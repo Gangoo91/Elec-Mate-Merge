@@ -27,7 +27,9 @@ interface UseInstallationMethodJobPollingReturn {
   error: string | null;
 }
 
-export const useInstallationMethodJobPolling = (jobId: string | null): UseInstallationMethodJobPollingReturn => {
+export const useInstallationMethodJobPolling = (
+  jobId: string | null
+): UseInstallationMethodJobPollingReturn => {
   const [job, setJob] = useState<InstallationMethodJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
   const lastProgressRef = useRef(0);
@@ -40,7 +42,8 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
     try {
       const { data, error } = await supabase
         .from('installation_method_jobs')
-        .select(`
+        .select(
+          `
           id,
           status,
           progress,
@@ -52,7 +55,8 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
           started_at,
           completed_at,
           user_id
-        `)
+        `
+        )
         .eq('id', jobId)
         .single();
 
@@ -69,7 +73,9 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
         hasMethodData: !!data.method_data,
         methodDataType: typeof data.method_data,
         methodDataKeys: data.method_data ? Object.keys(data.method_data) : [],
-        methodDataPreview: data.method_data ? JSON.stringify(data.method_data).substring(0, 200) : null
+        methodDataPreview: data.method_data
+          ? JSON.stringify(data.method_data).substring(0, 200)
+          : null,
       });
 
       setJob(data);
@@ -80,7 +86,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
         status: data.status,
         progress: data.progress,
         isPolling,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       // Fallback: If method_data is missing on complete, try direct query
@@ -91,7 +97,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
           .select('method_data')
           .eq('id', jobId)
           .single();
-        
+
         if (directData?.method_data) {
           console.log('✅ Retrieved method_data via direct query');
           setJob({ ...data, method_data: directData.method_data });
@@ -104,7 +110,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
       if (data.status === 'processing') {
         const hasProgressChanged = data.progress !== lastProgressRef.current;
         const hasStepChanged = data.current_step !== lastCurrentStepRef.current;
-        
+
         if (hasProgressChanged || hasStepChanged) {
           lastProgressRef.current = data.progress;
           lastCurrentStepRef.current = data.current_step || '';
@@ -117,7 +123,8 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
               .from('installation_method_jobs')
               .update({
                 status: 'failed',
-                error_message: 'Generation timed out - no activity detected for 6 minutes. Please try again.'
+                error_message:
+                  'Generation timed out - no activity detected for 6 minutes. Please try again.',
               })
               .eq('id', jobId);
             setIsPolling(false);
@@ -150,7 +157,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
     const poll = () => {
       pollJob();
       pollCount++;
-      
+
       // 0-20 polls: 1s interval
       // 21-40 polls: 5s interval
       // 41+ polls: 10s interval
@@ -162,7 +169,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
         pollInterval = 10000;
         console.log('📊 Polling: Switching to 10s interval');
       }
-      
+
       timeoutId = window.setTimeout(poll, pollInterval);
     };
 
@@ -189,10 +196,13 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
     startPolling,
     stopPolling,
     progress: job?.progress || 0,
-    status: jobId ? ((job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') || 'pending') : 'idle',
+    status: jobId
+      ? (job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') ||
+        'pending'
+      : 'idle',
     currentStep: job?.current_step || '',
     methodData: job?.method_data,
     qualityMetrics: job?.quality_metrics,
-    error: job?.error_message
+    error: job?.error_message,
   };
 };

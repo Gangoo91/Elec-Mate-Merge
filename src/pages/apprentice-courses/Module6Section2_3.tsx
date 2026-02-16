@@ -1,87 +1,122 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section2_3 = () => {
   useSEO(
-    "Checking Cable Routes, Depths, and Zones - Level 2 Electrical Installation",
-    "Understanding BS 7671 requirements for cable routing, depth requirements, and safe zones in electrical installations"
+    'Checking Cable Routes, Depths, and Zones - Level 2 Electrical Installation',
+    'Understanding BS 7671 requirements for cable routing, depth requirements, and safe zones in electrical installations'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the maximum distance from the top of a wall that a cable can run in a horizontal zone?",
-      options: ["100 mm", "150 mm", "200 mm", "250 mm"],
+      question:
+        'What is the maximum distance from the top of a wall that a cable can run in a horizontal zone?',
+      options: ['100 mm', '150 mm', '200 mm', '250 mm'],
       correctAnswer: 1,
-      explanation: "BS 7671 specifies horizontal zones within 150 mm from the top of a wall or above an accessory."
+      explanation:
+        'BS 7671 specifies horizontal zones within 150 mm from the top of a wall or above an accessory.',
     },
     {
       id: 2,
-      question: "True or False: Cables can be run diagonally if concealed in plaster.",
-      options: ["True", "False"],
+      question: 'True or False: Cables can be run diagonally if concealed in plaster.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False - cables must not be run diagonally when concealed. They must follow safe zones."
+      explanation:
+        'False - cables must not be run diagonally when concealed. They must follow safe zones.',
     },
     {
       id: 3,
-      question: "What is the minimum depth for a concealed cable without RCD protection?",
-      options: ["30 mm", "40 mm", "50 mm", "More than 50 mm"],
+      question: 'What is the minimum depth for a concealed cable without RCD protection?',
+      options: ['30 mm', '40 mm', '50 mm', 'More than 50 mm'],
       correctAnswer: 3,
-      explanation: "Cables must be buried more than 50 mm deep to avoid requiring additional RCD protection."
+      explanation:
+        'Cables must be buried more than 50 mm deep to avoid requiring additional RCD protection.',
     },
     {
       id: 4,
-      question: "Give one reason why diagonal runs are unsafe.",
-      options: ["They cost more", "They increase the chance of accidental drilling", "They look unprofessional", "They take longer to install"],
+      question: 'Give one reason why diagonal runs are unsafe.',
+      options: [
+        'They cost more',
+        'They increase the chance of accidental drilling',
+        'They look unprofessional',
+        'They take longer to install',
+      ],
       correctAnswer: 1,
-      explanation: "Diagonal runs are unsafe because they increase the chance of accidental drilling into cables."
+      explanation:
+        'Diagonal runs are unsafe because they increase the chance of accidental drilling into cables.',
     },
     {
       id: 5,
-      question: "Which regulation sets out safe zones for cables?",
-      options: ["BS 7671", "Building Regulations", "HSE Guidelines", "IET Guidance"],
+      question: 'Which regulation sets out safe zones for cables?',
+      options: ['BS 7671', 'Building Regulations', 'HSE Guidelines', 'IET Guidance'],
       correctAnswer: 0,
-      explanation: "BS 7671 (IET Wiring Regulations) sets out the requirements for safe cable zones."
+      explanation:
+        'BS 7671 (IET Wiring Regulations) sets out the requirements for safe cable zones.',
     },
     {
       id: 6,
-      question: "What additional protection is required for cables buried less than 50 mm deep?",
-      options: ["Extra insulation", "RCD or mechanical protection", "Warning labels", "Deeper burial"],
+      question: 'What additional protection is required for cables buried less than 50 mm deep?',
+      options: [
+        'Extra insulation',
+        'RCD or mechanical protection',
+        'Warning labels',
+        'Deeper burial',
+      ],
       correctAnswer: 1,
-      explanation: "Cables less than 50 mm deep require RCD protection or mechanical protection like conduit/trunking."
+      explanation:
+        'Cables less than 50 mm deep require RCD protection or mechanical protection like conduit/trunking.',
     },
     {
       id: 7,
-      question: "Name one tool used to verify cable routes during inspection.",
-      options: ["Multimeter", "Cable detector", "Insulation tester", "Earth loop tester"],
+      question: 'Name one tool used to verify cable routes during inspection.',
+      options: ['Multimeter', 'Cable detector', 'Insulation tester', 'Earth loop tester'],
       correctAnswer: 1,
-      explanation: "Cable detectors are used to locate and verify cable routes during inspections."
+      explanation: 'Cable detectors are used to locate and verify cable routes during inspections.',
     },
     {
       id: 8,
-      question: "Where should cables be installed in relation to sockets and switches?",
-      options: ["Diagonally from accessories", "Randomly positioned", "Directly above or below in vertical zones", "At 45-degree angles"],
+      question: 'Where should cables be installed in relation to sockets and switches?',
+      options: [
+        'Diagonally from accessories',
+        'Randomly positioned',
+        'Directly above or below in vertical zones',
+        'At 45-degree angles',
+      ],
       correctAnswer: 2,
-      explanation: "Cables should run directly above or below sockets and switches in vertical zones."
+      explanation:
+        'Cables should run directly above or below sockets and switches in vertical zones.',
     },
     {
       id: 9,
-      question: "What is one common mistake made when installing cable routes?",
-      options: ["Using too much cable", "Running cables diagonally", "Installing too many cables", "Using wrong colour cables"],
+      question: 'What is one common mistake made when installing cable routes?',
+      options: [
+        'Using too much cable',
+        'Running cables diagonally',
+        'Installing too many cables',
+        'Using wrong colour cables',
+      ],
       correctAnswer: 1,
-      explanation: "Running cables diagonally or outside safe zones is a common and dangerous mistake."
+      explanation:
+        'Running cables diagonally or outside safe zones is a common and dangerous mistake.',
     },
     {
       id: 10,
-      question: "Why is it important to follow cable zone rules?",
-      options: ["To save money", "For aesthetic reasons", "To ensure safety and compliance", "To use less cable"],
+      question: 'Why is it important to follow cable zone rules?',
+      options: [
+        'To save money',
+        'For aesthetic reasons',
+        'To ensure safety and compliance',
+        'To use less cable',
+      ],
       correctAnswer: 2,
-      explanation: "Following cable zone rules ensures safety, compliance with BS 7671, and reduces future risks of damage."
-    }
+      explanation:
+        'Following cable zone rules ensures safety, compliance with BS 7671, and reduces future risks of damage.',
+    },
   ];
 
   return (
@@ -115,7 +150,8 @@ const Module6Section2_3 = () => {
               Checking Cable Routes, Depths, and Zones
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding BS 7671 requirements for cable routing, depth requirements, and safe zones
+              Understanding BS 7671 requirements for cable routing, depth requirements, and safe
+              zones
             </p>
           </header>
 
@@ -126,7 +162,9 @@ const Module6Section2_3 = () => {
               <div>
                 <p className="font-medium text-white mb-1">In 30 Seconds</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li>Safe zones: horizontal within 150mm of top, vertical above/below accessories</li>
+                  <li>
+                    Safe zones: horizontal within 150mm of top, vertical above/below accessories
+                  </li>
                   <li>Depth requirements: &gt;50mm without RCD, ≤50mm needs protection</li>
                   <li>Route violations: diagonal runs, cables outside zones</li>
                 </ul>
@@ -134,8 +172,12 @@ const Module6Section2_3 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Spot it / Use it</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Spot:</strong> Diagonal cables, shallow runs, missing protection</li>
-                  <li><strong>Use:</strong> Cable detectors, as-built drawings, depth measurements</li>
+                  <li>
+                    <strong>Spot:</strong> Diagonal cables, shallow runs, missing protection
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Cable detectors, as-built drawings, depth measurements
+                  </li>
                 </ul>
               </div>
             </div>
@@ -149,7 +191,9 @@ const Module6Section2_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Cables must be installed in specific zones, depths, and routes to ensure both safety and compliance with BS 7671. Incorrect routing can make future work hazardous, increase the chance of mechanical damage, and lead to non-compliance.
+                Cables must be installed in specific zones, depths, and routes to ensure both safety
+                and compliance with BS 7671. Incorrect routing can make future work hazardous,
+                increase the chance of mechanical damage, and lead to non-compliance.
               </p>
             </div>
           </section>
@@ -177,7 +221,8 @@ const Module6Section2_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                BS 7671 defines specific safe zones where cables can be installed to ensure predictable routing and prevent accidental damage during future work.
+                BS 7671 defines specific safe zones where cables can be installed to ensure
+                predictable routing and prevent accidental damage during future work.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -213,7 +258,7 @@ const Module6Section2_3 = () => {
               <InlineCheck
                 id="cable-zones-check"
                 question="What is the maximum distance from the top of a wall for horizontal cable zones?"
-                options={["100 mm", "150 mm", "200 mm", "250 mm"]}
+                options={['100 mm', '150 mm', '200 mm', '250 mm']}
                 correctIndex={1}
                 explanation="Horizontal zones extend up to 150 mm from the top of a wall or above accessories as specified in BS 7671."
               />
@@ -228,7 +273,8 @@ const Module6Section2_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Cable burial depth affects the level of protection required against mechanical damage from drilling, nailing, or other penetration.
+                Cable burial depth affects the level of protection required against mechanical
+                damage from drilling, nailing, or other penetration.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -253,7 +299,8 @@ const Module6Section2_3 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Best Practice</p>
                 <p className="text-sm">
-                  Even when depth requirements are met, RCD protection and mechanical protection provide additional safety margins and should be considered for all installations.
+                  Even when depth requirements are met, RCD protection and mechanical protection
+                  provide additional safety margins and should be considered for all installations.
                 </p>
               </div>
             </div>
@@ -262,7 +309,12 @@ const Module6Section2_3 = () => {
               <InlineCheck
                 id="depth-requirements-check"
                 question="What additional protection is required for cables less than 50 mm deep?"
-                options={["Extra insulation only", "RCD or mechanical protection", "Warning tape only", "No additional protection needed"]}
+                options={[
+                  'Extra insulation only',
+                  'RCD or mechanical protection',
+                  'Warning tape only',
+                  'No additional protection needed',
+                ]}
                 correctIndex={1}
                 explanation="Cables less than 50 mm deep require RCD protection or mechanical protection like conduit to guard against accidental penetration."
               />
@@ -277,7 +329,8 @@ const Module6Section2_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Improper cable routing creates safety hazards and compliance issues that can have serious consequences.
+                Improper cable routing creates safety hazards and compliance issues that can have
+                serious consequences.
               </p>
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
@@ -305,7 +358,12 @@ const Module6Section2_3 = () => {
               <InlineCheck
                 id="routing-risks-check"
                 question="What is the main safety risk of cables outside safe zones?"
-                options={["Higher installation costs", "Accidental drilling and penetration", "Poor cable performance", "Difficult cable identification"]}
+                options={[
+                  'Higher installation costs',
+                  'Accidental drilling and penetration',
+                  'Poor cable performance',
+                  'Difficult cable identification',
+                ]}
                 correctIndex={1}
                 explanation="The primary risk is accidental drilling or fixing penetration into concealed cables, which can cause electric shock, fires, and system failures."
               />
@@ -342,7 +400,8 @@ const Module6Section2_3 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Inspection Tools</p>
                 <p className="text-sm">
-                  Cable detectors, depth gauges, as-built drawings, and RCD testers are essential tools for comprehensive route inspection.
+                  Cable detectors, depth gauges, as-built drawings, and RCD testers are essential
+                  tools for comprehensive route inspection.
                 </p>
               </div>
             </div>
@@ -351,7 +410,12 @@ const Module6Section2_3 = () => {
               <InlineCheck
                 id="inspection-tools-check"
                 question="Which tool is most important for verifying cable routes during inspection?"
-                options={["Multimeter", "Cable detector/locator", "Insulation tester", "Earth loop impedance tester"]}
+                options={[
+                  'Multimeter',
+                  'Cable detector/locator',
+                  'Insulation tester',
+                  'Earth loop impedance tester',
+                ]}
                 correctIndex={1}
                 explanation="Cable detectors are specifically designed to locate buried cables and verify their routing, making them essential for route inspection."
               />
@@ -387,7 +451,8 @@ const Module6Section2_3 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Prevention Strategy</p>
                 <p className="text-sm">
-                  Proper planning, clear drawings, and systematic inspection at key stages prevent most routing errors and ensure compliance.
+                  Proper planning, clear drawings, and systematic inspection at key stages prevent
+                  most routing errors and ensure compliance.
                 </p>
               </div>
             </div>
@@ -396,7 +461,12 @@ const Module6Section2_3 = () => {
               <InlineCheck
                 id="common-mistakes-check"
                 question="Which is the most common cable routing mistake in electrical installations?"
-                options={["Using oversized cables", "Running cables diagonally outside safe zones", "Installing too many junction boxes", "Using wrong cable colours"]}
+                options={[
+                  'Using oversized cables',
+                  'Running cables diagonally outside safe zones',
+                  'Installing too many junction boxes',
+                  'Using wrong cable colours',
+                ]}
                 correctIndex={1}
                 explanation="Running cables diagonally outside safe zones is extremely common as installers try to save time and materials, but it creates serious safety risks."
               />
@@ -410,9 +480,13 @@ const Module6Section2_3 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-              <p className="font-medium text-red-400 mb-3">Case Study: Housing Development Cable Strike</p>
+              <p className="font-medium text-red-400 mb-3">
+                Case Study: Housing Development Cable Strike
+              </p>
               <p className="text-sm text-white/80 mb-3">
-                During a housing development project, electricians installed cables diagonally across walls to save time. Later, during a kitchen renovation, a contractor struck a live cable, resulting in:
+                During a housing development project, electricians installed cables diagonally
+                across walls to save time. Later, during a kitchen renovation, a contractor struck a
+                live cable, resulting in:
               </p>
               <ul className="list-disc pl-4 space-y-1 text-sm text-white/80 mb-3">
                 <li>Electric shock injury to the contractor</li>
@@ -421,7 +495,8 @@ const Module6Section2_3 = () => {
                 <li>Insurance claims and potential legal action</li>
               </ul>
               <p className="text-sm font-medium text-white">
-                Prevention: Following BS 7671 safe zone requirements and ensuring proper RCD protection would have prevented this incident.
+                Prevention: Following BS 7671 safe zone requirements and ensuring proper RCD
+                protection would have prevented this incident.
               </p>
             </div>
           </section>

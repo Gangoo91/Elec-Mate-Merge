@@ -24,7 +24,7 @@ export const EmergencyLightingSummary6_3 = () => {
               <li>Review required annually or after building changes</li>
             </ul>
           </div>
-          
+
           <div className="bg-gray-800/30 border border-gray-600/50 rounded-lg p-4">
             <h4 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
               <span className="text-xl">⚡</span>
@@ -66,13 +66,13 @@ export const EmergencyLightingSummary6_3 = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="p-4 bg-gradient-to-r from-elec-yellow/20 to-yellow-600/20 border border-elec-yellow/30 rounded-lg">
           <p className="text-elec-yellow font-medium text-sm">
-            <span className="font-bold">Remember:</span> The fire risk assessment is not a suggestion — 
-            it's a legal requirement that drives every aspect of emergency lighting design. Ignoring it 
-            leads to non-compliance, fines, and potentially tragic consequences. Always design to the 
-            assessed risk level from day one.
+            <span className="font-bold">Remember:</span> The fire risk assessment is not a
+            suggestion — it's a legal requirement that drives every aspect of emergency lighting
+            design. Ignoring it leads to non-compliance, fines, and potentially tragic consequences.
+            Always design to the assessed risk level from day one.
           </p>
         </div>
       </CardContent>

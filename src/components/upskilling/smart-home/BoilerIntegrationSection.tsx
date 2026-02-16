@@ -12,9 +12,10 @@ export const BoilerIntegrationSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Smart thermostats and controllers can interface with different types of boilers using various connection methods, from simple relay switching to advanced digital protocols.
+          Smart thermostats and controllers can interface with different types of boilers using
+          various connection methods, from simple relay switching to advanced digital protocols.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Types of Boilers</h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -43,7 +44,7 @@ export const BoilerIntegrationSection = () => {
               <li>• Proprietary interfaces (eBUS)</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-red-600 rounded-lg p-4">
             <h4 className="font-semibold text-red-200 mb-3">Control Features</h4>
             <ul className="space-y-2 text-sm text-red-100">
@@ -60,11 +61,17 @@ export const BoilerIntegrationSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div>
               <p className="font-medium text-green-200 mb-2">Advanced Integration (OpenTherm)</p>
-              <p className="text-gray-300">Nest supports OpenTherm for modulating control, allowing the thermostat to adjust boiler output based on heat demand.</p>
+              <p className="text-gray-300">
+                Nest supports OpenTherm for modulating control, allowing the thermostat to adjust
+                boiler output based on heat demand.
+              </p>
             </div>
             <div>
               <p className="font-medium text-blue-200 mb-2">Basic Integration (Relay)</p>
-              <p className="text-gray-300">Hive typically uses simple on/off relay switching, which works with most boilers but doesn't provide modulation.</p>
+              <p className="text-gray-300">
+                Hive typically uses simple on/off relay switching, which works with most boilers but
+                doesn't provide modulation.
+              </p>
             </div>
           </div>
         </div>

@@ -12,7 +12,8 @@ export const EmergencyLightingPracticalSection4_4 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Proper planning and installation methods are essential to ensure emergency lighting circuits maintain integrity under fire conditions. Follow these practical guidelines:
+          Proper planning and installation methods are essential to ensure emergency lighting
+          circuits maintain integrity under fire conditions. Follow these practical guidelines:
         </p>
 
         <div className="grid gap-4">
@@ -30,14 +31,19 @@ export const EmergencyLightingPracticalSection4_4 = () => {
           </div>
 
           <div className="bg-green-600/10 border-l-4 border-green-600 p-4 rounded-r">
-            <h4 className="font-semibold text-green-300 mb-2">Multi-Storey Building Considerations</h4>
+            <h4 className="font-semibold text-green-300 mb-2">
+              Multi-Storey Building Considerations
+            </h4>
             <p className="text-foreground mb-2">
               In multi-storey buildings, run emergency circuits in protected shafts or risers:
             </p>
             <ul className="list-disc list-inside space-y-1 text-foreground">
               <li>Use dedicated fire-rated shafts for vertical distribution</li>
               <li>Provide adequate fire stopping at floor penetrations</li>
-              <li>Install horizontal distribution from shaft to luminaires using fire-resistant methods</li>
+              <li>
+                Install horizontal distribution from shaft to luminaires using fire-resistant
+                methods
+              </li>
               <li>Label all circuits at each floor level for identification</li>
             </ul>
           </div>
@@ -83,7 +89,9 @@ export const EmergencyLightingPracticalSection4_4 = () => {
         </div>
 
         <div className="bg-orange-600/20 border border-orange-600/40 rounded-lg p-4">
-          <h4 className="font-semibold text-orange-300 mb-2">Installation Best Practice Checklist</h4>
+          <h4 className="font-semibold text-orange-300 mb-2">
+            Installation Best Practice Checklist
+          </h4>
           <div className="space-y-2 text-foreground">
             <div className="flex items-start gap-2">
               <span className="text-green-400">✓</span>

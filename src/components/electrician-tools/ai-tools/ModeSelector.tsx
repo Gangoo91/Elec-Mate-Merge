@@ -1,7 +1,11 @@
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Search, Wrench, AlertTriangle, CheckCircle } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Search, Wrench, AlertTriangle, CheckCircle } from 'lucide-react';
 
-export type AnalysisMode = 'fault_diagnosis' | 'component_identify' | 'wiring_instruction' | 'installation_verify';
+export type AnalysisMode =
+  | 'fault_diagnosis'
+  | 'component_identify'
+  | 'wiring_instruction'
+  | 'installation_verify';
 
 interface ModeSelectorProps {
   onSelectMode: (mode: AnalysisMode) => void;
@@ -12,26 +16,26 @@ const MODE_OPTIONS = [
     mode: 'component_identify' as AnalysisMode,
     title: 'Component Identification',
     description: 'Identify components, specs & BS 7671 requirements',
-    icon: Search
+    icon: Search,
   },
   {
     mode: 'wiring_instruction' as AnalysisMode,
     title: 'Wiring Instructions',
     description: 'Step-by-step UK wiring guide with terminal diagrams',
-    icon: Wrench
+    icon: Wrench,
   },
   {
     mode: 'fault_diagnosis' as AnalysisMode,
     title: 'Fault Diagnosis',
     description: 'Identify issues, EICR codes & rectification steps',
-    icon: AlertTriangle
+    icon: AlertTriangle,
   },
   {
     mode: 'installation_verify' as AnalysisMode,
     title: 'Installation Verification',
     description: 'BS 7671 compliance check with pass/fail assessment',
-    icon: CheckCircle
-  }
+    icon: CheckCircle,
+  },
 ];
 
 const ModeSelector = ({ onSelectMode }: ModeSelectorProps) => {

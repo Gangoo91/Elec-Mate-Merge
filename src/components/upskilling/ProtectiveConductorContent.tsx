@@ -1,27 +1,46 @@
-
-import { BookOpen, Shield, Zap, Settings, Cable, CheckCircle, AlertTriangle, Wrench, Target, Info } from 'lucide-react';
+import {
+  BookOpen,
+  Shield,
+  Zap,
+  Settings,
+  Cable,
+  CheckCircle,
+  AlertTriangle,
+  Wrench,
+  Target,
+  Info,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const ProtectiveConductorContent = () => {
   const testingTriggers = [
-    "During initial verification of a new circuit",
-    "After alterations involving the earth path",
-    "Following any repair or fault where bonding might be compromised",
-    "As a spot-check during periodic inspections if a fault is suspected"
+    'During initial verification of a new circuit',
+    'After alterations involving the earth path',
+    'Following any repair or fault where bonding might be compromised',
+    'As a spot-check during periodic inspections if a fault is suspected',
   ];
 
   const testSteps = [
-    { step: 1, action: "Set your tester to low-resistance (Ω) mode" },
-    { step: 2, action: "Zero the leads first" },
-    { step: 3, action: "Connect one probe at the origin (e.g. DB earth bar)" },
-    { step: 4, action: "Connect the other at the far end (e.g. socket CPC terminal)" },
-    { step: 5, action: "Record the reading and verify it's within acceptable limits" }
+    { step: 1, action: 'Set your tester to low-resistance (Ω) mode' },
+    { step: 2, action: 'Zero the leads first' },
+    { step: 3, action: 'Connect one probe at the origin (e.g. DB earth bar)' },
+    { step: 4, action: 'Connect the other at the far end (e.g. socket CPC terminal)' },
+    { step: 5, action: "Record the reading and verify it's within acceptable limits" },
   ];
 
   const commonProblems = [
-    { issue: "High resistance readings", causes: ["Loose terminal connections", "Corroded connections", "Damaged conductor"] },
-    { issue: "No continuity", causes: ["Broken CPC", "Disconnected earth terminal", "Faulty connection"] },
-    { issue: "Intermittent readings", causes: ["Poor connection quality", "Oxidised terminals", "Vibration damage"] }
+    {
+      issue: 'High resistance readings',
+      causes: ['Loose terminal connections', 'Corroded connections', 'Damaged conductor'],
+    },
+    {
+      issue: 'No continuity',
+      causes: ['Broken CPC', 'Disconnected earth terminal', 'Faulty connection'],
+    },
+    {
+      issue: 'Intermittent readings',
+      causes: ['Poor connection quality', 'Oxidised terminals', 'Vibration damage'],
+    },
   ];
 
   return (
@@ -33,20 +52,20 @@ export const ProtectiveConductorContent = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* What Is the CPC */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">What Is the CPC?</h3>
           <div className="bg-[#323232] rounded-lg p-4 space-y-3">
             <p className="text-foreground leading-relaxed text-sm sm:text-base">
-              The Circuit Protective Conductor (CPC) is the earth wire that ensures fault current flows 
-              safely back to the supply, enabling protective devices to disconnect the circuit during a fault.
+              The Circuit Protective Conductor (CPC) is the earth wire that ensures fault current
+              flows safely back to the supply, enabling protective devices to disconnect the circuit
+              during a fault.
             </p>
             <div className="flex items-start gap-3 bg-green-600/10 border border-green-600/20 rounded p-3 sm:p-4">
               <Shield className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-foreground text-xs sm:text-sm leading-relaxed">
-                <strong>Remember:</strong> The CPC provides the return path for fault current, ensuring 
-                automatic disconnection of supply (ADS) can operate effectively.
+                <strong>Remember:</strong> The CPC provides the return path for fault current,
+                ensuring automatic disconnection of supply (ADS) can operate effectively.
               </p>
             </div>
           </div>
@@ -54,7 +73,9 @@ export const ProtectiveConductorContent = () => {
 
         {/* Why CPC Continuity Testing Matters */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Why CPC Continuity Testing Matters</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Why CPC Continuity Testing Matters
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
               <AlertTriangle className="h-6 w-6 text-red-400 mb-3" />
@@ -81,20 +102,22 @@ export const ProtectiveConductorContent = () => {
 
         {/* Regulatory Requirements */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Regulatory Requirements (BS 7671)</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Regulatory Requirements (BS 7671)
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4 space-y-3">
             <div className="bg-blue-600/10 border border-blue-600/20 rounded p-3">
               <h4 className="text-blue-200 font-medium mb-2">Section 643.2.3</h4>
               <p className="text-foreground text-sm">
-                The continuity of protective conductors, including main equipotential bonding 
+                The continuity of protective conductors, including main equipotential bonding
                 conductors and supplementary equipotential bonding conductors, shall be verified.
               </p>
             </div>
             <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-3">
               <h4 className="text-yellow-200 font-medium mb-2">Testing Requirement</h4>
               <p className="text-foreground text-sm">
-                Must be tested during initial verification and after any work that might affect 
-                the earth fault path integrity.
+                Must be tested during initial verification and after any work that might affect the
+                earth fault path integrity.
               </p>
             </div>
           </div>
@@ -102,10 +125,15 @@ export const ProtectiveConductorContent = () => {
 
         {/* When Should You Test */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">When Should You Test CPC Continuity?</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            When Should You Test CPC Continuity?
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {testingTriggers.map((trigger, index) => (
-              <div key={index} className="bg-[#323232] rounded-lg p-4 border-l-4 border-elec-yellow/50">
+              <div
+                key={index}
+                className="bg-[#323232] rounded-lg p-4 border-l-4 border-elec-yellow/50"
+              >
                 <p className="text-foreground text-sm">{trigger}</p>
               </div>
             ))}
@@ -114,11 +142,16 @@ export const ProtectiveConductorContent = () => {
 
         {/* Test Method */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Test Method – Low Resistance Ohmmeter</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Test Method – Low Resistance Ohmmeter
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="space-y-3">
               {testSteps.map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-3 rounded bg-gray-600/10 border border-gray-600/20">
+                <div
+                  key={index}
+                  className="flex items-center gap-4 p-3 rounded bg-gray-600/10 border border-gray-600/20"
+                >
                   <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                     {item.step}
                   </span>
@@ -128,7 +161,8 @@ export const ProtectiveConductorContent = () => {
             </div>
             <div className="mt-4 bg-blue-600/10 border border-blue-600/20 rounded p-3">
               <p className="text-foreground text-sm">
-                <strong>Purpose:</strong> You are confirming there is no break and minimal resistance in the CPC path.
+                <strong>Purpose:</strong> You are confirming there is no break and minimal
+                resistance in the CPC path.
               </p>
             </div>
           </div>
@@ -148,9 +182,7 @@ export const ProtectiveConductorContent = () => {
             <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
               <Settings className="h-6 w-6 text-blue-400 mb-3" />
               <h4 className="text-blue-200 font-medium mb-2">Documentation</h4>
-              <p className="text-foreground text-sm">
-                Record exact readings—don't just tick a box
-              </p>
+              <p className="text-foreground text-sm">Record exact readings—don't just tick a box</p>
             </div>
             <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
               <AlertTriangle className="h-6 w-6 text-red-400 mb-3" />
@@ -173,11 +205,12 @@ export const ProtectiveConductorContent = () => {
               </p>
               <div className="bg-green-600/10 border border-green-600/20 rounded p-2">
                 <p className="text-foreground text-xs">
-                  <strong>Test:</strong> From consumer unit earth bar to final accessory earth terminal
+                  <strong>Test:</strong> From consumer unit earth bar to final accessory earth
+                  terminal
                 </p>
               </div>
             </div>
-            
+
             <div className="bg-[#323232] rounded-lg p-4">
               <h4 className="text-foreground font-medium mb-3">Metal Conduit/Trunking as CPC</h4>
               <p className="text-foreground text-sm mb-2">
@@ -209,15 +242,14 @@ export const ProtectiveConductorContent = () => {
           <h3 className="text-xl font-semibold text-foreground">Testing Bonding Conductors</h3>
           <div className="bg-[#323232] rounded-lg p-4 space-y-4">
             <p className="text-foreground">
-              Main and supplementary bonding must also be tested for continuity using a similar method.
+              Main and supplementary bonding must also be tested for continuity using a similar
+              method.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-4">
                 <h4 className="text-yellow-200 font-medium mb-2">Main Bonding</h4>
-                <p className="text-foreground text-sm mb-2">
-                  From MET (Main Earth Terminal):
-                </p>
+                <p className="text-foreground text-sm mb-2">From MET (Main Earth Terminal):</p>
                 <ul className="text-foreground text-xs space-y-1">
                   <li>• To gas service pipe</li>
                   <li>• To water service pipe</li>
@@ -225,12 +257,10 @@ export const ProtectiveConductorContent = () => {
                   <li>• To structural steelwork</li>
                 </ul>
               </div>
-              
+
               <div className="bg-blue-600/10 border border-blue-600/20 rounded p-4">
                 <h4 className="text-blue-200 font-medium mb-2">Supplementary Bonding</h4>
-                <p className="text-foreground text-sm mb-2">
-                  Between exposed/extraneous parts:
-                </p>
+                <p className="text-foreground text-sm mb-2">Between exposed/extraneous parts:</p>
                 <ul className="text-foreground text-xs space-y-1">
                   <li>• Bath to taps</li>
                   <li>• Radiator to pipework</li>
@@ -271,7 +301,8 @@ export const ProtectiveConductorContent = () => {
                 <div>
                   <h4 className="text-orange-200 font-medium mb-2">Large Installations</h4>
                   <p className="text-foreground text-sm">
-                    For large installations, long CPC runs may require calculation of maximum permissible resistance
+                    For large installations, long CPC runs may require calculation of maximum
+                    permissible resistance
                   </p>
                 </div>
               </div>
@@ -282,7 +313,8 @@ export const ProtectiveConductorContent = () => {
                 <div>
                   <h4 className="text-red-200 font-medium mb-2">Parallel Paths</h4>
                   <p className="text-foreground text-sm">
-                    Always ensure parallel paths (e.g. through metal containment) don't give false positives
+                    Always ensure parallel paths (e.g. through metal containment) don't give false
+                    positives
                   </p>
                 </div>
               </div>
@@ -293,14 +325,14 @@ export const ProtectiveConductorContent = () => {
                 <div>
                   <h4 className="text-blue-200 font-medium mb-2">Safety During Testing</h4>
                   <p className="text-foreground text-sm">
-                    Always isolate circuits before testing and ensure test equipment is properly calibrated
+                    Always isolate circuits before testing and ensure test equipment is properly
+                    calibrated
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

@@ -1,135 +1,135 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Brain, Shield, CheckCircle, AlertTriangle, Users } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Brain, Shield, CheckCircle, AlertTriangle, Users } from 'lucide-react';
+import { useState } from 'react';
 
 const PreventionTab = () => {
   const [completedItems, setCompletedItems] = useState<string[]>([]);
 
   const preventionStrategies = [
     {
-      category: "Planning & Preparation",
+      category: 'Planning & Preparation',
       icon: Brain,
-      color: "border-blue-500/20 bg-blue-500/10",
-      description: "Set yourself up for success before you start",
+      color: 'border-blue-500/20 bg-blue-500/10',
+      description: 'Set yourself up for success before you start',
       strategies: [
         {
-          id: "plan-1",
-          title: "Read job specifications thoroughly before starting",
-          description: "Understand all requirements and scope completely",
-          impact: "Prevents scope misunderstandings and rework"
+          id: 'plan-1',
+          title: 'Read job specifications thoroughly before starting',
+          description: 'Understand all requirements and scope completely',
+          impact: 'Prevents scope misunderstandings and rework',
         },
         {
-          id: "plan-2",
-          title: "Create a comprehensive materials checklist",
-          description: "List all required components with quantities",
-          impact: "Reduces wrong part selection and delays"
+          id: 'plan-2',
+          title: 'Create a comprehensive materials checklist',
+          description: 'List all required components with quantities',
+          impact: 'Reduces wrong part selection and delays',
         },
         {
-          id: "plan-3",
-          title: "Review relevant BS 7671 regulations",
-          description: "Check compliance requirements for the specific job",
-          impact: "Ensures regulatory compliance from the start"
-        }
-      ]
+          id: 'plan-3',
+          title: 'Review relevant BS 7671 regulations',
+          description: 'Check compliance requirements for the specific job',
+          impact: 'Ensures regulatory compliance from the start',
+        },
+      ],
     },
     {
-      category: "Work Execution",
+      category: 'Work Execution',
       icon: Shield,
-      color: "border-green-500/20 bg-green-500/10",
-      description: "Execute work with precision and safety",
+      color: 'border-green-500/20 bg-green-500/10',
+      description: 'Execute work with precision and safety',
       strategies: [
         {
-          id: "exec-1",
-          title: "Double-check all connections before energising",
-          description: "Verify connections, polarity, and settings thoroughly",
-          impact: "Catches errors before they become dangerous"
+          id: 'exec-1',
+          title: 'Double-check all connections before energising',
+          description: 'Verify connections, polarity, and settings thoroughly',
+          impact: 'Catches errors before they become dangerous',
         },
         {
-          id: "exec-2",
-          title: "Follow proper testing sequence religiously",
-          description: "Use dead testing procedures without shortcuts",
-          impact: "Prevents live working incidents and injuries"
+          id: 'exec-2',
+          title: 'Follow proper testing sequence religiously',
+          description: 'Use dead testing procedures without shortcuts',
+          impact: 'Prevents live working incidents and injuries',
         },
         {
-          id: "exec-3",
-          title: "Label cables and circuits during installation",
-          description: "Mark everything clearly as work progresses",
-          impact: "Prevents confusion in complex installations"
-        }
-      ]
+          id: 'exec-3',
+          title: 'Label cables and circuits during installation',
+          description: 'Mark everything clearly as work progresses',
+          impact: 'Prevents confusion in complex installations',
+        },
+      ],
     },
     {
-      category: "Communication & Documentation",
+      category: 'Communication & Documentation',
       icon: Users,
-      color: "border-purple-500/20 bg-purple-500/10",
-      description: "Keep everyone informed and records accurate",
+      color: 'border-purple-500/20 bg-purple-500/10',
+      description: 'Keep everyone informed and records accurate',
       strategies: [
         {
-          id: "comm-1",
-          title: "Ask questions when anything is uncertain",
-          description: "Clarify all doubts before proceeding with work",
-          impact: "Prevents costly assumption-based errors"
+          id: 'comm-1',
+          title: 'Ask questions when anything is uncertain',
+          description: 'Clarify all doubts before proceeding with work',
+          impact: 'Prevents costly assumption-based errors',
         },
         {
-          id: "comm-2",
-          title: "Report progress regularly to supervisor",
-          description: "Keep everyone informed of work status",
-          impact: "Enables early intervention if issues arise"
+          id: 'comm-2',
+          title: 'Report progress regularly to supervisor',
+          description: 'Keep everyone informed of work status',
+          impact: 'Enables early intervention if issues arise',
         },
         {
-          id: "comm-3",
-          title: "Document any changes from original plan",
-          description: "Record all deviations with reasons clearly",
-          impact: "Maintains accurate installation records"
-        }
-      ]
-    }
+          id: 'comm-3',
+          title: 'Document any changes from original plan',
+          description: 'Record all deviations with reasons clearly',
+          impact: 'Maintains accurate installation records',
+        },
+      ],
+    },
   ];
 
   const commonRisks = [
     {
-      title: "High-Risk Situations",
+      title: 'High-Risk Situations',
       risks: [
-        "Working under severe time pressure",
-        "Unfamiliar installation types or locations",
-        "Complex multi-circuit designs",
-        "Multiple people working on same system"
-      ]
+        'Working under severe time pressure',
+        'Unfamiliar installation types or locations',
+        'Complex multi-circuit designs',
+        'Multiple people working on same system',
+      ],
     },
     {
-      title: "Environmental Factors",
+      title: 'Environmental Factors',
       risks: [
-        "Noisy or distracting work environment",
-        "End of day or week fatigue",
-        "Client presence causing pressure",
-        "New or unfamiliar tools and equipment"
-      ]
-    }
+        'Noisy or distracting work environment',
+        'End of day or week fatigue',
+        'Client presence causing pressure',
+        'New or unfamiliar tools and equipment',
+      ],
+    },
   ];
 
   const mitigationStrategies = [
-    "Take regular breaks to maintain concentration",
-    "Ask for help when facing unfamiliar situations",
-    "Double-check all critical connections and settings",
-    "Use systematic checklists for complex tasks",
-    "Communicate concerns early to supervisors",
-    "Plan work to avoid rushing at day's end"
+    'Take regular breaks to maintain concentration',
+    'Ask for help when facing unfamiliar situations',
+    'Double-check all critical connections and settings',
+    'Use systematic checklists for complex tasks',
+    'Communicate concerns early to supervisors',
+    "Plan work to avoid rushing at day's end",
   ];
 
   const toggleCompleted = (id: string) => {
-    setCompletedItems(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
+    setCompletedItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
   const calculateProgress = () => {
-    const totalItems = preventionStrategies.reduce((sum, category) => sum + category.strategies.length, 0);
+    const totalItems = preventionStrategies.reduce(
+      (sum, category) => sum + category.strategies.length,
+      0
+    );
     return Math.round((completedItems.length / totalItems) * 100);
   };
 
@@ -161,10 +161,13 @@ const PreventionTab = () => {
                       <p className="text-sm text-white">{category.description}</p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3">
                     {category.strategies.map((strategy) => (
-                      <div key={strategy.id} className="flex items-start gap-3 p-4 bg-black/20 rounded-lg">
+                      <div
+                        key={strategy.id}
+                        className="flex items-start gap-3 p-4 bg-black/20 rounded-lg"
+                      >
                         <Checkbox
                           id={strategy.id}
                           checked={completedItems.includes(strategy.id)}
@@ -172,7 +175,10 @@ const PreventionTab = () => {
                           className="mt-1"
                         />
                         <div className="flex-1">
-                          <label htmlFor={strategy.id} className="font-medium text-white cursor-pointer block">
+                          <label
+                            htmlFor={strategy.id}
+                            className="font-medium text-white cursor-pointer block"
+                          >
                             {strategy.title}
                           </label>
                           <p className="text-sm text-white mt-1">{strategy.description}</p>
@@ -214,7 +220,7 @@ const PreventionTab = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-3">Mitigation Strategies</h4>
               <ul className="space-y-2">

@@ -76,9 +76,7 @@ function RadialRing({
           strokeDashoffset={offset}
         />
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        {children}
-      </div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">{children}</div>
     </div>
   );
 }
@@ -148,28 +146,25 @@ export function EPAKnowledgeQuiz({
       }
 
       // Also save to epa_mock_sessions so it appears in history
-      const { error: sessionError } = await supabase
-        .from('epa_mock_sessions')
-        .insert({
-          user_id: user.id,
-          qualification_code: qualificationCode || 'unknown',
-          session_type: 'knowledge_test',
-          status: 'completed',
-          quiz_questions: (quiz.currentSession?.questions || []) as unknown as Record<string, unknown>,
-          quiz_answers: (quiz.currentSession?.answers || []) as unknown as Record<string, unknown>,
-          overall_score: result.percentage,
-          predicted_grade:
-            result.percentage >= 80
-              ? 'distinction'
-              : result.percentage >= 60
-                ? 'pass'
-                : 'fail',
-          component_scores: result.categoryBreakdown as unknown as Record<string, unknown>,
-          ai_feedback: `${result.correctAnswers}/${result.totalQuestions} correct (${result.percentage}%)`,
-          improvement_suggestions: [] as unknown as Record<string, unknown>,
-          completed_at: new Date().toISOString(),
-          time_spent_seconds: result.timeSpent,
-        });
+      const { error: sessionError } = await supabase.from('epa_mock_sessions').insert({
+        user_id: user.id,
+        qualification_code: qualificationCode || 'unknown',
+        session_type: 'knowledge_test',
+        status: 'completed',
+        quiz_questions: (quiz.currentSession?.questions || []) as unknown as Record<
+          string,
+          unknown
+        >,
+        quiz_answers: (quiz.currentSession?.answers || []) as unknown as Record<string, unknown>,
+        overall_score: result.percentage,
+        predicted_grade:
+          result.percentage >= 80 ? 'distinction' : result.percentage >= 60 ? 'pass' : 'fail',
+        component_scores: result.categoryBreakdown as unknown as Record<string, unknown>,
+        ai_feedback: `${result.correctAnswers}/${result.totalQuestions} correct (${result.percentage}%)`,
+        improvement_suggestions: [] as unknown as Record<string, unknown>,
+        completed_at: new Date().toISOString(),
+        time_spent_seconds: result.timeSpent,
+      });
 
       if (sessionError) {
         console.error('Failed to save mock session:', sessionError);
@@ -197,12 +192,10 @@ export function EPAKnowledgeQuiz({
             <FileText className="h-6 w-6 text-blue-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">
-              Mock Knowledge Test
-            </h2>
+            <h2 className="text-xl font-bold text-white">Mock Knowledge Test</h2>
             <p className="text-sm text-white mt-0.5">
-              AI generates EPA-style multiple choice questions tailored to
-              your qualification and weak areas.
+              AI generates EPA-style multiple choice questions tailored to your qualification and
+              weak areas.
             </p>
           </div>
         </div>
@@ -220,9 +213,7 @@ export function EPAKnowledgeQuiz({
                   onClick={() => setDifficulty(d)}
                   className={cn(
                     'h-11 rounded-lg text-xs font-medium touch-manipulation',
-                    difficulty === d
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white/[0.06] text-white'
+                    difficulty === d ? 'bg-blue-500 text-white' : 'bg-white/[0.06] text-white'
                   )}
                 >
                   {d.charAt(0).toUpperCase() + d.slice(1)}
@@ -242,9 +233,7 @@ export function EPAKnowledgeQuiz({
                   onClick={() => setQuestionCount(n)}
                   className={cn(
                     'h-11 rounded-lg text-xs font-medium touch-manipulation',
-                    questionCount === n
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white/[0.06] text-white'
+                    questionCount === n ? 'bg-blue-500 text-white' : 'bg-white/[0.06] text-white'
                   )}
                 >
                   {n} Qs
@@ -254,9 +243,7 @@ export function EPAKnowledgeQuiz({
           </div>
         </div>
 
-        {genError && (
-          <p className="text-sm text-red-400">{genError}</p>
-        )}
+        {genError && <p className="text-sm text-red-400">{genError}</p>}
 
         <button
           onClick={handleGenerate}
@@ -286,33 +273,30 @@ export function EPAKnowledgeQuiz({
     const total = quiz.currentSession.totalQuestions;
     const pct = Math.round((correct / total) * 100);
 
-    const ringColour = pct >= 80
-      ? 'stroke-emerald-500'
-      : pct >= 60
-        ? 'stroke-blue-500'
-        : pct >= 40
-          ? 'stroke-amber-500'
-          : 'stroke-red-500';
+    const ringColour =
+      pct >= 80
+        ? 'stroke-emerald-500'
+        : pct >= 60
+          ? 'stroke-blue-500'
+          : pct >= 40
+            ? 'stroke-amber-500'
+            : 'stroke-red-500';
 
-    const scoreText = pct >= 80
-      ? 'text-emerald-400'
-      : pct >= 60
-        ? 'text-blue-400'
-        : pct >= 40
-          ? 'text-amber-400'
-          : 'text-red-400';
+    const scoreText =
+      pct >= 80
+        ? 'text-emerald-400'
+        : pct >= 60
+          ? 'text-blue-400'
+          : pct >= 40
+            ? 'text-amber-400'
+            : 'text-red-400';
 
     return (
       <div className="space-y-5 px-4 py-5">
         {/* Score Hero — Radial Ring */}
         <div className="p-5 rounded-xl bg-white/[0.04] border border-white/10">
           <div className="flex items-center gap-5">
-            <RadialRing
-              score={pct}
-              size={120}
-              strokeWidth={10}
-              ringClass={ringColour}
-            >
+            <RadialRing score={pct} size={120} strokeWidth={10} ringClass={ringColour}>
               <span className={cn('text-4xl font-bold', scoreText)}>{pct}%</span>
             </RadialRing>
 
@@ -346,8 +330,7 @@ export function EPAKnowledgeQuiz({
                     (question) => question.id === answer.questionId
                   );
                   if (q) {
-                    if (!acc[q.category])
-                      acc[q.category] = { correct: 0, total: 0 };
+                    if (!acc[q.category]) acc[q.category] = { correct: 0, total: 0 };
                     acc[q.category].total++;
                     if (answer.isCorrect) acc[q.category].correct++;
                   }
@@ -358,16 +341,9 @@ export function EPAKnowledgeQuiz({
             ).map(([cat, data]) => {
               const catPct = Math.round((data.correct / data.total) * 100);
               const barColour =
-                catPct >= 70
-                  ? 'bg-emerald-500'
-                  : catPct >= 50
-                    ? 'bg-amber-500'
-                    : 'bg-red-500';
+                catPct >= 70 ? 'bg-emerald-500' : catPct >= 50 ? 'bg-amber-500' : 'bg-red-500';
               return (
-                <div
-                  key={cat}
-                  className="p-3 rounded-xl bg-white/[0.03] border border-white/10"
-                >
+                <div key={cat} className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
                   <div className="flex items-center justify-between mb-1.5">
                     <p className="text-sm text-white truncate">{cat}</p>
                     <span className="text-sm font-bold text-white shrink-0">
@@ -416,9 +392,7 @@ export function EPAKnowledgeQuiz({
                       <p className="text-xs text-emerald-400 mt-0.5">
                         Correct: {q.options[q.correctAnswer as number]}
                       </p>
-                      <p className="text-xs text-white mt-1">
-                        {q.explanation}
-                      </p>
+                      <p className="text-xs text-white mt-1">{q.explanation}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -476,9 +450,7 @@ export function EPAKnowledgeQuiz({
           </Badge>
         </div>
 
-        <p className="text-base text-white leading-relaxed">
-          {currentQ.question}
-        </p>
+        <p className="text-base text-white leading-relaxed">{currentQ.question}</p>
 
         {/* Options */}
         <div className="space-y-2">
@@ -517,9 +489,7 @@ export function EPAKnowledgeQuiz({
                 >
                   {String.fromCharCode(65 + i)}
                 </span>
-                <span className="text-sm text-white flex-1">
-                  {option}
-                </span>
+                <span className="text-sm text-white flex-1">{option}</span>
                 {showResult && isCorrect && (
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                 )}

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { enhancedCPDService } from '@/services/enhanced-cpd-service';
-import { 
-  EnhancedCPDEntry, 
-  CPDSettings, 
-  ComplianceAnalysis, 
+import {
+  EnhancedCPDEntry,
+  CPDSettings,
+  ComplianceAnalysis,
   CPDReminder,
-  EvidenceFile 
+  EvidenceFile,
 } from '@/types/cpd-enhanced';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -20,7 +20,9 @@ export const useEnhancedCPD = () => {
 
   const refreshData = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         setLoading(false);
         return;
@@ -30,7 +32,7 @@ export const useEnhancedCPD = () => {
       const newSettings = enhancedCPDService.getSettings();
       const newReminders = enhancedCPDService.getActiveReminders();
       const newCompliance = enhancedCPDService.getComplianceAnalysis();
-      
+
       setEntries(newEntries);
       setSettings(newSettings);
       setReminders(newReminders);
@@ -38,9 +40,9 @@ export const useEnhancedCPD = () => {
     } catch (error) {
       console.error('Error refreshing enhanced CPD data:', error);
       toast({
-        title: "Error loading CPD data",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error loading CPD data',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -53,12 +55,14 @@ export const useEnhancedCPD = () => {
 
   const addEntry = async (entryData: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         toast({
-          title: "Authentication required",
-          description: "Please log in to add CPD entries.",
-          variant: "destructive"
+          title: 'Authentication required',
+          description: 'Please log in to add CPD entries.',
+          variant: 'destructive',
         });
         return null;
       }
@@ -66,16 +70,16 @@ export const useEnhancedCPD = () => {
       const newEntry = await enhancedCPDService.saveEntry(user.id, entryData);
       refreshData();
       toast({
-        title: "CPD entry added",
+        title: 'CPD entry added',
         description: `${entryData.activity} has been recorded.`,
       });
       return newEntry;
     } catch (error) {
       console.error('Error adding enhanced CPD entry:', error);
       toast({
-        title: "Error adding entry",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error adding entry',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -84,32 +88,32 @@ export const useEnhancedCPD = () => {
   const uploadEvidence = async (entryId: string, file: File, type: string) => {
     try {
       const evidenceFile = await enhancedCPDService.uploadEvidence(entryId, file, type);
-      
+
       // Update the entry with the new evidence
-      const updatedEntries = entries.map(entry => {
+      const updatedEntries = entries.map((entry) => {
         if (entry.id === entryId) {
           return {
             ...entry,
             evidenceFiles: [...entry.evidenceFiles, evidenceFile],
-            updatedAt: new Date().toISOString()
+            updatedAt: new Date().toISOString(),
           };
         }
         return entry;
       });
-      
+
       setEntries(updatedEntries);
       toast({
-        title: "Evidence uploaded",
-        description: "File has been processed and attached to your CPD entry.",
+        title: 'Evidence uploaded',
+        description: 'File has been processed and attached to your CPD entry.',
       });
-      
+
       return evidenceFile;
     } catch (error) {
       console.error('Error uploading evidence:', error);
       toast({
-        title: "Upload failed",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Upload failed',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -121,15 +125,15 @@ export const useEnhancedCPD = () => {
       setSettings(newSettings);
       refreshData(); // Refresh to update compliance analysis
       toast({
-        title: "Settings updated",
-        description: "Your CPD preferences have been saved.",
+        title: 'Settings updated',
+        description: 'Your CPD preferences have been saved.',
       });
     } catch (error) {
       console.error('Error updating settings:', error);
       toast({
-        title: "Settings update failed",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Settings update failed',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     }
   };
@@ -139,24 +143,26 @@ export const useEnhancedCPD = () => {
       enhancedCPDService.dismissReminder(reminderId);
       refreshData();
       toast({
-        title: "Reminder dismissed",
-        description: "The reminder has been marked as completed.",
+        title: 'Reminder dismissed',
+        description: 'The reminder has been marked as completed.',
       });
     } catch (error) {
       console.error('Error dismissing reminder:', error);
       toast({
-        title: "Error dismissing reminder",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error dismissing reminder',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     }
   };
 
   const getAnalytics = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return null;
-      
+
       return await enhancedCPDService.getDetailedAnalytics(user.id);
     } catch (error) {
       console.error('Error getting analytics:', error);
@@ -178,7 +184,7 @@ export const useEnhancedCPD = () => {
       status: 'pending',
       templateUsed: template.id,
       skillsGained: [],
-      ...additionalData
+      ...additionalData,
     };
 
     return addEntry(entryData);
@@ -191,7 +197,7 @@ export const useEnhancedCPD = () => {
     reminders,
     compliance,
     loading,
-    
+
     // Actions
     addEntry,
     addFromTemplate,

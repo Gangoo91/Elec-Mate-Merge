@@ -67,12 +67,7 @@ const SparkParticle = ({ angle, delay }: { angle: number; delay: number }) => {
 
 // Animated checkmark SVG
 const AnimatedCheckmark = () => (
-  <motion.svg
-    viewBox="0 0 52 52"
-    className="w-20 h-20"
-    initial="hidden"
-    animate="visible"
-  >
+  <motion.svg viewBox="0 0 52 52" className="w-20 h-20" initial="hidden" animate="visible">
     {/* Circle */}
     <motion.circle
       cx="26"
@@ -169,8 +164,8 @@ export const ResultsSuccessAnimation = ({
       {isVisible && (
         <motion.div
           className={cn(
-            "fixed inset-0 z-50 flex items-center justify-center",
-            "bg-elec-dark/95 backdrop-blur-md"
+            'fixed inset-0 z-50 flex items-center justify-center',
+            'bg-elec-dark/95 backdrop-blur-md'
           )}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -201,11 +196,7 @@ export const ResultsSuccessAnimation = ({
             {/* Spark burst behind checkmark */}
             <div className="relative">
               {sparkParticles.map((spark) => (
-                <SparkParticle
-                  key={spark.id}
-                  angle={spark.angle}
-                  delay={spark.delay}
-                />
+                <SparkParticle key={spark.id} angle={spark.angle} delay={spark.delay} />
               ))}
 
               {/* Glow effect */}
@@ -245,8 +236,8 @@ export const ResultsSuccessAnimation = ({
             >
               {circuitCount > 0 ? (
                 <>
-                  <span className="text-elec-yellow font-semibold">{circuitCount}</span>
-                  {' '}circuit{circuitCount !== 1 ? 's' : ''} designed
+                  <span className="text-elec-yellow font-semibold">{circuitCount}</span> circuit
+                  {circuitCount !== 1 ? 's' : ''} designed
                 </>
               ) : (
                 'BS 7671 compliant design ready'

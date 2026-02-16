@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 
 interface MobileEnhancedHook {
@@ -17,7 +16,7 @@ export function useMobileEnhanced(): MobileEnhancedHook {
     isDesktop: true,
     touchSupport: false,
     screenSize: 'desktop',
-    orientation: 'landscape'
+    orientation: 'landscape',
   });
 
   useEffect(() => {
@@ -29,9 +28,12 @@ export function useMobileEnhanced(): MobileEnhancedHook {
       const isDesktop = width >= 1024;
       const touchSupport = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
       const orientation = height > width ? 'portrait' : 'landscape';
-      
-      const screenSize: 'mobile' | 'tablet' | 'desktop' = 
-        isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop';
+
+      const screenSize: 'mobile' | 'tablet' | 'desktop' = isMobile
+        ? 'mobile'
+        : isTablet
+          ? 'tablet'
+          : 'desktop';
 
       setDeviceInfo({
         isMobile,
@@ -39,17 +41,17 @@ export function useMobileEnhanced(): MobileEnhancedHook {
         isDesktop,
         touchSupport,
         screenSize,
-        orientation
+        orientation,
       });
     };
-    
+
     // Initial check
     updateDeviceInfo();
-    
+
     // Add event listeners
     window.addEventListener('resize', updateDeviceInfo);
     window.addEventListener('orientationchange', updateDeviceInfo);
-    
+
     // Cleanup
     return () => {
       window.removeEventListener('resize', updateDeviceInfo);

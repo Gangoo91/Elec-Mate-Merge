@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, XCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 interface StructuredDesignViewProps {
   design: {
@@ -12,7 +12,11 @@ interface StructuredDesignViewProps {
 
 export const StructuredDesignView = ({ design }: StructuredDesignViewProps) => {
   const getPassFailIcon = (value: string) => {
-    if (value.includes('✓') || value.toLowerCase().includes('pass') || value.toLowerCase().includes('compliant')) {
+    if (
+      value.includes('✓') ||
+      value.toLowerCase().includes('pass') ||
+      value.toLowerCase().includes('compliant')
+    ) {
       return <CheckCircle className="h-4 w-4 text-green-500" />;
     }
     if (value.includes('✗') || value.toLowerCase().includes('fail')) {

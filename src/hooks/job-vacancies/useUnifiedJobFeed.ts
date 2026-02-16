@@ -85,15 +85,17 @@ export function useUnifiedJobFeed(filters?: UnifiedFeedFilters): UnifiedJobFeedR
   // Convert employer vacancies to unified format
   const employerJobs = useMemo(() => {
     if (!employerVacancies) return [];
-    return employerVacancies.map(vacancy => employerVacancyToUnified({
-      ...vacancy,
-      employer_id: vacancy.employer?.id || '',
-    }));
+    return employerVacancies.map((vacancy) =>
+      employerVacancyToUnified({
+        ...vacancy,
+        employer_id: vacancy.employer?.id || '',
+      })
+    );
   }, [employerVacancies]);
 
   // Convert external jobs to unified format
   const externalJobs = useMemo(() => {
-    return rawExternalJobs.map(job => externalJobToUnified(job));
+    return rawExternalJobs.map((job) => externalJobToUnified(job));
   }, [rawExternalJobs]);
 
   // Combined job list with employer jobs first (priority placement)
@@ -113,10 +115,13 @@ export function useUnifiedJobFeed(filters?: UnifiedFeedFilters): UnifiedJobFeedR
   }, [employerJobs, externalJobs, filters?.source]);
 
   // Search external jobs (wrapper to track state)
-  const searchExternalJobs = useCallback(async (keywords: string, location?: string) => {
-    setHasSearchedExternal(true);
-    await searchAllJobs(keywords, location);
-  }, [searchAllJobs]);
+  const searchExternalJobs = useCallback(
+    async (keywords: string, location?: string) => {
+      setHasSearchedExternal(true);
+      await searchAllJobs(keywords, location);
+    },
+    [searchAllJobs]
+  );
 
   return {
     jobs,

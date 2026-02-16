@@ -1,20 +1,39 @@
 // UK Consumer Unit Analysis Schema - BS7671 Compliant
 
-export type Conf = "high" | "med" | "low";
+export type Conf = 'high' | 'med' | 'low';
 
 export type PictogramType =
-  | "SOCKETS" | "LIGHTING" | "COOKER_OVEN" | "HOB" | "SHOWER" | "EV_CHARGER"
-  | "SMOKE_ALARM" | "FIRE_ALARM" | "BOILER" | "HEATER" | "OUTDOOR"
-  | "GARDEN_ROOM" | "GARAGE" | "OTHER";
+  | 'SOCKETS'
+  | 'LIGHTING'
+  | 'COOKER_OVEN'
+  | 'HOB'
+  | 'SHOWER'
+  | 'EV_CHARGER'
+  | 'SMOKE_ALARM'
+  | 'FIRE_ALARM'
+  | 'BOILER'
+  | 'HEATER'
+  | 'OUTDOOR'
+  | 'GARDEN_ROOM'
+  | 'GARAGE'
+  | 'OTHER';
 
 export type CircuitType =
-  | "ring_final" | "radial_sockets" | "lighting" | "cooker" | "shower"
-  | "boiler" | "alarm" | "outdoor" | "ev" | "other";
+  | 'ring_final'
+  | 'radial_sockets'
+  | 'lighting'
+  | 'cooker'
+  | 'shower'
+  | 'boiler'
+  | 'alarm'
+  | 'outdoor'
+  | 'ev'
+  | 'other';
 
-export type DeviceCategory = "RCBO" | "MCB" | "RCD" | "AFDD" | "UNKNOWN";
-export type CurveType = "B" | "C" | "D";
-export type RCDType = "AC" | "A" | "F" | "B" | "S";
-export type TimeDelay = "S" | "None";
+export type DeviceCategory = 'RCBO' | 'MCB' | 'RCD' | 'AFDD' | 'UNKNOWN';
+export type CurveType = 'B' | 'C' | 'D';
+export type RCDType = 'AC' | 'A' | 'F' | 'B' | 'S';
+export type TimeDelay = 'S' | 'None';
 
 export interface EvidenceField<T> {
   value: T | null;
@@ -50,7 +69,7 @@ export interface Device {
 }
 
 export interface CableHint {
-  conductor: "TWIN_AND_EARTH_PVC_COPPER" | "UNKNOWN";
+  conductor: 'TWIN_AND_EARTH_PVC_COPPER' | 'UNKNOWN';
   line_csa_mm2: { value: number | null; conf: Conf; basis: string };
   cpc_csa_mm2: { value: number | null; conf: Conf; basis: string };
   notes: string[];
@@ -65,7 +84,7 @@ export interface Circuit {
   device_bbox_norm: [number, number, number, number] | null;
   description_normalised: {
     circuit_type: CircuitType;
-    phase: "1P" | "3P" | null;
+    phase: '1P' | '3P' | null;
     area_hint: string | null;
   };
   cable_hint?: CableHint;
@@ -95,7 +114,7 @@ export interface ServiceBlock {
   main_switch_rating: EvidenceField<number>;
   spd_mcb_slot: number | null;
   spd_module_slot: number | null;
-  spd_status: EvidenceField<"green_ok" | "red_replace" | null>;
+  spd_status: EvidenceField<'green_ok' | 'red_replace' | null>;
 }
 
 export interface Counts {
@@ -108,7 +127,7 @@ export interface Counts {
 
 export interface BoardMetadata {
   estimated_total_ways: EvidenceField<number>;
-  orientation_note: EvidenceField<"left_to_right" | "right_to_left" | null>;
+  orientation_note: EvidenceField<'left_to_right' | 'right_to_left' | null>;
   rails: number; // 1 or 2
 }
 
@@ -117,11 +136,11 @@ export interface BoardRead {
   model: EvidenceField<string | null>;
   main_switch: {
     rating_amps: EvidenceField<number>;
-    type: EvidenceField<"DP isolator" | "RCD main" | "other" | null>;
+    type: EvidenceField<'DP isolator' | 'RCD main' | 'other' | null>;
   };
   spd: {
     present: EvidenceField<boolean>;
-    status: EvidenceField<"green_ok" | "red_replace" | null>;
+    status: EvidenceField<'green_ok' | 'red_replace' | null>;
     via_mcb: EvidenceField<boolean>;
   };
   board_metadata: BoardMetadata;
@@ -146,7 +165,7 @@ export interface WayfinderResult {
   };
   module_classifications: Array<{
     slot: number;
-    type: "MCB" | "RCBO" | "RCD" | "AFDD" | "BLANK" | "MAIN_SWITCH" | "SPD_MCB" | "SPD_MODULE";
+    type: 'MCB' | 'RCBO' | 'RCD' | 'AFDD' | 'BLANK' | 'MAIN_SWITCH' | 'SPD_MCB' | 'SPD_MODULE';
     conf: Conf;
     evidence: string[];
   }>;
@@ -167,11 +186,11 @@ export interface ContextResult {
   model: EvidenceField<string | null>;
   main_switch: {
     rating_amps: EvidenceField<number>;
-    type: EvidenceField<"DP isolator" | "RCD main" | "other" | null>;
+    type: EvidenceField<'DP isolator' | 'RCD main' | 'other' | null>;
   };
   spd: {
     present: EvidenceField<boolean>;
-    status: EvidenceField<"green_ok" | "red_replace" | null>;
+    status: EvidenceField<'green_ok' | 'red_replace' | null>;
     via_mcb: EvidenceField<boolean>;
   };
   groups: Groups;

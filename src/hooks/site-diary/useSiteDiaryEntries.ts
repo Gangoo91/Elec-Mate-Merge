@@ -24,11 +24,16 @@ export interface SiteDiaryEntry {
   mood_rating: number | null;
   photos: string[];
   linked_portfolio_id: string | null;
+  linked_time_entry_id: string | null;
   created_at: string;
   updated_at: string;
 }
 
-export type NewDiaryEntry = Omit<SiteDiaryEntry, 'id' | 'user_id' | 'created_at' | 'updated_at'>;
+export interface NewDiaryEntry
+  extends Omit<SiteDiaryEntry, 'id' | 'user_id' | 'created_at' | 'updated_at' | 'linked_time_entry_id'> {
+  /** Optional hours spent on site — creates a linked OJT time entry */
+  hours_spent?: number | null;
+}
 
 const STORAGE_KEY = 'elec-mate-site-diary';
 
@@ -85,11 +90,42 @@ export function useSiteDiaryEntries() {
       }
 
       try {
+        // Extract hours_spent before inserting (not a DB column on site_diary_entries)
+        const { hours_spent, ...diaryFields } = entry;
+
+        // If hours_spent is provided, create a linked time entry first
+        let linkedTimeEntryId: string | null = null;
+        if (hours_spent && hours_spent > 0) {
+          const durationMinutes = Math.round(hours_spent * 60);
+          const activity =
+            diaryFields.tasks_completed.length > 0
+              ? diaryFields.tasks_completed.join(', ')
+              : `Site work at ${diaryFields.site_name}`;
+
+          const { data: timeData, error: timeError } = await supabase
+            .from('time_entries')
+            .insert({
+              user_id: user.id,
+              date: diaryFields.date,
+              duration: durationMinutes,
+              activity,
+              notes: `Logged from site diary — ${diaryFields.site_name}`,
+              is_automatic: false,
+            })
+            .select('id')
+            .single();
+
+          if (!timeError && timeData) {
+            linkedTimeEntryId = timeData.id;
+          }
+        }
+
         const { data, error } = await supabase
           .from('site_diary_entries')
           .insert({
-            ...entry,
+            ...diaryFields,
             user_id: user.id,
+            linked_time_entry_id: linkedTimeEntryId,
           })
           .select()
           .single();
@@ -99,7 +135,10 @@ export function useSiteDiaryEntries() {
         const newEntry = data as SiteDiaryEntry;
         setEntries((prev) => [newEntry, ...prev]);
         localStorage.setItem(STORAGE_KEY, JSON.stringify([newEntry, ...entries]));
-        toast.success('Diary entry saved');
+
+        const hoursMsg =
+          hours_spent && hours_spent > 0 ? ` + ${hours_spent}h OJT logged` : '';
+        toast.success(`Diary entry saved${hoursMsg}`);
 
         // Log XP for diary entry
         logActivity({
@@ -110,6 +149,7 @@ export function useSiteDiaryEntries() {
             siteName: newEntry.site_name,
             tasksCompleted: newEntry.tasks_completed?.length ?? 0,
             skillsPractised: newEntry.skills_practised?.length ?? 0,
+            hoursSpent: hours_spent ?? 0,
           },
         });
 

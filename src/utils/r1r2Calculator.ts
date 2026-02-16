@@ -1,4 +1,3 @@
-
 import { TestResult } from '@/types/testResult';
 
 // Cable resistance values (mΩ/m at 20°C) - from BS 7671 Table 9A
@@ -31,22 +30,20 @@ export interface R1R2Calculation {
 
 // Calculate expected R1+R2 based on cable type and length
 export const calculateExpectedR1R2 = (
-  liveSize: string, 
-  cpcSize: string | null, 
+  liveSize: string,
+  cpcSize: string | null,
   lengthMeters: number,
   temperatureCorrection: number = 1.2 // Default 20% increase for operating temperature
 ): number => {
-  const cableKey = cpcSize && cpcSize !== liveSize 
-    ? `${liveSize}-${cpcSize}` 
-    : liveSize;
-  
+  const cableKey = cpcSize && cpcSize !== liveSize ? `${liveSize}-${cpcSize}` : liveSize;
+
   const resistance = CABLE_RESISTANCE_DATA[cableKey as keyof typeof CABLE_RESISTANCE_DATA];
-  
+
   if (!resistance) {
     console.warn(`Cable resistance data not found for ${cableKey}`);
     return 0;
   }
-  
+
   // R1+R2 = (R1 + R2) × length × temperature correction
   const r1r2PerMeter = (resistance.live + resistance.cpc) / 1000; // Convert mΩ to Ω
   return r1r2PerMeter * lengthMeters * temperatureCorrection;
@@ -54,27 +51,28 @@ export const calculateExpectedR1R2 = (
 
 // Comprehensive R1+R2 analysis
 export const analyseR1R2 = (
-  result: TestResult, 
+  result: TestResult,
   cableLength: number,
   temperatureCorrection: number = 1.2
 ): R1R2Calculation => {
   const expectedR1R2 = calculateExpectedR1R2(
-    result.liveSize, 
-    result.cpcSize, 
-    cableLength, 
+    result.liveSize,
+    result.cpcSize,
+    cableLength,
     temperatureCorrection
   );
-  
+
   const actualR1R2 = result.r1r2 ? parseFloat(result.r1r2) : null;
   const difference = actualR1R2 ? actualR1R2 - expectedR1R2 : null;
-  const tolerancePercentage = difference && expectedR1R2 > 0 ? (difference / expectedR1R2) * 100 : 0;
-  
+  const tolerancePercentage =
+    difference && expectedR1R2 > 0 ? (difference / expectedR1R2) * 100 : 0;
+
   const warnings: string[] = [];
   const recommendations: string[] = [];
-  
+
   // Check if within acceptable tolerance (±20%)
   const isWithinTolerance = Math.abs(tolerancePercentage) <= 20;
-  
+
   if (actualR1R2 && !isWithinTolerance) {
     if (tolerancePercentage > 20) {
       warnings.push(`R1+R2 reading is ${tolerancePercentage.toFixed(1)}% higher than expected`);
@@ -82,20 +80,25 @@ export const analyseR1R2 = (
       recommendations.push('Verify cable length measurement');
       recommendations.push('Consider cable condition and joint resistance');
     } else if (tolerancePercentage < -20) {
-      warnings.push(`R1+R2 reading is ${Math.abs(tolerancePercentage).toFixed(1)}% lower than expected`);
+      warnings.push(
+        `R1+R2 reading is ${Math.abs(tolerancePercentage).toFixed(1)}% lower than expected`
+      );
       recommendations.push('Verify test instrument calibration');
       recommendations.push('Check for parallel paths or incorrect cable identification');
     }
   }
-  
+
   // Ring circuit specific checks
-  if (result.circuitDescription?.toLowerCase().includes('ring') || result.type?.toLowerCase().includes('ring')) {
+  if (
+    result.circuitDescription?.toLowerCase().includes('ring') ||
+    result.type?.toLowerCase().includes('ring')
+  ) {
     if (actualR1R2 && actualR1R2 > 1.67) {
       warnings.push('R1+R2 exceeds 1.67Ω limit for ring final circuits');
       recommendations.push('Check ring continuity - may be wired as radial');
     }
   }
-  
+
   return {
     expectedR1R2: Number(expectedR1R2.toFixed(3)),
     actualR1R2,
@@ -103,15 +106,13 @@ export const analyseR1R2 = (
     isWithinTolerance,
     tolerancePercentage: Number(tolerancePercentage.toFixed(1)),
     warnings,
-    recommendations
+    recommendations,
   };
 };
 
 // Get cable resistance for a specific size combination
 export const getCableResistance = (liveSize: string, cpcSize?: string) => {
-  const cableKey = cpcSize && cpcSize !== liveSize 
-    ? `${liveSize}-${cpcSize}` 
-    : liveSize;
-  
+  const cableKey = cpcSize && cpcSize !== liveSize ? `${liveSize}-${cpcSize}` : liveSize;
+
   return CABLE_RESISTANCE_DATA[cableKey as keyof typeof CABLE_RESISTANCE_DATA] || null;
 };

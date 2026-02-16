@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { referenceMethodOptions } from '@/types/cableTypes';
@@ -10,9 +16,12 @@ interface RefMethodCellProps {
 }
 
 const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate }) => {
-  const handleChange = useCallback((value: string) => {
-    onUpdate(result.id, 'referenceMethod', value);
-  }, [result.id, onUpdate]);
+  const handleChange = useCallback(
+    (value: string) => {
+      onUpdate(result.id, 'referenceMethod', value);
+    },
+    [result.id, onUpdate]
+  );
 
   return (
     <TableCell className="p-0 h-8 align-middle min-w-[100px] max-w-[100px]">
@@ -24,9 +33,16 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
         <SelectTrigger className="h-8 text-sm w-full px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Ref" />
         </SelectTrigger>
-        <SelectContent key={`referenceMethod-content-${result.id}`} className="max-h-60 bg-background border border-border rounded-md z-[9999]">
+        <SelectContent
+          key={`referenceMethod-content-${result.id}`}
+          className="max-h-60 bg-background border border-border rounded-md z-[9999]"
+        >
           {referenceMethodOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+            <SelectItem
+              key={option.value}
+              value={option.value}
+              className="text-xs text-neutral-100"
+            >
               {option.label}
             </SelectItem>
           ))}

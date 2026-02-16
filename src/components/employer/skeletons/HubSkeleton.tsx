@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface HubSkeletonProps {
   /** Number of stat cards in the top row */
@@ -14,11 +14,7 @@ interface HubSkeletonProps {
  * Consistent loading skeleton for hub dashboards.
  * Shows stat cards at top + feature card grid below.
  */
-export function HubSkeleton({
-  statCount = 4,
-  cardCount = 4,
-  columns = 2
-}: HubSkeletonProps) {
+export function HubSkeleton({ statCount = 4, cardCount = 4, columns = 2 }: HubSkeletonProps) {
   return (
     <div className="space-y-6 pb-6 animate-pulse">
       {/* Quick Stats Grid */}

@@ -1,50 +1,58 @@
-import { ArrowLeft, AlertTriangle, Search, Stethoscope, TestTube, Shield, FileText } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  AlertTriangle,
+  Search,
+  Stethoscope,
+  TestTube,
+  Shield,
+  FileText,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Understanding Electrical Faults",
-    description: "Fundamental concepts of electrical faults and their characteristics",
+    number: 'Section 1',
+    title: 'Understanding Electrical Faults',
+    description: 'Fundamental concepts of electrical faults and their characteristics',
     icon: AlertTriangle,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
-    title: "Common Fault Types in Electrical Installations",
-    description: "Identifying different types of electrical faults and their causes",
+    number: 'Section 2',
+    title: 'Common Fault Types in Electrical Installations',
+    description: 'Identifying different types of electrical faults and their causes',
     icon: Search,
-    href: "section2"
+    href: 'section2',
   },
   {
-    number: "Section 3",
-    title: "Signs and Symptoms of Fault Conditions",
-    description: "Recognising indicators of electrical fault conditions",
+    number: 'Section 3',
+    title: 'Signs and Symptoms of Fault Conditions',
+    description: 'Recognising indicators of electrical fault conditions',
     icon: Stethoscope,
-    href: "section3"
+    href: 'section3',
   },
   {
-    number: "Section 4",
-    title: "Basic Fault-Finding Process and Logical Testing",
-    description: "Systematic approach to electrical fault diagnosis",
+    number: 'Section 4',
+    title: 'Basic Fault-Finding Process and Logical Testing',
+    description: 'Systematic approach to electrical fault diagnosis',
     icon: TestTube,
-    href: "section4"
+    href: 'section4',
   },
   {
-    number: "Section 5",
-    title: "Using Tools and Equipment Safely When Fault-Finding",
-    description: "Safe practices and equipment use during fault finding",
+    number: 'Section 5',
+    title: 'Using Tools and Equipment Safely When Fault-Finding',
+    description: 'Safe practices and equipment use during fault finding',
     icon: Shield,
-    href: "section5"
+    href: 'section5',
   },
   {
-    number: "Section 6",
-    title: "Recording, Reporting, and Rectifying Faults",
-    description: "Documentation and remedial procedures for electrical faults",
+    number: 'Section 6',
+    title: 'Recording, Reporting, and Rectifying Faults',
+    description: 'Documentation and remedial procedures for electrical faults',
     icon: FileText,
-    href: "section6"
+    href: 'section6',
   },
 ];
 

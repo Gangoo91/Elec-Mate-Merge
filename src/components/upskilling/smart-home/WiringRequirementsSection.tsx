@@ -38,7 +38,7 @@ const WiringRequirementsSection = () => {
                 <div>
                   <h5 className="font-semibold text-amber-200 mb-1">Critical: DC Polarity</h5>
                   <p className="text-amber-100 text-sm">
-                    Correct polarity is critical for DC-powered devices. Reverse polarity can cause 
+                    Correct polarity is critical for DC-powered devices. Reverse polarity can cause
                     permanent damage or create safety hazards.
                   </p>
                 </div>

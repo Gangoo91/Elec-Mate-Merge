@@ -1,17 +1,17 @@
-
-import React from "react";
-import { AlertTriangle, Users, ArrowRight } from "lucide-react";
+import React from 'react';
+import { AlertTriangle, Users, ArrowRight } from 'lucide-react';
 
 const EmergencyProcedures = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-2xl font-bold text-elec-yellow">Emergency Response Procedures</h3>
-      
+
       <p className="text-base md:text-lg mb-4">
-        Every workplace must have clearly defined emergency procedures that all workers understand and can follow under pressure. 
-        Knowing what to do during an emergency can prevent injuries and save lives.
+        Every workplace must have clearly defined emergency procedures that all workers understand
+        and can follow under pressure. Knowing what to do during an emergency can prevent injuries
+        and save lives.
       </p>
-      
+
       <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Left Column */}
@@ -22,9 +22,11 @@ const EmergencyProcedures = () => {
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Evacuation Procedures</h4>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Primary Evacuation Steps</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">
+                Primary Evacuation Steps
+              </h5>
               <ol className="list-decimal list-inside text-base space-y-1">
                 <li>Raise the alarm according to site protocols</li>
                 <li>Immediately stop all work activities</li>
@@ -33,7 +35,7 @@ const EmergencyProcedures = () => {
                 <li>Do not use lifts during evacuations</li>
               </ol>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Assembly Points</h5>
               <ul className="list-disc list-inside text-base space-y-1">
@@ -45,7 +47,7 @@ const EmergencyProcedures = () => {
               </ul>
             </div>
           </div>
-          
+
           {/* Right Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
@@ -54,19 +56,33 @@ const EmergencyProcedures = () => {
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Emergency Response Roles</h4>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Key Personnel</h5>
               <ul className="list-disc list-inside text-base space-y-1">
-                <li><span className="text-elec-yellow">Fire Wardens:</span> Coordinate evacuations and conduct head counts</li>
-                <li><span className="text-elec-yellow">First Aiders:</span> Provide immediate medical assistance</li>
-                <li><span className="text-elec-yellow">Site Supervisors:</span> Liaise with emergency services</li>
-                <li><span className="text-elec-yellow">Safety Officers:</span> Evaluate incident and manage post-incident procedures</li>
+                <li>
+                  <span className="text-elec-yellow">Fire Wardens:</span> Coordinate evacuations and
+                  conduct head counts
+                </li>
+                <li>
+                  <span className="text-elec-yellow">First Aiders:</span> Provide immediate medical
+                  assistance
+                </li>
+                <li>
+                  <span className="text-elec-yellow">Site Supervisors:</span> Liaise with emergency
+                  services
+                </li>
+                <li>
+                  <span className="text-elec-yellow">Safety Officers:</span> Evaluate incident and
+                  manage post-incident procedures
+                </li>
               </ul>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Emergency Communication</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">
+                Emergency Communication
+              </h5>
               <ul className="list-disc list-inside text-base space-y-1">
                 <li>Use emergency call points when applicable</li>
                 <li>Contact emergency services: 999 (UK) or 112 (EU)</li>
@@ -77,12 +93,15 @@ const EmergencyProcedures = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-4 p-4 bg-white/10 rounded-lg text-base">
           <p className="font-medium mb-1 text-elec-yellow">Regulatory Requirements:</p>
-          <p>Under the Health and Safety (First-Aid) Regulations 1981 and the Regulatory Reform (Fire Safety) Order 2005, 
-          employers must ensure adequate emergency procedures are established and communicated to all employees. This includes 
-          creating evacuation plans, designating emergency exits, establishing assembly points, and conducting regular drills.</p>
+          <p>
+            Under the Health and Safety (First-Aid) Regulations 1981 and the Regulatory Reform (Fire
+            Safety) Order 2005, employers must ensure adequate emergency procedures are established
+            and communicated to all employees. This includes creating evacuation plans, designating
+            emergency exits, establishing assembly points, and conducting regular drills.
+          </p>
         </div>
       </div>
     </div>

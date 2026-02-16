@@ -1,158 +1,239 @@
-import { ArrowLeft, ArrowRight, BookOpen, Zap, Calculator, AlertTriangle, Lightbulb, CheckCircle2, HelpCircle, Info, Target, Activity } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { Card, CardContent } from "@/components/ui/card";
-import { useState, useEffect } from "react";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Zap,
+  Calculator,
+  AlertTriangle,
+  Lightbulb,
+  CheckCircle2,
+  HelpCircle,
+  Info,
+  Target,
+  Activity,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { Card, CardContent } from '@/components/ui/card';
+import { useState, useEffect } from 'react';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 
-const TITLE = "Harmonics and Waveform Distortion - Level 3 Electrical Science";
-const DESCRIPTION = "Master harmonic content, THD calculations and the effects of non-linear loads for City & Guilds electrical science Level 3.";
+const TITLE = 'Harmonics and Waveform Distortion - Level 3 Electrical Science';
+const DESCRIPTION =
+  'Master harmonic content, THD calculations and the effects of non-linear loads for City & Guilds electrical science Level 3.';
 
 const quickCheckQuestions = [
   {
-    id: "qc1",
-    question: "The 3rd harmonic in a 50 Hz system has a frequency of:",
-    options: ["100 Hz", "150 Hz", "200 Hz", "250 Hz"],
+    id: 'qc1',
+    question: 'The 3rd harmonic in a 50 Hz system has a frequency of:',
+    options: ['100 Hz', '150 Hz', '200 Hz', '250 Hz'],
     correctIndex: 1,
-    explanation: "The nth harmonic frequency = n times fundamental. Third harmonic = 3 times 50 = 150 Hz."
+    explanation:
+      'The nth harmonic frequency = n times fundamental. Third harmonic = 3 times 50 = 150 Hz.',
   },
   {
-    id: "qc2",
-    question: "Which harmonic is most problematic in three-phase systems with neutral?",
-    options: ["2nd harmonic", "3rd harmonic", "5th harmonic", "7th harmonic"],
+    id: 'qc2',
+    question: 'Which harmonic is most problematic in three-phase systems with neutral?',
+    options: ['2nd harmonic', '3rd harmonic', '5th harmonic', '7th harmonic'],
     correctIndex: 1,
-    explanation: "Triple-n harmonics (3rd, 9th, 15th) are zero-sequence and add up in the neutral conductor, potentially causing overloading."
+    explanation:
+      'Triple-n harmonics (3rd, 9th, 15th) are zero-sequence and add up in the neutral conductor, potentially causing overloading.',
   },
   {
-    id: "qc3",
-    question: "A waveform has THD of 25%. This means the harmonic content is:",
-    options: ["25% of fundamental voltage", "25% of total voltage", "75% of fundamental voltage", "25 times fundamental"],
+    id: 'qc3',
+    question: 'A waveform has THD of 25%. This means the harmonic content is:',
+    options: [
+      '25% of fundamental voltage',
+      '25% of total voltage',
+      '75% of fundamental voltage',
+      '25 times fundamental',
+    ],
     correctIndex: 0,
-    explanation: "THD is the ratio of total harmonic content to the fundamental, expressed as a percentage. 25% THD means harmonics equal 25% of fundamental magnitude."
+    explanation:
+      'THD is the ratio of total harmonic content to the fundamental, expressed as a percentage. 25% THD means harmonics equal 25% of fundamental magnitude.',
   },
   {
-    id: "qc4",
-    question: "Which type of load typically causes harmonic distortion?",
-    options: ["Resistive heaters", "Incandescent lamps", "Variable speed drives", "Kettles"],
+    id: 'qc4',
+    question: 'Which type of load typically causes harmonic distortion?',
+    options: ['Resistive heaters', 'Incandescent lamps', 'Variable speed drives', 'Kettles'],
     correctIndex: 2,
-    explanation: "Variable speed drives, LED drivers, and switched-mode power supplies are non-linear loads that draw non-sinusoidal current, creating harmonics."
-  }
+    explanation:
+      'Variable speed drives, LED drivers, and switched-mode power supplies are non-linear loads that draw non-sinusoidal current, creating harmonics.',
+  },
 ];
 
 const quizQuestions = [
   {
-    id: "q1",
-    question: "What is the fundamental frequency of the UK mains supply?",
-    options: ["60 Hz", "50 Hz", "100 Hz", "25 Hz"],
-    correctAnswer: "50 Hz",
-    explanation: "The UK mains supply operates at 50 Hz, which is the fundamental or first harmonic frequency."
+    id: 'q1',
+    question: 'What is the fundamental frequency of the UK mains supply?',
+    options: ['60 Hz', '50 Hz', '100 Hz', '25 Hz'],
+    correctAnswer: '50 Hz',
+    explanation:
+      'The UK mains supply operates at 50 Hz, which is the fundamental or first harmonic frequency.',
   },
   {
-    id: "q2",
-    question: "The 5th harmonic in a 50 Hz system has a frequency of:",
-    options: ["200 Hz", "250 Hz", "300 Hz", "350 Hz"],
-    correctAnswer: "250 Hz",
-    explanation: "Fifth harmonic = 5 times 50 Hz = 250 Hz. Each harmonic is a multiple of the fundamental."
+    id: 'q2',
+    question: 'The 5th harmonic in a 50 Hz system has a frequency of:',
+    options: ['200 Hz', '250 Hz', '300 Hz', '350 Hz'],
+    correctAnswer: '250 Hz',
+    explanation:
+      'Fifth harmonic = 5 times 50 Hz = 250 Hz. Each harmonic is a multiple of the fundamental.',
   },
   {
-    id: "q3",
-    question: "Odd harmonics are significant because they:",
-    options: ["Cancel out in three-phase", "Are produced by symmetrical loads", "Only affect capacitors", "Have no practical effect"],
-    correctAnswer: "Are produced by symmetrical loads",
-    explanation: "Symmetrical non-linear loads produce odd harmonics because positive and negative half-cycles are identical, cancelling even harmonics."
+    id: 'q3',
+    question: 'Odd harmonics are significant because they:',
+    options: [
+      'Cancel out in three-phase',
+      'Are produced by symmetrical loads',
+      'Only affect capacitors',
+      'Have no practical effect',
+    ],
+    correctAnswer: 'Are produced by symmetrical loads',
+    explanation:
+      'Symmetrical non-linear loads produce odd harmonics because positive and negative half-cycles are identical, cancelling even harmonics.',
   },
   {
-    id: "q4",
-    question: "THD stands for:",
-    options: ["Total Harmonic Difference", "True Harmonic Distortion", "Total Harmonic Distortion", "Theoretical Harmonic Deviation"],
-    correctAnswer: "Total Harmonic Distortion",
-    explanation: "THD (Total Harmonic Distortion) quantifies the total harmonic content relative to the fundamental frequency."
+    id: 'q4',
+    question: 'THD stands for:',
+    options: [
+      'Total Harmonic Difference',
+      'True Harmonic Distortion',
+      'Total Harmonic Distortion',
+      'Theoretical Harmonic Deviation',
+    ],
+    correctAnswer: 'Total Harmonic Distortion',
+    explanation:
+      'THD (Total Harmonic Distortion) quantifies the total harmonic content relative to the fundamental frequency.',
   },
   {
-    id: "q5",
-    question: "What is the formula for calculating THD?",
-    options: ["THD = V1 / Vh x 100%", "THD = sqrt(V2 squared + V3 squared + ...) / V1 x 100%", "THD = (V2 + V3 + V4) / V1 x 100%", "THD = Vh / Vtotal x 100%"],
-    correctAnswer: "THD = sqrt(V2 squared + V3 squared + ...) / V1 x 100%",
-    explanation: "THD is calculated as the RMS sum of all harmonics divided by the fundamental, expressed as a percentage."
+    id: 'q5',
+    question: 'What is the formula for calculating THD?',
+    options: [
+      'THD = V1 / Vh x 100%',
+      'THD = sqrt(V2 squared + V3 squared + ...) / V1 x 100%',
+      'THD = (V2 + V3 + V4) / V1 x 100%',
+      'THD = Vh / Vtotal x 100%',
+    ],
+    correctAnswer: 'THD = sqrt(V2 squared + V3 squared + ...) / V1 x 100%',
+    explanation:
+      'THD is calculated as the RMS sum of all harmonics divided by the fundamental, expressed as a percentage.',
   },
   {
-    id: "q6",
-    question: "Triple-n harmonics (3rd, 9th, 15th) in three-phase systems:",
-    options: ["Cancel in the neutral", "Add in the neutral", "Only affect phase conductors", "Have no effect"],
-    correctAnswer: "Add in the neutral",
-    explanation: "Triple-n harmonics are zero-sequence and sum arithmetically in the neutral, potentially causing neutral currents higher than phase currents."
+    id: 'q6',
+    question: 'Triple-n harmonics (3rd, 9th, 15th) in three-phase systems:',
+    options: [
+      'Cancel in the neutral',
+      'Add in the neutral',
+      'Only affect phase conductors',
+      'Have no effect',
+    ],
+    correctAnswer: 'Add in the neutral',
+    explanation:
+      'Triple-n harmonics are zero-sequence and sum arithmetically in the neutral, potentially causing neutral currents higher than phase currents.',
   },
   {
-    id: "q7",
-    question: "BS 7671 requires neutral conductor sizing to consider harmonics when:",
-    options: ["Never required", "Third harmonic exceeds 15% of fundamental", "Any harmonics present", "Only for industrial installations"],
-    correctAnswer: "Third harmonic exceeds 15% of fundamental",
-    explanation: "Regulation 523.6.3 requires increased neutral sizing when third harmonic current exceeds 15% of fundamental phase current."
+    id: 'q7',
+    question: 'BS 7671 requires neutral conductor sizing to consider harmonics when:',
+    options: [
+      'Never required',
+      'Third harmonic exceeds 15% of fundamental',
+      'Any harmonics present',
+      'Only for industrial installations',
+    ],
+    correctAnswer: 'Third harmonic exceeds 15% of fundamental',
+    explanation:
+      'Regulation 523.6.3 requires increased neutral sizing when third harmonic current exceeds 15% of fundamental phase current.',
   },
   {
-    id: "q8",
-    question: "Which equipment is most susceptible to harmonic damage?",
-    options: ["LED lamps", "Capacitors", "Resistive heaters", "Incandescent lamps"],
-    correctAnswer: "Capacitors",
-    explanation: "Capacitor reactance decreases with frequency, so harmonics cause increased current flow, leading to overheating and premature failure."
+    id: 'q8',
+    question: 'Which equipment is most susceptible to harmonic damage?',
+    options: ['LED lamps', 'Capacitors', 'Resistive heaters', 'Incandescent lamps'],
+    correctAnswer: 'Capacitors',
+    explanation:
+      'Capacitor reactance decreases with frequency, so harmonics cause increased current flow, leading to overheating and premature failure.',
   },
   {
-    id: "q9",
-    question: "A detuned reactor is used in power factor correction to:",
-    options: ["Increase harmonics", "Prevent resonance with harmonics", "Generate harmonics", "Filter the fundamental"],
-    correctAnswer: "Prevent resonance with harmonics",
-    explanation: "Detuned reactors shift the resonant frequency below dominant harmonics, preventing dangerous resonance that could amplify harmonic currents."
+    id: 'q9',
+    question: 'A detuned reactor is used in power factor correction to:',
+    options: [
+      'Increase harmonics',
+      'Prevent resonance with harmonics',
+      'Generate harmonics',
+      'Filter the fundamental',
+    ],
+    correctAnswer: 'Prevent resonance with harmonics',
+    explanation:
+      'Detuned reactors shift the resonant frequency below dominant harmonics, preventing dangerous resonance that could amplify harmonic currents.',
   },
   {
-    id: "q10",
-    question: "Skin effect at harmonic frequencies causes:",
-    options: ["Reduced cable resistance", "Increased cable resistance", "No change in resistance", "Improved current flow"],
-    correctAnswer: "Increased cable resistance",
-    explanation: "Higher frequency harmonics concentrate current flow near the conductor surface (skin effect), increasing effective resistance and heating."
+    id: 'q10',
+    question: 'Skin effect at harmonic frequencies causes:',
+    options: [
+      'Reduced cable resistance',
+      'Increased cable resistance',
+      'No change in resistance',
+      'Improved current flow',
+    ],
+    correctAnswer: 'Increased cable resistance',
+    explanation:
+      'Higher frequency harmonics concentrate current flow near the conductor surface (skin effect), increasing effective resistance and heating.',
   },
   {
-    id: "q11",
-    question: "The typical THD limit for voltage at the point of common coupling is:",
-    options: ["5%", "8%", "15%", "25%"],
-    correctAnswer: "8%",
-    explanation: "Engineering Recommendation G5/5 typically limits voltage THD to 8% at points of common coupling to protect other consumers."
+    id: 'q11',
+    question: 'The typical THD limit for voltage at the point of common coupling is:',
+    options: ['5%', '8%', '15%', '25%'],
+    correctAnswer: '8%',
+    explanation:
+      'Engineering Recommendation G5/5 typically limits voltage THD to 8% at points of common coupling to protect other consumers.',
   },
   {
-    id: "q12",
-    question: "An active harmonic filter works by:",
-    options: ["Blocking all frequencies", "Injecting anti-phase harmonics", "Absorbing harmonic energy", "Converting harmonics to heat"],
-    correctAnswer: "Injecting anti-phase harmonics",
-    explanation: "Active filters measure harmonic content and inject equal but opposite harmonic currents to cancel distortion at the source."
-  }
+    id: 'q12',
+    question: 'An active harmonic filter works by:',
+    options: [
+      'Blocking all frequencies',
+      'Injecting anti-phase harmonics',
+      'Absorbing harmonic energy',
+      'Converting harmonics to heat',
+    ],
+    correctAnswer: 'Injecting anti-phase harmonics',
+    explanation:
+      'Active filters measure harmonic content and inject equal but opposite harmonic currents to cancel distortion at the source.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What are electrical harmonics?",
-    answer: "Harmonics are voltages or currents at frequencies that are integer multiples of the fundamental supply frequency. In the UK, the fundamental is 50 Hz, so the 2nd harmonic is 100 Hz, 3rd is 150 Hz, and so on. They are caused by non-linear loads that draw current in pulses rather than smooth sine waves."
+    question: 'What are electrical harmonics?',
+    answer:
+      'Harmonics are voltages or currents at frequencies that are integer multiples of the fundamental supply frequency. In the UK, the fundamental is 50 Hz, so the 2nd harmonic is 100 Hz, 3rd is 150 Hz, and so on. They are caused by non-linear loads that draw current in pulses rather than smooth sine waves.',
   },
   {
-    question: "Why are harmonics a problem in electrical installations?",
-    answer: "Harmonics cause multiple problems: overheating of cables and transformers due to skin effect, increased neutral current in three-phase systems, resonance with capacitors, interference with sensitive equipment, increased losses, and potential failure of power factor correction equipment. They also increase magnetic losses in motors and transformers."
+    question: 'Why are harmonics a problem in electrical installations?',
+    answer:
+      'Harmonics cause multiple problems: overheating of cables and transformers due to skin effect, increased neutral current in three-phase systems, resonance with capacitors, interference with sensitive equipment, increased losses, and potential failure of power factor correction equipment. They also increase magnetic losses in motors and transformers.',
   },
   {
-    question: "How do I measure harmonics on site?",
-    answer: "Use a power quality analyser or harmonic analyser clamp meter. These instruments use Fast Fourier Transform (FFT) to separate the waveform into its harmonic components. Measure both voltage and current THD, and individual harmonic levels up to at least the 25th harmonic. Record measurements under typical load conditions."
+    question: 'How do I measure harmonics on site?',
+    answer:
+      'Use a power quality analyser or harmonic analyser clamp meter. These instruments use Fast Fourier Transform (FFT) to separate the waveform into its harmonic components. Measure both voltage and current THD, and individual harmonic levels up to at least the 25th harmonic. Record measurements under typical load conditions.',
   },
   {
-    question: "What is the difference between voltage and current THD?",
-    answer: "Voltage THD measures distortion of the supply voltage waveform at a point. Current THD measures distortion of the current drawn by a load. Current THD is typically higher as it reflects the characteristics of the non-linear load. Voltage THD depends on the supply impedance and affects all connected equipment."
+    question: 'What is the difference between voltage and current THD?',
+    answer:
+      'Voltage THD measures distortion of the supply voltage waveform at a point. Current THD measures distortion of the current drawn by a load. Current THD is typically higher as it reflects the characteristics of the non-linear load. Voltage THD depends on the supply impedance and affects all connected equipment.',
   },
   {
-    question: "How can harmonics be reduced or eliminated?",
-    answer: "Solutions include: passive filters tuned to specific harmonic frequencies, active filters that inject cancelling currents, multi-pulse rectifiers (12, 18 or 24 pulse) in drives, isolation transformers with delta windings to trap triple-n harmonics, K-rated transformers designed for harmonic loads, and oversized neutrals per BS 7671."
+    question: 'How can harmonics be reduced or eliminated?',
+    answer:
+      'Solutions include: passive filters tuned to specific harmonic frequencies, active filters that inject cancelling currents, multi-pulse rectifiers (12, 18 or 24 pulse) in drives, isolation transformers with delta windings to trap triple-n harmonics, K-rated transformers designed for harmonic loads, and oversized neutrals per BS 7671.',
   },
   {
-    question: "Why does BS 7671 require larger neutrals for harmonic loads?",
-    answer: "In balanced three-phase systems, fundamental currents cancel in the neutral. However, triple-n harmonics (3rd, 9th, 15th) are zero-sequence and add arithmetically, potentially causing neutral current to exceed phase current by up to 1.73 times. Regulation 523.6.3 requires increased neutral sizing when third harmonic exceeds 15%."
-  }
+    question: 'Why does BS 7671 require larger neutrals for harmonic loads?',
+    answer:
+      'In balanced three-phase systems, fundamental currents cancel in the neutral. However, triple-n harmonics (3rd, 9th, 15th) are zero-sequence and add arithmetically, potentially causing neutral current to exceed phase current by up to 1.73 times. Regulation 523.6.3 requires increased neutral sizing when third harmonic exceeds 15%.',
+  },
 ];
 
 const Level3Module3Section4_6 = () => {
@@ -168,7 +249,11 @@ const Level3Module3Section4_6 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            asChild
+          >
             <Link to="../section4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -190,7 +275,8 @@ const Level3Module3Section4_6 = () => {
             Harmonics and Waveform Distortion
           </h1>
           <p className="text-lg text-white/70 max-w-2xl">
-            Harmonic content, THD calculations and the effects of non-linear loads on electrical installations
+            Harmonic content, THD calculations and the effects of non-linear loads on electrical
+            installations
           </p>
         </div>
       </div>
@@ -204,7 +290,9 @@ const Level3Module3Section4_6 = () => {
                 <Activity className="w-4 h-4 text-purple-400" />
                 <span className="text-sm font-medium text-purple-400">Harmonic Frequency</span>
               </div>
-              <p className="text-sm text-white/70">f_n = n times f_1 (nth harmonic = n times 50 Hz)</p>
+              <p className="text-sm text-white/70">
+                f_n = n times f_1 (nth harmonic = n times 50 Hz)
+              </p>
             </CardContent>
           </Card>
           <Card className="bg-amber-500/10 border-amber-500/20">
@@ -222,7 +310,9 @@ const Level3Module3Section4_6 = () => {
                 <AlertTriangle className="w-4 h-4 text-red-400" />
                 <span className="text-sm font-medium text-red-400">Neutral Overload</span>
               </div>
-              <p className="text-sm text-white/70">Triple-n harmonics add in neutral - up to 1.73x phase current</p>
+              <p className="text-sm text-white/70">
+                Triple-n harmonics add in neutral - up to 1.73x phase current
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -242,15 +332,22 @@ const Level3Module3Section4_6 = () => {
                 <ul className="space-y-2 text-white/80">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                    <span>Explain the origin and characteristics of harmonic frequencies in AC systems</span>
+                    <span>
+                      Explain the origin and characteristics of harmonic frequencies in AC systems
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                    <span>Calculate Total Harmonic Distortion and interpret measurement results</span>
+                    <span>
+                      Calculate Total Harmonic Distortion and interpret measurement results
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                    <span>Identify the effects of harmonics on cables, transformers and power factor correction</span>
+                    <span>
+                      Identify the effects of harmonics on cables, transformers and power factor
+                      correction
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
@@ -273,14 +370,17 @@ const Level3Module3Section4_6 = () => {
             </div>
 
             <p className="text-white/80 leading-relaxed">
-              Harmonics are sinusoidal voltages or currents at frequencies that are integer multiples of the
-              fundamental supply frequency. In the UK, the fundamental is 50 Hz. Harmonics are created by
-              non-linear loads that draw current in non-sinusoidal patterns, distorting the supply waveform.
+              Harmonics are sinusoidal voltages or currents at frequencies that are integer
+              multiples of the fundamental supply frequency. In the UK, the fundamental is 50 Hz.
+              Harmonics are created by non-linear loads that draw current in non-sinusoidal
+              patterns, distorting the supply waveform.
             </p>
 
             <Card className="bg-white/5 border-white/10 my-6">
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Harmonic Frequencies in 50 Hz Systems</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Harmonic Frequencies in 50 Hz Systems
+                </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
@@ -379,13 +479,15 @@ const Level3Module3Section4_6 = () => {
               <div className="p-2 bg-amber-500/20 rounded-lg">
                 <Calculator className="w-5 h-5 text-amber-400" />
               </div>
-              <h2 className="text-xl font-semibold text-white m-0">Total Harmonic Distortion (THD)</h2>
+              <h2 className="text-xl font-semibold text-white m-0">
+                Total Harmonic Distortion (THD)
+              </h2>
             </div>
 
             <p className="text-white/80 leading-relaxed">
-              THD quantifies the total harmonic content of a waveform as a percentage of the fundamental.
-              It is calculated as the RMS sum of all harmonic components divided by the fundamental component.
-              THD can be measured for both voltage and current.
+              THD quantifies the total harmonic content of a waveform as a percentage of the
+              fundamental. It is calculated as the RMS sum of all harmonic components divided by the
+              fundamental component. THD can be measured for both voltage and current.
             </p>
 
             <Card className="bg-white/5 border-white/10 my-6">
@@ -393,8 +495,12 @@ const Level3Module3Section4_6 = () => {
                 <h3 className="text-lg font-semibold text-white mb-4">THD Calculation</h3>
                 <div className="bg-gradient-to-r from-amber-500/10 to-transparent p-4 rounded-lg border-l-4 border-amber-500 mb-4">
                   <p className="text-white font-medium mb-2">THD Formula:</p>
-                  <p className="text-amber-300 font-mono text-lg mb-2">THD% = sqrt(V2 squared + V3 squared + V4 squared + ... + Vn squared) / V1 x 100</p>
-                  <p className="text-white/70 text-sm">Where V1 is fundamental and V2, V3, etc. are harmonic magnitudes</p>
+                  <p className="text-amber-300 font-mono text-lg mb-2">
+                    THD% = sqrt(V2 squared + V3 squared + V4 squared + ... + Vn squared) / V1 x 100
+                  </p>
+                  <p className="text-white/70 text-sm">
+                    Where V1 is fundamental and V2, V3, etc. are harmonic magnitudes
+                  </p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium mb-2">Worked Example</h4>
@@ -402,10 +508,14 @@ const Level3Module3Section4_6 = () => {
                     A waveform has: V1 = 230V, V3 = 23V, V5 = 15V, V7 = 10V. Calculate THD.
                   </p>
                   <div className="space-y-2 text-sm font-mono">
-                    <p className="text-white/80">Harmonic RMS = sqrt(23 squared + 15 squared + 10 squared)</p>
+                    <p className="text-white/80">
+                      Harmonic RMS = sqrt(23 squared + 15 squared + 10 squared)
+                    </p>
                     <p className="text-white/80">= sqrt(529 + 225 + 100) = sqrt(854) = 29.2V</p>
                     <p className="text-white/80">THD = 29.2 / 230 x 100 = 12.7%</p>
-                    <p className="text-green-400 mt-2">This exceeds the typical 8% voltage THD limit</p>
+                    <p className="text-green-400 mt-2">
+                      This exceeds the typical 8% voltage THD limit
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -456,18 +566,22 @@ const Level3Module3Section4_6 = () => {
               <div className="p-2 bg-red-500/20 rounded-lg">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
               </div>
-              <h2 className="text-xl font-semibold text-white m-0">Effects on Electrical Installations</h2>
+              <h2 className="text-xl font-semibold text-white m-0">
+                Effects on Electrical Installations
+              </h2>
             </div>
 
             <p className="text-white/80 leading-relaxed">
-              Harmonics cause a range of problems in electrical installations, from increased losses and
-              overheating to equipment malfunction and premature failure. Understanding these effects is
-              essential for designing robust installations.
+              Harmonics cause a range of problems in electrical installations, from increased losses
+              and overheating to equipment malfunction and premature failure. Understanding these
+              effects is essential for designing robust installations.
             </p>
 
             <Card className="bg-white/5 border-white/10 my-6">
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Harmonic Effects on Equipment</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Harmonic Effects on Equipment
+                </h3>
                 <div className="space-y-4">
                   <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/20">
                     <h4 className="text-red-400 font-medium mb-2">Neutral Conductor Overload</h4>
@@ -483,15 +597,17 @@ const Level3Module3Section4_6 = () => {
                     <p className="text-white/80 text-sm">
                       Harmonics increase eddy current and hysteresis losses in transformer cores.
                       Higher frequency harmonics cause greater skin effect in windings. Standard
-                      transformers may need derating; K-rated transformers are designed for harmonic loads.
+                      transformers may need derating; K-rated transformers are designed for harmonic
+                      loads.
                     </p>
                   </div>
                   <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
                     <h4 className="text-purple-400 font-medium mb-2">Capacitor Damage</h4>
                     <p className="text-white/80 text-sm">
-                      Capacitor reactance decreases with frequency (Xc = 1/2 pi fC). Harmonic currents
-                      are amplified, causing overheating. Resonance between capacitors and system
-                      inductance at harmonic frequencies can cause dangerous current magnification.
+                      Capacitor reactance decreases with frequency (Xc = 1/2 pi fC). Harmonic
+                      currents are amplified, causing overheating. Resonance between capacitors and
+                      system inductance at harmonic frequencies can cause dangerous current
+                      magnification.
                     </p>
                   </div>
                   <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
@@ -520,25 +636,34 @@ const Level3Module3Section4_6 = () => {
               <div className="p-2 bg-green-500/20 rounded-lg">
                 <Lightbulb className="w-5 h-5 text-green-400" />
               </div>
-              <h2 className="text-xl font-semibold text-white m-0">BS 7671 Requirements and Mitigation</h2>
+              <h2 className="text-xl font-semibold text-white m-0">
+                BS 7671 Requirements and Mitigation
+              </h2>
             </div>
 
             <p className="text-white/80 leading-relaxed">
-              BS 7671 specifically addresses harmonic currents in Regulation 523.6.3, requiring increased
-              neutral sizing when third harmonic content exceeds 15% of fundamental. Various mitigation
-              techniques are available depending on the severity of the harmonic problem.
+              BS 7671 specifically addresses harmonic currents in Regulation 523.6.3, requiring
+              increased neutral sizing when third harmonic content exceeds 15% of fundamental.
+              Various mitigation techniques are available depending on the severity of the harmonic
+              problem.
             </p>
 
             <Card className="bg-white/5 border-white/10 my-6">
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">BS 7671 Neutral Sizing for Harmonics</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  BS 7671 Neutral Sizing for Harmonics
+                </h3>
                 <div className="bg-gradient-to-r from-green-500/10 to-transparent p-4 rounded-lg border-l-4 border-green-500 mb-4">
                   <p className="text-white font-medium mb-2">Regulation 523.6.3 Requirements:</p>
                   <div className="text-white/80 text-sm space-y-2">
                     <p>Where third harmonic content exceeds 15% and up to 33%:</p>
-                    <p className="font-mono text-green-300">Neutral sized equal to phase conductors</p>
+                    <p className="font-mono text-green-300">
+                      Neutral sized equal to phase conductors
+                    </p>
                     <p className="mt-2">Where third harmonic content exceeds 33%:</p>
-                    <p className="font-mono text-green-300">Neutral sized larger than phase - use Table 4G1A</p>
+                    <p className="font-mono text-green-300">
+                      Neutral sized larger than phase - use Table 4G1A
+                    </p>
                   </div>
                 </div>
                 <div className="overflow-x-auto">
@@ -625,10 +750,14 @@ const Level3Module3Section4_6 = () => {
                     <BookOpen className="w-5 h-5 text-green-400" />
                   </div>
                   <div className="w-full">
-                    <h3 className="text-lg font-semibold text-white mb-4">Practical Guidance for Electricians</h3>
+                    <h3 className="text-lg font-semibold text-white mb-4">
+                      Practical Guidance for Electricians
+                    </h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="p-4 bg-white/5 rounded-lg">
-                        <h4 className="text-green-400 font-medium mb-2">When to Suspect Harmonics</h4>
+                        <h4 className="text-green-400 font-medium mb-2">
+                          When to Suspect Harmonics
+                        </h4>
                         <ul className="text-sm text-white/80 space-y-1">
                           <li>Overheating neutrals or transformers</li>
                           <li>Premature capacitor failure</li>
@@ -750,7 +879,11 @@ const Level3Module3Section4_6 = () => {
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-white/10">
-          <Button variant="outline" className="text-white border-white/20 hover:bg-white/10" asChild>
+          <Button
+            variant="outline"
+            className="text-white border-white/20 hover:bg-white/10"
+            asChild
+          >
             <Link to="/study-centre/apprentice/level3-module3-section4-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Power in AC Circuits

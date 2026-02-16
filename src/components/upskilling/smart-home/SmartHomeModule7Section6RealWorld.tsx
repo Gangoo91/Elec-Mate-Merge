@@ -12,15 +12,18 @@ const SmartHomeModule7Section6RealWorld = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <h4 className="font-semibold text-foreground">Case Study: Smart Lighting Warranty Dispute in Bristol</h4>
-          
+          <h4 className="font-semibold text-foreground">
+            Case Study: Smart Lighting Warranty Dispute in Bristol
+          </h4>
+
           <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h5 className="font-semibold text-red-200 mb-2">The Incident</h5>
                 <p className="text-red-100 text-sm mb-3">
-                  A smart lighting installation failed six months after completion, leading to a warranty dispute:
+                  A smart lighting installation failed six months after completion, leading to a
+                  warranty dispute:
                 </p>
                 <ul className="space-y-1 text-red-100 text-sm ml-4">
                   <li>• Multiple LED smart bulbs stopped responding to commands</li>
@@ -79,27 +82,33 @@ const SmartHomeModule7Section6RealWorld = () => {
             <ul className="space-y-2 text-gray-300 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Documentation protects everyone:</strong> Good records saved the installer from liability
+                <strong>Documentation protects everyone:</strong> Good records saved the installer
+                from liability
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Backup systems are essential:</strong> Secure storage prevented loss of critical information
+                <strong>Backup systems are essential:</strong> Secure storage prevented loss of
+                critical information
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Clear warranty explanation prevents disputes:</strong> Upfront communication avoids conflicts
+                <strong>Clear warranty explanation prevents disputes:</strong> Upfront communication
+                avoids conflicts
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Detailed device records enable warranty claims:</strong> Serial numbers and dates are crucial
+                <strong>Detailed device records enable warranty claims:</strong> Serial numbers and
+                dates are crucial
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Professional handling builds trust:</strong> Proper documentation demonstrated competence
+                <strong>Professional handling builds trust:</strong> Proper documentation
+                demonstrated competence
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Client education is ongoing:</strong> Help clients understand warranty processes
+                <strong>Client education is ongoing:</strong> Help clients understand warranty
+                processes
               </li>
             </ul>
           </div>
@@ -107,9 +116,9 @@ const SmartHomeModule7Section6RealWorld = () => {
           <div className="bg-blue-600/10 border border-blue-600/30 rounded-lg p-4">
             <h5 className="font-semibold text-blue-200 mb-2">Outcome</h5>
             <p className="text-blue-100 text-sm">
-              The manufacturer replaced the faulty devices under warranty at no cost to the client. 
-              The electrician's professional documentation and helpful approach during the warranty claim 
-              not only resolved the immediate issue but strengthened the client relationship, 
+              The manufacturer replaced the faulty devices under warranty at no cost to the client.
+              The electrician's professional documentation and helpful approach during the warranty
+              claim not only resolved the immediate issue but strengthened the client relationship,
               leading to additional work and positive referrals.
             </p>
           </div>

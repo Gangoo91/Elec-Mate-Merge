@@ -68,6 +68,8 @@ export interface QualificationAwardingBody {
 // KSB (Knowledge, Skills, Behaviours) Types
 export type KSBType = 'knowledge' | 'skill' | 'behaviour';
 
+export type KSBRoute = 'core' | 'installation' | 'maintenance';
+
 export interface ApprenticeshipKSB {
   id: string;
   qualification_id: string;
@@ -76,9 +78,20 @@ export interface ApprenticeshipKSB {
   title: string;
   description?: string;
   assessment_method: string[];
+  route: KSBRoute;
   sort_order: number;
   created_at: string;
   updated_at: string;
+}
+
+export interface KSBUnitMapping {
+  id: string;
+  ksb_id: string;
+  unit_code: string;
+  unit_title: string;
+  qualification_code: string;
+  mapping_type: 'primary' | 'supporting';
+  created_at: string;
 }
 
 export type KSBProgressStatus =

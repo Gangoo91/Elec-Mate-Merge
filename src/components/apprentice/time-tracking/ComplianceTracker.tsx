@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { useComplianceTracking } from "@/hooks/time-tracking/useComplianceTracking";
-import { Target, Clock, TrendingUp, AlertTriangle, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
+import { Target, Clock, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const ComplianceTracker = () => {
   const { otjGoal, getComplianceStatus, getRemainingHours, isLoading } = useComplianceTracking();
@@ -43,7 +43,9 @@ const ComplianceTracker = () => {
   const remainingHours = getRemainingHours();
   const currentDate = new Date();
   const deadlineDate = otjGoal.deadline ? new Date(otjGoal.deadline) : null;
-  const daysRemaining = deadlineDate ? Math.ceil((deadlineDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24)) : null;
+  const daysRemaining = deadlineDate
+    ? Math.ceil((deadlineDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24))
+    : null;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -90,10 +92,7 @@ const ComplianceTracker = () => {
             <span className="text-elec-light/70">Progress</span>
             <span className="text-elec-light">{otjGoal.compliance_percentage}%</span>
           </div>
-          <Progress 
-            value={otjGoal.compliance_percentage} 
-            className="h-2"
-          />
+          <Progress value={otjGoal.compliance_percentage} className="h-2" />
           <div className="flex justify-between text-xs text-elec-light/50">
             <span>{otjGoal.current_hours}h completed</span>
             <span>{otjGoal.target_hours}h target</span>
@@ -111,21 +110,15 @@ const ComplianceTracker = () => {
         {/* Key Metrics */}
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white/10 rounded-lg p-3">
-            <div className="text-lg font-bold text-elec-yellow">
-              {remainingHours}h
-            </div>
-            <div className="text-xs text-elec-light/70">
-              Remaining
-            </div>
+            <div className="text-lg font-bold text-elec-yellow">{remainingHours}h</div>
+            <div className="text-xs text-elec-light/70">Remaining</div>
           </div>
           {daysRemaining !== null && (
             <div className="bg-white/10 rounded-lg p-3">
               <div className="text-lg font-bold text-elec-yellow">
                 {daysRemaining > 0 ? daysRemaining : 0}
               </div>
-              <div className="text-xs text-elec-light/70">
-                Days left
-              </div>
+              <div className="text-xs text-elec-light/70">Days left</div>
             </div>
           )}
         </div>
@@ -136,7 +129,8 @@ const ComplianceTracker = () => {
             <p className="text-xs text-elec-light/70 mb-2">Recommendation:</p>
             {complianceStatus.status === 'behind' && remainingHours > 0 && daysRemaining && (
               <p className="text-sm text-elec-light">
-                Track {Math.ceil(remainingHours / (daysRemaining / 7))} hours per week to meet your target.
+                Track {Math.ceil(remainingHours / (daysRemaining / 7))} hours per week to meet your
+                target.
               </p>
             )}
             {complianceStatus.status === 'at-risk' && (

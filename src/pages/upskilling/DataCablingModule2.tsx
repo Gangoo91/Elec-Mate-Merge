@@ -7,34 +7,34 @@ const DataCablingModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Twisted Pair Basics and Categories",
+      title: 'Twisted Pair Basics and Categories',
       icon: Cable,
-      description: "Understanding twisted pair cable construction and categories"
+      description: 'Understanding twisted pair cable construction and categories',
     },
     {
       id: 2,
-      title: "UTP, FTP, and STP Explained",
+      title: 'UTP, FTP, and STP Explained',
       icon: Shield,
-      description: "Different cable shielding types and applications"
+      description: 'Different cable shielding types and applications',
     },
     {
       id: 3,
-      title: "Performance Ratings and Bandwidth Limits",
+      title: 'Performance Ratings and Bandwidth Limits',
       icon: BarChart,
-      description: "Cable performance specifications and limitations"
+      description: 'Cable performance specifications and limitations',
     },
     {
       id: 4,
-      title: "Connectors and Patch Panel Config",
+      title: 'Connectors and Patch Panel Config',
       icon: Plug,
-      description: "Connector types and patch panel configuration"
+      description: 'Connector types and patch panel configuration',
     },
     {
       id: 5,
-      title: "PoE (Power over Ethernet) Use and Limitations",
+      title: 'PoE (Power over Ethernet) Use and Limitations',
       icon: Zap,
-      description: "Power over Ethernet capabilities and constraints"
-    }
+      description: 'Power over Ethernet capabilities and constraints',
+    },
   ];
 
   return (

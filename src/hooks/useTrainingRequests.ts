@@ -1,7 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
+import { useState, useCallback, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
 export interface TrainingRequest {
   id: string;
@@ -11,7 +11,7 @@ export interface TrainingRequest {
   provider?: string;
   completed_date?: string;
   certificate_url?: string;
-  status: "pending" | "approved" | "declined";
+  status: 'pending' | 'approved' | 'declined';
   requested_at: string;
   responded_at?: string;
   // Joined data
@@ -43,24 +43,24 @@ export function useTrainingRequests() {
       const isEmployer = profile?.role === 'employer';
 
       let query = supabase
-        .from("elec_id_training_requests")
-        .select("*")
-        .order("requested_at", { ascending: false });
+        .from('elec_id_training_requests')
+        .select('*')
+        .order('requested_at', { ascending: false });
 
       if (isEmployer) {
         // Employer sees requests they've sent
-        query = query.eq("employer_id", user.id);
+        query = query.eq('employer_id', user.id);
       } else {
         // Worker sees requests they've received
         // Need to get their elec_id_profile first
         const { data: elecProfile } = await supabase
-          .from("employer_elec_id_profiles")
-          .select("id")
-          .eq("employee_id", user.id)
+          .from('employer_elec_id_profiles')
+          .select('id')
+          .eq('employee_id', user.id)
           .single();
 
         if (elecProfile) {
-          query = query.eq("worker_profile_id", elecProfile.id);
+          query = query.eq('worker_profile_id', elecProfile.id);
         } else {
           setRequests([]);
           setIsLoading(false);
@@ -71,13 +71,13 @@ export function useTrainingRequests() {
       const { data, error } = await query;
 
       if (error) {
-        console.error("Error fetching training requests:", error);
+        console.error('Error fetching training requests:', error);
         return;
       }
 
       setRequests((data as TrainingRequest[]) || []);
     } catch (err) {
-      console.error("Error fetching training requests:", err);
+      console.error('Error fetching training requests:', err);
     } finally {
       setIsLoading(false);
     }
@@ -88,9 +88,9 @@ export function useTrainingRequests() {
     async (input: CreateTrainingRequestInput): Promise<boolean> => {
       if (!user?.id) {
         toast({
-          title: "Not authenticated",
-          description: "Please sign in to submit training requests.",
-          variant: "destructive",
+          title: 'Not authenticated',
+          description: 'Please sign in to submit training requests.',
+          variant: 'destructive',
         });
         return false;
       }
@@ -98,38 +98,36 @@ export function useTrainingRequests() {
       setIsSubmitting(true);
 
       try {
-        const { error } = await supabase
-          .from("elec_id_training_requests")
-          .insert({
-            worker_profile_id: input.workerProfileId,
-            employer_id: user.id,
-            training_name: input.trainingName,
-            provider: input.provider,
-            completed_date: input.completedDate,
-            certificate_url: input.certificateUrl,
-            status: "pending",
-          });
+        const { error } = await supabase.from('elec_id_training_requests').insert({
+          worker_profile_id: input.workerProfileId,
+          employer_id: user.id,
+          training_name: input.trainingName,
+          provider: input.provider,
+          completed_date: input.completedDate,
+          certificate_url: input.certificateUrl,
+          status: 'pending',
+        });
 
         if (error) {
-          console.error("Error creating training request:", error);
+          console.error('Error creating training request:', error);
           toast({
-            title: "Error",
-            description: "Failed to submit training request.",
-            variant: "destructive",
+            title: 'Error',
+            description: 'Failed to submit training request.',
+            variant: 'destructive',
           });
           return false;
         }
 
         toast({
-          title: "Request Sent",
-          description: "Training record request has been sent to the worker for approval.",
+          title: 'Request Sent',
+          description: 'Training record request has been sent to the worker for approval.',
         });
 
         // Refresh the list
         await fetchRequests();
         return true;
       } catch (err) {
-        console.error("Error creating training request:", err);
+        console.error('Error creating training request:', err);
         return false;
       } finally {
         setIsSubmitting(false);
@@ -147,19 +145,19 @@ export function useTrainingRequests() {
 
       try {
         const { error } = await supabase
-          .from("elec_id_training_requests")
+          .from('elec_id_training_requests')
           .update({
-            status: approve ? "approved" : "declined",
+            status: approve ? 'approved' : 'declined',
             responded_at: new Date().toISOString(),
           })
-          .eq("id", requestId);
+          .eq('id', requestId);
 
         if (error) {
-          console.error("Error responding to training request:", error);
+          console.error('Error responding to training request:', error);
           toast({
-            title: "Error",
-            description: "Failed to respond to request.",
-            variant: "destructive",
+            title: 'Error',
+            description: 'Failed to respond to request.',
+            variant: 'destructive',
           });
           return false;
         }
@@ -170,14 +168,14 @@ export function useTrainingRequests() {
           if (request) {
             // Get worker's profile ID
             const { data: elecProfile } = await supabase
-              .from("employer_elec_id_profiles")
-              .select("id")
-              .eq("employee_id", user.id)
+              .from('employer_elec_id_profiles')
+              .select('id')
+              .eq('employee_id', user.id)
               .single();
 
             if (elecProfile) {
               // Add to elec_id_training table
-              await supabase.from("elec_id_training").insert({
+              await supabase.from('elec_id_training').insert({
                 profile_id: elecProfile.id,
                 course_name: request.training_name,
                 provider: request.provider,
@@ -185,24 +183,24 @@ export function useTrainingRequests() {
                 certificate_url: request.certificate_url,
                 verified: true,
                 verified_at: new Date().toISOString(),
-                verified_by: "employer_attestation",
+                verified_by: 'employer_attestation',
               });
             }
           }
         }
 
         toast({
-          title: approve ? "Training Approved" : "Training Declined",
+          title: approve ? 'Training Approved' : 'Training Declined',
           description: approve
-            ? "Training record has been added to your Elec-ID profile."
-            : "Training request has been declined.",
+            ? 'Training record has been added to your Elec-ID profile.'
+            : 'Training request has been declined.',
         });
 
         // Refresh the list
         await fetchRequests();
         return true;
       } catch (err) {
-        console.error("Error responding to training request:", err);
+        console.error('Error responding to training request:', err);
         return false;
       } finally {
         setIsSubmitting(false);
@@ -213,7 +211,7 @@ export function useTrainingRequests() {
 
   // Get pending requests count (for notifications)
   const getPendingCount = useCallback((): number => {
-    return requests.filter((r) => r.status === "pending").length;
+    return requests.filter((r) => r.status === 'pending').length;
   }, [requests]);
 
   // Initial fetch

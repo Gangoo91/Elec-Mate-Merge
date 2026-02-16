@@ -1,7 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { ApiErrorDisplay, ApiTroubleshooting } from '../electrician-pricing/merchant-finder/ApiErrorDisplay';
+import {
+  ApiErrorDisplay,
+  ApiTroubleshooting,
+} from '../electrician-pricing/merchant-finder/ApiErrorDisplay';
 
 interface GoogleMapsLoaderProps {
   children: React.ReactNode;
@@ -25,52 +27,55 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children }) => {
     const loadGoogleMapsAPI = async () => {
       try {
         // Fetch the API key from our edge function
-        const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/get-google-maps-key');
+        const response = await fetch(
+          'https://jtwygbeceundfgnkirof.supabase.co/functions/v1/get-google-maps-key'
+        );
         const data = await response.json();
-        
+
         if (!response.ok || !data.apiKey) {
           throw new Error(data.error || 'Failed to fetch API key');
         }
-        
+
         const apiKey = data.apiKey;
 
         // Function to call when script loads
-      const onScriptLoad = () => {
-        if (window.google?.maps) {
-          console.log('Google Maps API loaded successfully');
-          setIsLoaded(true);
-        } else {
-          setError('Failed to load Google Maps API');
-          console.error('Google Maps API failed to load');
+        const onScriptLoad = () => {
+          if (window.google?.maps) {
+            console.log('Google Maps API loaded successfully');
+            setIsLoaded(true);
+          } else {
+            setError('Failed to load Google Maps API');
+            console.error('Google Maps API failed to load');
+          }
+        };
+
+        // Check if script already exists
+        const existingScript = document.getElementById('google-maps-api');
+        if (existingScript) {
+          existingScript.remove();
         }
-      };
 
-      // Check if script already exists
-      const existingScript = document.getElementById('google-maps-api');
-      if (existingScript) {
-        existingScript.remove();
-      }
+        // Create and append the script tag
+        const script = document.createElement('script');
+        script.id = 'google-maps-api';
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,geometry`;
+        script.async = true;
+        script.defer = true;
 
-      // Create and append the script tag
-      const script = document.createElement('script');
-      script.id = 'google-maps-api';
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,geometry`;
-      script.async = true;
-      script.defer = true;
-      
-      script.onload = onScriptLoad;
-      
-      script.onerror = (e) => {
-        console.error('Error loading Google Maps API:', e);
-        setError('Failed to load Google Maps API. Check your API key configuration.');
-        setApiStatus('REQUEST_DENIED');
-        toast({
-          title: 'Maps API Error',
-          description: 'Could not load the Google Maps API. Location-based features are unavailable.',
-          variant: 'destructive',
-        });
-      };
-      
+        script.onload = onScriptLoad;
+
+        script.onerror = (e) => {
+          console.error('Error loading Google Maps API:', e);
+          setError('Failed to load Google Maps API. Check your API key configuration.');
+          setApiStatus('REQUEST_DENIED');
+          toast({
+            title: 'Maps API Error',
+            description:
+              'Could not load the Google Maps API. Location-based features are unavailable.',
+            variant: 'destructive',
+          });
+        };
+
         document.head.appendChild(script);
       } catch (error) {
         console.error('Error fetching Google Maps API key:', error);
@@ -78,7 +83,8 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children }) => {
         setApiStatus('REQUEST_DENIED');
         toast({
           title: 'Maps API Error',
-          description: 'Could not load the Google Maps API. Location-based features are unavailable.',
+          description:
+            'Could not load the Google Maps API. Location-based features are unavailable.',
           variant: 'destructive',
         });
       }

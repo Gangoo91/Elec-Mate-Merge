@@ -31,14 +31,17 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   inspectionItems,
   onUpdateItem,
   onAutoCreateObservation,
-  onNavigateToObservations
+  onNavigateToObservations,
 }) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
-  const handleOutcomeChange = (id: string, outcome: 'satisfactory' | 'not-applicable' | 'limitation') => {
+  const handleOutcomeChange = (
+    id: string,
+    outcome: 'satisfactory' | 'not-applicable' | 'limitation'
+  ) => {
     haptics.tap();
-    const currentItem = inspectionItems.find(item => item.id === id);
+    const currentItem = inspectionItems.find((item) => item.id === id);
     if (currentItem?.outcome === outcome) {
       // Toggle off if clicking the same button
       onUpdateItem(id, 'outcome', '');
@@ -55,7 +58,7 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
           item: currentItem.description,
           itemNumber: currentItem.itemNumber,
           notes: currentItem.notes,
-          defectCode: 'limitation'
+          defectCode: 'limitation',
         });
         // Navigate to observations section
         if (onNavigateToObservations) {
@@ -74,12 +77,9 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   }
 
   return (
-    <div className={cn("space-y-0", isMobile && "-mx-4")}>
+    <div className={cn('space-y-0', isMobile && '-mx-4')}>
       {/* Subtitle */}
-      <p className={cn(
-        "text-xs text-muted-foreground mb-2",
-        isMobile ? "px-4" : "px-1"
-      )}>
+      <p className={cn('text-xs text-muted-foreground mb-2', isMobile ? 'px-4' : 'px-1')}>
         IET Model Forms - BS7671 18th Edition + A3:2024 compliant
       </p>
 
@@ -91,22 +91,19 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.15, delay: index * 0.01 }}
-            className={cn(
-              "py-4 touch-manipulation",
-              isMobile ? "px-4" : "px-1"
-            )}
+            className={cn('py-4 touch-manipulation', isMobile ? 'px-4' : 'px-1')}
           >
             {/* Item Row */}
             <div className="flex items-start gap-3">
               {/* Small Number Badge */}
               <div
                 className={cn(
-                  "flex-shrink-0 w-6 h-6 rounded-md flex items-center justify-center",
-                  "text-xs font-semibold transition-colors duration-200",
-                  item.outcome === 'satisfactory' && "bg-green-500/20 text-green-400",
-                  item.outcome === 'not-applicable' && "bg-neutral-500/20 text-neutral-400",
-                  item.outcome === 'limitation' && "bg-amber-500/20 text-amber-400",
-                  !item.outcome && "bg-amber-500/20 text-amber-400"
+                  'flex-shrink-0 w-6 h-6 rounded-md flex items-center justify-center',
+                  'text-xs font-semibold transition-colors duration-200',
+                  item.outcome === 'satisfactory' && 'bg-green-500/20 text-green-400',
+                  item.outcome === 'not-applicable' && 'bg-neutral-500/20 text-neutral-400',
+                  item.outcome === 'limitation' && 'bg-amber-500/20 text-amber-400',
+                  !item.outcome && 'bg-amber-500/20 text-amber-400'
                 )}
               >
                 {item.itemNumber}
@@ -125,21 +122,19 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
                   <button
                     onClick={() => handleOutcomeChange(item.id, 'satisfactory')}
                     className={cn(
-                      "h-10 px-4 rounded-lg font-medium text-sm transition-all duration-150",
-                      "touch-manipulation active:scale-[0.97]",
-                      "flex items-center justify-center gap-1.5",
+                      'h-10 px-4 rounded-lg font-medium text-sm transition-all duration-150',
+                      'touch-manipulation active:scale-[0.97]',
+                      'flex items-center justify-center gap-1.5',
                       item.outcome === 'satisfactory'
-                        ? "bg-green-500 text-white"
-                        : "bg-card/50 text-foreground/70 border border-border/30 hover:bg-card"
+                        ? 'bg-green-500 text-white'
+                        : 'bg-card/50 text-foreground/70 border border-border/30 hover:bg-card'
                     )}
                   >
-                    {item.outcome === 'satisfactory' && (
-                      <Check className="w-4 h-4" />
-                    )}
-                    <span className={cn(item.outcome === 'satisfactory' ? "" : "hidden sm:inline")}>
+                    {item.outcome === 'satisfactory' && <Check className="w-4 h-4" />}
+                    <span className={cn(item.outcome === 'satisfactory' ? '' : 'hidden sm:inline')}>
                       Satisfactory
                     </span>
-                    <span className={cn(item.outcome === 'satisfactory' ? "hidden" : "sm:hidden")}>
+                    <span className={cn(item.outcome === 'satisfactory' ? 'hidden' : 'sm:hidden')}>
                       ✓
                     </span>
                   </button>
@@ -148,17 +143,15 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
                   <button
                     onClick={() => handleOutcomeChange(item.id, 'not-applicable')}
                     className={cn(
-                      "h-10 px-4 rounded-lg font-medium text-sm transition-all duration-150",
-                      "touch-manipulation active:scale-[0.97]",
-                      "flex items-center justify-center gap-1.5",
+                      'h-10 px-4 rounded-lg font-medium text-sm transition-all duration-150',
+                      'touch-manipulation active:scale-[0.97]',
+                      'flex items-center justify-center gap-1.5',
                       item.outcome === 'not-applicable'
-                        ? "bg-neutral-500 text-white"
-                        : "bg-card/50 text-foreground/70 border border-border/30 hover:bg-card"
+                        ? 'bg-neutral-500 text-white'
+                        : 'bg-card/50 text-foreground/70 border border-border/30 hover:bg-card'
                     )}
                   >
-                    {item.outcome === 'not-applicable' && (
-                      <Minus className="w-4 h-4" />
-                    )}
+                    {item.outcome === 'not-applicable' && <Minus className="w-4 h-4" />}
                     N/A
                   </button>
 
@@ -166,17 +159,15 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
                   <button
                     onClick={() => handleOutcomeChange(item.id, 'limitation')}
                     className={cn(
-                      "h-10 px-4 rounded-lg font-medium text-sm transition-all duration-150",
-                      "touch-manipulation active:scale-[0.97]",
-                      "flex items-center justify-center gap-1.5",
+                      'h-10 px-4 rounded-lg font-medium text-sm transition-all duration-150',
+                      'touch-manipulation active:scale-[0.97]',
+                      'flex items-center justify-center gap-1.5',
                       item.outcome === 'limitation'
-                        ? "bg-amber-500 text-black"
-                        : "bg-card/50 text-foreground/70 border border-border/30 hover:bg-card"
+                        ? 'bg-amber-500 text-black'
+                        : 'bg-card/50 text-foreground/70 border border-border/30 hover:bg-card'
                     )}
                   >
-                    {item.outcome === 'limitation' && (
-                      <Check className="w-4 h-4" />
-                    )}
+                    {item.outcome === 'limitation' && <Check className="w-4 h-4" />}
                     LIM
                   </button>
                 </div>

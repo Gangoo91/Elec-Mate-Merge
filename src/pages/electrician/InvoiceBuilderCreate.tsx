@@ -1,10 +1,10 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { CheckCircle, X, ClipboardCheck } from "lucide-react";
-import { InvoiceWizard } from "@/components/electrician/invoice-builder/InvoiceWizard";
-import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
-import { useState, useEffect } from "react";
-import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { CheckCircle, X, ClipboardCheck } from 'lucide-react';
+import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
+import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { useState, useEffect } from 'react';
+import { VoiceFormProvider } from '@/contexts/VoiceFormContext';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,7 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 const InvoiceBuilderCreate = () => {
   const navigate = useNavigate();
@@ -172,7 +172,10 @@ const InvoiceBuilderCreate = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Keep Editing</AlertDialogCancel>
-              <AlertDialogAction onClick={confirmExit} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              <AlertDialogAction
+                onClick={confirmExit}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
                 Discard
               </AlertDialogAction>
             </AlertDialogFooter>

@@ -58,22 +58,16 @@ export function CouponCodeCard({ coupon, className }: CouponCodeCardProps) {
           </div>
 
           {/* Discount */}
-          <p className="text-lg font-bold text-elec-yellow">
-            {coupon.formatted_discount}
-          </p>
+          <p className="text-lg font-bold text-elec-yellow">{coupon.formatted_discount}</p>
 
           {/* Description */}
           {coupon.description && (
-            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-              {coupon.description}
-            </p>
+            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{coupon.description}</p>
           )}
 
           {/* Minimum Spend & Validity */}
           <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-muted-foreground">
-            {coupon.minimum_spend && (
-              <span>Min spend: £{coupon.minimum_spend.toFixed(2)}</span>
-            )}
+            {coupon.minimum_spend && <span>Min spend: £{coupon.minimum_spend.toFixed(2)}</span>}
             {validUntilText && (
               <span className="flex items-center gap-1">
                 <Clock className="h-3 w-3" />
@@ -87,9 +81,7 @@ export function CouponCodeCard({ coupon, className }: CouponCodeCardProps) {
         <div className="flex flex-col items-end gap-2">
           <div className="flex items-center gap-2 px-3 py-2 bg-background border border-border rounded-lg">
             <Tag className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <code className="font-mono font-bold text-sm sm:text-base">
-              {coupon.code}
-            </code>
+            <code className="font-mono font-bold text-sm sm:text-base">{coupon.code}</code>
           </div>
           <Button
             variant="outline"

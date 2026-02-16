@@ -1,66 +1,143 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, RefreshCw, ExternalLink, Star } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { TrendingUp, TrendingDown, RefreshCw, ExternalLink, Star } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const LivePriceComparison = () => {
   const [searchParams] = useSearchParams();
   const [filteredComparisons, setFilteredComparisons] = useState([]);
   const priceComparisons = [
     {
-      tool: "Fluke 1663 Multifunction Tester",
-      category: "equipment",
+      tool: 'Fluke 1663 Multifunction Tester',
+      category: 'equipment',
       prices: [
-        { supplier: "RS Components", price: "£649.99", originalPrice: "£899.99", discount: "28%", stock: "In Stock", rating: 4.8 },
-        { supplier: "City Electrical Factors", price: "£675.00", originalPrice: "£850.00", discount: "21%", stock: "2-3 Days", rating: 4.7 },
-        { supplier: "Screwfix", price: "£699.99", originalPrice: "£849.99", discount: "18%", stock: "Click & Collect", rating: 4.6 },
-        { supplier: "Amazon Business", price: "£729.00", originalPrice: null, discount: null, stock: "Prime Next Day", rating: 4.5 }
+        {
+          supplier: 'RS Components',
+          price: '£649.99',
+          originalPrice: '£899.99',
+          discount: '28%',
+          stock: 'In Stock',
+          rating: 4.8,
+        },
+        {
+          supplier: 'City Electrical Factors',
+          price: '£675.00',
+          originalPrice: '£850.00',
+          discount: '21%',
+          stock: '2-3 Days',
+          rating: 4.7,
+        },
+        {
+          supplier: 'Screwfix',
+          price: '£699.99',
+          originalPrice: '£849.99',
+          discount: '18%',
+          stock: 'Click & Collect',
+          rating: 4.6,
+        },
+        {
+          supplier: 'Amazon Business',
+          price: '£729.00',
+          originalPrice: null,
+          discount: null,
+          stock: 'Prime Next Day',
+          rating: 4.5,
+        },
       ],
-      trend: "down",
-      trendPercent: "5.2%",
-      lastUpdated: "2 minutes ago"
+      trend: 'down',
+      trendPercent: '5.2%',
+      lastUpdated: '2 minutes ago',
     },
     {
-      tool: "DeWalt 18V Combi Drill Kit",
-      category: "equipment",
+      tool: 'DeWalt 18V Combi Drill Kit',
+      category: 'equipment',
       prices: [
-        { supplier: "Toolstation", price: "£149.99", originalPrice: "£199.99", discount: "25%", stock: "In Stock", rating: 4.9 },
-        { supplier: "Screwfix", price: "£159.99", originalPrice: "£199.99", discount: "20%", stock: "500+ Stores", rating: 4.8 },
-        { supplier: "Amazon Business", price: "£164.99", originalPrice: "£189.99", discount: "13%", stock: "Prime", rating: 4.7 },
-        { supplier: "B&Q Trade", price: "£179.99", originalPrice: "£199.99", discount: "10%", stock: "Order Online", rating: 4.4 }
+        {
+          supplier: 'Toolstation',
+          price: '£149.99',
+          originalPrice: '£199.99',
+          discount: '25%',
+          stock: 'In Stock',
+          rating: 4.9,
+        },
+        {
+          supplier: 'Screwfix',
+          price: '£159.99',
+          originalPrice: '£199.99',
+          discount: '20%',
+          stock: '500+ Stores',
+          rating: 4.8,
+        },
+        {
+          supplier: 'Amazon Business',
+          price: '£164.99',
+          originalPrice: '£189.99',
+          discount: '13%',
+          stock: 'Prime',
+          rating: 4.7,
+        },
+        {
+          supplier: 'B&Q Trade',
+          price: '£179.99',
+          originalPrice: '£199.99',
+          discount: '10%',
+          stock: 'Order Online',
+          rating: 4.4,
+        },
       ],
-      trend: "up",
-      trendPercent: "2.1%",
-      lastUpdated: "5 minutes ago"
+      trend: 'up',
+      trendPercent: '2.1%',
+      lastUpdated: '5 minutes ago',
     },
     {
-      tool: "Twin & Earth Cable 2.5mm²",
-      category: "cable",
+      tool: 'Twin & Earth Cable 2.5mm²',
+      category: 'cable',
       prices: [
-        { supplier: "CEF", price: "£135.00", originalPrice: "£159.99", discount: "16%", stock: "In Stock", rating: 4.8 },
-        { supplier: "RS Components", price: "£142.50", originalPrice: "£165.00", discount: "14%", stock: "Next Day", rating: 4.7 },
-        { supplier: "Screwfix", price: "£149.99", originalPrice: "£169.99", discount: "12%", stock: "Click & Collect", rating: 4.6 }
+        {
+          supplier: 'CEF',
+          price: '£135.00',
+          originalPrice: '£159.99',
+          discount: '16%',
+          stock: 'In Stock',
+          rating: 4.8,
+        },
+        {
+          supplier: 'RS Components',
+          price: '£142.50',
+          originalPrice: '£165.00',
+          discount: '14%',
+          stock: 'Next Day',
+          rating: 4.7,
+        },
+        {
+          supplier: 'Screwfix',
+          price: '£149.99',
+          originalPrice: '£169.99',
+          discount: '12%',
+          stock: 'Click & Collect',
+          rating: 4.6,
+        },
       ],
-      trend: "up",
-      trendPercent: "2.1%",
-      lastUpdated: "3 minutes ago"
-    }
+      trend: 'up',
+      trendPercent: '2.1%',
+      lastUpdated: '3 minutes ago',
+    },
   ];
 
   useEffect(() => {
     const category = searchParams.get('category');
     if (category) {
-      const filtered = priceComparisons.filter(comp => comp.category === category);
+      const filtered = priceComparisons.filter((comp) => comp.category === category);
       setFilteredComparisons(filtered);
     } else {
       setFilteredComparisons(priceComparisons);
     }
   }, [searchParams]);
 
-  const displayComparisons = filteredComparisons.length > 0 ? filteredComparisons : priceComparisons;
+  const displayComparisons =
+    filteredComparisons.length > 0 ? filteredComparisons : priceComparisons;
 
   return (
     <div className="space-y-6">
@@ -74,7 +151,7 @@ const LivePriceComparison = () => {
           Refresh Prices
         </Button>
       </div>
-      
+
       <div className="space-y-6">
         {displayComparisons.map((comparison, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
@@ -82,12 +159,16 @@ const LivePriceComparison = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-lg text-foreground">{comparison.tool}</CardTitle>
-                  <p className="text-sm text-elec-yellow capitalize">{comparison.category} pricing</p>
+                  <p className="text-sm text-elec-yellow capitalize">
+                    {comparison.category} pricing
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className={`flex items-center gap-1 text-sm ${
-                    comparison.trend === 'up' ? 'text-red-400' : 'text-green-400'
-                  }`}>
+                  <div
+                    className={`flex items-center gap-1 text-sm ${
+                      comparison.trend === 'up' ? 'text-red-400' : 'text-green-400'
+                    }`}
+                  >
                     {comparison.trend === 'up' ? (
                       <TrendingUp className="h-4 w-4" />
                     ) : (
@@ -101,15 +182,15 @@ const LivePriceComparison = () => {
                 </div>
               </div>
             </CardHeader>
-            
+
             <CardContent>
               <div className="space-y-3">
                 {comparison.prices.map((price, priceIndex) => (
-                  <div 
-                    key={priceIndex} 
+                  <div
+                    key={priceIndex}
                     className={`flex items-center justify-between p-3 rounded-lg border ${
-                      priceIndex === 0 
-                        ? 'border-green-500/30 bg-green-500/10' 
+                      priceIndex === 0
+                        ? 'border-green-500/30 bg-green-500/10'
                         : 'border-elec-yellow/20 bg-elec-dark/30'
                     }`}
                   >
@@ -127,12 +208,10 @@ const LivePriceComparison = () => {
                         <span className="text-xs text-muted-foreground">{price.rating}</span>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
-                      <div className="text-sm text-muted-foreground">
-                        {price.stock}
-                      </div>
-                      
+                      <div className="text-sm text-muted-foreground">{price.stock}</div>
+
                       <div className="flex items-center gap-2">
                         {price.originalPrice && (
                           <>
@@ -144,11 +223,9 @@ const LivePriceComparison = () => {
                             </Badge>
                           </>
                         )}
-                        <span className="text-lg font-bold text-elec-yellow">
-                          {price.price}
-                        </span>
+                        <span className="text-lg font-bold text-elec-yellow">{price.price}</span>
                       </div>
-                      
+
                       <Button size="sm" variant="outline" className="border-elec-yellow/30">
                         <ExternalLink className="h-4 w-4" />
                       </Button>
@@ -156,11 +233,11 @@ const LivePriceComparison = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
                 <p className="text-sm text-blue-300">
-                  💡 <strong>Tip:</strong> Prices include VAT where applicable. Check delivery costs and 
-                  availability before ordering. Trade account discounts may apply.
+                  💡 <strong>Tip:</strong> Prices include VAT where applicable. Check delivery costs
+                  and availability before ordering. Trade account discounts may apply.
                 </p>
               </div>
             </CardContent>

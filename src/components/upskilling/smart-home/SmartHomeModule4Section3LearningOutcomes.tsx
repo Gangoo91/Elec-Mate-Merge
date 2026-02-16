@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule4Section3LearningOutcomes = () => {
   const outcomes = [
-    "Explain the role of environmental sensors in smart HVAC systems",
-    "Identify different types of environmental sensors and their applications",
-    "Recognise the importance of humidity, CO₂, and air quality control",
-    "Understand how sensors integrate with HVAC and BMS systems",
-    "Recommend sensor-based strategies for residential and commercial installs"
+    'Explain the role of environmental sensors in smart HVAC systems',
+    'Identify different types of environmental sensors and their applications',
+    'Recognise the importance of humidity, CO₂, and air quality control',
+    'Understand how sensors integrate with HVAC and BMS systems',
+    'Recommend sensor-based strategies for residential and commercial installs',
   ];
 
   return (

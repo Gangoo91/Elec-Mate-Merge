@@ -39,7 +39,11 @@ export const useCustomerActivity = (customerId: string, filters?: ActivityFilter
   const queryClient = useQueryClient();
 
   // Fetch activity log for a customer
-  const { data: activities = [], isLoading, refetch } = useQuery({
+  const {
+    data: activities = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['customer-activity', customerId, filters],
     queryFn: async () => {
       if (!customerId) return [];
@@ -83,7 +87,9 @@ export const useCustomerActivity = (customerId: string, filters?: ActivityFilter
   // Log new activity
   const logActivityMutation = useMutation({
     mutationFn: async (activity: ActivityInput) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data, error } = await supabase
@@ -125,10 +131,7 @@ export const useCustomerActivity = (customerId: string, filters?: ActivityFilter
   // Delete activity
   const deleteActivityMutation = useMutation({
     mutationFn: async (activityId: string) => {
-      const { error } = await supabase
-        .from('customer_activity_log')
-        .delete()
-        .eq('id', activityId);
+      const { error } = await supabase.from('customer_activity_log').delete().eq('id', activityId);
 
       if (error) throw error;
     },
@@ -198,7 +201,10 @@ export const useCustomerActivity = (customerId: string, filters?: ActivityFilter
 };
 
 // Activity type icons and colors for UI
-export const activityTypeConfig: Record<ActivityType, { icon: string; color: string; label: string }> = {
+export const activityTypeConfig: Record<
+  ActivityType,
+  { icon: string; color: string; label: string }
+> = {
   note: { icon: 'StickyNote', color: 'text-yellow-400', label: 'Note' },
   call: { icon: 'Phone', color: 'text-green-400', label: 'Call' },
   email: { icon: 'Mail', color: 'text-blue-400', label: 'Email' },

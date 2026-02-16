@@ -3,14 +3,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Upload, 
-  Camera, 
-  FileText, 
-  Image, 
-  Award, 
+import {
+  Upload,
+  Camera,
+  FileText,
+  Image,
+  Award,
   Video,
   Mic,
   MapPin,
@@ -19,7 +25,7 @@ import {
   Trash2,
   CheckCircle,
   Clock,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 import { EvidenceFile, EvidenceType } from '@/types/cpd-enhanced';
@@ -37,22 +43,67 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { uploadEvidence } = useEnhancedCPD();
 
-  const evidenceTypes: Array<{ type: EvidenceType; label: string; icon: React.ReactNode; color: string }> = [
-    { type: 'certificate', label: 'Certificate', icon: <Award className="h-4 w-4" />, color: 'bg-green-500/10 text-green-400' },
-    { type: 'attendance-record', label: 'Attendance Record', icon: <FileText className="h-4 w-4" />, color: 'bg-blue-500/10 text-blue-400' },
-    { type: 'site-photo', label: 'Site Photo', icon: <Camera className="h-4 w-4" />, color: 'bg-purple-500/10 text-purple-400' },
-    { type: 'reflection-notes', label: 'Reflection Notes', icon: <FileText className="h-4 w-4" />, color: 'bg-yellow-500/10 text-yellow-400' },
-    { type: 'assessment-results', label: 'Assessment Results', icon: <Award className="h-4 w-4" />, color: 'bg-green-500/10 text-green-400' },
-    { type: 'toolbox-talk', label: 'Toolbox Talk', icon: <Mic className="h-4 w-4" />, color: 'bg-orange-500/10 text-orange-400' },
-    { type: 'technical-document', label: 'Technical Document', icon: <FileText className="h-4 w-4" />, color: 'bg-indigo-500/10 text-indigo-400' },
-    { type: 'video-recording', label: 'Video Recording', icon: <Video className="h-4 w-4" />, color: 'bg-red-500/10 text-red-400' }
+  const evidenceTypes: Array<{
+    type: EvidenceType;
+    label: string;
+    icon: React.ReactNode;
+    color: string;
+  }> = [
+    {
+      type: 'certificate',
+      label: 'Certificate',
+      icon: <Award className="h-4 w-4" />,
+      color: 'bg-green-500/10 text-green-400',
+    },
+    {
+      type: 'attendance-record',
+      label: 'Attendance Record',
+      icon: <FileText className="h-4 w-4" />,
+      color: 'bg-blue-500/10 text-blue-400',
+    },
+    {
+      type: 'site-photo',
+      label: 'Site Photo',
+      icon: <Camera className="h-4 w-4" />,
+      color: 'bg-purple-500/10 text-purple-400',
+    },
+    {
+      type: 'reflection-notes',
+      label: 'Reflection Notes',
+      icon: <FileText className="h-4 w-4" />,
+      color: 'bg-yellow-500/10 text-yellow-400',
+    },
+    {
+      type: 'assessment-results',
+      label: 'Assessment Results',
+      icon: <Award className="h-4 w-4" />,
+      color: 'bg-green-500/10 text-green-400',
+    },
+    {
+      type: 'toolbox-talk',
+      label: 'Toolbox Talk',
+      icon: <Mic className="h-4 w-4" />,
+      color: 'bg-orange-500/10 text-orange-400',
+    },
+    {
+      type: 'technical-document',
+      label: 'Technical Document',
+      icon: <FileText className="h-4 w-4" />,
+      color: 'bg-indigo-500/10 text-indigo-400',
+    },
+    {
+      type: 'video-recording',
+      label: 'Video Recording',
+      icon: <Video className="h-4 w-4" />,
+      color: 'bg-red-500/10 text-red-400',
+    },
   ];
 
   const handleFileUpload = async (files: FileList | null, type: EvidenceType) => {
     if (!files || files.length === 0) return;
 
     setUploading(true);
-    
+
     try {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -69,21 +120,23 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
   const handleCameraCapture = async () => {
     try {
       // Request camera access
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } // Use rear camera on mobile
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }, // Use rear camera on mobile
       });
-      
+
       // Create video element for preview
       const video = document.createElement('video');
       video.srcObject = stream;
       video.play();
-      
+
       // This would typically open a camera interface
       // For now, we'll simulate the capture
-      alert('Camera interface would open here. In a real implementation, this would capture photos with metadata including GPS location.');
-      
+      alert(
+        'Camera interface would open here. In a real implementation, this would capture photos with metadata including GPS location.'
+      );
+
       // Clean up stream
-      stream.getTracks().forEach(track => track.stop());
+      stream.getTracks().forEach((track) => track.stop());
     } catch (error) {
       console.error('Camera access failed:', error);
       alert('Camera access not available. Please use file upload instead.');
@@ -94,12 +147,14 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
     try {
       // Request microphone access
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
+
       // This would typically start recording
-      alert('Voice recording interface would start here. In a real implementation, this would record voice notes and convert them to text.');
-      
+      alert(
+        'Voice recording interface would start here. In a real implementation, this would record voice notes and convert them to text.'
+      );
+
       // Clean up stream
-      stream.getTracks().forEach(track => track.stop());
+      stream.getTracks().forEach((track) => track.stop());
     } catch (error) {
       console.error('Microphone access failed:', error);
       alert('Microphone access not available.');
@@ -107,12 +162,12 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
   };
 
   const getEvidenceIcon = (type: EvidenceType) => {
-    const evidenceType = evidenceTypes.find(t => t.type === type);
+    const evidenceType = evidenceTypes.find((t) => t.type === type);
     return evidenceType?.icon || <FileText className="h-4 w-4" />;
   };
 
   const getEvidenceColor = (type: EvidenceType) => {
-    const evidenceType = evidenceTypes.find(t => t.type === type);
+    const evidenceType = evidenceTypes.find((t) => t.type === type);
     return evidenceType?.color || 'bg-gray-500/10 text-gray-400';
   };
 
@@ -230,11 +285,9 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
                   <div className={`p-2 rounded ${getEvidenceColor(file.type)}`}>
                     {getEvidenceIcon(file.type)}
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {file.fileName}
-                    </p>
+                    <p className="text-sm font-medium text-foreground truncate">{file.fileName}</p>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Badge variant="outline" className="text-xs">
                         {file.type.replace('-', ' ')}
@@ -250,14 +303,10 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
                   </div>
 
                   <div className="flex items-center gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedEvidence(file)}
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => setSelectedEvidence(file)}>
                       <Eye className="h-4 w-4" />
                     </Button>
-                    
+
                     <Button
                       variant="ghost"
                       size="sm"
@@ -303,7 +352,7 @@ const SiteLogForm = ({ entryId, onComplete }: { entryId: string; onComplete?: ()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Create a site log entry
     const logData = {
       location,
@@ -311,12 +360,12 @@ const SiteLogForm = ({ entryId, onComplete }: { entryId: string; onComplete?: ()
       observations,
       skillsGained,
       timestamp: new Date().toISOString(),
-      coordinates: await getCurrentLocation()
+      coordinates: await getCurrentLocation(),
     };
 
     // In a real implementation, this would create a structured site log
     console.log('Site log created:', logData);
-    
+
     onComplete?.();
   };
 
@@ -331,7 +380,7 @@ const SiteLogForm = ({ entryId, onComplete }: { entryId: string; onComplete?: ()
         (position) => {
           resolve({
             lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lng: position.coords.longitude,
           });
         },
         () => resolve(null)
@@ -405,7 +454,9 @@ const EvidenceDetail = ({ evidence }: { evidence: EvidenceFile }) => {
         </div>
         <div>
           <span className="text-muted-foreground">Upload Date:</span>
-          <p className="font-medium text-foreground">{new Date(evidence.uploadDate).toLocaleDateString()}</p>
+          <p className="font-medium text-foreground">
+            {new Date(evidence.uploadDate).toLocaleDateString()}
+          </p>
         </div>
         <div>
           <span className="text-muted-foreground">Verification:</span>
@@ -431,7 +482,9 @@ const EvidenceDetail = ({ evidence }: { evidence: EvidenceFile }) => {
           <div className="bg-muted/20 p-3 rounded-lg space-y-2">
             {Object.entries(evidence.extractedData).map(([key, value]) => (
               <div key={key} className="flex justify-between">
-                <span className="text-muted-foreground capitalize">{key.replace(/([A-Z])/g, ' $1')}:</span>
+                <span className="text-muted-foreground capitalize">
+                  {key.replace(/([A-Z])/g, ' $1')}:
+                </span>
                 <span className="text-foreground">{String(value)}</span>
               </div>
             ))}

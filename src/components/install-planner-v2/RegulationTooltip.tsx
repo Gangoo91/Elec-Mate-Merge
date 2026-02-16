@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { HelpCircle, Loader2 } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from 'react';
+import { HelpCircle, Loader2 } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 
 interface RegulationTooltipProps {
   topic: string;
@@ -20,14 +20,14 @@ export const RegulationTooltip = ({ topic, context }: RegulationTooltipProps) =>
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('explain-regulation', {
-        body: { topic, context }
+        body: { topic, context },
       });
 
       if (error) throw error;
       setExplanation(data.explanation);
     } catch (error) {
       console.error('Failed to fetch explanation:', error);
-      setExplanation("Unable to load explanation at this time.");
+      setExplanation('Unable to load explanation at this time.');
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +61,7 @@ export const RegulationTooltip = ({ topic, context }: RegulationTooltipProps) =>
           <div className="space-y-2">
             <h4 className="font-semibold text-sm text-foreground">Why {topic}?</h4>
             <p className="text-xs text-foreground/90 leading-relaxed">
-              {explanation || "Click to load explanation"}
+              {explanation || 'Click to load explanation'}
             </p>
           </div>
         )}

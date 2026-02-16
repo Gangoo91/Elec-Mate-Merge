@@ -39,26 +39,61 @@ const DataCablingModule5SectionTemplate = ({
     document.title = `${title} | Data Cabling Module 5 ${sectionNumber}`;
     const desc = description;
     let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'description';
+      document.head.appendChild(meta);
+    }
     if (meta) meta.content = desc;
 
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
     if (canonical) canonical.href = window.location.href;
 
-    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description: desc, about: [title, 'Data Cabling', 'BS 7671'], author: { '@type': 'Organisation', name: 'Training Module' } };
-    const script = document.createElement('script'); script.type = 'application/ld+json'; script.text = JSON.stringify(ld); document.head.appendChild(script);
-    return () => { if (script && script.parentNode) script.parentNode.removeChild(script); };
+    const ld = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: desc,
+      about: [title, 'Data Cabling', 'BS 7671'],
+      author: { '@type': 'Organisation', name: 'Training Module' },
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(ld);
+    document.head.appendChild(script);
+    return () => {
+      if (script && script.parentNode) script.parentNode.removeChild(script);
+    };
   }, [title, description, sectionNumber]);
 
-  const sequentialQuestions = useMemo(() => quiz.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })), [quiz]);
+  const sequentialQuestions = useMemo(
+    () =>
+      quiz.map((q) => ({
+        id: q.id,
+        question: q.question,
+        options: q.options,
+        correct: q.correctAnswer,
+        explanation: q.explanation,
+      })),
+    [quiz]
+  );
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/data-cabling-module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -75,16 +110,17 @@ const DataCablingModule5SectionTemplate = ({
               <Zap className="h-4 w-4" />
               <span>Module 5 Section {sectionNumber}</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-              {title}
-            </h1>
-            <p className="text-white/80">
-              {description}
-            </p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">{title}</h1>
+            <p className="text-white/80">{description}</p>
             {badges.length > 0 && (
               <div className="mt-4 flex flex-wrap justify-center gap-2">
                 {badges.map((b) => (
-                  <span key={b} className="px-3 py-1 text-xs rounded-full bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30">{b}</span>
+                  <span
+                    key={b}
+                    className="px-3 py-1 text-xs rounded-full bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30"
+                  >
+                    {b}
+                  </span>
                 ))}
               </div>
             )}
@@ -100,7 +136,9 @@ const DataCablingModule5SectionTemplate = ({
               <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Topics</p>
               <ul className="text-sm text-white space-y-1">
                 {blocks.slice(0, 3).map((block) => (
-                  <li key={block.heading}><strong>{block.heading}</strong></li>
+                  <li key={block.heading}>
+                    <strong>{block.heading}</strong>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -125,7 +163,9 @@ const DataCablingModule5SectionTemplate = ({
           {blocks.map((block, index) => (
             <section key={block.heading} className="mb-10">
               <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-                <span className="text-elec-yellow/80 text-sm font-normal">{String(index + 1).padStart(2, '0')}</span>
+                <span className="text-elec-yellow/80 text-sm font-normal">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 {block.heading}
               </h2>
               <div className="text-white space-y-4 leading-relaxed">
@@ -141,7 +181,9 @@ const DataCablingModule5SectionTemplate = ({
           {/* Summary */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">{String(blocks.length + 1).padStart(2, '0')}</span>
+              <span className="text-elec-yellow/80 text-sm font-normal">
+                {String(blocks.length + 1).padStart(2, '0')}
+              </span>
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -154,7 +196,10 @@ const DataCablingModule5SectionTemplate = ({
               ) : typeof summary === 'string' && summary.trim().length > 0 ? (
                 <p className="text-sm text-white">{summary}</p>
               ) : (
-                <p className="text-sm text-white">Key points align with industry standards and BS 7671 requirements in the UK context.</p>
+                <p className="text-sm text-white">
+                  Key points align with industry standards and BS 7671 requirements in the UK
+                  context.
+                </p>
               )}
             </div>
           </section>
@@ -167,14 +212,24 @@ const DataCablingModule5SectionTemplate = ({
           {/* Bottom Navigation */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             {prev ? (
-              <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+                asChild
+              >
                 <Link to={prev}>
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Previous Section
                 </Link>
               </Button>
             ) : (
-              <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+                asChild
+              >
                 <Link to="/electrician/upskilling/data-cabling-module-5">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back
@@ -182,14 +237,22 @@ const DataCablingModule5SectionTemplate = ({
               </Button>
             )}
             {next ? (
-              <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+              <Button
+                size="lg"
+                className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+                asChild
+              >
                 <Link to={next}>
                   Next Section
                   <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
                 </Link>
               </Button>
             ) : (
-              <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+              <Button
+                size="lg"
+                className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+                asChild
+              >
                 <Link to="/electrician/upskilling/data-cabling-module-5">
                   Module Overview
                   <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { format as formatDate } from "date-fns";
+import { format as formatDate } from 'date-fns';
 import { safeText, safeNumber } from './rams-pdf-helpers';
 
 // Extend jsPDF with autoTable
@@ -38,34 +38,37 @@ const decodeHtmlEntities = (text: string): string => {
     '&#8216;': '\u2018',
     '&#8217;': '\u2019',
     '&#8220;': '"',
-    '&#8221;': '"'
+    '&#8221;': '"',
   };
-  
+
   let decoded = text;
   Object.entries(entityMap).forEach(([entity, char]) => {
     decoded = decoded.replace(new RegExp(entity, 'g'), char);
   });
-  
+
   // Handle numeric HTML entities
   decoded = decoded.replace(/&#(\d+);/g, (match, dec) => {
     return String.fromCharCode(parseInt(dec, 10));
   });
-  
+
   // Handle hex HTML entities
   decoded = decoded.replace(/&#x([0-9A-Fa-f]+);/g, (match, hex) => {
     return String.fromCharCode(parseInt(hex, 16));
   });
-  
+
   return decoded;
 };
 
 // Enhanced markdown processing with comprehensive formatting and content deduplication
-const processMarkdownText = (text: string, doc: jsPDF): { 
-  content: string; 
-  isHeader: boolean; 
-  level: number; 
-  isList: boolean; 
-  isCode: boolean; 
+const processMarkdownText = (
+  text: string,
+  doc: jsPDF
+): {
+  content: string;
+  isHeader: boolean;
+  level: number;
+  isList: boolean;
+  isCode: boolean;
   fontSize: number;
   fontWeight: string;
   fontStyle: string;
@@ -82,23 +85,40 @@ const processMarkdownText = (text: string, doc: jsPDF): {
   let skip = false;
 
   // Skip duplicate headers and template placeholders
-  if (processedText.includes('*[INSERT') || 
-      processedText.includes('[INSERT') ||
-      processedText === 'Minor Electrical Installation Works Certificate' ||
-      processedText === 'MINOR ELECTRICAL INSTALLATION WORKS CERTIFICATE') {
+  if (
+    processedText.includes('*[INSERT') ||
+    processedText.includes('[INSERT') ||
+    processedText === 'Minor Electrical Installation Works Certificate' ||
+    processedText === 'MINOR ELECTRICAL INSTALLATION WORKS CERTIFICATE'
+  ) {
     skip = true;
-    return { content: '', isHeader: false, level: 0, isList: false, isCode: false, fontSize: 11, fontWeight: 'normal', fontStyle: 'normal', skip };
+    return {
+      content: '',
+      isHeader: false,
+      level: 0,
+      isList: false,
+      isCode: false,
+      fontSize: 11,
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      skip,
+    };
   }
 
   // Process template variables first
   processedText = processedText.replace(/\*\[INSERT\s+([^\]]+)\]\*/g, (match, placeholder) => {
     const today = new Date();
     switch (placeholder.toUpperCase()) {
-      case 'DATE': return today.toLocaleDateString('en-GB');
-      case 'TIME': return today.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-      case 'INSPECTOR NAME': return '_________________';
-      case 'CLIENT NAME': return '_________________';
-      default: return `[${placeholder}]`;
+      case 'DATE':
+        return today.toLocaleDateString('en-GB');
+      case 'TIME':
+        return today.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      case 'INSPECTOR NAME':
+        return '_________________';
+      case 'CLIENT NAME':
+        return '_________________';
+      default:
+        return `[${placeholder}]`;
     }
   });
 
@@ -108,14 +128,29 @@ const processMarkdownText = (text: string, doc: jsPDF): {
     isHeader = true;
     level = headerMatch[1].length;
     processedText = headerMatch[2];
-    
+
     // Professional font hierarchy
     switch (level) {
-      case 1: fontSize = 18; fontWeight = 'bold'; break;
-      case 2: fontSize = 14; fontWeight = 'bold'; break;
-      case 3: fontSize = 12; fontWeight = 'bold'; break;
-      case 4: fontSize = 11; fontWeight = 'bold'; break;
-      default: fontSize = 10; fontWeight = 'bold'; break;
+      case 1:
+        fontSize = 18;
+        fontWeight = 'bold';
+        break;
+      case 2:
+        fontSize = 14;
+        fontWeight = 'bold';
+        break;
+      case 3:
+        fontSize = 12;
+        fontWeight = 'bold';
+        break;
+      case 4:
+        fontSize = 11;
+        fontWeight = 'bold';
+        break;
+      default:
+        fontSize = 10;
+        fontWeight = 'bold';
+        break;
     }
   }
 
@@ -169,7 +204,17 @@ const processMarkdownText = (text: string, doc: jsPDF): {
     .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Convert links to just text
     .trim();
 
-  return { content: processedText, isHeader, level, isList, isCode, fontSize, fontWeight, fontStyle, skip };
+  return {
+    content: processedText,
+    isHeader,
+    level,
+    isList,
+    isCode,
+    fontSize,
+    fontWeight,
+    fontStyle,
+    skip,
+  };
 };
 
 // Advanced text measurement and wrapping
@@ -180,7 +225,12 @@ const measureText = (text: string, fontSize: number, doc: jsPDF): number => {
   return width;
 };
 
-const wrapTextAdvanced = (text: string, maxWidth: number, fontSize: number, doc: jsPDF): string[] => {
+const wrapTextAdvanced = (
+  text: string,
+  maxWidth: number,
+  fontSize: number,
+  doc: jsPDF
+): string[] => {
   const words = text.split(' ');
   const lines: string[] = [];
   let currentLine = '';
@@ -234,33 +284,34 @@ const addEnhancedTable = (
   // Parse table from markdown
   const tableLines = [currentLine];
   let index = currentIndex + 1;
-  
+
   // Collect all table lines
   while (index < lines.length && lines[index].includes('|')) {
     tableLines.push(lines[index]);
     index++;
   }
-  
+
   // Parse table data
   const tableData: string[][] = [];
   let isHeaderRow = true;
-  
+
   for (const line of tableLines) {
-    const cells = line.split('|')
-      .map(cell => cell.trim())
-      .filter(cell => cell.length > 0);
-    
+    const cells = line
+      .split('|')
+      .map((cell) => cell.trim())
+      .filter((cell) => cell.length > 0);
+
     if (cells.length > 0 && !line.includes('---')) {
       tableData.push(cells);
     }
   }
-  
+
   if (tableData.length === 0) return yPosition;
 
   // Calculate column widths based on content
   const columnWidths: number[] = [];
-  const numColumns = Math.max(...tableData.map(row => row.length));
-  
+  const numColumns = Math.max(...tableData.map((row) => row.length));
+
   for (let col = 0; col < numColumns; col++) {
     let maxWidth = 20; // Minimum width
     for (const row of tableData) {
@@ -271,7 +322,7 @@ const addEnhancedTable = (
     }
     columnWidths.push(Math.min(maxWidth, 50)); // Maximum width limit
   }
-  
+
   // Adjust widths to fit page
   const totalWidth = columnWidths.reduce((sum, width) => sum + width, 0);
   if (totalWidth > maxWidth) {
@@ -283,7 +334,7 @@ const addEnhancedTable = (
 
   try {
     // Check if table fits on current page
-    const estimatedTableHeight = (tableData.length * 8) + 20; // Rough estimate
+    const estimatedTableHeight = tableData.length * 8 + 20; // Rough estimate
     if (yPosition + estimatedTableHeight > pageHeight - bottomMargin) {
       doc.addPage();
       yPosition = 20;
@@ -301,23 +352,23 @@ const addEnhancedTable = (
         fontStyle: 'bold',
         fontSize: 9,
         halign: 'center',
-        cellPadding: { top: 4, right: 3, bottom: 4, left: 3 }
+        cellPadding: { top: 4, right: 3, bottom: 4, left: 3 },
       },
       bodyStyles: {
         fontSize: 8,
         cellPadding: { top: 3, right: 3, bottom: 3, left: 3 },
         lineColor: [220, 220, 220],
-        lineWidth: 0.1
+        lineWidth: 0.1,
       },
       alternateRowStyles: {
-        fillColor: [248, 249, 250]
+        fillColor: [248, 249, 250],
       },
       columnStyles: (() => {
         const styles: any = {};
         columnWidths.forEach((width, index) => {
-          styles[index] = { 
+          styles[index] = {
             cellWidth: width,
-            halign: index === 0 ? 'left' : 'center'
+            halign: index === 0 ? 'left' : 'center',
           };
         });
         return styles;
@@ -326,7 +377,7 @@ const addEnhancedTable = (
       tableWidth: 'wrap',
       didParseCell: (data: any) => {
         const cellText = data.cell.text[0];
-        
+
         // Highlight PASS/FAIL cells with enhanced styling
         if (cellText === 'PASS') {
           data.cell.styles.textColor = [40, 167, 69];
@@ -337,14 +388,14 @@ const addEnhancedTable = (
           data.cell.styles.fontStyle = 'bold';
           data.cell.styles.fillColor = [248, 215, 218];
         }
-        
+
         // Highlight electrical codes
         if (cellText.match(/^C[123]$/)) {
           data.cell.styles.textColor = [255, 193, 7];
           data.cell.styles.fontStyle = 'bold';
           data.cell.styles.fillColor = [255, 243, 205];
         }
-        
+
         // Handle multi-line cells
         if (cellText.length > 30) {
           data.cell.styles.overflow = 'linebreak';
@@ -356,9 +407,9 @@ const addEnhancedTable = (
           doc.setFontSize(8);
           doc.text(`Page ${data.pageNumber}`, pageHeight - 20, pageHeight - 10);
         }
-      }
+      },
     });
-    
+
     return (doc as any).lastAutoTable.finalY + 10;
   } catch (error) {
     console.error('Enhanced table generation error:', error);
@@ -375,19 +426,19 @@ const addEnhancedTable = (
 
 const addWatermark = (doc: jsPDF, watermark?: string) => {
   if (!watermark) return;
-  
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(40);
   doc.setTextColor(245, 245, 245); // Very light gray
-  
+
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const watermarkWidth = doc.getTextWidth(watermark);
   const watermarkX = (pageWidth - watermarkWidth) / 2;
   const watermarkY = pageHeight / 2;
-  
-  doc.text(watermark, watermarkX, watermarkY, { 
-    align: 'center'
+
+  doc.text(watermark, watermarkX, watermarkY, {
+    align: 'center',
   });
 };
 
@@ -403,21 +454,24 @@ export const generateEnhancedElectricalPDF = async (
 ): Promise<void> => {
   try {
     console.log('Starting enhanced electrical PDF generation...');
-    
+
     // Enhanced content preprocessing with deduplication
     let cleanContent = safeText(markdownContent);
-    
+
     // Remove duplicate headers and clean up formatting
     const contentLines = cleanContent.split('\n');
     const dedupedLines: string[] = [];
     const seenHeaders = new Set<string>();
-    
+
     for (let i = 0; i < contentLines.length; i++) {
       const line = contentLines[i].trim();
       const isHeaderLine = line.match(/^#{1,6}\s+/);
-      
+
       if (isHeaderLine) {
-        const headerText = line.replace(/^#{1,6}\s+/, '').trim().toLowerCase();
+        const headerText = line
+          .replace(/^#{1,6}\s+/, '')
+          .trim()
+          .toLowerCase();
         if (!seenHeaders.has(headerText)) {
           seenHeaders.add(headerText);
           dedupedLines.push(line);
@@ -426,10 +480,10 @@ export const generateEnhancedElectricalPDF = async (
         dedupedLines.push(line);
       }
     }
-    
+
     cleanContent = dedupedLines.join('\n');
     console.log('Content cleaned, entities decoded, and duplicates removed');
-    
+
     const doc = new jsPDF('p', 'mm', 'a4');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -441,7 +495,7 @@ export const generateEnhancedElectricalPDF = async (
       // Elegant gradient background
       doc.setFillColor(248, 250, 252);
       doc.rect(0, 0, pageWidth, 75, 'F');
-      
+
       // Professional title with clean typography
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(24);
@@ -508,7 +562,7 @@ export const generateEnhancedElectricalPDF = async (
     // Process each line with enhanced formatting and smart layout
     while (currentLine < processedLines.length) {
       const line = processedLines[currentLine].trim();
-      
+
       if (!line) {
         yPosition += 3;
         currentLine++;
@@ -516,35 +570,45 @@ export const generateEnhancedElectricalPDF = async (
       }
 
       const processed = processMarkdownText(line, doc);
-      
+
       // Skip processed lines or duplicates
       if (processed.skip || !processed.content) {
         currentLine++;
         continue;
       }
-      
+
       // Set font based on content type with proper styling
       doc.setFont('helvetica', processed.fontWeight);
       doc.setFontSize(processed.fontSize);
 
       // Calculate line height based on font size
       const lineHeight = processed.fontSize * 1.2;
-      
+
       // Check for special content types and apply styling
       if (processed.isHeader) {
         yPosition += processed.level === 1 ? 8 : 4; // Extra space before headers
-        
+
         // Add header background for major headers
         if (processed.level <= 2) {
           doc.setFillColor(245, 245, 245);
           doc.rect(18, yPosition - 3, maxWidth, lineHeight + 2, 'F');
         }
       }
-      
+
       // Handle tables separately
       if (line.includes('|') && line.split('|').length > 2) {
-        yPosition = addEnhancedTable(line, processedLines, currentLine, yPosition, doc, maxWidth, pageHeight, bottomMargin, options);
-        
+        yPosition = addEnhancedTable(
+          line,
+          processedLines,
+          currentLine,
+          yPosition,
+          doc,
+          maxWidth,
+          pageHeight,
+          bottomMargin,
+          options
+        );
+
         // Skip processed table lines
         while (currentLine < processedLines.length && processedLines[currentLine].includes('|')) {
           currentLine++;
@@ -554,10 +618,10 @@ export const generateEnhancedElectricalPDF = async (
 
       // Handle text wrapping with proper measurement
       const wrappedLines = wrapTextAdvanced(processed.content, maxWidth, processed.fontSize, doc);
-      
+
       for (let j = 0; j < wrappedLines.length; j++) {
         const wrappedLine = wrappedLines[j];
-        
+
         // Smart page break detection
         if (yPosition + lineHeight > pageHeight - bottomMargin) {
           doc.addPage();
@@ -570,7 +634,11 @@ export const generateEnhancedElectricalPDF = async (
           doc.setTextColor(40, 167, 69); // Green
         } else if (wrappedLine.includes('FAIL')) {
           doc.setTextColor(220, 53, 69); // Red
-        } else if (wrappedLine.includes('C1') || wrappedLine.includes('C2') || wrappedLine.includes('C3')) {
+        } else if (
+          wrappedLine.includes('C1') ||
+          wrappedLine.includes('C2') ||
+          wrappedLine.includes('C3')
+        ) {
           doc.setTextColor(255, 193, 7); // Amber for codes
         } else {
           doc.setTextColor(0, 0, 0); // Black
@@ -578,11 +646,11 @@ export const generateEnhancedElectricalPDF = async (
 
         // Enhanced electrical symbol processing with proper Unicode
         const symbolProcessedLine = wrappedLine
-          .replace(/©/g, 'Ω')  // Common encoding issue
-          .replace(/â‰¥/g, '≥')  // UTF-8 encoding fix
-          .replace(/Â±/g, '±')   // UTF-8 encoding fix
-          .replace(/Â°/g, '°')   // UTF-8 encoding fix
-          .replace(/Âµ/g, 'µ')   // UTF-8 encoding fix
+          .replace(/©/g, 'Ω') // Common encoding issue
+          .replace(/â‰¥/g, '≥') // UTF-8 encoding fix
+          .replace(/Â±/g, '±') // UTF-8 encoding fix
+          .replace(/Â°/g, '°') // UTF-8 encoding fix
+          .replace(/Âµ/g, 'µ') // UTF-8 encoding fix
           .replace(/&Omega;/g, 'Ω')
           .replace(/&ge;/g, '≥')
           .replace(/&plusmn;/g, '±')
@@ -593,7 +661,7 @@ export const generateEnhancedElectricalPDF = async (
 
         doc.text(symbolProcessedLine, 18, yPosition);
         yPosition += lineHeight;
-        
+
         // Reset text color
         doc.setTextColor(0, 0, 0);
       }
@@ -604,30 +672,31 @@ export const generateEnhancedElectricalPDF = async (
       } else if (processed.isCode) {
         yPosition += 2;
       }
-      
+
       currentLine++;
     }
 
     // Enhanced footer for professional consistency
     const addProfessionalFooter = (pageNum: number, totalPages: number) => {
       const footerY = pageHeight - 15;
-      
+
       // Footer background
       doc.setFillColor(248, 250, 252); // slate-50
       doc.rect(0, footerY - 8, pageWidth, 15, 'F');
-      
+
       // Footer border
       doc.setDrawColor(226, 232, 240); // slate-200
       doc.setLineWidth(0.5);
       doc.line(0, footerY - 8, pageWidth, footerY - 8);
-      
+
       // Left: Professional footer text
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(100, 116, 139); // slate-500
-      const footerText = 'Generated using Professional Electrical Reporting System — BS 7671:2018+A3:2024 Compliant';
+      const footerText =
+        'Generated using Professional Electrical Reporting System — BS 7671:2018+A3:2024 Compliant';
       doc.text(footerText, margin, footerY - 2);
-      
+
       // Right: Page numbers
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(71, 85, 105); // slate-600
@@ -644,13 +713,13 @@ export const generateEnhancedElectricalPDF = async (
         yPosition = 20;
         addWatermark(doc, options.watermark);
       }
-      
+
       yPosition += 20;
-      
+
       // Section background
       doc.setFillColor(249, 250, 251); // gray-50
       doc.rect(margin, yPosition - 5, pageWidth - 2 * margin, 85, 'F');
-      
+
       // Signatures header
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(16);
@@ -661,16 +730,16 @@ export const generateEnhancedElectricalPDF = async (
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(11);
       doc.setTextColor(51, 65, 85); // slate-700
-      
+
       // Professional styling for signature blocks
       const signatureBlockHeight = 25;
-      
+
       // Inspector signature block
       doc.setFillColor(255, 255, 255);
       doc.rect(margin + 5, yPosition, (pageWidth - 2 * margin - 15) / 2, signatureBlockHeight, 'F');
       doc.setDrawColor(203, 213, 225); // slate-300
       doc.rect(margin + 5, yPosition, (pageWidth - 2 * margin - 15) / 2, signatureBlockHeight);
-      
+
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(10);
       doc.text('QUALIFIED ELECTRICIAN', margin + 10, yPosition + 8);
@@ -678,14 +747,14 @@ export const generateEnhancedElectricalPDF = async (
       doc.setFontSize(9);
       doc.text('Signature:', margin + 10, yPosition + 15);
       doc.text('Date:', margin + 10, yPosition + 20);
-      
+
       // Client signature block
       const clientX = margin + 10 + (pageWidth - 2 * margin - 15) / 2;
       doc.setFillColor(255, 255, 255);
       doc.rect(clientX, yPosition, (pageWidth - 2 * margin - 15) / 2, signatureBlockHeight, 'F');
       doc.setDrawColor(203, 213, 225); // slate-300
       doc.rect(clientX, yPosition, (pageWidth - 2 * margin - 15) / 2, signatureBlockHeight);
-      
+
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(10);
       doc.text('CLIENT/REPRESENTATIVE', clientX + 5, yPosition + 8);
@@ -693,23 +762,24 @@ export const generateEnhancedElectricalPDF = async (
       doc.setFontSize(9);
       doc.text('Signature:', clientX + 5, yPosition + 15);
       doc.text('Date:', clientX + 5, yPosition + 20);
-      
+
       yPosition += signatureBlockHeight + 15;
-      
+
       // Enhanced compliance statement
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(9);
       doc.setTextColor(100, 116, 139); // slate-500
-      const complianceText = "This electrical inspection report has been prepared in accordance with BS 7671:2018+A3:2024 " +
-                           "(Requirements for Electrical Installations) and IET Guidance Note 3. The inspection has been " +
-                           "carried out by a qualified and competent person.";
-      
+      const complianceText =
+        'This electrical inspection report has been prepared in accordance with BS 7671:2018+A3:2024 ' +
+        '(Requirements for Electrical Installations) and IET Guidance Note 3. The inspection has been ' +
+        'carried out by a qualified and competent person.';
+
       const complianceLines = wrapTextAdvanced(complianceText, pageWidth - 2 * margin - 10, 9, doc);
       complianceLines.forEach((line: string) => {
         doc.text(line, margin + 5, yPosition);
         yPosition += 4;
       });
-      
+
       yPosition += 10;
     }
 
@@ -721,15 +791,19 @@ export const generateEnhancedElectricalPDF = async (
     }
 
     // Generate filename with enhanced naming
-    const safeReportType = safeText(reportType).toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const finalFilename = filename || `${safeReportType}-${formatDate(new Date(), 'ddMMyyyy-HHmm')}.pdf`;
-    
+    const safeReportType = safeText(reportType)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-');
+    const finalFilename =
+      filename || `${safeReportType}-${formatDate(new Date(), 'ddMMyyyy-HHmm')}.pdf`;
+
     // Save the PDF
     doc.save(finalFilename);
     console.log('Enhanced electrical PDF generated successfully with professional formatting');
-    
   } catch (error) {
     console.error('Enhanced PDF generation failed:', error);
-    throw new Error(`Enhanced PDF generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Enhanced PDF generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 };

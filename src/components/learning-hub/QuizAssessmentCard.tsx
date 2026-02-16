@@ -14,16 +14,11 @@ const QuizAssessmentCard = ({ assessment }: QuizAssessmentCardProps) => {
   const handleStartQuiz = () => {
     // Pass the current location as state so we can navigate back properly
     navigate(`/quiz/${assessment.id}`, {
-      state: { from: location.pathname }
+      state: { from: location.pathname },
     });
   };
 
-  return (
-    <ModernQuizCard
-      assessment={assessment}
-      onStart={handleStartQuiz}
-    />
-  );
+  return <ModernQuizCard assessment={assessment} onStart={handleStartQuiz} />;
 };
 
 export default QuizAssessmentCard;

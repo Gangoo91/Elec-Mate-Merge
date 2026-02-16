@@ -1,28 +1,33 @@
-
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { 
-  Search, 
-  Star, 
-  History, 
-  Download, 
-  Share2, 
-  BookOpen, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Search,
+  Star,
+  History,
+  Download,
+  Share2,
+  BookOpen,
   Calculator,
   Zap,
   TrendingUp,
   Filter,
   Grid,
   List,
-  ChevronRight
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+  ChevronRight,
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 interface CalculatorItem {
   id: string;
@@ -47,7 +52,7 @@ interface CalculatorManagerProps {
 const CalculatorManager: React.FC<CalculatorManagerProps> = ({
   calculators,
   currentCalculator,
-  onCalculatorSelect
+  onCalculatorSelect,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -60,7 +65,7 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
   useEffect(() => {
     const savedFavourites = localStorage.getItem('calculator-favourites');
     const savedRecent = localStorage.getItem('calculator-recent');
-    
+
     if (savedFavourites) {
       setFavourites(JSON.parse(savedFavourites));
     }
@@ -76,20 +81,23 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
   };
 
   const saveRecent = (calculatorId: string) => {
-    const updatedRecent = [calculatorId, ...recentCalculators.filter(id => id !== calculatorId)].slice(0, 10);
+    const updatedRecent = [
+      calculatorId,
+      ...recentCalculators.filter((id) => id !== calculatorId),
+    ].slice(0, 10);
     setRecentCalculators(updatedRecent);
     localStorage.setItem('calculator-recent', JSON.stringify(updatedRecent));
   };
 
   const toggleFavourite = (calculatorId: string) => {
     const newFavourites = favourites.includes(calculatorId)
-      ? favourites.filter(id => id !== calculatorId)
+      ? favourites.filter((id) => id !== calculatorId)
       : [...favourites, calculatorId];
-    
+
     saveFavourites(newFavourites);
     toast({
-      title: favourites.includes(calculatorId) ? "Removed from favourites" : "Added to favourites",
-      description: "Your calculator preferences have been updated."
+      title: favourites.includes(calculatorId) ? 'Removed from favourites' : 'Added to favourites',
+      description: 'Your calculator preferences have been updated.',
     });
   };
 
@@ -100,9 +108,10 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
 
   // Filter and sort calculators
   const filteredCalculators = calculators
-    .filter(calc => {
-      const matchesSearch = calc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          calc.description.toLowerCase().includes(searchTerm.toLowerCase());
+    .filter((calc) => {
+      const matchesSearch =
+        calc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        calc.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || calc.category === selectedCategory;
       return matchesSearch && matchesCategory;
     })
@@ -122,17 +131,22 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
       }
     });
 
-  const categories = ['all', ...Array.from(new Set(calculators.map(calc => calc.category)))];
-  const favouriteCalculators = calculators.filter(calc => favourites.includes(calc.id));
-  const recentCalcs = calculators.filter(calc => recentCalculators.includes(calc.id))
+  const categories = ['all', ...Array.from(new Set(calculators.map((calc) => calc.category)))];
+  const favouriteCalculators = calculators.filter((calc) => favourites.includes(calc.id));
+  const recentCalcs = calculators
+    .filter((calc) => recentCalculators.includes(calc.id))
     .sort((a, b) => recentCalculators.indexOf(a.id) - recentCalculators.indexOf(b.id));
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'intermediate': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'advanced': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      case 'beginner':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'intermediate':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'advanced':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
 
@@ -142,7 +156,7 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
     const isActive = currentCalculator === calculator.id;
 
     return (
-      <Card 
+      <Card
         className={`cursor-pointer border-2 transition-all hover:border-elec-yellow/50 ${
           isActive ? 'border-elec-yellow bg-elec-yellow/10' : 'border-elec-yellow/20'
         }`}
@@ -196,7 +210,7 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
     const isActive = currentCalculator === calculator.id;
 
     return (
-      <Card 
+      <Card
         className={`cursor-pointer border transition-all hover:border-elec-yellow/50 ${
           isActive ? 'border-elec-yellow bg-elec-yellow/10' : 'border-elec-yellow/20'
         }`}
@@ -254,7 +268,7 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
                   placeholder="Search calculators..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn("bg-elec-dark border-elec-yellow/20", !searchTerm && "pl-10")}
+                  className={cn('bg-elec-dark border-elec-yellow/20', !searchTerm && 'pl-10')}
                 />
               </div>
             </div>
@@ -265,14 +279,14 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  {categories.map(category => (
+                  {categories.map((category) => (
                     <SelectItem key={category} value={category}>
                       {category === 'all' ? 'All Categories' : category}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              
+
               <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
                 <SelectTrigger className="w-32 bg-elec-dark border-elec-yellow/20">
                   <TrendingUp className="h-4 w-4 mr-2" />
@@ -337,16 +351,20 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
               </CardContent>
             </Card>
           ) : (
-            <div className={
-              viewMode === 'grid' 
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                : "space-y-4"
-            }>
-              {filteredCalculators.map(calculator => (
-                viewMode === 'grid' 
-                  ? <CalculatorCard key={calculator.id} calculator={calculator} />
-                  : <CalculatorListItem key={calculator.id} calculator={calculator} />
-              ))}
+            <div
+              className={
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
+                  : 'space-y-4'
+              }
+            >
+              {filteredCalculators.map((calculator) =>
+                viewMode === 'grid' ? (
+                  <CalculatorCard key={calculator.id} calculator={calculator} />
+                ) : (
+                  <CalculatorListItem key={calculator.id} calculator={calculator} />
+                )
+              )}
             </div>
           )}
         </TabsContent>
@@ -363,16 +381,20 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
               </CardContent>
             </Card>
           ) : (
-            <div className={
-              viewMode === 'grid' 
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                : "space-y-4"
-            }>
-              {favouriteCalculators.map(calculator => (
-                viewMode === 'grid' 
-                  ? <CalculatorCard key={calculator.id} calculator={calculator} />
-                  : <CalculatorListItem key={calculator.id} calculator={calculator} />
-              ))}
+            <div
+              className={
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
+                  : 'space-y-4'
+              }
+            >
+              {favouriteCalculators.map((calculator) =>
+                viewMode === 'grid' ? (
+                  <CalculatorCard key={calculator.id} calculator={calculator} />
+                ) : (
+                  <CalculatorListItem key={calculator.id} calculator={calculator} />
+                )
+              )}
             </div>
           )}
         </TabsContent>
@@ -389,16 +411,20 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
               </CardContent>
             </Card>
           ) : (
-            <div className={
-              viewMode === 'grid' 
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                : "space-y-4"
-            }>
-              {recentCalcs.map(calculator => (
-                viewMode === 'grid' 
-                  ? <CalculatorCard key={calculator.id} calculator={calculator} />
-                  : <CalculatorListItem key={calculator.id} calculator={calculator} />
-              ))}
+            <div
+              className={
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
+                  : 'space-y-4'
+              }
+            >
+              {recentCalcs.map((calculator) =>
+                viewMode === 'grid' ? (
+                  <CalculatorCard key={calculator.id} calculator={calculator} />
+                ) : (
+                  <CalculatorListItem key={calculator.id} calculator={calculator} />
+                )
+              )}
             </div>
           )}
         </TabsContent>

@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Progress } from "@/components/ui/progress";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { AddTrainingRequestDialog } from "./dialogs/AddTrainingRequestDialog";
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Progress } from '@/components/ui/progress';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { AddTrainingRequestDialog } from './dialogs/AddTrainingRequestDialog';
 import {
   Star,
   CheckCircle,
@@ -25,8 +25,8 @@ import {
   FileText,
   ChevronRight,
   GraduationCap,
-  Plus
-} from "lucide-react";
+  Plus,
+} from 'lucide-react';
 
 // Elec-ID verification tiers aligned with database schema
 export type VerificationTier = 'basic' | 'verified' | 'premium';
@@ -96,27 +96,30 @@ interface SparkProfileSheetProps {
 }
 
 // Elec-ID verification tier configuration
-const tierConfig: Record<VerificationTier, { label: string; color: string; icon: typeof Shield; bg: string; description: string }> = {
+const tierConfig: Record<
+  VerificationTier,
+  { label: string; color: string; icon: typeof Shield; bg: string; description: string }
+> = {
   basic: {
     label: 'Basic',
     color: 'text-muted-foreground',
     icon: Shield,
     bg: 'bg-muted',
-    description: 'Profile created'
+    description: 'Profile created',
   },
   verified: {
     label: 'Verified',
     color: 'text-blue-500',
     icon: Shield,
     bg: 'bg-blue-100 dark:bg-blue-900/30',
-    description: 'ECS Card + qualification verified'
+    description: 'ECS Card + qualification verified',
   },
   premium: {
     label: 'Premium',
     color: 'text-elec-yellow',
     icon: Award,
     bg: 'bg-yellow-100 dark:bg-yellow-900/30',
-    description: 'Fully verified profile'
+    description: 'Fully verified profile',
   },
 };
 
@@ -138,7 +141,10 @@ export function SparkProfileSheet({
 
   const tier = tierConfig[electrician.verificationTier];
   const TierIcon = tier.icon;
-  const initials = electrician.name.split(' ').map(n => n[0]).join('');
+  const initials = electrician.name
+    .split(' ')
+    .map((n) => n[0])
+    .join('');
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -161,7 +167,7 @@ export function SparkProfileSheet({
                       <TierIcon className={`h-4 w-4 ${tier.color}`} />
                     </div>
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <SheetTitle className="text-xl truncate">{electrician.name}</SheetTitle>
@@ -181,15 +187,12 @@ export function SparkProfileSheet({
                       </Badge>
                     </div>
                   </div>
-                  
+
                   {/* Save Button */}
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="shrink-0"
-                    onClick={onSave}
-                  >
-                    <Heart className={`h-6 w-6 ${isSaved ? 'fill-primary text-elec-yellow' : ''}`} />
+                  <Button variant="ghost" size="icon" className="shrink-0" onClick={onSave}>
+                    <Heart
+                      className={`h-6 w-6 ${isSaved ? 'fill-primary text-elec-yellow' : ''}`}
+                    />
                   </Button>
                 </div>
               </SheetHeader>
@@ -223,7 +226,9 @@ export function SparkProfileSheet({
                 <Zap className="h-5 w-5 text-success" />
                 <div>
                   <p className="font-medium text-success">Labour Bank Member</p>
-                  <p className="text-xs text-muted-foreground">Pre-agreed rate: £{labourBankRate}/day</p>
+                  <p className="text-xs text-muted-foreground">
+                    Pre-agreed rate: £{labourBankRate}/day
+                  </p>
                 </div>
               </div>
             )}
@@ -232,10 +237,15 @@ export function SparkProfileSheet({
             <div className="px-4 py-4">
               <div className="flex items-center justify-between p-3 bg-elec-gray rounded-xl border border-border">
                 <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${
-                    electrician.availability === 'Immediate' ? 'bg-success animate-pulse' : 
-                    electrician.availability === '1 week notice' ? 'bg-warning' : 'bg-muted-foreground'
-                  }`} />
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      electrician.availability === 'Immediate'
+                        ? 'bg-success animate-pulse'
+                        : electrician.availability === '1 week notice'
+                          ? 'bg-warning'
+                          : 'bg-muted-foreground'
+                    }`}
+                  />
                   <span className="font-medium">{electrician.availability}</span>
                 </div>
                 <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -306,7 +316,7 @@ export function SparkProfileSheet({
                   See all <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
-              
+
               {electrician.reviews.length > 0 ? (
                 <div className="space-y-3">
                   {electrician.reviews.slice(0, 2).map((review) => (
@@ -319,7 +329,9 @@ export function SparkProfileSheet({
                         </div>
                       </div>
                       <p className="text-sm text-muted-foreground line-clamp-2">{review.comment}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{review.jobType} • {review.date}</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {review.jobType} • {review.date}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -387,7 +399,11 @@ export function SparkProfileSheet({
               Message
             </Button>
             {isInLabourBank ? (
-              <Button size="lg" className="flex-1 h-14 bg-success hover:bg-success/90" onClick={onBook}>
+              <Button
+                size="lg"
+                className="flex-1 h-14 bg-success hover:bg-success/90"
+                onClick={onBook}
+              >
                 <Calendar className="h-5 w-5 mr-2" />
                 Book Now
               </Button>
@@ -409,11 +425,15 @@ export function SparkProfileSheet({
         <AddTrainingRequestDialog
           open={trainingDialogOpen}
           onOpenChange={setTrainingDialogOpen}
-          worker={electrician.elecIdProfileId ? {
-            id: electrician.id,
-            name: electrician.name,
-            elecIdProfileId: electrician.elecIdProfileId,
-          } : null}
+          worker={
+            electrician.elecIdProfileId
+              ? {
+                  id: electrician.id,
+                  name: electrician.name,
+                  elecIdProfileId: electrician.elecIdProfileId,
+                }
+              : null
+          }
         />
       </SheetContent>
     </Sheet>

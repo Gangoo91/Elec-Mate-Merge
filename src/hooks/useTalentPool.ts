@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import type { VerificationTier } from "@/components/employer/SparkProfileSheet";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
 
 export interface WorkHistoryItem {
   jobTitle: string;
@@ -82,11 +82,16 @@ const calculateDayRate = (hourlyRate: number): number => {
 // Helper to convert any rate type to day rate
 const convertToDayRate = (amount: number, type: string): number => {
   switch (type) {
-    case 'hourly': return Math.round(amount * 8);
-    case 'daily': return Math.round(amount);
-    case 'weekly': return Math.round(amount / 5);
-    case 'yearly': return Math.round(amount / 260); // 52 weeks × 5 days
-    default: return Math.round(amount);
+    case 'hourly':
+      return Math.round(amount * 8);
+    case 'daily':
+      return Math.round(amount);
+    case 'weekly':
+      return Math.round(amount / 5);
+    case 'yearly':
+      return Math.round(amount / 260); // 52 weeks × 5 days
+    default:
+      return Math.round(amount);
   }
 };
 
@@ -103,7 +108,7 @@ const determineAvailability = (tier: string): 'Immediate' | '1 week notice' | 'L
 const generateStableValue = (id: string, min: number, max: number): number => {
   let hash = 0;
   for (let i = 0; i < id.length; i++) {
-    hash = ((hash << 5) - hash) + id.charCodeAt(i);
+    hash = (hash << 5) - hash + id.charCodeAt(i);
     hash = hash & hash;
   }
   return min + (Math.abs(hash) % (max - min + 1));
@@ -121,13 +126,14 @@ const calculateTotalExperience = (workHistory: WorkHistoryItem[]): number => {
     const endDate = job.endDate ? new Date(job.endDate) : now;
 
     // Calculate months between dates
-    const months = (endDate.getFullYear() - startDate.getFullYear()) * 12
-      + (endDate.getMonth() - startDate.getMonth());
+    const months =
+      (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+      (endDate.getMonth() - startDate.getMonth());
     totalMonths += Math.max(0, months);
   }
 
   // Return years (rounded to 1 decimal)
-  return Math.round(totalMonths / 12 * 10) / 10;
+  return Math.round((totalMonths / 12) * 10) / 10;
 };
 
 export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPoolReturn {
@@ -143,8 +149,9 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
     try {
       // Fetch profiles with employee data
       const { data: profiles, error: profileError } = await supabase
-        .from("employer_elec_id_profiles")
-        .select(`
+        .from('employer_elec_id_profiles')
+        .select(
+          `
           id,
           employee_id,
           elec_id_number,
@@ -168,14 +175,15 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
             hourly_rate,
             role
           )
-        `)
-        .eq("opt_out", false)
-        .eq("available_for_hire", true)
-        .in("profile_visibility", ["public", "employers_only"]);
+        `
+        )
+        .eq('opt_out', false)
+        .eq('available_for_hire', true)
+        .in('profile_visibility', ['public', 'employers_only']);
 
       if (profileError) {
-        console.error("Error fetching talent pool:", profileError);
-        setError("Failed to load talent pool");
+        console.error('Error fetching talent pool:', profileError);
+        setError('Failed to load talent pool');
         return;
       }
 
@@ -185,64 +193,76 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
       }
 
       // Fetch qualifications for all profiles
-      const profileIds = profiles.map(p => p.id);
+      const profileIds = profiles.map((p) => p.id);
       const { data: qualifications } = await supabase
-        .from("employer_elec_id_qualifications")
-        .select("profile_id, qualification_name, is_verified")
-        .in("profile_id", profileIds);
+        .from('employer_elec_id_qualifications')
+        .select('profile_id, qualification_name, is_verified')
+        .in('profile_id', profileIds);
 
       // Fetch skills for all profiles
       const { data: skills } = await supabase
-        .from("employer_elec_id_skills")
-        .select("profile_id, skill_name, is_verified")
-        .in("profile_id", profileIds);
+        .from('employer_elec_id_skills')
+        .select('profile_id, skill_name, is_verified')
+        .in('profile_id', profileIds);
 
       // Fetch verified documents count
       const { data: documents } = await supabase
-        .from("elec_id_documents")
-        .select("profile_id, verification_status")
-        .in("profile_id", profileIds)
-        .eq("verification_status", "verified");
+        .from('elec_id_documents')
+        .select('profile_id, verification_status')
+        .in('profile_id', profileIds)
+        .eq('verification_status', 'verified');
 
       // Fetch work history for all profiles
       const { data: workHistoryData } = await supabase
-        .from("employer_elec_id_work_history")
-        .select("profile_id, job_title, employer_name, start_date, end_date, is_current")
-        .in("profile_id", profileIds)
-        .order("start_date", { ascending: false });
+        .from('employer_elec_id_work_history')
+        .select('profile_id, job_title, employer_name, start_date, end_date, is_current')
+        .in('profile_id', profileIds)
+        .order('start_date', { ascending: false });
 
       // Map qualifications by profile
-      const qualsByProfile = (qualifications || []).reduce((acc, q) => {
-        if (!acc[q.profile_id]) acc[q.profile_id] = [];
-        acc[q.profile_id].push(q.qualification_name);
-        return acc;
-      }, {} as Record<string, string[]>);
+      const qualsByProfile = (qualifications || []).reduce(
+        (acc, q) => {
+          if (!acc[q.profile_id]) acc[q.profile_id] = [];
+          acc[q.profile_id].push(q.qualification_name);
+          return acc;
+        },
+        {} as Record<string, string[]>
+      );
 
       // Map skills by profile
-      const skillsByProfile = (skills || []).reduce((acc, s) => {
-        if (!acc[s.profile_id]) acc[s.profile_id] = [];
-        acc[s.profile_id].push(s.skill_name);
-        return acc;
-      }, {} as Record<string, string[]>);
+      const skillsByProfile = (skills || []).reduce(
+        (acc, s) => {
+          if (!acc[s.profile_id]) acc[s.profile_id] = [];
+          acc[s.profile_id].push(s.skill_name);
+          return acc;
+        },
+        {} as Record<string, string[]>
+      );
 
       // Count verified docs by profile
-      const verifiedDocsByProfile = (documents || []).reduce((acc, d) => {
-        acc[d.profile_id] = (acc[d.profile_id] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
+      const verifiedDocsByProfile = (documents || []).reduce(
+        (acc, d) => {
+          acc[d.profile_id] = (acc[d.profile_id] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
 
       // Map work history by profile
-      const workHistoryByProfile = (workHistoryData || []).reduce((acc, wh) => {
-        if (!acc[wh.profile_id]) acc[wh.profile_id] = [];
-        acc[wh.profile_id].push({
-          jobTitle: wh.job_title,
-          employer: wh.employer_name,
-          startDate: wh.start_date,
-          endDate: wh.end_date,
-          isCurrent: wh.is_current,
-        } as WorkHistoryItem);
-        return acc;
-      }, {} as Record<string, WorkHistoryItem[]>);
+      const workHistoryByProfile = (workHistoryData || []).reduce(
+        (acc, wh) => {
+          if (!acc[wh.profile_id]) acc[wh.profile_id] = [];
+          acc[wh.profile_id].push({
+            jobTitle: wh.job_title,
+            employer: wh.employer_name,
+            startDate: wh.start_date,
+            endDate: wh.end_date,
+            isCurrent: wh.is_current,
+          } as WorkHistoryItem);
+          return acc;
+        },
+        {} as Record<string, WorkHistoryItem[]>
+      );
 
       // Transform to TalentPoolWorker format
       const transformedWorkers: TalentPoolWorker[] = profiles.map((profile: any) => {
@@ -259,12 +279,11 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
 
         // Calculate experience from work history, or fallback to stable demo value
         const calculatedExperience = calculateTotalExperience(profileWorkHistory);
-        const yearsExperience = calculatedExperience > 0
-          ? calculatedExperience
-          : generateStableValue(profile.id, 2, 20);
+        const yearsExperience =
+          calculatedExperience > 0 ? calculatedExperience : generateStableValue(profile.id, 2, 20);
 
         // Get current role from work history (most recent current job)
-        const currentJob = profileWorkHistory.find(wh => wh.isCurrent);
+        const currentJob = profileWorkHistory.find((wh) => wh.isCurrent);
         const currentRole = currentJob?.jobTitle || employee.role || 'Electrician';
 
         return {
@@ -298,19 +317,23 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
           // UI enhancement fields
           availability: determineAvailability(profile.verification_tier),
           experience: yearsExperience, // Keep for backwards compatibility
-          rating: 4 + (generateStableValue(profile.id, 0, 10) / 10),
+          rating: 4 + generateStableValue(profile.id, 0, 10) / 10,
           completedJobs: generateStableValue(profile.id, 5, 150),
           distance: generateStableValue(profile.id, 1, 25),
           location: 'Manchester, UK', // Would come from geolocation in production
-          responseTime: profile.verification_tier === 'premium' ? '< 1hr' :
-                        profile.verification_tier === 'verified' ? '< 2hrs' : '< 4hrs',
+          responseTime:
+            profile.verification_tier === 'premium'
+              ? '< 1hr'
+              : profile.verification_tier === 'verified'
+                ? '< 2hrs'
+                : '< 4hrs',
         };
       });
 
       setWorkers(transformedWorkers);
     } catch (err) {
-      console.error("Error in useTalentPool:", err);
-      setError("An error occurred while loading talent pool");
+      console.error('Error in useTalentPool:', err);
+      setError('An error occurred while loading talent pool');
     } finally {
       setIsLoading(false);
     }
@@ -323,85 +346,92 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
     // Search filter
     if (options.searchQuery) {
       const query = options.searchQuery.toLowerCase();
-      result = result.filter(w =>
-        w.name.toLowerCase().includes(query) ||
-        w.location.toLowerCase().includes(query) ||
-        w.specialisms.some(s => s.toLowerCase().includes(query)) ||
-        w.role.toLowerCase().includes(query)
+      result = result.filter(
+        (w) =>
+          w.name.toLowerCase().includes(query) ||
+          w.location.toLowerCase().includes(query) ||
+          w.specialisms.some((s) => s.toLowerCase().includes(query)) ||
+          w.role.toLowerCase().includes(query)
       );
     }
 
     // Tier filter
     if (options.tierFilter && options.tierFilter !== 'all') {
       if (options.tierFilter === 'verified') {
-        result = result.filter(w => w.verificationTier === 'verified' || w.verificationTier === 'premium');
+        result = result.filter(
+          (w) => w.verificationTier === 'verified' || w.verificationTier === 'premium'
+        );
       } else if (options.tierFilter === 'premium') {
-        result = result.filter(w => w.verificationTier === 'premium');
+        result = result.filter((w) => w.verificationTier === 'premium');
       }
     }
 
     // Availability filter
     if (options.availabilityFilter && options.availabilityFilter !== 'all') {
       if (options.availabilityFilter === 'now') {
-        result = result.filter(w => w.availability === 'Immediate');
+        result = result.filter((w) => w.availability === 'Immediate');
       } else if (options.availabilityFilter === 'week') {
-        result = result.filter(w => w.availability !== 'Limited');
+        result = result.filter((w) => w.availability !== 'Limited');
       }
     }
 
     // Specialisms filter
     if (options.specialismsFilter && options.specialismsFilter.length > 0) {
-      result = result.filter(w =>
-        options.specialismsFilter!.some(s => w.specialisms.includes(s))
+      result = result.filter((w) =>
+        options.specialismsFilter!.some((s) => w.specialisms.includes(s))
       );
     }
 
     // Experience level filter
     if (options.experienceFilter && options.experienceFilter !== 'all') {
-      result = result.filter(w => {
+      result = result.filter((w) => {
         const years = w.totalYearsExperience;
         switch (options.experienceFilter) {
-          case 'entry': return years >= 0 && years <= 2;
-          case 'mid': return years >= 3 && years <= 7;
-          case 'senior': return years >= 8;
-          default: return true;
+          case 'entry':
+            return years >= 0 && years <= 2;
+          case 'mid':
+            return years >= 3 && years <= 7;
+          case 'senior':
+            return years >= 8;
+          default:
+            return true;
         }
       });
     }
 
     // ECS Card type filter
     if (options.ecsCardFilter && options.ecsCardFilter.length > 0) {
-      result = result.filter(w =>
-        options.ecsCardFilter!.some(cardType =>
-          w.ecsCardType.toLowerCase() === cardType.toLowerCase()
+      result = result.filter((w) =>
+        options.ecsCardFilter!.some(
+          (cardType) => w.ecsCardType.toLowerCase() === cardType.toLowerCase()
         )
       );
     }
 
     // Skills filter
     if (options.skillsFilter && options.skillsFilter.length > 0) {
-      result = result.filter(w =>
-        options.skillsFilter!.some(skill =>
-          w.skills.some(s => s.toLowerCase().includes(skill.toLowerCase()))
+      result = result.filter((w) =>
+        options.skillsFilter!.some((skill) =>
+          w.skills.some((s) => s.toLowerCase().includes(skill.toLowerCase()))
         )
       );
     }
 
     // Qualifications filter
     if (options.qualificationsFilter && options.qualificationsFilter.length > 0) {
-      result = result.filter(w =>
-        options.qualificationsFilter!.some(qual =>
-          w.qualifications.some(q => q.toLowerCase().includes(qual.toLowerCase()))
+      result = result.filter((w) =>
+        options.qualificationsFilter!.some((qual) =>
+          w.qualifications.some((q) => q.toLowerCase().includes(qual.toLowerCase()))
         )
       );
     }
 
     // Day rate range filter
     if (options.minRate !== undefined && options.minRate > 0) {
-      result = result.filter(w => w.dayRate >= options.minRate!);
+      result = result.filter((w) => w.dayRate >= options.minRate!);
     }
     if (options.maxRate !== undefined && options.maxRate > 0) {
-      result = result.filter(w => w.dayRate <= options.maxRate!);
+      result = result.filter((w) => w.dayRate <= options.maxRate!);
     }
 
     return result;
@@ -421,7 +451,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
 
   // Calculate counts
   const totalCount = filteredWorkers.length;
-  const availableNowCount = filteredWorkers.filter(w => w.availability === 'Immediate').length;
+  const availableNowCount = filteredWorkers.filter((w) => w.availability === 'Immediate').length;
 
   // Initial fetch
   useEffect(() => {

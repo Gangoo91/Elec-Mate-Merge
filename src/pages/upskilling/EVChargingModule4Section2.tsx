@@ -1,77 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m4s2-check1",
-    question: "What is the typical VMR trip voltage threshold for EV charging installations?",
-    options: ["25V", "35-50V", "100V", "230V"],
+    id: 'evcharging-m4s2-check1',
+    question: 'What is the typical VMR trip voltage threshold for EV charging installations?',
+    options: ['25V', '35-50V', '100V', '230V'],
     correctIndex: 1,
-    explanation: "VMR trip thresholds for EV charging are typically set at 35-50V. This is lower than the general 50V limit due to outdoor installation and higher exposure risks associated with EV charging equipment."
+    explanation:
+      'VMR trip thresholds for EV charging are typically set at 35-50V. This is lower than the general 50V limit due to outdoor installation and higher exposure risks associated with EV charging equipment.',
   },
   {
-    id: "evcharging-m4s2-check2",
-    question: "What is the recommended VMR trip time for safety-critical EV charging applications?",
-    options: ["5 seconds", "1 second", "40ms", "200ms"],
+    id: 'evcharging-m4s2-check2',
+    question: 'What is the recommended VMR trip time for safety-critical EV charging applications?',
+    options: ['5 seconds', '1 second', '40ms', '200ms'],
     correctIndex: 2,
-    explanation: "A 40ms trip time is recommended for EV charging to provide fast disconnection for touch safety. This ensures rapid protection when dangerous voltages appear on exposed metalwork."
+    explanation:
+      'A 40ms trip time is recommended for EV charging to provide fast disconnection for touch safety. This ensures rapid protection when dangerous voltages appear on exposed metalwork.',
   },
   {
-    id: "evcharging-m4s2-check3",
-    question: "During automatic earth changeover, what happens when a PEN fault is detected?",
+    id: 'evcharging-m4s2-check3',
+    question: 'During automatic earth changeover, what happens when a PEN fault is detected?',
     options: [
-      "System remains on TN-C-S with alarm only",
-      "Installation switches from TN-C-S to TT using local earth electrode",
-      "Power is disconnected permanently until manual reset",
-      "Only the affected charger is isolated"
+      'System remains on TN-C-S with alarm only',
+      'Installation switches from TN-C-S to TT using local earth electrode',
+      'Power is disconnected permanently until manual reset',
+      'Only the affected charger is isolated',
     ],
     correctIndex: 1,
-    explanation: "Automatic earth changeover systems switch from TN-C-S to TT operation, activating a pre-installed local earth electrode. This maintains protection while isolating from the faulty PEN conductor."
-  }
+    explanation:
+      'Automatic earth changeover systems switch from TN-C-S to TT operation, activating a pre-installed local earth electrode. This maintains protection while isolating from the faulty PEN conductor.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why is 50V the typical VMR trip setting?",
-    answer: "50V is considered the maximum safe touch voltage for general applications. For EV charging, lower settings (35-50V) are preferred due to outdoor installation and higher exposure risks from users touching the charger during operation."
+    question: 'Why is 50V the typical VMR trip setting?',
+    answer:
+      '50V is considered the maximum safe touch voltage for general applications. For EV charging, lower settings (35-50V) are preferred due to outdoor installation and higher exposure risks from users touching the charger during operation.',
   },
   {
-    question: "Can I use existing earth electrodes for PEN protection?",
-    answer: "Yes, but they must meet resistance requirements (<200Ω for 30mA RCD protection). Additional electrodes may be needed to achieve adequate performance for reliable earth changeover operation."
+    question: 'Can I use existing earth electrodes for PEN protection?',
+    answer:
+      'Yes, but they must meet resistance requirements (<200Ω for 30mA RCD protection). Additional electrodes may be needed to achieve adequate performance for reliable earth changeover operation.',
   },
   {
-    question: "How often should PEN protection be tested?",
-    answer: "Monthly automatic tests plus annual manual verification. More frequent testing may be required in high-risk environments or critical applications such as rapid charging hubs."
+    question: 'How often should PEN protection be tested?',
+    answer:
+      'Monthly automatic tests plus annual manual verification. More frequent testing may be required in high-risk environments or critical applications such as rapid charging hubs.',
   },
   {
-    question: "Do I need PEN protection for every charge point?",
-    answer: "Not necessarily. A single VMR system can protect multiple charge points on the same supply, but consider selective protection for large installations to maintain partial operation during faults."
-  }
+    question: 'Do I need PEN protection for every charge point?',
+    answer:
+      'Not necessarily. A single VMR system can protect multiple charge points on the same supply, but consider selective protection for large installations to maintain partial operation during faults.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A TN-C-S installation experiences an open PEN fault. What voltage could appear on exposed metalwork relative to true earth?",
-  options: [
-    "Maximum 50V due to RCD protection",
-    "Only a few volts from normal earth resistance",
-    "Up to 230V depending on load balance",
-    "No voltage as the system trips instantly"
-  ],
-  correctAnswer: 2,
-  explanation: "During an open PEN fault in a TN-C-S system, the installation earth can rise to dangerous potentials up to 230V relative to true earth, depending on the load balance. This occurs because conventional protective devices may not trip, and the fault can persist for extended periods."
-  }
+    question:
+      'A TN-C-S installation experiences an open PEN fault. What voltage could appear on exposed metalwork relative to true earth?',
+    options: [
+      'Maximum 50V due to RCD protection',
+      'Only a few volts from normal earth resistance',
+      'Up to 230V depending on load balance',
+      'No voltage as the system trips instantly',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'During an open PEN fault in a TN-C-S system, the installation earth can rise to dangerous potentials up to 230V relative to true earth, depending on the load balance. This occurs because conventional protective devices may not trip, and the fault can persist for extended periods.',
+  },
 ];
 
 const EVChargingModule4Section2 = () => {
   useSEO({
-    title: "Open PEN Fault Protection Methods | EV Charging Module 4.2",
-    description: "Learn protection methods against open PEN conductor faults in EV charging installations. Covers VMR systems, earth changeover, and BS 7671 compliance."
+    title: 'Open PEN Fault Protection Methods | EV Charging Module 4.2',
+    description:
+      'Learn protection methods against open PEN conductor faults in EV charging installations. Covers VMR systems, earth changeover, and BS 7671 compliance.',
   });
 
   return (
@@ -113,16 +123,26 @@ const EVChargingModule4Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Open PEN:</strong> Can cause up to 230V on metalwork</li>
-              <li><strong>VMR:</strong> Detects voltage rise, trips within 40ms</li>
-              <li><strong>Changeover:</strong> Switches to TT system automatically</li>
+              <li>
+                <strong>Open PEN:</strong> Can cause up to 230V on metalwork
+              </li>
+              <li>
+                <strong>VMR:</strong> Detects voltage rise, trips within 40ms
+              </li>
+              <li>
+                <strong>Changeover:</strong> Switches to TT system automatically
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> VMR unit with voltage display, earth electrode</li>
-              <li><strong>Use:</strong> Essential for outdoor TN-C-S EV charging</li>
+              <li>
+                <strong>Spot:</strong> VMR unit with voltage display, earth electrode
+              </li>
+              <li>
+                <strong>Use:</strong> Essential for outdoor TN-C-S EV charging
+              </li>
             </ul>
           </div>
         </div>
@@ -132,12 +152,12 @@ const EVChargingModule4Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify causes and consequences of open PEN faults",
-              "Specify VMR protection devices for EV charging",
-              "Design voltage monitoring systems",
-              "Implement current-based protection methods",
-              "Apply BS 7671 PEN conductor protection requirements",
-              "Coordinate protection with existing earthing"
+              'Identify causes and consequences of open PEN faults',
+              'Specify VMR protection devices for EV charging',
+              'Design voltage monitoring systems',
+              'Implement current-based protection methods',
+              'Apply BS 7671 PEN conductor protection requirements',
+              'Coordinate protection with existing earthing',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -158,27 +178,44 @@ const EVChargingModule4Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Open PEN (Protective Earth and Neutral) faults represent one of the most serious
-              electrical hazards in TN-C-S systems. When the combined PEN conductor breaks, dangerous
-              voltages can appear on exposed metalwork, creating severe shock and fire risks.
+              electrical hazards in TN-C-S systems. When the combined PEN conductor breaks,
+              dangerous voltages can appear on exposed metalwork, creating severe shock and fire
+              risks.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Causes</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Overhead lines:</strong> Weather or vehicle impact</li>
-                  <li><strong>Underground:</strong> Excavation or corrosion damage</li>
-                  <li><strong>Joints:</strong> Distribution network failures</li>
-                  <li><strong>Maintenance:</strong> Deliberate disconnection</li>
+                  <li>
+                    <strong>Overhead lines:</strong> Weather or vehicle impact
+                  </li>
+                  <li>
+                    <strong>Underground:</strong> Excavation or corrosion damage
+                  </li>
+                  <li>
+                    <strong>Joints:</strong> Distribution network failures
+                  </li>
+                  <li>
+                    <strong>Maintenance:</strong> Deliberate disconnection
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage Consequences</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Normal:</strong> Earth at 0V (supply neutral)</li>
-                  <li><strong>Open PEN:</strong> Earth rises to dangerous levels</li>
-                  <li><strong>Worst case:</strong> Up to 230V on metalwork</li>
-                  <li><strong>Load dependent:</strong> Varies with balance</li>
+                  <li>
+                    <strong>Normal:</strong> Earth at 0V (supply neutral)
+                  </li>
+                  <li>
+                    <strong>Open PEN:</strong> Earth rises to dangerous levels
+                  </li>
+                  <li>
+                    <strong>Worst case:</strong> Up to 230V on metalwork
+                  </li>
+                  <li>
+                    <strong>Load dependent:</strong> Varies with balance
+                  </li>
                 </ul>
               </div>
             </div>
@@ -214,19 +251,35 @@ const EVChargingModule4Section2 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">VMR Components</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Monitoring circuit:</strong> High impedance (1MΩ)</li>
-                  <li><strong>Isolation:</strong> Prevents nuisance tripping</li>
-                  <li><strong>Filtering:</strong> Transient immunity built-in</li>
-                  <li><strong>Indication:</strong> LED status monitoring</li>
+                  <li>
+                    <strong>Monitoring circuit:</strong> High impedance (1MΩ)
+                  </li>
+                  <li>
+                    <strong>Isolation:</strong> Prevents nuisance tripping
+                  </li>
+                  <li>
+                    <strong>Filtering:</strong> Transient immunity built-in
+                  </li>
+                  <li>
+                    <strong>Indication:</strong> LED status monitoring
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Switching Circuit</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Contactor:</strong> Main circuit isolation</li>
-                  <li><strong>Changeover:</strong> Earth switching capability</li>
-                  <li><strong>Auxiliary:</strong> Alarm and monitoring contacts</li>
-                  <li><strong>Override:</strong> Manual test facilities</li>
+                  <li>
+                    <strong>Contactor:</strong> Main circuit isolation
+                  </li>
+                  <li>
+                    <strong>Changeover:</strong> Earth switching capability
+                  </li>
+                  <li>
+                    <strong>Auxiliary:</strong> Alarm and monitoring contacts
+                  </li>
+                  <li>
+                    <strong>Override:</strong> Manual test facilities
+                  </li>
                 </ul>
               </div>
             </div>
@@ -234,10 +287,18 @@ const EVChargingModule4Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">EV Charging VMR Settings:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Trip voltage:</strong> 35-50V (enhanced for outdoor use)</li>
-                <li><strong>Trip time:</strong> 40ms (fast disconnection)</li>
-                <li><strong>Reconnect delay:</strong> 3 minutes (prevent cycling)</li>
-                <li><strong>Test facility:</strong> Automatic + manual verification</li>
+                <li>
+                  <strong>Trip voltage:</strong> 35-50V (enhanced for outdoor use)
+                </li>
+                <li>
+                  <strong>Trip time:</strong> 40ms (fast disconnection)
+                </li>
+                <li>
+                  <strong>Reconnect delay:</strong> 3 minutes (prevent cycling)
+                </li>
+                <li>
+                  <strong>Test facility:</strong> Automatic + manual verification
+                </li>
               </ul>
             </div>
           </div>
@@ -259,21 +320,39 @@ const EVChargingModule4Section2 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Normal Operation (TN-C-S)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Normal Operation (TN-C-S)
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Earth:</strong> Connected to DNO PEN</li>
-                  <li><strong>Protection:</strong> Standard MCB + RCD</li>
-                  <li><strong>Electrode:</strong> Isolated and monitored</li>
-                  <li><strong>Fault loop:</strong> Low impedance via DNO</li>
+                  <li>
+                    <strong>Earth:</strong> Connected to DNO PEN
+                  </li>
+                  <li>
+                    <strong>Protection:</strong> Standard MCB + RCD
+                  </li>
+                  <li>
+                    <strong>Electrode:</strong> Isolated and monitored
+                  </li>
+                  <li>
+                    <strong>Fault loop:</strong> Low impedance via DNO
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Operation (TT)</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Earth:</strong> Switched to local electrode</li>
-                  <li><strong>Protection:</strong> RCD mandatory (≤200Ω)</li>
-                  <li><strong>PEN:</strong> Complete isolation from fault</li>
-                  <li><strong>Fault loop:</strong> High impedance, RCD required</li>
+                  <li>
+                    <strong>Earth:</strong> Switched to local electrode
+                  </li>
+                  <li>
+                    <strong>Protection:</strong> RCD mandatory (≤200Ω)
+                  </li>
+                  <li>
+                    <strong>PEN:</strong> Complete isolation from fault
+                  </li>
+                  <li>
+                    <strong>Fault loop:</strong> High impedance, RCD required
+                  </li>
                 </ul>
               </div>
             </div>
@@ -281,10 +360,18 @@ const EVChargingModule4Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Switching Sequence:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>T+0ms:</strong> PEN fault detected, VMR initiates trip</li>
-                <li><strong>T+40ms:</strong> Main contactor opens, load disconnected</li>
-                <li><strong>T+100ms:</strong> Earth changeover to TT electrode</li>
-                <li><strong>T+200ms:</strong> System verification, ready for reconnection</li>
+                <li>
+                  <strong>T+0ms:</strong> PEN fault detected, VMR initiates trip
+                </li>
+                <li>
+                  <strong>T+40ms:</strong> Main contactor opens, load disconnected
+                </li>
+                <li>
+                  <strong>T+100ms:</strong> Earth changeover to TT electrode
+                </li>
+                <li>
+                  <strong>T+200ms:</strong> System verification, ready for reconnection
+                </li>
               </ul>
             </div>
           </div>
@@ -309,10 +396,18 @@ const EVChargingModule4Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Poor earth electrode:</strong> — Must achieve required resistance</li>
-                <li><strong>Slow trip time:</strong> — 40ms maximum for EV charging safety</li>
-                <li><strong>No testing:</strong> — Monthly automatic + annual manual required</li>
-                <li><strong>Missing documentation:</strong> — Record all settings and test results</li>
+                <li>
+                  <strong>Poor earth electrode:</strong> — Must achieve required resistance
+                </li>
+                <li>
+                  <strong>Slow trip time:</strong> — 40ms maximum for EV charging safety
+                </li>
+                <li>
+                  <strong>No testing:</strong> — Monthly automatic + annual manual required
+                </li>
+                <li>
+                  <strong>Missing documentation:</strong> — Record all settings and test results
+                </li>
               </ul>
             </div>
           </div>
@@ -356,10 +451,7 @@ const EVChargingModule4Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

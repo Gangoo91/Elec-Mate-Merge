@@ -10,111 +10,112 @@ export const SmartHomeSection5Quiz = () => {
 
   const questions = [
     {
-      question: "What is the main advantage of retrofit smart home installations?",
+      question: 'What is the main advantage of retrofit smart home installations?',
       options: [
-        "Professional aesthetic finish",
-        "Lower upfront costs and minimal disruption",
-        "Comprehensive system integration",
-        "Future-proof infrastructure"
+        'Professional aesthetic finish',
+        'Lower upfront costs and minimal disruption',
+        'Comprehensive system integration',
+        'Future-proof infrastructure',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Which installation approach is best for renters?",
+      question: 'Which installation approach is best for renters?',
       options: [
-        "New build integration",
-        "Hybrid approach",
-        "Retrofit with portable devices",
-        "Professional wired installation"
+        'New build integration',
+        'Hybrid approach',
+        'Retrofit with portable devices',
+        'Professional wired installation',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "What is a key benefit of new build smart home integration?",
+      question: 'What is a key benefit of new build smart home integration?',
       options: [
-        "Lower initial costs",
-        "Immediate installation",
-        "Hidden wiring and professional finish",
-        "Easy device replacement"
+        'Lower initial costs',
+        'Immediate installation',
+        'Hidden wiring and professional finish',
+        'Easy device replacement',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "For a budget under £3,000, which approach is typically recommended?",
+      question: 'For a budget under £3,000, which approach is typically recommended?',
       options: [
-        "Comprehensive new build",
-        "Retrofit installation",
-        "Professional hybrid system",
-        "Commercial grade system"
+        'Comprehensive new build',
+        'Retrofit installation',
+        'Professional hybrid system',
+        'Commercial grade system',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What makes new build installations more future-proof?",
+      question: 'What makes new build installations more future-proof?',
       options: [
-        "Wireless technology",
-        "Lower costs",
-        "Structured cabling and spare conduits",
-        "Simpler setup"
+        'Wireless technology',
+        'Lower costs',
+        'Structured cabling and spare conduits',
+        'Simpler setup',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "Which factor is most important when choosing between retrofit and new build?",
+      question: 'Which factor is most important when choosing between retrofit and new build?',
       options: [
-        "Brand preferences",
-        "Property status and budget",
-        "Colour schemes",
-        "Weather conditions"
+        'Brand preferences',
+        'Property status and budget',
+        'Colour schemes',
+        'Weather conditions',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What is typically the highest cost component in new build smart homes?",
+      question: 'What is typically the highest cost component in new build smart homes?',
       options: [
-        "Smart bulbs",
-        "Voice assistants",
-        "Professional installation and structured cabling",
-        "Smart plugs"
+        'Smart bulbs',
+        'Voice assistants',
+        'Professional installation and structured cabling',
+        'Smart plugs',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "For a growing family wanting security and energy management, which approach is recommended?",
+      question:
+        'For a growing family wanting security and energy management, which approach is recommended?',
       options: [
-        "Basic retrofit only",
-        "Hybrid retrofit with gradual expansion",
-        "Wait for new build opportunity",
-        "Commercial-grade system"
+        'Basic retrofit only',
+        'Hybrid retrofit with gradual expansion',
+        'Wait for new build opportunity',
+        'Commercial-grade system',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What is the typical disruption level for retrofit installations?",
+      question: 'What is the typical disruption level for retrofit installations?',
       options: [
-        "Major construction work required",
-        "Complete rewiring needed",
-        "Minimal disruption with immediate use",
-        "Property must be vacated"
+        'Major construction work required',
+        'Complete rewiring needed',
+        'Minimal disruption with immediate use',
+        'Property must be vacated',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "Which scenario best suits comprehensive new build integration?",
+      question: 'Which scenario best suits comprehensive new build integration?',
       options: [
-        "Student accommodation",
-        "Short-term rental property",
-        "Permanent family home with high budget",
-        "Temporary living situation"
+        'Student accommodation',
+        'Short-term rental property',
+        'Permanent family home with high budget',
+        'Temporary living situation',
       ],
-      correct: 2
-    }
+      correct: 2,
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -137,7 +138,7 @@ export const SmartHomeSection5Quiz = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = Math.round((score / questions.length) * 100);
-    
+
     return (
       <Card className="bg-elec-gray border-gray-700">
         <CardHeader>
@@ -150,16 +151,15 @@ export const SmartHomeSection5Quiz = () => {
           <div className="text-4xl font-bold text-elec-yellow">
             {score}/{questions.length}
           </div>
-          <div className="text-xl text-foreground">
-            {percentage}% Correct
-          </div>
+          <div className="text-xl text-foreground">{percentage}% Correct</div>
           <div className="text-gray-300">
-            {percentage >= 80 ? "Excellent work!" : percentage >= 60 ? "Good effort!" : "Keep studying!"}
+            {percentage >= 80
+              ? 'Excellent work!'
+              : percentage >= 60
+                ? 'Good effort!'
+                : 'Keep studying!'}
           </div>
-          <Button 
-            onClick={resetQuiz}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
-          >
+          <Button onClick={resetQuiz} className="bg-elec-yellow text-elec-dark hover:bg-yellow-600">
             Retake Quiz
           </Button>
         </CardContent>
@@ -177,14 +177,19 @@ export const SmartHomeSection5Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex gap-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}
@@ -195,7 +200,7 @@ export const SmartHomeSection5Quiz = () => {
           <h3 className="text-lg font-semibold text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
@@ -224,7 +229,7 @@ export const SmartHomeSection5Quiz = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           {currentQuestion === questions.length - 1 ? (
             <Button
               onClick={() => setShowResults(true)}

@@ -1,40 +1,45 @@
-import { ArrowLeft, Building2, Signpost, Sparkles, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Building2, Signpost, Sparkles, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Implementing MHFA in the Workplace",
+    title: 'Implementing MHFA in the Workplace',
     icon: Building2,
-    description: "Creating an MHFA programme, visibility, management buy-in, Thriving at Work core standards, measuring impact",
+    description:
+      'Creating an MHFA programme, visibility, management buy-in, Thriving at Work core standards, measuring impact',
   },
   {
     id: 2,
-    title: "Signposting & Support Services",
+    title: 'Signposting & Support Services',
     icon: Signpost,
-    description: "NHS Talking Therapies, GP pathway, crisis services, Samaritans, CALM, Mates in Mind, Lighthouse Club, EAPs",
+    description:
+      'NHS Talking Therapies, GP pathway, crisis services, Samaritans, CALM, Mates in Mind, Lighthouse Club, EAPs',
   },
   {
     id: 3,
-    title: "Building a Mentally Healthy Workplace",
+    title: 'Building a Mentally Healthy Workplace',
     icon: Sparkles,
-    description: "Five Ways to Wellbeing, mental health policies, toolbox talks, promoting openness, reducing presenteeism",
+    description:
+      'Five Ways to Wellbeing, mental health policies, toolbox talks, promoting openness, reducing presenteeism',
   },
   {
     id: 4,
-    title: "Self-Care for the Mental Health First Aider",
+    title: 'Self-Care for the Mental Health First Aider',
     icon: ShieldCheck,
-    description: "Compassion fatigue, vicarious trauma, setting boundaries, supervision, personal resilience, reflective practice",
+    description:
+      'Compassion fatigue, vicarious trauma, setting boundaries, supervision, personal resilience, reflective practice',
   },
 ];
 
 export default function MentalHealthModule5() {
   useSEO({
-    title: "Module 5: Workplace Implementation & Wellbeing | Mental Health First Aid",
-    description: "Implementing MHFA programmes, signposting support services, building healthy workplaces and self-care strategies.",
+    title: 'Module 5: Workplace Implementation & Wellbeing | Mental Health First Aid',
+    description:
+      'Implementing MHFA programmes, signposting support services, building healthy workplaces and self-care strategies.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function MentalHealthModule5() {
               Workplace Implementation &amp; Wellbeing
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Putting mental health first aid into practice &mdash; workplace programmes, signposting services, building healthy cultures and looking after yourself
+              Putting mental health first aid into practice &mdash; workplace programmes,
+              signposting services, building healthy cultures and looking after yourself
             </p>
           </div>
 

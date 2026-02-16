@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   AlertTriangle,
   CheckCircle,
@@ -11,15 +11,15 @@ import {
   Sparkles,
   Shield,
   XCircle,
-  MessageSquare
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
-import { RadialGauge, EICRCodeGrid, ExpandableSection } from "./results";
-import { cn } from "@/lib/utils";
-import ErrorAnalysisCard from "./ErrorAnalysisCard";
+  MessageSquare,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
+import { motion, AnimatePresence } from 'framer-motion';
+import { RadialGauge, EICRCodeGrid, ExpandableSection } from './results';
+import { cn } from '@/lib/utils';
+import ErrorAnalysisCard from './ErrorAnalysisCard';
 
 interface BoundingBox {
   x: number;
@@ -71,12 +71,25 @@ interface VisualAnalysisResultsProps {
 
 type FilterType = 'all' | 'C1' | 'C2' | 'C3' | 'FI';
 
-const filterConfig: Record<FilterType, { label: string; color: string; bg: string; border: string }> = {
+const filterConfig: Record<
+  FilterType,
+  { label: string; color: string; bg: string; border: string }
+> = {
   all: { label: 'All', color: 'text-foreground', bg: 'bg-card', border: 'border-border' },
   C1: { label: 'C1', color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' },
-  C2: { label: 'C2', color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/30' },
+  C2: {
+    label: 'C2',
+    color: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/30',
+  },
   C3: { label: 'C3', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
-  FI: { label: 'FI', color: 'text-slate-400', bg: 'bg-slate-500/10', border: 'border-slate-500/30' },
+  FI: {
+    label: 'FI',
+    color: 'text-slate-400',
+    bg: 'bg-slate-500/10',
+    border: 'border-slate-500/30',
+  },
 };
 
 const eicrConfig = {
@@ -114,16 +127,18 @@ const VisualAnalysisResults = ({
   analysisResult,
   onExportReport,
   onRetry,
-  onStartChat
+  onStartChat,
 }: VisualAnalysisResultsProps) => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('all');
   const [expandedFindings, setExpandedFindings] = useState<Record<number, boolean>>({});
 
   // Detect parse error
-  const isParseError = analysisResult?.findings?.some(
-    finding => finding.description.toLowerCase().includes('unable to complete') ||
-               finding.description.toLowerCase().includes('format was invalid')
-  ) || false;
+  const isParseError =
+    analysisResult?.findings?.some(
+      (finding) =>
+        finding.description.toLowerCase().includes('unable to complete') ||
+        finding.description.toLowerCase().includes('format was invalid')
+    ) || false;
 
   if (isParseError && onRetry) {
     return (
@@ -133,7 +148,7 @@ const VisualAnalysisResults = ({
           'Complex image with multiple components',
           'Poor lighting or image quality',
           'Too many images uploaded at once',
-          'Network timeout during processing'
+          'Network timeout during processing',
         ]}
       />
     );
@@ -144,12 +159,11 @@ const VisualAnalysisResults = ({
   const safetyPercentage = Math.round((safetyRating / 10) * 100);
 
   // Get C1 findings for immediate attention section
-  const c1Findings = findings.filter(f => f.eicr_code === 'C1');
+  const c1Findings = findings.filter((f) => f.eicr_code === 'C1');
 
   // Filter findings based on selected filter
-  const filteredFindings = selectedFilter === 'all'
-    ? findings
-    : findings.filter(f => f.eicr_code === selectedFilter);
+  const filteredFindings =
+    selectedFilter === 'all' ? findings : findings.filter((f) => f.eicr_code === selectedFilter);
 
   // Count by code for filter badges
   const countByCode = {
@@ -161,7 +175,7 @@ const VisualAnalysisResults = ({
   };
 
   const toggleFinding = (index: number) => {
-    setExpandedFindings(prev => ({ ...prev, [index]: !prev[index] }));
+    setExpandedFindings((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   const copySummary = () => {
@@ -170,21 +184,22 @@ Generated: ${new Date().toLocaleDateString('en-GB')}
 Safety Rating: ${safetyRating}/10
 
 IDENTIFIED ISSUES:
-${findings.map(finding =>
-  `• ${finding.description} (${finding.eicr_code}) - ${finding.bs7671_clauses.join(', ')}`
-).join('\n')}
+${findings
+  .map(
+    (finding) =>
+      `• ${finding.description} (${finding.eicr_code}) - ${finding.bs7671_clauses.join(', ')}`
+  )
+  .join('\n')}
 
 KEY ACTIONS REQUIRED:
-${recommendations.map(rec =>
-  `• ${rec.action} (${rec.priority})`
-).join('\n')}
+${recommendations.map((rec) => `• ${rec.action} (${rec.priority})`).join('\n')}
 
 This analysis is for guidance only and must be verified by a qualified electrician.`;
 
     navigator.clipboard.writeText(summaryText);
     toast({
-      title: "Copied to clipboard",
-      description: "Analysis summary ready to paste",
+      title: 'Copied to clipboard',
+      description: 'Analysis summary ready to paste',
     });
   };
 
@@ -202,9 +217,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
             </div>
 
             <div className="text-center sm:text-left flex-1">
-              <h2 className="text-2xl font-bold text-green-400 mb-2">
-                No Faults Detected
-              </h2>
+              <h2 className="text-2xl font-bold text-green-400 mb-2">No Faults Detected</h2>
               <p className="text-muted-foreground">
                 Installation appears compliant with BS 7671 requirements
               </p>
@@ -242,8 +255,8 @@ This analysis is for guidance only and must be verified by a qualified electrici
             <div>
               <p className="font-medium text-amber-400 text-sm mb-1">Visual Assessment Only</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Physical testing with calibrated instruments is required for full BS 7671 compliance.
-                Always engage a qualified electrician for certification work.
+                Physical testing with calibrated instruments is required for full BS 7671
+                compliance. Always engage a qualified electrician for certification work.
               </p>
             </div>
           </div>
@@ -298,18 +311,22 @@ This analysis is for guidance only and must be verified by a qualified electrici
 
             <div className="flex-1 space-y-4 w-full">
               {/* Overall Assessment Badge */}
-              <div className={cn(
-                "p-4 rounded-xl border-2 text-center",
-                compliance_summary.overall_assessment === 'satisfactory'
-                  ? "bg-green-500/10 border-green-500/30"
-                  : "bg-red-500/10 border-red-500/30"
-              )}>
-                <div className={cn(
-                  "text-lg font-bold uppercase tracking-wide",
+              <div
+                className={cn(
+                  'p-4 rounded-xl border-2 text-center',
                   compliance_summary.overall_assessment === 'satisfactory'
-                    ? "text-green-400"
-                    : "text-red-400"
-                )}>
+                    ? 'bg-green-500/10 border-green-500/30'
+                    : 'bg-red-500/10 border-red-500/30'
+                )}
+              >
+                <div
+                  className={cn(
+                    'text-lg font-bold uppercase tracking-wide',
+                    compliance_summary.overall_assessment === 'satisfactory'
+                      ? 'text-green-400'
+                      : 'text-red-400'
+                  )}
+                >
                   {compliance_summary.overall_assessment === 'satisfactory' ? (
                     <span className="flex items-center justify-center gap-2">
                       <CheckCircle className="h-5 w-5" />
@@ -325,9 +342,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
               </div>
 
               {/* Summary text */}
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {summary}
-              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">{summary}</p>
             </div>
           </div>
 
@@ -350,7 +365,10 @@ This analysis is for guidance only and must be verified by a qualified electrici
           </div>
           <div className="space-y-2">
             {c1Findings.map((finding, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+              <div
+                key={idx}
+                className="flex items-start gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20"
+              >
                 <XCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm">{finding.description}</p>
@@ -369,7 +387,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
 
       {/* Filter Tabs */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-        {(Object.keys(filterConfig) as FilterType[]).map(filter => {
+        {(Object.keys(filterConfig) as FilterType[]).map((filter) => {
           const config = filterConfig[filter];
           const count = countByCode[filter];
           const isActive = selectedFilter === filter;
@@ -381,11 +399,11 @@ This analysis is for guidance only and must be verified by a qualified electrici
               key={filter}
               onClick={() => setSelectedFilter(filter)}
               className={cn(
-                "flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm",
-                "min-h-[44px] touch-manipulation transition-all flex-shrink-0",
+                'flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm',
+                'min-h-[44px] touch-manipulation transition-all flex-shrink-0',
                 isActive
-                  ? "bg-elec-yellow/20 border-2 border-elec-yellow/40 text-elec-yellow"
-                  : cn("border", config.bg, config.border, config.color, "hover:opacity-80")
+                  ? 'bg-elec-yellow/20 border-2 border-elec-yellow/40 text-elec-yellow'
+                  : cn('border', config.bg, config.border, config.color, 'hover:opacity-80')
               )}
             >
               <span>{config.label}</span>
@@ -411,21 +429,22 @@ This analysis is for guidance only and must be verified by a qualified electrici
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className={cn(
-                  "rounded-xl border overflow-hidden",
-                  config.border,
-                  config.bg
-                )}
+                className={cn('rounded-xl border overflow-hidden', config.border, config.bg)}
               >
                 <button
                   onClick={() => toggleFinding(originalIndex)}
                   className="w-full flex items-center justify-between gap-3 p-4 min-h-[56px] touch-manipulation text-left"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <Badge className={cn(
-                      "text-sm font-bold px-2.5 py-1",
-                      config.bg, config.text, "border", config.border
-                    )}>
+                    <Badge
+                      className={cn(
+                        'text-sm font-bold px-2.5 py-1',
+                        config.bg,
+                        config.text,
+                        'border',
+                        config.border
+                      )}
+                    >
                       {finding.eicr_code}
                     </Badge>
                     <span className="font-medium text-foreground text-sm truncate">
@@ -449,14 +468,14 @@ This analysis is for guidance only and must be verified by a qualified electrici
                   {isExpanded && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
+                      animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-4 pt-0 space-y-4">
                         <div className="border-t border-border/30 pt-4">
                           {/* Code explanation */}
-                          <p className={cn("text-sm font-medium mb-2", config.text)}>
+                          <p className={cn('text-sm font-medium mb-2', config.text)}>
                             {config.label}: {config.description}
                           </p>
 
@@ -474,11 +493,17 @@ This analysis is for guidance only and must be verified by a qualified electrici
                           <div className="p-3 rounded-lg bg-background/50 border border-border/30">
                             <div className="flex items-center gap-2 mb-2">
                               <FileText className="h-4 w-4 text-elec-yellow" />
-                              <span className="text-sm font-semibold text-foreground">BS 7671 References</span>
+                              <span className="text-sm font-semibold text-foreground">
+                                BS 7671 References
+                              </span>
                             </div>
                             <div className="flex flex-wrap gap-2">
                               {finding.bs7671_clauses.map((clause, clauseIdx) => (
-                                <Badge key={clauseIdx} variant="outline" className="text-xs font-mono">
+                                <Badge
+                                  key={clauseIdx}
+                                  variant="outline"
+                                  className="text-xs font-mono"
+                                >
                                   Reg. {clause}
                                 </Badge>
                               ))}
@@ -490,7 +515,9 @@ This analysis is for guidance only and must be verified by a qualified electrici
                         <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
                           <div className="flex items-center gap-2 mb-2">
                             <Wrench className="h-4 w-4 text-elec-yellow" />
-                            <span className="text-sm font-semibold text-foreground">Recommended Fix</span>
+                            <span className="text-sm font-semibold text-foreground">
+                              Recommended Fix
+                            </span>
                           </div>
                           <p className="text-sm text-foreground/90 leading-relaxed">
                             {finding.fix_guidance}
@@ -523,41 +550,71 @@ This analysis is for guidance only and must be verified by a qualified electrici
           title="Action Plan"
           icon={Wrench}
           iconColor="text-elec-yellow"
-          badge={<Badge variant="secondary" className="text-xs">{recommendations.length}</Badge>}
+          badge={
+            <Badge variant="secondary" className="text-xs">
+              {recommendations.length}
+            </Badge>
+          }
           defaultOpen={true}
         >
           <div className="space-y-3">
             {recommendations.map((rec, idx) => {
               const priorityConfig = {
-                immediate: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400' },
-                urgent: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400' },
-                recommended: { bg: 'bg-green-500/10', border: 'border-green-500/30', text: 'text-green-400' },
+                immediate: {
+                  bg: 'bg-red-500/10',
+                  border: 'border-red-500/30',
+                  text: 'text-red-400',
+                },
+                urgent: {
+                  bg: 'bg-amber-500/10',
+                  border: 'border-amber-500/30',
+                  text: 'text-amber-400',
+                },
+                recommended: {
+                  bg: 'bg-green-500/10',
+                  border: 'border-green-500/30',
+                  text: 'text-green-400',
+                },
               };
               const pConfig = priorityConfig[rec.priority];
               const codeConfig = eicrConfig[rec.eicr_code];
 
               return (
-                <div
-                  key={idx}
-                  className={cn(
-                    "p-4 rounded-lg border",
-                    pConfig.border,
-                    pConfig.bg
-                  )}
-                >
+                <div key={idx} className={cn('p-4 rounded-lg border', pConfig.border, pConfig.bg)}>
                   <div className="flex items-start gap-3">
-                    <div className={cn(
-                      "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold",
-                      pConfig.bg, pConfig.text, "border", pConfig.border
-                    )}>
+                    <div
+                      className={cn(
+                        'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold',
+                        pConfig.bg,
+                        pConfig.text,
+                        'border',
+                        pConfig.border
+                      )}
+                    >
                       {idx + 1}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <Badge className={cn("text-xs", pConfig.bg, pConfig.text, "border", pConfig.border)}>
+                        <Badge
+                          className={cn(
+                            'text-xs',
+                            pConfig.bg,
+                            pConfig.text,
+                            'border',
+                            pConfig.border
+                          )}
+                        >
                           {rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1)}
                         </Badge>
-                        <Badge className={cn("text-xs", codeConfig.bg, codeConfig.text, "border", codeConfig.border)}>
+                        <Badge
+                          className={cn(
+                            'text-xs',
+                            codeConfig.bg,
+                            codeConfig.text,
+                            'border',
+                            codeConfig.border
+                          )}
+                        >
                           {rec.eicr_code}
                         </Badge>
                         {rec.cost_estimate && (
@@ -589,9 +646,10 @@ This analysis is for guidance only and must be verified by a qualified electrici
           <div>
             <p className="font-medium text-amber-400 text-sm mb-1">Visual Assessment Only</p>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              This AI analysis is provided as guidance only and should not replace professional electrical inspection.
-              All findings must be verified by a qualified electrician. Visual analysis may not detect all potential
-              issues, especially those requiring physical testing.
+              This AI analysis is provided as guidance only and should not replace professional
+              electrical inspection. All findings must be verified by a qualified electrician.
+              Visual analysis may not detect all potential issues, especially those requiring
+              physical testing.
             </p>
           </div>
         </div>

@@ -6,10 +6,10 @@
  * - Desktop (>=640px): Inline popover combobox (JobTypeSelectorDesktop)
  */
 
-import React, { useEffect, useState } from "react";
-import { JobTypeConfig } from "@/hooks/useJobTypes";
-import JobTypeSelectorMobile from "./JobTypeSelectorMobile";
-import JobTypeSelectorDesktop from "./JobTypeSelectorDesktop";
+import React, { useEffect, useState } from 'react';
+import { JobTypeConfig } from '@/hooks/useJobTypes';
+import JobTypeSelectorMobile from './JobTypeSelectorMobile';
+import JobTypeSelectorDesktop from './JobTypeSelectorDesktop';
 
 export interface JobTypeSelectorProps {
   value: string | null;
@@ -17,11 +17,7 @@ export interface JobTypeSelectorProps {
   className?: string;
 }
 
-const JobTypeSelector: React.FC<JobTypeSelectorProps> = ({
-  value,
-  onChange,
-  className,
-}) => {
+const JobTypeSelector: React.FC<JobTypeSelectorProps> = ({ value, onChange, className }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -31,27 +27,15 @@ const JobTypeSelector: React.FC<JobTypeSelectorProps> = ({
     };
 
     checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   if (isMobile) {
-    return (
-      <JobTypeSelectorMobile
-        value={value}
-        onChange={onChange}
-        className={className}
-      />
-    );
+    return <JobTypeSelectorMobile value={value} onChange={onChange} className={className} />;
   }
 
-  return (
-    <JobTypeSelectorDesktop
-      value={value}
-      onChange={onChange}
-      className={className}
-    />
-  );
+  return <JobTypeSelectorDesktop value={value} onChange={onChange} className={className} />;
 };
 
 export default JobTypeSelector;

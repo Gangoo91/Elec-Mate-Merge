@@ -1,11 +1,22 @@
-
 import React, { useState, useRef } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MobileTabs, MobileTabsContent, MobileTabsList, MobileTabsTrigger } from '@/components/ui/mobile-tabs';
+import {
+  MobileTabs,
+  MobileTabsContent,
+  MobileTabsList,
+  MobileTabsTrigger,
+} from '@/components/ui/mobile-tabs';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { PenTool, Trash2, Star, Plus, Eye } from 'lucide-react';
@@ -19,7 +30,8 @@ interface SignatureManagerDialogProps {
 }
 
 const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManagerDialogProps) => {
-  const { signatures, addSignature, updateSignature, deleteSignature, setDefaultSignature } = useSignatureProfiles();
+  const { signatures, addSignature, updateSignature, deleteSignature, setDefaultSignature } =
+    useSignatureProfiles();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [newSignatureName, setNewSignatureName] = useState('');
@@ -28,21 +40,21 @@ const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManager
 
   const handleSaveSignature = () => {
     const signatureData = signaturePadRef.current?.getSignature();
-    
+
     if (!signatureData) {
       toast({
-        title: "No signature",
-        description: "Please draw a signature before saving.",
-        variant: "destructive",
+        title: 'No signature',
+        description: 'Please draw a signature before saving.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (!newSignatureName.trim()) {
       toast({
-        title: "Name required",
-        description: "Please enter a name for the signature.",
-        variant: "destructive",
+        title: 'Name required',
+        description: 'Please enter a name for the signature.',
+        variant: 'destructive',
       });
       return;
     }
@@ -54,7 +66,7 @@ const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManager
     });
 
     toast({
-      title: "Signature saved",
+      title: 'Signature saved',
       description: `Signature "${newSignature.name}" has been saved.`,
     });
 
@@ -66,15 +78,15 @@ const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManager
   const handleSetDefault = (id: string) => {
     setDefaultSignature(id);
     toast({
-      title: "Default signature updated",
-      description: "The selected signature is now your default.",
+      title: 'Default signature updated',
+      description: 'The selected signature is now your default.',
     });
   };
 
   const handleDeleteSignature = (id: string, name: string) => {
     deleteSignature(id);
     toast({
-      title: "Signature deleted",
+      title: 'Signature deleted',
       description: `Signature "${name}" has been deleted.`,
     });
   };
@@ -83,7 +95,7 @@ const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManager
     onSignatureSelect?.(signature);
     setIsOpen(false);
     toast({
-      title: "Signature selected",
+      title: 'Signature selected',
       description: `Using signature: ${signature.name}`,
     });
   };
@@ -161,7 +173,9 @@ const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManager
                             onClick={() => handleSetDefault(signature.id)}
                             disabled={signature.isDefault}
                           >
-                            <Star className={`h-4 w-4 ${signature.isDefault ? 'fill-current' : ''}`} />
+                            <Star
+                              className={`h-4 w-4 ${signature.isDefault ? 'fill-current' : ''}`}
+                            />
                           </Button>
                           <Button
                             variant="ghost"
@@ -210,23 +224,14 @@ const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManager
 
                 <div className="space-y-2">
                   <Label>Draw Your Signature</Label>
-                  <SignaturePad
-                    ref={signaturePadRef}
-                    width={500}
-                    height={200}
-                  />
+                  <SignaturePad ref={signaturePadRef} width={500} height={200} />
                 </div>
 
                 <div className="flex gap-2 justify-end">
-                  <Button
-                    variant="outline"
-                    onClick={() => signaturePadRef.current?.clear()}
-                  >
+                  <Button variant="outline" onClick={() => signaturePadRef.current?.clear()}>
                     Clear
                   </Button>
-                  <Button onClick={handleSaveSignature}>
-                    Save Signature
-                  </Button>
+                  <Button onClick={handleSaveSignature}>Save Signature</Button>
                 </div>
               </CardContent>
             </Card>

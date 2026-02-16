@@ -2,7 +2,7 @@
  * Framer Motion animation variants for premium native app feel
  */
 
-import { Variants } from "framer-motion";
+import { Variants } from 'framer-motion';
 
 // Page enter/exit transitions
 export const pageVariants: Variants = {
@@ -38,7 +38,7 @@ export const listItemVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 500,
       damping: 30,
     },
@@ -58,17 +58,17 @@ export const cardPressSubtleVariants = {
 
 // Bottom sheet enter/exit
 export const sheetVariants: Variants = {
-  initial: { y: "100%" },
+  initial: { y: '100%' },
   animate: {
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 300,
       damping: 30,
     },
   },
   exit: {
-    y: "100%",
+    y: '100%',
     transition: { duration: 0.2 },
   },
 };
@@ -79,7 +79,7 @@ export const fadeUpVariants: Variants = {
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3, ease: "easeOut" },
+    transition: { duration: 0.3, ease: 'easeOut' },
   },
   exit: {
     opacity: 0,
@@ -103,7 +103,7 @@ export const tabContentVariants: Variants = {
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 0.3, ease: "easeOut" },
+    transition: { duration: 0.3, ease: 'easeOut' },
   },
   exit: (direction: number) => ({
     x: direction < 0 ? 20 : -20,
@@ -120,7 +120,7 @@ export const pillVariants: Variants = {
     scale: 1,
     transition: {
       delay: index * 0.05,
-      type: "spring",
+      type: 'spring',
       stiffness: 400,
       damping: 25,
     },
@@ -131,11 +131,11 @@ export const pillVariants: Variants = {
 // Skeleton shimmer (using CSS animation instead)
 export const skeletonVariants: Variants = {
   animate: {
-    backgroundPosition: ["-200%", "200%"],
+    backgroundPosition: ['-200%', '200%'],
     transition: {
       duration: 1.5,
       repeat: Infinity,
-      ease: "linear",
+      ease: 'linear',
     },
   },
 };
@@ -146,11 +146,11 @@ export const pullIndicatorVariants: Variants = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { type: "spring", stiffness: 400, damping: 25 },
+    transition: { type: 'spring', stiffness: 400, damping: 25 },
   },
   refreshing: {
     rotate: 360,
-    transition: { duration: 1, repeat: Infinity, ease: "linear" },
+    transition: { duration: 1, repeat: Infinity, ease: 'linear' },
   },
 };
 
@@ -161,7 +161,7 @@ export const fabVariants: Variants = {
     scale: 1,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 400,
       damping: 20,
       delay: 0.5,
@@ -177,7 +177,7 @@ export const badgePopVariants: Variants = {
   animate: {
     scale: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 500,
       damping: 25,
     },
@@ -192,7 +192,7 @@ export const counterSpringConfig = {
 
 // Native spring config (for most animations)
 export const nativeSpringConfig = {
-  type: "spring" as const,
+  type: 'spring' as const,
   stiffness: 300,
   damping: 24,
 };
@@ -203,7 +203,7 @@ export const swipeActionVariants: Variants = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { type: "spring", stiffness: 400, damping: 25 },
+    transition: { type: 'spring', stiffness: 400, damping: 25 },
   },
 };
 
@@ -212,7 +212,7 @@ export const progressRingVariants = (progress: number): Variants => ({
   initial: { pathLength: 0 },
   animate: {
     pathLength: progress / 100,
-    transition: { duration: 1.5, ease: "easeOut" },
+    transition: { duration: 1.5, ease: 'easeOut' },
   },
 });
 

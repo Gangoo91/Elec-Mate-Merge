@@ -1,4 +1,3 @@
-
 import { BookOpen } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { VisualInspectionWhatIs } from './visual-inspection/VisualInspectionWhatIs';
@@ -22,7 +21,6 @@ export const VisualInspectionContent = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
-        
         {/* What Is Visual Inspection */}
         <VisualInspectionWhatIs />
 
@@ -52,7 +50,6 @@ export const VisualInspectionContent = () => {
 
         {/* Tools and Equipment */}
         <VisualInspectionTools />
-
       </CardContent>
     </Card>
   );

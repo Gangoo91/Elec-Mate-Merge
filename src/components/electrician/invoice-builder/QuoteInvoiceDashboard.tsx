@@ -1,16 +1,16 @@
-import { useState, useMemo, useEffect } from "react";
-import { useQuoteStorage } from "@/hooks/useQuoteStorage";
-import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
-import { QuotesReadyPanel } from "./QuotesReadyPanel";
-import { InvoiceStatusPanel } from "./InvoiceStatusPanel";
-import { Quote } from "@/types/quote";
-import { Card, CardContent } from "@/components/ui/card";
-import { Receipt, FileCheck, TrendingUp, PoundSterling } from "lucide-react";
-import { InvoiceDecisionDialog } from "./InvoiceDecisionDialog";
-import { useNavigate } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { generateSequentialInvoiceNumber } from "@/utils/invoice-number-generator";
+import { useState, useMemo, useEffect } from 'react';
+import { useQuoteStorage } from '@/hooks/useQuoteStorage';
+import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { QuotesReadyPanel } from './QuotesReadyPanel';
+import { InvoiceStatusPanel } from './InvoiceStatusPanel';
+import { Quote } from '@/types/quote';
+import { Card, CardContent } from '@/components/ui/card';
+import { Receipt, FileCheck, TrendingUp, PoundSterling } from 'lucide-react';
+import { InvoiceDecisionDialog } from './InvoiceDecisionDialog';
+import { useNavigate } from 'react-router-dom';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
 export const QuoteInvoiceDashboard = () => {
   const navigate = useNavigate();
@@ -23,9 +23,7 @@ export const QuoteInvoiceDashboard = () => {
   // Quotes ready for invoice (approved + work_done + not yet invoiced)
   const quotesReady = savedQuotes.filter(
     (quote) =>
-      quote.status === "approved" &&
-      quote.tags?.includes("work_done") &&
-      !quote.invoice_raised
+      quote.status === 'approved' && quote.tags?.includes('work_done') && !quote.invoice_raised
   );
 
   // Calculate stats with improved categorization
@@ -36,15 +34,22 @@ export const QuoteInvoiceDashboard = () => {
 
     const thisMonthInvoices = invoices.filter((inv) => {
       const invDate = inv.invoice_date ? new Date(inv.invoice_date) : null;
-      return invDate && invDate.getMonth() === currentMonth && invDate.getFullYear() === currentYear;
+      return (
+        invDate && invDate.getMonth() === currentMonth && invDate.getFullYear() === currentYear
+      );
     });
 
     const sentInvoices = invoices.filter(
-      (inv) => inv.invoice_status === 'sent' && (!inv.invoice_due_date || new Date(inv.invoice_due_date) >= now)
+      (inv) =>
+        inv.invoice_status === 'sent' &&
+        (!inv.invoice_due_date || new Date(inv.invoice_due_date) >= now)
     );
 
     const overdueInvoices = invoices.filter(
-      (inv) => inv.invoice_status !== 'paid' && inv.invoice_due_date && new Date(inv.invoice_due_date) < now
+      (inv) =>
+        inv.invoice_status !== 'paid' &&
+        inv.invoice_due_date &&
+        new Date(inv.invoice_due_date) < now
     );
 
     const paidInvoices = invoices.filter((inv) => inv.invoice_status === 'paid');
@@ -63,22 +68,20 @@ export const QuoteInvoiceDashboard = () => {
     const checkOverdueInvoices = async () => {
       const now = new Date();
       const overdueInvoices = invoices.filter(
-        inv => inv.invoice_status === 'sent' && 
-               inv.invoice_due_date && 
-               new Date(inv.invoice_due_date) < now
+        (inv) =>
+          inv.invoice_status === 'sent' &&
+          inv.invoice_due_date &&
+          new Date(inv.invoice_due_date) < now
       );
 
       if (overdueInvoices.length > 0) {
         // Update status to 'overdue' in database
-        const updates = overdueInvoices.map(inv =>
-          supabase
-            .from('quotes')
-            .update({ invoice_status: 'overdue' })
-            .eq('id', inv.id)
+        const updates = overdueInvoices.map((inv) =>
+          supabase.from('quotes').update({ invoice_status: 'overdue' }).eq('id', inv.id)
         );
 
         await Promise.all(updates);
-        
+
         toast({
           title: 'Overdue Invoices Detected',
           description: `${overdueInvoices.length} invoice${overdueInvoices.length > 1 ? 's are' : ' is'} now overdue`,
@@ -96,7 +99,7 @@ export const QuoteInvoiceDashboard = () => {
   // Real-time subscription for quote status updates
   useEffect(() => {
     console.log('📡 Setting up real-time quote subscription...');
-    
+
     const channel = supabase
       .channel('quotes-realtime-updates')
       .on(
@@ -108,27 +111,27 @@ export const QuoteInvoiceDashboard = () => {
         },
         (payload) => {
           console.log('🔄 Real-time quote update received:', payload);
-          
+
           const updatedQuote = payload.new as Quote;
-          
+
           // Show success toast when quote is accepted
           if (updatedQuote.acceptance_status === 'accepted') {
             toast({
-              title: "🎉 Quote Accepted!",
+              title: '🎉 Quote Accepted!',
               description: `${updatedQuote.client?.name || 'Client'} accepted quote ${updatedQuote.quoteNumber}`,
-              variant: "default",
+              variant: 'default',
             });
           }
-          
+
           // Show notification when quote is rejected
           if (updatedQuote.acceptance_status === 'rejected') {
             toast({
-              title: "Quote Declined",
+              title: 'Quote Declined',
               description: `${updatedQuote.client?.name || 'Client'} declined quote ${updatedQuote.quoteNumber}`,
-              variant: "default",
+              variant: 'default',
             });
           }
-          
+
           // Trigger a refresh to update the UI
           fetchInvoices();
         }
@@ -145,9 +148,9 @@ export const QuoteInvoiceDashboard = () => {
   }, [fetchInvoices]);
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
     }).format(amount);
   };
 
@@ -169,11 +172,11 @@ export const QuoteInvoiceDashboard = () => {
         invoice_number: invoiceNumber,
         invoice_date: new Date(),
         invoice_due_date: dueDate,
-        invoice_status: "draft" as const,
+        invoice_status: 'draft' as const,
         invoice_raised: true,
         settings: {
           ...quoteForInvoice.settings,
-          paymentTerms: "30 days",
+          paymentTerms: '30 days',
           dueDate: dueDate,
         },
       };
@@ -182,26 +185,26 @@ export const QuoteInvoiceDashboard = () => {
 
       if (success) {
         toast({
-          title: "Invoice Created",
+          title: 'Invoice Created',
           description: `${invoiceNumber} created successfully from quote ${quoteForInvoice.quoteNumber}`,
-          variant: "success",
+          variant: 'success',
         });
         setShowInvoiceDecision(false);
         setQuoteForInvoice(null);
-        navigate("/electrician/invoices");
+        navigate('/electrician/invoices');
       } else {
         toast({
-          title: "Error",
-          description: "Failed to create invoice",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to create invoice',
+          variant: 'destructive',
         });
       }
     } catch (error) {
-      console.error("Error creating invoice:", error);
+      console.error('Error creating invoice:', error);
       toast({
-        title: "Error",
-        description: "Failed to create invoice",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create invoice',
+        variant: 'destructive',
       });
     } finally {
       setLoadingAction(false);
@@ -232,7 +235,9 @@ export const QuoteInvoiceDashboard = () => {
           <CardContent className="p-4 flex items-center gap-3 md:flex-col md:text-center md:space-y-2 md:p-6">
             <FileCheck className="h-5 w-5 md:h-10 md:w-10 text-blue-400 md:mx-auto flex-shrink-0" />
             <div className="flex-1">
-              <div className="text-xl md:text-3xl font-bold text-primary">{stats.totalInvoicesThisMonth}</div>
+              <div className="text-xl md:text-3xl font-bold text-primary">
+                {stats.totalInvoicesThisMonth}
+              </div>
               <div className="text-xs md:text-sm text-muted-foreground">Invoices This Month</div>
             </div>
           </CardContent>
@@ -242,7 +247,9 @@ export const QuoteInvoiceDashboard = () => {
           <CardContent className="p-4 flex items-center gap-3 md:flex-col md:text-center md:space-y-2 md:p-6">
             <TrendingUp className="h-5 w-5 md:h-10 md:w-10 text-orange-400 md:mx-auto flex-shrink-0" />
             <div className="flex-1">
-              <div className="text-xl md:text-3xl font-bold text-primary">{formatCurrency(stats.outstandingValue)}</div>
+              <div className="text-xl md:text-3xl font-bold text-primary">
+                {formatCurrency(stats.outstandingValue)}
+              </div>
               <div className="text-xs md:text-sm text-muted-foreground">Outstanding</div>
               {stats.overdueCount > 0 && (
                 <div className="text-xs text-destructive font-medium mt-1">
@@ -257,7 +264,9 @@ export const QuoteInvoiceDashboard = () => {
           <CardContent className="p-4 flex items-center gap-3 md:flex-col md:text-center md:space-y-2 md:p-6">
             <PoundSterling className="h-5 w-5 md:h-10 md:w-10 text-green-400 md:mx-auto flex-shrink-0" />
             <div className="flex-1">
-              <div className="text-xl md:text-3xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
+              <div className="text-xl md:text-3xl font-bold text-primary">
+                {formatCurrency(stats.paidValue)}
+              </div>
               <div className="text-xs md:text-sm text-muted-foreground">Paid</div>
             </div>
           </CardContent>

@@ -1,16 +1,25 @@
-import { useState } from "react";
-import { Calendar, Clock, MapPin, Star, ExternalLink, ChevronLeft, ChevronRight, GraduationCap } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
+import { useState } from 'react';
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Star,
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+  GraduationCap,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import { cn } from '@/lib/utils';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
 
 interface ModernEducationFeaturedCarouselProps {
   programmes: LiveEducationData[];
@@ -18,10 +27,14 @@ interface ModernEducationFeaturedCarouselProps {
   onProgrammeClick?: (programme: LiveEducationData) => void;
 }
 
-const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeClick }: ModernEducationFeaturedCarouselProps) => {
+const ModernEducationFeaturedCarousel = ({
+  programmes,
+  className,
+  onProgrammeClick,
+}: ModernEducationFeaturedCarouselProps) => {
   // Show up to 6 featured programmes (high rating or employment rate)
   const featuredProgrammes = programmes
-    .filter(prog => prog.rating >= 4.0 || prog.employmentRate >= 80)
+    .filter((prog) => prog.rating >= 4.0 || prog.employmentRate >= 80)
     .slice(0, 6);
 
   if (featuredProgrammes.length === 0) {
@@ -30,41 +43,52 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Degree": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Certificate": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Diploma": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Apprenticeship": "bg-orange-500/20 border-orange-500/30 text-orange-300",
-      "Foundation": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
-      "Master": "bg-red-500/20 border-red-500/30 text-red-300",
-      "HNC": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
-      "HND": "bg-pink-500/20 border-pink-500/30 text-pink-300",
+      Degree: 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+      Certificate: 'bg-green-500/20 border-green-500/30 text-green-300',
+      Diploma: 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+      Apprenticeship: 'bg-orange-500/20 border-orange-500/30 text-orange-300',
+      Foundation: 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
+      Master: 'bg-red-500/20 border-red-500/30 text-red-300',
+      HNC: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-300',
+      HND: 'bg-pink-500/20 border-pink-500/30 text-pink-300',
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return (
+      colors[category as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80'
+    );
   };
 
   const getLevelColor = (level: string) => {
     const colors = {
-      "Level 3": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Level 4": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Level 5": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Level 6": "bg-red-500/20 border-red-500/30 text-red-300",
-      "Level 7": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
+      'Level 3': 'bg-green-500/20 border-green-500/30 text-green-300',
+      'Level 4': 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+      'Level 5': 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+      'Level 6': 'bg-red-500/20 border-red-500/30 text-red-300',
+      'Level 7': 'bg-yellow-500/20 border-yellow-500/30 text-yellow-300',
     };
-    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return colors[level as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80';
   };
 
   const getCategoryImage = (category: string) => {
     const images = {
-      "Degree": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format",
-      "Certificate": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop&auto=format",
-      "Diploma": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format",
-      "Apprenticeship": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format",
-      "Foundation": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format",
-      "Master": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop&auto=format",
-      "HNC": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop&auto=format",
-      "HND": "https://images.unsplash.com/photo-1574188041339-3d9d896ce7f8?w=400&h=250&fit=crop&auto=format",
+      Degree:
+        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format',
+      Certificate:
+        'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop&auto=format',
+      Diploma:
+        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format',
+      Apprenticeship:
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format',
+      Foundation:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format',
+      Master:
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop&auto=format',
+      HNC: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop&auto=format',
+      HND: 'https://images.unsplash.com/photo-1574188041339-3d9d896ce7f8?w=400&h=250&fit=crop&auto=format',
     };
-    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format";
+    return (
+      images[category as keyof typeof images] ||
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format'
+    );
   };
 
   const formatDuration = (duration: string) => {
@@ -73,7 +97,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
       { regex: /(\d+)\s*years?/i, format: (n: number) => `${n} year${n > 1 ? 's' : ''}` },
       { regex: /(\d+)\s*months?/i, format: (n: number) => `${n} month${n > 1 ? 's' : ''}` },
       { regex: /(\d+)\s*weeks?/i, format: (n: number) => `${n} week${n > 1 ? 's' : ''}` },
-      { regex: /(\d+)\s*days?/i, format: (n: number) => `${n} day${n > 1 ? 's' : ''}` }
+      { regex: /(\d+)\s*days?/i, format: (n: number) => `${n} day${n > 1 ? 's' : ''}` },
     ];
 
     for (const pattern of patterns) {
@@ -88,7 +112,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
   };
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {/* Section Header */}
       <div className="space-y-1">
         <h2 className="text-xl sm:text-2xl font-bold text-foreground">
@@ -102,7 +126,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
       {/* Carousel */}
       <Carousel
         opts={{
-          align: "start",
+          align: 'start',
           loop: true,
           skipSnaps: false,
           dragFree: true,
@@ -111,9 +135,14 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {featuredProgrammes.map((programme, index) => (
-            <CarouselItem key={programme.id} className="pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]">
-              <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
-                   onClick={() => onProgrammeClick?.(programme)}>
+            <CarouselItem
+              key={programme.id}
+              className="pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]"
+            >
+              <div
+                className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
+                onClick={() => onProgrammeClick?.(programme)}
+              >
                 {/* Image */}
                 <div className="relative h-32 sm:h-36 overflow-hidden">
                   <img
@@ -123,17 +152,19 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  
+
                   {/* Category Badge */}
                   <div className="absolute top-2 left-2">
-                    <Badge className={cn("text-xs font-medium", getCategoryColor(programme.category))}>
+                    <Badge
+                      className={cn('text-xs font-medium', getCategoryColor(programme.category))}
+                    >
                       {programme.category}
                     </Badge>
                   </div>
 
                   {/* Level Badge */}
                   <div className="absolute top-2 right-2">
-                    <Badge className={cn("text-xs font-medium", getLevelColor(programme.level))}>
+                    <Badge className={cn('text-xs font-medium', getLevelColor(programme.level))}>
                       {programme.level}
                     </Badge>
                   </div>
@@ -189,7 +220,9 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                         <MapPin className="h-3 w-3" />
                         <span className="line-clamp-1">{programme.locations[0]}</span>
                         {programme.locations.length > 1 && (
-                          <span className="text-elec-yellow">+{programme.locations.length - 1}</span>
+                          <span className="text-elec-yellow">
+                            +{programme.locations.length - 1}
+                          </span>
                         )}
                       </div>
                     )}
@@ -200,7 +233,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
                     <div className="text-xs text-foreground/80">
                       <span className="font-medium">{programme.tuitionFees}</span>
                     </div>
-                    
+
                     <Button
                       size="sm"
                       variant="ghost"
@@ -219,7 +252,7 @@ const ModernEducationFeaturedCarousel = ({ programmes, className, onProgrammeCli
             </CarouselItem>
           ))}
         </CarouselContent>
-        
+
         {/* Navigation Arrows - Hidden on mobile, visible on desktop */}
         <CarouselPrevious className="hidden md:flex -left-4 h-10 w-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50" />
         <CarouselNext className="hidden md:flex -right-4 h-10 w-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50" />

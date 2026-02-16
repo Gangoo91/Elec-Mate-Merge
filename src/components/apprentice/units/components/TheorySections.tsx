@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SectionBox } from '@/components/apprentice/SectionBox';
@@ -12,22 +11,22 @@ interface TheorySectionsProps {
 
 const TheorySections = ({ unitCode, quizCompleted, onResourceClick }: TheorySectionsProps) => {
   const navigate = useNavigate();
-  const courseSlug = "level-2-diploma";
-  
+  const courseSlug = 'level-2-diploma';
+
   // The section titles for Electrical Theory
   const sectionTitles = [
-    "Legislation & Regulations",
-    "Technical Information",
-    "Wiring Systems",
-    "Service Position Equipment",
-    "Lighting Circuits",
-    "Ring and Radial Circuits",
-    "Circuit Requirements",
-    "Earthing and Bonding",
-    "Overcurrent Protection",
-    "Circuit Design"
+    'Legislation & Regulations',
+    'Technical Information',
+    'Wiring Systems',
+    'Service Position Equipment',
+    'Lighting Circuits',
+    'Ring and Radial Circuits',
+    'Circuit Requirements',
+    'Earthing and Bonding',
+    'Overcurrent Protection',
+    'Circuit Design',
   ];
-  
+
   return (
     <div className="space-y-6">
       {/* Section boxes */}
@@ -49,14 +48,14 @@ const TheorySections = ({ unitCode, quizCompleted, onResourceClick }: TheorySect
           );
         })}
       </div>
-      
+
       {/* Quiz card */}
       <div className="mt-8">
-        <TheoryQuizCard 
-          courseSlug={courseSlug} 
+        <TheoryQuizCard
+          courseSlug={courseSlug}
           unitCode={unitCode}
           quizCompleted={quizCompleted}
-          onClick={() => onResourceClick("quiz")}
+          onClick={() => onResourceClick('quiz')}
         />
       </div>
     </div>

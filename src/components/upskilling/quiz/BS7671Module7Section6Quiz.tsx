@@ -15,64 +15,69 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: "What new part was added in Amendment 2?",
+    question: 'What new part was added in Amendment 2?',
     options: [
-      "Part 7 - Special Locations",
-      "Part 8 - Prosumer Electrical Installations",
-      "Part 9 - Emergency Systems",
-      "Part 10 - Data Systems"
+      'Part 7 - Special Locations',
+      'Part 8 - Prosumer Electrical Installations',
+      'Part 9 - Emergency Systems',
+      'Part 10 - Data Systems',
     ],
     correctAnswer: 1,
-    explanation: "Amendment 2 introduced Part 8 covering Prosumer Electrical Installations to address the growing installation of systems that both consume and generate electrical energy."
+    explanation:
+      'Amendment 2 introduced Part 8 covering Prosumer Electrical Installations to address the growing installation of systems that both consume and generate electrical energy.',
   },
   {
     id: 2,
     question: "What's changed for EV charger safety?",
     options: [
-      "No changes were made",
-      "Enhanced PEN fault protection and RCD requirements",
-      "Only cosmetic updates",
-      "Removal of safety requirements"
+      'No changes were made',
+      'Enhanced PEN fault protection and RCD requirements',
+      'Only cosmetic updates',
+      'Removal of safety requirements',
     ],
     correctAnswer: 1,
-    explanation: "Amendment 2 enhanced EV charger safety with stricter PEN fault protection requirements and specific RCD type requirements for EV charging installations."
+    explanation:
+      'Amendment 2 enhanced EV charger safety with stricter PEN fault protection requirements and specific RCD type requirements for EV charging installations.',
   },
   {
     id: 3,
-    question: "Are SPDs now required in more areas?",
+    question: 'Are SPDs now required in more areas?',
     options: [
-      "No, requirements were reduced",
-      "Yes, expanded requirements for surge protection",
-      "Only in domestic properties",
-      "SPDs are no longer mentioned"
+      'No, requirements were reduced',
+      'Yes, expanded requirements for surge protection',
+      'Only in domestic properties',
+      'SPDs are no longer mentioned',
     ],
     correctAnswer: 1,
-    explanation: "Amendment 2 expanded surge protective device (SPD) requirements to cover more installation types and locations to provide better protection against transient overvoltages."
+    explanation:
+      'Amendment 2 expanded surge protective device (SPD) requirements to cover more installation types and locations to provide better protection against transient overvoltages.',
   },
   {
     id: 4,
     question: "What's one major fire safety update?",
     options: [
-      "Fire safety requirements were removed",
-      "Enhanced cable selection and installation requirements in escape routes",
-      "Only aesthetic changes",
-      "Fire safety only applies to domestic properties"
+      'Fire safety requirements were removed',
+      'Enhanced cable selection and installation requirements in escape routes',
+      'Only aesthetic changes',
+      'Fire safety only applies to domestic properties',
     ],
     correctAnswer: 1,
-    explanation: "Amendment 2 introduced enhanced fire safety requirements, particularly around cable selection and installation methods in escape routes and high-risk areas."
+    explanation:
+      'Amendment 2 introduced enhanced fire safety requirements, particularly around cable selection and installation methods in escape routes and high-risk areas.',
   },
   {
     id: 5,
-    question: "Is bonding more or less strict now?",
+    question: 'Is bonding more or less strict now?',
     options: [
-      "Less strict - many requirements removed",
-      "More strict with clearer guidance and expanded applications",
-      "No changes to bonding requirements",
-      "Bonding is no longer required"
+      'Less strict - many requirements removed',
+      'More strict with clearer guidance and expanded applications',
+      'No changes to bonding requirements',
+      'Bonding is no longer required',
     ],
     correctAnswer: 1,
-    explanation: "Amendment 2 made bonding requirements more strict with clearer guidance on when supplementary bonding is required and expanded applications in special locations."
-  }
+    explanation:
+      'Amendment 2 made bonding requirements more strict with clearer guidance on when supplementary bonding is required and expanded applications in special locations.',
+  },
 ];
 
 const BS7671Module7Section6Quiz = () => {
@@ -128,9 +133,10 @@ const BS7671Module7Section6Quiz = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Test your understanding of Amendment 2 changes to special locations with this 5-question quiz.
+            Test your understanding of Amendment 2 changes to special locations with this 5-question
+            quiz.
           </p>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -154,10 +160,14 @@ const BS7671Module7Section6Quiz = () => {
               {score}/{quizData.length}
             </div>
             <p className="text-gray-300 mt-2">
-              {score >= 4 ? 'Excellent knowledge of Amendment 2 updates!' : score >= 3 ? 'Good understanding!' : 'Review the material and try again!'}
+              {score >= 4
+                ? 'Excellent knowledge of Amendment 2 updates!'
+                : score >= 3
+                  ? 'Good understanding!'
+                  : 'Review the material and try again!'}
             </p>
           </div>
-          
+
           <div className="space-y-3">
             {quizData.map((question, index) => (
               <div key={question.id} className="bg-elec-dark p-3 rounded-md border border-gray-600">
@@ -171,16 +181,14 @@ const BS7671Module7Section6Quiz = () => {
                     <p className="text-sm font-semibold text-foreground mb-1">
                       {question.id}. {question.question}
                     </p>
-                    <p className="text-xs text-gray-400">
-                      {question.explanation}
-                    </p>
+                    <p className="text-xs text-gray-400">{question.explanation}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleRestart}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -204,7 +212,7 @@ const BS7671Module7Section6Quiz = () => {
           </Badge>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           ></div>
@@ -215,7 +223,7 @@ const BS7671Module7Section6Quiz = () => {
           <p className="text-foreground font-semibold mb-4">
             {question.id}. {question.question}
           </p>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => (
               <button
@@ -235,7 +243,7 @@ const BS7671Module7Section6Quiz = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="flex justify-between">
           <Button
             onClick={handlePrevious}
@@ -245,7 +253,7 @@ const BS7671Module7Section6Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

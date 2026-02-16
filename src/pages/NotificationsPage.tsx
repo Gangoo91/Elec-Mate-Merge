@@ -1,11 +1,10 @@
-
 import React from 'react';
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { format } from 'date-fns';
 import { Bell, Check, CheckCheck } from 'lucide-react';
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge';
 
 const NotificationsPage = () => {
   const { notifications, markAsRead, markAllAsRead } = useNotifications();
@@ -14,12 +13,12 @@ const NotificationsPage = () => {
     <div className="animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold flex items-center">
-          <Bell className="mr-2 h-5 w-5 text-elec-yellow" /> 
+          <Bell className="mr-2 h-5 w-5 text-elec-yellow" />
           Notifications
         </h1>
-        <Button 
-          variant="outline" 
-          size="sm" 
+        <Button
+          variant="outline"
+          size="sm"
           className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
           onClick={markAllAsRead}
         >
@@ -41,7 +40,7 @@ const NotificationsPage = () => {
       ) : (
         <div className="space-y-4">
           {notifications.map((notification) => (
-            <Card 
+            <Card
               key={notification.id}
               className={`border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors ${
                 notification.read ? 'bg-elec-gray' : 'bg-elec-gray-dark'

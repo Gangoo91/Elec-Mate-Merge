@@ -8,10 +8,10 @@ export const LightingRentersQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "Centralised wired systems", correct: false },
-    { text: "Smart bulbs (Wi-Fi/Zigbee)", correct: true },
-    { text: "Hardwired smart switches", correct: false },
-    { text: "KNX bus systems", correct: false }
+    { text: 'Centralised wired systems', correct: false },
+    { text: 'Smart bulbs (Wi-Fi/Zigbee)', correct: true },
+    { text: 'Hardwired smart switches', correct: false },
+    { text: 'KNX bus systems', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +32,10 @@ export const LightingRentersQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q1: Which system is easiest for renters to install?</p>
-        
+        <p className="text-foreground font-medium">
+          Q1: Which system is easiest for renters to install?
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +60,9 @@ export const LightingRentersQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +72,8 @@ export const LightingRentersQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Smart bulbs are renter-friendly because they require no rewiring, can be easily removed when moving, and work with existing light fittings.
+              <strong>Correct:</strong> Smart bulbs are renter-friendly because they require no
+              rewiring, can be easily removed when moving, and work with existing light fittings.
             </p>
           </div>
         )}

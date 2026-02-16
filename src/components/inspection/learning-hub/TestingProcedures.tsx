@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,18 +5,38 @@ import { Zap, Play, CheckCircle } from 'lucide-react';
 
 const TestingProcedures = () => {
   const testingTopics = [
-    { title: 'Continuity Testing', status: 'Essential', description: 'Earth continuity and protective bonding' },
-    { title: 'Insulation Resistance', status: 'Essential', description: 'Testing insulation between conductors' },
-    { title: 'Earth Fault Loop Impedance', status: 'Critical', description: 'Zs measurements and validation' },
-    { title: 'RCD Testing', status: 'Required', description: 'Residual current device verification' },
+    {
+      title: 'Continuity Testing',
+      status: 'Essential',
+      description: 'Earth continuity and protective bonding',
+    },
+    {
+      title: 'Insulation Resistance',
+      status: 'Essential',
+      description: 'Testing insulation between conductors',
+    },
+    {
+      title: 'Earth Fault Loop Impedance',
+      status: 'Critical',
+      description: 'Zs measurements and validation',
+    },
+    {
+      title: 'RCD Testing',
+      status: 'Required',
+      description: 'Residual current device verification',
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Essential': return 'text-red-400';
-      case 'Critical': return 'text-orange-400';
-      case 'Required': return 'text-blue-400';
-      default: return 'text-gray-400';
+      case 'Essential':
+        return 'text-red-400';
+      case 'Critical':
+        return 'text-orange-400';
+      case 'Required':
+        return 'text-blue-400';
+      default:
+        return 'text-gray-400';
     }
   };
 
@@ -45,7 +64,11 @@ const TestingProcedures = () => {
                 </div>
                 <p className="text-sm text-gray-400">{topic.description}</p>
               </div>
-              <Button size="sm" variant="ghost" className="text-elec-yellow hover:bg-elec-yellow hover:text-black">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-elec-yellow hover:bg-elec-yellow hover:text-black"
+              >
                 <Play className="h-4 w-4" />
               </Button>
             </div>

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 import {
   ResponsiveFormModal,
   ResponsiveFormModalContent,
@@ -6,27 +6,49 @@ import {
   ResponsiveFormModalTitle,
   ResponsiveFormModalBody,
   ResponsiveFormModalFooter,
-} from "@/components/ui/responsive-form-modal";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useCreateEmployee } from "@/hooks/useEmployees";
-import { useCreateElecIdProfile } from "@/hooks/useElecId";
-import { toast } from "@/hooks/use-toast";
-import { Plus, UserPlus, Camera, User, Briefcase, PoundSterling, CreditCard, Loader2 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { supabase } from "@/integrations/supabase/client";
-import { PayType } from "@/services/employeeService";
-import { useOptionalVoiceFormContext } from "@/contexts/VoiceFormContext";
+} from '@/components/ui/responsive-form-modal';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useCreateEmployee } from '@/hooks/useEmployees';
+import { useCreateElecIdProfile } from '@/hooks/useElecId';
+import { toast } from '@/hooks/use-toast';
+import {
+  Plus,
+  UserPlus,
+  Camera,
+  User,
+  Briefcase,
+  PoundSterling,
+  CreditCard,
+  Loader2,
+} from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { supabase } from '@/integrations/supabase/client';
+import { PayType } from '@/services/employeeService';
+import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 
-type TeamRole = "QS" | "Supervisor" | "Operative" | "Apprentice" | "Project Manager";
+type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 
-const TEAM_ROLES: TeamRole[] = ["QS", "Supervisor", "Operative", "Apprentice", "Project Manager"];
-const JOB_ROLES = ["Senior Electrician", "Electrician", "Apprentice", "Project Manager", "Site Supervisor", "Estimator"];
-const ECS_CARD_TYPES = ["Gold", "Blue", "White", "Black", "Green"];
+const TEAM_ROLES: TeamRole[] = ['QS', 'Supervisor', 'Operative', 'Apprentice', 'Project Manager'];
+const JOB_ROLES = [
+  'Senior Electrician',
+  'Electrician',
+  'Apprentice',
+  'Project Manager',
+  'Site Supervisor',
+  'Estimator',
+];
+const ECS_CARD_TYPES = ['Gold', 'Blue', 'White', 'Black', 'Green'];
 
 interface AddEmployeeDialogProps {
   trigger?: React.ReactNode;
@@ -34,32 +56,36 @@ interface AddEmployeeDialogProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange }: AddEmployeeDialogProps) {
+export function AddEmployeeDialog({
+  trigger,
+  open: controlledOpen,
+  onOpenChange,
+}: AddEmployeeDialogProps) {
   const createEmployee = useCreateEmployee();
   const createElecId = useCreateElecIdProfile();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [internalOpen, setInternalOpen] = useState(false);
-  
+
   const open = controlledOpen ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
   const [isUploading, setIsUploading] = useState(false);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
-  
+
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    role: "",
-    teamRole: "" as TeamRole | "",
-    payType: "hourly" as PayType,
-    hourlyRate: "25",
-    annualSalary: "",
-    dayRate: "",
+    name: '',
+    email: '',
+    phone: '',
+    role: '',
+    teamRole: '' as TeamRole | '',
+    payType: 'hourly' as PayType,
+    hourlyRate: '25',
+    annualSalary: '',
+    dayRate: '',
     createElecId: false,
-    ecsCardType: "Gold",
-    ecsCardNumber: "",
-    ecsExpiryDate: "",
+    ecsCardType: 'Gold',
+    ecsCardNumber: '',
+    ecsExpiryDate: '',
   });
 
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,12 +93,20 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      toast({ title: "Invalid file", description: "Please select an image file.", variant: "destructive" });
+      toast({
+        title: 'Invalid file',
+        description: 'Please select an image file.',
+        variant: 'destructive',
+      });
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast({ title: "File too large", description: "Image must be under 5MB.", variant: "destructive" });
+      toast({
+        title: 'File too large',
+        description: 'Image must be under 5MB.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -98,23 +132,23 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
       return null;
     }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('employee-photos')
-      .getPublicUrl(filePath);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from('employee-photos').getPublicUrl(filePath);
 
     return publicUrl;
   };
 
   const calculateEquivalent = () => {
-    if (formData.payType === "hourly" && formData.hourlyRate) {
+    if (formData.payType === 'hourly' && formData.hourlyRate) {
       const annual = parseFloat(formData.hourlyRate) * 40 * 52;
       return `≈ £${annual.toLocaleString()} p.a.`;
     }
-    if (formData.payType === "annual" && formData.annualSalary) {
+    if (formData.payType === 'annual' && formData.annualSalary) {
       const hourly = parseFloat(formData.annualSalary) / (40 * 52);
       return `≈ £${hourly.toFixed(2)}/hr`;
     }
-    if (formData.payType === "day_rate" && formData.dayRate) {
+    if (formData.payType === 'day_rate' && formData.dayRate) {
       const annual = parseFloat(formData.dayRate) * 5 * 52;
       return `≈ £${annual.toLocaleString()} p.a.`;
     }
@@ -123,25 +157,30 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.role || !formData.teamRole) {
       toast({
-        title: "Missing Fields",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
+        title: 'Missing Fields',
+        description: 'Please fill in all required fields.',
+        variant: 'destructive',
       });
       return;
     }
 
-    const initials = formData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    const initials = formData.name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
 
     let hourlyRate = parseFloat(formData.hourlyRate) || 25;
     let annualSalary: number | null = null;
 
-    if (formData.payType === "annual" && formData.annualSalary) {
+    if (formData.payType === 'annual' && formData.annualSalary) {
       annualSalary = parseFloat(formData.annualSalary);
       hourlyRate = annualSalary / (40 * 52);
-    } else if (formData.payType === "day_rate" && formData.dayRate) {
+    } else if (formData.payType === 'day_rate' && formData.dayRate) {
       const dayRate = parseFloat(formData.dayRate);
       hourlyRate = dayRate / 8;
       annualSalary = dayRate * 5 * 52;
@@ -156,7 +195,7 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
         phone: formData.phone || null,
         role: formData.role,
         team_role: formData.teamRole as TeamRole,
-        status: "Active",
+        status: 'Active',
         avatar_initials: initials,
         hourly_rate: hourlyRate,
         annual_salary: annualSalary,
@@ -189,33 +228,33 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
       }
 
       toast({
-        title: "Employee Added",
-        description: `${formData.name} has been added to your team.${formData.createElecId ? " Elec-ID created." : ""}`,
+        title: 'Employee Added',
+        description: `${formData.name} has been added to your team.${formData.createElecId ? ' Elec-ID created.' : ''}`,
       });
 
       setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        role: "",
-        teamRole: "",
-        payType: "hourly",
-        hourlyRate: "25",
-        annualSalary: "",
-        dayRate: "",
+        name: '',
+        email: '',
+        phone: '',
+        role: '',
+        teamRole: '',
+        payType: 'hourly',
+        hourlyRate: '25',
+        annualSalary: '',
+        dayRate: '',
         createElecId: false,
-        ecsCardType: "Gold",
-        ecsCardNumber: "",
-        ecsExpiryDate: "",
+        ecsCardType: 'Gold',
+        ecsCardNumber: '',
+        ecsExpiryDate: '',
       });
       setPhotoPreview(null);
       setPhotoFile(null);
       setOpen(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to add employee. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to add employee. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsUploading(false);
@@ -226,10 +265,10 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
-  
+
   useEffect(() => {
     if (!open || !voiceContext) return;
-    
+
     voiceContext.registerForm({
       formId: 'add-employee',
       formName: 'Add Employee',
@@ -246,7 +285,7 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
       ],
       onFillField: (field, value) => {
         const strValue = String(value);
-        setFormData(prev => ({ ...prev, [field]: strValue }));
+        setFormData((prev) => ({ ...prev, [field]: strValue }));
       },
       onSubmit: () => {
         const form = document.getElementById('employee-form') as HTMLFormElement;
@@ -254,7 +293,7 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
       },
       onCancel: () => setOpen(false),
     });
-    
+
     return () => voiceContext.unregisterForm('add-employee');
   }, [open, voiceContext]);
 
@@ -280,7 +319,7 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
             Add Team Member
           </ResponsiveFormModalTitle>
         </ResponsiveFormModalHeader>
-        
+
         <ResponsiveFormModalBody>
           <form id="employee-form" onSubmit={handleSubmit} className="space-y-6 py-2">
             {/* Photo Upload Section */}
@@ -289,7 +328,16 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                 <Avatar className="h-28 w-28 border-4 border-background shadow-lg">
                   <AvatarImage src={photoPreview || undefined} />
                   <AvatarFallback className="bg-muted text-muted-foreground text-3xl">
-                    {formData.name ? formData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : <User className="h-12 w-12" />}
+                    {formData.name ? (
+                      formData.name
+                        .split(' ')
+                        .map((n) => n[0])
+                        .join('')
+                        .toUpperCase()
+                        .slice(0, 2)
+                    ) : (
+                      <User className="h-12 w-12" />
+                    )}
                   </AvatarFallback>
                 </Avatar>
                 <button
@@ -319,35 +367,41 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-medium">Full Name *</Label>
+                  <Label htmlFor="name" className="text-sm font-medium">
+                    Full Name *
+                  </Label>
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                     placeholder="John Smith"
                     className="h-12 text-base"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                  <Label htmlFor="email" className="text-sm font-medium">
+                    Email
+                  </Label>
                   <Input
                     id="email"
                     type="email"
                     inputMode="email"
                     value={formData.email}
-                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                     placeholder="john@example.com"
                     className="h-12 text-base"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-sm font-medium">Phone</Label>
+                  <Label htmlFor="phone" className="text-sm font-medium">
+                    Phone
+                  </Label>
                   <Input
                     id="phone"
                     type="tel"
                     inputMode="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
                     placeholder="07700 900000"
                     className="h-12 text-base"
                   />
@@ -365,27 +419,43 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="role" className="text-sm font-medium">Job Role *</Label>
-                  <Select value={formData.role} onValueChange={(val) => setFormData(prev => ({ ...prev, role: val }))}>
+                  <Label htmlFor="role" className="text-sm font-medium">
+                    Job Role *
+                  </Label>
+                  <Select
+                    value={formData.role}
+                    onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
+                  >
                     <SelectTrigger className="h-12 text-base">
                       <SelectValue placeholder="Select role..." />
                     </SelectTrigger>
                     <SelectContent>
-                      {JOB_ROLES.map(role => (
-                        <SelectItem key={role} value={role} className="h-12">{role}</SelectItem>
+                      {JOB_ROLES.map((role) => (
+                        <SelectItem key={role} value={role} className="h-12">
+                          {role}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="teamRole" className="text-sm font-medium">Team Role *</Label>
-                  <Select value={formData.teamRole} onValueChange={(val) => setFormData(prev => ({ ...prev, teamRole: val as TeamRole }))}>
+                  <Label htmlFor="teamRole" className="text-sm font-medium">
+                    Team Role *
+                  </Label>
+                  <Select
+                    value={formData.teamRole}
+                    onValueChange={(val) =>
+                      setFormData((prev) => ({ ...prev, teamRole: val as TeamRole }))
+                    }
+                  >
                     <SelectTrigger className="h-12 text-base">
                       <SelectValue placeholder="Select team role..." />
                     </SelectTrigger>
                     <SelectContent>
-                      {TEAM_ROLES.map(role => (
-                        <SelectItem key={role} value={role} className="h-12">{role}</SelectItem>
+                      {TEAM_ROLES.map((role) => (
+                        <SelectItem key={role} value={role} className="h-12">
+                          {role}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -404,16 +474,22 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
               <div className="space-y-4">
                 <RadioGroup
                   value={formData.payType}
-                  onValueChange={(val) => setFormData(prev => ({ ...prev, payType: val as PayType }))}
+                  onValueChange={(val) =>
+                    setFormData((prev) => ({ ...prev, payType: val as PayType }))
+                  }
                   className="flex flex-col gap-2"
                 >
                   {[
-                    { value: "hourly", label: "Hourly Rate" },
-                    { value: "annual", label: "Annual Salary" },
-                    { value: "day_rate", label: "Day Rate" },
+                    { value: 'hourly', label: 'Hourly Rate' },
+                    { value: 'annual', label: 'Annual Salary' },
+                    { value: 'day_rate', label: 'Day Rate' },
                   ].map((option) => (
                     <div key={option.value}>
-                      <RadioGroupItem value={option.value} id={option.value} className="peer sr-only" />
+                      <RadioGroupItem
+                        value={option.value}
+                        id={option.value}
+                        className="peer sr-only"
+                      />
                       <Label
                         htmlFor={option.value}
                         className="flex items-center justify-center rounded-xl border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 cursor-pointer transition-all touch-feedback"
@@ -425,9 +501,11 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                 </RadioGroup>
 
                 <div className="space-y-2 animate-fade-in">
-                  {formData.payType === "hourly" && (
+                  {formData.payType === 'hourly' && (
                     <>
-                      <Label htmlFor="hourlyRate" className="text-sm font-medium">Hourly Rate (£)</Label>
+                      <Label htmlFor="hourlyRate" className="text-sm font-medium">
+                        Hourly Rate (£)
+                      </Label>
                       <Input
                         id="hourlyRate"
                         type="number"
@@ -435,15 +513,19 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                         min="0"
                         step="0.50"
                         value={formData.hourlyRate}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hourlyRate: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, hourlyRate: e.target.value }))
+                        }
                         placeholder="25.00"
                         className="h-12 text-base"
                       />
                     </>
                   )}
-                  {formData.payType === "annual" && (
+                  {formData.payType === 'annual' && (
                     <>
-                      <Label htmlFor="annualSalary" className="text-sm font-medium">Annual Salary (£)</Label>
+                      <Label htmlFor="annualSalary" className="text-sm font-medium">
+                        Annual Salary (£)
+                      </Label>
                       <Input
                         id="annualSalary"
                         type="number"
@@ -451,15 +533,19 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                         min="0"
                         step="1000"
                         value={formData.annualSalary}
-                        onChange={(e) => setFormData(prev => ({ ...prev, annualSalary: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, annualSalary: e.target.value }))
+                        }
                         placeholder="45000"
                         className="h-12 text-base"
                       />
                     </>
                   )}
-                  {formData.payType === "day_rate" && (
+                  {formData.payType === 'day_rate' && (
                     <>
-                      <Label htmlFor="dayRate" className="text-sm font-medium">Day Rate (£)</Label>
+                      <Label htmlFor="dayRate" className="text-sm font-medium">
+                        Day Rate (£)
+                      </Label>
                       <Input
                         id="dayRate"
                         type="number"
@@ -467,7 +553,9 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                         min="0"
                         step="10"
                         value={formData.dayRate}
-                        onChange={(e) => setFormData(prev => ({ ...prev, dayRate: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, dayRate: e.target.value }))
+                        }
                         placeholder="250"
                         className="h-12 text-base"
                       />
@@ -489,17 +577,24 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                 Elec-ID Card
               </div>
               <div className="space-y-4">
-                <div 
+                <div
                   className="flex items-center space-x-3 p-3 rounded-lg bg-muted/30 cursor-pointer touch-feedback"
-                  onClick={() => setFormData(prev => ({ ...prev, createElecId: !prev.createElecId }))}
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, createElecId: !prev.createElecId }))
+                  }
                 >
                   <Checkbox
                     id="createElecId"
                     checked={formData.createElecId}
-                    onCheckedChange={(checked) => setFormData(prev => ({ ...prev, createElecId: checked as boolean }))}
+                    onCheckedChange={(checked) =>
+                      setFormData((prev) => ({ ...prev, createElecId: checked as boolean }))
+                    }
                     className="h-5 w-5"
                   />
-                  <Label htmlFor="createElecId" className="text-base font-normal cursor-pointer flex-1">
+                  <Label
+                    htmlFor="createElecId"
+                    className="text-base font-normal cursor-pointer flex-1"
+                  >
                     Create Elec-ID profile for this employee
                   </Label>
                 </div>
@@ -507,35 +602,52 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                 {formData.createElecId && (
                   <div className="space-y-4 pt-2 animate-fade-in">
                     <div className="space-y-2">
-                      <Label htmlFor="ecsCardType" className="text-sm font-medium">ECS Card Type</Label>
-                      <Select value={formData.ecsCardType} onValueChange={(val) => setFormData(prev => ({ ...prev, ecsCardType: val }))}>
+                      <Label htmlFor="ecsCardType" className="text-sm font-medium">
+                        ECS Card Type
+                      </Label>
+                      <Select
+                        value={formData.ecsCardType}
+                        onValueChange={(val) =>
+                          setFormData((prev) => ({ ...prev, ecsCardType: val }))
+                        }
+                      >
                         <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Select type..." />
                         </SelectTrigger>
                         <SelectContent>
-                          {ECS_CARD_TYPES.map(type => (
-                            <SelectItem key={type} value={type} className="h-12">{type}</SelectItem>
+                          {ECS_CARD_TYPES.map((type) => (
+                            <SelectItem key={type} value={type} className="h-12">
+                              {type}
+                            </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="ecsCardNumber" className="text-sm font-medium">ECS Card Number</Label>
+                      <Label htmlFor="ecsCardNumber" className="text-sm font-medium">
+                        ECS Card Number
+                      </Label>
                       <Input
                         id="ecsCardNumber"
                         value={formData.ecsCardNumber}
-                        onChange={(e) => setFormData(prev => ({ ...prev, ecsCardNumber: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, ecsCardNumber: e.target.value }))
+                        }
                         placeholder="ECS-12345678"
                         className="h-12 text-base"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="ecsExpiryDate" className="text-sm font-medium">ECS Expiry Date</Label>
+                      <Label htmlFor="ecsExpiryDate" className="text-sm font-medium">
+                        ECS Expiry Date
+                      </Label>
                       <Input
                         id="ecsExpiryDate"
                         type="date"
                         value={formData.ecsExpiryDate}
-                        onChange={(e) => setFormData(prev => ({ ...prev, ecsExpiryDate: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, ecsExpiryDate: e.target.value }))
+                        }
                         className="h-12 text-base"
                       />
                     </div>
@@ -548,16 +660,16 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
 
         <ResponsiveFormModalFooter>
           <div className="flex gap-3">
-            <Button 
-              type="button" 
-              variant="outline" 
+            <Button
+              type="button"
+              variant="outline"
               className="flex-1 h-12 text-base"
               onClick={() => setOpen(false)}
             >
               Cancel
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               form="add-employee-form"
               className="flex-1 h-12 text-base font-semibold"
               disabled={isPending}
@@ -568,7 +680,7 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
                   Adding...
                 </>
               ) : (
-                "Add Employee"
+                'Add Employee'
               )}
             </Button>
           </div>

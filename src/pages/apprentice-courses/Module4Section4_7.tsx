@@ -1,132 +1,127 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Working at Height Safely While Installing Systems - Module 4.4.7 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn safe working practices for height work during electrical installations. Covers equipment selection, fall protection, and Work at Height Regulations 2005 compliance.";
+const TITLE =
+  'Working at Height Safely While Installing Systems - Module 4.4.7 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn safe working practices for height work during electrical installations. Covers equipment selection, fall protection, and Work at Height Regulations 2005 compliance.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What is the minimum height at which the Work at Height Regulations 2005 apply?",
-    options: ["1 metre", "2 metres", "Any height where a person could fall and be injured"],
+    question: 'What is the minimum height at which the Work at Height Regulations 2005 apply?',
+    options: ['1 metre', '2 metres', 'Any height where a person could fall and be injured'],
     correctIndex: 2,
-    explanation: "The Work at Height Regulations apply at any height where a person could fall and be injured, not just specific heights."
+    explanation:
+      'The Work at Height Regulations apply at any height where a person could fall and be injured, not just specific heights.',
   },
   {
     id: 2,
-    question: "Which type of ladder provides the most stability for electrical work?",
-    options: ["Step ladder", "Extension ladder", "Platform ladder with handrails"],
+    question: 'Which type of ladder provides the most stability for electrical work?',
+    options: ['Step ladder', 'Extension ladder', 'Platform ladder with handrails'],
     correctIndex: 2,
-    explanation: "Platform ladders with handrails provide the most stability and allow for hands-free working while maintaining three points of contact."
+    explanation:
+      'Platform ladders with handrails provide the most stability and allow for hands-free working while maintaining three points of contact.',
   },
   {
     id: 3,
-    question: "What is the recommended angle for leaning ladders?",
-    options: ["60 degrees", "75 degrees", "1:4 ratio (75 degrees)"],
+    question: 'What is the recommended angle for leaning ladders?',
+    options: ['60 degrees', '75 degrees', '1:4 ratio (75 degrees)'],
     correctIndex: 2,
-    explanation: "The safe angle for leaning ladders is 1:4 ratio, which equals approximately 75 degrees from horizontal."
-  }
+    explanation:
+      'The safe angle for leaning ladders is 1:4 ratio, which equals approximately 75 degrees from horizontal.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which regulation covers working at height in the UK?",
-    options: [
-      "BS 7671",
-      "Work at Height Regulations 2005",
-      "PUWER",
-      "CDM Regulations"
-    ],
+    question: 'Which regulation covers working at height in the UK?',
+    options: ['BS 7671', 'Work at Height Regulations 2005', 'PUWER', 'CDM Regulations'],
     correctAnswer: 1,
-    explanation: "The Work at Height Regulations 2005 specifically govern all work at height activities in the UK construction industry."
+    explanation:
+      'The Work at Height Regulations 2005 specifically govern all work at height activities in the UK construction industry.',
   },
   {
     id: 2,
-    question: "True or False: Extension ladders are suitable for prolonged installation work.",
-    options: [
-      "True",
-      "False"
-    ],
+    question: 'True or False: Extension ladders are suitable for prolonged installation work.',
+    options: ['True', 'False'],
     correctAnswer: 1,
-    explanation: "False. Extension ladders are only for access, not prolonged work. They don't provide a stable working platform for extended tasks."
+    explanation:
+      "False. Extension ladders are only for access, not prolonged work. They don't provide a stable working platform for extended tasks.",
   },
   {
     id: 3,
-    question: "What is the correct ladder positioning ratio?",
-    options: [
-      "3:1 ratio",
-      "4:1 ratio",
-      "5:1 ratio",
-      "2:1 ratio"
-    ],
+    question: 'What is the correct ladder positioning ratio?',
+    options: ['3:1 ratio', '4:1 ratio', '5:1 ratio', '2:1 ratio'],
     correctAnswer: 1,
-    explanation: "The 4:1 ratio means for every 4 metres of height, the base should be 1 metre away from the wall."
+    explanation:
+      'The 4:1 ratio means for every 4 metres of height, the base should be 1 metre away from the wall.',
   },
   {
     id: 4,
-    question: "Name two common hazards when working at height.",
-    options: [
-      "Falls and dropped tools",
-      "Noise and vibration",
-      "Heat and cold",
-      "Dust and fumes"
-    ],
+    question: 'Name two common hazards when working at height.',
+    options: ['Falls and dropped tools', 'Noise and vibration', 'Heat and cold', 'Dust and fumes'],
     correctAnswer: 0,
-    explanation: "Falls from height and dropped tools striking people below are the most common and serious hazards when working at height."
+    explanation:
+      'Falls from height and dropped tools striking people below are the most common and serious hazards when working at height.',
   },
   {
     id: 5,
-    question: "What is one key safety feature of scaffolding platforms?",
+    question: 'What is one key safety feature of scaffolding platforms?',
     options: [
-      "Mobility",
-      "Guard rails and toe boards",
-      "Lightweight construction",
-      "Quick assembly"
+      'Mobility',
+      'Guard rails and toe boards',
+      'Lightweight construction',
+      'Quick assembly',
     ],
     correctAnswer: 1,
-    explanation: "Guard rails and toe boards are essential safety features that prevent falls and dropped materials from scaffolding platforms."
+    explanation:
+      'Guard rails and toe boards are essential safety features that prevent falls and dropped materials from scaffolding platforms.',
   },
   {
     id: 6,
-    question: "When should fall arrest equipment be used?",
+    question: 'When should fall arrest equipment be used?',
     options: [
-      "Always when working at height",
-      "Only on ladders",
+      'Always when working at height',
+      'Only on ladders',
       "When there's a risk of falling and no physical barrier",
-      "Never required"
+      'Never required',
     ],
     correctAnswer: 2,
-    explanation: "Fall arrest equipment is required when there's a risk of falling and no physical barriers (like guard rails) are in place."
+    explanation:
+      "Fall arrest equipment is required when there's a risk of falling and no physical barriers (like guard rails) are in place.",
   },
   {
     id: 7,
-    question: "Why should you avoid overreaching on a ladder?",
+    question: 'Why should you avoid overreaching on a ladder?',
     options: [
       "It's uncomfortable",
-      "It can cause loss of balance and falls",
+      'It can cause loss of balance and falls',
       "It's inefficient",
-      "It damages the ladder"
+      'It damages the ladder',
     ],
     correctAnswer: 1,
-    explanation: "Overreaching shifts your centre of gravity outside the ladder's base, causing loss of balance and potential falls."
+    explanation:
+      "Overreaching shifts your centre of gravity outside the ladder's base, causing loss of balance and potential falls.",
   },
   {
     id: 8,
-    question: "What is the benefit of using tool lanyards?",
+    question: 'What is the benefit of using tool lanyards?',
     options: [
-      "Easier tool access",
-      "Prevents tools from dropping and injuring people below",
-      "Reduces tool weight",
-      "Improves tool performance"
+      'Easier tool access',
+      'Prevents tools from dropping and injuring people below',
+      'Reduces tool weight',
+      'Improves tool performance',
     ],
     correctAnswer: 1,
-    explanation: "Tool lanyards prevent dropped tools from falling and potentially injuring people working below."
-  }
+    explanation:
+      'Tool lanyards prevent dropped tools from falling and potentially injuring people working below.',
+  },
 ];
 
 export default function Module4Section4_7() {
@@ -164,7 +159,8 @@ export default function Module4Section4_7() {
               Working at Height Safely While Installing Systems
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Learn safe working practices for height work during electrical installations. Covers equipment selection, fall protection, and Work at Height Regulations 2005 compliance.
+              Learn safe working practices for height work during electrical installations. Covers
+              equipment selection, fall protection, and Work at Height Regulations 2005 compliance.
             </p>
           </header>
 
@@ -220,23 +216,37 @@ export default function Module4Section4_7() {
               Legal and Safety Requirements
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Work at height is regulated under the <strong>Work at Height Regulations 2005</strong>, which place specific duties on employers and workers.
+              Work at height is regulated under the <strong>Work at Height Regulations 2005</strong>
+              , which place specific duties on employers and workers.
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50 mb-4">
               <p className="font-medium text-white mb-2">Key Legal Requirements</p>
               <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
-                <li><strong>Avoid</strong> working at height where reasonably practicable</li>
-                <li>If unavoidable, ensure work is carried out <strong>safely</strong></li>
-                <li>Use appropriate <strong>work equipment</strong> that is suitable</li>
-                <li>Ensure workers are <strong>competent and trained</strong></li>
-                <li>Plan work to ensure it can be carried out <strong>safely</strong></li>
+                <li>
+                  <strong>Avoid</strong> working at height where reasonably practicable
+                </li>
+                <li>
+                  If unavoidable, ensure work is carried out <strong>safely</strong>
+                </li>
+                <li>
+                  Use appropriate <strong>work equipment</strong> that is suitable
+                </li>
+                <li>
+                  Ensure workers are <strong>competent and trained</strong>
+                </li>
+                <li>
+                  Plan work to ensure it can be carried out <strong>safely</strong>
+                </li>
               </ul>
             </div>
 
             <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
               <p className="font-medium text-white mb-2">Critical Requirement</p>
-              <p className="text-white/70 text-sm">Height work must be planned, supervised, and carried out by competent persons. Training records must be maintained and refreshed regularly.</p>
+              <p className="text-white/70 text-sm">
+                Height work must be planned, supervised, and carried out by competent persons.
+                Training records must be maintained and refreshed regularly.
+              </p>
             </div>
           </section>
 
@@ -257,7 +267,8 @@ export default function Module4Section4_7() {
               Common Hazards
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Understanding hazards is the first step in preventing accidents during electrical installation work at height.
+              Understanding hazards is the first step in preventing accidents during electrical
+              installation work at height.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
@@ -283,7 +294,10 @@ export default function Module4Section4_7() {
 
             <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
               <p className="font-medium text-white mb-2">Statistics Alert</p>
-              <p className="text-white/70 text-sm">Falls from height account for approximately 40% of workplace fatalities in construction. Most are preventable through proper planning and equipment use.</p>
+              <p className="text-white/70 text-sm">
+                Falls from height account for approximately 40% of workplace fatalities in
+                construction. Most are preventable through proper planning and equipment use.
+              </p>
             </div>
           </section>
 
@@ -294,36 +308,65 @@ export default function Module4Section4_7() {
               Access Equipment
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Selecting the right access equipment for the task is crucial for both safety and efficiency.
+              Selecting the right access equipment for the task is crucial for both safety and
+              efficiency.
             </p>
 
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Step Ladders</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Use for:</strong> Short-duration, light tasks up to 2.5m working height</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Requirements:</strong> Must be stable, positioned correctly, and not overloaded</p>
-                <p className="text-white/70 text-sm"><strong>Limitations:</strong> Not suitable for prolonged work or heavy tool use</p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Use for:</strong> Short-duration, light tasks up to 2.5m working height
+                </p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Requirements:</strong> Must be stable, positioned correctly, and not
+                  overloaded
+                </p>
+                <p className="text-white/70 text-sm">
+                  <strong>Limitations:</strong> Not suitable for prolonged work or heavy tool use
+                </p>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Extension Ladders</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Use for:</strong> Access only, not prolonged work</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Requirements:</strong> Secure at top and bottom, 4:1 angle ratio</p>
-                <p className="text-white/70 text-sm"><strong>Limitations:</strong> No working platform, limited tool carrying capacity</p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Use for:</strong> Access only, not prolonged work
+                </p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Requirements:</strong> Secure at top and bottom, 4:1 angle ratio
+                </p>
+                <p className="text-white/70 text-sm">
+                  <strong>Limitations:</strong> No working platform, limited tool carrying capacity
+                </p>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Towers/Scaffolds</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Use for:</strong> Prolonged work requiring large, stable platform</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Requirements:</strong> Must be erected by competent persons, guard rails fitted</p>
-                <p className="text-white/70 text-sm"><strong>Benefits:</strong> Large working area, tool storage, multiple workers</p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Use for:</strong> Prolonged work requiring large, stable platform
+                </p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Requirements:</strong> Must be erected by competent persons, guard rails
+                  fitted
+                </p>
+                <p className="text-white/70 text-sm">
+                  <strong>Benefits:</strong> Large working area, tool storage, multiple workers
+                </p>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
-                <p className="font-medium text-white mb-2">MEWPs (Mobile Elevating Work Platforms)</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Types:</strong> Scissor lifts, boom lifts, cherry pickers</p>
-                <p className="text-white/70 text-sm mb-1"><strong>Requirements:</strong> IPAF-trained operators, ground condition checks</p>
-                <p className="text-white/70 text-sm"><strong>Benefits:</strong> Quick positioning, precise height control, mobility</p>
+                <p className="font-medium text-white mb-2">
+                  MEWPs (Mobile Elevating Work Platforms)
+                </p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Types:</strong> Scissor lifts, boom lifts, cherry pickers
+                </p>
+                <p className="text-white/70 text-sm mb-1">
+                  <strong>Requirements:</strong> IPAF-trained operators, ground condition checks
+                </p>
+                <p className="text-white/70 text-sm">
+                  <strong>Benefits:</strong> Quick positioning, precise height control, mobility
+                </p>
               </div>
             </div>
           </section>
@@ -345,7 +388,8 @@ export default function Module4Section4_7() {
               Safe Working Practices
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Following established safe working practices reduces risk and ensures legal compliance.
+              Following established safe working practices reduces risk and ensures legal
+              compliance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
@@ -373,7 +417,10 @@ export default function Module4Section4_7() {
 
             <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
               <p className="font-medium text-white mb-2">Professional Tip</p>
-              <p className="text-white/70 text-sm">The "belt buckle rule" helps prevent overreaching: keep your belt buckle between the ladder rails at all times. If you need to reach beyond this, reposition the ladder.</p>
+              <p className="text-white/70 text-sm">
+                The "belt buckle rule" helps prevent overreaching: keep your belt buckle between the
+                ladder rails at all times. If you need to reach beyond this, reposition the ladder.
+              </p>
             </div>
           </section>
 
@@ -384,15 +431,23 @@ export default function Module4Section4_7() {
               Fall Protection
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              When edge protection cannot be provided, personal fall protection systems become essential.
+              When edge protection cannot be provided, personal fall protection systems become
+              essential.
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50 mb-4">
               <p className="font-medium text-white mb-2">Fall Protection Systems</p>
               <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
-                <li><strong>Work Restraint:</strong> Prevents reaching the fall edge (preferred method)</li>
-                <li><strong>Fall Arrest:</strong> Stops a fall after it occurs (requires rescue plan)</li>
-                <li><strong>Work Positioning:</strong> Supports worker in position (e.g., rope access)</li>
+                <li>
+                  <strong>Work Restraint:</strong> Prevents reaching the fall edge (preferred
+                  method)
+                </li>
+                <li>
+                  <strong>Fall Arrest:</strong> Stops a fall after it occurs (requires rescue plan)
+                </li>
+                <li>
+                  <strong>Work Positioning:</strong> Supports worker in position (e.g., rope access)
+                </li>
               </ul>
             </div>
 
@@ -419,7 +474,11 @@ export default function Module4Section4_7() {
 
             <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
               <p className="font-medium text-white mb-2">Critical Requirement</p>
-              <p className="text-white/70 text-sm">Fall arrest systems require sufficient clearance below the worker to prevent ground impact during arrest. Calculate fall distance including lanyard extension and harness stretch.</p>
+              <p className="text-white/70 text-sm">
+                Fall arrest systems require sufficient clearance below the worker to prevent ground
+                impact during arrest. Calculate fall distance including lanyard extension and
+                harness stretch.
+              </p>
             </div>
           </section>
 
@@ -440,25 +499,45 @@ export default function Module4Section4_7() {
               Common Mistakes
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Learning from common mistakes helps prevent accidents and ensures professional standards.
+              Learning from common mistakes helps prevent accidents and ensures professional
+              standards.
             </p>
 
             <div className="space-y-3">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
-                <p className="font-medium text-red-400 mb-1">Using ladders for tasks that require a platform</p>
-                <p className="text-white/60 text-sm">Prolonged work, heavy tools, or two-handed tasks need a stable platform, not ladder access.</p>
+                <p className="font-medium text-red-400 mb-1">
+                  Using ladders for tasks that require a platform
+                </p>
+                <p className="text-white/60 text-sm">
+                  Prolonged work, heavy tools, or two-handed tasks need a stable platform, not
+                  ladder access.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
-                <p className="font-medium text-red-400 mb-1">Standing on the top step or rung of a ladder</p>
-                <p className="text-white/60 text-sm">This eliminates handholds and creates an unstable working position with high fall risk.</p>
+                <p className="font-medium text-red-400 mb-1">
+                  Standing on the top step or rung of a ladder
+                </p>
+                <p className="text-white/60 text-sm">
+                  This eliminates handholds and creates an unstable working position with high fall
+                  risk.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
-                <p className="font-medium text-red-400 mb-1">Failing to secure tools and materials at height</p>
-                <p className="text-white/60 text-sm">Dropped tools can cause serious injuries and expensive damage to equipment below.</p>
+                <p className="font-medium text-red-400 mb-1">
+                  Failing to secure tools and materials at height
+                </p>
+                <p className="text-white/60 text-sm">
+                  Dropped tools can cause serious injuries and expensive damage to equipment below.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
-                <p className="font-medium text-red-400 mb-1">Ignoring weather conditions for outdoor height work</p>
-                <p className="text-white/60 text-sm">Wind, rain, or poor visibility significantly increase risks and should halt height work.</p>
+                <p className="font-medium text-red-400 mb-1">
+                  Ignoring weather conditions for outdoor height work
+                </p>
+                <p className="text-white/60 text-sm">
+                  Wind, rain, or poor visibility significantly increase risks and should halt height
+                  work.
+                </p>
               </div>
             </div>
           </section>
@@ -476,16 +555,23 @@ export default function Module4Section4_7() {
                   <li>Always carry out a risk assessment before starting work at height</li>
                   <li>Select the shortest and most stable access method possible for the task</li>
                   <li>Position ladders at a 4:1 ratio (for every 4 m up, base is 1 m out)</li>
-                  <li>On scaffolding, ensure toe boards, guard rails, and safe access points are in place</li>
+                  <li>
+                    On scaffolding, ensure toe boards, guard rails, and safe access points are in
+                    place
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-2">During Installation</p>
                 <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
                   <li>For MEWPs, check ground conditions before positioning the platform</li>
-                  <li>Use chutes or hoists to raise materials — avoid carrying heavy items up ladders</li>
+                  <li>
+                    Use chutes or hoists to raise materials — avoid carrying heavy items up ladders
+                  </li>
                   <li>Schedule height work for good weather and daylight where possible</li>
-                  <li>Always have a second person present when working at height for safety monitoring</li>
+                  <li>
+                    Always have a second person present when working at height for safety monitoring
+                  </li>
                 </ul>
               </div>
             </div>
@@ -498,12 +584,18 @@ export default function Module4Section4_7() {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
-              <p className="font-medium text-white mb-2">Warehouse Lighting Installation Incident</p>
+              <p className="font-medium text-white mb-2">
+                Warehouse Lighting Installation Incident
+              </p>
               <p className="text-white/70 text-sm mb-3">
-                During a warehouse lighting installation, a worker used a ladder for a task that required both hands and heavy tools. Overreaching caused the ladder to slip, resulting in a fall and injury.
+                During a warehouse lighting installation, a worker used a ladder for a task that
+                required both hands and heavy tools. Overreaching caused the ladder to slip,
+                resulting in a fall and injury.
               </p>
               <p className="font-medium text-orange-400 text-sm">
-                <strong>Solution:</strong> A mobile scaffold tower would have been safer, providing both stability and a platform for tools. Cost: £150/day vs. £15,000 injury claim + project delays.
+                <strong>Solution:</strong> A mobile scaffold tower would have been safer, providing
+                both stability and a platform for tools. Cost: £150/day vs. £15,000 injury claim +
+                project delays.
               </p>
             </div>
           </section>
@@ -516,16 +608,30 @@ export default function Module4Section4_7() {
             </h2>
             <div className="space-y-4 text-white/80">
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-medium text-white mb-1">Q: Do I always need a harness when working at height?</p>
-                <p className="text-sm">A: Not always — harnesses are required where there's a risk of falling and no physical barriers are in place.</p>
+                <p className="font-medium text-white mb-1">
+                  Q: Do I always need a harness when working at height?
+                </p>
+                <p className="text-sm">
+                  A: Not always — harnesses are required where there's a risk of falling and no
+                  physical barriers are in place.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-medium text-white mb-1">Q: Can I use a ladder on uneven ground?</p>
-                <p className="text-sm">A: Only with suitable stabilisers or levelling devices to ensure stability.</p>
+                <p className="font-medium text-white mb-1">
+                  Q: Can I use a ladder on uneven ground?
+                </p>
+                <p className="text-sm">
+                  A: Only with suitable stabilisers or levelling devices to ensure stability.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-medium text-white mb-1">Q: What training is required for MEWP use?</p>
-                <p className="text-sm">A: IPAF (International Powered Access Federation) or equivalent certification is required.</p>
+                <p className="font-medium text-white mb-1">
+                  Q: What training is required for MEWP use?
+                </p>
+                <p className="text-sm">
+                  A: IPAF (International Powered Access Federation) or equivalent certification is
+                  required.
+                </p>
               </div>
             </div>
           </section>
@@ -538,7 +644,11 @@ export default function Module4Section4_7() {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-white/80 text-sm leading-relaxed">
-                Working at height safely requires planning, the correct equipment, and adherence to regulations. The right access method, combined with good practices like securing tools and avoiding overreaching, prevents accidents and ensures productivity. Remember: most height-related accidents are preventable through proper planning and equipment selection.
+                Working at height safely requires planning, the correct equipment, and adherence to
+                regulations. The right access method, combined with good practices like securing
+                tools and avoiding overreaching, prevents accidents and ensures productivity.
+                Remember: most height-related accidents are preventable through proper planning and
+                equipment selection.
               </p>
             </div>
           </section>
@@ -564,9 +674,7 @@ export default function Module4Section4_7() {
               className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="..">
-                Complete Section 4
-              </Link>
+              <Link to="..">Complete Section 4</Link>
             </Button>
           </nav>
         </div>

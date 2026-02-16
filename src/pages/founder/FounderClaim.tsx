@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 import {
   Sparkles,
   AlertTriangle,
@@ -19,45 +19,45 @@ import {
   ArrowRight,
   Zap,
   ClipboardCheck,
-} from "lucide-react";
+} from 'lucide-react';
 
 const features = [
   {
     icon: Calculator,
-    title: "AI Calculators",
-    desc: "Cable sizing, voltage drop & more",
-    color: "text-green-400",
+    title: 'AI Calculators',
+    desc: 'Cable sizing, voltage drop & more',
+    color: 'text-green-400',
   },
   {
     icon: MessageSquare,
-    title: "BS7671 AI",
-    desc: "Instant regulation answers",
-    color: "text-blue-400",
+    title: 'BS7671 AI',
+    desc: 'Instant regulation answers',
+    color: 'text-blue-400',
   },
   {
     icon: FileText,
-    title: "Quote Builder",
-    desc: "Professional docs in seconds",
-    color: "text-purple-400",
+    title: 'Quote Builder',
+    desc: 'Professional docs in seconds',
+    color: 'text-purple-400',
   },
   {
     icon: ClipboardCheck,
-    title: "EICR Generator",
-    desc: "Certificates made easy",
-    color: "text-amber-400",
+    title: 'EICR Generator',
+    desc: 'Certificates made easy',
+    color: 'text-amber-400',
   },
   {
     icon: Zap,
-    title: "Priority Support",
-    desc: "Direct founder access",
-    color: "text-yellow-400",
+    title: 'Priority Support',
+    desc: 'Direct founder access',
+    color: 'text-yellow-400',
   },
 ];
 
 export default function FounderClaim() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const token = searchParams.get("token");
+  const token = searchParams.get('token');
 
   const [loading, setLoading] = useState(true);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
@@ -71,14 +71,14 @@ export default function FounderClaim() {
 
   const validateToken = async () => {
     if (!token) {
-      setError("No invite token provided");
+      setError('No invite token provided');
       setLoading(false);
       return;
     }
 
     try {
-      const { data, error } = await supabase.functions.invoke("founder-checkout", {
-        body: { action: "validate", token },
+      const { data, error } = await supabase.functions.invoke('founder-checkout', {
+        body: { action: 'validate', token },
       });
 
       if (error) throw error;
@@ -87,10 +87,10 @@ export default function FounderClaim() {
         setValid(true);
         setEmail(data.email);
       } else {
-        setError(data?.reason || "Invalid invite");
+        setError(data?.reason || 'Invalid invite');
       }
     } catch (err: any) {
-      setError(err.message || "Failed to validate invite");
+      setError(err.message || 'Failed to validate invite');
     } finally {
       setLoading(false);
     }
@@ -99,8 +99,8 @@ export default function FounderClaim() {
   const handleClaim = async () => {
     setCheckoutLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke("founder-checkout", {
-        body: { action: "create_checkout", token },
+      const { data, error } = await supabase.functions.invoke('founder-checkout', {
+        body: { action: 'create_checkout', token },
       });
 
       if (error) throw error;
@@ -108,10 +108,10 @@ export default function FounderClaim() {
       if (data?.url) {
         window.location.href = data.url;
       } else {
-        throw new Error("No checkout URL returned");
+        throw new Error('No checkout URL returned');
       }
     } catch (err: any) {
-      setError(err.message || "Failed to create checkout");
+      setError(err.message || 'Failed to create checkout');
       setCheckoutLoading(false);
     }
   };
@@ -134,10 +134,7 @@ export default function FounderClaim() {
   if (error || !valid) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <Card className="max-w-sm w-full border-red-500/30">
             <CardContent className="pt-8 pb-8 text-center">
               <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
@@ -148,7 +145,7 @@ export default function FounderClaim() {
               <Button
                 variant="outline"
                 className="h-11 touch-manipulation"
-                onClick={() => navigate("/")}
+                onClick={() => navigate('/')}
               >
                 Go to Homepage
               </Button>
@@ -177,7 +174,7 @@ export default function FounderClaim() {
           transition={{
             repeat: Infinity,
             duration: 3,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
         >
           <Crown className="w-full h-full text-yellow-400 drop-shadow-lg" />
@@ -218,7 +215,7 @@ export default function FounderClaim() {
             <motion.div
               className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-4 py-1.5 mb-4"
               animate={{ scale: [1, 1.02, 1] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
             >
               <Lock className="h-3.5 w-3.5 text-green-400" />
               <span className="text-sm font-semibold text-green-400">LOCKED FOREVER</span>
@@ -232,13 +229,12 @@ export default function FounderClaim() {
 
             <div className="flex items-center justify-center gap-3 text-sm mb-4">
               <span className="line-through text-muted-foreground">£9.99/mo</span>
-              <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                SAVE 60%
-              </Badge>
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/30">SAVE 60%</Badge>
             </div>
 
             <p className="text-xs text-muted-foreground">
-              This price will <strong className="text-yellow-400">never increase</strong> while you stay subscribed
+              This price will <strong className="text-yellow-400">never increase</strong> while you
+              stay subscribed
             </p>
           </CardContent>
         </Card>

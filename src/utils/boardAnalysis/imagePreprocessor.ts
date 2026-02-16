@@ -85,7 +85,7 @@ export async function assessImageQuality(dataUrl: string): Promise<ImageQualityR
         prevBrightness = brightness;
       }
 
-      const pixelCount = (sampleSize * sampleSize);
+      const pixelCount = sampleSize * sampleSize;
       const avgBrightness = totalBrightness / pixelCount;
       const avgContrast = totalContrast / pixelCount;
 
@@ -120,7 +120,7 @@ export async function assessImageQuality(dataUrl: string): Promise<ImageQualityR
         contrast: Math.round(avgContrast * 10),
         sharpness: Math.round(sharpness),
         issue,
-        suggestion
+        suggestion,
       });
     };
 
@@ -139,7 +139,8 @@ function calculateSharpness(ctx: CanvasRenderingContext2D, size: number): number
   // Convert to grayscale
   for (let i = 0; i < imageData.data.length; i += 4) {
     const idx = i / 4;
-    gray[idx] = 0.299 * imageData.data[i] + 0.587 * imageData.data[i + 1] + 0.114 * imageData.data[i + 2];
+    gray[idx] =
+      0.299 * imageData.data[i] + 0.587 * imageData.data[i + 1] + 0.114 * imageData.data[i + 2];
   }
 
   // Laplacian kernel
@@ -147,7 +148,8 @@ function calculateSharpness(ctx: CanvasRenderingContext2D, size: number): number
   for (let y = 1; y < size - 1; y++) {
     for (let x = 1; x < size - 1; x++) {
       const idx = y * size + x;
-      const laplacian = gray[idx - size] + gray[idx + size] + gray[idx - 1] + gray[idx + 1] - 4 * gray[idx];
+      const laplacian =
+        gray[idx - size] + gray[idx + size] + gray[idx - 1] + gray[idx + 1] - 4 * gray[idx];
       variance += laplacian * laplacian;
     }
   }
@@ -174,12 +176,7 @@ export async function enhanceImageForAI(
     sharpen?: boolean;
   } = {}
 ): Promise<ProcessedImage> {
-  const {
-    maxDimension = 1800,
-    quality = 0.82,
-    enhanceContrast = true,
-    sharpen = true
-  } = options;
+  const { maxDimension = 1800, quality = 0.82, enhanceContrast = true, sharpen = true } = options;
 
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -195,7 +192,7 @@ export async function enhanceImageForAI(
 
       // Calculate dimensions
       let { width, height } = img;
-      const originalSize = dataUrl.length * 0.75 / 1024 / 1024; // Approximate MB
+      const originalSize = (dataUrl.length * 0.75) / 1024 / 1024; // Approximate MB
 
       if (width > maxDimension || height > maxDimension) {
         if (width > height) {
@@ -228,7 +225,7 @@ export async function enhanceImageForAI(
 
       // Compress
       const processedDataUrl = canvas.toDataURL('image/jpeg', quality);
-      const processedSize = processedDataUrl.length * 0.75 / 1024 / 1024;
+      const processedSize = (processedDataUrl.length * 0.75) / 1024 / 1024;
 
       resolve({
         dataUrl: processedDataUrl,
@@ -236,7 +233,7 @@ export async function enhanceImageForAI(
         height: Math.round(height),
         originalSize,
         processedSize,
-        enhancements
+        enhancements,
       });
     };
 
@@ -264,7 +261,10 @@ function applyUnsharpMask(
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      let rSum = 0, gSum = 0, bSum = 0, count = 0;
+      let rSum = 0,
+        gSum = 0,
+        bSum = 0,
+        count = 0;
 
       for (let dy = -r; dy <= r; dy++) {
         for (let dx = -r; dx <= r; dx++) {
@@ -316,7 +316,13 @@ export async function splitIntoQuadrants(dataUrl: string): Promise<ProcessedImag
         { x: 0, y: 0, width: width / 2, height: height / 2, label: 'top-left' },
         { x: width / 2, y: 0, width: width / 2, height: height / 2, label: 'top-right' },
         { x: 0, y: height / 2, width: width / 2, height: height / 2, label: 'bottom-left' },
-        { x: width / 2, y: height / 2, width: width / 2, height: height / 2, label: 'bottom-right' }
+        {
+          x: width / 2,
+          y: height / 2,
+          width: width / 2,
+          height: height / 2,
+          label: 'bottom-right',
+        },
       ];
 
       for (const region of regions) {
@@ -330,8 +336,14 @@ export async function splitIntoQuadrants(dataUrl: string): Promise<ProcessedImag
 
         ctx.drawImage(
           img,
-          region.x, region.y, region.width, region.height,
-          0, 0, region.width, region.height
+          region.x,
+          region.y,
+          region.width,
+          region.height,
+          0,
+          0,
+          region.width,
+          region.height
         );
 
         const regionDataUrl = canvas.toDataURL('image/jpeg', 0.85);
@@ -340,9 +352,9 @@ export async function splitIntoQuadrants(dataUrl: string): Promise<ProcessedImag
           dataUrl: regionDataUrl,
           width: region.width,
           height: region.height,
-          originalSize: dataUrl.length * 0.75 / 1024 / 1024 / 4,
-          processedSize: regionDataUrl.length * 0.75 / 1024 / 1024,
-          enhancements: [`region:${region.label}`]
+          originalSize: (dataUrl.length * 0.75) / 1024 / 1024 / 4,
+          processedSize: (regionDataUrl.length * 0.75) / 1024 / 1024,
+          enhancements: [`region:${region.label}`],
         });
       }
 
@@ -357,10 +369,7 @@ export async function splitIntoQuadrants(dataUrl: string): Promise<ProcessedImag
 /**
  * Extracts a specific region from an image
  */
-export async function extractRegion(
-  dataUrl: string,
-  region: ImageRegion
-): Promise<ProcessedImage> {
+export async function extractRegion(dataUrl: string, region: ImageRegion): Promise<ProcessedImage> {
   return new Promise((resolve, reject) => {
     const img = new Image();
 
@@ -381,8 +390,14 @@ export async function extractRegion(
 
       ctx.drawImage(
         img,
-        region.x, region.y, region.width, region.height,
-        0, 0, region.width, region.height
+        region.x,
+        region.y,
+        region.width,
+        region.height,
+        0,
+        0,
+        region.width,
+        region.height
       );
 
       const regionDataUrl = canvas.toDataURL('image/jpeg', 0.88);
@@ -391,9 +406,9 @@ export async function extractRegion(
         dataUrl: regionDataUrl,
         width: region.width,
         height: region.height,
-        originalSize: dataUrl.length * 0.75 / 1024 / 1024,
-        processedSize: regionDataUrl.length * 0.75 / 1024 / 1024,
-        enhancements: ['region-extract', 'contrast']
+        originalSize: (dataUrl.length * 0.75) / 1024 / 1024,
+        processedSize: (regionDataUrl.length * 0.75) / 1024 / 1024,
+        enhancements: ['region-extract', 'contrast'],
       });
     };
 
@@ -437,7 +452,7 @@ export async function compressToSize(
         ctx.drawImage(img, 0, 0, width, height);
         result = canvas.toDataURL('image/jpeg', quality);
 
-        const sizeMB = result.length * 0.75 / 1024 / 1024;
+        const sizeMB = (result.length * 0.75) / 1024 / 1024;
 
         if (sizeMB <= targetSizeMB) {
           break;
@@ -457,9 +472,9 @@ export async function compressToSize(
         dataUrl: result,
         width: Math.round(width),
         height: Math.round(height),
-        originalSize: dataUrl.length * 0.75 / 1024 / 1024,
-        processedSize: result.length * 0.75 / 1024 / 1024,
-        enhancements: ['compressed']
+        originalSize: (dataUrl.length * 0.75) / 1024 / 1024,
+        processedSize: (result.length * 0.75) / 1024 / 1024,
+        enhancements: ['compressed'],
       });
     };
 
@@ -533,7 +548,7 @@ export async function detectThreePhaseBoard(dataUrl: string): Promise<{
       resolve({
         isLikelyThreePhase: score > 0.5,
         confidence: Math.min(1, score),
-        indicators
+        indicators,
       });
     };
 
@@ -570,6 +585,6 @@ function analyzePhaseColors(imageData: ImageData): { hasRedYellowBlue: boolean }
   const threshold = totalPixels * 0.001; // 0.1% of pixels
 
   return {
-    hasRedYellowBlue: redCount > threshold && yellowCount > threshold && blueCount > threshold
+    hasRedYellowBlue: redCount > threshold && yellowCount > threshold && blueCount > threshold,
   };
 }

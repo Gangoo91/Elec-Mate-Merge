@@ -13,20 +13,23 @@ const MaintenanceSchedulesPractical = () => {
   const generateMaintenanceSchedule = () => {
     const age = parseFloat(systemAge) || 0;
     const env = environment;
-    
-    if (age <= 1) return "Monthly monitoring, Quarterly visual checks, Annual electrical testing";
-    if (age <= 5) return "Bi-monthly monitoring, Quarterly inspections, Bi-annual electrical testing";
-    if (age <= 10) return "Monthly monitoring, Bi-monthly inspections, Quarterly electrical testing";
-    return "Continuous monitoring, Monthly inspections, Quarterly comprehensive testing";
+
+    if (age <= 1) return 'Monthly monitoring, Quarterly visual checks, Annual electrical testing';
+    if (age <= 5)
+      return 'Bi-monthly monitoring, Quarterly inspections, Bi-annual electrical testing';
+    if (age <= 10)
+      return 'Monthly monitoring, Bi-monthly inspections, Quarterly electrical testing';
+    return 'Continuous monitoring, Monthly inspections, Quarterly comprehensive testing';
   };
 
   const getCleaningRecommendation = () => {
     const days = parseInt(lastCleaning) || 0;
     const env = environment;
-    
+
     if (env === 'coastal' && days > 30) return { status: 'urgent', text: 'Clean immediately' };
     if (env === 'dusty' && days > 60) return { status: 'urgent', text: 'Clean soon' };
-    if (env === 'standard' && days > 90) return { status: 'recommended', text: 'Consider cleaning' };
+    if (env === 'standard' && days > 90)
+      return { status: 'recommended', text: 'Consider cleaning' };
     return { status: 'good', text: 'No cleaning required' };
   };
 
@@ -47,7 +50,6 @@ const MaintenanceSchedulesPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Maintenance Calendar Generator */}
         <div className="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
           <h4 className="text-blue-400 font-semibold mb-3 flex items-center gap-2">
@@ -57,7 +59,9 @@ const MaintenanceSchedulesPractical = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">System Age (years)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  System Age (years)
+                </label>
                 <input
                   type="number"
                   value={systemAge}
@@ -67,7 +71,9 @@ const MaintenanceSchedulesPractical = () => {
                 />
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Environment Type</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Environment Type
+                </label>
                 <select
                   value={environment}
                   onChange={(e) => setEnvironment(e.target.value)}
@@ -81,7 +87,9 @@ const MaintenanceSchedulesPractical = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Days since last cleaning</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Days since last cleaning
+                </label>
                 <input
                   type="number"
                   value={lastCleaning}
@@ -98,9 +106,14 @@ const MaintenanceSchedulesPractical = () => {
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-foreground font-medium">Cleaning Status:</p>
-                <Badge 
-                  variant={getCleaningRecommendation().status === 'urgent' ? "destructive" : 
-                          getCleaningRecommendation().status === 'recommended' ? "secondary" : "default"}
+                <Badge
+                  variant={
+                    getCleaningRecommendation().status === 'urgent'
+                      ? 'destructive'
+                      : getCleaningRecommendation().status === 'recommended'
+                        ? 'secondary'
+                        : 'default'
+                  }
                   className="text-sm"
                 >
                   {getCleaningRecommendation().text}
@@ -179,7 +192,9 @@ const MaintenanceSchedulesPractical = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Current Performance Ratio (%)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Current Performance Ratio (%)
+                </label>
                 <input
                   type="number"
                   value={performance}
@@ -187,25 +202,33 @@ const MaintenanceSchedulesPractical = () => {
                   className="w-full p-2 bg-elec-dark border border-gray-600 rounded text-foreground"
                   placeholder="e.g., 82"
                 />
-                <p className="text-gray-400 text-xs mt-1">PR = (Actual Energy / Theoretical Energy) × 100</p>
+                <p className="text-gray-400 text-xs mt-1">
+                  PR = (Actual Energy / Theoretical Energy) × 100
+                </p>
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <h5 className="text-foreground font-medium mb-2">Performance Benchmarks:</h5>
                 <ul className="text-gray-300 text-xs space-y-1">
-                  <li>• Excellent: {"≥"} 85% (well-maintained, optimal conditions)</li>
+                  <li>• Excellent: {'≥'} 85% (well-maintained, optimal conditions)</li>
                   <li>• Good: 80-84% (normal operation, minor soiling)</li>
                   <li>• Fair: 75-79% (requires attention, cleaning needed)</li>
-                  <li>• Poor: {"<"} 75% (fault investigation required)</li>
+                  <li>• Poor: {'<'} 75% (fault investigation required)</li>
                 </ul>
               </div>
             </div>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-foreground font-medium">Performance Status:</p>
-                <Badge 
-                  variant={getPerformanceStatus().status === 'excellent' ? "default" : 
-                          getPerformanceStatus().status === 'good' ? "secondary" : 
-                          getPerformanceStatus().status === 'fair' ? "outline" : "destructive"}
+                <Badge
+                  variant={
+                    getPerformanceStatus().status === 'excellent'
+                      ? 'default'
+                      : getPerformanceStatus().status === 'good'
+                        ? 'secondary'
+                        : getPerformanceStatus().status === 'fair'
+                          ? 'outline'
+                          : 'destructive'
+                  }
                   className="text-sm"
                 >
                   {getPerformanceStatus().text}
@@ -306,19 +329,27 @@ const MaintenanceSchedulesPractical = () => {
           <div className="space-y-2 text-sm">
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
               <h5 className="text-red-400 font-medium">Coastal Environments:</h5>
-              <p className="text-gray-300">Increase inspection frequency to monthly. Clean panels monthly to remove salt deposits. Check for accelerated corrosion of mounting hardware.</p>
+              <p className="text-gray-300">
+                Increase inspection frequency to monthly. Clean panels monthly to remove salt
+                deposits. Check for accelerated corrosion of mounting hardware.
+              </p>
             </div>
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
               <h5 className="text-orange-400 font-medium">Dusty/Agricultural Areas:</h5>
-              <p className="text-gray-300">Monitor soiling levels weekly during harvest seasons. Clean more frequently during dry periods. Check for pest damage to cables.</p>
+              <p className="text-gray-300">
+                Monitor soiling levels weekly during harvest seasons. Clean more frequently during
+                dry periods. Check for pest damage to cables.
+              </p>
             </div>
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
               <h5 className="text-yellow-400 font-medium">High Wind Areas:</h5>
-              <p className="text-gray-300">Inspect mounting hardware quarterly. Check for wind-induced vibration damage. Verify cable support adequacy after storms.</p>
+              <p className="text-gray-300">
+                Inspect mounting hardware quarterly. Check for wind-induced vibration damage. Verify
+                cable support adequacy after storms.
+              </p>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

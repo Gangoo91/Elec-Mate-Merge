@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -20,8 +19,8 @@ const ClientDetailsSection: React.FC<ClientDetailsSectionProps> = ({ formData, o
     if (formData.clientAddress) {
       onUpdate('installationAddress', formData.clientAddress);
       toast({
-        title: "Address Copied",
-        description: "Client address copied to installation address",
+        title: 'Address Copied',
+        description: 'Client address copied to installation address',
       });
     }
   };
@@ -46,7 +45,7 @@ const ClientDetailsSection: React.FC<ClientDetailsSectionProps> = ({ formData, o
             required
             helpText="Enter the full name of the client or organisation"
           />
-          
+
           <div>
             <Label htmlFor="clientAddress">Client Address</Label>
             <Textarea

@@ -1,4 +1,4 @@
-import ElectricianCPDTracker from "./cpd/ElectricianCPDTracker";
+import ElectricianCPDTracker from './cpd/ElectricianCPDTracker';
 
 const CPDTracker = () => {
   return <ElectricianCPDTracker />;

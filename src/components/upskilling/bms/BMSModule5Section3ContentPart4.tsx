@@ -12,10 +12,11 @@ export const BMSModule5Section3ContentPart4 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Modbus is found throughout modern buildings in various applications. Understanding where and why 
-          it's used helps electricians plan installations and troubleshoot issues effectively.
+          Modbus is found throughout modern buildings in various applications. Understanding where
+          and why it's used helps electricians plan installations and troubleshoot issues
+          effectively.
         </p>
-        
+
         <div className="space-y-3">
           <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2 mb-2">
@@ -23,10 +24,19 @@ export const BMSModule5Section3ContentPart4 = () => {
               Energy Meters
             </h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground"><strong>Application:</strong> Most electrical submeters use Modbus RTU or TCP/IP</p>
-              <p className="text-foreground"><strong>Data:</strong> kWh consumption, power demand, voltage, current, power factor</p>
-              <p className="text-foreground"><strong>Installation:</strong> Often daisy-chained in distribution boards</p>
-              <p className="text-foreground"><strong>Benefits:</strong> Automated meter reading, energy monitoring, cost allocation</p>
+              <p className="text-foreground">
+                <strong>Application:</strong> Most electrical submeters use Modbus RTU or TCP/IP
+              </p>
+              <p className="text-foreground">
+                <strong>Data:</strong> kWh consumption, power demand, voltage, current, power factor
+              </p>
+              <p className="text-foreground">
+                <strong>Installation:</strong> Often daisy-chained in distribution boards
+              </p>
+              <p className="text-foreground">
+                <strong>Benefits:</strong> Automated meter reading, energy monitoring, cost
+                allocation
+              </p>
             </div>
           </div>
 
@@ -36,10 +46,18 @@ export const BMSModule5Section3ContentPart4 = () => {
               Plant Equipment
             </h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground"><strong>Boilers:</strong> Temperature control, modulation, fault monitoring</p>
-              <p className="text-foreground"><strong>Chillers:</strong> Capacity control, efficiency monitoring, diagnostics</p>
-              <p className="text-foreground"><strong>VSDs:</strong> Speed control, motor monitoring, energy optimisation</p>
-              <p className="text-foreground"><strong>Heat pumps:</strong> Operating modes, performance data, alarm status</p>
+              <p className="text-foreground">
+                <strong>Boilers:</strong> Temperature control, modulation, fault monitoring
+              </p>
+              <p className="text-foreground">
+                <strong>Chillers:</strong> Capacity control, efficiency monitoring, diagnostics
+              </p>
+              <p className="text-foreground">
+                <strong>VSDs:</strong> Speed control, motor monitoring, energy optimisation
+              </p>
+              <p className="text-foreground">
+                <strong>Heat pumps:</strong> Operating modes, performance data, alarm status
+              </p>
             </div>
           </div>
 
@@ -49,10 +67,18 @@ export const BMSModule5Section3ContentPart4 = () => {
               Integration Gateways
             </h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground"><strong>Protocol conversion:</strong> Modbus devices linked into BACnet systems</p>
-              <p className="text-foreground"><strong>Legacy integration:</strong> Connecting older Modbus equipment to modern BMS</p>
-              <p className="text-foreground"><strong>Multi-protocol sites:</strong> Bridging different communication standards</p>
-              <p className="text-foreground"><strong>Cloud connectivity:</strong> IoT gateways for remote monitoring</p>
+              <p className="text-foreground">
+                <strong>Protocol conversion:</strong> Modbus devices linked into BACnet systems
+              </p>
+              <p className="text-foreground">
+                <strong>Legacy integration:</strong> Connecting older Modbus equipment to modern BMS
+              </p>
+              <p className="text-foreground">
+                <strong>Multi-protocol sites:</strong> Bridging different communication standards
+              </p>
+              <p className="text-foreground">
+                <strong>Cloud connectivity:</strong> IoT gateways for remote monitoring
+              </p>
             </div>
           </div>
         </div>
@@ -84,9 +110,10 @@ export const BMSModule5Section3ContentPart4 = () => {
         <div className="bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Installation Considerations</h4>
           <p className="text-foreground text-sm">
-            When planning Modbus installations, consider the number of devices, update frequency requirements, 
-            and existing network infrastructure. RTU is often sufficient for energy meters, while TCP/IP 
-            may be necessary for real-time plant control and integration with IT systems.
+            When planning Modbus installations, consider the number of devices, update frequency
+            requirements, and existing network infrastructure. RTU is often sufficient for energy
+            meters, while TCP/IP may be necessary for real-time plant control and integration with
+            IT systems.
           </p>
         </div>
       </CardContent>

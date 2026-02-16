@@ -44,7 +44,7 @@ export const MobileSelectPicker = ({
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
 
-  const selectedOption = options.find(o => o.value === value);
+  const selectedOption = options.find((o) => o.value === value);
 
   // On desktop, use regular Radix Select
   if (!isMobile) {
@@ -97,10 +97,7 @@ export const MobileSelectPicker = ({
           triggerClassName
         )}
       >
-        <span className={cn(
-          'truncate',
-          !selectedOption && 'text-muted-foreground'
-        )}>
+        <span className={cn('truncate', !selectedOption && 'text-muted-foreground')}>
           {selectedOption?.label || placeholder}
         </span>
         <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />
@@ -137,9 +134,7 @@ export const MobileSelectPicker = ({
                   <span className="text-xs text-muted-foreground mt-0.5">{option.description}</span>
                 )}
               </div>
-              {value === option.value && (
-                <Check className="h-5 w-5 flex-shrink-0 ml-3" />
-              )}
+              {value === option.value && <Check className="h-5 w-5 flex-shrink-0 ml-3" />}
             </button>
           ))}
         </div>

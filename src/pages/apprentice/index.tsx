@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   BookOpen,
   Wrench,
@@ -12,46 +11,46 @@ import {
   TrendingUp,
   MessageSquare,
   HelpCircle,
-  ArrowRight
-} from "lucide-react";
-import OJTRatioCard from "@/components/apprentice/OJTRatioCard";
-import StudyProgressCard from "@/components/apprentice/StudyProgressCard";
-import { useApprenticeData } from "@/hooks/useApprenticeData";
+  ArrowRight,
+} from 'lucide-react';
+import OJTRatioCard from '@/components/apprentice/OJTRatioCard';
+import StudyProgressCard from '@/components/apprentice/StudyProgressCard';
+import { useApprenticeData } from '@/hooks/useApprenticeData';
 
 const ApprenticeIndex = () => {
   const { user, isLoading } = useApprenticeData();
 
   const quickAccessItems = [
     {
-      title: "Learning Resources",
+      title: 'Learning Resources',
       icon: BookOpen,
-      href: "/apprentice/learning"
+      href: '/apprentice/learning',
     },
     {
-      title: "Professional Toolbox",
+      title: 'Professional Toolbox',
       icon: Wrench,
-      href: "/apprentice/toolbox"
+      href: '/apprentice/toolbox',
     },
     {
-      title: "Document Templates",
+      title: 'Document Templates',
       icon: FileText,
-      href: "/apprentice/documents"
+      href: '/apprentice/documents',
     },
     {
-      title: "Career Development",
+      title: 'Career Development',
       icon: TrendingUp,
-      href: "/apprentice/career"
+      href: '/apprentice/career',
     },
     {
-      title: "Community Chat",
+      title: 'Community Chat',
       icon: MessageSquare,
-      href: "/apprentice/chat"
+      href: '/apprentice/chat',
     },
     {
-      title: "Portfolio & OJT",
+      title: 'Portfolio & OJT',
       icon: Users,
-      href: "/apprentice/ojt"
-    }
+      href: '/apprentice/ojt',
+    },
   ];
 
   return (
@@ -62,7 +61,8 @@ const ApprenticeIndex = () => {
           {isLoading ? 'Welcome to Elec-Mate' : `Welcome back, ${user.firstName}`}
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-white max-w-2xl mx-auto px-2">
-          Your comprehensive electrical apprenticeship companion - designed specifically for UK electrical apprentices
+          Your comprehensive electrical apprenticeship companion - designed specifically for UK
+          electrical apprentices
         </p>
       </div>
 
@@ -74,7 +74,9 @@ const ApprenticeIndex = () => {
               <div className="flex items-center gap-3">
                 <Brain className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow shrink-0" />
                 <div>
-                  <CardTitle className="text-base sm:text-lg text-elec-yellow">Advanced Help Box</CardTitle>
+                  <CardTitle className="text-base sm:text-lg text-elec-yellow">
+                    Advanced Help Box
+                  </CardTitle>
                   <p className="text-xs sm:text-sm text-white mt-1">
                     AI-powered assistance and cutting-edge training tools
                   </p>
@@ -124,18 +126,15 @@ const ApprenticeIndex = () => {
         </CardHeader>
         <CardContent className="p-4 sm:p-6 pt-2 sm:pt-2">
           <p className="text-sm sm:text-base text-white mb-4">
-            New to Elec-Mate? Check out our getting started guide or explore the Advanced Help Box for AI-powered assistance.
+            New to Elec-Mate? Check out our getting started guide or explore the Advanced Help Box
+            for AI-powered assistance.
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
             <Button variant="outline" asChild className="w-full sm:w-auto h-11 touch-manipulation">
-              <Link to="/apprentice/advanced-help">
-                Get AI Help
-              </Link>
+              <Link to="/apprentice/advanced-help">Get AI Help</Link>
             </Button>
             <Button variant="outline" asChild className="w-full sm:w-auto h-11 touch-manipulation">
-              <Link to="/study-centre">
-                Start Learning
-              </Link>
+              <Link to="/study-centre">Start Learning</Link>
             </Button>
           </div>
         </CardContent>

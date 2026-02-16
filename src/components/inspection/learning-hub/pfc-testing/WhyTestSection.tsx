@@ -1,16 +1,32 @@
-
 import React from 'react';
-import { Shield, AlertTriangle, Target, Clock, Zap, TrendingUp, CheckCircle2, Users, Building, Flame } from 'lucide-react';
+import {
+  Shield,
+  AlertTriangle,
+  Target,
+  Clock,
+  Zap,
+  TrendingUp,
+  CheckCircle2,
+  Users,
+  Building,
+  Flame,
+} from 'lucide-react';
 
 const WhyTestSection = () => (
   <div className="space-y-4 sm:space-y-6">
     <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-blue-400">Fundamental Safety Purpose</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-blue-400">
+          Fundamental Safety Purpose
+        </h4>
       </div>
       <div className="space-y-3 text-xs sm:text-sm text-gray-300">
-        <p>PFC testing is a critical safety verification that ensures protective devices can operate effectively during fault conditions. Without adequate fault current, protective devices may fail to disconnect dangerous circuits, leading to serious safety hazards.</p>
+        <p>
+          PFC testing is a critical safety verification that ensures protective devices can operate
+          effectively during fault conditions. Without adequate fault current, protective devices
+          may fail to disconnect dangerous circuits, leading to serious safety hazards.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-foreground mb-2">Personal Safety Protection:</p>
@@ -37,7 +53,9 @@ const WhyTestSection = () => (
     <div className="bg-red-500/10 border border-red-500/20 border-l-4 border-l-red-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-red-400">Consequences of Inadequate PFC</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-red-400">
+          Consequences of Inadequate PFC
+        </h4>
       </div>
       <div className="space-y-4 text-sm text-gray-300">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -120,23 +138,44 @@ const WhyTestSection = () => (
       </div>
       <div className="space-y-3 text-sm text-gray-300">
         <div className="bg-card rounded p-4">
-          <p className="font-medium text-yellow-400 mb-3">Maximum Disconnection Times - Table 41.1:</p>
+          <p className="font-medium text-yellow-400 mb-3">
+            Maximum Disconnection Times - Table 41.1:
+          </p>
           <div className="space-y-3">
             <div className="grid grid-cols-4 gap-2 font-mono text-xs">
               <div className="font-medium text-foreground">System</div>
               <div className="font-medium text-foreground">Uo (V)</div>
               <div className="font-medium text-foreground">Final Circuits</div>
               <div className="font-medium text-foreground">Distribution</div>
-              <div>TN</div><div>120</div><div>0.8s</div><div>5s</div>
-              <div>TN</div><div>230</div><div>0.4s</div><div>5s</div>
-              <div>TN</div><div>400</div><div>0.2s</div><div>1s</div>
-              <div>TT</div><div>120</div><div>0.3s</div><div>1s</div>
-              <div>TT</div><div>230</div><div>0.2s</div><div>1s</div>
-              <div>TT</div><div>400</div><div>0.07s</div><div>1s</div>
+              <div>TN</div>
+              <div>120</div>
+              <div>0.8s</div>
+              <div>5s</div>
+              <div>TN</div>
+              <div>230</div>
+              <div>0.4s</div>
+              <div>5s</div>
+              <div>TN</div>
+              <div>400</div>
+              <div>0.2s</div>
+              <div>1s</div>
+              <div>TT</div>
+              <div>120</div>
+              <div>0.3s</div>
+              <div>1s</div>
+              <div>TT</div>
+              <div>230</div>
+              <div>0.2s</div>
+              <div>1s</div>
+              <div>TT</div>
+              <div>400</div>
+              <div>0.07s</div>
+              <div>1s</div>
             </div>
             <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
               <p className="text-orange-400 font-medium text-xs">
-                <strong>Critical Note:</strong> These times assume adequate PFC values. Insufficient PFC prevents achieving these disconnection times, compromising safety.
+                <strong>Critical Note:</strong> These times assume adequate PFC values. Insufficient
+                PFC prevents achieving these disconnection times, compromising safety.
               </p>
             </div>
           </div>
@@ -154,11 +193,15 @@ const WhyTestSection = () => (
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">MCB Operation Zones:</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Thermal Zone (1-3 × In):</strong></p>
+              <p>
+                <strong>Thermal Zone (1-3 × In):</strong>
+              </p>
               <p>• 1-60 minute operation</p>
               <p>• Overload protection</p>
               <p>• Not suitable for fault protection</p>
-              <p><strong>Magnetic Zone (&gt;5×In Type B):</strong></p>
+              <p>
+                <strong>Magnetic Zone (&gt;5×In Type B):</strong>
+              </p>
               <p>• Instantaneous operation (&lt;0.1s)</p>
               <p>• Fault current protection</p>
               <p>• Requires adequate PFC</p>
@@ -167,10 +210,14 @@ const WhyTestSection = () => (
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">Fuse Characteristics:</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Low Fault Currents:</strong></p>
+              <p>
+                <strong>Low Fault Currents:</strong>
+              </p>
               <p>• Extended operating times</p>
               <p>• May not meet disconnection requirements</p>
-              <p><strong>High Fault Currents:</strong></p>
+              <p>
+                <strong>High Fault Currents:</strong>
+              </p>
               <p>• Rapid fuse operation</p>
               <p>• Effective fault clearance</p>
               <p>• Time/current curves determine performance</p>
@@ -179,10 +226,14 @@ const WhyTestSection = () => (
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">RCD Integration:</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Primary Protection:</strong></p>
+              <p>
+                <strong>Primary Protection:</strong>
+              </p>
               <p>• 30mA RCDs for additional protection</p>
               <p>• Independent of PFC for earth leakage</p>
-              <p><strong>Backup Role:</strong></p>
+              <p>
+                <strong>Backup Role:</strong>
+              </p>
               <p>• PFC ensures overcurrent device operation</p>
               <p>• RCD provides secondary protection</p>
               <p>• Both systems must be effective</p>

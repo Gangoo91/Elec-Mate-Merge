@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m3s4-check1",
-    question: "What is the minimum burial depth for cables under a driveway?",
-    options: ["300mm", "450mm", "600mm", "750mm"],
+    id: 'evcharging-m3s4-check1',
+    question: 'What is the minimum burial depth for cables under a driveway?',
+    options: ['300mm', '450mm', '600mm', '750mm'],
     correctIndex: 2,
-    explanation: "Cables under driveways and roads must be buried at minimum 600mm depth to provide adequate protection from vehicle loads. Under lawns, 450mm is acceptable."
+    explanation:
+      'Cables under driveways and roads must be buried at minimum 600mm depth to provide adequate protection from vehicle loads. Under lawns, 450mm is acceptable.',
   },
   {
-    id: "evcharging-m3s4-check2",
-    question: "What is the maximum fill factor for cables in conduit?",
-    options: ["20%", "40%", "60%", "80%"],
+    id: 'evcharging-m3s4-check2',
+    question: 'What is the maximum fill factor for cables in conduit?',
+    options: ['20%', '40%', '60%', '80%'],
     correctIndex: 1,
-    explanation: "Maximum 40% fill factor ensures cables can be pulled through without damage and allows for heat dissipation. Higher fill factors make installation difficult and cause thermal issues."
+    explanation:
+      'Maximum 40% fill factor ensures cables can be pulled through without damage and allows for heat dissipation. Higher fill factors make installation difficult and cause thermal issues.',
   },
   {
-    id: "evcharging-m3s4-check3",
-    question: "What is the minimum bend radius for SWA cable?",
-    options: ["3 × cable diameter", "6 × cable diameter", "8 × cable diameter", "12 × cable diameter"],
+    id: 'evcharging-m3s4-check3',
+    question: 'What is the minimum bend radius for SWA cable?',
+    options: [
+      '3 × cable diameter',
+      '6 × cable diameter',
+      '8 × cable diameter',
+      '12 × cable diameter',
+    ],
     correctIndex: 1,
-    explanation: "SWA cable requires a minimum 6 × diameter bend radius during installation (8 × when fixed) to prevent damage to the steel wire armour and internal conductors."
-  }
+    explanation:
+      'SWA cable requires a minimum 6 × diameter bend radius during installation (8 × when fixed) to prevent damage to the steel wire armour and internal conductors.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When should I use SWA cable vs. cable in conduit?",
-    answer: "Use SWA for direct burial or where mechanical protection is needed without additional containment. Use conduit for surface runs requiring protection, where future cable changes may be needed, or when fire-rated containment is required."
+    question: 'When should I use SWA cable vs. cable in conduit?',
+    answer:
+      'Use SWA for direct burial or where mechanical protection is needed without additional containment. Use conduit for surface runs requiring protection, where future cable changes may be needed, or when fire-rated containment is required.',
   },
   {
-    question: "What IP rating is required for outdoor EV charging installations?",
-    answer: "Minimum IP65 is recommended for external installations, providing protection against water jets. IP44 is the absolute minimum for rain protection. Underground or flooded areas may need IP68."
+    question: 'What IP rating is required for outdoor EV charging installations?',
+    answer:
+      'Minimum IP65 is recommended for external installations, providing protection against water jets. IP44 is the absolute minimum for rain protection. Underground or flooded areas may need IP68.',
   },
   {
-    question: "How do I ensure EMC compliance with cable routing?",
-    answer: "Maintain minimum 300mm separation from data cables unless using shielded cables. Cross power and data cables at 90° only. Use SWA with armour earthed at both ends. Avoid parallel runs with communications cables over 10m."
+    question: 'How do I ensure EMC compliance with cable routing?',
+    answer:
+      'Maintain minimum 300mm separation from data cables unless using shielded cables. Cross power and data cables at 90° only. Use SWA with armour earthed at both ends. Avoid parallel runs with communications cables over 10m.',
   },
   {
-    question: "What support spacing is required for SWA cable?",
-    answer: "SWA cable requires support every 600mm vertically and 750mm horizontally. Additional support is needed within 150mm of terminations. Hot environments may require closer spacing."
-  }
+    question: 'What support spacing is required for SWA cable?',
+    answer:
+      'SWA cable requires support every 600mm vertically and 750mm horizontally. Additional support is needed within 150mm of terminations. Hot environments may require closer spacing.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "You're installing a 7kW charger 25m from the consumer unit via an external wall and underground to a garage. What routing method should you use?",
-  options: [
-    "PVC singles in conduit throughout",
-    "SWA cable clipped to wall, ducted underground, gland entry to garage",
-    "Extension lead from house socket",
-    "XLPE cable buried directly in soil"
-  ],
-  correctAnswer: 1,
-  explanation: "SWA provides mechanical protection for external runs and underground burial. Proper gland entries maintain IP ratings. Ducting underground allows future cable changes. This approach meets BS 7671 for protection, burial depth, and weatherproofing."
-  }
+    question:
+      "You're installing a 7kW charger 25m from the consumer unit via an external wall and underground to a garage. What routing method should you use?",
+    options: [
+      'PVC singles in conduit throughout',
+      'SWA cable clipped to wall, ducted underground, gland entry to garage',
+      'Extension lead from house socket',
+      'XLPE cable buried directly in soil',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'SWA provides mechanical protection for external runs and underground burial. Proper gland entries maintain IP ratings. Ducting underground allows future cable changes. This approach meets BS 7671 for protection, burial depth, and weatherproofing.',
+  },
 ];
 
 const EVChargingModule3Section4 = () => {
   useSEO({
-    title: "Cable Routing and Containment | EV Charging Module 3.4",
-    description: "Learn professional cable routing and containment methods for EV charging installations including BS 7671 requirements and installation techniques."
+    title: 'Cable Routing and Containment | EV Charging Module 3.4',
+    description:
+      'Learn professional cable routing and containment methods for EV charging installations including BS 7671 requirements and installation techniques.',
   });
 
   return (
@@ -98,9 +113,7 @@ const EVChargingModule3Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Routing and Containment
           </h1>
-          <p className="text-white/80">
-            Professional installation methods for EV charging
-          </p>
+          <p className="text-white/80">Professional installation methods for EV charging</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +121,26 @@ const EVChargingModule3Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Underground:</strong> 600mm under driveways, 450mm lawns</li>
-              <li><strong>Conduit fill:</strong> Maximum 40% capacity</li>
-              <li><strong>SWA bend:</strong> Minimum 6 × cable diameter</li>
+              <li>
+                <strong>Underground:</strong> 600mm under driveways, 450mm lawns
+              </li>
+              <li>
+                <strong>Conduit fill:</strong> Maximum 40% capacity
+              </li>
+              <li>
+                <strong>SWA bend:</strong> Minimum 6 × cable diameter
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Warning tape 150mm above buried cables</li>
-              <li><strong>Use:</strong> Sand bed + tile protection for underground</li>
+              <li>
+                <strong>Spot:</strong> Warning tape 150mm above buried cables
+              </li>
+              <li>
+                <strong>Use:</strong> Sand bed + tile protection for underground
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +150,12 @@ const EVChargingModule3Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Select cable routing methods for installations",
-              "Specify containment systems for fire and IP ratings",
-              "Apply bend radius and support spacing",
-              "Implement mechanical protection systems",
-              "Ensure BS 7671 wiring system compliance",
-              "Design for maintenance and future expansion"
+              'Select cable routing methods for installations',
+              'Specify containment systems for fire and IP ratings',
+              'Apply bend radius and support spacing',
+              'Implement mechanical protection systems',
+              'Ensure BS 7671 wiring system compliance',
+              'Design for maintenance and future expansion',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -215,7 +238,9 @@ const EVChargingModule3Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Segregation Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Segregation Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• ELV/LV separation</li>
                   <li>• Minimum 100mm or metal barrier</li>
@@ -272,25 +297,39 @@ const EVChargingModule3Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Bend Radius Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Bend Radius Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>PVC Singles:</strong> 3× install, 4× fixed</li>
-                  <li><strong>SWA Cable:</strong> 6× install, 8× fixed</li>
-                  <li><strong>Flexible:</strong> 4× install, 6× fixed</li>
+                  <li>
+                    <strong>PVC Singles:</strong> 3× install, 4× fixed
+                  </li>
+                  <li>
+                    <strong>SWA Cable:</strong> 6× install, 8× fixed
+                  </li>
+                  <li>
+                    <strong>Flexible:</strong> 4× install, 6× fixed
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Support Spacing</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>PVC:</strong> 300mm V, 400mm H</li>
-                  <li><strong>SWA:</strong> 600mm V, 750mm H</li>
+                  <li>
+                    <strong>PVC:</strong> 300mm V, 400mm H
+                  </li>
+                  <li>
+                    <strong>SWA:</strong> 600mm V, 750mm H
+                  </li>
                   <li>Additional 150mm from terminations</li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Pulling Techniques</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cable Pulling Techniques
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>• Maximum pulling tension: 50N per mm² conductor</li>
                 <li>• Use pulling eyes for larger cables</li>
@@ -349,11 +388,13 @@ const EVChargingModule3Section4 = () => {
             </div>
 
             <div className="p-4 rounded bg-transparent border border-elec-yellow/20">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Support Calculation Example</p>
+              <p className="text-sm font-medium text-elec-yellow mb-2">
+                Support Calculation Example
+              </p>
               <p className="text-sm text-white">
-                6mm² SWA cable, 25m horizontal run: 750mm spacing = 34 clips required.
-                Add support within 150mm of each termination = 2 additional clips.
-                Total: 36 cable clips for proper installation.
+                6mm² SWA cable, 25m horizontal run: 750mm spacing = 34 clips required. Add support
+                within 150mm of each termination = 2 additional clips. Total: 36 cable clips for
+                proper installation.
               </p>
             </div>
           </div>
@@ -368,7 +409,9 @@ const EVChargingModule3Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chapter 52 Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Chapter 52 Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• 521.5: External influences assessment</li>
                   <li>• 522.6: Installation methods</li>
@@ -377,12 +420,22 @@ const EVChargingModule3Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Appendix 5 Conditions</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Appendix 5 Conditions
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>AD:</strong> Water presence (AD1-AD8)</li>
-                  <li><strong>AF:</strong> Corrosion (AF1-AF4)</li>
-                  <li><strong>AG:</strong> Mechanical stress (AG1-AG3)</li>
-                  <li><strong>AH:</strong> Vibration (AH1-AH3)</li>
+                  <li>
+                    <strong>AD:</strong> Water presence (AD1-AD8)
+                  </li>
+                  <li>
+                    <strong>AF:</strong> Corrosion (AF1-AF4)
+                  </li>
+                  <li>
+                    <strong>AG:</strong> Mechanical stress (AG1-AG3)
+                  </li>
+                  <li>
+                    <strong>AH:</strong> Vibration (AH1-AH3)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -406,10 +459,19 @@ const EVChargingModule3Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Insufficient bend radius:</strong> — Damages cable insulation and armour</li>
-                <li><strong>Missing warning tape:</strong> — Underground cables damaged during excavation</li>
-                <li><strong>Wrong IP rating:</strong> — Water ingress causes failures</li>
-                <li><strong>Poor segregation:</strong> — EMC interference with data cables</li>
+                <li>
+                  <strong>Insufficient bend radius:</strong> — Damages cable insulation and armour
+                </li>
+                <li>
+                  <strong>Missing warning tape:</strong> — Underground cables damaged during
+                  excavation
+                </li>
+                <li>
+                  <strong>Wrong IP rating:</strong> — Water ingress causes failures
+                </li>
+                <li>
+                  <strong>Poor segregation:</strong> — EMC interference with data cables
+                </li>
               </ul>
             </div>
           </div>
@@ -453,10 +515,7 @@ const EVChargingModule3Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

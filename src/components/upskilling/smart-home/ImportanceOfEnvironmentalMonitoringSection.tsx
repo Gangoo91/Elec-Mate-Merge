@@ -12,9 +12,11 @@ export const ImportanceOfEnvironmentalMonitoringSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Indoor Air Quality (IAQ) significantly affects health, comfort, and productivity. Understanding and monitoring environmental conditions is essential for creating healthy indoor environments.
+          Indoor Air Quality (IAQ) significantly affects health, comfort, and productivity.
+          Understanding and monitoring environmental conditions is essential for creating healthy
+          indoor environments.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Health Impacts of Poor IAQ</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -49,7 +51,7 @@ export const ImportanceOfEnvironmentalMonitoringSection = () => {
               <li>• Lower workplace satisfaction</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-green-600 rounded-lg p-4">
             <h4 className="font-semibold text-green-200 mb-3">Regulatory Framework</h4>
             <ul className="space-y-2 text-sm text-green-100">

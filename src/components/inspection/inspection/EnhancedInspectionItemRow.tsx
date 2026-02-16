@@ -16,7 +16,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -33,54 +41,54 @@ const commonNoteTemplates = [
   'Installation not accessible for inspection',
   'Further investigation required by qualified person',
   'Remedial work recommended at earliest opportunity',
-  'Documentation required to verify compliance'
+  'Documentation required to verify compliance',
 ];
 
-const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({ 
-  sectionItem, 
-  inspectionItem, 
-  onUpdateItem, 
+const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
+  sectionItem,
+  inspectionItem,
+  onUpdateItem,
   onOutcomeChange,
-  onNavigateToObservations 
+  onNavigateToObservations,
 }) => {
   const rowRef = React.useRef<HTMLTableRowElement>(null);
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
   const [isFocused, setIsFocused] = React.useState(false);
   const [showSuggestions, setShowSuggestions] = React.useState(false);
-  
+
   const currentOutcome = inspectionItem?.outcome || '';
   const isInspected = inspectionItem?.inspected || false;
-  
+
   // Sync local notes when inspection item changes
   React.useEffect(() => {
     setLocalNotes(inspectionItem?.notes || '');
   }, [inspectionItem?.notes]);
-  
+
   // Handle notes input with debouncing and smart suggestions
   const handleNotesChange = (value: string) => {
     setLocalNotes(value);
-    
+
     // Show suggestions if typing
     setShowSuggestions(value.length > 0 && value.length < 10);
-    
+
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
-    
+
     const newTimer = setTimeout(() => {
       onUpdateItem(sectionItem.id, 'notes', value);
     }, 300);
-    
+
     setDebounceTimer(newTimer);
   };
-  
+
   const applySuggestion = (template: string) => {
     setLocalNotes(template);
     setShowSuggestions(false);
     onUpdateItem(sectionItem.id, 'notes', template);
   };
-  
+
   // Clean up timer on unmount
   React.useEffect(() => {
     return () => {
@@ -89,23 +97,30 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
       }
     };
   }, [debounceTimer]);
-  
+
   const getOutcomeClass = (outcome: string) => {
     switch (outcome) {
-      case 'satisfactory': return 'inspection-row-satisfactory';
-      case 'C1': return 'inspection-row-c1';
-      case 'C2': return 'inspection-row-c2';
-      case 'C3': return 'inspection-row-c3';
-      case 'FI': return 'inspection-row-fi';
-      case 'not-applicable': return 'inspection-row-na';
-      default: return '';
+      case 'satisfactory':
+        return 'inspection-row-satisfactory';
+      case 'C1':
+        return 'inspection-row-c1';
+      case 'C2':
+        return 'inspection-row-c2';
+      case 'C3':
+        return 'inspection-row-c3';
+      case 'FI':
+        return 'inspection-row-fi';
+      case 'not-applicable':
+        return 'inspection-row-na';
+      default:
+        return '';
     }
   };
-  
+
   const isCriticalOutcome = ['C1', 'C2', 'C3'].includes(currentOutcome);
-  
+
   return (
-    <TableRow 
+    <TableRow
       ref={rowRef}
       className={cn(
         'group transition-all duration-200 border-b border-border/30 hover:bg-muted/30 relative h-16',
@@ -122,7 +137,11 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
       }}
       onMouseDown={(e) => {
         const el = e.target as HTMLElement;
-        if (!el.closest('input, textarea, select, button, [role="button"], [role="menuitem"], .prevent-shortcuts')) {
+        if (
+          !el.closest(
+            'input, textarea, select, button, [role="button"], [role="menuitem"], .prevent-shortcuts'
+          )
+        ) {
           rowRef.current?.focus();
         }
       }}
@@ -133,14 +152,12 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
       <TableCell className="relative text-center py-2">
         <Checkbox
           checked={isInspected}
-          onCheckedChange={(checked) => 
-            onUpdateItem(sectionItem.id, 'inspected', checked)
-          }
+          onCheckedChange={(checked) => onUpdateItem(sectionItem.id, 'inspected', checked)}
           className="mx-auto data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 border-2 bg-card w-5 h-5"
           aria-label={`Mark ${sectionItem.item} as inspected`}
         />
       </TableCell>
-      
+
       <TableCell className="max-w-xs py-2 align-middle">
         <TooltipProvider>
           <Tooltip>
@@ -157,28 +174,31 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
           </Tooltip>
         </TooltipProvider>
       </TableCell>
-      
+
       <TableCell className="py-2 align-middle">
         {sectionItem.clause ? (
-          <Badge 
-            variant="outline" 
+          <Badge
+            variant="outline"
             className={`text-[11px] font-normal font-mono w-fit py-0.5 ${
               sectionItem.clause.includes('Visual') || sectionItem.clause.includes('Reserved')
                 ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
                 : sectionItem.clause.includes('Part') || sectionItem.clause.includes('Chapter')
-                ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                : 'bg-muted/50'
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                  : 'bg-muted/50'
             }`}
           >
             {sectionItem.clause}
           </Badge>
         ) : (
-          <Badge variant="secondary" className="text-[11px] font-normal font-mono w-fit py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400">
+          <Badge
+            variant="secondary"
+            className="text-[11px] font-normal font-mono w-fit py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400"
+          >
             No Specific Reg
           </Badge>
         )}
       </TableCell>
-      
+
       <TableCell className="relative py-2 align-middle">
         <EnhancedInspectionOutcomeSelect
           itemId={sectionItem.id}
@@ -186,7 +206,7 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
           onOutcomeChange={onOutcomeChange}
         />
       </TableCell>
-      
+
       <TableCell className="relative py-2 align-middle">
         <div className="space-y-1">
           <TooltipProvider>
@@ -205,14 +225,12 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          
+
           {/* Smart Suggestions Dropdown */}
           {showSuggestions && (
             <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border border-border rounded-lg shadow-xl max-h-40 overflow-y-auto">
               {commonNoteTemplates
-                .filter(template => 
-                  template.toLowerCase().includes(localNotes.toLowerCase())
-                )
+                .filter((template) => template.toLowerCase().includes(localNotes.toLowerCase()))
                 .slice(0, 3)
                 .map((template, index) => (
                   <button
@@ -222,13 +240,12 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
                   >
                     {template}
                   </button>
-                ))
-              }
+                ))}
             </div>
           )}
         </div>
       </TableCell>
-      
+
       <TableCell className="py-2 align-middle">
         <div className="flex items-center gap-2">
           {isCriticalOutcome && (

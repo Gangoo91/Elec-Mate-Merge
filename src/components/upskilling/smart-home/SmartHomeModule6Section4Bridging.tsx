@@ -8,14 +8,16 @@ const SmartHomeModule6Section4Bridging = () => {
       <Card className="bg-elec-gray border-transparent">
         <CardContent className="p-6">
           <h2 className="text-2xl font-bold text-foreground mb-6">1. What is Bridging?</h2>
-          
+
           <div className="space-y-6">
             <div>
               <p className="text-foreground text-lg font-semibold mb-2">
-                Bridging = enabling older or incompatible devices to communicate with modern smart home platforms
+                Bridging = enabling older or incompatible devices to communicate with modern smart
+                home platforms
               </p>
               <p className="text-foreground mb-4">
-                This process allows existing systems to integrate with new technology without complete replacement.
+                This process allows existing systems to integrate with new technology without
+                complete replacement.
               </p>
             </div>
 
@@ -37,7 +39,8 @@ const SmartHomeModule6Section4Bridging = () => {
                   <h3 className="text-lg font-semibold text-foreground">Example</h3>
                 </div>
                 <p className="text-foreground text-sm">
-                  Using a Hue Bridge to connect Zigbee bulbs to Alexa, allowing voice control of older lighting systems.
+                  Using a Hue Bridge to connect Zigbee bulbs to Alexa, allowing voice control of
+                  older lighting systems.
                 </p>
               </div>
             </div>
@@ -46,13 +49,16 @@ const SmartHomeModule6Section4Bridging = () => {
               <h4 className="text-lg font-semibold text-blue-400 mb-2">Key Benefits of Bridging</h4>
               <div className="grid md:grid-cols-3 gap-3 text-sm text-foreground">
                 <div>
-                  <strong className="text-green-400">Cost Effective:</strong> Preserve existing investments
+                  <strong className="text-green-400">Cost Effective:</strong> Preserve existing
+                  investments
                 </div>
                 <div>
-                  <strong className="text-blue-400">Gradual Upgrade:</strong> Modernise systems over time
+                  <strong className="text-blue-400">Gradual Upgrade:</strong> Modernise systems over
+                  time
                 </div>
                 <div>
-                  <strong className="text-purple-400">Functionality:</strong> Add smart features to old devices
+                  <strong className="text-purple-400">Functionality:</strong> Add smart features to
+                  old devices
                 </div>
               </div>
             </div>

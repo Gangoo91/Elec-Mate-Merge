@@ -13,8 +13,7 @@ export const questionsPart1: StandardMockQuestion[] = [
 
   {
     id: 1,
-    question:
-      'An electrician buys 3 rolls of cable at £48.50 each. What is the total cost?',
+    question: 'An electrician buys 3 rolls of cable at £48.50 each. What is the total cost?',
     options: ['£142.50', '£145.50', '£148.50', '£151.50'],
     correctAnswer: 1,
     explanation:
@@ -26,8 +25,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 2,
-    question:
-      'Using BIDMAS, calculate: 12 + 3 × (8 - 2)',
+    question: 'Using BIDMAS, calculate: 12 + 3 × (8 - 2)',
     options: ['90', '30', '54', '18'],
     correctAnswer: 1,
     explanation:
@@ -65,8 +63,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 5,
-    question:
-      'A job is quoted at £2,400 plus VAT at 20%. What is the total cost including VAT?',
+    question: 'A job is quoted at £2,400 plus VAT at 20%. What is the total cost including VAT?',
     options: ['£2,640', '£2,880', '£2,800', '£2,920'],
     correctAnswer: 1,
     explanation:
@@ -91,8 +88,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 7,
-    question:
-      'Calculate: 4² + 3 × (15 - 7) ÷ 2',
+    question: 'Calculate: 4² + 3 × (15 - 7) ÷ 2',
     options: ['28', '20', '16', '24'],
     correctAnswer: 0,
     explanation:
@@ -117,8 +113,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 9,
-    question:
-      'A 100m drum of cable has ⅜ remaining. How many metres are left on the drum?',
+    question: 'A 100m drum of cable has ⅜ remaining. How many metres are left on the drum?',
     options: ['33.5m', '37.5m', '38.0m', '35.0m'],
     correctAnswer: 1,
     explanation:
@@ -146,8 +141,7 @@ export const questionsPart1: StandardMockQuestion[] = [
 
   {
     id: 11,
-    question:
-      'What is the SI unit of electrical resistance?',
+    question: 'What is the SI unit of electrical resistance?',
     options: ['Ampere (A)', 'Volt (V)', 'Ohm (Ω)', 'Watt (W)'],
     correctAnswer: 2,
     explanation:
@@ -159,8 +153,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 12,
-    question:
-      'Convert 2,500mm to metres.',
+    question: 'Convert 2,500mm to metres.',
     options: ['0.25m', '25m', '2.5m', '250m'],
     correctAnswer: 2,
     explanation:
@@ -172,8 +165,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 13,
-    question:
-      'A room measures 4.2m × 3.8m. Calculate the floor area.',
+    question: 'A room measures 4.2m × 3.8m. Calculate the floor area.',
     options: ['16.00m²', '15.96m²', '15.86m²', '16.06m²'],
     correctAnswer: 1,
     explanation:
@@ -198,8 +190,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 15,
-    question:
-      'A hot water cylinder has a capacity of 120 litres. How many cubic metres is this?',
+    question: 'A hot water cylinder has a capacity of 120 litres. How many cubic metres is this?',
     options: ['1.2m³', '0.12m³', '0.012m³', '12m³'],
     correctAnswer: 1,
     explanation:
@@ -211,8 +202,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 16,
-    question:
-      'On a drawing at 1:50 scale, a cable run measures 6cm. What is the actual length?',
+    question: 'On a drawing at 1:50 scale, a cable run measures 6cm. What is the actual length?',
     options: ['30m', '3m', '300m', '0.3m'],
     correctAnswer: 1,
     explanation:
@@ -224,8 +214,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 17,
-    question:
-      'Convert 0.47kW to watts.',
+    question: 'Convert 0.47kW to watts.',
     options: ['4.7W', '47W', '470W', '4,700W'],
     correctAnswer: 2,
     explanation:
@@ -263,8 +252,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 20,
-    question:
-      'How many metres are in 3.75 kilometres?',
+    question: 'How many metres are in 3.75 kilometres?',
     options: ['375m', '37.5m', '3,750m', '37,500m'],
     correctAnswer: 2,
     explanation:
@@ -305,8 +293,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 23,
-    question:
-      'Rearrange the formula V = IR to make R the subject.',
+    question: 'Rearrange the formula V = IR to make R the subject.',
     options: ['R = V + I', 'R = V × I', 'R = V ÷ I', 'R = I ÷ V'],
     correctAnswer: 2,
     explanation:
@@ -318,8 +305,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 24,
-    question:
-      'If P = I²R, and I = 5A and R = 10Ω, what is the power dissipated?',
+    question: 'If P = I²R, and I = 5A and R = 10Ω, what is the power dissipated?',
     options: ['50W', '100W', '250W', '500W'],
     correctAnswer: 2,
     explanation:
@@ -396,8 +382,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 30,
-    question:
-      'Rearrange P = I²R to make I the subject.',
+    question: 'Rearrange P = I²R to make I the subject.',
     options: ['I = P ÷ R', 'I = √(P ÷ R)', 'I = P × R', 'I = √(P × R)'],
     correctAnswer: 1,
     explanation:
@@ -554,8 +539,7 @@ export const questionsPart1: StandardMockQuestion[] = [
 
   {
     id: 41,
-    question:
-      'In BS 7671, what does the abbreviation "RCD" stand for?',
+    question: 'In BS 7671, what does the abbreviation "RCD" stand for?',
     options: [
       'Residual Circuit Device',
       'Residual Current Detector',
@@ -572,8 +556,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 42,
-    question:
-      'When reading a product datasheet for a cable, what does "CSA" typically refer to?',
+    question: 'When reading a product datasheet for a cable, what does "CSA" typically refer to?',
     options: [
       'Cable Safety Assessment',
       'Cross-Sectional Area',
@@ -590,12 +573,11 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 43,
-    question:
-      'A method statement should contain which of the following?',
+    question: 'A method statement should contain which of the following?',
     options: [
       'A list of all company employees',
       'A step-by-step description of how the work will be carried out safely',
-      'The client\'s bank details for payment',
+      "The client's bank details for payment",
       'A record of completed work and test results',
     ],
     correctAnswer: 1,
@@ -608,8 +590,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 44,
-    question:
-      'What does "C2" mean on an Electrical Installation Condition Report (EICR)?',
+    question: 'What does "C2" mean on an Electrical Installation Condition Report (EICR)?',
     options: [
       'The installation is safe and satisfactory',
       'Potentially dangerous — urgent remedial action required',
@@ -626,8 +607,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 45,
-    question:
-      'When reading BS 7671, the term "shall" indicates what level of requirement?',
+    question: 'When reading BS 7671, the term "shall" indicates what level of requirement?',
     options: [
       'It is optional guidance',
       'It is a recommendation that may be varied',
@@ -662,8 +642,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 47,
-    question:
-      'In a risk assessment, what is a "control measure"?',
+    question: 'In a risk assessment, what is a "control measure"?',
     options: [
       'A device that controls electrical circuits',
       'An action or precaution taken to reduce a risk to an acceptable level',
@@ -747,7 +726,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'Test results must be recorded accurately and legibly at the time of testing. They form a legal record of the installation\'s safety and can be scrutinised during disputes or investigations.',
+      "Test results must be recorded accurately and legibly at the time of testing. They form a legal record of the installation's safety and can be scrutinised during disputes or investigations.",
     section: 'Technical Writing',
     difficulty: 'basic',
     topic: 'Forms',
@@ -773,8 +752,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 53,
-    question:
-      'Which is the most appropriate opening for a formal email to a new client?',
+    question: 'Which is the most appropriate opening for a formal email to a new client?',
     options: [
       '"Hi mate, just wanted to touch base about your electrics"',
       '"Dear Mr Thompson, I am writing to confirm the details of the electrical work discussed"',
@@ -783,7 +761,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'Formal emails should begin with a proper salutation using the client\'s name and title, followed by a clear, professional opening statement that establishes the purpose of the communication.',
+      "Formal emails should begin with a proper salutation using the client's name and title, followed by a clear, professional opening statement that establishes the purpose of the communication.",
     section: 'Technical Writing',
     difficulty: 'basic',
     topic: 'Emails',
@@ -827,8 +805,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 56,
-    question:
-      'When writing a daily site diary entry, which of the following should be included?',
+    question: 'When writing a daily site diary entry, which of the following should be included?',
     options: [
       'Personal opinions about other trades on site',
       'Date, weather, work carried out, materials used, personnel on site, and any issues encountered',
@@ -847,12 +824,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 57,
     question:
       'Which sign-off is most appropriate for a formal letter to a building control officer whose name you know?',
-    options: [
-      '"Cheers, Dave"',
-      '"Yours sincerely,"',
-      '"Yours faithfully,"',
-      '"Best wishes,"',
-    ],
+    options: ['"Cheers, Dave"', '"Yours sincerely,"', '"Yours faithfully,"', '"Best wishes,"'],
     correctAnswer: 1,
     explanation:
       'When you know the recipient\'s name (Dear Mr/Mrs/Ms...), the correct formal closing is "Yours sincerely". "Yours faithfully" is used when the recipient\'s name is not known (Dear Sir/Madam).',
@@ -939,7 +911,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   {
     id: 62,
     question:
-      'During a site meeting, you disagree with the main contractor\'s proposed cable route. What is the most appropriate way to raise your concern?',
+      "During a site meeting, you disagree with the main contractor's proposed cable route. What is the most appropriate way to raise your concern?",
     options: [
       'Stay silent to avoid conflict and install it as instructed',
       'Argue loudly to make your point heard by everyone',
@@ -984,7 +956,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'When handling complaints, acknowledge the client\'s frustration, apologise for the inconvenience, and commit to resolving the issue promptly. Never be dismissive or defensive.',
+      "When handling complaints, acknowledge the client's frustration, apologise for the inconvenience, and commit to resolving the issue promptly. Never be dismissive or defensive.",
     section: 'Communication',
     difficulty: 'intermediate',
     topic: 'Client Skills',
@@ -992,11 +964,10 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 65,
-    question:
-      'What is the purpose of a toolbox talk on a construction site?',
+    question: 'What is the purpose of a toolbox talk on a construction site?',
     options: [
       'To discuss which tools each person should bring to site',
-      'To give a brief, focused safety briefing on a specific hazard relevant to the day\'s work',
+      "To give a brief, focused safety briefing on a specific hazard relevant to the day's work",
       'To allocate parking spaces for the week',
       'To distribute new tools to the workforce',
     ],
@@ -1011,7 +982,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   {
     id: 66,
     question:
-      'You discover that a previous electrician\'s work does not comply with current regulations. How should you communicate this to the client?',
+      "You discover that a previous electrician's work does not comply with current regulations. How should you communicate this to the client?",
     options: [
       '"The last sparky was useless — look at the state of this!"',
       '"I\'ve identified some areas of the installation that do not meet current safety standards. I can provide a written report detailing the issues and recommended remedial work."',
@@ -1069,8 +1040,8 @@ export const questionsPart1: StandardMockQuestion[] = [
     options: [
       'Do the work as requested — the client is always right',
       'Refuse the work without any explanation and leave site',
-      'Explain clearly why the request is unsafe, reference the relevant regulation, and offer a compliant alternative that meets the client\'s needs',
-      'Do the work but don\'t sign it off on any certification',
+      "Explain clearly why the request is unsafe, reference the relevant regulation, and offer a compliant alternative that meets the client's needs",
+      "Do the work but don't sign it off on any certification",
     ],
     correctAnswer: 2,
     explanation:
@@ -1087,7 +1058,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     options: [
       'Send a quick text message with a photo of the control panel',
       'Provide a verbal walkthrough at the panel, a written operating guide, and offer to answer any follow-up questions',
-      'Leave the manufacturer\'s instruction manual and assume they will read it',
+      "Leave the manufacturer's instruction manual and assume they will read it",
       'Tell them to phone you if anything goes wrong',
     ],
     correctAnswer: 1,
@@ -1103,8 +1074,7 @@ export const questionsPart1: StandardMockQuestion[] = [
 
   {
     id: 71,
-    question:
-      'Which of these is the correct spelling of an item installed in a consumer unit?',
+    question: 'Which of these is the correct spelling of an item installed in a consumer unit?',
     options: ['Accessory', 'Acessory', 'Accesory', 'Accessorie'],
     correctAnswer: 0,
     explanation:
@@ -1116,8 +1086,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 72,
-    question:
-      'Which sentence uses correct grammar?',
+    question: 'Which sentence uses correct grammar?',
     options: [
       '"The circuits was tested and found to be satisfactory."',
       '"The circuits were tested and found to be satisfactory."',
@@ -1134,8 +1103,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 73,
-    question:
-      'Which of the following words is correctly spelt in UK English?',
+    question: 'Which of the following words is correctly spelt in UK English?',
     options: ['Organization', 'Organisation', 'Organizaton', 'Organisasion'],
     correctAnswer: 1,
     explanation:
@@ -1147,8 +1115,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 74,
-    question:
-      'Which sentence is correctly punctuated?',
+    question: 'Which sentence is correctly punctuated?',
     options: [
       '"The installation includes, lighting power and heating circuits."',
       '"The installation includes lighting, power, and heating circuits."',
@@ -1165,8 +1132,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 75,
-    question:
-      'Identify the correctly spelt technical term:',
+    question: 'Identify the correctly spelt technical term:',
     options: ['Continuety', 'Continuity', 'Continueity', 'Continuaty'],
     correctAnswer: 1,
     explanation:
@@ -1178,8 +1144,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 76,
-    question:
-      'Which sentence correctly uses the apostrophe?',
+    question: 'Which sentence correctly uses the apostrophe?',
     options: [
       '"The electricians tools were left on site."',
       '"The electrician\'s tools were left on site."',
@@ -1196,8 +1161,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 77,
-    question:
-      'Which of the following sentences contains a spelling error?',
+    question: 'Which of the following sentences contains a spelling error?',
     options: [
       '"The insulation resistance was measured at each distribution board."',
       '"The earth fault loop impedence was within acceptable limits."',
@@ -1227,8 +1191,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 79,
-    question:
-      'Which of the following sentences uses the correct form of "their/there/they\'re"?',
+    question: 'Which of the following sentences uses the correct form of "their/there/they\'re"?',
     options: [
       '"Their going to install the new distribution board tomorrow."',
       '"The electricians left there tools in the van."',
@@ -1283,8 +1246,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 82,
-    question:
-      'Which folder structure would best organise an electrician\'s digital records?',
+    question: "Which folder structure would best organise an electrician's digital records?",
     options: [
       'All files saved to the Desktop',
       'Folders by client name, with subfolders for quotes, certificates, photos, and invoices',
@@ -1301,8 +1263,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 83,
-    question:
-      'What does the keyboard shortcut Ctrl+Z (or Cmd+Z on Mac) do in most applications?',
+    question: 'What does the keyboard shortcut Ctrl+Z (or Cmd+Z on Mac) do in most applications?',
     options: [
       'Zoom in on the document',
       'Close the application',
@@ -1354,7 +1315,7 @@ export const questionsPart1: StandardMockQuestion[] = [
       'You need to find a specific EICR you completed last year. The file is somewhere on your computer. What is the fastest way to locate it?',
     options: [
       'Manually open every folder until you find it',
-      'Use the operating system\'s search function (Windows Search or Spotlight) and type the client name or address',
+      "Use the operating system's search function (Windows Search or Spotlight) and type the client name or address",
       'Re-create the document from scratch',
       'Phone the client and ask them for their copy',
     ],
@@ -1368,8 +1329,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   },
   {
     id: 87,
-    question:
-      'Which of the following is a benefit of backing up your work files to cloud storage?',
+    question: 'Which of the following is a benefit of backing up your work files to cloud storage?',
     options: [
       'Files can only be accessed from one device',
       'Files are protected if your computer is lost, stolen, or damaged',
@@ -1426,7 +1386,7 @@ export const questionsPart1: StandardMockQuestion[] = [
       'You need to share a cloud folder containing sensitive client data (personal addresses, electrical certificates) with a colleague. What is the safest approach?',
     options: [
       'Make the folder public so anyone with the link can access it',
-      'Share the folder with specific permission settings, granting access only to your colleague\'s email address',
+      "Share the folder with specific permission settings, granting access only to your colleague's email address",
       'Post the link on social media so your colleague can find it',
       'Email all the files as unencrypted attachments instead',
     ],
@@ -1507,12 +1467,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 95,
     question:
       'Which spreadsheet formula would calculate the average of insulation resistance readings in cells E2 to E20?',
-    options: [
-      '=MEAN(E2:E20)',
-      '=AVERAGE(E2:E20)',
-      '=AVG(E2:E20)',
-      '=SUM(E2:E20)/COUNT(E2:E20)',
-    ],
+    options: ['=MEAN(E2:E20)', '=AVERAGE(E2:E20)', '=AVG(E2:E20)', '=SUM(E2:E20)/COUNT(E2:E20)'],
     correctAnswer: 1,
     explanation:
       '=AVERAGE(E2:E20) is the standard function for calculating the arithmetic mean in spreadsheet applications. While =SUM/COUNT would also work, AVERAGE is the correct built-in function.',
@@ -1525,12 +1480,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 96,
     question:
       'You want to highlight any earth fault loop impedance readings that exceed the maximum permitted value in a spreadsheet. Which feature should you use?',
-    options: [
-      'Spell check',
-      'Conditional formatting',
-      'Page layout',
-      'Mail merge',
-    ],
+    options: ['Spell check', 'Conditional formatting', 'Page layout', 'Mail merge'],
     correctAnswer: 1,
     explanation:
       'Conditional formatting automatically changes the appearance of cells based on rules you set. For example, you can highlight any Zs reading that exceeds 80% of the maximum permitted value in red.',
@@ -1571,7 +1521,7 @@ export const questionsPart1: StandardMockQuestion[] = [
       'You are entering data into a shared spreadsheet for a project. Another team member is entering data at the same time. What should you be aware of?',
     options: [
       'Only one person can ever use a spreadsheet at a time',
-      'Changes may conflict if you edit the same cell simultaneously — communicate to avoid overwriting each other\'s work',
+      "Changes may conflict if you edit the same cell simultaneously — communicate to avoid overwriting each other's work",
       'Shared spreadsheets cannot contain formulae',
       'The file will corrupt if two people access it',
     ],

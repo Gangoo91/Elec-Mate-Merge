@@ -50,13 +50,13 @@ export const useCertificateImport = () => {
             const worksheet = workbook.Sheets[sheetName];
             const jsonData = XLSX.utils.sheet_to_json(worksheet, {
               raw: false,
-              defval: ''
+              defval: '',
             });
 
             // Transform headers to match expected format
             const transformedData = jsonData.map((row: any) => {
               const transformed: any = {};
-              Object.keys(row).forEach(key => {
+              Object.keys(row).forEach((key) => {
                 const normalizedKey = key.toLowerCase().replace(/\s+/g, '_');
                 transformed[normalizedKey] = row[key];
               });
@@ -86,13 +86,13 @@ export const useCertificateImport = () => {
     if (!row.report_type?.trim()) {
       return 'Report type is required';
     }
-    
+
     const validTypes = ['eicr', 'eic', 'minor-works'];
     const normalizedType = row.report_type.toLowerCase().trim();
     if (!validTypes.includes(normalizedType)) {
       return `Invalid report type: ${row.report_type}. Must be EICR, EIC, or Minor Works`;
     }
-    
+
     return null;
   };
 
@@ -102,7 +102,10 @@ export const useCertificateImport = () => {
 
     try {
       // Get current user
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
       if (userError || !user) {
         throw new Error('You must be logged in to import certificates');
       }
@@ -110,7 +113,7 @@ export const useCertificateImport = () => {
       // Parse file
       setProgress(10);
       const rows = await parseFile(file);
-      
+
       if (!rows || rows.length === 0) {
         throw new Error('No data found in file');
       }

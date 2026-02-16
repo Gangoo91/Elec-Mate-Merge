@@ -31,9 +31,9 @@ export const ScopeChecklist = ({ onScopeChange, initialScope = [] }: ScopeCheckl
 
   const handleToggle = (itemId: string) => {
     const updated = selectedItems.includes(itemId)
-      ? selectedItems.filter(id => id !== itemId)
+      ? selectedItems.filter((id) => id !== itemId)
       : [...selectedItems, itemId];
-    
+
     setSelectedItems(updated);
     onScopeChange(updated);
   };
@@ -68,7 +68,10 @@ export const ScopeChecklist = ({ onScopeChange, initialScope = [] }: ScopeCheckl
             </h4>
             <div className="space-y-2.5">
               {items.map((item: any) => (
-                <div key={item.id} className="flex items-center space-x-3 touch-manipulation min-h-[44px] py-1">
+                <div
+                  key={item.id}
+                  className="flex items-center space-x-3 touch-manipulation min-h-[44px] py-1"
+                >
                   <Checkbox
                     id={item.id}
                     checked={selectedItems.includes(item.id)}

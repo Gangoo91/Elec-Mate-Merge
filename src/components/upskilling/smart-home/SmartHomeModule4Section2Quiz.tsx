@@ -10,109 +10,102 @@ export const SmartHomeModule4Section2Quiz = () => {
 
   const questions = [
     {
-      question: "What does TRV stand for?",
+      question: 'What does TRV stand for?',
       options: [
-        "Temperature Regulating Valve",
-        "Thermostatic Radiator Valve",
-        "Thermal Regulation Valve",
-        "Temperature Responsive Valve"
+        'Temperature Regulating Valve',
+        'Thermostatic Radiator Valve',
+        'Thermal Regulation Valve',
+        'Temperature Responsive Valve',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "How does a smart TRV differ from a manual TRV?",
+      question: 'How does a smart TRV differ from a manual TRV?',
       options: [
         "It's larger in size",
-        "It uses different materials",
-        "It has motorised control and wireless connectivity",
-        "It only works with electric heating"
+        'It uses different materials',
+        'It has motorised control and wireless connectivity',
+        'It only works with electric heating',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "Name two communication protocols used by smart TRVs.",
-      options: [
-        "Bluetooth and USB",
-        "Zigbee and Z-Wave",
-        "Ethernet and HDMI",
-        "GSM and GPS"
-      ],
-      correct: 1
+      question: 'Name two communication protocols used by smart TRVs.',
+      options: ['Bluetooth and USB', 'Zigbee and Z-Wave', 'Ethernet and HDMI', 'GSM and GPS'],
+      correct: 1,
     },
     {
-      question: "List the three main types of boilers.",
+      question: 'List the three main types of boilers.',
       options: [
-        "Gas, oil, electric",
-        "Combi, system, conventional",
-        "Small, medium, large",
-        "Indoor, outdoor, hybrid"
+        'Gas, oil, electric',
+        'Combi, system, conventional',
+        'Small, medium, large',
+        'Indoor, outdoor, hybrid',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What is OpenTherm?",
+      question: 'What is OpenTherm?',
       options: [
-        "A type of smart TRV",
-        "A heating fuel",
-        "A digital communication protocol for boiler control",
-        "A temperature sensor"
+        'A type of smart TRV',
+        'A heating fuel',
+        'A digital communication protocol for boiler control',
+        'A temperature sensor',
       ],
-      correct: 2
+      correct: 2,
     },
     {
       question: "What's the difference between on/off and modulating boiler control?",
       options: [
-        "On/off is newer technology",
-        "Modulating adjusts output, on/off switches completely",
-        "On/off is more efficient",
-        "There's no difference"
+        'On/off is newer technology',
+        'Modulating adjusts output, on/off switches completely',
+        'On/off is more efficient',
+        "There's no difference",
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Why are heat pumps usually run at lower temperatures?",
+      question: 'Why are heat pumps usually run at lower temperatures?',
       options: [
-        "To save electricity",
-        "For maximum efficiency and to match their operating characteristics",
-        "To prevent overheating",
-        "It's a legal requirement"
+        'To save electricity',
+        'For maximum efficiency and to match their operating characteristics',
+        'To prevent overheating',
+        "It's a legal requirement",
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "True or False: All smart thermostats are compatible with all boilers.",
-      options: [
-        "True",
-        "False"
-      ],
-      correct: 1
+      question: 'True or False: All smart thermostats are compatible with all boilers.',
+      options: ['True', 'False'],
+      correct: 1,
     },
     {
       question: "What's one challenge of retrofitting smart controls to older systems?",
       options: [
         "They're too expensive",
-        "Older systems may lack digital communication interfaces",
-        "They require too much maintenance",
-        "They're too complicated to operate"
+        'Older systems may lack digital communication interfaces',
+        'They require too much maintenance',
+        "They're too complicated to operate",
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "A client installs smart TRVs but doesn't link them to the boiler. What issue might this cause?",
+      question:
+        "A client installs smart TRVs but doesn't link them to the boiler. What issue might this cause?",
       options: [
         "The TRVs won't work at all",
-        "Boiler may run unnecessarily when all TRVs are closed",
-        "The system will overheat",
-        "Nothing - they work independently"
+        'Boiler may run unnecessarily when all TRVs are closed',
+        'The system will overheat',
+        'Nothing - they work independently',
       ],
-      correct: 1
-    }
+      correct: 1,
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -135,7 +128,7 @@ export const SmartHomeModule4Section2Quiz = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = Math.round((score / questions.length) * 100);
-    
+
     return (
       <Card className="bg-elec-gray border-gray-700">
         <CardHeader>
@@ -148,16 +141,15 @@ export const SmartHomeModule4Section2Quiz = () => {
           <div className="text-4xl font-bold text-elec-yellow">
             {score}/{questions.length}
           </div>
-          <div className="text-xl text-foreground">
-            {percentage}% Correct
-          </div>
+          <div className="text-xl text-foreground">{percentage}% Correct</div>
           <div className="text-gray-300">
-            {percentage >= 80 ? "Excellent work!" : percentage >= 60 ? "Good effort!" : "Keep studying!"}
+            {percentage >= 80
+              ? 'Excellent work!'
+              : percentage >= 60
+                ? 'Good effort!'
+                : 'Keep studying!'}
           </div>
-          <Button 
-            onClick={resetQuiz}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
-          >
+          <Button onClick={resetQuiz} className="bg-elec-yellow text-elec-dark hover:bg-yellow-600">
             Retake Quiz
           </Button>
         </CardContent>
@@ -175,14 +167,19 @@ export const SmartHomeModule4Section2Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex gap-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}
@@ -193,7 +190,7 @@ export const SmartHomeModule4Section2Quiz = () => {
           <h3 className="text-lg font-semibold text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
@@ -222,7 +219,7 @@ export const SmartHomeModule4Section2Quiz = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           {currentQuestion === questions.length - 1 ? (
             <Button
               onClick={() => setShowResults(true)}

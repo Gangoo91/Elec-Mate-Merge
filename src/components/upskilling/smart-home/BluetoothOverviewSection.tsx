@@ -4,34 +4,37 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export const BluetoothOverviewSection = () => {
   const bluetoothTypes = [
     {
-      type: "Classic Bluetooth",
-      range: "10m (30ft)",
-      power: "Higher consumption",
-      uses: ["Audio devices", "File transfers", "Keyboards/mice"],
-      color: "blue"
+      type: 'Classic Bluetooth',
+      range: '10m (30ft)',
+      power: 'Higher consumption',
+      uses: ['Audio devices', 'File transfers', 'Keyboards/mice'],
+      color: 'blue',
     },
     {
-      type: "Bluetooth Low Energy (BLE)",
-      range: "10-100m",
-      power: "Ultra-low consumption",
-      uses: ["Smart locks", "Fitness trackers", "Beacons", "Sensors"],
-      color: "green"
-    }
+      type: 'Bluetooth Low Energy (BLE)',
+      range: '10-100m',
+      power: 'Ultra-low consumption',
+      uses: ['Smart locks', 'Fitness trackers', 'Beacons', 'Sensors'],
+      color: 'green',
+    },
   ];
 
   const commonUses = [
-    { device: "Smart door locks", reason: "Secure proximity unlocking via smartphone" },
-    { device: "Fitness trackers", reason: "Low power consumption for continuous monitoring" },
-    { device: "Asset trackers", reason: "Location services with minimal battery drain" },
-    { device: "Proximity sensors", reason: "Detect presence without complex setup" },
-    { device: "Setup/pairing", reason: "Easy device configuration and onboarding" }
+    { device: 'Smart door locks', reason: 'Secure proximity unlocking via smartphone' },
+    { device: 'Fitness trackers', reason: 'Low power consumption for continuous monitoring' },
+    { device: 'Asset trackers', reason: 'Location services with minimal battery drain' },
+    { device: 'Proximity sensors', reason: 'Detect presence without complex setup' },
+    { device: 'Setup/pairing', reason: 'Easy device configuration and onboarding' },
   ];
 
   const getColorClasses = (color: string) => {
     switch (color) {
-      case 'blue': return 'bg-blue-600/10 border-blue-600/20 text-blue-400';
-      case 'green': return 'bg-green-600/10 border-green-600/20 text-green-400';
-      default: return 'bg-gray-600/10 border-gray-600/20 text-gray-400';
+      case 'blue':
+        return 'bg-blue-600/10 border-blue-600/20 text-blue-400';
+      case 'green':
+        return 'bg-green-600/10 border-green-600/20 text-green-400';
+      default:
+        return 'bg-gray-600/10 border-gray-600/20 text-gray-400';
     }
   };
 
@@ -45,7 +48,10 @@ export const BluetoothOverviewSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p>
-          Bluetooth technology has evolved significantly for smart home applications. While classic Bluetooth handles high-data tasks, Bluetooth Low Energy (BLE) has revolutionised battery-powered devices by dramatically reducing power consumption while maintaining reliable connectivity.
+          Bluetooth technology has evolved significantly for smart home applications. While classic
+          Bluetooth handles high-data tasks, Bluetooth Low Energy (BLE) has revolutionised
+          battery-powered devices by dramatically reducing power consumption while maintaining
+          reliable connectivity.
         </p>
 
         <div className="space-y-4">
@@ -109,7 +115,10 @@ export const BluetoothOverviewSection = () => {
 
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Quick Check:</h4>
-          <p className="text-sm text-foreground">What's the main difference between standard Bluetooth and BLE in smart home applications?</p>
+          <p className="text-sm text-foreground">
+            What's the main difference between standard Bluetooth and BLE in smart home
+            applications?
+          </p>
         </div>
       </CardContent>
     </Card>

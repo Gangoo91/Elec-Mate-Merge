@@ -5,12 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -219,10 +214,7 @@ export function TimeSection() {
   const visibleEntries = showAllSessions ? entries : entries.slice(0, 5);
 
   // Group visible entries by day
-  const dayGroups = useMemo(
-    () => groupEntriesByDay(visibleEntries),
-    [visibleEntries]
-  );
+  const dayGroups = useMemo(() => groupEntriesByDay(visibleEntries), [visibleEntries]);
 
   const toggleDay = (dateKey: string) => {
     setExpandedDays((prev) => {
@@ -237,9 +229,7 @@ export function TimeSection() {
   };
 
   // Get verification status for a day group
-  const getDayVerificationStatus = (
-    dayEntries: TimeEntry[]
-  ): 'all' | 'some' | 'none' => {
+  const getDayVerificationStatus = (dayEntries: TimeEntry[]): 'all' | 'some' | 'none' => {
     let verified = 0;
     for (const entry of dayEntries) {
       const v = getVerificationForTimeEntry(entry.id);
@@ -484,9 +474,7 @@ export function TimeSection() {
 
                       {/* Date label + count */}
                       <div className="flex-1 text-left">
-                        <span className="text-sm font-medium text-foreground">
-                          {group.label}
-                        </span>
+                        <span className="text-sm font-medium text-foreground">{group.label}</span>
                         <span className="text-sm text-muted-foreground ml-2">
                           {group.entries.length}{' '}
                           {group.entries.length === 1 ? 'session' : 'sessions'}

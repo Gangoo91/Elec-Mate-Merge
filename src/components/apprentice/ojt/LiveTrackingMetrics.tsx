@@ -4,16 +4,16 @@ import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 
-const MetricCard = ({ 
-  icon: Icon, 
-  label, 
-  value, 
+const MetricCard = ({
+  icon: Icon,
+  label,
+  value,
   color,
-  subText 
-}: { 
-  icon: any; 
-  label: string; 
-  value: string | number; 
+  subText,
+}: {
+  icon: any;
+  label: string;
+  value: string | number;
   color: string;
   subText?: string;
 }) => (
@@ -24,9 +24,7 @@ const MetricCard = ({
         <div className="space-y-1">
           <p className="text-sm text-white">{label}</p>
           <p className={`text-2xl font-bold ${color}`}>{value}</p>
-          {subText && (
-            <p className="text-xs text-white">{subText}</p>
-          )}
+          {subText && <p className="text-xs text-white">{subText}</p>}
         </div>
       </div>
     </CardContent>
@@ -60,16 +58,22 @@ const LiveTrackingMetrics = () => {
   }
 
   // Portfolio metrics - sum up all required entries from qualification categories
-  const totalRequiredEntries = categories.reduce((sum, category) => sum + (category.requiredEntries || 0), 0);
+  const totalRequiredEntries = categories.reduce(
+    (sum, category) => sum + (category.requiredEntries || 0),
+    0
+  );
   const completedPortfolioEntries = analytics?.completedEntries || 0;
-  const portfolioProgress = totalRequiredEntries > 0 ? Math.round((completedPortfolioEntries / totalRequiredEntries) * 100) : 0;
+  const portfolioProgress =
+    totalRequiredEntries > 0
+      ? Math.round((completedPortfolioEntries / totalRequiredEntries) * 100)
+      : 0;
 
   // Compliance metrics - using 400h as standard 20% OTJ requirement
   const currentHours = otjGoal?.current_hours || 0;
   const targetHours = otjGoal?.target_hours || 400; // 20% of 2000-hour work year
   const remainingHours = getRemainingHours();
   const complianceProgress = Math.round((currentHours / targetHours) * 100);
-  
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
       <MetricCard
@@ -89,8 +93,8 @@ const LiveTrackingMetrics = () => {
       <MetricCard
         icon={AlertTriangle}
         label="Hours Needed"
-        value={remainingHours > 0 ? `${remainingHours}h` : "Complete"}
-        color={remainingHours > 0 ? "text-orange-400" : "text-green-400"}
+        value={remainingHours > 0 ? `${remainingHours}h` : 'Complete'}
+        color={remainingHours > 0 ? 'text-orange-400' : 'text-green-400'}
         subText="For 20% OTJ requirement"
       />
       <MetricCard

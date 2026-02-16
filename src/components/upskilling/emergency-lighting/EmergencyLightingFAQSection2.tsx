@@ -8,34 +8,40 @@ export const EmergencyLightingFAQSection2 = () => {
   const faqs = [
     {
       id: 1,
-      question: "Are toilets always required to have emergency lighting?",
-      answer: "Only toilets exceeding 8m² floor area require emergency lighting under BS5266. Smaller toilets in domestic premises are generally exempt unless part of a complex escape route."
+      question: 'Are toilets always required to have emergency lighting?',
+      answer:
+        'Only toilets exceeding 8m² floor area require emergency lighting under BS5266. Smaller toilets in domestic premises are generally exempt unless part of a complex escape route.',
     },
     {
       id: 2,
-      question: "Do I need emergency lighting in every corridor?",
-      answer: "Emergency lighting is required in corridors that form part of an escape route or serve areas requiring emergency lighting. Not all corridors need emergency lighting - only those critical for safe evacuation."
+      question: 'Do I need emergency lighting in every corridor?',
+      answer:
+        'Emergency lighting is required in corridors that form part of an escape route or serve areas requiring emergency lighting. Not all corridors need emergency lighting - only those critical for safe evacuation.',
     },
     {
       id: 3,
       question: "How do I determine if an area has 'high fire risk'?",
-      answer: "High fire risk areas typically contain flammable materials, chemicals, or processes that could rapidly develop fire. Examples include paint stores, workshops with flammable substances, and areas with significant combustible storage."
+      answer:
+        'High fire risk areas typically contain flammable materials, chemicals, or processes that could rapidly develop fire. Examples include paint stores, workshops with flammable substances, and areas with significant combustible storage.',
     },
     {
       id: 4,
-      question: "What about emergency lighting in lift cars?",
-      answer: "All lift cars must have emergency lighting to ensure passenger safety if trapped during a power failure. This is mandatory under BS5266 and Building Regulations."
+      question: 'What about emergency lighting in lift cars?',
+      answer:
+        'All lift cars must have emergency lighting to ensure passenger safety if trapped during a power failure. This is mandatory under BS5266 and Building Regulations.',
     },
     {
       id: 5,
-      question: "Are plant rooms always required to have emergency lighting?",
-      answer: "Plant rooms require emergency lighting if they contain essential services, fire safety equipment, or if safe shutdown procedures are needed during emergencies. Motor rooms, switch rooms, and battery rooms typically require emergency lighting."
+      question: 'Are plant rooms always required to have emergency lighting?',
+      answer:
+        'Plant rooms require emergency lighting if they contain essential services, fire safety equipment, or if safe shutdown procedures are needed during emergencies. Motor rooms, switch rooms, and battery rooms typically require emergency lighting.',
     },
     {
       id: 6,
-      question: "Do open-plan offices need emergency lighting throughout?",
-      answer: "Open-plan offices exceeding 60m² require emergency lighting to ensure safe movement to escape routes. Smaller offices may not need emergency lighting unless they have no natural light or form part of escape routes."
-    }
+      question: 'Do open-plan offices need emergency lighting throughout?',
+      answer:
+        'Open-plan offices exceeding 60m² require emergency lighting to ensure safe movement to escape routes. Smaller offices may not need emergency lighting unless they have no natural light or form part of escape routes.',
+    },
   ];
 
   const toggleFAQ = (id: number) => {

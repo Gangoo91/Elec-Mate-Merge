@@ -4,91 +4,92 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export const DataCablingContent = () => {
   const subsystems = [
     {
-      title: "Horizontal Cabling",
-      description: "Extends from telecommunications rooms to work area outlets",
-      details: "Typically 90m maximum length, includes cables, outlets, connectors, and cross-connects"
+      title: 'Horizontal Cabling',
+      description: 'Extends from telecommunications rooms to work area outlets',
+      details:
+        'Typically 90m maximum length, includes cables, outlets, connectors, and cross-connects',
     },
     {
-      title: "Backbone Cabling", 
-      description: "Provides interconnection between telecommunications rooms",
-      details: "Connects equipment rooms, entrance facilities, and telecommunications rooms"
+      title: 'Backbone Cabling',
+      description: 'Provides interconnection between telecommunications rooms',
+      details: 'Connects equipment rooms, entrance facilities, and telecommunications rooms',
     },
     {
-      title: "Work Area",
-      description: "Components that connect end-user equipment to outlets",
-      details: "Includes patch cords, adapters, and extension cables up to 5m"
+      title: 'Work Area',
+      description: 'Components that connect end-user equipment to outlets',
+      details: 'Includes patch cords, adapters, and extension cables up to 5m',
     },
     {
-      title: "Telecommunications Room",
-      description: "Houses telecommunications equipment and cross-connect hardware",
-      details: "Serves as connection point between horizontal and backbone cabling"
+      title: 'Telecommunications Room',
+      description: 'Houses telecommunications equipment and cross-connect hardware',
+      details: 'Serves as connection point between horizontal and backbone cabling',
     },
     {
-      title: "Equipment Room",
-      description: "Centralised space for telecommunications equipment",
-      details: "Houses PBXs, servers, switches, and other complex equipment"
+      title: 'Equipment Room',
+      description: 'Centralised space for telecommunications equipment',
+      details: 'Houses PBXs, servers, switches, and other complex equipment',
     },
     {
-      title: "Entrance Facilities",
-      description: "Point where outside plant cabling connects to inside plant",
-      details: "Includes protection devices, connecting hardware, and transition points"
-    }
+      title: 'Entrance Facilities',
+      description: 'Point where outside plant cabling connects to inside plant',
+      details: 'Includes protection devices, connecting hardware, and transition points',
+    },
   ];
 
   const cableTypes = [
     {
-      type: "Cat5e",
-      bandwidth: "100 MHz",
-      applications: "Gigabit Ethernet, basic data applications",
-      maxDistance: "100m"
+      type: 'Cat5e',
+      bandwidth: '100 MHz',
+      applications: 'Gigabit Ethernet, basic data applications',
+      maxDistance: '100m',
     },
     {
-      type: "Cat6",
-      bandwidth: "250 MHz", 
-      applications: "Gigabit Ethernet, enhanced performance",
-      maxDistance: "100m (55m for 10GBASE-T)"
+      type: 'Cat6',
+      bandwidth: '250 MHz',
+      applications: 'Gigabit Ethernet, enhanced performance',
+      maxDistance: '100m (55m for 10GBASE-T)',
     },
     {
-      type: "Cat6A",
-      bandwidth: "500 MHz",
-      applications: "10 Gigabit Ethernet, high-performance applications",
-      maxDistance: "100m"
+      type: 'Cat6A',
+      bandwidth: '500 MHz',
+      applications: '10 Gigabit Ethernet, high-performance applications',
+      maxDistance: '100m',
     },
     {
-      type: "Single-Mode Fiber",
-      bandwidth: "Unlimited",
-      applications: "Long distance, high bandwidth applications",
-      maxDistance: "40+ km"
+      type: 'Single-Mode Fiber',
+      bandwidth: 'Unlimited',
+      applications: 'Long distance, high bandwidth applications',
+      maxDistance: '40+ km',
     },
     {
-      type: "Multi-Mode Fiber",
-      bandwidth: "High",
-      applications: "Campus backbone, high-speed LAN applications", 
-      maxDistance: "300m-2km"
-    }
+      type: 'Multi-Mode Fiber',
+      bandwidth: 'High',
+      applications: 'Campus backbone, high-speed LAN applications',
+      maxDistance: '300m-2km',
+    },
   ];
 
   const benefits = [
     {
       icon: CheckCircle,
-      title: "Flexibility",
-      description: "Easy to reconfigure and adapt to changing requirements"
+      title: 'Flexibility',
+      description: 'Easy to reconfigure and adapt to changing requirements',
     },
     {
       icon: Zap,
-      title: "Performance",
-      description: "Optimised signal transmission and reduced interference"
+      title: 'Performance',
+      description: 'Optimised signal transmission and reduced interference',
     },
     {
       icon: Shield,
-      title: "Reliability", 
-      description: "Standardised components ensure consistent performance"
+      title: 'Reliability',
+      description: 'Standardised components ensure consistent performance',
     },
     {
       icon: Network,
-      title: "Future-Proof",
-      description: "Designed to support emerging technologies and applications"
-    }
+      title: 'Future-Proof',
+      description: 'Designed to support emerging technologies and applications',
+    },
   ];
 
   return (
@@ -129,8 +130,12 @@ export const DataCablingContent = () => {
                 <tr className="border-b border-gray-600">
                   <th className="text-left py-3 px-2 text-elec-yellow font-semibold">Cable Type</th>
                   <th className="text-left py-3 px-2 text-elec-yellow font-semibold">Bandwidth</th>
-                  <th className="text-left py-3 px-2 text-elec-yellow font-semibold">Applications</th>
-                  <th className="text-left py-3 px-2 text-elec-yellow font-semibold">Max Distance</th>
+                  <th className="text-left py-3 px-2 text-elec-yellow font-semibold">
+                    Applications
+                  </th>
+                  <th className="text-left py-3 px-2 text-elec-yellow font-semibold">
+                    Max Distance
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -156,7 +161,10 @@ export const DataCablingContent = () => {
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start gap-3 p-4 bg-[#323232] rounded-lg border border-gray-700">
+              <div
+                key={index}
+                className="flex items-start gap-3 p-4 bg-[#323232] rounded-lg border border-gray-700"
+              >
                 <benefit.icon className="h-6 w-6 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">{benefit.title}</h4>
@@ -217,12 +225,12 @@ export const DataCablingContent = () => {
             <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-blue-300 mb-2">Why Testing Matters</h4>
               <p className="text-blue-100 text-sm leading-relaxed">
-                Proper testing ensures the cabling system meets performance specifications and 
-                can support intended applications. It also provides documentation for warranty 
-                coverage and future troubleshooting.
+                Proper testing ensures the cabling system meets performance specifications and can
+                support intended applications. It also provides documentation for warranty coverage
+                and future troubleshooting.
               </p>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-4">
               <div className="bg-[#323232] rounded-lg p-4 border border-gray-700">
                 <h5 className="font-semibold text-elec-yellow mb-2">Basic Testing</h5>
@@ -233,7 +241,7 @@ export const DataCablingContent = () => {
                   <li>• Basic connectivity</li>
                 </ul>
               </div>
-              
+
               <div className="bg-[#323232] rounded-lg p-4 border border-gray-700">
                 <h5 className="font-semibold text-elec-yellow mb-2">Qualification Testing</h5>
                 <ul className="text-gray-300 text-sm space-y-1">
@@ -243,7 +251,7 @@ export const DataCablingContent = () => {
                   <li>• Pass/fail determination</li>
                 </ul>
               </div>
-              
+
               <div className="bg-[#323232] rounded-lg p-4 border border-gray-700">
                 <h5 className="font-semibold text-elec-yellow mb-2">Certification Testing</h5>
                 <ul className="text-gray-300 text-sm space-y-1">
@@ -270,35 +278,41 @@ export const DataCablingContent = () => {
           <div className="space-y-4">
             {[
               {
-                challenge: "Cable Pulling Tension",
-                problem: "Excessive pulling force can damage cable jacket and internal conductors",
-                solution: "Use proper pulling techniques, lubrication, and multiple pull points for long runs"
+                challenge: 'Cable Pulling Tension',
+                problem: 'Excessive pulling force can damage cable jacket and internal conductors',
+                solution:
+                  'Use proper pulling techniques, lubrication, and multiple pull points for long runs',
               },
               {
-                challenge: "Bend Radius Violations", 
-                problem: "Sharp bends can cause signal degradation and permanent cable damage",
-                solution: "Maintain minimum 4x cable diameter bend radius, use proper cable management"
+                challenge: 'Bend Radius Violations',
+                problem: 'Sharp bends can cause signal degradation and permanent cable damage',
+                solution:
+                  'Maintain minimum 4x cable diameter bend radius, use proper cable management',
               },
               {
-                challenge: "Electromagnetic Interference",
-                problem: "Nearby electrical equipment can cause signal interference and crosstalk",
-                solution: "Maintain proper separation distances, use shielded cable when necessary"
+                challenge: 'Electromagnetic Interference',
+                problem: 'Nearby electrical equipment can cause signal interference and crosstalk',
+                solution: 'Maintain proper separation distances, use shielded cable when necessary',
               },
               {
-                challenge: "Pathway Congestion",
-                problem: "Overcrowded cable trays and conduits can cause installation difficulties",
-                solution: "Plan adequate pathway fill ratios, typically 40% maximum for cables"
+                challenge: 'Pathway Congestion',
+                problem: 'Overcrowded cable trays and conduits can cause installation difficulties',
+                solution: 'Plan adequate pathway fill ratios, typically 40% maximum for cables',
               },
               {
-                challenge: "Environmental Factors",
-                problem: "Temperature, humidity, and contamination can affect cable performance",
-                solution: "Select appropriate cable ratings and environmental protections"
-              }
+                challenge: 'Environmental Factors',
+                problem: 'Temperature, humidity, and contamination can affect cable performance',
+                solution: 'Select appropriate cable ratings and environmental protections',
+              },
             ].map((item, index) => (
               <div key={index} className="bg-red-600/20 border border-red-600/30 rounded-lg p-4">
                 <h5 className="font-semibold text-red-300 mb-2">{item.challenge}</h5>
-                <p className="text-red-100 text-sm mb-2"><strong>Problem:</strong> {item.problem}</p>
-                <p className="text-red-100 text-sm"><strong>Solution:</strong> {item.solution}</p>
+                <p className="text-red-100 text-sm mb-2">
+                  <strong>Problem:</strong> {item.problem}
+                </p>
+                <p className="text-red-100 text-sm">
+                  <strong>Solution:</strong> {item.solution}
+                </p>
               </div>
             ))}
           </div>
@@ -335,7 +349,7 @@ export const DataCablingContent = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-[#323232] rounded-lg p-4 border border-gray-700">
               <h5 className="font-semibold text-elec-yellow mb-2">Migration Strategies</h5>
@@ -346,7 +360,7 @@ export const DataCablingContent = () => {
                 <li>• Design modular systems for easy upgrades</li>
               </ul>
             </div>
-            
+
             <div className="bg-[#323232] rounded-lg p-4 border border-gray-700">
               <h5 className="font-semibold text-elec-yellow mb-2">Cost Considerations</h5>
               <ul className="text-gray-300 text-sm space-y-1">
@@ -379,7 +393,7 @@ export const DataCablingContent = () => {
                 <li>• TIA-607: Grounding and Bonding</li>
               </ul>
             </div>
-            
+
             <div className="bg-purple-600/20 border border-purple-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-purple-300 mb-2">ISO/IEC Standards</h4>
               <ul className="text-purple-100 text-sm space-y-1">

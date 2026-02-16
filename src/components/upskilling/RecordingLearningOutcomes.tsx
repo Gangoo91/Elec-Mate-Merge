@@ -1,14 +1,13 @@
-
 import { Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const RecordingLearningOutcomes = () => {
   const outcomes = [
-    "Record visual inspection findings in the appropriate certificates or reports",
-    "Understand the importance of clarity, accuracy, and honesty in documentation", 
-    "Know how to handle non-compliances and limitations during visual inspection",
-    "Apply correct observation codes and classification systems",
-    "Ensure documentation meets legal and professional standards"
+    'Record visual inspection findings in the appropriate certificates or reports',
+    'Understand the importance of clarity, accuracy, and honesty in documentation',
+    'Know how to handle non-compliances and limitations during visual inspection',
+    'Apply correct observation codes and classification systems',
+    'Ensure documentation meets legal and professional standards',
   ];
 
   return (
@@ -20,9 +19,7 @@ export const RecordingLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-foreground">

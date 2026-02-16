@@ -3,11 +3,11 @@ import { Target, CheckCircle2 } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection6_1 = () => {
   const outcomes = [
-    "Identify the purpose and scope of BS 5266-1 and EN 1838",
-    "Interpret the most relevant clauses of both standards",
-    "Apply required lighting levels, durations, and design principles in practice",
-    "Recognise documentation and testing obligations within the standards",
-    "Understand the link between standards compliance and legal accountability"
+    'Identify the purpose and scope of BS 5266-1 and EN 1838',
+    'Interpret the most relevant clauses of both standards',
+    'Apply required lighting levels, durations, and design principles in practice',
+    'Recognise documentation and testing obligations within the standards',
+    'Understand the link between standards compliance and legal accountability',
   ];
 
   return (

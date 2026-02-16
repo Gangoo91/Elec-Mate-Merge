@@ -14,8 +14,9 @@ export const EmergencyLightingRealWorldSection3 = () => {
         <div className="p-4 bg-gradient-to-r from-orange-600/20 to-red-600/20 border border-orange-500/40 rounded-lg">
           <h4 className="text-orange-300 font-semibold mb-2">Project Brief</h4>
           <p className="text-sm">
-            A 4-storey hospital wing requiring emergency lighting for 24/7 operations. The facility includes operating theatres, 
-            intensive care units, patient wards, and critical equipment areas. High reliability and extended duration requirements apply.
+            A 4-storey hospital wing requiring emergency lighting for 24/7 operations. The facility
+            includes operating theatres, intensive care units, patient wards, and critical equipment
+            areas. High reliability and extended duration requirements apply.
           </p>
         </div>
 
@@ -27,16 +28,28 @@ export const EmergencyLightingRealWorldSection3 = () => {
             </h4>
             <div className="space-y-2 text-sm">
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>Power Supply:</strong> Central battery system chosen for reliability and centralised monitoring</p>
+                <p>
+                  <strong>Power Supply:</strong> Central battery system chosen for reliability and
+                  centralised monitoring
+                </p>
               </div>
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>Operating Mode:</strong> Mix of maintained (critical areas) and non-maintained (general circulation)</p>
+                <p>
+                  <strong>Operating Mode:</strong> Mix of maintained (critical areas) and
+                  non-maintained (general circulation)
+                </p>
               </div>
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>Battery Technology:</strong> Lithium Iron Phosphate for longevity and reliability</p>
+                <p>
+                  <strong>Battery Technology:</strong> Lithium Iron Phosphate for longevity and
+                  reliability
+                </p>
               </div>
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>Duration:</strong> 3-hour capacity for critical areas, 1-hour for general areas</p>
+                <p>
+                  <strong>Duration:</strong> 3-hour capacity for critical areas, 1-hour for general
+                  areas
+                </p>
               </div>
             </div>
           </div>
@@ -48,16 +61,28 @@ export const EmergencyLightingRealWorldSection3 = () => {
             </h4>
             <div className="space-y-2 text-sm">
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Operating Theatres:</strong> Maintained high-intensity task lighting with backup power</p>
+                <p>
+                  <strong>Operating Theatres:</strong> Maintained high-intensity task lighting with
+                  backup power
+                </p>
               </div>
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Patient Areas:</strong> Non-maintained escape route lighting with comfort illumination</p>
+                <p>
+                  <strong>Patient Areas:</strong> Non-maintained escape route lighting with comfort
+                  illumination
+                </p>
               </div>
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Critical Equipment:</strong> Specialised luminaires for life support and monitoring systems</p>
+                <p>
+                  <strong>Critical Equipment:</strong> Specialised luminaires for life support and
+                  monitoring systems
+                </p>
               </div>
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Circulation Areas:</strong> Standard escape route lighting with clear exit signage</p>
+                <p>
+                  <strong>Circulation Areas:</strong> Standard escape route lighting with clear exit
+                  signage
+                </p>
               </div>
             </div>
           </div>
@@ -87,8 +112,9 @@ export const EmergencyLightingRealWorldSection3 = () => {
             Key Learning Point
           </h4>
           <p className="text-sm">
-            Healthcare facilities require careful consideration of both general escape lighting and task-specific illumination. 
-            The system type selection must balance operational requirements, maintenance accessibility, and life-safety priorities.
+            Healthcare facilities require careful consideration of both general escape lighting and
+            task-specific illumination. The system type selection must balance operational
+            requirements, maintenance accessibility, and life-safety priorities.
           </p>
         </div>
       </CardContent>

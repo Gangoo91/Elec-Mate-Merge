@@ -1,8 +1,7 @@
-
-import { Download, Phone } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+import { Download, Phone } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const ResourceDownloads = () => {
   return (
@@ -14,26 +13,26 @@ const ResourceDownloads = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-6 space-y-3">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
           className="w-full flex items-center gap-2 text-xs hover:bg-red-500/5"
           onClick={() => {
-            toast.success("Crisis plan template downloaded", {
-              description: "Document saved to your downloads folder"
+            toast.success('Crisis plan template downloaded', {
+              description: 'Document saved to your downloads folder',
             });
           }}
         >
           <Download className="h-3.5 w-3.5" />
           Crisis Plan Template
         </Button>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
           className="w-full flex items-center gap-2 text-xs hover:bg-red-500/5"
           onClick={() => {
-            toast.success("Emergency contacts card downloaded", {
-              description: "Document saved to your downloads folder"
+            toast.success('Emergency contacts card downloaded', {
+              description: 'Document saved to your downloads folder',
             });
           }}
         >

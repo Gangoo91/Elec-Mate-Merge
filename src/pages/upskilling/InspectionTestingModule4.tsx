@@ -8,25 +8,29 @@ const sections = [
   {
     id: 1,
     title: 'Principles of Insulation Testing',
-    description: 'Understanding insulation resistance fundamentals and why testing is essential for electrical safety.',
+    description:
+      'Understanding insulation resistance fundamentals and why testing is essential for electrical safety.',
     icon: Gauge,
   },
   {
     id: 2,
     title: 'Test Voltages and Applications',
-    description: 'Selecting appropriate test voltages for different circuit types and voltage ratings.',
+    description:
+      'Selecting appropriate test voltages for different circuit types and voltage ratings.',
     icon: Zap,
   },
   {
     id: 3,
     title: 'Testing Procedure (Phase-Phase, Phase-Earth)',
-    description: 'Step-by-step procedures for conducting insulation resistance tests between conductors.',
+    description:
+      'Step-by-step procedures for conducting insulation resistance tests between conductors.',
     icon: TestTube,
   },
   {
     id: 4,
     title: 'Testing Sensitive Equipment (SERDs)',
-    description: 'Protecting surge protective devices and sensitive electronics during insulation testing.',
+    description:
+      'Protecting surge protective devices and sensitive electronics during insulation testing.',
     icon: Cpu,
   },
   {
@@ -46,7 +50,8 @@ const sections = [
 export default function InspectionTestingModule4() {
   useSEO({
     title: 'Module 4: Insulation Resistance Testing | Inspection & Testing',
-    description: 'Master insulation resistance testing procedures including test voltages, phase-phase and phase-earth testing, SERDs, interpreting results, and troubleshooting low insulation.',
+    description:
+      'Master insulation resistance testing procedures including test voltages, phase-phase and phase-earth testing, SERDs, interpreting results, and troubleshooting low insulation.',
   });
 
   return (
@@ -80,7 +85,8 @@ export default function InspectionTestingModule4() {
             Insulation Resistance Testing
           </h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Learn to perform insulation resistance tests correctly, interpret results, and troubleshoot faults to BS 7671 standards
+            Learn to perform insulation resistance tests correctly, interpret results, and
+            troubleshoot faults to BS 7671 standards
           </p>
         </div>
 

@@ -1,40 +1,45 @@
-import { ArrowLeft, Wine, Scissors, AlertTriangle, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Wine, Scissors, AlertTriangle, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Substance Misuse & Addiction",
+    title: 'Substance Misuse & Addiction',
     icon: Wine,
-    description: "Alcohol and drug misuse, substance use in construction, signs at work, dual diagnosis, approaching someone",
+    description:
+      'Alcohol and drug misuse, substance use in construction, signs at work, dual diagnosis, approaching someone',
   },
   {
     id: 2,
-    title: "Self-Harm",
+    title: 'Self-Harm',
     icon: Scissors,
-    description: "Understanding self-harm, types and prevalence, how to respond, first aid for injuries, long-term support pathways",
+    description:
+      'Understanding self-harm, types and prevalence, how to respond, first aid for injuries, long-term support pathways',
   },
   {
     id: 3,
-    title: "Suicide Awareness & Prevention",
+    title: 'Suicide Awareness & Prevention',
     icon: AlertTriangle,
-    description: "UK statistics, construction industry rates, risk factors, warning signs, safe messaging, means restriction",
+    description:
+      'UK statistics, construction industry rates, risk factors, warning signs, safe messaging, means restriction',
   },
   {
     id: 4,
-    title: "Suicide First Aid & Crisis Response",
+    title: 'Suicide First Aid & Crisis Response',
     icon: Phone,
-    description: "Asking about suicide directly, the TASC model, safety planning, calling 999, helplines, post-crisis support",
+    description:
+      'Asking about suicide directly, the TASC model, safety planning, calling 999, helplines, post-crisis support',
   },
 ];
 
 export default function MentalHealthModule3() {
   useSEO({
-    title: "Module 3: Substance Misuse, Self-Harm & Suicide | Mental Health First Aid",
-    description: "Substance misuse and addiction, self-harm awareness, suicide prevention, crisis intervention and support pathways.",
+    title: 'Module 3: Substance Misuse, Self-Harm & Suicide | Mental Health First Aid',
+    description:
+      'Substance misuse and addiction, self-harm awareness, suicide prevention, crisis intervention and support pathways.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function MentalHealthModule3() {
               Substance Misuse, Self-Harm &amp; Suicide
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Recognising substance misuse, understanding self-harm, suicide awareness and prevention, and crisis intervention skills
+              Recognising substance misuse, understanding self-harm, suicide awareness and
+              prevention, and crisis intervention skills
             </p>
           </div>
 

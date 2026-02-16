@@ -1,6 +1,15 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Info, Lightbulb, AlertTriangle, BookOpen, Zap, Users, Calculator, Shield, AlertCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Info,
+  Lightbulb,
+  AlertTriangle,
+  BookOpen,
+  Zap,
+  Users,
+  Calculator,
+  Shield,
+  AlertCircle,
+} from 'lucide-react';
 
 const ZsCalculatorInfo = () => {
   return (
@@ -14,16 +23,25 @@ const ZsCalculatorInfo = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-blue-200">
           <p>
-            Earth fault loop impedance (Zs) is the impedance of the path taken by fault current during an earth fault. 
-            It includes the impedance of the supply transformer, the line conductor, and the earth return path.
+            Earth fault loop impedance (Zs) is the impedance of the path taken by fault current
+            during an earth fault. It includes the impedance of the supply transformer, the line
+            conductor, and the earth return path.
           </p>
-          
+
           <div className="bg-blue-500/10 border border-blue-500/20 rounded p-4">
             <h4 className="font-medium mb-2">Formula: Zs = Ze + R1 + R2</h4>
             <ul className="space-y-1 text-sm">
-              <li><strong>Ze</strong> = External earth fault loop impedance (supply to origin of installation)</li>
-              <li><strong>R1</strong> = Resistance of the line conductor from origin to point of test</li>
-              <li><strong>R2</strong> = Resistance of the protective conductor from origin to point of test</li>
+              <li>
+                <strong>Ze</strong> = External earth fault loop impedance (supply to origin of
+                installation)
+              </li>
+              <li>
+                <strong>R1</strong> = Resistance of the line conductor from origin to point of test
+              </li>
+              <li>
+                <strong>R2</strong> = Resistance of the protective conductor from origin to point of
+                test
+              </li>
             </ul>
           </div>
         </CardContent>
@@ -48,7 +66,7 @@ const ZsCalculatorInfo = () => {
                 <li>• Example: If tabulated = 1.0Ω, test limit = 0.8Ω</li>
               </ul>
             </div>
-            
+
             <div className="bg-green-500/10 border border-green-500/20 rounded p-4">
               <h4 className="font-medium mb-2 text-blue-300">📋 100% Values - For Design</h4>
               <ul className="space-y-1 text-sm">
@@ -72,9 +90,10 @@ const ZsCalculatorInfo = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-purple-200">
           <p className="text-sm">
-            Different curve types have different magnetic trip characteristics, affecting the maximum permissible Zs:
+            Different curve types have different magnetic trip characteristics, affecting the
+            maximum permissible Zs:
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
               <h4 className="font-medium mb-2 text-blue-300">B-Curve</h4>
@@ -86,7 +105,7 @@ const ZsCalculatorInfo = () => {
                 <li>• Lighting, heating circuits</li>
               </ul>
             </div>
-            
+
             <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
               <h4 className="font-medium mb-2 text-yellow-300">C-Curve</h4>
               <ul className="space-y-1 text-xs">
@@ -97,7 +116,7 @@ const ZsCalculatorInfo = () => {
                 <li>• General socket circuits</li>
               </ul>
             </div>
-            
+
             <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
               <h4 className="font-medium mb-2 text-red-300">D-Curve</h4>
               <ul className="space-y-1 text-xs">
@@ -122,11 +141,13 @@ const ZsCalculatorInfo = () => {
         <CardContent className="space-y-4 text-yellow-200">
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-4">
             <h4 className="font-medium mb-3">Example: 32A B-curve MCB circuit</h4>
-            
+
             <div className="space-y-3 text-sm">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p><strong>Given:</strong></p>
+                  <p>
+                    <strong>Given:</strong>
+                  </p>
                   <ul className="space-y-1 text-xs">
                     <li>• Ze = 0.35Ω</li>
                     <li>• Cable: 6mm² twin & earth</li>
@@ -134,9 +155,11 @@ const ZsCalculatorInfo = () => {
                     <li>• R1+R2 = 12.1 × 25 ÷ 1000 = 0.30Ω</li>
                   </ul>
                 </div>
-                
+
                 <div>
-                  <p><strong>Calculation:</strong></p>
+                  <p>
+                    <strong>Calculation:</strong>
+                  </p>
                   <ul className="space-y-1 text-xs">
                     <li>• Zs = Ze + (R1+R2)</li>
                     <li>• Zs = 0.35 + 0.30 = 0.65Ω</li>
@@ -145,9 +168,11 @@ const ZsCalculatorInfo = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="border-t border-yellow-500/20 pt-2 mt-3">
-                <p className="text-green-300 font-medium">✓ Result: Circuit complies (0.65Ω {"<"} 1.15Ω test limit)</p>
+                <p className="text-green-300 font-medium">
+                  ✓ Result: Circuit complies (0.65Ω {'<'} 1.15Ω test limit)
+                </p>
                 <p className="text-xs text-yellow-200/80 mt-1">Headroom: 43% below test limit</p>
               </div>
             </div>
@@ -174,24 +199,25 @@ const ZsCalculatorInfo = () => {
                 <li>• Fast fault clearance possible</li>
               </ul>
             </div>
-            
+
             <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
               <h4 className="font-medium mb-2 text-yellow-300">TT Systems (Local Earth)</h4>
               <ul className="space-y-1 text-sm">
                 <li>• Remote locations</li>
                 <li>• Local earth electrode</li>
-                <li>• Higher Ze values ({">"}1Ω typical)</li>
+                <li>• Higher Ze values ({'>'}1Ω typical)</li>
                 <li>• RCD protection essential</li>
                 <li>• Different calculation methods</li>
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
             <h4 className="font-medium mb-2 text-red-300">⚠ Important for TT Systems</h4>
             <p className="text-sm">
-              This calculator is primarily for TN systems. TT systems typically require RCD protection 
-              with touch voltage calculations (RA × IΔn ≤ 50V) rather than overcurrent device Zs limits.
+              This calculator is primarily for TN systems. TT systems typically require RCD
+              protection with touch voltage calculations (RA × IΔn ≤ 50V) rather than overcurrent
+              device Zs limits.
             </p>
           </div>
         </CardContent>
@@ -216,7 +242,7 @@ const ZsCalculatorInfo = () => {
                 <li>• Poor test lead connections giving false readings</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
               <h4 className="font-medium mb-2">❌ Calculation Errors</h4>
               <ul className="space-y-1 text-sm">
@@ -227,7 +253,7 @@ const ZsCalculatorInfo = () => {
                 <li>• Forgetting temperature correction factors</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
               <h4 className="font-medium mb-2">❌ Design Issues</h4>
               <ul className="space-y-1 text-sm">
@@ -254,14 +280,18 @@ const ZsCalculatorInfo = () => {
             <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
               <h4 className="font-medium mb-2">Before Testing</h4>
               <ul className="space-y-1 text-sm">
-                <li>• Ensure circuit is isolated and proved dead using approved voltage indicator</li>
-                <li>• Remove or bridge RCDs during testing (they can interfere with measurements)</li>
+                <li>
+                  • Ensure circuit is isolated and proved dead using approved voltage indicator
+                </li>
+                <li>
+                  • Remove or bridge RCDs during testing (they can interfere with measurements)
+                </li>
                 <li>• Check test equipment calibration is current and within date</li>
                 <li>• Verify test leads are in good condition with secure connections</li>
                 <li>• Identify the furthest point of each circuit for testing</li>
               </ul>
             </div>
-            
+
             <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
               <h4 className="font-medium mb-2">During Testing</h4>
               <ul className="space-y-1 text-sm">
@@ -273,7 +303,7 @@ const ZsCalculatorInfo = () => {
                 <li>• Ensure good contact at test points (clean connections)</li>
               </ul>
             </div>
-            
+
             <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
               <h4 className="font-medium mb-2">If Values Are Too High</h4>
               <ul className="space-y-1 text-sm">

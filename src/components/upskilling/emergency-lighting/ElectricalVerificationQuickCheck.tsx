@@ -10,7 +10,11 @@ export const ElectricalVerificationQuickCheck = () => {
             ✅ Quick Check
           </h4>
           <p className="text-foreground text-sm sm:text-base leading-relaxed">
-            <span className="font-semibold">Electrical verification essentials:</span> Have you confirmed fire-resistant cables (FP200/FP400 or MICC) are used for all emergency circuits? Are circuit breakers correctly rated and labelled? Is earthing continuity verified at all luminaires? Have you checked polarity and insulation resistance values meet BS 7671 requirements?
+            <span className="font-semibold">Electrical verification essentials:</span> Have you
+            confirmed fire-resistant cables (FP200/FP400 or MICC) are used for all emergency
+            circuits? Are circuit breakers correctly rated and labelled? Is earthing continuity
+            verified at all luminaires? Have you checked polarity and insulation resistance values
+            meet BS 7671 requirements?
           </p>
         </div>
       </div>

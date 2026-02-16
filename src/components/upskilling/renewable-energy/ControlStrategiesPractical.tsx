@@ -5,7 +5,7 @@ import { Settings, Zap, FileText, AlertTriangle } from 'lucide-react';
 
 const ControlStrategiesPractical = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("control") || "selection";
+  const activeTab = searchParams.get('control') || 'selection';
   const setActiveTab = (tab: string) => setSearchParams({ control: tab }, { replace: false });
 
   return (
@@ -19,19 +19,31 @@ const ControlStrategiesPractical = () => {
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-elec-dark">
-            <TabsTrigger value="selection" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="selection"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Settings className="h-4 w-4 mr-1" />
               ATS Selection
             </TabsTrigger>
-            <TabsTrigger value="configuration" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="configuration"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Zap className="h-4 w-4 mr-1" />
               Configuration
             </TabsTrigger>
-            <TabsTrigger value="programming" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="programming"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <FileText className="h-4 w-4 mr-1" />
               Programming
             </TabsTrigger>
-            <TabsTrigger value="troubleshooting" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="troubleshooting"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <AlertTriangle className="h-4 w-4 mr-1" />
               Troubleshooting
             </TabsTrigger>
@@ -39,25 +51,43 @@ const ControlStrategiesPractical = () => {
 
           <TabsContent value="selection" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Automatic Transfer Switch Selection Guide</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Automatic Transfer Switch Selection Guide
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-gray-800 p-3 rounded">
                     <h4 className="text-foreground font-medium mb-2">Open Transition ATS</h4>
                     <div className="text-gray-300 space-y-1">
-                      <p><strong>Best for:</strong> General loads, cost-sensitive applications</p>
-                      <p><strong>Switching time:</strong> 50-100ms break</p>
-                      <p><strong>Cost:</strong> £500-2,000 (residential)</p>
-                      <p><strong>Applications:</strong> Heating, lighting, standard appliances</p>
+                      <p>
+                        <strong>Best for:</strong> General loads, cost-sensitive applications
+                      </p>
+                      <p>
+                        <strong>Switching time:</strong> 50-100ms break
+                      </p>
+                      <p>
+                        <strong>Cost:</strong> £500-2,000 (residential)
+                      </p>
+                      <p>
+                        <strong>Applications:</strong> Heating, lighting, standard appliances
+                      </p>
                     </div>
                   </div>
                   <div className="bg-gray-800 p-3 rounded">
                     <h4 className="text-foreground font-medium mb-2">Closed Transition ATS</h4>
                     <div className="text-gray-300 space-y-1">
-                      <p><strong>Best for:</strong> Critical/sensitive loads</p>
-                      <p><strong>Switching time:</strong> Seamless transfer</p>
-                      <p><strong>Cost:</strong> £1,500-5,000+ (residential)</p>
-                      <p><strong>Applications:</strong> Medical equipment, servers, precision tools</p>
+                      <p>
+                        <strong>Best for:</strong> Critical/sensitive loads
+                      </p>
+                      <p>
+                        <strong>Switching time:</strong> Seamless transfer
+                      </p>
+                      <p>
+                        <strong>Cost:</strong> £1,500-5,000+ (residential)
+                      </p>
+                      <p>
+                        <strong>Applications:</strong> Medical equipment, servers, precision tools
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -77,7 +107,9 @@ const ControlStrategiesPractical = () => {
                     <div>
                       <p className="font-medium text-foreground">Step 3: Total Requirement</p>
                       <p>Maximum of continuous or starting</p>
-                      <p><strong className="text-elec-yellow">ATS Rating: ___A</strong></p>
+                      <p>
+                        <strong className="text-elec-yellow">ATS Rating: ___A</strong>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -103,7 +135,9 @@ const ControlStrategiesPractical = () => {
                       </ul>
                     </div>
                     <div className="text-gray-300">
-                      <p className="font-medium text-foreground mb-1">Emergency Source (Generator):</p>
+                      <p className="font-medium text-foreground mb-1">
+                        Emergency Source (Generator):
+                      </p>
                       <ul className="space-y-1">
                         <li>Pickup voltage: 207V minimum</li>
                         <li>Frequency stabilisation: ±2%</li>
@@ -147,7 +181,9 @@ const ControlStrategiesPractical = () => {
 
           <TabsContent value="programming" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Control Logic Programming Examples</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Control Logic Programming Examples
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
                   <h4 className="text-foreground font-medium mb-2">Basic Switching Logic</h4>
@@ -179,7 +215,9 @@ const ControlStrategiesPractical = () => {
                   </div>
                 </div>
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Advanced Features Programming</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Advanced Features Programming
+                  </h4>
                   <div className="grid grid-cols-2 gap-3 text-gray-300">
                     <div>
                       <p className="font-medium text-foreground">Load Shedding:</p>
@@ -207,10 +245,14 @@ const ControlStrategiesPractical = () => {
 
           <TabsContent value="troubleshooting" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">ATS Troubleshooting Decision Tree</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                ATS Troubleshooting Decision Tree
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Problem: ATS Won't Transfer to Emergency</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Problem: ATS Won't Transfer to Emergency
+                  </h4>
                   <div className="space-y-2 text-gray-300">
                     <div className="border-l-4 border-red-500 pl-3">
                       <p className="font-medium">1. Check Control Power</p>
@@ -218,20 +260,28 @@ const ControlStrategiesPractical = () => {
                     </div>
                     <div className="border-l-4 border-orange-500 pl-3">
                       <p className="font-medium">2. Verify Normal Source Sensing</p>
-                      <p className="text-xs">Check voltage/frequency monitoring settings and actual values</p>
+                      <p className="text-xs">
+                        Check voltage/frequency monitoring settings and actual values
+                      </p>
                     </div>
                     <div className="border-l-4 border-yellow-500 pl-3">
                       <p className="font-medium">3. Check Emergency Source Status</p>
-                      <p className="text-xs">Verify generator running and voltage/frequency within limits</p>
+                      <p className="text-xs">
+                        Verify generator running and voltage/frequency within limits
+                      </p>
                     </div>
                     <div className="border-l-4 border-blue-500 pl-3">
                       <p className="font-medium">4. Inspect Mechanical Operation</p>
-                      <p className="text-xs">Check for binding, worn contacts, or mechanical failures</p>
+                      <p className="text-xs">
+                        Check for binding, worn contacts, or mechanical failures
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Problem: Frequent False Transfers</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Problem: Frequent False Transfers
+                  </h4>
                   <div className="grid grid-cols-2 gap-3 text-gray-300">
                     <div>
                       <p className="font-medium text-foreground">Possible Causes:</p>
@@ -258,12 +308,24 @@ const ControlStrategiesPractical = () => {
                 <div className="border border-gray-600 p-3 rounded">
                   <h4 className="text-foreground font-medium mb-2">Common Error Codes</h4>
                   <div className="grid grid-cols-3 gap-2 text-xs text-gray-300">
-                    <div><strong>E01:</strong> Control power failure</div>
-                    <div><strong>E02:</strong> Normal source failure</div>
-                    <div><strong>E03:</strong> Emergency source failure</div>
-                    <div><strong>E04:</strong> Transfer timeout</div>
-                    <div><strong>E05:</strong> Mechanical fault</div>
-                    <div><strong>E06:</strong> Overcurrent trip</div>
+                    <div>
+                      <strong>E01:</strong> Control power failure
+                    </div>
+                    <div>
+                      <strong>E02:</strong> Normal source failure
+                    </div>
+                    <div>
+                      <strong>E03:</strong> Emergency source failure
+                    </div>
+                    <div>
+                      <strong>E04:</strong> Transfer timeout
+                    </div>
+                    <div>
+                      <strong>E05:</strong> Mechanical fault
+                    </div>
+                    <div>
+                      <strong>E06:</strong> Overcurrent trip
+                    </div>
                   </div>
                 </div>
               </div>

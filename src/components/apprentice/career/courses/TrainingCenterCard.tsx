@@ -1,7 +1,6 @@
-
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MapPin, Building, BookOpen, CheckCircle } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { MapPin, Building, BookOpen, CheckCircle } from 'lucide-react';
 
 interface TrainingCenterCardProps {
   center: {

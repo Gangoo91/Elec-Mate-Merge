@@ -1,165 +1,169 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { AccordionItem } from "@/components/ui/accordion";
-import { 
-  Lightbulb, 
-  User, 
-  MessageSquare, 
-  Eye, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { AccordionItem } from '@/components/ui/accordion';
+import {
+  Lightbulb,
+  User,
+  MessageSquare,
+  Eye,
   Shirt,
   HandHeart,
   AlertCircle,
   CheckCircle,
   Star,
-  Clock
-} from "lucide-react";
+  Clock,
+} from 'lucide-react';
 
 export default function PresentationSkillsTab() {
   const presentationAreas = [
     {
-      id: "appearance",
-      title: "Professional Appearance",
+      id: 'appearance',
+      title: 'Professional Appearance',
       icon: <Shirt className="h-5 w-5" />,
       guidelines: [
-        "Clean, well-fitted clothing appropriate for the role",
-        "Safety boots in good condition if site visit likely",
-        "Minimal jewellery and avoid visible tattoos if possible",
-        "Good personal hygiene and grooming",
-        "Professional but practical attire"
+        'Clean, well-fitted clothing appropriate for the role',
+        'Safety boots in good condition if site visit likely',
+        'Minimal jewellery and avoid visible tattoos if possible',
+        'Good personal hygiene and grooming',
+        'Professional but practical attire',
       ],
       tips: [
-        "Dress slightly more formal than the everyday work attire",
-        "Bring high-vis jacket if site visit is mentioned",
-        "Ensure clothes are clean and pressed",
-        "Choose comfortable, professional footwear"
-      ]
+        'Dress slightly more formal than the everyday work attire',
+        'Bring high-vis jacket if site visit is mentioned',
+        'Ensure clothes are clean and pressed',
+        'Choose comfortable, professional footwear',
+      ],
     },
     {
-      id: "body-language",
-      title: "Body Language & Presence",
+      id: 'body-language',
+      title: 'Body Language & Presence',
       icon: <User className="h-5 w-5" />,
       guidelines: [
-        "Firm handshake with good eye contact",
-        "Upright posture showing confidence",
-        "Open gestures and attentive listening",
-        "Appropriate facial expressions",
-        "Respectful physical boundaries"
+        'Firm handshake with good eye contact',
+        'Upright posture showing confidence',
+        'Open gestures and attentive listening',
+        'Appropriate facial expressions',
+        'Respectful physical boundaries',
       ],
       tips: [
-        "Practice your handshake beforehand",
-        "Sit up straight but appear relaxed",
-        "Use hand gestures when explaining technical concepts",
-        "Mirror interviewer's energy level appropriately"
-      ]
+        'Practice your handshake beforehand',
+        'Sit up straight but appear relaxed',
+        'Use hand gestures when explaining technical concepts',
+        "Mirror interviewer's energy level appropriately",
+      ],
     },
     {
-      id: "communication",
-      title: "Verbal Communication",
+      id: 'communication',
+      title: 'Verbal Communication',
       icon: <MessageSquare className="h-5 w-5" />,
       guidelines: [
-        "Clear articulation and appropriate pace",
-        "Professional vocabulary with technical accuracy",
-        "Active listening and thoughtful responses",
-        "Confident tone without being arrogant",
-        "Appropriate use of technical terminology"
+        'Clear articulation and appropriate pace',
+        'Professional vocabulary with technical accuracy',
+        'Active listening and thoughtful responses',
+        'Confident tone without being arrogant',
+        'Appropriate use of technical terminology',
       ],
       tips: [
-        "Practice explaining technical concepts simply",
-        "Pause to think before answering complex questions",
-        "Ask for clarification if questions are unclear",
-        "Use specific examples to illustrate points"
-      ]
+        'Practice explaining technical concepts simply',
+        'Pause to think before answering complex questions',
+        'Ask for clarification if questions are unclear',
+        'Use specific examples to illustrate points',
+      ],
     },
     {
-      id: "non-verbal",
-      title: "Non-Verbal Communication",
+      id: 'non-verbal',
+      title: 'Non-Verbal Communication',
       icon: <Eye className="h-5 w-5" />,
       guidelines: [
-        "Maintain appropriate eye contact",
-        "Use purposeful hand gestures",
-        "Show engagement through facial expressions",
-        "Respect personal space",
-        "Display active listening cues"
+        'Maintain appropriate eye contact',
+        'Use purposeful hand gestures',
+        'Show engagement through facial expressions',
+        'Respect personal space',
+        'Display active listening cues',
       ],
       tips: [
-        "Look at all panel members if group interview",
-        "Nod appropriately to show understanding",
-        "Avoid fidgeting or distracting habits",
-        "Use open posture to appear approachable"
-      ]
-    }
+        'Look at all panel members if group interview',
+        'Nod appropriately to show understanding',
+        'Avoid fidgeting or distracting habits',
+        'Use open posture to appear approachable',
+      ],
+    },
   ];
 
   const professionalSkills = [
     {
-      skill: "Technical Explanation",
-      description: "Making complex electrical concepts understandable",
+      skill: 'Technical Explanation',
+      description: 'Making complex electrical concepts understandable',
       techniques: [
-        "Use analogies and real-world examples",
-        "Break down complex processes into steps",
+        'Use analogies and real-world examples',
+        'Break down complex processes into steps',
         "Check understanding with phrases like 'Does that make sense?'",
-        "Use visual aids or sketches when helpful"
-      ]
+        'Use visual aids or sketches when helpful',
+      ],
     },
     {
-      skill: "Confidence Building",
-      description: "Projecting competence without arrogance",
+      skill: 'Confidence Building',
+      description: 'Projecting competence without arrogance',
       techniques: [
-        "Speak about achievements factually",
-        "Acknowledge areas for improvement honestly",
-        "Ask thoughtful questions about the role",
-        "Show enthusiasm for learning opportunities"
-      ]
+        'Speak about achievements factually',
+        'Acknowledge areas for improvement honestly',
+        'Ask thoughtful questions about the role',
+        'Show enthusiasm for learning opportunities',
+      ],
     },
     {
-      skill: "Professional Storytelling",
-      description: "Presenting experience through compelling narratives",
+      skill: 'Professional Storytelling',
+      description: 'Presenting experience through compelling narratives',
       techniques: [
-        "Use the STAR method for behavioural questions",
-        "Include specific details and outcomes",
-        "Focus on your role and contributions",
-        "Demonstrate problem-solving and learning"
-      ]
+        'Use the STAR method for behavioural questions',
+        'Include specific details and outcomes',
+        'Focus on your role and contributions',
+        'Demonstrate problem-solving and learning',
+      ],
     },
     {
-      skill: "Emotional Intelligence",
-      description: "Reading the room and adapting communication style",
+      skill: 'Emotional Intelligence',
+      description: 'Reading the room and adapting communication style',
       techniques: [
         "Match interviewer's communication style",
-        "Pick up on verbal and non-verbal cues",
-        "Adjust technical detail level based on audience",
-        "Show empathy and collaborative mindset"
-      ]
-    }
+        'Pick up on verbal and non-verbal cues',
+        'Adjust technical detail level based on audience',
+        'Show empathy and collaborative mindset',
+      ],
+    },
   ];
 
   const commonMistakes = [
     {
-      mistake: "Over-explaining technical details",
-      solution: "Gauge audience knowledge and adjust complexity"
+      mistake: 'Over-explaining technical details',
+      solution: 'Gauge audience knowledge and adjust complexity',
     },
     {
-      mistake: "Speaking too quietly or quickly",
-      solution: "Practice speaking clearly at moderate pace"
+      mistake: 'Speaking too quietly or quickly',
+      solution: 'Practice speaking clearly at moderate pace',
     },
     {
-      mistake: "Avoiding eye contact",
-      solution: "Practice maintaining natural eye contact"
+      mistake: 'Avoiding eye contact',
+      solution: 'Practice maintaining natural eye contact',
     },
     {
-      mistake: "Using too much electrical jargon",
-      solution: "Explain terms or use simpler language"
+      mistake: 'Using too much electrical jargon',
+      solution: 'Explain terms or use simpler language',
     },
     {
-      mistake: "Appearing disinterested or overly casual",
-      solution: "Show enthusiasm and professional engagement"
+      mistake: 'Appearing disinterested or overly casual',
+      solution: 'Show enthusiasm and professional engagement',
     },
     {
-      mistake: "Interrupting or talking over interviewers",
-      solution: "Practice active listening and patient responses"
-    }
+      mistake: 'Interrupting or talking over interviewers',
+      solution: 'Practice active listening and patient responses',
+    },
   ];
 
   return (
@@ -200,8 +204,9 @@ export default function PresentationSkillsTab() {
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
-          <strong>Research Insight:</strong> Technical competence gets you the interview, but presentation skills often determine who gets the job. 
-          Practice is essential for natural, confident delivery.
+          <strong>Research Insight:</strong> Technical competence gets you the interview, but
+          presentation skills often determine who gets the job. Practice is essential for natural,
+          confident delivery.
         </AlertDescription>
       </Alert>
 
@@ -217,9 +222,7 @@ export default function PresentationSkillsTab() {
           <MobileAccordion type="single" collapsible defaultValue="appearance">
             {presentationAreas.map((area) => (
               <AccordionItem key={area.id} value={area.id}>
-                <MobileAccordionTrigger icon={area.icon}>
-                  {area.title}
-                </MobileAccordionTrigger>
+                <MobileAccordionTrigger icon={area.icon}>{area.title}</MobileAccordionTrigger>
                 <MobileAccordionContent>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -298,9 +301,7 @@ export default function PresentationSkillsTab() {
                   <h4 className="font-medium text-sm text-red-600 dark:text-red-400 mb-1">
                     ❌ {item.mistake}
                   </h4>
-                  <p className="text-sm text-green-600 dark:text-green-400">
-                    ✅ {item.solution}
-                  </p>
+                  <p className="text-sm text-green-600 dark:text-green-400">✅ {item.solution}</p>
                 </div>
               </div>
             ))}
@@ -377,9 +378,15 @@ export default function PresentationSkillsTab() {
             <div className="space-y-2">
               <h4 className="font-medium">Commercial Settings</h4>
               <div className="space-y-1">
-                <Badge variant="outline" className="text-xs">Business Casual+</Badge>
-                <Badge variant="outline" className="text-xs">Safety Conscious</Badge>
-                <Badge variant="outline" className="text-xs">Professional Manner</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Business Casual+
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Safety Conscious
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Professional Manner
+                </Badge>
               </div>
               <p className="text-xs text-muted-foreground">
                 Emphasis on professional communication and client interaction skills.
@@ -388,9 +395,15 @@ export default function PresentationSkillsTab() {
             <div className="space-y-2">
               <h4 className="font-medium">Industrial/Construction</h4>
               <div className="space-y-1">
-                <Badge variant="outline" className="text-xs">Practical Attire</Badge>
-                <Badge variant="outline" className="text-xs">Safety First</Badge>
-                <Badge variant="outline" className="text-xs">Team Focus</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Practical Attire
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Safety First
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Team Focus
+                </Badge>
               </div>
               <p className="text-xs text-muted-foreground">
                 Focus on practical skills, safety mindset, and team collaboration.
@@ -399,9 +412,15 @@ export default function PresentationSkillsTab() {
             <div className="space-y-2">
               <h4 className="font-medium">Domestic/Maintenance</h4>
               <div className="space-y-1">
-                <Badge variant="outline" className="text-xs">Customer Service</Badge>
-                <Badge variant="outline" className="text-xs">Reliability</Badge>
-                <Badge variant="outline" className="text-xs">Trust Building</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Customer Service
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Reliability
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Trust Building
+                </Badge>
               </div>
               <p className="text-xs text-muted-foreground">
                 Customer interaction skills and trustworthy presentation essential.

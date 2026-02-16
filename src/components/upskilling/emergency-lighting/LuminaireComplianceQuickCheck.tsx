@@ -10,7 +10,11 @@ export const LuminaireComplianceQuickCheck = () => {
             ✅ Quick Check
           </h4>
           <p className="text-foreground text-sm sm:text-base leading-relaxed">
-            <span className="font-semibold">Luminaire compliance verification:</span> Do all luminaires carry CE marking and BS EN 60598-2-22 certification? Are maintained/non-maintained types correct for each location? Have you checked rated duration (1hr or 3hr) matches design requirements? Are battery and lamp types as specified in the design?
+            <span className="font-semibold">Luminaire compliance verification:</span> Do all
+            luminaires carry CE marking and BS EN 60598-2-22 certification? Are
+            maintained/non-maintained types correct for each location? Have you checked rated
+            duration (1hr or 3hr) matches design requirements? Are battery and lamp types as
+            specified in the design?
           </p>
         </div>
       </div>

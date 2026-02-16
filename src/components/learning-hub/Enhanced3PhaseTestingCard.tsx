@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,9 +20,9 @@ interface Enhanced3PhaseTestingCardProps {
   onTestReadingChange: (phaseIndex: number, field: keyof PhaseTestReading, value: string) => void;
 }
 
-const Enhanced3PhaseTestingCard = ({ 
-  testReadings, 
-  onTestReadingChange 
+const Enhanced3PhaseTestingCard = ({
+  testReadings,
+  onTestReadingChange,
 }: Enhanced3PhaseTestingCardProps) => {
   const [activePhase, setActivePhase] = useState(0);
   const [testingMode, setTestingMode] = useState<'single' | 'three'>('three');
@@ -34,7 +33,7 @@ const Enhanced3PhaseTestingCard = ({
     { phase: 'L3', color: 'text-blue-400', description: 'Line 3 to Neutral and Earth' },
     { phase: 'L1-L2', color: 'text-purple-400', description: 'Line to Line Voltage' },
     { phase: 'L2-L3', color: 'text-green-400', description: 'Line to Line Voltage' },
-    { phase: 'L3-L1', color: 'text-orange-400', description: 'Line to Line Voltage' }
+    { phase: 'L3-L1', color: 'text-orange-400', description: 'Line to Line Voltage' },
   ];
 
   const validateReading = (value: string): boolean => {
@@ -42,35 +41,34 @@ const Enhanced3PhaseTestingCard = ({
     return !isNaN(numValue) && numValue >= 0 && numValue <= 1000;
   };
 
-  const allTestsValid = testReadings.every(reading => reading.valid);
-  const completedTests = testReadings.filter(reading => 
-    reading.liveToNeutral && reading.liveToEarth && reading.neutralToEarth
+  const allTestsValid = testReadings.every((reading) => reading.valid);
+  const completedTests = testReadings.filter(
+    (reading) => reading.liveToNeutral && reading.liveToEarth && reading.neutralToEarth
   ).length;
   const progressPercentage = (completedTests / testReadings.length) * 100;
 
   const interpretResults = () => {
-    const hasVoltage = testReadings.some(reading => 
-      parseFloat(reading.liveToNeutral) > 50 || 
-      parseFloat(reading.liveToEarth) > 50
+    const hasVoltage = testReadings.some(
+      (reading) => parseFloat(reading.liveToNeutral) > 50 || parseFloat(reading.liveToEarth) > 50
     );
-    
+
     if (hasVoltage) {
       return {
         status: 'danger',
         message: 'VOLTAGE DETECTED - Circuit is LIVE. Do not proceed with work.',
-        color: 'text-red-400 bg-red-500/10 border-red-500/20'
+        color: 'text-red-400 bg-red-500/10 border-red-500/20',
       };
     } else if (allTestsValid && completedTests === testReadings.length) {
       return {
         status: 'safe',
         message: 'All readings indicate circuit is DEAD and safe for work.',
-        color: 'text-green-400 bg-green-500/10 border-green-500/20'
+        color: 'text-green-400 bg-green-500/10 border-green-500/20',
       };
     } else {
       return {
         status: 'incomplete',
         message: 'Complete all test readings to verify safe isolation.',
-        color: 'text-orange-400 bg-orange-500/10 border-orange-500/20'
+        color: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
       };
     }
   };
@@ -124,9 +122,7 @@ const Enhanced3PhaseTestingCard = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
             {testSequence.slice(0, testingMode === 'three' ? 6 : 1).map((step, index) => (
               <div key={index} className="flex items-center gap-2">
-                <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
-                  {index + 1}
-                </span>
+                <span className="font-mono text-xs bg-muted px-2 py-1 rounded">{index + 1}</span>
                 <span className={step.color}>{step.phase}</span>
                 <ArrowRight className="h-3 w-3 text-white/60" />
                 <span className="text-white">{step.description}</span>
@@ -138,7 +134,10 @@ const Enhanced3PhaseTestingCard = ({
         {/* Phase Testing Cards */}
         <div className="space-y-4">
           {testReadings.slice(0, testingMode === 'three' ? 3 : 1).map((reading, index) => (
-            <Card key={index} className={`border-2 ${reading.valid ? 'border-green-500/30 bg-green-500/5' : 'border-border bg-card'}`}>
+            <Card
+              key={index}
+              className={`border-2 ${reading.valid ? 'border-green-500/30 bg-green-500/5' : 'border-border bg-card'}`}
+            >
               <CardHeader className="pb-3">
                 <CardTitle className="text-foreground flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -199,7 +198,7 @@ const Enhanced3PhaseTestingCard = ({
                     />
                   </div>
                 </div>
-                
+
                 {testingMode === 'three' && (
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-foreground mb-2">

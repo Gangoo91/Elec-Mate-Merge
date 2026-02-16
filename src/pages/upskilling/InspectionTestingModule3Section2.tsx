@@ -1,151 +1,223 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Ring Final Circuit Continuity - Module 3 Section 2";
-const DESCRIPTION = "Master the three-step ring final circuit continuity test. Learn to verify ring integrity, identify interconnections, spurs, and calculate R1+R2 for ring circuits.";
+const TITLE = 'Ring Final Circuit Continuity - Module 3 Section 2';
+const DESCRIPTION =
+  'Master the three-step ring final circuit continuity test. Learn to verify ring integrity, identify interconnections, spurs, and calculate R1+R2 for ring circuits.';
 
 const quickCheckQuestions = [
   {
-    id: "step1-readings",
-    question: "In Step 1, if the L-L' reading is 0.48\u03A9 and N-N' reading is 0.72\u03A9, what does this suggest?",
+    id: 'step1-readings',
+    question:
+      "In Step 1, if the L-L' reading is 0.48\u03A9 and N-N' reading is 0.72\u03A9, what does this suggest?",
     options: [
-      "Normal variation between conductors",
-      "A problem in one leg of the neutral conductor",
-      "The ring is correctly wired",
-      "Temperature affecting the readings"
+      'Normal variation between conductors',
+      'A problem in one leg of the neutral conductor',
+      'The ring is correctly wired',
+      'Temperature affecting the readings',
     ],
     correctIndex: 1,
-    explanation: "The L and N conductors should follow the same physical route and be the same size. A significant difference suggests unequal paths or a fault in one leg. This would need investigation before proceeding."
+    explanation:
+      'The L and N conductors should follow the same physical route and be the same size. A significant difference suggests unequal paths or a fault in one leg. This would need investigation before proceeding.',
   },
   {
-    id: "interconnection",
-    question: "During Step 3 testing, four sockets read 0.26\u03A9 and one socket reads 0.18\u03A9. What does this indicate?",
+    id: 'interconnection',
+    question:
+      'During Step 3 testing, four sockets read 0.26\u03A9 and one socket reads 0.18\u03A9. What does this indicate?',
     options: [
-      "The low-reading socket is closest to the DB",
-      "Possible interconnection with another circuit at the low-reading socket",
-      "Normal ring circuit variation",
-      "Faulty test equipment"
+      'The low-reading socket is closest to the DB',
+      'Possible interconnection with another circuit at the low-reading socket',
+      'Normal ring circuit variation',
+      'Faulty test equipment',
     ],
     correctIndex: 1,
-    explanation: "Lower than expected readings suggest additional paths for current flow. An interconnection with another ring allows current to bypass part of the ring being tested, reducing the measured resistance at that point."
+    explanation:
+      'Lower than expected readings suggest additional paths for current flow. An interconnection with another ring allows current to bypass part of the ring being tested, reducing the measured resistance at that point.',
   },
   {
-    id: "step3-value",
-    question: "If Step 1 end-to-end reading is 0.52\u03A9, what should the Step 3 readings at each socket approximately equal?",
-    options: [
-      "0.52\u03A9",
-      "1.04\u03A9",
-      "0.26\u03A9",
-      "0.13\u03A9"
-    ],
+    id: 'step3-value',
+    question:
+      'If Step 1 end-to-end reading is 0.52\u03A9, what should the Step 3 readings at each socket approximately equal?',
+    options: ['0.52\u03A9', '1.04\u03A9', '0.26\u03A9', '0.13\u03A9'],
     correctIndex: 2,
-    explanation: "The cross-connection creates two half-ring paths in parallel. This means the reading at any socket is approximately half the full end-to-end resistance, as current flows both ways around the ring."
-  }
+    explanation:
+      'The cross-connection creates two half-ring paths in parallel. This means the reading at any socket is approximately half the full end-to-end resistance, as current flows both ways around the ring.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the purpose of the ring final circuit continuity test?",
-    options: ["To measure insulation resistance", "To verify ring integrity and detect breaks, interconnections, and faults", "To test RCD operation", "To measure earth fault loop impedance"],
+    question: 'What is the purpose of the ring final circuit continuity test?',
+    options: [
+      'To measure insulation resistance',
+      'To verify ring integrity and detect breaks, interconnections, and faults',
+      'To test RCD operation',
+      'To measure earth fault loop impedance',
+    ],
     correctAnswer: 1,
-    explanation: "The ring test verifies the complete ring is intact (no breaks), there are no interconnections with other rings, the correct conductors are connected, and provides R1+R2 values for each socket position."
+    explanation:
+      'The ring test verifies the complete ring is intact (no breaks), there are no interconnections with other rings, the correct conductors are connected, and provides R1+R2 values for each socket position.',
   },
   {
     id: 2,
-    question: "In Step 1 of the ring test, what is measured?",
-    options: ["Insulation between L and N", "End-to-end resistance of each conductor (L, N, CPC separately)", "R1+R2 at each socket", "Voltage at each socket"],
+    question: 'In Step 1 of the ring test, what is measured?',
+    options: [
+      'Insulation between L and N',
+      'End-to-end resistance of each conductor (L, N, CPC separately)',
+      'R1+R2 at each socket',
+      'Voltage at each socket',
+    ],
     correctAnswer: 1,
-    explanation: "Step 1 measures the end-to-end resistance of each conductor separately (L-L', N-N', CPC-CPC') at the distribution board with the ring disconnected. These should all be similar values (for same-length legs)."
+    explanation:
+      "Step 1 measures the end-to-end resistance of each conductor separately (L-L', N-N', CPC-CPC') at the distribution board with the ring disconnected. These should all be similar values (for same-length legs).",
   },
   {
     id: 3,
-    question: "What should you expect for Step 1 end-to-end readings on a healthy ring?",
-    options: ["All three readings exactly the same", "L and N similar, CPC slightly higher (smaller CSA)", "L highest, CPC lowest", "Random values depending on socket positions"],
+    question: 'What should you expect for Step 1 end-to-end readings on a healthy ring?',
+    options: [
+      'All three readings exactly the same',
+      'L and N similar, CPC slightly higher (smaller CSA)',
+      'L highest, CPC lowest',
+      'Random values depending on socket positions',
+    ],
     correctAnswer: 1,
-    explanation: "L and N conductors are typically the same CSA so should have similar end-to-end resistance. CPC is often smaller (higher resistance per metre), so its end-to-end reading will be slightly higher, but similar pattern."
+    explanation:
+      'L and N conductors are typically the same CSA so should have similar end-to-end resistance. CPC is often smaller (higher resistance per metre), so its end-to-end reading will be slightly higher, but similar pattern.',
   },
   {
     id: 4,
-    question: "After cross-connecting for Step 2 or Step 3, what result indicates a healthy ring?",
-    options: ["Readings increase from first to last socket", "Readings decrease from first to last socket", "All sockets give approximately the same reading", "The furthest socket gives double the first socket reading"],
+    question: 'After cross-connecting for Step 2 or Step 3, what result indicates a healthy ring?',
+    options: [
+      'Readings increase from first to last socket',
+      'Readings decrease from first to last socket',
+      'All sockets give approximately the same reading',
+      'The furthest socket gives double the first socket reading',
+    ],
     correctAnswer: 2,
-    explanation: "The figure-of-8 configuration means every socket should give the same reading regardless of position - approximately half the Step 1 end-to-end value. Variations indicate faults at that position."
+    explanation:
+      'The figure-of-8 configuration means every socket should give the same reading regardless of position - approximately half the Step 1 end-to-end value. Variations indicate faults at that position.',
   },
   {
     id: 5,
-    question: "If one socket shows a significantly higher reading than others during Step 3, what does this indicate?",
-    options: ["That socket is closest to the DB", "There's likely a loose connection or damaged conductor at or near that socket", "The socket is correctly wired", "This is normal for the middle socket of the ring"],
+    question:
+      'If one socket shows a significantly higher reading than others during Step 3, what does this indicate?',
+    options: [
+      'That socket is closest to the DB',
+      "There's likely a loose connection or damaged conductor at or near that socket",
+      'The socket is correctly wired',
+      'This is normal for the middle socket of the ring',
+    ],
     correctAnswer: 1,
-    explanation: "Higher resistance at one socket indicates increased resistance at that point - typically a loose connection, corroded terminal, or damaged conductor. The fault location is at or immediately before that socket."
+    explanation:
+      'Higher resistance at one socket indicates increased resistance at that point - typically a loose connection, corroded terminal, or damaged conductor. The fault location is at or immediately before that socket.',
   },
   {
     id: 6,
-    question: "What does a lower than expected reading at a socket during the ring test suggest?",
-    options: ["Excellent wiring quality", "A possible interconnection with another circuit", "The socket is at the midpoint", "The socket is closest to the consumer unit"],
+    question: 'What does a lower than expected reading at a socket during the ring test suggest?',
+    options: [
+      'Excellent wiring quality',
+      'A possible interconnection with another circuit',
+      'The socket is at the midpoint',
+      'The socket is closest to the consumer unit',
+    ],
     correctAnswer: 1,
-    explanation: "Lower than expected readings suggest parallel paths exist - typically an interconnection with another ring circuit. Current can flow through the other circuit's conductors, reducing measured resistance."
+    explanation:
+      "Lower than expected readings suggest parallel paths exist - typically an interconnection with another ring circuit. Current can flow through the other circuit's conductors, reducing measured resistance.",
   },
   {
     id: 7,
-    question: "How do you calculate R1+R2 for a ring circuit from the test results?",
-    options: ["Double the Step 1 readings", "Add all three Step 1 readings together", "Use the Step 3 readings directly - they are R1+R2", "Divide Step 1 readings by 2"],
+    question: 'How do you calculate R1+R2 for a ring circuit from the test results?',
+    options: [
+      'Double the Step 1 readings',
+      'Add all three Step 1 readings together',
+      'Use the Step 3 readings directly - they are R1+R2',
+      'Divide Step 1 readings by 2',
+    ],
     correctAnswer: 2,
-    explanation: "The Step 3 readings (with L cross-connected to CPC) give R1+R2 directly at each socket. No calculation needed - the cross-connection configuration puts R1 and R2 in series automatically."
+    explanation:
+      'The Step 3 readings (with L cross-connected to CPC) give R1+R2 directly at each socket. No calculation needed - the cross-connection configuration puts R1 and R2 in series automatically.',
   },
   {
     id: 8,
-    question: "When testing a spur from a ring circuit, what reading should you expect compared to the ring sockets?",
-    options: ["Lower reading (spur is shorter)", "Same reading as the ring sockets", "Higher reading (adds spur cable length)", "Zero reading (spurs are not earthed)"],
+    question:
+      'When testing a spur from a ring circuit, what reading should you expect compared to the ring sockets?',
+    options: [
+      'Lower reading (spur is shorter)',
+      'Same reading as the ring sockets',
+      'Higher reading (adds spur cable length)',
+      'Zero reading (spurs are not earthed)',
+    ],
     correctAnswer: 2,
-    explanation: "Spurs add additional cable length beyond the ring. The measured R1+R2 at a spur socket equals the ring R1+R2 at the junction box PLUS the resistance of the spur cable to that point."
+    explanation:
+      'Spurs add additional cable length beyond the ring. The measured R1+R2 at a spur socket equals the ring R1+R2 at the junction box PLUS the resistance of the spur cable to that point.',
   },
   {
     id: 9,
-    question: "What is the relationship between Step 1 end-to-end reading and Step 3 socket readings for a healthy ring?",
-    options: ["Step 3 = Step 1 x 2", "Step 3 \u2248 Step 1 \u00F7 4 (approximately quarter)", "Step 3 \u2248 Step 1 \u00F7 2 (approximately half)", "No relationship - they measure different things"],
+    question:
+      'What is the relationship between Step 1 end-to-end reading and Step 3 socket readings for a healthy ring?',
+    options: [
+      'Step 3 = Step 1 x 2',
+      'Step 3 \u2248 Step 1 \u00F7 4 (approximately quarter)',
+      'Step 3 \u2248 Step 1 \u00F7 2 (approximately half)',
+      'No relationship - they measure different things',
+    ],
     correctAnswer: 2,
-    explanation: "For a healthy ring, Step 3 readings at each socket should be approximately half of the relevant Step 1 end-to-end reading. This is because the cross-connection creates two parallel half-ring paths to every socket."
+    explanation:
+      'For a healthy ring, Step 3 readings at each socket should be approximately half of the relevant Step 1 end-to-end reading. This is because the cross-connection creates two parallel half-ring paths to every socket.',
   },
   {
     id: 10,
-    question: "What indicates that a ring circuit is actually wired as two radials incorrectly connected?",
-    options: ["Step 3 readings are all identical", "Step 1 readings are zero", "End-to-end readings are very low but socket readings vary significantly around the ring", "Step 3 readings vary from very low to double the expected value moving around the ring"],
+    question:
+      'What indicates that a ring circuit is actually wired as two radials incorrectly connected?',
+    options: [
+      'Step 3 readings are all identical',
+      'Step 1 readings are zero',
+      'End-to-end readings are very low but socket readings vary significantly around the ring',
+      'Step 3 readings vary from very low to double the expected value moving around the ring',
+    ],
     correctAnswer: 3,
-    explanation: "If supposedly a ring is actually two radials joined, the pattern will show: first socket very low (almost zero), increasing through the ring, last socket showing full end-to-end value. A true ring gives the same reading at every socket."
-  }
+    explanation:
+      'If supposedly a ring is actually two radials joined, the pattern will show: first socket very low (almost zero), increasing through the ring, last socket showing full end-to-end value. A true ring gives the same reading at every socket.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why is the ring final circuit test so complex compared to radial circuit testing?",
-    answer: "A ring circuit has two parallel paths for current to flow - both legs of the ring. Testing must verify: both legs are continuous (no breaks), they connect to form a complete ring, there are no interconnections between rings, and the correct conductors are connected. The three-step process systematically confirms all these requirements. A simple end-to-end test wouldn't reveal breaks in one leg or interconnections."
+    question: 'Why is the ring final circuit test so complex compared to radial circuit testing?',
+    answer:
+      "A ring circuit has two parallel paths for current to flow - both legs of the ring. Testing must verify: both legs are continuous (no breaks), they connect to form a complete ring, there are no interconnections between rings, and the correct conductors are connected. The three-step process systematically confirms all these requirements. A simple end-to-end test wouldn't reveal breaks in one leg or interconnections.",
   },
   {
     question: "What does it mean if Step 1 readings aren't within 0.05\u03A9 of each other?",
-    answer: "If the end-to-end readings for L, N, and CPC differ by more than about 0.05\u03A9, this suggests: different cable sizes used in the ring, unequal leg lengths (ring doesn't follow the same route both ways), loose connections in one leg, or damage to one leg. All three conductors should follow the same physical route, so their end-to-end resistances should be very similar (allowing for the different CSA of the CPC)."
+    answer:
+      "If the end-to-end readings for L, N, and CPC differ by more than about 0.05\u03A9, this suggests: different cable sizes used in the ring, unequal leg lengths (ring doesn't follow the same route both ways), loose connections in one leg, or damage to one leg. All three conductors should follow the same physical route, so their end-to-end resistances should be very similar (allowing for the different CSA of the CPC).",
   },
   {
     question: "What is a 'figure of 8' pattern and why is it used?",
-    answer: "The figure of 8 refers to Steps 2 and 3 where you cross-connect conductors (L to L' and N to N', then L to CPC and L' to CPC'). When you then measure at each socket, current flows around the ring in a figure-of-8 pattern. This clever arrangement means every socket should give the same reading regardless of its position - about half the end-to-end value. This makes fault detection simple: any socket with a significantly different reading indicates a problem at that point."
+    answer:
+      "The figure of 8 refers to Steps 2 and 3 where you cross-connect conductors (L to L' and N to N', then L to CPC and L' to CPC'). When you then measure at each socket, current flows around the ring in a figure-of-8 pattern. This clever arrangement means every socket should give the same reading regardless of its position - about half the end-to-end value. This makes fault detection simple: any socket with a significantly different reading indicates a problem at that point.",
   },
   {
-    question: "Can I use the ring test to find which socket has a fault?",
-    answer: "Yes - this is one of the test's great benefits. When properly cross-connected for Step 3, every socket should give approximately the same R1+R2 reading. If one socket gives a significantly higher reading, the fault is likely at or near that socket (loose connection, damaged conductor). If a socket gives a significantly lower reading, there may be an interconnection with another circuit at that point."
+    question: 'Can I use the ring test to find which socket has a fault?',
+    answer:
+      "Yes - this is one of the test's great benefits. When properly cross-connected for Step 3, every socket should give approximately the same R1+R2 reading. If one socket gives a significantly higher reading, the fault is likely at or near that socket (loose connection, damaged conductor). If a socket gives a significantly lower reading, there may be an interconnection with another circuit at that point.",
   },
   {
-    question: "What happens to spurs during ring circuit testing?",
-    answer: "Unfused spurs connected from the ring will show higher readings than the ring sockets because the spur adds extra cable length. When testing at a spur, you measure the ring R1+R2 plus the resistance of the spur cable to that point. This is normal and expected - record the value for the spur. The ring itself should still show consistent readings at non-spur points."
+    question: 'What happens to spurs during ring circuit testing?',
+    answer:
+      'Unfused spurs connected from the ring will show higher readings than the ring sockets because the spur adds extra cable length. When testing at a spur, you measure the ring R1+R2 plus the resistance of the spur cable to that point. This is normal and expected - record the value for the spur. The ring itself should still show consistent readings at non-spur points.',
   },
   {
-    question: "Do I need to test every socket on a ring circuit?",
-    answer: "For thorough testing, yes - test at every socket during Step 3. This is the only way to verify the complete ring integrity and identify problems at individual points. Some practitioners test only a sample, but this could miss faults at untested sockets. At minimum, test at the closest and furthest points, but best practice is every socket."
-  }
+    question: 'Do I need to test every socket on a ring circuit?',
+    answer:
+      'For thorough testing, yes - test at every socket during Step 3. This is the only way to verify the complete ring integrity and identify problems at individual points. Some practitioners test only a sample, but this could miss faults at untested sockets. At minimum, test at the closest and furthest points, but best practice is every socket.',
+  },
 ];
 
 const InspectionTestingModule3Section2 = () => {
@@ -156,7 +228,12 @@ const InspectionTestingModule3Section2 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/inspection-testing-module-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -167,7 +244,6 @@ const InspectionTestingModule3Section2 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -187,18 +263,32 @@ const InspectionTestingModule3Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Step 1:</strong> End-to-end resistance of L, N, CPC separately</li>
-              <li><strong>Steps 2&3:</strong> Cross-connect and test at every socket</li>
-              <li><strong>Result:</strong> All sockets should read the same value</li>
-              <li><strong>Step 3:</strong> Readings give R1+R2 directly</li>
+              <li>
+                <strong>Step 1:</strong> End-to-end resistance of L, N, CPC separately
+              </li>
+              <li>
+                <strong>Steps 2&3:</strong> Cross-connect and test at every socket
+              </li>
+              <li>
+                <strong>Result:</strong> All sockets should read the same value
+              </li>
+              <li>
+                <strong>Step 3:</strong> Readings give R1+R2 directly
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Broken rings, interconnections, cross-wiring</li>
-              <li><strong>Use:</strong> Verify ring integrity, fault location</li>
-              <li><strong>Apply:</strong> Every ring final circuit installation</li>
+              <li>
+                <strong>Spot:</strong> Broken rings, interconnections, cross-wiring
+              </li>
+              <li>
+                <strong>Use:</strong> Verify ring integrity, fault location
+              </li>
+              <li>
+                <strong>Apply:</strong> Every ring final circuit installation
+              </li>
             </ul>
           </div>
         </div>
@@ -208,12 +298,12 @@ const InspectionTestingModule3Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Explain the purpose and importance of ring final circuit testing",
-              "Execute the three-step ring continuity test procedure correctly",
-              "Identify ring circuit faults: broken rings, interconnections, bridged conductors",
-              "Calculate and verify expected resistance values at each test step",
-              "Determine R1+R2 values from ring test results",
-              "Test spurs and extensions from ring circuits correctly"
+              'Explain the purpose and importance of ring final circuit testing',
+              'Execute the three-step ring continuity test procedure correctly',
+              'Identify ring circuit faults: broken rings, interconnections, bridged conductors',
+              'Calculate and verify expected resistance values at each test step',
+              'Determine R1+R2 values from ring test results',
+              'Test spurs and extensions from ring circuits correctly',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -234,25 +324,44 @@ const InspectionTestingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A ring final circuit provides two parallel paths for current. This improves current capacity but creates testing complexity - a simple end-to-end test cannot confirm the ring is properly formed.
+              A ring final circuit provides two parallel paths for current. This improves current
+              capacity but creates testing complexity - a simple end-to-end test cannot confirm the
+              ring is properly formed.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Ring Circuit Characteristics:</p>
               <ul className="text-sm text-white space-y-2 ml-4">
-                <li><strong>Two Parallel Paths:</strong> Current can flow either way around the ring to reach any socket - this doubles the effective current capacity</li>
-                <li><strong>Both Legs Must Be Continuous:</strong> A break in one leg makes it a radial - still works but with reduced capacity and protection issues</li>
-                <li><strong>No Interconnections:</strong> If two rings share a connection point, protective device discrimination is compromised</li>
+                <li>
+                  <strong>Two Parallel Paths:</strong> Current can flow either way around the ring
+                  to reach any socket - this doubles the effective current capacity
+                </li>
+                <li>
+                  <strong>Both Legs Must Be Continuous:</strong> A break in one leg makes it a
+                  radial - still works but with reduced capacity and protection issues
+                </li>
+                <li>
+                  <strong>No Interconnections:</strong> If two rings share a connection point,
+                  protective device discrimination is compromised
+                </li>
               </ul>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-amber-500/10">
               <p className="text-sm font-medium text-amber-400 mb-2">Common Ring Faults</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Broken ring:</strong> One leg disconnected (functions as radial)</li>
-                <li><strong>Interconnection:</strong> Connected to another ring</li>
-                <li><strong>Cross-connection:</strong> L and N swapped in one leg</li>
-                <li><strong>Missing earth:</strong> CPC not continuous in one leg</li>
+                <li>
+                  <strong>Broken ring:</strong> One leg disconnected (functions as radial)
+                </li>
+                <li>
+                  <strong>Interconnection:</strong> Connected to another ring
+                </li>
+                <li>
+                  <strong>Cross-connection:</strong> L and N swapped in one leg
+                </li>
+                <li>
+                  <strong>Missing earth:</strong> CPC not continuous in one leg
+                </li>
               </ul>
             </div>
           </div>
@@ -266,17 +375,32 @@ const InspectionTestingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Step 1 measures the resistance of each conductor's complete loop around the ring. This verifies continuity and establishes baseline values.
+              Step 1 measures the resistance of each conductor's complete loop around the ring. This
+              verifies continuity and establishes baseline values.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Step 1 Procedure:</p>
               <ul className="text-sm text-white space-y-2 ml-4">
-                <li><strong>1. Disconnect Both Ring Ends:</strong> Both legs disconnected from DB terminals</li>
-                <li><strong>2. Null Test Leads:</strong> Zero the instrument</li>
-                <li><strong>3. Test L to L' (Line to Line):</strong> Record the reading (e.g., 0.52\u03A9)</li>
-                <li><strong>4. Test N to N' (Neutral to Neutral):</strong> Record the reading (should match L-L')</li>
-                <li><strong>5. Test CPC to CPC':</strong> Record the reading (typically slightly higher if smaller CSA)</li>
+                <li>
+                  <strong>1. Disconnect Both Ring Ends:</strong> Both legs disconnected from DB
+                  terminals
+                </li>
+                <li>
+                  <strong>2. Null Test Leads:</strong> Zero the instrument
+                </li>
+                <li>
+                  <strong>3. Test L to L' (Line to Line):</strong> Record the reading (e.g.,
+                  0.52\u03A9)
+                </li>
+                <li>
+                  <strong>4. Test N to N' (Neutral to Neutral):</strong> Record the reading (should
+                  match L-L')
+                </li>
+                <li>
+                  <strong>5. Test CPC to CPC':</strong> Record the reading (typically slightly
+                  higher if smaller CSA)
+                </li>
               </ul>
             </div>
 
@@ -315,7 +439,9 @@ const InspectionTestingModule3Section2 = () => {
             <div className="my-6 p-4 rounded-lg bg-blue-500/10">
               <p className="text-sm font-medium text-blue-400 mb-2">Key Check</p>
               <p className="text-sm text-white">
-                L and N readings should be within 0.05\u03A9 of each other. If they differ significantly, it suggests unequal leg lengths or a problem in one leg. CPC will typically be higher due to smaller cross-section.
+                L and N readings should be within 0.05\u03A9 of each other. If they differ
+                significantly, it suggests unequal leg lengths or a problem in one leg. CPC will
+                typically be higher due to smaller cross-section.
               </p>
             </div>
           </div>
@@ -323,64 +449,246 @@ const InspectionTestingModule3Section2 = () => {
 
         {/* Ring Final Circuit Test Diagram */}
         <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
-          <h4 className="text-sm font-bold text-white mb-4">Ring Final Circuit — Three-Step Test at Consumer Unit</h4>
-          <svg viewBox="0 0 800 400" className="w-full h-auto" role="img" aria-label="Ring final circuit test diagram showing end-to-end and cross-connection tests at the consumer unit">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            Ring Final Circuit — Three-Step Test at Consumer Unit
+          </h4>
+          <svg
+            viewBox="0 0 800 400"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Ring final circuit test diagram showing end-to-end and cross-connection tests at the consumer unit"
+          >
             {/* Consumer Unit Box */}
-            <rect x="310" y="10" width="180" height="100" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-            <text x="400" y="30" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">CONSUMER UNIT</text>
+            <rect
+              x="310"
+              y="10"
+              width="180"
+              height="100"
+              rx="8"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="2"
+            />
+            <text
+              x="400"
+              y="30"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.6)"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              CONSUMER UNIT
+            </text>
 
             {/* Conductor labels in CU */}
             <circle cx="350" cy="55" r="8" fill="none" stroke="#EF4444" strokeWidth="2" />
-            <text x="350" y="59" textAnchor="middle" fill="#EF4444" fontSize="9" fontWeight="bold">L</text>
+            <text x="350" y="59" textAnchor="middle" fill="#EF4444" fontSize="9" fontWeight="bold">
+              L
+            </text>
             <circle cx="400" cy="55" r="8" fill="none" stroke="#3B82F6" strokeWidth="2" />
-            <text x="400" y="59" textAnchor="middle" fill="#3B82F6" fontSize="9" fontWeight="bold">N</text>
+            <text x="400" y="59" textAnchor="middle" fill="#3B82F6" fontSize="9" fontWeight="bold">
+              N
+            </text>
             <circle cx="450" cy="55" r="8" fill="none" stroke="#22C55E" strokeWidth="2" />
-            <text x="450" y="59" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">E</text>
+            <text x="450" y="59" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">
+              E
+            </text>
 
             {/* Leg labels */}
-            <text x="350" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">L  L'</text>
-            <text x="400" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">N  N'</text>
-            <text x="450" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">E  E'</text>
+            <text x="350" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              L L'
+            </text>
+            <text x="400" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              N N'
+            </text>
+            <text x="450" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              E E'
+            </text>
 
             {/* Ring path — Leg 1 (left) */}
-            <path d="M340,110 L340,180 Q340,200 320,200 L160,200 Q140,200 140,220 L140,280" fill="none" stroke="#EF4444" strokeWidth="2" opacity="0.6" />
-            <path d="M390,110 L390,180 Q390,200 370,200 L200,200 Q180,200 180,220 L180,280" fill="none" stroke="#3B82F6" strokeWidth="2" opacity="0.6" />
-            <path d="M440,110 L440,180 Q440,200 420,200 L240,200 Q220,200 220,220 L220,280" fill="none" stroke="#22C55E" strokeWidth="2" opacity="0.6" />
+            <path
+              d="M340,110 L340,180 Q340,200 320,200 L160,200 Q140,200 140,220 L140,280"
+              fill="none"
+              stroke="#EF4444"
+              strokeWidth="2"
+              opacity="0.6"
+            />
+            <path
+              d="M390,110 L390,180 Q390,200 370,200 L200,200 Q180,200 180,220 L180,280"
+              fill="none"
+              stroke="#3B82F6"
+              strokeWidth="2"
+              opacity="0.6"
+            />
+            <path
+              d="M440,110 L440,180 Q440,200 420,200 L240,200 Q220,200 220,220 L220,280"
+              fill="none"
+              stroke="#22C55E"
+              strokeWidth="2"
+              opacity="0.6"
+            />
 
             {/* Ring path — Leg 2 (right) */}
-            <path d="M360,110 L360,180 Q360,200 380,200 L560,200 Q580,200 580,220 L580,280" fill="none" stroke="#EF4444" strokeWidth="2" opacity="0.6" />
-            <path d="M410,110 L410,180 Q410,200 430,200 L600,200 Q620,200 620,220 L620,280" fill="none" stroke="#3B82F6" strokeWidth="2" opacity="0.6" />
-            <path d="M460,110 L460,180 Q460,200 480,200 L640,200 Q660,200 660,220 L660,280" fill="none" stroke="#22C55E" strokeWidth="2" opacity="0.6" />
+            <path
+              d="M360,110 L360,180 Q360,200 380,200 L560,200 Q580,200 580,220 L580,280"
+              fill="none"
+              stroke="#EF4444"
+              strokeWidth="2"
+              opacity="0.6"
+            />
+            <path
+              d="M410,110 L410,180 Q410,200 430,200 L600,200 Q620,200 620,220 L620,280"
+              fill="none"
+              stroke="#3B82F6"
+              strokeWidth="2"
+              opacity="0.6"
+            />
+            <path
+              d="M460,110 L460,180 Q460,200 480,200 L640,200 Q660,200 660,220 L660,280"
+              fill="none"
+              stroke="#22C55E"
+              strokeWidth="2"
+              opacity="0.6"
+            />
 
             {/* Socket outlets */}
-            <rect x="120" y="280" width="120" height="35" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-            <text x="180" y="302" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">Socket 1</text>
+            <rect
+              x="120"
+              y="280"
+              width="120"
+              height="35"
+              rx="6"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="180" y="302" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">
+              Socket 1
+            </text>
 
-            <rect x="340" y="310" width="120" height="35" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-            <text x="400" y="332" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">Socket 2 (mid)</text>
+            <rect
+              x="340"
+              y="310"
+              width="120"
+              height="35"
+              rx="6"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="332" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">
+              Socket 2 (mid)
+            </text>
 
-            <rect x="560" y="280" width="120" height="35" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-            <text x="620" y="302" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">Socket 3</text>
+            <rect
+              x="560"
+              y="280"
+              width="120"
+              height="35"
+              rx="6"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="620" y="302" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">
+              Socket 3
+            </text>
 
             {/* Connect sockets on ring path */}
-            <path d="M240,298 Q300,340 340,328" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-            <path d="M460,328 Q500,340 560,298" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+            <path
+              d="M240,298 Q300,340 340,328"
+              fill="none"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M460,328 Q500,340 560,298"
+              fill="none"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1.5"
+            />
 
             {/* Step labels */}
-            <rect x="10" y="360" width="240" height="35" rx="6" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.2)" strokeWidth="1" />
-            <text x="130" y="375" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Step 1: L-L', N-N', E-E'</text>
-            <text x="130" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">End-to-end at CU</text>
+            <rect
+              x="10"
+              y="360"
+              width="240"
+              height="35"
+              rx="6"
+              fill="rgba(251,191,36,0.08)"
+              stroke="rgba(251,191,36,0.2)"
+              strokeWidth="1"
+            />
+            <text
+              x="130"
+              y="375"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              Step 1: L-L', N-N', E-E'
+            </text>
+            <text x="130" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              End-to-end at CU
+            </text>
 
-            <rect x="280" y="360" width="240" height="35" rx="6" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.2)" strokeWidth="1" />
-            <text x="400" y="375" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Step 2: Cross L↔N'</text>
-            <text x="400" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">L-N at each socket</text>
+            <rect
+              x="280"
+              y="360"
+              width="240"
+              height="35"
+              rx="6"
+              fill="rgba(251,191,36,0.08)"
+              stroke="rgba(251,191,36,0.2)"
+              strokeWidth="1"
+            />
+            <text
+              x="400"
+              y="375"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              Step 2: Cross L↔N'
+            </text>
+            <text x="400" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              L-N at each socket
+            </text>
 
-            <rect x="550" y="360" width="240" height="35" rx="6" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.2)" strokeWidth="1" />
-            <text x="670" y="375" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Step 3: Cross L↔E'</text>
-            <text x="670" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">= R1+R2 at each socket</text>
+            <rect
+              x="550"
+              y="360"
+              width="240"
+              height="35"
+              rx="6"
+              fill="rgba(251,191,36,0.08)"
+              stroke="rgba(251,191,36,0.2)"
+              strokeWidth="1"
+            />
+            <text
+              x="670"
+              y="375"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              Step 3: Cross L↔E'
+            </text>
+            <text x="670" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              = R1+R2 at each socket
+            </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">Ring circuit conductors leave and return to the consumer unit. Step 1 tests each conductor end-to-end. Steps 2–3 cross-connect and test at every socket — readings should be equal throughout.</p>
+          <p className="text-xs text-white/40 mt-3">
+            Ring circuit conductors leave and return to the consumer unit. Step 1 tests each
+            conductor end-to-end. Steps 2–3 cross-connect and test at every socket — readings should
+            be equal throughout.
+          </p>
         </div>
 
         <InlineCheck {...quickCheckQuestions[0]} />
@@ -393,40 +701,65 @@ const InspectionTestingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Steps 2 and 3 use a "figure of 8" configuration that makes fault detection simple - every socket on a healthy ring should give the same reading.
+              Steps 2 and 3 use a "figure of 8" configuration that makes fault detection simple -
+              every socket on a healthy ring should give the same reading.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Step 2: Cross-Connect L with N</p>
               <ul className="text-sm text-white/80 space-y-1">
-                <li><strong>Connect:</strong> L of one leg to N of other leg (and vice versa)</li>
-                <li><strong>Measure:</strong> L-N at each socket around the ring</li>
-                <li><strong>Expected:</strong> All readings approximately equal (about half of Step 1)</li>
-                <li><strong>Purpose:</strong> Verifies L and N are correctly connected, no cross-wiring</li>
+                <li>
+                  <strong>Connect:</strong> L of one leg to N of other leg (and vice versa)
+                </li>
+                <li>
+                  <strong>Measure:</strong> L-N at each socket around the ring
+                </li>
+                <li>
+                  <strong>Expected:</strong> All readings approximately equal (about half of Step 1)
+                </li>
+                <li>
+                  <strong>Purpose:</strong> Verifies L and N are correctly connected, no
+                  cross-wiring
+                </li>
               </ul>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Step 3: Cross-Connect L with CPC (The Key Test)</p>
+              <p className="text-sm font-medium text-elec-yellow mb-2">
+                Step 3: Cross-Connect L with CPC (The Key Test)
+              </p>
               <ul className="text-sm text-white/80 space-y-1">
-                <li><strong>Connect:</strong> L of one leg to CPC of other leg (and vice versa)</li>
-                <li><strong>Measure:</strong> L-E at each socket around the ring</li>
-                <li><strong>Expected:</strong> All readings approximately equal</li>
-                <li><strong>Result:</strong> This reading IS the R1+R2 value for each socket!</li>
+                <li>
+                  <strong>Connect:</strong> L of one leg to CPC of other leg (and vice versa)
+                </li>
+                <li>
+                  <strong>Measure:</strong> L-E at each socket around the ring
+                </li>
+                <li>
+                  <strong>Expected:</strong> All readings approximately equal
+                </li>
+                <li>
+                  <strong>Result:</strong> This reading IS the R1+R2 value for each socket!
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why "Figure of 8" Works:</p>
               <p className="text-sm text-white/70">
-                When cross-connected, current flows around both legs to reach any socket. Every socket has equal resistance because it's always halfway around both loops. This makes fault detection simple - if one socket reads differently, the fault is at that location.
+                When cross-connected, current flows around both legs to reach any socket. Every
+                socket has equal resistance because it's always halfway around both loops. This
+                makes fault detection simple - if one socket reads differently, the fault is at that
+                location.
               </p>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10">
               <p className="text-sm font-medium text-green-400 mb-2">Step 3 Gives R1+R2 Directly</p>
               <p className="text-sm text-white">
-                The Step 3 reading at each socket IS the R1+R2 value for that position. No calculation needed - just record the reading. For a ring, this should be approximately (r1+r2)/4 x total ring length.
+                The Step 3 reading at each socket IS the R1+R2 value for that position. No
+                calculation needed - just record the reading. For a ring, this should be
+                approximately (r1+r2)/4 x total ring length.
               </p>
             </div>
           </div>
@@ -440,42 +773,73 @@ const InspectionTestingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Understanding what different patterns mean helps quickly identify the type and location of faults.
+              Understanding what different patterns mean helps quickly identify the type and
+              location of faults.
             </p>
 
             <div className="my-6 space-y-3">
               <div className="p-3 rounded-lg bg-green-500/10">
-                <p className="text-green-400 font-medium text-sm">All Sockets Equal (\u00B15%) - Healthy Ring</p>
-                <p className="text-white/70 text-sm">All readings within 5% = ring is complete and correctly wired</p>
+                <p className="text-green-400 font-medium text-sm">
+                  All Sockets Equal (\u00B15%) - Healthy Ring
+                </p>
+                <p className="text-white/70 text-sm">
+                  All readings within 5% = ring is complete and correctly wired
+                </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-medium text-sm">One Socket High - Local Fault</p>
-                <p className="text-white/70 text-sm">Loose connection or damaged conductor at or near that socket</p>
+                <p className="text-white/70 text-sm">
+                  Loose connection or damaged conductor at or near that socket
+                </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
-                <p className="text-amber-400 font-medium text-sm">One Socket Low - Interconnection</p>
-                <p className="text-white/70 text-sm">Possible connection to another ring at that socket</p>
+                <p className="text-amber-400 font-medium text-sm">
+                  One Socket Low - Interconnection
+                </p>
+                <p className="text-white/70 text-sm">
+                  Possible connection to another ring at that socket
+                </p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10">
-                <p className="text-red-400 font-medium text-sm">Progressive Increase - Broken Ring</p>
-                <p className="text-white/70 text-sm">Values rising from one end = one leg broken, actually a radial</p>
+                <p className="text-red-400 font-medium text-sm">
+                  Progressive Increase - Broken Ring
+                </p>
+                <p className="text-white/70 text-sm">
+                  Values rising from one end = one leg broken, actually a radial
+                </p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10">
-                <p className="text-red-400 font-medium text-sm">Open Circuit at One Socket - Break Location</p>
-                <p className="text-white/70 text-sm">Break is between that socket and the previous one tested</p>
+                <p className="text-red-400 font-medium text-sm">
+                  Open Circuit at One Socket - Break Location
+                </p>
+                <p className="text-white/70 text-sm">
+                  Break is between that socket and the previous one tested
+                </p>
               </div>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Example: Broken Ring Pattern</p>
-              <p className="text-xs text-white/60 mb-2">Socket readings around "ring" with break:</p>
+              <p className="text-xs text-white/60 mb-2">
+                Socket readings around "ring" with break:
+              </p>
               <div className="text-sm font-mono space-y-1">
-                <p>Socket 1: <span className="text-green-400">0.15\u03A9</span> - Near start</p>
-                <p>Socket 2: <span className="text-yellow-400">0.28\u03A9</span> - Increasing...</p>
-                <p>Socket 3: <span className="text-orange-400">0.42\u03A9</span> - Still rising...</p>
-                <p>Socket 4: <span className="text-red-400">0.56\u03A9</span> - Near break!</p>
+                <p>
+                  Socket 1: <span className="text-green-400">0.15\u03A9</span> - Near start
+                </p>
+                <p>
+                  Socket 2: <span className="text-yellow-400">0.28\u03A9</span> - Increasing...
+                </p>
+                <p>
+                  Socket 3: <span className="text-orange-400">0.42\u03A9</span> - Still rising...
+                </p>
+                <p>
+                  Socket 4: <span className="text-red-400">0.56\u03A9</span> - Near break!
+                </p>
               </div>
-              <p className="text-red-400 text-xs mt-2">Pattern shows this is a radial, not a ring</p>
+              <p className="text-red-400 text-xs mt-2">
+                Pattern shows this is a radial, not a ring
+              </p>
             </div>
           </div>
         </section>
@@ -490,7 +854,8 @@ const InspectionTestingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Unfused spurs connected from the ring will show readings that include the spur cable resistance on top of the ring R1+R2. This is expected behaviour.
+              Unfused spurs connected from the ring will show readings that include the spur cable
+              resistance on top of the ring R1+R2. This is expected behaviour.
             </p>
 
             <div className="my-6">
@@ -506,17 +871,28 @@ const InspectionTestingModule3Section2 = () => {
             <div className="my-6 p-4 rounded-lg bg-green-500/10">
               <p className="text-sm font-medium text-green-400 mb-2">Example: Spur Calculation</p>
               <div className="text-sm text-white space-y-1">
-                <p><strong>Ring R1+R2 at junction:</strong> 0.26\u03A9</p>
-                <p><strong>Spur length:</strong> 5m of 2.5/1.5mm\u00B2 T&E</p>
-                <p><strong>Spur R1+R2:</strong> 5 x 0.01951 = 0.10\u03A9</p>
-                <p><strong>Total at spur socket:</strong> 0.26 + 0.10 = <span className="text-elec-yellow font-bold">0.36\u03A9</span></p>
+                <p>
+                  <strong>Ring R1+R2 at junction:</strong> 0.26\u03A9
+                </p>
+                <p>
+                  <strong>Spur length:</strong> 5m of 2.5/1.5mm\u00B2 T&E
+                </p>
+                <p>
+                  <strong>Spur R1+R2:</strong> 5 x 0.01951 = 0.10\u03A9
+                </p>
+                <p>
+                  <strong>Total at spur socket:</strong> 0.26 + 0.10 ={' '}
+                  <span className="text-elec-yellow font-bold">0.36\u03A9</span>
+                </p>
               </div>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10">
               <p className="text-sm font-medium text-blue-400 mb-2">Identifying Spurs</p>
               <p className="text-sm text-white">
-                During testing, spur sockets are identified by their higher readings. If you don't know which are spurs beforehand, the test results will show you - spurs will read higher than the ring average.
+                During testing, spur sockets are identified by their higher readings. If you don't
+                know which are spurs beforehand, the test results will show you - spurs will read
+                higher than the ring average.
               </p>
             </div>
           </div>
@@ -530,16 +906,25 @@ const InspectionTestingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Ring circuit test results are recorded on the schedule of test results. The format allows all key values to be recorded systematically.
+              Ring circuit test results are recorded on the schedule of test results. The format
+              allows all key values to be recorded systematically.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Values to Record:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>r1:</strong> Line end-to-end divided by total cable length (m\u03A9/m)</li>
-                <li><strong>rn:</strong> Neutral end-to-end divided by total cable length (m\u03A9/m)</li>
-                <li><strong>r2:</strong> CPC end-to-end divided by total cable length (m\u03A9/m)</li>
-                <li><strong>R1+R2:</strong> The highest Step 3 reading (worst case for Zs)</li>
+                <li>
+                  <strong>r1:</strong> Line end-to-end divided by total cable length (m\u03A9/m)
+                </li>
+                <li>
+                  <strong>rn:</strong> Neutral end-to-end divided by total cable length (m\u03A9/m)
+                </li>
+                <li>
+                  <strong>r2:</strong> CPC end-to-end divided by total cable length (m\u03A9/m)
+                </li>
+                <li>
+                  <strong>R1+R2:</strong> The highest Step 3 reading (worst case for Zs)
+                </li>
               </ul>
             </div>
 
@@ -567,13 +952,17 @@ const InspectionTestingModule3Section2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/50 text-xs mt-2">R1+R2 recorded is the highest value from Step 3 testing</p>
+              <p className="text-white/50 text-xs mt-2">
+                R1+R2 recorded is the highest value from Step 3 testing
+              </p>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-amber-500/10">
               <p className="text-sm font-medium text-amber-400 mb-2">Use Highest R1+R2</p>
               <p className="text-sm text-white">
-                For Zs verification and circuit protection checks, always use the highest R1+R2 measured during Step 3. This is the worst-case value and ensures protection is adequate at all points.
+                For Zs verification and circuit protection checks, always use the highest R1+R2
+                measured during Step 3. This is the worst-case value and ensures protection is
+                adequate at all points.
               </p>
             </div>
           </div>
@@ -603,20 +992,36 @@ const InspectionTestingModule3Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Cross-connecting wrong conductors</strong> - L to L' instead of L to N'</li>
-                <li><strong>Forgetting to null test leads</strong> - affects all readings</li>
-                <li><strong>Testing only a few sockets</strong> - misses faults at untested points</li>
-                <li><strong>Not recording Step 1 values</strong> - needed for comparison</li>
-                <li><strong>Misidentifying which leg is which</strong> - causes confusion</li>
+                <li>
+                  <strong>Cross-connecting wrong conductors</strong> - L to L' instead of L to N'
+                </li>
+                <li>
+                  <strong>Forgetting to null test leads</strong> - affects all readings
+                </li>
+                <li>
+                  <strong>Testing only a few sockets</strong> - misses faults at untested points
+                </li>
+                <li>
+                  <strong>Not recording Step 1 values</strong> - needed for comparison
+                </li>
+                <li>
+                  <strong>Misidentifying which leg is which</strong> - causes confusion
+                </li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key References</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>BS 7671:</strong> Regulation 314.1 - Division of installation</li>
-                <li><strong>GN3:</strong> Ring final circuit testing procedure</li>
-                <li><strong>Appendix 15:</strong> Ring circuit continuity test method</li>
+                <li>
+                  <strong>BS 7671:</strong> Regulation 314.1 - Division of installation
+                </li>
+                <li>
+                  <strong>GN3:</strong> Ring final circuit testing procedure
+                </li>
+                <li>
+                  <strong>Appendix 15:</strong> Ring circuit continuity test method
+                </li>
               </ul>
             </div>
           </div>
@@ -667,28 +1072,33 @@ const InspectionTestingModule3Section2 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-3">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

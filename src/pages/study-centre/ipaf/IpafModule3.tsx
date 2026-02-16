@@ -1,40 +1,45 @@
-import { ArrowLeft, Wrench, ClipboardList, Layers, ArrowDownToLine, HardHat } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Wrench, ClipboardList, Layers, ArrowDownToLine, HardHat } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Planning & Preparation",
+    title: 'Planning & Preparation',
     icon: ClipboardList,
-    description: "Site survey requirements, ground assessment, overhead hazards, exclusion zones, and PPE requirements",
+    description:
+      'Site survey requirements, ground assessment, overhead hazards, exclusion zones, and PPE requirements',
   },
   {
     id: 2,
-    title: "3T Method (Through The Trap)",
+    title: '3T Method (Through The Trap)',
     icon: Layers,
-    description: "Step-by-step 3T assembly sequence, safe climbing positions, and guardrail installation from protected positions",
+    description:
+      'Step-by-step 3T assembly sequence, safe climbing positions, and guardrail installation from protected positions',
   },
   {
     id: 3,
-    title: "AGR Method (Advance Guard Rail)",
+    title: 'AGR Method (Advance Guard Rail)',
     icon: HardHat,
-    description: "How AGR frames work, automatic guardrails, advantages over 3T, and step-by-step AGR assembly sequence",
+    description:
+      'How AGR frames work, automatic guardrails, advantages over 3T, and step-by-step AGR assembly sequence',
   },
   {
     id: 4,
-    title: "Dismantling & Safe Lowering",
+    title: 'Dismantling & Safe Lowering',
     icon: ArrowDownToLine,
-    description: "Reverse sequence dismantling, safe lowering of components, minimum crew requirements, and site clearance",
+    description:
+      'Reverse sequence dismantling, safe lowering of components, minimum crew requirements, and site clearance',
   },
 ];
 
 export default function IpafModule3() {
   useSEO({
-    title: "Module 3: Assembly & Dismantling | IPAF Mobile Scaffold",
-    description: "3T and AGR assembly methods, planning, preparation, and safe dismantling procedures for mobile access towers.",
+    title: 'Module 3: Assembly & Dismantling | IPAF Mobile Scaffold',
+    description:
+      '3T and AGR assembly methods, planning, preparation, and safe dismantling procedures for mobile access towers.',
   });
 
   return (
@@ -73,7 +78,8 @@ export default function IpafModule3() {
               Assembly & Dismantling
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              3T and AGR assembly methods, planning, preparation, and safe dismantling procedures for mobile access towers
+              3T and AGR assembly methods, planning, preparation, and safe dismantling procedures
+              for mobile access towers
             </p>
           </div>
 

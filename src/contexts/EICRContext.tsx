@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useMemo, useCallback } from 'react';
 import { EICRFault } from '@/types/eicr';
 
@@ -58,27 +57,24 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
   const [eicr, setEICR] = useState<EICRData>({
     circuits: [],
     testResults: [],
-    observations: []
+    observations: [],
   });
 
   const [eicrSession, setEICRSession] = useState<EICRSession>({
     eicr_report: {},
-    auto_populate: false
+    auto_populate: false,
   });
 
   const updateEICR = useCallback((data: Partial<EICRData>) => {
-    setEICR(prev => ({ ...prev, ...data }));
+    setEICR((prev) => ({ ...prev, ...data }));
   }, []);
 
   const populateFromTestResult = useCallback((stepId: string, result: TestResult) => {
     console.log('Populating EICR from test result:', { stepId, result });
 
-    setEICR(prev => ({
+    setEICR((prev) => ({
       ...prev,
-      testResults: [
-        ...(prev.testResults || []).filter(r => r.stepId !== stepId),
-        result
-      ]
+      testResults: [...(prev.testResults || []).filter((r) => r.stepId !== stepId), result],
     }));
   }, []);
 
@@ -88,7 +84,7 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
       inspectorDetails,
       circuits: [],
       testResults: [],
-      observations: []
+      observations: [],
     });
   }, []);
 
@@ -96,11 +92,11 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
     setEICR({
       circuits: [],
       testResults: [],
-      observations: []
+      observations: [],
     });
     setEICRSession({
       eicr_report: {},
-      auto_populate: false
+      auto_populate: false,
     });
   }, []);
 
@@ -108,71 +104,70 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
     return {
       ...eicr,
       generatedAt: new Date(),
-      session: eicrSession
+      session: eicrSession,
     };
   }, [eicr, eicrSession]);
 
   const setAutoPopulate = useCallback((value: boolean) => {
-    setEICRSession(prev => ({
+    setEICRSession((prev) => ({
       ...prev,
-      auto_populate: value
+      auto_populate: value,
     }));
   }, []);
 
   const addFault = useCallback((fault: EICRFault) => {
-    setEICR(prev => ({
+    setEICR((prev) => ({
       ...prev,
-      observations: [...(prev.observations || []), fault]
+      observations: [...(prev.observations || []), fault],
     }));
   }, []);
 
   const updateFault = useCallback((id: string, faultUpdate: Partial<EICRFault>) => {
-    setEICR(prev => ({
+    setEICR((prev) => ({
       ...prev,
-      observations: (prev.observations || []).map(fault =>
+      observations: (prev.observations || []).map((fault) =>
         fault.id === id ? { ...fault, ...faultUpdate } : fault
-      )
+      ),
     }));
   }, []);
 
   const removeFault = useCallback((id: string) => {
-    setEICR(prev => ({
+    setEICR((prev) => ({
       ...prev,
-      observations: (prev.observations || []).filter(fault => fault.id !== id)
+      observations: (prev.observations || []).filter((fault) => fault.id !== id),
     }));
   }, []);
 
-  const value = useMemo(() => ({
-    eicr,
-    eicrSession,
-    updateEICR,
-    populateFromTestResult,
-    initializeEICR,
-    resetEICR,
-    generateEICRReport,
-    setAutoPopulate,
-    addFault,
-    updateFault,
-    removeFault
-  }), [
-    eicr,
-    eicrSession,
-    updateEICR,
-    populateFromTestResult,
-    initializeEICR,
-    resetEICR,
-    generateEICRReport,
-    setAutoPopulate,
-    addFault,
-    updateFault,
-    removeFault
-  ]);
-
-  return (
-    <EICRContext.Provider value={value}>
-      {children}
-    </EICRContext.Provider>
+  const value = useMemo(
+    () => ({
+      eicr,
+      eicrSession,
+      updateEICR,
+      populateFromTestResult,
+      initializeEICR,
+      resetEICR,
+      generateEICRReport,
+      setAutoPopulate,
+      addFault,
+      updateFault,
+      removeFault,
+    }),
+    [
+      eicr,
+      eicrSession,
+      updateEICR,
+      populateFromTestResult,
+      initializeEICR,
+      resetEICR,
+      generateEICRReport,
+      setAutoPopulate,
+      addFault,
+      updateFault,
+      removeFault,
+    ]
   );
+
+  return <EICRContext.Provider value={value}>{children}</EICRContext.Provider>;
 };
 
 /**

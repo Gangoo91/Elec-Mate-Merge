@@ -11,7 +11,16 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Camera, Plus, AlertTriangle, CheckCircle2, ArrowUpDown, Check, Bot, Sparkles } from 'lucide-react';
+import {
+  Camera,
+  Plus,
+  AlertTriangle,
+  CheckCircle2,
+  ArrowUpDown,
+  Check,
+  Bot,
+  Sparkles,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CircuitReviewCard } from './CircuitReviewCard';
 import { CircuitEditModal } from './CircuitEditModal';
@@ -74,9 +83,9 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
 
   // Count confidence levels
   const { highCount, mediumCount, lowCount, allHighConfidence } = useMemo(() => {
-    const high = circuits.filter(c => c.confidence === 'high').length;
-    const medium = circuits.filter(c => c.confidence === 'medium').length;
-    const low = circuits.filter(c => c.confidence === 'low').length;
+    const high = circuits.filter((c) => c.confidence === 'high').length;
+    const medium = circuits.filter((c) => c.confidence === 'medium').length;
+    const low = circuits.filter((c) => c.confidence === 'low').length;
     return {
       highCount: high,
       mediumCount: medium,
@@ -88,7 +97,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
   // Track if user made corrections (valuable for training)
   const correctionsCount = useMemo(() => {
     return circuits.filter((c, i) => {
-      const original = originalCircuits.find(o => o.id === c.id);
+      const original = originalCircuits.find((o) => o.id === c.id);
       if (!original) return false;
       return (
         c.device !== original.device ||
@@ -106,13 +115,13 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
 
   // Handle circuit update from edit modal
   const handleUpdateCircuit = (updated: DetectedCircuit) => {
-    setCircuits(prev => prev.map(c => c.id === updated.id ? updated : c));
+    setCircuits((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
     setEditingCircuit(null);
   };
 
   // Handle reverse order
   const handleReverseOrder = () => {
-    setCircuits(prev => {
+    setCircuits((prev) => {
       const reversed = [...prev].reverse();
       // Update position numbers
       return reversed.map((c, i) => ({ ...c, position: i + 1 }));
@@ -122,8 +131,8 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
 
   // Handle remove circuit
   const handleRemoveCircuit = (id: string) => {
-    setCircuits(prev => {
-      const filtered = prev.filter(c => c.id !== id);
+    setCircuits((prev) => {
+      const filtered = prev.filter((c) => c.id !== id);
       // Renumber positions
       return filtered.map((c, i) => ({ ...c, position: i + 1 }));
     });
@@ -141,10 +150,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] rounded-t-2xl p-0 flex flex-col"
-        >
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 flex flex-col">
           {/* Header with photo thumbnail, count, and status */}
           <SheetHeader className="px-4 py-4 border-b flex-shrink-0">
             <div className="flex items-start gap-3">
@@ -154,11 +160,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                   onClick={() => setShowPhotoPreview(true)}
                   className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border border-border/50 bg-muted/20 touch-manipulation hover:ring-2 hover:ring-elec-yellow/50 transition-all"
                 >
-                  <img
-                    src={photoUrl}
-                    alt="Scanned board"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={photoUrl} alt="Scanned board" className="w-full h-full object-cover" />
                 </button>
               )}
 
@@ -167,12 +169,12 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                 <div className="flex items-center justify-between gap-2">
                   <SheetTitle className="text-lg">{circuits.length} Circuits Found</SheetTitle>
                   <Badge
-                    variant={allHighConfidence ? "default" : "secondary"}
+                    variant={allHighConfidence ? 'default' : 'secondary'}
                     className={cn(
-                      "gap-1 flex-shrink-0",
+                      'gap-1 flex-shrink-0',
                       allHighConfidence
-                        ? "bg-green-500/10 text-green-500 border-green-500/30"
-                        : "bg-orange-500/10 text-orange-500 border-orange-500/30"
+                        ? 'bg-green-500/10 text-green-500 border-green-500/30'
+                        : 'bg-orange-500/10 text-orange-500 border-orange-500/30'
                     )}
                   >
                     {allHighConfidence ? (
@@ -197,11 +199,11 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
             {/* Prominent Reverse Order Button */}
             <div className="mt-4">
               <Button
-                variant={isReversed ? "default" : "outline"}
+                variant={isReversed ? 'default' : 'outline'}
                 onClick={handleReverseOrder}
                 className={cn(
-                  "w-full h-11 gap-2 touch-manipulation",
-                  isReversed && "bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  'w-full h-11 gap-2 touch-manipulation',
+                  isReversed && 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                 )}
               >
                 {isReversed ? (
@@ -218,9 +220,8 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
               </Button>
               <p className="text-xs text-muted-foreground text-center mt-1.5">
                 {isReversed
-                  ? "Tap again to reset to original order"
-                  : "Use if main switch is on the right side of the board"
-                }
+                  ? 'Tap again to reset to original order'
+                  : 'Use if main switch is on the right side of the board'}
               </p>
             </div>
 
@@ -228,12 +229,18 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
             {(lowCount > 0 || mediumCount > 0) && (
               <div className="flex gap-2 mt-3 flex-wrap">
                 {lowCount > 0 && (
-                  <Badge variant="outline" className="text-xs px-2 py-1 border-orange-500/30 text-orange-500">
+                  <Badge
+                    variant="outline"
+                    className="text-xs px-2 py-1 border-orange-500/30 text-orange-500"
+                  >
                     {lowCount} low confidence
                   </Badge>
                 )}
                 {mediumCount > 0 && (
-                  <Badge variant="outline" className="text-xs px-2 py-1 border-yellow-500/30 text-yellow-500">
+                  <Badge
+                    variant="outline"
+                    className="text-xs px-2 py-1 border-yellow-500/30 text-yellow-500"
+                  >
                     {mediumCount} medium confidence
                   </Badge>
                 )}
@@ -273,14 +280,12 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                   <p className="text-sm font-medium text-foreground">
                     {correctionsCount > 0
                       ? `${correctionsCount} correction${correctionsCount > 1 ? 's' : ''} made`
-                      : 'Great scan!'
-                    }
+                      : 'Great scan!'}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {correctionsCount > 0
                       ? 'Share to help improve AI accuracy'
-                      : 'Share this photo to train the AI'
-                    }
+                      : 'Share this photo to train the AI'}
                   </p>
                 </div>
                 <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 flex-shrink-0">

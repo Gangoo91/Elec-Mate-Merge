@@ -14,11 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -75,17 +71,19 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => (
   <CollapsibleTrigger className="flex items-center justify-between w-full p-4 sm:p-5 hover:bg-white/5 transition-colors rounded-t-xl">
     <div className="flex items-center gap-3">
-      <div className={cn(
-        'w-10 h-10 rounded-xl flex items-center justify-center',
-        `bg-${color}/15`
-      )}>
+      <div
+        className={cn('w-10 h-10 rounded-xl flex items-center justify-center', `bg-${color}/15`)}
+      >
         <Icon className={cn('h-5 w-5', `text-${color}`)} />
       </div>
       <div className="text-left">
         <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
           {title}
           {badge && (
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30">
+            <Badge
+              variant="outline"
+              className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30"
+            >
               {badge}
             </Badge>
           )}
@@ -126,7 +124,7 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
       ? formData.clientPostcode
       : formData.installationPostcode;
 
-    if (postcode && (!formData.gridConnection?.dnoName)) {
+    if (postcode && !formData.gridConnection?.dnoName) {
       const dno = suggestDNOByPostcode(postcode);
       if (dno) {
         onUpdate('gridConnection', {
@@ -142,7 +140,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
     <div className="space-y-4 px-4 sm:px-0">
       {/* Certificate Details */}
       <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.certificate} onOpenChange={() => toggleSection('certificate')}>
+        <Collapsible
+          open={openSections.certificate}
+          onOpenChange={() => toggleSection('certificate')}
+        >
           <SectionHeader
             title="Certificate Details"
             icon={FileCheck}
@@ -154,7 +155,8 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
               {/* MCS Certificate Type Info */}
               <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
                 <p className="text-sm text-amber-200">
-                  <strong>MCS Requirement:</strong> Certificate must be issued within 10 working days of commissioning.
+                  <strong>MCS Requirement:</strong> Certificate must be issued within 10 working
+                  days of commissioning.
                 </p>
               </div>
 
@@ -202,7 +204,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="certificateNumber" className="text-sm font-medium text-foreground">
+                  <Label
+                    htmlFor="certificateNumber"
+                    className="text-sm font-medium text-foreground"
+                  >
                     Certificate Number
                   </Label>
                   <Input
@@ -228,7 +233,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="installationDate" className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Label
+                    htmlFor="installationDate"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
+                  >
                     <Calendar className="h-4 w-4 text-amber-400" />
                     Installation Date *
                   </Label>
@@ -242,7 +250,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="commissioningDate" className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Label
+                    htmlFor="commissioningDate"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
+                  >
                     <Calendar className="h-4 w-4 text-amber-400" />
                     Commissioning Date *
                   </Label>
@@ -277,7 +288,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                 {/* Previous Installation Reference - shown for retrofit/extension */}
                 {(formData.workType === 'retrofit' || formData.workType === 'extension') && (
                   <div className="space-y-2">
-                    <Label htmlFor="previousInstallationRef" className="text-sm font-medium text-foreground">
+                    <Label
+                      htmlFor="previousInstallationRef"
+                      className="text-sm font-medium text-foreground"
+                    >
                       Previous MCS Certificate No.
                     </Label>
                     <Input
@@ -321,7 +335,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="clientAddress" className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Label
+                    htmlFor="clientAddress"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
+                  >
                     <MapPin className="h-4 w-4 text-blue-400" />
                     Address *
                   </Label>
@@ -348,7 +365,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="clientPhone" className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Label
+                    htmlFor="clientPhone"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
+                  >
                     <Phone className="h-4 w-4 text-blue-400" />
                     Phone
                   </Label>
@@ -363,7 +383,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="clientEmail" className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Label
+                    htmlFor="clientEmail"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
+                  >
                     <Mail className="h-4 w-4 text-blue-400" />
                     Email
                   </Label>
@@ -505,7 +528,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
 
       {/* Site Access & Safety */}
       <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.siteAccess} onOpenChange={() => toggleSection('siteAccess')}>
+        <Collapsible
+          open={openSections.siteAccess}
+          onOpenChange={() => toggleSection('siteAccess')}
+        >
           <SectionHeader
             title="Site Access & Safety"
             icon={HardHat}
@@ -587,7 +613,9 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                           <Checkbox
                             id="asbestosCheckCompleted"
                             checked={formData.asbestosCheckCompleted}
-                            onCheckedChange={(checked) => onUpdate('asbestosCheckCompleted', checked)}
+                            onCheckedChange={(checked) =>
+                              onUpdate('asbestosCheckCompleted', checked)
+                            }
                             className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
                           />
                           <div>
@@ -608,7 +636,9 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                     <Checkbox
                       id="structuralAssessmentRequired"
                       checked={formData.structuralAssessmentRequired}
-                      onCheckedChange={(checked) => onUpdate('structuralAssessmentRequired', checked)}
+                      onCheckedChange={(checked) =>
+                        onUpdate('structuralAssessmentRequired', checked)
+                      }
                       className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                     />
                     <div>
@@ -629,7 +659,9 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                       <Checkbox
                         id="structuralAssessmentCompleted"
                         checked={formData.structuralAssessmentCompleted}
-                        onCheckedChange={(checked) => onUpdate('structuralAssessmentCompleted', checked)}
+                        onCheckedChange={(checked) =>
+                          onUpdate('structuralAssessmentCompleted', checked)
+                        }
                         className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
                       />
                       <div>
@@ -651,7 +683,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
 
       {/* Installation Address */}
       <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.installation} onOpenChange={() => toggleSection('installation')}>
+        <Collapsible
+          open={openSections.installation}
+          onOpenChange={() => toggleSection('installation')}
+        >
           <SectionHeader
             title="Installation Address"
             icon={Building2}
@@ -684,7 +719,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
               {!formData.installationSameAsClient && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2 sm:col-span-2">
-                    <Label htmlFor="installationAddress" className="text-sm font-medium text-foreground">
+                    <Label
+                      htmlFor="installationAddress"
+                      className="text-sm font-medium text-foreground"
+                    >
                       Installation Address *
                     </Label>
                     <Input
@@ -697,13 +735,18 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="installationPostcode" className="text-sm font-medium text-foreground">
+                    <Label
+                      htmlFor="installationPostcode"
+                      className="text-sm font-medium text-foreground"
+                    >
                       Postcode *
                     </Label>
                     <Input
                       id="installationPostcode"
                       value={formData.installationPostcode || ''}
-                      onChange={(e) => onUpdate('installationPostcode', e.target.value.toUpperCase())}
+                      onChange={(e) =>
+                        onUpdate('installationPostcode', e.target.value.toUpperCase())
+                      }
                       placeholder="e.g., SW1A 1AA"
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 uppercase"
                     />
@@ -730,38 +773,49 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
               {/* MCS Info Banner */}
               <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
                 <p className="text-sm text-purple-200">
-                  MCS certification is required for Smart Export Guarantee (SEG) eligibility and most grant schemes.
+                  MCS certification is required for Smart Export Guarantee (SEG) eligibility and
+                  most grant schemes.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="mcsInstallerNumber" className="text-sm font-medium text-foreground">
+                  <Label
+                    htmlFor="mcsInstallerNumber"
+                    className="text-sm font-medium text-foreground"
+                  >
                     MCS Installer Number *
                   </Label>
                   <Input
                     id="mcsInstallerNumber"
                     value={formData.mcsDetails?.installerNumber || ''}
-                    onChange={(e) => onUpdate('mcsDetails', {
-                      ...formData.mcsDetails,
-                      installerNumber: e.target.value,
-                    })}
+                    onChange={(e) =>
+                      onUpdate('mcsDetails', {
+                        ...formData.mcsDetails,
+                        installerNumber: e.target.value,
+                      })
+                    }
                     placeholder="e.g., NAP-12345"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="mcsInstallationNumber" className="text-sm font-medium text-foreground">
+                  <Label
+                    htmlFor="mcsInstallationNumber"
+                    className="text-sm font-medium text-foreground"
+                  >
                     MCS Installation Number
                   </Label>
                   <Input
                     id="mcsInstallationNumber"
                     value={formData.mcsDetails?.installationNumber || ''}
-                    onChange={(e) => onUpdate('mcsDetails', {
-                      ...formData.mcsDetails,
-                      installationNumber: e.target.value,
-                    })}
+                    onChange={(e) =>
+                      onUpdate('mcsDetails', {
+                        ...formData.mcsDetails,
+                        installationNumber: e.target.value,
+                      })
+                    }
                     placeholder="Generated after registration"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                   />
@@ -776,10 +830,12 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                   </Label>
                   <Select
                     value={formData.mcsDetails?.consumerCode || ''}
-                    onValueChange={(value) => onUpdate('mcsDetails', {
-                      ...formData.mcsDetails,
-                      consumerCode: value,
-                    })}
+                    onValueChange={(value) =>
+                      onUpdate('mcsDetails', {
+                        ...formData.mcsDetails,
+                        consumerCode: value,
+                      })
+                    }
                   >
                     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
                       <SelectValue placeholder="Select consumer code" />
@@ -822,28 +878,30 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
               <p className="text-xs text-muted-foreground mb-1">Total Capacity</p>
               <p className="text-xl font-bold text-amber-400">
-                {formData.totalCapacity?.toFixed(2) || '0.00'} <span className="text-sm font-normal">kWp</span>
+                {formData.totalCapacity?.toFixed(2) || '0.00'}{' '}
+                <span className="text-sm font-normal">kWp</span>
               </p>
             </div>
 
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
               <p className="text-xs text-muted-foreground mb-1">Est. Annual Yield</p>
               <p className="text-xl font-bold text-green-400">
-                {formData.estimatedAnnualYield?.toLocaleString() || '0'} <span className="text-sm font-normal">kWh</span>
+                {formData.estimatedAnnualYield?.toLocaleString() || '0'}{' '}
+                <span className="text-sm font-normal">kWh</span>
               </p>
             </div>
 
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
               <p className="text-xs text-muted-foreground mb-1">Arrays</p>
-              <p className="text-xl font-bold text-blue-400">
-                {formData.arrays?.length || 0}
-              </p>
+              <p className="text-xl font-bold text-blue-400">{formData.arrays?.length || 0}</p>
             </div>
 
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
               <p className="text-xs text-muted-foreground mb-1">CO₂ Savings</p>
               <p className="text-xl font-bold text-emerald-400">
-                {formData.co2SavingsAnnual?.toLocaleString() || Math.round((formData.estimatedAnnualYield || 0) * 0.233).toLocaleString()} <span className="text-sm font-normal">kg/yr</span>
+                {formData.co2SavingsAnnual?.toLocaleString() ||
+                  Math.round((formData.estimatedAnnualYield || 0) * 0.233).toLocaleString()}{' '}
+                <span className="text-sm font-normal">kg/yr</span>
               </p>
             </div>
           </div>
@@ -851,13 +909,18 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
           {/* Yield Calculation Method - MCS Requirement */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
             <div className="space-y-2">
-              <Label htmlFor="yieldCalculationMethod" className="text-sm font-medium text-foreground flex items-center gap-2">
+              <Label
+                htmlFor="yieldCalculationMethod"
+                className="text-sm font-medium text-foreground flex items-center gap-2"
+              >
                 <ClipboardCheck className="h-4 w-4 text-amber-400" />
                 Yield Calculation Method *
               </Label>
               <Select
                 value={formData.yieldCalculationMethod || 'mcs-estimator'}
-                onValueChange={(value) => onUpdate('yieldCalculationMethod', value as YieldCalculationMethod)}
+                onValueChange={(value) =>
+                  onUpdate('yieldCalculationMethod', value as YieldCalculationMethod)
+                }
               >
                 <SelectTrigger className="h-11 touch-manipulation bg-background/50 border-white/20 focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select method" />
@@ -874,7 +937,10 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="yieldCalculationNotes" className="text-sm font-medium text-foreground">
+              <Label
+                htmlFor="yieldCalculationNotes"
+                className="text-sm font-medium text-foreground"
+              >
                 Calculation Notes
               </Label>
               <Input
@@ -890,8 +956,9 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
           {/* MCS Info */}
           <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
             <p className="text-xs text-amber-200">
-              <strong>MCS Requirement:</strong> Yield estimates must be calculated using an approved methodology.
-              The MCS Yield Estimator or SAP 2012 are the most commonly accepted methods for domestic installations.
+              <strong>MCS Requirement:</strong> Yield estimates must be calculated using an approved
+              methodology. The MCS Yield Estimator or SAP 2012 are the most commonly accepted
+              methods for domestic installations.
             </p>
           </div>
         </div>

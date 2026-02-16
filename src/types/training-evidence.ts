@@ -1,5 +1,4 @@
-
-import { TimeEntry } from "./time-tracking";
+import { TimeEntry } from './time-tracking';
 
 export interface TrainingEvidence {
   id: string;

@@ -12,7 +12,17 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, Zap, Cable, Shield, AlertTriangle, Globe, BookOpen, Sparkles, Info } from 'lucide-react';
+import {
+  ChevronDown,
+  Zap,
+  Cable,
+  Shield,
+  AlertTriangle,
+  Globe,
+  BookOpen,
+  Sparkles,
+  Info,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
@@ -50,7 +60,12 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
     if (!deviceType || !rating || !curve) return null;
 
     return lookupMaxZs(deviceType, rating, curve);
-  }, [formData.protectionDeviceType, formData.protectionDeviceRating, formData.protectionDeviceCurve, lookupMaxZs]);
+  }, [
+    formData.protectionDeviceType,
+    formData.protectionDeviceRating,
+    formData.protectionDeviceCurve,
+    lookupMaxZs,
+  ]);
 
   // Auto-update maxZs in testResults when lookup changes
   useEffect(() => {
@@ -73,9 +88,9 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
   const isPME = formData.earthingArrangement === 'TN-C-S' || formData.isPME;
 
   return (
-    <div className={cn(isMobile ? "space-y-0" : "space-y-6")}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
       {/* Supply Characteristics */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.supply} onOpenChange={() => toggleSection('supply')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -87,10 +102,12 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
                   <span className="text-xs text-muted-foreground">Voltage, phases, earthing</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.supply && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.supply && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -100,15 +117,17 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   </div>
                   <span className="text-white font-semibold">Supply Characteristics</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.supply && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.supply && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="supplyVoltage">Voltage (V)</Label>
@@ -116,7 +135,12 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     id="supplyVoltage"
                     type="number"
                     value={formData.supplyVoltage ?? ''}
-                    onChange={(e) => onUpdate('supplyVoltage', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      onUpdate(
+                        'supplyVoltage',
+                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                      )
+                    }
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
@@ -195,16 +219,20 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* PME Considerations */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.pme} onOpenChange={() => toggleSection('pme')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
               <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className={cn(
-                  "h-10 w-10 rounded-xl flex items-center justify-center shrink-0",
-                  isPME ? "bg-amber-500/20" : "bg-gray-500/20"
-                )}>
-                  <AlertTriangle className={cn("h-5 w-5", isPME ? "text-amber-400" : "text-gray-400")} />
+                <div
+                  className={cn(
+                    'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
+                    isPME ? 'bg-amber-500/20' : 'bg-gray-500/20'
+                  )}
+                >
+                  <AlertTriangle
+                    className={cn('h-5 w-5', isPME ? 'text-amber-400' : 'text-gray-400')}
+                  />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">PME Considerations</h3>
@@ -213,46 +241,61 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   </span>
                 </div>
                 {isPME && (
-                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-amber-500/30 text-amber-400 shrink-0 mr-2">
+                  <Badge
+                    variant="outline"
+                    className="text-[10px] px-1.5 py-0 border-amber-500/30 text-amber-400 shrink-0 mr-2"
+                  >
                     PME
                   </Badge>
                 )}
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.pme && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.pme && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    "w-9 h-9 rounded-xl flex items-center justify-center",
-                    isPME ? "bg-amber-500/15" : "bg-gray-500/15"
-                  )}>
-                    <AlertTriangle className={cn("h-4 w-4", isPME ? "text-amber-400" : "text-gray-400")} />
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-xl flex items-center justify-center',
+                      isPME ? 'bg-amber-500/15' : 'bg-gray-500/15'
+                    )}
+                  >
+                    <AlertTriangle
+                      className={cn('h-4 w-4', isPME ? 'text-amber-400' : 'text-gray-400')}
+                    />
                   </div>
                   <span className="text-white font-semibold">PME Earthing Considerations</span>
                   {isPME && (
-                    <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-amber-500/30 text-amber-400">
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] px-1.5 py-0 border-amber-500/30 text-amber-400"
+                    >
                       PME Detected
                     </Badge>
                   )}
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.pme && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.pme && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {isPME && (
                 <Alert className="border-amber-500/30 bg-amber-500/10">
                   <AlertTriangle className="h-4 w-4 text-amber-400" />
                   <AlertDescription className="text-amber-200 text-xs sm:text-sm">
-                    <strong>IET Code of Practice:</strong> Special earthing arrangements may be required for EV chargers
-                    connected to PME supplies. Ensure compliance with Section 722 and the IET CoP for EV charging.
+                    <strong>IET Code of Practice:</strong> Special earthing arrangements may be
+                    required for EV chargers connected to PME supplies. Ensure compliance with
+                    Section 722 and the IET CoP for EV charging.
                   </AlertDescription>
                 </Alert>
               )}
@@ -281,11 +324,19 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                         <SelectValue placeholder="Select measures" />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-background border-border text-foreground">
-                        <SelectItem value="integral-rcd">Integral RCD protection in charger</SelectItem>
-                        <SelectItem value="earth-electrode">Additional earth electrode installed</SelectItem>
+                        <SelectItem value="integral-rcd">
+                          Integral RCD protection in charger
+                        </SelectItem>
+                        <SelectItem value="earth-electrode">
+                          Additional earth electrode installed
+                        </SelectItem>
                         <SelectItem value="class-ii">Class II charger used</SelectItem>
-                        <SelectItem value="separated-extra-low">Separated extra-low voltage</SelectItem>
-                        <SelectItem value="protective-bonding">Additional protective bonding</SelectItem>
+                        <SelectItem value="separated-extra-low">
+                          Separated extra-low voltage
+                        </SelectItem>
+                        <SelectItem value="protective-bonding">
+                          Additional protective bonding
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -297,14 +348,19 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                       onCheckedChange={(checked) => onUpdate('earthElectrodeInstalled', checked)}
                       className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                     />
-                    <Label htmlFor="earthElectrodeInstalled" className="cursor-pointer text-base leading-relaxed">
+                    <Label
+                      htmlFor="earthElectrodeInstalled"
+                      className="cursor-pointer text-base leading-relaxed"
+                    >
                       Additional earth electrode installed
                     </Label>
                   </div>
 
                   {formData.earthElectrodeInstalled && (
                     <div className="space-y-2">
-                      <Label htmlFor="earthElectrodeResistance">Earth Electrode Resistance Ra (Ω)</Label>
+                      <Label htmlFor="earthElectrodeResistance">
+                        Earth Electrode Resistance Ra (Ω)
+                      </Label>
                       <Input
                         id="earthElectrodeResistance"
                         placeholder="e.g., 150"
@@ -322,7 +378,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* Circuit Details */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -334,10 +390,12 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <h3 className="font-semibold text-foreground">Circuit Details</h3>
                   <span className="text-xs text-muted-foreground">Cable type & size</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.circuit && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.circuit && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -347,15 +405,17 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   </div>
                   <span className="text-white font-semibold">Circuit Details</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.circuit && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.circuit && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="circuitDesignation">Circuit Designation</Label>
@@ -445,8 +505,11 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* Protection */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
-        <Collapsible open={openSections.protection} onOpenChange={() => toggleSection('protection')}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible
+          open={openSections.protection}
+          onOpenChange={() => toggleSection('protection')}
+        >
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
               <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
@@ -458,14 +521,19 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <span className="text-xs text-muted-foreground">MCB/RCBO & RCD</span>
                 </div>
                 {maxZsLookup && (
-                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow shrink-0 mr-2">
+                  <Badge
+                    variant="outline"
+                    className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow shrink-0 mr-2"
+                  >
                     Max Zs: {maxZsLookup.maxZs}Ω
                   </Badge>
                 )}
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.protection && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.protection && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -475,20 +543,25 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   </div>
                   <span className="text-white font-semibold">Circuit Protection</span>
                   {maxZsLookup && (
-                    <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow">
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow"
+                    >
                       Max Zs: {maxZsLookup.maxZs}Ω
                     </Badge>
                   )}
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.protection && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.protection && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="protectionDeviceType">Type *</Label>
@@ -552,19 +625,20 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-medium text-elec-yellow">Max Zs: {maxZsLookup.maxZs}Ω</span>
-                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-blue-500/30 text-blue-400">
+                        <span className="font-medium text-elec-yellow">
+                          Max Zs: {maxZsLookup.maxZs}Ω
+                        </span>
+                        <Badge
+                          variant="outline"
+                          className="text-[10px] px-1.5 py-0 border-blue-500/30 text-blue-400"
+                        >
                           Auto-lookup
                         </Badge>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {maxZsLookup.source}
-                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">{maxZsLookup.source}</p>
                       <div className="flex items-center gap-1 mt-1">
                         <BookOpen className="h-3 w-3 text-muted-foreground" />
-                        <p className="text-[10px] text-muted-foreground">
-                          {maxZsLookup.notes}
-                        </p>
+                        <p className="text-[10px] text-muted-foreground">{maxZsLookup.notes}</p>
                       </div>
                     </div>
                   </div>
@@ -630,19 +704,23 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* DNO Notification */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.dno} onOpenChange={() => toggleSection('dno')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
               <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className={cn(
-                  "h-10 w-10 rounded-xl flex items-center justify-center shrink-0",
-                  dnoRequirement.required ? "bg-orange-500/20" : "bg-green-500/20"
-                )}>
-                  <Globe className={cn(
-                    "h-5 w-5",
-                    dnoRequirement.required ? "text-orange-400" : "text-green-400"
-                  )} />
+                <div
+                  className={cn(
+                    'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
+                    dnoRequirement.required ? 'bg-orange-500/20' : 'bg-green-500/20'
+                  )}
+                >
+                  <Globe
+                    className={cn(
+                      'h-5 w-5',
+                      dnoRequirement.required ? 'text-orange-400' : 'text-green-400'
+                    )}
+                  />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">DNO Notification</h3>
@@ -654,56 +732,64 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <Badge
                     variant="outline"
                     className={cn(
-                      "text-[10px] px-1.5 py-0 shrink-0 mr-2",
+                      'text-[10px] px-1.5 py-0 shrink-0 mr-2',
                       dnoRequirement.type === 'G99'
-                        ? "border-red-500/30 text-red-400"
-                        : "border-orange-500/30 text-orange-400"
+                        ? 'border-red-500/30 text-red-400'
+                        : 'border-orange-500/30 text-orange-400'
                     )}
                   >
                     {dnoRequirement.type}
                   </Badge>
                 )}
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.dno && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.dno && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    "w-9 h-9 rounded-xl flex items-center justify-center",
-                    dnoRequirement.required ? "bg-orange-500/15" : "bg-green-500/15"
-                  )}>
-                    <Globe className={cn(
-                      "h-4 w-4",
-                      dnoRequirement.required ? "text-orange-400" : "text-green-400"
-                    )} />
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-xl flex items-center justify-center',
+                      dnoRequirement.required ? 'bg-orange-500/15' : 'bg-green-500/15'
+                    )}
+                  >
+                    <Globe
+                      className={cn(
+                        'h-4 w-4',
+                        dnoRequirement.required ? 'text-orange-400' : 'text-green-400'
+                      )}
+                    />
                   </div>
                   <span className="text-white font-semibold">DNO Notification</span>
                   {dnoRequirement.required && (
                     <Badge
                       variant="outline"
                       className={cn(
-                        "text-[10px] px-1.5 py-0",
+                        'text-[10px] px-1.5 py-0',
                         dnoRequirement.type === 'G99'
-                          ? "border-red-500/30 text-red-400"
-                          : "border-orange-500/30 text-orange-400"
+                          ? 'border-red-500/30 text-red-400'
+                          : 'border-orange-500/30 text-orange-400'
                       )}
                     >
                       {dnoRequirement.type} Required
                     </Badge>
                   )}
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.dno && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.dno && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Dynamic DNO Requirement Alert */}
               {dnoRequirement.type === 'G99' ? (
                 <Alert className="border-red-500/30 bg-red-500/10">
@@ -776,7 +862,10 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     onCheckedChange={(checked) => onUpdate('g98Notification', checked)}
                     className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <Label htmlFor="g98Notification" className="cursor-pointer text-sm leading-relaxed">
+                  <Label
+                    htmlFor="g98Notification"
+                    className="cursor-pointer text-sm leading-relaxed"
+                  >
                     G98 Notification
                   </Label>
                 </div>
@@ -787,7 +876,10 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     onCheckedChange={(checked) => onUpdate('g99Application', checked)}
                     className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <Label htmlFor="g99Application" className="cursor-pointer text-sm leading-relaxed">
+                  <Label
+                    htmlFor="g99Application"
+                    className="cursor-pointer text-sm leading-relaxed"
+                  >
                     G99 Application
                   </Label>
                 </div>

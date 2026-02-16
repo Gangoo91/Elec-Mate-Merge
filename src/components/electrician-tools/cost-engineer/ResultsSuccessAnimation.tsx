@@ -14,7 +14,7 @@ export const ResultsSuccessAnimation = ({
   isVisible,
   onContinue,
   totalAmount,
-  projectName
+  projectName,
 }: ResultsSuccessAnimationProps) => {
   const [showContent, setShowContent] = useState(false);
 
@@ -32,7 +32,7 @@ export const ResultsSuccessAnimation = ({
       style: 'currency',
       currency: 'GBP',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -55,18 +55,18 @@ export const ResultsSuccessAnimation = ({
                 initial={{
                   x: '50vw',
                   y: '50vh',
-                  scale: 0
+                  scale: 0,
                 }}
                 animate={{
                   x: `${Math.random() * 100}vw`,
                   y: `${Math.random() * 100}vh`,
                   scale: [0, 1, 0],
-                  opacity: [0, 1, 0]
+                  opacity: [0, 1, 0],
                 }}
                 transition={{
                   duration: 2,
                   delay: i * 0.05,
-                  ease: 'easeOut'
+                  ease: 'easeOut',
                 }}
               />
             ))}
@@ -90,7 +90,7 @@ export const ResultsSuccessAnimation = ({
                 type: 'spring',
                 stiffness: 200,
                 damping: 15,
-                delay: 0.1
+                delay: 0.1,
               }}
               className="relative inline-flex mb-6"
             >

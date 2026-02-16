@@ -1,82 +1,81 @@
-
-import ToolCard from "./ToolCard";
-import { Shield, HardHat, AlertTriangle } from "lucide-react";
+import ToolCard from './ToolCard';
+import { Shield, HardHat, AlertTriangle } from 'lucide-react';
 
 const PPETab = () => {
   const basicPPETools = [
     {
-      name: "Safety boots (S3 rated)",
-      description: "Steel toe caps, midsole protection, water resistant",
-      priceRange: "£40-80",
-      priority: "essential" as const,
-      ukStandard: "BS EN ISO 20345"
+      name: 'Safety boots (S3 rated)',
+      description: 'Steel toe caps, midsole protection, water resistant',
+      priceRange: '£40-80',
+      priority: 'essential' as const,
+      ukStandard: 'BS EN ISO 20345',
     },
     {
-      name: "Hard hat (adjustable)",
-      description: "Impact protection with electrical insulation",
-      priceRange: "£8-20",
-      priority: "essential" as const,
-      ukStandard: "BS EN 397"
+      name: 'Hard hat (adjustable)',
+      description: 'Impact protection with electrical insulation',
+      priceRange: '£8-20',
+      priority: 'essential' as const,
+      ukStandard: 'BS EN 397',
     },
     {
-      name: "Safety glasses (clear & tinted)",
-      description: "Impact resistant with side protection",
-      priceRange: "£5-15 each",
-      priority: "essential" as const,
-      ukStandard: "BS EN 166"
+      name: 'Safety glasses (clear & tinted)',
+      description: 'Impact resistant with side protection',
+      priceRange: '£5-15 each',
+      priority: 'essential' as const,
+      ukStandard: 'BS EN 166',
     },
     {
-      name: "Work gloves (cut-resistant)",
-      description: "General handling, not for electrical work",
-      priceRange: "£3-10",
-      priority: "essential" as const,
-      ukStandard: "Cut level A2 minimum"
+      name: 'Work gloves (cut-resistant)',
+      description: 'General handling, not for electrical work',
+      priceRange: '£3-10',
+      priority: 'essential' as const,
+      ukStandard: 'Cut level A2 minimum',
     },
     {
-      name: "Hi-visibility vest (Class 2)",
-      description: "Reflective strips for site visibility",
-      priceRange: "£8-20",
-      priority: "essential" as const,
-      ukStandard: "BS EN ISO 20471"
-    }
+      name: 'Hi-visibility vest (Class 2)',
+      description: 'Reflective strips for site visibility',
+      priceRange: '£8-20',
+      priority: 'essential' as const,
+      ukStandard: 'BS EN ISO 20471',
+    },
   ];
 
   const specialistPPETools = [
     {
-      name: "Arc flash protection suit",
-      description: "For live working on high voltage systems",
-      priceRange: "£200-500",
-      priority: "optional" as const,
-      ukStandard: "CAT 2/3/4 rating"
+      name: 'Arc flash protection suit',
+      description: 'For live working on high voltage systems',
+      priceRange: '£200-500',
+      priority: 'optional' as const,
+      ukStandard: 'CAT 2/3/4 rating',
     },
     {
-      name: "Insulating gloves (Class 0/00)",
-      description: "Electrical work up to 1000V",
-      priceRange: "£30-80",
-      priority: "recommended" as const,
-      ukStandard: "BS EN 60903"
+      name: 'Insulating gloves (Class 0/00)',
+      description: 'Electrical work up to 1000V',
+      priceRange: '£30-80',
+      priority: 'recommended' as const,
+      ukStandard: 'BS EN 60903',
     },
     {
-      name: "Ear defenders (32dB SNR)",
-      description: "Drilling, grinding, noisy environments",
-      priceRange: "£10-30",
-      priority: "recommended" as const,
-      ukStandard: "BS EN 352"
+      name: 'Ear defenders (32dB SNR)',
+      description: 'Drilling, grinding, noisy environments',
+      priceRange: '£10-30',
+      priority: 'recommended' as const,
+      ukStandard: 'BS EN 352',
     },
     {
-      name: "FFP3 dust masks",
-      description: "Drilling concrete, dusty environments",
-      priceRange: "£15-30 (box)",
-      priority: "recommended" as const,
-      ukStandard: "99% filtration"
+      name: 'FFP3 dust masks',
+      description: 'Drilling concrete, dusty environments',
+      priceRange: '£15-30 (box)',
+      priority: 'recommended' as const,
+      ukStandard: '99% filtration',
     },
     {
-      name: "Knee pads (gel-filled)",
-      description: "Floor work and low-level installations",
-      priceRange: "£15-35",
-      priority: "optional" as const,
-      ukStandard: "Type 2 protection"
-    }
+      name: 'Knee pads (gel-filled)',
+      description: 'Floor work and low-level installations',
+      priceRange: '£15-35',
+      priority: 'optional' as const,
+      ukStandard: 'Type 2 protection',
+    },
   ];
 
   return (
@@ -84,8 +83,8 @@ const PPETab = () => {
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">PPE & Safety Equipment</h2>
         <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
-          Personal Protective Equipment is essential for every UK electrical apprentice. Your safety is paramount -
-          never compromise on PPE quality or suitability.
+          Personal Protective Equipment is essential for every UK electrical apprentice. Your safety
+          is paramount - never compromise on PPE quality or suitability.
         </p>
       </div>
 
@@ -116,20 +115,24 @@ const PPETab = () => {
         </h3>
         <div className="space-y-2 text-sm text-white/80 leading-relaxed">
           <p>
-            <strong className="text-orange-300">Legal Requirements:</strong> The Personal Protective Equipment at Work Regulations 1992 (amended in 2022)
-            requires employers to provide adequate PPE. However, apprentices should have their own basic kit for flexibility.
+            <strong className="text-orange-300">Legal Requirements:</strong> The Personal Protective
+            Equipment at Work Regulations 1992 (amended in 2022) requires employers to provide
+            adequate PPE. However, apprentices should have their own basic kit for flexibility.
           </p>
           <p>
-            <strong className="text-orange-300">Maintenance:</strong> PPE must be properly maintained, stored, and replaced when damaged.
-            Check PPE before each use - damaged equipment provides no protection.
+            <strong className="text-orange-300">Maintenance:</strong> PPE must be properly
+            maintained, stored, and replaced when damaged. Check PPE before each use - damaged
+            equipment provides no protection.
           </p>
           <p>
-            <strong className="text-orange-300">Training:</strong> You must be trained in the correct use of PPE. If you're unsure about any
-            equipment, ask your supervisor or trainer for guidance.
+            <strong className="text-orange-300">Training:</strong> You must be trained in the
+            correct use of PPE. If you're unsure about any equipment, ask your supervisor or trainer
+            for guidance.
           </p>
           <p>
-            <strong className="text-orange-300">Cost Expectations:</strong> Basic PPE kit: £80-150. This investment protects you throughout your career.
-            Quality items last longer and provide better protection.
+            <strong className="text-orange-300">Cost Expectations:</strong> Basic PPE kit: £80-150.
+            This investment protects you throughout your career. Quality items last longer and
+            provide better protection.
           </p>
         </div>
       </div>
@@ -141,7 +144,10 @@ const PPETab = () => {
         </h3>
         <ul className="space-y-1 text-sm text-white/80">
           <li>• Never work without appropriate PPE - no job is worth an injury</li>
-          <li>• Regular work gloves are NOT suitable for electrical work - use insulated gloves when required</li>
+          <li>
+            • Regular work gloves are NOT suitable for electrical work - use insulated gloves when
+            required
+          </li>
           <li>• Replace damaged PPE immediately - it won't protect you if it's compromised</li>
           <li>• Ensure PPE is correctly fitted - loose or tight equipment is less effective</li>
           <li>• Keep spare PPE items - safety glasses and gloves are easily lost or damaged</li>

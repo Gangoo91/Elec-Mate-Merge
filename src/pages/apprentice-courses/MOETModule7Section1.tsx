@@ -1,51 +1,51 @@
-import { ArrowLeft, HelpCircle, Clock, MessageSquare, Search, Target } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HelpCircle, Clock, MessageSquare, Search, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule7Section1 = () => {
   useSEO(
-    "Section 7.1: Knowledge Test Practice - MOET Module 7",
-    "Multiple-choice questions, mock tests, feedback and exam techniques"
+    'Section 7.1: Knowledge Test Practice - MOET Module 7',
+    'Multiple-choice questions, mock tests, feedback and exam techniques'
   );
 
   const subsections = [
     {
-      number: "7.1.1",
-      title: "Multiple-Choice Question Banks",
-      description: "Practice question banks covering all module topics and learning outcomes",
+      number: '7.1.1',
+      title: 'Multiple-Choice Question Banks',
+      description: 'Practice question banks covering all module topics and learning outcomes',
       icon: HelpCircle,
-      href: "/study-centre/apprentice/m-o-e-t-module7-section1-1"
+      href: '/study-centre/apprentice/m-o-e-t-module7-section1-1',
     },
     {
-      number: "7.1.2",
-      title: "Timed Mock Tests",
-      description: "Full-length practice tests under exam conditions with time constraints",
+      number: '7.1.2',
+      title: 'Timed Mock Tests',
+      description: 'Full-length practice tests under exam conditions with time constraints',
       icon: Clock,
-      href: "/study-centre/apprentice/m-o-e-t-module7-section1-2"
+      href: '/study-centre/apprentice/m-o-e-t-module7-section1-2',
     },
     {
-      number: "7.1.3",
-      title: "Feedback and Explanations",
-      description: "Detailed explanations for answers and performance feedback",
+      number: '7.1.3',
+      title: 'Feedback and Explanations',
+      description: 'Detailed explanations for answers and performance feedback',
       icon: MessageSquare,
-      href: "/study-centre/apprentice/m-o-e-t-module7-section1-3"
+      href: '/study-centre/apprentice/m-o-e-t-module7-section1-3',
     },
     {
-      number: "7.1.4",
-      title: "Identifying Knowledge Gaps",
-      description: "Self-assessment techniques and identifying areas for improvement",
+      number: '7.1.4',
+      title: 'Identifying Knowledge Gaps',
+      description: 'Self-assessment techniques and identifying areas for improvement',
       icon: Search,
-      href: "/study-centre/apprentice/m-o-e-t-module7-section1-4"
+      href: '/study-centre/apprentice/m-o-e-t-module7-section1-4',
     },
     {
-      number: "7.1.5",
-      title: "Exam Techniques and Strategies",
-      description: "Test-taking strategies, time management and approach techniques",
+      number: '7.1.5',
+      title: 'Exam Techniques and Strategies',
+      description: 'Test-taking strategies, time management and approach techniques',
       icon: Target,
-      href: "/study-centre/apprentice/m-o-e-t-module7-section1-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module7-section1-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule7Section1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7

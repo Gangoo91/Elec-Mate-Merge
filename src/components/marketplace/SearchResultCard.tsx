@@ -15,7 +15,10 @@ const formatPrice = (price: number | null | undefined): string => {
   return price.toFixed(2);
 };
 
-const calculateSavings = (regular: number | null | undefined, current: number | null | undefined): string | null => {
+const calculateSavings = (
+  regular: number | null | undefined,
+  current: number | null | undefined
+): string | null => {
   if (!regular || !current || regular <= current) return null;
   return (regular - current).toFixed(2);
 };
@@ -28,12 +31,11 @@ export function SearchResultCard({ product, className }: SearchResultCardProps) 
   const savings = calculateSavings(product.regular_price, product.current_price);
 
   // Stock status color
-  const stockColor =
-    product.stock_status?.toLowerCase().includes('in stock')
-      ? 'text-green-500'
-      : product.stock_status?.toLowerCase().includes('low')
-        ? 'text-orange-500'
-        : 'text-red-500';
+  const stockColor = product.stock_status?.toLowerCase().includes('in stock')
+    ? 'text-green-500'
+    : product.stock_status?.toLowerCase().includes('low')
+      ? 'text-orange-500'
+      : 'text-red-500';
 
   return (
     <div
@@ -67,9 +69,7 @@ export function SearchResultCard({ product, className }: SearchResultCardProps) 
 
         {/* Brand & Category */}
         <div className="flex flex-wrap items-center gap-2 text-sm">
-          {product.brand && (
-            <span className="text-muted-foreground">{product.brand}</span>
-          )}
+          {product.brand && <span className="text-muted-foreground">{product.brand}</span>}
           {product.category && (
             <Badge variant="secondary" className="text-xs">
               {product.category}
@@ -79,10 +79,7 @@ export function SearchResultCard({ product, className }: SearchResultCardProps) 
 
         {/* Supplier Badge */}
         <div className="flex items-center gap-2">
-          <SupplierBadge
-            name={product.supplier_name}
-            slug={product.supplier_slug}
-          />
+          <SupplierBadge name={product.supplier_name} slug={product.supplier_slug} />
           {product.is_on_sale && (
             <Badge className="bg-green-500/20 text-green-500 border-green-500/30">
               <Tag className="h-3 w-3 mr-1" />
@@ -116,9 +113,7 @@ export function SearchResultCard({ product, className }: SearchResultCardProps) 
               <p className="text-sm text-muted-foreground line-through">
                 £{formatPrice(product.regular_price)}
               </p>
-              <p className="text-sm text-green-500 font-medium">
-                Save £{savings}
-              </p>
+              <p className="text-sm text-green-500 font-medium">Save £{savings}</p>
             </>
           )}
         </div>

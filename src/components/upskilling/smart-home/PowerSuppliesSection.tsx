@@ -38,8 +38,8 @@ const PowerSuppliesSection = () => {
                 <div>
                   <h5 className="font-semibold text-red-200 mb-1">Avoid Circuit Overloading</h5>
                   <p className="text-red-100 text-sm">
-                    Group loads carefully to prevent nuisance tripping. Calculate total load including 
-                    standby consumption of all connected smart devices.
+                    Group loads carefully to prevent nuisance tripping. Calculate total load
+                    including standby consumption of all connected smart devices.
                   </p>
                 </div>
               </div>

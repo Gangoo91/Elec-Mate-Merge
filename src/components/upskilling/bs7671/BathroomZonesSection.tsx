@@ -10,17 +10,20 @@ export const BathroomZonesSection = () => {
           <Droplets className="h-5 w-5 text-elec-yellow" />
           Bathroom Zone Requirements
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">Section 701.32</Badge>
+        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">
+          Section 701.32
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Bathroom installations require careful consideration of zone boundaries and equipment selection to ensure user safety whilst maintaining functionality.
+          Bathroom installations require careful consideration of zone boundaries and equipment
+          selection to ensure user safety whilst maintaining functionality.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h4 className="font-semibold text-elec-yellow">Equipment Restrictions by Zone</h4>
-            
+
             <div className="bg-elec-dark p-4 rounded border border-red-600">
               <h5 className="font-medium text-red-300 mb-3">Zone 0 & 1 Prohibitions</h5>
               <ul className="text-red-100 text-sm space-y-1">
@@ -46,7 +49,7 @@ export const BathroomZonesSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-elec-yellow">Practical Installation Guidelines</h4>
-            
+
             <div className="bg-elec-dark p-4 rounded border border-blue-600">
               <h5 className="font-medium text-blue-300 mb-3">Cable Selection</h5>
               <ul className="text-blue-100 text-sm space-y-1">

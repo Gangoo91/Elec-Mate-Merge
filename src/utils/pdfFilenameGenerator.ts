@@ -18,7 +18,7 @@ export type CertificateType = 'EICR' | 'EIC' | 'MinorWorks';
  */
 const sanitizeForFilename = (str: string, maxLength: number = 30): string => {
   if (!str || str.trim() === '') return 'Unknown';
-  
+
   return str
     .trim()
     .replace(/[^a-zA-Z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
@@ -34,21 +34,21 @@ const sanitizeForFilename = (str: string, maxLength: number = 30): string => {
  */
 const formatDateForFilename = (date?: Date | string): string => {
   if (!date) return new Date().toISOString().split('T')[0];
-  
+
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   return dateObj.toISOString().split('T')[0];
 };
 
 /**
  * Generates a professional, standardised PDF filename
- * 
+ *
  * Format: {CertType}_{CertNumber}_{ClientName}_{YYYY-MM-DD}.pdf
- * 
+ *
  * Examples:
  * - EICR_EICR-2025-A3B7F2_John_Smith_2025-10-14.pdf
  * - EIC_EIC-2025-X9K2M1_ABC_Electrical_2025-10-14.pdf
  * - MinorWorks_MW-2025-P4R8T3_Smith_Residence_2025-10-14.pdf
- * 
+ *
  * @param certType - Type of certificate (EICR, EIC, MinorWorks)
  * @param certificateNumber - The certificate reference number
  * @param clientName - Name of the client/property owner

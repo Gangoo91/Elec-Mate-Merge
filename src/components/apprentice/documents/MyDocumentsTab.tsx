@@ -1,10 +1,9 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { Upload, FileText, Trash2, Edit, Share, FolderOpen } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { Upload, FileText, Trash2, Edit, Share, FolderOpen } from 'lucide-react';
 
 interface UserDocument {
   id: number;
@@ -20,31 +19,31 @@ const MyDocumentsTab = () => {
   const [documents, setDocuments] = useState<UserDocument[]>([
     {
       id: 1,
-      name: "Site_Safety_Assessment_Project_A.pdf",
-      type: "PDF",
-      size: "2.3 MB",
-      uploadDate: "2024-01-15",
-      lastModified: "2024-01-15",
-      category: "Safety"
+      name: 'Site_Safety_Assessment_Project_A.pdf',
+      type: 'PDF',
+      size: '2.3 MB',
+      uploadDate: '2024-01-15',
+      lastModified: '2024-01-15',
+      category: 'Safety',
     },
     {
       id: 2,
-      name: "Electrical_Test_Results_Office_Block.xlsx",
-      type: "Excel",
-      size: "1.8 MB",
-      uploadDate: "2024-01-12",
-      lastModified: "2024-01-14",
-      category: "Testing"
-    }
+      name: 'Electrical_Test_Results_Office_Block.xlsx',
+      type: 'Excel',
+      size: '1.8 MB',
+      uploadDate: '2024-01-12',
+      lastModified: '2024-01-14',
+      category: 'Testing',
+    },
   ]);
-  
-  const [searchQuery, setSearchQuery] = useState("");
+
+  const [searchQuery, setSearchQuery] = useState('');
   const { toast } = useToast();
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      Array.from(files).forEach(file => {
+      Array.from(files).forEach((file) => {
         const newDoc: UserDocument = {
           id: Date.now() + Math.random(),
           name: file.name,
@@ -52,31 +51,32 @@ const MyDocumentsTab = () => {
           size: `${(file.size / 1024 / 1024).toFixed(1)} MB`,
           uploadDate: new Date().toISOString().split('T')[0],
           lastModified: new Date().toISOString().split('T')[0],
-          category: "General"
+          category: 'General',
         };
-        setDocuments(prev => [...prev, newDoc]);
+        setDocuments((prev) => [...prev, newDoc]);
       });
-      
+
       toast({
-        title: "Upload Successful",
+        title: 'Upload Successful',
         description: `${files.length} file(s) uploaded successfully.`,
-        variant: "default",
+        variant: 'default',
       });
     }
   };
 
   const handleDeleteDocument = (id: number) => {
-    setDocuments(prev => prev.filter(doc => doc.id !== id));
+    setDocuments((prev) => prev.filter((doc) => doc.id !== id));
     toast({
-      title: "Document Deleted",
-      description: "Document has been removed from your collection.",
-      variant: "default",
+      title: 'Document Deleted',
+      description: 'Document has been removed from your collection.',
+      variant: 'default',
     });
   };
 
-  const filteredDocuments = documents.filter(doc =>
-    doc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    doc.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredDocuments = documents.filter(
+    (doc) =>
+      doc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -93,9 +93,7 @@ const MyDocumentsTab = () => {
           <div className="border-2 border-dashed border-elec-yellow/30 rounded-lg p-8 text-center">
             <Upload className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">Upload your documents</h3>
-            <p className="text-white mb-4">
-              Drag and drop files here, or click to browse
-            </p>
+            <p className="text-white mb-4">Drag and drop files here, or click to browse</p>
             <Input
               type="file"
               multiple
@@ -177,8 +175,8 @@ const MyDocumentsTab = () => {
                       <Share className="h-3 w-3 mr-1" />
                       Share
                     </Button>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="outline"
                       onClick={() => handleDeleteDocument(doc.id)}
                     >
@@ -197,9 +195,7 @@ const MyDocumentsTab = () => {
             <FileText className="h-8 w-8 text-elec-yellow" />
           </div>
           <h3 className="text-xl font-medium mb-2">No documents found</h3>
-          <p className="text-white mb-4">
-            Upload your first document to get started
-          </p>
+          <p className="text-white mb-4">Upload your first document to get started</p>
         </div>
       )}
     </div>

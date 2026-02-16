@@ -1,11 +1,11 @@
-import { useState, useMemo, useCallback } from "react";
-import { GoogleMap, MarkerF, InfoWindowF } from "@react-google-maps/api";
-import { Camera, MapPin, Check, Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { useGoogleMaps } from "@/contexts/GoogleMapsContext";
-import { cn } from "@/lib/utils";
+import { useState, useMemo, useCallback } from 'react';
+import { GoogleMap, MarkerF, InfoWindowF } from '@react-google-maps/api';
+import { Camera, MapPin, Check, Share2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
+import { cn } from '@/lib/utils';
 
 export type PhotoCategory = 'before' | 'during' | 'after' | 'issue' | 'completion' | 'safety';
 
@@ -31,17 +31,17 @@ interface PhotoMapViewProps {
 }
 
 const categoryColors: Record<PhotoCategory, string> = {
-  before: "#3b82f6",
-  during: "#f59e0b",
-  after: "#22c55e",
-  issue: "#ef4444",
-  completion: "#a855f7",
-  safety: "#8b5cf6",
+  before: '#3b82f6',
+  during: '#f59e0b',
+  after: '#22c55e',
+  issue: '#ef4444',
+  completion: '#a855f7',
+  safety: '#8b5cf6',
 };
 
 const mapContainerStyle = {
-  width: "100%",
-  height: "100%",
+  width: '100%',
+  height: '100%',
 };
 
 const defaultCenter = {
@@ -57,29 +57,29 @@ const getMapOptions = (): google.maps.MapOptions => ({
   fullscreenControl: false,
   styles: [
     {
-      featureType: "all",
-      elementType: "geometry",
-      stylers: [{ color: "#1a1a2e" }],
+      featureType: 'all',
+      elementType: 'geometry',
+      stylers: [{ color: '#1a1a2e' }],
     },
     {
-      featureType: "all",
-      elementType: "labels.text.stroke",
-      stylers: [{ color: "#1a1a2e" }],
+      featureType: 'all',
+      elementType: 'labels.text.stroke',
+      stylers: [{ color: '#1a1a2e' }],
     },
     {
-      featureType: "all",
-      elementType: "labels.text.fill",
-      stylers: [{ color: "#746855" }],
+      featureType: 'all',
+      elementType: 'labels.text.fill',
+      stylers: [{ color: '#746855' }],
     },
     {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [{ color: "#0f0f23" }],
+      featureType: 'water',
+      elementType: 'geometry',
+      stylers: [{ color: '#0f0f23' }],
     },
     {
-      featureType: "road",
-      elementType: "geometry",
-      stylers: [{ color: "#2d2d44" }],
+      featureType: 'road',
+      elementType: 'geometry',
+      stylers: [{ color: '#2d2d44' }],
     },
   ],
 });
@@ -102,7 +102,7 @@ export const PhotoMapView = ({
   // Calculate map bounds - only when isLoaded
   const bounds = useMemo(() => {
     if (!isLoaded || photosWithLocation.length === 0) return null;
-    
+
     const bounds = new google.maps.LatLngBounds();
     photosWithLocation.forEach((photo) => {
       if (photo.lat && photo.lng) {
@@ -112,12 +112,15 @@ export const PhotoMapView = ({
     return bounds;
   }, [photosWithLocation, isLoaded]);
 
-  const onLoad = useCallback((map: google.maps.Map) => {
-    setMap(map);
-    if (bounds) {
-      map.fitBounds(bounds, 50);
-    }
-  }, [bounds]);
+  const onLoad = useCallback(
+    (map: google.maps.Map) => {
+      setMap(map);
+      if (bounds) {
+        map.fitBounds(bounds, 50);
+      }
+    },
+    [bounds]
+  );
 
   const handleMarkerClick = (photo: MapPhoto) => {
     setSelectedPhoto(photo);
@@ -152,9 +155,7 @@ export const PhotoMapView = ({
       <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
         <MapPin className="h-12 w-12 text-destructive/50 mb-4" />
         <h3 className="text-lg font-medium mb-2">Failed to load map</h3>
-        <p className="text-sm text-muted-foreground">
-          There was an error loading Google Maps.
-        </p>
+        <p className="text-sm text-muted-foreground">There was an error loading Google Maps.</p>
       </div>
     );
   }
@@ -195,7 +196,7 @@ export const PhotoMapView = ({
               scale: 10,
               fillColor: categoryColors[photo.category],
               fillOpacity: 0.9,
-              strokeColor: "#ffffff",
+              strokeColor: '#ffffff',
               strokeWeight: 2,
             }}
           />
@@ -248,7 +249,7 @@ export const PhotoMapView = ({
                   </Button>
                   <Button
                     size="sm"
-                    variant={selectedPhoto.isApproved ? "secondary" : "ghost"}
+                    variant={selectedPhoto.isApproved ? 'secondary' : 'ghost'}
                     className="h-7 w-7 p-0"
                     onClick={() => onToggleApproval(selectedPhoto.id)}
                   >
@@ -256,7 +257,7 @@ export const PhotoMapView = ({
                   </Button>
                   <Button
                     size="sm"
-                    variant={selectedPhoto.isShared ? "secondary" : "ghost"}
+                    variant={selectedPhoto.isShared ? 'secondary' : 'ghost'}
                     className="h-7 w-7 p-0"
                     onClick={() => onToggleSharing(selectedPhoto.id)}
                   >

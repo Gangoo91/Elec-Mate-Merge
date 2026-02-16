@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, TrendingDown, Package, Clock, Calculator } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown, TrendingDown, Package, Clock, Calculator } from 'lucide-react';
+import { useState } from 'react';
 
 interface MaterialItem {
   description: string;
@@ -63,7 +63,7 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['summary']));
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => {
+    setExpandedSections((prev) => {
       const next = new Set(prev);
       next.has(section) ? next.delete(section) : next.add(section);
       return next;
@@ -71,7 +71,7 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
   };
 
   const hasValueEngineering = data.valueEngineering && data.valueEngineering.length > 0;
-  const totalPotentialSavings = hasValueEngineering 
+  const totalPotentialSavings = hasValueEngineering
     ? data.valueEngineering.reduce((sum, item) => sum + item.potentialSaving, 0)
     : 0;
 
@@ -100,22 +100,31 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
           </div>
 
           {/* Breakdown */}
-          <Collapsible open={expandedSections.has('summary')} onOpenChange={() => toggleSection('summary')}>
+          <Collapsible
+            open={expandedSections.has('summary')}
+            onOpenChange={() => toggleSection('summary')}
+          >
             <CollapsibleTrigger asChild>
               <button className="w-full flex items-center justify-between px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
                 <span>View Breakdown</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${expandedSections.has('summary') ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${expandedSections.has('summary') ? 'rotate-180' : ''}`}
+                />
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-2 pt-2">
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="flex justify-between px-3 py-2 rounded bg-muted/30">
                   <span className="text-muted-foreground">Materials (wholesale)</span>
-                  <span className="font-semibold">£{data.summary.materialsSubtotal.toFixed(2)}</span>
+                  <span className="font-semibold">
+                    £{data.summary.materialsSubtotal.toFixed(2)}
+                  </span>
                 </div>
                 <div className="flex justify-between px-3 py-2 rounded bg-muted/30">
                   <span className="text-muted-foreground">+10% Markup</span>
-                  <span className="font-semibold text-elec-yellow">£{data.summary.materialsMarkup.toFixed(2)}</span>
+                  <span className="font-semibold text-elec-yellow">
+                    £{data.summary.materialsMarkup.toFixed(2)}
+                  </span>
                 </div>
                 <div className="flex justify-between px-3 py-2 rounded bg-muted/30">
                   <span className="text-muted-foreground">Labour</span>
@@ -153,8 +162,12 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
                 <tr className="border-b border-border">
                   <th className="text-left py-2 px-2 font-medium text-muted-foreground">Item</th>
                   <th className="text-right py-2 px-2 font-medium text-muted-foreground">Qty</th>
-                  <th className="text-right py-2 px-2 font-medium text-muted-foreground hidden sm:table-cell">Wholesale</th>
-                  <th className="text-right py-2 px-2 font-medium text-muted-foreground hidden sm:table-cell">+10%</th>
+                  <th className="text-right py-2 px-2 font-medium text-muted-foreground hidden sm:table-cell">
+                    Wholesale
+                  </th>
+                  <th className="text-right py-2 px-2 font-medium text-muted-foreground hidden sm:table-cell">
+                    +10%
+                  </th>
                   <th className="text-right py-2 px-2 font-medium text-muted-foreground">Total</th>
                 </tr>
               </thead>
@@ -166,13 +179,20 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
                         <p className="font-medium text-foreground">{item.description}</p>
                         <div className="flex items-center gap-2 mt-0.5">
                           {item.inDatabase ? (
-                            <span className="text-xs text-green-600 dark:text-green-400">✓ {item.supplier}</span>
+                            <span className="text-xs text-green-600 dark:text-green-400">
+                              ✓ {item.supplier}
+                            </span>
                           ) : (
-                            <span className="text-xs text-yellow-600 dark:text-yellow-400">⚠ Market rate</span>
+                            <span className="text-xs text-yellow-600 dark:text-yellow-400">
+                              ⚠ Market rate
+                            </span>
                           )}
                         </div>
                         {item.inStock === false && (
-                          <Badge variant="outline" className="text-xs mt-1 bg-orange-500/10 text-orange-500 border-orange-500/30">
+                          <Badge
+                            variant="outline"
+                            className="text-xs mt-1 bg-orange-500/10 text-orange-500 border-orange-500/30"
+                          >
                             Out of Stock
                           </Badge>
                         )}
@@ -194,7 +214,9 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
                   </tr>
                 ))}
                 <tr className="font-semibold border-t-2 border-border">
-                  <td className="py-3 px-2" colSpan={2}>Materials Total (inc. VAT)</td>
+                  <td className="py-3 px-2" colSpan={2}>
+                    Materials Total (inc. VAT)
+                  </td>
                   <td className="text-right py-3 px-2 hidden sm:table-cell" colSpan={2}>
                     <span className="text-xs text-muted-foreground">
                       £{data.materials.subtotalWithMarkup.toFixed(2)} + VAT
@@ -223,7 +245,10 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
         </CardHeader>
         <CardContent className="space-y-2">
           {data.labour.tasks.map((task, idx) => (
-            <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
+            <div
+              key={idx}
+              className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30"
+            >
               <div className="flex-1">
                 <p className="text-sm font-medium text-foreground">{task.description}</p>
                 {task.workers === 2 && task.electricianHours && task.apprenticeHours ? (
@@ -238,9 +263,7 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
                   </p>
                 )}
               </div>
-              <p className="text-sm font-semibold text-foreground">
-                £{task.total.toFixed(2)}
-              </p>
+              <p className="text-sm font-semibold text-foreground">£{task.total.toFixed(2)}</p>
             </div>
           ))}
           <div className="flex justify-between px-4 py-3 rounded-lg bg-green-500/10 border border-green-500/30 font-semibold mt-3">
@@ -276,12 +299,18 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
             <CollapsibleContent>
               <CardContent className="space-y-2 pt-0">
                 {data.valueEngineering?.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3 py-2 px-3 rounded-lg bg-muted/30">
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 py-2 px-3 rounded-lg bg-muted/30"
+                  >
                     <TrendingDown className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-foreground leading-relaxed">{item.suggestion}</p>
                     </div>
-                    <Badge variant="outline" className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-xs whitespace-nowrap flex-shrink-0">
+                    <Badge
+                      variant="outline"
+                      className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-xs whitespace-nowrap flex-shrink-0"
+                    >
                       -£{item.potentialSaving.toFixed(2)}
                     </Badge>
                   </div>

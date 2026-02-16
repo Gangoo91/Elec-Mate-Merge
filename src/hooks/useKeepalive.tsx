@@ -31,9 +31,9 @@ export function useKeepalive({
   const startCountdown = () => {
     setSecondsUntilNext(intervalMs / 1000);
     if (countdownRef.current) clearInterval(countdownRef.current);
-    
+
     countdownRef.current = setInterval(() => {
-      setSecondsUntilNext(prev => Math.max(0, prev - 1));
+      setSecondsUntilNext((prev) => Math.max(0, prev - 1));
     }, 1000);
   };
 

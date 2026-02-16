@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
-import { Check, Clock, FileCheck, Sparkles, ArrowRight, Zap, LucideIcon } from "lucide-react";
-import { AgentType, AGENT_CONFIG } from "./AgentConfig";
-import confetti from "canvas-confetti";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Check, Clock, FileCheck, Sparkles, ArrowRight, Zap, LucideIcon } from 'lucide-react';
+import { AgentType, AGENT_CONFIG } from './AgentConfig';
+import confetti from 'canvas-confetti';
 
 interface StatItem {
   icon: LucideIcon;
@@ -60,8 +57,8 @@ export function AgentSuccessDialog({
   }, [open, config.confettiColors]);
 
   const defaultStats: StatItem[] = stats || [
-    { icon: FileCheck, value: "1", label: "Document" },
-    { icon: Sparkles, value: "AI", label: "Powered" },
+    { icon: FileCheck, value: '1', label: 'Document' },
+    { icon: Sparkles, value: 'AI', label: 'Powered' },
   ];
 
   return (
@@ -69,11 +66,7 @@ export function AgentSuccessDialog({
       <DialogContent className="sm:max-w-[380px] bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] border-white/[0.08] p-0 overflow-hidden rounded-3xl shadow-2xl">
         <AnimatePresence>
           {showContent && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="relative"
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative">
               {/* Background glow effect */}
               <div
                 className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[200px] opacity-30 blur-[80px] pointer-events-none"
@@ -89,10 +82,10 @@ export function AgentSuccessDialog({
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{
-                    type: "spring",
+                    type: 'spring',
                     stiffness: 300,
                     damping: 20,
-                    delay: 0.1
+                    delay: 0.1,
                   }}
                   className="relative mx-auto w-24 h-24 mb-6"
                 >
@@ -103,7 +96,7 @@ export function AgentSuccessDialog({
                     transition={{
                       duration: 1.5,
                       repeat: Infinity,
-                      ease: "easeOut"
+                      ease: 'easeOut',
                     }}
                     className="absolute inset-0 rounded-full"
                     style={{
@@ -168,14 +161,15 @@ export function AgentSuccessDialog({
                           background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
                         }}
                       >
-                        <stat.icon
-                          className="h-4 w-4"
-                          style={{ color: config.gradientFrom }}
-                        />
+                        <stat.icon className="h-4 w-4" style={{ color: config.gradientFrom }} />
                       </div>
                       <div className="text-left">
-                        <p className="text-sm font-semibold text-white leading-tight">{stat.value}</p>
-                        <p className="text-[10px] text-white/40 uppercase tracking-wide">{stat.label}</p>
+                        <p className="text-sm font-semibold text-white leading-tight">
+                          {stat.value}
+                        </p>
+                        <p className="text-[10px] text-white/40 uppercase tracking-wide">
+                          {stat.label}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -213,14 +207,14 @@ export function AgentSuccessDialog({
                       onViewResults();
                     }}
                     className={cn(
-                      "w-full h-14 text-base font-semibold rounded-2xl",
-                      "touch-manipulation active:scale-[0.98] transition-all duration-150",
-                      "border-0 shadow-lg"
+                      'w-full h-14 text-base font-semibold rounded-2xl',
+                      'touch-manipulation active:scale-[0.98] transition-all duration-150',
+                      'border-0 shadow-lg'
                     )}
                     style={{
                       background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                       boxShadow: `0 8px 24px ${config.gradientFrom}40`,
-                      color: "#000",
+                      color: '#000',
                     }}
                   >
                     <span className="flex items-center gap-2">
@@ -247,7 +241,7 @@ function triggerConfetti(colors: string[]) {
     decay: 0.94,
     startVelocity: 30,
     colors: colors,
-    origin: { y: 0.4 }
+    origin: { y: 0.4 },
   };
 
   function fire(particleRatio: number, opts: confetti.Options) {
@@ -272,21 +266,21 @@ function triggerConfetti(colors: string[]) {
       particleCount: 30,
       spread: 50,
       startVelocity: 40,
-      origin: { x: 0.3, y: 0.5 }
+      origin: { x: 0.3, y: 0.5 },
     });
     confetti({
       ...defaults,
       particleCount: 30,
       spread: 50,
       startVelocity: 40,
-      origin: { x: 0.7, y: 0.5 }
+      origin: { x: 0.7, y: 0.5 },
     });
   }, 200);
 }
 
 // Haptic feedback helper
 function triggerHaptic() {
-  if ("vibrate" in navigator) {
+  if ('vibrate' in navigator) {
     navigator.vibrate([50, 30, 80]);
   }
 }

@@ -1,7 +1,7 @@
-import InfoBox from "@/components/common/InfoBox";
-import { ExternalLink, BookOpen, Shield, AlertTriangle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import InfoBox from '@/components/common/InfoBox';
+import { ExternalLink, BookOpen, Shield, AlertTriangle } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const R1R2Standards = () => {
   return (
@@ -18,34 +18,34 @@ const R1R2Standards = () => {
               <div>
                 <Badge className="bg-blue-500/20 text-blue-300 mb-2">Chapter 54</Badge>
                 <p className="text-xs">
-                  <strong>Earthing arrangements and protective conductors:</strong> Requirements for 
+                  <strong>Earthing arrangements and protective conductors:</strong> Requirements for
                   protective conductor sizing, installation, and continuity.
                 </p>
               </div>
-              
+
               <div>
                 <Badge className="bg-green-500/20 text-green-300 mb-2">Regulation 543.7</Badge>
                 <p className="text-xs">
-                  <strong>Protective conductor continuity:</strong> Every protective conductor must 
+                  <strong>Protective conductor continuity:</strong> Every protective conductor must
                   be protected against mechanical damage and deterioration.
                 </p>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <Badge className="bg-yellow-500/20 text-yellow-300 mb-2">Table 54.7</Badge>
                 <p className="text-xs">
-                  <strong>Minimum cross-sectional area of protective conductors:</strong> 
+                  <strong>Minimum cross-sectional area of protective conductors:</strong>
                   Defines minimum CPC sizes relative to line conductor areas.
                 </p>
               </div>
-              
+
               <div>
                 <Badge className="bg-orange-500/20 text-orange-300 mb-2">Part 6</Badge>
                 <p className="text-xs">
-                  <strong>Inspection and testing:</strong> Procedures for initial verification 
-                  and periodic inspection, including R1+R2 testing requirements.
+                  <strong>Inspection and testing:</strong> Procedures for initial verification and
+                  periodic inspection, including R1+R2 testing requirements.
                 </p>
               </div>
             </div>
@@ -72,7 +72,7 @@ const R1R2Standards = () => {
                   <li>• Test voltage: Low voltage DC (4-24V)</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h5 className="text-sm font-medium text-elec-light mb-1">When to Test</h5>
                 <ul className="text-xs space-y-0.5 text-white">
@@ -84,11 +84,11 @@ const R1R2Standards = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
             <p className="text-blue-200 text-xs">
-              <strong>Regulation 611.2:</strong> Every installation shall, during erection and on completion, 
-              be inspected and tested to verify compliance with BS 7671.
+              <strong>Regulation 611.2:</strong> Every installation shall, during erection and on
+              completion, be inspected and tested to verify compliance with BS 7671.
             </p>
           </div>
         </div>
@@ -104,16 +104,28 @@ const R1R2Standards = () => {
           <div className="grid gap-4 lg:grid-cols-2">
             <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
-                <CardTitle className="text-elec-light text-sm">Adiabatic Equation (543.1.3)</CardTitle>
+                <CardTitle className="text-elec-light text-sm">
+                  Adiabatic Equation (543.1.3)
+                </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="text-xs space-y-2">
-                  <p><strong>Formula:</strong> S = √(I²t) / k</p>
+                  <p>
+                    <strong>Formula:</strong> S = √(I²t) / k
+                  </p>
                   <div className="space-y-1">
-                    <p>• <strong>S:</strong> Minimum CPC cross-sectional area (mm²)</p>
-                    <p>• <strong>I:</strong> Fault current (A)</p>
-                    <p>• <strong>t:</strong> Disconnection time (s)</p>
-                    <p>• <strong>k:</strong> Material factor</p>
+                    <p>
+                      • <strong>S:</strong> Minimum CPC cross-sectional area (mm²)
+                    </p>
+                    <p>
+                      • <strong>I:</strong> Fault current (A)
+                    </p>
+                    <p>
+                      • <strong>t:</strong> Disconnection time (s)
+                    </p>
+                    <p>
+                      • <strong>k:</strong> Material factor
+                    </p>
                   </div>
                   <p className="text-yellow-200">
                     Ensures CPC can withstand fault current without overheating.
@@ -121,20 +133,26 @@ const R1R2Standards = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
-                <CardTitle className="text-elec-light text-sm">Material K Factors (Table 54.4)</CardTitle>
+                <CardTitle className="text-elec-light text-sm">
+                  Material K Factors (Table 54.4)
+                </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="text-xs space-y-2">
-                  <p><strong>Copper conductors:</strong></p>
+                  <p>
+                    <strong>Copper conductors:</strong>
+                  </p>
                   <div className="space-y-1">
                     <p>• PVC insulation: k = 115</p>
                     <p>• XLPE insulation: k = 143</p>
                     <p>• Bare conductor: k = 228</p>
                   </div>
-                  <p><strong>Aluminium conductors:</strong></p>
+                  <p>
+                    <strong>Aluminium conductors:</strong>
+                  </p>
                   <div className="space-y-1">
                     <p>• PVC insulation: k = 76</p>
                     <p>• XLPE insulation: k = 94</p>
@@ -158,22 +176,33 @@ const R1R2Standards = () => {
             <div className="space-y-3">
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3">
                 <p className="text-yellow-200 text-xs mb-2">
-                  <strong>Test Equipment Safety:</strong> Electrical test equipment for use by electricians
+                  <strong>Test Equipment Safety:</strong> Electrical test equipment for use by
+                  electricians
                 </p>
                 <div className="grid gap-2 sm:grid-cols-2 text-xs">
                   <div>
-                    <p><strong>Test leads:</strong> Insulated to at least 500V</p>
-                    <p><strong>Probe tips:</strong> Maximum 2mm exposed metal</p>
+                    <p>
+                      <strong>Test leads:</strong> Insulated to at least 500V
+                    </p>
+                    <p>
+                      <strong>Probe tips:</strong> Maximum 2mm exposed metal
+                    </p>
                   </div>
                   <div>
-                    <p><strong>Fused leads:</strong> Current-limiting for safety</p>
-                    <p><strong>Regular calibration:</strong> Annual verification required</p>
+                    <p>
+                      <strong>Fused leads:</strong> Current-limiting for safety
+                    </p>
+                    <p>
+                      <strong>Regular calibration:</strong> Annual verification required
+                    </p>
                   </div>
                 </div>
               </div>
-              
+
               <div className="text-xs space-y-1">
-                <p><strong>Continuity tester requirements:</strong></p>
+                <p>
+                  <strong>Continuity tester requirements:</strong>
+                </p>
                 <ul className="list-disc pl-5 space-y-0.5">
                   <li>Open circuit voltage between 4V and 24V DC</li>
                   <li>Short circuit current not less than 200mA</li>
@@ -205,7 +234,7 @@ const R1R2Standards = () => {
                   <li>• Most common conductor material</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h5 className="text-sm font-medium text-elec-light mb-2">Aluminium Conductors</h5>
                 <ul className="text-xs space-y-1">
@@ -216,11 +245,12 @@ const R1R2Standards = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3 mt-3">
               <p className="text-blue-200 text-xs">
-                <strong>Practical impact:</strong> These standard values ensure consistent calculations 
-                across the industry and compatibility with protective device characteristics.
+                <strong>Practical impact:</strong> These standard values ensure consistent
+                calculations across the industry and compatibility with protective device
+                characteristics.
               </p>
             </div>
           </div>
@@ -238,25 +268,44 @@ const R1R2Standards = () => {
             <div className="space-y-3">
               <h4 className="text-elec-yellow font-medium">Initial Verification</h4>
               <ul className="text-xs space-y-1">
-                <li>• <strong>New installations:</strong> 100% of circuits tested</li>
-                <li>• <strong>Alterations:</strong> Affected circuits and associated protective conductors</li>
-                <li>• <strong>Additions:</strong> New circuits plus verification of existing earthing</li>
-                <li>• <strong>Documentation:</strong> Electrical Installation Certificate required</li>
+                <li>
+                  • <strong>New installations:</strong> 100% of circuits tested
+                </li>
+                <li>
+                  • <strong>Alterations:</strong> Affected circuits and associated protective
+                  conductors
+                </li>
+                <li>
+                  • <strong>Additions:</strong> New circuits plus verification of existing earthing
+                </li>
+                <li>
+                  • <strong>Documentation:</strong> Electrical Installation Certificate required
+                </li>
               </ul>
-              
+
               <h4 className="text-elec-yellow font-medium mt-4">Periodic Inspection</h4>
               <ul className="text-xs space-y-1">
-                <li>• <strong>Domestic:</strong> 10 years (or 5 years if rented)</li>
-                <li>• <strong>Commercial:</strong> 5 years typical</li>
-                <li>• <strong>Industrial:</strong> 3 years typical</li>
-                <li>• <strong>Special locations:</strong> Annual or more frequent</li>
+                <li>
+                  • <strong>Domestic:</strong> 10 years (or 5 years if rented)
+                </li>
+                <li>
+                  • <strong>Commercial:</strong> 5 years typical
+                </li>
+                <li>
+                  • <strong>Industrial:</strong> 3 years typical
+                </li>
+                <li>
+                  • <strong>Special locations:</strong> Annual or more frequent
+                </li>
               </ul>
             </div>
-            
+
             <div className="space-y-3">
               <h4 className="text-elec-yellow font-medium">Test Records</h4>
               <div className="bg-white/5 border border-white/30 rounded p-3">
-                <p className="text-xs mb-2"><strong>Required information:</strong></p>
+                <p className="text-xs mb-2">
+                  <strong>Required information:</strong>
+                </p>
                 <ul className="text-xs space-y-1">
                   <li>• Circuit identification</li>
                   <li>• R1+R2 measured values at each outlet</li>
@@ -266,11 +315,11 @@ const R1R2Standards = () => {
                   <li>• Recommendations for remedial work</li>
                 </ul>
               </div>
-              
+
               <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
                 <p className="text-blue-200 text-xs">
-                  <strong>Legal requirement:</strong> Test results must be provided to client 
-                  and retained for reference during periodic inspections.
+                  <strong>Legal requirement:</strong> Test results must be provided to client and
+                  retained for reference during periodic inspections.
                 </p>
               </div>
             </div>
@@ -295,7 +344,7 @@ const R1R2Standards = () => {
                 <li>• GS 38: Electrical test equipment safety</li>
               </ul>
             </div>
-            
+
             <div className="space-y-2">
               <h5 className="text-sm font-medium text-elec-yellow">Industry Guidance</h5>
               <ul className="text-xs space-y-1">
@@ -306,11 +355,11 @@ const R1R2Standards = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-white/5 border border-white/30 rounded p-3">
             <p className="text-white/80 text-xs">
-              <strong>Note:</strong> This calculator and guidance is based on BS7671:2018+A3:2024. 
-              Always refer to the latest edition of relevant standards and seek advice from 
+              <strong>Note:</strong> This calculator and guidance is based on BS7671:2018+A3:2024.
+              Always refer to the latest edition of relevant standards and seek advice from
               qualified persons for complex installations.
             </p>
           </div>

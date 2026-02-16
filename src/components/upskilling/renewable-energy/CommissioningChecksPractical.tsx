@@ -16,7 +16,7 @@ const CommissioningChecksPractical = () => {
     const voc = parseFloat(moduleVoc) || 0;
     const modules = parseFloat(modulesInString) || 0;
     const temp = parseFloat(ambientTemp) || 25;
-    
+
     if (voc > 0 && modules > 0) {
       // Cell temperature = ambient + 30°C (typical)
       const cellTemp = temp + 30;
@@ -32,7 +32,7 @@ const CommissioningChecksPractical = () => {
   const calculateIscAt1000 = () => {
     const isc = parseFloat(measuredIsc) || 0;
     const irr = parseFloat(irradiance) || 1000;
-    
+
     if (isc > 0 && irr > 0) {
       const iscAt1000 = isc * (1000 / irr);
       return iscAt1000.toFixed(2);
@@ -43,7 +43,7 @@ const CommissioningChecksPractical = () => {
   const getVocCompliance = () => {
     const expected = parseFloat(calculateExpectedVoc());
     const measured = parseFloat(measuredVoc) || 0;
-    
+
     if (expected > 0 && measured > 0) {
       const deviation = Math.abs((measured - expected) / expected) * 100;
       if (deviation <= 5) return { status: 'pass', text: 'Within ±5%' };
@@ -62,7 +62,6 @@ const CommissioningChecksPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Pre-Energisation Checklist */}
         <div className="bg-red-900/20 p-4 rounded-lg border border-red-500/30">
           <h4 className="text-red-400 font-semibold mb-3 flex items-center gap-2">
@@ -124,7 +123,9 @@ const CommissioningChecksPractical = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Module Voc (STC)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Module Voc (STC)
+                </label>
                 <input
                   type="number"
                   value={moduleVoc}
@@ -134,7 +135,9 @@ const CommissioningChecksPractical = () => {
                 />
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Modules per String</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Modules per String
+                </label>
                 <input
                   type="number"
                   value={modulesInString}
@@ -144,7 +147,9 @@ const CommissioningChecksPractical = () => {
                 />
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Ambient Temperature (°C)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Ambient Temperature (°C)
+                </label>
                 <input
                   type="number"
                   value={ambientTemp}
@@ -154,7 +159,9 @@ const CommissioningChecksPractical = () => {
                 />
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Measured Voc</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Measured Voc
+                </label>
                 <input
                   type="number"
                   value={measuredVoc}
@@ -171,9 +178,14 @@ const CommissioningChecksPractical = () => {
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-foreground font-medium">Compliance Status:</p>
-                <Badge 
-                  variant={getVocCompliance().status === 'pass' ? "default" : 
-                          getVocCompliance().status === 'warning' ? "secondary" : "destructive"}
+                <Badge
+                  variant={
+                    getVocCompliance().status === 'pass'
+                      ? 'default'
+                      : getVocCompliance().status === 'warning'
+                        ? 'secondary'
+                        : 'destructive'
+                  }
                   className="text-sm"
                 >
                   {getVocCompliance().text}
@@ -181,8 +193,8 @@ const CommissioningChecksPractical = () => {
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600 text-xs">
                 <p className="text-gray-400">
-                  <strong>Note:</strong> Calculation assumes -0.35%/°C temperature coefficient 
-                  and cell temperature = ambient + 30°C
+                  <strong>Note:</strong> Calculation assumes -0.35%/°C temperature coefficient and
+                  cell temperature = ambient + 30°C
                 </p>
               </div>
             </div>
@@ -198,7 +210,9 @@ const CommissioningChecksPractical = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Current Irradiance (W/m²)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Current Irradiance (W/m²)
+                </label>
                 <input
                   type="number"
                   value={irradiance}
@@ -208,7 +222,9 @@ const CommissioningChecksPractical = () => {
                 />
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Measured Isc (A)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Measured Isc (A)
+                </label>
                 <input
                   type="number"
                   value={measuredIsc}
@@ -225,7 +241,7 @@ const CommissioningChecksPractical = () => {
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600 text-xs">
                 <p className="text-gray-400">
-                  <strong>Requirements:</strong> Minimum 200W/m² irradiance for meaningful results. 
+                  <strong>Requirements:</strong> Minimum 200W/m² irradiance for meaningful results.
                   Measurements should be within ±10% of module specification.
                 </p>
               </div>
@@ -307,23 +323,31 @@ const CommissioningChecksPractical = () => {
 
         {/* Common Fault Troubleshooting */}
         <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-          <h4 className="text-orange-400 font-semibold mb-3">Common Commissioning Faults & Solutions</h4>
+          <h4 className="text-orange-400 font-semibold mb-3">
+            Common Commissioning Faults & Solutions
+          </h4>
           <div className="space-y-2 text-sm">
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
               <h5 className="text-red-400 font-medium">Zero Voc Reading:</h5>
-              <p className="text-gray-300">Check: Blown fuse → Open circuit → Loose MC4 connector → Failed isolator</p>
+              <p className="text-gray-300">
+                Check: Blown fuse → Open circuit → Loose MC4 connector → Failed isolator
+              </p>
             </div>
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
-              <h5 className="text-orange-400 font-medium">Low Voc ({">"} 10% below expected):</h5>
-              <p className="text-gray-300">Check: Partial shading → Module bypass diode failure → High resistance connection</p>
+              <h5 className="text-orange-400 font-medium">Low Voc ({'>'} 10% below expected):</h5>
+              <p className="text-gray-300">
+                Check: Partial shading → Module bypass diode failure → High resistance connection
+              </p>
             </div>
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
               <h5 className="text-yellow-400 font-medium">Inverter Won't Start:</h5>
-              <p className="text-gray-300">Check: DC voltage too low → Reverse polarity → Grid voltage out of range → Earth fault</p>
+              <p className="text-gray-300">
+                Check: DC voltage too low → Reverse polarity → Grid voltage out of range → Earth
+                fault
+              </p>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

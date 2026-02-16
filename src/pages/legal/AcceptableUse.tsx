@@ -1,10 +1,21 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Zap, ArrowLeft, Scale, Ban, Shield, AlertTriangle, Users, Flag, FileText, Mail } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Zap,
+  ArrowLeft,
+  Scale,
+  Ban,
+  Shield,
+  AlertTriangle,
+  Users,
+  Flag,
+  FileText,
+  Mail,
+} from 'lucide-react';
 
 const AcceptableUse = () => {
-  const lastUpdated = "30 January 2026";
+  const lastUpdated = '30 January 2026';
 
   return (
     <div className="bg-black text-white">
@@ -20,7 +31,11 @@ const AcceptableUse = () => {
             </span>
           </Link>
           <Link to="/settings">
-            <Button variant="outline" size="sm" className="h-9 px-3 border-white/20 text-white hover:bg-white/5 touch-manipulation active:scale-95">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-9 px-3 border-white/20 text-white hover:bg-white/5 touch-manipulation active:scale-95"
+            >
               <ArrowLeft className="h-4 w-4 mr-1.5" />
               <span className="hidden sm:inline">Back</span>
             </Button>
@@ -43,7 +58,13 @@ const AcceptableUse = () => {
         <Card className="bg-neutral-900 border-white/10 mb-6">
           <CardContent className="p-4 sm:p-6">
             <p className="text-gray-300 leading-relaxed">
-              This Acceptable Use Policy ("AUP") sets out the rules for using the Elec-Mate platform. By using our services, you agree to comply with this policy. This AUP should be read alongside our <Link to="/terms" className="text-yellow-400 hover:underline">Terms of Service</Link>.
+              This Acceptable Use Policy ("AUP") sets out the rules for using the Elec-Mate
+              platform. By using our services, you agree to comply with this policy. This AUP should
+              be read alongside our{' '}
+              <Link to="/terms" className="text-yellow-400 hover:underline">
+                Terms of Service
+              </Link>
+              .
             </p>
           </CardContent>
         </Card>
@@ -65,7 +86,8 @@ const AcceptableUse = () => {
               <li>Colleges providing electrical training courses</li>
             </ul>
             <p className="text-gray-300 mt-3">
-              You may use the platform for legitimate professional and educational purposes in accordance with our Terms of Service.
+              You may use the platform for legitimate professional and educational purposes in
+              accordance with our Terms of Service.
             </p>
           </section>
 
@@ -75,9 +97,7 @@ const AcceptableUse = () => {
               <Ban className="h-5 w-5" />
               Prohibited Activities
             </h2>
-            <p className="text-gray-300 leading-relaxed mb-3">
-              You must NOT use Elec-Mate to:
-            </p>
+            <p className="text-gray-300 leading-relaxed mb-3">You must NOT use Elec-Mate to:</p>
 
             <div className="space-y-4">
               <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
@@ -149,7 +169,10 @@ const AcceptableUse = () => {
               <li>Complying with all applicable laws and regulations</li>
               <li>Respecting other users and maintaining professional conduct</li>
               <li>Reporting any security vulnerabilities or policy violations</li>
-              <li>Using our tools and calculators for reference only, not as the sole basis for electrical work</li>
+              <li>
+                Using our tools and calculators for reference only, not as the sole basis for
+                electrical work
+              </li>
             </ul>
           </section>
 
@@ -165,19 +188,28 @@ const AcceptableUse = () => {
             <div className="space-y-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Warnings</h3>
-                <p className="text-gray-300 text-sm">Issue a warning for minor or first-time violations.</p>
+                <p className="text-gray-300 text-sm">
+                  Issue a warning for minor or first-time violations.
+                </p>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Temporary Suspension</h3>
-                <p className="text-gray-300 text-sm">Suspend your account while we investigate reported violations.</p>
+                <p className="text-gray-300 text-sm">
+                  Suspend your account while we investigate reported violations.
+                </p>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Permanent Termination</h3>
-                <p className="text-gray-300 text-sm">Terminate your account without refund for serious or repeated violations.</p>
+                <p className="text-gray-300 text-sm">
+                  Terminate your account without refund for serious or repeated violations.
+                </p>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Legal Action</h3>
-                <p className="text-gray-300 text-sm">Report illegal activities to law enforcement and pursue legal remedies where appropriate.</p>
+                <p className="text-gray-300 text-sm">
+                  Report illegal activities to law enforcement and pursue legal remedies where
+                  appropriate.
+                </p>
               </div>
             </div>
           </section>
@@ -189,7 +221,8 @@ const AcceptableUse = () => {
               Reporting Violations
             </h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              If you become aware of any violations of this policy, please report them to us immediately. We investigate all reports and take appropriate action.
+              If you become aware of any violations of this policy, please report them to us
+              immediately. We investigate all reports and take appropriate action.
             </p>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <p className="text-white font-medium">Report a Violation</p>
@@ -211,7 +244,9 @@ const AcceptableUse = () => {
               Changes to This Policy
             </h2>
             <p className="text-gray-300 leading-relaxed">
-              We may update this Acceptable Use Policy from time to time. We will notify you of significant changes via email or in-app notification. Continued use of Elec-Mate after changes constitutes acceptance of the updated policy.
+              We may update this Acceptable Use Policy from time to time. We will notify you of
+              significant changes via email or in-app notification. Continued use of Elec-Mate after
+              changes constitutes acceptance of the updated policy.
             </p>
           </section>
 
@@ -221,9 +256,7 @@ const AcceptableUse = () => {
               <Mail className="h-5 w-5" />
               Contact Us
             </h2>
-            <p className="text-gray-300 mb-3">
-              For questions about this policy:
-            </p>
+            <p className="text-gray-300 mb-3">For questions about this policy:</p>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <p className="text-white font-medium">Elec-Mate Support</p>
               <p className="text-gray-400 text-sm">Email: support@elec-mate.com</p>

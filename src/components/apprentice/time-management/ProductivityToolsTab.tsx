@@ -1,108 +1,107 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Smartphone, Clock, Brain, Target, ExternalLink } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Smartphone, Clock, Brain, Target, ExternalLink } from 'lucide-react';
 
 const ProductivityToolsTab = () => {
   const mobileApps = [
     {
-      name: "Forest",
-      description: "Stay focused by growing virtual trees during study sessions",
-      category: "Focus",
-      price: "Free + Premium",
-      features: ["Pomodoro timer", "Study statistics", "Focus challenges"],
-      icon: "🌳"
+      name: 'Forest',
+      description: 'Stay focused by growing virtual trees during study sessions',
+      category: 'Focus',
+      price: 'Free + Premium',
+      features: ['Pomodoro timer', 'Study statistics', 'Focus challenges'],
+      icon: '🌳',
     },
     {
-      name: "Todoist",
-      description: "Organise tasks and projects with natural language processing",
-      category: "Task Management", 
-      price: "Free + Premium",
-      features: ["Project organisation", "Due date reminders", "Progress tracking"],
-      icon: "✅"
+      name: 'Todoist',
+      description: 'Organise tasks and projects with natural language processing',
+      category: 'Task Management',
+      price: 'Free + Premium',
+      features: ['Project organisation', 'Due date reminders', 'Progress tracking'],
+      icon: '✅',
     },
     {
-      name: "RescueTime",
-      description: "Automatically track how you spend time on devices",
-      category: "Time Tracking",
-      price: "Free + Premium",
-      features: ["Automatic tracking", "Detailed reports", "Goal setting"],
-      icon: "⏱️"
+      name: 'RescueTime',
+      description: 'Automatically track how you spend time on devices',
+      category: 'Time Tracking',
+      price: 'Free + Premium',
+      features: ['Automatic tracking', 'Detailed reports', 'Goal setting'],
+      icon: '⏱️',
     },
     {
-      name: "Headspace",
-      description: "Guided meditation and mindfulness for stress management",
-      category: "Wellbeing",
-      price: "Free trial + Subscription",
-      features: ["Guided meditations", "Sleep stories", "Focus music"],
-      icon: "🧘"
-    }
+      name: 'Headspace',
+      description: 'Guided meditation and mindfulness for stress management',
+      category: 'Wellbeing',
+      price: 'Free trial + Subscription',
+      features: ['Guided meditations', 'Sleep stories', 'Focus music'],
+      icon: '🧘',
+    },
   ];
 
   const webTools = [
     {
-      name: "Trello",
-      description: "Visual project management using boards and cards",
-      category: "Project Management",
-      url: "https://trello.com",
-      features: ["Kanban boards", "Team collaboration", "Due dates"],
-      icon: "📋"
+      name: 'Trello',
+      description: 'Visual project management using boards and cards',
+      category: 'Project Management',
+      url: 'https://trello.com',
+      features: ['Kanban boards', 'Team collaboration', 'Due dates'],
+      icon: '📋',
     },
     {
-      name: "Google Calendar",
-      description: "Schedule management with integration across devices",
-      category: "Scheduling",
-      url: "https://calendar.google.com",
-      features: ["Multiple calendars", "Event reminders", "Mobile sync"],
-      icon: "📅"
+      name: 'Google Calendar',
+      description: 'Schedule management with integration across devices',
+      category: 'Scheduling',
+      url: 'https://calendar.google.com',
+      features: ['Multiple calendars', 'Event reminders', 'Mobile sync'],
+      icon: '📅',
     },
     {
-      name: "Notion",
-      description: "All-in-one workspace for notes, tasks, and planning",
-      category: "Note-taking",
-      url: "https://notion.so",
-      features: ["Database functionality", "Template gallery", "Team sharing"],
-      icon: "📝"
-    }
+      name: 'Notion',
+      description: 'All-in-one workspace for notes, tasks, and planning',
+      category: 'Note-taking',
+      url: 'https://notion.so',
+      features: ['Database functionality', 'Template gallery', 'Team sharing'],
+      icon: '📝',
+    },
   ];
 
   const techniques = [
     {
-      title: "Pomodoro Technique",
-      description: "Work for 25 minutes, then take a 5-minute break",
-      benefits: ["Maintains focus", "Prevents burnout", "Improves time awareness"],
+      title: 'Pomodoro Technique',
+      description: 'Work for 25 minutes, then take a 5-minute break',
+      benefits: ['Maintains focus', 'Prevents burnout', 'Improves time awareness'],
       howTo: [
-        "Choose a task to work on",
-        "Set timer for 25 minutes",
-        "Work until timer rings",
-        "Take 5-minute break",
-        "After 4 cycles, take longer 15-30 minute break"
-      ]
+        'Choose a task to work on',
+        'Set timer for 25 minutes',
+        'Work until timer rings',
+        'Take 5-minute break',
+        'After 4 cycles, take longer 15-30 minute break',
+      ],
     },
     {
-      title: "Time Blocking",
-      description: "Assign specific time slots to different activities",
-      benefits: ["Reduces decision fatigue", "Ensures important tasks get time", "Creates routine"],
+      title: 'Time Blocking',
+      description: 'Assign specific time slots to different activities',
+      benefits: ['Reduces decision fatigue', 'Ensures important tasks get time', 'Creates routine'],
       howTo: [
-        "List all regular activities (work, college, study, personal)",
-        "Estimate time needed for each",
-        "Block out fixed commitments first",
-        "Assign remaining time to flexible tasks",
-        "Include buffer time for unexpected issues"
-      ]
+        'List all regular activities (work, college, study, personal)',
+        'Estimate time needed for each',
+        'Block out fixed commitments first',
+        'Assign remaining time to flexible tasks',
+        'Include buffer time for unexpected issues',
+      ],
     },
     {
-      title: "Two-Minute Rule",
-      description: "If a task takes less than 2 minutes, do it immediately",
-      benefits: ["Prevents small task accumulation", "Maintains momentum", "Reduces mental load"],
+      title: 'Two-Minute Rule',
+      description: 'If a task takes less than 2 minutes, do it immediately',
+      benefits: ['Prevents small task accumulation', 'Maintains momentum', 'Reduces mental load'],
       howTo: [
-        "When you encounter a small task, assess if it takes under 2 minutes",
-        "If yes, complete it immediately",
-        "If no, add it to your task list or calendar",
-        "Apply to emails, quick calls, filing, brief research"
-      ]
-    }
+        'When you encounter a small task, assess if it takes under 2 minutes',
+        'If yes, complete it immediately',
+        'If no, add it to your task list or calendar',
+        'Apply to emails, quick calls, filing, brief research',
+      ],
+    },
   ];
 
   return (
@@ -133,9 +132,9 @@ const ProductivityToolsTab = () => {
                   </div>
                   <div className="text-xs text-white">{app.price}</div>
                 </div>
-                
+
                 <p className="text-sm text-white mb-3">{app.description}</p>
-                
+
                 <div className="space-y-1">
                   <h5 className="text-xs font-medium text-white">Key Features:</h5>
                   <ul className="space-y-1">
@@ -159,9 +158,7 @@ const ProductivityToolsTab = () => {
             <Target className="h-6 w-6" />
             Web-Based Tools
           </CardTitle>
-          <p className="text-sm text-white">
-            Browser-based tools for planning and organisation
-          </p>
+          <p className="text-sm text-white">Browser-based tools for planning and organisation</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -176,9 +173,9 @@ const ProductivityToolsTab = () => {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <p className="text-sm text-white mb-3">{tool.description}</p>
-                
+
                 <div className="space-y-3">
                   <div className="space-y-1">
                     <h5 className="text-xs font-medium text-white">Features:</h5>
@@ -191,7 +188,7 @@ const ProductivityToolsTab = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <Button
                     variant="outline"
                     size="sm"
@@ -214,9 +211,7 @@ const ProductivityToolsTab = () => {
             <Brain className="h-6 w-6" />
             Proven Productivity Techniques
           </CardTitle>
-          <p className="text-sm text-white">
-            Time-tested methods for maximising efficiency
-          </p>
+          <p className="text-sm text-white">Time-tested methods for maximising efficiency</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
@@ -227,7 +222,7 @@ const ProductivityToolsTab = () => {
                     <h3 className="text-lg font-semibold text-white mb-2">{technique.title}</h3>
                     <p className="text-sm text-white">{technique.description}</p>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-medium text-white mb-2">Benefits:</h4>
@@ -240,7 +235,7 @@ const ProductivityToolsTab = () => {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="font-medium text-white mb-2">How to implement:</h4>
                       <ol className="space-y-1">

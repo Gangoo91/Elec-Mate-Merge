@@ -1,15 +1,29 @@
-import { useState, useRef, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Loader2, ShoppingCart, ExternalLink, Package, Sparkles, AlertCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { MaterialToQuoteItem } from "@/hooks/useQuoteMaterialIntegration";
-import { useMaterialsAutocomplete } from "@/hooks/useMaterialsAutocomplete";
+import { useState, useRef, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Search,
+  Loader2,
+  ShoppingCart,
+  ExternalLink,
+  Package,
+  Sparkles,
+  AlertCircle,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { MaterialToQuoteItem } from '@/hooks/useQuoteMaterialIntegration';
+import { useMaterialsAutocomplete } from '@/hooks/useMaterialsAutocomplete';
 
 interface IntelligentMaterialSearchProps {
   onAddToQuote?: (material: MaterialToQuoteItem, quantity?: number) => void;
@@ -22,7 +36,7 @@ interface SearchResult {
   price: string;
   supplier: string;
   image?: string;
-  stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
+  stockStatus: 'In Stock' | 'Low Stock' | 'Out of Stock';
   productUrl?: string;
   highlights?: string[];
   similarity?: number;
@@ -33,23 +47,21 @@ interface SearchResult {
 
 export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialSearchProps) => {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedSupplier, setSelectedSupplier] = useState("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedSupplier, setSelectedSupplier] = useState('all');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [searchMethod, setSearchMethod] = useState<string>("");
+  const [searchMethod, setSearchMethod] = useState<string>('');
   const [serverSuggestions, setServerSuggestions] = useState<string[]>([]);
   const [showAutocomplete, setShowAutocomplete] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const autocompleteRef = useRef<HTMLDivElement>(null);
 
   // Autocomplete hook
-  const { suggestions: autocompleteSuggestions, isLoading: autocompleteLoading } = useMaterialsAutocomplete(
-    searchQuery,
-    { debounceMs: 150, minChars: 2, maxSuggestions: 8 }
-  );
+  const { suggestions: autocompleteSuggestions, isLoading: autocompleteLoading } =
+    useMaterialsAutocomplete(searchQuery, { debounceMs: 150, minChars: 2, maxSuggestions: 8 });
 
   // Close autocomplete when clicking outside
   useEffect(() => {
@@ -64,38 +76,30 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const categories = [
-    "all",
-    "Cables & Wires",
-    "Consumer Units",
-    "Protection Devices",
-    "Sockets & Switches",
-    "Lighting",
-    "Accessories"
+    'all',
+    'Cables & Wires',
+    'Consumer Units',
+    'Protection Devices',
+    'Sockets & Switches',
+    'Lighting',
+    'Accessories',
   ];
 
-  const suppliers = [
-    "all",
-    "BG Electrical",
-    "CEF",
-    "Screwfix",
-    "TLC Direct",
-    "Wylex",
-    "Crabtree"
-  ];
+  const suppliers = ['all', 'BG Electrical', 'CEF', 'Screwfix', 'TLC Direct', 'Wylex', 'Crabtree'];
 
   const handleSearch = async (queryOverride?: string) => {
     const queryToSearch = queryOverride || searchQuery;
 
     if (!queryToSearch.trim()) {
       toast({
-        title: "Search Required",
-        description: "Please enter a search term to find materials.",
-        variant: "destructive"
+        title: 'Search Required',
+        description: 'Please enter a search term to find materials.',
+        variant: 'destructive',
       });
       return;
     }
@@ -107,16 +111,23 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
     setShowAutocomplete(false);
 
     try {
-      console.log('🔍 Fuzzy searching 43k materials:', { query: queryToSearch, selectedCategory, selectedSupplier });
-
-      const { data, error: functionError } = await supabase.functions.invoke('search-materials-fast', {
-        body: {
-          query: queryToSearch,
-          categoryFilter: selectedCategory !== "all" ? selectedCategory : null,
-          supplierFilter: selectedSupplier !== "all" ? selectedSupplier : null,
-          limit: 50
-        }
+      console.log('🔍 Fuzzy searching 43k materials:', {
+        query: queryToSearch,
+        selectedCategory,
+        selectedSupplier,
       });
+
+      const { data, error: functionError } = await supabase.functions.invoke(
+        'search-materials-fast',
+        {
+          body: {
+            query: queryToSearch,
+            categoryFilter: selectedCategory !== 'all' ? selectedCategory : null,
+            supplierFilter: selectedSupplier !== 'all' ? selectedSupplier : null,
+            limit: 50,
+          },
+        }
+      );
 
       if (functionError) {
         console.error('❌ Fuzzy search error:', functionError);
@@ -131,7 +142,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
 
         const fuzzyCount = data.materials.filter((m: SearchResult) => m.isFuzzyMatch).length;
         toast({
-          title: "Search Complete",
+          title: 'Search Complete',
           description: `Found ${data.materials.length} materials${fuzzyCount > 0 ? ` (${fuzzyCount} fuzzy matches)` : ''}`,
         });
       } else {
@@ -139,22 +150,23 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
         if (data?.suggestions && data.suggestions.length > 0) {
           setServerSuggestions(data.suggestions);
         }
-        setError("No materials found matching your search.");
+        setError('No materials found matching your search.');
         toast({
-          title: "No Results",
-          description: data?.suggestions?.length > 0
-            ? "Check 'Did you mean?' suggestions below"
-            : "Try broader search terms or remove filters.",
-          variant: "destructive"
+          title: 'No Results',
+          description:
+            data?.suggestions?.length > 0
+              ? "Check 'Did you mean?' suggestions below"
+              : 'Try broader search terms or remove filters.',
+          variant: 'destructive',
         });
       }
     } catch (err: any) {
       console.error('❌ Search failed:', err);
-      setError(err.message || "Failed to search materials");
+      setError(err.message || 'Failed to search materials');
       toast({
-        title: "Search Failed",
-        description: "Please try again in a moment.",
-        variant: "destructive"
+        title: 'Search Failed',
+        description: 'Please try again in a moment.',
+        variant: 'destructive',
       });
     } finally {
       setIsSearching(false);
@@ -171,12 +183,18 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
   const highlightMatch = (text: string, query: string) => {
     if (!query.trim()) return text;
 
-    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 1);
+    const terms = query
+      .toLowerCase()
+      .split(/\s+/)
+      .filter((t) => t.length > 1);
     let result = text;
 
-    terms.forEach(term => {
+    terms.forEach((term) => {
       const regex = new RegExp(`(${term})`, 'gi');
-      result = result.replace(regex, '<mark class="bg-elec-yellow/30 text-foreground rounded px-0.5">$1</mark>');
+      result = result.replace(
+        regex,
+        '<mark class="bg-elec-yellow/30 text-foreground rounded px-0.5">$1</mark>'
+      );
     });
 
     return result;
@@ -193,18 +211,18 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
       supplier: material.supplier,
       stockStatus: material.stockStatus,
       productUrl: material.productUrl,
-      highlights: material.highlights
+      highlights: material.highlights,
     };
 
     onAddToQuote(materialToAdd, 1);
   };
 
   const clearSearch = () => {
-    setSearchQuery("");
+    setSearchQuery('');
     setSearchResults([]);
     setError(null);
-    setSelectedCategory("all");
-    setSelectedSupplier("all");
+    setSelectedCategory('all');
+    setSelectedSupplier('all');
     setServerSuggestions([]);
     setShowAutocomplete(false);
   };
@@ -218,7 +236,8 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
           <h3 className="text-2xl font-bold text-foreground">Intelligent Material Search</h3>
         </div>
         <p className="text-muted-foreground">
-          Search across <span className="text-elec-yellow font-semibold">43,371 materials</span> with AI-powered matching
+          Search across <span className="text-elec-yellow font-semibold">43,371 materials</span>{' '}
+          with AI-powered matching
         </p>
       </div>
 
@@ -279,7 +298,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                             <span
                               className="text-sm font-medium text-foreground line-clamp-1"
                               dangerouslySetInnerHTML={{
-                                __html: highlightMatch(suggestion.name, searchQuery)
+                                __html: highlightMatch(suggestion.name, searchQuery),
                               }}
                             />
                             <span className="text-xs text-muted-foreground ml-2 whitespace-nowrap">
@@ -319,15 +338,20 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
           {/* Filters */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="category" className="text-sm font-medium">Category</Label>
+              <Label htmlFor="category" className="text-sm font-medium">
+                Category
+              </Label>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger id="category" className="h-11 touch-manipulation bg-elec-gray border-white/[0.1] focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger
+                  id="category"
+                  className="h-11 touch-manipulation bg-elec-gray border-white/[0.1] focus:border-elec-yellow focus:ring-elec-yellow"
+                >
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-white/[0.1]">
-                  {categories.map(cat => (
+                  {categories.map((cat) => (
                     <SelectItem key={cat} value={cat} className="capitalize">
-                      {cat === "all" ? "All Categories" : cat}
+                      {cat === 'all' ? 'All Categories' : cat}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -335,15 +359,20 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="supplier" className="text-sm font-medium">Supplier</Label>
+              <Label htmlFor="supplier" className="text-sm font-medium">
+                Supplier
+              </Label>
               <Select value={selectedSupplier} onValueChange={setSelectedSupplier}>
-                <SelectTrigger id="supplier" className="h-11 touch-manipulation bg-elec-gray border-white/[0.1] focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger
+                  id="supplier"
+                  className="h-11 touch-manipulation bg-elec-gray border-white/[0.1] focus:border-elec-yellow focus:ring-elec-yellow"
+                >
                   <SelectValue placeholder="All Suppliers" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-white/[0.1]">
-                  {suppliers.map(sup => (
+                  {suppliers.map((sup) => (
                     <SelectItem key={sup} value={sup}>
-                      {sup === "all" ? "All Suppliers" : sup}
+                      {sup === 'all' ? 'All Suppliers' : sup}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -371,9 +400,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
             {/* Did you mean? suggestions */}
             {serverSuggestions.length > 0 && (
               <div className="pt-4 border-t border-destructive/20">
-                <p className="text-sm text-muted-foreground mb-3 text-center">
-                  Did you mean?
-                </p>
+                <p className="text-sm text-muted-foreground mb-3 text-center">Did you mean?</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {serverSuggestions.slice(0, 5).map((suggestion, index) => (
                     <Button
@@ -398,14 +425,15 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
         <div className="space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <p className="text-sm text-muted-foreground">
-              Found <span className="font-semibold text-foreground">{searchResults.length}</span> materials
+              Found <span className="font-semibold text-foreground">{searchResults.length}</span>{' '}
+              materials
               {searchMethod && (
                 <span className="ml-2 text-xs text-elec-yellow">
                   ({searchMethod === 'fuzzy_trigram' ? 'Fuzzy Search' : 'Keyword'})
                 </span>
               )}
             </p>
-            {searchResults.some(m => m.isFuzzyMatch) && (
+            {searchResults.some((m) => m.isFuzzyMatch) && (
               <span className="text-xs px-2 py-1 bg-elec-yellow/10 text-elec-yellow rounded-full flex items-center gap-1">
                 <Sparkles className="h-3 w-3" />
                 Includes fuzzy matches
@@ -413,13 +441,18 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
             )}
           </div>
 
-          <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+          <div
+            className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}
+          >
             {searchResults.map((material) => (
-              <Card key={material.id} className={`bg-card border transition-all ${
-                material.isFuzzyMatch
-                  ? 'border-elec-yellow/30 hover:border-elec-yellow/60'
-                  : 'border-primary/20 hover:border-elec-yellow/50'
-              }`}>
+              <Card
+                key={material.id}
+                className={`bg-card border transition-all ${
+                  material.isFuzzyMatch
+                    ? 'border-elec-yellow/30 hover:border-elec-yellow/60'
+                    : 'border-primary/20 hover:border-elec-yellow/50'
+                }`}
+              >
                 <div className="p-4 space-y-3">
                   {/* Material Name with Fuzzy Match Indicator */}
                   <div className="space-y-1">
@@ -427,7 +460,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                       <h4
                         className="font-semibold text-foreground line-clamp-2 text-sm flex-1"
                         dangerouslySetInnerHTML={{
-                          __html: highlightMatch(material.name, searchQuery)
+                          __html: highlightMatch(material.name, searchQuery),
                         }}
                       />
                       {material.isFuzzyMatch && (
@@ -444,19 +477,19 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                   {/* Price & Supplier */}
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <p className="text-2xl font-bold text-elec-yellow">
-                        {material.price}
-                      </p>
+                      <p className="text-2xl font-bold text-elec-yellow">{material.price}</p>
                       <p className="text-xs text-muted-foreground">{material.supplier}</p>
                     </div>
                     <div className="text-right">
-                      <span className={`text-xs font-medium px-2 py-1 rounded ${
-                        material.stockStatus === "In Stock"
-                          ? "bg-green-500/20 text-green-400"
-                          : material.stockStatus === "Low Stock"
-                          ? "bg-yellow-500/20 text-yellow-400"
-                          : "bg-red-500/20 text-red-400"
-                      }`}>
+                      <span
+                        className={`text-xs font-medium px-2 py-1 rounded ${
+                          material.stockStatus === 'In Stock'
+                            ? 'bg-green-500/20 text-green-400'
+                            : material.stockStatus === 'Low Stock'
+                              ? 'bg-yellow-500/20 text-yellow-400'
+                              : 'bg-red-500/20 text-red-400'
+                        }`}
+                      >
                         {material.stockStatus}
                       </span>
                     </div>
@@ -467,11 +500,15 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                     <Package className="h-3 w-3" />
                     <span>{material.category}</span>
                     {material.similarity !== undefined && (
-                      <span className={`ml-auto font-medium ${
-                        material.similarity >= 0.9 ? 'text-green-400' :
-                        material.similarity >= 0.7 ? 'text-elec-yellow' :
-                        'text-orange-400'
-                      }`}>
+                      <span
+                        className={`ml-auto font-medium ${
+                          material.similarity >= 0.9
+                            ? 'text-green-400'
+                            : material.similarity >= 0.7
+                              ? 'text-elec-yellow'
+                              : 'text-orange-400'
+                        }`}
+                      >
                         {Math.round(material.similarity * 100)}% match
                       </span>
                     )}

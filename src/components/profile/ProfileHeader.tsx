@@ -42,9 +42,17 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     if (!elecIdProfile) return null;
     switch (elecIdProfile.verification_tier) {
       case 'premium':
-        return { label: 'Gold', bg: 'bg-gradient-to-r from-yellow-400 to-amber-500', text: 'text-black' };
+        return {
+          label: 'Gold',
+          bg: 'bg-gradient-to-r from-yellow-400 to-amber-500',
+          text: 'text-black',
+        };
       case 'verified':
-        return { label: 'Verified', bg: 'bg-gradient-to-r from-blue-500 to-cyan-500', text: 'text-white' };
+        return {
+          label: 'Verified',
+          bg: 'bg-gradient-to-r from-blue-500 to-cyan-500',
+          text: 'text-white',
+        };
       default:
         return { label: 'Basic', bg: 'bg-white/20', text: 'text-white' };
     }
@@ -98,9 +106,13 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               className="mt-3 inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 active:bg-emerald-500/25 transition-colors touch-manipulation"
             >
               <Shield className="h-4 w-4 text-emerald-400" />
-              <span className="text-sm font-medium text-emerald-400">{elecIdProfile.elec_id_number}</span>
+              <span className="text-sm font-medium text-emerald-400">
+                {elecIdProfile.elec_id_number}
+              </span>
               {badge && (
-                <span className={`px-2 py-0.5 rounded-md text-xs font-bold ${badge.bg} ${badge.text}`}>
+                <span
+                  className={`px-2 py-0.5 rounded-md text-xs font-bold ${badge.bg} ${badge.text}`}
+                >
                   {badge.label}
                 </span>
               )}

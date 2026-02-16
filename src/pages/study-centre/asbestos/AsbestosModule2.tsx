@@ -1,40 +1,45 @@
-import { ArrowLeft, Scale, BookOpen, ClipboardCheck, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, BookOpen, ClipboardCheck, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Control of Asbestos Regulations 2012",
+    title: 'Control of Asbestos Regulations 2012',
     icon: Scale,
-    description: "CAR 2012 overview, three work categories, control limit, key regulations, and HSE enforcement",
+    description:
+      'CAR 2012 overview, three work categories, control limit, key regulations, and HSE enforcement',
   },
   {
     id: 2,
-    title: "The Duty to Manage (Regulation 4)",
+    title: 'The Duty to Manage (Regulation 4)',
     icon: BookOpen,
-    description: "Dutyholder identification, reasonable steps, asbestos register, management plan, and penalties",
+    description:
+      'Dutyholder identification, reasonable steps, asbestos register, management plan, and penalties',
   },
   {
     id: 3,
-    title: "Asbestos Surveys",
+    title: 'Asbestos Surveys',
     icon: ClipboardCheck,
-    description: "Management vs Refurbishment & Demolition surveys, HSG264 guidance, surveyor qualifications",
+    description:
+      'Management vs Refurbishment & Demolition surveys, HSG264 guidance, surveyor qualifications',
   },
   {
     id: 4,
-    title: "The Asbestos Register & Management Plan",
+    title: 'The Asbestos Register & Management Plan',
     icon: FileText,
-    description: "Material and priority assessments, risk scoring, management options, and review triggers",
+    description:
+      'Material and priority assessments, risk scoring, management options, and review triggers',
   },
 ];
 
 export default function AsbestosModule2() {
   useSEO({
-    title: "Module 2: Legislation & the Duty to Manage | Asbestos Awareness",
-    description: "Control of Asbestos Regulations 2012, Regulation 4 duty to manage, survey types, and the asbestos register and management plan.",
+    title: 'Module 2: Legislation & the Duty to Manage | Asbestos Awareness',
+    description:
+      'Control of Asbestos Regulations 2012, Regulation 4 duty to manage, survey types, and the asbestos register and management plan.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function AsbestosModule2() {
               Legislation & the Duty to Manage
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The legal framework for managing asbestos in buildings, from CAR 2012 to surveys and the asbestos register
+              The legal framework for managing asbestos in buildings, from CAR 2012 to surveys and
+              the asbestos register
             </p>
           </div>
 

@@ -1,4 +1,3 @@
-
 import { ClipboardCheck, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -13,10 +12,14 @@ export const ReadinessIntro = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground leading-relaxed">
-          Once visual inspections are complete and documentation is reviewed, you need to make sure the installation is fully ready for electrical testing. This section outlines the final checks and decisions before applying test equipment.
+          Once visual inspections are complete and documentation is reviewed, you need to make sure
+          the installation is fully ready for electrical testing. This section outlines the final
+          checks and decisions before applying test equipment.
         </p>
         <p className="text-foreground leading-relaxed">
-          Jumping into testing too early—without proper verification—can lead to unsafe conditions, inaccurate results, or even equipment damage. Confirming readiness is the final safety gate before any test is run.
+          Jumping into testing too early—without proper verification—can lead to unsafe conditions,
+          inaccurate results, or even equipment damage. Confirming readiness is the final safety
+          gate before any test is run.
         </p>
         <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
           <p className="text-red-200 font-medium flex items-center gap-2">

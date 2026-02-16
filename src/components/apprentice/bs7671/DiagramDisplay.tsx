@@ -1,17 +1,16 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Image, Zap, Cable, Settings } from "lucide-react";
-import { BS7671StepData } from "@/data/bs7671-steps/enhancedStepData";
-import SafeIsolationDiagram from "./diagrams/SafeIsolationDiagram";
-import ContinuityTestingDiagram from "./diagrams/ContinuityTestingDiagram";
-import VisualInspectionDiagram from "./diagrams/VisualInspectionDiagram";
-import MFTConnectionDiagram from "./diagrams/MFTConnectionDiagram";
-import InsulationTestingDiagram from "./diagrams/InsulationTestingDiagram";
-import EarthFaultLoopDiagram from "./diagrams/EarthFaultLoopDiagram";
-import RCDTestingDiagram from "./diagrams/RCDTestingDiagram";
-import InitialVerificationDiagram from "./diagrams/InitialVerificationDiagram";
-import ComplianceChecklistDiagram from "./diagrams/ComplianceChecklistDiagram";
-import DocumentationRequirementsDiagram from "./diagrams/DocumentationRequirementsDiagram";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Image, Zap, Cable, Settings } from 'lucide-react';
+import { BS7671StepData } from '@/data/bs7671-steps/enhancedStepData';
+import SafeIsolationDiagram from './diagrams/SafeIsolationDiagram';
+import ContinuityTestingDiagram from './diagrams/ContinuityTestingDiagram';
+import VisualInspectionDiagram from './diagrams/VisualInspectionDiagram';
+import MFTConnectionDiagram from './diagrams/MFTConnectionDiagram';
+import InsulationTestingDiagram from './diagrams/InsulationTestingDiagram';
+import EarthFaultLoopDiagram from './diagrams/EarthFaultLoopDiagram';
+import RCDTestingDiagram from './diagrams/RCDTestingDiagram';
+import InitialVerificationDiagram from './diagrams/InitialVerificationDiagram';
+import ComplianceChecklistDiagram from './diagrams/ComplianceChecklistDiagram';
+import DocumentationRequirementsDiagram from './diagrams/DocumentationRequirementsDiagram';
 
 interface DiagramDisplayProps {
   stepData: BS7671StepData;
@@ -27,7 +26,9 @@ const DiagramDisplay = ({ stepData, systemType, installationType }: DiagramDispl
 
     // Initial verification and planning steps
     if (stepId === 1 || title.includes('initial verification') || title.includes('planning')) {
-      return <InitialVerificationDiagram stepType={stepData.title} installationType={installationType} />;
+      return (
+        <InitialVerificationDiagram stepType={stepData.title} installationType={installationType} />
+      );
     }
 
     // Compliance and regulation checking
@@ -47,12 +48,16 @@ const DiagramDisplay = ({ stepData, systemType, installationType }: DiagramDispl
 
     // Continuity testing (R1+R2)
     if (stepId === 5 || title.includes('continuity')) {
-      return <ContinuityTestingDiagram systemType={systemType} installationType={installationType} />;
+      return (
+        <ContinuityTestingDiagram systemType={systemType} installationType={installationType} />
+      );
     }
 
     // Insulation resistance testing
     if (stepId === 6 || title.includes('insulation')) {
-      return <InsulationTestingDiagram systemType={systemType} installationType={installationType} />;
+      return (
+        <InsulationTestingDiagram systemType={systemType} installationType={installationType} />
+      );
     }
 
     // Earth fault loop impedance testing
@@ -66,17 +71,19 @@ const DiagramDisplay = ({ stepData, systemType, installationType }: DiagramDispl
     }
 
     // Visual inspection steps
-    if (category === "Visual Inspection") {
-      return <VisualInspectionDiagram stepType={stepData.title} installationType={installationType} />;
+    if (category === 'Visual Inspection') {
+      return (
+        <VisualInspectionDiagram stepType={stepData.title} installationType={installationType} />
+      );
     }
 
     // MFT connection diagrams for electrical testing
-    if (category === "Electrical Testing" && stepData.mftSettings) {
+    if (category === 'Electrical Testing' && stepData.mftSettings) {
       return <MFTConnectionDiagram stepData={stepData} systemType={systemType} />;
     }
 
     // Default fallback for documentation steps
-    if (category === "Documentation") {
+    if (category === 'Documentation') {
       return <DocumentationRequirementsDiagram installationType={installationType} />;
     }
 

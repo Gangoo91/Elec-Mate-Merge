@@ -1,84 +1,89 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "UTP, FTP, STP Explained | Data Cabling Module 2.2";
-const DESCRIPTION = "Understand cable shielding types including UTP, FTP, and STP, with grounding requirements and EMI mitigation strategies.";
+const TITLE = 'UTP, FTP, STP Explained | Data Cabling Module 2.2';
+const DESCRIPTION =
+  'Understand cable shielding types including UTP, FTP, and STP, with grounding requirements and EMI mitigation strategies.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m2s2-check1",
-    question: "What does UTP stand for?",
+    id: 'datacabling-m2s2-check1',
+    question: 'What does UTP stand for?',
     options: [
-      "Universal Twisted Pair",
-      "Unshielded Twisted Pair",
-      "Ultra Transmission Protocol",
-      "Unified Termination Process"
+      'Universal Twisted Pair',
+      'Unshielded Twisted Pair',
+      'Ultra Transmission Protocol',
+      'Unified Termination Process',
     ],
     correctIndex: 1,
-    explanation: "UTP stands for Unshielded Twisted Pair - cable that relies solely on the twisting of wire pairs for EMI protection, without additional metallic shielding."
+    explanation:
+      'UTP stands for Unshielded Twisted Pair - cable that relies solely on the twisting of wire pairs for EMI protection, without additional metallic shielding.',
   },
   {
-    id: "datacabling-m2s2-check2",
-    question: "What is the primary requirement for shielded cable installations?",
+    id: 'datacabling-m2s2-check2',
+    question: 'What is the primary requirement for shielded cable installations?',
     options: [
-      "Higher quality connectors",
-      "Proper grounding at both ends",
-      "Longer cable lengths",
-      "Larger conduit sizes"
+      'Higher quality connectors',
+      'Proper grounding at both ends',
+      'Longer cable lengths',
+      'Larger conduit sizes',
     ],
     correctIndex: 1,
-    explanation: "Shielded cables require proper grounding at both ends to effectively drain noise. Without proper grounding, the shield can actually worsen interference by acting as an antenna."
+    explanation:
+      'Shielded cables require proper grounding at both ends to effectively drain noise. Without proper grounding, the shield can actually worsen interference by acting as an antenna.',
   },
   {
-    id: "datacabling-m2s2-check3",
-    question: "In the cable designation F/UTP, what does the F represent?",
-    options: [
-      "Fibre optic",
-      "Flexible",
-      "Foil (overall shield)",
-      "Frequency rated"
-    ],
+    id: 'datacabling-m2s2-check3',
+    question: 'In the cable designation F/UTP, what does the F represent?',
+    options: ['Fibre optic', 'Flexible', 'Foil (overall shield)', 'Frequency rated'],
     correctIndex: 2,
-    explanation: "In ISO/IEC cable designations, F represents foil shielding. F/UTP means an overall foil shield around unshielded twisted pairs."
-  }
+    explanation:
+      'In ISO/IEC cable designations, F represents foil shielding. F/UTP means an overall foil shield around unshielded twisted pairs.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I know if I need shielded cables in my environment?",
-    answer: "Conduct an EMI assessment. Look for electrical equipment like motors, VFDs, welding machines, or heavy machinery. If you can hear electrical humming, see fluorescent lights flickering, or have experienced network issues near electrical equipment, consider shielded cables. A simple EMI meter can help quantify interference levels."
+    question: 'How do I know if I need shielded cables in my environment?',
+    answer:
+      'Conduct an EMI assessment. Look for electrical equipment like motors, VFDs, welding machines, or heavy machinery. If you can hear electrical humming, see fluorescent lights flickering, or have experienced network issues near electrical equipment, consider shielded cables. A simple EMI meter can help quantify interference levels.',
   },
   {
-    question: "Can I use FTP cable with standard unshielded patch panels?",
-    answer: "No, this breaks the shield continuity and negates the EMI protection. All components in the channel must be shielded - cables, connectors, patch panels, and outlets. The shield must be continuous from end to end with proper termination."
+    question: 'Can I use FTP cable with standard unshielded patch panels?',
+    answer:
+      'No, this breaks the shield continuity and negates the EMI protection. All components in the channel must be shielded - cables, connectors, patch panels, and outlets. The shield must be continuous from end to end with proper termination.',
   },
   {
     question: "What's the difference between F/UTP and S/FTP cable designations?",
-    answer: "F/UTP means foiled/unshielded twisted pair (overall foil shield only). S/FTP means screened/foiled twisted pair (individual pair shields plus overall screen). The format is (overall shield)/(pair shield)TP, where F=foil, S=braid screen, U=unshielded."
+    answer:
+      'F/UTP means foiled/unshielded twisted pair (overall foil shield only). S/FTP means screened/foiled twisted pair (individual pair shields plus overall screen). The format is (overall shield)/(pair shield)TP, where F=foil, S=braid screen, U=unshielded.',
   },
   {
-    question: "Can I retrofit shielding to an existing UTP installation?",
-    answer: "No, you cannot add shielding to existing UTP cables. However, you can selectively upgrade problem areas to shielded cables whilst keeping UTP in clean environments. This hybrid approach can be cost-effective when properly planned and implemented."
-  }
+    question: 'Can I retrofit shielding to an existing UTP installation?',
+    answer:
+      'No, you cannot add shielding to existing UTP cables. However, you can selectively upgrade problem areas to shielded cables whilst keeping UTP in clean environments. This hybrid approach can be cost-effective when properly planned and implemented.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A manufacturing plant has VFDs, welding equipment, and large motors near network cable routes. Which cable type is most appropriate?",
-  options: [
-    "UTP with careful routing",
-    "F/UTP with overall foil shield",
-    "S/FTP with individual pair shields and overall braid",
-    "Standard Cat5e is sufficient"
-  ],
-  correctAnswer: 2,
-  explanation: "S/FTP provides the highest level of EMI protection with both individual pair foil shields and an overall braided screen. Heavy industrial environments with multiple EMI sources require this maximum protection."
-  }
+    question:
+      'A manufacturing plant has VFDs, welding equipment, and large motors near network cable routes. Which cable type is most appropriate?',
+    options: [
+      'UTP with careful routing',
+      'F/UTP with overall foil shield',
+      'S/FTP with individual pair shields and overall braid',
+      'Standard Cat5e is sufficient',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'S/FTP provides the highest level of EMI protection with both individual pair foil shields and an overall braided screen. Heavy industrial environments with multiple EMI sources require this maximum protection.',
+  },
 ];
 
 const DataCablingModule2Section2 = () => {
@@ -113,9 +118,7 @@ const DataCablingModule2Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             UTP, FTP, and STP Explained
           </h1>
-          <p className="text-white/80">
-            Cable shielding types and EMI protection
-          </p>
+          <p className="text-white/80">Cable shielding types and EMI protection</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -123,16 +126,26 @@ const DataCablingModule2Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>UTP:</strong> No shield, relies on twisting alone</li>
-              <li><strong>FTP:</strong> Overall foil shield around all pairs</li>
-              <li><strong>STP:</strong> Individual pair shields + overall screen</li>
+              <li>
+                <strong>UTP:</strong> No shield, relies on twisting alone
+              </li>
+              <li>
+                <strong>FTP:</strong> Overall foil shield around all pairs
+              </li>
+              <li>
+                <strong>STP:</strong> Individual pair shields + overall screen
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Foil visible under jacket, drain wire present</li>
-              <li><strong>Use:</strong> Shielded near motors, VFDs, heavy machinery</li>
+              <li>
+                <strong>Spot:</strong> Foil visible under jacket, drain wire present
+              </li>
+              <li>
+                <strong>Use:</strong> Shielded near motors, VFDs, heavy machinery
+              </li>
             </ul>
           </div>
         </div>
@@ -142,12 +155,12 @@ const DataCablingModule2Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify different cable shielding types",
-              "Understand ISO/IEC cable designations",
-              "Apply shielding selection criteria",
-              "Implement proper grounding techniques",
-              "Assess EMI environments",
-              "Terminate shielded cables correctly"
+              'Identify different cable shielding types',
+              'Understand ISO/IEC cable designations',
+              'Apply shielding selection criteria',
+              'Implement proper grounding techniques',
+              'Assess EMI environments',
+              'Terminate shielded cables correctly',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -168,7 +181,8 @@ const DataCablingModule2Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               UTP is the most common cable type in commercial installations. It relies entirely on
-              the twisting of wire pairs to cancel electromagnetic interference and reduce crosstalk.
+              the twisting of wire pairs to cancel electromagnetic interference and reduce
+              crosstalk.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -193,8 +207,8 @@ const DataCablingModule2Section2 = () => {
             </div>
 
             <p>
-              UTP performs well in typical office environments with moderate EMI levels. Most commercial
-              installations use UTP unless specific interference issues are identified.
+              UTP performs well in typical office environments with moderate EMI levels. Most
+              commercial installations use UTP unless specific interference issues are identified.
             </p>
           </div>
         </section>
@@ -209,16 +223,24 @@ const DataCablingModule2Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Shielded cables add metallic barriers to block electromagnetic interference. The ISO/IEC
-              designation system identifies shield configurations using a standard format.
+              Shielded cables add metallic barriers to block electromagnetic interference. The
+              ISO/IEC designation system identifies shield configurations using a standard format.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">ISO/IEC Designation Format: XX/YTP</p>
+              <p className="text-sm font-medium text-white mb-2">
+                ISO/IEC Designation Format: XX/YTP
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>XX:</strong> Overall shield type (U=none, F=foil, S=braid, SF=both)</li>
-                <li><strong>Y:</strong> Individual pair shield (U=none, F=foil)</li>
-                <li><strong>TP:</strong> Twisted Pair</li>
+                <li>
+                  <strong>XX:</strong> Overall shield type (U=none, F=foil, S=braid, SF=both)
+                </li>
+                <li>
+                  <strong>Y:</strong> Individual pair shield (U=none, F=foil)
+                </li>
+                <li>
+                  <strong>TP:</strong> Twisted Pair
+                </li>
               </ul>
             </div>
 
@@ -275,22 +297,42 @@ const DataCablingModule2Section2 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Grounding Requirements:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Grounding Requirements:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Both ends:</strong> Ground at patch panel and outlet for best results</li>
-                <li><strong>Continuous shield:</strong> All components must be shielded and connected</li>
-                <li><strong>Drain wire:</strong> Connect to grounding point at termination</li>
-                <li><strong>Earth reference:</strong> Connect to building earth system</li>
+                <li>
+                  <strong>Both ends:</strong> Ground at patch panel and outlet for best results
+                </li>
+                <li>
+                  <strong>Continuous shield:</strong> All components must be shielded and connected
+                </li>
+                <li>
+                  <strong>Drain wire:</strong> Connect to grounding point at termination
+                </li>
+                <li>
+                  <strong>Earth reference:</strong> Connect to building earth system
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Grounding Errors:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Common Grounding Errors:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Ground loops:</strong> Multiple ground paths at different potentials</li>
-                <li><strong>Ungrounded shields:</strong> Shield acts as antenna, worsening noise</li>
-                <li><strong>Mixed systems:</strong> Shielded cable with unshielded connectors</li>
-                <li><strong>Poor connections:</strong> High-resistance ground bonds</li>
+                <li>
+                  <strong>Ground loops:</strong> Multiple ground paths at different potentials
+                </li>
+                <li>
+                  <strong>Ungrounded shields:</strong> Shield acts as antenna, worsening noise
+                </li>
+                <li>
+                  <strong>Mixed systems:</strong> Shielded cable with unshielded connectors
+                </li>
+                <li>
+                  <strong>Poor connections:</strong> High-resistance ground bonds
+                </li>
               </ul>
             </div>
 
@@ -308,7 +350,9 @@ const DataCablingModule2Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use Shielded Cable</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When to Use Shielded Cable
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Industrial environments with motors, VFDs, welding</li>
                 <li>Near high-power electrical equipment</li>
@@ -320,10 +364,18 @@ const DataCablingModule2Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Ungrounded shields:</strong> — Creates worse interference than UTP</li>
-                <li><strong>Mixed components:</strong> — Shielded cable with UTP jacks</li>
-                <li><strong>Ground loops:</strong> — Multiple grounds at different potentials</li>
-                <li><strong>Over-specification:</strong> — Shielded cable where UTP suffices</li>
+                <li>
+                  <strong>Ungrounded shields:</strong> — Creates worse interference than UTP
+                </li>
+                <li>
+                  <strong>Mixed components:</strong> — Shielded cable with UTP jacks
+                </li>
+                <li>
+                  <strong>Ground loops:</strong> — Multiple grounds at different potentials
+                </li>
+                <li>
+                  <strong>Over-specification:</strong> — Shielded cable where UTP suffices
+                </li>
               </ul>
             </div>
           </div>
@@ -367,10 +419,7 @@ const DataCablingModule2Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

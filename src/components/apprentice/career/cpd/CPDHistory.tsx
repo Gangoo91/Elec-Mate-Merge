@@ -1,73 +1,83 @@
-
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Download, Eye, FileText, Loader2, Clock, CheckCircle } from "lucide-react";
-import { useUnifiedCPD } from "@/hooks/cpd/useUnifiedCPD";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, Filter, Download, Eye, FileText, Loader2, Clock, CheckCircle } from 'lucide-react';
+import { useUnifiedCPD } from '@/hooks/cpd/useUnifiedCPD';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const CPDHistory = () => {
   const { entries, loading, deleteEntry, updateEntry } = useUnifiedCPD();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [yearFilter, setYearFilter] = useState("all");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [yearFilter, setYearFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const categoryNames: Record<string, string> = {
-    "technical-skills": "Technical Skills",
-    "regulations-standards": "Regulations & Standards",
-    "safety-health": "Safety & Health",
-    "business-commercial": "Business & Commercial",
-    "professional-ethics": "Professional Ethics",
-    "environmental-sustainability": "Environmental Sustainability",
-    "digital-technology": "Digital Technology",
-    "customer-service": "Customer Service"
+    'technical-skills': 'Technical Skills',
+    'regulations-standards': 'Regulations & Standards',
+    'safety-health': 'Safety & Health',
+    'business-commercial': 'Business & Commercial',
+    'professional-ethics': 'Professional Ethics',
+    'environmental-sustainability': 'Environmental Sustainability',
+    'digital-technology': 'Digital Technology',
+    'customer-service': 'Customer Service',
   };
 
   const activityTypeNames: Record<string, string> = {
-    "formal-training": "Formal Training",
-    "work-based-learning": "Work-based Learning",
-    "self-directed-study": "Self-directed Study",
-    "professional-activities": "Professional Activities",
-    "conferences-seminars": "Conferences & Seminars",
-    "mentoring": "Mentoring",
-    "assessment-preparation": "Assessment Preparation"
+    'formal-training': 'Formal Training',
+    'work-based-learning': 'Work-based Learning',
+    'self-directed-study': 'Self-directed Study',
+    'professional-activities': 'Professional Activities',
+    'conferences-seminars': 'Conferences & Seminars',
+    mentoring: 'Mentoring',
+    'assessment-preparation': 'Assessment Preparation',
   };
 
   const categories = Object.entries(categoryNames);
-  
+
   const years = useMemo(() => {
-    const entryYears = entries.map(entry => 
+    const entryYears = entries.map((entry) =>
       new Date(entry.date_completed).getFullYear().toString()
     );
     return [...new Set(entryYears)].sort().reverse();
   }, [entries]);
 
   const filteredEntries = useMemo(() => {
-    return entries.filter(entry => {
-      const matchesSearch = entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           (entry.description?.toLowerCase().includes(searchTerm.toLowerCase()));
-      const matchesCategory = categoryFilter === "all" || entry.category === categoryFilter;
-      const matchesYear = yearFilter === "all" || entry.date_completed.startsWith(yearFilter);
-      const matchesStatus = statusFilter === "all" || 
-        (statusFilter === "verified" && entry.is_verified) ||
-        (statusFilter === "pending" && !entry.is_verified);
-      
+    return entries.filter((entry) => {
+      const matchesSearch =
+        entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        entry.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = categoryFilter === 'all' || entry.category === categoryFilter;
+      const matchesYear = yearFilter === 'all' || entry.date_completed.startsWith(yearFilter);
+      const matchesStatus =
+        statusFilter === 'all' ||
+        (statusFilter === 'verified' && entry.is_verified) ||
+        (statusFilter === 'pending' && !entry.is_verified);
+
       return matchesSearch && matchesCategory && matchesYear && matchesStatus;
     });
   }, [entries, searchTerm, categoryFilter, yearFilter, statusFilter]);
 
   const getStatusColor = (isVerified: boolean) => {
-    return isVerified 
-      ? "bg-green-500/10 text-green-400 border-green-500/30"
-      : "bg-amber-500/10 text-amber-400 border-amber-500/30";
+    return isVerified
+      ? 'bg-green-500/10 text-green-400 border-green-500/30'
+      : 'bg-amber-500/10 text-amber-400 border-amber-500/30';
   };
 
-  const totalHours = filteredEntries.reduce((sum, entry) => sum + parseFloat(entry.hours.toString()), 0);
+  const totalHours = filteredEntries.reduce(
+    (sum, entry) => sum + parseFloat(entry.hours.toString()),
+    0
+  );
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -93,8 +103,8 @@ const CPDHistory = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={cn(
-                  "h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50",
-                  !searchTerm && "pl-10"
+                  'h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50',
+                  !searchTerm && 'pl-10'
                 )}
               />
             </div>
@@ -106,7 +116,9 @@ const CPDHistory = () => {
               <SelectContent className="bg-elec-gray border-white/20">
                 <SelectItem value="all">All Categories</SelectItem>
                 {categories.map(([id, name]) => (
-                  <SelectItem key={id} value={id}>{name}</SelectItem>
+                  <SelectItem key={id} value={id}>
+                    {name}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -117,8 +129,10 @@ const CPDHistory = () => {
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-white/20">
                 <SelectItem value="all">All Years</SelectItem>
-                {years.map(year => (
-                  <SelectItem key={year} value={year}>{year}</SelectItem>
+                {years.map((year) => (
+                  <SelectItem key={year} value={year}>
+                    {year}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -143,7 +157,9 @@ const CPDHistory = () => {
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400" />
-                <span className="text-sm text-white">Total: <span className="font-semibold text-elec-yellow">{totalHours} hours</span></span>
+                <span className="text-sm text-white">
+                  Total: <span className="font-semibold text-elec-yellow">{totalHours} hours</span>
+                </span>
               </div>
             </div>
             <Button
@@ -175,13 +191,18 @@ const CPDHistory = () => {
               <Search className="h-8 w-8 text-white/50" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">No entries found</h3>
-            <p className="text-white/70">No CPD entries match your current filters. Try adjusting your search criteria.</p>
+            <p className="text-white/70">
+              No CPD entries match your current filters. Try adjusting your search criteria.
+            </p>
           </CardContent>
         </Card>
       ) : (
         <div className="space-y-3">
           {filteredEntries.map((entry) => (
-            <Card key={entry.id} className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all overflow-hidden relative group">
+            <Card
+              key={entry.id}
+              className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all overflow-hidden relative group"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
               <CardContent className="p-4 relative">
                 <div className="flex items-start justify-between gap-4">
@@ -190,7 +211,9 @@ const CPDHistory = () => {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-white text-base">{entry.title}</h3>
                         {entry.description && (
-                          <p className="text-sm text-white/60 mt-1 line-clamp-2">{entry.description}</p>
+                          <p className="text-sm text-white/60 mt-1 line-clamp-2">
+                            {entry.description}
+                          </p>
                         )}
                       </div>
                       <div className="flex flex-wrap gap-2">
@@ -198,7 +221,10 @@ const CPDHistory = () => {
                           {entry.is_verified ? 'Verified' : 'Pending'}
                         </Badge>
                         {entry.evidence_files && entry.evidence_files.length > 0 && (
-                          <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
+                          <Badge
+                            variant="outline"
+                            className="bg-blue-500/10 text-blue-400 border-blue-500/30"
+                          >
                             <FileText className="h-3 w-3 mr-1" />
                             Evidence
                           </Badge>
@@ -223,8 +249,12 @@ const CPDHistory = () => {
 
                     {entry.learning_outcomes && entry.learning_outcomes.length > 0 && (
                       <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
-                        <span className="text-xs text-green-400 font-medium">Learning outcomes:</span>
-                        <p className="text-xs text-white/80 mt-1">{entry.learning_outcomes.join(', ')}</p>
+                        <span className="text-xs text-green-400 font-medium">
+                          Learning outcomes:
+                        </span>
+                        <p className="text-xs text-white/80 mt-1">
+                          {entry.learning_outcomes.join(', ')}
+                        </p>
                       </div>
                     )}
                   </div>

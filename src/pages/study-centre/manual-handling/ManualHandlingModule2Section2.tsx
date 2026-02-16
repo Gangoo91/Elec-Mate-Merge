@@ -96,8 +96,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'What is the approximate HSE guideline starting (initial) force for pushing for men?',
+    question: 'What is the approximate HSE guideline starting (initial) force for pushing for men?',
     options: [
       'Approximately 5 kg of force',
       'Approximately 10 kg of force',
@@ -252,8 +251,8 @@ export default function ManualHandlingModule2Section2() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>Starting force:</strong> ~20&nbsp;kg men / ~15&nbsp;kg women.
-                    Sustained: ~10&nbsp;kg / ~7&nbsp;kg.
+                    <strong>Starting force:</strong> ~20&nbsp;kg men / ~15&nbsp;kg women. Sustained:
+                    ~10&nbsp;kg / ~7&nbsp;kg.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -277,8 +276,8 @@ export default function ManualHandlingModule2Section2() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>Trolleys:</strong> Push at waist height &mdash; avoid leaning forward
-                    or reaching up.
+                    <strong>Trolleys:</strong> Push at waist height &mdash; avoid leaning forward or
+                    reaching up.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -290,8 +289,8 @@ export default function ManualHandlingModule2Section2() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>One-handed:</strong> Avoid where possible &mdash; causes lateral
-                    spinal bending.
+                    <strong>One-handed:</strong> Avoid where possible &mdash; causes lateral spinal
+                    bending.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -338,8 +337,8 @@ export default function ManualHandlingModule2Section2() {
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span className="leading-relaxed">
-                Apply safe carrying techniques including correct posture, load positioning, and
-                the use of handles
+                Apply safe carrying techniques including correct posture, load positioning, and the
+                use of handles
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,9 +362,9 @@ export default function ManualHandlingModule2Section2() {
             <div className="space-y-4 text-white">
               <p className="leading-relaxed">
                 Not all manual handling involves lifting. On an electrical installation site, you
-                will frequently need to push trolleys of materials, pull cables through
-                containment, and carry tools and components from the van to the work area. Each of
-                these activities carries its own risks and requires specific techniques.
+                will frequently need to push trolleys of materials, pull cables through containment,
+                and carry tools and components from the van to the work area. Each of these
+                activities carries its own risks and requires specific techniques.
               </p>
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
@@ -383,9 +382,9 @@ export default function ManualHandlingModule2Section2() {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span className="leading-relaxed">
-                      <strong className="text-white">Body weight assist:</strong> You can lean
-                      into the load and use your body weight to supplement the pushing force,
-                      reducing the effort from your arms and back
+                      <strong className="text-white">Body weight assist:</strong> You can lean into
+                      the load and use your body weight to supplement the pushing force, reducing
+                      the effort from your arms and back
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -512,8 +511,8 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                 </div>
                 <p className="text-white/50 text-xs text-center mt-4 italic">
-                  HSE guideline force thresholds for pushing and pulling. These are
-                  risk-assessment thresholds, not absolute limits. Individual capability varies.
+                  HSE guideline force thresholds for pushing and pulling. These are risk-assessment
+                  thresholds, not absolute limits. Individual capability varies.
                 </p>
               </div>
 
@@ -525,13 +524,13 @@ export default function ManualHandlingModule2Section2() {
                   The <strong className="text-white">starting force</strong> (also called
                   &ldquo;initial force&rdquo;) is the amount of effort needed to get a stationary
                   load moving. It is always higher than the sustained force because you must
-                  overcome <strong className="text-white">static friction</strong> between the
-                  load (or its wheels) and the floor. Once the load is moving, the{' '}
-                  <strong className="text-white">sustained force</strong> (or
-                  &ldquo;keeping-going force&rdquo;) is the effort needed to keep it rolling.
-                  This is lower because rolling friction is less than static friction. If the
-                  sustained force required exceeds the guideline thresholds, the task needs
-                  redesigning &mdash; better wheels, a smoother surface, or a lighter load.
+                  overcome <strong className="text-white">static friction</strong> between the load
+                  (or its wheels) and the floor. Once the load is moving, the{' '}
+                  <strong className="text-white">sustained force</strong> (or &ldquo;keeping-going
+                  force&rdquo;) is the effort needed to keep it rolling. This is lower because
+                  rolling friction is less than static friction. If the sustained force required
+                  exceeds the guideline thresholds, the task needs redesigning &mdash; better
+                  wheels, a smoother surface, or a lighter load.
                 </p>
               </div>
             </div>
@@ -552,9 +551,9 @@ export default function ManualHandlingModule2Section2() {
                 Friction is the force that resists the movement of one surface across another. In
                 manual handling, friction is the enemy when you are trying to move a load
                 horizontally (pushing, pulling, or sliding) but your ally when you need grip
-                (holding a load, standing on a floor). Reducing{' '}
-                <strong>unwanted friction</strong> is one of the most effective ways to lower the
-                force requirements of a manual handling task.
+                (holding a load, standing on a floor). Reducing <strong>unwanted friction</strong>{' '}
+                is one of the most effective ways to lower the force requirements of a manual
+                handling task.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -564,9 +563,7 @@ export default function ManualHandlingModule2Section2() {
                 </h3>
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
-                    <h4 className="text-emerald-300 font-medium mb-1">
-                      Wheels &amp; Castors
-                    </h4>
+                    <h4 className="text-emerald-300 font-medium mb-1">Wheels &amp; Castors</h4>
                     <p className="text-white/80 text-sm leading-relaxed">
                       Wheeled equipment (trolleys, sack trucks, platform trucks) replaces sliding
                       friction with rolling friction, which requires{' '}
@@ -578,9 +575,7 @@ export default function ManualHandlingModule2Section2() {
                     </p>
                   </div>
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
-                    <h4 className="text-emerald-300 font-medium mb-1">
-                      Rollers &amp; Conveyors
-                    </h4>
+                    <h4 className="text-emerald-300 font-medium mb-1">Rollers &amp; Conveyors</h4>
                     <p className="text-white/80 text-sm leading-relaxed">
                       For heavy or bulky loads that cannot easily be placed on a trolley, rollers
                       (pipe rollers, skate rollers) or gravity conveyors can dramatically reduce the
@@ -589,9 +584,7 @@ export default function ManualHandlingModule2Section2() {
                     </p>
                   </div>
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
-                    <h4 className="text-emerald-300 font-medium mb-1">
-                      Slides &amp; Chutes
-                    </h4>
+                    <h4 className="text-emerald-300 font-medium mb-1">Slides &amp; Chutes</h4>
                     <p className="text-white/80 text-sm leading-relaxed">
                       Low-friction slides or chutes can be used to move materials between levels
                       (e.g. from a delivery vehicle to ground level) without manual lifting. This is
@@ -600,9 +593,7 @@ export default function ManualHandlingModule2Section2() {
                     </p>
                   </div>
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
-                    <h4 className="text-emerald-300 font-medium mb-1">
-                      Surface Maintenance
-                    </h4>
+                    <h4 className="text-emerald-300 font-medium mb-1">Surface Maintenance</h4>
                     <p className="text-white/80 text-sm leading-relaxed">
                       Keep floors and pathways clean, smooth, and free of debris. Grit, cable
                       offcuts, and spilt materials on the floor increase rolling resistance and can
@@ -625,10 +616,10 @@ export default function ManualHandlingModule2Section2() {
             </h2>
             <div className="space-y-4 text-white">
               <p className="leading-relaxed">
-                Carrying is one of the most common manual handling activities on site. Unlike a
-                lift (which is a brief, high-effort movement), carrying involves sustained effort
-                over a distance. This means that even relatively light loads can cause cumulative
-                strain if carried frequently or over long distances with poor technique.
+                Carrying is one of the most common manual handling activities on site. Unlike a lift
+                (which is a brief, high-effort movement), carrying involves sustained effort over a
+                distance. This means that even relatively light loads can cause cumulative strain if
+                carried frequently or over long distances with poor technique.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -660,8 +651,8 @@ export default function ManualHandlingModule2Section2() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Use handles</strong> wherever available. Handles provide a secure
-                      grip and allow you to carry with less hand and forearm fatigue. If no handles
+                      <strong>Use handles</strong> wherever available. Handles provide a secure grip
+                      and allow you to carry with less hand and forearm fatigue. If no handles
                       exist, consider adding temporary handles (e.g. ratchet straps, carry loops).
                     </div>
                   </li>
@@ -679,19 +670,17 @@ export default function ManualHandlingModule2Section2() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-red-300">
-                    One-Handed Carrying Risks
-                  </h3>
+                  <h3 className="font-semibold text-red-300">One-Handed Carrying Risks</h3>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
                   Carrying a load in one hand creates an{' '}
                   <strong className="text-white">asymmetric load</strong> on the body. Your spine
-                  bends laterally (sideways) to compensate, placing uneven compressive forces on
-                  the intervertebral discs and overloading the muscles on one side. Over time, this
-                  can lead to chronic back pain, disc degeneration, and postural problems.
-                  Electricians often carry tool bags in one hand out of habit &mdash; this is a
-                  common cause of cumulative strain. Where possible, use a backpack-style tool bag,
-                  carry with both hands, or split tools evenly between two bags.
+                  bends laterally (sideways) to compensate, placing uneven compressive forces on the
+                  intervertebral discs and overloading the muscles on one side. Over time, this can
+                  lead to chronic back pain, disc degeneration, and postural problems. Electricians
+                  often carry tool bags in one hand out of habit &mdash; this is a common cause of
+                  cumulative strain. Where possible, use a backpack-style tool bag, carry with both
+                  hands, or split tools evenly between two bags.
                 </p>
               </div>
 
@@ -700,13 +689,14 @@ export default function ManualHandlingModule2Section2() {
                   Carry Distance &amp; Frequency
                 </h3>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  The HSE recognises that the risk of injury increases with both the distance a
-                  load is carried and the frequency of the carry. As a rule of thumb, if you are
-                  regularly carrying loads more than <strong className="text-white">10 metres</strong>,
-                  you should consider using a trolley, sack truck, or other wheeled aid. If
-                  carrying is frequent (more than a few times per hour), the individual carry weight
-                  should be reduced. Plan your work area layout to minimise carrying distances
-                  &mdash; store materials as close to the work point as possible.
+                  The HSE recognises that the risk of injury increases with both the distance a load
+                  is carried and the frequency of the carry. As a rule of thumb, if you are
+                  regularly carrying loads more than{' '}
+                  <strong className="text-white">10 metres</strong>, you should consider using a
+                  trolley, sack truck, or other wheeled aid. If carrying is frequent (more than a
+                  few times per hour), the individual carry weight should be reduced. Plan your work
+                  area layout to minimise carrying distances &mdash; store materials as close to the
+                  work point as possible.
                 </p>
               </div>
             </div>
@@ -724,10 +714,10 @@ export default function ManualHandlingModule2Section2() {
             </h2>
             <div className="space-y-4 text-white">
               <p className="leading-relaxed">
-                Carrying loads on stairways and slopes introduces additional risk factors:
-                changes in elevation, restricted width, the need to maintain balance on an incline,
-                and the potential for the load to shift or the handler to trip. Falls on stairs
-                while carrying loads are a major cause of serious workplace injury.
+                Carrying loads on stairways and slopes introduces additional risk factors: changes
+                in elevation, restricted width, the need to maintain balance on an incline, and the
+                potential for the load to shift or the handler to trip. Falls on stairs while
+                carrying loads are a major cause of serious workplace injury.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -765,8 +755,8 @@ export default function ManualHandlingModule2Section2() {
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
                       <strong>Going down is more dangerous:</strong> Descending stairs while
-                      carrying is riskier than ascending because gravity is pulling both you and
-                      the load forward and downward. Go slowly and use the handrail.
+                      carrying is riskier than ascending because gravity is pulling both you and the
+                      load forward and downward. Go slowly and use the handrail.
                     </div>
                   </li>
                 </ul>
@@ -795,9 +785,9 @@ export default function ManualHandlingModule2Section2() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Chock wheels on slopes:</strong> If you need to stop on a slope,
-                      chock the wheels or engage the brake immediately. A loaded trolley on a slope
-                      will roll if left unsecured.
+                      <strong>Chock wheels on slopes:</strong> If you need to stop on a slope, chock
+                      the wheels or engage the brake immediately. A loaded trolley on a slope will
+                      roll if left unsecured.
                     </div>
                   </li>
                 </ul>
@@ -812,9 +802,8 @@ export default function ManualHandlingModule2Section2() {
                   Construction-site stairways are frequently wet, dusty, or contaminated with
                   building materials. This dramatically reduces the grip between your footwear and
                   the stair surface. If stairs are wet or contaminated, clean them before carrying
-                  loads on them, or use an alternative route. Ensure your safety boots have
-                  adequate tread. Report hazardous stairway conditions to your site supervisor
-                  immediately.
+                  loads on them, or use an alternative route. Ensure your safety boots have adequate
+                  tread. Report hazardous stairway conditions to your site supervisor immediately.
                 </p>
               </div>
             </div>
@@ -910,9 +899,7 @@ export default function ManualHandlingModule2Section2() {
                     </ul>
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
-                    <h4 className="text-emerald-300 font-medium mb-2">
-                      Stair-Climbing Trolleys
-                    </h4>
+                    <h4 className="text-emerald-300 font-medium mb-2">Stair-Climbing Trolleys</h4>
                     <ul className="text-white/80 text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -938,9 +925,7 @@ export default function ManualHandlingModule2Section2() {
               </div>
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-emerald-400">
-                  Key Numbers to Remember
-                </h3>
+                <h3 className="font-semibold mb-2 text-emerald-400">Key Numbers to Remember</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">20 kg</p>
@@ -988,10 +973,7 @@ export default function ManualHandlingModule2Section2() {
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0"
-              >
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
               </div>

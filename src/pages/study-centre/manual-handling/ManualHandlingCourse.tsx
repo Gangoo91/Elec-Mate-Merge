@@ -1,65 +1,83 @@
-import { ArrowLeft, PackageOpen, BookOpen, Dumbbell, Shield, HardHat, Siren, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  PackageOpen,
+  BookOpen,
+  Dumbbell,
+  Shield,
+  HardHat,
+  Siren,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Understanding Manual Handling",
-    description: "MHOR 1992 definition, injury statistics, the legal framework, risk assessment principles, and spinal anatomy",
+    title: 'Understanding Manual Handling',
+    description:
+      'MHOR 1992 definition, injury statistics, the legal framework, risk assessment principles, and spinal anatomy',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../manual-handling-module-1",
+    duration: '30 mins',
+    link: '../manual-handling-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Principles of Safe Lifting",
-    description: "Kinetic lifting technique, pushing and pulling, team handling, and managing awkward loads",
+    title: 'Principles of Safe Lifting',
+    description:
+      'Kinetic lifting technique, pushing and pulling, team handling, and managing awkward loads',
     icon: Dumbbell,
-    duration: "30 mins",
-    link: "../manual-handling-module-2",
+    duration: '30 mins',
+    link: '../manual-handling-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Risk Assessment & Reduction",
-    description: "The TILE framework, hazard identification, mechanical aids, and designing out manual handling",
+    title: 'Risk Assessment & Reduction',
+    description:
+      'The TILE framework, hazard identification, mechanical aids, and designing out manual handling',
     icon: Shield,
-    duration: "30 mins",
-    link: "../manual-handling-module-3",
+    duration: '30 mins',
+    link: '../manual-handling-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Workplace-Specific Handling",
-    description: "Electrical materials, construction environments, confined spaces, and repetitive handling risks",
+    title: 'Workplace-Specific Handling',
+    description:
+      'Electrical materials, construction environments, confined spaces, and repetitive handling risks',
     icon: HardHat,
-    duration: "30 mins",
-    link: "../manual-handling-module-4",
+    duration: '30 mins',
+    link: '../manual-handling-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Health, Welfare & Responsibilities",
-    description: "Musculoskeletal disorders, fitness and fatigue, incident reporting, and legal responsibilities",
+    title: 'Health, Welfare & Responsibilities',
+    description:
+      'Musculoskeletal disorders, fitness and fatigue, incident reporting, and legal responsibilities',
     icon: Siren,
-    duration: "30 mins",
-    link: "../manual-handling-module-5",
+    duration: '30 mins',
+    link: '../manual-handling-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../manual-handling-module-6",
+    duration: '30 mins',
+    link: '../manual-handling-module-6',
     isExam: true,
   },
 ];
 
 export default function ManualHandlingCourse() {
   useSEO({
-    title: "Manual Handling | General Upskilling",
-    description: "Complete manual handling training covering safe lifting techniques, risk assessment, injury prevention, and mock exam preparation.",
+    title: 'Manual Handling | General Upskilling',
+    description:
+      'Complete manual handling training covering safe lifting techniques, risk assessment, injury prevention, and mock exam preparation.',
   });
 
   return (
@@ -96,7 +114,8 @@ export default function ManualHandlingCourse() {
                 Manual Handling
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 max-w-2xl">
-                Safe lifting techniques, risk assessment, and injury prevention for tradespeople on site
+                Safe lifting techniques, risk assessment, and injury prevention for tradespeople on
+                site
               </p>
             </div>
           </div>

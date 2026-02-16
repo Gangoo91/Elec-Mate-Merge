@@ -14,7 +14,8 @@ const TestingVerificationSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Once paired, each device must be thoroughly tested to ensure proper operation and integration with the overall system.
+            Once paired, each device must be thoroughly tested to ensure proper operation and
+            integration with the overall system.
           </p>
 
           <div className="space-y-4">
@@ -22,7 +23,7 @@ const TestingVerificationSection = () => {
               <TestTube2 className="h-4 w-4 text-elec-yellow" />
               Testing Checklist
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-2">Individual Device Tests</h5>

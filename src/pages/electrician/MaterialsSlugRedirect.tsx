@@ -1,20 +1,19 @@
-
-import { Navigate, useParams } from "react-router-dom";
-import { supplierData } from "@/data/electrician/supplierData";
+import { Navigate, useParams } from 'react-router-dom';
+import { supplierData } from '@/data/electrician/supplierData';
 
 const categorySlugs = [
-  "cables", 
-  "protection", 
-  "cable-management", 
-  "ev-charging", 
-  "lighting", 
-  "accessories", 
-  "fixings-consumables", 
-  "components"
+  'cables',
+  'protection',
+  'cable-management',
+  'ev-charging',
+  'lighting',
+  'accessories',
+  'fixings-consumables',
+  'components',
 ] as const;
 
 const MaterialsSlugRedirect = () => {
-  const { slug = "" } = useParams<{ slug: string }>();
+  const { slug = '' } = useParams<{ slug: string }>();
   const lower = slug.toLowerCase();
 
   const supplierSlugs = Object.keys(supplierData);
@@ -22,7 +21,7 @@ const MaterialsSlugRedirect = () => {
   if (supplierSlugs.includes(lower)) {
     return <Navigate to={`/electrician/materials/supplier/${lower}`} replace />;
   }
-  if (lower === "tools") {
+  if (lower === 'tools') {
     return <Navigate to="/electrician/tools" replace />;
   }
   if (categorySlugs.includes(lower as any)) {

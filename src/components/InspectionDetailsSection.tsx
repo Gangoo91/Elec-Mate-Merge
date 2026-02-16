@@ -1,10 +1,15 @@
-
 import React, { useState, useCallback, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Calendar, Calculator, ClipboardList, CalendarCheck, Telescope } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -34,11 +39,23 @@ interface InspectionDetailsSectionProps {
 }
 
 // Section header component - MUST be outside main component to prevent re-renders
-const SectionTitle = ({ icon: Icon, title, isMobile }: { icon: React.ElementType; title: string; isMobile: boolean }) => (
-  <div className={cn(
-    "flex items-center gap-3 py-3",
-    isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
-  )}>
+const SectionTitle = ({
+  icon: Icon,
+  title,
+  isMobile,
+}: {
+  icon: React.ElementType;
+  title: string;
+  isMobile: boolean;
+}) => (
+  <div
+    className={cn(
+      'flex items-center gap-3 py-3',
+      isMobile
+        ? '-mx-4 px-4 bg-card/30 border-y border-border/20'
+        : 'pb-2 border-b border-border/30'
+    )}
+  >
     <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
       <Icon className="h-4 w-4 text-blue-400" />
     </div>
@@ -51,7 +68,7 @@ const FormField = ({
   label,
   required,
   hint,
-  children
+  children,
 }: {
   label: string;
   required?: boolean;
@@ -105,9 +122,9 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
   // Get recommended interval based on property type
   const getRecommendedInterval = (propertyType: string) => {
     const recommendations: { [key: string]: string } = {
-      'domestic': '10',
-      'commercial': '5',
-      'industrial': '1',
+      domestic: '10',
+      commercial: '5',
+      industrial: '1',
       'domestic-dwelling': '10',
       'commercial-office': '5',
       'retail-shop': '5',
@@ -126,7 +143,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
       onUpdate('inspectionInterval', recommended);
 
       toast({
-        title: "Recommended Interval Set",
+        title: 'Recommended Interval Set',
         description: `${recommended} years is recommended for ${formData.description?.replace('-', ' ')} properties according to BS7671`,
         duration: 3000,
       });
@@ -160,11 +177,11 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
   ];
 
   return (
-    <div className={cn("space-y-6", isMobile && "-mx-4")}>
+    <div className={cn('space-y-6', isMobile && '-mx-4')}>
       {/* Purpose of Inspection Section */}
       <div>
         <SectionTitle icon={ClipboardList} title="Purpose of Inspection" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="Purpose" required>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {purposeOptions.map((option) => (
@@ -173,13 +190,16 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('purposeOfInspection', formData.purposeOfInspection === option.value ? '' : option.value);
+                    onUpdate(
+                      'purposeOfInspection',
+                      formData.purposeOfInspection === option.value ? '' : option.value
+                    );
                   }}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm px-2",
+                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm px-2',
                     formData.purposeOfInspection === option.value
-                      ? "bg-elec-yellow text-black"
-                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                   )}
                 >
                   {isMobile ? option.shortLabel : option.label}
@@ -204,7 +224,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
       {/* Inspection Dates Section */}
       <div>
         <SectionTitle icon={Calendar} title="Inspection Dates" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="Date of Inspection" required>
             <div className="flex gap-2">
               <Input
@@ -233,13 +253,16 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('inspectionInterval', formData.inspectionInterval === option.value ? '' : option.value);
+                    onUpdate(
+                      'inspectionInterval',
+                      formData.inspectionInterval === option.value ? '' : option.value
+                    );
                   }}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
                     formData.inspectionInterval === option.value
-                      ? "bg-elec-yellow text-black"
-                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                   )}
                 >
                   {option.label}
@@ -249,7 +272,8 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             {formData.description && (
               <p className="text-xs text-elec-yellow/80 flex items-center gap-1 mt-2">
                 <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Recommended: {getRecommendedInterval(formData.description)} years for this property type
+                Recommended: {getRecommendedInterval(formData.description)} years for this property
+                type
               </p>
             )}
           </FormField>
@@ -275,7 +299,10 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             </div>
           </FormField>
 
-          <FormField label="Reasons for Recommended Interval" hint="Justify the chosen inspection interval">
+          <FormField
+            label="Reasons for Recommended Interval"
+            hint="Justify the chosen inspection interval"
+          >
             <Textarea
               value={formData.intervalReasons || ''}
               onChange={(e) => onUpdate('intervalReasons', e.target.value)}
@@ -289,7 +316,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
       {/* Inspection Scope Section */}
       <div>
         <SectionTitle icon={Telescope} title="Inspection Scope" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="Agreed With" hint="Person with whom the extent was agreed">
             <Input
               value={formData.agreedWith || ''}
@@ -339,7 +366,10 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
           <FormField label="BS 7671 Edition" hint="Amendment edition used for this inspection">
             <Select
               value={formData.bsAmendment || 'amd3-2024'}
-              onValueChange={(value) => { haptics.tap(); onUpdate('bsAmendment', value); }}
+              onValueChange={(value) => {
+                haptics.tap();
+                onUpdate('bsAmendment', value);
+              }}
             >
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue placeholder="Select edition" />
@@ -358,15 +388,18 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
 };
 
 // Memoized component - only re-renders when INSPECTION_SECTION_FIELDS change
-const InspectionDetailsSection = React.memo(InspectionDetailsSectionInner, (prevProps, nextProps) => {
-  // Compare only the fields this section cares about
-  for (const field of INSPECTION_SECTION_FIELDS) {
-    if (prevProps.formData[field] !== nextProps.formData[field]) {
-      return false; // Re-render needed
+const InspectionDetailsSection = React.memo(
+  InspectionDetailsSectionInner,
+  (prevProps, nextProps) => {
+    // Compare only the fields this section cares about
+    for (const field of INSPECTION_SECTION_FIELDS) {
+      if (prevProps.formData[field] !== nextProps.formData[field]) {
+        return false; // Re-render needed
+      }
     }
+    return prevProps.onUpdate === nextProps.onUpdate;
   }
-  return prevProps.onUpdate === nextProps.onUpdate;
-});
+);
 
 InspectionDetailsSection.displayName = 'InspectionDetailsSection';
 

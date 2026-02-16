@@ -7,12 +7,12 @@ export const HomeAssistantQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is one advantage and one disadvantage of Home Assistant?";
+  const question = 'What is one advantage and one disadvantage of Home Assistant?';
   const options = [
-    "Advantage: Easy setup, Disadvantage: Limited device support",
-    "Advantage: Very flexible with thousands of integrations, Disadvantage: Requires technical knowledge",
-    "Advantage: Cloud-based, Disadvantage: Expensive subscription fees",
-    "Advantage: Proprietary system, Disadvantage: No community support"
+    'Advantage: Easy setup, Disadvantage: Limited device support',
+    'Advantage: Very flexible with thousands of integrations, Disadvantage: Requires technical knowledge',
+    'Advantage: Cloud-based, Disadvantage: Expensive subscription fees',
+    'Advantage: Proprietary system, Disadvantage: No community support',
   ];
   const correctAnswer = 1;
 
@@ -35,7 +35,7 @@ export const HomeAssistantQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -47,8 +47,8 @@ export const HomeAssistantQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-900/30 border-green-500 text-green-300'
                     : index === selectedAnswer
-                    ? 'bg-red-900/30 border-red-500 text-red-300'
-                    : 'bg-gray-800/30 border-gray-600 text-gray-400'
+                      ? 'bg-red-900/30 border-red-500 text-red-300'
+                      : 'bg-gray-800/30 border-gray-600 text-gray-400'
                   : 'bg-elec-gray border-gray-600 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
               }`}
             >
@@ -67,16 +67,17 @@ export const HomeAssistantQuickCheck = () => {
 
         {showResult && (
           <div className="space-y-3">
-            <div className={`p-4 rounded-lg border ${
-              selectedAnswer === correctAnswer
-                ? 'bg-green-900/20 border-green-500/30'
-                : 'bg-red-900/20 border-red-500/30'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'bg-green-900/20 border-green-500/30'
+                  : 'bg-red-900/20 border-red-500/30'
+              }`}
+            >
               <p className="text-foreground text-sm">
                 {selectedAnswer === correctAnswer
                   ? "Correct! Home Assistant's flexibility and extensive device support make it powerful, but it requires significant technical knowledge to set up and maintain properly."
-                  : "Not quite. Home Assistant's main advantage is its flexibility and extensive integrations, while its main disadvantage is the technical expertise required for setup and maintenance."
-                }
+                  : "Not quite. Home Assistant's main advantage is its flexibility and extensive integrations, while its main disadvantage is the technical expertise required for setup and maintenance."}
               </p>
             </div>
 

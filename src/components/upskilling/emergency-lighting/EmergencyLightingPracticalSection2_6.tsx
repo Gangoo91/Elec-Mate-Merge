@@ -3,11 +3,11 @@ import { Wrench } from 'lucide-react';
 
 export const EmergencyLightingPracticalSection2_6 = () => {
   const practicalPoints = [
-    "Always carry out functional tests at times that minimise disruption (e.g. after hours)",
-    "After an annual full-duration test, recharge batteries immediately to restore system readiness",
-    "Keep logbooks up to date and stored in an accessible location near the fire panel or site office",
-    "If multiple electricians are working on-site, agree a system for consistent record keeping",
-    "Consider recommending automated testing systems in large buildings for reliability and efficiency"
+    'Always carry out functional tests at times that minimise disruption (e.g. after hours)',
+    'After an annual full-duration test, recharge batteries immediately to restore system readiness',
+    'Keep logbooks up to date and stored in an accessible location near the fire panel or site office',
+    'If multiple electricians are working on-site, agree a system for consistent record keeping',
+    'Consider recommending automated testing systems in large buildings for reliability and efficiency',
   ];
 
   return (

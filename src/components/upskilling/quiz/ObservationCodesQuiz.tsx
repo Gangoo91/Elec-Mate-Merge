@@ -3,7 +3,7 @@ import { observationCodesQuizQuestions } from '@/data/upskilling/observationCode
 
 const ObservationCodesQuiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={observationCodesQuizQuestions}
       title="Observation Codes Knowledge Quiz"
     />

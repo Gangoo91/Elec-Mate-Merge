@@ -71,7 +71,7 @@ export const RELATED_CONTENT: ContentRelation[] = [
     flashcardSetId: 'electrical-science',
     quizCategory: 'Theory',
     studyModule: 'unit-202',
-    relatedTopics: ['Ohm\'s law', 'Power formulae', 'AC theory'],
+    relatedTopics: ["Ohm's law", 'Power formulae', 'AC theory'],
   },
   {
     flashcardSetId: 'first-second-fix',

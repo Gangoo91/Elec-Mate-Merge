@@ -405,7 +405,9 @@ export default function SiteDiary() {
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-semibold text-white">Portfolio Opportunities</h4>
                   <p className="text-[11px] text-amber-300/80 mt-0.5">
-                    {portfolioOpportunities.length} entr{portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your portfolio
+                    {portfolioOpportunities.length} entr
+                    {portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your
+                    portfolio
                   </p>
                 </div>
                 <ChevronRight className="h-4 w-4 text-amber-400/60 flex-shrink-0" />

@@ -12,7 +12,8 @@ export const SmartHomeModule6Section1PracticalGuidance = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground leading-relaxed">
-          When advising clients on smart home hubs, consider these key factors to ensure the best solution for their needs:
+          When advising clients on smart home hubs, consider these key factors to ensure the best
+          solution for their needs:
         </p>
 
         <div className="grid gap-6">
@@ -23,10 +24,20 @@ export const SmartHomeModule6Section1PracticalGuidance = () => {
               <h4 className="font-semibold text-foreground">Assess Client Needs</h4>
             </div>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Technical skill level:</strong> Are they beginners, advanced users, or somewhere in between?</li>
-              <li>• <strong>System complexity:</strong> Simple lighting control or comprehensive automation?</li>
-              <li>• <strong>Device preferences:</strong> Specific brands or open to mixed ecosystems?</li>
-              <li>• <strong>Budget constraints:</strong> Initial cost vs. long-term expansion plans</li>
+              <li>
+                • <strong>Technical skill level:</strong> Are they beginners, advanced users, or
+                somewhere in between?
+              </li>
+              <li>
+                • <strong>System complexity:</strong> Simple lighting control or comprehensive
+                automation?
+              </li>
+              <li>
+                • <strong>Device preferences:</strong> Specific brands or open to mixed ecosystems?
+              </li>
+              <li>
+                • <strong>Budget constraints:</strong> Initial cost vs. long-term expansion plans
+              </li>
             </ul>
           </div>
 
@@ -37,10 +48,20 @@ export const SmartHomeModule6Section1PracticalGuidance = () => {
               <h4 className="font-semibold text-foreground">Check Compatibility</h4>
             </div>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Protocol support:</strong> Ensure all planned devices can communicate with the chosen hub</li>
-              <li>• <strong>Device limits:</strong> Check maximum number of connected devices</li>
-              <li>• <strong>Voice assistant integration:</strong> Confirm compatibility with preferred assistants</li>
-              <li>• <strong>Third-party apps:</strong> Verify integration with existing home systems</li>
+              <li>
+                • <strong>Protocol support:</strong> Ensure all planned devices can communicate with
+                the chosen hub
+              </li>
+              <li>
+                • <strong>Device limits:</strong> Check maximum number of connected devices
+              </li>
+              <li>
+                • <strong>Voice assistant integration:</strong> Confirm compatibility with preferred
+                assistants
+              </li>
+              <li>
+                • <strong>Third-party apps:</strong> Verify integration with existing home systems
+              </li>
             </ul>
           </div>
 
@@ -51,16 +72,27 @@ export const SmartHomeModule6Section1PracticalGuidance = () => {
               <h4 className="font-semibold text-foreground">Future-Proofing</h4>
             </div>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Avoid multiple hubs:</strong> Unless necessary for specific requirements</li>
-              <li>• <strong>Expandability:</strong> Choose systems that can grow with client needs</li>
-              <li>• <strong>Standard protocols:</strong> Prefer Zigbee 3.0, Z-Wave Plus, or Thread/Matter</li>
-              <li>• <strong>Update support:</strong> Ensure ongoing manufacturer updates and support</li>
+              <li>
+                • <strong>Avoid multiple hubs:</strong> Unless necessary for specific requirements
+              </li>
+              <li>
+                • <strong>Expandability:</strong> Choose systems that can grow with client needs
+              </li>
+              <li>
+                • <strong>Standard protocols:</strong> Prefer Zigbee 3.0, Z-Wave Plus, or
+                Thread/Matter
+              </li>
+              <li>
+                • <strong>Update support:</strong> Ensure ongoing manufacturer updates and support
+              </li>
             </ul>
           </div>
 
           {/* Support and Maintenance */}
           <div className="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
-            <h4 className="font-semibold text-foreground mb-3">Support and Maintenance Considerations</h4>
+            <h4 className="font-semibold text-foreground mb-3">
+              Support and Maintenance Considerations
+            </h4>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h5 className="font-medium text-orange-300 mb-2">Proprietary Hubs</h5>
@@ -86,11 +118,21 @@ export const SmartHomeModule6Section1PracticalGuidance = () => {
         <div className="bg-elec-dark/50 border border-gray-600/30 rounded-lg p-4">
           <h4 className="font-semibold text-elec-yellow mb-3">Quick Decision Guide:</h4>
           <div className="space-y-2 text-foreground text-sm">
-            <p><strong>Beginners:</strong> SmartThings or proprietary hubs (Hue, Hive)</p>
-            <p><strong>Tech enthusiasts:</strong> Home Assistant or SmartThings</p>
-            <p><strong>Mixed device brands:</strong> SmartThings or Home Assistant</p>
-            <p><strong>Single-system focus:</strong> Proprietary hubs (Philips, Nest)</p>
-            <p><strong>Privacy-conscious:</strong> Home Assistant (local control)</p>
+            <p>
+              <strong>Beginners:</strong> SmartThings or proprietary hubs (Hue, Hive)
+            </p>
+            <p>
+              <strong>Tech enthusiasts:</strong> Home Assistant or SmartThings
+            </p>
+            <p>
+              <strong>Mixed device brands:</strong> SmartThings or Home Assistant
+            </p>
+            <p>
+              <strong>Single-system focus:</strong> Proprietary hubs (Philips, Nest)
+            </p>
+            <p>
+              <strong>Privacy-conscious:</strong> Home Assistant (local control)
+            </p>
           </div>
         </div>
       </CardContent>

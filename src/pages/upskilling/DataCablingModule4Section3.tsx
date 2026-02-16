@@ -1,69 +1,79 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Fire-Stopping and Penetration Sealing | Data Cabling Module 4.3";
-const DESCRIPTION = "Learn fire compartmentation principles, intumescent materials, and penetration sealing requirements for data cabling installations.";
+const TITLE = 'Fire-Stopping and Penetration Sealing | Data Cabling Module 4.3';
+const DESCRIPTION =
+  'Learn fire compartmentation principles, intumescent materials, and penetration sealing requirements for data cabling installations.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m4s3-check1",
-    question: "What fire resistance must penetration sealing maintain in a 60-minute fire wall?",
-    options: ["30 minutes", "60 minutes", "90 minutes", "120 minutes"],
+    id: 'datacabling-m4s3-check1',
+    question: 'What fire resistance must penetration sealing maintain in a 60-minute fire wall?',
+    options: ['30 minutes', '60 minutes', '90 minutes', '120 minutes'],
     correctIndex: 1,
-    explanation: "Penetration sealing must maintain the same fire resistance rating as the element being penetrated - 60 minutes for 60-minute walls."
+    explanation:
+      'Penetration sealing must maintain the same fire resistance rating as the element being penetrated - 60 minutes for 60-minute walls.',
   },
   {
-    id: "datacabling-m4s3-check2",
-    question: "What is the maximum percentage of penetration area that cables can occupy?",
-    options: ["40%", "50%", "60%", "75%"],
+    id: 'datacabling-m4s3-check2',
+    question: 'What is the maximum percentage of penetration area that cables can occupy?',
+    options: ['40%', '50%', '60%', '75%'],
     correctIndex: 2,
-    explanation: "Cables should not exceed 60% of the penetration opening area to allow proper intumescent material expansion and effective sealing during a fire."
+    explanation:
+      'Cables should not exceed 60% of the penetration opening area to allow proper intumescent material expansion and effective sealing during a fire.',
   },
   {
-    id: "datacabling-m4s3-check3",
-    question: "Which standard covers fire resistance tests for service penetrations?",
-    options: ["BS EN 13501-1", "BS EN 1366-3", "BS 476-20", "BS 9999"],
+    id: 'datacabling-m4s3-check3',
+    question: 'Which standard covers fire resistance tests for service penetrations?',
+    options: ['BS EN 13501-1', 'BS EN 1366-3', 'BS 476-20', 'BS 9999'],
     correctIndex: 1,
-    explanation: "BS EN 1366-3 is the specific standard for fire resistance tests for service installations, including penetration sealing systems."
-  }
+    explanation:
+      'BS EN 1366-3 is the specific standard for fire resistance tests for service installations, including penetration sealing systems.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What are the three criteria for fire resistance (EI)?",
-    answer: "E = Integrity (no flames or hot gases pass through), I = Insulation (temperature rise limited on unexposed face), and the time in minutes they must be maintained (e.g., EI 60 = 60 minutes of both integrity and insulation)."
+    question: 'What are the three criteria for fire resistance (EI)?',
+    answer:
+      'E = Integrity (no flames or hot gases pass through), I = Insulation (temperature rise limited on unexposed face), and the time in minutes they must be maintained (e.g., EI 60 = 60 minutes of both integrity and insulation).',
   },
   {
-    question: "When should I use intumescent pillows vs blocks?",
-    answer: "Pillows are ideal for cable bundles with quick installation and easy reconfiguration. Blocks provide higher structural integrity for large openings and horizontal installations requiring better load-bearing capability."
+    question: 'When should I use intumescent pillows vs blocks?',
+    answer:
+      'Pillows are ideal for cable bundles with quick installation and easy reconfiguration. Blocks provide higher structural integrity for large openings and horizontal installations requiring better load-bearing capability.',
   },
   {
-    question: "How often should fire-stopping be inspected?",
-    answer: "Monthly visual inspection by building occupier, annual detailed inspection by competent person, and five-year professional assessment by FIRAS-approved inspector. Also inspect after any cable additions or modifications."
+    question: 'How often should fire-stopping be inspected?',
+    answer:
+      'Monthly visual inspection by building occupier, annual detailed inspection by competent person, and five-year professional assessment by FIRAS-approved inspector. Also inspect after any cable additions or modifications.',
   },
   {
-    question: "What is FIRAS certification?",
-    answer: "FIRAS is an installer registration scheme for fire-stopping contractors. It ensures installers are trained, competent, and their work is regularly inspected. FIRAS-certified installations provide documented quality assurance and warranty compliance."
-  }
+    question: 'What is FIRAS certification?',
+    answer:
+      'FIRAS is an installer registration scheme for fire-stopping contractors. It ensures installers are trained, competent, and their work is regularly inspected. FIRAS-certified installations provide documented quality assurance and warranty compliance.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A hospital requires a new data cable route through a 90-minute fire-rated wall separating an escape route. What must you ensure?",
-  options: [
-    "Use standard fire putty which is easy to apply",
-    "Use BS EN 1366-3 tested system maintaining 90-minute EI rating with proper documentation",
-    "Route cables around the wall to avoid penetration entirely",
-    "Use any intumescent material as they're all fire-rated"
-  ],
-  correctAnswer: 1,
-  explanation: "The penetration must use a system tested to BS EN 1366-3 that maintains the full 90-minute fire resistance rating. Documentation must include installation certificate, material specifications, and be added to the building's fire safety records."
-  }
+    question:
+      'A hospital requires a new data cable route through a 90-minute fire-rated wall separating an escape route. What must you ensure?',
+    options: [
+      'Use standard fire putty which is easy to apply',
+      'Use BS EN 1366-3 tested system maintaining 90-minute EI rating with proper documentation',
+      'Route cables around the wall to avoid penetration entirely',
+      "Use any intumescent material as they're all fire-rated",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The penetration must use a system tested to BS EN 1366-3 that maintains the full 90-minute fire resistance rating. Documentation must include installation certificate, material specifications, and be added to the building's fire safety records.",
+  },
 ];
 
 const DataCablingModule4Section3 = () => {
@@ -108,16 +118,26 @@ const DataCablingModule4Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Purpose:</strong> Maintain fire compartmentation integrity</li>
-              <li><strong>Key rule:</strong> Sealing must match wall/floor fire rating</li>
-              <li><strong>Standard:</strong> BS EN 1366-3 for penetration sealing</li>
+              <li>
+                <strong>Purpose:</strong> Maintain fire compartmentation integrity
+              </li>
+              <li>
+                <strong>Key rule:</strong> Sealing must match wall/floor fire rating
+              </li>
+              <li>
+                <strong>Standard:</strong> BS EN 1366-3 for penetration sealing
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Fire-rated walls = penetration sealing required</li>
-              <li><strong>Use:</strong> Tested systems, FIRAS installers, proper documentation</li>
+              <li>
+                <strong>Spot:</strong> Fire-rated walls = penetration sealing required
+              </li>
+              <li>
+                <strong>Use:</strong> Tested systems, FIRAS installers, proper documentation
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +147,12 @@ const DataCablingModule4Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand fire compartmentation principles",
-              "Select appropriate fire-stopping materials",
-              "Install penetration sealing correctly",
-              "Meet Building Regulations Part B requirements",
-              "Document fire-stopping installations",
-              "Maintain fire-stopping throughout building lifecycle"
+              'Understand fire compartmentation principles',
+              'Select appropriate fire-stopping materials',
+              'Install penetration sealing correctly',
+              'Meet Building Regulations Part B requirements',
+              'Document fire-stopping installations',
+              'Maintain fire-stopping throughout building lifecycle',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -159,21 +179,39 @@ const DataCablingModule4Section3 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fire Resistance Criteria</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Fire Resistance Criteria
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>E (Integrity):</strong> No passage of flames/hot gases</li>
-                  <li><strong>I (Insulation):</strong> Temperature rise limitation</li>
-                  <li><strong>R (Load Bearing):</strong> Structural stability</li>
-                  <li><strong>S (Smoke):</strong> Smoke leakage limitation</li>
+                  <li>
+                    <strong>E (Integrity):</strong> No passage of flames/hot gases
+                  </li>
+                  <li>
+                    <strong>I (Insulation):</strong> Temperature rise limitation
+                  </li>
+                  <li>
+                    <strong>R (Load Bearing):</strong> Structural stability
+                  </li>
+                  <li>
+                    <strong>S (Smoke):</strong> Smoke leakage limitation
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Fire Ratings</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>30 min:</strong> Internal partitions, some floors</li>
-                  <li><strong>60 min:</strong> Escape route walls, most floors</li>
-                  <li><strong>90 min:</strong> High buildings, structural elements</li>
-                  <li><strong>120 min:</strong> Basements, high-risk areas</li>
+                  <li>
+                    <strong>30 min:</strong> Internal partitions, some floors
+                  </li>
+                  <li>
+                    <strong>60 min:</strong> Escape route walls, most floors
+                  </li>
+                  <li>
+                    <strong>90 min:</strong> High buildings, structural elements
+                  </li>
+                  <li>
+                    <strong>120 min:</strong> Basements, high-risk areas
+                  </li>
                 </ul>
               </div>
             </div>
@@ -206,7 +244,8 @@ const DataCablingModule4Section3 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Intumescent materials expand when exposed to heat, forming a char that seals
-              penetration openings and prevents fire spread. Different forms suit different applications.
+              penetration openings and prevents fire spread. Different forms suit different
+              applications.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -299,17 +338,25 @@ const DataCablingModule4Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire-stop systems must comply with relevant standards and be installed by
-              competent personnel to ensure building safety compliance.
+              Fire-stop systems must comply with relevant standards and be installed by competent
+              personnel to ensure building safety compliance.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Standards:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>BS EN 1366-3:</strong> Fire resistance tests for service penetrations</li>
-                <li><strong>BS EN 13501-1:</strong> Fire classification of construction products</li>
-                <li><strong>BS 9999:</strong> Fire safety in design and management of buildings</li>
-                <li><strong>Building Regs Part B:</strong> Legal fire safety requirements</li>
+                <li>
+                  <strong>BS EN 1366-3:</strong> Fire resistance tests for service penetrations
+                </li>
+                <li>
+                  <strong>BS EN 13501-1:</strong> Fire classification of construction products
+                </li>
+                <li>
+                  <strong>BS 9999:</strong> Fire safety in design and management of buildings
+                </li>
+                <li>
+                  <strong>Building Regs Part B:</strong> Legal fire safety requirements
+                </li>
               </ul>
             </div>
 
@@ -343,19 +390,35 @@ const DataCablingModule4Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Inspection Schedule</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Monthly:</strong> Visual inspection by building occupier</li>
-                <li><strong>Annually:</strong> Detailed inspection by competent person</li>
-                <li><strong>5 yearly:</strong> Professional assessment by FIRAS approved inspector</li>
-                <li><strong>After changes:</strong> Verify seal integrity after any cable additions</li>
+                <li>
+                  <strong>Monthly:</strong> Visual inspection by building occupier
+                </li>
+                <li>
+                  <strong>Annually:</strong> Detailed inspection by competent person
+                </li>
+                <li>
+                  <strong>5 yearly:</strong> Professional assessment by FIRAS approved inspector
+                </li>
+                <li>
+                  <strong>After changes:</strong> Verify seal integrity after any cable additions
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Incomplete filling:</strong> — all voids must be sealed completely</li>
-                <li><strong>Wrong materials:</strong> — must be compatible with cable types</li>
-                <li><strong>Missing documentation:</strong> — critical for compliance and maintenance</li>
-                <li><strong>Exceeding capacity:</strong> — maximum 60% cable fill in penetration</li>
+                <li>
+                  <strong>Incomplete filling:</strong> — all voids must be sealed completely
+                </li>
+                <li>
+                  <strong>Wrong materials:</strong> — must be compatible with cable types
+                </li>
+                <li>
+                  <strong>Missing documentation:</strong> — critical for compliance and maintenance
+                </li>
+                <li>
+                  <strong>Exceeding capacity:</strong> — maximum 60% cable fill in penetration
+                </li>
               </ul>
             </div>
           </div>
@@ -399,10 +462,7 @@ const DataCablingModule4Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,7 +31,7 @@ const DiagnosticQuestionCard = ({
   onPrevious,
   canGoNext,
   canGoPrevious,
-  isLastQuestion
+  isLastQuestion,
 }: DiagnosticQuestionCardProps) => {
   const progress = ((currentQuestion + 1) / totalQuestions) * 100;
   const isCriticalPath = question.criticalPath;
@@ -43,13 +42,13 @@ const DiagnosticQuestionCard = ({
         <CardTitle className="text-foreground flex items-center gap-2">
           <AlertTriangle className="h-5 w-5 text-orange-400" />
           Interactive Diagnostic Wizard
-          {isCriticalPath && (
-            <Badge className="bg-red-500 text-foreground">Critical Path</Badge>
-          )}
+          {isCriticalPath && <Badge className="bg-red-500 text-foreground">Critical Path</Badge>}
         </CardTitle>
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-gray-400">
-            <span>Question {currentQuestion + 1} of {totalQuestions}</span>
+            <span>
+              Question {currentQuestion + 1} of {totalQuestions}
+            </span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
           <Progress value={progress} className="h-2" />
@@ -57,13 +56,14 @@ const DiagnosticQuestionCard = ({
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-lg font-semibold text-foreground mb-4">
-            {question.question}
-          </h3>
-          
+          <h3 className="text-lg font-semibold text-foreground mb-4">{question.question}</h3>
+
           <RadioGroup value={selectedAnswer} onValueChange={onAnswerSelect}>
             {question.options.map((option, idx) => (
-              <div key={idx} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted/50">
+              <div
+                key={idx}
+                className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted/50"
+              >
                 <RadioGroupItem value={option} id={`option-${idx}`} />
                 <Label htmlFor={`option-${idx}`} className="text-gray-300 cursor-pointer flex-1">
                   {option}
@@ -83,7 +83,7 @@ const DiagnosticQuestionCard = ({
             <ArrowLeft className="h-4 w-4 mr-2" />
             Previous
           </Button>
-          
+
           <Button
             onClick={onNext}
             disabled={!canGoNext}

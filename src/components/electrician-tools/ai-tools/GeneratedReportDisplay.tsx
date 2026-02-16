@@ -3,16 +3,16 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Copy, 
-  Check, 
-  Download, 
-  FileText, 
+import {
+  Copy,
+  Check,
+  Download,
+  FileText,
   Calendar,
   Printer,
   Share,
   ZoomIn,
-  ZoomOut
+  ZoomOut,
 } from 'lucide-react';
 import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
@@ -28,19 +28,19 @@ interface GeneratedReportDisplayProps {
 const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
   report,
   template,
-  onCopy
+  onCopy,
 }) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(100);
 
   const reportTypeMap = {
-    'eicr': 'EICR - Electrical Installation Condition Report',
+    eicr: 'EICR - Electrical Installation Condition Report',
     'minor-works': 'Minor Electrical Installation Works Certificate',
     'periodic-inspection': 'Periodic Inspection Report',
     'ev-charger': 'EV Charger Installation Certificate',
     'consumer-unit': 'Consumer Unit Installation Certificate',
-    'rcd-test': 'RCD Test Certificate'
+    'rcd-test': 'RCD Test Certificate',
   };
 
   const handleCopy = async () => {
@@ -49,15 +49,15 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       setCopied(true);
       onCopy?.();
       toast({
-        title: "Copied successfully",
-        description: "Report content has been copied to your clipboard.",
+        title: 'Copied successfully',
+        description: 'Report content has been copied to your clipboard.',
       });
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       toast({
-        title: "Copy failed",
-        description: "Failed to copy report to clipboard.",
-        variant: "destructive"
+        title: 'Copy failed',
+        description: 'Failed to copy report to clipboard.',
+        variant: 'destructive',
       });
     }
   };
@@ -67,7 +67,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       const { EnhancedMarkdownProcessor } = await import('@/utils/enhanced-markdown-processor');
       const processedHTML = EnhancedMarkdownProcessor.processMarkdownToHTML(report);
       const reportCSS = EnhancedMarkdownProcessor.getReportCSS();
-      
+
       const printWindow = window.open('', '_blank');
       if (printWindow) {
         printWindow.document.write(`
@@ -93,11 +93,11 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
                 <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #f59e0b; padding-bottom: 20px;">
                   <h1 style="color: #1a365d; margin-bottom: 10px;">${reportTypeMap[template] || 'Electrical Report'}</h1>
                   <p style="color: #4a5568; margin: 5px 0; font-weight: bold;">
-                    Generated: ${new Date().toLocaleDateString('en-GB', { 
-                      weekday: 'long', 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
+                    Generated: ${new Date().toLocaleDateString('en-GB', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
                     })}
                   </p>
                   <p style="color: #2d3748; margin: 5px 0; font-size: 14px;">
@@ -120,9 +120,9 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     } catch (error) {
       console.error('Print preparation error:', error);
       toast({
-        title: "Print Preparation Failed",
-        description: "There was an error preparing the document for printing.",
-        variant: "destructive"
+        title: 'Print Preparation Failed',
+        description: 'There was an error preparing the document for printing.',
+        variant: 'destructive',
       });
     }
   };
@@ -132,7 +132,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     try {
       const reportTypeName = reportTypeMap[template] || 'Electrical Report';
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
-      
+
       // Use enhanced markdown processor
       const { EnhancedMarkdownProcessor } = await import('@/utils/enhanced-markdown-processor');
       const processedHTML = EnhancedMarkdownProcessor.processMarkdownToHTML(report);
@@ -153,12 +153,15 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
             <div style="text-align: center; margin-bottom: 40px; border-bottom: 3px solid #f59e0b; padding-bottom: 25px;">
               <h1 style="color: #1a365d; margin-bottom: 15px; font-size: 32px;">${reportTypeName}</h1>
               <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                <p style="color: #4a5568; margin: 5px 0; font-weight: bold;">Generated: ${new Date().toLocaleDateString('en-GB', { 
-                  weekday: 'long', 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}</p>
+                <p style="color: #4a5568; margin: 5px 0; font-weight: bold;">Generated: ${new Date().toLocaleDateString(
+                  'en-GB',
+                  {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  }
+                )}</p>
                 <p style="color: #2d3748; margin: 5px 0; font-size: 14px; font-weight: bold;">
                   <span class="bs-ref">BS 7671:2018+A3:2024 COMPLIANT</span>
                 </p>
@@ -187,50 +190,50 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       const opt = {
         margin: [0.8, 0.6, 0.8, 0.6], // top, left, bottom, right in inches
         filename: filename,
-        image: { 
-          type: 'jpeg', 
-          quality: 0.95 
+        image: {
+          type: 'jpeg',
+          quality: 0.95,
         },
-        html2canvas: { 
+        html2canvas: {
           scale: 2,
           useCORS: true,
           letterRendering: true,
-          logging: false
+          logging: false,
         },
-        jsPDF: { 
-          unit: 'in', 
-          format: 'a4', 
+        jsPDF: {
+          unit: 'in',
+          format: 'a4',
           orientation: 'portrait',
-          compress: true
+          compress: true,
         },
-        pagebreak: { 
+        pagebreak: {
           mode: ['avoid-all', 'css', 'legacy'],
           before: '.report-h1, .report-h2',
-          after: '.electrical-table'
-        }
+          after: '.electrical-table',
+        },
       };
 
       await html2pdf().set(opt).from(htmlContent).save();
-      
+
       toast({
-        title: "Professional PDF Generated",
-        description: `${reportTypeName} has been downloaded with enhanced formatting and BS 7671 compliance styling.`
+        title: 'Professional PDF Generated',
+        description: `${reportTypeName} has been downloaded with enhanced formatting and BS 7671 compliance styling.`,
       });
     } catch (error) {
       console.error('Enhanced PDF generation error:', error);
       toast({
-        title: "PDF Generation Failed",
-        description: "There was an error generating the professional PDF. Please try again.",
-        variant: "destructive"
+        title: 'PDF Generation Failed',
+        description: 'There was an error generating the professional PDF. Please try again.',
+        variant: 'destructive',
       });
     }
   };
 
   const adjustZoom = (direction: 'in' | 'out') => {
     if (direction === 'in' && zoomLevel < 150) {
-      setZoomLevel(prev => Math.min(prev + 10, 150));
+      setZoomLevel((prev) => Math.min(prev + 10, 150));
     } else if (direction === 'out' && zoomLevel > 80) {
-      setZoomLevel(prev => Math.max(prev - 10, 80));
+      setZoomLevel((prev) => Math.max(prev - 10, 80));
     }
   };
 
@@ -251,8 +254,8 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
                     Generated Report
                   </h2>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    <Badge 
-                      variant="secondary" 
+                    <Badge
+                      variant="secondary"
                       className="text-sm font-medium bg-primary/10 text-primary border-primary/20 w-fit"
                     >
                       {reportTypeMap[template] || template.toUpperCase()}
@@ -267,7 +270,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
             </div>
 
             <Separator className="my-6" />
-            
+
             {/* Action Bar */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-wrap">
               {/* Zoom Controls */}
@@ -297,7 +300,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
                   </Button>
                 </div>
               </div>
-              
+
               {/* Action Buttons */}
               <div className="flex items-center gap-2 flex-wrap">
                 <Button
@@ -339,12 +342,9 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       </div>
 
       {/* Report Content */}
-      <div 
-        className="p-0 sm:p-6 bg-card"
-        style={{ fontSize: `${zoomLevel}%` }}
-      >
+      <div className="p-0 sm:p-6 bg-card" style={{ fontSize: `${zoomLevel}%` }}>
         <div className="bg-background rounded-lg border border-border/20 p-6">
-          <MarkdownViewer 
+          <MarkdownViewer
             content={report}
             className="[&>*]:text-left [&_h1]:text-center [&_h1]:mx-auto"
           />

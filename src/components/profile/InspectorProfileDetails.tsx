@@ -96,7 +96,14 @@ export const InspectorProfileDetails: React.FC<InspectorProfileDetailsProps> = (
           <CardTitle className="text-base font-semibold">Profile Details</CardTitle>
           <div className="flex items-center gap-2">
             {sourceInfo && dataSource === 'elec_id' && (
-              <Badge className={cn(sourceInfo.bgColor, sourceInfo.color, 'border', sourceInfo.borderColor)}>
+              <Badge
+                className={cn(
+                  sourceInfo.bgColor,
+                  sourceInfo.color,
+                  'border',
+                  sourceInfo.borderColor
+                )}
+              >
                 <Shield className="h-3 w-3 mr-1" />
                 From Elec-ID
               </Badge>
@@ -113,12 +120,7 @@ export const InspectorProfileDetails: React.FC<InspectorProfileDetailsProps> = (
               </Button>
             ) : (
               <div className="flex gap-1">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleCancel}
-                  className="h-8 px-2"
-                >
+                <Button variant="ghost" size="sm" onClick={handleCancel} className="h-8 px-2">
                   <X className="h-3.5 w-3.5" />
                 </Button>
                 <Button
@@ -174,7 +176,8 @@ export const InspectorProfileDetails: React.FC<InspectorProfileDetailsProps> = (
           <h3 className="text-sm font-medium text-muted-foreground">Company</h3>
           <div className="p-4 bg-muted/30 rounded-lg border border-border">
             <p className="text-sm text-muted-foreground mb-3">
-              Company details are managed centrally and apply to all your certificates, quotes, and invoices.
+              Company details are managed centrally and apply to all your certificates, quotes, and
+              invoices.
             </p>
             <Button
               variant="outline"
@@ -217,10 +220,7 @@ const FormField: React.FC<FormFieldProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className={cn(
-          'h-10',
-          disabled && 'bg-muted/30 cursor-default'
-        )}
+        className={cn('h-10', disabled && 'bg-muted/30 cursor-default')}
       />
     </div>
   );

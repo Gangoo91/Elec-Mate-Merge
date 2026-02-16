@@ -14,64 +14,55 @@ interface QuizQuestion {
 const questions: QuizQuestion[] = [
   {
     id: 1,
-    question: "Which connectivity technology offers the highest reliability for EV charging stations?",
-    options: [
-      "Wi-Fi (802.11ac)",
-      "4G/5G Cellular",
-      "Ethernet/Hardwired",
-      "OCPP over PLC"
-    ],
+    question:
+      'Which connectivity technology offers the highest reliability for EV charging stations?',
+    options: ['Wi-Fi (802.11ac)', '4G/5G Cellular', 'Ethernet/Hardwired', 'OCPP over PLC'],
     correctAnswer: 2,
-    explanation: "Ethernet/hardwired connections provide the highest stability with no interference and are ideal for commercial installations requiring maximum reliability."
+    explanation:
+      'Ethernet/hardwired connections provide the highest stability with no interference and are ideal for commercial installations requiring maximum reliability.',
   },
   {
     id: 2,
-    question: "What is the primary benefit of OCPP (Open Charge Point Protocol)?",
+    question: 'What is the primary benefit of OCPP (Open Charge Point Protocol)?',
     options: [
-      "Faster charging speeds",
-      "Lower installation costs",
-      "Interoperability between systems",
-      "Better user interface design"
+      'Faster charging speeds',
+      'Lower installation costs',
+      'Interoperability between systems',
+      'Better user interface design',
     ],
     correctAnswer: 2,
-    explanation: "OCPP ensures interoperability between charging stations and central management systems from different manufacturers, preventing vendor lock-in."
+    explanation:
+      'OCPP ensures interoperability between charging stations and central management systems from different manufacturers, preventing vendor lock-in.',
   },
   {
     id: 3,
-    question: "Which OCPP version introduced ISO 15118 support and enhanced security features?",
-    options: [
-      "OCPP 1.5",
-      "OCPP 1.6J",
-      "OCPP 2.0.1",
-      "OCPP 3.0"
-    ],
+    question: 'Which OCPP version introduced ISO 15118 support and enhanced security features?',
+    options: ['OCPP 1.5', 'OCPP 1.6J', 'OCPP 2.0.1', 'OCPP 3.0'],
     correctAnswer: 2,
-    explanation: "OCPP 2.0.1, released in 2020, introduced ISO 15118 support, enhanced security, device model framework, and display message support among other new features."
+    explanation:
+      'OCPP 2.0.1, released in 2020, introduced ISO 15118 support, enhanced security, device model framework, and display message support among other new features.',
   },
   {
     id: 4,
     question: "In dynamic load management, what does 'equal distribution' algorithm do?",
     options: [
-      "Gives priority to paying customers",
-      "Divides available power equally among active sessions",
-      "Allocates power based on vehicle type",
-      "Charges vehicles in order of arrival"
+      'Gives priority to paying customers',
+      'Divides available power equally among active sessions',
+      'Allocates power based on vehicle type',
+      'Charges vehicles in order of arrival',
     ],
     correctAnswer: 1,
-    explanation: "Equal distribution algorithm divides the available power equally among all active charging sessions, ensuring fair power allocation."
+    explanation:
+      'Equal distribution algorithm divides the available power equally among all active charging sessions, ensuring fair power allocation.',
   },
   {
     id: 5,
-    question: "What is the typical range limitation for OCPP over PLC (Power Line Communication)?",
-    options: [
-      "Up to 100m",
-      "Up to 200m",
-      "Up to 300m",
-      "Up to 500m"
-    ],
+    question: 'What is the typical range limitation for OCPP over PLC (Power Line Communication)?',
+    options: ['Up to 100m', 'Up to 200m', 'Up to 300m', 'Up to 500m'],
     correctAnswer: 2,
-    explanation: "OCPP over PLC can work up to 300m on low voltage networks, though it's susceptible to noise and has variable performance compared to other connectivity methods."
-  }
+    explanation:
+      "OCPP over PLC can work up to 300m on low voltage networks, though it's susceptible to noise and has variable performance compared to other connectivity methods.",
+  },
 ];
 
 interface SequentialQuestion {
@@ -91,19 +82,20 @@ const EVChargingModule2Section3Quiz: React.FC = () => {
   const [answered, setAnswered] = useState(false);
 
   const sequentialQuestions: SequentialQuestion[] = useMemo(
-    () => questions.map(q => ({
-      id: q.id,
-      question: q.question,
-      options: q.options,
-      correct: q.correctAnswer,
-      explanation: q.explanation
-    })),
+    () =>
+      questions.map((q) => ({
+        id: q.id,
+        question: q.question,
+        options: q.options,
+        correct: q.correctAnswer,
+        explanation: q.explanation,
+      })),
     []
   );
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (answered) return;
-    
+
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestion] = answerIndex;
     setSelectedAnswers(newAnswers);
@@ -160,9 +152,7 @@ const EVChargingModule2Section3Quiz: React.FC = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)} mb-2`}>
               {score}/{questions.length}
             </div>
-            <div className="text-gray-300">
-              You scored {percentage}%
-            </div>
+            <div className="text-gray-300">You scored {percentage}%</div>
           </div>
 
           <div className="space-y-4">
@@ -197,7 +187,7 @@ const EVChargingModule2Section3Quiz: React.FC = () => {
           </div>
 
           <div className="text-center">
-            <Button 
+            <Button
               onClick={handleReset}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             >
@@ -226,7 +216,7 @@ const EVChargingModule2Section3Quiz: React.FC = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
           />
@@ -236,20 +226,21 @@ const EVChargingModule2Section3Quiz: React.FC = () => {
           <h3 className="text-lg font-medium text-foreground mb-4">{currentQ.question}</h3>
           <div className="space-y-3">
             {currentQ.options.map((option, index) => {
-              let buttonClass = "w-full p-4 text-left border transition-all duration-200 ";
-              
+              let buttonClass = 'w-full p-4 text-left border transition-all duration-200 ';
+
               if (selectedAnswer === index) {
                 if (answered && index === currentQ.correct) {
-                  buttonClass += "border-green-500 bg-green-500/20 text-green-300";
+                  buttonClass += 'border-green-500 bg-green-500/20 text-green-300';
                 } else if (answered && index !== currentQ.correct) {
-                  buttonClass += "border-red-500 bg-red-500/20 text-red-300";
+                  buttonClass += 'border-red-500 bg-red-500/20 text-red-300';
                 } else {
-                  buttonClass += "border-elec-yellow bg-elec-yellow/20 text-elec-yellow";
+                  buttonClass += 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow';
                 }
               } else if (answered && index === currentQ.correct) {
-                buttonClass += "border-green-500 bg-green-500/20 text-green-300";
+                buttonClass += 'border-green-500 bg-green-500/20 text-green-300';
               } else {
-                buttonClass += "border-gray-600 text-gray-300 hover:border-gray-500 hover:bg-gray-700/50";
+                buttonClass +=
+                  'border-gray-600 text-gray-300 hover:border-gray-500 hover:bg-gray-700/50';
               }
 
               return (
@@ -281,7 +272,7 @@ const EVChargingModule2Section3Quiz: React.FC = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={!answered}

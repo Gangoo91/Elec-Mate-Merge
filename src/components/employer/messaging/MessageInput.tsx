@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2, Paperclip, X } from "lucide-react";
-import { ReplyPreview, ReplyToMessage } from "@/components/messaging/MessageReply";
-import { FilePreview, DropZone } from "@/components/messaging/FileAttachment";
-import { MentionSuggestions, MentionUser, useMentions } from "@/components/messaging/Mentions";
-import { useFileDrop } from "@/hooks/useFileUpload";
-import { validateFile } from "@/services/fileUploadService";
-import { toast } from "@/hooks/use-toast";
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Send, Loader2, Paperclip, X } from 'lucide-react';
+import { ReplyPreview, ReplyToMessage } from '@/components/messaging/MessageReply';
+import { FilePreview, DropZone } from '@/components/messaging/FileAttachment';
+import { MentionSuggestions, MentionUser, useMentions } from '@/components/messaging/Mentions';
+import { useFileDrop } from '@/hooks/useFileUpload';
+import { validateFile } from '@/services/fileUploadService';
+import { toast } from '@/hooks/use-toast';
 
 interface MessageInputProps {
   onSend: (content: string, attachments?: File[], replyToId?: string) => void;
@@ -25,12 +25,12 @@ export function MessageInput({
   onTyping,
   disabled,
   isSending,
-  placeholder = "Type a message...",
+  placeholder = 'Type a message...',
   replyTo,
   onCancelReply,
   mentionUsers = [],
 }: MessageInputProps) {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [attachments, setAttachments] = useState<File[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -58,19 +58,19 @@ export function MessageInput({
 
   // Drag and drop
   const handleFileDrop = useCallback((files: File[]) => {
-    const validFiles = files.filter(file => {
+    const validFiles = files.filter((file) => {
       const validation = validateFile(file);
       if (!validation.valid) {
         toast({
-          title: "Invalid File",
+          title: 'Invalid File',
           description: `${file.name}: ${validation.error}`,
-          variant: "destructive",
+          variant: 'destructive',
         });
         return false;
       }
       return true;
     });
-    setAttachments(prev => [...prev, ...validFiles].slice(0, 5)); // Max 5 files
+    setAttachments((prev) => [...prev, ...validFiles].slice(0, 5)); // Max 5 files
   }, []);
 
   const { isDragging, dragHandlers } = useFileDrop(handleFileDrop);
@@ -107,7 +107,7 @@ export function MessageInput({
     if ((!message.trim() && attachments.length === 0) || disabled || isSending) return;
 
     onSend(message.trim(), attachments.length > 0 ? attachments : undefined, replyTo?.id);
-    setMessage("");
+    setMessage('');
     setAttachments([]);
 
     if (onTyping) {
@@ -145,7 +145,7 @@ export function MessageInput({
   };
 
   const removeAttachment = (index: number) => {
-    setAttachments(prev => prev.filter((_, i) => i !== index));
+    setAttachments((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -224,11 +224,7 @@ export function MessageInput({
           size="icon"
           className="h-11 w-11 shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
         >
-          {isSending ? (
-            <Loader2 className="h-5 w-5 animate-spin" />
-          ) : (
-            <Send className="h-5 w-5" />
-          )}
+          {isSending ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
         </Button>
       </div>
     </div>

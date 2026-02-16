@@ -53,7 +53,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
       label: 'Client',
       icon: <User className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? '' : 'md:max-w-5xl mx-auto space-y-6')}>
           <PATTestingClientDetails formData={formData} onUpdate={onUpdate} />
           <PATTestingTabNavigation {...tabNavigationProps} />
         </div>
@@ -64,7 +64,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
       label: 'Appliances',
       icon: <Plug className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? '' : 'md:max-w-5xl mx-auto space-y-6')}>
           <PATTestingApplianceList formData={formData} onUpdate={onUpdate} />
           <PATTestingTabNavigation {...tabNavigationProps} />
         </div>
@@ -75,7 +75,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
       label: 'Results',
       icon: <TestTube className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? '' : 'md:max-w-5xl mx-auto space-y-6')}>
           <PATTestingResults formData={formData} onUpdate={onUpdate} />
           <PATTestingTabNavigation {...tabNavigationProps} />
         </div>
@@ -86,7 +86,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
       label: 'Declarations',
       icon: <FileText className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? '' : 'md:max-w-5xl mx-auto space-y-6')}>
           <PATTestingDeclarations formData={formData} onUpdate={onUpdate} />
           <PATTestingTabNavigation
             {...tabNavigationProps}

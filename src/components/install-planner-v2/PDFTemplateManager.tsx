@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Upload, FileText, Trash2, Download, Loader2, Settings } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Upload, FileText, Trash2, Download, Loader2, Settings } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 interface PDFTemplate {
   id: string;
@@ -43,7 +43,7 @@ export const PDFTemplateManager = () => {
   const [uploading, setUploading] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<PDFTemplate | null>(null);
-  const [templateId, setTemplateId] = useState("");
+  const [templateId, setTemplateId] = useState('');
   const [fieldMapping, setFieldMapping] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -52,7 +52,9 @@ export const PDFTemplateManager = () => {
 
   const loadTemplates = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -70,9 +72,11 @@ export const PDFTemplateManager = () => {
 
   const handleUpload = async (type: string, file: File) => {
     setUploading(type);
-    
+
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const fileExt = file.name.split('.').pop();
@@ -84,9 +88,9 @@ export const PDFTemplateManager = () => {
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('company-branding')
-        .getPublicUrl(fileName);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('company-branding').getPublicUrl(fileName);
 
       // Deactivate old template of same type
       await supabase
@@ -96,28 +100,27 @@ export const PDFTemplateManager = () => {
         .eq('type', type as any);
 
       // Create new template record
-      const { error: insertError } = await supabase
-        .from('pdf_templates')
-        .insert([{
+      const { error: insertError } = await supabase.from('pdf_templates').insert([
+        {
           user_id: user.id,
           name: file.name,
           type: type as any,
           file_url: publicUrl,
-          is_active: true
-        }]);
+          is_active: true,
+        },
+      ]);
 
       if (insertError) throw insertError;
 
       await loadTemplates();
 
-      toast.success("Template Uploaded", {
-        description: `${file.name} is now your ${TEMPLATE_TYPES.find(t => t.key === type)?.label} template`
+      toast.success('Template Uploaded', {
+        description: `${file.name} is now your ${TEMPLATE_TYPES.find((t) => t.key === type)?.label} template`,
       });
-
     } catch (error) {
       console.error('Upload error:', error);
-      toast.error("Upload Failed", {
-        description: error instanceof Error ? error.message : "Unknown error"
+      toast.error('Upload Failed', {
+        description: error instanceof Error ? error.message : 'Unknown error',
       });
     } finally {
       setUploading(null);
@@ -132,7 +135,7 @@ export const PDFTemplateManager = () => {
         .from('pdf_templates')
         .update({
           pdf_monkey_template_id: templateId,
-          field_mapping: fieldMapping
+          field_mapping: fieldMapping,
         })
         .eq('id', editingTemplate.id);
 
@@ -140,13 +143,13 @@ export const PDFTemplateManager = () => {
 
       await loadTemplates();
       setEditingTemplate(null);
-      setTemplateId("");
+      setTemplateId('');
       setFieldMapping({});
 
-      toast.success("Template Configuration Saved");
+      toast.success('Template Configuration Saved');
     } catch (error) {
       console.error('Save error:', error);
-      toast.error("Failed to save configuration");
+      toast.error('Failed to save configuration');
     }
   };
 
@@ -155,24 +158,19 @@ export const PDFTemplateManager = () => {
       if (template.file_url) {
         const fileName = template.file_url.split('/').pop();
         if (fileName) {
-          await supabase.storage
-            .from('company-branding')
-            .remove([`pdf-templates/${fileName}`]);
+          await supabase.storage.from('company-branding').remove([`pdf-templates/${fileName}`]);
         }
       }
 
-      const { error } = await supabase
-        .from('pdf_templates')
-        .delete()
-        .eq('id', template.id);
+      const { error } = await supabase.from('pdf_templates').delete().eq('id', template.id);
 
       if (error) throw error;
 
       await loadTemplates();
-      toast.success("Template Removed");
+      toast.success('Template Removed');
     } catch (error) {
       console.error('Delete error:', error);
-      toast.error("Delete Failed");
+      toast.error('Delete Failed');
     }
   };
 
@@ -186,9 +184,9 @@ export const PDFTemplateManager = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {TEMPLATE_TYPES.map(templateType => {
-          const existingTemplate = templates.find(t => t.type === templateType.key);
-          
+        {TEMPLATE_TYPES.map((templateType) => {
+          const existingTemplate = templates.find((t) => t.type === templateType.key);
+
           return (
             <div
               key={templateType.key}
@@ -200,7 +198,10 @@ export const PDFTemplateManager = () => {
                   <div>
                     <p className="text-xs font-medium text-foreground">{templateType.label}</p>
                     {existingTemplate && (
-                      <Badge variant="outline" className="text-xs mt-1 bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow">
+                      <Badge
+                        variant="outline"
+                        className="text-xs mt-1 bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+                      >
                         Template set
                       </Badge>
                     )}
@@ -229,7 +230,7 @@ export const PDFTemplateManager = () => {
                           size="sm"
                           onClick={() => {
                             setEditingTemplate(existingTemplate);
-                            setTemplateId(existingTemplate.pdf_monkey_template_id || "");
+                            setTemplateId(existingTemplate.pdf_monkey_template_id || '');
                             setFieldMapping(existingTemplate.field_mapping || {});
                           }}
                           className="flex-1 text-xs h-7 bg-white/5 hover:bg-white/10 border-white/10 text-foreground"
@@ -288,7 +289,10 @@ export const PDFTemplateManager = () => {
                     </Button>
                   </div>
                   {existingTemplate.pdf_monkey_template_id && (
-                    <Badge variant="outline" className="text-xs bg-emerald-500/10 border-emerald-500/30 text-emerald-400">
+                    <Badge
+                      variant="outline"
+                      className="text-xs bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                    >
                       ID: {existingTemplate.pdf_monkey_template_id}
                     </Badge>
                   )}
@@ -333,8 +337,9 @@ export const PDFTemplateManager = () => {
 
       <div className="pt-2 border-t border-border/30">
         <p className="text-xs text-muted-foreground">
-          💡 <strong>Tip:</strong> Templates are optional. Without them, the AI generates professional PDFs using standard layouts. 
-          Upload your own templates to match your company branding.
+          💡 <strong>Tip:</strong> Templates are optional. Without them, the AI generates
+          professional PDFs using standard layouts. Upload your own templates to match your company
+          branding.
         </p>
       </div>
     </Card>

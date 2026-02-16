@@ -1,22 +1,22 @@
-import React, { useMemo, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React, { useMemo, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
-type Unit = "Ω" | "kΩ" | "MΩ";
+type Unit = 'Ω' | 'kΩ' | 'MΩ';
 
 const unitFactor: Record<Unit, number> = {
-  "Ω": 1,
-  "kΩ": 1_000,
-  "MΩ": 1_000_000,
+  Ω: 1,
+  kΩ: 1_000,
+  MΩ: 1_000_000,
 };
 
 function toOhms(value: number, unit: Unit) {
@@ -24,8 +24,8 @@ function toOhms(value: number, unit: Unit) {
 }
 
 function formatAllUnits(ohms: number, dp = 3) {
-  if (!isFinite(ohms) || ohms <= 0) return { ohm: "—", kohm: "—", Mohm: "—" };
-  const round = (v: number) => Number.isFinite(v) ? Number(v.toFixed(dp)) : "—";
+  if (!isFinite(ohms) || ohms <= 0) return { ohm: '—', kohm: '—', Mohm: '—' };
+  const round = (v: number) => (Number.isFinite(v) ? Number(v.toFixed(dp)) : '—');
   return {
     ohm: `${round(ohms)} Ω`,
     kohm: `${round(ohms / 1_000)} kΩ`,
@@ -40,7 +40,7 @@ interface Row {
 
 function useRows(initial: Row[]) {
   const [rows, setRows] = useState<Row[]>(initial);
-  const addRow = () => setRows((r) => [...r, { value: "", unit: "Ω" }]);
+  const addRow = () => setRows((r) => [...r, { value: '', unit: 'Ω' }]);
   const reset = () => setRows(initial);
   const removeRow = (idx: number) => setRows((r) => r.filter((_, i) => i !== idx));
   const setValue = (idx: number, value: string) =>
@@ -52,8 +52,8 @@ function useRows(initial: Row[]) {
 
 export default function SeriesParallelCalculators() {
   const init: Row[] = [
-    { value: "", unit: "Ω" },
-    { value: "", unit: "Ω" },
+    { value: '', unit: 'Ω' },
+    { value: '', unit: 'Ω' },
   ];
 
   // Series
@@ -90,13 +90,16 @@ export default function SeriesParallelCalculators() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Add individual resistor values connected in series. The total resistance is the sum of all resistances (BS 7671 principle).
+            Add individual resistor values connected in series. The total resistance is the sum of
+            all resistances (BS 7671 principle).
           </p>
           <div className="space-y-3">
             {series.rows.map((row, idx) => (
               <div key={idx} className="grid grid-cols-12 gap-3 items-center">
                 <div className="col-span-7 sm:col-span-8">
-                  <Label htmlFor={`s-val-${idx}`} className="text-sm">R{idx + 1} value</Label>
+                  <Label htmlFor={`s-val-${idx}`} className="text-sm">
+                    R{idx + 1} value
+                  </Label>
                   <Input
                     id={`s-val-${idx}`}
                     inputMode="decimal"
@@ -132,8 +135,12 @@ export default function SeriesParallelCalculators() {
             ))}
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button onClick={series.addRow} variant="secondary">Add resistor</Button>
-            <Button onClick={series.reset} variant="outline">Reset</Button>
+            <Button onClick={series.addRow} variant="secondary">
+              Add resistor
+            </Button>
+            <Button onClick={series.reset} variant="outline">
+              Reset
+            </Button>
           </div>
           <div className="mt-4 grid sm:grid-cols-3 gap-3">
             <div className="bg-accent/30 rounded-md p-3">
@@ -158,13 +165,16 @@ export default function SeriesParallelCalculators() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Add resistor values connected in parallel. The total resistance is calculated using 1/Rt = 1/R1 + 1/R2 + … (diversity and parallel paths reduce total R).
+            Add resistor values connected in parallel. The total resistance is calculated using 1/Rt
+            = 1/R1 + 1/R2 + … (diversity and parallel paths reduce total R).
           </p>
           <div className="space-y-3">
             {parallel.rows.map((row, idx) => (
               <div key={idx} className="grid grid-cols-12 gap-3 items-center">
                 <div className="col-span-7 sm:col-span-8">
-                  <Label htmlFor={`p-val-${idx}`} className="text-sm">R{idx + 1} value</Label>
+                  <Label htmlFor={`p-val-${idx}`} className="text-sm">
+                    R{idx + 1} value
+                  </Label>
                   <Input
                     id={`p-val-${idx}`}
                     inputMode="decimal"
@@ -200,8 +210,12 @@ export default function SeriesParallelCalculators() {
             ))}
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button onClick={parallel.addRow} variant="secondary">Add resistor</Button>
-            <Button onClick={parallel.reset} variant="outline">Reset</Button>
+            <Button onClick={parallel.addRow} variant="secondary">
+              Add resistor
+            </Button>
+            <Button onClick={parallel.reset} variant="outline">
+              Reset
+            </Button>
           </div>
           <div className="mt-4 grid sm:grid-cols-3 gap-3">
             <div className="bg-accent/30 rounded-md p-3">

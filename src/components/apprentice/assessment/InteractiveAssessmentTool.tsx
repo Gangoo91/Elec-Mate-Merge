@@ -1,19 +1,26 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Badge } from '@/components/ui/badge';
 import {
-  CheckCircle, AlertTriangle, Camera, FileText, Award,
-  ChevronLeft, ChevronRight, Lightbulb, Target, Sparkles
-} from "lucide-react";
+  CheckCircle,
+  AlertTriangle,
+  Camera,
+  FileText,
+  Award,
+  ChevronLeft,
+  ChevronRight,
+  Lightbulb,
+  Target,
+  Sparkles,
+} from 'lucide-react';
 
 interface AssessmentItem {
   id: string;
   text: string;
   category: string;
-  riskLevel: "low" | "medium" | "high";
+  riskLevel: 'low' | 'medium' | 'high';
   guidance?: string;
   required: boolean;
 }
@@ -31,10 +38,14 @@ interface InteractiveAssessmentToolProps {
   isCompleted: boolean;
 }
 
-const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: InteractiveAssessmentToolProps) => {
+const InteractiveAssessmentTool = ({
+  tool,
+  onComplete,
+  isCompleted,
+}: InteractiveAssessmentToolProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [responses, setResponses] = useState<Record<string, any>>({});
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState('');
   const [assessmentComplete, setAssessmentComplete] = useState(false);
 
   const assessmentItems: AssessmentItem[] = tool.items.map((item, index) => ({
@@ -43,38 +54,51 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
     category: getItemCategory(item),
     riskLevel: getRiskLevel(item),
     guidance: getGuidanceForItem(item),
-    required: true
+    required: true,
   }));
 
   function getItemCategory(item: string): string {
-    if (item.toLowerCase().includes("ppe")) return "Personal Protective Equipment";
-    if (item.toLowerCase().includes("hazard")) return "Hazard Identification";
-    if (item.toLowerCase().includes("electrical")) return "Electrical Safety";
-    if (item.toLowerCase().includes("emergency")) return "Emergency Procedures";
-    if (item.toLowerCase().includes("lighting")) return "Environmental Conditions";
-    if (item.toLowerCase().includes("access")) return "Site Access";
-    return "General Safety";
+    if (item.toLowerCase().includes('ppe')) return 'Personal Protective Equipment';
+    if (item.toLowerCase().includes('hazard')) return 'Hazard Identification';
+    if (item.toLowerCase().includes('electrical')) return 'Electrical Safety';
+    if (item.toLowerCase().includes('emergency')) return 'Emergency Procedures';
+    if (item.toLowerCase().includes('lighting')) return 'Environmental Conditions';
+    if (item.toLowerCase().includes('access')) return 'Site Access';
+    return 'General Safety';
   }
 
-  function getRiskLevel(item: string): "low" | "medium" | "high" {
-    if (item.toLowerCase().includes("electrical") || item.toLowerCase().includes("hazard")) return "high";
-    if (item.toLowerCase().includes("emergency") || item.toLowerCase().includes("isolation")) return "medium";
-    return "low";
+  function getRiskLevel(item: string): 'low' | 'medium' | 'high' {
+    if (item.toLowerCase().includes('electrical') || item.toLowerCase().includes('hazard'))
+      return 'high';
+    if (item.toLowerCase().includes('emergency') || item.toLowerCase().includes('isolation'))
+      return 'medium';
+    return 'low';
   }
 
   function getGuidanceForItem(item: string): string {
     const guidanceMap: Record<string, string> = {
-      "ppe requirement assessment": "Ensure all required PPE is available, in good condition, and appropriate for the task. Check for hard hat, safety glasses, insulated gloves, and appropriate footwear.",
-      "electrical hazard identification": "Look for exposed conductors, damaged equipment, water ingress, overhead power lines, and underground cables. Use appropriate detection equipment.",
-      "safe isolation verification": "Follow the 5-step safe isolation procedure: identify, isolate, secure, test, and retest. Use approved voltage indicators and proving units.",
-      "emergency procedure review": "Confirm location of emergency stops, first aid kits, fire extinguishers, and emergency contact numbers. Ensure all team members know evacuation routes.",
-      "working space adequacy": "Verify minimum working distances as per BS 7671. Ensure adequate space for safe movement and equipment operation.",
-      "lighting conditions": "Assess natural and artificial lighting. Minimum 500 lux for electrical work. Consider portable lighting for confined spaces.",
-      "weather considerations": "Check for rain, wind, temperature extremes. Electrical work should not be performed in wet conditions unless specifically protected.",
-      "access route safety": "Ensure clear, stable access routes. Check for trip hazards, adequate lighting, and secure barriers where needed."
+      'ppe requirement assessment':
+        'Ensure all required PPE is available, in good condition, and appropriate for the task. Check for hard hat, safety glasses, insulated gloves, and appropriate footwear.',
+      'electrical hazard identification':
+        'Look for exposed conductors, damaged equipment, water ingress, overhead power lines, and underground cables. Use appropriate detection equipment.',
+      'safe isolation verification':
+        'Follow the 5-step safe isolation procedure: identify, isolate, secure, test, and retest. Use approved voltage indicators and proving units.',
+      'emergency procedure review':
+        'Confirm location of emergency stops, first aid kits, fire extinguishers, and emergency contact numbers. Ensure all team members know evacuation routes.',
+      'working space adequacy':
+        'Verify minimum working distances as per BS 7671. Ensure adequate space for safe movement and equipment operation.',
+      'lighting conditions':
+        'Assess natural and artificial lighting. Minimum 500 lux for electrical work. Consider portable lighting for confined spaces.',
+      'weather considerations':
+        'Check for rain, wind, temperature extremes. Electrical work should not be performed in wet conditions unless specifically protected.',
+      'access route safety':
+        'Ensure clear, stable access routes. Check for trip hazards, adequate lighting, and secure barriers where needed.',
     };
 
-    return guidanceMap[item.toLowerCase()] || "Follow relevant safety procedures and regulations for this assessment item.";
+    return (
+      guidanceMap[item.toLowerCase()] ||
+      'Follow relevant safety procedures and regulations for this assessment item.'
+    );
   }
 
   const currentItem = assessmentItems[currentStep];
@@ -83,7 +107,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
   const handleResponse = (response: any) => {
     setResponses({
       ...responses,
-      [currentItem.id]: response
+      [currentItem.id]: response,
     });
   };
 
@@ -108,10 +132,18 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
 
   const getRiskConfig = (level: string) => {
     switch (level) {
-      case "high": return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
-      case "medium": return { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', border: 'border-elec-yellow/30' };
-      case "low": return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
-      default: return { bg: 'bg-white/5', text: 'text-white/70', border: 'border-white/20' };
+      case 'high':
+        return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
+      case 'medium':
+        return {
+          bg: 'bg-elec-yellow/10',
+          text: 'text-elec-yellow',
+          border: 'border-elec-yellow/30',
+        };
+      case 'low':
+        return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+      default:
+        return { bg: 'bg-white/5', text: 'text-white/70', border: 'border-white/20' };
     }
   };
 
@@ -136,9 +168,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
               <Sparkles className="h-12 w-12 text-green-400" />
             </div>
             <h3 className="text-2xl font-bold text-white">Well Done!</h3>
-            <p className="text-white/60">
-              You've successfully completed the {tool.title}
-            </p>
+            <p className="text-white/60">You've successfully completed the {tool.title}</p>
 
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
@@ -146,7 +176,9 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
                 <div className="text-sm text-white/60">Items Assessed</div>
               </div>
               <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-                <div className="text-3xl font-bold text-green-400 mb-1">{successRate.toFixed(0)}%</div>
+                <div className="text-3xl font-bold text-green-400 mb-1">
+                  {successRate.toFixed(0)}%
+                </div>
                 <div className="text-sm text-white/60">Completion Rate</div>
               </div>
             </div>
@@ -166,7 +198,10 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
             </h4>
             <div className="space-y-2">
               {assessmentItems.map((item) => (
-                <div key={item.id} className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10">
+                <div
+                  key={item.id}
+                  className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10"
+                >
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span className="text-sm text-white/70">{item.text}</span>
                 </div>
@@ -241,14 +276,15 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
             <h4 className="font-medium text-white">Assessment Status</h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
-                onClick={() => handleResponse("compliant")}
+                onClick={() => handleResponse('compliant')}
                 className={`
                   flex items-center justify-center gap-2 p-4 rounded-xl
                   border transition-all duration-200
                   touch-manipulation active:scale-[0.98]
-                  ${responses[currentItem.id] === "compliant"
-                    ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                    : 'bg-white/10 border-white/10 hover:border-green-500/30 text-white/70'
+                  ${
+                    responses[currentItem.id] === 'compliant'
+                      ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                      : 'bg-white/10 border-white/10 hover:border-green-500/30 text-white/70'
                   }
                 `}
               >
@@ -256,14 +292,15 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
                 Compliant
               </button>
               <button
-                onClick={() => handleResponse("non-compliant")}
+                onClick={() => handleResponse('non-compliant')}
                 className={`
                   flex items-center justify-center gap-2 p-4 rounded-xl
                   border transition-all duration-200
                   touch-manipulation active:scale-[0.98]
-                  ${responses[currentItem.id] === "non-compliant"
-                    ? 'bg-red-500/20 border-red-500/50 text-red-400'
-                    : 'bg-white/10 border-white/10 hover:border-red-500/30 text-white/70'
+                  ${
+                    responses[currentItem.id] === 'non-compliant'
+                      ? 'bg-red-500/20 border-red-500/50 text-red-400'
+                      : 'bg-white/10 border-white/10 hover:border-red-500/30 text-white/70'
                   }
                 `}
               >
@@ -271,14 +308,15 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
                 Non-Compliant
               </button>
               <button
-                onClick={() => handleResponse("not-applicable")}
+                onClick={() => handleResponse('not-applicable')}
                 className={`
                   flex items-center justify-center gap-2 p-4 rounded-xl
                   border transition-all duration-200
                   touch-manipulation active:scale-[0.98]
-                  ${responses[currentItem.id] === "not-applicable"
-                    ? 'bg-white/10 border-white/30 text-white'
-                    : 'bg-white/10 border-white/10 hover:border-white/30 text-white/70'
+                  ${
+                    responses[currentItem.id] === 'not-applicable'
+                      ? 'bg-white/10 border-white/30 text-white'
+                      : 'bg-white/10 border-white/10 hover:border-white/30 text-white/70'
                   }
                 `}
               >
@@ -294,11 +332,13 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
               <MobileInput
                 label="Additional Details (Optional)"
                 placeholder="Enter specific observations, measurements, or notes..."
-                value={responses[currentItem.id]?.details || ""}
-                onChange={(e) => handleResponse({
-                  ...responses[currentItem.id],
-                  details: e.target.value
-                })}
+                value={responses[currentItem.id]?.details || ''}
+                onChange={(e) =>
+                  handleResponse({
+                    ...responses[currentItem.id],
+                    details: e.target.value,
+                  })
+                }
               />
 
               <Button

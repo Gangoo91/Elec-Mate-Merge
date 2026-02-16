@@ -1,4 +1,13 @@
-import { Star, Circle, Square, Zap, Shield, TrendingUp, Network, AlertTriangle } from 'lucide-react';
+import {
+  Star,
+  Circle,
+  Square,
+  Zap,
+  Shield,
+  TrendingUp,
+  Network,
+  AlertTriangle,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const TopologiesContent = () => {
@@ -14,28 +23,37 @@ export const TopologiesContent = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-300">
           <p className="leading-relaxed text-lg">
-            Think of network topology as the "shape" or "pattern" of how computers and devices are connected together.
+            Think of network topology as the "shape" or "pattern" of how computers and devices are
+            connected together.
           </p>
-          
+
           <div className="bg-slate-800/50 rounded-lg p-4">
             <h4 className="font-semibold text-foreground mb-3">Simple Analogy</h4>
             <p className="text-gray-300 leading-relaxed">
               Imagine connecting several houses in a neighbourhood:
             </p>
             <ul className="mt-3 space-y-2 text-gray-300">
-              <li>• <strong>Star:</strong> All houses connect to a central town hall</li>
-              <li>• <strong>Bus:</strong> All houses connect to one main road</li>
-              <li>• <strong>Ring:</strong> Houses connect in a circle, each to their neighbours</li>
-              <li>• <strong>Mesh:</strong> Every house connects directly to every other house</li>
+              <li>
+                • <strong>Star:</strong> All houses connect to a central town hall
+              </li>
+              <li>
+                • <strong>Bus:</strong> All houses connect to one main road
+              </li>
+              <li>
+                • <strong>Ring:</strong> Houses connect in a circle, each to their neighbours
+              </li>
+              <li>
+                • <strong>Mesh:</strong> Every house connects directly to every other house
+              </li>
             </ul>
           </div>
-          
+
           <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
             <h4 className="font-semibold text-blue-300 mb-2">Why Does This Matter?</h4>
             <p className="text-blue-100 text-sm leading-relaxed">
-              The way devices are connected affects how fast data travels, what happens when something breaks, 
-              how much it costs to build, and how easy it is to add new devices. Different shapes work better 
-              for different situations.
+              The way devices are connected affects how fast data travels, what happens when
+              something breaks, how much it costs to build, and how easy it is to add new devices.
+              Different shapes work better for different situations.
             </p>
           </div>
         </CardContent>
@@ -50,10 +68,10 @@ export const TopologiesContent = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-300">
           <p className="leading-relaxed">
-            In a star topology, all devices connect to a central hub or switch. This is the most 
+            In a star topology, all devices connect to a central hub or switch. This is the most
             common topology in modern LANs and forms the backbone of structured cabling systems.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-green-600/20 border border-green-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-green-300 mb-3 flex items-center gap-2">
@@ -68,7 +86,7 @@ export const TopologiesContent = () => {
                 <li>• Scalable - easy to add new devices</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-600/20 border border-red-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-300 mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
@@ -82,14 +100,14 @@ export const TopologiesContent = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
             <p className="text-blue-100 text-sm">
-              <strong>Best Use Cases:</strong> Office networks, home networks, most structured cabling installations, 
-              telecommunications rooms, data centres for server connections
+              <strong>Best Use Cases:</strong> Office networks, home networks, most structured
+              cabling installations, telecommunications rooms, data centres for server connections
             </p>
           </div>
-          
+
           <div className="bg-gray-600/20 border border-gray-600/30 rounded-lg p-4">
             <h4 className="font-semibold text-gray-300 mb-2">Technical Details</h4>
             <ul className="space-y-1 text-gray-300 text-sm">
@@ -113,10 +131,11 @@ export const TopologiesContent = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-300">
           <p className="leading-relaxed">
-            In a bus topology, all devices connect to a single backbone cable. Data travels along 
-            the backbone, and each device receives all transmissions but only processes data intended for it.
+            In a bus topology, all devices connect to a single backbone cable. Data travels along
+            the backbone, and each device receives all transmissions but only processes data
+            intended for it.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-green-600/20 border border-green-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-green-300 mb-3 flex items-center gap-2">
@@ -130,7 +149,7 @@ export const TopologiesContent = () => {
                 <li>• No central device required</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-600/20 border border-red-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-300 mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
@@ -145,19 +164,20 @@ export const TopologiesContent = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
             <p className="text-blue-100 text-sm">
-              <strong>Best Use Cases:</strong> Legacy systems, temporary installations, simple point-of-sale networks, 
-              older Ethernet implementations (10BASE2, 10BASE5)
+              <strong>Best Use Cases:</strong> Legacy systems, temporary installations, simple
+              point-of-sale networks, older Ethernet implementations (10BASE2, 10BASE5)
             </p>
           </div>
-          
+
           <div className="bg-gray-600/20 border border-gray-600/30 rounded-lg p-4">
             <h4 className="font-semibold text-gray-300 mb-2">Historical Context</h4>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Bus topology was common in early Ethernet networks using coaxial cable. While largely obsolete 
-              for LANs, the concept still applies to some industrial control systems and automotive networks.
+              Bus topology was common in early Ethernet networks using coaxial cable. While largely
+              obsolete for LANs, the concept still applies to some industrial control systems and
+              automotive networks.
             </p>
           </div>
         </CardContent>
@@ -173,10 +193,11 @@ export const TopologiesContent = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-300">
           <p className="leading-relaxed">
-            In a ring topology, devices are connected in a circular fashion, with each device having 
-            exactly two neighbours. Data travels in one direction around the ring until it reaches its destination.
+            In a ring topology, devices are connected in a circular fashion, with each device having
+            exactly two neighbours. Data travels in one direction around the ring until it reaches
+            its destination.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-green-600/20 border border-green-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-green-300 mb-3 flex items-center gap-2">
@@ -191,7 +212,7 @@ export const TopologiesContent = () => {
                 <li>• Orderly data transmission</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-600/20 border border-red-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-300 mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
@@ -206,19 +227,20 @@ export const TopologiesContent = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
             <p className="text-blue-100 text-sm">
-              <strong>Best Use Cases:</strong> Token Ring networks, FDDI backbones, some industrial control systems, 
-              metropolitan area networks (MANs)
+              <strong>Best Use Cases:</strong> Token Ring networks, FDDI backbones, some industrial
+              control systems, metropolitan area networks (MANs)
             </p>
           </div>
-          
+
           <div className="bg-gray-600/20 border border-gray-600/30 rounded-lg p-4">
             <h4 className="font-semibold text-gray-300 mb-2">Token Passing</h4>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Ring networks often use token passing for access control. A special data packet (token) circulates 
-              around the ring, and only the device holding the token can transmit data.
+              Ring networks often use token passing for access control. A special data packet
+              (token) circulates around the ring, and only the device holding the token can transmit
+              data.
             </p>
           </div>
         </CardContent>
@@ -234,11 +256,11 @@ export const TopologiesContent = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-300">
           <p className="leading-relaxed">
-            In a mesh topology, devices have multiple connections to other devices, providing 
-            redundant paths for data transmission. Can be full mesh (every device connected to every other) 
-            or partial mesh (some devices have multiple connections).
+            In a mesh topology, devices have multiple connections to other devices, providing
+            redundant paths for data transmission. Can be full mesh (every device connected to every
+            other) or partial mesh (some devices have multiple connections).
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-green-600/20 border border-green-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-green-300 mb-3 flex items-center gap-2">
@@ -253,7 +275,7 @@ export const TopologiesContent = () => {
                 <li>• Optimal performance for critical applications</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-600/20 border border-red-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-300 mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
@@ -268,19 +290,23 @@ export const TopologiesContent = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
             <p className="text-blue-100 text-sm">
-              <strong>Best Use Cases:</strong> WAN connections, critical infrastructure, wireless mesh networks, 
-              data centres, internet backbone, military communications
+              <strong>Best Use Cases:</strong> WAN connections, critical infrastructure, wireless
+              mesh networks, data centres, internet backbone, military communications
             </p>
           </div>
-          
+
           <div className="bg-gray-600/20 border border-gray-600/30 rounded-lg p-4">
             <h4 className="font-semibold text-gray-300 mb-2">Full vs Partial Mesh</h4>
             <ul className="space-y-1 text-gray-300 text-sm">
-              <li>• <strong>Full Mesh:</strong> Every device connects to every other device</li>
-              <li>• <strong>Partial Mesh:</strong> Some devices have multiple connections, but not all</li>
+              <li>
+                • <strong>Full Mesh:</strong> Every device connects to every other device
+              </li>
+              <li>
+                • <strong>Partial Mesh:</strong> Some devices have multiple connections, but not all
+              </li>
               <li>• Formula for full mesh: n(n-1)/2 connections needed for n devices</li>
               <li>• Partial mesh is more practical and cost-effective</li>
             </ul>
@@ -298,32 +324,32 @@ export const TopologiesContent = () => {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-300">
           <p className="leading-relaxed">
-            Hybrid topologies combine two or more different topology types to create a network 
-            that best meets specific requirements. This approach leverages the advantages of 
-            different topologies whilst minimising their disadvantages.
+            Hybrid topologies combine two or more different topology types to create a network that
+            best meets specific requirements. This approach leverages the advantages of different
+            topologies whilst minimising their disadvantages.
           </p>
-          
+
           <div className="space-y-4">
             <div className="bg-indigo-600/20 border border-indigo-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-indigo-300 mb-2">Star-Bus Hybrid</h4>
               <p className="text-indigo-100 text-sm">
-                Multiple star networks connected via a backbone bus. Common in structured cabling 
+                Multiple star networks connected via a backbone bus. Common in structured cabling
                 where departments have star configurations connected to a main distribution frame.
               </p>
             </div>
-            
+
             <div className="bg-indigo-600/20 border border-indigo-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-indigo-300 mb-2">Tree (Hierarchical) Topology</h4>
               <p className="text-indigo-100 text-sm">
-                Combines star and bus characteristics in a hierarchical structure. Root node connects 
-                to multiple levels of star-configured sub-networks.
+                Combines star and bus characteristics in a hierarchical structure. Root node
+                connects to multiple levels of star-configured sub-networks.
               </p>
             </div>
-            
+
             <div className="bg-indigo-600/20 border border-indigo-600/30 rounded-lg p-4">
               <h4 className="font-semibold text-indigo-300 mb-2">Partial Mesh with Star</h4>
               <p className="text-indigo-100 text-sm">
-                Critical devices use mesh connections for redundancy, whilst standard users connect 
+                Critical devices use mesh connections for redundancy, whilst standard users connect
                 via star topology for cost efficiency.
               </p>
             </div>
@@ -408,30 +434,34 @@ export const TopologiesContent = () => {
                   <li>• Maintenance capabilities</li>
                 </ul>
               </div>
-              
+
               <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-300 mb-2">Small Networks (5-20 devices)</h4>
                 <p className="text-blue-100 text-sm">
-                  <strong>Recommended:</strong> Star topology with a single switch. Simple, cost-effective, 
-                  and provides good performance for most applications.
+                  <strong>Recommended:</strong> Star topology with a single switch. Simple,
+                  cost-effective, and provides good performance for most applications.
                 </p>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div className="bg-purple-600/20 border border-purple-600/30 rounded-lg p-4">
-                <h4 className="font-semibold text-purple-300 mb-2">Medium Networks (20-100 devices)</h4>
+                <h4 className="font-semibold text-purple-300 mb-2">
+                  Medium Networks (20-100 devices)
+                </h4>
                 <p className="text-purple-100 text-sm">
-                  <strong>Recommended:</strong> Hierarchical star (tree) topology with multiple switches 
-                  connected to a central backbone switch.
+                  <strong>Recommended:</strong> Hierarchical star (tree) topology with multiple
+                  switches connected to a central backbone switch.
                 </p>
               </div>
-              
+
               <div className="bg-orange-600/20 border border-orange-600/30 rounded-lg p-4">
-                <h4 className="font-semibold text-orange-300 mb-2">Large Networks (100+ devices)</h4>
+                <h4 className="font-semibold text-orange-300 mb-2">
+                  Large Networks (100+ devices)
+                </h4>
                 <p className="text-orange-100 text-sm">
-                  <strong>Recommended:</strong> Hybrid topology combining star clusters with partial mesh 
-                  for backbone connections and redundancy where needed.
+                  <strong>Recommended:</strong> Hybrid topology combining star clusters with partial
+                  mesh for backbone connections and redundancy where needed.
                 </p>
               </div>
             </div>

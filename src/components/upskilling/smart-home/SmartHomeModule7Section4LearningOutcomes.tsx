@@ -3,14 +3,14 @@ import { Target, CheckCircle } from 'lucide-react';
 
 const SmartHomeModule7Section4LearningOutcomes = () => {
   const outcomes = [
-    "Explain the importance of isolation before working on smart devices",
-    "Apply BS 7671 requirements for safe working and circuit protection",
-    "Identify risks associated with mixing low-voltage and mains circuits",
-    "Carry out testing and verification for safety compliance",
-    "Use proper isolation techniques including lock-off devices and proving units",
-    "Understand RCD protection requirements for smart home installations",
-    "Recognise earth continuity requirements in metal containment systems",
-    "Document test results for compliance and warranty purposes"
+    'Explain the importance of isolation before working on smart devices',
+    'Apply BS 7671 requirements for safe working and circuit protection',
+    'Identify risks associated with mixing low-voltage and mains circuits',
+    'Carry out testing and verification for safety compliance',
+    'Use proper isolation techniques including lock-off devices and proving units',
+    'Understand RCD protection requirements for smart home installations',
+    'Recognise earth continuity requirements in metal containment systems',
+    'Document test results for compliance and warranty purposes',
   ];
 
   return (

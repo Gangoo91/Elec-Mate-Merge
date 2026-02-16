@@ -14,7 +14,8 @@ const TroubleshootingIssuesSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Even with careful procedures, pairing issues can occur. Understanding common problems and their solutions saves time and prevents frustration.
+            Even with careful procedures, pairing issues can occur. Understanding common problems
+            and their solutions saves time and prevents frustration.
           </p>
 
           <div className="space-y-4">
@@ -112,7 +113,9 @@ const TroubleshootingIssuesSection = () => {
           </div>
 
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-            <h4 className="font-semibold text-elec-yellow mb-2">Systematic Troubleshooting Approach</h4>
+            <h4 className="font-semibold text-elec-yellow mb-2">
+              Systematic Troubleshooting Approach
+            </h4>
             <ol className="space-y-2 text-gray-300 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">1.</span>

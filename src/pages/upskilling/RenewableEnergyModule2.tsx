@@ -7,40 +7,41 @@ const RenewableEnergyModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "PV Panel Types (Monocrystalline, Poly, Thin Film)",
+      title: 'PV Panel Types (Monocrystalline, Poly, Thin Film)',
       icon: Layers,
-      description: "Understanding different photovoltaic panel technologies and their characteristics"
+      description:
+        'Understanding different photovoltaic panel technologies and their characteristics',
     },
     {
       id: 2,
-      title: "Site Assessment: Orientation, Shading, and Irradiance",
+      title: 'Site Assessment: Orientation, Shading, and Irradiance',
       icon: MapPin,
-      description: "Evaluating site conditions for optimal solar PV system performance"
+      description: 'Evaluating site conditions for optimal solar PV system performance',
     },
     {
       id: 3,
-      title: "String Design, Voltage Matching & Panel Sizing",
+      title: 'String Design, Voltage Matching & Panel Sizing',
       icon: Calculator,
-      description: "Designing solar panel strings and matching system voltages"
+      description: 'Designing solar panel strings and matching system voltages',
     },
     {
       id: 4,
-      title: "Mounting Systems and Structural Considerations",
+      title: 'Mounting Systems and Structural Considerations',
       icon: Building,
-      description: "Roof and ground mounting systems with structural analysis"
+      description: 'Roof and ground mounting systems with structural analysis',
     },
     {
       id: 5,
-      title: "PV System Layouts: DC Side, AC Side, and Isolation",
+      title: 'PV System Layouts: DC Side, AC Side, and Isolation',
       icon: Zap,
-      description: "Understanding DC and AC system layouts with isolation requirements"
+      description: 'Understanding DC and AC system layouts with isolation requirements',
     },
     {
       id: 6,
-      title: "Typical Single-Line Diagrams and Component Flow",
+      title: 'Typical Single-Line Diagrams and Component Flow',
       icon: FileText,
-      description: "Creating and interpreting solar PV system diagrams"
-    }
+      description: 'Creating and interpreting solar PV system diagrams',
+    },
   ];
 
   return (

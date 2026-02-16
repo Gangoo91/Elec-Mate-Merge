@@ -86,8 +86,7 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'Which British Standard covers the code of practice for full and partial demolition?',
+    question: 'Which British Standard covers the code of practice for full and partial demolition?',
     options: ['BS 5228', 'BS 6187', 'BS 7671', 'BS 8110'],
     correctAnswer: 1,
     explanation:
@@ -95,8 +94,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'What type of asbestos survey is required before demolition work begins?',
+    question: 'What type of asbestos survey is required before demolition work begins?',
     options: [
       'A management survey',
       'A refurbishment and demolition survey',
@@ -139,12 +137,7 @@ const quizQuestions = [
     id: 5,
     question:
       'On a construction site with 80 workers, how many first aiders should be available as a minimum according to HSE guidance?',
-    options: [
-      'One first aider',
-      'Two first aiders',
-      'Three first aiders',
-      'Four first aiders',
-    ],
+    options: ['One first aider', 'Two first aiders', 'Three first aiders', 'Four first aiders'],
     correctAnswer: 1,
     explanation:
       'For a higher-risk workplace such as a construction site with 80 workers, HSE guidance recommends at least one first aider for the first 50 workers, plus an additional first aider for every additional 50 workers (or part thereof). Therefore, 80 workers would require a minimum of two first aiders. The employer should carry out a first aid needs assessment, which may indicate that more are needed depending on site-specific factors.',
@@ -165,22 +158,15 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question:
-      'What TWO numbers can be used to contact the emergency services in the UK?',
-    options: [
-      '999 and 111',
-      '999 and 112',
-      '112 and 101',
-      '999 and 0800',
-    ],
+    question: 'What TWO numbers can be used to contact the emergency services in the UK?',
+    options: ['999 and 111', '999 and 112', '112 and 101', '999 and 0800'],
     correctAnswer: 1,
     explanation:
       'In the UK, you can contact the emergency services by dialling 999 (the traditional UK emergency number) or 112 (the European emergency number, which also works in the UK). Both numbers connect to the same emergency call centre and can be used to request police, fire, or ambulance services. The 112 number works from any mobile phone, even without a SIM card or credit, and can be useful if 999 is not available.',
   },
   {
     id: 8,
-    question:
-      'After an emergency evacuation, when is it safe for workers to re-enter the site?',
+    question: 'After an emergency evacuation, when is it safe for workers to re-enter the site?',
     options: [
       'Once the fire alarm has stopped sounding',
       'After 15 minutes have passed',
@@ -226,15 +212,16 @@ export default function CscsCardModule5Section4() {
             <AlertTriangle className="h-7 w-7 text-green-400" />
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 mb-3 mx-auto">
-            <span className="text-green-400 text-xs font-semibold">MODULE 5 &middot; SECTION 4</span>
+            <span className="text-green-400 text-xs font-semibold">
+              MODULE 5 &middot; SECTION 4
+            </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Demolition &amp; Emergency Procedures
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
-            Safe demolition planning and methods, exclusion zones, first aid arrangements,
-            emergency procedures, working with emergency services, and site evacuation and
-            roll call processes
+            Safe demolition planning and methods, exclusion zones, first aid arrangements, emergency
+            procedures, working with emergency services, and site evacuation and roll call processes
           </p>
         </header>
 
@@ -244,13 +231,16 @@ export default function CscsCardModule5Section4() {
             <p className="text-green-400 text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>Demolition requires</strong> a structural survey, asbestos survey, and method statement before work begins
+                <strong>Demolition requires</strong> a structural survey, asbestos survey, and
+                method statement before work begins
               </li>
               <li>
-                <strong>Exclusion zones</strong> must be at least 1.5&times; the height of the structure
+                <strong>Exclusion zones</strong> must be at least 1.5&times; the height of the
+                structure
               </li>
               <li>
-                <strong>Every worker</strong> must know the emergency procedures, assembly point, and nearest first aider
+                <strong>Every worker</strong> must know the emergency procedures, assembly point,
+                and nearest first aider
               </li>
             </ul>
           </div>
@@ -312,8 +302,8 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-green-400">Critical Fact:</strong> Demolition work accounts
-                  for a disproportionately high number of fatal and serious injuries in the
+                  <strong className="text-green-400">Critical Fact:</strong> Demolition work
+                  accounts for a disproportionately high number of fatal and serious injuries in the
                   construction industry. The HSE classifies demolition as a high-risk activity
                   requiring specialist planning, competent supervision, and strict adherence to
                   approved method statements.
@@ -326,17 +316,17 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Structural collapse</strong> &mdash; premature or
-                      uncontrolled collapse of all or part of the structure, potentially burying workers
-                      or members of the public beneath falling debris
+                      <strong className="text-white">Structural collapse</strong> &mdash; premature
+                      or uncontrolled collapse of all or part of the structure, potentially burying
+                      workers or members of the public beneath falling debris
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Falling materials</strong> &mdash; bricks, concrete,
-                      steelwork, timber, roof tiles, and other structural elements falling from height
-                      during the demolition process
+                      <strong className="text-white">Falling materials</strong> &mdash; bricks,
+                      concrete, steelwork, timber, roof tiles, and other structural elements falling
+                      from height during the demolition process
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -350,60 +340,59 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Asbestos</strong> &mdash; many buildings constructed
-                      before 2000 contain asbestos-containing materials (ACMs) in insulation, floor
-                      tiles, roof sheets, pipe lagging, and other locations that must be identified and
-                      safely removed before demolition
+                      <strong className="text-white">Asbestos</strong> &mdash; many buildings
+                      constructed before 2000 contain asbestos-containing materials (ACMs) in
+                      insulation, floor tiles, roof sheets, pipe lagging, and other locations that
+                      must be identified and safely removed before demolition
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Noise</strong> &mdash; extremely high noise levels
-                      from hydraulic breakers, crushers, and the impact of falling materials, causing
-                      hearing damage without adequate protection
+                      <strong className="text-white">Noise</strong> &mdash; extremely high noise
+                      levels from hydraulic breakers, crushers, and the impact of falling materials,
+                      causing hearing damage without adequate protection
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Underground services</strong> &mdash; gas mains,
-                      electricity cables, water pipes, telecommunications cables, and sewers that may
-                      run beneath or adjacent to the structure being demolished
+                      <strong className="text-white">Underground services</strong> &mdash; gas
+                      mains, electricity cables, water pipes, telecommunications cables, and sewers
+                      that may run beneath or adjacent to the structure being demolished
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Adjacent properties</strong> &mdash; risk of damage
-                      to neighbouring buildings, party walls, and shared structural elements during
-                      demolition work
+                      <strong className="text-white">Adjacent properties</strong> &mdash; risk of
+                      damage to neighbouring buildings, party walls, and shared structural elements
+                      during demolition work
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Premature collapse</strong> &mdash; the removal of
-                      key structural elements (such as load-bearing walls or steel beams) in the wrong
-                      sequence can cause unintended collapse of remaining sections
+                      <strong className="text-white">Premature collapse</strong> &mdash; the removal
+                      of key structural elements (such as load-bearing walls or steel beams) in the
+                      wrong sequence can cause unintended collapse of remaining sections
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Hidden voids and hazards</strong> &mdash; basements,
-                      cellars, underground tanks, wells, service ducts, and other concealed spaces that
-                      may not be immediately apparent from visual inspection
+                      <strong className="text-white">Hidden voids and hazards</strong> &mdash;
+                      basements, cellars, underground tanks, wells, service ducts, and other
+                      concealed spaces that may not be immediately apparent from visual inspection
                     </span>
                   </li>
                 </ul>
               </div>
 
               <p>
-                All of these hazards must be identified during the pre-demolition planning phase
-                and addressed in the demolition method statement. Workers must be made aware of
-                every identified hazard during their site-specific briefing before demolition
-                work begins.
+                All of these hazards must be identified during the pre-demolition planning phase and
+                addressed in the demolition method statement. Workers must be made aware of every
+                identified hazard during their site-specific briefing before demolition work begins.
               </p>
             </div>
           </div>
@@ -418,8 +407,8 @@ export default function CscsCardModule5Section4() {
           <div className="border-l-2 border-green-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Demolition work must never be undertaken without thorough planning. BS 6187 (Code
-                of Practice for Full and Partial Demolition) sets out the requirements for planning,
+                Demolition work must never be undertaken without thorough planning. BS 6187 (Code of
+                Practice for Full and Partial Demolition) sets out the requirements for planning,
                 managing, and carrying out demolition work safely. The planning process involves
                 multiple surveys, a detailed method statement, and the appointment of competent
                 persons to oversee every stage of the work.
@@ -433,57 +422,61 @@ export default function CscsCardModule5Section4() {
                     <span>
                       <strong className="text-white">Structural survey</strong> &mdash; a thorough
                       examination of the building to determine its construction type, condition, and
-                      structural stability. This must be carried out by a competent structural engineer
-                      and must identify all load-bearing elements, the materials used, and any signs of
-                      structural deterioration or previous modification
+                      structural stability. This must be carried out by a competent structural
+                      engineer and must identify all load-bearing elements, the materials used, and
+                      any signs of structural deterioration or previous modification
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Asbestos refurbishment/demolition survey</strong> &mdash;
-                      a fully invasive survey to locate and identify all asbestos-containing materials
-                      within the structure. This is more comprehensive than a standard management survey
-                      and involves destructive inspection behind walls, above ceilings, and within floor
-                      and service voids. All asbestos must be removed by a licensed contractor before
-                      demolition proceeds
+                      <strong className="text-white">
+                        Asbestos refurbishment/demolition survey
+                      </strong>{' '}
+                      &mdash; a fully invasive survey to locate and identify all asbestos-containing
+                      materials within the structure. This is more comprehensive than a standard
+                      management survey and involves destructive inspection behind walls, above
+                      ceilings, and within floor and service voids. All asbestos must be removed by
+                      a licensed contractor before demolition proceeds
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Method statement</strong> &mdash; a detailed
-                      document setting out exactly how the demolition will be carried out, step by step.
-                      It must include the sequence of operations, the plant and equipment to be used,
-                      the safety precautions, temporary works and propping requirements, and the
-                      arrangements for dealing with hazardous materials
+                      document setting out exactly how the demolition will be carried out, step by
+                      step. It must include the sequence of operations, the plant and equipment to
+                      be used, the safety precautions, temporary works and propping requirements,
+                      and the arrangements for dealing with hazardous materials
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Sequence of operations</strong> &mdash; the precise
-                      order in which elements of the structure will be removed. The sequence is critical
-                      to preventing premature collapse and must be determined by a competent engineer
-                      based on the structural survey findings
+                      <strong className="text-white">Sequence of operations</strong> &mdash; the
+                      precise order in which elements of the structure will be removed. The sequence
+                      is critical to preventing premature collapse and must be determined by a
+                      competent engineer based on the structural survey findings
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Exclusion zones</strong> &mdash; the areas around
-                      the demolition site where access must be restricted to protect workers, members
-                      of the public, and adjacent properties from falling debris and other hazards
+                      <strong className="text-white">Exclusion zones</strong> &mdash; the areas
+                      around the demolition site where access must be restricted to protect workers,
+                      members of the public, and adjacent properties from falling debris and other
+                      hazards
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Competent contractor</strong> &mdash; demolition
-                      work must only be carried out by a contractor who is competent in demolition
-                      operations. Membership of the National Federation of Demolition Contractors (NFDC)
-                      provides evidence of competence. The contractor must demonstrate experience,
-                      training, and the necessary plant and equipment for the specific type of demolition
+                      <strong className="text-white">Competent contractor</strong> &mdash;
+                      demolition work must only be carried out by a contractor who is competent in
+                      demolition operations. Membership of the National Federation of Demolition
+                      Contractors (NFDC) provides evidence of competence. The contractor must
+                      demonstrate experience, training, and the necessary plant and equipment for
+                      the specific type of demolition
                     </span>
                   </li>
                 </ul>
@@ -492,21 +485,21 @@ export default function CscsCardModule5Section4() {
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
                   <strong className="text-green-400">CDM 2015 Requirement:</strong> Under the
-                  Construction (Design and Management) Regulations 2015, demolition is classified
-                  as construction work. The principal contractor must ensure that a construction
-                  phase plan is in place that covers the demolition, and that all workers have been
+                  Construction (Design and Management) Regulations 2015, demolition is classified as
+                  construction work. The principal contractor must ensure that a construction phase
+                  plan is in place that covers the demolition, and that all workers have been
                   provided with site-specific induction training covering the hazards and controls
                   identified in the method statement.
                 </p>
               </div>
 
               <p>
-                No demolition work should commence until all surveys have been completed, the
-                method statement has been approved, all hazardous materials (particularly asbestos)
-                have been safely removed, services have been disconnected and capped, and all
-                workers have been briefed on the method statement and emergency procedures. Any
-                deviation from the approved method statement must be authorised by the competent
-                engineer before work continues.
+                No demolition work should commence until all surveys have been completed, the method
+                statement has been approved, all hazardous materials (particularly asbestos) have
+                been safely removed, services have been disconnected and capped, and all workers
+                have been briefed on the method statement and emergency procedures. Any deviation
+                from the approved method statement must be authorised by the competent engineer
+                before work continues.
               </p>
             </div>
           </div>
@@ -526,15 +519,17 @@ export default function CscsCardModule5Section4() {
                 The method of demolition selected depends on the type and condition of the
                 structure, its location, the proximity of adjacent buildings, public areas, and
                 underground services, and the presence of hazardous materials. The competent
-                engineer specifies the method in the demolition method statement, and it must not
-                be changed without their approval.
+                engineer specifies the method in the demolition method statement, and it must not be
+                changed without their approval.
               </p>
 
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <Building2 className="h-5 w-5 text-green-400" />
-                    <p className="text-sm font-medium text-green-400">Deliberate Controlled Collapse</p>
+                    <p className="text-sm font-medium text-green-400">
+                      Deliberate Controlled Collapse
+                    </p>
                   </div>
                   <p className="text-sm text-white/80 mb-2">
                     The structure is weakened in a pre-planned sequence and then pulled or pushed
@@ -543,7 +538,9 @@ export default function CscsCardModule5Section4() {
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Requires large exclusion zone (minimum 1.5&times; building height)</span>
+                      <span>
+                        Requires large exclusion zone (minimum 1.5&times; building height)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -551,11 +548,17 @@ export default function CscsCardModule5Section4() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Creates significant dust and noise &mdash; requires dust suppression and hearing protection</span>
+                      <span>
+                        Creates significant dust and noise &mdash; requires dust suppression and
+                        hearing protection
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Relatively fast but requires careful structural engineering to ensure the collapse direction is controlled</span>
+                      <span>
+                        Relatively fast but requires careful structural engineering to ensure the
+                        collapse direction is controlled
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -573,19 +576,29 @@ export default function CscsCardModule5Section4() {
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Safest method &mdash; maximum control over the process at every stage</span>
+                      <span>
+                        Safest method &mdash; maximum control over the process at every stage
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Used where the structure is close to occupied buildings, roads, or public areas</span>
+                      <span>
+                        Used where the structure is close to occupied buildings, roads, or public
+                        areas
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Allows for the careful removal and segregation of hazardous materials</span>
+                      <span>
+                        Allows for the careful removal and segregation of hazardous materials
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Slowest and most expensive method, but often the only option in confined or sensitive locations</span>
+                      <span>
+                        Slowest and most expensive method, but often the only option in confined or
+                        sensitive locations
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -603,19 +616,31 @@ export default function CscsCardModule5Section4() {
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span><strong className="text-white">High-reach excavators</strong> &mdash; can demolish structures up to 60 metres in height from ground level</span>
+                      <span>
+                        <strong className="text-white">High-reach excavators</strong> &mdash; can
+                        demolish structures up to 60 metres in height from ground level
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span><strong className="text-white">Hydraulic breakers</strong> &mdash; mounted on excavator arms for breaking up concrete foundations, floors, and structural elements</span>
+                      <span>
+                        <strong className="text-white">Hydraulic breakers</strong> &mdash; mounted
+                        on excavator arms for breaking up concrete foundations, floors, and
+                        structural elements
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Operators must hold CPCS certification for the specific plant being used</span>
+                      <span>
+                        Operators must hold CPCS certification for the specific plant being used
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Ground conditions must be assessed to ensure the plant can operate safely without sinking or overturning</span>
+                      <span>
+                        Ground conditions must be assessed to ensure the plant can operate safely
+                        without sinking or overturning
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -632,19 +657,31 @@ export default function CscsCardModule5Section4() {
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Rarely used in modern UK demolition due to the difficulty of controlling the ball&rsquo;s path</span>
+                      <span>
+                        Rarely used in modern UK demolition due to the difficulty of controlling the
+                        ball&rsquo;s path
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Requires a very large exclusion zone due to the unpredictable trajectory of debris</span>
+                      <span>
+                        Requires a very large exclusion zone due to the unpredictable trajectory of
+                        debris
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Generates extreme noise and vibration, potentially damaging adjacent structures</span>
+                      <span>
+                        Generates extreme noise and vibration, potentially damaging adjacent
+                        structures
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Largely replaced by high-reach excavators which offer much greater precision and control</span>
+                      <span>
+                        Largely replaced by high-reach excavators which offer much greater precision
+                        and control
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -661,7 +698,10 @@ export default function CscsCardModule5Section4() {
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Used for small structures, internal strip-outs, or where machine access is not possible</span>
+                      <span>
+                        Used for small structures, internal strip-outs, or where machine access is
+                        not possible
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -669,11 +709,17 @@ export default function CscsCardModule5Section4() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Workers at height must be protected from falls &mdash; scaffolding, safety nets, or harnesses required</span>
+                      <span>
+                        Workers at height must be protected from falls &mdash; scaffolding, safety
+                        nets, or harnesses required
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>High risk of manual handling injuries, vibration exposure from power tools, and dust inhalation</span>
+                      <span>
+                        High risk of manual handling injuries, vibration exposure from power tools,
+                        and dust inhalation
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -685,7 +731,8 @@ export default function CscsCardModule5Section4() {
                   demolition method is not made by the site worker &mdash; it is determined by the
                   competent engineer based on the structural survey, the location, the proximity of
                   other buildings and public areas, and the presence of hazardous materials. The
-                  selected method is documented in the method statement and must be followed exactly.
+                  selected method is documented in the method statement and must be followed
+                  exactly.
                 </p>
               </div>
             </div>
@@ -714,28 +761,28 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Minimum distance</strong> &mdash; the exclusion zone
-                      should extend at least 1.5 times the height of the structure being demolished in
-                      all directions. This may be increased based on the demolition method, wind
-                      conditions, and site-specific risk assessment
+                      <strong className="text-white">Minimum distance</strong> &mdash; the exclusion
+                      zone should extend at least 1.5 times the height of the structure being
+                      demolished in all directions. This may be increased based on the demolition
+                      method, wind conditions, and site-specific risk assessment
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Hoarding</strong> &mdash; solid hoarding must be
-                      erected around the perimeter of the demolition site to prevent unauthorised access
-                      and to contain debris. Hoarding must be at least 2 metres high and must be
-                      maintained in good condition throughout the works
+                      <strong className="text-white">Hoarding</strong> &mdash; solid hoarding must
+                      be erected around the perimeter of the demolition site to prevent unauthorised
+                      access and to contain debris. Hoarding must be at least 2 metres high and must
+                      be maintained in good condition throughout the works
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Warning signs</strong> &mdash; clear signage must be
-                      displayed at all entry points warning of demolition in progress, the hazards
-                      present, and that unauthorised entry is prohibited. Signs must include pictograms
-                      for those who may not read English
+                      <strong className="text-white">Warning signs</strong> &mdash; clear signage
+                      must be displayed at all entry points warning of demolition in progress, the
+                      hazards present, and that unauthorised entry is prohibited. Signs must include
+                      pictograms for those who may not read English
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -743,9 +790,9 @@ export default function CscsCardModule5Section4() {
                     <span>
                       <strong className="text-white">Traffic management</strong> &mdash; where the
                       demolition site is adjacent to public roads, a traffic management plan must be
-                      implemented. This may include road closures, diversions, temporary traffic lights,
-                      banksmen, and protection barriers to prevent vehicles from entering the exclusion
-                      zone
+                      implemented. This may include road closures, diversions, temporary traffic
+                      lights, banksmen, and protection barriers to prevent vehicles from entering
+                      the exclusion zone
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -763,19 +810,19 @@ export default function CscsCardModule5Section4() {
                     <span>
                       <strong className="text-white">Working near public areas</strong> &mdash;
                       additional measures are required when demolition takes place near public
-                      footpaths, roads, schools, hospitals, or residential properties. These may include
-                      dedicated lookouts (banksmen), temporary covered walkways for pedestrians, and
-                      restricted working hours
+                      footpaths, roads, schools, hospitals, or residential properties. These may
+                      include dedicated lookouts (banksmen), temporary covered walkways for
+                      pedestrians, and restricted working hours
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Noise and dust controls</strong> &mdash; water
-                      suppression systems must be used to control dust during demolition. Noise levels
-                      must be monitored and controlled in accordance with BS 5228 (Code of Practice for
-                      Noise and Vibration Control on Construction and Open Sites). Working hours may be
-                      restricted by the local authority
+                      suppression systems must be used to control dust during demolition. Noise
+                      levels must be monitored and controlled in accordance with BS 5228 (Code of
+                      Practice for Noise and Vibration Control on Construction and Open Sites).
+                      Working hours may be restricted by the local authority
                     </span>
                   </li>
                 </ul>
@@ -815,26 +862,29 @@ export default function CscsCardModule5Section4() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">First Aiders and Appointed Persons</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  First Aiders and Appointed Persons
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">First aider</strong> &mdash; a person who has
                       completed an HSE-approved first aid at work (FAW) course. They are trained to
-                      provide emergency treatment including CPR, treating burns, controlling bleeding,
-                      managing fractures, and dealing with unconscious casualties. The FAW certificate
-                      is valid for 3 years
+                      provide emergency treatment including CPR, treating burns, controlling
+                      bleeding, managing fractures, and dealing with unconscious casualties. The FAW
+                      certificate is valid for 3 years
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Appointed person</strong> &mdash; someone nominated
-                      to take charge of the first aid arrangements. They are not fully trained first
-                      aiders but have completed an Emergency First Aid at Work (EFAW) course. They can
-                      call the emergency services and look after the first aid equipment. They act as a
-                      first point of contact until a qualified first aider or paramedic arrives
+                      <strong className="text-white">Appointed person</strong> &mdash; someone
+                      nominated to take charge of the first aid arrangements. They are not fully
+                      trained first aiders but have completed an Emergency First Aid at Work (EFAW)
+                      course. They can call the emergency services and look after the first aid
+                      equipment. They act as a first point of contact until a qualified first aider
+                      or paramedic arrives
                     </span>
                   </li>
                 </ul>
@@ -893,20 +943,23 @@ export default function CscsCardModule5Section4() {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">Remote or high-risk sites</p>
                       <p className="text-xs text-white/60">
-                        Additional provision may be needed &mdash; employer must complete a first aid needs assessment
+                        Additional provision may be needed &mdash; employer must complete a first
+                        aid needs assessment
                       </p>
                     </div>
                   </div>
                 </div>
 
                 <p className="text-xs text-white/40 text-center mt-4 italic">
-                  These are minimum requirements. The employer&rsquo;s first aid needs assessment may
-                  identify the need for additional first aiders based on site-specific factors.
+                  These are minimum requirements. The employer&rsquo;s first aid needs assessment
+                  may identify the need for additional first aiders based on site-specific factors.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">First Aid Kit Contents &amp; Location</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  First Aid Kit Contents &amp; Location
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -934,8 +987,9 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      On larger sites, additional first aid kits should be distributed across different
-                      work areas so that treatment is available within a short walking distance
+                      On larger sites, additional first aid kits should be distributed across
+                      different work areas so that treatment is available within a short walking
+                      distance
                     </span>
                   </li>
                 </ul>
@@ -948,8 +1002,8 @@ export default function CscsCardModule5Section4() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Emergency contact numbers</strong> &mdash; the
-                      numbers for the emergency services (999/112) and the site emergency contact must
-                      be displayed prominently on site notice boards and in welfare facilities
+                      numbers for the emergency services (999/112) and the site emergency contact
+                      must be displayed prominently on site notice boards and in welfare facilities
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -964,10 +1018,10 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Nearest first aider</strong> &mdash; every worker
-                      must know who the first aiders are on site and how to contact them. First aiders
-                      should be identifiable (e.g., by wearing a distinctive armband or having their
-                      name and location displayed on the site notice board)
+                      <strong className="text-white">Nearest first aider</strong> &mdash; every
+                      worker must know who the first aiders are on site and how to contact them.
+                      First aiders should be identifiable (e.g., by wearing a distinctive armband or
+                      having their name and location displayed on the site notice board)
                     </span>
                   </li>
                 </ul>
@@ -975,9 +1029,9 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-green-400">Site Induction Requirement:</strong> The location
-                  of first aid kits, the names of first aiders, emergency contact numbers, and the
-                  location of the accident book must all be covered during the site-specific
+                  <strong className="text-green-400">Site Induction Requirement:</strong> The
+                  location of first aid kits, the names of first aiders, emergency contact numbers,
+                  and the location of the accident book must all be covered during the site-specific
                   induction. If you are unsure about any of these on your site, ask your supervisor
                   or check the site notice board immediately.
                 </p>
@@ -1003,17 +1057,20 @@ export default function CscsCardModule5Section4() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Types of Emergency Covered by the Site Plan</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Types of Emergency Covered by the Site Plan
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Fire evacuation</strong> &mdash; the most common
-                      type of site emergency. The plan must include the location of fire alarm call
-                      points, the alarm signal (which may differ from building site alarms), primary
-                      and alternative escape routes, the location of fire extinguishers and their types,
-                      and the assembly point. Workers must know the difference between the evacuation
-                      alarm and any other site signals (such as crane movement warnings)
+                      <strong className="text-white">Fire evacuation</strong> &mdash; the most
+                      common type of site emergency. The plan must include the location of fire
+                      alarm call points, the alarm signal (which may differ from building site
+                      alarms), primary and alternative escape routes, the location of fire
+                      extinguishers and their types, and the assembly point. Workers must know the
+                      difference between the evacuation alarm and any other site signals (such as
+                      crane movement warnings)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1030,11 +1087,12 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Structural instability/collapse</strong> &mdash;
-                      if a structure shows signs of instability (cracking, movement, bulging walls),
-                      the area must be evacuated immediately, the exclusion zone established or
-                      extended, and a competent structural engineer called to assess the situation.
-                      No one must re-enter the affected area until it has been declared safe
+                      <strong className="text-white">Structural instability/collapse</strong>{' '}
+                      &mdash; if a structure shows signs of instability (cracking, movement, bulging
+                      walls), the area must be evacuated immediately, the exclusion zone established
+                      or extended, and a competent structural engineer called to assess the
+                      situation. No one must re-enter the affected area until it has been declared
+                      safe
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1044,18 +1102,19 @@ export default function CscsCardModule5Section4() {
                       lightning, heavy rain, snow, or extreme heat may all require work to stop and
                       workers to seek shelter. Cranes and other lifting operations must cease in
                       high winds (typically above 38 mph, though the specific limit depends on the
-                      crane type and the load being lifted). The plan must include trigger points for
-                      stopping work and shelter locations
+                      crane type and the load being lifted). The plan must include trigger points
+                      for stopping work and shelter locations
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Bomb threat</strong> &mdash; if a bomb threat is
-                      received, the site must be evacuated immediately using the standard evacuation
-                      procedure. Do not use mobile phones or radios near the site. Assemble at the
-                      designated point (which may be different from the standard fire assembly point
-                      depending on the nature of the threat) and await the police
+                      <strong className="text-white">Bomb threat</strong> &mdash; if a bomb threat
+                      is received, the site must be evacuated immediately using the standard
+                      evacuation procedure. Do not use mobile phones or radios near the site.
+                      Assemble at the designated point (which may be different from the standard
+                      fire assembly point depending on the nature of the threat) and await the
+                      police
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1071,11 +1130,12 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Medical emergency</strong> &mdash; heart attack,
-                      stroke, severe allergic reaction, electrocution, fall from height, crush injury,
-                      or any other serious medical event. The first aider must be called immediately,
-                      and 999/112 dialled without delay. Do not move the casualty unless they are in
-                      immediate danger (e.g., from fire or further collapse)
+                      <strong className="text-white">Medical emergency</strong> &mdash; heart
+                      attack, stroke, severe allergic reaction, electrocution, fall from height,
+                      crush injury, or any other serious medical event. The first aider must be
+                      called immediately, and 999/112 dialled without delay. Do not move the
+                      casualty unless they are in immediate danger (e.g., from fire or further
+                      collapse)
                     </span>
                   </li>
                 </ul>
@@ -1107,7 +1167,8 @@ export default function CscsCardModule5Section4() {
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-amber-500/20 to-amber-400/10 border border-amber-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-amber-400">2. ASSESS</p>
                     <p className="text-[11px] text-white/70">
-                      Quickly assess the situation &mdash; is it safe to approach? Are others in danger?
+                      Quickly assess the situation &mdash; is it safe to approach? Are others in
+                      danger?
                     </p>
                   </div>
                   <div className="flex flex-col items-center py-0.5">
@@ -1119,7 +1180,8 @@ export default function CscsCardModule5Section4() {
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-orange-500/20 to-orange-400/10 border border-orange-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-orange-400">3. ALERT</p>
                     <p className="text-[11px] text-white/70">
-                      Raise the alarm &mdash; activate call point, shout &ldquo;Fire!&rdquo;, or call 999/112
+                      Raise the alarm &mdash; activate call point, shout &ldquo;Fire!&rdquo;, or
+                      call 999/112
                     </p>
                   </div>
                   <div className="flex flex-col items-center py-0.5">
@@ -1131,7 +1193,8 @@ export default function CscsCardModule5Section4() {
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-yellow-500/20 to-yellow-400/10 border border-yellow-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-yellow-400">4. EVACUATE</p>
                     <p className="text-[11px] text-white/70">
-                      Leave by the nearest safe exit route &mdash; do NOT collect belongings or use lifts
+                      Leave by the nearest safe exit route &mdash; do NOT collect belongings or use
+                      lifts
                     </p>
                   </div>
                   <div className="flex flex-col items-center py-0.5">
@@ -1155,7 +1218,8 @@ export default function CscsCardModule5Section4() {
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-green-500/20 to-green-400/10 border border-green-500/30 rounded-b-xl p-3 text-center">
                     <p className="text-xs font-bold text-green-400">6. ACCOUNT</p>
                     <p className="text-[11px] text-white/70">
-                      Roll call to account for every person &mdash; report results to emergency services
+                      Roll call to account for every person &mdash; report results to emergency
+                      services
                     </p>
                   </div>
                 </div>
@@ -1167,14 +1231,16 @@ export default function CscsCardModule5Section4() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Assembly Point Location &amp; Procedures</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Assembly Point Location &amp; Procedures
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       The assembly point must be located at a safe distance from the site &mdash;
-                      far enough away to avoid any risk from the emergency (fire, explosion, collapse)
-                      but accessible to all workers
+                      far enough away to avoid any risk from the emergency (fire, explosion,
+                      collapse) but accessible to all workers
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1242,7 +1308,8 @@ export default function CscsCardModule5Section4() {
                     <span>
                       <strong className="text-white">999</strong> is the traditional UK emergency
                       number. <strong className="text-white">112</strong> is the European emergency
-                      number and also works in the UK. Both connect to the same emergency call centre
+                      number and also works in the UK. Both connect to the same emergency call
+                      centre
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1263,7 +1330,9 @@ export default function CscsCardModule5Section4() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Providing Clear Location and Information</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Providing Clear Location and Information
+                </p>
                 <p className="text-sm text-white/80 mb-3">
                   When calling the emergency services, provide the following information clearly and
                   calmly:
@@ -1282,8 +1351,8 @@ export default function CscsCardModule5Section4() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">What has happened</strong> &mdash; describe the
-                      nature of the emergency (fire, collapse, injury, chemical spill, etc.) as clearly
-                      as possible
+                      nature of the emergency (fire, collapse, injury, chemical spill, etc.) as
+                      clearly as possible
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1297,15 +1366,15 @@ export default function CscsCardModule5Section4() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Any specific hazards</strong> &mdash; mention
-                      asbestos, chemicals, gas leaks, electrical hazards, or structural instability so
-                      that the emergency services can prepare appropriately
+                      asbestos, chemicals, gas leaks, electrical hazards, or structural instability
+                      so that the emergency services can prepare appropriately
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Your name and callback number</strong> &mdash; so
-                      the emergency services can contact you if they need further information or
+                      <strong className="text-white">Your name and callback number</strong> &mdash;
+                      so the emergency services can contact you if they need further information or
                       directions
                     </span>
                   </li>
@@ -1320,7 +1389,9 @@ export default function CscsCardModule5Section4() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Site Access for Emergency Vehicles</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Site Access for Emergency Vehicles
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -1358,7 +1429,9 @@ export default function CscsCardModule5Section4() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Designated Emergency Access Routes</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Designated Emergency Access Routes
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -1370,8 +1443,8 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Routes must be maintained in a suitable condition &mdash; no potholes, adequate
-                      compaction, appropriate surface material for heavy vehicles
+                      Routes must be maintained in a suitable condition &mdash; no potholes,
+                      adequate compaction, appropriate surface material for heavy vehicles
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1417,8 +1490,8 @@ export default function CscsCardModule5Section4() {
                 A well-practised evacuation procedure is essential for ensuring the safety of
                 everyone on site during an emergency. The evacuation plan must account for all
                 persons on site &mdash; including employees, subcontractors, visitors, delivery
-                drivers, and any other persons who have signed in. The plan must be tested
-                regularly through practice drills.
+                drivers, and any other persons who have signed in. The plan must be tested regularly
+                through practice drills.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1427,9 +1500,9 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Construction sites may use a variety of alarm types: electric bells, air horns,
-                      klaxons, or PA systems. The specific alarm signal must be communicated to all
-                      workers during site induction
+                      Construction sites may use a variety of alarm types: electric bells, air
+                      horns, klaxons, or PA systems. The specific alarm signal must be communicated
+                      to all workers during site induction
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1504,9 +1577,9 @@ export default function CscsCardModule5Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Fire wardens (also known as fire marshals) are appointed for each area or floor
-                      of the site. They are responsible for ensuring that their designated area is
-                      fully evacuated when the alarm sounds
+                      Fire wardens (also known as fire marshals) are appointed for each area or
+                      floor of the site. They are responsible for ensuring that their designated
+                      area is fully evacuated when the alarm sounds
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1587,8 +1660,8 @@ export default function CscsCardModule5Section4() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       The roll call results &mdash; confirming all persons accounted for or
-                      identifying those missing &mdash; must be formally reported to the senior
-                      fire officer on their arrival
+                      identifying those missing &mdash; must be formally reported to the senior fire
+                      officer on their arrival
                     </span>
                   </li>
                 </ul>

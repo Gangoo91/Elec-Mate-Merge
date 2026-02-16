@@ -1,14 +1,9 @@
-import { useState } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import {
   Share2,
   Copy,
@@ -20,17 +15,17 @@ import {
   Loader2,
   Settings,
   AlertCircle,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { type Briefing } from "@/hooks/useBriefings";
-import { generateBriefingQRData } from "@/hooks/useBriefingSignatures";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { type Briefing } from '@/hooks/useBriefings';
+import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
 import {
   useSendToTeams,
   useCopyBriefingLink,
   useShareBriefing,
   useSaveTeamsWebhook,
   useTeamsWebhook,
-} from "@/hooks/useBriefingDistribution";
+} from '@/hooks/useBriefingDistribution';
 
 interface BriefingDistributionProps {
   open: boolean;
@@ -46,7 +41,7 @@ export function BriefingDistribution({
   onShowQR,
 }: BriefingDistributionProps) {
   const [showWebhookConfig, setShowWebhookConfig] = useState(false);
-  const [webhookInput, setWebhookInput] = useState("");
+  const [webhookInput, setWebhookInput] = useState('');
 
   const signOffUrl = generateBriefingQRData(briefing.id);
 
@@ -71,12 +66,12 @@ export function BriefingDistribution({
     if (webhookInput.trim()) {
       saveWebhook.mutate(webhookInput.trim());
       setShowWebhookConfig(false);
-      setWebhookInput("");
+      setWebhookInput('');
     }
   };
 
   const handleOpenLink = () => {
-    window.open(signOffUrl, "_blank");
+    window.open(signOffUrl, '_blank');
   };
 
   return (
@@ -113,9 +108,7 @@ export function BriefingDistribution({
             {/* Link Display */}
             <div className="p-3 rounded-lg bg-muted/50 border border-border">
               <p className="text-xs text-muted-foreground mb-1">Sign-off Link</p>
-              <p className="text-sm text-foreground font-mono break-all">
-                {signOffUrl}
-              </p>
+              <p className="text-sm text-foreground font-mono break-all">{signOffUrl}</p>
             </div>
 
             {/* Quick Actions */}
@@ -130,7 +123,7 @@ export function BriefingDistribution({
                 ) : (
                   <Copy className="h-5 w-5" />
                 )}
-                <span className="text-xs">{copied ? "Copied!" : "Copy Link"}</span>
+                <span className="text-xs">{copied ? 'Copied!' : 'Copy Link'}</span>
               </Button>
 
               <Button
@@ -207,7 +200,7 @@ export function BriefingDistribution({
                       {saveWebhook.isPending ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
                       ) : (
-                        "Save"
+                        'Save'
                       )}
                     </Button>
                   </div>
@@ -246,9 +239,7 @@ export function BriefingDistribution({
                   {sendToTeams.isError && (
                     <div className="flex items-center gap-2 p-2 rounded bg-red-500/10 border border-red-500/20">
                       <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
-                      <p className="text-xs text-red-400">
-                        {sendToTeams.error.message}
-                      </p>
+                      <p className="text-xs text-red-400">{sendToTeams.error.message}</p>
                     </div>
                   )}
 
@@ -278,8 +269,8 @@ export function BriefingDistribution({
             {/* Instructions */}
             <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
               <p className="text-xs text-muted-foreground">
-                <strong className="text-foreground">How to distribute:</strong> Share the link or
-                QR code with your team. They can scan it with their phone camera to sign off on the
+                <strong className="text-foreground">How to distribute:</strong> Share the link or QR
+                code with your team. They can scan it with their phone camera to sign off on the
                 briefing instantly.
               </p>
             </div>

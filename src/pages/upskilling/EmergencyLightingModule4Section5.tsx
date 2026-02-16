@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m4s5-check1",
-    question: "What standard covers automatic testing systems for emergency lighting?",
-    options: ["BS 5266-1 only", "BS 5266-8", "BS 7671 only", "Building Regulations"],
+    id: 'emergencylighting-m4s5-check1',
+    question: 'What standard covers automatic testing systems for emergency lighting?',
+    options: ['BS 5266-1 only', 'BS 5266-8', 'BS 7671 only', 'Building Regulations'],
     correctIndex: 1,
-    explanation: "BS 5266-8 specifically covers automatic testing systems (ATES) for emergency lighting. It defines requirements for systems that automatically perform functional and duration tests."
+    explanation:
+      'BS 5266-8 specifically covers automatic testing systems (ATES) for emergency lighting. It defines requirements for systems that automatically perform functional and duration tests.',
   },
   {
-    id: "emergencylighting-m4s5-check2",
-    question: "What is the main advantage of automatic testing systems?",
-    options: ["Lower initial cost", "No manual intervention needed", "Higher light output", "Longer battery life"],
+    id: 'emergencylighting-m4s5-check2',
+    question: 'What is the main advantage of automatic testing systems?',
+    options: [
+      'Lower initial cost',
+      'No manual intervention needed',
+      'Higher light output',
+      'Longer battery life',
+    ],
     correctIndex: 1,
-    explanation: "Automatic testing systems perform scheduled tests without manual intervention, ensuring consistent compliance and freeing maintenance staff from routine testing tasks. Results are logged automatically."
+    explanation:
+      'Automatic testing systems perform scheduled tests without manual intervention, ensuring consistent compliance and freeing maintenance staff from routine testing tasks. Results are logged automatically.',
   },
   {
-    id: "emergencylighting-m4s5-check3",
-    question: "How do DALI emergency lighting systems communicate?",
-    options: ["WiFi only", "Digital addressable signals", "Infrared", "Bluetooth only"],
+    id: 'emergencylighting-m4s5-check3',
+    question: 'How do DALI emergency lighting systems communicate?',
+    options: ['WiFi only', 'Digital addressable signals', 'Infrared', 'Bluetooth only'],
     correctIndex: 1,
-    explanation: "DALI (Digital Addressable Lighting Interface) uses digital signals over dedicated control wiring to communicate with individual luminaires. Each luminaire has a unique address for monitoring and control."
-  }
+    explanation:
+      'DALI (Digital Addressable Lighting Interface) uses digital signals over dedicated control wiring to communicate with individual luminaires. Each luminaire has a unique address for monitoring and control.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can automatic testing replace manual log book records?",
-    answer: "Yes, BS 5266-8 compliant systems can replace paper log books. The system must record all test results with date, time, and any failures. Printouts or electronic records must be available for inspection."
+    question: 'Can automatic testing replace manual log book records?',
+    answer:
+      'Yes, BS 5266-8 compliant systems can replace paper log books. The system must record all test results with date, time, and any failures. Printouts or electronic records must be available for inspection.',
   },
   {
-    question: "What happens when an automatic test detects a fault?",
-    answer: "The system generates an alert (indicator light, message, or remote notification) identifying the faulty luminaire. Some systems automatically schedule re-tests and can integrate with building management systems."
+    question: 'What happens when an automatic test detects a fault?',
+    answer:
+      'The system generates an alert (indicator light, message, or remote notification) identifying the faulty luminaire. Some systems automatically schedule re-tests and can integrate with building management systems.',
   },
   {
-    question: "Do all luminaires need to be addressable for remote monitoring?",
-    answer: "For comprehensive monitoring, yes. However, group monitoring is possible with simpler systems where multiple luminaires report collectively. Full DALI systems provide individual luminaire status."
+    question: 'Do all luminaires need to be addressable for remote monitoring?',
+    answer:
+      'For comprehensive monitoring, yes. However, group monitoring is possible with simpler systems where multiple luminaires report collectively. Full DALI systems provide individual luminaire status.',
   },
   {
     question: "What's the difference between DALI and self-test luminaires?",
-    answer: "Self-test luminaires perform tests locally with LED indicators showing pass/fail. DALI emergency luminaires can be monitored and controlled centrally, with results logged automatically. DALI offers more comprehensive management."
-  }
+    answer:
+      'Self-test luminaires perform tests locally with LED indicators showing pass/fail. DALI emergency luminaires can be monitored and controlled centrally, with results logged automatically. DALI offers more comprehensive management.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A large office building requires emergency lighting that can be monitored centrally with individual luminaire fault identification. What system is most suitable?",
-  options: [
-    "Self-contained with local test buttons",
-    "Central battery with manual testing",
-    "DALI emergency lighting system",
-    "Basic self-test luminaires"
-  ],
-  correctAnswer: 2,
-  explanation: "DALI emergency lighting systems provide individual luminaire addressing, central monitoring, automatic testing, and fault identification. This is ideal for large buildings requiring comprehensive management."
-  }
+    question:
+      'A large office building requires emergency lighting that can be monitored centrally with individual luminaire fault identification. What system is most suitable?',
+    options: [
+      'Self-contained with local test buttons',
+      'Central battery with manual testing',
+      'DALI emergency lighting system',
+      'Basic self-test luminaires',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'DALI emergency lighting systems provide individual luminaire addressing, central monitoring, automatic testing, and fault identification. This is ideal for large buildings requiring comprehensive management.',
+  },
 ];
 
 const EmergencyLightingModule4Section5 = () => {
   useSEO({
-    title: "Remote Testing and Monitoring | Emergency Lighting Module 4.5",
-    description: "Automatic testing systems, DALI emergency lighting, BS 5266-8 compliance, and modern maintenance solutions for emergency lighting."
+    title: 'Remote Testing and Monitoring | Emergency Lighting Module 4.5',
+    description:
+      'Automatic testing systems, DALI emergency lighting, BS 5266-8 compliance, and modern maintenance solutions for emergency lighting.',
   });
 
   return (
@@ -98,9 +113,7 @@ const EmergencyLightingModule4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Remote Testing and Monitoring Systems
           </h1>
-          <p className="text-white/80">
-            Modern automated testing and compliance solutions
-          </p>
+          <p className="text-white/80">Modern automated testing and compliance solutions</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +121,29 @@ const EmergencyLightingModule4Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>ATES:</strong> Automatic test systems</li>
-              <li><strong>BS 5266-8:</strong> Testing standard</li>
-              <li><strong>DALI:</strong> Digital addressable control</li>
+              <li>
+                <strong>ATES:</strong> Automatic test systems
+              </li>
+              <li>
+                <strong>BS 5266-8:</strong> Testing standard
+              </li>
+              <li>
+                <strong>DALI:</strong> Digital addressable control
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Benefits</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Automated:</strong> No manual intervention</li>
-              <li><strong>Logged:</strong> Automatic record keeping</li>
-              <li><strong>Alerts:</strong> Fault identification</li>
+              <li>
+                <strong>Automated:</strong> No manual intervention
+              </li>
+              <li>
+                <strong>Logged:</strong> Automatic record keeping
+              </li>
+              <li>
+                <strong>Alerts:</strong> Fault identification
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +153,12 @@ const EmergencyLightingModule4Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand automatic testing systems",
-              "Apply BS 5266-8 requirements",
-              "Configure DALI emergency lighting",
-              "Set up remote monitoring",
-              "Interpret test results",
-              "Manage fault notifications"
+              'Understand automatic testing systems',
+              'Apply BS 5266-8 requirements',
+              'Configure DALI emergency lighting',
+              'Set up remote monitoring',
+              'Interpret test results',
+              'Manage fault notifications',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,8 +178,8 @@ const EmergencyLightingModule4Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Automatic testing systems (ATES) perform scheduled functional and duration
-              tests without manual intervention, recording results for compliance evidence.
+              Automatic testing systems (ATES) perform scheduled functional and duration tests
+              without manual intervention, recording results for compliance evidence.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -205,24 +230,34 @@ const EmergencyLightingModule4Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              DALI (Digital Addressable Lighting Interface) provides sophisticated
-              control and monitoring of emergency luminaires through digital communication.
+              DALI (Digital Addressable Lighting Interface) provides sophisticated control and
+              monitoring of emergency luminaires through digital communication.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">DALI Emergency Features:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Individual addressing:</strong> Each luminaire uniquely identified</li>
-                <li><strong>Status reporting:</strong> Lamp, battery, charger status</li>
-                <li><strong>Remote testing:</strong> Tests initiated from central controller</li>
-                <li><strong>Automatic scheduling:</strong> Tests run at programmed times</li>
-                <li><strong>Result logging:</strong> Full compliance documentation</li>
+                <li>
+                  <strong>Individual addressing:</strong> Each luminaire uniquely identified
+                </li>
+                <li>
+                  <strong>Status reporting:</strong> Lamp, battery, charger status
+                </li>
+                <li>
+                  <strong>Remote testing:</strong> Tests initiated from central controller
+                </li>
+                <li>
+                  <strong>Automatic scheduling:</strong> Tests run at programmed times
+                </li>
+                <li>
+                  <strong>Result logging:</strong> Full compliance documentation
+                </li>
               </ul>
             </div>
 
             <p>
-              DALI emergency systems typically use the DALI-2 emergency standard (IEC 62386-202)
-              for interoperability between different manufacturer's products.
+              DALI emergency systems typically use the DALI-2 emergency standard (IEC 62386-202) for
+              interoperability between different manufacturer's products.
             </p>
           </div>
         </section>
@@ -237,13 +272,15 @@ const EmergencyLightingModule4Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Remote monitoring enables real-time visibility of system status and
-              immediate notification of faults, improving response times.
+              Remote monitoring enables real-time visibility of system status and immediate
+              notification of faults, improving response times.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Monitoring Capabilities</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Monitoring Capabilities
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Real-time luminaire status</li>
                   <li>Battery health monitoring</li>
@@ -271,7 +308,9 @@ const EmergencyLightingModule4Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">System Selection Factors</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                System Selection Factors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Building size and complexity</li>
                 <li>Number of luminaires to monitor</li>
@@ -282,12 +321,22 @@ const EmergencyLightingModule4Section5 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Implementation Errors</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Implementation Errors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>No alert response:</strong> — Faults reported but not actioned</li>
-                <li><strong>Wrong test times:</strong> — Tests during occupied hours</li>
-                <li><strong>Missing configuration:</strong> — System not fully commissioned</li>
-                <li><strong>Poor documentation:</strong> — Test records not reviewed</li>
+                <li>
+                  <strong>No alert response:</strong> — Faults reported but not actioned
+                </li>
+                <li>
+                  <strong>Wrong test times:</strong> — Tests during occupied hours
+                </li>
+                <li>
+                  <strong>Missing configuration:</strong> — System not fully commissioned
+                </li>
+                <li>
+                  <strong>Poor documentation:</strong> — Test records not reviewed
+                </li>
               </ul>
             </div>
           </div>
@@ -333,10 +382,7 @@ const EmergencyLightingModule4Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

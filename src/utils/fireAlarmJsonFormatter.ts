@@ -46,95 +46,134 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   // Format test result for display
   const formatTestResult = (result: string | undefined): string => {
     switch (result) {
-      case 'pass': return 'PASS';
-      case 'fail': return 'FAIL';
-      case 'na': return 'N/A';
-      default: return '';
+      case 'pass':
+        return 'PASS';
+      case 'fail':
+        return 'FAIL';
+      case 'na':
+        return 'N/A';
+      default:
+        return '';
     }
   };
 
   // Get badge class for test result
   const getResultClass = (result: string | undefined): string => {
     switch (result) {
-      case 'pass': return 'pass';
-      case 'fail': return 'fail';
-      case 'na': return 'na';
-      default: return 'na';
+      case 'pass':
+        return 'pass';
+      case 'fail':
+        return 'fail';
+      case 'na':
+        return 'na';
+      default:
+        return 'na';
     }
   };
 
   // Format certificate type
   const formatCertificateType = (type: string): string => {
     switch (type) {
-      case 'installation': return 'Installation Certificate';
-      case 'commissioning': return 'Commissioning Certificate';
-      case 'periodic': return 'Periodic Test Certificate';
-      default: return type || 'Certificate';
+      case 'installation':
+        return 'Installation Certificate';
+      case 'commissioning':
+        return 'Commissioning Certificate';
+      case 'periodic':
+        return 'Periodic Test Certificate';
+      default:
+        return type || 'Certificate';
     }
   };
 
   // Format network type
   const formatNetworkType = (type: string): string => {
     switch (type) {
-      case 'standalone': return 'Standalone';
-      case 'conventional': return 'Conventional';
-      case 'addressable': return 'Addressable';
-      case 'analogue': return 'Analogue Addressable';
-      case 'networked': return 'Networked';
-      case 'wireless': return 'Wireless';
-      default: return type || '';
+      case 'standalone':
+        return 'Standalone';
+      case 'conventional':
+        return 'Conventional';
+      case 'addressable':
+        return 'Addressable';
+      case 'analogue':
+        return 'Analogue Addressable';
+      case 'networked':
+        return 'Networked';
+      case 'wireless':
+        return 'Wireless';
+      default:
+        return type || '';
     }
   };
 
   // Format premises type
   const formatPremisesType = (type: string): string => {
     switch (type) {
-      case 'residential': return 'Residential';
-      case 'commercial': return 'Commercial';
-      case 'industrial': return 'Industrial';
-      case 'retail': return 'Retail';
-      case 'healthcare': return 'Healthcare';
-      case 'educational': return 'Educational';
-      case 'hospitality': return 'Hospitality';
-      case 'care-home': return 'Care Home';
-      case 'hmo': return 'HMO';
-      case 'mixed-use': return 'Mixed Use';
-      default: return type || '';
+      case 'residential':
+        return 'Residential';
+      case 'commercial':
+        return 'Commercial';
+      case 'industrial':
+        return 'Industrial';
+      case 'retail':
+        return 'Retail';
+      case 'healthcare':
+        return 'Healthcare';
+      case 'educational':
+        return 'Educational';
+      case 'hospitality':
+        return 'Hospitality';
+      case 'care-home':
+        return 'Care Home';
+      case 'hmo':
+        return 'HMO';
+      case 'mixed-use':
+        return 'Mixed Use';
+      default:
+        return type || '';
     }
   };
 
   // Format occupancy type
   const formatOccupancyType = (type: string): string => {
     switch (type) {
-      case 'sleeping': return 'Sleeping Risk';
-      case 'day-use': return 'Day Use Only';
-      case '24hr': return '24 Hour Occupation';
-      case 'shift': return 'Shift Pattern';
-      default: return type || '';
+      case 'sleeping':
+        return 'Sleeping Risk';
+      case 'day-use':
+        return 'Day Use Only';
+      case '24hr':
+        return '24 Hour Occupation';
+      case 'shift':
+        return 'Shift Pattern';
+      default:
+        return type || '';
     }
   };
 
   // Format battery type
   const formatBatteryType = (type: string): string => {
     switch (type) {
-      case 'sealed-lead-acid': return 'Sealed Lead Acid';
-      case 'nickel-cadmium': return 'Nickel Cadmium';
-      case 'lithium': return 'Lithium';
-      default: return type || '';
+      case 'sealed-lead-acid':
+        return 'Sealed Lead Acid';
+      case 'nickel-cadmium':
+        return 'Nickel Cadmium';
+      case 'lithium':
+        return 'Lithium';
+      default:
+        return type || '';
     }
   };
 
   // Format system category description
   const getSystemCategoryDescription = (category: string): string => {
     const descriptions: Record<string, string> = {
-      'L1': 'Full coverage throughout the building',
-      'L2': 'Protection in escape routes + high-risk areas',
-      'L3': 'Protection of escape routes only',
-      'L4': 'Within escape routes only',
-      'L5': 'As risk assessment dictates',
-      'M': 'Manual call points only',
-      'P1': 'Full property protection',
-      'P2': 'Partial property protection'
+      L1: 'Full coverage throughout the building',
+      L2: 'Protection in escape routes + high-risk areas',
+      L3: 'Protection of escape routes only',
+      L4: 'Within escape routes only',
+      L5: 'As risk assessment dictates',
+      M: 'Manual call points only',
+      P1: 'Full property protection',
+      P2: 'Partial property protection',
     };
     return descriptions[category] || '';
   };
@@ -142,19 +181,27 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   // Format defect severity
   const formatSeverity = (severity: string): string => {
     switch (severity) {
-      case 'critical': return 'Critical';
-      case 'non-critical': return 'Non-Critical';
-      case 'recommendation': return 'Recommendation';
-      default: return severity || '';
+      case 'critical':
+        return 'Critical';
+      case 'non-critical':
+        return 'Non-Critical';
+      case 'recommendation':
+        return 'Recommendation';
+      default:
+        return severity || '';
     }
   };
 
   const getSeverityClass = (severity: string): string => {
     switch (severity) {
-      case 'critical': return 'critical';
-      case 'non-critical': return 'non-critical';
-      case 'recommendation': return 'recommendation';
-      default: return 'recommendation';
+      case 'critical':
+        return 'critical';
+      case 'non-critical':
+        return 'non-critical';
+      case 'recommendation':
+        return 'recommendation';
+      default:
+        return 'recommendation';
     }
   };
 
@@ -171,8 +218,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     (detectorCount.flame || 0) +
     (detectorCount.co || 0);
 
-  const totalAlarmDevices =
-    (formData.sounderCount || 0) + (formData.visualAlarmCount || 0);
+  const totalAlarmDevices = (formData.sounderCount || 0) + (formData.visualAlarmCount || 0);
 
   // Format zones for PDF
   const formatZones = (): any[] => {
@@ -183,7 +229,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       location: zone.location || '',
       detector_count: zone.detectorCount || 0,
       call_point_count: zone.callPointCount || 0,
-      sounder_count: zone.sounderCount || 0
+      sounder_count: zone.sounderCount || 0,
     }));
   };
 
@@ -204,7 +250,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       event_log_result: getResultClass(tests.eventLog),
       event_log_display: formatTestResult(tests.eventLog),
       remote_signalling_result: getResultClass(tests.remoteSignalling),
-      remote_signalling_display: formatTestResult(tests.remoteSignalling)
+      remote_signalling_display: formatTestResult(tests.remoteSignalling),
     };
   };
 
@@ -220,7 +266,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       charger_result: getResultClass(tests.chargerOperation),
       charger_display: formatTestResult(tests.chargerOperation),
       standby_result: getResultClass(tests.standbyDuration),
-      standby_display: formatTestResult(tests.standbyDuration)
+      standby_display: formatTestResult(tests.standbyDuration),
     };
   };
 
@@ -235,7 +281,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       earth_fault_result: getResultClass(tests.earthFault),
       earth_fault_display: formatTestResult(tests.earthFault),
       power_fail_result: getResultClass(tests.powerFail),
-      power_fail_display: formatTestResult(tests.powerFail)
+      power_fail_display: formatTestResult(tests.powerFail),
     };
   };
 
@@ -254,7 +300,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
         db_reading: r.dBReading || '',
         min_required: r.minRequired || '65',
         result: isPassing ? 'PASS' : 'FAIL',
-        result_class: isPassing ? 'pass' : 'fail'
+        result_class: isPassing ? 'pass' : 'fail',
       };
     });
   };
@@ -269,7 +315,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       severity_class: getSeverityClass(d.severity),
       rectified: d.rectified || false,
       rectification_date: formatDateUK(d.rectificationDate || ''),
-      photo_url: d.photoUrl || ''
+      photo_url: d.photoUrl || '',
     }));
   };
 
@@ -282,14 +328,18 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       maintenance_log: handover.maintenanceLog || false,
       zone_chart: handover.zoneChart || false,
       cause_effect: handover.causeEffectMatrix || false,
-      training: handover.trainingProvided || false
+      training: handover.trainingProvided || false,
     };
   };
 
   // Get overall result display
   const overallResult = get('overallResult');
-  const overallResultDisplay = overallResult === 'satisfactory' ? 'SATISFACTORY' :
-    overallResult === 'unsatisfactory' ? 'UNSATISFACTORY' : '';
+  const overallResultDisplay =
+    overallResult === 'satisfactory'
+      ? 'SATISFACTORY'
+      : overallResult === 'unsatisfactory'
+        ? 'UNSATISFACTORY'
+        : '';
   const overallResultClass = overallResult === 'satisfactory' ? 'pass' : 'fail';
 
   // Format third-party certification
@@ -300,7 +350,12 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       fia_membership: cert.fiaMembership || '',
       nsi_ssaib_certification: cert.nsiSsaibCertification || '',
       other_accreditation: cert.otherAccreditation || '',
-      has_certification: !!(cert.bafeRegistration || cert.fiaMembership || cert.nsiSsaibCertification || cert.otherAccreditation)
+      has_certification: !!(
+        cert.bafeRegistration ||
+        cert.fiaMembership ||
+        cert.nsiSsaibCertification ||
+        cert.otherAccreditation
+      ),
     };
   };
 
@@ -312,21 +367,22 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       fra_date: formatDateUK(fra.fraDate || ''),
       fra_author: fra.fraAuthor || '',
       fra_company: fra.fraCompany || '',
-      has_fra: !!(fra.fraReference || fra.fraAuthor)
+      has_fra: !!(fra.fraReference || fra.fraAuthor),
     };
   };
 
   // Format monitoring details
   const formatMonitoringDetails = () => {
     const monitoring = formData.monitoringDetails || {};
-    const signallingRouteDisplay = {
-      'dual-path': 'Dual Path',
-      'single-path': 'Single Path',
-      'redcare': 'BT Redcare',
-      'dualcom': 'Dualcom',
-      'gsm': 'GSM/GPRS',
-      'other': monitoring.signallingRouteOther || 'Other'
-    }[monitoring.signallingRoute || ''] || '';
+    const signallingRouteDisplay =
+      {
+        'dual-path': 'Dual Path',
+        'single-path': 'Single Path',
+        redcare: 'BT Redcare',
+        dualcom: 'Dualcom',
+        gsm: 'GSM/GPRS',
+        other: monitoring.signallingRouteOther || 'Other',
+      }[monitoring.signallingRoute || ''] || '';
 
     return {
       is_monitored: monitoring.isMonitored || false,
@@ -334,7 +390,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       arc_contact_number: monitoring.arcContactNumber || '',
       arc_account_number: monitoring.arcAccountNumber || '',
       signalling_route: monitoring.signallingRoute || '',
-      signalling_route_display: signallingRouteDisplay
+      signalling_route_display: signallingRouteDisplay,
     };
   };
 
@@ -342,16 +398,18 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   const formatPreviousDefects = (): any[] => {
     const defects = formData.previousDefects || [];
     return defects.map((d: any, index: number) => {
-      const statusDisplay = {
-        'outstanding': 'Outstanding',
-        'rectified': 'Rectified',
-        'no-longer-applicable': 'No Longer Applicable'
-      }[d.status || ''] || '';
-      const statusClass = {
-        'outstanding': 'fail',
-        'rectified': 'pass',
-        'no-longer-applicable': 'na'
-      }[d.status || ''] || 'na';
+      const statusDisplay =
+        {
+          outstanding: 'Outstanding',
+          rectified: 'Rectified',
+          'no-longer-applicable': 'No Longer Applicable',
+        }[d.status || ''] || '';
+      const statusClass =
+        {
+          outstanding: 'fail',
+          rectified: 'pass',
+          'no-longer-applicable': 'na',
+        }[d.status || ''] || 'na';
 
       return {
         number: index + 1,
@@ -360,7 +418,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
         status: d.status || 'outstanding',
         status_display: statusDisplay,
         status_class: statusClass,
-        notes: d.notes || ''
+        notes: d.notes || '',
       };
     });
   };
@@ -448,7 +506,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       beam: detectorCount.beam || 0,
       aspirating: detectorCount.aspirating || 0,
       flame: detectorCount.flame || 0,
-      co: detectorCount.co || 0
+      co: detectorCount.co || 0,
     },
     total_detectors: totalDetectors,
     call_point_count: formData.callPointCount || 0,
@@ -542,6 +600,6 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#dc2626',
     registration_scheme_logo: get('registrationSchemeLogo'),
-    registration_scheme: get('registrationScheme')
+    registration_scheme: get('registrationScheme'),
   };
 };

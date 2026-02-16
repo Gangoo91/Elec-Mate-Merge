@@ -1,31 +1,31 @@
-import { useInspectorProfiles, InspectorProfile } from "@/hooks/useInspectorProfiles";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { FormSection } from "./FormSection";
-import { SchemeLogoPicker } from "./SchemeLogoPicker";
-import { InsuranceDetailsForm } from "./InsuranceDetailsForm";
-import { SignatureGenerator } from "./SignatureGenerator";
-import SignaturePad, { SignaturePadRef } from "@/components/signature/SignaturePad";
-import { ProfilePhotoUpload } from "./ProfilePhotoUpload";
-import { InspectorProfileViewCard } from "./InspectorProfileViewCard";
-import { User, Award, Building2, FileText, PenTool, Globe } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
+import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { FormSection } from './FormSection';
+import { SchemeLogoPicker } from './SchemeLogoPicker';
+import { InsuranceDetailsForm } from './InsuranceDetailsForm';
+import { SignatureGenerator } from './SignatureGenerator';
+import SignaturePad, { SignaturePadRef } from '@/components/signature/SignaturePad';
+import { ProfilePhotoUpload } from './ProfilePhotoUpload';
+import { InspectorProfileViewCard } from './InspectorProfileViewCard';
+import { User, Award, Building2, FileText, PenTool, Globe } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { Badge } from '@/components/ui/badge';
 
 const qualificationOptions = [
   'C&G 2391-50 (Inspection & Testing)',
-  'C&G 2391-52 (Inspection & Testing)', 
+  'C&G 2391-52 (Inspection & Testing)',
   '18th Edition BS7671',
   'C&G 2394/2395 (Design & Verification)',
   'AM2 (Achievement Measurement)',
   'EAL Level 3 Inspection & Testing',
-  'EAL Level 4 Inspection & Testing'
+  'EAL Level 4 Inspection & Testing',
 ];
 
 export default function InspectorProfileForm() {
@@ -33,28 +33,28 @@ export default function InspectorProfileForm() {
   const currentProfile = profiles[0] || null;
   const [isEditing, setIsEditing] = useState(false);
   const [hasInitialized, setHasInitialized] = useState(false);
-  
+
   const [formData, setFormData] = useState({
-    name: "",
-    photoUrl: "",
+    name: '',
+    photoUrl: '',
     qualifications: [] as string[],
-    companyName: "",
-    companyAddress: "",
-    companyPhone: "",
-    companyEmail: "",
-    companyLogo: "",
-    companyWebsite: "",
-    companyRegistrationNumber: "",
-    vatNumber: "",
-    registrationScheme: "none",
-    registrationNumber: "",
-    registrationExpiry: "",
-    schemeLogoDataUrl: "",
-    insuranceProvider: "none",
-    insurancePolicyNumber: "",
-    insuranceCoverage: "",
-    insuranceExpiry: "",
-    signatureData: "",
+    companyName: '',
+    companyAddress: '',
+    companyPhone: '',
+    companyEmail: '',
+    companyLogo: '',
+    companyWebsite: '',
+    companyRegistrationNumber: '',
+    vatNumber: '',
+    registrationScheme: 'none',
+    registrationNumber: '',
+    registrationExpiry: '',
+    schemeLogoDataUrl: '',
+    insuranceProvider: 'none',
+    insurancePolicyNumber: '',
+    insuranceCoverage: '',
+    insuranceExpiry: '',
+    signatureData: '',
     isDefault: true,
   });
   const signaturePadRef = useRef<SignaturePadRef>(null);
@@ -71,25 +71,25 @@ export default function InspectorProfileForm() {
     if (currentProfile) {
       setFormData({
         name: currentProfile.name,
-        photoUrl: currentProfile.photoUrl || "",
+        photoUrl: currentProfile.photoUrl || '',
         qualifications: currentProfile.qualifications,
         companyName: currentProfile.companyName,
         companyAddress: currentProfile.companyAddress,
         companyPhone: currentProfile.companyPhone,
         companyEmail: currentProfile.companyEmail,
-        companyLogo: currentProfile.companyLogo || "",
-        companyWebsite: currentProfile.companyWebsite || "",
-        companyRegistrationNumber: currentProfile.companyRegistrationNumber || "",
-        vatNumber: currentProfile.vatNumber || "",
-        registrationScheme: currentProfile.registrationScheme || "none",
-        registrationNumber: currentProfile.registrationNumber || "",
-        registrationExpiry: currentProfile.registrationExpiry || "",
-        schemeLogoDataUrl: currentProfile.schemeLogoDataUrl || "",
-        insuranceProvider: currentProfile.insuranceProvider || "none",
-        insurancePolicyNumber: currentProfile.insurancePolicyNumber || "",
-        insuranceCoverage: currentProfile.insuranceCoverage || "",
-        insuranceExpiry: currentProfile.insuranceExpiry || "",
-        signatureData: currentProfile.signatureData || "",
+        companyLogo: currentProfile.companyLogo || '',
+        companyWebsite: currentProfile.companyWebsite || '',
+        companyRegistrationNumber: currentProfile.companyRegistrationNumber || '',
+        vatNumber: currentProfile.vatNumber || '',
+        registrationScheme: currentProfile.registrationScheme || 'none',
+        registrationNumber: currentProfile.registrationNumber || '',
+        registrationExpiry: currentProfile.registrationExpiry || '',
+        schemeLogoDataUrl: currentProfile.schemeLogoDataUrl || '',
+        insuranceProvider: currentProfile.insuranceProvider || 'none',
+        insurancePolicyNumber: currentProfile.insurancePolicyNumber || '',
+        insuranceCoverage: currentProfile.insuranceCoverage || '',
+        insuranceExpiry: currentProfile.insuranceExpiry || '',
+        signatureData: currentProfile.signatureData || '',
         isDefault: true,
       });
       if (currentProfile.signatureData) {
@@ -102,17 +102,17 @@ export default function InspectorProfileForm() {
 
   const handleSave = () => {
     if (!formData.name.trim()) {
-      toast.error("Inspector name is required");
+      toast.error('Inspector name is required');
       return;
     }
 
     if (currentProfile) {
       updateProfile(currentProfile.id, formData);
-      toast.success("Profile updated successfully");
+      toast.success('Profile updated successfully');
       setIsEditing(false);
     } else {
       addProfile(formData);
-      toast.success("Profile created successfully");
+      toast.success('Profile created successfully');
       setIsEditing(false);
     }
 
@@ -128,9 +128,7 @@ export default function InspectorProfileForm() {
 
   const toggleQualification = (qual: string) => {
     const current = formData.qualifications;
-    const updated = current.includes(qual)
-      ? current.filter(q => q !== qual)
-      : [...current, qual];
+    const updated = current.includes(qual) ? current.filter((q) => q !== qual) : [...current, qual];
     setFormData({ ...formData, qualifications: updated });
   };
 
@@ -154,10 +152,7 @@ export default function InspectorProfileForm() {
   if (currentProfile && !isEditing) {
     return (
       <div className="animate-fade-in">
-        <InspectorProfileViewCard 
-          profile={currentProfile} 
-          onEdit={() => setIsEditing(true)} 
-        />
+        <InspectorProfileViewCard profile={currentProfile} onEdit={() => setIsEditing(true)} />
       </div>
     );
   }
@@ -180,10 +175,12 @@ export default function InspectorProfileForm() {
         <div className="bg-elec-gray border border-elec-gray-light rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-gray-400">Profile Completion</span>
-            <span className="text-sm font-semibold text-elec-yellow">{completionPercentage()}%</span>
+            <span className="text-sm font-semibold text-elec-yellow">
+              {completionPercentage()}%
+            </span>
           </div>
           <div className="w-full bg-elec-gray-dark rounded-full h-2">
-            <div 
+            <div
               className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
               style={{ width: `${completionPercentage()}%` }}
             />
@@ -193,10 +190,9 @@ export default function InspectorProfileForm() {
 
       {/* Form Container */}
       <div className="bg-elec-gray border border-elec-gray-light rounded-lg p-4 sm:p-6 md:p-8 space-y-6 md:space-y-8 pb-24 lg:pb-8">
-        
         {/* Section 1: Personal Details */}
-        <FormSection 
-          icon={User} 
+        <FormSection
+          icon={User}
           title="1. Personal Details"
           description="Your basic information and profile photo"
         >
@@ -213,25 +209,27 @@ export default function InspectorProfileForm() {
                 className="mt-1.5 min-h-[48px]"
               />
             </div>
-            
+
             <ProfilePhotoUpload
               photoUrl={formData.photoUrl}
-              onPhotoChange={(url) => setFormData({ ...formData, photoUrl: url || "" })}
+              onPhotoChange={(url) => setFormData({ ...formData, photoUrl: url || '' })}
               label="Profile Photo"
             />
           </div>
         </FormSection>
 
         {/* Section 2: Company & Branding */}
-        <FormSection 
-          icon={Building2} 
+        <FormSection
+          icon={Building2}
           title="2. Company & Branding"
           description="Optional company details and branding (skip if not applicable)"
         >
           <div className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <Label htmlFor="companyName" className="text-foreground font-semibold">Company Name</Label>
+                <Label htmlFor="companyName" className="text-foreground font-semibold">
+                  Company Name
+                </Label>
                 <Input
                   id="companyName"
                   value={formData.companyName}
@@ -241,7 +239,9 @@ export default function InspectorProfileForm() {
                 />
               </div>
               <div>
-                <Label htmlFor="companyPhone" className="text-foreground font-semibold">Phone Number</Label>
+                <Label htmlFor="companyPhone" className="text-foreground font-semibold">
+                  Phone Number
+                </Label>
                 <Input
                   id="companyPhone"
                   type="tel"
@@ -253,10 +253,12 @@ export default function InspectorProfileForm() {
                 />
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <Label htmlFor="companyEmail" className="text-foreground font-semibold">Email Address</Label>
+                <Label htmlFor="companyEmail" className="text-foreground font-semibold">
+                  Email Address
+                </Label>
                 <Input
                   id="companyEmail"
                   type="email"
@@ -268,7 +270,9 @@ export default function InspectorProfileForm() {
                 />
               </div>
               <div>
-                <Label htmlFor="companyWebsite" className="text-foreground font-semibold">Website</Label>
+                <Label htmlFor="companyWebsite" className="text-foreground font-semibold">
+                  Website
+                </Label>
                 <div className="relative mt-1.5">
                   {!formData.companyWebsite && (
                     <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
@@ -278,14 +282,16 @@ export default function InspectorProfileForm() {
                     value={formData.companyWebsite}
                     onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
                     placeholder="www.example.co.uk"
-                    className={cn("min-h-[48px]", !formData.companyWebsite && "pl-10")}
+                    className={cn('min-h-[48px]', !formData.companyWebsite && 'pl-10')}
                   />
                 </div>
               </div>
             </div>
 
             <div>
-              <Label htmlFor="companyAddress" className="text-foreground font-semibold">Company Address</Label>
+              <Label htmlFor="companyAddress" className="text-foreground font-semibold">
+                Company Address
+              </Label>
               <Textarea
                 id="companyAddress"
                 value={formData.companyAddress}
@@ -298,17 +304,23 @@ export default function InspectorProfileForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <Label htmlFor="companyRegNumber" className="text-foreground font-semibold">Company Registration Number</Label>
+                <Label htmlFor="companyRegNumber" className="text-foreground font-semibold">
+                  Company Registration Number
+                </Label>
                 <Input
                   id="companyRegNumber"
                   value={formData.companyRegistrationNumber}
-                  onChange={(e) => setFormData({ ...formData, companyRegistrationNumber: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, companyRegistrationNumber: e.target.value })
+                  }
                   placeholder="e.g., 12345678"
                   className="mt-1.5 min-h-[48px]"
                 />
               </div>
               <div>
-                <Label htmlFor="vatNumber" className="text-foreground font-semibold">VAT Number</Label>
+                <Label htmlFor="vatNumber" className="text-foreground font-semibold">
+                  VAT Number
+                </Label>
                 <Input
                   id="vatNumber"
                   value={formData.vatNumber}
@@ -321,7 +333,7 @@ export default function InspectorProfileForm() {
 
             <ProfilePhotoUpload
               photoUrl={formData.companyLogo}
-              onPhotoChange={(url) => setFormData({ ...formData, companyLogo: url || "" })}
+              onPhotoChange={(url) => setFormData({ ...formData, companyLogo: url || '' })}
               label="Company Logo"
               isLogo={true}
             />
@@ -329,8 +341,8 @@ export default function InspectorProfileForm() {
         </FormSection>
 
         {/* Section 3: Qualifications */}
-        <FormSection 
-          icon={Award} 
+        <FormSection
+          icon={Award}
           title="3. Qualifications"
           description="Select your professional qualifications"
         >
@@ -361,7 +373,10 @@ export default function InspectorProfileForm() {
             {formData.qualifications.length > 0 && (
               <div className="flex flex-wrap gap-2 pt-2">
                 {formData.qualifications.map((qual) => (
-                  <Badge key={qual} className="bg-elec-yellow/20 text-gray-300 border border-elec-yellow/30">
+                  <Badge
+                    key={qual}
+                    className="bg-elec-yellow/20 text-gray-300 border border-elec-yellow/30"
+                  >
                     {qual}
                   </Badge>
                 ))}
@@ -371,8 +386,8 @@ export default function InspectorProfileForm() {
         </FormSection>
 
         {/* Section 4: Registration & Insurance */}
-        <FormSection 
-          icon={FileText} 
+        <FormSection
+          icon={FileText}
           title="4. Registration & Insurance"
           description="Professional registration and insurance details"
         >
@@ -383,7 +398,9 @@ export default function InspectorProfileForm() {
             onSchemeChange={(value) => setFormData({ ...formData, registrationScheme: value })}
             onNumberChange={(value) => setFormData({ ...formData, registrationNumber: value })}
             onExpiryChange={(value) => setFormData({ ...formData, registrationExpiry: value })}
-            onLogoDataUrlChange={(dataUrl) => setFormData({ ...formData, schemeLogoDataUrl: dataUrl || '' })}
+            onLogoDataUrlChange={(dataUrl) =>
+              setFormData({ ...formData, schemeLogoDataUrl: dataUrl || '' })
+            }
           />
 
           <div className="pt-4 border-t border-elec-gray-light">
@@ -393,7 +410,9 @@ export default function InspectorProfileForm() {
               coverage={formData.insuranceCoverage}
               expiry={formData.insuranceExpiry}
               onProviderChange={(value) => setFormData({ ...formData, insuranceProvider: value })}
-              onPolicyNumberChange={(value) => setFormData({ ...formData, insurancePolicyNumber: value })}
+              onPolicyNumberChange={(value) =>
+                setFormData({ ...formData, insurancePolicyNumber: value })
+              }
               onCoverageChange={(value) => setFormData({ ...formData, insuranceCoverage: value })}
               onExpiryChange={(value) => setFormData({ ...formData, insuranceExpiry: value })}
             />
@@ -401,35 +420,37 @@ export default function InspectorProfileForm() {
         </FormSection>
 
         {/* Section 5: Digital Signature */}
-        <FormSection 
-          icon={PenTool} 
+        <FormSection
+          icon={PenTool}
           title="5. Digital Signature"
           description="Create your signature for inspection certificates"
         >
           <Tabs defaultValue="draw" className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-elec-gray-dark border border-elec-gray-light">
-              <TabsTrigger value="draw" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">
+              <TabsTrigger
+                value="draw"
+                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+              >
                 Draw Signature
               </TabsTrigger>
-              <TabsTrigger value="type" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">
+              <TabsTrigger
+                value="type"
+                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+              >
                 Type Signature
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="draw" className="mt-4 space-y-4">
-              <SignaturePad
-                ref={signaturePadRef}
-                width={400}
-                height={150}
-              />
-              <Button 
+              <SignaturePad ref={signaturePadRef} width={400} height={150} />
+              <Button
                 onClick={() => {
                   const data = signaturePadRef.current?.getSignature();
                   if (data) {
                     setFormData({ ...formData, signatureData: data });
-                    toast.success("Signature saved to profile");
+                    toast.success('Signature saved to profile');
                   } else {
-                    toast.error("Please draw a signature first");
+                    toast.error('Please draw a signature first');
                   }
                 }}
                 className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
@@ -437,13 +458,13 @@ export default function InspectorProfileForm() {
                 Save Drawn Signature
               </Button>
             </TabsContent>
-            
+
             <TabsContent value="type" className="mt-4">
               <SignatureGenerator
                 onSave={(data) => {
                   setFormData({ ...formData, signatureData: data });
                   signaturePadRef.current?.setSignature(data);
-                  toast.success("Signature saved to profile");
+                  toast.success('Signature saved to profile');
                 }}
               />
             </TabsContent>
@@ -454,9 +475,9 @@ export default function InspectorProfileForm() {
             <div className="mt-4 p-4 bg-elec-gray-dark border border-elec-gray-light rounded-lg">
               <Label className="text-foreground mb-2 block">Current Signature Preview</Label>
               <div className="bg-white rounded-lg p-4 border-2 border-elec-yellow/50">
-                <img 
-                  src={formData.signatureData} 
-                  alt="Signature preview" 
+                <img
+                  src={formData.signatureData}
+                  alt="Signature preview"
                   className="max-w-full h-auto"
                 />
               </div>

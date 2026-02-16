@@ -7,40 +7,40 @@ const DataCablingModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Fibre Types: Singlemode vs Multimode",
+      title: 'Fibre Types: Singlemode vs Multimode',
       icon: Lightbulb,
-      description: "Different fibre optic cable types and applications"
+      description: 'Different fibre optic cable types and applications',
     },
     {
       id: 2,
-      title: "Connector Types and Polish Grades (LC, SC, ST)",
+      title: 'Connector Types and Polish Grades (LC, SC, ST)',
       icon: Shield,
-      description: "Fibre optic connector types and polishing standards"
+      description: 'Fibre optic connector types and polishing standards',
     },
     {
       id: 3,
-      title: "Cleaving, Splicing, and Connectorisation",
+      title: 'Cleaving, Splicing, and Connectorisation',
       icon: Cpu,
-      description: "Fibre preparation and termination techniques"
+      description: 'Fibre preparation and termination techniques',
     },
     {
       id: 4,
-      title: "Loss Budgets and OTDR Basics",
+      title: 'Loss Budgets and OTDR Basics',
       icon: Route,
-      description: "Optical loss calculations and testing methods"
+      description: 'Optical loss calculations and testing methods',
     },
     {
       id: 5,
-      title: "Bending Radius and Fibre Routing",
+      title: 'Bending Radius and Fibre Routing',
       icon: TrendingUp,
-      description: "Installation guidelines and physical constraints"
+      description: 'Installation guidelines and physical constraints',
     },
     {
       id: 6,
-      title: "Fibre Safety and Cleaning",
+      title: 'Fibre Safety and Cleaning',
       icon: TestTube,
-      description: "Safety procedures and maintenance practices"
-    }
+      description: 'Safety procedures and maintenance practices',
+    },
   ];
 
   return (

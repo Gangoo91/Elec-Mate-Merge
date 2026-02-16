@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
 import { rcdBsStandardOptions } from '@/types/protectiveDeviceTypes';
 import { rcdTypeOptions } from '@/types/wiringTypes';
@@ -18,7 +24,7 @@ const rcdRatingOptions = [
   { value: '30mA', label: '30mA' },
   { value: '100mA', label: '100mA' },
   { value: '300mA', label: '300mA' },
-  { value: '500mA', label: '500mA' }
+  { value: '500mA', label: '500mA' },
 ];
 
 const rcdRatingAOptions = [
@@ -27,14 +33,14 @@ const rcdRatingAOptions = [
   { value: '40', label: '40A' },
   { value: '63', label: '63A' },
   { value: '80', label: '80A' },
-  { value: '100', label: '100A' }
+  { value: '100', label: '100A' },
 ];
 
 const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
   onFillAllRcdBsStandard,
   onFillAllRcdType,
   onFillAllRcdRating,
-  onFillAllRcdRatingA
+  onFillAllRcdRatingA,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [selectedBsStandard, setSelectedBsStandard] = useState<string>('');
@@ -52,7 +58,7 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
         <div className="flex items-center gap-2">
           <Zap className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
           <span className="font-semibold text-sm text-foreground">Quick Fill RCD Details</span>
-          <FieldTooltip 
+          <FieldTooltip
             content="Use this to quickly apply RCD details to all circuits when one or two RCDs protect multiple circuits. This saves time by filling all rows at once."
             regulation="Reg 314.1"
             example="If all circuits are protected by a 30mA Type A RCD, select the values and click 'Apply to All Circuits'"
@@ -77,15 +83,15 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdBsStandardOptions.map(option => (
+                  {rcdBsStandardOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 onClick={() => selectedBsStandard && onFillAllRcdBsStandard(selectedBsStandard)}
                 disabled={!selectedBsStandard}
                 className="whitespace-nowrap"
@@ -104,15 +110,15 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdTypeOptions.map(option => (
+                  {rcdTypeOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 onClick={() => selectedType && onFillAllRcdType(selectedType)}
                 disabled={!selectedType}
                 className="whitespace-nowrap"
@@ -131,15 +137,15 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdRatingOptions.map(option => (
+                  {rcdRatingOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 onClick={() => selectedRating && onFillAllRcdRating(selectedRating)}
                 disabled={!selectedRating}
                 className="whitespace-nowrap"
@@ -158,15 +164,15 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdRatingAOptions.map(option => (
+                  {rcdRatingAOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 onClick={() => selectedRatingA && onFillAllRcdRatingA(selectedRatingA)}
                 disabled={!selectedRatingA}
                 className="whitespace-nowrap"

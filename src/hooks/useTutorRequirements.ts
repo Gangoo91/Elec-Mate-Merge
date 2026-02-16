@@ -167,9 +167,7 @@ export function useTutorRequirements(options: UseTutorRequirementsOptions = {}) 
         if (updateError) throw updateError;
 
         const updatedReq = data as TutorPortfolioRequirement;
-        setRequirements((prev) =>
-          prev.map((r) => (r.id === requirementId ? updatedReq : r))
-        );
+        setRequirements((prev) => prev.map((r) => (r.id === requirementId ? updatedReq : r)));
         return updatedReq;
       } catch (err) {
         console.error('Error updating requirement:', err);

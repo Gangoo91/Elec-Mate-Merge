@@ -1,14 +1,26 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { CheckCircle2, AlertTriangle, Cable, Zap, TrendingDown, Shield, Package, DollarSign, BookOpen, FileText, Loader2 } from "lucide-react";
-import { InstallPlanDataV2, CalculationResult, SiteInfo, ProjectInfo } from "../types";
-import { InstallationInsights } from "../InstallationInsights";
-import { RegulationTooltip } from "../RegulationTooltip";
-import { SiteProjectInfoDialog } from "../SiteProjectInfoDialog";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { generateInstallationPlanPDF, generatePlanReference } from "@/utils/installation-plan-pdf";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  CheckCircle2,
+  AlertTriangle,
+  Cable,
+  Zap,
+  TrendingDown,
+  Shield,
+  Package,
+  DollarSign,
+  BookOpen,
+  FileText,
+  Loader2,
+} from 'lucide-react';
+import { InstallPlanDataV2, CalculationResult, SiteInfo, ProjectInfo } from '../types';
+import { InstallationInsights } from '../InstallationInsights';
+import { RegulationTooltip } from '../RegulationTooltip';
+import { SiteProjectInfoDialog } from '../SiteProjectInfoDialog';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { generateInstallationPlanPDF, generatePlanReference } from '@/utils/installation-plan-pdf';
 
 interface ResultsStepProps {
   planData: InstallPlanDataV2;
@@ -42,22 +54,22 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
       siteInfo,
       projectInfo: {
         ...projectInfo,
-        planReference: projectInfo.planReference || generatePlanReference()
-      }
+        planReference: projectInfo.planReference || generatePlanReference(),
+      },
     };
 
     try {
       await generateInstallationPlanPDF(updatedPlanData, result);
       toast({
-        title: "PDF Generated",
-        description: "Your installation plan has been downloaded successfully"
+        title: 'PDF Generated',
+        description: 'Your installation plan has been downloaded successfully',
       });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
-        title: "Export failed",
-        description: "Could not generate PDF. Please try again.",
-        variant: "destructive"
+        title: 'Export failed',
+        description: 'Could not generate PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGeneratingPdf(false);
@@ -65,7 +77,8 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
   };
 
   const hasSiteInfo = planData.siteInfo?.propertyAddress || planData.siteInfo?.clientName;
-  const hasProjectInfo = planData.projectInfo?.leadElectrician || planData.projectInfo?.plannedStartDate;
+  const hasProjectInfo =
+    planData.projectInfo?.leadElectrician || planData.projectInfo?.plannedStartDate;
 
   return (
     <div className="space-y-6">
@@ -79,7 +92,9 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Site Information</h4>
                     {planData.siteInfo?.propertyAddress && (
-                      <p className="text-foreground/70">Address: {planData.siteInfo.propertyAddress}</p>
+                      <p className="text-foreground/70">
+                        Address: {planData.siteInfo.propertyAddress}
+                      </p>
                     )}
                     {planData.siteInfo?.clientName && (
                       <p className="text-foreground/70">Client: {planData.siteInfo.clientName}</p>
@@ -90,10 +105,14 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Project Information</h4>
                     {planData.projectInfo?.leadElectrician && (
-                      <p className="text-foreground/70">Electrician: {planData.projectInfo.leadElectrician}</p>
+                      <p className="text-foreground/70">
+                        Electrician: {planData.projectInfo.leadElectrician}
+                      </p>
                     )}
                     {planData.projectInfo?.plannedStartDate && (
-                      <p className="text-foreground/70">Start: {planData.projectInfo.plannedStartDate}</p>
+                      <p className="text-foreground/70">
+                        Start: {planData.projectInfo.plannedStartDate}
+                      </p>
                     )}
                   </div>
                 )}
@@ -101,11 +120,11 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
             </CardContent>
           </Card>
         )}
-        
+
         <div className="flex justify-end gap-2">
           {(hasSiteInfo || hasProjectInfo) && (
-            <Button 
-              onClick={() => setShowSiteInfoDialog(true)} 
+            <Button
+              onClick={() => setShowSiteInfoDialog(true)}
               variant="outline"
               size="sm"
               className="gap-2"
@@ -113,8 +132,8 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
               Edit Details
             </Button>
           )}
-          <Button 
-            onClick={handleExportPdf} 
+          <Button
+            onClick={handleExportPdf}
             disabled={isGeneratingPdf}
             variant="outline"
             className="gap-2"
@@ -135,11 +154,13 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
       </div>
 
       {/* Compliance Status - Mobile Optimized */}
-      <div className={`p-4 md:p-6 rounded-xl ${
-        result.compliant 
-          ? 'bg-green-500/10 border-2 border-green-500/50' 
-          : 'bg-red-500/10 border-2 border-red-500/50'
-      }`}>
+      <div
+        className={`p-4 md:p-6 rounded-xl ${
+          result.compliant
+            ? 'bg-green-500/10 border-2 border-green-500/50'
+            : 'bg-red-500/10 border-2 border-red-500/50'
+        }`}
+      >
         <div className="flex items-center gap-2 md:gap-3">
           {result.compliant ? (
             <CheckCircle2 className="h-6 w-6 md:h-8 md:w-8 text-green-500 flex-shrink-0" />
@@ -151,8 +172,8 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
               {result.compliant ? 'BS 7671 Compliant' : 'Non-Compliant'}
             </h3>
             <p className="text-xs md:text-sm text-foreground/80">
-              {result.compliant 
-                ? 'Meets all electrical safety standards' 
+              {result.compliant
+                ? 'Meets all electrical safety standards'
                 : 'Requires adjustments to meet standards'}
             </p>
           </div>
@@ -173,9 +194,13 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
               <div className="text-3xl md:text-4xl font-bold text-primary mb-1 md:mb-2">
                 {result.recommendedCableSize}mm²
               </div>
-              <RegulationTooltip 
-                topic="cable size" 
-                context={{ size: result.recommendedCableSize, load: planData.totalLoad, length: planData.cableLength }}
+              <RegulationTooltip
+                topic="cable size"
+                context={{
+                  size: result.recommendedCableSize,
+                  load: planData.totalLoad,
+                  length: planData.cableLength,
+                }}
               />
             </div>
             <div className="text-xs md:text-sm text-foreground">
@@ -198,9 +223,7 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
             <div className="text-2xl md:text-4xl font-bold text-elec-yellow mb-1 md:mb-2">
               {result.protectiveDevice}
             </div>
-            <div className="text-xs md:text-sm text-foreground">
-              Overcurrent protection device
-            </div>
+            <div className="text-xs md:text-sm text-foreground">Overcurrent protection device</div>
           </CardContent>
         </Card>
 
@@ -218,7 +241,13 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
             <div className="text-xs md:text-sm text-foreground mb-1">
               {result.voltageDrop.toFixed(2)}V drop
             </div>
-            <Badge className={result.voltageDropPercent <= 3 ? 'bg-green-500 text-foreground' : 'bg-amber-500 text-foreground'}>
+            <Badge
+              className={
+                result.voltageDropPercent <= 3
+                  ? 'bg-green-500 text-foreground'
+                  : 'bg-amber-500 text-foreground'
+              }
+            >
               {result.voltageDropPercent <= 3 ? 'Within limits' : 'Review required'}
             </Badge>
           </CardContent>
@@ -235,9 +264,7 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
             <div className="text-3xl md:text-4xl font-bold text-green-400 mb-1 md:mb-2">
               {result.safetyMargin.toFixed(1)}%
             </div>
-            <div className="text-xs md:text-sm text-foreground">
-              Capacity above requirement
-            </div>
+            <div className="text-xs md:text-sm text-foreground">Capacity above requirement</div>
             <div className="text-xs text-foreground/70 mt-0.5 md:mt-1">
               Zs: {result.zs.toFixed(3)}Ω
             </div>
@@ -253,8 +280,8 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
         <CardHeader className="pb-3 md:pb-4">
           <CardTitle className="text-sm md:text-base text-foreground flex items-center gap-2">
             Applied Derating Factors
-            <RegulationTooltip 
-              topic="derating factors" 
+            <RegulationTooltip
+              topic="derating factors"
               context={{ temp: result.factors.temperature, grouping: result.factors.grouping }}
             />
           </CardTitle>
@@ -263,15 +290,21 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
           <div className="grid grid-cols-3 gap-3 md:gap-4 text-center">
             <div>
               <div className="text-xs md:text-sm text-foreground/70">Temperature</div>
-              <div className="text-xl md:text-2xl font-bold text-primary">{result.factors.temperature}</div>
+              <div className="text-xl md:text-2xl font-bold text-primary">
+                {result.factors.temperature}
+              </div>
             </div>
             <div>
               <div className="text-xs md:text-sm text-foreground/70">Grouping</div>
-              <div className="text-xl md:text-2xl font-bold text-primary">{result.factors.grouping}</div>
+              <div className="text-xl md:text-2xl font-bold text-primary">
+                {result.factors.grouping}
+              </div>
             </div>
             <div>
               <div className="text-xs md:text-sm text-foreground/70">Overall</div>
-              <div className="text-xl md:text-2xl font-bold text-primary">{result.factors.overall.toFixed(2)}</div>
+              <div className="text-xl md:text-2xl font-bold text-primary">
+                {result.factors.overall.toFixed(2)}
+              </div>
             </div>
           </div>
         </CardContent>
@@ -288,12 +321,21 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
         <CardContent className="pt-0">
           <div className="space-y-2 md:space-y-3">
             {result.materials.map((material, idx) => (
-              <div key={idx} className="flex justify-between items-start gap-3 pb-2 md:pb-3 border-b border-border last:border-0 last:pb-0">
+              <div
+                key={idx}
+                className="flex justify-between items-start gap-3 pb-2 md:pb-3 border-b border-border last:border-0 last:pb-0"
+              >
                 <div className="text-left min-w-0">
-                  <p className="text-sm md:text-base font-medium text-foreground">{material.name}</p>
-                  <p className="text-xs md:text-sm text-foreground/70 mt-0.5">{material.specification}</p>
+                  <p className="text-sm md:text-base font-medium text-foreground">
+                    {material.name}
+                  </p>
+                  <p className="text-xs md:text-sm text-foreground/70 mt-0.5">
+                    {material.specification}
+                  </p>
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-primary flex-shrink-0">{material.quantity}</span>
+                <span className="text-xs md:text-sm font-semibold text-primary flex-shrink-0">
+                  {material.quantity}
+                </span>
               </div>
             ))}
           </div>
@@ -317,8 +359,12 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
               </div>
             ))}
             <div className="pt-2 md:pt-3 border-t border-border flex justify-between items-center gap-3">
-              <span className="font-semibold text-sm md:text-base text-foreground text-left">Total Estimate</span>
-              <span className="text-lg md:text-xl font-bold text-primary">£{result.costEstimate.total}</span>
+              <span className="font-semibold text-sm md:text-base text-foreground text-left">
+                Total Estimate
+              </span>
+              <span className="text-lg md:text-xl font-bold text-primary">
+                £{result.costEstimate.total}
+              </span>
             </div>
             <p className="text-xs text-foreground/70 mt-2 text-left">
               * Prices are estimates based on UK market rates (September 2025)
@@ -339,10 +385,15 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
           <div className="space-y-3 md:space-y-4">
             {result.practicalGuidance.map((section, idx) => (
               <div key={idx}>
-                <h4 className="font-semibold text-xs md:text-sm mb-2 text-foreground text-left">{section.title}</h4>
+                <h4 className="font-semibold text-xs md:text-sm mb-2 text-foreground text-left">
+                  {section.title}
+                </h4>
                 <ul className="space-y-1 md:space-y-1.5">
                   {section.points.map((point, pidx) => (
-                    <li key={pidx} className="flex gap-1.5 items-start text-xs md:text-sm text-foreground leading-snug">
+                    <li
+                      key={pidx}
+                      className="flex gap-1.5 items-start text-xs md:text-sm text-foreground leading-snug"
+                    >
                       <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-success shrink-0" />
                       <span className="break-words text-left">{point}</span>
                     </li>
@@ -360,10 +411,14 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-4 w-4 md:h-5 md:w-5 text-amber-400 mt-0.5 flex-shrink-0" />
             <div className="min-w-0">
-              <h4 className="font-semibold text-sm md:text-base text-amber-400 mb-1.5 md:mb-2">Warnings</h4>
+              <h4 className="font-semibold text-sm md:text-base text-amber-400 mb-1.5 md:mb-2">
+                Warnings
+              </h4>
               <ul className="space-y-0.5 md:space-y-1">
                 {result.warnings.map((warning, idx) => (
-                  <li key={idx} className="text-xs md:text-sm text-foreground">• {warning}</li>
+                  <li key={idx} className="text-xs md:text-sm text-foreground">
+                    • {warning}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -377,10 +432,14 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
           <div className="flex items-start gap-2">
             <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-primary mt-0.5 flex-shrink-0" />
             <div className="min-w-0">
-              <h4 className="font-semibold text-sm md:text-base text-primary mb-1.5 md:mb-2">Recommendations</h4>
+              <h4 className="font-semibold text-sm md:text-base text-primary mb-1.5 md:mb-2">
+                Recommendations
+              </h4>
               <ul className="space-y-0.5 md:space-y-1">
                 {result.recommendations.map((rec, idx) => (
-                  <li key={idx} className="text-xs md:text-sm text-foreground">• {rec}</li>
+                  <li key={idx} className="text-xs md:text-sm text-foreground">
+                    • {rec}
+                  </li>
                 ))}
               </ul>
             </div>

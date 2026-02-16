@@ -1,8 +1,7 @@
-
-import { useState, useEffect } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { Certificate } from "@/types/certificates";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { useToast } from '@/components/ui/use-toast';
+import { Certificate } from '@/types/certificates';
+import { supabase } from '@/integrations/supabase/client';
 
 export const useCertificates = () => {
   const { toast } = useToast();
@@ -16,7 +15,9 @@ export const useCertificates = () => {
 
   const fetchCertificates = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       // For now, we'll use the training_evidence table to store certificates
@@ -30,22 +31,23 @@ export const useCertificates = () => {
 
       if (error) throw error;
 
-      const formattedCertificates: Certificate[] = data?.map(item => ({
-        id: item.id,
-        name: item.title,
-        issueDate: item.date_achieved,
-        expiryDate: item.date_achieved, // You might want to add an expiry_date field
-        fileUrl: item.file_url || "#",
-        issuedBy: item.witness_name || "Unknown"
-      })) || [];
+      const formattedCertificates: Certificate[] =
+        data?.map((item) => ({
+          id: item.id,
+          name: item.title,
+          issueDate: item.date_achieved,
+          expiryDate: item.date_achieved, // You might want to add an expiry_date field
+          fileUrl: item.file_url || '#',
+          issuedBy: item.witness_name || 'Unknown',
+        })) || [];
 
       setCertificates(formattedCertificates);
     } catch (error) {
       console.error('Error fetching certificates:', error);
       toast({
-        title: "Error loading certificates",
-        description: "Could not load your certificates. Please try again.",
-        variant: "destructive"
+        title: 'Error loading certificates',
+        description: 'Could not load your certificates. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -54,7 +56,9 @@ export const useCertificates = () => {
 
   const uploadFile = async (file: File): Promise<string | null> => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const fileExt = file.name.split('.').pop();
@@ -67,9 +71,9 @@ export const useCertificates = () => {
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('evidence-files')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('evidence-files').getPublicUrl(filePath);
 
       return publicUrl;
     } catch (error) {
@@ -78,13 +82,15 @@ export const useCertificates = () => {
     }
   };
 
-  const addCertificate = async (certificate: Omit<Certificate, "id" | "fileUrl">, file?: File) => {
+  const addCertificate = async (certificate: Omit<Certificate, 'id' | 'fileUrl'>, file?: File) => {
     setIsUploading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      let fileUrl = "#";
+      let fileUrl = '#';
       if (file) {
         const uploadedUrl = await uploadFile(file);
         if (uploadedUrl) fileUrl = uploadedUrl;
@@ -101,7 +107,7 @@ export const useCertificates = () => {
           file_url: fileUrl,
           file_name: file?.name,
           witness_name: certificate.issuedBy,
-          verification_status: 'pending'
+          verification_status: 'pending',
         })
         .select()
         .single();
@@ -113,22 +119,22 @@ export const useCertificates = () => {
         name: data.title,
         issueDate: data.date_achieved,
         expiryDate: certificate.expiryDate,
-        fileUrl: data.file_url || "#",
-        issuedBy: data.witness_name || certificate.issuedBy
+        fileUrl: data.file_url || '#',
+        issuedBy: data.witness_name || certificate.issuedBy,
       };
 
-      setCertificates(prev => [newCertificate, ...prev]);
-      
+      setCertificates((prev) => [newCertificate, ...prev]);
+
       toast({
-        title: "Certificate uploaded",
-        description: "Your certificate has been successfully uploaded and saved.",
+        title: 'Certificate uploaded',
+        description: 'Your certificate has been successfully uploaded and saved.',
       });
     } catch (error) {
       console.error('Error adding certificate:', error);
       toast({
-        title: "Upload failed",
-        description: "Could not upload certificate. Please try again.",
-        variant: "destructive"
+        title: 'Upload failed',
+        description: 'Could not upload certificate. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsUploading(false);
@@ -137,25 +143,22 @@ export const useCertificates = () => {
 
   const deleteCertificate = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('training_evidence')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('training_evidence').delete().eq('id', id);
 
       if (error) throw error;
 
-      setCertificates(prev => prev.filter(cert => cert.id !== id));
-      
+      setCertificates((prev) => prev.filter((cert) => cert.id !== id));
+
       toast({
-        title: "Certificate deleted",
-        description: "The certificate has been removed from your records.",
+        title: 'Certificate deleted',
+        description: 'The certificate has been removed from your records.',
       });
     } catch (error) {
       console.error('Error deleting certificate:', error);
       toast({
-        title: "Delete failed",
-        description: "Could not delete certificate. Please try again.",
-        variant: "destructive"
+        title: 'Delete failed',
+        description: 'Could not delete certificate. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -166,7 +169,7 @@ export const useCertificates = () => {
     deleteCertificate,
     isUploading,
     setIsUploading,
-    loading
+    loading,
   };
 };
 

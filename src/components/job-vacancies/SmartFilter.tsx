@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { 
-  Filter, 
-  ChevronDown, 
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Filter,
+  ChevronDown,
   ChevronUp,
-  MapPin, 
-  PoundSterling, 
+  MapPin,
+  PoundSterling,
   Award,
   Briefcase,
   User,
-  Settings
-} from "lucide-react";
+  Settings,
+} from 'lucide-react';
 
 export interface SmartFilterData {
   experience: string;
@@ -41,29 +41,46 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
   filters,
   onFiltersChange,
   isExpanded = false,
-  onToggleExpanded
+  onToggleExpanded,
 }) => {
-  const [skillInput, setSkillInput] = useState("");
+  const [skillInput, setSkillInput] = useState('');
 
   const commonSkills = [
-    "Electrical Installation", "Testing & Inspection", "18th Edition", "PAT Testing",
-    "EICR", "Solar Installation", "EV Charging", "Commercial Electrical",
-    "Domestic Electrical", "Industrial Electrical", "Maintenance", "Fault Finding"
+    'Electrical Installation',
+    'Testing & Inspection',
+    '18th Edition',
+    'PAT Testing',
+    'EICR',
+    'Solar Installation',
+    'EV Charging',
+    'Commercial Electrical',
+    'Domestic Electrical',
+    'Industrial Electrical',
+    'Maintenance',
+    'Fault Finding',
   ];
 
   const commonCertifications = [
-    "City & Guilds 2365", "City & Guilds 2382-18", "AM2", "JIB Gold Card",
-    "NICEIC Approved", "Part P Qualified", "IPAF", "SSSTS"
+    'City & Guilds 2365',
+    'City & Guilds 2382-18',
+    'AM2',
+    'JIB Gold Card',
+    'NICEIC Approved',
+    'Part P Qualified',
+    'IPAF',
+    'SSSTS',
   ];
 
   const jobTypes = [
-    "Electrician", "Electrical Engineer", "Maintenance Electrician",
-    "Electrical Supervisor", "Electrical Tester", "Installation Electrician"
+    'Electrician',
+    'Electrical Engineer',
+    'Maintenance Electrician',
+    'Electrical Supervisor',
+    'Electrical Tester',
+    'Installation Electrician',
   ];
 
-  const workModes = [
-    "On-site", "Remote", "Hybrid", "Travel required", "Local work only"
-  ];
+  const workModes = ['On-site', 'Remote', 'Hybrid', 'Travel required', 'Local work only'];
 
   const handleInputChange = (field: keyof SmartFilterData, value: any) => {
     onFiltersChange({ ...filters, [field]: value });
@@ -72,18 +89,21 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
   const addSkill = (skill: string) => {
     if (skill && !filters.skills.includes(skill)) {
       handleInputChange('skills', [...filters.skills, skill]);
-      setSkillInput("");
+      setSkillInput('');
     }
   };
 
   const removeSkill = (skill: string) => {
-    handleInputChange('skills', filters.skills.filter(s => s !== skill));
+    handleInputChange(
+      'skills',
+      filters.skills.filter((s) => s !== skill)
+    );
   };
 
   const toggleArrayItem = (field: 'certifications' | 'jobTypes' | 'workMode', item: string) => {
     const currentArray = filters[field];
     const newArray = currentArray.includes(item)
-      ? currentArray.filter(i => i !== item)
+      ? currentArray.filter((i) => i !== item)
       : [...currentArray, item];
     handleInputChange(field, newArray);
   };
@@ -172,15 +192,18 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
             Key Skills
           </Label>
           <div className="flex flex-wrap gap-2">
-            {commonSkills.slice(0, 6).map(skill => (
+            {commonSkills.slice(0, 6).map((skill) => (
               <Badge
                 key={skill}
-                variant={filters.skills.includes(skill) ? "default" : "outline"}
-                className={filters.skills.includes(skill) 
-                  ? "bg-elec-yellow text-elec-dark cursor-pointer text-xs" 
-                  : "border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10 text-xs"
+                variant={filters.skills.includes(skill) ? 'default' : 'outline'}
+                className={
+                  filters.skills.includes(skill)
+                    ? 'bg-elec-yellow text-elec-dark cursor-pointer text-xs'
+                    : 'border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10 text-xs'
                 }
-                onClick={() => filters.skills.includes(skill) ? removeSkill(skill) : addSkill(skill)}
+                onClick={() =>
+                  filters.skills.includes(skill) ? removeSkill(skill) : addSkill(skill)
+                }
               >
                 {skill}
               </Badge>
@@ -194,7 +217,7 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
             {/* Custom Skills */}
             <div className="space-y-3">
               <Label className="text-elec-yellow">All Skills & Expertise</Label>
-              
+
               <div className="flex gap-2">
                 <Input
                   placeholder="Add a skill..."
@@ -203,7 +226,7 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
                   onKeyPress={(e) => e.key === 'Enter' && addSkill(skillInput)}
                   className="bg-elec-gray border-elec-yellow/30 text-elec-light"
                 />
-                <Button 
+                <Button
                   onClick={() => addSkill(skillInput)}
                   variant="outline"
                   className="border-elec-yellow/30 text-elec-yellow"
@@ -213,15 +236,18 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {commonSkills.map(skill => (
+                {commonSkills.map((skill) => (
                   <Badge
                     key={skill}
-                    variant={filters.skills.includes(skill) ? "default" : "outline"}
-                    className={filters.skills.includes(skill) 
-                      ? "bg-elec-yellow text-elec-dark cursor-pointer text-xs" 
-                      : "border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10 text-xs"
+                    variant={filters.skills.includes(skill) ? 'default' : 'outline'}
+                    className={
+                      filters.skills.includes(skill)
+                        ? 'bg-elec-yellow text-elec-dark cursor-pointer text-xs'
+                        : 'border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10 text-xs'
                     }
-                    onClick={() => filters.skills.includes(skill) ? removeSkill(skill) : addSkill(skill)}
+                    onClick={() =>
+                      filters.skills.includes(skill) ? removeSkill(skill) : addSkill(skill)
+                    }
                   >
                     {skill}
                   </Badge>
@@ -232,7 +258,7 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
                 <div className="space-y-2">
                   <Label className="text-sm text-muted-foreground">Your Skills:</Label>
                   <div className="flex flex-wrap gap-2">
-                    {filters.skills.map(skill => (
+                    {filters.skills.map((skill) => (
                       <Badge
                         key={skill}
                         className="bg-elec-yellow text-elec-dark cursor-pointer"
@@ -250,15 +276,13 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
             <div className="space-y-3">
               <Label className="text-elec-yellow">Certifications</Label>
               <div className="grid grid-cols-2 gap-2">
-                {commonCertifications.map(cert => (
+                {commonCertifications.map((cert) => (
                   <div key={cert} className="flex items-center space-x-2">
                     <Checkbox
                       checked={filters.certifications.includes(cert)}
                       onCheckedChange={() => toggleArrayItem('certifications', cert)}
                     />
-                    <label className="text-sm text-muted-foreground cursor-pointer">
-                      {cert}
-                    </label>
+                    <label className="text-sm text-muted-foreground cursor-pointer">{cert}</label>
                   </div>
                 ))}
               </div>
@@ -271,15 +295,13 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
                 Job Types
               </Label>
               <div className="grid grid-cols-2 gap-2">
-                {jobTypes.map(type => (
+                {jobTypes.map((type) => (
                   <div key={type} className="flex items-center space-x-2">
                     <Checkbox
                       checked={filters.jobTypes.includes(type)}
                       onCheckedChange={() => toggleArrayItem('jobTypes', type)}
                     />
-                    <label className="text-sm text-muted-foreground cursor-pointer">
-                      {type}
-                    </label>
+                    <label className="text-sm text-muted-foreground cursor-pointer">{type}</label>
                   </div>
                 ))}
               </div>
@@ -289,13 +311,14 @@ const SmartFilter: React.FC<SmartFilterProps> = ({
             <div className="space-y-3">
               <Label className="text-elec-yellow">Work Mode Preference</Label>
               <div className="flex flex-wrap gap-2">
-                {workModes.map(mode => (
+                {workModes.map((mode) => (
                   <Badge
                     key={mode}
-                    variant={filters.workMode.includes(mode) ? "default" : "outline"}
-                    className={filters.workMode.includes(mode) 
-                      ? "bg-elec-yellow text-elec-dark cursor-pointer text-xs" 
-                      : "border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10 text-xs"
+                    variant={filters.workMode.includes(mode) ? 'default' : 'outline'}
+                    className={
+                      filters.workMode.includes(mode)
+                        ? 'bg-elec-yellow text-elec-dark cursor-pointer text-xs'
+                        : 'border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10 text-xs'
                     }
                     onClick={() => toggleArrayItem('workMode', mode)}
                   >

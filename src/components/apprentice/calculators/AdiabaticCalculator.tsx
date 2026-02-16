@@ -1,7 +1,17 @@
-import { useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Shield, Info, CheckCircle, AlertTriangle, BookOpen, Lightbulb, ChevronDown, Zap, FileText } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useMemo, useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import {
+  Shield,
+  Info,
+  CheckCircle,
+  AlertTriangle,
+  BookOpen,
+  Lightbulb,
+  ChevronDown,
+  Zap,
+  FileText,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -11,14 +21,12 @@ import {
   CalculatorResult,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
-const STANDARD_SIZES = [1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400];
+const STANDARD_SIZES = [
+  1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400,
+];
 
 const K_FACTORS: Record<string, Record<number, number>> = {
   copper: { 60: 103, 70: 115, 90: 143 },
@@ -27,43 +35,43 @@ const K_FACTORS: Record<string, Record<number, number>> = {
 };
 
 const modeOptions = [
-  { value: "current", label: "Enter Fault Current (I)" },
-  { value: "zs", label: "Calculate I from Zs" },
+  { value: 'current', label: 'Enter Fault Current (I)' },
+  { value: 'zs', label: 'Calculate I from Zs' },
 ];
 
 const timePresetOptions = [
-  { value: "0.1", label: "0.1 s" },
-  { value: "0.2", label: "0.2 s" },
-  { value: "0.4", label: "0.4 s" },
-  { value: "1", label: "1 s" },
-  { value: "5", label: "5 s" },
-  { value: "custom", label: "Custom" },
+  { value: '0.1', label: '0.1 s' },
+  { value: '0.2', label: '0.2 s' },
+  { value: '0.4', label: '0.4 s' },
+  { value: '1', label: '1 s' },
+  { value: '5', label: '5 s' },
+  { value: 'custom', label: 'Custom' },
 ];
 
 const materialOptions = [
-  { value: "copper", label: "Copper" },
-  { value: "aluminium", label: "Aluminium" },
-  { value: "steel", label: "Steel" },
+  { value: 'copper', label: 'Copper' },
+  { value: 'aluminium', label: 'Aluminium' },
+  { value: 'steel', label: 'Steel' },
 ];
 
 const tempOptions = [
-  { value: "60", label: "60°C (Rubber/EPR)" },
-  { value: "70", label: "70°C (PVC)" },
-  { value: "90", label: "90°C (XLPE)" },
+  { value: '60', label: '60°C (Rubber/EPR)' },
+  { value: '70', label: '70°C (PVC)' },
+  { value: '90', label: '90°C (XLPE)' },
 ];
 
 const AdiabaticCalculator = () => {
   const config = CALCULATOR_CONFIG['protection'];
 
-  const [mode, setMode] = useState<"current" | "zs">("current");
-  const [disconnectionTime, setDisconnectionTime] = useState<string>("");
-  const [timePreset, setTimePreset] = useState<string>("custom");
-  const [material, setMaterial] = useState<string>("copper");
-  const [maxTemp, setMaxTemp] = useState<string>("70");
-  const [customK, setCustomK] = useState<string>("");
-  const [faultCurrent, setFaultCurrent] = useState<string>("");
-  const [zs, setZs] = useState<string>("");
-  const [voltage, setVoltage] = useState<string>("230");
+  const [mode, setMode] = useState<'current' | 'zs'>('current');
+  const [disconnectionTime, setDisconnectionTime] = useState<string>('');
+  const [timePreset, setTimePreset] = useState<string>('custom');
+  const [material, setMaterial] = useState<string>('copper');
+  const [maxTemp, setMaxTemp] = useState<string>('70');
+  const [customK, setCustomK] = useState<string>('');
+  const [faultCurrent, setFaultCurrent] = useState<string>('');
+  const [zs, setZs] = useState<string>('');
+  const [voltage, setVoltage] = useState<string>('230');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [result, setResult] = useState<{
@@ -90,13 +98,13 @@ const AdiabaticCalculator = () => {
   }, [material, maxTemp, customK]);
 
   const effectiveTime = useMemo(() => {
-    if (timePreset !== "custom") return parseFloat(timePreset);
+    if (timePreset !== 'custom') return parseFloat(timePreset);
     const t = parseFloat(disconnectionTime);
     return Number.isFinite(t) && t > 0 ? t : NaN;
   }, [timePreset, disconnectionTime]);
 
   const computeFaultCurrent = useMemo(() => {
-    if (mode === "current") {
+    if (mode === 'current') {
       const I = parseFloat(faultCurrent);
       return Number.isFinite(I) && I > 0 ? I : NaN;
     }
@@ -116,21 +124,21 @@ const AdiabaticCalculator = () => {
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
 
-    if (mode === "current") {
+    if (mode === 'current') {
       if (!faultCurrent || parseFloat(faultCurrent) <= 0) {
-        newErrors.faultCurrent = "Fault current must be > 0";
+        newErrors.faultCurrent = 'Fault current must be > 0';
       }
     } else {
       if (!zs || parseFloat(zs) <= 0) {
-        newErrors.zs = "Zs must be > 0";
+        newErrors.zs = 'Zs must be > 0';
       }
       if (!voltage || parseFloat(voltage) <= 0) {
-        newErrors.voltage = "Voltage must be > 0";
+        newErrors.voltage = 'Voltage must be > 0';
       }
     }
 
-    if (timePreset === "custom" && (!disconnectionTime || parseFloat(disconnectionTime) <= 0)) {
-      newErrors.disconnectionTime = "Time must be > 0";
+    if (timePreset === 'custom' && (!disconnectionTime || parseFloat(disconnectionTime) <= 0)) {
+      newErrors.disconnectionTime = 'Time must be > 0';
     }
 
     setErrors(newErrors);
@@ -144,7 +152,14 @@ const AdiabaticCalculator = () => {
     const t = effectiveTime;
     const k = effectiveK;
 
-    if (!Number.isFinite(I) || I <= 0 || !Number.isFinite(t) || t <= 0 || !Number.isFinite(k) || k <= 0) {
+    if (
+      !Number.isFinite(I) ||
+      I <= 0 ||
+      !Number.isFinite(t) ||
+      t <= 0 ||
+      !Number.isFinite(k) ||
+      k <= 0
+    ) {
       setResult(null);
       return;
     }
@@ -156,16 +171,20 @@ const AdiabaticCalculator = () => {
     let isCompliant = true;
 
     if (t > 5) {
-      complianceNotes.push("Disconnection time >5s may require additional considerations per BS 7671");
+      complianceNotes.push(
+        'Disconnection time >5s may require additional considerations per BS 7671'
+      );
       isCompliant = false;
     }
 
     if (I > 10000) {
-      complianceNotes.push("Very high fault current - verify calculation method and protection coordination");
+      complianceNotes.push(
+        'Very high fault current - verify calculation method and protection coordination'
+      );
     }
 
     if (roundedCsa < 1.5) {
-      complianceNotes.push("Minimum 1.5mm² generally required for fixed wiring per BS 7671");
+      complianceNotes.push('Minimum 1.5mm² generally required for fixed wiring per BS 7671');
     }
 
     setResult({
@@ -177,25 +196,25 @@ const AdiabaticCalculator = () => {
       material,
       maxTemp,
       isCompliant,
-      complianceNotes
+      complianceNotes,
     });
   };
 
   const reset = () => {
-    setMode("current");
-    setFaultCurrent("");
-    setZs("");
-    setVoltage("230");
-    setDisconnectionTime("");
-    setTimePreset("custom");
-    setMaterial("copper");
-    setMaxTemp("70");
-    setCustomK("");
+    setMode('current');
+    setFaultCurrent('');
+    setZs('');
+    setVoltage('230');
+    setDisconnectionTime('');
+    setTimePreset('custom');
+    setMaterial('copper');
+    setMaxTemp('70');
+    setCustomK('');
     setResult(null);
     setErrors({});
   };
 
-  const canCalculate = mode === "current" ? !!faultCurrent : (!!zs && !!voltage);
+  const canCalculate = mode === 'current' ? !!faultCurrent : !!zs && !!voltage;
 
   return (
     <div className="space-y-4">
@@ -207,11 +226,11 @@ const AdiabaticCalculator = () => {
         <CalculatorSelect
           label="Input Mode"
           value={mode}
-          onChange={(v) => setMode(v as "current" | "zs")}
+          onChange={(v) => setMode(v as 'current' | 'zs')}
           options={modeOptions}
         />
 
-        {mode === "current" ? (
+        {mode === 'current' ? (
           <CalculatorInput
             label="Prospective Fault Current (I)"
             unit="A"
@@ -253,7 +272,9 @@ const AdiabaticCalculator = () => {
                 <div className="flex items-center gap-2 text-sm">
                   <Zap className="h-4 w-4 text-orange-400" />
                   <span className="text-white/70">Calculated fault current:</span>
-                  <span className="font-mono font-bold text-orange-400">{computeFaultCurrent.toFixed(0)} A</span>
+                  <span className="font-mono font-bold text-orange-400">
+                    {computeFaultCurrent.toFixed(0)} A
+                  </span>
                 </div>
               </div>
             )}
@@ -267,7 +288,7 @@ const AdiabaticCalculator = () => {
           options={timePresetOptions}
         />
 
-        {timePreset === "custom" && (
+        {timePreset === 'custom' && (
           <CalculatorInput
             label="Custom Time (t)"
             unit="s"
@@ -299,14 +320,19 @@ const AdiabaticCalculator = () => {
         <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
           <div
             className="rounded-xl border overflow-hidden"
-            style={{ borderColor: `${config.gradientFrom}30`, background: `${config.gradientFrom}08` }}
+            style={{
+              borderColor: `${config.gradientFrom}30`,
+              background: `${config.gradientFrom}08`,
+            }}
           >
             <CollapsibleTrigger className="flex items-center justify-between w-full p-4">
               <span className="text-sm font-medium text-white">Advanced Options</span>
-              <ChevronDown className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showAdvanced && "rotate-180"
-              )} />
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white/70 transition-transform duration-200',
+                  showAdvanced && 'rotate-180'
+                )}
+              />
             </CollapsibleTrigger>
             <CollapsibleContent className="px-4 pb-4">
               <CalculatorInput
@@ -348,7 +374,8 @@ const AdiabaticCalculator = () => {
                 className="mb-2"
                 style={{ borderColor: `${config.gradientFrom}50`, color: config.gradientFrom }}
               >
-                {result.material.charAt(0).toUpperCase() + result.material.slice(1)} @ {result.maxTemp}°C (k={result.k})
+                {result.material.charAt(0).toUpperCase() + result.material.slice(1)} @{' '}
+                {result.maxTemp}°C (k={result.k})
               </Badge>
             </div>
 
@@ -375,32 +402,59 @@ const AdiabaticCalculator = () => {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
                   <span className="text-white/60">Fault Current:</span>
-                  <p className="font-mono" style={{ color: config.gradientFrom }}>{result.usedFaultCurrent.toFixed(0)} A</p>
+                  <p className="font-mono" style={{ color: config.gradientFrom }}>
+                    {result.usedFaultCurrent.toFixed(0)} A
+                  </p>
                 </div>
                 <div>
                   <span className="text-white/60">Disconnection Time:</span>
-                  <p className="font-mono" style={{ color: config.gradientFrom }}>{result.disconnectionTime} s</p>
+                  <p className="font-mono" style={{ color: config.gradientFrom }}>
+                    {result.disconnectionTime} s
+                  </p>
                 </div>
               </div>
               <div className="mt-3 p-2 rounded-lg bg-white/5 text-xs text-white/60">
-                <span className="font-mono">S = I × √t / k = {result.usedFaultCurrent.toFixed(0)} × √{result.disconnectionTime} / {result.k} = {result.minimumCsa.toFixed(2)} mm²</span>
+                <span className="font-mono">
+                  S = I × √t / k = {result.usedFaultCurrent.toFixed(0)} × √
+                  {result.disconnectionTime} / {result.k} = {result.minimumCsa.toFixed(2)} mm²
+                </span>
               </div>
             </div>
 
             {result.complianceNotes.length > 0 && (
-              <div className={cn(
-                "p-3 rounded-xl border",
-                result.isCompliant ? "bg-amber-500/10 border-amber-500/30" : "bg-red-500/10 border-red-500/30"
-              )}>
+              <div
+                className={cn(
+                  'p-3 rounded-xl border',
+                  result.isCompliant
+                    ? 'bg-amber-500/10 border-amber-500/30'
+                    : 'bg-red-500/10 border-red-500/30'
+                )}
+              >
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className={cn("h-4 w-4", result.isCompliant ? "text-amber-400" : "text-red-400")} />
-                  <span className={cn("font-medium text-sm", result.isCompliant ? "text-amber-300" : "text-red-300")}>
+                  <AlertTriangle
+                    className={cn(
+                      'h-4 w-4',
+                      result.isCompliant ? 'text-amber-400' : 'text-red-400'
+                    )}
+                  />
+                  <span
+                    className={cn(
+                      'font-medium text-sm',
+                      result.isCompliant ? 'text-amber-300' : 'text-red-300'
+                    )}
+                  >
                     Compliance Notes
                   </span>
                 </div>
                 <ul className="space-y-1">
                   {result.complianceNotes.map((note, index) => (
-                    <li key={index} className={cn("text-xs flex items-start gap-2", result.isCompliant ? "text-amber-200" : "text-red-200")}>
+                    <li
+                      key={index}
+                      className={cn(
+                        'text-xs flex items-start gap-2',
+                        result.isCompliant ? 'text-amber-200' : 'text-red-200'
+                      )}
+                    >
                       <span className="w-1 h-1 rounded-full bg-current mt-1.5 shrink-0" />
                       {note}
                     </li>
@@ -416,7 +470,9 @@ const AdiabaticCalculator = () => {
                   <span className="text-sm font-medium text-green-300">Safety Margin</span>
                 </div>
                 <p className="text-xs text-green-200">
-                  The {result.roundedCsa}mm² cable provides a {((result.roundedCsa / result.minimumCsa - 1) * 100).toFixed(1)}% margin above minimum.
+                  The {result.roundedCsa}mm² cable provides a{' '}
+                  {((result.roundedCsa / result.minimumCsa - 1) * 100).toFixed(1)}% margin above
+                  minimum.
                 </p>
               </div>
             )}
@@ -430,12 +486,16 @@ const AdiabaticCalculator = () => {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <Lightbulb className="h-4 w-4 text-blue-400" />
-              <span className="text-sm sm:text-base font-medium text-blue-300">Why Adiabatic Calculations Matter</span>
+              <span className="text-sm sm:text-base font-medium text-blue-300">
+                Why Adiabatic Calculations Matter
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showGuidance && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showGuidance && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
             <p>• Ensures cables can withstand fault currents without dangerous overheating</p>
@@ -453,18 +513,34 @@ const AdiabaticCalculator = () => {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Requirements</span>
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                BS 7671 Requirements
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showRegs && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showRegs && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
-            <p><strong className="text-amber-300">Section 543:</strong> Earthing conductors must be sized using adiabatic equation</p>
-            <p><strong className="text-amber-300">Table 54.3:</strong> k factors for different conductor materials and insulation</p>
-            <p><strong className="text-amber-300">Regulation 411.3.2:</strong> Maximum disconnection times for automatic disconnection</p>
-            <p><strong className="text-amber-300">Section 434:</strong> Protection against overcurrent in case of short-circuit</p>
+            <p>
+              <strong className="text-amber-300">Section 543:</strong> Earthing conductors must be
+              sized using adiabatic equation
+            </p>
+            <p>
+              <strong className="text-amber-300">Table 54.3:</strong> k factors for different
+              conductor materials and insulation
+            </p>
+            <p>
+              <strong className="text-amber-300">Regulation 411.3.2:</strong> Maximum disconnection
+              times for automatic disconnection
+            </p>
+            <p>
+              <strong className="text-amber-300">Section 434:</strong> Protection against
+              overcurrent in case of short-circuit
+            </p>
           </CollapsibleContent>
         </div>
       </Collapsible>
@@ -474,8 +550,12 @@ const AdiabaticCalculator = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
           <div className="text-sm text-orange-200">
-            <p><strong>Adiabatic Equation:</strong> S = I × √t / k</p>
-            <p className="text-xs mt-1">Where S = CSA (mm²), I = fault current (A), t = time (s), k = material factor</p>
+            <p>
+              <strong>Adiabatic Equation:</strong> S = I × √t / k
+            </p>
+            <p className="text-xs mt-1">
+              Where S = CSA (mm²), I = fault current (A), t = time (s), k = material factor
+            </p>
           </div>
         </div>
       </div>

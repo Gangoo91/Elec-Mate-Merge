@@ -1,8 +1,7 @@
-
-import { useState, useEffect } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { TrainingEvidenceItem } from "@/types/time-tracking";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { useToast } from '@/components/ui/use-toast';
+import { TrainingEvidenceItem } from '@/types/time-tracking';
+import { supabase } from '@/integrations/supabase/client';
 
 export const useTrainingEvidence = () => {
   const { toast } = useToast();
@@ -16,7 +15,9 @@ export const useTrainingEvidence = () => {
 
   const fetchEvidence = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -27,22 +28,23 @@ export const useTrainingEvidence = () => {
 
       if (error) throw error;
 
-      const formattedEvidence: TrainingEvidenceItem[] = data?.map(item => ({
-        id: item.id,
-        title: item.title,
-        type: item.evidence_type,
-        date: item.date_achieved,
-        description: item.description || '',
-        files: item.file_name ? [item.file_name] : []
-      })) || [];
+      const formattedEvidence: TrainingEvidenceItem[] =
+        data?.map((item) => ({
+          id: item.id,
+          title: item.title,
+          type: item.evidence_type,
+          date: item.date_achieved,
+          description: item.description || '',
+          files: item.file_name ? [item.file_name] : [],
+        })) || [];
 
       setEvidenceItems(formattedEvidence);
     } catch (error) {
       console.error('Error fetching evidence:', error);
       toast({
-        title: "Error loading evidence",
-        description: "Could not load your training evidence. Please try again.",
-        variant: "destructive"
+        title: 'Error loading evidence',
+        description: 'Could not load your training evidence. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -51,7 +53,9 @@ export const useTrainingEvidence = () => {
 
   const uploadFile = async (file: File): Promise<string | null> => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const fileExt = file.name.split('.').pop();
@@ -64,17 +68,17 @@ export const useTrainingEvidence = () => {
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('evidence-files')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('evidence-files').getPublicUrl(filePath);
 
       return publicUrl;
     } catch (error) {
       console.error('Error uploading file:', error);
       toast({
-        title: "Upload failed",
-        description: "Could not upload file. Please try again.",
-        variant: "destructive"
+        title: 'Upload failed',
+        description: 'Could not upload file. Please try again.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -83,7 +87,9 @@ export const useTrainingEvidence = () => {
   const addEvidence = async (evidence: Omit<TrainingEvidenceItem, 'id'>, files: File[] = []) => {
     setIsUploading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       let fileUrl = null;
@@ -105,7 +111,7 @@ export const useTrainingEvidence = () => {
           file_url: fileUrl,
           file_name: fileName,
           tags: [],
-          verification_status: 'pending'
+          verification_status: 'pending',
         })
         .select()
         .single();
@@ -118,21 +124,21 @@ export const useTrainingEvidence = () => {
         type: data.evidence_type,
         date: data.date_achieved,
         description: data.description || '',
-        files: data.file_name ? [data.file_name] : []
+        files: data.file_name ? [data.file_name] : [],
       };
 
-      setEvidenceItems(prev => [newEvidence, ...prev]);
-      
+      setEvidenceItems((prev) => [newEvidence, ...prev]);
+
       toast({
-        title: "Evidence uploaded",
-        description: "Your training evidence has been successfully added to your records.",
+        title: 'Evidence uploaded',
+        description: 'Your training evidence has been successfully added to your records.',
       });
     } catch (error) {
       console.error('Error adding evidence:', error);
       toast({
-        title: "Upload failed",
-        description: "Could not add evidence. Please try again.",
-        variant: "destructive"
+        title: 'Upload failed',
+        description: 'Could not add evidence. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsUploading(false);
@@ -141,33 +147,28 @@ export const useTrainingEvidence = () => {
 
   const deleteEvidence = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('training_evidence')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('training_evidence').delete().eq('id', id);
 
       if (error) throw error;
 
-      setEvidenceItems(prev => prev.filter(item => item.id !== id));
+      setEvidenceItems((prev) => prev.filter((item) => item.id !== id));
       toast({
-        title: "Evidence deleted",
-        description: "The evidence has been removed from your records.",
+        title: 'Evidence deleted',
+        description: 'The evidence has been removed from your records.',
       });
     } catch (error) {
       console.error('Error deleting evidence:', error);
       toast({
-        title: "Delete failed",
-        description: "Could not delete evidence. Please try again.",
-        variant: "destructive"
+        title: 'Delete failed',
+        description: 'Could not delete evidence. Please try again.',
+        variant: 'destructive',
       });
     }
   };
 
   const getFileUrl = async (filePath: string): Promise<string | null> => {
     try {
-      const { data } = supabase.storage
-        .from('evidence-files')
-        .getPublicUrl(filePath);
+      const { data } = supabase.storage.from('evidence-files').getPublicUrl(filePath);
       return data.publicUrl;
     } catch (error) {
       console.error('Error getting file URL:', error);
@@ -182,6 +183,6 @@ export const useTrainingEvidence = () => {
     isUploading,
     setIsUploading,
     loading,
-    getFileUrl
+    getFileUrl,
   };
 };

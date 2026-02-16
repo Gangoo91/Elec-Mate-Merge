@@ -152,16 +152,16 @@ export const referenceMethodOptions = [
 // Helper function to get current carrying capacity
 export const getCurrentCarryingCapacity = (cableSize: string, referenceMethod: string): number => {
   const capacityTable: { [key: string]: { [method: string]: number } } = {
-    '1.0': { 'A1': 11, 'A2': 13, 'B1': 13, 'B2': 15, 'C': 15, 'D1': 13, 'D2': 14, 'E': 17, 'F': 19, 'G': 22 },
-    '1.5': { 'A1': 14, 'A2': 17, 'B1': 17, 'B2': 19, 'C': 19, 'D1': 17, 'D2': 18, 'E': 22, 'F': 24, 'G': 29 },
-    '2.5': { 'A1': 18, 'A2': 24, 'B1': 23, 'B2': 26, 'C': 26, 'D1': 23, 'D2': 25, 'E': 30, 'F': 32, 'G': 39 },
-    '4.0': { 'A1': 24, 'A2': 32, 'B1': 30, 'B2': 34, 'C': 35, 'D1': 30, 'D2': 33, 'E': 40, 'F': 43, 'G': 52 },
-    '6.0': { 'A1': 31, 'A2': 41, 'B1': 38, 'B2': 43, 'C': 46, 'D1': 38, 'D2': 42, 'E': 51, 'F': 54, 'G': 66 },
-    '10': { 'A1': 42, 'A2': 57, 'B1': 52, 'B2': 59, 'C': 63, 'D1': 52, 'D2': 57, 'E': 70, 'F': 75, 'G': 90 },
-    '16': { 'A1': 56, 'A2': 76, 'B1': 69, 'B2': 79, 'C': 85, 'D1': 69, 'D2': 76, 'E': 94, 'F': 100, 'G': 119 },
-    '25': { 'A1': 73, 'A2': 101, 'B1': 89, 'B2': 104, 'C': 112, 'D1': 89, 'D2': 99, 'E': 119, 'F': 127, 'G': 151 },
+    '1.0': { A1: 11, A2: 13, B1: 13, B2: 15, C: 15, D1: 13, D2: 14, E: 17, F: 19, G: 22 },
+    '1.5': { A1: 14, A2: 17, B1: 17, B2: 19, C: 19, D1: 17, D2: 18, E: 22, F: 24, G: 29 },
+    '2.5': { A1: 18, A2: 24, B1: 23, B2: 26, C: 26, D1: 23, D2: 25, E: 30, F: 32, G: 39 },
+    '4.0': { A1: 24, A2: 32, B1: 30, B2: 34, C: 35, D1: 30, D2: 33, E: 40, F: 43, G: 52 },
+    '6.0': { A1: 31, A2: 41, B1: 38, B2: 43, C: 46, D1: 38, D2: 42, E: 51, F: 54, G: 66 },
+    '10': { A1: 42, A2: 57, B1: 52, B2: 59, C: 63, D1: 52, D2: 57, E: 70, F: 75, G: 90 },
+    '16': { A1: 56, A2: 76, B1: 69, B2: 79, C: 85, D1: 69, D2: 76, E: 94, F: 100, G: 119 },
+    '25': { A1: 73, A2: 101, B1: 89, B2: 104, C: 112, D1: 89, D2: 99, E: 119, F: 127, G: 151 },
   };
-  
+
   return capacityTable[cableSize]?.[referenceMethod] || 0;
 };
 
@@ -173,12 +173,12 @@ export const getRecommendedCpcSize = (liveConductorSize: string): string => {
     '2.5': '1.5', // T&E cable: 2.5mm² live, 1.5mm² CPC
     '4.0': '1.5', // T&E cable: 4.0mm² live, 1.5mm² CPC
     '6.0': '2.5', // T&E cable: 6.0mm² live, 2.5mm² CPC
-    '10': '4.0',  // T&E cable: 10mm² live, 4.0mm² CPC
-    '16': '6.0',  // SWA cable: equal CPC for larger sizes
+    '10': '4.0', // T&E cable: 10mm² live, 4.0mm² CPC
+    '16': '6.0', // SWA cable: equal CPC for larger sizes
     '25': '6.0',
     '35': '10',
     '50': '16',
   };
-  
+
   return cpcTable[liveConductorSize] || liveConductorSize;
 };

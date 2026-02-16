@@ -1,15 +1,25 @@
-import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { FileText, CheckCircle, X, FileSignature, Loader2, Calendar, MapPin, Clock, Briefcase } from "lucide-react";
-import { Quote, QuoteItem } from "@/types/quote";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import SignaturePad from "@/components/forms/SignaturePad";
+import { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import {
+  FileText,
+  CheckCircle,
+  X,
+  FileSignature,
+  Loader2,
+  Calendar,
+  MapPin,
+  Clock,
+  Briefcase,
+} from 'lucide-react';
+import { Quote, QuoteItem } from '@/types/quote';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import SignaturePad from '@/components/forms/SignaturePad';
 
 const PublicQuoteView = () => {
   const { token } = useParams<{ token: string }>();
@@ -17,9 +27,9 @@ const PublicQuoteView = () => {
   const [loading, setLoading] = useState(true);
   const [accepting, setAccepting] = useState(false);
   const [rejecting, setRejecting] = useState(false);
-  const [clientName, setClientName] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
-  const [signatureData, setSignatureData] = useState<string>("");
+  const [clientName, setClientName] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [signatureData, setSignatureData] = useState<string>('');
   const signaturePadRef = useRef<any>(null);
 
   useEffect(() => {
@@ -52,20 +62,22 @@ const PublicQuoteView = () => {
       setLoading(true);
 
       // Use secure RPC function to fetch quote by token (prevents viewing other quotes)
-      const { data: quoteResults, error: quoteError } = await supabase
-        .rpc("get_quote_by_public_token", { token_param: token });
+      const { data: quoteResults, error: quoteError } = await supabase.rpc(
+        'get_quote_by_public_token',
+        { token_param: token }
+      );
 
       if (quoteError) {
-        console.error("Quote fetch error:", quoteError);
-        throw new Error("Quote not found or expired");
+        console.error('Quote fetch error:', quoteError);
+        throw new Error('Quote not found or expired');
       }
 
       // RPC returns an array, get the first (and only) result
       const quoteData = Array.isArray(quoteResults) ? quoteResults[0] : quoteResults;
 
       if (!quoteData) {
-        console.error("Quote not found for token:", token);
-        throw new Error("Quote not found or expired");
+        console.error('Quote not found for token:', token);
+        throw new Error('Quote not found or expired');
       }
 
       const convertedQuote: Quote = {
@@ -86,7 +98,9 @@ const PublicQuoteView = () => {
         createdAt: new Date(quoteData.created_at),
         updatedAt: new Date(quoteData.updated_at),
         expiryDate: new Date(quoteData.expiry_date),
-        lastReminderSentAt: quoteData.last_reminder_sent_at ? new Date(quoteData.last_reminder_sent_at) : undefined,
+        lastReminderSentAt: quoteData.last_reminder_sent_at
+          ? new Date(quoteData.last_reminder_sent_at)
+          : undefined,
         acceptance_status: quoteData.acceptance_status as any,
         acceptance_method: quoteData.acceptance_method as any,
         accepted_at: quoteData.accepted_at ? new Date(quoteData.accepted_at) : undefined,
@@ -97,21 +111,20 @@ const PublicQuoteView = () => {
         signature_url: quoteData.signature_url,
         docusign_envelope_id: quoteData.docusign_envelope_id,
         docusign_status: quoteData.docusign_status,
-        public_token: quoteData.public_token
+        public_token: quoteData.public_token,
       };
 
       setQuote(convertedQuote);
-      setClientName(convertedQuote.client?.name || "");
-      setClientEmail(convertedQuote.client?.email || "");
+      setClientName(convertedQuote.client?.name || '');
+      setClientEmail(convertedQuote.client?.email || '');
 
       // Note: View tracking removed - anonymous users don't have write access to quote_views
-
     } catch (error) {
-      console.error("Error loading quote:", error);
+      console.error('Error loading quote:', error);
       toast({
-        title: "Error",
-        description: "Quote not found or has expired",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Quote not found or has expired',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -121,9 +134,9 @@ const PublicQuoteView = () => {
   const handleAcceptQuote = async () => {
     if (!quote || !clientName || !clientEmail || !signatureData) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all fields and provide your signature",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please fill in all fields and provide your signature',
+        variant: 'destructive',
       });
       return;
     }
@@ -132,52 +145,53 @@ const PublicQuoteView = () => {
     try {
       // Use secure RPC function to accept quote (prevents unauthorized updates)
       const clientIP = await getUserIP();
-      const { data: success, error: updateError } = await supabase
-        .rpc("accept_quote_by_token", {
-          token_param: quote.public_token,
-          accepted_name: clientName,
-          accepted_email: clientEmail,
-          signature_data: signatureData,
-          client_ip: clientIP,
-          client_user_agent: navigator.userAgent
-        });
+      const { data: success, error: updateError } = await supabase.rpc('accept_quote_by_token', {
+        token_param: quote.public_token,
+        accepted_name: clientName,
+        accepted_email: clientEmail,
+        signature_data: signatureData,
+        client_ip: clientIP,
+        client_user_agent: navigator.userAgent,
+      });
 
       if (updateError) {
-        console.error("Update error:", updateError);
+        console.error('Update error:', updateError);
         throw updateError;
       }
 
       if (!success) {
-        throw new Error("Quote could not be accepted. It may have expired.");
+        throw new Error('Quote could not be accepted. It may have expired.');
       }
 
       // Send confirmation email to client (non-blocking)
       if (clientEmail) {
-        supabase.functions.invoke("quote-acceptance-confirmation", {
-          body: {
-            quoteId: quote.id,
-            quoteNumber: quote.quoteNumber,
-            clientEmail: clientEmail,
-            clientName: clientName,
-            total: quote.total
-          }
-        }).catch(err => console.warn("Could not send confirmation email:", err));
+        supabase.functions
+          .invoke('quote-acceptance-confirmation', {
+            body: {
+              quoteId: quote.id,
+              quoteNumber: quote.quoteNumber,
+              clientEmail: clientEmail,
+              clientName: clientName,
+              total: quote.total,
+            },
+          })
+          .catch((err) => console.warn('Could not send confirmation email:', err));
       }
 
       toast({
-        title: "Quote Accepted!",
-        description: "We've sent you a confirmation email. We'll be in touch soon to schedule the work.",
-        variant: "success"
+        title: 'Quote Accepted!',
+        description:
+          "We've sent you a confirmation email. We'll be in touch soon to schedule the work.",
+        variant: 'success',
       });
 
       loadQuote();
-
     } catch (error) {
-      console.error("Error accepting quote:", error);
+      console.error('Error accepting quote:', error);
       toast({
-        title: "Error",
-        description: "Failed to accept quote. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to accept quote. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setAccepting(false);
@@ -191,35 +205,33 @@ const PublicQuoteView = () => {
     try {
       // Use secure RPC function to reject quote (prevents unauthorized updates)
       const clientIP = await getUserIP();
-      const { data: success, error } = await supabase
-        .rpc("reject_quote_by_token", {
-          token_param: quote.public_token,
-          rejected_name: clientName || "Client",
-          rejected_email: clientEmail || null,
-          client_ip: clientIP,
-          client_user_agent: navigator.userAgent
-        });
+      const { data: success, error } = await supabase.rpc('reject_quote_by_token', {
+        token_param: quote.public_token,
+        rejected_name: clientName || 'Client',
+        rejected_email: clientEmail || null,
+        client_ip: clientIP,
+        client_user_agent: navigator.userAgent,
+      });
 
       if (error) throw error;
 
       if (!success) {
-        throw new Error("Quote could not be declined. It may have expired.");
+        throw new Error('Quote could not be declined. It may have expired.');
       }
 
       toast({
-        title: "Quote Declined",
-        description: "Thank you for letting us know.",
-        variant: "default"
+        title: 'Quote Declined',
+        description: 'Thank you for letting us know.',
+        variant: 'default',
       });
 
       loadQuote();
-
     } catch (error) {
-      console.error("Error rejecting quote:", error);
+      console.error('Error rejecting quote:', error);
       toast({
-        title: "Error",
-        description: "Failed to decline quote. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to decline quote. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setRejecting(false);
@@ -251,20 +263,23 @@ const PublicQuoteView = () => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
-      currency: 'GBP'
+      currency: 'GBP',
     }).format(amount);
   };
 
   const groupItemsByCategory = (items: QuoteItem[]) => {
-    const grouped = items.reduce((acc, item) => {
-      if (!acc[item.category]) {
-        acc[item.category] = [];
-      }
-      acc[item.category].push(item);
-      return acc;
-    }, {} as Record<string, QuoteItem[]>);
+    const grouped = items.reduce(
+      (acc, item) => {
+        if (!acc[item.category]) {
+          acc[item.category] = [];
+        }
+        acc[item.category].push(item);
+        return acc;
+      },
+      {} as Record<string, QuoteItem[]>
+    );
 
-    Object.keys(grouped).forEach(category => {
+    Object.keys(grouped).forEach((category) => {
       grouped[category].sort((a, b) => b.totalPrice - a.totalPrice);
     });
 
@@ -300,8 +315,8 @@ const PublicQuoteView = () => {
     );
   }
 
-  const isAccepted = quote.acceptance_status === "accepted";
-  const isRejected = quote.acceptance_status === "rejected";
+  const isAccepted = quote.acceptance_status === 'accepted';
+  const isRejected = quote.acceptance_status === 'rejected';
   const isPending = !isAccepted && !isRejected;
   const groupedItems = groupItemsByCategory(quote.items || []);
 
@@ -317,18 +332,25 @@ const PublicQuoteView = () => {
               </h1>
               <p className="text-blue-200 text-sm flex items-center gap-1.5 mt-0.5">
                 <Calendar className="h-3.5 w-3.5 flex-shrink-0" />
-                Valid until {quote.expiryDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                Valid until{' '}
+                {quote.expiryDate.toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}
               </p>
             </div>
             <div className="flex-shrink-0">
               {isAccepted && (
                 <Badge className="bg-green-500/90 text-white border-0 h-8 px-3 text-sm">
-                  <CheckCircle className="h-4 w-4 mr-1.5" />Accepted
+                  <CheckCircle className="h-4 w-4 mr-1.5" />
+                  Accepted
                 </Badge>
               )}
               {isRejected && (
                 <Badge className="bg-red-500/90 text-white border-0 h-8 px-3 text-sm">
-                  <X className="h-4 w-4 mr-1.5" />Declined
+                  <X className="h-4 w-4 mr-1.5" />
+                  Declined
                 </Badge>
               )}
               {isPending && (
@@ -343,7 +365,6 @@ const PublicQuoteView = () => {
 
       {/* Main Content */}
       <div className="px-4 py-4 sm:py-6 max-w-2xl mx-auto space-y-4 pb-8 safe-area-bottom">
-
         {/* Total Amount - Hero Card */}
         <div className="bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 rounded-2xl p-5 sm:p-6 border border-elec-yellow/30">
           <div className="text-center">
@@ -379,7 +400,8 @@ const PublicQuoteView = () => {
                 {quote.jobDetails.location && (
                   <div>
                     <p className="text-xs text-elec-light/60 flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />Location
+                      <MapPin className="h-3 w-3" />
+                      Location
                     </p>
                     <p className="text-white text-sm">{quote.jobDetails.location}</p>
                   </div>
@@ -387,7 +409,8 @@ const PublicQuoteView = () => {
                 {quote.jobDetails.estimatedDuration && (
                   <div>
                     <p className="text-xs text-elec-light/60 flex items-center gap-1">
-                      <Clock className="h-3 w-3" />Duration
+                      <Clock className="h-3 w-3" />
+                      Duration
                     </p>
                     <p className="text-white text-sm">{quote.jobDetails.estimatedDuration}</p>
                   </div>
@@ -417,9 +440,14 @@ const PublicQuoteView = () => {
                 </h4>
                 <div className="space-y-2">
                   {items.map((item) => (
-                    <div key={item.id} className="flex justify-between items-start py-2 px-3 bg-white/5 rounded-xl">
+                    <div
+                      key={item.id}
+                      className="flex justify-between items-start py-2 px-3 bg-white/5 rounded-xl"
+                    >
                       <div className="flex-1 min-w-0 pr-3">
-                        <p className="text-white text-sm font-medium truncate">{item.description}</p>
+                        <p className="text-white text-sm font-medium truncate">
+                          {item.description}
+                        </p>
                         <p className="text-elec-light/60 text-xs">
                           {item.quantity} {item.unit} × {formatCurrency(item.unitPrice)}
                         </p>
@@ -470,7 +498,10 @@ const PublicQuoteView = () => {
 
         {/* Acceptance Section */}
         {isPending && (
-          <div id="acceptance-section" className="bg-elec-card/80 backdrop-blur-sm rounded-2xl border border-elec-yellow/30 overflow-hidden">
+          <div
+            id="acceptance-section"
+            className="bg-elec-card/80 backdrop-blur-sm rounded-2xl border border-elec-yellow/30 overflow-hidden"
+          >
             <div className="px-4 py-3 border-b border-white/10 bg-elec-yellow/10">
               <h2 className="text-base font-semibold text-white flex items-center gap-2">
                 <FileSignature className="h-4 w-4 text-elec-yellow" />
@@ -512,12 +543,8 @@ const PublicQuoteView = () => {
 
               {/* Signature Pad */}
               <div>
-                <Label className="text-elec-light/80 text-sm">
-                  Digital Signature *
-                </Label>
-                <p className="text-elec-light/50 text-xs mb-2">
-                  Sign below to accept this quote
-                </p>
+                <Label className="text-elec-light/80 text-sm">Digital Signature *</Label>
+                <p className="text-elec-light/50 text-xs mb-2">Sign below to accept this quote</p>
                 <SignaturePad
                   ref={signaturePadRef}
                   onSignatureChange={setSignatureData}
@@ -560,7 +587,8 @@ const PublicQuoteView = () => {
 
               {/* Legal Notice */}
               <p className="text-elec-light/50 text-xs text-center pt-2">
-                By accepting, you agree to the quoted amount and terms. Your signature will be stored securely.
+                By accepting, you agree to the quoted amount and terms. Your signature will be
+                stored securely.
               </p>
             </div>
           </div>
@@ -568,30 +596,35 @@ const PublicQuoteView = () => {
 
         {/* Accepted/Rejected Confirmation */}
         {(isAccepted || isRejected) && (
-          <div className={`rounded-2xl p-6 text-center ${
-            isAccepted
-              ? 'bg-green-500/10 border border-green-500/30'
-              : 'bg-red-500/10 border border-red-500/30'
-          }`}>
-            <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${
-              isAccepted ? 'bg-green-500/20' : 'bg-red-500/20'
-            }`}>
+          <div
+            className={`rounded-2xl p-6 text-center ${
+              isAccepted
+                ? 'bg-green-500/10 border border-green-500/30'
+                : 'bg-red-500/10 border border-red-500/30'
+            }`}
+          >
+            <div
+              className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${
+                isAccepted ? 'bg-green-500/20' : 'bg-red-500/20'
+              }`}
+            >
               {isAccepted ? (
                 <CheckCircle className="h-8 w-8 text-green-400" />
               ) : (
                 <X className="h-8 w-8 text-red-400" />
               )}
             </div>
-            <h3 className={`text-xl font-semibold mb-2 ${
-              isAccepted ? 'text-green-400' : 'text-red-400'
-            }`}>
+            <h3
+              className={`text-xl font-semibold mb-2 ${
+                isAccepted ? 'text-green-400' : 'text-red-400'
+              }`}
+            >
               {isAccepted ? 'Quote Accepted' : 'Quote Declined'}
             </h3>
             <p className="text-elec-light/70 text-sm">
               {isAccepted
                 ? `Thank you! Accepted by ${quote.accepted_by_name} on ${quote.accepted_at ? new Date(quote.accepted_at).toLocaleDateString('en-GB') : 'N/A'}`
-                : `Declined by ${quote.accepted_by_name || 'Client'} on ${quote.accepted_at ? new Date(quote.accepted_at).toLocaleDateString('en-GB') : 'N/A'}`
-              }
+                : `Declined by ${quote.accepted_by_name || 'Client'} on ${quote.accepted_at ? new Date(quote.accepted_at).toLocaleDateString('en-GB') : 'N/A'}`}
             </p>
             {isAccepted && quote.signature_url && (
               <div className="mt-4 pt-4 border-t border-white/10">
@@ -608,9 +641,7 @@ const PublicQuoteView = () => {
 
         {/* Footer */}
         <div className="text-center pt-4">
-          <p className="text-elec-light/40 text-xs">
-            Powered by ElecMate Professional Suite
-          </p>
+          <p className="text-elec-light/40 text-xs">Powered by ElecMate Professional Suite</p>
         </div>
       </div>
     </div>

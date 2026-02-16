@@ -1,19 +1,23 @@
-import { useState, lazy, Suspense, useEffect } from "react";
-import { useCommissioningGeneration } from "@/hooks/useCommissioningGeneration";
-import { supabase } from "@/integrations/supabase/client";
-import CommissioningInput from "./CommissioningInput";
-import CommissioningProcessingView from "./CommissioningProcessingView";
-import CommissioningSuccess from "./CommissioningSuccess";
-import CommissioningResults from "./CommissioningResults";
-import FaultDiagnosisView from "./FaultDiagnosisView";
-import { Button } from "@/components/ui/button";
-import type { CommissioningResponse, FaultDiagnosis } from "@/types/commissioning-response";
-import { toast } from "sonner";
-import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
-import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
-import { AnimatePresence } from "framer-motion";
+import { useState, lazy, Suspense, useEffect } from 'react';
+import { useCommissioningGeneration } from '@/hooks/useCommissioningGeneration';
+import { supabase } from '@/integrations/supabase/client';
+import CommissioningInput from './CommissioningInput';
+import CommissioningProcessingView from './CommissioningProcessingView';
+import CommissioningSuccess from './CommissioningSuccess';
+import CommissioningResults from './CommissioningResults';
+import FaultDiagnosisView from './FaultDiagnosisView';
+import { Button } from '@/components/ui/button';
+import type { CommissioningResponse, FaultDiagnosis } from '@/types/commissioning-response';
+import { toast } from 'sonner';
+import {
+  getStoredCircuitContext,
+  clearStoredCircuitContext,
+  type StoredCircuitContext,
+} from '@/utils/circuit-context-generator';
+import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
+import { AnimatePresence } from 'framer-motion';
 
-const CommissioningChat = lazy(() => import("./CommissioningChat"));
+const CommissioningChat = lazy(() => import('./CommissioningChat'));
 
 const CommissioningInterface = () => {
   const [showResults, setShowResults] = useState(false);
@@ -21,10 +25,12 @@ const CommissioningInterface = () => {
   const [celebrationShown, setCelebrationShown] = useState(false);
   const [results, setResults] = useState<CommissioningResponse | null>(null);
   const [generationStartTime, setGenerationStartTime] = useState(0);
-  const [responseMode, setResponseMode] = useState<'procedure' | 'conversational' | 'fault-diagnosis' | null>(null);
+  const [responseMode, setResponseMode] = useState<
+    'procedure' | 'conversational' | 'fault-diagnosis' | null
+  >(null);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
-  const [initialPrompt, setInitialPrompt] = useState<string>("");
-  const [initialProjectName, setInitialProjectName] = useState<string>("");
+  const [initialPrompt, setInitialPrompt] = useState<string>('');
+  const [initialProjectName, setInitialProjectName] = useState<string>('');
 
   // Check for imported circuit context on mount
   useEffect(() => {
@@ -56,15 +62,15 @@ const CommissioningInterface = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [isFastPath, setIsFastPath] = useState(false);
-  const [originalQuery, setOriginalQuery] = useState<string>("");
+  const [originalQuery, setOriginalQuery] = useState<string>('');
   const [projectInfo, setProjectInfo] = useState({
-    projectName: "",
-    location: "",
-    clientName: "",
-    installationDate: "",
-    selectedType: 'domestic' as 'domestic' | 'commercial' | 'industrial'
+    projectName: '',
+    location: '',
+    clientName: '',
+    installationDate: '',
+    selectedType: 'domestic' as 'domestic' | 'commercial' | 'industrial',
   });
-  
+
   const { job, isLoading, error, createJob, cancelJob } = useCommissioningGeneration();
 
   // Update results when job completes
@@ -86,7 +92,7 @@ const CommissioningInterface = () => {
         setConversationalResponse({
           text: typedResponse.response || '',
           queryType: typedResponse.queryType || 'question',
-          citations: typedResponse.citations || []
+          citations: typedResponse.citations || [],
         });
         setShowCelebration(false);
       } else {
@@ -114,7 +120,7 @@ const CommissioningInterface = () => {
     setGenerationStartTime(Date.now());
     setShowResults(true);
     setCelebrationShown(false);
-    
+
     // Store original query and project info for results page
     setOriginalQuery(data.prompt);
     setProjectInfo({
@@ -122,37 +128,40 @@ const CommissioningInterface = () => {
       location: data.location,
       clientName: data.clientName,
       installationDate: data.installationDate,
-      selectedType: data.selectedType
+      selectedType: data.selectedType,
     });
-    
+
     // Store uploaded image URL for results display
     const imageUrlsArray = data.imageUrls || (data.imageUrl ? [data.imageUrl] : []);
     setUploadedImageUrl(imageUrlsArray.length > 0 ? imageUrlsArray[0] : null);
     setUploadedImageUrls(imageUrlsArray);
-    
+
     // FAST PATH: Direct call to commissioning-v3 for EICR photo analysis
     const hasPhotos = imageUrlsArray.length > 0;
-    
+
     if (hasPhotos) {
       console.log('🚀 Fast path: Calling commissioning-v3 directly for photo analysis');
       setIsFastPath(true);
-      
+
       try {
-        const { data: result, error: invokeError } = await supabase.functions.invoke('commissioning-v3', {
-          body: {
-            query: data.prompt,
-            queryMode: data.queryMode,
-            imageUrl: imageUrlsArray[0],
-            imageUrls: imageUrlsArray,
-            projectContext: {
-              projectType: data.selectedType,
-              projectName: data.projectName,
-              location: data.location,
-              clientName: data.clientName,
-              installationDate: data.installationDate
-            }
+        const { data: result, error: invokeError } = await supabase.functions.invoke(
+          'commissioning-v3',
+          {
+            body: {
+              query: data.prompt,
+              queryMode: data.queryMode,
+              imageUrl: imageUrlsArray[0],
+              imageUrls: imageUrlsArray,
+              projectContext: {
+                projectType: data.selectedType,
+                projectName: data.projectName,
+                location: data.location,
+                clientName: data.clientName,
+                installationDate: data.installationDate,
+              },
+            },
           }
-        });
+        );
 
         if (invokeError) {
           throw invokeError;
@@ -163,9 +172,9 @@ const CommissioningInterface = () => {
         }
 
         console.log('✅ Fast path complete:', result);
-        
+
         const typedResponse = result as CommissioningResponse;
-        
+
         // Handle EICR photo analysis response
         if (typedResponse.mode === 'eicr-photo-analysis') {
           setResponseMode('fault-diagnosis');
@@ -181,33 +190,33 @@ const CommissioningInterface = () => {
           setConversationalResponse({
             text: typedResponse.response || '',
             queryType: typedResponse.queryType || 'photo-analysis',
-            citations: typedResponse.citations || []
+            citations: typedResponse.citations || [],
           });
         }
-        
+
         // Clear fast path state so results display correctly
         setIsFastPath(false);
-        
+
         toast.success('Photo analysis complete', {
-          description: 'Results ready in ~' + Math.floor((Date.now() - generationStartTime) / 1000) + 's'
+          description:
+            'Results ready in ~' + Math.floor((Date.now() - generationStartTime) / 1000) + 's',
         });
-        
       } catch (err) {
         console.error('❌ Fast path error:', err);
         toast.error('Photo analysis failed', {
-          description: err instanceof Error ? err.message : 'Unknown error occurred'
+          description: err instanceof Error ? err.message : 'Unknown error occurred',
         });
         setShowResults(false);
         setIsFastPath(false);
       }
-      
+
       return;
     }
-    
+
     // SLOW PATH: Use job queue for detailed commissioning procedures
     console.log('🐌 Slow path: Using job queue for commissioning procedures');
     setIsFastPath(false);
-    
+
     try {
       await createJob({
         query: data.prompt,
@@ -221,7 +230,7 @@ const CommissioningInterface = () => {
         clientName: data.clientName,
         installationDate: data.installationDate,
         imageUrl: data.imageUrl,
-        imageUrls: data.imageUrls
+        imageUrls: data.imageUrls,
       });
     } catch (err) {
       console.error('Error creating commissioning job:', err);
@@ -252,9 +261,8 @@ const CommissioningInterface = () => {
     setShowCelebration(false);
   };
 
-  const generationTime = generationStartTime > 0 
-    ? Math.floor((Date.now() - generationStartTime) / 1000) 
-    : 0;
+  const generationTime =
+    generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0;
 
   // Show input form
   if (!showResults) {
@@ -297,21 +305,26 @@ const CommissioningInterface = () => {
         </div>
       );
     }
-    
+
     // Slow path: Detailed progress for commissioning procedures
     const progressStage = {
-      stage: 
-        !job?.progress || job.progress < 20 ? 'initializing' as const :
-        job.progress < 50 ? 'parsing' as const :
-        job.progress < 75 ? 'ai' as const :
-        job.progress < 100 ? 'validation' as const : 'complete' as const,
-      message: job?.current_step || 'Processing...'
+      stage:
+        !job?.progress || job.progress < 20
+          ? ('initializing' as const)
+          : job.progress < 50
+            ? ('parsing' as const)
+            : job.progress < 75
+              ? ('ai' as const)
+              : job.progress < 100
+                ? ('validation' as const)
+                : ('complete' as const),
+      message: job?.current_step || 'Processing...',
     };
 
     return (
       <div className="space-y-6">
-        <CommissioningProcessingView 
-          progress={progressStage} 
+        <CommissioningProcessingView
+          progress={progressStage}
           startTime={generationStartTime}
           backendProgress={job?.progress || 0}
         />
@@ -337,7 +350,14 @@ const CommissioningInterface = () => {
   // CONVERSATIONAL MODE: Show chat-style response
   if (responseMode === 'conversational' && conversationalResponse) {
     return (
-      <Suspense fallback={<CommissioningProcessingView progress={{ stage: 'ai', message: 'Loading...' }} startTime={generationStartTime} />}>
+      <Suspense
+        fallback={
+          <CommissioningProcessingView
+            progress={{ stage: 'ai', message: 'Loading...' }}
+            startTime={generationStartTime}
+          />
+        }
+      >
         <CommissioningChat
           response={conversationalResponse.text}
           queryType={conversationalResponse.queryType}
@@ -351,7 +371,7 @@ const CommissioningInterface = () => {
               projectName: projectInfo.projectName,
               location: projectInfo.location,
               clientName: projectInfo.clientName,
-              installationDate: projectInfo.installationDate
+              installationDate: projectInfo.installationDate,
             });
           }}
         />
@@ -381,7 +401,7 @@ const CommissioningInterface = () => {
   if (responseMode === 'procedure' && results) {
     return (
       <>
-        <CommissioningResults 
+        <CommissioningResults
           results={results}
           projectName={projectInfo.projectName}
           location={projectInfo.location}
@@ -390,10 +410,10 @@ const CommissioningInterface = () => {
           originalQuery={originalQuery}
           onStartOver={handleStartOver}
         />
-        
+
         {/* Success celebration popup */}
-        <CommissioningSuccess 
-          results={results} 
+        <CommissioningSuccess
+          results={results}
           onViewResults={handleViewResults}
           generationTime={generationTime}
           open={showCelebration}

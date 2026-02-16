@@ -179,11 +179,7 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
           {/* Overflow Menu - Everything Else */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-10 w-10 p-0 shrink-0 hover:bg-muted"
-              >
+              <Button variant="ghost" size="sm" className="h-10 w-10 p-0 shrink-0 hover:bg-muted">
                 <MoreVertical className="h-5 w-5 text-muted-foreground" />
               </Button>
             </DropdownMenuTrigger>
@@ -203,7 +199,9 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
                 <Pen className="h-4 w-4 text-primary" />
                 <div className="flex flex-col">
                   <span className="font-medium">Text to Circuits</span>
-                  <span className="text-[11px] text-muted-foreground">Type or paste circuit list</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    Type or paste circuit list
+                  </span>
                 </div>
               </DropdownMenuItem>
 
@@ -217,21 +215,27 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
                 <Shield className="h-4 w-4 text-blue-400" />
                 <div className="flex flex-col">
                   <span className="font-medium">RCD Presets</span>
-                  <span className="text-[11px] text-muted-foreground">Apply common RCD settings</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    Apply common RCD settings
+                  </span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onBulkInfill} className="gap-3 py-2.5">
                 <Grid className="h-4 w-4 text-green-400" />
                 <div className="flex flex-col">
                   <span className="font-medium">Bulk Infill</span>
-                  <span className="text-[11px] text-muted-foreground">Fill multiple circuits at once</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    Fill multiple circuits at once
+                  </span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onQuickFillRcd} className="gap-3 py-2.5">
                 <Zap className="h-4 w-4 text-amber-400" />
                 <div className="flex flex-col">
                   <span className="font-medium">Quick Fill RCD</span>
-                  <span className="text-[11px] text-muted-foreground">Auto-detect RCD protection</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    Auto-detect RCD protection
+                  </span>
                 </div>
               </DropdownMenuItem>
 
@@ -290,17 +294,12 @@ const DesktopHeader: React.FC<{
   onRemoveAllCircuits: () => void;
   onShowAnalytics: () => void;
   className?: string;
-}> = ({
-  circuitCount,
-  onAddCircuit,
-  onScanBoard,
-  onSmartAutoFill,
-  className = '',
-}) => {
+}> = ({ circuitCount, onAddCircuit, onScanBoard, onSmartAutoFill, className = '' }) => {
   // Calculate stats
   const completedCircuits = 0; // Will be calculated from actual data
   const pendingCircuits = circuitCount;
-  const progressPercent = circuitCount > 0 ? Math.round((completedCircuits / circuitCount) * 100) : 0;
+  const progressPercent =
+    circuitCount > 0 ? Math.round((completedCircuits / circuitCount) * 100) : 0;
 
   return (
     <div className={cn('px-4 lg:px-6 py-6 mb-4', className)}>
@@ -314,7 +313,9 @@ const DesktopHeader: React.FC<{
                 <Zap className="h-7 w-7 text-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground tracking-tight">Schedule of Tests</h2>
+                <h2 className="text-2xl font-bold text-foreground tracking-tight">
+                  Schedule of Tests
+                </h2>
                 <p className="text-sm text-muted-foreground mt-0.5">
                   BS 7671 compliant circuit testing & verification
                 </p>
@@ -348,7 +349,13 @@ const DesktopHeader: React.FC<{
               size="lg"
               className="h-12 px-6 gap-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-medium shadow-lg shadow-purple-500/25 transition-all"
             >
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                className="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
                 <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
                 <line x1="12" y1="19" x2="12" y2="23" />
@@ -388,9 +395,13 @@ const DesktopHeader: React.FC<{
 /**
  * Stat card component for header
  */
-const StatCard: React.FC<{ value: number | string; label: string; color: string }> = ({ value, label, color }) => (
+const StatCard: React.FC<{ value: number | string; label: string; color: string }> = ({
+  value,
+  label,
+  color,
+}) => (
   <div className="px-5 py-3 text-center min-w-[90px] border-r border-border/30 last:border-r-0">
-    <div className={cn("text-2xl font-bold tabular-nums", color)}>{value}</div>
+    <div className={cn('text-2xl font-bold tabular-nums', color)}>{value}</div>
     <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
   </div>
 );

@@ -1,12 +1,11 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Clock, Plus, Target, Calendar, TrendingUp, ChevronRight, Download } from "lucide-react";
-import { useCPDData } from "@/hooks/cpd/useCPDData";
-import { cpdExportService } from "@/services/cpdExportService";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Clock, Plus, Target, Calendar, TrendingUp, ChevronRight, Download } from 'lucide-react';
+import { useCPDData } from '@/hooks/cpd/useCPDData';
+import { cpdExportService } from '@/services/cpdExportService';
 
 interface MobileCPDTrackerProps {
   onAddEntry: () => void;
@@ -30,13 +29,13 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
   }
 
   const recentEntries = entries.slice(0, 3);
-  const activeGoals = goals.filter(goal => goal.status === 'Active').slice(0, 2);
+  const activeGoals = goals.filter((goal) => goal.status === 'Active').slice(0, 2);
 
   const getComplianceColor = () => {
-    if (stats.completionPercentage >= 100) return "text-green-400";
-    if (stats.completionPercentage >= 80) return "text-green-400";
-    if (stats.completionPercentage >= 60) return "text-amber-400";
-    return "text-red-400";
+    if (stats.completionPercentage >= 100) return 'text-green-400';
+    if (stats.completionPercentage >= 80) return 'text-green-400';
+    if (stats.completionPercentage >= 60) return 'text-amber-400';
+    return 'text-red-400';
   };
 
   const handleQuickExport = () => {
@@ -68,14 +67,18 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
               <div className="text-xs text-white/70">Hours This Year</div>
             </div>
             <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
-              <div className={`text-2xl font-bold ${getComplianceColor()}`}>{stats.completionPercentage}%</div>
+              <div className={`text-2xl font-bold ${getComplianceColor()}`}>
+                {stats.completionPercentage}%
+              </div>
               <div className="text-xs text-white/70">Progress</div>
             </div>
           </div>
           <div className="mt-4 space-y-2 p-3 rounded-lg bg-white/5 border border-white/10">
             <div className="flex justify-between text-sm text-white">
               <span>Annual Target</span>
-              <span className="text-elec-yellow font-medium">{stats.hoursThisYear} / {stats.targetHours} hours</span>
+              <span className="text-elec-yellow font-medium">
+                {stats.hoursThisYear} / {stats.targetHours} hours
+              </span>
             </div>
             <Progress value={stats.completionPercentage} className="h-2" />
           </div>
@@ -88,7 +91,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
           { id: 'overview', label: 'Overview', icon: TrendingUp },
           { id: 'recent', label: 'Recent', icon: Clock },
           { id: 'goals', label: 'Goals', icon: Target },
-        ].map(tab => {
+        ].map((tab) => {
           const Icon = tab.icon;
           return (
             <button
@@ -136,7 +139,10 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
             </CardHeader>
             <CardContent className="space-y-3 relative">
               {stats.categoryBreakdown.slice(0, 3).map((category, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10"
+                >
                   <span className="text-xs font-medium text-white">{category.category}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-elec-yellow font-medium">{category.hours}h</span>
@@ -166,11 +172,20 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
               <CardContent className="p-4 relative">
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-2 flex-1 min-w-0">
-                    <h3 className="font-medium text-white text-sm line-clamp-2">{entry.activity}</h3>
+                    <h3 className="font-medium text-white text-sm line-clamp-2">
+                      {entry.activity}
+                    </h3>
                     <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="px-2 py-1 rounded bg-white/5 text-white/70">{entry.date}</span>
-                      <span className="px-2 py-1 rounded bg-elec-yellow/10 text-elec-yellow font-medium">{entry.hours}h</span>
-                      <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
+                      <span className="px-2 py-1 rounded bg-white/5 text-white/70">
+                        {entry.date}
+                      </span>
+                      <span className="px-2 py-1 rounded bg-elec-yellow/10 text-elec-yellow font-medium">
+                        {entry.hours}h
+                      </span>
+                      <Badge
+                        variant="outline"
+                        className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30"
+                      >
                         {entry.status}
                       </Badge>
                     </div>
@@ -194,13 +209,19 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
       {activeTab === 'goals' && (
         <div className="space-y-3">
           {activeGoals.map((goal) => (
-            <Card key={goal.id} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+            <Card
+              key={goal.id}
+              className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative"
+            >
               <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
               <CardContent className="p-4 relative">
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="font-medium text-white text-sm">{goal.title}</h3>
-                    <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
+                    <Badge
+                      variant="outline"
+                      className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30"
+                    >
                       {goal.status}
                     </Badge>
                   </div>
@@ -208,7 +229,9 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
                   <div className="space-y-2 p-2 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex justify-between text-xs text-white">
                       <span className="text-white/60">Progress</span>
-                      <span className="text-elec-yellow font-medium">{goal.currentHours} / {goal.targetHours} hours</span>
+                      <span className="text-elec-yellow font-medium">
+                        {goal.currentHours} / {goal.targetHours} hours
+                      </span>
                     </div>
                     <Progress
                       value={(goal.currentHours / goal.targetHours) * 100}

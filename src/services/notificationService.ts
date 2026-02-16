@@ -1,6 +1,11 @@
 import { supabase } from '@/integrations/supabase/client';
 
-export type NotificationType = 'job_assignment' | 'schedule_change' | 'safety_alert' | 'message' | 'general';
+export type NotificationType =
+  | 'job_assignment'
+  | 'schedule_change'
+  | 'safety_alert'
+  | 'message'
+  | 'general';
 
 export interface Notification {
   id: string;
@@ -76,16 +81,14 @@ export const getUnreadCount = async (employeeId?: string): Promise<number> => {
   return count || 0;
 };
 
-export const createNotification = async (
-  notification: {
-    employee_id: string;
-    type: NotificationType;
-    title: string;
-    message: string;
-    job_id?: string | null;
-    action_url?: string | null;
-  }
-): Promise<Notification> => {
+export const createNotification = async (notification: {
+  employee_id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  job_id?: string | null;
+  action_url?: string | null;
+}): Promise<Notification> => {
   const { data, error } = await supabase
     .from('employer_notifications')
     .insert(notification)
@@ -135,10 +138,7 @@ export const markAllAsRead = async (employeeId?: string): Promise<boolean> => {
 };
 
 export const deleteNotification = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_notifications')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_notifications').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting notification:', error);

@@ -1,8 +1,13 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { logger, generateRequestId } from '@/utils/logger';
-import { captureError, identifySentryUser, clearSentryUser, trackMilestone, addBreadcrumb } from '@/lib/sentry';
+import {
+  captureError,
+  identifySentryUser,
+  clearSentryUser,
+  trackMilestone,
+  addBreadcrumb,
+} from '@/lib/sentry';
 
 export function useAuthentication() {
   const { toast } = useToast();
@@ -10,14 +15,20 @@ export function useAuthentication() {
   // Helper to make error messages user-friendly
   const getFriendlyErrorMessage = (errorMessage: string): string => {
     const lowerMessage = errorMessage.toLowerCase();
-    if (lowerMessage.includes('invalid login credentials') || lowerMessage.includes('invalid credentials')) {
+    if (
+      lowerMessage.includes('invalid login credentials') ||
+      lowerMessage.includes('invalid credentials')
+    ) {
       return 'Incorrect email or password. Please try again.';
     }
-    if (lowerMessage.includes('user already registered') || lowerMessage.includes('already been registered')) {
+    if (
+      lowerMessage.includes('user already registered') ||
+      lowerMessage.includes('already been registered')
+    ) {
       return 'This email is already registered. Try signing in instead.';
     }
     if (lowerMessage.includes('password') && lowerMessage.includes('weak')) {
-      return 'This password has been found in data breaches. Please choose a unique password that you haven\'t used elsewhere.';
+      return "This password has been found in data breaches. Please choose a unique password that you haven't used elsewhere.";
     }
     if (lowerMessage.includes('rate limit') || lowerMessage.includes('too many')) {
       return 'Too many attempts. Please wait a moment and try again.';
@@ -108,10 +119,10 @@ export function useAuthentication() {
       return { error: null, user: data?.user };
     } catch (error: any) {
       // Track unexpected login errors (not auth failures, which are expected)
-      captureError(
-        error instanceof Error ? error : new Error(error.message || 'Login error'),
-        { context: 'signIn', email }
-      );
+      captureError(error instanceof Error ? error : new Error(error.message || 'Login error'), {
+        context: 'signIn',
+        email,
+      });
       toast({
         title: 'Login Error',
         description: error.message || 'An unexpected error occurred',
@@ -167,10 +178,10 @@ export function useAuthentication() {
     } catch (error: any) {
       logger.api('auth/signUp', requestId).error(error, { email });
       // Track unexpected signup errors
-      captureError(
-        error instanceof Error ? error : new Error(error.message || 'Signup error'),
-        { context: 'signUp', email }
-      );
+      captureError(error instanceof Error ? error : new Error(error.message || 'Signup error'), {
+        context: 'signUp',
+        email,
+      });
       toast({
         title: 'Signup Error',
         description: getFriendlyErrorMessage(error.message || 'An unexpected error occurred'),
@@ -190,15 +201,17 @@ export function useAuthentication() {
       const keysToRemove: string[] = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && key.startsWith('user_') && (
-          key.includes('_quiz_completed') ||
-          key.includes('_quiz_attempts') ||
-          key.includes('_todayTime')
-        )) {
+        if (
+          key &&
+          key.startsWith('user_') &&
+          (key.includes('_quiz_completed') ||
+            key.includes('_quiz_attempts') ||
+            key.includes('_todayTime'))
+        ) {
           keysToRemove.push(key);
         }
       }
-      keysToRemove.forEach(key => localStorage.removeItem(key));
+      keysToRemove.forEach((key) => localStorage.removeItem(key));
     } catch (e) {
       console.error('Error clearing quiz localStorage on sign-out:', e);
     }
@@ -233,7 +246,7 @@ export function useAuthentication() {
       // Always show success to prevent user enumeration
       toast({
         title: 'Check Your Email',
-        description: 'If an account exists, we\'ve sent you a password reset link.',
+        description: "If an account exists, we've sent you a password reset link.",
       });
 
       return { error: null };
@@ -242,7 +255,7 @@ export function useAuthentication() {
       logger.warn('Password reset exception (non-fatal)', { error: error.message });
       toast({
         title: 'Check Your Email',
-        description: 'If an account exists, we\'ve sent you a password reset link.',
+        description: "If an account exists, we've sent you a password reset link.",
       });
       return { error: null };
     }
@@ -333,12 +346,15 @@ export function useAuthentication() {
     }
   };
 
-  const updateProfile = async (userId: string, profileData: {
-    role?: string;
-    ecs_card_type?: string;
-    elec_id_enabled?: boolean;
-    onboarding_completed?: boolean;
-  }) => {
+  const updateProfile = async (
+    userId: string,
+    profileData: {
+      role?: string;
+      ecs_card_type?: string;
+      elec_id_enabled?: boolean;
+      onboarding_completed?: boolean;
+    }
+  ) => {
     const requestId = generateRequestId();
     logger.api('profiles/update', requestId).start({ userId, fields: Object.keys(profileData) });
 

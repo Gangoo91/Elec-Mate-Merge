@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { Zap, BookOpen, Calculator, Shield, Wrench } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Zap, BookOpen, Calculator, Shield, Wrench } from 'lucide-react';
 
 interface WelcomeScreenProps {
   onSelectQuery: (query: string) => void;
@@ -8,35 +8,35 @@ interface WelcomeScreenProps {
 const exampleQueries = [
   {
     icon: BookOpen,
-    colour: "text-blue-400",
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/20",
-    category: "Regulations",
-    query: "What are the RCD requirements for bathrooms under BS 7671?",
+    colour: 'text-blue-400',
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/20',
+    category: 'Regulations',
+    query: 'What are the RCD requirements for bathrooms under BS 7671?',
   },
   {
     icon: Calculator,
-    colour: "text-green-400",
-    bg: "bg-green-500/10",
-    border: "border-green-500/20",
-    category: "Calculations",
-    query: "How do I calculate voltage drop for a 6mm twin & earth cable?",
+    colour: 'text-green-400',
+    bg: 'bg-green-500/10',
+    border: 'border-green-500/20',
+    category: 'Calculations',
+    query: 'How do I calculate voltage drop for a 6mm twin & earth cable?',
   },
   {
     icon: Shield,
-    colour: "text-amber-400",
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/20",
-    category: "Testing",
-    query: "What is the correct procedure for testing loop impedance?",
+    colour: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/20',
+    category: 'Testing',
+    query: 'What is the correct procedure for testing loop impedance?',
   },
   {
     icon: Wrench,
-    colour: "text-purple-400",
-    bg: "bg-purple-500/10",
-    border: "border-purple-500/20",
-    category: "Practical",
-    query: "How do I wire a consumer unit with dual RCD split-load?",
+    colour: 'text-purple-400',
+    bg: 'bg-purple-500/10',
+    border: 'border-purple-500/20',
+    category: 'Practical',
+    query: 'How do I wire a consumer unit with dual RCD split-load?',
   },
 ];
 
@@ -59,11 +59,10 @@ export function WelcomeScreen({ onSelectQuery }: WelcomeScreenProps) {
         </div>
 
         <div className="text-center space-y-2">
-          <h2 className="text-xl font-bold text-foreground tracking-tight">
-            Elec-AI Assistant
-          </h2>
+          <h2 className="text-xl font-bold text-foreground tracking-tight">Elec-AI Assistant</h2>
           <p className="text-sm text-muted-foreground max-w-[280px] leading-relaxed">
-            Your BS 7671 expert. Ask about regulations, calculations, testing or installation guidance.
+            Your BS 7671 expert. Ask about regulations, calculations, testing or installation
+            guidance.
           </p>
         </div>
       </motion.div>

@@ -11,12 +11,12 @@ interface MaintenanceMethodInputProps {
 
 export const MaintenanceMethodInput = ({
   equipmentDetails,
-  onChange
+  onChange,
 }: MaintenanceMethodInputProps) => {
   const handleChange = (field: keyof MaintenanceEquipmentDetails, value: string | number) => {
     onChange({
       ...equipmentDetails,
-      [field]: value
+      [field]: value,
     });
   };
 

@@ -7,40 +7,40 @@ const BMSModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Digital vs Analog Inputs and Outputs",
+      title: 'Digital vs Analog Inputs and Outputs',
       icon: ToggleLeft,
-      description: "Signal types and processing methods"
+      description: 'Signal types and processing methods',
     },
     {
       id: 2,
-      title: "Types of Sensors: Temperature, Humidity, CO2, Occupancy",
+      title: 'Types of Sensors: Temperature, Humidity, CO2, Occupancy',
       icon: Thermometer,
-      description: "Sensor technologies and applications"
+      description: 'Sensor technologies and applications',
     },
     {
       id: 3,
-      title: "Actuators, Valves, and Dampers",
+      title: 'Actuators, Valves, and Dampers',
       icon: Settings,
-      description: "Control devices and mechanical components"
+      description: 'Control devices and mechanical components',
     },
     {
       id: 4,
-      title: "Sensor Placement and Accuracy Considerations",
+      title: 'Sensor Placement and Accuracy Considerations',
       icon: MapPin,
-      description: "Installation best practices"
+      description: 'Installation best practices',
     },
     {
       id: 5,
-      title: "I/O Modules and Expansion Devices",
+      title: 'I/O Modules and Expansion Devices',
       icon: Cable,
-      description: "Input/output expansion and connectivity"
+      description: 'Input/output expansion and connectivity',
     },
     {
       id: 6,
-      title: "Cabling, Interference, and Shielding Practices",
+      title: 'Cabling, Interference, and Shielding Practices',
       icon: Shield,
-      description: "Signal integrity and protection methods"
-    }
+      description: 'Signal integrity and protection methods',
+    },
   ];
 
   return (

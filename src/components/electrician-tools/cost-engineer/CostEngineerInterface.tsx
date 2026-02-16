@@ -1,25 +1,31 @@
-import { useState, useEffect, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useCostEngineerGeneration } from "@/hooks/useCostEngineerGeneration";
-import CostAnalysisProcessingView from "./CostAnalysisProcessingView";
-import CostAnalysisResults from "./CostAnalysisResults";
-import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
-import { BusinessSettings, DEFAULT_BUSINESS_SETTINGS, BusinessSettingsDialog } from "./BusinessSettingsDialog";
-import { AgentSuccessDialog } from "@/components/agents/shared/AgentSuccessDialog";
-import { CostEngineerInput } from "./CostEngineerInput";
-import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
-import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
-import { AnimatePresence } from "framer-motion";
-import { useAuth } from "@/contexts/AuthContext";
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { useCostEngineerGeneration } from '@/hooks/useCostEngineerGeneration';
+import CostAnalysisProcessingView from './CostAnalysisProcessingView';
+import CostAnalysisResults from './CostAnalysisResults';
+import { parseCostAnalysis, ParsedCostAnalysis } from '@/utils/cost-analysis-parser';
+import {
+  BusinessSettings,
+  DEFAULT_BUSINESS_SETTINGS,
+  BusinessSettingsDialog,
+} from './BusinessSettingsDialog';
+import { AgentSuccessDialog } from '@/components/agents/shared/AgentSuccessDialog';
+import { CostEngineerInput } from './CostEngineerInput';
+import {
+  getStoredCircuitContext,
+  clearStoredCircuitContext,
+  type StoredCircuitContext,
+} from '@/utils/circuit-context-generator';
+import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
+import { AnimatePresence } from 'framer-motion';
+import { useAuth } from '@/contexts/AuthContext';
 
 // Generate user-scoped storage key for business settings
 const getStorageKey = (userId?: string) =>
-  userId
-    ? `electrician_business_settings_${userId}`
-    : 'electrician_business_settings_guest';
+  userId ? `electrician_business_settings_${userId}` : 'electrician_business_settings_guest';
 
 type ViewState = 'input' | 'processing' | 'results';
 type ProjectType = 'domestic' | 'commercial' | 'industrial';
@@ -41,15 +47,16 @@ const CostEngineerInterface = () => {
     savedResultsState?.fromSavedResults ? 'results' : 'input'
   );
   const [projectType, setProjectType] = useState<ProjectType>('domestic');
-  const [prompt, setPrompt] = useState("");
-  const [originalQueryFromResponse, setOriginalQueryFromResponse] = useState<string>("");
+  const [prompt, setPrompt] = useState('');
+  const [originalQueryFromResponse, setOriginalQueryFromResponse] = useState<string>('');
   const [parsedResults, setParsedResults] = useState<ParsedCostAnalysis | null>(null);
   const [structuredData, setStructuredData] = useState<any>(null);
-  const [projectName, setProjectName] = useState("");
-  const [clientInfo, setClientInfo] = useState("");
-  const [location, setLocation] = useState("");
-  const [additionalInfo, setAdditionalInfo] = useState("");
-  const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
+  const [projectName, setProjectName] = useState('');
+  const [clientInfo, setClientInfo] = useState('');
+  const [location, setLocation] = useState('');
+  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [businessSettings, setBusinessSettings] =
+    useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
   const [hasConfiguredSettings, setHasConfiguredSettings] = useState(false);
   const [showSettingsDialog, setShowSettingsDialog] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
@@ -96,25 +103,31 @@ const CostEngineerInterface = () => {
           totalCost: coreStructuredData.summary.grandTotal,
           materialsTotal: coreStructuredData.materials?.subtotal || 0,
           labourTotal: coreStructuredData.labour?.subtotal || 0,
-          materials: coreStructuredData.materials?.items?.map((m: any) => ({
-            item: m.description || m.item || 'Unknown item',
-            quantity: m.quantity,
-            unit: m.unit,
-            unitPrice: m.unitPrice,
-            total: m.total,
-            supplier: m.supplier
-          })) || [],
+          materials:
+            coreStructuredData.materials?.items?.map((m: any) => ({
+              item: m.description || m.item || 'Unknown item',
+              quantity: m.quantity,
+              unit: m.unit,
+              unitPrice: m.unitPrice,
+              total: m.total,
+              supplier: m.supplier,
+            })) || [],
           labour: {
-            hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+            hours:
+              coreStructuredData.labour?.tasks?.reduce(
+                (sum: number, t: any) => sum + (t.hours || 0),
+                0
+              ) || 0,
             rate: 50,
             total: coreStructuredData.labour?.subtotal || 0,
-            description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
+            description:
+              coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour',
           },
           additionalCosts: [],
           vatAmount: coreStructuredData.summary.vat,
           vatRate: 20,
           subtotal: coreStructuredData.summary.subtotal,
-          rawText: data.response
+          rawText: data.response,
         });
       } else if (data.response) {
         // Fallback to text parsing
@@ -172,13 +185,12 @@ const CostEngineerInterface = () => {
       // Keep in processing view to show error state with retry option
       setJobError(error);
       toast({
-        title: "Generation failed",
+        title: 'Generation failed',
         description: error,
-        variant: "destructive"
+        variant: 'destructive',
       });
-    }
+    },
   });
-
 
   const handleJobComplete = (data: any) => {
     // Store original query from response
@@ -196,25 +208,30 @@ const CostEngineerInterface = () => {
         totalCost: coreStructuredData.summary.grandTotal,
         materialsTotal: coreStructuredData.materials?.subtotal || 0,
         labourTotal: coreStructuredData.labour?.subtotal || 0,
-        materials: coreStructuredData.materials?.items?.map((m: any) => ({
-          item: m.description || m.item || 'Unknown item',
-          quantity: m.quantity,
-          unit: m.unit,
-          unitPrice: m.unitPrice,
-          total: m.total,
-          supplier: m.supplier
-        })) || [],
+        materials:
+          coreStructuredData.materials?.items?.map((m: any) => ({
+            item: m.description || m.item || 'Unknown item',
+            quantity: m.quantity,
+            unit: m.unit,
+            unitPrice: m.unitPrice,
+            total: m.total,
+            supplier: m.supplier,
+          })) || [],
         labour: {
-          hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+          hours:
+            coreStructuredData.labour?.tasks?.reduce(
+              (sum: number, t: any) => sum + (t.hours || 0),
+              0
+            ) || 0,
           rate: 50,
           total: coreStructuredData.labour?.subtotal || 0,
-          description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
+          description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour',
         },
         additionalCosts: [],
         vatAmount: coreStructuredData.summary.vat,
         vatRate: 20,
         subtotal: coreStructuredData.summary.subtotal,
-        rawText: data.response
+        rawText: data.response,
       });
     } else {
       // Fallback to text parsing
@@ -234,9 +251,9 @@ const CostEngineerInterface = () => {
   const handleGenerate = async () => {
     if (!prompt.trim()) {
       toast({
-        title: "Description required",
-        description: "Please describe your electrical project",
-        variant: "destructive"
+        title: 'Description required',
+        description: 'Please describe your electrical project',
+        variant: 'destructive',
       });
       return;
     }
@@ -252,16 +269,16 @@ const CostEngineerInterface = () => {
         projectType: projectType,
         projectName: projectName,
         clientInfo: clientInfo,
-        additionalInfo: additionalInfo
+        additionalInfo: additionalInfo,
       },
-      businessSettings: businessSettings
+      businessSettings: businessSettings,
     };
     setLastJobInputs(inputs);
 
     try {
       // Create job using new job queue pattern
       const { data, error } = await supabase.functions.invoke('create-cost-engineer-job', {
-        body: inputs
+        body: inputs,
       });
 
       if (error) throw error;
@@ -270,16 +287,16 @@ const CostEngineerInterface = () => {
       setJobId(data.jobId);
 
       toast({
-        title: "Analysis started",
-        description: "Generating cost estimate...",
+        title: 'Analysis started',
+        description: 'Generating cost estimate...',
       });
     } catch (error: any) {
       console.error('Error creating job:', error);
       setViewState('input');
       toast({
-        title: "Failed to start analysis",
+        title: 'Failed to start analysis',
         description: error.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
@@ -307,7 +324,7 @@ const CostEngineerInterface = () => {
     try {
       // Create job using stored inputs
       const { data, error } = await supabase.functions.invoke('create-cost-engineer-job', {
-        body: lastJobInputs
+        body: lastJobInputs,
       });
 
       if (error) throw error;
@@ -315,28 +332,28 @@ const CostEngineerInterface = () => {
       setJobId(data.jobId);
 
       toast({
-        title: "Retrying analysis",
-        description: "Generating cost estimate...",
+        title: 'Retrying analysis',
+        description: 'Generating cost estimate...',
       });
     } catch (error: any) {
       console.error('Error retrying job:', error);
       setJobError(error.message);
       toast({
-        title: "Retry failed",
+        title: 'Retry failed',
         description: error.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
 
   const handleNewAnalysis = () => {
     setViewState('input');
-    setPrompt("");
+    setPrompt('');
     setParsedResults(null);
-    setProjectName("");
-    setClientInfo("");
-    setLocation("");
-    setAdditionalInfo("");
+    setProjectName('');
+    setClientInfo('');
+    setLocation('');
+    setAdditionalInfo('');
     setJobId(null);
     setShowSuccessDialog(false);
   };
@@ -355,7 +372,7 @@ const CostEngineerInterface = () => {
       <CostAnalysisProcessingView
         progress={{
           stage,
-          message: job?.current_step || 'Initializing...'
+          message: job?.current_step || 'Initializing...',
         }}
         onCancel={handleCancel}
         status={jobError ? 'failed' : 'processing'}
@@ -378,7 +395,7 @@ const CostEngineerInterface = () => {
           clientInfo,
           location,
           additionalInfo,
-          projectType
+          projectType,
         }}
       />
     );

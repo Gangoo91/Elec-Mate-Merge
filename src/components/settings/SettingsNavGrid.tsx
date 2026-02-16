@@ -1,15 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import {
-  User,
-  IdCard,
-  Building2,
-  Settings2,
-  Shield,
-  CreditCard,
-  ChevronRight,
-} from "lucide-react";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { User, IdCard, Building2, Settings2, Shield, CreditCard, ChevronRight } from 'lucide-react';
 
 interface SettingsNavItem {
   id: string;
@@ -38,67 +30,67 @@ interface SettingsNavGridProps {
 // New 6-tab grouped settings sections - iOS style
 const SETTINGS_SECTIONS: SettingsSection[] = [
   {
-    title: "Profile",
+    title: 'Profile',
     items: [
       {
-        id: "account",
-        label: "Account",
-        description: "Your profile & role settings",
+        id: 'account',
+        label: 'Account',
+        description: 'Your profile & role settings',
         icon: User,
-        iconBg: "bg-blue-500/15",
-        iconColour: "text-blue-400",
+        iconBg: 'bg-blue-500/15',
+        iconColour: 'text-blue-400',
       },
       {
-        id: "elec-id",
-        label: "Elec-ID",
-        description: "Your digital identity card",
+        id: 'elec-id',
+        label: 'Elec-ID',
+        description: 'Your digital identity card',
         icon: IdCard,
-        iconBg: "bg-elec-yellow/15",
-        iconColour: "text-elec-yellow",
-        badge: "Gamified",
-        badgeColour: "bg-elec-yellow/20 text-elec-yellow",
+        iconBg: 'bg-elec-yellow/15',
+        iconColour: 'text-elec-yellow',
+        badge: 'Gamified',
+        badgeColour: 'bg-elec-yellow/20 text-elec-yellow',
       },
     ],
   },
   {
-    title: "Business",
+    title: 'Business',
     items: [
       {
-        id: "business",
-        label: "Business Settings",
-        description: "Company, rates, instruments, branding",
+        id: 'business',
+        label: 'Business Settings',
+        description: 'Company, rates, instruments, branding',
         icon: Building2,
-        iconBg: "bg-emerald-500/15",
-        iconColour: "text-emerald-400",
+        iconBg: 'bg-emerald-500/15',
+        iconColour: 'text-emerald-400',
       },
       {
-        id: "billing",
-        label: "Billing",
-        description: "Subscription & payments",
+        id: 'billing',
+        label: 'Billing',
+        description: 'Subscription & payments',
         icon: CreditCard,
-        iconBg: "bg-purple-500/15",
-        iconColour: "text-purple-400",
+        iconBg: 'bg-purple-500/15',
+        iconColour: 'text-purple-400',
       },
     ],
   },
   {
-    title: "App Settings",
+    title: 'App Settings',
     items: [
       {
-        id: "preferences",
-        label: "Preferences",
-        description: "Theme, notifications, AI assistant",
+        id: 'preferences',
+        label: 'Preferences',
+        description: 'Theme, notifications, AI assistant',
         icon: Settings2,
-        iconBg: "bg-amber-500/15",
-        iconColour: "text-amber-400",
+        iconBg: 'bg-amber-500/15',
+        iconColour: 'text-amber-400',
       },
       {
-        id: "privacy",
-        label: "Privacy",
-        description: "Data controls & analytics",
+        id: 'privacy',
+        label: 'Privacy',
+        description: 'Data controls & analytics',
         icon: Shield,
-        iconBg: "bg-rose-500/15",
-        iconColour: "text-rose-400",
+        iconBg: 'bg-rose-500/15',
+        iconColour: 'text-rose-400',
       },
     ],
   },
@@ -153,22 +145,22 @@ const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProp
                   key={item.id}
                   onClick={() => onSelect(item.id)}
                   className={cn(
-                    "relative w-full flex items-center gap-3 px-4 py-4",
-                    "text-left transition-all duration-150",
-                    "hover:bg-white/[0.04] active:bg-white/[0.08]",
-                    "active:scale-[0.99] touch-manipulation",
-                    "group",
-                    index !== section.items.length - 1 && "border-b border-white/[0.04]"
+                    'relative w-full flex items-center gap-3 px-4 py-4',
+                    'text-left transition-all duration-150',
+                    'hover:bg-white/[0.04] active:bg-white/[0.08]',
+                    'active:scale-[0.99] touch-manipulation',
+                    'group',
+                    index !== section.items.length - 1 && 'border-b border-white/[0.04]'
                   )}
                 >
                   {/* Icon */}
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0",
+                      'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
                       item.iconBg
                     )}
                   >
-                    <Icon className={cn("h-5 w-5", item.iconColour)} />
+                    <Icon className={cn('h-5 w-5', item.iconColour)} />
                   </div>
 
                   {/* Label & Description */}
@@ -180,7 +172,7 @@ const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProp
                       {item.badge && (
                         <span
                           className={cn(
-                            "px-1.5 py-0.5 rounded text-[10px] font-semibold",
+                            'px-1.5 py-0.5 rounded text-[10px] font-semibold',
                             item.badgeColour
                           )}
                         >
@@ -191,9 +183,7 @@ const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProp
                         <span className="h-2 w-2 bg-red-500 rounded-full animate-pulse" />
                       )}
                     </div>
-                    <p className="text-[12px] text-white/40 truncate">
-                      {item.description}
-                    </p>
+                    <p className="text-[12px] text-white/40 truncate">{item.description}</p>
                   </div>
 
                   {/* Chevron */}

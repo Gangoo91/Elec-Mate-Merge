@@ -1,14 +1,13 @@
-
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface BackButtonProps {
   customUrl?: string;
   label?: string;
 }
 
-const BackButton = ({ customUrl, label = "Back" }: BackButtonProps) => {
+const BackButton = ({ customUrl, label = 'Back' }: BackButtonProps) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -20,8 +19,8 @@ const BackButton = ({ customUrl, label = "Back" }: BackButtonProps) => {
   };
 
   return (
-    <Button 
-      variant="outline" 
+    <Button
+      variant="outline"
       onClick={handleBack}
       className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-foreground"
     >

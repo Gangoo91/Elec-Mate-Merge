@@ -1,74 +1,84 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Passive vs Active Hardware | Data Cabling Module 1.3";
-const DESCRIPTION = "Understand the differences between passive and active network components for structured cabling system design.";
+const TITLE = 'Passive vs Active Hardware | Data Cabling Module 1.3';
+const DESCRIPTION =
+  'Understand the differences between passive and active network components for structured cabling system design.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m1s3-check1",
-    question: "Which of the following is a passive network component?",
-    options: ["Network switch", "Patch panel", "Router", "Access point"],
+    id: 'datacabling-m1s3-check1',
+    question: 'Which of the following is a passive network component?',
+    options: ['Network switch', 'Patch panel', 'Router', 'Access point'],
     correctIndex: 1,
-    explanation: "A patch panel is a passive component - it provides physical connection points but doesn't process or amplify signals. Switches, routers, and access points are all active components requiring power."
+    explanation:
+      "A patch panel is a passive component - it provides physical connection points but doesn't process or amplify signals. Switches, routers, and access points are all active components requiring power.",
   },
   {
-    id: "datacabling-m1s3-check2",
-    question: "What is the typical lifespan of passive cabling infrastructure?",
-    options: ["3-5 years", "5-10 years", "15-25 years", "30-40 years"],
+    id: 'datacabling-m1s3-check2',
+    question: 'What is the typical lifespan of passive cabling infrastructure?',
+    options: ['3-5 years', '5-10 years', '15-25 years', '30-40 years'],
     correctIndex: 2,
-    explanation: "Passive cabling infrastructure typically lasts 15-25 years when properly installed, outlasting multiple generations of active equipment that typically needs replacement every 3-7 years."
+    explanation:
+      'Passive cabling infrastructure typically lasts 15-25 years when properly installed, outlasting multiple generations of active equipment that typically needs replacement every 3-7 years.',
   },
   {
-    id: "datacabling-m1s3-check3",
-    question: "Why do active components require more maintenance than passive?",
+    id: 'datacabling-m1s3-check3',
+    question: 'Why do active components require more maintenance than passive?',
     options: [
-      "They are physically larger",
-      "They require power, cooling, and firmware updates",
-      "They use more expensive materials",
-      "They have more connectors"
+      'They are physically larger',
+      'They require power, cooling, and firmware updates',
+      'They use more expensive materials',
+      'They have more connectors',
     ],
     correctIndex: 1,
-    explanation: "Active components require power, cooling, firmware updates, monitoring, and eventual replacement. Passive components have no moving parts or software, requiring minimal maintenance."
-  }
+    explanation:
+      'Active components require power, cooling, firmware updates, monitoring, and eventual replacement. Passive components have no moving parts or software, requiring minimal maintenance.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When should I choose passive components over active ones?",
-    answer: "Choose passive components when you need maximum reliability, minimal maintenance, operation without power, or deployment in harsh environments. They're ideal for foundational infrastructure that needs to last 15-25 years."
+    question: 'When should I choose passive components over active ones?',
+    answer:
+      "Choose passive components when you need maximum reliability, minimal maintenance, operation without power, or deployment in harsh environments. They're ideal for foundational infrastructure that needs to last 15-25 years.",
   },
   {
-    question: "What are the ongoing costs of active vs passive components?",
-    answer: "Passive components have minimal ongoing costs after installation. Active components require power, cooling, firmware updates, monitoring, and periodic replacement every 3-7 years, making their total cost of ownership higher."
+    question: 'What are the ongoing costs of active vs passive components?',
+    answer:
+      'Passive components have minimal ongoing costs after installation. Active components require power, cooling, firmware updates, monitoring, and periodic replacement every 3-7 years, making their total cost of ownership higher.',
   },
   {
-    question: "Can I mix passive and active approaches in the same network?",
-    answer: "Yes, and this is recommended. Most modern networks use passive infrastructure (cables, connectors) as the foundation with active components (switches, routers) strategically placed where intelligence and management are needed."
+    question: 'Can I mix passive and active approaches in the same network?',
+    answer:
+      'Yes, and this is recommended. Most modern networks use passive infrastructure (cables, connectors) as the foundation with active components (switches, routers) strategically placed where intelligence and management are needed.',
   },
   {
-    question: "What happens if active components fail?",
-    answer: "Active component failures can disrupt network operations. This is why redundancy planning, backup power, and spare equipment are important. The underlying passive infrastructure usually remains intact and functional."
-  }
+    question: 'What happens if active components fail?',
+    answer:
+      'Active component failures can disrupt network operations. This is why redundancy planning, backup power, and spare equipment are important. The underlying passive infrastructure usually remains intact and functional.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A client wants to minimise network maintenance costs over the next 20 years. What should you emphasise in your design?",
-  options: [
-    "Use the cheapest active equipment available",
-    "High-quality passive infrastructure with strategic active components",
-    "All-wireless solution to eliminate cabling",
-    "Active components throughout for maximum features"
-  ],
-  correctAnswer: 1,
-  explanation: "High-quality passive infrastructure (cables, patch panels, connectors) will last 15-25 years with minimal maintenance. Active components should be strategically placed where needed, knowing they'll require replacement every 3-7 years."
-  }
+    question:
+      'A client wants to minimise network maintenance costs over the next 20 years. What should you emphasise in your design?',
+    options: [
+      'Use the cheapest active equipment available',
+      'High-quality passive infrastructure with strategic active components',
+      'All-wireless solution to eliminate cabling',
+      'Active components throughout for maximum features',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "High-quality passive infrastructure (cables, patch panels, connectors) will last 15-25 years with minimal maintenance. Active components should be strategically placed where needed, knowing they'll require replacement every 3-7 years.",
+  },
 ];
 
 const DataCablingModule1Section3 = () => {
@@ -103,9 +113,7 @@ const DataCablingModule1Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Passive vs Active Hardware
           </h1>
-          <p className="text-white/80">
-            Understanding network component types and their roles
-          </p>
+          <p className="text-white/80">Understanding network component types and their roles</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -113,16 +121,26 @@ const DataCablingModule1Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Passive:</strong> No power, no processing (cables, panels)</li>
-              <li><strong>Active:</strong> Requires power, processes signals (switches)</li>
-              <li><strong>Balance:</strong> Passive foundation + strategic active</li>
+              <li>
+                <strong>Passive:</strong> No power, no processing (cables, panels)
+              </li>
+              <li>
+                <strong>Active:</strong> Requires power, processes signals (switches)
+              </li>
+              <li>
+                <strong>Balance:</strong> Passive foundation + strategic active
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Patch panels (passive), switches with LEDs (active)</li>
-              <li><strong>Use:</strong> Build on reliable passive, add active where needed</li>
+              <li>
+                <strong>Spot:</strong> Patch panels (passive), switches with LEDs (active)
+              </li>
+              <li>
+                <strong>Use:</strong> Build on reliable passive, add active where needed
+              </li>
             </ul>
           </div>
         </div>
@@ -132,12 +150,12 @@ const DataCablingModule1Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Distinguish passive from active components",
-              "Identify common passive components",
-              "Understand active component functions",
-              "Calculate total cost of ownership",
-              "Plan component replacement cycles",
-              "Design balanced infrastructure"
+              'Distinguish passive from active components',
+              'Identify common passive components',
+              'Understand active component functions',
+              'Calculate total cost of ownership',
+              'Plan component replacement cycles',
+              'Design balanced infrastructure',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -163,12 +181,22 @@ const DataCablingModule1Section3 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Passive Components</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Common Passive Components
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Cables:</strong> Copper, fibre optic</li>
-                  <li><strong>Patch panels:</strong> Connection points</li>
-                  <li><strong>Keystone jacks:</strong> Wall outlets</li>
-                  <li><strong>Connectors:</strong> RJ45, LC, SC</li>
+                  <li>
+                    <strong>Cables:</strong> Copper, fibre optic
+                  </li>
+                  <li>
+                    <strong>Patch panels:</strong> Connection points
+                  </li>
+                  <li>
+                    <strong>Keystone jacks:</strong> Wall outlets
+                  </li>
+                  <li>
+                    <strong>Connectors:</strong> RJ45, LC, SC
+                  </li>
                 </ul>
               </div>
               <div>
@@ -216,20 +244,38 @@ const DataCablingModule1Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Common Active Components:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Switches:</strong> Connect devices, forward frames based on MAC addresses</li>
-                <li><strong>Routers:</strong> Connect networks, route packets based on IP addresses</li>
-                <li><strong>Access points:</strong> Provide wireless connectivity</li>
-                <li><strong>Media converters:</strong> Convert between copper and fibre</li>
+                <li>
+                  <strong>Switches:</strong> Connect devices, forward frames based on MAC addresses
+                </li>
+                <li>
+                  <strong>Routers:</strong> Connect networks, route packets based on IP addresses
+                </li>
+                <li>
+                  <strong>Access points:</strong> Provide wireless connectivity
+                </li>
+                <li>
+                  <strong>Media converters:</strong> Convert between copper and fibre
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Active Component Requirements:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Active Component Requirements:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Power:</strong> Mains or PoE supply</li>
-                <li><strong>Cooling:</strong> Ventilation or air conditioning</li>
-                <li><strong>Updates:</strong> Firmware and security patches</li>
-                <li><strong>Monitoring:</strong> Performance and fault detection</li>
+                <li>
+                  <strong>Power:</strong> Mains or PoE supply
+                </li>
+                <li>
+                  <strong>Cooling:</strong> Ventilation or air conditioning
+                </li>
+                <li>
+                  <strong>Updates:</strong> Firmware and security patches
+                </li>
+                <li>
+                  <strong>Monitoring:</strong> Performance and fault detection
+                </li>
               </ul>
             </div>
           </div>
@@ -245,8 +291,8 @@ const DataCablingModule1Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              When comparing passive and active components, consider the total cost of
-              ownership over the system's expected lifetime, not just initial purchase cost.
+              When comparing passive and active components, consider the total cost of ownership
+              over the system's expected lifetime, not just initial purchase cost.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -296,10 +342,18 @@ const DataCablingModule1Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Cheap cabling:</strong> — Passive infrastructure should outlast active</li>
-                <li><strong>No cooling plan:</strong> — Active components generate heat</li>
-                <li><strong>Ignoring TCO:</strong> — Initial cost isn't total cost</li>
-                <li><strong>No spare capacity:</strong> — Both passive and active need growth room</li>
+                <li>
+                  <strong>Cheap cabling:</strong> — Passive infrastructure should outlast active
+                </li>
+                <li>
+                  <strong>No cooling plan:</strong> — Active components generate heat
+                </li>
+                <li>
+                  <strong>Ignoring TCO:</strong> — Initial cost isn't total cost
+                </li>
+                <li>
+                  <strong>No spare capacity:</strong> — Both passive and active need growth room
+                </li>
               </ul>
             </div>
           </div>
@@ -343,10 +397,7 @@ const DataCablingModule1Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -3,12 +3,7 @@ export { MessageReactions, ReactionBar } from './MessageReactions';
 export type { Reaction } from './MessageReactions';
 
 // File attachments
-export {
-  FileAttachment,
-  FilePreview,
-  AttachmentButton,
-  DropZone,
-} from './FileAttachment';
+export { FileAttachment, FilePreview, AttachmentButton, DropZone } from './FileAttachment';
 
 // Read receipts
 export {

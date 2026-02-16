@@ -10,7 +10,9 @@ const BS7671Module8Section1Summary = () => {
           <CheckCircle className="h-6 w-6 text-elec-yellow" />
           Section Summary and Key Takeaways
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">Essential Knowledge</Badge>
+        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">
+          Essential Knowledge
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
@@ -20,7 +22,9 @@ const BS7671Module8Section1Summary = () => {
               <h6 className="text-yellow-400 font-medium mb-2">Appendix Navigation Mastery:</h6>
               <ul className="text-sm space-y-1">
                 <li>• Appendix 4: Current-carrying capacities are installation method dependent</li>
-                <li>• Appendix 12: Voltage drop calculations must consider circuit type and loading</li>
+                <li>
+                  • Appendix 12: Voltage drop calculations must consider circuit type and loading
+                </li>
                 <li>• Appendix 14: Zs values are critical for protective device coordination</li>
                 <li>• Cross-referencing between appendices is essential for accurate design</li>
                 <li>• Amendment 3 updates include enhanced safety margins</li>
@@ -47,7 +51,9 @@ const BS7671Module8Section1Summary = () => {
               <div className="text-xs font-mono bg-gray-900 p-2 rounded mb-2">
                 It = In / (Ca × Cg × Ci × Cr)
               </div>
-              <p className="text-xs">Required tabulated current accounting for all correction factors</p>
+              <p className="text-xs">
+                Required tabulated current accounting for all correction factors
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="font-bold text-green-400 mb-2">Voltage Drop</h6>
@@ -61,7 +67,9 @@ const BS7671Module8Section1Summary = () => {
               <div className="text-xs font-mono bg-gray-900 p-2 rounded mb-2">
                 Zs = Ze + (R1 + R2)
               </div>
-              <p className="text-xs">Total earth fault loop impedance for protective device coordination</p>
+              <p className="text-xs">
+                Total earth fault loop impedance for protective device coordination
+              </p>
             </div>
           </div>
         </div>
@@ -71,21 +79,32 @@ const BS7671Module8Section1Summary = () => {
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <h6 className="font-bold text-green-400 mb-1">Design Verification</h6>
-              <p className="text-sm">Always verify calculations using multiple methods and cross-reference with different appendix sections to ensure accuracy and compliance.</p>
+              <p className="text-sm">
+                Always verify calculations using multiple methods and cross-reference with different
+                appendix sections to ensure accuracy and compliance.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Documentation Standards</h6>
-              <p className="text-sm">Maintain detailed calculation records with clear references to BS 7671 tables and correction factors used for future reference and inspection.</p>
+              <p className="text-sm">
+                Maintain detailed calculation records with clear references to BS 7671 tables and
+                correction factors used for future reference and inspection.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-1">Continuous Learning</h6>
-              <p className="text-sm">Stay updated with amendment changes and industry best practices as electrical technology and regulations continue to evolve.</p>
+              <p className="text-sm">
+                Stay updated with amendment changes and industry best practices as electrical
+                technology and regulations continue to evolve.
+              </p>
             </div>
           </div>
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Next Steps in Your Learning Journey:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Next Steps in Your Learning Journey:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Immediate Actions:</h6>

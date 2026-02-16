@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -23,7 +22,7 @@ const EquipmentInfoCard = () => {
             <div key={index} className="p-4 bg-muted rounded-lg">
               <h4 className="font-medium text-foreground mb-2">{equipment.name}</h4>
               <p className="text-sm text-gray-300 mb-3">{equipment.description}</p>
-              
+
               <div className="space-y-2">
                 <div>
                   <p className="text-xs text-gray-400 mb-1">Tests:</p>
@@ -35,7 +34,7 @@ const EquipmentInfoCard = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2 text-xs text-gray-400">
                   <Clock className="h-3 w-3" />
                   <span>{equipment.calibrationRequirement}</span>

@@ -104,16 +104,13 @@ export function useEPAProfessionalDiscussion() {
 
         qualificationCodeRef.current = qualificationCode;
 
-        const response = await supabase.functions.invoke(
-          'epa-professional-discussion',
-          {
-            body: {
-              action: 'generate',
-              portfolio_entries,
-              qualification_code: qualificationCode,
-            },
-          }
-        );
+        const response = await supabase.functions.invoke('epa-professional-discussion', {
+          body: {
+            action: 'generate',
+            portfolio_entries,
+            qualification_code: qualificationCode,
+          },
+        });
 
         if (response.error) throw response.error;
 
@@ -127,8 +124,7 @@ export function useEPAProfessionalDiscussion() {
         toast.success('Discussion questions ready');
         return data.questions;
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : 'Failed to generate questions';
+        const message = err instanceof Error ? err.message : 'Failed to generate questions';
         console.error('EPA discussion generate error:', err);
         setError(message);
         toast.error(message);
@@ -160,17 +156,14 @@ export function useEPAProfessionalDiscussion() {
           throw new Error('Not authenticated');
         }
 
-        const response = await supabase.functions.invoke(
-          'epa-professional-discussion',
-          {
-            body: {
-              action: 'score',
-              question,
-              response: responseText,
-              qualification_code: qualificationCode,
-            },
-          }
-        );
+        const response = await supabase.functions.invoke('epa-professional-discussion', {
+          body: {
+            action: 'score',
+            question,
+            response: responseText,
+            qualification_code: qualificationCode,
+          },
+        });
 
         if (response.error) throw response.error;
 
@@ -214,8 +207,7 @@ export function useEPAProfessionalDiscussion() {
 
         return score;
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : 'Failed to score response';
+        const message = err instanceof Error ? err.message : 'Failed to score response';
         console.error('EPA discussion score error:', err);
         setError(message);
         toast.error(message);
@@ -250,14 +242,10 @@ export function useEPAProfessionalDiscussion() {
     if (scoredResponses.length === 0) return null;
 
     const scores = scoredResponses.map((r) => r.score!);
-    const avgScore = Math.round(
-      scores.reduce((sum, s) => sum + s.score, 0) / scores.length
-    );
+    const avgScore = Math.round(scores.reduce((sum, s) => sum + s.score, 0) / scores.length);
 
     const avg = (field: keyof ResponseScore['subscores']) =>
-      Math.round(
-        scores.reduce((sum, s) => sum + s.subscores[field], 0) / scores.length
-      );
+      Math.round(scores.reduce((sum, s) => sum + s.subscores[field], 0) / scores.length);
 
     const avgTechnicalKnowledge = avg('technicalKnowledge');
     const avgPracticalApplication = avg('practicalApplication');
@@ -266,16 +254,10 @@ export function useEPAProfessionalDiscussion() {
     const avgProblemSolving = avg('problemSolving');
 
     const predictedGrade: SessionResult['predictedGrade'] =
-      avgScore >= 70
-        ? 'distinction'
-        : avgScore >= 40
-          ? 'pass'
-          : 'fail';
+      avgScore >= 70 ? 'distinction' : avgScore >= 40 ? 'pass' : 'fail';
 
     const timeSpentSeconds = sessionStartRef.current
-      ? Math.round(
-          (new Date().getTime() - sessionStartRef.current.getTime()) / 1000
-        )
+      ? Math.round((new Date().getTime() - sessionStartRef.current.getTime()) / 1000)
       : 0;
 
     // Gather improvement suggestions from all responses
@@ -308,32 +290,26 @@ export function useEPAProfessionalDiscussion() {
         data: { user },
       } = await supabase.auth.getUser();
       if (user) {
-        const { error: saveError } = await supabase
-          .from('epa_mock_sessions')
-          .insert({
-            user_id: user.id,
-            qualification_code: qualificationCodeRef.current || 'unknown',
-            session_type: 'professional_discussion',
-            status: 'completed',
-            questions: questions as unknown as Record<string, unknown>,
-            responses: responses.map((r) => ({
-              questionId: r.questionId,
-              responseText: r.responseText,
-              score: r.score,
-            })) as unknown as Record<string, unknown>,
-            overall_score: avgScore,
-            predicted_grade: predictedGrade,
-            component_scores: result.componentScores as unknown as Record<
-              string,
-              unknown
-            >,
-            ai_feedback: result.aiFeedback,
-            improvement_suggestions:
-              uniqueImprovements as unknown as Record<string, unknown>,
-            started_at: sessionStartRef.current?.toISOString(),
-            completed_at: new Date().toISOString(),
-            time_spent_seconds: timeSpentSeconds,
-          });
+        const { error: saveError } = await supabase.from('epa_mock_sessions').insert({
+          user_id: user.id,
+          qualification_code: qualificationCodeRef.current || 'unknown',
+          session_type: 'professional_discussion',
+          status: 'completed',
+          questions: questions as unknown as Record<string, unknown>,
+          responses: responses.map((r) => ({
+            questionId: r.questionId,
+            responseText: r.responseText,
+            score: r.score,
+          })) as unknown as Record<string, unknown>,
+          overall_score: avgScore,
+          predicted_grade: predictedGrade,
+          component_scores: result.componentScores as unknown as Record<string, unknown>,
+          ai_feedback: result.aiFeedback,
+          improvement_suggestions: uniqueImprovements as unknown as Record<string, unknown>,
+          started_at: sessionStartRef.current?.toISOString(),
+          completed_at: new Date().toISOString(),
+          time_spent_seconds: timeSpentSeconds,
+        });
 
         if (saveError) {
           console.error('Failed to save discussion session:', saveError);

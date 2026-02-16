@@ -63,7 +63,8 @@ const quickCheckQuestions = [
 
 const faqs = [
   {
-    question: 'How do I safely handle a large, floppy item like a roll of cable or a coil of conduit?',
+    question:
+      'How do I safely handle a large, floppy item like a roll of cable or a coil of conduit?',
     answer:
       'Floppy or coiled items are difficult to grip and can shift unpredictably during handling. For cable rolls, keep them in their original packaging or on the drum as long as possible. If you must carry a loose coil, secure it with cable ties or tape first to prevent it uncoiling. Carry it close to your body, supporting the bottom. For heavier rolls, use a trolley or drum stand rather than carrying. Never let a cable coil hang from one hand &mdash; the weight creates significant lateral spinal loading. If the coil is large, use a two-person carry.',
   },
@@ -101,7 +102,8 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'What is the primary risk when handling a container of liquid (e.g. a drum of cutting oil)?',
+    question:
+      'What is the primary risk when handling a container of liquid (e.g. a drum of cutting oil)?',
     options: [
       'The liquid may spill and create a slip hazard',
       'The liquid inside shifts as you move, causing unpredictable changes in the centre of gravity',
@@ -140,8 +142,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'Why is manual handling particularly risky in ceiling voids and under-floor spaces?',
+    question: 'Why is manual handling particularly risky in ceiling voids and under-floor spaces?',
     options: [
       'The materials are always heavier in these locations',
       'There is usually no lighting available',
@@ -272,8 +273,8 @@ export default function ManualHandlingModule2Section4() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>Restricted spaces:</strong> Keep loads minimal, use ropes and
-                    pulleys, avoid lifting in awkward postures.
+                    <strong>Restricted spaces:</strong> Keep loads minimal, use ropes and pulleys,
+                    avoid lifting in awkward postures.
                   </span>
                 </li>
               </ul>
@@ -284,8 +285,8 @@ export default function ManualHandlingModule2Section4() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>Cable tray edges:</strong> Always deburr or tape before handling.
-                    Wear cut-resistant gloves.
+                    <strong>Cable tray edges:</strong> Always deburr or tape before handling. Wear
+                    cut-resistant gloves.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -305,8 +306,8 @@ export default function ManualHandlingModule2Section4() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>PPE reduces grip:</strong> Account for thick gloves and hard hat
-                    vision restrictions.
+                    <strong>PPE reduces grip:</strong> Account for thick gloves and hard hat vision
+                    restrictions.
                   </span>
                 </li>
               </ul>
@@ -340,22 +341,21 @@ export default function ManualHandlingModule2Section4() {
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span className="leading-relaxed">
-                Explain how PPE (gloves, hard hats, respirators) affects manual handling
-                capability and describe mitigations
+                Explain how PPE (gloves, hard hats, respirators) affects manual handling capability
+                and describe mitigations
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span className="leading-relaxed">
-                Describe safe handling practices in restricted headroom environments such as
-                ceiling voids and under-floor spaces
+                Describe safe handling practices in restricted headroom environments such as ceiling
+                voids and under-floor spaces
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span className="leading-relaxed">
-                Explain why handling loads from ladders is dangerous and identify safer
-                alternatives
+                Explain why handling loads from ladders is dangerous and identify safer alternatives
               </span>
             </li>
           </ul>
@@ -372,10 +372,10 @@ export default function ManualHandlingModule2Section4() {
             </h2>
             <div className="space-y-4 text-white">
               <p className="leading-relaxed">
-                Conduit, trunking, cable tray, and cable ladder sections are among the most
-                commonly handled long loads in electrical installation work. Standard lengths of
-                3 metres and 6 metres are awkward to carry, difficult to balance, and create
-                a significant hazard radius when turning. The weight may be manageable, but the{' '}
+                Conduit, trunking, cable tray, and cable ladder sections are among the most commonly
+                handled long loads in electrical installation work. Standard lengths of 3 metres and
+                6 metres are awkward to carry, difficult to balance, and create a significant hazard
+                radius when turning. The weight may be manageable, but the{' '}
                 <strong>length and rigidity</strong> are the real challenges.
               </p>
 
@@ -397,10 +397,10 @@ export default function ManualHandlingModule2Section4() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Shoulder carry</strong> for lighter long loads: rest the load on
-                      your shoulder at the balance point, with one hand steadying the front end.
-                      Keep the front end tilted slightly upward to avoid striking people or
-                      obstacles at head height.
+                      <strong>Shoulder carry</strong> for lighter long loads: rest the load on your
+                      shoulder at the balance point, with one hand steadying the front end. Keep the
+                      front end tilted slightly upward to avoid striking people or obstacles at head
+                      height.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -423,10 +423,10 @@ export default function ManualHandlingModule2Section4() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Corners:</strong> Slow right down. The rear end of a long load
-                      swings out when you turn a corner. Communicate with your partner and ensure
-                      the area is clear before turning. The rear person may need to step wide
-                      while the front person pivots.
+                      <strong>Corners:</strong> Slow right down. The rear end of a long load swings
+                      out when you turn a corner. Communicate with your partner and ensure the area
+                      is clear before turning. The rear person may need to step wide while the front
+                      person pivots.
                     </div>
                   </li>
                 </ul>
@@ -530,10 +530,10 @@ export default function ManualHandlingModule2Section4() {
             </h2>
             <div className="space-y-4 text-white">
               <p className="leading-relaxed">
-                Electrical equipment and containment materials present two specific physical
-                hazards during handling: <strong>heat</strong> from recently energised or soldered
-                equipment, and <strong>sharp edges</strong> from cut or stamped metalwork. Both
-                can cause a reflexive release of the load, leading to secondary injuries.
+                Electrical equipment and containment materials present two specific physical hazards
+                during handling: <strong>heat</strong> from recently energised or soldered
+                equipment, and <strong>sharp edges</strong> from cut or stamped metalwork. Both can
+                cause a reflexive release of the load, leading to secondary injuries.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -554,8 +554,8 @@ export default function ManualHandlingModule2Section4() {
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
                       <strong>Motor starters &amp; contactors:</strong> Components that have been
-                      under heavy load generate heat through resistive losses. Allow to cool
-                      before handling.
+                      under heavy load generate heat through resistive losses. Allow to cool before
+                      handling.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -585,9 +585,9 @@ export default function ManualHandlingModule2Section4() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Cable tray:</strong> Factory-cut ends and site-cut ends are
-                      extremely sharp. The thin steel edge can cause deep lacerations even through
-                      light gloves. Always deburr cut ends with a file or fit edge protectors.
+                      <strong>Cable tray:</strong> Factory-cut ends and site-cut ends are extremely
+                      sharp. The thin steel edge can cause deep lacerations even through light
+                      gloves. Always deburr cut ends with a file or fit edge protectors.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -621,17 +621,15 @@ export default function ManualHandlingModule2Section4() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-red-300">
-                    The Reflex Release Problem
-                  </h3>
+                  <h3 className="font-semibold text-red-300">The Reflex Release Problem</h3>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
                   When your hand touches something unexpectedly hot or sharp, your body&rsquo;s
-                  pain-withdrawal reflex causes an instant, involuntary release of the object.
-                  You cannot control this reflex &mdash; it happens before your conscious brain
-                  is aware of the pain. In a manual handling context, this means a hot or sharp
-                  load can be dropped without warning, potentially falling on your feet, legs, or
-                  a colleague. This is why inspecting loads for temperature and sharp edges{' '}
+                  pain-withdrawal reflex causes an instant, involuntary release of the object. You
+                  cannot control this reflex &mdash; it happens before your conscious brain is aware
+                  of the pain. In a manual handling context, this means a hot or sharp load can be
+                  dropped without warning, potentially falling on your feet, legs, or a colleague.
+                  This is why inspecting loads for temperature and sharp edges{' '}
                   <strong className="text-white">before</strong> gripping is so important.
                 </p>
               </div>
@@ -686,9 +684,9 @@ export default function ManualHandlingModule2Section4() {
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Hard Hat</h4>
                         <p className="text-white/80 text-xs leading-relaxed">
-                          The brim limits upward vision. Difficult to see overhead placement
-                          points or low beams. Pause and look up before lifting to height. Use a
-                          spotter for overhead work.
+                          The brim limits upward vision. Difficult to see overhead placement points
+                          or low beams. Pause and look up before lifting to height. Use a spotter
+                          for overhead work.
                         </p>
                       </div>
                     </div>
@@ -734,7 +732,9 @@ export default function ManualHandlingModule2Section4() {
                         <ShieldAlert className="h-5 w-5 text-emerald-300" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-emerald-300 font-medium mb-1">Hi-Vis &amp; Harnesses</h4>
+                        <h4 className="text-emerald-300 font-medium mb-1">
+                          Hi-Vis &amp; Harnesses
+                        </h4>
                         <p className="text-white/80 text-xs leading-relaxed">
                           Bulky clothing and harnesses can catch on loads or restrict movement.
                           Ensure straps and zips are secured before handling. Check that harness
@@ -790,33 +790,32 @@ export default function ManualHandlingModule2Section4() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Pass items up:</strong> Never carry tools or materials while
-                      climbing into a ceiling void. Climb in first (maintaining three points of
-                      contact), then have items passed up to you by a colleague or raised on a
-                      rope.
+                      <strong>Pass items up:</strong> Never carry tools or materials while climbing
+                      into a ceiling void. Climb in first (maintaining three points of contact),
+                      then have items passed up to you by a colleague or raised on a rope.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Minimise load weight:</strong> Only take what you need into the
-                      void. A small bag of fixings and the minimum tools required is far safer
-                      than dragging a full toolbox through a crawl space.
+                      <strong>Minimise load weight:</strong> Only take what you need into the void.
+                      A small bag of fixings and the minimum tools required is far safer than
+                      dragging a full toolbox through a crawl space.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Slide, don&rsquo;t lift:</strong> In crawl spaces, slide items
-                      along the floor rather than lifting them. This keeps the load low and avoids
-                      the need for an upright posture.
+                      <strong>Slide, don&rsquo;t lift:</strong> In crawl spaces, slide items along
+                      the floor rather than lifting them. This keeps the load low and avoids the
+                      need for an upright posture.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Use cable rollers:</strong> For running cables through ceiling
-                      voids, use cable rollers or guides to reduce the manual pulling force.
+                      <strong>Use cable rollers:</strong> For running cables through ceiling voids,
+                      use cable rollers or guides to reduce the manual pulling force.
                     </div>
                   </li>
                 </ul>
@@ -829,9 +828,9 @@ export default function ManualHandlingModule2Section4() {
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
                       <strong>Raised access floors:</strong> The void depth is usually only
-                      150&ndash;600 mm. Working with arms extended down into the void while
-                      kneeling on the floor above is the safest approach for installing
-                      containment below raised floors.
+                      150&ndash;600 mm. Working with arms extended down into the void while kneeling
+                      on the floor above is the safest approach for installing containment below
+                      raised floors.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -848,21 +847,16 @@ export default function ManualHandlingModule2Section4() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-red-300">
-                    Kneeling and Crouching Risks
-                  </h3>
+                  <h3 className="font-semibold text-red-300">Kneeling and Crouching Risks</h3>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
                   When you kneel or crouch, your spine is in a flexed position and the large leg
                   muscles cannot contribute to lifting. Any load you handle in this posture places
-                  almost all the strain on your back muscles and lumbar discs. The risk of injury
-                  is{' '}
-                  <strong className="text-white">
-                    significantly higher than when standing
-                  </strong>
-                  . Keep loads to an absolute minimum in these postures &mdash; if a load would
-                  be marginal when standing, it is too heavy when kneeling. Use knee pads to
-                  protect your knees and reduce fatigue.
+                  almost all the strain on your back muscles and lumbar discs. The risk of injury is{' '}
+                  <strong className="text-white">significantly higher than when standing</strong>.
+                  Keep loads to an absolute minimum in these postures &mdash; if a load would be
+                  marginal when standing, it is too heavy when kneeling. Use knee pads to protect
+                  your knees and reduce fatigue.
                 </p>
               </div>
             </div>
@@ -897,8 +891,8 @@ export default function ManualHandlingModule2Section4() {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span className="leading-relaxed">
-                      <strong className="text-white">Tiny base of support:</strong> Your feet are
-                      on narrow rungs, giving almost no lateral stability
+                      <strong className="text-white">Tiny base of support:</strong> Your feet are on
+                      narrow rungs, giving almost no lateral stability
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -911,17 +905,17 @@ export default function ManualHandlingModule2Section4() {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span className="leading-relaxed">
-                      <strong className="text-white">Three-point contact conflict:</strong>{' '}
-                      Carrying a load means losing at least one point of contact with the ladder,
-                      greatly increasing fall risk
+                      <strong className="text-white">Three-point contact conflict:</strong> Carrying
+                      a load means losing at least one point of contact with the ladder, greatly
+                      increasing fall risk
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span className="leading-relaxed">
                       <strong className="text-white">Height amplifies consequences:</strong> A
-                      dropped load or a fall from height has far more serious consequences than
-                      the same event at ground level
+                      dropped load or a fall from height has far more serious consequences than the
+                      same event at ground level
                     </span>
                   </li>
                 </ul>
@@ -934,8 +928,8 @@ export default function ManualHandlingModule2Section4() {
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
                       <strong>Rope and bucket:</strong> Climb the ladder empty-handed. Have
-                      materials raised using a rope and bucket, tool hoist, or gin wheel. This
-                      keeps you free to maintain three-point contact.
+                      materials raised using a rope and bucket, tool hoist, or gin wheel. This keeps
+                      you free to maintain three-point contact.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -949,17 +943,17 @@ export default function ManualHandlingModule2Section4() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Mobile scaffold tower:</strong> For tasks that require handling
-                      loads at height, a scaffold tower provides a stable platform with enough
-                      room to stand, move, and use proper lifting technique.
+                      <strong>Mobile scaffold tower:</strong> For tasks that require handling loads
+                      at height, a scaffold tower provides a stable platform with enough room to
+                      stand, move, and use proper lifting technique.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Podium step:</strong> A podium step gives a larger standing area
-                      than a ladder and a guardrail for fall protection. Suitable for light
-                      handling tasks at moderate heights.
+                      <strong>Podium step:</strong> A podium step gives a larger standing area than
+                      a ladder and a guardrail for fall protection. Suitable for light handling
+                      tasks at moderate heights.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -974,9 +968,7 @@ export default function ManualHandlingModule2Section4() {
               </div>
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-emerald-400">
-                  Key Numbers to Remember
-                </h3>
+                <h3 className="font-semibold mb-2 text-emerald-400">Key Numbers to Remember</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">80&deg;C+</p>
@@ -1024,10 +1016,7 @@ export default function ManualHandlingModule2Section4() {
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0"
-              >
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
               </div>

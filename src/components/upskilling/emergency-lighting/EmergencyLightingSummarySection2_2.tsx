@@ -4,23 +4,23 @@ import { CheckCircle2, BookOpen, Key } from 'lucide-react';
 
 export const EmergencyLightingSummarySection2_2 = () => {
   const keyPoints = [
-    "Anti-panic lighting required in open areas exceeding 60m² to prevent panic and confusion",
-    "Minimum 0.5 lux illumination must be maintained across the entire open area",
-    "Maximum uniformity ratio of 40:1 between brightest and darkest points",
-    "Maximum luminaire spacing of 4 x mounting height with proper overlap",
-    "Must enable occupants to identify and move towards escape routes safely",
-    "Can be integrated with normal lighting using maintained emergency systems",
-    "Calculation grid approach (2m x 2m) used for verification of coverage",
-    "Coordination with escape lighting ensures comprehensive emergency provision"
+    'Anti-panic lighting required in open areas exceeding 60m² to prevent panic and confusion',
+    'Minimum 0.5 lux illumination must be maintained across the entire open area',
+    'Maximum uniformity ratio of 40:1 between brightest and darkest points',
+    'Maximum luminaire spacing of 4 x mounting height with proper overlap',
+    'Must enable occupants to identify and move towards escape routes safely',
+    'Can be integrated with normal lighting using maintained emergency systems',
+    'Calculation grid approach (2m x 2m) used for verification of coverage',
+    'Coordination with escape lighting ensures comprehensive emergency provision',
   ];
 
   const applications = [
-    "Retail floors > 60m²",
-    "Assembly areas and halls", 
-    "Industrial warehouses",
-    "Exhibition spaces",
-    "Sports facilities",
-    "Conference centres"
+    'Retail floors > 60m²',
+    'Assembly areas and halls',
+    'Industrial warehouses',
+    'Exhibition spaces',
+    'Sports facilities',
+    'Conference centres',
   ];
 
   return (
@@ -51,7 +51,11 @@ export const EmergencyLightingSummarySection2_2 = () => {
           <h3 className="text-foreground font-semibold mb-3">Typical Applications</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {applications.map((app, index) => (
-              <Badge key={index} variant="outline" className="border-elec-yellow/50 text-elec-yellow justify-center p-2">
+              <Badge
+                key={index}
+                variant="outline"
+                className="border-elec-yellow/50 text-elec-yellow justify-center p-2"
+              >
                 {app}
               </Badge>
             ))}
@@ -61,8 +65,8 @@ export const EmergencyLightingSummarySection2_2 = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <p className="text-elec-yellow font-medium mb-2">Next Steps:</p>
           <p className="text-gray-300 text-sm">
-            Continue to Section 3 to explore High-Risk Task Area Lighting requirements 
-            and specialised emergency lighting applications.
+            Continue to Section 3 to explore High-Risk Task Area Lighting requirements and
+            specialised emergency lighting applications.
           </p>
         </div>
       </CardContent>

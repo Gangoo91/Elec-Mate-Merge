@@ -1,13 +1,17 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { AccordionItem } from "@/components/ui/accordion";
-import { 
-  AlertTriangle, 
-  Brain, 
-  Clock, 
-  MessageCircle, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { AccordionItem } from '@/components/ui/accordion';
+import {
+  AlertTriangle,
+  Brain,
+  Clock,
+  MessageCircle,
   RefreshCw,
   Shield,
   Users,
@@ -15,166 +19,176 @@ import {
   Star,
   Target,
   Lightbulb,
-  Phone
-} from "lucide-react";
+  Phone,
+} from 'lucide-react';
 
 export default function TroubleshootingTab() {
   const commonChallenges = [
     {
-      id: "nerves",
-      title: "Interview Nerves & Anxiety",
+      id: 'nerves',
+      title: 'Interview Nerves & Anxiety',
       icon: <Brain className="h-5 w-5" />,
       symptoms: [
-        "Forgetting technical knowledge you know well",
-        "Speaking too quickly or stumbling over words",
-        "Physical symptoms (sweating, shaking, racing heart)",
-        "Mind going blank during questions",
-        "Overthinking and second-guessing answers"
+        'Forgetting technical knowledge you know well',
+        'Speaking too quickly or stumbling over words',
+        'Physical symptoms (sweating, shaking, racing heart)',
+        'Mind going blank during questions',
+        'Overthinking and second-guessing answers',
       ],
       solutions: [
-        "Practice relaxation techniques before the interview",
-        "Arrive early and take time to compose yourself",
-        "Prepare key talking points on note cards",
-        "Practice mock interviews until responses become natural",
-        "Reframe nerves as excitement and positive energy"
+        'Practice relaxation techniques before the interview',
+        'Arrive early and take time to compose yourself',
+        'Prepare key talking points on note cards',
+        'Practice mock interviews until responses become natural',
+        'Reframe nerves as excitement and positive energy',
       ],
       preventionTips: [
-        "Thorough preparation builds confidence",
-        "Visualise successful interview scenarios",
-        "Get proper sleep and eat well before the interview",
-        "Exercise or do breathing exercises to manage stress"
-      ]
+        'Thorough preparation builds confidence',
+        'Visualise successful interview scenarios',
+        'Get proper sleep and eat well before the interview',
+        'Exercise or do breathing exercises to manage stress',
+      ],
     },
     {
-      id: "technical-gaps",
-      title: "Technical Knowledge Gaps",
+      id: 'technical-gaps',
+      title: 'Technical Knowledge Gaps',
       icon: <AlertTriangle className="h-5 w-5" />,
       symptoms: [
-        "Unable to answer specific technical questions",
-        "Outdated knowledge of current regulations",
-        "Lack of experience with newer technologies",
-        "Difficulty explaining complex concepts simply",
-        "Uncertainty about current market practices"
+        'Unable to answer specific technical questions',
+        'Outdated knowledge of current regulations',
+        'Lack of experience with newer technologies',
+        'Difficulty explaining complex concepts simply',
+        'Uncertainty about current market practices',
       ],
       solutions: [
-        "Admit knowledge gaps honestly and show willingness to learn",
-        "Explain your approach to finding solutions",
-        "Highlight related experience and transferable skills",
-        "Ask clarifying questions to better understand the requirement",
-        "Discuss your commitment to continuous professional development"
+        'Admit knowledge gaps honestly and show willingness to learn',
+        'Explain your approach to finding solutions',
+        'Highlight related experience and transferable skills',
+        'Ask clarifying questions to better understand the requirement',
+        'Discuss your commitment to continuous professional development',
       ],
       preventionTips: [
-        "Stay current with 18th Edition updates and amendments",
-        "Read industry publications and attend training courses",
-        "Join professional forums and discussion groups",
-        "Practice explaining technical concepts to non-electricians"
-      ]
+        'Stay current with 18th Edition updates and amendments',
+        'Read industry publications and attend training courses',
+        'Join professional forums and discussion groups',
+        'Practice explaining technical concepts to non-electricians',
+      ],
     },
     {
-      id: "difficult-questions",
-      title: "Difficult or Unexpected Questions",
+      id: 'difficult-questions',
+      title: 'Difficult or Unexpected Questions',
       icon: <MessageCircle className="h-5 w-5" />,
       symptoms: [
-        "Questions outside your experience range",
+        'Questions outside your experience range',
         "Hypothetical scenarios you haven't encountered",
-        "Personal questions that feel inappropriate",
-        "Questions about salary expectations too early",
-        "Aggressive or confrontational questioning style"
+        'Personal questions that feel inappropriate',
+        'Questions about salary expectations too early',
+        'Aggressive or confrontational questioning style',
       ],
       solutions: [
-        "Take a moment to think before responding",
-        "Ask for clarification if the question is unclear",
-        "Break complex questions into smaller parts",
-        "Use frameworks like STAR method for behavioural questions",
-        "Redirect inappropriate questions professionally"
+        'Take a moment to think before responding',
+        'Ask for clarification if the question is unclear',
+        'Break complex questions into smaller parts',
+        'Use frameworks like STAR method for behavioural questions',
+        'Redirect inappropriate questions professionally',
       ],
       preventionTips: [
-        "Prepare for common difficult questions in advance",
-        "Practice thinking out loud through complex problems",
-        "Research the company culture to anticipate question styles",
-        "Prepare responses for salary and personal questions"
-      ]
+        'Prepare for common difficult questions in advance',
+        'Practice thinking out loud through complex problems',
+        'Research the company culture to anticipate question styles',
+        'Prepare responses for salary and personal questions',
+      ],
     },
     {
-      id: "poor-first-impression",
-      title: "Poor First Impression",
+      id: 'poor-first-impression',
+      title: 'Poor First Impression',
       icon: <Users className="h-5 w-5" />,
       symptoms: [
-        "Arriving late or appearing flustered",
-        "Inappropriate dress or unprofessional appearance",
-        "Weak handshake or poor eye contact",
-        "Negative comments about previous employers",
-        "Appearing disinterested or unprepared"
+        'Arriving late or appearing flustered',
+        'Inappropriate dress or unprofessional appearance',
+        'Weak handshake or poor eye contact',
+        'Negative comments about previous employers',
+        'Appearing disinterested or unprepared',
       ],
       solutions: [
-        "Acknowledge any initial mistakes and reset professionally",
-        "Focus on demonstrating competence and enthusiasm",
-        "Use confident body language throughout the interview",
-        "Show genuine interest in the role and company",
-        "End strongly with thoughtful questions and clear next steps"
+        'Acknowledge any initial mistakes and reset professionally',
+        'Focus on demonstrating competence and enthusiasm',
+        'Use confident body language throughout the interview',
+        'Show genuine interest in the role and company',
+        'End strongly with thoughtful questions and clear next steps',
       ],
       preventionTips: [
-        "Plan your route and arrive 10-15 minutes early",
-        "Prepare professional attire the night before",
-        "Practice confident introductions and handshakes",
-        "Research the company thoroughly to show genuine interest"
-      ]
-    }
+        'Plan your route and arrive 10-15 minutes early',
+        'Prepare professional attire the night before',
+        'Practice confident introductions and handshakes',
+        'Research the company thoroughly to show genuine interest',
+      ],
+    },
   ];
 
   const recoveryStrategies = [
     {
-      situation: "Made a Technical Error",
-      recovery: "Acknowledge the mistake immediately, provide the correct information if you know it, and explain how you would find the right answer in practice.",
-      example: "Actually, I need to correct that. The maximum Zs for a 32A Type B MCB is 1.44Ω, not 1.37Ω. In practice, I always refer to the current BS 7671 tables to verify these values."
+      situation: 'Made a Technical Error',
+      recovery:
+        'Acknowledge the mistake immediately, provide the correct information if you know it, and explain how you would find the right answer in practice.',
+      example:
+        'Actually, I need to correct that. The maximum Zs for a 32A Type B MCB is 1.44Ω, not 1.37Ω. In practice, I always refer to the current BS 7671 tables to verify these values.',
     },
     {
       situation: "Couldn't Answer a Question",
-      recovery: "Admit you don't know, explain your approach to finding the answer, and show willingness to learn.",
-      example: "I haven't worked with that specific system before, but I would research the manufacturer's guidelines, consult with colleagues, and ensure I received proper training before attempting any work."
+      recovery:
+        "Admit you don't know, explain your approach to finding the answer, and show willingness to learn.",
+      example:
+        "I haven't worked with that specific system before, but I would research the manufacturer's guidelines, consult with colleagues, and ensure I received proper training before attempting any work.",
     },
     {
-      situation: "Interview Running Over Time",
-      recovery: "Acknowledge the time constraint and offer to prioritise the most important topics or continue the discussion later.",
-      example: "I notice we're running short on time. Would you like me to focus on any particular areas, or would it be helpful to schedule a follow-up conversation?"
+      situation: 'Interview Running Over Time',
+      recovery:
+        'Acknowledge the time constraint and offer to prioritise the most important topics or continue the discussion later.',
+      example:
+        "I notice we're running short on time. Would you like me to focus on any particular areas, or would it be helpful to schedule a follow-up conversation?",
     },
     {
-      situation: "Difficult Interviewer",
-      recovery: "Stay professional, focus on your qualifications, and don't take challenging questions personally.",
-      example: "I understand you want to ensure I can handle challenging situations. Let me give you a specific example of how I've dealt with [similar situation] in the past."
-    }
+      situation: 'Difficult Interviewer',
+      recovery:
+        "Stay professional, focus on your qualifications, and don't take challenging questions personally.",
+      example:
+        "I understand you want to ensure I can handle challenging situations. Let me give you a specific example of how I've dealt with [similar situation] in the past.",
+    },
   ];
 
   const redFlags = [
     {
-      redFlag: "Company seems unprofessional or disorganised",
-      assessment: "Multiple reschedulings, unprepared interviewers, poor communication",
-      action: "Consider if this reflects their work culture and whether you'd be comfortable working there"
+      redFlag: 'Company seems unprofessional or disorganised',
+      assessment: 'Multiple reschedulings, unprepared interviewers, poor communication',
+      action:
+        "Consider if this reflects their work culture and whether you'd be comfortable working there",
     },
     {
-      redFlag: "Vague job description or responsibilities",
+      redFlag: 'Vague job description or responsibilities',
       assessment: "Can't clearly explain what you'd be doing day-to-day",
-      action: "Ask specific questions about typical projects, team structure, and expectations"
+      action: 'Ask specific questions about typical projects, team structure, and expectations',
     },
     {
-      redFlag: "Pressure to accept immediately",
+      redFlag: 'Pressure to accept immediately',
       assessment: "Won't allow time to consider the offer properly",
-      action: "Professional employers understand you need time to make important career decisions"
+      action: 'Professional employers understand you need time to make important career decisions',
     },
     {
-      redFlag: "Inappropriate questions or behaviour",
-      assessment: "Questions about personal life, discriminatory comments, unprofessional conduct",
-      action: "Consider reporting serious issues and whether this is a company you want to work for"
-    }
+      redFlag: 'Inappropriate questions or behaviour',
+      assessment: 'Questions about personal life, discriminatory comments, unprofessional conduct',
+      action:
+        'Consider reporting serious issues and whether this is a company you want to work for',
+    },
   ];
 
   const confidenceBuilders = [
     "Remember that they invited you to interview - they're already interested",
-    "You have valuable skills and experience that they need",
-    "Every interview is practice for the next opportunity",
-    "Most interviewers want you to succeed and are rooting for you",
-    "Focus on what you can offer rather than what you lack",
-    "One interview doesn't define your worth or career prospects"
+    'You have valuable skills and experience that they need',
+    'Every interview is practice for the next opportunity',
+    'Most interviewers want you to succeed and are rooting for you',
+    'Focus on what you can offer rather than what you lack',
+    "One interview doesn't define your worth or career prospects",
   ];
 
   return (
@@ -215,8 +229,8 @@ export default function TroubleshootingTab() {
       <Alert>
         <Lightbulb className="h-4 w-4" />
         <AlertDescription>
-          <strong>Remember:</strong> Everyone makes mistakes in interviews. What matters is how you handle them. 
-          Recovery and professionalism often impress more than perfect answers.
+          <strong>Remember:</strong> Everyone makes mistakes in interviews. What matters is how you
+          handle them. Recovery and professionalism often impress more than perfect answers.
         </AlertDescription>
       </Alert>
 
@@ -250,7 +264,7 @@ export default function TroubleshootingTab() {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="font-medium text-sm mb-2 text-green-600 dark:text-green-400">
                         In-the-Moment Solutions
@@ -264,7 +278,7 @@ export default function TroubleshootingTab() {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="font-medium text-sm mb-2 text-blue-600 dark:text-blue-400">
                         Prevention Tips
@@ -301,7 +315,9 @@ export default function TroubleshootingTab() {
                 <h4 className="font-medium text-primary">{strategy.situation}</h4>
                 <p className="text-sm">{strategy.recovery}</p>
                 <div className="bg-muted/50 p-3 rounded border-l-4 border-green-500">
-                  <p className="text-sm"><strong>Example response:</strong></p>
+                  <p className="text-sm">
+                    <strong>Example response:</strong>
+                  </p>
                   <p className="text-sm italic mt-1">"{strategy.example}"</p>
                 </div>
               </div>
@@ -346,7 +362,10 @@ export default function TroubleshootingTab() {
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
             {confidenceBuilders.map((reminder, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 border border-green-200 rounded-lg">
+              <div
+                key={index}
+                className="flex items-start gap-3 p-3 border border-green-200 rounded-lg"
+              >
                 <Star className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                 <p className="text-sm">{reminder}</p>
               </div>
@@ -382,7 +401,7 @@ export default function TroubleshootingTab() {
                 </li>
               </ul>
             </div>
-            
+
             <div className="space-y-4">
               <h4 className="font-medium">If You Realise You're Unprepared</h4>
               <ul className="space-y-2 text-sm">
@@ -401,12 +420,13 @@ export default function TroubleshootingTab() {
               </ul>
             </div>
           </div>
-          
+
           <Alert>
             <CheckCircle className="h-4 w-4" />
             <AlertDescription>
-              <strong>Final Reminder:</strong> Even if an interview doesn't go perfectly, treat it as valuable experience. 
-              Every interview makes you better prepared for the next opportunity.
+              <strong>Final Reminder:</strong> Even if an interview doesn't go perfectly, treat it
+              as valuable experience. Every interview makes you better prepared for the next
+              opportunity.
             </AlertDescription>
           </Alert>
         </CardContent>

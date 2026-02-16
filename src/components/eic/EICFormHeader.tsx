@@ -7,13 +7,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  Save,
-  Plus,
-  MoreHorizontal,
-  Loader2
-} from 'lucide-react';
+import { ArrowLeft, Save, Plus, MoreHorizontal, Loader2 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,7 +27,12 @@ interface EICFormHeaderProps {
   onManualSave?: () => void;
   onStartNew?: () => void;
   formData?: any;
-  syncState?: { status: SyncStatus; lastSyncTime?: number; lastLocalSave?: number; errorMessage?: string };
+  syncState?: {
+    status: SyncStatus;
+    lastSyncTime?: number;
+    lastLocalSave?: number;
+    errorMessage?: string;
+  };
   isOnline?: boolean;
   isAuthenticated?: boolean;
   currentTab?: number;
@@ -55,7 +54,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
   isAuthenticated = false,
   progressPercentage = 0,
   onOpenBoardScan,
-  onSyncNow
+  onSyncNow,
 }) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
@@ -81,10 +80,12 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
   return (
     <>
       {/* Mobile: Compact sticky header - edge-to-edge */}
-      <header className={cn(
-        "lg:hidden sticky top-0 z-50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b border-border/50",
-        isMobile && "-mx-4"
-      )}>
+      <header
+        className={cn(
+          'lg:hidden sticky top-0 z-50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b border-border/50',
+          isMobile && '-mx-4'
+        )}
+      >
         <div className="flex items-center justify-between h-14 px-3">
           {/* Left: Back + Title */}
           <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -95,9 +96,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
               <ArrowLeft className="h-6 w-6" />
             </button>
             <div className="flex flex-col min-w-0">
-              <span className="text-sm font-semibold text-foreground truncate">
-                {displayName}
-              </span>
+              <span className="text-sm font-semibold text-foreground truncate">{displayName}</span>
               {progressPercentage > 0 && (
                 <span className="text-xs text-muted-foreground">
                   {progressPercentage}% complete
@@ -135,7 +134,10 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-card border-border/50 z-[100]">
                 {onStartNew && (
-                  <DropdownMenuItem onClick={handleStartNew} className="gap-2 h-11 touch-manipulation">
+                  <DropdownMenuItem
+                    onClick={handleStartNew}
+                    className="gap-2 h-11 touch-manipulation"
+                  >
                     <Plus className="h-4 w-4" />
                     New Certificate
                   </DropdownMenuItem>
@@ -171,22 +173,13 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
         <div className="flex items-center justify-between py-3 px-1">
           {/* Left: Back + Title */}
           <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="h-9 w-9"
-            >
+            <Button variant="ghost" size="icon" onClick={onBack} className="h-9 w-9">
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <div>
-              <h1 className="text-lg font-semibold text-foreground">
-                {displayName}
-              </h1>
+              <h1 className="text-lg font-semibold text-foreground">{displayName}</h1>
               {formData?.certificateNumber && formData?.clientName && (
-                <p className="text-xs text-muted-foreground">
-                  {formData.certificateNumber}
-                </p>
+                <p className="text-xs text-muted-foreground">{formData.certificateNumber}</p>
               )}
             </div>
           </div>
@@ -204,12 +197,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
               />
             )}
             {onStartNew && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onStartNew}
-                className="h-9 gap-1.5"
-              >
+              <Button variant="outline" size="sm" onClick={onStartNew} className="h-9 gap-1.5">
                 <Plus className="h-4 w-4" />
                 New
               </Button>

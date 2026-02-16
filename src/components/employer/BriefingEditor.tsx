@@ -1,15 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect, useCallback } from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Bold,
   Italic,
@@ -26,11 +21,11 @@ import {
   Loader2,
   FileText,
   AlertTriangle,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useUpdateBriefingContent, type Briefing } from "@/hooks/useBriefings";
-import { sanitizeHtmlSafe } from "@/utils/inputSanitization";
-import { useToast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useUpdateBriefingContent, type Briefing } from '@/hooks/useBriefings';
+import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
+import { useToast } from '@/hooks/use-toast';
 
 interface BriefingEditorProps {
   open: boolean;
@@ -39,14 +34,9 @@ interface BriefingEditorProps {
   onSaved?: () => void;
 }
 
-const DRAFT_KEY_PREFIX = "briefing-editor-draft-";
+const DRAFT_KEY_PREFIX = 'briefing-editor-draft-';
 
-export function BriefingEditor({
-  open,
-  onOpenChange,
-  briefing,
-  onSaved,
-}: BriefingEditorProps) {
+export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: BriefingEditorProps) {
   const { toast } = useToast();
   const [isPreview, setIsPreview] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
@@ -64,11 +54,11 @@ export function BriefingEditor({
         },
       }),
       Placeholder.configure({
-        placeholder: "Start writing your briefing content...",
-        emptyEditorClass: "is-editor-empty",
+        placeholder: 'Start writing your briefing content...',
+        emptyEditorClass: 'is-editor-empty',
       }),
     ],
-    content: briefing.content || "",
+    content: briefing.content || '',
     onUpdate: ({ editor }) => {
       setHasChanges(true);
       // Auto-save draft
@@ -77,15 +67,15 @@ export function BriefingEditor({
     editorProps: {
       attributes: {
         class: cn(
-          "prose prose-invert prose-sm max-w-none",
-          "min-h-[300px] p-4 focus:outline-none",
-          "prose-headings:text-white prose-headings:font-semibold",
-          "prose-p:text-white/80 prose-p:leading-relaxed",
-          "prose-li:text-white/80",
-          "prose-strong:text-white prose-strong:font-semibold",
-          "prose-em:text-white/90",
-          "prose-table:border-collapse",
-          "[&_table]:w-full [&_td]:py-1 [&_td]:pr-4 [&_th]:py-1 [&_th]:pr-4"
+          'prose prose-invert prose-sm max-w-none',
+          'min-h-[300px] p-4 focus:outline-none',
+          'prose-headings:text-white prose-headings:font-semibold',
+          'prose-p:text-white/80 prose-p:leading-relaxed',
+          'prose-li:text-white/80',
+          'prose-strong:text-white prose-strong:font-semibold',
+          'prose-em:text-white/90',
+          'prose-table:border-collapse',
+          '[&_table]:w-full [&_td]:py-1 [&_td]:pr-4 [&_th]:py-1 [&_th]:pr-4'
         ),
       },
     },
@@ -98,17 +88,17 @@ export function BriefingEditor({
       if (draft && draft !== briefing.content) {
         // Ask user if they want to restore draft
         const useDraft = window.confirm(
-          "You have unsaved changes from a previous session. Would you like to restore them?"
+          'You have unsaved changes from a previous session. Would you like to restore them?'
         );
         if (useDraft) {
           editor.commands.setContent(draft);
           setHasChanges(true);
         } else {
           localStorage.removeItem(draftKey);
-          editor.commands.setContent(briefing.content || "");
+          editor.commands.setContent(briefing.content || '');
         }
       } else {
-        editor.commands.setContent(briefing.content || "");
+        editor.commands.setContent(briefing.content || '');
       }
     }
   }, [editor, briefing.content, draftKey]);
@@ -117,7 +107,7 @@ export function BriefingEditor({
   const handleClose = useCallback(() => {
     if (hasChanges) {
       const confirmClose = window.confirm(
-        "You have unsaved changes. Are you sure you want to close?"
+        'You have unsaved changes. Are you sure you want to close?'
       );
       if (!confirmClose) return;
     }
@@ -143,8 +133,8 @@ export function BriefingEditor({
       setHasChanges(false);
 
       toast({
-        title: "Briefing saved",
-        description: "Your changes have been saved successfully.",
+        title: 'Briefing saved',
+        description: 'Your changes have been saved successfully.',
       });
 
       onSaved?.();
@@ -174,10 +164,10 @@ export function BriefingEditor({
       title={title}
       disabled={disabled}
       className={cn(
-        "h-11 w-11 p-0 rounded-lg touch-manipulation",
+        'h-11 w-11 p-0 rounded-lg touch-manipulation',
         isActive
-          ? "bg-elec-yellow/20 text-elec-yellow"
-          : "text-white/60 hover:text-white hover:bg-white/10"
+          ? 'bg-elec-yellow/20 text-elec-yellow'
+          : 'text-white/60 hover:text-white hover:bg-white/10'
       )}
     >
       {children}
@@ -185,11 +175,12 @@ export function BriefingEditor({
   );
 
   // Get risk level styling
-  const riskColour = briefing.risk_level === "high"
-    ? "text-red-400 border-red-500/50"
-    : briefing.risk_level === "medium"
-    ? "text-amber-400 border-amber-500/50"
-    : "text-green-400 border-green-500/50";
+  const riskColour =
+    briefing.risk_level === 'high'
+      ? 'text-red-400 border-red-500/50'
+      : briefing.risk_level === 'medium'
+        ? 'text-amber-400 border-amber-500/50'
+        : 'text-green-400 border-green-500/50';
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
@@ -206,12 +197,15 @@ export function BriefingEditor({
                   <SheetTitle className="text-left">{briefing.title}</SheetTitle>
                   <div className="flex items-center gap-2 mt-1">
                     <Badge variant="outline" className="text-xs">
-                      {briefing.briefing_type || "Briefing"}
+                      {briefing.briefing_type || 'Briefing'}
                     </Badge>
                     {briefing.risk_level && (
-                      <Badge variant="outline" className={cn("text-xs", riskColour)}>
-                        {briefing.risk_level === "high" && <AlertTriangle className="h-3 w-3 mr-1" />}
-                        {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} Risk
+                      <Badge variant="outline" className={cn('text-xs', riskColour)}>
+                        {briefing.risk_level === 'high' && (
+                          <AlertTriangle className="h-3 w-3 mr-1" />
+                        )}
+                        {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)}{' '}
+                        Risk
                       </Badge>
                     )}
                     {hasChanges && (
@@ -239,7 +233,7 @@ export function BriefingEditor({
             <div className="flex flex-wrap items-center gap-1 p-2 bg-white/5 rounded-t-xl border border-white/10 border-b-0 mb-0">
               <ToolbarButton
                 onClick={() => editor?.chain().focus().toggleBold().run()}
-                isActive={editor?.isActive("bold")}
+                isActive={editor?.isActive('bold')}
                 title="Bold"
                 disabled={isPreview}
               >
@@ -248,7 +242,7 @@ export function BriefingEditor({
 
               <ToolbarButton
                 onClick={() => editor?.chain().focus().toggleItalic().run()}
-                isActive={editor?.isActive("italic")}
+                isActive={editor?.isActive('italic')}
                 title="Italic"
                 disabled={isPreview}
               >
@@ -258,10 +252,8 @@ export function BriefingEditor({
               <div className="w-px h-6 bg-white/10 mx-1" />
 
               <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleHeading({ level: 2 }).run()
-                }
-                isActive={editor?.isActive("heading", { level: 2 })}
+                onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+                isActive={editor?.isActive('heading', { level: 2 })}
                 title="Heading 2"
                 disabled={isPreview}
               >
@@ -269,10 +261,8 @@ export function BriefingEditor({
               </ToolbarButton>
 
               <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleHeading({ level: 3 }).run()
-                }
-                isActive={editor?.isActive("heading", { level: 3 })}
+                onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
+                isActive={editor?.isActive('heading', { level: 3 })}
                 title="Heading 3"
                 disabled={isPreview}
               >
@@ -283,7 +273,7 @@ export function BriefingEditor({
 
               <ToolbarButton
                 onClick={() => editor?.chain().focus().toggleBulletList().run()}
-                isActive={editor?.isActive("bulletList")}
+                isActive={editor?.isActive('bulletList')}
                 title="Bullet List"
                 disabled={isPreview}
               >
@@ -292,7 +282,7 @@ export function BriefingEditor({
 
               <ToolbarButton
                 onClick={() => editor?.chain().focus().toggleOrderedList().run()}
-                isActive={editor?.isActive("orderedList")}
+                isActive={editor?.isActive('orderedList')}
                 title="Numbered List"
                 disabled={isPreview}
               >
@@ -322,7 +312,7 @@ export function BriefingEditor({
               {/* Preview toggle */}
               <Button
                 type="button"
-                variant={isPreview ? "secondary" : "ghost"}
+                variant={isPreview ? 'secondary' : 'ghost'}
                 size="sm"
                 onClick={() => setIsPreview(!isPreview)}
                 className="h-9 px-3"
@@ -344,15 +334,15 @@ export function BriefingEditor({
             {/* Editor / Preview */}
             <div
               className={cn(
-                "bg-white/5 rounded-b-xl border border-white/10 border-t-0",
-                "focus-within:border-elec-yellow/30 transition-colors",
-                "flex-1 overflow-y-auto"
+                'bg-white/5 rounded-b-xl border border-white/10 border-t-0',
+                'focus-within:border-elec-yellow/30 transition-colors',
+                'flex-1 overflow-y-auto'
               )}
             >
               {isPreview ? (
                 <div
                   className="prose prose-sm prose-invert max-w-none p-4 min-h-[300px] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-foreground [&_table]:w-full [&_td]:py-1 [&_td]:pr-4"
-                  dangerouslySetInnerHTML={{ __html: editor?.getHTML() || "" }}
+                  dangerouslySetInnerHTML={{ __html: editor?.getHTML() || '' }}
                 />
               ) : (
                 <EditorContent editor={editor} />
@@ -361,9 +351,7 @@ export function BriefingEditor({
 
             {/* Help text */}
             <div className="flex justify-between text-xs text-muted-foreground mt-2">
-              <span>
-                Use headings to structure your briefing. Changes auto-save as draft.
-              </span>
+              <span>Use headings to structure your briefing. Changes auto-save as draft.</span>
             </div>
 
             {/* Editor styles */}

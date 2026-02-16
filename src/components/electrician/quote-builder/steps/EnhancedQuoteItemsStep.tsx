@@ -1,26 +1,48 @@
-import { useState, useMemo, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search, ChevronRight, ChevronDown, Clock, PoundSterling, Hash, Scan } from "lucide-react";
-import { QuoteItem, JobTemplate } from "@/types/quote";
-import { JobTemplates } from "../JobTemplates";
-import { cn } from "@/lib/utils";
+import { useState, useMemo, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Plus,
+  Trash2,
+  Wrench,
+  Package,
+  Zap,
+  FileText,
+  Copy,
+  TrendingUp,
+  Search,
+  ChevronRight,
+  ChevronDown,
+  Clock,
+  PoundSterling,
+  Hash,
+  Scan,
+} from 'lucide-react';
+import { QuoteItem, JobTemplate } from '@/types/quote';
+import { JobTemplates } from '../JobTemplates';
+import { cn } from '@/lib/utils';
 import {
   workerTypes as defaultWorkerTypes,
   materialCategories,
   commonMaterials,
   equipmentCategories,
-  commonEquipment
-} from "@/data/electrician/presetData";
-import { supabase } from "@/integrations/supabase/client";
-import { useDebounce } from "@/hooks/useDebounce";
-import { toast } from "@/hooks/use-toast";
-import { useCompanyProfile } from "@/hooks/useCompanyProfile";
-import { useInvoiceScanner } from "@/hooks/useInvoiceScanner";
-import { InvoiceScannerSheet } from "@/components/electrician/invoice-builder/InvoiceScannerSheet";
-import { InvoiceScanResults } from "@/components/electrician/invoice-builder/InvoiceScanResults";
+  commonEquipment,
+} from '@/data/electrician/presetData';
+import { supabase } from '@/integrations/supabase/client';
+import { useDebounce } from '@/hooks/useDebounce';
+import { toast } from '@/hooks/use-toast';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
+import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
+import { InvoiceScanResults } from '@/components/electrician/invoice-builder/InvoiceScanResults';
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -32,7 +54,15 @@ interface EnhancedQuoteItemsStepProps {
   calculateAdjustedPrice?: (basePrice: number) => number;
 }
 
-export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, priceAdjustment = 0, setPriceAdjustment, calculateAdjustedPrice }: EnhancedQuoteItemsStepProps) => {
+export const EnhancedQuoteItemsStep = ({
+  items,
+  onAdd,
+  onUpdate,
+  onRemove,
+  priceAdjustment = 0,
+  setPriceAdjustment,
+  calculateAdjustedPrice,
+}: EnhancedQuoteItemsStepProps) => {
   // Get user's company profile for custom worker rates
   const { companyProfile } = useCompanyProfile();
 
@@ -42,18 +72,18 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
     // If user has saved custom worker rates, use them
     if (savedRates) {
-      return defaultWorkerTypes.map(worker => {
+      return defaultWorkerTypes.map((worker) => {
         const savedRate = savedRates[worker.id as keyof typeof savedRates];
         return {
           ...worker,
-          defaultHourlyRate: savedRate ?? worker.defaultHourlyRate
+          defaultHourlyRate: savedRate ?? worker.defaultHourlyRate,
         };
       });
     }
 
     // Fall back to percentage calculation if no saved rates
     const userRate = companyProfile?.hourly_rate || 45;
-    return defaultWorkerTypes.map(worker => {
+    return defaultWorkerTypes.map((worker) => {
       let rate = worker.defaultHourlyRate;
       switch (worker.id) {
         case 'electrician':
@@ -77,21 +107,21 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   }, [companyProfile?.worker_rates, companyProfile?.hourly_rate]);
 
   const [newItem, setNewItem] = useState({
-    description: "",
+    description: '',
     quantity: 1,
-    unit: "each",
+    unit: 'each',
     unitPrice: 0,
-    category: "labour" as 'labour' | 'materials' | 'equipment' | 'manual',
-    subcategory: "",
-    workerType: "",
+    category: 'labour' as 'labour' | 'materials' | 'equipment' | 'manual',
+    subcategory: '',
+    workerType: '',
     hours: 0,
     hourlyRate: 0,
-    materialCode: "",
-    equipmentCode: "",
-    notes: ""
+    materialCode: '',
+    equipmentCode: '',
+    notes: '',
   });
 
-  const [materialSearch, setMaterialSearch] = useState("");
+  const [materialSearch, setMaterialSearch] = useState('');
   const [ragResults, setRagResults] = useState<any[]>([]);
   const [isSearchingRAG, setIsSearchingRAG] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
@@ -103,7 +133,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   const scanner = useInvoiceScanner();
 
   const handleTemplateSelect = (template: JobTemplate) => {
-    template.items.forEach(item => {
+    template.items.forEach((item) => {
       onAdd(item);
     });
     setShowTemplates(false);
@@ -130,12 +160,14 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
   const handleConfirmScannedItems = () => {
     const items = scanner.getSelectedItems();
-    items.forEach(item => {
-      const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(item.unitPrice) : item.unitPrice;
+    items.forEach((item) => {
+      const adjustedPrice = calculateAdjustedPrice
+        ? calculateAdjustedPrice(item.unitPrice)
+        : item.unitPrice;
       onAdd({
         ...item,
         unitPrice: adjustedPrice,
-        notes: `Scanned from supplier invoice`
+        notes: `Scanned from supplier invoice`,
       });
     });
 
@@ -150,65 +182,67 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   };
 
   const handleCategoryChange = (category: string) => {
-    setNewItem(prev => ({
+    setNewItem((prev) => ({
       ...prev,
       category: category as 'labour' | 'materials' | 'equipment' | 'manual',
-      subcategory: "",
-      workerType: "",
+      subcategory: '',
+      workerType: '',
       hours: 0,
       hourlyRate: 0,
-      materialCode: "",
-      equipmentCode: "",
+      materialCode: '',
+      equipmentCode: '',
       unitPrice: 0,
-      unit: category === "labour" ? "hour" : category === "manual" ? "item" : "each"
+      unit: category === 'labour' ? 'hour' : category === 'manual' ? 'item' : 'each',
     }));
   };
 
   const handleWorkerTypeChange = (workerTypeId: string) => {
-    const worker = workerTypes.find(w => w.id === workerTypeId);
+    const worker = workerTypes.find((w) => w.id === workerTypeId);
     if (worker) {
-      setNewItem(prev => ({
+      setNewItem((prev) => ({
         ...prev,
         workerType: workerTypeId,
         hourlyRate: worker.defaultHourlyRate,
         unitPrice: worker.defaultHourlyRate,
-        description: prev.description || `${worker.name} - ${worker.description}`
+        description: prev.description || `${worker.name} - ${worker.description}`,
       }));
     }
   };
 
   const handleMaterialSelect = (materialId: string) => {
-    const material = commonMaterials.find(m => m.id === materialId);
+    const material = commonMaterials.find((m) => m.id === materialId);
     if (material) {
-      setNewItem(prev => ({
+      setNewItem((prev) => ({
         ...prev,
         materialCode: materialId,
         description: material.name,
-        unitPrice: calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice,
-        unit: material.unit
+        unitPrice: calculateAdjustedPrice
+          ? calculateAdjustedPrice(material.defaultPrice)
+          : material.defaultPrice,
+        unit: material.unit,
       }));
     }
   };
 
   const handleEquipmentSelect = (equipmentId: string) => {
-    const equipment = commonEquipment.find(e => e.id === equipmentId);
+    const equipment = commonEquipment.find((e) => e.id === equipmentId);
     if (equipment) {
-      setNewItem(prev => ({
+      setNewItem((prev) => ({
         ...prev,
         equipmentCode: equipmentId,
         description: equipment.name,
         unitPrice: equipment.dailyRate,
-        unit: equipment.unit
+        unit: equipment.unit,
       }));
     }
   };
 
   const handleHoursChange = (hours: number) => {
-    setNewItem(prev => ({
+    setNewItem((prev) => ({
       ...prev,
       hours,
       quantity: hours,
-      unitPrice: prev.hourlyRate
+      unitPrice: prev.hourlyRate,
     }));
   };
 
@@ -216,33 +250,38 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
     if (newItem.description && newItem.unitPrice > 0) {
       const itemToAdd = {
         ...newItem,
-        quantity: newItem.category === "labour" && newItem.hours > 0 ? newItem.hours : newItem.quantity
+        quantity:
+          newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity,
       };
       onAdd(itemToAdd);
 
-      setNewItem(prev => ({
-        description: "",
+      setNewItem((prev) => ({
+        description: '',
         quantity: 1,
-        unit: prev.category === "labour" ? "hour" : prev.category === "manual" ? "item" : "each",
+        unit: prev.category === 'labour' ? 'hour' : prev.category === 'manual' ? 'item' : 'each',
         unitPrice: 0,
         category: prev.category,
-        subcategory: "",
-        workerType: "",
+        subcategory: '',
+        workerType: '',
         hours: 0,
         hourlyRate: 0,
-        materialCode: "",
-        equipmentCode: "",
-        notes: ""
+        materialCode: '',
+        equipmentCode: '',
+        notes: '',
       }));
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'labour': return 'border-l-blue-500';
-      case 'materials': return 'border-l-green-500';
-      case 'equipment': return 'border-l-purple-500';
-      default: return 'border-l-gray-500';
+      case 'labour':
+        return 'border-l-blue-500';
+      case 'materials':
+        return 'border-l-green-500';
+      case 'equipment':
+        return 'border-l-purple-500';
+      default:
+        return 'border-l-gray-500';
     }
   };
 
@@ -259,7 +298,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       hourlyRate: item.hourlyRate,
       materialCode: item.materialCode,
       equipmentCode: item.equipmentCode,
-      notes: item.notes
+      notes: item.notes,
     };
     onAdd(duplicate);
   };
@@ -268,15 +307,16 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   const filteredMaterials = useMemo(() => {
     let filtered = commonMaterials;
     if (newItem.subcategory && newItem.subcategory !== 'all-categories') {
-      filtered = filtered.filter(m => m.category === newItem.subcategory);
+      filtered = filtered.filter((m) => m.category === newItem.subcategory);
     }
     if (materialSearch.trim().length >= 2) {
       const searchTerm = materialSearch.toLowerCase();
-      filtered = filtered.filter(material =>
-        material.name.toLowerCase().includes(searchTerm) ||
-        material.category.toLowerCase().includes(searchTerm) ||
-        material.subcategory.toLowerCase().includes(searchTerm) ||
-        (material.code && material.code.toLowerCase().includes(searchTerm))
+      filtered = filtered.filter(
+        (material) =>
+          material.name.toLowerCase().includes(searchTerm) ||
+          material.category.toLowerCase().includes(searchTerm) ||
+          material.subcategory.toLowerCase().includes(searchTerm) ||
+          (material.code && material.code.toLowerCase().includes(searchTerm))
       );
     }
     return filtered;
@@ -291,10 +331,13 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
           const { data, error } = await supabase.functions.invoke('search-materials-fast', {
             body: {
               query: debouncedSearch,
-              categoryFilter: newItem.subcategory && newItem.subcategory !== 'all-categories' ? newItem.subcategory : null,
+              categoryFilter:
+                newItem.subcategory && newItem.subcategory !== 'all-categories'
+                  ? newItem.subcategory
+                  : null,
               supplierFilter: 'all',
-              limit: 30
-            }
+              limit: 30,
+            },
           });
           if (error) throw error;
           if (data?.materials) setRagResults(data.materials);
@@ -321,20 +364,20 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   ];
 
   const hourOptions = [
-    { value: "1", label: "1 hour" },
-    { value: "2", label: "2 hours" },
-    { value: "4", label: "4 hours" },
-    { value: "8", label: "8 hours (1 day)" },
-    { value: "16", label: "16 hours (2 days)" },
-    { value: "24", label: "24 hours (3 days)" },
-    { value: "40", label: "40 hours (5 days)" },
+    { value: '1', label: '1 hour' },
+    { value: '2', label: '2 hours' },
+    { value: '4', label: '4 hours' },
+    { value: '8', label: '8 hours (1 day)' },
+    { value: '16', label: '16 hours (2 days)' },
+    { value: '24', label: '24 hours (3 days)' },
+    { value: '40', label: '40 hours (5 days)' },
   ];
 
   const markupOptions = [
-    { value: "0", label: "No markup (0%)" },
-    { value: "10", label: "10% markup" },
-    { value: "15", label: "15% markup" },
-    { value: "20", label: "20% markup" },
+    { value: '0', label: 'No markup (0%)' },
+    { value: '10', label: '10% markup' },
+    { value: '15', label: '15% markup' },
+    { value: '20', label: '20% markup' },
   ];
 
   return (
@@ -348,7 +391,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
             </div>
             <div>
               <p className="text-[12px] text-white/70">Quote Total</p>
-              <p className="text-[13px] text-white/70">{items.length} item{items.length !== 1 && 's'}</p>
+              <p className="text-[13px] text-white/70">
+                {items.length} item{items.length !== 1 && 's'}
+              </p>
             </div>
           </div>
           <p className="text-2xl font-bold text-elec-yellow">£{total.toFixed(2)}</p>
@@ -396,7 +441,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
             <span className="text-[13px] text-white/70">Material Markup</span>
           </div>
           <div className="flex gap-1">
-            {[0, 10, 15, 20].map(markup => (
+            {[0, 10, 15, 20].map((markup) => (
               <button
                 key={markup}
                 type="button"
@@ -418,7 +463,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       {/* Section Header */}
       <div className="flex items-center gap-2 pt-2">
         <div className="h-px flex-1 bg-white/10" />
-        <span className="text-[11px] uppercase tracking-wider text-white/40 font-medium">Add Items</span>
+        <span className="text-[11px] uppercase tracking-wider text-white/40 font-medium">
+          Add Items
+        </span>
         <div className="h-px flex-1 bg-white/10" />
       </div>
 
@@ -433,14 +480,18 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               type="button"
               onClick={() => handleCategoryChange(cat.id)}
               className={cn(
-                "flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all touch-manipulation active:scale-[0.97]",
+                'flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all touch-manipulation active:scale-[0.97]',
                 isActive
-                  ? "bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20"
-                  : "bg-white/[0.03] text-white/60 border border-white/[0.06]"
+                  ? 'bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20'
+                  : 'bg-white/[0.03] text-white/60 border border-white/[0.06]'
               )}
             >
-              <Icon className={cn("h-5 w-5", isActive ? "text-black" : "text-white/60")} />
-              <span className={cn("text-[12px] font-medium", isActive ? "text-black" : "text-white/60")}>{cat.label}</span>
+              <Icon className={cn('h-5 w-5', isActive ? 'text-black' : 'text-white/60')} />
+              <span
+                className={cn('text-[12px] font-medium', isActive ? 'text-black' : 'text-white/60')}
+              >
+                {cat.label}
+              </span>
             </button>
           );
         })}
@@ -449,13 +500,15 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       {/* Add Item Form - iOS grouped style */}
       <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
         {/* Labour Fields */}
-        {newItem.category === "labour" && (
+        {newItem.category === 'labour' && (
           <div className="p-4 space-y-4">
             {/* Worker Type - Visual Pills */}
             <div>
-              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">Worker Type</label>
+              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">
+                Worker Type
+              </label>
               <div className="grid grid-cols-2 gap-2">
-                {workerTypes.map(w => {
+                {workerTypes.map((w) => {
                   const isSelected = newItem.workerType === w.id;
                   return (
                     <button
@@ -463,14 +516,28 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       type="button"
                       onClick={() => handleWorkerTypeChange(w.id)}
                       className={cn(
-                        "flex items-center justify-between p-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]",
+                        'flex items-center justify-between p-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]',
                         isSelected
-                          ? "bg-elec-yellow text-black"
-                          : "bg-white/[0.03] text-white border border-white/[0.08]"
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/[0.03] text-white border border-white/[0.08]'
                       )}
                     >
-                      <span className={cn("text-[13px] font-medium", isSelected ? "text-black" : "text-white")}>{w.name}</span>
-                      <span className={cn("text-[12px] font-semibold", isSelected ? "text-black/70" : "text-white/50")}>£{w.defaultHourlyRate}/hr</span>
+                      <span
+                        className={cn(
+                          'text-[13px] font-medium',
+                          isSelected ? 'text-black' : 'text-white'
+                        )}
+                      >
+                        {w.name}
+                      </span>
+                      <span
+                        className={cn(
+                          'text-[12px] font-semibold',
+                          isSelected ? 'text-black/70' : 'text-white/50'
+                        )}
+                      >
+                        £{w.defaultHourlyRate}/hr
+                      </span>
                     </button>
                   );
                 })}
@@ -479,9 +546,11 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
             {/* Hours - Visual Pills */}
             <div>
-              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">Hours</label>
+              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">
+                Hours
+              </label>
               <div className="flex flex-wrap gap-2">
-                {hourOptions.map(opt => {
+                {hourOptions.map((opt) => {
                   const isSelected = newItem.hours === parseFloat(opt.value);
                   return (
                     <button
@@ -489,10 +558,10 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       type="button"
                       onClick={() => handleHoursChange(parseFloat(opt.value))}
                       className={cn(
-                        "px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]",
+                        'px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                         isSelected
-                          ? "bg-elec-yellow text-black"
-                          : "bg-white/[0.03] text-white/70 border border-white/[0.08]"
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/[0.03] text-white/70 border border-white/[0.08]'
                       )}
                     >
                       {opt.label}
@@ -505,7 +574,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
         )}
 
         {/* Materials Fields */}
-        {newItem.category === "materials" && (
+        {newItem.category === 'materials' && (
           <div className="p-4 space-y-3">
             {/* Search Input - Full Width */}
             <div className="relative">
@@ -519,73 +588,86 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
             </div>
 
             {/* Material Results */}
-            {materialSearch.length >= 2 && (filteredMaterials.length > 0 || ragResults.length > 0) && (
-              <div>
-                <p className="text-[12px] text-white/40 mb-2">
-                  {filteredMaterials.length + ragResults.length} results {isSearchingRAG && "• Searching..."}
-                </p>
-                <div className="max-h-[300px] overflow-y-auto space-y-2">
-                  {filteredMaterials.slice(0, 5).map(material => {
-                    const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
-                    const isSelected = newItem.materialCode === material.id;
-                    return (
-                      <button
-                        key={material.id}
-                        type="button"
-                        onClick={() => handleMaterialSelect(material.id)}
-                        className={cn(
-                          "w-full p-3 rounded-xl text-left transition-all touch-manipulation active:scale-[0.99]",
-                          isSelected
-                            ? "bg-elec-yellow/20 border border-elec-yellow/40"
-                            : "bg-white/[0.03] border border-white/[0.06] active:bg-white/[0.06]"
-                        )}
-                      >
-                        <div className="flex justify-between items-start">
-                          <p className="font-medium text-[14px] text-white">{material.name}</p>
-                          <p className={cn("font-bold text-[15px]", isSelected ? "text-elec-yellow" : "text-white")}>
-                            £{adjustedPrice.toFixed(2)}
-                          </p>
-                        </div>
-                        <p className="text-[12px] text-white/70 mt-0.5">{material.category}</p>
-                      </button>
-                    );
-                  })}
-                  {ragResults.slice(0, 10).map((material, idx) => {
-                    const priceMatch = material.price?.match(/£?(\d+\.?\d*)/);
-                    const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
-                    const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(basePrice) : basePrice;
-                    return (
-                      <button
-                        key={`rag-${idx}`}
-                        type="button"
-                        onClick={() => {
-                          setNewItem(prev => ({
-                            ...prev,
-                            description: material.name,
-                            unitPrice: adjustedPrice,
-                            unit: "each",
-                            materialCode: `rag-${material.id}`,
-                          }));
-                          toast({ title: "Material Selected", description: material.name });
-                        }}
-                        className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.05] transition-all touch-manipulation"
-                      >
-                        <div className="flex justify-between items-start">
-                          <p className="font-medium text-[14px] text-white">{material.name}</p>
-                          <p className="font-bold text-[15px] text-white">£{adjustedPrice.toFixed(2)}</p>
-                        </div>
-                        <p className="text-[12px] text-white/70 mt-0.5">{material.supplier}</p>
-                      </button>
-                    );
-                  })}
+            {materialSearch.length >= 2 &&
+              (filteredMaterials.length > 0 || ragResults.length > 0) && (
+                <div>
+                  <p className="text-[12px] text-white/40 mb-2">
+                    {filteredMaterials.length + ragResults.length} results{' '}
+                    {isSearchingRAG && '• Searching...'}
+                  </p>
+                  <div className="max-h-[300px] overflow-y-auto space-y-2">
+                    {filteredMaterials.slice(0, 5).map((material) => {
+                      const adjustedPrice = calculateAdjustedPrice
+                        ? calculateAdjustedPrice(material.defaultPrice)
+                        : material.defaultPrice;
+                      const isSelected = newItem.materialCode === material.id;
+                      return (
+                        <button
+                          key={material.id}
+                          type="button"
+                          onClick={() => handleMaterialSelect(material.id)}
+                          className={cn(
+                            'w-full p-3 rounded-xl text-left transition-all touch-manipulation active:scale-[0.99]',
+                            isSelected
+                              ? 'bg-elec-yellow/20 border border-elec-yellow/40'
+                              : 'bg-white/[0.03] border border-white/[0.06] active:bg-white/[0.06]'
+                          )}
+                        >
+                          <div className="flex justify-between items-start">
+                            <p className="font-medium text-[14px] text-white">{material.name}</p>
+                            <p
+                              className={cn(
+                                'font-bold text-[15px]',
+                                isSelected ? 'text-elec-yellow' : 'text-white'
+                              )}
+                            >
+                              £{adjustedPrice.toFixed(2)}
+                            </p>
+                          </div>
+                          <p className="text-[12px] text-white/70 mt-0.5">{material.category}</p>
+                        </button>
+                      );
+                    })}
+                    {ragResults.slice(0, 10).map((material, idx) => {
+                      const priceMatch = material.price?.match(/£?(\d+\.?\d*)/);
+                      const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
+                      const adjustedPrice = calculateAdjustedPrice
+                        ? calculateAdjustedPrice(basePrice)
+                        : basePrice;
+                      return (
+                        <button
+                          key={`rag-${idx}`}
+                          type="button"
+                          onClick={() => {
+                            setNewItem((prev) => ({
+                              ...prev,
+                              description: material.name,
+                              unitPrice: adjustedPrice,
+                              unit: 'each',
+                              materialCode: `rag-${material.id}`,
+                            }));
+                            toast({ title: 'Material Selected', description: material.name });
+                          }}
+                          className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.05] transition-all touch-manipulation"
+                        >
+                          <div className="flex justify-between items-start">
+                            <p className="font-medium text-[14px] text-white">{material.name}</p>
+                            <p className="font-bold text-[15px] text-white">
+                              £{adjustedPrice.toFixed(2)}
+                            </p>
+                          </div>
+                          <p className="text-[12px] text-white/70 mt-0.5">{material.supplier}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         )}
 
         {/* Equipment Fields */}
-        {newItem.category === "equipment" && (
+        {newItem.category === 'equipment' && (
           <div className="divide-y divide-white/[0.06]">
             {/* Category */}
             <div className="flex items-center gap-3 p-3.5">
@@ -595,15 +677,19 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Equipment Category</label>
                 <Select
-                  value={newItem.subcategory || ""}
-                  onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}
+                  value={newItem.subcategory || ''}
+                  onValueChange={(value) => setNewItem((prev) => ({ ...prev, subcategory: value }))}
                 >
                   <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
-                    {equipmentCategories.map(c => (
-                      <SelectItem key={c.id} value={c.id} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
+                    {equipmentCategories.map((c) => (
+                      <SelectItem
+                        key={c.id}
+                        value={c.id}
+                        className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer"
+                      >
                         {c.name}
                       </SelectItem>
                     ))}
@@ -619,7 +705,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Equipment</label>
                 <Select
-                  value={newItem.equipmentCode || ""}
+                  value={newItem.equipmentCode || ''}
                   onValueChange={(value) => handleEquipmentSelect(value)}
                 >
                   <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
@@ -627,9 +713,13 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                   </SelectTrigger>
                   <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
                     {commonEquipment
-                      .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
-                      .map(e => (
-                        <SelectItem key={e.id} value={e.id} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
+                      .filter((e) => !newItem.subcategory || e.category === newItem.subcategory)
+                      .map((e) => (
+                        <SelectItem
+                          key={e.id}
+                          value={e.id}
+                          className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer"
+                        >
                           {e.name} - £{e.dailyRate}/{e.unit}
                         </SelectItem>
                       ))}
@@ -641,7 +731,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
         )}
 
         {/* Manual Entry Fields */}
-        {newItem.category === "manual" && (
+        {newItem.category === 'manual' && (
           <div className="divide-y divide-white/[0.06]">
             {/* Description */}
             <div className="p-3.5">
@@ -654,7 +744,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                   <Textarea
                     placeholder="e.g., Site visit fee, Call-out charge"
                     value={newItem.description}
-                    onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewItem((prev) => ({ ...prev, description: e.target.value }))
+                    }
                     className="min-h-[80px] px-0 border-0 bg-transparent text-[15px] text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
                   />
                 </div>
@@ -670,8 +762,13 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                 <Input
                   type="number"
                   inputMode="decimal"
-                  value={newItem.quantity === 0 ? "" : newItem.quantity}
-                  onChange={(e) => setNewItem(prev => ({ ...prev, quantity: e.target.value === "" ? 0 : parseFloat(e.target.value) }))}
+                  value={newItem.quantity === 0 ? '' : newItem.quantity}
+                  onChange={(e) =>
+                    setNewItem((prev) => ({
+                      ...prev,
+                      quantity: e.target.value === '' ? 0 : parseFloat(e.target.value),
+                    }))
+                  }
                   placeholder="1"
                   className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
@@ -687,8 +784,13 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                 <Input
                   type="number"
                   inputMode="decimal"
-                  value={newItem.unitPrice === 0 ? "" : newItem.unitPrice}
-                  onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: e.target.value === "" ? 0 : parseFloat(e.target.value) }))}
+                  value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
+                  onChange={(e) =>
+                    setNewItem((prev) => ({
+                      ...prev,
+                      unitPrice: e.target.value === '' ? 0 : parseFloat(e.target.value),
+                    }))
+                  }
                   placeholder="0.00"
                   className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
@@ -727,19 +829,25 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
             {items.map((item) => {
-              const cat = categories.find(c => c.id === item.category);
+              const cat = categories.find((c) => c.id === item.category);
               const Icon = cat?.icon || FileText;
               const color = cat?.color || 'bg-gray-500';
               return (
                 <div key={item.id} className="p-3">
                   {/* Top row: Category dot + Description + Total */}
                   <div className="flex items-start gap-2 mb-2">
-                    <div className={cn(
-                      "w-2 h-2 rounded-full mt-1.5 flex-shrink-0",
-                      item.category === 'labour' ? 'bg-blue-500' :
-                      item.category === 'materials' ? 'bg-green-500' :
-                      item.category === 'equipment' ? 'bg-purple-500' : 'bg-gray-500'
-                    )} />
+                    <div
+                      className={cn(
+                        'w-2 h-2 rounded-full mt-1.5 flex-shrink-0',
+                        item.category === 'labour'
+                          ? 'bg-blue-500'
+                          : item.category === 'materials'
+                            ? 'bg-green-500'
+                            : item.category === 'equipment'
+                              ? 'bg-purple-500'
+                              : 'bg-gray-500'
+                      )}
+                    />
                     <p className="flex-1 min-w-0 font-medium text-[14px] text-white leading-tight line-clamp-2">
                       {item.description}
                     </p>
@@ -755,8 +863,12 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       <input
                         type="number"
                         inputMode="decimal"
-                        value={item.quantity === 0 ? "" : item.quantity}
-                        onChange={(e) => onUpdate(item.id, { quantity: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
+                        value={item.quantity === 0 ? '' : item.quantity}
+                        onChange={(e) =>
+                          onUpdate(item.id, {
+                            quantity: e.target.value === '' ? 0 : parseFloat(e.target.value),
+                          })
+                        }
                         className="w-12 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                       <span className="text-[11px] text-white/50 w-8 truncate">{item.unit}</span>
@@ -765,8 +877,12 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       <input
                         type="number"
                         inputMode="decimal"
-                        value={item.unitPrice === 0 ? "" : item.unitPrice}
-                        onChange={(e) => onUpdate(item.id, { unitPrice: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
+                        value={item.unitPrice === 0 ? '' : item.unitPrice}
+                        onChange={(e) =>
+                          onUpdate(item.id, {
+                            unitPrice: e.target.value === '' ? 0 : parseFloat(e.target.value),
+                          })
+                        }
                         className="w-14 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                     </div>
@@ -840,7 +956,11 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
         onOpenChange={setScannerSheetOpen}
         onCapture={handleScanCapture}
         onUpload={handleScanUpload}
-        isProcessing={scanner.state === 'processing' || scanner.state === 'matching' || scanner.state === 'uploading'}
+        isProcessing={
+          scanner.state === 'processing' ||
+          scanner.state === 'matching' ||
+          scanner.state === 'uploading'
+        }
         progress={scanner.progress}
       />
 

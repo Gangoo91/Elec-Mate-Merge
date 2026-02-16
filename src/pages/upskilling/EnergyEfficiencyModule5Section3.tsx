@@ -1,186 +1,232 @@
-import { ArrowLeft, Zap, CheckCircle, Bell, Target, Layers, FileText, TrendingUp, BellOff, Brain, Wrench, Clock, Activity, Settings, Shield, AlertTriangle, Info, AlertCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Zap,
+  CheckCircle,
+  Bell,
+  Target,
+  Layers,
+  FileText,
+  TrendingUp,
+  BellOff,
+  Brain,
+  Wrench,
+  Clock,
+  Activity,
+  Settings,
+  Shield,
+  AlertTriangle,
+  Info,
+  AlertCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Fault Alerts and Event Logging - Energy Efficiency Module 5 Section 3";
-const DESCRIPTION = "Learn to configure meaningful alert thresholds, implement event logging for trend analysis, and integrate alerts with maintenance systems for electrical efficiency monitoring.";
+const TITLE = 'Fault Alerts and Event Logging - Energy Efficiency Module 5 Section 3';
+const DESCRIPTION =
+  'Learn to configure meaningful alert thresholds, implement event logging for trend analysis, and integrate alerts with maintenance systems for electrical efficiency monitoring.';
 
 const quickCheckQuestions = [
   {
-    id: "ee5s3-qc1",
-    question: "When setting alert thresholds for power factor on a motor, what statistical approach helps minimise false alarms while catching genuine issues?",
+    id: 'ee5s3-qc1',
+    question:
+      'When setting alert thresholds for power factor on a motor, what statistical approach helps minimise false alarms while catching genuine issues?',
     options: [
-      "Setting threshold at exactly the mean value",
-      "Using mean plus 2-3 standard deviations from baseline",
-      "Always using manufacturer specifications only",
-      "Setting threshold at maximum recorded value"
+      'Setting threshold at exactly the mean value',
+      'Using mean plus 2-3 standard deviations from baseline',
+      'Always using manufacturer specifications only',
+      'Setting threshold at maximum recorded value',
     ],
     correctIndex: 1,
-    explanation: "Using mean plus 2-3 standard deviations creates a threshold that accounts for normal variation while alerting on statistically significant deviations. This approach is based on actual operating data and reduces false positives while catching genuine anomalies."
+    explanation:
+      'Using mean plus 2-3 standard deviations creates a threshold that accounts for normal variation while alerting on statistically significant deviations. This approach is based on actual operating data and reduces false positives while catching genuine anomalies.',
   },
   {
-    id: "ee5s3-qc2",
+    id: 'ee5s3-qc2',
     question: "What is 'alert fatigue' and why is it dangerous in electrical monitoring systems?",
     options: [
-      "Physical tiredness from responding to too many alerts",
-      "When operators ignore or disable alerts due to excessive false alarms",
-      "System slowdown from processing too many events",
-      "Battery drain in portable monitoring devices"
+      'Physical tiredness from responding to too many alerts',
+      'When operators ignore or disable alerts due to excessive false alarms',
+      'System slowdown from processing too many events',
+      'Battery drain in portable monitoring devices',
     ],
     correctIndex: 1,
-    explanation: "Alert fatigue occurs when operators become desensitised to alerts due to excessive false alarms or non-actionable notifications. This is dangerous because critical alerts may be ignored or disabled, potentially leading to missed equipment failures, safety hazards, or energy waste."
+    explanation:
+      'Alert fatigue occurs when operators become desensitised to alerts due to excessive false alarms or non-actionable notifications. This is dangerous because critical alerts may be ignored or disabled, potentially leading to missed equipment failures, safety hazards, or energy waste.',
   },
   {
-    id: "ee5s3-qc3",
-    question: "What information should be included in a well-structured event log entry for an electrical fault?",
+    id: 'ee5s3-qc3',
+    question:
+      'What information should be included in a well-structured event log entry for an electrical fault?',
     options: [
-      "Only the time and date of the event",
-      "Just the equipment name and fault type",
-      "Timestamp, equipment ID, measured values, threshold exceeded, and recommended action",
-      "The name of the operator on duty"
+      'Only the time and date of the event',
+      'Just the equipment name and fault type',
+      'Timestamp, equipment ID, measured values, threshold exceeded, and recommended action',
+      'The name of the operator on duty',
     ],
     correctIndex: 2,
-    explanation: "A comprehensive event log entry should include timestamp, equipment identification, actual measured values, which threshold was exceeded, severity level, and recommended corrective action. This data enables trend analysis, root cause investigation, and informed maintenance decisions."
-  }
+    explanation:
+      'A comprehensive event log entry should include timestamp, equipment identification, actual measured values, which threshold was exceeded, severity level, and recommended corrective action. This data enables trend analysis, root cause investigation, and informed maintenance decisions.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "For a 100 kW motor with baseline current of 120A and standard deviation of 5A, what would be an appropriate warning threshold using the 2-sigma rule?",
-    options: ["125A", "130A", "135A", "140A"],
+    question:
+      'For a 100 kW motor with baseline current of 120A and standard deviation of 5A, what would be an appropriate warning threshold using the 2-sigma rule?',
+    options: ['125A', '130A', '135A', '140A'],
     correctAnswer: 1,
-    explanation: "Warning threshold = Mean + 2σ = 120A + (2 × 5A) = 130A. This captures 95.4% of normal variation."
+    explanation:
+      'Warning threshold = Mean + 2σ = 120A + (2 × 5A) = 130A. This captures 95.4% of normal variation.',
   },
   {
     id: 2,
-    question: "What is the primary purpose of alert escalation in electrical monitoring systems?",
+    question: 'What is the primary purpose of alert escalation in electrical monitoring systems?',
     options: [
-      "To increase the volume of all alerts",
-      "To ensure critical issues reach appropriate personnel when initial responses fail",
-      "To reduce the number of alerts generated",
-      "To automatically fix all detected faults"
+      'To increase the volume of all alerts',
+      'To ensure critical issues reach appropriate personnel when initial responses fail',
+      'To reduce the number of alerts generated',
+      'To automatically fix all detected faults',
     ],
     correctAnswer: 1,
-    explanation: "Alert escalation ensures that if initial responders do not acknowledge or resolve an alert within set timeframes, it automatically routes to supervisors and management."
+    explanation:
+      'Alert escalation ensures that if initial responders do not acknowledge or resolve an alert within set timeframes, it automatically routes to supervisors and management.',
   },
   {
     id: 3,
-    question: "Which type of event logging approach provides the most useful data for trend analysis?",
+    question:
+      'Which type of event logging approach provides the most useful data for trend analysis?',
     options: [
-      "Logging only when thresholds are exceeded",
-      "Continuous logging at regular intervals with event-triggered detailed capture",
-      "Manual logging by operators",
-      "Logging only during business hours"
+      'Logging only when thresholds are exceeded',
+      'Continuous logging at regular intervals with event-triggered detailed capture',
+      'Manual logging by operators',
+      'Logging only during business hours',
     ],
     correctAnswer: 1,
-    explanation: "Combining continuous baseline logging with detailed event-triggered capture provides both the trend data needed for long-term analysis and the high-resolution data needed to investigate specific incidents."
+    explanation:
+      'Combining continuous baseline logging with detailed event-triggered capture provides both the trend data needed for long-term analysis and the high-resolution data needed to investigate specific incidents.',
   },
   {
     id: 4,
-    question: "What is the recommended approach to avoid alert fatigue in energy monitoring systems?",
+    question:
+      'What is the recommended approach to avoid alert fatigue in energy monitoring systems?',
     options: [
-      "Disable all non-critical alerts",
-      "Send all alerts to a single person",
-      "Implement tiered severity levels with appropriate routing and suppression rules",
-      "Only check alerts once per week"
+      'Disable all non-critical alerts',
+      'Send all alerts to a single person',
+      'Implement tiered severity levels with appropriate routing and suppression rules',
+      'Only check alerts once per week',
     ],
     correctAnswer: 2,
-    explanation: "Tiered severity levels ensure the right people receive the right alerts, while suppression rules prevent cascading alerts and reduce unnecessary notifications."
+    explanation:
+      'Tiered severity levels ensure the right people receive the right alerts, while suppression rules prevent cascading alerts and reduce unnecessary notifications.',
   },
   {
     id: 5,
-    question: "Predictive analytics in electrical monitoring primarily uses which technique to forecast failures?",
+    question:
+      'Predictive analytics in electrical monitoring primarily uses which technique to forecast failures?',
     options: [
-      "Random sampling of equipment",
-      "Machine learning algorithms analysing historical patterns and trends",
-      "Manual inspection schedules",
-      "Fixed time-based replacement"
+      'Random sampling of equipment',
+      'Machine learning algorithms analysing historical patterns and trends',
+      'Manual inspection schedules',
+      'Fixed time-based replacement',
     ],
     correctAnswer: 1,
-    explanation: "Machine learning algorithms analyse historical data to identify patterns that precede failures, enabling proactive maintenance before problems occur."
+    explanation:
+      'Machine learning algorithms analyse historical data to identify patterns that precede failures, enabling proactive maintenance before problems occur.',
   },
   {
     id: 6,
-    question: "When integrating alerts with a CMMS, what automatic action is most valuable?",
+    question: 'When integrating alerts with a CMMS, what automatic action is most valuable?',
     options: [
-      "Sending email notifications only",
-      "Automatic work order generation with priority assignment",
-      "Shutting down all equipment immediately",
-      "Deleting old maintenance records"
+      'Sending email notifications only',
+      'Automatic work order generation with priority assignment',
+      'Shutting down all equipment immediately',
+      'Deleting old maintenance records',
     ],
     correctAnswer: 1,
-    explanation: "Automatic work order generation ensures that alerts result in tracked, prioritised maintenance actions rather than being lost or forgotten."
+    explanation:
+      'Automatic work order generation ensures that alerts result in tracked, prioritised maintenance actions rather than being lost or forgotten.',
   },
   {
     id: 7,
     question: "What does 'dead-band' or hysteresis in alert configuration prevent?",
     options: [
-      "All alerts from being generated",
-      "Rapid on-off cycling of alerts when values hover near threshold",
-      "Equipment from being monitored",
-      "Maintenance personnel from receiving notifications"
+      'All alerts from being generated',
+      'Rapid on-off cycling of alerts when values hover near threshold',
+      'Equipment from being monitored',
+      'Maintenance personnel from receiving notifications',
     ],
     correctAnswer: 1,
-    explanation: "Dead-band creates a gap between alert activation and clearing thresholds, preventing rapid cycling when values fluctuate around a single threshold point."
+    explanation:
+      'Dead-band creates a gap between alert activation and clearing thresholds, preventing rapid cycling when values fluctuate around a single threshold point.',
   },
   {
     id: 8,
-    question: "For voltage monitoring on a 400V system, what percentage deviation typically warrants a critical alert?",
-    options: ["±1%", "±3%", "±5%", "±10% or greater"],
+    question:
+      'For voltage monitoring on a 400V system, what percentage deviation typically warrants a critical alert?',
+    options: ['±1%', '±3%', '±5%', '±10% or greater'],
     correctAnswer: 3,
-    explanation: "Voltage deviations of ±10% or greater indicate serious supply problems that could damage equipment or cause operational issues, warranting critical priority."
+    explanation:
+      'Voltage deviations of ±10% or greater indicate serious supply problems that could damage equipment or cause operational issues, warranting critical priority.',
   },
   {
     id: 9,
-    question: "What is the benefit of correlating multiple parameter alerts on the same equipment?",
+    question: 'What is the benefit of correlating multiple parameter alerts on the same equipment?',
     options: [
-      "It reduces the total number of sensors needed",
-      "It helps identify root causes and distinguish real faults from sensor errors",
-      "It eliminates the need for maintenance",
-      "It makes the system less complex"
+      'It reduces the total number of sensors needed',
+      'It helps identify root causes and distinguish real faults from sensor errors',
+      'It eliminates the need for maintenance',
+      'It makes the system less complex',
     ],
     correctAnswer: 1,
-    explanation: "When multiple related parameters (current, temperature, vibration) all indicate a problem simultaneously, it confirms a genuine issue. Single-parameter anomalies may indicate sensor faults rather than equipment problems."
+    explanation:
+      'When multiple related parameters (current, temperature, vibration) all indicate a problem simultaneously, it confirms a genuine issue. Single-parameter anomalies may indicate sensor faults rather than equipment problems.',
   },
   {
     id: 10,
-    question: "What retention period is typically recommended for detailed electrical event logs in industrial facilities?",
+    question:
+      'What retention period is typically recommended for detailed electrical event logs in industrial facilities?',
     options: [
-      "24 hours",
-      "1 week",
-      "1-3 years minimum, with summary data retained longer",
-      "Logs should never be retained"
+      '24 hours',
+      '1 week',
+      '1-3 years minimum, with summary data retained longer',
+      'Logs should never be retained',
     ],
     correctAnswer: 2,
-    explanation: "Retaining 1-3 years of detailed logs enables trend analysis across seasons and operating cycles, while summary data retained longer supports long-term equipment lifecycle analysis."
-  }
+    explanation:
+      'Retaining 1-3 years of detailed logs enables trend analysis across seasons and operating cycles, while summary data retained longer supports long-term equipment lifecycle analysis.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I determine the right alert threshold for a new piece of equipment?",
-    answer: "Start by establishing a baseline during normal operation - collect data for at least 2-4 weeks covering various operating conditions. Calculate the mean and standard deviation of key parameters. Set warning thresholds at mean + 2 standard deviations and critical thresholds at mean + 3 standard deviations. Compare with manufacturer specifications and adjust based on equipment criticality. Review and refine thresholds quarterly based on actual alert history and operator feedback."
+    question: 'How do I determine the right alert threshold for a new piece of equipment?',
+    answer:
+      'Start by establishing a baseline during normal operation - collect data for at least 2-4 weeks covering various operating conditions. Calculate the mean and standard deviation of key parameters. Set warning thresholds at mean + 2 standard deviations and critical thresholds at mean + 3 standard deviations. Compare with manufacturer specifications and adjust based on equipment criticality. Review and refine thresholds quarterly based on actual alert history and operator feedback.',
   },
   {
-    question: "What is the difference between event logging and data logging in energy monitoring?",
-    answer: "Data logging continuously records measured values at regular intervals (e.g., every 15 minutes) regardless of whether anything unusual occurs - this creates trend data. Event logging specifically captures when something noteworthy happens: threshold exceedances, equipment state changes, operator actions, or system errors. Best practice combines both: continuous data logging at moderate intervals with detailed event logging triggered by specific conditions."
+    question: 'What is the difference between event logging and data logging in energy monitoring?',
+    answer:
+      'Data logging continuously records measured values at regular intervals (e.g., every 15 minutes) regardless of whether anything unusual occurs - this creates trend data. Event logging specifically captures when something noteworthy happens: threshold exceedances, equipment state changes, operator actions, or system errors. Best practice combines both: continuous data logging at moderate intervals with detailed event logging triggered by specific conditions.',
   },
   {
-    question: "How can I reduce false alarms without missing real problems?",
-    answer: "Implement multiple strategies: Use statistical thresholds based on actual operating data rather than arbitrary values. Add time delays so brief transients do not trigger alerts. Implement dead-bands to prevent cycling. Correlate multiple parameters before alerting. Use rate-of-change detection for gradual drift. Establish different thresholds for different operating modes. Review alert history monthly and adjust thresholds that generate excessive false positives."
+    question: 'How can I reduce false alarms without missing real problems?',
+    answer:
+      'Implement multiple strategies: Use statistical thresholds based on actual operating data rather than arbitrary values. Add time delays so brief transients do not trigger alerts. Implement dead-bands to prevent cycling. Correlate multiple parameters before alerting. Use rate-of-change detection for gradual drift. Establish different thresholds for different operating modes. Review alert history monthly and adjust thresholds that generate excessive false positives.',
   },
   {
-    question: "What alerts should route directly to maintenance vs operations?",
-    answer: "Operations should receive alerts requiring immediate response: safety hazards, equipment trips, process impacts, and conditions requiring manual intervention. Maintenance receives alerts for degradation trends, preventive maintenance triggers, efficiency losses, and non-urgent equipment issues. Critical safety alerts should go to both simultaneously. Use escalation paths so unacknowledged alerts automatically route to supervisors."
+    question: 'What alerts should route directly to maintenance vs operations?',
+    answer:
+      'Operations should receive alerts requiring immediate response: safety hazards, equipment trips, process impacts, and conditions requiring manual intervention. Maintenance receives alerts for degradation trends, preventive maintenance triggers, efficiency losses, and non-urgent equipment issues. Critical safety alerts should go to both simultaneously. Use escalation paths so unacknowledged alerts automatically route to supervisors.',
   },
   {
-    question: "How do I integrate electrical monitoring alerts with our existing CMMS?",
-    answer: "Most modern energy monitoring systems support standard integration methods: API connections (REST/SOAP), database links, file-based exchange (CSV/XML), or dedicated CMMS connectors. Map alert severity levels to work order priorities. Include equipment ID, fault description, measured values, and timestamp in the data exchange. Configure automatic work order creation for specific alert types. Test integrations thoroughly before production deployment."
-  }
+    question: 'How do I integrate electrical monitoring alerts with our existing CMMS?',
+    answer:
+      'Most modern energy monitoring systems support standard integration methods: API connections (REST/SOAP), database links, file-based exchange (CSV/XML), or dedicated CMMS connectors. Map alert severity levels to work order priorities. Include equipment ID, fault description, measured values, and timestamp in the data exchange. Configure automatic work order creation for specific alert types. Test integrations thoroughly before production deployment.',
+  },
 ];
 
 const EnergyEfficiencyModule5Section3 = () => {
@@ -191,7 +237,12 @@ const EnergyEfficiencyModule5Section3 = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -221,18 +272,32 @@ const EnergyEfficiencyModule5Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Thresholds:</strong> Mean + 2σ (warning), Mean + 3σ (critical)</li>
-              <li><strong>Target:</strong> Less than 10 alerts per shift</li>
-              <li><strong>Actionable:</strong> More than 80% of alerts need action</li>
-              <li><strong>Retention:</strong> 1-3 years for detailed logs</li>
+              <li>
+                <strong>Thresholds:</strong> Mean + 2σ (warning), Mean + 3σ (critical)
+              </li>
+              <li>
+                <strong>Target:</strong> Less than 10 alerts per shift
+              </li>
+              <li>
+                <strong>Actionable:</strong> More than 80% of alerts need action
+              </li>
+              <li>
+                <strong>Retention:</strong> 1-3 years for detailed logs
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Alert fatigue when operators disable notifications</li>
-              <li><strong>Use:</strong> Dead-band (hysteresis) to prevent alert cycling</li>
-              <li><strong>Integrate:</strong> CMMS for automatic work order generation</li>
+              <li>
+                <strong>Spot:</strong> Alert fatigue when operators disable notifications
+              </li>
+              <li>
+                <strong>Use:</strong> Dead-band (hysteresis) to prevent alert cycling
+              </li>
+              <li>
+                <strong>Integrate:</strong> CMMS for automatic work order generation
+              </li>
             </ul>
           </div>
         </div>
@@ -242,12 +307,12 @@ const EnergyEfficiencyModule5Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Calculate statistical thresholds for meaningful alerts",
-              "Configure alert escalation and notification routing",
-              "Implement comprehensive event logging",
-              "Prevent alert fatigue with proper configuration",
-              "Apply predictive analytics for early warning",
-              "Integrate alerts with maintenance systems"
+              'Calculate statistical thresholds for meaningful alerts',
+              'Configure alert escalation and notification routing',
+              'Implement comprehensive event logging',
+              'Prevent alert fatigue with proper configuration',
+              'Apply predictive analytics for early warning',
+              'Integrate alerts with maintenance systems',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -267,24 +332,36 @@ const EnergyEfficiencyModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Effective alert thresholds distinguish between normal operational variation and genuine problems requiring attention. Poor threshold configuration leads to either missed faults or overwhelming false alarms.
+              Effective alert thresholds distinguish between normal operational variation and
+              genuine problems requiring attention. Poor threshold configuration leads to either
+              missed faults or overwhelming false alarms.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Statistical Threshold Calculation:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Statistical Threshold Calculation:
+              </p>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-white text-sm mb-2">Baseline Data Collection (2-4 weeks):</p>
                 <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Mean (μ) = Sum of all readings / Number of readings</li>
                   <li>Standard Deviation (σ) = √(Σ(x-μ)² / n)</li>
-                  <li><strong className="text-yellow-400">Warning Threshold</strong> = μ + 2σ (95.4% confidence)</li>
-                  <li><strong className="text-red-400">Critical Threshold</strong> = μ + 3σ (99.7% confidence)</li>
+                  <li>
+                    <strong className="text-yellow-400">Warning Threshold</strong> = μ + 2σ (95.4%
+                    confidence)
+                  </li>
+                  <li>
+                    <strong className="text-red-400">Critical Threshold</strong> = μ + 3σ (99.7%
+                    confidence)
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Example: Motor Current Threshold Setup (100 kW motor)</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Example: Motor Current Threshold Setup (100 kW motor)
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <p className="text-elec-yellow text-sm font-medium mb-2">Baseline Data</p>
@@ -297,16 +374,24 @@ const EnergyEfficiencyModule5Section3 = () => {
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <p className="text-elec-yellow text-sm font-medium mb-2">Calculated Thresholds</p>
                   <ul className="text-sm text-white space-y-1">
-                    <li><span className="text-yellow-400">Warning:</span> 130A (μ + 2σ)</li>
-                    <li><span className="text-orange-400">High:</span> 135A (μ + 3σ)</li>
-                    <li><span className="text-red-400">Critical:</span> 140A (trip point)</li>
+                    <li>
+                      <span className="text-yellow-400">Warning:</span> 130A (μ + 2σ)
+                    </li>
+                    <li>
+                      <span className="text-orange-400">High:</span> 135A (μ + 3σ)
+                    </li>
+                    <li>
+                      <span className="text-red-400">Critical:</span> 140A (trip point)
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Electrical Parameters and Typical Thresholds</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Common Electrical Parameters and Typical Thresholds
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">Voltage (400V nominal)</p>
@@ -349,7 +434,8 @@ const EnergyEfficiencyModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper escalation ensures critical alerts reach the right people at the right time, while preventing notification overload for non-urgent issues.
+              Proper escalation ensures critical alerts reach the right people at the right time,
+              while preventing notification overload for non-urgent issues.
             </p>
 
             <div className="my-6">
@@ -359,28 +445,40 @@ const EnergyEfficiencyModule5Section3 = () => {
                   <Info className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-blue-400">INFORMATIONAL</p>
-                    <p className="text-sm text-white">Normal events logged for reference. Equipment state changes, scheduled operations. No notification required - visible in dashboard only.</p>
+                    <p className="text-sm text-white">
+                      Normal events logged for reference. Equipment state changes, scheduled
+                      operations. No notification required - visible in dashboard only.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-yellow-500/10 border-l-2 border-yellow-500/50">
                   <AlertCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-yellow-400">WARNING</p>
-                    <p className="text-sm text-white">Parameter approaching threshold, degradation detected. Email to maintenance queue, dashboard highlight. Response within 24-48 hours.</p>
+                    <p className="text-sm text-white">
+                      Parameter approaching threshold, degradation detected. Email to maintenance
+                      queue, dashboard highlight. Response within 24-48 hours.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
                   <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-orange-400">HIGH</p>
-                    <p className="text-sm text-white">Threshold exceeded, equipment at risk. SMS/push notification to on-duty technician, email to supervisor. Response within 4 hours.</p>
+                    <p className="text-sm text-white">
+                      Threshold exceeded, equipment at risk. SMS/push notification to on-duty
+                      technician, email to supervisor. Response within 4 hours.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                   <Zap className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-red-400">CRITICAL</p>
-                    <p className="text-sm text-white">Immediate safety hazard or equipment failure imminent. Phone call, SMS, email to multiple recipients. Immediate response required.</p>
+                    <p className="text-sm text-white">
+                      Immediate safety hazard or equipment failure imminent. Phone call, SMS, email
+                      to multiple recipients. Immediate response required.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -390,19 +488,27 @@ const EnergyEfficiencyModule5Section3 = () => {
               <p className="text-sm font-medium text-white mb-3">Escalation Path Example:</p>
               <div className="space-y-2 text-sm text-white">
                 <div className="flex items-centre gap-3">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">1</div>
+                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">
+                    1
+                  </div>
                   <span>T+0: Alert generated - Primary technician notified (SMS + app push)</span>
                 </div>
                 <div className="flex items-centre gap-3">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">2</div>
+                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">
+                    2
+                  </div>
                   <span>T+15 min: Not acknowledged - Secondary technician added</span>
                 </div>
                 <div className="flex items-centre gap-3">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">3</div>
+                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">
+                    3
+                  </div>
                   <span>T+30 min: Still open - Maintenance supervisor notified (phone call)</span>
                 </div>
                 <div className="flex items-centre gap-3">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">4</div>
+                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-medium flex-shrink-0">
+                    4
+                  </div>
                   <span>T+60 min: Unresolved - Plant manager + safety officer notified</span>
                 </div>
               </div>
@@ -420,11 +526,14 @@ const EnergyEfficiencyModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Comprehensive event logging creates the historical record needed for trend analysis, root cause investigation, compliance documentation, and continuous improvement.
+              Comprehensive event logging creates the historical record needed for trend analysis,
+              root cause investigation, compliance documentation, and continuous improvement.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Event Log Fields</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Essential Event Log Fields
+              </p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-white">
                   <thead>
@@ -484,7 +593,9 @@ const EnergyEfficiencyModule5Section3 = () => {
               <p className="text-sm font-medium text-white mb-2">Trend Analysis Techniques:</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                  <p className="text-elec-yellow text-sm font-medium mb-2">Short-term Analysis (Daily/Weekly)</p>
+                  <p className="text-elec-yellow text-sm font-medium mb-2">
+                    Short-term Analysis (Daily/Weekly)
+                  </p>
                   <ul className="text-sm text-white space-y-1">
                     <li>Peak demand patterns</li>
                     <li>Operating schedule correlation</li>
@@ -493,7 +604,9 @@ const EnergyEfficiencyModule5Section3 = () => {
                   </ul>
                 </div>
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                  <p className="text-elec-yellow text-sm font-medium mb-2">Long-term Analysis (Monthly/Yearly)</p>
+                  <p className="text-elec-yellow text-sm font-medium mb-2">
+                    Long-term Analysis (Monthly/Yearly)
+                  </p>
                   <ul className="text-sm text-white space-y-1">
                     <li>Equipment degradation curves</li>
                     <li>Seasonal variations</li>
@@ -505,12 +618,22 @@ const EnergyEfficiencyModule5Section3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Data Retention Guidelines</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Data Retention Guidelines
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>High-resolution data (1-sec intervals):</strong> 7-30 days</li>
-                <li><strong>Detailed logs (15-min intervals):</strong> 1-3 years</li>
-                <li><strong>Summary/aggregate data:</strong> 5-10 years</li>
-                <li><strong>Critical event records:</strong> Permanent or per compliance requirements</li>
+                <li>
+                  <strong>High-resolution data (1-sec intervals):</strong> 7-30 days
+                </li>
+                <li>
+                  <strong>Detailed logs (15-min intervals):</strong> 1-3 years
+                </li>
+                <li>
+                  <strong>Summary/aggregate data:</strong> 5-10 years
+                </li>
+                <li>
+                  <strong>Critical event records:</strong> Permanent or per compliance requirements
+                </li>
               </ul>
             </div>
           </div>
@@ -524,11 +647,15 @@ const EnergyEfficiencyModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Alert fatigue is one of the most common failures in monitoring systems. When operators receive too many false or non-actionable alerts, they begin ignoring all alerts - including critical ones.
+              Alert fatigue is one of the most common failures in monitoring systems. When operators
+              receive too many false or non-actionable alerts, they begin ignoring all alerts -
+              including critical ones.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-              <p className="text-sm font-medium text-red-400 mb-2">Warning Signs of Alert Fatigue</p>
+              <p className="text-sm font-medium text-red-400 mb-2">
+                Warning Signs of Alert Fatigue
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Operators disabling or muting alert notifications</li>
                 <li>Alerts being acknowledged without investigation</li>
@@ -539,34 +666,52 @@ const EnergyEfficiencyModule5Section3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-3">Strategies to Prevent Alert Fatigue:</p>
+              <p className="text-sm font-medium text-white mb-3">
+                Strategies to Prevent Alert Fatigue:
+              </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Time Delays and Persistence</p>
-                    <p className="text-sm text-white">Require conditions to persist for a set duration (e.g., 30 seconds to 5 minutes) before alerting. Eliminates transient spikes from triggering false alarms.</p>
+                    <p className="text-sm text-white">
+                      Require conditions to persist for a set duration (e.g., 30 seconds to 5
+                      minutes) before alerting. Eliminates transient spikes from triggering false
+                      alarms.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Activity className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Dead-band (Hysteresis)</p>
-                    <p className="text-sm text-white">Set different thresholds for alert activation vs clearing. Example: Alert at 130A, clear at 125A. Prevents rapid on-off cycling when values hover near threshold.</p>
+                    <p className="text-sm text-white">
+                      Set different thresholds for alert activation vs clearing. Example: Alert at
+                      130A, clear at 125A. Prevents rapid on-off cycling when values hover near
+                      threshold.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Layers className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Alert Suppression and Grouping</p>
-                    <p className="text-sm text-white">Suppress secondary alerts when a root cause alert is active. Group related alerts into single notifications. Implement maintenance mode to suppress alerts during planned work.</p>
+                    <p className="text-sm text-white">
+                      Suppress secondary alerts when a root cause alert is active. Group related
+                      alerts into single notifications. Implement maintenance mode to suppress
+                      alerts during planned work.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Settings className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Regular Threshold Review</p>
-                    <p className="text-sm text-white">Monthly review of alert statistics. Adjust thresholds generating excessive false positives. Remove or consolidate redundant alerts. Benchmark against industry standards.</p>
+                    <p className="text-sm text-white">
+                      Monthly review of alert statistics. Adjust thresholds generating excessive
+                      false positives. Remove or consolidate redundant alerts. Benchmark against
+                      industry standards.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -606,45 +751,68 @@ const EnergyEfficiencyModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Advanced monitoring systems use machine learning to detect subtle patterns that indicate developing problems, enabling proactive maintenance before failures occur.
+              Advanced monitoring systems use machine learning to detect subtle patterns that
+              indicate developing problems, enabling proactive maintenance before failures occur.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-3">How Predictive Analytics Works:</p>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">1</div>
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">
+                    1
+                  </div>
                   <div>
                     <p className="font-medium text-white">Baseline Learning</p>
-                    <p className="text-sm text-white">System learns normal operating patterns from historical data including daily cycles, seasonal variations, and load relationships.</p>
+                    <p className="text-sm text-white">
+                      System learns normal operating patterns from historical data including daily
+                      cycles, seasonal variations, and load relationships.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">2</div>
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">
+                    2
+                  </div>
                   <div>
                     <p className="font-medium text-white">Pattern Recognition</p>
-                    <p className="text-sm text-white">Algorithms identify correlations between parameters (e.g., temperature rise rate vs current, vibration patterns vs bearing condition).</p>
+                    <p className="text-sm text-white">
+                      Algorithms identify correlations between parameters (e.g., temperature rise
+                      rate vs current, vibration patterns vs bearing condition).
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">3</div>
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">
+                    3
+                  </div>
                   <div>
                     <p className="font-medium text-white">Anomaly Detection</p>
-                    <p className="text-sm text-white">Real-time comparison of current behaviour to learned patterns. Deviations are flagged even if within fixed thresholds.</p>
+                    <p className="text-sm text-white">
+                      Real-time comparison of current behaviour to learned patterns. Deviations are
+                      flagged even if within fixed thresholds.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">4</div>
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-medium flex-shrink-0">
+                    4
+                  </div>
                   <div>
                     <p className="font-medium text-white">Failure Prediction</p>
-                    <p className="text-sm text-white">Based on degradation trends and historical failure data, system estimates remaining useful life and recommends maintenance timing.</p>
+                    <p className="text-sm text-white">
+                      Based on degradation trends and historical failure data, system estimates
+                      remaining useful life and recommends maintenance timing.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Predictive Indicators for Electrical Equipment</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Common Predictive Indicators for Electrical Equipment
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium text-elec-yellow mb-1">Motors</p>
@@ -687,7 +855,9 @@ const EnergyEfficiencyModule5Section3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-elec-yellow mb-2">Rate-of-Change Alerting</p>
-              <p className="text-sm text-white mb-2">Beyond fixed thresholds, monitor how quickly parameters are changing:</p>
+              <p className="text-sm text-white mb-2">
+                Beyond fixed thresholds, monitor how quickly parameters are changing:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4 font-mono">
                 <li>IF temperature_rise_rate &gt; 2°C/hour THEN alert "Abnormal heating"</li>
                 <li>IF current_trend &gt; 5A/week THEN alert "Load increasing"</li>
@@ -705,11 +875,15 @@ const EnergyEfficiencyModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Connecting your energy monitoring system to your CMMS (Computerised Maintenance Management System) automates work order creation and ensures monitoring data informs maintenance decisions.
+              Connecting your energy monitoring system to your CMMS (Computerised Maintenance
+              Management System) automates work order creation and ensures monitoring data informs
+              maintenance decisions.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CMMS Integration Benefits</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                CMMS Integration Benefits
+              </p>
               <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -780,19 +954,31 @@ const EnergyEfficiencyModule5Section3 = () => {
               <div className="space-y-3 text-sm text-white">
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <span className="font-medium text-elec-yellow min-w-[80px]">API</span>
-                  <span>REST or SOAP web services for real-time bi-directional data exchange. Most flexible but requires development effort.</span>
+                  <span>
+                    REST or SOAP web services for real-time bi-directional data exchange. Most
+                    flexible but requires development effort.
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <span className="font-medium text-elec-yellow min-w-[80px]">Database</span>
-                  <span>Direct database connection or shared database tables. Good for large data volumes but requires careful security configuration.</span>
+                  <span>
+                    Direct database connection or shared database tables. Good for large data
+                    volumes but requires careful security configuration.
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <span className="font-medium text-elec-yellow min-w-[80px]">File-based</span>
-                  <span>CSV or XML file exchange on scheduled intervals. Simple but introduces latency. Good for legacy systems.</span>
+                  <span>
+                    CSV or XML file exchange on scheduled intervals. Simple but introduces latency.
+                    Good for legacy systems.
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <span className="font-medium text-elec-yellow min-w-[80px]">Middleware</span>
-                  <span>Integration platform (e.g., OSIsoft PI, Ignition) as intermediary. Adds cost but simplifies complex integrations.</span>
+                  <span>
+                    Integration platform (e.g., OSIsoft PI, Ignition) as intermediary. Adds cost but
+                    simplifies complex integrations.
+                  </span>
                 </div>
               </div>
             </div>
@@ -807,7 +993,9 @@ const EnergyEfficiencyModule5Section3 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Configuring Alerts</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Configuring Alerts
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Collect 2-4 weeks of baseline data before setting thresholds</li>
                 <li>Start with conservative (wider) thresholds and tighten over time</li>
@@ -818,7 +1006,9 @@ const EnergyEfficiencyModule5Section3 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Reviewing Alert Performance</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Reviewing Alert Performance
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Track alert volume by type, severity, and equipment</li>
                 <li>Calculate false positive rate for each alert type</li>
@@ -831,11 +1021,22 @@ const EnergyEfficiencyModule5Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Using arbitrary thresholds</strong> - always base on actual operating data</li>
-                <li><strong>Alerting on everything</strong> - focus on actionable conditions only</li>
-                <li><strong>Ignoring alert fatigue signs</strong> - address root causes immediately</li>
-                <li><strong>No escalation paths</strong> - critical alerts must reach someone</li>
-                <li><strong>Poor log retention</strong> - maintain sufficient history for trend analysis</li>
+                <li>
+                  <strong>Using arbitrary thresholds</strong> - always base on actual operating data
+                </li>
+                <li>
+                  <strong>Alerting on everything</strong> - focus on actionable conditions only
+                </li>
+                <li>
+                  <strong>Ignoring alert fatigue signs</strong> - address root causes immediately
+                </li>
+                <li>
+                  <strong>No escalation paths</strong> - critical alerts must reach someone
+                </li>
+                <li>
+                  <strong>Poor log retention</strong> - maintain sufficient history for trend
+                  analysis
+                </li>
               </ul>
             </div>
           </div>
@@ -899,21 +1100,27 @@ const EnergyEfficiencyModule5Section3 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/energy-efficiency/module-5/section-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Dashboard Design
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/energy-efficiency/module-5/section-4">
               Next: Remote Control
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

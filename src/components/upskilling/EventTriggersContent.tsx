@@ -14,13 +14,15 @@ const EventTriggersContent = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
           <p>
-            Event triggers and automated reporting systems form the intelligence layer of modern BMS installations. 
-            These systems monitor building conditions continuously, responding automatically to predefined scenarios 
-            and generating comprehensive reports without manual intervention.
+            Event triggers and automated reporting systems form the intelligence layer of modern BMS
+            installations. These systems monitor building conditions continuously, responding
+            automatically to predefined scenarios and generating comprehensive reports without
+            manual intervention.
           </p>
           <p>
-            Intelligent event handling reduces operator workload, ensures consistent responses to building conditions, 
-            and provides comprehensive documentation for compliance, energy management, and operational optimization.
+            Intelligent event handling reduces operator workload, ensures consistent responses to
+            building conditions, and provides comprehensive documentation for compliance, energy
+            management, and operational optimization.
           </p>
         </CardContent>
       </Card>
@@ -68,10 +70,18 @@ const EventTriggersContent = () => {
               <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
                 <h5 className="text-elec-yellow font-semibold mb-2">Trigger Types</h5>
                 <ul className="text-sm space-y-1">
-                  <li>• <strong>Time-based:</strong> Scheduled events, astronomical time</li>
-                  <li>• <strong>Condition-based:</strong> Temperature, occupancy, equipment status</li>
-                  <li>• <strong>Logic-based:</strong> Multiple conditions, complex algorithms</li>
-                  <li>• <strong>Manual:</strong> Operator overrides, emergency commands</li>
+                  <li>
+                    • <strong>Time-based:</strong> Scheduled events, astronomical time
+                  </li>
+                  <li>
+                    • <strong>Condition-based:</strong> Temperature, occupancy, equipment status
+                  </li>
+                  <li>
+                    • <strong>Logic-based:</strong> Multiple conditions, complex algorithms
+                  </li>
+                  <li>
+                    • <strong>Manual:</strong> Operator overrides, emergency commands
+                  </li>
                 </ul>
               </div>
               <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
@@ -100,13 +110,16 @@ const EventTriggersContent = () => {
                 <h5 className="text-elec-yellow font-semibold mb-2">Notification Channels</h5>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
                   <div>
-                    <strong>Email Systems:</strong> Formatted reports, alarm notifications, scheduled summaries
+                    <strong>Email Systems:</strong> Formatted reports, alarm notifications,
+                    scheduled summaries
                   </div>
                   <div>
-                    <strong>SMS/Text:</strong> Critical alarms, emergency notifications, status updates
+                    <strong>SMS/Text:</strong> Critical alarms, emergency notifications, status
+                    updates
                   </div>
                   <div>
-                    <strong>Mobile Apps:</strong> Push notifications, dashboard alerts, interactive responses
+                    <strong>Mobile Apps:</strong> Push notifications, dashboard alerts, interactive
+                    responses
                   </div>
                 </div>
               </div>
@@ -135,10 +148,18 @@ const EventTriggersContent = () => {
               <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
                 <h5 className="text-elec-yellow font-semibold mb-2">Report Categories</h5>
                 <ul className="text-sm space-y-1">
-                  <li>• <strong>Operational:</strong> Daily summaries, equipment runtime</li>
-                  <li>• <strong>Energy:</strong> Consumption analysis, cost reporting</li>
-                  <li>• <strong>Maintenance:</strong> Service schedules, fault history</li>
-                  <li>• <strong>Compliance:</strong> Environmental logs, safety records</li>
+                  <li>
+                    • <strong>Operational:</strong> Daily summaries, equipment runtime
+                  </li>
+                  <li>
+                    • <strong>Energy:</strong> Consumption analysis, cost reporting
+                  </li>
+                  <li>
+                    • <strong>Maintenance:</strong> Service schedules, fault history
+                  </li>
+                  <li>
+                    • <strong>Compliance:</strong> Environmental logs, safety records
+                  </li>
                 </ul>
               </div>
               <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
@@ -194,7 +215,7 @@ const EventTriggersContent = () => {
             <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
               <h5 className="text-elec-yellow font-semibold mb-2">Performance Optimization</h5>
               <p className="text-sm mb-2">
-                Efficient event processing requires careful consideration of trigger frequency, 
+                Efficient event processing requires careful consideration of trigger frequency,
                 processing load, and system response times.
               </p>
               <ul className="text-sm space-y-1">

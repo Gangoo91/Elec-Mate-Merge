@@ -1,7 +1,7 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 // Types matching the database schema
-export type RateType = "hourly" | "daily" | "weekly" | "yearly";
+export type RateType = 'hourly' | 'daily' | 'weekly' | 'yearly';
 
 export interface ElecIdProfile {
   id: string;
@@ -95,64 +95,86 @@ export interface ElecIdQualification {
 export const getElecIdProfiles = async (): Promise<ElecIdProfile[]> => {
   const { data: profiles, error: profileError } = await supabase
     .from('employer_elec_id_profiles')
-    .select(`
+    .select(
+      `
       *,
       employee:employer_employees(id, name, role, photo_url, email, phone)
-    `)
+    `
+    )
     .order('created_at', { ascending: false });
 
   if (profileError) throw profileError;
   if (!profiles) return [];
 
   // Fetch related data for each profile
-  const profileIds = profiles.map(p => p.id);
+  const profileIds = profiles.map((p) => p.id);
 
-  const [
-    { data: skills },
-    { data: workHistory },
-    { data: training },
-    { data: qualifications }
-  ] = await Promise.all([
-    supabase.from('employer_elec_id_skills').select('*').in('profile_id', profileIds),
-    supabase.from('employer_elec_id_work_history').select('*').in('profile_id', profileIds).order('start_date', { ascending: false }),
-    supabase.from('employer_elec_id_training').select('*').in('profile_id', profileIds).order('completed_date', { ascending: false }),
-    supabase.from('employer_elec_id_qualifications').select('*').in('profile_id', profileIds).order('date_achieved', { ascending: false }),
-  ]);
+  const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
+    await Promise.all([
+      supabase.from('employer_elec_id_skills').select('*').in('profile_id', profileIds),
+      supabase
+        .from('employer_elec_id_work_history')
+        .select('*')
+        .in('profile_id', profileIds)
+        .order('start_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_training')
+        .select('*')
+        .in('profile_id', profileIds)
+        .order('completed_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_qualifications')
+        .select('*')
+        .in('profile_id', profileIds)
+        .order('date_achieved', { ascending: false }),
+    ]);
 
-  return profiles.map(profile => ({
+  return profiles.map((profile) => ({
     ...profile,
-    skills: skills?.filter(s => s.profile_id === profile.id) || [],
-    work_history: workHistory?.filter(w => w.profile_id === profile.id) || [],
-    training: training?.filter(t => t.profile_id === profile.id) || [],
-    qualifications: qualifications?.filter(q => q.profile_id === profile.id) || [],
+    skills: skills?.filter((s) => s.profile_id === profile.id) || [],
+    work_history: workHistory?.filter((w) => w.profile_id === profile.id) || [],
+    training: training?.filter((t) => t.profile_id === profile.id) || [],
+    qualifications: qualifications?.filter((q) => q.profile_id === profile.id) || [],
   }));
 };
 
 // Fetch single profile by employee ID
-export const getElecIdProfileByEmployeeId = async (employeeId: string): Promise<ElecIdProfile | null> => {
+export const getElecIdProfileByEmployeeId = async (
+  employeeId: string
+): Promise<ElecIdProfile | null> => {
   const { data: profile, error } = await supabase
     .from('employer_elec_id_profiles')
-    .select(`
+    .select(
+      `
       *,
       employee:employer_employees(id, name, role, photo_url, email, phone)
-    `)
+    `
+    )
     .eq('employee_id', employeeId)
     .maybeSingle();
 
   if (error) throw error;
   if (!profile) return null;
 
-  const [
-    { data: skills },
-    { data: workHistory },
-    { data: training },
-    { data: qualifications }
-  ] = await Promise.all([
-    supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
-    supabase.from('employer_elec_id_work_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
-    supabase.from('employer_elec_id_training').select('*').eq('profile_id', profile.id).order('completed_date', { ascending: false }),
-    supabase.from('employer_elec_id_qualifications').select('*').eq('profile_id', profile.id).order('date_achieved', { ascending: false }),
-  ]);
+  const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
+    await Promise.all([
+      supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
+      supabase
+        .from('employer_elec_id_work_history')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('start_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_training')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('completed_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_qualifications')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('date_achieved', { ascending: false }),
+    ]);
 
   return {
     ...profile,
@@ -164,30 +186,42 @@ export const getElecIdProfileByEmployeeId = async (employeeId: string): Promise<
 };
 
 // Lookup profile by Elec-ID number (for scanning)
-export const getElecIdProfileByNumber = async (elecIdNumber: string): Promise<ElecIdProfile | null> => {
+export const getElecIdProfileByNumber = async (
+  elecIdNumber: string
+): Promise<ElecIdProfile | null> => {
   const { data: profile, error } = await supabase
     .from('employer_elec_id_profiles')
-    .select(`
+    .select(
+      `
       *,
       employee:employer_employees(id, name, role, photo_url, email, phone)
-    `)
+    `
+    )
     .eq('elec_id_number', elecIdNumber)
     .maybeSingle();
 
   if (error) throw error;
   if (!profile) return null;
 
-  const [
-    { data: skills },
-    { data: workHistory },
-    { data: training },
-    { data: qualifications }
-  ] = await Promise.all([
-    supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
-    supabase.from('employer_elec_id_work_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
-    supabase.from('employer_elec_id_training').select('*').eq('profile_id', profile.id).order('completed_date', { ascending: false }),
-    supabase.from('employer_elec_id_qualifications').select('*').eq('profile_id', profile.id).order('date_achieved', { ascending: false }),
-  ]);
+  const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
+    await Promise.all([
+      supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
+      supabase
+        .from('employer_elec_id_work_history')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('start_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_training')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('completed_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_qualifications')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('date_achieved', { ascending: false }),
+    ]);
 
   // Increment profile views
   await supabase
@@ -214,8 +248,12 @@ export const createElecIdProfile = async (data: {
   bio?: string;
   specialisations?: string[];
 }): Promise<ElecIdProfile> => {
-  const elecIdNumber = data.elec_id_number || `ELEC-${new Date().getFullYear()}-${Math.floor(Math.random() * 100000).toString().padStart(5, '0')}`;
-  
+  const elecIdNumber =
+    data.elec_id_number ||
+    `ELEC-${new Date().getFullYear()}-${Math.floor(Math.random() * 100000)
+      .toString()
+      .padStart(5, '0')}`;
+
   const { data: profile, error } = await supabase
     .from('employer_elec_id_profiles')
     .insert({ ...data, elec_id_number: elecIdNumber })
@@ -227,7 +265,10 @@ export const createElecIdProfile = async (data: {
 };
 
 // Update profile
-export const updateElecIdProfile = async (id: string, updates: Partial<ElecIdProfile>): Promise<ElecIdProfile> => {
+export const updateElecIdProfile = async (
+  id: string,
+  updates: Partial<ElecIdProfile>
+): Promise<ElecIdProfile> => {
   const { data, error } = await supabase
     .from('employer_elec_id_profiles')
     .update(updates)
@@ -240,13 +281,16 @@ export const updateElecIdProfile = async (id: string, updates: Partial<ElecIdPro
 };
 
 // Verify profile credentials
-export const verifyElecIdProfile = async (id: string, verifiedBy: string): Promise<ElecIdProfile> => {
+export const verifyElecIdProfile = async (
+  id: string,
+  verifiedBy: string
+): Promise<ElecIdProfile> => {
   const { data, error } = await supabase
     .from('employer_elec_id_profiles')
     .update({
       is_verified: true,
       verified_at: new Date().toISOString(),
-      verified_by: verifiedBy
+      verified_by: verifiedBy,
     })
     .eq('id', id)
     .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
@@ -259,7 +303,7 @@ export const verifyElecIdProfile = async (id: string, verifiedBy: string): Promi
 // Generate shareable link
 export const generateShareableLink = async (id: string): Promise<string> => {
   const shareableLink = `https://elec-id.app/profile/${id}?token=${crypto.randomUUID()}`;
-  
+
   const { error } = await supabase
     .from('employer_elec_id_profiles')
     .update({ shareable_link: shareableLink })
@@ -270,7 +314,9 @@ export const generateShareableLink = async (id: string): Promise<string> => {
 };
 
 // Skills CRUD
-export const addElecIdSkill = async (data: Omit<ElecIdSkill, 'id' | 'created_at'>): Promise<ElecIdSkill> => {
+export const addElecIdSkill = async (
+  data: Omit<ElecIdSkill, 'id' | 'created_at'>
+): Promise<ElecIdSkill> => {
   const { data: skill, error } = await supabase
     .from('employer_elec_id_skills')
     .insert(data)
@@ -287,7 +333,9 @@ export const deleteElecIdSkill = async (id: string): Promise<void> => {
 };
 
 // Work History CRUD
-export const addElecIdWorkHistory = async (data: Omit<ElecIdWorkHistory, 'id' | 'created_at'>): Promise<ElecIdWorkHistory> => {
+export const addElecIdWorkHistory = async (
+  data: Omit<ElecIdWorkHistory, 'id' | 'created_at'>
+): Promise<ElecIdWorkHistory> => {
   const { data: history, error } = await supabase
     .from('employer_elec_id_work_history')
     .insert(data)
@@ -304,7 +352,9 @@ export const deleteElecIdWorkHistory = async (id: string): Promise<void> => {
 };
 
 // Training CRUD
-export const addElecIdTraining = async (data: Omit<ElecIdTraining, 'id' | 'created_at'>): Promise<ElecIdTraining> => {
+export const addElecIdTraining = async (
+  data: Omit<ElecIdTraining, 'id' | 'created_at'>
+): Promise<ElecIdTraining> => {
   const { data: training, error } = await supabase
     .from('employer_elec_id_training')
     .insert(data)
@@ -321,7 +371,9 @@ export const deleteElecIdTraining = async (id: string): Promise<void> => {
 };
 
 // Qualifications CRUD
-export const addElecIdQualification = async (data: Omit<ElecIdQualification, 'id' | 'created_at'>): Promise<ElecIdQualification> => {
+export const addElecIdQualification = async (
+  data: Omit<ElecIdQualification, 'id' | 'created_at'>
+): Promise<ElecIdQualification> => {
   const { data: qualification, error } = await supabase
     .from('employer_elec_id_qualifications')
     .insert(data)
@@ -337,7 +389,10 @@ export const deleteElecIdQualification = async (id: string): Promise<void> => {
   if (error) throw error;
 };
 
-export const updateElecIdQualification = async (id: string, data: Partial<ElecIdQualification>): Promise<ElecIdQualification> => {
+export const updateElecIdQualification = async (
+  id: string,
+  data: Partial<ElecIdQualification>
+): Promise<ElecIdQualification> => {
   const { data: qualification, error } = await supabase
     .from('employer_elec_id_qualifications')
     .update(data)
@@ -349,7 +404,10 @@ export const updateElecIdQualification = async (id: string, data: Partial<ElecId
   return qualification;
 };
 
-export const updateElecIdSkill = async (id: string, data: Partial<ElecIdSkill>): Promise<ElecIdSkill> => {
+export const updateElecIdSkill = async (
+  id: string,
+  data: Partial<ElecIdSkill>
+): Promise<ElecIdSkill> => {
   const { data: skill, error } = await supabase
     .from('employer_elec_id_skills')
     .update(data)
@@ -361,7 +419,10 @@ export const updateElecIdSkill = async (id: string, data: Partial<ElecIdSkill>):
   return skill;
 };
 
-export const updateElecIdWorkHistory = async (id: string, data: Partial<ElecIdWorkHistory>): Promise<ElecIdWorkHistory> => {
+export const updateElecIdWorkHistory = async (
+  id: string,
+  data: Partial<ElecIdWorkHistory>
+): Promise<ElecIdWorkHistory> => {
   const { data: history, error } = await supabase
     .from('employer_elec_id_work_history')
     .update(data)
@@ -374,7 +435,9 @@ export const updateElecIdWorkHistory = async (id: string, data: Partial<ElecIdWo
 };
 
 // Fetch qualifications for a profile
-export const getQualificationsByProfileId = async (profileId: string): Promise<ElecIdQualification[]> => {
+export const getQualificationsByProfileId = async (
+  profileId: string
+): Promise<ElecIdQualification[]> => {
   const { data, error } = await supabase
     .from('employer_elec_id_qualifications')
     .select('*')
@@ -398,7 +461,9 @@ export const getSkillsByProfileId = async (profileId: string): Promise<ElecIdSki
 };
 
 // Fetch work history for a profile
-export const getWorkHistoryByProfileId = async (profileId: string): Promise<ElecIdWorkHistory[]> => {
+export const getWorkHistoryByProfileId = async (
+  profileId: string
+): Promise<ElecIdWorkHistory[]> => {
   const { data, error } = await supabase
     .from('employer_elec_id_work_history')
     .select('*')
@@ -439,7 +504,9 @@ export interface UserCV {
 
 // Get all CVs for the current user
 export const getUserCVs = async (): Promise<UserCV[]> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
   const { data, error } = await supabase
@@ -454,11 +521,7 @@ export const getUserCVs = async (): Promise<UserCV[]> => {
 
 // Get a specific CV by ID
 export const getCVById = async (cvId: string): Promise<UserCV | null> => {
-  const { data, error } = await supabase
-    .from('user_cvs')
-    .select('*')
-    .eq('id', cvId)
-    .maybeSingle();
+  const { data, error } = await supabase.from('user_cvs').select('*').eq('id', cvId).maybeSingle();
 
   if (error) throw error;
   return data;
@@ -466,7 +529,9 @@ export const getCVById = async (cvId: string): Promise<UserCV | null> => {
 
 // Get user's primary CV
 export const getPrimaryCV = async (): Promise<UserCV | null> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
   const { data, error } = await supabase
@@ -488,7 +553,9 @@ export const saveCV = async (cvData: {
   is_primary?: boolean;
   pdf_url?: string;
 }): Promise<UserCV> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
   const { data, error } = await supabase
@@ -509,13 +576,16 @@ export const saveCV = async (cvData: {
 };
 
 // Update an existing CV
-export const updateCV = async (cvId: string, updates: Partial<{
-  template_id: UserCV['template_id'];
-  cv_data: Record<string, unknown>;
-  title: string;
-  is_primary: boolean;
-  pdf_url: string;
-}>): Promise<UserCV> => {
+export const updateCV = async (
+  cvId: string,
+  updates: Partial<{
+    template_id: UserCV['template_id'];
+    cv_data: Record<string, unknown>;
+    title: string;
+    is_primary: boolean;
+    pdf_url: string;
+  }>
+): Promise<UserCV> => {
   const { data, error } = await supabase
     .from('user_cvs')
     .update(updates)
@@ -529,20 +599,14 @@ export const updateCV = async (cvId: string, updates: Partial<{
 
 // Delete a CV
 export const deleteCV = async (cvId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('user_cvs')
-    .delete()
-    .eq('id', cvId);
+  const { error } = await supabase.from('user_cvs').delete().eq('id', cvId);
 
   if (error) throw error;
 };
 
 // Set a CV as primary (and unset others)
 export const setAsPrimaryCV = async (cvId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('user_cvs')
-    .update({ is_primary: true })
-    .eq('id', cvId);
+  const { error } = await supabase.from('user_cvs').update({ is_primary: true }).eq('id', cvId);
 
   if (error) throw error;
 };
@@ -552,7 +616,9 @@ export const getCurrentUserElecIdForCV = async (): Promise<{
   profile: ElecIdProfile | null;
   userInfo: { full_name: string; email: string } | null;
 }> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return { profile: null, userInfo: null };
 
   // Get user's basic info from profiles
@@ -562,10 +628,12 @@ export const getCurrentUserElecIdForCV = async (): Promise<{
     .eq('id', user.id)
     .maybeSingle();
 
-  const userInfo = userProfile ? {
-    full_name: userProfile.full_name || '',
-    email: user.email || '',
-  } : null;
+  const userInfo = userProfile
+    ? {
+        full_name: userProfile.full_name || '',
+        email: user.email || '',
+      }
+    : null;
 
   // If they have an Elec-ID number, try to find their profile
   if (userProfile?.elec_id_number) {
@@ -587,27 +655,27 @@ export const getCurrentUserElecIdForCV = async (): Promise<{
  * @returns The public URL of the uploaded PDF
  */
 export const uploadCVPDF = async (cvId: string, pdfBlob: Blob): Promise<string> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error('User not authenticated');
 
   const timestamp = Date.now();
   const fileName = `${user.id}/${cvId}/${timestamp}.pdf`;
 
-  const { data, error } = await supabase.storage
-    .from('cv-documents')
-    .upload(fileName, pdfBlob, {
-      contentType: 'application/pdf',
-      upsert: true,
-    });
+  const { data, error } = await supabase.storage.from('cv-documents').upload(fileName, pdfBlob, {
+    contentType: 'application/pdf',
+    upsert: true,
+  });
 
   if (error) {
     throw new Error(`Failed to upload CV PDF: ${error.message}`);
   }
 
   // Get public URL
-  const { data: { publicUrl } } = supabase.storage
-    .from('cv-documents')
-    .getPublicUrl(data.path);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from('cv-documents').getPublicUrl(data.path);
 
   return publicUrl;
 };
@@ -617,7 +685,9 @@ export const uploadCVPDF = async (cvId: string, pdfBlob: Blob): Promise<string> 
  * @param pdfUrl - The public URL of the PDF to delete
  */
 export const deleteCVPDF = async (pdfUrl: string): Promise<void> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error('User not authenticated');
 
   // Extract path from URL
@@ -629,9 +699,7 @@ export const deleteCVPDF = async (pdfUrl: string): Promise<void> => {
 
   const filePath = decodeURIComponent(pathMatch[1]);
 
-  const { error } = await supabase.storage
-    .from('cv-documents')
-    .remove([filePath]);
+  const { error } = await supabase.storage.from('cv-documents').remove([filePath]);
 
   if (error) {
     throw new Error(`Failed to delete CV PDF: ${error.message}`);

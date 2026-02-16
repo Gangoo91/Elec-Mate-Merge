@@ -1,79 +1,76 @@
-import { ArrowLeft, ShieldAlert, CheckCircle, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ShieldAlert, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "4s-procedure",
+    id: '4s-procedure',
     question:
-      "What is the correct order of the 4-S emergency procedure for accidental asbestos disturbance?",
+      'What is the correct order of the 4-S emergency procedure for accidental asbestos disturbance?',
     options: [
-      "Stop, Seal, Sign, Summon",
-      "Summon, Stop, Seal, Sign",
-      "Seal, Sign, Stop, Summon",
-      "Sign, Summon, Seal, Stop",
+      'Stop, Seal, Sign, Summon',
+      'Summon, Stop, Seal, Sign',
+      'Seal, Sign, Stop, Summon',
+      'Sign, Summon, Seal, Stop',
     ],
     correctIndex: 0,
     explanation:
-      "The 4-S procedure follows a strict order: STOP work immediately to prevent further fibre release; SEAL the area by closing doors, windows, and ventilation; SIGN all entry points with danger warnings and barrier tape; SUMMON your supervisor, the dutyholder, and specialist help. Each step builds on the previous one to contain the contamination and protect people.",
+      'The 4-S procedure follows a strict order: STOP work immediately to prevent further fibre release; SEAL the area by closing doors, windows, and ventilation; SIGN all entry points with danger warnings and barrier tape; SUMMON your supervisor, the dutyholder, and specialist help. Each step builds on the previous one to contain the contamination and protect people.',
   },
   {
-    id: "rushing-disturbance",
+    id: 'rushing-disturbance',
     question:
-      "Why should you NOT rush out of an area where asbestos has been accidentally disturbed?",
+      'Why should you NOT rush out of an area where asbestos has been accidentally disturbed?',
     options: [
-      "Rushing creates air currents that spread fibres further",
-      "You might slip and injure yourself",
-      "It causes panic among other workers",
-      "The HSE requires you to walk at all times on site",
+      'Rushing creates air currents that spread fibres further',
+      'You might slip and injure yourself',
+      'It causes panic among other workers',
+      'The HSE requires you to walk at all times on site',
     ],
     correctIndex: 0,
     explanation:
-      "Rushing out of a contaminated area creates air currents and turbulence that can spread asbestos fibres much further than they would otherwise travel. You should leave the area calmly and close the door behind you. The priority is to contain the fibres within the smallest possible area.",
+      'Rushing out of a contaminated area creates air currents and turbulence that can spread asbestos fibres much further than they would otherwise travel. You should leave the area calmly and close the door behind you. The priority is to contain the fibres within the smallest possible area.',
   },
   {
-    id: "riddor-reporting",
+    id: 'riddor-reporting',
     question:
-      "Under which regulations might an accidental asbestos disturbance need to be reported?",
+      'Under which regulations might an accidental asbestos disturbance need to be reported?',
     options: [
-      "RIDDOR — Reporting of Injuries, Diseases and Dangerous Occurrences Regulations",
-      "COSHH — Control of Substances Hazardous to Health",
-      "CDM — Construction (Design and Management) Regulations",
-      "The Building Regulations Part P",
+      'RIDDOR — Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
+      'COSHH — Control of Substances Hazardous to Health',
+      'CDM — Construction (Design and Management) Regulations',
+      'The Building Regulations Part P',
     ],
     correctIndex: 0,
     explanation:
-      "An accidental disturbance of asbestos may need to be reported under RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations) if it constitutes a dangerous occurrence — specifically, the accidental release of a biological agent or substance that could cause harm to health. COSHH and CAR 2012 are also relevant regulations, but the reporting duty for incidents falls under RIDDOR.",
+      'An accidental disturbance of asbestos may need to be reported under RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations) if it constitutes a dangerous occurrence — specifically, the accidental release of a biological agent or substance that could cause harm to health. COSHH and CAR 2012 are also relevant regulations, but the reporting duty for incidents falls under RIDDOR.',
   },
 ];
 
 const faqs = [
   {
-    question:
-      "What should I do if I accidentally drill into something I think might be asbestos?",
+    question: 'What should I do if I accidentally drill into something I think might be asbestos?',
     answer:
-      "Stop drilling immediately. Do not try to remove the drill bit or continue working. Put down your tools carefully. If you have RPE (respiratory protective equipment), keep it on. If not, cover your nose and mouth with a handkerchief or your clothing and leave the area calmly — do not rush. Close the door behind you. Seal the area as best you can (tape, polythene, or simply keeping the door closed). Place warning signs if available. Report immediately to your supervisor and the building dutyholder. Do not re-enter the area until a competent person has assessed it and given clearance. Record the incident in writing, including the date, time, location, what material was disturbed, and who was present.",
+      'Stop drilling immediately. Do not try to remove the drill bit or continue working. Put down your tools carefully. If you have RPE (respiratory protective equipment), keep it on. If not, cover your nose and mouth with a handkerchief or your clothing and leave the area calmly — do not rush. Close the door behind you. Seal the area as best you can (tape, polythene, or simply keeping the door closed). Place warning signs if available. Report immediately to your supervisor and the building dutyholder. Do not re-enter the area until a competent person has assessed it and given clearance. Record the incident in writing, including the date, time, location, what material was disturbed, and who was present.',
+  },
+  {
+    question: 'Can I clean up asbestos debris myself if only a small amount was disturbed?',
+    answer:
+      'Absolutely not. Even a very small disturbance of asbestos-containing material can release thousands of microscopic fibres into the air. These fibres are invisible to the naked eye and remain airborne for hours. Only a competent, specialist contractor should clean up asbestos debris. They will use HEPA-filtered vacuums, wet wiping techniques, and appropriate PPE. Using a standard vacuum cleaner, broom, or cloth will spread the fibres further and contaminate a larger area. Never attempt to clean up asbestos debris yourself, regardless of how small the amount appears to be.',
   },
   {
     question:
-      "Can I clean up asbestos debris myself if only a small amount was disturbed?",
+      'Do I need to tell my GP if I was exposed to asbestos during an accidental disturbance?',
     answer:
-      "Absolutely not. Even a very small disturbance of asbestos-containing material can release thousands of microscopic fibres into the air. These fibres are invisible to the naked eye and remain airborne for hours. Only a competent, specialist contractor should clean up asbestos debris. They will use HEPA-filtered vacuums, wet wiping techniques, and appropriate PPE. Using a standard vacuum cleaner, broom, or cloth will spread the fibres further and contaminate a larger area. Never attempt to clean up asbestos debris yourself, regardless of how small the amount appears to be.",
+      'Yes, it is advisable to inform your GP about any potential asbestos exposure, even a single incident. Your GP can add the exposure to your medical records, which is important for long-term health monitoring. Asbestos-related diseases can take 15 to 60 years to develop, so having an accurate exposure history is valuable. If the exposure was significant (prolonged or involving high-risk materials such as pipe lagging or sprayed coatings), you should also be placed on health surveillance. Your employer has a duty to arrange this under the Control of Asbestos Regulations 2012.',
   },
   {
-    question:
-      "Do I need to tell my GP if I was exposed to asbestos during an accidental disturbance?",
+    question: 'What happens if the asbestos register was not checked before work started?',
     answer:
-      "Yes, it is advisable to inform your GP about any potential asbestos exposure, even a single incident. Your GP can add the exposure to your medical records, which is important for long-term health monitoring. Asbestos-related diseases can take 15 to 60 years to develop, so having an accurate exposure history is valuable. If the exposure was significant (prolonged or involving high-risk materials such as pipe lagging or sprayed coatings), you should also be placed on health surveillance. Your employer has a duty to arrange this under the Control of Asbestos Regulations 2012.",
-  },
-  {
-    question:
-      "What happens if the asbestos register was not checked before work started?",
-    answer:
-      "Failure to check the asbestos register before starting work in a non-domestic building is a breach of the Control of Asbestos Regulations 2012. The dutyholder has a legal obligation to make the register available to anyone who may disturb ACMs, and anyone carrying out work has a responsibility to check it. If the register was not checked and an accidental disturbance occurs, this will be investigated as part of the incident review. It may result in enforcement action by the HSE, and the dutyholder and/or employer could face prosecution. The lessons-learned review should identify why the register was not checked and put measures in place to prevent recurrence.",
+      'Failure to check the asbestos register before starting work in a non-domestic building is a breach of the Control of Asbestos Regulations 2012. The dutyholder has a legal obligation to make the register available to anyone who may disturb ACMs, and anyone carrying out work has a responsibility to check it. If the register was not checked and an accidental disturbance occurs, this will be investigated as part of the incident review. It may result in enforcement action by the HSE, and the dutyholder and/or employer could face prosecution. The lessons-learned review should identify why the register was not checked and put measures in place to prevent recurrence.',
   },
 ];
 
@@ -81,123 +78,117 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      "What is the FIRST thing you should do if you accidentally disturb asbestos-containing material?",
+      'What is the FIRST thing you should do if you accidentally disturb asbestos-containing material?',
     options: [
-      "Call the HSE immediately",
-      "Stop work immediately and do not continue to disturb the material",
-      "Try to clean up the debris quickly to limit exposure",
-      "Put on RPE and continue working carefully",
+      'Call the HSE immediately',
+      'Stop work immediately and do not continue to disturb the material',
+      'Try to clean up the debris quickly to limit exposure',
+      'Put on RPE and continue working carefully',
     ],
     correctAnswer: 1,
     explanation:
-      "The very first action is to STOP work immediately. Do not continue to disturb the material, do not try to clean up the debris, and do not continue working even with RPE. Stopping immediately limits the amount of fibre released into the air. The 4-S procedure begins with STOP.",
+      'The very first action is to STOP work immediately. Do not continue to disturb the material, do not try to clean up the debris, and do not continue working even with RPE. Stopping immediately limits the amount of fibre released into the air. The 4-S procedure begins with STOP.',
   },
   {
     id: 2,
-    question:
-      'What does the "SEAL" step of the 4-S procedure involve?',
+    question: 'What does the "SEAL" step of the 4-S procedure involve?',
     options: [
-      "Sealing the asbestos material in a plastic bag",
-      "Applying sealant paint to the damaged ACM",
-      "Closing doors, windows, and turning off ventilation to contain the area",
-      "Sealing your clothing in a bag for disposal",
+      'Sealing the asbestos material in a plastic bag',
+      'Applying sealant paint to the damaged ACM',
+      'Closing doors, windows, and turning off ventilation to contain the area',
+      'Sealing your clothing in a bag for disposal',
     ],
     correctAnswer: 2,
     explanation:
-      "The SEAL step involves containing the contaminated area by closing all doors and windows, sealing the area with tape or polythene if available, and turning off any ventilation, fans, or air conditioning that could spread fibres to other areas. The goal is to prevent fibres from migrating beyond the immediate area of disturbance.",
+      'The SEAL step involves containing the contaminated area by closing all doors and windows, sealing the area with tape or polythene if available, and turning off any ventilation, fans, or air conditioning that could spread fibres to other areas. The goal is to prevent fibres from migrating beyond the immediate area of disturbance.',
   },
   {
     id: 3,
     question:
-      "If you do NOT have RPE on when an accidental disturbance occurs, what should you do?",
+      'If you do NOT have RPE on when an accidental disturbance occurs, what should you do?',
     options: [
-      "Hold your breath and run out of the area as fast as possible",
-      "Cover your nose and mouth and leave the area calmly",
-      "Stay in the area and wait for someone to bring you RPE",
-      "Continue working — a single exposure is not dangerous",
+      'Hold your breath and run out of the area as fast as possible',
+      'Cover your nose and mouth and leave the area calmly',
+      'Stay in the area and wait for someone to bring you RPE',
+      'Continue working — a single exposure is not dangerous',
     ],
     correctAnswer: 1,
     explanation:
-      "If you do not have RPE, cover your nose and mouth with a handkerchief, cloth, or your clothing and leave the area calmly. Do not rush — rushing creates air currents that spread fibres further. Close the door behind you as you leave. Once out of the area, remove any outer clothing that may be contaminated and wash your hands and face.",
+      'If you do not have RPE, cover your nose and mouth with a handkerchief, cloth, or your clothing and leave the area calmly. Do not rush — rushing creates air currents that spread fibres further. Close the door behind you as you leave. Once out of the area, remove any outer clothing that may be contaminated and wash your hands and face.',
   },
   {
     id: 4,
-    question:
-      "Who should be the FIRST person you report an accidental asbestos disturbance to?",
+    question: 'Who should be the FIRST person you report an accidental asbestos disturbance to?',
     options: [
-      "The HSE enforcement officer",
-      "An asbestos removal contractor",
-      "Your immediate supervisor or site manager",
-      "Your GP",
+      'The HSE enforcement officer',
+      'An asbestos removal contractor',
+      'Your immediate supervisor or site manager',
+      'Your GP',
     ],
     correctAnswer: 2,
     explanation:
-      "Your immediate supervisor or site manager should be the first person you contact. They will then take responsibility for contacting the building dutyholder, arranging for a competent person to assess the situation, and escalating to the HSE if necessary. The chain of communication starts with your direct line management.",
+      'Your immediate supervisor or site manager should be the first person you contact. They will then take responsibility for contacting the building dutyholder, arranging for a competent person to assess the situation, and escalating to the HSE if necessary. The chain of communication starts with your direct line management.',
   },
   {
     id: 5,
     question:
-      "A plumber breaks a section of pipe lagging while accessing a valve. What makes this scenario particularly high-risk?",
+      'A plumber breaks a section of pipe lagging while accessing a valve. What makes this scenario particularly high-risk?',
     options: [
-      "Pipe lagging is very expensive to replace",
-      "Pipe lagging typically contains amosite/crocidolite and is highly friable — the highest-risk ACM",
-      "The valve may have been damaged",
-      "Pipe lagging is always blue in colour, which indicates crocidolite",
+      'Pipe lagging is very expensive to replace',
+      'Pipe lagging typically contains amosite/crocidolite and is highly friable — the highest-risk ACM',
+      'The valve may have been damaged',
+      'Pipe lagging is always blue in colour, which indicates crocidolite',
     ],
     correctAnswer: 1,
     explanation:
-      "Pipe lagging is one of the highest-risk ACMs because it typically contains amosite (brown asbestos) and/or crocidolite (blue asbestos) and is highly friable — meaning it crumbles easily and releases large quantities of dangerous fibres when disturbed. Breaking even a small section can create a significant fibre release requiring specialist clean-up.",
+      'Pipe lagging is one of the highest-risk ACMs because it typically contains amosite (brown asbestos) and/or crocidolite (blue asbestos) and is highly friable — meaning it crumbles easily and releases large quantities of dangerous fibres when disturbed. Breaking even a small section can create a significant fibre release requiring specialist clean-up.',
   },
   {
     id: 6,
-    question:
-      "What information should be recorded after an accidental asbestos disturbance?",
+    question: 'What information should be recorded after an accidental asbestos disturbance?',
     options: [
-      "Only the names of people present — everything else is confidential",
-      "Date, time, location, what happened, what material was disturbed, who was present, actions taken, and who was notified",
-      "Only the cost of the clean-up for insurance purposes",
-      "A photograph of the material is sufficient — no written record is needed",
+      'Only the names of people present — everything else is confidential',
+      'Date, time, location, what happened, what material was disturbed, who was present, actions taken, and who was notified',
+      'Only the cost of the clean-up for insurance purposes',
+      'A photograph of the material is sufficient — no written record is needed',
     ],
     correctAnswer: 1,
     explanation:
-      "A comprehensive written record must be made, including: date, time, and location; what happened and what material was disturbed; who was present and potentially exposed; what actions were taken; who was notified; and what the outcome was. This record is essential for health surveillance (exposure history), legal compliance, insurance claims, and lessons learned.",
+      'A comprehensive written record must be made, including: date, time, and location; what happened and what material was disturbed; who was present and potentially exposed; what actions were taken; who was notified; and what the outcome was. This record is essential for health surveillance (exposure history), legal compliance, insurance claims, and lessons learned.',
   },
   {
     id: 7,
-    question:
-      "After an accidental disturbance, when is it safe to re-enter the affected area?",
+    question: 'After an accidental disturbance, when is it safe to re-enter the affected area?',
     options: [
-      "After 24 hours — the fibres will have settled by then",
-      "Once you have put on a dust mask",
-      "Only after a competent person has assessed the area and given clearance",
-      "As soon as warning signs have been put up",
+      'After 24 hours — the fibres will have settled by then',
+      'Once you have put on a dust mask',
+      'Only after a competent person has assessed the area and given clearance',
+      'As soon as warning signs have been put up',
     ],
     correctAnswer: 2,
     explanation:
-      "You must NOT re-enter the area until a competent person (asbestos surveyor or analyst) has assessed the damage, carried out air monitoring if needed, and confirmed that the area is safe. Simply waiting or wearing a basic dust mask is not sufficient. If asbestos is confirmed, professional clean-up must be completed and clearance given before anyone can re-enter.",
+      'You must NOT re-enter the area until a competent person (asbestos surveyor or analyst) has assessed the damage, carried out air monitoring if needed, and confirmed that the area is safe. Simply waiting or wearing a basic dust mask is not sufficient. If asbestos is confirmed, professional clean-up must be completed and clearance given before anyone can re-enter.',
   },
   {
     id: 8,
-    question:
-      "What is the single most effective way to PREVENT accidental asbestos disturbance?",
+    question: 'What is the single most effective way to PREVENT accidental asbestos disturbance?',
     options: [
-      "Wearing RPE at all times in every building",
-      "Only working in buildings built after 2010",
-      "Always checking the asbestos register before starting any work in a pre-2000 building",
-      "Using hand tools instead of power tools",
+      'Wearing RPE at all times in every building',
+      'Only working in buildings built after 2010',
+      'Always checking the asbestos register before starting any work in a pre-2000 building',
+      'Using hand tools instead of power tools',
     ],
     correctAnswer: 2,
     explanation:
-      "The single most effective prevention measure is always checking the asbestos register BEFORE starting any work in a pre-2000 building. The register identifies the location, type, and condition of known ACMs, allowing you to plan your work to avoid disturbing them. A few minutes checking the register can prevent an accidental disturbance and a lifetime of worry about asbestos exposure.",
+      'The single most effective prevention measure is always checking the asbestos register BEFORE starting any work in a pre-2000 building. The register identifies the location, type, and condition of known ACMs, allowing you to plan your work to avoid disturbing them. A few minutes checking the register can prevent an accidental disturbance and a lifetime of worry about asbestos exposure.',
   },
 ];
 
 export default function AsbestosModule5Section1() {
   useSEO({
-    title:
-      "Accidental Disturbance Procedures | Asbestos Awareness Module 5.1",
+    title: 'Accidental Disturbance Procedures | Asbestos Awareness Module 5.1',
     description:
-      "The 4-S emergency procedure (Stop, Seal, Sign, Summon), immediate actions, who to call, incident recording, example scenarios, and prevention of accidental asbestos disturbance.",
+      'The 4-S emergency procedure (Stop, Seal, Sign, Summon), immediate actions, who to call, incident recording, example scenarios, and prevention of accidental asbestos disturbance.',
   });
 
   return (
@@ -234,47 +225,38 @@ export default function AsbestosModule5Section1() {
             Accidental Disturbance Procedures
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
-            The 4-S emergency procedure, immediate actions, who to call,
-            incident recording, example scenarios, and how to prevent accidental
-            disturbance of asbestos-containing materials
+            The 4-S emergency procedure, immediate actions, who to call, incident recording, example
+            scenarios, and how to prevent accidental disturbance of asbestos-containing materials
           </p>
         </header>
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
-            <p className="text-orange-400 text-base font-medium mb-2">
-              In 30 Seconds
-            </p>
+            <p className="text-orange-400 text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
                 <strong>4-S procedure:</strong> Stop, Seal, Sign, Summon
               </li>
               <li>
-                <strong>Never clean up:</strong> Only specialist contractors
-                handle asbestos debris
+                <strong>Never clean up:</strong> Only specialist contractors handle asbestos debris
               </li>
               <li>
-                <strong>Prevention:</strong> Always check the asbestos register
-                before work
+                <strong>Prevention:</strong> Always check the asbestos register before work
               </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
-            <p className="text-orange-400/90 text-base font-medium mb-2">
-              Key Facts
-            </p>
+            <p className="text-orange-400/90 text-base font-medium mb-2">Key Facts</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
                 <strong>Report to:</strong> Supervisor first, then dutyholder
               </li>
               <li>
-                <strong>Record:</strong> Every incident must be documented in
-                writing
+                <strong>Record:</strong> Every incident must be documented in writing
               </li>
               <li>
-                <strong>Do not re-enter:</strong> Until cleared by a competent
-                person
+                <strong>Do not re-enter:</strong> Until cleared by a competent person
               </li>
             </ul>
           </div>
@@ -282,17 +264,15 @@ export default function AsbestosModule5Section1() {
 
         {/* Learning Outcomes */}
         <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">
-            Learning Outcomes
-          </h2>
+          <h2 className="text-lg font-semibold text-white mb-4">Learning Outcomes</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Explain what constitutes an accidental disturbance of ACMs",
-              "Describe the 4-S emergency procedure: Stop, Seal, Sign, Summon",
-              "Identify the correct immediate actions to protect yourself and others",
-              "Know who to contact and in what order after an accidental disturbance",
-              "Understand the importance of incident recording and RIDDOR reporting",
-              "Apply prevention measures to avoid accidental disturbances in the first place",
+              'Explain what constitutes an accidental disturbance of ACMs',
+              'Describe the 4-S emergency procedure: Stop, Seal, Sign, Summon',
+              'Identify the correct immediate actions to protect yourself and others',
+              'Know who to contact and in what order after an accidental disturbance',
+              'Understand the importance of incident recording and RIDDOR reporting',
+              'Apply prevention measures to avoid accidental disturbances in the first place',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-orange-400/70 mt-0.5 flex-shrink-0" />
@@ -313,101 +293,78 @@ export default function AsbestosModule5Section1() {
           <div className="border-l-2 border-orange-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                An accidental disturbance is any{" "}
-                <strong>unplanned disturbance of asbestos-containing materials</strong>
-                . It can happen to anyone working in or on a building that
-                contains ACMs &mdash; and it happens more often than most people
-                think.
+                An accidental disturbance is any{' '}
+                <strong>unplanned disturbance of asbestos-containing materials</strong>. It can
+                happen to anyone working in or on a building that contains ACMs &mdash; and it
+                happens more often than most people think.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  Common Examples
-                </p>
+                <p className="text-sm font-medium text-white mb-2">Common Examples</p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Drilling into AIB
-                      </strong>{" "}
-                      without realising the panel contains asbestos
+                      <strong className="text-white">Drilling into AIB</strong> without realising
+                      the panel contains asbestos
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Breaking an asbestos cement sheet
-                      </strong>{" "}
+                      <strong className="text-white">Breaking an asbestos cement sheet</strong>{' '}
                       during access or maintenance work
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Scraping textured coatings
-                      </strong>{" "}
-                      (Artex) from a ceiling or wall
+                      <strong className="text-white">Scraping textured coatings</strong> (Artex)
+                      from a ceiling or wall
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Knocking pipe lagging
-                      </strong>{" "}
-                      while working near pipes in a plant room or ceiling void
+                      <strong className="text-white">Knocking pipe lagging</strong> while working
+                      near pipes in a plant room or ceiling void
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Falling through an AIB ceiling
-                      </strong>{" "}
-                      tile while working in a roof void
+                      <strong className="text-white">Falling through an AIB ceiling</strong> tile
+                      while working in a roof void
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Cutting into an AIB fire door
-                      </strong>{" "}
-                      to install hardware or access cabling
+                      <strong className="text-white">Cutting into an AIB fire door</strong> to
+                      install hardware or access cabling
                     </span>
                   </li>
                 </ul>
               </div>
 
               <p>
-                Accidental disturbances can happen during{" "}
-                <strong>routine maintenance, refurbishment, emergency repairs</strong>
-                , or even seemingly harmless activities like moving furniture
-                against an AIB panel. The key issue is that{" "}
-                <strong>
-                  fibres may have been released into the air
-                </strong>
-                .
+                Accidental disturbances can happen during{' '}
+                <strong>routine maintenance, refurbishment, emergency repairs</strong>, or even
+                seemingly harmless activities like moving furniture against an AIB panel. The key
+                issue is that <strong>fibres may have been released into the air</strong>.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    Invisible Danger
-                  </p>
+                  <p className="text-sm font-medium text-red-400">Invisible Danger</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  Even a <strong className="text-white">small disturbance</strong>{" "}
-                  can release <strong className="text-white">thousands of
-                  microscopic fibres</strong> into the air. Asbestos fibres are
-                  invisible to the naked eye and can remain airborne for hours.
-                  You cannot see, smell, or taste them. This is why every
-                  accidental disturbance must be treated seriously, regardless
-                  of how minor it appears.
+                  Even a <strong className="text-white">small disturbance</strong> can release{' '}
+                  <strong className="text-white">thousands of microscopic fibres</strong> into the
+                  air. Asbestos fibres are invisible to the naked eye and can remain airborne for
+                  hours. You cannot see, smell, or taste them. This is why every accidental
+                  disturbance must be treated seriously, regardless of how minor it appears.
                 </p>
               </div>
             </div>
@@ -429,9 +386,7 @@ export default function AsbestosModule5Section1() {
                   <span className="text-white text-lg sm:text-xl font-black">1</span>
                 </div>
                 <div>
-                  <p className="text-red-400 text-2xl sm:text-3xl font-black tracking-wide">
-                    STOP
-                  </p>
+                  <p className="text-red-400 text-2xl sm:text-3xl font-black tracking-wide">STOP</p>
                 </div>
               </div>
               <ul className="text-sm sm:text-base text-white/90 space-y-2">
@@ -444,22 +399,20 @@ export default function AsbestosModule5Section1() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                   <span>
-                    Do <strong className="text-white">NOT</strong> continue to
-                    disturb the material
+                    Do <strong className="text-white">NOT</strong> continue to disturb the material
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                   <span>
-                    Do <strong className="text-white">NOT</strong> try to clean
-                    up the debris
+                    Do <strong className="text-white">NOT</strong> try to clean up the debris
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                   <span>
-                    Do <strong className="text-white">NOT</strong> panic &mdash;
-                    controlled, calm response
+                    Do <strong className="text-white">NOT</strong> panic &mdash; controlled, calm
+                    response
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -493,39 +446,34 @@ export default function AsbestosModule5Section1() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
                   <span>
-                    Close all <strong className="text-white">doors and windows</strong>{" "}
-                    in the affected area
+                    Close all <strong className="text-white">doors and windows</strong> in the
+                    affected area
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
                   <span>
-                    Seal the area with{" "}
-                    <strong className="text-white">tape or polythene</strong> if
+                    Seal the area with <strong className="text-white">tape or polythene</strong> if
                     available
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
                   <span>
-                    Turn off any{" "}
-                    <strong className="text-white">
-                      ventilation, fans, or air conditioning
-                    </strong>
+                    Turn off any{' '}
+                    <strong className="text-white">ventilation, fans, or air conditioning</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
                   <span>
-                    Prevent anyone from{" "}
-                    <strong className="text-white">entering the area</strong>
+                    Prevent anyone from <strong className="text-white">entering the area</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
                   <span>
-                    If you have RPE,{" "}
-                    <strong className="text-white">keep it on</strong>
+                    If you have RPE, <strong className="text-white">keep it on</strong>
                   </span>
                 </li>
               </ul>
@@ -555,38 +503,37 @@ export default function AsbestosModule5Section1() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
                   <span>
-                    Place <strong className="text-white">warning signs</strong>{" "}
-                    at all entry points to the area
+                    Place <strong className="text-white">warning signs</strong> at all entry points
+                    to the area
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
                   <span>
-                    &ldquo;<strong className="text-white">DANGER &mdash; Possible
-                    asbestos contamination &mdash; DO NOT ENTER</strong>&rdquo;
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
-                  <span>
-                    Use <strong className="text-white">barrier tape</strong> if
-                    available
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
-                  <span>
-                    Ensure signs are{" "}
+                    &ldquo;
                     <strong className="text-white">
-                      visible from all approaches
+                      DANGER &mdash; Possible asbestos contamination &mdash; DO NOT ENTER
                     </strong>
+                    &rdquo;
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
                   <span>
-                    Keep <strong className="text-white">people away</strong> from
-                    the area
+                    Use <strong className="text-white">barrier tape</strong> if available
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
+                  <span>
+                    Ensure signs are{' '}
+                    <strong className="text-white">visible from all approaches</strong>
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
+                  <span>
+                    Keep <strong className="text-white">people away</strong> from the area
                   </span>
                 </li>
               </ul>
@@ -616,44 +563,35 @@ export default function AsbestosModule5Section1() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                   <span>
-                    Report immediately to your{" "}
-                    <strong className="text-white">
-                      supervisor/site manager
-                    </strong>
+                    Report immediately to your{' '}
+                    <strong className="text-white">supervisor/site manager</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                   <span>
-                    Contact the{" "}
-                    <strong className="text-white">building dutyholder</strong>
+                    Contact the <strong className="text-white">building dutyholder</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                   <span>
-                    The dutyholder must arrange for:{" "}
-                    <strong className="text-white">
-                      assessment by a competent person
-                    </strong>
-                    , air monitoring if needed, professional clean-up if
-                    confirmed asbestos
+                    The dutyholder must arrange for:{' '}
+                    <strong className="text-white">assessment by a competent person</strong>, air
+                    monitoring if needed, professional clean-up if confirmed asbestos
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                   <span>
-                    <strong className="text-white">
-                      Record the incident
-                    </strong>{" "}
-                    in writing
+                    <strong className="text-white">Record the incident</strong> in writing
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                   <span>
-                    Do <strong className="text-white">NOT</strong> re-enter the
-                    area until cleared by a competent person
+                    Do <strong className="text-white">NOT</strong> re-enter the area until cleared
+                    by a competent person
                   </span>
                 </li>
               </ul>
@@ -672,55 +610,43 @@ export default function AsbestosModule5Section1() {
           <div className="border-l-2 border-orange-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Your <strong>personal safety is the priority</strong>. The
-                actions you take in the first few minutes after an accidental
-                disturbance can significantly reduce your exposure and prevent
-                fibres from spreading to other areas.
+                Your <strong>personal safety is the priority</strong>. The actions you take in the
+                first few minutes after an accidental disturbance can significantly reduce your
+                exposure and prevent fibres from spreading to other areas.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  If You Have RPE On
-                </p>
+                <p className="text-sm font-medium text-white mb-2">If You Have RPE On</p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Keep it on</strong> &mdash;
-                      your RPE is protecting you from inhaling fibres
+                      <strong className="text-white">Keep it on</strong> &mdash; your RPE is
+                      protecting you from inhaling fibres
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>
-                      Proceed with the SEAL step calmly while your RPE is still
-                      in place
-                    </span>
+                    <span>Proceed with the SEAL step calmly while your RPE is still in place</span>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  If You Do NOT Have RPE
-                </p>
+                <p className="text-sm font-medium text-white mb-2">If You Do NOT Have RPE</p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Cover your nose and mouth
-                      </strong>{" "}
-                      with a handkerchief, cloth, or your clothing
+                      <strong className="text-white">Cover your nose and mouth</strong> with a
+                      handkerchief, cloth, or your clothing
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Leave the area calmly
-                      </strong>{" "}
-                      &mdash; do not rush
+                      <strong className="text-white">Leave the area calmly</strong> &mdash; do not
+                      rush
                     </span>
                   </li>
                 </ul>
@@ -729,48 +655,39 @@ export default function AsbestosModule5Section1() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    Do NOT Rush
-                  </p>
+                  <p className="text-sm font-medium text-red-400">Do NOT Rush</p>
                 </div>
                 <p className="text-sm text-white/80">
                   <strong className="text-white">
                     Rushing creates air currents that spread fibres
-                  </strong>{" "}
-                  much further than they would otherwise travel. Walk calmly and
-                  deliberately. Close the door behind you as you leave to
-                  contain the fibres within the smallest possible area.
+                  </strong>{' '}
+                  much further than they would otherwise travel. Walk calmly and deliberately. Close
+                  the door behind you as you leave to contain the fibres within the smallest
+                  possible area.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  Once You Have Left the Area
-                </p>
+                <p className="text-sm font-medium text-white mb-2">Once You Have Left the Area</p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Remove any outer clothing
-                      </strong>{" "}
-                      that may be contaminated and bag it
+                      <strong className="text-white">Remove any outer clothing</strong> that may be
+                      contaminated and bag it
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Wash your hands and face
-                      </strong>{" "}
-                      thoroughly
+                      <strong className="text-white">Wash your hands and face</strong> thoroughly
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      Do <strong className="text-white">not eat, drink, or smoke</strong>{" "}
-                      until you have washed
+                      Do <strong className="text-white">not eat, drink, or smoke</strong> until you
+                      have washed
                     </span>
                   </li>
                 </ul>
@@ -788,16 +705,13 @@ export default function AsbestosModule5Section1() {
           <div className="border-l-2 border-orange-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Knowing who to contact &mdash; and in what order &mdash; is
-                critical. The following list shows the{" "}
-                <strong>priority order of communication</strong> after an
-                accidental disturbance.
+                Knowing who to contact &mdash; and in what order &mdash; is critical. The following
+                list shows the <strong>priority order of communication</strong> after an accidental
+                disturbance.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Contact Priority Order
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Contact Priority Order</p>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0">
@@ -814,14 +728,10 @@ export default function AsbestosModule5Section1() {
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-7 h-7 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-orange-400">
-                        2
-                      </span>
+                      <span className="text-xs font-bold text-orange-400">2</span>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white">
-                        The building dutyholder
-                      </p>
+                      <p className="text-sm font-medium text-white">The building dutyholder</p>
                       <p className="text-xs text-white/60">
                         Owner, managing agent, or facilities manager
                       </p>
@@ -829,9 +739,7 @@ export default function AsbestosModule5Section1() {
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-yellow-400">
-                        3
-                      </span>
+                      <span className="text-xs font-bold text-yellow-400">3</span>
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">
@@ -851,24 +759,19 @@ export default function AsbestosModule5Section1() {
                         HSE (if the incident is serious)
                       </p>
                       <p className="text-xs text-white/60">
-                        Potential significant exposure may require RIDDOR
-                        reporting
+                        Potential significant exposure may require RIDDOR reporting
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-purple-400">
-                        5
-                      </span>
+                      <span className="text-xs font-bold text-purple-400">5</span>
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">
                         An asbestos consultant/analyst
                       </p>
-                      <p className="text-xs text-white/60">
-                        For assessment and air monitoring
-                      </p>
+                      <p className="text-xs text-white/60">For assessment and air monitoring</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -879,9 +782,7 @@ export default function AsbestosModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         An asbestos removal contractor
                       </p>
-                      <p className="text-xs text-white/60">
-                        If professional clean-up is needed
-                      </p>
+                      <p className="text-xs text-white/60">If professional clean-up is needed</p>
                     </div>
                   </div>
                 </div>
@@ -890,19 +791,15 @@ export default function AsbestosModule5Section1() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    Non-Specialist Cleaners
-                  </p>
+                  <p className="text-sm font-medium text-red-400">Non-Specialist Cleaners</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  Do <strong className="text-white">NOT</strong> call
-                  non-specialist cleaners. Standard cleaning companies must{" "}
-                  <strong className="text-white">NOT</strong> clean up asbestos
-                  debris. Using a standard vacuum cleaner, broom, or mop will
-                  spread fibres further and contaminate a much larger area. Only
-                  specialist asbestos contractors with appropriate equipment
-                  (HEPA-filtered vacuums, wet wiping techniques) should handle
-                  asbestos debris.
+                  Do <strong className="text-white">NOT</strong> call non-specialist cleaners.
+                  Standard cleaning companies must <strong className="text-white">NOT</strong> clean
+                  up asbestos debris. Using a standard vacuum cleaner, broom, or mop will spread
+                  fibres further and contaminate a much larger area. Only specialist asbestos
+                  contractors with appropriate equipment (HEPA-filtered vacuums, wet wiping
+                  techniques) should handle asbestos debris.
                 </p>
               </div>
             </div>
@@ -920,108 +817,95 @@ export default function AsbestosModule5Section1() {
           <div className="border-l-2 border-orange-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Every accidental disturbance{" "}
-                <strong>must be recorded in writing</strong>. This is not
-                optional &mdash; it is a legal requirement and essential for
-                protecting the health of everyone involved.
+                Every accidental disturbance <strong>must be recorded in writing</strong>. This is
+                not optional &mdash; it is a legal requirement and essential for protecting the
+                health of everyone involved.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  What to Record
-                </p>
+                <p className="text-sm font-medium text-white mb-2">What to Record</p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Date, time, and location
-                      </strong>{" "}
-                      of the incident
+                      <strong className="text-white">Date, time, and location</strong> of the
+                      incident
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">What happened</strong>{" "}
-                      &mdash; how the disturbance occurred
+                      <strong className="text-white">What happened</strong> &mdash; how the
+                      disturbance occurred
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        What material was disturbed
-                      </strong>{" "}
-                      &mdash; type, location, extent of damage
+                      <strong className="text-white">What material was disturbed</strong> &mdash;
+                      type, location, extent of damage
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Who was present</strong>{" "}
-                      &mdash; all persons potentially exposed
+                      <strong className="text-white">Who was present</strong> &mdash; all persons
+                      potentially exposed
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Actions taken</strong>{" "}
-                      &mdash; how the area was sealed, who was warned
+                      <strong className="text-white">Actions taken</strong> &mdash; how the area was
+                      sealed, who was warned
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Who was notified</strong>{" "}
-                      &mdash; supervisor, dutyholder, HSE
+                      <strong className="text-white">Who was notified</strong> &mdash; supervisor,
+                      dutyholder, HSE
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Outcome</strong> &mdash;
-                      assessment results, clean-up details, clearance
+                      <strong className="text-white">Outcome</strong> &mdash; assessment results,
+                      clean-up details, clearance
                     </span>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  Why Recording Matters
-                </p>
+                <p className="text-sm font-medium text-white mb-2">Why Recording Matters</p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Health surveillance:
-                      </strong>{" "}
-                      creates an exposure history for affected workers
+                      <strong className="text-white">Health surveillance:</strong> creates an
+                      exposure history for affected workers
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Legal compliance:
-                      </strong>{" "}
-                      required under the Control of Asbestos Regulations 2012
+                      <strong className="text-white">Legal compliance:</strong> required under the
+                      Control of Asbestos Regulations 2012
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Insurance claims:</strong>{" "}
-                      documented evidence supports any future claims
+                      <strong className="text-white">Insurance claims:</strong> documented evidence
+                      supports any future claims
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Lessons learned:</strong>{" "}
-                      helps prevent future incidents
+                      <strong className="text-white">Lessons learned:</strong> helps prevent future
+                      incidents
                     </span>
                   </li>
                 </ul>
@@ -1029,31 +913,26 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-orange-400">Personal Records:</strong>{" "}
-                  Workers who were present during the disturbance should record
-                  their potential exposure for their{" "}
-                  <strong>personal health records</strong>. This information may
-                  be important decades later if any health issues develop. Keep a
-                  note of the date, duration of exposure, and the type of
-                  material involved.
+                  <strong className="text-orange-400">Personal Records:</strong> Workers who were
+                  present during the disturbance should record their potential exposure for their{' '}
+                  <strong>personal health records</strong>. This information may be important
+                  decades later if any health issues develop. Keep a note of the date, duration of
+                  exposure, and the type of material involved.
                 </p>
               </div>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    RIDDOR Reporting
-                  </p>
+                  <p className="text-sm font-medium text-red-400">RIDDOR Reporting</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  The incident may need to be reported under{" "}
-                  <strong className="text-white">RIDDOR</strong> (Reporting of
-                  Injuries, Diseases and Dangerous Occurrences Regulations) if
-                  it constitutes a dangerous occurrence &mdash; specifically, the
-                  accidental release of a substance that could cause harm to
-                  health. Your employer or the dutyholder is responsible for
-                  determining whether RIDDOR reporting is required.
+                  The incident may need to be reported under{' '}
+                  <strong className="text-white">RIDDOR</strong> (Reporting of Injuries, Diseases
+                  and Dangerous Occurrences Regulations) if it constitutes a dangerous occurrence
+                  &mdash; specifically, the accidental release of a substance that could cause harm
+                  to health. Your employer or the dutyholder is responsible for determining whether
+                  RIDDOR reporting is required.
                 </p>
               </div>
             </div>
@@ -1069,9 +948,8 @@ export default function AsbestosModule5Section1() {
           <div className="border-l-2 border-orange-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The following scenarios illustrate how accidental disturbances
-                can happen in real-world situations and what the{" "}
-                <strong>correct response</strong> should be.
+                The following scenarios illustrate how accidental disturbances can happen in
+                real-world situations and what the <strong>correct response</strong> should be.
               </p>
 
               <div className="space-y-4">
@@ -1079,26 +957,22 @@ export default function AsbestosModule5Section1() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-orange-400">
-                        1
-                      </span>
+                      <span className="text-xs font-bold text-orange-400">1</span>
                     </div>
                     <p className="text-sm font-medium text-orange-400">
                       Electrician Drills Through AIB
                     </p>
                   </div>
                   <p className="text-sm text-white/80 mb-2">
-                    An electrician drills through an AIB panel while installing a
-                    cable clip. Dust is released from the hole.
+                    An electrician drills through an AIB panel while installing a cable clip. Dust
+                    is released from the hole.
                   </p>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                    <p className="text-xs font-semibold text-green-400 mb-1">
-                      Correct Response:
-                    </p>
+                    <p className="text-xs font-semibold text-green-400 mb-1">Correct Response:</p>
                     <p className="text-xs text-white/80">
-                      STOP drilling immediately. Seal the room &mdash; close
-                      doors and windows. Put up warning signs at every entrance.
-                      Call your supervisor and report the incident.
+                      STOP drilling immediately. Seal the room &mdash; close doors and windows. Put
+                      up warning signs at every entrance. Call your supervisor and report the
+                      incident.
                     </p>
                   </div>
                 </div>
@@ -1107,30 +981,25 @@ export default function AsbestosModule5Section1() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-orange-400">
-                        2
-                      </span>
+                      <span className="text-xs font-bold text-orange-400">2</span>
                     </div>
                     <p className="text-sm font-medium text-orange-400">
                       Plumber Breaks Pipe Lagging
                     </p>
                   </div>
                   <p className="text-sm text-white/80 mb-2">
-                    A plumber breaks a section of pipe lagging while accessing a
-                    valve in a plant room. Friable material crumbles and falls to
-                    the floor.
+                    A plumber breaks a section of pipe lagging while accessing a valve in a plant
+                    room. Friable material crumbles and falls to the floor.
                   </p>
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                     <p className="text-xs font-semibold text-red-400 mb-1">
                       Highest Risk &mdash; Correct Response:
                     </p>
                     <p className="text-xs text-white/80">
-                      STOP work immediately. Leave the area carefully &mdash; do
-                      not rush. Seal the door behind you. Warn colleagues not to
-                      enter. Call your supervisor{" "}
-                      <strong className="text-white">immediately</strong>{" "}
-                      &mdash; pipe lagging is the highest-risk ACM, typically
-                      containing amosite/crocidolite.
+                      STOP work immediately. Leave the area carefully &mdash; do not rush. Seal the
+                      door behind you. Warn colleagues not to enter. Call your supervisor{' '}
+                      <strong className="text-white">immediately</strong> &mdash; pipe lagging is
+                      the highest-risk ACM, typically containing amosite/crocidolite.
                     </p>
                   </div>
                 </div>
@@ -1139,28 +1008,23 @@ export default function AsbestosModule5Section1() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-orange-400">
-                        3
-                      </span>
+                      <span className="text-xs font-bold text-orange-400">3</span>
                     </div>
                     <p className="text-sm font-medium text-orange-400">
                       Painter Scrapes Textured Coating
                     </p>
                   </div>
                   <p className="text-sm text-white/80 mb-2">
-                    A painter scrapes textured coating from a ceiling and notices
-                    fibrous material in the scrapings.
+                    A painter scrapes textured coating from a ceiling and notices fibrous material
+                    in the scrapings.
                   </p>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                    <p className="text-xs font-semibold text-green-400 mb-1">
-                      Correct Response:
-                    </p>
+                    <p className="text-xs font-semibold text-green-400 mb-1">Correct Response:</p>
                     <p className="text-xs text-white/80">
-                      STOP scraping immediately. Seal the room. Do{" "}
-                      <strong className="text-white">not</strong> clean up the
-                      scrapings &mdash; leave them where they are. Report to
-                      your supervisor. The scrapings and remaining coating will
-                      need to be tested.
+                      STOP scraping immediately. Seal the room. Do{' '}
+                      <strong className="text-white">not</strong> clean up the scrapings &mdash;
+                      leave them where they are. Report to your supervisor. The scrapings and
+                      remaining coating will need to be tested.
                     </p>
                   </div>
                 </div>
@@ -1169,28 +1033,22 @@ export default function AsbestosModule5Section1() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-orange-400">
-                        4
-                      </span>
+                      <span className="text-xs font-bold text-orange-400">4</span>
                     </div>
                     <p className="text-sm font-medium text-orange-400">
                       Worker Falls Through AIB Ceiling
                     </p>
                   </div>
                   <p className="text-sm text-white/80 mb-2">
-                    A maintenance worker steps through an AIB ceiling tile while
-                    working in a roof void. The tile breaks and debris falls into
-                    the room below.
+                    A maintenance worker steps through an AIB ceiling tile while working in a roof
+                    void. The tile breaks and debris falls into the room below.
                   </p>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                    <p className="text-xs font-semibold text-green-400 mb-1">
-                      Correct Response:
-                    </p>
+                    <p className="text-xs font-semibold text-green-400 mb-1">Correct Response:</p>
                     <p className="text-xs text-white/80">
-                      Get to safety first. Seal the room below &mdash; both the
-                      void and the room below may be contaminated. Report the
-                      incident. Both areas will need assessment and potential
-                      clean-up.
+                      Get to safety first. Seal the room below &mdash; both the void and the room
+                      below may be contaminated. Report the incident. Both areas will need
+                      assessment and potential clean-up.
                     </p>
                   </div>
                 </div>
@@ -1208,46 +1066,40 @@ export default function AsbestosModule5Section1() {
           <div className="border-l-2 border-orange-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Once the area has been sealed and the appropriate people
-                notified, a structured process follows to assess the situation
-                and protect everyone involved.
+                Once the area has been sealed and the appropriate people notified, a structured
+                process follows to assess the situation and protect everyone involved.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  Assessment and Clean-Up
-                </p>
+                <p className="text-sm font-medium text-white mb-2">Assessment and Clean-Up</p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      A <strong className="text-white">competent person</strong>{" "}
-                      (asbestos surveyor/analyst) assesses the damage
+                      A <strong className="text-white">competent person</strong> (asbestos
+                      surveyor/analyst) assesses the damage
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Air monitoring</strong> may
-                      be carried out to determine if fibres are airborne
+                      <strong className="text-white">Air monitoring</strong> may be carried out to
+                      determine if fibres are airborne
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      If asbestos is confirmed:{" "}
-                      <strong className="text-white">
-                        professional clean-up
-                      </strong>{" "}
-                      by a licensed or competent contractor
+                      If asbestos is confirmed:{' '}
+                      <strong className="text-white">professional clean-up</strong> by a licensed or
+                      competent contractor
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      The area{" "}
-                      <strong className="text-white">remains sealed</strong>{" "}
-                      until clearance is given
+                      The area <strong className="text-white">remains sealed</strong> until
+                      clearance is given
                     </span>
                   </li>
                 </ul>
@@ -1261,25 +1113,22 @@ export default function AsbestosModule5Section1() {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Record the exposure
-                      </strong>{" "}
-                      &mdash; date, duration, material type
+                      <strong className="text-white">Record the exposure</strong> &mdash; date,
+                      duration, material type
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">Inform your GP</strong>{" "}
-                      &mdash; add the exposure to your medical records
+                      <strong className="text-white">Inform your GP</strong> &mdash; add the
+                      exposure to your medical records
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      Be placed on{" "}
-                      <strong className="text-white">health surveillance</strong>{" "}
-                      if the exposure was significant
+                      Be placed on <strong className="text-white">health surveillance</strong> if
+                      the exposure was significant
                     </span>
                   </li>
                 </ul>
@@ -1287,16 +1136,12 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-orange-400">
-                    Lessons Learned Review:
-                  </strong>{" "}
-                  After every accidental disturbance, a review should be
-                  conducted to understand why the incident happened. Key
-                  questions include: Was the asbestos register checked before
-                  work started? Was the worker&rsquo;s training adequate? Were
-                  risk assessments completed? What can be done to prevent
-                  recurrence? The answers to these questions drive improvements
-                  that protect everyone in the future.
+                  <strong className="text-orange-400">Lessons Learned Review:</strong> After every
+                  accidental disturbance, a review should be conducted to understand why the
+                  incident happened. Key questions include: Was the asbestos register checked before
+                  work started? Was the worker&rsquo;s training adequate? Were risk assessments
+                  completed? What can be done to prevent recurrence? The answers to these questions
+                  drive improvements that protect everyone in the future.
                 </p>
               </div>
             </div>
@@ -1314,60 +1159,48 @@ export default function AsbestosModule5Section1() {
           <div className="border-l-2 border-orange-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The best response to an accidental disturbance is to{" "}
-                <strong>prevent it from happening in the first place</strong>.
-                Most accidental disturbances are preventable with simple,
-                straightforward precautions.
+                The best response to an accidental disturbance is to{' '}
+                <strong>prevent it from happening in the first place</strong>. Most accidental
+                disturbances are preventable with simple, straightforward precautions.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">
-                  Prevention Checklist
-                </p>
+                <p className="text-sm font-medium text-white mb-2">Prevention Checklist</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Always check the asbestos register
-                      </strong>{" "}
+                      <strong className="text-white">Always check the asbestos register</strong>{' '}
                       BEFORE starting any work in a pre-2000 building
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Ask the dutyholder
-                      </strong>{" "}
-                      about ACM locations &mdash; do not assume
+                      <strong className="text-white">Ask the dutyholder</strong> about ACM locations
+                      &mdash; do not assume
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      Complete a{" "}
-                      <strong className="text-white">
-                        pre-work risk assessment
-                      </strong>{" "}
+                      Complete a <strong className="text-white">pre-work risk assessment</strong>{' '}
                       for every task
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      If in any doubt &mdash;{" "}
-                      <strong className="text-white">presume asbestos</strong>{" "}
-                      and do not proceed until confirmed safe
+                      If in any doubt &mdash;{' '}
+                      <strong className="text-white">presume asbestos</strong> and do not proceed
+                      until confirmed safe
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      Ensure you have{" "}
-                      <strong className="text-white">
-                        adequate asbestos awareness training
-                      </strong>{" "}
+                      Ensure you have{' '}
+                      <strong className="text-white">adequate asbestos awareness training</strong>{' '}
                       &mdash; this prevents most accidental disturbances
                     </span>
                   </li>
@@ -1376,12 +1209,11 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-green-400">Remember:</strong> A few
-                  minutes checking the asbestos register can prevent a{" "}
-                  <strong>lifetime of worry</strong>. Asbestos-related diseases
-                  take 15 to 60 years to develop. The exposure you prevent today
-                  could save your health decades from now. Prevention is always
-                  better than cure &mdash; and with asbestos, there is no cure.
+                  <strong className="text-green-400">Remember:</strong> A few minutes checking the
+                  asbestos register can prevent a <strong>lifetime of worry</strong>.
+                  Asbestos-related diseases take 15 to 60 years to develop. The exposure you prevent
+                  today could save your health decades from now. Prevention is always better than
+                  cure &mdash; and with asbestos, there is no cure.
                 </p>
               </div>
             </div>
@@ -1390,21 +1222,12 @@ export default function AsbestosModule5Section1() {
 
         {/* FAQ Section */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">
-            Frequently Asked Questions
-          </h2>
+          <h2 className="text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="pb-4 border-b border-white/5 last:border-0"
-              >
-                <h3 className="text-sm font-medium text-white mb-1">
-                  {faq.question}
-                </h3>
-                <p className="text-sm text-white/80 leading-relaxed">
-                  {faq.answer}
-                </p>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

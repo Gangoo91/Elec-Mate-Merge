@@ -13,7 +13,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -40,19 +48,21 @@ const EnhancedInspectionChecklistCard: React.FC<EnhancedInspectionChecklistCardP
   onBulkMarkSatisfactory,
   onBulkClearSection,
   onBulkMarkNotApplicable,
-  propertyType
+  propertyType,
 }) => {
   // Show all sections - no filtering based on property type
   const filteredSections = bs7671InspectionSections;
 
   // Calculate overall progress
   const totalItems = filteredSections.reduce((total, section) => total + section.items.length, 0);
-  const completedItems = inspectionItems.filter(item => item.outcome && item.outcome !== '' as any).length;
+  const completedItems = inspectionItems.filter(
+    (item) => item.outcome && item.outcome !== ('' as any)
+  ).length;
   const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
   // Calculate critical outcomes
-  const criticalItems = inspectionItems.filter(item => ['C1', 'C2', 'C3'].includes(item.outcome));
-  const satisfactoryItems = inspectionItems.filter(item => item.outcome === 'satisfactory');
+  const criticalItems = inspectionItems.filter((item) => ['C1', 'C2', 'C3'].includes(item.outcome));
+  const satisfactoryItems = inspectionItems.filter((item) => item.outcome === 'satisfactory');
 
   return (
     <Card className="bs7671-clean-card">
@@ -73,7 +83,7 @@ const EnhancedInspectionChecklistCard: React.FC<EnhancedInspectionChecklistCardP
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <Badge variant="outline" className="bg-muted/50">
               {completedItems}/{totalItems} completed
@@ -91,26 +101,30 @@ const EnhancedInspectionChecklistCard: React.FC<EnhancedInspectionChecklistCardP
         <div className="space-y-3 pt-4 border-t border-border/30">
           <div className="flex items-center justify-between text-sm">
             <span className="font-medium text-foreground/90">Overall Progress</span>
-            <span className={`font-medium transition-colors duration-300 ${
-              progressPercent === 100 ? 'text-green-400' : 'text-foreground/80'
-            }`}>
+            <span
+              className={`font-medium transition-colors duration-300 ${
+                progressPercent === 100 ? 'text-green-400' : 'text-foreground/80'
+              }`}
+            >
               {progressPercent}%
             </span>
           </div>
           <div className="w-full bg-secondary/50 rounded-full h-3 overflow-hidden ring-1 ring-border/30">
-            <div 
+            <div
               className={`h-full transition-all duration-500 ${
-                progressPercent === 100 
-                  ? 'bg-gradient-to-r from-green-500 via-green-400 to-emerald-500' 
+                progressPercent === 100
+                  ? 'bg-gradient-to-r from-green-500 via-green-400 to-emerald-500'
                   : 'bg-gradient-to-r from-primary via-primary/90 to-primary/80'
               }`}
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-          
+
           <div className="grid grid-cols-3 gap-6 md:gap-4 text-center">
             <div className="space-y-2 md:space-y-1">
-              <p className="text-2xl md:text-lg font-bold text-green-400">{satisfactoryItems.length}</p>
+              <p className="text-2xl md:text-lg font-bold text-green-400">
+                {satisfactoryItems.length}
+              </p>
               <p className="bs7671-body text-foreground/80">Satisfactory</p>
             </div>
             <div className="space-y-2 md:space-y-1">
@@ -118,7 +132,9 @@ const EnhancedInspectionChecklistCard: React.FC<EnhancedInspectionChecklistCardP
               <p className="bs7671-body text-foreground/80">Critical Issues</p>
             </div>
             <div className="space-y-2 md:space-y-1">
-              <p className="text-2xl md:text-lg font-bold text-foreground/90">{totalItems - completedItems}</p>
+              <p className="text-2xl md:text-lg font-bold text-foreground/90">
+                {totalItems - completedItems}
+              </p>
               <p className="bs7671-body text-foreground/80">Remaining</p>
             </div>
           </div>
@@ -130,7 +146,10 @@ const EnhancedInspectionChecklistCard: React.FC<EnhancedInspectionChecklistCardP
             <Activity className="h-4 w-4 text-bs7671-info mt-0.5 flex-shrink-0" />
             <div className="text-xs text-foreground/80 leading-relaxed">
               <p className="font-medium mb-1">Professional Inspection Guidance:</p>
-              <p>Complete each section systematically. Mark items as satisfactory or add observations for non-conformities.</p>
+              <p>
+                Complete each section systematically. Mark items as satisfactory or add observations
+                for non-conformities.
+              </p>
             </div>
           </div>
         </div>

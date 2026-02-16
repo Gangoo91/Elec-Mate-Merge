@@ -1,64 +1,73 @@
-import React, { useState, useRef } from "react";
-import { FileText, Loader } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import GeneratedReportDisplay from "./GeneratedReportDisplay";
+import React, { useState, useRef } from 'react';
+import { FileText, Loader } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import GeneratedReportDisplay from './GeneratedReportDisplay';
 
 // Form imports
-import { EICRForm, type EICRFormData } from "./forms/EICRForm";
-import { MinorWorksForm, type MinorWorksFormData } from "./forms/MinorWorksForm";
-import { PeriodicInspectionForm, type PeriodicInspectionFormData } from "./forms/PeriodicInspectionForm";
-import { EVChargerForm, type EVChargerFormData } from "./forms/EVChargerForm";
-import { ConsumerUnitForm, type ConsumerUnitFormData } from "./forms/ConsumerUnitForm";
-import { RCDTestForm, type RCDTestFormData } from "./forms/RCDTestForm";
+import { EICRForm, type EICRFormData } from './forms/EICRForm';
+import { MinorWorksForm, type MinorWorksFormData } from './forms/MinorWorksForm';
+import {
+  PeriodicInspectionForm,
+  type PeriodicInspectionFormData,
+} from './forms/PeriodicInspectionForm';
+import { EVChargerForm, type EVChargerFormData } from './forms/EVChargerForm';
+import { ConsumerUnitForm, type ConsumerUnitFormData } from './forms/ConsumerUnitForm';
+import { RCDTestForm, type RCDTestFormData } from './forms/RCDTestForm';
 
 const ReportWriter = () => {
   const { toast } = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [selectedTemplate, setSelectedTemplate] = useState("");
-  const [reportPrompt, setReportPrompt] = useState("");
-  const [generatedReport, setGeneratedReport] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState('');
+  const [reportPrompt, setReportPrompt] = useState('');
+  const [generatedReport, setGeneratedReport] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
-  
+
   // Form data states
   const [formData, setFormData] = useState<any>(null);
 
   const reportTemplates = [
     {
-      id: "eicr",
-      name: "EICR (Electrical Installation Condition Report)",
-      description: "Comprehensive inspection report for existing electrical installations"
+      id: 'eicr',
+      name: 'EICR (Electrical Installation Condition Report)',
+      description: 'Comprehensive inspection report for existing electrical installations',
     },
     {
-      id: "minor-works",
-      name: "Minor Electrical Installation Works Certificate",
-      description: "Certificate for small electrical works and additions"
+      id: 'minor-works',
+      name: 'Minor Electrical Installation Works Certificate',
+      description: 'Certificate for small electrical works and additions',
     },
     {
-      id: "periodic-inspection",
-      name: "Periodic Inspection Report",
-      description: "Regular inspection report for ongoing electrical safety"
+      id: 'periodic-inspection',
+      name: 'Periodic Inspection Report',
+      description: 'Regular inspection report for ongoing electrical safety',
     },
     {
-      id: "ev-charger",
-      name: "EV Charger Installation Certificate",
-      description: "Installation certificate for electric vehicle charging points"
+      id: 'ev-charger',
+      name: 'EV Charger Installation Certificate',
+      description: 'Installation certificate for electric vehicle charging points',
     },
     {
-      id: "consumer-unit",
-      name: "Consumer Unit Installation Certificate",
-      description: "Certificate for new or replacement consumer units"
+      id: 'consumer-unit',
+      name: 'Consumer Unit Installation Certificate',
+      description: 'Certificate for new or replacement consumer units',
     },
     {
-      id: "rcd-test",
-      name: "RCD Test Certificate",
-      description: "Testing certificate for residual current devices"
-    }
+      id: 'rcd-test',
+      name: 'RCD Test Certificate',
+      description: 'Testing certificate for residual current devices',
+    },
   ];
 
   // Form change handlers
@@ -70,10 +79,10 @@ const ReportWriter = () => {
   const buildPromptFromForm = () => {
     if (!formData || !selectedTemplate) return reportPrompt;
 
-    let structuredPrompt = "";
-    
+    let structuredPrompt = '';
+
     switch (selectedTemplate) {
-      case "eicr":
+      case 'eicr':
         const eicrData = formData as EICRFormData;
         structuredPrompt = `
 Generate a comprehensive EICR (Electrical Installation Condition Report) with the following details:
@@ -116,7 +125,7 @@ ${reportPrompt ? `ADDITIONAL NOTES: ${reportPrompt}` : ''}
 Please generate a professional EICR report following BS 7671:2018 standards.`;
         break;
 
-      case "minor-works":
+      case 'minor-works':
         const minorData = formData as MinorWorksFormData;
         structuredPrompt = `
 Generate a Minor Electrical Installation Works Certificate with the following details:
@@ -140,7 +149,7 @@ ${reportPrompt ? `ADDITIONAL NOTES: ${reportPrompt}` : ''}
 Please generate a professional minor works certificate following BS 7671:2018 standards.`;
         break;
 
-      case "periodic-inspection":
+      case 'periodic-inspection':
         const periodicData = formData as PeriodicInspectionFormData;
         structuredPrompt = `
 Generate a Periodic Inspection Report with the following details:
@@ -166,7 +175,7 @@ ${reportPrompt ? `ADDITIONAL NOTES: ${reportPrompt}` : ''}
 Please generate a professional periodic inspection report following BS 7671:2018 standards.`;
         break;
 
-      case "ev-charger":
+      case 'ev-charger':
         const evData = formData as EVChargerFormData;
         structuredPrompt = `
 Generate an EV Charger Installation Certificate with the following details:
@@ -195,7 +204,7 @@ ${reportPrompt ? `ADDITIONAL NOTES: ${reportPrompt}` : ''}
 Please generate a professional EV charger installation certificate following BS 7671:2018 and IET Code of Practice standards.`;
         break;
 
-      case "consumer-unit":
+      case 'consumer-unit':
         const cuData = formData as ConsumerUnitFormData;
         structuredPrompt = `
 Generate a Consumer Unit Installation/Replacement Certificate with the following details:
@@ -225,7 +234,7 @@ ${reportPrompt ? `ADDITIONAL NOTES: ${reportPrompt}` : ''}
 Please generate a professional consumer unit installation certificate following BS 7671:2018 standards.`;
         break;
 
-      case "rcd-test":
+      case 'rcd-test':
         const rcdData = formData as RCDTestFormData;
         structuredPrompt = `
 Generate an RCD Test Certificate with the following details:
@@ -263,28 +272,28 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
   const handleGenerateReport = async () => {
     if (!selectedTemplate || !formData) {
       toast({
-        title: "Missing Information",
-        description: "Please select a template and complete the form before generating a report.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please select a template and complete the form before generating a report.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     setIsGenerating(true);
-    
+
     try {
       console.log('Calling generate-electrical-report function with:', {
         template: selectedTemplate,
         formData,
-        additionalNotes: reportPrompt
+        additionalNotes: reportPrompt,
       });
 
       const { data, error } = await supabase.functions.invoke('generate-electrical-report', {
         body: {
           template: selectedTemplate,
           formData: formData,
-          additionalNotes: reportPrompt
-        }
+          additionalNotes: reportPrompt,
+        },
       });
 
       if (error) {
@@ -294,18 +303,18 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
 
       console.log('Report generation successful');
       setGeneratedReport(data.report);
-      
+
       toast({
-        title: "Report Generated",
-        description: "Your professional electrical report has been generated successfully.",
-        variant: "success"
+        title: 'Report Generated',
+        description: 'Your professional electrical report has been generated successfully.',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error generating report:', error);
       toast({
-        title: "Generation Failed",
-        description: error.message || "Failed to generate report. Please try again.",
-        variant: "destructive"
+        title: 'Generation Failed',
+        description: error.message || 'Failed to generate report. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -316,8 +325,8 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
     navigator.clipboard.writeText(generatedReport);
     setCopied(true);
     toast({
-      title: "Copied to clipboard",
-      description: "Report content has been copied to your clipboard."
+      title: 'Copied to clipboard',
+      description: 'Report content has been copied to your clipboard.',
     });
     setTimeout(() => setCopied(false), 2000);
   };
@@ -342,17 +351,20 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
             {/* Template Selection */}
             <Card className="bg-elec-gray border-elec-yellow/30 p-6">
               <h3 className="text-lg font-medium text-elec-yellow mb-4">Choose Report Template</h3>
-              <Select value={selectedTemplate} onValueChange={(value) => {
-                setSelectedTemplate(value);
-                setFormData(null); // Reset form data when template changes
-              }}>
+              <Select
+                value={selectedTemplate}
+                onValueChange={(value) => {
+                  setSelectedTemplate(value);
+                  setFormData(null); // Reset form data when template changes
+                }}
+              >
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/30 text-foreground">
                   <SelectValue placeholder="Select a report template" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/30">
                   {reportTemplates.map((template) => (
-                    <SelectItem 
-                      key={template.id} 
+                    <SelectItem
+                      key={template.id}
                       value={template.id}
                       className="text-foreground hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
                     >
@@ -364,7 +376,7 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
               {selectedTemplate && (
                 <div className="mt-4 p-3 bg-elec-dark/50 rounded-md">
                   <p className="text-sm text-muted-foreground">
-                    {reportTemplates.find(t => t.id === selectedTemplate)?.description}
+                    {reportTemplates.find((t) => t.id === selectedTemplate)?.description}
                   </p>
                 </div>
               )}
@@ -374,24 +386,20 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
             {selectedTemplate && (
               <Card className="bg-elec-gray border-elec-yellow/30 p-6">
                 <h3 className="text-lg font-medium text-elec-yellow mb-4">Report Details</h3>
-                {selectedTemplate === "eicr" && (
-                  <EICRForm onFormChange={handleFormChange} />
-                )}
-                {selectedTemplate === "minor-works" && (
+                {selectedTemplate === 'eicr' && <EICRForm onFormChange={handleFormChange} />}
+                {selectedTemplate === 'minor-works' && (
                   <MinorWorksForm onFormChange={handleFormChange} />
                 )}
-                {selectedTemplate === "periodic-inspection" && (
+                {selectedTemplate === 'periodic-inspection' && (
                   <PeriodicInspectionForm onFormChange={handleFormChange} />
                 )}
-                {selectedTemplate === "ev-charger" && (
+                {selectedTemplate === 'ev-charger' && (
                   <EVChargerForm onFormChange={handleFormChange} />
                 )}
-                {selectedTemplate === "consumer-unit" && (
+                {selectedTemplate === 'consumer-unit' && (
                   <ConsumerUnitForm onFormChange={handleFormChange} />
                 )}
-                {selectedTemplate === "rcd-test" && (
-                  <RCDTestForm onFormChange={handleFormChange} />
-                )}
+                {selectedTemplate === 'rcd-test' && <RCDTestForm onFormChange={handleFormChange} />}
               </Card>
             )}
 
@@ -408,7 +416,9 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
           {/* Additional Notes & Generate */}
           <div className="mt-6">
             <Card className="bg-elec-gray border-elec-yellow/30 p-6">
-              <h3 className="text-lg font-medium text-elec-yellow mb-4">Additional Notes (Optional)</h3>
+              <h3 className="text-lg font-medium text-elec-yellow mb-4">
+                Additional Notes (Optional)
+              </h3>
               <div className="space-y-3">
                 <Textarea
                   ref={textareaRef}
@@ -417,14 +427,14 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
                   value={reportPrompt}
                   onChange={(e) => setReportPrompt(e.target.value)}
                 />
-                <Button 
-                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 text-base font-semibold" 
-                  onClick={handleGenerateReport} 
+                <Button
+                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 text-base font-semibold"
+                  onClick={handleGenerateReport}
                   disabled={isGenerating || !selectedTemplate || !formData}
                 >
                   {isGenerating ? (
                     <>
-                      <Loader className="h-5 w-5 mr-2 animate-spin" /> 
+                      <Loader className="h-5 w-5 mr-2 animate-spin" />
                       Generating...
                     </>
                   ) : (

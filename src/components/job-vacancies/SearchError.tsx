@@ -1,6 +1,6 @@
-import { AlertCircle } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { AlertCircle } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface SearchErrorProps {
   error: string;
@@ -13,30 +13,30 @@ const SearchError = ({ error, onRetry }: SearchErrorProps) => {
       return {
         title: 'API Configuration Issue',
         description: 'The job search service is not properly configured. Please contact support.',
-        suggestion: 'The administrator needs to configure the Reed API key in Supabase secrets.'
+        suggestion: 'The administrator needs to configure the Reed API key in Supabase secrets.',
       };
     }
-    
+
     if (error.includes('Network') || error.includes('fetch')) {
       return {
         title: 'Network Error',
         description: 'Unable to connect to the job search service.',
-        suggestion: 'Please check your internet connection and try again.'
+        suggestion: 'Please check your internet connection and try again.',
       };
     }
-    
+
     if (error.includes('timeout') || error.includes('slow')) {
       return {
         title: 'Service Timeout',
         description: 'The job search is taking longer than expected.',
-        suggestion: 'Please try again with different search terms.'
+        suggestion: 'Please try again with different search terms.',
       };
     }
-    
+
     return {
       title: 'Search Error',
       description: error,
-      suggestion: 'Please try adjusting your search terms or try again later.'
+      suggestion: 'Please try adjusting your search terms or try again later.',
     };
   };
 
@@ -52,12 +52,7 @@ const SearchError = ({ error, onRetry }: SearchErrorProps) => {
             <p className="text-sm text-muted-foreground">{errorInfo.description}</p>
             <p className="text-xs text-muted-foreground italic">{errorInfo.suggestion}</p>
             {onRetry && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={onRetry}
-                className="mt-3"
-              >
+              <Button variant="outline" size="sm" onClick={onRetry} className="mt-3">
                 Try Again
               </Button>
             )}

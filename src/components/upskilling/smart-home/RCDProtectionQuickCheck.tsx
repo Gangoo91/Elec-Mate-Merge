@@ -7,15 +7,15 @@ const RCDProtectionQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const question = "What BS 7671 requirement protects circuits from electric shock and fire risk?";
+  const question = 'What BS 7671 requirement protects circuits from electric shock and fire risk?';
   const options = [
-    { id: 'a', text: "Cable colour coding standards", correct: false },
-    { id: 'b', text: "RCD (Residual Current Device) protection", correct: true },
-    { id: 'c', text: "IP rating requirements for enclosures", correct: false },
-    { id: 'd', text: "Maximum cable length restrictions", correct: false }
+    { id: 'a', text: 'Cable colour coding standards', correct: false },
+    { id: 'b', text: 'RCD (Residual Current Device) protection', correct: true },
+    { id: 'c', text: 'IP rating requirements for enclosures', correct: false },
+    { id: 'd', text: 'Maximum cable length restrictions', correct: false },
   ];
-  
-  const correctAnswer = options.find(opt => opt.correct);
+
+  const correctAnswer = options.find((opt) => opt.correct);
 
   const handleSubmit = () => {
     setShowAnswer(true);
@@ -31,10 +31,13 @@ const RCDProtectionQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
-            <label key={option.id} className="flex items-start gap-3 p-3 bg-[#1a1a1a] rounded-lg cursor-pointer hover:bg-[#252525] active:bg-[#303030] transition-all touch-manipulation">
+            <label
+              key={option.id}
+              className="flex items-start gap-3 p-3 bg-[#1a1a1a] rounded-lg cursor-pointer hover:bg-[#252525] active:bg-[#303030] transition-all touch-manipulation"
+            >
               <input
                 type="radio"
                 name="rcd-protection"
@@ -44,10 +47,17 @@ const RCDProtectionQuickCheck = () => {
                 className="mt-1"
                 disabled={showAnswer}
               />
-              <span className={`text-sm ${showAnswer 
-                ? (option.correct ? 'text-green-300' : selectedAnswer === option.id ? 'text-red-300' : 'text-gray-300')
-                : 'text-gray-300'
-              }`}>
+              <span
+                className={`text-sm ${
+                  showAnswer
+                    ? option.correct
+                      ? 'text-green-300'
+                      : selectedAnswer === option.id
+                        ? 'text-red-300'
+                        : 'text-gray-300'
+                    : 'text-gray-300'
+                }`}
+              >
                 {option.text}
               </span>
               {showAnswer && option.correct && (
@@ -61,7 +71,10 @@ const RCDProtectionQuickCheck = () => {
         </div>
 
         {!showAnswer && selectedAnswer && (
-          <Button onClick={handleSubmit} className="bg-elec-yellow text-elec-dark hover:bg-yellow-500">
+          <Button
+            onClick={handleSubmit}
+            className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
+          >
             Check Answer
           </Button>
         )}
@@ -72,9 +85,10 @@ const RCDProtectionQuickCheck = () => {
               {selectedAnswer === correctAnswer?.id ? '✓ Correct!' : '✗ Incorrect'}
             </p>
             <p className="text-foreground text-sm">
-              <strong>Explanation:</strong> RCD (Residual Current Device) protection is required by BS 7671 for most new circuits. 
-              RCDs detect current imbalances that indicate earth faults, quickly disconnecting power to prevent electric shock 
-              and reduce fire risk from earth fault currents.
+              <strong>Explanation:</strong> RCD (Residual Current Device) protection is required by
+              BS 7671 for most new circuits. RCDs detect current imbalances that indicate earth
+              faults, quickly disconnecting power to prevent electric shock and reduce fire risk
+              from earth fault currents.
             </p>
           </div>
         )}

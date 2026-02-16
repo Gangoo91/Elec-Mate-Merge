@@ -1,8 +1,22 @@
-import { useState, useEffect } from "react";
-import { TrendingUp, TrendingDown, Minus, Users, MapPin, Award, Download, BarChart3, Calendar, Zap, Target, Trophy, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import {
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  Users,
+  MapPin,
+  Award,
+  Download,
+  BarChart3,
+  Calendar,
+  Zap,
+  Target,
+  Trophy,
+  Star,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 
 interface UserStats {
   totalContributions: number;
@@ -38,7 +52,9 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
 
         if (user) {
           const { data: userContribs, count } = await supabase
@@ -47,7 +63,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
             .eq('user_id', user.id);
 
           if (userContribs) {
-            const uniqueAreas = new Set(userContribs.map(c => c.postcode_district)).size;
+            const uniqueAreas = new Set(userContribs.map((c) => c.postcode_district)).size;
             setUserStats({
               totalContributions: count || 0,
               areasContributed: uniqueAreas,
@@ -61,29 +77,28 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
           .from('community_pricing_submissions')
           .select('*', { count: 'exact', head: true });
 
-        setMarketStats(prev => ({
+        setMarketStats((prev) => ({
           ...prev,
           totalSubmissions: totalCount || 0,
         }));
 
         setTopJobs([
-          { job: "EV Charger Install", searches: 1240 },
-          { job: "Fuse Box Upgrade", searches: 980 },
-          { job: "Socket Installation", searches: 850 },
-          { job: "EICR Inspection", searches: 720 },
-          { job: "Rewiring", searches: 540 },
+          { job: 'EV Charger Install', searches: 1240 },
+          { job: 'Fuse Box Upgrade', searches: 980 },
+          { job: 'Socket Installation', searches: 850 },
+          { job: 'EICR Inspection', searches: 720 },
+          { job: 'Rewiring', searches: 540 },
         ]);
 
         setHotRegions([
-          { region: "London (SW)", change: 5.2 },
-          { region: "Manchester (M)", change: 3.8 },
-          { region: "Birmingham (B)", change: 3.1 },
-          { region: "Leeds (LS)", change: -1.2 },
-          { region: "Bristol (BS)", change: 2.4 },
+          { region: 'London (SW)', change: 5.2 },
+          { region: 'Manchester (M)', change: 3.8 },
+          { region: 'Birmingham (B)', change: 3.1 },
+          { region: 'Leeds (LS)', change: -1.2 },
+          { region: 'Bristol (BS)', change: 2.4 },
         ]);
-
       } catch (error) {
-        console.error("Error fetching insights:", error);
+        console.error('Error fetching insights:', error);
       } finally {
         setIsLoading(false);
       }
@@ -94,16 +109,16 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
 
   const getBadges = (contributions: number): string[] => {
     const badges = [];
-    if (contributions >= 1) badges.push("First Contribution");
-    if (contributions >= 5) badges.push("Active Contributor");
-    if (contributions >= 10) badges.push("Community Helper");
-    if (contributions >= 25) badges.push("Pricing Expert");
-    if (contributions >= 50) badges.push("Data Champion");
+    if (contributions >= 1) badges.push('First Contribution');
+    if (contributions >= 5) badges.push('Active Contributor');
+    if (contributions >= 10) badges.push('Community Helper');
+    if (contributions >= 25) badges.push('Pricing Expert');
+    if (contributions >= 50) badges.push('Data Champion');
     return badges;
   };
 
   const handleExport = () => {
-    alert("Export feature coming soon!");
+    alert('Export feature coming soon!');
   };
 
   const TrendIndicator = ({ value }: { value: number }) => {
@@ -111,22 +126,27 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
     const isDown = value < 0;
 
     return (
-      <div className={cn(
-        "flex items-center gap-1 text-sm font-bold",
-        isUp && "text-emerald-400",
-        isDown && "text-rose-400",
-        !isUp && !isDown && "text-white/50"
-      )}>
+      <div
+        className={cn(
+          'flex items-center gap-1 text-sm font-bold',
+          isUp && 'text-emerald-400',
+          isDown && 'text-rose-400',
+          !isUp && !isDown && 'text-white/50'
+        )}
+      >
         {isUp && <TrendingUp className="h-4 w-4" />}
         {isDown && <TrendingDown className="h-4 w-4" />}
         {!isUp && !isDown && <Minus className="h-4 w-4" />}
-        <span>{isUp && "+"}{value.toFixed(1)}%</span>
+        <span>
+          {isUp && '+'}
+          {value.toFixed(1)}%
+        </span>
       </div>
     );
   };
 
   return (
-    <div className={cn("space-y-6", className)}>
+    <div className={cn('space-y-6', className)}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -198,7 +218,9 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
       {/* Badges Display */}
       {userStats.badges.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Your Badges</h3>
+          <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+            Your Badges
+          </h3>
           <div className="flex flex-wrap gap-2">
             {userStats.badges.map((badge) => (
               <span
@@ -228,7 +250,9 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
         {/* Market Stats Row */}
         <div className="grid grid-cols-3 gap-3 mb-5">
           <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-            <p className="text-3xl font-black text-white">{marketStats.totalSubmissions.toLocaleString()}</p>
+            <p className="text-3xl font-black text-white">
+              {marketStats.totalSubmissions.toLocaleString()}
+            </p>
             <p className="text-xs text-white/60 font-medium mt-1">Total Prices</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
@@ -253,18 +277,22 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
               {topJobs.map((job, index) => (
                 <div key={job.job} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className={cn(
-                      "w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold",
-                      index === 0 && "bg-yellow-400 text-black",
-                      index === 1 && "bg-white/30 text-white",
-                      index === 2 && "bg-orange-500 text-white",
-                      index > 2 && "bg-white/10 text-white/70"
-                    )}>
+                    <span
+                      className={cn(
+                        'w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold',
+                        index === 0 && 'bg-yellow-400 text-black',
+                        index === 1 && 'bg-white/30 text-white',
+                        index === 2 && 'bg-orange-500 text-white',
+                        index > 2 && 'bg-white/10 text-white/70'
+                      )}
+                    >
                       {index + 1}
                     </span>
                     <span className="text-white font-medium">{job.job}</span>
                   </div>
-                  <span className="text-sm text-white/50 font-semibold">{job.searches.toLocaleString()}</span>
+                  <span className="text-sm text-white/50 font-semibold">
+                    {job.searches.toLocaleString()}
+                  </span>
                 </div>
               ))}
             </div>
@@ -298,7 +326,8 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
             <div>
               <h4 className="font-bold text-white text-xl">Start Contributing!</h4>
               <p className="text-white/70 mt-2 leading-relaxed">
-                Submit your first job price to help fellow electricians and start earning badges. Your contributions make the community stronger.
+                Submit your first job price to help fellow electricians and start earning badges.
+                Your contributions make the community stronger.
               </p>
             </div>
           </div>

@@ -72,9 +72,9 @@ export const NotificationFilters = ({
 
       {/* Clear Filters */}
       {hasActiveFilters && (
-        <Button 
-          variant="outline" 
-          onClick={onClearFilters} 
+        <Button
+          variant="outline"
+          onClick={onClearFilters}
           size="sm"
           className="w-full sm:w-auto min-h-[48px] sm:min-h-[36px]"
         >

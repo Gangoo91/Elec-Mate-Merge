@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BookOpen, Shield, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,7 +18,9 @@ const InsulationRegulationRequirementsCard = () => (
         <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
-            <h4 className="font-medium text-purple-400 text-sm sm:text-base">Regulation 612.3 - Insulation Resistance</h4>
+            <h4 className="font-medium text-purple-400 text-sm sm:text-base">
+              Regulation 612.3 - Insulation Resistance
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -52,7 +53,9 @@ const InsulationRegulationRequirementsCard = () => (
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-            <h4 className="font-medium text-blue-400 text-sm sm:text-base">Regulation 134.1.1 - Protection Against Electric Shock</h4>
+            <h4 className="font-medium text-blue-400 text-sm sm:text-base">
+              Regulation 134.1.1 - Protection Against Electric Shock
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -83,7 +86,9 @@ const InsulationRegulationRequirementsCard = () => (
         <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-            <h4 className="font-medium text-green-400 text-sm sm:text-base">Regulation 651.4 - Periodic Inspection and Testing</h4>
+            <h4 className="font-medium text-green-400 text-sm sm:text-base">
+              Regulation 651.4 - Periodic Inspection and Testing
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -99,7 +104,9 @@ const InsulationRegulationRequirementsCard = () => (
                 </div>
               </div>
               <div>
-                <p className="font-medium text-foreground mb-2">Acceptable Values for Existing Installations:</p>
+                <p className="font-medium text-foreground mb-2">
+                  Acceptable Values for Existing Installations:
+                </p>
                 <div className="space-y-1 text-xs">
                   <p>• Minimum 1.0MΩ preferred</p>
                   <p>• 0.5MΩ acceptable for existing installations</p>
@@ -116,7 +123,9 @@ const InsulationRegulationRequirementsCard = () => (
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
-            <h4 className="font-medium text-orange-400 text-sm sm:text-base">Regulation 421.1.201 - RCD Protection</h4>
+            <h4 className="font-medium text-orange-400 text-sm sm:text-base">
+              Regulation 421.1.201 - RCD Protection
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -147,7 +156,9 @@ const InsulationRegulationRequirementsCard = () => (
         <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-            <h4 className="font-medium text-red-400 text-sm sm:text-base">Critical Compliance Points</h4>
+            <h4 className="font-medium text-red-400 text-sm sm:text-base">
+              Critical Compliance Points
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-white">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

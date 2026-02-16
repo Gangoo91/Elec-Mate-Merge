@@ -29,10 +29,7 @@ export function SegmentedControl<T extends string>({
 }: SegmentedControlProps<T>) {
   return (
     <div
-      className={cn(
-        'flex rounded-lg bg-card/50 p-1 border border-border/50',
-        className
-      )}
+      className={cn('flex rounded-lg bg-card/50 p-1 border border-border/50', className)}
       role="tablist"
       aria-label="Filter options"
     >

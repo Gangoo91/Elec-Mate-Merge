@@ -5,14 +5,17 @@
  */
 
 import React, { useState } from 'react';
-import { CheckCircle2, Loader2, XCircle, HardDrive, Smartphone, Cloud, ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+  CheckCircle2,
+  Loader2,
+  XCircle,
+  HardDrive,
+  Smartphone,
+  Cloud,
+  ChevronDown,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 type LayerStatus = 'saved' | 'saving' | 'unsaved' | 'error';
 
@@ -41,10 +44,14 @@ const statusIcon = (status: LayerStatus) => {
 
 const statusColor = (status: LayerStatus): string => {
   switch (status) {
-    case 'saved': return 'bg-green-500';
-    case 'saving': return 'bg-amber-400';
-    case 'unsaved': return 'bg-white/20';
-    case 'error': return 'bg-red-500';
+    case 'saved':
+      return 'bg-green-500';
+    case 'saving':
+      return 'bg-amber-400';
+    case 'unsaved':
+      return 'bg-white/20';
+    case 'error':
+      return 'bg-red-500';
   }
 };
 
@@ -76,9 +83,9 @@ export const TripleSaveIndicator: React.FC<TripleSaveIndicatorProps> = ({
     { status: cloudStatus, label: 'Cloud' },
   ];
 
-  const allSaved = layers.every(l => l.status === 'saved');
-  const anyError = layers.some(l => l.status === 'error');
-  const anySaving = layers.some(l => l.status === 'saving');
+  const allSaved = layers.every((l) => l.status === 'saved');
+  const anyError = layers.some((l) => l.status === 'error');
+  const anySaving = layers.some((l) => l.status === 'saving');
 
   return (
     <>
@@ -88,7 +95,7 @@ export const TripleSaveIndicator: React.FC<TripleSaveIndicatorProps> = ({
         className={cn(
           'flex items-center gap-1.5 px-2 py-1.5 rounded-lg touch-manipulation transition-colors',
           'active:bg-white/10',
-          className,
+          className
         )}
         aria-label="Save status"
       >
@@ -100,24 +107,35 @@ export const TripleSaveIndicator: React.FC<TripleSaveIndicatorProps> = ({
               className={cn(
                 'h-2 w-2 rounded-full transition-colors',
                 statusColor(layer.status),
-                layer.status === 'saving' && 'animate-pulse',
+                layer.status === 'saving' && 'animate-pulse'
               )}
             />
           ))}
         </div>
 
         {/* Compact status text */}
-        <span className={cn(
-          'text-[11px] font-medium',
-          allSaved ? 'text-green-500' : anyError ? 'text-red-400' : anySaving ? 'text-amber-400' : 'text-white/50',
-        )}>
+        <span
+          className={cn(
+            'text-[11px] font-medium',
+            allSaved
+              ? 'text-green-500'
+              : anyError
+                ? 'text-red-400'
+                : anySaving
+                  ? 'text-amber-400'
+                  : 'text-white/50'
+          )}
+        >
           {allSaved ? 'Saved' : anyError ? 'Error' : anySaving ? 'Saving...' : 'Pending'}
         </span>
       </button>
 
       {/* Detail Sheet */}
       <Sheet open={showDetail} onOpenChange={setShowDetail}>
-        <SheetContent side="bottom" className="h-auto max-h-[50vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent
+          side="bottom"
+          className="h-auto max-h-[50vh] p-0 rounded-t-2xl overflow-hidden"
+        >
           <div className="px-5 pt-5 pb-8 space-y-5 bg-background">
             <SheetHeader>
               <SheetTitle className="text-base font-semibold text-left">Data Protection</SheetTitle>
@@ -143,7 +161,9 @@ export const TripleSaveIndicator: React.FC<TripleSaveIndicatorProps> = ({
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground">Device Storage</p>
-                  <p className="text-xs text-muted-foreground">Persistent backup — survives cache clears</p>
+                  <p className="text-xs text-muted-foreground">
+                    Persistent backup — survives cache clears
+                  </p>
                 </div>
                 {statusIcon(indexedDBStatus)}
               </div>

@@ -101,9 +101,7 @@ export const useUserPresence = (userId: string | undefined) => {
   const presence = realtimePresence || query.data;
 
   // Calculate actual status based on last_seen
-  const actualStatus = presence
-    ? calculateStatus(presence.last_seen)
-    : 'offline';
+  const actualStatus = presence ? calculateStatus(presence.last_seen) : 'offline';
 
   return {
     ...query,
@@ -135,7 +133,7 @@ export const useMultipleUserPresence = (userIds: string[]) => {
   useEffect(() => {
     if (query.data) {
       const map: Record<string, UserPresence> = {};
-      query.data.forEach(p => {
+      query.data.forEach((p) => {
         map[p.user_id] = p;
       });
       setPresenceMap(map);
@@ -158,7 +156,7 @@ export const useMultipleUserPresence = (userIds: string[]) => {
         (payload) => {
           const newPresence = payload.new as UserPresence;
           if (userIds.includes(newPresence.user_id)) {
-            setPresenceMap(prev => ({
+            setPresenceMap((prev) => ({
               ...prev,
               [newPresence.user_id]: newPresence,
             }));
@@ -191,7 +189,11 @@ export const useMultipleUserPresence = (userIds: string[]) => {
  * Hook for Supabase Realtime Presence (channel-based presence)
  * This is more suitable for "who's currently viewing this conversation"
  */
-export const useRealtimePresence = (channelName: string, userId: string, metadata?: Record<string, unknown>) => {
+export const useRealtimePresence = (
+  channelName: string,
+  userId: string,
+  metadata?: Record<string, unknown>
+) => {
   const [presentUsers, setPresentUsers] = useState<Record<string, unknown>[]>([]);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
 

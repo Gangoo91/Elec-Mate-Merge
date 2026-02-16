@@ -12,9 +12,10 @@ export const HumiditySensorsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Humidity sensors measure relative humidity (RH %) in the air, providing critical data for maintaining comfortable and healthy indoor environments whilst protecting building fabric.
+          Humidity sensors measure relative humidity (RH %) in the air, providing critical data for
+          maintaining comfortable and healthy indoor environments whilst protecting building fabric.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Optimal Humidity Range</h4>
           <div className="text-center mb-4">
@@ -22,7 +23,8 @@ export const HumiditySensorsSection = () => {
             <div className="text-sm text-gray-400">Relative Humidity (RH)</div>
           </div>
           <p className="text-sm text-center">
-            This range minimises health risks whilst protecting building materials and ensuring occupant comfort.
+            This range minimises health risks whilst protecting building materials and ensuring
+            occupant comfort.
           </p>
         </div>
 
@@ -37,7 +39,7 @@ export const HumiditySensorsSection = () => {
               <li>• Increased virus transmission</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-orange-600 rounded-lg p-4">
             <h4 className="font-semibold text-orange-200 mb-3">Too High (&gt;60%)</h4>
             <ul className="space-y-2 text-sm text-orange-100">
@@ -88,12 +90,16 @@ export const HumiditySensorsSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div>
               <h5 className="font-medium text-yellow-200 mb-2">Capacitive Sensors</h5>
-              <p className="text-gray-300 mb-2">Most common type, using polymer film that changes capacitance with humidity.</p>
+              <p className="text-gray-300 mb-2">
+                Most common type, using polymer film that changes capacitance with humidity.
+              </p>
               <p className="text-xs text-gray-400">Accurate, stable, moderate cost</p>
             </div>
             <div>
               <h5 className="font-medium text-cyan-200 mb-2">Resistive Sensors</h5>
-              <p className="text-gray-300 mb-2">Use salt or polymer that changes resistance with moisture content.</p>
+              <p className="text-gray-300 mb-2">
+                Use salt or polymer that changes resistance with moisture content.
+              </p>
               <p className="text-xs text-gray-400">Lower cost, less accurate</p>
             </div>
           </div>

@@ -59,8 +59,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 3,
-    question:
-      'When delegating a task, a leader should always ensure the team member understands:',
+    question: 'When delegating a task, a leader should always ensure the team member understands:',
     options: [
       'Only what needs to be done — they can figure out the rest',
       'What needs to be done, why it matters, the expected standard, the deadline, and what authority they have',
@@ -75,8 +74,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 4,
-    question:
-      'The five whys technique is primarily used for:',
+    question: 'The five whys technique is primarily used for:',
     options: [
       'Conducting employee performance reviews',
       'Writing method statements for complex tasks',
@@ -107,8 +105,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 6,
-    question:
-      'RIDDOR stands for:',
+    question: 'RIDDOR stands for:',
     options: [
       'Reporting of Industrial Diseases, Dangers and Operational Risks',
       'Regulations for Investigating Dangerous and Destructive Occurrences at Work',
@@ -139,8 +136,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 8,
-    question:
-      'A contemporaneous note is:',
+    question: 'A contemporaneous note is:',
     options: [
       'A note written from memory several weeks after the event',
       'A note written at or very close to the time of the event it records',
@@ -171,8 +167,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 10,
-    question:
-      'Fairness in leadership means:',
+    question: 'Fairness in leadership means:',
     options: [
       'Treating everyone identically regardless of circumstances',
       'Giving the best tasks to the most experienced workers',
@@ -187,8 +182,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 11,
-    question:
-      'The angry email rule advises that when you are frustrated, you should:',
+    question: 'The angry email rule advises that when you are frustrated, you should:',
     options: [
       'Send the email immediately while details are fresh',
       'Use capital letters for emphasis on key points',
@@ -203,8 +197,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 12,
-    question:
-      'A well-structured site report should include:',
+    question: 'A well-structured site report should include:',
     options: [
       'Personal opinions about quality and competence of the workforce',
       'What happened, where, when, who was involved, what action was taken, and what follow-up is needed',
@@ -219,8 +212,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 13,
-    question:
-      'Mcgregor\'s Theory Y assumes that workers:',
+    question: "Mcgregor's Theory Y assumes that workers:",
     options: [
       'Are inherently lazy and need constant supervision',
       'Are naturally motivated and can exercise self-direction when committed to objectives',
@@ -235,8 +227,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 14,
-    question:
-      'The most effective way to build trust with a new team is:',
+    question: 'The most effective way to build trust with a new team is:',
     options: [
       'Make promises about improvements and hope you can deliver them',
       'Be consistently fair, follow through on commitments, and admit when you do not know something',
@@ -251,8 +242,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 15,
-    question:
-      'When using the five whys technique, a common mistake is:',
+    question: 'When using the five whys technique, a common mistake is:',
     options: [
       'Asking too many questions',
       'Stopping at the first answer instead of drilling deeper to the root cause',
@@ -267,8 +257,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 16,
-    question:
-      'Setting boundaries as a new supervisor should happen:',
+    question: 'Setting boundaries as a new supervisor should happen:',
     options: [
       'After the first major problem occurs',
       'From day one, applied equally to everyone',
@@ -283,8 +272,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 17,
-    question:
-      'Emotional intelligence in leadership primarily involves:',
+    question: 'Emotional intelligence in leadership primarily involves:',
     options: [
       'Suppressing all emotions to appear strong and decisive',
       'Recognising, understanding, and managing your own emotions and those of others',
@@ -299,8 +287,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 18,
-    question:
-      'A SWOT analysis examines:',
+    question: 'A SWOT analysis examines:',
     options: [
       'Safety, Welfare, Organisation, and Training',
       'Strengths, Weaknesses, Opportunities, and Threats',
@@ -315,8 +302,7 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 19,
-    question:
-      'When motivating a team, the most sustainable approach is:',
+    question: 'When motivating a team, the most sustainable approach is:',
     options: [
       'Financial bonuses for hitting targets',
       'Creating a sense of purpose, recognition, and opportunities for development',
@@ -331,13 +317,12 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 20,
-    question:
-      'When conducting an investigation into a workplace incident, the primary goal is:',
+    question: 'When conducting an investigation into a workplace incident, the primary goal is:',
     options: [
       'To find someone to blame for what happened',
       'To identify root causes and prevent recurrence',
       'To complete the paperwork as quickly as possible',
-      'To minimise the company\'s legal liability',
+      "To minimise the company's legal liability",
     ],
     correctAnswer: 1,
     explanation:
@@ -347,12 +332,6 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
   },
 ];
 
-export const getRandomLeadershipExamQuestions = (
-  numQuestions: number = 20
-) => {
-  return getRandomQuestionsBalanced(
-    leadershipQuestionBank,
-    numQuestions,
-    leadershipCategories
-  );
+export const getRandomLeadershipExamQuestions = (numQuestions: number = 20) => {
+  return getRandomQuestionsBalanced(leadershipQuestionBank, numQuestions, leadershipCategories);
 };

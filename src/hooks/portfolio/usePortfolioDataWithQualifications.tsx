@@ -2,28 +2,40 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
-import { PortfolioEntry, PortfolioCategory, PortfolioAnalytics, PortfolioActivity } from '@/types/portfolio';
+import {
+  PortfolioEntry,
+  PortfolioCategory,
+  PortfolioAnalytics,
+  PortfolioActivity,
+} from '@/types/portfolio';
 
 export const usePortfolioDataWithQualifications = () => {
   const { toast } = useToast();
-  const { categories: qualificationCategories, userSelection, updateCompliance, loading: qualLoading } = useQualifications();
+  const {
+    categories: qualificationCategories,
+    userSelection,
+    updateCompliance,
+    loading: qualLoading,
+  } = useQualifications();
   const [entries, setEntries] = useState<PortfolioEntry[]>([]);
   const [analytics, setAnalytics] = useState<PortfolioAnalytics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Memoize categories to prevent infinite re-renders
-  const categories: PortfolioCategory[] = useMemo(() => 
-    qualificationCategories.map(qc => ({
-      id: qc.id,
-      name: qc.name,
-      description: qc.description || '',
-      icon: qc.icon || 'folder',
-      color: qc.color || 'blue',
-      requiredEntries: qc.required_entries,
-      completedEntries: entries.filter(e => 
-        e.category.id === qc.id && e.status === 'completed'
-      ).length
-    })), [qualificationCategories, entries]);
+  const categories: PortfolioCategory[] = useMemo(
+    () =>
+      qualificationCategories.map((qc) => ({
+        id: qc.id,
+        name: qc.name,
+        description: qc.description || '',
+        icon: qc.icon || 'folder',
+        color: qc.color || 'blue',
+        requiredEntries: qc.required_entries,
+        completedEntries: entries.filter((e) => e.category.id === qc.id && e.status === 'completed')
+          .length,
+      })),
+    [qualificationCategories, entries]
+  );
 
   const loadEntries = useCallback(async () => {
     if (!userSelection) {
@@ -33,7 +45,9 @@ export const usePortfolioDataWithQualifications = () => {
 
     setIsLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -45,29 +59,33 @@ export const usePortfolioDataWithQualifications = () => {
       if (error) throw error;
 
       // Convert database entries to local format
-      const portfolioEntries: PortfolioEntry[] = data.map(item => {
-        const category = qualificationCategories.find(c => c.id === item.qualification_category_id);
+      const portfolioEntries: PortfolioEntry[] = data.map((item) => {
+        const category = qualificationCategories.find(
+          (c) => c.id === item.qualification_category_id
+        );
         return {
           id: item.id,
           title: item.title,
           description: item.description || '',
-          category: category ? {
-            id: category.id,
-            name: category.name,
-            description: category.description || '',
-            icon: category.icon || 'folder',
-            color: category.color || 'blue',
-            requiredEntries: category.required_entries,
-            completedEntries: 0
-          } : {
-            id: 'general',
-            name: 'General',
-            description: 'General portfolio entries',
-            icon: 'folder',
-            color: 'gray',
-            requiredEntries: 1,
-            completedEntries: 0
-          },
+          category: category
+            ? {
+                id: category.id,
+                name: category.name,
+                description: category.description || '',
+                icon: category.icon || 'folder',
+                color: category.color || 'blue',
+                requiredEntries: category.required_entries,
+                completedEntries: 0,
+              }
+            : {
+                id: 'general',
+                name: 'General',
+                description: 'General portfolio entries',
+                icon: 'folder',
+                color: 'gray',
+                requiredEntries: 1,
+                completedEntries: 0,
+              },
           skills: item.skills_demonstrated || [],
           reflection: item.reflection_notes || '',
           dateCreated: item.created_at,
@@ -80,7 +98,7 @@ export const usePortfolioDataWithQualifications = () => {
           selfAssessment: 3, // Default rating
           status: item.grade ? 'completed' : 'draft',
           timeSpent: 60, // Default time
-          awardingBodyStandards: []
+          awardingBodyStandards: [],
         };
       });
 
@@ -88,9 +106,9 @@ export const usePortfolioDataWithQualifications = () => {
     } catch (error) {
       console.error('Error loading portfolio entries:', error);
       toast({
-        title: "Error loading portfolio",
-        description: "Failed to load your portfolio entries.",
-        variant: "destructive"
+        title: 'Error loading portfolio',
+        description: 'Failed to load your portfolio entries.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -100,29 +118,33 @@ export const usePortfolioDataWithQualifications = () => {
   // Calculate analytics directly when needed
   const calculateAnalytics = useMemo(() => {
     const totalEntries = entries.length;
-    const completedEntries = entries.filter(e => e.status === 'completed').length;
+    const completedEntries = entries.filter((e) => e.status === 'completed').length;
     const totalTimeSpent = entries.reduce((total, entry) => total + entry.timeSpent, 0);
-    const averageRating = entries.length > 0 
-      ? entries.reduce((total, entry) => total + entry.selfAssessment, 0) / entries.length 
-      : 0;
+    const averageRating =
+      entries.length > 0
+        ? entries.reduce((total, entry) => total + entry.selfAssessment, 0) / entries.length
+        : 0;
 
     const categoriesProgress: { [key: string]: number } = {};
-    categories.forEach(category => {
-      const categoryEntries = entries.filter(e => e.category.id === category.id && e.status === 'completed');
-      categoriesProgress[category.id] = Math.min((categoryEntries.length / category.requiredEntries) * 100, 100);
+    categories.forEach((category) => {
+      const categoryEntries = entries.filter(
+        (e) => e.category.id === category.id && e.status === 'completed'
+      );
+      categoriesProgress[category.id] = Math.min(
+        (categoryEntries.length / category.requiredEntries) * 100,
+        100
+      );
     });
 
-    const skillsDemo = [...new Set(entries.flatMap(entry => entry.skills))];
+    const skillsDemo = [...new Set(entries.flatMap((entry) => entry.skills))];
 
-    const recentActivity: PortfolioActivity[] = entries
-      .slice(-5)
-      .map(entry => ({
-        id: `activity_${entry.id}`,
-        type: 'created',
-        entryId: entry.id,
-        entryTitle: entry.title,
-        date: entry.dateCreated
-      }));
+    const recentActivity: PortfolioActivity[] = entries.slice(-5).map((entry) => ({
+      id: `activity_${entry.id}`,
+      type: 'created',
+      entryId: entry.id,
+      entryTitle: entry.title,
+      date: entry.dateCreated,
+    }));
 
     return {
       totalEntries,
@@ -131,7 +153,7 @@ export const usePortfolioDataWithQualifications = () => {
       averageRating,
       categoriesProgress,
       skillsDemo,
-      recentActivity
+      recentActivity,
     };
   }, [entries, categories]);
 
@@ -141,8 +163,8 @@ export const usePortfolioDataWithQualifications = () => {
 
     try {
       for (const category of categories) {
-        const completedEntries = entries.filter(e => 
-          e.category.id === category.id && e.status === 'completed'
+        const completedEntries = entries.filter(
+          (e) => e.category.id === category.id && e.status === 'completed'
         ).length;
 
         await updateCompliance(category.id, completedEntries);
@@ -173,7 +195,9 @@ export const usePortfolioDataWithQualifications = () => {
 
   const addEntry = async (entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data, error } = await supabase
@@ -189,7 +213,7 @@ export const usePortfolioDataWithQualifications = () => {
           assessment_criteria_met: entryData.assessmentCriteria,
           learning_outcomes_met: entryData.learningOutcomes,
           supervisor_feedback: entryData.supervisorFeedback,
-          grade: entryData.status === 'completed' ? 'Pass' : null
+          grade: entryData.status === 'completed' ? 'Pass' : null,
         })
         .select()
         .single();
@@ -197,19 +221,19 @@ export const usePortfolioDataWithQualifications = () => {
       if (error) throw error;
 
       await loadEntries(); // Reload to get updated data
-      
+
       toast({
-        title: "Portfolio entry added",
-        description: "Your new portfolio entry has been saved successfully."
+        title: 'Portfolio entry added',
+        description: 'Your new portfolio entry has been saved successfully.',
       });
 
       return data.id;
     } catch (error) {
       console.error('Error adding entry:', error);
       toast({
-        title: "Error adding entry",
-        description: "Failed to add portfolio entry.",
-        variant: "destructive"
+        title: 'Error adding entry',
+        description: 'Failed to add portfolio entry.',
+        variant: 'destructive',
       });
       throw error;
     }
@@ -217,7 +241,9 @@ export const usePortfolioDataWithQualifications = () => {
 
   const updateEntry = async (entryId: string, updates: Partial<PortfolioEntry>) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const updateData: any = {};
@@ -229,7 +255,8 @@ export const usePortfolioDataWithQualifications = () => {
       }
       if (updates.skills) updateData.skills_demonstrated = updates.skills;
       if (updates.reflection) updateData.reflection_notes = updates.reflection;
-      if (updates.assessmentCriteria) updateData.assessment_criteria_met = updates.assessmentCriteria;
+      if (updates.assessmentCriteria)
+        updateData.assessment_criteria_met = updates.assessmentCriteria;
       if (updates.learningOutcomes) updateData.learning_outcomes_met = updates.learningOutcomes;
       if (updates.supervisorFeedback) updateData.supervisor_feedback = updates.supervisorFeedback;
       if (updates.status) updateData.grade = updates.status === 'completed' ? 'Pass' : null;
@@ -243,17 +270,17 @@ export const usePortfolioDataWithQualifications = () => {
       if (error) throw error;
 
       await loadEntries(); // Reload to get updated data
-      
+
       toast({
-        title: "Portfolio entry updated",
-        description: "Your changes have been saved successfully."
+        title: 'Portfolio entry updated',
+        description: 'Your changes have been saved successfully.',
       });
     } catch (error) {
       console.error('Error updating entry:', error);
       toast({
-        title: "Error updating entry",
-        description: "Failed to update portfolio entry.",
-        variant: "destructive"
+        title: 'Error updating entry',
+        description: 'Failed to update portfolio entry.',
+        variant: 'destructive',
       });
       throw error;
     }
@@ -261,7 +288,9 @@ export const usePortfolioDataWithQualifications = () => {
 
   const deleteEntry = async (entryId: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { error } = await supabase
@@ -273,17 +302,17 @@ export const usePortfolioDataWithQualifications = () => {
       if (error) throw error;
 
       await loadEntries(); // Reload to get updated data
-      
+
       toast({
-        title: "Portfolio entry deleted",
-        description: "The portfolio entry has been removed."
+        title: 'Portfolio entry deleted',
+        description: 'The portfolio entry has been removed.',
       });
     } catch (error) {
       console.error('Error deleting entry:', error);
       toast({
-        title: "Error deleting entry",
-        description: "Failed to delete portfolio entry.",
-        variant: "destructive"
+        title: 'Error deleting entry',
+        description: 'Failed to delete portfolio entry.',
+        variant: 'destructive',
       });
       throw error;
     }
@@ -298,6 +327,6 @@ export const usePortfolioDataWithQualifications = () => {
     updateEntry,
     deleteEntry,
     loadData: loadEntries,
-    hasQualificationSelected: !!userSelection
+    hasQualificationSelected: !!userSelection,
   };
 };

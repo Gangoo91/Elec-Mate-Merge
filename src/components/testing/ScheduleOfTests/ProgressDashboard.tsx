@@ -112,8 +112,8 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({
                   stats.completionPercent === 100
                     ? 'bg-gradient-to-r from-green-500 to-green-400'
                     : stats.failCount > 0
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-400'
-                    : 'bg-gradient-to-r from-primary to-primary/70'
+                      ? 'bg-gradient-to-r from-amber-500 to-amber-400'
+                      : 'bg-gradient-to-r from-primary to-primary/70'
                 )}
                 style={{ width: `${stats.completionPercent}%` }}
               />

@@ -8,10 +8,13 @@ export const TrueWhiteImportanceQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "It makes the bulb last longer", correct: false },
-    { text: "It provides better white light accuracy and brightness than RGB mixing", correct: true },
-    { text: "It uses less electricity", correct: false },
-    { text: "It's easier to manufacture", correct: false }
+    { text: 'It makes the bulb last longer', correct: false },
+    {
+      text: 'It provides better white light accuracy and brightness than RGB mixing',
+      correct: true,
+    },
+    { text: 'It uses less electricity', correct: false },
+    { text: "It's easier to manufacture", correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +35,10 @@ export const TrueWhiteImportanceQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q4: Why is true white important in RGBW bulbs?</p>
-        
+        <p className="text-foreground font-medium">
+          Q4: Why is true white important in RGBW bulbs?
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +63,9 @@ export const TrueWhiteImportanceQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +75,9 @@ export const TrueWhiteImportanceQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> The dedicated white LED in RGBW bulbs provides much better white light accuracy and higher brightness than trying to mix RGB colours to create white light.
+              <strong>Correct:</strong> The dedicated white LED in RGBW bulbs provides much better
+              white light accuracy and higher brightness than trying to mix RGB colours to create
+              white light.
             </p>
           </div>
         )}

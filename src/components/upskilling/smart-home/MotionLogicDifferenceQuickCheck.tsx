@@ -10,9 +10,13 @@ export const MotionLogicDifferenceQuickCheck = () => {
   const question = "What's the difference between basic and conditional motion logic?";
   const options = [
     { id: 'a', text: 'Basic is faster, conditional is slower', correct: false },
-    { id: 'b', text: 'Basic always responds to motion, conditional responds only under specific conditions', correct: true },
+    {
+      id: 'b',
+      text: 'Basic always responds to motion, conditional responds only under specific conditions',
+      correct: true,
+    },
     { id: 'c', text: 'Basic uses one sensor, conditional uses multiple sensors', correct: false },
-    { id: 'd', text: 'Basic is for indoor use, conditional is for outdoor use', correct: false }
+    { id: 'd', text: 'Basic is for indoor use, conditional is for outdoor use', correct: false },
   ];
 
   const handleAnswerSelect = (optionId: string) => {
@@ -31,7 +35,7 @@ export const MotionLogicDifferenceQuickCheck = () => {
     setShowResult(false);
   };
 
-  const selectedOption = options.find(opt => opt.id === selectedAnswer);
+  const selectedOption = options.find((opt) => opt.id === selectedAnswer);
   const isCorrect = selectedOption?.correct || false;
 
   return (
@@ -44,7 +48,7 @@ export const MotionLogicDifferenceQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
             <Button
@@ -52,10 +56,10 @@ export const MotionLogicDifferenceQuickCheck = () => {
               variant="outline"
               onClick={() => handleAnswerSelect(option.id)}
               className={`w-full justify-start text-left p-4 h-auto border-gray-600 hover:bg-gray-700 ${
-                selectedAnswer === option.id 
-                  ? showResult 
-                    ? option.correct 
-                      ? 'bg-green-900/20 border-green-600 text-green-100' 
+                selectedAnswer === option.id
+                  ? showResult
+                    ? option.correct
+                      ? 'bg-green-900/20 border-green-600 text-green-100'
                       : 'bg-red-900/20 border-red-600 text-red-100'
                     : 'bg-blue-900/20 border-blue-600 text-blue-100'
                   : 'text-gray-300'
@@ -78,7 +82,7 @@ export const MotionLogicDifferenceQuickCheck = () => {
         </div>
 
         {!showResult && selectedAnswer && (
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
           >
@@ -87,7 +91,9 @@ export const MotionLogicDifferenceQuickCheck = () => {
         )}
 
         {showResult && (
-          <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}>
+          <div
+            className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400" />
@@ -99,12 +105,11 @@ export const MotionLogicDifferenceQuickCheck = () => {
               </span>
             </div>
             <p className={`text-sm ${isCorrect ? 'text-green-100' : 'text-red-100'}`}>
-              {isCorrect 
+              {isCorrect
                 ? 'Exactly right! Basic motion logic always responds to motion regardless of conditions, while conditional logic only responds when specific conditions are met (like after dark or in certain modes).'
-                : 'The key difference is response conditions: basic motion logic always responds to any motion, while conditional logic only responds when specific conditions are met (time of day, light levels, modes).'
-              }
+                : 'The key difference is response conditions: basic motion logic always responds to any motion, while conditional logic only responds when specific conditions are met (time of day, light levels, modes).'}
             </p>
-            <Button 
+            <Button
               onClick={resetCheck}
               variant="outline"
               className="mt-3 border-gray-600 text-gray-300 hover:bg-gray-700"

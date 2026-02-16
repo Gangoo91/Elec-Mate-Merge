@@ -113,18 +113,36 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
         {
           heading: 'System Types (Part 3, Section 312)',
           rows: [
-            { label: 'TN-S', value: 'Separate earth conductor from DNO. Typical Ze \u2264 0.8 \u03A9' },
-            { label: 'TN-C-S (PME)', value: 'Combined neutral/earth split at origin. Typical Ze \u2264 0.35 \u03A9' },
-            { label: 'TT', value: 'Local earth electrode, no DNO earth. RCD required for fault protection' },
-            { label: 'TN-C', value: 'Combined neutral/earth throughout. Not permitted in consumer installations' },
-            { label: 'IT', value: 'Isolated supply, no direct earth connection. Used in specialist applications' },
+            {
+              label: 'TN-S',
+              value: 'Separate earth conductor from DNO. Typical Ze \u2264 0.8 \u03A9',
+            },
+            {
+              label: 'TN-C-S (PME)',
+              value: 'Combined neutral/earth split at origin. Typical Ze \u2264 0.35 \u03A9',
+            },
+            {
+              label: 'TT',
+              value: 'Local earth electrode, no DNO earth. RCD required for fault protection',
+            },
+            {
+              label: 'TN-C',
+              value: 'Combined neutral/earth throughout. Not permitted in consumer installations',
+            },
+            {
+              label: 'IT',
+              value: 'Isolated supply, no direct earth connection. Used in specialist applications',
+            },
           ],
         },
         {
           heading: 'Key Requirements',
           rows: [
             { label: 'TN-S max disconnection', value: '0.4s final circuits / 5s distribution' },
-            { label: 'TN-C-S (PME) bonding', value: 'Main bonding to gas, water, oil, structural steel' },
+            {
+              label: 'TN-C-S (PME) bonding',
+              value: 'Main bonding to gas, water, oil, structural steel',
+            },
             { label: 'TT earth electrode', value: 'Must achieve Ra \u00D7 I\u0394n \u2264 50V' },
           ],
         },
@@ -187,14 +205,35 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
         {
           heading: 'Common IP Ratings (BS EN 60529)',
           rows: [
-            { label: 'IP20', value: 'Finger-safe, no water protection \u2014 indoor switchgear, consumer units' },
+            {
+              label: 'IP20',
+              value: 'Finger-safe, no water protection \u2014 indoor switchgear, consumer units',
+            },
             { label: 'IP2X', value: 'Minimum for consumer units (Regulation 421.1.201)' },
-            { label: 'IP44', value: 'Splash-proof \u2014 bathrooms (Zone 2), covered outdoor areas' },
-            { label: 'IP55', value: 'Dust-protected, low-pressure water jets \u2014 industrial, plant rooms' },
-            { label: 'IP65', value: 'Dust-tight, water jets \u2014 outdoor lighting, garden sockets' },
-            { label: 'IP66', value: 'Dust-tight, powerful water jets \u2014 car washes, exposed outdoor' },
-            { label: 'IP67', value: 'Dust-tight, temporary immersion \u2014 ground-level fittings' },
-            { label: 'IP68', value: 'Dust-tight, continuous immersion \u2014 swimming pools, pond lighting' },
+            {
+              label: 'IP44',
+              value: 'Splash-proof \u2014 bathrooms (Zone 2), covered outdoor areas',
+            },
+            {
+              label: 'IP55',
+              value: 'Dust-protected, low-pressure water jets \u2014 industrial, plant rooms',
+            },
+            {
+              label: 'IP65',
+              value: 'Dust-tight, water jets \u2014 outdoor lighting, garden sockets',
+            },
+            {
+              label: 'IP66',
+              value: 'Dust-tight, powerful water jets \u2014 car washes, exposed outdoor',
+            },
+            {
+              label: 'IP67',
+              value: 'Dust-tight, temporary immersion \u2014 ground-level fittings',
+            },
+            {
+              label: 'IP68',
+              value: 'Dust-tight, continuous immersion \u2014 swimming pools, pond lighting',
+            },
           ],
         },
         {
@@ -220,11 +259,19 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
         {
           heading: 'Current Harmonised Colours (post-2004)',
           codes: [
-            { colour: 'Brown', tailwindBg: 'bg-amber-700', function: 'Line (single-phase) / L1 (three-phase)' },
+            {
+              colour: 'Brown',
+              tailwindBg: 'bg-amber-700',
+              function: 'Line (single-phase) / L1 (three-phase)',
+            },
             { colour: 'Black', tailwindBg: 'bg-gray-900', function: 'L2 (three-phase)' },
             { colour: 'Grey', tailwindBg: 'bg-gray-500', function: 'L3 (three-phase)' },
             { colour: 'Blue', tailwindBg: 'bg-blue-500', function: 'Neutral' },
-            { colour: 'Green/Yellow', tailwindBg: 'bg-gradient-to-r from-green-500 to-yellow-400', function: 'Protective Earth (CPC)' },
+            {
+              colour: 'Green/Yellow',
+              tailwindBg: 'bg-gradient-to-r from-green-500 to-yellow-400',
+              function: 'Protective Earth (CPC)',
+            },
           ],
         },
         {
@@ -232,9 +279,17 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
           codes: [
             { colour: 'Red', tailwindBg: 'bg-red-600', function: 'Line (single-phase) / L1' },
             { colour: 'Yellow', tailwindBg: 'bg-yellow-400', function: 'L2 (three-phase)' },
-            { colour: 'Blue', tailwindBg: 'bg-blue-500', function: 'L3 (three-phase) / Neutral (single-phase)' },
+            {
+              colour: 'Blue',
+              tailwindBg: 'bg-blue-500',
+              function: 'L3 (three-phase) / Neutral (single-phase)',
+            },
             { colour: 'Black', tailwindBg: 'bg-gray-900', function: 'Neutral (three-phase)' },
-            { colour: 'Green/Yellow', tailwindBg: 'bg-gradient-to-r from-green-500 to-yellow-400', function: 'Protective Earth (CPC)' },
+            {
+              colour: 'Green/Yellow',
+              tailwindBg: 'bg-gradient-to-r from-green-500 to-yellow-400',
+              function: 'Protective Earth (CPC)',
+            },
           ],
         },
       ],

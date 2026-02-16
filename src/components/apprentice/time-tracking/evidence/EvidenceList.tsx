@@ -1,8 +1,7 @@
-
-import { TrainingEvidenceItem } from "@/types/time-tracking";
-import EvidenceItem from "./EvidenceItem";
-import EvidenceEmptyState from "./EvidenceEmptyState";
-import { useTrainingEvidence } from "@/hooks/time-tracking/useTrainingEvidence";
+import { TrainingEvidenceItem } from '@/types/time-tracking';
+import EvidenceItem from './EvidenceItem';
+import EvidenceEmptyState from './EvidenceEmptyState';
+import { useTrainingEvidence } from '@/hooks/time-tracking/useTrainingEvidence';
 
 interface EvidenceListProps {
   items: TrainingEvidenceItem[];
@@ -14,14 +13,14 @@ const EvidenceList = ({ items, onDelete }: EvidenceListProps) => {
 
   if (items.length === 0) {
     return (
-      <EvidenceEmptyState 
-        onAddEvidence={addEvidence} 
+      <EvidenceEmptyState
+        onAddEvidence={addEvidence}
         isUploading={isUploading}
         setIsUploading={setIsUploading}
       />
     );
   }
-  
+
   return (
     <div className="space-y-4">
       {items.map((item) => (

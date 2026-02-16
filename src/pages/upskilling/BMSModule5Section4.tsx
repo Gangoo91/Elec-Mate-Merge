@@ -1,75 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "knx-vendor-neutral",
-    question: "Why is KNX considered vendor-neutral?",
-    options: ["It's free to use", "Hundreds of manufacturers produce compatible devices", "It only works with one brand"],
+    id: 'knx-vendor-neutral',
+    question: 'Why is KNX considered vendor-neutral?',
+    options: [
+      "It's free to use",
+      'Hundreds of manufacturers produce compatible devices',
+      'It only works with one brand',
+    ],
     correctIndex: 1,
-    explanation: "KNX is vendor-neutral because hundreds of manufacturers produce KNX-compatible devices that work together seamlessly, ensuring competition, choice, and long-term availability."
+    explanation:
+      'KNX is vendor-neutral because hundreds of manufacturers produce KNX-compatible devices that work together seamlessly, ensuring competition, choice, and long-term availability.',
   },
   {
-    id: "knx-line-devices",
-    question: "How many devices can typically be supported on a KNX line?",
-    options: ["Up to 32 devices", "Up to 64 devices", "Up to 127 devices"],
+    id: 'knx-line-devices',
+    question: 'How many devices can typically be supported on a KNX line?',
+    options: ['Up to 32 devices', 'Up to 64 devices', 'Up to 127 devices'],
     correctIndex: 1,
-    explanation: "A KNX line can support up to 64 devices (including couplers), though the total current consumption must not exceed the power supply capacity."
+    explanation:
+      'A KNX line can support up to 64 devices (including couplers), though the total current consumption must not exceed the power supply capacity.',
   },
   {
-    id: "knx-line-coupler",
-    question: "What type of KNX device is used to link two lines together?",
-    options: ["Gateway", "Line coupler", "USB interface"],
+    id: 'knx-line-coupler',
+    question: 'What type of KNX device is used to link two lines together?',
+    options: ['Gateway', 'Line coupler', 'USB interface'],
     correctIndex: 1,
-    explanation: "Line couplers are used to connect lines within areas, allowing expansion beyond the 64-device limit per line while maintaining system integrity."
+    explanation:
+      'Line couplers are used to connect lines within areas, allowing expansion beyond the 64-device limit per line while maintaining system integrity.',
   },
   {
-    id: "knx-no-loops",
-    question: "Why are loops not allowed in KNX topology?",
-    options: ["They use too much power", "They cause signal reflections and communication errors", "They're too expensive"],
+    id: 'knx-no-loops',
+    question: 'Why are loops not allowed in KNX topology?',
+    options: [
+      'They use too much power',
+      'They cause signal reflections and communication errors',
+      "They're too expensive",
+    ],
     correctIndex: 1,
-    explanation: "Loops cause signal reflections and communication errors because telegrams would travel both directions and interfere with each other. Always maintain tree or star structure."
-  }
+    explanation:
+      'Loops cause signal reflections and communication errors because telegrams would travel both directions and interfere with each other. Always maintain tree or star structure.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Do electricians program KNX systems?",
-    answer: "No, KNX programming requires ETS software and specialist training. Electricians install the bus cabling, devices, and power supplies, while integrators handle commissioning and programming."
+    question: 'Do electricians program KNX systems?',
+    answer:
+      'No, KNX programming requires ETS software and specialist training. Electricians install the bus cabling, devices, and power supplies, while integrators handle commissioning and programming.',
   },
   {
-    question: "What cable is used for KNX bus wiring?",
-    answer: "KNX uses dedicated two-wire twisted pair cable (typically green sheathed) that carries both 24V DC power and data. Standard KNX cable is EIB-Y(ST)Y 2x2x0.8mm."
+    question: 'What cable is used for KNX bus wiring?',
+    answer:
+      'KNX uses dedicated two-wire twisted pair cable (typically green sheathed) that carries both 24V DC power and data. Standard KNX cable is EIB-Y(ST)Y 2x2x0.8mm.',
   },
   {
-    question: "Can KNX work without a central controller?",
-    answer: "Yes, KNX is a distributed system. Basic functions work peer-to-peer between devices without requiring a central controller. Central systems add advanced features and visualisation."
-  }
+    question: 'Can KNX work without a central controller?',
+    answer:
+      'Yes, KNX is a distributed system. Basic functions work peer-to-peer between devices without requiring a central controller. Central systems add advanced features and visualisation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "What is the maximum total cable length allowed on a single KNX line?",
-  options: [
-    "500 metres",
-    "700 metres",
-    "1000 metres",
-    "1200 metres"
-  ],
-  correctAnswer: 2,
-  explanation: "The maximum bus cable length on a KNX line is 1000m. The distance between power supply and the furthest device must not exceed 700m."
-  }
+    question: 'What is the maximum total cable length allowed on a single KNX line?',
+    options: ['500 metres', '700 metres', '1000 metres', '1200 metres'],
+    correctAnswer: 2,
+    explanation:
+      'The maximum bus cable length on a KNX line is 1000m. The distance between power supply and the furthest device must not exceed 700m.',
+  },
 ];
 
 const BMSModule5Section4 = () => {
   useSEO({
-    title: "KNX Topology and Bus Devices | BMS Course",
-    description: "Learn KNX bus system configuration, device addressing, and installation practices for building automation."
+    title: 'KNX Topology and Bus Devices | BMS Course',
+    description:
+      'Learn KNX bus system configuration, device addressing, and installation practices for building automation.',
   });
 
   return (
@@ -77,7 +89,12 @@ const BMSModule5Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
@@ -106,17 +123,29 @@ const BMSModule5Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>KNX:</strong> Distributed peer-to-peer bus system</li>
-              <li><strong>Topology:</strong> Max 64 devices/line, 1000m cable</li>
-              <li><strong>Key rule:</strong> Never create loops in the bus</li>
+              <li>
+                <strong>KNX:</strong> Distributed peer-to-peer bus system
+              </li>
+              <li>
+                <strong>Topology:</strong> Max 64 devices/line, 1000m cable
+              </li>
+              <li>
+                <strong>Key rule:</strong> Never create loops in the bus
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Green 2-wire twisted pair cable = KNX bus</li>
-              <li><strong>Spot:</strong> 29V DC on bus terminals = KNX power</li>
-              <li><strong>Use:</strong> Lighting, blinds, HVAC automation</li>
+              <li>
+                <strong>Spot:</strong> Green 2-wire twisted pair cable = KNX bus
+              </li>
+              <li>
+                <strong>Spot:</strong> 29V DC on bus terminals = KNX power
+              </li>
+              <li>
+                <strong>Use:</strong> Lighting, blinds, HVAC automation
+              </li>
             </ul>
           </div>
         </div>
@@ -126,10 +155,10 @@ const BMSModule5Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand KNX distributed architecture",
-              "Design proper KNX bus topology",
-              "Identify KNX device types and functions",
-              "Apply installation best practices"
+              'Understand KNX distributed architecture',
+              'Design proper KNX bus topology',
+              'Identify KNX device types and functions',
+              'Apply installation best practices',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -149,9 +178,9 @@ const BMSModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              KNX is a distributed bus system where each device (sensor, switch, actuator) can communicate directly
-              with others on the same bus. This peer-to-peer communication eliminates the need for a central controller
-              for basic building automation functions.
+              KNX is a distributed bus system where each device (sensor, switch, actuator) can
+              communicate directly with others on the same bus. This peer-to-peer communication
+              eliminates the need for a central controller for basic building automation functions.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -163,16 +192,20 @@ const BMSModule5Section4 = () => {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Multiple Media Support</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Multiple Media Support
+                </p>
                 <p className="text-sm text-white">
-                  Supports twisted-pair bus (most common), Ethernet/IP (KNXnet/IP),
-                  and wireless communication (KNX RF).
+                  Supports twisted-pair bus (most common), Ethernet/IP (KNXnet/IP), and wireless
+                  communication (KNX RF).
                 </p>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Distributed Intelligence</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Distributed Intelligence
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Devices communicate peer-to-peer</li>
                 <li>No single point of failure</li>
@@ -184,9 +217,9 @@ const BMSModule5Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Practical Example:</p>
               <p className="text-sm text-white">
-                A KNX wall switch can directly control a lighting actuator and a blind motor without requiring
-                a central controller. The switch sends a telegram on the bus, and any device programmed to
-                respond to that address will act accordingly.
+                A KNX wall switch can directly control a lighting actuator and a blind motor without
+                requiring a central controller. The switch sends a telegram on the bus, and any
+                device programmed to respond to that address will act accordingly.
               </p>
             </div>
 
@@ -221,9 +254,9 @@ const BMSModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              KNX uses a bus topology where all devices connect to a two-wire twisted-pair bus.
-              The topology is flexible, supporting line, tree, and star layouts, but loops are strictly prohibited
-              as they cause signal reflections and communication errors.
+              KNX uses a bus topology where all devices connect to a two-wire twisted-pair bus. The
+              topology is flexible, supporting line, tree, and star layouts, but loops are strictly
+              prohibited as they cause signal reflections and communication errors.
             </p>
 
             <div className="my-6">
@@ -278,8 +311,12 @@ const BMSModule5Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-red-400/80 mb-2">Critical Topology Rules</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Never create loops</strong> - cause signal reflections</li>
-                <li><strong>Polarity matters</strong> - red to red, black to black</li>
+                <li>
+                  <strong>Never create loops</strong> - cause signal reflections
+                </li>
+                <li>
+                  <strong>Polarity matters</strong> - red to red, black to black
+                </li>
                 <li>Use couplers to connect separate lines, not loops</li>
                 <li>Incorrect polarity prevents device communication</li>
               </ul>
@@ -297,12 +334,15 @@ const BMSModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              KNX devices fall into several categories, each serving specific functions in the building automation system.
-              Understanding device types and their applications is essential for proper system design and installation.
+              KNX devices fall into several categories, each serving specific functions in the
+              building automation system. Understanding device types and their applications is
+              essential for proper system design and installation.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sensors (Input Devices)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Sensors (Input Devices)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Wall switches and push buttons</li>
                 <li>PIR occupancy detectors</li>
@@ -314,7 +354,9 @@ const BMSModule5Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Actuators (Output Devices)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Actuators (Output Devices)
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Lighting Control:</p>
@@ -384,8 +426,9 @@ const BMSModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              While electricians don't typically program KNX systems, understanding addressing, performance characteristics,
-              and system limitations is crucial for proper installation and troubleshooting.
+              While electricians don't typically program KNX systems, understanding addressing,
+              performance characteristics, and system limitations is crucial for proper installation
+              and troubleshooting.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -410,7 +453,9 @@ const BMSModule5Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Characteristics</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Performance Characteristics
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Bus speed: 9600 bits per second</li>
                 <li>Telegram transmission: ~20-50ms typical</li>
@@ -421,7 +466,9 @@ const BMSModule5Section4 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-green-400/80 mb-2">Good Installation Results</p>
+                <p className="text-sm font-medium text-green-400/80 mb-2">
+                  Good Installation Results
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Reliable communication</li>
                   <li>Fast response times</li>
@@ -484,21 +531,27 @@ const BMSModule5Section4 = () => {
 
         {/* Quiz */}
         <section className="mb-10 mt-10">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-5-section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Modbus Protocol
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-5-section-5">
               Next: Gateways
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

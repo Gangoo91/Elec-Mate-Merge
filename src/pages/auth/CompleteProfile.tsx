@@ -18,7 +18,7 @@ import {
   Zap,
   Check,
   AlertTriangle,
-  UserCircle
+  UserCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -31,8 +31,18 @@ const CompleteProfile = () => {
   const [error, setError] = useState<string | null>(null);
 
   const roleOptions = [
-    { value: 'electrician', label: 'Electrician', icon: Zap, description: 'Qualified professional' },
-    { value: 'apprentice', label: 'Apprentice', icon: GraduationCap, description: 'Learning the trade' },
+    {
+      value: 'electrician',
+      label: 'Electrician',
+      icon: Zap,
+      description: 'Qualified professional',
+    },
+    {
+      value: 'apprentice',
+      label: 'Apprentice',
+      icon: GraduationCap,
+      description: 'Learning the trade',
+    },
   ];
 
   const handleSubmit = async () => {
@@ -86,7 +96,7 @@ const CompleteProfile = () => {
       <div className="fixed inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.12, 0.08] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-elec-yellow/20 blur-[150px]"
         />
       </div>
@@ -130,9 +140,7 @@ const CompleteProfile = () => {
             <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
               Complete Your Profile
             </h1>
-            <p className="text-[15px] text-white/50">
-              Just one more step to get started
-            </p>
+            <p className="text-[15px] text-white/50">Just one more step to get started</p>
           </div>
 
           {/* Error */}
@@ -160,29 +168,33 @@ const CompleteProfile = () => {
                 type="button"
                 onClick={() => setSelectedRole(option.value)}
                 className={cn(
-                  "w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation",
+                  'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation',
                   selectedRole === option.value
-                    ? "border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-                    : "border-white/10 bg-white/[0.03] hover:border-white/20"
+                    ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                    : 'border-white/10 bg-white/[0.03] hover:border-white/20'
                 )}
               >
                 <div className="flex items-center gap-4">
-                  <div className={cn(
-                    "w-12 h-12 rounded-xl flex items-center justify-center",
-                    selectedRole === option.value ? "bg-elec-yellow/20" : "bg-white/10"
-                  )}>
-                    <option.icon className={cn(
-                      "h-6 w-6",
-                      selectedRole === option.value ? "text-elec-yellow" : "text-white/50"
-                    )} />
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-xl flex items-center justify-center',
+                      selectedRole === option.value ? 'bg-elec-yellow/20' : 'bg-white/10'
+                    )}
+                  >
+                    <option.icon
+                      className={cn(
+                        'h-6 w-6',
+                        selectedRole === option.value ? 'text-elec-yellow' : 'text-white/50'
+                      )}
+                    />
                   </div>
                   <div className="flex-1">
-                    <span className="font-semibold text-white text-[16px] block">{option.label}</span>
+                    <span className="font-semibold text-white text-[16px] block">
+                      {option.label}
+                    </span>
                     <span className="text-[13px] text-white/50">{option.description}</span>
                   </div>
-                  {selectedRole === option.value && (
-                    <Check className="h-5 w-5 text-elec-yellow" />
-                  )}
+                  {selectedRole === option.value && <Check className="h-5 w-5 text-elec-yellow" />}
                 </div>
               </button>
             ))}
@@ -193,10 +205,10 @@ const CompleteProfile = () => {
             onClick={handleSubmit}
             disabled={!selectedRole || isSubmitting}
             className={cn(
-              "w-full h-14 rounded-2xl text-[16px] font-semibold",
-              "bg-elec-yellow hover:bg-elec-yellow/90 text-black",
-              "shadow-lg shadow-elec-yellow/25 transition-all duration-200",
-              "disabled:opacity-50"
+              'w-full h-14 rounded-2xl text-[16px] font-semibold',
+              'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
+              'shadow-lg shadow-elec-yellow/25 transition-all duration-200',
+              'disabled:opacity-50'
             )}
           >
             {isSubmitting ? (

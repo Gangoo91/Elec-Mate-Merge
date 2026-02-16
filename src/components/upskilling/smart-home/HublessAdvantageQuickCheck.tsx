@@ -7,12 +7,12 @@ export const HublessAdvantageQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Name one advantage of hubless systems.";
+  const question = 'Name one advantage of hubless systems.';
   const options = [
     { id: 'a', text: 'Better scalability for large installations', correct: false },
     { id: 'b', text: 'Simple setup with no extra hardware needed', correct: true },
     { id: 'c', text: 'More reliable mesh networking', correct: false },
-    { id: 'd', text: 'Superior protocol interoperability', correct: false }
+    { id: 'd', text: 'Superior protocol interoperability', correct: false },
   ];
 
   const handleAnswerSelect = (optionId: string) => {
@@ -31,7 +31,7 @@ export const HublessAdvantageQuickCheck = () => {
     setShowResult(false);
   };
 
-  const selectedOption = options.find(opt => opt.id === selectedAnswer);
+  const selectedOption = options.find((opt) => opt.id === selectedAnswer);
   const isCorrect = selectedOption?.correct || false;
 
   return (
@@ -44,7 +44,7 @@ export const HublessAdvantageQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
             <Button
@@ -52,10 +52,10 @@ export const HublessAdvantageQuickCheck = () => {
               variant="outline"
               onClick={() => handleAnswerSelect(option.id)}
               className={`w-full justify-start text-left p-4 h-auto border-gray-600 hover:bg-gray-700 ${
-                selectedAnswer === option.id 
-                  ? showResult 
-                    ? option.correct 
-                      ? 'bg-green-900/20 border-green-600 text-green-100' 
+                selectedAnswer === option.id
+                  ? showResult
+                    ? option.correct
+                      ? 'bg-green-900/20 border-green-600 text-green-100'
                       : 'bg-red-900/20 border-red-600 text-red-100'
                     : 'bg-blue-900/20 border-blue-600 text-blue-100'
                   : 'text-gray-300'
@@ -78,7 +78,7 @@ export const HublessAdvantageQuickCheck = () => {
         </div>
 
         {!showResult && selectedAnswer && (
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
           >
@@ -87,7 +87,9 @@ export const HublessAdvantageQuickCheck = () => {
         )}
 
         {showResult && (
-          <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}>
+          <div
+            className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400" />
@@ -99,12 +101,11 @@ export const HublessAdvantageQuickCheck = () => {
               </span>
             </div>
             <p className={`text-sm ${isCorrect ? 'text-green-100' : 'text-red-100'}`}>
-              {isCorrect 
+              {isCorrect
                 ? 'Exactly! The main advantage of hubless systems is their simplicity - no additional hardware purchase or complex setup required. Just connect devices directly to your existing Wi-Fi network.'
-                : 'The key advantage of hubless systems is their simplicity and ease of setup. They don\'t require additional hardware and can be installed by connecting directly to existing Wi-Fi networks.'
-              }
+                : "The key advantage of hubless systems is their simplicity and ease of setup. They don't require additional hardware and can be installed by connecting directly to existing Wi-Fi networks."}
             </p>
-            <Button 
+            <Button
               onClick={resetCheck}
               variant="outline"
               className="mt-3 border-gray-600 text-gray-300 hover:bg-gray-700"

@@ -3,12 +3,12 @@ import { BookOpen, Check } from 'lucide-react';
 
 export const SmartHomeSection4Summary = () => {
   const keyPoints = [
-    "Local architectures process everything within the home for maximum speed, privacy, and offline operation",
-    "Cloud architectures offer easy setup and advanced features but depend entirely on internet connectivity", 
-    "Hybrid architectures combine local reliability with cloud convenience, ideal for complex installations",
-    "Architecture choice depends on priorities: speed vs convenience, privacy vs features, control vs simplicity",
-    "Future developments like edge computing and Matter protocol will blur architectural boundaries",
-    "Migration between architectures is possible but requires planning and compatible devices"
+    'Local architectures process everything within the home for maximum speed, privacy, and offline operation',
+    'Cloud architectures offer easy setup and advanced features but depend entirely on internet connectivity',
+    'Hybrid architectures combine local reliability with cloud convenience, ideal for complex installations',
+    'Architecture choice depends on priorities: speed vs convenience, privacy vs features, control vs simplicity',
+    'Future developments like edge computing and Matter protocol will blur architectural boundaries',
+    'Migration between architectures is possible but requires planning and compatible devices',
   ];
 
   return (
@@ -21,11 +21,12 @@ export const SmartHomeSection4Summary = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 leading-relaxed">
-          Smart home architectures represent fundamental design decisions that affect every aspect of system performance, 
-          from response times and reliability to privacy and ease of use. Understanding these trade-offs enables informed 
-          choices that match specific needs and priorities.
+          Smart home architectures represent fundamental design decisions that affect every aspect
+          of system performance, from response times and reliability to privacy and ease of use.
+          Understanding these trade-offs enables informed choices that match specific needs and
+          priorities.
         </p>
-        
+
         <div className="space-y-3">
           <h4 className="font-semibold text-foreground">Key Takeaways:</h4>
           <ul className="space-y-2">
@@ -40,8 +41,9 @@ export const SmartHomeSection4Summary = () => {
 
         <div className="p-4 bg-elec-gray border border-gray-600 rounded-lg">
           <p className="text-gray-300 text-sm">
-            <strong className="text-foreground">Next:</strong> In Section 5, we'll explore smart home protocols and communication 
-            standards that enable device interoperability across these different architectural approaches.
+            <strong className="text-foreground">Next:</strong> In Section 5, we'll explore smart
+            home protocols and communication standards that enable device interoperability across
+            these different architectural approaches.
           </p>
         </div>
       </CardContent>

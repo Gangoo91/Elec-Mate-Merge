@@ -1,7 +1,6 @@
-
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { CheckCircle } from 'lucide-react';
 
 interface TheoryQuizCardProps {
   courseSlug: string;
@@ -10,14 +9,9 @@ interface TheoryQuizCardProps {
   onClick: () => void;
 }
 
-const TheoryQuizCard = ({ 
-  courseSlug, 
-  unitCode, 
-  quizCompleted,
-  onClick
-}: TheoryQuizCardProps) => {
+const TheoryQuizCard = ({ courseSlug, unitCode, quizCompleted, onClick }: TheoryQuizCardProps) => {
   const unitCodeFormatted = unitCode.toLowerCase().replace('/', '-');
-  
+
   return (
     <Link
       to={`/apprentice/study/eal/${courseSlug}/unit/${unitCodeFormatted}/quiz`}
@@ -33,11 +27,9 @@ const TheoryQuizCard = ({
               </div>
               <h3 className="text-lg font-medium">Assessment Quiz</h3>
             </div>
-            <p className="text-sm text-white pl-[52px]">
-              Electrical Theory Assessment Quiz
-            </p>
+            <p className="text-sm text-white pl-[52px]">Electrical Theory Assessment Quiz</p>
           </div>
-          
+
           {quizCompleted && (
             <div className="absolute top-3 right-3">
               <CheckCircle className="h-5 w-5 text-green-500" />

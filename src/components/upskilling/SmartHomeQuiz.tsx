@@ -10,7 +10,9 @@ export const SmartHomeQuiz = () => {
   const questions = useMemo(() => smartHomeQuizQuestions, []);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(undefined as unknown as number));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    Array(questions.length).fill(undefined as unknown as number)
+  );
   const [showResults, setShowResults] = useState(false);
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -38,8 +40,9 @@ export const SmartHomeQuiz = () => {
   };
 
   const calculateScore = () => {
-    return selectedAnswers.reduce((acc, answer, index) => 
-      answer === questions[index].correctAnswer ? acc + 1 : acc, 0
+    return selectedAnswers.reduce(
+      (acc, answer, index) => (answer === questions[index].correctAnswer ? acc + 1 : acc),
+      0
     );
   };
 
@@ -72,7 +75,7 @@ export const SmartHomeQuiz = () => {
                       Q{index + 1}. {question.question}
                     </p>
                     <p className={isCorrect ? 'text-green-400' : 'text-red-400'}>
-                      Your answer: {question.options[selectedAnswers[index]] || '—'} 
+                      Your answer: {question.options[selectedAnswers[index]] || '—'}
                       {isCorrect ? ' (Correct)' : ' (Incorrect)'}
                     </p>
                     {!isCorrect && (
@@ -80,29 +83,21 @@ export const SmartHomeQuiz = () => {
                         Correct: {question.options[question.correctAnswer]}
                       </p>
                     )}
-                    <p className="text-gray-300 mt-1">
-                      Explanation: {question.explanation}
-                    </p>
+                    <p className="text-gray-300 mt-1">Explanation: {question.explanation}</p>
                   </div>
                 );
               })}
             </div>
 
             <div className="flex justify-end">
-              <Button 
-                onClick={resetQuiz} 
-                className="bg-elec-yellow text-black hover:bg-yellow-400"
-              >
+              <Button onClick={resetQuiz} className="bg-elec-yellow text-black hover:bg-yellow-400">
                 Restart Quiz
               </Button>
             </div>
           </div>
         ) : (
           <div className="space-y-6">
-            <QuizProgress 
-              currentQuestion={currentQuestion} 
-              totalQuestions={questions.length} 
-            />
+            <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
 
             <div>
               <p className="text-lg font-semibold text-foreground mb-4">

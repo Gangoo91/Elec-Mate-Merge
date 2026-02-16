@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Dialog,
@@ -24,7 +23,7 @@ const StartNewEICRDialog = ({
   onClose,
   onConfirm,
   onDuplicate,
-  hasUnsavedChanges
+  hasUnsavedChanges,
 }: StartNewEICRDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -38,9 +37,7 @@ const StartNewEICRDialog = ({
                 <div className="p-2.5 rounded-xl bg-bs7671-warning/20 border border-bs7671-warning/30">
                   <Sparkles className="h-5 w-5 text-bs7671-warning" />
                 </div>
-                <DialogTitle className="text-lg font-semibold">
-                  Start New EICR Report
-                </DialogTitle>
+                <DialogTitle className="text-lg font-semibold">Start New EICR Report</DialogTitle>
               </div>
             </DialogHeader>
           </div>
@@ -51,7 +48,7 @@ const StartNewEICRDialog = ({
           <DialogDescription className="text-sm leading-relaxed">
             Choose how you want to proceed with creating a new report:
           </DialogDescription>
-          
+
           {hasUnsavedChanges && (
             <Card className="p-3 bg-bs7671-warning/5 border-bs7671-warning/20">
               <div className="flex items-start gap-2">
@@ -63,11 +60,11 @@ const StartNewEICRDialog = ({
               </div>
             </Card>
           )}
-          
+
           {/* Option Cards */}
           <div className="space-y-3">
             {onDuplicate && (
-              <Card 
+              <Card
                 className="p-4 cursor-pointer border-2 hover:border-primary/50 hover:bg-accent/50 transition-all"
                 onClick={onDuplicate}
               >
@@ -78,14 +75,15 @@ const StartNewEICRDialog = ({
                   <div className="flex-1">
                     <h4 className="font-semibold text-sm mb-1">Duplicate Current Report</h4>
                     <p className="text-xs text-muted-foreground">
-                      Keep all data with a new certificate number. Perfect for similar properties or repeat inspections.
+                      Keep all data with a new certificate number. Perfect for similar properties or
+                      repeat inspections.
                     </p>
                   </div>
                 </div>
               </Card>
             )}
-            
-            <Card 
+
+            <Card
               className="p-4 cursor-pointer border-2 hover:border-destructive/50 hover:bg-destructive/5 transition-all"
               onClick={onConfirm}
             >
@@ -106,11 +104,7 @@ const StartNewEICRDialog = ({
 
         {/* Actions */}
         <div className="flex p-6 pt-2 bg-muted/20">
-          <Button
-            variant="outline"
-            onClick={onClose}
-            className="w-full"
-          >
+          <Button variant="outline" onClick={onClose} className="w-full">
             Cancel
           </Button>
         </div>

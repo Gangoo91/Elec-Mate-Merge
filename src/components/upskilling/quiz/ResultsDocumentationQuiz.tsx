@@ -12,7 +12,7 @@ export const ResultsDocumentationQuiz = () => {
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (showResult) return;
-    
+
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestion] = answerIndex;
     setSelectedAnswers(newAnswers);
@@ -57,7 +57,7 @@ export const ResultsDocumentationQuiz = () => {
   if (quizCompleted) {
     const score = calculateScore();
     const percentage = getScorePercentage();
-    
+
     return (
       <Card className="bg-elec-gray border-transparent">
         <CardHeader>
@@ -75,37 +75,40 @@ export const ResultsDocumentationQuiz = () => {
               Score: <span className={getScoreColor(percentage)}>{percentage}%</span>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             {percentage >= 80 && (
               <div className="bg-green-600/20 border border-green-600/30 rounded-lg p-4">
                 <p className="text-green-200 font-medium">Excellent! 🎉</p>
                 <p className="text-gray-300 text-sm">
-                  You have a strong understanding of documentation requirements and verification procedures.
+                  You have a strong understanding of documentation requirements and verification
+                  procedures.
                 </p>
               </div>
             )}
-            
+
             {percentage >= 60 && percentage < 80 && (
               <div className="bg-yellow-600/20 border border-yellow-600/30 rounded-lg p-4">
                 <p className="text-yellow-200 font-medium">Good work! 👍</p>
                 <p className="text-gray-300 text-sm">
-                  You understand the key concepts. Review certification requirements and data integrity procedures.
+                  You understand the key concepts. Review certification requirements and data
+                  integrity procedures.
                 </p>
               </div>
             )}
-            
+
             {percentage < 60 && (
               <div className="bg-red-600/20 border border-red-600/30 rounded-lg p-4">
                 <p className="text-red-200 font-medium">Keep studying 📚</p>
                 <p className="text-gray-300 text-sm">
-                  Review the section content focusing on BS 7671 compliance and professional documentation standards.
+                  Review the section content focusing on BS 7671 compliance and professional
+                  documentation standards.
                 </p>
               </div>
             )}
           </div>
 
-          <Button 
+          <Button
             onClick={handleRestartQuiz}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
           >
@@ -137,9 +140,11 @@ export const ResultsDocumentationQuiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="w-full bg-[#323232] rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
-            style={{ width: `${((currentQuestion + 1) / resultsDocumentationQuizData.length) * 100}%` }}
+            style={{
+              width: `${((currentQuestion + 1) / resultsDocumentationQuizData.length) * 100}%`,
+            }}
           />
         </div>
 
@@ -147,19 +152,19 @@ export const ResultsDocumentationQuiz = () => {
           <h3 className="text-lg font-medium text-foreground leading-relaxed">
             {question.question}
           </h3>
-          
+
           <div className="space-y-3">
             {question.options.map((option, index) => {
-              let buttonStyle = "bg-[#323232] text-gray-300 hover:bg-[#404040] border-transparent";
-              
+              let buttonStyle = 'bg-[#323232] text-gray-300 hover:bg-[#404040] border-transparent';
+
               if (showResult) {
                 if (index === question.correctAnswer) {
-                  buttonStyle = "bg-green-600/20 text-green-200 border-green-600/30";
+                  buttonStyle = 'bg-green-600/20 text-green-200 border-green-600/30';
                 } else if (index === userAnswer && userAnswer !== question.correctAnswer) {
-                  buttonStyle = "bg-red-600/20 text-red-200 border-red-600/30";
+                  buttonStyle = 'bg-red-600/20 text-red-200 border-red-600/30';
                 }
               } else if (userAnswer === index) {
-                buttonStyle = "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
+                buttonStyle = 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
               }
 
               return (
@@ -178,9 +183,11 @@ export const ResultsDocumentationQuiz = () => {
                     {showResult && index === question.correctAnswer && (
                       <CheckCircle className="h-5 w-5 text-green-400 ml-auto" />
                     )}
-                    {showResult && index === userAnswer && userAnswer !== question.correctAnswer && (
-                      <XCircle className="h-5 w-5 text-red-400 ml-auto" />
-                    )}
+                    {showResult &&
+                      index === userAnswer &&
+                      userAnswer !== question.correctAnswer && (
+                        <XCircle className="h-5 w-5 text-red-400 ml-auto" />
+                      )}
                   </div>
                 </Button>
               );
@@ -189,7 +196,9 @@ export const ResultsDocumentationQuiz = () => {
         </div>
 
         {showResult && (
-          <div className={`rounded-lg p-4 ${isCorrect ? 'bg-green-600/10 border border-green-600/20' : 'bg-red-600/10 border border-red-600/20'}`}>
+          <div
+            className={`rounded-lg p-4 ${isCorrect ? 'bg-green-600/10 border border-green-600/20' : 'bg-red-600/10 border border-red-600/20'}`}
+          >
             <div className="flex items-start gap-3">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -200,9 +209,7 @@ export const ResultsDocumentationQuiz = () => {
                 <p className={`font-medium ${isCorrect ? 'text-green-200' : 'text-red-200'}`}>
                   {isCorrect ? 'Correct!' : 'Incorrect'}
                 </p>
-                <p className="text-gray-300 text-sm mt-1">
-                  {question.explanation}
-                </p>
+                <p className="text-gray-300 text-sm mt-1">{question.explanation}</p>
               </div>
             </div>
           </div>
@@ -212,23 +219,25 @@ export const ResultsDocumentationQuiz = () => {
           <div className="text-sm text-gray-400">
             Question {currentQuestion + 1} of {resultsDocumentationQuizData.length}
           </div>
-          
+
           <div className="space-x-2">
             {!showResult && isAnswered && (
-              <Button 
+              <Button
                 onClick={handleSubmitAnswer}
                 className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
               >
                 Submit Answer
               </Button>
             )}
-            
+
             {showResult && (
-              <Button 
+              <Button
                 onClick={handleNextQuestion}
                 className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
               >
-                {currentQuestion < resultsDocumentationQuizData.length - 1 ? 'Next Question' : 'Complete Quiz'}
+                {currentQuestion < resultsDocumentationQuizData.length - 1
+                  ? 'Next Question'
+                  : 'Complete Quiz'}
               </Button>
             )}
           </div>

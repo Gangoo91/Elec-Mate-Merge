@@ -26,7 +26,7 @@ function GoogleMapsLoader({
   apiKey,
   children,
   setApiKey,
-  clearApiKey
+  clearApiKey,
 }: {
   apiKey: string;
   children: ReactNode;
@@ -40,7 +40,9 @@ function GoogleMapsLoader({
   });
 
   return (
-    <GoogleMapsContext.Provider value={{ isLoaded, loadError, apiKey, setApiKey, clearApiKey, isLoadingKey: false }}>
+    <GoogleMapsContext.Provider
+      value={{ isLoaded, loadError, apiKey, setApiKey, clearApiKey, isLoadingKey: false }}
+    >
       {children}
     </GoogleMapsContext.Provider>
   );
@@ -98,7 +100,16 @@ export function GoogleMapsProvider({ children }: { children: ReactNode }) {
   // Still loading from Supabase
   if (isLoadingKey) {
     return (
-      <GoogleMapsContext.Provider value={{ isLoaded: false, loadError: undefined, apiKey: '', setApiKey, clearApiKey, isLoadingKey: true }}>
+      <GoogleMapsContext.Provider
+        value={{
+          isLoaded: false,
+          loadError: undefined,
+          apiKey: '',
+          setApiKey,
+          clearApiKey,
+          isLoadingKey: true,
+        }}
+      >
         {children}
       </GoogleMapsContext.Provider>
     );
@@ -107,7 +118,16 @@ export function GoogleMapsProvider({ children }: { children: ReactNode }) {
   // No API key configured - don't attempt to load Google Maps
   if (!apiKey) {
     return (
-      <GoogleMapsContext.Provider value={{ isLoaded: false, loadError: undefined, apiKey: '', setApiKey, clearApiKey, isLoadingKey: false }}>
+      <GoogleMapsContext.Provider
+        value={{
+          isLoaded: false,
+          loadError: undefined,
+          apiKey: '',
+          setApiKey,
+          clearApiKey,
+          isLoadingKey: false,
+        }}
+      >
         {children}
       </GoogleMapsContext.Provider>
     );

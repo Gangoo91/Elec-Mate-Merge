@@ -38,7 +38,10 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
   useEffect(() => {
     // Get title from trackingTitle prop or last breadcrumb
     const lastBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
-    const title = trackingTitle || (typeof lastBreadcrumb === 'string' ? lastBreadcrumb : lastBreadcrumb?.label) || 'Learning';
+    const title =
+      trackingTitle ||
+      (typeof lastBreadcrumb === 'string' ? lastBreadcrumb : lastBreadcrumb?.label) ||
+      'Learning';
 
     // Update the last study location
     updateLastLocation(location.pathname, title);
@@ -108,9 +111,7 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
 
       {/* Main Content with Safe Area Padding and Stagger Animation */}
       <main className="px-4 sm:px-6 py-6 safe-bottom">
-        <div className="max-w-5xl mx-auto ios-stagger-children">
-          {children}
-        </div>
+        <div className="max-w-5xl mx-auto ios-stagger-children">{children}</div>
       </main>
     </div>
   );

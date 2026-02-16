@@ -21,15 +21,15 @@ export const ProgressTracker = () => {
       sections: 8,
       completedSections: 3,
       quizScore: 85,
-      lastAccessed: new Date('2024-01-15')
+      lastAccessed: new Date('2024-01-15'),
     },
     {
-      id: 'module2', 
+      id: 'module2',
       title: 'Test Equipment & Calibration',
       sections: 7,
       completedSections: 5,
       quizScore: 92,
-      lastAccessed: new Date('2024-01-18')
+      lastAccessed: new Date('2024-01-18'),
     },
     {
       id: 'module3',
@@ -37,33 +37,37 @@ export const ProgressTracker = () => {
       sections: 6,
       completedSections: 6,
       quizScore: 78,
-      lastAccessed: new Date('2024-01-20')
+      lastAccessed: new Date('2024-01-20'),
     },
     {
       id: 'module4',
       title: 'Electrical Testing Methods',
       sections: 7,
       completedSections: 2,
-      lastAccessed: new Date('2024-01-22')
+      lastAccessed: new Date('2024-01-22'),
     },
     {
       id: 'module5',
       title: 'Results & Documentation',
       sections: 7,
-      completedSections: 0
-    }
+      completedSections: 0,
+    },
   ]);
 
   const calculateOverallProgress = () => {
     const totalSections = moduleProgress.reduce((sum, module) => sum + module.sections, 0);
-    const completedSections = moduleProgress.reduce((sum, module) => sum + module.completedSections, 0);
+    const completedSections = moduleProgress.reduce(
+      (sum, module) => sum + module.completedSections,
+      0
+    );
     return Math.round((completedSections / totalSections) * 100);
   };
 
   const getAverageQuizScore = () => {
-    const scoresWithValues = moduleProgress.filter(m => m.quizScore !== undefined);
+    const scoresWithValues = moduleProgress.filter((m) => m.quizScore !== undefined);
     if (scoresWithValues.length === 0) return 0;
-    const average = scoresWithValues.reduce((sum, m) => sum + (m.quizScore || 0), 0) / scoresWithValues.length;
+    const average =
+      scoresWithValues.reduce((sum, m) => sum + (m.quizScore || 0), 0) / scoresWithValues.length;
     return Math.round(average);
   };
 
@@ -96,28 +100,23 @@ export const ProgressTracker = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-elec-dark p-4 rounded-md text-center">
-              <div className="text-2xl font-bold text-elec-yellow mb-1">
-                {overallProgress}%
-              </div>
+              <div className="text-2xl font-bold text-elec-yellow mb-1">{overallProgress}%</div>
               <p className="text-gray-300 text-sm">Overall Completion</p>
-              <Progress 
-                value={overallProgress} 
-                className="mt-2 h-2"
+              <Progress value={overallProgress} className="mt-2 h-2" />
+            </div>
+
+            <div className="bg-elec-dark p-4 rounded-md text-center">
+              <div className="text-2xl font-bold text-green-400 mb-1">{averageQuizScore}%</div>
+              <p className="text-gray-300 text-sm">Average Quiz Score</p>
+              <div
+                className={`mt-2 h-2 rounded-full ${getProgressColor(averageQuizScore)}`}
+                style={{ width: `${averageQuizScore}%` }}
               />
             </div>
-            
-            <div className="bg-elec-dark p-4 rounded-md text-center">
-              <div className="text-2xl font-bold text-green-400 mb-1">
-                {averageQuizScore}%
-              </div>
-              <p className="text-gray-300 text-sm">Average Quiz Score</p>
-              <div className={`mt-2 h-2 rounded-full ${getProgressColor(averageQuizScore)}`} 
-                   style={{ width: `${averageQuizScore}%` }} />
-            </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-md text-center">
               <div className="text-2xl font-bold text-blue-400 mb-1">
-                {moduleProgress.filter(m => m.completedSections === m.sections).length}
+                {moduleProgress.filter((m) => m.completedSections === m.sections).length}
               </div>
               <p className="text-gray-300 text-sm">Modules Completed</p>
               <Trophy className="h-6 w-6 text-elec-yellow mx-auto mt-2" />
@@ -138,7 +137,7 @@ export const ProgressTracker = () => {
           {moduleProgress.map((module) => {
             const modulePercentage = Math.round((module.completedSections / module.sections) * 100);
             const isCompleted = module.completedSections === module.sections;
-            
+
             return (
               <div key={module.id} className="bg-elec-dark p-4 rounded-md">
                 <div className="flex items-center justify-between mb-3">
@@ -150,7 +149,7 @@ export const ProgressTracker = () => {
                     )}
                     <h3 className="text-foreground font-medium">{module.title}</h3>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     {module.quizScore && (
                       <Badge variant={getScoreBadgeVariant(module.quizScore)}>
@@ -162,7 +161,7 @@ export const ProgressTracker = () => {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Progress</span>
@@ -170,7 +169,7 @@ export const ProgressTracker = () => {
                   </div>
                   <Progress value={modulePercentage} className="h-2" />
                 </div>
-                
+
                 {module.lastAccessed && (
                   <p className="text-xs text-gray-500 mt-2">
                     Last accessed: {module.lastAccessed.toLocaleDateString()}
@@ -209,7 +208,7 @@ export const ProgressTracker = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div className="space-y-2">
               <h4 className="text-foreground font-medium">In Progress</h4>
               <ul className="space-y-1 text-sm">

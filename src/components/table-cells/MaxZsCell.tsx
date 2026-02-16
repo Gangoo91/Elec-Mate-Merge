@@ -13,12 +13,12 @@ interface MaxZsCellProps {
   circuitDescription?: string;
 }
 
-export const MaxZsCell = ({ 
-  value, 
-  onChange, 
+export const MaxZsCell = ({
+  value,
+  onChange,
   protectiveDeviceType,
   protectiveDeviceRating,
-  circuitDescription = ''
+  circuitDescription = '',
 }: MaxZsCellProps) => {
   const { toast } = useToast();
 
@@ -26,36 +26,36 @@ export const MaxZsCell = ({
     const rating = parseInt(protectiveDeviceRating);
     if (isNaN(rating)) {
       toast({
-        title: "Missing Device Rating",
-        description: "Please enter the protective device rating first.",
-        variant: "destructive"
+        title: 'Missing Device Rating',
+        description: 'Please enter the protective device rating first.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (!protectiveDeviceType) {
       toast({
-        title: "Missing Device Type",
-        description: "Please select the protective device type first.",
-        variant: "destructive"
+        title: 'Missing Device Type',
+        description: 'Please select the protective device type first.',
+        variant: 'destructive',
       });
       return;
     }
 
     const result = getZsLimitFromDeviceString(protectiveDeviceType, rating, circuitDescription);
-    
+
     if (result) {
       onChange(result.maxZs.toFixed(2));
       const disconnectionTime = getDisconnectionTimeForCircuit(circuitDescription);
       toast({
-        title: "Max Zs Looked Up",
+        title: 'Max Zs Looked Up',
         description: `${result.maxZs.toFixed(2)}Ω (${disconnectionTime} disconnection) - ${result.source}`,
       });
     } else {
       toast({
-        title: "Max Zs Not Found",
+        title: 'Max Zs Not Found',
         description: `No Max Zs value found for ${protectiveDeviceType} at ${rating}A rating.`,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };

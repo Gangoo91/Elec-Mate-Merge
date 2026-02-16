@@ -1,17 +1,16 @@
-
-import { useState } from "react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { 
-  Wrench, 
-  Zap, 
-  Cable, 
-  ShoppingCart, 
-  Scale, 
-  Shield, 
+import { useState } from 'react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import {
+  Wrench,
+  Zap,
+  Cable,
+  ShoppingCart,
+  Scale,
+  Shield,
   AlertTriangle,
   CheckCircle,
   Play,
@@ -28,8 +27,8 @@ import {
   Plug,
   Home,
   Building,
-  Factory
-} from "lucide-react";
+  Factory,
+} from 'lucide-react';
 
 const BasicToolsMaterialsGuide = () => {
   const [currentQuiz, setCurrentQuiz] = useState(0);
@@ -39,397 +38,450 @@ const BasicToolsMaterialsGuide = () => {
 
   const expandedCableQuiz = [
     {
-      question: "What cable would you use for a standard ring main circuit in a domestic property?",
-      options: ["1.5mm² T&E", "2.5mm² T&E", "4mm² T&E", "6mm² T&E"],
-      correct: "2.5mm² T&E",
-      explanation: "2.5mm² Twin & Earth is standard for ring main circuits (32A) in domestic installations as per BS 7671."
+      question: 'What cable would you use for a standard ring main circuit in a domestic property?',
+      options: ['1.5mm² T&E', '2.5mm² T&E', '4mm² T&E', '6mm² T&E'],
+      correct: '2.5mm² T&E',
+      explanation:
+        '2.5mm² Twin & Earth is standard for ring main circuits (32A) in domestic installations as per BS 7671.',
     },
     {
-      question: "Which cable is suitable for external underground installation?",
-      options: ["Standard T&E", "SWA Cable", "Flex Cable", "FP200"],
-      correct: "SWA Cable",
-      explanation: "Steel Wire Armoured (SWA) cable provides mechanical protection for underground installations and complies with BS 5467."
+      question: 'Which cable is suitable for external underground installation?',
+      options: ['Standard T&E', 'SWA Cable', 'Flex Cable', 'FP200'],
+      correct: 'SWA Cable',
+      explanation:
+        'Steel Wire Armoured (SWA) cable provides mechanical protection for underground installations and complies with BS 5467.',
     },
     {
-      question: "What cable would you use for a cooker circuit rated at 32A?",
-      options: ["2.5mm² T&E", "4mm² T&E", "6mm² T&E", "10mm² T&E"],
-      correct: "6mm² T&E",
-      explanation: "6mm² T&E is typically used for 32A cooker circuits, though cable sizing depends on installation method and protection device."
+      question: 'What cable would you use for a cooker circuit rated at 32A?',
+      options: ['2.5mm² T&E', '4mm² T&E', '6mm² T&E', '10mm² T&E'],
+      correct: '6mm² T&E',
+      explanation:
+        '6mm² T&E is typically used for 32A cooker circuits, though cable sizing depends on installation method and protection device.',
     },
     {
-      question: "Which cable maintains circuit integrity in fire conditions?",
-      options: ["Standard T&E", "SWA", "FP200", "SY Cable"],
-      correct: "FP200",
-      explanation: "FP200 is a fire performance cable that maintains circuit integrity for 2 hours at 950°C, essential for fire alarm systems."
+      question: 'Which cable maintains circuit integrity in fire conditions?',
+      options: ['Standard T&E', 'SWA', 'FP200', 'SY Cable'],
+      correct: 'FP200',
+      explanation:
+        'FP200 is a fire performance cable that maintains circuit integrity for 2 hours at 950°C, essential for fire alarm systems.',
     },
     {
-      question: "What size cable is typically used for lighting circuits in domestic installations?",
-      options: ["1.0mm² T&E", "1.5mm² T&E", "2.5mm² T&E", "4mm² T&E"],
-      correct: "1.5mm² T&E",
-      explanation: "1.5mm² T&E is standard for domestic lighting circuits protected by a 6A MCB or 5A fuse."
+      question:
+        'What size cable is typically used for lighting circuits in domestic installations?',
+      options: ['1.0mm² T&E', '1.5mm² T&E', '2.5mm² T&E', '4mm² T&E'],
+      correct: '1.5mm² T&E',
+      explanation:
+        '1.5mm² T&E is standard for domestic lighting circuits protected by a 6A MCB or 5A fuse.',
     },
     {
-      question: "Which cable type would you use for a shower circuit rated at 40A?",
-      options: ["6mm² T&E", "10mm² T&E", "16mm² T&E", "25mm² T&E"],
-      correct: "10mm² T&E",
-      explanation: "10mm² T&E is typically suitable for electric shower circuits up to 40A, depending on installation method and route length."
+      question: 'Which cable type would you use for a shower circuit rated at 40A?',
+      options: ['6mm² T&E', '10mm² T&E', '16mm² T&E', '25mm² T&E'],
+      correct: '10mm² T&E',
+      explanation:
+        '10mm² T&E is typically suitable for electric shower circuits up to 40A, depending on installation method and route length.',
     },
     {
       question: "What does the 'T&E' in cable specification stand for?",
-      options: ["Tough & Earthed", "Twin & Earth", "Tested & Evaluated", "Thermal & Electric"],
-      correct: "Twin & Earth",
-      explanation: "T&E stands for Twin & Earth - referring to the two insulated conductors (live and neutral) plus the bare earth conductor."
+      options: ['Tough & Earthed', 'Twin & Earth', 'Tested & Evaluated', 'Thermal & Electric'],
+      correct: 'Twin & Earth',
+      explanation:
+        'T&E stands for Twin & Earth - referring to the two insulated conductors (live and neutral) plus the bare earth conductor.',
     },
     {
-      question: "Which cable would be most appropriate for a garden shed supply?",
-      options: ["Standard T&E", "SWA Cable", "Flex Cable", "MICC Cable"],
-      correct: "SWA Cable",
-      explanation: "SWA (Steel Wire Armoured) cable provides the necessary mechanical protection for outdoor/underground installation to outbuildings."
-    }
+      question: 'Which cable would be most appropriate for a garden shed supply?',
+      options: ['Standard T&E', 'SWA Cable', 'Flex Cable', 'MICC Cable'],
+      correct: 'SWA Cable',
+      explanation:
+        'SWA (Steel Wire Armoured) cable provides the necessary mechanical protection for outdoor/underground installation to outbuildings.',
+    },
   ];
 
   const essentialToolsData = [
     {
-      category: "Testing Equipment",
-      priority: "Critical",
+      category: 'Testing Equipment',
+      priority: 'Critical',
       tools: [
-        { 
-          name: "Multifunction Tester", 
-          cost: "£300-800", 
-          description: "Essential for all electrical testing - insulation resistance, continuity, RCD testing",
-          brands: ["Megger", "Fluke", "Kewtech"]
+        {
+          name: 'Multifunction Tester',
+          cost: '£300-800',
+          description:
+            'Essential for all electrical testing - insulation resistance, continuity, RCD testing',
+          brands: ['Megger', 'Fluke', 'Kewtech'],
         },
-        { 
-          name: "Voltage Tester", 
-          cost: "£15-50", 
-          description: "Two-pole voltage tester for proving dead before work",
-          safety: "Must be GS38 compliant"
+        {
+          name: 'Voltage Tester',
+          cost: '£15-50',
+          description: 'Two-pole voltage tester for proving dead before work',
+          safety: 'Must be GS38 compliant',
         },
-        { 
-          name: "Proving Unit", 
-          cost: "£20-40", 
-          description: "Tests your voltage tester is working properly",
-          safety: "Essential part of safe isolation procedure"
-        }
-      ]
+        {
+          name: 'Proving Unit',
+          cost: '£20-40',
+          description: 'Tests your voltage tester is working properly',
+          safety: 'Essential part of safe isolation procedure',
+        },
+      ],
     },
     {
-      category: "Hand Tools",
-      priority: "Essential",
+      category: 'Hand Tools',
+      priority: 'Essential',
       tools: [
-        { 
-          name: "Insulated Screwdrivers", 
-          cost: "£30-80 (set)", 
-          description: "VDE approved screwdrivers for work near live parts",
-          safety: "Must be individually tested to 10,000V"
+        {
+          name: 'Insulated Screwdrivers',
+          cost: '£30-80 (set)',
+          description: 'VDE approved screwdrivers for work near live parts',
+          safety: 'Must be individually tested to 10,000V',
         },
-        { 
-          name: "Side Cutters", 
-          cost: "£20-60", 
-          description: "For cutting cables and conductors",
-          brands: ["Knipex", "Bahco", "CK Tools"]
+        {
+          name: 'Side Cutters',
+          cost: '£20-60',
+          description: 'For cutting cables and conductors',
+          brands: ['Knipex', 'Bahco', 'CK Tools'],
         },
-        { 
-          name: "Wire Strippers", 
-          cost: "£15-40", 
-          description: "Self-adjusting strippers save time and prevent damage",
-          tip: "Look for ones that adjust automatically"
-        }
-      ]
+        {
+          name: 'Wire Strippers',
+          cost: '£15-40',
+          description: 'Self-adjusting strippers save time and prevent damage',
+          tip: 'Look for ones that adjust automatically',
+        },
+      ],
     },
     {
-      category: "Power Tools",
-      priority: "Important",
+      category: 'Power Tools',
+      priority: 'Important',
       tools: [
-        { 
-          name: "Cordless Drill/Driver", 
-          cost: "£80-200", 
-          description: "Essential for fixing and drilling. 18V systems most popular",
-          brands: ["Makita", "DeWalt", "Milwaukee"]
+        {
+          name: 'Cordless Drill/Driver',
+          cost: '£80-200',
+          description: 'Essential for fixing and drilling. 18V systems most popular',
+          brands: ['Makita', 'DeWalt', 'Milwaukee'],
         },
-        { 
-          name: "SDS Drill", 
-          cost: "£100-300", 
-          description: "For drilling masonry and concrete",
-          safety: "Always use appropriate PPE and dust extraction"
-        }
-      ]
-    }
+        {
+          name: 'SDS Drill',
+          cost: '£100-300',
+          description: 'For drilling masonry and concrete',
+          safety: 'Always use appropriate PPE and dust extraction',
+        },
+      ],
+    },
   ];
 
   const ukMaterialGuide = [
     {
-      type: "Twin & Earth (T&E)",
-      sizes: ["1.0mm²", "1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²", "16mm²"],
+      type: 'Twin & Earth (T&E)',
+      sizes: ['1.0mm²', '1.5mm²', '2.5mm²', '4mm²', '6mm²', '10mm²', '16mm²'],
       applications: [
-        "1.0mm² - Alarm circuits, door entry systems",
-        "1.5mm² - Domestic lighting circuits (6A MCB)",
-        "2.5mm² - Ring main circuits (32A MCB/RCBO)",
-        "4mm² - Radial circuits, small cookers (20A)",
-        "6mm² - Cooker circuits, large radials (32A)",
-        "10mm² - Electric shower circuits (40A-45A)",
-        "16mm² - Large appliances, sub-mains (63A)"
+        '1.0mm² - Alarm circuits, door entry systems',
+        '1.5mm² - Domestic lighting circuits (6A MCB)',
+        '2.5mm² - Ring main circuits (32A MCB/RCBO)',
+        '4mm² - Radial circuits, small cookers (20A)',
+        '6mm² - Cooker circuits, large radials (32A)',
+        '10mm² - Electric shower circuits (40A-45A)',
+        '16mm² - Large appliances, sub-mains (63A)',
       ],
-      standards: "BS 6004",
-      colours: "Brown (L), Blue (N), Green/Yellow (E)",
-      typical_uses: "Internal domestic and commercial wiring where mechanical protection not required"
+      standards: 'BS 6004',
+      colours: 'Brown (L), Blue (N), Green/Yellow (E)',
+      typical_uses:
+        'Internal domestic and commercial wiring where mechanical protection not required',
     },
     {
-      type: "Steel Wire Armoured (SWA)",
-      sizes: ["1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²", "16mm²", "25mm²", "35mm²", "50mm²", "70mm²", "95mm²"],
-      applications: [
-        "1.5mm² - Small outdoor lighting, garden circuits",
-        "2.5mm² - Outdoor sockets, small outbuilding supplies",
-        "4mm² - Medium outbuilding supplies, external equipment",
-        "6mm² - Large outbuilding supplies, workshop feeds",
-        "10mm² - Sub-main feeds to garages, workshops",
-        "16mm² - Small industrial equipment, larger sub-mains",
-        "25mm² - Industrial machinery, large sub-main feeds",
-        "35mm²+ - High-current industrial applications, main distribution"
+      type: 'Steel Wire Armoured (SWA)',
+      sizes: [
+        '1.5mm²',
+        '2.5mm²',
+        '4mm²',
+        '6mm²',
+        '10mm²',
+        '16mm²',
+        '25mm²',
+        '35mm²',
+        '50mm²',
+        '70mm²',
+        '95mm²',
       ],
-      standards: "BS 5467",
-      colours: "Various core configurations available (2-core, 3-core, 4-core)",
-      typical_uses: "Underground installations, external supplies, industrial environments requiring mechanical protection"
+      applications: [
+        '1.5mm² - Small outdoor lighting, garden circuits',
+        '2.5mm² - Outdoor sockets, small outbuilding supplies',
+        '4mm² - Medium outbuilding supplies, external equipment',
+        '6mm² - Large outbuilding supplies, workshop feeds',
+        '10mm² - Sub-main feeds to garages, workshops',
+        '16mm² - Small industrial equipment, larger sub-mains',
+        '25mm² - Industrial machinery, large sub-main feeds',
+        '35mm²+ - High-current industrial applications, main distribution',
+      ],
+      standards: 'BS 5467',
+      colours: 'Various core configurations available (2-core, 3-core, 4-core)',
+      typical_uses:
+        'Underground installations, external supplies, industrial environments requiring mechanical protection',
     },
     {
-      type: "Fire Performance (FP200)",
-      sizes: ["1.0mm²", "1.5mm²", "2.5mm²"],
+      type: 'Fire Performance (FP200)',
+      sizes: ['1.0mm²', '1.5mm²', '2.5mm²'],
       applications: [
-        "Fire alarm systems and control panels",
-        "Emergency lighting circuits",
-        "Smoke extraction fan controls",
-        "Fire suppression system wiring",
-        "Emergency voice communication systems"
+        'Fire alarm systems and control panels',
+        'Emergency lighting circuits',
+        'Smoke extraction fan controls',
+        'Fire suppression system wiring',
+        'Emergency voice communication systems',
       ],
-      standards: "BS EN 50200",
-      colours: "Red sheath (fire circuits), other colours available",
-      typical_uses: "Life safety systems that must continue operating during fire conditions"
-    }
+      standards: 'BS EN 50200',
+      colours: 'Red sheath (fire circuits), other colours available',
+      typical_uses: 'Life safety systems that must continue operating during fire conditions',
+    },
   ];
 
   const cableFittingsGuide = [
     {
-      category: "SWA Cable Glands",
-      description: "Essential for terminating Steel Wire Armoured cables safely and maintaining IP ratings",
+      category: 'SWA Cable Glands',
+      description:
+        'Essential for terminating Steel Wire Armoured cables safely and maintaining IP ratings',
       fittings: [
         {
-          name: "20mm SWA Gland (CW20S)",
-          cable_sizes: "6-12mm cable diameter",
-          typical_cables: "1.5mm² to 4mm² SWA",
-          thread: "M20 x 1.5",
+          name: '20mm SWA Gland (CW20S)',
+          cable_sizes: '6-12mm cable diameter',
+          typical_cables: '1.5mm² to 4mm² SWA',
+          thread: 'M20 x 1.5',
           termination_steps: [
-            "Strip outer sheath 50mm from cable end",
-            "Fold back steel wire armour evenly",
-            "Fit gland body through enclosure entry",
-            "Slide compression ring over cable",
-            "Tighten gland nut to compress armour wires",
-            "Ensure armour makes good earth connection",
-            "Tighten compression seal on inner sheath"
-          ]
+            'Strip outer sheath 50mm from cable end',
+            'Fold back steel wire armour evenly',
+            'Fit gland body through enclosure entry',
+            'Slide compression ring over cable',
+            'Tighten gland nut to compress armour wires',
+            'Ensure armour makes good earth connection',
+            'Tighten compression seal on inner sheath',
+          ],
         },
         {
-          name: "25mm SWA Gland (CW25S)",
-          cable_sizes: "13-18mm cable diameter",
-          typical_cables: "6mm² to 10mm² SWA",
-          thread: "M25 x 1.5",
+          name: '25mm SWA Gland (CW25S)',
+          cable_sizes: '13-18mm cable diameter',
+          typical_cables: '6mm² to 10mm² SWA',
+          thread: 'M25 x 1.5',
           termination_steps: [
-            "Strip outer sheath 60mm from cable end",
-            "Fold back steel wire armour evenly",
-            "Fit gland body through panel cutout",
-            "Position compression ring correctly",
-            "Hand tighten gland nut initially",
-            "Check armour wire positioning",
-            "Final tighten to manufacturer's torque spec"
-          ]
+            'Strip outer sheath 60mm from cable end',
+            'Fold back steel wire armour evenly',
+            'Fit gland body through panel cutout',
+            'Position compression ring correctly',
+            'Hand tighten gland nut initially',
+            'Check armour wire positioning',
+            "Final tighten to manufacturer's torque spec",
+          ],
         },
         {
-          name: "32mm SWA Gland (CW32S)",
-          cable_sizes: "18-25mm cable diameter",
-          typical_cables: "16mm² to 25mm² SWA",
-          thread: "M32 x 1.5",
+          name: '32mm SWA Gland (CW32S)',
+          cable_sizes: '18-25mm cable diameter',
+          typical_cables: '16mm² to 25mm² SWA',
+          thread: 'M32 x 1.5',
           termination_steps: [
-            "Strip outer sheath 70mm from cable end",
-            "Carefully fold back all armour wires",
-            "Apply thread sealant to gland threads",
-            "Insert through enclosure wall",
-            "Position compression components correctly",
-            "Ensure even compression of armour",
-            "Test earth continuity through armour"
-          ]
-        }
-      ]
+            'Strip outer sheath 70mm from cable end',
+            'Carefully fold back all armour wires',
+            'Apply thread sealant to gland threads',
+            'Insert through enclosure wall',
+            'Position compression components correctly',
+            'Ensure even compression of armour',
+            'Test earth continuity through armour',
+          ],
+        },
+      ],
     },
     {
-      category: "T&E Cable Accessories",
-      description: "Standard fittings for Twin & Earth cable installations",
+      category: 'T&E Cable Accessories',
+      description: 'Standard fittings for Twin & Earth cable installations',
       fittings: [
         {
-          name: "Plastic Cable Grommet",
-          cable_sizes: "6-10mm cable diameter",
-          typical_cables: "1.5mm² to 2.5mm² T&E",
-          thread: "Various sizes 16mm-25mm",
+          name: 'Plastic Cable Grommet',
+          cable_sizes: '6-10mm cable diameter',
+          typical_cables: '1.5mm² to 2.5mm² T&E',
+          thread: 'Various sizes 16mm-25mm',
           termination_steps: [
-            "Drill appropriate hole in enclosure",
-            "Fit grommet into drilled hole",
-            "Thread cable through grommet",
-            "Ensure cable sheath protection",
-            "No mechanical strain on conductors",
-            "Maintain IP rating if required"
-          ]
+            'Drill appropriate hole in enclosure',
+            'Fit grommet into drilled hole',
+            'Thread cable through grommet',
+            'Ensure cable sheath protection',
+            'No mechanical strain on conductors',
+            'Maintain IP rating if required',
+          ],
         },
         {
-          name: "Stuffing Gland",
-          cable_sizes: "Multiple cables 4-20mm total",
-          typical_cables: "Multiple T&E cables",
-          thread: "M20, M25 threads available",
+          name: 'Stuffing Gland',
+          cable_sizes: 'Multiple cables 4-20mm total',
+          typical_cables: 'Multiple T&E cables',
+          thread: 'M20, M25 threads available',
           termination_steps: [
-            "Insert cables through gland body",
-            "Pack stuffing material around cables",
-            "Ensure even distribution of packing",
-            "Compress packing with gland nut",
-            "Test seal integrity",
-            "Verify strain relief on cables"
-          ]
-        }
-      ]
+            'Insert cables through gland body',
+            'Pack stuffing material around cables',
+            'Ensure even distribution of packing',
+            'Compress packing with gland nut',
+            'Test seal integrity',
+            'Verify strain relief on cables',
+          ],
+        },
+      ],
     },
     {
-      category: "Flexible Cable Glands",
-      description: "For flexible and multicore cables in moving applications",
+      category: 'Flexible Cable Glands',
+      description: 'For flexible and multicore cables in moving applications',
       fittings: [
         {
-          name: "Nickel Plated Brass Gland",
-          cable_sizes: "3-40mm diameter range",
-          typical_cables: "SY cable, multicore flex",
-          thread: "Metric and PG threads",
+          name: 'Nickel Plated Brass Gland',
+          cable_sizes: '3-40mm diameter range',
+          typical_cables: 'SY cable, multicore flex',
+          thread: 'Metric and PG threads',
           termination_steps: [
-            "Select correct size for cable diameter",
-            "Strip outer sheath to required length",
-            "Fit gland components in correct order",
-            "Ensure strain relief on cable",
-            "Tighten to achieve IP rating",
-            "Test pull-out resistance"
-          ]
-        }
-      ]
-    }
+            'Select correct size for cable diameter',
+            'Strip outer sheath to required length',
+            'Fit gland components in correct order',
+            'Ensure strain relief on cable',
+            'Tighten to achieve IP rating',
+            'Test pull-out resistance',
+          ],
+        },
+      ],
+    },
   ];
 
   const toolSelection = [
     {
-      task: "SWA Gland Installation",
+      task: 'SWA Gland Installation',
       required_tools: [
-        "SWA stripping knife or specialist stripper",
-        "Sharp utility knife",
-        "Cable cutters/hacksaw",
-        "Spanners (correct size for gland)",
-        "Torque wrench (for larger glands)",
-        "Earth continuity tester"
+        'SWA stripping knife or specialist stripper',
+        'Sharp utility knife',
+        'Cable cutters/hacksaw',
+        'Spanners (correct size for gland)',
+        'Torque wrench (for larger glands)',
+        'Earth continuity tester',
       ],
       safety_considerations: [
-        "Ensure supply is isolated and proved dead",
-        "Wear cut-resistant gloves when stripping",
-        "Use proper lifting techniques for heavy cables",
-        "Check gland IP rating matches application"
-      ]
+        'Ensure supply is isolated and proved dead',
+        'Wear cut-resistant gloves when stripping',
+        'Use proper lifting techniques for heavy cables',
+        'Check gland IP rating matches application',
+      ],
     },
     {
-      task: "T&E Cable Termination",
+      task: 'T&E Cable Termination',
       required_tools: [
-        "Cable strippers (automatic preferred)",
-        "Sharp knife for sheath removal",
-        "Terminal screwdrivers (various sizes)",
-        "Wire nuts or connector blocks",
-        "Insulation tape",
-        "Cable identification labels"
+        'Cable strippers (automatic preferred)',
+        'Sharp knife for sheath removal',
+        'Terminal screwdrivers (various sizes)',
+        'Wire nuts or connector blocks',
+        'Insulation tape',
+        'Cable identification labels',
       ],
       safety_considerations: [
-        "Prove dead before starting work",
-        "Ensure adequate strain relief",
-        "Check terminal tightness",
-        "Apply appropriate IP protection"
-      ]
-    }
+        'Prove dead before starting work',
+        'Ensure adequate strain relief',
+        'Check terminal tightness',
+        'Apply appropriate IP protection',
+      ],
+    },
   ];
 
   const apprenticeProgression = [
     {
-      year: "Year 1",
-      focus: "Basic Tools & Safety",
-      budget: "£200-400",
-      essentials: ["Basic hand tools", "PPE kit", "Simple multimeter", "Tool bag"],
-      skills: "Learn safe handling and basic electrical principles"
+      year: 'Year 1',
+      focus: 'Basic Tools & Safety',
+      budget: '£200-400',
+      essentials: ['Basic hand tools', 'PPE kit', 'Simple multimeter', 'Tool bag'],
+      skills: 'Learn safe handling and basic electrical principles',
     },
     {
-      year: "Year 2", 
-      focus: "Testing Equipment",
-      budget: "£400-800",
-      essentials: ["Multifunction tester", "Advanced hand tools", "Power tools"],
-      skills: "Testing procedures, fault finding, installation methods"
+      year: 'Year 2',
+      focus: 'Testing Equipment',
+      budget: '£400-800',
+      essentials: ['Multifunction tester', 'Advanced hand tools', 'Power tools'],
+      skills: 'Testing procedures, fault finding, installation methods',
     },
     {
-      year: "Year 3",
-      focus: "Specialisation",
-      budget: "£300-600", 
-      essentials: ["Specialist tools", "Additional test equipment", "Professional tool storage"],
-      skills: "Design, inspection, certification, project management"
-    }
+      year: 'Year 3',
+      focus: 'Specialisation',
+      budget: '£300-600',
+      essentials: ['Specialist tools', 'Additional test equipment', 'Professional tool storage'],
+      skills: 'Design, inspection, certification, project management',
+    },
   ];
 
   const ukSuppliersGuide = [
     {
-      name: "Electrical Wholesalers",
-      suppliers: ["CEF (City Electrical Factors)", "Rexel", "Edmundson Electrical", "TLC Electrical"],
-      benefits: "Trade prices, technical support, local branches",
-      apprenticeDiscount: "Many offer apprentice rates - ask for student card"
+      name: 'Electrical Wholesalers',
+      suppliers: [
+        'CEF (City Electrical Factors)',
+        'Rexel',
+        'Edmundson Electrical',
+        'TLC Electrical',
+      ],
+      benefits: 'Trade prices, technical support, local branches',
+      apprenticeDiscount: 'Many offer apprentice rates - ask for student card',
     },
     {
-      name: "Tool Retailers", 
-      suppliers: ["Screwfix", "Toolstation", "Machine Mart", "Travis Perkins"],
-      benefits: "Competitive prices, online ordering, click & collect",
-      apprenticeDiscount: "Some offer trade accounts with discounts"
+      name: 'Tool Retailers',
+      suppliers: ['Screwfix', 'Toolstation', 'Machine Mart', 'Travis Perkins'],
+      benefits: 'Competitive prices, online ordering, click & collect',
+      apprenticeDiscount: 'Some offer trade accounts with discounts',
     },
     {
-      name: "Specialist Electrical",
-      suppliers: ["RS Components", "Farnell", "CPC", "Rapid Electronics"],
-      benefits: "Technical specification, next-day delivery, wide range",
-      apprenticeDiscount: "Educational discounts available"
-    }
+      name: 'Specialist Electrical',
+      suppliers: ['RS Components', 'Farnell', 'CPC', 'Rapid Electronics'],
+      benefits: 'Technical specification, next-day delivery, wide range',
+      apprenticeDiscount: 'Educational discounts available',
+    },
   ];
 
   const electricalInstallationGuides = [
     {
-      title: "Domestic Installation Guide",
-      description: "Complete guide for residential electrical installations including consumer units, circuits, and certification",
+      title: 'Domestic Installation Guide',
+      description:
+        'Complete guide for residential electrical installations including consumer units, circuits, and certification',
       icon: <Home className="h-5 w-5 text-elec-yellow" />,
-      topics: ["Consumer Unit Installation", "Ring Main Circuits", "Lighting Circuits", "Electric Shower Installation"],
-      difficulty: "Intermediate",
-      estimatedTime: "2-3 hours read"
+      topics: [
+        'Consumer Unit Installation',
+        'Ring Main Circuits',
+        'Lighting Circuits',
+        'Electric Shower Installation',
+      ],
+      difficulty: 'Intermediate',
+      estimatedTime: '2-3 hours read',
     },
     {
-      title: "Commercial Installation Guide", 
-      description: "Commercial electrical systems, three-phase supplies, and distribution boards",
+      title: 'Commercial Installation Guide',
+      description: 'Commercial electrical systems, three-phase supplies, and distribution boards',
       icon: <Building className="h-5 w-5 text-elec-yellow" />,
-      topics: ["Three-Phase Systems", "Distribution Boards", "Fire Alarm Systems", "Emergency Lighting"],
-      difficulty: "Advanced",
-      estimatedTime: "3-4 hours read"
+      topics: [
+        'Three-Phase Systems',
+        'Distribution Boards',
+        'Fire Alarm Systems',
+        'Emergency Lighting',
+      ],
+      difficulty: 'Advanced',
+      estimatedTime: '3-4 hours read',
     },
     {
-      title: "Industrial Installation Guide",
-      description: "Heavy-duty electrical installations, motor control, and industrial safety systems",
+      title: 'Industrial Installation Guide',
+      description:
+        'Heavy-duty electrical installations, motor control, and industrial safety systems',
       icon: <Factory className="h-5 w-5 text-elec-yellow" />,
-      topics: ["Motor Control Centers", "High Voltage Systems", "Industrial Automation", "Safety Interlocks"],
-      difficulty: "Expert",
-      estimatedTime: "4-5 hours read"
+      topics: [
+        'Motor Control Centers',
+        'High Voltage Systems',
+        'Industrial Automation',
+        'Safety Interlocks',
+      ],
+      difficulty: 'Expert',
+      estimatedTime: '4-5 hours read',
     },
     {
-      title: "Outdoor Installation Guide",
-      description: "External electrical work including garden lighting, outbuildings, and weatherproof installations",
+      title: 'Outdoor Installation Guide',
+      description:
+        'External electrical work including garden lighting, outbuildings, and weatherproof installations',
       icon: <Plug className="h-5 w-5 text-elec-yellow" />,
-      topics: ["Garden Lighting", "Shed/Garage Supplies", "Electric Gates", "IP Rating Requirements"],
-      difficulty: "Intermediate", 
-      estimatedTime: "2 hours read"
-    }
+      topics: [
+        'Garden Lighting',
+        'Shed/Garage Supplies',
+        'Electric Gates',
+        'IP Rating Requirements',
+      ],
+      difficulty: 'Intermediate',
+      estimatedTime: '2 hours read',
+    },
   ];
 
   const handleQuizAnswer = (answer: string) => {
@@ -437,7 +489,7 @@ const BasicToolsMaterialsGuide = () => {
     if (answer === expandedCableQuiz[currentQuiz].correct) {
       setQuizScore(quizScore + 1);
     }
-    
+
     setTimeout(() => {
       if (currentQuiz < expandedCableQuiz.length - 1) {
         setCurrentQuiz(currentQuiz + 1);
@@ -458,10 +510,12 @@ const BasicToolsMaterialsGuide = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="text-center mb-6 sm:mb-8 px-2">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4 text-elec-yellow">Basic Tools & Materials Guide</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4 text-elec-yellow">
+          Basic Tools & Materials Guide
+        </h1>
         <p className="text-sm sm:text-base md:text-lg text-white max-w-3xl mx-auto mb-4 sm:mb-6">
-          Complete guide to electrical tools, materials, and equipment for UK apprentices. 
-          Learn what you need, when you need it, and where to get the best deals.
+          Complete guide to electrical tools, materials, and equipment for UK apprentices. Learn
+          what you need, when you need it, and where to get the best deals.
         </p>
         <SmartBackButton />
       </div>
@@ -473,8 +527,12 @@ const BasicToolsMaterialsGuide = () => {
             <div className="flex items-center gap-3">
               <Cable className="h-7 w-7 text-elec-yellow" />
               <div>
-                <CardTitle className="text-elec-yellow text-xl">Cable Selection Master Quiz</CardTitle>
-                <p className="text-sm text-white mt-1">Test your knowledge of UK cable types and applications</p>
+                <CardTitle className="text-elec-yellow text-xl">
+                  Cable Selection Master Quiz
+                </CardTitle>
+                <p className="text-sm text-white mt-1">
+                  Test your knowledge of UK cable types and applications
+                </p>
               </div>
             </div>
             <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
@@ -491,7 +549,7 @@ const BasicToolsMaterialsGuide = () => {
                     Question {currentQuiz + 1} of {expandedCableQuiz.length}
                   </span>
                   <div className="bg-white/20 rounded-full h-2 w-32">
-                    <div 
+                    <div
                       className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                       style={{ width: `${((currentQuiz + 1) / expandedCableQuiz.length) * 100}%` }}
                     />
@@ -501,12 +559,12 @@ const BasicToolsMaterialsGuide = () => {
                   Score: {quizScore}/{currentQuiz + (selectedAnswer ? 1 : 0)}
                 </span>
               </div>
-              
+
               <div className="bg-white/5 p-6 rounded-lg">
                 <h3 className="text-xl font-semibold text-white mb-6">
                   {expandedCableQuiz[currentQuiz].question}
                 </h3>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {expandedCableQuiz[currentQuiz].options.map((option, index) => (
                     <Button
@@ -537,7 +595,7 @@ const BasicToolsMaterialsGuide = () => {
                     </Button>
                   ))}
                 </div>
-                
+
                 {selectedAnswer && (
                   <div className="mt-6 p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
                     <div className="flex items-start gap-2">
@@ -557,37 +615,55 @@ const BasicToolsMaterialsGuide = () => {
             <div className="text-center space-y-6">
               <div className="bg-white/5 p-8 rounded-lg">
                 <h3 className="text-2xl font-bold text-white mb-4">Quiz Complete!</h3>
-                <div className={`text-5xl font-bold mb-4 ${
-                  quizScore >= expandedCableQuiz.length * 0.8 ? 'text-green-400' : 
-                  quizScore >= expandedCableQuiz.length * 0.6 ? 'text-elec-yellow' : 'text-orange-400'
-                }`}>
+                <div
+                  className={`text-5xl font-bold mb-4 ${
+                    quizScore >= expandedCableQuiz.length * 0.8
+                      ? 'text-green-400'
+                      : quizScore >= expandedCableQuiz.length * 0.6
+                        ? 'text-elec-yellow'
+                        : 'text-orange-400'
+                  }`}
+                >
                   {Math.round((quizScore / expandedCableQuiz.length) * 100)}%
                 </div>
                 <p className="text-lg mb-6">
-                  You scored <span className="font-bold text-elec-yellow">{quizScore}</span> out of{" "}
+                  You scored <span className="font-bold text-elec-yellow">{quizScore}</span> out of{' '}
                   <span className="font-bold">{expandedCableQuiz.length}</span> questions correctly
                 </p>
-                
-                <div className={`p-4 rounded-lg border ${
-                  quizScore >= expandedCableQuiz.length * 0.8 
-                    ? 'bg-green-500/20 border-green-500 text-green-300'
-                    : quizScore >= expandedCableQuiz.length * 0.6
-                    ? 'bg-amber-500/20 border-amber-500 text-amber-300'
-                    : 'bg-orange-500/20 border-orange-500 text-orange-300'
-                }`}>
+
+                <div
+                  className={`p-4 rounded-lg border ${
+                    quizScore >= expandedCableQuiz.length * 0.8
+                      ? 'bg-green-500/20 border-green-500 text-green-300'
+                      : quizScore >= expandedCableQuiz.length * 0.6
+                        ? 'bg-amber-500/20 border-amber-500 text-amber-300'
+                        : 'bg-orange-500/20 border-orange-500 text-orange-300'
+                  }`}
+                >
                   {quizScore >= expandedCableQuiz.length * 0.8 && (
-                    <p className="font-medium">Excellent! You have a strong understanding of UK cable types and applications.</p>
+                    <p className="font-medium">
+                      Excellent! You have a strong understanding of UK cable types and applications.
+                    </p>
                   )}
-                  {quizScore >= expandedCableQuiz.length * 0.6 && quizScore < expandedCableQuiz.length * 0.8 && (
-                    <p className="font-medium">Good work! Review BS 7671 cable selection requirements to improve further.</p>
-                  )}
+                  {quizScore >= expandedCableQuiz.length * 0.6 &&
+                    quizScore < expandedCableQuiz.length * 0.8 && (
+                      <p className="font-medium">
+                        Good work! Review BS 7671 cable selection requirements to improve further.
+                      </p>
+                    )}
                   {quizScore < expandedCableQuiz.length * 0.6 && (
-                    <p className="font-medium">Keep studying! Cable selection is crucial for safety and compliance. Review the materials section below.</p>
+                    <p className="font-medium">
+                      Keep studying! Cable selection is crucial for safety and compliance. Review
+                      the materials section below.
+                    </p>
                   )}
                 </div>
               </div>
-              
-              <Button onClick={resetQuiz} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+
+              <Button
+                onClick={resetQuiz}
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              >
                 Take Quiz Again
               </Button>
             </div>
@@ -602,26 +678,40 @@ const BasicToolsMaterialsGuide = () => {
             <Wrench className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Essential Tools for UK Electricians</CardTitle>
           </div>
-          <p className="text-white">Comprehensive guide to professional electrical tools and equipment</p>
+          <p className="text-white">
+            Comprehensive guide to professional electrical tools and equipment
+          </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-8">
             {essentialToolsData.map((category, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
-                  <h3 className="text-lg sm:text-xl font-semibold text-white">{category.category}</h3>
-                  <Badge variant="outline" className={`
-                    ${category.priority === 'Critical' ? 'border-red-500 text-red-400' : 
-                      category.priority === 'Essential' ? 'border-elec-yellow text-elec-yellow' : 
-                      'border-blue-500 text-blue-400'}
-                  `}>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white">
+                    {category.category}
+                  </h3>
+                  <Badge
+                    variant="outline"
+                    className={`
+                    ${
+                      category.priority === 'Critical'
+                        ? 'border-red-500 text-red-400'
+                        : category.priority === 'Essential'
+                          ? 'border-elec-yellow text-elec-yellow'
+                          : 'border-blue-500 text-blue-400'
+                    }
+                  `}
+                  >
                     {category.priority}
                   </Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {category.tools.map((tool, toolIndex) => (
-                    <div key={toolIndex} className="bg-white/5 border border-white/10 p-3 sm:p-4 rounded-lg">
+                    <div
+                      key={toolIndex}
+                      className="bg-white/5 border border-white/10 p-3 sm:p-4 rounded-lg"
+                    >
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-medium text-white">{tool.name}</h4>
                         <span className="text-sm text-green-300 flex items-center gap-1">
@@ -630,14 +720,16 @@ const BasicToolsMaterialsGuide = () => {
                         </span>
                       </div>
                       <p className="text-sm text-white mb-3">{tool.description}</p>
-                      
+
                       {tool.brands && (
                         <div className="mb-2">
-                          <span className="text-xs font-medium text-elec-yellow">Recommended brands: </span>
+                          <span className="text-xs font-medium text-elec-yellow">
+                            Recommended brands:{' '}
+                          </span>
                           <span className="text-xs text-white">{tool.brands.join(', ')}</span>
                         </div>
                       )}
-                      
+
                       {tool.safety && (
                         <div className="bg-orange-500/10 p-2 rounded border border-orange-500/30">
                           <p className="text-xs text-orange-300">
@@ -646,7 +738,7 @@ const BasicToolsMaterialsGuide = () => {
                           </p>
                         </div>
                       )}
-                      
+
                       {tool.tip && (
                         <div className="bg-blue-500/10 p-2 rounded border border-blue-500/30">
                           <p className="text-xs text-blue-300">
@@ -671,7 +763,9 @@ const BasicToolsMaterialsGuide = () => {
             <Cable className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">UK Electrical Materials Guide</CardTitle>
           </div>
-          <p className="text-white">Understanding British Standards, cable specifications, and applications</p>
+          <p className="text-white">
+            Understanding British Standards, cable specifications, and applications
+          </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-8">
@@ -688,13 +782,17 @@ const BasicToolsMaterialsGuide = () => {
                       <h5 className="text-sm font-medium text-elec-yellow mb-2">Available Sizes</h5>
                       <div className="flex flex-wrap gap-1">
                         {material.sizes.map((size, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs border-elec-yellow/40 text-elec-yellow">
+                          <Badge
+                            key={idx}
+                            variant="outline"
+                            className="text-xs border-elec-yellow/40 text-elec-yellow"
+                          >
                             {size}
                           </Badge>
                         ))}
                       </div>
                     </div>
-                    
+
                     <div className="bg-white/5 p-3 rounded">
                       <p className="text-xs text-white mb-1">
                         <strong className="text-elec-yellow">Standard:</strong> {material.standards}
@@ -703,13 +801,16 @@ const BasicToolsMaterialsGuide = () => {
                         <strong className="text-elec-yellow">Colours:</strong> {material.colours}
                       </p>
                       <p className="text-xs text-white">
-                        <strong className="text-elec-yellow">Typical Uses:</strong> {material.typical_uses}
+                        <strong className="text-elec-yellow">Typical Uses:</strong>{' '}
+                        {material.typical_uses}
                       </p>
                     </div>
                   </div>
-                  
+
                   <div>
-                    <h5 className="text-sm font-medium text-elec-yellow mb-2">Applications by Size</h5>
+                    <h5 className="text-sm font-medium text-elec-yellow mb-2">
+                      Applications by Size
+                    </h5>
                     <ul className="text-xs text-white space-y-1 max-h-40 sm:max-h-32 overflow-y-auto">
                       {material.applications.map((app, idx) => (
                         <li key={idx} className="flex items-start gap-2">
@@ -733,37 +834,51 @@ const BasicToolsMaterialsGuide = () => {
             <Plug className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Cable Fittings & Glands Guide</CardTitle>
           </div>
-          <p className="text-white">Complete guide to cable termination, gland selection, and installation procedures</p>
+          <p className="text-white">
+            Complete guide to cable termination, gland selection, and installation procedures
+          </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-8">
             {cableFittingsGuide.map((category, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{category.category}</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                  {category.category}
+                </h3>
                 <p className="text-sm text-white mb-4 sm:mb-6">{category.description}</p>
-                
+
                 <div className="space-y-6">
                   {category.fittings.map((fitting, fittingIndex) => (
-                    <div key={fittingIndex} className="bg-white/5 border border-white/10 p-3 sm:p-5 rounded-lg">
+                    <div
+                      key={fittingIndex}
+                      className="bg-white/5 border border-white/10 p-3 sm:p-5 rounded-lg"
+                    >
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-4">
                         <div>
                           <h4 className="font-medium text-white mb-2">{fitting.name}</h4>
                           <p className="text-sm text-white mb-1">
-                            <strong className="text-elec-yellow">Cable Size:</strong> {fitting.cable_sizes}
+                            <strong className="text-elec-yellow">Cable Size:</strong>{' '}
+                            {fitting.cable_sizes}
                           </p>
                           <p className="text-sm text-white mb-1">
-                            <strong className="text-elec-yellow">Typical Cables:</strong> {fitting.typical_cables}
+                            <strong className="text-elec-yellow">Typical Cables:</strong>{' '}
+                            {fitting.typical_cables}
                           </p>
                           <p className="text-sm text-white">
                             <strong className="text-elec-yellow">Thread:</strong> {fitting.thread}
                           </p>
                         </div>
-                        
+
                         <div className="md:col-span-2">
-                          <h5 className="font-medium text-elec-yellow mb-2 sm:mb-3">Installation Steps</h5>
+                          <h5 className="font-medium text-elec-yellow mb-2 sm:mb-3">
+                            Installation Steps
+                          </h5>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {fitting.termination_steps.map((step, stepIndex) => (
-                              <div key={stepIndex} className="flex items-start gap-2 text-sm text-white">
+                              <div
+                                key={stepIndex}
+                                className="flex items-start gap-2 text-sm text-white"
+                              >
                                 <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                                   {stepIndex + 1}
                                 </span>
@@ -789,14 +904,16 @@ const BasicToolsMaterialsGuide = () => {
             <Settings className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Tools for Cable Termination Work</CardTitle>
           </div>
-          <p className="text-white">Essential tools and safety considerations for different cable work</p>
+          <p className="text-white">
+            Essential tools and safety considerations for different cable work
+          </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {toolSelection.map((task, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
                 <h4 className="font-semibold text-white mb-4">{task.task}</h4>
-                
+
                 <div className="space-y-4">
                   <div>
                     <h5 className="text-sm font-medium text-elec-yellow mb-2">Required Tools</h5>
@@ -809,9 +926,11 @@ const BasicToolsMaterialsGuide = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
-                    <h5 className="text-sm font-medium text-orange-400 mb-2">Safety Considerations</h5>
+                    <h5 className="text-sm font-medium text-orange-400 mb-2">
+                      Safety Considerations
+                    </h5>
                     <ul className="space-y-1">
                       {task.safety_considerations.map((safety, safetyIndex) => (
                         <li key={safetyIndex} className="text-sm text-white flex items-start gap-2">
@@ -868,7 +987,7 @@ const BasicToolsMaterialsGuide = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-medium text-white mb-2">Skills Development</h4>
                     <p className="text-sm text-white">{year.skills}</p>
@@ -887,7 +1006,9 @@ const BasicToolsMaterialsGuide = () => {
             <ShoppingCart className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Where to Buy - UK Supplier Guide</CardTitle>
           </div>
-          <p className="text-white">Best places to purchase electrical tools and materials in the UK</p>
+          <p className="text-white">
+            Best places to purchase electrical tools and materials in the UK
+          </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
@@ -907,14 +1028,16 @@ const BasicToolsMaterialsGuide = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h4 className="text-sm font-medium text-elec-yellow mb-2">Benefits</h4>
                     <p className="text-sm text-white">{category.benefits}</p>
                   </div>
-                  
+
                   <div>
-                    <h4 className="text-sm font-medium text-elec-yellow mb-2">Apprentice Discounts</h4>
+                    <h4 className="text-sm font-medium text-elec-yellow mb-2">
+                      Apprentice Discounts
+                    </h4>
                     <p className="text-sm text-green-300">{category.apprenticeDiscount}</p>
                   </div>
                 </div>
@@ -935,7 +1058,9 @@ const BasicToolsMaterialsGuide = () => {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <h4 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Quality Investment Strategy</h4>
+              <h4 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">
+                Quality Investment Strategy
+              </h4>
               <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -955,7 +1080,7 @@ const BasicToolsMaterialsGuide = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-white mb-3">Career Development</h4>
               <ul className="space-y-2 text-sm text-white">

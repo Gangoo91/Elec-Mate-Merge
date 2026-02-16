@@ -20,14 +20,14 @@ export const useBriefingAutoSave = (formData: any, step: number, isEditing: bool
   // Load saved data on mount
   const loadSavedData = (): AutoSaveData | null => {
     if (isEditing) return null; // Don't load auto-save for editing
-    
+
     try {
       const saved = localStorage.getItem(AUTO_SAVE_KEY);
       if (!saved) return null;
-      
+
       const data = JSON.parse(saved) as AutoSaveData;
       const ageInMinutes = (Date.now() - data.timestamp) / 1000 / 60;
-      
+
       // Only return if less than 24 hours old
       if (ageInMinutes < 1440) {
         return data;
@@ -49,15 +49,15 @@ export const useBriefingAutoSave = (formData: any, step: number, isEditing: bool
         timestamp: Date.now(),
         step,
       };
-      
+
       localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(dataToSave));
       setLastSaved(new Date());
       setHasUnsavedChanges(false);
-      
+
       if (showNotification) {
         toast({
-          title: "Progress Saved",
-          description: "Your briefing has been auto-saved.",
+          title: 'Progress Saved',
+          description: 'Your briefing has been auto-saved.',
         });
       }
     } catch (error) {
@@ -80,25 +80,25 @@ export const useBriefingAutoSave = (formData: any, step: number, isEditing: bool
   // Auto-save effect
   useEffect(() => {
     if (isEditing) return; // Don't auto-save when editing existing briefing
-    
+
     const currentData = JSON.stringify(formData);
-    
+
     // Check if data has changed
     if (currentData !== lastFormData.current) {
       setHasUnsavedChanges(true);
       lastFormData.current = currentData;
-      
+
       // Clear existing timer
       if (saveTimer.current) {
         clearTimeout(saveTimer.current);
       }
-      
+
       // Set new timer
       saveTimer.current = setTimeout(() => {
         saveData(false);
       }, AUTO_SAVE_INTERVAL);
     }
-    
+
     return () => {
       if (saveTimer.current) {
         clearTimeout(saveTimer.current);
@@ -109,9 +109,9 @@ export const useBriefingAutoSave = (formData: any, step: number, isEditing: bool
   // Get time since last save
   const getTimeSinceLastSave = (): string | null => {
     if (!lastSaved) return null;
-    
+
     const seconds = Math.floor((Date.now() - lastSaved.getTime()) / 1000);
-    
+
     if (seconds < 60) return 'just now';
     if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;

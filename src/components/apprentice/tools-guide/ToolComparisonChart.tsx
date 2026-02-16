@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Star, Award, TrendingUp } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Star, Award, TrendingUp } from 'lucide-react';
 
 interface BrandComparison {
   brand: string;
@@ -24,17 +23,23 @@ interface ToolComparisonChartProps {
 const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProps) => {
   const getRatingStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <Star 
-        key={i} 
-        className={`h-3 w-3 ${i < rating ? 'text-yellow-400 fill-current' : 'text-white'}`} 
+      <Star
+        key={i}
+        className={`h-3 w-3 ${i < rating ? 'text-yellow-400 fill-current' : 'text-white'}`}
       />
     ));
   };
 
   const getValueBadge = (index: number) => {
-    if (index === 0) return { text: "Best Overall", color: "bg-green-500/20 text-green-400 border-green-500/30" };
-    if (index === 1) return { text: "Best Value", color: "bg-blue-500/20 text-blue-400 border-blue-500/30" };
-    if (index === 2) return { text: "Budget Pick", color: "bg-orange-500/20 text-orange-400 border-orange-500/30" };
+    if (index === 0)
+      return { text: 'Best Overall', color: 'bg-green-500/20 text-green-400 border-green-500/30' };
+    if (index === 1)
+      return { text: 'Best Value', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' };
+    if (index === 2)
+      return {
+        text: 'Budget Pick',
+        color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+      };
     return null;
   };
 
@@ -49,7 +54,7 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
           Professional comparison of top {category} tools for UK electricians
         </p>
       </CardHeader>
-      
+
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {tools.map((tool, index) => {
@@ -73,14 +78,12 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
                     <span className="text-sm text-white">Price:</span>
                     <span className="text-elec-yellow font-medium">{tool.price}</span>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-white">Rating:</span>
-                    <div className="flex items-center gap-1">
-                      {getRatingStars(tool.rating)}
-                    </div>
+                    <div className="flex items-center gap-1">{getRatingStars(tool.rating)}</div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-white">Warranty:</span>
                     <span className="text-white">{tool.warranty}</span>

@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 import {
   Zap,
   GraduationCap,
@@ -20,71 +20,76 @@ import {
   Calculator,
   FileCheck,
   Play,
-  Sparkles
-} from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { cn } from "@/lib/utils";
+  Sparkles,
+} from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
 
 const Index = () => {
   const { user } = useAuth();
 
   // Respect reduced motion preferences
-  const prefersReducedMotion = typeof window !== 'undefined'
-    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    : false;
+  const prefersReducedMotion =
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
 
   const hubs = [
     {
-      title: "Apprentice Hub",
-      description: "Training, OJT tracking, and portfolio",
+      title: 'Apprentice Hub',
+      description: 'Training, OJT tracking, and portfolio',
       icon: GraduationCap,
-      link: "/apprentice",
-      features: ["Level 2 & 3", "AM2 Prep", "OJT Log"],
-      stat: "2,000+ questions",
-      color: "blue"
+      link: '/apprentice',
+      features: ['Level 2 & 3', 'AM2 Prep', 'OJT Log'],
+      stat: '2,000+ questions',
+      color: 'blue',
     },
     {
-      title: "Electrician Hub",
-      description: "Professional tools and calculators",
+      title: 'Electrician Hub',
+      description: 'Professional tools and calculators',
       icon: Zap,
-      link: "/electrician",
-      features: ["BS7671", "Calcs", "Certs"],
-      stat: "50+ tools",
-      color: "yellow"
+      link: '/electrician',
+      features: ['BS7671', 'Calcs', 'Certs'],
+      stat: '50+ tools',
+      color: 'yellow',
     },
     {
-      title: "Employer Hub",
-      description: "Team and business management",
+      title: 'Employer Hub',
+      description: 'Team and business management',
       icon: Briefcase,
-      link: "/employer",
-      features: ["Jobs", "GPS", "Voice AI"],
-      stat: "Full control",
-      color: "purple"
+      link: '/employer',
+      features: ['Jobs', 'GPS', 'Voice AI'],
+      stat: 'Full control',
+      color: 'purple',
     },
     {
-      title: "Study Centre",
-      description: "Professional upskilling courses",
+      title: 'Study Centre',
+      description: 'Professional upskilling courses',
       icon: BookOpen,
-      link: "/study-centre",
-      features: ["14 Courses", "Exams", "Certs"],
-      stat: "14 courses",
-      color: "green"
-    }
+      link: '/study-centre',
+      features: ['14 Courses', 'Exams', 'Certs'],
+      stat: '14 courses',
+      color: 'green',
+    },
   ];
 
   const features = [
-    { icon: Shield, title: "BS7671", desc: "18th Edition" },
-    { icon: BadgeCheck, title: "Elec-ID", desc: "Digital credential" },
-    { icon: FileCheck, title: "Certificates", desc: "EICR & more" },
-    { icon: Calculator, title: "Calculators", desc: "Cable & load" },
-    { icon: Award, title: "Training", desc: "Industry recognised" },
-    { icon: Users, title: "Team Tools", desc: "Manage crew" }
+    { icon: Shield, title: 'BS7671', desc: '18th Edition' },
+    { icon: BadgeCheck, title: 'Elec-ID', desc: 'Digital credential' },
+    { icon: FileCheck, title: 'Certificates', desc: 'EICR & more' },
+    { icon: Calculator, title: 'Calculators', desc: 'Cable & load' },
+    { icon: Award, title: 'Training', desc: 'Industry recognised' },
+    { icon: Users, title: 'Team Tools', desc: 'Manage crew' },
   ];
 
   const testimonials = [
-    { quote: "Passed my AM2 first time with this training.", author: "James T.", role: "Manchester" },
-    { quote: "Cable calculators save me hours every week.", author: "Sarah M.", role: "London" },
-    { quote: "Managing my team has never been easier.", author: "David W.", role: "Birmingham" }
+    {
+      quote: 'Passed my AM2 first time with this training.',
+      author: 'James T.',
+      role: 'Manchester',
+    },
+    { quote: 'Cable calculators save me hours every week.', author: 'Sarah M.', role: 'London' },
+    { quote: 'Managing my team has never been easier.', author: 'David W.', role: 'Birmingham' },
   ];
 
   // Animation variants - Smooth, fast entrance
@@ -92,8 +97,8 @@ const Index = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.02, delayChildren: 0 }
-    }
+      transition: { staggerChildren: 0.02, delayChildren: 0 },
+    },
   };
 
   const itemVariants = {
@@ -101,8 +106,8 @@ const Index = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.2, ease: 'easeOut' }
-    }
+      transition: { duration: 0.2, ease: 'easeOut' },
+    },
   };
 
   const cardVariants = {
@@ -110,8 +115,8 @@ const Index = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.2, ease: 'easeOut' }
-    }
+      transition: { duration: 0.2, ease: 'easeOut' },
+    },
   };
 
   return (
@@ -128,20 +133,28 @@ const Index = () => {
           />
           {/* Primary animated orb - skip animation if reduced motion preferred */}
           <motion.div
-            animate={prefersReducedMotion ? {} : {
-              scale: [1, 1.2, 1],
-              opacity: [0.15, 0.25, 0.15]
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            animate={
+              prefersReducedMotion
+                ? {}
+                : {
+                    scale: [1, 1.2, 1],
+                    opacity: [0.15, 0.25, 0.15],
+                  }
+            }
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-elec-yellow/20 blur-[120px]"
           />
           {/* Secondary orb - skip animation if reduced motion preferred */}
           <motion.div
-            animate={prefersReducedMotion ? {} : {
-              scale: [1.1, 0.9, 1.1],
-              opacity: [0.08, 0.15, 0.08]
-            }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            animate={
+              prefersReducedMotion
+                ? {}
+                : {
+                    scale: [1.1, 0.9, 1.1],
+                    opacity: [0.08, 0.15, 0.08],
+                  }
+            }
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
             className="absolute top-1/2 right-0 w-[300px] h-[300px] rounded-full bg-blue-500/15 blur-[100px]"
           />
         </div>
@@ -161,7 +174,13 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
                 className="w-14 h-14 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(255,209,0,0.3)] ring-2 ring-elec-yellow/20"
               >
-                <img src="/logo.jpg" alt="Elec-Mate" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                <img
+                  src="/logo.jpg"
+                  alt="Elec-Mate"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
               <span className="text-[22px] font-bold tracking-tight">
                 Elec-<span className="text-elec-yellow">Mate</span>
@@ -186,7 +205,9 @@ const Index = () => {
             <h1 className="text-[32px] leading-tight font-bold tracking-tight text-white mb-4">
               Your Complete
               <br />
-              <span className="text-elec-yellow bg-gradient-to-r from-elec-yellow to-yellow-300 bg-clip-text text-transparent">Electrical Career</span>
+              <span className="text-elec-yellow bg-gradient-to-r from-elec-yellow to-yellow-300 bg-clip-text text-transparent">
+                Electrical Career
+              </span>
               <br />
               Platform
             </h1>
@@ -198,7 +219,12 @@ const Index = () => {
           {/* CTA Buttons */}
           <motion.div variants={itemVariants} className="space-y-3 mb-8">
             {user ? (
-              <Button asChild variant="ios-primary" size="ios-large" className="w-full h-[56px] shadow-lg shadow-elec-yellow/25">
+              <Button
+                asChild
+                variant="ios-primary"
+                size="ios-large"
+                className="w-full h-[56px] shadow-lg shadow-elec-yellow/25"
+              >
                 <Link to="/apprentice/study">
                   Go to Dashboard
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -207,7 +233,12 @@ const Index = () => {
             ) : (
               <>
                 <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-                  <Button asChild variant="ios-primary" size="ios-large" className="w-full h-[56px] shadow-lg shadow-elec-yellow/25">
+                  <Button
+                    asChild
+                    variant="ios-primary"
+                    size="ios-large"
+                    className="w-full h-[56px] shadow-lg shadow-elec-yellow/25"
+                  >
                     <Link to="/auth/signup">
                       Start Free Trial
                       <ArrowRight className="ml-2 h-5 w-5" />
@@ -215,10 +246,13 @@ const Index = () => {
                   </Button>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-                  <Button asChild variant="ios-secondary" size="ios-default" className="w-full h-[52px]">
-                    <Link to="/auth/signin">
-                      Sign In
-                    </Link>
+                  <Button
+                    asChild
+                    variant="ios-secondary"
+                    size="ios-default"
+                    className="w-full h-[52px]"
+                  >
+                    <Link to="/auth/signin">Sign In</Link>
                   </Button>
                 </motion.div>
               </>
@@ -253,17 +287,17 @@ const Index = () => {
         <div className="max-w-lg mx-auto px-6 py-6">
           <div className="grid grid-cols-4 gap-4 text-center">
             {[
-              { value: "2k+", label: "Questions" },
-              { value: "50+", label: "Tools" },
-              { value: "14", label: "Courses" },
-              { value: "24/7", label: "Access" }
+              { value: '2k+', label: 'Questions' },
+              { value: '50+', label: 'Tools' },
+              { value: '14', label: 'Courses' },
+              { value: '24/7', label: 'Access' },
             ].map((stat, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, type: "spring", stiffness: 400 }}
+                transition={{ delay: i * 0.1, type: 'spring', stiffness: 400 }}
               >
                 <div className="text-[20px] font-bold text-elec-yellow">{stat.value}</div>
                 <div className="text-ios-caption-2 text-white/40 mt-0.5">{stat.label}</div>
@@ -293,40 +327,56 @@ const Index = () => {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1, type: "spring", stiffness: 300 }}
+                transition={{ delay: index * 0.1, type: 'spring', stiffness: 300 }}
               >
                 <Link to={hub.link} className="block">
-                  <motion.div
-                    whileHover={{ scale: 1.01, x: 4 }}
-                    whileTap={{ scale: 0.99 }}
-                  >
-                    <Card variant="ios" interactive className="bg-white/[0.04] backdrop-blur-xl border-white/10 hover:border-white/20 transition-all">
+                  <motion.div whileHover={{ scale: 1.01, x: 4 }} whileTap={{ scale: 0.99 }}>
+                    <Card
+                      variant="ios"
+                      interactive
+                      className="bg-white/[0.04] backdrop-blur-xl border-white/10 hover:border-white/20 transition-all"
+                    >
                       <CardContent className="p-4">
                         <div className="flex items-center gap-4">
-                          <div className={cn(
-                            "w-14 h-14 rounded-xl flex items-center justify-center shrink-0 shadow-lg",
-                            hub.color === 'blue' && "bg-gradient-to-br from-blue-500/30 to-blue-600/10 shadow-blue-500/20",
-                            hub.color === 'yellow' && "bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 shadow-elec-yellow/20",
-                            hub.color === 'purple' && "bg-gradient-to-br from-purple-500/30 to-purple-600/10 shadow-purple-500/20",
-                            hub.color === 'green' && "bg-gradient-to-br from-green-500/30 to-green-600/10 shadow-green-500/20"
-                          )}>
-                            <hub.icon className={cn(
-                              "h-7 w-7",
-                              hub.color === 'blue' && "text-blue-400",
-                              hub.color === 'yellow' && "text-elec-yellow",
-                              hub.color === 'purple' && "text-purple-400",
-                              hub.color === 'green' && "text-green-400"
-                            )} />
+                          <div
+                            className={cn(
+                              'w-14 h-14 rounded-xl flex items-center justify-center shrink-0 shadow-lg',
+                              hub.color === 'blue' &&
+                                'bg-gradient-to-br from-blue-500/30 to-blue-600/10 shadow-blue-500/20',
+                              hub.color === 'yellow' &&
+                                'bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 shadow-elec-yellow/20',
+                              hub.color === 'purple' &&
+                                'bg-gradient-to-br from-purple-500/30 to-purple-600/10 shadow-purple-500/20',
+                              hub.color === 'green' &&
+                                'bg-gradient-to-br from-green-500/30 to-green-600/10 shadow-green-500/20'
+                            )}
+                          >
+                            <hub.icon
+                              className={cn(
+                                'h-7 w-7',
+                                hub.color === 'blue' && 'text-blue-400',
+                                hub.color === 'yellow' && 'text-elec-yellow',
+                                hub.color === 'purple' && 'text-purple-400',
+                                hub.color === 'green' && 'text-green-400'
+                              )}
+                            />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                              <h3 className="text-ios-headline font-semibold text-white">{hub.title}</h3>
+                              <h3 className="text-ios-headline font-semibold text-white">
+                                {hub.title}
+                              </h3>
                               <ChevronRight className="h-5 w-5 text-white/30" />
                             </div>
-                            <p className="text-ios-caption-1 text-white/50 mb-2">{hub.description}</p>
+                            <p className="text-ios-caption-1 text-white/50 mb-2">
+                              {hub.description}
+                            </p>
                             <div className="flex flex-wrap gap-1.5">
                               {hub.features.map((feature, i) => (
-                                <span key={i} className="text-ios-caption-2 px-2.5 py-1 rounded-lg bg-white/5 text-white/50 border border-white/5">
+                                <span
+                                  key={i}
+                                  className="text-ios-caption-2 px-2.5 py-1 rounded-lg bg-white/5 text-white/50 border border-white/5"
+                                >
                                   {feature}
                                 </span>
                               ))}
@@ -366,14 +416,16 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.05, type: "spring", stiffness: 400 }}
+                transition={{ delay: index * 0.05, type: 'spring', stiffness: 400 }}
                 whileHover={{ scale: 1.02, y: -2 }}
                 className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-center backdrop-blur-sm hover:bg-white/[0.06] transition-colors"
               >
                 <div className="w-11 h-11 rounded-xl bg-elec-yellow/15 flex items-center justify-center mx-auto mb-3">
                   <feature.icon className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <h3 className="text-ios-footnote font-semibold text-white mb-0.5">{feature.title}</h3>
+                <h3 className="text-ios-footnote font-semibold text-white mb-0.5">
+                  {feature.title}
+                </h3>
                 <p className="text-ios-caption-2 text-white/40">{feature.desc}</p>
               </motion.div>
             ))}
@@ -387,10 +439,13 @@ const Index = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 300 }}
+          transition={{ type: 'spring', stiffness: 300 }}
           className="max-w-lg mx-auto"
         >
-          <Card variant="ios-elevated" className="border-elec-yellow/20 bg-gradient-to-br from-white/[0.06] to-white/[0.02] overflow-hidden backdrop-blur-xl">
+          <Card
+            variant="ios-elevated"
+            className="border-elec-yellow/20 bg-gradient-to-br from-white/[0.06] to-white/[0.02] overflow-hidden backdrop-blur-xl"
+          >
             <CardContent className="p-6">
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
@@ -417,7 +472,7 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.3, type: "spring" }}
+                transition={{ delay: 0.3, type: 'spring' }}
                 className="bg-gradient-to-br from-white/[0.08] to-white/[0.02] rounded-2xl border border-elec-yellow/20 p-5 mb-5 shadow-lg shadow-elec-yellow/5"
               >
                 <div className="h-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded-full -mt-5 -mx-5 mb-5" />
@@ -426,8 +481,12 @@ const Index = () => {
                     <Lightbulb className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-ios-caption-2 text-white/40 uppercase tracking-wider">Elec-ID</div>
-                    <div className="font-mono text-ios-headline font-bold text-white">ELEC-2026-00001</div>
+                    <div className="text-ios-caption-2 text-white/40 uppercase tracking-wider">
+                      Elec-ID
+                    </div>
+                    <div className="font-mono text-ios-headline font-bold text-white">
+                      ELEC-2026-00001
+                    </div>
                   </div>
                   <div className="flex items-center gap-1.5 text-ios-caption-1 text-green-400 bg-green-500/15 px-3 py-1.5 rounded-full font-medium">
                     <ShieldCheck className="h-3.5 w-3.5" />
@@ -436,12 +495,14 @@ const Index = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
                   {[
-                    { value: "5", label: "Years" },
-                    { value: "8", label: "Certs" },
-                    { value: "12", label: "Training" }
+                    { value: '5', label: 'Years' },
+                    { value: '8', label: 'Certs' },
+                    { value: '12', label: 'Training' },
                   ].map((stat, i) => (
                     <div key={i} className="text-center p-2 rounded-lg bg-white/5">
-                      <div className="text-ios-headline font-bold text-elec-yellow">{stat.value}</div>
+                      <div className="text-ios-headline font-bold text-elec-yellow">
+                        {stat.value}
+                      </div>
                       <div className="text-ios-caption-2 text-white/40">{stat.label}</div>
                     </div>
                   ))}
@@ -449,23 +510,30 @@ const Index = () => {
               </motion.div>
 
               <div className="space-y-2.5 mb-5">
-                {["JIB verified credentials", "Shareable QR code", "Complete training history"].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + i * 0.1 }}
-                    className="flex items-center gap-2.5 text-ios-footnote text-white/70"
-                  >
-                    <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
-                    {item}
-                  </motion.div>
-                ))}
+                {['JIB verified credentials', 'Shareable QR code', 'Complete training history'].map(
+                  (item, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4 + i * 0.1 }}
+                      className="flex items-center gap-2.5 text-ios-footnote text-white/70"
+                    >
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
+                      {item}
+                    </motion.div>
+                  )
+                )}
               </div>
 
               <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-                <Button asChild variant="ios-primary" size="ios-default" className="w-full h-[52px] shadow-lg shadow-elec-yellow/20">
+                <Button
+                  asChild
+                  variant="ios-primary"
+                  size="ios-default"
+                  className="w-full h-[52px] shadow-lg shadow-elec-yellow/20"
+                >
                   <Link to="/auth/signup">
                     Create Your Elec-ID
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -498,7 +566,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1, type: "spring" }}
+                transition={{ delay: index * 0.1, type: 'spring' }}
               >
                 <Card variant="ios" className="bg-white/[0.04] backdrop-blur-xl border-white/10">
                   <CardContent className="p-5">
@@ -511,7 +579,10 @@ const Index = () => {
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 flex items-center justify-center">
                         <span className="text-ios-footnote font-bold text-elec-yellow">
-                          {t.author.split(' ').map(n => n[0]).join('')}
+                          {t.author
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('')}
                         </span>
                       </div>
                       <div>
@@ -531,11 +602,15 @@ const Index = () => {
       <section className="py-16 px-6 relative">
         {/* Background glow - skip animation if reduced motion preferred */}
         <motion.div
-          animate={prefersReducedMotion ? {} : {
-            scale: [1, 1.1, 1],
-            opacity: [0.1, 0.15, 0.1]
-          }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          animate={
+            prefersReducedMotion
+              ? {}
+              : {
+                  scale: [1, 1.1, 1],
+                  opacity: [0.1, 0.15, 0.1],
+                }
+          }
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-elec-yellow/15 blur-[100px] pointer-events-none"
         />
 
@@ -549,7 +624,7 @@ const Index = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 400, delay: 0.1 }}
+            transition={{ type: 'spring', stiffness: 400, delay: 0.1 }}
             className="w-20 h-20 rounded-3xl bg-gradient-to-br from-elec-yellow to-yellow-500 flex items-center justify-center mx-auto mb-6 shadow-[0_8px_32px_rgba(255,209,0,0.35)]"
           >
             <Zap className="h-10 w-10 text-black" />
@@ -560,7 +635,12 @@ const Index = () => {
           </p>
 
           <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-            <Button asChild variant="ios-primary" size="ios-large" className="w-full h-[56px] mb-5 shadow-lg shadow-elec-yellow/25">
+            <Button
+              asChild
+              variant="ios-primary"
+              size="ios-large"
+              className="w-full h-[56px] mb-5 shadow-lg shadow-elec-yellow/25"
+            >
               <Link to="/auth/signup">
                 Start Your Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />

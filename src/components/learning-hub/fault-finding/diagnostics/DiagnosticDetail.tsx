@@ -12,7 +12,7 @@ import {
   Eye,
   Target,
   Clock,
-  ThermometerSun
+  ThermometerSun,
 } from 'lucide-react';
 import { diagnosticScenarios, Diagnostic } from '../data/faultFindingData';
 
@@ -21,7 +21,7 @@ interface DiagnosticDetailProps {
   diagnosticIndex: number;
 }
 
-const getCategoryIcon = (category: string, className: string = "h-6 w-6") => {
+const getCategoryIcon = (category: string, className: string = 'h-6 w-6') => {
   switch (category) {
     case 'continuity':
       return <Activity className={className} />;
@@ -54,27 +54,27 @@ const getSeverityColor = (severity: string) => {
         text: 'text-red-400',
         bg: 'bg-red-500/10',
         border: 'border-red-500/30',
-        badge: 'bg-red-500/20 text-red-400 border-red-500/30'
+        badge: 'bg-red-500/20 text-red-400 border-red-500/30',
       };
     case 'high':
       return {
         text: 'text-orange-400',
         bg: 'bg-orange-500/10',
         border: 'border-orange-500/30',
-        badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+        badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
       };
     default:
       return {
         text: 'text-yellow-400',
         bg: 'bg-yellow-500/10',
         border: 'border-yellow-500/30',
-        badge: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
+        badge: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
       };
   }
 };
 
 const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps) => {
-  const scenario = diagnosticScenarios.find(s => s.id === categoryId);
+  const scenario = diagnosticScenarios.find((s) => s.id === categoryId);
 
   if (!scenario || !scenario.diagnostics[diagnosticIndex]) {
     return (
@@ -93,19 +93,14 @@ const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps
       <Card className={`${colors.border} border-l-4 ${colors.bg}`}>
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2 mb-2">
-            <Badge
-              variant="outline"
-              className={`text-xs uppercase ${colors.badge}`}
-            >
+            <Badge variant="outline" className={`text-xs uppercase ${colors.badge}`}>
               {diagnostic.severity}
             </Badge>
             <Badge variant="outline" className="text-xs">
               {scenario.title.replace(' Analysis', '')}
             </Badge>
           </div>
-          <CardTitle className={`text-lg ${colors.text}`}>
-            {diagnostic.symptom}
-          </CardTitle>
+          <CardTitle className={`text-lg ${colors.text}`}>{diagnostic.symptom}</CardTitle>
         </CardHeader>
       </Card>
 
@@ -115,9 +110,7 @@ const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps
           <h3 className="font-semibold text-xs text-muted-foreground mb-2 uppercase tracking-wide">
             Test Measurement
           </h3>
-          <p className="text-sm font-mono text-foreground">
-            {diagnostic.measurement}
-          </p>
+          <p className="text-sm font-mono text-foreground">{diagnostic.measurement}</p>
         </CardContent>
       </Card>
 
@@ -127,9 +120,7 @@ const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps
           <h3 className="font-semibold text-xs text-yellow-400 mb-2 uppercase tracking-wide">
             Technical Interpretation
           </h3>
-          <p className="text-sm text-foreground">
-            {diagnostic.interpretation}
-          </p>
+          <p className="text-sm text-foreground">{diagnostic.interpretation}</p>
         </CardContent>
       </Card>
 
@@ -199,9 +190,7 @@ const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps
             <BookOpen className="h-4 w-4" />
             Regulatory Compliance
           </h3>
-          <p className="text-sm text-blue-300">
-            {diagnostic.regulation}
-          </p>
+          <p className="text-sm text-blue-300">{diagnostic.regulation}</p>
         </CardContent>
       </Card>
     </div>

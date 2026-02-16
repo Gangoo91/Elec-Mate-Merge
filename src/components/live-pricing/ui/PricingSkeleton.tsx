@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface SkeletonProps {
   className?: string;
 }
 
 const Skeleton = ({ className }: SkeletonProps) => (
-  <div className={cn("animate-pulse rounded-lg bg-white/10", className)} />
+  <div className={cn('animate-pulse rounded-lg bg-white/10', className)} />
 );
 
 // Skeleton for PriceCard component

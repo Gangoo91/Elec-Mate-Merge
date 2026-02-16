@@ -1,14 +1,13 @@
-
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Clock, Settings, Users, RefreshCcw } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Calendar, Clock, Settings, Users, RefreshCcw } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from '@/hooks/use-toast';
 
 const ScheduleManager = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "calendar";
+  const activeTab = searchParams.get('tab') || 'calendar';
 
   const setActiveTab = (tab: string) => {
     setSearchParams({ tab }, { replace: false });
@@ -16,7 +15,7 @@ const ScheduleManager = () => {
 
   const handleAction = (action: string) => {
     toast({
-      title: "Action Triggered",
+      title: 'Action Triggered',
       description: `${action} functionality will be available soon.`,
     });
   };
@@ -26,9 +25,7 @@ const ScheduleManager = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Schedule Manager</h1>
-          <p className="text-muted-foreground">
-            Manage appointments and schedule electrical jobs.
-          </p>
+          <p className="text-muted-foreground">Manage appointments and schedule electrical jobs.</p>
         </div>
         <Link to="/electrician-tools/admin">
           <Button variant="outline" className="flex items-center gap-2">
@@ -64,40 +61,31 @@ const ScheduleManager = () => {
                 <CardDescription>View your schedule in monthly format.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Monthly Calendar")}
-                >
+                <Button className="w-full" onClick={() => handleAction('View Monthly Calendar')}>
                   Open Calendar
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Create Event</CardTitle>
                 <CardDescription>Schedule a new job or appointment.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Create New Event")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Create New Event')}>
                   Create Event
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Export Calendar</CardTitle>
                 <CardDescription>Export your calendar to external applications.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Export Calendar")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Export Calendar')}>
                   Export Calendar
                 </Button>
               </CardContent>
@@ -113,10 +101,7 @@ const ScheduleManager = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Appointments")}
-                >
+                <Button className="w-full" onClick={() => handleAction('View Appointments')}>
                   View Appointments
                 </Button>
               </div>
@@ -132,10 +117,7 @@ const ScheduleManager = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Manage Staff Schedule")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Manage Staff Schedule')}>
                   Manage Staff Schedule
                 </Button>
               </div>
@@ -151,10 +133,7 @@ const ScheduleManager = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Manage Recurring Jobs")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Manage Recurring Jobs')}>
                   Manage Recurring Jobs
                 </Button>
               </div>
@@ -170,10 +149,7 @@ const ScheduleManager = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Configure Calendar")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Configure Calendar')}>
                   Configure Settings
                 </Button>
               </div>

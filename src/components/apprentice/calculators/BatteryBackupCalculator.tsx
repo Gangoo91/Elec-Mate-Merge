@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Battery, Info, BookOpen, ChevronDown, AlertTriangle, Plus, X, Clock, Zap } from 'lucide-react';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+  Battery,
+  Info,
+  BookOpen,
+  ChevronDown,
+  AlertTriangle,
+  Plus,
+  X,
+  Clock,
+  Zap,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -17,7 +23,7 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 import {
   calculateBatteryBackup,
   BATTERY_CHEMISTRIES,
@@ -25,7 +31,7 @@ import {
   LOAD_PRESETS,
   formatRuntime,
   type BatteryInputs,
-  type CalculationResults
+  type CalculationResults,
 } from '@/lib/battery-backup-calcs';
 
 interface Load {
@@ -49,7 +55,9 @@ const BatteryBackupCalculator = () => {
   const [loads, setLoads] = useState<Load[]>([]);
   const [newLoadName, setNewLoadName] = useState('');
   const [newLoadWatts, setNewLoadWatts] = useState('');
-  const [newLoadPriority, setNewLoadPriority] = useState<'essential' | 'important' | 'convenience'>('essential');
+  const [newLoadPriority, setNewLoadPriority] = useState<'essential' | 'important' | 'convenience'>(
+    'essential'
+  );
   const [requiredRuntime, setRequiredRuntime] = useState('');
   const [results, setResults] = useState<CalculationResults | null>(null);
 
@@ -58,18 +66,18 @@ const BatteryBackupCalculator = () => {
 
   const chemistryOptions = Object.entries(BATTERY_CHEMISTRIES).map(([key, chem]) => ({
     value: key,
-    label: chem.name
+    label: chem.name,
   }));
 
   const inverterOptions = Object.entries(INVERTER_TYPES).map(([key, inv]) => ({
     value: key,
-    label: inv.name
+    label: inv.name,
   }));
 
   const priorityOptions = [
     { value: 'essential', label: 'Essential' },
     { value: 'important', label: 'Important' },
-    { value: 'convenience', label: 'Convenience' }
+    { value: 'convenience', label: 'Convenience' },
   ];
 
   const addLoad = () => {
@@ -80,7 +88,7 @@ const BatteryBackupCalculator = () => {
       watts: parseFloat(newLoadWatts),
       dutyCycle: 1.0,
       surgeMultiplier: 1.0,
-      priority: newLoadPriority
+      priority: newLoadPriority,
     };
 
     setLoads([...loads, newLoad]);
@@ -93,7 +101,7 @@ const BatteryBackupCalculator = () => {
     setLoads(loads.filter((_, i) => i !== index));
   };
 
-  const handleLoadPresetSelect = (preset: typeof LOAD_PRESETS[0]) => {
+  const handleLoadPresetSelect = (preset: (typeof LOAD_PRESETS)[0]) => {
     setNewLoadName(preset.name);
     setNewLoadWatts(preset.watts.toString());
     setNewLoadPriority(preset.category);
@@ -115,7 +123,8 @@ const BatteryBackupCalculator = () => {
       inverterType,
       dcCableLength: 2,
       maxVoltDrop: 3,
-      requiredRuntime: mode === 'sizing' && requiredRuntime ? parseFloat(requiredRuntime) : undefined
+      requiredRuntime:
+        mode === 'sizing' && requiredRuntime ? parseFloat(requiredRuntime) : undefined,
     };
 
     try {
@@ -139,8 +148,14 @@ const BatteryBackupCalculator = () => {
   const selectedChemistry = BATTERY_CHEMISTRIES[chemistry];
   const selectedInverter = INVERTER_TYPES[inverterType];
 
-  const getRuntimeColor = (runtime: number) => runtime >= 8 ? 'text-green-400' : runtime >= 3 ? 'text-amber-400' : 'text-red-400';
-  const getCRateColor = (cRate: number, maxCRate: number) => cRate <= maxCRate * 0.5 ? 'text-green-400' : cRate <= maxCRate * 0.8 ? 'text-amber-400' : 'text-red-400';
+  const getRuntimeColor = (runtime: number) =>
+    runtime >= 8 ? 'text-green-400' : runtime >= 3 ? 'text-amber-400' : 'text-red-400';
+  const getCRateColor = (cRate: number, maxCRate: number) =>
+    cRate <= maxCRate * 0.5
+      ? 'text-green-400'
+      : cRate <= maxCRate * 0.8
+        ? 'text-amber-400'
+        : 'text-red-400';
 
   return (
     <div className="space-y-4">
@@ -157,8 +172,10 @@ const BatteryBackupCalculator = () => {
             <button
               onClick={() => setMode('runtime')}
               className={cn(
-                "p-3 rounded-xl border transition-colors flex items-center justify-center gap-2",
-                mode === 'runtime' ? "bg-blue-500/20 border-blue-500/50 text-blue-300" : "bg-white/5 border-white/10 text-white/60 hover:border-white/20"
+                'p-3 rounded-xl border transition-colors flex items-center justify-center gap-2',
+                mode === 'runtime'
+                  ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                  : 'bg-white/5 border-white/10 text-white/60 hover:border-white/20'
               )}
             >
               <Clock className="h-4 w-4" />
@@ -167,8 +184,10 @@ const BatteryBackupCalculator = () => {
             <button
               onClick={() => setMode('sizing')}
               className={cn(
-                "p-3 rounded-xl border transition-colors flex items-center justify-center gap-2",
-                mode === 'sizing' ? "bg-blue-500/20 border-blue-500/50 text-blue-300" : "bg-white/5 border-white/10 text-white/60 hover:border-white/20"
+                'p-3 rounded-xl border transition-colors flex items-center justify-center gap-2',
+                mode === 'sizing'
+                  ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                  : 'bg-white/5 border-white/10 text-white/60 hover:border-white/20'
               )}
             >
               <Battery className="h-4 w-4" />
@@ -299,10 +318,15 @@ const BatteryBackupCalculator = () => {
           {loads.length > 0 && (
             <div className="space-y-2 max-h-40 overflow-y-auto">
               {loads.map((load, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm"
+                >
                   <div className="flex-1 min-w-0">
                     <span className="font-medium text-white block truncate">{load.name}</span>
-                    <span className="text-white/80 text-xs">{load.watts}W • {load.priority}</span>
+                    <span className="text-white/80 text-xs">
+                      {load.watts}W • {load.priority}
+                    </span>
                   </div>
                   <button
                     onClick={() => removeLoad(index)}
@@ -343,44 +367,89 @@ const BatteryBackupCalculator = () => {
           {/* Main Results */}
           <CalculatorResult category="ev-storage">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-sm text-white/60">{mode === 'runtime' ? 'Runtime Analysis' : 'Battery Sizing'}</span>
+              <span className="text-sm text-white/60">
+                {mode === 'runtime' ? 'Runtime Analysis' : 'Battery Sizing'}
+              </span>
               <Badge variant="outline" className="text-blue-400 border-blue-400/50">
                 {selectedChemistry.name}
               </Badge>
             </div>
 
             <div className="text-center py-4">
-              <p className="text-sm text-white/60 mb-1">{mode === 'runtime' ? 'Estimated Runtime' : 'Required Capacity'}</p>
-              <div className="text-4xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
-                {mode === 'runtime' ? formatRuntime(results.runtime) : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`}
+              <p className="text-sm text-white/60 mb-1">
+                {mode === 'runtime' ? 'Estimated Runtime' : 'Required Capacity'}
+              </p>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
+              >
+                {mode === 'runtime'
+                  ? formatRuntime(results.runtime)
+                  : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`}
               </div>
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="Usable Energy" value={results.usableEnergyWh.toFixed(0)} unit="Wh" category="ev-storage" size="sm" />
-              <ResultValue label="DC Current" value={results.dcCurrent.toFixed(1)} unit="A" category="ev-storage" size="sm" />
-              <ResultValue label="C-Rate" value={results.cRate.toFixed(2)} unit="C" category="ev-storage" size="sm" />
-              <ResultValue label="Max C-Rate" value={selectedChemistry.maxCRate.toFixed(1)} unit="C" category="ev-storage" size="sm" />
+              <ResultValue
+                label="Usable Energy"
+                value={results.usableEnergyWh.toFixed(0)}
+                unit="Wh"
+                category="ev-storage"
+                size="sm"
+              />
+              <ResultValue
+                label="DC Current"
+                value={results.dcCurrent.toFixed(1)}
+                unit="A"
+                category="ev-storage"
+                size="sm"
+              />
+              <ResultValue
+                label="C-Rate"
+                value={results.cRate.toFixed(2)}
+                unit="C"
+                category="ev-storage"
+                size="sm"
+              />
+              <ResultValue
+                label="Max C-Rate"
+                value={selectedChemistry.maxCRate.toFixed(1)}
+                unit="C"
+                category="ev-storage"
+                size="sm"
+              />
             </ResultsGrid>
           </CalculatorResult>
 
           {/* Runtime Assessment */}
-          <div className={cn(
-            "p-3 rounded-xl border",
-            results.runtime >= 8 ? "bg-green-500/10 border-green-500/30" :
-            results.runtime >= 3 ? "bg-amber-500/10 border-amber-500/30" :
-            "bg-red-500/10 border-red-500/30"
-          )}>
+          <div
+            className={cn(
+              'p-3 rounded-xl border',
+              results.runtime >= 8
+                ? 'bg-green-500/10 border-green-500/30'
+                : results.runtime >= 3
+                  ? 'bg-amber-500/10 border-amber-500/30'
+                  : 'bg-red-500/10 border-red-500/30'
+            )}
+          >
             <div className="flex items-start gap-2">
-              <Clock className={cn("h-4 w-4 mt-0.5 shrink-0", getRuntimeColor(results.runtime))} />
+              <Clock className={cn('h-4 w-4 mt-0.5 shrink-0', getRuntimeColor(results.runtime))} />
               <div>
-                <p className={cn("text-sm font-medium", getRuntimeColor(results.runtime))}>
-                  {results.runtime >= 8 ? "Excellent Runtime" : results.runtime >= 3 ? "Moderate Runtime" : "Short Runtime"}
+                <p className={cn('text-sm font-medium', getRuntimeColor(results.runtime))}>
+                  {results.runtime >= 8
+                    ? 'Excellent Runtime'
+                    : results.runtime >= 3
+                      ? 'Moderate Runtime'
+                      : 'Short Runtime'}
                 </p>
                 <p className="text-sm text-white/60 mt-1">
-                  {results.runtime >= 8 ? "Exceeds typical 8-hour requirement" :
-                   results.runtime >= 3 ? "Consider if adequate for your needs" :
-                   "May need larger battery or reduced loads"}
+                  {results.runtime >= 8
+                    ? 'Exceeds typical 8-hour requirement'
+                    : results.runtime >= 3
+                      ? 'Consider if adequate for your needs'
+                      : 'May need larger battery or reduced loads'}
                 </p>
               </div>
             </div>
@@ -394,7 +463,8 @@ const BatteryBackupCalculator = () => {
                 <div>
                   <p className="text-sm font-medium text-orange-300">High Discharge Rate</p>
                   <p className="text-sm text-orange-200/80 mt-1">
-                    Current C-rate ({results.cRate.toFixed(2)}C) is high. Consider parallel batteries to reduce discharge rate and extend battery life.
+                    Current C-rate ({results.cRate.toFixed(2)}C) is high. Consider parallel
+                    batteries to reduce discharge rate and extend battery life.
                   </p>
                 </div>
               </div>
@@ -407,14 +477,35 @@ const BatteryBackupCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
-                <p><strong className="text-blue-300">Usable Energy:</strong> {results.usableEnergyWh.toFixed(0)}Wh available after accounting for depth of discharge ({(selectedChemistry.recommendedDoD * 100).toFixed(0)}% DoD for {selectedChemistry.name})</p>
-                <p><strong className="text-blue-300">C-Rate:</strong> Discharge rate of {results.cRate.toFixed(2)}C means the battery would fully discharge in {(1 / results.cRate).toFixed(1)} hours at this load. Lower C-rates extend battery life.</p>
-                <p><strong className="text-blue-300">Inverter Efficiency:</strong> {selectedInverter.name} at {(selectedInverter.efficiency * 100).toFixed(0)}% efficiency - {(1 - selectedInverter.efficiency) * 100}% energy lost as heat.</p>
+                <p>
+                  <strong className="text-blue-300">Usable Energy:</strong>{' '}
+                  {results.usableEnergyWh.toFixed(0)}Wh available after accounting for depth of
+                  discharge ({(selectedChemistry.recommendedDoD * 100).toFixed(0)}% DoD for{' '}
+                  {selectedChemistry.name})
+                </p>
+                <p>
+                  <strong className="text-blue-300">C-Rate:</strong> Discharge rate of{' '}
+                  {results.cRate.toFixed(2)}C means the battery would fully discharge in{' '}
+                  {(1 / results.cRate).toFixed(1)} hours at this load. Lower C-rates extend battery
+                  life.
+                </p>
+                <p>
+                  <strong className="text-blue-300">Inverter Efficiency:</strong>{' '}
+                  {selectedInverter.name} at {(selectedInverter.efficiency * 100).toFixed(0)}%
+                  efficiency - {(1 - selectedInverter.efficiency) * 100}% energy lost as heat.
+                </p>
               </CollapsibleContent>
             </div>
           </Collapsible>
@@ -425,9 +516,16 @@ const BatteryBackupCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 & Safety</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    BS 7671 & Safety
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
                 <p>• DC current ({results.dcCurrent.toFixed(1)}A) must not exceed cable rating</p>
@@ -446,7 +544,8 @@ const BatteryBackupCalculator = () => {
         <div className="flex items-start gap-2">
           <Battery className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
           <p className="text-sm text-blue-200">
-            <strong>Peukert's equation</strong> used for accurate runtime. DoD and chemistry affect usable capacity.
+            <strong>Peukert's equation</strong> used for accurate runtime. DoD and chemistry affect
+            usable capacity.
           </p>
         </div>
       </div>

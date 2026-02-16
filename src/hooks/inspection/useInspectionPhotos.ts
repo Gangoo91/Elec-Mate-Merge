@@ -18,7 +18,13 @@ interface UseInspectionPhotosProps {
   };
 }
 
-export const useInspectionPhotos = ({ reportId, reportType, itemId, observationId, observationContext }: UseInspectionPhotosProps) => {
+export const useInspectionPhotos = ({
+  reportId,
+  reportType,
+  itemId,
+  observationId,
+  observationContext,
+}: UseInspectionPhotosProps) => {
   const [photos, setPhotos] = useState<InspectionPhoto[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [isScanning, setIsScanning] = useState<string | null>(null);
@@ -28,7 +34,9 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
   React.useEffect(() => {
     const loadPhotos = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (!user) return;
 
         const { data: reportData } = await supabase
@@ -43,7 +51,8 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
         if (reportData?.id) {
           // Migrate any temp photos to real report_id if needed
           if (isUuid(reportId) && reportId !== reportData.id) {
-            await supabase.from('inspection_photos')
+            await supabase
+              .from('inspection_photos')
               .update({ report_id: reportData.id })
               .eq('report_id', reportId);
           }
@@ -68,10 +77,10 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
         if (error) throw error;
 
         if (data) {
-          const loadedPhotos: InspectionPhoto[] = data.map(photo => {
-            const { data: { publicUrl } } = supabase.storage
-              .from('inspection-photos')
-              .getPublicUrl(photo.file_path);
+          const loadedPhotos: InspectionPhoto[] = data.map((photo) => {
+            const {
+              data: { publicUrl },
+            } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path);
 
             return {
               id: photo.id,
@@ -111,7 +120,9 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
 
     setIsUploading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data: reportData } = await supabase
@@ -133,7 +144,7 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
 
       // Compress image if needed (max 1920px width)
       const compressedFile = await compressImage(file);
-      
+
       const fileExt = file.name.split('.').pop();
       const fileName = `${crypto.randomUUID()}.${fileExt}`;
       // Use itemId if available, otherwise use observationId for the folder path
@@ -148,9 +159,9 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('inspection-photos')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('inspection-photos').getPublicUrl(filePath);
 
       // Create database record with fault code
       const { data: photoData, error: dbError } = await supabase
@@ -182,11 +193,13 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
         faultDescription: photoData.fault_description,
       };
 
-      setPhotos(prev => [...prev, newPhoto]);
+      setPhotos((prev) => [...prev, newPhoto]);
 
       toast({
         title: 'Photo uploaded',
-        description: faultCode ? `Photo added with ${faultCode} fault code` : 'Photo added successfully',
+        description: faultCode
+          ? `Photo added with ${faultCode} fault code`
+          : 'Photo added successfully',
       });
 
       return newPhoto;
@@ -211,12 +224,8 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
 
       if (error) throw error;
 
-      setPhotos(prev => 
-        prev.map(photo => 
-          photo.id === photoId 
-            ? { ...photo, observationId } 
-            : photo
-        )
+      setPhotos((prev) =>
+        prev.map((photo) => (photo.id === photoId ? { ...photo, observationId } : photo))
       );
 
       toast({
@@ -235,7 +244,7 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
 
   const deletePhoto = async (photoId: string) => {
     try {
-      const photo = photos.find(p => p.id === photoId);
+      const photo = photos.find((p) => p.id === photoId);
       if (!photo) return;
 
       // Delete from database
@@ -255,12 +264,10 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
 
       // Delete from storage
       if (photoRecord?.file_path) {
-        await supabase.storage
-          .from('inspection-photos')
-          .remove([photoRecord.file_path]);
+        await supabase.storage.from('inspection-photos').remove([photoRecord.file_path]);
       }
 
-      setPhotos(prev => prev.filter(p => p.id !== photoId));
+      setPhotos((prev) => prev.filter((p) => p.id !== photoId));
 
       toast({
         title: 'Photo deleted',
@@ -279,16 +286,18 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
   const scanPhotoWithAI = async (photoId: string) => {
     setIsScanning(photoId);
     try {
-      const photo = photos.find(p => p.id === photoId);
+      const photo = photos.find((p) => p.id === photoId);
       if (!photo) return;
 
       const { data, error } = await supabase.functions.invoke('scan-inspection-photo', {
         body: {
           photoUrl: photo.url,
-          observationContext: observationContext ? {
-            ...observationContext,
-            reportType,
-          } : undefined,
+          observationContext: observationContext
+            ? {
+                ...observationContext,
+                reportType,
+              }
+            : undefined,
         },
       });
 
@@ -310,7 +319,7 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
         aiAnalysis: aiAnalysis as any,
       };
 
-      setPhotos(prev => prev.map(p => p.id === photoId ? updatedPhoto : p));
+      setPhotos((prev) => prev.map((p) => (p.id === photoId ? updatedPhoto : p)));
 
       // Update database with full AI analysis
       await supabase
@@ -319,11 +328,11 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
         .eq('id', photoId);
 
       // Show appropriate toast based on agreement
-      const qaBadge = data.qualityAssurance.agreesWithInspector 
-        ? '✓ Confirmed' 
+      const qaBadge = data.qualityAssurance.agreesWithInspector
+        ? '✓ Confirmed'
         : data.aiClassification === 'NO_DEFECT_VISIBLE'
-        ? '🔍 Query'
-        : `⚠️ Suggests ${data.aiClassification}`;
+          ? '🔍 Query'
+          : `⚠️ Suggests ${data.aiClassification}`;
 
       toast({
         title: 'AI Quality Assurance Complete',

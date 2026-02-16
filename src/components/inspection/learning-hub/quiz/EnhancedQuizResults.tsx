@@ -5,13 +5,13 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { 
-  Trophy, 
-  Clock, 
-  Target, 
-  BookOpen, 
-  CheckCircle, 
-  XCircle, 
+import {
+  Trophy,
+  Clock,
+  Target,
+  BookOpen,
+  CheckCircle,
+  XCircle,
   RotateCcw,
   Eye,
   TrendingUp,
@@ -20,7 +20,7 @@ import {
   ChevronRight,
   ArrowLeft,
   Download,
-  Share2
+  Share2,
 } from 'lucide-react';
 import { QuizResult, Assessment, QuizQuestion, QuizAnswer } from '@/types/quiz';
 
@@ -45,7 +45,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
   onBackToHub,
   onReviewAnswers,
   onTakeAnother,
-  onViewAnalytics
+  onViewAnalytics,
 }) => {
   const [showCategoryDetails, setShowCategoryDetails] = useState(false);
 
@@ -62,9 +62,9 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
   };
 
   const getScoreMessage = (percentage: number): string => {
-    if (percentage >= 90) return 'Outstanding! You\'ve mastered this topic.';
+    if (percentage >= 90) return "Outstanding! You've mastered this topic.";
     if (percentage >= 80) return 'Excellent work! You have a strong understanding.';
-    if (percentage >= 70) return 'Good job! You\'re well on your way.';
+    if (percentage >= 70) return "Good job! You're well on your way.";
     if (percentage >= 60) return 'Not bad! Some areas need improvement.';
     return 'Keep studying! Focus on the areas highlighted below.';
   };
@@ -78,13 +78,13 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
 
   const getStrengths = (): string[] => {
     return Object.entries(result.categoryBreakdown)
-      .filter(([_, data]) => (data.correct / data.total) >= 0.8)
+      .filter(([_, data]) => data.correct / data.total >= 0.8)
       .map(([category]) => category);
   };
 
   const getWeaknesses = (): string[] => {
     return Object.entries(result.categoryBreakdown)
-      .filter(([_, data]) => (data.correct / data.total) < 0.6)
+      .filter(([_, data]) => data.correct / data.total < 0.6)
       .map(([category]) => category);
   };
 
@@ -95,16 +95,16 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
     if (weaknesses.length > 0) {
       recommendations.push(`Focus on ${weaknesses.slice(0, 2).join(' and ')} topics`);
     }
-    
+
     if (result.percentage < 70) {
       recommendations.push('Review BS 7671 regulations for these areas');
       recommendations.push('Practice with more questions in weak categories');
     }
-    
+
     if (result.timeSpent / result.totalQuestions > 90) {
       recommendations.push('Work on improving your response time');
     }
-    
+
     return recommendations;
   };
 
@@ -121,7 +121,11 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                 <p className="text-muted-foreground text-sm sm:text-base">{assessment.title}</p>
               </div>
             </div>
-            <Button variant="outline" onClick={onBackToHub} className="min-h-[44px] touch-manipulation w-full sm:w-auto">
+            <Button
+              variant="outline"
+              onClick={onBackToHub}
+              className="min-h-[44px] touch-manipulation w-full sm:w-auto"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Hub
             </Button>
@@ -133,7 +137,9 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         <Card>
           <CardContent className="p-4 sm:p-6 text-center">
-            <div className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-2 ${getScoreColor(result.percentage)}`}>
+            <div
+              className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-2 ${getScoreColor(result.percentage)}`}
+            >
               {result.percentage}%
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground">Overall Score</p>
@@ -172,7 +178,9 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
       <Card>
         <CardContent className="p-4 sm:p-6">
           <div className="text-center">
-            <div className={`text-base sm:text-lg font-medium mb-2 ${getScoreColor(result.percentage)}`}>
+            <div
+              className={`text-base sm:text-lg font-medium mb-2 ${getScoreColor(result.percentage)}`}
+            >
               {getScoreMessage(result.percentage)}
             </div>
             {result.percentage >= 70 && (
@@ -193,8 +201,8 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
               <Target className="h-4 w-4 sm:h-5 sm:w-5" />
               Category Performance
             </CardTitle>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               onClick={() => setShowCategoryDetails(!showCategoryDetails)}
               className="min-h-[44px] touch-manipulation text-xs sm:text-sm w-full sm:w-auto"
@@ -212,13 +220,15 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-sm sm:text-base">{category}</span>
                     <div className="flex items-center gap-2">
-                      <span className={`text-xs sm:text-sm ${getCategoryColor(data.correct, data.total)}`}>
+                      <span
+                        className={`text-xs sm:text-sm ${getCategoryColor(data.correct, data.total)}`}
+                      >
                         {data.correct}/{data.total} ({percentage}%)
                       </span>
                     </div>
                   </div>
                   <Progress value={percentage} className="h-3 sm:h-2" />
-                  
+
                   {showCategoryDetails && (
                     <div className="mt-2 text-xs sm:text-sm text-muted-foreground">
                       <div className="flex items-center gap-4">
@@ -252,8 +262,12 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
           <CardContent>
             {getStrengths().length > 0 ? (
               <div className="space-y-2">
-                {getStrengths().map(strength => (
-                  <Badge key={strength} variant="outline" className="text-green-400 border-green-500/50">
+                {getStrengths().map((strength) => (
+                  <Badge
+                    key={strength}
+                    variant="outline"
+                    className="text-green-400 border-green-500/50"
+                  >
                     {strength}
                   </Badge>
                 ))}
@@ -274,8 +288,12 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
           <CardContent>
             {getWeaknesses().length > 0 ? (
               <div className="space-y-2">
-                {getWeaknesses().map(weakness => (
-                  <Badge key={weakness} variant="outline" className="text-amber-400 border-amber-500/50">
+                {getWeaknesses().map((weakness) => (
+                  <Badge
+                    key={weakness}
+                    variant="outline"
+                    className="text-amber-400 border-amber-500/50"
+                  >
                     {weakness}
                   </Badge>
                 ))}
@@ -309,25 +327,40 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
 
       {/* Action Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <Button onClick={onReviewAnswers} className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation">
+        <Button
+          onClick={onReviewAnswers}
+          className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation"
+        >
           <Eye className="h-5 w-5" />
           <span className="text-sm sm:text-base">Review Answers</span>
           <span className="text-xs opacity-70">See correct solutions</span>
         </Button>
 
-        <Button variant="outline" onClick={onRetake} className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation">
+        <Button
+          variant="outline"
+          onClick={onRetake}
+          className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation"
+        >
           <RotateCcw className="h-5 w-5" />
           <span className="text-sm sm:text-base">Retake Quiz</span>
           <span className="text-xs opacity-70">Try again</span>
         </Button>
 
-        <Button variant="outline" onClick={onTakeAnother} className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation">
+        <Button
+          variant="outline"
+          onClick={onTakeAnother}
+          className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation"
+        >
           <BookOpen className="h-5 w-5" />
           <span className="text-sm sm:text-base">Take Another Quiz</span>
           <span className="text-xs opacity-70">More practice</span>
         </Button>
 
-        <Button variant="outline" onClick={onViewAnalytics} className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation">
+        <Button
+          variant="outline"
+          onClick={onViewAnalytics}
+          className="min-h-[56px] sm:h-auto p-4 flex-col gap-1 sm:gap-2 touch-manipulation"
+        >
           <TrendingUp className="h-5 w-5" />
           <span className="text-sm sm:text-base">View Analytics</span>
           <span className="text-xs opacity-70">Track progress</span>

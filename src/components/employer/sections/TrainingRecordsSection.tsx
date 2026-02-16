@@ -1,15 +1,21 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { QuickStats } from "@/components/employer/QuickStats";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { QuickStats } from '@/components/employer/QuickStats';
 import {
   useTrainingRecords,
   useTrainingStats,
@@ -18,9 +24,9 @@ import {
   useDeleteTrainingRecord,
   type TrainingRecord,
   type TrainingType,
-  type TrainingStatus
-} from "@/hooks/useTrainingRecords";
-import { useEmployees } from "@/hooks/useEmployees";
+  type TrainingStatus,
+} from '@/hooks/useTrainingRecords';
+import { useEmployees } from '@/hooks/useEmployees';
 import {
   Award,
   GraduationCap,
@@ -33,30 +39,37 @@ import {
   Loader2,
   RefreshCw,
   Calendar,
-  Trash2
-} from "lucide-react";
+  Trash2,
+} from 'lucide-react';
 
 const statusColors: Record<string, string> = {
-  "Pending": "bg-yellow-500/20 text-yellow-400",
-  "In Progress": "bg-blue-500/20 text-blue-400",
-  "Completed": "bg-green-500/20 text-green-400",
-  "Expired": "bg-red-500/20 text-red-400",
-  "Failed": "bg-red-500/20 text-red-400",
+  Pending: 'bg-yellow-500/20 text-yellow-400',
+  'In Progress': 'bg-blue-500/20 text-blue-400',
+  Completed: 'bg-green-500/20 text-green-400',
+  Expired: 'bg-red-500/20 text-red-400',
+  Failed: 'bg-red-500/20 text-red-400',
 };
 
-const trainingTypes: TrainingType[] = ["Induction", "Safety", "CPD", "Apprenticeship", "Certification", "Refresher"];
+const trainingTypes: TrainingType[] = [
+  'Induction',
+  'Safety',
+  'CPD',
+  'Apprenticeship',
+  'Certification',
+  'Refresher',
+];
 
 export function TrainingRecordsSection() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [showNewTraining, setShowNewTraining] = useState(false);
 
   // Form state
-  const [trainingName, setTrainingName] = useState("");
-  const [trainingType, setTrainingType] = useState<TrainingType>("Safety");
-  const [provider, setProvider] = useState("");
-  const [selectedEmployee, setSelectedEmployee] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
+  const [trainingName, setTrainingName] = useState('');
+  const [trainingType, setTrainingType] = useState<TrainingType>('Safety');
+  const [provider, setProvider] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
 
   // Hooks
   const { data: trainingRecords, isLoading, error, refetch } = useTrainingRecords();
@@ -67,11 +80,13 @@ export function TrainingRecordsSection() {
   const deleteTraining = useDeleteTrainingRecord();
 
   // Filter by search
-  const filteredRecords = trainingRecords?.filter(record =>
-    record.training_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    record.employee?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    record.provider?.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredRecords =
+    trainingRecords?.filter(
+      (record) =>
+        record.training_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        record.employee?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        record.provider?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
   const handleCreateTraining = async () => {
     if (!trainingName) return;
@@ -83,23 +98,23 @@ export function TrainingRecordsSection() {
       employee_id: selectedEmployee || undefined,
       start_date: startDate || undefined,
       expiry_date: expiryDate || undefined,
-      status: "Pending",
+      status: 'Pending',
     });
 
     // Reset form
-    setTrainingName("");
-    setTrainingType("Safety");
-    setProvider("");
-    setSelectedEmployee("");
-    setStartDate("");
-    setExpiryDate("");
+    setTrainingName('');
+    setTrainingType('Safety');
+    setProvider('');
+    setSelectedEmployee('');
+    setStartDate('');
+    setExpiryDate('');
     setShowNewTraining(false);
   };
 
   const handleMarkComplete = async (record: TrainingRecord) => {
     await updateStatus.mutateAsync({
       id: record.id,
-      status: "Completed",
+      status: 'Completed',
     });
   };
 
@@ -153,13 +168,18 @@ export function TrainingRecordsSection() {
 
                 <div className="space-y-2">
                   <Label>Training Type</Label>
-                  <Select value={trainingType} onValueChange={(v) => setTrainingType(v as TrainingType)}>
+                  <Select
+                    value={trainingType}
+                    onValueChange={(v) => setTrainingType(v as TrainingType)}
+                  >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
-                      {trainingTypes.map(type => (
-                        <SelectItem key={type} value={type}>{type}</SelectItem>
+                      {trainingTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -167,14 +187,19 @@ export function TrainingRecordsSection() {
 
                 <div className="space-y-2">
                   <Label>Employee (Optional)</Label>
-                  <Select value={selectedEmployee || "all"} onValueChange={(v) => setSelectedEmployee(v === "all" ? "" : v)}>
+                  <Select
+                    value={selectedEmployee || 'all'}
+                    onValueChange={(v) => setSelectedEmployee(v === 'all' ? '' : v)}
+                  >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select employee..." />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
                       <SelectItem value="all">All employees / General</SelectItem>
-                      {employees?.map(emp => (
-                        <SelectItem key={emp.id} value={emp.id}>{emp.name}</SelectItem>
+                      {employees?.map((emp) => (
+                        <SelectItem key={emp.id} value={emp.id}>
+                          {emp.name}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -229,7 +254,7 @@ export function TrainingRecordsSection() {
                     {createTraining.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      "Add Training"
+                      'Add Training'
                     )}
                   </Button>
                 </div>
@@ -248,7 +273,7 @@ export function TrainingRecordsSection() {
           placeholder="Search training..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn("h-11 touch-manipulation", !searchQuery && "pl-9")}
+          className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
         />
       </div>
 
@@ -257,30 +282,38 @@ export function TrainingRecordsSection() {
         stats={[
           {
             icon: CheckCircle2,
-            value: isLoading ? "-" : (stats?.completed || 0),
-            label: "Completed",
-            color: "green",
+            value: isLoading ? '-' : stats?.completed || 0,
+            label: 'Completed',
+            color: 'green',
           },
           {
             icon: Clock,
-            value: isLoading ? "-" : (stats?.inProgress || 0),
-            label: "In Progress",
-            color: "yellow",
+            value: isLoading ? '-' : stats?.inProgress || 0,
+            label: 'In Progress',
+            color: 'yellow',
           },
-          ...(stats?.pending && stats.pending > 0 ? [{
-            icon: AlertTriangle,
-            value: stats.pending,
-            label: "Pending",
-            color: "orange" as const,
-            pulse: true,
-          }] : []),
-          ...(stats?.expiringsSoon && stats.expiringsSoon > 0 ? [{
-            icon: Calendar,
-            value: stats.expiringsSoon,
-            label: "Expiring Soon",
-            color: "orange" as const,
-            pulse: true,
-          }] : []),
+          ...(stats?.pending && stats.pending > 0
+            ? [
+                {
+                  icon: AlertTriangle,
+                  value: stats.pending,
+                  label: 'Pending',
+                  color: 'orange' as const,
+                  pulse: true,
+                },
+              ]
+            : []),
+          ...(stats?.expiringsSoon && stats.expiringsSoon > 0
+            ? [
+                {
+                  icon: Calendar,
+                  value: stats.expiringsSoon,
+                  label: 'Expiring Soon',
+                  color: 'orange' as const,
+                  pulse: true,
+                },
+              ]
+            : []),
         ]}
       />
 
@@ -308,7 +341,9 @@ export function TrainingRecordsSection() {
             <CardContent className="p-8 text-center">
               <GraduationCap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">No Training Records</h3>
-              <p className="text-muted-foreground mb-4">Add your first training record to get started.</p>
+              <p className="text-muted-foreground mb-4">
+                Add your first training record to get started.
+              </p>
               <Button onClick={() => setShowNewTraining(true)} className="gap-2">
                 <Plus className="h-4 w-4" />
                 Add Training
@@ -318,28 +353,35 @@ export function TrainingRecordsSection() {
         ) : (
           <div className="space-y-3">
             {filteredRecords.map((record) => (
-              <Card key={record.id} className="bg-elec-gray border-border hover:bg-muted/50 transition-colors">
+              <Card
+                key={record.id}
+                className="bg-elec-gray border-border hover:bg-muted/50 transition-colors"
+              >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3 flex-1">
-                      <div className={`p-2 rounded-lg ${
-                        record.status === "Completed"
-                          ? "bg-success/10"
-                          : record.status === "In Progress"
-                          ? "bg-blue-500/10"
-                          : record.status === "Expired"
-                          ? "bg-red-500/10"
-                          : "bg-yellow-500/10"
-                      }`}>
-                        <Award className={`h-4 w-4 ${
-                          record.status === "Completed"
-                            ? "text-success"
-                            : record.status === "In Progress"
-                            ? "text-blue-400"
-                            : record.status === "Expired"
-                            ? "text-red-400"
-                            : "text-yellow-400"
-                        }`} />
+                      <div
+                        className={`p-2 rounded-lg ${
+                          record.status === 'Completed'
+                            ? 'bg-success/10'
+                            : record.status === 'In Progress'
+                              ? 'bg-blue-500/10'
+                              : record.status === 'Expired'
+                                ? 'bg-red-500/10'
+                                : 'bg-yellow-500/10'
+                        }`}
+                      >
+                        <Award
+                          className={`h-4 w-4 ${
+                            record.status === 'Completed'
+                              ? 'text-success'
+                              : record.status === 'In Progress'
+                                ? 'text-blue-400'
+                                : record.status === 'Expired'
+                                  ? 'text-red-400'
+                                  : 'text-yellow-400'
+                          }`}
+                        />
                       </div>
                       <div className="flex-1">
                         <p className="font-medium text-foreground text-sm md:text-base">
@@ -357,9 +399,7 @@ export function TrainingRecordsSection() {
                               {record.employee.name}
                             </span>
                           )}
-                          {record.provider && (
-                            <span>Provider: {record.provider}</span>
-                          )}
+                          {record.provider && <span>Provider: {record.provider}</span>}
                         </div>
                         {record.expiry_date && (
                           <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
@@ -370,11 +410,9 @@ export function TrainingRecordsSection() {
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                      <Badge className={statusColors[record.status] || ""}>
-                        {record.status}
-                      </Badge>
+                      <Badge className={statusColors[record.status] || ''}>{record.status}</Badge>
                       <div className="flex items-center gap-1">
-                        {record.status !== "Completed" && (
+                        {record.status !== 'Completed' && (
                           <Button
                             size="sm"
                             variant="outline"

@@ -8,49 +8,59 @@ export const CloudArchitecturesSection = () => {
 
   const platforms = [
     {
-      name: "Amazon Alexa",
-      description: "Voice-controlled smart home ecosystem",
-      features: ["Voice control", "Skills marketplace", "Easy setup", "Wide device support"],
-      company: "Amazon",
-      primaryUse: "Voice automation and entertainment"
+      name: 'Amazon Alexa',
+      description: 'Voice-controlled smart home ecosystem',
+      features: ['Voice control', 'Skills marketplace', 'Easy setup', 'Wide device support'],
+      company: 'Amazon',
+      primaryUse: 'Voice automation and entertainment',
     },
     {
-      name: "Google Home",
+      name: 'Google Home',
       description: "Google's smart home and assistant platform",
-      features: ["Google Assistant", "Chromecast integration", "Routine automation", "Search capabilities"],
-      company: "Google",
-      primaryUse: "Information and media control"
+      features: [
+        'Google Assistant',
+        'Chromecast integration',
+        'Routine automation',
+        'Search capabilities',
+      ],
+      company: 'Google',
+      primaryUse: 'Information and media control',
     },
     {
-      name: "SmartThings",
+      name: 'SmartThings',
       description: "Samsung's cloud-based smart home platform",
-      features: ["Multi-protocol support", "Scene automation", "Third-party integrations", "Mobile app control"],
-      company: "Samsung",
-      primaryUse: "Device coordination and automation"
-    }
+      features: [
+        'Multi-protocol support',
+        'Scene automation',
+        'Third-party integrations',
+        'Mobile app control',
+      ],
+      company: 'Samsung',
+      primaryUse: 'Device coordination and automation',
+    },
   ];
 
   const prosAndCons = [
     {
-      type: "pros",
+      type: 'pros',
       items: [
-        "Extremely easy setup - often plug-and-play",
-        "Remote access from anywhere with internet",
-        "Continuous feature updates and improvements", 
-        "Extensive third-party service integrations",
-        "Professional support and documentation"
-      ]
+        'Extremely easy setup - often plug-and-play',
+        'Remote access from anywhere with internet',
+        'Continuous feature updates and improvements',
+        'Extensive third-party service integrations',
+        'Professional support and documentation',
+      ],
     },
     {
-      type: "cons", 
+      type: 'cons',
       items: [
-        "Complete reliance on internet connectivity",
-        "Potential latency and response delays",
-        "Privacy concerns with data sharing",
-        "Recurring subscription costs possible",
-        "Limited control over system updates"
-      ]
-    }
+        'Complete reliance on internet connectivity',
+        'Potential latency and response delays',
+        'Privacy concerns with data sharing',
+        'Recurring subscription costs possible',
+        'Limited control over system updates',
+      ],
+    },
   ];
 
   return (
@@ -65,32 +75,46 @@ export const CloudArchitecturesSection = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
           <p className="text-lg font-medium text-foreground mb-6">
-            Cloud architectures route device communications through remote servers where automation decisions are processed:
+            Cloud architectures route device communications through remote servers where automation
+            decisions are processed:
           </p>
-          
+
           {/* How it Works */}
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
             <h4 className="font-semibold text-foreground mb-3">How Cloud Processing Works</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-green-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                <div className="w-6 h-6 bg-green-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                  1
+                </div>
                 <div>
                   <span className="font-medium text-foreground">Device to Cloud:</span>
-                  <span className="text-gray-300 ml-2">Smart devices connect to the internet and send status updates to cloud servers</span>
+                  <span className="text-gray-300 ml-2">
+                    Smart devices connect to the internet and send status updates to cloud servers
+                  </span>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-green-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                <div className="w-6 h-6 bg-green-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                  2
+                </div>
                 <div>
                   <span className="font-medium text-foreground">Server Processing:</span>
-                  <span className="text-gray-300 ml-2">Cloud servers evaluate automation rules, process user commands, and determine appropriate responses</span>
+                  <span className="text-gray-300 ml-2">
+                    Cloud servers evaluate automation rules, process user commands, and determine
+                    appropriate responses
+                  </span>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-green-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                <div className="w-6 h-6 bg-green-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                  3
+                </div>
                 <div>
                   <span className="font-medium text-foreground">Cloud to Device:</span>
-                  <span className="text-gray-300 ml-2">Commands are sent back through the internet to target devices for execution</span>
+                  <span className="text-gray-300 ml-2">
+                    Commands are sent back through the internet to target devices for execution
+                  </span>
                 </div>
               </div>
             </div>
@@ -101,7 +125,10 @@ export const CloudArchitecturesSection = () => {
             <h4 className="font-semibold text-foreground mb-4">Popular Cloud Platforms</h4>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {platforms.map((platform, index) => (
-                <div key={index} className="p-4 bg-gradient-to-br from-green-900/30 to-green-800/30 border border-green-600 rounded-lg">
+                <div
+                  key={index}
+                  className="p-4 bg-gradient-to-br from-green-900/30 to-green-800/30 border border-green-600 rounded-lg"
+                >
                   <h5 className="font-semibold text-green-200 mb-2">{platform.name}</h5>
                   <p className="text-green-100 text-sm mb-3">{platform.description}</p>
                   <div className="space-y-2">
@@ -129,25 +156,39 @@ export const CloudArchitecturesSection = () => {
           {/* Pros and Cons */}
           <div className="grid md:grid-cols-2 gap-4">
             {prosAndCons.map((section) => (
-              <div key={section.type} className={`p-4 rounded-lg border ${
-                section.type === 'pros' 
-                  ? 'bg-gradient-to-br from-green-900/30 to-green-800/30 border-green-600' 
-                  : 'bg-gradient-to-br from-red-900/30 to-red-800/30 border-red-600'
-              }`}>
-                <h5 className={`font-semibold mb-3 flex items-center gap-2 ${
-                  section.type === 'pros' ? 'text-green-200' : 'text-red-200'
-                }`}>
-                  {section.type === 'pros' ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
+              <div
+                key={section.type}
+                className={`p-4 rounded-lg border ${
+                  section.type === 'pros'
+                    ? 'bg-gradient-to-br from-green-900/30 to-green-800/30 border-green-600'
+                    : 'bg-gradient-to-br from-red-900/30 to-red-800/30 border-red-600'
+                }`}
+              >
+                <h5
+                  className={`font-semibold mb-3 flex items-center gap-2 ${
+                    section.type === 'pros' ? 'text-green-200' : 'text-red-200'
+                  }`}
+                >
+                  {section.type === 'pros' ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <X className="h-4 w-4" />
+                  )}
                   {section.type === 'pros' ? 'Advantages' : 'Disadvantages'}
                 </h5>
                 <ul className="space-y-2">
                   {section.items.map((item, idx) => (
-                    <li key={idx} className={`text-sm flex items-start gap-2 ${
-                      section.type === 'pros' ? 'text-green-100' : 'text-red-100'
-                    }`}>
-                      <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${
-                        section.type === 'pros' ? 'bg-green-400' : 'bg-red-400'
-                      }`}></div>
+                    <li
+                      key={idx}
+                      className={`text-sm flex items-start gap-2 ${
+                        section.type === 'pros' ? 'text-green-100' : 'text-red-100'
+                      }`}
+                    >
+                      <div
+                        className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${
+                          section.type === 'pros' ? 'bg-green-400' : 'bg-red-400'
+                        }`}
+                      ></div>
                       {item}
                     </li>
                   ))}
@@ -161,7 +202,9 @@ export const CloudArchitecturesSection = () => {
             <h4 className="font-semibold text-foreground mb-3">Latency and Performance Factors</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
-                <h5 className="font-medium text-yellow-200 mb-2">Factors Affecting Response Time:</h5>
+                <h5 className="font-medium text-yellow-200 mb-2">
+                  Factors Affecting Response Time:
+                </h5>
                 <ul className="space-y-1 text-yellow-100">
                   <li>• Internet connection speed and stability</li>
                   <li>• Server load and geographic distance</li>
@@ -219,28 +262,40 @@ export const CloudArchitecturesSection = () => {
         <CardContent className="space-y-4">
           <div className="space-y-3">
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q1: How do cloud-based smart home systems process automation decisions?</p>
+              <p className="font-medium text-foreground">
+                Q1: How do cloud-based smart home systems process automation decisions?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q2: What is the biggest advantage of cloud systems for new users?</p>
+              <p className="font-medium text-foreground">
+                Q2: What is the biggest advantage of cloud systems for new users?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q3: What happens to a cloud-based system during an internet outage?</p>
+              <p className="font-medium text-foreground">
+                Q3: What happens to a cloud-based system during an internet outage?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q4: Why might latency be a concern with cloud architectures?</p>
+              <p className="font-medium text-foreground">
+                Q4: Why might latency be a concern with cloud architectures?
+              </p>
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={() => setShowAnswers(!showAnswers)}
-            variant="outline" 
+            variant="outline"
             className="w-full border-gray-600 text-gray-300 hover:bg-[#323232] hover:text-foreground"
           >
-            {showAnswers ? <ChevronUp className="mr-2 h-4 w-4" /> : <ChevronDown className="mr-2 h-4 w-4" />}
+            {showAnswers ? (
+              <ChevronUp className="mr-2 h-4 w-4" />
+            ) : (
+              <ChevronDown className="mr-2 h-4 w-4" />
+            )}
             {showAnswers ? 'Hide Answers' : 'Show Answers'}
           </Button>
 
@@ -248,22 +303,34 @@ export const CloudArchitecturesSection = () => {
             <div className="space-y-3 pt-4 border-t border-gray-600">
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A1:</p>
-                <p className="text-gray-300">Devices send data to remote servers via the internet, where automation rules are processed and commands are sent back to devices through the cloud.</p>
+                <p className="text-gray-300">
+                  Devices send data to remote servers via the internet, where automation rules are
+                  processed and commands are sent back to devices through the cloud.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A2:</p>
-                <p className="text-gray-300">Extremely easy setup - often plug-and-play installation with minimal technical knowledge required, plus professional support and documentation.</p>
+                <p className="text-gray-300">
+                  Extremely easy setup - often plug-and-play installation with minimal technical
+                  knowledge required, plus professional support and documentation.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A3:</p>
-                <p className="text-gray-300">The system becomes completely non-functional as it cannot communicate with cloud servers to process automation or receive commands.</p>
+                <p className="text-gray-300">
+                  The system becomes completely non-functional as it cannot communicate with cloud
+                  servers to process automation or receive commands.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A4:</p>
-                <p className="text-gray-300">Commands must travel to remote servers and back, adding delays. Internet speed, server load, and network congestion can cause response times of several seconds.</p>
+                <p className="text-gray-300">
+                  Commands must travel to remote servers and back, adding delays. Internet speed,
+                  server load, and network congestion can cause response times of several seconds.
+                </p>
               </div>
             </div>
           )}

@@ -1,8 +1,18 @@
-import { useState, useEffect } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
-import { AlertTriangle, Calculator, Shield, Info, Lightbulb, HelpCircle, BookOpen, ChevronDown, Zap } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Slider } from '@/components/ui/slider';
+import {
+  AlertTriangle,
+  Calculator,
+  Shield,
+  Info,
+  Lightbulb,
+  HelpCircle,
+  BookOpen,
+  ChevronDown,
+  Zap,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   calculateArcFlash,
   getEquipmentDefaults,
@@ -11,8 +21,8 @@ import {
   type EquipmentType,
   type ElectrodeConfig,
   type EnclosureType,
-  type ArcFlashResult
-} from "@/lib/arcflash";
+  type ArcFlashResult,
+} from '@/lib/arcflash';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -22,45 +32,41 @@ import {
   CalculatorResult,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const voltageOptions = [
-  { value: "230", label: "230V - Single phase" },
-  { value: "400", label: "400V - 3-phase (new)" },
-  { value: "415", label: "415V - 3-phase (legacy)" },
-  { value: "690", label: "690V - 3-phase industrial" },
-  { value: "1000", label: "1000V - LV maximum" },
-  { value: "3300", label: "3.3kV - HV distribution" },
-  { value: "6600", label: "6.6kV - HV distribution" },
-  { value: "11000", label: "11kV - HV primary" }
+  { value: '230', label: '230V - Single phase' },
+  { value: '400', label: '400V - 3-phase (new)' },
+  { value: '415', label: '415V - 3-phase (legacy)' },
+  { value: '690', label: '690V - 3-phase industrial' },
+  { value: '1000', label: '1000V - LV maximum' },
+  { value: '3300', label: '3.3kV - HV distribution' },
+  { value: '6600', label: '6.6kV - HV distribution' },
+  { value: '11000', label: '11kV - HV primary' },
 ];
 
 const equipmentOptions = Object.entries(EQUIPMENT_TYPE_LABELS).map(([key, label]) => ({
   value: key,
-  label
+  label,
 }));
 
 const electrodeOptions = Object.entries(ELECTRODE_CONFIG_LABELS).map(([key, label]) => ({
   value: key,
-  label
+  label,
 }));
 
 const ArcFlashCalculator = () => {
   const config = CALCULATOR_CONFIG['protection'];
 
-  const [voltage, setVoltage] = useState<string>("415");
-  const [faultCurrent, setFaultCurrent] = useState<string>("");
-  const [clearingTime, setClearingTime] = useState<string>("");
-  const [workingDistance, setWorkingDistance] = useState<string>("450");
-  const [equipmentType, setEquipmentType] = useState<EquipmentType>("panelboard");
-  const [electrodeConfig, setElectrodeConfig] = useState<ElectrodeConfig>("VCB");
-  const [enclosureType, setEnclosureType] = useState<EnclosureType>("box");
-  const [conductorGap, setConductorGap] = useState<string>("");
+  const [voltage, setVoltage] = useState<string>('415');
+  const [faultCurrent, setFaultCurrent] = useState<string>('');
+  const [clearingTime, setClearingTime] = useState<string>('');
+  const [workingDistance, setWorkingDistance] = useState<string>('450');
+  const [equipmentType, setEquipmentType] = useState<EquipmentType>('panelboard');
+  const [electrodeConfig, setElectrodeConfig] = useState<ElectrodeConfig>('VCB');
+  const [enclosureType, setEnclosureType] = useState<EnclosureType>('box');
+  const [conductorGap, setConductorGap] = useState<string>('');
   const [useAutoGap, setUseAutoGap] = useState<boolean>(true);
   const [result, setResult] = useState<ArcFlashResult | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -86,14 +92,14 @@ const ArcFlashCalculator = () => {
     const t = parseFloat(clearingTime);
     const D = parseFloat(workingDistance);
 
-    if (!V || V <= 0) newErrors.voltage = "Voltage must be positive";
-    if (V < 208 || V > 15000) newErrors.voltage = "Outside IEEE 1584 range (208-15000V)";
-    if (!I || I <= 0) newErrors.faultCurrent = "Fault current must be positive";
-    if (I < 700 || I > 106000) newErrors.faultCurrent = "Outside typical range (700-106000A)";
-    if (!t || t <= 0) newErrors.clearingTime = "Clearing time must be positive";
-    if (t > 2.0) newErrors.clearingTime = ">2s indicates sustained arc risk";
-    if (!D || D <= 0) newErrors.workingDistance = "Working distance must be positive";
-    if (D < 200) newErrors.workingDistance = "Below 200mm not recommended";
+    if (!V || V <= 0) newErrors.voltage = 'Voltage must be positive';
+    if (V < 208 || V > 15000) newErrors.voltage = 'Outside IEEE 1584 range (208-15000V)';
+    if (!I || I <= 0) newErrors.faultCurrent = 'Fault current must be positive';
+    if (I < 700 || I > 106000) newErrors.faultCurrent = 'Outside typical range (700-106000A)';
+    if (!t || t <= 0) newErrors.clearingTime = 'Clearing time must be positive';
+    if (t > 2.0) newErrors.clearingTime = '>2s indicates sustained arc risk';
+    if (!D || D <= 0) newErrors.workingDistance = 'Working distance must be positive';
+    if (D < 200) newErrors.workingDistance = 'Below 200mm not recommended';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -110,7 +116,7 @@ const ArcFlashCalculator = () => {
       equipmentType,
       electrodeConfig,
       enclosureType,
-      conductorGap: useAutoGap ? undefined : parseFloat(conductorGap)
+      conductorGap: useAutoGap ? undefined : parseFloat(conductorGap),
     };
 
     const calcResult = calculateArcFlash(inputs);
@@ -130,20 +136,20 @@ const ArcFlashCalculator = () => {
       equipmentType,
       electrodeConfig,
       enclosureType,
-      conductorGap: useAutoGap ? undefined : parseFloat(conductorGap)
+      conductorGap: useAutoGap ? undefined : parseFloat(conductorGap),
     };
 
     return calculateArcFlash(inputs);
   };
 
   const getMostImpactfulLever = () => {
-    if (!result) return "";
+    if (!result) return '';
 
     const baseEnergy = result.incidentEnergy;
     const timeReduced = calculateWhatIf(undefined, whatIfTime * 0.5);
     const distanceIncreased = calculateWhatIf(whatIfDistance * 1.5, undefined);
 
-    if (!timeReduced || !distanceIncreased) return "";
+    if (!timeReduced || !distanceIncreased) return '';
 
     const timeReduction = ((baseEnergy - timeReduced.incidentEnergy) / baseEnergy) * 100;
     const distanceReduction = ((baseEnergy - distanceIncreased.incidentEnergy) / baseEnergy) * 100;
@@ -154,14 +160,14 @@ const ArcFlashCalculator = () => {
   };
 
   const reset = () => {
-    setVoltage("415");
-    setFaultCurrent("");
-    setClearingTime("");
-    setWorkingDistance("450");
-    setEquipmentType("panelboard");
-    setElectrodeConfig("VCB");
-    setEnclosureType("box");
-    setConductorGap("");
+    setVoltage('415');
+    setFaultCurrent('');
+    setClearingTime('');
+    setWorkingDistance('450');
+    setEquipmentType('panelboard');
+    setElectrodeConfig('VCB');
+    setEnclosureType('box');
+    setConductorGap('');
     setUseAutoGap(true);
     setResult(null);
     setErrors({});
@@ -238,7 +244,10 @@ const ArcFlashCalculator = () => {
 
         <div
           className="p-4 rounded-xl border space-y-3"
-          style={{ borderColor: `${config.gradientFrom}30`, background: `${config.gradientFrom}08` }}
+          style={{
+            borderColor: `${config.gradientFrom}30`,
+            background: `${config.gradientFrom}08`,
+          }}
         >
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-white">Conductor Gap</span>
@@ -283,8 +292,8 @@ const ArcFlashCalculator = () => {
         <div className="flex items-start gap-2">
           <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
           <p className="text-sm text-red-200">
-            <strong>Warning:</strong> This calculation is for estimation only.
-            Formal arc flash studies must be conducted by qualified engineers.
+            <strong>Warning:</strong> This calculation is for estimation only. Formal arc flash
+            studies must be conducted by qualified engineers.
           </p>
         </div>
       </div>
@@ -297,21 +306,29 @@ const ArcFlashCalculator = () => {
               <p className="text-sm text-white/60 mb-1">Incident Energy</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {result.incidentEnergy.toFixed(2)}
               </div>
-              <p className="text-sm text-white/60">cal/cm² ({result.incidentEnergyJoules.toFixed(1)} J/cm²)</p>
+              <p className="text-sm text-white/60">
+                cal/cm² ({result.incidentEnergyJoules.toFixed(1)} J/cm²)
+              </p>
               <Badge
                 variant="outline"
                 className={cn(
-                  "mt-2",
-                  result.incidentEnergy <= 8 ? "border-green-500/50 text-green-400" :
-                  result.incidentEnergy <= 25 ? "border-yellow-500/50 text-yellow-400" :
-                  "border-red-500/50 text-red-400"
+                  'mt-2',
+                  result.incidentEnergy <= 8
+                    ? 'border-green-500/50 text-green-400'
+                    : result.incidentEnergy <= 25
+                      ? 'border-yellow-500/50 text-yellow-400'
+                      : 'border-red-500/50 text-red-400'
                 )}
               >
-                {result.isUnrealistic ? "Dangerous Energy Level" : `Min Arc Rating: ${result.minArcRatingRequired} cal/cm²`}
+                {result.isUnrealistic
+                  ? 'Dangerous Energy Level'
+                  : `Min Arc Rating: ${result.minArcRatingRequired} cal/cm²`}
               </Badge>
             </div>
 
@@ -329,12 +346,18 @@ const ArcFlashCalculator = () => {
             <ResultsGrid columns={2}>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Arc Flash Boundary</p>
-                <p className="text-xl font-bold text-white font-mono">{Math.round(result.arcFlashBoundary)}mm</p>
-                <p className="text-xs text-white/80">({(result.arcFlashBoundary/1000).toFixed(2)}m)</p>
+                <p className="text-xl font-bold text-white font-mono">
+                  {Math.round(result.arcFlashBoundary)}mm
+                </p>
+                <p className="text-xs text-white/80">
+                  ({(result.arcFlashBoundary / 1000).toFixed(2)}m)
+                </p>
               </div>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Arcing Current</p>
-                <p className="text-xl font-bold text-white font-mono">{result.arcingCurrent.toFixed(1)} kA</p>
+                <p className="text-xl font-bold text-white font-mono">
+                  {result.arcingCurrent.toFixed(1)} kA
+                </p>
                 <p className="text-xs text-white/80">{result.calculationMethod}</p>
               </div>
             </ResultsGrid>
@@ -358,7 +381,10 @@ const ArcFlashCalculator = () => {
                 <ul className="space-y-1">
                   {result.ppeRecommendations.map((rec, index) => (
                     <li key={index} className="flex items-start gap-2 text-sm text-white/70">
-                      <span className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ backgroundColor: config.gradientFrom }} />
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
                       {rec}
                     </li>
                   ))}
@@ -384,12 +410,16 @@ const ArcFlashCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <HelpCircle className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">What-if Analysis</span>
+                  <span className="text-sm sm:text-base font-medium text-purple-300">
+                    What-if Analysis
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showWhatIf && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showWhatIf && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-4">
                 <div className="space-y-3">
@@ -430,7 +460,9 @@ const ArcFlashCalculator = () => {
                       <p className="text-xl font-bold text-purple-400 font-mono">
                         {whatIfResult.incidentEnergy.toFixed(2)} cal/cm²
                       </p>
-                      <p className="text-xs text-white/80">PPE Category {whatIfResult.ppeCategory}</p>
+                      <p className="text-xs text-white/80">
+                        PPE Category {whatIfResult.ppeCategory}
+                      </p>
                     </div>
                   ) : null;
                 })()}
@@ -446,12 +478,16 @@ const ArcFlashCalculator = () => {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <Info className="h-4 w-4 text-blue-400" />
-              <span className="text-sm sm:text-base font-medium text-blue-300">Why This Matters</span>
+              <span className="text-sm sm:text-base font-medium text-blue-300">
+                Why This Matters
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showGuidance && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showGuidance && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
             <p>• Arc flash assessment required for electrical work on live systems above 50V AC</p>
@@ -469,18 +505,34 @@ const ArcFlashCalculator = () => {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">Regulations & Standards</span>
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                Regulations & Standards
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showRegs && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showRegs && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
-            <p><strong className="text-amber-300">IEEE 1584-2018:</strong> International standard for arc flash calculations</p>
-            <p><strong className="text-amber-300">NFPA 70E:</strong> PPE categories and safety requirements</p>
-            <p><strong className="text-amber-300">UK EAWR 1989:</strong> Electrical safety regulations</p>
-            <p><strong className="text-amber-300">BS 7671 (18th Ed):</strong> UK wiring regulations for fault clearing</p>
+            <p>
+              <strong className="text-amber-300">IEEE 1584-2018:</strong> International standard for
+              arc flash calculations
+            </p>
+            <p>
+              <strong className="text-amber-300">NFPA 70E:</strong> PPE categories and safety
+              requirements
+            </p>
+            <p>
+              <strong className="text-amber-300">UK EAWR 1989:</strong> Electrical safety
+              regulations
+            </p>
+            <p>
+              <strong className="text-amber-300">BS 7671 (18th Ed):</strong> UK wiring regulations
+              for fault clearing
+            </p>
           </CollapsibleContent>
         </div>
       </Collapsible>
@@ -490,8 +542,12 @@ const ArcFlashCalculator = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
           <div className="text-sm text-orange-200">
-            <p><strong>IEEE 1584-2018:</strong> E = 4.184 × Cf × En × (t/0.2) × (610^x / D^x)</p>
-            <p className="text-xs mt-1">Where E = incident energy (cal/cm²), t = clearing time, D = working distance</p>
+            <p>
+              <strong>IEEE 1584-2018:</strong> E = 4.184 × Cf × En × (t/0.2) × (610^x / D^x)
+            </p>
+            <p className="text-xs mt-1">
+              Where E = incident energy (cal/cm²), t = clearing time, D = working distance
+            </p>
           </div>
         </div>
       </div>

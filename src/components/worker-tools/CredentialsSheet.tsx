@@ -4,15 +4,7 @@
  * Bottom sheet for workers to view their Elec-ID and certifications.
  */
 
-import {
-  IdCard,
-  Award,
-  AlertTriangle,
-  CheckCircle,
-  X,
-  Loader2,
-  ExternalLink,
-} from 'lucide-react';
+import { IdCard, Award, AlertTriangle, CheckCircle, X, Loader2, ExternalLink } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -46,16 +38,27 @@ export function CredentialsSheet({ open, onOpenChange }: CredentialsSheetProps) 
     if (daysUntilExpiry < 0) {
       return { status: 'expired', label: 'Expired', colour: 'text-red-400 bg-red-500/20' };
     } else if (daysUntilExpiry <= 30) {
-      return { status: 'expiring', label: `${daysUntilExpiry}d left`, colour: 'text-amber-400 bg-amber-500/20' };
+      return {
+        status: 'expiring',
+        label: `${daysUntilExpiry}d left`,
+        colour: 'text-amber-400 bg-amber-500/20',
+      };
     } else if (daysUntilExpiry <= 90) {
-      return { status: 'warning', label: `${daysUntilExpiry}d`, colour: 'text-yellow-400 bg-yellow-500/20' };
+      return {
+        status: 'warning',
+        label: `${daysUntilExpiry}d`,
+        colour: 'text-yellow-400 bg-yellow-500/20',
+      };
     }
     return { status: 'valid', label: 'Valid', colour: 'text-green-400 bg-green-500/20' };
   };
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -96,12 +99,14 @@ export function CredentialsSheet({ open, onOpenChange }: CredentialsSheetProps) 
                       <p className="font-semibold text-white">Elec-ID</p>
                       <p className="text-xs text-white/60">Digital identity card</p>
                     </div>
-                    <Badge className={cn(
-                      'ml-auto border-0',
-                      credentials?.elecId?.verified
-                        ? 'bg-green-500/20 text-green-400'
-                        : 'bg-amber-500/20 text-amber-400'
-                    )}>
+                    <Badge
+                      className={cn(
+                        'ml-auto border-0',
+                        credentials?.elecId?.verified
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-amber-500/20 text-amber-400'
+                      )}
+                    >
                       {credentials?.elecId?.verified ? 'Verified' : 'Pending'}
                     </Badge>
                   </div>
@@ -157,7 +162,8 @@ export function CredentialsSheet({ open, onOpenChange }: CredentialsSheetProps) 
                           </div>
                           {cert.expiry_date && (
                             <p className="text-xs text-white/40 mt-2">
-                              Expires: {new Date(cert.expiry_date).toLocaleDateString('en-GB', {
+                              Expires:{' '}
+                              {new Date(cert.expiry_date).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'short',
                                 year: 'numeric',
@@ -176,9 +182,7 @@ export function CredentialsSheet({ open, onOpenChange }: CredentialsSheetProps) 
           {/* Footer */}
           <div className="border-t border-white/[0.06] p-4 flex-shrink-0">
             <Link to="/elec-id" onClick={handleClose}>
-              <Button
-                className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation"
-              >
+              <Button className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation">
                 <ExternalLink className="h-5 w-5 mr-2" />
                 View Full Credentials
               </Button>

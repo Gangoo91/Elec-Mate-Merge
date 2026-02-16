@@ -1,22 +1,30 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp, CheckCircle2, Copy, BookOpen, FileText, Camera } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { InstrumentSetupPanel } from "../../commissioning/testing-results/InstrumentSetupPanel";
-import { ProcedureStepper } from "./ProcedureStepper";
-import { TroubleshootingPanel } from "../../commissioning/testing-results/TroubleshootingPanel";
-import { TestCalculatorWidget } from "../TestCalculatorWidget";
-import { toast } from "sonner";
-import type { TestProcedure } from "@/types/commissioning-response";
+import { useState } from 'react';
+import {
+  ChevronDown,
+  ChevronUp,
+  CheckCircle2,
+  Copy,
+  BookOpen,
+  FileText,
+  Camera,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { InstrumentSetupPanel } from '../../commissioning/testing-results/InstrumentSetupPanel';
+import { ProcedureStepper } from './ProcedureStepper';
+import { TroubleshootingPanel } from '../../commissioning/testing-results/TroubleshootingPanel';
+import { TestCalculatorWidget } from '../TestCalculatorWidget';
+import { toast } from 'sonner';
+import type { TestProcedure } from '@/types/commissioning-response';
 
 interface TestCardProps {
   test: TestProcedure;
   index: number;
-  variant: "dead" | "live";
+  variant: 'dead' | 'live';
   onResultRecorded?: (result: {
     measuredValue?: string;
     unit?: string;
@@ -32,7 +40,13 @@ interface TestCardProps {
   };
 }
 
-export const TestCard = ({ test, index, variant, onResultRecorded, initialResult }: TestCardProps) => {
+export const TestCard = ({
+  test,
+  index,
+  variant,
+  onResultRecorded,
+  initialResult,
+}: TestCardProps) => {
   // Defensive checks for test object
   if (!test) {
     console.error('TestCard received null/undefined test');
@@ -41,8 +55,8 @@ export const TestCard = ({ test, index, variant, onResultRecorded, initialResult
 
   const [expanded, setExpanded] = useState(false);
   const [showResultEntry, setShowResultEntry] = useState(false);
-  const [measuredValue, setMeasuredValue] = useState(initialResult?.measuredValue || "");
-  const [resultNotes, setResultNotes] = useState(initialResult?.notes || "");
+  const [measuredValue, setMeasuredValue] = useState(initialResult?.measuredValue || '');
+  const [resultNotes, setResultNotes] = useState(initialResult?.notes || '');
   const [isPassed, setIsPassed] = useState<boolean | undefined>(initialResult?.passed);
 
   const handleSaveResult = () => {
@@ -53,9 +67,9 @@ export const TestCard = ({ test, index, variant, onResultRecorded, initialResult
       notes: resultNotes,
       timestamp: new Date().toISOString(),
     };
-    
+
     onResultRecorded?.(result);
-    toast.success("Test result recorded!", {
+    toast.success('Test result recorded!', {
       description: `${test.testName} - ${isPassed ? 'PASS' : isPassed === false ? 'FAIL' : 'Recorded'}`,
     });
   };
@@ -67,7 +81,7 @@ export const TestCard = ({ test, index, variant, onResultRecorded, initialResult
   };
 
   const copyTestProcedure = () => {
-    const procedureSteps = Array.isArray(test.procedure) 
+    const procedureSteps = Array.isArray(test.procedure)
       ? test.procedure.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')
       : 'No procedure steps available';
 
@@ -84,7 +98,7 @@ ${procedureSteps}
 ${test.acceptanceCriteria || 'Not specified'}`;
 
     navigator.clipboard.writeText(markdown);
-    toast.success("Test procedure copied!", { description: "Paste into your notes app" });
+    toast.success('Test procedure copied!', { description: 'Paste into your notes app' });
   };
 
   return (
@@ -98,16 +112,16 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-sm font-bold text-elec-yellow">
-                {index + 1}
-              </span>
+                <span className="text-sm font-bold text-elec-yellow">{index + 1}</span>
+              </div>
+              <h3 className="text-lg font-bold text-foreground">
+                {test.testName || 'Test Procedure'}
+              </h3>
             </div>
-            <h3 className="text-lg font-bold text-foreground">{test.testName || 'Test Procedure'}</h3>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-foreground/70">
-            <BookOpen className="h-3 w-3 text-elec-yellow" />
-            {test.regulation || 'BS 7671'}
-          </div>
+            <div className="flex items-center gap-2 text-sm text-foreground/70">
+              <BookOpen className="h-3 w-3 text-elec-yellow" />
+              {test.regulation || 'BS 7671'}
+            </div>
           </div>
           {expanded ? (
             <ChevronUp className="h-5 w-5 text-elec-yellow shrink-0" />
@@ -121,11 +135,14 @@ ${test.acceptanceCriteria || 'Not specified'}`;
       {expanded && (
         <div className="px-5 pb-5 space-y-5 border-t border-elec-yellow/20">
           {/* Test Duration & Prerequisites */}
-          {(test.testDuration || (Array.isArray(test.prerequisiteTests) && test.prerequisiteTests.length > 0)) && (
+          {(test.testDuration ||
+            (Array.isArray(test.prerequisiteTests) && test.prerequisiteTests.length > 0)) && (
             <div className="pt-5 flex flex-wrap gap-2">
               {test.testSequence && (
                 <div className="px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
-                  <span className="text-xs text-foreground font-medium">Test #{test.testSequence}</span>
+                  <span className="text-xs text-foreground font-medium">
+                    Test #{test.testSequence}
+                  </span>
                 </div>
               )}
               {test.testDuration && (
@@ -135,14 +152,16 @@ ${test.acceptanceCriteria || 'Not specified'}`;
               )}
               {Array.isArray(test.prerequisiteTests) && test.prerequisiteTests.length > 0 && (
                 <div className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30">
-                  <span className="text-xs text-foreground font-medium">⚠ Requires: {test.prerequisiteTests.join(', ')}</span>
+                  <span className="text-xs text-foreground font-medium">
+                    ⚠ Requires: {test.prerequisiteTests.join(', ')}
+                  </span>
                 </div>
               )}
             </div>
           )}
 
           {/* Acceptance Criteria */}
-          <div className={test.testDuration || test.prerequisiteTests?.length ? "" : "pt-5"}>
+          <div className={test.testDuration || test.prerequisiteTests?.length ? '' : 'pt-5'}>
             <div className="flex items-center gap-2 text-foreground text-base font-semibold mb-3">
               <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
               Acceptance Criteria
@@ -163,10 +182,26 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                   <p>{test.expectedResult}</p>
                 ) : (
                   <div className="space-y-1">
-                    {test.expectedResult.calculated && <p><strong>Calculated:</strong> {test.expectedResult.calculated}</p>}
-                    {test.expectedResult.measured && <p><strong>Measured:</strong> {test.expectedResult.measured}</p>}
-                    {test.expectedResult.maximumPermitted && <p><strong>Max Permitted:</strong> {test.expectedResult.maximumPermitted}</p>}
-                    {test.expectedResult.marginOfSafety && <p><strong>Margin of Safety:</strong> {test.expectedResult.marginOfSafety}</p>}
+                    {test.expectedResult.calculated && (
+                      <p>
+                        <strong>Calculated:</strong> {test.expectedResult.calculated}
+                      </p>
+                    )}
+                    {test.expectedResult.measured && (
+                      <p>
+                        <strong>Measured:</strong> {test.expectedResult.measured}
+                      </p>
+                    )}
+                    {test.expectedResult.maximumPermitted && (
+                      <p>
+                        <strong>Max Permitted:</strong> {test.expectedResult.maximumPermitted}
+                      </p>
+                    )}
+                    {test.expectedResult.marginOfSafety && (
+                      <p>
+                        <strong>Margin of Safety:</strong> {test.expectedResult.marginOfSafety}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
@@ -184,10 +219,26 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                   <p>{test.calculation}</p>
                 ) : (
                   <div className="space-y-2">
-                    {test.calculation.formula && <p><strong>Formula:</strong> {test.calculation.formula}</p>}
-                    {test.calculation.Ze && <p><strong>Ze:</strong> {test.calculation.Ze}</p>}
-                    {test.calculation.R1R2 && <p><strong>R1+R2:</strong> {test.calculation.R1R2}</p>}
-                    {test.calculation.expectedZs && <p><strong>Expected Zs:</strong> {test.calculation.expectedZs}</p>}
+                    {test.calculation.formula && (
+                      <p>
+                        <strong>Formula:</strong> {test.calculation.formula}
+                      </p>
+                    )}
+                    {test.calculation.Ze && (
+                      <p>
+                        <strong>Ze:</strong> {test.calculation.Ze}
+                      </p>
+                    )}
+                    {test.calculation.R1R2 && (
+                      <p>
+                        <strong>R1+R2:</strong> {test.calculation.R1R2}
+                      </p>
+                    )}
+                    {test.calculation.expectedZs && (
+                      <p>
+                        <strong>Expected Zs:</strong> {test.calculation.expectedZs}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
@@ -219,7 +270,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
               </h4>
               <div className="space-y-2">
                 {test.instrumentNotes.map((note, idx) => (
-                  <div key={idx} className="text-sm text-foreground/80 bg-orange-500/5 border-l-4 border-orange-500/50 p-3 rounded-lg">
+                  <div
+                    key={idx}
+                    className="text-sm text-foreground/80 bg-orange-500/5 border-l-4 border-orange-500/50 p-3 rounded-lg"
+                  >
                     {note}
                   </div>
                 ))}
@@ -245,7 +299,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
               </h4>
               <div className="space-y-2">
                 {test.siteRealityFactors.map((factor, idx) => (
-                  <div key={idx} className="text-sm text-foreground/80 bg-amber-500/5 border-l-4 border-amber-500/50 p-3 rounded-lg">
+                  <div
+                    key={idx}
+                    className="text-sm text-foreground/80 bg-amber-500/5 border-l-4 border-amber-500/50 p-3 rounded-lg"
+                  >
                     {factor}
                   </div>
                 ))}
@@ -261,7 +318,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
               </h4>
               <div className="space-y-2">
                 {test.efficiencyTips.map((tip, idx) => (
-                  <div key={idx} className="text-sm text-foreground/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg">
+                  <div
+                    key={idx}
+                    className="text-sm text-foreground/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg"
+                  >
                     {tip}
                   </div>
                 ))}
@@ -326,13 +386,15 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                 Record Test Result
               </h4>
               {isPassed !== undefined && (
-                <div className={cn(
-                  "px-3 py-1 rounded-full text-xs font-semibold",
-                  isPassed 
-                    ? "bg-green-500/10 text-green-400 border border-green-500/30" 
-                    : "bg-red-500/10 text-red-400 border border-red-500/30"
-                )}>
-                  {isPassed ? "PASS" : "FAIL"}
+                <div
+                  className={cn(
+                    'px-3 py-1 rounded-full text-xs font-semibold',
+                    isPassed
+                      ? 'bg-green-500/10 text-green-400 border border-green-500/30'
+                      : 'bg-red-500/10 text-red-400 border border-red-500/30'
+                  )}
+                >
+                  {isPassed ? 'PASS' : 'FAIL'}
                 </div>
               )}
             </div>
@@ -356,10 +418,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                     onClick={() => setIsPassed(true)}
                     variant="outline"
                     className={cn(
-                      "flex-1",
+                      'flex-1',
                       isPassed === true
-                        ? "bg-green-500/20 border-green-500/50 text-green-400"
-                        : "border-elec-yellow/30 text-foreground"
+                        ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                        : 'border-elec-yellow/30 text-foreground'
                     )}
                   >
                     <CheckCircle2 className="h-4 w-4 mr-2" />
@@ -369,10 +431,10 @@ ${test.acceptanceCriteria || 'Not specified'}`;
                     onClick={() => setIsPassed(false)}
                     variant="outline"
                     className={cn(
-                      "flex-1",
+                      'flex-1',
                       isPassed === false
-                        ? "bg-red-500/20 border-red-500/50 text-red-400"
-                        : "border-elec-yellow/30 text-foreground"
+                        ? 'bg-red-500/20 border-red-500/50 text-red-400'
+                        : 'border-elec-yellow/30 text-foreground'
                     )}
                   >
                     Fail

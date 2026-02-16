@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,156 +13,154 @@ import {
   Shield,
   Wind,
   Mountain,
-} from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
 const TITLE =
-  "Understanding External Influences (BS 7671 Overview) - Module 3.5.1 | Level 2 Electrical Course";
+  'Understanding External Influences (BS 7671 Overview) - Module 3.5.1 | Level 2 Electrical Course';
 const DESCRIPTION =
-  "Master BS 7671 external influence classification codes, environmental assessment, and their impact on electrical installation design and equipment selection.";
+  'Master BS 7671 external influence classification codes, environmental assessment, and their impact on electrical installation design and equipment selection.';
 
 // Quiz questions for the end of the page
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "In BS 7671, what does the first letter of an external influence code represent?",
+    question: 'In BS 7671, what does the first letter of an external influence code represent?',
     options: [
-      "The degree of severity",
-      "The general category of influence",
-      "The size of the cable",
-      "The type of fuse required",
+      'The degree of severity',
+      'The general category of influence',
+      'The size of the cable',
+      'The type of fuse required',
     ],
     correctAnswer: 1,
     explanation:
-      "The first letter represents the general category of influence (A = environmental, B = utilisation, C = construction).",
+      'The first letter represents the general category of influence (A = environmental, B = utilisation, C = construction).',
   },
   {
     id: 2,
-    question: "What does AD4 mean?",
+    question: 'What does AD4 mean?',
     options: [
-      "No water present",
-      "Water splashes present",
-      "Water jets present",
-      "High humidity only",
+      'No water present',
+      'Water splashes present',
+      'Water jets present',
+      'High humidity only',
     ],
     correctAnswer: 1,
     explanation:
-      "AD4 indicates the presence of water splashes, commonly found in kitchens, laundries, and some outdoor areas.",
+      'AD4 indicates the presence of water splashes, commonly found in kitchens, laundries, and some outdoor areas.',
   },
   {
     id: 3,
-    question: "True or False: All installations have at least one external influence classification.",
-    options: ["True", "False"],
+    question:
+      'True or False: All installations have at least one external influence classification.',
+    options: ['True', 'False'],
     correctAnswer: 0,
     explanation:
       "True. Even 'normal' environments have influence ratings, such as AD1 (no significant presence of water).",
   },
   {
     id: 4,
-    question: "Give one example of a utilisation-related influence.",
+    question: 'Give one example of a utilisation-related influence.',
     options: [
-      "Temperature variation",
-      "Mechanical stress and vibration",
-      "Presence of water",
-      "Building material type",
+      'Temperature variation',
+      'Mechanical stress and vibration',
+      'Presence of water',
+      'Building material type',
     ],
     correctAnswer: 1,
     explanation:
-      "Utilisation influences (B category) include mechanical stress, vibration, movement of cables, and impact risks.",
+      'Utilisation influences (B category) include mechanical stress, vibration, movement of cables, and impact risks.',
   },
   {
     id: 5,
-    question: "Which BS 7671 category covers corrosive substances?",
-    options: ["AD", "AF", "BA", "CA"],
+    question: 'Which BS 7671 category covers corrosive substances?',
+    options: ['AD', 'AF', 'BA', 'CA'],
     correctAnswer: 1,
-    explanation:
-      "AF covers the presence of corrosive or polluting substances in the environment.",
+    explanation: 'AF covers the presence of corrosive or polluting substances in the environment.',
   },
   {
     id: 6,
-    question: "Why should influence codes be documented?",
+    question: 'Why should influence codes be documented?',
     options: [
-      "For warranty claims",
-      "For compliance and future maintenance reference",
-      "To make the installation look professional",
-      "For cable colour coding",
+      'For warranty claims',
+      'For compliance and future maintenance reference',
+      'To make the installation look professional',
+      'For cable colour coding',
     ],
     correctAnswer: 1,
     explanation:
-      "BS 7671 requires that design decisions consider external influences, and this must be documented for compliance and future reference.",
+      'BS 7671 requires that design decisions consider external influences, and this must be documented for compliance and future reference.',
   },
   {
     id: 7,
-    question: "What might happen if a standard accessory is used in a high-humidity environment?",
+    question: 'What might happen if a standard accessory is used in a high-humidity environment?',
     options: [
-      "Better performance",
-      "Premature failure due to corrosion",
-      "Increased efficiency",
-      "No effect",
+      'Better performance',
+      'Premature failure due to corrosion',
+      'Increased efficiency',
+      'No effect',
     ],
     correctAnswer: 1,
     explanation:
-      "Standard accessories in high-humidity environments can suffer premature failure due to corrosion or moisture ingress.",
+      'Standard accessories in high-humidity environments can suffer premature failure due to corrosion or moisture ingress.',
   },
   {
     id: 8,
     question: "Give one example of a 'construction of premises' influence.",
     options: [
-      "Water presence",
-      "Ceiling height and wall material",
-      "Temperature variation",
-      "Mechanical vibration",
+      'Water presence',
+      'Ceiling height and wall material',
+      'Temperature variation',
+      'Mechanical vibration',
     ],
     correctAnswer: 1,
     explanation:
-      "Construction influences (C category) include ceiling height, wall material, building layout, and structural features.",
+      'Construction influences (C category) include ceiling height, wall material, building layout, and structural features.',
   },
 ];
 
 // Quick knowledge check questions
 const quickCheckQuestions = [
   {
-    id: "influence-code",
-    question:
-      "In BS 7671, what does the second letter in an external influence code represent?",
+    id: 'influence-code',
+    question: 'In BS 7671, what does the second letter in an external influence code represent?',
     options: [
-      "The severity level",
-      "The nature of the influence",
-      "The cable type required",
-      "The protection method",
+      'The severity level',
+      'The nature of the influence',
+      'The cable type required',
+      'The protection method',
     ],
     correctIndex: 1,
     explanation:
-      "The second letter represents the nature of the influence (e.g., D = presence of water, F = corrosive substances).",
+      'The second letter represents the nature of the influence (e.g., D = presence of water, F = corrosive substances).',
   },
   {
-    id: "environmental-factor",
-    question: "Which of these is an environmental factor that counts as an external influence?",
+    id: 'environmental-factor',
+    question: 'Which of these is an environmental factor that counts as an external influence?',
     options: [
-      "Cable installation method",
-      "Circuit protection rating",
-      "Ambient temperature variation",
-      "Electrical load type",
+      'Cable installation method',
+      'Circuit protection rating',
+      'Ambient temperature variation',
+      'Electrical load type',
     ],
     correctIndex: 2,
     explanation:
-      "Ambient temperature variation is an environmental factor (AA series) that significantly affects electrical installations.",
+      'Ambient temperature variation is an environmental factor (AA series) that significantly affects electrical installations.',
   },
   {
-    id: "classification-importance",
-    question: "Why is it important to classify external influences before installation?",
+    id: 'classification-importance',
+    question: 'Why is it important to classify external influences before installation?',
     options: [
-      "To reduce material costs",
-      "To ensure equipment and cable selection is appropriate",
-      "To speed up installation time",
-      "To simplify testing procedures",
+      'To reduce material costs',
+      'To ensure equipment and cable selection is appropriate',
+      'To speed up installation time',
+      'To simplify testing procedures',
     ],
     correctIndex: 1,
     explanation:
-      "Proper classification ensures that equipment, cables, and protective measures are suitable for the environmental conditions they will face.",
+      'Proper classification ensures that equipment, cables, and protective measures are suitable for the environmental conditions they will face.',
   },
 ];
 
@@ -202,7 +200,8 @@ export default function Module3Section5_1() {
             Understanding External Influences (BS 7671 Overview)
           </h1>
           <p className="text-white/80">
-            Master BS 7671 external influence classification codes, environmental assessment, and their critical impact on electrical installation design and equipment selection.
+            Master BS 7671 external influence classification codes, environmental assessment, and
+            their critical impact on electrical installation design and equipment selection.
           </p>
         </header>
 
@@ -217,7 +216,9 @@ export default function Module3Section5_1() {
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Electrical installations face environmental and operational challenges.</li>
-                <li>BS 7671 requires assessment of external influences before equipment selection.</li>
+                <li>
+                  BS 7671 requires assessment of external influences before equipment selection.
+                </li>
                 <li>Three-part coding system classifies environmental conditions.</li>
                 <li>Proper assessment ensures safety, compliance, and equipment longevity.</li>
               </ul>
@@ -225,9 +226,17 @@ export default function Module3Section5_1() {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Environmental conditions, operational factors, building characteristics.</li>
-                <li><strong>Use:</strong> BS 7671 classification codes; appropriate equipment selection.</li>
-                <li><strong>Check:</strong> Temperature, humidity, corrosion risk, mechanical stress.</li>
+                <li>
+                  <strong>Spot:</strong> Environmental conditions, operational factors, building
+                  characteristics.
+                </li>
+                <li>
+                  <strong>Use:</strong> BS 7671 classification codes; appropriate equipment
+                  selection.
+                </li>
+                <li>
+                  <strong>Check:</strong> Temperature, humidity, corrosion risk, mechanical stress.
+                </li>
               </ul>
             </div>
           </div>
@@ -242,8 +251,12 @@ export default function Module3Section5_1() {
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Define "external influence" in the context of BS 7671.</li>
             <li>Identify the three main categories of external influences.</li>
-            <li>Interpret BS 7671 influence codes and apply them to design and installation decisions.</li>
-            <li>Explain why assessing environmental conditions is essential for compliance and safety.</li>
+            <li>
+              Interpret BS 7671 influence codes and apply them to design and installation decisions.
+            </li>
+            <li>
+              Explain why assessing environmental conditions is essential for compliance and safety.
+            </li>
           </ul>
         </section>
 
@@ -257,17 +270,23 @@ export default function Module3Section5_1() {
           {/* 1. Definition of External Influences */}
           <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <FileText className="w-5 h-5" /> 1. Definition of External Influences - Comprehensive Overview
+              <FileText className="w-5 h-5" /> 1. Definition of External Influences - Comprehensive
+              Overview
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-white mb-3">What Constitutes an External Influence</h4>
+              <h4 className="font-medium text-white mb-3">
+                What Constitutes an External Influence
+              </h4>
               <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
                 <p className="text-xs sm:text-sm text-white mb-3">
-                  <strong>BS 7671 Definition:</strong> External influences are any environmental or operational factors that can affect the safety, performance, and durability of an electrical installation.
+                  <strong>BS 7671 Definition:</strong> External influences are any environmental or
+                  operational factors that can affect the safety, performance, and durability of an
+                  electrical installation.
                 </p>
                 <p className="text-xs sm:text-sm text-white">
-                  These influences must be identified and assessed during the design phase to ensure appropriate equipment selection, installation methods, and protective measures.
+                  These influences must be identified and assessed during the design phase to ensure
+                  appropriate equipment selection, installation methods, and protective measures.
                 </p>
               </div>
 
@@ -277,19 +296,29 @@ export default function Module3Section5_1() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <Thermometer className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Temperature extremes:</strong> -40°C to +70°C operating ranges</span>
+                      <span>
+                        <strong>Temperature extremes:</strong> -40°C to +70°C operating ranges
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Droplets className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Humidity and moisture:</strong> Condensation, direct water contact, splashing</span>
+                      <span>
+                        <strong>Humidity and moisture:</strong> Condensation, direct water contact,
+                        splashing
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Wind className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Foreign bodies:</strong> Dust, debris, particulate matter ingress</span>
+                      <span>
+                        <strong>Foreign bodies:</strong> Dust, debris, particulate matter ingress
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Shield className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Chemical exposure:</strong> Corrosive substances, salt spray, cleaning agents</span>
+                      <span>
+                        <strong>Chemical exposure:</strong> Corrosive substances, salt spray,
+                        cleaning agents
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -298,19 +327,29 @@ export default function Module3Section5_1() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <Mountain className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Mechanical stress:</strong> Vibration, impact, cable movement</span>
+                      <span>
+                        <strong>Mechanical stress:</strong> Vibration, impact, cable movement
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Zap className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Electromagnetic interference:</strong> RF fields, harmonic distortion</span>
+                      <span>
+                        <strong>Electromagnetic interference:</strong> RF fields, harmonic
+                        distortion
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Fire risk factors:</strong> Combustible materials, ignition sources</span>
+                      <span>
+                        <strong>Fire risk factors:</strong> Combustible materials, ignition sources
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Access limitations:</strong> Maintenance constraints, safety requirements</span>
+                      <span>
+                        <strong>Access limitations:</strong> Maintenance constraints, safety
+                        requirements
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -321,22 +360,49 @@ export default function Module3Section5_1() {
               <h4 className="font-medium text-white mb-3">Impact on Installation Design</h4>
               <div className="space-y-3">
                 <div className="p-3 border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-2">Equipment Selection Criteria</h5>
+                  <h5 className="font-medium text-elec-yellow mb-2">
+                    Equipment Selection Criteria
+                  </h5>
                   <ul className="space-y-1 text-sm">
-                    <li>* <strong>IP ratings:</strong> Ingress protection against solids and liquids</li>
-                    <li>* <strong>Material compatibility:</strong> Corrosion resistance, UV stability</li>
-                    <li>* <strong>Temperature ratings:</strong> Operating and storage temperature ranges</li>
-                    <li>* <strong>Mechanical strength:</strong> Impact resistance (IK codes)</li>
-                    <li>* <strong>Fire performance:</strong> Material flammability and toxicity ratings</li>
+                    <li>
+                      * <strong>IP ratings:</strong> Ingress protection against solids and liquids
+                    </li>
+                    <li>
+                      * <strong>Material compatibility:</strong> Corrosion resistance, UV stability
+                    </li>
+                    <li>
+                      * <strong>Temperature ratings:</strong> Operating and storage temperature
+                      ranges
+                    </li>
+                    <li>
+                      * <strong>Mechanical strength:</strong> Impact resistance (IK codes)
+                    </li>
+                    <li>
+                      * <strong>Fire performance:</strong> Material flammability and toxicity
+                      ratings
+                    </li>
                   </ul>
                 </div>
                 <div className="p-3 border border-green-400/30 rounded-lg">
-                  <h5 className="font-medium text-green-400 mb-2">Installation Method Considerations</h5>
+                  <h5 className="font-medium text-green-400 mb-2">
+                    Installation Method Considerations
+                  </h5>
                   <ul className="space-y-1 text-sm">
-                    <li>* <strong>Cable routing:</strong> Protection from physical damage and environmental exposure</li>
-                    <li>* <strong>Containment systems:</strong> Appropriate material selection and sealing</li>
-                    <li>* <strong>Support methods:</strong> Vibration isolation, expansion compensation</li>
-                    <li>* <strong>Access provisions:</strong> Maintenance and inspection requirements</li>
+                    <li>
+                      * <strong>Cable routing:</strong> Protection from physical damage and
+                      environmental exposure
+                    </li>
+                    <li>
+                      * <strong>Containment systems:</strong> Appropriate material selection and
+                      sealing
+                    </li>
+                    <li>
+                      * <strong>Support methods:</strong> Vibration isolation, expansion
+                      compensation
+                    </li>
+                    <li>
+                      * <strong>Access provisions:</strong> Maintenance and inspection requirements
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -349,7 +415,8 @@ export default function Module3Section5_1() {
           {/* 2. BS 7671 Classification System */}
           <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <FileText className="w-5 h-5" /> 2. BS 7671 Classification System - Detailed Code Structure
+              <FileText className="w-5 h-5" /> 2. BS 7671 Classification System - Detailed Code
+              Structure
             </h3>
 
             <div className="mb-6">
@@ -373,13 +440,18 @@ export default function Module3Section5_1() {
                   </div>
                 </div>
                 <div className="mt-4 p-3 border border-border/30 rounded-lg">
-                  <p className="text-sm text-center"><strong>Example: AD3</strong> = Environmental (A) + Water presence (D) + Splashing level (3)</p>
+                  <p className="text-sm text-center">
+                    <strong>Example: AD3</strong> = Environmental (A) + Water presence (D) +
+                    Splashing level (3)
+                  </p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-3">Category A: Environmental Conditions</h5>
+                  <h5 className="font-medium text-elec-yellow mb-3">
+                    Category A: Environmental Conditions
+                  </h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <h6 className="font-medium text-white mb-2">AA - Ambient Temperature</h6>
@@ -409,7 +481,9 @@ export default function Module3Section5_1() {
                 </div>
 
                 <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
-                  <h5 className="font-medium text-green-400 mb-3">Category B: Utilisation Conditions</h5>
+                  <h5 className="font-medium text-green-400 mb-3">
+                    Category B: Utilisation Conditions
+                  </h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <h6 className="font-medium text-white mb-2">BA - Mechanical Stress</h6>
@@ -435,7 +509,9 @@ export default function Module3Section5_1() {
                 </div>
 
                 <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-3">Category C: Construction of Buildings</h5>
+                  <h5 className="font-medium text-elec-yellow mb-3">
+                    Category C: Construction of Buildings
+                  </h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <h6 className="font-medium text-white mb-2">CA - Construction Materials</h6>
@@ -465,22 +541,45 @@ export default function Module3Section5_1() {
           {/* 3. Practical Application and Assessment */}
           <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" /> 3. Practical Application and Environmental Assessment
+              <CheckCircle className="w-5 h-5" /> 3. Practical Application and Environmental
+              Assessment
             </h3>
 
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">Site Assessment Methodology</h4>
               <div className="space-y-4">
                 <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
-                  <h5 className="font-medium text-amber-400 mb-3">Step-by-Step Assessment Process</h5>
+                  <h5 className="font-medium text-amber-400 mb-3">
+                    Step-by-Step Assessment Process
+                  </h5>
                   <ol className="list-decimal pl-6 space-y-2 text-sm">
-                    <li><strong>Initial site survey:</strong> Document all environmental conditions and operational requirements</li>
-                    <li><strong>Risk identification:</strong> Identify potential hazards and stress factors</li>
-                    <li><strong>Code classification:</strong> Apply appropriate BS 7671 influence codes</li>
-                    <li><strong>Equipment specification:</strong> Select suitable equipment based on classifications</li>
-                    <li><strong>Installation method selection:</strong> Choose appropriate installation techniques</li>
-                    <li><strong>Documentation:</strong> Record all decisions and justifications</li>
-                    <li><strong>Periodic review:</strong> Reassess conditions during installation lifecycle</li>
+                    <li>
+                      <strong>Initial site survey:</strong> Document all environmental conditions
+                      and operational requirements
+                    </li>
+                    <li>
+                      <strong>Risk identification:</strong> Identify potential hazards and stress
+                      factors
+                    </li>
+                    <li>
+                      <strong>Code classification:</strong> Apply appropriate BS 7671 influence
+                      codes
+                    </li>
+                    <li>
+                      <strong>Equipment specification:</strong> Select suitable equipment based on
+                      classifications
+                    </li>
+                    <li>
+                      <strong>Installation method selection:</strong> Choose appropriate
+                      installation techniques
+                    </li>
+                    <li>
+                      <strong>Documentation:</strong> Record all decisions and justifications
+                    </li>
+                    <li>
+                      <strong>Periodic review:</strong> Reassess conditions during installation
+                      lifecycle
+                    </li>
                   </ol>
                 </div>
 
@@ -531,10 +630,18 @@ export default function Module3Section5_1() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Influence Classifications</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>* <strong>AA6:</strong> High temperature from cooking equipment</li>
-                        <li>* <strong>AD4:</strong> Water spraying from cleaning</li>
-                        <li>* <strong>AF2:</strong> Grease and cleaning chemical exposure</li>
-                        <li>* <strong>BA3:</strong> Movement of heavy equipment</li>
+                        <li>
+                          * <strong>AA6:</strong> High temperature from cooking equipment
+                        </li>
+                        <li>
+                          * <strong>AD4:</strong> Water spraying from cleaning
+                        </li>
+                        <li>
+                          * <strong>AF2:</strong> Grease and cleaning chemical exposure
+                        </li>
+                        <li>
+                          * <strong>BA3:</strong> Movement of heavy equipment
+                        </li>
                       </ul>
                     </div>
                     <div>
@@ -555,10 +662,18 @@ export default function Module3Section5_1() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Influence Classifications</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>* <strong>AF3:</strong> High salt concentration</li>
-                        <li>* <strong>AD5:</strong> Storm water exposure</li>
-                        <li>* <strong>BB4:</strong> High impact from machinery</li>
-                        <li>* <strong>AC2:</strong> High altitude effects</li>
+                        <li>
+                          * <strong>AF3:</strong> High salt concentration
+                        </li>
+                        <li>
+                          * <strong>AD5:</strong> Storm water exposure
+                        </li>
+                        <li>
+                          * <strong>BB4:</strong> High impact from machinery
+                        </li>
+                        <li>
+                          * <strong>AC2:</strong> High altitude effects
+                        </li>
                       </ul>
                     </div>
                     <div>
@@ -582,29 +697,57 @@ export default function Module3Section5_1() {
           {/* 4. Documentation and Compliance */}
           <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <FileText className="w-5 h-5" /> 4. Documentation Requirements and Compliance Standards
+              <FileText className="w-5 h-5" /> 4. Documentation Requirements and Compliance
+              Standards
             </h3>
 
             <div className="space-y-4">
               <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                <h5 className="font-medium text-elec-yellow mb-3">BS 7671 Documentation Requirements</h5>
+                <h5 className="font-medium text-elec-yellow mb-3">
+                  BS 7671 Documentation Requirements
+                </h5>
                 <ul className="space-y-2 text-sm">
-                  <li><strong>Design documentation:</strong> All external influence assessments must be recorded</li>
-                  <li><strong>Installation certificates:</strong> Reference to relevant influence codes</li>
-                  <li><strong>Operation and maintenance manuals:</strong> Environmental limitations and requirements</li>
-                  <li><strong>Periodic inspection reports:</strong> Changes in environmental conditions</li>
-                  <li><strong>Risk assessments:</strong> Ongoing evaluation of influence factors</li>
+                  <li>
+                    <strong>Design documentation:</strong> All external influence assessments must
+                    be recorded
+                  </li>
+                  <li>
+                    <strong>Installation certificates:</strong> Reference to relevant influence
+                    codes
+                  </li>
+                  <li>
+                    <strong>Operation and maintenance manuals:</strong> Environmental limitations
+                    and requirements
+                  </li>
+                  <li>
+                    <strong>Periodic inspection reports:</strong> Changes in environmental
+                    conditions
+                  </li>
+                  <li>
+                    <strong>Risk assessments:</strong> Ongoing evaluation of influence factors
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h5 className="font-medium text-green-400 mb-3">Quality Assurance Procedures</h5>
                 <ul className="space-y-2 text-sm">
-                  <li><strong>Design review:</strong> Independent verification of influence classifications</li>
-                  <li><strong>Material verification:</strong> Confirmation of equipment suitability</li>
-                  <li><strong>Installation inspection:</strong> Compliance with specified methods</li>
-                  <li><strong>Commissioning tests:</strong> Performance under actual conditions</li>
-                  <li><strong>Handover documentation:</strong> Complete records for end user</li>
+                  <li>
+                    <strong>Design review:</strong> Independent verification of influence
+                    classifications
+                  </li>
+                  <li>
+                    <strong>Material verification:</strong> Confirmation of equipment suitability
+                  </li>
+                  <li>
+                    <strong>Installation inspection:</strong> Compliance with specified methods
+                  </li>
+                  <li>
+                    <strong>Commissioning tests:</strong> Performance under actual conditions
+                  </li>
+                  <li>
+                    <strong>Handover documentation:</strong> Complete records for end user
+                  </li>
                 </ul>
               </div>
             </div>
@@ -619,28 +762,41 @@ export default function Module3Section5_1() {
           </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
-              <h3 className="font-medium text-amber-400 mb-3">Case Study 1: Coastal Cafe Installation Failure</h3>
+              <h3 className="font-medium text-amber-400 mb-3">
+                Case Study 1: Coastal Cafe Installation Failure
+              </h3>
               <p className="text-xs sm:text-sm text-white mb-3">
-                <strong>Situation:</strong> Standard outdoor sockets were installed at a coastal cafe without considering the high salt content in the air (AF3 - corrosive environment).
+                <strong>Situation:</strong> Standard outdoor sockets were installed at a coastal
+                cafe without considering the high salt content in the air (AF3 - corrosive
+                environment).
               </p>
               <p className="text-xs sm:text-sm text-white mb-3">
-                <strong>Outcome:</strong> Within six months, severe corrosion caused electrical failures, tripping RCDs and creating safety hazards.
+                <strong>Outcome:</strong> Within six months, severe corrosion caused electrical
+                failures, tripping RCDs and creating safety hazards.
               </p>
               <p className="text-xs sm:text-sm text-white">
-                <strong>Solution:</strong> Replacement with marine-grade stainless steel fittings (316L grade), IP65-rated enclosures, and enhanced corrosion protection resolved the issues and provided long-term reliability.
+                <strong>Solution:</strong> Replacement with marine-grade stainless steel fittings
+                (316L grade), IP65-rated enclosures, and enhanced corrosion protection resolved the
+                issues and provided long-term reliability.
               </p>
             </div>
 
             <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-              <h3 className="font-medium text-elec-yellow mb-3">Case Study 2: Industrial Vibration Problems</h3>
+              <h3 className="font-medium text-elec-yellow mb-3">
+                Case Study 2: Industrial Vibration Problems
+              </h3>
               <p className="text-xs sm:text-sm text-white mb-3">
-                <strong>Situation:</strong> Cable terminations in a manufacturing facility were failing due to constant vibration (BA4 conditions) from heavy machinery.
+                <strong>Situation:</strong> Cable terminations in a manufacturing facility were
+                failing due to constant vibration (BA4 conditions) from heavy machinery.
               </p>
               <p className="text-xs sm:text-sm text-white mb-3">
-                <strong>Analysis:</strong> Standard compression glands and rigid conduit systems couldn't accommodate the mechanical stress.
+                <strong>Analysis:</strong> Standard compression glands and rigid conduit systems
+                couldn't accommodate the mechanical stress.
               </p>
               <p className="text-xs sm:text-sm text-white">
-                <strong>Solution:</strong> Installation of flexible conduit systems, vibration-resistant cable glands, and spring-loaded support systems eliminated the failures.
+                <strong>Solution:</strong> Installation of flexible conduit systems,
+                vibration-resistant cable glands, and spring-loaded support systems eliminated the
+                failures.
               </p>
             </div>
           </div>
@@ -654,33 +810,52 @@ export default function Module3Section5_1() {
           </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: Do I need to document external influences in the installation certificate?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: Do I need to document external influences in the installation certificate?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Yes - BS 7671 requires that design decisions consider external influences, and this must be recorded in the design section of the electrical installation certificate for compliance and future reference.
+                A: Yes - BS 7671 requires that design decisions consider external influences, and
+                this must be recorded in the design section of the electrical installation
+                certificate for compliance and future reference.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: Are all installations affected by external influences?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: Are all installations affected by external influences?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Yes - even 'normal' environments have influence ratings (e.g., AD1 = no significant presence of water, AA4 = normal temperature range). Every installation must be classified.
+                A: Yes - even 'normal' environments have influence ratings (e.g., AD1 = no
+                significant presence of water, AA4 = normal temperature range). Every installation
+                must be classified.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: Can the classification change over time?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: Can the classification change over time?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Yes - building extensions, change of use, environmental changes, or operational modifications can alter the influence category. Regular reassessment is recommended.
+                A: Yes - building extensions, change of use, environmental changes, or operational
+                modifications can alter the influence category. Regular reassessment is recommended.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: How often should external influence assessments be reviewed?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: How often should external influence assessments be reviewed?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Formally during periodic inspection and testing (typically 1-5 years depending on installation type), and whenever significant changes occur to the building use or environment.
+                A: Formally during periodic inspection and testing (typically 1-5 years depending on
+                installation type), and whenever significant changes occur to the building use or
+                environment.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: What happens if I use equipment with insufficient rating?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: What happens if I use equipment with insufficient rating?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Equipment may fail prematurely, creating safety hazards and non-compliance with BS 7671. Insurance claims may be rejected, and legal liability could arise from inadequate design.
+                A: Equipment may fail prematurely, creating safety hazards and non-compliance with
+                BS 7671. Insurance claims may be rejected, and legal liability could arise from
+                inadequate design.
               </p>
             </div>
           </div>
@@ -694,7 +869,11 @@ export default function Module3Section5_1() {
           </h2>
           <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
             <p className="text-white/90">
-              External influences, as defined by BS 7671, are environmental and operational factors that impact electrical installations. Understanding the three-category classification system and applying appropriate codes in design and installation ensures safety, compliance, and long-term durability. Proper assessment and documentation are essential for regulatory compliance and professional practice.
+              External influences, as defined by BS 7671, are environmental and operational factors
+              that impact electrical installations. Understanding the three-category classification
+              system and applying appropriate codes in design and installation ensures safety,
+              compliance, and long-term durability. Proper assessment and documentation are
+              essential for regulatory compliance and professional practice.
             </p>
           </div>
         </section>
@@ -710,7 +889,11 @@ export default function Module3Section5_1() {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-8 border-t border-white/10">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.5

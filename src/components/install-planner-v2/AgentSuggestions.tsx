@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Lightbulb, Calculator, Wrench, Shield, CheckCircle, ClipboardList } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Lightbulb, Calculator, Wrench, Shield, CheckCircle, ClipboardList } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface AgentSuggestion {
   agent: string;
@@ -17,24 +17,24 @@ interface AgentSuggestionsProps {
 
 const getAgentEmoji = (agent: string) => {
   const emojis: Record<string, string> = {
-    'designer': '📐',
+    designer: '📐',
     'cost-engineer': '💷',
-    'installer': '🔧',
+    installer: '🔧',
     'health-safety': '⚠️',
-    'commissioning': '✅',
-    'project-manager': '📋'
+    commissioning: '✅',
+    'project-manager': '📋',
   };
   return emojis[agent] || '🤖';
 };
 
 const getAgentName = (agent: string) => {
   const names: Record<string, string> = {
-    'designer': 'Circuit Designer',
+    designer: 'Circuit Designer',
     'cost-engineer': 'Cost Engineer',
-    'installer': 'Installation Specialist',
+    installer: 'Installation Specialist',
     'health-safety': 'Health & Safety',
-    'commissioning': 'Testing & Commissioning',
-    'project-manager': 'Project Manager'
+    commissioning: 'Testing & Commissioning',
+    'project-manager': 'Project Manager',
   };
   return names[agent] || agent;
 };
@@ -76,7 +76,7 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
         <Lightbulb className="h-4 w-4 text-elec-yellow" />
         <span>Who would you like to consult next?</span>
       </div>
-      
+
       <div className="flex flex-col gap-2">
         {sortedSuggestions.map((suggestion, index) => (
           <motion.div
@@ -90,8 +90,8 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
               size="sm"
               onClick={() => onSelectAgent(suggestion.agent)}
               className={cn(
-                "h-auto w-full py-2.5 px-3 flex items-start gap-3 hover:bg-elec-yellow/10 hover:border-elec-yellow transition-all text-left",
-                suggestion.priority === 'high' && "border-elec-yellow/50 bg-elec-yellow/5"
+                'h-auto w-full py-2.5 px-3 flex items-start gap-3 hover:bg-elec-yellow/10 hover:border-elec-yellow transition-all text-left',
+                suggestion.priority === 'high' && 'border-elec-yellow/50 bg-elec-yellow/5'
               )}
             >
               <span className="text-xl shrink-0 mt-0.5">{getAgentEmoji(suggestion.agent)}</span>
@@ -100,9 +100,7 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
                   <span className="text-sm font-semibold">{getAgentName(suggestion.agent)}</span>
                   {getPriorityBadge(suggestion.priority)}
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {suggestion.reason}
-                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{suggestion.reason}</p>
                 {suggestion.contextHint && (
                   <p className="text-[10px] text-elec-yellow/60 mt-1.5 italic">
                     💡 {suggestion.contextHint}

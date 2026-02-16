@@ -29,7 +29,7 @@ export const FirmwareUpdateQuickCheck = () => {
         <p className="text-purple-100 font-medium">
           Why should firmware updates be applied regularly?
         </p>
-        
+
         {!showFeedback ? (
           <div className="space-y-3">
             <Button
@@ -39,7 +39,7 @@ export const FirmwareUpdateQuickCheck = () => {
             >
               To add new features and improve user interface
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-purple-400 hover:bg-purple-900/20"
@@ -47,7 +47,7 @@ export const FirmwareUpdateQuickCheck = () => {
             >
               To patch security vulnerabilities and fix bugs
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-purple-400 hover:bg-purple-900/20"
@@ -58,29 +58,36 @@ export const FirmwareUpdateQuickCheck = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className={`p-4 rounded-lg border-2 ${
-              selectedAnswer === 'patch-vulnerabilities' 
-                ? 'border-green-500 bg-green-900/20' 
-                : 'border-red-500 bg-red-900/20'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border-2 ${
+                selectedAnswer === 'patch-vulnerabilities'
+                  ? 'border-green-500 bg-green-900/20'
+                  : 'border-red-500 bg-red-900/20'
+              }`}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {selectedAnswer === 'patch-vulnerabilities' ? (
                   <CheckCircle className="h-5 w-5 text-green-400" />
                 ) : (
                   <XCircle className="h-5 w-5 text-red-400" />
                 )}
-                <span className={`font-semibold ${
-                  selectedAnswer === 'patch-vulnerabilities' ? 'text-green-300' : 'text-red-300'
-                }`}>
+                <span
+                  className={`font-semibold ${
+                    selectedAnswer === 'patch-vulnerabilities' ? 'text-green-300' : 'text-red-300'
+                  }`}
+                >
                   {selectedAnswer === 'patch-vulnerabilities' ? 'Correct!' : 'Not quite right'}
                 </span>
               </div>
               <p className="text-gray-300 text-sm">
-                The primary reason for regular firmware updates is to <strong>patch security vulnerabilities</strong> and fix bugs. As new threats are discovered, manufacturers release updates to protect against them. Delaying updates leaves locks vulnerable to known exploits.
+                The primary reason for regular firmware updates is to{' '}
+                <strong>patch security vulnerabilities</strong> and fix bugs. As new threats are
+                discovered, manufacturers release updates to protect against them. Delaying updates
+                leaves locks vulnerable to known exploits.
               </p>
             </div>
-            
-            <Button 
+
+            <Button
               onClick={resetQuiz}
               variant="ghost"
               className="text-purple-400 hover:text-purple-300"

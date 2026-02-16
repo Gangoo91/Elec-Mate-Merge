@@ -5,71 +5,76 @@
  * Dark theme with elec-yellow accent
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 // ============================================
 // SEO CONFIGURATION
 // ============================================
-const TITLE = "Exam Preparation - Level 3 Module 8 Section 4.4";
-const DESCRIPTION = "Final preparation strategies for Level 3 electrical exams. Learn what to do in the final weeks, days, and hours before your exam to maximise your chances of success.";
+const TITLE = 'Exam Preparation - Level 3 Module 8 Section 4.4';
+const DESCRIPTION =
+  'Final preparation strategies for Level 3 electrical exams. Learn what to do in the final weeks, days, and hours before your exam to maximise your chances of success.';
 
 // ============================================
 // INLINE CHECK QUESTIONS
 // ============================================
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "In the final week before your exam, you should:",
+    id: 'check-1',
+    question: 'In the final week before your exam, you should:',
     options: [
-      "Learn new topics to fill any gaps",
-      "Consolidate existing knowledge and rest well",
-      "Complete as many mock exams as possible",
-      "Avoid all study to prevent burnout"
+      'Learn new topics to fill any gaps',
+      'Consolidate existing knowledge and rest well',
+      'Complete as many mock exams as possible',
+      'Avoid all study to prevent burnout',
     ],
     correctIndex: 1,
-    explanation: "The final week is too late for new learning. Focus on consolidating what you know, light revision of summaries, and ensuring you're well-rested for optimal performance."
+    explanation:
+      "The final week is too late for new learning. Focus on consolidating what you know, light revision of summaries, and ensuring you're well-rested for optimal performance.",
   },
   {
-    id: "check-2",
-    question: "What should you prepare the night before the exam?",
+    id: 'check-2',
+    question: 'What should you prepare the night before the exam?',
     options: [
-      "Nothing - prepare in the morning",
-      "Just your calculator",
-      "All required items: ID, calculator, pens, directions, permitted materials",
-      "A list of formulas to memorise"
+      'Nothing - prepare in the morning',
+      'Just your calculator',
+      'All required items: ID, calculator, pens, directions, permitted materials',
+      'A list of formulas to memorise',
     ],
     correctIndex: 2,
-    explanation: "Prepare everything the night before to reduce morning stress. This includes identification, approved calculator, spare pens, directions to the venue, and any permitted reference materials."
+    explanation:
+      'Prepare everything the night before to reduce morning stress. This includes identification, approved calculator, spare pens, directions to the venue, and any permitted reference materials.',
   },
   {
-    id: "check-3",
-    question: "When you first receive the exam paper, you should:",
+    id: 'check-3',
+    question: 'When you first receive the exam paper, you should:',
     options: [
-      "Start answering question 1 immediately",
-      "Read through all questions first to plan your approach",
-      "Find the hardest question and start there",
-      "Calculate how many marks you need per question"
+      'Start answering question 1 immediately',
+      'Read through all questions first to plan your approach',
+      'Find the hardest question and start there',
+      'Calculate how many marks you need per question',
     ],
     correctIndex: 1,
-    explanation: "Quickly scanning all questions helps you plan your time, identify easy wins, and spot any unexpected topics. It also allows your brain to start processing questions subconsciously."
+    explanation:
+      'Quickly scanning all questions helps you plan your time, identify easy wins, and spot any unexpected topics. It also allows your brain to start processing questions subconsciously.',
   },
   {
-    id: "check-4",
-    question: "If you encounter a question you cannot answer during the exam, you should:",
+    id: 'check-4',
+    question: 'If you encounter a question you cannot answer during the exam, you should:',
     options: [
-      "Spend extra time until you figure it out",
-      "Leave it blank and never return to it",
-      "Flag it, make your best attempt, and move on to return later if time permits",
-      "Ask the invigilator for help"
+      'Spend extra time until you figure it out',
+      'Leave it blank and never return to it',
+      'Flag it, make your best attempt, and move on to return later if time permits',
+      'Ask the invigilator for help',
     ],
     correctIndex: 2,
-    explanation: "Don't get stuck on difficult questions. Make your best attempt, flag it for review, and move on. You may gain insight from later questions, and you protect time for questions you can answer."
-  }
+    explanation:
+      "Don't get stuck on difficult questions. Make your best attempt, flag it for review, and move on. You may gain insight from later questions, and you protect time for questions you can answer.",
+  },
 ];
 
 // ============================================
@@ -78,148 +83,160 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: "The optimal amount of sleep the night before an exam is:",
+    question: 'The optimal amount of sleep the night before an exam is:',
     options: [
-      "4-5 hours - save time for extra revision",
-      "6-8 hours - adequate rest for cognitive function",
-      "10+ hours - more is better",
-      "Sleep doesn't affect exam performance"
+      '4-5 hours - save time for extra revision',
+      '6-8 hours - adequate rest for cognitive function',
+      '10+ hours - more is better',
+      "Sleep doesn't affect exam performance",
     ],
     correctAnswer: 1,
-    explanation: "7-8 hours of sleep optimises memory consolidation and cognitive function. Sleep deprivation significantly impairs reasoning and recall - the exact skills needed in exams."
+    explanation:
+      '7-8 hours of sleep optimises memory consolidation and cognitive function. Sleep deprivation significantly impairs reasoning and recall - the exact skills needed in exams.',
   },
   {
     id: 2,
-    question: "On the morning of the exam, breakfast should be:",
+    question: 'On the morning of the exam, breakfast should be:',
     options: [
-      "Skipped to avoid feeling sluggish",
-      "A large meal to provide maximum energy",
-      "A moderate, balanced meal avoiding excess sugar",
-      "Whatever is most convenient"
+      'Skipped to avoid feeling sluggish',
+      'A large meal to provide maximum energy',
+      'A moderate, balanced meal avoiding excess sugar',
+      'Whatever is most convenient',
     ],
     correctAnswer: 2,
-    explanation: "A moderate breakfast with protein and complex carbohydrates provides sustained energy. Excess sugar causes energy crashes, while skipping breakfast leaves you running on empty."
+    explanation:
+      'A moderate breakfast with protein and complex carbohydrates provides sustained energy. Excess sugar causes energy crashes, while skipping breakfast leaves you running on empty.',
   },
   {
     id: 3,
-    question: "You should arrive at the exam venue:",
+    question: 'You should arrive at the exam venue:',
     options: [
-      "Just before the start time",
-      "15-30 minutes early to settle and prepare mentally",
-      "An hour early for maximum preparation time",
-      "Timing doesn't matter"
+      'Just before the start time',
+      '15-30 minutes early to settle and prepare mentally',
+      'An hour early for maximum preparation time',
+      "Timing doesn't matter",
     ],
     correctAnswer: 1,
-    explanation: "Arriving 15-30 minutes early allows you to find your seat, settle your nerves, and prepare mentally without the stress of rushing or excessive waiting."
+    explanation:
+      'Arriving 15-30 minutes early allows you to find your seat, settle your nerves, and prepare mentally without the stress of rushing or excessive waiting.',
   },
   {
     id: 4,
-    question: "When allocating time during the exam, you should:",
+    question: 'When allocating time during the exam, you should:',
     options: [
-      "Spend equal time on all questions",
-      "Allocate time roughly proportional to marks available",
-      "Spend most time on your best topics",
-      "Not worry about time until the final warning"
+      'Spend equal time on all questions',
+      'Allocate time roughly proportional to marks available',
+      'Spend most time on your best topics',
+      'Not worry about time until the final warning',
     ],
     correctAnswer: 1,
-    explanation: "Time allocation should reflect mark weighting. A 10-mark question deserves roughly twice the time of a 5-mark question. Track your time at regular intervals."
+    explanation:
+      'Time allocation should reflect mark weighting. A 10-mark question deserves roughly twice the time of a 5-mark question. Track your time at regular intervals.',
   },
   {
     id: 5,
-    question: "For multiple choice questions, if unsure of the answer:",
+    question: 'For multiple choice questions, if unsure of the answer:',
     options: [
-      "Leave it blank",
-      "Always choose option C",
-      "Eliminate obviously wrong answers, then make your best choice",
-      "Change your answer multiple times"
+      'Leave it blank',
+      'Always choose option C',
+      'Eliminate obviously wrong answers, then make your best choice',
+      'Change your answer multiple times',
     ],
     correctAnswer: 2,
-    explanation: "Eliminate obviously wrong answers first, then choose the best remaining option. Never leave multiple choice blank - there's no penalty for guessing."
+    explanation:
+      "Eliminate obviously wrong answers first, then choose the best remaining option. Never leave multiple choice blank - there's no penalty for guessing.",
   },
   {
     id: 6,
-    question: "When answering calculation questions, marks are typically awarded for:",
+    question: 'When answering calculation questions, marks are typically awarded for:',
     options: [
-      "The final answer only",
-      "Method shown as well as final answer",
-      "Neatness of presentation",
-      "Speed of completion"
+      'The final answer only',
+      'Method shown as well as final answer',
+      'Neatness of presentation',
+      'Speed of completion',
     ],
     correctAnswer: 1,
-    explanation: "Most calculation questions award marks for method (correct formula, substitution, working) as well as the final answer. Show your working clearly - you can gain marks even with a final calculation error."
+    explanation:
+      'Most calculation questions award marks for method (correct formula, substitution, working) as well as the final answer. Show your working clearly - you can gain marks even with a final calculation error.',
   },
   {
     id: 7,
-    question: "If you finish the exam early, you should:",
+    question: 'If you finish the exam early, you should:',
     options: [
-      "Leave immediately to reduce stress",
-      "Sit quietly without reviewing",
-      "Review answers, particularly flagged questions and calculations",
-      "Change as many answers as possible"
+      'Leave immediately to reduce stress',
+      'Sit quietly without reviewing',
+      'Review answers, particularly flagged questions and calculations',
+      'Change as many answers as possible',
     ],
     correctAnswer: 2,
-    explanation: "Use extra time to review flagged questions, check calculations, and ensure you haven't missed any questions. But be cautious about changing answers - first instincts are often correct."
+    explanation:
+      "Use extra time to review flagged questions, check calculations, and ensure you haven't missed any questions. But be cautious about changing answers - first instincts are often correct.",
   },
   {
     id: 8,
-    question: "Reading time at the start of an exam should be used to:",
+    question: 'Reading time at the start of an exam should be used to:',
     options: [
-      "Start planning your revision for next time",
-      "Read and understand questions, plan your approach",
-      "Calculate the maximum time per question",
-      "Relax and avoid looking at the paper"
+      'Start planning your revision for next time',
+      'Read and understand questions, plan your approach',
+      'Calculate the maximum time per question',
+      'Relax and avoid looking at the paper',
     ],
     correctAnswer: 1,
-    explanation: "Use reading time actively - understand what each question is asking, note any unexpected topics, and mentally plan which questions to tackle first."
+    explanation:
+      'Use reading time actively - understand what each question is asking, note any unexpected topics, and mentally plan which questions to tackle first.',
   },
   {
     id: 9,
     question: "If you realise you've made an error in an earlier answer:",
     options: [
-      "Leave it - changing answers is always wrong",
+      'Leave it - changing answers is always wrong',
       "Cross out and correct clearly if you're certain",
-      "Panic and rush through remaining questions",
-      "Start the exam again from the beginning"
+      'Panic and rush through remaining questions',
+      'Start the exam again from the beginning',
     ],
     correctAnswer: 1,
-    explanation: "If you're confident you made an error, cross it out neatly and write the correction clearly. But don't second-guess yourself on every question - only change when you have good reason."
+    explanation:
+      "If you're confident you made an error, cross it out neatly and write the correction clearly. But don't second-guess yourself on every question - only change when you have good reason.",
   },
   {
     id: 10,
-    question: "For questions requiring BS 7671 references (if permitted), you should:",
+    question: 'For questions requiring BS 7671 references (if permitted), you should:',
     options: [
-      "Look up every question to be thorough",
-      "Know the structure well enough to find information quickly",
-      "Guess rather than waste time looking things up",
-      "Memorise every regulation number"
+      'Look up every question to be thorough',
+      'Know the structure well enough to find information quickly',
+      'Guess rather than waste time looking things up',
+      'Memorise every regulation number',
     ],
     correctAnswer: 1,
-    explanation: "If BS 7671 is permitted, knowing its structure allows quick lookups without wasting time. Practice navigating to common sections during revision."
+    explanation:
+      'If BS 7671 is permitted, knowing its structure allows quick lookups without wasting time. Practice navigating to common sections during revision.',
   },
   {
     id: 11,
     question: "The best approach to questions you've never seen before is:",
     options: [
-      "Skip them entirely",
-      "Apply related knowledge and first principles",
-      "Leave them until last and then guess",
-      "Panic and assume you'll fail"
+      'Skip them entirely',
+      'Apply related knowledge and first principles',
+      'Leave them until last and then guess',
+      "Panic and assume you'll fail",
     ],
     correctAnswer: 1,
-    explanation: "Apply your knowledge of related topics and first principles. Even unfamiliar questions can often be approached using fundamental concepts you do know."
+    explanation:
+      'Apply your knowledge of related topics and first principles. Even unfamiliar questions can often be approached using fundamental concepts you do know.',
   },
   {
     id: 12,
-    question: "After the exam, the most productive activity is:",
+    question: 'After the exam, the most productive activity is:',
     options: [
-      "Immediately discuss every answer with others",
-      "Begin studying for potential resits",
-      "Allow yourself to decompress, then reflect on lessons learned",
-      "Try to remember and record all your answers"
+      'Immediately discuss every answer with others',
+      'Begin studying for potential resits',
+      'Allow yourself to decompress, then reflect on lessons learned',
+      'Try to remember and record all your answers',
     ],
     correctAnswer: 2,
-    explanation: "After the exam, give yourself time to decompress. Later, reflect on what went well and what you'd do differently - this helps future exams. Avoid obsessive answer comparisons."
-  }
+    explanation:
+      "After the exam, give yourself time to decompress. Later, reflect on what went well and what you'd do differently - this helps future exams. Avoid obsessive answer comparisons.",
+  },
 ];
 
 // ============================================
@@ -227,29 +244,35 @@ const quizQuestions = [
 // ============================================
 const faqs = [
   {
-    question: "What if I blank out during the exam?",
-    answer: "Pause, take slow deep breaths (4 seconds in, 4 out), and move to another question. Coming back to the difficult question later often helps as your brain continues processing subconsciously. Remember: some nerves are normal."
+    question: 'What if I blank out during the exam?',
+    answer:
+      'Pause, take slow deep breaths (4 seconds in, 4 out), and move to another question. Coming back to the difficult question later often helps as your brain continues processing subconsciously. Remember: some nerves are normal.',
   },
   {
-    question: "Should I study the night before the exam?",
-    answer: "Light review only - glance over summary notes and key formulas. Do not attempt to learn new material. Cramming the night before actually impairs performance by disrupting sleep and increasing anxiety."
+    question: 'Should I study the night before the exam?',
+    answer:
+      'Light review only - glance over summary notes and key formulas. Do not attempt to learn new material. Cramming the night before actually impairs performance by disrupting sleep and increasing anxiety.',
   },
   {
     question: "What if I'm running out of time?",
-    answer: "If time is short, prioritise questions with the most marks remaining. For calculation questions, show your method even if you can't complete - method marks can be awarded. Never leave multiple choice blank."
+    answer:
+      "If time is short, prioritise questions with the most marks remaining. For calculation questions, show your method even if you can't complete - method marks can be awarded. Never leave multiple choice blank.",
   },
   {
-    question: "Can I bring notes into the exam?",
-    answer: "Check your specific exam rules carefully. Some exams are 'open book' allowing BS 7671 or specified materials. Others are 'closed book' with nothing permitted. Know the rules before exam day."
+    question: 'Can I bring notes into the exam?',
+    answer:
+      "Check your specific exam rules carefully. Some exams are 'open book' allowing BS 7671 or specified materials. Others are 'closed book' with nothing permitted. Know the rules before exam day.",
   },
   {
-    question: "What should I do if I feel ill during the exam?",
-    answer: "Inform the invigilator immediately. They can arrange a comfort break, provide water, or in serious cases, arrange for special consideration. Don't suffer in silence - your wellbeing matters."
+    question: 'What should I do if I feel ill during the exam?',
+    answer:
+      "Inform the invigilator immediately. They can arrange a comfort break, provide water, or in serious cases, arrange for special consideration. Don't suffer in silence - your wellbeing matters.",
   },
   {
-    question: "How do I handle exam anxiety on the day?",
-    answer: "Use breathing techniques (slow, deep breaths), positive self-talk ('I have prepared well'), and focus on one question at a time. Arrive early to settle. Remember that some anxiety is normal and can help performance."
-  }
+    question: 'How do I handle exam anxiety on the day?',
+    answer:
+      "Use breathing techniques (slow, deep breaths), positive self-talk ('I have prepared well'), and focus on one question at a time. Arrive early to settle. Remember that some anxiety is normal and can help performance.",
+  },
 ];
 
 // ============================================
@@ -260,7 +283,6 @@ const Level3Module8Section4_4 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* STICKY HEADER */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -280,35 +302,44 @@ const Level3Module8Section4_4 = () => {
 
       {/* MAIN ARTICLE CONTENT */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* HEADER */}
-        
 
         {/* QUICK SUMMARY BOXES */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Final week:</strong> Consolidate, don't cram</li>
-              <li><strong>Night before:</strong> Prepare everything, sleep well</li>
-              <li><strong>Exam day:</strong> Arrive early, stay calm</li>
-              <li><strong>During exam:</strong> Read all, plan time, show working</li>
+              <li>
+                <strong>Final week:</strong> Consolidate, don't cram
+              </li>
+              <li>
+                <strong>Night before:</strong> Prepare everything, sleep well
+              </li>
+              <li>
+                <strong>Exam day:</strong> Arrive early, stay calm
+              </li>
+              <li>
+                <strong>During exam:</strong> Read all, plan time, show working
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> High-mark questions, familiar topics</li>
-              <li><strong>Use:</strong> Time proportional to marks</li>
-              <li><strong>Apply:</strong> Show method for calculations</li>
+              <li>
+                <strong>Spot:</strong> High-mark questions, familiar topics
+              </li>
+              <li>
+                <strong>Use:</strong> Time proportional to marks
+              </li>
+              <li>
+                <strong>Apply:</strong> Show method for calculations
+              </li>
             </ul>
           </div>
         </div>
 
         {/* LEARNING OUTCOMES */}
-        
-
-        
 
         {/* CONTENT SECTION 01 */}
         <section className="mb-10">
@@ -318,7 +349,8 @@ const Level3Module8Section4_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The final week before your exam is not the time for intensive new learning. Focus on consolidation, confidence building, and ensuring you're physically and mentally ready.
+              The final week before your exam is not the time for intensive new learning. Focus on
+              consolidation, confidence building, and ensuring you're physically and mentally ready.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
@@ -326,19 +358,31 @@ const Level3Module8Section4_4 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">7-5 Days Before</p>
-                  <p className="text-white/80 mt-1">Light revision of weak areas, review summary notes, complete one final mock exam under conditions.</p>
+                  <p className="text-white/80 mt-1">
+                    Light revision of weak areas, review summary notes, complete one final mock exam
+                    under conditions.
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">4-3 Days Before</p>
-                  <p className="text-white/80 mt-1">Review the mock exam results, address any surprising gaps. Review key formulas and procedures.</p>
+                  <p className="text-white/80 mt-1">
+                    Review the mock exam results, address any surprising gaps. Review key formulas
+                    and procedures.
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">2 Days Before</p>
-                  <p className="text-white/80 mt-1">Light review of summary notes only. Check exam logistics - venue, time, required items.</p>
+                  <p className="text-white/80 mt-1">
+                    Light review of summary notes only. Check exam logistics - venue, time, required
+                    items.
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">1 Day Before</p>
-                  <p className="text-white/80 mt-1">Glance at summaries only. Prepare all equipment. Plan journey. Early night - aim for 7-8 hours sleep.</p>
+                  <p className="text-white/80 mt-1">
+                    Glance at summaries only. Prepare all equipment. Plan journey. Early night - aim
+                    for 7-8 hours sleep.
+                  </p>
                 </div>
               </div>
             </div>
@@ -367,7 +411,8 @@ const Level3Module8Section4_4 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> You can't learn everything in the final week. Trust your preparation and focus on arriving at the exam rested and confident.
+              <strong>Remember:</strong> You can't learn everything in the final week. Trust your
+              preparation and focus on arriving at the exam rested and confident.
             </p>
           </div>
         </section>
@@ -383,7 +428,8 @@ const Level3Module8Section4_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Exam day logistics should be planned in advance so you can focus entirely on the exam itself. Reduce stress by having everything ready the night before.
+              Exam day logistics should be planned in advance so you can focus entirely on the exam
+              itself. Reduce stress by having everything ready the night before.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
@@ -450,7 +496,9 @@ const Level3Module8Section4_4 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Pro Tip:</strong> Avoid discussing exam topics with other candidates immediately before. Their anxiety is contagious, and last-minute doubts aren't helpful.
+              <strong>Pro Tip:</strong> Avoid discussing exam topics with other candidates
+              immediately before. Their anxiety is contagious, and last-minute doubts aren't
+              helpful.
             </p>
           </div>
         </section>
@@ -466,7 +514,8 @@ const Level3Module8Section4_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Effective exam technique can make a significant difference to your result. A methodical approach helps you demonstrate your knowledge effectively.
+              Effective exam technique can make a significant difference to your result. A
+              methodical approach helps you demonstrate your knowledge effectively.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
@@ -474,30 +523,47 @@ const Level3Module8Section4_4 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">1. Read Instructions (2-3 mins)</p>
-                  <p className="text-white/80 mt-1">Check total marks, number of questions, any compulsory sections, and allowed materials. Note any surprises.</p>
+                  <p className="text-white/80 mt-1">
+                    Check total marks, number of questions, any compulsory sections, and allowed
+                    materials. Note any surprises.
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
-                  <p className="text-elec-yellow/80 font-medium">2. Scan All Questions (5-10 mins)</p>
-                  <p className="text-white/80 mt-1">Read through all questions. Note topics covered, mark allocations, and identify your strongest questions.</p>
+                  <p className="text-elec-yellow/80 font-medium">
+                    2. Scan All Questions (5-10 mins)
+                  </p>
+                  <p className="text-white/80 mt-1">
+                    Read through all questions. Note topics covered, mark allocations, and identify
+                    your strongest questions.
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">3. Plan Time Allocation</p>
-                  <p className="text-white/80 mt-1">Roughly allocate time proportional to marks. Note target times for each section.</p>
+                  <p className="text-white/80 mt-1">
+                    Roughly allocate time proportional to marks. Note target times for each section.
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">4. Answer Strategically</p>
-                  <p className="text-white/80 mt-1">Start with your strongest topics to build confidence. Flag difficult questions for later review.</p>
+                  <p className="text-white/80 mt-1">
+                    Start with your strongest topics to build confidence. Flag difficult questions
+                    for later review.
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">5. Review (Final 10-15 mins)</p>
-                  <p className="text-white/80 mt-1">Return to flagged questions. Check calculations. Ensure all questions attempted.</p>
+                  <p className="text-white/80 mt-1">
+                    Return to flagged questions. Check calculations. Ensure all questions attempted.
+                  </p>
                 </div>
               </div>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Multiple Choice Tips:</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Multiple Choice Tips:
+                </p>
                 <ul className="text-xs text-white/80 space-y-1">
                   <li>Read the question fully before looking at options</li>
                   <li>Eliminate obviously wrong answers first</li>
@@ -521,17 +587,31 @@ const Level3Module8Section4_4 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-sm font-medium text-red-400 mb-2">Common Exam Mistakes:</p>
               <ul className="text-xs text-white/90 space-y-1">
-                <li><strong>Not reading carefully:</strong> Missing key words like "NOT" or specific conditions</li>
-                <li><strong>Time mismanagement:</strong> Spending too long on one question</li>
-                <li><strong>Leaving questions blank:</strong> Even a guess is better than nothing</li>
-                <li><strong>Not showing working:</strong> Missing method marks on calculations</li>
-                <li><strong>Changing correct answers:</strong> Second-guessing your knowledge</li>
-                <li><strong>Rushing at the end:</strong> Careless errors when time is short</li>
+                <li>
+                  <strong>Not reading carefully:</strong> Missing key words like "NOT" or specific
+                  conditions
+                </li>
+                <li>
+                  <strong>Time mismanagement:</strong> Spending too long on one question
+                </li>
+                <li>
+                  <strong>Leaving questions blank:</strong> Even a guess is better than nothing
+                </li>
+                <li>
+                  <strong>Not showing working:</strong> Missing method marks on calculations
+                </li>
+                <li>
+                  <strong>Changing correct answers:</strong> Second-guessing your knowledge
+                </li>
+                <li>
+                  <strong>Rushing at the end:</strong> Careless errors when time is short
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key Point:</strong> Marks are awarded for what you write. Show your knowledge - never leave a question completely blank if you have any relevant information.
+              <strong>Key Point:</strong> Marks are awarded for what you write. Show your knowledge
+              - never leave a question completely blank if you have any relevant information.
             </p>
           </div>
         </section>
@@ -547,7 +627,8 @@ const Level3Module8Section4_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Even with excellent preparation, you may encounter unexpected difficulties. Having strategies ready helps you stay calm and maximise your performance.
+              Even with excellent preparation, you may encounter unexpected difficulties. Having
+              strategies ready helps you stay calm and maximise your performance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -562,7 +643,9 @@ const Level3Module8Section4_4 = () => {
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">If Running Out of Time:</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  If Running Out of Time:
+                </p>
                 <ul className="text-xs text-white/80 space-y-1">
                   <li>Prioritise highest-mark questions remaining</li>
                   <li>Write key points in bullet form if needed</li>
@@ -576,15 +659,29 @@ const Level3Module8Section4_4 = () => {
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-white mb-3">After the Exam:</p>
               <div className="space-y-3 text-sm text-white/80">
-                <p><strong>Immediately after:</strong> Allow yourself to decompress. Avoid obsessive answer comparisons with others - it often increases anxiety without benefit.</p>
-                <p><strong>Same day:</strong> Do something enjoyable and unrelated to the exam. You've earned a break regardless of how it went.</p>
-                <p><strong>Within a week:</strong> Brief reflection - what went well? What would you do differently? This helps future exams without dwelling.</p>
-                <p><strong>Results:</strong> If you pass, celebrate! If not, analyse objectively and plan next steps. One exam doesn't define your career.</p>
+                <p>
+                  <strong>Immediately after:</strong> Allow yourself to decompress. Avoid obsessive
+                  answer comparisons with others - it often increases anxiety without benefit.
+                </p>
+                <p>
+                  <strong>Same day:</strong> Do something enjoyable and unrelated to the exam.
+                  You've earned a break regardless of how it went.
+                </p>
+                <p>
+                  <strong>Within a week:</strong> Brief reflection - what went well? What would you
+                  do differently? This helps future exams without dwelling.
+                </p>
+                <p>
+                  <strong>Results:</strong> If you pass, celebrate! If not, analyse objectively and
+                  plan next steps. One exam doesn't define your career.
+                </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 my-6">
-              <p className="text-sm font-medium text-green-400 mb-2">Post-Exam Reflection Questions:</p>
+              <p className="text-sm font-medium text-green-400 mb-2">
+                Post-Exam Reflection Questions:
+              </p>
               <ul className="text-xs text-white/80 space-y-1">
                 <li>Did I manage my time effectively?</li>
                 <li>Were there topics I wish I'd reviewed more?</li>
@@ -595,7 +692,9 @@ const Level3Module8Section4_4 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Final Thought:</strong> Remember that exams are a means to an end - demonstrating competence in your chosen field. Whatever the result, your value as a person and professional extends far beyond a single exam score.
+              <strong>Final Thought:</strong> Remember that exams are a means to an end -
+              demonstrating competence in your chosen field. Whatever the result, your value as a
+              person and professional extends far beyond a single exam score.
             </p>
           </div>
         </section>
@@ -622,7 +721,9 @@ const Level3Module8Section4_4 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">During-Exam Reminders</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                During-Exam Reminders
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Read questions carefully (twice if needed)</li>
                 <li>Allocate time proportional to marks</li>
@@ -688,10 +789,7 @@ const Level3Module8Section4_4 = () => {
 
         {/* QUIZ */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* NAVIGATION */}
@@ -718,7 +816,6 @@ const Level3Module8Section4_4 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

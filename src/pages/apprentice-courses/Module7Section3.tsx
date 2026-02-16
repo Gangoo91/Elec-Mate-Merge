@@ -1,44 +1,44 @@
-import { ArrowLeft, Stethoscope, Eye, AlertTriangle, TestTube, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Stethoscope, Eye, AlertTriangle, TestTube, Zap } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Tripping MCBs or RCDs",
-    description: "Understanding protective device operation as fault indicators",
+    number: 'Subsection 1',
+    title: 'Tripping MCBs or RCDs',
+    description: 'Understanding protective device operation as fault indicators',
     icon: Stethoscope,
-    href: "3-1"
+    href: '3-1',
   },
   {
-    number: "Subsection 2",
-    title: "Understanding the Sequence of Operation",
-    description: "Trace how a circuit functions to locate faults logically",
+    number: 'Subsection 2',
+    title: 'Understanding the Sequence of Operation',
+    description: 'Trace how a circuit functions to locate faults logically',
     icon: Eye,
-    href: "3-2"
+    href: '3-2',
   },
   {
-    number: "Subsection 3",
-    title: "Testing One Component or Section at a Time",
-    description: "Isolate and confirm faults efficiently with step-by-step testing",
+    number: 'Subsection 3',
+    title: 'Testing One Component or Section at a Time',
+    description: 'Isolate and confirm faults efficiently with step-by-step testing',
     icon: AlertTriangle,
-    href: "3-3"
+    href: '3-3',
   },
   {
-    number: "Subsection 4",
-    title: "Buzzing Sounds, Arcing, or Sparking",
-    description: "Recognising audible and visible signs of electrical problems",
+    number: 'Subsection 4',
+    title: 'Buzzing Sounds, Arcing, or Sparking',
+    description: 'Recognising audible and visible signs of electrical problems',
     icon: TestTube,
-    href: "3-4"
+    href: '3-4',
   },
   {
-    number: "Subsection 5",
-    title: "Complaints from Occupants or Users",
-    description: "Understanding user-reported symptoms of electrical faults",
+    number: 'Subsection 5',
+    title: 'Complaints from Occupants or Users',
+    description: 'Understanding user-reported symptoms of electrical faults',
     icon: Zap,
-    href: "3-5"
-  }
+    href: '3-5',
+  },
 ];
 
 const Section3 = () => {

@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   ArrowLeft,
   FileCheck,
@@ -13,8 +13,8 @@ import {
   Plug,
   Sun,
   ChevronRight,
-  Sparkles
-} from "lucide-react";
+  Sparkles,
+} from 'lucide-react';
 
 interface CertificateType {
   id: string;
@@ -40,102 +40,102 @@ export default function NewCertificate() {
 
   const certificateGroups: CertificateGroup[] = [
     {
-      title: "Electrical Installation",
-      description: "BS 7671 certificates for electrical installations",
+      title: 'Electrical Installation',
+      description: 'BS 7671 certificates for electrical installations',
       certificates: [
         {
-          id: "eicr",
-          title: "EICR",
-          fullName: "Electrical Installation Condition Report",
-          description: "Periodic inspection and testing of existing installations",
+          id: 'eicr',
+          title: 'EICR',
+          fullName: 'Electrical Installation Condition Report',
+          description: 'Periodic inspection and testing of existing installations',
           icon: FileCheck,
-          color: "text-blue-500",
-          bgColor: "bg-blue-500/10",
-          borderColor: "border-blue-500/30 hover:border-blue-500",
-          standard: "BS 7671"
+          color: 'text-blue-500',
+          bgColor: 'bg-blue-500/10',
+          borderColor: 'border-blue-500/30 hover:border-blue-500',
+          standard: 'BS 7671',
         },
         {
-          id: "eic",
-          title: "EIC",
-          fullName: "Electrical Installation Certificate",
-          description: "New installations or major alterations/additions",
+          id: 'eic',
+          title: 'EIC',
+          fullName: 'Electrical Installation Certificate',
+          description: 'New installations or major alterations/additions',
           icon: FileText,
-          color: "text-green-500",
-          bgColor: "bg-green-500/10",
-          borderColor: "border-green-500/30 hover:border-green-500",
-          standard: "BS 7671"
+          color: 'text-green-500',
+          bgColor: 'bg-green-500/10',
+          borderColor: 'border-green-500/30 hover:border-green-500',
+          standard: 'BS 7671',
         },
         {
-          id: "minor-works",
-          title: "Minor Works",
-          fullName: "Minor Electrical Installation Works Certificate",
-          description: "Small additions to existing circuits",
+          id: 'minor-works',
+          title: 'Minor Works',
+          fullName: 'Minor Electrical Installation Works Certificate',
+          description: 'Small additions to existing circuits',
           icon: Wrench,
-          color: "text-orange-500",
-          bgColor: "bg-orange-500/10",
-          borderColor: "border-orange-500/30 hover:border-orange-500",
-          standard: "BS 7671"
-        }
-      ]
+          color: 'text-orange-500',
+          bgColor: 'bg-orange-500/10',
+          borderColor: 'border-orange-500/30 hover:border-orange-500',
+          standard: 'BS 7671',
+        },
+      ],
     },
     {
-      title: "Fire & Safety Systems",
-      description: "Fire alarm and emergency lighting certificates",
+      title: 'Fire & Safety Systems',
+      description: 'Fire alarm and emergency lighting certificates',
       certificates: [
         {
-          id: "fire-alarm",
-          title: "Fire Alarm",
-          fullName: "Fire Alarm System Certificate",
-          description: "Installation, commissioning, and periodic testing",
+          id: 'fire-alarm',
+          title: 'Fire Alarm',
+          fullName: 'Fire Alarm System Certificate',
+          description: 'Installation, commissioning, and periodic testing',
           icon: Bell,
-          color: "text-red-500",
-          bgColor: "bg-red-500/10",
-          borderColor: "border-red-500/30 hover:border-red-500",
-          standard: "BS 5839",
-          isNew: true
+          color: 'text-red-500',
+          bgColor: 'bg-red-500/10',
+          borderColor: 'border-red-500/30 hover:border-red-500',
+          standard: 'BS 5839',
+          isNew: true,
         },
         {
-          id: "emergency-lighting",
-          title: "Emergency Lighting",
-          fullName: "Emergency Lighting Certificate",
-          description: "Installation and periodic inspection",
+          id: 'emergency-lighting',
+          title: 'Emergency Lighting',
+          fullName: 'Emergency Lighting Certificate',
+          description: 'Installation and periodic inspection',
           icon: Lightbulb,
-          color: "text-amber-500",
-          bgColor: "bg-amber-500/10",
-          borderColor: "border-amber-500/30 hover:border-amber-500",
-          standard: "BS 5266",
-          isNew: true
-        }
-      ]
+          color: 'text-amber-500',
+          bgColor: 'bg-amber-500/10',
+          borderColor: 'border-amber-500/30 hover:border-amber-500',
+          standard: 'BS 5266',
+          isNew: true,
+        },
+      ],
     },
     {
-      title: "Specialist Certificates",
-      description: "EV charging and solar PV installations",
+      title: 'Specialist Certificates',
+      description: 'EV charging and solar PV installations',
       certificates: [
         {
-          id: "ev-charging",
-          title: "EV Charging",
-          fullName: "EV Charging Point Certificate",
-          description: "Electric vehicle charger installation",
+          id: 'ev-charging',
+          title: 'EV Charging',
+          fullName: 'EV Charging Point Certificate',
+          description: 'Electric vehicle charger installation',
           icon: Zap,
-          color: "text-emerald-500",
-          bgColor: "bg-emerald-500/10",
-          borderColor: "border-emerald-500/30 hover:border-emerald-500",
-          standard: "IET CoP",
-          isNew: true
+          color: 'text-emerald-500',
+          bgColor: 'bg-emerald-500/10',
+          borderColor: 'border-emerald-500/30 hover:border-emerald-500',
+          standard: 'IET CoP',
+          isNew: true,
         },
         {
-          id: "solar-pv",
-          title: "Solar PV",
-          fullName: "Solar PV Installation Certificate",
-          description: "MCS-certified solar panel installations",
+          id: 'solar-pv',
+          title: 'Solar PV',
+          fullName: 'Solar PV Installation Certificate',
+          description: 'MCS-certified solar panel installations',
           icon: Sun,
-          color: "text-amber-500",
-          bgColor: "bg-amber-500/10",
-          borderColor: "border-amber-500/30 hover:border-amber-500",
-          standard: "MCS / BS EN 62446",
-          isNew: true
-        }
+          color: 'text-amber-500',
+          bgColor: 'bg-amber-500/10',
+          borderColor: 'border-amber-500/30 hover:border-amber-500',
+          standard: 'MCS / BS EN 62446',
+          isNew: true,
+        },
         // PAT Testing archived - code preserved in PATTestingCertificate.tsx
         // {
         //   id: "pat-testing",
@@ -149,8 +149,8 @@ export default function NewCertificate() {
         //   standard: "IET CoP",
         //   isNew: true
         // }
-      ]
-    }
+      ],
+    },
   ];
 
   return (
@@ -161,7 +161,7 @@ export default function NewCertificate() {
           <Button
             variant="ghost"
             className="text-muted-foreground hover:text-foreground p-0 mb-3 h-11 touch-manipulation active:scale-[0.98]"
-            onClick={() => navigate("/electrician/inspection-testing")}
+            onClick={() => navigate('/electrician/inspection-testing')}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -202,7 +202,9 @@ export default function NewCertificate() {
                     <CardContent className="p-4">
                       <div className="flex items-start gap-4">
                         {/* Icon */}
-                        <div className={`w-12 h-12 rounded-xl ${cert.bgColor} flex items-center justify-center flex-shrink-0`}>
+                        <div
+                          className={`w-12 h-12 rounded-xl ${cert.bgColor} flex items-center justify-center flex-shrink-0`}
+                        >
                           <cert.icon className={`h-6 w-6 ${cert.color}`} />
                         </div>
 
@@ -222,7 +224,10 @@ export default function NewCertificate() {
                           </p>
                           <div className="flex items-center justify-between">
                             {cert.standard && (
-                              <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-muted/50">
+                              <Badge
+                                variant="outline"
+                                className="text-[10px] px-1.5 py-0 bg-muted/50"
+                              >
                                 {cert.standard}
                               </Badge>
                             )}

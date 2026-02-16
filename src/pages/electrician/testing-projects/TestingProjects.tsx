@@ -63,7 +63,9 @@ export default function TestingProjects() {
           <CardContent className="py-12 text-center">
             <AlertCircle className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
             <p className="text-muted-foreground">No designs ready for testing</p>
-            <p className="text-sm text-muted-foreground mt-2">Complete a design in the AI Planner to see it here</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Complete a design in the AI Planner to see it here
+            </p>
           </CardContent>
         </Card>
       ) : (
@@ -82,15 +84,20 @@ export default function TestingProjects() {
                   <p className="text-muted-foreground">Location</p>
                   <p className="font-medium">{design.installation_address || 'Not specified'}</p>
                 </div>
-                
+
                 <div className="text-sm">
                   <p className="text-muted-foreground">Circuits</p>
-                  <p className="font-medium">{Array.isArray(design.circuits) ? design.circuits.length : 0} circuits</p>
+                  <p className="font-medium">
+                    {Array.isArray(design.circuits) ? design.circuits.length : 0} circuits
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Clock className="h-4 w-4" />
-                  <span>Exported {new Date(design.exported_at || design.created_at).toLocaleDateString()}</span>
+                  <span>
+                    Exported{' '}
+                    {new Date(design.exported_at || design.created_at).toLocaleDateString()}
+                  </span>
                 </div>
 
                 <Button onClick={() => startTesting(design)} className="w-full mt-4">

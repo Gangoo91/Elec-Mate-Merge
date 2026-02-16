@@ -1,45 +1,45 @@
-import { ArrowLeft, Zap, CloudRain, Droplets, Package } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CloudRain, Droplets, Package } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Energy Use on Construction Sites",
+    title: 'Energy Use on Construction Sites',
     icon: Zap,
     description:
-      "Common energy sources on site, how to monitor and measure energy consumption, and practical steps to reduce energy waste",
+      'Common energy sources on site, how to monitor and measure energy consumption, and practical steps to reduce energy waste',
   },
   {
     id: 2,
-    title: "Reducing Your Carbon Footprint",
+    title: 'Reducing Your Carbon Footprint',
     icon: CloudRain,
     description:
-      "Understanding carbon emissions from construction activities, Scope 1, 2, and 3 emissions, and strategies for carbon reduction on site",
+      'Understanding carbon emissions from construction activities, Scope 1, 2, and 3 emissions, and strategies for carbon reduction on site',
   },
   {
     id: 3,
-    title: "Water Conservation",
+    title: 'Water Conservation',
     icon: Droplets,
     description:
-      "Why water is a precious resource on construction sites, practical water-saving techniques, rainwater harvesting, and preventing water waste",
+      'Why water is a precious resource on construction sites, practical water-saving techniques, rainwater harvesting, and preventing water waste',
   },
   {
     id: 4,
-    title: "Sustainable Materials & Procurement",
+    title: 'Sustainable Materials & Procurement',
     icon: Package,
     description:
-      "Choosing materials with lower environmental impact, responsible sourcing, embodied carbon, and the role of supply chain sustainability",
+      'Choosing materials with lower environmental impact, responsible sourcing, embodied carbon, and the role of supply chain sustainability',
   },
 ];
 
 export default function EnvironmentalSustainabilityModule3() {
   useSEO({
-    title: "Module 3: Energy & Resource Efficiency | Environmental & Sustainability",
+    title: 'Module 3: Energy & Resource Efficiency | Environmental & Sustainability',
     description:
-      "Learn about energy use on construction sites, carbon reduction, water conservation, and sustainable materials procurement.",
+      'Learn about energy use on construction sites, carbon reduction, water conservation, and sustainable materials procurement.',
   });
 
   return (
@@ -77,8 +77,8 @@ export default function EnvironmentalSustainabilityModule3() {
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
               Explore how energy is used on construction sites, learn strategies to reduce your
-              carbon footprint, discover practical water conservation techniques, and understand
-              how to choose sustainable materials and procurement methods.
+              carbon footprint, discover practical water conservation techniques, and understand how
+              to choose sustainable materials and procurement methods.
             </p>
           </div>
 

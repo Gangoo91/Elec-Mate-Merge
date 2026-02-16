@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { diagnosticQuestions } from './diagnosticQuestions';
 import { generateResult } from './diagnosticLogic';

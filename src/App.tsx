@@ -1,8 +1,8 @@
 import './App.css';
 import AppRouter from './AppRouter';
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as SonnerToaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as SonnerToaster } from '@/components/ui/sonner';
+import { ThemeProvider } from '@/components/theme-provider';
 import { BrowserRouter } from 'react-router-dom';
 import TrainingActivityMonitor from '@/components/apprentice/TrainingActivityMonitor';
 import { AuthProvider } from '@/contexts/AuthContext';
@@ -19,8 +19,12 @@ import { lazy, Suspense } from 'react';
 
 // Lazy load analytics components to defer ~427KB from initial bundle
 const PostHogProvider = lazy(() => import('@/components/analytics/PostHogProvider'));
-const SpeedInsights = lazy(() => import('@vercel/speed-insights/react').then(m => ({ default: m.SpeedInsights })));
-const Analytics = lazy(() => import('@vercel/analytics/react').then(m => ({ default: m.Analytics })));
+const SpeedInsights = lazy(() =>
+  import('@vercel/speed-insights/react').then((m) => ({ default: m.SpeedInsights }))
+);
+const Analytics = lazy(() =>
+  import('@vercel/analytics/react').then((m) => ({ default: m.Analytics }))
+);
 
 // Initialize native app features (Capacitor)
 function NativeAppInit({ children }: { children: React.ReactNode }) {

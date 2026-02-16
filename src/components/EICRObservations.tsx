@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EICRInspectionChecklist from './EICRInspectionChecklist';
 
@@ -8,11 +7,15 @@ interface EICRObservationsProps {
   onNavigateToObservations?: () => void;
 }
 
-const EICRObservations = ({ formData, onUpdate, onNavigateToObservations }: EICRObservationsProps) => {
+const EICRObservations = ({
+  formData,
+  onUpdate,
+  onNavigateToObservations,
+}: EICRObservationsProps) => {
   return (
-    <EICRInspectionChecklist 
-      formData={formData} 
-      onUpdate={onUpdate} 
+    <EICRInspectionChecklist
+      formData={formData}
+      onUpdate={onUpdate}
       onNavigateToObservations={onNavigateToObservations}
     />
   );

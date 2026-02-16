@@ -1,14 +1,26 @@
-import { useState, useEffect } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { IOSStepIndicator } from "@/components/ui/ios-step-indicator";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
+import { cn } from '@/lib/utils';
 import {
   Plus,
   Trash2,
@@ -22,12 +34,12 @@ import {
   Clock,
   Sparkles,
   Loader2,
-  X
-} from "lucide-react";
-import { useCreateQuote, useNextQuoteNumber, usePriceBook } from "@/hooks/useFinance";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { useOptionalVoiceFormContext } from "@/contexts/VoiceFormContext";
+  X,
+} from 'lucide-react';
+import { useCreateQuote, useNextQuoteNumber, usePriceBook } from '@/hooks/useFinance';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 
 interface LineItem {
   id: string;
@@ -54,35 +66,45 @@ interface CreateQuoteDialogProps {
 }
 
 const STEPS = [
-  { id: 1, title: "Client", icon: User },
-  { id: 2, title: "Labour", icon: Clock },
-  { id: 3, title: "Materials", icon: Package },
-  { id: 4, title: "Review", icon: FileCheck },
+  { id: 1, title: 'Client', icon: User },
+  { id: 2, title: 'Labour', icon: Clock },
+  { id: 3, title: 'Materials', icon: Package },
+  { id: 4, title: 'Review', icon: FileCheck },
 ];
 
 const LABOUR_PRESETS = [
-  { description: "1st Fix Electrician", hourlyRate: 45 },
-  { description: "2nd Fix Electrician", hourlyRate: 45 },
-  { description: "Apprentice", hourlyRate: 18 },
-  { description: "Qualified Electrician", hourlyRate: 45 },
+  { description: '1st Fix Electrician', hourlyRate: 45 },
+  { description: '2nd Fix Electrician', hourlyRate: 45 },
+  { description: 'Apprentice', hourlyRate: 18 },
+  { description: 'Qualified Electrician', hourlyRate: 45 },
 ];
 
-export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAmount }: CreateQuoteDialogProps) {
+export function CreateQuoteDialog({
+  open,
+  onOpenChange,
+  prefillClient,
+  prefillAmount,
+}: CreateQuoteDialogProps) {
   const [step, setStep] = useState(1);
-  const [client, setClient] = useState(prefillClient || "");
-  const [clientAddress, setClientAddress] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
-  const [clientPhone, setClientPhone] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [validityDays, setValidityDays] = useState("30");
-  const [vatRate, setVatRate] = useState("20");
-  const [notes, setNotes] = useState("");
+  const [client, setClient] = useState(prefillClient || '');
+  const [clientAddress, setClientAddress] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [validityDays, setValidityDays] = useState('30');
+  const [vatRate, setVatRate] = useState('20');
+  const [notes, setNotes] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [labourItems, setLabourItems] = useState<LabourItem[]>([]);
-  const [newItem, setNewItem] = useState({ description: "", quantity: "", unit: "each", unitPrice: "" });
-  const [newLabour, setNewLabour] = useState({ description: "", hours: "", hourlyRate: "" });
-  
+  const [newItem, setNewItem] = useState({
+    description: '',
+    quantity: '',
+    unit: 'each',
+    unitPrice: '',
+  });
+  const [newLabour, setNewLabour] = useState({ description: '', hours: '', hourlyRate: '' });
+
   // String state for quantity/price inputs to allow empty values
   const [itemQuantityInputs, setItemQuantityInputs] = useState<Record<string, string>>({});
   const [labourHoursInputs, setLabourHoursInputs] = useState<Record<string, string>>({});
@@ -95,22 +117,22 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
   // AI expand description
   const handleExpandDescription = async () => {
     if (!description.trim()) return;
-    
+
     setIsExpandingDescription(true);
     try {
       const { data, error } = await supabase.functions.invoke('expand-description', {
-        body: { description: description.trim() }
+        body: { description: description.trim() },
       });
-      
+
       if (error) throw error;
-      
+
       if (data?.expandedDescription) {
         setDescription(data.expandedDescription);
-        toast.success("Description expanded");
+        toast.success('Description expanded');
       }
     } catch (err: any) {
-      console.error("Error expanding description:", err);
-      toast.error(err.message || "Failed to expand description");
+      console.error('Error expanding description:', err);
+      toast.error(err.message || 'Failed to expand description');
     } finally {
       setIsExpandingDescription(false);
     }
@@ -119,23 +141,25 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
   useEffect(() => {
     if (prefillClient) setClient(prefillClient);
     if (prefillAmount) {
-      setLineItems([{
-        id: crypto.randomUUID(),
-        description: "Works as discussed",
-        quantity: 1,
-        unit: "job",
-        unitPrice: prefillAmount,
-        total: prefillAmount
-      }]);
+      setLineItems([
+        {
+          id: crypto.randomUUID(),
+          description: 'Works as discussed',
+          quantity: 1,
+          unit: 'job',
+          unitPrice: prefillAmount,
+          total: prefillAmount,
+        },
+      ]);
     }
   }, [prefillClient, prefillAmount]);
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
-  
+
   useEffect(() => {
     if (!open || !voiceContext) return;
-    
+
     voiceContext.registerForm({
       formId: 'create-quote',
       formName: 'Create Quote',
@@ -150,19 +174,43 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
         { name: 'vatRate', label: 'VAT Rate', type: 'text' },
         { name: 'notes', label: 'Notes', type: 'text' },
       ],
-      actions: ['add_labour_item', 'add_material_item', 'add_from_preset', 'next_step', 'previous_step'],
+      actions: [
+        'add_labour_item',
+        'add_material_item',
+        'add_from_preset',
+        'next_step',
+        'previous_step',
+      ],
       onFillField: (field, value) => {
         const strValue = String(value);
         switch (field) {
-          case 'client': setClient(strValue); break;
-          case 'clientAddress': setClientAddress(strValue); break;
-          case 'clientEmail': setClientEmail(strValue); break;
-          case 'clientPhone': setClientPhone(strValue); break;
-          case 'jobTitle': setJobTitle(strValue); break;
-          case 'description': setDescription(strValue); break;
-          case 'validityDays': setValidityDays(strValue); break;
-          case 'vatRate': setVatRate(strValue); break;
-          case 'notes': setNotes(strValue); break;
+          case 'client':
+            setClient(strValue);
+            break;
+          case 'clientAddress':
+            setClientAddress(strValue);
+            break;
+          case 'clientEmail':
+            setClientEmail(strValue);
+            break;
+          case 'clientPhone':
+            setClientPhone(strValue);
+            break;
+          case 'jobTitle':
+            setJobTitle(strValue);
+            break;
+          case 'description':
+            setDescription(strValue);
+            break;
+          case 'validityDays':
+            setValidityDays(strValue);
+            break;
+          case 'vatRate':
+            setVatRate(strValue);
+            break;
+          case 'notes':
+            setNotes(strValue);
+            break;
         }
       },
       onAction: (action, params) => {
@@ -172,9 +220,9 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
             description: String(params.description || 'Labour'),
             hours: Number(params.hours) || 8,
             hourlyRate: Number(params.rate) || 45,
-            total: (Number(params.hours) || 8) * (Number(params.rate) || 45)
+            total: (Number(params.hours) || 8) * (Number(params.rate) || 45),
           };
-          setLabourItems(prev => [...prev, item]);
+          setLabourItems((prev) => [...prev, item]);
         }
         if (action === 'add_material_item' && params) {
           const item: LineItem = {
@@ -183,24 +231,27 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
             quantity: Number(params.quantity) || 1,
             unit: String(params.unit || 'each'),
             unitPrice: Number(params.price) || 0,
-            total: (Number(params.quantity) || 1) * (Number(params.price) || 0)
+            total: (Number(params.quantity) || 1) * (Number(params.price) || 0),
           };
-          setLineItems(prev => [...prev, item]);
+          setLineItems((prev) => [...prev, item]);
         }
         if (action === 'add_from_preset' && params?.preset) {
-          const preset = LABOUR_PRESETS.find(p => 
+          const preset = LABOUR_PRESETS.find((p) =>
             p.description.toLowerCase().includes(String(params.preset).toLowerCase())
           );
           if (preset) addLabourFromPreset(preset);
         }
-        if (action === 'next_step') setStep(prev => Math.min(prev + 1, 4));
-        if (action === 'previous_step') setStep(prev => Math.max(prev - 1, 1));
+        if (action === 'next_step') setStep((prev) => Math.min(prev + 1, 4));
+        if (action === 'previous_step') setStep((prev) => Math.max(prev - 1, 1));
       },
       onSubmit: () => handleSubmit(false),
-      onCancel: () => { resetForm(); onOpenChange(false); },
-      onNextStep: () => setStep(prev => Math.min(prev + 1, 4)),
+      onCancel: () => {
+        resetForm();
+        onOpenChange(false);
+      },
+      onNextStep: () => setStep((prev) => Math.min(prev + 1, 4)),
     });
-    
+
     return () => voiceContext.unregisterForm('create-quote');
   }, [open, voiceContext]);
 
@@ -220,37 +271,37 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
       description: newLabour.description,
       hours,
       hourlyRate: rate,
-      total: hours * rate
+      total: hours * rate,
     };
     setLabourItems([...labourItems, item]);
-    setNewLabour({ description: "", hours: "", hourlyRate: "" });
+    setNewLabour({ description: '', hours: '', hourlyRate: '' });
   };
 
-  const addLabourFromPreset = (preset: typeof LABOUR_PRESETS[0]) => {
+  const addLabourFromPreset = (preset: (typeof LABOUR_PRESETS)[0]) => {
     const item: LabourItem = {
       id: crypto.randomUUID(),
       description: preset.description,
       hours: 8,
       hourlyRate: preset.hourlyRate,
-      total: 8 * preset.hourlyRate
+      total: 8 * preset.hourlyRate,
     };
     setLabourItems([...labourItems, item]);
   };
 
   const removeLabourItem = (id: string) => {
-    setLabourItems(labourItems.filter(item => item.id !== id));
-    setLabourHoursInputs(prev => {
+    setLabourItems(labourItems.filter((item) => item.id !== id));
+    setLabourHoursInputs((prev) => {
       const { [id]: _, ...rest } = prev;
       return rest;
     });
   };
 
   const updateLabourHours = (id: string, hours: number) => {
-    setLabourItems(labourItems.map(item => 
-      item.id === id 
-        ? { ...item, hours, total: hours * item.hourlyRate }
-        : item
-    ));
+    setLabourItems(
+      labourItems.map((item) =>
+        item.id === id ? { ...item, hours, total: hours * item.hourlyRate } : item
+      )
+    );
   };
 
   // Materials functions
@@ -264,10 +315,10 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
       quantity: qty,
       unit: newItem.unit,
       unitPrice: price,
-      total: qty * price
+      total: qty * price,
     };
     setLineItems([...lineItems, item]);
-    setNewItem({ description: "", quantity: "", unit: "each", unitPrice: "" });
+    setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
   };
 
   const addFromPriceBook = (item: any) => {
@@ -277,25 +328,25 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
       quantity: 1,
       unit: item.unit,
       unitPrice: Number(item.sell_price),
-      total: Number(item.sell_price)
+      total: Number(item.sell_price),
     };
     setLineItems([...lineItems, lineItem]);
   };
 
   const removeLineItem = (id: string) => {
-    setLineItems(lineItems.filter(item => item.id !== id));
-    setItemQuantityInputs(prev => {
+    setLineItems(lineItems.filter((item) => item.id !== id));
+    setItemQuantityInputs((prev) => {
       const { [id]: _, ...rest } = prev;
       return rest;
     });
   };
 
   const updateQuantity = (id: string, quantity: number) => {
-    setLineItems(lineItems.map(item => 
-      item.id === id 
-        ? { ...item, quantity, total: quantity * item.unitPrice }
-        : item
-    ));
+    setLineItems(
+      lineItems.map((item) =>
+        item.id === id ? { ...item, quantity, total: quantity * item.unitPrice } : item
+      )
+    );
   };
 
   const handleSubmit = async (sendImmediately: boolean) => {
@@ -304,19 +355,19 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
 
     // Combine labour and materials into line_items for storage
     const allLineItems = [
-      ...labourItems.map(item => ({
+      ...labourItems.map((item) => ({
         id: item.id,
         description: item.description,
         quantity: item.hours,
-        unit: "hour",
+        unit: 'hour',
         unitPrice: item.hourlyRate,
         total: item.total,
-        type: "labour"
+        type: 'labour',
       })),
-      ...lineItems.map(item => ({
+      ...lineItems.map((item) => ({
         ...item,
-        type: "material"
-      }))
+        type: 'material',
+      })),
     ];
 
     await createQuoteMutation.mutateAsync({
@@ -328,13 +379,13 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
       job_title: jobTitle || null,
       description,
       value: total,
-      status: sendImmediately ? "Sent" : "Draft",
+      status: sendImmediately ? 'Sent' : 'Draft',
       sent_date: sendImmediately ? new Date().toISOString().split('T')[0] : null,
       valid_until: validUntil.toISOString().split('T')[0],
       job_id: null,
-      created_by: "Admin",
+      created_by: 'Admin',
       line_items: allLineItems,
-      notes
+      notes,
     } as any);
 
     resetForm();
@@ -343,35 +394,40 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
 
   const resetForm = () => {
     setStep(1);
-    setClient("");
-    setClientAddress("");
-    setClientEmail("");
-    setClientPhone("");
-    setJobTitle("");
-    setDescription("");
-    setValidityDays("30");
-    setVatRate("20");
-    setNotes("");
+    setClient('');
+    setClientAddress('');
+    setClientEmail('');
+    setClientPhone('');
+    setJobTitle('');
+    setDescription('');
+    setValidityDays('30');
+    setVatRate('20');
+    setNotes('');
     setLineItems([]);
     setLabourItems([]);
     setItemQuantityInputs({});
     setLabourHoursInputs({});
-    setNewItem({ description: "", quantity: "", unit: "each", unitPrice: "" });
-    setNewLabour({ description: "", hours: "", hourlyRate: "" });
+    setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
+    setNewLabour({ description: '', hours: '', hourlyRate: '' });
   };
 
   const canProceed = () => {
     switch (step) {
-      case 1: return client.trim().length > 0;
-      case 2: return true; // Labour is optional
-      case 3: return true; // Materials are optional if labour exists
-      case 4: return labourItems.length > 0 || lineItems.length > 0; // Need at least one item
-      default: return false;
+      case 1:
+        return client.trim().length > 0;
+      case 2:
+        return true; // Labour is optional
+      case 3:
+        return true; // Materials are optional if labour exists
+      case 4:
+        return labourItems.length > 0 || lineItems.length > 0; // Need at least one item
+      default:
+        return false;
     }
   };
 
   // Step labels for display
-  const stepLabels = ["Client", "Labour", "Materials", "Review"];
+  const stepLabels = ['Client', 'Labour', 'Materials', 'Review'];
   const currentStepLabel = stepLabels[step - 1];
 
   // Navigation Buttons Component
@@ -387,27 +443,23 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
           Cancel
         </Button>
       )}
-      
+
       {step < 4 ? (
-        <Button 
-          onClick={() => setStep(step + 1)} 
-          disabled={!canProceed()}
-          className="flex-1 h-12"
-        >
+        <Button onClick={() => setStep(step + 1)} disabled={!canProceed()} className="flex-1 h-12">
           Next
           <ChevronRight className="h-4 w-4 ml-1" />
         </Button>
       ) : (
         <div className="flex gap-2 flex-1">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={() => handleSubmit(false)}
             disabled={createQuoteMutation.isPending || !canProceed()}
             className="flex-1 h-12"
           >
             Save Draft
           </Button>
-          <Button 
+          <Button
             onClick={() => handleSubmit(true)}
             disabled={createQuoteMutation.isPending || !canProceed()}
             className="flex-1 h-12"
@@ -438,7 +490,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 autoComplete="off"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Client Address</Label>
               <Textarea
@@ -448,7 +500,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 className="min-h-[80px] text-base"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Client Email</Label>
               <Input
@@ -460,7 +512,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 autoComplete="off"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Client Phone</Label>
               <Input
@@ -472,7 +524,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 autoComplete="off"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">
                 Job Title <span className="text-destructive">*</span>
@@ -485,7 +537,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 autoComplete="off"
               />
             </div>
-            
+
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label className="text-sm font-medium">Project Description</Label>
@@ -512,7 +564,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 className="min-h-[120px] text-base"
               />
             </div>
-            
+
             <div className="space-y-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Valid For</Label>
@@ -563,23 +615,35 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                               type="text"
                               inputMode="decimal"
                               value={labourHoursInputs[item.id] ?? String(item.hours)}
-                              onChange={(e) => setLabourHoursInputs(prev => ({ ...prev, [item.id]: e.target.value }))}
+                              onChange={(e) =>
+                                setLabourHoursInputs((prev) => ({
+                                  ...prev,
+                                  [item.id]: e.target.value,
+                                }))
+                              }
                               onBlur={(e) => {
                                 const val = Number(e.target.value) || 1;
                                 updateLabourHours(item.id, val);
-                                setLabourHoursInputs(prev => ({ ...prev, [item.id]: String(val) }));
+                                setLabourHoursInputs((prev) => ({
+                                  ...prev,
+                                  [item.id]: String(val),
+                                }));
                               }}
                               className="w-20 h-12 text-base text-center"
                             />
                             <span className="text-sm text-muted-foreground">hrs</span>
-                            <span className="text-sm text-muted-foreground">× £{item.hourlyRate.toFixed(2)}/hr</span>
+                            <span className="text-sm text-muted-foreground">
+                              × £{item.hourlyRate.toFixed(2)}/hr
+                            </span>
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="text-lg font-bold text-elec-yellow">£{item.total.toFixed(2)}</p>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <p className="text-lg font-bold text-elec-yellow">
+                            £{item.total.toFixed(2)}
+                          </p>
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             className="h-10 w-10 p-0 mt-1"
                             onClick={() => removeLabourItem(item.id)}
                           >
@@ -601,7 +665,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
               </Label>
               <div className="grid grid-cols-2 gap-2">
                 {LABOUR_PRESETS.map((preset) => (
-                  <Card 
+                  <Card
                     key={preset.description}
                     className="cursor-pointer hover:border-elec-yellow/50 active:scale-[0.98] transition-all touch-feedback"
                     onClick={() => addLabourFromPreset(preset)}
@@ -609,7 +673,9 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                     <CardContent className="p-3 text-center">
                       <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
                       <p className="text-sm font-medium truncate">{preset.description}</p>
-                      <p className="text-xs text-elec-yellow font-medium">£{preset.hourlyRate}/hr</p>
+                      <p className="text-xs text-elec-yellow font-medium">
+                        £{preset.hourlyRate}/hr
+                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -653,8 +719,8 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                     />
                   </div>
                 </div>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full h-12"
                   onClick={addLabourItem}
                   disabled={!newLabour.description}
@@ -691,23 +757,35 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                               type="text"
                               inputMode="decimal"
                               value={itemQuantityInputs[item.id] ?? String(item.quantity)}
-                              onChange={(e) => setItemQuantityInputs(prev => ({ ...prev, [item.id]: e.target.value }))}
+                              onChange={(e) =>
+                                setItemQuantityInputs((prev) => ({
+                                  ...prev,
+                                  [item.id]: e.target.value,
+                                }))
+                              }
                               onBlur={(e) => {
                                 const val = Number(e.target.value) || 1;
                                 updateQuantity(item.id, val);
-                                setItemQuantityInputs(prev => ({ ...prev, [item.id]: String(val) }));
+                                setItemQuantityInputs((prev) => ({
+                                  ...prev,
+                                  [item.id]: String(val),
+                                }));
                               }}
                               className="w-20 h-12 text-base text-center"
                             />
                             <span className="text-sm text-muted-foreground">{item.unit}</span>
-                            <span className="text-sm text-muted-foreground">× £{item.unitPrice.toFixed(2)}</span>
+                            <span className="text-sm text-muted-foreground">
+                              × £{item.unitPrice.toFixed(2)}
+                            </span>
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="text-lg font-bold text-elec-yellow">£{item.total.toFixed(2)}</p>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <p className="text-lg font-bold text-elec-yellow">
+                            £{item.total.toFixed(2)}
+                          </p>
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             className="h-10 w-10 p-0 mt-1"
                             onClick={() => removeLineItem(item.id)}
                           >
@@ -730,7 +808,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 </Label>
                 <div className="grid grid-cols-2 gap-2">
                   {priceBook.slice(0, 6).map((item) => (
-                    <Card 
+                    <Card
                       key={item.id}
                       className="cursor-pointer hover:border-elec-yellow/50 active:scale-[0.98] transition-all touch-feedback"
                       onClick={() => addFromPriceBook(item)}
@@ -738,7 +816,9 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                       <CardContent className="p-3 text-center">
                         <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
                         <p className="text-sm font-medium truncate">{item.name}</p>
-                        <p className="text-xs text-elec-yellow font-medium">£{Number(item.sell_price).toFixed(2)}</p>
+                        <p className="text-xs text-elec-yellow font-medium">
+                          £{Number(item.sell_price).toFixed(2)}
+                        </p>
                       </CardContent>
                     </Card>
                   ))}
@@ -802,8 +882,8 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                     />
                   </div>
                 </div>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full h-12"
                   onClick={addLineItem}
                   disabled={!newItem.description}
@@ -841,13 +921,17 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 <div className="border-t border-border pt-4 space-y-2">
                   {labourTotal > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Labour ({labourItems.length} item{labourItems.length !== 1 ? 's' : ''})</span>
+                      <span className="text-sm text-muted-foreground">
+                        Labour ({labourItems.length} item{labourItems.length !== 1 ? 's' : ''})
+                      </span>
                       <span className="text-sm">£{labourTotal.toFixed(2)}</span>
                     </div>
                   )}
                   {materialsTotal > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Materials ({lineItems.length} item{lineItems.length !== 1 ? 's' : ''})</span>
+                      <span className="text-sm text-muted-foreground">
+                        Materials ({lineItems.length} item{lineItems.length !== 1 ? 's' : ''})
+                      </span>
                       <span className="text-sm">£{materialsTotal.toFixed(2)}</span>
                     </div>
                   )}
@@ -887,11 +971,16 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 </Label>
                 <div className="space-y-2">
                   {labourItems.map((item, idx) => (
-                    <div key={item.id} className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg">
+                    <div
+                      key={item.id}
+                      className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
+                    >
                       <div className="flex-1 min-w-0">
                         <span className="text-sm text-muted-foreground mr-2">{idx + 1}.</span>
                         <span className="text-sm">{item.description}</span>
-                        <span className="text-xs text-muted-foreground ml-2">× {item.hours} hrs</span>
+                        <span className="text-xs text-muted-foreground ml-2">
+                          × {item.hours} hrs
+                        </span>
                       </div>
                       <span className="font-medium shrink-0">£{item.total.toFixed(2)}</span>
                     </div>
@@ -909,11 +998,16 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 </Label>
                 <div className="space-y-2">
                   {lineItems.map((item, idx) => (
-                    <div key={item.id} className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg">
+                    <div
+                      key={item.id}
+                      className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
+                    >
                       <div className="flex-1 min-w-0">
                         <span className="text-sm text-muted-foreground mr-2">{idx + 1}.</span>
                         <span className="text-sm">{item.description}</span>
-                        <span className="text-xs text-muted-foreground ml-2">× {item.quantity}</span>
+                        <span className="text-xs text-muted-foreground ml-2">
+                          × {item.quantity}
+                        </span>
                       </div>
                       <span className="font-medium shrink-0">£{item.total.toFixed(2)}</span>
                     </div>
@@ -961,11 +1055,15 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                 </Button>
                 <div>
                   <SheetTitle className="text-lg font-semibold">New Quote</SheetTitle>
-                  <SheetDescription className="text-xs font-mono text-muted-foreground">{quoteNumber}</SheetDescription>
+                  <SheetDescription className="text-xs font-mono text-muted-foreground">
+                    {quoteNumber}
+                  </SheetDescription>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-medium text-muted-foreground">{currentStepLabel}</span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {currentStepLabel}
+                </span>
                 <IOSStepIndicator steps={4} currentStep={step - 1} className="mt-1" />
               </div>
             </div>
@@ -985,10 +1083,13 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
               <div>
                 <span className="text-xs text-muted-foreground block">Quote Total</span>
                 <span className="text-sm text-muted-foreground">
-                  {labourItems.length + lineItems.length} item{(labourItems.length + lineItems.length) !== 1 ? 's' : ''}
+                  {labourItems.length + lineItems.length} item
+                  {labourItems.length + lineItems.length !== 1 ? 's' : ''}
                 </span>
               </div>
-              <span className="text-2xl font-bold text-elec-yellow tabular-nums">£{total.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-elec-yellow tabular-nums">
+                £{total.toFixed(2)}
+              </span>
             </div>
           </div>
         </div>

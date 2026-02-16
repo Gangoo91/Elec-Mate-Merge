@@ -22,13 +22,14 @@ import {
   Sun,
   Radio,
   Target,
-  HelpCircle
+  HelpCircle,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule4Section1: React.FC = () => {
   useSEO({
     title: 'LED and Lighting Control Upgrades | Energy Efficiency Module 4 Section 1 | Elec-Mate',
-    description: 'Master LED lighting technology, control systems including DALI and PIR, UK Part L compliance requirements, and ROI calculations for energy-efficient lighting upgrades.',
+    description:
+      'Master LED lighting technology, control systems including DALI and PIR, UK Part L compliance requirements, and ROI calculations for energy-efficient lighting upgrades.',
     keywords: [
       'LED lighting',
       'DALI controls',
@@ -38,55 +39,62 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
       'energy efficiency',
       'lumen efficacy',
       'daylight harvesting',
-      'UK electrical training'
+      'UK electrical training',
     ],
-    canonicalUrl: '/upskilling/energy-efficiency/module-4/section-1'
+    canonicalUrl: '/upskilling/energy-efficiency/module-4/section-1',
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc-led-efficacy',
-      question: 'What is the typical lumen efficacy range of modern LED lamps compared to traditional incandescent bulbs?',
+      question:
+        'What is the typical lumen efficacy range of modern LED lamps compared to traditional incandescent bulbs?',
       options: [
         '10-15 lm/W vs 8-12 lm/W',
         '80-150 lm/W vs 10-17 lm/W',
         '40-60 lm/W vs 30-40 lm/W',
-        '200-300 lm/W vs 50-70 lm/W'
+        '200-300 lm/W vs 50-70 lm/W',
       ],
       correctIndex: 1,
-      explanation: 'Modern LEDs achieve 80-150 lumens per watt (lm/W), while incandescent bulbs only manage 10-17 lm/W. This represents an 8-10x improvement in efficacy, making LEDs significantly more energy efficient.'
+      explanation:
+        'Modern LEDs achieve 80-150 lumens per watt (lm/W), while incandescent bulbs only manage 10-17 lm/W. This represents an 8-10x improvement in efficacy, making LEDs significantly more energy efficient.',
     },
     {
       id: 'qc-dali-advantage',
-      question: 'What is the key advantage of DALI (Digital Addressable Lighting Interface) over 1-10V dimming systems?',
+      question:
+        'What is the key advantage of DALI (Digital Addressable Lighting Interface) over 1-10V dimming systems?',
       options: [
         'Lower installation cost',
         'Individual luminaire addressing and two-way communication',
         'Simpler wiring requirements',
-        'Higher dimming range'
+        'Higher dimming range',
       ],
       correctIndex: 1,
-      explanation: 'DALI allows individual addressing of up to 64 luminaires per line with two-way communication for status feedback, fault reporting, and precise control. 1-10V systems can only dim groups together and provide no feedback.'
+      explanation:
+        'DALI allows individual addressing of up to 64 luminaires per line with two-way communication for status feedback, fault reporting, and precise control. 1-10V systems can only dim groups together and provide no feedback.',
     },
     {
       id: 'qc-part-l-requirement',
-      question: 'Under UK Building Regulations Part L, what is the minimum luminous efficacy requirement for new non-domestic lighting installations?',
+      question:
+        'Under UK Building Regulations Part L, what is the minimum luminous efficacy requirement for new non-domestic lighting installations?',
       options: [
         '45 luminaire lumens per circuit watt',
         '60 luminaire lumens per circuit watt',
         '75 luminaire lumens per circuit watt',
-        '90 luminaire lumens per circuit watt'
+        '90 luminaire lumens per circuit watt',
       ],
       correctIndex: 1,
-      explanation: 'Part L 2021 requires a minimum luminous efficacy of 60 luminaire lumens per circuit watt for general lighting in new non-domestic buildings. This includes all control gear losses and ensures energy-efficient installations.'
-    }
+      explanation:
+        'Part L 2021 requires a minimum luminous efficacy of 60 luminaire lumens per circuit watt for general lighting in new non-domestic buildings. This includes all control gear losses and ensures energy-efficient installations.',
+    },
   ];
 
   const quizQuestions = [
     {
-      question: 'A 100W incandescent lamp producing 1200 lumens is being replaced. What wattage LED lamp would typically provide equivalent light output?',
+      question:
+        'A 100W incandescent lamp producing 1200 lumens is being replaced. What wattage LED lamp would typically provide equivalent light output?',
       options: ['40W', '25W', '12-15W', '8-10W'],
-      correctAnswer: '12-15W'
+      correctAnswer: '12-15W',
     },
     {
       question: 'What does the term "L70" refer to in LED specifications?',
@@ -94,9 +102,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         'The lamp operates at 70% brightness',
         'The point at which light output degrades to 70% of initial lumens',
         'The maximum dimming level of 70%',
-        'The colour temperature in 70K increments'
+        'The colour temperature in 70K increments',
       ],
-      correctAnswer: 'The point at which light output degrades to 70% of initial lumens'
+      correctAnswer: 'The point at which light output degrades to 70% of initial lumens',
     },
     {
       question: 'When should complete luminaire replacement be chosen over lamp-only retrofitting?',
@@ -104,14 +112,16 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         'Always, as it is more cost-effective',
         'Only when existing luminaires are less than 5 years old',
         'When control gear is incompatible, reflectors are degraded, or thermal management is inadequate',
-        'Never, as retrofit lamps are always sufficient'
+        'Never, as retrofit lamps are always sufficient',
       ],
-      correctAnswer: 'When control gear is incompatible, reflectors are degraded, or thermal management is inadequate'
+      correctAnswer:
+        'When control gear is incompatible, reflectors are degraded, or thermal management is inadequate',
     },
     {
-      question: 'What is the recommended maintained illuminance level for a typical office workspace according to BS EN 12464-1?',
+      question:
+        'What is the recommended maintained illuminance level for a typical office workspace according to BS EN 12464-1?',
       options: ['200 lux', '300 lux', '500 lux', '750 lux'],
-      correctAnswer: '500 lux'
+      correctAnswer: '500 lux',
     },
     {
       question: 'A PIR (Passive Infrared) sensor detects occupancy by sensing:',
@@ -119,19 +129,21 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         'Sound levels in the space',
         'Changes in infrared radiation from body heat',
         'Air pressure changes from movement',
-        'Electromagnetic fields from people'
+        'Electromagnetic fields from people',
       ],
-      correctAnswer: 'Changes in infrared radiation from body heat'
+      correctAnswer: 'Changes in infrared radiation from body heat',
     },
     {
-      question: 'What is the maximum number of devices that can be connected to a single DALI line?',
+      question:
+        'What is the maximum number of devices that can be connected to a single DALI line?',
       options: ['32 devices', '64 devices', '128 devices', '256 devices'],
-      correctAnswer: '64 devices'
+      correctAnswer: '64 devices',
     },
     {
-      question: 'For a lighting upgrade with £5,000 installation cost saving £2,500 annually in energy costs, what is the simple payback period?',
+      question:
+        'For a lighting upgrade with £5,000 installation cost saving £2,500 annually in energy costs, what is the simple payback period?',
       options: ['6 months', '1 year', '2 years', '5 years'],
-      correctAnswer: '2 years'
+      correctAnswer: '2 years',
     },
     {
       question: 'Daylight harvesting controls work by:',
@@ -139,52 +151,61 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         'Switching lights on when daylight fades',
         'Automatically dimming artificial light in response to available daylight levels',
         'Blocking daylight to reduce glare',
-        'Storing daylight energy for later use'
+        'Storing daylight energy for later use',
       ],
-      correctAnswer: 'Automatically dimming artificial light in response to available daylight levels'
+      correctAnswer:
+        'Automatically dimming artificial light in response to available daylight levels',
     },
     {
       question: 'What colour temperature range is typically classified as "warm white"?',
       options: ['2700-3000K', '4000-4500K', '5000-5500K', '6000-6500K'],
-      correctAnswer: '2700-3000K'
+      correctAnswer: '2700-3000K',
     },
     {
-      question: 'When installing LED retrofit tubes in existing fluorescent fittings, what critical safety step must be taken?',
+      question:
+        'When installing LED retrofit tubes in existing fluorescent fittings, what critical safety step must be taken?',
       options: [
         'Increase the circuit breaker rating',
         'Remove or bypass the existing ballast/control gear',
         'Add a step-up transformer',
-        'Install additional earthing'
+        'Install additional earthing',
       ],
-      correctAnswer: 'Remove or bypass the existing ballast/control gear'
-    }
+      correctAnswer: 'Remove or bypass the existing ballast/control gear',
+    },
   ];
 
   const faqs = [
     {
       question: 'Can I simply replace fluorescent tubes with LED tubes in existing fittings?',
-      answer: 'It depends on the type of LED tube. Type A (plug-and-play) tubes work with existing ballasts but may have compatibility issues and lower efficiency. Type B tubes require ballast bypass and direct mains connection - these are more efficient but require rewiring. Type C tubes need an external LED driver. For best results and safety, always check compatibility, consider complete luminaire replacement for older fittings, and ensure any modifications comply with BS 7671. The existing fitting becomes a new product when modified, affecting warranty and liability.'
+      answer:
+        'It depends on the type of LED tube. Type A (plug-and-play) tubes work with existing ballasts but may have compatibility issues and lower efficiency. Type B tubes require ballast bypass and direct mains connection - these are more efficient but require rewiring. Type C tubes need an external LED driver. For best results and safety, always check compatibility, consider complete luminaire replacement for older fittings, and ensure any modifications comply with BS 7671. The existing fitting becomes a new product when modified, affecting warranty and liability.',
     },
     {
       question: 'How do I calculate if an LED upgrade is financially worthwhile?',
-      answer: 'Calculate simple payback: divide total upgrade cost by annual energy savings. For example: upgrading 50 x 58W fluorescents (2900W) to 50 x 25W LEDs (1250W) running 2,500 hours/year saves 4,125 kWh annually. At £0.30/kWh, that\'s £1,237.50 saved per year. If the upgrade costs £2,500, payback is approximately 2 years. Also factor in reduced maintenance costs (LED lifespan 50,000+ hours vs 15,000 for fluorescent), any available incentives, and improved light quality benefits.'
+      answer:
+        "Calculate simple payback: divide total upgrade cost by annual energy savings. For example: upgrading 50 x 58W fluorescents (2900W) to 50 x 25W LEDs (1250W) running 2,500 hours/year saves 4,125 kWh annually. At £0.30/kWh, that's £1,237.50 saved per year. If the upgrade costs £2,500, payback is approximately 2 years. Also factor in reduced maintenance costs (LED lifespan 50,000+ hours vs 15,000 for fluorescent), any available incentives, and improved light quality benefits.",
     },
     {
-      question: 'What are the Part L requirements for lighting controls in new non-domestic buildings?',
-      answer: 'Part L 2021 requires: automatic switching/dimming linked to daylight in spaces with adequate daylight, occupancy sensing in spaces with intermittent use, time scheduling where appropriate, and manual override facilities. The lighting must achieve minimum 60 luminaire lumens per circuit watt. Controls should be commissioned and a Building Log Book provided. For spaces over 100m², consideration should be given to local switching to avoid lighting unoccupied areas.'
+      question:
+        'What are the Part L requirements for lighting controls in new non-domestic buildings?',
+      answer:
+        'Part L 2021 requires: automatic switching/dimming linked to daylight in spaces with adequate daylight, occupancy sensing in spaces with intermittent use, time scheduling where appropriate, and manual override facilities. The lighting must achieve minimum 60 luminaire lumens per circuit watt. Controls should be commissioned and a Building Log Book provided. For spaces over 100m², consideration should be given to local switching to avoid lighting unoccupied areas.',
     },
     {
-      question: 'What\'s the difference between PIR, microwave, and ultrasonic occupancy sensors?',
-      answer: 'PIR (Passive Infrared) detects body heat movement - best for smaller enclosed spaces, cannot detect through obstacles, may miss small movements. Microwave sensors emit and detect radio waves, detecting any movement including through partitions - better for larger or open areas, can be more sensitive. Ultrasonic sensors use sound waves, good for spaces with obstacles blocking line of sight. Often, dual-technology sensors combining PIR with microwave or ultrasonic provide the most reliable detection while reducing false triggering.'
+      question: "What's the difference between PIR, microwave, and ultrasonic occupancy sensors?",
+      answer:
+        'PIR (Passive Infrared) detects body heat movement - best for smaller enclosed spaces, cannot detect through obstacles, may miss small movements. Microwave sensors emit and detect radio waves, detecting any movement including through partitions - better for larger or open areas, can be more sensitive. Ultrasonic sensors use sound waves, good for spaces with obstacles blocking line of sight. Often, dual-technology sensors combining PIR with microwave or ultrasonic provide the most reliable detection while reducing false triggering.',
     },
     {
       question: 'How do I ensure good dimming performance with LED luminaires?',
-      answer: 'Key factors: use a compatible dimmer designed for LED loads (leading-edge dimmers often cause flickering), check minimum load requirements (some dimmers need minimum 25W), ensure driver compatibility (DALI, 1-10V, or phase-cut), select quality LEDs with smooth dimming curves, and consider dimming range (some LEDs only dim to 10-20%). For DALI systems, ensure correct addressing and verify the dimming curve in the driver settings. Always test the full dimming range during commissioning.'
+      answer:
+        'Key factors: use a compatible dimmer designed for LED loads (leading-edge dimmers often cause flickering), check minimum load requirements (some dimmers need minimum 25W), ensure driver compatibility (DALI, 1-10V, or phase-cut), select quality LEDs with smooth dimming curves, and consider dimming range (some LEDs only dim to 10-20%). For DALI systems, ensure correct addressing and verify the dimming curve in the driver settings. Always test the full dimming range during commissioning.',
     },
     {
       question: 'What documentation is required when completing a lighting upgrade project?',
-      answer: 'Required documentation includes: Electrical Installation Certificate (EIC) or Minor Works Certificate as appropriate, BS 7671 compliance declaration, emergency lighting certification to BS 5266 if applicable, Part L compliance calculations and evidence, DALI or control system commissioning records, luminaire data sheets and warranty information, maintenance schedules, and a Building Log Book for non-domestic installations. Also provide client handover documentation including operating instructions and recommended lamp replacement specifications.'
-    }
+      answer:
+        'Required documentation includes: Electrical Installation Certificate (EIC) or Minor Works Certificate as appropriate, BS 7671 compliance declaration, emergency lighting certification to BS 5266 if applicable, Part L compliance calculations and evidence, DALI or control system commissioning records, luminaire data sheets and warranty information, maintenance schedules, and a Building Log Book for non-domestic installations. Also provide client handover documentation including operating instructions and recommended lamp replacement specifications.',
+    },
   ];
 
   return (
@@ -192,7 +213,12 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-4">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -211,9 +237,13 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <p className="text-white/90 leading-relaxed">
-            Lighting typically accounts for <span className="text-elec-yellow font-semibold">15-25% of a commercial building's electricity consumption</span>.
-            Modern LED technology combined with intelligent controls can reduce this by 50-80%. This section covers the technical knowledge
-            and practical skills needed to specify, install, and commission energy-efficient lighting systems that comply with UK Building
+            Lighting typically accounts for{' '}
+            <span className="text-elec-yellow font-semibold">
+              15-25% of a commercial building's electricity consumption
+            </span>
+            . Modern LED technology combined with intelligent controls can reduce this by 50-80%.
+            This section covers the technical knowledge and practical skills needed to specify,
+            install, and commission energy-efficient lighting systems that comply with UK Building
             Regulations Part L and deliver genuine energy savings.
           </p>
         </div>
@@ -227,8 +257,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              LED (Light Emitting Diode) technology has revolutionised the lighting industry. Understanding efficacy
-              comparisons is essential for specifying appropriate replacements and calculating energy savings.
+              LED (Light Emitting Diode) technology has revolutionised the lighting industry.
+              Understanding efficacy comparisons is essential for specifying appropriate
+              replacements and calculating energy savings.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -281,39 +312,60 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <ul className="space-y-2 text-white/80 text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Long lifespan:</strong> 50,000+ hours (L70) vs 15,000 for fluorescent</span>
+                    <span>
+                      <strong className="text-white">Long lifespan:</strong> 50,000+ hours (L70) vs
+                      15,000 for fluorescent
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Instant start:</strong> Full brightness immediately, unlimited switching cycles</span>
+                    <span>
+                      <strong className="text-white">Instant start:</strong> Full brightness
+                      immediately, unlimited switching cycles
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Dimmable:</strong> Smooth dimming to 1% with appropriate drivers</span>
+                    <span>
+                      <strong className="text-white">Dimmable:</strong> Smooth dimming to 1% with
+                      appropriate drivers
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Directional:</strong> Light output can be precisely directed, reducing waste</span>
+                    <span>
+                      <strong className="text-white">Directional:</strong> Light output can be
+                      precisely directed, reducing waste
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Mercury-free:</strong> No hazardous materials, easier disposal</span>
+                    <span>
+                      <strong className="text-white">Mercury-free:</strong> No hazardous materials,
+                      easier disposal
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Low heat:</strong> Reduced HVAC load, safer installation options</span>
+                    <span>
+                      <strong className="text-white">Low heat:</strong> Reduced HVAC load, safer
+                      installation options
+                    </span>
                   </li>
                 </ul>
               </div>
             </div>
 
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 mt-4">
-              <h4 className="text-elec-yellow font-semibold mb-2">Understanding L70 and Lumen Maintenance</h4>
+              <h4 className="text-elec-yellow font-semibold mb-2">
+                Understanding L70 and Lumen Maintenance
+              </h4>
               <p className="text-white/80 text-sm">
-                L70 indicates the point at which LED light output has degraded to 70% of its initial lumens.
-                A 50,000-hour L70 rating means the LED will still produce 70% of original output after 50,000 hours.
-                For critical applications, specify L80 or L90 ratings. Always factor in lumen depreciation when
-                calculating maintained illuminance levels - specify initial lumens 1.25-1.4x the maintained requirement.
+                L70 indicates the point at which LED light output has degraded to 70% of its initial
+                lumens. A 50,000-hour L70 rating means the LED will still produce 70% of original
+                output after 50,000 hours. For critical applications, specify L80 or L90 ratings.
+                Always factor in lumen depreciation when calculating maintained illuminance levels -
+                specify initial lumens 1.25-1.4x the maintained requirement.
               </p>
             </div>
           </div>
@@ -337,8 +389,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              Choosing between retrofit lamps and complete luminaire replacement requires careful assessment of
-              the existing installation, desired outcomes, and total cost of ownership.
+              Choosing between retrofit lamps and complete luminaire replacement requires careful
+              assessment of the existing installation, desired outcomes, and total cost of
+              ownership.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -374,7 +427,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h3 className="text-elec-yellow font-semibold mb-3">Full Luminaire Replacement - When Required</h3>
+                <h3 className="text-elec-yellow font-semibold mb-3">
+                  Full Luminaire Replacement - When Required
+                </h3>
                 <ul className="space-y-2 text-white/80 text-sm">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
@@ -399,7 +454,8 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </ul>
                 <div className="mt-3 pt-3 border-t border-white/10">
                   <p className="text-green-400 text-xs">
-                    <strong>Benefit:</strong> Typical new installation savings: 60-75% energy reduction
+                    <strong>Benefit:</strong> Typical new installation savings: 60-75% energy
+                    reduction
                   </p>
                 </div>
               </div>
@@ -413,15 +469,24 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               <div className="grid md:grid-cols-3 gap-4 text-sm">
                 <div className="text-white/80">
                   <strong className="text-white">Type A (Plug and Play)</strong>
-                  <p>Works with existing ballast. Quick install but limited compatibility and reduced efficiency.</p>
+                  <p>
+                    Works with existing ballast. Quick install but limited compatibility and reduced
+                    efficiency.
+                  </p>
                 </div>
                 <div className="text-white/80">
                   <strong className="text-white">Type B (Ballast Bypass)</strong>
-                  <p>Direct mains connection. Requires rewiring but more efficient. Fitting becomes new product.</p>
+                  <p>
+                    Direct mains connection. Requires rewiring but more efficient. Fitting becomes
+                    new product.
+                  </p>
                 </div>
                 <div className="text-white/80">
                   <strong className="text-white">Type C (External Driver)</strong>
-                  <p>Uses separate LED driver. Most flexible and efficient but highest installation complexity.</p>
+                  <p>
+                    Uses separate LED driver. Most flexible and efficient but highest installation
+                    complexity.
+                  </p>
                 </div>
               </div>
             </div>
@@ -489,8 +554,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                   Daylight Harvesting/Linking
                 </h3>
                 <p className="text-white/80 text-sm mb-3">
-                  Photocells measure ambient light levels and automatically dim artificial lighting to maintain
-                  target lux levels while maximising daylight use. Savings of 20-40% are typical in daylit spaces.
+                  Photocells measure ambient light levels and automatically dim artificial lighting
+                  to maintain target lux levels while maximising daylight use. Savings of 20-40% are
+                  typical in daylit spaces.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="text-sm text-white/80">
@@ -499,7 +565,10 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                   </div>
                   <div className="text-sm text-white/80">
                     <strong className="text-white">Closed Loop</strong>
-                    <p>Sensor faces task area, measures combined light. More accurate, requires calibration.</p>
+                    <p>
+                      Sensor faces task area, measures combined light. More accurate, requires
+                      calibration.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -576,8 +645,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              UK Building Regulations Part L sets minimum energy efficiency standards for lighting in new
-              and refurbished buildings. Understanding these requirements is essential for compliant installations.
+              UK Building Regulations Part L sets minimum energy efficiency standards for lighting
+              in new and refurbished buildings. Understanding these requirements is essential for
+              compliant installations.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -588,23 +658,38 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Minimum efficacy:</strong> 60 luminaire lumens per circuit watt for general lighting</span>
+                  <span>
+                    <strong className="text-white">Minimum efficacy:</strong> 60 luminaire lumens
+                    per circuit watt for general lighting
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Controls required:</strong> Automatic switching/dimming in response to daylight and occupancy</span>
+                  <span>
+                    <strong className="text-white">Controls required:</strong> Automatic
+                    switching/dimming in response to daylight and occupancy
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Zoning:</strong> Local switching for areas over 100m² to avoid lighting unoccupied zones</span>
+                  <span>
+                    <strong className="text-white">Zoning:</strong> Local switching for areas over
+                    100m² to avoid lighting unoccupied zones
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Metering:</strong> Sub-metering for lighting loads exceeding 100kW total</span>
+                  <span>
+                    <strong className="text-white">Metering:</strong> Sub-metering for lighting
+                    loads exceeding 100kW total
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Commissioning:</strong> System must be commissioned and results recorded</span>
+                  <span>
+                    <strong className="text-white">Commissioning:</strong> System must be
+                    commissioned and results recorded
+                  </span>
                 </li>
               </ul>
             </div>
@@ -681,10 +766,12 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="text-blue-400 font-semibold mb-2">Calculating Circuit Watts</h4>
               <p className="text-white/80 text-sm">
-                Circuit watts = lamp watts + control gear losses. For LED luminaires, this is typically the
-                stated luminaire wattage. For older technology with separate ballasts, add ballast losses
-                (typically 10-15% for electronic, 20-25% for magnetic). The 60 lm/W requirement uses
-                <em> luminaire lumens</em> (output from the fitting, not bare lamp lumens) divided by total circuit watts.
+                Circuit watts = lamp watts + control gear losses. For LED luminaires, this is
+                typically the stated luminaire wattage. For older technology with separate ballasts,
+                add ballast losses (typically 10-15% for electronic, 20-25% for magnetic). The 60
+                lm/W requirement uses
+                <em> luminaire lumens</em> (output from the fitting, not bare lamp lumens) divided
+                by total circuit watts.
               </p>
             </div>
           </div>
@@ -708,8 +795,8 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              Demonstrating financial returns is often key to securing approval for lighting upgrades.
-              Understanding payback calculations helps you make compelling business cases.
+              Demonstrating financial returns is often key to securing approval for lighting
+              upgrades. Understanding payback calculations helps you make compelling business cases.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -724,7 +811,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               </div>
 
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                <h4 className="text-green-400 font-semibold mb-2">Worked Example: Office Lighting Upgrade</h4>
+                <h4 className="text-green-400 font-semibold mb-2">
+                  Worked Example: Office Lighting Upgrade
+                </h4>
                 <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
                   <div>
                     <strong className="text-white">Existing System:</strong>
@@ -799,9 +888,10 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 Lifecycle Cost Analysis
               </h4>
               <p className="text-white/80 text-sm">
-                For a more complete picture, calculate Total Cost of Ownership (TCO) over 10-15 years, including:
-                initial purchase and installation, energy costs, lamp/driver replacements, maintenance labour,
-                and disposal costs. LED systems typically show 40-60% lower TCO despite higher initial cost.
+                For a more complete picture, calculate Total Cost of Ownership (TCO) over 10-15
+                years, including: initial purchase and installation, energy costs, lamp/driver
+                replacements, maintenance labour, and disposal costs. LED systems typically show
+                40-60% lower TCO despite higher initial cost.
               </p>
             </div>
           </div>
@@ -816,74 +906,96 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              Learning from common mistakes helps ensure successful installations. Here are the most frequent
-              issues encountered in LED and lighting control projects.
+              Learning from common mistakes helps ensure successful installations. Here are the most
+              frequent issues encountered in LED and lighting control projects.
             </p>
 
             <div className="space-y-4">
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
-                <h4 className="text-red-400 font-semibold mb-2">Pitfall 1: Dimmer Compatibility Issues</h4>
+                <h4 className="text-red-400 font-semibold mb-2">
+                  Pitfall 1: Dimmer Compatibility Issues
+                </h4>
                 <p className="text-white/80 text-sm mb-2">
-                  <strong>Problem:</strong> Flickering, buzzing, or limited dimming range when using existing dimmers with LED lamps.
+                  <strong>Problem:</strong> Flickering, buzzing, or limited dimming range when using
+                  existing dimmers with LED lamps.
                 </p>
                 <p className="text-green-400 text-sm">
-                  <strong>Solution:</strong> Always verify dimmer compatibility. Replace leading-edge (TRIAC) dimmers with
-                  trailing-edge or LED-specific dimmers. Check minimum load requirements and use compatible LED lamps.
+                  <strong>Solution:</strong> Always verify dimmer compatibility. Replace
+                  leading-edge (TRIAC) dimmers with trailing-edge or LED-specific dimmers. Check
+                  minimum load requirements and use compatible LED lamps.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
-                <h4 className="text-red-400 font-semibold mb-2">Pitfall 2: Thermal Management Failures</h4>
+                <h4 className="text-red-400 font-semibold mb-2">
+                  Pitfall 2: Thermal Management Failures
+                </h4>
                 <p className="text-white/80 text-sm mb-2">
-                  <strong>Problem:</strong> Premature LED failure due to overheating in enclosed fittings or insulated ceilings.
+                  <strong>Problem:</strong> Premature LED failure due to overheating in enclosed
+                  fittings or insulated ceilings.
                 </p>
                 <p className="text-green-400 text-sm">
-                  <strong>Solution:</strong> Check LED temperature ratings. Use products rated for enclosed fixtures.
-                  Ensure adequate ventilation. In IC-rated ceilings, use appropriate fire-rated housings with thermal cut-outs.
+                  <strong>Solution:</strong> Check LED temperature ratings. Use products rated for
+                  enclosed fixtures. Ensure adequate ventilation. In IC-rated ceilings, use
+                  appropriate fire-rated housings with thermal cut-outs.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
-                <h4 className="text-red-400 font-semibold mb-2">Pitfall 3: Incorrect Colour Temperature Selection</h4>
+                <h4 className="text-red-400 font-semibold mb-2">
+                  Pitfall 3: Incorrect Colour Temperature Selection
+                </h4>
                 <p className="text-white/80 text-sm mb-2">
-                  <strong>Problem:</strong> Mixed colour temperatures creating uneven appearance, or wrong colour for application.
+                  <strong>Problem:</strong> Mixed colour temperatures creating uneven appearance, or
+                  wrong colour for application.
                 </p>
                 <p className="text-green-400 text-sm">
-                  <strong>Solution:</strong> Specify consistent colour temperature across the installation. Match existing
-                  lighting where partial upgrades. Use 3000K for hospitality/residential feel, 4000K for offices, 5000K+ for industrial.
+                  <strong>Solution:</strong> Specify consistent colour temperature across the
+                  installation. Match existing lighting where partial upgrades. Use 3000K for
+                  hospitality/residential feel, 4000K for offices, 5000K+ for industrial.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
-                <h4 className="text-red-400 font-semibold mb-2">Pitfall 4: Emergency Lighting Compatibility</h4>
+                <h4 className="text-red-400 font-semibold mb-2">
+                  Pitfall 4: Emergency Lighting Compatibility
+                </h4>
                 <p className="text-white/80 text-sm mb-2">
-                  <strong>Problem:</strong> Existing emergency inverters/batteries incompatible with LED loads.
+                  <strong>Problem:</strong> Existing emergency inverters/batteries incompatible with
+                  LED loads.
                 </p>
                 <p className="text-green-400 text-sm">
-                  <strong>Solution:</strong> Verify emergency pack compatibility with LED drivers. Many older emergency
-                  units sized for fluorescent loads are oversized for LEDs. Consider integral emergency LED luminaires or dedicated emergency fittings.
+                  <strong>Solution:</strong> Verify emergency pack compatibility with LED drivers.
+                  Many older emergency units sized for fluorescent loads are oversized for LEDs.
+                  Consider integral emergency LED luminaires or dedicated emergency fittings.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
-                <h4 className="text-red-400 font-semibold mb-2">Pitfall 5: Control System Commissioning Failures</h4>
+                <h4 className="text-red-400 font-semibold mb-2">
+                  Pitfall 5: Control System Commissioning Failures
+                </h4>
                 <p className="text-white/80 text-sm mb-2">
-                  <strong>Problem:</strong> DALI systems not functioning correctly due to addressing errors or sensor placement.
+                  <strong>Problem:</strong> DALI systems not functioning correctly due to addressing
+                  errors or sensor placement.
                 </p>
                 <p className="text-green-400 text-sm">
-                  <strong>Solution:</strong> Plan DALI addressing before installation. Commission systematically with proper software.
-                  Position sensors to avoid false triggers (away from HVAC vents, direct sunlight). Document all settings.
+                  <strong>Solution:</strong> Plan DALI addressing before installation. Commission
+                  systematically with proper software. Position sensors to avoid false triggers
+                  (away from HVAC vents, direct sunlight). Document all settings.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 6: Over-Lighting Spaces</h4>
                 <p className="text-white/80 text-sm mb-2">
-                  <strong>Problem:</strong> Replacing like-for-like without considering LED's superior efficacy, resulting in excessive light levels.
+                  <strong>Problem:</strong> Replacing like-for-like without considering LED's
+                  superior efficacy, resulting in excessive light levels.
                 </p>
                 <p className="text-green-400 text-sm">
-                  <strong>Solution:</strong> Conduct proper lighting calculations for the space. A 36W LED panel often replaces
-                  a 4x18W fluorescent fitting. Verify lux levels meet but do not vastly exceed requirements. Consider dimming to optimise levels.
+                  <strong>Solution:</strong> Conduct proper lighting calculations for the space. A
+                  36W LED panel often replaces a 4x18W fluorescent fitting. Verify lux levels meet
+                  but do not vastly exceed requirements. Consider dimming to optimise levels.
                 </p>
               </div>
             </div>
@@ -1021,10 +1133,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-lg overflow-hidden"
-              >
+              <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
                   <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
@@ -1041,7 +1150,8 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
             Section Knowledge Check
           </h2>
           <p className="text-white/80 mb-6">
-            Test your understanding of LED technology and lighting controls with this 10-question quiz.
+            Test your understanding of LED technology and lighting controls with this 10-question
+            quiz.
           </p>
           <Quiz
             questions={quizQuestions}

@@ -10,109 +10,81 @@ export const SmartHomeModule2Section2Quiz = () => {
 
   const questions = [
     {
-      question: "Define mesh networking in your own words.",
+      question: 'Define mesh networking in your own words.',
       options: [
-        "A single central hub connecting all devices",
-        "Devices that can relay signals through each other to extend coverage",
-        "Wireless devices that only work with internet",
-        "A type of antenna used in smart homes"
+        'A single central hub connecting all devices',
+        'Devices that can relay signals through each other to extend coverage',
+        'Wireless devices that only work with internet',
+        'A type of antenna used in smart homes',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Which frequency does Zigbee operate on?",
-      options: [
-        "868 MHz",
-        "908 MHz", 
-        "2.4 GHz",
-        "5 GHz"
-      ],
-      correct: 2
+      question: 'Which frequency does Zigbee operate on?',
+      options: ['868 MHz', '908 MHz', '2.4 GHz', '5 GHz'],
+      correct: 2,
     },
     {
-      question: "Which frequency does Z-Wave use in Europe?",
-      options: [
-        "2.4 GHz",
-        "868 MHz",
-        "908 MHz",
-        "5 GHz"
-      ],
-      correct: 1
+      question: 'Which frequency does Z-Wave use in Europe?',
+      options: ['2.4 GHz', '868 MHz', '908 MHz', '5 GHz'],
+      correct: 1,
     },
     {
-      question: "True or False: Zigbee supports more devices per network than Z-Wave.",
-      options: [
-        "True",
-        "False"
-      ],
-      correct: 0
+      question: 'True or False: Zigbee supports more devices per network than Z-Wave.',
+      options: ['True', 'False'],
+      correct: 0,
     },
     {
-      question: "Which protocol is better at penetrating walls?",
-      options: [
-        "Zigbee",
-        "Z-Wave",
-        "Both are equal",
-        "Neither works through walls"
-      ],
-      correct: 1
+      question: 'Which protocol is better at penetrating walls?',
+      options: ['Zigbee', 'Z-Wave', 'Both are equal', 'Neither works through walls'],
+      correct: 1,
     },
     {
-      question: "Give one example of a Zigbee-based product.",
-      options: [
-        "Ring Video Doorbell",
-        "Philips Hue bulbs",
-        "Nest Thermostat",
-        "Amazon Echo"
-      ],
-      correct: 1
+      question: 'Give one example of a Zigbee-based product.',
+      options: ['Ring Video Doorbell', 'Philips Hue bulbs', 'Nest Thermostat', 'Amazon Echo'],
+      correct: 1,
     },
     {
       question: "What's a drawback of Z-Wave compared to Zigbee?",
       options: [
-        "Poor range",
-        "High power consumption",
-        "Limited to 232 devices per network",
-        "No mesh capabilities"
+        'Poor range',
+        'High power consumption',
+        'Limited to 232 devices per network',
+        'No mesh capabilities',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "Why is Zigbee more prone to interference?",
+      question: 'Why is Zigbee more prone to interference?',
       options: [
-        "It uses old technology",
-        "It operates on 2.4GHz band shared with Wi-Fi",
-        "It has poor encryption",
-        "It only works indoors"
+        'It uses old technology',
+        'It operates on 2.4GHz band shared with Wi-Fi',
+        'It has poor encryption',
+        'It only works indoors',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Which protocol would suit a large house with thick walls?",
-      options: [
-        "Zigbee",
-        "Z-Wave", 
-        "Bluetooth",
-        "Wi-Fi"
-      ],
-      correct: 1
+      question: 'Which protocol would suit a large house with thick walls?',
+      options: ['Zigbee', 'Z-Wave', 'Bluetooth', 'Wi-Fi'],
+      correct: 1,
     },
     {
-      question: "A client wants 80 smart bulbs in their apartment. Which protocol is best?",
+      question: 'A client wants 80 smart bulbs in their apartment. Which protocol is best?',
       options: [
-        "Z-Wave - better reliability",
-        "Zigbee - supports high device count and cost-effective",
-        "Wi-Fi - fastest speeds",
-        "Bluetooth - easiest setup"
+        'Z-Wave - better reliability',
+        'Zigbee - supports high device count and cost-effective',
+        'Wi-Fi - fastest speeds',
+        'Bluetooth - easiest setup',
       ],
-      correct: 1
-    }
+      correct: 1,
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -135,7 +107,7 @@ export const SmartHomeModule2Section2Quiz = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = Math.round((score / questions.length) * 100);
-    
+
     return (
       <Card className="bg-elec-gray border-gray-700">
         <CardHeader>
@@ -148,18 +120,15 @@ export const SmartHomeModule2Section2Quiz = () => {
           <div className="text-4xl font-bold text-elec-yellow">
             {score}/{questions.length}
           </div>
-          <div className="text-xl text-foreground">
-            {percentage}% Correct
-          </div>
+          <div className="text-xl text-foreground">{percentage}% Correct</div>
           <div className="text-gray-300">
-            {percentage >= 80 ? "Excellent understanding of Zigbee vs Z-Wave!" : 
-             percentage >= 60 ? "Good grasp of mesh protocols - review the differences." : 
-             "Keep studying the protocol characteristics and use cases."}
+            {percentage >= 80
+              ? 'Excellent understanding of Zigbee vs Z-Wave!'
+              : percentage >= 60
+                ? 'Good grasp of mesh protocols - review the differences.'
+                : 'Keep studying the protocol characteristics and use cases.'}
           </div>
-          <Button 
-            onClick={resetQuiz}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
-          >
+          <Button onClick={resetQuiz} className="bg-elec-yellow text-elec-dark hover:bg-yellow-600">
             Retake Quiz
           </Button>
         </CardContent>
@@ -177,14 +146,19 @@ export const SmartHomeModule2Section2Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex gap-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}
@@ -195,7 +169,7 @@ export const SmartHomeModule2Section2Quiz = () => {
           <h3 className="text-lg font-semibold text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
@@ -224,7 +198,7 @@ export const SmartHomeModule2Section2Quiz = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           {currentQuestion === questions.length - 1 ? (
             <Button
               onClick={() => setShowResults(true)}

@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Trash2, Copy, Wrench, Package, Zap } from "lucide-react";
-import { QuoteItem } from "@/types/quote";
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Trash2, Copy, Wrench, Package, Zap } from 'lucide-react';
+import { QuoteItem } from '@/types/quote';
 
 interface MobileQuoteItemCardProps {
   item: QuoteItem;
@@ -12,22 +12,35 @@ interface MobileQuoteItemCardProps {
   onDuplicate: (item: QuoteItem) => void;
 }
 
-export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: MobileQuoteItemCardProps) => {
+export const MobileQuoteItemCard = ({
+  item,
+  onUpdate,
+  onRemove,
+  onDuplicate,
+}: MobileQuoteItemCardProps) => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'labour': return <Wrench className="h-3 w-3" />;
-      case 'materials': return <Package className="h-3 w-3" />;
-      case 'equipment': return <Zap className="h-3 w-3" />;
-      default: return <Package className="h-3 w-3" />;
+      case 'labour':
+        return <Wrench className="h-3 w-3" />;
+      case 'materials':
+        return <Package className="h-3 w-3" />;
+      case 'equipment':
+        return <Zap className="h-3 w-3" />;
+      default:
+        return <Package className="h-3 w-3" />;
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'labour': return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
-      case 'materials': return 'bg-green-500/20 text-green-300 border-green-500/30';
-      case 'equipment': return 'bg-purple-500/20 text-purple-300 border-purple-500/30';
-      default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+      case 'labour':
+        return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+      case 'materials':
+        return 'bg-green-500/20 text-green-300 border-green-500/30';
+      case 'equipment':
+        return 'bg-purple-500/20 text-purple-300 border-purple-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
     }
   };
 
@@ -41,12 +54,10 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
           </div>
           <div>
             <p className="text-xs text-muted-foreground">Total</p>
-            <p className="font-bold text-primary text-lg">
-              £{item.totalPrice.toFixed(2)}
-            </p>
+            <p className="font-bold text-primary text-lg">£{item.totalPrice.toFixed(2)}</p>
           </div>
         </div>
-        
+
         {/* Prominent delete button */}
         <Button
           variant="destructive"

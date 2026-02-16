@@ -1,9 +1,8 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import {
   BookOpen,
   Clock,
@@ -19,23 +18,23 @@ import {
   GitBranch,
   Eye,
   RotateCcw,
-  TestTube
-} from "lucide-react";
-import InteractiveTestingGuide from "./InteractiveTestingGuide";
-import { allBS7671Tests, BS7671Test } from "@/data/bs7671-testing/allBS7671Tests";
-import { cn } from "@/lib/utils";
+  TestTube,
+} from 'lucide-react';
+import InteractiveTestingGuide from './InteractiveTestingGuide';
+import { allBS7671Tests, BS7671Test } from '@/data/bs7671-testing/allBS7671Tests';
+import { cn } from '@/lib/utils';
 
 const RunThroughStepsTab = () => {
   const [selectedTest, setSelectedTest] = useState<BS7671Test | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState<string>("All");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [difficultyFilter, setDifficultyFilter] = useState<string>('All');
 
   const handleTestSelect = (test: BS7671Test) => {
     setSelectedTest(test);
   };
 
   const handleTestComplete = () => {
-    console.log("Test completed!");
+    console.log('Test completed!');
     setSelectedTest(null);
   };
 
@@ -45,10 +44,14 @@ const RunThroughStepsTab = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return 'bg-green-500/10 text-green-400 border-green-500/20';
-      case 'Intermediate': return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
-      case 'Advanced': return 'bg-red-500/10 text-red-400 border-red-500/20';
-      default: return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+      case 'Beginner':
+        return 'bg-green-500/10 text-green-400 border-green-500/20';
+      case 'Intermediate':
+        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
+      case 'Advanced':
+        return 'bg-red-500/10 text-red-400 border-red-500/20';
+      default:
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
     }
   };
 
@@ -77,10 +80,11 @@ const RunThroughStepsTab = () => {
     }
   };
 
-  const filteredTests = allBS7671Tests.filter(test => {
-    const matchesSearch = test.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         test.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDifficulty = difficultyFilter === "All" || test.difficulty === difficultyFilter;
+  const filteredTests = allBS7671Tests.filter((test) => {
+    const matchesSearch =
+      test.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      test.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesDifficulty = difficultyFilter === 'All' || test.difficulty === difficultyFilter;
     return matchesSearch && matchesDifficulty;
   });
 
@@ -109,9 +113,9 @@ const RunThroughStepsTab = () => {
         </CardHeader>
         <CardContent className="relative space-y-6">
           <p className="text-white/70">
-            Comprehensive step-by-step testing procedures covering all required BS 7671 (18th Edition)
-            inspection and testing requirements. Each test includes detailed instructions, safety warnings,
-            regulation references, and troubleshooting guidance.
+            Comprehensive step-by-step testing procedures covering all required BS 7671 (18th
+            Edition) inspection and testing requirements. Each test includes detailed instructions,
+            safety warnings, regulation references, and troubleshooting guidance.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -157,7 +161,10 @@ const RunThroughStepsTab = () => {
                 placeholder="Search tests..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn("h-11 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-cyan-500/50", !searchTerm && "pl-10")}
+                className={cn(
+                  'h-11 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-cyan-500/50',
+                  !searchTerm && 'pl-10'
+                )}
               />
             </div>
             <div className="flex items-center gap-2">
@@ -182,7 +189,10 @@ const RunThroughStepsTab = () => {
       {/* Test Cards Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {filteredTests.map((test) => (
-          <Card key={test.id} className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 overflow-hidden relative group">
+          <Card
+            key={test.id}
+            className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 overflow-hidden relative group"
+          >
             <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
             <CardHeader className="relative">
               <div className="flex items-start justify-between gap-4">
@@ -192,7 +202,9 @@ const RunThroughStepsTab = () => {
                       {getTestIcon(test.id)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <CardTitle className="text-white text-lg leading-tight">{test.title}</CardTitle>
+                      <CardTitle className="text-white text-lg leading-tight">
+                        {test.title}
+                      </CardTitle>
                       <p className="text-sm text-white/60 mt-1">{test.description}</p>
                     </div>
                   </div>
@@ -223,7 +235,9 @@ const RunThroughStepsTab = () => {
                     {test.testLimits.slice(0, 2).map((limit, index) => (
                       <div key={index} className="text-sm text-white/70 flex justify-between">
                         <span>{limit.parameter}:</span>
-                        <span className="font-mono text-green-300">{limit.limit} {limit.unit}</span>
+                        <span className="font-mono text-green-300">
+                          {limit.limit} {limit.unit}
+                        </span>
                       </div>
                     ))}
                     {test.testLimits.length > 2 && (
@@ -293,7 +307,8 @@ const RunThroughStepsTab = () => {
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">No Tests Found</h3>
             <p className="text-white/60 max-w-md mx-auto">
-              No tests match your current search criteria. Try adjusting your search terms or filters.
+              No tests match your current search criteria. Try adjusting your search terms or
+              filters.
             </p>
           </CardContent>
         </Card>
@@ -321,11 +336,11 @@ const RunThroughStepsTab = () => {
               </div>
               <ul className="space-y-2">
                 {[
-                  "Complete safe isolation procedure and prove dead",
-                  "Verify test equipment calibration and functionality",
-                  "Have circuit diagrams and schedules available",
-                  "Plan testing sequence to minimise re-isolation",
-                  "Ensure adequate lighting and access"
+                  'Complete safe isolation procedure and prove dead',
+                  'Verify test equipment calibration and functionality',
+                  'Have circuit diagrams and schedules available',
+                  'Plan testing sequence to minimise re-isolation',
+                  'Ensure adequate lighting and access',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-white/70">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
@@ -343,11 +358,11 @@ const RunThroughStepsTab = () => {
               </div>
               <ul className="space-y-2">
                 {[
-                  "Record all readings, even satisfactory ones",
-                  "Take photographs of test setups for records",
-                  "Double-check unusual or borderline readings",
-                  "Follow the prescribed testing sequence",
-                  "Document any deviations or observations"
+                  'Record all readings, even satisfactory ones',
+                  'Take photographs of test setups for records',
+                  'Double-check unusual or borderline readings',
+                  'Follow the prescribed testing sequence',
+                  'Document any deviations or observations',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-white/70">
                     <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />

@@ -1,22 +1,43 @@
-
 import React from 'react';
-import { Target, CheckCircle2, AlertTriangle, Wrench, Settings, BookOpen, TrendingUp } from 'lucide-react';
+import {
+  Target,
+  CheckCircle2,
+  AlertTriangle,
+  Wrench,
+  Settings,
+  BookOpen,
+  TrendingUp,
+} from 'lucide-react';
 
 const PracticalGuidanceSection = () => (
   <div className="space-y-4 sm:space-y-6">
     <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">Testing Strategy and Planning</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-green-400">
+          Testing Strategy and Planning
+        </h4>
       </div>
       <div className="space-y-3 text-xs sm:text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Pre-testing assessment:</p>
-          <p className="ml-4">• <strong>Circuit mapping:</strong> Identify all circuits protected by each RCD</p>
-          <p className="ml-4">• <strong>Load assessment:</strong> Note critical equipment that will be affected by testing</p>
-          <p className="ml-4">• <strong>Access planning:</strong> Ensure safe access to all RCDs requiring testing</p>
-          <p className="ml-4">• <strong>Time scheduling:</strong> Plan testing to minimise disruption to occupants</p>
-          <p className="ml-4">• <strong>Equipment preparation:</strong> Gather all necessary test equipment and documentation</p>
+          <p className="ml-4">
+            • <strong>Circuit mapping:</strong> Identify all circuits protected by each RCD
+          </p>
+          <p className="ml-4">
+            • <strong>Load assessment:</strong> Note critical equipment that will be affected by
+            testing
+          </p>
+          <p className="ml-4">
+            • <strong>Access planning:</strong> Ensure safe access to all RCDs requiring testing
+          </p>
+          <p className="ml-4">
+            • <strong>Time scheduling:</strong> Plan testing to minimise disruption to occupants
+          </p>
+          <p className="ml-4">
+            • <strong>Equipment preparation:</strong> Gather all necessary test equipment and
+            documentation
+          </p>
         </div>
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Systematic testing approach:</p>
@@ -45,18 +66,24 @@ const PracticalGuidanceSection = () => (
     <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-blue-400">Common Testing Challenges and Solutions</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-blue-400">
+          Common Testing Challenges and Solutions
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Challenge 1: RCD won't reset after testing</p>
           <div className="ml-4 space-y-1">
-            <p><strong>Possible causes:</strong></p>
+            <p>
+              <strong>Possible causes:</strong>
+            </p>
             <p>• Genuine earth fault on protected circuit</p>
             <p>• High background leakage current</p>
             <p>• Damaged RCD mechanism</p>
             <p>• Incorrect wiring connections</p>
-            <p><strong>Solutions:</strong></p>
+            <p>
+              <strong>Solutions:</strong>
+            </p>
             <p>• Disconnect all loads and attempt reset</p>
             <p>• Measure insulation resistance of protected circuits</p>
             <p>• Check RCD wiring for correct connections</p>
@@ -66,12 +93,16 @@ const PracticalGuidanceSection = () => (
         <div>
           <p className="font-medium text-foreground">Challenge 2: Inconsistent trip times</p>
           <div className="ml-4 space-y-1">
-            <p><strong>Possible causes:</strong></p>
+            <p>
+              <strong>Possible causes:</strong>
+            </p>
             <p>• Temperature variations affecting RCD operation</p>
             <p>• Supply voltage fluctuations during test</p>
             <p>• Marginal RCD performance near end of life</p>
             <p>• Test equipment calibration issues</p>
-            <p><strong>Solutions:</strong></p>
+            <p>
+              <strong>Solutions:</strong>
+            </p>
             <p>• Allow RCD to stabilise at ambient temperature</p>
             <p>• Check supply voltage stability</p>
             <p>• Repeat tests multiple times and average results</p>
@@ -79,9 +110,13 @@ const PracticalGuidanceSection = () => (
           </div>
         </div>
         <div>
-          <p className="font-medium text-foreground">Challenge 3: RCD trips during normal operation</p>
+          <p className="font-medium text-foreground">
+            Challenge 3: RCD trips during normal operation
+          </p>
           <div className="ml-4 space-y-1">
-            <p><strong>Investigation procedure:</strong></p>
+            <p>
+              <strong>Investigation procedure:</strong>
+            </p>
             <p>• Measure background leakage current when RCD is reset</p>
             <p>• Disconnect circuits one by one to isolate source</p>
             <p>• Check for water ingress or damaged cables</p>
@@ -95,7 +130,9 @@ const PracticalGuidanceSection = () => (
     <div className="bg-orange-500/10 border border-orange-500/20 border-l-4 border-l-orange-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-orange-400">Troubleshooting RCD Problems</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-orange-400">
+          Troubleshooting RCD Problems
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-3">
@@ -122,11 +159,24 @@ const PracticalGuidanceSection = () => (
         </div>
         <div>
           <p className="font-medium text-foreground">Advanced diagnostic techniques:</p>
-          <p className="ml-4">• <strong>Leakage current measurement:</strong> Use clamp-on earth leakage detector</p>
-          <p className="ml-4">• <strong>Harmonic analysis:</strong> Check for high-frequency components affecting Type AC RCDs</p>
-          <p className="ml-4">• <strong>Load analysis:</strong> Review connected equipment for compatibility with RCD type</p>
-          <p className="ml-4">• <strong>Environmental factors:</strong> Consider temperature, humidity, and contamination effects</p>
-          <p className="ml-4">• <strong>Age assessment:</strong> Consider replacement for RCDs &gt;10-15 years old</p>
+          <p className="ml-4">
+            • <strong>Leakage current measurement:</strong> Use clamp-on earth leakage detector
+          </p>
+          <p className="ml-4">
+            • <strong>Harmonic analysis:</strong> Check for high-frequency components affecting Type
+            AC RCDs
+          </p>
+          <p className="ml-4">
+            • <strong>Load analysis:</strong> Review connected equipment for compatibility with RCD
+            type
+          </p>
+          <p className="ml-4">
+            • <strong>Environmental factors:</strong> Consider temperature, humidity, and
+            contamination effects
+          </p>
+          <p className="ml-4">
+            • <strong>Age assessment:</strong> Consider replacement for RCDs &gt;10-15 years old
+          </p>
         </div>
       </div>
     </div>
@@ -192,19 +242,42 @@ const PracticalGuidanceSection = () => (
       <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Recommended maintenance intervals:</p>
-          <p className="ml-4">• <strong>Monthly:</strong> Test button operation by user (recommended)</p>
-          <p className="ml-4">• <strong>6 months:</strong> Professional testing in high-risk environments</p>
-          <p className="ml-4">• <strong>Annually:</strong> Full electrical testing with calibrated instruments</p>
-          <p className="ml-4">• <strong>5 years:</strong> Comprehensive inspection and condition assessment</p>
-          <p className="ml-4">• <strong>10-15 years:</strong> Consider replacement regardless of test results</p>
+          <p className="ml-4">
+            • <strong>Monthly:</strong> Test button operation by user (recommended)
+          </p>
+          <p className="ml-4">
+            • <strong>6 months:</strong> Professional testing in high-risk environments
+          </p>
+          <p className="ml-4">
+            • <strong>Annually:</strong> Full electrical testing with calibrated instruments
+          </p>
+          <p className="ml-4">
+            • <strong>5 years:</strong> Comprehensive inspection and condition assessment
+          </p>
+          <p className="ml-4">
+            • <strong>10-15 years:</strong> Consider replacement regardless of test results
+          </p>
         </div>
         <div>
           <p className="font-medium text-foreground">Replacement indicators:</p>
-          <p className="ml-4">• <strong>Age-related:</strong> RCDs &gt;15 years old should be replaced</p>
-          <p className="ml-4">• <strong>Performance degradation:</strong> Trip times consistently &gt;200ms at rated current</p>
-          <p className="ml-4">• <strong>Mechanical issues:</strong> Test button fails to operate or feels different</p>
-          <p className="ml-4">• <strong>Environmental damage:</strong> Signs of overheating, corrosion, or impact damage</p>
-          <p className="ml-4">• <strong>Nuisance tripping:</strong> Frequent unexplained trips with no identifiable cause</p>
+          <p className="ml-4">
+            • <strong>Age-related:</strong> RCDs &gt;15 years old should be replaced
+          </p>
+          <p className="ml-4">
+            • <strong>Performance degradation:</strong> Trip times consistently &gt;200ms at rated
+            current
+          </p>
+          <p className="ml-4">
+            • <strong>Mechanical issues:</strong> Test button fails to operate or feels different
+          </p>
+          <p className="ml-4">
+            • <strong>Environmental damage:</strong> Signs of overheating, corrosion, or impact
+            damage
+          </p>
+          <p className="ml-4">
+            • <strong>Nuisance tripping:</strong> Frequent unexplained trips with no identifiable
+            cause
+          </p>
         </div>
         <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
           <p className="font-medium text-red-400 mb-2">Critical Replacement Situations:</p>
@@ -227,11 +300,22 @@ const PracticalGuidanceSection = () => (
       <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Essential record keeping:</p>
-          <p className="ml-4">• <strong>Test schedules:</strong> Maintain regular testing calendar</p>
-          <p className="ml-4">• <strong>Historical data:</strong> Track performance trends over time</p>
-          <p className="ml-4">• <strong>Defect logs:</strong> Record all faults and remedial actions</p>
-          <p className="ml-4">• <strong>Replacement records:</strong> Document all RCD replacements with dates and reasons</p>
-          <p className="ml-4">• <strong>Training records:</strong> Ensure personnel are competent in RCD testing</p>
+          <p className="ml-4">
+            • <strong>Test schedules:</strong> Maintain regular testing calendar
+          </p>
+          <p className="ml-4">
+            • <strong>Historical data:</strong> Track performance trends over time
+          </p>
+          <p className="ml-4">
+            • <strong>Defect logs:</strong> Record all faults and remedial actions
+          </p>
+          <p className="ml-4">
+            • <strong>Replacement records:</strong> Document all RCD replacements with dates and
+            reasons
+          </p>
+          <p className="ml-4">
+            • <strong>Training records:</strong> Ensure personnel are competent in RCD testing
+          </p>
         </div>
         <div>
           <p className="font-medium text-foreground">Compliance documentation:</p>
@@ -244,9 +328,10 @@ const PracticalGuidanceSection = () => (
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Best Practice Recommendations:</p>
           <p className="text-sm text-white">
-            Maintain a comprehensive RCD register including location, type, rating, installation date, 
-            and test history. Use this to plan preventive maintenance and budget for future replacements. 
-            Consider upgrading to higher specification RCD types during routine replacements.
+            Maintain a comprehensive RCD register including location, type, rating, installation
+            date, and test history. Use this to plan preventive maintenance and budget for future
+            replacements. Consider upgrading to higher specification RCD types during routine
+            replacements.
           </p>
         </div>
       </div>
@@ -255,31 +340,53 @@ const PracticalGuidanceSection = () => (
     <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-4">
       <div className="flex items-center gap-2 mb-3">
         <TrendingUp className="h-4 w-4 text-indigo-400" />
-        <h4 className="font-medium text-indigo-400">Emerging Technologies and Future Considerations</h4>
+        <h4 className="font-medium text-indigo-400">
+          Emerging Technologies and Future Considerations
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Smart RCDs and monitoring systems:</p>
-          <p className="ml-4">• <strong>Remote monitoring:</strong> Real-time RCD status and performance data</p>
-          <p className="ml-4">• <strong>Predictive maintenance:</strong> Alert systems for degrading performance</p>
-          <p className="ml-4">• <strong>Data logging:</strong> Continuous recording of trip events and test results</p>
-          <p className="ml-4">• <strong>Integration:</strong> Connection to building management systems</p>
-          <p className="ml-4">• <strong>Self-testing:</strong> Automated periodic testing capabilities</p>
+          <p className="ml-4">
+            • <strong>Remote monitoring:</strong> Real-time RCD status and performance data
+          </p>
+          <p className="ml-4">
+            • <strong>Predictive maintenance:</strong> Alert systems for degrading performance
+          </p>
+          <p className="ml-4">
+            • <strong>Data logging:</strong> Continuous recording of trip events and test results
+          </p>
+          <p className="ml-4">
+            • <strong>Integration:</strong> Connection to building management systems
+          </p>
+          <p className="ml-4">
+            • <strong>Self-testing:</strong> Automated periodic testing capabilities
+          </p>
         </div>
         <div>
           <p className="font-medium text-foreground">Emerging load challenges:</p>
-          <p className="ml-4">• <strong>EV charging:</strong> Increasing DC fault risk requiring Type B RCDs</p>
-          <p className="ml-4">• <strong>Solar PV systems:</strong> DC components creating new fault scenarios</p>
-          <p className="ml-4">• <strong>Heat pumps:</strong> Variable frequency drives affecting RCD selection</p>
-          <p className="ml-4">• <strong>LED lighting:</strong> Switched-mode power supplies creating harmonics</p>
-          <p className="ml-4">• <strong>IoT devices:</strong> Proliferation of electronic loads with earth leakage</p>
+          <p className="ml-4">
+            • <strong>EV charging:</strong> Increasing DC fault risk requiring Type B RCDs
+          </p>
+          <p className="ml-4">
+            • <strong>Solar PV systems:</strong> DC components creating new fault scenarios
+          </p>
+          <p className="ml-4">
+            • <strong>Heat pumps:</strong> Variable frequency drives affecting RCD selection
+          </p>
+          <p className="ml-4">
+            • <strong>LED lighting:</strong> Switched-mode power supplies creating harmonics
+          </p>
+          <p className="ml-4">
+            • <strong>IoT devices:</strong> Proliferation of electronic loads with earth leakage
+          </p>
         </div>
         <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
           <p className="font-medium text-blue-400 mb-2">Planning for the Future:</p>
           <p className="text-sm text-white">
-            Consider upgrading to Type A or Type B RCDs during planned maintenance to future-proof installations. 
-            Evaluate smart RCD options for critical applications where downtime must be minimised. 
-            Plan for increased testing frequency as installations become more complex.
+            Consider upgrading to Type A or Type B RCDs during planned maintenance to future-proof
+            installations. Evaluate smart RCD options for critical applications where downtime must
+            be minimised. Plan for increased testing frequency as installations become more complex.
           </p>
         </div>
       </div>

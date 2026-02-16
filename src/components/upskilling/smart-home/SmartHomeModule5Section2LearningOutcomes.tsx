@@ -4,11 +4,11 @@ import { Target, Check } from 'lucide-react';
 
 export const SmartHomeModule5Section2LearningOutcomes = () => {
   const outcomes = [
-    "Identify different CCTV camera types and their uses",
-    "Explain what resolution means and compare common standards",
-    "Describe storage options (local, network, cloud) and their pros/cons",
-    "Recognise integration features like motion alerts and AI detection",
-    "Recommend appropriate CCTV setups for domestic and commercial sites"
+    'Identify different CCTV camera types and their uses',
+    'Explain what resolution means and compare common standards',
+    'Describe storage options (local, network, cloud) and their pros/cons',
+    'Recognise integration features like motion alerts and AI detection',
+    'Recommend appropriate CCTV setups for domestic and commercial sites',
   ];
 
   return (
@@ -20,13 +20,14 @@ export const SmartHomeModule5Section2LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-gray-300">
-          By the end of this section, learners will be able to:
-        </p>
+        <p className="text-gray-300">By the end of this section, learners will be able to:</p>
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs px-2 py-1 mt-0.5">
+              <Badge
+                variant="secondary"
+                className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs px-2 py-1 mt-0.5"
+              >
                 {index + 1}
               </Badge>
               <div className="flex items-start gap-2 flex-1">

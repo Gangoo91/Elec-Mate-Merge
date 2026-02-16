@@ -36,22 +36,23 @@ export const NotificationsList = ({
     // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(n =>
-        n.work_type?.toLowerCase().includes(query) ||
-        n.building_control_authority?.toLowerCase().includes(query) ||
-        n.reports?.certificate_number?.toLowerCase().includes(query) ||
-        n.reports?.client_name?.toLowerCase().includes(query)
+      filtered = filtered.filter(
+        (n) =>
+          n.work_type?.toLowerCase().includes(query) ||
+          n.building_control_authority?.toLowerCase().includes(query) ||
+          n.reports?.certificate_number?.toLowerCase().includes(query) ||
+          n.reports?.client_name?.toLowerCase().includes(query)
       );
     }
 
     // Apply status filter
     if (statusFilter !== 'all') {
-      filtered = filtered.filter(n => n.notification_status === statusFilter);
+      filtered = filtered.filter((n) => n.notification_status === statusFilter);
     }
 
     // Apply report type filter
     if (reportTypeFilter !== 'all') {
-      filtered = filtered.filter(n => n.reports?.report_type === reportTypeFilter);
+      filtered = filtered.filter((n) => n.reports?.report_type === reportTypeFilter);
     }
 
     // Sort by deadline (overdue first, then by date)
@@ -82,9 +83,12 @@ export const NotificationsList = ({
       cancelled: [] as Notification[],
     };
 
-    filteredNotifications.forEach(notification => {
+    filteredNotifications.forEach((notification) => {
       // Check if overdue
-      if (notification.submission_deadline && getDaysUntilDeadline(notification.submission_deadline) < 0) {
+      if (
+        notification.submission_deadline &&
+        getDaysUntilDeadline(notification.submission_deadline) < 0
+      ) {
         groups.overdue.push(notification);
       } else {
         const status = notification.notification_status;
@@ -121,7 +125,8 @@ export const NotificationsList = ({
 
           <h3 className="text-xl font-bold text-center mb-2">All Clear!</h3>
           <p className="text-muted-foreground text-center text-sm mb-8 max-w-sm mx-auto">
-            No Part P notifications pending. When you complete notifiable electrical work, it will appear here.
+            No Part P notifications pending. When you complete notifiable electrical work, it will
+            appear here.
           </p>
 
           {/* How it works */}
@@ -136,7 +141,9 @@ export const NotificationsList = ({
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">Create EIC or Minor Works</p>
-                  <p className="text-xs text-muted-foreground">Tick "Part P notification required"</p>
+                  <p className="text-xs text-muted-foreground">
+                    Tick "Part P notification required"
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
@@ -145,7 +152,9 @@ export const NotificationsList = ({
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">Generate Certificate</p>
-                  <p className="text-xs text-muted-foreground">Notification auto-created with 30-day deadline</p>
+                  <p className="text-xs text-muted-foreground">
+                    Notification auto-created with 30-day deadline
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
@@ -154,7 +163,9 @@ export const NotificationsList = ({
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">Submit to Scheme/Building Control</p>
-                  <p className="text-xs text-muted-foreground">Track submissions & stay compliant</p>
+                  <p className="text-xs text-muted-foreground">
+                    Track submissions & stay compliant
+                  </p>
                 </div>
               </div>
             </div>
@@ -179,7 +190,8 @@ export const NotificationsList = ({
 
       {/* Results count */}
       <div className="text-sm text-muted-foreground">
-        Showing {filteredNotifications.length} of {notifications.length} notification{notifications.length === 1 ? '' : 's'}
+        Showing {filteredNotifications.length} of {notifications.length} notification
+        {notifications.length === 1 ? '' : 's'}
       </div>
 
       {/* Grouped Lists */}
@@ -194,9 +206,11 @@ export const NotificationsList = ({
         <div className="space-y-8">
           {groupedNotifications.overdue.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold text-red-500 mb-3">Overdue ({groupedNotifications.overdue.length})</h3>
+              <h3 className="text-lg font-semibold text-red-500 mb-3">
+                Overdue ({groupedNotifications.overdue.length})
+              </h3>
               <div className="space-y-3">
-                {groupedNotifications.overdue.map(notification => (
+                {groupedNotifications.overdue.map((notification) => (
                   <NotificationCard
                     key={notification.id}
                     notification={notification}
@@ -214,9 +228,11 @@ export const NotificationsList = ({
 
           {groupedNotifications.pending.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold mb-3">Pending ({groupedNotifications.pending.length})</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                Pending ({groupedNotifications.pending.length})
+              </h3>
               <div className="space-y-3">
-                {groupedNotifications.pending.map(notification => (
+                {groupedNotifications.pending.map((notification) => (
                   <NotificationCard
                     key={notification.id}
                     notification={notification}
@@ -234,9 +250,11 @@ export const NotificationsList = ({
 
           {groupedNotifications['in-progress'].length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold mb-3">In Progress ({groupedNotifications['in-progress'].length})</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                In Progress ({groupedNotifications['in-progress'].length})
+              </h3>
               <div className="space-y-3">
-                {groupedNotifications['in-progress'].map(notification => (
+                {groupedNotifications['in-progress'].map((notification) => (
                   <NotificationCard
                     key={notification.id}
                     notification={notification}
@@ -254,9 +272,11 @@ export const NotificationsList = ({
 
           {groupedNotifications.submitted.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold mb-3">Submitted ({groupedNotifications.submitted.length})</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                Submitted ({groupedNotifications.submitted.length})
+              </h3>
               <div className="space-y-3">
-                {groupedNotifications.submitted.map(notification => (
+                {groupedNotifications.submitted.map((notification) => (
                   <NotificationCard
                     key={notification.id}
                     notification={notification}

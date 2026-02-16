@@ -91,14 +91,11 @@ export async function trackedInvokeCritical<T = unknown>(
     if (error) {
       // Use the payment error tracker for critical functions (triggers alerts)
       const { capturePaymentError } = await import('@/lib/sentry');
-      capturePaymentError(
-        new Error(`Critical function ${functionName} failed: ${error.message}`),
-        {
-          functionName,
-          errorMessage: error.message,
-          critical: true,
-        }
-      );
+      capturePaymentError(new Error(`Critical function ${functionName} failed: ${error.message}`), {
+        functionName,
+        errorMessage: error.message,
+        critical: true,
+      });
       return { data: null, error };
     }
 

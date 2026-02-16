@@ -1,72 +1,83 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m6s4-check1",
-    question: "What is the maximum operating time for a 30mA RCD at five times rated current (150mA)?",
-    options: ["200ms", "100ms", "40ms", "300ms"],
+    id: 'evcharging-m6s4-check1',
+    question:
+      'What is the maximum operating time for a 30mA RCD at five times rated current (150mA)?',
+    options: ['200ms', '100ms', '40ms', '300ms'],
     correctIndex: 2,
-    explanation: "At five times rated current (5×IΔn), an RCD must operate within 40ms. This faster trip time ensures rapid disconnection during high fault currents."
+    explanation:
+      'At five times rated current (5×IΔn), an RCD must operate within 40ms. This faster trip time ensures rapid disconnection during high fault currents.',
   },
   {
-    id: "evcharging-m6s4-check2",
-    question: "Which RCD type is required for DC fault detection in Mode 3 EV charging?",
-    options: ["Type AC", "Type A", "Type B", "Type F"],
+    id: 'evcharging-m6s4-check2',
+    question: 'Which RCD type is required for DC fault detection in Mode 3 EV charging?',
+    options: ['Type AC', 'Type A', 'Type B', 'Type F'],
     correctIndex: 2,
-    explanation: "Type B RCDs can detect smooth DC residual currents, which can be produced by EV charger electronics. Type A only detects pulsating DC up to 6mA, insufficient for DC charging applications."
+    explanation:
+      'Type B RCDs can detect smooth DC residual currents, which can be produced by EV charger electronics. Type A only detects pulsating DC up to 6mA, insufficient for DC charging applications.',
   },
   {
-    id: "evcharging-m6s4-check3",
-    question: "During RCD testing, what should happen at half-rated current (15mA for a 30mA RCD)?",
-    options: ["Trip within 300ms", "Trip within 40ms", "NOT trip", "Trip after 1 second"],
+    id: 'evcharging-m6s4-check3',
+    question: 'During RCD testing, what should happen at half-rated current (15mA for a 30mA RCD)?',
+    options: ['Trip within 300ms', 'Trip within 40ms', 'NOT trip', 'Trip after 1 second'],
     correctIndex: 2,
-    explanation: "At half-rated current (0.5×IΔn), the RCD should NOT trip. This test verifies the RCD won't cause nuisance tripping during normal operation with minor earth leakage."
-  }
+    explanation:
+      "At half-rated current (0.5×IΔn), the RCD should NOT trip. This test verifies the RCD won't cause nuisance tripping during normal operation with minor earth leakage.",
+  },
 ];
 
 const faqs = [
   {
-    question: "Why do EV chargers need Type B RCDs instead of Type A?",
-    answer: "EV charger electronics (inverters, DC-DC converters) can produce smooth DC fault currents that would saturate a Type A RCD's core, preventing it from tripping. Type B RCDs use different detection technology that remains effective with DC components."
+    question: 'Why do EV chargers need Type B RCDs instead of Type A?',
+    answer:
+      "EV charger electronics (inverters, DC-DC converters) can produce smooth DC fault currents that would saturate a Type A RCD's core, preventing it from tripping. Type B RCDs use different detection technology that remains effective with DC components.",
   },
   {
-    question: "What causes nuisance tripping on EV charging circuits?",
-    answer: "Common causes include high cumulative earth leakage from EMI filters, capacitive coupling in long cable runs, VFD harmonics, and multiple loads on the same RCD. Individual circuit testing can identify the source."
+    question: 'What causes nuisance tripping on EV charging circuits?',
+    answer:
+      'Common causes include high cumulative earth leakage from EMI filters, capacitive coupling in long cable runs, VFD harmonics, and multiple loads on the same RCD. Individual circuit testing can identify the source.',
   },
   {
-    question: "How often should RCDs be tested on EV charging installations?",
-    answer: "Manual test button operation should be performed monthly by the user. Full instrument testing is required at initial verification and periodic inspection (typically 1-5 years depending on installation type)."
+    question: 'How often should RCDs be tested on EV charging installations?',
+    answer:
+      'Manual test button operation should be performed monthly by the user. Full instrument testing is required at initial verification and periodic inspection (typically 1-5 years depending on installation type).',
   },
   {
-    question: "Can Type A RCDs ever be used for EV charging?",
-    answer: "Type A RCDs can be used for Mode 1 and Mode 2 charging (domestic socket or ICCB), but Mode 3 dedicated chargepoints require either Type B RCDs or Type A with a 6mA DC detection device built into the charger."
-  }
+    question: 'Can Type A RCDs ever be used for EV charging?',
+    answer:
+      'Type A RCDs can be used for Mode 1 and Mode 2 charging (domestic socket or ICCB), but Mode 3 dedicated chargepoints require either Type B RCDs or Type A with a 6mA DC detection device built into the charger.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An EV charger RCD trips intermittently during charging but passes all standard tests. What is the most likely cause?",
-  options: [
-    "Faulty RCD requiring replacement",
-    "Cumulative earth leakage from charger EMI filters",
-    "Incorrect RCD rating installed",
-    "Vehicle battery fault"
-  ],
-  correctAnswer: 1,
-  explanation: "Intermittent tripping with passing tests often indicates cumulative earth leakage approaching the trip threshold. EV charger EMI filters can contribute 3-5mA leakage per charger. A clamp meter on the earth conductor during charging can confirm this."
-  }
+    question:
+      'An EV charger RCD trips intermittently during charging but passes all standard tests. What is the most likely cause?',
+    options: [
+      'Faulty RCD requiring replacement',
+      'Cumulative earth leakage from charger EMI filters',
+      'Incorrect RCD rating installed',
+      'Vehicle battery fault',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Intermittent tripping with passing tests often indicates cumulative earth leakage approaching the trip threshold. EV charger EMI filters can contribute 3-5mA leakage per charger. A clamp meter on the earth conductor during charging can confirm this.',
+  },
 ];
 
 const EVChargingModule6Section4 = () => {
   useSEO({
-    title: "RCD and Functional Testing | EV Charging Module 6.4",
-    description: "Learn RCD testing procedures for EV charging installations. Master Type A, Type B, and EV-RCD testing for safe charging systems."
+    title: 'RCD and Functional Testing | EV Charging Module 6.4',
+    description:
+      'Learn RCD testing procedures for EV charging installations. Master Type A, Type B, and EV-RCD testing for safe charging systems.',
   });
 
   return (
@@ -108,17 +119,29 @@ const EVChargingModule6Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Type A:</strong> AC faults + pulsating DC up to 6mA</li>
-              <li><strong>Type B:</strong> All Type A + smooth DC detection</li>
-              <li><strong>Trip times:</strong> ≤300ms at IΔn, ≤40ms at 5×IΔn</li>
+              <li>
+                <strong>Type A:</strong> AC faults + pulsating DC up to 6mA
+              </li>
+              <li>
+                <strong>Type B:</strong> All Type A + smooth DC detection
+              </li>
+              <li>
+                <strong>Trip times:</strong> ≤300ms at IΔn, ≤40ms at 5×IΔn
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Requirements</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Mode 3:</strong> Type B or Type A + DC detection</li>
-              <li><strong>Half-rated test:</strong> Must NOT trip</li>
-              <li><strong>Manual test:</strong> Monthly user operation</li>
+              <li>
+                <strong>Mode 3:</strong> Type B or Type A + DC detection
+              </li>
+              <li>
+                <strong>Half-rated test:</strong> Must NOT trip
+              </li>
+              <li>
+                <strong>Manual test:</strong> Monthly user operation
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +151,12 @@ const EVChargingModule6Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand RCD types for EV charging applications",
-              "Perform Type A RCD testing procedures",
-              "Execute Type B RCD functional tests",
-              "Test EV-specific RCD protection systems",
-              "Verify trip times and pass/fail criteria",
-              "Diagnose common RCD faults on EV circuits"
+              'Understand RCD types for EV charging applications',
+              'Perform Type A RCD testing procedures',
+              'Execute Type B RCD functional tests',
+              'Test EV-specific RCD protection systems',
+              'Verify trip times and pass/fail criteria',
+              'Diagnose common RCD faults on EV circuits',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -154,8 +177,8 @@ const EVChargingModule6Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               EV charger electronics can produce different types of fault currents that require
-              appropriate RCD protection. Understanding which RCD type is needed depends on
-              the charging mode and charger design.
+              appropriate RCD protection. Understanding which RCD type is needed depends on the
+              charging mode and charger design.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -192,9 +215,9 @@ const EVChargingModule6Section4 = () => {
             </div>
 
             <p>
-              BS 7671 Regulation 722.531.2 requires either a Type B RCD or a Type A RCD
-              combined with equipment providing equivalent DC fault protection (typically
-              built into the charger) for Mode 3 charging installations.
+              BS 7671 Regulation 722.531.2 requires either a Type B RCD or a Type A RCD combined
+              with equipment providing equivalent DC fault protection (typically built into the
+              charger) for Mode 3 charging installations.
             </p>
           </div>
         </section>
@@ -209,8 +232,8 @@ const EVChargingModule6Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Standard RCD testing follows a specific sequence to verify correct operation
-              at different fault current levels. Each test has specific pass/fail criteria.
+              Standard RCD testing follows a specific sequence to verify correct operation at
+              different fault current levels. Each test has specific pass/fail criteria.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -228,11 +251,21 @@ const EVChargingModule6Section4 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pass Criteria</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>0.5×IΔn (15mA):</strong> Must NOT trip</li>
-                  <li><strong>1×IΔn (30mA):</strong> ≤300ms general, ≤40ms socket</li>
-                  <li><strong>5×IΔn (150mA):</strong> ≤40ms all applications</li>
-                  <li><strong>Test button:</strong> Must operate correctly</li>
-                  <li><strong>Reset:</strong> Must function properly</li>
+                  <li>
+                    <strong>0.5×IΔn (15mA):</strong> Must NOT trip
+                  </li>
+                  <li>
+                    <strong>1×IΔn (30mA):</strong> ≤300ms general, ≤40ms socket
+                  </li>
+                  <li>
+                    <strong>5×IΔn (150mA):</strong> ≤40ms all applications
+                  </li>
+                  <li>
+                    <strong>Test button:</strong> Must operate correctly
+                  </li>
+                  <li>
+                    <strong>Reset:</strong> Must function properly
+                  </li>
                 </ul>
               </div>
             </div>
@@ -240,9 +273,9 @@ const EVChargingModule6Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why test both phase angles?</p>
               <p className="text-sm text-white/80">
-                RCDs can have slightly different operating characteristics at 0° and 180° of the
-                AC waveform. Testing both angles (using the instrument's phase selector) ensures
-                the RCD operates correctly regardless of when in the cycle the fault occurs.
+                RCDs can have slightly different operating characteristics at 0° and 180° of the AC
+                waveform. Testing both angles (using the instrument's phase selector) ensures the
+                RCD operates correctly regardless of when in the cycle the fault occurs.
               </p>
             </div>
           </div>
@@ -258,8 +291,8 @@ const EVChargingModule6Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Type B RCDs require additional testing beyond standard Type A tests to verify
-              their DC fault detection capabilities. Specialist test equipment is required.
+              Type B RCDs require additional testing beyond standard Type A tests to verify their DC
+              fault detection capabilities. Specialist test equipment is required.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -298,9 +331,9 @@ const EVChargingModule6Section4 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Important: Test Equipment</p>
               <p className="text-sm text-white/80">
-                Standard multifunction testers cannot test Type B RCD DC functions. A dedicated
-                Type B RCD tester is required for full verification. If not available, verify
-                the charger's built-in DC detection device is operational.
+                Standard multifunction testers cannot test Type B RCD DC functions. A dedicated Type
+                B RCD tester is required for full verification. If not available, verify the
+                charger's built-in DC detection device is operational.
               </p>
             </div>
           </div>
@@ -316,8 +349,8 @@ const EVChargingModule6Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              RCD problems on EV charging circuits often have specific causes related to
-              the charger electronics and installation environment.
+              RCD problems on EV charging circuits often have specific causes related to the charger
+              electronics and installation environment.
             </p>
 
             <div className="my-6 overflow-x-auto">
@@ -361,7 +394,9 @@ const EVChargingModule6Section4 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Earth Leakage Assessment</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Earth Leakage Assessment
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Use clamp meter on CPC during charging</li>
                   <li>• Typical charger leakage: 3-5mA</li>
@@ -387,7 +422,9 @@ const EVChargingModule6Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Best Practice</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Testing Best Practice
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always test at both 0° and 180° phase angles</li>
                 <li>Record the worst-case trip time for documentation</li>
@@ -399,10 +436,18 @@ const EVChargingModule6Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Type A for Mode 3:</strong> — only valid with charger DC detection</li>
-                <li><strong>Ignoring leakage:</strong> — cumulative leakage causes nuisance trips</li>
-                <li><strong>No DC testing:</strong> — Type B requires specialist verification</li>
-                <li><strong>Single phase angle:</strong> — always test both 0° and 180°</li>
+                <li>
+                  <strong>Type A for Mode 3:</strong> — only valid with charger DC detection
+                </li>
+                <li>
+                  <strong>Ignoring leakage:</strong> — cumulative leakage causes nuisance trips
+                </li>
+                <li>
+                  <strong>No DC testing:</strong> — Type B requires specialist verification
+                </li>
+                <li>
+                  <strong>Single phase angle:</strong> — always test both 0° and 180°
+                </li>
               </ul>
             </div>
           </div>
@@ -446,10 +491,7 @@ const EVChargingModule6Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

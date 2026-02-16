@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 interface StickyGenerateButtonProps {
   children: ReactNode;
@@ -10,10 +10,8 @@ export const StickyGenerateButton = ({ children, className }: StickyGenerateButt
   return (
     <>
       {/* Spacer for normal flow on larger screens */}
-      <div className="hidden sm:block">
-        {children}
-      </div>
-      
+      <div className="hidden sm:block">{children}</div>
+
       {/* Sticky bottom bar on mobile */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 animate-slide-up-fade">
         <div className="bg-gradient-to-t from-background via-background to-background/0 pt-6 pb-safe">

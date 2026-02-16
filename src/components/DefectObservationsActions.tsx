@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus, Save } from 'lucide-react';
@@ -18,7 +17,11 @@ const DefectObservationsActions = ({
         <Save className="h-4 w-4 mr-2" />
         Save
       </Button>
-      <Button onClick={onAddObservation} className="h-9 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium" size="sm">
+      <Button
+        onClick={onAddObservation}
+        className="h-9 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
+        size="sm"
+      >
         <Plus className="h-4 w-4 mr-2" />
         Add Observation
       </Button>

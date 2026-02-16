@@ -17,10 +17,10 @@ export const DataCablingScenario = () => {
             <div>
               <h4 className="font-semibold text-orange-300 mb-2">The Challenge</h4>
               <p className="text-orange-100 text-sm leading-relaxed">
-                A growing company needs to expand their office space and add 50 new workstations. 
-                The existing cabling is a mix of Cat5 and point-to-point connections installed 
-                15 years ago. The IT department wants to support current Gigabit Ethernet and 
-                future 10 Gigabit requirements, plus integrate VoIP phones and security cameras.
+                A growing company needs to expand their office space and add 50 new workstations.
+                The existing cabling is a mix of Cat5 and point-to-point connections installed 15
+                years ago. The IT department wants to support current Gigabit Ethernet and future 10
+                Gigabit requirements, plus integrate VoIP phones and security cameras.
               </p>
             </div>
           </div>
@@ -32,11 +32,24 @@ export const DataCablingScenario = () => {
             <div>
               <h4 className="font-semibold text-green-300 mb-2">The Structured Cabling Solution</h4>
               <div className="text-green-100 text-sm space-y-2">
-                <p><strong>Infrastructure Design:</strong> Install Cat6A structured cabling system throughout</p>
-                <p><strong>Backbone:</strong> Fiber optic backbone between telecommunications rooms</p>
-                <p><strong>Horizontal:</strong> Cat6A to all work areas, allowing for 10GBASE-T</p>
-                <p><strong>Integration:</strong> Single infrastructure supports data, voice, and security</p>
-                <p><strong>Future-Proofing:</strong> 15-year technology lifecycle with upgrade flexibility</p>
+                <p>
+                  <strong>Infrastructure Design:</strong> Install Cat6A structured cabling system
+                  throughout
+                </p>
+                <p>
+                  <strong>Backbone:</strong> Fiber optic backbone between telecommunications rooms
+                </p>
+                <p>
+                  <strong>Horizontal:</strong> Cat6A to all work areas, allowing for 10GBASE-T
+                </p>
+                <p>
+                  <strong>Integration:</strong> Single infrastructure supports data, voice, and
+                  security
+                </p>
+                <p>
+                  <strong>Future-Proofing:</strong> 15-year technology lifecycle with upgrade
+                  flexibility
+                </p>
               </div>
             </div>
           </div>

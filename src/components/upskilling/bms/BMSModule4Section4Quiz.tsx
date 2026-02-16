@@ -3,7 +3,7 @@ import { bmsModule4Section4QuizQuestions } from '@/data/upskilling/bmsModule4Sec
 
 export const BMSModule4Section4Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={bmsModule4Section4QuizQuestions}
       title="Section 4 Quiz: Shading, Blinds, and Façade Automation"
     />

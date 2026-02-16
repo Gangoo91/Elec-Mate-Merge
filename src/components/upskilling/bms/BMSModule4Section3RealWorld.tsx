@@ -12,8 +12,10 @@ export const BMSModule4Section3RealWorld = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-600/40 rounded-lg p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-300">Commercial Office Access Control Installation</h3>
-          
+          <h3 className="text-xl font-semibold mb-4 text-blue-300">
+            Commercial Office Access Control Installation
+          </h3>
+
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
@@ -22,11 +24,13 @@ export const BMSModule4Section3RealWorld = () => {
                   <div>
                     <h4 className="font-semibold mb-2 text-red-400">The Problem</h4>
                     <p className="text-sm text-gray-300">
-                      In a commercial office, electricians installed maglocks on main doors but forgot to integrate them with the fire alarm system. During testing, doors remained locked when the alarm was triggered — a major safety hazard.
+                      In a commercial office, electricians installed maglocks on main doors but
+                      forgot to integrate them with the fire alarm system. During testing, doors
+                      remained locked when the alarm was triggered — a major safety hazard.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-800/60 rounded-lg p-4">
                   <h4 className="font-semibold mb-3 text-gray-300">Installation Details:</h4>
                   <ul className="space-y-2 text-sm text-gray-400">
@@ -38,18 +42,19 @@ export const BMSModule4Section3RealWorld = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start gap-3 p-4 bg-green-900/40 rounded-lg border border-green-500/40">
                   <CheckCircle className="h-6 w-6 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold mb-2 text-green-400">The Solution</h4>
                     <p className="text-sm text-gray-300">
-                      After re-wiring the relays to the fire alarm panel, the system released doors automatically during alarms, ensuring compliance with fire regulations.
+                      After re-wiring the relays to the fire alarm panel, the system released doors
+                      automatically during alarms, ensuring compliance with fire regulations.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-800/60 rounded-lg p-4">
                   <h4 className="font-semibold mb-3 text-gray-300">Corrective Actions:</h4>
                   <ul className="space-y-2 text-sm text-gray-400">
@@ -62,7 +67,7 @@ export const BMSModule4Section3RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-yellow-900/30 border border-yellow-600/40 rounded-lg p-4">
               <h4 className="font-semibold mb-2 text-yellow-400">Key Learning Points</h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm">

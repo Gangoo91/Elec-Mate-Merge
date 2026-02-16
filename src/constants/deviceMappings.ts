@@ -26,15 +26,15 @@ export const STANDARD_TO_DEVICE_TYPES: Record<string, string[]> = {
   'BS EN 60947-2': ['mccb'],
 
   // Fuses - various standards
-  'BS 88-2': ['fuse-bs88'],      // HRC fuses (gG industrial)
-  'BS 88-3': ['fuse-bs88-3'],    // HRC fuses (System C domestic)
-  'BS 3036': ['fuse-bs3036'],    // Semi-enclosed (rewireable) fuses
-  'BS 1361': ['fuse-bs1361'],    // Cartridge fuses for AC circuits
-  'BS 1362': ['fuse-bs1362'],    // Plug-top cartridge fuses
+  'BS 88-2': ['fuse-bs88'], // HRC fuses (gG industrial)
+  'BS 88-3': ['fuse-bs88-3'], // HRC fuses (System C domestic)
+  'BS 3036': ['fuse-bs3036'], // Semi-enclosed (rewireable) fuses
+  'BS 1361': ['fuse-bs1361'], // Cartridge fuses for AC circuits
+  'BS 1362': ['fuse-bs1362'], // Plug-top cartridge fuses
 
   // RCDs without overcurrent protection - no device types
-  'BS EN 61008': [],  // RCDs without overcurrent protection
-  'BS EN 62423': [],  // Type F and Type B RCDs
+  'BS EN 61008': [], // RCDs without overcurrent protection
+  'BS EN 62423': [], // Type F and Type B RCDs
 };
 
 // ============================================================================
@@ -47,13 +47,13 @@ export const STANDARD_TO_DEVICE_TYPES: Record<string, string[]> = {
  */
 export const DEVICE_TYPE_RATINGS: Record<string, number[]> = {
   // MCBs - Table 41.3 standard sizes
-  'mcb': [3, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125],
+  mcb: [3, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125],
 
   // RCBOs - Similar to MCBs, Table 41.3
-  'rcbo': [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125],
+  rcbo: [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125],
 
   // MCCBs - Manufacturer specific, extended range
-  'mccb': [16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800],
+  mccb: [16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800],
 
   // Fuse BS 88-2 (HRC industrial) - Tables 41.2/41.4
   'fuse-bs88': [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200],
@@ -80,13 +80,13 @@ export const DEVICE_TYPE_RATINGS: Record<string, number[]> = {
  */
 export const DEVICE_TYPE_KA_RATINGS: Record<string, number[]> = {
   // MCBs - Domestic typically 6kA
-  'mcb': [3, 6, 10, 15],
+  mcb: [3, 6, 10, 15],
 
   // RCBOs - Similar to MCB
-  'rcbo': [6, 10, 15, 25],
+  rcbo: [6, 10, 15, 25],
 
   // MCCBs - Industrial/commercial, high breaking capacity
-  'mccb': [10, 16, 25, 36, 50, 65, 70, 100],
+  mccb: [10, 16, 25, 36, 50, 65, 70, 100],
 
   // Fuse BS 88 - HRC fuses, very high breaking capacity
   'fuse-bs88': [80],

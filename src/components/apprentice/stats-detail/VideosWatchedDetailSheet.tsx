@@ -14,12 +14,7 @@
  * All interactive items navigate to /apprentice/learning-videos.
  */
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   Video,
   ChevronDown,
@@ -45,16 +40,16 @@ import { categoryLabels, type VideoCategory } from '@/data/apprentice/curatedVid
 
 const categoryColours: Partial<Record<VideoCategory, string>> = {
   'electrical-theory': 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
-  'wiring': 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+  wiring: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
   'testing-inspection': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-  'bs7671': 'bg-green-500/20 text-green-300 border-green-500/30',
+  bs7671: 'bg-green-500/20 text-green-300 border-green-500/30',
   'am2-prep': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-  'domestic': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-  'commercial': 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+  domestic: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
+  commercial: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
   'solar-ev': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-  'safety': 'bg-red-500/20 text-red-300 border-red-500/30',
+  safety: 'bg-red-500/20 text-red-300 border-red-500/30',
   'tools-equipment': 'bg-pink-500/20 text-pink-300 border-pink-500/30',
-  'career': 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+  career: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
 };
 
 const levelColours = {
@@ -105,7 +100,8 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
     recommendations,
   } = useVideoInsights();
 
-  const totalLevelWatched = levelDistribution.beginner + levelDistribution.intermediate + levelDistribution.advanced;
+  const totalLevelWatched =
+    levelDistribution.beginner + levelDistribution.intermediate + levelDistribution.advanced;
 
   function formatTime(minutes: number): string {
     if (minutes >= 60) {
@@ -141,7 +137,12 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
               <div className="relative">
                 {/* Glow behind ring */}
                 <div className="absolute inset-0 bg-elec-yellow/15 rounded-full blur-2xl scale-110" />
-                <StatRing percent={completionPercent} size={140} ringClass="stroke-elec-yellow" strokeWidth={10}>
+                <StatRing
+                  percent={completionPercent}
+                  size={140}
+                  ringClass="stroke-elec-yellow"
+                  strokeWidth={10}
+                >
                   <div className="flex flex-col items-center">
                     <div className="flex items-baseline">
                       <AnimatedCounter
@@ -178,7 +179,9 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 <p className="text-xl font-bold text-white">
                   {watchTimeMinutes > 0 ? formatTime(watchTimeMinutes) : '0m'}
                 </p>
-                <p className="text-[11px] text-white/50 mt-1 uppercase tracking-wider font-medium">Time invested</p>
+                <p className="text-[11px] text-white/50 mt-1 uppercase tracking-wider font-medium">
+                  Time invested
+                </p>
               </div>
               <div className="relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/[0.06] p-4 text-center">
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500/0 via-amber-400/40 to-amber-500/0" />
@@ -186,7 +189,9 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 <p className="text-xl font-bold text-white">
                   {remainingTimeMinutes > 0 ? formatTime(remainingTimeMinutes) : '0m'}
                 </p>
-                <p className="text-[11px] text-white/50 mt-1 uppercase tracking-wider font-medium">Remaining</p>
+                <p className="text-[11px] text-white/50 mt-1 uppercase tracking-wider font-medium">
+                  Remaining
+                </p>
               </div>
             </motion.div>
 
@@ -233,14 +238,24 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                         {nextRecommendedVideo.title}
                       </p>
                       <div className="flex items-center gap-2 mt-1.5">
-                        <span className="text-xs text-white/50">{nextRecommendedVideo.channel}</span>
+                        <span className="text-xs text-white/50">
+                          {nextRecommendedVideo.channel}
+                        </span>
                         <span className="text-white/15">·</span>
-                        <span className={cn(
-                          'flex items-center gap-1 text-xs font-semibold',
-                          levelTextColours[nextRecommendedVideo.level]
-                        )}>
-                          <span className={cn('h-1.5 w-1.5 rounded-full', levelColours[nextRecommendedVideo.level])} />
-                          {nextRecommendedVideo.level.charAt(0).toUpperCase() + nextRecommendedVideo.level.slice(1)}
+                        <span
+                          className={cn(
+                            'flex items-center gap-1 text-xs font-semibold',
+                            levelTextColours[nextRecommendedVideo.level]
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              'h-1.5 w-1.5 rounded-full',
+                              levelColours[nextRecommendedVideo.level]
+                            )}
+                          />
+                          {nextRecommendedVideo.level.charAt(0).toUpperCase() +
+                            nextRecommendedVideo.level.slice(1)}
                         </span>
                       </div>
                     </div>
@@ -280,7 +295,12 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                               className={cn('h-full rounded-full', levelColours[level])}
                             />
                           </div>
-                          <span className={cn('text-xs font-semibold w-6 text-right', levelTextColours[level])}>
+                          <span
+                            className={cn(
+                              'text-xs font-semibold w-6 text-right',
+                              levelTextColours[level]
+                            )}
+                          >
                             {count}
                           </span>
                         </div>
@@ -310,7 +330,9 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                   <div className="h-2.5 rounded-full bg-white/[0.06] overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
-                      animate={{ width: `${Math.round((categoriesExplored / categoriesTotal) * 100)}%` }}
+                      animate={{
+                        width: `${Math.round((categoriesExplored / categoriesTotal) * 100)}%`,
+                      }}
                       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
                       className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400"
                     />
@@ -346,7 +368,10 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                   <Bookmark className="h-4 w-4 text-white/50" />
                   <span className="text-sm font-semibold text-white">Bookmarked</span>
                   <span className="text-xs text-white/40 ml-auto">
-                    {bookmarks.length} saved{unwatchedBookmarks.length > 0 ? ` · ${unwatchedBookmarks.length} unwatched` : ''}
+                    {bookmarks.length} saved
+                    {unwatchedBookmarks.length > 0
+                      ? ` · ${unwatchedBookmarks.length} unwatched`
+                      : ''}
                   </span>
                 </div>
                 <div className="space-y-2">
@@ -375,7 +400,8 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                         <span
                           className={cn(
                             'inline-block mt-1 px-2 py-0.5 rounded-lg text-[10px] font-semibold border',
-                            categoryColours[b.category as VideoCategory] || 'bg-white/10 text-white/60 border-white/15'
+                            categoryColours[b.category as VideoCategory] ||
+                              'bg-white/10 text-white/60 border-white/15'
                           )}
                         >
                           {categoryLabels[b.category as VideoCategory] || b.category}
@@ -424,7 +450,9 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">What to do next</span>
+                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                    What to do next
+                  </span>
                   <div className="flex-1 border-t border-white/[0.06]" />
                 </div>
 
@@ -432,7 +460,15 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                   {recommendations.map((rec) => (
                     <RecommendationCard
                       key={rec.id}
-                      icon={rec.id === 'watch-bookmark' ? Bookmark : rec.id === 'quiz-weakness' ? Target : rec.id === 'explore-category' ? LayoutGrid : Play}
+                      icon={
+                        rec.id === 'watch-bookmark'
+                          ? Bookmark
+                          : rec.id === 'quiz-weakness'
+                            ? Target
+                            : rec.id === 'explore-category'
+                              ? LayoutGrid
+                              : Play
+                      }
                       title={rec.title}
                       description={rec.description}
                       actionLabel={rec.actionLabel}

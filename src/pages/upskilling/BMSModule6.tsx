@@ -1,4 +1,12 @@
-import { ArrowLeft, AlertTriangle, TrendingUp, Monitor, Zap, Shield, Smartphone } from 'lucide-react';
+import {
+  ArrowLeft,
+  AlertTriangle,
+  TrendingUp,
+  Monitor,
+  Zap,
+  Shield,
+  Smartphone,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,40 +15,40 @@ const BMSModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "Alarm Priorities and Escalation Logic",
+      title: 'Alarm Priorities and Escalation Logic',
       icon: AlertTriangle,
-      description: "Alarm management and escalation procedures"
+      description: 'Alarm management and escalation procedures',
     },
     {
       id: 2,
-      title: "Trend Logging and Historical Data Collection",
+      title: 'Trend Logging and Historical Data Collection',
       icon: TrendingUp,
-      description: "Data logging and historical analysis"
+      description: 'Data logging and historical analysis',
     },
     {
       id: 3,
-      title: "BMS Dashboards and Visualisation Platforms",
+      title: 'BMS Dashboards and Visualisation Platforms',
       icon: Monitor,
-      description: "User interfaces and data visualization"
+      description: 'User interfaces and data visualization',
     },
     {
       id: 4,
-      title: "Event Triggers and Auto-Reporting",
+      title: 'Event Triggers and Auto-Reporting',
       icon: Zap,
-      description: "Automated reporting and event handling"
+      description: 'Automated reporting and event handling',
     },
     {
       id: 5,
-      title: "Integration with Fire Panels, Emergency Shutdowns",
+      title: 'Integration with Fire Panels, Emergency Shutdowns',
       icon: Shield,
-      description: "Safety system integration"
+      description: 'Safety system integration',
     },
     {
       id: 6,
-      title: "Remote Monitoring and Fault Alerts",
+      title: 'Remote Monitoring and Fault Alerts',
       icon: Smartphone,
-      description: "Remote access and notification systems"
-    }
+      description: 'Remote access and notification systems',
+    },
   ];
 
   return (

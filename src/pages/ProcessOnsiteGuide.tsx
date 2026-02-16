@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Loader2, FileText, CheckCircle2, AlertCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Loader2, FileText, CheckCircle2, AlertCircle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const ProcessOnsiteGuide = () => {
-  const [onsiteStatus, setOnsiteStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [onsiteStatus, setOnsiteStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    'idle'
+  );
   const [onsiteResult, setOnsiteResult] = useState<any>(null);
   const [onsiteError, setOnsiteError] = useState<string>('');
 
@@ -25,7 +27,9 @@ const ProcessOnsiteGuide = () => {
   const [book2Result, setBook2Result] = useState<any>(null);
   const [book2Error, setBook2Error] = useState<string>('');
 
-  const [bs7671Status, setBs7671Status] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [bs7671Status, setBs7671Status] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    'idle'
+  );
   const [bs7671Result, setBs7671Result] = useState<any>(null);
   const [bs7671Error, setBs7671Error] = useState<string>('');
 
@@ -43,7 +47,6 @@ const ProcessOnsiteGuide = () => {
 
       setBs7671Result(data);
       setBs7671Status('success');
-      
     } catch (err) {
       console.error('Processing error:', err);
       setBs7671Error(err instanceof Error ? err.message : 'Unknown error');
@@ -61,12 +64,12 @@ const ProcessOnsiteGuide = () => {
       if (!response.ok) {
         throw new Error('Failed to load On-Site Guide file');
       }
-      
+
       const fileContent = await response.text();
       console.log(`📄 Loaded On-Site Guide: ${fileContent.length} characters`);
 
       const { data, error: invokeError } = await supabase.functions.invoke('parse-onsite-guide', {
-        body: { fileContent }
+        body: { fileContent },
       });
 
       if (invokeError) {
@@ -75,7 +78,6 @@ const ProcessOnsiteGuide = () => {
 
       setOnsiteResult(data);
       setOnsiteStatus('success');
-      
     } catch (err) {
       console.error('Processing error:', err);
       setOnsiteError(err instanceof Error ? err.message : 'Unknown error');
@@ -97,7 +99,6 @@ const ProcessOnsiteGuide = () => {
 
       setGn3Result(data);
       setGn3Status('success');
-      
     } catch (err) {
       console.error('Processing error:', err);
       setGn3Error(err instanceof Error ? err.message : 'Unknown error');
@@ -111,7 +112,9 @@ const ProcessOnsiteGuide = () => {
     setElResult(null);
 
     try {
-      const { data, error: invokeError } = await supabase.functions.invoke('parse-emergency-lighting');
+      const { data, error: invokeError } = await supabase.functions.invoke(
+        'parse-emergency-lighting'
+      );
 
       if (invokeError) {
         throw invokeError;
@@ -119,7 +122,6 @@ const ProcessOnsiteGuide = () => {
 
       setElResult(data);
       setElStatus('success');
-      
     } catch (err) {
       console.error('Processing error:', err);
       setElError(err instanceof Error ? err.message : 'Unknown error');
@@ -133,7 +135,9 @@ const ProcessOnsiteGuide = () => {
     setBook1Result(null);
 
     try {
-      const { data, error: invokeError } = await supabase.functions.invoke('parse-city-guilds-book-1');
+      const { data, error: invokeError } = await supabase.functions.invoke(
+        'parse-city-guilds-book-1'
+      );
 
       if (invokeError) {
         throw invokeError;
@@ -141,7 +145,6 @@ const ProcessOnsiteGuide = () => {
 
       setBook1Result(data);
       setBook1Status('success');
-      
     } catch (err) {
       console.error('Processing error:', err);
       setBook1Error(err instanceof Error ? err.message : 'Unknown error');
@@ -155,7 +158,9 @@ const ProcessOnsiteGuide = () => {
     setBook2Result(null);
 
     try {
-      const { data, error: invokeError } = await supabase.functions.invoke('parse-city-guilds-book-2');
+      const { data, error: invokeError } = await supabase.functions.invoke(
+        'parse-city-guilds-book-2'
+      );
 
       if (invokeError) {
         throw invokeError;
@@ -163,7 +168,6 @@ const ProcessOnsiteGuide = () => {
 
       setBook2Result(data);
       setBook2Status('success');
-      
     } catch (err) {
       console.error('Processing error:', err);
       setBook2Error(err instanceof Error ? err.message : 'Unknown error');
@@ -194,8 +198,8 @@ const ProcessOnsiteGuide = () => {
               </div>
             </div>
 
-            <Button 
-              onClick={processOnsiteGuide} 
+            <Button
+              onClick={processOnsiteGuide}
               disabled={onsiteStatus === 'loading'}
               className="w-full"
               size="lg"
@@ -229,11 +233,15 @@ const ProcessOnsiteGuide = () => {
                     Processing Complete!
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm">
-                  <p>✅ Chunks Created: <strong>{onsiteResult.chunksCreated}</strong></p>
-                  <p>✅ Embeddings Processed: <strong>{onsiteResult.embeddingsProcessed}</strong></p>
-                  
+                  <p>
+                    ✅ Chunks Created: <strong>{onsiteResult.chunksCreated}</strong>
+                  </p>
+                  <p>
+                    ✅ Embeddings Processed: <strong>{onsiteResult.embeddingsProcessed}</strong>
+                  </p>
+
                   {onsiteResult.sampleChunks && (
                     <div className="mt-4">
                       <p className="font-semibold mb-2">Sample Chunks:</p>
@@ -281,8 +289,8 @@ const ProcessOnsiteGuide = () => {
               </div>
             </div>
 
-            <Button 
-              onClick={processGuidanceNote3} 
+            <Button
+              onClick={processGuidanceNote3}
               disabled={gn3Status === 'loading'}
               className="w-full"
               size="lg"
@@ -316,11 +324,15 @@ const ProcessOnsiteGuide = () => {
                     Processing Complete!
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm">
-                  <p>✅ Chunks Created: <strong>{gn3Result.chunksCreated}</strong></p>
-                  <p>✅ Embeddings Processed: <strong>{gn3Result.embeddingsProcessed}</strong></p>
-                  
+                  <p>
+                    ✅ Chunks Created: <strong>{gn3Result.chunksCreated}</strong>
+                  </p>
+                  <p>
+                    ✅ Embeddings Processed: <strong>{gn3Result.embeddingsProcessed}</strong>
+                  </p>
+
                   {gn3Result.sampleChunks && (
                     <div className="mt-4">
                       <p className="font-semibold mb-2">Sample Testing Procedures:</p>
@@ -334,9 +346,10 @@ const ProcessOnsiteGuide = () => {
                             {chunk.metadata.test_category && (
                               <span className="mr-2">Category: {chunk.metadata.test_category}</span>
                             )}
-                            {chunk.metadata.test_methods && chunk.metadata.test_methods.length > 0 && (
-                              <span>Methods: {chunk.metadata.test_methods.join(', ')}</span>
-                            )}
+                            {chunk.metadata.test_methods &&
+                              chunk.metadata.test_methods.length > 0 && (
+                                <span>Methods: {chunk.metadata.test_methods.join(', ')}</span>
+                              )}
                           </div>
                         </div>
                       ))}
@@ -373,8 +386,8 @@ const ProcessOnsiteGuide = () => {
               </div>
             </div>
 
-            <Button 
-              onClick={processEmergencyLighting} 
+            <Button
+              onClick={processEmergencyLighting}
               disabled={elStatus === 'loading'}
               className="w-full"
               size="lg"
@@ -407,9 +420,11 @@ const ProcessOnsiteGuide = () => {
                     Processing Complete!
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm">
-                  <p>✅ Chunks Processed: <strong>{elResult.chunksProcessed}</strong></p>
+                  <p>
+                    ✅ Chunks Processed: <strong>{elResult.chunksProcessed}</strong>
+                  </p>
                 </div>
               </div>
             )}
@@ -441,8 +456,8 @@ const ProcessOnsiteGuide = () => {
               </div>
             </div>
 
-            <Button 
-              onClick={processBook1} 
+            <Button
+              onClick={processBook1}
               disabled={book1Status === 'loading'}
               className="w-full"
               size="lg"
@@ -476,9 +491,11 @@ const ProcessOnsiteGuide = () => {
                     Processing Complete!
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm">
-                  <p>✅ Chunks Processed: <strong>{book1Result.chunksProcessed}</strong></p>
+                  <p>
+                    ✅ Chunks Processed: <strong>{book1Result.chunksProcessed}</strong>
+                  </p>
                 </div>
               </div>
             )}
@@ -510,8 +527,8 @@ const ProcessOnsiteGuide = () => {
               </div>
             </div>
 
-            <Button 
-              onClick={processBook2} 
+            <Button
+              onClick={processBook2}
               disabled={book2Status === 'loading'}
               className="w-full"
               size="lg"
@@ -545,9 +562,11 @@ const ProcessOnsiteGuide = () => {
                     Processing Complete!
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm">
-                  <p>✅ Chunks Processed: <strong>{book2Result.chunksProcessed}</strong></p>
+                  <p>
+                    ✅ Chunks Processed: <strong>{book2Result.chunksProcessed}</strong>
+                  </p>
                 </div>
               </div>
             )}
@@ -572,15 +591,17 @@ const ProcessOnsiteGuide = () => {
             <div className="flex items-center gap-3">
               <FileText className="h-6 w-6 text-primary" />
               <div>
-                <p className="font-semibold text-primary">BS 7671:2018+A3:2024 (Wiring Regulations)</p>
+                <p className="font-semibold text-primary">
+                  BS 7671:2018+A3:2024 (Wiring Regulations)
+                </p>
                 <p className="text-sm text-muted-foreground">
                   🔥 FOUNDATIONAL DOCUMENT - The legal basis for all electrical installations
                 </p>
               </div>
             </div>
 
-            <Button 
-              onClick={processBS7671} 
+            <Button
+              onClick={processBS7671}
               disabled={bs7671Status === 'loading'}
               className="w-full"
               size="lg"
@@ -616,10 +637,14 @@ const ProcessOnsiteGuide = () => {
                     BS 7671 Successfully Processed! 🎉
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm">
-                  <p>✅ Chunks Created: <strong>{bs7671Result.chunks_created}</strong></p>
-                  <p>✅ Embeddings Processed: <strong>{bs7671Result.chunks_processed}</strong></p>
+                  <p>
+                    ✅ Chunks Created: <strong>{bs7671Result.chunks_created}</strong>
+                  </p>
+                  <p>
+                    ✅ Embeddings Processed: <strong>{bs7671Result.chunks_processed}</strong>
+                  </p>
                   <p className="text-xs text-muted-foreground mt-3">
                     All agents now have access to BS 7671 regulations via RAG search
                   </p>
@@ -644,7 +669,8 @@ const ProcessOnsiteGuide = () => {
         <div className="text-sm text-muted-foreground text-center">
           <p>After processing, these guides will be available to:</p>
           <p className="font-semibold mt-1">
-            Designer Agent • Installer Agent • Commissioning Agent • Cost Engineer • Apprentice Learning
+            Designer Agent • Installer Agent • Commissioning Agent • Cost Engineer • Apprentice
+            Learning
           </p>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { RegulationData, REGULATIONS_DATABASE } from './regulationDatabase';
  * @returns The regulation data if found, undefined otherwise
  */
 export function findRegulationByNumber(regNumber: string): RegulationData | undefined {
-  return REGULATIONS_DATABASE.find(reg => reg.number === regNumber);
+  return REGULATIONS_DATABASE.find((reg) => reg.number === regNumber);
 }
 
 /**
@@ -16,6 +16,6 @@ export function findRegulationByNumber(regNumber: string): RegulationData | unde
  */
 export function findRegulationsByNumbers(regNumbers: string[]): RegulationData[] {
   return regNumbers
-    .map(regNumber => findRegulationByNumber(regNumber))
+    .map((regNumber) => findRegulationByNumber(regNumber))
     .filter((reg): reg is RegulationData => reg !== undefined);
 }

@@ -12,10 +12,10 @@ const BMSModule7Section6ContentPart2 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          The following documents must be provided to the client to ensure proper operation, 
+          The following documents must be provided to the client to ensure proper operation,
           maintenance, and future modifications of the BMS:
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
             <FileText className="h-6 w-6 text-elec-yellow mb-3" />
@@ -30,7 +30,7 @@ const BMSModule7Section6ContentPart2 = () => {
               <li>• Emergency circuit modifications</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <Database className="h-6 w-6 text-elec-yellow mb-3" />
             <h4 className="font-semibold text-foreground mb-2">IO Lists</h4>
@@ -44,7 +44,7 @@ const BMSModule7Section6ContentPart2 = () => {
               <li>• Alarm limits and priorities</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <Settings className="h-6 w-6 text-elec-yellow mb-3" />
             <h4 className="font-semibold text-foreground mb-2">Addressing Registers</h4>
@@ -58,7 +58,7 @@ const BMSModule7Section6ContentPart2 = () => {
               <li>• Network configuration details</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <HardDrive className="h-6 w-6 text-elec-yellow mb-3" />
             <h4 className="font-semibold text-foreground mb-2">Software Backups</h4>
@@ -72,7 +72,7 @@ const BMSModule7Section6ContentPart2 = () => {
               <li>• Trending and alarm configurations</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <ClipboardCheck className="h-6 w-6 text-elec-yellow mb-3" />
             <h4 className="font-semibold text-foreground mb-2">Commissioning Records</h4>
@@ -86,7 +86,7 @@ const BMSModule7Section6ContentPart2 = () => {
               <li>• Performance verification data</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <Book className="h-6 w-6 text-elec-yellow mb-3" />
             <h4 className="font-semibold text-foreground mb-2">O&M Manuals</h4>
@@ -101,17 +101,18 @@ const BMSModule7Section6ContentPart2 = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Inline Check</h4>
           <p className="text-foreground">
-            👉 <strong>Why must IO lists and addressing registers be updated before handover?</strong>
+            👉{' '}
+            <strong>Why must IO lists and addressing registers be updated before handover?</strong>
           </p>
           <details className="mt-2">
             <summary className="cursor-pointer text-elec-yellow">Click for answer</summary>
             <p className="mt-2 text-sm text-foreground">
-              Accurate IO lists and addressing registers are essential for future troubleshooting, 
-              modifications, and maintenance. Without them, technicians cannot identify which 
+              Accurate IO lists and addressing registers are essential for future troubleshooting,
+              modifications, and maintenance. Without them, technicians cannot identify which
               physical device corresponds to a system alarm or modify the system safely.
             </p>
           </details>

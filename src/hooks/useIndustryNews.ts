@@ -20,13 +20,13 @@ export interface NewsArticle {
 
 const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
   console.log('🔧 Fetching industry news from database...');
-  
+
   const { data, error } = await supabase
     .from('industry_news')
     .select('*')
     .eq('is_active', true)
     .order('date_published', { ascending: false });
-  
+
   if (error) {
     console.error('❌ Error fetching news:', error);
     throw new Error(error.message || 'Failed to fetch news data');
@@ -36,25 +36,29 @@ const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
   return data || [];
 };
 
-const refreshNewsFromFirecrawl = async (): Promise<{ success: boolean; message: string; articlesInserted: number }> => {
+const refreshNewsFromFirecrawl = async (): Promise<{
+  success: boolean;
+  message: string;
+  articlesInserted: number;
+}> => {
   console.log('🔄 Refreshing news from Firecrawl scraper...');
 
   const { data, error } = await supabase.functions.invoke('firecrawl-news-scraper', {
-    body: { action: 'refresh' }
+    body: { action: 'refresh' },
   });
-  
+
   if (error) {
     console.error('❌ Error refreshing news:', error);
     throw new Error(error.message || 'Failed to refresh news');
   }
-  
+
   console.log('✅ News refresh completed:', data);
   return data;
 };
 
 export const useIndustryNews = () => {
   const queryClient = useQueryClient();
-  
+
   const query = useQuery({
     queryKey: ['industry-news'],
     queryFn: fetchIndustryNews,
@@ -64,7 +68,7 @@ export const useIndustryNews = () => {
     refetchOnReconnect: true,
     retry: 2,
   });
-  
+
   const refreshMutation = useMutation({
     mutationFn: refreshNewsFromFirecrawl,
     onSuccess: (data) => {
@@ -74,9 +78,9 @@ export const useIndustryNews = () => {
     },
     onError: (error) => {
       console.error('❌ Refresh failed:', error);
-    }
+    },
   });
-  
+
   console.log('🔍 useIndustryNews hook state:', {
     isLoading: query.isLoading,
     isError: query.isError,
@@ -84,14 +88,14 @@ export const useIndustryNews = () => {
     dataLength: query.data?.length,
     status: query.status,
     fetchStatus: query.fetchStatus,
-    isRefreshing: refreshMutation.isPending
+    isRefreshing: refreshMutation.isPending,
   });
-  
+
   return {
     ...query,
     refresh: refreshMutation.mutate,
     isRefreshing: refreshMutation.isPending,
     refreshError: refreshMutation.error,
-    refreshSuccess: refreshMutation.isSuccess
+    refreshSuccess: refreshMutation.isSuccess,
   };
 };

@@ -1,4 +1,4 @@
-import { MessageSquare, Zap, Users, Shield } from "lucide-react";
+import { MessageSquare, Zap, Users, Shield } from 'lucide-react';
 
 const ElectricalHeroSection = () => {
   return (
@@ -7,19 +7,43 @@ const ElectricalHeroSection = () => {
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" viewBox="0 0 400 200" fill="none">
           {/* Circuit lines */}
-          <path d="M0 100 L50 100 L60 90 L80 110 L90 100 L140 100" stroke="currentColor" strokeWidth="2"/>
-          <path d="M160 100 L210 100 L220 90 L240 110 L250 100 L300 100" stroke="currentColor" strokeWidth="2"/>
-          <path d="M320 100 L370 100 L380 90 L400 110" stroke="currentColor" strokeWidth="2"/>
-          
+          <path
+            d="M0 100 L50 100 L60 90 L80 110 L90 100 L140 100"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path
+            d="M160 100 L210 100 L220 90 L240 110 L250 100 L300 100"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path d="M320 100 L370 100 L380 90 L400 110" stroke="currentColor" strokeWidth="2" />
+
           {/* Connection points */}
-          <circle cx="50" cy="100" r="3" fill="currentColor"/>
-          <circle cx="140" cy="100" r="3" fill="currentColor"/>
-          <circle cx="160" cy="100" r="3" fill="currentColor"/>
-          <circle cx="300" cy="100" r="3" fill="currentColor"/>
-          
+          <circle cx="50" cy="100" r="3" fill="currentColor" />
+          <circle cx="140" cy="100" r="3" fill="currentColor" />
+          <circle cx="160" cy="100" r="3" fill="currentColor" />
+          <circle cx="300" cy="100" r="3" fill="currentColor" />
+
           {/* Resistor symbols */}
-          <rect x="75" y="95" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1"/>
-          <rect x="235" y="95" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1"/>
+          <rect
+            x="75"
+            y="95"
+            width="10"
+            height="10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          <rect
+            x="235"
+            y="95"
+            width="10"
+            height="10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
         </svg>
       </div>
 
@@ -33,10 +57,16 @@ const ElectricalHeroSection = () => {
               <Zap className="h-4 w-4 text-elec-yellow animate-pulse" />
             </div>
           </div>
-          
+
           {/* Animated rings */}
-          <div className="absolute inset-0 rounded-2xl border border-elec-yellow/20 animate-ping" style={{ animationDuration: "3s" }} />
-          <div className="absolute inset-2 rounded-xl border border-elec-yellow/10 animate-ping" style={{ animationDuration: "2s", animationDelay: "0.5s" }} />
+          <div
+            className="absolute inset-0 rounded-2xl border border-elec-yellow/20 animate-ping"
+            style={{ animationDuration: '3s' }}
+          />
+          <div
+            className="absolute inset-2 rounded-xl border border-elec-yellow/10 animate-ping"
+            style={{ animationDuration: '2s', animationDelay: '0.5s' }}
+          />
         </div>
 
         {/* Title with electrical styling */}
@@ -45,8 +75,8 @@ const ElectricalHeroSection = () => {
             Client Explainer
           </h1>
           <p className="text-foreground max-w-2xl mx-auto text-sm leading-relaxed">
-            Transform technical electrical findings into clear, professional explanations 
-            that clients can understand and trust.
+            Transform technical electrical findings into clear, professional explanations that
+            clients can understand and trust.
           </p>
         </div>
 

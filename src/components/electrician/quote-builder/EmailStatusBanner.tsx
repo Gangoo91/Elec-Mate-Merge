@@ -16,14 +16,16 @@ export const EmailStatusBanner = () => {
 
   const checkEmailStatus = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
         setLoading(false);
         return;
       }
 
       const { data, error } = await supabase.functions.invoke('get-email-config', {
-        headers: { Authorization: `Bearer ${session.access_token}` }
+        headers: { Authorization: `Bearer ${session.access_token}` },
       });
 
       if (!error && data?.configs?.length > 0) {
@@ -74,12 +76,10 @@ export const EmailStatusBanner = () => {
       <AlertDescription className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Mail className="h-4 w-4" />
-          <span className="text-sm">
-            Connect your email to send quotes automatically
-          </span>
+          <span className="text-sm">Connect your email to send quotes automatically</span>
         </div>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
           onClick={() => navigate('/settings?tab=preferences')}
           className="h-8"

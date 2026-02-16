@@ -12,10 +12,10 @@ export const PolarityMethodsIntro = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground text-lg leading-relaxed">
-          This section explains how to safely and effectively test for correct polarity throughout 
+          This section explains how to safely and effectively test for correct polarity throughout
           an electrical installation, using the correct instruments and procedures.
         </p>
-        
+
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <h3 className="text-blue-200 font-medium mb-3">What You'll Learn</h3>
           <ul className="space-y-2 text-foreground text-sm">
@@ -32,8 +32,8 @@ export const PolarityMethodsIntro = () => {
             <div>
               <h3 className="text-red-200 font-medium mb-2">Safety First</h3>
               <p className="text-foreground text-sm leading-relaxed">
-                Polarity testing is performed on dead circuits using continuity settings. 
-                Always ensure the installation is safely isolated and proven dead before testing.
+                Polarity testing is performed on dead circuits using continuity settings. Always
+                ensure the installation is safely isolated and proven dead before testing.
               </p>
             </div>
           </div>

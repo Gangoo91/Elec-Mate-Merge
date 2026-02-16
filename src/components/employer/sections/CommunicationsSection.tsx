@@ -1,21 +1,27 @@
-import { useState, useMemo, useCallback, useRef } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { format } from "date-fns";
-import { QuickStatsGrid, QuickStat } from "@/components/employer/QuickStats";
+import { useState, useMemo, useCallback, useRef } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { format } from 'date-fns';
+import { QuickStatsGrid, QuickStat } from '@/components/employer/QuickStats';
 import {
   MessageSquare,
   Search,
@@ -48,8 +54,8 @@ import {
   ChevronDown,
   ChevronUp,
   RotateCw,
-  Loader2
-} from "lucide-react";
+  Loader2,
+} from 'lucide-react';
 import {
   useCommunications,
   useCommunicationStats,
@@ -58,16 +64,21 @@ import {
   usePinCommunication,
   useMarkAsRead,
   useAcknowledgeMessage,
-  useDeleteCommunication
-} from "@/hooks/useCommunications";
-import { useActiveEmployees } from "@/hooks/useEmployees";
-import { Communication, CommunicationType, CommunicationPriority, TargetAudience } from "@/services/communicationService";
+  useDeleteCommunication,
+} from '@/hooks/useCommunications';
+import { useActiveEmployees } from '@/hooks/useEmployees';
+import {
+  Communication,
+  CommunicationType,
+  CommunicationPriority,
+  TargetAudience,
+} from '@/services/communicationService';
 
 // Type mapping from new backend types to UI
 const typeMapping: Record<CommunicationType, string> = {
-  'announcement': 'Team Broadcast',
-  'message': 'Job Message',
-  'alert': 'Safety Warning',
+  announcement: 'Team Broadcast',
+  message: 'Job Message',
+  alert: 'Safety Warning',
 };
 
 const reverseTypeMapping: Record<string, CommunicationType> = {
@@ -78,33 +89,93 @@ const reverseTypeMapping: Record<string, CommunicationType> = {
 };
 
 const typeConfig = {
-  "Job Message": { icon: Briefcase, color: "bg-info/20 text-info", borderColor: "border-l-info", label: "Job" },
-  "Safety Warning": { icon: AlertTriangle, color: "bg-destructive/20 text-destructive", borderColor: "border-l-destructive", label: "Safety" },
-  "Team Broadcast": { icon: Megaphone, color: "bg-elec-yellow/20 text-elec-yellow", borderColor: "border-l-primary", label: "Brief" },
-  "Mandatory Reading": { icon: FileCheck, color: "bg-warning/20 text-warning", borderColor: "border-l-warning", label: "Required" },
+  'Job Message': {
+    icon: Briefcase,
+    color: 'bg-info/20 text-info',
+    borderColor: 'border-l-info',
+    label: 'Job',
+  },
+  'Safety Warning': {
+    icon: AlertTriangle,
+    color: 'bg-destructive/20 text-destructive',
+    borderColor: 'border-l-destructive',
+    label: 'Safety',
+  },
+  'Team Broadcast': {
+    icon: Megaphone,
+    color: 'bg-elec-yellow/20 text-elec-yellow',
+    borderColor: 'border-l-primary',
+    label: 'Brief',
+  },
+  'Mandatory Reading': {
+    icon: FileCheck,
+    color: 'bg-warning/20 text-warning',
+    borderColor: 'border-l-warning',
+    label: 'Required',
+  },
 };
 
 const priorityColors = {
-  "high": "bg-destructive text-destructive-foreground",
-  "urgent": "bg-destructive text-destructive-foreground",
-  "normal": "bg-muted text-muted-foreground",
-  "low": "bg-muted text-muted-foreground",
+  high: 'bg-destructive text-destructive-foreground',
+  urgent: 'bg-destructive text-destructive-foreground',
+  normal: 'bg-muted text-muted-foreground',
+  low: 'bg-muted text-muted-foreground',
 };
 
 // Message templates
 const templates = [
-  { id: "safety", name: "Safety Alert", icon: AlertTriangle, type: "Safety Warning", preview: "Important safety notice regarding..." },
-  { id: "brief", name: "Team Brief", icon: Megaphone, type: "Team Broadcast", preview: "Weekly update from management..." },
-  { id: "job", name: "Job Update", icon: Briefcase, type: "Job Message", preview: "Update on job progress..." },
-  { id: "mandatory", name: "Policy Update", icon: FileText, type: "Mandatory Reading", preview: "Please review and acknowledge..." },
+  {
+    id: 'safety',
+    name: 'Safety Alert',
+    icon: AlertTriangle,
+    type: 'Safety Warning',
+    preview: 'Important safety notice regarding...',
+  },
+  {
+    id: 'brief',
+    name: 'Team Brief',
+    icon: Megaphone,
+    type: 'Team Broadcast',
+    preview: 'Weekly update from management...',
+  },
+  {
+    id: 'job',
+    name: 'Job Update',
+    icon: Briefcase,
+    type: 'Job Message',
+    preview: 'Update on job progress...',
+  },
+  {
+    id: 'mandatory',
+    name: 'Policy Update',
+    icon: FileText,
+    type: 'Mandatory Reading',
+    preview: 'Please review and acknowledge...',
+  },
 ];
 
 // Per-tab empty states
 const emptyStates = {
-  inbox: { icon: Inbox, title: "All caught up!", message: "Your inbox is empty. Check back later for new messages." },
-  briefs: { icon: Megaphone, title: "No team briefs", message: "Send one to keep your team informed." },
-  safety: { icon: CheckCircle2, title: "No safety alerts", message: "That's good news! Operating safely." },
-  mandatory: { icon: FileCheck, title: "Nothing to sign", message: "No mandatory readings pending." },
+  inbox: {
+    icon: Inbox,
+    title: 'All caught up!',
+    message: 'Your inbox is empty. Check back later for new messages.',
+  },
+  briefs: {
+    icon: Megaphone,
+    title: 'No team briefs',
+    message: 'Send one to keep your team informed.',
+  },
+  safety: {
+    icon: CheckCircle2,
+    title: 'No safety alerts',
+    message: "That's good news! Operating safely.",
+  },
+  mandatory: {
+    icon: FileCheck,
+    title: 'Nothing to sign',
+    message: 'No mandatory readings pending.',
+  },
 };
 
 // Helper to get display type from backend communication
@@ -138,8 +209,8 @@ export const CommunicationsSection = () => {
   const [localAcknowledgedIds, setLocalAcknowledgedIds] = useState<Set<string>>(new Set());
 
   // Core state
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("inbox");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('inbox');
   const [filterUnread, setFilterUnread] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [pinnedCollapsed, setPinnedCollapsed] = useState(false);
@@ -148,20 +219,20 @@ export const CommunicationsSection = () => {
   const [selectedMessage, setSelectedMessage] = useState<Communication | null>(null);
   const [showDetail, setShowDetail] = useState(false);
   const [showReplySheet, setShowReplySheet] = useState(false);
-  const [replyContent, setReplyContent] = useState("");
+  const [replyContent, setReplyContent] = useState('');
 
   // Compose state
   const [showCompose, setShowCompose] = useState(false);
   const [selectedRecipients, setSelectedRecipients] = useState<string[]>([]);
-  const [selectedType, setSelectedType] = useState<string>("Team Broadcast");
-  const [messageTitle, setMessageTitle] = useState("");
-  const [messageContent, setMessageContent] = useState("");
+  const [selectedType, setSelectedType] = useState<string>('Team Broadcast');
+  const [messageTitle, setMessageTitle] = useState('');
+  const [messageContent, setMessageContent] = useState('');
   const [isPinned, setIsPinned] = useState(false);
   const [isScheduled, setIsScheduled] = useState(false);
   const [scheduleDate, setScheduleDate] = useState<Date | undefined>();
-  const [scheduleTime, setScheduleTime] = useState("09:00");
-  const [priority, setPriority] = useState<"normal" | "high">("normal");
-  const [recipientMode, setRecipientMode] = useState<"all" | "specific">("all");
+  const [scheduleTime, setScheduleTime] = useState('09:00');
+  const [priority, setPriority] = useState<'normal' | 'high'>('normal');
+  const [recipientMode, setRecipientMode] = useState<'all' | 'specific'>('all');
 
   // Swipe state
   const [swipingId, setSwipingId] = useState<string | null>(null);
@@ -172,26 +243,28 @@ export const CommunicationsSection = () => {
   // Pull to refresh
   const handleRefresh = async () => {
     await refetch();
-    toast({ title: "Refreshed", description: "Messages updated" });
+    toast({ title: 'Refreshed', description: 'Messages updated' });
   };
 
   // Filter and group messages
   const filteredComms = useMemo(() => {
-    let filtered = communications.filter(comm => {
-      const matchesSearch = comm.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            comm.content.toLowerCase().includes(searchQuery.toLowerCase());
+    let filtered = communications.filter((comm) => {
+      const matchesSearch =
+        comm.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        comm.content.toLowerCase().includes(searchQuery.toLowerCase());
 
       const displayType = getDisplayType(comm);
 
-      if (activeTab === "inbox") return matchesSearch;
-      if (activeTab === "briefs") return matchesSearch && displayType === "Team Broadcast";
-      if (activeTab === "safety") return matchesSearch && displayType === "Safety Warning";
-      if (activeTab === "mandatory") return matchesSearch && (displayType === "Mandatory Reading" || comm.priority === 'urgent');
+      if (activeTab === 'inbox') return matchesSearch;
+      if (activeTab === 'briefs') return matchesSearch && displayType === 'Team Broadcast';
+      if (activeTab === 'safety') return matchesSearch && displayType === 'Safety Warning';
+      if (activeTab === 'mandatory')
+        return matchesSearch && (displayType === 'Mandatory Reading' || comm.priority === 'urgent');
       return matchesSearch;
     });
 
     if (filterUnread) {
-      filtered = filtered.filter(c => !localReadIds.has(c.id));
+      filtered = filtered.filter((c) => !localReadIds.has(c.id));
     }
 
     return filtered;
@@ -204,19 +277,17 @@ export const CommunicationsSection = () => {
     const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
 
     const groups: { label: string; messages: Communication[] }[] = [
-      { label: "Today", messages: [] },
-      { label: "Yesterday", messages: [] },
-      { label: "This Week", messages: [] },
-      { label: "Earlier", messages: [] },
+      { label: 'Today', messages: [] },
+      { label: 'Yesterday', messages: [] },
+      { label: 'This Week', messages: [] },
+      { label: 'Earlier', messages: [] },
     ];
 
     // Separate pinned for inbox
-    const pinnedMessages = activeTab === "inbox"
-      ? filteredComms.filter(c => c.is_pinned)
-      : [];
-    const unpinnedMessages = filteredComms.filter(c => !c.is_pinned || activeTab !== "inbox");
+    const pinnedMessages = activeTab === 'inbox' ? filteredComms.filter((c) => c.is_pinned) : [];
+    const unpinnedMessages = filteredComms.filter((c) => !c.is_pinned || activeTab !== 'inbox');
 
-    unpinnedMessages.forEach(comm => {
+    unpinnedMessages.forEach((comm) => {
       const commDate = comm.created_at.split('T')[0];
       if (commDate >= today) groups[0].messages.push(comm);
       else if (commDate >= yesterday) groups[1].messages.push(comm);
@@ -224,57 +295,70 @@ export const CommunicationsSection = () => {
       else groups[3].messages.push(comm);
     });
 
-    return { pinned: pinnedMessages, groups: groups.filter(g => g.messages.length > 0) };
+    return { pinned: pinnedMessages, groups: groups.filter((g) => g.messages.length > 0) };
   }, [filteredComms, activeTab]);
 
   // Use stats from backend hook, with fallbacks
-  const displayStats = useMemo(() => ({
-    total: stats?.totalAnnouncements ?? communications.length,
-    unread: stats?.unreadCount ?? communications.filter(c => !localReadIds.has(c.id)).length,
-    mandatoryPending: communications.filter(c =>
-      (c.priority === 'urgent' || c.priority === 'high') && !localAcknowledgedIds.has(c.id)
-    ).length,
-    safetyWarnings: communications.filter(c => c.type === 'alert').length,
-  }), [stats, communications, localReadIds, localAcknowledgedIds]);
+  const displayStats = useMemo(
+    () => ({
+      total: stats?.totalAnnouncements ?? communications.length,
+      unread: stats?.unreadCount ?? communications.filter((c) => !localReadIds.has(c.id)).length,
+      mandatoryPending: communications.filter(
+        (c) => (c.priority === 'urgent' || c.priority === 'high') && !localAcknowledgedIds.has(c.id)
+      ).length,
+      safetyWarnings: communications.filter((c) => c.type === 'alert').length,
+    }),
+    [stats, communications, localReadIds, localAcknowledgedIds]
+  );
 
   // Actions
-  const togglePin = useCallback(async (id: string, currentPinned: boolean) => {
-    try {
-      await pinCommunication.mutateAsync({ id, isPinned: !currentPinned });
-      toast({ title: currentPinned ? "Unpinned" : "Pinned" });
-    } catch {
-      toast({ title: "Error", description: "Failed to update pin status", variant: "destructive" });
-    }
-  }, [pinCommunication]);
+  const togglePin = useCallback(
+    async (id: string, currentPinned: boolean) => {
+      try {
+        await pinCommunication.mutateAsync({ id, isPinned: !currentPinned });
+        toast({ title: currentPinned ? 'Unpinned' : 'Pinned' });
+      } catch {
+        toast({
+          title: 'Error',
+          description: 'Failed to update pin status',
+          variant: 'destructive',
+        });
+      }
+    },
+    [pinCommunication]
+  );
 
   const toggleRead = useCallback((id: string) => {
-    setLocalReadIds(prev => {
+    setLocalReadIds((prev) => {
       const next = new Set(prev);
       if (next.has(id)) {
         next.delete(id);
-        toast({ title: "Marked Unread" });
+        toast({ title: 'Marked Unread' });
       } else {
         next.add(id);
-        toast({ title: "Marked Read" });
+        toast({ title: 'Marked Read' });
       }
       return next;
     });
   }, []);
 
-  const deleteMessage = useCallback(async (id: string) => {
-    try {
-      await deleteCommunication.mutateAsync(id);
-      setShowDetail(false);
-      toast({ title: "Deleted" });
-    } catch {
-      toast({ title: "Error", description: "Failed to delete message", variant: "destructive" });
-    }
-  }, [deleteCommunication]);
+  const deleteMessage = useCallback(
+    async (id: string) => {
+      try {
+        await deleteCommunication.mutateAsync(id);
+        setShowDetail(false);
+        toast({ title: 'Deleted' });
+      } catch {
+        toast({ title: 'Error', description: 'Failed to delete message', variant: 'destructive' });
+      }
+    },
+    [deleteCommunication]
+  );
 
   const signOff = useCallback((id: string) => {
-    setLocalAcknowledgedIds(prev => new Set([...prev, id]));
-    setLocalReadIds(prev => new Set([...prev, id]));
-    toast({ title: "Signed Off", description: "Acknowledged" });
+    setLocalAcknowledgedIds((prev) => new Set([...prev, id]));
+    setLocalReadIds((prev) => new Set([...prev, id]));
+    toast({ title: 'Signed Off', description: 'Acknowledged' });
   }, []);
 
   const handleReply = useCallback(async () => {
@@ -291,9 +375,10 @@ export const CommunicationsSection = () => {
         content: replyContent,
         priority: 'normal',
         target_audience: isReplyToSpecific ? 'specific' : selectedMessage.target_audience,
-        target_employee_ids: isReplyToSpecific && selectedMessage.sender_id
-          ? [selectedMessage.sender_id]
-          : selectedMessage.target_employee_ids,
+        target_employee_ids:
+          isReplyToSpecific && selectedMessage.sender_id
+            ? [selectedMessage.sender_id]
+            : selectedMessage.target_employee_ids,
         is_pinned: false,
         expires_at: null,
         sender_id: null,
@@ -301,16 +386,16 @@ export const CommunicationsSection = () => {
       });
 
       toast({
-        title: "Reply sent",
-        description: "Your reply has been sent.",
+        title: 'Reply sent',
+        description: 'Your reply has been sent.',
       });
-      setReplyContent("");
+      setReplyContent('');
       setShowReplySheet(false);
     } catch {
       toast({
-        title: "Error",
-        description: "Failed to send reply. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to send reply. Please try again.',
+        variant: 'destructive',
       });
     }
   }, [selectedMessage, replyContent, createCommunication]);
@@ -319,7 +404,7 @@ export const CommunicationsSection = () => {
     setSelectedMessage(comm);
     setRecipientsMessageId(comm.id);
     setShowDetail(true);
-    setLocalReadIds(prev => new Set([...prev, comm.id]));
+    setLocalReadIds((prev) => new Set([...prev, comm.id]));
   }, []);
 
   // Swipe handlers
@@ -362,22 +447,29 @@ export const CommunicationsSection = () => {
   // Compose handlers
   const handleSendMessage = async () => {
     if (!messageTitle.trim() || !messageContent.trim()) {
-      toast({ title: "Missing info", description: "Add a title and message", variant: "destructive" });
+      toast({
+        title: 'Missing info',
+        description: 'Add a title and message',
+        variant: 'destructive',
+      });
       return;
     }
 
-    const recipientCount = recipientMode === "all" ? employees.length : selectedRecipients.length;
+    const recipientCount = recipientMode === 'all' ? employees.length : selectedRecipients.length;
     if (recipientCount === 0) {
-      toast({ title: "No recipients", description: "Select at least one", variant: "destructive" });
+      toast({ title: 'No recipients', description: 'Select at least one', variant: 'destructive' });
       return;
     }
 
     try {
-      const targetAudience: TargetAudience = recipientMode === "all" ? 'all' : 'specific';
+      const targetAudience: TargetAudience = recipientMode === 'all' ? 'all' : 'specific';
       const commType: CommunicationType = reverseTypeMapping[selectedType] || 'announcement';
-      const commPriority: CommunicationPriority = selectedType === "Mandatory Reading" ? 'urgent' :
-                                                   selectedType === "Safety Warning" ? 'high' :
-                                                   priority;
+      const commPriority: CommunicationPriority =
+        selectedType === 'Mandatory Reading'
+          ? 'urgent'
+          : selectedType === 'Safety Warning'
+            ? 'high'
+            : priority;
 
       await createCommunication.mutateAsync({
         type: commType,
@@ -385,42 +477,43 @@ export const CommunicationsSection = () => {
         content: messageContent,
         priority: commPriority,
         target_audience: targetAudience,
-        target_employee_ids: recipientMode === "specific" ? selectedRecipients : null,
+        target_employee_ids: recipientMode === 'specific' ? selectedRecipients : null,
         is_pinned: isPinned,
         expires_at: isScheduled && scheduleDate ? scheduleDate.toISOString() : null,
         sender_id: null,
         attachments: null,
       });
 
-      const scheduleInfo = isScheduled && scheduleDate
-        ? ` for ${format(scheduleDate, "dd MMM")} at ${scheduleTime}`
-        : "";
+      const scheduleInfo =
+        isScheduled && scheduleDate
+          ? ` for ${format(scheduleDate, 'dd MMM')} at ${scheduleTime}`
+          : '';
 
       toast({
-        title: isScheduled ? "Scheduled" : "Sent",
+        title: isScheduled ? 'Scheduled' : 'Sent',
         description: `${recipientCount} recipients${scheduleInfo}`,
       });
       setShowCompose(false);
       resetCompose();
     } catch {
-      toast({ title: "Error", description: "Failed to send message", variant: "destructive" });
+      toast({ title: 'Error', description: 'Failed to send message', variant: 'destructive' });
     }
   };
 
   const resetCompose = () => {
     setSelectedRecipients([]);
-    setMessageTitle("");
-    setMessageContent("");
-    setSelectedType("Team Broadcast");
+    setMessageTitle('');
+    setMessageContent('');
+    setSelectedType('Team Broadcast');
     setIsPinned(false);
     setIsScheduled(false);
     setScheduleDate(undefined);
-    setScheduleTime("09:00");
-    setPriority("normal");
-    setRecipientMode("all");
+    setScheduleTime('09:00');
+    setPriority('normal');
+    setRecipientMode('all');
   };
 
-  const handleUseTemplate = (template: typeof templates[0]) => {
+  const handleUseTemplate = (template: (typeof templates)[0]) => {
     setSelectedType(template.type);
     setMessageContent(template.preview);
     setMessageTitle(template.name);
@@ -433,24 +526,35 @@ export const CommunicationsSection = () => {
     const commDate = dateStr.split('T')[0];
 
     if (commDate === today) return format(date, 'HH:mm');
-    if (commDate === yesterday) return "Yesterday";
+    if (commDate === yesterday) return 'Yesterday';
     return format(date, 'dd MMM');
   };
 
   // Tab config
   const tabs = [
-    { id: "inbox", icon: Inbox, label: "Inbox", count: null },
-    { id: "briefs", icon: Megaphone, label: "Briefs", count: null },
-    { id: "safety", icon: AlertTriangle, label: "Safety", count: displayStats.safetyWarnings > 0 ? displayStats.safetyWarnings : null },
-    { id: "mandatory", icon: FileCheck, label: "Sign", count: displayStats.mandatoryPending > 0 ? displayStats.mandatoryPending : null },
+    { id: 'inbox', icon: Inbox, label: 'Inbox', count: null },
+    { id: 'briefs', icon: Megaphone, label: 'Briefs', count: null },
+    {
+      id: 'safety',
+      icon: AlertTriangle,
+      label: 'Safety',
+      count: displayStats.safetyWarnings > 0 ? displayStats.safetyWarnings : null,
+    },
+    {
+      id: 'mandatory',
+      icon: FileCheck,
+      label: 'Sign',
+      count: displayStats.mandatoryPending > 0 ? displayStats.mandatoryPending : null,
+    },
   ];
 
   // Message Card Component
   const MessageCard = ({ comm }: { comm: Communication }) => {
     const displayType = getDisplayType(comm);
     const TypeIcon = typeConfig[displayType as keyof typeof typeConfig]?.icon || MessageSquare;
-    const typeColor = typeConfig[displayType as keyof typeof typeConfig]?.color || "bg-muted";
-    const borderColor = typeConfig[displayType as keyof typeof typeConfig]?.borderColor || "border-l-muted";
+    const typeColor = typeConfig[displayType as keyof typeof typeConfig]?.color || 'bg-muted';
+    const borderColor =
+      typeConfig[displayType as keyof typeof typeConfig]?.borderColor || 'border-l-muted';
     const isRead = localReadIds.has(comm.id);
     const isPinnedMsg = comm.is_pinned;
     const isSignedOff = localAcknowledgedIds.has(comm.id);
@@ -466,11 +570,21 @@ export const CommunicationsSection = () => {
       >
         {/* Swipe action backgrounds */}
         <div className="absolute inset-0 flex">
-          <div className={`flex-1 flex items-center justify-start pl-5 transition-colors duration-200 ${swipeOffset > 30 ? 'bg-success' : 'bg-success/50'}`}>
-            {isRead ? <Mail className="h-6 w-6 text-success-foreground" /> : <MailOpen className="h-6 w-6 text-success-foreground" />}
-            <span className="ml-2 text-sm font-medium text-success-foreground">{isRead ? "Unread" : "Read"}</span>
+          <div
+            className={`flex-1 flex items-center justify-start pl-5 transition-colors duration-200 ${swipeOffset > 30 ? 'bg-success' : 'bg-success/50'}`}
+          >
+            {isRead ? (
+              <Mail className="h-6 w-6 text-success-foreground" />
+            ) : (
+              <MailOpen className="h-6 w-6 text-success-foreground" />
+            )}
+            <span className="ml-2 text-sm font-medium text-success-foreground">
+              {isRead ? 'Unread' : 'Read'}
+            </span>
           </div>
-          <div className={`flex-1 flex items-center justify-end pr-5 transition-colors duration-200 ${swipeOffset < -30 ? 'bg-destructive' : 'bg-destructive/50'}`}>
+          <div
+            className={`flex-1 flex items-center justify-end pr-5 transition-colors duration-200 ${swipeOffset < -30 ? 'bg-destructive' : 'bg-destructive/50'}`}
+          >
             <span className="mr-2 text-sm font-medium text-destructive-foreground">Delete</span>
             <Trash2 className="h-6 w-6 text-destructive-foreground" />
           </div>
@@ -498,13 +612,17 @@ export const CommunicationsSection = () => {
               {/* Title row with pin icon */}
               <div className="flex items-center gap-1.5">
                 {isPinnedMsg && <Pin className="h-3 w-3 text-elec-yellow flex-shrink-0" />}
-                <h4 className={`text-sm truncate ${!isRead ? 'font-bold text-foreground' : 'font-medium text-foreground/80'}`}>
+                <h4
+                  className={`text-sm truncate ${!isRead ? 'font-bold text-foreground' : 'font-medium text-foreground/80'}`}
+                >
                   {comm.title}
                 </h4>
               </div>
 
               {/* Preview - two lines */}
-              <p className={`text-sm mt-1 line-clamp-2 leading-relaxed ${!isRead ? 'text-foreground/70' : 'text-muted-foreground'}`}>
+              <p
+                className={`text-sm mt-1 line-clamp-2 leading-relaxed ${!isRead ? 'text-foreground/70' : 'text-muted-foreground'}`}
+              >
                 {comm.content}
               </p>
 
@@ -512,13 +630,18 @@ export const CommunicationsSection = () => {
               <div className="flex items-center justify-between mt-2.5 gap-2">
                 <div className="flex items-center gap-1.5 flex-wrap min-w-0">
                   {isHighPriority && (
-                    <Badge className={`text-[10px] py-0 h-5 px-1.5 gap-0.5 ${priorityColors[comm.priority]}`}>
+                    <Badge
+                      className={`text-[10px] py-0 h-5 px-1.5 gap-0.5 ${priorityColors[comm.priority]}`}
+                    >
                       <Zap className="h-2.5 w-2.5" />
                       Urgent
                     </Badge>
                   )}
-                  {displayType === "Mandatory Reading" && isSignedOff && (
-                    <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-success/10 text-success border-success/30 gap-0.5">
+                  {displayType === 'Mandatory Reading' && isSignedOff && (
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] py-0 h-5 px-1.5 bg-success/10 text-success border-success/30 gap-0.5"
+                    >
                       <Check className="h-2.5 w-2.5" />
                       Done
                     </Badge>
@@ -532,10 +655,13 @@ export const CommunicationsSection = () => {
 
             {/* Right: Sign button or chevron */}
             <div className="flex items-center flex-shrink-0">
-              {displayType === "Mandatory Reading" && !isSignedOff ? (
+              {displayType === 'Mandatory Reading' && !isSignedOff ? (
                 <Button
                   size="sm"
-                  onClick={(e) => { e.stopPropagation(); signOff(comm.id); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    signOff(comm.id);
+                  }}
                   className="h-9 px-3 text-xs gap-1.5 rounded-lg"
                 >
                   <FileCheck className="h-3.5 w-3.5" />
@@ -557,11 +683,12 @@ export const CommunicationsSection = () => {
 
     const displayType = getDisplayType(selectedMessage);
     const TypeIcon = typeConfig[displayType as keyof typeof typeConfig]?.icon || MessageSquare;
-    const typeColor = typeConfig[displayType as keyof typeof typeConfig]?.color || "bg-muted";
+    const typeColor = typeConfig[displayType as keyof typeof typeConfig]?.color || 'bg-muted';
     const isPinnedMsg = selectedMessage.is_pinned;
     const isRead = localReadIds.has(selectedMessage.id);
     const isSignedOff = localAcknowledgedIds.has(selectedMessage.id);
-    const isHighPriority = selectedMessage.priority === 'high' || selectedMessage.priority === 'urgent';
+    const isHighPriority =
+      selectedMessage.priority === 'high' || selectedMessage.priority === 'urgent';
 
     return (
       <Sheet open={showDetail} onOpenChange={setShowDetail}>
@@ -580,17 +707,24 @@ export const CommunicationsSection = () => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   {isHighPriority && (
-                    <Badge className={`text-xs ${priorityColors[selectedMessage.priority]}`}>Urgent</Badge>
+                    <Badge className={`text-xs ${priorityColors[selectedMessage.priority]}`}>
+                      Urgent
+                    </Badge>
                   )}
                   {isPinnedMsg && (
                     <Badge variant="outline" className="text-xs gap-1">
-                      <Pin className="h-3 w-3" />Pinned
+                      <Pin className="h-3 w-3" />
+                      Pinned
                     </Badge>
                   )}
                 </div>
-                <h2 className="text-lg font-bold text-foreground mt-1 leading-tight">{selectedMessage.title}</h2>
+                <h2 className="text-lg font-bold text-foreground mt-1 leading-tight">
+                  {selectedMessage.title}
+                </h2>
                 <div className="flex items-center gap-2 mt-1.5 text-sm text-muted-foreground">
-                  <span>{format(new Date(selectedMessage.created_at), "dd MMM yyyy 'at' HH:mm")}</span>
+                  <span>
+                    {format(new Date(selectedMessage.created_at), "dd MMM yyyy 'at' HH:mm")}
+                  </span>
                 </div>
               </div>
             </div>
@@ -606,7 +740,7 @@ export const CommunicationsSection = () => {
               </div>
 
               {/* Mandatory sign-off */}
-              {displayType === "Mandatory Reading" && !isSignedOff && (
+              {displayType === 'Mandatory Reading' && !isSignedOff && (
                 <Card className="border-warning bg-warning/5 border-2">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
@@ -615,10 +749,14 @@ export const CommunicationsSection = () => {
                       </div>
                       <div className="flex-1">
                         <p className="text-sm font-semibold">Acknowledgement Required</p>
-                        <p className="text-xs text-muted-foreground mt-1">Confirm you've read and understood this.</p>
-                        <Button className="mt-3 w-full gap-2" onClick={() => signOff(selectedMessage.id)}>
-                          <FileCheck className="h-4 w-4" />
-                          I Acknowledge
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Confirm you've read and understood this.
+                        </p>
+                        <Button
+                          className="mt-3 w-full gap-2"
+                          onClick={() => signOff(selectedMessage.id)}
+                        >
+                          <FileCheck className="h-4 w-4" />I Acknowledge
                         </Button>
                       </div>
                     </div>
@@ -626,7 +764,7 @@ export const CommunicationsSection = () => {
                 </Card>
               )}
 
-              {isSignedOff && displayType === "Mandatory Reading" && (
+              {isSignedOff && displayType === 'Mandatory Reading' && (
                 <div className="flex items-center gap-3 p-3.5 rounded-xl bg-success/10 border border-success/30">
                   <CheckCircle2 className="h-5 w-5 text-success" />
                   <span className="text-sm font-medium text-success">You've signed off</span>
@@ -637,10 +775,13 @@ export const CommunicationsSection = () => {
               <div className="flex items-center gap-3 p-3.5 rounded-xl bg-muted/30 border border-border">
                 <Users className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm">
-                  Sent to: <span className="font-medium">
-                    {selectedMessage.target_audience === 'all' ? 'All team members' :
-                     selectedMessage.target_audience === 'managers' ? 'Managers only' :
-                     `${selectedMessage.target_employee_ids?.length || 0} selected members`}
+                  Sent to:{' '}
+                  <span className="font-medium">
+                    {selectedMessage.target_audience === 'all'
+                      ? 'All team members'
+                      : selectedMessage.target_audience === 'managers'
+                        ? 'Managers only'
+                        : `${selectedMessage.target_employee_ids?.length || 0} selected members`}
                   </span>
                 </span>
               </div>
@@ -656,11 +797,11 @@ export const CommunicationsSection = () => {
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <div className="w-2 h-2 rounded-full bg-success" />
-                        {recipients.filter(r => r.read_at).length} read
+                        {recipients.filter((r) => r.read_at).length} read
                       </span>
                       <span className="flex items-center gap-1">
                         <div className="w-2 h-2 rounded-full bg-blue-500" />
-                        {recipients.filter(r => r.acknowledged_at).length} signed
+                        {recipients.filter((r) => r.acknowledged_at).length} signed
                       </span>
                     </div>
                   </div>
@@ -688,17 +829,26 @@ export const CommunicationsSection = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           {recipient.acknowledged_at ? (
-                            <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-blue-500/10 text-blue-400 border-blue-500/30 gap-0.5">
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] py-0 h-5 px-1.5 bg-blue-500/10 text-blue-400 border-blue-500/30 gap-0.5"
+                            >
                               <CheckCheck className="h-2.5 w-2.5" />
                               Signed
                             </Badge>
                           ) : recipient.read_at ? (
-                            <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-success/10 text-success border-success/30 gap-0.5">
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] py-0 h-5 px-1.5 bg-success/10 text-success border-success/30 gap-0.5"
+                            >
                               <Check className="h-2.5 w-2.5" />
                               Read
                             </Badge>
                           ) : (
-                            <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-muted text-muted-foreground gap-0.5">
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] py-0 h-5 px-1.5 bg-muted text-muted-foreground gap-0.5"
+                            >
                               <Clock className="h-2.5 w-2.5" />
                               Pending
                             </Badge>
@@ -723,7 +873,7 @@ export const CommunicationsSection = () => {
                 disabled={pinCommunication.isPending}
               >
                 {isPinnedMsg ? <PinOff className="h-5 w-5" /> : <Pin className="h-5 w-5" />}
-                <span className="text-[11px]">{isPinnedMsg ? "Unpin" : "Pin"}</span>
+                <span className="text-[11px]">{isPinnedMsg ? 'Unpin' : 'Pin'}</span>
               </Button>
               <Button
                 variant="outline"
@@ -732,7 +882,7 @@ export const CommunicationsSection = () => {
                 onClick={() => toggleRead(selectedMessage.id)}
               >
                 {isRead ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                <span className="text-[11px]">{isRead ? "Unread" : "Read"}</span>
+                <span className="text-[11px]">{isRead ? 'Unread' : 'Read'}</span>
               </Button>
               <Button
                 variant="outline"
@@ -797,7 +947,8 @@ export const CommunicationsSection = () => {
               <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4">
                 {templates.map((template) => {
                   const Icon = template.icon;
-                  const isSelected = selectedType === template.type && messageTitle === template.name;
+                  const isSelected =
+                    selectedType === template.type && messageTitle === template.name;
                   return (
                     <button
                       key={template.id}
@@ -821,7 +972,7 @@ export const CommunicationsSection = () => {
                   return (
                     <Button
                       key={type}
-                      variant={selectedType === type ? "default" : "outline"}
+                      variant={selectedType === type ? 'default' : 'outline'}
                       className="justify-start gap-2 h-12 rounded-xl"
                       onClick={() => setSelectedType(type)}
                     >
@@ -862,18 +1013,19 @@ export const CommunicationsSection = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>Recipients</Label>
-                {(recipientMode === "all" || selectedRecipients.length > 0) && (
+                {(recipientMode === 'all' || selectedRecipients.length > 0) && (
                   <Badge variant="secondary" className="text-xs">
-                    {recipientMode === "all" ? employees.length : selectedRecipients.length} selected
+                    {recipientMode === 'all' ? employees.length : selectedRecipients.length}{' '}
+                    selected
                   </Badge>
                 )}
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <Button
-                  variant={recipientMode === "all" ? "default" : "outline"}
+                  variant={recipientMode === 'all' ? 'default' : 'outline'}
                   className="h-11 gap-1.5 rounded-xl"
                   onClick={() => {
-                    setRecipientMode("all");
+                    setRecipientMode('all');
                     setSelectedRecipients([]);
                   }}
                 >
@@ -881,22 +1033,27 @@ export const CommunicationsSection = () => {
                   All Team
                 </Button>
                 <Button
-                  variant={recipientMode === "specific" ? "default" : "outline"}
+                  variant={recipientMode === 'specific' ? 'default' : 'outline'}
                   className="h-11 gap-1.5 rounded-xl"
-                  onClick={() => setRecipientMode("specific")}
+                  onClick={() => setRecipientMode('specific')}
                 >
                   <User className="h-4 w-4" />
                   Select
                 </Button>
               </div>
 
-              {recipientMode === "specific" && (
+              {recipientMode === 'specific' && (
                 <div className="max-h-[140px] overflow-y-auto border border-border rounded-xl p-2 space-y-1">
                   {employees.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-4">No employees found</p>
+                    <p className="text-sm text-muted-foreground text-center py-4">
+                      No employees found
+                    </p>
                   ) : (
                     employees.map((emp) => (
-                      <div key={emp.id} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-muted/50">
+                      <div
+                        key={emp.id}
+                        className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-muted/50"
+                      >
                         <Checkbox
                           id={`recipient-${emp.id}`}
                           checked={selectedRecipients.includes(emp.id)}
@@ -904,11 +1061,18 @@ export const CommunicationsSection = () => {
                             if (checked) {
                               setSelectedRecipients([...selectedRecipients, emp.id]);
                             } else {
-                              setSelectedRecipients(selectedRecipients.filter(id => id !== emp.id));
+                              setSelectedRecipients(
+                                selectedRecipients.filter((id) => id !== emp.id)
+                              );
                             }
                           }}
                         />
-                        <label htmlFor={`recipient-${emp.id}`} className="text-sm flex-1 cursor-pointer">{emp.name}</label>
+                        <label
+                          htmlFor={`recipient-${emp.id}`}
+                          className="text-sm flex-1 cursor-pointer"
+                        >
+                          {emp.name}
+                        </label>
                       </div>
                     ))
                   )}
@@ -928,8 +1092,8 @@ export const CommunicationsSection = () => {
                   <span className="text-sm font-medium">High Priority</span>
                 </div>
                 <Checkbox
-                  checked={priority === "high"}
-                  onCheckedChange={(checked) => setPriority(checked ? "high" : "normal")}
+                  checked={priority === 'high'}
+                  onCheckedChange={(checked) => setPriority(checked ? 'high' : 'normal')}
                 />
               </div>
 
@@ -966,7 +1130,7 @@ export const CommunicationsSection = () => {
                       <PopoverTrigger asChild>
                         <Button variant="outline" className="h-11 justify-start gap-2 rounded-xl">
                           <CalendarIcon className="h-4 w-4" />
-                          {scheduleDate ? format(scheduleDate, "dd MMM") : "Date"}
+                          {scheduleDate ? format(scheduleDate, 'dd MMM') : 'Date'}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
@@ -984,8 +1148,24 @@ export const CommunicationsSection = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {["06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map(time => (
-                          <SelectItem key={time} value={time}>{time}</SelectItem>
+                        {[
+                          '06:00',
+                          '07:00',
+                          '08:00',
+                          '09:00',
+                          '10:00',
+                          '11:00',
+                          '12:00',
+                          '13:00',
+                          '14:00',
+                          '15:00',
+                          '16:00',
+                          '17:00',
+                          '18:00',
+                        ].map((time) => (
+                          <SelectItem key={time} value={time}>
+                            {time}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -1016,9 +1196,7 @@ export const CommunicationsSection = () => {
           <Button variant="ghost" size="sm" onClick={() => setShowReplySheet(false)}>
             Cancel
           </Button>
-          <h3 className="font-semibold text-foreground">
-            Reply to: {selectedMessage?.title}
-          </h3>
+          <h3 className="font-semibold text-foreground">Reply to: {selectedMessage?.title}</h3>
           <Button
             size="sm"
             onClick={handleReply}
@@ -1068,14 +1246,16 @@ export const CommunicationsSection = () => {
           <div className="w-20 h-20 rounded-3xl bg-muted/50 flex items-center justify-center">
             <Icon className="h-10 w-10 text-muted-foreground" />
           </div>
-          {activeTab === "safety" && (
+          {activeTab === 'safety' && (
             <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-success flex items-center justify-center">
               <Check className="h-4 w-4 text-success-foreground" />
             </div>
           )}
         </div>
         <h3 className="font-bold text-foreground text-lg mt-5">{state.title}</h3>
-        <p className="text-sm text-muted-foreground text-center mt-1 max-w-[200px]">{state.message}</p>
+        <p className="text-sm text-muted-foreground text-center mt-1 max-w-[200px]">
+          {state.message}
+        </p>
         <Button className="mt-5 gap-2 rounded-xl" onClick={() => setShowCompose(true)}>
           <Plus className="h-4 w-4" />
           New Message
@@ -1121,7 +1301,7 @@ export const CommunicationsSection = () => {
 
           {/* Search toggle */}
           <Button
-            variant={showSearch ? "default" : "ghost"}
+            variant={showSearch ? 'default' : 'ghost'}
             size="icon"
             className="h-10 w-10"
             onClick={() => setShowSearch(!showSearch)}
@@ -1157,7 +1337,7 @@ export const CommunicationsSection = () => {
             )}
             <Input
               placeholder="Search messages..."
-              className={cn("h-11 rounded-xl", !searchQuery && "pl-10")}
+              className={cn('h-11 rounded-xl', !searchQuery && 'pl-10')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus
@@ -1167,14 +1347,14 @@ export const CommunicationsSection = () => {
                 variant="ghost"
                 size="icon"
                 className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
-                onClick={() => setSearchQuery("")}
+                onClick={() => setSearchQuery('')}
               >
                 <X className="h-4 w-4" />
               </Button>
             )}
           </div>
           <Button
-            variant={filterUnread ? "default" : "outline"}
+            variant={filterUnread ? 'default' : 'outline'}
             size="icon"
             className="h-11 w-11 rounded-xl flex-shrink-0"
             onClick={() => setFilterUnread(!filterUnread)}
@@ -1190,28 +1370,28 @@ export const CommunicationsSection = () => {
           {
             icon: Inbox,
             value: displayStats.total,
-            label: "All",
-            color: "blue",
+            label: 'All',
+            color: 'blue',
           },
           {
             icon: Bell,
             value: displayStats.unread,
-            label: "Unread",
-            color: "yellow",
+            label: 'Unread',
+            color: 'yellow',
             pulse: displayStats.unread > 0,
           },
           {
             icon: FileCheck,
             value: displayStats.mandatoryPending,
-            label: "Sign",
-            color: "orange",
+            label: 'Sign',
+            color: 'orange',
             pulse: displayStats.mandatoryPending > 0,
           },
           {
             icon: AlertTriangle,
             value: displayStats.safetyWarnings,
-            label: "Safety",
-            color: "red",
+            label: 'Safety',
+            color: 'red',
             pulse: displayStats.safetyWarnings > 0,
           },
         ]}
@@ -1228,13 +1408,15 @@ export const CommunicationsSection = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative flex flex-col items-center justify-center py-2.5 px-2 rounded-lg transition-all ${
-                  isActive
-                    ? 'bg-elec-gray shadow-sm'
-                    : 'hover:bg-muted/50'
+                  isActive ? 'bg-elec-gray shadow-sm' : 'hover:bg-muted/50'
                 }`}
               >
-                <Icon className={`h-5 w-5 ${isActive ? 'text-elec-yellow' : 'text-muted-foreground'}`} />
-                <span className={`text-[11px] mt-1 ${isActive ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}>
+                <Icon
+                  className={`h-5 w-5 ${isActive ? 'text-elec-yellow' : 'text-muted-foreground'}`}
+                />
+                <span
+                  className={`text-[11px] mt-1 ${isActive ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}
+                >
                   {tab.label}
                 </span>
                 {tab.count && (
@@ -1263,7 +1445,11 @@ export const CommunicationsSection = () => {
                 >
                   <Pin className="h-3 w-3 text-elec-yellow" />
                   <span className="font-medium">Pinned ({groupedMessages.pinned.length})</span>
-                  {pinnedCollapsed ? <ChevronDown className="h-3 w-3 ml-auto" /> : <ChevronUp className="h-3 w-3 ml-auto" />}
+                  {pinnedCollapsed ? (
+                    <ChevronDown className="h-3 w-3 ml-auto" />
+                  ) : (
+                    <ChevronUp className="h-3 w-3 ml-auto" />
+                  )}
                 </button>
                 {!pinnedCollapsed && (
                   <div className="space-y-2">

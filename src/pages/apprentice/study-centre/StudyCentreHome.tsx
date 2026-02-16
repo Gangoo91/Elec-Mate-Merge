@@ -1,129 +1,147 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ModuleCard } from "@/components/shared/ModuleCard";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Zap, BookOpen, Shield, Award, GraduationCap, CheckCircle, Settings, Info, AlertTriangle, Target, Flame, ChevronLeft } from "lucide-react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ModuleCard } from '@/components/shared/ModuleCard';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Search,
+  Zap,
+  BookOpen,
+  Shield,
+  Award,
+  GraduationCap,
+  CheckCircle,
+  Settings,
+  Info,
+  AlertTriangle,
+  Target,
+  Flame,
+  ChevronLeft,
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 export default function StudyCentreHome() {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Level 2 Electrical Installation modules (7 modules)
   const level2Modules = [
     {
-      id: "level2-module1",
-      title: "Module 1: Health and Safety",
-      description: "Health and Safety in Building Services Engineering - HASAWA, PPE, risk assessments",
-      category: "Level 2",
-      duration: "4 weeks",
+      id: 'level2-module1',
+      title: 'Module 1: Health and Safety',
+      description:
+        'Health and Safety in Building Services Engineering - HASAWA, PPE, risk assessments',
+      category: 'Level 2',
+      duration: '4 weeks',
       progress: 0,
       lessonsCount: 12,
       questionsCount: 250,
-      icon: <Shield className="h-4 w-4 text-blue-400" />
+      icon: <Shield className="h-4 w-4 text-blue-400" />,
     },
     {
-      id: "level2-module2",
-      title: "Module 2: Electrical Science",
-      description: "Principles of electrical science - Ohm's law, circuits, magnetism, AC/DC theory",
-      category: "Level 2",
-      duration: "6 weeks",
+      id: 'level2-module2',
+      title: 'Module 2: Electrical Science',
+      description:
+        "Principles of electrical science - Ohm's law, circuits, magnetism, AC/DC theory",
+      category: 'Level 2',
+      duration: '6 weeks',
       progress: 0,
       lessonsCount: 18,
       questionsCount: 250,
-      icon: <Zap className="h-4 w-4 text-blue-400" />
+      icon: <Zap className="h-4 w-4 text-blue-400" />,
     },
     {
-      id: "level2-module3",
-      title: "Module 3: Electrical Installations",
-      description: "Electrical installation technology - wiring systems, containment, accessories",
-      category: "Level 2",
-      duration: "8 weeks",
+      id: 'level2-module3',
+      title: 'Module 3: Electrical Installations',
+      description: 'Electrical installation technology - wiring systems, containment, accessories',
+      category: 'Level 2',
+      duration: '8 weeks',
       progress: 0,
       lessonsCount: 24,
       questionsCount: 250,
-      icon: <Settings className="h-4 w-4 text-blue-400" />
+      icon: <Settings className="h-4 w-4 text-blue-400" />,
     },
     {
-      id: "level2-module4",
-      title: "Module 4: Installation Methods",
-      description: "Installation methods, procedures and requirements for electrical systems",
-      category: "Level 2",
-      duration: "6 weeks",
+      id: 'level2-module4',
+      title: 'Module 4: Installation Methods',
+      description: 'Installation methods, procedures and requirements for electrical systems',
+      category: 'Level 2',
+      duration: '6 weeks',
       progress: 0,
       lessonsCount: 16,
       questionsCount: 250,
-      icon: <BookOpen className="h-4 w-4 text-blue-400" />
+      icon: <BookOpen className="h-4 w-4 text-blue-400" />,
     },
     {
-      id: "level2-module5",
-      title: "Module 5: Inspection & Testing",
-      description: "Understanding inspection and testing of electrical installations",
-      category: "Level 2",
-      duration: "5 weeks",
+      id: 'level2-module5',
+      title: 'Module 5: Inspection & Testing',
+      description: 'Understanding inspection and testing of electrical installations',
+      category: 'Level 2',
+      duration: '5 weeks',
       progress: 0,
       lessonsCount: 14,
       questionsCount: 250,
-      icon: <CheckCircle className="h-4 w-4 text-blue-400" />
+      icon: <CheckCircle className="h-4 w-4 text-blue-400" />,
     },
     {
-      id: "level2-module6",
-      title: "Module 6: Fault Diagnosis",
-      description: "Electrical fault diagnosis and rectification techniques",
-      category: "Level 2",
-      duration: "4 weeks",
+      id: 'level2-module6',
+      title: 'Module 6: Fault Diagnosis',
+      description: 'Electrical fault diagnosis and rectification techniques',
+      category: 'Level 2',
+      duration: '4 weeks',
       progress: 0,
       lessonsCount: 12,
       questionsCount: 250,
-      icon: <Zap className="h-4 w-4 text-purple-400" />
+      icon: <Zap className="h-4 w-4 text-purple-400" />,
     },
     {
-      id: "level2-module7",
-      title: "Module 7: Regulations",
-      description: "Understanding BS7671 wiring regulations and building regulations",
-      category: "Level 2",
-      duration: "4 weeks",
+      id: 'level2-module7',
+      title: 'Module 7: Regulations',
+      description: 'Understanding BS7671 wiring regulations and building regulations',
+      category: 'Level 2',
+      duration: '4 weeks',
       progress: 0,
       lessonsCount: 10,
       questionsCount: 250,
-      icon: <BookOpen className="h-4 w-4 text-blue-400" />
-    }
+      icon: <BookOpen className="h-4 w-4 text-blue-400" />,
+    },
   ];
 
   // AM2 Assessment modules
   const am2Modules = [
     {
-      id: "am2",
-      title: "AM2 Preparation & Guidance",
-      description: "Complete AM2 assessment preparation - practical tasks, testing, fault diagnosis and exam strategy",
-      category: "AM2",
-      duration: "8 weeks",
+      id: 'am2',
+      title: 'AM2 Preparation & Guidance',
+      description:
+        'Complete AM2 assessment preparation - practical tasks, testing, fault diagnosis and exam strategy',
+      category: 'AM2',
+      duration: '8 weeks',
       progress: 0,
       lessonsCount: 20,
       questionsCount: 400,
-      icon: <Award className="h-4 w-4 text-elec-yellow" />
-    }
+      icon: <Award className="h-4 w-4 text-elec-yellow" />,
+    },
   ];
 
   // Combine all modules
   const allModules = [...level2Modules, ...am2Modules];
 
-  const filteredModules = allModules.filter(module =>
-    module.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    module.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    module.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredModules = allModules.filter(
+    (module) =>
+      module.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      module.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      module.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const filterByCategory = (category?: string) => {
     if (!category) return filteredModules;
-    return filteredModules.filter(module => module.category === category);
+    return filteredModules.filter((module) => module.category === category);
   };
 
-  const completedCount = allModules.filter(m => m.progress === 100).length;
-  const inProgressCount = allModules.filter(m => m.progress > 0 && m.progress < 100).length;
+  const completedCount = allModules.filter((m) => m.progress === 100).length;
+  const inProgressCount = allModules.filter((m) => m.progress > 0 && m.progress < 100).length;
   const totalQuestions = allModules.reduce((sum, m) => sum + m.questionsCount, 0);
 
   return (
@@ -148,14 +166,11 @@ export default function StudyCentreHome() {
 
         <div className="relative px-4 pt-4 pb-6">
           {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => navigate("/study-centre")}
+              onClick={() => navigate('/study-centre')}
               className="mb-4 text-white hover:text-white hover:bg-white/10 gap-2"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -194,10 +209,30 @@ export default function StudyCentreHome() {
             className="mt-6 grid grid-cols-4 gap-2"
           >
             {[
-              { value: allModules.length, label: "Topics", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
-              { value: totalQuestions.toLocaleString(), label: "Questions", icon: Target, color: "from-purple-500 to-pink-400" },
-              { value: inProgressCount, label: "Active", icon: Flame, color: "from-orange-500 to-red-400" },
-              { value: completedCount, label: "Done", icon: CheckCircle, color: "from-emerald-500 to-teal-400" },
+              {
+                value: allModules.length,
+                label: 'Topics',
+                icon: BookOpen,
+                color: 'from-blue-500 to-cyan-400',
+              },
+              {
+                value: totalQuestions.toLocaleString(),
+                label: 'Questions',
+                icon: Target,
+                color: 'from-purple-500 to-pink-400',
+              },
+              {
+                value: inProgressCount,
+                label: 'Active',
+                icon: Flame,
+                color: 'from-orange-500 to-red-400',
+              },
+              {
+                value: completedCount,
+                label: 'Done',
+                icon: CheckCircle,
+                color: 'from-emerald-500 to-teal-400',
+              },
             ].map((stat, idx) => (
               <motion.div
                 key={idx}
@@ -207,11 +242,13 @@ export default function StudyCentreHome() {
                 className="relative group"
               >
                 <div className="relative flex flex-col items-center p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all">
-                  <div className={cn("p-1.5 rounded-lg bg-gradient-to-br mb-1.5", stat.color)}>
+                  <div className={cn('p-1.5 rounded-lg bg-gradient-to-br mb-1.5', stat.color)}>
                     <stat.icon className="h-3.5 w-3.5 text-white" />
                   </div>
                   <span className="text-lg font-bold text-white">{stat.value}</span>
-                  <span className="text-[10px] text-white/50 uppercase tracking-wider font-medium">{stat.label}</span>
+                  <span className="text-[10px] text-white/50 uppercase tracking-wider font-medium">
+                    {stat.label}
+                  </span>
                 </div>
               </motion.div>
             ))}
@@ -236,8 +273,9 @@ export default function StudyCentreHome() {
             <div>
               <p className="text-sm font-medium text-white mb-1">Training Aid Notice</p>
               <p className="text-xs text-white/50 leading-relaxed">
-                These materials are designed as a <span className="text-amber-400 font-medium">supplementary training aid</span> to support
-                your college studies and on-the-job learning.
+                These materials are designed as a{' '}
+                <span className="text-amber-400 font-medium">supplementary training aid</span> to
+                support your college studies and on-the-job learning.
               </p>
             </div>
           </div>
@@ -258,7 +296,10 @@ export default function StudyCentreHome() {
             placeholder="Search topics..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("bg-white/5 border-white/10 text-white placeholder:text-white focus:border-blue-500/50 focus:ring-blue-500/20", !searchQuery && "pl-10")}
+            className={cn(
+              'bg-white/5 border-white/10 text-white placeholder:text-white focus:border-blue-500/50 focus:ring-blue-500/20',
+              !searchQuery && 'pl-10'
+            )}
           />
         </motion.div>
 
@@ -280,13 +321,13 @@ export default function StudyCentreHome() {
                 value="Level 2"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white text-white"
               >
-                Level 2 ({filterByCategory("Level 2").length})
+                Level 2 ({filterByCategory('Level 2').length})
               </TabsTrigger>
               <TabsTrigger
                 value="AM2"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow data-[state=active]:to-amber-500 data-[state=active]:text-elec-dark text-white"
               >
-                AM2 ({filterByCategory("AM2").length})
+                AM2 ({filterByCategory('AM2').length})
               </TabsTrigger>
             </TabsList>
 
@@ -318,7 +359,7 @@ export default function StudyCentreHome() {
 
             <TabsContent value="Level 2" className="mt-0">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                {filterByCategory("Level 2").map((module, index) => (
+                {filterByCategory('Level 2').map((module, index) => (
                   <motion.div
                     key={module.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -344,7 +385,7 @@ export default function StudyCentreHome() {
 
             <TabsContent value="AM2" className="mt-0">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                {filterByCategory("AM2").map((module, index) => (
+                {filterByCategory('AM2').map((module, index) => (
                   <motion.div
                     key={module.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -381,9 +422,7 @@ export default function StudyCentreHome() {
               <BookOpen className="h-12 w-12 text-white/30" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">No topics found</h3>
-            <p className="text-sm text-white/50">
-              Try adjusting your search
-            </p>
+            <p className="text-sm text-white/50">Try adjusting your search</p>
           </motion.div>
         )}
 
@@ -397,8 +436,9 @@ export default function StudyCentreHome() {
           <div className="flex items-start gap-3">
             <AlertTriangle className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
             <p className="text-xs text-white leading-relaxed">
-              <strong className="text-white">Disclaimer:</strong> Elec-Mate study materials are provided for revision and practice purposes only.
-              For accredited qualifications, please contact registered training providers.
+              <strong className="text-white">Disclaimer:</strong> Elec-Mate study materials are
+              provided for revision and practice purposes only. For accredited qualifications,
+              please contact registered training providers.
             </p>
           </div>
         </motion.div>

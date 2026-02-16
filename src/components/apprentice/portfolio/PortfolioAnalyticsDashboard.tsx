@@ -1,23 +1,18 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { PortfolioAnalytics, PortfolioCategory } from "@/types/portfolio";
-import { 
-  BarChart3, 
-  TrendingUp, 
-  Clock, 
-  Star, 
-  Target,
-  CheckCircle
-} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { PortfolioAnalytics, PortfolioCategory } from '@/types/portfolio';
+import { BarChart3, TrendingUp, Clock, Star, Target, CheckCircle } from 'lucide-react';
 
 interface PortfolioAnalyticsDashboardProps {
   analytics: PortfolioAnalytics | null;
   categories: PortfolioCategory[];
 }
 
-const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyticsDashboardProps) => {
+const PortfolioAnalyticsDashboard = ({
+  analytics,
+  categories,
+}: PortfolioAnalyticsDashboardProps) => {
   if (!analytics) {
     return (
       <Card>
@@ -34,9 +29,8 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
     );
   }
 
-  const completionRate = analytics.totalEntries > 0 
-    ? (analytics.completedEntries / analytics.totalEntries) * 100 
-    : 0;
+  const completionRate =
+    analytics.totalEntries > 0 ? (analytics.completedEntries / analytics.totalEntries) * 100 : 0;
 
   const totalHours = Math.floor(analytics.totalTimeSpent / 60);
   const totalMinutes = analytics.totalTimeSpent % 60;
@@ -74,7 +68,9 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-purple-400" />
               <div>
-                <p className="text-2xl font-bold">{totalHours}h {totalMinutes}m</p>
+                <p className="text-2xl font-bold">
+                  {totalHours}h {totalMinutes}m
+                </p>
                 <p className="text-xs text-white">Time Invested</p>
               </div>
             </div>
@@ -104,20 +100,21 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {categories.map(category => {
+            {categories.map((category) => {
               const progress = analytics.categoriesProgress[category.id] || 0;
-              
+
               return (
                 <div key={category.id} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <h4 className="font-medium">{category.name}</h4>
-                      <Badge variant={progress >= 100 ? "success" : "outline"}>
+                      <Badge variant={progress >= 100 ? 'success' : 'outline'}>
                         {Math.round(progress)}%
                       </Badge>
                     </div>
                     <div className="text-sm text-white">
-                      {Math.round((progress / 100) * category.requiredEntries)}/{category.requiredEntries} required
+                      {Math.round((progress / 100) * category.requiredEntries)}/
+                      {category.requiredEntries} required
                     </div>
                   </div>
                   <Progress value={progress} className="h-2" />
@@ -141,19 +138,18 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
           ) : (
             <div className="space-y-4">
               <div className="flex flex-wrap gap-2">
-                {analytics.skillsDemo.slice(0, 15).map(skill => (
+                {analytics.skillsDemo.slice(0, 15).map((skill) => (
                   <Badge key={skill} variant="secondary">
                     {skill}
                   </Badge>
                 ))}
                 {analytics.skillsDemo.length > 15 && (
-                  <Badge variant="outline">
-                    +{analytics.skillsDemo.length - 15} more
-                  </Badge>
+                  <Badge variant="outline">+{analytics.skillsDemo.length - 15} more</Badge>
                 )}
               </div>
               <div className="text-sm text-white">
-                You've demonstrated {analytics.skillsDemo.length} unique skills across your portfolio entries.
+                You've demonstrated {analytics.skillsDemo.length} unique skills across your
+                portfolio entries.
               </div>
             </div>
           )}
@@ -167,19 +163,24 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
         </CardHeader>
         <CardContent>
           {analytics.recentActivity.length === 0 ? (
-            <p className="text-white text-center py-4">
-              No recent activity to display.
-            </p>
+            <p className="text-white text-center py-4">No recent activity to display.</p>
           ) : (
             <div className="space-y-3">
-              {analytics.recentActivity.map(activity => (
-                <div key={activity.id} className="flex items-center justify-between p-3 border rounded-lg">
+              {analytics.recentActivity.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-center justify-between p-3 border rounded-lg"
+                >
                   <div>
                     <p className="font-medium">{activity.entryTitle}</p>
                     <p className="text-sm text-white">
-                      {activity.type === 'created' ? 'Created' : 
-                       activity.type === 'updated' ? 'Updated' : 
-                       activity.type === 'completed' ? 'Completed' : 'Reviewed'}
+                      {activity.type === 'created'
+                        ? 'Created'
+                        : activity.type === 'updated'
+                          ? 'Updated'
+                          : activity.type === 'completed'
+                            ? 'Completed'
+                            : 'Reviewed'}
                     </p>
                   </div>
                   <div className="text-sm text-white">
@@ -203,21 +204,23 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Increase Your Completion Rate</p>
                 <p className="text-sm text-white">
-                  Consider marking some of your in-progress entries as completed once they're finished.
+                  Consider marking some of your in-progress entries as completed once they're
+                  finished.
                 </p>
               </div>
             )}
-            
+
             {analytics.averageRating < 3.5 && (
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Improve Self-Assessment Ratings</p>
                 <p className="text-sm text-white">
-                  Your average self-assessment rating is below 3.5. Consider reflecting more on your achievements.
+                  Your average self-assessment rating is below 3.5. Consider reflecting more on your
+                  achievements.
                 </p>
               </div>
             )}
-            
-            {Object.values(analytics.categoriesProgress).some(progress => progress < 30) && (
+
+            {Object.values(analytics.categoriesProgress).some((progress) => progress < 30) && (
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Focus on Underdeveloped Categories</p>
                 <p className="text-sm text-white">
@@ -225,7 +228,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
                 </p>
               </div>
             )}
-            
+
             {analytics.skillsDemo.length < 10 && (
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Expand Skill Documentation</p>

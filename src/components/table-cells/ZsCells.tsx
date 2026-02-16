@@ -1,5 +1,11 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
@@ -24,9 +30,15 @@ const ZsCellsComponent: React.FC<ZsCellsProps> = ({ result, onUpdate, validation
             <SelectValue placeholder="Polarity" className="truncate" />
           </SelectTrigger>
           <SelectContent className="bg-background border border-border rounded-md z-[100]">
-            <SelectItem value="Correct" className="text-xs text-neutral-100">Correct</SelectItem>
-            <SelectItem value="Incorrect" className="text-xs text-red-400 hover:text-red-300">Incorrect</SelectItem>
-            <SelectItem value="N/A" className="text-xs text-neutral-100">N/A</SelectItem>
+            <SelectItem value="Correct" className="text-xs text-neutral-100">
+              Correct
+            </SelectItem>
+            <SelectItem value="Incorrect" className="text-xs text-red-400 hover:text-red-300">
+              Incorrect
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs text-neutral-100">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>

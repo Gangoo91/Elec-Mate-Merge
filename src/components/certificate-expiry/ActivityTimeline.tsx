@@ -30,25 +30,19 @@ const getStatusLabel = (status: string): string => {
 
 export const ActivityTimeline = ({ history }: ActivityTimelineProps) => {
   if (!history || history.length === 0) {
-    return (
-      <div className="text-sm text-muted-foreground py-2">
-        No status changes yet
-      </div>
-    );
+    return <div className="text-sm text-muted-foreground py-2">No status changes yet</div>;
   }
 
   // Sort by most recent first
-  const sortedHistory = [...history].sort((a, b) => 
-    new Date(b.changed_at).getTime() - new Date(a.changed_at).getTime()
+  const sortedHistory = [...history].sort(
+    (a, b) => new Date(b.changed_at).getTime() - new Date(a.changed_at).getTime()
   );
 
   return (
     <div className="space-y-3">
       {sortedHistory.map((entry, index) => (
         <div key={index} className="flex items-start gap-3 text-sm">
-          <div className="mt-0.5">
-            {getStatusIcon(entry.to)}
-          </div>
+          <div className="mt-0.5">{getStatusIcon(entry.to)}</div>
           <div className="flex-1 space-y-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-muted-foreground text-xs sm:text-sm">Changed to</span>

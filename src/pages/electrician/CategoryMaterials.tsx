@@ -1,39 +1,41 @@
-import { useMemo, useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Loader2, RefreshCw } from "lucide-react";
+import { useMemo, useState } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Loader2, RefreshCw } from 'lucide-react';
 
-import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
-import { MATERIAL_CATEGORY_META } from "@/components/electrician-materials/materialCategoryStyleUtils";
+import { useCategoryMaterials } from '@/hooks/useCategoryMaterials';
+import { MATERIAL_CATEGORY_META } from '@/components/electrician-materials/materialCategoryStyleUtils';
 
 // New premium components
-import PremiumMaterialPageHeader from "@/components/electrician-materials/PremiumMaterialPageHeader";
-import MaterialSlideOutFilters, { MaterialFilterState } from "@/components/electrician-materials/MaterialSlideOutFilters";
-import EnhancedMaterialsGrid from "@/components/electrician-materials/EnhancedMaterialsGrid";
-import InlineMaterialCompareSection from "@/components/electrician-materials/InlineMaterialCompareSection";
-import InlineMaterialAIInsightsSection from "@/components/electrician-materials/InlineMaterialAIInsightsSection";
-import MaterialTips from "@/components/electrician-materials/MaterialTips";
+import PremiumMaterialPageHeader from '@/components/electrician-materials/PremiumMaterialPageHeader';
+import MaterialSlideOutFilters, {
+  MaterialFilterState,
+} from '@/components/electrician-materials/MaterialSlideOutFilters';
+import EnhancedMaterialsGrid from '@/components/electrician-materials/EnhancedMaterialsGrid';
+import InlineMaterialCompareSection from '@/components/electrician-materials/InlineMaterialCompareSection';
+import InlineMaterialAIInsightsSection from '@/components/electrician-materials/InlineMaterialAIInsightsSection';
+import MaterialTips from '@/components/electrician-materials/MaterialTips';
 
 const CategoryMaterials = () => {
-  const { categoryId = "" } = useParams<{ categoryId: string }>();
+  const { categoryId = '' } = useParams<{ categoryId: string }>();
 
   // Redirect tools category to dedicated tools page
-  if (categoryId === "tools") {
+  if (categoryId === 'tools') {
     return <Navigate to="/electrician/tools" replace />;
   }
 
   const meta = MATERIAL_CATEGORY_META[categoryId] || {
-    title: "Materials",
-    description: "Browse curated products by category",
+    title: 'Materials',
+    description: 'Browse curated products by category',
   };
 
   // Use comprehensive materials data
   const { materials, isLoading, error, refetch } = useCategoryMaterials(categoryId);
 
   // State
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [filters, setFilters] = useState<MaterialFilterState>({
     brands: [],
@@ -45,23 +47,23 @@ const CategoryMaterials = () => {
 
   // Helper function to parse price string to number
   const parsePrice = (priceStr: string): number => {
-    return parseFloat(priceStr.replace(/[£,]/g, "")) || 0;
+    return parseFloat(priceStr.replace(/[£,]/g, '')) || 0;
   };
 
   // Helper function to check if price falls within range
   const priceInRange = (price: number, range: string): boolean => {
     switch (range) {
-      case "Under £50":
+      case 'Under £50':
         return price < 50;
-      case "£50 - £200":
+      case '£50 - £200':
         return price >= 50 && price < 200;
-      case "£200 - £500":
+      case '£200 - £500':
         return price >= 200 && price < 500;
-      case "£500 - £1000":
+      case '£500 - £1000':
         return price >= 500 && price < 1000;
-      case "£1000 - £2500":
+      case '£1000 - £2500':
         return price >= 1000 && price < 2500;
-      case "Over £2500":
+      case 'Over £2500':
         return price >= 2500;
       default:
         return true;
@@ -88,11 +90,8 @@ const CategoryMaterials = () => {
     // Brand filter
     if (filters.brands.length > 0) {
       result = result.filter((material) => {
-        const firstWord = material.name?.split(" ")[0];
-        return (
-          filters.brands.includes(firstWord) ||
-          filters.brands.includes(material.category)
-        );
+        const firstWord = material.name?.split(' ')[0];
+        return filters.brands.includes(firstWord) || filters.brands.includes(material.category);
       });
     }
 
@@ -107,16 +106,14 @@ const CategoryMaterials = () => {
     // Availability filter
     if (filters.availability.length > 0) {
       result = result.filter(
-        (material) =>
-          material.stockStatus && filters.availability.includes(material.stockStatus)
+        (material) => material.stockStatus && filters.availability.includes(material.stockStatus)
       );
     }
 
     // Supplier filter
     if (filters.suppliers.length > 0) {
       result = result.filter(
-        (material) =>
-          material.supplier && filters.suppliers.includes(material.supplier)
+        (material) => material.supplier && filters.suppliers.includes(material.supplier)
       );
     }
 
@@ -168,11 +165,7 @@ const CategoryMaterials = () => {
 
         <div className="text-center space-y-4 py-12">
           <p className="text-red-400">Failed to load materials data</p>
-          <Button
-            variant="outline"
-            onClick={() => refetch()}
-            disabled={isLoading}
-          >
+          <Button variant="outline" onClick={() => refetch()} disabled={isLoading}>
             {isLoading ? (
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
             ) : (
@@ -211,9 +204,7 @@ const CategoryMaterials = () => {
             <CardContent className="p-6 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                <p className="text-primary font-medium">
-                  Loading {meta.title.toLowerCase()}...
-                </p>
+                <p className="text-primary font-medium">Loading {meta.title.toLowerCase()}...</p>
               </div>
               <p className="text-muted-foreground text-sm">
                 Fetching data from comprehensive materials database
@@ -248,10 +239,7 @@ const CategoryMaterials = () => {
         )}
 
         {/* AI Insights Section */}
-        <InlineMaterialAIInsightsSection
-          materials={materials || []}
-          categoryName={meta.title}
-        />
+        <InlineMaterialAIInsightsSection materials={materials || []} categoryName={meta.title} />
 
         {/* Material Tips */}
         <MaterialTips />

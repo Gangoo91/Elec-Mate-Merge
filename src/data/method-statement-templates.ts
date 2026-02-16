@@ -19,16 +19,20 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Installation tester', 'Digital camera', 'Measuring tape'],
         qualifications: ['18th Edition'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Isolation & Verification',
         description: 'Isolate main supply and verify isolation at consumer unit',
-        safetyRequirements: ['Prove dead device', 'Lockout/tagout procedures', 'Two-person verification'],
+        safetyRequirements: [
+          'Prove dead device',
+          'Lockout/tagout procedures',
+          'Two-person verification',
+        ],
         equipmentNeeded: ['Voltage indicator', 'Proving unit', 'Isolation locks'],
         qualifications: ['18th Edition', 'Safe isolation procedures'],
         estimatedDuration: '20 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Remove Existing Consumer Unit',
@@ -37,7 +41,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Label maker', 'Circuit identification tools', 'Hand tools'],
         qualifications: ['18th Edition'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Install New Consumer Unit',
@@ -46,7 +50,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['New consumer unit', 'MCBs', 'RCDs', 'Cable management'],
         qualifications: ['18th Edition', 'Part P'],
         estimatedDuration: '2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Certification',
@@ -55,9 +59,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Multifunction tester', 'Schedule of test results'],
         qualifications: ['18th Edition', 'Testing competence'],
         estimatedDuration: '1 hour',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'socket-outlet-installation',
@@ -77,7 +81,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Circuit tester', 'Load calculation sheets'],
         qualifications: ['18th Edition'],
         estimatedDuration: '20 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Safe Isolation',
@@ -86,7 +90,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Voltage tester', 'Proving unit', 'Isolation locks'],
         qualifications: ['Safe isolation procedures'],
         estimatedDuration: '15 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Installation Work',
@@ -95,7 +99,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Socket outlets', 'Cable', 'Installation tools'],
         qualifications: ['18th Edition', 'Part P'],
         estimatedDuration: '1.5 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -104,9 +108,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Socket tester', 'Certification forms'],
         qualifications: ['Testing competence'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'lighting-circuit-installation',
@@ -125,7 +129,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Design software', 'Lighting calculations'],
         qualifications: ['Lighting design competence'],
         estimatedDuration: '1 hour',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'First Fix Installation',
@@ -134,7 +138,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Twin & earth cable', 'Back boxes', 'Installation tools'],
         qualifications: ['18th Edition'],
         estimatedDuration: '3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Second Fix & Connection',
@@ -143,7 +147,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Light fittings', 'Switches', 'Connectors'],
         qualifications: ['18th Edition', 'Part P'],
         estimatedDuration: '2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -152,9 +156,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Installation tester', 'Light meter'],
         qualifications: ['Testing competence'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   // Emergency/Maintenance Work
   {
@@ -166,7 +170,11 @@ export const methodTemplates: MethodTemplate[] = [
     estimatedDuration: '1-4 hours',
     difficultyLevel: 'advanced',
     isPopular: true,
-    requiredQualifications: ['18th Edition', 'Emergency Response Training', 'Approved Person Status'],
+    requiredQualifications: [
+      '18th Edition',
+      'Emergency Response Training',
+      'Approved Person Status',
+    ],
     steps: [
       {
         title: 'Emergency Assessment',
@@ -175,7 +183,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Emergency kit', 'Voltage detector', 'Emergency lighting'],
         qualifications: ['Emergency response procedures'],
         estimatedDuration: '15 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Make Safe Procedures',
@@ -184,7 +192,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Isolation equipment', 'Warning barriers', 'Communication devices'],
         qualifications: ['Emergency isolation procedures'],
         estimatedDuration: '20 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Fault Investigation',
@@ -193,7 +201,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Testing equipment', 'Insulation tester', 'Circuit tracer'],
         qualifications: ['Fault finding competence'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Temporary Repair',
@@ -202,7 +210,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Emergency repair materials', 'Temporary switchgear'],
         qualifications: ['Emergency repair procedures'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Testing & Handover',
@@ -211,9 +219,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Portable testing equipment', 'Emergency certificates'],
         qualifications: ['Emergency testing procedures'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'periodic-inspection-testing',
@@ -233,7 +241,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Installation drawings', 'Previous certificates', 'EICR forms'],
         qualifications: ['Inspection planning'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Visual Inspection',
@@ -242,7 +250,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Torch', 'Mirror', 'Camera', 'Inspection checklist'],
         qualifications: ['Visual inspection competence'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Dead Testing',
@@ -251,7 +259,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Multifunction tester', 'Low resistance ohmmeter', 'Insulation tester'],
         qualifications: ['Testing competence'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Live Testing',
@@ -260,7 +268,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['RCD tester', 'Socket tester', 'Phase rotation meter'],
         qualifications: ['Live testing procedures'],
         estimatedDuration: '1 hour',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Report Completion',
@@ -269,9 +277,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['EICR forms', 'Computer/tablet', 'Digital camera'],
         qualifications: ['Report writing competence'],
         estimatedDuration: '1 hour',
-        riskLevel: 'low'
-      }
-    ]
+        riskLevel: 'low',
+      },
+    ],
   },
   {
     id: 'fault-finding-diagnosis',
@@ -290,7 +298,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Fault report forms', 'Installation drawings'],
         qualifications: ['Fault analysis procedures'],
         estimatedDuration: '20 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Initial Safety Assessment',
@@ -299,7 +307,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Voltage detector', 'Warning notices', 'Isolation equipment'],
         qualifications: ['Safety assessment'],
         estimatedDuration: '15 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Systematic Testing',
@@ -308,7 +316,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Multifunction tester', 'Clamp meter', 'Oscilloscope'],
         qualifications: ['Advanced testing techniques'],
         estimatedDuration: '2-4 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Fault Repair',
@@ -317,7 +325,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Repair materials', 'Installation tools', 'Joint systems'],
         qualifications: ['Repair techniques'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Verification Testing',
@@ -326,9 +334,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Testing equipment', 'Verification procedures'],
         qualifications: ['Verification testing'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   // Specialised Installation Work
   {
@@ -349,7 +357,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Load calculator', 'Site survey forms', 'Measuring equipment'],
         qualifications: ['EV installation competence'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Supply Modification',
@@ -358,7 +366,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['6mm² SWA cable', 'Type A RCD', 'Conduit systems'],
         qualifications: ['18th Edition', 'Cable installation'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Charge Point Installation',
@@ -367,7 +375,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['EV charge point', 'Mounting hardware', 'Earth electrode'],
         qualifications: ['EV installation procedures'],
         estimatedDuration: '1 hour',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -376,7 +384,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['RCD tester', 'Earth loop tester', 'EV test adapter'],
         qualifications: ['EV testing procedures'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Customer Handover',
@@ -385,9 +393,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['User manual', 'Installation certificate', 'OLEV documentation'],
         qualifications: ['Customer training'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
-      }
-    ]
+        riskLevel: 'low',
+      },
+    ],
   },
   {
     id: 'solar-pv-installation',
@@ -406,16 +414,20 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Design software', 'Irradiance meter', 'Structural calculations'],
         qualifications: ['PV design competence'],
         estimatedDuration: '2 hours',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Roof Work & Mounting',
         description: 'Install PV mounting system and panels',
-        safetyRequirements: ['Working at height procedures', 'Fall protection', 'Weather conditions'],
+        safetyRequirements: [
+          'Working at height procedures',
+          'Fall protection',
+          'Weather conditions',
+        ],
         equipmentNeeded: ['PV panels', 'Mounting rails', 'Safety harness', 'Weather monitoring'],
         qualifications: ['Working at height certificate'],
         estimatedDuration: '6-8 hours',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'DC Installation',
@@ -424,7 +436,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['DC cable', 'MC4 connectors', 'DC isolators', 'Generation meter'],
         qualifications: ['PV electrical installation'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Inverter & AC Connection',
@@ -433,7 +445,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Inverter', 'AC isolator', 'Export meter', 'Protection devices'],
         qualifications: ['Grid connection procedures'],
         estimatedDuration: '2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -442,9 +454,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['PV tester', 'Irradiance meter', 'Insulation tester'],
         qualifications: ['PV testing procedures'],
         estimatedDuration: '1 hour',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'shower-circuit-installation',
@@ -464,7 +476,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Load calculator', 'Shower specifications', 'Supply assessment'],
         qualifications: ['Load calculation competence'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Cable Installation',
@@ -473,7 +485,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['10mm² cable', 'Protective conduit', 'Cable clips'],
         qualifications: ['Cable installation'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Shower Unit Installation',
@@ -482,7 +494,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Shower unit', 'Bonding conductors', 'Connection units'],
         qualifications: ['Bathroom electrical work'],
         estimatedDuration: '1 hour',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Protective Device Installation',
@@ -491,7 +503,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['MCB', 'RCD', 'Labels'],
         qualifications: ['Protection device selection'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Certification',
@@ -500,9 +512,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Installation tester', 'RCD tester', 'Certificates'],
         qualifications: ['Testing competence'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'cooker-circuit-installation',
@@ -522,7 +534,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Cooker specifications', 'Load calculation sheets'],
         qualifications: ['Load calculation procedures'],
         estimatedDuration: '20 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Cable Route Planning',
@@ -531,7 +543,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Cable route planner', 'Detection equipment'],
         qualifications: ['Cable routing'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Cable Installation',
@@ -540,7 +552,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['6mm² cable', 'Protective conduit', 'Fire barriers'],
         qualifications: ['Cable installation'],
         estimatedDuration: '1.5-2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Connection Unit Installation',
@@ -549,7 +561,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Cooker connection unit', 'Terminals', 'Earth bonding'],
         qualifications: ['Connection procedures'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -558,9 +570,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Installation tester', 'Load test equipment'],
         qualifications: ['Testing procedures'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   // Commercial/Industrial Work
   {
@@ -580,7 +592,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Load analysis software', 'Phase meters', 'Design documentation'],
         qualifications: ['Three-phase design'],
         estimatedDuration: '1 hour',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Supply Authority Liaison',
@@ -589,16 +601,20 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['DNO application forms', 'Site plans'],
         qualifications: ['DNO liaison procedures'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Three-Phase Distribution',
         description: 'Install three-phase distribution equipment',
         safetyRequirements: ['Phase sequence', 'Neutral earthing', 'Protection coordination'],
-        equipmentNeeded: ['Three-phase distribution board', 'Three-phase MCBs', 'Phase rotation meter'],
+        equipmentNeeded: [
+          'Three-phase distribution board',
+          'Three-phase MCBs',
+          'Phase rotation meter',
+        ],
         qualifications: ['Three-phase installation'],
         estimatedDuration: '3-4 hours',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Load Connection',
@@ -607,7 +623,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Three-phase contactors', 'Motor starters', 'Phase monitoring'],
         qualifications: ['Three-phase connections'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -616,9 +632,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Three-phase tester', 'Power quality analyser'],
         qualifications: ['Three-phase testing'],
         estimatedDuration: '1.5 hours',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'fire-alarm-installation',
@@ -637,7 +653,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Design software', 'Site plans', 'Fire risk assessment'],
         qualifications: ['Fire alarm design'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Cable Installation',
@@ -646,7 +662,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['FP200 cable', 'Fire-resistant clips', 'Cable supports'],
         qualifications: ['Fire alarm cabling'],
         estimatedDuration: '8-16 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Device Installation',
@@ -655,7 +671,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Smoke detectors', 'Heat detectors', 'Call points', 'Sounders'],
         qualifications: ['Fire alarm devices'],
         estimatedDuration: '4-6 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Panel Programming',
@@ -664,7 +680,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Programming software', 'System documentation'],
         qualifications: ['Fire alarm programming'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -673,9 +689,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Testing equipment', 'Commissioning certificates'],
         qualifications: ['Fire alarm testing'],
         estimatedDuration: '3-4 hours',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'emergency-lighting-installation',
@@ -694,7 +710,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Lux meter', 'Design software', 'Site drawings'],
         qualifications: ['Emergency lighting design'],
         estimatedDuration: '1 hour',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Circuit Installation',
@@ -703,7 +719,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Emergency lighting cable', 'Test switches', 'Key switches'],
         qualifications: ['Emergency lighting circuits'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Luminaire Installation',
@@ -712,7 +728,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Emergency luminaires', 'Exit signs', 'Mounting hardware'],
         qualifications: ['Luminaire installation'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'System Testing',
@@ -721,7 +737,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Lux meter', 'Duration timer', 'Test log sheets'],
         qualifications: ['Emergency lighting testing'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Documentation & Handover',
@@ -730,9 +746,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Certificates', 'User manuals', 'Test log books'],
         qualifications: ['System documentation'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
-      }
-    ]
+        riskLevel: 'low',
+      },
+    ],
   },
   {
     id: 'distribution-board-upgrade',
@@ -751,7 +767,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Power analyser', 'Load survey equipment'],
         qualifications: ['Load assessment'],
         estimatedDuration: '1 hour',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Isolation Planning',
@@ -760,7 +776,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Isolation schedule', 'Communication equipment'],
         qualifications: ['Isolation planning'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Old Board Removal',
@@ -769,7 +785,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Circuit labels', 'Isolation equipment'],
         qualifications: ['Safe removal procedures'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'New Board Installation',
@@ -778,7 +794,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['New distribution board', 'MCBs', 'RCDs', 'Busbars'],
         qualifications: ['Distribution board installation'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Commissioning',
@@ -787,9 +803,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Installation tester', 'Power quality analyser'],
         qualifications: ['Commissioning procedures'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   // Testing & Compliance
   {
@@ -810,7 +826,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Asset register', 'Barcode labels', 'Camera'],
         qualifications: ['PAT testing procedures'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Visual Inspection',
@@ -819,7 +835,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Inspection checklist', 'Failure labels'],
         qualifications: ['Visual inspection'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Electrical Testing',
@@ -828,7 +844,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['PAT tester', 'Test adapters', 'Test leads'],
         qualifications: ['PAT testing'],
         estimatedDuration: '2-4 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Results Documentation',
@@ -837,7 +853,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Test result forms', 'Pass labels', 'Computer/printer'],
         qualifications: ['Result recording'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Retest Schedule',
@@ -846,9 +862,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Scheduling software', 'Asset database'],
         qualifications: ['Programme management'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
-      }
-    ]
+        riskLevel: 'low',
+      },
+    ],
   },
   // Safety-Critical Work
   {
@@ -868,7 +884,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Risk assessment forms', 'Work permit'],
         qualifications: ['Live working authorisation'],
         estimatedDuration: '10 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Safety Preparation',
@@ -877,7 +893,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Insulated tools', 'Arc flash PPE', 'Insulated mats'],
         qualifications: ['Live working procedures'],
         estimatedDuration: '15 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Live Work Execution',
@@ -886,7 +902,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Specialised live working tools'],
         qualifications: ['Live working competence'],
         estimatedDuration: '10-60 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Immediate Verification',
@@ -895,7 +911,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Non-contact testing', 'Monitoring equipment'],
         qualifications: ['Live verification'],
         estimatedDuration: '10 minutes',
-        riskLevel: 'high'
+        riskLevel: 'high',
       },
       {
         title: 'Documentation',
@@ -904,9 +920,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Work records', 'Incident forms'],
         qualifications: ['Documentation procedures'],
         estimatedDuration: '15 minutes',
-        riskLevel: 'low'
-      }
-    ]
+        riskLevel: 'low',
+      },
+    ],
   },
   // Domestic Specialists
   {
@@ -927,7 +943,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['System design software', 'Network analyser'],
         qualifications: ['Smart home design'],
         estimatedDuration: '2 hours',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Network Infrastructure',
@@ -936,7 +952,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Cat6 cable', 'Network switches', 'WiFi access points'],
         qualifications: ['Network installation'],
         estimatedDuration: '3-4 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Smart Device Installation',
@@ -945,7 +961,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Smart switches', 'Smart outlets', 'Controllers'],
         qualifications: ['Smart device installation'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'System Configuration',
@@ -954,7 +970,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Configuration software', 'Mobile devices'],
         qualifications: ['System programming'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Testing & User Training',
@@ -963,9 +979,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Test procedures', 'User manuals'],
         qualifications: ['User training'],
         estimatedDuration: '1 hour',
-        riskLevel: 'low'
-      }
-    ]
+        riskLevel: 'low',
+      },
+    ],
   },
   {
     id: 'garden-outdoor-electrical',
@@ -985,7 +1001,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Cable detector', 'Site survey equipment'],
         qualifications: ['Outdoor installation'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Cable Route Planning',
@@ -994,7 +1010,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Route planning tools', 'Marking spray'],
         qualifications: ['Cable routing'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Underground Cable Installation',
@@ -1003,7 +1019,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['SWA cable', 'Ducting', 'Sand', 'Warning tape'],
         qualifications: ['Underground installation'],
         estimatedDuration: '3-4 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Outdoor Equipment Installation',
@@ -1012,7 +1028,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Weatherproof sockets', 'Outdoor lights', 'Earth electrode'],
         qualifications: ['Outdoor equipment'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Certification',
@@ -1021,9 +1037,9 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Earth electrode tester', 'RCD tester'],
         qualifications: ['Outdoor testing'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
-      }
-    ]
+        riskLevel: 'medium',
+      },
+    ],
   },
   {
     id: 'bathroom-electrical-installation',
@@ -1043,7 +1059,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Zone measurement tools', 'IP rating charts'],
         qualifications: ['Special locations'],
         estimatedDuration: '30 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Circuit Design',
@@ -1052,7 +1068,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Circuit design tools', 'Load calculations'],
         qualifications: ['Bathroom circuits'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'low'
+        riskLevel: 'low',
       },
       {
         title: 'Cable Installation',
@@ -1061,7 +1077,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Appropriate cables', 'Protection systems'],
         qualifications: ['Bathroom cabling'],
         estimatedDuration: '2-3 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Equipment Installation',
@@ -1070,7 +1086,7 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Bathroom lights', 'Extractor fans', 'Bonding conductors'],
         qualifications: ['Bathroom equipment'],
         estimatedDuration: '1-2 hours',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       },
       {
         title: 'Testing & Verification',
@@ -1079,10 +1095,10 @@ export const methodTemplates: MethodTemplate[] = [
         equipmentNeeded: ['Low resistance ohmmeter', 'Insulation tester'],
         qualifications: ['Special location testing'],
         estimatedDuration: '45 minutes',
-        riskLevel: 'medium'
-      }
-    ]
-  }
+        riskLevel: 'medium',
+      },
+    ],
+  },
 ];
 
 export const stepTemplates: StepTemplate[] = [
@@ -1095,18 +1111,18 @@ export const stepTemplates: StepTemplate[] = [
       'Use approved voltage indicator',
       'Prove dead device before and after use',
       'Apply lockout/tagout procedures',
-      'Two-person verification where required'
+      'Two-person verification where required',
     ],
     equipmentNeeded: [
       'Voltage indicator (GS38 compliant)',
       'Proving unit',
       'Isolation locks and tags',
-      'Warning notices'
+      'Warning notices',
     ],
     qualifications: ['Safe isolation procedures (GS38)', '18th Edition'],
     estimatedDuration: '15-20 minutes',
     riskLevel: 'high',
-    commonlyUsedWith: ['testing-commissioning', 'installation-work']
+    commonlyUsedWith: ['testing-commissioning', 'installation-work'],
   },
   {
     id: 'testing-commissioning',
@@ -1116,17 +1132,17 @@ export const stepTemplates: StepTemplate[] = [
     safetyRequirements: [
       'Safe re-energisation procedures',
       'Sequential testing approach',
-      'Functional testing of protection devices'
+      'Functional testing of protection devices',
     ],
     equipmentNeeded: [
       'Multifunction installation tester',
       'PAT tester (if applicable)',
-      'Test certificates and schedules'
+      'Test certificates and schedules',
     ],
     qualifications: ['18th Edition', 'Testing and inspection competence'],
     estimatedDuration: '30-60 minutes',
     riskLevel: 'medium',
-    commonlyUsedWith: ['isolation-verification', 'installation-work']
+    commonlyUsedWith: ['isolation-verification', 'installation-work'],
   },
   {
     id: 'risk-assessment',
@@ -1136,30 +1152,30 @@ export const stepTemplates: StepTemplate[] = [
     safetyRequirements: [
       'Identify all hazards',
       'Assess risk levels',
-      'Implement control measures'
+      'Implement control measures',
     ],
     equipmentNeeded: [
       'Risk assessment forms',
       'Camera for hazard documentation',
-      'Site survey equipment'
+      'Site survey equipment',
     ],
     qualifications: ['Risk assessment training'],
     estimatedDuration: '20-30 minutes',
     riskLevel: 'low',
-    commonlyUsedWith: ['method-statement', 'planning-preparation']
-  }
+    commonlyUsedWith: ['method-statement', 'planning-preparation'],
+  },
 ];
 
 export const getTemplatesByCategory = (category?: string): MethodTemplate[] => {
   if (!category) return methodTemplates;
-  return methodTemplates.filter(template => template.category === category);
+  return methodTemplates.filter((template) => template.category === category);
 };
 
 export const getTemplateById = (id: string): MethodTemplate | undefined => {
-  return methodTemplates.find(template => template.id === id);
+  return methodTemplates.find((template) => template.id === id);
 };
 
 export const getStepTemplatesByCategory = (category?: string): StepTemplate[] => {
   if (!category) return stepTemplates;
-  return stepTemplates.filter(template => template.category === category);
+  return stepTemplates.filter((template) => template.category === category);
 };

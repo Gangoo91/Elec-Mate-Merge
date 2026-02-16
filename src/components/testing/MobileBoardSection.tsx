@@ -65,8 +65,8 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
   }, [circuitCount, completedCount]);
 
   // Check if board verification is complete
-  const verificationComplete = board.zdb && board.ipf &&
-    (board.confirmedCorrectPolarity || board.confirmedPhaseSequence);
+  const verificationComplete =
+    board.zdb && board.ipf && (board.confirmedCorrectPolarity || board.confirmedPhaseSequence);
 
   const handleToggle = () => {
     haptics.tap();
@@ -109,8 +109,11 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
           strokeDashoffset={strokeDashoffset}
           className={cn(
             'transition-all duration-500',
-            stats.percent === 100 ? 'text-green-400' :
-            stats.percent > 50 ? 'text-amber-400' : 'text-elec-yellow'
+            stats.percent === 100
+              ? 'text-green-400'
+              : stats.percent > 50
+                ? 'text-amber-400'
+                : 'text-elec-yellow'
           )}
         />
         {/* Center text */}
@@ -140,10 +143,12 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
             {/* Board Info */}
             <div className="flex-1 min-w-0 text-left">
               <div className="flex items-center gap-2">
-                <CircuitBoard className={cn(
-                  "h-4 w-4 shrink-0",
-                  isMainBoard ? "text-elec-yellow" : "text-blue-400"
-                )} />
+                <CircuitBoard
+                  className={cn(
+                    'h-4 w-4 shrink-0',
+                    isMainBoard ? 'text-elec-yellow' : 'text-blue-400'
+                  )}
+                />
                 <span className="font-semibold text-white truncate">
                   {board.reference || board.name}
                 </span>
@@ -154,7 +159,9 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                 )}
               </div>
               <div className="flex items-center gap-2 text-xs text-white/50 mt-0.5">
-                <span>{stats.total} circuit{stats.total !== 1 ? 's' : ''}</span>
+                <span>
+                  {stats.total} circuit{stats.total !== 1 ? 's' : ''}
+                </span>
                 {stats.completed > 0 && (
                   <>
                     <span>•</span>
@@ -171,10 +178,12 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
             </div>
 
             {/* Expand indicator */}
-            <ChevronDown className={cn(
-              "h-5 w-5 text-white/40 transition-transform duration-200 shrink-0",
-              isExpanded && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-5 w-5 text-white/40 transition-transform duration-200 shrink-0',
+                isExpanded && 'rotate-180'
+              )}
+            />
           </button>
         </CollapsibleTrigger>
 
@@ -191,7 +200,10 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
 
             {tools?.onScanBoard && (
               <Button
-                onClick={() => { haptics.tap(); tools.onScanBoard?.(); }}
+                onClick={() => {
+                  haptics.tap();
+                  tools.onScanBoard?.();
+                }}
                 variant="outline"
                 className="h-12 px-4 border-white/20 hover:bg-white/10 shrink-0 touch-manipulation active:scale-95 transition-transform"
               >
@@ -202,38 +214,46 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
 
             {tools?.onVoiceToggle && (
               <Button
-                onClick={() => { haptics.tap(); tools.onVoiceToggle?.(); }}
+                onClick={() => {
+                  haptics.tap();
+                  tools.onVoiceToggle?.();
+                }}
                 variant="outline"
                 className={cn(
-                  "h-12 w-12 p-0 shrink-0 touch-manipulation active:scale-95 transition-all",
+                  'h-12 w-12 p-0 shrink-0 touch-manipulation active:scale-95 transition-all',
                   tools.voiceActive
-                    ? "bg-green-500/20 border-green-500 ring-2 ring-green-500/30"
+                    ? 'bg-green-500/20 border-green-500 ring-2 ring-green-500/30'
                     : tools.voiceConnecting
-                    ? "bg-yellow-500/20 border-yellow-500 animate-pulse"
-                    : "border-white/20 hover:bg-white/10"
+                      ? 'bg-yellow-500/20 border-yellow-500 animate-pulse'
+                      : 'border-white/20 hover:bg-white/10'
                 )}
               >
-                <Mic className={cn(
-                  "h-5 w-5",
-                  tools.voiceActive ? "text-green-500" :
-                  tools.voiceConnecting ? "text-yellow-500" : "text-white"
-                )} />
+                <Mic
+                  className={cn(
+                    'h-5 w-5',
+                    tools.voiceActive
+                      ? 'text-green-500'
+                      : tools.voiceConnecting
+                        ? 'text-yellow-500'
+                        : 'text-white'
+                  )}
+                />
               </Button>
             )}
 
             {!isMainBoard && onRemoveBoard && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="h-12 w-12 p-0 shrink-0 touch-manipulation"
-                  >
+                  <Button variant="ghost" className="h-12 w-12 p-0 shrink-0 touch-manipulation">
                     <MoreVertical className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-background">
                   <DropdownMenuItem
-                    onClick={() => { haptics.impact(); onRemoveBoard(); }}
+                    onClick={() => {
+                      haptics.impact();
+                      onRemoveBoard();
+                    }}
                     className="text-red-400 focus:text-red-400"
                   >
                     Remove Board
@@ -244,9 +264,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
           </div>
 
           {/* Circuit content */}
-          <div className="p-4">
-            {children}
-          </div>
+          <div className="p-4">{children}</div>
         </CollapsibleContent>
       </Collapsible>
     </div>

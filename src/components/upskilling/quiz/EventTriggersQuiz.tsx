@@ -61,7 +61,10 @@ const EventTriggersQuiz = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
-          <p>Test your understanding of automated event handling and reporting systems in building management.</p>
+          <p>
+            Test your understanding of automated event handling and reporting systems in building
+            management.
+          </p>
           <div className="flex gap-4">
             <Badge variant="secondary" className="bg-elec-yellow text-elec-dark">
               10 Questions
@@ -70,7 +73,7 @@ const EventTriggersQuiz = () => {
               ~8 minutes
             </Badge>
           </div>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -96,18 +99,19 @@ const EventTriggersQuiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)}`}>
               {score}/{eventTriggersQuizData.length}
             </div>
-            <div className={`text-xl ${getScoreColor(score)}`}>
-              {percentage}%
-            </div>
+            <div className={`text-xl ${getScoreColor(score)}`}>{percentage}%</div>
           </div>
 
           <div className="space-y-4">
             {eventTriggersQuizData.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
-                <div key={question.id} className="bg-elec-dark p-4 rounded-md border border-gray-600">
+                <div
+                  key={question.id}
+                  className="bg-elec-dark p-4 rounded-md border border-gray-600"
+                >
                   <div className="flex items-start gap-3 mb-2">
                     {isCorrect ? (
                       <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -126,9 +130,7 @@ const EventTriggersQuiz = () => {
                           Correct answer: {question.options[question.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-gray-300 text-sm">
-                        {question.explanation}
-                      </p>
+                      <p className="text-gray-300 text-sm">{question.explanation}</p>
                     </div>
                   </div>
                 </div>
@@ -136,7 +138,10 @@ const EventTriggersQuiz = () => {
             })}
           </div>
 
-          <Button onClick={handleRestart} className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600">
+          <Button
+            onClick={handleRestart}
+            className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600"
+          >
             <RotateCcw className="mr-2 h-4 w-4" />
             Retake Quiz
           </Button>
@@ -162,7 +167,7 @@ const EventTriggersQuiz = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg text-foreground">{question.question}</p>
-        
+
         <div className="space-y-3">
           {question.options.map((option, index) => (
             <button

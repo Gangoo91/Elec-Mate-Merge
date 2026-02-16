@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Filter, 
-  X, 
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { Badge } from '@/components/ui/badge';
+import {
+  Filter,
+  X,
   Search,
   MapPin,
   BanknoteIcon,
@@ -18,9 +24,9 @@ import {
   Clock,
   Building2,
   Award,
-  Sliders
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+  Sliders,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export interface FilterCriteria {
   keywords: string;
@@ -57,52 +63,46 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
   onResetFilters,
   availableCompanies,
   availableSkills,
-  isLoading
+  isLoading,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const jobTypes = [
-    "Full-time",
-    "Part-time", 
-    "Contract",
-    "Temporary",
-    "Apprenticeship",
-    "Permanent"
+    'Full-time',
+    'Part-time',
+    'Contract',
+    'Temporary',
+    'Apprenticeship',
+    'Permanent',
   ];
 
   const experienceLevels = [
-    "Entry Level",
-    "Apprentice",
-    "1-2 years",
-    "3-5 years",
-    "5-10 years",
-    "10+ years",
-    "Senior Level"
+    'Entry Level',
+    'Apprentice',
+    '1-2 years',
+    '3-5 years',
+    '5-10 years',
+    '10+ years',
+    'Senior Level',
   ];
 
   const postedWithinOptions = [
-    { value: "1", label: "Last 24 hours" },
-    { value: "3", label: "Last 3 days" },
-    { value: "7", label: "Last week" },
-    { value: "14", label: "Last 2 weeks" },
-    { value: "30", label: "Last month" },
-    { value: "all", label: "Any time" }
+    { value: '1', label: 'Last 24 hours' },
+    { value: '3', label: 'Last 3 days' },
+    { value: '7', label: 'Last week' },
+    { value: '14', label: 'Last 2 weeks' },
+    { value: '30', label: 'Last month' },
+    { value: 'all', label: 'Any time' },
   ];
 
-  const updateFilter = <K extends keyof FilterCriteria>(
-    key: K,
-    value: FilterCriteria[K]
-  ) => {
+  const updateFilter = <K extends keyof FilterCriteria>(key: K, value: FilterCriteria[K]) => {
     onFiltersChange({ ...filters, [key]: value });
   };
 
-  const toggleArrayFilter = <K extends keyof FilterCriteria>(
-    key: K,
-    value: string
-  ) => {
+  const toggleArrayFilter = <K extends keyof FilterCriteria>(key: K, value: string) => {
     const currentArray = filters[key] as string[];
     const newArray = currentArray.includes(value)
-      ? currentArray.filter(item => item !== value)
+      ? currentArray.filter((item) => item !== value)
       : [...currentArray, value];
     updateFilter(key, newArray as FilterCriteria[K]);
   };
@@ -114,7 +114,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
     if (filters.salaryMin > 0 || filters.salaryMax < 100000) count++;
     if (filters.jobTypes.length > 0) count++;
     if (filters.companies.length > 0) count++;
-    if (filters.postedWithin !== "all") count++;
+    if (filters.postedWithin !== 'all') count++;
     if (filters.experience.length > 0) count++;
     if (filters.skills.length > 0) count++;
     if (filters.remote || filters.hasAccommodation) count++;
@@ -129,9 +129,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             <Filter className="h-5 w-5 text-elec-yellow" />
             Advanced Filters
             {getActiveFiltersCount() > 0 && (
-              <Badge className="bg-elec-yellow text-elec-dark">
-                {getActiveFiltersCount()}
-              </Badge>
+              <Badge className="bg-elec-yellow text-elec-dark">{getActiveFiltersCount()}</Badge>
             )}
           </CardTitle>
           <Button
@@ -180,9 +178,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
         {/* Search Radius */}
         {filters.location && (
           <div className="space-y-3">
-            <Label className="text-elec-yellow">
-              Search Radius: {filters.radius} miles
-            </Label>
+            <Label className="text-elec-yellow">Search Radius: {filters.radius} miles</Label>
             <Slider
               value={[filters.radius]}
               onValueChange={(value) => updateFilter('radius', value[0])}
@@ -206,14 +202,14 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                 <Input
                   type="number"
                   placeholder="Min £"
-                  value={filters.salaryMin || ""}
+                  value={filters.salaryMin || ''}
                   onChange={(e) => updateFilter('salaryMin', parseInt(e.target.value) || 0)}
                   className="bg-elec-gray border-elec-yellow/30 text-elec-light"
                 />
                 <Input
                   type="number"
                   placeholder="Max £"
-                  value={filters.salaryMax === 100000 ? "" : filters.salaryMax}
+                  value={filters.salaryMax === 100000 ? '' : filters.salaryMax}
                   onChange={(e) => updateFilter('salaryMax', parseInt(e.target.value) || 100000)}
                   className="bg-elec-gray border-elec-yellow/30 text-elec-light"
                 />
@@ -227,15 +223,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                 Job Types
               </Label>
               <div className="flex flex-wrap gap-2">
-                {jobTypes.map(type => (
+                {jobTypes.map((type) => (
                   <Badge
                     key={type}
-                    variant={filters.jobTypes.includes(type) ? "default" : "outline"}
+                    variant={filters.jobTypes.includes(type) ? 'default' : 'outline'}
                     className={cn(
-                      "cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
-                      filters.jobTypes.includes(type) 
-                        ? "bg-elec-yellow text-elec-dark" 
-                        : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                      'cursor-pointer active:scale-[0.98] transition-all touch-manipulation',
+                      filters.jobTypes.includes(type)
+                        ? 'bg-elec-yellow text-elec-dark'
+                        : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
                     )}
                     onClick={() => toggleArrayFilter('jobTypes', type)}
                   >
@@ -251,15 +247,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                 <Calendar className="h-4 w-4" />
                 Posted Within
               </Label>
-              <Select 
-                value={filters.postedWithin} 
+              <Select
+                value={filters.postedWithin}
                 onValueChange={(value) => updateFilter('postedWithin', value)}
               >
                 <SelectTrigger className="bg-elec-gray border-elec-yellow/30 text-elec-light">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {postedWithinOptions.map(option => (
+                  {postedWithinOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
@@ -275,15 +271,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                 Experience Level
               </Label>
               <div className="flex flex-wrap gap-2">
-                {experienceLevels.map(level => (
+                {experienceLevels.map((level) => (
                   <Badge
                     key={level}
-                    variant={filters.experience.includes(level) ? "default" : "outline"}
+                    variant={filters.experience.includes(level) ? 'default' : 'outline'}
                     className={cn(
-                      "cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
-                      filters.experience.includes(level) 
-                        ? "bg-elec-yellow text-elec-dark" 
-                        : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                      'cursor-pointer active:scale-[0.98] transition-all touch-manipulation',
+                      filters.experience.includes(level)
+                        ? 'bg-elec-yellow text-elec-dark'
+                        : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
                     )}
                     onClick={() => toggleArrayFilter('experience', level)}
                   >
@@ -301,15 +297,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                   Companies
                 </Label>
                 <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
-                  {availableCompanies.slice(0, 15).map(company => (
+                  {availableCompanies.slice(0, 15).map((company) => (
                     <Badge
                       key={company}
-                      variant={filters.companies.includes(company) ? "default" : "outline"}
+                      variant={filters.companies.includes(company) ? 'default' : 'outline'}
                       className={cn(
-                        "cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
-                        filters.companies.includes(company) 
-                          ? "bg-elec-yellow text-elec-dark" 
-                          : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                        'cursor-pointer active:scale-[0.98] transition-all touch-manipulation',
+                        filters.companies.includes(company)
+                          ? 'bg-elec-yellow text-elec-dark'
+                          : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
                       )}
                       onClick={() => toggleArrayFilter('companies', company)}
                     >
@@ -362,7 +358,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
               </>
             )}
           </Button>
-          
+
           <Button
             variant="outline"
             onClick={onResetFilters}

@@ -1,6 +1,6 @@
-import { MessageSquare, Calendar, MapPin, User } from "lucide-react";
-import { format } from "date-fns";
-import { motion } from "framer-motion";
+import { MessageSquare, Calendar, MapPin, User } from 'lucide-react';
+import { format } from 'date-fns';
+import { motion } from 'framer-motion';
 
 interface OriginalRequestCardProps {
   query: string;
@@ -53,7 +53,9 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
           {timestamp && (
             <div className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5 text-blue-400" />
-              <span className="text-xs text-white/70">{format(new Date(timestamp), 'dd MMM yyyy, HH:mm')}</span>
+              <span className="text-xs text-white/70">
+                {format(new Date(timestamp), 'dd MMM yyyy, HH:mm')}
+              </span>
             </div>
           )}
         </div>

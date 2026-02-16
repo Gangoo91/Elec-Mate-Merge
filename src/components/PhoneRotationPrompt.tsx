@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -21,15 +20,15 @@ const PhoneRotationPrompt = ({ onContinuePortrait, testTypeName }: PhoneRotation
                 <RotateCcw className="w-6 h-6 text-elec-yellow" />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Rotate Your Device</h2>
               <p className="text-sm text-muted-foreground">
-                For the best testing experience with <strong>{testTypeName}</strong>, 
-                please rotate your phone to landscape mode.
+                For the best testing experience with <strong>{testTypeName}</strong>, please rotate
+                your phone to landscape mode.
               </p>
             </div>
-            
+
             <div className="space-y-4">
               <div className="bg-muted/50 p-3 rounded-lg">
                 <p className="text-xs text-muted-foreground">
@@ -41,12 +40,8 @@ const PhoneRotationPrompt = ({ onContinuePortrait, testTypeName }: PhoneRotation
                   <li>• More space for circuit details</li>
                 </ul>
               </div>
-              
-              <Button 
-                onClick={onContinuePortrait}
-                variant="outline" 
-                className="w-full text-sm"
-              >
+
+              <Button onClick={onContinuePortrait} variant="outline" className="w-full text-sm">
                 Continue in Portrait Mode
               </Button>
             </div>

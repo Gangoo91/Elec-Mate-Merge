@@ -69,11 +69,11 @@ export function MarketplaceSearchBar({
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setSelectedIndex(prev => (prev < maxIndex ? prev + 1 : 0));
+        setSelectedIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
         break;
       case 'ArrowUp':
         e.preventDefault();
-        setSelectedIndex(prev => (prev > 0 ? prev - 1 : maxIndex));
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
         break;
       case 'Enter':
         e.preventDefault();
@@ -131,7 +131,10 @@ export function MarketplaceSearchBar({
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder="Search tools across all suppliers..."
-          className={cn("h-12 sm:h-14 pr-12 text-base sm:text-lg bg-background border-2 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow rounded-xl touch-manipulation", !query && "pl-12")}
+          className={cn(
+            'h-12 sm:h-14 pr-12 text-base sm:text-lg bg-background border-2 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow rounded-xl touch-manipulation',
+            !query && 'pl-12'
+          )}
           autoFocus={autoFocus}
         />
         {query && (

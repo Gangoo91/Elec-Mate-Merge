@@ -21,15 +21,21 @@ export const BMSModule5Section2Practical = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                  <span className="text-foreground">Use shielded twisted pair, 120Ω impedance cable</span>
+                  <span className="text-foreground">
+                    Use shielded twisted pair, 120Ω impedance cable
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                  <span className="text-foreground">Follow polarity: RS-485 is polarity-sensitive</span>
+                  <span className="text-foreground">
+                    Follow polarity: RS-485 is polarity-sensitive
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                  <span className="text-foreground">Fit 120Ω termination resistors at both ends</span>
+                  <span className="text-foreground">
+                    Fit 120Ω termination resistors at both ends
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
@@ -70,11 +76,15 @@ export const BMSModule5Section2Practical = () => {
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                  <span className="text-foreground">Keep BMS traffic separate from corporate IT</span>
+                  <span className="text-foreground">
+                    Keep BMS traffic separate from corporate IT
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                  <span className="text-foreground">Coordinate with IT for VLANs and addressing</span>
+                  <span className="text-foreground">
+                    Coordinate with IT for VLANs and addressing
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />

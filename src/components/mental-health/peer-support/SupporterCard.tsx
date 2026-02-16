@@ -26,7 +26,9 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
   // Shorter response time labels for compact display
   const getResponseTime = () => {
     if (!supporter.last_active_at) return null;
-    const diffMins = Math.floor((Date.now() - new Date(supporter.last_active_at).getTime()) / 60000);
+    const diffMins = Math.floor(
+      (Date.now() - new Date(supporter.last_active_at).getTime()) / 60000
+    );
     if (diffMins < 5) return 'Instant';
     if (diffMins < 30) return '~5 min';
     if (diffMins < 60) return '~30 min';
@@ -62,9 +64,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
         <div className="flex-1 min-w-0">
           {/* Name + Online indicator */}
           <div className="flex items-center justify-between gap-2">
-            <h3 className="font-semibold text-white text-sm truncate">
-              {supporter.display_name}
-            </h3>
+            <h3 className="font-semibold text-white text-sm truncate">{supporter.display_name}</h3>
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative rounded-full h-2 w-2 bg-green-500" />
@@ -92,9 +92,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
 
       {/* Bio - 2 lines max */}
       {supporter.bio && (
-        <p className="text-xs text-white/70 mt-2 line-clamp-2 leading-relaxed">
-          "{supporter.bio}"
-        </p>
+        <p className="text-xs text-white/70 mt-2 line-clamp-2 leading-relaxed">"{supporter.bio}"</p>
       )}
 
       {/* Topics - compact with +N overflow indicator */}

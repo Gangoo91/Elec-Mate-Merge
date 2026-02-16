@@ -3,9 +3,9 @@
  * Frontend pre-flight checks before calling AI agent
  */
 
-import { CircuitInput } from "@/types/installation-design";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { CircuitInput } from '@/types/installation-design';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
   CheckCircle2,
   AlertTriangle,
@@ -15,10 +15,14 @@ import {
   Shield,
   PoundSterling,
   Info,
-  Gauge
-} from "lucide-react";
-import { validateCircuit, estimateMaterialCost, MaterialEstimate } from "@/utils/circuit-calculations";
-import { cn } from "@/lib/utils";
+  Gauge,
+} from 'lucide-react';
+import {
+  validateCircuit,
+  estimateMaterialCost,
+  MaterialEstimate,
+} from '@/utils/circuit-calculations';
+import { cn } from '@/lib/utils';
 
 interface PreCalculationStepProps {
   circuits: CircuitInput[];
@@ -26,22 +30,27 @@ interface PreCalculationStepProps {
   earthingSystem: 'TN-S' | 'TN-C-S' | 'TT';
 }
 
-export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCalculationStepProps) => {
-
+export const PreCalculationStep = ({
+  circuits,
+  voltage,
+  earthingSystem,
+}: PreCalculationStepProps) => {
   // Run validations
-  const validations = circuits.map(circuit => ({
+  const validations = circuits.map((circuit) => ({
     circuit,
     validation: validateCircuit(circuit, voltage, earthingSystem),
   }));
 
   // Calculate material estimates
   const materialEstimates: MaterialEstimate[] = circuits
-    .filter(c => c.calculatedIb && c.cableLength)
-    .map(c => estimateMaterialCost(
-      c.calculatedIb!,
-      c.cableLength!,
-      c.protectionType && c.protectionType !== 'auto' ? c.protectionType : undefined
-    ));
+    .filter((c) => c.calculatedIb && c.cableLength)
+    .map((c) =>
+      estimateMaterialCost(
+        c.calculatedIb!,
+        c.cableLength!,
+        c.protectionType && c.protectionType !== 'auto' ? c.protectionType : undefined
+      )
+    );
 
   const totalMaterialCost = materialEstimates.reduce((sum, est) => sum + est.totalEstimate, 0);
 
@@ -59,7 +68,8 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
   }, 0);
 
   const maxPossibleFields = circuits.length * 2;
-  const readinessScore = maxPossibleFields > 0 ? Math.round((fieldsProvided / maxPossibleFields) * 100) : 0;
+  const readinessScore =
+    maxPossibleFields > 0 ? Math.round((fieldsProvided / maxPossibleFields) * 100) : 0;
 
   return (
     <div className="space-y-6">
@@ -76,10 +86,7 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
 
       {/* AI Processing Readiness */}
       <div
-        className={cn(
-          "p-4 rounded-xl",
-          "bg-white/5 backdrop-blur border border-elec-yellow/20"
-        )}
+        className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-elec-yellow/20')}
       >
         <div className="flex items-center gap-3 mb-4">
           <div className="p-2.5 rounded-xl bg-elec-yellow/10">
@@ -98,9 +105,11 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
           </div>
           <Progress value={readinessScore} className="h-2" />
           <p className="text-xs text-white/60">
-            {readinessScore >= 80 && "Excellent! AI will process this very quickly"}
-            {readinessScore >= 50 && readinessScore < 80 && "Good! AI will have most details it needs"}
-            {readinessScore < 50 && "AI will need to infer some details (may take longer)"}
+            {readinessScore >= 80 && 'Excellent! AI will process this very quickly'}
+            {readinessScore >= 50 &&
+              readinessScore < 80 &&
+              'Good! AI will have most details it needs'}
+            {readinessScore < 50 && 'AI will need to infer some details (may take longer)'}
           </p>
         </div>
       </div>
@@ -109,8 +118,8 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
       {totalErrors === 0 && totalWarnings === 0 && (
         <div
           className={cn(
-            "flex items-start gap-3 p-4 rounded-xl border",
-            "bg-green-500/10 border-green-500/30"
+            'flex items-start gap-3 p-4 rounded-xl border',
+            'bg-green-500/10 border-green-500/30'
           )}
         >
           <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
@@ -124,15 +133,13 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
       {totalWarnings > 0 && (
         <div
           className={cn(
-            "flex items-start gap-3 p-4 rounded-xl border",
-            "bg-orange-500/10 border-orange-500/30"
+            'flex items-start gap-3 p-4 rounded-xl border',
+            'bg-orange-500/10 border-orange-500/30'
           )}
         >
           <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
           <div>
-            <h4 className="text-sm font-semibold text-white mb-0.5">
-              Warnings ({totalWarnings})
-            </h4>
+            <h4 className="text-sm font-semibold text-white mb-0.5">Warnings ({totalWarnings})</h4>
             <p className="text-xs text-orange-200">
               Review warnings below - design will proceed with assumptions
             </p>
@@ -143,8 +150,8 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
       {totalErrors > 0 && (
         <div
           className={cn(
-            "flex items-start gap-3 p-4 rounded-xl border",
-            "bg-red-500/10 border-red-500/30"
+            'flex items-start gap-3 p-4 rounded-xl border',
+            'bg-red-500/10 border-red-500/30'
           )}
         >
           <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
@@ -152,9 +159,7 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
             <h4 className="text-sm font-semibold text-white mb-0.5">
               Validation Errors ({totalErrors})
             </h4>
-            <p className="text-xs text-red-200">
-              Please fix errors before generating design
-            </p>
+            <p className="text-xs text-red-200">Please fix errors before generating design</p>
           </div>
         </div>
       )}
@@ -165,10 +170,10 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
           <div
             key={circuit.id}
             className={cn(
-              "p-4 rounded-xl",
-              "bg-white/5 backdrop-blur border",
-              validation.isValid ? "border-white/10" : "border-red-500/30",
-              "transition-all duration-ios-fast"
+              'p-4 rounded-xl',
+              'bg-white/5 backdrop-blur border',
+              validation.isValid ? 'border-white/10' : 'border-red-500/30',
+              'transition-all duration-ios-fast'
             )}
           >
             {/* Circuit Header */}
@@ -221,7 +226,8 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
                 <div className="flex items-center gap-2 text-xs text-white/70">
                   <Cable className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
                   <span className="flex-1 truncate">
-                    Cable: {materialEstimates[index].cableSize}mm² × {materialEstimates[index].cableLength}m
+                    Cable: {materialEstimates[index].cableSize}mm² ×{' '}
+                    {materialEstimates[index].cableLength}m
                   </span>
                   <span className="font-medium text-white shrink-0">
                     £{materialEstimates[index].estimatedCableCost}
@@ -250,10 +256,7 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
       {/* Total Cost Estimate */}
       {totalMaterialCost > 0 && (
         <div
-          className={cn(
-            "p-4 rounded-xl",
-            "bg-white/5 backdrop-blur border border-elec-yellow/20"
-          )}
+          className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-elec-yellow/20')}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -275,14 +278,14 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
       {/* Info Footer */}
       <div
         className={cn(
-          "flex items-start gap-2 p-3 rounded-xl border",
-          "bg-white/5 backdrop-blur border-blue-500/30"
+          'flex items-start gap-2 p-3 rounded-xl border',
+          'bg-white/5 backdrop-blur border-blue-500/30'
         )}
       >
         <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
         <p className="text-xs leading-relaxed text-blue-200">
-          AI will perform full BS 7671 compliance calculations including voltage drop, fault current, and derating factors.
-          These estimates are for pre-flight validation only.
+          AI will perform full BS 7671 compliance calculations including voltage drop, fault
+          current, and derating factors. These estimates are for pre-flight validation only.
         </p>
       </div>
     </div>

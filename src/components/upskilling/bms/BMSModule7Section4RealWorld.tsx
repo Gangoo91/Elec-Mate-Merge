@@ -15,16 +15,20 @@ export const BMSModule7Section4RealWorld = () => {
           <div className="flex items-start gap-3">
             <AlertTriangle className="h-6 w-6 text-red-400 mt-0.5 flex-shrink-0" />
             <div>
-              <h4 className="text-red-300 font-semibold mb-2">Data Centre BMS Project - Upload Failures</h4>
+              <h4 className="text-red-300 font-semibold mb-2">
+                Data Centre BMS Project - Upload Failures
+              </h4>
               <div className="space-y-3 text-sm">
                 <p className="text-foreground">
-                  On a data centre BMS project, engineers repeatedly failed to upload programs to several VAV controllers 
-                  located throughout the facility. The upload process would start normally but then timeout or fail with 
-                  communication errors partway through.
+                  On a data centre BMS project, engineers repeatedly failed to upload programs to
+                  several VAV controllers located throughout the facility. The upload process would
+                  start normally but then timeout or fail with communication errors partway through.
                 </p>
-                
+
                 <div className="bg-gray-700 rounded-lg p-3">
-                  <p className="text-foreground font-semibold mb-2">Initial Troubleshooting Attempts:</p>
+                  <p className="text-foreground font-semibold mb-2">
+                    Initial Troubleshooting Attempts:
+                  </p>
                   <ul className="space-y-1 ml-4 text-xs">
                     <li>• Engineers tried different programming software versions</li>
                     <li>• Multiple laptops were tested with same results</li>
@@ -33,13 +37,14 @@ export const BMSModule7Section4RealWorld = () => {
                     <li>• Upload worked fine on similar controllers in other areas</li>
                   </ul>
                 </div>
-                
+
                 <p className="text-foreground">
-                  After two days of delays, the electrical contractor was asked to verify the physical layer. 
-                  Upon investigation, electricians discovered that RS-485 communication wiring had been installed with 
-                  reversed polarity on multiple controllers during the initial installation phase.
+                  After two days of delays, the electrical contractor was asked to verify the
+                  physical layer. Upon investigation, electricians discovered that RS-485
+                  communication wiring had been installed with reversed polarity on multiple
+                  controllers during the initial installation phase.
                 </p>
-                
+
                 <div className="bg-gray-700 rounded-lg p-3">
                   <p className="text-foreground font-semibold mb-2">Root Cause Analysis:</p>
                   <ul className="space-y-1 ml-4 text-xs">
@@ -50,11 +55,11 @@ export const BMSModule7Section4RealWorld = () => {
                     <li>• Complex uploads failed due to data integrity issues</li>
                   </ul>
                 </div>
-                
+
                 <p className="text-foreground">
-                  Once the polarity was corrected on all affected controllers, uploads completed successfully and all 
-                  controllers came online without further issues. However, the project experienced a two-week delay in 
-                  handover while the rework was completed.
+                  Once the polarity was corrected on all affected controllers, uploads completed
+                  successfully and all controllers came online without further issues. However, the
+                  project experienced a two-week delay in handover while the rework was completed.
                 </p>
               </div>
             </div>
@@ -65,7 +70,9 @@ export const BMSModule7Section4RealWorld = () => {
           <div className="flex items-start gap-3">
             <CheckCircle className="h-6 w-6 text-green-400 mt-0.5 flex-shrink-0" />
             <div>
-              <h4 className="text-green-300 font-semibold mb-2">Lessons Learned & Corrective Actions</h4>
+              <h4 className="text-green-300 font-semibold mb-2">
+                Lessons Learned & Corrective Actions
+              </h4>
               <div className="space-y-3 text-sm">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-gray-700 rounded-lg p-3">
@@ -77,7 +84,7 @@ export const BMSModule7Section4RealWorld = () => {
                       <li>• Test upload procedure developed for sample controllers</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-gray-700 rounded-lg p-3">
                     <p className="text-foreground font-semibold mb-2">Quality Control Measures:</p>
                     <ul className="space-y-1 ml-4 text-xs">
@@ -88,13 +95,14 @@ export const BMSModule7Section4RealWorld = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
                   <p className="text-blue-400 font-semibold mb-1">Key Takeaway:</p>
                   <p className="text-xs text-foreground">
-                    This incident highlighted the critical importance of electricians verifying communication wiring before 
-                    software deployment. Simple connectivity tests aren't always sufficient - full communication integrity 
-                    must be verified under the load conditions that will occur during programming and operation.
+                    This incident highlighted the critical importance of electricians verifying
+                    communication wiring before software deployment. Simple connectivity tests
+                    aren't always sufficient - full communication integrity must be verified under
+                    the load conditions that will occur during programming and operation.
                   </p>
                 </div>
               </div>
@@ -109,24 +117,27 @@ export const BMSModule7Section4RealWorld = () => {
               <div className="bg-gray-700 rounded-lg p-3">
                 <p className="text-foreground font-semibold mb-2 text-xs">Hospital Project:</p>
                 <p className="text-xs text-foreground">
-                  Power fluctuations during peak usage caused controller memory corruption during uploads. 
-                  Solution: Scheduled uploads during low-load periods with UPS backup.
+                  Power fluctuations during peak usage caused controller memory corruption during
+                  uploads. Solution: Scheduled uploads during low-load periods with UPS backup.
                 </p>
               </div>
-              
+
               <div className="bg-gray-700 rounded-lg p-3">
                 <p className="text-foreground font-semibold mb-2 text-xs">Office Building:</p>
                 <p className="text-xs text-foreground">
-                  IP address conflicts between BMS and corporate networks caused upload failures. 
+                  IP address conflicts between BMS and corporate networks caused upload failures.
                   Solution: Dedicated BMS VLAN with IT-coordinated address allocation.
                 </p>
               </div>
-              
+
               <div className="bg-gray-700 rounded-lg p-3">
-                <p className="text-foreground font-semibold mb-2 text-xs">Manufacturing Facility:</p>
+                <p className="text-foreground font-semibold mb-2 text-xs">
+                  Manufacturing Facility:
+                </p>
                 <p className="text-xs text-foreground">
-                  Electromagnetic interference from production equipment corrupted serial communications. 
-                  Solution: Shielded cables and dedicated cable routes away from high-power equipment.
+                  Electromagnetic interference from production equipment corrupted serial
+                  communications. Solution: Shielded cables and dedicated cable routes away from
+                  high-power equipment.
                 </p>
               </div>
             </div>
@@ -137,12 +148,15 @@ export const BMSModule7Section4RealWorld = () => {
           <h4 className="text-yellow-400 font-semibold mb-2">Prevention Strategies</h4>
           <div className="space-y-3 text-sm">
             <p className="text-foreground">
-              Based on multiple project experiences, successful software deployment depends on thorough electrical preparation:
+              Based on multiple project experiences, successful software deployment depends on
+              thorough electrical preparation:
             </p>
-            
+
             <div className="grid md:grid-cols-2 gap-3">
               <div>
-                <p className="text-foreground font-semibold mb-1 text-xs">Before Any Programming:</p>
+                <p className="text-foreground font-semibold mb-1 text-xs">
+                  Before Any Programming:
+                </p>
                 <ul className="ml-4 space-y-1 text-xs">
                   <li>• Complete continuity and polarity testing</li>
                   <li>• Verify stable power under maximum load</li>

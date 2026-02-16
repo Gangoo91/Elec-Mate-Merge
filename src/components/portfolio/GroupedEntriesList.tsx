@@ -21,7 +21,7 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
   getEntriesByGroup,
   onViewEntry,
   onEditEntry,
-  onDeleteEntry
+  onDeleteEntry,
 }) => {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [groupBy, setGroupBy] = useState<'theme' | 'status' | 'competency'>('theme');
@@ -38,10 +38,14 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-600 bg-green-50 border-green-200';
-      case 'in-progress': return 'text-blue-600 bg-blue-50 border-blue-200';
-      case 'reviewed': return 'text-purple-600 bg-purple-50 border-purple-200';
-      default: return 'text-gray-600 bg-gray-50 border-gray-200';
+      case 'completed':
+        return 'text-green-600 bg-green-50 border-green-200';
+      case 'in-progress':
+        return 'text-blue-600 bg-blue-50 border-blue-200';
+      case 'reviewed':
+        return 'text-purple-600 bg-purple-50 border-purple-200';
+      default:
+        return 'text-gray-600 bg-gray-50 border-gray-200';
     }
   };
 
@@ -62,30 +66,39 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
     switch (groupBy) {
       case 'status':
         const statuses = ['completed', 'in-progress', 'reviewed', 'draft'];
-        return statuses.map(status => ({
+        return statuses.map((status) => ({
           id: status,
           name: status.charAt(0).toUpperCase() + status.slice(1).replace('-', ' '),
-          entries: groups.flatMap(group => getEntriesByGroup(group.id)).filter(entry => entry.status === status),
-          color: status === 'completed' ? 'green' : status === 'in-progress' ? 'blue' : status === 'reviewed' ? 'purple' : 'gray'
+          entries: groups
+            .flatMap((group) => getEntriesByGroup(group.id))
+            .filter((entry) => entry.status === status),
+          color:
+            status === 'completed'
+              ? 'green'
+              : status === 'in-progress'
+                ? 'blue'
+                : status === 'reviewed'
+                  ? 'purple'
+                  : 'gray',
         }));
-      
+
       case 'competency':
         const levels = ['foundation', 'intermediate', 'advanced'];
-        return levels.map(level => ({
+        return levels.map((level) => ({
           id: level,
           name: level.charAt(0).toUpperCase() + level.slice(1),
-          entries: groups.flatMap(group => 
-            getEntriesByGroup(group.id).filter(entry => entry.category.competencyLevel === level)
+          entries: groups.flatMap((group) =>
+            getEntriesByGroup(group.id).filter((entry) => entry.category.competencyLevel === level)
           ),
-          color: level === 'foundation' ? 'green' : level === 'intermediate' ? 'blue' : 'purple'
+          color: level === 'foundation' ? 'green' : level === 'intermediate' ? 'blue' : 'purple',
         }));
 
       default:
-        return groups.map(group => ({
+        return groups.map((group) => ({
           id: group.id,
           name: group.name,
           entries: getEntriesByGroup(group.id),
-          color: group.color
+          color: group.color,
         }));
     }
   };
@@ -108,7 +121,7 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
       <div className="space-y-4">
         {groupedData.map((group) => (
           <Card key={group.id}>
-            <Collapsible 
+            <Collapsible
               open={expandedGroups.has(group.id)}
               onOpenChange={() => toggleGroup(group.id)}
             >
@@ -117,9 +130,7 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <CardTitle className="text-lg">{group.name}</CardTitle>
-                      <Badge variant="secondary">
-                        {group.entries.length} entries
-                      </Badge>
+                      <Badge variant="secondary">{group.entries.length} entries</Badge>
                     </div>
                     {expandedGroups.has(group.id) ? (
                       <ChevronDown className="h-5 w-5" />
@@ -141,79 +152,81 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
                       {group.entries.map((entry) => (
                         <Card key={entry.id} className="border-l-4 border-l-primary">
                           <CardContent className="p-4">
-                             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                               <div className="flex-1 space-y-2">
-                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                                   <h4 className="font-semibold text-foreground text-center sm:text-left">{entry.title}</h4>
-                                   <Badge 
-                                     variant="outline" 
-                                     className={`${getStatusColor(entry.status)} self-center sm:self-auto`}
-                                   >
-                                     {entry.status.replace('-', ' ')}
-                                   </Badge>
-                                 </div>
+                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                              <div className="flex-1 space-y-2">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                  <h4 className="font-semibold text-foreground text-center sm:text-left">
+                                    {entry.title}
+                                  </h4>
+                                  <Badge
+                                    variant="outline"
+                                    className={`${getStatusColor(entry.status)} self-center sm:self-auto`}
+                                  >
+                                    {entry.status.replace('-', ' ')}
+                                  </Badge>
+                                </div>
 
-                                 <p className="text-sm text-muted-foreground line-clamp-2 text-center sm:text-left">
-                                   {entry.description}
-                                 </p>
+                                <p className="text-sm text-muted-foreground line-clamp-2 text-center sm:text-left">
+                                  {entry.description}
+                                </p>
 
-                                 <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2 sm:gap-4 text-xs text-muted-foreground">
-                                   <div className="flex items-center gap-1">
-                                     <Calendar className="h-3 w-3" />
-                                     {formatDate(entry.dateCreated)}
-                                   </div>
-                                   <div className="flex items-center gap-1">
-                                     <Clock className="h-3 w-3" />
-                                     {entry.timeSpent} mins
-                                   </div>
-                                   <div className="flex items-center gap-1">
-                                     {renderStars(entry.selfAssessment)}
-                                   </div>
-                                 </div>
+                                <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2 sm:gap-4 text-xs text-muted-foreground">
+                                  <div className="flex items-center gap-1">
+                                    <Calendar className="h-3 w-3" />
+                                    {formatDate(entry.dateCreated)}
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="h-3 w-3" />
+                                    {entry.timeSpent} mins
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    {renderStars(entry.selfAssessment)}
+                                  </div>
+                                </div>
 
-                                 <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2">
-                                   <Badge variant="outline" className="text-xs">
-                                     {entry.category.name}
-                                   </Badge>
-                                   {entry.skills.slice(0, 2).map((skill) => (
-                                     <Badge key={skill} variant="secondary" className="text-xs">
-                                       {skill}
-                                     </Badge>
-                                   ))}
-                                   {entry.skills.length > 2 && (
-                                     <Badge variant="secondary" className="text-xs">
-                                       +{entry.skills.length - 2} more
-                                     </Badge>
-                                   )}
-                                 </div>
+                                <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2">
+                                  <Badge variant="outline" className="text-xs">
+                                    {entry.category.name}
+                                  </Badge>
+                                  {entry.skills.slice(0, 2).map((skill) => (
+                                    <Badge key={skill} variant="secondary" className="text-xs">
+                                      {skill}
+                                    </Badge>
+                                  ))}
+                                  {entry.skills.length > 2 && (
+                                    <Badge variant="secondary" className="text-xs">
+                                      +{entry.skills.length - 2} more
+                                    </Badge>
+                                  )}
+                                </div>
                               </div>
 
-                               <div className="flex flex-wrap justify-center sm:justify-end gap-2 w-full sm:w-auto">
-                                 <Button
-                                   variant="outline"
-                                   size="sm"
-                                   onClick={() => onViewEntry(entry)}
-                                   className="flex-1 sm:flex-none"
-                                 >
-                                   View
-                                 </Button>
-                                 <Button
-                                   variant="outline"
-                                   size="sm"
-                                   onClick={() => onEditEntry(entry)}
-                                   className="flex-1 sm:flex-none"
-                                 >
-                                   Edit
-                                 </Button>
-                                 <Button
-                                   variant="outline"
-                                   size="sm"
-                                   onClick={() => onDeleteEntry(entry.id)}
-                                   className="text-red-600 hover:text-red-700 flex-1 sm:flex-none"
-                                 >
-                                   Delete
-                                 </Button>
-                               </div>
+                              <div className="flex flex-wrap justify-center sm:justify-end gap-2 w-full sm:w-auto">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => onViewEntry(entry)}
+                                  className="flex-1 sm:flex-none"
+                                >
+                                  View
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => onEditEntry(entry)}
+                                  className="flex-1 sm:flex-none"
+                                >
+                                  Edit
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => onDeleteEntry(entry.id)}
+                                  className="text-red-600 hover:text-red-700 flex-1 sm:flex-none"
+                                >
+                                  Delete
+                                </Button>
+                              </div>
                             </div>
                           </CardContent>
                         </Card>
@@ -227,7 +240,7 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
         ))}
       </div>
 
-      {groupedData.every(group => group.entries.length === 0) && (
+      {groupedData.every((group) => group.entries.length === 0) && (
         <Card>
           <CardContent className="p-8 text-center">
             <p className="text-muted-foreground">No portfolio entries found.</p>

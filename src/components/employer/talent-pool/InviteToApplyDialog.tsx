@@ -1,25 +1,18 @@
-import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Briefcase,
-  Send,
-  Loader2,
-  MapPin,
-  Check,
-  AlertCircle,
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { createInvitation } from "@/services/conversationService";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
+import { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Briefcase, Send, Loader2, MapPin, Check, AlertCircle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { createInvitation } from '@/services/conversationService';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
 interface Vacancy {
   id: string;
@@ -46,13 +39,13 @@ export function InviteToApplyDialog({
   open,
   onOpenChange,
   electrician,
-  onSuccess
+  onSuccess,
 }: InviteToApplyDialogProps) {
   const { user } = useAuth();
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVacancy, setSelectedVacancy] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [alreadyInvited, setAlreadyInvited] = useState<Set<string>>(new Set());
 
@@ -80,13 +73,13 @@ export function InviteToApplyDialog({
           .select('vacancy_id')
           .eq('electrician_profile_id', electrician.elecIdProfileId);
 
-        setAlreadyInvited(new Set((invitations || []).map(i => i.vacancy_id)));
+        setAlreadyInvited(new Set((invitations || []).map((i) => i.vacancy_id)));
       } catch (error) {
         console.error('Error fetching data:', error);
         toast({
-          title: "Error",
-          description: "Failed to load vacancies.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to load vacancies.',
+          variant: 'destructive',
         });
       } finally {
         setIsLoading(false);
@@ -109,29 +102,29 @@ export function InviteToApplyDialog({
         message: message.trim() || undefined,
       });
 
-      const vacancy = vacancies.find(v => v.id === selectedVacancy);
+      const vacancy = vacancies.find((v) => v.id === selectedVacancy);
       toast({
-        title: "Invitation Sent",
+        title: 'Invitation Sent',
         description: `${electrician.name} has been invited to apply for "${vacancy?.title}".`,
       });
 
       setSelectedVacancy(null);
-      setMessage("");
+      setMessage('');
       onOpenChange(false);
       onSuccess?.();
     } catch (error: any) {
       console.error('Error sending invitation:', error);
       if (error.code === '23505') {
         toast({
-          title: "Already Invited",
+          title: 'Already Invited',
           description: `${electrician.name} has already been invited to this vacancy.`,
-          variant: "destructive",
+          variant: 'destructive',
         });
       } else {
         toast({
-          title: "Error",
-          description: "Failed to send invitation. Please try again.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to send invitation. Please try again.',
+          variant: 'destructive',
         });
       }
     } finally {
@@ -141,8 +134,11 @@ export function InviteToApplyDialog({
 
   if (!electrician) return null;
 
-  const initials = electrician.name.split(' ').map(n => n[0]).join('');
-  const availableVacancies = vacancies.filter(v => !alreadyInvited.has(v.id));
+  const initials = electrician.name
+    .split(' ')
+    .map((n) => n[0])
+    .join('');
+  const availableVacancies = vacancies.filter((v) => !alreadyInvited.has(v.id));
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -184,8 +180,8 @@ export function InviteToApplyDialog({
                   <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                   <p className="text-sm text-muted-foreground">
                     {vacancies.length === 0
-                      ? "No active vacancies. Create a job posting first."
-                      : "This person has been invited to all your active vacancies."}
+                      ? 'No active vacancies. Create a job posting first.'
+                      : 'This person has been invited to all your active vacancies.'}
                   </p>
                 </CardContent>
               </Card>
@@ -203,11 +199,13 @@ export function InviteToApplyDialog({
                       onClick={() => setSelectedVacancy(vacancy.id)}
                     >
                       <CardContent className="p-3 flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                          selectedVacancy === vacancy.id
-                            ? 'border-elec-yellow bg-elec-yellow'
-                            : 'border-border'
-                        }`}>
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                            selectedVacancy === vacancy.id
+                              ? 'border-elec-yellow bg-elec-yellow'
+                              : 'border-border'
+                          }`}
+                        >
                           {selectedVacancy === vacancy.id && (
                             <Check className="h-3 w-3 text-black" />
                           )}
@@ -248,7 +246,8 @@ export function InviteToApplyDialog({
           {/* Already Invited Info */}
           {alreadyInvited.size > 0 && (
             <p className="text-xs text-muted-foreground">
-              {alreadyInvited.size} vacancy invitation{alreadyInvited.size > 1 ? 's' : ''} already sent to this person.
+              {alreadyInvited.size} vacancy invitation{alreadyInvited.size > 1 ? 's' : ''} already
+              sent to this person.
             </p>
           )}
 

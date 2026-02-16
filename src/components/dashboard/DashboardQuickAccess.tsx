@@ -1,7 +1,6 @@
-
-import QuickAccessCard from "@/components/dashboard/QuickAccessCard";
-import { BookOpen, Calculator, GraduationCap, Wrench, Bot } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import QuickAccessCard from '@/components/dashboard/QuickAccessCard';
+import { BookOpen, Calculator, GraduationCap, Wrench, Bot } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 
 const DashboardQuickAccess = () => {
   return (

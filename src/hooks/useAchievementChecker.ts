@@ -76,10 +76,7 @@ export function useAchievementChecker() {
           .select('current_streak, longest_streak, total_cards_reviewed')
           .eq('user_id', user.id)
           .maybeSingle(),
-        supabase
-          .from('quiz_results')
-          .select('percentage, time_spent')
-          .eq('user_id', user.id),
+        supabase.from('quiz_results').select('percentage, time_spent').eq('user_id', user.id),
         supabase
           .from('user_xp_summary' as any)
           .select('total_xp, level')
@@ -108,15 +105,18 @@ export function useAchievementChecker() {
         .select('duration')
         .eq('user_id', user.id);
 
-      const totalMinutes = (timeData ?? []).reduce((sum: number, t: any) => sum + (t.duration || 0), 0);
+      const totalMinutes = (timeData ?? []).reduce(
+        (sum: number, t: any) => sum + (t.duration || 0),
+        0
+      );
 
       return {
         totalCardsReviewed: streakData?.total_cards_reviewed ?? 0,
         totalQuizzes: quizData.length,
-        bestQuizPercent: quizData.length > 0 ? Math.max(...quizData.map((q: any) => q.percentage)) : 0,
-        fastestQuizMinutes: quizData.length > 0
-          ? Math.min(...quizData.map((q: any) => q.time_spent / 60000))
-          : null,
+        bestQuizPercent:
+          quizData.length > 0 ? Math.max(...quizData.map((q: any) => q.percentage)) : 0,
+        fastestQuizMinutes:
+          quizData.length > 0 ? Math.min(...quizData.map((q: any) => q.time_spent / 60000)) : null,
         currentStreak: streakData?.current_streak ?? 0,
         longestStreak: streakData?.longest_streak ?? 0,
         ojtHoursLogged: Math.floor(totalMinutes / 60),
@@ -145,8 +145,10 @@ export function useAchievementChecker() {
         return Object.values(stats.flashcardSetMastery).some((v) => v >= 100);
 
       case 'all_sets_mastered':
-        return Object.keys(stats.flashcardSetMastery).length >= (p.setCount as number) &&
-          Object.values(stats.flashcardSetMastery).every((v) => v >= 100);
+        return (
+          Object.keys(stats.flashcardSetMastery).length >= (p.setCount as number) &&
+          Object.values(stats.flashcardSetMastery).every((v) => v >= 100)
+        );
 
       case 'total_quizzes':
         return stats.totalQuizzes >= (p.count as number);
@@ -155,14 +157,17 @@ export function useAchievementChecker() {
         return stats.bestQuizPercent >= 100;
 
       case 'fast_quiz':
-        return stats.fastestQuizMinutes !== null &&
-          stats.fastestQuizMinutes <= (p.maxMinutes as number);
+        return (
+          stats.fastestQuizMinutes !== null && stats.fastestQuizMinutes <= (p.maxMinutes as number)
+        );
 
       case 'all_categories_above':
         // Simplified: check if totalQuizzes >= 4 (one per category minimum)
-        return stats.totalQuizzes >= 4 &&
+        return (
+          stats.totalQuizzes >= 4 &&
           Object.values(stats.quizCategoryScores).length >= 4 &&
-          Object.values(stats.quizCategoryScores).every((s) => s >= (p.minScore as number));
+          Object.values(stats.quizCategoryScores).every((s) => s >= (p.minScore as number))
+        );
 
       case 'streak_days':
         return Math.max(stats.currentStreak, stats.longestStreak) >= (p.days as number);
@@ -218,10 +223,12 @@ export function useAchievementChecker() {
       if (checkCondition(def, stats)) {
         // Unlock it
         try {
-          await supabase.from('user_achievements' as any).upsert(
-            { user_id: user.id, achievement_id: def.id } as any,
-            { onConflict: 'user_id,achievement_id', ignoreDuplicates: true }
-          );
+          await supabase
+            .from('user_achievements' as any)
+            .upsert({ user_id: user.id, achievement_id: def.id } as any, {
+              onConflict: 'user_id,achievement_id',
+              ignoreDuplicates: true,
+            });
 
           // Award bonus XP
           if (def.xpBonus > 0) {

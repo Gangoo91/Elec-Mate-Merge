@@ -1,6 +1,5 @@
-
-import PayCalculator from "./PayCalculator";
-import RightsQuiz from "./RightsQuiz";
+import PayCalculator from './PayCalculator';
+import RightsQuiz from './RightsQuiz';
 
 const InteractiveToolsTab = () => {
   return (

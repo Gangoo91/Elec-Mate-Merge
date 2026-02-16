@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m5s2-check1",
-    question: "How long should a functional test last?",
-    options: ["30 seconds", "At least 1 minute", "5 minutes", "15 minutes"],
+    id: 'emergencylighting-m5s2-check1',
+    question: 'How long should a functional test last?',
+    options: ['30 seconds', 'At least 1 minute', '5 minutes', '15 minutes'],
     correctIndex: 1,
-    explanation: "A functional test should last at least 1 minute to verify luminaires illuminate and remain lit briefly. This is typically done monthly and doesn't fully discharge the batteries."
+    explanation:
+      "A functional test should last at least 1 minute to verify luminaires illuminate and remain lit briefly. This is typically done monthly and doesn't fully discharge the batteries.",
   },
   {
-    id: "emergencylighting-m5s2-check2",
-    question: "When is a 3-hour duration test required?",
-    options: ["Monthly", "Every 6 months", "Annually", "At commissioning only"],
+    id: 'emergencylighting-m5s2-check2',
+    question: 'When is a 3-hour duration test required?',
+    options: ['Monthly', 'Every 6 months', 'Annually', 'At commissioning only'],
     correctIndex: 2,
-    explanation: "A full duration test (typically 3 hours) is required annually to verify the system can operate for its rated duration. This fully discharges batteries and verifies capacity."
+    explanation:
+      'A full duration test (typically 3 hours) is required annually to verify the system can operate for its rated duration. This fully discharges batteries and verifies capacity.',
   },
   {
-    id: "emergencylighting-m5s2-check3",
-    question: "What must be checked at the end of a duration test?",
-    options: ["Cable temperature", "All luminaires still lit", "Circuit breaker position", "Mains voltage"],
+    id: 'emergencylighting-m5s2-check3',
+    question: 'What must be checked at the end of a duration test?',
+    options: [
+      'Cable temperature',
+      'All luminaires still lit',
+      'Circuit breaker position',
+      'Mains voltage',
+    ],
     correctIndex: 1,
-    explanation: "At the end of the rated duration, all luminaires must still be illuminated at acceptable levels. Any that have failed indicate battery or lamp problems requiring attention."
-  }
+    explanation:
+      'At the end of the rated duration, all luminaires must still be illuminated at acceptable levels. Any that have failed indicate battery or lamp problems requiring attention.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I perform duration tests during occupied hours?",
-    answer: "Not recommended. Duration tests discharge batteries, leaving the system unable to function if a real emergency occurs. Schedule during low-occupancy periods and ensure normal lighting remains available."
+    question: 'Can I perform duration tests during occupied hours?',
+    answer:
+      'Not recommended. Duration tests discharge batteries, leaving the system unable to function if a real emergency occurs. Schedule during low-occupancy periods and ensure normal lighting remains available.',
   },
   {
-    question: "How do I simulate mains failure for testing?",
-    answer: "Use the circuit breaker protecting the emergency lighting circuit, or test switches if installed. Some systems have dedicated test facilities. Never use main switches that affect other safety systems."
+    question: 'How do I simulate mains failure for testing?',
+    answer:
+      'Use the circuit breaker protecting the emergency lighting circuit, or test switches if installed. Some systems have dedicated test facilities. Never use main switches that affect other safety systems.',
   },
   {
-    question: "What if some luminaires fail before the full duration?",
-    answer: "Record which luminaires failed and when. These require battery replacement or repair. The system cannot be signed off as compliant until all luminaires achieve rated duration."
+    question: 'What if some luminaires fail before the full duration?',
+    answer:
+      'Record which luminaires failed and when. These require battery replacement or repair. The system cannot be signed off as compliant until all luminaires achieve rated duration.',
   },
   {
-    question: "How long after a duration test before the system is ready again?",
-    answer: "Allow 24 hours for full recharge. During this period, the system has reduced capacity. For critical premises, plan duration tests to allow recovery before next occupation."
-  }
+    question: 'How long after a duration test before the system is ready again?',
+    answer:
+      'Allow 24 hours for full recharge. During this period, the system has reduced capacity. For critical premises, plan duration tests to allow recovery before next occupation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An annual duration test is conducted on a 3-hour rated system. After 2.5 hours, 3 luminaires have failed. What action is required?",
-  options: [
-    "Pass the test - most luminaires still working",
-    "Record failures and replace batteries/lamps",
-    "Extend the test to 4 hours",
-    "Reduce system rating to 2 hours"
-  ],
-  correctAnswer: 1,
-  explanation: "All luminaires must achieve the rated duration. The failed luminaires require investigation and repair (typically battery replacement). The system fails the test until repairs are completed and verified."
-  }
+    question:
+      'An annual duration test is conducted on a 3-hour rated system. After 2.5 hours, 3 luminaires have failed. What action is required?',
+    options: [
+      'Pass the test - most luminaires still working',
+      'Record failures and replace batteries/lamps',
+      'Extend the test to 4 hours',
+      'Reduce system rating to 2 hours',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'All luminaires must achieve the rated duration. The failed luminaires require investigation and repair (typically battery replacement). The system fails the test until repairs are completed and verified.',
+  },
 ];
 
 const EmergencyLightingModule5Section2 = () => {
   useSEO({
-    title: "Functional Testing and Duration Tests | Emergency Lighting Module 5.2",
-    description: "Essential testing procedures including functional tests and 3-hour duration tests to verify emergency lighting system operation."
+    title: 'Functional Testing and Duration Tests | Emergency Lighting Module 5.2',
+    description:
+      'Essential testing procedures including functional tests and 3-hour duration tests to verify emergency lighting system operation.',
   });
 
   return (
@@ -98,9 +113,7 @@ const EmergencyLightingModule5Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Functional Testing and Duration Tests
           </h1>
-          <p className="text-white/80">
-            Verifying emergency lighting operates correctly
-          </p>
+          <p className="text-white/80">Verifying emergency lighting operates correctly</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +121,29 @@ const EmergencyLightingModule5Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Functional:</strong> 1 minute minimum</li>
-              <li><strong>Duration:</strong> Full rated time</li>
-              <li><strong>Frequency:</strong> Monthly/Annual</li>
+              <li>
+                <strong>Functional:</strong> 1 minute minimum
+              </li>
+              <li>
+                <strong>Duration:</strong> Full rated time
+              </li>
+              <li>
+                <strong>Frequency:</strong> Monthly/Annual
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Test Purpose</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Functional:</strong> Basic operation</li>
-              <li><strong>Duration:</strong> Battery capacity</li>
-              <li><strong>Record:</strong> All results</li>
+              <li>
+                <strong>Functional:</strong> Basic operation
+              </li>
+              <li>
+                <strong>Duration:</strong> Battery capacity
+              </li>
+              <li>
+                <strong>Record:</strong> All results
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +153,12 @@ const EmergencyLightingModule5Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Conduct functional tests",
-              "Perform duration tests",
-              "Record test results",
-              "Identify test failures",
-              "Schedule testing appropriately",
-              "Manage post-test recovery"
+              'Conduct functional tests',
+              'Perform duration tests',
+              'Record test results',
+              'Identify test failures',
+              'Schedule testing appropriately',
+              'Manage post-test recovery',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,9 +178,8 @@ const EmergencyLightingModule5Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Functional tests verify that luminaires illuminate when mains power
-              fails. These brief tests are performed regularly without significantly
-              discharging batteries.
+              Functional tests verify that luminaires illuminate when mains power fails. These brief
+              tests are performed regularly without significantly discharging batteries.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -206,26 +230,34 @@ const EmergencyLightingModule5Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Duration tests verify batteries can power luminaires for the full
-              rated period (typically 3 hours). This confirms battery capacity
-              has not degraded.
+              Duration tests verify batteries can power luminaires for the full rated period
+              (typically 3 hours). This confirms battery capacity has not degraded.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Duration Test Requirements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Frequency:</strong> Annually (or as specified)</li>
-                <li><strong>Duration:</strong> Full rated time (1 or 3 hours)</li>
-                <li><strong>Timing:</strong> During low occupancy</li>
-                <li><strong>Recovery:</strong> 24 hours for recharge</li>
-                <li><strong>Outcome:</strong> All luminaires must pass</li>
+                <li>
+                  <strong>Frequency:</strong> Annually (or as specified)
+                </li>
+                <li>
+                  <strong>Duration:</strong> Full rated time (1 or 3 hours)
+                </li>
+                <li>
+                  <strong>Timing:</strong> During low occupancy
+                </li>
+                <li>
+                  <strong>Recovery:</strong> 24 hours for recharge
+                </li>
+                <li>
+                  <strong>Outcome:</strong> All luminaires must pass
+                </li>
               </ul>
             </div>
 
             <p>
-              Schedule duration tests when the building can remain unoccupied for
-              24+ hours, as the system cannot provide full protection during
-              battery recovery.
+              Schedule duration tests when the building can remain unoccupied for 24+ hours, as the
+              system cannot provide full protection during battery recovery.
             </p>
           </div>
         </section>
@@ -240,8 +272,8 @@ const EmergencyLightingModule5Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              All test results must be recorded in the log book. This provides
-              compliance evidence and helps identify deteriorating luminaires.
+              All test results must be recorded in the log book. This provides compliance evidence
+              and helps identify deteriorating luminaires.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -274,7 +306,9 @@ const EmergencyLightingModule5Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Duration Test Planning</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Duration Test Planning
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Schedule during building shutdown</li>
                 <li>Inform building management</li>
@@ -287,10 +321,18 @@ const EmergencyLightingModule5Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Testing Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Short tests:</strong> — Not achieving full duration</li>
-                <li><strong>No recording:</strong> — Missing log book entries</li>
-                <li><strong>Wrong timing:</strong> — Testing during occupation</li>
-                <li><strong>Missed luminaires:</strong> — Not checking all units</li>
+                <li>
+                  <strong>Short tests:</strong> — Not achieving full duration
+                </li>
+                <li>
+                  <strong>No recording:</strong> — Missing log book entries
+                </li>
+                <li>
+                  <strong>Wrong timing:</strong> — Testing during occupation
+                </li>
+                <li>
+                  <strong>Missed luminaires:</strong> — Not checking all units
+                </li>
               </ul>
             </div>
           </div>
@@ -336,10 +378,7 @@ const EmergencyLightingModule5Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

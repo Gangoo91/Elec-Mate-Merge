@@ -16,42 +16,54 @@ export const SmartHomeModule5Section3Content = () => {
           <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
             <h4 className="text-foreground font-semibold mb-3">How Contact Sensors Work</h4>
             <p className="text-sm mb-3">
-              Door and window contact sensors consist of two components: a magnetic switch (sensor) 
-              mounted on the frame and a magnet mounted on the moving door or window. When the door 
-              or window opens, the magnet moves away from the sensor, breaking the magnetic field 
+              Door and window contact sensors consist of two components: a magnetic switch (sensor)
+              mounted on the frame and a magnet mounted on the moving door or window. When the door
+              or window opens, the magnet moves away from the sensor, breaking the magnetic field
               and triggering an alert.
             </p>
             <p className="text-sm">
-              These sensors provide immediate detection of unauthorised entry attempts at perimeter 
+              These sensors provide immediate detection of unauthorised entry attempts at perimeter
               access points, forming the first line of defence in a layered security system.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Optimal Placement Locations</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Optimal Placement Locations
+              </h4>
               <div className="space-y-3">
                 <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                   <p className="text-green-400 font-semibold text-sm mb-1">Primary Entry Points</p>
-                  <p className="text-xs text-foreground">Front door, back door, patio doors, main access routes</p>
+                  <p className="text-xs text-foreground">
+                    Front door, back door, patio doors, main access routes
+                  </p>
                 </div>
                 <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                   <p className="text-blue-400 font-semibold text-sm mb-1">Ground Floor Windows</p>
-                  <p className="text-xs text-foreground">Accessible windows, bay windows, French windows</p>
+                  <p className="text-xs text-foreground">
+                    Accessible windows, bay windows, French windows
+                  </p>
                 </div>
                 <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
                   <p className="text-purple-400 font-semibold text-sm mb-1">Secondary Access</p>
-                  <p className="text-xs text-foreground">Garage doors, side gates, basement access</p>
+                  <p className="text-xs text-foreground">
+                    Garage doors, side gates, basement access
+                  </p>
                 </div>
                 <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
                   <p className="text-orange-400 font-semibold text-sm mb-1">Vulnerable Areas</p>
-                  <p className="text-xs text-foreground">Basement windows, roof access, conservatory doors</p>
+                  <p className="text-xs text-foreground">
+                    Basement windows, roof access, conservatory doors
+                  </p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Key Advantages & Limitations</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Key Advantages & Limitations
+              </h4>
               <div className="space-y-3">
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <p className="text-green-400 font-semibold text-sm mb-1">✓ Advantages</p>
@@ -124,35 +136,49 @@ export const SmartHomeModule5Section3Content = () => {
           <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
             <h4 className="text-foreground font-semibold mb-3">PIR Technology & Operation</h4>
             <p className="text-sm mb-3">
-              Passive Infrared (PIR) sensors detect changes in infrared radiation caused by moving 
-              warm objects, such as people or animals. They use fresnel lenses to focus infrared 
-              energy onto pyroelectric sensors that generate electrical signals when heat patterns change.
+              Passive Infrared (PIR) sensors detect changes in infrared radiation caused by moving
+              warm objects, such as people or animals. They use fresnel lenses to focus infrared
+              energy onto pyroelectric sensors that generate electrical signals when heat patterns
+              change.
             </p>
             <p className="text-sm">
-              PIR sensors provide interior motion detection, creating a secondary layer of security 
-              that activates when intruders move through protected spaces after bypassing perimeter defences.
+              PIR sensors provide interior motion detection, creating a secondary layer of security
+              that activates when intruders move through protected spaces after bypassing perimeter
+              defences.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Strategic Placement Principles</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Strategic Placement Principles
+              </h4>
               <div className="space-y-3">
                 <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                   <p className="text-blue-400 font-semibold text-sm mb-1">High-Traffic Areas</p>
-                  <p className="text-xs text-foreground">Hallways, staircases, main corridors, living rooms</p>
+                  <p className="text-xs text-foreground">
+                    Hallways, staircases, main corridors, living rooms
+                  </p>
                 </div>
                 <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
                   <p className="text-purple-400 font-semibold text-sm mb-1">Corner Mounting</p>
-                  <p className="text-xs text-foreground">Room corners for maximum coverage and discrete positioning</p>
+                  <p className="text-xs text-foreground">
+                    Room corners for maximum coverage and discrete positioning
+                  </p>
                 </div>
                 <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                   <p className="text-green-400 font-semibold text-sm mb-1">Entry Monitoring</p>
-                  <p className="text-xs text-foreground">Monitor movement from doorways and access points</p>
+                  <p className="text-xs text-foreground">
+                    Monitor movement from doorways and access points
+                  </p>
                 </div>
                 <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                  <p className="text-orange-400 font-semibold text-sm mb-1">Height Considerations</p>
-                  <p className="text-xs text-foreground">2.4-3m mounting height for optimal detection coverage</p>
+                  <p className="text-orange-400 font-semibold text-sm mb-1">
+                    Height Considerations
+                  </p>
+                  <p className="text-xs text-foreground">
+                    2.4-3m mounting height for optimal detection coverage
+                  </p>
                 </div>
               </div>
             </div>
@@ -229,15 +255,17 @@ export const SmartHomeModule5Section3Content = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <div className="bg-purple-600/10 p-4 rounded-lg border border-purple-600/30">
-            <h4 className="text-foreground font-semibold mb-3">Perimeter + Interior Detection Strategy</h4>
+            <h4 className="text-foreground font-semibold mb-3">
+              Perimeter + Interior Detection Strategy
+            </h4>
             <p className="text-sm mb-3">
-              Combining contact sensors at entry points with PIR sensors for interior detection 
-              creates multiple detection layers that significantly improve security effectiveness. 
+              Combining contact sensors at entry points with PIR sensors for interior detection
+              creates multiple detection layers that significantly improve security effectiveness.
               This approach provides redundancy and catches different types of intrusion attempts.
             </p>
             <p className="text-sm">
-              Contact sensors detect the initial breach at doors and windows, while PIR sensors 
-              catch movement inside the property, ensuring comprehensive coverage even if perimeter 
+              Contact sensors detect the initial breach at doors and windows, while PIR sensors
+              catch movement inside the property, ensuring comprehensive coverage even if perimeter
               sensors are bypassed or disabled.
             </p>
           </div>
@@ -248,15 +276,23 @@ export const SmartHomeModule5Section3Content = () => {
               <div className="space-y-3">
                 <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                   <p className="text-blue-400 font-semibold text-sm mb-1">Redundant Detection</p>
-                  <p className="text-xs text-foreground">Multiple sensors reduce risk of undetected intrusion</p>
+                  <p className="text-xs text-foreground">
+                    Multiple sensors reduce risk of undetected intrusion
+                  </p>
                 </div>
                 <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
-                  <p className="text-green-400 font-semibold text-sm mb-1">Different Detection Methods</p>
-                  <p className="text-xs text-foreground">Physical contact and thermal movement detection</p>
+                  <p className="text-green-400 font-semibold text-sm mb-1">
+                    Different Detection Methods
+                  </p>
+                  <p className="text-xs text-foreground">
+                    Physical contact and thermal movement detection
+                  </p>
                 </div>
                 <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
                   <p className="text-purple-400 font-semibold text-sm mb-1">Bypass Protection</p>
-                  <p className="text-xs text-foreground">Interior sensors catch intruders who avoid entry points</p>
+                  <p className="text-xs text-foreground">
+                    Interior sensors catch intruders who avoid entry points
+                  </p>
                 </div>
               </div>
             </div>
@@ -266,15 +302,21 @@ export const SmartHomeModule5Section3Content = () => {
               <div className="space-y-3">
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <p className="text-yellow-400 font-semibold text-sm mb-1">Lighting Automation</p>
-                  <p className="text-xs text-foreground">Automatic lights deter intruders and assist response</p>
+                  <p className="text-xs text-foreground">
+                    Automatic lights deter intruders and assist response
+                  </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <p className="text-blue-400 font-semibold text-sm mb-1">CCTV Activation</p>
-                  <p className="text-xs text-foreground">Triggered recording provides evidence and monitoring</p>
+                  <p className="text-xs text-foreground">
+                    Triggered recording provides evidence and monitoring
+                  </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <p className="text-green-400 font-semibold text-sm mb-1">Alert Systems</p>
-                  <p className="text-xs text-foreground">Immediate notifications enable rapid response</p>
+                  <p className="text-xs text-foreground">
+                    Immediate notifications enable rapid response
+                  </p>
                 </div>
               </div>
             </div>
@@ -293,10 +335,14 @@ export const SmartHomeModule5Section3Content = () => {
         <CardContent className="text-foreground space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Installation Best Practices</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Installation Best Practices
+              </h4>
               <div className="space-y-3">
                 <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
-                  <p className="text-green-400 font-semibold text-sm mb-1">Contact Sensor Alignment</p>
+                  <p className="text-green-400 font-semibold text-sm mb-1">
+                    Contact Sensor Alignment
+                  </p>
                   <ul className="text-xs text-foreground space-y-1">
                     <li>• Maximum 15mm gap when closed</li>
                     <li>• Secure mounting prevents tampering</li>
@@ -314,7 +360,9 @@ export const SmartHomeModule5Section3Content = () => {
                   </ul>
                 </div>
                 <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
-                  <p className="text-purple-400 font-semibold text-sm mb-1">Network Considerations</p>
+                  <p className="text-purple-400 font-semibold text-sm mb-1">
+                    Network Considerations
+                  </p>
                   <ul className="text-xs text-foreground space-y-1">
                     <li>• Signal strength testing</li>
                     <li>• Battery monitoring setup</li>
@@ -326,7 +374,9 @@ export const SmartHomeModule5Section3Content = () => {
             </div>
 
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Limitations & Challenges</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Limitations & Challenges
+              </h4>
               <div className="space-y-3">
                 <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
                   <p className="text-red-400 font-semibold text-sm mb-1">Battery Dependencies</p>
@@ -338,7 +388,9 @@ export const SmartHomeModule5Section3Content = () => {
                   </ul>
                 </div>
                 <div className="bg-yellow-600/20 p-3 rounded border border-yellow-600/40">
-                  <p className="text-yellow-400 font-semibold text-sm mb-1">Environmental Factors</p>
+                  <p className="text-yellow-400 font-semibold text-sm mb-1">
+                    Environmental Factors
+                  </p>
                   <ul className="text-xs text-foreground space-y-1">
                     <li>• Temperature extremes affect operation</li>
                     <li>• Humidity can cause issues</li>
@@ -347,7 +399,9 @@ export const SmartHomeModule5Section3Content = () => {
                   </ul>
                 </div>
                 <div className="bg-gray-600/20 p-3 rounded border border-gray-600/40">
-                  <p className="text-foreground font-semibold text-sm mb-1">Technical Limitations</p>
+                  <p className="text-foreground font-semibold text-sm mb-1">
+                    Technical Limitations
+                  </p>
                   <ul className="text-xs text-foreground space-y-1">
                     <li>• Range limitations with wireless</li>
                     <li>• Interference from other devices</li>
@@ -360,7 +414,9 @@ export const SmartHomeModule5Section3Content = () => {
           </div>
 
           <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-            <h4 className="text-orange-400 font-semibold mb-3">Professional Installation Considerations</h4>
+            <h4 className="text-orange-400 font-semibold mb-3">
+              Professional Installation Considerations
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-foreground font-semibold text-sm mb-2">System Integration:</p>

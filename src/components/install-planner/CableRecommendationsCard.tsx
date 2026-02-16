@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, XCircle, Cable, ChevronDown, ChevronUp } from "lucide-react";
-import { CableRecommendation } from "./types";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, AlertTriangle, XCircle, Cable, ChevronDown, ChevronUp } from 'lucide-react';
+import { CableRecommendation } from './types';
+import { useState } from 'react';
 
 interface CableRecommendationsCardProps {
   recommendations: CableRecommendation[];
@@ -10,15 +10,19 @@ interface CableRecommendationsCardProps {
   showNonCompliant?: boolean;
 }
 
-const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompliant = false }: CableRecommendationsCardProps) => {
+const CableRecommendationsCard = ({
+  recommendations,
+  onSelectCable,
+  showNonCompliant = false,
+}: CableRecommendationsCardProps) => {
   const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
   const getSuitabilityIcon = (suitability: string) => {
     switch (suitability) {
-      case "suitable":
+      case 'suitable':
         return <CheckCircle className="h-5 w-5 text-green-400" />;
-      case "marginal":
+      case 'marginal':
         return <AlertTriangle className="h-5 w-5 text-amber-400" />;
-      case "unsuitable":
+      case 'unsuitable':
         return <XCircle className="h-5 w-5 text-red-400" />;
       default:
         return null;
@@ -27,34 +31,34 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
 
   const getSuitabilityColor = (suitability: string) => {
     switch (suitability) {
-      case "suitable":
-        return "bg-green-500/20 border-green-500/30 text-green-300";
-      case "marginal":
-        return "bg-amber-500/20 border-amber-500/30 text-amber-300";
-      case "unsuitable":
-        return "bg-red-500/20 border-red-500/30 text-red-300";
+      case 'suitable':
+        return 'bg-green-500/20 border-green-500/30 text-green-300';
+      case 'marginal':
+        return 'bg-amber-500/20 border-amber-500/30 text-amber-300';
+      case 'unsuitable':
+        return 'bg-red-500/20 border-red-500/30 text-red-300';
       default:
-        return "";
+        return '';
     }
   };
 
   const getCostColor = (cost: string) => {
     switch (cost) {
-      case "low":
-        return "text-green-400";
-      case "medium":
-        return "text-foreground";
-      case "high":
-        return "text-red-400";
+      case 'low':
+        return 'text-green-400';
+      case 'medium':
+        return 'text-foreground';
+      case 'high':
+        return 'text-red-400';
       default:
-        return "text-foreground";
+        return 'text-foreground';
     }
   };
 
   const toggleExpanded = (index: number) => {
-    setExpandedCards(prev => ({
+    setExpandedCards((prev) => ({
       ...prev,
-      [index]: !prev[index]
+      [index]: !prev[index],
     }));
   };
 
@@ -71,8 +75,10 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
           <div
             key={`${cable.size}-${index}`}
             className={`p-3 rounded-lg border transition-all cursor-pointer hover:border-elec-yellow/50 ${
-              index === 0 ? getSuitabilityColor(cable.suitability) : "border-gray-600 hover:border-gray-500"
-            } ${index === 0 ? "ring-1 ring-elec-yellow/20" : ""}`}
+              index === 0
+                ? getSuitabilityColor(cable.suitability)
+                : 'border-gray-600 hover:border-gray-500'
+            } ${index === 0 ? 'ring-1 ring-elec-yellow/20' : ''}`}
             onClick={() => onSelectCable?.(cable)}
           >
             {/* Streamlined Header */}
@@ -81,12 +87,16 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
                 <span className="text-lg font-bold text-foreground">{cable.size}</span>
                 {getSuitabilityIcon(cable.suitability)}
                 {index === 0 && (
-                  <Badge className={`text-xs px-2 py-0.5 flex-shrink-0 ${
-                    showNonCompliant || cable.suitability !== "suitable" 
-                      ? "bg-red-500/20 text-red-300 border-red-500/30" 
-                      : "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
-                  }`}>
-                    {showNonCompliant || cable.suitability !== "suitable" ? "NON-COMPLIANT" : "RECOMMENDED"}
+                  <Badge
+                    className={`text-xs px-2 py-0.5 flex-shrink-0 ${
+                      showNonCompliant || cable.suitability !== 'suitable'
+                        ? 'bg-red-500/20 text-red-300 border-red-500/30'
+                        : 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'
+                    }`}
+                  >
+                    {showNonCompliant || cable.suitability !== 'suitable'
+                      ? 'NON-COMPLIANT'
+                      : 'RECOMMENDED'}
                   </Badge>
                 )}
               </div>
@@ -96,30 +106,42 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-foreground/80">Capacity:</span>
-                <span className="font-medium text-foreground tabular-nums">{cable.currentCarryingCapacity}A</span>
+                <span className="font-medium text-foreground tabular-nums">
+                  {cable.currentCarryingCapacity}A
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-foreground/80">V.Drop:</span>
-                <span className={`font-medium tabular-nums ${
-                  cable.voltageDropPercentage > 5 ? 'text-red-400' : 
-                  cable.voltageDropPercentage > 3 ? 'text-amber-400' : 'text-green-400'
-                }`}>
+                <span
+                  className={`font-medium tabular-nums ${
+                    cable.voltageDropPercentage > 5
+                      ? 'text-red-400'
+                      : cable.voltageDropPercentage > 3
+                        ? 'text-amber-400'
+                        : 'text-green-400'
+                  }`}
+                >
                   {cable.voltageDropPercentage.toFixed(2)}%
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-foreground/80">Cost:</span>
-                <span className={`font-medium ${getCostColor(cable.cost || "medium")}`}>
-                  {cable.cost?.toUpperCase() || "MEDIUM"}
+                <span className={`font-medium ${getCostColor(cable.cost || 'medium')}`}>
+                  {cable.cost?.toUpperCase() || 'MEDIUM'}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-foreground/80">Install:</span>
-                <span className={`font-medium ${
-                  cable.installationComplexity === "simple" ? "text-green-400" :
-                  cable.installationComplexity === "moderate" ? "text-foreground" : "text-red-400"
-                }`}>
-                  {cable.installationComplexity?.toUpperCase() || "MODERATE"}
+                <span
+                  className={`font-medium ${
+                    cable.installationComplexity === 'simple'
+                      ? 'text-green-400'
+                      : cable.installationComplexity === 'moderate'
+                        ? 'text-foreground'
+                        : 'text-red-400'
+                  }`}
+                >
+                  {cable.installationComplexity?.toUpperCase() || 'MODERATE'}
                 </span>
               </div>
             </div>
@@ -130,20 +152,27 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable, showNonCompl
                 <div className="space-y-1">
                   {/* Always show first note */}
                   {cable.notes.slice(0, 1).map((note, noteIndex) => (
-                    <div key={noteIndex} className="text-xs text-foreground/80 flex items-start gap-1">
+                    <div
+                      key={noteIndex}
+                      className="text-xs text-foreground/80 flex items-start gap-1"
+                    >
                       <span className="text-elec-yellow mt-0.5 text-xs flex-shrink-0">•</span>
                       <span className="flex-1 leading-relaxed">{note}</span>
                     </div>
                   ))}
-                  
+
                   {/* Show additional notes if expanded or if only 2 total */}
-                  {expandedCards[index] && cable.notes.slice(1).map((note, noteIndex) => (
-                    <div key={noteIndex + 1} className="text-xs text-foreground/80 flex items-start gap-1">
-                      <span className="text-elec-yellow mt-0.5 text-xs flex-shrink-0">•</span>
-                      <span className="flex-1 leading-relaxed">{note}</span>
-                    </div>
-                  ))}
-                  
+                  {expandedCards[index] &&
+                    cable.notes.slice(1).map((note, noteIndex) => (
+                      <div
+                        key={noteIndex + 1}
+                        className="text-xs text-foreground/80 flex items-start gap-1"
+                      >
+                        <span className="text-elec-yellow mt-0.5 text-xs flex-shrink-0">•</span>
+                        <span className="flex-1 leading-relaxed">{note}</span>
+                      </div>
+                    ))}
+
                   {/* Toggle button for notes > 1 */}
                   {cable.notes.length > 1 && (
                     <button

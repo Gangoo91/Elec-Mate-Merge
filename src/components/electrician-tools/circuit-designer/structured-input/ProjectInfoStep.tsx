@@ -1,6 +1,6 @@
-import { IOSInput } from "@/components/ui/ios-input";
-import { Building, Building2, Factory, FolderOpen } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { IOSInput } from '@/components/ui/ios-input';
+import { Building, Building2, Factory, FolderOpen } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ProjectInfoStepProps {
   projectName: string;
@@ -16,9 +16,19 @@ interface ProjectInfoStepProps {
 }
 
 const INSTALLATION_TYPES = [
-  { value: 'domestic', label: 'Domestic', icon: Building, description: 'Houses, flats, residential' },
-  { value: 'commercial', label: 'Commercial', icon: Building2, description: 'Offices, shops, restaurants' },
-  { value: 'industrial', label: 'Industrial', icon: Factory, description: 'Factories, warehouses' }
+  {
+    value: 'domestic',
+    label: 'Domestic',
+    icon: Building,
+    description: 'Houses, flats, residential',
+  },
+  {
+    value: 'commercial',
+    label: 'Commercial',
+    icon: Building2,
+    description: 'Offices, shops, restaurants',
+  },
+  { value: 'industrial', label: 'Industrial', icon: Factory, description: 'Factories, warehouses' },
 ] as const;
 
 export const ProjectInfoStep = ({
@@ -31,7 +41,7 @@ export const ProjectInfoStep = ({
   electricianName,
   setElectricianName,
   installationType,
-  setInstallationType
+  setInstallationType,
 }: ProjectInfoStepProps) => {
   return (
     <div className="space-y-6">
@@ -59,23 +69,21 @@ export const ProjectInfoStep = ({
               <div
                 key={type.value}
                 className={cn(
-                  "relative p-4 rounded-xl cursor-pointer",
-                  "bg-white/[0.03] border-2",
-                  "transition-all duration-ios-normal ease-ios-ease",
-                  "touch-manipulation active:scale-[0.98]",
+                  'relative p-4 rounded-xl cursor-pointer',
+                  'bg-white/[0.03] border-2',
+                  'transition-all duration-ios-normal ease-ios-ease',
+                  'touch-manipulation active:scale-[0.98]',
                   isSelected
-                    ? "border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]"
-                    : "border-white/[0.08] hover:border-white/15 hover:bg-white/5"
+                    ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]'
+                    : 'border-white/[0.08] hover:border-white/15 hover:bg-white/5'
                 )}
                 onClick={() => setInstallationType(type.value as any)}
               >
                 <div className="flex items-start gap-3">
                   <div
                     className={cn(
-                      "p-2 rounded-lg transition-colors duration-ios-fast",
-                      isSelected
-                        ? "bg-elec-yellow text-black"
-                        : "bg-white/10 text-white/60"
+                      'p-2 rounded-lg transition-colors duration-ios-fast',
+                      isSelected ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white/60'
                     )}
                   >
                     <Icon className="h-5 w-5" />
@@ -83,15 +91,13 @@ export const ProjectInfoStep = ({
                   <div className="flex-1 min-w-0">
                     <div
                       className={cn(
-                        "font-semibold transition-colors duration-ios-fast",
-                        isSelected ? "text-elec-yellow" : "text-white"
+                        'font-semibold transition-colors duration-ios-fast',
+                        isSelected ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
                       {type.label}
                     </div>
-                    <div className="text-xs text-white/50 mt-0.5">
-                      {type.description}
-                    </div>
+                    <div className="text-xs text-white/50 mt-0.5">{type.description}</div>
                   </div>
                 </div>
                 {/* Selection indicator */}

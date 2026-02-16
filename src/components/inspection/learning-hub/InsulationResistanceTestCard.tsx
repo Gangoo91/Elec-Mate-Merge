@@ -1,4 +1,3 @@
-
 import React from 'react';
 import SimpleInsulationTestCard from './insulation-testing/SimpleInsulationTestCard';
 

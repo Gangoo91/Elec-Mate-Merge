@@ -13,7 +13,9 @@ export function SetupIncompleteBanner() {
   const { data: setupStatus } = useQuery({
     queryKey: ['setup-status'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return null;
 
       // Check profile
@@ -24,8 +26,7 @@ export function SetupIncompleteBanner() {
         .single();
 
       // Check company profile - use RPC to bypass 406 error
-      const { data: companyProfiles } = await supabase
-        .rpc('get_my_company_profile');
+      const { data: companyProfiles } = await supabase.rpc('get_my_company_profile');
       const companyProfile = Array.isArray(companyProfiles) ? companyProfiles[0] : companyProfiles;
 
       return {
@@ -40,7 +41,9 @@ export function SetupIncompleteBanner() {
 
   const dismissBanner = useMutation({
     mutationFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase

@@ -14,8 +14,9 @@ export const BMSModule5Section2RealWorld = () => {
         <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">The University BACnet Project</h4>
           <p className="text-foreground text-sm">
-            On a large university campus project, electricians installed BACnet MSTP controllers for all HVAC plant 
-            across multiple buildings. The initial installation covered 15 buildings with over 200 controllers.
+            On a large university campus project, electricians installed BACnet MSTP controllers for
+            all HVAC plant across multiple buildings. The initial installation covered 15 buildings
+            with over 200 controllers.
           </p>
         </div>
 
@@ -26,7 +27,8 @@ export const BMSModule5Section2RealWorld = () => {
               The Problem
             </h4>
             <p className="text-foreground text-sm mb-2">
-              Several MSTP controllers were experiencing intermittent communication failures, causing:
+              Several MSTP controllers were experiencing intermittent communication failures,
+              causing:
             </p>
             <div className="space-y-1 text-sm">
               <p className="text-foreground">• Loss of temperature control in lecture halls</p>
@@ -39,12 +41,16 @@ export const BMSModule5Section2RealWorld = () => {
           <div className="bg-gradient-to-r from-yellow-500/10 to-red-500/10 border border-yellow-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold mb-2">Root Cause Analysis</h4>
             <p className="text-foreground text-sm mb-2">
-              Investigation revealed that several controllers were wired in a star formation rather than a proper 
-              daisy chain. Additionally:
+              Investigation revealed that several controllers were wired in a star formation rather
+              than a proper daisy chain. Additionally:
             </p>
             <div className="space-y-1 text-sm">
-              <p className="text-foreground">• Termination resistors were missing on some segments</p>
-              <p className="text-foreground">• Cable shields were connected at both ends causing ground loops</p>
+              <p className="text-foreground">
+                • Termination resistors were missing on some segments
+              </p>
+              <p className="text-foreground">
+                • Cable shields were connected at both ends causing ground loops
+              </p>
               <p className="text-foreground">• Some segments exceeded the 127 device limit</p>
             </div>
           </div>
@@ -58,9 +64,15 @@ export const BMSModule5Section2RealWorld = () => {
               The network was rewired according to proper RS-485 standards:
             </p>
             <div className="space-y-1 text-sm">
-              <p className="text-foreground">• All star connections converted to daisy-chain topology</p>
-              <p className="text-foreground">• 120Ω termination resistors installed at segment ends</p>
-              <p className="text-foreground">• Shield connections corrected (earth at one end only)</p>
+              <p className="text-foreground">
+                • All star connections converted to daisy-chain topology
+              </p>
+              <p className="text-foreground">
+                • 120Ω termination resistors installed at segment ends
+              </p>
+              <p className="text-foreground">
+                • Shield connections corrected (earth at one end only)
+              </p>
               <p className="text-foreground">• Large segments split to stay under device limits</p>
             </div>
           </div>
@@ -71,9 +83,10 @@ export const BMSModule5Section2RealWorld = () => {
               Lesson Learned
             </h4>
             <p className="text-foreground text-sm">
-              Physical wiring discipline is just as important as the protocol itself. Even sophisticated BACnet 
-              systems will fail if basic electrical installation practices aren't followed. The project was 
-              delayed by 3 weeks and cost an additional £15,000 to rectify.
+              Physical wiring discipline is just as important as the protocol itself. Even
+              sophisticated BACnet systems will fail if basic electrical installation practices
+              aren't followed. The project was delayed by 3 weeks and cost an additional £15,000 to
+              rectify.
             </p>
           </div>
         </div>
@@ -81,8 +94,9 @@ export const BMSModule5Section2RealWorld = () => {
         <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Key Takeaway</h4>
           <p className="text-foreground text-sm">
-            This experience highlights why electricians must understand BACnet network requirements. 
-            Proper training and adherence to installation standards would have prevented the entire issue.
+            This experience highlights why electricians must understand BACnet network requirements.
+            Proper training and adherence to installation standards would have prevented the entire
+            issue.
           </p>
         </div>
       </CardContent>

@@ -1,11 +1,19 @@
-import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ChevronDown, Wrench, Clock, AlertTriangle, Lightbulb, BookOpen, DollarSign } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
-import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
-import type { CorrectiveAction } from "@/types/commissioning-response";
+import { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  ChevronDown,
+  Wrench,
+  Clock,
+  AlertTriangle,
+  Lightbulb,
+  BookOpen,
+  DollarSign,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import type { CorrectiveAction } from '@/types/commissioning-response';
 
 interface CorrectiveActionStepCardProps {
   action: CorrectiveAction;
@@ -15,13 +23,10 @@ interface CorrectiveActionStepCardProps {
 const skillLevelColors = {
   apprentice: 'bg-green-500/20 text-green-300 border-green-500/50',
   qualified: 'bg-amber-500/20 text-amber-300 border-amber-500/50',
-  specialist: 'bg-red-500/20 text-red-300 border-red-500/50'
+  specialist: 'bg-red-500/20 text-red-300 border-red-500/50',
 };
 
-export const CorrectiveActionStepCard = ({
-  action,
-  stepNumber
-}: CorrectiveActionStepCardProps) => {
+export const CorrectiveActionStepCard = ({ action, stepNumber }: CorrectiveActionStepCardProps) => {
   const { isMobile } = useMobileEnhanced();
   const [sectionsExpanded, setSectionsExpanded] = useState({
     procedure: true,
@@ -29,23 +34,25 @@ export const CorrectiveActionStepCard = ({
     tools: !isMobile,
     whyThisWorks: false,
     alternativeMethods: false,
-    safetyNotes: true
+    safetyNotes: true,
   });
 
   const toggleSection = (section: keyof typeof sectionsExpanded) => {
-    setSectionsExpanded(prev => ({ ...prev, [section]: !prev[section] }));
+    setSectionsExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   return (
     <Card className="relative overflow-hidden transition-all duration-300 border-2 border-border/40 hover:border-green-400/40 animate-fade-in hover:shadow-lg">
-      <div className={cn("p-6", isMobile && "p-4")}>
+      <div className={cn('p-6', isMobile && 'p-4')}>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 text-center sm:text-left">
           {/* Step number - Touch optimized */}
           <div className="relative flex-shrink-0">
-            <div className={cn(
-              "rounded-full flex items-center justify-center font-black bg-green-500 text-foreground shadow-lg",
-              isMobile ? "w-[72px] h-[72px] text-2xl" : "w-16 h-16 text-2xl"
-            )}>
+            <div
+              className={cn(
+                'rounded-full flex items-center justify-center font-black bg-green-500 text-foreground shadow-lg',
+                isMobile ? 'w-[72px] h-[72px] text-2xl' : 'w-16 h-16 text-2xl'
+              )}
+            >
               {stepNumber}
             </div>
           </div>
@@ -92,24 +99,26 @@ export const CorrectiveActionStepCard = ({
                     <button
                       onClick={() => toggleSection('procedure')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-blue-500/10 transition-colors",
-                        isMobile && "min-h-[56px]"
+                        'w-full flex items-center justify-between p-4 bg-blue-500/10 transition-colors',
+                        isMobile && 'min-h-[56px]'
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <BookOpen className="h-5 w-5 text-blue-400" />
                         <h4 className="font-bold text-base text-foreground">Detailed Procedure</h4>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-5 w-5 transition-transform",
-                        sectionsExpanded.procedure && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-5 w-5 transition-transform',
+                          sectionsExpanded.procedure && 'rotate-180'
+                        )}
+                      />
                     </button>
                     <AnimatePresence>
                       {sectionsExpanded.procedure && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
+                          animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
@@ -134,31 +143,38 @@ export const CorrectiveActionStepCard = ({
                     <button
                       onClick={() => toggleSection('stepByStepFix')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-green-500/10 transition-colors",
-                        isMobile && "min-h-[56px]"
+                        'w-full flex items-center justify-between p-4 bg-green-500/10 transition-colors',
+                        isMobile && 'min-h-[56px]'
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <Wrench className="h-5 w-5 text-green-400" />
-                        <h4 className="font-bold text-base text-foreground">Step-by-Step Instructions</h4>
+                        <h4 className="font-bold text-base text-foreground">
+                          Step-by-Step Instructions
+                        </h4>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-5 w-5 transition-transform",
-                        sectionsExpanded.stepByStepFix && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-5 w-5 transition-transform',
+                          sectionsExpanded.stepByStepFix && 'rotate-180'
+                        )}
+                      />
                     </button>
                     <AnimatePresence>
                       {sectionsExpanded.stepByStepFix && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
+                          animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
                           <div className="p-4 bg-green-500/5">
                             <ol className="space-y-3 text-left">
                               {action.stepByStepFix.map((step, idx) => (
-                                <li key={idx} className="flex items-start gap-3 text-base text-foreground leading-relaxed">
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-3 text-base text-foreground leading-relaxed"
+                                >
                                   <span className="flex-shrink-0 w-7 h-7 rounded-full bg-green-500/20 border-2 border-green-500/50 flex items-center justify-center text-sm font-bold text-green-300">
                                     {idx + 1}
                                   </span>
@@ -179,31 +195,38 @@ export const CorrectiveActionStepCard = ({
                     <button
                       onClick={() => toggleSection('tools')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-purple-500/10 transition-colors",
-                        isMobile && "min-h-[56px]"
+                        'w-full flex items-center justify-between p-4 bg-purple-500/10 transition-colors',
+                        isMobile && 'min-h-[56px]'
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <Wrench className="h-5 w-5 text-purple-400" />
-                        <h4 className="font-bold text-base text-foreground">Tools & Materials Required</h4>
+                        <h4 className="font-bold text-base text-foreground">
+                          Tools & Materials Required
+                        </h4>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-5 w-5 transition-transform",
-                        sectionsExpanded.tools && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-5 w-5 transition-transform',
+                          sectionsExpanded.tools && 'rotate-180'
+                        )}
+                      />
                     </button>
                     <AnimatePresence>
                       {sectionsExpanded.tools && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
+                          animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
                           <div className="p-4 bg-purple-500/5">
                             <ul className="space-y-2 text-left">
                               {action.tools.map((tool, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-2 text-base text-foreground leading-relaxed"
+                                >
                                   <span className="text-purple-400 mt-1">•</span>
                                   <span>{tool}</span>
                                 </li>
@@ -211,7 +234,9 @@ export const CorrectiveActionStepCard = ({
                             </ul>
                             {action.partNumbers && action.partNumbers.length > 0 && (
                               <div className="mt-3 pt-3 border-t border-purple-500/20">
-                                <p className="text-sm font-semibold text-foreground mb-1">Part Numbers:</p>
+                                <p className="text-sm font-semibold text-foreground mb-1">
+                                  Part Numbers:
+                                </p>
                                 <ul className="space-y-1">
                                   {action.partNumbers.map((part, idx) => (
                                     <li key={idx} className="text-sm text-foreground/80 font-mono">
@@ -234,24 +259,28 @@ export const CorrectiveActionStepCard = ({
                     <button
                       onClick={() => toggleSection('whyThisWorks')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-cyan-500/10 transition-colors",
-                        isMobile && "min-h-[56px]"
+                        'w-full flex items-center justify-between p-4 bg-cyan-500/10 transition-colors',
+                        isMobile && 'min-h-[56px]'
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <Lightbulb className="h-5 w-5 text-cyan-400" />
-                        <h4 className="font-bold text-base text-foreground">Technical Explanation</h4>
+                        <h4 className="font-bold text-base text-foreground">
+                          Technical Explanation
+                        </h4>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-5 w-5 transition-transform",
-                        sectionsExpanded.whyThisWorks && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-5 w-5 transition-transform',
+                          sectionsExpanded.whyThisWorks && 'rotate-180'
+                        )}
+                      />
                     </button>
                     <AnimatePresence>
                       {sectionsExpanded.whyThisWorks && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
+                          animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
@@ -270,31 +299,38 @@ export const CorrectiveActionStepCard = ({
                     <button
                       onClick={() => toggleSection('alternativeMethods')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-indigo-500/10 transition-colors",
-                        isMobile && "min-h-[56px]"
+                        'w-full flex items-center justify-between p-4 bg-indigo-500/10 transition-colors',
+                        isMobile && 'min-h-[56px]'
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <Lightbulb className="h-5 w-5 text-indigo-400" />
-                        <h4 className="font-bold text-base text-foreground">Alternative Approaches</h4>
+                        <h4 className="font-bold text-base text-foreground">
+                          Alternative Approaches
+                        </h4>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-5 w-5 transition-transform",
-                        sectionsExpanded.alternativeMethods && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-5 w-5 transition-transform',
+                          sectionsExpanded.alternativeMethods && 'rotate-180'
+                        )}
+                      />
                     </button>
                     <AnimatePresence>
                       {sectionsExpanded.alternativeMethods && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
+                          animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
                           <div className="p-4 bg-indigo-500/5">
                             <ul className="space-y-2 text-left">
                               {action.alternativeMethods.map((method, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-2 text-base text-foreground leading-relaxed"
+                                >
                                   <Lightbulb className="h-4 w-4 text-indigo-400 mt-1 flex-shrink-0" />
                                   <span>{method}</span>
                                 </li>
@@ -313,31 +349,36 @@ export const CorrectiveActionStepCard = ({
                     <button
                       onClick={() => toggleSection('safetyNotes')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-red-500/20 transition-colors",
-                        isMobile && "min-h-[56px]"
+                        'w-full flex items-center justify-between p-4 bg-red-500/20 transition-colors',
+                        isMobile && 'min-h-[56px]'
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 text-red-400" />
                         <h4 className="font-bold text-base text-foreground">⚠️ Safety Notes</h4>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-5 w-5 transition-transform",
-                        sectionsExpanded.safetyNotes && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-5 w-5 transition-transform',
+                          sectionsExpanded.safetyNotes && 'rotate-180'
+                        )}
+                      />
                     </button>
                     <AnimatePresence>
                       {sectionsExpanded.safetyNotes && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
+                          animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
                           <div className="p-4 bg-red-500/10">
                             <ul className="space-y-2 text-left">
                               {action.safetyNotes.map((note, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-2 text-base text-foreground leading-relaxed"
+                                >
                                   <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                                   <span>{note}</span>
                                 </li>

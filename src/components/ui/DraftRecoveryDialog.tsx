@@ -28,8 +28,8 @@ interface DraftRecoveryDialogProps {
 }
 
 const REPORT_TYPE_LABELS: Record<string, string> = {
-  'eicr': 'EICR',
-  'eic': 'EIC',
+  eicr: 'EICR',
+  eic: 'EIC',
   'minor-works': 'Minor Works',
 };
 
@@ -82,10 +82,7 @@ export const DraftRecoveryDialog: React.FC<DraftRecoveryDialogProps> = ({
         </AlertDialogHeader>
 
         <AlertDialogFooter className="flex-col sm:flex-row gap-2">
-          <AlertDialogCancel
-            onClick={onDiscard}
-            className="flex items-center gap-2"
-          >
+          <AlertDialogCancel onClick={onDiscard} className="flex items-center gap-2">
             <Trash2 className="h-4 w-4" />
             Discard
           </AlertDialogCancel>

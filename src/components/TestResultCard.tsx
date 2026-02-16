@@ -1,10 +1,15 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Trash2 } from 'lucide-react';
 
@@ -44,9 +49,7 @@ const TestResultCard = ({ result, onUpdate, onRemove, circuitTypes }: TestResult
               <CardTitle className="text-base">
                 {result.circuitDesignation || 'New Circuit'}
               </CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                {result.type || 'Circuit Type'}
-              </p>
+              <p className="text-sm text-muted-foreground mt-1">{result.type || 'Circuit Type'}</p>
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -59,7 +62,9 @@ const TestResultCard = ({ result, onUpdate, onRemove, circuitTypes }: TestResult
               </Button>
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                  />
                 </Button>
               </CollapsibleTrigger>
             </div>

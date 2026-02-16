@@ -1,11 +1,11 @@
-import React, { useState, useRef, useCallback } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { 
-  Camera, 
-  CheckCircle, 
+import React, { useState, useRef, useCallback } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import {
+  Camera,
+  CheckCircle,
   AlertTriangle,
   Target,
   Zap,
@@ -13,10 +13,10 @@ import {
   Shield,
   FileText,
   ArrowRight,
-  RotateCcw
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { checkImageQuality, type ImageQualityResult } from "@/utils/imageQuality";
+  RotateCcw,
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { checkImageQuality, type ImageQualityResult } from '@/utils/imageQuality';
 
 interface CapturePreset {
   id: string;
@@ -45,15 +45,15 @@ const CAPTURE_PRESETS: CapturePreset[] = [
       'MCB/RCBO labelling and condition',
       'Cable entries and glands',
       'Earth and neutral connections',
-      'Any signs of overheating or damage'
+      'Any signs of overheating or damage',
     ],
     examples: [
       'Wide shot of entire consumer unit',
       'Close-up of RCD test button',
       'MCB labels and ratings',
-      'Cable connections at top/bottom'
+      'Cable connections at top/bottom',
     ],
-    estimatedPhotos: 4
+    estimatedPhotos: 4,
   },
   {
     id: 'socket-accessories',
@@ -66,15 +66,15 @@ const CAPTURE_PRESETS: CapturePreset[] = [
       'Cable condition and routing',
       'Earth bonding connections',
       'Accessory labelling',
-      'Signs of overheating or arcing'
+      'Signs of overheating or arcing',
     ],
     examples: [
       'Socket face and condition',
       'Switch plate alignment',
       'Cable entry points',
-      'Any visible damage or discolouration'
+      'Any visible damage or discolouration',
     ],
-    estimatedPhotos: 3
+    estimatedPhotos: 3,
   },
   {
     id: 'safety-survey',
@@ -87,50 +87,50 @@ const CAPTURE_PRESETS: CapturePreset[] = [
       'Earthing and bonding',
       'Environmental hazards',
       'Access and maintenance issues',
-      'Compliance with current standards'
+      'Compliance with current standards',
     ],
     examples: [
       'Installation overview',
       'Problem areas or defects',
       'Earthing arrangements',
-      'Environmental conditions'
+      'Environmental conditions',
     ],
-    estimatedPhotos: 5
-  }
+    estimatedPhotos: 5,
+  },
 ];
 
-const CaptureWizard: React.FC<CaptureWizardProps> = ({
-  onImagesCapture,
-  onPresetSelect
-}) => {
+const CaptureWizard: React.FC<CaptureWizardProps> = ({ onImagesCapture, onPresetSelect }) => {
   const [selectedPreset, setSelectedPreset] = useState<CapturePreset | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [capturedImages, setCapturedImages] = useState<File[]>([]);
   const [qualityResults, setQualityResults] = useState<ImageQualityResult[]>([]);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [completedChecklist, setCompletedChecklist] = useState<number[]>([]);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const startCapture = useCallback((preset: CapturePreset) => {
-    setSelectedPreset(preset);
-    setCurrentStep(0);
-    setCapturedImages([]);
-    setQualityResults([]);
-    setCompletedChecklist([]);
-    onPresetSelect(preset);
-    startCamera();
-  }, [onPresetSelect]);
+  const startCapture = useCallback(
+    (preset: CapturePreset) => {
+      setSelectedPreset(preset);
+      setCurrentStep(0);
+      setCapturedImages([]);
+      setQualityResults([]);
+      setCompletedChecklist([]);
+      onPresetSelect(preset);
+      startCamera();
+    },
+    [onPresetSelect]
+  );
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { 
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
           facingMode: 'environment',
           width: { ideal: 1920 },
-          height: { ideal: 1080 }
-        } 
+          height: { ideal: 1080 },
+        },
       });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -138,9 +138,9 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
       }
     } catch (error) {
       toast({
-        title: "Camera access denied",
-        description: "Please allow camera access to capture images.",
-        variant: "destructive",
+        title: 'Camera access denied',
+        description: 'Please allow camera access to capture images.',
+        variant: 'destructive',
       });
     }
   };
@@ -148,7 +148,7 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
   const stopCamera = () => {
     if (videoRef.current?.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
+      tracks.forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
     setIsCameraActive(false);
@@ -156,58 +156,66 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
 
   const captureImage = async () => {
     if (!videoRef.current || !canvasRef.current || !selectedPreset) return;
-    
+
     const canvas = canvasRef.current;
     const video = videoRef.current;
     const context = canvas.getContext('2d');
-    
+
     if (!context) return;
-    
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0);
-    
-    canvas.toBlob(async (blob) => {
-      if (blob) {
-        const file = new File([blob], `${selectedPreset.id}-${currentStep + 1}-${Date.now()}.jpg`, { 
-          type: 'image/jpeg' 
-        });
-        
-        // Check image quality
-        const quality = await checkImageQuality(file);
-        
-        setCapturedImages(prev => [...prev, file]);
-        setQualityResults(prev => [...prev, quality]);
-        
-        // Mark current checklist item as completed
-        setCompletedChecklist(prev => [...prev, currentStep]);
-        
-        if (quality.overall < 0.7) {
-          toast({
-            title: "Image quality warning",
-            description: `${quality.issues.join(', ')}. Consider retaking this photo.`,
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Image captured",
-            description: `Step ${currentStep + 1}/${selectedPreset.checklist.length} completed.`,
-          });
+
+    canvas.toBlob(
+      async (blob) => {
+        if (blob) {
+          const file = new File(
+            [blob],
+            `${selectedPreset.id}-${currentStep + 1}-${Date.now()}.jpg`,
+            {
+              type: 'image/jpeg',
+            }
+          );
+
+          // Check image quality
+          const quality = await checkImageQuality(file);
+
+          setCapturedImages((prev) => [...prev, file]);
+          setQualityResults((prev) => [...prev, quality]);
+
+          // Mark current checklist item as completed
+          setCompletedChecklist((prev) => [...prev, currentStep]);
+
+          if (quality.overall < 0.7) {
+            toast({
+              title: 'Image quality warning',
+              description: `${quality.issues.join(', ')}. Consider retaking this photo.`,
+              variant: 'destructive',
+            });
+          } else {
+            toast({
+              title: 'Image captured',
+              description: `Step ${currentStep + 1}/${selectedPreset.checklist.length} completed.`,
+            });
+          }
+
+          // Auto-advance to next step
+          if (currentStep < selectedPreset.checklist.length - 1) {
+            setCurrentStep((prev) => prev + 1);
+          }
         }
-        
-        // Auto-advance to next step
-        if (currentStep < selectedPreset.checklist.length - 1) {
-          setCurrentStep(prev => prev + 1);
-        }
-      }
-    }, 'image/jpeg', 0.85);
+      },
+      'image/jpeg',
+      0.85
+    );
   };
 
   const retakeImage = () => {
     if (capturedImages.length > 0) {
-      setCapturedImages(prev => prev.slice(0, -1));
-      setQualityResults(prev => prev.slice(0, -1));
-      setCompletedChecklist(prev => prev.slice(0, -1));
+      setCapturedImages((prev) => prev.slice(0, -1));
+      setQualityResults((prev) => prev.slice(0, -1));
+      setCompletedChecklist((prev) => prev.slice(0, -1));
     }
   };
 
@@ -216,12 +224,12 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
     stopCamera();
     setSelectedPreset(null);
     toast({
-      title: "Capture complete",
+      title: 'Capture complete',
       description: `${capturedImages.length} images ready for analysis.`,
     });
   };
 
-  const coveragePercentage = selectedPreset 
+  const coveragePercentage = selectedPreset
     ? Math.round((capturedImages.length / selectedPreset.estimatedPhotos) * 100)
     : 0;
 
@@ -234,13 +242,13 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
             Select an inspection type for guided photo capture with quality checks
           </p>
         </div>
-        
+
         <div className="grid gap-4 md:grid-cols-3">
           {CAPTURE_PRESETS.map((preset) => {
             const IconComponent = preset.icon;
             return (
-              <Card 
-                key={preset.id} 
+              <Card
+                key={preset.id}
                 className="cursor-pointer transition-all hover:shadow-lg hover:border-primary/50"
                 onClick={() => startCapture(preset)}
               >
@@ -258,9 +266,7 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {preset.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground mb-3">{preset.description}</p>
                   <Button className="w-full" size="sm">
                     <Camera className="h-4 w-4 mr-2" />
                     Start Capture
@@ -298,7 +304,9 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
           </div>
           <Progress value={coveragePercentage} className="mb-2" />
           <p className="text-xs text-muted-foreground">
-            {coveragePercentage >= 100 ? 'Minimum coverage achieved' : 'Capture more photos for better analysis'}
+            {coveragePercentage >= 100
+              ? 'Minimum coverage achieved'
+              : 'Capture more photos for better analysis'}
           </p>
         </CardContent>
       </Card>
@@ -317,23 +325,25 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
             {isCameraActive ? (
               <div className="space-y-4">
                 <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
-                  <video 
+                  <video
                     ref={videoRef}
-                    autoPlay 
-                    playsInline 
+                    autoPlay
+                    playsInline
                     muted
                     className="w-full h-full object-cover"
                   />
                   <canvas ref={canvasRef} className="hidden" />
-                  
+
                   {/* Capture overlay */}
                   <div className="absolute inset-0 border-2 border-primary/30 rounded-lg pointer-events-none">
                     <div className="absolute top-2 left-2 bg-background/80 backdrop-blur-sm rounded px-2 py-1">
-                      <span className="text-xs font-medium">Focus on: {selectedPreset.checklist[currentStep]}</span>
+                      <span className="text-xs font-medium">
+                        Focus on: {selectedPreset.checklist[currentStep]}
+                      </span>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex gap-2">
                   <Button onClick={captureImage} className="flex-1">
                     <Camera className="h-4 w-4 mr-2" />
@@ -369,14 +379,14 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
           <CardContent className="space-y-4">
             <div className="space-y-2">
               {selectedPreset.checklist.map((item, index) => (
-                <div 
+                <div
                   key={index}
                   className={`flex items-start gap-3 p-2 rounded-lg transition-colors ${
-                    index === currentStep 
-                      ? 'bg-primary/10 border border-primary/20' 
+                    index === currentStep
+                      ? 'bg-primary/10 border border-primary/20'
                       : completedChecklist.includes(index)
-                      ? 'bg-green-500/10'
-                      : 'bg-muted/30'
+                        ? 'bg-green-500/10'
+                        : 'bg-muted/30'
                   }`}
                 >
                   <div className="mt-0.5">
@@ -388,9 +398,13 @@ const CaptureWizard: React.FC<CaptureWizardProps> = ({
                       <div className="h-4 w-4 rounded-full border-2 border-muted-foreground/50" />
                     )}
                   </div>
-                  <span className={`text-sm ${
-                    index === currentStep ? 'font-medium text-foreground' : 'text-muted-foreground'
-                  }`}>
+                  <span
+                    className={`text-sm ${
+                      index === currentStep
+                        ? 'font-medium text-foreground'
+                        : 'text-muted-foreground'
+                    }`}
+                  >
                     {item}
                   </span>
                 </div>

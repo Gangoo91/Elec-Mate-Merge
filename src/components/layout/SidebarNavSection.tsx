@@ -1,7 +1,6 @@
-
-import { cn } from "@/lib/utils";
-import SidebarNavLink from "./SidebarNavLink";
-import { NavItem } from "./SidebarNavItems";
+import { cn } from '@/lib/utils';
+import SidebarNavLink from './SidebarNavLink';
+import { NavItem } from './SidebarNavItems';
 
 interface SidebarNavSectionProps {
   title?: string;
@@ -20,7 +19,7 @@ const SidebarNavSection = ({
   userEmail,
   adminRole,
   className,
-  onItemClick
+  onItemClick,
 }: SidebarNavSectionProps) => {
   // Filter items based on user role, admin status, and allowed emails
   const filteredItems = items.filter((item) => {
@@ -36,10 +35,10 @@ const SidebarNavSection = ({
     }
     return item.roles.includes(userRole);
   });
-  
+
   // If there are no items to display, don't render the section
   if (filteredItems.length === 0) return null;
-  
+
   return (
     <div className={className}>
       {title && (
@@ -49,7 +48,7 @@ const SidebarNavSection = ({
           </h3>
         </div>
       )}
-      <div className={cn("space-y-1", title ? "" : "mt-6")}>
+      <div className={cn('space-y-1', title ? '' : 'mt-6')}>
         {filteredItems.map((item) => (
           <SidebarNavLink key={item.path} item={item} onItemClick={onItemClick} />
         ))}

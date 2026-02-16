@@ -70,7 +70,14 @@ export function OJTDashboard({
   const yearlyPercent = Math.round((yearlyProgress.current / yearlyProgress.target) * 100);
 
   // Determine status
-  const weeklyStatus = weeklyPercent >= 100 ? 'complete' : weeklyPercent >= 75 ? 'good' : weeklyPercent >= 50 ? 'warning' : 'behind';
+  const weeklyStatus =
+    weeklyPercent >= 100
+      ? 'complete'
+      : weeklyPercent >= 75
+        ? 'good'
+        : weeklyPercent >= 50
+          ? 'warning'
+          : 'behind';
   const yearlyStatus = yearlyPercent >= getExpectedYearlyPercent() ? 'on-track' : 'behind';
 
   const totalPending = pendingTasks.evidence + pendingTasks.assessments + pendingTasks.goals;
@@ -90,34 +97,32 @@ export function OJTDashboard({
       {/* Progress Cards */}
       <div className="grid grid-cols-2 gap-3 sm:gap-4">
         {/* Weekly Progress */}
-        <Card className={cn(
-          "border-2 transition-colors",
-          weeklyStatus === 'complete' ? "border-green-500/30 bg-green-500/5" :
-          weeklyStatus === 'good' ? "border-elec-yellow/30 bg-elec-yellow/5" :
-          weeklyStatus === 'warning' ? "border-amber-500/30 bg-amber-500/5" :
-          "border-red-500/30 bg-red-500/5"
-        )}>
+        <Card
+          className={cn(
+            'border-2 transition-colors',
+            weeklyStatus === 'complete'
+              ? 'border-green-500/30 bg-green-500/5'
+              : weeklyStatus === 'good'
+                ? 'border-elec-yellow/30 bg-elec-yellow/5'
+                : weeklyStatus === 'warning'
+                  ? 'border-amber-500/30 bg-amber-500/5'
+                  : 'border-red-500/30 bg-red-500/5'
+          )}
+        >
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 This Week
               </span>
-              {weeklyStatus === 'complete' && (
-                <CheckCircle2 className="h-4 w-4 text-green-500" />
-              )}
+              {weeklyStatus === 'complete' && <CheckCircle2 className="h-4 w-4 text-green-500" />}
             </div>
             <div className="flex items-end gap-1 mb-2">
               <span className="text-2xl sm:text-3xl font-bold text-foreground">
                 {weeklyProgress.current.toFixed(1)}
               </span>
-              <span className="text-sm text-muted-foreground mb-1">
-                / {weeklyProgress.target}h
-              </span>
+              <span className="text-sm text-muted-foreground mb-1">/ {weeklyProgress.target}h</span>
             </div>
-            <Progress
-              value={Math.min(weeklyPercent, 100)}
-              className="h-2"
-            />
+            <Progress value={Math.min(weeklyPercent, 100)} className="h-2" />
             <p className="text-xs text-muted-foreground mt-2">
               {weeklyPercent >= 100
                 ? 'Target achieved!'
@@ -127,10 +132,14 @@ export function OJTDashboard({
         </Card>
 
         {/* Yearly Progress */}
-        <Card className={cn(
-          "border-2 transition-colors",
-          yearlyStatus === 'on-track' ? "border-green-500/30 bg-green-500/5" : "border-amber-500/30 bg-amber-500/5"
-        )}>
+        <Card
+          className={cn(
+            'border-2 transition-colors',
+            yearlyStatus === 'on-track'
+              ? 'border-green-500/30 bg-green-500/5'
+              : 'border-amber-500/30 bg-amber-500/5'
+          )}
+        >
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
@@ -146,14 +155,9 @@ export function OJTDashboard({
               <span className="text-2xl sm:text-3xl font-bold text-foreground">
                 {yearlyProgress.current}
               </span>
-              <span className="text-sm text-muted-foreground mb-1">
-                / {yearlyProgress.target}h
-              </span>
+              <span className="text-sm text-muted-foreground mb-1">/ {yearlyProgress.target}h</span>
             </div>
-            <Progress
-              value={yearlyPercent}
-              className="h-2"
-            />
+            <Progress value={yearlyPercent} className="h-2" />
             <p className="text-xs text-muted-foreground mt-2">
               {yearlyPercent}% complete • {yearlyProgress.target - yearlyProgress.current}h to go
             </p>
@@ -187,7 +191,10 @@ export function OJTDashboard({
             <CardTitle className="text-base flex items-center gap-2">
               <AlertCircle className="h-4 w-4 text-amber-500" />
               Needs Attention
-              <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-xs">
+              <Badge
+                variant="outline"
+                className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-xs"
+              >
                 {totalPending}
               </Badge>
             </CardTitle>
@@ -251,11 +258,7 @@ export function OJTDashboard({
             <div className="text-center py-8">
               <Clock className="h-10 w-10 text-muted-foreground/30 mx-auto mb-2" />
               <p className="text-sm text-muted-foreground">No recent sessions</p>
-              <Button
-                variant="link"
-                onClick={onQuickLog}
-                className="text-elec-yellow mt-2"
-              >
+              <Button variant="link" onClick={onQuickLog} className="text-elec-yellow mt-2">
                 Log your first session
               </Button>
             </div>

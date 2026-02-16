@@ -1,72 +1,88 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m2s4-check1",
-    question: "What is the maximum mounting height typically recommended for escape route luminaires?",
-    options: ["2 metres", "2.5 metres", "3 metres", "4 metres"],
+    id: 'emergencylighting-m2s4-check1',
+    question:
+      'What is the maximum mounting height typically recommended for escape route luminaires?',
+    options: ['2 metres', '2.5 metres', '3 metres', '4 metres'],
     correctIndex: 1,
-    explanation: "2.5 metres is the typical maximum mounting height for escape route luminaires to ensure effective illumination at floor level. Higher mounting reduces illumination levels at the walking surface."
+    explanation:
+      '2.5 metres is the typical maximum mounting height for escape route luminaires to ensure effective illumination at floor level. Higher mounting reduces illumination levels at the walking surface.',
   },
   {
-    id: "emergencylighting-m2s4-check2",
-    question: "What width escape route can be served by a single row of luminaires?",
-    options: ["Up to 1m", "Up to 2m", "Up to 3m", "Up to 4m"],
+    id: 'emergencylighting-m2s4-check2',
+    question: 'What width escape route can be served by a single row of luminaires?',
+    options: ['Up to 1m', 'Up to 2m', 'Up to 3m', 'Up to 4m'],
     correctIndex: 1,
-    explanation: "A single row of centrally mounted luminaires can serve escape routes up to 2m wide. Wider routes require additional rows of luminaires or luminaires on both sides."
+    explanation:
+      'A single row of centrally mounted luminaires can serve escape routes up to 2m wide. Wider routes require additional rows of luminaires or luminaires on both sides.',
   },
   {
-    id: "emergencylighting-m2s4-check3",
-    question: "At what point must a luminaire always be positioned?",
-    options: ["Every 5 metres", "At each fire extinguisher", "Within 2m of each exit", "At each room entrance"],
+    id: 'emergencylighting-m2s4-check3',
+    question: 'At what point must a luminaire always be positioned?',
+    options: [
+      'Every 5 metres',
+      'At each fire extinguisher',
+      'Within 2m of each exit',
+      'At each room entrance',
+    ],
     correctIndex: 2,
-    explanation: "BS 5266-1 requires a luminaire within 2m of each exit and exit sign. This ensures the exit is clearly illuminated and visible during evacuation."
-  }
+    explanation:
+      'BS 5266-1 requires a luminaire within 2m of each exit and exit sign. This ensures the exit is clearly illuminated and visible during evacuation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I determine luminaire spacing for a specific route?",
-    answer: "Use manufacturer photometric data specific to the luminaire model. Spacing depends on mounting height, light output, and the need to maintain 1 lux minimum with 40:1 uniformity. Typically 4× mounting height for ceiling mounted luminaires."
+    question: 'How do I determine luminaire spacing for a specific route?',
+    answer:
+      'Use manufacturer photometric data specific to the luminaire model. Spacing depends on mounting height, light output, and the need to maintain 1 lux minimum with 40:1 uniformity. Typically 4× mounting height for ceiling mounted luminaires.',
   },
   {
-    question: "Should escape route lighting be maintained or non-maintained?",
-    answer: "BS 5266-1 allows either. Maintained is required if normal lighting could be confused with emergency lighting, or in entertainment venues. Non-maintained is acceptable for most commercial premises."
+    question: 'Should escape route lighting be maintained or non-maintained?',
+    answer:
+      'BS 5266-1 allows either. Maintained is required if normal lighting could be confused with emergency lighting, or in entertainment venues. Non-maintained is acceptable for most commercial premises.',
   },
   {
-    question: "How do I handle escape routes with low ceilings?",
-    answer: "Wall-mounted luminaires may be more effective with low ceilings. Mount at 2-2.5m height. Lower mounting improves floor illumination but may affect uniformity - verify with photometric calculations."
+    question: 'How do I handle escape routes with low ceilings?',
+    answer:
+      'Wall-mounted luminaires may be more effective with low ceilings. Mount at 2-2.5m height. Lower mounting improves floor illumination but may affect uniformity - verify with photometric calculations.',
   },
   {
-    question: "What about routes with dark coloured floors or walls?",
-    answer: "Dark surfaces absorb light rather than reflect it, reducing effective illumination. Reduce luminaire spacing by 20-30% or use higher output luminaires. Always verify with on-site measurements after installation."
-  }
+    question: 'What about routes with dark coloured floors or walls?',
+    answer:
+      'Dark surfaces absorb light rather than reflect it, reducing effective illumination. Reduce luminaire spacing by 20-30% or use higher output luminaires. Always verify with on-site measurements after installation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An escape route is 3m wide and 25m long with 2.4m ceiling height. What is the minimum number of luminaire rows required?",
-  options: [
-    "1 row (central mounting)",
-    "2 rows (at edges or staggered)",
-    "3 rows (one central, two at edges)",
-    "No specific requirement"
-  ],
-  correctAnswer: 1,
-  explanation: "Routes wider than 2m require more than one row of luminaires. A 3m wide route needs at least 2 rows - either mounted along each edge or staggered. A single central row cannot maintain 40:1 uniformity across the full 3m width."
-  }
+    question:
+      'An escape route is 3m wide and 25m long with 2.4m ceiling height. What is the minimum number of luminaire rows required?',
+    options: [
+      '1 row (central mounting)',
+      '2 rows (at edges or staggered)',
+      '3 rows (one central, two at edges)',
+      'No specific requirement',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Routes wider than 2m require more than one row of luminaires. A 3m wide route needs at least 2 rows - either mounted along each edge or staggered. A single central row cannot maintain 40:1 uniformity across the full 3m width.',
+  },
 ];
 
 const EmergencyLightingModule2Section4 = () => {
   useSEO({
-    title: "Escape Route Lighting Design | Emergency Lighting Module 2.4",
-    description: "Design and install escape route lighting to BS 5266-1 including luminaire spacing, mounting heights, route width considerations, and practical installation guidance."
+    title: 'Escape Route Lighting Design | Emergency Lighting Module 2.4',
+    description:
+      'Design and install escape route lighting to BS 5266-1 including luminaire spacing, mounting heights, route width considerations, and practical installation guidance.',
   });
 
   return (
@@ -108,17 +124,29 @@ const EmergencyLightingModule2Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Mounting:</strong> Max 2.5m height typical</li>
-              <li><strong>Spacing:</strong> 4× mounting height typical</li>
-              <li><strong>Route width:</strong> 2m per luminaire row</li>
+              <li>
+                <strong>Mounting:</strong> Max 2.5m height typical
+              </li>
+              <li>
+                <strong>Spacing:</strong> 4× mounting height typical
+              </li>
+              <li>
+                <strong>Route width:</strong> 2m per luminaire row
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Positions</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Exits:</strong> Within 2m of each exit</li>
-              <li><strong>Changes:</strong> At each direction change</li>
-              <li><strong>Hazards:</strong> At level changes, steps</li>
+              <li>
+                <strong>Exits:</strong> Within 2m of each exit
+              </li>
+              <li>
+                <strong>Changes:</strong> At each direction change
+              </li>
+              <li>
+                <strong>Hazards:</strong> At level changes, steps
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +156,12 @@ const EmergencyLightingModule2Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Calculate luminaire spacing for escape routes",
-              "Select appropriate mounting heights",
-              "Design for different route widths",
-              "Position luminaires at critical points",
-              "Account for surface reflectances",
-              "Verify designs with photometric data"
+              'Calculate luminaire spacing for escape routes',
+              'Select appropriate mounting heights',
+              'Design for different route widths',
+              'Position luminaires at critical points',
+              'Account for surface reflectances',
+              'Verify designs with photometric data',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,8 +181,8 @@ const EmergencyLightingModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Correct spacing ensures adequate illumination with acceptable uniformity. The goal
-              is to maintain 1 lux minimum along the centre line with no point exceeding 40:1
+              Correct spacing ensures adequate illumination with acceptable uniformity. The goal is
+              to maintain 1 lux minimum along the centre line with no point exceeding 40:1
               uniformity ratio.
             </p>
 
@@ -162,19 +190,35 @@ const EmergencyLightingModule2Section4 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Spacing Factors</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Mounting height:</strong> Lower = closer spacing</li>
-                  <li><strong>Light output:</strong> Higher = wider spacing</li>
-                  <li><strong>Beam angle:</strong> Wide = wider spacing</li>
-                  <li><strong>Surface colour:</strong> Dark = closer spacing</li>
+                  <li>
+                    <strong>Mounting height:</strong> Lower = closer spacing
+                  </li>
+                  <li>
+                    <strong>Light output:</strong> Higher = wider spacing
+                  </li>
+                  <li>
+                    <strong>Beam angle:</strong> Wide = wider spacing
+                  </li>
+                  <li>
+                    <strong>Surface colour:</strong> Dark = closer spacing
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Guidelines</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Ceiling mount:</strong> 4× mounting height</li>
-                  <li><strong>Wall mount:</strong> 3× mounting height</li>
-                  <li><strong>Always verify:</strong> Manufacturer data</li>
-                  <li><strong>Dark surfaces:</strong> Reduce by 20-30%</li>
+                  <li>
+                    <strong>Ceiling mount:</strong> 4× mounting height
+                  </li>
+                  <li>
+                    <strong>Wall mount:</strong> 3× mounting height
+                  </li>
+                  <li>
+                    <strong>Always verify:</strong> Manufacturer data
+                  </li>
+                  <li>
+                    <strong>Dark surfaces:</strong> Reduce by 20-30%
+                  </li>
                 </ul>
               </div>
             </div>
@@ -206,8 +250,8 @@ const EmergencyLightingModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The width of the escape route determines the number of luminaire rows needed.
-              Wider routes require additional coverage to maintain uniformity across the full width.
+              The width of the escape route determines the number of luminaire rows needed. Wider
+              routes require additional coverage to maintain uniformity across the full width.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -255,13 +299,27 @@ const EmergencyLightingModule2Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Mandatory Luminaire Positions:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Within 2m of each exit:</strong> Illuminates the exit point</li>
-                <li><strong>Within 2m of exit signs:</strong> Ensures sign visibility</li>
-                <li><strong>At direction changes &gt;45°:</strong> Highlights route turns</li>
-                <li><strong>At each staircase:</strong> Every flight illuminated</li>
-                <li><strong>At level changes:</strong> Steps, ramps, thresholds</li>
-                <li><strong>At fire equipment:</strong> Extinguishers, call points</li>
-                <li><strong>At first aid:</strong> First aid points when required</li>
+                <li>
+                  <strong>Within 2m of each exit:</strong> Illuminates the exit point
+                </li>
+                <li>
+                  <strong>Within 2m of exit signs:</strong> Ensures sign visibility
+                </li>
+                <li>
+                  <strong>At direction changes &gt;45°:</strong> Highlights route turns
+                </li>
+                <li>
+                  <strong>At each staircase:</strong> Every flight illuminated
+                </li>
+                <li>
+                  <strong>At level changes:</strong> Steps, ramps, thresholds
+                </li>
+                <li>
+                  <strong>At fire equipment:</strong> Extinguishers, call points
+                </li>
+                <li>
+                  <strong>At first aid:</strong> First aid points when required
+                </li>
               </ul>
             </div>
           </div>
@@ -287,10 +345,19 @@ const EmergencyLightingModule2Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Design Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Assuming all luminaires equal:</strong> — Check specific photometric data</li>
-                <li><strong>Ignoring surface colours:</strong> — Dark surfaces need closer spacing</li>
-                <li><strong>Missing mandatory positions:</strong> — Exits and signs always need luminaires</li>
-                <li><strong>Wide routes with single row:</strong> — Routes &gt;2m need multiple rows</li>
+                <li>
+                  <strong>Assuming all luminaires equal:</strong> — Check specific photometric data
+                </li>
+                <li>
+                  <strong>Ignoring surface colours:</strong> — Dark surfaces need closer spacing
+                </li>
+                <li>
+                  <strong>Missing mandatory positions:</strong> — Exits and signs always need
+                  luminaires
+                </li>
+                <li>
+                  <strong>Wide routes with single row:</strong> — Routes &gt;2m need multiple rows
+                </li>
               </ul>
             </div>
           </div>
@@ -336,10 +403,7 @@ const EmergencyLightingModule2Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

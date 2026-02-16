@@ -12,14 +12,15 @@ export const BestPracticesSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p className="leading-relaxed">
-          Implementing effective HVAC interlocks requires careful planning and adherence to proven best practices. 
-          These guidelines ensure optimal performance, safety, and user satisfaction.
+          Implementing effective HVAC interlocks requires careful planning and adherence to proven
+          best practices. These guidelines ensure optimal performance, safety, and user
+          satisfaction.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Core Principles:</h4>
-            
+
             <div className="space-y-3">
               <div className="bg-red-950/30 border border-red-600 rounded-lg p-4">
                 <h5 className="font-medium text-red-200 mb-2">Always Prioritise Safety</h5>
@@ -27,12 +28,15 @@ export const BestPracticesSection = () => {
                   Safety interlocks take precedence over efficiency features.
                 </p>
                 <p className="text-xs text-red-200">
-                  Example: Boiler interlock prevents overheating even if it disrupts comfort schedules.
+                  Example: Boiler interlock prevents overheating even if it disrupts comfort
+                  schedules.
                 </p>
               </div>
-              
+
               <div className="bg-green-950/30 border border-green-600 rounded-lg p-4">
-                <h5 className="font-medium text-green-200 mb-2">Minimise Simultaneous Energy Use</h5>
+                <h5 className="font-medium text-green-200 mb-2">
+                  Minimise Simultaneous Energy Use
+                </h5>
                 <p className="text-sm text-green-100 mb-2">
                   Design systems to avoid running multiple high-energy loads together.
                 </p>
@@ -40,7 +44,7 @@ export const BestPracticesSection = () => {
                   Example: Stagger heating and electric water heating to reduce peak demand.
                 </p>
               </div>
-              
+
               <div className="bg-blue-950/30 border border-blue-600 rounded-lg p-4">
                 <h5 className="font-medium text-blue-200 mb-2">Use Conditional Logic</h5>
                 <p className="text-sm text-blue-100 mb-2">
@@ -55,26 +59,29 @@ export const BestPracticesSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Implementation Guidelines:</h4>
-            
+
             <div className="space-y-3">
               <div className="bg-purple-950/30 border border-purple-600 rounded-lg p-4">
                 <h5 className="font-medium text-purple-200 mb-2">Provide Manual Overrides</h5>
                 <p className="text-sm text-purple-100">
-                  Users must be able to override automatic systems when needed for maintenance or emergencies.
+                  Users must be able to override automatic systems when needed for maintenance or
+                  emergencies.
                 </p>
               </div>
-              
+
               <div className="bg-yellow-950/30 border border-yellow-600 rounded-lg p-4">
                 <h5 className="font-medium text-yellow-200 mb-2">Test at Commissioning</h5>
                 <p className="text-sm text-yellow-100">
-                  Thoroughly test all interlocks during system commissioning to ensure proper function.
+                  Thoroughly test all interlocks during system commissioning to ensure proper
+                  function.
                 </p>
               </div>
-              
+
               <div className="bg-orange-950/30 border border-orange-600 rounded-lg p-4">
                 <h5 className="font-medium text-orange-200 mb-2">Document Everything</h5>
                 <p className="text-sm text-orange-100">
-                  Create clear documentation of all interlock logic for future maintenance and troubleshooting.
+                  Create clear documentation of all interlock logic for future maintenance and
+                  troubleshooting.
                 </p>
               </div>
             </div>

@@ -1,9 +1,13 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { MobileTabs, MobileTabsList, MobileTabsTrigger, MobileTabsContent } from '@/components/ui/mobile-tabs';
+import {
+  MobileTabs,
+  MobileTabsList,
+  MobileTabsTrigger,
+  MobileTabsContent,
+} from '@/components/ui/mobile-tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Progress } from '@/components/ui/progress';
 import { TestTube, Zap, Shield, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
@@ -27,13 +31,13 @@ const testingProcedures: TestingStep[] = [
     safetyNotes: [
       'Installation must be isolated before inspection',
       'Use appropriate PPE',
-      'Check for presence of asbestos in older installations'
+      'Check for presence of asbestos in older installations',
     ],
     equipment: [
       'Torch/adequate lighting',
       'PPE (safety glasses, gloves)',
       'Camera for documentation',
-      'Checklist/inspection forms'
+      'Checklist/inspection forms',
     ],
     procedure: [
       'Check consumer unit condition and labelling',
@@ -41,10 +45,10 @@ const testingProcedures: TestingStep[] = [
       'Examine accessories for cracks, burns, or damage',
       'Verify earthing and bonding arrangements',
       'Check IP ratings for environmental conditions',
-      'Document all observations and defects'
+      'Document all observations and defects',
     ],
     acceptableLimits: 'No visible damage, adequate IP ratings, compliant installations',
-    regulation: 'BS 7671 Section 610'
+    regulation: 'BS 7671 Section 610',
   },
   {
     id: 'continuity',
@@ -53,24 +57,19 @@ const testingProcedures: TestingStep[] = [
     safetyNotes: [
       'Installation must be isolated and proven dead',
       'Remove all lamps and portable equipment',
-      'Link phase and neutral at furthest point for ring circuits'
+      'Link phase and neutral at furthest point for ring circuits',
     ],
-    equipment: [
-      'Low resistance ohmmeter',
-      'Test leads',
-      'Temporary links',
-      'Suitable test probes'
-    ],
+    equipment: ['Low resistance ohmmeter', 'Test leads', 'Temporary links', 'Suitable test probes'],
     procedure: [
       'Test continuity of protective conductors',
       'Test ring final circuit continuity (if applicable)',
       'Measure R1 + R2 values for all circuits',
       'Verify correct polarity throughout',
       'Check continuity of supplementary bonding',
-      'Record all readings on test sheet'
+      'Record all readings on test sheet',
     ],
     acceptableLimits: 'R1 + R2 ≤ maximum values in BS 7671 Tables',
-    regulation: 'BS 7671 Section 612.2'
+    regulation: 'BS 7671 Section 612.2',
   },
   {
     id: 'insulation',
@@ -79,13 +78,13 @@ const testingProcedures: TestingStep[] = [
     safetyNotes: [
       'Remove or isolate electronic equipment',
       'Check test voltage is appropriate for installation',
-      'Ensure all switches are closed for testing'
+      'Ensure all switches are closed for testing',
     ],
     equipment: [
       'Insulation resistance tester (500V/1000V)',
       'Test leads',
       'Warning notices',
-      'Electronic equipment isolation materials'
+      'Electronic equipment isolation materials',
     ],
     procedure: [
       'Isolate or remove electronic equipment',
@@ -94,10 +93,10 @@ const testingProcedures: TestingStep[] = [
       'Test between phase conductors and earth',
       'Test between neutral conductor and earth',
       'Test three-phase installations appropriately',
-      'Record minimum values found'
+      'Record minimum values found',
     ],
     acceptableLimits: 'Minimum 1MΩ for final circuits, 0.5MΩ acceptable with investigation',
-    regulation: 'BS 7671 Section 612.3'
+    regulation: 'BS 7671 Section 612.3',
   },
   {
     id: 'polarity',
@@ -106,13 +105,13 @@ const testingProcedures: TestingStep[] = [
     safetyNotes: [
       'Test with installation isolated',
       'Verify test equipment calibration',
-      'Check polarity at origin before testing circuits'
+      'Check polarity at origin before testing circuits',
     ],
     equipment: [
       'Continuity tester',
       'Test leads',
       'Polarity testing device',
-      'Documentation materials'
+      'Documentation materials',
     ],
     procedure: [
       'Check polarity at consumer unit/distribution board',
@@ -120,10 +119,10 @@ const testingProcedures: TestingStep[] = [
       'Verify polarity of all switches',
       'Check polarity of fixed equipment connections',
       'Test ES lamp holders for correct connections',
-      'Verify centre contact of ES holders connected to phase'
+      'Verify centre contact of ES holders connected to phase',
     ],
     acceptableLimits: 'Phase conductor connected to phase terminals only',
-    regulation: 'BS 7671 Section 612.6'
+    regulation: 'BS 7671 Section 612.6',
   },
   {
     id: 'rcd',
@@ -132,25 +131,20 @@ const testingProcedures: TestingStep[] = [
     safetyNotes: [
       'Ensure RCD can be safely tested under load',
       'Check test current does not exceed equipment ratings',
-      'Verify test equipment is suitable for RCD type'
+      'Verify test equipment is suitable for RCD type',
     ],
-    equipment: [
-      'RCD tester',
-      'Test leads',
-      'Stop watch (if required)',
-      'RCD test record sheets'
-    ],
+    equipment: ['RCD tester', 'Test leads', 'Stop watch (if required)', 'RCD test record sheets'],
     procedure: [
       'Check RCD operates with test button',
       'Test at 50% of rated current (should not trip)',
       'Test at 100% of rated current (should trip within limits)',
       'Test at 150% of rated current (should trip quickly)',
       'Test unwanted tripping resistance (if applicable)',
-      'Record all test times and currents'
+      'Record all test times and currents',
     ],
     acceptableLimits: '30mA RCD: ≤300ms at 1× rating, ≤40ms at 5× rating',
-    regulation: 'BS 7671 Section 612.13'
-  }
+    regulation: 'BS 7671 Section 612.13',
+  },
 ];
 
 const TestingProcedures = () => {
@@ -159,22 +153,22 @@ const TestingProcedures = () => {
 
   const handleStepCheck = (testId: string, stepIndex: number) => {
     const key = `${testId}-${stepIndex}`;
-    setCheckedSteps(prev => ({ ...prev, [key]: !prev[key] }));
+    setCheckedSteps((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const getTestCompletion = (testId: string) => {
-    const test = testingProcedures.find(t => t.id === testId);
+    const test = testingProcedures.find((t) => t.id === testId);
     if (!test) return 0;
-    
+
     const totalSteps = test.procedure.length;
-    const completedSteps = test.procedure.filter((_, idx) => 
-      checkedSteps[`${testId}-${idx}`]
+    const completedSteps = test.procedure.filter(
+      (_, idx) => checkedSteps[`${testId}-${idx}`]
     ).length;
-    
+
     return Math.round((completedSteps / totalSteps) * 100);
   };
 
-  const getCurrentTest = () => testingProcedures.find(t => t.id === activeTest);
+  const getCurrentTest = () => testingProcedures.find((t) => t.id === activeTest);
 
   return (
     <div className="space-y-6">
@@ -190,16 +184,16 @@ const TestingProcedures = () => {
           <MobileTabs value={activeTest} onValueChange={setActiveTest}>
             <MobileTabsList className="grid w-full grid-cols-5 bg-muted">
               {testingProcedures.map((test) => (
-                <MobileTabsTrigger 
-                  key={test.id} 
+                <MobileTabsTrigger
+                  key={test.id}
                   value={test.id}
                   className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
                 >
                   <div className="flex flex-col items-center">
                     <span className="text-xs font-medium">{test.title.split(' ')[0]}</span>
                     <div className="w-8 h-1 bg-neutral-600 rounded-full mt-1">
-                      <div 
-                        className="h-full bg-green-500 rounded-full transition-all" 
+                      <div
+                        className="h-full bg-green-500 rounded-full transition-all"
                         style={{ width: `${getTestCompletion(test.id)}%` }}
                       />
                     </div>
@@ -221,14 +215,16 @@ const TestingProcedures = () => {
                         </CardTitle>
                         <div className="flex items-center gap-2">
                           <Badge className="bg-purple-500 text-foreground">{test.regulation}</Badge>
-                          <Badge className={`${getTestCompletion(test.id) === 100 ? 'bg-green-500' : 'bg-orange-500'}`}>
+                          <Badge
+                            className={`${getTestCompletion(test.id) === 100 ? 'bg-green-500' : 'bg-orange-500'}`}
+                          >
                             {getTestCompletion(test.id)}% Complete
                           </Badge>
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <p className="text-gray-300">{test.description}</p>
-                        
+
                         <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                           <h4 className="font-semibold text-green-400 mb-2">Acceptable Limits</h4>
                           <p className="text-sm text-gray-300">{test.acceptableLimits}</p>
@@ -286,7 +282,10 @@ const TestingProcedures = () => {
                       </CardHeader>
                       <CardContent className="space-y-3">
                         {test.procedure.map((step, idx) => (
-                          <div key={idx} className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50">
+                          <div
+                            key={idx}
+                            className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50"
+                          >
                             <Checkbox
                               id={`${test.id}-step-${idx}`}
                               checked={checkedSteps[`${test.id}-${idx}`] || false}
@@ -297,8 +296,8 @@ const TestingProcedures = () => {
                               <label
                                 htmlFor={`${test.id}-step-${idx}`}
                                 className={`cursor-pointer text-sm leading-relaxed ${
-                                  checkedSteps[`${test.id}-${idx}`] 
-                                    ? 'text-green-400 line-through' 
+                                  checkedSteps[`${test.id}-${idx}`]
+                                    ? 'text-green-400 line-through'
                                     : 'text-gray-300'
                                 }`}
                               >

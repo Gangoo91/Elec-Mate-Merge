@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const PolarityPurposeLearningOutcomes = () => {
   const outcomes = [
-    "Understand why polarity testing is essential for electrical safety",
-    "Identify what can go wrong when polarity is incorrect",
-    "Know the regulatory requirements for polarity testing",
-    "Recognise the consequences of skipping this critical test",
-    "Understand the relationship between polarity and protective device operation"
+    'Understand why polarity testing is essential for electrical safety',
+    'Identify what can go wrong when polarity is incorrect',
+    'Know the regulatory requirements for polarity testing',
+    'Recognise the consequences of skipping this critical test',
+    'Understand the relationship between polarity and protective device operation',
   ];
 
   return (
@@ -19,9 +19,7 @@ export const PolarityPurposeLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-foreground">

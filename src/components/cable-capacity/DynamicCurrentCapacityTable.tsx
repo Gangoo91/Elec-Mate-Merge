@@ -1,9 +1,21 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { cableSizeOptions } from '@/types/cableTypes';
 import { installationMethods } from '@/utils/regulationChecker/cableCapacityCalculator';
 import { Zap, Info } from 'lucide-react';
@@ -15,15 +27,32 @@ interface CorrectionFactors {
 }
 
 const ambientTemperatureFactors = {
-  25: 1.22, 30: 1.15, 35: 1.08, 40: 1.00, 45: 0.91, 50: 0.82, 55: 0.71, 60: 0.58
+  25: 1.22,
+  30: 1.15,
+  35: 1.08,
+  40: 1.0,
+  45: 0.91,
+  50: 0.82,
+  55: 0.71,
+  60: 0.58,
 } as const;
 
 const groupingFactors = {
-  1: 1.00, 2: 0.80, 3: 0.70, 4: 0.65, 5: 0.60, 6: 0.57, 7: 0.54, 8: 0.52, 9: 0.50
+  1: 1.0,
+  2: 0.8,
+  3: 0.7,
+  4: 0.65,
+  5: 0.6,
+  6: 0.57,
+  7: 0.54,
+  8: 0.52,
+  9: 0.5,
 } as const;
 
 const thermalInsulationFactors = {
-  none: 1.00, partial: 0.87, full: 0.78
+  none: 1.0,
+  partial: 0.87,
+  full: 0.78,
 } as const;
 
 type AmbientTempKey = keyof typeof ambientTemperatureFactors;
@@ -39,12 +68,13 @@ export const DynamicCurrentCapacityTable = () => {
   const getCorrectedCapacity = (baseCapacity: number): number => {
     const ambientTempNum = Number(ambientTemp) as AmbientTempKey;
     const groupingCountNum = Number(groupingCount) as GroupingKey;
-    
+
     const ambientFactor = ambientTemperatureFactors[ambientTempNum] || 1.0;
     const groupingFactor = groupingFactors[groupingCountNum] || 1.0;
     const thermalFactor = thermalInsulationFactors[thermalInsulation as ThermalKey] || 1.0;
-    const methodFactor = installationMethods[selectedMethod as keyof typeof installationMethods]?.factor || 1.0;
-    
+    const methodFactor =
+      installationMethods[selectedMethod as keyof typeof installationMethods]?.factor || 1.0;
+
     return Math.round(baseCapacity * methodFactor * ambientFactor * groupingFactor * thermalFactor);
   };
 
@@ -59,7 +89,7 @@ export const DynamicCurrentCapacityTable = () => {
           <div>
             <label className="text-sm text-gray-300 mb-1 block">Installation Method</label>
             <Select value={selectedMethod} onValueChange={setSelectedMethod}>
-               <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
+              <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -75,12 +105,14 @@ export const DynamicCurrentCapacityTable = () => {
           <div>
             <label className="text-sm text-gray-300 mb-1 block">Ambient Temperature (°C)</label>
             <Select value={ambientTemp} onValueChange={setAmbientTemp}>
-             <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
+              <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {Object.keys(ambientTemperatureFactors).map(temp => (
-                  <SelectItem key={temp} value={temp}>{temp}°C</SelectItem>
+                {Object.keys(ambientTemperatureFactors).map((temp) => (
+                  <SelectItem key={temp} value={temp}>
+                    {temp}°C
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -89,12 +121,14 @@ export const DynamicCurrentCapacityTable = () => {
           <div>
             <label className="text-sm text-gray-300 mb-1 block">Circuits Grouped</label>
             <Select value={groupingCount} onValueChange={setGroupingCount}>
-             <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
+              <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {Object.keys(groupingFactors).map(count => (
-                  <SelectItem key={count} value={count}>{count} circuit{count !== '1' ? 's' : ''}</SelectItem>
+                {Object.keys(groupingFactors).map((count) => (
+                  <SelectItem key={count} value={count}>
+                    {count} circuit{count !== '1' ? 's' : ''}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -123,22 +157,26 @@ export const DynamicCurrentCapacityTable = () => {
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 text-sm">
             <div className="text-gray-300">
-              Installation: <Badge variant="outline" className="ml-1 text-blue-400 border-blue-400">
+              Installation:{' '}
+              <Badge variant="outline" className="ml-1 text-blue-400 border-blue-400">
                 {installationMethods[selectedMethod as keyof typeof installationMethods]?.factor}
               </Badge>
             </div>
             <div className="text-gray-300">
-              Ambient: <Badge variant="outline" className="ml-1 text-orange-400 border-orange-400">
+              Ambient:{' '}
+              <Badge variant="outline" className="ml-1 text-orange-400 border-orange-400">
                 {ambientTemperatureFactors[Number(ambientTemp) as AmbientTempKey] || 1.0}
               </Badge>
             </div>
             <div className="text-gray-300">
-              Grouping: <Badge variant="outline" className="ml-1 text-purple-400 border-purple-400">
+              Grouping:{' '}
+              <Badge variant="outline" className="ml-1 text-purple-400 border-purple-400">
                 {groupingFactors[Number(groupingCount) as GroupingKey] || 1.0}
               </Badge>
             </div>
             <div className="text-gray-300">
-              Thermal: <Badge variant="outline" className="ml-1 text-green-400 border-green-400">
+              Thermal:{' '}
+              <Badge variant="outline" className="ml-1 text-green-400 border-green-400">
                 {thermalInsulationFactors[thermalInsulation as ThermalKey] || 1.0}
               </Badge>
             </div>
@@ -157,15 +195,21 @@ export const DynamicCurrentCapacityTable = () => {
           <TableBody>
             {cableSizeOptions.slice(0, 10).map((cable) => {
               const correctedCapacity = getCorrectedCapacity(cable.currentCarryingCapacity);
-              const derating = Math.round(((correctedCapacity / cable.currentCarryingCapacity) * 100));
-              
+              const derating = Math.round(
+                (correctedCapacity / cable.currentCarryingCapacity) * 100
+              );
+
               return (
                 <TableRow key={cable.value}>
                   <TableCell className="text-foreground font-medium">{cable.label}</TableCell>
                   <TableCell className="text-gray-300">{cable.currentCarryingCapacity}</TableCell>
                   <TableCell className="text-elec-yellow font-bold">{correctedCapacity}</TableCell>
                   <TableCell>
-                    <Badge variant={derating >= 90 ? "default" : derating >= 70 ? "secondary" : "destructive"}>
+                    <Badge
+                      variant={
+                        derating >= 90 ? 'default' : derating >= 70 ? 'secondary' : 'destructive'
+                      }
+                    >
                       {derating}%
                     </Badge>
                   </TableCell>

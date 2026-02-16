@@ -19,13 +19,14 @@ import {
   Info,
   Activity,
   Globe,
-  Server
+  Server,
 } from 'lucide-react';
 
 const IndustrialElectricalModule4Section4: React.FC = () => {
   useSEO({
     title: 'Industrial Protocols: Modbus, Profibus, Ethernet/IP | Module 4 Section 4',
-    description: 'Learn industrial communication protocols including Modbus RTU/TCP, PROFIBUS DP, PROFINET, EtherNet/IP, and EtherCAT. Covers network topology, wiring, addressing, and troubleshooting.',
+    description:
+      'Learn industrial communication protocols including Modbus RTU/TCP, PROFIBUS DP, PROFINET, EtherNet/IP, and EtherCAT. Covers network topology, wiring, addressing, and troubleshooting.',
     keywords: [
       'industrial protocols',
       'Modbus RTU',
@@ -36,8 +37,8 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
       'EtherCAT',
       'fieldbus',
       'industrial Ethernet',
-      'PLC communication'
-    ]
+      'PLC communication',
+    ],
   });
 
   const [showQuiz, setShowQuiz] = useState(false);
@@ -45,105 +46,136 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
   const quickCheckQuestions = [
     {
       id: 'qc1',
-      question: 'What is the maximum cable length for a Modbus RTU network using RS-485 at 9600 baud?',
+      question:
+        'What is the maximum cable length for a Modbus RTU network using RS-485 at 9600 baud?',
       options: ['100 metres', '500 metres', '1200 metres', '4000 metres'],
       correctIndex: 2,
-      explanation: 'RS-485 used by Modbus RTU supports cable lengths up to 1200 metres (4000 feet) at 9600 baud. Higher baud rates reduce the maximum distance.'
+      explanation:
+        'RS-485 used by Modbus RTU supports cable lengths up to 1200 metres (4000 feet) at 9600 baud. Higher baud rates reduce the maximum distance.',
     },
     {
       id: 'qc2',
       question: 'Which industrial protocol uses the Producer/Consumer communication model?',
       options: ['Modbus RTU', 'PROFIBUS DP', 'EtherNet/IP', 'Modbus TCP'],
       correctIndex: 2,
-      explanation: 'EtherNet/IP uses the Producer/Consumer model where any device can produce or consume data. Modbus uses Master/Slave, while PROFIBUS DP uses a similar Master/Slave arrangement.'
+      explanation:
+        'EtherNet/IP uses the Producer/Consumer model where any device can produce or consume data. Modbus uses Master/Slave, while PROFIBUS DP uses a similar Master/Slave arrangement.',
     },
     {
       id: 'qc3',
       question: 'What type of cable is required for PROFIBUS DP networks?',
-      options: ['Standard Ethernet CAT5', 'Purple shielded twisted pair', 'Coaxial cable', 'Fibre optic only'],
+      options: [
+        'Standard Ethernet CAT5',
+        'Purple shielded twisted pair',
+        'Coaxial cable',
+        'Fibre optic only',
+      ],
       correctIndex: 1,
-      explanation: 'PROFIBUS DP requires special purple-jacketed shielded twisted pair cable with specific impedance characteristics (150 ohms). Standard Ethernet cable cannot be used.'
-    }
+      explanation:
+        'PROFIBUS DP requires special purple-jacketed shielded twisted pair cable with specific impedance characteristics (150 ohms). Standard Ethernet cable cannot be used.',
+    },
   ];
 
   const quizQuestions = [
     {
       question: 'What is the function code for "Read Holding Registers" in Modbus protocol?',
       options: ['01', '02', '03', '04'],
-      correctAnswer: '03'
+      correctAnswer: '03',
     },
     {
       question: 'Which protocol operates at the highest speed?',
-      options: ['Modbus RTU (115.2 kbps)', 'PROFIBUS DP (12 Mbps)', 'EtherCAT (100 Mbps)', 'Modbus TCP (10 Mbps)'],
-      correctAnswer: 'EtherCAT (100 Mbps)'
+      options: [
+        'Modbus RTU (115.2 kbps)',
+        'PROFIBUS DP (12 Mbps)',
+        'EtherCAT (100 Mbps)',
+        'Modbus TCP (10 Mbps)',
+      ],
+      correctAnswer: 'EtherCAT (100 Mbps)',
     },
     {
       question: 'What is the maximum number of devices on a single PROFIBUS DP segment?',
       options: ['32', '64', '126', '247'],
-      correctAnswer: '126'
+      correctAnswer: '126',
     },
     {
       question: 'Which termination resistor value is required for Modbus RTU networks?',
       options: ['75 ohms', '100 ohms', '120 ohms', '150 ohms'],
-      correctAnswer: '120 ohms'
+      correctAnswer: '120 ohms',
     },
     {
       question: 'What port number does Modbus TCP use by default?',
       options: ['Port 44818', 'Port 502', 'Port 2222', 'Port 102'],
-      correctAnswer: 'Port 502'
+      correctAnswer: 'Port 502',
     },
     {
       question: 'PROFINET IO uses which Ethernet frame type for cyclic real-time data?',
       options: ['Standard TCP/IP', 'UDP/IP', 'Raw Ethernet frames', 'HTTP'],
-      correctAnswer: 'Raw Ethernet frames'
+      correctAnswer: 'Raw Ethernet frames',
     },
     {
       question: 'What addressing scheme does EtherNet/IP use for device identification?',
-      options: ['Node address (1-247)', 'MAC address only', 'IP address with CIP identity', 'Slot/Rack addressing'],
-      correctAnswer: 'IP address with CIP identity'
+      options: [
+        'Node address (1-247)',
+        'MAC address only',
+        'IP address with CIP identity',
+        'Slot/Rack addressing',
+      ],
+      correctAnswer: 'IP address with CIP identity',
     },
     {
       question: 'Which topology is NOT supported by EtherCAT?',
       options: ['Line/Daisy-chain', 'Star', 'Tree', 'Ring'],
-      correctAnswer: 'Star'
+      correctAnswer: 'Star',
     },
     {
       question: 'What tool is commonly used for PROFIBUS network diagnostics?',
-      options: ['Wireshark only', 'PROFIBUS tester/analyser', 'Standard multimeter', 'Oscilloscope only'],
-      correctAnswer: 'PROFIBUS tester/analyser'
+      options: [
+        'Wireshark only',
+        'PROFIBUS tester/analyser',
+        'Standard multimeter',
+        'Oscilloscope only',
+      ],
+      correctAnswer: 'PROFIBUS tester/analyser',
     },
     {
-      question: 'Which industrial protocol was specifically designed for motion control applications?',
+      question:
+        'Which industrial protocol was specifically designed for motion control applications?',
       options: ['Modbus RTU', 'PROFIBUS PA', 'EtherCAT', 'Modbus TCP'],
-      correctAnswer: 'EtherCAT'
-    }
+      correctAnswer: 'EtherCAT',
+    },
   ];
 
   const faqItems = [
     {
       question: 'What is the difference between Modbus RTU and Modbus TCP?',
-      answer: 'Modbus RTU is a serial protocol using RS-232 or RS-485 physical layers with a compact binary format and CRC error checking. It operates at baud rates up to 115.2 kbps. Modbus TCP encapsulates Modbus messages in TCP/IP packets for Ethernet networks, operating at 10/100 Mbps. TCP adds its own error checking, so the CRC is not used. Modbus TCP uses port 502 and supports multiple simultaneous connections, while RTU is limited to one master on the bus.'
+      answer:
+        'Modbus RTU is a serial protocol using RS-232 or RS-485 physical layers with a compact binary format and CRC error checking. It operates at baud rates up to 115.2 kbps. Modbus TCP encapsulates Modbus messages in TCP/IP packets for Ethernet networks, operating at 10/100 Mbps. TCP adds its own error checking, so the CRC is not used. Modbus TCP uses port 502 and supports multiple simultaneous connections, while RTU is limited to one master on the bus.',
     },
     {
       question: 'Why do PROFIBUS networks require special purple cable?',
-      answer: 'PROFIBUS DP cable has specific electrical characteristics required for reliable high-speed communication: 150-ohm characteristic impedance (vs. 100 ohms for Ethernet), specific capacitance and attenuation values, and robust shielding for industrial environments. The purple colour is an industry standard for easy identification. Using standard Ethernet cable will cause signal reflections, data errors, and communication failures due to impedance mismatch.'
+      answer:
+        'PROFIBUS DP cable has specific electrical characteristics required for reliable high-speed communication: 150-ohm characteristic impedance (vs. 100 ohms for Ethernet), specific capacitance and attenuation values, and robust shielding for industrial environments. The purple colour is an industry standard for easy identification. Using standard Ethernet cable will cause signal reflections, data errors, and communication failures due to impedance mismatch.',
     },
     {
       question: 'How do I choose between EtherNet/IP and PROFINET?',
-      answer: 'The choice often depends on your PLC vendor: Allen-Bradley/Rockwell systems typically use EtherNet/IP, while Siemens systems use PROFINET. Both offer similar performance for standard I/O applications. EtherNet/IP uses standard TCP/IP and UDP/IP, making it easier to integrate with IT networks. PROFINET offers better real-time performance for motion control (IRT mode). Consider your existing infrastructure, vendor support, and application requirements.'
+      answer:
+        'The choice often depends on your PLC vendor: Allen-Bradley/Rockwell systems typically use EtherNet/IP, while Siemens systems use PROFINET. Both offer similar performance for standard I/O applications. EtherNet/IP uses standard TCP/IP and UDP/IP, making it easier to integrate with IT networks. PROFINET offers better real-time performance for motion control (IRT mode). Consider your existing infrastructure, vendor support, and application requirements.',
     },
     {
       question: 'What causes communication timeout errors in Modbus?',
-      answer: 'Common causes include: incorrect baud rate, parity, or stop bit settings; wrong device address; missing or incorrect termination resistors; cable length exceeding limits; electromagnetic interference; loose or damaged connections; incorrect wiring (A/B lines swapped); device not responding due to overload; and ground loops. Use a protocol analyser to capture actual traffic and verify the physical layer with an oscilloscope.'
+      answer:
+        'Common causes include: incorrect baud rate, parity, or stop bit settings; wrong device address; missing or incorrect termination resistors; cable length exceeding limits; electromagnetic interference; loose or damaged connections; incorrect wiring (A/B lines swapped); device not responding due to overload; and ground loops. Use a protocol analyser to capture actual traffic and verify the physical layer with an oscilloscope.',
     },
     {
       question: 'Can I mix different protocols on the same network?',
-      answer: 'For serial fieldbuses (Modbus RTU, PROFIBUS), you cannot mix protocols on the same physical network. For Ethernet-based protocols, they can coexist on the same physical network infrastructure since they use different ports/protocols, but dedicated network segments or VLANs are recommended to ensure deterministic performance. Gateways/protocol converters can translate between different protocols when integration is required.'
+      answer:
+        'For serial fieldbuses (Modbus RTU, PROFIBUS), you cannot mix protocols on the same physical network. For Ethernet-based protocols, they can coexist on the same physical network infrastructure since they use different ports/protocols, but dedicated network segments or VLANs are recommended to ensure deterministic performance. Gateways/protocol converters can translate between different protocols when integration is required.',
     },
     {
       question: 'What is the role of a termination resistor in industrial networks?',
-      answer: 'Termination resistors absorb signal energy at cable ends to prevent reflections that cause data corruption. For RS-485/Modbus RTU, 120-ohm resistors are placed at both ends of the bus. PROFIBUS uses built-in active termination in connectors at both ends. Proper termination is critical—missing termination causes intermittent errors, while extra termination reduces signal amplitude. Always verify termination when troubleshooting communication issues.'
-    }
+      answer:
+        'Termination resistors absorb signal energy at cable ends to prevent reflections that cause data corruption. For RS-485/Modbus RTU, 120-ohm resistors are placed at both ends of the bus. PROFIBUS uses built-in active termination in connectors at both ends. Proper termination is critical—missing termination causes intermittent errors, while extra termination reduces signal amplitude. Always verify termination when troubleshooting communication issues.',
+    },
   ];
 
   return (
@@ -151,7 +183,12 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -171,8 +208,8 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
             Industrial Protocols: Modbus, Profibus, Ethernet/IP
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Master industrial communication protocols essential for PLC networking, device integration,
-            and troubleshooting complex automation systems.
+            Master industrial communication protocols essential for PLC networking, device
+            integration, and troubleshooting complex automation systems.
           </p>
         </div>
 
@@ -202,9 +239,10 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
               Evolution of Industrial Communications
             </h3>
             <p className="text-muted-foreground text-sm mb-4">
-              Industrial communication has evolved from simple hardwired connections to sophisticated
-              networked systems. Understanding the differences between traditional fieldbus and modern
-              industrial Ethernet is crucial for system design and troubleshooting.
+              Industrial communication has evolved from simple hardwired connections to
+              sophisticated networked systems. Understanding the differences between traditional
+              fieldbus and modern industrial Ethernet is crucial for system design and
+              troubleshooting.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -319,7 +357,9 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                     </tr>
                   </tbody>
                 </table>
-                <p className="text-xs text-muted-foreground mt-2">*Limited by network infrastructure</p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  *Limited by network infrastructure
+                </p>
               </div>
             </div>
           </div>
@@ -347,23 +387,49 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
               <h4 className="font-medium text-blue-400 mb-3">Modbus RTU Configuration</h4>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="text-sm font-medium text-muted-foreground mb-2">Serial Parameters</h5>
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
+                    Serial Parameters
+                  </h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Baud Rate:</span> 9600, 19200, 38400, 115200</li>
-                    <li>- <span className="text-elec-yellow">Data Bits:</span> 8</li>
-                    <li>- <span className="text-elec-yellow">Parity:</span> Even (most common), None, Odd</li>
-                    <li>- <span className="text-elec-yellow">Stop Bits:</span> 1 (with parity), 2 (without)</li>
-                    <li>- <span className="text-elec-yellow">Address Range:</span> 1-247 (0 = broadcast)</li>
+                    <li>
+                      - <span className="text-elec-yellow">Baud Rate:</span> 9600, 19200, 38400,
+                      115200
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Data Bits:</span> 8
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Parity:</span> Even (most common), None,
+                      Odd
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Stop Bits:</span> 1 (with parity), 2
+                      (without)
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Address Range:</span> 1-247 (0 =
+                      broadcast)
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <h5 className="text-sm font-medium text-muted-foreground mb-2">RS-485 Wiring</h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-green-400">A (D-):</span> Negative/inverting line</li>
-                    <li>- <span className="text-green-400">B (D+):</span> Positive/non-inverting line</li>
-                    <li>- <span className="text-green-400">GND:</span> Signal ground (reference)</li>
-                    <li>- <span className="text-green-400">Shield:</span> Ground at one end only</li>
-                    <li>- <span className="text-green-400">Termination:</span> 120 ohms at both ends</li>
+                    <li>
+                      - <span className="text-green-400">A (D-):</span> Negative/inverting line
+                    </li>
+                    <li>
+                      - <span className="text-green-400">B (D+):</span> Positive/non-inverting line
+                    </li>
+                    <li>
+                      - <span className="text-green-400">GND:</span> Signal ground (reference)
+                    </li>
+                    <li>
+                      - <span className="text-green-400">Shield:</span> Ground at one end only
+                    </li>
+                    <li>
+                      - <span className="text-green-400">Termination:</span> 120 ohms at both ends
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -439,16 +505,28 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
               <h4 className="font-medium text-purple-400 mb-3">Modbus TCP Specifics</h4>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="text-sm font-medium text-muted-foreground mb-2">Network Settings</h5>
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
+                    Network Settings
+                  </h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Default Port:</span> TCP 502</li>
-                    <li>- <span className="text-elec-yellow">Unit ID:</span> 0-255 (usually 1 or 255)</li>
-                    <li>- <span className="text-elec-yellow">Max Connections:</span> Vendor dependent</li>
-                    <li>- <span className="text-elec-yellow">Timeout:</span> Typically 1-5 seconds</li>
+                    <li>
+                      - <span className="text-elec-yellow">Default Port:</span> TCP 502
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Unit ID:</span> 0-255 (usually 1 or 255)
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Max Connections:</span> Vendor dependent
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Timeout:</span> Typically 1-5 seconds
+                    </li>
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-muted-foreground mb-2">Frame Structure</h5>
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
+                    Frame Structure
+                  </h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
                     <li>- Transaction ID: 2 bytes</li>
                     <li>- Protocol ID: 2 bytes (0x0000)</li>
@@ -476,9 +554,9 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
               Siemens Protocol Ecosystem
             </h3>
             <p className="text-muted-foreground text-sm mb-4">
-              PROFIBUS and PROFINET are dominant in manufacturing, particularly with Siemens equipment.
-              PROFIBUS DP (Decentralised Periphery) remains widely installed, while PROFINET is the
-              modern Ethernet-based successor.
+              PROFIBUS and PROFINET are dominant in manufacturing, particularly with Siemens
+              equipment. PROFIBUS DP (Decentralised Periphery) remains widely installed, while
+              PROFINET is the modern Ethernet-based successor.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4 mb-4">
@@ -487,25 +565,46 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                 <div>
                   <h5 className="text-sm font-medium text-muted-foreground mb-2">Physical Layer</h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Cable:</span> Purple shielded twisted pair</li>
-                    <li>- <span className="text-elec-yellow">Impedance:</span> 150 ohms</li>
-                    <li>- <span className="text-elec-yellow">Connector:</span> 9-pin D-sub</li>
-                    <li>- <span className="text-elec-yellow">Termination:</span> Active (built-in switch)</li>
+                    <li>
+                      - <span className="text-elec-yellow">Cable:</span> Purple shielded twisted
+                      pair
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Impedance:</span> 150 ohms
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Connector:</span> 9-pin D-sub
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Termination:</span> Active (built-in
+                      switch)
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <h5 className="text-sm font-medium text-muted-foreground mb-2">Performance</h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Speeds:</span> 9.6 kbps - 12 Mbps</li>
-                    <li>- <span className="text-elec-yellow">Max Distance:</span> 100m @12Mbps, 1200m @93.75kbps</li>
-                    <li>- <span className="text-elec-yellow">Max Nodes:</span> 126 per segment</li>
-                    <li>- <span className="text-elec-yellow">Repeaters:</span> Up to 9 segments</li>
+                    <li>
+                      - <span className="text-elec-yellow">Speeds:</span> 9.6 kbps - 12 Mbps
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Max Distance:</span> 100m @12Mbps, 1200m
+                      @93.75kbps
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Max Nodes:</span> 126 per segment
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Repeaters:</span> Up to 9 segments
+                    </li>
                   </ul>
                 </div>
               </div>
 
               <div className="bg-background rounded p-3">
-                <h5 className="text-sm font-medium text-elec-yellow mb-2">PROFIBUS Speed vs Distance</h5>
+                <h5 className="text-sm font-medium text-elec-yellow mb-2">
+                  PROFIBUS Speed vs Distance
+                </h5>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-muted-foreground">
                   <div className="text-center p-2 bg-background/50 rounded">
                     <div className="font-bold text-purple-400">12 Mbps</div>
@@ -564,7 +663,9 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
               <div className="flex items-start gap-2">
                 <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-amber-300 mb-1">PROFIBUS Wiring Critical Points</h4>
+                  <h4 className="font-medium text-amber-300 mb-1">
+                    PROFIBUS Wiring Critical Points
+                  </h4>
                   <ul className="text-muted-foreground text-sm space-y-1">
                     <li>- Always use genuine PROFIBUS cable (not standard network cable)</li>
                     <li>- Enable termination ONLY at first and last devices</li>
@@ -596,72 +697,134 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
             <div className="bg-background/50 rounded-lg p-4 mb-4">
               <h4 className="font-medium text-green-400 mb-3">EtherNet/IP (Industrial Protocol)</h4>
               <p className="text-muted-foreground text-sm mb-3">
-                Developed by ODVA and Rockwell Automation, EtherNet/IP uses standard TCP/IP and UDP/IP
-                with the Common Industrial Protocol (CIP) application layer.
+                Developed by ODVA and Rockwell Automation, EtherNet/IP uses standard TCP/IP and
+                UDP/IP with the Common Industrial Protocol (CIP) application layer.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h5 className="text-sm font-medium text-muted-foreground mb-2">Key Features</h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Producer/Consumer Model:</span> Multicast capable</li>
-                    <li>- <span className="text-elec-yellow">TCP Port:</span> 44818 (explicit messages)</li>
-                    <li>- <span className="text-elec-yellow">UDP Port:</span> 2222 (implicit/I/O)</li>
-                    <li>- <span className="text-elec-yellow">RPI:</span> Requested Packet Interval (ms)</li>
+                    <li>
+                      - <span className="text-elec-yellow">Producer/Consumer Model:</span> Multicast
+                      capable
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">TCP Port:</span> 44818 (explicit
+                      messages)
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">UDP Port:</span> 2222 (implicit/I/O)
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">RPI:</span> Requested Packet Interval
+                      (ms)
+                    </li>
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-muted-foreground mb-2">Connection Types</h5>
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
+                    Connection Types
+                  </h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-blue-400">Explicit:</span> Configuration, diagnostics</li>
-                    <li>- <span className="text-green-400">Implicit:</span> Cyclic I/O data</li>
-                    <li>- <span className="text-purple-400">Class 1:</span> Cyclic scheduled</li>
-                    <li>- <span className="text-orange-400">Class 3:</span> Explicit unconnected</li>
+                    <li>
+                      - <span className="text-blue-400">Explicit:</span> Configuration, diagnostics
+                    </li>
+                    <li>
+                      - <span className="text-green-400">Implicit:</span> Cyclic I/O data
+                    </li>
+                    <li>
+                      - <span className="text-purple-400">Class 1:</span> Cyclic scheduled
+                    </li>
+                    <li>
+                      - <span className="text-orange-400">Class 3:</span> Explicit unconnected
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
 
             <div className="bg-background/50 rounded-lg p-4 mb-4">
-              <h4 className="font-medium text-orange-400 mb-3">EtherCAT (Ethernet for Control Automation Technology)</h4>
+              <h4 className="font-medium text-orange-400 mb-3">
+                EtherCAT (Ethernet for Control Automation Technology)
+              </h4>
               <p className="text-muted-foreground text-sm mb-3">
                 Developed by Beckhoff, EtherCAT achieves exceptional performance through a unique
-                "processing on the fly" architecture where each device processes the frame as it passes.
+                "processing on the fly" architecture where each device processes the frame as it
+                passes.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="text-sm font-medium text-muted-foreground mb-2">Technical Specifications</h5>
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
+                    Technical Specifications
+                  </h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Speed:</span> 100 Mbps full duplex</li>
-                    <li>- <span className="text-elec-yellow">Cycle Time:</span> &lt;100 microseconds possible</li>
-                    <li>- <span className="text-elec-yellow">Jitter:</span> &lt;1 microsecond</li>
-                    <li>- <span className="text-elec-yellow">Nodes:</span> Up to 65,535 devices</li>
+                    <li>
+                      - <span className="text-elec-yellow">Speed:</span> 100 Mbps full duplex
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Cycle Time:</span> &lt;100 microseconds
+                      possible
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Jitter:</span> &lt;1 microsecond
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Nodes:</span> Up to 65,535 devices
+                    </li>
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-muted-foreground mb-2">Topology Support</h5>
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
+                    Topology Support
+                  </h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-green-400">Line:</span> Primary topology (daisy-chain)</li>
-                    <li>- <span className="text-green-400">Tree:</span> Branching supported</li>
-                    <li>- <span className="text-green-400">Ring:</span> Cable redundancy</li>
-                    <li>- <span className="text-red-400">Star:</span> Not supported directly</li>
+                    <li>
+                      - <span className="text-green-400">Line:</span> Primary topology (daisy-chain)
+                    </li>
+                    <li>
+                      - <span className="text-green-400">Tree:</span> Branching supported
+                    </li>
+                    <li>
+                      - <span className="text-green-400">Ring:</span> Cable redundancy
+                    </li>
+                    <li>
+                      - <span className="text-red-400">Star:</span> Not supported directly
+                    </li>
                   </ul>
                 </div>
               </div>
 
               <div className="mt-4 bg-background rounded p-3">
-                <h5 className="text-sm font-medium text-elec-yellow mb-2">EtherCAT Frame Processing</h5>
+                <h5 className="text-sm font-medium text-elec-yellow mb-2">
+                  EtherCAT Frame Processing
+                </h5>
                 <div className="text-muted-foreground text-sm">
-                  <p className="mb-2">Each EtherCAT frame passes through all devices in sequence:</p>
+                  <p className="mb-2">
+                    Each EtherCAT frame passes through all devices in sequence:
+                  </p>
                   <div className="flex items-center gap-2 text-xs overflow-x-auto pb-2">
-                    <div className="bg-blue-500/20 text-blue-300 px-3 py-2 rounded whitespace-nowrap">Master</div>
+                    <div className="bg-blue-500/20 text-blue-300 px-3 py-2 rounded whitespace-nowrap">
+                      Master
+                    </div>
                     <span className="text-elec-yellow">-&gt;</span>
-                    <div className="bg-green-500/20 text-green-300 px-3 py-2 rounded whitespace-nowrap">Slave 1<br/>(reads/writes)</div>
+                    <div className="bg-green-500/20 text-green-300 px-3 py-2 rounded whitespace-nowrap">
+                      Slave 1<br />
+                      (reads/writes)
+                    </div>
                     <span className="text-elec-yellow">-&gt;</span>
-                    <div className="bg-green-500/20 text-green-300 px-3 py-2 rounded whitespace-nowrap">Slave 2<br/>(reads/writes)</div>
+                    <div className="bg-green-500/20 text-green-300 px-3 py-2 rounded whitespace-nowrap">
+                      Slave 2<br />
+                      (reads/writes)
+                    </div>
                     <span className="text-elec-yellow">-&gt;</span>
-                    <div className="bg-green-500/20 text-green-300 px-3 py-2 rounded whitespace-nowrap">Slave N<br/>(reads/writes)</div>
+                    <div className="bg-green-500/20 text-green-300 px-3 py-2 rounded whitespace-nowrap">
+                      Slave N<br />
+                      (reads/writes)
+                    </div>
                     <span className="text-elec-yellow">-&gt;</span>
-                    <div className="bg-blue-500/20 text-blue-300 px-3 py-2 rounded whitespace-nowrap">Return</div>
+                    <div className="bg-blue-500/20 text-blue-300 px-3 py-2 rounded whitespace-nowrap">
+                      Return
+                    </div>
                   </div>
                 </div>
               </div>
@@ -673,10 +836,22 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-blue-300 mb-1">Protocol Selection Guide</h4>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-green-400">Rockwell/Allen-Bradley:</span> EtherNet/IP is native</li>
-                    <li>- <span className="text-purple-400">Siemens:</span> PROFINET preferred, PROFIBUS legacy</li>
-                    <li>- <span className="text-orange-400">Motion Control:</span> EtherCAT for best performance</li>
-                    <li>- <span className="text-blue-400">Multi-vendor/SCADA:</span> Modbus TCP for simplicity</li>
+                    <li>
+                      - <span className="text-green-400">Rockwell/Allen-Bradley:</span> EtherNet/IP
+                      is native
+                    </li>
+                    <li>
+                      - <span className="text-purple-400">Siemens:</span> PROFINET preferred,
+                      PROFIBUS legacy
+                    </li>
+                    <li>
+                      - <span className="text-orange-400">Motion Control:</span> EtherCAT for best
+                      performance
+                    </li>
+                    <li>
+                      - <span className="text-blue-400">Multi-vendor/SCADA:</span> Modbus TCP for
+                      simplicity
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -733,26 +908,38 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                 <ul className="text-muted-foreground text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-foreground">Star:</strong> Devices connect to central switch</span>
+                    <span>
+                      <strong className="text-foreground">Star:</strong> Devices connect to central
+                      switch
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-foreground">Line:</strong> Daisy-chain through device ports</span>
+                    <span>
+                      <strong className="text-foreground">Line:</strong> Daisy-chain through device
+                      ports
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-foreground">Ring:</strong> Redundancy with RSTP/MRP</span>
+                    <span>
+                      <strong className="text-foreground">Ring:</strong> Redundancy with RSTP/MRP
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-foreground">Tree:</strong> Combination of above</span>
+                    <span>
+                      <strong className="text-foreground">Tree:</strong> Combination of above
+                    </span>
                   </li>
                 </ul>
               </div>
             </div>
 
             <div className="bg-background/50 rounded-lg p-4 mb-4">
-              <h4 className="font-medium text-elec-yellow mb-3">Cable Specifications by Protocol</h4>
+              <h4 className="font-medium text-elec-yellow mb-3">
+                Cable Specifications by Protocol
+              </h4>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -803,7 +990,9 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
               <div className="flex items-start gap-2">
                 <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-red-300 mb-1">Industrial Ethernet Cable Requirements</h4>
+                  <h4 className="font-medium text-red-300 mb-1">
+                    Industrial Ethernet Cable Requirements
+                  </h4>
                   <ul className="text-muted-foreground text-sm space-y-1">
                     <li>- Use industrial-rated cables with oil/chemical resistance</li>
                     <li>- Maintain minimum bend radius (typically 4x cable diameter)</li>
@@ -836,19 +1025,39 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                 <div>
                   <h5 className="text-sm font-medium text-muted-foreground mb-2">Hardware Tools</h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Oscilloscope:</span> Signal quality analysis</li>
-                    <li>- <span className="text-elec-yellow">Cable Tester:</span> Continuity and mapping</li>
-                    <li>- <span className="text-elec-yellow">PROFIBUS Tester:</span> ProfiTrace, NetTEST II</li>
-                    <li>- <span className="text-elec-yellow">Network Analyser:</span> Fluke or similar</li>
+                    <li>
+                      - <span className="text-elec-yellow">Oscilloscope:</span> Signal quality
+                      analysis
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Cable Tester:</span> Continuity and
+                      mapping
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">PROFIBUS Tester:</span> ProfiTrace,
+                      NetTEST II
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Network Analyser:</span> Fluke or similar
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <h5 className="text-sm font-medium text-muted-foreground mb-2">Software Tools</h5>
                   <ul className="text-muted-foreground text-sm space-y-1">
-                    <li>- <span className="text-elec-yellow">Wireshark:</span> Ethernet packet capture</li>
-                    <li>- <span className="text-elec-yellow">Modbus Poll/Scan:</span> Protocol testing</li>
-                    <li>- <span className="text-elec-yellow">PRONETA:</span> PROFINET diagnostics</li>
-                    <li>- <span className="text-elec-yellow">RSLinx/Studio 5000:</span> EtherNet/IP diagnostics</li>
+                    <li>
+                      - <span className="text-elec-yellow">Wireshark:</span> Ethernet packet capture
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">Modbus Poll/Scan:</span> Protocol testing
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">PRONETA:</span> PROFINET diagnostics
+                    </li>
+                    <li>
+                      - <span className="text-elec-yellow">RSLinx/Studio 5000:</span> EtherNet/IP
+                      diagnostics
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -860,7 +1069,9 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                 <div className="bg-background rounded p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <Activity className="w-4 h-4 text-red-400" />
-                    <span className="font-medium text-red-300 text-sm">Intermittent Communication Loss</span>
+                    <span className="font-medium text-red-300 text-sm">
+                      Intermittent Communication Loss
+                    </span>
                   </div>
                   <ul className="text-muted-foreground text-sm space-y-1 ml-6">
                     <li>- Check termination resistors (add/remove as needed)</li>
@@ -874,7 +1085,9 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                 <div className="bg-background rounded p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <Activity className="w-4 h-4 text-amber-400" />
-                    <span className="font-medium text-amber-300 text-sm">No Communication at All</span>
+                    <span className="font-medium text-amber-300 text-sm">
+                      No Communication at All
+                    </span>
                   </div>
                   <ul className="text-muted-foreground text-sm space-y-1 ml-6">
                     <li>- Verify matching communication parameters (baud, parity)</li>
@@ -888,7 +1101,9 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
                 <div className="bg-background rounded p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <Activity className="w-4 h-4 text-blue-400" />
-                    <span className="font-medium text-blue-300 text-sm">Slow Response / Timeouts</span>
+                    <span className="font-medium text-blue-300 text-sm">
+                      Slow Response / Timeouts
+                    </span>
                   </div>
                   <ul className="text-muted-foreground text-sm space-y-1 ml-6">
                     <li>- Reduce number of devices or polling frequency</li>
@@ -902,27 +1117,54 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
             </div>
 
             <div className="bg-background/50 rounded-lg p-4">
-              <h4 className="font-medium text-green-400 mb-3">Systematic Troubleshooting Process</h4>
+              <h4 className="font-medium text-green-400 mb-3">
+                Systematic Troubleshooting Process
+              </h4>
               <ol className="text-muted-foreground text-sm space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
-                  <span><strong className="text-foreground">Physical Layer:</strong> Check cables, connectors, termination, power supply</span>
+                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    1
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Physical Layer:</strong> Check cables,
+                    connectors, termination, power supply
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
-                  <span><strong className="text-foreground">Data Link Layer:</strong> Verify baud rate, addressing, frame format</span>
+                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    2
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Data Link Layer:</strong> Verify baud rate,
+                    addressing, frame format
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
-                  <span><strong className="text-foreground">Network Layer:</strong> Check IP addresses, subnet masks, gateways (Ethernet)</span>
+                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    3
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Network Layer:</strong> Check IP addresses,
+                    subnet masks, gateways (Ethernet)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
-                  <span><strong className="text-foreground">Application Layer:</strong> Verify register addresses, data types, function codes</span>
+                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    4
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Application Layer:</strong> Verify register
+                    addresses, data types, function codes
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
-                  <span><strong className="text-foreground">Document:</strong> Record all findings and changes for future reference</span>
+                  <span className="bg-elec-yellow text-background rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    5
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Document:</strong> Record all findings and
+                    changes for future reference
+                  </span>
                 </li>
               </ol>
             </div>
@@ -992,7 +1234,10 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
           <h2 className="text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {faqItems.map((faq, index) => (
-              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+              <div
+                key={index}
+                className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4"
+              >
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
                 <p className="text-sm text-muted-foreground">{faq.answer}</p>
               </div>
@@ -1019,13 +1264,20 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation border-white/20" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation border-white/20"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-4/section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Section 3 - Sensors
             </Link>
           </Button>
-          <Button className="min-h-[44px] touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90" asChild>
+          <Button
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-4/section-5">
               Next: Section 5 - HMI and SCADA
               <ArrowRight className="w-4 h-4 ml-2" />

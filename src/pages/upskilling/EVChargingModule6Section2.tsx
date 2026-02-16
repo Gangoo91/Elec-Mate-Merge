@@ -1,72 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m6s2-check1",
-    question: "What is the minimum burial depth for SWA cables under a driveway?",
-    options: ["300mm", "450mm", "600mm", "750mm"],
+    id: 'evcharging-m6s2-check1',
+    question: 'What is the minimum burial depth for SWA cables under a driveway?',
+    options: ['300mm', '450mm', '600mm', '750mm'],
     correctIndex: 2,
-    explanation: "SWA cables should be buried at a minimum depth of 600mm (750mm under driveways is often recommended). Warning tape should be installed 150mm above the cable."
+    explanation:
+      'SWA cables should be buried at a minimum depth of 600mm (750mm under driveways is often recommended). Warning tape should be installed 150mm above the cable.',
   },
   {
-    id: "evcharging-m6s2-check2",
-    question: "What is the maximum voltage drop allowed for EV charging circuits?",
-    options: ["3%", "4%", "5%", "6%"],
+    id: 'evcharging-m6s2-check2',
+    question: 'What is the maximum voltage drop allowed for EV charging circuits?',
+    options: ['3%', '4%', '5%', '6%'],
     correctIndex: 2,
-    explanation: "BS 7671 allows a maximum 5% voltage drop from the origin of the installation. For a 230V supply, this is 11.5V maximum."
+    explanation:
+      'BS 7671 allows a maximum 5% voltage drop from the origin of the installation. For a 230V supply, this is 11.5V maximum.',
   },
   {
-    id: "evcharging-m6s2-check3",
-    question: "What torque setting is typically required for a 6mm² conductor in a terminal block?",
-    options: ["1.2 Nm", "2.5 Nm", "4.0 Nm", "6.0 Nm"],
+    id: 'evcharging-m6s2-check3',
+    question: 'What torque setting is typically required for a 6mm² conductor in a terminal block?',
+    options: ['1.2 Nm', '2.5 Nm', '4.0 Nm', '6.0 Nm'],
     correctIndex: 1,
-    explanation: "6mm² conductors typically require 2.5 Nm torque in standard terminal blocks. Always verify with the manufacturer's specifications."
-  }
+    explanation:
+      "6mm² conductors typically require 2.5 Nm torque in standard terminal blocks. Always verify with the manufacturer's specifications.",
+  },
 ];
 
 const faqs = [
   {
-    question: "What happens if my voltage drop calculation exceeds 5%?",
-    answer: "Increase cable size to reduce voltage drop. Consider splitting long runs with intermediate distribution points. For existing installations, check actual voltage under load - calculations include safety margins."
+    question: 'What happens if my voltage drop calculation exceeds 5%?',
+    answer:
+      'Increase cable size to reduce voltage drop. Consider splitting long runs with intermediate distribution points. For existing installations, check actual voltage under load - calculations include safety margins.',
   },
   {
-    question: "Can I use standard Twin & Earth cable for EV charging outdoors?",
-    answer: "No, Twin & Earth lacks mechanical protection for outdoor use. Use SWA cable with appropriate environmental rating. Indoor routing of T&E is acceptable with proper protection."
+    question: 'Can I use standard Twin & Earth cable for EV charging outdoors?',
+    answer:
+      'No, Twin & Earth lacks mechanical protection for outdoor use. Use SWA cable with appropriate environmental rating. Indoor routing of T&E is acceptable with proper protection.',
   },
   {
-    question: "How do I connect the SWA armour to earth?",
-    answer: "Use a CW (Cable Wire) gland with integral earth connection, or connect armour to a separate earth terminal. Ensure continuity throughout the cable run and test resistance."
+    question: 'How do I connect the SWA armour to earth?',
+    answer:
+      'Use a CW (Cable Wire) gland with integral earth connection, or connect armour to a separate earth terminal. Ensure continuity throughout the cable run and test resistance.',
   },
   {
     question: "What's the maximum length for an EV charging circuit?",
-    answer: "No specific limit, but voltage drop constrains practical length. Typically 50-80m for 6mm² cable depending on load. Consider sub-distribution for longer runs."
-  }
+    answer:
+      'No specific limit, but voltage drop constrains practical length. Typically 50-80m for 6mm² cable depending on load. Consider sub-distribution for longer runs.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A 22kW three-phase EV charger requires a 40m cable run in underground ducting. Which cable selection is most appropriate?",
-  options: [
-    "6mm² 4-core Twin & Earth in conduit",
-    "10mm² 4-core SWA with CW glands",
-    "4mm² flexible cable in trunking",
-    "16mm² single-core cables in separate ducts"
-  ],
-  correctAnswer: 1,
-  explanation: "10mm² 4-core SWA provides adequate current capacity (57A > 32A per phase), mechanical protection for underground installation, and proper earth continuity via the steel wire armour."
-  }
+    question:
+      'A 22kW three-phase EV charger requires a 40m cable run in underground ducting. Which cable selection is most appropriate?',
+    options: [
+      '6mm² 4-core Twin & Earth in conduit',
+      '10mm² 4-core SWA with CW glands',
+      '4mm² flexible cable in trunking',
+      '16mm² single-core cables in separate ducts',
+    ],
+    correctAnswer: 1,
+    explanation:
+      '10mm² 4-core SWA provides adequate current capacity (57A > 32A per phase), mechanical protection for underground installation, and proper earth continuity via the steel wire armour.',
+  },
 ];
 
 const EVChargingModule6Section2 = () => {
   useSEO({
-    title: "Cable Termination and Routing | EV Charging Module 6.2",
-    description: "Master professional cable termination and routing practices for EV charging installations, including voltage drop calculations and BS 7671 compliance."
+    title: 'Cable Termination and Routing | EV Charging Module 6.2',
+    description:
+      'Master professional cable termination and routing practices for EV charging installations, including voltage drop calculations and BS 7671 compliance.',
   });
 
   return (
@@ -108,16 +118,26 @@ const EVChargingModule6Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Cable:</strong> SWA for external, LSF for commercial</li>
-              <li><strong>Voltage drop:</strong> Maximum 5% (11.5V at 230V)</li>
-              <li><strong>Burial depth:</strong> Minimum 600mm underground</li>
+              <li>
+                <strong>Cable:</strong> SWA for external, LSF for commercial
+              </li>
+              <li>
+                <strong>Voltage drop:</strong> Maximum 5% (11.5V at 230V)
+              </li>
+              <li>
+                <strong>Burial depth:</strong> Minimum 600mm underground
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> CW glands, cable cleats, route markers</li>
-              <li><strong>Use:</strong> Torque wrench, cable calculator, warning tape</li>
+              <li>
+                <strong>Spot:</strong> CW glands, cable cleats, route markers
+              </li>
+              <li>
+                <strong>Use:</strong> Torque wrench, cable calculator, warning tape
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +147,12 @@ const EVChargingModule6Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Select appropriate cables for EV applications",
-              "Calculate voltage drop and derating factors",
-              "Implement proper routing and protection",
-              "Execute professional termination techniques",
-              "Apply correct torque settings",
-              "Comply with BS 7671 cable requirements"
+              'Select appropriate cables for EV applications',
+              'Calculate voltage drop and derating factors',
+              'Implement proper routing and protection',
+              'Execute professional termination techniques',
+              'Apply correct torque settings',
+              'Comply with BS 7671 cable requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,38 +172,64 @@ const EVChargingModule6Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Correct cable selection ensures safe current carrying capacity, appropriate
-              mechanical protection, and compliance with voltage drop requirements.
+              Correct cable selection ensures safe current carrying capacity, appropriate mechanical
+              protection, and compliance with voltage drop requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Types</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>6242Y T&E:</strong> Internal dry locations only</li>
-                  <li><strong>SWA:</strong> Underground/external installation</li>
-                  <li><strong>LSF:</strong> Commercial buildings, escape routes</li>
-                  <li><strong>FP200:</strong> Fire survival circuits</li>
+                  <li>
+                    <strong>6242Y T&E:</strong> Internal dry locations only
+                  </li>
+                  <li>
+                    <strong>SWA:</strong> Underground/external installation
+                  </li>
+                  <li>
+                    <strong>LSF:</strong> Commercial buildings, escape routes
+                  </li>
+                  <li>
+                    <strong>FP200:</strong> Fire survival circuits
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Derating Factors</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Ca (temp):</strong> 0.87 at 40°C ambient</li>
-                  <li><strong>Cg (grouping):</strong> 0.80 for 2 circuits</li>
-                  <li><strong>Ci (insulation):</strong> 0.78 if surrounded</li>
-                  <li><strong>Overall:</strong> Multiply all factors</li>
+                  <li>
+                    <strong>Ca (temp):</strong> 0.87 at 40°C ambient
+                  </li>
+                  <li>
+                    <strong>Cg (grouping):</strong> 0.80 for 2 circuits
+                  </li>
+                  <li>
+                    <strong>Ci (insulation):</strong> 0.78 if surrounded
+                  </li>
+                  <li>
+                    <strong>Overall:</strong> Multiply all factors
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common Cable Sizes for EV Charging:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Common Cable Sizes for EV Charging:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>3.7kW (16A single phase):</strong> 2.5mm² minimum</li>
-                <li><strong>7.4kW (32A single phase):</strong> 6mm² typical</li>
-                <li><strong>22kW (32A three phase):</strong> 6-10mm² depending on length</li>
-                <li><strong>Multiple chargers:</strong> 10-16mm² sub-mains</li>
+                <li>
+                  <strong>3.7kW (16A single phase):</strong> 2.5mm² minimum
+                </li>
+                <li>
+                  <strong>7.4kW (32A single phase):</strong> 6mm² typical
+                </li>
+                <li>
+                  <strong>22kW (32A three phase):</strong> 6-10mm² depending on length
+                </li>
+                <li>
+                  <strong>Multiple chargers:</strong> 10-16mm² sub-mains
+                </li>
               </ul>
             </div>
           </div>
@@ -199,8 +245,8 @@ const EVChargingModule6Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Voltage drop must not exceed 5% (11.5V at 230V) from the origin of the
-              installation to ensure proper charger operation and efficiency.
+              Voltage drop must not exceed 5% (11.5V at 230V) from the origin of the installation to
+              ensure proper charger operation and efficiency.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -251,18 +297,28 @@ const EVChargingModule6Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Professional termination and proper routing ensure long-term reliability
-              and maintainability of the EV charging installation.
+              Professional termination and proper routing ensure long-term reliability and
+              maintainability of the EV charging installation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">SWA Termination Steps</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  SWA Termination Steps
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>1.</strong> Strip outer sheath correctly</li>
-                  <li><strong>2.</strong> Select correct CW gland size</li>
-                  <li><strong>3.</strong> Ensure armour contacts compression ring</li>
-                  <li><strong>4.</strong> Apply correct torque to terminals</li>
+                  <li>
+                    <strong>1.</strong> Strip outer sheath correctly
+                  </li>
+                  <li>
+                    <strong>2.</strong> Select correct CW gland size
+                  </li>
+                  <li>
+                    <strong>3.</strong> Ensure armour contacts compression ring
+                  </li>
+                  <li>
+                    <strong>4.</strong> Apply correct torque to terminals
+                  </li>
                 </ul>
               </div>
               <div>
@@ -279,9 +335,15 @@ const EVChargingModule6Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Torque Settings Reference:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>2.5mm²:</strong> 1.2 Nm typical</li>
-                <li><strong>6mm²:</strong> 2.5 Nm typical</li>
-                <li><strong>10mm²:</strong> 4.0 Nm typical</li>
+                <li>
+                  <strong>2.5mm²:</strong> 1.2 Nm typical
+                </li>
+                <li>
+                  <strong>6mm²:</strong> 2.5 Nm typical
+                </li>
+                <li>
+                  <strong>10mm²:</strong> 4.0 Nm typical
+                </li>
                 <li>Always verify with equipment specifications</li>
               </ul>
             </div>
@@ -295,7 +357,9 @@ const EVChargingModule6Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Installation Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Quality Installation Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Clean, straight cuts on all conductors</li>
                 <li>No nicked or damaged copper strands</li>
@@ -308,10 +372,18 @@ const EVChargingModule6Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Faults to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Loose terminations:</strong> — cause overheating and failure</li>
-                <li><strong>Incorrect gland size:</strong> — compromises IP rating</li>
-                <li><strong>Minimum bend radius:</strong> — damages cable insulation</li>
-                <li><strong>No warning tape:</strong> — future excavation risk</li>
+                <li>
+                  <strong>Loose terminations:</strong> — cause overheating and failure
+                </li>
+                <li>
+                  <strong>Incorrect gland size:</strong> — compromises IP rating
+                </li>
+                <li>
+                  <strong>Minimum bend radius:</strong> — damages cable insulation
+                </li>
+                <li>
+                  <strong>No warning tape:</strong> — future excavation risk
+                </li>
               </ul>
             </div>
           </div>
@@ -355,10 +427,7 @@ const EVChargingModule6Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -12,12 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   Drawer,
   DrawerContent,
@@ -96,14 +91,12 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
 
   // Separate single-phase and three-phase circuits
   const { singlePhaseCircuits, threePhaseCircuits } = useMemo(() => {
-    const threePhasePositions = new Set(
-      threePhaseGroups.flatMap(g => g.positions)
-    );
+    const threePhasePositions = new Set(threePhaseGroups.flatMap((g) => g.positions));
 
     const single: TestResult[] = [];
     const threep: TestResult[] = [];
 
-    testResults.forEach(r => {
+    testResults.forEach((r) => {
       const pos = parseInt(r.circuitNumber || '0');
       if (r.phaseType === '3P' || threePhasePositions.has(pos)) {
         threep.push(r);
@@ -117,9 +110,11 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
 
   // Calculate total phase loads from all circuits
   const totalPhaseLoads = useMemo((): PhaseLoadData => {
-    let L1 = 0, L2 = 0, L3 = 0;
+    let L1 = 0,
+      L2 = 0,
+      L3 = 0;
 
-    testResults.forEach(r => {
+    testResults.forEach((r) => {
       if (r.phaseType === '3P') {
         L1 += parseFloat(r.phaseBalanceL1 || '0') || 0;
         L2 += parseFloat(r.phaseBalanceL2 || '0') || 0;
@@ -131,7 +126,8 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
 
         // Simple rotation: C1 -> L1, C2 -> L2, C3 -> L3, C4 -> L1...
         const phaseIndex = (circuitNum - 1) % 3;
-        if (phaseIndex === 0) L1 += load * 0.5; // Assume 50% loading
+        if (phaseIndex === 0)
+          L1 += load * 0.5; // Assume 50% loading
         else if (phaseIndex === 1) L2 += load * 0.5;
         else L3 += load * 0.5;
       }
@@ -157,7 +153,7 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
 
   // Toggle group expansion
   const toggleGroup = (groupId: string) => {
-    setExpandedGroups(prev => {
+    setExpandedGroups((prev) => {
       const next = new Set(prev);
       if (next.has(groupId)) {
         next.delete(groupId);
@@ -207,11 +203,7 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
                   {overallBalance.imbalancePercent}% Imbalance
                 </Badge>
               )}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowChart(!showChart)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setShowChart(!showChart)}>
                 {showChart ? 'Hide Chart' : 'Show Chart'}
               </Button>
             </div>
@@ -288,11 +280,11 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {threePhaseGroups.map(group => (
+              {threePhaseGroups.map((group) => (
                 <ThreePhaseGroupRow
                   key={group.id}
                   group={group}
-                  circuits={testResults.filter(r =>
+                  circuits={testResults.filter((r) =>
                     group.positions.includes(parseInt(r.circuitNumber || '0'))
                   )}
                   isExpanded={expandedGroups.has(group.id)}
@@ -315,7 +307,7 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
             {useMobileView ? (
               /* Mobile Card View */
               <div className="space-y-3">
-                {threePhaseCircuits.map(circuit => (
+                {threePhaseCircuits.map((circuit) => (
                   <MobileThreePhaseCard
                     key={circuit.id}
                     circuit={circuit}
@@ -333,7 +325,9 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
                       <TableHead>Description</TableHead>
                       <TableHead className="w-20">Rating</TableHead>
                       <TableHead className="w-24 bg-red-50 dark:bg-red-950/20">L1 (A)</TableHead>
-                      <TableHead className="w-24 bg-yellow-50 dark:bg-yellow-950/20">L2 (A)</TableHead>
+                      <TableHead className="w-24 bg-yellow-50 dark:bg-yellow-950/20">
+                        L2 (A)
+                      </TableHead>
                       <TableHead className="w-24 bg-blue-50 dark:bg-blue-950/20">L3 (A)</TableHead>
                       <TableHead className="w-28">Balance</TableHead>
                       <TableHead className="w-24">Rotation</TableHead>
@@ -341,7 +335,7 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {threePhaseCircuits.map(circuit => (
+                    {threePhaseCircuits.map((circuit) => (
                       <ThreePhaseCircuitRow
                         key={circuit.id}
                         circuit={circuit}
@@ -395,8 +389,10 @@ const ThreePhaseGroupRow: React.FC<{
 }> = ({ group, circuits, isExpanded, onToggle, onUpdateResult }) => {
   // Calculate group phase balance
   const groupLoads = useMemo((): PhaseLoadData => {
-    let L1 = 0, L2 = 0, L3 = 0;
-    circuits.forEach(c => {
+    let L1 = 0,
+      L2 = 0,
+      L3 = 0;
+    circuits.forEach((c) => {
       L1 += parseFloat(c.phaseBalanceL1 || '0') || 0;
       L2 += parseFloat(c.phaseBalanceL2 || '0') || 0;
       L3 += parseFloat(c.phaseBalanceL3 || '0') || 0;
@@ -414,24 +410,16 @@ const ThreePhaseGroupRow: React.FC<{
         className="w-full flex items-center justify-between p-3 bg-purple-50/50 dark:bg-purple-950/20 hover:bg-purple-100/50 dark:hover:bg-purple-950/30 transition-colors"
       >
         <div className="flex items-center gap-3">
-          {isExpanded ? (
-            <ChevronDown className="h-4 w-4" />
-          ) : (
-            <ChevronRight className="h-4 w-4" />
-          )}
+          {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
           <Badge variant="outline" className="bg-purple-100 text-purple-700 border-purple-200">
             3P
           </Badge>
           <span className="font-medium">{group.label}</span>
-          <span className="text-sm text-muted-foreground">
-            (Ways {group.positions.join(', ')})
-          </span>
+          <span className="text-sm text-muted-foreground">(Ways {group.positions.join(', ')})</span>
         </div>
         <div className="flex items-center gap-2">
           <Badge variant="outline">{group.rating}A</Badge>
-          {hasLoads && (
-            <PhaseBalanceIndicator loads={groupLoads} compact />
-          )}
+          {hasLoads && <PhaseBalanceIndicator loads={groupLoads} compact />}
         </div>
       </button>
 
@@ -445,9 +433,11 @@ const ThreePhaseGroupRow: React.FC<{
                   <Badge
                     variant="outline"
                     className={
-                      idx === 0 ? 'bg-red-50 text-red-700 border-red-200' :
-                      idx === 1 ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                      'bg-blue-50 text-blue-700 border-blue-200'
+                      idx === 0
+                        ? 'bg-red-50 text-red-700 border-red-200'
+                        : idx === 1
+                          ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                          : 'bg-blue-50 text-blue-700 border-blue-200'
                     }
                   >
                     {group.phases[idx]}
@@ -461,13 +451,7 @@ const ThreePhaseGroupRow: React.FC<{
             ))}
           </div>
 
-          {hasLoads && (
-            <PhaseBalanceIndicator
-              loads={groupLoads}
-              showNeutral
-              showDetails
-            />
-          )}
+          {hasLoads && <PhaseBalanceIndicator loads={groupLoads} showNeutral showDetails />}
         </div>
       )}
     </div>
@@ -492,7 +476,9 @@ const ThreePhaseCircuitRow: React.FC<{
 
   return (
     <TableRow>
-      <TableCell className="font-medium">{circuit.circuitDesignation || circuit.circuitNumber}</TableCell>
+      <TableCell className="font-medium">
+        {circuit.circuitDesignation || circuit.circuitNumber}
+      </TableCell>
       <TableCell className="max-w-[200px] truncate">{circuit.circuitDescription}</TableCell>
       <TableCell>{circuit.protectiveDeviceRating}A</TableCell>
       <TableCell className="bg-red-50/50 dark:bg-red-950/10">
@@ -541,7 +527,9 @@ const ThreePhaseCircuitRow: React.FC<{
               </TooltipTrigger>
               <TooltipContent>
                 <p className="text-xs">
-                  {balance.isCompliant ? 'Within BS7671 limits (<10%)' : 'Exceeds BS7671 limit (>10%)'}
+                  {balance.isCompliant
+                    ? 'Within BS7671 limits (<10%)'
+                    : 'Exceeds BS7671 limit (>10%)'}
                 </p>
                 {balance.recommendation && (
                   <p className="text-xs text-amber-500 mt-1">{balance.recommendation}</p>
@@ -583,10 +571,7 @@ const MobileThreePhaseCard: React.FC<{
   const balance = hasLoads ? calculatePhaseBalance(loads) : null;
 
   return (
-    <Card
-      className="touch-manipulation active:scale-[0.98] transition-transform"
-      onClick={onEdit}
-    >
+    <Card className="touch-manipulation active:scale-[0.98] transition-transform" onClick={onEdit}>
       <CardContent className="p-4">
         {/* Header Row */}
         <div className="flex items-center justify-between mb-3">
@@ -626,10 +611,7 @@ const MobileThreePhaseCard: React.FC<{
             <span className="font-medium">{circuit.protectiveDeviceRating || '-'}A</span>
           </div>
           {balance && (
-            <Badge
-              variant="outline"
-              className={getPhaseBalanceColor(balance.imbalancePercent)}
-            >
+            <Badge variant="outline" className={getPhaseBalanceColor(balance.imbalancePercent)}>
               {balance.isCompliant ? (
                 <CheckCircle className="h-3 w-3 mr-1" />
               ) : (
@@ -722,18 +704,24 @@ const MobileEditDrawer: React.FC<{
                   type="number"
                   inputMode="decimal"
                   value={localValues.phaseBalanceL1}
-                  onChange={(e) => setLocalValues(prev => ({ ...prev, phaseBalanceL1: e.target.value }))}
+                  onChange={(e) =>
+                    setLocalValues((prev) => ({ ...prev, phaseBalanceL1: e.target.value }))
+                  }
                   placeholder="0"
                   className="h-12 text-lg text-center touch-manipulation bg-red-50/50 dark:bg-red-950/20 border-red-200"
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-yellow-600 dark:text-yellow-400">L2</label>
+                <label className="text-xs font-medium text-yellow-600 dark:text-yellow-400">
+                  L2
+                </label>
                 <Input
                   type="number"
                   inputMode="decimal"
                   value={localValues.phaseBalanceL2}
-                  onChange={(e) => setLocalValues(prev => ({ ...prev, phaseBalanceL2: e.target.value }))}
+                  onChange={(e) =>
+                    setLocalValues((prev) => ({ ...prev, phaseBalanceL2: e.target.value }))
+                  }
                   placeholder="0"
                   className="h-12 text-lg text-center touch-manipulation bg-yellow-50/50 dark:bg-yellow-950/20 border-yellow-200"
                 />
@@ -744,7 +732,9 @@ const MobileEditDrawer: React.FC<{
                   type="number"
                   inputMode="decimal"
                   value={localValues.phaseBalanceL3}
-                  onChange={(e) => setLocalValues(prev => ({ ...prev, phaseBalanceL3: e.target.value }))}
+                  onChange={(e) =>
+                    setLocalValues((prev) => ({ ...prev, phaseBalanceL3: e.target.value }))
+                  }
                   placeholder="0"
                   className="h-12 text-lg text-center touch-manipulation bg-blue-50/50 dark:bg-blue-950/20 border-blue-200"
                 />
@@ -781,10 +771,13 @@ const MobileEditDrawer: React.FC<{
                   key={option}
                   variant={localValues.phaseRotation === option ? 'default' : 'outline'}
                   className={`h-12 touch-manipulation ${
-                    option === '✓' ? 'text-green-600 border-green-300' :
-                    option === '✗' ? 'text-red-600 border-red-300' : ''
+                    option === '✓'
+                      ? 'text-green-600 border-green-300'
+                      : option === '✗'
+                        ? 'text-red-600 border-red-300'
+                        : ''
                   }`}
-                  onClick={() => setLocalValues(prev => ({ ...prev, phaseRotation: option }))}
+                  onClick={() => setLocalValues((prev) => ({ ...prev, phaseRotation: option }))}
                 >
                   {option === '✓' ? '✓ Correct' : option === '✗' ? '✗ Incorrect' : option}
                 </Button>
@@ -800,11 +793,15 @@ const MobileEditDrawer: React.FC<{
                 type="number"
                 inputMode="decimal"
                 value={localValues.lineToLineVoltage}
-                onChange={(e) => setLocalValues(prev => ({ ...prev, lineToLineVoltage: e.target.value }))}
+                onChange={(e) =>
+                  setLocalValues((prev) => ({ ...prev, lineToLineVoltage: e.target.value }))
+                }
                 placeholder="400"
                 className="h-12 text-lg touch-manipulation flex-1"
               />
-              <span className="flex items-center px-3 bg-muted rounded-md text-muted-foreground">V</span>
+              <span className="flex items-center px-3 bg-muted rounded-md text-muted-foreground">
+                V
+              </span>
             </div>
             <p className="text-xs text-muted-foreground">Nominal: 400V (360-440V acceptable)</p>
           </div>
@@ -812,10 +809,7 @@ const MobileEditDrawer: React.FC<{
 
         {/* Save Button */}
         <div className="p-4 border-t bg-background">
-          <Button
-            onClick={handleSave}
-            className="w-full h-12 text-base touch-manipulation"
-          >
+          <Button onClick={handleSave} className="w-full h-12 text-base touch-manipulation">
             Save Changes
           </Button>
         </div>

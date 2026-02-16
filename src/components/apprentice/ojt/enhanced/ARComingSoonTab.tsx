@@ -1,43 +1,42 @@
-
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Eye, Zap, Headphones, Smartphone, Calendar, Clock, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Eye, Zap, Headphones, Smartphone, Calendar, Clock, Star } from 'lucide-react';
 
 const ARComingSoonTab = () => {
   const arFeatures = [
     {
-      title: "3D Circuit Visualization",
-      description: "See electrical circuits in 3D space with real-time current flow animations",
+      title: '3D Circuit Visualization',
+      description: 'See electrical circuits in 3D space with real-time current flow animations',
       icon: Zap,
-      status: "In Development"
+      status: 'In Development',
     },
     {
-      title: "Virtual Equipment Training",
-      description: "Practice with virtual test equipment before using the real thing",
+      title: 'Virtual Equipment Training',
+      description: 'Practice with virtual test equipment before using the real thing',
       icon: Smartphone,
-      status: "Planned"
+      status: 'Planned',
     },
     {
-      title: "Interactive Safety Scenarios",
-      description: "Experience safety situations in a controlled virtual environment",
+      title: 'Interactive Safety Scenarios',
+      description: 'Experience safety situations in a controlled virtual environment',
       icon: Eye,
-      status: "Research Phase"
+      status: 'Research Phase',
     },
     {
-      title: "Remote Mentoring",
-      description: "Share your view with mentors for real-time guidance on-site",
+      title: 'Remote Mentoring',
+      description: 'Share your view with mentors for real-time guidance on-site',
       icon: Headphones,
-      status: "Concept"
-    }
+      status: 'Concept',
+    },
   ];
 
   const developmentMilestones = [
-    { phase: "Research & Design", progress: 100, status: "Complete" },
-    { phase: "Prototype Development", progress: 75, status: "In Progress" },
-    { phase: "Beta Testing", progress: 0, status: "Upcoming" },
-    { phase: "Public Release", progress: 0, status: "2025 Q3" }
+    { phase: 'Research & Design', progress: 100, status: 'Complete' },
+    { phase: 'Prototype Development', progress: 75, status: 'In Progress' },
+    { phase: 'Beta Testing', progress: 0, status: 'Upcoming' },
+    { phase: 'Public Release', progress: 0, status: '2025 Q3' },
   ];
 
   return (
@@ -49,10 +48,11 @@ const ARComingSoonTab = () => {
             <Eye className="h-6 w-6" />
             Augmented Reality Training
           </CardTitle>
-          <p className="text-lg text-white">
-            The future of electrical apprentice training is here
-          </p>
-          <Badge variant="outline" className="self-center bg-blue-500/20 text-blue-300 border-blue-500/50">
+          <p className="text-lg text-white">The future of electrical apprentice training is here</p>
+          <Badge
+            variant="outline"
+            className="self-center bg-blue-500/20 text-blue-300 border-blue-500/50"
+          >
             Coming Soon - 2025 Q3
           </Badge>
         </CardHeader>
@@ -60,7 +60,7 @@ const ARComingSoonTab = () => {
           <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg p-8 border border-blue-500/30">
             <Eye className="h-16 w-16 text-blue-400 mx-auto mb-4" />
             <p className="text-white">
-              Imagine being able to see electrical circuits in 3D, practice with virtual equipment, 
+              Imagine being able to see electrical circuits in 3D, practice with virtual equipment,
               and receive real-time guidance from mentors - all through augmented reality.
             </p>
           </div>
@@ -81,7 +81,10 @@ const ARComingSoonTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {arFeatures.map((feature, index) => (
-              <Card key={index} className="border-white/15 bg-gradient-to-br from-white/5 to-white/[0.02]">
+              <Card
+                key={index}
+                className="border-white/15 bg-gradient-to-br from-white/5 to-white/[0.02]"
+              >
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <feature.icon className="h-5 w-5 text-blue-400" />
@@ -92,9 +95,7 @@ const ARComingSoonTab = () => {
                   </Badge>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-white">
-                    {feature.description}
-                  </p>
+                  <p className="text-sm text-white">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -119,29 +120,32 @@ const ARComingSoonTab = () => {
               <div key={index} className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="font-medium">{milestone.phase}</span>
-                  <Badge 
-                    variant="outline" 
+                  <Badge
+                    variant="outline"
                     className={`text-xs ${
-                      milestone.status === 'Complete' ? 'bg-green-500/20 text-green-300 border-green-500/50' :
-                      milestone.status === 'In Progress' ? 'bg-blue-500/20 text-blue-300 border-blue-500/50' :
-                      'bg-white/10 text-white/80 border-white/50'
+                      milestone.status === 'Complete'
+                        ? 'bg-green-500/20 text-green-300 border-green-500/50'
+                        : milestone.status === 'In Progress'
+                          ? 'bg-blue-500/20 text-blue-300 border-blue-500/50'
+                          : 'bg-white/10 text-white/80 border-white/50'
                     }`}
                   >
                     {milestone.status}
                   </Badge>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-2">
-                  <div 
+                  <div
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      milestone.progress === 100 ? 'bg-green-500' :
-                      milestone.progress > 0 ? 'bg-blue-500' : 'bg-white/15'
+                      milestone.progress === 100
+                        ? 'bg-green-500'
+                        : milestone.progress > 0
+                          ? 'bg-blue-500'
+                          : 'bg-white/15'
                     }`}
                     style={{ width: `${milestone.progress}%` }}
                   ></div>
                 </div>
-                <div className="text-xs text-white">
-                  {milestone.progress}% Complete
-                </div>
+                <div className="text-xs text-white">{milestone.progress}% Complete</div>
               </div>
             ))}
           </div>
@@ -155,9 +159,7 @@ const ARComingSoonTab = () => {
             <Eye className="h-5 w-5" />
             AR Preview Concept
           </CardTitle>
-          <p className="text-sm text-white">
-            Get a glimpse of what AR training will look like
-          </p>
+          <p className="text-sm text-white">Get a glimpse of what AR training will look like</p>
         </CardHeader>
         <CardContent>
           <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg p-6 border border-purple-500/30">
@@ -167,17 +169,15 @@ const ARComingSoonTab = () => {
                   <Eye className="h-12 w-12 text-purple-400 mx-auto mb-4 animate-pulse" />
                   <p className="text-purple-300 font-semibold">AR Experience Preview</p>
                   <p className="text-sm text-white mt-2">
-                    Point your device at electrical equipment to see interactive 3D overlays, 
-                    safety information, and step-by-step guidance.
+                    Point your device at electrical equipment to see interactive 3D overlays, safety
+                    information, and step-by-step guidance.
                   </p>
                 </div>
                 <div className="absolute -top-2 -right-2">
-                  <Badge className="bg-purple-500 text-white">
-                    Demo Coming Soon
-                  </Badge>
+                  <Badge className="bg-purple-500 text-white">Demo Coming Soon</Badge>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-3 gap-4 mt-6">
                 <div className="text-center">
                   <Zap className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
@@ -210,9 +210,7 @@ const ARComingSoonTab = () => {
             <Button className="flex-1" variant="outline">
               Join AR Beta List
             </Button>
-            <Button className="flex-1">
-              Get Notified on Release
-            </Button>
+            <Button className="flex-1">Get Notified on Release</Button>
           </div>
           <p className="text-xs text-white mt-4 text-center">
             Expected release: Q3 2025 • Beta testing available Q2 2025

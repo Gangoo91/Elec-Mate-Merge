@@ -1,25 +1,16 @@
-
-import { useState } from "react";
-import { Helmet } from "react-helmet";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { 
-  Search, 
-  MapPin, 
-  Brain, 
-  Star, 
-  Settings,
-  Loader2,
-  Sparkles
-} from "lucide-react";
-import BasicJobSearch from "@/components/job-vacancies/BasicJobSearch";
-import ModernJobCard from "@/components/job-vacancies/ModernJobCard";
-import { useJobListings } from "@/hooks/job-vacancies/useJobListings";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Search, MapPin, Brain, Star, Settings, Loader2, Sparkles } from 'lucide-react';
+import BasicJobSearch from '@/components/job-vacancies/BasicJobSearch';
+import ModernJobCard from '@/components/job-vacancies/ModernJobCard';
+import { useJobListings } from '@/hooks/job-vacancies/useJobListings';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface UserProfile {
   experience: string;
@@ -48,57 +39,53 @@ interface JobListing {
 }
 
 const JobVacancies = () => {
-  const { 
-    jobs, 
-    isLoading, 
-    handleApply
-  } = useJobListings();
-  
+  const { jobs, isLoading, handleApply } = useJobListings();
+
   const [aiEnhancedJobs, setAiEnhancedJobs] = useState<JobListing[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    experience: "",
+    experience: '',
     skills: [],
     certifications: [],
-    preferredLocation: "",
-    preferredSalary: "",
+    preferredLocation: '',
+    preferredSalary: '',
     jobTypes: [],
-    workMode: []
+    workMode: [],
   });
   const [isMatching, setIsMatching] = useState(false);
   const [savedJobs, setSavedJobs] = useState<string[]>([]);
   const [showAIProfile, setShowAIProfile] = useState(false);
-  const [skillInput, setSkillInput] = useState("");
+  const [skillInput, setSkillInput] = useState('');
 
   const commonSkills = [
-    "Electrical Installation",
-    "Testing & Inspection", 
-    "18th Edition",
-    "PAT Testing",
-    "EICR",
-    "Solar Installation",
-    "EV Charging",
-    "Commercial Electrical",
-    "Domestic Electrical",
-    "Industrial Electrical",
-    "Maintenance",
-    "Fault Finding"
+    'Electrical Installation',
+    'Testing & Inspection',
+    '18th Edition',
+    'PAT Testing',
+    'EICR',
+    'Solar Installation',
+    'EV Charging',
+    'Commercial Electrical',
+    'Domestic Electrical',
+    'Industrial Electrical',
+    'Maintenance',
+    'Fault Finding',
   ];
 
   const handleGenerateMatches = async () => {
     if (!jobs.length) {
       toast({
-        title: "No jobs available",
-        description: "Search for jobs first to get AI matches",
-        variant: "destructive"
+        title: 'No jobs available',
+        description: 'Search for jobs first to get AI matches',
+        variant: 'destructive',
       });
       return;
     }
 
     if (!userProfile.skills.length && !userProfile.experience) {
       toast({
-        title: "Profile incomplete",
-        description: "Please add some skills or experience for better matching",
-        variant: "destructive"
+        title: 'Profile incomplete',
+        description: 'Please add some skills or experience for better matching',
+        variant: 'destructive',
       });
       return;
     }
@@ -109,37 +96,36 @@ const JobVacancies = () => {
         body: {
           jobs: jobs.slice(0, 20), // Limit for better performance
           userPreferences: userProfile,
-          searchQuery: `${userProfile.skills.join(', ')} ${userProfile.experience}`
-        }
+          searchQuery: `${userProfile.skills.join(', ')} ${userProfile.experience}`,
+        },
       });
 
       if (error) throw error;
 
       const enhancedJobs = data.enhancedJobs || [];
-      
+
       // Sort by match score
       const sortedJobs = enhancedJobs
         .filter((job: any) => job.relevanceScore && job.relevanceScore > 50)
         .sort((a: any, b: any) => (b.relevanceScore || 0) - (a.relevanceScore || 0))
         .map((job: any) => ({
           ...job,
-          aiMatchScore: job.relevanceScore
+          aiMatchScore: job.relevanceScore,
         }));
 
       setAiEnhancedJobs(sortedJobs);
-      
-      toast({
-        title: "AI Matching Complete",
-        description: `Found ${sortedJobs.length} jobs that match your profile`,
-        variant: "success"
-      });
 
+      toast({
+        title: 'AI Matching Complete',
+        description: `Found ${sortedJobs.length} jobs that match your profile`,
+        variant: 'success',
+      });
     } catch (error) {
       console.error('AI matching error:', error);
       toast({
-        title: "AI Matching Failed",
-        description: "Please try again",
-        variant: "destructive"
+        title: 'AI Matching Failed',
+        description: 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsMatching(false);
@@ -148,26 +134,24 @@ const JobVacancies = () => {
 
   const handleSkillAdd = () => {
     if (skillInput.trim() && !userProfile.skills.includes(skillInput.trim())) {
-      setUserProfile(prev => ({
+      setUserProfile((prev) => ({
         ...prev,
-        skills: [...prev.skills, skillInput.trim()]
+        skills: [...prev.skills, skillInput.trim()],
       }));
-      setSkillInput("");
+      setSkillInput('');
     }
   };
 
   const handleSkillRemove = (skill: string) => {
-    setUserProfile(prev => ({
+    setUserProfile((prev) => ({
       ...prev,
-      skills: prev.skills.filter(s => s !== skill)
+      skills: prev.skills.filter((s) => s !== skill),
     }));
   };
 
   const handleSaveJob = (jobId: string) => {
-    setSavedJobs(prev => 
-      prev.includes(jobId) 
-        ? prev.filter(id => id !== jobId)
-        : [...prev, jobId]
+    setSavedJobs((prev) =>
+      prev.includes(jobId) ? prev.filter((id) => id !== jobId) : [...prev, jobId]
     );
   };
 
@@ -175,9 +159,12 @@ const JobVacancies = () => {
     <div className="bg-elec-dark text-white">
       <Helmet>
         <title>Job Vacancies - AI-Enhanced Job Search</title>
-        <meta name="description" content="Find electrical jobs with AI-powered matching and personalised recommendations" />
+        <meta
+          name="description"
+          content="Find electrical jobs with AI-powered matching and personalised recommendations"
+        />
       </Helmet>
-      
+
       <div className="space-y-8 animate-fade-in">
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
@@ -197,11 +184,7 @@ const JobVacancies = () => {
                 <Sparkles className="h-5 w-5 text-elec-yellow" />
                 AI Job Matching
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowAIProfile(!showAIProfile)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setShowAIProfile(!showAIProfile)}>
                 <Settings className="h-4 w-4" />
               </Button>
             </CardTitle>
@@ -215,16 +198,22 @@ const JobVacancies = () => {
                     <Input
                       placeholder="e.g. 5 years commercial electrical"
                       value={userProfile.experience}
-                      onChange={(e) => setUserProfile(prev => ({ ...prev, experience: e.target.value }))}
+                      onChange={(e) =>
+                        setUserProfile((prev) => ({ ...prev, experience: e.target.value }))
+                      }
                       className="mt-1"
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-elec-yellow">Preferred Location</label>
+                    <label className="text-sm font-medium text-elec-yellow">
+                      Preferred Location
+                    </label>
                     <Input
                       placeholder="e.g. London, Birmingham"
                       value={userProfile.preferredLocation}
-                      onChange={(e) => setUserProfile(prev => ({ ...prev, preferredLocation: e.target.value }))}
+                      onChange={(e) =>
+                        setUserProfile((prev) => ({ ...prev, preferredLocation: e.target.value }))
+                      }
                       className="mt-1"
                     />
                   </div>
@@ -243,18 +232,21 @@ const JobVacancies = () => {
                       Add
                     </Button>
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-2 mt-3">
-                    {commonSkills.map(skill => (
+                    {commonSkills.map((skill) => (
                       <Badge
                         key={skill}
-                        variant={userProfile.skills.includes(skill) ? "default" : "outline"}
+                        variant={userProfile.skills.includes(skill) ? 'default' : 'outline'}
                         className="cursor-pointer"
                         onClick={() => {
                           if (userProfile.skills.includes(skill)) {
                             handleSkillRemove(skill);
                           } else {
-                            setUserProfile(prev => ({ ...prev, skills: [...prev.skills, skill] }));
+                            setUserProfile((prev) => ({
+                              ...prev,
+                              skills: [...prev.skills, skill],
+                            }));
                           }
                         }}
                       >
@@ -265,11 +257,8 @@ const JobVacancies = () => {
 
                   {userProfile.skills.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-3">
-                      {userProfile.skills.map(skill => (
-                        <Badge
-                          key={skill}
-                          className="bg-elec-yellow text-elec-dark"
-                        >
+                      {userProfile.skills.map((skill) => (
+                        <Badge key={skill} className="bg-elec-yellow text-elec-dark">
                           {skill}
                           <button
                             onClick={() => handleSkillRemove(skill)}
@@ -285,7 +274,7 @@ const JobVacancies = () => {
               </div>
             )}
 
-            <Button 
+            <Button
               onClick={handleGenerateMatches}
               disabled={isMatching}
               className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"

@@ -1,72 +1,83 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m6s3-check1",
-    question: "What test voltage is used for insulation resistance testing on circuits up to 500V?",
-    options: ["250V DC", "500V DC", "1000V DC", "1500V DC"],
+    id: 'evcharging-m6s3-check1',
+    question: 'What test voltage is used for insulation resistance testing on circuits up to 500V?',
+    options: ['250V DC', '500V DC', '1000V DC', '1500V DC'],
     correctIndex: 1,
-    explanation: "For circuits up to 500V, a 500V DC test voltage is used. The minimum acceptable insulation resistance is 1MΩ for new installations."
+    explanation:
+      'For circuits up to 500V, a 500V DC test voltage is used. The minimum acceptable insulation resistance is 1MΩ for new installations.',
   },
   {
-    id: "evcharging-m6s3-check2",
-    question: "What is the maximum Zs value for a 32A Type B MCB protecting a single-phase EV charger?",
-    options: ["0.72Ω", "1.15Ω", "1.44Ω", "2.88Ω"],
+    id: 'evcharging-m6s3-check2',
+    question:
+      'What is the maximum Zs value for a 32A Type B MCB protecting a single-phase EV charger?',
+    options: ['0.72Ω', '1.15Ω', '1.44Ω', '2.88Ω'],
     correctIndex: 2,
-    explanation: "For a 32A Type B MCB, the maximum Zs is 1.44Ω. This ensures the protective device will disconnect within 0.4 seconds during a fault."
+    explanation:
+      'For a 32A Type B MCB, the maximum Zs is 1.44Ω. This ensures the protective device will disconnect within 0.4 seconds during a fault.',
   },
   {
-    id: "evcharging-m6s3-check3",
-    question: "What is the minimum test current for continuity testing of protective conductors?",
-    options: ["50mA", "100mA", "200mA", "500mA"],
+    id: 'evcharging-m6s3-check3',
+    question: 'What is the minimum test current for continuity testing of protective conductors?',
+    options: ['50mA', '100mA', '200mA', '500mA'],
     correctIndex: 2,
-    explanation: "A minimum 200mA test current is required for continuity testing to ensure accurate resistance measurements and detect high-resistance connections."
-  }
+    explanation:
+      'A minimum 200mA test current is required for continuity testing to ensure accurate resistance measurements and detect high-resistance connections.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I test earth fault loop impedance with RCDs in circuit?",
-    answer: "Use the no-trip method (calculate Zs = Ze + R1+R2) or temporarily isolate the RCD. Some modern testers have no-trip test modes specifically for RCD-protected circuits."
+    question: 'Can I test earth fault loop impedance with RCDs in circuit?',
+    answer:
+      'Use the no-trip method (calculate Zs = Ze + R1+R2) or temporarily isolate the RCD. Some modern testers have no-trip test modes specifically for RCD-protected circuits.',
   },
   {
-    question: "What if insulation resistance is below 1MΩ?",
-    answer: "Investigate the cause - check for moisture ingress, damaged insulation, or faulty equipment. Disconnect loads to isolate the issue. The circuit cannot be energised until the fault is resolved."
+    question: 'What if insulation resistance is below 1MΩ?',
+    answer:
+      'Investigate the cause - check for moisture ingress, damaged insulation, or faulty equipment. Disconnect loads to isolate the issue. The circuit cannot be energised until the fault is resolved.',
   },
   {
-    question: "How do I verify polarity on three-phase EV chargers?",
-    answer: "Use a phase rotation meter to confirm correct L1-L2-L3 sequence. Incorrect rotation can damage motors and may cause charger malfunction."
+    question: 'How do I verify polarity on three-phase EV chargers?',
+    answer:
+      'Use a phase rotation meter to confirm correct L1-L2-L3 sequence. Incorrect rotation can damage motors and may cause charger malfunction.',
   },
   {
-    question: "What documentation is required after testing?",
-    answer: "Complete an Electrical Installation Certificate (EIC) for new installations, including Schedule of Test Results. Minor Works Certificate is not suitable for EV charging installations."
-  }
+    question: 'What documentation is required after testing?',
+    answer:
+      'Complete an Electrical Installation Certificate (EIC) for new installations, including Schedule of Test Results. Minor Works Certificate is not suitable for EV charging installations.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An EV charging circuit has measured Zs of 1.2Ω with a 32A Type B MCB. What is the correct assessment?",
-  options: [
-    "Fail - Zs exceeds maximum permitted value",
-    "Pass - Zs is within maximum permitted value",
-    "Cannot determine - need more information",
-    "Marginal - recommend cable upgrade"
-  ],
-  correctAnswer: 1,
-  explanation: "The maximum Zs for a 32A Type B MCB is 1.44Ω. The measured value of 1.2Ω is within this limit, so the circuit passes. However, applying the 0.8 multiplier for conductor temperature (1.2 ÷ 0.8 = 1.5Ω) may exceed the limit at elevated temperatures."
-  }
+    question:
+      'An EV charging circuit has measured Zs of 1.2Ω with a 32A Type B MCB. What is the correct assessment?',
+    options: [
+      'Fail - Zs exceeds maximum permitted value',
+      'Pass - Zs is within maximum permitted value',
+      'Cannot determine - need more information',
+      'Marginal - recommend cable upgrade',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The maximum Zs for a 32A Type B MCB is 1.44Ω. The measured value of 1.2Ω is within this limit, so the circuit passes. However, applying the 0.8 multiplier for conductor temperature (1.2 ÷ 0.8 = 1.5Ω) may exceed the limit at elevated temperatures.',
+  },
 ];
 
 const EVChargingModule6Section3 = () => {
   useSEO({
-    title: "BS 7671 Part 722 Testing Procedures | EV Charging Module 6.3",
-    description: "Master BS 7671 Part 722 testing procedures for EV charging installations, including verification methods and compliance standards."
+    title: 'BS 7671 Part 722 Testing Procedures | EV Charging Module 6.3',
+    description:
+      'Master BS 7671 Part 722 testing procedures for EV charging installations, including verification methods and compliance standards.',
   });
 
   return (
@@ -108,16 +119,26 @@ const EVChargingModule6Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>IR test:</strong> 500V DC, minimum 1MΩ</li>
-              <li><strong>Continuity:</strong> 200mA test current</li>
-              <li><strong>Zs (32A Type B):</strong> Maximum 1.44Ω</li>
+              <li>
+                <strong>IR test:</strong> 500V DC, minimum 1MΩ
+              </li>
+              <li>
+                <strong>Continuity:</strong> 200mA test current
+              </li>
+              <li>
+                <strong>Zs (32A Type B):</strong> Maximum 1.44Ω
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Test records, EIC certificates</li>
-              <li><strong>Use:</strong> Multifunction tester, calibration cert</li>
+              <li>
+                <strong>Spot:</strong> Test records, EIC certificates
+              </li>
+              <li>
+                <strong>Use:</strong> Multifunction tester, calibration cert
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +148,12 @@ const EVChargingModule6Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand BS 7671 Part 722 requirements",
-              "Perform initial verification testing",
-              "Execute continuity and IR testing",
-              "Conduct earth fault loop impedance tests",
-              "Verify protective device operation",
-              "Complete certification documentation"
+              'Understand BS 7671 Part 722 requirements',
+              'Perform initial verification testing',
+              'Execute continuity and IR testing',
+              'Conduct earth fault loop impedance tests',
+              'Verify protective device operation',
+              'Complete certification documentation',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,8 +173,8 @@ const EVChargingModule6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Initial verification confirms the installation is safe before energisation
-              and complies with BS 7671 requirements for EV charging circuits.
+              Initial verification confirms the installation is safe before energisation and
+              complies with BS 7671 requirements for EV charging circuits.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -169,21 +190,39 @@ const EVChargingModule6Section3 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Sequence</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>1.</strong> Continuity of conductors</li>
-                  <li><strong>2.</strong> Insulation resistance</li>
-                  <li><strong>3.</strong> Polarity verification</li>
-                  <li><strong>4.</strong> Earth fault loop impedance</li>
+                  <li>
+                    <strong>1.</strong> Continuity of conductors
+                  </li>
+                  <li>
+                    <strong>2.</strong> Insulation resistance
+                  </li>
+                  <li>
+                    <strong>3.</strong> Polarity verification
+                  </li>
+                  <li>
+                    <strong>4.</strong> Earth fault loop impedance
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Continuity Testing Requirements:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Continuity Testing Requirements:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Test current:</strong> Minimum 200mA</li>
-                <li><strong>Socket outlet circuits:</strong> R1+R2 method</li>
-                <li><strong>Protective conductors:</strong> Direct measurement to MET</li>
-                <li><strong>Main bonding:</strong> Verify integrity of connections</li>
+                <li>
+                  <strong>Test current:</strong> Minimum 200mA
+                </li>
+                <li>
+                  <strong>Socket outlet circuits:</strong> R1+R2 method
+                </li>
+                <li>
+                  <strong>Protective conductors:</strong> Direct measurement to MET
+                </li>
+                <li>
+                  <strong>Main bonding:</strong> Verify integrity of connections
+                </li>
               </ul>
             </div>
           </div>
@@ -199,27 +238,43 @@ const EVChargingModule6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Earth fault loop impedance (Zs) must be low enough to ensure protective
-              devices disconnect within required times during fault conditions.
+              Earth fault loop impedance (Zs) must be low enough to ensure protective devices
+              disconnect within required times during fault conditions.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Maximum Zs Values</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>32A Type B:</strong> 1.44Ω</li>
-                  <li><strong>40A Type B:</strong> 1.15Ω</li>
-                  <li><strong>32A Type C:</strong> 0.72Ω</li>
-                  <li><strong>40A Type C:</strong> 0.58Ω</li>
+                  <li>
+                    <strong>32A Type B:</strong> 1.44Ω
+                  </li>
+                  <li>
+                    <strong>40A Type B:</strong> 1.15Ω
+                  </li>
+                  <li>
+                    <strong>32A Type C:</strong> 0.72Ω
+                  </li>
+                  <li>
+                    <strong>40A Type C:</strong> 0.58Ω
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Methods</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Direct:</strong> Live measurement at circuit end</li>
-                  <li><strong>No-trip:</strong> Calculate Zs = Ze + (R1+R2)</li>
-                  <li><strong>0.8 factor:</strong> Temperature correction</li>
-                  <li><strong>Record:</strong> All values on test schedule</li>
+                  <li>
+                    <strong>Direct:</strong> Live measurement at circuit end
+                  </li>
+                  <li>
+                    <strong>No-trip:</strong> Calculate Zs = Ze + (R1+R2)
+                  </li>
+                  <li>
+                    <strong>0.8 factor:</strong> Temperature correction
+                  </li>
+                  <li>
+                    <strong>Record:</strong> All values on test schedule
+                  </li>
                 </ul>
               </div>
             </div>
@@ -259,10 +314,18 @@ const EVChargingModule6Section3 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Requirements</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Voltage:</strong> 500V DC (up to 500V circuits)</li>
-                  <li><strong>Duration:</strong> Minimum 60 seconds</li>
-                  <li><strong>Minimum:</strong> 1MΩ for new installations</li>
-                  <li><strong>Acceptable:</strong> ≥0.5MΩ for periodic</li>
+                  <li>
+                    <strong>Voltage:</strong> 500V DC (up to 500V circuits)
+                  </li>
+                  <li>
+                    <strong>Duration:</strong> Minimum 60 seconds
+                  </li>
+                  <li>
+                    <strong>Minimum:</strong> 1MΩ for new installations
+                  </li>
+                  <li>
+                    <strong>Acceptable:</strong> ≥0.5MΩ for periodic
+                  </li>
                 </ul>
               </div>
               <div>
@@ -308,10 +371,19 @@ const EVChargingModule6Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Testing Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>No temperature correction:</strong> — Zs may exceed limits at operating temperature</li>
-                <li><strong>Testing with loads connected:</strong> — IR test may damage equipment</li>
-                <li><strong>Wrong test voltage:</strong> — invalid IR results</li>
-                <li><strong>Incomplete documentation:</strong> — certificate invalid</li>
+                <li>
+                  <strong>No temperature correction:</strong> — Zs may exceed limits at operating
+                  temperature
+                </li>
+                <li>
+                  <strong>Testing with loads connected:</strong> — IR test may damage equipment
+                </li>
+                <li>
+                  <strong>Wrong test voltage:</strong> — invalid IR results
+                </li>
+                <li>
+                  <strong>Incomplete documentation:</strong> — certificate invalid
+                </li>
               </ul>
             </div>
           </div>
@@ -355,10 +427,7 @@ const EVChargingModule6Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -12,24 +12,18 @@ interface ResponsiveTableRowProps {
   className?: string;
 }
 
-export const ResponsiveTable: React.FC<ResponsiveTableProps> = ({ 
-  children, 
-  className 
-}) => (
-  <div className={cn(
-    "w-full overflow-hidden rounded-lg border border-border bg-card",
-    className
-  )}>
+export const ResponsiveTable: React.FC<ResponsiveTableProps> = ({ children, className }) => (
+  <div className={cn('w-full overflow-hidden rounded-lg border border-border bg-card', className)}>
     {children}
   </div>
 );
 
-export const ResponsiveTableRow: React.FC<ResponsiveTableRowProps> = ({ 
-  headers, 
-  data, 
-  className 
+export const ResponsiveTableRow: React.FC<ResponsiveTableRowProps> = ({
+  headers,
+  data,
+  className,
 }) => (
-  <div className={cn("border-b border-border last:border-b-0", className)}>
+  <div className={cn('border-b border-border last:border-b-0', className)}>
     {/* Desktop view */}
     <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4 text-sm">
       {data.map((item, index) => (
@@ -38,7 +32,7 @@ export const ResponsiveTableRow: React.FC<ResponsiveTableRowProps> = ({
         </div>
       ))}
     </div>
-    
+
     {/* Mobile view */}
     <div className="sm:hidden p-4 space-y-2">
       {headers.map((header, index) => (
@@ -56,14 +50,16 @@ interface ResponsiveTableHeaderProps {
   className?: string;
 }
 
-export const ResponsiveTableHeader: React.FC<ResponsiveTableHeaderProps> = ({ 
-  children, 
-  className 
+export const ResponsiveTableHeader: React.FC<ResponsiveTableHeaderProps> = ({
+  children,
+  className,
 }) => (
-  <div className={cn(
-    "hidden sm:grid sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4 border-b border-border bg-muted/50 text-sm font-medium text-muted-foreground",
-    className
-  )}>
+  <div
+    className={cn(
+      'hidden sm:grid sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4 border-b border-border bg-muted/50 text-sm font-medium text-muted-foreground',
+      className
+    )}
+  >
     {children}
   </div>
 );
@@ -83,14 +79,14 @@ export const ModernTableCard: React.FC<ModernTableCardProps> = ({
   icon,
   children,
   variant = 'default',
-  className
+  className,
 }) => {
   const variantStyles = {
     default: 'bg-card border-border',
     warning: 'bg-yellow-500/10 border-yellow-500/20',
     success: 'bg-green-500/10 border-green-500/20',
     info: 'bg-blue-500/10 border-blue-500/20',
-    danger: 'bg-red-500/10 border-red-500/20'
+    danger: 'bg-red-500/10 border-red-500/20',
   };
 
   const iconColors = {
@@ -98,7 +94,7 @@ export const ModernTableCard: React.FC<ModernTableCardProps> = ({
     warning: 'text-yellow-400',
     success: 'text-green-400',
     info: 'text-blue-400',
-    danger: 'text-red-400'
+    danger: 'text-red-400',
   };
 
   const titleColors = {
@@ -106,28 +102,16 @@ export const ModernTableCard: React.FC<ModernTableCardProps> = ({
     warning: 'text-yellow-400',
     success: 'text-green-400',
     info: 'text-blue-400',
-    danger: 'text-red-400'
+    danger: 'text-red-400',
   };
 
   return (
-    <div className={cn(
-      "rounded-lg border p-4 space-y-4",
-      variantStyles[variant],
-      className
-    )}>
+    <div className={cn('rounded-lg border p-4 space-y-4', variantStyles[variant], className)}>
       <div className="flex items-center gap-2">
-        {icon && (
-          <div className={cn("h-4 w-4", iconColors[variant])}>
-            {icon}
-          </div>
-        )}
-        <h4 className={cn("font-medium", titleColors[variant])}>
-          {title}
-        </h4>
+        {icon && <div className={cn('h-4 w-4', iconColors[variant])}>{icon}</div>}
+        <h4 className={cn('font-medium', titleColors[variant])}>{title}</h4>
       </div>
-      {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
-      )}
+      {description && <p className="text-sm text-muted-foreground">{description}</p>}
       {children}
     </div>
   );
@@ -139,11 +123,7 @@ interface DataGridProps {
   className?: string;
 }
 
-export const DataGrid: React.FC<DataGridProps> = ({ 
-  headers, 
-  rows, 
-  className 
-}) => (
+export const DataGrid: React.FC<DataGridProps> = ({ headers, rows, className }) => (
   <ResponsiveTable className={className}>
     <ResponsiveTableHeader>
       {headers.map((header, index) => (
@@ -151,11 +131,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
       ))}
     </ResponsiveTableHeader>
     {rows.map((row, index) => (
-      <ResponsiveTableRow
-        key={index}
-        headers={headers}
-        data={row}
-      />
+      <ResponsiveTableRow key={index} headers={headers} data={row} />
     ))}
   </ResponsiveTable>
 );

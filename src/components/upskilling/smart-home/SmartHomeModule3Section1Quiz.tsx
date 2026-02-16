@@ -10,71 +10,121 @@ export const SmartHomeModule3Section1Quiz = () => {
 
   const questions = [
     {
-      question: "Name two examples of smart bulb brands.",
-      options: ["Philips Hue and IKEA Tradfri", "Samsung and Apple", "BT and Sky", "Tesla and Google"],
+      question: 'Name two examples of smart bulb brands.',
+      options: [
+        'Philips Hue and IKEA Tradfri',
+        'Samsung and Apple',
+        'BT and Sky',
+        'Tesla and Google',
+      ],
       correct: 0,
-      explanation: "Philips Hue and IKEA Tradfri are leading smart bulb brands offering Zigbee connectivity."
+      explanation:
+        'Philips Hue and IKEA Tradfri are leading smart bulb brands offering Zigbee connectivity.',
     },
     {
-      question: "What is a key disadvantage of smart bulbs?",
-      options: ["They don't work in winter", "They're expensive per bulb and need constant power", "They only work with Android", "They can't be dimmed"],
+      question: 'What is a key disadvantage of smart bulbs?',
+      options: [
+        "They don't work in winter",
+        "They're expensive per bulb and need constant power",
+        'They only work with Android',
+        "They can't be dimmed",
+      ],
       correct: 1,
-      explanation: "Smart bulbs cost £15-£50+ each and must have constant power to stay connected - wall switches can't be turned off."
+      explanation:
+        "Smart bulbs cost £15-£50+ each and must have constant power to stay connected - wall switches can't be turned off.",
     },
     {
-      question: "What type of system controls all bulbs on a circuit?",
-      options: ["Smart bulbs", "Smart switches", "Voice assistants", "Motion sensors"],
+      question: 'What type of system controls all bulbs on a circuit?',
+      options: ['Smart bulbs', 'Smart switches', 'Voice assistants', 'Motion sensors'],
       correct: 1,
-      explanation: "Smart switches replace wall switches and control all lights on that circuit simultaneously."
+      explanation:
+        'Smart switches replace wall switches and control all lights on that circuit simultaneously.',
     },
     {
-      question: "Which system requires structured cabling during installation?",
-      options: ["Wi-Fi bulbs", "Smart switches", "Centralised wired systems", "Bluetooth bulbs"],
+      question: 'Which system requires structured cabling during installation?',
+      options: ['Wi-Fi bulbs', 'Smart switches', 'Centralised wired systems', 'Bluetooth bulbs'],
       correct: 2,
-      explanation: "Centralised systems like KNX require dedicated bus cables run during construction."
+      explanation:
+        'Centralised systems like KNX require dedicated bus cables run during construction.',
     },
     {
-      question: "True or False: Smart switches can control colour temperature of bulbs.",
-      options: ["True - all smart switches do this", "False - only smart bulbs can change colour", "True - but only with compatible LED bulbs", "False - only voice assistants can do this"],
+      question: 'True or False: Smart switches can control colour temperature of bulbs.',
+      options: [
+        'True - all smart switches do this',
+        'False - only smart bulbs can change colour',
+        'True - but only with compatible LED bulbs',
+        'False - only voice assistants can do this',
+      ],
       correct: 2,
-      explanation: "Smart switches can adjust colour temperature if paired with compatible tunable white LED bulbs."
+      explanation:
+        'Smart switches can adjust colour temperature if paired with compatible tunable white LED bulbs.',
     },
     {
-      question: "What is a hybrid lighting system?",
-      options: ["Solar-powered lights", "Mix of wired and wireless components", "Lights that work underwater", "Bulbs that change shape"],
+      question: 'What is a hybrid lighting system?',
+      options: [
+        'Solar-powered lights',
+        'Mix of wired and wireless components',
+        'Lights that work underwater',
+        'Bulbs that change shape',
+      ],
       correct: 1,
-      explanation: "Hybrid systems combine wired infrastructure for reliability with wireless devices for flexibility."
+      explanation:
+        'Hybrid systems combine wired infrastructure for reliability with wireless devices for flexibility.',
     },
     {
-      question: "Which option is best for renters?",
-      options: ["KNX wired system", "Smart bulbs", "Hardwired smart switches", "Centralised control panels"],
+      question: 'Which option is best for renters?',
+      options: [
+        'KNX wired system',
+        'Smart bulbs',
+        'Hardwired smart switches',
+        'Centralised control panels',
+      ],
       correct: 1,
-      explanation: "Smart bulbs require no rewiring and can be taken when moving house."
+      explanation: 'Smart bulbs require no rewiring and can be taken when moving house.',
     },
     {
-      question: "Give one advantage of centralised systems.",
-      options: ["They're the cheapest option", "They work without electricity", "They're highly reliable with no wireless interference", "They only need one bulb"],
+      question: 'Give one advantage of centralised systems.',
+      options: [
+        "They're the cheapest option",
+        'They work without electricity',
+        "They're highly reliable with no wireless interference",
+        'They only need one bulb',
+      ],
       correct: 2,
-      explanation: "Centralised wired systems eliminate wireless interference issues and provide professional-grade reliability."
+      explanation:
+        'Centralised wired systems eliminate wireless interference issues and provide professional-grade reliability.',
     },
     {
-      question: "What is circadian rhythm lighting?",
-      options: ["Lights that flash in patterns", "Lighting that adjusts to support natural sleep patterns", "Emergency lighting only", "Lights controlled by music"],
+      question: 'What is circadian rhythm lighting?',
+      options: [
+        'Lights that flash in patterns',
+        'Lighting that adjusts to support natural sleep patterns',
+        'Emergency lighting only',
+        'Lights controlled by music',
+      ],
       correct: 1,
-      explanation: "Circadian lighting adjusts colour temperature throughout the day to support natural sleep-wake cycles."
+      explanation:
+        'Circadian lighting adjusts colour temperature throughout the day to support natural sleep-wake cycles.',
     },
     {
-      question: "Scenario: A homeowner wants whole-house smart lighting with minimal disruption. Which system type would you recommend?",
-      options: ["Individual smart bulbs in every fitting", "Smart switches for main circuits", "Full KNX rewiring", "Voice assistants only"],
+      question:
+        'Scenario: A homeowner wants whole-house smart lighting with minimal disruption. Which system type would you recommend?',
+      options: [
+        'Individual smart bulbs in every fitting',
+        'Smart switches for main circuits',
+        'Full KNX rewiring',
+        'Voice assistants only',
+      ],
       correct: 1,
-      explanation: "Smart switches provide whole-house control with minimal disruption - one switch controls multiple bulbs per room."
-    }
+      explanation:
+        'Smart switches provide whole-house control with minimal disruption - one switch controls multiple bulbs per room.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -123,9 +173,11 @@ export const SmartHomeModule3Section1Quiz = () => {
               You scored {score} out of {questions.length} questions correctly
             </div>
             <div className="text-foreground">
-              {percentage >= 80 ? 'Excellent work!' : 
-               percentage >= 60 ? 'Good job! Review the areas you missed.' : 
-               'Consider reviewing the material and trying again.'}
+              {percentage >= 80
+                ? 'Excellent work!'
+                : percentage >= 60
+                  ? 'Good job! Review the areas you missed.'
+                  : 'Consider reviewing the material and trying again.'}
             </div>
           </div>
 
@@ -134,11 +186,16 @@ export const SmartHomeModule3Section1Quiz = () => {
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
-                <div key={index} className={`p-3 rounded-lg border ${
-                  isCorrect ? 'bg-green-600/10 border-green-600/20' : 'bg-red-600/10 border-red-600/20'
-                }`}>
+                <div
+                  key={index}
+                  className={`p-3 rounded-lg border ${
+                    isCorrect
+                      ? 'bg-green-600/10 border-green-600/20'
+                      : 'bg-red-600/10 border-red-600/20'
+                  }`}
+                >
                   <div className="font-medium text-foreground mb-1">
                     Q{index + 1}: {question.question}
                   </div>
@@ -150,9 +207,7 @@ export const SmartHomeModule3Section1Quiz = () => {
                       Correct: {question.options[question.correct]}
                     </div>
                   )}
-                  <div className="text-xs text-foreground mt-2">
-                    {question.explanation}
-                  </div>
+                  <div className="text-xs text-foreground mt-2">{question.explanation}</div>
                 </div>
               );
             })}
@@ -180,14 +235,19 @@ export const SmartHomeModule3Section1Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between text-sm text-foreground mb-4">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex space-x-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}

@@ -23,20 +23,20 @@ export type CircuitType =
  */
 export function getDefaultDescription(circuitType: string): string {
   const descriptions: Record<string, string> = {
-    'lighting': 'Lighting',
-    'ring': 'Ring Final Sockets',
-    'ring_final': 'Ring Final Sockets',
-    'radial': 'Radial Sockets',
-    'cooker': 'Cooker',
-    'shower': 'Shower',
-    'immersion': 'Immersion Heater',
-    'smoke_alarm': 'Smoke Alarms',
-    'smoke_detectors': 'Smoke Alarms',
-    'ev_charger': 'EV Charger',
-    'boiler': 'Boiler/CH',
-    'socket': 'Sockets',
-    'spur': 'Fused Spur',
-    'other': 'Circuit',
+    lighting: 'Lighting',
+    ring: 'Ring Final Sockets',
+    ring_final: 'Ring Final Sockets',
+    radial: 'Radial Sockets',
+    cooker: 'Cooker',
+    shower: 'Shower',
+    immersion: 'Immersion Heater',
+    smoke_alarm: 'Smoke Alarms',
+    smoke_detectors: 'Smoke Alarms',
+    ev_charger: 'EV Charger',
+    boiler: 'Boiler/CH',
+    socket: 'Sockets',
+    spur: 'Fused Spur',
+    other: 'Circuit',
   };
   return descriptions[circuitType.toLowerCase()] || 'Circuit';
 }
@@ -61,8 +61,8 @@ const baseDefaults: Partial<TestResult> = {
   insulationLiveNeutral: '>200',
   insulationLiveEarth: '>200',
   insulationNeutralEarth: '',
-  polarity: 'Correct',        // Select expects: Correct, Incorrect, N/A
-  functionalTesting: '✓',     // Select expects: ✓, ✗, N/A
+  polarity: 'Correct', // Select expects: Correct, Incorrect, N/A
+  functionalTesting: '✓', // Select expects: ✓, ✗, N/A
 
   // Empty defaults
   zs: '', // Auto-calculated
@@ -307,7 +307,8 @@ export function createCircuitWithDefaults(
   const defaults = getCircuitDefaults(circuitType);
 
   // Use provided description, or get default from circuit type
-  const circuitDescription = description || defaults.circuitDescription || getDefaultDescription(circuitType);
+  const circuitDescription =
+    description || defaults.circuitDescription || getDefaultDescription(circuitType);
 
   return {
     id: crypto.randomUUID(),
@@ -389,14 +390,14 @@ export function getCircuitTypes(): { value: CircuitType; label: string }[] {
  * Maps protective device rating to minimum cable size
  */
 const CABLE_SIZE_BY_RATING: Record<number, string> = {
-  6: '1.5mm',   // Lighting
+  6: '1.5mm', // Lighting
   10: '1.5mm',
-  16: '2.5mm',  // Immersion
-  20: '2.5mm',  // Radial
+  16: '2.5mm', // Immersion
+  20: '2.5mm', // Radial
   25: '4.0mm',
-  32: '2.5mm',  // Ring final (or 4mm radial)
+  32: '2.5mm', // Ring final (or 4mm radial)
   40: '6.0mm',
-  45: '10mm',   // Shower
+  45: '10mm', // Shower
   50: '10mm',
   63: '16mm',
   80: '25mm',
@@ -422,13 +423,13 @@ const CPC_BY_LIVE: Record<string, string> = {
  * Map detected device category to BS Standard
  */
 export const BS_STANDARD_MAP: Record<string, string> = {
-  'MCB': 'MCB (BS EN 60898)',
-  'RCBO': 'RCBO (BS EN 61009)',
-  'RCD': 'RCD (BS EN 61008)',
-  'Fuse': 'Fuse (BS 88)',
-  'AFDD': 'MCB (BS EN 60898)',
-  'MCCB': 'Other',
-  'Isolator': 'Other',
+  MCB: 'MCB (BS EN 60898)',
+  RCBO: 'RCBO (BS EN 61009)',
+  RCD: 'RCD (BS EN 61008)',
+  Fuse: 'Fuse (BS 88)',
+  AFDD: 'MCB (BS EN 60898)',
+  MCCB: 'Other',
+  Isolator: 'Other',
 };
 
 /**

@@ -1,12 +1,12 @@
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import useSEO from '@/hooks/useSEO';
 
 export default function LeadershipModule3Section4() {
   useSEO({
-    title: "Leadership Module 3 Section 4 | Elec-Mate",
-    description: "Leadership on-site module 3 section 4",
+    title: 'Leadership Module 3 Section 4 | Elec-Mate',
+    description: 'Leadership on-site module 3 section 4',
   });
 
   return (

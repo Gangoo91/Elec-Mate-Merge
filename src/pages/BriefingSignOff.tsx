@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   FileText,
   CheckCircle,
@@ -18,12 +18,12 @@ import {
   Loader2,
   PenTool,
   Building2,
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import SignaturePad from "@/components/forms/SignaturePad";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import SignaturePad from '@/components/forms/SignaturePad';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface Briefing {
   id: string;
@@ -59,9 +59,9 @@ const BriefingSignOff = () => {
   const [submitting, setSubmitting] = useState(false);
   const [selectedAttendee, setSelectedAttendee] = useState<string | null>(null);
   const [isGuest, setIsGuest] = useState(false);
-  const [guestName, setGuestName] = useState("");
-  const [guestCompany, setGuestCompany] = useState("");
-  const [signatureData, setSignatureData] = useState<string>("");
+  const [guestName, setGuestName] = useState('');
+  const [guestCompany, setGuestCompany] = useState('');
+  const [signatureData, setSignatureData] = useState<string>('');
   const [showSuccess, setShowSuccess] = useState(false);
   const signaturePadRef = useRef<any>(null);
 
@@ -78,8 +78,9 @@ const BriefingSignOff = () => {
       setLoading(true);
 
       const { data, error } = await supabase
-        .from("briefings")
-        .select(`
+        .from('briefings')
+        .select(
+          `
           *,
           attendees:briefing_attendees(
             id,
@@ -91,21 +92,22 @@ const BriefingSignOff = () => {
             guest_company,
             employee:employer_employees(id, name)
           )
-        `)
-        .eq("id", briefingId)
+        `
+        )
+        .eq('id', briefingId)
         .single();
 
       if (error || !data) {
-        throw new Error("Briefing not found");
+        throw new Error('Briefing not found');
       }
 
       setBriefing(data as Briefing);
     } catch (error) {
-      console.error("Error loading briefing:", error);
+      console.error('Error loading briefing:', error);
       toast({
-        title: "Error",
-        description: "Briefing not found or has been removed",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Briefing not found or has been removed',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -116,9 +118,9 @@ const BriefingSignOff = () => {
     if (!briefing) return;
     if (!signatureData) {
       toast({
-        title: "Signature required",
-        description: "Please provide your signature to sign off",
-        variant: "destructive",
+        title: 'Signature required',
+        description: 'Please provide your signature to sign off',
+        variant: 'destructive',
       });
       return;
     }
@@ -126,17 +128,17 @@ const BriefingSignOff = () => {
     // Validate guest info or selected attendee
     if (isGuest && !guestName.trim()) {
       toast({
-        title: "Name required",
-        description: "Please enter your name",
-        variant: "destructive",
+        title: 'Name required',
+        description: 'Please enter your name',
+        variant: 'destructive',
       });
       return;
     }
     if (!isGuest && !selectedAttendee) {
       toast({
-        title: "Select your name",
-        description: "Please select your name from the list or sign as a guest",
-        variant: "destructive",
+        title: 'Select your name',
+        description: 'Please select your name from the list or sign as a guest',
+        variant: 'destructive',
       });
       return;
     }
@@ -148,14 +150,14 @@ const BriefingSignOff = () => {
       const fileName = `public-signatures/${briefing.id}/${Date.now()}.png`;
 
       const { error: uploadError } = await supabase.storage
-        .from("visual-uploads")
+        .from('visual-uploads')
         .upload(fileName, signatureBlob, { upsert: true });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from("visual-uploads")
-        .getPublicUrl(fileName);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
 
       // Get device info
       const deviceInfo = navigator.userAgent.substring(0, 200);
@@ -173,55 +175,53 @@ const BriefingSignOff = () => {
 
       if (isGuest) {
         // Create new attendee record for guest
-        const { error: insertError } = await supabase
-          .from("briefing_attendees")
-          .insert({
-            briefing_id: briefing.id,
-            guest_name: guestName.trim(),
-            guest_company: guestCompany.trim() || null,
-            acknowledged: true,
-            acknowledged_at: new Date().toISOString(),
-            signature_url: publicUrl,
-            signed_via: "qr_code",
-            device_info: deviceInfo,
-            location_lat: location.lat,
-            location_lng: location.lng,
-          });
+        const { error: insertError } = await supabase.from('briefing_attendees').insert({
+          briefing_id: briefing.id,
+          guest_name: guestName.trim(),
+          guest_company: guestCompany.trim() || null,
+          acknowledged: true,
+          acknowledged_at: new Date().toISOString(),
+          signature_url: publicUrl,
+          signed_via: 'qr_code',
+          device_info: deviceInfo,
+          location_lat: location.lat,
+          location_lng: location.lng,
+        });
 
         if (insertError) throw insertError;
       } else {
         // Update existing attendee record
         const { error: updateError } = await supabase
-          .from("briefing_attendees")
+          .from('briefing_attendees')
           .update({
             acknowledged: true,
             acknowledged_at: new Date().toISOString(),
             signature_url: publicUrl,
-            signed_via: "qr_code",
+            signed_via: 'qr_code',
             device_info: deviceInfo,
             location_lat: location.lat,
             location_lng: location.lng,
             updated_at: new Date().toISOString(),
           })
-          .eq("id", selectedAttendee);
+          .eq('id', selectedAttendee);
 
         if (updateError) throw updateError;
       }
 
       setShowSuccess(true);
       toast({
-        title: "Signed off successfully",
-        description: "Thank you for signing off on this briefing.",
+        title: 'Signed off successfully',
+        description: 'Thank you for signing off on this briefing.',
       });
 
       // Reload briefing to show updated state
       loadBriefing();
     } catch (error) {
-      console.error("Error signing off:", error);
+      console.error('Error signing off:', error);
       toast({
-        title: "Sign off failed",
-        description: "Could not complete sign off. Please try again.",
-        variant: "destructive",
+        title: 'Sign off failed',
+        description: 'Could not complete sign off. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setSubmitting(false);
@@ -229,7 +229,7 @@ const BriefingSignOff = () => {
   };
 
   const dataURLtoBlob = (dataURL: string): Blob => {
-    const arr = dataURL.split(",");
+    const arr = dataURL.split(',');
     const mime = arr[0].match(/:(.*?);/)![1];
     const bstr = atob(arr[1]);
     let n = bstr.length;
@@ -241,7 +241,7 @@ const BriefingSignOff = () => {
   };
 
   const clearSignature = () => {
-    setSignatureData("");
+    setSignatureData('');
     if (signaturePadRef.current?.clear) {
       signaturePadRef.current.clear();
     }
@@ -275,18 +275,19 @@ const BriefingSignOff = () => {
   }
 
   // Get pending attendees (not yet signed)
-  const pendingAttendees = briefing.attendees?.filter(a => !a.acknowledged) || [];
-  const signedAttendees = briefing.attendees?.filter(a => a.acknowledged) || [];
+  const pendingAttendees = briefing.attendees?.filter((a) => !a.acknowledged) || [];
+  const signedAttendees = briefing.attendees?.filter((a) => a.acknowledged) || [];
   const totalAttendees = briefing.attendees?.length || 0;
   const signedCount = signedAttendees.length;
   const completionRate = totalAttendees > 0 ? Math.round((signedCount / totalAttendees) * 100) : 0;
 
   // Get risk level styling
-  const riskColour = briefing.risk_level === "high"
-    ? "text-red-400 border-red-500/50 bg-red-500/10"
-    : briefing.risk_level === "medium"
-    ? "text-amber-400 border-amber-500/50 bg-amber-500/10"
-    : "text-green-400 border-green-500/50 bg-green-500/10";
+  const riskColour =
+    briefing.risk_level === 'high'
+      ? 'text-red-400 border-red-500/50 bg-red-500/10'
+      : briefing.risk_level === 'medium'
+        ? 'text-amber-400 border-amber-500/50 bg-amber-500/10'
+        : 'text-green-400 border-green-500/50 bg-green-500/10';
 
   if (showSuccess) {
     return (
@@ -298,8 +299,7 @@ const BriefingSignOff = () => {
             </div>
             <h1 className="text-2xl font-bold text-foreground mb-2">Successfully Signed Off</h1>
             <p className="text-muted-foreground mb-6">
-              Thank you for signing off on "{briefing.title}".
-              Your attendance has been recorded.
+              Thank you for signing off on "{briefing.title}". Your attendance has been recorded.
             </p>
             <div className="p-4 rounded-lg bg-muted/50 text-sm text-muted-foreground">
               <p>You can close this page now.</p>
@@ -317,19 +317,21 @@ const BriefingSignOff = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-5">
             <div className="flex items-start gap-3">
-              <div className={cn("p-2.5 rounded-xl bg-white/10", riskColour)}>
+              <div className={cn('p-2.5 rounded-xl bg-white/10', riskColour)}>
                 <FileText className="h-6 w-6" />
               </div>
               <div className="flex-1">
                 <h1 className="text-lg font-bold leading-tight">{briefing.title}</h1>
                 <div className="flex flex-wrap gap-2 mt-2">
                   <Badge variant="outline" className="border-white/30 text-white text-xs">
-                    {briefing.briefing_type || "Briefing"}
+                    {briefing.briefing_type || 'Briefing'}
                   </Badge>
                   {briefing.risk_level && (
-                    <Badge variant="outline" className={cn("text-xs", riskColour)}>
-                      {briefing.risk_level === "high" && <AlertTriangle className="h-3 w-3 mr-1" />}
-                      {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} Risk
+                    <Badge variant="outline" className={cn('text-xs', riskColour)}>
+                      {briefing.risk_level === 'high' && <AlertTriangle className="h-3 w-3 mr-1" />}
+                      {briefing.risk_level.charAt(0).toUpperCase() +
+                        briefing.risk_level.slice(1)}{' '}
+                      Risk
                     </Badge>
                   )}
                 </div>
@@ -343,7 +345,7 @@ const BriefingSignOff = () => {
               {briefing.date && (
                 <span className="flex items-center gap-1.5 text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  {format(new Date(briefing.date), "dd MMM yyyy")}
+                  {format(new Date(briefing.date), 'dd MMM yyyy')}
                 </span>
               )}
               {briefing.time && (
@@ -400,22 +402,22 @@ const BriefingSignOff = () => {
                 {/* Toggle between existing attendee and guest */}
                 <div className="flex gap-2">
                   <Button
-                    variant={!isGuest ? "default" : "outline"}
+                    variant={!isGuest ? 'default' : 'outline'}
                     onClick={() => setIsGuest(false)}
                     className={cn(
-                      "flex-1 h-11 touch-manipulation",
-                      !isGuest && "bg-blue-600 hover:bg-blue-700"
+                      'flex-1 h-11 touch-manipulation',
+                      !isGuest && 'bg-blue-600 hover:bg-blue-700'
                     )}
                   >
                     <Users className="h-4 w-4 mr-1.5" />
                     I'm on the list
                   </Button>
                   <Button
-                    variant={isGuest ? "default" : "outline"}
+                    variant={isGuest ? 'default' : 'outline'}
                     onClick={() => setIsGuest(true)}
                     className={cn(
-                      "flex-1 h-11 touch-manipulation",
-                      isGuest && "bg-blue-600 hover:bg-blue-700"
+                      'flex-1 h-11 touch-manipulation',
+                      isGuest && 'bg-blue-600 hover:bg-blue-700'
                     )}
                   >
                     <User className="h-4 w-4 mr-1.5" />
@@ -435,14 +437,14 @@ const BriefingSignOff = () => {
                               key={attendee.id}
                               onClick={() => setSelectedAttendee(attendee.id)}
                               className={cn(
-                                "w-full p-3 rounded-lg border text-left transition-colors touch-manipulation",
+                                'w-full p-3 rounded-lg border text-left transition-colors touch-manipulation',
                                 selectedAttendee === attendee.id
-                                  ? "bg-blue-500/20 border-blue-500"
-                                  : "bg-muted/50 border-border hover:border-blue-500/50"
+                                  ? 'bg-blue-500/20 border-blue-500'
+                                  : 'bg-muted/50 border-border hover:border-blue-500/50'
                               )}
                             >
                               <p className="font-medium text-foreground truncate">
-                                {attendee.employee?.name || attendee.guest_name || "Unknown"}
+                                {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                               </p>
                               {attendee.guest_company && (
                                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -457,7 +459,9 @@ const BriefingSignOff = () => {
                       <div className="p-4 text-center text-muted-foreground bg-muted/50 rounded-lg">
                         <CheckCircle className="h-8 w-8 mx-auto mb-2 text-green-400" />
                         <p className="text-sm">All attendees have signed off!</p>
-                        <p className="text-xs mt-1">Sign as a guest if you need to add your signature.</p>
+                        <p className="text-xs mt-1">
+                          Sign as a guest if you need to add your signature.
+                        </p>
                       </div>
                     )}
                   </div>
@@ -520,7 +524,12 @@ const BriefingSignOff = () => {
                 {/* Submit */}
                 <Button
                   onClick={handleSignOff}
-                  disabled={submitting || !signatureData || (!isGuest && !selectedAttendee) || (isGuest && !guestName.trim())}
+                  disabled={
+                    submitting ||
+                    !signatureData ||
+                    (!isGuest && !selectedAttendee) ||
+                    (isGuest && !guestName.trim())
+                  }
                   className="w-full h-12 bg-green-600 hover:bg-green-700 text-white touch-manipulation"
                 >
                   {submitting ? (
@@ -559,8 +568,8 @@ const BriefingSignOff = () => {
                         </span>
                         <span className="text-xs text-muted-foreground shrink-0 whitespace-nowrap">
                           {attendee.acknowledged_at
-                            ? format(new Date(attendee.acknowledged_at), "HH:mm")
-                            : ""}
+                            ? format(new Date(attendee.acknowledged_at), 'HH:mm')
+                            : ''}
                         </span>
                       </div>
                     ))}

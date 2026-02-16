@@ -7,12 +7,12 @@ export const HVACSensorDataQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "How do smart HVAC systems use sensor data?";
+  const question = 'How do smart HVAC systems use sensor data?';
   const options = [
-    "Only for displaying information to users",
-    "Automatically adjust ventilation, filtration, and humidity control",
-    "Just for recording historical data",
-    "Only for maintenance scheduling"
+    'Only for displaying information to users',
+    'Automatically adjust ventilation, filtration, and humidity control',
+    'Just for recording historical data',
+    'Only for maintenance scheduling',
   ];
   const correctAnswer = 1;
 
@@ -36,7 +36,7 @@ export const HVACSensorDataQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <Button
@@ -49,11 +49,11 @@ export const HVACSensorDataQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-600/20 border-green-500 text-green-200'
                     : selectedAnswer === index.toString()
-                    ? 'bg-red-600/20 border-red-500 text-red-200'
-                    : 'text-gray-400'
+                      ? 'bg-red-600/20 border-red-500 text-red-200'
+                      : 'text-gray-400'
                   : selectedAnswer === index.toString()
-                  ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
-                  : 'text-gray-300'
+                    ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                    : 'text-gray-300'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -72,7 +72,11 @@ export const HVACSensorDataQuickCheck = () => {
         {showResult && (
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
             <p className="text-gray-300 text-sm">
-              <strong className="text-foreground">Explanation:</strong> Smart HVAC systems use sensor data to automatically control various functions: increasing ventilation when CO₂ is high, activating humidifiers when air is dry, boosting filtration when particulates are detected, and adjusting fresh air supply based on occupancy and air quality.
+              <strong className="text-foreground">Explanation:</strong> Smart HVAC systems use
+              sensor data to automatically control various functions: increasing ventilation when
+              CO₂ is high, activating humidifiers when air is dry, boosting filtration when
+              particulates are detected, and adjusting fresh air supply based on occupancy and air
+              quality.
             </p>
             <Button
               onClick={resetQuestion}

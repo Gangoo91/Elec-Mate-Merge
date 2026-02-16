@@ -31,7 +31,10 @@ export function useVideoBookmarks() {
   const { user } = useAuth();
   const [bookmarks, setBookmarks] = useState<VideoBookmark[]>([]);
   const [watchedIds, setWatchedIds] = useState<string[]>([]);
-  const [keys, setKeys] = useState({ bookmarkKey: BASE_BOOKMARK_KEY, watchedKey: BASE_WATCHED_KEY });
+  const [keys, setKeys] = useState({
+    bookmarkKey: BASE_BOOKMARK_KEY,
+    watchedKey: BASE_WATCHED_KEY,
+  });
 
   // Fetch from Supabase on mount / user change
   useEffect(() => {
@@ -44,11 +47,15 @@ export function useVideoBookmarks() {
       try {
         const stored = localStorage.getItem(userKeys.bookmarkKey);
         if (stored) setBookmarks(JSON.parse(stored));
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
       try {
         const stored = localStorage.getItem(userKeys.watchedKey);
         if (stored) setWatchedIds(JSON.parse(stored));
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
       return;
     }
 
@@ -64,16 +71,15 @@ export function useVideoBookmarks() {
       if (oldWatched && !newWatched) {
         localStorage.setItem(userKeys.watchedKey, oldWatched);
       }
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
 
     // Fetch from Supabase
     const fetchData = async () => {
       try {
         const [watchesRes, bookmarksRes] = await Promise.all([
-          supabase
-            .from('user_video_watches')
-            .select('video_id')
-            .eq('user_id', uid),
+          supabase.from('user_video_watches').select('video_id').eq('user_id', uid),
           supabase
             .from('user_video_bookmarks')
             .select('video_id, title, category, bookmarked_at')
@@ -101,88 +107,106 @@ export function useVideoBookmarks() {
         try {
           const stored = localStorage.getItem(userKeys.bookmarkKey);
           if (stored) setBookmarks(JSON.parse(stored));
-        } catch { /* ignore */ }
+        } catch {
+          /* ignore */
+        }
         try {
           const stored = localStorage.getItem(userKeys.watchedKey);
           if (stored) setWatchedIds(JSON.parse(stored));
-        } catch { /* ignore */ }
+        } catch {
+          /* ignore */
+        }
       }
     };
 
     fetchData();
   }, [user]);
 
-  const isBookmarked = useCallback((videoId: string) => {
-    return bookmarks.some(b => b.videoId === videoId);
-  }, [bookmarks]);
+  const isBookmarked = useCallback(
+    (videoId: string) => {
+      return bookmarks.some((b) => b.videoId === videoId);
+    },
+    [bookmarks]
+  );
 
-  const toggleBookmark = useCallback(async (videoId: string, title: string, category: string) => {
-    const removing = isBookmarked(videoId);
+  const toggleBookmark = useCallback(
+    async (videoId: string, title: string, category: string) => {
+      const removing = isBookmarked(videoId);
 
-    // Optimistic local update
-    let updated: VideoBookmark[];
-    if (removing) {
-      updated = bookmarks.filter(b => b.videoId !== videoId);
-    } else {
-      updated = [...bookmarks, {
-        videoId,
-        title,
-        category,
-        bookmarkedAt: new Date().toISOString(),
-      }];
-    }
-    setBookmarks(updated);
-    localStorage.setItem(keys.bookmarkKey, JSON.stringify(updated));
+      // Optimistic local update
+      let updated: VideoBookmark[];
+      if (removing) {
+        updated = bookmarks.filter((b) => b.videoId !== videoId);
+      } else {
+        updated = [
+          ...bookmarks,
+          {
+            videoId,
+            title,
+            category,
+            bookmarkedAt: new Date().toISOString(),
+          },
+        ];
+      }
+      setBookmarks(updated);
+      localStorage.setItem(keys.bookmarkKey, JSON.stringify(updated));
 
-    // Persist to Supabase
-    if (user) {
-      try {
-        if (removing) {
-          await supabase
-            .from('user_video_bookmarks')
-            .delete()
-            .eq('user_id', user.id)
-            .eq('video_id', videoId);
-        } else {
-          await supabase
-            .from('user_video_bookmarks')
-            .upsert({
+      // Persist to Supabase
+      if (user) {
+        try {
+          if (removing) {
+            await supabase
+              .from('user_video_bookmarks')
+              .delete()
+              .eq('user_id', user.id)
+              .eq('video_id', videoId);
+          } else {
+            await supabase.from('user_video_bookmarks').upsert(
+              {
+                user_id: user.id,
+                video_id: videoId,
+                title,
+                category,
+                bookmarked_at: new Date().toISOString(),
+              },
+              { onConflict: 'user_id,video_id' }
+            );
+          }
+        } catch (err) {
+          console.error('Error syncing bookmark:', err);
+        }
+      }
+    },
+    [bookmarks, isBookmarked, keys.bookmarkKey, user]
+  );
+
+  const trackVideoWatched = useCallback(
+    async (videoId: string) => {
+      if (watchedIds.includes(videoId)) return;
+
+      // Optimistic local update
+      const updated = [...watchedIds, videoId];
+      setWatchedIds(updated);
+      localStorage.setItem(keys.watchedKey, JSON.stringify(updated));
+
+      // Persist to Supabase
+      if (user) {
+        try {
+          await supabase.from('user_video_watches').upsert(
+            {
               user_id: user.id,
               video_id: videoId,
-              title,
-              category,
-              bookmarked_at: new Date().toISOString(),
-            }, { onConflict: 'user_id,video_id' });
+              watched_at: new Date().toISOString(),
+            },
+            { onConflict: 'user_id,video_id' }
+          );
+        } catch (err) {
+          console.error('Error syncing video watch:', err);
         }
-      } catch (err) {
-        console.error('Error syncing bookmark:', err);
       }
-    }
-  }, [bookmarks, isBookmarked, keys.bookmarkKey, user]);
-
-  const trackVideoWatched = useCallback(async (videoId: string) => {
-    if (watchedIds.includes(videoId)) return;
-
-    // Optimistic local update
-    const updated = [...watchedIds, videoId];
-    setWatchedIds(updated);
-    localStorage.setItem(keys.watchedKey, JSON.stringify(updated));
-
-    // Persist to Supabase
-    if (user) {
-      try {
-        await supabase
-          .from('user_video_watches')
-          .upsert({
-            user_id: user.id,
-            video_id: videoId,
-            watched_at: new Date().toISOString(),
-          }, { onConflict: 'user_id,video_id' });
-      } catch (err) {
-        console.error('Error syncing video watch:', err);
-      }
-    }
-  }, [watchedIds, keys.watchedKey, user]);
+    },
+    [watchedIds, keys.watchedKey, user]
+  );
 
   const getWatchedIds = useCallback((): string[] => {
     return watchedIds;

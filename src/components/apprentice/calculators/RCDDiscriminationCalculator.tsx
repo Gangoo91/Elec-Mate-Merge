@@ -1,8 +1,21 @@
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { AlertTriangle, CheckCircle, Calculator, Info, Clock, Shield, Zap, BookOpen, XCircle, AlertCircle, ChevronDown, Lightbulb } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  AlertTriangle,
+  CheckCircle,
+  Calculator,
+  Info,
+  Clock,
+  Shield,
+  Zap,
+  BookOpen,
+  XCircle,
+  AlertCircle,
+  ChevronDown,
+  Lightbulb,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -12,12 +25,8 @@ import {
   CalculatorResult,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface RCDConfig {
   rating: string;
@@ -45,79 +54,79 @@ interface DiscriminationResult {
 }
 
 const rcdTypes = [
-  { value: "type-ac", label: "Type AC (Standard)", trippingTime: 300 },
-  { value: "type-a", label: "Type A (Enhanced)", trippingTime: 300 },
-  { value: "type-f", label: "Type F (Frequency)", trippingTime: 300 },
-  { value: "type-b", label: "Type B (Universal)", trippingTime: 300 },
-  { value: "s-type", label: "S-Type (Selective)", trippingTime: 500 },
-  { value: "type-ac-time-delayed", label: "Type AC Time-Delayed", trippingTime: 150 }
+  { value: 'type-ac', label: 'Type AC (Standard)', trippingTime: 300 },
+  { value: 'type-a', label: 'Type A (Enhanced)', trippingTime: 300 },
+  { value: 'type-f', label: 'Type F (Frequency)', trippingTime: 300 },
+  { value: 'type-b', label: 'Type B (Universal)', trippingTime: 300 },
+  { value: 's-type', label: 'S-Type (Selective)', trippingTime: 500 },
+  { value: 'type-ac-time-delayed', label: 'Type AC Time-Delayed', trippingTime: 150 },
 ];
 
 const rcdRatings = [
-  { value: "10", label: "10mA - Medical/Special" },
-  { value: "30", label: "30mA - Personal protection" },
-  { value: "100", label: "100mA - Fire protection (small)" },
-  { value: "300", label: "300mA - Fire protection (large)" },
-  { value: "500", label: "500mA - Fire protection (industrial)" },
-  { value: "1000", label: "1000mA - Very large loads" }
+  { value: '10', label: '10mA - Medical/Special' },
+  { value: '30', label: '30mA - Personal protection' },
+  { value: '100', label: '100mA - Fire protection (small)' },
+  { value: '300', label: '300mA - Fire protection (large)' },
+  { value: '500', label: '500mA - Fire protection (industrial)' },
+  { value: '1000', label: '1000mA - Very large loads' },
 ];
 
 const installationLocations = [
-  { value: "consumer-unit", label: "Consumer Unit (Main)" },
-  { value: "distribution-board", label: "Distribution Board" },
-  { value: "local-db", label: "Local Distribution Board" },
-  { value: "socket-outlet", label: "Socket Outlet RCD" },
-  { value: "rcbo", label: "RCBO in Board" },
-  { value: "external", label: "External Installation" }
+  { value: 'consumer-unit', label: 'Consumer Unit (Main)' },
+  { value: 'distribution-board', label: 'Distribution Board' },
+  { value: 'local-db', label: 'Local Distribution Board' },
+  { value: 'socket-outlet', label: 'Socket Outlet RCD' },
+  { value: 'rcbo', label: 'RCBO in Board' },
+  { value: 'external', label: 'External Installation' },
 ];
 
 const circuitTypes = [
-  { value: "lighting", label: "Lighting Circuit" },
-  { value: "power-sockets", label: "Power & Socket Outlets" },
-  { value: "immersion", label: "Immersion Heater" },
-  { value: "shower", label: "Electric Shower" },
-  { value: "cooker", label: "Electric Cooker" },
-  { value: "heating", label: "Electric Heating" },
-  { value: "motor", label: "Motor Circuit" },
-  { value: "outdoor", label: "Outdoor/Garden Circuit" },
-  { value: "ev-charging", label: "EV Charging Point" },
-  { value: "special-location", label: "Special Location (Bathroom/Pool)" }
+  { value: 'lighting', label: 'Lighting Circuit' },
+  { value: 'power-sockets', label: 'Power & Socket Outlets' },
+  { value: 'immersion', label: 'Immersion Heater' },
+  { value: 'shower', label: 'Electric Shower' },
+  { value: 'cooker', label: 'Electric Cooker' },
+  { value: 'heating', label: 'Electric Heating' },
+  { value: 'motor', label: 'Motor Circuit' },
+  { value: 'outdoor', label: 'Outdoor/Garden Circuit' },
+  { value: 'ev-charging', label: 'EV Charging Point' },
+  { value: 'special-location', label: 'Special Location (Bathroom/Pool)' },
 ];
 
 const earthingSystems = [
-  { value: "tn-s", label: "TN-S (Separate earth)" },
-  { value: "tn-c-s", label: "TN-C-S (PME)" },
-  { value: "tt", label: "TT (Earth electrode)" },
-  { value: "it", label: "IT (Isolated/impedance)" }
+  { value: 'tn-s', label: 'TN-S (Separate earth)' },
+  { value: 'tn-c-s', label: 'TN-C-S (PME)' },
+  { value: 'tt', label: 'TT (Earth electrode)' },
+  { value: 'it', label: 'IT (Isolated/impedance)' },
 ];
 
 const RCDDiscriminationCalculator = () => {
   const config = CALCULATOR_CONFIG['protection'];
 
   const [upstreamRCD, setUpstreamRCD] = useState<RCDConfig>({
-    rating: "",
-    type: "",
-    installationLocation: "",
-    circuitType: "",
-    loadCurrent: "",
-    cableLength: "",
-    earthingSystem: "",
+    rating: '',
+    type: '',
+    installationLocation: '',
+    circuitType: '',
+    loadCurrent: '',
+    cableLength: '',
+    earthingSystem: '',
     hasTimeDelay: false,
-    customTripTime: "",
-    manufacturer: ""
+    customTripTime: '',
+    manufacturer: '',
   });
 
   const [downstreamRCD, setDownstreamRCD] = useState<RCDConfig>({
-    rating: "",
-    type: "",
-    installationLocation: "",
-    circuitType: "",
-    loadCurrent: "",
-    cableLength: "",
-    earthingSystem: "",
+    rating: '',
+    type: '',
+    installationLocation: '',
+    circuitType: '',
+    loadCurrent: '',
+    cableLength: '',
+    earthingSystem: '',
     hasTimeDelay: false,
-    customTripTime: "",
-    manufacturer: ""
+    customTripTime: '',
+    manufacturer: '',
   });
 
   const [result, setResult] = useState<DiscriminationResult | null>(null);
@@ -130,18 +139,20 @@ const RCDDiscriminationCalculator = () => {
       return;
     }
 
-    const upstreamType = rcdTypes.find(type => type.value === upstreamRCD.type);
-    const downstreamType = rcdTypes.find(type => type.value === downstreamRCD.type);
+    const upstreamType = rcdTypes.find((type) => type.value === upstreamRCD.type);
+    const downstreamType = rcdTypes.find((type) => type.value === downstreamRCD.type);
 
     if (!upstreamType || !downstreamType) return;
 
-    const upstreamTime = upstreamRCD.hasTimeDelay && upstreamRCD.customTripTime
-      ? parseInt(upstreamRCD.customTripTime)
-      : upstreamType.trippingTime;
+    const upstreamTime =
+      upstreamRCD.hasTimeDelay && upstreamRCD.customTripTime
+        ? parseInt(upstreamRCD.customTripTime)
+        : upstreamType.trippingTime;
 
-    const downstreamTime = downstreamRCD.hasTimeDelay && downstreamRCD.customTripTime
-      ? parseInt(downstreamRCD.customTripTime)
-      : downstreamType.trippingTime;
+    const downstreamTime =
+      downstreamRCD.hasTimeDelay && downstreamRCD.customTripTime
+        ? parseInt(downstreamRCD.customTripTime)
+        : downstreamType.trippingTime;
 
     const timeDifference = upstreamTime - downstreamTime;
 
@@ -152,45 +163,50 @@ const RCDDiscriminationCalculator = () => {
     let discriminates = false;
     let complianceStatus: 'compliant' | 'non-compliant' | 'marginal' = 'non-compliant';
     let riskLevel: 'low' | 'medium' | 'high' | 'critical' = 'critical';
-    let recommendation = "";
+    let recommendation = '';
     let practicalGuidance: string[] = [];
-    let regulatoryReference = "";
+    let regulatoryReference = '';
     let improvements: string[] = [];
 
-    if (upstreamRCD.type === "s-type" && downstreamRCD.type !== "s-type") {
+    if (upstreamRCD.type === 's-type' && downstreamRCD.type !== 's-type') {
       discriminates = timeDifference >= 200 && currentRatio >= 3;
 
       if (discriminates) {
         complianceStatus = 'compliant';
         riskLevel = 'low';
-        recommendation = "Excellent discrimination achieved. S-type upstream provides reliable selective operation per BS 7671 requirements.";
-        regulatoryReference = "BS 7671:2018 Regulation 531.2.9 - Coordination of protective devices";
+        recommendation =
+          'Excellent discrimination achieved. S-type upstream provides reliable selective operation per BS 7671 requirements.';
+        regulatoryReference =
+          'BS 7671:2018 Regulation 531.2.9 - Coordination of protective devices';
       } else if (timeDifference >= 150 && currentRatio >= 2) {
         complianceStatus = 'marginal';
         riskLevel = 'medium';
-        recommendation = "Marginal discrimination. Consider increasing upstream rating or using longer time delay.";
-        improvements.push("Increase upstream RCD rating to achieve minimum 3:1 ratio");
-        improvements.push("Consider S-type RCD with longer time delay (minimum 200ms)");
+        recommendation =
+          'Marginal discrimination. Consider increasing upstream rating or using longer time delay.';
+        improvements.push('Increase upstream RCD rating to achieve minimum 3:1 ratio');
+        improvements.push('Consider S-type RCD with longer time delay (minimum 200ms)');
       } else {
         complianceStatus = 'non-compliant';
         riskLevel = 'high';
-        recommendation = "Poor discrimination. Risk of simultaneous tripping during earth faults.";
-        improvements.push("Replace upstream with higher rated S-type RCD");
-        improvements.push("Ensure minimum 200ms time delay difference");
-        improvements.push("Achieve minimum 3:1 current rating ratio");
+        recommendation = 'Poor discrimination. Risk of simultaneous tripping during earth faults.';
+        improvements.push('Replace upstream with higher rated S-type RCD');
+        improvements.push('Ensure minimum 200ms time delay difference');
+        improvements.push('Achieve minimum 3:1 current rating ratio');
       }
-    } else if (upstreamRCD.type === "type-ac-time-delayed") {
+    } else if (upstreamRCD.type === 'type-ac-time-delayed') {
       discriminates = timeDifference >= 100 && currentRatio >= 3;
       if (discriminates) {
         complianceStatus = 'compliant';
         riskLevel = 'low';
-        recommendation = "Time-delayed Type AC provides adequate discrimination margin for standard installations.";
-        regulatoryReference = "BS 7671:2018 Section 531 - Protective devices";
+        recommendation =
+          'Time-delayed Type AC provides adequate discrimination margin for standard installations.';
+        regulatoryReference = 'BS 7671:2018 Section 531 - Protective devices';
       } else {
         complianceStatus = 'marginal';
         riskLevel = 'medium';
-        recommendation = "Time delay provides some discrimination but may not be sufficient for all fault conditions.";
-        improvements.push("Consider using S-type RCD upstream for better discrimination");
+        recommendation =
+          'Time delay provides some discrimination but may not be sufficient for all fault conditions.';
+        improvements.push('Consider using S-type RCD upstream for better discrimination');
       }
     } else {
       discriminates = timeDifference > 0 && currentRatio >= 3;
@@ -198,19 +214,20 @@ const RCDDiscriminationCalculator = () => {
       if (discriminates && currentRatio >= 5) {
         complianceStatus = 'compliant';
         riskLevel = 'low';
-        recommendation = "Good discrimination achieved with adequate current ratio separation.";
+        recommendation = 'Good discrimination achieved with adequate current ratio separation.';
       } else if (discriminates && currentRatio >= 3) {
         complianceStatus = 'marginal';
         riskLevel = 'medium';
-        recommendation = "Basic discrimination achieved but current ratio could be improved.";
-        improvements.push("Consider increasing upstream RCD rating for better discrimination");
+        recommendation = 'Basic discrimination achieved but current ratio could be improved.';
+        improvements.push('Consider increasing upstream RCD rating for better discrimination');
       } else {
         complianceStatus = 'non-compliant';
         riskLevel = 'critical';
-        recommendation = "No effective discrimination. High risk of nuisance tripping and loss of selectivity.";
-        improvements.push("Use S-type RCD upstream for time delay");
-        improvements.push("Increase upstream current rating (minimum 3:1 ratio)");
-        improvements.push("Consider alternative protection scheme");
+        recommendation =
+          'No effective discrimination. High risk of nuisance tripping and loss of selectivity.';
+        improvements.push('Use S-type RCD upstream for time delay');
+        improvements.push('Increase upstream current rating (minimum 3:1 ratio)');
+        improvements.push('Consider alternative protection scheme');
       }
     }
 
@@ -218,22 +235,27 @@ const RCDDiscriminationCalculator = () => {
       discriminates = false;
       complianceStatus = 'non-compliant';
       riskLevel = 'critical';
-      recommendation += " | CRITICAL: Upstream RCD rating must be higher than downstream for any discrimination.";
-      improvements.unshift("IMMEDIATE: Increase upstream RCD rating above downstream rating");
+      recommendation +=
+        ' | CRITICAL: Upstream RCD rating must be higher than downstream for any discrimination.';
+      improvements.unshift('IMMEDIATE: Increase upstream RCD rating above downstream rating');
     }
 
-    if (downstreamRCD.circuitType === "special-location" && parseInt(downstreamRCD.rating) > 30) {
-      practicalGuidance.push("Special locations (bathrooms, pools) require 30mA RCD protection maximum");
+    if (downstreamRCD.circuitType === 'special-location' && parseInt(downstreamRCD.rating) > 30) {
+      practicalGuidance.push(
+        'Special locations (bathrooms, pools) require 30mA RCD protection maximum'
+      );
       riskLevel = 'high';
     }
 
-    if (downstreamRCD.circuitType === "ev-charging" && downstreamRCD.rating !== "30") {
-      practicalGuidance.push("EV charging points require 30mA RCD protection per BS 7671");
-      improvements.push("Install 30mA Type A RCD for EV charging circuit");
+    if (downstreamRCD.circuitType === 'ev-charging' && downstreamRCD.rating !== '30') {
+      practicalGuidance.push('EV charging points require 30mA RCD protection per BS 7671');
+      improvements.push('Install 30mA Type A RCD for EV charging circuit');
     }
 
-    if (upstreamRCD.earthingSystem === "tt" && parseInt(upstreamRCD.rating) > 100) {
-      practicalGuidance.push("TT earthing systems typically require 100mA maximum RCD for fire protection");
+    if (upstreamRCD.earthingSystem === 'tt' && parseInt(upstreamRCD.rating) > 100) {
+      practicalGuidance.push(
+        'TT earthing systems typically require 100mA maximum RCD for fire protection'
+      );
     }
 
     if (downstreamRCD.loadCurrent) {
@@ -241,20 +263,24 @@ const RCDDiscriminationCalculator = () => {
       const leakageCurrent = loadCurrent * 0.001;
 
       if (leakageCurrent > parseInt(downstreamRCD.rating) * 0.5) {
-        practicalGuidance.push(`High leakage current risk (≈${leakageCurrent.toFixed(1)}mA) may cause nuisance tripping`);
-        improvements.push("Consider higher rated RCD or reduce circuit loading");
+        practicalGuidance.push(
+          `High leakage current risk (≈${leakageCurrent.toFixed(1)}mA) may cause nuisance tripping`
+        );
+        improvements.push('Consider higher rated RCD or reduce circuit loading');
       }
     }
 
     practicalGuidance.push(
-      "Test both RCDs at commissioning with appropriate test equipment",
-      "Document actual trip times on electrical installation certificate",
-      "Ensure proper labelling of RCD functions and circuits protected",
-      "Regular testing required: monthly for critical circuits, quarterly for others"
+      'Test both RCDs at commissioning with appropriate test equipment',
+      'Document actual trip times on electrical installation certificate',
+      'Ensure proper labelling of RCD functions and circuits protected',
+      'Regular testing required: monthly for critical circuits, quarterly for others'
     );
 
-    if (upstreamRCD.type === "s-type") {
-      practicalGuidance.push("S-type RCDs require specific test procedures - do not use standard RCD testers");
+    if (upstreamRCD.type === 's-type') {
+      practicalGuidance.push(
+        'S-type RCDs require specific test procedures - do not use standard RCD testers'
+      );
     }
 
     setResult({
@@ -266,49 +292,55 @@ const RCDDiscriminationCalculator = () => {
       riskLevel,
       practicalGuidance,
       regulatoryReference,
-      improvements
+      improvements,
     });
   };
 
   const resetCalculator = () => {
     setUpstreamRCD({
-      rating: "",
-      type: "",
-      installationLocation: "",
-      circuitType: "",
-      loadCurrent: "",
-      cableLength: "",
-      earthingSystem: "",
+      rating: '',
+      type: '',
+      installationLocation: '',
+      circuitType: '',
+      loadCurrent: '',
+      cableLength: '',
+      earthingSystem: '',
       hasTimeDelay: false,
-      customTripTime: "",
-      manufacturer: ""
+      customTripTime: '',
+      manufacturer: '',
     });
     setDownstreamRCD({
-      rating: "",
-      type: "",
-      installationLocation: "",
-      circuitType: "",
-      loadCurrent: "",
-      cableLength: "",
-      earthingSystem: "",
+      rating: '',
+      type: '',
+      installationLocation: '',
+      circuitType: '',
+      loadCurrent: '',
+      cableLength: '',
+      earthingSystem: '',
       hasTimeDelay: false,
-      customTripTime: "",
-      manufacturer: ""
+      customTripTime: '',
+      manufacturer: '',
     });
     setResult(null);
   };
 
   const getRiskColor = (level: string) => {
     switch (level) {
-      case 'low': return 'text-green-400';
-      case 'medium': return 'text-yellow-400';
-      case 'high': return 'text-orange-400';
-      case 'critical': return 'text-red-400';
-      default: return 'text-white';
+      case 'low':
+        return 'text-green-400';
+      case 'medium':
+        return 'text-yellow-400';
+      case 'high':
+        return 'text-orange-400';
+      case 'critical':
+        return 'text-red-400';
+      default:
+        return 'text-white';
     }
   };
 
-  const canCalculate = upstreamRCD.rating && downstreamRCD.rating && upstreamRCD.type && downstreamRCD.type;
+  const canCalculate =
+    upstreamRCD.rating && downstreamRCD.rating && upstreamRCD.type && downstreamRCD.type;
 
   return (
     <div className="space-y-4">
@@ -332,28 +364,30 @@ const RCDDiscriminationCalculator = () => {
             <CalculatorSelect
               label="Rating (IΔn)"
               value={upstreamRCD.rating}
-              onChange={(value) => setUpstreamRCD(prev => ({ ...prev, rating: value }))}
+              onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, rating: value }))}
               options={rcdRatings}
               placeholder="Select rating"
             />
             <CalculatorSelect
               label="RCD Type"
               value={upstreamRCD.type}
-              onChange={(value) => setUpstreamRCD(prev => ({ ...prev, type: value }))}
+              onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, type: value }))}
               options={rcdTypes}
               placeholder="Select type"
             />
             <CalculatorSelect
               label="Installation Location"
               value={upstreamRCD.installationLocation}
-              onChange={(value) => setUpstreamRCD(prev => ({ ...prev, installationLocation: value }))}
+              onChange={(value) =>
+                setUpstreamRCD((prev) => ({ ...prev, installationLocation: value }))
+              }
               options={installationLocations}
               placeholder="Select location"
             />
             <CalculatorSelect
               label="Earthing System"
               value={upstreamRCD.earthingSystem}
-              onChange={(value) => setUpstreamRCD(prev => ({ ...prev, earthingSystem: value }))}
+              onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, earthingSystem: value }))}
               options={earthingSystems}
               placeholder="Select system"
             />
@@ -364,7 +398,7 @@ const RCDDiscriminationCalculator = () => {
               id="upstream-delay"
               checked={upstreamRCD.hasTimeDelay}
               onCheckedChange={(checked) =>
-                setUpstreamRCD(prev => ({ ...prev, hasTimeDelay: !!checked }))
+                setUpstreamRCD((prev) => ({ ...prev, hasTimeDelay: !!checked }))
               }
             />
             <label htmlFor="upstream-delay" className="text-sm text-white">
@@ -379,7 +413,7 @@ const RCDDiscriminationCalculator = () => {
               type="text"
               inputMode="decimal"
               value={upstreamRCD.customTripTime}
-              onChange={(value) => setUpstreamRCD(prev => ({ ...prev, customTripTime: value }))}
+              onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, customTripTime: value }))}
               placeholder="Enter trip time in milliseconds"
             />
           )}
@@ -400,14 +434,14 @@ const RCDDiscriminationCalculator = () => {
             <CalculatorSelect
               label="Rating (IΔn)"
               value={downstreamRCD.rating}
-              onChange={(value) => setDownstreamRCD(prev => ({ ...prev, rating: value }))}
+              onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, rating: value }))}
               options={rcdRatings}
               placeholder="Select rating"
             />
             <CalculatorSelect
               label="RCD Type"
               value={downstreamRCD.type}
-              onChange={(value) => setDownstreamRCD(prev => ({ ...prev, type: value }))}
+              onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, type: value }))}
               options={rcdTypes}
               placeholder="Select type"
             />
@@ -416,7 +450,7 @@ const RCDDiscriminationCalculator = () => {
           <CalculatorSelect
             label="Circuit Type"
             value={downstreamRCD.circuitType}
-            onChange={(value) => setDownstreamRCD(prev => ({ ...prev, circuitType: value }))}
+            onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, circuitType: value }))}
             options={circuitTypes}
             placeholder="Select circuit type"
           />
@@ -428,7 +462,7 @@ const RCDDiscriminationCalculator = () => {
               type="text"
               inputMode="decimal"
               value={downstreamRCD.loadCurrent}
-              onChange={(value) => setDownstreamRCD(prev => ({ ...prev, loadCurrent: value }))}
+              onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, loadCurrent: value }))}
               placeholder="Enter load current"
             />
             <CalculatorInput
@@ -437,7 +471,7 @@ const RCDDiscriminationCalculator = () => {
               type="text"
               inputMode="decimal"
               value={downstreamRCD.cableLength}
-              onChange={(value) => setDownstreamRCD(prev => ({ ...prev, cableLength: value }))}
+              onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, cableLength: value }))}
               placeholder="Enter cable length"
             />
           </CalculatorInputGrid>
@@ -447,7 +481,7 @@ const RCDDiscriminationCalculator = () => {
               id="downstream-delay"
               checked={downstreamRCD.hasTimeDelay}
               onCheckedChange={(checked) =>
-                setDownstreamRCD(prev => ({ ...prev, hasTimeDelay: !!checked }))
+                setDownstreamRCD((prev) => ({ ...prev, hasTimeDelay: !!checked }))
               }
             />
             <label htmlFor="downstream-delay" className="text-sm text-white">
@@ -462,7 +496,7 @@ const RCDDiscriminationCalculator = () => {
               type="text"
               inputMode="decimal"
               value={downstreamRCD.customTripTime}
-              onChange={(value) => setDownstreamRCD(prev => ({ ...prev, customTripTime: value }))}
+              onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, customTripTime: value }))}
               placeholder="Enter trip time in milliseconds"
             />
           )}
@@ -489,20 +523,24 @@ const RCDDiscriminationCalculator = () => {
                 ) : (
                   <XCircle className="h-6 w-6 text-red-400" />
                 )}
-                <span className={cn(
-                  "text-xl font-bold",
-                  result.discriminates ? "text-green-400" : "text-red-400"
-                )}>
+                <span
+                  className={cn(
+                    'text-xl font-bold',
+                    result.discriminates ? 'text-green-400' : 'text-red-400'
+                  )}
+                >
                   {result.discriminates ? 'DISCRIMINATES' : 'NO DISCRIMINATION'}
                 </span>
               </div>
               <Badge
                 variant="outline"
                 className={cn(
-                  "mt-2",
-                  result.complianceStatus === 'compliant' ? "border-green-500/50 text-green-400" :
-                  result.complianceStatus === 'marginal' ? "border-yellow-500/50 text-yellow-400" :
-                  "border-red-500/50 text-red-400"
+                  'mt-2',
+                  result.complianceStatus === 'compliant'
+                    ? 'border-green-500/50 text-green-400'
+                    : result.complianceStatus === 'marginal'
+                      ? 'border-yellow-500/50 text-yellow-400'
+                      : 'border-red-500/50 text-red-400'
                 )}
               >
                 {result.complianceStatus.toUpperCase()}
@@ -512,19 +550,23 @@ const RCDDiscriminationCalculator = () => {
             <ResultsGrid columns={3}>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Risk Level</p>
-                <p className={cn("text-lg font-bold", getRiskColor(result.riskLevel))}>
+                <p className={cn('text-lg font-bold', getRiskColor(result.riskLevel))}>
                   {result.riskLevel.toUpperCase()}
                 </p>
               </div>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Current Ratio</p>
-                <p className="text-lg font-bold text-white font-mono">{result.currentRatio.toFixed(1)}:1</p>
+                <p className="text-lg font-bold text-white font-mono">
+                  {result.currentRatio.toFixed(1)}:1
+                </p>
               </div>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Time Difference</p>
                 <div className="flex items-center justify-center gap-1">
                   <Clock className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                  <p className="text-lg font-bold text-white font-mono">{result.timeDifference}ms</p>
+                  <p className="text-lg font-bold text-white font-mono">
+                    {result.timeDifference}ms
+                  </p>
                 </div>
               </div>
             </ResultsGrid>
@@ -546,7 +588,10 @@ const RCDDiscriminationCalculator = () => {
 
           {/* Improvements Required */}
           {result.improvements.length > 0 && (
-            <div className="calculator-card p-4" style={{ borderColor: '#fb923c30', background: '#fb923c08' }}>
+            <div
+              className="calculator-card p-4"
+              style={{ borderColor: '#fb923c30', background: '#fb923c08' }}
+            >
               <div className="flex items-center gap-2 mb-3">
                 <AlertCircle className="h-5 w-5 text-orange-400" />
                 <h3 className="font-semibold text-orange-300">Required Improvements</h3>
@@ -568,12 +613,16 @@ const RCDDiscriminationCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-green-400" />
-                  <span className="text-sm sm:text-base font-medium text-green-300">Practical Installation Guidance</span>
+                  <span className="text-sm sm:text-base font-medium text-green-300">
+                    Practical Installation Guidance
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <ul className="space-y-2">
@@ -596,31 +645,58 @@ const RCDDiscriminationCalculator = () => {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <Lightbulb className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">Understanding RCD Discrimination</span>
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                Understanding RCD Discrimination
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showRegs && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showRegs && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4 pt-0 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <h4 className="font-medium text-amber-300 text-sm">Why Discrimination Matters</h4>
                 <ul className="space-y-1 text-sm text-amber-200/80">
-                  <li>• <strong className="text-amber-300">Selective Operation:</strong> Only faulty circuit trips</li>
-                  <li>• <strong className="text-amber-300">Reduced Downtime:</strong> Minimises service disruption</li>
-                  <li>• <strong className="text-amber-300">Easier Fault Finding:</strong> Identifies faulty circuit</li>
-                  <li>• <strong className="text-amber-300">Safety Compliance:</strong> Meets BS 7671 requirements</li>
+                  <li>
+                    • <strong className="text-amber-300">Selective Operation:</strong> Only faulty
+                    circuit trips
+                  </li>
+                  <li>
+                    • <strong className="text-amber-300">Reduced Downtime:</strong> Minimises
+                    service disruption
+                  </li>
+                  <li>
+                    • <strong className="text-amber-300">Easier Fault Finding:</strong> Identifies
+                    faulty circuit
+                  </li>
+                  <li>
+                    • <strong className="text-amber-300">Safety Compliance:</strong> Meets BS 7671
+                    requirements
+                  </li>
                 </ul>
               </div>
               <div className="space-y-2">
                 <h4 className="font-medium text-amber-300 text-sm">BS 7671 Requirements</h4>
                 <ul className="space-y-1 text-sm text-amber-200/80">
-                  <li>• <strong className="text-amber-300">531.2.9:</strong> Coordination between devices</li>
-                  <li>• <strong className="text-amber-300">Time-Current:</strong> Upstream must be higher</li>
-                  <li>• <strong className="text-amber-300">S-Type RCDs:</strong> Time delay for selectivity</li>
-                  <li>• <strong className="text-amber-300">Testing:</strong> Verify at commissioning</li>
+                  <li>
+                    • <strong className="text-amber-300">531.2.9:</strong> Coordination between
+                    devices
+                  </li>
+                  <li>
+                    • <strong className="text-amber-300">Time-Current:</strong> Upstream must be
+                    higher
+                  </li>
+                  <li>
+                    • <strong className="text-amber-300">S-Type RCDs:</strong> Time delay for
+                    selectivity
+                  </li>
+                  <li>
+                    • <strong className="text-amber-300">Testing:</strong> Verify at commissioning
+                  </li>
                 </ul>
               </div>
             </div>
@@ -634,26 +710,42 @@ const RCDDiscriminationCalculator = () => {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-purple-400" />
-              <span className="text-sm sm:text-base font-medium text-purple-300">Common Installation Scenarios</span>
+              <span className="text-sm sm:text-base font-medium text-purple-300">
+                Common Installation Scenarios
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showScenarios && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showScenarios && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4 pt-0">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                 <h5 className="text-blue-300 font-medium text-sm mb-2">Domestic</h5>
-                <p className="text-xs text-blue-200/80">Main: 100mA S-Type<br/>Circuits: 30mA Type AC/A</p>
+                <p className="text-xs text-blue-200/80">
+                  Main: 100mA S-Type
+                  <br />
+                  Circuits: 30mA Type AC/A
+                </p>
               </div>
               <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
                 <h5 className="text-green-300 font-medium text-sm mb-2">Commercial</h5>
-                <p className="text-xs text-green-200/80">Main: 300mA S-Type<br/>Sub: 100mA, Final: 30mA</p>
+                <p className="text-xs text-green-200/80">
+                  Main: 300mA S-Type
+                  <br />
+                  Sub: 100mA, Final: 30mA
+                </p>
               </div>
               <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
                 <h5 className="text-purple-300 font-medium text-sm mb-2">Industrial</h5>
-                <p className="text-xs text-purple-200/80">Main: 500mA S-Type<br/>Motors: 100mA, Sockets: 30mA</p>
+                <p className="text-xs text-purple-200/80">
+                  Main: 500mA S-Type
+                  <br />
+                  Motors: 100mA, Sockets: 30mA
+                </p>
               </div>
             </div>
           </CollapsibleContent>
@@ -665,7 +757,10 @@ const RCDDiscriminationCalculator = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
           <div className="text-sm text-orange-200">
-            <p><strong>For discrimination:</strong> Upstream time ≥ Downstream time + 200ms, Current ratio ≥ 3:1</p>
+            <p>
+              <strong>For discrimination:</strong> Upstream time ≥ Downstream time + 200ms, Current
+              ratio ≥ 3:1
+            </p>
           </div>
         </div>
       </div>

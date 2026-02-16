@@ -1,20 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { PoolCalculationResult } from "@/lib/swimming-pool";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { 
-  BookOpen, 
-  Wrench, 
-  TestTube, 
-  Clock, 
-  AlertTriangle, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { PoolCalculationResult } from '@/lib/swimming-pool';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
+import {
+  BookOpen,
+  Wrench,
+  TestTube,
+  Clock,
+  AlertTriangle,
   Shield,
   Lightbulb,
   CheckCircle,
-  Eye
-} from "lucide-react";
+  Eye,
+} from 'lucide-react';
 
 interface PoolGuidanceProps {
   result: PoolCalculationResult | null;
@@ -29,7 +29,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <BookOpen className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base font-semibold text-white">Regulatory Requirements</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <h4 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
@@ -76,7 +76,9 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           </div>
 
           <div>
-            <h4 className="font-medium text-blue-300 mb-2">IET Code of Practice for Electrical Installations</h4>
+            <h4 className="font-medium text-blue-300 mb-2">
+              IET Code of Practice for Electrical Installations
+            </h4>
             <ul className="space-y-1.5">
               <li className="flex items-start gap-2 text-sm text-white">
                 <span className="text-elec-yellow mt-0.5 text-xs">•</span>
@@ -147,12 +149,17 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <Eye className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base font-semibold text-white">Zone Classifications Guide</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <div className="flex flex-col gap-2 mb-2">
               <h4 className="font-medium text-red-300">Zone 0 - Highest Risk</h4>
-              <Badge variant="outline" className="border-red-500/30 text-red-300 self-start text-xs">IPX8 Required</Badge>
+              <Badge
+                variant="outline"
+                className="border-red-500/30 text-red-300 self-start text-xs"
+              >
+                IPX8 Required
+              </Badge>
             </div>
             <p className="text-sm text-white mb-2">Interior of pool, fountain, or water feature</p>
             <ul className="space-y-1.5">
@@ -186,9 +193,16 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <div>
             <div className="flex flex-col gap-2 mb-2">
               <h4 className="font-medium text-yellow-300">Zone 1 - Medium Risk</h4>
-              <Badge variant="outline" className="border-yellow-500/30 text-yellow-300 self-start text-xs">IPX4 Minimum</Badge>
+              <Badge
+                variant="outline"
+                className="border-yellow-500/30 text-yellow-300 self-start text-xs"
+              >
+                IPX4 Minimum
+              </Badge>
             </div>
-            <p className="text-sm text-white mb-2">2m horizontally from pool edge, up to 2.5m height</p>
+            <p className="text-sm text-white mb-2">
+              2m horizontally from pool edge, up to 2.5m height
+            </p>
             <ul className="space-y-1.5">
               <li className="flex items-start gap-2 text-sm text-white">
                 <span className="text-elec-yellow mt-0.5 text-xs">•</span>
@@ -220,7 +234,12 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <div>
             <div className="flex flex-col gap-2 mb-2">
               <h4 className="font-medium text-green-300">Zone 2 - Lower Risk</h4>
-              <Badge variant="outline" className="border-green-500/30 text-green-300 self-start text-xs">IPX2 Minimum</Badge>
+              <Badge
+                variant="outline"
+                className="border-green-500/30 text-green-300 self-start text-xs"
+              >
+                IPX2 Minimum
+              </Badge>
             </div>
             <p className="text-sm text-white mb-2">1.5m beyond Zone 1, up to 2.5m height</p>
             <ul className="space-y-1.5">
@@ -260,7 +279,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
             <Wrench className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-base font-semibold text-white">Installation Procedure</h3>
           </div>
-          
+
           <ul className="space-y-1.5">
             {result.practicalGuidance.installationSteps.map((step, index) => (
               <li key={index} className="flex items-start gap-2 text-sm text-white">
@@ -279,7 +298,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
             <TestTube className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-base font-semibold text-white">Testing & Verification</h3>
           </div>
-          
+
           <ul className="space-y-1.5">
             {result.practicalGuidance.testingRequirements.map((test, index) => (
               <li key={index} className="flex items-start gap-2 text-sm text-white">
@@ -298,7 +317,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
             <Clock className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-base font-semibold text-white">Ongoing Maintenance</h3>
           </div>
-          
+
           <ul className="space-y-1.5">
             {result.practicalGuidance.maintenancePoints.map((point, index) => (
               <li key={index} className="flex items-start gap-2 text-sm text-white">
@@ -317,14 +336,12 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
             <AlertTriangle className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-base font-semibold text-white">Common Pitfalls to Avoid</h3>
           </div>
-          
+
           <div className="space-y-2">
             {result.practicalGuidance.commonPitfalls.map((pitfall, index) => (
               <Alert key={index} className="border-orange-500/20 bg-orange-500/10">
                 <AlertTriangle className="h-4 w-4 text-orange-400" />
-                <AlertDescription className="text-orange-200 text-sm">
-                  {pitfall}
-                </AlertDescription>
+                <AlertDescription className="text-orange-200 text-sm">{pitfall}</AlertDescription>
               </Alert>
             ))}
           </div>
@@ -337,7 +354,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <Lightbulb className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base font-semibold text-white">Equipment Selection Guide</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <h4 className="font-medium text-elec-yellow mb-2">Pool Pumps & Filtration</h4>
@@ -429,14 +446,16 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <Lightbulb className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base font-semibold text-white">Design Considerations</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <h4 className="font-medium text-elec-yellow mb-2">Load Calculations</h4>
             <ul className="space-y-1.5">
               <li className="flex items-start gap-2 text-sm text-white">
                 <span className="text-elec-yellow mt-0.5 text-xs">•</span>
-                <span>Apply diversity factors: Heating 75% (domestic), Pumps 100%, Lighting 80%</span>
+                <span>
+                  Apply diversity factors: Heating 75% (domestic), Pumps 100%, Lighting 80%
+                </span>
               </li>
               <li className="flex items-start gap-2 text-sm text-white">
                 <span className="text-elec-yellow mt-0.5 text-xs">•</span>
@@ -529,7 +548,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <Shield className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base font-semibold text-white">Advanced Design Topics</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <h4 className="font-medium text-red-300 mb-2">Commercial Pool Requirements</h4>
@@ -629,7 +648,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
           <BookOpen className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base font-semibold text-white">Documentation & Certification</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <h4 className="font-medium text-elec-yellow mb-2">Required Documentation</h4>
@@ -660,7 +679,7 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-medium text-blue-300 mb-2">Testing Schedules</h4>
             <ul className="space-y-1.5">
@@ -697,14 +716,14 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
       <WhyThisMatters
         title="Why Swimming Pool Electrical Safety Matters"
         points={[
-          "Water and electricity create extreme hazards - proper installation prevents electrocution",
-          "Zone classifications ensure appropriate equipment for wet environments",
-          "RCD protection provides rapid fault clearance in high-risk areas",
-          "Supplementary bonding eliminates dangerous potential differences",
-          "Regular testing ensures continued protection as equipment ages",
-          "Compliance with BS 7671 Section 702 is legally required",
-          "Professional installation protects users and reduces liability",
-          "Proper earthing arrangements prevent shock and fire hazards"
+          'Water and electricity create extreme hazards - proper installation prevents electrocution',
+          'Zone classifications ensure appropriate equipment for wet environments',
+          'RCD protection provides rapid fault clearance in high-risk areas',
+          'Supplementary bonding eliminates dangerous potential differences',
+          'Regular testing ensures continued protection as equipment ages',
+          'Compliance with BS 7671 Section 702 is legally required',
+          'Professional installation protects users and reduces liability',
+          'Proper earthing arrangements prevent shock and fire hazards',
         ]}
       />
 
@@ -712,9 +731,10 @@ const PoolGuidance = ({ result }: PoolGuidanceProps) => {
       <Alert className="border-red-500/30 bg-red-500/10">
         <Shield className="h-4 w-4 text-red-400" />
         <AlertDescription className="text-red-200">
-          <strong>Critical Safety Notice:</strong> Swimming pool electrical installations require specialist knowledge 
-          and experience. Water and electricity create extreme hazards. Always engage qualified pool electrical 
-          engineers for design and installation. Building control notification is required for new installations.
+          <strong>Critical Safety Notice:</strong> Swimming pool electrical installations require
+          specialist knowledge and experience. Water and electricity create extreme hazards. Always
+          engage qualified pool electrical engineers for design and installation. Building control
+          notification is required for new installations.
         </AlertDescription>
       </Alert>
     </div>

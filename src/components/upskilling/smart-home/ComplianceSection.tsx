@@ -42,8 +42,8 @@ const ComplianceSection = () => {
                 <div>
                   <h5 className="font-semibold text-blue-200 mb-1">Cable Separation</h5>
                   <p className="text-blue-100 text-sm">
-                    Separate power and data cables where possible to avoid electromagnetic interference. 
-                    This prevents communication issues and ensures reliable operation.
+                    Separate power and data cables where possible to avoid electromagnetic
+                    interference. This prevents communication issues and ensures reliable operation.
                   </p>
                 </div>
               </div>

@@ -1,12 +1,12 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const Level3Module5Section6_4 = () => {
   useSEO(
-    "Re-testing and Updating Records - Level 3 Inspection, Testing & Commissioning",
-    "Re-testing procedures after rectification and updating documentation"
+    'Re-testing and Updating Records - Level 3 Inspection, Testing & Commissioning',
+    'Re-testing procedures after rectification and updating documentation'
   );
 
   return (
@@ -14,7 +14,11 @@ const Level3Module5Section6_4 = () => {
       {/* Header */}
       <div className="border-b border-white/10 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            asChild
+          >
             <Link to="../section6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6

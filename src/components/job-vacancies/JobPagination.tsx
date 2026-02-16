@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 interface JobPaginationProps {
   currentPage: number;
@@ -9,11 +8,7 @@ interface JobPaginationProps {
   paginate: (pageNumber: number) => void;
 }
 
-const JobPagination: React.FC<JobPaginationProps> = ({ 
-  currentPage, 
-  totalPages, 
-  paginate 
-}) => {
+const JobPagination: React.FC<JobPaginationProps> = ({ currentPage, totalPages, paginate }) => {
   if (totalPages <= 1) {
     return null;
   }
@@ -30,29 +25,29 @@ const JobPagination: React.FC<JobPaginationProps> = ({
           <ChevronLeft className="h-4 w-4" />
           <span>Previous</span>
         </Button>
-        
+
         {Array.from({ length: totalPages }).map((_, index) => {
           const pageNum = index + 1;
-          
+
           // Show first page, current page, last page, and one page before and after current
           if (
-            pageNum === 1 || 
-            pageNum === totalPages || 
+            pageNum === 1 ||
+            pageNum === totalPages ||
             (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
           ) {
             return (
               <Button
                 key={pageNum}
-                variant={currentPage === pageNum ? "outline" : "ghost"}
+                variant={currentPage === pageNum ? 'outline' : 'ghost'}
                 size="icon"
                 onClick={() => paginate(pageNum)}
-                aria-current={currentPage === pageNum ? "page" : undefined}
+                aria-current={currentPage === pageNum ? 'page' : undefined}
               >
                 {pageNum}
               </Button>
             );
           }
-          
+
           // Show ellipsis for gaps
           if (pageNum === currentPage - 2 || pageNum === currentPage + 2) {
             return (
@@ -66,10 +61,10 @@ const JobPagination: React.FC<JobPaginationProps> = ({
               </span>
             );
           }
-          
+
           return null;
         })}
-        
+
         <Button
           variant="ghost"
           onClick={() => currentPage < totalPages && paginate(currentPage + 1)}

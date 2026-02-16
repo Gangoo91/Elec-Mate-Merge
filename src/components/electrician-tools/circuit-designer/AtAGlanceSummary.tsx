@@ -53,7 +53,7 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
   // Defensive checks for missing/undefined values
   const safeLoadKw = summary?.loadKw ?? 0;
   const safeLoadIb = summary?.loadIb || 'N/A';
-  
+
   // Use calculated values when available, fall back to AI prose
   // Parse cableType to remove any size prefix (e.g., "4mm² twin and earth" -> "twin and earth")
   const parseCableType = (type?: string) => {
@@ -61,36 +61,37 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
     // Remove leading size prefix like "2.5mm²", "4mm²", etc.
     return type.replace(/^\d+(\.\d+)?mm²\s*/i, '').trim() || type;
   };
-  
-  const safeCable = circuit 
+
+  const safeCable = circuit
     ? `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC, ${parseCableType(circuit.cableType)}`
-    : (summary?.cable || 'Not specified');
-  
+    : summary?.cable || 'Not specified';
+
   // PRIORITY: Use summary.protectiveDevice from AI justification (single source of truth)
-  const safeProtectiveDevice = summary?.protectiveDevice 
+  const safeProtectiveDevice = summary?.protectiveDevice
     ? summary.protectiveDevice
     : circuit
       ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}${circuit.rcdProtected ? ` + ${circuit.protectionDevice.rcdRating || 30}mA RCD` : ''}`
       : 'Not specified';
-  
+
   const safeVoltageDrop = circuit
     ? `${(circuit.calculations?.voltageDrop?.percent ?? 0).toFixed(2)}% ${circuit.calculations?.voltageDrop?.compliant ? '✓' : '✗'} (Limit: ${circuit.calculations?.voltageDrop?.limit ?? 5}%)`
-    : (summary?.voltageDrop || 'N/A');
-  
+    : summary?.voltageDrop || 'N/A';
+
   const safeZs = circuit
     ? (() => {
         const zsValue = circuit.expectedTests?.zs?.expected ?? circuit.calculations.zs;
         const maxZs = circuit.expectedTests?.zs?.maxPermitted ?? circuit.calculations.maxZs;
-        const compliant = circuit.expectedTests?.zs?.compliant ?? (zsValue <= maxZs);
+        const compliant = circuit.expectedTests?.zs?.compliant ?? zsValue <= maxZs;
         return `${zsValue.toFixed(3)}Ω ${compliant ? '✓' : '✗'} (Max: ${maxZs.toFixed(3)}Ω)`;
       })()
-    : (summary?.zs || 'N/A');
-  
+    : summary?.zs || 'N/A';
+
   const safeComplianceTick = circuit
-    ? ((circuit.calculations?.voltageDrop?.compliant ?? true) &&
-       (circuit.expectedTests?.zs?.compliant ?? ((circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))))
+    ? (circuit.calculations?.voltageDrop?.compliant ?? true) &&
+      (circuit.expectedTests?.zs?.compliant ??
+        (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))
     : (summary?.complianceTick ?? false);
-  
+
   const safeNotes = summary?.notes || '';
 
   return (
@@ -105,7 +106,7 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
             <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 animate-pulse-subtle" />
           )}
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3 md:gap-4">
           <SummaryField label="Load" value={`${safeLoadKw}kW (${safeLoadIb})`} />
           <SummaryField label="Cable" value={safeCable} />
@@ -113,7 +114,7 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
           <SummaryField label="Voltage Drop" value={safeVoltageDrop} />
           <SummaryField label="Zs" value={safeZs} />
         </div>
-        
+
         {safeNotes && (
           <div className="mt-4 p-3 sm:p-4 bg-elec-dark/40 rounded border border-elec-yellow/20">
             <p className="text-xs text-foreground/60 mb-1">Notes</p>

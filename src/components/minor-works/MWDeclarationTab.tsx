@@ -16,10 +16,7 @@ import {
 import { User, CheckSquare, PenTool, UserCircle, CheckCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
-import {
-  QUALIFICATION_LEVELS,
-  SCHEME_PROVIDERS,
-} from '@/constants/minorWorksOptions';
+import { QUALIFICATION_LEVELS, SCHEME_PROVIDERS } from '@/constants/minorWorksOptions';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { useToast } from '@/hooks/use-toast';
 
@@ -29,26 +26,30 @@ interface MWDeclarationTabProps {
   isMobile?: boolean;
 }
 
-const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate, isMobile = false }) => {
+const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
+  formData,
+  onUpdate,
+  isMobile = false,
+}) => {
   const { toast } = useToast();
   const [openSections, setOpenSections] = useState({
     electrician: true,
     compliance: true,
-    signature: true
+    signature: true,
   });
 
   // Smart form hook for auto-fill from Business Settings
   const {
     loading: smartFormLoading,
     hasSavedElectricianDetails,
-    loadElectricianDetails
+    loadElectricianDetails,
   } = useMinorWorksSmartForm();
 
   // Helper for conditional section card styling - no card on mobile, full card on desktop
-  const sectionCardClass = cn(isMobile ? "" : "eicr-section-card");
+  const sectionCardClass = cn(isMobile ? '' : 'eicr-section-card');
 
   const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   // Handler to load user profile data from Business Settings
@@ -57,9 +58,9 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
 
     if (!details) {
       toast({
-        title: "No Profile Found",
-        description: "Set up your details in Business Settings to auto-fill.",
-        variant: "destructive"
+        title: 'No Profile Found',
+        description: 'Set up your details in Business Settings to auto-fill.',
+        variant: 'destructive',
       });
       return;
     }
@@ -78,9 +79,9 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
     if (details.signatureDate) onUpdate('signatureDate', details.signatureDate);
 
     toast({
-      title: "Profile Applied",
-      description: "Your details have been filled from Business Settings.",
-      variant: "success"
+      title: 'Profile Applied',
+      description: 'Your details have been filled from Business Settings.',
+      variant: 'success',
     });
   };
 
@@ -88,14 +89,17 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
     <div className="space-y-4 sm:space-y-6">
       {/* Electrician Details */}
       <div className={sectionCardClass}>
-        <Collapsible open={openSections.electrician} onOpenChange={() => toggleSection('electrician')}>
+        <Collapsible
+          open={openSections.electrician}
+          onOpenChange={() => toggleSection('electrician')}
+        >
           <CollapsibleTrigger className="w-full">
             <SectionHeader
               title="Electrician Details"
               icon={User}
               isOpen={openSections.electrician}
               color="amber-500"
-                          />
+            />
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-5">
@@ -105,31 +109,37 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
                 onClick={handleUseMyProfile}
                 disabled={smartFormLoading}
                 className={cn(
-                  "w-full h-14 rounded-xl border-2 border-dashed transition-all flex items-center justify-center gap-3 ios-pressable touch-manipulation",
+                  'w-full h-14 rounded-xl border-2 border-dashed transition-all flex items-center justify-center gap-3 ios-pressable touch-manipulation',
                   hasSavedElectricianDetails
-                    ? "border-green-500/30 bg-green-500/5 hover:bg-green-500/10 hover:border-green-500/50"
-                    : "border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 hover:border-amber-500/50"
+                    ? 'border-green-500/30 bg-green-500/5 hover:bg-green-500/10 hover:border-green-500/50'
+                    : 'border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 hover:border-amber-500/50'
                 )}
               >
                 {smartFormLoading ? (
                   <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
                 ) : (
                   <>
-                    <div className={cn(
-                      "p-2 rounded-lg",
-                      hasSavedElectricianDetails ? "bg-green-500/20" : "bg-amber-500/20"
-                    )}>
+                    <div
+                      className={cn(
+                        'p-2 rounded-lg',
+                        hasSavedElectricianDetails ? 'bg-green-500/20' : 'bg-amber-500/20'
+                      )}
+                    >
                       {hasSavedElectricianDetails ? (
                         <CheckCircle className="h-5 w-5 text-green-400" />
                       ) : (
                         <UserCircle className="h-5 w-5 text-amber-400" />
                       )}
                     </div>
-                    <span className={cn(
-                      "font-medium",
-                      hasSavedElectricianDetails ? "text-green-400" : "text-amber-400"
-                    )}>
-                      {hasSavedElectricianDetails ? "Use My Profile Details" : "Set Up Profile in Settings"}
+                    <span
+                      className={cn(
+                        'font-medium',
+                        hasSavedElectricianDetails ? 'text-green-400' : 'text-amber-400'
+                      )}
+                    >
+                      {hasSavedElectricianDetails
+                        ? 'Use My Profile Details'
+                        : 'Set Up Profile in Settings'}
                     </span>
                   </>
                 )}
@@ -137,16 +147,23 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Electrician Name *</label>
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                    Electrician Name *
+                  </label>
                   <Input
                     value={formData.electricianName || ''}
                     onChange={(e) => onUpdate('electricianName', e.target.value)}
                     placeholder="Full name"
-                    className={cn("h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !formData.electricianName && "border-red-500/30")}
+                    className={cn(
+                      'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                      !formData.electricianName && 'border-red-500/30'
+                    )}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Company Name</label>
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                    Company Name
+                  </label>
                   <Input
                     value={formData.forAndOnBehalfOf || ''}
                     onChange={(e) => onUpdate('forAndOnBehalfOf', e.target.value)}
@@ -157,19 +174,29 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Position *</label>
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  Position *
+                </label>
                 <Input
                   value={formData.position || ''}
                   onChange={(e) => onUpdate('position', e.target.value)}
                   placeholder="e.g., Qualified Electrician"
-                  className={cn("h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !formData.position && "border-red-500/30")}
+                  className={cn(
+                    'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                    !formData.position && 'border-red-500/30'
+                  )}
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Qualification Level</label>
-                  <Select value={formData.qualificationLevel || ''} onValueChange={(v) => onUpdate('qualificationLevel', v)}>
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                    Qualification Level
+                  </label>
+                  <Select
+                    value={formData.qualificationLevel || ''}
+                    onValueChange={(v) => onUpdate('qualificationLevel', v)}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="Select level" />
                     </SelectTrigger>
@@ -183,8 +210,13 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
                   </Select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Scheme Provider</label>
-                  <Select value={formData.schemeProvider || ''} onValueChange={(v) => onUpdate('schemeProvider', v)}>
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                    Scheme Provider
+                  </label>
+                  <Select
+                    value={formData.schemeProvider || ''}
+                    onValueChange={(v) => onUpdate('schemeProvider', v)}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="Select provider" />
                     </SelectTrigger>
@@ -200,7 +232,9 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Registration Number</label>
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  Registration Number
+                </label>
                 <Input
                   value={formData.registrationNumber || ''}
                   onChange={(e) => onUpdate('registrationNumber', e.target.value)}
@@ -211,7 +245,9 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
 
               {/* Contractor Address */}
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Contractor Address</label>
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  Contractor Address
+                </label>
                 <Textarea
                   value={formData.contractorAddress || ''}
                   onChange={(e) => onUpdate('contractorAddress', e.target.value)}
@@ -224,7 +260,9 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
               {/* Contact Details */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Contact Telephone</label>
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                    Contact Telephone
+                  </label>
                   <Input
                     type="tel"
                     value={formData.electricianPhone || ''}
@@ -234,7 +272,9 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Email Address</label>
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                    Email Address
+                  </label>
                   <Input
                     type="email"
                     value={formData.electricianEmail || ''}
@@ -251,14 +291,17 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
 
       {/* Compliance Declarations */}
       <div className={sectionCardClass}>
-        <Collapsible open={openSections.compliance} onOpenChange={() => toggleSection('compliance')}>
+        <Collapsible
+          open={openSections.compliance}
+          onOpenChange={() => toggleSection('compliance')}
+        >
           <CollapsibleTrigger className="w-full">
             <SectionHeader
               title="Compliance Declarations"
               icon={CheckSquare}
               isOpen={openSections.compliance}
               color="green-500"
-                          />
+            />
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-5">
@@ -272,12 +315,17 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
                       onCheckedChange={(c) => onUpdate('ietDeclaration', c)}
                       className="mt-0.5 h-6 w-6 rounded-lg border-white/30 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation flex-shrink-0"
                     />
-                    <label htmlFor="ietDeclaration" className="text-sm cursor-pointer leading-relaxed text-white/80 text-left">
-                      I/We <span className="text-green-400 font-medium">CERTIFY</span> that the work does not impair the safety of the existing installation
-                      and that the work has been designed, constructed, inspected and tested in accordance
-                      with <span className="text-white font-medium">BS 7671:2018+A3:2024</span> (IET Wiring Regulations), subject to the departures detailed
-                      above if any. The work is to the best of my/our knowledge and belief safe to be put
-                      into service. <span className="text-red-400">*</span>
+                    <label
+                      htmlFor="ietDeclaration"
+                      className="text-sm cursor-pointer leading-relaxed text-white/80 text-left"
+                    >
+                      I/We <span className="text-green-400 font-medium">CERTIFY</span> that the work
+                      does not impair the safety of the existing installation and that the work has
+                      been designed, constructed, inspected and tested in accordance with{' '}
+                      <span className="text-white font-medium">BS 7671:2018+A3:2024</span> (IET
+                      Wiring Regulations), subject to the departures detailed above if any. The work
+                      is to the best of my/our knowledge and belief safe to be put into service.{' '}
+                      <span className="text-red-400">*</span>
                     </label>
                   </div>
                 </div>
@@ -292,7 +340,10 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
                         onCheckedChange={(c) => onUpdate('partPNotification', c)}
                         className="h-5 w-5 rounded-md border-white/30 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 touch-manipulation"
                       />
-                      <label htmlFor="partPNotification" className="text-sm cursor-pointer text-white/70">
+                      <label
+                        htmlFor="partPNotification"
+                        className="text-sm cursor-pointer text-white/70"
+                      >
                         Part P notification made
                       </label>
                     </div>
@@ -306,7 +357,10 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
                         onCheckedChange={(c) => onUpdate('copyProvided', c)}
                         className="h-5 w-5 rounded-md border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
                       />
-                      <label htmlFor="copyProvided" className="text-sm cursor-pointer text-white/70">
+                      <label
+                        htmlFor="copyProvided"
+                        className="text-sm cursor-pointer text-white/70"
+                      >
                         Copy provided to client
                       </label>
                     </div>
@@ -316,7 +370,9 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
 
               {/* Additional Notes */}
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Additional Notes</label>
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  Additional Notes
+                </label>
                 <Textarea
                   value={formData.additionalNotes || ''}
                   onChange={(e) => onUpdate('additionalNotes', e.target.value)}
@@ -339,27 +395,34 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
               icon={PenTool}
               isOpen={openSections.signature}
               color="purple-500"
-                          />
+            />
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-5">
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Signature Date *</label>
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  Signature Date *
+                </label>
                 <Input
                   type="date"
                   value={formData.signatureDate || ''}
                   onChange={(e) => onUpdate('signatureDate', e.target.value)}
-                  className={cn("h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-purple-500/50 focus:ring-purple-500/20", !formData.signatureDate && "border-red-500/30")}
+                  className={cn(
+                    'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-purple-500/50 focus:ring-purple-500/20',
+                    !formData.signatureDate && 'border-red-500/30'
+                  )}
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Signature *</label>
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  Signature *
+                </label>
                 <SignatureInput
                   value={formData.signature || ''}
                   onChange={(v) => onUpdate('signature', v)}
                   placeholder="Sign here"
-                  className={cn("rounded-xl", !formData.signature && "border-red-500/30")}
+                  className={cn('rounded-xl', !formData.signature && 'border-red-500/30')}
                 />
               </div>
 
@@ -370,15 +433,26 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate,
                     <div className="p-1.5 rounded-lg bg-purple-500/20">
                       <PenTool className="h-4 w-4 text-purple-400" />
                     </div>
-                    <span className="text-xs uppercase tracking-wide text-purple-400 font-medium">Certificate Signed</span>
+                    <span className="text-xs uppercase tracking-wide text-purple-400 font-medium">
+                      Certificate Signed
+                    </span>
                   </div>
                   <div className="text-sm text-white/70">
-                    Signed by <span className="text-white font-medium">{formData.electricianName}</span>
-                    {formData.position && <span className="text-white/50"> ({formData.position})</span>}
-                    {' '}on <span className="text-white font-medium">{new Date(formData.signatureDate).toLocaleDateString('en-GB')}</span>
+                    Signed by{' '}
+                    <span className="text-white font-medium">{formData.electricianName}</span>
+                    {formData.position && (
+                      <span className="text-white/50"> ({formData.position})</span>
+                    )}{' '}
+                    on{' '}
+                    <span className="text-white font-medium">
+                      {new Date(formData.signatureDate).toLocaleDateString('en-GB')}
+                    </span>
                     {formData.schemeProvider && formData.schemeProvider !== 'none' && (
                       <span className="text-white/50">
-                        {' '}• {SCHEME_PROVIDERS.find(s => s.value === formData.schemeProvider)?.label || formData.schemeProvider}
+                        {' '}
+                        •{' '}
+                        {SCHEME_PROVIDERS.find((s) => s.value === formData.schemeProvider)?.label ||
+                          formData.schemeProvider}
                       </span>
                     )}
                   </div>

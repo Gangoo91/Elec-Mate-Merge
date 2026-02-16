@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 import {
   Award,
   Clock,
@@ -15,9 +15,9 @@ import {
   Calendar,
   Sparkles,
   TrendingUp,
-} from "lucide-react";
-import { useCollege } from "@/contexts/CollegeContext";
-import type { CollegeSection } from "@/pages/college/CollegeDashboard";
+} from 'lucide-react';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface EPACountdownProps {
   onNavigate?: (section: CollegeSection) => void;
@@ -50,27 +50,30 @@ interface EPAStudent {
 }
 
 export function EPACountdown({ onNavigate, studentId, compact = false }: EPACountdownProps) {
-  const { students, epaRecords, ilps, cohorts } = useCollege();
+  const { students, epaRecords, ilps, cohorts } = useCollegeSupabase();
   const [selectedStudent, setSelectedStudent] = useState<string | null>(studentId || null);
 
   // Calculate EPA readiness for each student
   const epaStudents = useMemo(() => {
     const calculateStudentEPA = (studentIdToCalc: string): EPAStudent | null => {
-      const student = students.find(s => s.id === studentIdToCalc);
+      const student = students.find((s) => s.id === studentIdToCalc);
       if (!student || student.status !== 'Active') return null;
 
-      const epaRecord = epaRecords.find(e => e.studentId === studentIdToCalc);
-      const studentILP = ilps.find(i => i.studentId === studentIdToCalc);
-      const cohort = cohorts.find(c => c.id === student.cohortId);
+      const epaRecord = epaRecords.find((e) => e.studentId === studentIdToCalc);
+      const studentILP = ilps.find((i) => i.studentId === studentIdToCalc);
+      const cohort = cohorts.find((c) => c.id === student.cohortId);
 
       // Calculate planned end date (use EPA record or estimate from cohort)
-      const plannedEndDate = epaRecord?.plannedEndDate ||
+      const plannedEndDate =
+        epaRecord?.plannedEndDate ||
         cohort?.endDate ||
         new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString();
 
       const endDate = new Date(plannedEndDate);
       const today = new Date();
-      const daysRemaining = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      const daysRemaining = Math.ceil(
+        (endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+      );
 
       // Build gateway requirements
       const requirements: GatewayRequirement[] = [];
@@ -85,7 +88,12 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         title: 'Knowledge Criteria',
         description: 'All theory units completed and passed',
         required: true,
-        status: knowledgeProgress >= 100 ? 'complete' : knowledgeProgress >= 80 ? 'in_progress' : 'at_risk',
+        status:
+          knowledgeProgress >= 100
+            ? 'complete'
+            : knowledgeProgress >= 80
+              ? 'in_progress'
+              : 'at_risk',
         progress: Math.min(knowledgeProgress, 100),
       });
       if (knowledgeProgress < 100) {
@@ -103,7 +111,8 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         title: 'Practical Skills',
         description: 'All practical assessments demonstrated',
         required: true,
-        status: skillsProgress >= 100 ? 'complete' : skillsProgress >= 70 ? 'in_progress' : 'at_risk',
+        status:
+          skillsProgress >= 100 ? 'complete' : skillsProgress >= 70 ? 'in_progress' : 'at_risk',
         progress: skillsProgress,
       });
       if (skillsProgress < 100) {
@@ -111,14 +120,21 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
       }
 
       // 3. Portfolio Evidence
-      const portfolioProgress = epaRecord?.portfolioComplete ? 100 : (student.progressPercentage || 0) * 0.7;
+      const portfolioProgress = epaRecord?.portfolioComplete
+        ? 100
+        : (student.progressPercentage || 0) * 0.7;
       requirements.push({
         id: 'portfolio',
         category: 'portfolio',
         title: 'Portfolio Evidence',
         description: 'Complete portfolio with mapped evidence',
         required: true,
-        status: portfolioProgress >= 100 ? 'complete' : portfolioProgress >= 60 ? 'in_progress' : 'not_started',
+        status:
+          portfolioProgress >= 100
+            ? 'complete'
+            : portfolioProgress >= 60
+              ? 'in_progress'
+              : 'not_started',
         progress: portfolioProgress,
       });
       if (portfolioProgress < 100) {
@@ -136,7 +152,8 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         title: '20% Off-the-Job',
         description: `${offJobHours}/${requiredOffJob} hours completed`,
         required: true,
-        status: offJobProgress >= 100 ? 'complete' : offJobProgress >= 80 ? 'in_progress' : 'at_risk',
+        status:
+          offJobProgress >= 100 ? 'complete' : offJobProgress >= 80 ? 'in_progress' : 'at_risk',
         progress: offJobProgress,
       });
       if (offJobProgress < 100) {
@@ -148,7 +165,8 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
 
       // 5. Attendance
       const attendance = student.attendancePercentage || 0;
-      const attendanceStatus = attendance >= 90 ? 'complete' : attendance >= 80 ? 'in_progress' : 'at_risk';
+      const attendanceStatus =
+        attendance >= 90 ? 'complete' : attendance >= 80 ? 'in_progress' : 'at_risk';
       requirements.push({
         id: 'attendance',
         category: 'attendance',
@@ -184,7 +202,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
 
       // Determine gateway status
       let gatewayStatus: 'ready' | 'almost' | 'needs_work' | 'at_risk';
-      const criticalGaps = requirements.filter(r => r.status === 'at_risk').length;
+      const criticalGaps = requirements.filter((r) => r.status === 'at_risk').length;
 
       if (overallReadiness >= 95 && criticalGaps === 0) {
         gatewayStatus = 'ready';
@@ -225,9 +243,9 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
 
     // Otherwise return all students approaching gateway
     return students
-      .map(s => calculateStudentEPA(s.id))
+      .map((s) => calculateStudentEPA(s.id))
       .filter((s): s is EPAStudent => s !== null)
-      .filter(s => s.daysRemaining <= 180) // Only show students within 6 months of EPA
+      .filter((s) => s.daysRemaining <= 180) // Only show students within 6 months of EPA
       .sort((a, b) => a.daysRemaining - b.daysRemaining);
   }, [students, epaRecords, ilps, cohorts, studentId]);
 
@@ -245,47 +263,63 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
       case 'at_risk':
         return 'bg-red-500/20 text-red-500 border-red-500/30';
       default:
-        return 'bg-muted text-muted-foreground';
+        return 'bg-white/10 text-white border-white/20';
     }
   };
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'ready': return 'Gateway Ready';
-      case 'almost': return 'Almost Ready';
-      case 'needs_work': return 'Needs Work';
-      case 'at_risk': return 'At Risk';
-      default: return status;
+      case 'ready':
+        return 'Gateway Ready';
+      case 'almost':
+        return 'Almost Ready';
+      case 'needs_work':
+        return 'Needs Work';
+      case 'at_risk':
+        return 'At Risk';
+      default:
+        return status;
     }
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'knowledge': return BookOpen;
-      case 'skills': return Target;
-      case 'portfolio': return FileCheck;
-      case 'attendance': return Clock;
-      case 'behaviours': return CheckCircle2;
-      case 'offjob': return Calendar;
-      default: return AlertCircle;
+      case 'knowledge':
+        return BookOpen;
+      case 'skills':
+        return Target;
+      case 'portfolio':
+        return FileCheck;
+      case 'attendance':
+        return Clock;
+      case 'behaviours':
+        return CheckCircle2;
+      case 'offjob':
+        return Calendar;
+      default:
+        return AlertCircle;
     }
   };
 
   const selectedStudentData = selectedStudent
-    ? epaStudents.find(s => s.id === selectedStudent)
+    ? epaStudents.find((s) => s.id === selectedStudent)
     : epaStudents[0];
 
   if (compact) {
     const nearestEPA = epaStudents[0];
-    const readyCount = epaStudents.filter(s => s.gatewayStatus === 'ready').length;
-    const atRiskCount = epaStudents.filter(s => s.gatewayStatus === 'at_risk').length;
+    const readyCount = epaStudents.filter((s) => s.gatewayStatus === 'ready').length;
+    const atRiskCount = epaStudents.filter((s) => s.gatewayStatus === 'at_risk').length;
 
     return (
-      <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 transition-all duration-300">
+      <Card className="relative overflow-hidden glass-premium hover:border-success/30 transition-all duration-300">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500" />
+        <div className="absolute -top-8 -right-8 w-24 h-24 bg-green-500/[0.04] rounded-full blur-3xl pointer-events-none" />
         <CardHeader className="pb-2">
           <CardTitle className="text-sm flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5"><Award className="h-3.5 w-3.5 text-success" /></div>
+              <div className="p-1.5 rounded-lg bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5">
+                <Award className="h-3.5 w-3.5 text-success" />
+              </div>
               <span>EPA Gateway</span>
             </div>
             <span className="text-lg font-bold text-elec-yellow">{epaStudents.length}</span>
@@ -303,17 +337,17 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
           {nearestEPA && (
             <div
               className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
-              onClick={() => onNavigate?.("epatracking")}
+              onClick={() => onNavigate?.('epatracking')}
             >
               <div className="min-w-0">
                 <p className="text-sm font-medium truncate">{nearestEPA.name}</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   {nearestEPA.daysRemaining} days to EPA
                 </p>
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold text-elec-yellow">{nearestEPA.overallReadiness}%</p>
-                <p className="text-[10px] text-muted-foreground">ready</p>
+                <p className="text-[10px] text-white">ready</p>
               </div>
             </div>
           )}
@@ -321,7 +355,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
             variant="ghost"
             size="sm"
             className="w-full mt-2 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
-            onClick={() => onNavigate?.("epatracking")}
+            onClick={() => onNavigate?.('epatracking')}
           >
             View EPA tracking
             <ChevronRight className="h-4 w-4 ml-1" />
@@ -332,11 +366,15 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
   }
 
   return (
-    <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 transition-all duration-300">
+    <Card className="relative overflow-hidden glass-premium hover:border-success/30 transition-all duration-300">
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500" />
+      <div className="absolute -top-8 -right-8 w-24 h-24 bg-green-500/[0.04] rounded-full blur-3xl pointer-events-none" />
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5"><Award className="h-4 w-4 text-success" /></div>
+            <div className="p-1.5 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5">
+              <Award className="h-4 w-4 text-success" />
+            </div>
             <span>EPA Gateway Countdown</span>
             <Badge className="bg-elec-yellow/20 text-elec-yellow">
               <Sparkles className="h-3 w-3 mr-1" />
@@ -349,18 +387,18 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         {/* Student selector if multiple students */}
         {epaStudents.length > 1 && !studentId && (
           <div className="flex gap-2 mb-4 overflow-x-auto hide-scrollbar pb-2">
-            {epaStudents.slice(0, 5).map(student => (
+            {epaStudents.slice(0, 5).map((student) => (
               <button
                 key={student.id}
                 onClick={() => setSelectedStudent(student.id)}
                 className={`shrink-0 px-3 py-2 rounded-lg border transition-all ${
                   selectedStudent === student.id || (!selectedStudent && student === epaStudents[0])
                     ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-border hover:border-elec-yellow/50'
+                    : 'border-white/10 hover:border-elec-yellow/50'
                 }`}
               >
                 <p className="text-sm font-medium">{student.name.split(' ')[0]}</p>
-                <p className="text-xs text-muted-foreground">{student.daysRemaining}d</p>
+                <p className="text-xs text-white">{student.daysRemaining}d</p>
               </button>
             ))}
           </div>
@@ -369,19 +407,19 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         {selectedStudentData && (
           <>
             {/* Countdown Header */}
-            <div className="flex items-center justify-between p-4 rounded-lg bg-background border border-border mb-4">
+            <div className="flex items-center justify-between p-4 rounded-lg bg-white/[0.03] border border-white/10 mb-4">
               <div>
                 <h3 className="font-semibold text-lg">{selectedStudentData.name}</h3>
-                <p className="text-sm text-muted-foreground">{selectedStudentData.cohort}</p>
+                <p className="text-sm text-white">{selectedStudentData.cohort}</p>
               </div>
               <div className="text-right">
                 <div className="flex items-center gap-2">
                   <Clock className="h-5 w-5 text-elec-yellow" />
-                  <span className="text-3xl font-bold text-foreground">
+                  <span className="text-3xl font-bold text-white">
                     {selectedStudentData.daysRemaining}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">days to EPA</p>
+                <p className="text-xs text-white">days to EPA</p>
               </div>
             </div>
 
@@ -401,13 +439,13 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
 
             {/* Requirements Checklist */}
             <div className="space-y-2 mb-4">
-              <h4 className="text-sm font-medium text-muted-foreground">Gateway Requirements</h4>
-              {selectedStudentData.requirements.map(req => {
+              <h4 className="text-sm font-medium text-white">Gateway Requirements</h4>
+              {selectedStudentData.requirements.map((req) => {
                 const Icon = getCategoryIcon(req.category);
                 return (
                   <div
                     key={req.id}
-                    className="flex items-center gap-3 p-3 rounded-lg border border-border bg-background"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-white/10 bg-white/[0.03]"
                   >
                     <div className={`p-2 rounded-lg ${getStatusColor(req.status)}`}>
                       <Icon className="h-4 w-4" />
@@ -417,7 +455,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
                         <p className="text-sm font-medium">{req.title}</p>
                         <span className="text-sm font-bold">{Math.round(req.progress)}%</span>
                       </div>
-                      <p className="text-xs text-muted-foreground truncate">{req.description}</p>
+                      <p className="text-xs text-white truncate">{req.description}</p>
                       <Progress value={req.progress} className="h-1.5 mt-1" />
                     </div>
                   </div>
@@ -428,7 +466,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
             {/* Gaps Analysis */}
             {selectedStudentData.gaps.length > 0 && (
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-muted-foreground mb-2 flex items-center gap-1">
+                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-1">
                   <AlertCircle className="h-4 w-4 text-amber-500" />
                   Gaps to Address
                 </h4>
@@ -448,17 +486,14 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
 
             {/* AI Recommendations */}
             {selectedStudentData.recommendations.length > 0 && (
-              <div className="border-t border-border pt-4">
-                <h4 className="text-sm font-medium text-muted-foreground mb-2 flex items-center gap-1">
+              <div className="border-t border-white/10 pt-4">
+                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-1">
                   <Sparkles className="h-4 w-4 text-elec-yellow" />
                   AI Recommendations
                 </h4>
                 <div className="space-y-1">
                   {selectedStudentData.recommendations.map((rec, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-sm"
-                    >
+                    <div key={idx} className="flex items-start gap-2 text-sm">
                       <TrendingUp className="h-3 w-3 text-elec-yellow mt-1 shrink-0" />
                       {rec}
                     </div>
@@ -470,10 +505,12 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         )}
 
         {epaStudents.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-white">
             <Award className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <p>No students approaching EPA</p>
-            <p className="text-sm mt-1">Students will appear here within 6 months of their planned EPA date</p>
+            <p className="text-sm mt-1">
+              Students will appear here within 6 months of their planned EPA date
+            </p>
           </div>
         )}
       </CardContent>

@@ -1,44 +1,51 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { CheckSquare, Download, Plus, Trash2, Sparkles, ListChecks } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { CheckSquare, Download, Plus, Trash2, Sparkles, ListChecks } from 'lucide-react';
+import { useState } from 'react';
 
 const ToolChecklistGenerator = () => {
-  const [projectType, setProjectType] = useState<string>("domestic");
-  const [projectName, setProjectName] = useState<string>("");
-  const [checklist, setChecklist] = useState<Array<{id: string, tool: string, checked: boolean, essential: boolean}>>([]);
+  const [projectType, setProjectType] = useState<string>('domestic');
+  const [projectName, setProjectName] = useState<string>('');
+  const [checklist, setChecklist] = useState<
+    Array<{ id: string; tool: string; checked: boolean; essential: boolean }>
+  >([]);
 
   const toolSuggestions = {
     domestic: [
-      { tool: "Voltage tester", essential: true },
-      { tool: "Screwdriver set", essential: true },
-      { tool: "Wire strippers", essential: true },
-      { tool: "Pliers set", essential: true },
-      { tool: "Multimeter", essential: true },
-      { tool: "Drill", essential: false },
-      { tool: "Cable detector", essential: false }
+      { tool: 'Voltage tester', essential: true },
+      { tool: 'Screwdriver set', essential: true },
+      { tool: 'Wire strippers', essential: true },
+      { tool: 'Pliers set', essential: true },
+      { tool: 'Multimeter', essential: true },
+      { tool: 'Drill', essential: false },
+      { tool: 'Cable detector', essential: false },
     ],
     commercial: [
-      { tool: "MFT (Multifunction tester)", essential: true },
-      { tool: "Insulation tester", essential: true },
-      { tool: "Cable puller", essential: true },
-      { tool: "SDS drill", essential: true },
-      { tool: "Angle grinder", essential: false },
-      { tool: "Conduit bender", essential: false }
+      { tool: 'MFT (Multifunction tester)', essential: true },
+      { tool: 'Insulation tester', essential: true },
+      { tool: 'Cable puller', essential: true },
+      { tool: 'SDS drill', essential: true },
+      { tool: 'Angle grinder', essential: false },
+      { tool: 'Conduit bender', essential: false },
     ],
     industrial: [
-      { tool: "High voltage detector", essential: true },
-      { tool: "Torque wrench", essential: true },
-      { tool: "Cable fault locator", essential: true },
-      { tool: "Thermal imaging camera", essential: false },
-      { tool: "Oscilloscope", essential: false }
-    ]
+      { tool: 'High voltage detector', essential: true },
+      { tool: 'Torque wrench', essential: true },
+      { tool: 'Cable fault locator', essential: true },
+      { tool: 'Thermal imaging camera', essential: false },
+      { tool: 'Oscilloscope', essential: false },
+    ],
   };
 
   const generateChecklist = () => {
@@ -47,7 +54,7 @@ const ToolChecklistGenerator = () => {
       id: `${Date.now()}-${index}`,
       tool: item.tool,
       checked: false,
-      essential: item.essential
+      essential: item.essential,
     }));
     setChecklist(newChecklist);
   };
@@ -55,27 +62,31 @@ const ToolChecklistGenerator = () => {
   const addCustomTool = () => {
     const newTool = {
       id: `custom-${Date.now()}`,
-      tool: "Custom tool",
+      tool: 'Custom tool',
       checked: false,
-      essential: false
+      essential: false,
     };
     setChecklist([...checklist, newTool]);
   };
 
   const updateTool = (id: string, field: string, value: any) => {
-    setChecklist(checklist.map(item => 
-      item.id === id ? { ...item, [field]: value } : item
-    ));
+    setChecklist(checklist.map((item) => (item.id === id ? { ...item, [field]: value } : item)));
   };
 
   const removeTool = (id: string) => {
-    setChecklist(checklist.filter(item => item.id !== id));
+    setChecklist(checklist.filter((item) => item.id !== id));
   };
 
   const downloadChecklist = () => {
-    const content = `${projectName || 'Tool Checklist'}\n\nProject Type: ${projectType}\n\n` +
-      checklist.map(item => `${item.checked ? '✓' : '☐'} ${item.tool}${item.essential ? ' (Essential)' : ''}`).join('\n');
-    
+    const content =
+      `${projectName || 'Tool Checklist'}\n\nProject Type: ${projectType}\n\n` +
+      checklist
+        .map(
+          (item) =>
+            `${item.checked ? '✓' : '☐'} ${item.tool}${item.essential ? ' (Essential)' : ''}`
+        )
+        .join('\n');
+
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -85,7 +96,7 @@ const ToolChecklistGenerator = () => {
     URL.revokeObjectURL(url);
   };
 
-  const completedCount = checklist.filter(item => item.checked).length;
+  const completedCount = checklist.filter((item) => item.checked).length;
 
   return (
     <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
@@ -105,7 +116,9 @@ const ToolChecklistGenerator = () => {
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="project-name" className="text-white/70">Project Name</Label>
+              <Label htmlFor="project-name" className="text-white/70">
+                Project Name
+              </Label>
               <Input
                 id="project-name"
                 value={projectName}
@@ -116,7 +129,9 @@ const ToolChecklistGenerator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="project-type" className="text-white/70">Project Type</Label>
+              <Label htmlFor="project-type" className="text-white/70">
+                Project Type
+              </Label>
               <Select value={projectType} onValueChange={setProjectType}>
                 <SelectTrigger className="bg-white/10 border-white/20 h-11">
                   <SelectValue />
@@ -161,7 +176,10 @@ const ToolChecklistGenerator = () => {
                       style={{ width: `${(completedCount / checklist.length) * 100}%` }}
                     />
                   </div>
-                  <Badge variant="outline" className="bg-blue-500/10 border-blue-500/30 text-blue-400">
+                  <Badge
+                    variant="outline"
+                    className="bg-blue-500/10 border-blue-500/30 text-blue-400"
+                  >
                     {completedCount}/{checklist.length}
                   </Badge>
                 </div>
@@ -189,7 +207,10 @@ const ToolChecklistGenerator = () => {
                       }`}
                     />
                     {item.essential && (
-                      <Badge variant="outline" className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-xs">
+                      <Badge
+                        variant="outline"
+                        className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-xs"
+                      >
                         Essential
                       </Badge>
                     )}

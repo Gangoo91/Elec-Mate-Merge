@@ -1,7 +1,13 @@
 import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Zap, AlertCircle, Shield, Plug, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -17,7 +23,10 @@ interface EICSupplyCharacteristicsSectionProps {
 }
 
 // Smart device configuration - BS standard determines available types and ratings
-const DEVICE_CONFIG: Record<string, { types: { value: string; label: string }[]; ratings: string[] }> = {
+const DEVICE_CONFIG: Record<
+  string,
+  { types: { value: string; label: string }[]; ratings: string[] }
+> = {
   'BS EN 60898': {
     types: [
       { value: 'B', label: 'Type B' },
@@ -40,7 +49,28 @@ const DEVICE_CONFIG: Record<string, { types: { value: string; label: string }[];
       { value: 'C', label: 'Type C' },
       { value: 'D', label: 'Type D' },
     ],
-    ratings: ['16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250'],
+    ratings: [
+      '16',
+      '20',
+      '25',
+      '32',
+      '40',
+      '50',
+      '63',
+      '80',
+      '100',
+      '125',
+      '160',
+      '200',
+      '250',
+      '315',
+      '400',
+      '500',
+      '630',
+      '800',
+      '1000',
+      '1250',
+    ],
   },
   'BS 88-2': {
     types: [
@@ -48,12 +78,35 @@ const DEVICE_CONFIG: Record<string, { types: { value: string; label: string }[];
       { value: 'gM', label: 'gM (Motor)' },
       { value: 'aM', label: 'aM (Motor Starter)' },
     ],
-    ratings: ['2', '4', '6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250'],
+    ratings: [
+      '2',
+      '4',
+      '6',
+      '10',
+      '16',
+      '20',
+      '25',
+      '32',
+      '40',
+      '50',
+      '63',
+      '80',
+      '100',
+      '125',
+      '160',
+      '200',
+      '250',
+      '315',
+      '400',
+      '500',
+      '630',
+      '800',
+      '1000',
+      '1250',
+    ],
   },
   'BS 88-3': {
-    types: [
-      { value: 'gG', label: 'gG (General Purpose)' },
-    ],
+    types: [{ value: 'gG', label: 'gG (General Purpose)' }],
     ratings: ['5', '15', '20', '30', '45', '60', '80', '100'],
   },
   'BS 1361': {
@@ -70,7 +123,7 @@ const DEVICE_CONFIG: Record<string, { types: { value: string; label: string }[];
     ],
     ratings: ['5', '15', '20', '30', '45', '60', '100'],
   },
-  'other': {
+  other: {
     types: [
       { value: 'B', label: 'Type B' },
       { value: 'C', label: 'Type C' },
@@ -79,11 +132,36 @@ const DEVICE_CONFIG: Record<string, { types: { value: string; label: string }[];
       { value: 'aM', label: 'aM Fuse' },
       { value: 'other', label: 'Other' },
     ],
-    ratings: ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630'],
+    ratings: [
+      '6',
+      '10',
+      '16',
+      '20',
+      '25',
+      '32',
+      '40',
+      '50',
+      '63',
+      '80',
+      '100',
+      '125',
+      '160',
+      '200',
+      '250',
+      '315',
+      '400',
+      '500',
+      '630',
+    ],
   },
 };
 
-const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({ formData, onUpdate, isOpen, onToggle }) => {
+const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({
+  formData,
+  onUpdate,
+  isOpen,
+  onToggle,
+}) => {
   const isMobile = useIsMobile();
 
   // Get available types based on selected BS standard
@@ -105,7 +183,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     const config = DEVICE_CONFIG[value] || DEVICE_CONFIG['other'];
 
     // Reset type if current value is not in the new options
-    if (formData.supplyDeviceType && !config.types.some(t => t.value === formData.supplyDeviceType)) {
+    if (
+      formData.supplyDeviceType &&
+      !config.types.some((t) => t.value === formData.supplyDeviceType)
+    ) {
       onUpdate('supplyDeviceType', '');
     }
 
@@ -139,13 +220,20 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
   // Calculate completion percentage
   const getCompletionPercentage = () => {
-    const requiredFields = ['supplyVoltage', 'phases', 'earthingArrangement', 'liveCondutorType', 'prospectiveFaultCurrent', 'externalZe'];
-    const filled = requiredFields.filter(f => formData[f]).length;
+    const requiredFields = [
+      'supplyVoltage',
+      'phases',
+      'earthingArrangement',
+      'liveCondutorType',
+      'prospectiveFaultCurrent',
+      'externalZe',
+    ];
+    const filled = requiredFields.filter((f) => formData[f]).length;
     return Math.round((filled / requiredFields.length) * 100);
   };
 
   return (
-    <div className={cn(isMobile ? "" : "eicr-section-card")}>
+    <div className={cn(isMobile ? '' : 'eicr-section-card')}>
       <Collapsible open={isOpen} onOpenChange={onToggle}>
         <CollapsibleTrigger className="w-full">
           {isMobile ? (
@@ -155,12 +243,16 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </div>
               <div className="flex-1 text-left min-w-0">
                 <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
-                <span className="text-xs text-muted-foreground">{getCompletionPercentage()}% complete</span>
+                <span className="text-xs text-muted-foreground">
+                  {getCompletionPercentage()}% complete
+                </span>
               </div>
-              <ChevronDown className={cn(
-                "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                isOpen && "rotate-180"
-              )} />
+              <ChevronDown
+                className={cn(
+                  'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                  isOpen && 'rotate-180'
+                )}
+              />
             </div>
           ) : (
             <SectionHeader
@@ -173,14 +265,15 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
           )}
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn(
-            "space-y-5 sm:space-y-6",
-            isMobile ? "px-4 py-4" : "p-4 sm:p-5 md:p-6"
-          )}>
+          <div
+            className={cn('space-y-5 sm:space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-5 md:p-6')}
+          >
             {/* Voltage & Frequency */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="supplyVoltage" className="text-sm">Supply Voltage *</Label>
+                <Label htmlFor="supplyVoltage" className="text-sm">
+                  Supply Voltage *
+                </Label>
                 <Select
                   value={formData.supplyVoltage || ''}
                   onValueChange={(value) => onUpdate('supplyVoltage', value)}
@@ -197,7 +290,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="supplyFrequency" className="text-sm">Frequency (Hz)</Label>
+                <Label htmlFor="supplyFrequency" className="text-sm">
+                  Frequency (Hz)
+                </Label>
                 <Input
                   id="supplyFrequency"
                   type="number"
@@ -210,11 +305,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phases" className="text-sm">Number of Phases *</Label>
-                <Select
-                  value={formData.phases || ''}
-                  onValueChange={handlePhasesChange}
-                >
+                <Label htmlFor="phases" className="text-sm">
+                  Number of Phases *
+                </Label>
+                <Select value={formData.phases || ''} onValueChange={handlePhasesChange}>
                   <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue placeholder="Select phases" />
                   </SelectTrigger>
@@ -234,7 +328,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="earthingArrangement" className="text-sm">Earthing Type *</Label>
+                  <Label htmlFor="earthingArrangement" className="text-sm">
+                    Earthing Type *
+                  </Label>
                   <Select
                     value={formData.earthingArrangement || ''}
                     onValueChange={handleEarthingArrangementChange}
@@ -252,7 +348,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="supplyPME" className="text-sm">Supply PME</Label>
+                  <Label htmlFor="supplyPME" className="text-sm">
+                    Supply PME
+                  </Label>
                   <Select
                     value={formData.supplyPME || ''}
                     onValueChange={(value) => onUpdate('supplyPME', value)}
@@ -351,7 +449,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   onCheckedChange={(checked) => onUpdate('supplyPolarityConfirmed', checked)}
                   className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 mt-0.5"
                 />
-                <Label htmlFor="supplyPolarityConfirmed" className="text-sm font-medium cursor-pointer leading-relaxed">
+                <Label
+                  htmlFor="supplyPolarityConfirmed"
+                  className="text-sm font-medium cursor-pointer leading-relaxed"
+                >
                   Confirmation of supply polarity
                 </Label>
               </div>
@@ -365,13 +466,18 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     onCheckedChange={(checked) => onUpdate('otherSourcesOfSupply', checked)}
                     className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 mt-0.5"
                   />
-                  <Label htmlFor="otherSourcesOfSupply" className="text-sm font-medium cursor-pointer leading-relaxed">
+                  <Label
+                    htmlFor="otherSourcesOfSupply"
+                    className="text-sm font-medium cursor-pointer leading-relaxed"
+                  >
                     Other sources of supply present (as detailed on attached schedule)
                   </Label>
                 </div>
                 {formData.otherSourcesOfSupply && (
                   <div className="space-y-2 ml-6">
-                    <Label htmlFor="otherSourcesDetails" className="text-sm">Details of Other Sources</Label>
+                    <Label htmlFor="otherSourcesDetails" className="text-sm">
+                      Details of Other Sources
+                    </Label>
                     <Input
                       id="otherSourcesDetails"
                       value={formData.otherSourcesDetails || ''}
@@ -392,7 +498,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="supplyDeviceBsEn" className="text-sm">BS (EN)</Label>
+                  <Label htmlFor="supplyDeviceBsEn" className="text-sm">
+                    BS (EN)
+                  </Label>
                   <Select
                     value={formData.supplyDeviceBsEn || ''}
                     onValueChange={handleBsStandardChange}
@@ -413,7 +521,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="supplyDeviceType" className="text-sm">Type</Label>
+                  <Label htmlFor="supplyDeviceType" className="text-sm">
+                    Type
+                  </Label>
                   <Select
                     value={formData.supplyDeviceType || ''}
                     onValueChange={(value) => onUpdate('supplyDeviceType', value)}
@@ -423,13 +533,17 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground">
                       {getAvailableTypes().map((type) => (
-                        <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                        <SelectItem key={type.value} value={type.value}>
+                          {type.label}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="supplyDeviceRating" className="text-sm">Rated Current (A)</Label>
+                  <Label htmlFor="supplyDeviceRating" className="text-sm">
+                    Rated Current (A)
+                  </Label>
                   <Select
                     value={formData.supplyDeviceRating || ''}
                     onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
@@ -439,7 +553,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground max-h-[300px]">
                       {getAvailableRatings().map((rating) => (
-                        <SelectItem key={rating} value={rating}>{rating}A</SelectItem>
+                        <SelectItem key={rating} value={rating}>
+                          {rating}A
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>

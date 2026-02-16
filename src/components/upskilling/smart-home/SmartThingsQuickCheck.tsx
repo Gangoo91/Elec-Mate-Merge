@@ -7,12 +7,12 @@ export const SmartThingsQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why might SmartThings be a good choice for a beginner smart home user?";
+  const question = 'Why might SmartThings be a good choice for a beginner smart home user?';
   const options = [
-    "Because it requires advanced programming knowledge",
-    "Because it only works with Samsung devices",
+    'Because it requires advanced programming knowledge',
+    'Because it only works with Samsung devices',
     "Because it's easy to set up with a user-friendly app and broad device compatibility",
-    "Because it works completely offline without internet"
+    'Because it works completely offline without internet',
   ];
   const correctAnswer = 2;
 
@@ -35,7 +35,7 @@ export const SmartThingsQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -47,8 +47,8 @@ export const SmartThingsQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-900/30 border-green-500 text-green-300'
                     : index === selectedAnswer
-                    ? 'bg-red-900/30 border-red-500 text-red-300'
-                    : 'bg-gray-800/30 border-gray-600 text-gray-400'
+                      ? 'bg-red-900/30 border-red-500 text-red-300'
+                      : 'bg-gray-800/30 border-gray-600 text-gray-400'
                   : 'bg-elec-gray border-gray-600 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
               }`}
             >
@@ -67,16 +67,17 @@ export const SmartThingsQuickCheck = () => {
 
         {showResult && (
           <div className="space-y-3">
-            <div className={`p-4 rounded-lg border ${
-              selectedAnswer === correctAnswer
-                ? 'bg-green-900/20 border-green-500/30'
-                : 'bg-red-900/20 border-red-500/30'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'bg-green-900/20 border-green-500/30'
+                  : 'bg-red-900/20 border-red-500/30'
+              }`}
+            >
               <p className="text-foreground text-sm">
                 {selectedAnswer === correctAnswer
-                  ? "Correct! SmartThings is designed for beginners with its simple setup process, intuitive mobile app, and broad compatibility with different device brands, making it accessible to users without technical expertise."
-                  : "Not quite. SmartThings is ideal for beginners because it offers easy setup, a user-friendly app, and works with many different device brands without requiring technical knowledge."
-                }
+                  ? 'Correct! SmartThings is designed for beginners with its simple setup process, intuitive mobile app, and broad compatibility with different device brands, making it accessible to users without technical expertise.'
+                  : 'Not quite. SmartThings is ideal for beginners because it offers easy setup, a user-friendly app, and works with many different device brands without requiring technical knowledge.'}
               </p>
             </div>
 

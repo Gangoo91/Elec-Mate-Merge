@@ -13,23 +13,23 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1,
         unit: 'each',
         unitPrice: 45,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '13A socket outlet',
         quantity: 1,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '2.5mm² T&E cable',
         quantity: 10,
         unit: 'metres',
-        unitPrice: 2.50,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 2.5,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'light-fitting',
@@ -43,23 +43,23 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1,
         unit: 'each',
         unitPrice: 35,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Ceiling rose',
         quantity: 1,
         unit: 'each',
         unitPrice: 8,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '1.5mm² T&E cable',
         quantity: 5,
         unit: 'metres',
-        unitPrice: 1.80,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 1.8,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'consumer-unit-replacement',
@@ -73,37 +73,37 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 6,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '12-way consumer unit',
         quantity: 1,
         unit: 'each',
         unitPrice: 180,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'RCBO 32A Type B',
         quantity: 6,
         unit: 'each',
         unitPrice: 45,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'RCBO 16A Type B',
         quantity: 4,
         unit: 'each',
         unitPrice: 42,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'Electrical testing',
         quantity: 1,
         unit: 'each',
         unitPrice: 120,
-        category: 'labour'
-      }
-    ]
+        category: 'labour',
+      },
+    ],
   },
   {
     id: 'ev-charger-installation',
@@ -117,35 +117,36 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 4,
         unit: 'hours',
         unitPrice: 55,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '7kW EV charging unit',
         quantity: 1,
         unit: 'each',
         unitPrice: 450,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: '6mm² SWA cable',
         quantity: 20,
         unit: 'metres',
-        unitPrice: 8.50,
-        category: 'materials'
+        unitPrice: 8.5,
+        category: 'materials',
       },
       {
         description: '32A Type B RCBO',
         quantity: 1,
         unit: 'each',
         unitPrice: 45,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: '3-bed-house-rewire-kit',
     name: '3-Bedroom House Rewire (Starter Kit)',
-    description: 'Complete material kit for 3-bedroom house rewire including sockets, lights, switches, cables and consumer unit',
+    description:
+      'Complete material kit for 3-bedroom house rewire including sockets, lights, switches, cables and consumer unit',
     category: 'Rewire',
     estimatedHours: 40,
     items: [
@@ -155,7 +156,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 40,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       // Sockets - Bedrooms (2 per room)
       {
@@ -163,7 +164,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 6,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       // Sockets - Living room
       {
@@ -171,7 +172,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 3,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       // Sockets - Kitchen
       {
@@ -179,7 +180,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 4,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       // Cooker outlet
       {
@@ -187,7 +188,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1,
         unit: 'each',
         unitPrice: 25,
-        category: 'materials'
+        category: 'materials',
       },
       // Consumer unit
       {
@@ -195,7 +196,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1,
         unit: 'each',
         unitPrice: 180,
-        category: 'materials'
+        category: 'materials',
       },
       // RCBOs
       {
@@ -203,14 +204,14 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 6,
         unit: 'each',
         unitPrice: 45,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'RCBO 16A Type B',
         quantity: 4,
         unit: 'each',
         unitPrice: 42,
-        category: 'materials'
+        category: 'materials',
       },
       // Lights
       {
@@ -218,7 +219,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 10,
         unit: 'each',
         unitPrice: 18,
-        category: 'materials'
+        category: 'materials',
       },
       // Light switches
       {
@@ -226,59 +227,59 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 8,
         unit: 'each',
         unitPrice: 8,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '2-gang light switches',
         quantity: 2,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       // Cables
       {
         description: '1.5mm² T&E cable',
         quantity: 100,
         unit: 'metres',
-        unitPrice: 1.80,
-        category: 'materials'
+        unitPrice: 1.8,
+        category: 'materials',
       },
       {
         description: '2.5mm² T&E cable',
         quantity: 100,
         unit: 'metres',
-        unitPrice: 2.50,
-        category: 'materials'
+        unitPrice: 2.5,
+        category: 'materials',
       },
       {
         description: '10mm² T&E cable - Shower',
         quantity: 50,
         unit: 'metres',
-        unitPrice: 8.50,
-        category: 'materials'
+        unitPrice: 8.5,
+        category: 'materials',
       },
       // Back boxes
       {
         description: '35mm back boxes',
         quantity: 15,
         unit: 'each',
-        unitPrice: 1.20,
-        category: 'materials'
+        unitPrice: 1.2,
+        category: 'materials',
       },
       {
         description: '47mm back boxes - deeper',
         quantity: 8,
         unit: 'each',
-        unitPrice: 1.80,
-        category: 'materials'
+        unitPrice: 1.8,
+        category: 'materials',
       },
       // Meter tails
       {
         description: '25mm² meter tails',
         quantity: 3,
         unit: 'metres',
-        unitPrice: 15.00,
-        category: 'materials'
+        unitPrice: 15.0,
+        category: 'materials',
       },
       // Fixings
       {
@@ -286,7 +287,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1,
         unit: 'pack',
         unitPrice: 25,
-        category: 'materials'
+        category: 'materials',
       },
       // Cable cleats
       {
@@ -294,7 +295,7 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 50,
         unit: 'each',
         unitPrice: 0.75,
-        category: 'materials'
+        category: 'materials',
       },
       // Shower
       {
@@ -302,9 +303,9 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1,
         unit: 'each',
         unitPrice: 180,
-        category: 'equipment'
-      }
-    ]
+        category: 'equipment',
+      },
+    ],
   },
   {
     id: 'eicr-inspection',
@@ -318,16 +319,16 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 3,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'EICR certificate',
         quantity: 1,
         unit: 'each',
         unitPrice: 25,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'outdoor-socket-installation',
@@ -341,30 +342,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 2,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'IP65 weatherproof socket',
         quantity: 1,
         unit: 'each',
         unitPrice: 28,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '2.5mm² SWA cable',
         quantity: 15,
         unit: 'metres',
-        unitPrice: 4.20,
-        category: 'materials'
+        unitPrice: 4.2,
+        category: 'materials',
       },
       {
         description: '30mA RCD protection',
         quantity: 1,
         unit: 'each',
         unitPrice: 35,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'bathroom-fan-installation',
@@ -378,30 +379,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1.5,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Bathroom extractor fan',
         quantity: 1,
         unit: 'each',
         unitPrice: 85,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Fan isolator switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 15,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '1.5mm² T&E cable',
         quantity: 8,
         unit: 'metres',
-        unitPrice: 1.80,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 1.8,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'garden-lighting-installation',
@@ -415,30 +416,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 3,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'LED garden light fittings',
         quantity: 6,
         unit: 'each',
         unitPrice: 45,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: '12V transformer',
         quantity: 1,
         unit: 'each',
         unitPrice: 65,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Low voltage cable',
         quantity: 30,
         unit: 'metres',
-        unitPrice: 2.10,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 2.1,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'smoke-alarm-installation',
@@ -452,30 +453,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 2,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Mains smoke alarm',
         quantity: 3,
         unit: 'each',
         unitPrice: 25,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: '1.5mm² fire-rated cable',
         quantity: 20,
         unit: 'metres',
-        unitPrice: 2.20,
-        category: 'materials'
+        unitPrice: 2.2,
+        category: 'materials',
       },
       {
         description: 'Junction boxes',
         quantity: 3,
         unit: 'each',
-        unitPrice: 3.50,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 3.5,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'electric-cooker-installation',
@@ -489,30 +490,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 2.5,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '45A cooker control unit',
         quantity: 1,
         unit: 'each',
         unitPrice: 32,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '6mm² T&E cable',
         quantity: 12,
         unit: 'metres',
-        unitPrice: 6.80,
-        category: 'materials'
+        unitPrice: 6.8,
+        category: 'materials',
       },
       {
         description: '45A RCBO Type B',
         quantity: 1,
         unit: 'each',
         unitPrice: 48,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'partial-rewire-single-room',
@@ -526,51 +527,51 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 8,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '13A DP socket outlets',
         quantity: 4,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'LED ceiling light',
         quantity: 2,
         unit: 'each',
         unitPrice: 18,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '2-gang light switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '2.5mm² T&E cable',
         quantity: 25,
         unit: 'metres',
-        unitPrice: 2.50,
-        category: 'materials'
+        unitPrice: 2.5,
+        category: 'materials',
       },
       {
         description: '1.5mm² T&E cable',
         quantity: 15,
         unit: 'metres',
-        unitPrice: 1.80,
-        category: 'materials'
+        unitPrice: 1.8,
+        category: 'materials',
       },
       {
         description: '35mm back boxes',
         quantity: 6,
         unit: 'each',
-        unitPrice: 1.20,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 1.2,
+        category: 'materials',
+      },
+    ],
   },
   // Additional Domestic Installation Templates
   {
@@ -585,30 +586,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 3,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'LED downlight fittings',
         quantity: 6,
         unit: 'each',
         unitPrice: 22,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'LED dimmer switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 35,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '1.5mm² T&E cable',
         quantity: 20,
         unit: 'metres',
-        unitPrice: 1.80,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 1.8,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'security-light-installation',
@@ -622,30 +623,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 2,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'PIR security light',
         quantity: 1,
         unit: 'each',
         unitPrice: 45,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Override switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 12,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '1.5mm² T&E cable',
         quantity: 15,
         unit: 'metres',
-        unitPrice: 1.80,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 1.8,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'doorbell-transformer',
@@ -659,30 +660,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 1,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Doorbell transformer',
         quantity: 1,
         unit: 'each',
         unitPrice: 25,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Chime unit',
         quantity: 1,
         unit: 'each',
         unitPrice: 18,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Bell wire',
         quantity: 10,
         unit: 'metres',
-        unitPrice: 0.80,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 0.8,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'underfloor-heating',
@@ -696,30 +697,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 4,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Heating mat (10m²)',
         quantity: 1,
         unit: 'each',
         unitPrice: 280,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Digital thermostat',
         quantity: 1,
         unit: 'each',
         unitPrice: 85,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: '2.5mm² T&E cable',
         quantity: 8,
         unit: 'metres',
-        unitPrice: 2.50,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 2.5,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'immersion-heater',
@@ -733,30 +734,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 2.5,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '3kW immersion heater element',
         quantity: 1,
         unit: 'each',
         unitPrice: 65,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Dual element switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 28,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '2.5mm² heat-resistant cable',
         quantity: 12,
         unit: 'metres',
-        unitPrice: 3.20,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 3.2,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'kitchen-under-cabinet-lighting',
@@ -770,30 +771,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 3,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'LED strip lights (3m)',
         quantity: 1,
         unit: 'set',
         unitPrice: 95,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: '12V LED driver',
         quantity: 1,
         unit: 'each',
         unitPrice: 35,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Dimmer switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 25,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   // Commercial/Industrial Templates
   {
@@ -808,30 +809,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 4,
         unit: 'hours',
         unitPrice: 55,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Emergency light fittings',
         quantity: 6,
         unit: 'each',
         unitPrice: 45,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Test key switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 15,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '1.5mm² fire-rated cable',
         quantity: 50,
         unit: 'metres',
-        unitPrice: 2.20,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 2.2,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'fire-alarm-small-office',
@@ -845,30 +846,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 6,
         unit: 'hours',
         unitPrice: 55,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Fire alarm control panel',
         quantity: 1,
         unit: 'each',
         unitPrice: 280,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Smoke detectors',
         quantity: 4,
         unit: 'each',
         unitPrice: 35,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Fire alarm cable',
         quantity: 100,
         unit: 'metres',
         unitPrice: 1.95,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'data-cabinet-installation',
@@ -882,30 +883,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 3,
         unit: 'hours',
         unitPrice: 55,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '19" wall-mounted cabinet',
         quantity: 1,
         unit: 'each',
         unitPrice: 220,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'PDU power strip',
         quantity: 1,
         unit: 'each',
         unitPrice: 85,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Cabinet cooling fan',
         quantity: 1,
         unit: 'each',
         unitPrice: 45,
-        category: 'equipment'
-      }
-    ]
+        category: 'equipment',
+      },
+    ],
   },
   {
     id: 'three-phase-supply',
@@ -919,30 +920,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 5,
         unit: 'hours',
         unitPrice: 60,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '3-phase isolator switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 120,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '4mm² 4-core SWA cable',
         quantity: 25,
         unit: 'metres',
-        unitPrice: 12.50,
-        category: 'materials'
+        unitPrice: 12.5,
+        category: 'materials',
       },
       {
         description: '3-phase distribution board',
         quantity: 1,
         unit: 'each',
         unitPrice: 180,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'industrial-socket-32a',
@@ -956,30 +957,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 3,
         unit: 'hours',
         unitPrice: 60,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '32A 3-phase socket',
         quantity: 1,
         unit: 'each',
         unitPrice: 85,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'IP65 enclosure',
         quantity: 1,
         unit: 'each',
         unitPrice: 45,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '6mm² 4-core SWA cable',
         quantity: 15,
         unit: 'metres',
-        unitPrice: 15.80,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 15.8,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'workshop-lighting-upgrade',
@@ -993,30 +994,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 6,
         unit: 'hours',
         unitPrice: 55,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'LED high-bay fittings',
         quantity: 8,
         unit: 'each',
         unitPrice: 120,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Contactor control system',
         quantity: 1,
         unit: 'each',
         unitPrice: 95,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '2.5mm² T&E cable',
         quantity: 80,
         unit: 'metres',
-        unitPrice: 2.50,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 2.5,
+        category: 'materials',
+      },
+    ],
   },
   // Renewable Energy Templates
   {
@@ -1031,37 +1032,37 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 8,
         unit: 'hours',
         unitPrice: 65,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '4kW solar panel array',
         quantity: 1,
         unit: 'system',
         unitPrice: 2800,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: '4kW string inverter',
         quantity: 1,
         unit: 'each',
         unitPrice: 850,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'DC isolator switch',
         quantity: 1,
         unit: 'each',
         unitPrice: 45,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'Generation meter',
         quantity: 1,
         unit: 'each',
         unitPrice: 180,
-        category: 'equipment'
-      }
-    ]
+        category: 'equipment',
+      },
+    ],
   },
   {
     id: 'battery-storage-system',
@@ -1075,30 +1076,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 6,
         unit: 'hours',
         unitPrice: 65,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '10kWh lithium battery',
         quantity: 1,
         unit: 'each',
         unitPrice: 4500,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Hybrid inverter',
         quantity: 1,
         unit: 'each',
         unitPrice: 1200,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Battery management system',
         quantity: 1,
         unit: 'each',
         unitPrice: 320,
-        category: 'equipment'
-      }
-    ]
+        category: 'equipment',
+      },
+    ],
   },
   {
     id: 'heat-pump-electrical',
@@ -1112,30 +1113,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 4,
         unit: 'hours',
         unitPrice: 60,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '32A dedicated supply',
         quantity: 1,
         unit: 'each',
         unitPrice: 85,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '6mm² SWA cable',
         quantity: 30,
         unit: 'metres',
-        unitPrice: 8.50,
-        category: 'materials'
+        unitPrice: 8.5,
+        category: 'materials',
       },
       {
         description: 'External isolator',
         quantity: 1,
         unit: 'each',
         unitPrice: 65,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'car-lift-power-supply',
@@ -1149,30 +1150,30 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 5,
         unit: 'hours',
         unitPrice: 65,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: '3-phase distribution board',
         quantity: 1,
         unit: 'each',
         unitPrice: 220,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: '10mm² 4-core SWA cable',
         quantity: 20,
         unit: 'metres',
-        unitPrice: 18.50,
-        category: 'materials'
+        unitPrice: 18.5,
+        category: 'materials',
       },
       {
         description: 'Emergency stop system',
         quantity: 1,
         unit: 'each',
         unitPrice: 95,
-        category: 'equipment'
-      }
-    ]
+        category: 'equipment',
+      },
+    ],
   },
   {
     id: 'pool-spa-electrical',
@@ -1186,37 +1187,37 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 6,
         unit: 'hours',
         unitPrice: 65,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Pool pump (1.5HP)',
         quantity: 1,
         unit: 'each',
         unitPrice: 450,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: 'Pool lighting transformer',
         quantity: 1,
         unit: 'each',
         unitPrice: 85,
-        category: 'equipment'
+        category: 'equipment',
       },
       {
         description: '2.5mm² SWA cable',
         quantity: 40,
         unit: 'metres',
-        unitPrice: 4.20,
-        category: 'materials'
+        unitPrice: 4.2,
+        category: 'materials',
       },
       {
         description: 'RCD protection',
         quantity: 1,
         unit: 'each',
         unitPrice: 35,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   // Testing Templates
   {
@@ -1231,23 +1232,23 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 0.1,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'PAT test certificate',
         quantity: 1,
         unit: 'each',
         unitPrice: 2,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'Test label',
         quantity: 1,
         unit: 'each',
-        unitPrice: 0.20,
-        category: 'materials'
-      }
-    ]
+        unitPrice: 0.2,
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'new-installation-certificate',
@@ -1261,23 +1262,23 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 2,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'EIC certificate',
         quantity: 1,
         unit: 'each',
         unitPrice: 25,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'Schedule of test results',
         quantity: 1,
         unit: 'each',
         unitPrice: 10,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'periodic-inspection-testing',
@@ -1291,23 +1292,23 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 4,
         unit: 'hours',
         unitPrice: 50,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'EICR certificate',
         quantity: 1,
         unit: 'each',
         unitPrice: 35,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'Schedule of inspections',
         quantity: 1,
         unit: 'each',
         unitPrice: 15,
-        category: 'materials'
-      }
-    ]
+        category: 'materials',
+      },
+    ],
   },
   {
     id: 'fault-finding-diagnostics',
@@ -1321,22 +1322,22 @@ export const jobTemplates: JobTemplate[] = [
         quantity: 2,
         unit: 'hours',
         unitPrice: 55,
-        category: 'labour'
+        category: 'labour',
       },
       {
         description: 'Test equipment usage',
         quantity: 1,
         unit: 'each',
         unitPrice: 25,
-        category: 'materials'
+        category: 'materials',
       },
       {
         description: 'Fault report',
         quantity: 1,
         unit: 'each',
         unitPrice: 15,
-        category: 'materials'
-      }
-    ]
-  }
+        category: 'materials',
+      },
+    ],
+  },
 ];

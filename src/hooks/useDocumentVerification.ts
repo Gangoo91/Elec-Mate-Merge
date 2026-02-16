@@ -1,11 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
-export type VerificationTier = "basic" | "verified" | "premium";
-export type VerificationStatus = "pending" | "verified" | "rejected" | "expired";
-export type DocumentType = "ecs_card" | "qualification" | "training" | "cscs" | "driving_licence" | "insurance";
+export type VerificationTier = 'basic' | 'verified' | 'premium';
+export type VerificationStatus = 'pending' | 'verified' | 'rejected' | 'expired';
+export type DocumentType =
+  | 'ecs_card'
+  | 'qualification'
+  | 'training'
+  | 'cscs'
+  | 'driving_licence'
+  | 'insurance';
 
 export interface ElecIdDocument {
   id: string;
@@ -46,7 +52,7 @@ export interface ElecIdProfile {
   tier_updated_at?: string;
   opt_out: boolean;
   available_for_hire: boolean;
-  profile_visibility: "public" | "employers_only" | "private";
+  profile_visibility: 'public' | 'employers_only' | 'private';
   created_at: string;
   updated_at: string;
 }
@@ -66,20 +72,20 @@ export interface TierProgress {
 // Tier requirements configuration
 const TIER_REQUIREMENTS = {
   basic: {
-    label: "Basic",
-    requirements: ["Profile created", "Email verified"],
+    label: 'Basic',
+    requirements: ['Profile created', 'Email verified'],
   },
   verified: {
-    label: "Verified",
-    requirements: ["ECS Card verified", "1+ qualification verified"],
+    label: 'Verified',
+    requirements: ['ECS Card verified', '1+ qualification verified'],
   },
   premium: {
-    label: "Premium",
+    label: 'Premium',
     requirements: [
-      "ECS Card verified",
-      "2+ qualifications verified",
-      "Insurance verified",
-      "Driving licence verified",
+      'ECS Card verified',
+      '2+ qualifications verified',
+      'Insurance verified',
+      'Driving licence verified',
     ],
   },
 };
@@ -97,18 +103,18 @@ export function useDocumentVerification() {
 
     try {
       const { data, error } = await supabase
-        .from("employer_elec_id_profiles")
-        .select("*")
-        .eq("employee_id", user.id)
+        .from('employer_elec_id_profiles')
+        .select('*')
+        .eq('employee_id', user.id)
         .single();
 
-      if (error && error.code !== "PGRST116") {
+      if (error && error.code !== 'PGRST116') {
         throw error;
       }
 
       return data as ElecIdProfile | null;
     } catch (err: any) {
-      console.error("Error fetching Elec-ID profile:", err);
+      console.error('Error fetching Elec-ID profile:', err);
       return null;
     }
   }, [user?.id]);
@@ -117,62 +123,66 @@ export function useDocumentVerification() {
   const fetchDocuments = useCallback(async (profileId: string) => {
     try {
       const { data, error } = await supabase
-        .from("elec_id_documents")
-        .select("*")
-        .eq("profile_id", profileId)
-        .order("created_at", { ascending: false });
+        .from('elec_id_documents')
+        .select('*')
+        .eq('profile_id', profileId)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
 
       return (data as ElecIdDocument[]) || [];
     } catch (err: any) {
-      console.error("Error fetching documents:", err);
+      console.error('Error fetching documents:', err);
       return [];
     }
   }, []);
 
   // Calculate verification tier based on documents
   const calculateTier = useCallback((docs: ElecIdDocument[]): VerificationTier => {
-    const verifiedDocs = docs.filter((d) => d.verification_status === "verified");
+    const verifiedDocs = docs.filter((d) => d.verification_status === 'verified');
 
-    const hasECS = verifiedDocs.some((d) => d.document_type === "ecs_card");
-    const qualCount = verifiedDocs.filter((d) => d.document_type === "qualification").length;
-    const hasInsurance = verifiedDocs.some((d) => d.document_type === "insurance");
-    const hasDrivingLicence = verifiedDocs.some((d) => d.document_type === "driving_licence");
+    const hasECS = verifiedDocs.some((d) => d.document_type === 'ecs_card');
+    const qualCount = verifiedDocs.filter((d) => d.document_type === 'qualification').length;
+    const hasInsurance = verifiedDocs.some((d) => d.document_type === 'insurance');
+    const hasDrivingLicence = verifiedDocs.some((d) => d.document_type === 'driving_licence');
 
     if (hasECS && qualCount >= 2 && hasInsurance && hasDrivingLicence) {
-      return "premium";
+      return 'premium';
     }
     if (hasECS && qualCount >= 1) {
-      return "verified";
+      return 'verified';
     }
-    return "basic";
+    return 'basic';
   }, []);
 
   // Calculate tier progress
   const calculateTierProgress = useCallback(
     (docs: ElecIdDocument[], currentTier: VerificationTier): TierProgress => {
-      const verifiedDocs = docs.filter((d) => d.verification_status === "verified");
+      const verifiedDocs = docs.filter((d) => d.verification_status === 'verified');
 
-      const hasECS = verifiedDocs.some((d) => d.document_type === "ecs_card");
-      const qualCount = verifiedDocs.filter((d) => d.document_type === "qualification").length;
-      const hasInsurance = verifiedDocs.some((d) => d.document_type === "insurance");
-      const hasDrivingLicence = verifiedDocs.some((d) => d.document_type === "driving_licence");
+      const hasECS = verifiedDocs.some((d) => d.document_type === 'ecs_card');
+      const qualCount = verifiedDocs.filter((d) => d.document_type === 'qualification').length;
+      const hasInsurance = verifiedDocs.some((d) => d.document_type === 'insurance');
+      const hasDrivingLicence = verifiedDocs.some((d) => d.document_type === 'driving_licence');
 
       const missingForNextTier: string[] = [];
       let percentToNextTier = 0;
 
-      if (currentTier === "basic") {
+      if (currentTier === 'basic') {
         // To get to verified: need ECS + 1 qual
-        if (!hasECS) missingForNextTier.push("ECS Card");
-        if (qualCount < 1) missingForNextTier.push("1 qualification");
-        percentToNextTier = ((hasECS ? 1 : 0) + Math.min(qualCount, 1)) / 2 * 100;
-      } else if (currentTier === "verified") {
+        if (!hasECS) missingForNextTier.push('ECS Card');
+        if (qualCount < 1) missingForNextTier.push('1 qualification');
+        percentToNextTier = (((hasECS ? 1 : 0) + Math.min(qualCount, 1)) / 2) * 100;
+      } else if (currentTier === 'verified') {
         // To get to premium: need ECS + 2 quals + insurance + driving licence
         if (qualCount < 2) missingForNextTier.push(`${2 - qualCount} more qualification(s)`);
-        if (!hasInsurance) missingForNextTier.push("Insurance");
-        if (!hasDrivingLicence) missingForNextTier.push("Driving licence");
-        const progress = (hasECS ? 1 : 0) + Math.min(qualCount, 2) + (hasInsurance ? 1 : 0) + (hasDrivingLicence ? 1 : 0);
+        if (!hasInsurance) missingForNextTier.push('Insurance');
+        if (!hasDrivingLicence) missingForNextTier.push('Driving licence');
+        const progress =
+          (hasECS ? 1 : 0) +
+          Math.min(qualCount, 2) +
+          (hasInsurance ? 1 : 0) +
+          (hasDrivingLicence ? 1 : 0);
         percentToNextTier = (progress / 5) * 100;
       } else {
         percentToNextTier = 100;
@@ -227,14 +237,14 @@ export function useDocumentVerification() {
       const elecIdNumber = `EM-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
       const { data, error } = await supabase
-        .from("employer_elec_id_profiles")
+        .from('employer_elec_id_profiles')
         .insert({
           employee_id: user.id,
           elec_id_number: elecIdNumber,
-          verification_tier: "basic",
+          verification_tier: 'basic',
           opt_out: false,
           available_for_hire: true,
-          profile_visibility: "public",
+          profile_visibility: 'public',
         })
         .select()
         .single();
@@ -243,17 +253,17 @@ export function useDocumentVerification() {
 
       setElecIdProfile(data as ElecIdProfile);
       toast({
-        title: "Elec-ID Created",
+        title: 'Elec-ID Created',
         description: `Your Elec-ID number is ${elecIdNumber}`,
       });
 
       return data as ElecIdProfile;
     } catch (err: any) {
-      console.error("Error creating Elec-ID profile:", err);
+      console.error('Error creating Elec-ID profile:', err);
       toast({
-        title: "Error",
-        description: "Failed to create Elec-ID profile",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create Elec-ID profile',
+        variant: 'destructive',
       });
       return null;
     }
@@ -261,28 +271,32 @@ export function useDocumentVerification() {
 
   // Update profile settings
   const updateProfile = useCallback(
-    async (updates: Partial<Pick<ElecIdProfile, "opt_out" | "available_for_hire" | "profile_visibility" | "bio">>) => {
+    async (
+      updates: Partial<
+        Pick<ElecIdProfile, 'opt_out' | 'available_for_hire' | 'profile_visibility' | 'bio'>
+      >
+    ) => {
       if (!elecIdProfile?.id) return false;
 
       try {
         const { error } = await supabase
-          .from("employer_elec_id_profiles")
+          .from('employer_elec_id_profiles')
           .update({
             ...updates,
             updated_at: new Date().toISOString(),
           })
-          .eq("id", elecIdProfile.id);
+          .eq('id', elecIdProfile.id);
 
         if (error) throw error;
 
         setElecIdProfile((prev) => (prev ? { ...prev, ...updates } : null));
         return true;
       } catch (err: any) {
-        console.error("Error updating profile:", err);
+        console.error('Error updating profile:', err);
         toast({
-          title: "Error",
-          description: "Failed to update profile settings",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to update profile settings',
+          variant: 'destructive',
         });
         return false;
       }
@@ -305,32 +319,30 @@ export function useDocumentVerification() {
     ) => {
       if (!elecIdProfile?.id) {
         toast({
-          title: "Error",
-          description: "Please create an Elec-ID profile first",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Please create an Elec-ID profile first',
+          variant: 'destructive',
         });
         return null;
       }
 
       try {
         // Upload file to Supabase Storage
-        const fileExt = file.name.split(".").pop();
+        const fileExt = file.name.split('.').pop();
         const fileName = `${elecIdProfile.id}/${documentType}_${Date.now()}.${fileExt}`;
 
         const { data: uploadData, error: uploadError } = await supabase.storage
-          .from("elec-id-documents")
+          .from('elec-id-documents')
           .upload(fileName, file);
 
         if (uploadError) throw uploadError;
 
         // Get public URL
-        const { data: urlData } = supabase.storage
-          .from("elec-id-documents")
-          .getPublicUrl(fileName);
+        const { data: urlData } = supabase.storage.from('elec-id-documents').getPublicUrl(fileName);
 
         // Call verification function
         const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
-          "verify-document",
+          'verify-document',
           {
             body: {
               fileUrl: urlData.publicUrl,
@@ -362,20 +374,20 @@ export function useDocumentVerification() {
         }
 
         toast({
-          title: verifyResult?.status === "verified" ? "Document Verified" : "Document Uploaded",
+          title: verifyResult?.status === 'verified' ? 'Document Verified' : 'Document Uploaded',
           description:
-            verifyResult?.status === "verified"
-              ? "Your document has been verified successfully!"
-              : "Your document is being reviewed.",
+            verifyResult?.status === 'verified'
+              ? 'Your document has been verified successfully!'
+              : 'Your document is being reviewed.',
         });
 
         return verifyResult;
       } catch (err: any) {
-        console.error("Error uploading document:", err);
+        console.error('Error uploading document:', err);
         toast({
-          title: "Upload Failed",
-          description: err.message || "Failed to upload document",
-          variant: "destructive",
+          title: 'Upload Failed',
+          description: err.message || 'Failed to upload document',
+          variant: 'destructive',
         });
         return null;
       }
@@ -387,10 +399,7 @@ export function useDocumentVerification() {
   const deleteDocument = useCallback(
     async (documentId: string) => {
       try {
-        const { error } = await supabase
-          .from("elec_id_documents")
-          .delete()
-          .eq("id", documentId);
+        const { error } = await supabase.from('elec_id_documents').delete().eq('id', documentId);
 
         if (error) throw error;
 
@@ -401,12 +410,12 @@ export function useDocumentVerification() {
         const newTier = calculateTier(remainingDocs);
         if (elecIdProfile && newTier !== elecIdProfile.verification_tier) {
           await supabase
-            .from("employer_elec_id_profiles")
+            .from('employer_elec_id_profiles')
             .update({
               verification_tier: newTier,
               tier_updated_at: new Date().toISOString(),
             })
-            .eq("id", elecIdProfile.id);
+            .eq('id', elecIdProfile.id);
 
           setElecIdProfile((prev) =>
             prev
@@ -420,17 +429,17 @@ export function useDocumentVerification() {
         }
 
         toast({
-          title: "Document Removed",
-          description: "The document has been removed from your profile.",
+          title: 'Document Removed',
+          description: 'The document has been removed from your profile.',
         });
 
         return true;
       } catch (err: any) {
-        console.error("Error deleting document:", err);
+        console.error('Error deleting document:', err);
         toast({
-          title: "Error",
-          description: "Failed to delete document",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to delete document',
+          variant: 'destructive',
         });
         return false;
       }
@@ -448,7 +457,7 @@ export function useDocumentVerification() {
 
   // Get verified documents count
   const getVerifiedCount = useCallback(() => {
-    return documents.filter((d) => d.verification_status === "verified").length;
+    return documents.filter((d) => d.verification_status === 'verified').length;
   }, [documents]);
 
   // Get expiring documents (within 30 days)
@@ -473,13 +482,13 @@ export function useDocumentVerification() {
     if (!elecIdProfile?.id) return;
 
     const subscription = supabase
-      .channel("elec_id_documents_changes")
+      .channel('elec_id_documents_changes')
       .on(
-        "postgres_changes",
+        'postgres_changes',
         {
-          event: "*",
-          schema: "public",
-          table: "elec_id_documents",
+          event: '*',
+          schema: 'public',
+          table: 'elec_id_documents',
           filter: `profile_id=eq.${elecIdProfile.id}`,
         },
         () => {
@@ -501,8 +510,8 @@ export function useDocumentVerification() {
     error,
 
     // Computed
-    verificationTier: elecIdProfile?.verification_tier || "basic",
-    tierProgress: calculateTierProgress(documents, elecIdProfile?.verification_tier || "basic"),
+    verificationTier: elecIdProfile?.verification_tier || 'basic',
+    tierProgress: calculateTierProgress(documents, elecIdProfile?.verification_tier || 'basic'),
     verifiedCount: getVerifiedCount(),
     expiringDocuments: getExpiringDocuments(),
 

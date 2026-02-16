@@ -4,21 +4,18 @@ import { cn } from '@/lib/utils';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-const pageHeaderVariants = cva(
-  "border-b border-border",
-  {
-    variants: {
-      variant: {
-        standard: "bg-card/50 backdrop-blur-sm",
-        compact: "bg-transparent border-none",
-        hero: "bg-gradient-to-b from-elec-yellow/5 to-transparent border-none",
-      },
+const pageHeaderVariants = cva('border-b border-border', {
+  variants: {
+    variant: {
+      standard: 'bg-card/50 backdrop-blur-sm',
+      compact: 'bg-transparent border-none',
+      hero: 'bg-gradient-to-b from-elec-yellow/5 to-transparent border-none',
     },
-    defaultVariants: {
-      variant: "standard",
-    },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'standard',
+  },
+});
 
 interface Breadcrumb {
   label: string;
@@ -90,22 +87,13 @@ export const PageHeader = ({
   className,
 }: PageHeaderProps) => {
   return (
-    <div className={cn(
-      pageHeaderVariants({ variant }),
-      sticky && "sticky top-0 z-10",
-      className
-    )}>
+    <div className={cn(pageHeaderVariants({ variant }), sticky && 'sticky top-0 z-10', className)}>
       <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 sm:py-4">
         {/* Main header row */}
         <div className="flex items-center gap-3">
           {/* Back button */}
           {showBack && (
-            <SmartBackButton
-              label={backLabel}
-              to={backTo}
-              size="sm"
-              className="flex-shrink-0"
-            />
+            <SmartBackButton label={backLabel} to={backTo} size="sm" className="flex-shrink-0" />
           )}
 
           {/* Icon + Title */}
@@ -116,9 +104,7 @@ export const PageHeader = ({
               </div>
             )}
             <div className="min-w-0">
-              <h1 className="text-lg sm:text-2xl font-bold text-foreground truncate">
-                {title}
-              </h1>
+              <h1 className="text-lg sm:text-2xl font-bold text-foreground truncate">{title}</h1>
               {subtitle && variant !== 'compact' && (
                 <p className="text-sm text-muted-foreground mt-0.5 hidden sm:block truncate">
                   {subtitle}
@@ -128,11 +114,7 @@ export const PageHeader = ({
           </div>
 
           {/* Actions */}
-          {actions && (
-            <div className="flex items-center gap-2 flex-shrink-0">
-              {actions}
-            </div>
-          )}
+          {actions && <div className="flex items-center gap-2 flex-shrink-0">{actions}</div>}
         </div>
 
         {/* Breadcrumbs (if provided) */}
@@ -142,10 +124,7 @@ export const PageHeader = ({
               <React.Fragment key={index}>
                 {index > 0 && <span className="text-muted-foreground/50">/</span>}
                 {crumb.to ? (
-                  <a
-                    href={crumb.to}
-                    className="hover:text-foreground transition-colors"
-                  >
+                  <a href={crumb.to} className="hover:text-foreground transition-colors">
                     {crumb.label}
                   </a>
                 ) : (
@@ -158,9 +137,7 @@ export const PageHeader = ({
 
         {/* Subtitle for compact variant (shown below) */}
         {subtitle && variant === 'compact' && (
-          <p className="text-sm text-muted-foreground mt-1">
-            {subtitle}
-          </p>
+          <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
         )}
       </div>
     </div>

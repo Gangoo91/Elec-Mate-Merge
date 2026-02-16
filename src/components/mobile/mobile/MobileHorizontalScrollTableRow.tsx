@@ -4,10 +4,23 @@ import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { referenceMethodOptions } from '@/types/cableTypes';
 import { cableSizeOptions } from '@/types/cableTypes';
-import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, bsStandardOptions, protectiveDeviceCurveOptions, rcdBsStandardOptions, bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
+import {
+  protectiveDeviceTypeOptions,
+  protectiveDeviceRatingOptions,
+  bsStandardOptions,
+  protectiveDeviceCurveOptions,
+  rcdBsStandardOptions,
+  bsStandardRequiresCurve,
+} from '@/types/protectiveDeviceTypes';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
 import { wiringTypeOptions, rcdTypeOptions } from '@/types/wiringTypes';
 import { columnGroups } from '@/utils/mobileTableUtils';
@@ -28,7 +41,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
   onRemove,
 }) => {
   const { toast } = useToast();
-  
+
   const getBorderColor = () => {
     if (result.sourceCircuitId) return 'border-l-4 border-l-blue-500';
     if (result.autoFilled) return 'border-l-4 border-l-elec-yellow';
@@ -39,21 +52,21 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
     const r1 = parseFloat(result.ringR1 || '');
     const rn = parseFloat(result.ringRn || '');
     const r2 = parseFloat(result.ringR2 || '');
-    
+
     if (isNaN(r1) || isNaN(rn) || isNaN(r2)) {
       toast({
-        title: "Missing Values",
-        description: "Please enter r1, rn, and r2 values first.",
-        variant: "destructive"
+        title: 'Missing Values',
+        description: 'Please enter r1, rn, and r2 values first.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     const calculated = (r1 + r2) / 4;
     onUpdate(result.id, 'r1r2', calculated.toFixed(3));
-    
+
     toast({
-      title: "R1+R2 Calculated",
+      title: 'R1+R2 Calculated',
       description: `R1+R2 = ${calculated.toFixed(3)}Ω`,
     });
   };
@@ -61,11 +74,11 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
   // Auto-fill maxZs when device details change
   const autoFillMaxZs = (bsStandard: string, curve: string, rating: string) => {
     if (!bsStandard || !rating) return;
-    
+
     // For fuses, curve is not needed
     const needsCurve = bsStandardRequiresCurve(bsStandard);
     if (needsCurve && !curve) return;
-    
+
     const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, rating);
     if (maxZs !== null) {
       onUpdate(result.id, 'maxZs', maxZs.toString());
@@ -90,11 +103,13 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
     autoFillMaxZs(result.bsStandard || '', result.protectiveDeviceCurve || '', value);
   };
 
-  const inputClassName = "h-11 text-sm border border-input bg-background text-foreground focus:ring-2 focus:ring-primary text-center touch-manipulation";
-  const selectTriggerClassName = "h-11 text-sm border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation";
+  const inputClassName =
+    'h-11 text-sm border border-input bg-background text-foreground focus:ring-2 focus:ring-primary text-center touch-manipulation';
+  const selectTriggerClassName =
+    'h-11 text-sm border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation';
 
   return (
-    <TableRow className={cn("hover:bg-muted/50 border-b border-border", getBorderColor())}>
+    <TableRow className={cn('hover:bg-muted/50 border-b border-border', getBorderColor())}>
       {/* Circuit Details Group */}
       <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-1 font-bold text-center whitespace-nowrap bg-elec-gray-light min-w-[60px]">
         <Input
@@ -108,7 +123,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
         <Input
           value={result.circuitDescription}
           onChange={(e) => onUpdate(result.id, 'circuitDescription', e.target.value)}
-          className={cn(inputClassName, "whitespace-normal")}
+          className={cn(inputClassName, 'whitespace-normal')}
           placeholder="Description"
         />
       </TableCell>
@@ -118,9 +133,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           onValueChange={(value) => onUpdate(result.id, 'typeOfWiring', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Type">
-              {result.typeOfWiring || "Type"}
-            </SelectValue>
+            <SelectValue placeholder="Type">{result.typeOfWiring || 'Type'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {wiringTypeOptions.map((option) => (
@@ -137,9 +150,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Method">
-              {result.referenceMethod || "Method"}
-            </SelectValue>
+            <SelectValue placeholder="Method">{result.referenceMethod || 'Method'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {referenceMethodOptions.map((option) => (
@@ -199,10 +210,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
 
       {/* Protection Group */}
       <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
-        <Select
-          value={result.bsStandard || ''}
-          onValueChange={handleBsStandardChange}
-        >
+        <Select value={result.bsStandard || ''} onValueChange={handleBsStandardChange}>
           <SelectTrigger className={selectTriggerClassName}>
             <SelectValue placeholder="BS" />
           </SelectTrigger>
@@ -222,9 +230,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           disabled={!bsStandardRequiresCurve(result.bsStandard || '')}
         >
           <SelectTrigger className={selectTriggerClassName}>
-          <SelectValue placeholder="Type">
-            {result.protectiveDeviceCurve || "Type"}
-          </SelectValue>
+            <SelectValue placeholder="Type">{result.protectiveDeviceCurve || 'Type'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {protectiveDeviceCurveOptions.map((option) => (
@@ -236,13 +242,10 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
         </Select>
       </TableCell>
       <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[70px]">
-        <Select
-          value={result.protectiveDeviceRating || ''}
-          onValueChange={handleRatingChange}
-        >
+        <Select value={result.protectiveDeviceRating || ''} onValueChange={handleRatingChange}>
           <SelectTrigger className={selectTriggerClassName}>
             <SelectValue placeholder="Rating">
-              {result.protectiveDeviceRating || "Rating"}
+              {result.protectiveDeviceRating || 'Rating'}
             </SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
@@ -280,9 +283,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           onValueChange={(value) => onUpdate(result.id, 'rcdBsStandard', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="BS">
-              {result.rcdBsStandard || "BS"}
-            </SelectValue>
+            <SelectValue placeholder="BS">{result.rcdBsStandard || 'BS'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[9999]">
             {rcdBsStandardOptions.map((option) => (
@@ -299,9 +300,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           onValueChange={(value) => onUpdate(result.id, 'rcdType', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Type">
-              {result.rcdType || "Type"}
-            </SelectValue>
+            <SelectValue placeholder="Type">{result.rcdType || 'Type'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {rcdTypeOptions.map((option) => (
@@ -321,11 +320,21 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
             <SelectValue placeholder="mA" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="10" className="text-xs py-2">10mA</SelectItem>
-            <SelectItem value="30" className="text-xs py-2">30mA</SelectItem>
-            <SelectItem value="100" className="text-xs py-2">100mA</SelectItem>
-            <SelectItem value="300" className="text-xs py-2">300mA</SelectItem>
-            <SelectItem value="500" className="text-xs py-2">500mA</SelectItem>
+            <SelectItem value="10" className="text-xs py-2">
+              10mA
+            </SelectItem>
+            <SelectItem value="30" className="text-xs py-2">
+              30mA
+            </SelectItem>
+            <SelectItem value="100" className="text-xs py-2">
+              100mA
+            </SelectItem>
+            <SelectItem value="300" className="text-xs py-2">
+              300mA
+            </SelectItem>
+            <SelectItem value="500" className="text-xs py-2">
+              500mA
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -451,9 +460,15 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
             <SelectValue placeholder="Polarity" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="Correct" className="text-xs py-2">Correct</SelectItem>
-            <SelectItem value="Incorrect" className="text-xs py-2">Incorrect</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
+            <SelectItem value="Correct" className="text-xs py-2">
+              Correct
+            </SelectItem>
+            <SelectItem value="Incorrect" className="text-xs py-2">
+              Incorrect
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -487,9 +502,15 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
             <SelectValue placeholder="Btn" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2">✓ Pass</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2">✗ Fail</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2">
+              ✓ Pass
+            </SelectItem>
+            <SelectItem value="✗" className="text-xs py-2">
+              ✗ Fail
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -504,9 +525,15 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
             <SelectValue placeholder="AFDD" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓ Pass</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗ Fail</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2 text-green-600">
+              ✓ Pass
+            </SelectItem>
+            <SelectItem value="✗" className="text-xs py-2 text-red-600">
+              ✗ Fail
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -517,16 +544,25 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           value={result.functionalTesting || ''}
           onValueChange={(value) => onUpdate(result.id, 'functionalTesting', value)}
         >
-          <SelectTrigger className={cn(selectTriggerClassName,
-            result.functionalTesting === '✓' && 'text-green-600',
-            result.functionalTesting === '✗' && 'text-red-600'
-          )}>
+          <SelectTrigger
+            className={cn(
+              selectTriggerClassName,
+              result.functionalTesting === '✓' && 'text-green-600',
+              result.functionalTesting === '✗' && 'text-red-600'
+            )}
+          >
             <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-sm py-2 text-green-600">✓ Satisfactory</SelectItem>
-            <SelectItem value="✗" className="text-sm py-2 text-red-600">✗ Unsatisfactory</SelectItem>
-            <SelectItem value="N/A" className="text-sm py-2">N/A</SelectItem>
+            <SelectItem value="✓" className="text-sm py-2 text-green-600">
+              ✓ Satisfactory
+            </SelectItem>
+            <SelectItem value="✗" className="text-sm py-2 text-red-600">
+              ✗ Unsatisfactory
+            </SelectItem>
+            <SelectItem value="N/A" className="text-sm py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>

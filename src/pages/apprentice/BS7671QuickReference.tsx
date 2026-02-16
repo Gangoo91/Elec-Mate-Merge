@@ -1,7 +1,6 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   BookOpen,
   CheckCircle,
@@ -10,203 +9,203 @@ import {
   AlertTriangle,
   FileText,
   Award,
-  Target
-} from "lucide-react";
+  Target,
+} from 'lucide-react';
 
 const BS7671QuickReference = () => {
   const bs7671Parts = [
     {
-      part: "Part 1: Scope & Definitions",
-      section: "100",
-      description: "Fundamental principles and scope of the regulations",
+      part: 'Part 1: Scope & Definitions',
+      section: '100',
+      description: 'Fundamental principles and scope of the regulations',
       keyPoints: [
-        "Applies to electrical installations up to 1000V AC/1500V DC",
-        "Covers design, erection and verification of electrical installations",
-        "Excludes automotive and marine applications",
-        "Fundamental principles for safety"
-      ]
+        'Applies to electrical installations up to 1000V AC/1500V DC',
+        'Covers design, erection and verification of electrical installations',
+        'Excludes automotive and marine applications',
+        'Fundamental principles for safety',
+      ],
     },
     {
-      part: "Part 2: Definitions", 
-      section: "200",
-      description: "Definitions of terms used throughout the regulations",
+      part: 'Part 2: Definitions',
+      section: '200',
+      description: 'Definitions of terms used throughout the regulations',
       keyPoints: [
-        "Circuit protective conductor (CPC)",
-        "Skilled person - adequate technical knowledge",
-        "Special locations - additional requirements",
-        "RCD - residual current device"
-      ]
+        'Circuit protective conductor (CPC)',
+        'Skilled person - adequate technical knowledge',
+        'Special locations - additional requirements',
+        'RCD - residual current device',
+      ],
     },
     {
-      part: "Part 3: Assessment",
-      section: "300",
-      description: "Assessment of general characteristics",
+      part: 'Part 3: Assessment',
+      section: '300',
+      description: 'Assessment of general characteristics',
       keyPoints: [
-        "Purpose and characteristics of installation",
-        "External influences (environmental conditions)", 
-        "Compatibility of equipment",
-        "Maintainability and accessibility"
-      ]
+        'Purpose and characteristics of installation',
+        'External influences (environmental conditions)',
+        'Compatibility of equipment',
+        'Maintainability and accessibility',
+      ],
     },
     {
-      part: "Part 4: Protection",
-      section: "400",
-      description: "Protection for safety requirements",
+      part: 'Part 4: Protection',
+      section: '400',
+      description: 'Protection for safety requirements',
       keyPoints: [
-        "Protection against electric shock (basic and fault protection)",
-        "Protection against thermal effects",
-        "Protection against overcurrent",
-        "Protection against voltage disturbances"
-      ]
+        'Protection against electric shock (basic and fault protection)',
+        'Protection against thermal effects',
+        'Protection against overcurrent',
+        'Protection against voltage disturbances',
+      ],
     },
     {
-      part: "Part 5: Selection & Erection",
-      section: "500",
-      description: "Selection and erection of electrical equipment",
+      part: 'Part 5: Selection & Erection',
+      section: '500',
+      description: 'Selection and erection of electrical equipment',
       keyPoints: [
-        "Equipment compliance and selection",
-        "Wiring systems and cable installation", 
-        "Protection and switching devices",
-        "Earthing arrangements and bonding"
-      ]
+        'Equipment compliance and selection',
+        'Wiring systems and cable installation',
+        'Protection and switching devices',
+        'Earthing arrangements and bonding',
+      ],
     },
     {
-      part: "Part 6: Inspection & Testing",
-      section: "600",
-      description: "Inspection and testing requirements",
+      part: 'Part 6: Inspection & Testing',
+      section: '600',
+      description: 'Inspection and testing requirements',
       keyPoints: [
-        "Initial verification requirements",
-        "Schedule of test results",
-        "Electrical Installation Certificate",
-        "Periodic inspection and testing"
-      ]
+        'Initial verification requirements',
+        'Schedule of test results',
+        'Electrical Installation Certificate',
+        'Periodic inspection and testing',
+      ],
     },
     {
-      part: "Part 7: Special Installations",
-      section: "700",
-      description: "Requirements for special installations or locations",
+      part: 'Part 7: Special Installations',
+      section: '700',
+      description: 'Requirements for special installations or locations',
       keyPoints: [
-        "Bathrooms and shower rooms (701)",
-        "Swimming pools (702)",
-        "Solar photovoltaic systems (712)",
-        "Electric vehicle charging (722)"
-      ]
-    }
+        'Bathrooms and shower rooms (701)',
+        'Swimming pools (702)',
+        'Solar photovoltaic systems (712)',
+        'Electric vehicle charging (722)',
+      ],
+    },
   ];
 
   const protectionRequirements = [
     {
-      type: "Basic Protection",
-      description: "Protection against direct contact with live parts",
+      type: 'Basic Protection',
+      description: 'Protection against direct contact with live parts',
       methods: [
-        "Insulation of live parts",
-        "Barriers or enclosures (IP2X or IPXXB)",
-        "Obstacles (restricted to skilled persons)",
-        "Placing out of reach"
-      ]
+        'Insulation of live parts',
+        'Barriers or enclosures (IP2X or IPXXB)',
+        'Obstacles (restricted to skilled persons)',
+        'Placing out of reach',
+      ],
     },
     {
-      type: "Fault Protection", 
-      description: "Protection against indirect contact",
+      type: 'Fault Protection',
+      description: 'Protection against indirect contact',
       methods: [
-        "Automatic disconnection of supply (ADS)",
-        "Double or reinforced insulation (Class II)",
-        "Electrical separation",
-        "Extra-low voltage (SELV/PELV)"
-      ]
+        'Automatic disconnection of supply (ADS)',
+        'Double or reinforced insulation (Class II)',
+        'Electrical separation',
+        'Extra-low voltage (SELV/PELV)',
+      ],
     },
     {
-      type: "Additional Protection",
-      description: "Additional measures for enhanced safety",
+      type: 'Additional Protection',
+      description: 'Additional measures for enhanced safety',
       methods: [
-        "RCD protection (≤30mA)",
-        "Supplementary bonding",
-        "RCBO for circuit protection",
-        "Type A RCD for electronic loads"
-      ]
-    }
+        'RCD protection (≤30mA)',
+        'Supplementary bonding',
+        'RCBO for circuit protection',
+        'Type A RCD for electronic loads',
+      ],
+    },
   ];
 
   const testingSequence = [
     {
-      test: "Continuity of Protective Conductors",
-      purpose: "Verify earth continuity throughout installation",
-      method: "Low resistance ohmmeter, test current >200mA",
-      acceptable: "R1+R2 values within design limits"
+      test: 'Continuity of Protective Conductors',
+      purpose: 'Verify earth continuity throughout installation',
+      method: 'Low resistance ohmmeter, test current >200mA',
+      acceptable: 'R1+R2 values within design limits',
     },
     {
-      test: "Continuity of Ring Final Circuits",
-      purpose: "Verify ring circuit integrity",
-      method: "End-to-end test of line, neutral, and earth",
-      acceptable: "Measured values confirm ring continuity"
+      test: 'Continuity of Ring Final Circuits',
+      purpose: 'Verify ring circuit integrity',
+      method: 'End-to-end test of line, neutral, and earth',
+      acceptable: 'Measured values confirm ring continuity',
     },
     {
-      test: "Insulation Resistance",
-      purpose: "Verify insulation between conductors",
-      method: "500V DC for circuits ≤500V nominal",
-      acceptable: "≥1MΩ (≥0.5MΩ with equipment connected)"
+      test: 'Insulation Resistance',
+      purpose: 'Verify insulation between conductors',
+      method: '500V DC for circuits ≤500V nominal',
+      acceptable: '≥1MΩ (≥0.5MΩ with equipment connected)',
     },
     {
-      test: "Polarity",
-      purpose: "Verify correct connections throughout",
-      method: "Continuity testing or approved test lamp",
-      acceptable: "All connections correctly polarized"
+      test: 'Polarity',
+      purpose: 'Verify correct connections throughout',
+      method: 'Continuity testing or approved test lamp',
+      acceptable: 'All connections correctly polarized',
     },
     {
-      test: "Earth Fault Loop Impedance",
-      purpose: "Verify disconnection times will be achieved",
-      method: "Earth fault loop impedance tester",
-      acceptable: "Zs ≤ values in BS 7671 tables"
+      test: 'Earth Fault Loop Impedance',
+      purpose: 'Verify disconnection times will be achieved',
+      method: 'Earth fault loop impedance tester',
+      acceptable: 'Zs ≤ values in BS 7671 tables',
     },
     {
-      test: "RCD Operation",
-      purpose: "Verify RCD disconnection time and sensitivity",
-      method: "RCD tester at rated current",
-      acceptable: "≤300ms at 1×IΔn, ≤40ms at 5×IΔn"
-    }
+      test: 'RCD Operation',
+      purpose: 'Verify RCD disconnection time and sensitivity',
+      method: 'RCD tester at rated current',
+      acceptable: '≤300ms at 1×IΔn, ≤40ms at 5×IΔn',
+    },
   ];
 
   const specialLocationSummary = [
     {
-      section: "701 - Bathrooms",
-      zones: "Zones 0, 1, 2 based on proximity to water",
+      section: '701 - Bathrooms',
+      zones: 'Zones 0, 1, 2 based on proximity to water',
       requirements: [
-        "Zone 0: IPX7, 12V SELV only",
-        "Zone 1: IPX4, limited equipment",
-        "Zone 2: IPX4, Class II equipment",
-        "30mA RCD protection required"
-      ]
+        'Zone 0: IPX7, 12V SELV only',
+        'Zone 1: IPX4, limited equipment',
+        'Zone 2: IPX4, Class II equipment',
+        '30mA RCD protection required',
+      ],
     },
     {
-      section: "702 - Swimming Pools", 
-      zones: "Zones 0, 1, 2 around pool area",
+      section: '702 - Swimming Pools',
+      zones: 'Zones 0, 1, 2 around pool area',
       requirements: [
-        "Zone 0: IPX8, 12V SELV only",
-        "Zone 1: IPX5, SELV or Class II",
-        "Zone 2: IPX4, standard requirements",
-        "Supplementary bonding required"
-      ]
+        'Zone 0: IPX8, 12V SELV only',
+        'Zone 1: IPX5, SELV or Class II',
+        'Zone 2: IPX4, standard requirements',
+        'Supplementary bonding required',
+      ],
     },
     {
-      section: "712 - Solar PV",
-      zones: "DC and AC sides of installation",
+      section: '712 - Solar PV',
+      zones: 'DC and AC sides of installation',
       requirements: [
-        "DC isolation at array and inverter",
-        "AC isolation at grid connection",
-        "Fire safety considerations",
-        "G98/G99 grid connection requirements"
-      ]
+        'DC isolation at array and inverter',
+        'AC isolation at grid connection',
+        'Fire safety considerations',
+        'G98/G99 grid connection requirements',
+      ],
     },
     {
-      section: "722 - EV Charging",
-      zones: "Based on installation location",
+      section: '722 - EV Charging',
+      zones: 'Based on installation location',
       requirements: [
-        "Type A RCD protection (6mA DC)",
-        "O-PEN device protection",
-        "Load management systems",
-        "Earthing arrangements critical"
-      ]
-    }
+        'Type A RCD protection (6mA DC)',
+        'O-PEN device protection',
+        'Load management systems',
+        'Earthing arrangements critical',
+      ],
+    },
   ];
 
   return (
@@ -219,8 +218,8 @@ const BS7671QuickReference = () => {
           </h1>
         </div>
         <p className="text-white text-base md:text-lg max-w-3xl mx-auto mb-6">
-          Essential sections of the 18th Edition Wiring Regulations (BS 7671:2018+A3:2024). 
-          Quick reference guide for electrical installation requirements and compliance.
+          Essential sections of the 18th Edition Wiring Regulations (BS 7671:2018+A3:2024). Quick
+          reference guide for electrical installation requirements and compliance.
         </p>
         <SmartBackButton />
       </div>
@@ -436,11 +435,15 @@ const BS7671QuickReference = () => {
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 3</h4>
-              <p className="text-sm text-white">Time/current characteristics of overcurrent protective devices</p>
+              <p className="text-sm text-white">
+                Time/current characteristics of overcurrent protective devices
+              </p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 4</h4>
-              <p className="text-sm text-white">Current-carrying capacity and voltage drop tables</p>
+              <p className="text-sm text-white">
+                Current-carrying capacity and voltage drop tables
+              </p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 6</h4>

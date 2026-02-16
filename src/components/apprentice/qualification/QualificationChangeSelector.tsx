@@ -15,16 +15,19 @@ interface QualificationChangeSelectorProps {
   onCancel: () => void;
 }
 
-const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChangeSelectorProps) => {
+const QualificationChangeSelector = ({
+  onComplete,
+  onCancel,
+}: QualificationChangeSelectorProps) => {
   const { awardingBodies, loading, selectQualification } = useQualifications();
   const [selectedQualification, setSelectedQualification] = useState<Qualification | null>(null);
   const [targetDate, setTargetDate] = useState('');
   const [isSelecting, setIsSelecting] = useState(false);
 
   const awardingBodyIcons = {
-    'EAL': Award,
+    EAL: Award,
     'City & Guilds': GraduationCap,
-    'MOET': BookOpen
+    MOET: BookOpen,
   };
 
   const handleSelectQualification = async () => {
@@ -57,7 +60,8 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
       <CardHeader>
         <CardTitle>Select New Qualification</CardTitle>
         <CardDescription>
-          Choose your new awarding body and qualification. Your existing portfolio entries will be preserved.
+          Choose your new awarding body and qualification. Your existing portfolio entries will be
+          preserved.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -76,32 +80,35 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
                     <Card
                       key={qualification.id}
                       className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-white/10 ${
-                        selectedQualification?.id === qualification.id ? 'ring-2 ring-elec-yellow' : ''
+                        selectedQualification?.id === qualification.id
+                          ? 'ring-2 ring-elec-yellow'
+                          : ''
                       }`}
                       onClick={() => setSelectedQualification(qualification)}
                     >
-                    <CardContent className="p-4">
-                      <div className="space-y-3">
-                        <div className="flex justify-center">
-                          <Badge variant="outline" className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold">
-                            {qualification.level}
-                          </Badge>
+                      <CardContent className="p-4">
+                        <div className="space-y-3">
+                          <div className="flex justify-center">
+                            <Badge
+                              variant="outline"
+                              className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold"
+                            >
+                              {qualification.level}
+                            </Badge>
+                          </div>
+                          <div className="space-y-2 text-center">
+                            <h3 className="font-semibold text-lg leading-tight">
+                              {qualification.title}
+                            </h3>
+                            <p className="text-sm text-white">{qualification.description}</p>
+                            <p className="text-xs text-white">Code: {qualification.code}</p>
+                          </div>
                         </div>
-                        <div className="space-y-2 text-center">
-                          <h3 className="font-semibold text-lg leading-tight">{qualification.title}</h3>
-                          <p className="text-sm text-white">
-                            {qualification.description}
-                          </p>
-                          <p className="text-xs text-white">
-                            Code: {qualification.code}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
+                      </CardContent>
                     </Card>
                   ))}
                 </div>
-              )
+              ),
             };
           })}
         />
@@ -109,7 +116,9 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
         {selectedQualification && (
           <div className="mt-6 space-y-4 border-t border-elec-yellow/20 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="target-date" className="text-sm font-medium">Target Completion Date (Optional)</Label>
+              <Label htmlFor="target-date" className="text-sm font-medium">
+                Target Completion Date (Optional)
+              </Label>
               <Input
                 id="target-date"
                 type="date"
@@ -120,14 +129,14 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
               />
             </div>
             <div className="flex gap-3">
-              <Button 
+              <Button
                 onClick={onCancel}
                 variant="outline"
                 className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={handleSelectQualification}
                 disabled={isSelecting}
                 className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"

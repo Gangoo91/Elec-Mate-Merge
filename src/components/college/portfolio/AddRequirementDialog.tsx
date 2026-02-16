@@ -180,9 +180,7 @@ export function AddRequirementDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-elec-dark border-elec-gray/40 max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>
-            {isEditing ? 'Edit Requirement' : 'Add Custom Requirement'}
-          </DialogTitle>
+          <DialogTitle>{isEditing ? 'Edit Requirement' : 'Add Custom Requirement'}</DialogTitle>
           <DialogDescription>
             {isEditing
               ? 'Update the evidence requirement for this student'
@@ -228,7 +226,9 @@ export function AddRequirementDialog({
             </p>
             <div className="grid grid-cols-2 gap-2 mt-2">
               {evidenceTypes.map((type) => {
-                const isSelected = formData.evidenceTypeCodes.includes(type.code as EvidenceTypeCode);
+                const isSelected = formData.evidenceTypeCodes.includes(
+                  type.code as EvidenceTypeCode
+                );
                 return (
                   <button
                     key={type.code}
@@ -341,11 +341,7 @@ export function AddRequirementDialog({
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting
-                ? 'Saving...'
-                : isEditing
-                ? 'Update Requirement'
-                : 'Add Requirement'}
+              {isSubmitting ? 'Saving...' : isEditing ? 'Update Requirement' : 'Add Requirement'}
             </Button>
           </DialogFooter>
         </form>

@@ -12,8 +12,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const itemVariants = {
@@ -21,8 +21,8 @@ const itemVariants = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 500, damping: 30 },
+  },
 };
 
 const getCategoryConfig = (category: string) => {
@@ -42,12 +42,7 @@ const getCategoryConfig = (category: string) => {
 
 const CommonFaultsGrid = ({ onSelectFault }: CommonFaultsGridProps) => {
   return (
-    <motion.div
-      className="space-y-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
+    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Fault Types List */}
       <div>
         <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
@@ -65,10 +60,12 @@ const CommonFaultsGrid = ({ onSelectFault }: CommonFaultsGridProps) => {
                 onClick={() => onSelectFault(fault.id)}
                 className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
               >
-                <div className={cn(
-                  "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
-                  config.iconBg
-                )}>
+                <div
+                  className={cn(
+                    'w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0',
+                    config.iconBg
+                  )}
+                >
                   <Icon className="h-5 w-5 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -80,7 +77,9 @@ const CommonFaultsGrid = ({ onSelectFault }: CommonFaultsGridProps) => {
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-[13px] text-white/30">{fault.commonSymptoms.length} symptoms</span>
+                  <span className="text-[13px] text-white/30">
+                    {fault.commonSymptoms.length} symptoms
+                  </span>
                   <ChevronRight className="h-4 w-4 text-white/20" />
                 </div>
               </motion.div>

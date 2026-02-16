@@ -1,16 +1,17 @@
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, TrendingUp, Clock, Target, Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, TrendingUp, Clock, Target, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 // Generate confetti particles
-const generateParticles = () => Array.from({ length: 20 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  delay: Math.random() * 0.5,
-  duration: 1 + Math.random() * 0.5,
-  color: ['#fbbf24', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'][Math.floor(Math.random() * 5)]
-}));
+const generateParticles = () =>
+  Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    delay: Math.random() * 0.5,
+    duration: 1 + Math.random() * 0.5,
+    color: ['#fbbf24', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'][Math.floor(Math.random() * 5)],
+  }));
 
 interface QuoteHeroCardProps {
   amount: number;
@@ -29,7 +30,7 @@ const QuoteHeroCard = ({
   margin,
   profitPerHour,
   confidence,
-  totalLabourHours
+  totalLabourHours,
 }: QuoteHeroCardProps) => {
   const [displayAmount, setDisplayAmount] = useState(0);
   const [displayProfit, setDisplayProfit] = useState(0);
@@ -59,7 +60,7 @@ const QuoteHeroCard = ({
       style: 'currency',
       currency: 'GBP',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(value);
   };
 
@@ -72,7 +73,7 @@ const QuoteHeroCard = ({
           gradient: 'from-emerald-500/30 to-emerald-600/20',
           textClass: 'text-emerald-400',
           iconBg: 'bg-emerald-500/20',
-          badge: 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+          badge: 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400',
         };
       case 'sparse':
       case 'minimum':
@@ -81,7 +82,7 @@ const QuoteHeroCard = ({
           gradient: 'from-amber-500/30 to-amber-600/20',
           textClass: 'text-amber-400',
           iconBg: 'bg-amber-500/20',
-          badge: 'bg-amber-500/20 border-amber-500/40 text-amber-400'
+          badge: 'bg-amber-500/20 border-amber-500/40 text-amber-400',
         };
       default:
         return {
@@ -89,7 +90,7 @@ const QuoteHeroCard = ({
           gradient: 'from-elec-yellow/30 to-amber-500/20',
           textClass: 'text-elec-yellow',
           iconBg: 'bg-elec-yellow/20',
-          badge: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
+          badge: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow',
         };
     }
   };
@@ -99,7 +100,9 @@ const QuoteHeroCard = ({
   return (
     <div className="space-y-3">
       {/* Hero Section */}
-      <div className={`relative p-6 bg-gradient-to-br ${tierConfig.gradient} rounded-2xl overflow-hidden`}>
+      <div
+        className={`relative p-6 bg-gradient-to-br ${tierConfig.gradient} rounded-2xl overflow-hidden`}
+      >
         {/* Confetti Animation */}
         {showConfetti && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -116,12 +119,12 @@ const QuoteHeroCard = ({
                   y: 300,
                   opacity: 0,
                   scale: 0.5,
-                  rotate: 360
+                  rotate: 360,
                 }}
                 transition={{
                   duration: particle.duration,
                   delay: particle.delay,
-                  ease: "easeOut"
+                  ease: 'easeOut',
                 }}
                 onAnimationComplete={() => setShowConfetti(false)}
               />
@@ -133,7 +136,7 @@ const QuoteHeroCard = ({
         <motion.div
           className="absolute inset-0 bg-gradient-radial from-white/5 to-transparent opacity-50"
           animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         />
 
         <div className="relative z-10 space-y-4">
@@ -165,7 +168,7 @@ const QuoteHeroCard = ({
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.1 }}
             className="text-left"
           >
             <span className="text-5xl sm:text-6xl font-black text-white tabular-nums tracking-tight">
@@ -200,7 +203,9 @@ const QuoteHeroCard = ({
               <div className="p-1.5 rounded-lg bg-emerald-500/20">
                 <CheckCircle2 className="h-4 w-4 text-emerald-400" />
               </div>
-              <span className="text-xs font-semibold text-emerald-300/80 uppercase tracking-wide">Your Profit</span>
+              <span className="text-xs font-semibold text-emerald-300/80 uppercase tracking-wide">
+                Your Profit
+              </span>
             </div>
             <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
               {formatCurrency(displayProfit)}
@@ -221,7 +226,9 @@ const QuoteHeroCard = ({
               <div className="p-1.5 rounded-lg bg-amber-500/20">
                 <TrendingUp className="h-4 w-4 text-amber-400" />
               </div>
-              <span className="text-xs font-semibold text-amber-300/80 uppercase tracking-wide">Margin</span>
+              <span className="text-xs font-semibold text-amber-300/80 uppercase tracking-wide">
+                Margin
+              </span>
             </div>
             <p className="text-2xl font-black text-amber-400 tabular-nums tracking-tight">
               {margin.toFixed(1)}%
@@ -242,10 +249,13 @@ const QuoteHeroCard = ({
               <div className="p-1.5 rounded-lg bg-cyan-500/20">
                 <Clock className="h-4 w-4 text-cyan-400" />
               </div>
-              <span className="text-xs font-semibold text-cyan-300/80 uppercase tracking-wide">Profit/Hour</span>
+              <span className="text-xs font-semibold text-cyan-300/80 uppercase tracking-wide">
+                Profit/Hour
+              </span>
             </div>
             <p className="text-2xl font-black text-cyan-400 tabular-nums tracking-tight">
-              {formatCurrency(profitPerHour)}<span className="text-lg">/hr</span>
+              {formatCurrency(profitPerHour)}
+              <span className="text-lg">/hr</span>
             </p>
             <p className="text-[10px] text-cyan-400/60 mt-1">Your hourly earnings</p>
           </div>
@@ -264,7 +274,9 @@ const QuoteHeroCard = ({
               <div className="p-1.5 rounded-lg bg-blue-500/20">
                 <Target className="h-4 w-4 text-blue-400" />
               </div>
-              <span className="text-xs font-semibold text-blue-300/80 uppercase tracking-wide">Confidence</span>
+              <span className="text-xs font-semibold text-blue-300/80 uppercase tracking-wide">
+                Confidence
+              </span>
             </div>
             <p className="text-2xl font-black text-blue-400 tabular-nums tracking-tight">
               {confidence}%

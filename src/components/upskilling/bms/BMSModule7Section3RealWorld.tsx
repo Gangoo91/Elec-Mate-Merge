@@ -17,14 +17,17 @@ export const BMSModule7Section3RealWorld = () => {
             <div>
               <h4 className="text-red-300 font-semibold mb-2">Commercial Tower Block Project</h4>
               <p className="text-foreground mb-3">
-                On a commercial tower block project, several Modbus submeters were left at their factory default address of "1." 
-                When commissioning started, the BMS could only read one meter — the others clashed.
+                On a commercial tower block project, several Modbus submeters were left at their
+                factory default address of "1." When commissioning started, the BMS could only read
+                one meter — the others clashed.
               </p>
               <p className="text-foreground mb-3">
-                Electricians had to revisit every meter, assign unique addresses, and relabel them, delaying handover by two weeks.
+                Electricians had to revisit every meter, assign unique addresses, and relabel them,
+                delaying handover by two weeks.
               </p>
               <p className="text-foreground">
-                Afterward, the contractor introduced a policy requiring address checks during installation.
+                Afterward, the contractor introduced a policy requiring address checks during
+                installation.
               </p>
             </div>
           </div>
@@ -33,8 +36,8 @@ export const BMSModule7Section3RealWorld = () => {
         <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-4">
           <h4 className="text-green-300 font-semibold mb-2">Lesson Learned</h4>
           <p className="text-foreground">
-            Always verify and set unique device addresses during installation, not during commissioning. 
-            This prevents costly delays and ensures smooth handover.
+            Always verify and set unique device addresses during installation, not during
+            commissioning. This prevents costly delays and ensures smooth handover.
           </p>
         </div>
       </CardContent>

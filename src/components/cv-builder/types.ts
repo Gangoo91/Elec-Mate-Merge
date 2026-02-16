@@ -1,4 +1,3 @@
-
 export interface CVData {
   personalInfo: {
     fullName: string;
@@ -77,29 +76,29 @@ export type CVFormat = 'full' | 'summary' | 'ats';
 
 export const defaultCVData: CVData = {
   personalInfo: {
-    fullName: "",
-    email: "",
-    phone: "",
-    address: "",
-    postcode: "",
-    professionalSummary: "",
-    photoUrl: "",
-    linkedIn: "",
-    portfolio: ""
+    fullName: '',
+    email: '',
+    phone: '',
+    address: '',
+    postcode: '',
+    professionalSummary: '',
+    photoUrl: '',
+    linkedIn: '',
+    portfolio: '',
   },
   professionalCards: {
-    ecsCardNumber: "",
-    ecsCardType: "",
-    ecsExpiry: "",
-    cscsCardNumber: "",
-    cscsCardType: "",
-    cscsExpiry: "",
-    drivingLicence: []
+    ecsCardNumber: '',
+    ecsCardType: '',
+    ecsExpiry: '',
+    cscsCardNumber: '',
+    cscsCardType: '',
+    cscsExpiry: '',
+    drivingLicence: [],
   },
   experience: [],
   education: [],
   skills: [],
   certifications: [],
   keyProjects: [],
-  references: []
+  references: [],
 };

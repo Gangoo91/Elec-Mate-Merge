@@ -41,7 +41,10 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
 
   const removeAppliance = (id: string) => {
     const appliances = formData.appliances || [];
-    onUpdate('appliances', appliances.filter((a: Appliance) => a.id !== id));
+    onUpdate(
+      'appliances',
+      appliances.filter((a: Appliance) => a.id !== id)
+    );
   };
 
   const duplicateAppliance = (appliance: Appliance) => {
@@ -57,11 +60,8 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
-        <div className={cn(
-          "p-4",
-          isMobile ? "bg-card/30 border-y border-border/20" : ""
-        )}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <div className={cn('p-4', isMobile ? 'bg-card/30 border-y border-border/20' : '')}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
@@ -84,10 +84,13 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
           ) : (
             <div className="space-y-4">
               {(formData.appliances || []).map((appliance: Appliance, index: number) => (
-                <div key={appliance.id} className={cn(
-                  "rounded-lg p-4",
-                  isMobile ? "bg-card/20 border border-border/20" : "bg-muted/30"
-                )}>
+                <div
+                  key={appliance.id}
+                  className={cn(
+                    'rounded-lg p-4',
+                    isMobile ? 'bg-card/20 border border-border/20' : 'bg-muted/30'
+                  )}
+                >
                   <div className="flex items-start justify-between mb-3">
                     <h4 className="font-medium flex items-center gap-2">
                       <Plug className="h-4 w-4 text-blue-500" />
@@ -125,7 +128,9 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
                       <Input
                         placeholder="e.g., PAT001"
                         value={appliance.assetNumber || ''}
-                        onChange={(e) => updateAppliance(appliance.id, 'assetNumber', e.target.value)}
+                        onChange={(e) =>
+                          updateAppliance(appliance.id, 'assetNumber', e.target.value)
+                        }
                         className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
@@ -134,7 +139,9 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
                       <Input
                         placeholder="e.g., Kettle, Monitor"
                         value={appliance.description || ''}
-                        onChange={(e) => updateAppliance(appliance.id, 'description', e.target.value)}
+                        onChange={(e) =>
+                          updateAppliance(appliance.id, 'description', e.target.value)
+                        }
                         className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
@@ -161,7 +168,9 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
                       <Input
                         placeholder="Serial number"
                         value={appliance.serialNumber || ''}
-                        onChange={(e) => updateAppliance(appliance.id, 'serialNumber', e.target.value)}
+                        onChange={(e) =>
+                          updateAppliance(appliance.id, 'serialNumber', e.target.value)
+                        }
                         className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
@@ -225,10 +234,12 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
           </Button>
 
           {/* Quick Add Multiple */}
-          <div className={cn(
-            "rounded-lg p-4",
-            isMobile ? "bg-card/20 border border-border/20" : "bg-muted/30"
-          )}>
+          <div
+            className={cn(
+              'rounded-lg p-4',
+              isMobile ? 'bg-card/20 border border-border/20' : 'bg-muted/30'
+            )}
+          >
             <h4 className="font-medium mb-2">Quick Add Multiple</h4>
             <p className="text-sm text-muted-foreground mb-3">
               Add multiple blank appliance entries at once

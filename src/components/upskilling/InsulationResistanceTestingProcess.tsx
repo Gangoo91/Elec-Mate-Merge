@@ -1,23 +1,46 @@
-
 import { Settings, Zap, AlertTriangle, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const InsulationResistanceTestingProcess = () => {
   const testSequence = [
-    "Complete continuity testing first",
-    "Verify circuit is safely isolated and proven dead",
-    "Disconnect electronic equipment and sensitive devices", 
-    "Select appropriate test voltage (typically 500V DC)",
-    "Perform tests between L-N, L-E, and N-E",
-    "Record actual values (not just pass/fail)",
-    "Investigate any readings below minimum values"
+    'Complete continuity testing first',
+    'Verify circuit is safely isolated and proven dead',
+    'Disconnect electronic equipment and sensitive devices',
+    'Select appropriate test voltage (typically 500V DC)',
+    'Perform tests between L-N, L-E, and N-E',
+    'Record actual values (not just pass/fail)',
+    'Investigate any readings below minimum values',
   ];
 
   const commonCauses = [
-    { issue: "Moisture ingress", causes: ["Condensation in accessories", "Water penetration in outdoor fittings", "Damp cable runs"] },
-    { issue: "Insulation damage", causes: ["Mechanical damage during installation", "Heat degradation", "Rodent damage"] },
-    { issue: "Poor workmanship", causes: ["Bare conductors too close", "Incorrect terminations", "Foreign objects in enclosures"] },
-    { issue: "Equipment leakage", causes: ["Connected loads with normal leakage", "Faulty equipment", "Surge protection devices"] }
+    {
+      issue: 'Moisture ingress',
+      causes: [
+        'Condensation in accessories',
+        'Water penetration in outdoor fittings',
+        'Damp cable runs',
+      ],
+    },
+    {
+      issue: 'Insulation damage',
+      causes: ['Mechanical damage during installation', 'Heat degradation', 'Rodent damage'],
+    },
+    {
+      issue: 'Poor workmanship',
+      causes: [
+        'Bare conductors too close',
+        'Incorrect terminations',
+        'Foreign objects in enclosures',
+      ],
+    },
+    {
+      issue: 'Equipment leakage',
+      causes: [
+        'Connected loads with normal leakage',
+        'Faulty equipment',
+        'Surge protection devices',
+      ],
+    },
   ];
 
   return (
@@ -29,7 +52,6 @@ export const InsulationResistanceTestingProcess = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Test Sequence */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Proper Test Sequence</h3>
@@ -57,12 +79,17 @@ export const InsulationResistanceTestingProcess = () => {
             <div className="bg-[#323232] rounded-lg p-4 border-l-4 border-green-500/50">
               <h4 className="text-foreground font-medium mb-2">Standard Circuits (≤500V)</h4>
               <p className="text-elec-yellow text-lg font-semibold mb-2">500V DC</p>
-              <p className="text-foreground text-sm">Used for most domestic and commercial installations including 230V single-phase and 400V three-phase circuits.</p>
+              <p className="text-foreground text-sm">
+                Used for most domestic and commercial installations including 230V single-phase and
+                400V three-phase circuits.
+              </p>
             </div>
             <div className="bg-[#323232] rounded-lg p-4 border-l-4 border-blue-500/50">
               <h4 className="text-foreground font-medium mb-2">Extra-Low Voltage</h4>
               <p className="text-elec-yellow text-lg font-semibold mb-2">250V DC</p>
-              <p className="text-foreground text-sm">For SELV and PELV circuits including 12V/24V lighting and control systems.</p>
+              <p className="text-foreground text-sm">
+                For SELV and PELV circuits including 12V/24V lighting and control systems.
+              </p>
             </div>
           </div>
         </div>
@@ -105,7 +132,6 @@ export const InsulationResistanceTestingProcess = () => {
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

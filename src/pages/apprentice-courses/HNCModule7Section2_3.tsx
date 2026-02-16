@@ -1,161 +1,235 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Life Safety Power - HNC Module 7 Section 2.3";
-const DESCRIPTION = "Master life safety power systems for building services: essential supplies, safety services per BS 7671 Chapter 56, fire-rated cables to BS 7846/BS 8519, switchover systems, automatic transfer switches, and testing requirements.";
+const TITLE = 'Life Safety Power - HNC Module 7 Section 2.3';
+const DESCRIPTION =
+  'Master life safety power systems for building services: essential supplies, safety services per BS 7671 Chapter 56, fire-rated cables to BS 7846/BS 8519, switchover systems, automatic transfer switches, and testing requirements.';
 
 const quickCheckQuestions = [
   {
-    id: "safety-services-definition",
-    question: "What are safety services as defined in BS 7671?",
-    options: ["Any electrical service in a building", "Services essential for safety of persons in emergency conditions", "Services that protect electrical equipment", "Services installed in fire compartments"],
+    id: 'safety-services-definition',
+    question: 'What are safety services as defined in BS 7671?',
+    options: [
+      'Any electrical service in a building',
+      'Services essential for safety of persons in emergency conditions',
+      'Services that protect electrical equipment',
+      'Services installed in fire compartments',
+    ],
     correctIndex: 1,
-    explanation: "Safety services are electrical services essential for the safety of persons in the event of emergency conditions such as fire, requiring maintained power supply for evacuation, firefighting, and rescue operations."
+    explanation:
+      'Safety services are electrical services essential for the safety of persons in the event of emergency conditions such as fire, requiring maintained power supply for evacuation, firefighting, and rescue operations.',
   },
   {
-    id: "fire-rating-standard",
-    question: "Which standard specifies fire-resistant cable requirements for UK installations?",
-    options: ["BS 7671 only", "BS 7846 for fire performance classification", "BS 5839 for fire detection", "IEC 60364 for wiring systems"],
+    id: 'fire-rating-standard',
+    question: 'Which standard specifies fire-resistant cable requirements for UK installations?',
+    options: [
+      'BS 7671 only',
+      'BS 7846 for fire performance classification',
+      'BS 5839 for fire detection',
+      'IEC 60364 for wiring systems',
+    ],
     correctIndex: 1,
-    explanation: "BS 7846 specifies fire performance categories for cables, classifying them according to their ability to maintain circuit integrity under fire conditions (e.g., PH30, PH60, PH120)."
+    explanation:
+      'BS 7846 specifies fire performance categories for cables, classifying them according to their ability to maintain circuit integrity under fire conditions (e.g., PH30, PH60, PH120).',
   },
   {
-    id: "changeover-time",
-    question: "What is the maximum changeover time for automatic transfer to safety supply for emergency lighting?",
-    options: ["0.5 seconds", "5 seconds", "15 seconds", "60 seconds"],
+    id: 'changeover-time',
+    question:
+      'What is the maximum changeover time for automatic transfer to safety supply for emergency lighting?',
+    options: ['0.5 seconds', '5 seconds', '15 seconds', '60 seconds'],
     correctIndex: 1,
-    explanation: "BS 7671 Regulation 560.6.12 requires safety services to be available within specified times - typically 5 seconds maximum for emergency lighting to ensure safe evacuation conditions."
+    explanation:
+      'BS 7671 Regulation 560.6.12 requires safety services to be available within specified times - typically 5 seconds maximum for emergency lighting to ensure safe evacuation conditions.',
   },
   {
-    id: "cable-rating-duration",
-    question: "A cable rated PH60 will maintain circuit integrity for how long?",
-    options: ["30 minutes under fire conditions", "60 minutes under fire conditions", "90 minutes under fire conditions", "120 minutes under fire conditions"],
+    id: 'cable-rating-duration',
+    question: 'A cable rated PH60 will maintain circuit integrity for how long?',
+    options: [
+      '30 minutes under fire conditions',
+      '60 minutes under fire conditions',
+      '90 minutes under fire conditions',
+      '120 minutes under fire conditions',
+    ],
     correctIndex: 1,
-    explanation: "The PH classification indicates the duration in minutes: PH60 means the cable will maintain circuit integrity for 60 minutes when exposed to fire conditions as tested to BS 8491."
-  }
+    explanation:
+      'The PH classification indicates the duration in minutes: PH60 means the cable will maintain circuit integrity for 60 minutes when exposed to fire conditions as tested to BS 8491.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "According to BS 7671 Chapter 56, which of the following is classified as a safety service?",
+    question:
+      'According to BS 7671 Chapter 56, which of the following is classified as a safety service?',
     options: [
-      "General lighting circuits",
-      "Emergency escape lighting",
-      "Socket outlet circuits",
-      "Heating systems"
+      'General lighting circuits',
+      'Emergency escape lighting',
+      'Socket outlet circuits',
+      'Heating systems',
     ],
     correctAnswer: 1,
-    explanation: "Emergency escape lighting is a safety service as it is essential for the safety of persons during evacuation. Other safety services include fire detection/alarm systems, smoke control, firefighting lifts, and emergency voice communication."
+    explanation:
+      'Emergency escape lighting is a safety service as it is essential for the safety of persons during evacuation. Other safety services include fire detection/alarm systems, smoke control, firefighting lifts, and emergency voice communication.',
   },
   {
     id: 2,
     question: "What does the 'Enhanced' classification mean for fire-resistant cables to BS 8519?",
-    options: ["Higher current carrying capacity", "Improved electromagnetic compatibility", "Circuit integrity maintained with water spray application", "Reduced smoke emission"],
+    options: [
+      'Higher current carrying capacity',
+      'Improved electromagnetic compatibility',
+      'Circuit integrity maintained with water spray application',
+      'Reduced smoke emission',
+    ],
     correctAnswer: 2,
-    explanation: "Enhanced fire-resistant cables to BS 8519 maintain circuit integrity when subjected to fire AND simultaneous water spray (simulating firefighting operations). Standard fire-resistant cables are tested under fire conditions only."
+    explanation:
+      'Enhanced fire-resistant cables to BS 8519 maintain circuit integrity when subjected to fire AND simultaneous water spray (simulating firefighting operations). Standard fire-resistant cables are tested under fire conditions only.',
   },
   {
     id: 3,
-    question: "For a hospital critical care area, what minimum fire rating would typically be required for safety service cables?",
-    options: ["PH30 (30 minutes)", "PH60 (60 minutes)", "PH90 (90 minutes)", "PH120 (120 minutes)"],
+    question:
+      'For a hospital critical care area, what minimum fire rating would typically be required for safety service cables?',
+    options: ['PH30 (30 minutes)', 'PH60 (60 minutes)', 'PH90 (90 minutes)', 'PH120 (120 minutes)'],
     correctAnswer: 3,
-    explanation: "Critical healthcare facilities typically require PH120 rated cables to maintain life safety systems for 2 hours, allowing extended evacuation times for vulnerable patients and continued operation of critical medical equipment."
+    explanation:
+      'Critical healthcare facilities typically require PH120 rated cables to maintain life safety systems for 2 hours, allowing extended evacuation times for vulnerable patients and continued operation of critical medical equipment.',
   },
   {
     id: 4,
-    question: "An Automatic Transfer Switch (ATS) must comply with which standard?",
-    options: ["BS 7671 only", "BS EN 60947-6-1 for transfer switching equipment", "BS 7846 for cable systems", "BS 5839 for fire systems"],
+    question: 'An Automatic Transfer Switch (ATS) must comply with which standard?',
+    options: [
+      'BS 7671 only',
+      'BS EN 60947-6-1 for transfer switching equipment',
+      'BS 7846 for cable systems',
+      'BS 5839 for fire systems',
+    ],
     correctAnswer: 1,
-    explanation: "Automatic Transfer Switches must comply with BS EN 60947-6-1 which specifies requirements for transfer switching equipment including operating times, withstand capability, and coordination requirements."
+    explanation:
+      'Automatic Transfer Switches must comply with BS EN 60947-6-1 which specifies requirements for transfer switching equipment including operating times, withstand capability, and coordination requirements.',
   },
   {
     id: 5,
-    question: "Which source classification provides power with zero break during changeover?",
-    options: ["Non-automatic supply", "Automatic supply with short break", "Automatic supply with medium break", "Uninterruptible supply (no-break)"],
+    question: 'Which source classification provides power with zero break during changeover?',
+    options: [
+      'Non-automatic supply',
+      'Automatic supply with short break',
+      'Automatic supply with medium break',
+      'Uninterruptible supply (no-break)',
+    ],
     correctAnswer: 3,
-    explanation: "An uninterruptible supply (no-break) uses UPS or rotating machinery to provide continuous power with zero interruption. This is required for critical loads that cannot tolerate any supply interruption."
+    explanation:
+      'An uninterruptible supply (no-break) uses UPS or rotating machinery to provide continuous power with zero interruption. This is required for critical loads that cannot tolerate any supply interruption.',
   },
   {
     id: 6,
     question: "What is the purpose of the 'two-hour rule' in BS 7671 for safety services?",
-    options: ["Maximum testing duration", "Minimum battery capacity for UPS", "Evacuation time allowance for larger buildings", "Generator start-up time"],
+    options: [
+      'Maximum testing duration',
+      'Minimum battery capacity for UPS',
+      'Evacuation time allowance for larger buildings',
+      'Generator start-up time',
+    ],
     correctAnswer: 2,
-    explanation: "The two-hour rule recognises that larger, more complex buildings require extended evacuation times. Safety services must be capable of operating for the duration needed for full evacuation and firefighting operations."
+    explanation:
+      'The two-hour rule recognises that larger, more complex buildings require extended evacuation times. Safety services must be capable of operating for the duration needed for full evacuation and firefighting operations.',
   },
   {
     id: 7,
-    question: "Which cable installation method provides the highest fire resistance?",
-    options: ["Clipped direct to combustible surface", "Within steel conduit with mineral insulated cable", "In plastic trunking", "In suspended ceiling void"],
+    question: 'Which cable installation method provides the highest fire resistance?',
+    options: [
+      'Clipped direct to combustible surface',
+      'Within steel conduit with mineral insulated cable',
+      'In plastic trunking',
+      'In suspended ceiling void',
+    ],
     correctAnswer: 1,
-    explanation: "Mineral insulated cables within steel conduit provide the highest fire resistance. MICC is inherently fire-resistant, and steel conduit adds mechanical protection and additional fire performance."
+    explanation:
+      'Mineral insulated cables within steel conduit provide the highest fire resistance. MICC is inherently fire-resistant, and steel conduit adds mechanical protection and additional fire performance.',
   },
   {
     id: 8,
-    question: "How often must automatic transfer switches be functionally tested according to best practice?",
-    options: ["Daily", "Weekly", "Monthly", "Annually"],
+    question:
+      'How often must automatic transfer switches be functionally tested according to best practice?',
+    options: ['Daily', 'Weekly', 'Monthly', 'Annually'],
     correctAnswer: 2,
-    explanation: "Monthly functional testing of ATS units is recommended to verify correct operation. This includes simulating mains failure, verifying transfer to generator, and retransfer on mains restoration."
+    explanation:
+      'Monthly functional testing of ATS units is recommended to verify correct operation. This includes simulating mains failure, verifying transfer to generator, and retransfer on mains restoration.',
   },
   {
     id: 9,
-    question: "What is the maximum voltage drop permitted for safety service circuits under normal conditions?",
-    options: ["2%", "3%", "4%", "5%"],
+    question:
+      'What is the maximum voltage drop permitted for safety service circuits under normal conditions?',
+    options: ['2%', '3%', '4%', '5%'],
     correctAnswer: 1,
-    explanation: "BS 7671 recommends maximum 3% voltage drop for lighting circuits. For safety services, maintaining adequate voltage is critical to ensure equipment operates correctly during emergencies."
+    explanation:
+      'BS 7671 recommends maximum 3% voltage drop for lighting circuits. For safety services, maintaining adequate voltage is critical to ensure equipment operates correctly during emergencies.',
   },
   {
     id: 10,
-    question: "Which safety system typically requires the fastest changeover time?",
-    options: ["Emergency lighting", "Sprinkler pump", "Smoke extract fan", "Fire alarm panel"],
+    question: 'Which safety system typically requires the fastest changeover time?',
+    options: ['Emergency lighting', 'Sprinkler pump', 'Smoke extract fan', 'Fire alarm panel'],
     correctAnswer: 3,
-    explanation: "Fire alarm panels typically require the fastest changeover (&lt;0.5s) as they must maintain continuous monitoring capability. Loss of power, even momentarily, could miss a detection event."
+    explanation:
+      'Fire alarm panels typically require the fastest changeover (&lt;0.5s) as they must maintain continuous monitoring capability. Loss of power, even momentarily, could miss a detection event.',
   },
   {
     id: 11,
-    question: "For fire-resistant cable installations, what is the maximum support spacing for horizontal runs?",
-    options: ["150mm", "300mm", "450mm", "600mm"],
+    question:
+      'For fire-resistant cable installations, what is the maximum support spacing for horizontal runs?',
+    options: ['150mm', '300mm', '450mm', '600mm'],
     correctAnswer: 1,
-    explanation: "Fire-resistant cables should be supported at maximum 300mm centres horizontally (450mm vertically) to prevent cable sagging and potential circuit failure under fire conditions when insulation softens."
+    explanation:
+      'Fire-resistant cables should be supported at maximum 300mm centres horizontally (450mm vertically) to prevent cable sagging and potential circuit failure under fire conditions when insulation softens.',
   },
   {
     id: 12,
-    question: "What documentation must be maintained for safety service installations?",
-    options: ["Installation certificate only", "Test certificates and maintenance records throughout operational life", "Manufacturer datasheets only", "Initial commissioning report only"],
+    question: 'What documentation must be maintained for safety service installations?',
+    options: [
+      'Installation certificate only',
+      'Test certificates and maintenance records throughout operational life',
+      'Manufacturer datasheets only',
+      'Initial commissioning report only',
+    ],
     correctAnswer: 1,
-    explanation: "Comprehensive documentation including installation certificates, commissioning records, test results, and ongoing maintenance records must be maintained throughout the operational life as evidence of continued compliance."
-  }
+    explanation:
+      'Comprehensive documentation including installation certificates, commissioning records, test results, and ongoing maintenance records must be maintained throughout the operational life as evidence of continued compliance.',
+  },
 ];
 
 const faqs = [
   {
     question: "What is the difference between 'standard' and 'enhanced' fire-resistant cables?",
-    answer: "Standard fire-resistant cables (to BS 8434-2) maintain circuit integrity under fire conditions only. Enhanced fire-resistant cables (to BS 8519) maintain circuit integrity under fire conditions PLUS simultaneous water spray application, simulating firefighting operations. Enhanced cables are required where cables may be exposed to sprinkler discharge or fire brigade hose streams during operation."
+    answer:
+      'Standard fire-resistant cables (to BS 8434-2) maintain circuit integrity under fire conditions only. Enhanced fire-resistant cables (to BS 8519) maintain circuit integrity under fire conditions PLUS simultaneous water spray application, simulating firefighting operations. Enhanced cables are required where cables may be exposed to sprinkler discharge or fire brigade hose streams during operation.',
   },
   {
-    question: "When is a generator required versus UPS for safety services?",
-    answer: "UPS provides immediate power (no-break or very short break) and is essential for loads that cannot tolerate any interruption (IT systems, fire alarm panels). Generators provide longer duration backup but require 5-15 seconds to start and transfer. Most safety systems use both: UPS for immediate bridging during generator start-up, then generator for extended operation. The choice depends on maximum acceptable break time and required duration."
+    question: 'When is a generator required versus UPS for safety services?',
+    answer:
+      'UPS provides immediate power (no-break or very short break) and is essential for loads that cannot tolerate any interruption (IT systems, fire alarm panels). Generators provide longer duration backup but require 5-15 seconds to start and transfer. Most safety systems use both: UPS for immediate bridging during generator start-up, then generator for extended operation. The choice depends on maximum acceptable break time and required duration.',
   },
   {
-    question: "How do I determine the required fire rating for safety service cables?",
-    answer: "Fire rating is determined by: (1) Building type and occupancy - hospitals/care homes typically need PH120, offices may need PH60; (2) Evacuation time requirements - multi-storey buildings need longer ratings; (3) Location - cables in fire-protected shafts may need lower ratings; (4) Risk assessment - fire engineering analysis may specify requirements; (5) Regulatory requirements - Building Regulations Approved Document B and specific sector guidance."
+    question: 'How do I determine the required fire rating for safety service cables?',
+    answer:
+      'Fire rating is determined by: (1) Building type and occupancy - hospitals/care homes typically need PH120, offices may need PH60; (2) Evacuation time requirements - multi-storey buildings need longer ratings; (3) Location - cables in fire-protected shafts may need lower ratings; (4) Risk assessment - fire engineering analysis may specify requirements; (5) Regulatory requirements - Building Regulations Approved Document B and specific sector guidance.',
   },
   {
-    question: "What testing is required for automatic transfer switches?",
-    answer: "ATS testing includes: (1) Monthly functional tests - simulate mains failure, verify transfer, check transfer time; (2) Quarterly load tests - verify operation under load; (3) Annual comprehensive tests - check all settings, timing, coordination with generator; (4) Record all tests in maintenance log. Test procedures should simulate both mains failure and mains restoration to verify bi-directional transfer operation."
+    question: 'What testing is required for automatic transfer switches?',
+    answer:
+      'ATS testing includes: (1) Monthly functional tests - simulate mains failure, verify transfer, check transfer time; (2) Quarterly load tests - verify operation under load; (3) Annual comprehensive tests - check all settings, timing, coordination with generator; (4) Record all tests in maintenance log. Test procedures should simulate both mains failure and mains restoration to verify bi-directional transfer operation.',
   },
   {
-    question: "Can fire-resistant cables share containment with standard cables?",
-    answer: "Generally, fire-resistant cables for safety services should be segregated from standard cables to maintain circuit integrity. BS 5839-1 requires fire alarm cables to be separated from other cables. If shared containment is unavoidable, fire-rated containment systems (fire-rated trunking/conduit) may be used, but the preferred approach is physical segregation to eliminate risk of damage from faults in other circuits."
+    question: 'Can fire-resistant cables share containment with standard cables?',
+    answer:
+      'Generally, fire-resistant cables for safety services should be segregated from standard cables to maintain circuit integrity. BS 5839-1 requires fire alarm cables to be separated from other cables. If shared containment is unavoidable, fire-rated containment systems (fire-rated trunking/conduit) may be used, but the preferred approach is physical segregation to eliminate risk of damage from faults in other circuits.',
   },
   {
-    question: "What are the requirements for safety service distribution boards?",
-    answer: "Safety service distribution boards should: (1) Be dedicated to safety services only - not shared with general loads; (2) Be located in fire-protected areas where possible; (3) Have appropriate fire rating for enclosure; (4) Be clearly labelled as safety services; (5) Have discrimination coordinated to maintain supply during downstream faults; (6) Be fed by appropriately rated fire-resistant cables from source."
-  }
+    question: 'What are the requirements for safety service distribution boards?',
+    answer:
+      'Safety service distribution boards should: (1) Be dedicated to safety services only - not shared with general loads; (2) Be located in fire-protected areas where possible; (3) Have appropriate fire rating for enclosure; (4) Be clearly labelled as safety services; (5) Have discrimination coordinated to maintain supply during downstream faults; (6) Be fed by appropriately rated fire-resistant cables from source.',
+  },
 ];
 
 const HNCModule7Section2_3 = () => {
@@ -166,7 +240,12 @@ const HNCModule7Section2_3 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module7-section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -177,7 +256,6 @@ const HNCModule7Section2_3 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centred Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -188,7 +266,8 @@ const HNCModule7Section2_3 = () => {
             Life Safety Power
           </h1>
           <p className="text-white/80">
-            Essential supplies, safety services, fire-rated cables, switchover systems, and testing requirements
+            Essential supplies, safety services, fire-rated cables, switchover systems, and testing
+            requirements
           </p>
         </header>
 
@@ -197,19 +276,35 @@ const HNCModule7Section2_3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>Safety services:</strong> Essential for life safety in emergencies</li>
-              <li className="pl-1"><strong>Fire ratings:</strong> PH30/60/90/120 minute classifications</li>
-              <li className="pl-1"><strong>Changeover:</strong> ATS provides automatic source transfer</li>
-              <li className="pl-1"><strong>Testing:</strong> Monthly functional, annual comprehensive</li>
+              <li className="pl-1">
+                <strong>Safety services:</strong> Essential for life safety in emergencies
+              </li>
+              <li className="pl-1">
+                <strong>Fire ratings:</strong> PH30/60/90/120 minute classifications
+              </li>
+              <li className="pl-1">
+                <strong>Changeover:</strong> ATS provides automatic source transfer
+              </li>
+              <li className="pl-1">
+                <strong>Testing:</strong> Monthly functional, annual comprehensive
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>BS 7671 Ch. 56:</strong> Safety services requirements</li>
-              <li className="pl-1"><strong>BS 7846:</strong> Fire performance classification</li>
-              <li className="pl-1"><strong>BS 8519:</strong> Enhanced fire-resistant cables</li>
-              <li className="pl-1"><strong>BS EN 60947-6-1:</strong> Transfer switch equipment</li>
+              <li className="pl-1">
+                <strong>BS 7671 Ch. 56:</strong> Safety services requirements
+              </li>
+              <li className="pl-1">
+                <strong>BS 7846:</strong> Fire performance classification
+              </li>
+              <li className="pl-1">
+                <strong>BS 8519:</strong> Enhanced fire-resistant cables
+              </li>
+              <li className="pl-1">
+                <strong>BS EN 60947-6-1:</strong> Transfer switch equipment
+              </li>
             </ul>
           </div>
         </div>
@@ -219,12 +314,12 @@ const HNCModule7Section2_3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Define safety services and their classification per BS 7671 Chapter 56",
-              "Specify fire-rated cables using BS 7846 and BS 8519 classifications",
-              "Design changeover systems with appropriate transfer times",
-              "Select and specify automatic transfer switches",
-              "Implement testing and maintenance regimes for safety supplies",
-              "Apply fire rating requirements to cable installation methods"
+              'Define safety services and their classification per BS 7671 Chapter 56',
+              'Specify fire-rated cables using BS 7846 and BS 8519 classifications',
+              'Design changeover systems with appropriate transfer times',
+              'Select and specify automatic transfer switches',
+              'Implement testing and maintenance regimes for safety supplies',
+              'Apply fire rating requirements to cable installation methods',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -247,42 +342,68 @@ const HNCModule7Section2_3 = () => {
             <p>
               Safety services are electrical installations essential for the safety of persons in
               emergency conditions. BS 7671 Chapter 56 provides comprehensive requirements for these
-              critical systems, which must remain operational during fire, evacuation, and rescue operations.
+              critical systems, which must remain operational during fire, evacuation, and rescue
+              operations.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Safety service classifications:</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Emergency escape lighting:</strong> Illuminates escape routes during evacuation</li>
-                <li className="pl-1"><strong>Fire detection and alarm:</strong> Early warning and alert systems</li>
-                <li className="pl-1"><strong>Smoke control systems:</strong> Maintains tenable conditions in escape routes</li>
-                <li className="pl-1"><strong>Firefighting lifts:</strong> Enables firefighter access to all floors</li>
-                <li className="pl-1"><strong>Emergency voice communication:</strong> Public address for evacuation instructions</li>
-                <li className="pl-1"><strong>Fire suppression systems:</strong> Sprinkler pumps and gas suppression</li>
+                <li className="pl-1">
+                  <strong>Emergency escape lighting:</strong> Illuminates escape routes during
+                  evacuation
+                </li>
+                <li className="pl-1">
+                  <strong>Fire detection and alarm:</strong> Early warning and alert systems
+                </li>
+                <li className="pl-1">
+                  <strong>Smoke control systems:</strong> Maintains tenable conditions in escape
+                  routes
+                </li>
+                <li className="pl-1">
+                  <strong>Firefighting lifts:</strong> Enables firefighter access to all floors
+                </li>
+                <li className="pl-1">
+                  <strong>Emergency voice communication:</strong> Public address for evacuation
+                  instructions
+                </li>
+                <li className="pl-1">
+                  <strong>Fire suppression systems:</strong> Sprinkler pumps and gas suppression
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Source Classifications (BS 7671 Regulation 560.6)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Source Classifications (BS 7671 Regulation 560.6)
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Classification</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Changeover Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Application</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Changeover Time
+                      </th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Typical Application
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">No-break (UPS)</td>
                       <td className="border border-white/10 px-3 py-2">0 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm panels, critical IT</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Fire alarm panels, critical IT
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Very short break</td>
                       <td className="border border-white/10 px-3 py-2">&lt; 0.15 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">Emergency lighting (maintained)</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Emergency lighting (maintained)
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Short break</td>
@@ -292,12 +413,16 @@ const HNCModule7Section2_3 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Medium break</td>
                       <td className="border border-white/10 px-3 py-2">&lt; 15 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">Firefighting lifts, sprinkler pumps</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Firefighting lifts, sprinkler pumps
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Long break</td>
                       <td className="border border-white/10 px-3 py-2">&gt; 15 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">Non-critical backup loads</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Non-critical backup loads
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -305,7 +430,8 @@ const HNCModule7Section2_3 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> The changeover time must be selected based on the most critical load - all loads on that source must tolerate the transfer duration.
+              <strong>Key principle:</strong> The changeover time must be selected based on the most
+              critical load - all loads on that source must tolerate the transfer duration.
             </p>
           </div>
         </section>
@@ -329,10 +455,18 @@ const HNCModule7Section2_3 = () => {
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">BS 7846 Categories</p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1"><strong>PH30:</strong> 30 minutes fire resistance</li>
-                  <li className="pl-1"><strong>PH60:</strong> 60 minutes fire resistance</li>
-                  <li className="pl-1"><strong>PH90:</strong> 90 minutes fire resistance</li>
-                  <li className="pl-1"><strong>PH120:</strong> 120 minutes fire resistance</li>
+                  <li className="pl-1">
+                    <strong>PH30:</strong> 30 minutes fire resistance
+                  </li>
+                  <li className="pl-1">
+                    <strong>PH60:</strong> 60 minutes fire resistance
+                  </li>
+                  <li className="pl-1">
+                    <strong>PH90:</strong> 90 minutes fire resistance
+                  </li>
+                  <li className="pl-1">
+                    <strong>PH120:</strong> 120 minutes fire resistance
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
@@ -360,18 +494,26 @@ const HNCModule7Section2_3 = () => {
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">MICC (Mineral Insulated)</td>
-                      <td className="border border-white/10 px-3 py-2">Inherently fire-resistant</td>
-                      <td className="border border-white/10 px-3 py-2">Highest performance, harsh environments</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Inherently fire-resistant
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Highest performance, harsh environments
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">FP200 Gold</td>
                       <td className="border border-white/10 px-3 py-2">PH120 to BS 8491</td>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm, emergency lighting</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Fire alarm, emergency lighting
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">SWA with fire barrier</td>
                       <td className="border border-white/10 px-3 py-2">Variable with system</td>
-                      <td className="border border-white/10 px-3 py-2">Power to safety equipment</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Power to safety equipment
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">LSOH fire-resistant</td>
@@ -384,17 +526,29 @@ const HNCModule7Section2_3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Requirements</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Requirements
+              </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Support spacing:</strong> 300mm max horizontal, 450mm max vertical</li>
-                <li className="pl-1"><strong>Fire-rated clips:</strong> Must match cable fire rating</li>
-                <li className="pl-1"><strong>Segregation:</strong> Separate from non-safety cables</li>
-                <li className="pl-1"><strong>Fire stopping:</strong> Maintain compartment integrity at penetrations</li>
+                <li className="pl-1">
+                  <strong>Support spacing:</strong> 300mm max horizontal, 450mm max vertical
+                </li>
+                <li className="pl-1">
+                  <strong>Fire-rated clips:</strong> Must match cable fire rating
+                </li>
+                <li className="pl-1">
+                  <strong>Segregation:</strong> Separate from non-safety cables
+                </li>
+                <li className="pl-1">
+                  <strong>Fire stopping:</strong> Maintain compartment integrity at penetrations
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Selection principle:</strong> Fire rating must exceed the required operational time for evacuation plus firefighting access - typically 60-120 minutes for most commercial buildings.
+              <strong>Selection principle:</strong> Fire rating must exceed the required operational
+              time for evacuation plus firefighting access - typically 60-120 minutes for most
+              commercial buildings.
             </p>
           </div>
         </section>
@@ -417,19 +571,47 @@ const HNCModule7Section2_3 = () => {
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">ATS Operating Sequence</p>
               <div className="font-mono text-sm space-y-1">
-                <p><span className="text-white/60">1.</span> <span className="text-white">Monitor mains supply voltage and frequency</span></p>
-                <p><span className="text-white/60">2.</span> <span className="text-white">Detect mains failure (voltage drops below threshold)</span></p>
-                <p><span className="text-white/60">3.</span> <span className="text-white">Send start signal to standby generator</span></p>
-                <p><span className="text-white/60">4.</span> <span className="text-white">Generator reaches rated speed and voltage</span></p>
-                <p><span className="text-white/60">5.</span> <span className="text-white">ATS transfers load to generator</span></p>
-                <p><span className="text-white/60">6.</span> <span className="text-white">Monitor mains for restoration</span></p>
-                <p><span className="text-white/60">7.</span> <span className="text-white">Retransfer to mains after stabilisation delay</span></p>
-                <p><span className="text-white/60">8.</span> <span className="text-white">Generator runs on cooldown, then stops</span></p>
+                <p>
+                  <span className="text-white/60">1.</span>{' '}
+                  <span className="text-white">Monitor mains supply voltage and frequency</span>
+                </p>
+                <p>
+                  <span className="text-white/60">2.</span>{' '}
+                  <span className="text-white">
+                    Detect mains failure (voltage drops below threshold)
+                  </span>
+                </p>
+                <p>
+                  <span className="text-white/60">3.</span>{' '}
+                  <span className="text-white">Send start signal to standby generator</span>
+                </p>
+                <p>
+                  <span className="text-white/60">4.</span>{' '}
+                  <span className="text-white">Generator reaches rated speed and voltage</span>
+                </p>
+                <p>
+                  <span className="text-white/60">5.</span>{' '}
+                  <span className="text-white">ATS transfers load to generator</span>
+                </p>
+                <p>
+                  <span className="text-white/60">6.</span>{' '}
+                  <span className="text-white">Monitor mains for restoration</span>
+                </p>
+                <p>
+                  <span className="text-white/60">7.</span>{' '}
+                  <span className="text-white">Retransfer to mains after stabilisation delay</span>
+                </p>
+                <p>
+                  <span className="text-white/60">8.</span>{' '}
+                  <span className="text-white">Generator runs on cooldown, then stops</span>
+                </p>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">ATS Types and Applications</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                ATS Types and Applications
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -448,17 +630,23 @@ const HNCModule7Section2_3 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Closed transition</td>
                       <td className="border border-white/10 px-3 py-2">Make-before-break</td>
-                      <td className="border border-white/10 px-3 py-2">Critical loads, paralleling</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Critical loads, paralleling
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Soft load transfer</td>
                       <td className="border border-white/10 px-3 py-2">Ramped transition</td>
-                      <td className="border border-white/10 px-3 py-2">Motor loads, gradual transfer</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Motor loads, gradual transfer
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Static (solid-state)</td>
                       <td className="border border-white/10 px-3 py-2">&lt; 4ms</td>
-                      <td className="border border-white/10 px-3 py-2">Data centres, critical IT</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Data centres, critical IT
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -466,18 +654,33 @@ const HNCModule7Section2_3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Design Considerations</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Key Design Considerations
+              </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Voltage sensing:</strong> Typically 85-90% of nominal for under-voltage detection</li>
-                <li className="pl-1"><strong>Frequency sensing:</strong> Usually ± 3-5% of nominal frequency</li>
-                <li className="pl-1"><strong>Time delays:</strong> Prevent nuisance transfers on transients</li>
-                <li className="pl-1"><strong>Interlocking:</strong> Mechanical and electrical prevention of paralleling</li>
-                <li className="pl-1"><strong>Bypass facilities:</strong> Manual override for maintenance</li>
+                <li className="pl-1">
+                  <strong>Voltage sensing:</strong> Typically 85-90% of nominal for under-voltage
+                  detection
+                </li>
+                <li className="pl-1">
+                  <strong>Frequency sensing:</strong> Usually ± 3-5% of nominal frequency
+                </li>
+                <li className="pl-1">
+                  <strong>Time delays:</strong> Prevent nuisance transfers on transients
+                </li>
+                <li className="pl-1">
+                  <strong>Interlocking:</strong> Mechanical and electrical prevention of paralleling
+                </li>
+                <li className="pl-1">
+                  <strong>Bypass facilities:</strong> Manual override for maintenance
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Safety requirement:</strong> Open transition is preferred for most applications as it prevents any possibility of generator-mains paralleling, which requires complex protection coordination.
+              <strong>Safety requirement:</strong> Open transition is preferred for most
+              applications as it prevents any possibility of generator-mains paralleling, which
+              requires complex protection coordination.
             </p>
           </div>
         </section>
@@ -531,7 +734,9 @@ const HNCModule7Section2_3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Documentation Requirements</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Test Documentation Requirements
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -543,23 +748,33 @@ const HNCModule7Section2_3 = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2">Commissioning certificate</td>
-                      <td className="border border-white/10 px-3 py-2">Initial test results, system configuration</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Commissioning certificate
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Initial test results, system configuration
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Life of installation</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Monthly test log</td>
-                      <td className="border border-white/10 px-3 py-2">Test date, results, operator signature</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Test date, results, operator signature
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Minimum 3 years</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Annual inspection report</td>
-                      <td className="border border-white/10 px-3 py-2">Comprehensive assessment, remedials</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Comprehensive assessment, remedials
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Life of installation</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Maintenance records</td>
-                      <td className="border border-white/10 px-3 py-2">Repairs, replacements, modifications</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Repairs, replacements, modifications
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Life of installation</td>
                     </tr>
                   </tbody>
@@ -568,18 +783,34 @@ const HNCModule7Section2_3 = () => {
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Generator Load Bank Testing</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Generator Load Bank Testing
+              </p>
               <div className="text-sm space-y-2">
-                <p><strong>Purpose:</strong> Verify generator can sustain rated load for required duration</p>
-                <p><strong>Frequency:</strong> Annual minimum, quarterly for critical facilities</p>
-                <p><strong>Load:</strong> Minimum 30% of rated capacity, preferably 75-100%</p>
-                <p><strong>Duration:</strong> 4 hours minimum for annual test</p>
-                <p><strong>Records:</strong> Fuel consumption, temperature, oil pressure, voltage/frequency stability</p>
+                <p>
+                  <strong>Purpose:</strong> Verify generator can sustain rated load for required
+                  duration
+                </p>
+                <p>
+                  <strong>Frequency:</strong> Annual minimum, quarterly for critical facilities
+                </p>
+                <p>
+                  <strong>Load:</strong> Minimum 30% of rated capacity, preferably 75-100%
+                </p>
+                <p>
+                  <strong>Duration:</strong> 4 hours minimum for annual test
+                </p>
+                <p>
+                  <strong>Records:</strong> Fuel consumption, temperature, oil pressure,
+                  voltage/frequency stability
+                </p>
               </div>
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Compliance note:</strong> Fire safety legislation requires safety systems to be maintained in proper working order. Test records provide evidence of compliance and may be requested by enforcing authorities.
+              <strong>Compliance note:</strong> Fire safety legislation requires safety systems to
+              be maintained in proper working order. Test records provide evidence of compliance and
+              may be requested by enforcing authorities.
             </p>
           </div>
         </section>
@@ -595,9 +826,12 @@ const HNCModule7Section2_3 = () => {
 
           <div className="space-y-6">
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 1: Fire Rating Selection for Hospital</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 1: Fire Rating Selection for Hospital
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify cable fire rating for a new hospital wing with 4 floors above ground.
+                <strong>Scenario:</strong> Specify cable fire rating for a new hospital wing with 4
+                floors above ground.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p className="text-white/60">Analysis:</p>
@@ -605,7 +839,9 @@ const HNCModule7Section2_3 = () => {
                 <p>Evacuation complexity: High (patients, equipment)</p>
                 <p>Vertical escape routes: 4 floors requiring protected stairs</p>
                 <p className="mt-2">Regulatory requirements:</p>
-                <p className="ml-4">- BS 5839-1 recommends PH120 for fire alarm cables in hospitals</p>
+                <p className="ml-4">
+                  - BS 5839-1 recommends PH120 for fire alarm cables in hospitals
+                </p>
                 <p className="ml-4">- HTM 06-01 guidance for healthcare facilities</p>
                 <p className="ml-4">- Extended evacuation time &gt; 60 minutes likely</p>
                 <p className="mt-2">Cable specification:</p>
@@ -613,14 +849,19 @@ const HNCModule7Section2_3 = () => {
                 <p className="ml-4">Emergency lighting: PH120 (BS 8434-2)</p>
                 <p className="ml-4">Smoke control: PH120 enhanced (BS 8519)</p>
                 <p className="ml-4">Support: Fire-rated clips at 300mm centres</p>
-                <p className="mt-2 text-green-400">Result: PH120 enhanced cables throughout safety services</p>
+                <p className="mt-2 text-green-400">
+                  Result: PH120 enhanced cables throughout safety services
+                </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 2: ATS Sizing and Selection</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 2: ATS Sizing and Selection
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select ATS for 500kVA generator serving safety loads in office building.
+                <strong>Scenario:</strong> Select ATS for 500kVA generator serving safety loads in
+                office building.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p className="text-white/60">Load analysis:</p>
@@ -639,14 +880,19 @@ const HNCModule7Section2_3 = () => {
                 <p className="ml-4">- Transfer time: &lt; 100ms</p>
                 <p className="ml-4">- Mechanical and electrical interlock</p>
                 <p className="ml-4">- Manual bypass for maintenance</p>
-                <p className="mt-2 text-green-400">Result: 800A 4-pole ATS, open transition, Type 2 coordination</p>
+                <p className="mt-2 text-green-400">
+                  Result: 800A 4-pole ATS, open transition, Type 2 coordination
+                </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 3: Monthly Test Procedure Development</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 3: Monthly Test Procedure Development
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop monthly functional test procedure for office building safety power system.
+                <strong>Scenario:</strong> Develop monthly functional test procedure for office
+                building safety power system.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p className="text-white/60">Test procedure:</p>
@@ -681,34 +927,59 @@ const HNCModule7Section2_3 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Checklist for Safety Power Systems</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Design Checklist for Safety Power Systems
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Identify all safety services requiring maintained supply</li>
                 <li className="pl-1">Determine required changeover time for each load type</li>
                 <li className="pl-1">Calculate total safety load for generator/UPS sizing</li>
-                <li className="pl-1">Specify cable fire ratings based on building risk assessment</li>
+                <li className="pl-1">
+                  Specify cable fire ratings based on building risk assessment
+                </li>
                 <li className="pl-1">Select ATS type appropriate for load characteristics</li>
                 <li className="pl-1">Design segregated distribution for safety services</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Values to Remember</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Key Values to Remember
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Emergency lighting changeover: <strong>5 seconds maximum</strong></li>
-                <li className="pl-1">Fire alarm changeover: <strong>&lt; 0.5 seconds</strong></li>
-                <li className="pl-1">Cable support spacing: <strong>300mm horizontal, 450mm vertical</strong></li>
-                <li className="pl-1">Generator test frequency: <strong>Monthly functional, annual load</strong></li>
+                <li className="pl-1">
+                  Emergency lighting changeover: <strong>5 seconds maximum</strong>
+                </li>
+                <li className="pl-1">
+                  Fire alarm changeover: <strong>&lt; 0.5 seconds</strong>
+                </li>
+                <li className="pl-1">
+                  Cable support spacing: <strong>300mm horizontal, 450mm vertical</strong>
+                </li>
+                <li className="pl-1">
+                  Generator test frequency: <strong>Monthly functional, annual load</strong>
+                </li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Under-rated fire cables</strong> - Always select rating for worst-case evacuation time</li>
-                <li className="pl-1"><strong>Inadequate support spacing</strong> - Cables sag and fail under fire conditions</li>
-                <li className="pl-1"><strong>Mixed loads on ATS</strong> - All loads must tolerate the transfer time</li>
-                <li className="pl-1"><strong>Neglected testing</strong> - Systems fail when needed if not regularly tested</li>
+                <li className="pl-1">
+                  <strong>Under-rated fire cables</strong> - Always select rating for worst-case
+                  evacuation time
+                </li>
+                <li className="pl-1">
+                  <strong>Inadequate support spacing</strong> - Cables sag and fail under fire
+                  conditions
+                </li>
+                <li className="pl-1">
+                  <strong>Mixed loads on ATS</strong> - All loads must tolerate the transfer time
+                </li>
+                <li className="pl-1">
+                  <strong>Neglected testing</strong> - Systems fail when needed if not regularly
+                  tested
+                </li>
               </ul>
             </div>
           </div>
@@ -759,28 +1030,33 @@ const HNCModule7Section2_3 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module7-section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module7-section2-4">
               Next: Section 2.4
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

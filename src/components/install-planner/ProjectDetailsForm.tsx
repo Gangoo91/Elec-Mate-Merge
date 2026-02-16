@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Building2, User, FileText, RotateCcw } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { CompanyProfile } from "@/types/company";
-import { InstallPlanDataV2 } from "@/components/install-planner-v2/types";
+import { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Building2, User, FileText, RotateCcw } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { CompanyProfile } from '@/types/company';
+import { InstallPlanDataV2 } from '@/components/install-planner-v2/types';
 
 export interface ProjectDetailsData {
   // Company
@@ -21,14 +21,14 @@ export interface ProjectDetailsData {
   companyWebsite?: string;
   registrationNumber?: string;
   vatNumber?: string;
-  
+
   // Client
   clientName: string;
   propertyAddress: string;
   postcode: string;
   contactNumber: string;
   clientEmail: string;
-  
+
   // Project
   projectName: string;
   location: string;
@@ -44,18 +44,18 @@ interface ProjectDetailsFormProps {
   onChange: (data: ProjectDetailsData) => void;
 }
 
-export const ProjectDetailsForm = ({ 
-  companyProfile, 
-  planData, 
-  value, 
-  onChange 
+export const ProjectDetailsForm = ({
+  companyProfile,
+  planData,
+  value,
+  onChange,
 }: ProjectDetailsFormProps) => {
   const [openSections, setOpenSections] = useState<Set<string>>(
     new Set(['company', 'client', 'project'])
   );
 
   const toggleSection = (section: string) => {
-    setOpenSections(prev => {
+    setOpenSections((prev) => {
       const next = new Set(prev);
       if (next.has(section)) {
         next.delete(section);
@@ -112,13 +112,13 @@ export const ProjectDetailsForm = ({
     companyWebsite: companyProfile?.company_website,
     registrationNumber: companyProfile?.company_registration,
     vatNumber: companyProfile?.vat_number,
-    
+
     clientName: planData.siteInfo?.clientName || '',
     propertyAddress: planData.siteInfo?.propertyAddress || '',
     postcode: planData.siteInfo?.postcode || '',
     contactNumber: planData.siteInfo?.contactNumber || '',
     clientEmail: '',
-    
+
     projectName: `${planData.installationType} Installation`,
     location: planData.siteInfo?.propertyAddress || '',
     designEngineer: planData.projectInfo?.leadElectrician || '',
@@ -131,10 +131,14 @@ export const ProjectDetailsForm = ({
   };
 
   const requiredFields: (keyof ProjectDetailsData)[] = [
-    'companyName', 'clientName', 'propertyAddress', 'projectName', 'designEngineer'
+    'companyName',
+    'clientName',
+    'propertyAddress',
+    'projectName',
+    'designEngineer',
   ];
 
-  const isComplete = requiredFields.every(field => value[field]?.trim());
+  const isComplete = requiredFields.every((field) => value[field]?.trim());
 
   return (
     <div className="space-y-4">
@@ -150,16 +154,16 @@ export const ProjectDetailsForm = ({
               </p>
             </div>
           </div>
-          <Badge variant={isComplete ? "default" : "secondary"}>
-            {isComplete ? "✓ Complete" : "Incomplete"}
+          <Badge variant={isComplete ? 'default' : 'secondary'}>
+            {isComplete ? '✓ Complete' : 'Incomplete'}
           </Badge>
         </div>
       </Card>
 
       {/* Company Details Section */}
       <Card>
-        <Collapsible 
-          open={openSections.has('company')} 
+        <Collapsible
+          open={openSections.has('company')}
           onOpenChange={() => toggleSection('company')}
         >
           <CollapsibleTrigger className="w-full">
@@ -175,13 +179,13 @@ export const ProjectDetailsForm = ({
               </div>
             </div>
           </CollapsibleTrigger>
-          
+
           <CollapsibleContent>
             <div className="px-4 pb-4 space-y-4 border-t border-border pt-4">
               <div className="flex justify-end">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleReset('company')}
                   className="gap-2"
                 >
@@ -206,7 +210,9 @@ export const ProjectDetailsForm = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <Label htmlFor="companyAddress" className="text-sm font-medium">Address</Label>
+                    <Label htmlFor="companyAddress" className="text-sm font-medium">
+                      Address
+                    </Label>
                     <Input
                       id="companyAddress"
                       value={value.companyAddress}
@@ -216,7 +222,9 @@ export const ProjectDetailsForm = ({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="companyPostcode" className="text-sm font-medium">Postcode</Label>
+                    <Label htmlFor="companyPostcode" className="text-sm font-medium">
+                      Postcode
+                    </Label>
                     <Input
                       id="companyPostcode"
                       value={value.companyPostcode}
@@ -229,7 +237,9 @@ export const ProjectDetailsForm = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <Label htmlFor="companyPhone" className="text-sm font-medium">Phone</Label>
+                    <Label htmlFor="companyPhone" className="text-sm font-medium">
+                      Phone
+                    </Label>
                     <Input
                       id="companyPhone"
                       value={value.companyPhone}
@@ -239,7 +249,9 @@ export const ProjectDetailsForm = ({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="companyEmail" className="text-sm font-medium">Email</Label>
+                    <Label htmlFor="companyEmail" className="text-sm font-medium">
+                      Email
+                    </Label>
                     <Input
                       id="companyEmail"
                       type="email"
@@ -253,7 +265,9 @@ export const ProjectDetailsForm = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <Label htmlFor="companyWebsite" className="text-sm font-medium">Website</Label>
+                    <Label htmlFor="companyWebsite" className="text-sm font-medium">
+                      Website
+                    </Label>
                     <Input
                       id="companyWebsite"
                       value={value.companyWebsite || ''}
@@ -263,7 +277,9 @@ export const ProjectDetailsForm = ({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="registrationNumber" className="text-sm font-medium">Registration No.</Label>
+                    <Label htmlFor="registrationNumber" className="text-sm font-medium">
+                      Registration No.
+                    </Label>
                     <Input
                       id="registrationNumber"
                       value={value.registrationNumber || ''}
@@ -273,7 +289,9 @@ export const ProjectDetailsForm = ({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="vatNumber" className="text-sm font-medium">VAT Number</Label>
+                    <Label htmlFor="vatNumber" className="text-sm font-medium">
+                      VAT Number
+                    </Label>
                     <Input
                       id="vatNumber"
                       value={value.vatNumber || ''}
@@ -291,10 +309,7 @@ export const ProjectDetailsForm = ({
 
       {/* Client Details Section */}
       <Card>
-        <Collapsible 
-          open={openSections.has('client')} 
-          onOpenChange={() => toggleSection('client')}
-        >
+        <Collapsible open={openSections.has('client')} onOpenChange={() => toggleSection('client')}>
           <CollapsibleTrigger className="w-full">
             <div className="p-4 flex items-center justify-between hover:bg-accent/50 transition-colors">
               <div className="flex items-center gap-3">
@@ -308,13 +323,13 @@ export const ProjectDetailsForm = ({
               </div>
             </div>
           </CollapsibleTrigger>
-          
+
           <CollapsibleContent>
             <div className="px-4 pb-4 space-y-4 border-t border-border pt-4">
               <div className="flex justify-end">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleReset('client')}
                   className="gap-2"
                 >
@@ -351,7 +366,9 @@ export const ProjectDetailsForm = ({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="postcode" className="text-sm font-medium">Postcode</Label>
+                    <Label htmlFor="postcode" className="text-sm font-medium">
+                      Postcode
+                    </Label>
                     <Input
                       id="postcode"
                       value={value.postcode}
@@ -364,7 +381,9 @@ export const ProjectDetailsForm = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <Label htmlFor="contactNumber" className="text-sm font-medium">Contact Number</Label>
+                    <Label htmlFor="contactNumber" className="text-sm font-medium">
+                      Contact Number
+                    </Label>
                     <Input
                       id="contactNumber"
                       value={value.contactNumber}
@@ -374,7 +393,9 @@ export const ProjectDetailsForm = ({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="clientEmail" className="text-sm font-medium">Email</Label>
+                    <Label htmlFor="clientEmail" className="text-sm font-medium">
+                      Email
+                    </Label>
                     <Input
                       id="clientEmail"
                       type="email"
@@ -393,8 +414,8 @@ export const ProjectDetailsForm = ({
 
       {/* Project Information Section */}
       <Card>
-        <Collapsible 
-          open={openSections.has('project')} 
+        <Collapsible
+          open={openSections.has('project')}
           onOpenChange={() => toggleSection('project')}
         >
           <CollapsibleTrigger className="w-full">
@@ -410,13 +431,13 @@ export const ProjectDetailsForm = ({
               </div>
             </div>
           </CollapsibleTrigger>
-          
+
           <CollapsibleContent>
             <div className="px-4 pb-4 space-y-4 border-t border-border pt-4">
               <div className="flex justify-end">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleReset('project')}
                   className="gap-2"
                 >
@@ -441,7 +462,9 @@ export const ProjectDetailsForm = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <Label htmlFor="location" className="text-sm font-medium">Location</Label>
+                    <Label htmlFor="location" className="text-sm font-medium">
+                      Location
+                    </Label>
                     <Input
                       id="location"
                       value={value.location}
@@ -466,7 +489,9 @@ export const ProjectDetailsForm = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <Label htmlFor="designDate" className="text-sm font-medium">Design Date</Label>
+                    <Label htmlFor="designDate" className="text-sm font-medium">
+                      Design Date
+                    </Label>
                     <Input
                       id="designDate"
                       type="date"
@@ -476,7 +501,9 @@ export const ProjectDetailsForm = ({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="installationType" className="text-sm font-medium">Installation Type</Label>
+                    <Label htmlFor="installationType" className="text-sm font-medium">
+                      Installation Type
+                    </Label>
                     <Input
                       id="installationType"
                       value={value.installationType}

@@ -19,7 +19,9 @@ export interface QueueOperation {
  * Internally uses the new syncQueue
  */
 export const offlineQueue = {
-  async addToQueue(operation: Omit<QueueOperation, 'id' | 'timestamp' | 'retryCount'>): Promise<void> {
+  async addToQueue(
+    operation: Omit<QueueOperation, 'id' | 'timestamp' | 'retryCount'>
+  ): Promise<void> {
     // Note: delete operations are not supported in the new system
     if (operation.type === 'delete') {
       console.warn('[offlineQueue] Delete operations are handled differently in the new system');
@@ -37,7 +39,7 @@ export const offlineQueue = {
 
   async getQueue(): Promise<QueueOperation[]> {
     const operations = await syncQueue.getPending();
-    return operations.map(op => ({
+    return operations.map((op) => ({
       id: op.id,
       type: op.type,
       reportId: op.reportId,

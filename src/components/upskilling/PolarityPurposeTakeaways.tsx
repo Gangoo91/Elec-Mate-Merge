@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const PolarityPurposeTakeaways = () => {
   const takeaways = [
-    "Polarity testing is a mandatory safety requirement, not an optional check",
-    "Incorrect polarity can be fatal - circuits may remain live when switched off",
-    "All single-pole devices must be connected to the line conductor",
-    "The test must be completed before any circuit is energised",
-    "Professional liability and legal compliance depend on proper polarity verification"
+    'Polarity testing is a mandatory safety requirement, not an optional check',
+    'Incorrect polarity can be fatal - circuits may remain live when switched off',
+    'All single-pole devices must be connected to the line conductor',
+    'The test must be completed before any circuit is energised',
+    'Professional liability and legal compliance depend on proper polarity verification',
   ];
 
   return (

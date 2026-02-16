@@ -60,8 +60,9 @@ const PracticalTipsTab = () => {
       <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
         <h4 className="font-semibold text-amber-400 mb-3">Legal and Insurance Considerations</h4>
         <p className="text-sm mb-3">
-          Electrical certificates have significant legal implications. They may be required as evidence 
-          in insurance claims, property sales, legal disputes, or Health and Safety investigations.
+          Electrical certificates have significant legal implications. They may be required as
+          evidence in insurance claims, property sales, legal disputes, or Health and Safety
+          investigations.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
@@ -95,7 +96,7 @@ const PracticalTipsTab = () => {
         <h4 className="font-semibold text-violet-400 mb-3">Quality Assurance and Verification</h4>
         <div className="text-sm space-y-3">
           <p>
-            Implementing systematic quality assurance procedures ensures consistent, accurate 
+            Implementing systematic quality assurance procedures ensures consistent, accurate
             certificate completion and reduces the risk of errors or omissions.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -131,8 +132,8 @@ const PracticalTipsTab = () => {
         <h4 className="font-semibold text-orange-400 mb-3">Client Communication and Education</h4>
         <div className="text-sm space-y-3">
           <p>
-            Effective communication with clients is essential for professional service and 
-            helps ensure they understand their responsibilities and the importance of the certification.
+            Effective communication with clients is essential for professional service and helps
+            ensure they understand their responsibilities and the importance of the certification.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -167,8 +168,8 @@ const PracticalTipsTab = () => {
         <h4 className="font-semibold text-teal-400 mb-3">Common Mistakes and How to Avoid Them</h4>
         <div className="text-sm space-y-3">
           <p>
-            Learning from common errors helps improve certificate quality and reduces 
-            the risk of regulatory or professional issues.
+            Learning from common errors helps improve certificate quality and reduces the risk of
+            regulatory or professional issues.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -196,15 +197,18 @@ const PracticalTipsTab = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded">
-            <h6 className="font-medium text-red-400 mb-2">🚫 Critical Errors That Must Be Avoided</h6>
+            <h6 className="font-medium text-red-400 mb-2">
+              🚫 Critical Errors That Must Be Avoided
+            </h6>
             <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2">
               <div>
                 <strong>Never:</strong> Sign certificates for work you haven't personally verified
               </div>
               <div>
-                <strong>Never:</strong> Issue certificates for work that doesn't comply with regulations
+                <strong>Never:</strong> Issue certificates for work that doesn't comply with
+                regulations
               </div>
             </div>
           </div>
@@ -212,7 +216,9 @@ const PracticalTipsTab = () => {
       </div>
 
       <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-4">
-        <h4 className="font-semibold text-indigo-400 mb-3">Professional Development and Resources</h4>
+        <h4 className="font-semibold text-indigo-400 mb-3">
+          Professional Development and Resources
+        </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <h5 className="font-medium text-foreground mb-2">Continuing Education:</h5>

@@ -10,81 +10,121 @@ export const ProsumerInstallationSection = () => {
           <Factory className="h-5 w-5 text-elec-yellow" />
           Prosumer Electrical Installation (PEI) Definition
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">BS 7671 Part 8</Badge>
+        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">
+          BS 7671 Part 8
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600 mb-4">
-          <h5 className="text-elec-yellow font-semibold mb-2">Code Reference: BS 7671:2018+A2:2022 Part 8</h5>
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Code Reference: BS 7671:2018+A2:2022 Part 8
+          </h5>
           <p className="text-sm mb-3">
-            Revolutionary new part covering prosumer electrical installations - installations that 
+            Revolutionary new part covering prosumer electrical installations - installations that
             consume and generate energy, fundamentally changing how we approach electrical design.
           </p>
           <div className="bg-gray-800 p-3 rounded border border-gray-600">
             <h6 className="text-yellow-400 font-medium mb-2">Official Definition:</h6>
             <p className="text-sm italic">
-              "An electrical installation containing one or more prosumer installations and 
-              comprising generating plant and associated equipment for the generation, 
+              "An electrical installation containing one or more prosumer installations and
+              comprising generating plant and associated equipment for the generation,
               transformation, rectification, inversion and storage of electrical energy."
             </p>
           </div>
         </div>
-        
+
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">PEI System Components & Integration:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            PEI System Components & Integration:
+          </h5>
+
           {/* Mobile-friendly component cards */}
           <div className="grid gap-4 md:hidden">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-blue-400">Solar PV Arrays</h6>
-                <span className="text-xs bg-blue-600 text-foreground px-2 py-1 rounded">1kW - 50kW</span>
+                <span className="text-xs bg-blue-600 text-foreground px-2 py-1 rounded">
+                  1kW - 50kW
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Function:</strong> DC generation from photovoltaic cells</p>
-              <p className="text-sm mb-1"><strong>Requirements:</strong> DC isolation, MPP tracking, module-level monitoring</p>
-              <p className="text-xs text-gray-400">Typical efficiency: 18-22% for monocrystalline panels</p>
+              <p className="text-sm mb-1">
+                <strong>Function:</strong> DC generation from photovoltaic cells
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Requirements:</strong> DC isolation, MPP tracking, module-level monitoring
+              </p>
+              <p className="text-xs text-gray-400">
+                Typical efficiency: 18-22% for monocrystalline panels
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-green-400">Wind Generation</h6>
-                <span className="text-xs bg-green-600 text-foreground px-2 py-1 rounded">1kW - 15kW</span>
+                <span className="text-xs bg-green-600 text-foreground px-2 py-1 rounded">
+                  1kW - 15kW
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Function:</strong> AC generation from wind energy</p>
-              <p className="text-sm mb-1"><strong>Requirements:</strong> Grid synchronisation, dynamic braking systems</p>
+              <p className="text-sm mb-1">
+                <strong>Function:</strong> AC generation from wind energy
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Requirements:</strong> Grid synchronisation, dynamic braking systems
+              </p>
               <p className="text-xs text-gray-400">Cut-in wind speed: typically 3-4 m/s</p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-orange-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-orange-400">Battery Storage (BESS)</h6>
-                <span className="text-xs bg-orange-600 text-foreground px-2 py-1 rounded">2kWh - 100kWh</span>
+                <span className="text-xs bg-orange-600 text-foreground px-2 py-1 rounded">
+                  2kWh - 100kWh
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Function:</strong> Energy storage and grid services</p>
-              <p className="text-sm mb-1"><strong>Requirements:</strong> BMS, thermal management, fire suppression</p>
+              <p className="text-sm mb-1">
+                <strong>Function:</strong> Energy storage and grid services
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Requirements:</strong> BMS, thermal management, fire suppression
+              </p>
               <p className="text-xs text-gray-400">Lithium-ion: 95%+ round-trip efficiency</p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-purple-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-purple-400">EV Charging & V2G</h6>
-                <span className="text-xs bg-purple-600 text-foreground px-2 py-1 rounded">3kW - 22kW</span>
+                <span className="text-xs bg-purple-600 text-foreground px-2 py-1 rounded">
+                  3kW - 22kW
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Function:</strong> Vehicle charging and vehicle-to-grid services</p>
-              <p className="text-sm mb-1"><strong>Requirements:</strong> Bi-directional capability, OCPP compliance</p>
+              <p className="text-sm mb-1">
+                <strong>Function:</strong> Vehicle charging and vehicle-to-grid services
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Requirements:</strong> Bi-directional capability, OCPP compliance
+              </p>
               <p className="text-xs text-gray-400">CHAdeMO or CCS for DC bi-directional</p>
             </div>
 
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-red-400">Heat Pumps & Thermal</h6>
-                <span className="text-xs bg-red-600 text-foreground px-2 py-1 rounded">3kW - 12kW</span>
+                <span className="text-xs bg-red-600 text-foreground px-2 py-1 rounded">
+                  3kW - 12kW
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Function:</strong> Controllable thermal loads with storage</p>
-              <p className="text-sm mb-1"><strong>Requirements:</strong> Smart controls, demand response capability</p>
-              <p className="text-xs text-gray-400">COP: 3-5 depending on technology and conditions</p>
+              <p className="text-sm mb-1">
+                <strong>Function:</strong> Controllable thermal loads with storage
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Requirements:</strong> Smart controls, demand response capability
+              </p>
+              <p className="text-xs text-gray-400">
+                COP: 3-5 depending on technology and conditions
+              </p>
             </div>
           </div>
-          
+
           {/* Desktop table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm">
@@ -139,7 +179,9 @@ export const ProsumerInstallationSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Installation Classifications & Scope:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Installation Classifications & Scope:
+          </h5>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="text-blue-400 font-medium mb-2">Domestic PEI</h6>

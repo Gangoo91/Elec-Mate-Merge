@@ -1,14 +1,24 @@
-import { ArrowLeft, Zap, CheckCircle, HelpCircle, Settings, Gauge, BarChart, Target } from 'lucide-react';
+import {
+  ArrowLeft,
+  Zap,
+  CheckCircle,
+  HelpCircle,
+  Settings,
+  Gauge,
+  BarChart,
+  Target,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule5Section5 = () => {
   useSEO({
-    title: "Loop Tuning and Stability Considerations | Instrumentation Module 5",
-    description: "Learn advanced techniques for optimising control loop performance and ensuring system stability in industrial control environments."
+    title: 'Loop Tuning and Stability Considerations | Instrumentation Module 5',
+    description:
+      'Learn advanced techniques for optimising control loop performance and ensuring system stability in industrial control environments.',
   });
 
   return (
@@ -16,7 +26,10 @@ const InstrumentationModule5Section5 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-5" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-5"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Module 5
           </Link>
@@ -45,7 +58,9 @@ const InstrumentationModule5Section5 = () => {
         {/* Section 01 - Advanced Tuning Methods */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Advanced Tuning Methods</h2>
           </div>
 
@@ -56,7 +71,8 @@ const InstrumentationModule5Section5 = () => {
                 <h3 className="font-medium text-white mb-2">Process-Specific Tuning</h3>
                 <p className="text-white/80 text-sm">
                   Different process types require different tuning approaches. Understanding process
-                  characteristics helps select the most effective tuning method for optimal performance.
+                  characteristics helps select the most effective tuning method for optimal
+                  performance.
                 </p>
               </div>
             </div>
@@ -64,7 +80,9 @@ const InstrumentationModule5Section5 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-blue-300 mb-2">Self-Regulating Processes</h4>
-                <p className="text-white/70 text-xs mb-2">Naturally reach steady state (e.g., temperature)</p>
+                <p className="text-white/70 text-xs mb-2">
+                  Naturally reach steady state (e.g., temperature)
+                </p>
                 <ul className="space-y-1 text-white/80 text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
@@ -82,7 +100,9 @@ const InstrumentationModule5Section5 = () => {
               </div>
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-green-300 mb-2">Integrating Processes</h4>
-                <p className="text-white/70 text-xs mb-2">Continue changing without feedback (e.g., level)</p>
+                <p className="text-white/70 text-xs mb-2">
+                  Continue changing without feedback (e.g., level)
+                </p>
                 <ul className="space-y-1 text-white/80 text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -134,15 +154,21 @@ const InstrumentationModule5Section5 = () => {
               <div className="space-y-2">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Pattern Recognition</p>
-                  <p className="text-white/70 text-xs">Identifies oscillations, overshoot, and performance degradation</p>
+                  <p className="text-white/70 text-xs">
+                    Identifies oscillations, overshoot, and performance degradation
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Relay Feedback</p>
-                  <p className="text-white/70 text-xs">Uses relay oscillations to identify critical parameters</p>
+                  <p className="text-white/70 text-xs">
+                    Uses relay oscillations to identify critical parameters
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Continuous Adaptation</p>
-                  <p className="text-white/70 text-xs">Monitors performance and adjusts parameters in real-time</p>
+                  <p className="text-white/70 text-xs">
+                    Monitors performance and adjusts parameters in real-time
+                  </p>
                 </div>
               </div>
             </div>
@@ -159,7 +185,9 @@ const InstrumentationModule5Section5 = () => {
         {/* Section 02 - Stability Analysis */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Stability Analysis and Margins</h2>
           </div>
 
@@ -169,8 +197,9 @@ const InstrumentationModule5Section5 = () => {
               <div>
                 <h3 className="font-medium text-white mb-2">Understanding Stability Criteria</h3>
                 <p className="text-white/80 text-sm">
-                  Stability margins indicate how much the system can tolerate changes before becoming
-                  unstable. Adequate margins ensure robust operation under varying conditions.
+                  Stability margins indicate how much the system can tolerate changes before
+                  becoming unstable. Adequate margins ensure robust operation under varying
+                  conditions.
                 </p>
               </div>
             </div>
@@ -210,21 +239,27 @@ const InstrumentationModule5Section5 = () => {
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium text-sm">Magnitude Plot</p>
-                    <p className="text-white/70 text-xs">Shows gain vs frequency, indicates gain margin</p>
+                    <p className="text-white/70 text-xs">
+                      Shows gain vs frequency, indicates gain margin
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium text-sm">Phase Plot</p>
-                    <p className="text-white/70 text-xs">Shows phase shift vs frequency, indicates phase margin</p>
+                    <p className="text-white/70 text-xs">
+                      Shows phase shift vs frequency, indicates phase margin
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium text-sm">Bandwidth</p>
-                    <p className="text-white/70 text-xs">Frequency range where system responds effectively</p>
+                    <p className="text-white/70 text-xs">
+                      Frequency range where system responds effectively
+                    </p>
                   </div>
                 </div>
               </div>
@@ -269,7 +304,9 @@ const InstrumentationModule5Section5 = () => {
         {/* Section 03 - Dead Time Compensation */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Dead Time Compensation</h2>
           </div>
 
@@ -280,7 +317,8 @@ const InstrumentationModule5Section5 = () => {
                 <h3 className="font-medium text-white mb-2">Understanding Dead Time</h3>
                 <p className="text-white/80 text-sm">
                   Dead time (transportation delay) occurs when there is a delay between controller
-                  action and measurable response. It is one of the most challenging aspects of process control.
+                  action and measurable response. It is one of the most challenging aspects of
+                  process control.
                 </p>
               </div>
             </div>
@@ -348,7 +386,9 @@ const InstrumentationModule5Section5 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-purple-300 mb-2">Dahlin Controller</h4>
-                <p className="text-white/70 text-xs mb-2">Digital controller designed for dead time processes</p>
+                <p className="text-white/70 text-xs mb-2">
+                  Digital controller designed for dead time processes
+                </p>
                 <ul className="space-y-1 text-white/70 text-xs">
                   <li>Finite settling time response</li>
                   <li>Good for digital systems</li>
@@ -357,7 +397,9 @@ const InstrumentationModule5Section5 = () => {
               </div>
               <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-orange-300 mb-2">Fuzzy Logic Control</h4>
-                <p className="text-white/70 text-xs mb-2">Rule-based control for dead time handling</p>
+                <p className="text-white/70 text-xs mb-2">
+                  Rule-based control for dead time handling
+                </p>
                 <ul className="space-y-1 text-white/70 text-xs">
                   <li>No mathematical model needed</li>
                   <li>Robust to uncertainties</li>
@@ -378,7 +420,9 @@ const InstrumentationModule5Section5 = () => {
         {/* Section 04 - Performance Evaluation */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">Performance Evaluation</h2>
           </div>
 
@@ -422,15 +466,23 @@ const InstrumentationModule5Section5 = () => {
               <div className="space-y-2">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">IAE (Integral Absolute Error)</p>
-                  <p className="text-white/70 text-xs">Integral of |error| dt - Penalises all errors equally</p>
+                  <p className="text-white/70 text-xs">
+                    Integral of |error| dt - Penalises all errors equally
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">ISE (Integral Square Error)</p>
-                  <p className="text-white/70 text-xs">Integral of error squared dt - Penalises large errors more heavily</p>
+                  <p className="text-white/70 text-xs">
+                    Integral of error squared dt - Penalises large errors more heavily
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
-                  <p className="text-white font-medium text-sm">ITAE (Integral Time Absolute Error)</p>
-                  <p className="text-white/70 text-xs">Integral of t|error| dt - Emphasises reducing errors quickly</p>
+                  <p className="text-white font-medium text-sm">
+                    ITAE (Integral Time Absolute Error)
+                  </p>
+                  <p className="text-white/70 text-xs">
+                    Integral of t|error| dt - Emphasises reducing errors quickly
+                  </p>
                 </div>
               </div>
             </div>
@@ -463,19 +515,30 @@ const InstrumentationModule5Section5 = () => {
 
         {/* Real-World Scenario */}
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 mb-8">
-          <h4 className="font-medium text-blue-300 mb-2">Real-World Scenario: Chemical Reactor Temperature</h4>
+          <h4 className="font-medium text-blue-300 mb-2">
+            Real-World Scenario: Chemical Reactor Temperature
+          </h4>
           <div className="space-y-3 text-white/80 text-sm">
             <div>
               <p className="text-white font-medium">Challenge:</p>
-              <p className="text-white/70 text-xs">A chemical reactor has significant dead time (3 minutes) and is sensitive to temperature overshoot which can damage the catalyst.</p>
+              <p className="text-white/70 text-xs">
+                A chemical reactor has significant dead time (3 minutes) and is sensitive to
+                temperature overshoot which can damage the catalyst.
+              </p>
             </div>
             <div>
               <p className="text-white font-medium">Solution:</p>
-              <p className="text-white/70 text-xs">Implement Smith Predictor with conservative tuning. Use model-based feed-forward control for known disturbances like feed rate changes.</p>
+              <p className="text-white/70 text-xs">
+                Implement Smith Predictor with conservative tuning. Use model-based feed-forward
+                control for known disturbances like feed rate changes.
+              </p>
             </div>
             <div>
               <p className="text-white font-medium">Result:</p>
-              <p className="text-white/70 text-xs">Dead time compensation reduces settling time by 70% while maintaining tight temperature control without overshoot.</p>
+              <p className="text-white/70 text-xs">
+                Dead time compensation reduces settling time by 70% while maintaining tight
+                temperature control without overshoot.
+              </p>
             </div>
           </div>
         </div>
@@ -492,22 +555,27 @@ const InstrumentationModule5Section5 = () => {
               <h4 className="font-medium text-white mb-2">What is the main goal of loop tuning?</h4>
               <p className="text-white/70 text-sm">
                 Loop tuning aims to optimise system performance (speed, accuracy, robustness) while
-                maintaining stability. The goal is not to make the system as fast as possible, but to
-                achieve the best balance between performance and stability for the application.
+                maintaining stability. The goal is not to make the system as fast as possible, but
+                to achieve the best balance between performance and stability for the application.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">What indicates an over-tuned (aggressive) control loop?</h4>
+              <h4 className="font-medium text-white mb-2">
+                What indicates an over-tuned (aggressive) control loop?
+              </h4>
               <p className="text-white/70 text-sm">
-                Over-tuned loops exhibit oscillations, overshoot, and potentially unstable behaviour.
-                Signs include excessive process variable swings, frequent valve movement, and slow
-                settling after disturbances. Reducing gain or increasing integral time usually helps.
+                Over-tuned loops exhibit oscillations, overshoot, and potentially unstable
+                behaviour. Signs include excessive process variable swings, frequent valve movement,
+                and slow settling after disturbances. Reducing gain or increasing integral time
+                usually helps.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">Why should control loops be tested with realistic disturbances?</h4>
+              <h4 className="font-medium text-white mb-2">
+                Why should control loops be tested with realistic disturbances?
+              </h4>
               <p className="text-white/70 text-sm">
                 Testing with realistic disturbances ensures the control loop will perform well under
                 actual operating conditions, not just ideal laboratory conditions. Real processes
@@ -517,11 +585,14 @@ const InstrumentationModule5Section5 = () => {
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">When is model-based tuning preferred over empirical methods?</h4>
+              <h4 className="font-medium text-white mb-2">
+                When is model-based tuning preferred over empirical methods?
+              </h4>
               <p className="text-white/70 text-sm">
-                Model-based tuning is preferred when the process is well understood, an accurate model
-                exists, and the cost of poor tuning is high. Empirical methods like Ziegler-Nichols are
-                better for unknown processes where trial and error is acceptable.
+                Model-based tuning is preferred when the process is well understood, an accurate
+                model exists, and the cost of poor tuning is high. Empirical methods like
+                Ziegler-Nichols are better for unknown processes where trial and error is
+                acceptable.
               </p>
             </div>
           </div>
@@ -531,12 +602,7 @@ const InstrumentationModule5Section5 = () => {
         <div className="mb-8">
           <SingleQuestionQuiz
             question="What is the typical target range for phase margin in a stable control system?"
-            options={[
-              "5-15 degrees",
-              "30-60 degrees",
-              "90-120 degrees",
-              "180-270 degrees"
-            ]}
+            options={['5-15 degrees', '30-60 degrees', '90-120 degrees', '180-270 degrees']}
             correctAnswer={1}
             explanation="A phase margin of 30-60 degrees provides good stability with adequate damping. Lower values risk oscillation, while higher values may result in sluggish response."
           />

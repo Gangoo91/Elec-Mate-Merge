@@ -1,68 +1,78 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
-  FileText, User, Briefcase, Calculator, Lightbulb, Plus,
-  Clock, ChevronRight, Sparkles
-} from "lucide-react";
+  FileText,
+  User,
+  Briefcase,
+  Calculator,
+  Lightbulb,
+  Plus,
+  Clock,
+  ChevronRight,
+  Sparkles,
+} from 'lucide-react';
 
 interface EmptyStateGuideProps {
-  type: "quote" | "invoice";
+  type: 'quote' | 'invoice';
   onCreateClick: () => void;
 }
 
 export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreateClick }) => {
-  const steps = type === "quote" ? [
-    {
-      icon: User,
-      title: "Add Client Details",
-      description: "Enter customer information and contact details",
-      time: "30 sec"
-    },
-    {
-      icon: Briefcase,
-      title: "Describe the Job",
-      description: "Add job title, description, and work scope",
-      time: "1 min"
-    },
-    {
-      icon: Calculator,
-      title: "Add Items",
-      description: "Include labour, materials, and equipment costs",
-      time: "2 min"
-    },
-    {
-      icon: FileText,
-      title: "Generate Quote",
-      description: "Review and download professional PDF quote",
-      time: "30 sec"
-    }
-  ] : [
-    {
-      icon: User,
-      title: "Client Details",
-      description: "Customer and project information",
-      time: "1 min"
-    },
-    {
-      icon: Calculator,
-      title: "Line Items",
-      description: "Completed work and materials",
-      time: "2 min"
-    },
-    {
-      icon: FileText,
-      title: "Payment Terms",
-      description: "Due date and payment methods",
-      time: "30 sec"
-    },
-    {
-      icon: Sparkles,
-      title: "Generate",
-      description: "Download professional PDF",
-      time: "30 sec"
-    }
-  ];
+  const steps =
+    type === 'quote'
+      ? [
+          {
+            icon: User,
+            title: 'Add Client Details',
+            description: 'Enter customer information and contact details',
+            time: '30 sec',
+          },
+          {
+            icon: Briefcase,
+            title: 'Describe the Job',
+            description: 'Add job title, description, and work scope',
+            time: '1 min',
+          },
+          {
+            icon: Calculator,
+            title: 'Add Items',
+            description: 'Include labour, materials, and equipment costs',
+            time: '2 min',
+          },
+          {
+            icon: FileText,
+            title: 'Generate Quote',
+            description: 'Review and download professional PDF quote',
+            time: '30 sec',
+          },
+        ]
+      : [
+          {
+            icon: User,
+            title: 'Client Details',
+            description: 'Customer and project information',
+            time: '1 min',
+          },
+          {
+            icon: Calculator,
+            title: 'Line Items',
+            description: 'Completed work and materials',
+            time: '2 min',
+          },
+          {
+            icon: FileText,
+            title: 'Payment Terms',
+            description: 'Due date and payment methods',
+            time: '30 sec',
+          },
+          {
+            icon: Sparkles,
+            title: 'Generate',
+            description: 'Download professional PDF',
+            time: '30 sec',
+          },
+        ];
 
   return (
     <div className="space-y-6">
@@ -73,10 +83,10 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
         </div>
         <div className="space-y-2">
           <h2 className="text-xl sm:text-2xl font-bold text-white">
-            Create Your First {type === "quote" ? "Quote" : "Invoice"}
+            Create Your First {type === 'quote' ? 'Quote' : 'Invoice'}
           </h2>
           <p className="text-sm sm:text-base text-white/60 max-w-md mx-auto">
-            Professional {type === "quote" ? "quotes" : "invoices"} in 4 easy steps
+            Professional {type === 'quote' ? 'quotes' : 'invoices'} in 4 easy steps
           </p>
         </div>
 
@@ -134,9 +144,9 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-white text-sm sm:text-base">Quick Tip</p>
               <p className="text-xs sm:text-sm text-white/60 mt-0.5">
-                {type === "quote"
-                  ? "All fields are auto-saved as you type. Return anytime to complete your quote."
-                  : "Create invoices from accepted quotes or start fresh with new client details."}
+                {type === 'quote'
+                  ? 'All fields are auto-saved as you type. Return anytime to complete your quote.'
+                  : 'Create invoices from accepted quotes or start fresh with new client details.'}
               </p>
             </div>
           </div>
@@ -151,7 +161,7 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
           className="w-full h-14 sm:h-12 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-elec-yellow/20"
         >
           <Plus className="mr-2 h-5 w-5" />
-          Create {type === "quote" ? "Quote" : "Invoice"} Now
+          Create {type === 'quote' ? 'Quote' : 'Invoice'} Now
           <ChevronRight className="ml-2 h-5 w-5" />
         </Button>
       </div>

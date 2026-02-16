@@ -6,16 +6,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Receipt,
-  Camera,
-  X,
-  Loader2,
-  Send,
-  PoundSterling,
-  ChevronDown,
-  Clock,
-} from 'lucide-react';
+import { Receipt, Camera, X, Loader2, Send, PoundSterling, ChevronDown, Clock } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -116,7 +107,10 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-xl sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-xl sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -195,11 +189,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
               <label className="text-sm font-medium text-white/80">
                 Charge to Job <span className="text-white/40">(optional)</span>
               </label>
-              <Select
-                value={selectedJobId}
-                onValueChange={setSelectedJobId}
-                disabled={jobsLoading}
-              >
+              <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
                 <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="No job selected" />
                 </SelectTrigger>
@@ -236,10 +226,9 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
                 >
                   <Clock className="h-4 w-4" />
                   Recent Expenses
-                  <ChevronDown className={cn(
-                    'h-4 w-4 transition-transform',
-                    showRecent && 'rotate-180'
-                  )} />
+                  <ChevronDown
+                    className={cn('h-4 w-4 transition-transform', showRecent && 'rotate-180')}
+                  />
                 </button>
 
                 <AnimatePresence>

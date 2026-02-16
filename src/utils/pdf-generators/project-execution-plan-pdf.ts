@@ -41,11 +41,11 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
   doc.setFontSize(24);
   doc.setFont('helvetica', 'bold');
   doc.text('Project Execution Plan', pageWidth / 2, 60, { align: 'center' });
-  
+
   doc.setFontSize(16);
   doc.setFont('helvetica', 'normal');
   doc.text(data.projectName, pageWidth / 2, 80, { align: 'center' });
-  
+
   doc.setFontSize(12);
   doc.text(`Project Manager: ${data.projectManager}`, pageWidth / 2, 100, { align: 'center' });
   doc.text(`Period: ${data.startDate} to ${data.endDate}`, pageWidth / 2, 110, { align: 'center' });
@@ -53,7 +53,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
   // Page 2 - Project Phases
   doc.addPage();
   yPos = 20;
-  
+
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
   doc.text('Project Phases & Timeline', 15, yPos);
@@ -74,7 +74,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
     doc.setFont('helvetica', 'normal');
     doc.text(`Duration: ${phase.duration}`, 20, yPos);
     yPos += 6;
-    
+
     if (phase.dependencies) {
       doc.text(`Dependencies: ${phase.dependencies}`, 20, yPos);
       yPos += 6;
@@ -82,7 +82,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
 
     doc.text('Tasks:', 20, yPos);
     yPos += 5;
-    phase.tasks.forEach(task => {
+    phase.tasks.forEach((task) => {
       doc.text(`• ${task}`, 25, yPos);
       yPos += 5;
     });
@@ -90,7 +90,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
 
     doc.text('Resources:', 20, yPos);
     yPos += 5;
-    phase.resources.forEach(resource => {
+    phase.resources.forEach((resource) => {
       doc.text(`• ${resource}`, 25, yPos);
       yPos += 5;
     });
@@ -100,7 +100,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
   // Resource Allocation
   doc.addPage();
   yPos = 20;
-  
+
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
   doc.text('Resource Allocation', 15, yPos);
@@ -111,10 +111,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
   doc.text('Materials Budget', 15, yPos);
   yPos += 8;
 
-  const materialRows = data.resources.materials.map(m => [
-    m.item,
-    `£${m.cost.toFixed(2)}`
-  ]);
+  const materialRows = data.resources.materials.map((m) => [m.item, `£${m.cost.toFixed(2)}`]);
 
   autoTable(doc, {
     startY: yPos,
@@ -122,7 +119,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
     body: materialRows,
     theme: 'grid',
     headStyles: { fillColor: [236, 72, 153], textColor: [255, 255, 255] },
-    styles: { fontSize: 9, cellPadding: 3 }
+    styles: { fontSize: 9, cellPadding: 3 },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 12;
@@ -133,11 +130,11 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
   doc.text('Labour Allocation', 15, yPos);
   yPos += 8;
 
-  const labourRows = data.resources.labour.map(l => [
+  const labourRows = data.resources.labour.map((l) => [
     l.role,
     l.hours.toString(),
     `£${l.rate.toFixed(2)}`,
-    `£${(l.hours * l.rate).toFixed(2)}`
+    `£${(l.hours * l.rate).toFixed(2)}`,
   ]);
 
   autoTable(doc, {
@@ -146,7 +143,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
     body: labourRows,
     theme: 'grid',
     headStyles: { fillColor: [236, 72, 153], textColor: [255, 255, 255] },
-    styles: { fontSize: 9, cellPadding: 3 }
+    styles: { fontSize: 9, cellPadding: 3 },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 8;
@@ -159,16 +156,12 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
   // Risk Register
   doc.addPage();
   yPos = 20;
-  
+
   doc.setFontSize(18);
   doc.text('Risk Register', 15, yPos);
   yPos += 10;
 
-  const riskRows = data.risks.map(r => [
-    r.risk,
-    r.severity,
-    r.mitigation
-  ]);
+  const riskRows = data.risks.map((r) => [r.risk, r.severity, r.mitigation]);
 
   autoTable(doc, {
     startY: yPos,
@@ -180,7 +173,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
     columnStyles: {
       0: { cellWidth: 60 },
       1: { cellWidth: 30 },
-      2: { cellWidth: 90 }
+      2: { cellWidth: 90 },
     },
     didParseCell: (data) => {
       if (data.column.index === 1) {
@@ -191,23 +184,19 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
           data.cell.styles.textColor = [255, 165, 0];
         }
       }
-    }
+    },
   });
 
   // Milestones
   doc.addPage();
   yPos = 20;
-  
+
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
   doc.text('Project Milestones', 15, yPos);
   yPos += 10;
 
-  const milestoneRows = data.milestones.map(m => [
-    m.milestone,
-    m.targetDate,
-    m.status
-  ]);
+  const milestoneRows = data.milestones.map((m) => [m.milestone, m.targetDate, m.status]);
 
   autoTable(doc, {
     startY: yPos,
@@ -215,7 +204,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
     body: milestoneRows,
     theme: 'grid',
     headStyles: { fillColor: [16, 185, 129], textColor: [255, 255, 255] },
-    styles: { fontSize: 9, cellPadding: 3 }
+    styles: { fontSize: 9, cellPadding: 3 },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 15;
@@ -228,7 +217,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
 
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  data.referencedDocuments.forEach(docRef => {
+  data.referencedDocuments.forEach((docRef) => {
     doc.text(`• ${docRef}`, 20, yPos);
     yPos += 6;
   });
@@ -250,7 +239,7 @@ export const generateProjectExecutionPlanPDF = (data: PXPData): jsPDF => {
   // Footer on all pages
   const pageCount = doc.internal.pages.length - 1; // Subtract 1 for the 0 index page
   const pageHeight = doc.internal.pageSize.getHeight();
-  
+
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
     doc.setFontSize(8);

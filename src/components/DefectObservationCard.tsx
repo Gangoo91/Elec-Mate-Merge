@@ -4,7 +4,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, CheckCircle, XCircle, FileText, Trash2, Minus, Info, Camera, Check, Sparkles, BookOpen } from 'lucide-react';
+import {
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
+  FileText,
+  Trash2,
+  Minus,
+  Info,
+  Camera,
+  Check,
+  Sparkles,
+  BookOpen,
+} from 'lucide-react';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import { useEnhanceObservation } from '@/hooks/useEnhanceObservation';
 import InspectionPhotoUpload from './inspection/InspectionPhotoUpload';
@@ -38,7 +50,7 @@ interface DefectObservationCardProps {
 }
 
 const defectCodeConfig = {
-  'C1': {
+  C1: {
     label: 'C1 - DANGER',
     description: 'Immediate action required',
     bgClass: 'bg-red-500/15',
@@ -46,7 +58,7 @@ const defectCodeConfig = {
     textClass: 'text-red-400',
     icon: XCircle,
   },
-  'C2': {
+  C2: {
     label: 'C2 - POTENTIALLY DANGEROUS',
     description: 'Urgent remedial action required',
     bgClass: 'bg-orange-500/15',
@@ -54,7 +66,7 @@ const defectCodeConfig = {
     textClass: 'text-orange-400',
     icon: AlertTriangle,
   },
-  'C3': {
+  C3: {
     label: 'C3 - IMPROVEMENT',
     description: 'Improvement recommended',
     bgClass: 'bg-yellow-500/15',
@@ -62,7 +74,7 @@ const defectCodeConfig = {
     textClass: 'text-yellow-400',
     icon: CheckCircle,
   },
-  'FI': {
+  FI: {
     label: 'FI - FURTHER INVESTIGATION',
     description: 'Further investigation required',
     bgClass: 'bg-blue-500/15',
@@ -78,7 +90,7 @@ const defectCodeConfig = {
     textClass: 'text-white/60',
     icon: Minus,
   },
-  'LIM': {
+  LIM: {
     label: 'LIM - LIMITATION',
     description: 'Limitation noted',
     bgClass: 'bg-purple-500/15',
@@ -88,29 +100,30 @@ const defectCodeConfig = {
   },
 };
 
-const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, certificateContext }: DefectObservationCardProps) => {
+const DefectObservationCard = ({
+  defect,
+  reportId,
+  index,
+  onUpdate,
+  onRemove,
+  certificateContext,
+}: DefectObservationCardProps) => {
   const [showAISheet, setShowAISheet] = useState(false);
   const { enhance, retry, isEnhancing, suggestions, progressStep } = useEnhanceObservation();
 
-  const {
-    photos,
-    isUploading,
-    isScanning,
-    uploadPhoto,
-    deletePhoto,
-    scanPhotoWithAI
-  } = useInspectionPhotos({
-    reportId: reportId || '',
-    reportType: 'eicr',
-    itemId: defect.inspectionItemId,
-    observationId: defect.id,
-    observationContext: {
-      classification: defect.defectCode,
-      itemLocation: defect.item || 'Not specified',
-      description: defect.description || 'No description provided',
-      recommendation: defect.recommendation,
-    },
-  });
+  const { photos, isUploading, isScanning, uploadPhoto, deletePhoto, scanPhotoWithAI } =
+    useInspectionPhotos({
+      reportId: reportId || '',
+      reportType: 'eicr',
+      itemId: defect.inspectionItemId,
+      observationId: defect.id,
+      observationContext: {
+        classification: defect.defectCode,
+        itemLocation: defect.item || 'Not specified',
+        description: defect.description || 'No description provided',
+        recommendation: defect.recommendation,
+      },
+    });
 
   const config = defectCodeConfig[defect.defectCode];
   const IconComponent = config.icon;
@@ -122,17 +135,12 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
   return (
     <div className="eicr-section-card overflow-hidden">
       {/* Classification Badge Header */}
-      <div className={cn(
-        "px-4 py-3 border-b border-white/5",
-        config.bgClass
-      )}>
+      <div className={cn('px-4 py-3 border-b border-white/5', config.bgClass)}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <IconComponent className={cn("h-5 w-5", config.textClass)} />
+            <IconComponent className={cn('h-5 w-5', config.textClass)} />
             <div>
-              <h4 className={cn("font-semibold text-sm", config.textClass)}>
-                {config.label}
-              </h4>
+              <h4 className={cn('font-semibold text-sm', config.textClass)}>{config.label}</h4>
               <p className="text-xs text-white/50">{config.description}</p>
             </div>
           </div>
@@ -167,11 +175,17 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
                   type="button"
                   onClick={() => handleCodeChange(code)}
                   className={cn(
-                    "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
-                    "border touch-manipulation",
+                    'px-3 py-1.5 rounded-full text-xs font-medium transition-all',
+                    'border touch-manipulation',
                     isActive
-                      ? cn(codeConfig.bgClass, codeConfig.borderClass, codeConfig.textClass, "ring-2 ring-offset-2 ring-offset-background", codeConfig.borderClass.replace('border-', 'ring-'))
-                      : "bg-white/5 border-white/10 text-white/50 hover:bg-white/10"
+                      ? cn(
+                          codeConfig.bgClass,
+                          codeConfig.borderClass,
+                          codeConfig.textClass,
+                          'ring-2 ring-offset-2 ring-offset-background',
+                          codeConfig.borderClass.replace('border-', 'ring-')
+                        )
+                      : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10'
                   )}
                 >
                   {code}
@@ -200,15 +214,19 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
         {/* Description */}
         <div>
           <Label className="text-xs text-white/50 mb-1.5 block">
-            {defect.defectCode === 'N/A' ? 'Reason for Not Applicable' :
-             defect.defectCode === 'LIM' ? 'Description of Limitation' :
-             'Description of Defect'}
+            {defect.defectCode === 'N/A'
+              ? 'Reason for Not Applicable'
+              : defect.defectCode === 'LIM'
+                ? 'Description of Limitation'
+                : 'Description of Defect'}
           </Label>
           <Textarea
             placeholder={
-              defect.defectCode === 'N/A' ? 'Explain why this item is not applicable...' :
-              defect.defectCode === 'LIM' ? 'Describe the limitation encountered...' :
-              'Detailed description of the defect found...'
+              defect.defectCode === 'N/A'
+                ? 'Explain why this item is not applicable...'
+                : defect.defectCode === 'LIM'
+                  ? 'Describe the limitation encountered...'
+                  : 'Detailed description of the defect found...'
             }
             value={defect.description}
             onChange={async (e) => {
@@ -230,8 +248,9 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
             </Label>
             <Textarea
               placeholder={
-                defect.defectCode === 'LIM' ? 'What action is needed to overcome this limitation...' :
-                'Recommended remedial action...'
+                defect.defectCode === 'LIM'
+                  ? 'What action is needed to overcome this limitation...'
+                  : 'Recommended remedial action...'
               }
               value={defect.recommendation}
               onChange={async (e) => {
@@ -294,11 +313,7 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
 
           <InspectionPhotoUpload
             onPhotoCapture={async (file) => {
-              await uploadPhoto(
-                file,
-                defect.defectCode,
-                defect.description
-              );
+              await uploadPhoto(file, defect.defectCode, defect.description);
             }}
             isUploading={isUploading}
           />
@@ -329,24 +344,28 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
               type="button"
               onClick={() => onUpdate(defect.id, 'rectified', !defect.rectified)}
               className={cn(
-                "flex items-center gap-3 w-full p-3 rounded-xl transition-all touch-manipulation",
+                'flex items-center gap-3 w-full p-3 rounded-xl transition-all touch-manipulation',
                 defect.rectified
-                  ? "bg-green-500/15 border border-green-500/30"
-                  : "bg-white/5 border border-white/10 hover:bg-white/10"
+                  ? 'bg-green-500/15 border border-green-500/30'
+                  : 'bg-white/5 border border-white/10 hover:bg-white/10'
               )}
             >
-              <div className={cn(
-                "w-5 h-5 rounded flex items-center justify-center transition-colors",
-                defect.rectified
-                  ? "bg-green-500 text-white"
-                  : "bg-white/10 border border-white/20"
-              )}>
+              <div
+                className={cn(
+                  'w-5 h-5 rounded flex items-center justify-center transition-colors',
+                  defect.rectified
+                    ? 'bg-green-500 text-white'
+                    : 'bg-white/10 border border-white/20'
+                )}
+              >
                 {defect.rectified && <Check className="h-3.5 w-3.5" />}
               </div>
-              <span className={cn(
-                "text-sm font-medium",
-                defect.rectified ? "text-green-400" : "text-white/70"
-              )}>
+              <span
+                className={cn(
+                  'text-sm font-medium',
+                  defect.rectified ? 'text-green-400' : 'text-white/70'
+                )}
+              >
                 {defect.rectified ? 'Rectified during inspection' : 'Mark as rectified'}
               </span>
             </button>
@@ -382,7 +401,9 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
               mergedUpdates.recommendation = suggestions.recommendation;
             }
             if (suggestions.regulationRefs?.length > 0) {
-              mergedUpdates.regulation = suggestions.regulationRefs.map(r => `${r.number}: ${r.title}`).join('; ');
+              mergedUpdates.regulation = suggestions.regulationRefs
+                .map((r) => `${r.number}: ${r.title}`)
+                .join('; ');
             }
             // Use special '__BULK__' field to apply all updates atomically
             onUpdate(defect.id, '__BULK__', mergedUpdates);

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -6,11 +5,31 @@ import { Wrench, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const RcdInstallationTab = () => {
   const installationGuidelines = [
-    { category: 'Location', requirement: 'Accessible for testing', detail: 'RCD should be easily accessible for monthly testing' },
-    { category: 'Labelling', requirement: 'Clear identification', detail: 'All RCD-protected circuits must be clearly labelled' },
-    { category: 'Discrimination', requirement: 'Selective coordination', detail: 'Use S-type RCDs for upstream protection' },
-    { category: 'Load Balance', requirement: 'Balanced loading', detail: 'Distribute loads evenly across phases' },
-    { category: 'Nuisance Tripping', requirement: 'Minimise earth leakage', detail: 'Consider load characteristics and cable lengths' }
+    {
+      category: 'Location',
+      requirement: 'Accessible for testing',
+      detail: 'RCD should be easily accessible for monthly testing',
+    },
+    {
+      category: 'Labelling',
+      requirement: 'Clear identification',
+      detail: 'All RCD-protected circuits must be clearly labelled',
+    },
+    {
+      category: 'Discrimination',
+      requirement: 'Selective coordination',
+      detail: 'Use S-type RCDs for upstream protection',
+    },
+    {
+      category: 'Load Balance',
+      requirement: 'Balanced loading',
+      detail: 'Distribute loads evenly across phases',
+    },
+    {
+      category: 'Nuisance Tripping',
+      requirement: 'Minimise earth leakage',
+      detail: 'Consider load characteristics and cable lengths',
+    },
   ];
 
   return (
@@ -20,9 +39,7 @@ const RcdInstallationTab = () => {
           <Wrench className="h-6 w-6 text-elec-yellow" />
           Installation Guidelines
         </CardTitle>
-        <CardDescription>
-          Best practices for RCD installation and configuration
-        </CardDescription>
+        <CardDescription>Best practices for RCD installation and configuration</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -30,9 +47,7 @@ const RcdInstallationTab = () => {
             <Card key={index} className="bg-muted border-border">
               <CardHeader className="pb-3">
                 <CardTitle className="text-foreground text-lg">{guideline.category}</CardTitle>
-                <Badge className="bg-elec-yellow text-black w-fit">
-                  {guideline.requirement}
-                </Badge>
+                <Badge className="bg-elec-yellow text-black w-fit">{guideline.requirement}</Badge>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-300">{guideline.detail}</p>

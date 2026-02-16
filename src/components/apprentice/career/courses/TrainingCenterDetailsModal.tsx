@@ -1,15 +1,30 @@
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
-  MapPin, X, Phone, Globe, Award, Users, Building,
-  Star, CheckCircle, Clock, Mail, Calendar
-} from "lucide-react";
-import { EnhancedTrainingCenter } from "./enhancedCoursesData";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import {
+  MapPin,
+  X,
+  Phone,
+  Globe,
+  Award,
+  Users,
+  Building,
+  Star,
+  CheckCircle,
+  Clock,
+  Mail,
+  Calendar,
+} from 'lucide-react';
+import { EnhancedTrainingCenter } from './enhancedCoursesData';
 
 interface TrainingCenterDetailsModalProps {
   center: EnhancedTrainingCenter;
@@ -133,7 +148,11 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                   <h5 className="text-sm font-medium mb-3 text-white/80">Areas of Expertise:</h5>
                   <div className="flex flex-wrap gap-2">
                     {center.specialisations.map((spec, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
+                      <Badge
+                        key={idx}
+                        variant="outline"
+                        className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30"
+                      >
                         {spec}
                       </Badge>
                     ))}
@@ -143,7 +162,10 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                   <h5 className="text-sm font-medium mb-3 text-white/80">Featured Courses:</h5>
                   <div className="space-y-2">
                     {center.courses.slice(0, 5).map((course, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5">
+                      <div
+                        key={idx}
+                        className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5"
+                      >
                         <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
                         <span className="text-white/80">{course}</span>
                       </div>
@@ -169,7 +191,11 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
               <CardContent className="relative">
                 <div className="flex flex-wrap gap-2">
                   {center.accreditations.map((acc, idx) => (
-                    <Badge key={idx} variant="outline" className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30">
+                    <Badge
+                      key={idx}
+                      variant="outline"
+                      className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30"
+                    >
                       {acc}
                     </Badge>
                   ))}
@@ -190,7 +216,10 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
               <CardContent className="relative">
                 <div className="space-y-2">
                   {center.supportServices.map((service, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5">
+                    <div
+                      key={idx}
+                      className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5"
+                    >
                       <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                       <span className="text-white/80">{service}</span>
                     </div>
@@ -214,7 +243,10 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
             <CardContent className="relative">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {center.facilities.map((facility, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm p-3 bg-white/5 rounded-lg border border-white/10">
+                  <div
+                    key={idx}
+                    className="flex items-center gap-2 text-sm p-3 bg-white/5 rounded-lg border border-white/10"
+                  >
                     <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
                     <span className="text-white/80">{facility}</span>
                   </div>
@@ -267,7 +299,9 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                       </SelectTrigger>
                       <SelectContent className="bg-elec-gray border-white/20">
                         {center.courses.map((course) => (
-                          <SelectItem key={course} value={course}>{course}</SelectItem>
+                          <SelectItem key={course} value={course}>
+                            {course}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>

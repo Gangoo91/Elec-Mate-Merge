@@ -13,11 +13,13 @@ export const PolarityPurposeContent = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">What is Polarity Testing?</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-3">
+              What is Polarity Testing?
+            </h3>
             <p className="text-foreground leading-relaxed mb-4">
-              Polarity testing verifies that line conductors are connected to the correct terminals at 
-              all points in the installation. This ensures that switches, protective devices, and accessories 
-              function as intended for safety.
+              Polarity testing verifies that line conductors are connected to the correct terminals
+              at all points in the installation. This ensures that switches, protective devices, and
+              accessories function as intended for safety.
             </p>
           </div>
 
@@ -72,10 +74,22 @@ export const PolarityPurposeContent = () => {
               When polarity is incorrect, several dangerous situations can occur:
             </p>
             <ul className="space-y-2 text-foreground">
-              <li><strong>Live When Switched Off:</strong> If a switch is wired in the neutral, the circuit remains live even when the switch is off</li>
-              <li><strong>Shock Risk at Accessories:</strong> Incorrect connections can make normally safe parts become live</li>
-              <li><strong>Protection Failure:</strong> MCBs and RCDs on the wrong conductor may not provide proper protection</li>
-              <li><strong>Equipment Damage:</strong> Some equipment relies on correct polarity for safe operation</li>
+              <li>
+                <strong>Live When Switched Off:</strong> If a switch is wired in the neutral, the
+                circuit remains live even when the switch is off
+              </li>
+              <li>
+                <strong>Shock Risk at Accessories:</strong> Incorrect connections can make normally
+                safe parts become live
+              </li>
+              <li>
+                <strong>Protection Failure:</strong> MCBs and RCDs on the wrong conductor may not
+                provide proper protection
+              </li>
+              <li>
+                <strong>Equipment Damage:</strong> Some equipment relies on correct polarity for
+                safe operation
+              </li>
             </ul>
           </div>
         </CardContent>

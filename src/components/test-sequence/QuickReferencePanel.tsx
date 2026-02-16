@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,8 +18,8 @@ const QuickReferencePanel = ({ quickRefValues, onClose }: QuickReferencePanelPro
             <FileText className="h-5 w-5 text-elec-yellow" />
             Quick Reference
           </h3>
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             size="sm"
             onClick={onClose}
             className="text-gray-400 hover:text-foreground"

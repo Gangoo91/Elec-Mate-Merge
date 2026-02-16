@@ -26,9 +26,7 @@ export const RelatedTopicsCard: React.FC<RelatedTopicsCardProps> = ({
   return (
     <Card className={cn('border-purple-500/20 bg-purple-500/5', className)}>
       <CardHeader className="pb-3 sm:pb-4">
-        <CardTitle className="text-sm sm:text-base md:text-lg text-purple-300">
-          {title}
-        </CardTitle>
+        <CardTitle className="text-sm sm:text-base md:text-lg text-purple-300">{title}</CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -45,11 +43,11 @@ export const RelatedTopicsCard: React.FC<RelatedTopicsCardProps> = ({
               )}
             >
               <div className="flex items-center gap-3 flex-1 text-left">
-                <div className="text-purple-400 flex-shrink-0">
-                  {topic.icon}
-                </div>
+                <div className="text-purple-400 flex-shrink-0">{topic.icon}</div>
                 <div className="flex-1 min-w-0">
-                  <div className={cn('text-foreground font-medium truncate', responsiveBody.normal)}>
+                  <div
+                    className={cn('text-foreground font-medium truncate', responsiveBody.normal)}
+                  >
                     {topic.title}
                   </div>
                   {topic.description && (

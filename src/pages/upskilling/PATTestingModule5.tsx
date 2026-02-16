@@ -7,34 +7,34 @@ const PATTestingModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "PAT Labels: Pass/Fail, Retest Dates, Asset ID",
+      title: 'PAT Labels: Pass/Fail, Retest Dates, Asset ID',
       icon: Tag,
-      description: "Labelling systems and identification requirements"
+      description: 'Labelling systems and identification requirements',
     },
     {
       id: 2,
-      title: "Test Record Keeping and Legal Requirements",
+      title: 'Test Record Keeping and Legal Requirements',
       icon: FileText,
-      description: "Documentation standards and compliance"
+      description: 'Documentation standards and compliance',
     },
     {
       id: 3,
-      title: "Asset Register Creation and Management",
+      title: 'Asset Register Creation and Management',
       icon: Database,
-      description: "Creating and maintaining equipment registers"
+      description: 'Creating and maintaining equipment registers',
     },
     {
       id: 4,
-      title: "Re-Test Period Planning",
+      title: 'Re-Test Period Planning',
       icon: Calendar,
-      description: "Schedule planning and resource management"
+      description: 'Schedule planning and resource management',
     },
     {
       id: 5,
-      title: "Certification and Reporting Requirements",
+      title: 'Certification and Reporting Requirements',
       icon: Award,
-      description: "Professional certification and compliance reporting"
-    }
+      description: 'Professional certification and compliance reporting',
+    },
   ];
 
   return (
@@ -69,9 +69,7 @@ const PATTestingModule5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Documentation, Labelling, and Legal Requirements
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
-            Compliance and record keeping
-          </p>
+          <p className="text-white/60 text-sm sm:text-base">Compliance and record keeping</p>
         </div>
 
         {/* Section Grid */}

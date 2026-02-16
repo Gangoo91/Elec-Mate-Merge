@@ -1,6 +1,6 @@
-import { LucideIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { LucideIcon } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 interface ResultsHeroCardProps {
   icon: LucideIcon;
@@ -19,10 +19,10 @@ interface ResultsHeroCardProps {
 }
 
 const badgeStyles = {
-  success: "bg-green-500/20 text-green-400 border-green-500/30",
-  warning: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-  danger: "bg-red-500/20 text-red-400 border-red-500/30",
-  info: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  success: 'bg-green-500/20 text-green-400 border-green-500/30',
+  warning: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  danger: 'bg-red-500/20 text-red-400 border-red-500/30',
+  info: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
 };
 
 /**
@@ -47,11 +47,11 @@ export function ResultsHeroCard({
     <div
       className={cn(
         // Glassmorphism container
-        "relative overflow-hidden rounded-2xl",
-        "border border-elec-yellow/20",
-        "bg-gradient-to-br from-card via-card/95 to-card/90",
-        "backdrop-blur-xl",
-        "shadow-xl shadow-black/5",
+        'relative overflow-hidden rounded-2xl',
+        'border border-elec-yellow/20',
+        'bg-gradient-to-br from-card via-card/95 to-card/90',
+        'backdrop-blur-xl',
+        'shadow-xl shadow-black/5',
         className
       )}
     >
@@ -72,7 +72,10 @@ export function ResultsHeroCard({
           {/* Title and badges */}
           <div className="flex-1 min-w-0 space-y-2">
             {subtitle && (
-              <Badge variant="outline" className="text-xs font-medium text-muted-foreground border-border/50">
+              <Badge
+                variant="outline"
+                className="text-xs font-medium text-muted-foreground border-border/50"
+              >
                 {subtitle}
               </Badge>
             )}
@@ -85,12 +88,14 @@ export function ResultsHeroCard({
             {(badge || secondaryBadge) && (
               <div className="flex flex-wrap gap-2 pt-1">
                 {badge && (
-                  <Badge className={cn("text-sm px-3 py-1 font-semibold", badgeStyles[badge.variant])}>
+                  <Badge
+                    className={cn('text-sm px-3 py-1 font-semibold', badgeStyles[badge.variant])}
+                  >
                     {badge.label}
                   </Badge>
                 )}
                 {secondaryBadge && (
-                  <Badge className={cn("text-sm px-3 py-1", badgeStyles[secondaryBadge.variant])}>
+                  <Badge className={cn('text-sm px-3 py-1', badgeStyles[secondaryBadge.variant])}>
                     {secondaryBadge.label}
                   </Badge>
                 )}

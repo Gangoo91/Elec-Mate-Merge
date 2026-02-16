@@ -1,45 +1,45 @@
-import { ArrowLeft, TreePine, Search, Award, Settings } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, TreePine, Search, Award, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Protected Species & Habitats",
+    title: 'Protected Species & Habitats',
     icon: TreePine,
     description:
-      "UK protected species (bats, great crested newts, badgers), the Wildlife and Countryside Act 1981, and your legal obligations when working near habitats",
+      'UK protected species (bats, great crested newts, badgers), the Wildlife and Countryside Act 1981, and your legal obligations when working near habitats',
   },
   {
     id: 2,
-    title: "Ecological Surveys & Assessments",
+    title: 'Ecological Surveys & Assessments',
     icon: Search,
     description:
-      "When ecological surveys are required, types of survey (Phase 1 habitat, protected species), seasonal constraints, and working with ecologists",
+      'When ecological surveys are required, types of survey (Phase 1 habitat, protected species), seasonal constraints, and working with ecologists',
   },
   {
     id: 3,
-    title: "BREEAM & Green Building Standards",
+    title: 'BREEAM & Green Building Standards',
     icon: Award,
     description:
-      "How BREEAM certification works, the rating categories, how electrical installations contribute to credits, and other green building standards",
+      'How BREEAM certification works, the rating categories, how electrical installations contribute to credits, and other green building standards',
   },
   {
     id: 4,
-    title: "Environmental Management Systems",
+    title: 'Environmental Management Systems',
     icon: Settings,
     description:
-      "ISO 14001 framework, plan-do-check-act cycle, environmental policy development, auditing, and continuous improvement in environmental performance",
+      'ISO 14001 framework, plan-do-check-act cycle, environmental policy development, auditing, and continuous improvement in environmental performance',
   },
 ];
 
 export default function EnvironmentalSustainabilityModule5() {
   useSEO({
-    title: "Module 5: Biodiversity & Best Practice | Environmental & Sustainability",
+    title: 'Module 5: Biodiversity & Best Practice | Environmental & Sustainability',
     description:
-      "Learn about protected species and habitats, ecological surveys, BREEAM green building standards, and environmental management systems.",
+      'Learn about protected species and habitats, ecological surveys, BREEAM green building standards, and environmental management systems.',
   });
 
   return (

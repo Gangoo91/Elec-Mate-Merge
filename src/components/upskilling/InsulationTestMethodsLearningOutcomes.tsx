@@ -1,14 +1,13 @@
-
 import { Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const InsulationTestMethodsLearningOutcomes = () => {
   const outcomes = [
-    "Set up and perform insulation resistance tests on different circuit types",
-    "Understand how to test between conductors and to earth",
-    "Identify when to apply variations based on circuit configuration or equipment present",
-    "Know when to use combined L+N to Earth testing",
-    "Record and interpret test results correctly"
+    'Set up and perform insulation resistance tests on different circuit types',
+    'Understand how to test between conductors and to earth',
+    'Identify when to apply variations based on circuit configuration or equipment present',
+    'Know when to use combined L+N to Earth testing',
+    'Record and interpret test results correctly',
   ];
 
   return (
@@ -20,9 +19,7 @@ export const InsulationTestMethodsLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-foreground">

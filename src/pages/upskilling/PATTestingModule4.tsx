@@ -7,40 +7,40 @@ const PATTestingModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Earth Continuity Testing (Class I)",
+      title: 'Earth Continuity Testing (Class I)',
       icon: Zap,
-      description: "Testing earth connections in Class I appliances"
+      description: 'Testing earth connections in Class I appliances',
     },
     {
       id: 2,
-      title: "Insulation Resistance Testing",
+      title: 'Insulation Resistance Testing',
       icon: Settings,
-      description: "Testing insulation integrity in Class I and II appliances"
+      description: 'Testing insulation integrity in Class I and II appliances',
     },
     {
       id: 3,
-      title: "Polarity Testing of Cords and Leads",
+      title: 'Polarity Testing of Cords and Leads',
       icon: RotateCcw,
-      description: "Verifying correct wiring polarity"
+      description: 'Verifying correct wiring polarity',
     },
     {
       id: 4,
-      title: "Touch Current and Leakage Testing",
+      title: 'Touch Current and Leakage Testing',
       icon: Activity,
-      description: "Advanced current measurement techniques"
+      description: 'Advanced current measurement techniques',
     },
     {
       id: 5,
-      title: "Test Equipment Types",
+      title: 'Test Equipment Types',
       icon: Wrench,
-      description: "Manual, automatic, and advanced PAT testing equipment"
+      description: 'Manual, automatic, and advanced PAT testing equipment',
     },
     {
       id: 6,
-      title: "Interpreting Results and Common Failures",
+      title: 'Interpreting Results and Common Failures',
       icon: FileX,
-      description: "Understanding test results and failure modes"
-    }
+      description: 'Understanding test results and failure modes',
+    },
   ];
 
   return (

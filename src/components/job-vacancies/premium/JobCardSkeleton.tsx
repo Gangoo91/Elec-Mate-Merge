@@ -3,9 +3,9 @@
  * Matches PremiumJobCard layout with shimmer animation
  */
 
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { shimmerVariants } from "./animations/variants";
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { shimmerVariants } from './animations/variants';
 
 interface JobCardSkeletonProps {
   count?: number;
@@ -13,7 +13,7 @@ interface JobCardSkeletonProps {
 }
 
 const SkeletonPulse = ({ className }: { className?: string }) => (
-  <div className={cn("relative overflow-hidden bg-white/5 rounded", className)}>
+  <div className={cn('relative overflow-hidden bg-white/5 rounded', className)}>
     <motion.div
       variants={shimmerVariants}
       initial="initial"
@@ -66,7 +66,7 @@ const SingleSkeleton = () => (
 
 const JobCardSkeleton = ({ count = 3, className }: JobCardSkeletonProps) => {
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {Array.from({ length: count }).map((_, index) => (
         <motion.div
           key={index}

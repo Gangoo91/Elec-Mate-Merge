@@ -1,4 +1,17 @@
-import { AlertTriangle, MapPin, ExternalLink, FileText, CheckCircle, Search, ClipboardCheck, Lightbulb, ArrowRight, Building2, Clock, Info } from 'lucide-react';
+import {
+  AlertTriangle,
+  MapPin,
+  ExternalLink,
+  FileText,
+  CheckCircle,
+  Search,
+  ClipboardCheck,
+  Lightbulb,
+  ArrowRight,
+  Building2,
+  Clock,
+  Info,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -9,7 +22,10 @@ interface NonRegisteredUserGuideProps {
 export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredUserGuideProps) => {
   // Open Planning Portal council finder - official tool for finding building control
   const openCouncilFinder = () => {
-    window.open('https://www.planningportal.co.uk/applications/building-control-applications/building-control/find-your-LABC/', '_blank');
+    window.open(
+      'https://www.planningportal.co.uk/applications/building-control-applications/building-control/find-your-LABC/',
+      '_blank'
+    );
   };
 
   return (
@@ -161,7 +177,10 @@ export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredU
             <div>
               <p className="font-semibold text-sm text-blue-300 mb-1">Save Money on Future Jobs</p>
               <p className="text-xs text-blue-300/80 leading-relaxed">
-                Join <span className="font-semibold text-yellow-400">NICEIC</span> or <span className="font-semibold text-blue-400">NAPIT</span> to self-certify work and skip Building Control fees entirely. Membership pays for itself after just a few notifiable jobs.
+                Join <span className="font-semibold text-yellow-400">NICEIC</span> or{' '}
+                <span className="font-semibold text-blue-400">NAPIT</span> to self-certify work and
+                skip Building Control fees entirely. Membership pays for itself after just a few
+                notifiable jobs.
               </p>
             </div>
           </div>

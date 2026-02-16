@@ -1,12 +1,19 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Clock, MapPin, PoundSterling, Users, Star, Award, 
-  TrendingUp, Calendar, BookOpen, Info
-} from "lucide-react";
-import { EnhancedEducationOption } from "./enhancedEducationData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Clock,
+  MapPin,
+  PoundSterling,
+  Users,
+  Star,
+  Award,
+  TrendingUp,
+  Calendar,
+  BookOpen,
+  Info,
+} from 'lucide-react';
+import { EnhancedEducationOption } from './enhancedEducationData';
 
 interface EnhancedEducationCardProps {
   option: EnhancedEducationOption;
@@ -15,29 +22,37 @@ interface EnhancedEducationCardProps {
   isFavorite?: boolean;
 }
 
-const EnhancedEducationCard = ({ 
-  option, 
-  onViewDetails, 
+const EnhancedEducationCard = ({
+  option,
+  onViewDetails,
   onSaveToFavorites,
-  isFavorite = false 
+  isFavorite = false,
 }: EnhancedEducationCardProps) => {
-  
   const getDemandColor = (demand: string) => {
     switch (demand) {
-      case "High": return "text-green-400 bg-green-400/10 border-green-400/30";
-      case "Medium": return "text-yellow-400 bg-yellow-400/10 border-yellow-400/30";
-      case "Low": return "text-red-400 bg-red-400/10 border-red-400/30";
-      default: return "text-white bg-white/10 border-white/30";
+      case 'High':
+        return 'text-green-400 bg-green-400/10 border-green-400/30';
+      case 'Medium':
+        return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30';
+      case 'Low':
+        return 'text-red-400 bg-red-400/10 border-red-400/30';
+      default:
+        return 'text-white bg-white/10 border-white/30';
     }
   };
 
   const getModeColor = (mode: string) => {
     switch (mode) {
-      case "Full-time": return "bg-blue-500/10 text-blue-400 border-blue-500/30";
-      case "Part-time": return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Distance Learning": return "bg-purple-500/10 text-purple-400 border-purple-500/30";
-      case "Flexible": return "bg-amber-500/10 text-amber-400 border-amber-500/30";
-      default: return "bg-white/5 text-white border-white/30";
+      case 'Full-time':
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+      case 'Part-time':
+        return 'bg-green-500/10 text-green-400 border-green-500/30';
+      case 'Distance Learning':
+        return 'bg-purple-500/10 text-purple-400 border-purple-500/30';
+      case 'Flexible':
+        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+      default:
+        return 'bg-white/5 text-white border-white/30';
     }
   };
 
@@ -63,14 +78,14 @@ const EnhancedEducationCard = ({
 
       <CardContent className="pt-0 flex-grow flex flex-col">
         <p className="text-sm text-white mb-4 line-clamp-2">{option.description}</p>
-        
+
         {/* Key Information Grid */}
         <div className="grid grid-cols-1 gap-3 mb-4">
           <div className="flex items-center gap-2 text-sm">
             <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <span className="text-white">{option.duration}</span>
           </div>
-          
+
           <div className="flex items-center gap-2 text-sm">
             <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <span className="text-white">{option.cost}</span>
@@ -102,7 +117,7 @@ const EnhancedEducationCard = ({
           <h5 className="text-xs font-medium text-elec-yellow mb-2">Key Topics:</h5>
           <div className="flex flex-wrap gap-1">
             {option.keyTopics.slice(0, 3).map((topic, idx) => (
-              <span 
+              <span
                 key={idx}
                 className="text-xs bg-white/10 px-2 py-0.5 rounded border border-elec-yellow/10"
               >
@@ -126,7 +141,9 @@ const EnhancedEducationCard = ({
               </div>
             ))}
             {option.careerOutcomes.length > 2 && (
-              <span className="text-xs text-white ml-5">+{option.careerOutcomes.length - 2} more roles</span>
+              <span className="text-xs text-white ml-5">
+                +{option.careerOutcomes.length - 2} more roles
+              </span>
             )}
           </div>
         </div>
@@ -137,8 +154,8 @@ const EnhancedEducationCard = ({
             <span className="text-white">Starting salary:</span>
             <span className="font-medium text-green-400">{option.averageStartingSalary}</span>
           </div>
-          
-          <Button 
+
+          <Button
             className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400"
             onClick={() => onViewDetails(option)}
           >

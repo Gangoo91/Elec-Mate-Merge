@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ReactNode } from "react";
-import BookmarkButton from "@/components/career/BookmarkButton";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ReactNode } from 'react';
+import BookmarkButton from '@/components/career/BookmarkButton';
 
 interface CareerPathCardProps {
   title: string;
@@ -20,10 +19,13 @@ const CareerPathCard = ({
   icon,
   skills,
   salaryRange,
-  timeToAchieve
+  timeToAchieve,
 }: CareerPathCardProps) => {
   // Generate a consistent ID from the title
-  const careerPathId = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  const careerPathId = title
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
 
   return (
     <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all h-full flex flex-col overflow-hidden relative animate-fade-in">

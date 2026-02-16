@@ -13,11 +13,12 @@ export const SmartHomeModule2Section1RealWorld = () => {
       <CardContent className="text-gray-300 space-y-4">
         <div className="p-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-600 rounded-lg">
           <h4 className="font-semibold text-foreground mb-4">Smart Security System Installation</h4>
-          
+
           <p className="text-gray-300 mb-4">
-            An installer is fitting a smart security system in a large house. The system needs to handle different types of devices with varying requirements for power, data, and range.
+            An installer is fitting a smart security system in a large house. The system needs to
+            handle different types of devices with varying requirements for power, data, and range.
           </p>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div className="p-3 bg-[#1a1a1a] border border-purple-600 rounded">
               <div className="flex items-center gap-2 mb-2">
@@ -25,25 +26,43 @@ export const SmartHomeModule2Section1RealWorld = () => {
                 <h5 className="font-medium text-purple-200">Security Cameras</h5>
               </div>
               <div className="text-sm space-y-1">
-                <div><span className="text-gray-400">Protocol:</span> <span className="text-foreground">Wi-Fi</span></div>
-                <div><span className="text-gray-400">Reason:</span> <span className="text-gray-300">High bandwidth for video streaming</span></div>
-                <div><span className="text-gray-400">Power:</span> <span className="text-gray-300">Mains powered (continuous operation)</span></div>
+                <div>
+                  <span className="text-gray-400">Protocol:</span>{' '}
+                  <span className="text-foreground">Wi-Fi</span>
+                </div>
+                <div>
+                  <span className="text-gray-400">Reason:</span>{' '}
+                  <span className="text-gray-300">High bandwidth for video streaming</span>
+                </div>
+                <div>
+                  <span className="text-gray-400">Power:</span>{' '}
+                  <span className="text-gray-300">Mains powered (continuous operation)</span>
+                </div>
               </div>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-blue-600 rounded">
               <div className="flex items-center gap-2 mb-2">
                 <Radio className="h-4 w-4 text-blue-400" />
                 <h5 className="font-medium text-blue-200">Motion Sensors & Door Contacts</h5>
               </div>
               <div className="text-sm space-y-1">
-                <div><span className="text-gray-400">Protocol:</span> <span className="text-foreground">Zigbee</span></div>
-                <div><span className="text-gray-400">Reason:</span> <span className="text-gray-300">Low power, mesh networking</span></div>
-                <div><span className="text-gray-400">Power:</span> <span className="text-gray-300">Battery powered (1-2 year life)</span></div>
+                <div>
+                  <span className="text-gray-400">Protocol:</span>{' '}
+                  <span className="text-foreground">Zigbee</span>
+                </div>
+                <div>
+                  <span className="text-gray-400">Reason:</span>{' '}
+                  <span className="text-gray-300">Low power, mesh networking</span>
+                </div>
+                <div>
+                  <span className="text-gray-400">Power:</span>{' '}
+                  <span className="text-gray-300">Battery powered (1-2 year life)</span>
+                </div>
               </div>
             </div>
           </div>
-          
+
           <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded">
             <h5 className="font-medium text-foreground mb-2">Why This Mixed Approach Works</h5>
             <ul className="space-y-1 text-sm text-gray-300">

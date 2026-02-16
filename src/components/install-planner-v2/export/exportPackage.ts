@@ -13,7 +13,8 @@ export interface ExportOptions {
 }
 
 export async function generateExportPackage(options: ExportOptions): Promise<void> {
-  const { selectedDocuments, eicSchedule, circuitDiagrams, consumerUnitDiagram, projectName } = options;
+  const { selectedDocuments, eicSchedule, circuitDiagrams, consumerUnitDiagram, projectName } =
+    options;
   const zip = new JSZip();
 
   // Add EIC Schedule PDF if selected
@@ -27,23 +28,23 @@ export async function generateExportPackage(options: ExportOptions): Promise<voi
   if (selectedDocuments.includes('drawings') && circuitDiagrams && circuitDiagrams.length > 0) {
     // Generate combined PDF with all circuit diagrams
     const { exportDiagramsAsPDF } = await import('@/lib/diagramGenerator/exportDiagram');
-    
+
     // Create a temporary div to render diagrams (they need to be in DOM)
     const tempContainer = document.createElement('div');
     tempContainer.style.position = 'absolute';
     tempContainer.style.left = '-9999px';
     document.body.appendChild(tempContainer);
-    
+
     // Clone diagrams into container
-    const clonedDiagrams = circuitDiagrams.map(svg => {
+    const clonedDiagrams = circuitDiagrams.map((svg) => {
       const clone = svg.cloneNode(true) as SVGSVGElement;
       tempContainer.appendChild(clone);
       return clone;
     });
-    
+
     // Export to PDF
     await exportDiagramsAsPDF(clonedDiagrams, projectName);
-    
+
     // Cleanup
     document.body.removeChild(tempContainer);
   }

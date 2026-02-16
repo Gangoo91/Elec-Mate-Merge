@@ -10,11 +10,15 @@ const DocumentationBestPracticesSection = () => {
           <Shield className="h-6 w-6 text-elec-yellow" />
           Professional Documentation Standards
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-indigo-600 text-foreground">Best Practice</Badge>
+        <Badge variant="secondary" className="w-fit bg-indigo-600 text-foreground">
+          Best Practice
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Legal and Professional Responsibilities:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Legal and Professional Responsibilities:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Statutory Requirements:</h6>
@@ -42,11 +46,15 @@ const DocumentationBestPracticesSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Certificate Completion Excellence:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Certificate Completion Excellence:
+          </h5>
+
           <div className="space-y-4">
             <div className="bg-gray-800 p-4 rounded border-l-4 border-green-400">
-              <h6 className="font-bold text-green-400 mb-3 text-sm sm:text-base">EIC Best Practices</h6>
+              <h6 className="font-bold text-green-400 mb-3 text-sm sm:text-base">
+                EIC Best Practices
+              </h6>
               <ul className="text-sm sm:text-base space-y-2">
                 <li>• Complete all sections legibly and accurately</li>
                 <li>• Use permanent ink for handwritten entries</li>
@@ -56,7 +64,7 @@ const DocumentationBestPracticesSection = () => {
                 <li>• Document any limitations or exclusions clearly</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-3 text-sm sm:text-base">MEIWC Standards</h6>
               <ul className="text-sm sm:text-base space-y-2">
@@ -68,9 +76,11 @@ const DocumentationBestPracticesSection = () => {
                 <li>• Provide clear work description</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-orange-400">
-              <h6 className="font-bold text-orange-400 mb-3 text-sm sm:text-base">EICR Professional Standards</h6>
+              <h6 className="font-bold text-orange-400 mb-3 text-sm sm:text-base">
+                EICR Professional Standards
+              </h6>
               <ul className="text-sm sm:text-base space-y-2">
                 <li>• Use appropriate sampling strategy</li>
                 <li>• Document inspection limitations clearly</li>
@@ -84,7 +94,9 @@ const DocumentationBestPracticesSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
               <div className="bg-gray-800 p-4 rounded touch-manipulation">
                 <Users className="h-6 w-6 text-elec-yellow mb-3" />
-                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">Client Communication</h6>
+                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">
+                  Client Communication
+                </h6>
                 <ul className="text-sm space-y-2">
                   <li>• Explain certification requirements clearly</li>
                   <li>• Provide copies promptly after completion</li>
@@ -94,7 +106,9 @@ const DocumentationBestPracticesSection = () => {
               </div>
               <div className="bg-gray-800 p-4 rounded touch-manipulation">
                 <Clock className="h-6 w-6 text-elec-yellow mb-3" />
-                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">Timely Completion</h6>
+                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">
+                  Timely Completion
+                </h6>
                 <ul className="text-sm space-y-2">
                   <li>• Issue certificates without delay</li>
                   <li>• Notify building control within required timeframes</li>
@@ -104,7 +118,9 @@ const DocumentationBestPracticesSection = () => {
               </div>
               <div className="bg-gray-800 p-4 rounded touch-manipulation">
                 <Shield className="h-6 w-6 text-elec-yellow mb-3" />
-                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">Quality Assurance</h6>
+                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">
+                  Quality Assurance
+                </h6>
                 <ul className="text-sm space-y-2">
                   <li>• Peer review complex installations</li>
                   <li>• Maintain competence through training</li>
@@ -117,7 +133,9 @@ const DocumentationBestPracticesSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Digital Documentation Integration:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Digital Documentation Integration:
+          </h5>
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -143,7 +161,7 @@ const DocumentationBestPracticesSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="text-purple-400 font-medium mb-2">Recommended Digital Workflow:</h6>
               <div className="grid md:grid-cols-4 gap-2 text-sm">
@@ -169,7 +187,9 @@ const DocumentationBestPracticesSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Record Keeping and Archive Management:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Record Keeping and Archive Management:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Retention Requirements:</h6>
@@ -197,36 +217,64 @@ const DocumentationBestPracticesSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Common Documentation Errors and Prevention:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Common Documentation Errors and Prevention:
+          </h5>
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
               <h6 className="font-bold text-red-400 mb-1">Incomplete Information</h6>
-              <p className="text-sm mb-2"><strong>Error:</strong> Missing circuit descriptions, unclear protective device ratings, incomplete test results</p>
-              <p className="text-sm"><strong>Prevention:</strong> Use comprehensive checklists, peer review processes, and systematic completion procedures</p>
+              <p className="text-sm mb-2">
+                <strong>Error:</strong> Missing circuit descriptions, unclear protective device
+                ratings, incomplete test results
+              </p>
+              <p className="text-sm">
+                <strong>Prevention:</strong> Use comprehensive checklists, peer review processes,
+                and systematic completion procedures
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-orange-400">
               <h6 className="font-bold text-orange-400 mb-1">Calculation Mistakes</h6>
-              <p className="text-sm mb-2"><strong>Error:</strong> Incorrect Zs values, wrong correction factors, voltage drop miscalculations</p>
-              <p className="text-sm"><strong>Prevention:</strong> Double-check all calculations, use verified software tools, maintain competence through training</p>
+              <p className="text-sm mb-2">
+                <strong>Error:</strong> Incorrect Zs values, wrong correction factors, voltage drop
+                miscalculations
+              </p>
+              <p className="text-sm">
+                <strong>Prevention:</strong> Double-check all calculations, use verified software
+                tools, maintain competence through training
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-1">Inappropriate Certification</h6>
-              <p className="text-sm mb-2"><strong>Error:</strong> Using MEIWC for work requiring EIC, incorrect EICR coding, missing signatures</p>
-              <p className="text-sm"><strong>Prevention:</strong> Understand certificate scope limitations, follow guidance notes, ensure competent person authority</p>
+              <p className="text-sm mb-2">
+                <strong>Error:</strong> Using MEIWC for work requiring EIC, incorrect EICR coding,
+                missing signatures
+              </p>
+              <p className="text-sm">
+                <strong>Prevention:</strong> Understand certificate scope limitations, follow
+                guidance notes, ensure competent person authority
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Poor Presentation</h6>
-              <p className="text-sm mb-2"><strong>Error:</strong> Illegible handwriting, unprofessional appearance, missing client copies</p>
-              <p className="text-sm"><strong>Prevention:</strong> Use clear presentation methods, maintain professional standards, implement quality assurance procedures</p>
+              <p className="text-sm mb-2">
+                <strong>Error:</strong> Illegible handwriting, unprofessional appearance, missing
+                client copies
+              </p>
+              <p className="text-sm">
+                <strong>Prevention:</strong> Use clear presentation methods, maintain professional
+                standards, implement quality assurance procedures
+              </p>
             </div>
           </div>
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Client Relations and Professional Service:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Client Relations and Professional Service:
+          </h5>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="font-bold text-green-400 mb-2">Pre-Work Communication</h6>

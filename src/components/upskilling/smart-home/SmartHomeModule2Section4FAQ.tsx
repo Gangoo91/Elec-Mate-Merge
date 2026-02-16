@@ -7,29 +7,35 @@ export const SmartHomeModule2Section4FAQ = () => {
 
   const faqs = [
     {
-      question: "Can I use the same channel for Wi-Fi and Zigbee?",
-      answer: "It's not recommended. Wi-Fi and Zigbee operating on the same channel will interfere with each other, causing dropped connections and poor performance. Always separate them by at least 5 channels."
+      question: 'Can I use the same channel for Wi-Fi and Zigbee?',
+      answer:
+        "It's not recommended. Wi-Fi and Zigbee operating on the same channel will interfere with each other, causing dropped connections and poor performance. Always separate them by at least 5 channels.",
     },
     {
-      question: "Why do smart devices work during the day but fail at night?",
-      answer: "Evening hours typically see higher network usage as family members come home and use streaming services, video calls, and other bandwidth-intensive applications, increasing interference and congestion."
+      question: 'Why do smart devices work during the day but fail at night?',
+      answer:
+        'Evening hours typically see higher network usage as family members come home and use streaming services, video calls, and other bandwidth-intensive applications, increasing interference and congestion.',
     },
     {
-      question: "Do microwave ovens really affect smart home devices?",
-      answer: "Yes, microwave ovens operate at 2.45 GHz and can cause significant interference with Wi-Fi and Zigbee devices on the 2.4 GHz band, especially when the devices are nearby."
+      question: 'Do microwave ovens really affect smart home devices?',
+      answer:
+        'Yes, microwave ovens operate at 2.45 GHz and can cause significant interference with Wi-Fi and Zigbee devices on the 2.4 GHz band, especially when the devices are nearby.',
     },
     {
-      question: "Is 5 GHz Wi-Fi always better than 2.4 GHz?",
-      answer: "5 GHz offers higher speeds and less congestion but has shorter range and worse wall penetration. Use 5 GHz for high-bandwidth devices close to the router, and 2.4 GHz for IoT devices that need better range."
+      question: 'Is 5 GHz Wi-Fi always better than 2.4 GHz?',
+      answer:
+        '5 GHz offers higher speeds and less congestion but has shorter range and worse wall penetration. Use 5 GHz for high-bandwidth devices close to the router, and 2.4 GHz for IoT devices that need better range.',
     },
     {
-      question: "How many smart devices can one Wi-Fi network handle?",
-      answer: "This depends on the router quality and device types. Most home routers can handle 50-100 low-bandwidth IoT devices, but only 10-20 high-bandwidth devices like cameras. Consider mesh protocols for sensor-heavy installations."
+      question: 'How many smart devices can one Wi-Fi network handle?',
+      answer:
+        'This depends on the router quality and device types. Most home routers can handle 50-100 low-bandwidth IoT devices, but only 10-20 high-bandwidth devices like cameras. Consider mesh protocols for sensor-heavy installations.',
     },
     {
-      question: "Should I use different networks for different device types?",
-      answer: "Yes, network segmentation is often beneficial. Use Wi-Fi for high-bandwidth devices, Zigbee/Z-Wave for sensors and switches, and consider separate IoT VLANs for security and performance."
-    }
+      question: 'Should I use different networks for different device types?',
+      answer:
+        'Yes, network segmentation is often beneficial. Use Wi-Fi for high-bandwidth devices, Zigbee/Z-Wave for sensors and switches, and consider separate IoT VLANs for security and performance.',
+    },
   ];
 
   const toggleQuestion = (index: number) => {

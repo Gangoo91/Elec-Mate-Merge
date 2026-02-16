@@ -19,107 +19,188 @@ const quickCircuitPresets = [
     icon: Lightbulb,
     color: 'bg-elec-gray hover:bg-elec-gray-light',
     circuits: [
-      { 
-        label: 'Downstairs Lights', 
+      {
+        label: 'Downstairs Lights',
         type: 'Downstairs Lights',
-        suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceRating: '6', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
+        suggestions: {
+          liveSize: '1.5mm',
+          cpcSize: '1.0mm',
+          protectiveDeviceRating: '6',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
       },
-      { 
-        label: 'Upstairs Lights', 
+      {
+        label: 'Upstairs Lights',
         type: 'Upstairs Lights',
-        suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceRating: '6', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
+        suggestions: {
+          liveSize: '1.5mm',
+          cpcSize: '1.0mm',
+          protectiveDeviceRating: '6',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
       },
-      { 
-        label: 'Kitchen Lights', 
+      {
+        label: 'Kitchen Lights',
         type: 'Kitchen Lights',
-        suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceRating: '10', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
+        suggestions: {
+          liveSize: '1.5mm',
+          cpcSize: '1.0mm',
+          protectiveDeviceRating: '10',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
       },
-      { 
-        label: 'Outdoor Lights', 
+      {
+        label: 'Outdoor Lights',
         type: 'Outdoor Lights',
-        suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceRating: '6', referenceMethod: '1', protectiveDeviceType: 'RCBO 30mA' }
-      }
-    ]
+        suggestions: {
+          liveSize: '1.5mm',
+          cpcSize: '1.0mm',
+          protectiveDeviceRating: '6',
+          referenceMethod: '1',
+          protectiveDeviceType: 'RCBO 30mA',
+        },
+      },
+    ],
   },
   {
     category: 'Sockets',
     icon: Plug,
     color: 'bg-elec-gray hover:bg-elec-gray-light',
     circuits: [
-      { 
-        label: 'Downstairs Ring', 
+      {
+        label: 'Downstairs Ring',
         type: 'Downstairs Ring',
-        suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '32', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
+        suggestions: {
+          liveSize: '2.5mm',
+          cpcSize: '1.5mm',
+          protectiveDeviceRating: '32',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
       },
-      { 
-        label: 'Upstairs Ring', 
+      {
+        label: 'Upstairs Ring',
         type: 'Upstairs Ring',
-        suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '32', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
+        suggestions: {
+          liveSize: '2.5mm',
+          cpcSize: '1.5mm',
+          protectiveDeviceRating: '32',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
       },
-      { 
-        label: 'Kitchen Ring', 
+      {
+        label: 'Kitchen Ring',
         type: 'Kitchen Ring',
-        suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '32', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
-      }
-    ]
+        suggestions: {
+          liveSize: '2.5mm',
+          cpcSize: '1.5mm',
+          protectiveDeviceRating: '32',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
+      },
+    ],
   },
   {
     category: 'Appliances',
     icon: ChefHat,
     color: 'bg-elec-gray hover:bg-elec-gray-light',
     circuits: [
-      { 
-        label: 'Cooker', 
+      {
+        label: 'Cooker',
         type: 'Electric Cooker',
-        suggestions: { liveSize: '6.0mm', cpcSize: '2.5mm', protectiveDeviceRating: '32', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
+        suggestions: {
+          liveSize: '6.0mm',
+          cpcSize: '2.5mm',
+          protectiveDeviceRating: '32',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
       },
-      { 
-        label: 'Shower', 
+      {
+        label: 'Shower',
         type: 'Electric Shower',
-        suggestions: { liveSize: '10mm', cpcSize: '4.0mm', protectiveDeviceRating: '40', referenceMethod: '1', protectiveDeviceType: 'RCBO 30mA' }
+        suggestions: {
+          liveSize: '10mm',
+          cpcSize: '4.0mm',
+          protectiveDeviceRating: '40',
+          referenceMethod: '1',
+          protectiveDeviceType: 'RCBO 30mA',
+        },
       },
-      { 
-        label: 'Immersion', 
+      {
+        label: 'Immersion',
         type: 'Immersion Heater',
-        suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '16', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
-      }
-    ]
+        suggestions: {
+          liveSize: '2.5mm',
+          cpcSize: '1.5mm',
+          protectiveDeviceRating: '16',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
+      },
+    ],
   },
   {
     category: 'Modern',
     icon: Car,
     color: 'bg-elec-gray hover:bg-elec-gray-light',
     circuits: [
-      { 
-        label: 'EV Charger', 
+      {
+        label: 'EV Charger',
         type: 'EV Charging Point',
-        suggestions: { liveSize: '6.0mm', cpcSize: '2.5mm', protectiveDeviceRating: '32', referenceMethod: '1', protectiveDeviceType: 'RCBO 30mA' }
+        suggestions: {
+          liveSize: '6.0mm',
+          cpcSize: '2.5mm',
+          protectiveDeviceRating: '32',
+          referenceMethod: '1',
+          protectiveDeviceType: 'RCBO 30mA',
+        },
       },
-      { 
-        label: 'Heat Pump', 
+      {
+        label: 'Heat Pump',
         type: 'Heat Pump',
-        suggestions: { liveSize: '4.0mm', cpcSize: '1.5mm', protectiveDeviceRating: '25', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
+        suggestions: {
+          liveSize: '4.0mm',
+          cpcSize: '1.5mm',
+          protectiveDeviceRating: '25',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
       },
-      { 
-        label: 'Solar PV', 
+      {
+        label: 'Solar PV',
         type: 'Solar PV',
-        suggestions: { liveSize: '4.0mm', cpcSize: '1.5mm', protectiveDeviceRating: '16', referenceMethod: '1', protectiveDeviceType: 'MCB Type B' }
-      }
-    ]
-  }
+        suggestions: {
+          liveSize: '4.0mm',
+          cpcSize: '1.5mm',
+          protectiveDeviceRating: '16',
+          referenceMethod: '1',
+          protectiveDeviceType: 'MCB Type B',
+        },
+      },
+    ],
+  },
 ];
 
 const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, onUpdate }) => {
   const [selectedCircuit, setSelectedCircuit] = useState<TestResult | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [showWarningDialog, setShowWarningDialog] = useState(false);
-  const [pendingUpdate, setPendingUpdate] = useState<{ id: string; updates: Partial<TestResult> } | null>(null);
+  const [pendingUpdate, setPendingUpdate] = useState<{
+    id: string;
+    updates: Partial<TestResult>;
+  } | null>(null);
   const [pendingWarnings, setPendingWarnings] = useState<any[]>([]);
 
   const handleQuickFill = (circuitType: string, suggestions: Partial<TestResult>) => {
     if (!selectedCircuit) return;
 
-    const result = testResults.find(r => r.id === selectedCircuit.id);
+    const result = testResults.find((r) => r.id === selectedCircuit.id);
     if (!result) return;
 
     const updatedResult = {
@@ -127,11 +208,11 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
       ...suggestions,
       circuitDescription: circuitType,
       type: circuitType,
-      autoFilled: true
+      autoFilled: true,
     };
-    
+
     const complianceCheck = checkRegulationCompliance(updatedResult);
-    
+
     if (complianceCheck.warnings.length > 0) {
       setPendingUpdate({
         id: selectedCircuit.id,
@@ -139,8 +220,8 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
           ...suggestions,
           circuitDescription: circuitType,
           type: circuitType,
-          autoFilled: true
-        }
+          autoFilled: true,
+        },
       });
       setPendingWarnings(complianceCheck.warnings);
       setShowWarningDialog(true);
@@ -149,7 +230,7 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
         ...suggestions,
         circuitDescription: circuitType,
         type: circuitType,
-        autoFilled: true
+        autoFilled: true,
       });
       setSelectedCircuit(null); // Clear selection after successful fill
       setSelectedCategory(''); // Reset category
@@ -173,7 +254,7 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
     setPendingWarnings([]);
   };
 
-  const selectedCategoryData = quickCircuitPresets.find(c => c.category === selectedCategory);
+  const selectedCategoryData = quickCircuitPresets.find((c) => c.category === selectedCategory);
 
   return (
     <>
@@ -186,19 +267,21 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
             </div>
             <h3 className="font-semibold text-foreground text-lg">Select Circuit to Fill</h3>
           </div>
-          
+
           <div className="text-sm mb-2 font-medium">
             {selectedCircuit ? (
               <span className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-elec-yellow" />
                 <span className="text-foreground">Selected:</span>
-                <span className="text-elec-yellow font-bold">{selectedCircuit.circuitDesignation || 'Circuit'}</span>
+                <span className="text-elec-yellow font-bold">
+                  {selectedCircuit.circuitDesignation || 'Circuit'}
+                </span>
               </span>
             ) : (
               <span className="text-white/70">Tap a circuit below</span>
             )}
           </div>
-          
+
           <ScrollArea className="h-[200px] w-full rounded-md border-2 border-elec-gray-light bg-elec-gray-darker">
             <div className="p-2 space-y-2">
               {testResults.map((result) => (
@@ -250,8 +333,8 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
                     onClick={() => setSelectedCategory(preset.category)}
                     variant="outline"
                     className={`h-20 flex-col gap-2 text-sm touch-manipulation border-2 transition-all ${
-                      selectedCategory === preset.category 
-                        ? 'bg-elec-gray-light border-elec-yellow text-foreground shadow-[0_0_15px_rgba(255,204,0,0.3)]' 
+                      selectedCategory === preset.category
+                        ? 'bg-elec-gray-light border-elec-yellow text-foreground shadow-[0_0_15px_rgba(255,204,0,0.3)]'
                         : 'bg-elec-gray border-elec-gray-light text-white/80 hover:border-elec-yellow hover:text-foreground hover:bg-elec-gray-light'
                     }`}
                   >
@@ -294,7 +377,10 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
             <Lightbulb className="h-4 w-4 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="text-foreground font-semibold mb-1">Auto-Reg Checker:</p>
-              <p className="text-white/80">All configurations are checked against BS 7671. Any issues will be flagged for review.</p>
+              <p className="text-white/80">
+                All configurations are checked against BS 7671. Any issues will be flagged for
+                review.
+              </p>
             </div>
           </div>
         </div>

@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle, Shield, FileText, Clock, Phone, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertTriangle, Shield, FileText, Clock, Phone, CheckCircle } from 'lucide-react';
 
 const IncidentGuidelines = () => {
   return (
@@ -9,8 +8,8 @@ const IncidentGuidelines = () => {
       <Alert className="border-red-500/20 bg-red-500/5">
         <AlertTriangle className="h-4 w-4 text-red-500" />
         <AlertDescription className="text-red-400">
-          <strong>Emergency First:</strong> If anyone is injured or there's immediate danger, call 999 first. 
-          Complete this form only after ensuring everyone's safety.
+          <strong>Emergency First:</strong> If anyone is injured or there's immediate danger, call
+          999 first. Complete this form only after ensuring everyone's safety.
         </AlertDescription>
       </Alert>
 
@@ -65,7 +64,9 @@ const IncidentGuidelines = () => {
           <CardContent className="space-y-4">
             <div className="space-y-3">
               <div>
-                <h4 className="font-medium text-elec-yellow mb-2">Health and Safety at Work Act 1974</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">
+                  Health and Safety at Work Act 1974
+                </h4>
                 <p className="text-sm text-white">
                   Employees have a duty to report incidents that could affect health and safety.
                 </p>
@@ -148,7 +149,9 @@ const IncidentGuidelines = () => {
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                 <h4 className="font-medium text-red-400 mb-2">Emergency Services</h4>
                 <p className="text-2xl font-bold text-red-400">999</p>
-                <p className="text-sm text-white">For immediate medical assistance or fire/police response</p>
+                <p className="text-sm text-white">
+                  For immediate medical assistance or fire/police response
+                </p>
               </div>
 
               <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
@@ -236,13 +239,15 @@ const IncidentGuidelines = () => {
             <div>
               <h4 className="font-medium mb-1">Training Requirements</h4>
               <p className="text-sm text-white">
-                Regular safety training helps identify and prevent incidents. Ensure you're up to date with current requirements.
+                Regular safety training helps identify and prevent incidents. Ensure you're up to
+                date with current requirements.
               </p>
             </div>
             <div>
               <h4 className="font-medium mb-1">Anonymous Reporting</h4>
               <p className="text-sm text-white">
-                If you have concerns about reporting openly, speak to your safety representative about anonymous reporting options.
+                If you have concerns about reporting openly, speak to your safety representative
+                about anonymous reporting options.
               </p>
             </div>
           </div>

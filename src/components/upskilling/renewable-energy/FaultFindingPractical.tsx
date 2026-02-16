@@ -21,24 +21,38 @@ const FaultFindingPractical = () => {
           <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
             <div className="space-y-3">
               <div className="flex items-center gap-3 p-3 bg-blue-900/30 rounded border-l-4 border-blue-500">
-                <Badge variant="outline" className="bg-blue-500 text-foreground">1</Badge>
-                <span className="text-foreground">Check monitoring system data and error codes</span>
+                <Badge variant="outline" className="bg-blue-500 text-foreground">
+                  1
+                </Badge>
+                <span className="text-foreground">
+                  Check monitoring system data and error codes
+                </span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-green-900/30 rounded border-l-4 border-green-500">
-                <Badge variant="outline" className="bg-green-500 text-foreground">2</Badge>
+                <Badge variant="outline" className="bg-green-500 text-foreground">
+                  2
+                </Badge>
                 <span className="text-foreground">Verify system isolation and safety</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-yellow-900/30 rounded border-l-4 border-yellow-500">
-                <Badge variant="outline" className="bg-yellow-500 text-black">3</Badge>
+                <Badge variant="outline" className="bg-yellow-500 text-black">
+                  3
+                </Badge>
                 <span className="text-foreground">Measure voltages and currents at key points</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-purple-900/30 rounded border-l-4 border-purple-500">
-                <Badge variant="outline" className="bg-purple-500 text-foreground">4</Badge>
+                <Badge variant="outline" className="bg-purple-500 text-foreground">
+                  4
+                </Badge>
                 <span className="text-foreground">Compare readings with expected values</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-red-900/30 rounded border-l-4 border-red-500">
-                <Badge variant="outline" className="bg-red-500 text-foreground">5</Badge>
-                <span className="text-foreground">Isolate fault to specific component or circuit</span>
+                <Badge variant="outline" className="bg-red-500 text-foreground">
+                  5
+                </Badge>
+                <span className="text-foreground">
+                  Isolate fault to specific component or circuit
+                </span>
               </div>
             </div>
           </div>
@@ -103,20 +117,30 @@ const FaultFindingPractical = () => {
           <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
             <div className="space-y-3">
               <div className="p-3 bg-blue-900/20 rounded border border-blue-600">
-                <p className="text-foreground font-medium">String Voltage = Normal, Current = Zero</p>
-                <p className="text-sm text-blue-300 mt-1">→ Open circuit fault (broken cable, loose connector)</p>
+                <p className="text-foreground font-medium">
+                  String Voltage = Normal, Current = Zero
+                </p>
+                <p className="text-sm text-blue-300 mt-1">
+                  → Open circuit fault (broken cable, loose connector)
+                </p>
               </div>
               <div className="p-3 bg-red-900/20 rounded border border-red-600">
                 <p className="text-foreground font-medium">String Voltage = Zero, Current = Zero</p>
-                <p className="text-sm text-red-300 mt-1">→ Complete string failure or isolator open</p>
+                <p className="text-sm text-red-300 mt-1">
+                  → Complete string failure or isolator open
+                </p>
               </div>
               <div className="p-3 bg-yellow-900/20 rounded border border-yellow-600">
-                <p className="text-foreground font-medium">String Voltage = Low, Current = Normal</p>
+                <p className="text-foreground font-medium">
+                  String Voltage = Low, Current = Normal
+                </p>
                 <p className="text-sm text-yellow-300 mt-1">→ Failed panel(s) or partial shading</p>
               </div>
               <div className="p-3 bg-green-900/20 rounded border border-green-600">
                 <p className="text-foreground font-medium">String Voltage = High, Current = Low</p>
-                <p className="text-sm text-green-300 mt-1">→ High resistance connection or bypass diode failure</p>
+                <p className="text-sm text-green-300 mt-1">
+                  → High resistance connection or bypass diode failure
+                </p>
               </div>
             </div>
           </div>

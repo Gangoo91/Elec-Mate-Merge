@@ -7,17 +7,17 @@ export const EmergencyLightingFAQSection2_2 = () => {
 
   const faqs = [
     {
-      question: "Do small rooms under 60 m² need anti-panic lighting?",
-      answer: "Not usually, unless they form part of an escape route."
+      question: 'Do small rooms under 60 m² need anti-panic lighting?',
+      answer: 'Not usually, unless they form part of an escape route.',
     },
     {
-      question: "How long must anti-panic lighting operate?",
-      answer: "At least 1 hour, though 3 hours is standard for most commercial buildings."
+      question: 'How long must anti-panic lighting operate?',
+      answer: 'At least 1 hour, though 3 hours is standard for most commercial buildings.',
     },
     {
-      question: "Can I use standard LED panels as anti-panic lighting?",
-      answer: "Only if they are tested, certified, and fitted with the correct emergency modules."
-    }
+      question: 'Can I use standard LED panels as anti-panic lighting?',
+      answer: 'Only if they are tested, certified, and fitted with the correct emergency modules.',
+    },
   ];
 
   const toggleFAQ = (index: number) => {
@@ -40,9 +40,11 @@ export const EmergencyLightingFAQSection2_2 = () => {
               className="w-full p-4 text-left bg-elec-dark/30 hover:bg-elec-dark/50 transition-colors flex justify-between items-center"
             >
               <span className="text-foreground font-medium">{faq.question}</span>
-              <ChevronDown className={`h-4 w-4 text-elec-yellow transition-transform ${
-                openFAQ === index ? 'transform rotate-180' : ''
-              }`} />
+              <ChevronDown
+                className={`h-4 w-4 text-elec-yellow transition-transform ${
+                  openFAQ === index ? 'transform rotate-180' : ''
+                }`}
+              />
             </button>
             {openFAQ === index && (
               <div className="p-4 bg-elec-dark/20">

@@ -4,7 +4,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Sparkles, Search, Lightbulb, ArrowRight, Loader2, ChevronDown, ChevronRight, BookOpen, FileText, HelpCircle, X, Clock } from 'lucide-react';
+import {
+  Sparkles,
+  Search,
+  Lightbulb,
+  ArrowRight,
+  Loader2,
+  ChevronDown,
+  ChevronRight,
+  BookOpen,
+  FileText,
+  HelpCircle,
+  X,
+  Clock,
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -47,52 +60,97 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
   }, []);
 
   // Keyboard shortcut (Cmd/Ctrl+K) removed - shortcuts disabled
-  
+
   // Comprehensive autocomplete database
-  const autocompleteTerms = useMemo(() => [
-    // Regulation numbers
-    '612.1', '612.2.1', '612.3', '612.6', '612.8', '612.10', '411.3.3', '415.1.1', 
-    'Table 41.3', '701.411.3.3', '544.1.1', '131.8', '411.3.2', '522.6.101',
-    
-    // Technical terms
-    'RCD protection', 'RCBO', 'MCB', 'MCCB', 'Zs values', 'earth fault loop impedance',
-    'insulation resistance', 'continuity testing', 'polarity testing', 'earth electrode',
-    'bonding conductor', 'main equipotential bonding', 'supplementary bonding',
-    
-    // Testing procedures
-    'testing sequence', 'initial verification', 'periodic inspection', 'minor works',
-    'cable sizing', 'current carrying capacity', 'voltage drop calculation',
-    'discrimination', 'selectivity', 'fault current', 'prospective fault current',
-    
-    // Installation areas
-    'bathroom zones', 'kitchen regulations', 'garden installation', 'swimming pool',
-    'underfloor heating', 'electric vehicle charging', 'solar PV installation',
-    
-    // Safety requirements
-    'IP rating', 'ingress protection', 'fire barrier', 'emergency lighting',
-    'fire alarm system', 'SELV circuit', 'PELV circuit', 'functional earthing',
-    
-    // Common questions
-    'What are the RCD requirements for bathrooms?',
-    'How do I test earth fault loop impedance?',
-    'What cable size do I need for a 32A circuit?',
-    'What are the IP ratings for outdoor installations?',
-    'How often should I do PAT testing?',
-    'What are the bonding requirements for gas pipes?'
-  ], []);
+  const autocompleteTerms = useMemo(
+    () => [
+      // Regulation numbers
+      '612.1',
+      '612.2.1',
+      '612.3',
+      '612.6',
+      '612.8',
+      '612.10',
+      '411.3.3',
+      '415.1.1',
+      'Table 41.3',
+      '701.411.3.3',
+      '544.1.1',
+      '131.8',
+      '411.3.2',
+      '522.6.101',
+
+      // Technical terms
+      'RCD protection',
+      'RCBO',
+      'MCB',
+      'MCCB',
+      'Zs values',
+      'earth fault loop impedance',
+      'insulation resistance',
+      'continuity testing',
+      'polarity testing',
+      'earth electrode',
+      'bonding conductor',
+      'main equipotential bonding',
+      'supplementary bonding',
+
+      // Testing procedures
+      'testing sequence',
+      'initial verification',
+      'periodic inspection',
+      'minor works',
+      'cable sizing',
+      'current carrying capacity',
+      'voltage drop calculation',
+      'discrimination',
+      'selectivity',
+      'fault current',
+      'prospective fault current',
+
+      // Installation areas
+      'bathroom zones',
+      'kitchen regulations',
+      'garden installation',
+      'swimming pool',
+      'underfloor heating',
+      'electric vehicle charging',
+      'solar PV installation',
+
+      // Safety requirements
+      'IP rating',
+      'ingress protection',
+      'fire barrier',
+      'emergency lighting',
+      'fire alarm system',
+      'SELV circuit',
+      'PELV circuit',
+      'functional earthing',
+
+      // Common questions
+      'What are the RCD requirements for bathrooms?',
+      'How do I test earth fault loop impedance?',
+      'What cable size do I need for a 32A circuit?',
+      'What are the IP ratings for outdoor installations?',
+      'How often should I do PAT testing?',
+      'What are the bonding requirements for gas pipes?',
+    ],
+    []
+  );
 
   // Filter suggestions with memoization
-  const filteredSuggestions = useMemo(() => 
-    query.length >= 2 
-      ? autocompleteTerms.filter(term => 
-          term.toLowerCase().includes(query.toLowerCase())
-        ).slice(0, isMobile ? 6 : 10)
-      : [],
+  const filteredSuggestions = useMemo(
+    () =>
+      query.length >= 2
+        ? autocompleteTerms
+            .filter((term) => term.toLowerCase().includes(query.toLowerCase()))
+            .slice(0, isMobile ? 6 : 10)
+        : [],
     [query, autocompleteTerms, isMobile]
   );
 
-  const placeholder = isMobile 
-    ? "Ask about regulations..." 
+  const placeholder = isMobile
+    ? 'Ask about regulations...'
     : "e.g. 'What are the RCD requirements for bathrooms?'";
 
   const handleQueryChange = (value: string) => {
@@ -113,13 +171,13 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
+        setSelectedSuggestionIndex((prev) =>
           prev < filteredSuggestions.length - 1 ? prev + 1 : prev
         );
         break;
       case 'ArrowUp':
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => prev > 0 ? prev - 1 : -1);
+        setSelectedSuggestionIndex((prev) => (prev > 0 ? prev - 1 : -1));
         break;
       case 'Enter':
         if (selectedSuggestionIndex >= 0) {
@@ -147,27 +205,27 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
   const handleSearch = async () => {
     if (!query.trim()) {
       toast({
-        title: "Query Required",
-        description: "Please enter a question or topic to search for.",
-        variant: "destructive",
+        title: 'Query Required',
+        description: 'Please enter a question or topic to search for.',
+        variant: 'destructive',
       });
       return;
     }
 
     setIsSearching(true);
-    
+
     // Save to search history
-    const newHistory = [query, ...searchHistory.filter(h => h !== query)].slice(0, 5);
+    const newHistory = [query, ...searchHistory.filter((h) => h !== query)].slice(0, 5);
     setSearchHistory(newHistory);
     localStorage.setItem('regulation-search-history', JSON.stringify(newHistory));
-    
+
     try {
       const { data, error } = await supabase.functions.invoke('ai-regulation-search', {
-        body: { 
+        body: {
           query: query.trim(),
           includeExplanations: true,
-          maxResults: 8
-        }
+          maxResults: 8,
+        },
       });
 
       if (error) {
@@ -180,16 +238,15 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
 
       if (result.regulations?.length === 0) {
         toast({
-          title: "No Specific Regulations Found",
+          title: 'No Specific Regulations Found',
           description: "I've provided general guidance and suggestions below.",
         });
       }
-
     } catch (error) {
       toast({
-        title: "Search Failed",
-        description: "Search is temporarily unavailable. Please try again later.",
-        variant: "destructive",
+        title: 'Search Failed',
+        description: 'Search is temporarily unavailable. Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setIsSearching(false);
@@ -201,17 +258,11 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
     handleSearch();
   };
 
-
   return (
     <div className="space-y-3 sm:space-y-4">
       {/* Screen reader announcement */}
-      <div 
-        role="status" 
-        aria-live="polite" 
-        aria-atomic="true"
-        className="sr-only"
-      >
-        {isSearching && "Searching regulations..."}
+      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+        {isSearching && 'Searching regulations...'}
         {searchResult && `Found ${searchResult.regulations?.length || 0} regulations`}
       </div>
 
@@ -227,8 +278,8 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
           {searchHistory.length > 0 && (
             <Collapsible>
               <CollapsibleTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="sm"
                   className="w-full justify-start text-foreground hover:text-foreground h-auto py-1 px-2"
                 >
@@ -240,9 +291,9 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
               <CollapsibleContent>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {searchHistory.map((historyQuery, idx) => (
-                    <Button 
+                    <Button
                       key={idx}
-                      size="sm" 
+                      size="sm"
                       variant="outline"
                       onClick={() => {
                         setQuery(historyQuery);
@@ -250,7 +301,9 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                       }}
                       className="text-xs h-7 border-white/20 text-foreground hover:bg-white/10"
                     >
-                      {historyQuery.length > 30 ? historyQuery.substring(0, 30) + '...' : historyQuery}
+                      {historyQuery.length > 30
+                        ? historyQuery.substring(0, 30) + '...'
+                        : historyQuery}
                     </Button>
                   ))}
                 </div>
@@ -260,7 +313,9 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
 
           <div className="space-y-2 relative">
             <label className="text-xs sm:text-sm font-medium text-foreground">
-              {isMobile ? "Your question:" : "Ask about electrical regulations, testing procedures, or installation requirements:"}
+              {isMobile
+                ? 'Your question:'
+                : 'Ask about electrical regulations, testing procedures, or installation requirements:'}
             </label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50 pointer-events-none" />
@@ -284,7 +339,9 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                 aria-controls="autocomplete-listbox"
                 aria-expanded={showSuggestions}
                 aria-autocomplete="list"
-                aria-activedescendant={selectedSuggestionIndex >= 0 ? `suggestion-${selectedSuggestionIndex}` : undefined}
+                aria-activedescendant={
+                  selectedSuggestionIndex >= 0 ? `suggestion-${selectedSuggestionIndex}` : undefined
+                }
               />
               {query && (
                 <Button
@@ -300,10 +357,10 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                   <X className="h-4 w-4" />
                 </Button>
               )}
-              
+
               {/* Enhanced Autocomplete dropdown */}
               {showSuggestions && filteredSuggestions.length > 0 && (
-                <div 
+                <div
                   id="autocomplete-listbox"
                   role="listbox"
                   className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-2xl z-50 max-h-80 overflow-y-auto"
@@ -316,31 +373,43 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                       aria-selected={index === selectedSuggestionIndex}
                       onClick={() => handleSuggestionSelect(suggestion)}
                       className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors min-h-[48px] border-l-2 ${
-                        index === selectedSuggestionIndex 
-                          ? 'bg-muted border-elec-yellow' 
+                        index === selectedSuggestionIndex
+                          ? 'bg-muted border-elec-yellow'
                           : 'border-transparent hover:bg-muted/70'
                       }`}
                     >
                       {/* Icon based on type */}
-                      {suggestion.includes('?') && <HelpCircle className="h-5 w-5 text-blue-400 flex-shrink-0" />}
-                      {suggestion.match(/^\d+/) && <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />}
-                      {!suggestion.includes('?') && !suggestion.match(/^\d+/) && <Search className="h-5 w-5 text-green-400 flex-shrink-0" />}
-                      
+                      {suggestion.includes('?') && (
+                        <HelpCircle className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                      )}
+                      {suggestion.match(/^\d+/) && (
+                        <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                      )}
+                      {!suggestion.includes('?') && !suggestion.match(/^\d+/) && (
+                        <Search className="h-5 w-5 text-green-400 flex-shrink-0" />
+                      )}
+
                       <div className="flex-1 min-w-0">
-                        <div className={`text-sm font-medium truncate ${
-                          suggestion.includes('?') ? 'text-blue-300' : 
-                          suggestion.match(/^\d+/) ? 'text-elec-yellow' : 
-                          'text-foreground'
-                        }`}>
+                        <div
+                          className={`text-sm font-medium truncate ${
+                            suggestion.includes('?')
+                              ? 'text-blue-300'
+                              : suggestion.match(/^\d+/)
+                                ? 'text-elec-yellow'
+                                : 'text-foreground'
+                          }`}
+                        >
                           {suggestion}
                         </div>
                         <div className="text-xs text-foreground/70">
-                          {suggestion.includes('?') ? 'Question' : 
-                           suggestion.match(/^\d+/) ? 'Regulation' : 
-                           'Search term'}
+                          {suggestion.includes('?')
+                            ? 'Question'
+                            : suggestion.match(/^\d+/)
+                              ? 'Regulation'
+                              : 'Search term'}
                         </div>
                       </div>
-                      
+
                       <ArrowRight className="h-4 w-4 text-foreground/50 flex-shrink-0" />
                     </button>
                   ))}
@@ -348,8 +417,8 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
               )}
             </div>
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleSearch}
             disabled={isSearching || !query.trim()}
             className="w-full bg-purple-500 hover:bg-purple-600 text-foreground h-12 sm:h-14 text-sm sm:text-base font-semibold"
@@ -370,8 +439,8 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
           {/* Quick examples - Collapsible on mobile */}
           <Collapsible defaultOpen={!isMobile}>
             <CollapsibleTrigger asChild>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="sm"
                 className="w-full justify-start text-foreground hover:text-foreground h-auto py-1 px-2 sm:hidden"
               >
@@ -382,15 +451,17 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="space-y-2">
-                <span className="text-xs text-foreground/80 hidden sm:block">Try these questions:</span>
+                <span className="text-xs text-foreground/80 hidden sm:block">
+                  Try these questions:
+                </span>
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                   {[
-                    "RCD bathroom requirements", 
-                    "Cable sizing formula", 
-                    "Testing sequence",
-                    "Zs values for MCBs",
-                    "Bonding conductor sizes", 
-                    "IP rating requirements"
+                    'RCD bathroom requirements',
+                    'Cable sizing formula',
+                    'Testing sequence',
+                    'Zs values for MCBs',
+                    'Bonding conductor sizes',
+                    'IP rating requirements',
                   ].map((example) => (
                     <Button
                       key={example}
@@ -422,7 +493,9 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-white/90 leading-relaxed text-sm sm:text-base">{searchResult.aiSummary}</p>
+              <p className="text-white/90 leading-relaxed text-sm sm:text-base">
+                {searchResult.aiSummary}
+              </p>
             </CardContent>
           </Card>
 
@@ -433,7 +506,9 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                 <div className="mx-auto w-16 h-16 sm:w-24 sm:h-24 bg-muted/50 rounded-full flex items-center justify-center mb-4">
                   <Search className="h-8 w-8 sm:h-12 sm:w-12 text-white/60" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">No Exact Matches Found</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
+                  No Exact Matches Found
+                </h3>
                 <p className="text-foreground/80 text-sm sm:text-base mb-6 max-w-md mx-auto px-4">
                   Try rephrasing your question or use our suggested searches below
                 </p>
@@ -454,121 +529,139 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                 )}
               </CardContent>
             </Card>
-          ) : searchResult.regulations && searchResult.regulations.length > 0 && (
-            <Card className="bg-white/5 border-green-500/30 backdrop-blur-sm">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-green-400 text-base sm:text-lg flex items-center justify-between">
-                  <span className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
-                    Relevant Regulations
-                  </span>
-                  <Badge variant="outline" className="border-green-500/30 text-green-400 text-xs">
-                    {searchResult.regulations.length} found
-                  </Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2 sm:space-y-3">
-                {searchResult.regulations.map((reg, index) => {
-                  const isExpanded = expandedRegulations.has(reg.number);
-                  return (
-                    <Collapsible key={index} open={isExpanded} onOpenChange={() => toggleRegulationExpansion(reg.number)}>
-                      <div className="bg-card/70 rounded-lg border-l-4 border-green-500 hover:bg-card transition-all">
-                        {/* Summary Section - Mobile Optimized */}
-                        <div className="p-3 sm:p-4">
-                          <div className="flex flex-col sm:flex-row sm:items-start gap-3">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-                                <div className="flex items-center gap-2 flex-wrap">
-                                  <Badge className="bg-green-500 text-black font-bold text-xs sm:text-sm">
-                                    {reg.number}
-                                  </Badge>
-                                  <span className="text-xs text-foreground/80">
-                                    {Math.round(reg.relevanceScore * 100)}% relevant
-                                  </span>
-                                </div>
-                              </div>
-                              <h4 className="font-medium text-foreground mb-1 text-sm sm:text-base">{reg.title}</h4>
-                              <p className="text-xs sm:text-sm text-foreground">{reg.description}</p>
-                            </div>
-                            <div className="flex items-center gap-2 sm:flex-col">
-                              <CollapsibleTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="flex-1 sm:flex-none h-10 sm:h-8 sm:w-8 p-0 text-white/70 hover:text-green-400"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  {isExpanded ? (
-                                    <>
-                                      <ChevronDown className="h-4 w-4 sm:mr-0 mr-2" />
-                                      <span className="sm:hidden">Hide Details</span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <ChevronRight className="h-4 w-4 sm:mr-0 mr-2" />
-                                      <span className="sm:hidden">Show Details</span>
-                                    </>
-                                  )}
-                                </Button>
-                              </CollapsibleTrigger>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="flex-1 sm:flex-none h-10 sm:h-8 text-white/70 hover:text-green-400 hover:bg-green-500/20 border-green-500/30"
-                                onClick={() => onRegulationSelect(reg.number)}
-                              >
-                                <ArrowRight className="h-4 w-4 sm:mr-0 mr-2" />
-                                <span className="sm:hidden">View Full</span>
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Expanded Content - Mobile Optimized */}
-                        <CollapsibleContent>
-                          <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-border/50">
-                            <div className="pt-3 space-y-2 sm:space-y-3">
-                              {/* AI Explanation */}
-                              {reg.aiExplanation && (
-                                <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                                  <div className="flex items-center gap-2 mb-2">
-                                    <Lightbulb className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
-                                    <span className="text-xs sm:text-sm font-medium text-blue-400">Explanation</span>
+          ) : (
+            searchResult.regulations &&
+            searchResult.regulations.length > 0 && (
+              <Card className="bg-white/5 border-green-500/30 backdrop-blur-sm">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-green-400 text-base sm:text-lg flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                      <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+                      Relevant Regulations
+                    </span>
+                    <Badge variant="outline" className="border-green-500/30 text-green-400 text-xs">
+                      {searchResult.regulations.length} found
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2 sm:space-y-3">
+                  {searchResult.regulations.map((reg, index) => {
+                    const isExpanded = expandedRegulations.has(reg.number);
+                    return (
+                      <Collapsible
+                        key={index}
+                        open={isExpanded}
+                        onOpenChange={() => toggleRegulationExpansion(reg.number)}
+                      >
+                        <div className="bg-card/70 rounded-lg border-l-4 border-green-500 hover:bg-card transition-all">
+                          {/* Summary Section - Mobile Optimized */}
+                          <div className="p-3 sm:p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-start gap-3">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <Badge className="bg-green-500 text-black font-bold text-xs sm:text-sm">
+                                      {reg.number}
+                                    </Badge>
+                                    <span className="text-xs text-foreground/80">
+                                      {Math.round(reg.relevanceScore * 100)}% relevant
+                                    </span>
                                   </div>
-                                  <p className="text-xs sm:text-sm text-blue-300 leading-relaxed">{reg.aiExplanation}</p>
                                 </div>
-                              )}
-
-                              {/* Practical Notes */}
-                              <div className="p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-orange-400" />
-                                  <span className="text-xs sm:text-sm font-medium text-orange-400">Practical Application</span>
-                                </div>
-                                <p className="text-xs sm:text-sm text-orange-300 leading-relaxed">
-                                  This regulation applies to {reg.title.toLowerCase()}. Review the full text for specific requirements, 
-                                  measurement procedures, and compliance criteria relevant to your installation.
+                                <h4 className="font-medium text-foreground mb-1 text-sm sm:text-base">
+                                  {reg.title}
+                                </h4>
+                                <p className="text-xs sm:text-sm text-foreground">
+                                  {reg.description}
                                 </p>
                               </div>
-
-                              {/* Action Button - Full Width on Mobile */}
-                              <Button
-                                size="sm"
-                                onClick={() => onRegulationSelect(reg.number)}
-                                className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-black font-semibold"
-                              >
-                                <FileText className="h-4 w-4 mr-2" />
-                                View Full Regulation
-                              </Button>
+                              <div className="flex items-center gap-2 sm:flex-col">
+                                <CollapsibleTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="flex-1 sm:flex-none h-10 sm:h-8 sm:w-8 p-0 text-white/70 hover:text-green-400"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    {isExpanded ? (
+                                      <>
+                                        <ChevronDown className="h-4 w-4 sm:mr-0 mr-2" />
+                                        <span className="sm:hidden">Hide Details</span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <ChevronRight className="h-4 w-4 sm:mr-0 mr-2" />
+                                        <span className="sm:hidden">Show Details</span>
+                                      </>
+                                    )}
+                                  </Button>
+                                </CollapsibleTrigger>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="flex-1 sm:flex-none h-10 sm:h-8 text-white/70 hover:text-green-400 hover:bg-green-500/20 border-green-500/30"
+                                  onClick={() => onRegulationSelect(reg.number)}
+                                >
+                                  <ArrowRight className="h-4 w-4 sm:mr-0 mr-2" />
+                                  <span className="sm:hidden">View Full</span>
+                                </Button>
+                              </div>
                             </div>
                           </div>
-                        </CollapsibleContent>
-                      </div>
-                    </Collapsible>
-                  );
-                })}
-              </CardContent>
-            </Card>
+
+                          {/* Expanded Content - Mobile Optimized */}
+                          <CollapsibleContent>
+                            <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-border/50">
+                              <div className="pt-3 space-y-2 sm:space-y-3">
+                                {/* AI Explanation */}
+                                {reg.aiExplanation && (
+                                  <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                                    <div className="flex items-center gap-2 mb-2">
+                                      <Lightbulb className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
+                                      <span className="text-xs sm:text-sm font-medium text-blue-400">
+                                        Explanation
+                                      </span>
+                                    </div>
+                                    <p className="text-xs sm:text-sm text-blue-300 leading-relaxed">
+                                      {reg.aiExplanation}
+                                    </p>
+                                  </div>
+                                )}
+
+                                {/* Practical Notes */}
+                                <div className="p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-orange-400" />
+                                    <span className="text-xs sm:text-sm font-medium text-orange-400">
+                                      Practical Application
+                                    </span>
+                                  </div>
+                                  <p className="text-xs sm:text-sm text-orange-300 leading-relaxed">
+                                    This regulation applies to {reg.title.toLowerCase()}. Review the
+                                    full text for specific requirements, measurement procedures, and
+                                    compliance criteria relevant to your installation.
+                                  </p>
+                                </div>
+
+                                {/* Action Button - Full Width on Mobile */}
+                                <Button
+                                  size="sm"
+                                  onClick={() => onRegulationSelect(reg.number)}
+                                  className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-black font-semibold"
+                                >
+                                  <FileText className="h-4 w-4 mr-2" />
+                                  View Full Regulation
+                                </Button>
+                              </div>
+                            </div>
+                          </CollapsibleContent>
+                        </div>
+                      </Collapsible>
+                    );
+                  })}
+                </CardContent>
+              </Card>
+            )
           )}
 
           {/* Suggested Queries */}

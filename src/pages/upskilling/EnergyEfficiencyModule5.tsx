@@ -7,34 +7,34 @@ const EnergyEfficiencyModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Sub-Metering Installation Strategy",
+      title: 'Sub-Metering Installation Strategy',
       icon: Gauge,
-      description: "Strategic placement and installation of sub-meters"
+      description: 'Strategic placement and installation of sub-meters',
     },
     {
       id: 2,
-      title: "Energy Dashboards and Cloud Portals",
+      title: 'Energy Dashboards and Cloud Portals',
       icon: BarChart,
-      description: "Creating and managing energy monitoring dashboards"
+      description: 'Creating and managing energy monitoring dashboards',
     },
     {
       id: 3,
-      title: "Fault Alerts and Event Logging",
+      title: 'Fault Alerts and Event Logging',
       icon: AlertTriangle,
-      description: "Setting up automated alerts and event tracking"
+      description: 'Setting up automated alerts and event tracking',
     },
     {
       id: 4,
-      title: "Remote Control and Load Shedding",
+      title: 'Remote Control and Load Shedding',
       icon: Settings,
-      description: "Implementing remote control and demand management"
+      description: 'Implementing remote control and demand management',
     },
     {
       id: 5,
-      title: "Cybersecurity in Energy Systems",
+      title: 'Cybersecurity in Energy Systems',
       icon: Shield,
-      description: "Securing energy monitoring and control systems"
-    }
+      description: 'Securing energy monitoring and control systems',
+    },
   ];
 
   return (

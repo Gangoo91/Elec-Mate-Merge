@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { Skeleton } from "@/components/ui/skeleton";
-import { FloatingActionButton } from "@/components/ui/floating-action-button";
-import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { Skeleton } from '@/components/ui/skeleton';
+import { FloatingActionButton } from '@/components/ui/floating-action-button';
+import { QuickStats, QuickStat } from '@/components/employer/QuickStats';
 import {
   Package,
   Truck,
@@ -19,18 +19,18 @@ import {
   ChevronDown,
   ChevronUp,
   Phone,
-  Mail
-} from "lucide-react";
-import { useMaterialOrders, useSuppliers, useUpdateOrderStatus } from "@/hooks/useFinance";
-import { useCompanyTools, useToolStats } from "@/hooks/useCompanyTools";
-import { CreateOrderDialog } from "@/components/employer/dialogs/CreateOrderDialog";
-import { CreateSupplierDialog } from "@/components/employer/dialogs/CreateSupplierDialog";
-import type { MaterialOrder, Supplier } from "@/services/financeService";
+  Mail,
+} from 'lucide-react';
+import { useMaterialOrders, useSuppliers, useUpdateOrderStatus } from '@/hooks/useFinance';
+import { useCompanyTools, useToolStats } from '@/hooks/useCompanyTools';
+import { CreateOrderDialog } from '@/components/employer/dialogs/CreateOrderDialog';
+import { CreateSupplierDialog } from '@/components/employer/dialogs/CreateSupplierDialog';
+import type { MaterialOrder, Supplier } from '@/services/financeService';
 
 export function ProcurementSection() {
-  const [activeTab, setActiveTab] = useState("orders");
+  const [activeTab, setActiveTab] = useState('orders');
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [showOrderDialog, setShowOrderDialog] = useState(false);
   const [showSupplierDialog, setShowSupplierDialog] = useState(false);
 
@@ -42,33 +42,43 @@ export function ProcurementSection() {
 
   const isLoading = ordersLoading || suppliersLoading || toolsLoading;
 
-  const pendingOrders = materialOrders.filter(o => o.status === "Processing" || o.status === "In Transit").length;
+  const pendingOrders = materialOrders.filter(
+    (o) => o.status === 'Processing' || o.status === 'In Transit'
+  ).length;
   const toolsDuePAT = toolStats.toolsDuePAT;
   const toolsDueCalibration = toolStats.toolsDueCalibration;
 
   const getOrderStatusBadge = (status: string) => {
     switch (status) {
-      case "Delivered":
+      case 'Delivered':
         return <Badge className="bg-success text-success-foreground text-xs">{status}</Badge>;
-      case "In Transit":
+      case 'In Transit':
         return <Badge className="bg-info text-info-foreground text-xs">{status}</Badge>;
-      case "Processing":
+      case 'Processing':
         return <Badge className="bg-warning text-warning-foreground text-xs">{status}</Badge>;
       default:
-        return <Badge variant="secondary" className="text-xs">{status}</Badge>;
+        return (
+          <Badge variant="secondary" className="text-xs">
+            {status}
+          </Badge>
+        );
     }
   };
 
   const getToolStatusBadge = (status: string) => {
     switch (status) {
-      case "In Use":
+      case 'In Use':
         return <Badge className="bg-success text-success-foreground text-xs">{status}</Badge>;
-      case "Available":
+      case 'Available':
         return <Badge className="bg-info text-info-foreground text-xs">{status}</Badge>;
-      case "On Hire":
+      case 'On Hire':
         return <Badge className="bg-warning text-warning-foreground text-xs">{status}</Badge>;
       default:
-        return <Badge variant="secondary" className="text-xs">{status}</Badge>;
+        return (
+          <Badge variant="secondary" className="text-xs">
+            {status}
+          </Badge>
+        );
     }
   };
 
@@ -91,10 +101,7 @@ export function ProcurementSection() {
 
   return (
     <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
-        title="Procurement"
-        description="Materials, suppliers, and equipment"
-      />
+      <SectionHeader title="Procurement" description="Materials, suppliers, and equipment" />
 
       {/* Stats */}
       <QuickStats
@@ -102,22 +109,22 @@ export function ProcurementSection() {
           {
             icon: Truck,
             value: pendingOrders,
-            label: "Pending Orders",
-            color: "blue",
+            label: 'Pending Orders',
+            color: 'blue',
             pulse: pendingOrders > 0,
           },
           {
             icon: Store,
             value: suppliers.length,
-            label: "Suppliers",
-            color: "yellow",
+            label: 'Suppliers',
+            color: 'yellow',
           },
           {
             icon: Wrench,
             value: toolsDuePAT + toolsDueCalibration,
-            label: "Tools Due",
-            color: "orange",
-            pulse: (toolsDuePAT + toolsDueCalibration) > 0,
+            label: 'Tools Due',
+            color: 'orange',
+            pulse: toolsDuePAT + toolsDueCalibration > 0,
           },
         ]}
       />
@@ -125,9 +132,15 @@ export function ProcurementSection() {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="w-full grid grid-cols-3">
-          <TabsTrigger value="orders" className="text-xs">Orders</TabsTrigger>
-          <TabsTrigger value="suppliers" className="text-xs">Suppliers</TabsTrigger>
-          <TabsTrigger value="tools" className="text-xs">Equipment</TabsTrigger>
+          <TabsTrigger value="orders" className="text-xs">
+            Orders
+          </TabsTrigger>
+          <TabsTrigger value="suppliers" className="text-xs">
+            Suppliers
+          </TabsTrigger>
+          <TabsTrigger value="tools" className="text-xs">
+            Equipment
+          </TabsTrigger>
         </TabsList>
 
         {/* Orders Tab */}
@@ -145,21 +158,27 @@ export function ProcurementSection() {
               return (
                 <Card key={order.id} className="bg-elec-gray border-border overflow-hidden">
                   <CardContent className="p-0">
-                    <div 
+                    <div
                       className="p-4 cursor-pointer touch-feedback"
                       onClick={() => setExpandedItem(isExpanded ? null : order.id)}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-semibold text-foreground text-sm">{order.order_number}</h3>
+                            <h3 className="font-semibold text-foreground text-sm">
+                              {order.order_number}
+                            </h3>
                             {getOrderStatusBadge(order.status)}
                           </div>
-                          <p className="text-sm text-muted-foreground">{order.suppliers?.name || 'Unknown'}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {order.suppliers?.name || 'Unknown'}
+                          </p>
                           <p className="text-xs text-muted-foreground">Stock Order</p>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="font-bold text-foreground">£{Number(order.total).toFixed(2)}</p>
+                          <p className="font-bold text-foreground">
+                            £{Number(order.total).toFixed(2)}
+                          </p>
                           <p className="text-xs text-muted-foreground">
                             {new Date(order.order_date).toLocaleDateString()}
                           </p>
@@ -185,7 +204,9 @@ export function ProcurementSection() {
                                 <span className="text-muted-foreground">
                                   {item.qty}x {item.name}
                                 </span>
-                                <span className="font-medium">£{(item.qty * item.price).toFixed(2)}</span>
+                                <span className="font-medium">
+                                  £{(item.qty * item.price).toFixed(2)}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -194,20 +215,22 @@ export function ProcurementSection() {
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
                           <span>Ordered by: {order.ordered_by || 'Unknown'}</span>
                           {order.delivery_date && (
-                            <span>Delivery: {new Date(order.delivery_date).toLocaleDateString()}</span>
+                            <span>
+                              Delivery: {new Date(order.delivery_date).toLocaleDateString()}
+                            </span>
                           )}
                         </div>
 
-                        {order.status === "In Transit" && (
-                          <Button 
-                            size="sm" 
+                        {order.status === 'In Transit' && (
+                          <Button
+                            size="sm"
                             className="w-full"
                             onClick={(e) => {
                               e.stopPropagation();
-                              updateOrderStatusMutation.mutate({ 
-                                id: order.id, 
-                                status: "Delivered", 
-                                deliveryDate: new Date().toISOString().split('T')[0] 
+                              updateOrderStatusMutation.mutate({
+                                id: order.id,
+                                status: 'Delivered',
+                                deliveryDate: new Date().toISOString().split('T')[0],
                               });
                             }}
                             disabled={updateOrderStatusMutation.isPending}
@@ -234,34 +257,38 @@ export function ProcurementSection() {
               placeholder="Search suppliers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn("bg-elec-gray border-border", !searchQuery && "pl-10")}
+              className={cn('bg-elec-gray border-border', !searchQuery && 'pl-10')}
             />
           </div>
 
           <div className="space-y-3">
             {suppliers
-              .filter(s => s.name.toLowerCase().includes(searchQuery.toLowerCase()))
+              .filter((s) => s.name.toLowerCase().includes(searchQuery.toLowerCase()))
               .map((supplier) => {
                 const isExpanded = expandedItem === supplier.id;
 
                 return (
                   <Card key={supplier.id} className="bg-elec-gray border-border overflow-hidden">
                     <CardContent className="p-0">
-                      <div 
+                      <div
                         className="p-4 cursor-pointer touch-feedback"
                         onClick={() => setExpandedItem(isExpanded ? null : supplier.id)}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-foreground">{supplier.name}</h3>
-                            <Badge variant="outline" className="text-xs mt-1">{supplier.category}</Badge>
+                            <Badge variant="outline" className="text-xs mt-1">
+                              {supplier.category}
+                            </Badge>
                           </div>
                           <div className="text-right shrink-0">
                             <Badge className="bg-success text-success-foreground text-xs">
                               {Number(supplier.discount_percent)}% off
                             </Badge>
                             <p className="text-xs text-muted-foreground mt-1">
-                              {supplier.delivery_days === 0 ? "Same day" : `${supplier.delivery_days} day delivery`}
+                              {supplier.delivery_days === 0
+                                ? 'Same day'
+                                : `${supplier.delivery_days} day delivery`}
                             </p>
                           </div>
                         </div>
@@ -280,19 +307,27 @@ export function ProcurementSection() {
                           <div className="grid grid-cols-2 gap-3 text-sm">
                             <div>
                               <span className="text-muted-foreground">Account:</span>
-                              <span className="ml-2 font-medium">{supplier.account_number || '-'}</span>
+                              <span className="ml-2 font-medium">
+                                {supplier.account_number || '-'}
+                              </span>
                             </div>
                             <div>
                               <span className="text-muted-foreground">Credit Limit:</span>
-                              <span className="ml-2 font-medium">£{Number(supplier.credit_limit).toLocaleString()}</span>
+                              <span className="ml-2 font-medium">
+                                £{Number(supplier.credit_limit).toLocaleString()}
+                              </span>
                             </div>
                             <div>
                               <span className="text-muted-foreground">Balance:</span>
-                              <span className="ml-2 font-medium">£{Number(supplier.balance).toLocaleString()}</span>
+                              <span className="ml-2 font-medium">
+                                £{Number(supplier.balance).toLocaleString()}
+                              </span>
                             </div>
                             <div>
                               <span className="text-muted-foreground">Contact:</span>
-                              <span className="ml-2 font-medium">{supplier.contact_name || '-'}</span>
+                              <span className="ml-2 font-medium">
+                                {supplier.contact_name || '-'}
+                              </span>
                             </div>
                           </div>
 
@@ -333,7 +368,9 @@ export function ProcurementSection() {
               <CardContent className="p-8 text-center">
                 <Wrench className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="font-semibold text-foreground mb-2">No Equipment</h3>
-                <p className="text-sm text-muted-foreground">Add your first tool to track equipment inventory.</p>
+                <p className="text-sm text-muted-foreground">
+                  Add your first tool to track equipment inventory.
+                </p>
               </CardContent>
             </Card>
           ) : (
@@ -351,9 +388,13 @@ export function ProcurementSection() {
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-foreground text-sm">{tool.name}</h3>
-                            <Badge variant="outline" className="text-xs">{tool.category}</Badge>
+                            <Badge variant="outline" className="text-xs">
+                              {tool.category}
+                            </Badge>
                             {tool.assigned_to && (
-                              <p className="text-xs text-muted-foreground mt-1">{tool.assigned_to}</p>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {tool.assigned_to}
+                              </p>
                             )}
                           </div>
                           {getToolStatusBadge(tool.status)}
@@ -374,32 +415,44 @@ export function ProcurementSection() {
                             {tool.serial_number && (
                               <div>
                                 <span className="text-muted-foreground">Serial:</span>
-                                <span className="ml-2 font-medium text-xs">{tool.serial_number}</span>
+                                <span className="ml-2 font-medium text-xs">
+                                  {tool.serial_number}
+                                </span>
                               </div>
                             )}
                             {tool.purchase_price && Number(tool.purchase_price) > 0 && (
                               <div>
                                 <span className="text-muted-foreground">Value:</span>
-                                <span className="ml-2 font-medium">£{Number(tool.purchase_price).toFixed(2)}</span>
+                                <span className="ml-2 font-medium">
+                                  £{Number(tool.purchase_price).toFixed(2)}
+                                </span>
                               </div>
                             )}
                             {tool.pat_due && (
                               <div>
                                 <span className="text-muted-foreground">PAT Due:</span>
-                                <span className="ml-2 font-medium">{new Date(tool.pat_due).toLocaleDateString("en-GB")}</span>
+                                <span className="ml-2 font-medium">
+                                  {new Date(tool.pat_due).toLocaleDateString('en-GB')}
+                                </span>
                               </div>
                             )}
                             {tool.next_calibration && (
                               <div>
                                 <span className="text-muted-foreground">Calibration Due:</span>
-                                <span className="ml-2 font-medium">{new Date(tool.next_calibration).toLocaleDateString("en-GB")}</span>
+                                <span className="ml-2 font-medium">
+                                  {new Date(tool.next_calibration).toLocaleDateString('en-GB')}
+                                </span>
                               </div>
                             )}
                           </div>
 
                           <div className="flex gap-2">
-                            <Button variant="outline" size="sm" className="flex-1">Edit</Button>
-                            <Button size="sm" className="flex-1">Log Service</Button>
+                            <Button variant="outline" size="sm" className="flex-1">
+                              Edit
+                            </Button>
+                            <Button size="sm" className="flex-1">
+                              Log Service
+                            </Button>
                           </div>
                         </div>
                       )}
@@ -414,19 +467,15 @@ export function ProcurementSection() {
 
       <FloatingActionButton
         icon={<Plus className="h-5 w-5" />}
-        onClick={() => activeTab === "suppliers" ? setShowSupplierDialog(true) : setShowOrderDialog(true)}
-        label={activeTab === "suppliers" ? "Add Supplier" : "New Order"}
+        onClick={() =>
+          activeTab === 'suppliers' ? setShowSupplierDialog(true) : setShowOrderDialog(true)
+        }
+        label={activeTab === 'suppliers' ? 'Add Supplier' : 'New Order'}
       />
 
-      <CreateOrderDialog 
-        open={showOrderDialog} 
-        onOpenChange={setShowOrderDialog} 
-      />
-      
-      <CreateSupplierDialog 
-        open={showSupplierDialog} 
-        onOpenChange={setShowSupplierDialog} 
-      />
+      <CreateOrderDialog open={showOrderDialog} onOpenChange={setShowOrderDialog} />
+
+      <CreateSupplierDialog open={showSupplierDialog} onOpenChange={setShowSupplierDialog} />
     </div>
   );
 }

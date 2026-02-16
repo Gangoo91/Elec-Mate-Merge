@@ -57,14 +57,16 @@ export const ComfortAndLifestyleSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-[#1a1a1a] border border-gray-600 rounded-lg p-3">
               <h5 className="font-medium text-foreground mb-2">Tech Comfort</h5>
-              <p className="text-gray-300 text-sm">Users comfortable with technology prefer AI learning</p>
+              <p className="text-gray-300 text-sm">
+                Users comfortable with technology prefer AI learning
+              </p>
             </div>
-            
+
             <div className="bg-[#1a1a1a] border border-gray-600 rounded-lg p-3">
               <h5 className="font-medium text-foreground mb-2">Control Preference</h5>
               <p className="text-gray-300 text-sm">Users wanting direct control prefer schedules</p>
             </div>
-            
+
             <div className="bg-[#1a1a1a] border border-gray-600 rounded-lg p-3">
               <h5 className="font-medium text-foreground mb-2">Convenience Priority</h5>
               <p className="text-gray-300 text-sm">Busy households value AI automation</p>

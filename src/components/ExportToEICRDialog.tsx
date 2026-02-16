@@ -72,7 +72,9 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
   const loadEICData = async () => {
     setIsLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const data = await reportCloud.getReportData(reportId, user.id);
@@ -99,7 +101,9 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
 
     setIsExporting(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Transform EIC to EICR data
@@ -170,12 +174,14 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
             ) : validation && summary ? (
               <>
                 {/* Validation Status */}
-                <div className={cn(
-                  'rounded-lg border p-4',
-                  validation.isValid
-                    ? 'border-green-500/30 bg-green-500/10'
-                    : 'border-red-500/30 bg-red-500/10'
-                )}>
+                <div
+                  className={cn(
+                    'rounded-lg border p-4',
+                    validation.isValid
+                      ? 'border-green-500/30 bg-green-500/10'
+                      : 'border-red-500/30 bg-red-500/10'
+                  )}
+                >
                   <div className="flex items-start gap-3">
                     {validation.isValid ? (
                       <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
@@ -183,13 +189,13 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
                       <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
                     )}
                     <div>
-                      <p className={cn(
-                        'font-medium',
-                        validation.isValid ? 'text-green-400' : 'text-red-400'
-                      )}>
-                        {validation.isValid
-                          ? 'Ready to export'
-                          : 'Cannot export - issues found'}
+                      <p
+                        className={cn(
+                          'font-medium',
+                          validation.isValid ? 'text-green-400' : 'text-red-400'
+                        )}
+                      >
+                        {validation.isValid ? 'Ready to export' : 'Cannot export - issues found'}
                       </p>
                       {validation.errors.length > 0 && (
                         <ul className="mt-2 space-y-1 text-sm text-red-300">

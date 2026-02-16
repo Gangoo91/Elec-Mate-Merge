@@ -28,7 +28,8 @@ interface Message {
 }
 
 const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
+const SUPABASE_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
 
 // Storage key for conversation persistence
 const STORAGE_KEY = 'elec-ai-conversation';
@@ -55,7 +56,7 @@ const loadStoredMessages = (): Message[] => {
     // Restore Date objects for timestamps
     return messages.map((m: Message) => ({
       ...m,
-      timestamp: m.timestamp ? new Date(m.timestamp) : undefined
+      timestamp: m.timestamp ? new Date(m.timestamp) : undefined,
     }));
   } catch (e) {
     console.warn('Failed to load stored conversation:', e);
@@ -71,10 +72,13 @@ const saveMessages = (messages: Message[]) => {
       return;
     }
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      messages,
-      timestamp: new Date().toISOString()
-    }));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        messages,
+        timestamp: new Date().toISOString(),
+      })
+    );
   } catch (e) {
     console.warn('Failed to save conversation:', e);
   }
@@ -121,7 +125,7 @@ export default function ConversationalSearch() {
       const timeoutId = setTimeout(() => {
         toast.success('Previous conversation restored', {
           description: 'Your chat history has been recovered',
-          duration: 3000
+          duration: 3000,
         });
       }, 500);
       return () => clearTimeout(timeoutId);
@@ -155,7 +159,7 @@ export default function ConversationalSearch() {
     if (isNearBottomRef.current) {
       messagesEndRef.current?.scrollIntoView({
         behavior: instant ? 'instant' : 'smooth',
-        block: 'end'
+        block: 'end',
       });
     }
   }, []);
@@ -179,45 +183,48 @@ export default function ConversationalSearch() {
   }, [isStreaming, streaming.displayedText, scrollToBottomIfNeeded]);
 
   // Image handling - supports large files with compression
-  const handleImageSelect = useCallback(async (file: File) => {
-    // Check for image types including HEIC
-    if (!isImageFile(file)) {
-      toast.error('Please select an image');
-      return;
-    }
-
-    // Validate size (allow up to 50MB, will be compressed)
-    const validation = validateImageSize(file);
-    if (!validation.valid) {
-      toast.error(validation.error);
-      return;
-    }
-
-    // Show compression indicator for large files
-    const needsCompression = file.size > 2 * 1024 * 1024;
-    if (needsCompression) {
-      setIsCompressing(true);
-    }
-
-    try {
-      // Compress image for upload (target ~2MB)
-      const compressed = await compressImageForUpload(file);
-      setSelectedImage(compressed);
-      setImagePreview(URL.createObjectURL(compressed));
-      haptic.selection();
-
-      // Show compression result for large files
-      if (needsCompression) {
-        const savedMB = ((file.size - compressed.size) / 1024 / 1024).toFixed(1);
-        toast.success(`Image optimised (saved ${savedMB}MB)`);
+  const handleImageSelect = useCallback(
+    async (file: File) => {
+      // Check for image types including HEIC
+      if (!isImageFile(file)) {
+        toast.error('Please select an image');
+        return;
       }
-    } catch (error) {
-      console.error('Image processing error:', error);
-      toast.error('Failed to process image');
-    } finally {
-      setIsCompressing(false);
-    }
-  }, [haptic]);
+
+      // Validate size (allow up to 50MB, will be compressed)
+      const validation = validateImageSize(file);
+      if (!validation.valid) {
+        toast.error(validation.error);
+        return;
+      }
+
+      // Show compression indicator for large files
+      const needsCompression = file.size > 2 * 1024 * 1024;
+      if (needsCompression) {
+        setIsCompressing(true);
+      }
+
+      try {
+        // Compress image for upload (target ~2MB)
+        const compressed = await compressImageForUpload(file);
+        setSelectedImage(compressed);
+        setImagePreview(URL.createObjectURL(compressed));
+        haptic.selection();
+
+        // Show compression result for large files
+        if (needsCompression) {
+          const savedMB = ((file.size - compressed.size) / 1024 / 1024).toFixed(1);
+          toast.success(`Image optimised (saved ${savedMB}MB)`);
+        }
+      } catch (error) {
+        console.error('Image processing error:', error);
+        toast.error('Failed to process image');
+      } finally {
+        setIsCompressing(false);
+      }
+    },
+    [haptic]
+  );
 
   const clearImage = useCallback(() => {
     if (imagePreview) {
@@ -228,184 +235,187 @@ export default function ConversationalSearch() {
   }, [imagePreview]);
 
   const uploadImage = useCallback(async (file: File): Promise<string> => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const fileName = `${user.id}/elec-ai/${Date.now()}.jpg`;
 
-    const { error } = await supabase.storage
-      .from('visual-uploads')
-      .upload(fileName, file);
+    const { error } = await supabase.storage.from('visual-uploads').upload(fileName, file);
 
     if (error) throw error;
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('visual-uploads')
-      .getPublicUrl(fileName);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
 
     return publicUrl;
   }, []);
 
-  const handleSend = useCallback(async (queryText?: string) => {
-    const messageText = queryText || input.trim();
+  const handleSend = useCallback(
+    async (queryText?: string) => {
+      const messageText = queryText || input.trim();
 
-    if (!messageText && !selectedImage) return;
+      if (!messageText && !selectedImage) return;
 
-    haptic.medium();
+      haptic.medium();
 
-    // Upload image if present
-    let imageUrl: string | undefined;
-    if (selectedImage) {
-      try {
-        imageUrl = await uploadImage(selectedImage);
-        clearImage();
-      } catch (err) {
-        toast.error('Failed to upload image');
-        return;
+      // Upload image if present
+      let imageUrl: string | undefined;
+      if (selectedImage) {
+        try {
+          imageUrl = await uploadImage(selectedImage);
+          clearImage();
+        } catch (err) {
+          toast.error('Failed to upload image');
+          return;
+        }
       }
-    }
 
-    const userMessage: Message = {
-      role: 'user',
-      content: messageText || 'What can you tell me about this?',
-      timestamp: new Date(),
-      imageUrl
-    };
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setIsSearching(true);
-    setIsStreaming(true);
-    streaming.reset();
+      const userMessage: Message = {
+        role: 'user',
+        content: messageText || 'What can you tell me about this?',
+        timestamp: new Date(),
+        imageUrl,
+      };
+      setMessages((prev) => [...prev, userMessage]);
+      setInput('');
+      setIsSearching(true);
+      setIsStreaming(true);
+      streaming.reset();
 
-    try {
-      abortControllerRef.current = new AbortController();
+      try {
+        abortControllerRef.current = new AbortController();
 
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/conversational-search`,
-        {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/conversational-search`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${SUPABASE_KEY}`
+            Authorization: `Bearer ${SUPABASE_KEY}`,
           },
           body: JSON.stringify({
-            messages: [...messages, userMessage].map(m => ({ role: m.role, content: m.content })),
-            imageUrl
+            messages: [...messages, userMessage].map((m) => ({ role: m.role, content: m.content })),
+            imageUrl,
           }),
-          signal: abortControllerRef.current.signal
-        }
-      );
+          signal: abortControllerRef.current.signal,
+        });
 
-      if (!response.ok) {
-        if (response.status === 429) {
-          toast.error('Rate limit exceeded', {
-            description: 'Please wait a moment and try again.'
-          });
-          setMessages(prev => prev.slice(0, -1));
-          haptic.error();
+        if (!response.ok) {
+          if (response.status === 429) {
+            toast.error('Rate limit exceeded', {
+              description: 'Please wait a moment and try again.',
+            });
+            setMessages((prev) => prev.slice(0, -1));
+            haptic.error();
+            return;
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        setIsSearching(false);
+
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: '',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, assistantMessage]);
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('No response body');
+
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            const finalContent = streaming.flush();
+
+            // Match ---FOLLOWUP--- with optional ---END_FOLLOWUP--- (may run to end of content)
+            const followUpMatch = finalContent.match(
+              /---FOLLOWUP---([\s\S]*?)(?:---END_FOLLOWUP---|$)/
+            );
+            let questions: string[] = [];
+            let cleanedContent = finalContent;
+
+            if (followUpMatch) {
+              questions = followUpMatch[1]
+                .trim()
+                .split('\n')
+                .map((q) => q.replace(/^[\s•\-*]*\d*[.)]*\s*/, '').trim())
+                .filter((q) => q.length > 0 && q.endsWith('?'));
+
+              cleanedContent = finalContent
+                .replace(/---FOLLOWUP---[\s\S]*?(?:---END_FOLLOWUP---|$)/g, '')
+                .trim();
+            }
+
+            setMessages((prev) => {
+              const newMessages = [...prev];
+              const lastMessage = newMessages[newMessages.length - 1];
+              if (lastMessage?.role === 'assistant') {
+                lastMessage.content = cleanedContent;
+                if (questions.length > 0) {
+                  lastMessage.followUpQuestions = questions;
+                }
+              }
+              return newMessages;
+            });
+            break;
+          }
+
+          buffer += decoder.decode(value, { stream: true });
+
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const data = line.slice(6).trim();
+              if (data === '[DONE]') continue;
+
+              try {
+                const parsed = JSON.parse(data);
+                const token = parsed.choices?.[0]?.delta?.content;
+
+                if (token) {
+                  streaming.addTokens(token);
+                }
+              } catch {
+                // Ignore JSON parse errors
+              }
+            }
+          }
+        }
+      } catch (error: unknown) {
+        const err = error as Error;
+        if (err.name === 'AbortError') {
           return;
         }
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
 
-      setIsSearching(false);
+        toast.error('Failed to get response', {
+          description: err.message,
+        });
+        haptic.error();
 
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: '',
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, assistantMessage]);
-
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error('No response body');
-
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          const finalContent = streaming.flush();
-
-          // Match ---FOLLOWUP--- with optional ---END_FOLLOWUP--- (may run to end of content)
-          const followUpMatch = finalContent.match(/---FOLLOWUP---([\s\S]*?)(?:---END_FOLLOWUP---|$)/);
-          let questions: string[] = [];
-          let cleanedContent = finalContent;
-
-          if (followUpMatch) {
-            questions = followUpMatch[1]
-              .trim()
-              .split('\n')
-              .map(q => q.replace(/^[\s•\-*]*\d*[.)]*\s*/, '').trim())
-              .filter(q => q.length > 0 && q.endsWith('?'));
-
-            cleanedContent = finalContent.replace(/---FOLLOWUP---[\s\S]*?(?:---END_FOLLOWUP---|$)/g, '').trim();
+        setMessages((prev) => {
+          const lastMsg = prev[prev.length - 1];
+          if (lastMsg?.role === 'assistant') {
+            return prev.slice(0, -2);
           }
-
-          setMessages(prev => {
-            const newMessages = [...prev];
-            const lastMessage = newMessages[newMessages.length - 1];
-            if (lastMessage?.role === 'assistant') {
-              lastMessage.content = cleanedContent;
-              if (questions.length > 0) {
-                lastMessage.followUpQuestions = questions;
-              }
-            }
-            return newMessages;
-          });
-          break;
-        }
-
-        buffer += decoder.decode(value, { stream: true });
-
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6).trim();
-            if (data === '[DONE]') continue;
-
-            try {
-              const parsed = JSON.parse(data);
-              const token = parsed.choices?.[0]?.delta?.content;
-
-              if (token) {
-                streaming.addTokens(token);
-              }
-            } catch {
-              // Ignore JSON parse errors
-            }
-          }
-        }
+          return prev.slice(0, -1);
+        });
+      } finally {
+        streaming.stop();
+        setIsStreaming(false);
+        setIsSearching(false);
+        abortControllerRef.current = null;
       }
-
-    } catch (error: unknown) {
-      const err = error as Error;
-      if (err.name === 'AbortError') {
-        return;
-      }
-
-      toast.error('Failed to get response', {
-        description: err.message
-      });
-      haptic.error();
-
-      setMessages(prev => {
-        const lastMsg = prev[prev.length - 1];
-        if (lastMsg?.role === 'assistant') {
-          return prev.slice(0, -2);
-        }
-        return prev.slice(0, -1);
-      });
-    } finally {
-      streaming.stop();
-      setIsStreaming(false);
-      setIsSearching(false);
-      abortControllerRef.current = null;
-    }
-  }, [input, messages, streaming, haptic, selectedImage, uploadImage, clearImage]);
+    },
+    [input, messages, streaming, haptic, selectedImage, uploadImage, clearImage]
+  );
 
   const handleClearConversation = useCallback(() => {
     if (messages.length === 0) return;
@@ -417,11 +427,14 @@ export default function ConversationalSearch() {
     }
   }, [messages.length, haptic]);
 
-  const handleFollowUpSelect = useCallback((question: string) => {
-    setInput(question);
-    inputRef.current?.focus();
-    haptic.selection();
-  }, [haptic]);
+  const handleFollowUpSelect = useCallback(
+    (question: string) => {
+      setInput(question);
+      inputRef.current?.focus();
+      haptic.selection();
+    },
+    [haptic]
+  );
 
   return (
     <ChatContainer>
@@ -474,7 +487,8 @@ export default function ConversationalSearch() {
           <div className="py-6 space-y-6">
             <AnimatePresence mode="popLayout">
               {messages.map((message, idx) => {
-                const isCurrentlyStreaming = isStreaming && idx === messages.length - 1 && message.role === 'assistant';
+                const isCurrentlyStreaming =
+                  isStreaming && idx === messages.length - 1 && message.role === 'assistant';
                 return (
                   <motion.div
                     key={`${idx}-${message.role}`}
@@ -511,20 +525,24 @@ export default function ConversationalSearch() {
                           <InspectorMessage
                             message={{
                               role: 'assistant',
-                              content: isCurrentlyStreaming ? streaming.displayedText : message.content,
-                              agentName: 'Elec-AI'
+                              content: isCurrentlyStreaming
+                                ? streaming.displayedText
+                                : message.content,
+                              agentName: 'Elec-AI',
                             }}
                             isStreaming={isCurrentlyStreaming}
                           />
 
                           {/* Follow-up Question Chips */}
-                          {!isCurrentlyStreaming && message.followUpQuestions && message.followUpQuestions.length > 0 && (
-                            <FollowUpChips
-                              questions={message.followUpQuestions}
-                              onSelect={handleFollowUpSelect}
-                              className="ml-11"
-                            />
-                          )}
+                          {!isCurrentlyStreaming &&
+                            message.followUpQuestions &&
+                            message.followUpQuestions.length > 0 && (
+                              <FollowUpChips
+                                questions={message.followUpQuestions}
+                                onSelect={handleFollowUpSelect}
+                                className="ml-11"
+                              />
+                            )}
                         </div>
                       </div>
                     )}
@@ -534,11 +552,7 @@ export default function ConversationalSearch() {
             </AnimatePresence>
 
             {/* Searching Skeleton */}
-            <AnimatePresence>
-              {isSearching && (
-                <SearchingSkeleton />
-              )}
-            </AnimatePresence>
+            <AnimatePresence>{isSearching && <SearchingSkeleton />}</AnimatePresence>
           </div>
         </ChatMessagesArea>
       )}

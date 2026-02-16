@@ -53,7 +53,9 @@ export const MarkAsPaidDialog = ({
     try {
       setIsSubmitting(true);
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
       }
@@ -72,17 +74,15 @@ export const MarkAsPaidDialog = ({
       if (updateError) throw updateError;
 
       // 2. Record payment in invoice_payments table
-      const { error: paymentError } = await supabase
-        .from('invoice_payments')
-        .insert({
-          quote_id: invoice.id,
-          user_id: user.id,
-          amount: invoice.total,
-          payment_date: paymentDate.toISOString(),
-          payment_method: paymentMethod,
-          payment_reference: paymentReference || null,
-          notes: notes || null,
-        });
+      const { error: paymentError } = await supabase.from('invoice_payments').insert({
+        quote_id: invoice.id,
+        user_id: user.id,
+        amount: invoice.total,
+        payment_date: paymentDate.toISOString(),
+        payment_method: paymentMethod,
+        payment_reference: paymentReference || null,
+        notes: notes || null,
+      });
 
       if (paymentError) throw paymentError;
 
@@ -94,7 +94,7 @@ export const MarkAsPaidDialog = ({
 
       // Auto-sync to connected accounting software (e.g., Xero)
       if (hasConnectedProvider) {
-        const connectedProvider = integrations.find(i => i.status === 'connected');
+        const connectedProvider = integrations.find((i) => i.status === 'connected');
         if (connectedProvider) {
           toast({
             title: 'Syncing to accounting...',
@@ -102,18 +102,20 @@ export const MarkAsPaidDialog = ({
           });
 
           // Sync in background - don't block the UI
-          syncInvoice(invoice.id).then((success) => {
-            if (success) {
-              toast({
-                title: 'Synced to accounting',
-                description: `Invoice synced to ${connectedProvider.tenantName || connectedProvider.provider}`,
-                variant: 'success',
-              });
-            }
-          }).catch((error) => {
-            console.error('Auto-sync failed:', error);
-            // Don't show error toast here - syncInvoice already handles it
-          });
+          syncInvoice(invoice.id)
+            .then((success) => {
+              if (success) {
+                toast({
+                  title: 'Synced to accounting',
+                  description: `Invoice synced to ${connectedProvider.tenantName || connectedProvider.provider}`,
+                  variant: 'success',
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Auto-sync failed:', error);
+              // Don't show error toast here - syncInvoice already handles it
+            });
         }
       }
 

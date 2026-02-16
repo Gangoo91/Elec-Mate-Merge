@@ -7,34 +7,34 @@ const IndustrialElectricalModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "Industrial vs Domestic Electrical Setup",
+      title: 'Industrial vs Domestic Electrical Setup',
       icon: Settings,
-      description: "Key differences between industrial and domestic systems"
+      description: 'Key differences between industrial and domestic systems',
     },
     {
       id: 2,
-      title: "HV/LV Separation and Transformer Overview",
+      title: 'HV/LV Separation and Transformer Overview',
       icon: Zap,
-      description: "High voltage systems and transformer principles"
+      description: 'High voltage systems and transformer principles',
     },
     {
       id: 3,
-      title: "MCC Panels and Switchgear Intro",
+      title: 'MCC Panels and Switchgear Intro',
       icon: PanelLeft,
-      description: "Motor control centres and switchgear basics"
+      description: 'Motor control centres and switchgear basics',
     },
     {
       id: 4,
-      title: "Cabling, Busbar Systems, and Riser Design",
+      title: 'Cabling, Busbar Systems, and Riser Design',
       icon: Cable,
-      description: "Power distribution methods and design"
+      description: 'Power distribution methods and design',
     },
     {
       id: 5,
-      title: "Earthing and Bonding Strategies",
+      title: 'Earthing and Bonding Strategies',
       icon: PlugZap,
-      description: "Industrial earthing systems and protection"
-    }
+      description: 'Industrial earthing systems and protection',
+    },
   ];
 
   return (

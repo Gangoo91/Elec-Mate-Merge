@@ -1,9 +1,8 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MessageSquare, Users, CheckCircle, AlertCircle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, MessageSquare, Users, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface CommunicationSimulatorProps {
   onBack: () => void;
@@ -24,50 +23,60 @@ interface Scenario {
 const scenarios: Scenario[] = [
   {
     id: 'help-senior',
-    title: "Asking for Help from a Senior Electrician",
-    context: "You're working on a complex three-phase installation and have encountered a problem you're not sure how to solve.",
-    situation: "You approach your supervisor, Dave, who is known for being direct and sometimes impatient. How do you ask for help?",
+    title: 'Asking for Help from a Senior Electrician',
+    context:
+      "You're working on a complex three-phase installation and have encountered a problem you're not sure how to solve.",
+    situation:
+      'You approach your supervisor, Dave, who is known for being direct and sometimes impatient. How do you ask for help?',
     responses: [
       {
         text: "Dave, I'm completely lost with this three-phase setup. Can you just do it for me?",
-        feedback: "This approach makes you sound incompetent and puts the burden entirely on Dave. It doesn't show initiative or learning mindset.",
-        rating: 'poor'
+        feedback:
+          "This approach makes you sound incompetent and puts the burden entirely on Dave. It doesn't show initiative or learning mindset.",
+        rating: 'poor',
       },
       {
         text: "Hi Dave, I'm working on the three-phase installation and I've checked the diagrams, but I'm unsure about the neutral connections. Could you spare a few minutes to guide me through it?",
-        feedback: "Excellent! You've shown you've attempted the work, identified the specific issue, and asked for guidance rather than someone to do it for you.",
-        rating: 'excellent'
+        feedback:
+          "Excellent! You've shown you've attempted the work, identified the specific issue, and asked for guidance rather than someone to do it for you.",
+        rating: 'excellent',
       },
       {
         text: "Dave, this three-phase thing is really confusing. I don't get any of it.",
-        feedback: "While honest, this is too vague and doesn't show you've made any effort to understand or solve the problem yourself.",
-        rating: 'poor'
-      }
-    ]
+        feedback:
+          "While honest, this is too vague and doesn't show you've made any effort to understand or solve the problem yourself.",
+        rating: 'poor',
+      },
+    ],
   },
   {
     id: 'impatient-client',
-    title: "Dealing with an Impatient Client",
-    context: "You're rewiring a kitchen and the job is taking longer than initially estimated due to discovering old wiring that needs replacing.",
-    situation: "Mrs. Johnson is frustrated and says: 'This is taking forever! You said it would be done yesterday. I have family coming over this weekend!'",
+    title: 'Dealing with an Impatient Client',
+    context:
+      "You're rewiring a kitchen and the job is taking longer than initially estimated due to discovering old wiring that needs replacing.",
+    situation:
+      "Mrs. Johnson is frustrated and says: 'This is taking forever! You said it would be done yesterday. I have family coming over this weekend!'",
     responses: [
       {
         text: "Look, these things take time. You can't rush electrical work.",
-        feedback: "Too dismissive and doesn't acknowledge the client's concerns or explain why the delay occurred.",
-        rating: 'poor'
+        feedback:
+          "Too dismissive and doesn't acknowledge the client's concerns or explain why the delay occurred.",
+        rating: 'poor',
       },
       {
         text: "I completely understand your frustration, Mrs. Johnson. We discovered some old wiring that wasn't up to current safety standards, which we need to replace for your safety. I should have communicated this better when we found it. Let me give you a realistic timeline for completion.",
-        feedback: "Perfect! You've acknowledged her feelings, explained the reason for the delay, taken responsibility for poor communication, and offered a solution.",
-        rating: 'excellent'
+        feedback:
+          "Perfect! You've acknowledged her feelings, explained the reason for the delay, taken responsibility for poor communication, and offered a solution.",
+        rating: 'excellent',
       },
       {
         text: "Sorry, but we found problems with the old wiring. It'll be done when it's done.",
-        feedback: "While you've explained the issue, the tone is unprofessional and doesn't show empathy for the client's situation.",
-        rating: 'poor'
-      }
-    ]
-  }
+        feedback:
+          "While you've explained the issue, the tone is unprofessional and doesn't show empathy for the client's situation.",
+        rating: 'poor',
+      },
+    ],
+  },
 ];
 
 const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
@@ -88,19 +97,27 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
 
   const getRatingColor = (rating: string) => {
     switch (rating) {
-      case 'excellent': return 'text-green-400 bg-green-500/20 border-green-500/30';
-      case 'good': return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
-      case 'poor': return 'text-red-400 bg-red-500/20 border-red-500/30';
-      default: return 'text-white bg-white/10 border-white/20';
+      case 'excellent':
+        return 'text-green-400 bg-green-500/20 border-green-500/30';
+      case 'good':
+        return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
+      case 'poor':
+        return 'text-red-400 bg-red-500/20 border-red-500/30';
+      default:
+        return 'text-white bg-white/10 border-white/20';
     }
   };
 
   const getRatingIcon = (rating: string) => {
     switch (rating) {
-      case 'excellent': return <CheckCircle className="h-4 w-4" />;
-      case 'good': return <CheckCircle className="h-4 w-4" />;
-      case 'poor': return <AlertCircle className="h-4 w-4" />;
-      default: return null;
+      case 'excellent':
+        return <CheckCircle className="h-4 w-4" />;
+      case 'good':
+        return <CheckCircle className="h-4 w-4" />;
+      case 'poor':
+        return <AlertCircle className="h-4 w-4" />;
+      default:
+        return null;
     }
   };
 
@@ -216,7 +233,9 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
                 {showFeedback && selectedResponse === index && (
                   <div className={`rounded-xl p-4 ${getRatingColor(response.rating)}`}>
                     <div className="flex items-center gap-2 mb-2">
-                      <div className={`p-1.5 rounded-lg ${response.rating === 'excellent' ? 'bg-green-500/20' : response.rating === 'good' ? 'bg-yellow-500/20' : 'bg-red-500/20'}`}>
+                      <div
+                        className={`p-1.5 rounded-lg ${response.rating === 'excellent' ? 'bg-green-500/20' : response.rating === 'good' ? 'bg-yellow-500/20' : 'bg-red-500/20'}`}
+                      >
                         {getRatingIcon(response.rating)}
                       </div>
                       <Badge variant="outline" className={getRatingColor(response.rating)}>

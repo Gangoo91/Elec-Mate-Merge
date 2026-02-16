@@ -1,44 +1,46 @@
-import { ChevronLeft, Wrench, Zap, Cable, PoundSterling, Compass } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import { ChevronLeft, Wrench, Zap, Cable, PoundSterling, Compass } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const FunctionalSkillsModule4 = () => {
   useSEO(
-    "Module 4: Practical Mathematics Applications - Functional Skills",
-    "Apply mathematical skills to real electrical work including calculations, cable sizing, costing and geometry"
+    'Module 4: Practical Mathematics Applications - Functional Skills',
+    'Apply mathematical skills to real electrical work including calculations, cable sizing, costing and geometry'
   );
 
   const sections = [
     {
-      number: "Section 1",
-      title: "Electrical Calculations",
-      description: "Ohm's law, power triangle, voltage drop, diversity, maximum demand and Zs calculations",
+      number: 'Section 1',
+      title: 'Electrical Calculations',
+      description:
+        "Ohm's law, power triangle, voltage drop, diversity, maximum demand and Zs calculations",
       icon: Zap,
-      href: "/study-centre/apprentice/functional-skills/module4/section1",
+      href: '/study-centre/apprentice/functional-skills/module4/section1',
     },
     {
-      number: "Section 2",
-      title: "Cable Sizing & Selection",
-      description: "Current-carrying capacity, correction factors, volt drop calculations and worked examples",
+      number: 'Section 2',
+      title: 'Cable Sizing & Selection',
+      description:
+        'Current-carrying capacity, correction factors, volt drop calculations and worked examples',
       icon: Cable,
-      href: "/study-centre/apprentice/functional-skills/module4/section2",
+      href: '/study-centre/apprentice/functional-skills/module4/section2',
     },
     {
-      number: "Section 3",
-      title: "Costing & Quoting",
-      description: "Material takeoffs, labour rates, markup and margin, VAT and creating quotes",
+      number: 'Section 3',
+      title: 'Costing & Quoting',
+      description: 'Material takeoffs, labour rates, markup and margin, VAT and creating quotes',
       icon: PoundSterling,
-      href: "/study-centre/apprentice/functional-skills/module4/section3",
+      href: '/study-centre/apprentice/functional-skills/module4/section3',
     },
     {
-      number: "Section 4",
-      title: "Geometry & Spatial Skills",
-      description: "Conduit bending angles, trunking fill, containment layouts and trigonometry",
+      number: 'Section 4',
+      title: 'Geometry & Spatial Skills',
+      description: 'Conduit bending angles, trunking fill, containment layouts and trigonometry',
       icon: Compass,
-      href: "/study-centre/apprentice/functional-skills/module4/section4",
+      href: '/study-centre/apprentice/functional-skills/module4/section4',
     },
   ];
 
@@ -91,7 +93,8 @@ const FunctionalSkillsModule4 = () => {
               </span>
             </h1>
             <p className="text-sm text-white/50 max-w-lg mx-auto">
-              Apply mathematical skills to real electrical work including calculations, cable sizing, costing and geometry
+              Apply mathematical skills to real electrical work including calculations, cable
+              sizing, costing and geometry
             </p>
           </motion.div>
         </div>

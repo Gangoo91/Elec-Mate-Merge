@@ -46,10 +46,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
-import {
-  useAIEvidenceTagger,
-  getStrengthColor,
-} from '@/hooks/portfolio/useAIEvidenceTagger';
+import { useAIEvidenceTagger, getStrengthColor } from '@/hooks/portfolio/useAIEvidenceTagger';
 import type { MatchedCriterion } from '@/hooks/portfolio/useAIEvidenceTagger';
 import type { PortfolioCategory } from '@/types/portfolio';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
@@ -75,11 +72,7 @@ const FALLBACK_CATEGORIES = [
   'Workplace Practice',
 ];
 
-export function UnifiedCaptureSheet({
-  open,
-  onOpenChange,
-  onComplete,
-}: UnifiedCaptureSheetProps) {
+export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
   const { user } = useAuth();
   const haptics = useHaptics();
@@ -159,9 +152,7 @@ export function UnifiedCaptureSheet({
       }
 
       // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('portfolio-evidence')
-        .getPublicUrl(data.path);
+      const { data: urlData } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
 
       return urlData.publicUrl;
     } catch (err) {
@@ -173,9 +164,7 @@ export function UnifiedCaptureSheet({
   };
 
   // Get evidence type from file
-  const getEvidenceType = (
-    fileType: string
-  ): 'image' | 'document' | 'video' => {
+  const getEvidenceType = (fileType: string): 'image' | 'document' | 'video' => {
     if (fileType.startsWith('image/')) return 'image';
     if (fileType.startsWith('video/')) return 'video';
     return 'document';
@@ -246,9 +235,7 @@ export function UnifiedCaptureSheet({
   const toggleAC = (acCode: string) => {
     haptics.tap();
     setSelectedACs((prev) =>
-      prev.includes(acCode)
-        ? prev.filter((c) => c !== acCode)
-        : [...prev, acCode]
+      prev.includes(acCode) ? prev.filter((c) => c !== acCode) : [...prev, acCode]
     );
   };
 
@@ -358,10 +345,7 @@ export function UnifiedCaptureSheet({
         });
       }
 
-      if (
-        (snap.linkTo === 'ojt' || snap.linkTo === 'both') &&
-        snap.ojtDuration
-      ) {
+      if ((snap.linkTo === 'ojt' || snap.linkTo === 'both') && snap.ojtDuration) {
         await addTimeEntry({
           date: new Date().toISOString().split('T')[0],
           duration: parseFloat(snap.ojtDuration) * 60,
@@ -396,8 +380,7 @@ export function UnifiedCaptureSheet({
           <SheetHeader className="px-4 pb-4">
             <SheetTitle>Add Evidence</SheetTitle>
             <SheetDescription>
-              {step === 'capture' &&
-                'Capture or upload evidence for your portfolio'}
+              {step === 'capture' && 'Capture or upload evidence for your portfolio'}
               {step === 'details' && 'Add details about this evidence'}
             </SheetDescription>
           </SheetHeader>
@@ -415,9 +398,7 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-elec-yellow/20">
                       <Camera className="h-6 w-6 text-elec-yellow" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">
-                      Camera
-                    </span>
+                    <span className="text-sm font-medium text-foreground">Camera</span>
                   </button>
 
                   <button
@@ -427,9 +408,7 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-blue-500/20">
                       <Upload className="h-6 w-6 text-blue-500" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">
-                      Upload
-                    </span>
+                    <span className="text-sm font-medium text-foreground">Upload</span>
                   </button>
 
                   <button
@@ -441,9 +420,7 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-green-500/20">
                       <Link2 className="h-6 w-6 text-green-500" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">
-                      Link
-                    </span>
+                    <span className="text-sm font-medium text-foreground">Link</span>
                   </button>
 
                   <button
@@ -453,9 +430,7 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-purple-500/20">
                       <Video className="h-6 w-6 text-purple-500" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">
-                      Video
-                    </span>
+                    <span className="text-sm font-medium text-foreground">Video</span>
                   </button>
                 </div>
 
@@ -478,8 +453,7 @@ export function UnifiedCaptureSheet({
 
                 {/* Info */}
                 <p className="text-xs text-white/80 text-center">
-                  Max file size: 10MB. Supported: Images, Videos, PDFs,
-                  Documents
+                  Max file size: 10MB. Supported: Images, Videos, PDFs, Documents
                 </p>
               </div>
             )}
@@ -490,11 +464,7 @@ export function UnifiedCaptureSheet({
                 {/* Preview */}
                 {previewUrl && (
                   <div className="relative aspect-video rounded-xl overflow-hidden bg-muted">
-                    <img
-                      src={previewUrl}
-                      alt="Preview"
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
                     <button
                       onClick={() => {
                         setFile(null);
@@ -511,9 +481,7 @@ export function UnifiedCaptureSheet({
                 {isUploading && (
                   <div className="flex items-center gap-2 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                     <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-                    <span className="text-sm text-elec-yellow">
-                      Uploading file...
-                    </span>
+                    <span className="text-sm text-elec-yellow">Uploading file...</span>
                   </div>
                 )}
 
@@ -543,9 +511,7 @@ export function UnifiedCaptureSheet({
                 {isAnalyzing && (
                   <div className="flex items-center gap-2 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                     <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-                    <span className="text-sm text-elec-yellow">
-                      AI analysing evidence...
-                    </span>
+                    <span className="text-sm text-elec-yellow">AI analysing evidence...</span>
                   </div>
                 )}
 
@@ -605,9 +571,7 @@ export function UnifiedCaptureSheet({
                       <Briefcase
                         className={cn(
                           'h-5 w-5',
-                          linkTo === 'portfolio'
-                            ? 'text-elec-yellow'
-                            : 'text-white/80'
+                          linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-white/80'
                         )}
                       />
                       <span className="text-xs font-medium">Portfolio</span>
@@ -624,9 +588,7 @@ export function UnifiedCaptureSheet({
                       <Clock
                         className={cn(
                           'h-5 w-5',
-                          linkTo === 'ojt'
-                            ? 'text-elec-yellow'
-                            : 'text-white/80'
+                          linkTo === 'ojt' ? 'text-elec-yellow' : 'text-white/80'
                         )}
                       />
                       <span className="text-xs font-medium">OJT Hours</span>
@@ -643,9 +605,7 @@ export function UnifiedCaptureSheet({
                       <Check
                         className={cn(
                           'h-5 w-5',
-                          linkTo === 'both'
-                            ? 'text-elec-yellow'
-                            : 'text-white/80'
+                          linkTo === 'both' ? 'text-elec-yellow' : 'text-white/80'
                         )}
                       />
                       <span className="text-xs font-medium">Both</span>
@@ -656,9 +616,7 @@ export function UnifiedCaptureSheet({
                 {/* OJT Duration (if linking to OJT) */}
                 {(linkTo === 'ojt' || linkTo === 'both') && (
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">
-                      Time Spent (hours)
-                    </label>
+                    <label className="text-sm font-medium">Time Spent (hours)</label>
                     <Input
                       type="number"
                       step="0.5"
@@ -676,9 +634,7 @@ export function UnifiedCaptureSheet({
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-elec-yellow" />
-                      <label className="text-sm font-medium">
-                        Matched Assessment Criteria
-                      </label>
+                      <label className="text-sm font-medium">Matched Assessment Criteria</label>
                     </div>
 
                     {/* Evidence Strength Badge */}
@@ -702,13 +658,11 @@ export function UnifiedCaptureSheet({
                     )}
 
                     {/* Matched ACs grouped by unit */}
-                    {aiResult.matchedCriteria &&
-                    aiResult.matchedCriteria.length > 0 ? (
+                    {aiResult.matchedCriteria && aiResult.matchedCriteria.length > 0 ? (
                       <div className="space-y-3">
                         {/* Bulk selection buttons */}
                         <div className="flex gap-2">
-                          {selectedACs.length ===
-                          aiResult.matchedCriteria.length ? (
+                          {selectedACs.length === aiResult.matchedCriteria.length ? (
                             <button
                               onClick={deselectAllACs}
                               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white/70 touch-manipulation active:scale-95 transition-transform"
@@ -725,9 +679,7 @@ export function UnifiedCaptureSheet({
                               Select All
                             </button>
                           )}
-                          {aiResult.matchedCriteria.some(
-                            (ac) => ac.confidence >= 80
-                          ) && (
+                          {aiResult.matchedCriteria.some((ac) => ac.confidence >= 80) && (
                             <button
                               onClick={selectRecommendedACs}
                               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 touch-manipulation active:scale-95 transition-transform"
@@ -756,106 +708,96 @@ export function UnifiedCaptureSheet({
                           }
 
                           let acIndex = 0;
-                          return Array.from(grouped.entries()).map(
-                            ([unitCode, group]) => (
-                              <div key={unitCode} className="space-y-2">
-                                <p className="text-xs font-semibold text-white/80 uppercase tracking-wide">
-                                  Unit {unitCode}
-                                  {group.unitTitle !== 'Other' &&
-                                    ` — ${group.unitTitle}`}
-                                </p>
-                                {group.criteria.map((ac) => {
-                                  const canonicalRef = `${unitCode} AC ${ac.acCode}`;
-                                  const isSelected = selectedACs.includes(canonicalRef);
-                                  const idx = acIndex++;
-                                  return (
-                                    <motion.button
-                                      key={canonicalRef}
-                                      initial={{ opacity: 0, y: 8 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      transition={{
-                                        delay: idx * 0.05,
-                                        type: 'spring',
-                                        stiffness: 400,
-                                        damping: 25,
+                          return Array.from(grouped.entries()).map(([unitCode, group]) => (
+                            <div key={unitCode} className="space-y-2">
+                              <p className="text-xs font-semibold text-white/80 uppercase tracking-wide">
+                                Unit {unitCode}
+                                {group.unitTitle !== 'Other' && ` — ${group.unitTitle}`}
+                              </p>
+                              {group.criteria.map((ac) => {
+                                const canonicalRef = `${unitCode} AC ${ac.acCode}`;
+                                const isSelected = selectedACs.includes(canonicalRef);
+                                const idx = acIndex++;
+                                return (
+                                  <motion.button
+                                    key={canonicalRef}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{
+                                      delay: idx * 0.05,
+                                      type: 'spring',
+                                      stiffness: 400,
+                                      damping: 25,
+                                    }}
+                                    onClick={() => toggleAC(canonicalRef)}
+                                    className={cn(
+                                      'w-full flex items-start gap-3 p-3 rounded-lg border text-left transition-colors touch-manipulation',
+                                      isSelected
+                                        ? 'border-elec-yellow/50 bg-elec-yellow/10'
+                                        : 'border-border hover:border-muted-foreground/50'
+                                    )}
+                                  >
+                                    <motion.div
+                                      animate={{
+                                        scale: isSelected ? [1, 1.2, 1] : 1,
                                       }}
-                                      onClick={() => toggleAC(canonicalRef)}
-                                      className={cn(
-                                        'w-full flex items-start gap-3 p-3 rounded-lg border text-left transition-colors touch-manipulation',
-                                        isSelected
-                                          ? 'border-elec-yellow/50 bg-elec-yellow/10'
-                                          : 'border-border hover:border-muted-foreground/50'
-                                      )}
+                                      transition={{ duration: 0.2 }}
                                     >
-                                      <motion.div
-                                        animate={{
-                                          scale: isSelected ? [1, 1.2, 1] : 1,
-                                        }}
-                                        transition={{ duration: 0.2 }}
-                                      >
-                                        {isSelected ? (
-                                          <CheckSquare className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                                        ) : (
-                                          <Square className="h-5 w-5 text-white/40 shrink-0 mt-0.5" />
-                                        )}
-                                      </motion.div>
-                                      <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-medium text-foreground leading-snug">
-                                          {ac.acCode} {ac.acText}
+                                      {isSelected ? (
+                                        <CheckSquare className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+                                      ) : (
+                                        <Square className="h-5 w-5 text-white/40 shrink-0 mt-0.5" />
+                                      )}
+                                    </motion.div>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-sm font-medium text-foreground leading-snug">
+                                        {ac.acCode} {ac.acText}
+                                      </p>
+                                      <div className="flex items-center gap-2 mt-1">
+                                        <p className="text-xs text-white/60">
+                                          {ac.confidence}% match
                                         </p>
-                                        <div className="flex items-center gap-2 mt-1">
-                                          <p className="text-xs text-white/60">
-                                            {ac.confidence}% match
-                                          </p>
-                                          {ac.confidence >= 80 && (
-                                            <Badge
-                                              variant="outline"
-                                              className="text-[9px] px-1 py-0 border-green-500/30 text-green-400"
-                                            >
-                                              Recommended
-                                            </Badge>
-                                          )}
-                                        </div>
+                                        {ac.confidence >= 80 && (
+                                          <Badge
+                                            variant="outline"
+                                            className="text-[9px] px-1 py-0 border-green-500/30 text-green-400"
+                                          >
+                                            Recommended
+                                          </Badge>
+                                        )}
                                       </div>
-                                    </motion.button>
-                                  );
-                                })}
-                              </div>
-                            )
-                          );
+                                    </div>
+                                  </motion.button>
+                                );
+                              })}
+                            </div>
+                          ));
                         })()}
                       </div>
                     ) : (
                       <p className="text-xs text-white/60">
-                        No matching criteria found. Try adding a more specific
-                        title and description.
+                        No matching criteria found. Try adding a more specific title and
+                        description.
                       </p>
                     )}
 
                     {/* Quality Tips */}
-                    {aiResult.qualityTips &&
-                      aiResult.qualityTips.length > 0 && (
-                        <div className="space-y-1 pt-1">
-                          <p className="text-xs font-medium text-white/70">
-                            Tips to strengthen evidence:
+                    {aiResult.qualityTips && aiResult.qualityTips.length > 0 && (
+                      <div className="space-y-1 pt-1">
+                        <p className="text-xs font-medium text-white/70">
+                          Tips to strengthen evidence:
+                        </p>
+                        {aiResult.qualityTips.map((tip: string, i: number) => (
+                          <p key={i} className="text-xs text-white/60 pl-3">
+                            &bull; {tip}
                           </p>
-                          {aiResult.qualityTips.map(
-                            (tip: string, i: number) => (
-                              <p
-                                key={i}
-                                className="text-xs text-white/60 pl-3"
-                              >
-                                &bull; {tip}
-                              </p>
-                            )
-                          )}
-                        </div>
-                      )}
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
             )}
-
           </div>
 
           {/* Actions */}
@@ -875,8 +817,7 @@ export function UnifiedCaptureSheet({
                 <Button
                   onClick={handleSave}
                   disabled={
-                    !title.trim() ||
-                    ((linkTo === 'ojt' || linkTo === 'both') && !ojtDuration)
+                    !title.trim() || ((linkTo === 'ojt' || linkTo === 'both') && !ojtDuration)
                   }
                   className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                 >

@@ -1,11 +1,11 @@
-import { useState, useMemo } from "react";
-import { format, isToday, isYesterday, parseISO } from "date-fns";
-import { Camera, Check, Share2, MapPin, Clock, ChevronDown, ChevronUp } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
+import { useState, useMemo } from 'react';
+import { format, isToday, isYesterday, parseISO } from 'date-fns';
+import { Camera, Check, Share2, MapPin, Clock, ChevronDown, ChevronUp } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 
 export type PhotoCategory = 'before' | 'during' | 'after' | 'issue' | 'completion' | 'safety';
 
@@ -34,23 +34,23 @@ interface PhotoTimelineProps {
 }
 
 const categoryColors: Record<PhotoCategory, string> = {
-  before: "bg-blue-400",
-  during: "bg-amber-400",
-  after: "bg-emerald-400",
-  issue: "bg-red-400",
-  completion: "bg-purple-400",
-  safety: "bg-violet-400",
+  before: 'bg-blue-400',
+  during: 'bg-amber-400',
+  after: 'bg-emerald-400',
+  issue: 'bg-red-400',
+  completion: 'bg-purple-400',
+  safety: 'bg-violet-400',
 };
 
 const formatDateHeader = (dateStr: string): string => {
   const date = parseISO(dateStr);
-  if (isToday(date)) return "Today";
-  if (isYesterday(date)) return "Yesterday";
-  return format(date, "EEE, d MMM");
+  if (isToday(date)) return 'Today';
+  if (isYesterday(date)) return 'Yesterday';
+  return format(date, 'EEE, d MMM');
 };
 
 const formatTime = (timestamp: string): string => {
-  return format(parseISO(timestamp), "HH:mm");
+  return format(parseISO(timestamp), 'HH:mm');
 };
 
 export const PhotoTimeline = ({
@@ -64,13 +64,13 @@ export const PhotoTimeline = ({
   // Group photos by date
   const groupedPhotos = useMemo(() => {
     const groups: Record<string, TimelinePhoto[]> = {};
-    
+
     const sortedPhotos = [...photos].sort(
       (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
     );
 
     sortedPhotos.forEach((photo) => {
-      const dateKey = format(parseISO(photo.timestamp), "yyyy-MM-dd");
+      const dateKey = format(parseISO(photo.timestamp), 'yyyy-MM-dd');
       if (!groups[dateKey]) {
         groups[dateKey] = [];
       }
@@ -116,7 +116,7 @@ export const PhotoTimeline = ({
         {dateKeys.map((dateKey) => {
           const datePhotos = groupedPhotos[dateKey];
           const expanded = isExpanded(dateKey);
-          
+
           return (
             <div key={dateKey}>
               {/* Sticky date header - more compact */}
@@ -145,17 +145,19 @@ export const PhotoTimeline = ({
                 <div className="relative pl-5 border-l-2 border-border/30 ml-4 mt-1 mb-3 space-y-2">
                   {datePhotos.map((photo, idx) => {
                     const globalIndex = photos.findIndex((p) => p.id === photo.id);
-                    
+
                     return (
                       <div key={photo.id} className="relative group">
                         {/* Timeline dot */}
-                        <div className={cn(
-                          "absolute -left-[21px] top-4 h-2.5 w-2.5 rounded-full transition-colors",
-                          categoryColors[photo.category]
-                        )} />
+                        <div
+                          className={cn(
+                            'absolute -left-[21px] top-4 h-2.5 w-2.5 rounded-full transition-colors',
+                            categoryColors[photo.category]
+                          )}
+                        />
 
                         {/* Photo card - more compact */}
-                        <div 
+                        <div
                           className="bg-elec-gray/50 border border-border/30 rounded-lg overflow-hidden touch-feedback"
                           onClick={() => onPhotoClick(photo, globalIndex)}
                         >
@@ -219,7 +221,7 @@ export const PhotoTimeline = ({
                           <div className="hidden md:flex items-center justify-end gap-2 px-3 py-2 bg-muted/20 border-t border-border/20">
                             <Button
                               size="sm"
-                              variant={photo.isApproved ? "default" : "ghost"}
+                              variant={photo.isApproved ? 'default' : 'ghost'}
                               className="h-7 text-xs"
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -227,11 +229,11 @@ export const PhotoTimeline = ({
                               }}
                             >
                               <Check className="h-3 w-3 mr-1" />
-                              {photo.isApproved ? "Approved" : "Approve"}
+                              {photo.isApproved ? 'Approved' : 'Approve'}
                             </Button>
                             <Button
                               size="sm"
-                              variant={photo.isShared ? "default" : "ghost"}
+                              variant={photo.isShared ? 'default' : 'ghost'}
                               className="h-7 text-xs"
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -239,7 +241,7 @@ export const PhotoTimeline = ({
                               }}
                             >
                               <Share2 className="h-3 w-3 mr-1" />
-                              {photo.isShared ? "Shared" : "Share"}
+                              {photo.isShared ? 'Shared' : 'Share'}
                             </Button>
                           </div>
                         </div>

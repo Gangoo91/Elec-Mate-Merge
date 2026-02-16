@@ -10,31 +10,34 @@ export const EmergencyLightingQuickCheckSection2_1 = () => {
   const questions = [
     {
       id: 1,
-      question: "What is the minimum illuminance level for escape routes?",
-      options: ["0.2 lux", "0.5 lux", "1 lux", "2 lux"],
-      correct: "1 lux",
-      explanation: "BS 5266 requires a minimum of 1 lux at floor level on the centre line of escape routes."
+      question: 'What is the minimum illuminance level for escape routes?',
+      options: ['0.2 lux', '0.5 lux', '1 lux', '2 lux'],
+      correct: '1 lux',
+      explanation:
+        'BS 5266 requires a minimum of 1 lux at floor level on the centre line of escape routes.',
     },
     {
       id: 2,
-      question: "What is the maximum uniformity ratio for escape lighting?",
-      options: ["20:1", "40:1", "60:1", "100:1"],
-      correct: "40:1",
-      explanation: "The uniformity ratio between maximum and minimum illuminance levels must not exceed 40:1."
+      question: 'What is the maximum uniformity ratio for escape lighting?',
+      options: ['20:1', '40:1', '60:1', '100:1'],
+      correct: '40:1',
+      explanation:
+        'The uniformity ratio between maximum and minimum illuminance levels must not exceed 40:1.',
     },
     {
       id: 3,
-      question: "Where must emergency escape lighting be provided?",
-      options: ["Only at exits", "Escape routes only", "All areas", "Escape routes and exits"],
-      correct: "Escape routes and exits",
-      explanation: "Emergency escape lighting must illuminate all escape routes, exits, and areas leading to places of safety."
-    }
+      question: 'Where must emergency escape lighting be provided?',
+      options: ['Only at exits', 'Escape routes only', 'All areas', 'Escape routes and exits'],
+      correct: 'Escape routes and exits',
+      explanation:
+        'Emergency escape lighting must illuminate all escape routes, exits, and areas leading to places of safety.',
+    },
   ];
 
   const handleAnswerSelect = (questionId: number, answer: string) => {
-    setSelectedAnswers(prev => ({
+    setSelectedAnswers((prev) => ({
       ...prev,
-      [questionId]: answer
+      [questionId]: answer,
     }));
   };
 
@@ -70,18 +73,28 @@ export const EmergencyLightingQuickCheckSection2_1 = () => {
               ))}
             </div>
             {showResults && selectedAnswers[question.id] && (
-              <div className={`p-3 rounded-lg ${
-                selectedAnswers[question.id] === question.correct 
-                  ? 'bg-green-500/20 border-green-500/50' 
-                  : 'bg-red-500/20 border-red-500/50'
-              } border`}>
+              <div
+                className={`p-3 rounded-lg ${
+                  selectedAnswers[question.id] === question.correct
+                    ? 'bg-green-500/20 border-green-500/50'
+                    : 'bg-red-500/20 border-red-500/50'
+                } border`}
+              >
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className={`h-4 w-4 ${
-                    selectedAnswers[question.id] === question.correct ? 'text-green-400' : 'text-red-400'
-                  }`} />
-                  <span className={`font-medium ${
-                    selectedAnswers[question.id] === question.correct ? 'text-green-400' : 'text-red-400'
-                  }`}>
+                  <CheckCircle2
+                    className={`h-4 w-4 ${
+                      selectedAnswers[question.id] === question.correct
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  />
+                  <span
+                    className={`font-medium ${
+                      selectedAnswers[question.id] === question.correct
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  >
                     {selectedAnswers[question.id] === question.correct ? 'Correct!' : 'Incorrect'}
                   </span>
                 </div>
@@ -90,7 +103,7 @@ export const EmergencyLightingQuickCheckSection2_1 = () => {
             )}
           </div>
         ))}
-        
+
         {!showResults && Object.keys(selectedAnswers).length === questions.length && (
           <button
             onClick={handleShowResults}
@@ -99,11 +112,12 @@ export const EmergencyLightingQuickCheckSection2_1 = () => {
             Show Results
           </button>
         )}
-        
+
         {showResults && (
           <div className="text-center">
             <Badge className="bg-elec-yellow/20 text-elec-yellow">
-              Score: {questions.filter(q => selectedAnswers[q.id] === q.correct).length}/{questions.length}
+              Score: {questions.filter((q) => selectedAnswers[q.id] === q.correct).length}/
+              {questions.length}
             </Badge>
           </div>
         )}

@@ -1,5 +1,4 @@
-
-import EnhancedCareerPathways from "./enhanced/EnhancedCareerPathways";
+import EnhancedCareerPathways from './enhanced/EnhancedCareerPathways';
 
 const CareerPathways = () => {
   return <EnhancedCareerPathways />;

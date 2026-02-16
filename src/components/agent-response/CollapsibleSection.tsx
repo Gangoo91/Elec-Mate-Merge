@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -9,10 +9,10 @@ interface CollapsibleSectionProps {
   defaultOpen?: boolean;
 }
 
-export const CollapsibleSection = ({ 
-  title, 
-  children, 
-  defaultOpen = false 
+export const CollapsibleSection = ({
+  title,
+  children,
+  defaultOpen = false,
 }: CollapsibleSectionProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -32,11 +32,7 @@ export const CollapsibleSection = ({
           )}
         </Button>
       </CardHeader>
-      {isOpen && (
-        <CardContent className="pt-0">
-          {children}
-        </CardContent>
-      )}
+      {isOpen && <CardContent className="pt-0">{children}</CardContent>}
     </Card>
   );
 };

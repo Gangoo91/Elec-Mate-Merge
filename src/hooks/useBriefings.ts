@@ -1,11 +1,17 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
-export type BriefingType = "Toolbox Talk" | "Site Induction" | "Safety Briefing" | "Method Statement" | "Emergency Procedures" | "PPE Reminder";
-export type BriefingStatus = "Scheduled" | "Completed" | "Cancelled";
-export type RiskLevel = "low" | "medium" | "high";
-export type RecurringPattern = "daily" | "weekly" | "monthly";
+export type BriefingType =
+  | 'Toolbox Talk'
+  | 'Site Induction'
+  | 'Safety Briefing'
+  | 'Method Statement'
+  | 'Emergency Procedures'
+  | 'PPE Reminder';
+export type BriefingStatus = 'Scheduled' | 'Completed' | 'Cancelled';
+export type RiskLevel = 'low' | 'medium' | 'high';
+export type RecurringPattern = 'daily' | 'weekly' | 'monthly';
 
 export interface BriefingAttendee {
   id: string;
@@ -14,7 +20,7 @@ export interface BriefingAttendee {
   acknowledged: boolean;
   acknowledged_at?: string;
   signature_url?: string;
-  signed_via?: "manual" | "qr_code" | "app" | "link";
+  signed_via?: 'manual' | 'qr_code' | 'app' | 'link';
   device_info?: string;
   location_lat?: number;
   location_lng?: number;
@@ -74,43 +80,57 @@ export interface Briefing {
   acknowledged_count?: number;
 }
 
-export type CreateBriefingInput = Omit<Briefing, "id" | "user_id" | "created_at" | "updated_at" | "job" | "attendees" | "attendee_count" | "acknowledged_count">;
+export type CreateBriefingInput = Omit<
+  Briefing,
+  | 'id'
+  | 'user_id'
+  | 'created_at'
+  | 'updated_at'
+  | 'job'
+  | 'attendees'
+  | 'attendee_count'
+  | 'acknowledged_count'
+>;
 export type UpdateBriefingInput = Partial<CreateBriefingInput>;
 
 // Fetch all briefings for the current user
 export function useBriefings() {
   return useQuery({
-    queryKey: ["briefings"],
+    queryKey: ['briefings'],
     queryFn: async (): Promise<Briefing[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       // Get briefings with job info
       const { data: briefings, error: briefingsError } = await supabase
-        .from("briefings")
-        .select(`
+        .from('briefings')
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
-        .eq("user_id", user.id)
-        .order("date", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .order('date', { ascending: false });
 
       if (briefingsError) throw briefingsError;
 
       // Get attendee counts for each briefing
-      const briefingIds = briefings.map(b => b.id);
+      const briefingIds = briefings.map((b) => b.id);
       if (briefingIds.length === 0) return briefings as Briefing[];
 
       const { data: attendeeCounts, error: countError } = await supabase
-        .from("briefing_attendees")
-        .select("briefing_id, acknowledged")
-        .in("briefing_id", briefingIds);
+        .from('briefing_attendees')
+        .select('briefing_id, acknowledged')
+        .in('briefing_id', briefingIds);
 
       if (countError) throw countError;
 
       // Calculate counts per briefing
       const countsMap = new Map<string, { total: number; acknowledged: number }>();
-      attendeeCounts?.forEach(a => {
+      attendeeCounts?.forEach((a) => {
         const current = countsMap.get(a.briefing_id) || { total: 0, acknowledged: 0 };
         current.total++;
         if (a.acknowledged) current.acknowledged++;
@@ -118,7 +138,7 @@ export function useBriefings() {
       });
 
       // Merge counts into briefings
-      return briefings.map(b => ({
+      return briefings.map((b) => ({
         ...b,
         attendee_count: countsMap.get(b.id)?.total || 0,
         acknowledged_count: countsMap.get(b.id)?.acknowledged || 0,
@@ -130,23 +150,27 @@ export function useBriefings() {
 // Fetch upcoming briefings (scheduled)
 export function useUpcomingBriefings() {
   return useQuery({
-    queryKey: ["briefings", "upcoming"],
+    queryKey: ['briefings', 'upcoming'],
     queryFn: async (): Promise<Briefing[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
-      const today = new Date().toISOString().split("T")[0];
+      const today = new Date().toISOString().split('T')[0];
 
       const { data, error } = await supabase
-        .from("briefings")
-        .select(`
+        .from('briefings')
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
-        .eq("user_id", user.id)
-        .eq("status", "Scheduled")
-        .gte("date", today)
-        .order("date", { ascending: true });
+        `
+        )
+        .eq('user_id', user.id)
+        .eq('status', 'Scheduled')
+        .gte('date', today)
+        .order('date', { ascending: true });
 
       if (error) throw error;
       return data as Briefing[];
@@ -157,30 +181,34 @@ export function useUpcomingBriefings() {
 // Fetch a single briefing with attendees
 export function useBriefingWithAttendees(briefingId: string | undefined) {
   return useQuery({
-    queryKey: ["briefings", briefingId],
+    queryKey: ['briefings', briefingId],
     queryFn: async (): Promise<Briefing | null> => {
       if (!briefingId) return null;
 
       const { data: briefing, error: briefingError } = await supabase
-        .from("briefings")
-        .select(`
+        .from('briefings')
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
-        .eq("id", briefingId)
+        `
+        )
+        .eq('id', briefingId)
         .single();
 
       if (briefingError) throw briefingError;
 
       // Get attendees
       const { data: attendees, error: attendeesError } = await supabase
-        .from("briefing_attendees")
-        .select(`
+        .from('briefing_attendees')
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
-        .eq("briefing_id", briefingId)
-        .order("created_at", { ascending: true });
+        `
+        )
+        .eq('briefing_id', briefingId)
+        .order('created_at', { ascending: true });
 
       if (attendeesError) throw attendeesError;
 
@@ -188,7 +216,7 @@ export function useBriefingWithAttendees(briefingId: string | undefined) {
         ...briefing,
         attendees: attendees as BriefingAttendee[],
         attendee_count: attendees?.length || 0,
-        acknowledged_count: attendees?.filter(a => a.acknowledged).length || 0,
+        acknowledged_count: attendees?.filter((a) => a.acknowledged).length || 0,
       } as Briefing;
     },
     enabled: !!briefingId,
@@ -198,37 +226,39 @@ export function useBriefingWithAttendees(briefingId: string | undefined) {
 // Get briefing statistics
 export function useBriefingStats() {
   return useQuery({
-    queryKey: ["briefings", "stats"],
+    queryKey: ['briefings', 'stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       // Get briefings
       const { data: briefings, error } = await supabase
-        .from("briefings")
-        .select("id, status, date")
-        .eq("user_id", user.id);
+        .from('briefings')
+        .select('id, status, date')
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
       // Get attendee data
-      const briefingIds = briefings.map(b => b.id);
+      const briefingIds = briefings.map((b) => b.id);
       let totalAttendees = 0;
       let totalAcknowledged = 0;
 
       if (briefingIds.length > 0) {
         const { data: attendees, error: attendeesError } = await supabase
-          .from("briefing_attendees")
-          .select("briefing_id, acknowledged")
-          .in("briefing_id", briefingIds);
+          .from('briefing_attendees')
+          .select('briefing_id, acknowledged')
+          .in('briefing_id', briefingIds);
 
         if (attendeesError) throw attendeesError;
 
         const completedBriefingIds = new Set(
-          briefings.filter(b => b.status === "Completed").map(b => b.id)
+          briefings.filter((b) => b.status === 'Completed').map((b) => b.id)
         );
 
-        attendees?.forEach(a => {
+        attendees?.forEach((a) => {
           if (completedBriefingIds.has(a.briefing_id)) {
             totalAttendees++;
             if (a.acknowledged) totalAcknowledged++;
@@ -236,14 +266,15 @@ export function useBriefingStats() {
         });
       }
 
-      const today = new Date().toISOString().split("T")[0];
+      const today = new Date().toISOString().split('T')[0];
 
       const stats = {
         total: briefings.length,
-        completed: briefings.filter(b => b.status === "Completed").length,
-        scheduled: briefings.filter(b => b.status === "Scheduled" && b.date >= today).length,
-        cancelled: briefings.filter(b => b.status === "Cancelled").length,
-        avgAttendance: totalAttendees > 0 ? Math.round((totalAcknowledged / totalAttendees) * 100) : 100,
+        completed: briefings.filter((b) => b.status === 'Completed').length,
+        scheduled: briefings.filter((b) => b.status === 'Scheduled' && b.date >= today).length,
+        cancelled: briefings.filter((b) => b.status === 'Cancelled').length,
+        avgAttendance:
+          totalAttendees > 0 ? Math.round((totalAcknowledged / totalAttendees) * 100) : 100,
         totalAttendees,
         totalAcknowledged,
       };
@@ -260,33 +291,37 @@ export function useCreateBriefing() {
 
   return useMutation({
     mutationFn: async (input: CreateBriefingInput): Promise<Briefing> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .insert({ ...input, user_id: user.id })
-        .select(`
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as Briefing;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Briefing created",
+        title: 'Briefing created',
         description: `${data.title} has been scheduled.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -298,32 +333,37 @@ export function useUpdateBriefing() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, ...input }: UpdateBriefingInput & { id: string }): Promise<Briefing> => {
+    mutationFn: async ({
+      id,
+      ...input
+    }: UpdateBriefingInput & { id: string }): Promise<Briefing> => {
       const { data, error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({ ...input, updated_at: new Date().toISOString() })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as Briefing;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Briefing updated",
-        description: "The briefing has been updated successfully.",
+        title: 'Briefing updated',
+        description: 'The briefing has been updated successfully.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -337,33 +377,35 @@ export function useCompleteBriefing() {
   return useMutation({
     mutationFn: async (id: string): Promise<Briefing> => {
       const { data, error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({
-          status: "Completed",
-          updated_at: new Date().toISOString()
+          status: 'Completed',
+          updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as Briefing;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Briefing completed",
+        title: 'Briefing completed',
         description: `${data.title} has been marked as completed.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -376,25 +418,22 @@ export function useDeleteBriefing() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("briefings")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('briefings').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Briefing deleted",
-        description: "The briefing has been removed.",
+        title: 'Briefing deleted',
+        description: 'The briefing has been removed.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -406,34 +445,42 @@ export function useAddBriefingAttendee() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ briefingId, employeeId }: { briefingId: string; employeeId: string }): Promise<BriefingAttendee> => {
+    mutationFn: async ({
+      briefingId,
+      employeeId,
+    }: {
+      briefingId: string;
+      employeeId: string;
+    }): Promise<BriefingAttendee> => {
       const { data, error } = await supabase
-        .from("briefing_attendees")
+        .from('briefing_attendees')
         .insert({
           briefing_id: briefingId,
           employee_id: employeeId,
         })
-        .select(`
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as BriefingAttendee;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Attendee added",
-        description: "The team member has been added to the briefing.",
+        title: 'Attendee added',
+        description: 'The team member has been added to the briefing.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -446,25 +493,22 @@ export function useRemoveBriefingAttendee() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("briefing_attendees")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('briefing_attendees').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Attendee removed",
-        description: "The team member has been removed from the briefing.",
+        title: 'Attendee removed',
+        description: 'The team member has been removed from the briefing.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -476,36 +520,44 @@ export function useAcknowledgeAttendance() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, signatureUrl }: { id: string; signatureUrl?: string }): Promise<BriefingAttendee> => {
+    mutationFn: async ({
+      id,
+      signatureUrl,
+    }: {
+      id: string;
+      signatureUrl?: string;
+    }): Promise<BriefingAttendee> => {
       const { data, error } = await supabase
-        .from("briefing_attendees")
+        .from('briefing_attendees')
         .update({
           acknowledged: true,
           acknowledged_at: new Date().toISOString(),
           signature_url: signatureUrl,
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as BriefingAttendee;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Attendance recorded",
-        description: "The attendance has been acknowledged.",
+        title: 'Attendance recorded',
+        description: 'The attendance has been acknowledged.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -517,30 +569,36 @@ export function useAddMultipleAttendees() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ briefingId, employeeIds }: { briefingId: string; employeeIds: string[] }): Promise<void> => {
-      const attendees = employeeIds.map(employeeId => ({
+    mutationFn: async ({
+      briefingId,
+      employeeIds,
+    }: {
+      briefingId: string;
+      employeeIds: string[];
+    }): Promise<void> => {
+      const attendees = employeeIds.map((employeeId) => ({
         briefing_id: briefingId,
         employee_id: employeeId,
       }));
 
       const { error } = await supabase
-        .from("briefing_attendees")
-        .upsert(attendees, { onConflict: "briefing_id,employee_id" });
+        .from('briefing_attendees')
+        .upsert(attendees, { onConflict: 'briefing_id,employee_id' });
 
       if (error) throw error;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Attendees added",
+        title: 'Attendees added',
         description: `${variables.employeeIds.length} team members added to the briefing.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -567,65 +625,69 @@ export function useCreateBriefingFromTemplate() {
       presenter?: string;
       jobId?: string;
     }): Promise<Briefing> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       // Fetch the template
       const { data: template, error: templateError } = await supabase
-        .from("toolbox_talk_templates")
-        .select("*")
-        .eq("id", templateId)
+        .from('toolbox_talk_templates')
+        .select('*')
+        .eq('id', templateId)
         .single();
 
       if (templateError) throw templateError;
 
       // Create the briefing
       const { data, error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .insert({
           user_id: user.id,
           toolbox_template_id: templateId,
           title: template.name,
-          briefing_type: "Toolbox Talk",
+          briefing_type: 'Toolbox Talk',
           content: template.content,
           date,
           time,
           location,
           presenter,
           job_id: jobId,
-          status: "Scheduled",
+          status: 'Scheduled',
           risk_level: template.risk_level,
           duration_minutes: template.duration_minutes,
         })
-        .select(`
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
 
       // Increment template usage count
       await supabase
-        .from("toolbox_talk_templates")
+        .from('toolbox_talk_templates')
         .update({ usage_count: (template.usage_count || 0) + 1 })
-        .eq("id", templateId);
+        .eq('id', templateId);
 
       return data as Briefing;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
-      queryClient.invalidateQueries({ queryKey: ["toolbox-talk-templates"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
+      queryClient.invalidateQueries({ queryKey: ['toolbox-talk-templates'] });
       toast({
-        title: "Briefing created",
+        title: 'Briefing created',
         description: `${data.title} has been scheduled.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -637,35 +699,43 @@ export function useAddPresenterSignature() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, signatureUrl }: { id: string; signatureUrl: string }): Promise<Briefing> => {
+    mutationFn: async ({
+      id,
+      signatureUrl,
+    }: {
+      id: string;
+      signatureUrl: string;
+    }): Promise<Briefing> => {
       const { data, error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({
           presenter_signature_url: signatureUrl,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as Briefing;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Signature saved",
-        description: "Presenter signature has been recorded.",
+        title: 'Signature saved',
+        description: 'Presenter signature has been recorded.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -679,33 +749,35 @@ export function useUpdateBriefingContent() {
   return useMutation({
     mutationFn: async ({ id, content }: { id: string; content: string }): Promise<Briefing> => {
       const { data, error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({
           content,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as Briefing;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Content saved",
-        description: "Briefing content has been updated.",
+        title: 'Content saved',
+        description: 'Briefing content has been updated.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -720,9 +792,9 @@ export function useAddBriefingPhoto() {
     mutationFn: async ({ id, photoUrl }: { id: string; photoUrl: string }): Promise<Briefing> => {
       // First get current photos
       const { data: current, error: fetchError } = await supabase
-        .from("briefings")
-        .select("photo_evidence")
-        .eq("id", id)
+        .from('briefings')
+        .select('photo_evidence')
+        .eq('id', id)
         .single();
 
       if (fetchError) throw fetchError;
@@ -731,33 +803,35 @@ export function useAddBriefingPhoto() {
       photos.push(photoUrl);
 
       const { data, error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({
           photo_evidence: photos,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:jobs(id, title)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as Briefing;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Photo added",
-        description: "Photo evidence has been added to the briefing.",
+        title: 'Photo added',
+        description: 'Photo evidence has been added to the briefing.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

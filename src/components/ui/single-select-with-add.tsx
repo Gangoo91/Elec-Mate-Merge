@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Plus, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
+import React, { useState } from 'react';
+import { Plus, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
   ScrollbarFreeSelect,
   ScrollbarFreeSelectContent,
   ScrollbarFreeSelectItem,
   ScrollbarFreeSelectTrigger,
   ScrollbarFreeSelectValue,
-} from "@/components/ui/scrollbar-free-select";
+} from '@/components/ui/scrollbar-free-select';
 
 interface SelectOption {
   value: string;
@@ -30,7 +30,7 @@ interface SingleSelectWithAddProps {
 
 export const SingleSelectWithAdd: React.FC<SingleSelectWithAddProps> = ({
   label,
-  placeholder = "Select an option...",
+  placeholder = 'Select an option...',
   value,
   onValueChange,
   options,
@@ -39,36 +39,34 @@ export const SingleSelectWithAdd: React.FC<SingleSelectWithAddProps> = ({
   disabled = false,
   className,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<string>('');
 
   const handleAdd = () => {
     if (selectedOption && !value.includes(selectedOption)) {
       onValueChange([...value, selectedOption]);
-      setSelectedOption("");
+      setSelectedOption('');
     }
   };
 
   const handleRemove = (itemValue: string) => {
-    onValueChange(value.filter(v => v !== itemValue));
+    onValueChange(value.filter((v) => v !== itemValue));
   };
 
-  const availableOptions = options.filter(option => !value.includes(option.value));
+  const availableOptions = options.filter((option) => !value.includes(option.value));
 
   const getSelectedLabels = () => {
-    return value
-      .map(val => options.find(opt => opt.value === val)?.label)
-      .filter(Boolean);
+    return value.map((val) => options.find((opt) => opt.value === val)?.label).filter(Boolean);
   };
 
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn('space-y-3', className)}>
       {label && (
         <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
           <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
           {label}
         </label>
       )}
-      
+
       {/* Selected Items Display */}
       {value.length > 0 && (
         <div className="flex flex-wrap gap-2">
@@ -100,8 +98,8 @@ export const SingleSelectWithAdd: React.FC<SingleSelectWithAddProps> = ({
             disabled={disabled || availableOptions.length === 0}
           >
             <ScrollbarFreeSelectTrigger className="h-12">
-              <ScrollbarFreeSelectValue 
-                placeholder={availableOptions.length === 0 ? "All options selected" : placeholder} 
+              <ScrollbarFreeSelectValue
+                placeholder={availableOptions.length === 0 ? 'All options selected' : placeholder}
               />
             </ScrollbarFreeSelectTrigger>
             <ScrollbarFreeSelectContent>
@@ -113,7 +111,7 @@ export const SingleSelectWithAdd: React.FC<SingleSelectWithAddProps> = ({
             </ScrollbarFreeSelectContent>
           </ScrollbarFreeSelect>
         </div>
-        
+
         <Button
           type="button"
           onClick={handleAdd}

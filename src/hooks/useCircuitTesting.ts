@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 import { CircuitTestSession, CircuitTestResult } from '@/types/circuit-testing';
 import { comprehensiveCircuitTestFlow } from '@/data/inspection-testing/circuitTestFlow';
@@ -17,7 +16,7 @@ export const useCircuitTesting = (): UseCircuitTestingReturn => {
 
   const startSession = useCallback((installationDetails: any, technician: any) => {
     console.log('Starting circuit testing session...');
-    
+
     const newSession: CircuitTestSession = {
       id: `circuit-session-${Date.now()}`,
       flowId: comprehensiveCircuitTestFlow.id,
@@ -29,61 +28,64 @@ export const useCircuitTesting = (): UseCircuitTestingReturn => {
       installationDetails: {
         location: installationDetails?.location || 'Not specified',
         installationType: installationDetails?.type || 'Domestic',
-        description: installationDetails?.description || 'Circuit testing'
+        description: installationDetails?.description || 'Circuit testing',
       },
       technician: {
         name: technician?.name || 'Technician',
         qualifications: technician?.qualifications || 'Qualified Electrician',
-        company: technician?.company || 'Electrical Company'
-      }
+        company: technician?.company || 'Electrical Company',
+      },
     };
 
     setSession(newSession);
     console.log('Circuit testing session started:', newSession);
   }, []);
 
-  const recordResult = useCallback((stepId: string, result: Omit<CircuitTestResult, 'stepId' | 'timestamp'>) => {
-    if (!session) {
-      console.warn('No active session to record result');
-      return;
-    }
-
-    console.log('Recording result for step:', stepId, result);
-
-    const newResult: CircuitTestResult = {
-      ...result,
-      stepId,
-      timestamp: new Date()
-    };
-
-    setSession(prev => {
-      if (!prev) return null;
-
-      const existingIndex = prev.results.findIndex(r => r.stepId === stepId);
-      const updatedResults = [...prev.results];
-
-      if (existingIndex >= 0) {
-        updatedResults[existingIndex] = newResult;
-      } else {
-        updatedResults.push(newResult);
+  const recordResult = useCallback(
+    (stepId: string, result: Omit<CircuitTestResult, 'stepId' | 'timestamp'>) => {
+      if (!session) {
+        console.warn('No active session to record result');
+        return;
       }
 
-      return {
-        ...prev,
-        results: updatedResults
+      console.log('Recording result for step:', stepId, result);
+
+      const newResult: CircuitTestResult = {
+        ...result,
+        stepId,
+        timestamp: new Date(),
       };
-    });
-  }, [session]);
+
+      setSession((prev) => {
+        if (!prev) return null;
+
+        const existingIndex = prev.results.findIndex((r) => r.stepId === stepId);
+        const updatedResults = [...prev.results];
+
+        if (existingIndex >= 0) {
+          updatedResults[existingIndex] = newResult;
+        } else {
+          updatedResults.push(newResult);
+        }
+
+        return {
+          ...prev,
+          results: updatedResults,
+        };
+      });
+    },
+    [session]
+  );
 
   const nextStep = useCallback(() => {
     if (!session) return;
 
-    setSession(prev => {
+    setSession((prev) => {
       if (!prev || prev.currentStepIndex >= prev.steps.length - 1) return prev;
-      
+
       return {
         ...prev,
-        currentStepIndex: prev.currentStepIndex + 1
+        currentStepIndex: prev.currentStepIndex + 1,
       };
     });
   }, [session]);
@@ -91,12 +93,12 @@ export const useCircuitTesting = (): UseCircuitTestingReturn => {
   const previousStep = useCallback(() => {
     if (!session) return;
 
-    setSession(prev => {
+    setSession((prev) => {
       if (!prev || prev.currentStepIndex <= 0) return prev;
-      
+
       return {
         ...prev,
-        currentStepIndex: prev.currentStepIndex - 1
+        currentStepIndex: prev.currentStepIndex - 1,
       };
     });
   }, [session]);
@@ -105,14 +107,14 @@ export const useCircuitTesting = (): UseCircuitTestingReturn => {
     if (!session) return;
 
     console.log('Completing circuit testing session');
-    
-    setSession(prev => {
+
+    setSession((prev) => {
       if (!prev) return null;
-      
+
       return {
         ...prev,
         endTime: new Date(),
-        status: 'completed'
+        status: 'completed',
       };
     });
   }, [session]);
@@ -123,6 +125,6 @@ export const useCircuitTesting = (): UseCircuitTestingReturn => {
     recordResult,
     nextStep,
     previousStep,
-    completeSession
+    completeSession,
   };
 };

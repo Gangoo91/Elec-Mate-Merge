@@ -10,29 +10,52 @@ export const SmartHomeModule3Section1RealWorld = () => {
 
   const steps = [
     {
-      title: "Client A: Small Rented Flat",
-      content: "Client A lives in a small rented flat. They want smart lighting but cannot rewire or make permanent modifications.",
-      solution: "Wi-Fi bulbs they can take with them when they move.",
-      reasoning: "Perfect for renters - no installation required, portable, and provides full smart functionality."
+      title: 'Client A: Small Rented Flat',
+      content:
+        'Client A lives in a small rented flat. They want smart lighting but cannot rewire or make permanent modifications.',
+      solution: 'Wi-Fi bulbs they can take with them when they move.',
+      reasoning:
+        'Perfect for renters - no installation required, portable, and provides full smart functionality.',
     },
     {
-      title: "Client B: Luxury New Build",
-      content: "Client B is building a luxury 5-bedroom house. They want integrated lighting, HVAC, and shading control with ultimate reliability.",
-      solution: "A centralised wired system (KNX/Lutron) with hybrid Zigbee overlay for sensors.",
-      reasoning: "New build allows structured cabling, budget supports professional system, integration requirements need centralised control."
+      title: 'Client B: Luxury New Build',
+      content:
+        'Client B is building a luxury 5-bedroom house. They want integrated lighting, HVAC, and shading control with ultimate reliability.',
+      solution: 'A centralised wired system (KNX/Lutron) with hybrid Zigbee overlay for sensors.',
+      reasoning:
+        'New build allows structured cabling, budget supports professional system, integration requirements need centralised control.',
     },
     {
-      title: "Your Turn: Client C Decision",
-      content: "Client C owns a 3-bedroom house and wants flexibility without major rewiring. They have a moderate budget and want room-by-room control.",
-      isQuestion: true
-    }
+      title: 'Your Turn: Client C Decision',
+      content:
+        'Client C owns a 3-bedroom house and wants flexibility without major rewiring. They have a moderate budget and want room-by-room control.',
+      isQuestion: true,
+    },
   ];
 
   const clientCOptions = [
-    { text: "Smart bulbs throughout the house", feedback: "Expensive for whole house - would cost £300-£600+ for all bulbs", correct: false },
-    { text: "Smart switches in main rooms", feedback: "Good choice! Cost-effective, works with existing bulbs, provides room control with minimal disruption", correct: true },
-    { text: "Full KNX wired system", feedback: "Too disruptive and expensive for retrofit with moderate budget", correct: false },
-    { text: "Mix of smart switches and some smart bulbs for flexibility", feedback: "Excellent solution! Smart switches for main lighting, smart bulbs where colour/special control needed", correct: true }
+    {
+      text: 'Smart bulbs throughout the house',
+      feedback: 'Expensive for whole house - would cost £300-£600+ for all bulbs',
+      correct: false,
+    },
+    {
+      text: 'Smart switches in main rooms',
+      feedback:
+        'Good choice! Cost-effective, works with existing bulbs, provides room control with minimal disruption',
+      correct: true,
+    },
+    {
+      text: 'Full KNX wired system',
+      feedback: 'Too disruptive and expensive for retrofit with moderate budget',
+      correct: false,
+    },
+    {
+      text: 'Mix of smart switches and some smart bulbs for flexibility',
+      feedback:
+        'Excellent solution! Smart switches for main lighting, smart bulbs where colour/special control needed',
+      correct: true,
+    },
   ];
 
   const nextStep = () => {
@@ -94,7 +117,7 @@ export const SmartHomeModule3Section1RealWorld = () => {
           ) : (
             <div className="space-y-4">
               <p className="text-elec-yellow font-medium">Which system would you recommend?</p>
-              
+
               <div className="space-y-2">
                 {clientCOptions.map((option, index) => (
                   <label
@@ -123,14 +146,18 @@ export const SmartHomeModule3Section1RealWorld = () => {
               </div>
 
               {showFeedback && selectedAnswer !== null && (
-                <div className={`p-3 rounded-lg border ${
-                  clientCOptions[selectedAnswer].correct 
-                    ? 'bg-green-600/10 border-green-600/20' 
-                    : 'bg-red-600/10 border-red-600/20'
-                }`}>
-                  <p className={`text-sm ${
-                    clientCOptions[selectedAnswer].correct ? 'text-green-100' : 'text-red-100'
-                  }`}>
+                <div
+                  className={`p-3 rounded-lg border ${
+                    clientCOptions[selectedAnswer].correct
+                      ? 'bg-green-600/10 border-green-600/20'
+                      : 'bg-red-600/10 border-red-600/20'
+                  }`}
+                >
+                  <p
+                    className={`text-sm ${
+                      clientCOptions[selectedAnswer].correct ? 'text-green-100' : 'text-red-100'
+                    }`}
+                  >
                     {clientCOptions[selectedAnswer].feedback}
                   </p>
                 </div>

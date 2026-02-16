@@ -1,15 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Route, 
-  MapPin, 
-  Settings, 
+import {
+  Route,
+  MapPin,
+  Settings,
   TestTube,
   Lightbulb,
   Eye,
   Navigation,
   CheckCircle,
   AlertCircle,
-  Clock
+  Clock,
 } from 'lucide-react';
 
 export const EmergencyLightingContent2_4_Enhanced = () => {
@@ -28,7 +28,8 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <h3 className="font-semibold text-blue-400 mb-2">Primary Purpose</h3>
               <p className="text-foreground">
-                Escape route lighting provides illumination along designated paths to ensure safe evacuation during mains lighting failure.
+                Escape route lighting provides illumination along designated paths to ensure safe
+                evacuation during mains lighting failure.
               </p>
             </div>
 
@@ -60,7 +61,9 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">What is the minimum lux requirement along the centre line of an escape route?</p>
+            <p className="text-foreground">
+              What is the minimum lux requirement along the centre line of an escape route?
+            </p>
             <p className="text-green-400 mt-2 font-medium">Answer: 1 lux minimum</p>
           </div>
         </CardContent>
@@ -130,8 +133,12 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">Name two features along an escape route that must be clearly illuminated.</p>
-            <p className="text-green-400 mt-2 font-medium">Answer: Fire-fighting equipment and changes of direction</p>
+            <p className="text-foreground">
+              Name two features along an escape route that must be clearly illuminated.
+            </p>
+            <p className="text-green-400 mt-2 font-medium">
+              Answer: Fire-fighting equipment and changes of direction
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -145,7 +152,9 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
-          <p className="text-foreground">When designing escape route lighting, electricians should:</p>
+          <p className="text-foreground">
+            When designing escape route lighting, electricians should:
+          </p>
 
           <div className="grid gap-4">
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
@@ -190,8 +199,12 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">Why must luminaires be placed at changes of direction and intersections?</p>
-            <p className="text-green-400 mt-2 font-medium">Answer: To ensure continuous illumination and prevent confusion during evacuation</p>
+            <p className="text-foreground">
+              Why must luminaires be placed at changes of direction and intersections?
+            </p>
+            <p className="text-green-400 mt-2 font-medium">
+              Answer: To ensure continuous illumination and prevent confusion during evacuation
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -270,7 +283,9 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">How often should full-duration testing of escape route lighting be carried out?</p>
+            <p className="text-foreground">
+              How often should full-duration testing of escape route lighting be carried out?
+            </p>
             <p className="text-green-400 mt-2 font-medium">Answer: Annually (once per year)</p>
           </div>
         </CardContent>

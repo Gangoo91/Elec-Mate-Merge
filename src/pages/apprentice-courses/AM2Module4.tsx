@@ -1,65 +1,74 @@
-import { ArrowLeft, ListChecks, Wrench, FileCheck, Activity, AlertTriangle, Timer, TestTube } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
-import { cn } from "@/lib/utils";
+import {
+  ArrowLeft,
+  ListChecks,
+  Wrench,
+  FileCheck,
+  Activity,
+  AlertTriangle,
+  Timer,
+  TestTube,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
+import { cn } from '@/lib/utils';
 
 const AM2Module4 = () => {
   useSEO(
-    "Module 4: Inspection and Testing - AM2 Preparation Course",
-    "Complete testing procedures, instrument use, certification and compliance recording for AM2 assessment"
+    'Module 4: Inspection and Testing - AM2 Preparation Course',
+    'Complete testing procedures, instrument use, certification and compliance recording for AM2 assessment'
   );
 
   const sections = [
     {
       id: 1,
-      number: "Section 1",
-      title: "Full test sequence and order of tests",
-      description: "Correct testing sequence and methodology",
+      number: 'Section 1',
+      title: 'Full test sequence and order of tests',
+      description: 'Correct testing sequence and methodology',
       icon: ListChecks,
-      path: "section1"
+      path: 'section1',
     },
     {
       id: 2,
-      number: "Section 2",
-      title: "Safe use of test instruments (GS38 compliance)",
-      description: "Proper test equipment use and safety requirements",
+      number: 'Section 2',
+      title: 'Safe use of test instruments (GS38 compliance)',
+      description: 'Proper test equipment use and safety requirements',
       icon: Wrench,
-      path: "section2"
+      path: 'section2',
     },
     {
       id: 3,
-      number: "Section 3",
-      title: "Recording test results on certification",
-      description: "Accurate completion of test certificates",
+      number: 'Section 3',
+      title: 'Recording test results on certification',
+      description: 'Accurate completion of test certificates',
       icon: FileCheck,
-      path: "section3"
+      path: 'section3',
     },
     {
       id: 4,
-      number: "Section 4",
-      title: "Functional and operational testing",
-      description: "Testing system functionality and operation",
+      number: 'Section 4',
+      title: 'Functional and operational testing',
+      description: 'Testing system functionality and operation',
       icon: Activity,
-      path: "section4"
+      path: 'section4',
     },
     {
       id: 5,
-      number: "Section 5",
-      title: "Identifying and reporting non-compliances",
-      description: "Finding and documenting installation defects",
+      number: 'Section 5',
+      title: 'Identifying and reporting non-compliances',
+      description: 'Finding and documenting installation defects',
       icon: AlertTriangle,
-      path: "section5"
+      path: 'section5',
     },
     {
       id: 6,
-      number: "Section 6",
-      title: "Time management during testing",
-      description: "Efficient testing under exam time constraints",
+      number: 'Section 6',
+      title: 'Time management during testing',
+      description: 'Efficient testing under exam time constraints',
       icon: Timer,
-      path: "section6"
-    }
+      path: 'section6',
+    },
   ];
 
   return (
@@ -95,12 +104,14 @@ const AM2Module4 = () => {
             {/* Icon with Glow Effect */}
             <div className="relative inline-block mb-4 ios-animate-in">
               <div className="absolute inset-0 bg-elec-yellow/20 rounded-2xl blur-xl scale-150" />
-              <div className={cn(
-                'relative p-3 sm:p-4 rounded-2xl',
-                'bg-gradient-to-br from-elec-yellow/20 to-amber-500/10',
-                'border border-elec-yellow/30',
-                'shadow-[0_0_30px_-5px_hsl(47_100%_50%/0.3)]'
-              )}>
+              <div
+                className={cn(
+                  'relative p-3 sm:p-4 rounded-2xl',
+                  'bg-gradient-to-br from-elec-yellow/20 to-amber-500/10',
+                  'border border-elec-yellow/30',
+                  'shadow-[0_0_30px_-5px_hsl(47_100%_50%/0.3)]'
+                )}
+              >
                 <TestTube className="w-7 h-7 sm:w-8 sm:h-8 text-elec-yellow" />
               </div>
             </div>
@@ -112,7 +123,8 @@ const AM2Module4 = () => {
 
             {/* Description */}
             <p className="text-ios-body text-white/70 leading-relaxed max-w-2xl ios-animate-in">
-              Complete testing procedures, instrument use, certification and compliance recording for AM2 assessment.
+              Complete testing procedures, instrument use, certification and compliance recording
+              for AM2 assessment.
             </p>
           </div>
 

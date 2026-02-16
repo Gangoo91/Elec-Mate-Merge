@@ -1,11 +1,16 @@
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Calculator, RefreshCw, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { MobileInput } from '@/components/ui/mobile-input';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Calculator, RefreshCw, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 
-import { CableSizingInputs, CableSizingErrors, CableType } from "./useCableSizing";
-import { installationCategories, getMethodsByCategory, isUndergroundMethod, isDomesticInsulationMethod } from "@/lib/calculators/bs7671-data/installationMethodFactors";
+import { CableSizingInputs, CableSizingErrors, CableType } from './useCableSizing';
+import {
+  installationCategories,
+  getMethodsByCategory,
+  isUndergroundMethod,
+  isDomesticInsulationMethod,
+} from '@/lib/calculators/bs7671-data/installationMethodFactors';
 
 interface CableSizingFormProps {
   inputs: CableSizingInputs;
@@ -25,88 +30,89 @@ interface CableSizingFormProps {
 // Complete BS 7671 installation method options grouped by category
 const installationOptionsByCategory: Record<string, Array<{ value: string; label: string }>> = {
   enclosed: [
-    { value: "conduit-insulated-wall", label: "Conduit in insulated wall (Method A)" },
-    { value: "conduit-masonry", label: "Conduit in masonry (Method A1)" },
-    { value: "conduit-surface", label: "Conduit on surface (Method A2)" },
+    { value: 'conduit-insulated-wall', label: 'Conduit in insulated wall (Method A)' },
+    { value: 'conduit-masonry', label: 'Conduit in masonry (Method A1)' },
+    { value: 'conduit-surface', label: 'Conduit on surface (Method A2)' },
   ],
   surface: [
-    { value: "trunking-surface", label: "Trunking on wall (Method B1)" },
-    { value: "trunking-flush", label: "Trunking flush in wall (Method B2)" },
+    { value: 'trunking-surface', label: 'Trunking on wall (Method B1)' },
+    { value: 'trunking-flush', label: 'Trunking flush in wall (Method B2)' },
   ],
   clipped: [
-    { value: "clipped-direct", label: "Clipped direct to surface (Method C)" },
-    { value: "tray-non-perforated", label: "On non-perforated tray (Method C)" },
+    { value: 'clipped-direct', label: 'Clipped direct to surface (Method C)' },
+    { value: 'tray-non-perforated', label: 'On non-perforated tray (Method C)' },
   ],
   underground: [
-    { value: "buried-direct", label: "Buried direct in ground (Method D1)" },
-    { value: "buried-duct", label: "In buried ducts (Method D2)" },
+    { value: 'buried-direct', label: 'Buried direct in ground (Method D1)' },
+    { value: 'buried-duct', label: 'In buried ducts (Method D2)' },
   ],
   'free-air': [
-    { value: "tray-perforated", label: "Multicore on perforated tray (Method E)" },
-    { value: "cable-ladder", label: "Multicore on cable ladder (Method E)" },
-    { value: "tray-single-trefoil", label: "Single-core trefoil on tray (Method F)" },
-    { value: "tray-single-flat", label: "Single-core flat spaced (Method F)" },
-    { value: "free-air-spaced", label: "Free air, spaced from surface (Method G)" },
+    { value: 'tray-perforated', label: 'Multicore on perforated tray (Method E)' },
+    { value: 'cable-ladder', label: 'Multicore on cable ladder (Method E)' },
+    { value: 'tray-single-trefoil', label: 'Single-core trefoil on tray (Method F)' },
+    { value: 'tray-single-flat', label: 'Single-core flat spaced (Method F)' },
+    { value: 'free-air-spaced', label: 'Free air, spaced from surface (Method G)' },
   ],
   domestic: [
-    { value: "ceiling-insulation-below100", label: "Above ceiling, insulation ≤100mm (100)" },
-    { value: "ceiling-insulation-over100", label: "Above ceiling, insulation >100mm (101)" },
-    { value: "stud-wall-touching", label: "Stud wall, touching insulation (102)" },
-    { value: "stud-wall-not-touching", label: "Stud wall, not touching (103)" },
-  ]
+    { value: 'ceiling-insulation-below100', label: 'Above ceiling, insulation ≤100mm (100)' },
+    { value: 'ceiling-insulation-over100', label: 'Above ceiling, insulation >100mm (101)' },
+    { value: 'stud-wall-touching', label: 'Stud wall, touching insulation (102)' },
+    { value: 'stud-wall-not-touching', label: 'Stud wall, not touching (103)' },
+  ],
 };
 
 // Flatten for select dropdown
-const allInstallationOptions = Object.entries(installationOptionsByCategory).flatMap(([category, options]) => 
-  options.map(opt => ({
-    ...opt,
-    label: opt.label
-  }))
+const allInstallationOptions = Object.entries(installationOptionsByCategory).flatMap(
+  ([category, options]) =>
+    options.map((opt) => ({
+      ...opt,
+      label: opt.label,
+    }))
 );
 
 const cableTypeOptions = [
-  { value: "pvc-twin-earth", label: "Flat Twin & Earth 70°C (Table 4D5)" },
-  { value: "pvc-single", label: "PVC Single-core 70°C (Table 4D1A)" },
-  { value: "xlpe-single", label: "XLPE Single-core 90°C (Table 4D2A)" },
-  { value: "xlpe-twin-earth", label: "XLPE Twin & Earth 90°C" },
-  { value: "swa", label: "SWA Multicore Armoured (Table 4D4A)" },
-  { value: "swa-single-core", label: "SWA Single-core Armoured (Table 4D3A)" },
-  { value: "micc", label: "Mineral Insulated (MICC)" },
-  { value: "aluminium-xlpe", label: "Aluminium XLPE 90°C" },
+  { value: 'pvc-twin-earth', label: 'Flat Twin & Earth 70°C (Table 4D5)' },
+  { value: 'pvc-single', label: 'PVC Single-core 70°C (Table 4D1A)' },
+  { value: 'xlpe-single', label: 'XLPE Single-core 90°C (Table 4D2A)' },
+  { value: 'xlpe-twin-earth', label: 'XLPE Twin & Earth 90°C' },
+  { value: 'swa', label: 'SWA Multicore Armoured (Table 4D4A)' },
+  { value: 'swa-single-core', label: 'SWA Single-core Armoured (Table 4D3A)' },
+  { value: 'micc', label: 'Mineral Insulated (MICC)' },
+  { value: 'aluminium-xlpe', label: 'Aluminium XLPE 90°C' },
 ];
 
 const loadTypeOptions = [
-  { value: "resistive", label: "Resistive (Heating, Lighting)" },
-  { value: "inductive", label: "Inductive (Motors, Transformers)" },
-  { value: "capacitive", label: "Capacitive (Power Factor Correction)" },
-  { value: "mixed", label: "Mixed Load" },
-  { value: "non-linear", label: "Non-Linear (LED, VFD)" },
+  { value: 'resistive', label: 'Resistive (Heating, Lighting)' },
+  { value: 'inductive', label: 'Inductive (Motors, Transformers)' },
+  { value: 'capacitive', label: 'Capacitive (Power Factor Correction)' },
+  { value: 'mixed', label: 'Mixed Load' },
+  { value: 'non-linear', label: 'Non-Linear (LED, VFD)' },
 ];
 
 const voltageOptions = [
-  { value: "230", label: "230V Single Phase" },
-  { value: "400", label: "400V Three Phase" },
-  { value: "110", label: "110V Site Supply" },
+  { value: '230', label: '230V Single Phase' },
+  { value: '400', label: '400V Three Phase' },
+  { value: '110', label: '110V Site Supply' },
 ];
 
 const soilResistivityOptions = [
-  { value: "0.5", label: "0.5 K.m/W (Very wet soil)" },
-  { value: "0.7", label: "0.7 K.m/W (Wet soil)" },
-  { value: "1.0", label: "1.0 K.m/W (Damp soil)" },
-  { value: "1.5", label: "1.5 K.m/W (Dry soil)" },
-  { value: "2.0", label: "2.0 K.m/W (Very dry soil)" },
-  { value: "2.5", label: "2.5 K.m/W (Standard)" },
-  { value: "3.0", label: "3.0 K.m/W (Very dry/rocky)" },
+  { value: '0.5', label: '0.5 K.m/W (Very wet soil)' },
+  { value: '0.7', label: '0.7 K.m/W (Wet soil)' },
+  { value: '1.0', label: '1.0 K.m/W (Damp soil)' },
+  { value: '1.5', label: '1.5 K.m/W (Dry soil)' },
+  { value: '2.0', label: '2.0 K.m/W (Very dry soil)' },
+  { value: '2.5', label: '2.5 K.m/W (Standard)' },
+  { value: '3.0', label: '3.0 K.m/W (Very dry/rocky)' },
 ];
 
 const burialDepthOptions = [
-  { value: "0.5", label: "0.5m (Minimum for domestic)" },
-  { value: "0.7", label: "0.7m (Standard)" },
-  { value: "0.8", label: "0.8m" },
-  { value: "0.9", label: "0.9m" },
-  { value: "1.0", label: "1.0m" },
-  { value: "1.25", label: "1.25m" },
-  { value: "1.5", label: "1.5m (Road crossings)" },
+  { value: '0.5', label: '0.5m (Minimum for domestic)' },
+  { value: '0.7', label: '0.7m (Standard)' },
+  { value: '0.8', label: '0.8m' },
+  { value: '0.9', label: '0.9m' },
+  { value: '1.0', label: '1.0m' },
+  { value: '1.25', label: '1.25m' },
+  { value: '1.5', label: '1.5m (Road crossings)' },
 ];
 
 const CableSizingForm = ({
@@ -121,7 +127,7 @@ const CableSizingForm = ({
   inputMode,
 }: CableSizingFormProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  
+
   const showUndergroundFields = isUndergroundMethod(uiSelections.installationMethodUI);
   const showDomesticFields = isDomesticInsulationMethod(uiSelections.installationMethodUI);
 
@@ -136,7 +142,7 @@ const CableSizingForm = ({
 
   const getCategoryLabel = (method: string): string => {
     for (const [cat, options] of Object.entries(installationOptionsByCategory)) {
-      if (options.some(opt => opt.value === method)) {
+      if (options.some((opt) => opt.value === method)) {
         return installationCategories[cat as keyof typeof installationCategories]?.label || cat;
       }
     }
@@ -145,7 +151,7 @@ const CableSizingForm = ({
 
   const getMethodLabel = (method: string): string => {
     for (const options of Object.values(installationOptionsByCategory)) {
-      const found = options.find(opt => opt.value === method);
+      const found = options.find((opt) => opt.value === method);
       if (found) return found.label;
     }
     return method;
@@ -157,7 +163,7 @@ const CableSizingForm = ({
         <Calculator className="h-5 w-5" />
         Cable Sizing Parameters
       </h3>
-      
+
       {/* Basic Parameters - Only show current input in "current" mode */}
       {inputMode === 'current' && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 border border-blue-500/40 rounded-lg bg-blue-500/5">
@@ -208,7 +214,7 @@ const CableSizingForm = ({
         <h4 className="font-medium text-white flex items-center gap-2">
           Installation Method (BS 7671)
         </h4>
-        
+
         {/* Current Selection Display */}
         <div className="p-4 bg-white/10 rounded-lg border border-elec-yellow/20">
           <div className="text-sm text-white mb-1">Selected Method</div>
@@ -246,7 +252,10 @@ const CableSizingForm = ({
               ← Back to categories
             </button>
             <div className="text-sm text-white mb-2">
-              {installationCategories[selectedCategory as keyof typeof installationCategories]?.label}
+              {
+                installationCategories[selectedCategory as keyof typeof installationCategories]
+                  ?.label
+              }
             </div>
             <div className="space-y-2">
               {installationOptionsByCategory[selectedCategory]?.map((option) => (
@@ -277,7 +286,7 @@ const CableSizingForm = ({
           placeholder="Select cable type"
           options={cableTypeOptions}
         />
-        
+
         {/* Core Selection for SWA Multicore Cables */}
         {uiSelections.cableTypeUI === 'swa' && (
           <MobileSelectWrapper
@@ -339,13 +348,13 @@ const CableSizingForm = ({
         <h4 className="font-medium text-white">Environmental Conditions</h4>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <MobileInput
-            label={showUndergroundFields ? "Soil Temperature (°C)" : "Ambient Temperature (°C)"}
+            label={showUndergroundFields ? 'Soil Temperature (°C)' : 'Ambient Temperature (°C)'}
             type="text"
             inputMode="numeric"
             value={inputs.ambientTemp ?? '30'}
             onChange={(e) => updateInput('ambientTemp', e.target.value)}
             placeholder="30"
-            hint={showUndergroundFields ? "Standard: 20°C" : "Standard: 30°C"}
+            hint={showUndergroundFields ? 'Standard: 20°C' : 'Standard: 30°C'}
           />
 
           <MobileInput
@@ -430,8 +439,8 @@ const CableSizingForm = ({
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 pt-6">
-        <MobileButton 
-          onClick={calculateCableSize} 
+        <MobileButton
+          onClick={calculateCableSize}
           variant="elec"
           size="wide"
           className="flex-1"
@@ -440,11 +449,7 @@ const CableSizingForm = ({
           <Calculator className="mr-2 h-5 w-5" />
           Calculate Cable Size
         </MobileButton>
-        <MobileButton 
-          variant="outline" 
-          onClick={resetCalculator} 
-          size="lg"
-        >
+        <MobileButton variant="outline" onClick={resetCalculator} size="lg">
           <RefreshCw className="mr-2 h-5 w-5" />
           Reset All Fields
         </MobileButton>

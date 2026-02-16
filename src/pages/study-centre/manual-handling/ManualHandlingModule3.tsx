@@ -1,45 +1,43 @@
-import { ArrowLeft, ClipboardCheck, Search, Wrench, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ClipboardCheck, Search, Wrench, Lightbulb } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The TILE Framework in Depth",
+    title: 'The TILE Framework in Depth',
     icon: ClipboardCheck,
     description:
-      "Detailed Task, Individual, Load, and Environment factor analysis for manual handling operations",
+      'Detailed Task, Individual, Load, and Environment factor analysis for manual handling operations',
   },
   {
     id: 2,
-    title: "Identifying Manual Handling Hazards",
+    title: 'Identifying Manual Handling Hazards',
     icon: Search,
     description:
-      "Workplace observation, task analysis, injury data review, and worker consultation",
+      'Workplace observation, task analysis, injury data review, and worker consultation',
   },
   {
     id: 3,
-    title: "Mechanical Aids & Equipment",
+    title: 'Mechanical Aids & Equipment',
     icon: Wrench,
-    description:
-      "Trolleys, sack trucks, hoists, pallet trucks, conveyors, and vacuum lifters",
+    description: 'Trolleys, sack trucks, hoists, pallet trucks, conveyors, and vacuum lifters',
   },
   {
     id: 4,
-    title: "Designing Out Manual Handling",
+    title: 'Designing Out Manual Handling',
     icon: Lightbulb,
-    description:
-      "Elimination, substitution, automation, delivery planning, and storage design",
+    description: 'Elimination, substitution, automation, delivery planning, and storage design',
   },
 ];
 
 export default function ManualHandlingModule3() {
   useSEO({
-    title: "Module 3: Risk Assessment & Reduction | Manual Handling",
+    title: 'Module 3: Risk Assessment & Reduction | Manual Handling',
     description:
-      "The TILE framework in depth, identifying hazards, mechanical aids, and designing out manual handling risks.",
+      'The TILE framework in depth, identifying hazards, mechanical aids, and designing out manual handling risks.',
   });
 
   return (
@@ -66,9 +64,7 @@ export default function ManualHandlingModule3() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3">
-              <span className="text-emerald-400 text-xs font-semibold">
-                MODULE 3
-              </span>
+              <span className="text-emerald-400 text-xs font-semibold">MODULE 3</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +74,8 @@ export default function ManualHandlingModule3() {
               Risk Assessment & Reduction
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The TILE framework in depth, identifying hazards, mechanical aids,
-              and designing out manual handling risks
+              The TILE framework in depth, identifying hazards, mechanical aids, and designing out
+              manual handling risks
             </p>
           </div>
 

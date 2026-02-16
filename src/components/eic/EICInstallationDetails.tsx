@@ -18,7 +18,7 @@ interface EICInstallationDetailsProps {
 const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
   formData,
   onUpdate,
-  onQuickSave
+  onQuickSave,
 }) => {
   const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
@@ -35,7 +35,7 @@ const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
 
   return (
     <KeyboardNavigationProvider onQuickSave={onQuickSave}>
-      <div className={cn("space-y-4", isMobile && "-mx-4")}>
+      <div className={cn('space-y-4', isMobile && '-mx-4')}>
         {/* Smart Field Dependencies - invisible component that handles auto-fills */}
         <SmartFieldDependencies formData={formData} onUpdate={onUpdate} />
 

@@ -20,8 +20,8 @@ export const EmergencyLightingContent2_1 = () => {
             </h3>
             <div className="space-y-3 text-gray-300">
               <p>
-                Emergency escape lighting must provide adequate illumination to enable safe evacuation 
-                from any point within a building to the final exit or a place of safety.
+                Emergency escape lighting must provide adequate illumination to enable safe
+                evacuation from any point within a building to the final exit or a place of safety.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-elec-dark/50 rounded-lg p-4">
@@ -57,18 +57,24 @@ export const EmergencyLightingContent2_1 = () => {
                   <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">Escape Routes</Badge>
                   <div className="space-y-2">
                     <p className="text-foreground font-medium">1 lux minimum</p>
-                    <p className="text-gray-300 text-sm">At floor level on centre line of escape route</p>
+                    <p className="text-gray-300 text-sm">
+                      At floor level on centre line of escape route
+                    </p>
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4">
                   <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">High Risk Areas</Badge>
                   <div className="space-y-2">
                     <p className="text-foreground font-medium">15 lux minimum</p>
-                    <p className="text-gray-300 text-sm">For potentially dangerous areas or processes</p>
+                    <p className="text-gray-300 text-sm">
+                      For potentially dangerous areas or processes
+                    </p>
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4">
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">Uniformity Ratio</Badge>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">
+                    Uniformity Ratio
+                  </Badge>
                   <div className="space-y-2">
                     <p className="text-foreground font-medium">40:1 maximum</p>
                     <p className="text-gray-300 text-sm">Between maximum and minimum levels</p>
@@ -79,12 +85,20 @@ export const EmergencyLightingContent2_1 = () => {
                 <h4 className="text-foreground font-medium mb-2">Additional Requirements:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
                   <div>
-                    <p><strong>Duration:</strong> Minimum 1 hour for most premises</p>
-                    <p><strong>Response Time:</strong> Full output within 5 seconds</p>
+                    <p>
+                      <strong>Duration:</strong> Minimum 1 hour for most premises
+                    </p>
+                    <p>
+                      <strong>Response Time:</strong> Full output within 5 seconds
+                    </p>
                   </div>
                   <div>
-                    <p><strong>Height:</strong> Measured at floor level</p>
-                    <p><strong>Width:</strong> Full width of escape route</p>
+                    <p>
+                      <strong>Height:</strong> Measured at floor level
+                    </p>
+                    <p>
+                      <strong>Width:</strong> Full width of escape route
+                    </p>
                   </div>
                 </div>
               </div>
@@ -102,9 +116,15 @@ export const EmergencyLightingContent2_1 = () => {
                   <div className="bg-elec-dark/50 rounded-lg p-4">
                     <h4 className="text-foreground font-medium mb-2">Maximum Spacing:</h4>
                     <ul className="space-y-1 text-sm text-gray-300">
-                      <li>• <strong>Corridors:</strong> 2 x mounting height</li>
-                      <li>• <strong>Open areas:</strong> 4 x mounting height</li>
-                      <li>• <strong>High ceiling areas:</strong> Special calculations required</li>
+                      <li>
+                        • <strong>Corridors:</strong> 2 x mounting height
+                      </li>
+                      <li>
+                        • <strong>Open areas:</strong> 4 x mounting height
+                      </li>
+                      <li>
+                        • <strong>High ceiling areas:</strong> Special calculations required
+                      </li>
                     </ul>
                   </div>
                   <div className="bg-elec-dark/50 rounded-lg p-4">
@@ -121,9 +141,15 @@ export const EmergencyLightingContent2_1 = () => {
                   <div className="bg-elec-dark/50 rounded-lg p-4">
                     <h4 className="text-foreground font-medium mb-2">Installation Heights:</h4>
                     <ul className="space-y-1 text-sm text-gray-300">
-                      <li>• <strong>Minimum:</strong> 2m above floor level</li>
-                      <li>• <strong>Maximum:</strong> 3m in escape routes</li>
-                      <li>• <strong>Wall mounting:</strong> 0.2m from ceiling</li>
+                      <li>
+                        • <strong>Minimum:</strong> 2m above floor level
+                      </li>
+                      <li>
+                        • <strong>Maximum:</strong> 3m in escape routes
+                      </li>
+                      <li>
+                        • <strong>Wall mounting:</strong> 0.2m from ceiling
+                      </li>
                     </ul>
                   </div>
                   <div className="bg-elec-dark/50 rounded-lg p-4">

@@ -16,7 +16,19 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { Save, Trash2, ChevronLeft, ChevronRight, Zap, TestTube, Shield, MessageSquare, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
+import {
+  Save,
+  Trash2,
+  ChevronLeft,
+  ChevronRight,
+  Zap,
+  TestTube,
+  Shield,
+  MessageSquare,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+} from 'lucide-react';
 
 // Virtualization threshold - use virtualization when circuit count exceeds this
 const VIRTUALIZATION_THRESHOLD = 10;
@@ -51,13 +63,16 @@ export const CircuitList: React.FC<CircuitListProps> = ({
   const [editingCircuit, setEditingCircuit] = useState<TestResult | null>(null);
   const [editedValues, setEditedValues] = useState<Partial<TestResult>>({});
 
-  const handleEdit = useCallback((circuitId: string) => {
-    const circuit = circuits.find(c => c.id === circuitId);
-    if (circuit) {
-      setEditingCircuit(circuit);
-      setEditedValues({});
-    }
-  }, [circuits]);
+  const handleEdit = useCallback(
+    (circuitId: string) => {
+      const circuit = circuits.find((c) => c.id === circuitId);
+      if (circuit) {
+        setEditingCircuit(circuit);
+        setEditedValues({});
+      }
+    },
+    [circuits]
+  );
 
   const handleFieldChange = useCallback((field: keyof TestResult, value: string) => {
     setEditedValues((prev) => ({ ...prev, [field]: value }));
@@ -92,42 +107,58 @@ export const CircuitList: React.FC<CircuitListProps> = ({
   }, [editingCircuit, onRemove]);
 
   // Navigate to adjacent circuit
-  const navigateCircuit = useCallback((direction: 'prev' | 'next') => {
-    if (!editingCircuit) return;
-    const currentIndex = circuits.findIndex((c) => c.id === editingCircuit.id);
-    const newIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
+  const navigateCircuit = useCallback(
+    (direction: 'prev' | 'next') => {
+      if (!editingCircuit) return;
+      const currentIndex = circuits.findIndex((c) => c.id === editingCircuit.id);
+      const newIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
 
-    if (newIndex >= 0 && newIndex < circuits.length) {
-      // Save current first
-      if (onBulkUpdate && Object.keys(editedValues).length > 0) {
-        onBulkUpdate(editingCircuit.id, editedValues);
+      if (newIndex >= 0 && newIndex < circuits.length) {
+        // Save current first
+        if (onBulkUpdate && Object.keys(editedValues).length > 0) {
+          onBulkUpdate(editingCircuit.id, editedValues);
+        }
+        setEditingCircuit(circuits[newIndex]);
+        setEditedValues({});
       }
-      setEditingCircuit(circuits[newIndex]);
-      setEditedValues({});
-    }
-  }, [editingCircuit, circuits, editedValues, onBulkUpdate]);
+    },
+    [editingCircuit, circuits, editedValues, onBulkUpdate]
+  );
 
   // Memoized circuit card renderer for virtualization
-  const VirtualizedRow = useCallback(({ index, style }: { index: number; style: CSSProperties }) => {
-    const circuit = circuits[index];
-    return (
-      <div style={{ ...style, paddingBottom: 6 }}>
-        <CircuitCard
-          circuit={circuit}
-          onEdit={handleEdit}
-          onDelete={onRemove}
-          enableSwipe={true}
-        />
-      </div>
-    );
-  }, [circuits, handleEdit, onRemove]);
+  const VirtualizedRow = useCallback(
+    ({ index, style }: { index: number; style: CSSProperties }) => {
+      const circuit = circuits[index];
+      return (
+        <div style={{ ...style, paddingBottom: 6 }}>
+          <CircuitCard
+            circuit={circuit}
+            onEdit={handleEdit}
+            onDelete={onRemove}
+            enableSwipe={true}
+          />
+        </div>
+      );
+    },
+    [circuits, handleEdit, onRemove]
+  );
 
   if (circuits.length === 0) {
     return (
       <div className={cn('flex flex-col items-center justify-center py-12 text-center', className)}>
         <div className="p-4 rounded-full bg-muted/50 mb-4">
-          <svg className="h-12 w-12 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          <svg
+            className="h-12 w-12 text-muted-foreground"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+            />
           </svg>
         </div>
         <h3 className="text-lg font-medium text-foreground mb-1">No Circuits Yet</h3>
@@ -192,7 +223,9 @@ export const CircuitList: React.FC<CircuitListProps> = ({
             onClose={handleClose}
             onNavigate={navigateCircuit}
             canNavigatePrev={circuits.findIndex((c) => c.id === editingCircuit.id) > 0}
-            canNavigateNext={circuits.findIndex((c) => c.id === editingCircuit.id) < circuits.length - 1}
+            canNavigateNext={
+              circuits.findIndex((c) => c.id === editingCircuit.id) < circuits.length - 1
+            }
           />
         )}
       </MobileBottomSheet>
@@ -253,15 +286,16 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
   }, [haptics, onDelete]);
 
   // Haptic feedback on tab change
-  const handleTabChange = useCallback((tab: TabId) => {
-    haptics.tap();
-    setActiveTab(tab);
-  }, [haptics]);
+  const handleTabChange = useCallback(
+    (tab: TabId) => {
+      haptics.tap();
+      setActiveTab(tab);
+    },
+    [haptics]
+  );
 
   const getValue = (field: keyof TestResult) => {
-    return editedValues[field] !== undefined
-      ? editedValues[field]
-      : circuit[field] || '';
+    return editedValues[field] !== undefined ? editedValues[field] : circuit[field] || '';
   };
 
   // Check if circuit has RCD protection
@@ -287,7 +321,10 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
   }, [hasRcd]);
 
   // Validate quick values
-  const getQuickValueValidation = (field: string, value: string): 'pass' | 'fail' | 'warning' | 'empty' => {
+  const getQuickValueValidation = (
+    field: string,
+    value: string
+  ): 'pass' | 'fail' | 'warning' | 'empty' => {
     if (!value || value === '') return 'empty';
 
     const numValue = parseFloat(value.replace('>', '').replace('<', ''));
@@ -326,7 +363,8 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
   // Format display value for quick values
   const formatQuickValue = (field: string, value: string): string => {
     if (!value || value === '') return '—';
-    if (field === 'polarity') return value === 'Correct' ? '✓' : value === 'Incorrect' ? '✗' : value;
+    if (field === 'polarity')
+      return value === 'Correct' ? '✓' : value === 'Incorrect' ? '✗' : value;
     return value;
   };
 
@@ -363,7 +401,9 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
       <div className="px-3 py-2 border-b border-border bg-card">
         <div className="flex items-center gap-1 mb-2">
           <Zap className="h-3 w-3 text-primary" />
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Quick Values</span>
+          <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
+            Quick Values
+          </span>
         </div>
         <div className="grid grid-cols-4 gap-2">
           <QuickValueTile
@@ -419,41 +459,25 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
 
       {/* Tab Content */}
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-4">
-        {activeTab === 'circuit' && (
-          <CircuitTabContent getValue={getValue} onChange={onChange} />
-        )}
+        {activeTab === 'circuit' && <CircuitTabContent getValue={getValue} onChange={onChange} />}
 
-        {activeTab === 'tests' && (
-          <TestsTabContent getValue={getValue} onChange={onChange} />
-        )}
+        {activeTab === 'tests' && <TestsTabContent getValue={getValue} onChange={onChange} />}
 
         {activeTab === 'rcd' && (
           <RcdTabContent getValue={getValue} onChange={onChange} hasRcd={hasRcd} />
         )}
 
-        {activeTab === 'remarks' && (
-          <RemarksTabContent getValue={getValue} onChange={onChange} />
-        )}
+        {activeTab === 'remarks' && <RemarksTabContent getValue={getValue} onChange={onChange} />}
       </div>
 
       {/* Footer actions */}
       <div className="flex items-center gap-2 p-3 border-t border-border bg-background">
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={handleDelete}
-          className="h-10 px-3"
-        >
+        <Button variant="destructive" size="sm" onClick={handleDelete} className="h-10 px-3">
           <Trash2 className="h-4 w-4 mr-1" />
           Delete
         </Button>
         <div className="flex-1" />
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onClose}
-          className="h-10 px-3"
-        >
+        <Button variant="outline" size="sm" onClick={onClose} className="h-10 px-3">
           Cancel
         </Button>
         <Button
@@ -520,11 +544,13 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
       )}
     >
       <span className="text-[10px] font-medium text-muted-foreground mb-0.5">{label}</span>
-      <span className={cn(
-        'text-base font-bold',
-        isStatus && value === '✓' && 'text-green-400',
-        isStatus && value === '✗' && 'text-red-400',
-      )}>
+      <span
+        className={cn(
+          'text-base font-bold',
+          isStatus && value === '✓' && 'text-green-400',
+          isStatus && value === '✗' && 'text-red-400'
+        )}
+      >
         {value}
       </span>
       {unit && <span className="text-[10px] text-muted-foreground">{unit}</span>}
@@ -628,7 +654,9 @@ const CircuitTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) =>
             </SelectTrigger>
             <SelectContent>
               {['1.0', '1.5', '2.5', '4.0', '6.0', '10.0', '16.0', '25.0'].map((v) => (
-                <SelectItem key={v} value={v}>{v}</SelectItem>
+                <SelectItem key={v} value={v}>
+                  {v}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -643,7 +671,9 @@ const CircuitTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) =>
             </SelectTrigger>
             <SelectContent>
               {['1.0', '1.5', '2.5', '4.0', '6.0', '10.0', '16.0'].map((v) => (
-                <SelectItem key={v} value={v}>{v}</SelectItem>
+                <SelectItem key={v} value={v}>
+                  {v}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -701,7 +731,9 @@ const CircuitTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) =>
             </SelectTrigger>
             <SelectContent>
               {['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'].map((v) => (
-                <SelectItem key={v} value={v}>{v}A</SelectItem>
+                <SelectItem key={v} value={v}>
+                  {v}A
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -747,7 +779,9 @@ const TestsTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) => (
           />
         </FormField>
       </FormRow>
-      <div className="text-xs text-muted-foreground font-medium mt-2 mb-1">Ring Circuit (if applicable)</div>
+      <div className="text-xs text-muted-foreground font-medium mt-2 mb-1">
+        Ring Circuit (if applicable)
+      </div>
       <FormRow>
         <FormField label="r₁ line (Ω)">
           <Input
@@ -914,8 +948,8 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
       <FormRow>
         <FormField label="RCD BS Standard">
           <Select
-            value={getValue('rcdBsStandard') as string || "na"}
-            onValueChange={(v) => onChange('rcdBsStandard', v === "na" ? "" : v)}
+            value={(getValue('rcdBsStandard') as string) || 'na'}
+            onValueChange={(v) => onChange('rcdBsStandard', v === 'na' ? '' : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
@@ -930,8 +964,8 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
         </FormField>
         <FormField label="RCD Type">
           <Select
-            value={getValue('rcdType') as string || "na"}
-            onValueChange={(v) => onChange('rcdType', v === "na" ? "" : v)}
+            value={(getValue('rcdType') as string) || 'na'}
+            onValueChange={(v) => onChange('rcdType', v === 'na' ? '' : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
@@ -949,8 +983,8 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
       <FormRow>
         <FormField label="IΔn (mA)">
           <Select
-            value={getValue('rcdRating') as string || "na"}
-            onValueChange={(v) => onChange('rcdRating', v === "na" ? "" : v)}
+            value={(getValue('rcdRating') as string) || 'na'}
+            onValueChange={(v) => onChange('rcdRating', v === 'na' ? '' : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
@@ -965,8 +999,8 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
         </FormField>
         <FormField label="Rating (A)">
           <Select
-            value={getValue('rcdRatingA') as string || "na"}
-            onValueChange={(v) => onChange('rcdRatingA', v === "na" ? "" : v)}
+            value={(getValue('rcdRatingA') as string) || 'na'}
+            onValueChange={(v) => onChange('rcdRatingA', v === 'na' ? '' : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
@@ -974,7 +1008,9 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
             <SelectContent>
               <SelectItem value="na">N/A</SelectItem>
               {['40', '63', '80', '100'].map((v) => (
-                <SelectItem key={v} value={v}>{v}A</SelectItem>
+                <SelectItem key={v} value={v}>
+                  {v}A
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -1078,9 +1114,7 @@ const FormSection: React.FC<{ title: string; children: React.ReactNode }> = ({
   children,
 }) => (
   <div className="space-y-3">
-    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">
-      {title}
-    </h4>
+    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">{title}</h4>
     <div className="space-y-3">{children}</div>
   </div>
 );
@@ -1089,10 +1123,7 @@ const FormRow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="grid grid-cols-2 gap-3">{children}</div>
 );
 
-const FormField: React.FC<{ label: string; children: React.ReactNode }> = ({
-  label,
-  children,
-}) => (
+const FormField: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
   <div className="space-y-1.5">
     <Label className="text-xs text-muted-foreground font-medium">{label}</Label>
     {children}

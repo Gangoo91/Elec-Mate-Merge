@@ -56,22 +56,19 @@ const AGENT_CONFIG: Record<
     gradient: 'from-orange-400 to-red-500',
     route: '/electrician/health-safety',
   },
-  'installer': {
+  installer: {
     icon: Wrench,
     gradient: 'from-blue-400 to-blue-500',
     route: '/electrician/installation-specialist',
   },
-  'maintenance': {
+  maintenance: {
     icon: Settings,
     gradient: 'from-cyan-400 to-teal-500',
     route: '/electrician/maintenance',
   },
 };
 
-export const SavedResultItem: React.FC<SavedResultItemProps> = ({
-  result,
-  onClose,
-}) => {
+export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClose }) => {
   const navigate = useNavigate();
   const [isDownloading, setIsDownloading] = useState(false);
   const config = AGENT_CONFIG[result.agentType];
@@ -114,15 +111,12 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({
 
         case 'cost-engineer': {
           // Use edge function to generate quote PDF
-          const { data, error } = await supabase.functions.invoke(
-            'generate-quote-pdf',
-            {
-              body: {
-                quoteData: result.outputData,
-                projectName: result.title,
-              },
-            }
-          );
+          const { data, error } = await supabase.functions.invoke('generate-quote-pdf', {
+            body: {
+              quoteData: result.outputData,
+              projectName: result.title,
+            },
+          });
 
           if (error) throw error;
 
@@ -208,10 +202,7 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({
       </div>
 
       {/* Content */}
-      <button
-        onClick={handleViewResults}
-        className="flex-1 min-w-0 text-left touch-manipulation"
-      >
+      <button onClick={handleViewResults} className="flex-1 min-w-0 text-left touch-manipulation">
         <h4 className="text-sm font-medium text-white truncate">{result.title}</h4>
         <p className="text-xs text-white/50">{relativeDate}</p>
       </button>
@@ -223,10 +214,7 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({
             <MoreVertical className="h-5 w-5" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align="end"
-          className="bg-elec-dark border-white/[0.1] min-w-[160px]"
-        >
+        <DropdownMenuContent align="end" className="bg-elec-dark border-white/[0.1] min-w-[160px]">
           <DropdownMenuItem
             onClick={handleViewResults}
             className="gap-2 text-white focus:bg-white/[0.08] focus:text-white"

@@ -1,4 +1,13 @@
-import { Calculator, Zap, TrendingDown, AlertTriangle, CheckCircle, Target, Info, Lightbulb } from 'lucide-react';
+import {
+  Calculator,
+  Zap,
+  TrendingDown,
+  AlertTriangle,
+  CheckCircle,
+  Target,
+  Info,
+  Lightbulb,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -15,13 +24,16 @@ export const VoltageDropContent = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            Voltage drop is the reduction in voltage that occurs as current flows through cable conductors. 
-            Understanding and controlling voltage drop is essential for equipment performance, energy efficiency, and regulatory compliance.
+            Voltage drop is the reduction in voltage that occurs as current flows through cable
+            conductors. Understanding and controlling voltage drop is essential for equipment
+            performance, energy efficiency, and regulatory compliance.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
-              <h4 className="text-blue-300 font-semibold text-lg mb-3">Basic Voltage Drop Formula</h4>
+              <h4 className="text-blue-300 font-semibold text-lg mb-3">
+                Basic Voltage Drop Formula
+              </h4>
               <div className="bg-blue-900/30 p-3 rounded mb-3">
                 <p className="text-foreground font-mono text-lg text-center mb-2">
                   Vd = (mV/A/m) × Ib × L × CF
@@ -31,16 +43,28 @@ export const VoltageDropContent = () => {
                 </p>
               </div>
               <div className="space-y-2 text-sm">
-                <p><strong>Vd:</strong> Voltage drop (volts)</p>
-                <p><strong>mV/A/m:</strong> Voltage drop per amp per metre (from tables)</p>
-                <p><strong>Ib:</strong> Design current (amperes)</p>
-                <p><strong>L:</strong> Length of cable run (metres)</p>
-                <p><strong>CF:</strong> Circuit factor (accounts for conductors)</p>
+                <p>
+                  <strong>Vd:</strong> Voltage drop (volts)
+                </p>
+                <p>
+                  <strong>mV/A/m:</strong> Voltage drop per amp per metre (from tables)
+                </p>
+                <p>
+                  <strong>Ib:</strong> Design current (amperes)
+                </p>
+                <p>
+                  <strong>L:</strong> Length of cable run (metres)
+                </p>
+                <p>
+                  <strong>CF:</strong> Circuit factor (accounts for conductors)
+                </p>
               </div>
             </div>
 
             <div className="bg-red-600/10 p-4 rounded-lg border border-red-600/30">
-              <h4 className="text-red-300 font-semibold text-lg mb-3">BS 7671 Voltage Drop Limits</h4>
+              <h4 className="text-red-300 font-semibold text-lg mb-3">
+                BS 7671 Voltage Drop Limits
+              </h4>
               <div className="space-y-3">
                 <div className="bg-red-900/30 p-3 rounded">
                   <p className="text-foreground font-semibold">Lighting Circuits: Maximum 3%</p>
@@ -63,10 +87,14 @@ export const VoltageDropContent = () => {
           </div>
 
           <div className="bg-elec-dark p-4 rounded-lg">
-            <h4 className="text-elec-yellow font-semibold text-lg mb-3">Advanced Three-Phase Calculations</h4>
+            <h4 className="text-elec-yellow font-semibold text-lg mb-3">
+              Advanced Three-Phase Calculations
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-foreground font-semibold text-sm mb-2">Balanced Three-Phase Load:</p>
+                <p className="text-foreground font-semibold text-sm mb-2">
+                  Balanced Three-Phase Load:
+                </p>
                 <div className="bg-gray-800 p-3 rounded mb-2">
                   <p className="font-mono text-center">Vd = √3 × IL × (R cos φ + X sin φ) × L</p>
                 </div>
@@ -105,10 +133,14 @@ export const VoltageDropContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Example 1 */}
             <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-              <h4 className="text-green-300 font-semibold text-lg mb-3">Example 1: Lighting Circuit</h4>
+              <h4 className="text-green-300 font-semibold text-lg mb-3">
+                Example 1: Lighting Circuit
+              </h4>
               <div className="space-y-3 text-sm">
                 <div className="bg-gray-800 p-3 rounded">
-                  <p><strong>Given:</strong></p>
+                  <p>
+                    <strong>Given:</strong>
+                  </p>
                   <ul className="text-xs space-y-1 mt-1">
                     <li>• 16A lighting circuit</li>
                     <li>• 35m cable run</li>
@@ -117,13 +149,13 @@ export const VoltageDropContent = () => {
                   </ul>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <p><strong>Calculation:</strong></p>
+                  <p>
+                    <strong>Calculation:</strong>
+                  </p>
                   <p className="font-mono text-xs mt-1">
                     Vd = 18 × 16 × 35 × 2 = 20,160mV = 20.16V
                   </p>
-                  <p className="font-mono text-xs">
-                    Percentage = 20.16 ÷ 230 = 8.8%
-                  </p>
+                  <p className="font-mono text-xs">Percentage = 20.16 ÷ 230 = 8.8%</p>
                 </div>
                 <div className="bg-red-900/30 p-3 rounded border border-red-600/40">
                   <p className="text-red-300 text-xs">
@@ -141,7 +173,9 @@ export const VoltageDropContent = () => {
               <h4 className="text-blue-300 font-semibold text-lg mb-3">Example 2: Motor Circuit</h4>
               <div className="space-y-3 text-sm">
                 <div className="bg-gray-800 p-3 rounded">
-                  <p><strong>Given:</strong></p>
+                  <p>
+                    <strong>Given:</strong>
+                  </p>
                   <ul className="text-xs space-y-1 mt-1">
                     <li>• 25A motor load</li>
                     <li>• 60m cable run</li>
@@ -150,7 +184,9 @@ export const VoltageDropContent = () => {
                   </ul>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <p><strong>Solution Process:</strong></p>
+                  <p>
+                    <strong>Solution Process:</strong>
+                  </p>
                   <ul className="text-xs space-y-1 mt-1">
                     <li>• Try 6mm²: 7.3 mV/A/m</li>
                     <li>• Vd = √3 × 25 × 7.3 × 60 ÷ 1000</li>
@@ -168,7 +204,9 @@ export const VoltageDropContent = () => {
           </div>
 
           <div className="bg-elec-dark p-4 rounded-lg">
-            <h4 className="text-elec-yellow font-semibold text-lg mb-3">Cable Selection Reference Table</h4>
+            <h4 className="text-elec-yellow font-semibold text-lg mb-3">
+              Cable Selection Reference Table
+            </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -225,7 +263,9 @@ export const VoltageDropContent = () => {
                   </tr>
                 </tbody>
               </table>
-              <p className="text-xs text-foreground mt-2">*Current ratings for 70°C thermoplastic cables, reference method C</p>
+              <p className="text-xs text-foreground mt-2">
+                *Current ratings for 70°C thermoplastic cables, reference method C
+              </p>
             </div>
           </div>
         </CardContent>
@@ -245,22 +285,49 @@ export const VoltageDropContent = () => {
               <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-600/30">
                 <h4 className="text-yellow-300 font-semibold mb-3">Economic Optimization</h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Cable Cost vs. Energy Loss:</strong> Higher upfront cable cost often pays back through reduced energy losses</li>
-                  <li>• <strong>Installation Routes:</strong> Shorter routes reduce both cable costs and voltage drop</li>
-                  <li>• <strong>Voltage Selection:</strong> 400V circuits have lower current for same power, reducing voltage drop</li>
-                  <li>• <strong>Load Scheduling:</strong> Time-based control can reduce peak demand and cable requirements</li>
-                  <li>• <strong>Sub-distribution:</strong> Local distribution boards can reduce main cable requirements</li>
+                  <li>
+                    • <strong>Cable Cost vs. Energy Loss:</strong> Higher upfront cable cost often
+                    pays back through reduced energy losses
+                  </li>
+                  <li>
+                    • <strong>Installation Routes:</strong> Shorter routes reduce both cable costs
+                    and voltage drop
+                  </li>
+                  <li>
+                    • <strong>Voltage Selection:</strong> 400V circuits have lower current for same
+                    power, reducing voltage drop
+                  </li>
+                  <li>
+                    • <strong>Load Scheduling:</strong> Time-based control can reduce peak demand
+                    and cable requirements
+                  </li>
+                  <li>
+                    • <strong>Sub-distribution:</strong> Local distribution boards can reduce main
+                    cable requirements
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
                 <h4 className="text-green-300 font-semibold mb-3">Performance Optimization</h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Power Factor Correction:</strong> Reduces current and voltage drop for inductive loads</li>
-                  <li>• <strong>Load Balancing:</strong> Proper phase distribution minimizes neutral currents</li>
-                  <li>• <strong>Diversity Factors:</strong> Account for realistic simultaneous demand</li>
-                  <li>• <strong>Future Expansion:</strong> Design headroom for additional loads</li>
-                  <li>• <strong>Monitoring Systems:</strong> Track actual vs. calculated performance</li>
+                  <li>
+                    • <strong>Power Factor Correction:</strong> Reduces current and voltage drop for
+                    inductive loads
+                  </li>
+                  <li>
+                    • <strong>Load Balancing:</strong> Proper phase distribution minimizes neutral
+                    currents
+                  </li>
+                  <li>
+                    • <strong>Diversity Factors:</strong> Account for realistic simultaneous demand
+                  </li>
+                  <li>
+                    • <strong>Future Expansion:</strong> Design headroom for additional loads
+                  </li>
+                  <li>
+                    • <strong>Monitoring Systems:</strong> Track actual vs. calculated performance
+                  </li>
                 </ul>
               </div>
             </div>
@@ -269,22 +336,46 @@ export const VoltageDropContent = () => {
               <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
                 <h4 className="text-blue-300 font-semibold mb-3">Installation Considerations</h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Temperature Derating:</strong> Higher temperatures increase resistance and voltage drop</li>
-                  <li>• <strong>Grouping Effects:</strong> Multiple cables together generate heat and reduce capacity</li>
-                  <li>• <strong>Installation Method:</strong> Affects current carrying capacity and voltage drop</li>
-                  <li>• <strong>Cable Route Planning:</strong> Avoid heat sources and minimize length</li>
-                  <li>• <strong>Future Access:</strong> Consider maintenance and modification requirements</li>
+                  <li>
+                    • <strong>Temperature Derating:</strong> Higher temperatures increase resistance
+                    and voltage drop
+                  </li>
+                  <li>
+                    • <strong>Grouping Effects:</strong> Multiple cables together generate heat and
+                    reduce capacity
+                  </li>
+                  <li>
+                    • <strong>Installation Method:</strong> Affects current carrying capacity and
+                    voltage drop
+                  </li>
+                  <li>
+                    • <strong>Cable Route Planning:</strong> Avoid heat sources and minimize length
+                  </li>
+                  <li>
+                    • <strong>Future Access:</strong> Consider maintenance and modification
+                    requirements
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-purple-600/10 p-4 rounded-lg border border-purple-600/30">
                 <h4 className="text-purple-300 font-semibold mb-3">Special Applications</h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Motor Starting:</strong> Consider starting current (5-7× full load)</li>
-                  <li>• <strong>LED Lighting:</strong> Low current but sensitive to voltage variation</li>
-                  <li>• <strong>EV Charging:</strong> High current, long duration loads</li>
-                  <li>• <strong>Harmonic Loads:</strong> Non-linear loads increase effective current</li>
-                  <li>• <strong>Emergency Supplies:</strong> May have different voltage drop limits</li>
+                  <li>
+                    • <strong>Motor Starting:</strong> Consider starting current (5-7× full load)
+                  </li>
+                  <li>
+                    • <strong>LED Lighting:</strong> Low current but sensitive to voltage variation
+                  </li>
+                  <li>
+                    • <strong>EV Charging:</strong> High current, long duration loads
+                  </li>
+                  <li>
+                    • <strong>Harmonic Loads:</strong> Non-linear loads increase effective current
+                  </li>
+                  <li>
+                    • <strong>Emergency Supplies:</strong> May have different voltage drop limits
+                  </li>
                 </ul>
               </div>
             </div>
@@ -293,8 +384,10 @@ export const VoltageDropContent = () => {
           <Alert className="border-orange-600/30 bg-orange-900/20">
             <AlertTriangle className="h-4 w-4 text-orange-400" />
             <AlertDescription className="text-foreground">
-              <strong className="text-orange-300">Design Tip:</strong> Always verify voltage drop calculations with actual measured values during commissioning. 
-              Real-world conditions (temperature, installation methods, load diversity) can significantly affect performance.
+              <strong className="text-orange-300">Design Tip:</strong> Always verify voltage drop
+              calculations with actual measured values during commissioning. Real-world conditions
+              (temperature, installation methods, load diversity) can significantly affect
+              performance.
             </AlertDescription>
           </Alert>
         </CardContent>

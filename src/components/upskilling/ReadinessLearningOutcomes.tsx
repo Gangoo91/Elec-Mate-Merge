@@ -1,12 +1,11 @@
-
 import { Target, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const ReadinessLearningOutcomes = () => {
   const outcomes = [
-    "Identify the key conditions that must be met before testing",
-    "Understand how to confirm circuits are safe to energise and test",
-    "Recognise when testing should be delayed or stopped"
+    'Identify the key conditions that must be met before testing',
+    'Understand how to confirm circuits are safe to energise and test',
+    'Recognise when testing should be delayed or stopped',
   ];
 
   return (

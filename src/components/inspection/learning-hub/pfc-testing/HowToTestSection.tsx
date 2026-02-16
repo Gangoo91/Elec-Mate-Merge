@@ -1,12 +1,25 @@
 import React from 'react';
-import { Wrench, Play, CheckCircle2, AlertTriangle, Settings, Target, Zap, Shield, Clock, Calculator } from 'lucide-react';
+import {
+  Wrench,
+  Play,
+  CheckCircle2,
+  AlertTriangle,
+  Settings,
+  Target,
+  Zap,
+  Shield,
+  Clock,
+  Calculator,
+} from 'lucide-react';
 
 const HowToTestSection = () => (
   <div className="space-y-4 sm:space-y-6">
     <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">Essential Test Equipment</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-green-400">
+          Essential Test Equipment
+        </h4>
       </div>
       <div className="space-y-4 text-xs sm:text-sm text-gray-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -55,7 +68,9 @@ const HowToTestSection = () => (
     <div className="bg-red-500/10 border border-red-500/20 border-l-4 border-l-red-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-red-400">CRITICAL: PFC Testing Requires Live Circuits</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-red-400">
+          CRITICAL: PFC Testing Requires Live Circuits
+        </h4>
       </div>
       <div className="space-y-4 text-sm text-gray-300">
         <div className="bg-card rounded p-4">
@@ -65,15 +80,19 @@ const HowToTestSection = () => (
             <p>• Dead circuit testing cannot provide meaningful PFC values</p>
             <p>• Supply impedance and transformer characteristics only exist when energised</p>
             <p>• BS 7671 requires measurement of actual prospective fault current</p>
-            <p>• Unlike other electrical tests, PFC testing CANNOT be performed safely on isolated circuits</p>
+            <p>
+              • Unlike other electrical tests, PFC testing CANNOT be performed safely on isolated
+              circuits
+            </p>
           </div>
         </div>
-        
+
         <div className="bg-red-500/20 border border-red-500/30 rounded p-3">
           <p className="font-medium text-red-400 mb-2">⚠️ Live Working Safety Notice:</p>
           <p className="text-xs text-gray-300">
-            PFC testing involves working on or near live electrical circuits. This presents significant risks of electric shock, 
-            burns, and arc flash. Only competent persons with appropriate training, equipment, and authorisation should perform PFC testing.
+            PFC testing involves working on or near live electrical circuits. This presents
+            significant risks of electric shock, burns, and arc flash. Only competent persons with
+            appropriate training, equipment, and authorisation should perform PFC testing.
           </p>
         </div>
       </div>
@@ -89,7 +108,9 @@ const HowToTestSection = () => (
           <p className="font-medium text-blue-400 mb-3">Step-by-Step Live Testing Procedure:</p>
           <div className="space-y-4">
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">1</div>
+              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                1
+              </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Risk Assessment and Preparation</p>
                 <div className="text-xs text-gray-400 space-y-1">
@@ -101,9 +122,11 @@ const HowToTestSection = () => (
                 </div>
               </div>
             </div>
-            
+
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">2</div>
+              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                2
+              </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Working Safety Setup</p>
                 <div className="text-xs text-gray-400 space-y-1">
@@ -117,7 +140,9 @@ const HowToTestSection = () => (
             </div>
 
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">3</div>
+              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                3
+              </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Circuit Load Disconnection</p>
                 <div className="text-xs text-gray-400 space-y-1">
@@ -131,7 +156,9 @@ const HowToTestSection = () => (
             </div>
 
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">4</div>
+              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                4
+              </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Circuit Test Connection</p>
                 <div className="text-xs text-gray-400 space-y-1">
@@ -145,7 +172,9 @@ const HowToTestSection = () => (
             </div>
 
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">5</div>
+              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                5
+              </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Measurement and Recording</p>
                 <div className="text-xs text-gray-400 space-y-1">
@@ -159,9 +188,13 @@ const HowToTestSection = () => (
             </div>
 
             <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">6</div>
+              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                6
+              </div>
               <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">Safe Disconnection and Restoration</p>
+                <p className="font-medium text-foreground mb-1">
+                  Safe Disconnection and Restoration
+                </p>
                 <div className="text-xs text-gray-400 space-y-1">
                   <p>• Carefully disconnect test equipment using insulated tools</p>
                   <p>• Reconnect all loads and equipment</p>
@@ -229,11 +262,11 @@ const HowToTestSection = () => (
           <div className="space-y-3">
             <div className="bg-muted rounded p-3">
               <p className="font-medium text-foreground mb-2">Basic PFC Formula:</p>
-              <div className="font-mono text-sm bg-accent p-2 rounded">
-                PFC = Uo / Zs
-              </div>
+              <div className="font-mono text-sm bg-accent p-2 rounded">PFC = Uo / Zs</div>
               <div className="text-xs mt-2 space-y-1">
-                <p><strong>Where:</strong></p>
+                <p>
+                  <strong>Where:</strong>
+                </p>
                 <p>• PFC = Prospective Fault Current (Amperes)</p>
                 <p>• Uo = Nominal voltage to earth (230V single phase, 400V three phase)</p>
                 <p>• Zs = Earth fault loop impedance (Ze + R1 + R2)</p>
@@ -244,14 +277,18 @@ const HowToTestSection = () => (
               <p className="font-medium text-foreground mb-2">Component Values Required:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                 <div>
-                  <p><strong>Ze - External Earth Fault Loop Impedance:</strong></p>
+                  <p>
+                    <strong>Ze - External Earth Fault Loop Impedance:</strong>
+                  </p>
                   <p>• Measured at supply intake</p>
                   <p>• Provided by DNO or measured</p>
                   <p>• Varies with supply transformer and network</p>
                   <p>• Typical values: 0.2-0.8Ω for TN systems</p>
                 </div>
                 <div>
-                  <p><strong>R1 + R2 - Circuit Conductor Resistances:</strong></p>
+                  <p>
+                    <strong>R1 + R2 - Circuit Conductor Resistances:</strong>
+                  </p>
                   <p>• R1 = Phase conductor resistance</p>
                   <p>• R2 = Protective conductor resistance</p>
                   <p>• Calculated from cable length and conductor size</p>
@@ -261,10 +298,14 @@ const HowToTestSection = () => (
             </div>
 
             <div className="bg-muted rounded p-3">
-              <p className="font-medium text-foreground mb-2">Worked Example - Kitchen Ring Circuit:</p>
+              <p className="font-medium text-foreground mb-2">
+                Worked Example - Kitchen Ring Circuit:
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                 <div>
-                  <p><strong>Given Data:</strong></p>
+                  <p>
+                    <strong>Given Data:</strong>
+                  </p>
                   <p>• Ze = 0.35Ω (TN-C-S supply)</p>
                   <p>• Ring circuit length = 30m</p>
                   <p>• Cable: 2.5mm² T&E (twin and earth)</p>
@@ -272,12 +313,16 @@ const HowToTestSection = () => (
                   <p>• Ring factor = 0.25 (quarter end-to-end)</p>
                 </div>
                 <div>
-                  <p><strong>Calculation:</strong></p>
+                  <p>
+                    <strong>Calculation:</strong>
+                  </p>
                   <p>• Zs = Ze + (R1+R2)/4</p>
                   <p>• Zs = 0.35 + 0.96/4</p>
                   <p>• Zs = 0.35 + 0.24 = 0.59Ω</p>
                   <p>• PFC = 230V / 0.59Ω</p>
-                  <p>• <strong>PFC = 390A</strong></p>
+                  <p>
+                    • <strong>PFC = 390A</strong>
+                  </p>
                 </div>
               </div>
             </div>

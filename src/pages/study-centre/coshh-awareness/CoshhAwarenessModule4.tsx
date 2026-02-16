@@ -1,40 +1,45 @@
-import { ArrowLeft, Layers, Settings, Shield, Package } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Layers, Settings, Shield, Package } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Hierarchy of Control",
+    title: 'Hierarchy of Control',
     icon: Layers,
-    description: "Elimination, substitution, engineering controls, administrative controls, and PPE as the last line of defence",
+    description:
+      'Elimination, substitution, engineering controls, administrative controls, and PPE as the last line of defence',
   },
   {
     id: 2,
-    title: "Engineering Controls",
+    title: 'Engineering Controls',
     icon: Settings,
-    description: "Local exhaust ventilation systems, general ventilation, enclosure, segregation, and automated processes",
+    description:
+      'Local exhaust ventilation systems, general ventilation, enclosure, segregation, and automated processes',
   },
   {
     id: 3,
-    title: "RPE & PPE Selection",
+    title: 'RPE & PPE Selection',
     icon: Shield,
-    description: "RPE types, assigned protection factors, face-fit testing, chemical-resistant gloves, goggles, and overalls",
+    description:
+      'RPE types, assigned protection factors, face-fit testing, chemical-resistant gloves, goggles, and overalls',
   },
   {
     id: 4,
-    title: "Storage, Handling & Disposal",
+    title: 'Storage, Handling & Disposal',
     icon: Package,
-    description: "DSEAR requirements, chemical storage best practice, segregation rules, spill kits, and hazardous waste disposal",
+    description:
+      'DSEAR requirements, chemical storage best practice, segregation rules, spill kits, and hazardous waste disposal',
   },
 ];
 
 export default function CoshhAwarenessModule4() {
   useSEO({
-    title: "Module 4: Control Measures & PPE | COSHH Awareness",
-    description: "Learn the hierarchy of control for hazardous substances, engineering controls, RPE and PPE selection, and safe storage, handling, and disposal procedures.",
+    title: 'Module 4: Control Measures & PPE | COSHH Awareness',
+    description:
+      'Learn the hierarchy of control for hazardous substances, engineering controls, RPE and PPE selection, and safe storage, handling, and disposal procedures.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function CoshhAwarenessModule4() {
               Control Measures & PPE
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              How to control exposure to hazardous substances using the hierarchy of control — from elimination through to RPE and PPE, plus safe storage and disposal
+              How to control exposure to hazardous substances using the hierarchy of control — from
+              elimination through to RPE and PPE, plus safe storage and disposal
             </p>
           </div>
 

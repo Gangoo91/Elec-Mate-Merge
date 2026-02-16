@@ -25,13 +25,13 @@ interface UsePaginationResult<T> {
 export function usePagination<T>({
   items,
   itemsPerPage = 12,
-  initialPage = 1
+  initialPage = 1,
 }: UsePaginationProps): UsePaginationResult<T> {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [currentItemsPerPage, setCurrentItemsPerPage] = useState(itemsPerPage);
 
   const totalPages = Math.ceil(items.length / currentItemsPerPage);
-  
+
   const currentItems = useMemo(() => {
     const startIndex = (currentPage - 1) * currentItemsPerPage;
     const endIndex = startIndex + currentItemsPerPage;
@@ -81,6 +81,6 @@ export function usePagination<T>({
     nextPage,
     previousPage,
     hasNextPage,
-    hasPreviousPage
+    hasPreviousPage,
   };
 }

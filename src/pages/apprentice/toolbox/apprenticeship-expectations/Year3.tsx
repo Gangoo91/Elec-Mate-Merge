@@ -1,8 +1,7 @@
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
   Zap,
   Users,
@@ -26,11 +25,16 @@ import {
   Star,
   ClipboardCheck,
   FileText,
-  MessageSquare
-} from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+  MessageSquare,
+} from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
 
 const Year3 = () => {
   const isMobile = useIsMobile();
@@ -39,289 +43,320 @@ const Year3 = () => {
 
   const monthlyBreakdown = [
     {
-      month: "Month 25-26",
-      title: "Advanced Installation Work",
-      focus: "Complex electrical systems and installations",
+      month: 'Month 25-26',
+      title: 'Advanced Installation Work',
+      focus: 'Complex electrical systems and installations',
       icon: Wrench,
-      color: "text-green-400",
+      color: 'text-green-400',
       activities: [
-        "Industrial installation principles - three-phase commercial work",
-        "High-current systems - larger cables and busbars",
-        "Advanced control systems - PLCs and automation basics",
-        "Specialist equipment installation - machinery and plant"
+        'Industrial installation principles - three-phase commercial work',
+        'High-current systems - larger cables and busbars',
+        'Advanced control systems - PLCs and automation basics',
+        'Specialist equipment installation - machinery and plant',
       ],
-      dayInLife: "You're trusted with more complex work now. Jobs that seemed impossible in Year 1 are now your bread and butter."
+      dayInLife:
+        "You're trusted with more complex work now. Jobs that seemed impossible in Year 1 are now your bread and butter.",
     },
     {
-      month: "Month 27-28",
-      title: "Fault Finding & Diagnostics",
-      focus: "Advanced troubleshooting techniques",
+      month: 'Month 27-28',
+      title: 'Fault Finding & Diagnostics',
+      focus: 'Advanced troubleshooting techniques',
       icon: Search,
-      color: "text-yellow-400",
+      color: 'text-yellow-400',
       activities: [
-        "Systematic fault finding - logical approach to any problem",
-        "Advanced test equipment usage - oscilloscopes and thermal imaging",
-        "Circuit analysis techniques - reading and interpreting schematics",
-        "Repair and maintenance procedures - fixing what others can't"
+        'Systematic fault finding - logical approach to any problem',
+        'Advanced test equipment usage - oscilloscopes and thermal imaging',
+        'Circuit analysis techniques - reading and interpreting schematics',
+        "Repair and maintenance procedures - fixing what others can't",
       ],
-      dayInLife: "When something's broken, you're increasingly the one they call. The satisfaction of finding a tricky fault is unmatched."
+      dayInLife:
+        "When something's broken, you're increasingly the one they call. The satisfaction of finding a tricky fault is unmatched.",
     },
     {
-      month: "Month 29-30",
-      title: "Commercial Systems",
-      focus: "Commercial and industrial electrical systems",
+      month: 'Month 29-30',
+      title: 'Commercial Systems',
+      focus: 'Commercial and industrial electrical systems',
       icon: Zap,
-      color: "text-blue-400",
+      color: 'text-blue-400',
       activities: [
-        "Three-phase distribution systems - substations and HV/LV",
-        "Motor control and starters - star-delta, soft starters, VSDs",
-        "Building management systems - BMS and integration",
-        "Emergency and fire alarm systems - critical life safety"
+        'Three-phase distribution systems - substations and HV/LV',
+        'Motor control and starters - star-delta, soft starters, VSDs',
+        'Building management systems - BMS and integration',
+        'Emergency and fire alarm systems - critical life safety',
       ],
-      dayInLife: "Commercial work opens new opportunities. Understanding how whole buildings work electrically gives you valuable perspective."
+      dayInLife:
+        'Commercial work opens new opportunities. Understanding how whole buildings work electrically gives you valuable perspective.',
     },
     {
-      month: "Month 31-32",
-      title: "Supervisory Experience",
-      focus: "Leadership and mentoring skills",
+      month: 'Month 31-32',
+      title: 'Supervisory Experience',
+      focus: 'Leadership and mentoring skills',
       icon: Users,
-      color: "text-purple-400",
+      color: 'text-purple-400',
       activities: [
         "Mentoring junior apprentices - passing on what you've learned",
-        "Work planning and coordination - organising jobs efficiently",
+        'Work planning and coordination - organising jobs efficiently',
         "Quality control and inspection - checking others' work",
-        "Health and safety leadership - setting the example"
+        'Health and safety leadership - setting the example',
       ],
-      dayInLife: "Remember your first day? Now you're helping others through theirs. Teaching reinforces your own knowledge too."
+      dayInLife:
+        "Remember your first day? Now you're helping others through theirs. Teaching reinforces your own knowledge too.",
     },
     {
-      month: "Month 33-34",
-      title: "EPA Preparation",
-      focus: "End Point Assessment preparation",
+      month: 'Month 33-34',
+      title: 'EPA Preparation',
+      focus: 'End Point Assessment preparation',
       icon: Award,
-      color: "text-cyan-400",
+      color: 'text-cyan-400',
       activities: [
-        "Portfolio completion and review - gathering final evidence",
-        "Mock practical assessments - practicing under exam conditions",
-        "Professional discussion preparation - talking about your work",
-        "Knowledge test revision - filling any gaps"
+        'Portfolio completion and review - gathering final evidence',
+        'Mock practical assessments - practicing under exam conditions',
+        'Professional discussion preparation - talking about your work',
+        'Knowledge test revision - filling any gaps',
       ],
-      dayInLife: "EPA prep time. Everything you've done for 3+ years comes together now. Trust your training - you're ready for this."
+      dayInLife:
+        "EPA prep time. Everything you've done for 3+ years comes together now. Trust your training - you're ready for this.",
     },
     {
-      month: "Month 35-36",
-      title: "Year 3 Consolidation",
-      focus: "Skills consolidation and assessment",
+      month: 'Month 35-36',
+      title: 'Year 3 Consolidation',
+      focus: 'Skills consolidation and assessment',
       icon: Star,
-      color: "text-orange-400",
+      color: 'text-orange-400',
       activities: [
-        "Advanced skills demonstration - showing what you can do",
-        "Professional competency review - supervisor sign-offs",
-        "Career planning discussions - what comes next?",
-        "Year 4 transition preparation - final stretch planning"
+        'Advanced skills demonstration - showing what you can do',
+        'Professional competency review - supervisor sign-offs',
+        'Career planning discussions - what comes next?',
+        'Year 4 transition preparation - final stretch planning',
       ],
-      dayInLife: "You can see the finish line. This year is about proving you're ready to be called a qualified electrician."
-    }
+      dayInLife:
+        "You can see the finish line. This year is about proving you're ready to be called a qualified electrician.",
+    },
   ];
 
   const keyLearningAreas = [
     {
-      title: "Advanced Installation Methods",
+      title: 'Advanced Installation Methods',
       icon: Wrench,
       progress: 85,
-      color: "text-green-400",
-      bgColor: "bg-green-500/10",
-      borderColor: "border-green-500/30",
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/10',
+      borderColor: 'border-green-500/30',
       topics: [
-        "Industrial installation techniques",
-        "High-voltage systems (up to 1kV)",
-        "Specialist containment systems",
-        "Advanced jointing techniques",
-        "Complex distribution arrangements"
-      ]
+        'Industrial installation techniques',
+        'High-voltage systems (up to 1kV)',
+        'Specialist containment systems',
+        'Advanced jointing techniques',
+        'Complex distribution arrangements',
+      ],
     },
     {
-      title: "Fault Finding & Diagnostics",
+      title: 'Fault Finding & Diagnostics',
       icon: Search,
       progress: 80,
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/10",
-      borderColor: "border-yellow-500/30",
+      color: 'text-yellow-400',
+      bgColor: 'bg-yellow-500/10',
+      borderColor: 'border-yellow-500/30',
       topics: [
-        "Systematic troubleshooting approaches",
-        "Advanced test equipment operation",
-        "Circuit analysis and diagnosis",
-        "Repair techniques and procedures",
-        "Preventive maintenance principles"
-      ]
+        'Systematic troubleshooting approaches',
+        'Advanced test equipment operation',
+        'Circuit analysis and diagnosis',
+        'Repair techniques and procedures',
+        'Preventive maintenance principles',
+      ],
     },
     {
-      title: "Commercial & Industrial Systems",
+      title: 'Commercial & Industrial Systems',
       icon: Zap,
       progress: 75,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/30",
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
       topics: [
-        "Three-phase power distribution",
-        "Motor control systems (DOL, star-delta, VSD)",
-        "Building services integration",
-        "Emergency lighting systems",
-        "Fire alarm and security systems"
-      ]
+        'Three-phase power distribution',
+        'Motor control systems (DOL, star-delta, VSD)',
+        'Building services integration',
+        'Emergency lighting systems',
+        'Fire alarm and security systems',
+      ],
     },
     {
-      title: "Leadership & Mentoring",
+      title: 'Leadership & Mentoring',
       icon: Users,
       progress: 70,
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/30",
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/10',
+      borderColor: 'border-purple-500/30',
       topics: [
-        "Supervising junior apprentices",
-        "Work planning and organisation",
-        "Communication and delegation",
-        "Quality assurance procedures",
-        "Health and safety leadership"
-      ]
-    }
+        'Supervising junior apprentices',
+        'Work planning and organisation',
+        'Communication and delegation',
+        'Quality assurance procedures',
+        'Health and safety leadership',
+      ],
+    },
   ];
 
   const epaPreparation = [
     {
-      component: "Practical Assessment",
+      component: 'Practical Assessment',
       icon: Wrench,
-      color: "text-green-400",
-      bgColor: "bg-green-500/20",
-      duration: "6 hours",
-      weighting: "50%",
-      description: "Demonstrate installation, testing, and fault-finding skills under exam conditions",
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/20',
+      duration: '6 hours',
+      weighting: '50%',
+      description:
+        'Demonstrate installation, testing, and fault-finding skills under exam conditions',
       preparationTips: [
-        "Practice installations under time pressure",
-        "Master all testing procedures thoroughly",
-        "Develop systematic fault-finding approach",
-        "Ensure all portfolio evidence is complete"
+        'Practice installations under time pressure',
+        'Master all testing procedures thoroughly',
+        'Develop systematic fault-finding approach',
+        'Ensure all portfolio evidence is complete',
       ],
-      whatToExpect: "You'll complete a real installation task, test your work, and diagnose a fault - all while being observed and assessed."
+      whatToExpect:
+        "You'll complete a real installation task, test your work, and diagnose a fault - all while being observed and assessed.",
     },
     {
-      component: "Professional Discussion",
+      component: 'Professional Discussion',
       icon: MessageSquare,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20",
-      duration: "60 minutes",
-      weighting: "25%",
-      description: "Discuss your portfolio evidence and demonstrate knowledge through conversation",
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/20',
+      duration: '60 minutes',
+      weighting: '25%',
+      description: 'Discuss your portfolio evidence and demonstrate knowledge through conversation',
       preparationTips: [
-        "Know your portfolio evidence thoroughly",
-        "Practice explaining complex technical concepts simply",
-        "Prepare for regulation-based questions",
-        "Develop confidence in professional communication"
+        'Know your portfolio evidence thoroughly',
+        'Practice explaining complex technical concepts simply',
+        'Prepare for regulation-based questions',
+        'Develop confidence in professional communication',
       ],
-      whatToExpect: "An assessor will ask about your work experience, how you've applied knowledge, and test your understanding through discussion."
+      whatToExpect:
+        "An assessor will ask about your work experience, how you've applied knowledge, and test your understanding through discussion.",
     },
     {
-      component: "Knowledge Test",
+      component: 'Knowledge Test',
       icon: Brain,
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/20",
-      duration: "90 minutes",
-      weighting: "25%",
-      description: "Multiple choice test covering all apprenticeship content areas",
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/20',
+      duration: '90 minutes',
+      weighting: '25%',
+      description: 'Multiple choice test covering all apprenticeship content areas',
       preparationTips: [
-        "Revise all theoretical knowledge systematically",
-        "Practice past papers and mock tests",
-        "Focus on weak areas identified in practice",
-        "Understand regulations and their applications"
+        'Revise all theoretical knowledge systematically',
+        'Practice past papers and mock tests',
+        'Focus on weak areas identified in practice',
+        'Understand regulations and their applications',
       ],
-      whatToExpect: "An online or paper-based test with questions covering the entire apprenticeship standard. Use of Regs book allowed."
-    }
+      whatToExpect:
+        'An online or paper-based test with questions covering the entire apprenticeship standard. Use of Regs book allowed.',
+    },
   ];
 
   const leadershipOpportunities = [
     {
-      opportunity: "Mentor New Apprentices",
+      opportunity: 'Mentor New Apprentices',
       icon: Users,
-      color: "text-green-400",
-      description: "Guide and support first-year apprentices in their learning journey",
-      benefits: ["Develops leadership skills", "Reinforces your own knowledge", "Builds confidence"],
-      responsibilities: ["Provide technical guidance", "Share experiences and tips", "Support with challenges"]
+      color: 'text-green-400',
+      description: 'Guide and support first-year apprentices in their learning journey',
+      benefits: [
+        'Develops leadership skills',
+        'Reinforces your own knowledge',
+        'Builds confidence',
+      ],
+      responsibilities: [
+        'Provide technical guidance',
+        'Share experiences and tips',
+        'Support with challenges',
+      ],
     },
     {
-      opportunity: "Lead Small Projects",
+      opportunity: 'Lead Small Projects',
       icon: ClipboardCheck,
-      color: "text-blue-400",
-      description: "Take responsibility for planning and executing smaller electrical projects",
-      benefits: ["Project management experience", "Increased responsibility", "Problem-solving skills"],
-      responsibilities: ["Plan work activities", "Coordinate with team members", "Ensure quality standards"]
+      color: 'text-blue-400',
+      description: 'Take responsibility for planning and executing smaller electrical projects',
+      benefits: [
+        'Project management experience',
+        'Increased responsibility',
+        'Problem-solving skills',
+      ],
+      responsibilities: [
+        'Plan work activities',
+        'Coordinate with team members',
+        'Ensure quality standards',
+      ],
     },
     {
-      opportunity: "Quality Assurance Role",
+      opportunity: 'Quality Assurance Role',
       icon: Shield,
-      color: "text-purple-400",
-      description: "Check and verify work completed by junior team members",
-      benefits: ["Attention to detail", "Technical knowledge application", "Quality awareness"],
-      responsibilities: ["Inspect completed work", "Identify issues early", "Provide constructive feedback"]
-    }
+      color: 'text-purple-400',
+      description: 'Check and verify work completed by junior team members',
+      benefits: ['Attention to detail', 'Technical knowledge application', 'Quality awareness'],
+      responsibilities: [
+        'Inspect completed work',
+        'Identify issues early',
+        'Provide constructive feedback',
+      ],
+    },
   ];
 
   const commonChallenges = [
     {
-      challenge: "EPA Anxiety",
+      challenge: 'EPA Anxiety',
       icon: Award,
-      description: "The End Point Assessment can feel overwhelming after years of preparation",
+      description: 'The End Point Assessment can feel overwhelming after years of preparation',
       solutions: [
         "Start preparation early - don't cram at the end",
-        "Attend mock assessments if offered by college",
+        'Attend mock assessments if offered by college',
         "Talk to apprentices who've passed recently",
         "Remember - you've been preparing for 3+ years",
-        "Trust your training and experience"
-      ]
+        'Trust your training and experience',
+      ],
     },
     {
-      challenge: "Increased Responsibility",
+      challenge: 'Increased Responsibility',
       icon: TrendingUp,
-      description: "More complex work and expectations to guide others can feel pressuring",
+      description: 'More complex work and expectations to guide others can feel pressuring',
       solutions: [
         "Delegate appropriately - you can't do everything",
         "Ask for help when needed - it's not weakness",
-        "Set realistic expectations for yourself",
-        "Learn from mistakes without dwelling on them",
-        "Remember - even qualified sparkies ask questions"
-      ]
+        'Set realistic expectations for yourself',
+        'Learn from mistakes without dwelling on them',
+        'Remember - even qualified sparkies ask questions',
+      ],
     },
     {
-      challenge: "Complex Technical Problems",
+      challenge: 'Complex Technical Problems',
       icon: Search,
-      description: "Advanced fault finding and diagnostics can be frustrating when solutions aren't obvious",
+      description:
+        "Advanced fault finding and diagnostics can be frustrating when solutions aren't obvious",
       solutions: [
-        "Develop a systematic approach to every fault",
+        'Develop a systematic approach to every fault',
         "Document what you've tried and the results",
         "Don't be afraid to ask for a second opinion",
-        "Use manufacturer resources and tech support",
-        "Every tricky fault teaches you something new"
-      ]
+        'Use manufacturer resources and tech support',
+        'Every tricky fault teaches you something new',
+      ],
     },
     {
-      challenge: "Mentoring Others",
+      challenge: 'Mentoring Others',
       icon: Users,
-      description: "Guiding junior apprentices while still learning yourself can be challenging",
+      description: 'Guiding junior apprentices while still learning yourself can be challenging',
       solutions: [
-        "Be patient - remember your first days",
+        'Be patient - remember your first days',
         "You don't need to know everything to help",
         "It's okay to say 'let's find out together'",
-        "Teaching reinforces your own learning",
-        "Set boundaries - your work matters too"
-      ]
-    }
+        'Teaching reinforces your own learning',
+        'Set boundaries - your work matters too',
+      ],
+    },
   ];
 
   const weeklyScheduleExample = {
-    monday: { location: "Site", activities: "Industrial installation - motor control panel" },
-    tuesday: { location: "Site", activities: "Commissioning and testing" },
-    wednesday: { location: "College", activities: "EPA preparation, revision sessions" },
-    thursday: { location: "Site", activities: "Fault finding on production line" },
-    friday: { location: "Site", activities: "Mentoring Y1 apprentice, documentation" }
+    monday: { location: 'Site', activities: 'Industrial installation - motor control panel' },
+    tuesday: { location: 'Site', activities: 'Commissioning and testing' },
+    wednesday: { location: 'College', activities: 'EPA preparation, revision sessions' },
+    thursday: { location: 'Site', activities: 'Fault finding on production line' },
+    friday: { location: 'Site', activities: 'Mentoring Y1 apprentice, documentation' },
   };
 
   const renderHeroSection = () => (
@@ -338,13 +373,15 @@ const Year3 = () => {
             <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 mb-2">
               Progression Year
             </Badge>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">Year 3: Advanced Skills & EPA Prep</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              Year 3: Advanced Skills & EPA Prep
+            </h1>
           </div>
         </div>
 
         <p className="text-white text-lg mb-6 max-w-3xl">
-          Year 3 is where you step up - more complex installations, fault finding, and the beginning of your
-          End Point Assessment preparation. You'll also start mentoring junior apprentices.
+          Year 3 is where you step up - more complex installations, fault finding, and the beginning
+          of your End Point Assessment preparation. You'll also start mentoring junior apprentices.
         </p>
 
         {/* Progress indicator */}
@@ -392,9 +429,7 @@ const Year3 = () => {
           <TrendingUp className="h-5 w-5" />
           Salary Progression
         </CardTitle>
-        <p className="text-white text-sm">
-          Your skills and experience are worth more each year
-        </p>
+        <p className="text-white text-sm">Your skills and experience are worth more each year</p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-4 gap-3 text-center">
@@ -417,8 +452,9 @@ const Year3 = () => {
         </div>
         <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
           <p className="text-white text-sm">
-            <strong className="text-green-400">Looking ahead:</strong> Qualified electricians typically earn £32k-£45k,
-            with specialists earning significantly more. Your investment is nearly paying off.
+            <strong className="text-green-400">Looking ahead:</strong> Qualified electricians
+            typically earn £32k-£45k, with specialists earning significantly more. Your investment
+            is nearly paying off.
           </p>
         </div>
       </CardContent>
@@ -473,8 +509,9 @@ const Year3 = () => {
         </div>
         <div className="mt-4 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
           <p className="text-white text-sm">
-            <strong className="text-purple-400">EPA Success Rate:</strong> Over 90% of apprentices who attend regularly
-            and maintain their portfolio pass first time. If you've put in the work, you're ready.
+            <strong className="text-purple-400">EPA Success Rate:</strong> Over 90% of apprentices
+            who attend regularly and maintain their portfolio pass first time. If you've put in the
+            work, you're ready.
           </p>
         </div>
       </CardContent>
@@ -535,9 +572,7 @@ const Year3 = () => {
           <Calendar className="h-5 w-5 text-elec-yellow" />
           Your Year 3 Journey
         </CardTitle>
-        <p className="text-white text-sm">
-          Click each period to see what to expect
-        </p>
+        <p className="text-white text-sm">Click each period to see what to expect</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -608,7 +643,10 @@ const Year3 = () => {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {keyLearningAreas.map((area, index) => (
-          <Card key={index} className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}>
+          <Card
+            key={index}
+            className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}
+          >
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className={`flex items-center gap-2 text-lg ${area.color}`}>
@@ -649,13 +687,17 @@ const Year3 = () => {
       <CardContent>
         <div className="space-y-2">
           {Object.entries(weeklyScheduleExample).map(([day, info], index) => (
-            <div key={index} className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10">
+            <div
+              key={index}
+              className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10"
+            >
               <div className="w-24 font-medium text-white capitalize">{day}</div>
               <Badge
                 variant="outline"
-                className={info.location === "College"
-                  ? "bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center"
-                  : "bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center"
+                className={
+                  info.location === 'College'
+                    ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center'
+                    : 'bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center'
                 }
               >
                 {info.location}
@@ -675,9 +717,7 @@ const Year3 = () => {
           <AlertTriangle className="h-5 w-5" />
           Year 3 Challenges & Solutions
         </CardTitle>
-        <p className="text-white text-sm">
-          Common hurdles and how to overcome them
-        </p>
+        <p className="text-white text-sm">Common hurdles and how to overcome them</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -770,11 +810,15 @@ const Year3 = () => {
               <div key={index} className={`p-3 rounded-lg ${item.bgColor}`}>
                 <div className="flex items-center justify-between mb-2">
                   <span className={`font-medium text-sm ${item.color}`}>{item.component}</span>
-                  <Badge variant="outline" className="text-xs bg-white/10">{item.weighting}</Badge>
+                  <Badge variant="outline" className="text-xs bg-white/10">
+                    {item.weighting}
+                  </Badge>
                 </div>
                 <p className="text-white text-xs mb-2">{item.description}</p>
                 <div className="flex gap-2">
-                  <Badge variant="outline" className="text-xs">{item.duration}</Badge>
+                  <Badge variant="outline" className="text-xs">
+                    {item.duration}
+                  </Badge>
                 </div>
               </div>
             ))}
@@ -795,7 +839,9 @@ const Year3 = () => {
                   <period.icon className={`h-4 w-4 ${period.color}`} />
                   <span className="font-medium text-white">{period.title}</span>
                 </div>
-                <Badge variant="outline" className="mb-2 text-xs">{period.month}</Badge>
+                <Badge variant="outline" className="mb-2 text-xs">
+                  {period.month}
+                </Badge>
                 <p className="text-white text-xs">{period.focus}</p>
               </div>
             ))}
@@ -811,7 +857,10 @@ const Year3 = () => {
         <MobileAccordionContent>
           <div className="space-y-3 pt-2">
             {keyLearningAreas.map((area, index) => (
-              <div key={index} className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}>
+              <div
+                key={index}
+                className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span className={`font-medium ${area.color}`}>{area.title}</span>
                   <span className={`text-sm ${area.color}`}>{area.progress}%</span>
@@ -851,7 +900,10 @@ const Year3 = () => {
         <MobileAccordionContent>
           <div className="space-y-3 pt-2">
             {commonChallenges.map((item, index) => (
-              <div key={index} className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+              <div
+                key={index}
+                className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
+              >
                 <div className="font-medium text-orange-400 text-sm mb-1">{item.challenge}</div>
                 <p className="text-white text-xs mb-2">{item.description}</p>
                 <div className="text-white text-xs">

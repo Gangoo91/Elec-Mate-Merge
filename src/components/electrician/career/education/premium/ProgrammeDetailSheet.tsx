@@ -3,22 +3,14 @@
  * Parallax hero, collapsible sections, sticky CTA bar
  */
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerClose,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Drawer, DrawerContent, DrawerClose } from '@/components/ui/drawer';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   X,
   Star,
@@ -37,9 +29,9 @@ import {
   Bookmark,
   Share2,
   GitCompare,
-} from "lucide-react";
-import { fadeUpVariants } from "./animations/variants";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
+} from 'lucide-react';
+import { fadeUpVariants } from './animations/variants';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
 
 interface ProgrammeDetailSheetProps {
   programme: LiveEducationData | null;
@@ -78,8 +70,8 @@ const Section = ({
         </div>
         <ChevronDown
           className={cn(
-            "h-5 w-5 text-white/40 transition-transform duration-200",
-            isOpen && "rotate-180"
+            'h-5 w-5 text-white/40 transition-transform duration-200',
+            isOpen && 'rotate-180'
           )}
         />
       </CollapsibleTrigger>
@@ -101,7 +93,7 @@ const StatItem = ({
   icon: Icon,
   label,
   value,
-  iconColor = "text-purple-400",
+  iconColor = 'text-purple-400',
 }: {
   icon: typeof Star;
   label: string;
@@ -109,7 +101,7 @@ const StatItem = ({
   iconColor?: string;
 }) => (
   <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
-    <Icon className={cn("h-5 w-5 mx-auto mb-1", iconColor)} />
+    <Icon className={cn('h-5 w-5 mx-auto mb-1', iconColor)} />
     <div className="text-sm font-semibold text-white">{value}</div>
     <div className="text-[10px] text-white/50 uppercase">{label}</div>
   </div>
@@ -118,14 +110,20 @@ const StatItem = ({
 // Category image fallbacks
 const getCategoryImage = (category: string) => {
   const images: Record<string, string> = {
-    Degree: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=400&fit=crop&auto=format",
-    Certificate: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop&auto=format",
-    Diploma: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=400&fit=crop&auto=format",
-    Apprenticeship: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=800&h=400&fit=crop&auto=format",
-    Foundation: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop&auto=format",
-    Master: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop&auto=format",
-    HNC: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop&auto=format",
-    HND: "https://images.unsplash.com/photo-1574188041339-3d9d896ce7f8?w=800&h=400&fit=crop&auto=format",
+    Degree:
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=400&fit=crop&auto=format',
+    Certificate:
+      'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop&auto=format',
+    Diploma:
+      'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=400&fit=crop&auto=format',
+    Apprenticeship:
+      'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=800&h=400&fit=crop&auto=format',
+    Foundation:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop&auto=format',
+    Master:
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop&auto=format',
+    HNC: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop&auto=format',
+    HND: 'https://images.unsplash.com/photo-1574188041339-3d9d896ce7f8?w=800&h=400&fit=crop&auto=format',
   };
   return images[category] || images.Degree;
 };
@@ -170,11 +168,7 @@ const ProgrammeDetailSheet = ({
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="h-[95vh] rounded-t-3xl overflow-hidden">
         {/* Custom scroll area with parallax */}
-        <div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="h-full overflow-y-auto"
-        >
+        <div ref={scrollRef} onScroll={handleScroll} className="h-full overflow-y-auto">
           {/* Hero Image with Parallax */}
           <div className="relative h-56 sm:h-64 overflow-hidden">
             <motion.img
@@ -210,9 +204,7 @@ const ProgrammeDetailSheet = ({
               <h1 className="text-xl sm:text-2xl font-bold text-white leading-tight">
                 {programme.title}
               </h1>
-              <p className="text-purple-300 font-medium mt-1">
-                {programme.institution}
-              </p>
+              <p className="text-purple-300 font-medium mt-1">{programme.institution}</p>
             </div>
           </div>
 
@@ -276,12 +268,12 @@ const ProgrammeDetailSheet = ({
                   size="sm"
                   onClick={() => onBookmark(programme.id)}
                   className={cn(
-                    "flex-1 border-white/20 hover:bg-white/10",
-                    isBookmarked && "bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+                    'flex-1 border-white/20 hover:bg-white/10',
+                    isBookmarked && 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
                   )}
                 >
-                  <Bookmark className={cn("h-4 w-4 mr-2", isBookmarked && "fill-current")} />
-                  {isBookmarked ? "Saved" : "Save"}
+                  <Bookmark className={cn('h-4 w-4 mr-2', isBookmarked && 'fill-current')} />
+                  {isBookmarked ? 'Saved' : 'Save'}
                 </Button>
               )}
               {onAddToCompare && (
@@ -290,12 +282,12 @@ const ProgrammeDetailSheet = ({
                   size="sm"
                   onClick={() => onAddToCompare(programme)}
                   className={cn(
-                    "flex-1 border-white/20 hover:bg-white/10",
-                    isInCompare && "bg-purple-500/10 border-purple-500/30 text-purple-400"
+                    'flex-1 border-white/20 hover:bg-white/10',
+                    isInCompare && 'bg-purple-500/10 border-purple-500/30 text-purple-400'
                   )}
                 >
                   <GitCompare className="h-4 w-4 mr-2" />
-                  {isInCompare ? "Added" : "Compare"}
+                  {isInCompare ? 'Added' : 'Compare'}
                 </Button>
               )}
               <Button
@@ -312,9 +304,7 @@ const ProgrammeDetailSheet = ({
             <div className="space-y-3">
               {/* Overview */}
               <Section title="Programme Overview" icon={BookOpen} defaultOpen>
-                <p className="text-white/70 leading-relaxed">
-                  {programme.description}
-                </p>
+                <p className="text-white/70 leading-relaxed">{programme.description}</p>
               </Section>
 
               {/* Key Topics */}
@@ -441,7 +431,7 @@ const ProgrammeDetailSheet = ({
               className="flex-1 border-white/20 hover:bg-white/10"
               onClick={() => {
                 if (programme.courseUrl) {
-                  window.open(programme.courseUrl, "_blank");
+                  window.open(programme.courseUrl, '_blank');
                 }
               }}
             >
@@ -451,7 +441,7 @@ const ProgrammeDetailSheet = ({
               className="flex-1 bg-purple-500 text-white hover:bg-purple-600"
               onClick={() => {
                 if (programme.courseUrl) {
-                  window.open(programme.courseUrl, "_blank");
+                  window.open(programme.courseUrl, '_blank');
                 }
               }}
             >

@@ -1,12 +1,14 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { TimeEntry } from "@/types/time-tracking";
-import LogbookEntryRow from "./LogbookEntryRow";
+import { Card, CardContent } from '@/components/ui/card';
+import { TimeEntry } from '@/types/time-tracking';
+import LogbookEntryRow from './LogbookEntryRow';
 
 interface LogbookDayEntriesProps {
   date: string;
   entries: TimeEntry[];
-  onSave: (entryId: string, updatedData: { duration: number, activity: string, notes: string }) => void;
+  onSave: (
+    entryId: string,
+    updatedData: { duration: number; activity: string; notes: string }
+  ) => void;
   onDelete: (entryId: string) => void;
 }
 
@@ -14,11 +16,11 @@ const LogbookDayEntries = ({ date, entries, onSave, onDelete }: LogbookDayEntrie
   // Format date for display
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-GB', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
@@ -38,12 +40,7 @@ const LogbookDayEntries = ({ date, entries, onSave, onDelete }: LogbookDayEntrie
             </thead>
             <tbody className="divide-y divide-elec-yellow/10">
               {entries.map((entry) => (
-                <LogbookEntryRow 
-                  key={entry.id} 
-                  entry={entry} 
-                  onSave={onSave} 
-                  onDelete={onDelete} 
-                />
+                <LogbookEntryRow key={entry.id} entry={entry} onSave={onSave} onDelete={onDelete} />
               ))}
             </tbody>
           </table>

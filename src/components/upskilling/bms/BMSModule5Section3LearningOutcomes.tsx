@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule5Section3LearningOutcomes = () => {
   const outcomes = [
-    "Explain what Modbus is and why it is still widely used",
-    "Describe the differences between Modbus RTU (serial) and Modbus TCP/IP (Ethernet)",
-    "Identify typical devices that use Modbus in a BMS",
-    "Apply best-practice wiring and testing for reliable Modbus communication"
+    'Explain what Modbus is and why it is still widely used',
+    'Describe the differences between Modbus RTU (serial) and Modbus TCP/IP (Ethernet)',
+    'Identify typical devices that use Modbus in a BMS',
+    'Apply best-practice wiring and testing for reliable Modbus communication',
   ];
 
   return (

@@ -1,72 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m7s2-check1",
-    question: "Which qualification is specifically required for EV charging installation?",
-    options: ["City & Guilds 2391", "City & Guilds 2919", "18th Edition only", "Part P only"],
+    id: 'evcharging-m7s2-check1',
+    question: 'Which qualification is specifically required for EV charging installation?',
+    options: ['City & Guilds 2391', 'City & Guilds 2919', '18th Edition only', 'Part P only'],
     correctIndex: 1,
-    explanation: "City & Guilds 2919 (Level 3 Award in Electric Vehicle Charging Equipment Installation) is the specific qualification required. Other qualifications like 18th Edition and 2391 are also needed but aren't EV-specific."
+    explanation:
+      "City & Guilds 2919 (Level 3 Award in Electric Vehicle Charging Equipment Installation) is the specific qualification required. Other qualifications like 18th Edition and 2391 are also needed but aren't EV-specific.",
   },
   {
-    id: "evcharging-m7s2-check2",
-    question: "What is the minimum public liability insurance required for OZEV approval?",
-    options: ["£500,000", "£1 million", "£2 million", "£5 million"],
+    id: 'evcharging-m7s2-check2',
+    question: 'What is the minimum public liability insurance required for OZEV approval?',
+    options: ['£500,000', '£1 million', '£2 million', '£5 million'],
     correctIndex: 2,
-    explanation: "OZEV requires minimum £2 million public liability insurance. Professional indemnity must be at least £500,000. These minimums protect both installers and customers."
+    explanation:
+      'OZEV requires minimum £2 million public liability insurance. Professional indemnity must be at least £500,000. These minimums protect both installers and customers.',
   },
   {
-    id: "evcharging-m7s2-check3",
-    question: "How many completed EV installations are typically required in a portfolio?",
-    options: ["None required", "Minimum 3", "Minimum 5", "Minimum 10"],
+    id: 'evcharging-m7s2-check3',
+    question: 'How many completed EV installations are typically required in a portfolio?',
+    options: ['None required', 'Minimum 3', 'Minimum 5', 'Minimum 10'],
     correctIndex: 2,
-    explanation: "A minimum of 5 completed EV charging installations with full documentation is typically required. This demonstrates practical competency and real-world experience."
-  }
+    explanation:
+      'A minimum of 5 completed EV charging installations with full documentation is typically required. This demonstrates practical competency and real-world experience.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How long does the OZEV approval process take?",
-    answer: "The approval process typically takes 4-8 weeks from initial application to approval, depending on completeness of documentation and any queries raised during review."
+    question: 'How long does the OZEV approval process take?',
+    answer:
+      'The approval process typically takes 4-8 weeks from initial application to approval, depending on completeness of documentation and any queries raised during review.',
   },
   {
-    question: "What ongoing obligations do approved installers have?",
-    answer: "Ongoing obligations include maintaining valid qualifications, insurance coverage, submitting accurate installation reports, participating in audits, and attending mandatory training updates annually."
+    question: 'What ongoing obligations do approved installers have?',
+    answer:
+      'Ongoing obligations include maintaining valid qualifications, insurance coverage, submitting accurate installation reports, participating in audits, and attending mandatory training updates annually.',
   },
   {
-    question: "Can I apply as a sole trader or must I be a limited company?",
-    answer: "Both sole traders and limited companies can apply for OZEV approval, provided they meet all competency, insurance, and documentation requirements."
+    question: 'Can I apply as a sole trader or must I be a limited company?',
+    answer:
+      'Both sole traders and limited companies can apply for OZEV approval, provided they meet all competency, insurance, and documentation requirements.',
   },
   {
-    question: "What happens if my approval lapses?",
-    answer: "If approval lapses due to expired qualifications or insurance, you cannot claim grants until the issue is resolved. Multiple lapses may result in removal from the approved installer list."
-  }
+    question: 'What happens if my approval lapses?',
+    answer:
+      'If approval lapses due to expired qualifications or insurance, you cannot claim grants until the issue is resolved. Multiple lapses may result in removal from the approved installer list.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An electrician wants to become OZEV approved but only has 18th Edition and 2391 qualifications. What is their most critical next step?",
-  options: [
-    "Apply immediately with current qualifications",
-    "Complete City & Guilds 2919 EV installation training",
-    "Wait for automatic approval based on experience",
-    "Only install non-grant funded chargers"
-  ],
-  correctAnswer: 1,
-  explanation: "City & Guilds 2919 is mandatory for OZEV approval. Without this specific EV installation qualification, the application will be rejected regardless of other credentials."
-  }
+    question:
+      'An electrician wants to become OZEV approved but only has 18th Edition and 2391 qualifications. What is their most critical next step?',
+    options: [
+      'Apply immediately with current qualifications',
+      'Complete City & Guilds 2919 EV installation training',
+      'Wait for automatic approval based on experience',
+      'Only install non-grant funded chargers',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'City & Guilds 2919 is mandatory for OZEV approval. Without this specific EV installation qualification, the application will be rejected regardless of other credentials.',
+  },
 ];
 
 const EVChargingModule7Section2 = () => {
   useSEO({
-    title: "Approved Installer Registration Process | EV Charging Module 7.2",
-    description: "Learn how to become an OZEV approved installer including registration requirements, competency standards, and ongoing compliance obligations."
+    title: 'Approved Installer Registration Process | EV Charging Module 7.2',
+    description:
+      'Learn how to become an OZEV approved installer including registration requirements, competency standards, and ongoing compliance obligations.',
   });
 
   return (
@@ -108,17 +118,29 @@ const EVChargingModule7Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Key qual:</strong> City & Guilds 2919 (EV specific)</li>
-              <li><strong>Insurance:</strong> £2M PL + £500K PI minimum</li>
-              <li><strong>Portfolio:</strong> 5+ completed installations</li>
+              <li>
+                <strong>Key qual:</strong> City & Guilds 2919 (EV specific)
+              </li>
+              <li>
+                <strong>Insurance:</strong> £2M PL + £500K PI minimum
+              </li>
+              <li>
+                <strong>Portfolio:</strong> 5+ completed installations
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Business Benefits</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Access:</strong> Grant-funded projects</li>
-              <li><strong>Trust:</strong> Government-backed credibility</li>
-              <li><strong>Market:</strong> Growing EV infrastructure demand</li>
+              <li>
+                <strong>Access:</strong> Grant-funded projects
+              </li>
+              <li>
+                <strong>Trust:</strong> Government-backed credibility
+              </li>
+              <li>
+                <strong>Market:</strong> Growing EV infrastructure demand
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +150,12 @@ const EVChargingModule7Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Requirements for OZEV installer approval",
-              "Navigate the registration application process",
-              "Identify required competencies and qualifications",
-              "Recognise ongoing compliance obligations",
-              "Implement quality management systems",
-              "Understand insurance and liability requirements"
+              'Requirements for OZEV installer approval',
+              'Navigate the registration application process',
+              'Identify required competencies and qualifications',
+              'Recognise ongoing compliance obligations',
+              'Implement quality management systems',
+              'Understand insurance and liability requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -154,23 +176,37 @@ const EVChargingModule7Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               To deliver EV charging installations under OZEV grant schemes, installers must hold
-              specific qualifications demonstrating competency in both general electrical work
-              and EV-specific installation requirements.
+              specific qualifications demonstrating competency in both general electrical work and
+              EV-specific installation requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mandatory Qualifications</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Mandatory Qualifications
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>City & Guilds 2919:</strong> EV Charging Installation</li>
-                  <li><strong>18th Edition:</strong> BS 7671 Wiring Regulations</li>
-                  <li><strong>2391-52:</strong> Inspection and Testing</li>
-                  <li><strong>Part P:</strong> Building Regulations (domestic)</li>
-                  <li><strong>Trade body:</strong> ECS/JIB/NICEIC registration</li>
+                  <li>
+                    <strong>City & Guilds 2919:</strong> EV Charging Installation
+                  </li>
+                  <li>
+                    <strong>18th Edition:</strong> BS 7671 Wiring Regulations
+                  </li>
+                  <li>
+                    <strong>2391-52:</strong> Inspection and Testing
+                  </li>
+                  <li>
+                    <strong>Part P:</strong> Building Regulations (domestic)
+                  </li>
+                  <li>
+                    <strong>Trade body:</strong> ECS/JIB/NICEIC registration
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Professional Development</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Professional Development
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Minimum 20 hours CPD annually</li>
                   <li>Technical update seminars</li>
@@ -202,11 +238,21 @@ const EVChargingModule7Section2 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mandatory Insurance</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Public liability:</strong> Minimum £2 million</li>
-                  <li><strong>Professional indemnity:</strong> Minimum £500,000</li>
-                  <li><strong>Employers liability:</strong> If applicable</li>
-                  <li><strong>Product liability:</strong> Included coverage</li>
-                  <li><strong>Renewal:</strong> Annual policy required</li>
+                  <li>
+                    <strong>Public liability:</strong> Minimum £2 million
+                  </li>
+                  <li>
+                    <strong>Professional indemnity:</strong> Minimum £500,000
+                  </li>
+                  <li>
+                    <strong>Employers liability:</strong> If applicable
+                  </li>
+                  <li>
+                    <strong>Product liability:</strong> Included coverage
+                  </li>
+                  <li>
+                    <strong>Renewal:</strong> Annual policy required
+                  </li>
                 </ul>
               </div>
               <div>
@@ -233,23 +279,33 @@ const EVChargingModule7Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The approval process involves several stages designed to verify competency and
-              ensure compliance with OZEV standards. Preparation is key to a smooth application.
+              The approval process involves several stages designed to verify competency and ensure
+              compliance with OZEV standards. Preparation is key to a smooth application.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Registration Steps:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Step 1:</strong> Submit online application with documentation</li>
-                <li><strong>Step 2:</strong> Document review and verification by OZEV</li>
-                <li><strong>Step 3:</strong> Technical assessment and competency evaluation</li>
-                <li><strong>Step 4:</strong> Approval decision and credentials issued</li>
+                <li>
+                  <strong>Step 1:</strong> Submit online application with documentation
+                </li>
+                <li>
+                  <strong>Step 2:</strong> Document review and verification by OZEV
+                </li>
+                <li>
+                  <strong>Step 3:</strong> Technical assessment and competency evaluation
+                </li>
+                <li>
+                  <strong>Step 4:</strong> Approval decision and credentials issued
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Business Documentation</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Business Documentation
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Companies House registration</li>
                   <li>VAT registration certificate</li>
@@ -259,7 +315,9 @@ const EVChargingModule7Section2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Portfolio Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Portfolio Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Minimum 5 completed EV installations</li>
                   <li>EICs for each project</li>
@@ -279,7 +337,9 @@ const EVChargingModule7Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Management Requirements</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Quality Management Requirements
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Document control procedures for all installations</li>
                 <li>Customer satisfaction monitoring and feedback</li>
@@ -289,12 +349,24 @@ const EVChargingModule7Section2 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Application Mistakes</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Application Mistakes
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Expired certificates:</strong> — Check all expiry dates before submission</li>
-                <li><strong>Incomplete portfolio:</strong> — Prepare comprehensive project documentation</li>
-                <li><strong>Poor quality documents:</strong> — Ensure high resolution, clearly legible files</li>
-                <li><strong>Inadequate insurance:</strong> — Verify coverage meets OZEV minimums</li>
+                <li>
+                  <strong>Expired certificates:</strong> — Check all expiry dates before submission
+                </li>
+                <li>
+                  <strong>Incomplete portfolio:</strong> — Prepare comprehensive project
+                  documentation
+                </li>
+                <li>
+                  <strong>Poor quality documents:</strong> — Ensure high resolution, clearly legible
+                  files
+                </li>
+                <li>
+                  <strong>Inadequate insurance:</strong> — Verify coverage meets OZEV minimums
+                </li>
               </ul>
             </div>
           </div>
@@ -340,10 +412,7 @@ const EVChargingModule7Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

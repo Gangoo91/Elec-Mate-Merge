@@ -1,13 +1,13 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { CircuitInput } from "@/types/installation-design";
-import { Plus, Zap, CircuitBoard } from "lucide-react";
-import { CircuitCard } from "./CircuitCard";
-import { CircuitPresetSelector } from "./CircuitPresetSelector";
-import { QuickAddButtons } from "./QuickAddButtons";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { CircuitInput } from '@/types/installation-design';
+import { Plus, Zap, CircuitBoard } from 'lucide-react';
+import { CircuitCard } from './CircuitCard';
+import { CircuitPresetSelector } from './CircuitPresetSelector';
+import { QuickAddButtons } from './QuickAddButtons';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 interface CircuitBuilderStepProps {
   circuits: CircuitInput[];
@@ -18,12 +18,12 @@ interface CircuitBuilderStepProps {
 export const CircuitBuilderStep = ({
   circuits,
   setCircuits,
-  installationType
+  installationType,
 }: CircuitBuilderStepProps) => {
   const addCircuit = (circuit: Omit<CircuitInput, 'id'>) => {
     const newCircuit: CircuitInput = {
       id: `circuit-${Date.now()}-${Math.random()}`,
-      ...circuit
+      ...circuit,
     };
     setCircuits([...circuits, newCircuit]);
   };
@@ -34,25 +34,25 @@ export const CircuitBuilderStep = ({
       loadType: 'socket',
       phases: 'single',
       specialLocation: 'none',
-      cableLength: 20
+      cableLength: 20,
     });
   };
 
   const updateCircuit = (id: string, updates: Partial<CircuitInput>) => {
-    setCircuits(circuits.map(c => c.id === id ? { ...c, ...updates } : c));
+    setCircuits(circuits.map((c) => (c.id === id ? { ...c, ...updates } : c)));
   };
 
   const deleteCircuit = (id: string) => {
-    setCircuits(circuits.filter(c => c.id !== id));
+    setCircuits(circuits.filter((c) => c.id !== id));
   };
 
   const duplicateCircuit = (id: string) => {
-    const circuit = circuits.find(c => c.id === id);
+    const circuit = circuits.find((c) => c.id === id);
     if (circuit) {
       const { id: _, ...circuitData } = circuit;
       addCircuit({
         ...circuitData,
-        name: `${circuit.name} (Copy)`
+        name: `${circuit.name} (Copy)`,
       });
     }
   };
@@ -73,10 +73,10 @@ export const CircuitBuilderStep = ({
         <Badge
           variant="secondary"
           className={cn(
-            "px-3 py-1.5 rounded-full font-semibold",
+            'px-3 py-1.5 rounded-full font-semibold',
             circuits.length > 0
-              ? "bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow"
-              : "bg-white/5 border border-white/10 text-white/50"
+              ? 'bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow'
+              : 'bg-white/5 border border-white/10 text-white/50'
           )}
         >
           {circuits.length} Circuit{circuits.length !== 1 ? 's' : ''}
@@ -87,22 +87,19 @@ export const CircuitBuilderStep = ({
       <CircuitPresetSelector
         installationType={installationType}
         onSelectPreset={(preset) => {
-          const newCircuits = preset.circuits.map(c => ({
+          const newCircuits = preset.circuits.map((c) => ({
             id: `circuit-${Date.now()}-${Math.random()}`,
-            ...c
+            ...c,
           }));
           setCircuits([...circuits, ...newCircuits]);
           toast.success(`Added ${preset.circuits.length} circuits from template`, {
-            description: preset.name
+            description: preset.name,
           });
         }}
       />
 
       {/* Quick Add Buttons */}
-      <QuickAddButtons
-        installationType={installationType}
-        onAddCircuit={addCircuit}
-      />
+      <QuickAddButtons installationType={installationType} onAddCircuit={addCircuit} />
 
       {/* Circuits List */}
       {circuits.length > 0 && (
@@ -117,13 +114,13 @@ export const CircuitBuilderStep = ({
               size="sm"
               onClick={addBlankCircuit}
               className={cn(
-                "gap-2 h-11 px-4 rounded-xl",
-                "bg-elec-yellow/10 border border-elec-yellow/25",
-                "hover:bg-elec-yellow/20 hover:border-elec-yellow/40",
-                "text-elec-yellow font-medium",
-                "transition-all duration-ios-fast",
-                "active:scale-[0.97]",
-                "touch-manipulation"
+                'gap-2 h-11 px-4 rounded-xl',
+                'bg-elec-yellow/10 border border-elec-yellow/25',
+                'hover:bg-elec-yellow/20 hover:border-elec-yellow/40',
+                'text-elec-yellow font-medium',
+                'transition-all duration-ios-fast',
+                'active:scale-[0.97]',
+                'touch-manipulation'
               )}
             >
               <Plus className="h-4 w-4" />
@@ -140,7 +137,7 @@ export const CircuitBuilderStep = ({
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 >
                   <CircuitCard
                     circuit={circuit}
@@ -163,9 +160,9 @@ export const CircuitBuilderStep = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "p-8 sm:p-12 text-center rounded-2xl",
-            "bg-gradient-to-br from-elec-yellow/[0.04] to-transparent",
-            "border-2 border-dashed border-elec-yellow/20"
+            'p-8 sm:p-12 text-center rounded-2xl',
+            'bg-gradient-to-br from-elec-yellow/[0.04] to-transparent',
+            'border-2 border-dashed border-elec-yellow/20'
           )}
         >
           <div className="inline-flex p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-5">
@@ -180,13 +177,13 @@ export const CircuitBuilderStep = ({
           <Button
             onClick={addBlankCircuit}
             className={cn(
-              "gap-2.5 h-13 px-8 rounded-xl",
-              "bg-elec-yellow text-black font-semibold text-base",
-              "hover:bg-elec-yellow/90",
-              "shadow-[0_4px_16px_rgba(255,204,0,0.25)]",
-              "active:scale-[0.97]",
-              "transition-all duration-ios-fast",
-              "touch-manipulation"
+              'gap-2.5 h-13 px-8 rounded-xl',
+              'bg-elec-yellow text-black font-semibold text-base',
+              'hover:bg-elec-yellow/90',
+              'shadow-[0_4px_16px_rgba(255,204,0,0.25)]',
+              'active:scale-[0.97]',
+              'transition-all duration-ios-fast',
+              'touch-manipulation'
             )}
           >
             <Plus className="h-5 w-5" />

@@ -1,4 +1,3 @@
-
 import { Gauge, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -13,10 +12,11 @@ export const TestProceduresIntro = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground text-lg leading-relaxed">
-          Once you know what you're testing, you need to do it right. This section outlines standard 
-          continuity test procedures and the expected values you should see in a healthy installation.
+          Once you know what you're testing, you need to do it right. This section outlines standard
+          continuity test procedures and the expected values you should see in a healthy
+          installation.
         </p>
-        
+
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <h3 className="text-blue-200 font-medium mb-3">Why Proper Procedures Matter</h3>
           <ul className="space-y-2 text-foreground text-sm">
@@ -33,9 +33,9 @@ export const TestProceduresIntro = () => {
             <div>
               <h3 className="text-red-200 font-medium mb-2">Critical Point</h3>
               <p className="text-foreground text-sm leading-relaxed">
-                Following correct test procedures isn't just about compliance—it's about safety. 
-                Inaccurate readings can lead to dangerous installations being passed as safe, 
-                or safe installations being unnecessarily condemned.
+                Following correct test procedures isn't just about compliance—it's about safety.
+                Inaccurate readings can lead to dangerous installations being passed as safe, or
+                safe installations being unnecessarily condemned.
               </p>
             </div>
           </div>

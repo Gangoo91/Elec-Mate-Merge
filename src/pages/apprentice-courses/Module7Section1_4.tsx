@@ -1,43 +1,58 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Categories of Electrical Faults - Module 7.1.4 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn about the four main categories of electrical faults: design, installation, deterioration, and external damage faults.";
+const TITLE = 'Categories of Electrical Faults - Module 7.1.4 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn about the four main categories of electrical faults: design, installation, deterioration, and external damage faults.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What type of fault occurs due to inadequate circuit design?",
-    options: ["Installation fault", "Design fault", "Deterioration fault", "External damage fault"],
+    question: 'What type of fault occurs due to inadequate circuit design?',
+    options: ['Installation fault', 'Design fault', 'Deterioration fault', 'External damage fault'],
     correctIndex: 1,
-    explanation: "Design faults occur when circuits are inadequately designed, such as insufficient cable ratings or inadequate protection."
+    explanation:
+      'Design faults occur when circuits are inadequately designed, such as insufficient cable ratings or inadequate protection.',
   },
   {
     id: 2,
-    question: "Which category of fault typically results from poor workmanship?",
-    options: ["Design fault", "Installation fault", "Deterioration fault", "External damage fault"],
+    question: 'Which category of fault typically results from poor workmanship?',
+    options: ['Design fault', 'Installation fault', 'Deterioration fault', 'External damage fault'],
     correctIndex: 1,
-    explanation: "Installation faults result from poor workmanship during installation, such as loose connections or incorrect wiring."
+    explanation:
+      'Installation faults result from poor workmanship during installation, such as loose connections or incorrect wiring.',
   },
   {
     id: 3,
-    question: "What causes deterioration faults over time?",
-    options: ["Poor design", "Bad installation", "Age, wear, and environmental factors", "Physical damage"],
+    question: 'What causes deterioration faults over time?',
+    options: [
+      'Poor design',
+      'Bad installation',
+      'Age, wear, and environmental factors',
+      'Physical damage',
+    ],
     correctIndex: 2,
-    explanation: "Deterioration faults develop over time due to age, wear, environmental factors, and normal operational stresses."
+    explanation:
+      'Deterioration faults develop over time due to age, wear, environmental factors, and normal operational stresses.',
   },
   {
     id: 4,
-    question: "Give an example of external damage that could cause electrical faults.",
-    options: ["Loose connections", "Inadequate cable size", "Construction work damaging cables", "Old insulation"],
+    question: 'Give an example of external damage that could cause electrical faults.',
+    options: [
+      'Loose connections',
+      'Inadequate cable size',
+      'Construction work damaging cables',
+      'Old insulation',
+    ],
     correctIndex: 2,
-    explanation: "External damage includes physical damage from construction work, impact damage, or deliberate interference with electrical equipment."
-  }
+    explanation:
+      'External damage includes physical damage from construction work, impact damage, or deliberate interference with electrical equipment.',
+  },
 ];
 
 const Module7Section1_4 = () => {
@@ -46,89 +61,152 @@ const Module7Section1_4 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What type of fault occurs due to inadequate circuit design?",
-      options: ["Installation fault", "Design fault", "Deterioration fault", "External damage fault"],
+      question: 'What type of fault occurs due to inadequate circuit design?',
+      options: [
+        'Installation fault',
+        'Design fault',
+        'Deterioration fault',
+        'External damage fault',
+      ],
       correctAnswer: 1,
-      explanation: "Design faults occur when circuits are inadequately designed, such as insufficient cable ratings or inadequate protection."
+      explanation:
+        'Design faults occur when circuits are inadequately designed, such as insufficient cable ratings or inadequate protection.',
     },
     {
       id: 2,
-      question: "Which category of fault typically results from poor workmanship?",
-      options: ["Design fault", "Installation fault", "Deterioration fault", "External damage fault"],
+      question: 'Which category of fault typically results from poor workmanship?',
+      options: [
+        'Design fault',
+        'Installation fault',
+        'Deterioration fault',
+        'External damage fault',
+      ],
       correctAnswer: 1,
-      explanation: "Installation faults result from poor workmanship during installation, such as loose connections or incorrect wiring."
+      explanation:
+        'Installation faults result from poor workmanship during installation, such as loose connections or incorrect wiring.',
     },
     {
       id: 3,
-      question: "What is a common example of a design fault?",
-      options: ["Loose terminal", "Cable damaged by drill", "Insufficient cable rating for load", "Corroded connection"],
+      question: 'What is a common example of a design fault?',
+      options: [
+        'Loose terminal',
+        'Cable damaged by drill',
+        'Insufficient cable rating for load',
+        'Corroded connection',
+      ],
       correctAnswer: 2,
-      explanation: "Insufficient cable rating for the intended load is a classic design fault that can lead to overheating and fire risks."
+      explanation:
+        'Insufficient cable rating for the intended load is a classic design fault that can lead to overheating and fire risks.',
     },
     {
       id: 4,
-      question: "Which of these is an installation fault?",
-      options: ["Cable too small for load", "Incorrect polarity connections", "Insulation degradation", "Impact damage"],
+      question: 'Which of these is an installation fault?',
+      options: [
+        'Cable too small for load',
+        'Incorrect polarity connections',
+        'Insulation degradation',
+        'Impact damage',
+      ],
       correctAnswer: 1,
-      explanation: "Incorrect polarity connections are installation faults resulting from poor workmanship during the installation process."
+      explanation:
+        'Incorrect polarity connections are installation faults resulting from poor workmanship during the installation process.',
     },
     {
       id: 5,
-      question: "What causes deterioration faults over time?",
-      options: ["Poor design", "Bad installation", "Age, wear, and environmental factors", "Physical damage"],
+      question: 'What causes deterioration faults over time?',
+      options: [
+        'Poor design',
+        'Bad installation',
+        'Age, wear, and environmental factors',
+        'Physical damage',
+      ],
       correctAnswer: 2,
-      explanation: "Deterioration faults develop over time due to age, wear, environmental factors, and normal operational stresses."
+      explanation:
+        'Deterioration faults develop over time due to age, wear, environmental factors, and normal operational stresses.',
     },
     {
       id: 6,
-      question: "Give an example of external damage that could cause electrical faults.",
-      options: ["Loose connections", "Inadequate cable size", "Construction work damaging cables", "Old insulation"],
+      question: 'Give an example of external damage that could cause electrical faults.',
+      options: [
+        'Loose connections',
+        'Inadequate cable size',
+        'Construction work damaging cables',
+        'Old insulation',
+      ],
       correctAnswer: 2,
-      explanation: "External damage includes physical damage from construction work, impact damage, or deliberate interference with electrical equipment."
+      explanation:
+        'External damage includes physical damage from construction work, impact damage, or deliberate interference with electrical equipment.',
     },
     {
       id: 7,
-      question: "Which fault category is most likely to cause immediate danger?",
-      options: ["Design faults only", "Any category can cause immediate danger", "Only external damage", "Only deterioration faults"],
+      question: 'Which fault category is most likely to cause immediate danger?',
+      options: [
+        'Design faults only',
+        'Any category can cause immediate danger',
+        'Only external damage',
+        'Only deterioration faults',
+      ],
       correctAnswer: 1,
-      explanation: "Any category of fault can create immediate danger depending on the specific circumstances and location of the fault."
+      explanation:
+        'Any category of fault can create immediate danger depending on the specific circumstances and location of the fault.',
     },
     {
       id: 8,
-      question: "What is the key difference between design and installation faults?",
-      options: ["No difference", "Design faults occur during planning, installation faults during construction", "Only timing", "Only severity"],
+      question: 'What is the key difference between design and installation faults?',
+      options: [
+        'No difference',
+        'Design faults occur during planning, installation faults during construction',
+        'Only timing',
+        'Only severity',
+      ],
       correctAnswer: 1,
-      explanation: "Design faults occur during the planning/design phase, while installation faults happen during the actual construction/installation work."
+      explanation:
+        'Design faults occur during the planning/design phase, while installation faults happen during the actual construction/installation work.',
     },
     {
       id: 9,
-      question: "How can deterioration faults be prevented?",
-      options: ["They cannot be prevented", "Regular inspection and maintenance", "Better installation only", "Improved design only"],
+      question: 'How can deterioration faults be prevented?',
+      options: [
+        'They cannot be prevented',
+        'Regular inspection and maintenance',
+        'Better installation only',
+        'Improved design only',
+      ],
       correctAnswer: 1,
-      explanation: "Deterioration faults can be prevented or delayed through regular inspection, maintenance, and timely replacement of aging components."
+      explanation:
+        'Deterioration faults can be prevented or delayed through regular inspection, maintenance, and timely replacement of aging components.',
     },
     {
       id: 10,
-      question: "Why is it important to understand fault categories?",
-      options: ["Academic interest only", "Helps determine prevention strategies and responsibility", "No practical benefit", "Only for insurance claims"],
+      question: 'Why is it important to understand fault categories?',
+      options: [
+        'Academic interest only',
+        'Helps determine prevention strategies and responsibility',
+        'No practical benefit',
+        'Only for insurance claims',
+      ],
       correctAnswer: 1,
-      explanation: "Understanding fault categories helps determine appropriate prevention strategies, assign responsibility, and implement effective maintenance programs."
-    }
+      explanation:
+        'Understanding fault categories helps determine appropriate prevention strategies, assign responsibility, and implement effective maintenance programs.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Can one installation contain multiple fault categories?",
-      answer: "Yes, it's common to find design, installation, deterioration, and external damage faults in the same electrical system."
+      question: 'Can one installation contain multiple fault categories?',
+      answer:
+        "Yes, it's common to find design, installation, deterioration, and external damage faults in the same electrical system.",
     },
     {
-      question: "Which fault category is most common during initial testing?",
-      answer: "Installation faults are most common during initial testing because they result from workmanship issues during construction."
+      question: 'Which fault category is most common during initial testing?',
+      answer:
+        'Installation faults are most common during initial testing because they result from workmanship issues during construction.',
     },
     {
-      question: "Which fault category usually requires complete redesign to fix?",
-      answer: "Design faults typically cannot be corrected without significant redesign and modification of the electrical system."
-    }
+      question: 'Which fault category usually requires complete redesign to fix?',
+      answer:
+        'Design faults typically cannot be corrected without significant redesign and modification of the electrical system.',
+    },
   ];
 
   return (
@@ -171,7 +249,10 @@ const Module7Section1_4 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="text-white/90 text-sm leading-relaxed">
-              <strong className="text-elec-yellow">Key Points:</strong> Four main categories: design, installation, deterioration, external damage. Each category has different causes and prevention strategies. Understanding categories helps with fault finding and responsibility.
+              <strong className="text-elec-yellow">Key Points:</strong> Four main categories:
+              design, installation, deterioration, external damage. Each category has different
+              causes and prevention strategies. Understanding categories helps with fault finding
+              and responsibility.
             </p>
           </div>
 
@@ -183,16 +264,24 @@ const Module7Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Not all electrical faults are the same—they arise from different causes and require different approaches for prevention and correction. Understanding the four main categories of electrical faults helps electricians identify root causes, assign responsibility, and implement effective prevention strategies.
+                Not all electrical faults are the same—they arise from different causes and require
+                different approaches for prevention and correction. Understanding the four main
+                categories of electrical faults helps electricians identify root causes, assign
+                responsibility, and implement effective prevention strategies.
               </p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Why This Matters:</strong> Proper fault categorisation helps determine liability, guides maintenance strategies, and prevents recurrence. It's the difference between reactive repairs and proactive system management.
+                  <strong className="text-elec-yellow">Why This Matters:</strong> Proper fault
+                  categorisation helps determine liability, guides maintenance strategies, and
+                  prevents recurrence. It's the difference between reactive repairs and proactive
+                  system management.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Industry Standard:</strong> BS 7671 emphasises the importance of understanding fault origins to ensure appropriate protective measures and maintenance schedules are implemented.
+                  <strong className="text-elec-yellow">Industry Standard:</strong> BS 7671
+                  emphasises the importance of understanding fault origins to ensure appropriate
+                  protective measures and maintenance schedules are implemented.
                 </p>
               </div>
             </div>
@@ -208,9 +297,16 @@ const Module7Section1_4 = () => {
               <p>By the end of this subsection, learners will be able to:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Identify and describe the four main categories of electrical faults.</li>
-                <li>Explain how each category of fault develops and their typical characteristics.</li>
-                <li>Recognise real-world examples of each fault type in electrical installations.</li>
-                <li>Appreciate why classification helps with fault finding, prevention, and responsibility.</li>
+                <li>
+                  Explain how each category of fault develops and their typical characteristics.
+                </li>
+                <li>
+                  Recognise real-world examples of each fault type in electrical installations.
+                </li>
+                <li>
+                  Appreciate why classification helps with fault finding, prevention, and
+                  responsibility.
+                </li>
               </ul>
             </div>
           </section>
@@ -223,25 +319,34 @@ const Module7Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Design faults occur before installation begins—they are errors in the planning and specification phase.
+                Design faults occur before installation begins—they are errors in the planning and
+                specification phase.
               </p>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Undersized Cables</p>
-                  <p className="text-sm text-white/70">Cable ratings insufficient for intended loads</p>
+                  <p className="text-sm text-white/70">
+                    Cable ratings insufficient for intended loads
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Inadequate Protection</p>
-                  <p className="text-sm text-white/70">Protective devices not sized for fault conditions</p>
+                  <p className="text-sm text-white/70">
+                    Protective devices not sized for fault conditions
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Poor Load Assessment</p>
-                  <p className="text-sm text-white/70">Incorrect calculation of anticipated loads</p>
+                  <p className="text-sm text-white/70">
+                    Incorrect calculation of anticipated loads
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental Neglect</p>
-                  <p className="text-sm text-white/70">Failure to account for environmental conditions</p>
+                  <p className="text-sm text-white/70">
+                    Failure to account for environmental conditions
+                  </p>
                 </div>
               </div>
 
@@ -257,7 +362,9 @@ const Module7Section1_4 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="text-sm">
-                  <strong className="text-green-400">Prevention Strategy:</strong> Design faults are prevented through proper design review, adequate load assessment, compliance with BS 7671, and consideration of future requirements and environmental factors.
+                  <strong className="text-green-400">Prevention Strategy:</strong> Design faults are
+                  prevented through proper design review, adequate load assessment, compliance with
+                  BS 7671, and consideration of future requirements and environmental factors.
                 </p>
               </div>
             </div>
@@ -281,7 +388,8 @@ const Module7Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Installation faults arise during construction and are typically caused by poor workmanship.
+                Installation faults arise during construction and are typically caused by poor
+                workmanship.
               </p>
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -308,17 +416,23 @@ const Module7Section1_4 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Detection Methods</p>
-                  <p className="text-sm text-white/70">Initial testing and inspection reveals most installation faults</p>
+                  <p className="text-sm text-white/70">
+                    Initial testing and inspection reveals most installation faults
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Prevention</p>
-                  <p className="text-sm text-white/70">Proper training, supervision, and quality control procedures</p>
+                  <p className="text-sm text-white/70">
+                    Proper training, supervision, and quality control procedures
+                  </p>
                 </div>
               </div>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
                 <p className="text-sm">
-                  <strong className="text-amber-400">Important Note:</strong> Installation faults are the most preventable category through proper training, supervision, and adherence to installation standards and procedures.
+                  <strong className="text-amber-400">Important Note:</strong> Installation faults
+                  are the most preventable category through proper training, supervision, and
+                  adherence to installation standards and procedures.
                 </p>
               </div>
             </div>
@@ -341,26 +455,32 @@ const Module7Section1_4 = () => {
               Deterioration Faults
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                Deterioration faults develop over time as systems age and components degrade.
-              </p>
+              <p>Deterioration faults develop over time as systems age and components degrade.</p>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental Factors</p>
-                  <p className="text-sm text-white/70">Heat, moisture, chemicals, and UV causing material degradation</p>
+                  <p className="text-sm text-white/70">
+                    Heat, moisture, chemicals, and UV causing material degradation
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Operational Stress</p>
-                  <p className="text-sm text-white/70">Thermal cycling, vibration, and electrical stress over time</p>
+                  <p className="text-sm text-white/70">
+                    Thermal cycling, vibration, and electrical stress over time
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Material Aging</p>
-                  <p className="text-sm text-white/70">Natural degradation of insulation, conductors, and protective devices</p>
+                  <p className="text-sm text-white/70">
+                    Natural degradation of insulation, conductors, and protective devices
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Corrosion</p>
-                  <p className="text-sm text-white/70">Electrochemical processes affecting connections and components</p>
+                  <p className="text-sm text-white/70">
+                    Electrochemical processes affecting connections and components
+                  </p>
                 </div>
               </div>
 
@@ -376,7 +496,9 @@ const Module7Section1_4 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
                 <p className="text-sm">
-                  <strong className="text-purple-400">Key Understanding:</strong> Deterioration is inevitable but manageable. Regular inspection and maintenance can identify degradation before it becomes dangerous or causes system failure.
+                  <strong className="text-purple-400">Key Understanding:</strong> Deterioration is
+                  inevitable but manageable. Regular inspection and maintenance can identify
+                  degradation before it becomes dangerous or causes system failure.
                 </p>
               </div>
             </div>
@@ -400,25 +522,34 @@ const Module7Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                External damage faults are caused by influences outside the electrical system itself.
+                External damage faults are caused by influences outside the electrical system
+                itself.
               </p>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Physical Impact</p>
-                  <p className="text-sm text-white/70">Construction work, vehicle impact, or accidental damage to equipment</p>
+                  <p className="text-sm text-white/70">
+                    Construction work, vehicle impact, or accidental damage to equipment
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Penetration Damage</p>
-                  <p className="text-sm text-white/70">Nails, screws, or drilling through concealed cables</p>
+                  <p className="text-sm text-white/70">
+                    Nails, screws, or drilling through concealed cables
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Animal Damage</p>
-                  <p className="text-sm text-white/70">Rodents chewing through cables or nesting in equipment</p>
+                  <p className="text-sm text-white/70">
+                    Rodents chewing through cables or nesting in equipment
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental Events</p>
-                  <p className="text-sm text-white/70">Flooding, fire, lightning, or extreme weather damage</p>
+                  <p className="text-sm text-white/70">
+                    Flooding, fire, lightning, or extreme weather damage
+                  </p>
                 </div>
               </div>
 
@@ -434,7 +565,9 @@ const Module7Section1_4 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="text-sm">
-                  <strong className="text-red-400">Critical Point:</strong> While external damage may be unpredictable, proper installation practices and protective measures can significantly reduce the risk and severity of such incidents.
+                  <strong className="text-red-400">Critical Point:</strong> While external damage
+                  may be unpredictable, proper installation practices and protective measures can
+                  significantly reduce the risk and severity of such incidents.
                 </p>
               </div>
             </div>
@@ -458,31 +591,55 @@ const Module7Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <div>
-                <p className="font-medium text-white mb-2">Fault Identification and Classification:</p>
+                <p className="font-medium text-white mb-2">
+                  Fault Identification and Classification:
+                </p>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>Always determine the fault category as part of the investigation process.</li>
                   <li>Consider when the fault likely occurred and what may have caused it.</li>
-                  <li>Document the category in fault reports to help with prevention strategies.</li>
-                  <li>Use categorisation to guide discussions about responsibility and liability.</li>
+                  <li>
+                    Document the category in fault reports to help with prevention strategies.
+                  </li>
+                  <li>
+                    Use categorisation to guide discussions about responsibility and liability.
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <p className="font-medium text-white mb-2">Prevention Strategies by Category:</p>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li><strong>Design:</strong> Thorough design review, proper load assessment, compliance verification.</li>
-                  <li><strong>Installation:</strong> Skilled tradespeople, proper supervision, quality control procedures.</li>
-                  <li><strong>Deterioration:</strong> Regular inspection, planned maintenance, environmental protection.</li>
-                  <li><strong>External Damage:</strong> Proper protection, clear marking, risk assessment.</li>
+                  <li>
+                    <strong>Design:</strong> Thorough design review, proper load assessment,
+                    compliance verification.
+                  </li>
+                  <li>
+                    <strong>Installation:</strong> Skilled tradespeople, proper supervision, quality
+                    control procedures.
+                  </li>
+                  <li>
+                    <strong>Deterioration:</strong> Regular inspection, planned maintenance,
+                    environmental protection.
+                  </li>
+                  <li>
+                    <strong>External Damage:</strong> Proper protection, clear marking, risk
+                    assessment.
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <p className="font-medium text-white mb-2">Professional Application:</p>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li>Use fault categories to advise clients on prevention and maintenance needs.</li>
-                  <li>Implement targeted inspection procedures based on likely fault categories.</li>
-                  <li>Establish responsibility and liability through proper fault categorisation.</li>
+                  <li>
+                    Use fault categories to advise clients on prevention and maintenance needs.
+                  </li>
+                  <li>
+                    Implement targeted inspection procedures based on likely fault categories.
+                  </li>
+                  <li>
+                    Establish responsibility and liability through proper fault categorisation.
+                  </li>
                   <li>Develop maintenance schedules appropriate to fault risk categories.</li>
                 </ul>
               </div>
@@ -496,19 +653,40 @@ const Module7Section1_4 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
-              <p className="font-medium text-white mb-3">Case Study: Office Building Fault Investigation</p>
+              <p className="font-medium text-white mb-3">
+                Case Study: Office Building Fault Investigation
+              </p>
               <div className="text-white/80 space-y-3 text-sm leading-relaxed">
                 <p>
-                  During testing of an office refurbishment, electricians found multiple faults that clearly demonstrated all four categories:
+                  During testing of an office refurbishment, electricians found multiple faults that
+                  clearly demonstrated all four categories:
                 </p>
                 <ul className="space-y-2">
-                  <li><strong>Design Fault:</strong> The main distribution board cables were consistently overheating because they were undersized for the connected load—a design error that existed from day one.</li>
-                  <li><strong>Installation Fault:</strong> Several socket circuits had loose earth connections at terminals, clearly resulting from poor workmanship during installation.</li>
-                  <li><strong>Deterioration Fault:</strong> Lighting circuits in the roof space showed degraded insulation due to prolonged exposure to heat from poorly ventilated areas.</li>
-                  <li><strong>External Damage Fault:</strong> One circuit was completely dead due to a cable damaged by a contractor's screw during recent partition installation work.</li>
+                  <li>
+                    <strong>Design Fault:</strong> The main distribution board cables were
+                    consistently overheating because they were undersized for the connected load—a
+                    design error that existed from day one.
+                  </li>
+                  <li>
+                    <strong>Installation Fault:</strong> Several socket circuits had loose earth
+                    connections at terminals, clearly resulting from poor workmanship during
+                    installation.
+                  </li>
+                  <li>
+                    <strong>Deterioration Fault:</strong> Lighting circuits in the roof space showed
+                    degraded insulation due to prolonged exposure to heat from poorly ventilated
+                    areas.
+                  </li>
+                  <li>
+                    <strong>External Damage Fault:</strong> One circuit was completely dead due to a
+                    cable damaged by a contractor's screw during recent partition installation work.
+                  </li>
                 </ul>
                 <p>
-                  <strong>Outcome:</strong> Each fault category required a different response—redesign for the undersized cables, repair work for installation faults, planned replacement for deteriorated circuits, and protection measures to prevent future external damage.
+                  <strong>Outcome:</strong> Each fault category required a different
+                  response—redesign for the undersized cables, repair work for installation faults,
+                  planned replacement for deteriorated circuits, and protection measures to prevent
+                  future external damage.
                 </p>
               </div>
             </div>
@@ -538,10 +716,22 @@ const Module7Section1_4 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <ul className="list-disc pl-5 space-y-2 text-white/80 text-sm">
-                <li>Design faults occur during planning and typically require redesign to correct properly.</li>
-                <li>Installation faults result from poor workmanship and are preventable through proper training and supervision.</li>
-                <li>Deterioration faults develop over time and require regular inspection and maintenance to manage effectively.</li>
-                <li>External damage faults are caused by outside influences but can be minimised through proper protection and installation practices.</li>
+                <li>
+                  Design faults occur during planning and typically require redesign to correct
+                  properly.
+                </li>
+                <li>
+                  Installation faults result from poor workmanship and are preventable through
+                  proper training and supervision.
+                </li>
+                <li>
+                  Deterioration faults develop over time and require regular inspection and
+                  maintenance to manage effectively.
+                </li>
+                <li>
+                  External damage faults are caused by outside influences but can be minimised
+                  through proper protection and installation practices.
+                </li>
               </ul>
             </div>
           </section>

@@ -11,22 +11,48 @@ export const SmartHomeModule3Section2RealWorld = () => {
   const steps = [
     {
       title: "Client's Current Setup",
-      content: "A client has set up a 'Goodnight' scene that dims bedroom lights, keeps hallway light on low, and turns all other lights off. They've also added a schedule so outdoor lights switch on at sunset.",
-      isExample: true
+      content:
+        "A client has set up a 'Goodnight' scene that dims bedroom lights, keeps hallway light on low, and turns all other lights off. They've also added a schedule so outdoor lights switch on at sunset.",
+      isExample: true,
     },
     {
-      title: "Enhancement Opportunities",
-      content: "What additional schedules or scenes could be added to improve security and comfort?",
-      isQuestion: true
-    }
+      title: 'Enhancement Opportunities',
+      content:
+        'What additional schedules or scenes could be added to improve security and comfort?',
+      isQuestion: true,
+    },
   ];
 
   const enhancementOptions = [
-    { text: "Morning wake-up scene with gradual brightening", benefit: "Excellent! Gradual wake-up lighting supports natural circadian rhythms and provides a gentle start to the day.", correct: true },
-    { text: "Away mode with random light patterns", benefit: "Perfect for security! Random patterns simulate occupancy and deter break-ins when the house is empty.", correct: true },
-    { text: "Motion-activated night lighting in hallways", benefit: "Great safety feature! Provides safe navigation at night without disturbing others.", correct: true },
-    { text: "All lights flash red when smoke alarm triggers", benefit: "Smart emergency response! Visual alerts help during fire emergencies, especially for hearing-impaired users.", correct: true },
-    { text: "Lights turn off every 30 minutes automatically", benefit: "This would be annoying and disruptive. Over-automation that fights user control is poor design.", correct: false }
+    {
+      text: 'Morning wake-up scene with gradual brightening',
+      benefit:
+        'Excellent! Gradual wake-up lighting supports natural circadian rhythms and provides a gentle start to the day.',
+      correct: true,
+    },
+    {
+      text: 'Away mode with random light patterns',
+      benefit:
+        'Perfect for security! Random patterns simulate occupancy and deter break-ins when the house is empty.',
+      correct: true,
+    },
+    {
+      text: 'Motion-activated night lighting in hallways',
+      benefit: 'Great safety feature! Provides safe navigation at night without disturbing others.',
+      correct: true,
+    },
+    {
+      text: 'All lights flash red when smoke alarm triggers',
+      benefit:
+        'Smart emergency response! Visual alerts help during fire emergencies, especially for hearing-impaired users.',
+      correct: true,
+    },
+    {
+      text: 'Lights turn off every 30 minutes automatically',
+      benefit:
+        'This would be annoying and disruptive. Over-automation that fights user control is poor design.',
+      correct: false,
+    },
   ];
 
   const nextStep = () => {
@@ -43,7 +69,7 @@ export const SmartHomeModule3Section2RealWorld = () => {
 
   const toggleAnswer = (index: number) => {
     if (selectedAnswers.includes(index)) {
-      setSelectedAnswers(selectedAnswers.filter(i => i !== index));
+      setSelectedAnswers(selectedAnswers.filter((i) => i !== index));
     } else {
       setSelectedAnswers([...selectedAnswers, index]);
     }
@@ -86,17 +112,25 @@ export const SmartHomeModule3Section2RealWorld = () => {
             <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
               <h4 className="font-semibold text-blue-200 mb-2">Current Implementation:</h4>
               <ul className="text-blue-100 space-y-1">
-                <li>• <strong>"Goodnight" Scene:</strong> Bedroom dim, hallway low, others off</li>
-                <li>• <strong>Sunset Schedule:</strong> Outdoor lights activate automatically</li>
-                <li>• <strong>Needs:</strong> Enhanced security and comfort features</li>
+                <li>
+                  • <strong>"Goodnight" Scene:</strong> Bedroom dim, hallway low, others off
+                </li>
+                <li>
+                  • <strong>Sunset Schedule:</strong> Outdoor lights activate automatically
+                </li>
+                <li>
+                  • <strong>Needs:</strong> Enhanced security and comfort features
+                </li>
               </ul>
             </div>
           )}
 
           {steps[currentStep].isQuestion && (
             <div className="space-y-4">
-              <p className="text-elec-yellow font-medium">Select all enhancements that would improve security and comfort:</p>
-              
+              <p className="text-elec-yellow font-medium">
+                Select all enhancements that would improve security and comfort:
+              </p>
+
               <div className="space-y-2">
                 {enhancementOptions.map((option, index) => (
                   <label
@@ -125,19 +159,30 @@ export const SmartHomeModule3Section2RealWorld = () => {
               {showFeedback && (
                 <div className="space-y-3">
                   {selectedAnswers.map((answerIndex) => (
-                    <div key={answerIndex} className={`p-3 rounded-lg border ${
-                      enhancementOptions[answerIndex].correct 
-                        ? 'bg-green-600/10 border-green-600/20' 
-                        : 'bg-red-600/10 border-red-600/20'
-                    }`}>
-                      <h5 className={`font-medium mb-1 ${
-                        enhancementOptions[answerIndex].correct ? 'text-green-200' : 'text-red-200'
-                      }`}>
+                    <div
+                      key={answerIndex}
+                      className={`p-3 rounded-lg border ${
+                        enhancementOptions[answerIndex].correct
+                          ? 'bg-green-600/10 border-green-600/20'
+                          : 'bg-red-600/10 border-red-600/20'
+                      }`}
+                    >
+                      <h5
+                        className={`font-medium mb-1 ${
+                          enhancementOptions[answerIndex].correct
+                            ? 'text-green-200'
+                            : 'text-red-200'
+                        }`}
+                      >
                         {enhancementOptions[answerIndex].text}
                       </h5>
-                      <p className={`text-sm ${
-                        enhancementOptions[answerIndex].correct ? 'text-green-100' : 'text-red-100'
-                      }`}>
+                      <p
+                        className={`text-sm ${
+                          enhancementOptions[answerIndex].correct
+                            ? 'text-green-100'
+                            : 'text-red-100'
+                        }`}
+                      >
                         {enhancementOptions[answerIndex].benefit}
                       </p>
                     </div>

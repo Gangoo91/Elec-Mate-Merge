@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 // Types
 export type TrainingLevel = 'peer' | 'trained' | 'mhfa_certified';
@@ -99,8 +99,7 @@ export const peerSupporterService = {
    * Uses RPC function to bypass PostgREST schema cache issues
    */
   async getAvailableSupporters(): Promise<PeerSupporter[]> {
-    const { data, error } = await supabase
-      .rpc('get_available_peer_supporters');
+    const { data, error } = await supabase.rpc('get_available_peer_supporters');
 
     if (error) throw error;
     return (data as unknown as PeerSupporter[]) || [];
@@ -111,8 +110,7 @@ export const peerSupporterService = {
    * Uses RPC function to bypass PostgREST schema cache issues
    */
   async getSupporter(id: string): Promise<PeerSupporter | null> {
-    const { data, error } = await supabase
-      .rpc('get_peer_supporter_by_id', { supporter_id: id });
+    const { data, error } = await supabase.rpc('get_peer_supporter_by_id', { supporter_id: id });
 
     if (error && error.code !== 'PGRST116') throw error;
     return data as unknown as PeerSupporter | null;
@@ -123,12 +121,13 @@ export const peerSupporterService = {
    * Uses RPC function to bypass PostgREST schema cache issues
    */
   async getMyProfile(): Promise<PeerSupporter | null> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return null;
 
     // Use RPC function to bypass 406 error from direct table query
-    const { data, error } = await supabase
-      .rpc('get_my_peer_supporter_profile');
+    const { data, error } = await supabase.rpc('get_my_peer_supporter_profile');
 
     if (error && error.code !== 'PGRST116') throw error;
 
@@ -141,7 +140,9 @@ export const peerSupporterService = {
    * Register as a peer supporter
    */
   async register(input: CreateSupporterInput): Promise<PeerSupporter> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
@@ -167,7 +168,9 @@ export const peerSupporterService = {
    * Update supporter profile
    */
   async updateProfile(input: UpdateSupporterInput): Promise<PeerSupporter> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const updateData: Record<string, unknown> = {
@@ -179,7 +182,8 @@ export const peerSupporterService = {
     if (input.avatar_url !== undefined) updateData.avatar_url = input.avatar_url;
     if (input.is_available !== undefined) updateData.is_available = input.is_available;
     if (input.training_level !== undefined) updateData.training_level = input.training_level;
-    if (input.topics_comfortable_with !== undefined) updateData.topics_comfortable_with = input.topics_comfortable_with;
+    if (input.topics_comfortable_with !== undefined)
+      updateData.topics_comfortable_with = input.topics_comfortable_with;
 
     // Update last_active_at when toggling availability
     if (input.is_available) {
@@ -213,7 +217,9 @@ export const peerSupporterService = {
    * Deactivate supporter profile (soft delete)
    */
   async deactivate(): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { error } = await supabase
@@ -239,7 +245,9 @@ export const peerConversationService = {
    * OPTIMIZED: Runs all independent queries in parallel
    */
   async getMyConversations(): Promise<PeerConversation[]> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return [];
 
     // OPTIMIZATION: Run ALL initial queries in parallel
@@ -248,16 +256,18 @@ export const peerConversationService = {
     // We'll fetch conversations immediately after we have the profile
     const [supporterProfile, blockedUsers] = await Promise.all([
       peerSupporterService.getMyProfile(),
-      peerBlockService.getBlockedUsers()
+      peerBlockService.getBlockedUsers(),
     ]);
 
     // Build query conditions - fetch conversations with supporter data
     let query = supabase
       .from('mental_health_peer_conversations')
-      .select(`
+      .select(
+        `
         *,
         supporter:mental_health_peer_supporters(*)
-      `)
+      `
+      )
       .order('last_message_at', { ascending: false });
 
     // If user is a supporter with a valid ID, get conversations where they are the supporter
@@ -283,27 +293,29 @@ export const peerConversationService = {
     }
 
     // Get unique seeker IDs and fetch their profiles
-    const seekerIds = [...new Set(rawConversations.map(c => c.seeker_id))];
+    const seekerIds = [...new Set(rawConversations.map((c) => c.seeker_id))];
     const { data: seekerProfiles } = await supabase
       .from('profiles')
       .select('id, full_name, avatar_url')
       .in('id', seekerIds);
 
     // Map seeker profiles to conversations
-    const profileMap = new Map(seekerProfiles?.map(p => [p.id, p]) || []);
-    const conversationsWithProfiles = rawConversations.map(conv => ({
+    const profileMap = new Map(seekerProfiles?.map((p) => [p.id, p]) || []);
+    const conversationsWithProfiles = rawConversations.map((conv) => ({
       ...conv,
-      seeker: profileMap.get(conv.seeker_id) || { id: conv.seeker_id, full_name: null, avatar_url: null }
+      seeker: profileMap.get(conv.seeker_id) || {
+        id: conv.seeker_id,
+        full_name: null,
+        avatar_url: null,
+      },
     })) as unknown as PeerConversation[];
 
     // Filter out conversations with blocked users
     let conversations = conversationsWithProfiles;
     if (blockedUsers.length > 0) {
-      conversations = conversationsWithProfiles.filter(conv => {
+      conversations = conversationsWithProfiles.filter((conv) => {
         // Determine the other user in the conversation
-        const otherUserId = conv.seeker_id === user.id
-          ? conv.supporter?.user_id
-          : conv.seeker_id;
+        const otherUserId = conv.seeker_id === user.id ? conv.supporter?.user_id : conv.seeker_id;
 
         // Keep conversation if other user is not blocked
         return !otherUserId || !blockedUsers.includes(otherUserId);
@@ -326,14 +338,16 @@ export const peerConversationService = {
    */
   async getActiveConversations(): Promise<PeerConversation[]> {
     const conversations = await this.getMyConversations();
-    return conversations.filter(c => c.status === 'active');
+    return conversations.filter((c) => c.status === 'active');
   },
 
   /**
    * Start a conversation with a supporter
    */
   async startConversation(supporterId: string): Promise<PeerConversation> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     // First insert the conversation
@@ -344,10 +358,12 @@ export const peerConversationService = {
         seeker_id: user.id,
         status: 'active',
       })
-      .select(`
+      .select(
+        `
         *,
         supporter:mental_health_peer_supporters(*)
-      `)
+      `
+      )
       .single();
 
     if (insertError) throw insertError;
@@ -361,7 +377,7 @@ export const peerConversationService = {
 
     return {
       ...conversation,
-      seeker: seekerProfile || { id: user.id, full_name: null, avatar_url: null }
+      seeker: seekerProfile || { id: user.id, full_name: null, avatar_url: null },
     } as unknown as PeerConversation;
   },
 
@@ -418,7 +434,9 @@ export const peerMessageService = {
    * Send a message
    */
   async sendMessage(conversationId: string, content: string): Promise<PeerMessage> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
@@ -442,15 +460,21 @@ export const peerMessageService = {
   /**
    * Send push notification to the other person in conversation
    */
-  async sendPushNotification(conversationId: string, senderId: string, content: string): Promise<void> {
+  async sendPushNotification(
+    conversationId: string,
+    senderId: string,
+    content: string
+  ): Promise<void> {
     try {
       // Get conversation to find recipient
       const { data: conversation } = await supabase
         .from('mental_health_peer_conversations')
-        .select(`
+        .select(
+          `
           *,
           supporter:mental_health_peer_supporters(user_id, display_name)
-        `)
+        `
+        )
         .eq('id', conversationId)
         .single();
 
@@ -467,8 +491,8 @@ export const peerMessageService = {
       const isSupporter = conversation.supporter?.user_id === senderId;
       const recipientId = isSupporter ? conversation.seeker_id : conversation.supporter?.user_id;
       const senderName = isSupporter
-        ? (conversation.supporter?.display_name || 'Peer Supporter')
-        : (seekerProfile?.full_name?.split(' ')[0] || 'Someone');
+        ? conversation.supporter?.display_name || 'Peer Supporter'
+        : seekerProfile?.full_name?.split(' ')[0] || 'Someone';
 
       if (!recipientId) return;
 
@@ -495,7 +519,9 @@ export const peerMessageService = {
    * Mark messages as read
    */
   async markAsRead(conversationId: string): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { error } = await supabase
@@ -511,7 +537,9 @@ export const peerMessageService = {
    * Mark ALL peer messages as read across all conversations
    */
   async markAllAsRead(): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     // Mark all messages not sent by me as read
@@ -528,7 +556,9 @@ export const peerMessageService = {
    * Get unread count for a conversation
    */
   async getUnreadCount(conversationId: string): Promise<number> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return 0;
 
     const { count, error } = await supabase
@@ -546,7 +576,9 @@ export const peerMessageService = {
    * Delete a conversation and all its messages
    */
   async deleteConversation(conversationId: string): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     // Delete all messages first
@@ -569,10 +601,7 @@ export const peerMessageService = {
   /**
    * Subscribe to new messages in a conversation (real-time)
    */
-  subscribeToMessages(
-    conversationId: string,
-    onMessage: (message: PeerMessage) => void
-  ) {
+  subscribeToMessages(conversationId: string, onMessage: (message: PeerMessage) => void) {
     const channel = supabase
       .channel(`peer-messages-${conversationId}`)
       .on(
@@ -603,12 +632,14 @@ export const peerBlockService = {
    * Block a user
    */
   async blockUser(blockedUserId: string): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { error } = await supabase.from('mental_health_peer_blocks').insert({
       blocker_id: user.id,
-      blocked_user_id: blockedUserId
+      blocked_user_id: blockedUserId,
     });
 
     if (error) throw error;
@@ -618,7 +649,9 @@ export const peerBlockService = {
    * Unblock a user
    */
   async unblockUser(blockedUserId: string): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { error } = await supabase
@@ -634,7 +667,9 @@ export const peerBlockService = {
    * Get list of blocked user IDs
    */
   async getBlockedUsers(): Promise<string[]> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return [];
 
     const { data, error } = await supabase
@@ -643,7 +678,7 @@ export const peerBlockService = {
       .eq('blocker_id', user.id);
 
     if (error) throw error;
-    return data?.map(b => b.blocked_user_id) || [];
+    return data?.map((b) => b.blocked_user_id) || [];
   },
 
   /**
@@ -658,7 +693,9 @@ export const peerBlockService = {
    * Check if the current user is blocked by another user
    */
   async amIBlockedBy(userId: string): Promise<boolean> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return false;
 
     const { data, error } = await supabase
@@ -702,7 +739,9 @@ export const peerReportService = {
     reason: ReportReason;
     additionalNotes?: string;
   }): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { error } = await supabase.from('mental_health_peer_reports').insert({
@@ -710,7 +749,7 @@ export const peerReportService = {
       reported_user_id: params.reportedUserId,
       conversation_id: params.conversationId || null,
       reason: params.reason,
-      additional_notes: params.additionalNotes || null
+      additional_notes: params.additionalNotes || null,
     });
 
     if (error) throw error;
@@ -720,7 +759,9 @@ export const peerReportService = {
    * Get my submitted reports
    */
   async getMyReports(): Promise<PeerReport[]> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return [];
 
     const { data, error } = await supabase
@@ -742,7 +783,9 @@ export const peerPresenceService = {
    * Subscribe to supporter availability changes
    * OPTIMIZED: Returns single changed supporter instead of full list refetch
    */
-  subscribeToAvailability(onUpdate: (supporter: PeerSupporter, eventType: 'INSERT' | 'UPDATE' | 'DELETE') => void) {
+  subscribeToAvailability(
+    onUpdate: (supporter: PeerSupporter, eventType: 'INSERT' | 'UPDATE' | 'DELETE') => void
+  ) {
     const channel = supabase
       .channel('peer-supporters-availability')
       .on(

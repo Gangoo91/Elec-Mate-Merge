@@ -3,7 +3,12 @@
  * Compliant with BS 5266-1:2016, BS EN 50172:2004, BS EN 1838:2013
  */
 
-import { EmergencyLightingFormData, Luminaire, LuxReading, CertificatePhoto } from '@/types/emergency-lighting';
+import {
+  EmergencyLightingFormData,
+  Luminaire,
+  LuxReading,
+  CertificatePhoto,
+} from '@/types/emergency-lighting';
 
 export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingFormData>) => {
   const get = (key: string, defaultValue: any = ''): string => {
@@ -69,7 +74,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       wattage: lum.wattage || 0,
       notes: lum.notes || '',
       install_date: lum.installDate || '',
-      photo_url: lum.photoUrl || ''
+      photo_url: lum.photoUrl || '',
     }));
   };
 
@@ -77,8 +82,8 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
   const calculateSummary = () => {
     const luminaires: Luminaire[] = formData.luminaires || [];
     const passCount = luminaires.filter((l) => l.functionalTestResult === 'pass').length;
-    const failCount = luminaires.filter((l) =>
-      l.functionalTestResult === 'fail' || l.durationTestResult === 'fail'
+    const failCount = luminaires.filter(
+      (l) => l.functionalTestResult === 'fail' || l.durationTestResult === 'fail'
     ).length;
 
     return {
@@ -87,14 +92,14 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       open_area: luminaires.filter((l) => l.category === 'open-area').length,
       high_risk: luminaires.filter((l) => l.category === 'high-risk').length,
       standby: luminaires.filter((l) => l.category === 'standby').length,
-      exit_signs: luminaires.filter((l) =>
-        l.luminaireType === 'exit-sign' || l.luminaireType === 'exit-box'
+      exit_signs: luminaires.filter(
+        (l) => l.luminaireType === 'exit-sign' || l.luminaireType === 'exit-box'
       ).length,
       all_pass: failCount === 0 && passCount > 0,
       all_pass_display: failCount === 0 && passCount > 0 ? 'Yes' : 'No',
       pass_count: passCount,
       fail_count: failCount,
-      tested_count: luminaires.filter((l) => l.functionalTestResult).length
+      tested_count: luminaires.filter((l) => l.functionalTestResult).length,
     };
   };
 
@@ -109,7 +114,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       reading: r.luxReading || '',
       min_required: r.minRequired || '',
       result: formatTestResult(r.result),
-      result_raw: r.result || ''
+      result_raw: r.result || '',
     }));
   };
 
@@ -130,7 +135,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
         rectified: d.rectified || false,
         rectified_display: d.rectified ? 'Yes' : 'No',
         rectification_date: formatDateUK(d.rectificationDate || ''),
-        photo_url: d.photoUrl || ''
+        photo_url: d.photoUrl || '',
       };
     });
   };
@@ -145,7 +150,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       let linkedItemName = '';
       if (photo.linkedItemId) {
         if (photo.category === 'luminaire') {
-          const lum = luminaires.find(l => l.id === photo.linkedItemId);
+          const lum = luminaires.find((l) => l.id === photo.linkedItemId);
           if (lum) {
             const lumIndex = luminaires.indexOf(lum) + 1;
             linkedItemName = `Luminaire #${lumIndex} - ${lum.location}`;
@@ -165,7 +170,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
         category: photo.category,
         category_display: formatPhotoCategory(photo.category),
         linked_item: linkedItemName,
-        uploaded_at: photo.uploadedAt
+        uploaded_at: photo.uploadedAt,
       };
     });
   };
@@ -175,31 +180,33 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     const luminaires: Luminaire[] = formData.luminaires || [];
     const defects = formData.defectsFound || [];
 
-    return photos.filter(p => p.category === category).map((photo, index) => {
-      let linkedItemName = '';
-      if (photo.linkedItemId) {
-        if (photo.category === 'luminaire') {
-          const lum = luminaires.find(l => l.id === photo.linkedItemId);
-          if (lum) {
-            const lumIndex = luminaires.indexOf(lum) + 1;
-            linkedItemName = `#${lumIndex} - ${lum.location}`;
-          }
-        } else if (photo.category === 'defect') {
-          const def = defects.find((d: any) => d.id === photo.linkedItemId);
-          if (def) {
-            linkedItemName = (def as any).description?.substring(0, 40);
+    return photos
+      .filter((p) => p.category === category)
+      .map((photo, index) => {
+        let linkedItemName = '';
+        if (photo.linkedItemId) {
+          if (photo.category === 'luminaire') {
+            const lum = luminaires.find((l) => l.id === photo.linkedItemId);
+            if (lum) {
+              const lumIndex = luminaires.indexOf(lum) + 1;
+              linkedItemName = `#${lumIndex} - ${lum.location}`;
+            }
+          } else if (photo.category === 'defect') {
+            const def = defects.find((d: any) => d.id === photo.linkedItemId);
+            if (def) {
+              linkedItemName = (def as any).description?.substring(0, 40);
+            }
           }
         }
-      }
 
-      return {
-        number: index + 1,
-        url: photo.url,
-        caption: photo.caption || '',
-        linked_item: linkedItemName,
-        uploaded_at: photo.uploadedAt
-      };
-    });
+        return {
+          number: index + 1,
+          url: photo.url,
+          caption: photo.caption || '',
+          linked_item: linkedItemName,
+          uploaded_at: photo.uploadedAt,
+        };
+      });
   };
 
   // Get monthly test data
@@ -215,7 +222,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       test_type: get('testType'),
       test_type_display: formatTestType(get('testType')),
       test_date: getDate('testDate'),
-      standards: 'BS 5266-1:2016, BS EN 50172:2004, BS EN 1838:2013'
+      standards: 'BS 5266-1:2016, BS EN 50172:2004, BS EN 1838:2013',
     },
 
     // ============================================
@@ -225,7 +232,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       name: get('clientName'),
       address: get('clientAddress'),
       telephone: get('clientTelephone'),
-      email: get('clientEmail')
+      email: get('clientEmail'),
     },
 
     // ============================================
@@ -237,7 +244,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       type: get('premisesType'),
       type_display: formatPremisesType(get('premisesType')),
       occupancy_type: get('occupancyType'),
-      occupancy_display: formatOccupancy(get('occupancyType'))
+      occupancy_display: formatOccupancy(get('occupancyType')),
     },
 
     // ============================================
@@ -247,13 +254,14 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       type: get('systemType'),
       type_display: formatSystemType(get('systemType')),
       rated_duration: getNum('ratedDuration', 180),
-      rated_duration_display: getNum('ratedDuration', 180) === 60 ? '1 Hour (60 min)' : '3 Hours (180 min)',
+      rated_duration_display:
+        getNum('ratedDuration', 180) === 60 ? '1 Hour (60 min)' : '3 Hours (180 min)',
       total_luminaires: (formData.luminaires || []).length,
       central_battery_system: getBool('centralBatterySystem'),
       central_battery_system_display: getBool('centralBatterySystem') ? 'Yes' : 'No',
       central_battery_location: get('centralBatteryLocation'),
       self_contained_units: getBool('selfContainedUnits') !== false,
-      self_contained_units_display: getBool('selfContainedUnits') !== false ? 'Yes' : 'No'
+      self_contained_units_display: getBool('selfContainedUnits') !== false ? 'Yes' : 'No',
     },
 
     // ============================================
@@ -263,7 +271,8 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       luminaire_count: getNum('luminaireCount') || (formData.luminaires || []).length,
       exit_sign_count: getNum('exitSignCount'),
       central_battery_count: getNum('centralBatteryCount'),
-      total_count: (getNum('luminaireCount') || (formData.luminaires || []).length) + getNum('exitSignCount')
+      total_count:
+        (getNum('luminaireCount') || (formData.luminaires || []).length) + getNum('exitSignCount'),
     },
 
     // ============================================
@@ -283,7 +292,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       charging_indicators_normal_display: monthlyTest.chargingIndicatorsNormal ? 'PASS' : 'FAIL',
       faults_found: monthlyTest.faultsFound || '',
       action_taken: monthlyTest.actionTaken || '',
-      has_faults: !!(monthlyTest.faultsFound && monthlyTest.faultsFound.trim())
+      has_faults: !!(monthlyTest.faultsFound && monthlyTest.faultsFound.trim()),
     },
 
     // ============================================
@@ -298,7 +307,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       battery_condition_display: formatBatteryCondition(annualTest.batteryCondition || ''),
       faults_found: annualTest.faultsFound || '',
       action_taken: annualTest.actionTaken || '',
-      has_faults: !!(annualTest.faultsFound && annualTest.faultsFound.trim())
+      has_faults: !!(annualTest.faultsFound && annualTest.faultsFound.trim()),
     },
 
     // ============================================
@@ -341,7 +350,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     // ============================================
     service_schedule: {
       next_monthly_test: getDate('nextMonthlyTestDue'),
-      next_annual_test: getDate('nextAnnualTestDue')
+      next_annual_test: getDate('nextAnnualTestDue'),
     },
 
     // ============================================
@@ -352,15 +361,19 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       company: get('testerCompany'),
       qualifications: get('testerQualifications'),
       signature: get('testerSignature'),
-      date: getDate('testerDate')
+      date: getDate('testerDate'),
     },
 
     // ============================================
     // OVERALL RESULT
     // ============================================
     overall_result: get('overallResult'),
-    overall_result_display: get('overallResult') === 'satisfactory' ? 'SATISFACTORY'
-      : get('overallResult') === 'unsatisfactory' ? 'UNSATISFACTORY' : '',
+    overall_result_display:
+      get('overallResult') === 'satisfactory'
+        ? 'SATISFACTORY'
+        : get('overallResult') === 'unsatisfactory'
+          ? 'UNSATISFACTORY'
+          : '',
     is_satisfactory: get('overallResult') === 'satisfactory',
 
     // ============================================
@@ -381,13 +394,14 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       logo: get('companyLogo'),
       accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
       registration_scheme_logo: get('registrationSchemeLogo'),
-      registration_scheme: get('registrationScheme')
+      registration_scheme: get('registrationScheme'),
     },
 
     // ============================================
     // DECLARATION TEXT (for PDF template)
     // ============================================
-    declaration_text: 'I/We certify that the emergency lighting system has been inspected and tested in accordance with BS 5266-1:2016, BS EN 50172:2004, and BS EN 1838:2013, and the results are as recorded in this certificate.',
+    declaration_text:
+      'I/We certify that the emergency lighting system has been inspected and tested in accordance with BS 5266-1:2016, BS EN 50172:2004, and BS EN 1838:2013, and the results are as recorded in this certificate.',
 
     // ============================================
     // FLAT COPIES FOR DIRECT TEMPLATE ACCESS
@@ -442,7 +456,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
     registration_scheme_logo: get('registrationSchemeLogo'),
-    registration_scheme: get('registrationScheme')
+    registration_scheme: get('registrationScheme'),
   };
 };
 
@@ -452,126 +466,192 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
 
 function formatTestResult(result: string | undefined): string {
   switch (result) {
-    case 'pass': return 'PASS';
-    case 'fail': return 'FAIL';
-    case 'na': return 'N/A';
-    default: return '';
+    case 'pass':
+      return 'PASS';
+    case 'fail':
+      return 'FAIL';
+    case 'na':
+      return 'N/A';
+    default:
+      return '';
   }
 }
 
 function formatTestType(testType: string): string {
   switch (testType) {
-    case 'commissioning': return 'Commissioning';
-    case 'monthly': return 'Monthly Functional Test';
-    case 'annual': return 'Annual Duration Test';
-    default: return testType || '';
+    case 'commissioning':
+      return 'Commissioning';
+    case 'monthly':
+      return 'Monthly Functional Test';
+    case 'annual':
+      return 'Annual Duration Test';
+    default:
+      return testType || '';
   }
 }
 
 function formatSystemType(systemType: string): string {
   switch (systemType) {
-    case 'maintained': return 'Maintained';
-    case 'non-maintained': return 'Non-Maintained';
-    case 'combined': return 'Combined (Sustained)';
-    default: return systemType || '';
+    case 'maintained':
+      return 'Maintained';
+    case 'non-maintained':
+      return 'Non-Maintained';
+    case 'combined':
+      return 'Combined (Sustained)';
+    default:
+      return systemType || '';
   }
 }
 
 function formatLuminaireType(type: string): string {
   switch (type) {
-    case 'bulkhead': return 'Bulkhead';
-    case 'twin-spot': return 'Twin Spot';
-    case 'recessed': return 'Recessed';
-    case 'surface': return 'Surface Mount';
-    case 'downlight': return 'Downlight';
-    case 'exit-sign': return 'Exit Sign';
-    case 'exit-box': return 'Exit Box';
-    case 'strip': return 'Strip Light';
-    default: return type || '';
+    case 'bulkhead':
+      return 'Bulkhead';
+    case 'twin-spot':
+      return 'Twin Spot';
+    case 'recessed':
+      return 'Recessed';
+    case 'surface':
+      return 'Surface Mount';
+    case 'downlight':
+      return 'Downlight';
+    case 'exit-sign':
+      return 'Exit Sign';
+    case 'exit-box':
+      return 'Exit Box';
+    case 'strip':
+      return 'Strip Light';
+    default:
+      return type || '';
   }
 }
 
 function formatCategory(category: string): string {
   switch (category) {
-    case 'escape-route': return 'Escape Route';
-    case 'open-area': return 'Open Area';
-    case 'high-risk': return 'High Risk';
-    case 'standby': return 'Standby';
-    default: return category || '';
+    case 'escape-route':
+      return 'Escape Route';
+    case 'open-area':
+      return 'Open Area';
+    case 'high-risk':
+      return 'High Risk';
+    case 'standby':
+      return 'Standby';
+    default:
+      return category || '';
   }
 }
 
 function formatBatteryType(batteryType: string): string {
   switch (batteryType) {
-    case 'NiCd': return 'NiCd (Nickel Cadmium)';
-    case 'NiMH': return 'NiMH (Nickel Metal Hydride)';
-    case 'LiFePO4': return 'LiFePO4 (Lithium)';
-    case 'Li-ion': return 'Li-ion';
-    case 'central': return 'Central Battery';
-    default: return batteryType || '';
+    case 'NiCd':
+      return 'NiCd (Nickel Cadmium)';
+    case 'NiMH':
+      return 'NiMH (Nickel Metal Hydride)';
+    case 'LiFePO4':
+      return 'LiFePO4 (Lithium)';
+    case 'Li-ion':
+      return 'Li-ion';
+    case 'central':
+      return 'Central Battery';
+    default:
+      return batteryType || '';
   }
 }
 
 function formatBatteryCondition(condition: string): string {
   switch (condition.toLowerCase()) {
-    case 'good': return 'Good';
-    case 'fair': return 'Fair';
-    case 'poor': return 'Poor';
-    default: return condition || '';
+    case 'good':
+      return 'Good';
+    case 'fair':
+      return 'Fair';
+    case 'poor':
+      return 'Poor';
+    default:
+      return condition || '';
   }
 }
 
 function formatPriority(priority: string): string {
   switch (priority) {
-    case 'immediate': return 'Immediate';
-    case 'within-7-days': return 'Within 7 Days';
-    case 'within-28-days': return 'Within 28 Days';
-    case 'recommendation': return 'Recommendation';
-    default: return priority || '';
+    case 'immediate':
+      return 'Immediate';
+    case 'within-7-days':
+      return 'Within 7 Days';
+    case 'within-28-days':
+      return 'Within 28 Days';
+    case 'recommendation':
+      return 'Recommendation';
+    default:
+      return priority || '';
   }
 }
 
 function formatPremisesType(premisesType: string): string {
   switch (premisesType) {
-    case 'office': return 'Office';
-    case 'retail': return 'Retail';
-    case 'industrial': return 'Industrial';
-    case 'educational': return 'Educational';
-    case 'healthcare': return 'Healthcare';
-    case 'residential-communal': return 'Residential Communal';
-    case 'hotel': return 'Hotel/Hospitality';
-    case 'entertainment': return 'Entertainment';
-    case 'warehouse': return 'Warehouse';
-    default: return premisesType || '';
+    case 'office':
+      return 'Office';
+    case 'retail':
+      return 'Retail';
+    case 'industrial':
+      return 'Industrial';
+    case 'educational':
+      return 'Educational';
+    case 'healthcare':
+      return 'Healthcare';
+    case 'residential-communal':
+      return 'Residential Communal';
+    case 'hotel':
+      return 'Hotel/Hospitality';
+    case 'entertainment':
+      return 'Entertainment';
+    case 'warehouse':
+      return 'Warehouse';
+    default:
+      return premisesType || '';
   }
 }
 
 function formatOccupancy(occupancy: string): string {
   switch (occupancy) {
-    case 'sleeping': return 'Sleeping Risk';
-    case 'high': return 'High Risk';
-    case 'normal': return 'Normal Risk';
-    case 'low': return 'Low Risk';
-    default: return occupancy || '';
+    case 'sleeping':
+      return 'Sleeping Risk';
+    case 'high':
+      return 'High Risk';
+    case 'normal':
+      return 'Normal Risk';
+    case 'low':
+      return 'Low Risk';
+    default:
+      return occupancy || '';
   }
 }
 
 function formatPhotoCategory(category: string): string {
   switch (category) {
-    case 'installation': return 'Installation Overview';
-    case 'luminaire': return 'Luminaire';
-    case 'defect': return 'Defect Evidence';
-    case 'central-battery': return 'Central Battery';
-    case 'exit-sign': return 'Exit Sign';
-    default: return category || '';
+    case 'installation':
+      return 'Installation Overview';
+    case 'luminaire':
+      return 'Luminaire';
+    case 'defect':
+      return 'Defect Evidence';
+    case 'central-battery':
+      return 'Central Battery';
+    case 'exit-sign':
+      return 'Exit Sign';
+    default:
+      return category || '';
   }
 }
 
 function formatLuxCategory(category: string): string {
   switch (category) {
-    case 'escape-route': return 'Escape Route (≥1 lux)';
-    case 'open-area': return 'Open Area (≥0.5 lux)';
-    case 'high-risk': return 'High Risk (≥15 lux)';
-    default: return category || '';
+    case 'escape-route':
+      return 'Escape Route (≥1 lux)';
+    case 'open-area':
+      return 'Open Area (≥0.5 lux)';
+    case 'high-risk':
+      return 'High Risk (≥15 lux)';
+    default:
+      return category || '';
   }
 }

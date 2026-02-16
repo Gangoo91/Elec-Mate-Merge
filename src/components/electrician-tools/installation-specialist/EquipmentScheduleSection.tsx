@@ -1,7 +1,12 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { Wrench, Zap, HardHat, Package, CheckCircle2, AlertCircle } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { Wrench, Zap, HardHat, Package, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface EquipmentItem {
   name: string;
@@ -19,19 +24,22 @@ const categoryIcons: Record<string, any> = {
   'Test Equipment': Wrench,
   'Safety Equipment': HardHat,
   'Hand Tools': Wrench,
-  'Materials': Package
+  Materials: Package,
 };
 
 export const EquipmentScheduleSection = ({ equipment }: EquipmentScheduleSectionProps) => {
   if (!equipment || equipment.length === 0) return null;
 
   // Categorize equipment
-  const categorized = equipment.reduce((acc, item) => {
-    const category = item.category || 'Other';
-    if (!acc[category]) acc[category] = [];
-    acc[category].push(item);
-    return acc;
-  }, {} as Record<string, EquipmentItem[]>);
+  const categorized = equipment.reduce(
+    (acc, item) => {
+      const category = item.category || 'Other';
+      if (!acc[category]) acc[category] = [];
+      acc[category].push(item);
+      return acc;
+    },
+    {} as Record<string, EquipmentItem[]>
+  );
 
   return (
     <Card className="p-4 sm:p-6">
@@ -54,7 +62,9 @@ export const EquipmentScheduleSection = ({ equipment }: EquipmentScheduleSection
                 <div className="flex items-center gap-2">
                   <Icon className="h-4 w-4 text-primary" />
                   <span className="font-semibold text-sm">{category}</span>
-                  <Badge variant="outline" className="ml-auto mr-8">{items.length}</Badge>
+                  <Badge variant="outline" className="ml-auto mr-8">
+                    {items.length}
+                  </Badge>
                 </div>
               </MobileAccordionTrigger>
               <MobileAccordionContent>
@@ -73,7 +83,10 @@ export const EquipmentScheduleSection = ({ equipment }: EquipmentScheduleSection
                               </Badge>
                             )}
                             {item.inspectionRequired && (
-                              <Badge variant="outline" className="text-xs bg-warning/5 text-warning border-warning/40">
+                              <Badge
+                                variant="outline"
+                                className="text-xs bg-warning/5 text-warning border-warning/40"
+                              >
                                 <AlertCircle className="h-3 w-3 mr-1" />
                                 Inspection Required
                               </Badge>

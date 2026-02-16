@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Check, CheckCheck, MoreVertical, Reply, Pencil, Trash2 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Check, CheckCheck, MoreVertical, Reply, Pencil, Trash2 } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import type { Message, MessageReaction } from "@/services/conversationService";
-import { MessageReactions, ReactionBar } from "@/components/messaging/MessageReactions";
-import { ReplyQuote, ReplyToMessage } from "@/components/messaging/MessageReply";
-import { TextWithLinks, AutoLinkPreview } from "@/components/messaging/LinkPreview";
-import { FileAttachment } from "@/components/messaging/FileAttachment";
+} from '@/components/ui/dropdown-menu';
+import type { Message, MessageReaction } from '@/services/conversationService';
+import { MessageReactions, ReactionBar } from '@/components/messaging/MessageReactions';
+import { ReplyQuote, ReplyToMessage } from '@/components/messaging/MessageReply';
+import { TextWithLinks, AutoLinkPreview } from '@/components/messaging/LinkPreview';
+import { FileAttachment } from '@/components/messaging/FileAttachment';
 
 interface MessageBubbleProps {
   message: Message;
@@ -57,7 +57,7 @@ export function MessageBubble({
   const isDeleted = !!message.deleted_at;
 
   // Convert reactions to the format expected by MessageReactions
-  const formattedReactions = reactions.map(r => ({
+  const formattedReactions = reactions.map((r) => ({
     id: r.id,
     emoji: r.emoji,
     userId: r.user_id,
@@ -80,9 +80,10 @@ export function MessageBubble({
         <div
           className={`
             rounded-2xl px-4 py-2.5
-            ${isOwn
-              ? 'bg-elec-yellow text-black rounded-br-md'
-              : 'bg-elec-gray text-foreground rounded-bl-md'
+            ${
+              isOwn
+                ? 'bg-elec-yellow text-black rounded-br-md'
+                : 'bg-elec-gray text-foreground rounded-bl-md'
             }
             ${isDeleted ? 'opacity-60 italic' : ''}
           `}
@@ -131,7 +132,9 @@ export function MessageBubble({
           {!isDeleted && <AutoLinkPreview text={message.content} maxPreviews={1} />}
 
           {/* Timestamp and read receipts */}
-          <div className={`flex items-center gap-1 mt-1 ${isOwn ? 'justify-end' : 'justify-start'}`}>
+          <div
+            className={`flex items-center gap-1 mt-1 ${isOwn ? 'justify-end' : 'justify-start'}`}
+          >
             {isEdited && !isDeleted && (
               <span className={`text-xs ${isOwn ? 'text-black/50' : 'text-muted-foreground'}`}>
                 edited
@@ -168,7 +171,9 @@ export function MessageBubble({
 
         {/* Actions dropdown */}
         {showActions && !isDeleted && (
-          <div className={`absolute top-1 ${isOwn ? 'left-0 -translate-x-full pr-1' : 'right-0 translate-x-full pl-1'}`}>
+          <div
+            className={`absolute top-1 ${isOwn ? 'left-0 -translate-x-full pr-1' : 'right-0 translate-x-full pl-1'}`}
+          >
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-9 w-9 sm:h-6 sm:w-6">

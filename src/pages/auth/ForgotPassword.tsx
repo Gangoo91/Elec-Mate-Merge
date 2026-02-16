@@ -67,9 +67,8 @@ const ForgotPassword = () => {
             <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-white">Reset password</h1>
             <p className="text-gray-400 text-sm sm:text-base">
               {isSuccess
-                ? "Check your email for the reset link"
-                : "Enter your email and we'll send you a reset link"
-              }
+                ? 'Check your email for the reset link'
+                : "Enter your email and we'll send you a reset link"}
             </p>
           </div>
 
@@ -109,7 +108,9 @@ const ForgotPassword = () => {
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium text-gray-300">Email address</Label>
+                      <Label htmlFor="email" className="text-sm font-medium text-gray-300">
+                        Email address
+                      </Label>
                       <div className="relative group">
                         <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400 pointer-events-none" />
                         <Input

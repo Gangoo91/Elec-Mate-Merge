@@ -18,7 +18,8 @@ export const ExpiringCertificatesCard = () => {
     .slice(0, 5);
 
   const handleViewAll = () => navigate('/certificate-expiry');
-  const handleReminderClick = (reportId: string) => navigate(`/certificate-expiry?highlight=${reportId}`);
+  const handleReminderClick = (reportId: string) =>
+    navigate(`/certificate-expiry?highlight=${reportId}`);
 
   if (isLoading) {
     return (
@@ -51,13 +52,17 @@ export const ExpiringCertificatesCard = () => {
     );
   }
 
-  const expiredCount = sortedReminders.filter(r => getExpiryUrgency(r.expiry_date) === 'expired').length;
+  const expiredCount = sortedReminders.filter(
+    (r) => getExpiryUrgency(r.expiry_date) === 'expired'
+  ).length;
 
   return (
-    <div className={cn(
-      "bg-[#242428] border rounded-2xl overflow-hidden",
-      expiredCount > 0 ? "border-red-500/30" : "border-elec-yellow/30"
-    )}>
+    <div
+      className={cn(
+        'bg-[#242428] border rounded-2xl overflow-hidden',
+        expiredCount > 0 ? 'border-red-500/30' : 'border-elec-yellow/30'
+      )}
+    >
       {/* Header */}
       <div className="p-4 pb-3">
         <div className="flex items-center justify-between">
@@ -98,22 +103,36 @@ export const ExpiringCertificatesCard = () => {
                 exit={{ opacity: 0 }}
                 transition={{ delay: index * 0.03 }}
                 className={cn(
-                  "flex items-center gap-3 p-3 rounded-xl cursor-pointer",
-                  "active:scale-[0.98] transition-all touch-manipulation",
-                  isExpired ? 'bg-red-500/10 hover:bg-red-500/15' :
-                  isCritical ? 'bg-orange-500/10 hover:bg-orange-500/15' :
-                  'bg-black/40 hover:bg-black/50'
+                  'flex items-center gap-3 p-3 rounded-xl cursor-pointer',
+                  'active:scale-[0.98] transition-all touch-manipulation',
+                  isExpired
+                    ? 'bg-red-500/10 hover:bg-red-500/15'
+                    : isCritical
+                      ? 'bg-orange-500/10 hover:bg-orange-500/15'
+                      : 'bg-black/40 hover:bg-black/50'
                 )}
                 onClick={() => handleReminderClick(reminder.report_id)}
               >
-                <div className={cn(
-                  "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
-                  isExpired ? 'bg-red-500/15' : isCritical ? 'bg-orange-500/15' : 'bg-elec-yellow/15'
-                )}>
-                  <Calendar className={cn(
-                    "h-4 w-4",
-                    isExpired ? 'text-red-400' : isCritical ? 'text-orange-400' : 'text-elec-yellow'
-                  )} />
+                <div
+                  className={cn(
+                    'flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center',
+                    isExpired
+                      ? 'bg-red-500/15'
+                      : isCritical
+                        ? 'bg-orange-500/15'
+                        : 'bg-elec-yellow/15'
+                  )}
+                >
+                  <Calendar
+                    className={cn(
+                      'h-4 w-4',
+                      isExpired
+                        ? 'text-red-400'
+                        : isCritical
+                          ? 'text-orange-400'
+                          : 'text-elec-yellow'
+                    )}
+                  />
                 </div>
 
                 <div className="flex-1 min-w-0">
@@ -121,25 +140,37 @@ export const ExpiringCertificatesCard = () => {
                     {reminder.customer?.name || reminder.client_name || 'Unknown Client'}
                   </h4>
                   <div className="flex items-center gap-2 text-[11px] text-white/40 mt-0.5">
-                    <span className="truncate">{reminder.installation_address || 'No address'}</span>
+                    <span className="truncate">
+                      {reminder.installation_address || 'No address'}
+                    </span>
                     <span>•</span>
                     <span>{format(new Date(reminder.expiry_date), 'dd MMM')}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className={cn(
-                    'text-[10px] font-medium px-2 py-1 rounded-lg',
-                    isExpired ? 'bg-red-500/20 text-red-400' :
-                    isCritical ? 'bg-orange-500/20 text-orange-400' :
-                    'bg-amber-500/20 text-amber-400'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-[10px] font-medium px-2 py-1 rounded-lg',
+                      isExpired
+                        ? 'bg-red-500/20 text-red-400'
+                        : isCritical
+                          ? 'bg-orange-500/20 text-orange-400'
+                          : 'bg-amber-500/20 text-amber-400'
+                    )}
+                  >
                     {isExpired ? 'Expired' : statusText}
                   </span>
-                  <ChevronRight className={cn(
-                    "h-5 w-5 flex-shrink-0",
-                    isExpired ? 'text-red-400/40' : isCritical ? 'text-orange-400/40' : 'text-elec-yellow/40'
-                  )} />
+                  <ChevronRight
+                    className={cn(
+                      'h-5 w-5 flex-shrink-0',
+                      isExpired
+                        ? 'text-red-400/40'
+                        : isCritical
+                          ? 'text-orange-400/40'
+                          : 'text-elec-yellow/40'
+                    )}
+                  />
                 </div>
               </motion.div>
             );

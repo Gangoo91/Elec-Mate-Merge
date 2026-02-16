@@ -86,16 +86,12 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity; index: number }> = (
       {/* Header: Icon + Title + Rate */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <div className={cn("p-2.5 rounded-xl flex-shrink-0", styles.bg)}>
-            <Icon className={cn("h-5 w-5", styles.icon)} />
+          <div className={cn('p-2.5 rounded-xl flex-shrink-0', styles.bg)}>
+            <Icon className={cn('h-5 w-5', styles.icon)} />
           </div>
           <div className="min-w-0">
-            <h4 className="font-semibold text-white text-[15px] leading-tight">
-              {title}
-            </h4>
-            <p className="text-[13px] text-white/50 line-clamp-1 mt-0.5">
-              {description}
-            </p>
+            <h4 className="font-semibold text-white text-[15px] leading-tight">{title}</h4>
+            <p className="text-[13px] text-white/50 line-clamp-1 mt-0.5">{description}</p>
           </div>
         </div>
       </div>
@@ -104,24 +100,18 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity; index: number }> = (
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-3 border-t border-white/[0.06]">
         {/* Rate - Primary */}
         <div className="flex items-center gap-1.5">
-          <span className={cn("font-bold text-base", styles.rate)}>
-            {rate}
-          </span>
+          <span className={cn('font-bold text-base', styles.rate)}>{rate}</span>
         </div>
 
         {/* Growth */}
         <div className="flex items-center gap-1.5">
-          <TrendingUp className={cn("h-3.5 w-3.5", styles.growth)} />
-          <span className="text-xs text-white/50">
-            {growth.replace('Growth: ', '')}
-          </span>
+          <TrendingUp className={cn('h-3.5 w-3.5', styles.growth)} />
+          <span className="text-xs text-white/50">{growth.replace('Growth: ', '')}</span>
         </div>
       </div>
 
       {/* Requirement */}
-      <div className="mt-2.5 text-xs text-white/40">
-        {requirement.replace('Required: ', '')}
-      </div>
+      <div className="mt-2.5 text-xs text-white/40">{requirement.replace('Required: ', '')}</div>
     </motion.div>
   );
 };
@@ -131,9 +121,7 @@ export const OpportunityStack: React.FC<OpportunityStackProps> = ({
   initialCount = 3,
 }) => {
   const [showAll, setShowAll] = useState(false);
-  const displayedOpportunities = showAll
-    ? opportunities
-    : opportunities.slice(0, initialCount);
+  const displayedOpportunities = showAll ? opportunities : opportunities.slice(0, initialCount);
   const hasMore = opportunities.length > initialCount;
 
   return (

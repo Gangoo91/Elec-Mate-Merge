@@ -1,51 +1,51 @@
-import { ArrowLeft, Square, Shield, Zap, Star, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Square, Shield, Zap, Star, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule5Section3 = () => {
   useSEO(
-    "Section 5.3: Safety Circuits and Interlocks - MOET Module 5",
-    "Emergency stops, interlocking devices, safety relays and functional safety principles"
+    'Section 5.3: Safety Circuits and Interlocks - MOET Module 5',
+    'Emergency stops, interlocking devices, safety relays and functional safety principles'
   );
 
   const subsections = [
     {
-      number: "5.3.1",
-      title: "Emergency Stop Circuits",
-      description: "E-stop requirements, wiring methods and testing procedures",
+      number: '5.3.1',
+      title: 'Emergency Stop Circuits',
+      description: 'E-stop requirements, wiring methods and testing procedures',
       icon: Square,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section3-1"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section3-1',
     },
     {
-      number: "5.3.2",
-      title: "Guarding and Interlocking Devices",
-      description: "Safety switches, light curtains and guard interlocking systems",
+      number: '5.3.2',
+      title: 'Guarding and Interlocking Devices',
+      description: 'Safety switches, light curtains and guard interlocking systems',
       icon: Shield,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section3-2"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section3-2',
     },
     {
-      number: "5.3.3",
-      title: "Safety Relays and Controllers",
-      description: "Safety relay modules, monitoring relays and safety controllers",
+      number: '5.3.3',
+      title: 'Safety Relays and Controllers',
+      description: 'Safety relay modules, monitoring relays and safety controllers',
       icon: Zap,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section3-3"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section3-3',
     },
     {
-      number: "5.3.4",
-      title: "Category and Performance Levels (ISO 13849)",
-      description: "Safety categories, performance levels and risk assessment",
+      number: '5.3.4',
+      title: 'Category and Performance Levels (ISO 13849)',
+      description: 'Safety categories, performance levels and risk assessment',
       icon: Star,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section3-4"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section3-4',
     },
     {
-      number: "5.3.5",
-      title: "Functional Safety Principles",
-      description: "SIL levels, safety lifecycle and functional safety management",
+      number: '5.3.5',
+      title: 'Functional Safety Principles',
+      description: 'SIL levels, safety lifecycle and functional safety management',
       icon: AlertTriangle,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section3-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module5-section3-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule5Section3 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5

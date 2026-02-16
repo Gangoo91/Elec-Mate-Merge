@@ -15,7 +15,7 @@ const SmartFieldDependencies: React.FC<SmartFieldDependenciesProps> = ({ formDat
     // NOTE: This only auto-fills form fields, it does NOT filter the inspection checklist
     if (formData.description && formData.installationType) {
       const smartDefaults = updateSmartFieldDependencies(formData.description);
-      
+
       if (smartDefaults) {
         // Only update fields that are empty to avoid overriding user choices
         Object.entries(smartDefaults).forEach(([field, value]) => {

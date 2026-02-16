@@ -8,12 +8,12 @@ interface InlineProjectTypeSelectorProps {
 
 export const InlineProjectTypeSelector = ({
   selectedType,
-  onChange
+  onChange,
 }: InlineProjectTypeSelectorProps) => {
   const types = [
     { value: 'domestic' as const, icon: Home, label: 'Domestic' },
     { value: 'commercial' as const, icon: Building2, label: 'Commercial' },
-    { value: 'industrial' as const, icon: Factory, label: 'Industrial' }
+    { value: 'industrial' as const, icon: Factory, label: 'Industrial' },
   ];
 
   return (
@@ -26,10 +26,10 @@ export const InlineProjectTypeSelector = ({
             type="button"
             onClick={() => onChange(value)}
             className={cn(
-              "flex flex-col items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all touch-manipulation h-20 sm:h-24",
+              'flex flex-col items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all touch-manipulation h-20 sm:h-24',
               selectedType === value
-                ? "bg-gradient-to-br from-pink-400 to-pink-600 border-pink-400 text-foreground"
-                : "border-pink-400/30 hover:border-pink-400/50 hover:bg-pink-400/5"
+                ? 'bg-gradient-to-br from-pink-400 to-pink-600 border-pink-400 text-foreground'
+                : 'border-pink-400/30 hover:border-pink-400/50 hover:bg-pink-400/5'
             )}
             aria-label={label}
           >

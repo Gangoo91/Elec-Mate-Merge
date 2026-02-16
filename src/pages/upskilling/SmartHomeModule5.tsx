@@ -7,40 +7,40 @@ const SmartHomeModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Smart Locks and Keypads",
+      title: 'Smart Locks and Keypads',
       icon: Lock,
-      description: "Installing and configuring smart access control systems"
+      description: 'Installing and configuring smart access control systems',
     },
     {
       id: 2,
-      title: "CCTV Types, Resolution, and Storage Options",
+      title: 'CCTV Types, Resolution, and Storage Options',
       icon: Camera,
-      description: "Selecting and installing smart surveillance systems"
+      description: 'Selecting and installing smart surveillance systems',
     },
     {
       id: 3,
-      title: "Door/Window Contact Sensors and PIR",
+      title: 'Door/Window Contact Sensors and PIR',
       icon: Eye,
-      description: "Installing perimeter detection and motion sensors"
+      description: 'Installing perimeter detection and motion sensors',
     },
     {
       id: 4,
-      title: "Remote Access and Alerts",
+      title: 'Remote Access and Alerts',
       icon: Smartphone,
-      description: "Setting up mobile notifications and remote monitoring"
+      description: 'Setting up mobile notifications and remote monitoring',
     },
     {
       id: 5,
-      title: "Linking with Lighting and Emergency Scenes",
+      title: 'Linking with Lighting and Emergency Scenes',
       icon: Lightbulb,
-      description: "Integrating security systems with lighting automation"
+      description: 'Integrating security systems with lighting automation',
     },
     {
       id: 6,
-      title: "Network Security and User Privacy",
+      title: 'Network Security and User Privacy',
       icon: Shield,
-      description: "Securing smart home networks and protecting user data"
-    }
+      description: 'Securing smart home networks and protecting user data',
+    },
   ];
 
   return (

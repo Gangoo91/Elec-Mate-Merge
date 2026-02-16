@@ -15,7 +15,10 @@ export const ResultsDocumentationScenario = () => {
           <div className="bg-red-900/20 border border-red-500/30 p-4 rounded-md">
             <h4 className="text-red-400 font-semibold mb-2">⚠️ The Problem</h4>
             <p className="text-foreground text-sm sm:text-base leading-relaxed">
-              You record "OK" in the Zs field on a certificate instead of the actual value of 2.1Ω. Later, a fatal electric shock occurs and during the legal review, experts discover the Zs value exceeded the 1.44Ω maximum for the 32A Type B MCB. You face prosecution for false certification.
+              You record "OK" in the Zs field on a certificate instead of the actual value of 2.1Ω.
+              Later, a fatal electric shock occurs and during the legal review, experts discover the
+              Zs value exceeded the 1.44Ω maximum for the 32A Type B MCB. You face prosecution for
+              false certification.
             </p>
           </div>
 
@@ -25,7 +28,9 @@ export const ResultsDocumentationScenario = () => {
               The Solution
             </h4>
             <p className="text-foreground text-sm sm:text-base leading-relaxed">
-              "OK" is unacceptable—always record actual numbers. If you had recorded 2.1Ω, it would have been clear that the result exceeded limits and corrective action was needed. Accurate documentation protects both public safety and your professional reputation.
+              "OK" is unacceptable—always record actual numbers. If you had recorded 2.1Ω, it would
+              have been clear that the result exceeded limits and corrective action was needed.
+              Accurate documentation protects both public safety and your professional reputation.
             </p>
           </div>
 

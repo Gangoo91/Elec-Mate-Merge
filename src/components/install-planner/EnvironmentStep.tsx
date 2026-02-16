@@ -1,9 +1,8 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { InstallPlanData } from "./types";
-import { Thermometer, Shield, Zap, AlertTriangle, Info } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import EnvironmentalContextManager from "./EnvironmentalContextManager";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { InstallPlanData } from './types';
+import { Thermometer, Shield, Zap, AlertTriangle, Info } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import EnvironmentalContextManager from './EnvironmentalContextManager';
 
 interface EnvironmentStepProps {
   planData: InstallPlanData;
@@ -14,18 +13,18 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
   // Initialize environmental settings if not present
   const environmentalSettings = planData.environmentalSettings || {
     ambientTemperature: planData.ambientTemperature || 30,
-    environmentalConditions: planData.environmentalConditions || "Indoor dry locations",
-    earthingSystem: planData.earthingSystem || "TN-S",
+    environmentalConditions: planData.environmentalConditions || 'Indoor dry locations',
+    earthingSystem: planData.earthingSystem || 'TN-S',
     ze: planData.ze || 0.35,
     globalGroupingFactor: planData.groupingFactor || 1,
     specialRequirements: planData.specialRequirements || [],
-    installationZones: []
+    installationZones: [],
   };
 
   const circuits = planData.circuits || [];
 
   const handleEnvironmentalSettingsUpdate = (settings: typeof environmentalSettings) => {
-    updatePlanData({ 
+    updatePlanData({
       environmentalSettings: settings,
       // Maintain backward compatibility
       ambientTemperature: settings.ambientTemperature,
@@ -33,7 +32,7 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
       earthingSystem: settings.earthingSystem,
       ze: settings.ze,
       groupingFactor: settings.globalGroupingFactor,
-      specialRequirements: settings.specialRequirements
+      specialRequirements: settings.specialRequirements,
     });
   };
 
@@ -43,15 +42,15 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
 
   // Simplified environmental warnings that actually matter
   const hasHighTemperature = environmentalSettings.ambientTemperature > 40;
-  const hasTTSystem = environmentalSettings.earthingSystem === "TT";
-  const hasFireRequirement = environmentalSettings.specialRequirements.includes("Fire escape routes");
-  const hasWetArea = environmentalSettings.specialRequirements.includes("Wet/damp areas");
+  const hasTTSystem = environmentalSettings.earthingSystem === 'TT';
+  const hasFireRequirement =
+    environmentalSettings.specialRequirements.includes('Fire escape routes');
+  const hasWetArea = environmentalSettings.specialRequirements.includes('Wet/damp areas');
 
-  if (planData.designMode === "single") {
+  if (planData.designMode === 'single') {
     // For single circuit mode, show simplified environmental controls
     return (
       <div className="space-y-6">
-
         <EnvironmentalContextManager
           environmentalSettings={environmentalSettings}
           circuits={[]}
@@ -64,7 +63,8 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           <Alert className="bg-red-500/10 border-red-500/30">
             <AlertTriangle className="h-4 w-4 text-red-300" />
             <AlertDescription className="text-red-200">
-              <strong>High Temperature Warning:</strong> Ambient temperature above 40°C requires special consideration for cable selection and derating factors.
+              <strong>High Temperature Warning:</strong> Ambient temperature above 40°C requires
+              special consideration for cable selection and derating factors.
             </AlertDescription>
           </Alert>
         )}
@@ -73,7 +73,8 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           <Alert className="bg-amber-500/10 border-amber-500/30">
             <Info className="h-4 w-4 text-amber-300" />
             <AlertDescription className="text-amber-200">
-              <strong>TT System:</strong> Additional earth electrode required. RCD protection mandatory for all circuits.
+              <strong>TT System:</strong> Additional earth electrode required. RCD protection
+              mandatory for all circuits.
             </AlertDescription>
           </Alert>
         )}
@@ -84,7 +85,6 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
   // Multi-circuit mode with full environmental management
   return (
     <div className="space-y-6">
-
       <EnvironmentalContextManager
         environmentalSettings={environmentalSettings}
         circuits={circuits}
@@ -98,8 +98,9 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           <Alert className="bg-red-500/10 border-red-500/30">
             <AlertTriangle className="h-4 w-4 text-red-300" />
             <AlertDescription className="text-red-200">
-              <strong>High Temperature Warning:</strong> Global ambient temperature above 40°C affects all circuits. 
-              Consider creating cooler installation zones for sensitive circuits.
+              <strong>High Temperature Warning:</strong> Global ambient temperature above 40°C
+              affects all circuits. Consider creating cooler installation zones for sensitive
+              circuits.
             </AlertDescription>
           </Alert>
         )}
@@ -108,8 +109,9 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           <Alert className="bg-amber-500/10 border-amber-500/30">
             <Info className="h-4 w-4 text-amber-300" />
             <AlertDescription className="text-amber-200">
-              <strong>TT System:</strong> All {circuits.filter(c => c.enabled).length} active circuits require RCD protection. 
-              Earth electrode and bonding requirements apply to entire installation.
+              <strong>TT System:</strong> All {circuits.filter((c) => c.enabled).length} active
+              circuits require RCD protection. Earth electrode and bonding requirements apply to
+              entire installation.
             </AlertDescription>
           </Alert>
         )}
@@ -118,8 +120,8 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           <Alert className="bg-orange-500/10 border-orange-500/30">
             <Info className="h-4 w-4 text-orange-300" />
             <AlertDescription className="text-orange-200">
-              <strong>Fire Escape Routes:</strong> XLPE-LSOH cables required for escape route circuits. 
-              Enhanced fire performance and low smoke emission mandatory.
+              <strong>Fire Escape Routes:</strong> XLPE-LSOH cables required for escape route
+              circuits. Enhanced fire performance and low smoke emission mandatory.
             </AlertDescription>
           </Alert>
         )}
@@ -128,21 +130,23 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           <Alert className="bg-blue-500/10 border-blue-500/30">
             <AlertTriangle className="h-4 w-4 text-blue-300" />
             <AlertDescription className="text-blue-200">
-              <strong>Wet/Damp Areas:</strong> IP-rated equipment and RCD protection required. 
+              <strong>Wet/Damp Areas:</strong> IP-rated equipment and RCD protection required.
               Consider special zones and additional earth bonding requirements.
             </AlertDescription>
           </Alert>
         )}
 
-        {environmentalSettings.installationZones && environmentalSettings.installationZones.length > 1 && (
-          <Alert className="bg-green-500/10 border-green-500/30">
-            <Info className="h-4 w-4 text-green-300" />
-            <AlertDescription className="text-green-200">
-              <strong>Multi-Zone Installation:</strong> You have defined {environmentalSettings.installationZones.length} installation zones. 
-              Each zone's environmental conditions will be applied to its assigned circuits during analysis.
-            </AlertDescription>
-          </Alert>
-        )}
+        {environmentalSettings.installationZones &&
+          environmentalSettings.installationZones.length > 1 && (
+            <Alert className="bg-green-500/10 border-green-500/30">
+              <Info className="h-4 w-4 text-green-300" />
+              <AlertDescription className="text-green-200">
+                <strong>Multi-Zone Installation:</strong> You have defined{' '}
+                {environmentalSettings.installationZones.length} installation zones. Each zone's
+                environmental conditions will be applied to its assigned circuits during analysis.
+              </AlertDescription>
+            </Alert>
+          )}
       </div>
 
       {/* Installation Summary */}
@@ -157,19 +161,27 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           <div className="grid grid-cols-2 gap-4 text-center">
             <div className="space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wide">Temp</div>
-              <div className="text-xl font-bold text-elec-yellow">{environmentalSettings.ambientTemperature}°C</div>
+              <div className="text-xl font-bold text-elec-yellow">
+                {environmentalSettings.ambientTemperature}°C
+              </div>
             </div>
             <div className="space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wide">Earthing</div>
-              <div className="text-xl font-bold text-blue-400">{environmentalSettings.earthingSystem}</div>
+              <div className="text-xl font-bold text-blue-400">
+                {environmentalSettings.earthingSystem}
+              </div>
             </div>
             <div className="space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wide">Zones</div>
-              <div className="text-xl font-bold text-green-400">{environmentalSettings.installationZones?.length || 0}</div>
+              <div className="text-xl font-bold text-green-400">
+                {environmentalSettings.installationZones?.length || 0}
+              </div>
             </div>
             <div className="space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wide">Circuits</div>
-              <div className="text-xl font-bold text-purple-400">{circuits.filter(c => c.enabled).length}</div>
+              <div className="text-xl font-bold text-purple-400">
+                {circuits.filter((c) => c.enabled).length}
+              </div>
             </div>
           </div>
         </CardContent>

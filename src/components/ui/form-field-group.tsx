@@ -1,23 +1,23 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Label } from "@/components/ui/label"
-import { AlertCircle } from "lucide-react"
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Label } from '@/components/ui/label';
+import { AlertCircle } from 'lucide-react';
 
 interface FormFieldGroupProps {
   /** Field label text */
-  label: string
+  label: string;
   /** Unique identifier for the field */
-  htmlFor?: string
+  htmlFor?: string;
   /** Optional description text below the label */
-  description?: string
+  description?: string;
   /** Error message to display */
-  error?: string
+  error?: string;
   /** Whether the field is required */
-  required?: boolean
+  required?: boolean;
   /** The form input element(s) */
-  children: React.ReactNode
+  children: React.ReactNode;
   /** Additional className for the wrapper */
-  className?: string
+  className?: string;
 }
 
 /**
@@ -40,15 +40,12 @@ interface FormFieldGroupProps {
 export const FormFieldGroup = React.forwardRef<HTMLDivElement, FormFieldGroupProps>(
   ({ label, htmlFor, description, error, required, children, className }, ref) => {
     return (
-      <div ref={ref} className={cn("space-y-2", className)}>
+      <div ref={ref} className={cn('space-y-2', className)}>
         {/* Label row */}
         <div className="flex items-center justify-between">
           <Label
             htmlFor={htmlFor}
-            className={cn(
-              "text-sm font-medium text-foreground",
-              error && "text-destructive"
-            )}
+            className={cn('text-sm font-medium text-foreground', error && 'text-destructive')}
           >
             {label}
             {required && (
@@ -60,16 +57,10 @@ export const FormFieldGroup = React.forwardRef<HTMLDivElement, FormFieldGroupPro
         </div>
 
         {/* Description (if provided) */}
-        {description && !error && (
-          <p className="text-xs text-muted-foreground">
-            {description}
-          </p>
-        )}
+        {description && !error && <p className="text-xs text-muted-foreground">{description}</p>}
 
         {/* Field content */}
-        <div className={cn(error && "[&>*]:border-destructive")}>
-          {children}
-        </div>
+        <div className={cn(error && '[&>*]:border-destructive')}>{children}</div>
 
         {/* Error message */}
         {error && (
@@ -79,10 +70,10 @@ export const FormFieldGroup = React.forwardRef<HTMLDivElement, FormFieldGroupPro
           </div>
         )}
       </div>
-    )
+    );
   }
-)
+);
 
-FormFieldGroup.displayName = "FormFieldGroup"
+FormFieldGroup.displayName = 'FormFieldGroup';
 
-export default FormFieldGroup
+export default FormFieldGroup;

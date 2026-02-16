@@ -21,23 +21,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  ArrowLeft,
-  Loader2,
-  User,
-  Home,
-  Clock,
-  Edit,
-  Trash2,
-  AlertCircle,
-} from 'lucide-react';
+import { ArrowLeft, Loader2, User, Home, Clock, Edit, Trash2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Get initials from customer name
 const getInitials = (name: string) => {
   return name
     .split(' ')
-    .map(part => part[0])
+    .map((part) => part[0])
     .join('')
     .toUpperCase()
     .slice(0, 2);
@@ -183,11 +174,11 @@ export default function CustomerDetailPage() {
             <TabsTrigger
               value="overview"
               className={cn(
-                "flex-1 sm:flex-none min-h-[44px] touch-manipulation rounded-xl transition-all",
-                "data-[state=inactive]:bg-white/[0.02] data-[state=inactive]:border data-[state=inactive]:border-white/10",
-                "data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/20 data-[state=active]:to-pink-600/20",
-                "data-[state=active]:border data-[state=active]:border-purple-500/30",
-                "data-[state=active]:text-purple-300"
+                'flex-1 sm:flex-none min-h-[44px] touch-manipulation rounded-xl transition-all',
+                'data-[state=inactive]:bg-white/[0.02] data-[state=inactive]:border data-[state=inactive]:border-white/10',
+                'data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/20 data-[state=active]:to-pink-600/20',
+                'data-[state=active]:border data-[state=active]:border-purple-500/30',
+                'data-[state=active]:text-purple-300'
               )}
             >
               <User className="h-4 w-4 mr-2" />
@@ -196,11 +187,11 @@ export default function CustomerDetailPage() {
             <TabsTrigger
               value="properties"
               className={cn(
-                "flex-1 sm:flex-none min-h-[44px] touch-manipulation rounded-xl transition-all",
-                "data-[state=inactive]:bg-white/[0.02] data-[state=inactive]:border data-[state=inactive]:border-white/10",
-                "data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/20 data-[state=active]:to-pink-600/20",
-                "data-[state=active]:border data-[state=active]:border-purple-500/30",
-                "data-[state=active]:text-purple-300"
+                'flex-1 sm:flex-none min-h-[44px] touch-manipulation rounded-xl transition-all',
+                'data-[state=inactive]:bg-white/[0.02] data-[state=inactive]:border data-[state=inactive]:border-white/10',
+                'data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/20 data-[state=active]:to-pink-600/20',
+                'data-[state=active]:border data-[state=active]:border-purple-500/30',
+                'data-[state=active]:text-purple-300'
               )}
             >
               <Home className="h-4 w-4 mr-2" />
@@ -214,11 +205,11 @@ export default function CustomerDetailPage() {
             <TabsTrigger
               value="timeline"
               className={cn(
-                "flex-1 sm:flex-none min-h-[44px] touch-manipulation rounded-xl transition-all",
-                "data-[state=inactive]:bg-white/[0.02] data-[state=inactive]:border data-[state=inactive]:border-white/10",
-                "data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/20 data-[state=active]:to-pink-600/20",
-                "data-[state=active]:border data-[state=active]:border-purple-500/30",
-                "data-[state=active]:text-purple-300"
+                'flex-1 sm:flex-none min-h-[44px] touch-manipulation rounded-xl transition-all',
+                'data-[state=inactive]:bg-white/[0.02] data-[state=inactive]:border data-[state=inactive]:border-white/10',
+                'data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/20 data-[state=active]:to-pink-600/20',
+                'data-[state=active]:border data-[state=active]:border-purple-500/30',
+                'data-[state=active]:text-purple-300'
               )}
             >
               <Clock className="h-4 w-4 mr-2" />
@@ -249,10 +240,7 @@ export default function CustomerDetailPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <CustomerPropertiesTab
-                customerId={customer.id}
-                onRefresh={refetch}
-              />
+              <CustomerPropertiesTab customerId={customer.id} onRefresh={refetch} />
             </motion.div>
           </TabsContent>
 
@@ -282,12 +270,14 @@ export default function CustomerDetailPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Customer?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove "{customer.name}" and cannot be undone.
-              Their certificates will remain but won't be linked to this customer.
+              This will permanently remove "{customer.name}" and cannot be undone. Their
+              certificates will remain but won't be linked to this customer.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-red-600 hover:bg-red-700 min-h-[44px] rounded-xl"

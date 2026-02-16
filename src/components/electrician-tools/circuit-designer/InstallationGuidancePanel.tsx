@@ -1,12 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { AlertTriangle, CheckCircle2, Wrench, Package, TestTube2, FileText } from "lucide-react";
-import { EnhancedInstallationGuidance } from "@/types/circuit-design";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { AlertTriangle, CheckCircle2, Wrench, Package, TestTube2, FileText } from 'lucide-react';
+import { EnhancedInstallationGuidance } from '@/types/circuit-design';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface InstallationGuidancePanelProps {
   guidance: EnhancedInstallationGuidance;
@@ -18,13 +18,12 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
     materials: false,
     tools: false,
     procedure: false,
-    testing: false
+    testing: false,
   });
 
   const toggleSection = (section: string) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
-
 
   return (
     <div className="space-y-4">
@@ -55,7 +54,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   <AlertTriangle className="h-5 w-5 text-red-500" />
                   Safety Considerations ({guidance.safetyConsiderations?.length || 0})
                 </span>
-                <ChevronDown className={`h-5 w-5 transition-transform ${openSections.safety ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${openSections.safety ? 'rotate-180' : ''}`}
+                />
               </CardTitle>
             </CardHeader>
           </CollapsibleTrigger>
@@ -65,23 +66,25 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                 <div
                   key={idx}
                   className={cn(
-                    "rounded-lg p-4 text-left border-l-4",
-                    safety.priority === 'critical' && "border-l-red-500 bg-red-500/10",
-                    safety.priority === 'high' && "border-l-orange-500 bg-orange-500/10",
-                    safety.priority === 'medium' && "border-l-yellow-500 bg-yellow-500/10"
+                    'rounded-lg p-4 text-left border-l-4',
+                    safety.priority === 'critical' && 'border-l-red-500 bg-red-500/10',
+                    safety.priority === 'high' && 'border-l-orange-500 bg-orange-500/10',
+                    safety.priority === 'medium' && 'border-l-yellow-500 bg-yellow-500/10'
                   )}
                 >
                   <div className="flex items-start gap-3">
                     <AlertTriangle
                       className={cn(
-                        "h-5 w-5 shrink-0 mt-0.5",
-                        safety.priority === 'critical' && "text-red-500",
-                        safety.priority === 'high' && "text-orange-500",
-                        safety.priority === 'medium' && "text-yellow-500"
+                        'h-5 w-5 shrink-0 mt-0.5',
+                        safety.priority === 'critical' && 'text-red-500',
+                        safety.priority === 'high' && 'text-orange-500',
+                        safety.priority === 'medium' && 'text-yellow-500'
                       )}
                     />
                     <div className="space-y-2 text-left flex-1">
-                      <p className="font-semibold text-sm text-left text-foreground">{safety.consideration}</p>
+                      <p className="font-semibold text-sm text-left text-foreground">
+                        {safety.consideration}
+                      </p>
                       <div className="flex flex-wrap gap-2 text-xs text-foreground/70">
                         {safety.bsReference && (
                           <span className="inline-flex items-center gap-1">
@@ -113,7 +116,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   <Package className="h-5 w-5 text-blue-500" />
                   Materials Required ({guidance.materialsRequired?.length || 0})
                 </span>
-                <ChevronDown className={`h-5 w-5 transition-transform ${openSections.materials ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${openSections.materials ? 'rotate-180' : ''}`}
+                />
               </CardTitle>
             </CardHeader>
           </CollapsibleTrigger>
@@ -158,7 +163,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   <Wrench className="h-5 w-5 text-purple-500" />
                   Tools Required ({guidance.toolsRequired?.length || 0})
                 </span>
-                <ChevronDown className={`h-5 w-5 transition-transform ${openSections.tools ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${openSections.tools ? 'rotate-180' : ''}`}
+                />
               </CardTitle>
             </CardHeader>
           </CollapsibleTrigger>
@@ -170,14 +177,14 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                     key={idx}
                     className="flex items-start gap-3 p-3 rounded-lg border bg-card/50 text-left"
                   >
-                  <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
-                  <div className="flex-1 text-left">
-                    <p className="font-medium text-sm text-left text-foreground">{tool.tool}</p>
-                    <p className="text-xs text-foreground/70 text-left">{tool.purpose}</p>
-                    <Badge variant="secondary" className="mt-1.5 text-xs">
-                      {tool.category}
-                    </Badge>
-                  </div>
+                    <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
+                    <div className="flex-1 text-left">
+                      <p className="font-medium text-sm text-left text-foreground">{tool.tool}</p>
+                      <p className="text-xs text-foreground/70 text-left">{tool.purpose}</p>
+                      <Badge variant="secondary" className="mt-1.5 text-xs">
+                        {tool.category}
+                      </Badge>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -196,7 +203,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   <CheckCircle2 className="h-5 w-5 text-green-500" />
                   Installation Procedure ({guidance.installationProcedure?.length || 0} steps)
                 </span>
-                <ChevronDown className={`h-5 w-5 transition-transform ${openSections.procedure ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${openSections.procedure ? 'rotate-180' : ''}`}
+                />
               </CardTitle>
             </CardHeader>
           </CollapsibleTrigger>
@@ -217,7 +226,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
 
                     {/* Content */}
                     <div className="flex-1 pb-4 text-left">
-                      <p className="font-semibold text-sm text-left text-foreground">{step.title}</p>
+                      <p className="font-semibold text-sm text-left text-foreground">
+                        {step.title}
+                      </p>
                       <p className="text-sm text-foreground/70 mt-1 leading-relaxed text-left">
                         {step.description}
                       </p>
@@ -259,7 +270,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   <TestTube2 className="h-5 w-5 text-teal-500" />
                   Testing Requirements ({guidance.testingRequirements?.tests?.length || 0})
                 </span>
-                <ChevronDown className={`h-5 w-5 transition-transform ${openSections.testing ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${openSections.testing ? 'rotate-180' : ''}`}
+                />
               </CardTitle>
             </CardHeader>
           </CollapsibleTrigger>
@@ -267,7 +280,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
             <CardContent className="space-y-3">
               {guidance.testingRequirements?.intro && (
                 <>
-                  <p className="text-sm text-foreground text-left">{guidance.testingRequirements.intro}</p>
+                  <p className="text-sm text-foreground text-left">
+                    {guidance.testingRequirements.intro}
+                  </p>
                   <Separator />
                 </>
               )}
@@ -282,7 +297,9 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                     </div>
                     <div className="flex-1 text-left">
                       <div className="flex items-start justify-between gap-2">
-                        <p className="font-semibold text-sm text-left text-foreground">{test.testName}</p>
+                        <p className="font-semibold text-sm text-left text-foreground">
+                          {test.testName}
+                        </p>
                         <Badge variant="outline" className="text-xs shrink-0">
                           {test.regulation}
                         </Badge>

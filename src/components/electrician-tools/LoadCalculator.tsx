@@ -1,23 +1,29 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart4, Info, Calculator, RotateCcw, Zap, CheckCircle2 } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { BarChart4, Info, Calculator, RotateCcw, Zap, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const LoadCalculator = () => {
-  const [supplyType, setSupplyType] = useState<string>("single-phase");
-  const [supplyVoltage, setSupplyVoltage] = useState<string>("230");
-  const [lighting, setLighting] = useState<string>("");
-  const [sockets, setSockets] = useState<string>("");
-  const [heating, setHeating] = useState<string>("");
-  const [cooker, setCooker] = useState<string>("");
-  const [waterHeating, setWaterHeating] = useState<string>("");
-  const [motors, setMotors] = useState<string>("");
+  const [supplyType, setSupplyType] = useState<string>('single-phase');
+  const [supplyVoltage, setSupplyVoltage] = useState<string>('230');
+  const [lighting, setLighting] = useState<string>('');
+  const [sockets, setSockets] = useState<string>('');
+  const [heating, setHeating] = useState<string>('');
+  const [cooker, setCooker] = useState<string>('');
+  const [waterHeating, setWaterHeating] = useState<string>('');
+  const [motors, setMotors] = useState<string>('');
   const [result, setResult] = useState<{
     totalLoad: number;
     totalLoadAfterDiversity: number;
@@ -34,76 +40,82 @@ const LoadCalculator = () => {
     const cookerLoad = parseFloat(cooker) || 0;
     const waterHeatingLoad = parseFloat(waterHeating) || 0;
     const motorLoad = parseFloat(motors) || 0;
-    
+
     // BS 7671 diversity factors
     const diversityFactors = {
-      lighting: 0.9,       // 90% for lighting
-      sockets: 0.6,        // 60% for socket outlets
-      heating: 0.8,        // 80% for space heating
-      cooker: 0.6,         // 60% for cooking (first 10kW + 30% remainder)
-      waterHeating: 1.0,   // 100% for water heating
-      motors: 0.8          // 80% for motors
+      lighting: 0.9, // 90% for lighting
+      sockets: 0.6, // 60% for socket outlets
+      heating: 0.8, // 80% for space heating
+      cooker: 0.6, // 60% for cooking (first 10kW + 30% remainder)
+      waterHeating: 1.0, // 100% for water heating
+      motors: 0.8, // 80% for motors
     };
-    
+
     // Apply diversity factors
     const lightingAfterDiversity = lightingLoad * diversityFactors.lighting;
     const socketsAfterDiversity = socketLoad * diversityFactors.sockets;
     const heatingAfterDiversity = heatingLoad * diversityFactors.heating;
     const waterHeatingAfterDiversity = waterHeatingLoad * diversityFactors.waterHeating;
     const motorsAfterDiversity = motorLoad * diversityFactors.motors;
-    
+
     // Special calculation for cookers (first 10kW at 100%, remainder at 30%)
     let cookerAfterDiversity = 0;
     if (cookerLoad > 0) {
       if (cookerLoad <= 10) {
         cookerAfterDiversity = cookerLoad;
       } else {
-        cookerAfterDiversity = 10 + ((cookerLoad - 10) * 0.3);
+        cookerAfterDiversity = 10 + (cookerLoad - 10) * 0.3;
       }
     }
-    
-    const totalLoad = lightingLoad + socketLoad + heatingLoad + cookerLoad + waterHeatingLoad + motorLoad;
-    const totalAfterDiversity = lightingAfterDiversity + socketsAfterDiversity + heatingAfterDiversity + 
-                               cookerAfterDiversity + waterHeatingAfterDiversity + motorsAfterDiversity;
-    
+
+    const totalLoad =
+      lightingLoad + socketLoad + heatingLoad + cookerLoad + waterHeatingLoad + motorLoad;
+    const totalAfterDiversity =
+      lightingAfterDiversity +
+      socketsAfterDiversity +
+      heatingAfterDiversity +
+      cookerAfterDiversity +
+      waterHeatingAfterDiversity +
+      motorsAfterDiversity;
+
     // Calculate estimated current
     const voltage = parseFloat(supplyVoltage);
-    const voltageFactor = supplyType === "three-phase" ? Math.sqrt(3) : 1;
-    const estimatedCurrent = totalAfterDiversity * 1000 / (voltage * voltageFactor);
-    
+    const voltageFactor = supplyType === 'three-phase' ? Math.sqrt(3) : 1;
+    const estimatedCurrent = (totalAfterDiversity * 1000) / (voltage * voltageFactor);
+
     // Recommend main switch rating
-    let recommendedMainSwitch = "";
-    if (estimatedCurrent <= 32) recommendedMainSwitch = "40A";
-    else if (estimatedCurrent <= 50) recommendedMainSwitch = "63A";
-    else if (estimatedCurrent <= 63) recommendedMainSwitch = "80A";
-    else if (estimatedCurrent <= 80) recommendedMainSwitch = "100A";
-    else recommendedMainSwitch = "125A or higher";
-    
+    let recommendedMainSwitch = '';
+    if (estimatedCurrent <= 32) recommendedMainSwitch = '40A';
+    else if (estimatedCurrent <= 50) recommendedMainSwitch = '63A';
+    else if (estimatedCurrent <= 63) recommendedMainSwitch = '80A';
+    else if (estimatedCurrent <= 80) recommendedMainSwitch = '100A';
+    else recommendedMainSwitch = '125A or higher';
+
     // Supply adequacy assessment
-    let supplyAdequacy = "";
-    if (estimatedCurrent <= 100) supplyAdequacy = "Standard single phase supply adequate";
-    else if (estimatedCurrent <= 200) supplyAdequacy = "Three phase supply recommended";
-    else supplyAdequacy = "High load - DNO consultation required";
-    
+    let supplyAdequacy = '';
+    if (estimatedCurrent <= 100) supplyAdequacy = 'Standard single phase supply adequate';
+    else if (estimatedCurrent <= 200) supplyAdequacy = 'Three phase supply recommended';
+    else supplyAdequacy = 'High load - DNO consultation required';
+
     setResult({
       totalLoad,
       totalLoadAfterDiversity: totalAfterDiversity,
       estimatedCurrent,
       diversityFactors,
       recommendedMainSwitch,
-      supplyAdequacy
+      supplyAdequacy,
     });
   };
 
   const resetCalculator = () => {
-    setSupplyType("single-phase");
-    setSupplyVoltage("230");
-    setLighting("");
-    setSockets("");
-    setHeating("");
-    setCooker("");
-    setWaterHeating("");
-    setMotors("");
+    setSupplyType('single-phase');
+    setSupplyVoltage('230');
+    setLighting('');
+    setSockets('');
+    setHeating('');
+    setCooker('');
+    setWaterHeating('');
+    setMotors('');
     setResult(null);
   };
 
@@ -115,7 +127,8 @@ const LoadCalculator = () => {
           <div>
             <CardTitle>Load Assessment Calculator</CardTitle>
             <CardDescription className="mt-1">
-              Calculate total electrical load with BS 7671 diversity factors and supply requirements.
+              Calculate total electrical load with BS 7671 diversity factors and supply
+              requirements.
             </CardDescription>
           </div>
           <Badge variant="outline" className="ml-auto">
@@ -159,11 +172,11 @@ const LoadCalculator = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="lighting-load">Lighting Load (kW)</Label>
-                <Input 
-                  id="lighting-load" 
-                  type="number" 
+                <Input
+                  id="lighting-load"
+                  type="number"
                   step="0.1"
-                  placeholder="Enter lighting load" 
+                  placeholder="Enter lighting load"
                   className="bg-card border border-muted/40"
                   value={lighting}
                   onChange={(e) => setLighting(e.target.value)}
@@ -172,11 +185,11 @@ const LoadCalculator = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="socket-load">Socket Outlets Load (kW)</Label>
-                <Input 
-                  id="socket-load" 
-                  type="number" 
+                <Input
+                  id="socket-load"
+                  type="number"
                   step="0.1"
-                  placeholder="Enter socket outlets load" 
+                  placeholder="Enter socket outlets load"
                   className="bg-card border border-muted/40"
                   value={sockets}
                   onChange={(e) => setSockets(e.target.value)}
@@ -185,11 +198,11 @@ const LoadCalculator = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="heating-load">Space Heating Load (kW)</Label>
-                <Input 
-                  id="heating-load" 
-                  type="number" 
+                <Input
+                  id="heating-load"
+                  type="number"
                   step="0.1"
-                  placeholder="Enter heating load" 
+                  placeholder="Enter heating load"
                   className="bg-card border border-muted/40"
                   value={heating}
                   onChange={(e) => setHeating(e.target.value)}
@@ -198,11 +211,11 @@ const LoadCalculator = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cooker-load">Cooking Load (kW)</Label>
-                <Input 
-                  id="cooker-load" 
-                  type="number" 
+                <Input
+                  id="cooker-load"
+                  type="number"
                   step="0.1"
-                  placeholder="Enter cooker load" 
+                  placeholder="Enter cooker load"
                   className="bg-card border border-muted/40"
                   value={cooker}
                   onChange={(e) => setCooker(e.target.value)}
@@ -211,24 +224,26 @@ const LoadCalculator = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="water-heating-load">Water Heating Load (kW)</Label>
-                <Input 
-                  id="water-heating-load" 
-                  type="number" 
+                <Input
+                  id="water-heating-load"
+                  type="number"
                   step="0.1"
-                  placeholder="Enter water heating load" 
+                  placeholder="Enter water heating load"
                   className="bg-card border border-muted/40"
                   value={waterHeating}
                   onChange={(e) => setWaterHeating(e.target.value)}
                 />
-                <p className="text-xs text-muted-foreground">100% diversity factor (no reduction)</p>
+                <p className="text-xs text-muted-foreground">
+                  100% diversity factor (no reduction)
+                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="motor-load">Motor Load (kW)</Label>
-                <Input 
-                  id="motor-load" 
-                  type="number" 
+                <Input
+                  id="motor-load"
+                  type="number"
                   step="0.1"
-                  placeholder="Enter motor load" 
+                  placeholder="Enter motor load"
                   className="bg-card border border-muted/40"
                   value={motors}
                   onChange={(e) => setMotors(e.target.value)}
@@ -236,7 +251,7 @@ const LoadCalculator = () => {
                 <p className="text-xs text-muted-foreground">80% diversity factor applied</p>
               </div>
             </div>
-            
+
             <div className="flex gap-2">
               <Button className="flex-1" onClick={calculateTotalLoad}>
                 <Calculator className="h-4 w-4 mr-2" />
@@ -265,11 +280,15 @@ const LoadCalculator = () => {
                     </div>
                     <div className="flex justify-between p-3 bg-elec-yellow/10 rounded">
                       <span className="text-sm font-medium">Load After Diversity:</span>
-                      <span className="text-xl font-bold text-elec-yellow">{result.totalLoadAfterDiversity.toFixed(2)} kW</span>
+                      <span className="text-xl font-bold text-elec-yellow">
+                        {result.totalLoadAfterDiversity.toFixed(2)} kW
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm text-muted-foreground">Estimated Current:</span>
-                      <span className="font-semibold text-elec-yellow">{result.estimatedCurrent.toFixed(1)} A</span>
+                      <span className="font-semibold text-elec-yellow">
+                        {result.estimatedCurrent.toFixed(1)} A
+                      </span>
                     </div>
                   </div>
 
@@ -293,8 +312,15 @@ const LoadCalculator = () => {
                   </div>
 
                   <div className="text-xs text-muted-foreground">
-                    <p>Load reduction: {(result.totalLoad - result.totalLoadAfterDiversity).toFixed(2)} kW 
-                    ({(((result.totalLoad - result.totalLoadAfterDiversity) / result.totalLoad) * 100).toFixed(1)}%)</p>
+                    <p>
+                      Load reduction:{' '}
+                      {(result.totalLoad - result.totalLoadAfterDiversity).toFixed(2)} kW (
+                      {(
+                        ((result.totalLoad - result.totalLoadAfterDiversity) / result.totalLoad) *
+                        100
+                      ).toFixed(1)}
+                      %)
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -314,7 +340,10 @@ const LoadCalculator = () => {
                 <div className="space-y-2">
                   <p className="font-medium">What This Means:</p>
                   <ul className="text-sm space-y-1">
-                    <li>• Diversity factors reduce total load as not all equipment operates simultaneously</li>
+                    <li>
+                      • Diversity factors reduce total load as not all equipment operates
+                      simultaneously
+                    </li>
                     <li>• Current calculation determines cable and protective device sizing</li>
                     <li>• Main switch rating provides adequate discrimination and safety margin</li>
                     <li>• Supply assessment ensures adequate network capacity</li>

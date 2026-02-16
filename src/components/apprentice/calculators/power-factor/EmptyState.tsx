@@ -1,5 +1,4 @@
-
-import { PlugZap } from "lucide-react";
+import { PlugZap } from 'lucide-react';
 
 const EmptyState = () => {
   return (

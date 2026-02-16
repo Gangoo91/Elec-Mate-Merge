@@ -101,7 +101,9 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
               <Checkbox
                 id="correct-polarity"
                 checked={data.confirmedCorrectPolarity}
-                onCheckedChange={(checked) => onUpdate('confirmedCorrectPolarity', checked === true)}
+                onCheckedChange={(checked) =>
+                  onUpdate('confirmedCorrectPolarity', checked === true)
+                }
               />
               <span className="text-sm text-muted-foreground">Correct polarity</span>
             </label>

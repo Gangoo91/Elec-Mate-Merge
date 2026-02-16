@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface FeatureFlag {
   id: string;
@@ -20,19 +20,17 @@ export function useFeatureFlags() {
   const { user, profile } = useAuth();
 
   return useQuery({
-    queryKey: ["feature-flags"],
+    queryKey: ['feature-flags'],
     queryFn: async () => {
       // Use cache if fresh
       if (flagsCache && Date.now() - lastFetch < CACHE_TTL) {
         return flagsCache;
       }
 
-      const { data, error } = await supabase
-        .from("feature_flags")
-        .select("*");
+      const { data, error } = await supabase.from('feature_flags').select('*');
 
       if (error) {
-        console.error("Error fetching feature flags:", error);
+        console.error('Error fetching feature flags:', error);
         return [];
       }
 
@@ -79,7 +77,7 @@ export function useFeatureFlag(flagName: string): boolean {
   if (flag.percentage_rollout < 100) {
     // Use user ID or session to determine bucket
     const bucket = user?.id
-      ? parseInt(user.id.replace(/-/g, "").slice(0, 8), 16) % 100
+      ? parseInt(user.id.replace(/-/g, '').slice(0, 8), 16) % 100
       : Math.random() * 100;
     return bucket < flag.percentage_rollout;
   }
@@ -89,17 +87,17 @@ export function useFeatureFlag(flagName: string): boolean {
 
 // Specific feature flag hooks for common flags
 export function useMaintenanceMode(): boolean {
-  return useFeatureFlag("maintenance_mode");
+  return useFeatureFlag('maintenance_mode');
 }
 
 export function useBetaFeatures(): boolean {
-  return useFeatureFlag("beta_features");
+  return useFeatureFlag('beta_features');
 }
 
 export function useAIAssistant(): boolean {
-  return useFeatureFlag("ai_assistant");
+  return useFeatureFlag('ai_assistant');
 }
 
 export function useNewOnboarding(): boolean {
-  return useFeatureFlag("new_onboarding");
+  return useFeatureFlag('new_onboarding');
 }

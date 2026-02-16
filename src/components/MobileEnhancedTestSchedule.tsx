@@ -4,14 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { 
-  Smartphone, 
-  CheckCircle, 
-  Clock, 
+import {
+  Smartphone,
+  CheckCircle,
+  Clock,
   AlertCircle,
   ChevronRight,
   RotateCcw,
-  Zap
+  Zap,
 } from 'lucide-react';
 import MobileTestTypeCard from './MobileTestTypeCard';
 import MobileTestTypeSection from './MobileTestTypeSection';
@@ -33,60 +33,60 @@ const MobileEnhancedTestSchedule = ({ formData, onUpdate }: MobileEnhancedTestSc
   const progress = totalTests > 0 ? (completedTestsCount / totalTests) * 100 : 0;
 
   const testTypes = [
-    { 
-      id: 'continuity', 
-      name: 'Continuity Tests', 
-      icon: '⚡', 
+    {
+      id: 'continuity',
+      name: 'Continuity Tests',
+      icon: '⚡',
       unit: 'Ω',
       color: 'bg-blue-500',
       description: 'R1+R2 and Ring final circuit tests',
-      requiredForAll: true
+      requiredForAll: true,
     },
-    { 
-      id: 'insulation', 
-      name: 'Insulation Resistance', 
-      icon: '✅', 
+    {
+      id: 'insulation',
+      name: 'Insulation Resistance',
+      icon: '✅',
       unit: 'MΩ',
       color: 'bg-green-500',
       description: 'Line/Neutral to Earth resistance',
-      requiredForAll: true
+      requiredForAll: true,
     },
-    { 
-      id: 'polarity', 
-      name: 'Polarity', 
-      icon: '⚠️', 
+    {
+      id: 'polarity',
+      name: 'Polarity',
+      icon: '⚠️',
       unit: '',
       color: 'bg-yellow-500',
       description: 'Correct polarity verification',
-      requiredForAll: true
+      requiredForAll: true,
     },
-    { 
-      id: 'zs', 
-      name: 'Earth Fault Loop', 
-      icon: '🔄', 
+    {
+      id: 'zs',
+      name: 'Earth Fault Loop',
+      icon: '🔄',
       unit: 'Ω',
       color: 'bg-purple-500',
       description: 'Zs earth fault loop impedance',
-      requiredForAll: true
+      requiredForAll: true,
     },
-    { 
-      id: 'rcd', 
-      name: 'RCD Tests', 
-      icon: '⏱️', 
+    {
+      id: 'rcd',
+      name: 'RCD Tests',
+      icon: '⏱️',
       unit: 'ms',
       color: 'bg-orange-500',
       description: 'RCD operation time and current',
-      requiredForCircuits: ['rcd', 'socket', 'bathroom', 'outdoor']
+      requiredForCircuits: ['rcd', 'socket', 'bathroom', 'outdoor'],
     },
-    { 
-      id: 'functional', 
-      name: 'Functional Tests', 
-      icon: '✅', 
+    {
+      id: 'functional',
+      name: 'Functional Tests',
+      icon: '✅',
       unit: '',
       color: 'bg-teal-500',
       description: 'Switch and control operation',
-      requiredForAll: true
-    }
+      requiredForAll: true,
+    },
   ];
 
   const handleStartTestType = (testTypeId: string) => {
@@ -95,9 +95,9 @@ const MobileEnhancedTestSchedule = ({ formData, onUpdate }: MobileEnhancedTestSc
 
   const handleTestComplete = (testTypeId: string, circuitId: string) => {
     const testKey = `${testTypeId}-${circuitId}`;
-    setCompletedTests(prev => new Set([...prev, testKey]));
-    
-    const testType = testTypes.find(t => t.id === testTypeId);
+    setCompletedTests((prev) => new Set([...prev, testKey]));
+
+    const testType = testTypes.find((t) => t.id === testTypeId);
     toast.success(`✅ ${testType?.name} completed for circuit`, {
       description: `Test recorded successfully`,
       duration: 2000,
@@ -167,12 +167,9 @@ const MobileEnhancedTestSchedule = ({ formData, onUpdate }: MobileEnhancedTestSc
                 {Math.round(progress)}% Complete
               </Badge>
             </div>
-            
-            <Progress 
-              value={progress} 
-              className="h-3 bg-muted"
-            />
-            
+
+            <Progress value={progress} className="h-3 bg-muted" />
+
             <div className="grid grid-cols-3 gap-4 text-center">
               <div className="space-y-1">
                 <div className="text-2xl font-bold text-elec-yellow">{circuits.length}</div>
@@ -183,7 +180,9 @@ const MobileEnhancedTestSchedule = ({ formData, onUpdate }: MobileEnhancedTestSc
                 <div className="text-xs text-muted-foreground">Completed</div>
               </div>
               <div className="space-y-1">
-                <div className="text-2xl font-bold text-orange-500">{totalTests - completedTestsCount}</div>
+                <div className="text-2xl font-bold text-orange-500">
+                  {totalTests - completedTestsCount}
+                </div>
                 <div className="text-xs text-muted-foreground">Remaining</div>
               </div>
             </div>
@@ -230,9 +229,7 @@ const MobileEnhancedTestSchedule = ({ formData, onUpdate }: MobileEnhancedTestSc
             <p className="text-muted-foreground mb-6 max-w-sm">
               Add circuits to your schedule of test results to begin mobile testing
             </p>
-            <Button variant="outline">
-              Add Test Circuits
-            </Button>
+            <Button variant="outline">Add Test Circuits</Button>
           </CardContent>
         </Card>
       )}
@@ -244,7 +241,7 @@ const MobileEnhancedTestSchedule = ({ formData, onUpdate }: MobileEnhancedTestSc
             <Zap className="h-5 w-5 text-elec-yellow" />
             Available Tests
           </h3>
-          
+
           <div className="grid gap-3">
             {testTypes.map((testType) => (
               <MobileTestTypeCard

@@ -14,8 +14,9 @@ export const EmergencyLightingRealWorldSection4 = () => {
         <div className="p-4 bg-gradient-to-r from-orange-600/20 to-red-600/20 border border-orange-500/40 rounded-lg">
           <h4 className="text-orange-300 font-semibold mb-2">Project Challenge</h4>
           <p className="text-sm">
-            A large shopping centre with multiple tenants, varying ceiling heights, and complex escape routes. The project required 
-            coordination between multiple responsible persons while ensuring full BS 5266 compliance across all areas.
+            A large shopping centre with multiple tenants, varying ceiling heights, and complex
+            escape routes. The project required coordination between multiple responsible persons
+            while ensuring full BS 5266 compliance across all areas.
           </p>
         </div>
 
@@ -27,16 +28,28 @@ export const EmergencyLightingRealWorldSection4 = () => {
             </h4>
             <div className="space-y-2 text-sm">
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>BS 5266-1:2016:</strong> Used for design methodology and system specification</p>
+                <p>
+                  <strong>BS 5266-1:2016:</strong> Used for design methodology and system
+                  specification
+                </p>
               </div>
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>BS EN 1838:2013:</strong> Applied for photometric calculations and light levels</p>
+                <p>
+                  <strong>BS EN 1838:2013:</strong> Applied for photometric calculations and light
+                  levels
+                </p>
               </div>
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>Building Regulations:</strong> Compliance with Approved Document B requirements</p>
+                <p>
+                  <strong>Building Regulations:</strong> Compliance with Approved Document B
+                  requirements
+                </p>
               </div>
               <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                <p><strong>Fire Safety Order:</strong> Risk assessment and responsible person duties defined</p>
+                <p>
+                  <strong>Fire Safety Order:</strong> Risk assessment and responsible person duties
+                  defined
+                </p>
               </div>
             </div>
           </div>
@@ -48,16 +61,27 @@ export const EmergencyLightingRealWorldSection4 = () => {
             </h4>
             <div className="space-y-2 text-sm">
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Multiple Tenancies:</strong> Coordinating individual and common area responsibilities</p>
+                <p>
+                  <strong>Multiple Tenancies:</strong> Coordinating individual and common area
+                  responsibilities
+                </p>
               </div>
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Varied Layouts:</strong> Different ceiling heights and shop configurations</p>
+                <p>
+                  <strong>Varied Layouts:</strong> Different ceiling heights and shop configurations
+                </p>
               </div>
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Testing Coordination:</strong> Scheduling across multiple business operations</p>
+                <p>
+                  <strong>Testing Coordination:</strong> Scheduling across multiple business
+                  operations
+                </p>
               </div>
               <div className="p-2 bg-purple-500/10 border-l-2 border-purple-500 rounded">
-                <p><strong>Documentation:</strong> Maintaining records across different responsible persons</p>
+                <p>
+                  <strong>Documentation:</strong> Maintaining records across different responsible
+                  persons
+                </p>
               </div>
             </div>
           </div>
@@ -111,9 +135,9 @@ export const EmergencyLightingRealWorldSection4 = () => {
             Key Learning Point
           </h4>
           <p className="text-sm">
-            Standards compliance in complex buildings requires systematic application of the regulatory hierarchy. 
-            BS 5266 provides the technical framework, but success depends on clear responsibility allocation and 
-            coordinated documentation across all stakeholders.
+            Standards compliance in complex buildings requires systematic application of the
+            regulatory hierarchy. BS 5266 provides the technical framework, but success depends on
+            clear responsibility allocation and coordinated documentation across all stakeholders.
           </p>
         </div>
       </CardContent>

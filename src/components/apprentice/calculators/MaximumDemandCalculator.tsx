@@ -1,6 +1,16 @@
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Info, Calculator, Plus, Trash2, Zap, AlertTriangle, BookOpen, ChevronDown } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Badge } from '@/components/ui/badge';
+import {
+  TrendingUp,
+  Info,
+  Calculator,
+  Plus,
+  Trash2,
+  Zap,
+  AlertTriangle,
+  BookOpen,
+  ChevronDown,
+} from 'lucide-react';
+import { useState, useEffect } from 'react';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -11,13 +21,9 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 
 interface Load {
   id: number;
@@ -28,33 +34,39 @@ interface Load {
 }
 
 const LOAD_PRESETS = {
-  "lighting": { name: "Lighting", diversityFactor: "0.9" },
-  "socket-outlets": { name: "Socket Outlets", diversityFactor: "0.6" },
-  "cooking": { name: "Cooking Appliances", diversityFactor: "0.6" },
-  "water-heating": { name: "Water Heating", diversityFactor: "1.0" },
-  "space-heating": { name: "Space Heating", diversityFactor: "1.0" },
-  "motors": { name: "Motors", diversityFactor: "0.8" },
-  "immersion": { name: "Immersion Heaters", diversityFactor: "1.0" },
-  "shower": { name: "Electric Showers", diversityFactor: "1.0" },
-  "custom": { name: "Custom Load", diversityFactor: "1.0" }
+  lighting: { name: 'Lighting', diversityFactor: '0.9' },
+  'socket-outlets': { name: 'Socket Outlets', diversityFactor: '0.6' },
+  cooking: { name: 'Cooking Appliances', diversityFactor: '0.6' },
+  'water-heating': { name: 'Water Heating', diversityFactor: '1.0' },
+  'space-heating': { name: 'Space Heating', diversityFactor: '1.0' },
+  motors: { name: 'Motors', diversityFactor: '0.8' },
+  immersion: { name: 'Immersion Heaters', diversityFactor: '1.0' },
+  shower: { name: 'Electric Showers', diversityFactor: '1.0' },
+  custom: { name: 'Custom Load', diversityFactor: '1.0' },
 } as const;
 
 const loadTypeOptions = [
-  { value: "lighting", label: "Lighting Circuits" },
-  { value: "socket-outlets", label: "Socket Outlets" },
-  { value: "cooking", label: "Cooking Appliances" },
-  { value: "water-heating", label: "Water Heating" },
-  { value: "space-heating", label: "Space Heating" },
-  { value: "motors", label: "Motors" },
-  { value: "immersion", label: "Immersion Heaters" },
-  { value: "shower", label: "Electric Showers" },
-  { value: "custom", label: "Custom Load" },
+  { value: 'lighting', label: 'Lighting Circuits' },
+  { value: 'socket-outlets', label: 'Socket Outlets' },
+  { value: 'cooking', label: 'Cooking Appliances' },
+  { value: 'water-heating', label: 'Water Heating' },
+  { value: 'space-heating', label: 'Space Heating' },
+  { value: 'motors', label: 'Motors' },
+  { value: 'immersion', label: 'Immersion Heaters' },
+  { value: 'shower', label: 'Electric Showers' },
+  { value: 'custom', label: 'Custom Load' },
 ];
 
 const MaximumDemandCalculator = () => {
   const [loads, setLoads] = useState<Load[]>([
-    { id: 1, name: "Lighting", power: "", diversityFactor: "0.9", loadType: "lighting" },
-    { id: 2, name: "Socket Outlets", power: "", diversityFactor: "0.6", loadType: "socket-outlets" },
+    { id: 1, name: 'Lighting', power: '', diversityFactor: '0.9', loadType: 'lighting' },
+    {
+      id: 2,
+      name: 'Socket Outlets',
+      power: '',
+      diversityFactor: '0.6',
+      loadType: 'socket-outlets',
+    },
   ]);
   const [result, setResult] = useState<{
     totalConnectedLoad: number;
@@ -69,74 +81,84 @@ const MaximumDemandCalculator = () => {
 
   const config = CALCULATOR_CONFIG['power'];
 
-  const addLoad = (loadType: string = "custom") => {
+  const addLoad = (loadType: string = 'custom') => {
     const preset = LOAD_PRESETS[loadType as keyof typeof LOAD_PRESETS];
     const newLoad: Load = {
       id: Date.now(),
       name: preset.name,
-      power: "",
+      power: '',
       diversityFactor: preset.diversityFactor,
-      loadType
+      loadType,
     };
     setLoads([...loads, newLoad]);
   };
 
   const removeLoad = (id: number) => {
     if (loads.length > 1) {
-      setLoads(loads.filter(load => load.id !== id));
+      setLoads(loads.filter((load) => load.id !== id));
     }
   };
 
   const updateLoad = (id: number, field: keyof Load, value: string) => {
-    setLoads(loads.map(load => {
-      if (load.id === id) {
-        let updatedLoad = { ...load, [field]: value };
+    setLoads(
+      loads.map((load) => {
+        if (load.id === id) {
+          let updatedLoad = { ...load, [field]: value };
 
-        if (field === 'loadType') {
-          const preset = LOAD_PRESETS[value as keyof typeof LOAD_PRESETS];
-          updatedLoad.diversityFactor = preset.diversityFactor;
-          updatedLoad.name = preset.name;
+          if (field === 'loadType') {
+            const preset = LOAD_PRESETS[value as keyof typeof LOAD_PRESETS];
+            updatedLoad.diversityFactor = preset.diversityFactor;
+            updatedLoad.name = preset.name;
+          }
+
+          return updatedLoad;
         }
-
-        return updatedLoad;
-      }
-      return load;
-    }));
+        return load;
+      })
+    );
 
     if (errors[id]) {
-      setErrors(prev => ({ ...prev, [id]: "" }));
+      setErrors((prev) => ({ ...prev, [id]: '' }));
     }
   };
 
   const validateAndCalculate = () => {
     const newErrors: { [key: number]: string } = {};
 
-    loads.forEach(load => {
+    loads.forEach((load) => {
       const power = parseFloat(load.power) || 0;
       const diversity = parseFloat(load.diversityFactor) || 0;
 
       if (power < 0) {
-        newErrors[load.id] = "Power cannot be negative";
+        newErrors[load.id] = 'Power cannot be negative';
       } else if (power > 1000) {
-        newErrors[load.id] = "Power seems unreasonably high";
+        newErrors[load.id] = 'Power seems unreasonably high';
       } else if (diversity < 0 || diversity > 1) {
-        newErrors[load.id] = "Diversity factor must be between 0 and 1";
+        newErrors[load.id] = 'Diversity factor must be between 0 and 1';
       }
     });
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      const totalConnectedLoad = loads.reduce((sum, load) => sum + (parseFloat(load.power) || 0), 0);
-      const maximumDemand = loads.reduce((sum, load) => sum + ((parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)), 0);
-      const overallDiversityFactor = totalConnectedLoad > 0 ? maximumDemand / totalConnectedLoad : 0;
+      const totalConnectedLoad = loads.reduce(
+        (sum, load) => sum + (parseFloat(load.power) || 0),
+        0
+      );
+      const maximumDemand = loads.reduce(
+        (sum, load) =>
+          sum + (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0),
+        0
+      );
+      const overallDiversityFactor =
+        totalConnectedLoad > 0 ? maximumDemand / totalConnectedLoad : 0;
       const loadReduction = totalConnectedLoad - maximumDemand;
 
       setResult({
         totalConnectedLoad,
         maximumDemand: Math.round(maximumDemand * 100) / 100,
         overallDiversityFactor: Math.round(overallDiversityFactor * 1000) / 1000,
-        loadReduction: Math.round(loadReduction * 100) / 100
+        loadReduction: Math.round(loadReduction * 100) / 100,
       });
     } else {
       setResult(null);
@@ -145,8 +167,14 @@ const MaximumDemandCalculator = () => {
 
   const reset = () => {
     setLoads([
-      { id: 1, name: "Lighting", power: "", diversityFactor: "0.9", loadType: "lighting" },
-      { id: 2, name: "Socket Outlets", power: "", diversityFactor: "0.6", loadType: "socket-outlets" },
+      { id: 1, name: 'Lighting', power: '', diversityFactor: '0.9', loadType: 'lighting' },
+      {
+        id: 2,
+        name: 'Socket Outlets',
+        power: '',
+        diversityFactor: '0.6',
+        loadType: 'socket-outlets',
+      },
     ]);
     setResult(null);
     setErrors({});
@@ -154,7 +182,7 @@ const MaximumDemandCalculator = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (loads.some(load => parseFloat(load.power) > 0)) {
+      if (loads.some((load) => parseFloat(load.power) > 0)) {
         validateAndCalculate();
       }
     }, 300);
@@ -165,24 +193,24 @@ const MaximumDemandCalculator = () => {
   const calculateSupplyRequirements = (totalAfterDiversity: number) => {
     const estimatedCurrent = (totalAfterDiversity * 1000) / 230;
 
-    let supplyAdequacy = "";
-    let mainSwitchRecommendation = "";
+    let supplyAdequacy = '';
+    let mainSwitchRecommendation = '';
 
     if (estimatedCurrent <= 63) {
-      supplyAdequacy = "Standard single phase supply adequate (100A service fuse)";
-      mainSwitchRecommendation = estimatedCurrent <= 32 ? "63A Main Switch" : "100A Main Switch";
+      supplyAdequacy = 'Standard single phase supply adequate (100A service fuse)';
+      mainSwitchRecommendation = estimatedCurrent <= 32 ? '63A Main Switch' : '100A Main Switch';
     } else if (estimatedCurrent <= 200) {
-      supplyAdequacy = "Three phase supply recommended";
-      mainSwitchRecommendation = "Three phase distribution board required";
+      supplyAdequacy = 'Three phase supply recommended';
+      mainSwitchRecommendation = 'Three phase distribution board required';
     } else {
-      supplyAdequacy = "High load installation - DNO consultation required";
-      mainSwitchRecommendation = "Professional electrical design needed";
+      supplyAdequacy = 'High load installation - DNO consultation required';
+      mainSwitchRecommendation = 'Professional electrical design needed';
     }
 
     return { estimatedCurrent, supplyAdequacy, mainSwitchRecommendation };
   };
 
-  const loadsWithPower = loads.filter(l => parseFloat(l.power) > 0);
+  const loadsWithPower = loads.filter((l) => parseFloat(l.power) > 0);
 
   return (
     <div className="space-y-4">
@@ -196,7 +224,7 @@ const MaximumDemandCalculator = () => {
           className="space-y-4 p-4 rounded-xl border"
           style={{
             borderColor: `${config.gradientFrom}30`,
-            background: `${config.gradientFrom}08`
+            background: `${config.gradientFrom}08`,
           }}
         >
           <div className="flex items-center justify-between">
@@ -230,8 +258,8 @@ const MaximumDemandCalculator = () => {
             <div
               key={load.id}
               className={cn(
-                "p-4 rounded-xl border transition-colors",
-                errors[load.id] ? "border-red-500/50 bg-red-500/5" : "bg-white/5 border-white/10"
+                'p-4 rounded-xl border transition-colors',
+                errors[load.id] ? 'border-red-500/50 bg-red-500/5' : 'bg-white/5 border-white/10'
               )}
             >
               <div className="space-y-3">
@@ -283,7 +311,11 @@ const MaximumDemandCalculator = () => {
                     className="text-xs p-2 rounded-lg"
                     style={{ background: `${config.gradientFrom}10`, color: config.gradientFrom }}
                   >
-                    Contribution: {((parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)).toFixed(2)} kW
+                    Contribution:{' '}
+                    {(
+                      (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)
+                    ).toFixed(2)}{' '}
+                    kW
                   </div>
                 )}
               </div>
@@ -309,7 +341,9 @@ const MaximumDemandCalculator = () => {
               <p className="text-sm text-white/60 mb-1">Maximum Demand</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {result.maximumDemand} kW
               </div>
@@ -335,7 +369,9 @@ const MaximumDemandCalculator = () => {
               />
               <ResultValue
                 label="Estimated Current"
-                value={calculateSupplyRequirements(result.maximumDemand).estimatedCurrent.toFixed(1)}
+                value={calculateSupplyRequirements(result.maximumDemand).estimatedCurrent.toFixed(
+                  1
+                )}
                 unit="A"
                 category="power"
                 size="sm"
@@ -370,7 +406,9 @@ const MaximumDemandCalculator = () => {
                     <Zap className="h-4 w-4 text-emerald-400" />
                     <p className="text-xs text-emerald-300">Recommended</p>
                   </div>
-                  <p className="text-sm text-emerald-200 mt-1">{supplyInfo.mainSwitchRecommendation}</p>
+                  <p className="text-sm text-emerald-200 mt-1">
+                    {supplyInfo.mainSwitchRecommendation}
+                  </p>
                 </div>
               </div>
             );
@@ -382,36 +420,66 @@ const MaximumDemandCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Calculator className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
+                  <span className="text-sm sm:text-base font-medium text-purple-300">
+                    How It Worked Out
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showWorkings && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showWorkings && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
                 <div className="text-sm font-mono text-purple-300 space-y-3">
                   <div>
-                    <p className="text-xs text-purple-400 mb-2">Step 1: Calculate each load contribution</p>
+                    <p className="text-xs text-purple-400 mb-2">
+                      Step 1: Calculate each load contribution
+                    </p>
                     {loadsWithPower.map((load) => (
                       <div key={load.id} className="pl-3 border-l-2 border-purple-500/30 mb-1">
-                        {load.name}: {load.power}kW × {load.diversityFactor} = <span className="text-purple-200 font-bold">{((parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)).toFixed(2)}kW</span>
+                        {load.name}: {load.power}kW × {load.diversityFactor} ={' '}
+                        <span className="text-purple-200 font-bold">
+                          {(
+                            (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)
+                          ).toFixed(2)}
+                          kW
+                        </span>
                       </div>
                     ))}
                   </div>
 
                   <div className="pt-2 border-t border-purple-500/20">
                     <p className="text-xs text-purple-400 mb-1">Step 2: Sum all contributions</p>
-                    <p>MD = {loadsWithPower.map(l => `${((parseFloat(l.power) || 0) * (parseFloat(l.diversityFactor) || 0)).toFixed(2)}`).join(' + ')}</p>
-                    <p>MD = <span className="text-purple-200 font-bold">{result.maximumDemand}kW</span></p>
+                    <p>
+                      MD ={' '}
+                      {loadsWithPower
+                        .map(
+                          (l) =>
+                            `${((parseFloat(l.power) || 0) * (parseFloat(l.diversityFactor) || 0)).toFixed(2)}`
+                        )
+                        .join(' + ')}
+                    </p>
+                    <p>
+                      MD ={' '}
+                      <span className="text-purple-200 font-bold">{result.maximumDemand}kW</span>
+                    </p>
                   </div>
 
                   <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">Step 3: Calculate current (230V single phase)</p>
+                    <p className="text-xs text-purple-400 mb-1">
+                      Step 3: Calculate current (230V single phase)
+                    </p>
                     <p>I = (P × 1000) ÷ V</p>
                     <p>I = ({result.maximumDemand} × 1000) ÷ 230</p>
-                    <p>I = <span className="text-purple-200 font-bold">{((result.maximumDemand * 1000) / 230).toFixed(1)}A</span></p>
+                    <p>
+                      I ={' '}
+                      <span className="text-purple-200 font-bold">
+                        {((result.maximumDemand * 1000) / 230).toFixed(1)}A
+                      </span>
+                    </p>
                   </div>
                 </div>
               </CollapsibleContent>
@@ -424,23 +492,31 @@ const MaximumDemandCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Maximum Demand:</strong> The calculated peak load after applying diversity factors based on realistic usage patterns.
+                  <strong className="text-blue-300">Maximum Demand:</strong> The calculated peak
+                  load after applying diversity factors based on realistic usage patterns.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Diversity Factor:</strong> Accounts for the fact that not all loads operate at full capacity simultaneously. Lower factors = more diversity.
+                  <strong className="text-blue-300">Diversity Factor:</strong> Accounts for the fact
+                  that not all loads operate at full capacity simultaneously. Lower factors = more
+                  diversity.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Supply Assessment:</strong> Helps determine if your electrical supply is adequate for the calculated demand.
+                  <strong className="text-blue-300">Supply Assessment:</strong> Helps determine if
+                  your electrical supply is adequate for the calculated demand.
                 </p>
               </CollapsibleContent>
             </div>
@@ -452,20 +528,36 @@ const MaximumDemandCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    BS 7671 Regs at a Glance
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showBsRegs && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showBsRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p>• <strong className="text-amber-300">311.1:</strong> Assessment of maximum demand shall take diversity into account</p>
-                  <p>• <strong className="text-amber-300">Appendix 1:</strong> Guidance on diversity factors for different installation types</p>
-                  <p>• <strong className="text-amber-300">433.1:</strong> Overcurrent protection coordination with calculated demand</p>
-                  <p>• <strong className="text-amber-300">314.1:</strong> Division of installation relative to the maximum demand</p>
+                  <p>
+                    • <strong className="text-amber-300">311.1:</strong> Assessment of maximum
+                    demand shall take diversity into account
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">Appendix 1:</strong> Guidance on diversity
+                    factors for different installation types
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">433.1:</strong> Overcurrent protection
+                    coordination with calculated demand
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">314.1:</strong> Division of installation
+                    relative to the maximum demand
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>
@@ -478,7 +570,8 @@ const MaximumDemandCalculator = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
           <p className="text-sm text-blue-200">
-            <strong>Maximum Demand</strong> = Σ(Load Power × Diversity Factor). Design current I = (MD × 1000) ÷ V
+            <strong>Maximum Demand</strong> = Σ(Load Power × Diversity Factor). Design current I =
+            (MD × 1000) ÷ V
           </p>
         </div>
       </div>

@@ -1,23 +1,35 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Send, Search, ArrowLeft, X, RefreshCw } from "lucide-react";
-import { VoiceHeaderButton } from "@/components/electrician/VoiceHeaderButton";
-import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
-import { useQuoteStorage } from "@/hooks/useQuoteStorage";
-import FinancialSnapshot from "@/components/electrician/quote-builder/FinancialSnapshot";
-import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
-import React, { useState, useMemo, useCallback } from "react";
-import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Plus,
+  FileText,
+  Clock,
+  CheckCircle,
+  TrendingUp,
+  XCircle,
+  Send,
+  Search,
+  ArrowLeft,
+  X,
+  RefreshCw,
+} from 'lucide-react';
+import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
+import RecentQuotesList from '@/components/electrician/quote-builder/RecentQuotesList';
+import { useQuoteStorage } from '@/hooks/useQuoteStorage';
+import FinancialSnapshot from '@/components/electrician/quote-builder/FinancialSnapshot';
+import { EmptyStateGuide } from '@/components/electrician/shared/EmptyStateGuide';
+import React, { useState, useMemo, useCallback } from 'react';
+import { VoiceFormProvider } from '@/contexts/VoiceFormContext';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 const QuoteBuilder = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showFinancialSnapshot, setShowFinancialSnapshot] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -31,7 +43,7 @@ const QuoteBuilder = () => {
     sendPaymentReminder,
     getQuoteStats,
     loading,
-    refreshQuotes
+    refreshQuotes,
   } = useQuoteStorage();
 
   const stats = getQuoteStats();
@@ -48,15 +60,16 @@ const QuoteBuilder = () => {
     let filtered = savedQuotes;
 
     if (activeFilter !== 'all') {
-      filtered = filtered.filter(q => q.status === activeFilter);
+      filtered = filtered.filter((q) => q.status === activeFilter);
     }
 
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(q =>
-        q.client?.name?.toLowerCase().includes(query) ||
-        q.jobDetails?.title?.toLowerCase().includes(query) ||
-        q.quoteNumber?.toLowerCase().includes(query)
+      filtered = filtered.filter(
+        (q) =>
+          q.client?.name?.toLowerCase().includes(query) ||
+          q.jobDetails?.title?.toLowerCase().includes(query) ||
+          q.quoteNumber?.toLowerCase().includes(query)
       );
     }
 
@@ -75,8 +88,20 @@ const QuoteBuilder = () => {
     { id: 'all', label: 'All', count: savedQuotes.length },
     { id: 'pending', label: 'Pending', count: stats.pending, icon: Clock, color: 'text-amber-400' },
     { id: 'sent', label: 'Sent', count: stats.sent, icon: Send, color: 'text-blue-400' },
-    { id: 'approved', label: 'Approved', count: stats.approved, icon: CheckCircle, color: 'text-emerald-400' },
-    { id: 'rejected', label: 'Rejected', count: stats.rejected, icon: XCircle, color: 'text-red-400' },
+    {
+      id: 'approved',
+      label: 'Approved',
+      count: stats.approved,
+      icon: CheckCircle,
+      color: 'text-emerald-400',
+    },
+    {
+      id: 'rejected',
+      label: 'Rejected',
+      count: stats.rejected,
+      icon: XCircle,
+      color: 'text-red-400',
+    },
   ];
 
   const canonical = `${window.location.origin}/electrician/quote-builder`;
@@ -117,7 +142,7 @@ const QuoteBuilder = () => {
                   />
                   {searchQuery && (
                     <button
-                      onClick={() => setSearchQuery("")}
+                      onClick={() => setSearchQuery('')}
                       className="absolute right-3 top-1/2 -translate-y-1/2"
                     >
                       <X className="h-4 w-4 text-muted-foreground" />
@@ -127,7 +152,7 @@ const QuoteBuilder = () => {
                 <button
                   onClick={() => {
                     setIsSearchOpen(false);
-                    setSearchQuery("");
+                    setSearchQuery('');
                   }}
                   className="text-sm text-muted-foreground"
                 >
@@ -153,7 +178,7 @@ const QuoteBuilder = () => {
                   disabled={isRefreshing}
                   className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
                 >
-                  <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+                  <RefreshCw className={cn('h-5 w-5', isRefreshing && 'animate-spin')} />
                 </button>
                 <Button
                   onClick={() => navigate('/electrician/quote-builder/create')}
@@ -173,17 +198,19 @@ const QuoteBuilder = () => {
                 key={filter.id}
                 onClick={() => handleFilterChange(filter.id)}
                 className={cn(
-                  "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation",
+                  'shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation',
                   activeFilter === filter.id
-                    ? "bg-elec-yellow text-elec-dark"
-                    : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
+                    ? 'bg-elec-yellow text-elec-dark'
+                    : 'bg-elec-gray/50 text-foreground hover:bg-elec-gray'
                 )}
               >
                 {filter.label}
-                <span className={cn(
-                  "ml-1.5",
-                  activeFilter === filter.id ? "text-elec-dark/70" : "text-muted-foreground"
-                )}>
+                <span
+                  className={cn(
+                    'ml-1.5',
+                    activeFilter === filter.id ? 'text-elec-dark/70' : 'text-muted-foreground'
+                  )}
+                >
                   {filter.count}
                 </span>
               </button>
@@ -220,8 +247,8 @@ const QuoteBuilder = () => {
             {/* Quick Stats */}
             <Card
               className={cn(
-                "cursor-pointer active:scale-[0.98] transition-transform",
-                activeFilter === 'pending' && "ring-2 ring-amber-400"
+                'cursor-pointer active:scale-[0.98] transition-transform',
+                activeFilter === 'pending' && 'ring-2 ring-amber-400'
               )}
               onClick={() => handleFilterChange('pending')}
             >
@@ -236,8 +263,8 @@ const QuoteBuilder = () => {
 
             <Card
               className={cn(
-                "cursor-pointer active:scale-[0.98] transition-transform",
-                activeFilter === 'approved' && "ring-2 ring-emerald-400"
+                'cursor-pointer active:scale-[0.98] transition-transform',
+                activeFilter === 'approved' && 'ring-2 ring-emerald-400'
               )}
               onClick={() => handleFilterChange('approved')}
             >
@@ -256,7 +283,9 @@ const QuoteBuilder = () => {
             {/* Section Header */}
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                {activeFilter === 'all' ? 'All Quotes' : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Quotes`}
+                {activeFilter === 'all'
+                  ? 'All Quotes'
+                  : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Quotes`}
               </h2>
               <span className="text-xs text-muted-foreground">
                 {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
@@ -283,7 +312,7 @@ const QuoteBuilder = () => {
                       variant="ghost"
                       size="sm"
                       className="mt-3"
-                      onClick={() => setSearchQuery("")}
+                      onClick={() => setSearchQuery('')}
                     >
                       Clear search
                     </Button>

@@ -12,7 +12,11 @@ export const EmergencyLightingIntroSection2_4 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p className="text-lg leading-relaxed">
-          Escape routes are the designated paths that building occupants must follow to reach a place of safety during an emergency. If the mains lighting fails, people could easily become disorientated or trapped without properly illuminated exit routes. Escape route lighting ensures that corridors, staircases, doorways, and exit signs remain visible, providing safe passage to the outside.
+          Escape routes are the designated paths that building occupants must follow to reach a
+          place of safety during an emergency. If the mains lighting fails, people could easily
+          become disorientated or trapped without properly illuminated exit routes. Escape route
+          lighting ensures that corridors, staircases, doorways, and exit signs remain visible,
+          providing safe passage to the outside.
         </p>
 
         <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
@@ -21,7 +25,10 @@ export const EmergencyLightingIntroSection2_4 = () => {
             <div>
               <h3 className="font-semibold text-red-400 mb-2">Critical Responsibility</h3>
               <p className="text-foreground">
-                For electricians, correct design and installation of escape route lighting is a critical responsibility, as it directly affects life safety and compliance with BS 5266-1. Inadequate escape route lighting can result in tragic consequences during emergencies.
+                For electricians, correct design and installation of escape route lighting is a
+                critical responsibility, as it directly affects life safety and compliance with BS
+                5266-1. Inadequate escape route lighting can result in tragic consequences during
+                emergencies.
               </p>
             </div>
           </div>
@@ -34,7 +41,9 @@ export const EmergencyLightingIntroSection2_4 = () => {
               <h3 className="font-semibold text-blue-400">Life Safety Priority</h3>
             </div>
             <p className="text-foreground">
-              Escape route lighting is fundamentally about preserving human life. When mains lighting fails during an emergency, these systems become the critical difference between safe evacuation and potential disaster.
+              Escape route lighting is fundamentally about preserving human life. When mains
+              lighting fails during an emergency, these systems become the critical difference
+              between safe evacuation and potential disaster.
             </p>
           </div>
 
@@ -44,13 +53,17 @@ export const EmergencyLightingIntroSection2_4 = () => {
               <h3 className="font-semibold text-green-400">BS 5266 Compliance</h3>
             </div>
             <p className="text-foreground">
-              All escape route lighting installations must comply with BS 5266-1, which sets out the minimum standards for illumination levels, placement, and maintenance to ensure effective evacuation routes.
+              All escape route lighting installations must comply with BS 5266-1, which sets out the
+              minimum standards for illumination levels, placement, and maintenance to ensure
+              effective evacuation routes.
             </p>
           </div>
         </div>
 
         <p className="text-foreground leading-relaxed">
-          This section will equip you with the knowledge and practical skills needed to design, install, and maintain escape route lighting systems that meet regulatory requirements and, most importantly, protect lives during emergency situations.
+          This section will equip you with the knowledge and practical skills needed to design,
+          install, and maintain escape route lighting systems that meet regulatory requirements and,
+          most importantly, protect lives during emergency situations.
         </p>
       </CardContent>
     </Card>

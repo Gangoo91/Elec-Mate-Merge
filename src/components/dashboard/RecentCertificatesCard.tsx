@@ -1,7 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { FileText, ArrowRight, Clock, ChevronRight, MapPin, Plus, CloudOff, AlertCircle } from 'lucide-react';
+import {
+  FileText,
+  ArrowRight,
+  Clock,
+  ChevronRight,
+  MapPin,
+  Plus,
+  CloudOff,
+  AlertCircle,
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
@@ -51,7 +60,7 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
   // Create a map of report IDs that have local backups
   const backupMap = useMemo(() => {
     const map = new Map<string, LocalBackup>();
-    localBackups.forEach(backup => {
+    localBackups.forEach((backup) => {
       map.set(backup.reportId, backup);
     });
     return map;
@@ -74,24 +83,32 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
 
   // Count reports with unsynced local changes
   const unsyncedCount = useMemo(() => {
-    return reports.filter(r => hasNewerLocalBackup(r) !== null).length;
+    return reports.filter((r) => hasNewerLocalBackup(r) !== null).length;
   }, [reports, backupMap]);
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'draft': return 'Draft';
-      case 'in-progress': return 'In Progress';
-      case 'completed': return 'Completed';
-      default: return status;
+      case 'draft':
+        return 'Draft';
+      case 'in-progress':
+        return 'In Progress';
+      case 'completed':
+        return 'Completed';
+      default:
+        return status;
     }
   };
 
   const getStatusStyle = (status: string) => {
     switch (status) {
-      case 'draft': return 'bg-amber-500/15 text-amber-400';
-      case 'in-progress': return 'bg-blue-500/15 text-blue-400';
-      case 'completed': return 'bg-green-500/15 text-green-400';
-      default: return 'bg-white/10 text-white/60';
+      case 'draft':
+        return 'bg-amber-500/15 text-amber-400';
+      case 'in-progress':
+        return 'bg-blue-500/15 text-blue-400';
+      case 'completed':
+        return 'bg-green-500/15 text-green-400';
+      default:
+        return 'bg-white/10 text-white/60';
     }
   };
 
@@ -116,10 +133,14 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
 
   const getTypeLabel = (type: string) => {
     switch (type) {
-      case 'minor-works': return 'MW';
-      case 'eic': return 'EIC';
-      case 'eicr': return 'EICR';
-      default: return 'CERT';
+      case 'minor-works':
+        return 'MW';
+      case 'eic':
+        return 'EIC';
+      case 'eicr':
+        return 'EICR';
+      default:
+        return 'CERT';
     }
   };
 
@@ -193,24 +214,30 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
                 exit={{ opacity: 0 }}
                 transition={{ delay: index * 0.03 }}
                 className={cn(
-                  "relative p-3 rounded-xl cursor-pointer",
-                  "bg-black/40 hover:bg-black/50 border border-white/5",
-                  "active:scale-[0.98] transition-all touch-manipulation"
+                  'relative p-3 rounded-xl cursor-pointer',
+                  'bg-black/40 hover:bg-black/50 border border-white/5',
+                  'active:scale-[0.98] transition-all touch-manipulation'
                 )}
                 onClick={() => handleOpenCertificate(report)}
               >
                 {/* Top row: Type badge + Status + Time */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className={cn(
-                    "text-[10px] font-bold px-2 py-0.5 rounded-md",
-                    localBackup ? 'bg-amber-500/20 text-amber-400' : 'bg-elec-yellow/20 text-elec-yellow'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-[10px] font-bold px-2 py-0.5 rounded-md',
+                      localBackup
+                        ? 'bg-amber-500/20 text-amber-400'
+                        : 'bg-elec-yellow/20 text-elec-yellow'
+                    )}
+                  >
                     {getTypeLabel(report.report_type)}
                   </span>
-                  <span className={cn(
-                    'text-[10px] font-medium px-2 py-0.5 rounded-md',
-                    localBackup ? 'bg-amber-500/15 text-amber-400' : getStatusStyle(report.status)
-                  )}>
+                  <span
+                    className={cn(
+                      'text-[10px] font-medium px-2 py-0.5 rounded-md',
+                      localBackup ? 'bg-amber-500/15 text-amber-400' : getStatusStyle(report.status)
+                    )}
+                  >
                     {localBackup ? 'Unsynced' : getStatusLabel(report.status)}
                   </span>
                   <span className="text-[10px] text-white/30 ml-auto">

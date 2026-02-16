@@ -12,20 +12,27 @@ const CustomerHandoverPurposeSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          A professional handover is the final critical step that determines whether a smart home installation succeeds or fails in the client's hands.
+          A professional handover is the final critical step that determines whether a smart home
+          installation succeeds or fails in the client's hands.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Confirms System Operation</h4>
-            <p className="text-gray-300 text-sm">Verifies the system works as designed and meets client expectations</p>
+            <p className="text-gray-300 text-sm">
+              Verifies the system works as designed and meets client expectations
+            </p>
           </div>
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Builds Client Confidence</h4>
-            <p className="text-gray-300 text-sm">Shows clients how to control devices and understand system capabilities</p>
+            <p className="text-gray-300 text-sm">
+              Shows clients how to control devices and understand system capabilities
+            </p>
           </div>
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Reduces Call-backs</h4>
-            <p className="text-gray-300 text-sm">Prevents future support calls caused by misuse or misunderstanding</p>
+            <p className="text-gray-300 text-sm">
+              Prevents future support calls caused by misuse or misunderstanding
+            </p>
           </div>
         </div>
       </CardContent>

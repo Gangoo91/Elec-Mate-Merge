@@ -1,60 +1,60 @@
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, Calculator, RotateCcw, ArrowDownUp, Settings } from "lucide-react";
-import { calculateSelectivity, SelectivityInputs, SelectivityResult } from "@/lib/selectivity";
-import SelectivityInfo from "./selectivity/SelectivityInfo";
-import SelectivityGuidance from "./selectivity/SelectivityGuidance";
+import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileSelectWrapper as MobileSelect } from '@/components/ui/mobile-select-wrapper';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown, Calculator, RotateCcw, ArrowDownUp, Settings } from 'lucide-react';
+import { calculateSelectivity, SelectivityInputs, SelectivityResult } from '@/lib/selectivity';
+import SelectivityInfo from './selectivity/SelectivityInfo';
+import SelectivityGuidance from './selectivity/SelectivityGuidance';
 
 const SelectivityCalculator = () => {
   // Basic inputs
-  const [upstreamDevice, setUpstreamDevice] = useState<string>("mccb");
-  const [upstreamRating, setUpstreamRating] = useState<string>("");
-  const [upstreamCurve, setUpstreamCurve] = useState<string>("");
-  const [downstreamDevice, setDownstreamDevice] = useState<string>("mcb");
-  const [downstreamRating, setDownstreamRating] = useState<string>("");
-  const [downstreamCurve, setDownstreamCurve] = useState<string>("B");
-  const [faultCurrent, setFaultCurrent] = useState<string>("");
-  
+  const [upstreamDevice, setUpstreamDevice] = useState<string>('mccb');
+  const [upstreamRating, setUpstreamRating] = useState<string>('');
+  const [upstreamCurve, setUpstreamCurve] = useState<string>('');
+  const [downstreamDevice, setDownstreamDevice] = useState<string>('mcb');
+  const [downstreamRating, setDownstreamRating] = useState<string>('');
+  const [downstreamCurve, setDownstreamCurve] = useState<string>('B');
+  const [faultCurrent, setFaultCurrent] = useState<string>('');
+
   // Advanced inputs
   const [showAdvanced, setShowAdvanced] = useState<boolean>(false);
-  const [upstreamMagneticSetting, setUpstreamMagneticSetting] = useState<string>("");
-  const [upstreamTimeDelay, setUpstreamTimeDelay] = useState<string>("");
-  const [upstreamBreakingCapacity, setUpstreamBreakingCapacity] = useState<string>("");
-  const [downstreamMagneticSetting, setDownstreamMagneticSetting] = useState<string>("");
-  const [downstreamBreakingCapacity, setDownstreamBreakingCapacity] = useState<string>("");
-  const [shortCircuitCurrent, setShortCircuitCurrent] = useState<string>("");
-  const [loadCurrent, setLoadCurrent] = useState<string>("");
-  const [cableLength, setCableLength] = useState<string>("");
-  const [ambientTemperature, setAmbientTemperature] = useState<string>("");
-  const [installationMethod, setInstallationMethod] = useState<string>("reference-method-c");
-  
+  const [upstreamMagneticSetting, setUpstreamMagneticSetting] = useState<string>('');
+  const [upstreamTimeDelay, setUpstreamTimeDelay] = useState<string>('');
+  const [upstreamBreakingCapacity, setUpstreamBreakingCapacity] = useState<string>('');
+  const [downstreamMagneticSetting, setDownstreamMagneticSetting] = useState<string>('');
+  const [downstreamBreakingCapacity, setDownstreamBreakingCapacity] = useState<string>('');
+  const [shortCircuitCurrent, setShortCircuitCurrent] = useState<string>('');
+  const [loadCurrent, setLoadCurrent] = useState<string>('');
+  const [cableLength, setCableLength] = useState<string>('');
+  const [ambientTemperature, setAmbientTemperature] = useState<string>('');
+  const [installationMethod, setInstallationMethod] = useState<string>('reference-method-c');
+
   const [result, setResult] = useState<SelectivityResult | null>(null);
 
   const deviceTypes = {
-    mcb: "MCB (Miniature Circuit Breaker)",
-    mccb: "MCCB (Moulded Case Circuit Breaker)", 
-    fuse: "Fuse (BS 88/1361)",
-    rcbo: "RCBO (Residual Current Breaker)"
+    mcb: 'MCB (Miniature Circuit Breaker)',
+    mccb: 'MCCB (Moulded Case Circuit Breaker)',
+    fuse: 'Fuse (BS 88/1361)',
+    rcbo: 'RCBO (Residual Current Breaker)',
   };
 
   const mcbCurves = {
-    B: "B Curve (3-5 x In)",
-    C: "C Curve (5-10 x In)",
-    D: "D Curve (10-20 x In)"
+    B: 'B Curve (3-5 x In)',
+    C: 'C Curve (5-10 x In)',
+    D: 'D Curve (10-20 x In)',
   };
 
   const installationMethods = {
-    "reference-method-c": "Reference Method C (Clipped Direct)",
-    "reference-method-a": "Reference Method A (Enclosed)",
-    "reference-method-b": "Reference Method B (Trunking)",
-    "reference-method-e": "Reference Method E (Free Air)",
-    "underground": "Underground (Direct Buried)"
+    'reference-method-c': 'Reference Method C (Clipped Direct)',
+    'reference-method-a': 'Reference Method A (Enclosed)',
+    'reference-method-b': 'Reference Method B (Trunking)',
+    'reference-method-e': 'Reference Method E (Free Air)',
+    underground: 'Underground (Direct Buried)',
   };
 
   const calculateSelectivityResult = () => {
@@ -67,20 +67,28 @@ const SelectivityCalculator = () => {
         upstreamDevice,
         upstreamRating: upRating,
         upstreamCurve,
-        upstreamMagneticSetting: upstreamMagneticSetting ? parseFloat(upstreamMagneticSetting) : undefined,
+        upstreamMagneticSetting: upstreamMagneticSetting
+          ? parseFloat(upstreamMagneticSetting)
+          : undefined,
         upstreamTimeDelay: upstreamTimeDelay ? parseFloat(upstreamTimeDelay) : undefined,
-        upstreamBreakingCapacity: upstreamBreakingCapacity ? parseFloat(upstreamBreakingCapacity) : undefined,
+        upstreamBreakingCapacity: upstreamBreakingCapacity
+          ? parseFloat(upstreamBreakingCapacity)
+          : undefined,
         downstreamDevice,
         downstreamRating: downRating,
         downstreamCurve,
-        downstreamMagneticSetting: downstreamMagneticSetting ? parseFloat(downstreamMagneticSetting) : undefined,
-        downstreamBreakingCapacity: downstreamBreakingCapacity ? parseFloat(downstreamBreakingCapacity) : undefined,
+        downstreamMagneticSetting: downstreamMagneticSetting
+          ? parseFloat(downstreamMagneticSetting)
+          : undefined,
+        downstreamBreakingCapacity: downstreamBreakingCapacity
+          ? parseFloat(downstreamBreakingCapacity)
+          : undefined,
         faultCurrent: faultI,
         shortCircuitCurrent: shortCircuitCurrent ? parseFloat(shortCircuitCurrent) : faultI,
         loadCurrent: loadCurrent ? parseFloat(loadCurrent) : upRating * 0.8,
         cableLength: cableLength ? parseFloat(cableLength) : undefined,
         ambientTemperature: ambientTemperature ? parseFloat(ambientTemperature) : undefined,
-        installationMethod
+        installationMethod,
       };
 
       const calculationResult = calculateSelectivity(inputs);
@@ -89,23 +97,23 @@ const SelectivityCalculator = () => {
   };
 
   const reset = () => {
-    setUpstreamDevice("mccb");
-    setUpstreamRating("");
-    setUpstreamCurve("");
-    setDownstreamDevice("mcb");
-    setDownstreamRating("");
-    setDownstreamCurve("B");
-    setFaultCurrent("");
-    setUpstreamMagneticSetting("");
-    setUpstreamTimeDelay("");
-    setUpstreamBreakingCapacity("");
-    setDownstreamMagneticSetting("");
-    setDownstreamBreakingCapacity("");
-    setShortCircuitCurrent("");
-    setLoadCurrent("");
-    setCableLength("");
-    setAmbientTemperature("");
-    setInstallationMethod("reference-method-c");
+    setUpstreamDevice('mccb');
+    setUpstreamRating('');
+    setUpstreamCurve('');
+    setDownstreamDevice('mcb');
+    setDownstreamRating('');
+    setDownstreamCurve('B');
+    setFaultCurrent('');
+    setUpstreamMagneticSetting('');
+    setUpstreamTimeDelay('');
+    setUpstreamBreakingCapacity('');
+    setDownstreamMagneticSetting('');
+    setDownstreamBreakingCapacity('');
+    setShortCircuitCurrent('');
+    setLoadCurrent('');
+    setCableLength('');
+    setAmbientTemperature('');
+    setInstallationMethod('reference-method-c');
     setResult(null);
   };
 
@@ -119,19 +127,23 @@ const SelectivityCalculator = () => {
             <CardTitle>Selectivity/Discrimination Calculator</CardTitle>
           </div>
           <CardDescription>
-            Calculate protection device selectivity and discrimination for proper fault current coordination.
+            Calculate protection device selectivity and discrimination for proper fault current
+            coordination.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
             <h3 className="text-lg font-medium text-elec-yellow">Upstream Protection</h3>
-            
+
             <MobileSelect
               label="Upstream Device Type"
               placeholder="Select upstream device"
               value={upstreamDevice}
               onValueChange={setUpstreamDevice}
-              options={Object.entries(deviceTypes).map(([key, type]) => ({ value: key, label: type }))}
+              options={Object.entries(deviceTypes).map(([key, type]) => ({
+                value: key,
+                label: type,
+              }))}
             />
 
             <MobileInput
@@ -143,13 +155,16 @@ const SelectivityCalculator = () => {
               unit="A"
             />
 
-            {upstreamDevice === "mcb" && (
+            {upstreamDevice === 'mcb' && (
               <MobileSelect
                 label="Upstream Curve"
                 placeholder="Select curve type"
                 value={upstreamCurve}
                 onValueChange={setUpstreamCurve}
-                options={Object.entries(mcbCurves).map(([key, curve]) => ({ value: key, label: curve }))}
+                options={Object.entries(mcbCurves).map(([key, curve]) => ({
+                  value: key,
+                  label: curve,
+                }))}
               />
             )}
 
@@ -162,7 +177,10 @@ const SelectivityCalculator = () => {
               placeholder="Select downstream device"
               value={downstreamDevice}
               onValueChange={setDownstreamDevice}
-              options={Object.entries(deviceTypes).map(([key, type]) => ({ value: key, label: type }))}
+              options={Object.entries(deviceTypes).map(([key, type]) => ({
+                value: key,
+                label: type,
+              }))}
             />
 
             <MobileInput
@@ -174,13 +192,16 @@ const SelectivityCalculator = () => {
               unit="A"
             />
 
-            {downstreamDevice === "mcb" && (
+            {downstreamDevice === 'mcb' && (
               <MobileSelect
                 label="Downstream Curve"
                 placeholder="Select curve type"
                 value={downstreamCurve}
                 onValueChange={setDownstreamCurve}
-                options={Object.entries(mcbCurves).map(([key, curve]) => ({ value: key, label: curve }))}
+                options={Object.entries(mcbCurves).map(([key, curve]) => ({
+                  value: key,
+                  label: curve,
+                }))}
               />
             )}
 
@@ -196,16 +217,14 @@ const SelectivityCalculator = () => {
             {/* Advanced Settings */}
             <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
               <CollapsibleTrigger asChild>
-                <MobileButton 
-                  variant="outline" 
-                  className="w-full justify-between"
-                  type="button"
-                >
+                <MobileButton variant="outline" className="w-full justify-between" type="button">
                   <div className="flex items-center gap-2">
                     <Settings className="h-4 w-4" />
                     Advanced Settings
                   </div>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`}
+                  />
                 </MobileButton>
               </CollapsibleTrigger>
               <CollapsibleContent className="space-y-4 mt-4">
@@ -238,7 +257,7 @@ const SelectivityCalculator = () => {
                       unit="kA"
                     />
                   </div>
-                  
+
                   <div className="space-y-4">
                     <h4 className="text-sm font-medium text-elec-yellow">Downstream Settings</h4>
                     <MobileInput
@@ -306,9 +325,9 @@ const SelectivityCalculator = () => {
                       placeholder="Select installation method"
                       value={installationMethod}
                       onValueChange={setInstallationMethod}
-                      options={Object.entries(installationMethods).map(([key, method]) => ({ 
-                        value: key, 
-                        label: method 
+                      options={Object.entries(installationMethods).map(([key, method]) => ({
+                        value: key,
+                        label: method,
                       }))}
                     />
                   </div>
@@ -317,7 +336,7 @@ const SelectivityCalculator = () => {
             </Collapsible>
 
             <div className="flex flex-col sm:flex-row gap-2">
-              <MobileButton 
+              <MobileButton
                 onClick={calculateSelectivityResult}
                 variant="elec"
                 size="wide"
@@ -327,12 +346,7 @@ const SelectivityCalculator = () => {
                 <Calculator className="h-4 w-4 mr-2" />
                 Calculate Selectivity
               </MobileButton>
-              <MobileButton 
-                onClick={reset} 
-                variant="outline" 
-                size="default"
-                className="sm:w-auto"
-              >
+              <MobileButton onClick={reset} variant="outline" size="default" className="sm:w-auto">
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>

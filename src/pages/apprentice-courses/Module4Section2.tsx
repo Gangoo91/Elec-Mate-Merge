@@ -1,37 +1,37 @@
-import { ArrowLeft, Ruler, FileText, Wrench, Package } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Ruler, FileText, Wrench, Package } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Using Measurement Tools and Marking Equipment",
-    description: "Proper use of measuring and marking tools for accuracy",
+    number: 'Subsection 1',
+    title: 'Using Measurement Tools and Marking Equipment',
+    description: 'Proper use of measuring and marking tools for accuracy',
     icon: Ruler,
-    href: "2-1"
+    href: '2-1',
   },
   {
-    number: "Subsection 2",
-    title: "Setting Out for Conduit, Trunking, and Accessories",
-    description: "Layout techniques for containment systems and accessories",
+    number: 'Subsection 2',
+    title: 'Setting Out for Conduit, Trunking, and Accessories',
+    description: 'Layout techniques for containment systems and accessories',
     icon: FileText,
-    href: "2-2"
+    href: '2-2',
   },
   {
-    number: "Subsection 3",
-    title: "Following Dimensions, Levels, and Tolerances",
-    description: "Working to specified dimensions and tolerances",
+    number: 'Subsection 3',
+    title: 'Following Dimensions, Levels, and Tolerances',
+    description: 'Working to specified dimensions and tolerances',
     icon: Wrench,
-    href: "2-3"
+    href: '2-3',
   },
   {
-    number: "Subsection 4",
-    title: "Avoiding Common Errors in Measurement and Positioning",
-    description: "Preventing typical measurement and positioning mistakes",
+    number: 'Subsection 4',
+    title: 'Avoiding Common Errors in Measurement and Positioning',
+    description: 'Preventing typical measurement and positioning mistakes',
     icon: Package,
-    href: "2-4"
-  }
+    href: '2-4',
+  },
 ];
 
 const Section2 = () => {

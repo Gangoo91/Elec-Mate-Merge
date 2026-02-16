@@ -12,7 +12,8 @@ export const Amendment3TestingContent = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-gray-300">
-          Amendment 3 introduces specific testing requirements for bidirectional protection systems in renewable energy installations.
+          Amendment 3 introduces specific testing requirements for bidirectional protection systems
+          in renewable energy installations.
         </p>
 
         {/* Bidirectional Protection Testing */}
@@ -24,10 +25,22 @@ export const Amendment3TestingContent = () => {
           <div className="bg-elec-dark p-4 rounded-lg">
             <h4 className="font-medium text-elec-yellow mb-2">Required Tests:</h4>
             <ul className="space-y-2 text-gray-300">
-              <li>• <strong>Continuity Testing:</strong> Verify protection in both forward and reverse current directions</li>
-              <li>• <strong>Operation Time Testing:</strong> Confirm disconnection times meet requirements under reverse current</li>
-              <li>• <strong>Sensitivity Testing:</strong> Test RCD operation at rated current in both directions</li>
-              <li>• <strong>Load Testing:</strong> Verify protection operates correctly under various load conditions</li>
+              <li>
+                • <strong>Continuity Testing:</strong> Verify protection in both forward and reverse
+                current directions
+              </li>
+              <li>
+                • <strong>Operation Time Testing:</strong> Confirm disconnection times meet
+                requirements under reverse current
+              </li>
+              <li>
+                • <strong>Sensitivity Testing:</strong> Test RCD operation at rated current in both
+                directions
+              </li>
+              <li>
+                • <strong>Load Testing:</strong> Verify protection operates correctly under various
+                load conditions
+              </li>
             </ul>
           </div>
         </div>
@@ -41,10 +54,22 @@ export const Amendment3TestingContent = () => {
           <div className="bg-elec-dark p-4 rounded-lg">
             <h4 className="font-medium text-elec-yellow mb-2">Anti-Islanding Function Tests:</h4>
             <ul className="space-y-2 text-gray-300">
-              <li>• <strong>Loss of Mains (LOM) Testing:</strong> Verify automatic disconnection when grid supply fails</li>
-              <li>• <strong>Frequency Protection Testing:</strong> Test response to grid frequency variations</li>
-              <li>• <strong>Voltage Protection Testing:</strong> Verify operation at voltage limit thresholds</li>
-              <li>• <strong>Reconnection Delay Testing:</strong> Confirm proper restart sequence after grid restoration</li>
+              <li>
+                • <strong>Loss of Mains (LOM) Testing:</strong> Verify automatic disconnection when
+                grid supply fails
+              </li>
+              <li>
+                • <strong>Frequency Protection Testing:</strong> Test response to grid frequency
+                variations
+              </li>
+              <li>
+                • <strong>Voltage Protection Testing:</strong> Verify operation at voltage limit
+                thresholds
+              </li>
+              <li>
+                • <strong>Reconnection Delay Testing:</strong> Confirm proper restart sequence after
+                grid restoration
+              </li>
             </ul>
           </div>
         </div>
@@ -58,10 +83,21 @@ export const Amendment3TestingContent = () => {
           <div className="bg-elec-dark p-4 rounded-lg">
             <h4 className="font-medium text-elec-yellow mb-2">Specific Requirements:</h4>
             <ul className="space-y-2 text-gray-300">
-              <li>• <strong>RCD Effectiveness:</strong> Test all RCDs under reverse current conditions</li>
-              <li>• <strong>Main Switch Rating:</strong> Verify adequate breaking capacity for bidirectional operation</li>
-              <li>• <strong>Overcurrent Protection:</strong> Test MCBs and fuses under reverse current scenarios</li>
-              <li>• <strong>Earth Fault Loop:</strong> Measure impedance with renewable energy sources active</li>
+              <li>
+                • <strong>RCD Effectiveness:</strong> Test all RCDs under reverse current conditions
+              </li>
+              <li>
+                • <strong>Main Switch Rating:</strong> Verify adequate breaking capacity for
+                bidirectional operation
+              </li>
+              <li>
+                • <strong>Overcurrent Protection:</strong> Test MCBs and fuses under reverse current
+                scenarios
+              </li>
+              <li>
+                • <strong>Earth Fault Loop:</strong> Measure impedance with renewable energy sources
+                active
+              </li>
             </ul>
           </div>
         </div>

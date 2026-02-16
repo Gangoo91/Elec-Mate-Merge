@@ -8,7 +8,8 @@ const sections = [
   {
     id: 1,
     title: 'Earth Fault Path Principles',
-    description: 'Understanding the earth fault current path and its importance for protective device operation',
+    description:
+      'Understanding the earth fault current path and its importance for protective device operation',
     icon: Route,
   },
   {
@@ -38,7 +39,8 @@ const sections = [
   {
     id: 6,
     title: 'EFLI Testing of RCD-Protected Circuits',
-    description: 'Special considerations for testing earth fault loop impedance on RCD-protected circuits',
+    description:
+      'Special considerations for testing earth fault loop impedance on RCD-protected circuits',
     icon: Shield,
   },
 ];
@@ -46,7 +48,8 @@ const sections = [
 export default function InspectionTestingModule5() {
   useSEO({
     title: 'Module 5: Earth Fault Loop Impedance | Inspection & Testing',
-    description: 'Learn earth fault loop impedance testing including Zs and Ze measurements, maximum values from BS 7671, and RCD-protected circuit testing.',
+    description:
+      'Learn earth fault loop impedance testing including Zs and Ze measurements, maximum values from BS 7671, and RCD-protected circuit testing.',
   });
 
   return (
@@ -80,7 +83,8 @@ export default function InspectionTestingModule5() {
             Earth Fault Loop Impedance
           </h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Master the measurement and verification of earth fault loop impedance to ensure automatic disconnection of supply operates within required times
+            Master the measurement and verification of earth fault loop impedance to ensure
+            automatic disconnection of supply operates within required times
           </p>
         </div>
 

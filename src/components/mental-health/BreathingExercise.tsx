@@ -1,8 +1,7 @@
-
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX, Check } from "lucide-react";
+import { useState, useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX, Check } from 'lucide-react';
 
 interface BreathingExerciseProps {
   onClose: () => void;
@@ -18,9 +17,9 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const phaseConfig = {
-    inhale: { duration: 4, instruction: "Breathe In", color: "from-blue-400 to-cyan-400" },
-    hold: { duration: 4, instruction: "Hold", color: "from-purple-400 to-pink-400" },
-    exhale: { duration: 4, instruction: "Breathe Out", color: "from-green-400 to-emerald-400" }
+    inhale: { duration: 4, instruction: 'Breathe In', color: 'from-blue-400 to-cyan-400' },
+    hold: { duration: 4, instruction: 'Hold', color: 'from-purple-400 to-pink-400' },
+    exhale: { duration: 4, instruction: 'Breathe Out', color: 'from-green-400 to-emerald-400' },
   };
 
   useEffect(() => {
@@ -89,9 +88,9 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   };
 
   const getCurrentColor = () => {
-    if (phase === 'ready') return "from-blue-400/50 to-cyan-400/50";
-    if (phase === 'complete') return "from-green-400 to-emerald-400";
-    return phaseConfig[phase as keyof typeof phaseConfig]?.color || "from-blue-400 to-cyan-400";
+    if (phase === 'ready') return 'from-blue-400/50 to-cyan-400/50';
+    if (phase === 'complete') return 'from-green-400 to-emerald-400';
+    return phaseConfig[phase as keyof typeof phaseConfig]?.color || 'from-blue-400 to-cyan-400';
   };
 
   return (
@@ -128,12 +127,8 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-2">Well Done!</h2>
-              <p className="text-white">
-                You completed {totalCycles} breathing cycles.
-              </p>
-              <p className="text-sm text-white mt-2">
-                Take a moment to notice how you feel.
-              </p>
+              <p className="text-white">You completed {totalCycles} breathing cycles.</p>
+              <p className="text-sm text-white mt-2">Take a moment to notice how you feel.</p>
             </div>
             <div className="flex gap-3 justify-center">
               <Button
@@ -158,7 +153,9 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
             <div className="text-center mb-8">
               <h2 className="text-xl font-semibold text-foreground mb-1">Box Breathing</h2>
               <p className="text-sm text-white">
-                {phase === 'ready' ? 'Find a comfortable position and relax' : `Cycle ${cyclesCompleted + 1} of ${totalCycles}`}
+                {phase === 'ready'
+                  ? 'Find a comfortable position and relax'
+                  : `Cycle ${cyclesCompleted + 1} of ${totalCycles}`}
               </p>
             </div>
 
@@ -178,7 +175,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
                     stroke="currentColor"
                     strokeWidth="4"
                     strokeDasharray={780}
-                    strokeDashoffset={780 - (780 * (cyclesCompleted / totalCycles))}
+                    strokeDashoffset={780 - 780 * (cyclesCompleted / totalCycles)}
                     className="text-green-400/30 transition-all duration-500"
                   />
                 </svg>
@@ -275,10 +272,10 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
         <CardContent className="p-4">
           <p className="text-sm text-white text-center">
             {phase === 'ready'
-              ? "Box breathing helps activate your parasympathetic nervous system, reducing stress and anxiety."
+              ? 'Box breathing helps activate your parasympathetic nervous system, reducing stress and anxiety.'
               : phase === 'complete'
-              ? "Regular practice can help manage stress, improve focus, and promote better sleep."
-              : "Focus on the rhythm. Let your thoughts pass without judgment."}
+                ? 'Regular practice can help manage stress, improve focus, and promote better sleep.'
+                : 'Focus on the rhythm. Let your thoughts pass without judgment.'}
           </p>
         </CardContent>
       </Card>

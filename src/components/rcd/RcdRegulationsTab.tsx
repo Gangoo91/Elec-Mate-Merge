@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookOpen } from 'lucide-react';
@@ -11,9 +10,7 @@ const RcdRegulationsTab = () => {
           <BookOpen className="h-6 w-6 text-elec-yellow" />
           BS7671 Regulation Details
         </CardTitle>
-        <CardDescription>
-          Detailed regulation references and requirements
-        </CardDescription>
+        <CardDescription>Detailed regulation references and requirements</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

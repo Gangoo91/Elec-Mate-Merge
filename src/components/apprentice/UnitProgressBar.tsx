@@ -1,5 +1,4 @@
-
-import { Progress } from "@/components/ui/progress";
+import { Progress } from '@/components/ui/progress';
 
 interface UnitProgressBarProps {
   progressPercent: number;

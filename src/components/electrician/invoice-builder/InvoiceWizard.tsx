@@ -1,16 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  ArrowRight,
-  User,
-  Check,
-  Loader2,
-  Send,
-  Package,
-  Receipt,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, User, Check, Loader2, Send, Package, Receipt } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Quote } from '@/types/quote';
 import { Invoice } from '@/types/invoice';
@@ -59,7 +50,12 @@ interface InvoiceWizardProps {
   };
 }
 
-export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated, initialCertificateData }: InvoiceWizardProps) => {
+export const InvoiceWizard = ({
+  sourceQuote,
+  existingInvoice,
+  onInvoiceGenerated,
+  initialCertificateData,
+}: InvoiceWizardProps) => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -88,31 +84,36 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   const defaultPaymentTerms = companyProfile?.payment_terms || '30 days';
 
   // Merge certificate data into existing invoice for proper initialization
-  const mergedExistingInvoice = initialCertificateData && !existingInvoice && !sourceQuote
-    ? {
-        client: initialCertificateData.client,
-        jobDetails: initialCertificateData.jobDetails,
-        // Include settings from company profile so useInvoiceBuilder can calculate totals
-        items: [],
-        additional_invoice_items: [],
-        settings: {
-          labourRate: defaultLabourRate,
-          overheadPercentage: defaultOverhead,
-          profitMargin: defaultProfitMargin,
-          vatRate: 20,
-          vatRegistered: !!companyProfile?.vat_number,
-          paymentTerms: defaultPaymentTerms,
-          dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        },
-        // Include linked certificate data for attachment support
-        ...(initialCertificateData.linkedCertificate && {
-          linked_certificate_id: initialCertificateData.linkedCertificate.reportId,
-          linked_certificate_type: initialCertificateData.linkedCertificate.certificateType as 'EICR' | 'EIC' | 'Minor Works',
-          linked_certificate_reference: initialCertificateData.linkedCertificate.certificateReference,
-          linked_certificate_pdf_url: initialCertificateData.linkedCertificate.pdfUrl,
-        }),
-      }
-    : existingInvoice;
+  const mergedExistingInvoice =
+    initialCertificateData && !existingInvoice && !sourceQuote
+      ? {
+          client: initialCertificateData.client,
+          jobDetails: initialCertificateData.jobDetails,
+          // Include settings from company profile so useInvoiceBuilder can calculate totals
+          items: [],
+          additional_invoice_items: [],
+          settings: {
+            labourRate: defaultLabourRate,
+            overheadPercentage: defaultOverhead,
+            profitMargin: defaultProfitMargin,
+            vatRate: 20,
+            vatRegistered: !!companyProfile?.vat_number,
+            paymentTerms: defaultPaymentTerms,
+            dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+          },
+          // Include linked certificate data for attachment support
+          ...(initialCertificateData.linkedCertificate && {
+            linked_certificate_id: initialCertificateData.linkedCertificate.reportId,
+            linked_certificate_type: initialCertificateData.linkedCertificate.certificateType as
+              | 'EICR'
+              | 'EIC'
+              | 'Minor Works',
+            linked_certificate_reference:
+              initialCertificateData.linkedCertificate.certificateReference,
+            linked_certificate_pdf_url: initialCertificateData.linkedCertificate.pdfUrl,
+          }),
+        }
+      : existingInvoice;
 
   const invoiceBuilder = useInvoiceBuilder(sourceQuote, mergedExistingInvoice);
   const { saveInvoice } = useInvoiceStorage();
@@ -133,7 +134,12 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
 
     const saveTimer = setInterval(() => {
       const invoice = invoiceBuilder.invoice;
-      if (invoice.client?.name || invoice.jobDetails?.title || (invoice.items && invoice.items.length > 0) || (invoice.additional_invoice_items && invoice.additional_invoice_items.length > 0)) {
+      if (
+        invoice.client?.name ||
+        invoice.jobDetails?.title ||
+        (invoice.items && invoice.items.length > 0) ||
+        (invoice.additional_invoice_items && invoice.additional_invoice_items.length > 0)
+      ) {
         setIsSaving(true);
         draftStorage.saveDraft('invoice', invoice.id || null, {
           client: invoice.client,
@@ -158,10 +164,13 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
       if (recoveredDraft.client) invoiceBuilder.updateClientDetails(recoveredDraft.client);
       if (recoveredDraft.jobDetails) invoiceBuilder.updateJobDetails(recoveredDraft.jobDetails);
       if (recoveredDraft.additional_invoice_items) {
-        recoveredDraft.additional_invoice_items.forEach((item: any) => invoiceBuilder.addInvoiceItem(item));
+        recoveredDraft.additional_invoice_items.forEach((item: any) =>
+          invoiceBuilder.addInvoiceItem(item)
+        );
       }
       if (recoveredDraft.settings) invoiceBuilder.updateInvoiceSettings(recoveredDraft.settings);
-      if (recoveredDraft.invoice_notes) invoiceBuilder.setInvoiceNotes(recoveredDraft.invoice_notes);
+      if (recoveredDraft.invoice_notes)
+        invoiceBuilder.setInvoiceNotes(recoveredDraft.invoice_notes);
       setShowRecoveryBanner(false);
       setRecoveredDraft(null);
     }
@@ -301,8 +310,8 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
               <h3 className="font-semibold text-amber-400 mb-1">Recover Unsaved Invoice?</h3>
               <p className="text-sm text-white/70">
                 You have an unsaved invoice draft
-                {recoveredDraft.client?.name && ` for ${recoveredDraft.client.name}`}.
-                Would you like to recover it?
+                {recoveredDraft.client?.name && ` for ${recoveredDraft.client.name}`}. Would you
+                like to recover it?
               </p>
             </div>
             <div className="flex gap-2 flex-shrink-0">
@@ -351,25 +360,23 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
                 }}
                 disabled={!isComplete && !isActive}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2.5 rounded-full transition-all active:scale-95",
-                  isComplete && "bg-emerald-500/20 text-emerald-400 cursor-pointer",
-                  isActive && "bg-elec-yellow text-elec-dark font-semibold",
-                  !isComplete && !isActive && "bg-elec-gray/30 text-muted-foreground"
+                  'flex items-center gap-2 px-4 py-2.5 rounded-full transition-all active:scale-95',
+                  isComplete && 'bg-emerald-500/20 text-emerald-400 cursor-pointer',
+                  isActive && 'bg-elec-yellow text-elec-dark font-semibold',
+                  !isComplete && !isActive && 'bg-elec-gray/30 text-muted-foreground'
                 )}
               >
-                {isComplete ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <Icon className="h-4 w-4" />
-                )}
+                {isComplete ? <Check className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
                 <span className="text-sm hidden sm:inline">{step.title}</span>
                 <span className="text-sm sm:hidden">{step.shortTitle}</span>
               </button>
               {index < steps.length - 1 && (
-                <div className={cn(
-                  "w-6 h-0.5 rounded-full",
-                  currentStep > index ? "bg-emerald-500" : "bg-elec-gray/50"
-                )} />
+                <div
+                  className={cn(
+                    'w-6 h-0.5 rounded-full',
+                    currentStep > index ? 'bg-emerald-500' : 'bg-elec-gray/50'
+                  )}
+                />
               )}
             </React.Fragment>
           );
@@ -377,9 +384,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
       </div>
 
       {/* Step Content */}
-      <div>
-        {renderStep()}
-      </div>
+      <div>{renderStep()}</div>
 
       {/* Bottom Navigation - Fixed (matching quote wizard) */}
       <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 px-4 py-4 z-30">

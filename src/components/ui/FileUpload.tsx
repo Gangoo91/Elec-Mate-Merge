@@ -28,14 +28,14 @@ interface FileUploadProps {
 
 const FileUpload = ({
   onFileUpload,
-  accept = "*/*",
+  accept = '*/*',
   maxSize = 10,
   maxFiles = 5,
-  bucket = "evidence-files",
-  folder = "portfolio",
+  bucket = 'evidence-files',
+  folder = 'portfolio',
   multiple = true,
   disabled = false,
-  className = ""
+  className = '',
 }: FileUploadProps) => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -50,7 +50,7 @@ const FileUpload = ({
     }
 
     // Check file type if accept is specified and not wildcard
-    if (accept !== "*/*" && !accept.includes(file.type)) {
+    if (accept !== '*/*' && !accept.includes(file.type)) {
       return `File type ${file.type} is not supported`;
     }
 
@@ -61,18 +61,16 @@ const FileUpload = ({
     const fileName = `${Date.now()}_${file.name}`;
     const filePath = folder ? `${folder}/${fileName}` : fileName;
 
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(filePath, file);
+    const { data, error } = await supabase.storage.from(bucket).upload(filePath, file);
 
     if (error) {
       throw new Error(`Upload failed: ${error.message}`);
     }
 
     // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(filePath);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from(bucket).getPublicUrl(filePath);
 
     return {
       id: data.path,
@@ -80,7 +78,7 @@ const FileUpload = ({
       size: file.size,
       type: file.type,
       url: publicUrl,
-      uploadedAt: new Date().toISOString()
+      uploadedAt: new Date().toISOString(),
     };
   };
 
@@ -88,13 +86,13 @@ const FileUpload = ({
     if (disabled) return;
 
     const fileArray = Array.from(files);
-    
+
     // Check max files limit
     if (uploadedFiles.length + fileArray.length > maxFiles) {
       toast({
-        title: "Too many files",
+        title: 'Too many files',
         description: `Maximum ${maxFiles} files allowed`,
-        variant: "destructive"
+        variant: 'destructive',
       });
       return;
     }
@@ -114,9 +112,9 @@ const FileUpload = ({
 
     if (validationErrors.length > 0) {
       toast({
-        title: "File validation failed",
+        title: 'File validation failed',
         description: validationErrors.join(', '),
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
 
@@ -125,23 +123,23 @@ const FileUpload = ({
     setIsUploading(true);
 
     try {
-      const uploadPromises = validFiles.map(file => uploadFileToSupabase(file));
+      const uploadPromises = validFiles.map((file) => uploadFileToSupabase(file));
       const uploadedFileResults = await Promise.all(uploadPromises);
-      
+
       const newUploadedFiles = [...uploadedFiles, ...uploadedFileResults];
       setUploadedFiles(newUploadedFiles);
       onFileUpload(newUploadedFiles);
 
       toast({
-        title: "Upload successful",
+        title: 'Upload successful',
         description: `${uploadedFileResults.length} file(s) uploaded successfully`,
       });
     } catch (error) {
       console.error('Upload error:', error);
       toast({
-        title: "Upload failed",
-        description: error instanceof Error ? error.message : "An error occurred during upload",
-        variant: "destructive"
+        title: 'Upload failed',
+        description: error instanceof Error ? error.message : 'An error occurred during upload',
+        variant: 'destructive',
       });
     } finally {
       setIsUploading(false);
@@ -151,29 +149,27 @@ const FileUpload = ({
   const removeFile = async (fileId: string) => {
     try {
       // Remove from Supabase storage
-      const { error } = await supabase.storage
-        .from(bucket)
-        .remove([fileId]);
+      const { error } = await supabase.storage.from(bucket).remove([fileId]);
 
       if (error) {
         console.error('Error removing file from storage:', error);
       }
 
       // Remove from local state
-      const newFiles = uploadedFiles.filter(file => file.id !== fileId);
+      const newFiles = uploadedFiles.filter((file) => file.id !== fileId);
       setUploadedFiles(newFiles);
       onFileUpload(newFiles);
 
       toast({
-        title: "File removed",
-        description: "File has been removed successfully",
+        title: 'File removed',
+        description: 'File has been removed successfully',
       });
     } catch (error) {
       console.error('Remove file error:', error);
       toast({
-        title: "Remove failed",
-        description: "Failed to remove file",
-        variant: "destructive"
+        title: 'Remove failed',
+        description: 'Failed to remove file',
+        variant: 'destructive',
       });
     }
   };
@@ -197,15 +193,18 @@ const FileUpload = ({
     setDragActive(false);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      handleFiles(e.dataTransfer.files);
-    }
-  }, [uploadedFiles, disabled]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setDragActive(false);
+
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFiles(e.dataTransfer.files);
+      }
+    },
+    [uploadedFiles, disabled]
+  );
 
   const formatFileSize = (bytes: number): string => {
     if (bytes === 0) return '0 Bytes';
@@ -239,9 +238,11 @@ const FileUpload = ({
           className="hidden"
           disabled={disabled}
         />
-        
+
         <div className="space-y-4">
-          <Upload className={`h-12 w-12 mx-auto ${isUploading ? 'animate-pulse' : ''} text-muted-foreground`} />
+          <Upload
+            className={`h-12 w-12 mx-auto ${isUploading ? 'animate-pulse' : ''} text-muted-foreground`}
+          />
           <div>
             <p className="text-lg font-medium">
               {isUploading ? 'Uploading files...' : 'Drop files here or click to browse'}
@@ -249,13 +250,11 @@ const FileUpload = ({
             <p className="text-sm text-muted-foreground mt-1">
               Max {maxFiles} files, {maxSize}MB each
             </p>
-            {accept !== "*/*" && (
-              <p className="text-xs text-muted-foreground mt-1">
-                Accepted types: {accept}
-              </p>
+            {accept !== '*/*' && (
+              <p className="text-xs text-muted-foreground mt-1">Accepted types: {accept}</p>
             )}
           </div>
-          
+
           {!disabled && (
             <Button variant="outline" type="button" disabled={isUploading}>
               <Upload className="h-4 w-4 mr-2" />
@@ -270,7 +269,10 @@ const FileUpload = ({
         <div className="mt-4 space-y-2">
           <h4 className="text-sm font-medium">Uploaded Files ({uploadedFiles.length})</h4>
           {uploadedFiles.map((file) => (
-            <div key={file.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+            <div
+              key={file.id}
+              className="flex items-center justify-between p-3 bg-muted rounded-lg"
+            >
               <div className="flex items-center space-x-3">
                 <File className="h-5 w-5 text-muted-foreground" />
                 <div>

@@ -1,8 +1,7 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { FileText } from "lucide-react";
-import JobCard from "./JobCard";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { FileText } from 'lucide-react';
+import JobCard from './JobCard';
 
 interface JobListing {
   id: string;
@@ -28,12 +27,12 @@ interface JobGridProps {
   isLoading: boolean;
 }
 
-const JobGrid: React.FC<JobGridProps> = ({ 
-  jobs, 
-  selectedJob, 
-  handleApply, 
+const JobGrid: React.FC<JobGridProps> = ({
+  jobs,
+  selectedJob,
+  handleApply,
   resetFilters,
-  isLoading
+  isLoading,
 }) => {
   if (isLoading) {
     return (
@@ -50,10 +49,12 @@ const JobGrid: React.FC<JobGridProps> = ({
       <div className="bg-gradient-to-br from-white/5 via-white/2 to-transparent border border-white/10 rounded-xl p-8 text-center backdrop-blur-sm">
         <FileText className="h-16 w-16 text-foreground/40 mx-auto mb-4" />
         <h3 className="text-lg font-medium text-foreground mb-2">No matching jobs found</h3>
-        <p className="text-foreground/80 mt-1">Try adjusting your filters or check back later for new opportunities</p>
-        <Button 
-          onClick={resetFilters} 
-          variant="outline" 
+        <p className="text-foreground/80 mt-1">
+          Try adjusting your filters or check back later for new opportunities
+        </p>
+        <Button
+          onClick={resetFilters}
+          variant="outline"
           className="mt-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
         >
           View All Jobs
@@ -64,13 +65,8 @@ const JobGrid: React.FC<JobGridProps> = ({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
-      {jobs.map(job => (
-        <JobCard
-          key={job.id}
-          job={job}
-          selectedJob={selectedJob}
-          handleApply={handleApply}
-        />
+      {jobs.map((job) => (
+        <JobCard key={job.id} job={job} selectedJob={selectedJob} handleApply={handleApply} />
       ))}
     </div>
   );

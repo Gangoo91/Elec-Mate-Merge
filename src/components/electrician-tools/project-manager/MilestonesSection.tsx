@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle2 } from 'lucide-react';
 
 interface Milestone {
   milestone?: string;
@@ -24,21 +24,20 @@ const MilestonesSection = ({ milestones }: MilestonesSectionProps) => {
       </CardHeader>
       <CardContent className="space-y-2">
         {milestones.map((milestone, idx) => {
-          const text = typeof milestone === 'string' 
-            ? milestone 
-            : milestone.milestone || milestone.name || 'Milestone';
+          const text =
+            typeof milestone === 'string'
+              ? milestone
+              : milestone.milestone || milestone.name || 'Milestone';
           const date = typeof milestone !== 'string' ? milestone.date : null;
 
           return (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className="flex items-center gap-3 text-sm p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
             >
               <div className="w-2 h-2 rounded-full bg-pink-400 flex-shrink-0" />
               <div className="flex-1 text-foreground">{text}</div>
-              {date && (
-                <span className="text-foreground/60 text-xs">{date}</span>
-              )}
+              {date && <span className="text-foreground/60 text-xs">{date}</span>}
             </div>
           );
         })}

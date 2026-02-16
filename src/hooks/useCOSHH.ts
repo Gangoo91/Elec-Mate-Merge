@@ -28,6 +28,9 @@ export interface COSHHAssessment {
   assessed_by: string;
   assessment_date: string;
   review_date: string;
+  assessor_signature: string | null;
+  reviewer_signature: string | null;
+  reviewer_name: string | null;
   pdf_url: string | null;
   created_at: string;
   updated_at: string;

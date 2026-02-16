@@ -1,200 +1,215 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Benefits and Applications - Smart Home Technology Module 1 Section 2";
-const DESCRIPTION = "Explore smart home benefits and applications across lighting, HVAC, security, and accessibility. Learn about energy efficiency, automation, and system integration.";
+const TITLE = 'Benefits and Applications - Smart Home Technology Module 1 Section 2';
+const DESCRIPTION =
+  'Explore smart home benefits and applications across lighting, HVAC, security, and accessibility. Learn about energy efficiency, automation, and system integration.';
 
 const quickCheckQuestions = [
   {
-    id: "smart-lighting-benefit",
-    question: "What is a primary benefit of smart lighting systems?",
+    id: 'smart-lighting-benefit',
+    question: 'What is a primary benefit of smart lighting systems?',
     options: [
-      "Increased electricity consumption",
-      "Manual control only",
-      "Automated energy savings through occupancy sensing and scheduling",
-      "Fixed brightness levels"
+      'Increased electricity consumption',
+      'Manual control only',
+      'Automated energy savings through occupancy sensing and scheduling',
+      'Fixed brightness levels',
     ],
     correctIndex: 2,
-    explanation: "Smart lighting systems can significantly reduce energy consumption through occupancy sensing, daylight harvesting, and automated scheduling that turns lights off when not needed."
+    explanation:
+      'Smart lighting systems can significantly reduce energy consumption through occupancy sensing, daylight harvesting, and automated scheduling that turns lights off when not needed.',
   },
   {
-    id: "hvac-efficiency",
-    question: "How do smart HVAC systems improve energy efficiency?",
+    id: 'hvac-efficiency',
+    question: 'How do smart HVAC systems improve energy efficiency?',
     options: [
-      "By running continuously at maximum power",
-      "Through zone control and learning user patterns",
-      "By disabling all automation features",
-      "Through manual-only temperature adjustments"
+      'By running continuously at maximum power',
+      'Through zone control and learning user patterns',
+      'By disabling all automation features',
+      'Through manual-only temperature adjustments',
     ],
     correctIndex: 1,
-    explanation: "Smart HVAC systems improve efficiency through zone control, learning user patterns, and adjusting temperatures based on occupancy and external conditions."
+    explanation:
+      'Smart HVAC systems improve efficiency through zone control, learning user patterns, and adjusting temperatures based on occupancy and external conditions.',
   },
   {
-    id: "accessibility-features",
-    question: "Which feature makes smart homes particularly beneficial for users with mobility limitations?",
+    id: 'accessibility-features',
+    question:
+      'Which feature makes smart homes particularly beneficial for users with mobility limitations?',
     options: [
-      "Complex touch screen controls",
-      "Voice control and automated assistance",
-      "Manual switches throughout the property",
-      "Reduced device functionality"
+      'Complex touch screen controls',
+      'Voice control and automated assistance',
+      'Manual switches throughout the property',
+      'Reduced device functionality',
     ],
     correctIndex: 1,
-    explanation: "Voice control and automated assistance allow users with mobility limitations to control their home environment without physical interaction with switches or controls."
-  }
+    explanation:
+      'Voice control and automated assistance allow users with mobility limitations to control their home environment without physical interaction with switches or controls.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What percentage of energy savings can smart lighting systems typically achieve?",
-    options: [
-      "5-10%",
-      "15-25%",
-      "30-60%",
-      "80-90%"
-    ],
+    question: 'What percentage of energy savings can smart lighting systems typically achieve?',
+    options: ['5-10%', '15-25%', '30-60%', '80-90%'],
     correctAnswer: 2,
-    explanation: "Smart lighting systems can typically achieve 30-60% energy savings through occupancy sensing, daylight harvesting, and automated scheduling."
+    explanation:
+      'Smart lighting systems can typically achieve 30-60% energy savings through occupancy sensing, daylight harvesting, and automated scheduling.',
   },
   {
     id: 2,
-    question: "Which smart lighting feature adjusts artificial light based on natural daylight levels?",
+    question:
+      'Which smart lighting feature adjusts artificial light based on natural daylight levels?',
     options: [
-      "Colour temperature control",
-      "Daylight harvesting",
-      "Motion sensing",
-      "Scene programming"
+      'Colour temperature control',
+      'Daylight harvesting',
+      'Motion sensing',
+      'Scene programming',
     ],
     correctAnswer: 1,
-    explanation: "Daylight harvesting automatically adjusts artificial lighting levels based on the amount of natural daylight entering a space, reducing unnecessary energy consumption."
+    explanation:
+      'Daylight harvesting automatically adjusts artificial lighting levels based on the amount of natural daylight entering a space, reducing unnecessary energy consumption.',
   },
   {
     id: 3,
-    question: "What is zone control in smart HVAC systems?",
+    question: 'What is zone control in smart HVAC systems?',
     options: [
-      "Heating the entire building uniformly",
-      "Independent temperature control for different areas",
-      "Manual thermostat adjustment",
-      "Single-point temperature sensing"
+      'Heating the entire building uniformly',
+      'Independent temperature control for different areas',
+      'Manual thermostat adjustment',
+      'Single-point temperature sensing',
     ],
     correctAnswer: 1,
-    explanation: "Zone control allows different areas of a building to be heated or cooled independently, optimising comfort and reducing energy waste in unoccupied zones."
+    explanation:
+      'Zone control allows different areas of a building to be heated or cooled independently, optimising comfort and reducing energy waste in unoccupied zones.',
   },
   {
     id: 4,
-    question: "Which security feature provides both visual monitoring and communication with visitors?",
-    options: [
-      "Motion sensors",
-      "Smart locks",
-      "Video doorbells",
-      "Window sensors"
-    ],
+    question:
+      'Which security feature provides both visual monitoring and communication with visitors?',
+    options: ['Motion sensors', 'Smart locks', 'Video doorbells', 'Window sensors'],
     correctAnswer: 2,
-    explanation: "Video doorbells combine visual monitoring with two-way communication, allowing homeowners to see and speak with visitors remotely."
+    explanation:
+      'Video doorbells combine visual monitoring with two-way communication, allowing homeowners to see and speak with visitors remotely.',
   },
   {
     id: 5,
-    question: "What type of smart home feature can detect water leaks and prevent flooding?",
+    question: 'What type of smart home feature can detect water leaks and prevent flooding?',
     options: [
-      "Smart lighting",
-      "Environmental sensors",
-      "Voice assistants",
-      "Entertainment systems"
+      'Smart lighting',
+      'Environmental sensors',
+      'Voice assistants',
+      'Entertainment systems',
     ],
     correctAnswer: 1,
-    explanation: "Environmental sensors can detect water leaks, humidity changes, and other conditions that might indicate flooding risk, allowing for early intervention."
+    explanation:
+      'Environmental sensors can detect water leaks, humidity changes, and other conditions that might indicate flooding risk, allowing for early intervention.',
   },
   {
     id: 6,
-    question: "How do smart security systems provide enhanced protection compared to traditional systems?",
+    question:
+      'How do smart security systems provide enhanced protection compared to traditional systems?',
     options: [
-      "Through manual monitoring only",
-      "By using louder alarms",
-      "Through integration, remote access, and intelligent alerts",
-      "By requiring physical key access"
+      'Through manual monitoring only',
+      'By using louder alarms',
+      'Through integration, remote access, and intelligent alerts',
+      'By requiring physical key access',
     ],
     correctAnswer: 2,
-    explanation: "Smart security systems enhance protection through integration of multiple sensors, remote monitoring access, intelligent alerts, and automated responses to detected threats."
+    explanation:
+      'Smart security systems enhance protection through integration of multiple sensors, remote monitoring access, intelligent alerts, and automated responses to detected threats.',
   },
   {
     id: 7,
-    question: "What accessibility benefit do voice-controlled smart home systems provide?",
+    question: 'What accessibility benefit do voice-controlled smart home systems provide?',
     options: [
-      "Louder audio feedback",
-      "Hands-free control of home functions",
-      "More physical switches",
-      "Complex menu navigation"
+      'Louder audio feedback',
+      'Hands-free control of home functions',
+      'More physical switches',
+      'Complex menu navigation',
     ],
     correctAnswer: 1,
-    explanation: "Voice control enables hands-free operation of lighting, climate, entertainment, and security systems, particularly beneficial for users with mobility or dexterity limitations."
+    explanation:
+      'Voice control enables hands-free operation of lighting, climate, entertainment, and security systems, particularly beneficial for users with mobility or dexterity limitations.',
   },
   {
     id: 8,
-    question: "Which smart home application helps manage energy costs during peak demand periods?",
+    question: 'Which smart home application helps manage energy costs during peak demand periods?',
     options: [
-      "Entertainment systems",
-      "Demand response and load shifting",
-      "Decorative lighting",
-      "Background music"
+      'Entertainment systems',
+      'Demand response and load shifting',
+      'Decorative lighting',
+      'Background music',
     ],
     correctAnswer: 1,
-    explanation: "Demand response and load shifting capabilities allow smart homes to reduce consumption during peak pricing periods, lowering energy costs while maintaining comfort."
+    explanation:
+      'Demand response and load shifting capabilities allow smart homes to reduce consumption during peak pricing periods, lowering energy costs while maintaining comfort.',
   },
   {
     id: 9,
-    question: "What type of sensor is commonly used to optimise HVAC operation based on room usage?",
+    question:
+      'What type of sensor is commonly used to optimise HVAC operation based on room usage?',
     options: [
-      "Light sensors",
-      "Occupancy and presence sensors",
-      "Smoke detectors",
-      "Water sensors"
+      'Light sensors',
+      'Occupancy and presence sensors',
+      'Smoke detectors',
+      'Water sensors',
     ],
     correctAnswer: 1,
-    explanation: "Occupancy and presence sensors detect whether rooms are in use, allowing HVAC systems to reduce heating or cooling in unoccupied spaces."
+    explanation:
+      'Occupancy and presence sensors detect whether rooms are in use, allowing HVAC systems to reduce heating or cooling in unoccupied spaces.',
   },
   {
     id: 10,
-    question: "How do smart window blinds contribute to energy efficiency?",
+    question: 'How do smart window blinds contribute to energy efficiency?',
     options: [
-      "By staying permanently closed",
-      "Through automated adjustment based on sun position and temperature",
-      "By requiring manual operation",
-      "Through decorative effects only"
+      'By staying permanently closed',
+      'Through automated adjustment based on sun position and temperature',
+      'By requiring manual operation',
+      'Through decorative effects only',
     ],
     correctAnswer: 1,
-    explanation: "Smart blinds automatically adjust based on sun position, outdoor temperature, and time of day to optimise natural light and reduce heating or cooling loads."
-  }
+    explanation:
+      'Smart blinds automatically adjust based on sun position, outdoor temperature, and time of day to optimise natural light and reduce heating or cooling loads.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How much can I save on energy bills with smart lighting?",
-    answer: "Smart lighting systems typically achieve 30-60% energy savings compared to traditional lighting. Savings come from occupancy sensing, daylight harvesting, scheduling, and the ability to easily turn off lights in unoccupied areas. LED bulbs combined with smart controls maximise efficiency."
+    question: 'How much can I save on energy bills with smart lighting?',
+    answer:
+      'Smart lighting systems typically achieve 30-60% energy savings compared to traditional lighting. Savings come from occupancy sensing, daylight harvesting, scheduling, and the ability to easily turn off lights in unoccupied areas. LED bulbs combined with smart controls maximise efficiency.',
   },
   {
-    question: "Are smart security systems reliable during power outages?",
-    answer: "Quality smart security systems include battery backup for critical components like door sensors, cameras, and control hubs. Many can continue monitoring and alerting during outages. However, features requiring internet connectivity will be limited until power and connectivity are restored."
+    question: 'Are smart security systems reliable during power outages?',
+    answer:
+      'Quality smart security systems include battery backup for critical components like door sensors, cameras, and control hubs. Many can continue monitoring and alerting during outages. However, features requiring internet connectivity will be limited until power and connectivity are restored.',
   },
   {
-    question: "Can smart HVAC systems work with my existing heating system?",
-    answer: "Most smart thermostats are designed to work with common heating systems including combi boilers, system boilers, and heat pumps. However, compatibility varies, so always check specifications. Some older or unusual systems may require additional components or professional installation."
+    question: 'Can smart HVAC systems work with my existing heating system?',
+    answer:
+      'Most smart thermostats are designed to work with common heating systems including combi boilers, system boilers, and heat pumps. However, compatibility varies, so always check specifications. Some older or unusual systems may require additional components or professional installation.',
   },
   {
-    question: "How do smart homes help elderly or disabled residents?",
-    answer: "Smart homes offer voice control for hands-free operation, automated routines reducing physical tasks, remote monitoring for caregivers, fall detection sensors, medication reminders, and simplified interfaces. These features promote independence while maintaining safety."
+    question: 'How do smart homes help elderly or disabled residents?',
+    answer:
+      'Smart homes offer voice control for hands-free operation, automated routines reducing physical tasks, remote monitoring for caregivers, fall detection sensors, medication reminders, and simplified interfaces. These features promote independence while maintaining safety.',
   },
   {
-    question: "What happens if my smart home system loses internet connection?",
-    answer: "Local processing in hubs means basic automation often continues working. Smart locks, lighting schedules, and sensor-triggered actions typically function offline. However, remote access, voice assistants, and cloud-dependent features will be unavailable until connectivity returns."
+    question: 'What happens if my smart home system loses internet connection?',
+    answer:
+      'Local processing in hubs means basic automation often continues working. Smart locks, lighting schedules, and sensor-triggered actions typically function offline. However, remote access, voice assistants, and cloud-dependent features will be unavailable until connectivity returns.',
   },
   {
-    question: "Are smart home security cameras secure from hackers?",
-    answer: "Security depends on proper setup: use strong unique passwords, enable two-factor authentication, keep firmware updated, use encrypted connections, and consider cameras with local storage. Reputable brands prioritise security, but users must follow best practices."
-  }
+    question: 'Are smart home security cameras secure from hackers?',
+    answer:
+      'Security depends on proper setup: use strong unique passwords, enable two-factor authentication, keep firmware updated, use encrypted connections, and consider cameras with local storage. Reputable brands prioritise security, but users must follow best practices.',
+  },
 ];
 
 const SmartHomeModule1Section2 = () => {
@@ -205,7 +220,12 @@ const SmartHomeModule1Section2 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/smart-home-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -216,7 +236,6 @@ const SmartHomeModule1Section2 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -236,18 +255,32 @@ const SmartHomeModule1Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Lighting:</strong> 30-60% energy savings potential</li>
-              <li><strong>HVAC:</strong> Zone control, learning thermostats</li>
-              <li><strong>Security:</strong> Integrated monitoring, remote access</li>
-              <li><strong>Accessibility:</strong> Voice control, automated assistance</li>
+              <li>
+                <strong>Lighting:</strong> 30-60% energy savings potential
+              </li>
+              <li>
+                <strong>HVAC:</strong> Zone control, learning thermostats
+              </li>
+              <li>
+                <strong>Security:</strong> Integrated monitoring, remote access
+              </li>
+              <li>
+                <strong>Accessibility:</strong> Voice control, automated assistance
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Occupancy sensors, smart thermostats, video doorbells</li>
-              <li><strong>Use:</strong> Energy audits, system design, client consultations</li>
-              <li><strong>Apply:</strong> Cost-benefit analysis, system recommendations</li>
+              <li>
+                <strong>Spot:</strong> Occupancy sensors, smart thermostats, video doorbells
+              </li>
+              <li>
+                <strong>Use:</strong> Energy audits, system design, client consultations
+              </li>
+              <li>
+                <strong>Apply:</strong> Cost-benefit analysis, system recommendations
+              </li>
             </ul>
           </div>
         </div>
@@ -257,12 +290,12 @@ const SmartHomeModule1Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand smart lighting benefits including energy savings and automation",
-              "Explain smart HVAC systems and zone control advantages",
-              "Evaluate smart security system features and integration options",
-              "Assess accessibility benefits for elderly and disabled users",
-              "Calculate potential energy savings from smart home installations",
-              "Recommend appropriate smart home solutions for different client needs"
+              'Understand smart lighting benefits including energy savings and automation',
+              'Explain smart HVAC systems and zone control advantages',
+              'Evaluate smart security system features and integration options',
+              'Assess accessibility benefits for elderly and disabled users',
+              'Calculate potential energy savings from smart home installations',
+              'Recommend appropriate smart home solutions for different client needs',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -283,20 +316,38 @@ const SmartHomeModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart lighting represents one of the most impactful and accessible entry points into home automation.
-              These systems combine LED technology with intelligent controls to deliver significant energy savings,
-              enhanced convenience, and improved quality of life.
+              Smart lighting represents one of the most impactful and accessible entry points into
+              home automation. These systems combine LED technology with intelligent controls to
+              deliver significant energy savings, enhanced convenience, and improved quality of
+              life.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Features:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Occupancy Sensing:</strong> Lights automatically turn on when rooms are occupied and off when empty</li>
-                <li><strong>Daylight Harvesting:</strong> Adjusts artificial light based on natural daylight levels</li>
-                <li><strong>Scheduling:</strong> Automated on/off times based on daily routines</li>
-                <li><strong>Colour Temperature:</strong> Adjustable warm to cool white, supporting circadian rhythms</li>
-                <li><strong>Scene Control:</strong> Pre-programmed lighting scenes for different activities</li>
-                <li><strong>Dimming:</strong> Variable brightness levels for energy savings and ambience</li>
+                <li>
+                  <strong>Occupancy Sensing:</strong> Lights automatically turn on when rooms are
+                  occupied and off when empty
+                </li>
+                <li>
+                  <strong>Daylight Harvesting:</strong> Adjusts artificial light based on natural
+                  daylight levels
+                </li>
+                <li>
+                  <strong>Scheduling:</strong> Automated on/off times based on daily routines
+                </li>
+                <li>
+                  <strong>Colour Temperature:</strong> Adjustable warm to cool white, supporting
+                  circadian rhythms
+                </li>
+                <li>
+                  <strong>Scene Control:</strong> Pre-programmed lighting scenes for different
+                  activities
+                </li>
+                <li>
+                  <strong>Dimming:</strong> Variable brightness levels for energy savings and
+                  ambience
+                </li>
               </ul>
             </div>
 
@@ -322,13 +373,16 @@ const SmartHomeModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart heating, ventilation, and air conditioning systems optimise comfort while minimising energy
-              consumption. These systems learn user preferences and adapt to changing conditions automatically.
+              Smart heating, ventilation, and air conditioning systems optimise comfort while
+              minimising energy consumption. These systems learn user preferences and adapt to
+              changing conditions automatically.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Smart Thermostat Features</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Smart Thermostat Features
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Learning algorithms for user preferences</li>
                   <li>Geofencing for away/home detection</li>
@@ -338,7 +392,9 @@ const SmartHomeModule1Section2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Zone Control Benefits</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Zone Control Benefits
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Independent room temperature control</li>
                   <li>Reduced heating of unoccupied areas</li>
@@ -352,10 +408,18 @@ const SmartHomeModule1Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Integration Opportunities:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Window Sensors:</strong> Automatically pause heating when windows are open</li>
-                <li><strong>Smart Blinds:</strong> Coordinate with HVAC to optimise solar gain</li>
-                <li><strong>Weather Data:</strong> Pre-heat or cool based on forecast conditions</li>
-                <li><strong>Occupancy:</strong> Reduce output in unoccupied rooms</li>
+                <li>
+                  <strong>Window Sensors:</strong> Automatically pause heating when windows are open
+                </li>
+                <li>
+                  <strong>Smart Blinds:</strong> Coordinate with HVAC to optimise solar gain
+                </li>
+                <li>
+                  <strong>Weather Data:</strong> Pre-heat or cool based on forecast conditions
+                </li>
+                <li>
+                  <strong>Occupancy:</strong> Reduce output in unoccupied rooms
+                </li>
               </ul>
             </div>
           </div>
@@ -371,20 +435,33 @@ const SmartHomeModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart security systems provide comprehensive protection through integration of multiple sensors,
-              cameras, and access control devices. These systems offer real-time monitoring and intelligent
-              alerts that traditional systems cannot match.
+              Smart security systems provide comprehensive protection through integration of
+              multiple sensors, cameras, and access control devices. These systems offer real-time
+              monitoring and intelligent alerts that traditional systems cannot match.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Core Components:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Video Doorbells:</strong> Visual identification and two-way communication</li>
-                <li><strong>Smart Locks:</strong> Keyless entry, temporary access codes, activity logging</li>
-                <li><strong>CCTV Cameras:</strong> Indoor and outdoor monitoring with cloud storage</li>
-                <li><strong>Motion Sensors:</strong> PIR detection with pet immunity options</li>
-                <li><strong>Door/Window Sensors:</strong> Entry point monitoring and alerts</li>
-                <li><strong>Smart Alarms:</strong> Professional monitoring integration options</li>
+                <li>
+                  <strong>Video Doorbells:</strong> Visual identification and two-way communication
+                </li>
+                <li>
+                  <strong>Smart Locks:</strong> Keyless entry, temporary access codes, activity
+                  logging
+                </li>
+                <li>
+                  <strong>CCTV Cameras:</strong> Indoor and outdoor monitoring with cloud storage
+                </li>
+                <li>
+                  <strong>Motion Sensors:</strong> PIR detection with pet immunity options
+                </li>
+                <li>
+                  <strong>Door/Window Sensors:</strong> Entry point monitoring and alerts
+                </li>
+                <li>
+                  <strong>Smart Alarms:</strong> Professional monitoring integration options
+                </li>
               </ul>
             </div>
 
@@ -409,13 +486,15 @@ const SmartHomeModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart home technology offers significant benefits for elderly residents and those with disabilities,
-              enabling greater independence while maintaining safety and comfort.
+              Smart home technology offers significant benefits for elderly residents and those with
+              disabilities, enabling greater independence while maintaining safety and comfort.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voice Control Benefits</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Voice Control Benefits
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Hands-free control of all smart devices</li>
                   <li>No need to reach switches or controls</li>
@@ -437,13 +516,30 @@ const SmartHomeModule1Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Specific Accessibility Features:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Specific Accessibility Features:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Fall Detection:</strong> Sensors that detect falls and alert emergency contacts</li>
-                <li><strong>Activity Monitoring:</strong> Patterns that alert caregivers to unusual activity</li>
-                <li><strong>Medication Reminders:</strong> Voice or visual reminders for medication schedules</li>
-                <li><strong>Video Communication:</strong> Easy video calls with family and healthcare providers</li>
-                <li><strong>Simplified Interfaces:</strong> Large buttons, voice control, minimal complexity</li>
+                <li>
+                  <strong>Fall Detection:</strong> Sensors that detect falls and alert emergency
+                  contacts
+                </li>
+                <li>
+                  <strong>Activity Monitoring:</strong> Patterns that alert caregivers to unusual
+                  activity
+                </li>
+                <li>
+                  <strong>Medication Reminders:</strong> Voice or visual reminders for medication
+                  schedules
+                </li>
+                <li>
+                  <strong>Video Communication:</strong> Easy video calls with family and healthcare
+                  providers
+                </li>
+                <li>
+                  <strong>Simplified Interfaces:</strong> Large buttons, voice control, minimal
+                  complexity
+                </li>
               </ul>
             </div>
           </div>
@@ -459,18 +555,29 @@ const SmartHomeModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart environmental sensors and energy monitoring systems provide valuable insights into home
-              conditions and consumption patterns, enabling informed decisions about efficiency improvements.
+              Smart environmental sensors and energy monitoring systems provide valuable insights
+              into home conditions and consumption patterns, enabling informed decisions about
+              efficiency improvements.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Environmental Sensors:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Air Quality:</strong> CO2, VOC, particulate matter monitoring</li>
-                <li><strong>Humidity:</strong> Prevention of mould and condensation issues</li>
-                <li><strong>Temperature:</strong> Multi-point monitoring throughout the home</li>
-                <li><strong>Water Leak:</strong> Early detection of leaks and flooding</li>
-                <li><strong>Smoke/CO:</strong> Interconnected smart detectors with alerts</li>
+                <li>
+                  <strong>Air Quality:</strong> CO2, VOC, particulate matter monitoring
+                </li>
+                <li>
+                  <strong>Humidity:</strong> Prevention of mould and condensation issues
+                </li>
+                <li>
+                  <strong>Temperature:</strong> Multi-point monitoring throughout the home
+                </li>
+                <li>
+                  <strong>Water Leak:</strong> Early detection of leaks and flooding
+                </li>
+                <li>
+                  <strong>Smoke/CO:</strong> Interconnected smart detectors with alerts
+                </li>
               </ul>
             </div>
 
@@ -496,7 +603,9 @@ const SmartHomeModule1Section2 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Recommending Smart Lighting</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Recommending Smart Lighting
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Assess current lighting energy consumption and usage patterns</li>
                 <li>Consider daylight availability and room orientation</li>
@@ -506,7 +615,9 @@ const SmartHomeModule1Section2 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Designing Security Systems</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Designing Security Systems
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Conduct thorough site survey for camera and sensor placement</li>
                 <li>Consider privacy requirements and data storage options</li>
@@ -518,10 +629,22 @@ const SmartHomeModule1Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Overestimating savings</strong> - use realistic calculations based on actual usage</li>
-                <li><strong>Ignoring user capability</strong> - match system complexity to user technical ability</li>
-                <li><strong>Poor sensor placement</strong> - test positions before permanent installation</li>
-                <li><strong>Inadequate network planning</strong> - ensure reliable connectivity throughout</li>
+                <li>
+                  <strong>Overestimating savings</strong> - use realistic calculations based on
+                  actual usage
+                </li>
+                <li>
+                  <strong>Ignoring user capability</strong> - match system complexity to user
+                  technical ability
+                </li>
+                <li>
+                  <strong>Poor sensor placement</strong> - test positions before permanent
+                  installation
+                </li>
+                <li>
+                  <strong>Inadequate network planning</strong> - ensure reliable connectivity
+                  throughout
+                </li>
               </ul>
             </div>
           </div>
@@ -572,28 +695,33 @@ const SmartHomeModule1Section2 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/smart-home-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-3">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

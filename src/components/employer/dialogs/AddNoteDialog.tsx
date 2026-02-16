@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -6,14 +6,14 @@ import {
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
   ResponsiveDialogFooter,
-} from "@/components/ui/responsive-dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useEmployer, type Employee, type WorkerNote } from "@/contexts/EmployerContext";
-import { toast } from "@/hooks/use-toast";
-import { StickyNote, MessageSquare, AlertTriangle, ThumbsUp, FileText } from "lucide-react";
+} from '@/components/ui/responsive-dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useEmployer, type Employee, type WorkerNote } from '@/contexts/EmployerContext';
+import { toast } from '@/hooks/use-toast';
+import { StickyNote, MessageSquare, AlertTriangle, ThumbsUp, FileText } from 'lucide-react';
 
 interface AddNoteDialogProps {
   employee: Employee | null;
@@ -21,16 +21,41 @@ interface AddNoteDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const noteTypes: { value: WorkerNote['type']; label: string; icon: React.ReactNode; color: string }[] = [
-  { value: 'General', label: 'General Note', icon: <FileText className="h-4 w-4" />, color: 'text-muted-foreground' },
-  { value: 'Performance', label: 'Performance', icon: <MessageSquare className="h-4 w-4" />, color: 'text-info' },
-  { value: 'Incident', label: 'Incident', icon: <AlertTriangle className="h-4 w-4" />, color: 'text-warning' },
-  { value: 'Positive', label: 'Positive Feedback', icon: <ThumbsUp className="h-4 w-4" />, color: 'text-success' },
+const noteTypes: {
+  value: WorkerNote['type'];
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+}[] = [
+  {
+    value: 'General',
+    label: 'General Note',
+    icon: <FileText className="h-4 w-4" />,
+    color: 'text-muted-foreground',
+  },
+  {
+    value: 'Performance',
+    label: 'Performance',
+    icon: <MessageSquare className="h-4 w-4" />,
+    color: 'text-info',
+  },
+  {
+    value: 'Incident',
+    label: 'Incident',
+    icon: <AlertTriangle className="h-4 w-4" />,
+    color: 'text-warning',
+  },
+  {
+    value: 'Positive',
+    label: 'Positive Feedback',
+    icon: <ThumbsUp className="h-4 w-4" />,
+    color: 'text-success',
+  },
 ];
 
 export function AddNoteDialog({ employee, open, onOpenChange }: AddNoteDialogProps) {
   const { addWorkerNote } = useEmployer();
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [noteType, setNoteType] = useState<WorkerNote['type']>('General');
 
   if (!employee) return null;
@@ -38,21 +63,21 @@ export function AddNoteDialog({ employee, open, onOpenChange }: AddNoteDialogPro
   const handleSubmit = () => {
     if (!content.trim()) {
       toast({
-        title: "Content Required",
-        description: "Please enter a note.",
-        variant: "destructive",
+        title: 'Content Required',
+        description: 'Please enter a note.',
+        variant: 'destructive',
       });
       return;
     }
 
     addWorkerNote(employee.id, content.trim(), noteType, 'Current User');
-    
+
     toast({
-      title: "Note Added",
+      title: 'Note Added',
       description: `Note added to ${employee.name}'s profile.`,
     });
 
-    setContent("");
+    setContent('');
     setNoteType('General');
     onOpenChange(false);
   };
@@ -82,14 +107,14 @@ export function AddNoteDialog({ employee, open, onOpenChange }: AddNoteDialogPro
 
           <div className="space-y-2">
             <Label>Note Type</Label>
-            <RadioGroup value={noteType} onValueChange={(v) => setNoteType(v as WorkerNote['type'])} className="grid grid-cols-2 gap-2">
+            <RadioGroup
+              value={noteType}
+              onValueChange={(v) => setNoteType(v as WorkerNote['type'])}
+              className="grid grid-cols-2 gap-2"
+            >
               {noteTypes.map((type) => (
                 <div key={type.value}>
-                  <RadioGroupItem
-                    value={type.value}
-                    id={type.value}
-                    className="peer sr-only"
-                  />
+                  <RadioGroupItem value={type.value} id={type.value} className="peer sr-only" />
                   <Label
                     htmlFor={type.value}
                     className={`flex items-center gap-2 rounded-lg border-2 p-3 cursor-pointer transition-all touch-manipulation
@@ -118,10 +143,18 @@ export function AddNoteDialog({ employee, open, onOpenChange }: AddNoteDialogPro
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
-          <Button variant="outline" className="flex-1 h-11 touch-manipulation" onClick={() => onOpenChange(false)}>
+          <Button
+            variant="outline"
+            className="flex-1 h-11 touch-manipulation"
+            onClick={() => onOpenChange(false)}
+          >
             Cancel
           </Button>
-          <Button className="flex-1 h-11 touch-manipulation" onClick={handleSubmit} disabled={!content.trim()}>
+          <Button
+            className="flex-1 h-11 touch-manipulation"
+            onClick={handleSubmit}
+            disabled={!content.trim()}
+          >
             Add Note
           </Button>
         </ResponsiveDialogFooter>

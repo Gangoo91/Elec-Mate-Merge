@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -16,7 +15,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -32,28 +39,28 @@ interface InspectionSectionCardProps {
   onBulkClearSection?: (sectionId: string) => void;
 }
 
-const InspectionSectionCard = ({ 
-  section, 
-  inspectionItems, 
-  isExpanded, 
-  onToggle, 
+const InspectionSectionCard = ({
+  section,
+  inspectionItems,
+  isExpanded,
+  onToggle,
   onUpdateItem,
   onNavigateToObservations,
   onAutoCreateObservation,
   onBulkMarkSatisfactory,
-  onBulkClearSection
+  onBulkClearSection,
 }: InspectionSectionCardProps) => {
   const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
     console.log(`[InspectionSectionCard] handleOutcomeChange called:`, {
       itemId,
       newOutcome: outcome,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
+
     // Find the current inspection item
-    const currentInspectionItem = inspectionItems.find(item => item.id === itemId);
+    const currentInspectionItem = inspectionItems.find((item) => item.id === itemId);
     console.log(`[InspectionSectionCard] Current inspection item:`, currentInspectionItem);
-    
+
     if (!currentInspectionItem) {
       console.warn(`[InspectionSectionCard] Could not find inspection item ${itemId}`);
       return;
@@ -64,33 +71,38 @@ const InspectionSectionCard = ({
       const updatedItem: InspectionItem = {
         ...currentInspectionItem,
         outcome,
-        inspected: outcome !== '' && outcome !== 'not-applicable'
+        inspected: outcome !== '' && outcome !== 'not-applicable',
       };
 
       console.log(`[InspectionSectionCard] Updated item to be saved:`, updatedItem);
 
       // Update the entire item atomically using a single call
       // This ensures both outcome and inspected status are updated together
-      const allItems = inspectionItems.map(item => 
-        item.id === itemId ? updatedItem : item
-      );
-      
+      const allItems = inspectionItems.map((item) => (item.id === itemId ? updatedItem : item));
+
       // Use the bulk update mechanism to update the entire items array at once
       onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
-      
+
       // Create observation for C1/C2/C3 outcomes using the updated item data
       if ((outcome === 'C1' || outcome === 'C2' || outcome === 'C3') && onAutoCreateObservation) {
-        console.log(`[InspectionSectionCard] Auto-creating observation for ${outcome}:`, updatedItem);
+        console.log(
+          `[InspectionSectionCard] Auto-creating observation for ${outcome}:`,
+          updatedItem
+        );
         onAutoCreateObservation(updatedItem);
       }
-      
-      console.log(`[InspectionSectionCard] handleOutcomeChange completed successfully for ${itemId}`);
+
+      console.log(
+        `[InspectionSectionCard] handleOutcomeChange completed successfully for ${itemId}`
+      );
     } catch (error) {
       console.error(`[InspectionSectionCard] Error in handleOutcomeChange:`, error);
     }
   };
 
-  console.log(`[InspectionSectionCard] Rendering section ${section.id} with ${inspectionItems.length} items`);
+  console.log(
+    `[InspectionSectionCard] Rendering section ${section.id} with ${inspectionItems.length} items`
+  );
 
   // Use enhanced component for better UX
   return (
@@ -124,7 +136,7 @@ const InspectionSectionCard = ({
                   </p>
                 </div>
                 <div className="flex items-center justify-between sm:justify-end gap-3 flex-shrink-0">
-                  <InspectionSectionProgress 
+                  <InspectionSectionProgress
                     sectionItems={section.items}
                     inspectionItems={inspectionItems}
                   />
@@ -135,10 +147,10 @@ const InspectionSectionCard = ({
                   )}
                 </div>
               </div>
-              
+
               {/* Bulk Action Buttons */}
               {isExpanded && (onBulkMarkSatisfactory || onBulkClearSection) && (
-                <div 
+                <div
                   className="flex flex-wrap gap-3 pt-3 border-t border-border/30"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -194,8 +206,10 @@ const InspectionSectionCard = ({
                 </TableHeader>
                 <TableBody>
                   {section.items.map((sectionItem) => {
-                    const inspectionItem = inspectionItems.find(item => item.id === sectionItem.id);
-                    
+                    const inspectionItem = inspectionItems.find(
+                      (item) => item.id === sectionItem.id
+                    );
+
                     return (
                       <InspectionItemRow
                         key={sectionItem.id}
@@ -214,8 +228,8 @@ const InspectionSectionCard = ({
             {/* Mobile Card View */}
             <div className="md:hidden space-y-2">
               {section.items.map((sectionItem) => {
-                const inspectionItem = inspectionItems.find(item => item.id === sectionItem.id);
-                
+                const inspectionItem = inspectionItems.find((item) => item.id === sectionItem.id);
+
                 return (
                   <InspectionItemCard
                     key={sectionItem.id}

@@ -206,10 +206,7 @@ export const updateVacancy = async (
 };
 
 export const deleteVacancy = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_vacancies')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_vacancies').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting vacancy:', error);
@@ -232,10 +229,13 @@ export const incrementVacancyViews = async (id: string): Promise<void> => {
 };
 
 // Vacancy Applications CRUD
-export const getApplicationsForVacancy = async (vacancyId: string): Promise<VacancyApplication[]> => {
+export const getApplicationsForVacancy = async (
+  vacancyId: string
+): Promise<VacancyApplication[]> => {
   const { data, error } = await supabase
     .from('employer_vacancy_applications')
-    .select(`
+    .select(
+      `
       *,
       elec_id_profile:employer_elec_id_profiles (
         elec_id_number,
@@ -243,7 +243,8 @@ export const getApplicationsForVacancy = async (vacancyId: string): Promise<Vaca
         verification_tier,
         is_verified
       )
-    `)
+    `
+    )
     .eq('vacancy_id', vacancyId)
     .order('applied_at', { ascending: false });
 
@@ -258,7 +259,8 @@ export const getApplicationsForVacancy = async (vacancyId: string): Promise<Vaca
 export const getAllApplications = async (): Promise<VacancyApplication[]> => {
   const { data, error } = await supabase
     .from('employer_vacancy_applications')
-    .select(`
+    .select(
+      `
       *,
       vacancy:employer_vacancies (
         id,
@@ -272,7 +274,8 @@ export const getAllApplications = async (): Promise<VacancyApplication[]> => {
         verification_tier,
         is_verified
       )
-    `)
+    `
+    )
     .order('applied_at', { ascending: false });
 
   if (error) {
@@ -286,11 +289,13 @@ export const getAllApplications = async (): Promise<VacancyApplication[]> => {
 export const getApplicationById = async (id: string): Promise<VacancyApplication | null> => {
   const { data, error } = await supabase
     .from('employer_vacancy_applications')
-    .select(`
+    .select(
+      `
       *,
       vacancy:employer_vacancies (*),
       elec_id_profile:employer_elec_id_profiles (*)
-    `)
+    `
+    )
     .eq('id', id)
     .single();
 
@@ -320,7 +325,9 @@ export const createApplication = async (
   await supabase.rpc('increment_applications_count', { vacancy_id: application.vacancy_id });
 
   // Send push notification to vacancy owner
-  notifyVacancyOwner(application.vacancy_id, application.applicant_name, data.id).catch(console.error);
+  notifyVacancyOwner(application.vacancy_id, application.applicant_name, data.id).catch(
+    console.error
+  );
 
   return data;
 };
@@ -357,11 +364,13 @@ export const updateApplicationStatus = async (
   // Get application details for notification
   const { data: existingApp } = await supabase
     .from('employer_vacancy_applications')
-    .select(`
+    .select(
+      `
       status,
       applicant_profile_id,
       vacancy:vacancies(title)
-    `)
+    `
+    )
     .eq('id', id)
     .single();
 
@@ -425,7 +434,7 @@ async function notifyApplicantStatusChange(
         break;
       case 'Shortlisted':
         emoji = '⭐';
-        title = 'You\'ve Been Shortlisted!';
+        title = "You've Been Shortlisted!";
         body = `Great news! You've been shortlisted for ${vacancyTitle}`;
         break;
       case 'Interviewed':
@@ -440,7 +449,7 @@ async function notifyApplicantStatusChange(
         break;
       case 'Hired':
         emoji = '🎊';
-        title = 'You\'re Hired!';
+        title = "You're Hired!";
         body = `Welcome aboard! You've been hired for ${vacancyTitle}`;
         break;
       case 'Rejected':
@@ -451,23 +460,18 @@ async function notifyApplicantStatusChange(
         return; // Don't notify for other statuses
     }
 
-    await sendPushNotification(
-      profile.user_id,
-      emoji ? `${emoji} ${title}` : title,
-      body,
-      'job',
-      { applicationId, status: newStatus, isEmployer: false }
-    );
+    await sendPushNotification(profile.user_id, emoji ? `${emoji} ${title}` : title, body, 'job', {
+      applicationId,
+      status: newStatus,
+      isEmployer: false,
+    });
   } catch (error) {
     console.error('Error notifying applicant:', error);
   }
 }
 
 export const deleteApplication = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_vacancy_applications')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_vacancy_applications').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting application:', error);
@@ -486,7 +490,10 @@ export const getVacancyStats = async (): Promise<{
   const [vacanciesResult, applicationsResult, newAppsResult] = await Promise.all([
     supabase.from('employer_vacancies').select('id', { count: 'exact' }).eq('status', 'Open'),
     supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }),
-    supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }).eq('status', 'New'),
+    supabase
+      .from('employer_vacancy_applications')
+      .select('id', { count: 'exact' })
+      .eq('status', 'New'),
   ]);
 
   return {
@@ -587,10 +594,13 @@ export interface EmployerVacancyApplication {
  * Fetch all applications for employer vacancies with full Elec-ID data
  * This is for employers viewing who applied to their jobs
  */
-export const getEmployerVacancyApplications = async (vacancyId?: string): Promise<EmployerVacancyApplication[]> => {
+export const getEmployerVacancyApplications = async (
+  vacancyId?: string
+): Promise<EmployerVacancyApplication[]> => {
   let query = supabase
     .from('employer_vacancy_applications')
-    .select(`
+    .select(
+      `
       *,
       vacancy:employer_vacancies (
         id,
@@ -613,7 +623,8 @@ export const getEmployerVacancyApplications = async (vacancyId?: string): Promis
         profile_views,
         available_for_hire
       )
-    `)
+    `
+    )
     .order('applied_at', { ascending: false });
 
   if (vacancyId) {
@@ -632,39 +643,45 @@ export const getEmployerVacancyApplications = async (vacancyId?: string): Promis
   }
 
   // Get all profile IDs to fetch related data
-  const profileIds = applications
-    .map(a => (a.elec_id_profile as any)?.id)
-    .filter(Boolean);
+  const profileIds = applications.map((a) => (a.elec_id_profile as any)?.id).filter(Boolean);
 
   if (profileIds.length === 0) {
     return applications as EmployerVacancyApplication[];
   }
 
   // Fetch related Elec-ID data in parallel
-  const [
-    { data: skills },
-    { data: workHistory },
-    { data: qualifications },
-    { data: training }
-  ] = await Promise.all([
-    supabase.from('employer_elec_id_skills').select('*').in('profile_id', profileIds),
-    supabase.from('employer_elec_id_work_history').select('*').in('profile_id', profileIds).order('start_date', { ascending: false }),
-    supabase.from('employer_elec_id_qualifications').select('*').in('profile_id', profileIds).order('date_achieved', { ascending: false }),
-    supabase.from('employer_elec_id_training').select('*').in('profile_id', profileIds).order('completed_date', { ascending: false }),
-  ]);
+  const [{ data: skills }, { data: workHistory }, { data: qualifications }, { data: training }] =
+    await Promise.all([
+      supabase.from('employer_elec_id_skills').select('*').in('profile_id', profileIds),
+      supabase
+        .from('employer_elec_id_work_history')
+        .select('*')
+        .in('profile_id', profileIds)
+        .order('start_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_qualifications')
+        .select('*')
+        .in('profile_id', profileIds)
+        .order('date_achieved', { ascending: false }),
+      supabase
+        .from('employer_elec_id_training')
+        .select('*')
+        .in('profile_id', profileIds)
+        .order('completed_date', { ascending: false }),
+    ]);
 
   // Map related data to profiles
-  return applications.map(app => {
+  return applications.map((app) => {
     const profile = app.elec_id_profile as any;
     if (profile) {
       return {
         ...app,
         elec_id_profile: {
           ...profile,
-          skills: skills?.filter(s => s.profile_id === profile.id) || [],
-          work_history: workHistory?.filter(w => w.profile_id === profile.id) || [],
-          qualifications: qualifications?.filter(q => q.profile_id === profile.id) || [],
-          training: training?.filter(t => t.profile_id === profile.id) || [],
+          skills: skills?.filter((s) => s.profile_id === profile.id) || [],
+          work_history: workHistory?.filter((w) => w.profile_id === profile.id) || [],
+          qualifications: qualifications?.filter((q) => q.profile_id === profile.id) || [],
+          training: training?.filter((t) => t.profile_id === profile.id) || [],
         },
       };
     }
@@ -675,10 +692,13 @@ export const getEmployerVacancyApplications = async (vacancyId?: string): Promis
 /**
  * Fetch a single application with full Elec-ID profile data
  */
-export const getEmployerVacancyApplicationById = async (id: string): Promise<EmployerVacancyApplication | null> => {
+export const getEmployerVacancyApplicationById = async (
+  id: string
+): Promise<EmployerVacancyApplication | null> => {
   const { data: application, error } = await supabase
     .from('employer_vacancy_applications')
-    .select(`
+    .select(
+      `
       *,
       vacancy:employer_vacancies (
         id,
@@ -704,7 +724,8 @@ export const getEmployerVacancyApplicationById = async (id: string): Promise<Emp
         profile_views,
         available_for_hire
       )
-    `)
+    `
+    )
     .eq('id', id)
     .single();
 
@@ -719,17 +740,25 @@ export const getEmployerVacancyApplicationById = async (id: string): Promise<Emp
   if (!profile?.id) return application as EmployerVacancyApplication;
 
   // Fetch related Elec-ID data
-  const [
-    { data: skills },
-    { data: workHistory },
-    { data: qualifications },
-    { data: training }
-  ] = await Promise.all([
-    supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
-    supabase.from('employer_elec_id_work_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
-    supabase.from('employer_elec_id_qualifications').select('*').eq('profile_id', profile.id).order('date_achieved', { ascending: false }),
-    supabase.from('employer_elec_id_training').select('*').eq('profile_id', profile.id).order('completed_date', { ascending: false }),
-  ]);
+  const [{ data: skills }, { data: workHistory }, { data: qualifications }, { data: training }] =
+    await Promise.all([
+      supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
+      supabase
+        .from('employer_elec_id_work_history')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('start_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_qualifications')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('date_achieved', { ascending: false }),
+      supabase
+        .from('employer_elec_id_training')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('completed_date', { ascending: false }),
+    ]);
 
   return {
     ...application,
@@ -784,12 +813,20 @@ export const getEmployerVacancyStats = async (): Promise<{
   newApplications: number;
   shortlistedCount: number;
 }> => {
-  const [vacanciesResult, applicationsResult, newAppsResult, shortlistedResult] = await Promise.all([
-    supabase.from('employer_vacancies').select('id', { count: 'exact' }).eq('status', 'Open'),
-    supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }),
-    supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }).eq('status', 'New'),
-    supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }).eq('status', 'Shortlisted'),
-  ]);
+  const [vacanciesResult, applicationsResult, newAppsResult, shortlistedResult] = await Promise.all(
+    [
+      supabase.from('employer_vacancies').select('id', { count: 'exact' }).eq('status', 'Open'),
+      supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }),
+      supabase
+        .from('employer_vacancy_applications')
+        .select('id', { count: 'exact' })
+        .eq('status', 'New'),
+      supabase
+        .from('employer_vacancy_applications')
+        .select('id', { count: 'exact' })
+        .eq('status', 'Shortlisted'),
+    ]
+  );
 
   return {
     totalOpen: vacanciesResult.count || 0,
@@ -828,7 +865,9 @@ export interface VacancyTemplate {
  * Get all vacancy templates (system + user created)
  */
 export const getVacancyTemplates = async (): Promise<VacancyTemplate[]> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   // Get user's custom templates (stored as JSONB)
   const { data, error } = await supabase
@@ -842,35 +881,37 @@ export const getVacancyTemplates = async (): Promise<VacancyTemplate[]> => {
   }
 
   // Transform JSONB template_data to flat VacancyTemplate structure
-  const userTemplates: VacancyTemplate[] = (data || []).map((row: {
-    id: string;
-    name: string;
-    template_data: Record<string, unknown>;
-    created_at: string;
-    updated_at: string;
-  }) => {
-    const td = row.template_data || {};
-    return {
-      id: row.id,
-      name: row.name,
-      title: (td.title as string) || row.name,
-      type: (td.type as EmploymentType) || 'Full-time',
-      location: (td.location as string) || null,
-      work_arrangement: (td.workArrangement as string) || 'On-site',
-      salary_min: (td.salaryMin as number) || null,
-      salary_max: (td.salaryMax as number) || null,
-      salary_period: (td.salaryPeriod as string) || 'year',
-      benefits: (td.benefits as string[]) || [],
-      requirements: (td.requirements as string[]) || [],
-      experience_level: (td.experienceLevel as string) || 'Mid',
-      description: (td.description as string) || null,
-      nice_to_have: (td.niceToHave as string[]) || [],
-      schedule: (td.schedule as string) || null,
-      is_system_template: false,
-      created_at: row.created_at,
-      updated_at: row.updated_at,
-    };
-  });
+  const userTemplates: VacancyTemplate[] = (data || []).map(
+    (row: {
+      id: string;
+      name: string;
+      template_data: Record<string, unknown>;
+      created_at: string;
+      updated_at: string;
+    }) => {
+      const td = row.template_data || {};
+      return {
+        id: row.id,
+        name: row.name,
+        title: (td.title as string) || row.name,
+        type: (td.type as EmploymentType) || 'Full-time',
+        location: (td.location as string) || null,
+        work_arrangement: (td.workArrangement as string) || 'On-site',
+        salary_min: (td.salaryMin as number) || null,
+        salary_max: (td.salaryMax as number) || null,
+        salary_period: (td.salaryPeriod as string) || 'year',
+        benefits: (td.benefits as string[]) || [],
+        requirements: (td.requirements as string[]) || [],
+        experience_level: (td.experienceLevel as string) || 'Mid',
+        description: (td.description as string) || null,
+        nice_to_have: (td.niceToHave as string[]) || [],
+        schedule: (td.schedule as string) || null,
+        is_system_template: false,
+        created_at: row.created_at,
+        updated_at: row.updated_at,
+      };
+    }
+  );
 
   // Return built-in templates first, then user templates
   return [...getBuiltInTemplates(), ...userTemplates];
@@ -888,7 +929,9 @@ export const saveVacancyAsTemplate = async (
     schedule?: string;
   }
 ): Promise<VacancyTemplate | null> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) {
     console.error('No authenticated user');
     return null;
@@ -960,10 +1003,7 @@ export const deleteVacancyTemplate = async (id: string): Promise<boolean> => {
     return false;
   }
 
-  const { error } = await supabase
-    .from('employer_vacancy_templates')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_vacancy_templates').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting vacancy template:', error);
@@ -1015,7 +1055,12 @@ function getBuiltInTemplates(): VacancyTemplate[] {
       salary_max: 45000,
       salary_period: 'year',
       benefits: ['Company Vehicle', 'Pension', 'Tools Provided', 'Training Budget'],
-      requirements: ['18th Edition (BS7671)', 'NVQ Level 3', 'Full UK Driving Licence', 'ECS Gold Card'],
+      requirements: [
+        '18th Edition (BS7671)',
+        'NVQ Level 3',
+        'Full UK Driving Licence',
+        'ECS Gold Card',
+      ],
       experience_level: 'Mid',
       description: `<h2>About the Role</h2>
 <p>We are looking for an experienced Qualified Electrician to join our team. You will be responsible for carrying out electrical installations, maintenance, and repairs across residential and commercial properties.</p>
@@ -1089,7 +1134,12 @@ function getBuiltInTemplates(): VacancyTemplate[] {
       salary_max: 65000,
       salary_period: 'year',
       benefits: ['Company Car', 'Pension', 'Bonus Scheme', 'Healthcare'],
-      requirements: ['18th Edition (BS7671)', 'Project Management Experience', 'Full UK Driving Licence', 'SMSTS'],
+      requirements: [
+        '18th Edition (BS7671)',
+        'Project Management Experience',
+        'Full UK Driving Licence',
+        'SMSTS',
+      ],
       experience_level: 'Senior',
       description: `<h2>About the Role</h2>
 <p>We are seeking an experienced Electrical Project Manager to oversee multiple electrical installation projects from tender to completion.</p>

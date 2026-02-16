@@ -34,7 +34,11 @@ import {
   usePeerPresence,
   usePeerSupporterProfile,
 } from '@/hooks/usePeerChat';
-import { ReadReceipt, getReceiptStatus, TypingIndicatorWithName } from '@/components/messaging/ReadReceipt';
+import {
+  ReadReceipt,
+  getReceiptStatus,
+  TypingIndicatorWithName,
+} from '@/components/messaging/ReadReceipt';
 import { PresenceIndicator } from '@/components/messaging/PresenceIndicator';
 import { calculateStatus } from '@/services/presenceService';
 import { NativePageWrapper } from '@/components/native/NativePageWrapper';
@@ -55,7 +59,10 @@ type ViewState = 'hub' | 'become-supporter' | 'chat' | 'supporter-detail';
 const ConversationSkeleton = () => (
   <div className="space-y-3">
     {[1, 2].map((i) => (
-      <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+      <div
+        key={i}
+        className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/10"
+      >
         <Skeleton className="w-12 h-12 rounded-xl bg-white/10" />
         <div className="flex-1 space-y-2">
           <Skeleton className="h-4 w-32 bg-white/10" />
@@ -99,9 +106,20 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   const [selectedSupporter, setSelectedSupporter] = useState<PeerSupporter | null>(null);
 
   // Use centralised hooks for conversations, messages, and profile (all cached)
-  const { data: conversations = [], isLoading: conversationsLoading, isError: conversationsError, refetch: refetchConversations } = usePeerConversations();
-  const { data: myProfile, isLoading: profileLoading, refetch: refetchProfile } = usePeerSupporterProfile();
-  const { data: chatMessages = [], isLoading: messagesLoading } = usePeerMessages(selectedConversation?.id);
+  const {
+    data: conversations = [],
+    isLoading: conversationsLoading,
+    isError: conversationsError,
+    refetch: refetchConversations,
+  } = usePeerConversations();
+  const {
+    data: myProfile,
+    isLoading: profileLoading,
+    refetch: refetchProfile,
+  } = usePeerSupporterProfile();
+  const { data: chatMessages = [], isLoading: messagesLoading } = usePeerMessages(
+    selectedConversation?.id
+  );
   const sendMessage = useSendPeerMessage();
   const markAsRead = useMarkPeerMessagesAsRead();
 
@@ -110,15 +128,19 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
   // Presence - get partner's user ID
   const partnerId = selectedConversation
-    ? (selectedConversation.supporter?.user_id === user?.id
-        ? (selectedConversation as any).seeker_id
-        : selectedConversation.supporter?.user_id)
+    ? selectedConversation.supporter?.user_id === user?.id
+      ? (selectedConversation as any).seeker_id
+      : selectedConversation.supporter?.user_id
     : undefined;
   const { data: partnerPresence } = usePeerPresence(partnerId);
-  const partnerPresenceStatus = partnerPresence ? calculateStatus(partnerPresence.last_seen) : 'offline';
+  const partnerPresenceStatus = partnerPresence
+    ? calculateStatus(partnerPresence.last_seen)
+    : 'offline';
 
   // Count unread messages
-  const unreadCount = conversations.filter(c => c.status === 'active' && (c as any).unread_count > 0).length;
+  const unreadCount = conversations.filter(
+    (c) => c.status === 'active' && (c as any).unread_count > 0
+  ).length;
 
   const handleConnect = async (supporterId: string) => {
     setConnectingId(supporterId);
@@ -126,17 +148,17 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
       const { peerConversationService } = await import('@/services/peerSupportService');
       await peerConversationService.startConversation(supporterId);
       toast({
-        title: "Connected!",
-        description: "You can now start chatting. Be kind to each other.",
+        title: 'Connected!',
+        description: 'You can now start chatting. Be kind to each other.',
       });
       refetchConversations();
       setActiveTab('chats');
     } catch (error) {
       console.error('Connection error:', error);
       toast({
-        title: "Connection failed",
-        description: "Please try again",
-        variant: "destructive",
+        title: 'Connection failed',
+        description: 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setConnectingId(null);
@@ -157,15 +179,15 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         title: myProfile.is_available ? "You're now offline" : "You're now available!",
         description: myProfile.is_available
           ? "You won't receive new connection requests"
-          : "Others can now see you and connect",
+          : 'Others can now see you and connect',
       });
       handleProfileUpdated();
     } catch (error) {
       console.error('Toggle error:', error);
       toast({
-        title: "Failed to update status",
-        description: "Please try again",
-        variant: "destructive",
+        title: 'Failed to update status',
+        description: 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsToggling(false);
@@ -191,9 +213,9 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         },
         onError: () => {
           toast({
-            title: "Failed to send",
-            description: "Please try again",
-            variant: "destructive",
+            title: 'Failed to send',
+            description: 'Please try again',
+            variant: 'destructive',
           });
         },
       }
@@ -305,7 +327,9 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
     const getResponseTime = () => {
       if (!selectedSupporter.last_active_at) return null;
-      const diffMins = Math.floor((Date.now() - new Date(selectedSupporter.last_active_at).getTime()) / 60000);
+      const diffMins = Math.floor(
+        (Date.now() - new Date(selectedSupporter.last_active_at).getTime()) / 60000
+      );
       if (diffMins < 5) return 'Usually responds instantly';
       if (diffMins < 30) return 'Usually responds in ~5 minutes';
       if (diffMins < 60) return 'Usually responds in ~30 minutes';
@@ -457,10 +481,17 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         <div className="flex flex-col h-[calc(100vh-56px)]">
           {/* Partner Status Bar */}
           <div className="px-4 py-2 bg-purple-500/10 border-b border-purple-500/20 flex items-center gap-2">
-            <PresenceIndicator status={partnerPresenceStatus} lastSeen={partnerPresence?.last_seen} size="sm" />
+            <PresenceIndicator
+              status={partnerPresenceStatus}
+              lastSeen={partnerPresence?.last_seen}
+              size="sm"
+            />
             <span className="text-xs text-white/60">
-              {partnerPresenceStatus === 'online' ? 'Online now' :
-               partnerPresenceStatus === 'away' ? 'Away' : 'Offline'}
+              {partnerPresenceStatus === 'online'
+                ? 'Online now'
+                : partnerPresenceStatus === 'away'
+                  ? 'Away'
+                  : 'Offline'}
             </span>
           </div>
 
@@ -479,17 +510,29 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 const isOwn = msg.sender_id === user?.id;
                 const isOptimistic = msg.id.startsWith('temp-');
                 return (
-                  <div key={msg.id} className={cn("flex", isOwn ? "justify-end" : "justify-start")}>
-                    <div className={cn(
-                      "max-w-[80%] rounded-2xl px-4 py-3",
-                      isOwn
-                        ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-br-md"
-                        : "bg-white/10 text-white rounded-bl-md"
-                    )}>
+                  <div key={msg.id} className={cn('flex', isOwn ? 'justify-end' : 'justify-start')}>
+                    <div
+                      className={cn(
+                        'max-w-[80%] rounded-2xl px-4 py-3',
+                        isOwn
+                          ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-br-md'
+                          : 'bg-white/10 text-white rounded-bl-md'
+                      )}
+                    >
                       <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
-                      <div className={cn("flex items-center gap-1.5 mt-1.5", isOwn ? "justify-end" : "")}>
-                        <span className={cn("text-[10px]", isOwn ? "text-white/70" : "text-white/50")}>
-                          {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      <div
+                        className={cn(
+                          'flex items-center gap-1.5 mt-1.5',
+                          isOwn ? 'justify-end' : ''
+                        )}
+                      >
+                        <span
+                          className={cn('text-[10px]', isOwn ? 'text-white/70' : 'text-white/50')}
+                        >
+                          {new Date(msg.created_at).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
                         </span>
                         {isOwn && (
                           <ReadReceipt
@@ -499,7 +542,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                               (msg as any).read_at,
                               isOptimistic
                             )}
-                            className={isOptimistic ? "text-white/50" : "text-white/70"}
+                            className={isOptimistic ? 'text-white/50' : 'text-white/70'}
                           />
                         )}
                       </div>
@@ -512,7 +555,10 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             {isOtherTyping && (
               <div className="flex justify-start">
                 <div className="bg-white/10 rounded-2xl rounded-bl-md px-4 py-3">
-                  <TypingIndicatorWithName userName={getChatPartnerName()} className="text-white/60" />
+                  <TypingIndicatorWithName
+                    userName={getChatPartnerName()}
+                    className="text-white/60"
+                  />
                 </div>
               </div>
             )}
@@ -585,19 +631,23 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
       ) : myProfile ? (
         <div className="mb-6">
           {/* Status Toggle Row */}
-          <div className={cn(
-            "flex items-center justify-between p-4 rounded-2xl transition-all duration-300",
-            myProfile.is_available
-              ? "bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20"
-              : "bg-white/[0.03] border border-white/10"
-          )}>
+          <div
+            className={cn(
+              'flex items-center justify-between p-4 rounded-2xl transition-all duration-300',
+              myProfile.is_available
+                ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20'
+                : 'bg-white/[0.03] border border-white/10'
+            )}
+          >
             <div className="flex items-center gap-3">
-              <div className={cn(
-                "w-12 h-12 rounded-xl flex items-center justify-center transition-all",
-                myProfile.is_available
-                  ? "bg-gradient-to-br from-purple-500 to-pink-500"
-                  : "bg-white/10"
-              )}>
+              <div
+                className={cn(
+                  'w-12 h-12 rounded-xl flex items-center justify-center transition-all',
+                  myProfile.is_available
+                    ? 'bg-gradient-to-br from-purple-500 to-pink-500'
+                    : 'bg-white/10'
+                )}
+              >
                 {myProfile.avatar_url ? (
                   <img
                     src={myProfile.avatar_url}
@@ -605,16 +655,23 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                     className="w-12 h-12 rounded-xl object-cover"
                   />
                 ) : (
-                  <User className={cn("h-6 w-6", myProfile.is_available ? "text-white" : "text-white/60")} />
+                  <User
+                    className={cn(
+                      'h-6 w-6',
+                      myProfile.is_available ? 'text-white' : 'text-white/60'
+                    )}
+                  />
                 )}
               </div>
               <div>
                 <h3 className="font-semibold text-white">{myProfile.display_name}</h3>
-                <p className={cn(
-                  "text-sm",
-                  myProfile.is_available ? "text-green-400" : "text-white/50"
-                )}>
-                  {myProfile.is_available ? "Available to help" : "Currently offline"}
+                <p
+                  className={cn(
+                    'text-sm',
+                    myProfile.is_available ? 'text-green-400' : 'text-white/50'
+                  )}
+                >
+                  {myProfile.is_available ? 'Available to help' : 'Currently offline'}
                 </p>
               </div>
             </div>
@@ -658,10 +715,10 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         <button
           onClick={() => setActiveTab('browse')}
           className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation",
+            'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation',
             activeTab === 'browse'
-              ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-              : "text-white/60"
+              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+              : 'text-white/60'
           )}
         >
           <Users className="h-4 w-4" />
@@ -670,10 +727,10 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         <button
           onClick={() => setActiveTab('chats')}
           className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation",
+            'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation',
             activeTab === 'chats'
-              ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-              : "text-white/60"
+              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+              : 'text-white/60'
           )}
         >
           <MessageCircle className="h-4 w-4" />
@@ -755,10 +812,10 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                   key={convo.id}
                   onClick={() => convo.status === 'active' && handleOpenChat(convo)}
                   className={cn(
-                    "flex items-center gap-4 p-4 rounded-2xl transition-transform touch-manipulation",
+                    'flex items-center gap-4 p-4 rounded-2xl transition-transform touch-manipulation',
                     convo.status === 'active'
-                      ? "bg-white/[0.03] border border-white/10 active:scale-[0.98]"
-                      : "bg-white/[0.01] border border-white/5 opacity-50"
+                      ? 'bg-white/[0.03] border border-white/10 active:scale-[0.98]'
+                      : 'bg-white/[0.01] border border-white/5 opacity-50'
                   )}
                 >
                   {/* Avatar */}
@@ -774,15 +831,16 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                     <div className="flex items-center justify-between">
                       <h4 className="font-medium text-white truncate">
                         {convo.supporter?.user_id === user?.id
-                          ? (convo.seeker?.full_name?.split(' ')[0] || 'Mate')
-                          : (convo.supporter?.display_name || 'Supporter')}
+                          ? convo.seeker?.full_name?.split(' ')[0] || 'Mate'
+                          : convo.supporter?.display_name || 'Supporter'}
                       </h4>
                       <span className="text-xs text-white/40">
                         {formatConversationTime((convo as any).last_message_at)}
                       </span>
                     </div>
                     <p className="text-sm text-white/60 truncate mt-0.5">
-                      {(convo as any).last_message || (convo.status === 'active' ? 'Start chatting...' : 'Conversation ended')}
+                      {(convo as any).last_message ||
+                        (convo.status === 'active' ? 'Start chatting...' : 'Conversation ended')}
                     </p>
                   </div>
 
@@ -808,10 +866,12 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           <div>
             <p className="font-medium text-amber-300 mb-1">Important</p>
             <p className="text-sm text-white/80 leading-relaxed">
-              Mental Health Mates are peer supporters, not professional counsellors.
-              If you're in crisis, call{' '}
-              <a href="tel:116123" className="text-amber-300 font-semibold">116 123</a>
-              {' '}(Samaritans) or text SHOUT to{' '}
+              Mental Health Mates are peer supporters, not professional counsellors. If you're in
+              crisis, call{' '}
+              <a href="tel:116123" className="text-amber-300 font-semibold">
+                116 123
+              </a>{' '}
+              (Samaritans) or text SHOUT to{' '}
               <span className="text-amber-300 font-semibold">85258</span>.
             </p>
           </div>

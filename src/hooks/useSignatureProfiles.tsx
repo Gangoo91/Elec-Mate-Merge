@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { offlineStorage } from '@/utils/offlineStorage';
 
@@ -49,10 +48,10 @@ export const useSignatureProfiles = () => {
     };
 
     const updatedSignatures = [...signatures, newSignature];
-    
+
     // If this is set as default, remove default from others
     if (newSignature.isDefault) {
-      updatedSignatures.forEach(s => {
+      updatedSignatures.forEach((s) => {
         if (s.id !== newSignature.id) s.isDefault = false;
       });
     }
@@ -62,13 +61,13 @@ export const useSignatureProfiles = () => {
   };
 
   const updateSignature = (id: string, updates: Partial<SignatureProfile>) => {
-    const updatedSignatures = signatures.map(signature => 
+    const updatedSignatures = signatures.map((signature) =>
       signature.id === id ? { ...signature, ...updates } : signature
     );
 
     // Handle default setting
     if (updates.isDefault) {
-      updatedSignatures.forEach(s => {
+      updatedSignatures.forEach((s) => {
         if (s.id !== id) s.isDefault = false;
       });
     }
@@ -77,18 +76,18 @@ export const useSignatureProfiles = () => {
   };
 
   const deleteSignature = (id: string) => {
-    const updatedSignatures = signatures.filter(signature => signature.id !== id);
+    const updatedSignatures = signatures.filter((signature) => signature.id !== id);
     saveSignatures(updatedSignatures);
   };
 
   const getDefaultSignature = (): SignatureProfile | null => {
-    return signatures.find(signature => signature.isDefault) || null;
+    return signatures.find((signature) => signature.isDefault) || null;
   };
 
   const setDefaultSignature = (id: string) => {
-    const updatedSignatures = signatures.map(signature => ({
+    const updatedSignatures = signatures.map((signature) => ({
       ...signature,
-      isDefault: signature.id === id
+      isDefault: signature.id === id,
     }));
     saveSignatures(updatedSignatures);
   };

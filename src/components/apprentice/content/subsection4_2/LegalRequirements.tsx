@@ -1,28 +1,30 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle, CheckCircle, Shield } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, CheckCircle, Shield } from 'lucide-react';
 
 const LegalRequirements = () => {
   return (
     <Card className="border border-elec-yellow/30 bg-elec-card rounded-xl overflow-hidden">
       <CardHeader className="pb-3">
-        <CardTitle className="text-xl font-bold text-elec-yellow">Legal Requirements for Working at Height</CardTitle>
+        <CardTitle className="text-xl font-bold text-elec-yellow">
+          Legal Requirements for Working at Height
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm md:text-base">
-          The Work at Height Regulations 2005 establish specific legal requirements that all electrical 
-          contractors must follow when working at height. These regulations are designed to prevent falls 
-          and minimise injuries in construction and maintenance activities.
+          The Work at Height Regulations 2005 establish specific legal requirements that all
+          electrical contractors must follow when working at height. These regulations are designed
+          to prevent falls and minimise injuries in construction and maintenance activities.
         </p>
-        
+
         <div className="bg-white/10 border-l-4 border-elec-yellow p-4 rounded-r">
           <div className="flex items-center gap-2 mb-2">
             <Shield className="h-5 w-5 text-elec-yellow" />
             <h4 className="font-semibold text-elec-yellow">Hierarchy of Control Measures</h4>
           </div>
           <p className="text-sm">
-            The regulations establish a mandatory hierarchy of control measures that must be followed:
+            The regulations establish a mandatory hierarchy of control measures that must be
+            followed:
           </p>
           <ol className="list-decimal pl-5 space-y-1 text-sm mt-2">
             <li>Avoid work at height where possible</li>
@@ -32,13 +34,15 @@ const LegalRequirements = () => {
             <li>Provide training and instruction</li>
           </ol>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
           <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                <CardTitle className="text-lg font-semibold text-elec-yellow">Employer Responsibilities</CardTitle>
+                <CardTitle className="text-lg font-semibold text-elec-yellow">
+                  Employer Responsibilities
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -54,12 +58,14 @@ const LegalRequirements = () => {
               </ul>
             </CardContent>
           </Card>
-          
+
           <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                <CardTitle className="text-lg font-semibold text-elec-yellow">Employee Responsibilities</CardTitle>
+                <CardTitle className="text-lg font-semibold text-elec-yellow">
+                  Employee Responsibilities
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -76,15 +82,18 @@ const LegalRequirements = () => {
             </CardContent>
           </Card>
         </div>
-        
+
         <div className="mt-4">
           <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg font-semibold text-elec-yellow">Risk Assessment Requirements</CardTitle>
+              <CardTitle className="text-lg font-semibold text-elec-yellow">
+                Risk Assessment Requirements
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="mb-3 text-sm">
-                A suitable and sufficient risk assessment must be completed before any work at height in electrical installations:
+                A suitable and sufficient risk assessment must be completed before any work at
+                height in electrical installations:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
@@ -92,28 +101,37 @@ const LegalRequirements = () => {
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Environmental Considerations
                   </h5>
-                  <p className="text-sm">Weather conditions, lighting, ventilation, and surface conditions must be assessed</p>
+                  <p className="text-sm">
+                    Weather conditions, lighting, ventilation, and surface conditions must be
+                    assessed
+                  </p>
                 </div>
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Electrical Hazards
                   </h5>
-                  <p className="text-sm">Overhead lines, exposed conductors, and energised equipment must be identified</p>
+                  <p className="text-sm">
+                    Overhead lines, exposed conductors, and energised equipment must be identified
+                  </p>
                 </div>
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Duration and Complexity
                   </h5>
-                  <p className="text-sm">Task duration, frequency of access, and tools required need assessment</p>
+                  <p className="text-sm">
+                    Task duration, frequency of access, and tools required need assessment
+                  </p>
                 </div>
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Emergency Procedures
                   </h5>
-                  <p className="text-sm">Rescue plans must be documented and communicated to all workers</p>
+                  <p className="text-sm">
+                    Rescue plans must be documented and communicated to all workers
+                  </p>
                 </div>
               </div>
             </CardContent>

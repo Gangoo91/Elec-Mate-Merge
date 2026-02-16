@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Brain, CheckCircle, XCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,115 +11,120 @@ export const ReadinessQuiz = () => {
 
   const questions = [
     {
-      question: "What should be verified before starting any electrical testing?",
+      question: 'What should be verified before starting any electrical testing?',
       options: [
-        "That all tools are calibrated",
-        "That the visual inspection is complete and the circuit is safe and isolated",
-        "That the client has paid",
-        "That lunch break is over"
+        'That all tools are calibrated',
+        'That the visual inspection is complete and the circuit is safe and isolated',
+        'That the client has paid',
+        'That lunch break is over',
       ],
       correct: 1,
-      explanation: "Before any testing begins, the visual inspection must be complete, and you must ensure the circuit is safe to work on and properly isolated."
+      explanation:
+        'Before any testing begins, the visual inspection must be complete, and you must ensure the circuit is safe to work on and properly isolated.',
     },
     {
-      question: "Why should loads be disconnected during insulation resistance testing?",
+      question: 'Why should loads be disconnected during insulation resistance testing?',
       options: [
-        "To save electricity",
-        "To avoid damaging connected equipment and obtain accurate readings",
-        "To make the test faster",
-        "It's not necessary"
+        'To save electricity',
+        'To avoid damaging connected equipment and obtain accurate readings',
+        'To make the test faster',
+        "It's not necessary",
       ],
       correct: 1,
-      explanation: "Loads must be disconnected to prevent damage to electronic equipment and ensure accurate insulation resistance readings."
+      explanation:
+        'Loads must be disconnected to prevent damage to electronic equipment and ensure accurate insulation resistance readings.',
     },
     {
-      question: "What is the minimum acceptable insulation resistance for most circuits?",
+      question: 'What is the minimum acceptable insulation resistance for most circuits?',
+      options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '5.0 MΩ'],
+      correct: 1,
+      explanation:
+        'BS 7671 requires a minimum insulation resistance of 1.0 MΩ for most electrical circuits, though higher values are often achieved.',
+    },
+    {
+      question: 'When should test instruments be verified with a proving unit?',
       options: [
-        "0.5 MΩ",
-        "1.0 MΩ", 
-        "2.0 MΩ",
-        "5.0 MΩ"
+        'Once per day',
+        'Before and after each use',
+        'Once per week',
+        'Only when calibration is due',
       ],
       correct: 1,
-      explanation: "BS 7671 requires a minimum insulation resistance of 1.0 MΩ for most electrical circuits, though higher values are often achieved."
+      explanation:
+        'Test instruments, especially voltage testers, must be verified with a proving unit before and after each use to ensure they are working correctly.',
     },
     {
-      question: "When should test instruments be verified with a proving unit?",
+      question: 'What should you do if the installation earthing arrangements are unclear?',
       options: [
-        "Once per day",
-        "Before and after each use",
-        "Once per week",
-        "Only when calibration is due"
+        'Assume standard TN-S arrangement',
+        'Record as a limitation and investigate before proceeding',
+        'Skip earth testing',
+        'Guess based on building age',
       ],
       correct: 1,
-      explanation: "Test instruments, especially voltage testers, must be verified with a proving unit before and after each use to ensure they are working correctly."
+      explanation:
+        'Unclear earthing arrangements must be investigated and understood before testing can proceed safely. Record any limitations clearly.',
     },
     {
-      question: "What should you do if the installation earthing arrangements are unclear?",
+      question: 'Which protective devices should be checked before testing begins?',
       options: [
-        "Assume standard TN-S arrangement",
-        "Record as a limitation and investigate before proceeding",
-        "Skip earth testing",
-        "Guess based on building age"
+        'Only the main switch',
+        'RCDs/RCBOs, MCBs, and isolation switches',
+        'Just emergency lighting circuits',
+        'Only recently installed devices',
       ],
       correct: 1,
-      explanation: "Unclear earthing arrangements must be investigated and understood before testing can proceed safely. Record any limitations clearly."
+      explanation:
+        'All protective devices including RCDs, RCBOs, MCBs, and isolation switches should be visually checked and functionally tested before electrical testing.',
     },
     {
-      question: "Which protective devices should be checked before testing begins?",
+      question: 'What is the correct sequence for safe isolation?',
       options: [
-        "Only the main switch",
-        "RCDs/RCBOs, MCBs, and isolation switches",
-        "Just emergency lighting circuits",
-        "Only recently installed devices"
+        'Switch off, lock off, test dead, test tester',
+        'Test tester, switch off, test dead, lock off',
+        'Lock off, switch off, test dead, test tester',
+        'Test dead, switch off, lock off, test tester',
       ],
       correct: 1,
-      explanation: "All protective devices including RCDs, RCBOs, MCBs, and isolation switches should be visually checked and functionally tested before electrical testing."
+      explanation:
+        'The correct sequence is: Switch off, secure (lock off), test dead with voltage tester, then test the tester with a proving unit.',
     },
     {
-      question: "What is the correct sequence for safe isolation?",
+      question: 'Why must all parallel paths be identified before testing?',
       options: [
-        "Switch off, lock off, test dead, test tester",
-        "Test tester, switch off, test dead, lock off",
-        "Lock off, switch off, test dead, test tester",
-        "Test dead, switch off, lock off, test tester"
+        'To calculate circuit length',
+        'To ensure accurate test results and prevent false readings',
+        'To determine cable size',
+        'For cost estimation',
       ],
       correct: 1,
-      explanation: "The correct sequence is: Switch off, secure (lock off), test dead with voltage tester, then test the tester with a proving unit."
+      explanation:
+        'Parallel paths can affect test results, particularly for insulation resistance and earth fault loop impedance tests, leading to false readings.',
     },
     {
-      question: "Why must all parallel paths be identified before testing?",
+      question: 'What documentation must be available before commencing testing?',
       options: [
-        "To calculate circuit length",
-        "To ensure accurate test results and prevent false readings",
-        "To determine cable size",
-        "For cost estimation"
+        'Just the electrical certificate',
+        'Circuit schedules, installation certificates, and previous test results',
+        'Only building plans',
+        'Insurance documents',
       ],
       correct: 1,
-      explanation: "Parallel paths can affect test results, particularly for insulation resistance and earth fault loop impedance tests, leading to false readings."
+      explanation:
+        'Complete documentation including circuit schedules, installation certificates, and previous test results is essential for proper testing.',
     },
     {
-      question: "What documentation must be available before commencing testing?",
+      question: 'When should you refuse to proceed with testing?',
       options: [
-        "Just the electrical certificate",
-        "Circuit schedules, installation certificates, and previous test results",
-        "Only building plans",
-        "Insurance documents"
-      ],
-      correct: 1,
-      explanation: "Complete documentation including circuit schedules, installation certificates, and previous test results is essential for proper testing."
-    },
-    {
-      question: "When should you refuse to proceed with testing?",
-      options: [
-        "If the client seems difficult",
-        "If safety cannot be assured or isolation is impossible",
+        'If the client seems difficult',
+        'If safety cannot be assured or isolation is impossible',
         "If it's raining outside",
-        "If documentation is in a different language"
+        'If documentation is in a different language',
       ],
       correct: 1,
-      explanation: "Testing should never proceed if safety cannot be assured, proper isolation is impossible, or if there are significant safety concerns."
-    }
+      explanation:
+        'Testing should never proceed if safety cannot be assured, proper isolation is impossible, or if there are significant safety concerns.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -143,7 +147,9 @@ export const ReadinessQuiz = () => {
     setShowResults(false);
   };
 
-  const correctAnswers = selectedAnswers.filter((answer, index) => answer === questions[index].correct).length;
+  const correctAnswers = selectedAnswers.filter(
+    (answer, index) => answer === questions[index].correct
+  ).length;
   const percentage = Math.round((correctAnswers / questions.length) * 100);
 
   if (showResults) {
@@ -157,20 +163,18 @@ export const ReadinessQuiz = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-elec-yellow mb-2">
-              {percentage}%
-            </div>
+            <div className="text-3xl font-bold text-elec-yellow mb-2">{percentage}%</div>
             <p className="text-foreground">
               You got {correctAnswers} out of {questions.length} questions correct
             </p>
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className={`mt-3 ${percentage >= 80 ? 'bg-green-600/40 text-green-200' : 'bg-red-600/40 text-red-200'}`}
             >
               {percentage >= 80 ? 'Well Done!' : 'Keep Learning!'}
             </Badge>
           </div>
-          
+
           <div className="space-y-4">
             {questions.map((q, index) => (
               <div key={index} className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
@@ -198,9 +202,9 @@ export const ReadinessQuiz = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="text-center">
-            <Button 
+            <Button
               onClick={resetQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-400"
             >
@@ -222,31 +226,35 @@ export const ReadinessQuiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-foreground">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <span>{Math.round(((currentQuestion + 1) / questions.length) * 100)}% Complete</span>
         </div>
-        
+
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
-          <h3 className="text-foreground font-medium mb-4">{questions[currentQuestion].question}</h3>
+          <h3 className="text-foreground font-medium mb-4">
+            {questions[currentQuestion].question}
+          </h3>
           <div className="space-y-2">
             {questions[currentQuestion].options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswerSelect(index)}
-                  className={`w-full text-left p-3 rounded-lg border transition-all duration-200 ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-elec-yellow bg-yellow-600/20 text-elec-yellow'
-                      : 'border-gray-600 text-foreground hover:border-gray-500 hover:bg-gray-800'
-                  }`}
+                className={`w-full text-left p-3 rounded-lg border transition-all duration-200 ${
+                  selectedAnswers[currentQuestion] === index
+                    ? 'border-elec-yellow bg-yellow-600/20 text-elec-yellow'
+                    : 'border-gray-600 text-foreground hover:border-gray-500 hover:bg-gray-800'
+                }`}
               >
                 {option}
               </button>
             ))}
           </div>
         </div>
-        
+
         <div className="flex justify-end">
-          <Button 
+          <Button
             onClick={nextQuestion}
             disabled={selectedAnswers[currentQuestion] === null}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-400 disabled:opacity-50"

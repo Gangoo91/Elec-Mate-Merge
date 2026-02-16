@@ -6,21 +6,21 @@
 export interface RichAgentRequest {
   // Core query
   query: string;
-  
+
   // User context (for personalization)
   userContext?: {
     experienceLevel: 'apprentice' | 'electrician' | 'designer' | 'expert';
     previousQueries?: string[]; // Last 3 queries for context
     preferredExplanationStyle?: 'technical' | 'conversational' | 'detailed';
   };
-  
+
   // Project context (for better recommendations)
   projectContext?: {
     projectType?: 'domestic' | 'commercial' | 'industrial';
     buildingAge?: 'new' | 'modern' | 'period';
     budget?: 'tight' | 'standard' | 'premium';
   };
-  
+
   // System context (for optimization)
   systemContext?: {
     cacheHint?: string; // Hint for cache key
@@ -28,7 +28,7 @@ export interface RichAgentRequest {
     allowFallback?: boolean; // OK to return template response if AI fails
     cacheWarming?: boolean; // This is a cache warming request
   };
-  
+
   // Legacy support (backward compatible)
   circuitType?: string;
   power?: number;
@@ -80,4 +80,12 @@ export interface AgentResponse {
   suggestedNextAgents?: string[];
 }
 
-export type AgentType = 'designer' | 'cost-engineer' | 'health-safety' | 'installer' | 'project-manager' | 'commissioning' | 'maintenance' | 'tutor';
+export type AgentType =
+  | 'designer'
+  | 'cost-engineer'
+  | 'health-safety'
+  | 'installer'
+  | 'project-manager'
+  | 'commissioning'
+  | 'maintenance'
+  | 'tutor';

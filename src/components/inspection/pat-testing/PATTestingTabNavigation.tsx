@@ -36,11 +36,13 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
   const isLastTab = currentTabIndex === totalTabs - 1;
 
   return (
-    <div className={cn(
-      "sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border",
-      isMobile ? "p-3 mt-2" : "p-4 mt-6"
-    )}>
-      <div className={cn(isMobile ? "" : "max-w-5xl mx-auto")}>
+    <div
+      className={cn(
+        'sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border',
+        isMobile ? 'p-3 mt-2' : 'p-4 mt-6'
+      )}
+    >
+      <div className={cn(isMobile ? '' : 'max-w-5xl mx-auto')}>
         {/* Progress bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">

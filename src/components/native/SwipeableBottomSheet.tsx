@@ -91,13 +91,7 @@ export const SwipeableBottomSheet: React.FC<SwipeableBottomSheetProps> = ({
           )}
 
           {/* Content */}
-          <div
-            className={cn(
-              'momentum-scroll-y',
-              'px-6 py-4 pb-safe',
-              contentClassName
-            )}
-          >
+          <div className={cn('momentum-scroll-y', 'px-6 py-4 pb-safe', contentClassName)}>
             {children}
           </div>
         </Drawer.Content>
@@ -143,11 +137,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
       handleVisible={true}
       contentClassName="px-4 pb-6"
     >
-      {title && (
-        <p className="text-center text-sm text-muted-foreground mb-4 px-4">
-          {title}
-        </p>
-      )}
+      {title && <p className="text-center text-sm text-muted-foreground mb-4 px-4">{title}</p>}
 
       <div className="space-y-2">
         {actions.map((action, index) => (
@@ -167,9 +157,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
               action.disabled && 'opacity-50 pointer-events-none'
             )}
           >
-            {action.icon && (
-              <span className="w-5 h-5">{action.icon}</span>
-            )}
+            {action.icon && <span className="w-5 h-5">{action.icon}</span>}
             {action.label}
           </button>
         ))}
@@ -229,9 +217,7 @@ export const ConfirmSheet: React.FC<ConfirmSheetProps> = ({
       <div className="py-4">
         <h3 className="text-lg font-semibold text-foreground">{title}</h3>
         {description && (
-          <p className="text-sm text-muted-foreground mt-2 max-w-sm mx-auto">
-            {description}
-          </p>
+          <p className="text-sm text-muted-foreground mt-2 max-w-sm mx-auto">{description}</p>
         )}
       </div>
 

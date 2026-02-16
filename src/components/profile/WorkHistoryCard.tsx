@@ -6,7 +6,15 @@
  */
 
 import React from 'react';
-import { History, FileCheck, ClipboardCheck, Wrench, Plug, FileText, ExternalLink } from 'lucide-react';
+import {
+  History,
+  FileCheck,
+  ClipboardCheck,
+  Wrench,
+  Plug,
+  FileText,
+  ExternalLink,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -57,10 +65,7 @@ export const WorkHistoryCard: React.FC<WorkHistoryCardProps> = ({
         {isLoading ? (
           <div className="space-y-2">
             {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-16 rounded-lg bg-muted/50 animate-pulse"
-              />
+              <div key={i} className="h-16 rounded-lg bg-muted/50 animate-pulse" />
             ))}
           </div>
         ) : workHistory.length === 0 ? (
@@ -117,25 +122,15 @@ const WorkHistoryItem: React.FC<WorkHistoryItemProps> = ({ entry }) => {
           </Badge>
         </div>
 
-        <p className="text-xs text-muted-foreground mt-0.5 truncate">
-          {entry.description}
-        </p>
+        <p className="text-xs text-muted-foreground mt-0.5 truncate">{entry.description}</p>
 
         {/* Observations summary */}
         {hasObservations && (
           <div className="flex items-center gap-2 mt-1.5">
-            {metadata.c1 > 0 && (
-              <ObservationBadge code="C1" count={metadata.c1} />
-            )}
-            {metadata.c2 > 0 && (
-              <ObservationBadge code="C2" count={metadata.c2} />
-            )}
-            {metadata.c3 > 0 && (
-              <ObservationBadge code="C3" count={metadata.c3} />
-            )}
-            {metadata.fi > 0 && (
-              <ObservationBadge code="FI" count={metadata.fi} />
-            )}
+            {metadata.c1 > 0 && <ObservationBadge code="C1" count={metadata.c1} />}
+            {metadata.c2 > 0 && <ObservationBadge code="C2" count={metadata.c2} />}
+            {metadata.c3 > 0 && <ObservationBadge code="C3" count={metadata.c3} />}
+            {metadata.fi > 0 && <ObservationBadge code="FI" count={metadata.fi} />}
           </div>
         )}
       </div>

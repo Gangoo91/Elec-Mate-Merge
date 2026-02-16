@@ -21,7 +21,7 @@ export const EmergencyLightingSummary = () => {
               <li>Non-compliance carries serious penalties</li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-foreground font-semibold mb-2">Practical Application</h4>
             <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -32,10 +32,11 @@ export const EmergencyLightingSummary = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="p-3 bg-elec-gray rounded-md">
           <p className="text-elec-yellow font-medium text-sm">
-            Remember: Emergency lighting is not optional – it's a legal requirement that protects lives and creates liability for those responsible for buildings.
+            Remember: Emergency lighting is not optional – it's a legal requirement that protects
+            lives and creates liability for those responsible for buildings.
           </p>
         </div>
       </CardContent>

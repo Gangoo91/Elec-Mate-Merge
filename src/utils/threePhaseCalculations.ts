@@ -19,7 +19,7 @@ export interface PhaseLoadData {
 }
 
 export interface PhaseVoltageData {
-  L1_N: number;  // Line to Neutral (230V nominal)
+  L1_N: number; // Line to Neutral (230V nominal)
   L2_N: number;
   L3_N: number;
   L1_L2?: number; // Line to Line (400V nominal)
@@ -86,7 +86,7 @@ export function calculatePhaseBalance(loads: PhaseLoadData): PhaseBalanceResult 
       imbalancePercent: 0,
       isCompliant: true,
       highestPhase: 'L1',
-      lowestPhase: 'L1'
+      lowestPhase: 'L1',
     };
   }
 
@@ -98,7 +98,7 @@ export function calculatePhaseBalance(loads: PhaseLoadData): PhaseBalanceResult 
     imbalancePercent: Math.round(imbalancePercent * 10) / 10,
     isCompliant: imbalancePercent <= 10,
     highestPhase: labels[maxIndex],
-    lowestPhase: labels[minIndex]
+    lowestPhase: labels[minIndex],
   };
 
   // Add recommendations for imbalanced systems
@@ -125,17 +125,14 @@ export function calculateNeutralCurrent(loads: PhaseLoadData): NeutralCurrentRes
 
   // Vector sum calculation for 120° phase displacement
   // Simplified formula for resistive loads (power factor = 1)
-  const IN = Math.sqrt(
-    L1 * L1 + L2 * L2 + L3 * L3 -
-    L1 * L2 - L2 * L3 - L1 * L3
-  );
+  const IN = Math.sqrt(L1 * L1 + L2 * L2 + L3 * L3 - L1 * L2 - L2 * L3 - L1 * L3);
 
   const maxPhase = Math.max(L1, L2, L3);
   const neutralRatio = maxPhase > 0 ? (IN / maxPhase) * 100 : 0;
 
   const result: NeutralCurrentResult = {
     estimatedAmps: Math.round(IN * 10) / 10,
-    isAcceptable: IN <= maxPhase
+    isAcceptable: IN <= maxPhase,
   };
 
   if (IN > maxPhase * 0.8) {
@@ -156,7 +153,7 @@ export function calculateNeutralCurrent(loads: PhaseLoadData): NeutralCurrentRes
 export function validateVoltageCompliance(voltages: PhaseVoltageData): VoltageComplianceResult {
   const NOMINAL_LN = 230;
   const NOMINAL_LL = 400;
-  const TOLERANCE = 0.10; // 10%
+  const TOLERANCE = 0.1; // 10%
 
   const deviations: VoltageComplianceResult['deviations'] = [];
 
@@ -164,7 +161,7 @@ export function validateVoltageCompliance(voltages: PhaseVoltageData): VoltageCo
   const lnVoltages = [
     { phase: 'L1-N', voltage: voltages.L1_N },
     { phase: 'L2-N', voltage: voltages.L2_N },
-    { phase: 'L3-N', voltage: voltages.L3_N }
+    { phase: 'L3-N', voltage: voltages.L3_N },
   ];
 
   for (const { phase, voltage } of lnVoltages) {
@@ -175,7 +172,7 @@ export function validateVoltageCompliance(voltages: PhaseVoltageData): VoltageCo
       phase,
       voltage,
       deviation: Math.round(deviation * 10) / 10,
-      acceptable
+      acceptable,
     });
   }
 
@@ -183,8 +180,8 @@ export function validateVoltageCompliance(voltages: PhaseVoltageData): VoltageCo
   const llVoltages = [
     { phase: 'L1-L2', voltage: voltages.L1_L2 },
     { phase: 'L2-L3', voltage: voltages.L2_L3 },
-    { phase: 'L1-L3', voltage: voltages.L1_L3 }
-  ].filter(v => v.voltage !== undefined);
+    { phase: 'L1-L3', voltage: voltages.L1_L3 },
+  ].filter((v) => v.voltage !== undefined);
 
   for (const { phase, voltage } of llVoltages) {
     if (voltage === undefined) continue;
@@ -196,17 +193,17 @@ export function validateVoltageCompliance(voltages: PhaseVoltageData): VoltageCo
       phase,
       voltage,
       deviation: Math.round(deviation * 10) / 10,
-      acceptable
+      acceptable,
     });
   }
 
-  const allAcceptable = deviations.every(d => d.acceptable);
-  const hasWarning = deviations.some(d => Math.abs(d.deviation) > 5 && d.acceptable);
+  const allAcceptable = deviations.every((d) => d.acceptable);
+  const hasWarning = deviations.some((d) => Math.abs(d.deviation) > 5 && d.acceptable);
 
   return {
     isCompliant: allAcceptable,
     deviations,
-    overallStatus: allAcceptable ? (hasWarning ? 'WARNING' : 'OK') : 'FAIL'
+    overallStatus: allAcceptable ? (hasWarning ? 'WARNING' : 'OK') : 'FAIL',
   };
 }
 
@@ -247,7 +244,7 @@ export function detectThreePhaseGroups(
         label: c1.label || `Three-Phase Circuit`,
         rating: c1.rating || 0,
         deviceType: c1.device,
-        phases: ['L1', 'L2', 'L3']
+        phases: ['L1', 'L2', 'L3'],
       });
       i += 3;
       continue;
@@ -271,7 +268,7 @@ export function detectThreePhaseGroups(
         label,
         rating: c1.rating,
         deviceType: c1.device,
-        phases: ['L1', 'L2', 'L3']
+        phases: ['L1', 'L2', 'L3'],
       });
 
       i += 3;
@@ -346,10 +343,7 @@ export function getPhaseBalanceColor(imbalancePercent: number): string {
 /**
  * Formats voltage with deviation indicator
  */
-export function formatVoltageWithDeviation(
-  voltage: number,
-  nominal: number = 230
-): string {
+export function formatVoltageWithDeviation(voltage: number, nominal: number = 230): string {
   const deviation = ((voltage - nominal) / nominal) * 100;
   const sign = deviation > 0 ? '+' : '';
   return `${voltage}V (${sign}${deviation.toFixed(1)}%)`;
@@ -387,12 +381,13 @@ export function validateThreePhaseCircuit(
     32: 4,
     40: 6,
     50: 10,
-    63: 16
+    63: 16,
   };
 
-  const nearestRating = Object.keys(minConductorByRating)
-    .map(Number)
-    .find(r => r >= circuit.rating) || 63;
+  const nearestRating =
+    Object.keys(minConductorByRating)
+      .map(Number)
+      .find((r) => r >= circuit.rating) || 63;
 
   if (circuit.conductorSize < minConductorByRating[nearestRating]) {
     issues.push(`Conductor size may be undersized for ${circuit.rating}A rating`);
@@ -406,7 +401,7 @@ export function validateThreePhaseCircuit(
 
   return {
     valid: issues.length === 0,
-    issues
+    issues,
   };
 }
 
@@ -421,19 +416,19 @@ export function shouldBeThreePhase(totalLoadAmps: number): {
   if (totalLoadAmps > 80) {
     return {
       recommended: true,
-      reason: `Total load (${totalLoadAmps}A) exceeds single-phase practical limit (80A). Three-phase supply recommended.`
+      reason: `Total load (${totalLoadAmps}A) exceeds single-phase practical limit (80A). Three-phase supply recommended.`,
     };
   }
 
   if (totalLoadAmps > 63) {
     return {
       recommended: true,
-      reason: `Total load (${totalLoadAmps}A) is high for single-phase. Consider three-phase for headroom.`
+      reason: `Total load (${totalLoadAmps}A) is high for single-phase. Consider three-phase for headroom.`,
     };
   }
 
   return {
     recommended: false,
-    reason: `Total load (${totalLoadAmps}A) is within single-phase capacity.`
+    reason: `Total load (${totalLoadAmps}A) is within single-phase capacity.`,
   };
 }

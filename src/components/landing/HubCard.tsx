@@ -27,7 +27,10 @@ export const HubCard = ({
   const cardProps = comingSoon ? {} : { to: href };
 
   return (
-    <CardWrapper {...cardProps} className={`block group touch-manipulation ${comingSoon ? 'cursor-default' : ''}`}>
+    <CardWrapper
+      {...cardProps}
+      className={`block group touch-manipulation ${comingSoon ? 'cursor-default' : ''}`}
+    >
       <div
         className={`relative overflow-hidden rounded-2xl p-5 sm:p-6 ${gradient} border border-white/[0.06] h-full transition-all duration-200 ${!comingSoon ? 'hover:border-white/15 active:scale-[0.98]' : ''}`}
       >
@@ -39,7 +42,9 @@ export const HubCard = ({
         )}
 
         {/* Icon */}
-        <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl ${iconColor} bg-white/10 mb-3 sm:mb-4`}>
+        <div
+          className={`inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl ${iconColor} bg-white/10 mb-3 sm:mb-4`}
+        >
           <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
 
@@ -47,7 +52,9 @@ export const HubCard = ({
         <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5 sm:mb-2">{title}</h3>
 
         {/* Description */}
-        <p className="text-white/50 mb-3 sm:mb-4 text-sm leading-relaxed line-clamp-2">{description}</p>
+        <p className="text-white/50 mb-3 sm:mb-4 text-sm leading-relaxed line-clamp-2">
+          {description}
+        </p>
 
         {/* Features */}
         <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">

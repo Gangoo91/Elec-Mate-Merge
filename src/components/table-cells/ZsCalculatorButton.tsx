@@ -17,18 +17,19 @@ export const ZsCalculatorButton = ({ r1r2, ze, onCalculate }: ZsCalculatorButton
 
     if (isNaN(r1r2Val)) {
       toast({
-        title: "Missing R1+R2",
-        description: "Please enter the R1+R2 value first.",
-        variant: "destructive"
+        title: 'Missing R1+R2',
+        description: 'Please enter the R1+R2 value first.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (isNaN(zeVal)) {
       toast({
-        title: "Missing Ze",
-        description: "Ze (external earth fault loop impedance) is required. Please check the installation details.",
-        variant: "destructive"
+        title: 'Missing Ze',
+        description:
+          'Ze (external earth fault loop impedance) is required. Please check the installation details.',
+        variant: 'destructive',
       });
       return;
     }
@@ -36,9 +37,9 @@ export const ZsCalculatorButton = ({ r1r2, ze, onCalculate }: ZsCalculatorButton
     // Calculate Zs = Ze + (R1+R2)
     const calculatedZs = zeVal + r1r2Val;
     onCalculate(calculatedZs.toFixed(2));
-    
+
     toast({
-      title: "Zs Calculated",
+      title: 'Zs Calculated',
       description: `Zs = ${calculatedZs.toFixed(2)}Ω (Ze ${zeVal}Ω + R1+R2 ${r1r2Val}Ω)`,
     });
   };

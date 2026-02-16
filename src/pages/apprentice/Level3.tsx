@@ -1,14 +1,15 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { BookOpen } from 'lucide-react';
 
 const Level3 = () => {
   return (
     <div className="bg-background text-foreground">
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 space-y-4 sm:space-y-6 animate-fade-in">
         <div className="flex flex-col items-center justify-center mb-2 sm:mb-4">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">Level 3 Electrical Installation</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">
+            Level 3 Electrical Installation
+          </h1>
           <SmartBackButton />
         </div>
 

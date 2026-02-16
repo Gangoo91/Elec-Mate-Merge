@@ -1,7 +1,6 @@
-
-import { Globe } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import ResourceCard from "@/components/mental-health/ResourceCard";
+import { Globe } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import ResourceCard from '@/components/mental-health/ResourceCard';
 
 interface OnlineResource {
   title: string;
@@ -26,7 +25,7 @@ const OnlineCrisisSupport = ({ onlineResources }: OnlineCrisisSupportProps) => {
       <CardContent className="p-4 pt-6 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {onlineResources.map((resource, index) => (
-            <ResourceCard 
+            <ResourceCard
               key={index}
               title={resource.title}
               description={resource.description}

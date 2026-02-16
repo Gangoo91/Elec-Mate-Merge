@@ -5,12 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -48,7 +43,12 @@ const CATEGORIES = [
 const SMART_GOAL_SUGGESTIONS = [
   { title: 'Complete 400 OJT hours', category: 'training', target: 400, unit: 'hours' },
   { title: 'Add 20 portfolio entries', category: 'portfolio', target: 20, unit: 'entries' },
-  { title: 'Pass all Unit 201 assessments', category: 'assessment', target: 4, unit: 'assessments' },
+  {
+    title: 'Pass all Unit 201 assessments',
+    category: 'assessment',
+    target: 4,
+    unit: 'assessments',
+  },
   { title: 'Achieve 95% attendance', category: 'training', target: 95, unit: '%' },
   { title: 'Master safe isolation', category: 'skill', target: 100, unit: '%' },
 ];
@@ -86,15 +86,19 @@ export function GoalsSection() {
     : goals;
 
   // Separate active and completed
-  const activeGoals = filteredGoals.filter((g) => g.status !== 'completed' && g.status !== 'cancelled');
+  const activeGoals = filteredGoals.filter(
+    (g) => g.status !== 'completed' && g.status !== 'cancelled'
+  );
   const completedGoals = filteredGoals.filter((g) => g.status === 'completed');
 
   // Calculate overall progress
-  const overallProgress = goals.length > 0
-    ? Math.round(
-        goals.reduce((sum, g) => sum + ((g.current_value || 0) / g.target_value) * 100, 0) / goals.length
-      )
-    : 0;
+  const overallProgress =
+    goals.length > 0
+      ? Math.round(
+          goals.reduce((sum, g) => sum + ((g.current_value || 0) / g.target_value) * 100, 0) /
+            goals.length
+        )
+      : 0;
 
   const handleAddGoal = async () => {
     if (!newGoal.title) return;
@@ -139,13 +143,19 @@ export function GoalsSection() {
     switch (priority) {
       case 'high':
         return (
-          <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/30 text-[10px]">
+          <Badge
+            variant="outline"
+            className="bg-red-500/10 text-red-500 border-red-500/30 text-[10px]"
+          >
             High
           </Badge>
         );
       case 'medium':
         return (
-          <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/30 text-[10px]">
+          <Badge
+            variant="outline"
+            className="bg-amber-500/10 text-amber-500 border-amber-500/30 text-[10px]"
+          >
             Medium
           </Badge>
         );
@@ -233,9 +243,7 @@ export function GoalsSection() {
             onClick={() => setSelectedCategory(null)}
             className={cn(
               'flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all active:scale-95',
-              !selectedCategory
-                ? 'bg-elec-yellow text-black'
-                : 'bg-muted text-muted-foreground'
+              !selectedCategory ? 'bg-elec-yellow text-black' : 'bg-muted text-muted-foreground'
             )}
           >
             All ({goals.length})
@@ -279,26 +287,19 @@ export function GoalsSection() {
                     <div className="flex items-start gap-3">
                       <div
                         className={cn(
-                          "h-10 w-10 rounded-xl flex items-center justify-center shrink-0",
+                          'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
                           percent >= 75
-                            ? "bg-green-500/10"
+                            ? 'bg-green-500/10'
                             : percent >= 50
-                            ? "bg-elec-yellow/10"
-                            : "bg-muted"
+                              ? 'bg-elec-yellow/10'
+                              : 'bg-muted'
                         )}
                       >
-                        <CategoryIcon
-                          className={cn(
-                            "h-5 w-5",
-                            getCategoryColor(goal.category)
-                          )}
-                        />
+                        <CategoryIcon className={cn('h-5 w-5', getCategoryColor(goal.category))} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2 mb-1">
-                          <p className="font-medium text-foreground line-clamp-1">
-                            {goal.title}
-                          </p>
+                          <p className="font-medium text-foreground line-clamp-1">{goal.title}</p>
                           {getPriorityBadge(goal.priority)}
                         </div>
                         {goal.description && (
@@ -321,7 +322,8 @@ export function GoalsSection() {
                         />
                         {goal.deadline && (
                           <p className="text-[10px] text-muted-foreground mt-2">
-                            Due: {new Date(goal.deadline).toLocaleDateString('en-GB', {
+                            Due:{' '}
+                            {new Date(goal.deadline).toLocaleDateString('en-GB', {
                               day: 'numeric',
                               month: 'short',
                               year: 'numeric',
@@ -348,19 +350,14 @@ export function GoalsSection() {
               const CategoryIcon = getCategoryIcon(goal.category);
 
               return (
-                <Card
-                  key={goal.id}
-                  className="border-green-500/20 bg-green-500/5"
-                >
+                <Card key={goal.id} className="border-green-500/20 bg-green-500/5">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0">
                         <CheckCircle2 className="h-5 w-5 text-green-500" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-foreground line-clamp-1">
-                          {goal.title}
-                        </p>
+                        <p className="font-medium text-foreground line-clamp-1">{goal.title}</p>
                         <p className="text-xs text-green-500">
                           {goal.target_value} {goal.unit} achieved
                         </p>
@@ -442,13 +439,13 @@ export function GoalsSection() {
                       key={cat.value}
                       onClick={() => setNewGoal({ ...newGoal, category: cat.value })}
                       className={cn(
-                        "flex flex-col items-center gap-1 p-3 rounded-xl border transition-all active:scale-95 touch-manipulation",
+                        'flex flex-col items-center gap-1 p-3 rounded-xl border transition-all active:scale-95 touch-manipulation',
                         newGoal.category === cat.value
-                          ? "border-elec-yellow bg-elec-yellow/10"
-                          : "border-border"
+                          ? 'border-elec-yellow bg-elec-yellow/10'
+                          : 'border-border'
                       )}
                     >
-                      <Icon className={cn("h-5 w-5", cat.color)} />
+                      <Icon className={cn('h-5 w-5', cat.color)} />
                       <span className="text-[10px] font-medium">{cat.label}</span>
                     </button>
                   );
@@ -498,14 +495,14 @@ export function GoalsSection() {
                     key={priority}
                     onClick={() => setNewGoal({ ...newGoal, priority })}
                     className={cn(
-                      "py-2.5 px-4 rounded-xl border text-sm font-medium capitalize transition-all active:scale-95 touch-manipulation h-11",
+                      'py-2.5 px-4 rounded-xl border text-sm font-medium capitalize transition-all active:scale-95 touch-manipulation h-11',
                       newGoal.priority === priority
                         ? priority === 'high'
-                          ? "border-red-500 bg-red-500/10 text-red-500"
+                          ? 'border-red-500 bg-red-500/10 text-red-500'
                           : priority === 'medium'
-                          ? "border-amber-500 bg-amber-500/10 text-amber-500"
-                          : "border-elec-yellow bg-elec-yellow/10"
-                        : "border-border"
+                            ? 'border-amber-500 bg-amber-500/10 text-amber-500'
+                            : 'border-elec-yellow bg-elec-yellow/10'
+                        : 'border-border'
                     )}
                   >
                     {priority}

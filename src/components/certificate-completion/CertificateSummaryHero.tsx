@@ -15,7 +15,7 @@ import {
   FileText,
   MapPin,
   Calendar,
-  AlertOctagon
+  AlertOctagon,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -116,11 +116,7 @@ export const CertificateSummaryHero: React.FC<CertificateSummaryHeroProps> = ({
               transition={{ delay: 0.2, duration: 0.4 }}
             >
               <div className="relative">
-                <svg
-                  width={size}
-                  height={size}
-                  className="transform -rotate-90"
-                >
+                <svg width={size} height={size} className="transform -rotate-90">
                   {/* Background circle */}
                   <circle
                     cx={size / 2}
@@ -156,7 +152,9 @@ export const CertificateSummaryHero: React.FC<CertificateSummaryHeroProps> = ({
                   >
                     {completionPercentage}%
                   </motion.span>
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Complete</span>
+                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                    Complete
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -189,7 +187,9 @@ export const CertificateSummaryHero: React.FC<CertificateSummaryHeroProps> = ({
                 {installationAddress && (
                   <div className="flex items-start gap-2 text-foreground">
                     <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
-                    <span className="text-base font-medium line-clamp-2">{installationAddress}</span>
+                    <span className="text-base font-medium line-clamp-2">
+                      {installationAddress}
+                    </span>
                   </div>
                 )}
 
@@ -201,7 +201,7 @@ export const CertificateSummaryHero: React.FC<CertificateSummaryHeroProps> = ({
                       {new Date(inspectionDate).toLocaleDateString('en-GB', {
                         day: 'numeric',
                         month: 'long',
-                        year: 'numeric'
+                        year: 'numeric',
                       })}
                     </span>
                   </div>
@@ -233,17 +233,26 @@ export const CertificateSummaryHero: React.FC<CertificateSummaryHeroProps> = ({
 
                 {/* Defect codes */}
                 {c1Count > 0 && (
-                  <Badge variant="outline" className="bg-red-500/10 border-red-500/30 text-red-400 text-xs">
+                  <Badge
+                    variant="outline"
+                    className="bg-red-500/10 border-red-500/30 text-red-400 text-xs"
+                  >
                     C1: {c1Count}
                   </Badge>
                 )}
                 {c2Count > 0 && (
-                  <Badge variant="outline" className="bg-amber-500/10 border-amber-500/30 text-amber-400 text-xs">
+                  <Badge
+                    variant="outline"
+                    className="bg-amber-500/10 border-amber-500/30 text-amber-400 text-xs"
+                  >
                     C2: {c2Count}
                   </Badge>
                 )}
                 {c3Count > 0 && (
-                  <Badge variant="outline" className="bg-blue-500/10 border-blue-500/30 text-blue-400 text-xs">
+                  <Badge
+                    variant="outline"
+                    className="bg-blue-500/10 border-blue-500/30 text-blue-400 text-xs"
+                  >
                     C3: {c3Count}
                   </Badge>
                 )}
@@ -255,12 +264,14 @@ export const CertificateSummaryHero: React.FC<CertificateSummaryHeroProps> = ({
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
               >
-                <div className={cn(
-                  'inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 transition-all',
-                  assessmentConfig.bgColor,
-                  assessmentConfig.borderColor,
-                  overallAssessment && `shadow-lg ${assessmentConfig.glowColor}`
-                )}>
+                <div
+                  className={cn(
+                    'inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 transition-all',
+                    assessmentConfig.bgColor,
+                    assessmentConfig.borderColor,
+                    overallAssessment && `shadow-lg ${assessmentConfig.glowColor}`
+                  )}
+                >
                   <AssessmentIcon className={cn('h-5 w-5', assessmentConfig.color)} />
                   <span className={cn('font-bold text-sm tracking-wide', assessmentConfig.color)}>
                     {assessmentConfig.label}

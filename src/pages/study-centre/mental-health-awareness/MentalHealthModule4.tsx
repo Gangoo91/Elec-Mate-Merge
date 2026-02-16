@@ -1,45 +1,44 @@
-import { ArrowLeft, Heart, Signpost, RefreshCw, Shield } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Heart, Signpost, RefreshCw, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Mental Health First Aid in Action",
+    title: 'Mental Health First Aid in Action',
     icon: Heart,
     description:
-      "The MHFA action plan, immediate support techniques, and knowing your role and limits",
+      'The MHFA action plan, immediate support techniques, and knowing your role and limits',
   },
   {
     id: 2,
-    title: "Signposting to Professional Help",
+    title: 'Signposting to Professional Help',
     icon: Signpost,
-    description:
-      "NHS services, GPs, EAPs, Samaritans, Mates in Mind, and the Lighthouse Club",
+    description: 'NHS services, GPs, EAPs, Samaritans, Mates in Mind, and the Lighthouse Club',
   },
   {
     id: 3,
-    title: "Supporting Recovery and Return to Work",
+    title: 'Supporting Recovery and Return to Work',
     icon: RefreshCw,
     description:
-      "Reasonable adjustments, phased returns, ongoing check-ins, and avoiding assumptions",
+      'Reasonable adjustments, phased returns, ongoing check-ins, and avoiding assumptions',
   },
   {
     id: 4,
-    title: "Looking After Yourself as a Supporter",
+    title: 'Looking After Yourself as a Supporter',
     icon: Shield,
     description:
-      "Compassion fatigue, setting boundaries, recognising your own limits, and self-care",
+      'Compassion fatigue, setting boundaries, recognising your own limits, and self-care',
   },
 ];
 
 export default function MentalHealthModule4() {
   useSEO({
-    title: "Module 4: Supporting Others | Mental Health Awareness",
+    title: 'Module 4: Supporting Others | Mental Health Awareness',
     description:
-      "Mental health first aid, signposting to help, supporting recovery, and looking after yourself.",
+      'Mental health first aid, signposting to help, supporting recovery, and looking after yourself.',
   });
 
   return (
@@ -72,12 +71,10 @@ export default function MentalHealthModule4() {
               <span className="text-white text-xs">&bull;</span>
               <span className="text-white text-xs">30 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Supporting Others
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Supporting Others</h1>
             <p className="text-white text-sm sm:text-base">
-              How to provide immediate support, signpost to professional help,
-              support someone's recovery, and protect your own wellbeing
+              How to provide immediate support, signpost to professional help, support someone's
+              recovery, and protect your own wellbeing
             </p>
           </div>
 

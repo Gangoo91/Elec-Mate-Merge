@@ -1,44 +1,44 @@
-import { ArrowLeft, TestTube, Eye, Wrench, Zap, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, TestTube, Eye, Wrench, Zap, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Why Electrical Installations Must Be Inspected and Tested",
-    description: "Understanding the fundamental need for electrical inspection and testing",
+    number: 'Subsection 1',
+    title: 'Why Electrical Installations Must Be Inspected and Tested',
+    description: 'Understanding the fundamental need for electrical inspection and testing',
     icon: TestTube,
-    href: "1-1"
+    href: '1-1',
   },
   {
-    number: "Subsection 2",
-    title: "Legal and Safety Reasons (EAWR, BS 7671 Principles)",
-    description: "Legal requirements under EAWR and BS 7671 standards",
+    number: 'Subsection 2',
+    title: 'Legal and Safety Reasons (EAWR, BS 7671 Principles)',
+    description: 'Legal requirements under EAWR and BS 7671 standards',
     icon: Eye,
-    href: "1-2"
+    href: '1-2',
   },
   {
-    number: "Subsection 3",
-    title: "When Testing Is Required (New Work, Alterations, Faults)",
-    description: "Circumstances that require electrical testing and inspection",
+    number: 'Subsection 3',
+    title: 'When Testing Is Required (New Work, Alterations, Faults)',
+    description: 'Circumstances that require electrical testing and inspection',
     icon: Wrench,
-    href: "1-3"
+    href: '1-3',
   },
   {
-    number: "Subsection 4",
-    title: "Difference Between Inspection and Testing",
-    description: "Understanding the distinction between visual inspection and testing",
+    number: 'Subsection 4',
+    title: 'Difference Between Inspection and Testing',
+    description: 'Understanding the distinction between visual inspection and testing',
     icon: Zap,
-    href: "1-4"
+    href: '1-4',
   },
   {
-    number: "Subsection 5",
-    title: "What Level 2 Learners Are Expected to Know and Do",
-    description: "Scope of knowledge and practical requirements for Level 2",
+    number: 'Subsection 5',
+    title: 'What Level 2 Learners Are Expected to Know and Do',
+    description: 'Scope of knowledge and practical requirements for Level 2',
     icon: Shield,
-    href: "1-5"
-  }
+    href: '1-5',
+  },
 ];
 
 const Section1 = () => {

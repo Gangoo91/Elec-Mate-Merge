@@ -1,38 +1,44 @@
-import { ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
-import { motion } from "framer-motion";
+import { ParsedCostAnalysis } from '@/utils/cost-analysis-parser';
+import { motion } from 'framer-motion';
 import {
-  Layers, PoundSterling, MessageSquare, ClipboardList,
-  ChevronDown, TrendingUp, Shield, Sparkles
-} from "lucide-react";
+  Layers,
+  PoundSterling,
+  MessageSquare,
+  ClipboardList,
+  ChevronDown,
+  TrendingUp,
+  Shield,
+  Sparkles,
+} from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
-import OriginalRequestCard from "./OriginalRequestCard";
-import QuoteHeroCard from "./QuoteHeroCard";
-import AIAnalysisSummary from "./AIAnalysisSummary";
-import QuickMetricsCard from "./QuickMetricsCard";
-import KeyActionItems from "./KeyActionItems";
-import ClientQuoteSummary from "./ClientQuoteSummary";
-import PricingOptionsTiers from "./PricingOptionsTiers";
-import CostBreakdownCard from "./CostBreakdownCard";
-import ClientQuoteJustificationCard from "./ClientQuoteJustificationCard";
-import MaterialsTable from "./MaterialsTable";
-import LabourPlanTable from "./LabourPlanTable";
-import JobComplexityCard from "./JobComplexityCard";
-import RiskAssessmentTable from "./RiskAssessmentTable";
-import PricingConfidenceCard from "./PricingConfidenceCard";
-import UpsellOpportunitiesCard from "./UpsellOpportunitiesCard";
-import FutureWorkPipelineCard from "./FutureWorkPipelineCard";
-import ClientConversationsCard from "./ClientConversationsCard";
-import SiteArrivalChecklist from "./SiteArrivalChecklist";
-import PaymentTermsCard from "./PaymentTermsCard";
-import JobNotesCard from "./JobNotesCard";
-import PostJobReviewCard from "./PostJobReviewCard";
-import TradeIntelligenceCard from "./TradeIntelligenceCard";
+} from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
+import OriginalRequestCard from './OriginalRequestCard';
+import QuoteHeroCard from './QuoteHeroCard';
+import AIAnalysisSummary from './AIAnalysisSummary';
+import QuickMetricsCard from './QuickMetricsCard';
+import KeyActionItems from './KeyActionItems';
+import ClientQuoteSummary from './ClientQuoteSummary';
+import PricingOptionsTiers from './PricingOptionsTiers';
+import CostBreakdownCard from './CostBreakdownCard';
+import ClientQuoteJustificationCard from './ClientQuoteJustificationCard';
+import MaterialsTable from './MaterialsTable';
+import LabourPlanTable from './LabourPlanTable';
+import JobComplexityCard from './JobComplexityCard';
+import RiskAssessmentTable from './RiskAssessmentTable';
+import PricingConfidenceCard from './PricingConfidenceCard';
+import UpsellOpportunitiesCard from './UpsellOpportunitiesCard';
+import FutureWorkPipelineCard from './FutureWorkPipelineCard';
+import ClientConversationsCard from './ClientConversationsCard';
+import SiteArrivalChecklist from './SiteArrivalChecklist';
+import PaymentTermsCard from './PaymentTermsCard';
+import JobNotesCard from './JobNotesCard';
+import PostJobReviewCard from './PostJobReviewCard';
+import TradeIntelligenceCard from './TradeIntelligenceCard';
 
 interface ComprehensiveResultsViewProps {
   analysis: ParsedCostAnalysis;
@@ -42,25 +48,25 @@ interface ComprehensiveResultsViewProps {
   onNewAnalysis: () => void;
 }
 
-const ComprehensiveResultsView = ({ 
-  analysis, 
-  structuredData, 
+const ComprehensiveResultsView = ({
+  analysis,
+  structuredData,
   projectContext,
   originalQuery,
-  onNewAnalysis 
+  onNewAnalysis,
 }: ComprehensiveResultsViewProps) => {
-  
   const profitability = structuredData?.profitabilityAnalysis;
   const selectedTier = structuredData?.recommendedQuote?.tier || 'standard';
-  const selectedAmount = profitability?.quoteTiers?.standard?.price 
-    || structuredData?.recommendedQuote?.amount 
-    || profitability?.quoteTiers?.target?.price  // Fallback to old tier name if exists
-    || analysis.totalCost;
+  const selectedAmount =
+    profitability?.quoteTiers?.standard?.price ||
+    structuredData?.recommendedQuote?.amount ||
+    profitability?.quoteTiers?.target?.price || // Fallback to old tier name if exists
+    analysis.totalCost;
 
   // Calculate derived metrics
-  const totalLabourHours = structuredData?.labour?.tasks?.reduce((sum: number, t: any) => 
-    sum + (t.hours || 0), 0) || 0;
-  
+  const totalLabourHours =
+    structuredData?.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0;
+
   const calculateMargin = (total: number, breakEven: number) => {
     if (!breakEven || breakEven === 0) return 0;
     return ((total - breakEven) / total) * 100;
@@ -75,13 +81,16 @@ const ComprehensiveResultsView = ({
     return profit / hours;
   };
 
-  const breakEven = profitability?.breakEvenPoint || profitability?.baseQuote?.subtotal || analysis.subtotal;
+  const breakEven =
+    profitability?.breakEvenPoint || profitability?.baseQuote?.subtotal || analysis.subtotal;
   const margin = calculateMargin(selectedAmount, breakEven);
   const profit = calculateProfit(selectedAmount, breakEven);
   const profitPerHour = calculateProfitPerHour(profit, totalLabourHours);
-  
-  const avgConfidence = structuredData?.confidence 
-    ? Math.round((structuredData.confidence.materials?.level + structuredData.confidence.labour?.level) / 2)
+
+  const avgConfidence = structuredData?.confidence
+    ? Math.round(
+        (structuredData.confidence.materials?.level + structuredData.confidence.labour?.level) / 2
+      )
     : 75;
 
   const formatCurrency = (value: number) => {
@@ -89,7 +98,7 @@ const ComprehensiveResultsView = ({
       style: 'currency',
       currency: 'GBP',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(value);
   };
 
@@ -99,10 +108,7 @@ const ComprehensiveResultsView = ({
 
       {/* 0. Original User Request */}
       {originalQuery && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <OriginalRequestCard
             query={originalQuery}
             projectContext={projectContext}
@@ -153,13 +159,8 @@ const ComprehensiveResultsView = ({
       </motion.div>
 
       {/* ======= ACCORDION SECTIONS ======= */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-      >
-        <Accordion type="multiple" defaultValue={["pricing"]} className="space-y-3">
-
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+        <Accordion type="multiple" defaultValue={['pricing']} className="space-y-3">
           {/* PRICING & TIERS */}
           <AccordionItem value="pricing" className="border-none">
             <AccordionTrigger className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/5 hover:from-elec-yellow/15 hover:to-amber-500/10 rounded-xl px-4 py-3 border border-elec-yellow/20 [&[data-state=open]]:rounded-b-none">
@@ -275,7 +276,9 @@ const ComprehensiveResultsView = ({
               <ClientQuoteJustificationCard
                 materialsNet={analysis.materialsTotal}
                 materialsMarkup={structuredData?.materials?.markup || 15}
-                materialsTotal={analysis.materialsTotal * (1 + ((structuredData?.materials?.markup || 15) / 100))}
+                materialsTotal={
+                  analysis.materialsTotal * (1 + (structuredData?.materials?.markup || 15) / 100)
+                }
                 labourHours={totalLabourHours}
                 labourRate={totalLabourHours > 0 ? analysis.labourTotal / totalLabourHours : 0}
                 labourTotal={analysis.labourTotal}
@@ -333,7 +336,6 @@ const ComprehensiveResultsView = ({
               />
             </AccordionContent>
           </AccordionItem>
-
         </Accordion>
       </motion.div>
     </div>

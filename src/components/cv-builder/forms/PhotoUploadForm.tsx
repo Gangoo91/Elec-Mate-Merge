@@ -1,9 +1,8 @@
-
-import React, { useState, useCallback, useRef } from "react";
-import { Camera, Upload, X, User } from "lucide-react";
-import { CVData } from "../types";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import React, { useState, useCallback, useRef } from 'react';
+import { Camera, Upload, X, User } from 'lucide-react';
+import { CVData } from '../types';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface PhotoUploadFormProps {
   cvData: CVData;
@@ -15,62 +14,67 @@ export const PhotoUploadForm: React.FC<PhotoUploadFormProps> = ({ cvData, onChan
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = useCallback(async (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      toast.error('Please select an image file');
-      return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('Image must be under 5MB');
-      return;
-    }
-
-    setIsUploading(true);
-
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast.error('Please sign in to upload a photo');
+  const handleFileSelect = useCallback(
+    async (file: File) => {
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select an image file');
         return;
       }
 
-      const fileName = `${user.id}/cv-photo/${Date.now()}.jpg`;
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image must be under 5MB');
+        return;
+      }
 
-      const { error: uploadError } = await supabase.storage
-        .from('visual-uploads')
-        .upload(fileName, file, { upsert: true });
+      setIsUploading(true);
 
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('visual-uploads')
-        .getPublicUrl(fileName);
-
-      onChange({
-        ...cvData,
-        personalInfo: {
-          ...cvData.personalInfo,
-          photoUrl: publicUrl
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) {
+          toast.error('Please sign in to upload a photo');
+          return;
         }
-      });
 
-      toast.success('Photo uploaded');
-    } catch (error) {
-      console.error('Upload error:', error);
-      toast.error('Failed to upload photo');
-    } finally {
-      setIsUploading(false);
-    }
-  }, [cvData, onChange]);
+        const fileName = `${user.id}/cv-photo/${Date.now()}.jpg`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('visual-uploads')
+          .upload(fileName, file, { upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
+
+        onChange({
+          ...cvData,
+          personalInfo: {
+            ...cvData.personalInfo,
+            photoUrl: publicUrl,
+          },
+        });
+
+        toast.success('Photo uploaded');
+      } catch (error) {
+        console.error('Upload error:', error);
+        toast.error('Failed to upload photo');
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [cvData, onChange]
+  );
 
   const handleRemovePhoto = useCallback(() => {
     onChange({
       ...cvData,
       personalInfo: {
         ...cvData.personalInfo,
-        photoUrl: ''
-      }
+        photoUrl: '',
+      },
     });
     toast.success('Photo removed');
   }, [cvData, onChange]);
@@ -90,7 +94,8 @@ export const PhotoUploadForm: React.FC<PhotoUploadFormProps> = ({ cvData, onChan
           Profile Photo
         </h3>
         <p className="text-sm text-elec-light/60 mb-6">
-          Add a professional photo to make your CV stand out. Photos help employers put a face to your application.
+          Add a professional photo to make your CV stand out. Photos help employers put a face to
+          your application.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-6">

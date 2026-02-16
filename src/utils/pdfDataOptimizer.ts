@@ -36,7 +36,7 @@ const isBase64DataUrl = (str: string): boolean => {
  */
 export const findBase64Images = (data: any, path = ''): Array<{ path: string; sizeMB: number }> => {
   const images: Array<{ path: string; sizeMB: number }> = [];
-  
+
   if (typeof data === 'string' && isBase64DataUrl(data)) {
     const sizeMB = (data.length * 0.75) / (1024 * 1024); // base64 is ~33% larger
     images.push({ path, sizeMB });
@@ -50,7 +50,7 @@ export const findBase64Images = (data: any, path = ''): Array<{ path: string; si
       images.push(...findBase64Images(value, newPath));
     });
   }
-  
+
   return images;
 };
 
@@ -64,7 +64,7 @@ export const stripBase64Images = (data: any): any => {
     // Preserve all non-base64 strings (required fields like names, addresses)
     return data;
   } else if (Array.isArray(data)) {
-    return data.map(item => stripBase64Images(item));
+    return data.map((item) => stripBase64Images(item));
   } else if (typeof data === 'object' && data !== null) {
     const result: any = {};
     Object.entries(data).forEach(([key, value]) => {
@@ -82,37 +82,37 @@ export const stripBase64Images = (data: any): any => {
 export const optimizeForPdfGeneration = (data: any): OptimizationResult => {
   const warnings: string[] = [];
   const originalSizeMB = calculateDataSize(data);
-  
+
   // Find all base64 images
   const images = findBase64Images(data);
   const totalImageSizeMB = images.reduce((sum, img) => sum + img.sizeMB, 0);
-  
+
   // Log image findings
   if (images.length > 0) {
     console.log(`Found ${images.length} base64 images totaling ${totalImageSizeMB.toFixed(2)}MB:`);
-    images.forEach(img => {
+    images.forEach((img) => {
       console.log(`  - ${img.path}: ${img.sizeMB.toFixed(2)}MB`);
     });
   }
-  
+
   // Check if data is too large
   if (originalSizeMB > MAX_SAFE_SIZE_MB) {
     warnings.push(
       `Data size (${originalSizeMB.toFixed(2)}MB) exceeds safe limit (${MAX_SAFE_SIZE_MB}MB). ` +
-      `This may cause PDF generation to fail.`
+        `This may cause PDF generation to fail.`
     );
-    
+
     if (totalImageSizeMB > 0.1) {
       warnings.push(
         `Found ${totalImageSizeMB.toFixed(2)}MB of base64 images. ` +
-        `Consider storing images in Supabase Storage and referencing by URL.`
+          `Consider storing images in Supabase Storage and referencing by URL.`
       );
     }
-    
+
     // Strip images as optimization
     const optimizedData = stripBase64Images(data);
     const optimizedSizeMB = calculateDataSize(optimizedData);
-    
+
     // Log sample of preserved data to verify required fields remain
     console.log('[pdfDataOptimizer] Sample of optimised data:', {
       clientName: optimizedData.clientName?.substring(0, 20),
@@ -121,12 +121,12 @@ export const optimizeForPdfGeneration = (data: any): OptimizationResult => {
       hasCircuits: !!optimizedData.circuits_json,
       hasObservations: !!optimizedData.defect_observations_json,
     });
-    
+
     warnings.push(
       `Attempting PDF generation without embedded images. ` +
-      `Reduced size from ${originalSizeMB.toFixed(2)}MB to ${optimizedSizeMB.toFixed(2)}MB.`
+        `Reduced size from ${originalSizeMB.toFixed(2)}MB to ${optimizedSizeMB.toFixed(2)}MB.`
     );
-    
+
     return {
       success: true,
       originalSizeMB,
@@ -135,15 +135,15 @@ export const optimizeForPdfGeneration = (data: any): OptimizationResult => {
       optimizedData,
     };
   }
-  
+
   // Data is within safe limits
   if (originalSizeMB > WARNING_SIZE_MB) {
     warnings.push(
       `Data size (${originalSizeMB.toFixed(2)}MB) is approaching the limit. ` +
-      `Consider optimizing images or using storage URLs.`
+        `Consider optimizing images or using storage URLs.`
     );
   }
-  
+
   return {
     success: true,
     originalSizeMB,
@@ -158,6 +158,6 @@ export const optimizeForPdfGeneration = (data: any): OptimizationResult => {
  */
 export const formatSizeWarning = (result: OptimizationResult): string => {
   if (result.warnings.length === 0) return '';
-  
+
   return result.warnings.join('\n\n');
 };

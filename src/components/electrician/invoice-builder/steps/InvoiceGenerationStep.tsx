@@ -25,7 +25,10 @@ export const InvoiceGenerationStep = ({
   const [isPreviewing, setIsPreviewing] = useState(false);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
-  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+  const pollPdfDownloadUrl = async (
+    documentId: string,
+    accessToken: string
+  ): Promise<string | null> => {
     for (let i = 0; i < 45; i++) {
       const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { documentId, mode: 'status' },
@@ -36,7 +39,7 @@ export const InvoiceGenerationStep = ({
     }
     return null;
   };
-  
+
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
@@ -46,10 +49,7 @@ export const InvoiceGenerationStep = ({
   };
 
   // Combine original items and additional items for display
-  const allItems = [
-    ...(invoice.items || []),
-    ...(invoice.additional_invoice_items || [])
-  ];
+  const allItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
 
   const handlePreviewPDF = async () => {
     setIsPreviewing(true);
@@ -60,14 +60,16 @@ export const InvoiceGenerationStep = ({
       }
 
       // Get user session for authentication
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
         throw new Error('User not authenticated');
       }
 
       // Use items directly from invoice - they're already merged in DB
       const mergedItems = invoice.items || [];
-      
+
       const completeInvoice = {
         ...invoice,
         items: mergedItems,
@@ -77,21 +79,24 @@ export const InvoiceGenerationStep = ({
 
       // Generate PDF silently - show loading in button UI
 
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: completeInvoice,
-          companyProfile: companyProfile,
-          invoice_mode: true  // Uses DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2 template
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-pdf-monkey',
+        {
+          body: {
+            quote: completeInvoice,
+            companyProfile: companyProfile,
+            invoice_mode: true, // Uses DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2 template
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
         }
-      });
+      );
 
       let pdfUrl: string | undefined = pdfData?.downloadUrl;
       const documentId: string | undefined = pdfData?.documentId;
       if (!pdfUrl && documentId) {
-        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        pdfUrl = (await pollPdfDownloadUrl(documentId, session.access_token)) || undefined;
       }
 
       if (pdfError || !pdfUrl) {
@@ -107,7 +112,7 @@ export const InvoiceGenerationStep = ({
           .update({
             pdf_document_id: documentId,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: newVersion
+            pdf_version: newVersion,
           })
           .eq('id', invoice.id);
 
@@ -165,7 +170,9 @@ export const InvoiceGenerationStep = ({
         <div className="text-sm space-y-1">
           <div className="font-medium">{invoice.client?.name}</div>
           <div className="text-muted-foreground">{invoice.client?.email}</div>
-          <div className="text-muted-foreground">{invoice.client?.address}, {invoice.client?.postcode}</div>
+          <div className="text-muted-foreground">
+            {invoice.client?.address}, {invoice.client?.postcode}
+          </div>
         </div>
       </Card>
 
@@ -194,28 +201,28 @@ export const InvoiceGenerationStep = ({
             <span>Subtotal (Materials & Labour):</span>
             <span className="font-medium">{formatCurrency(invoice.subtotal || 0)}</span>
           </div>
-          
-          {(invoice.overhead !== undefined && invoice.overhead !== 0) && (
+
+          {invoice.overhead !== undefined && invoice.overhead !== 0 && (
             <div className="flex justify-between text-sm text-muted-foreground">
               <span>Overhead ({invoice.settings?.overheadPercentage || 0}%):</span>
               <span>{formatCurrency(invoice.overhead)}</span>
             </div>
           )}
-          
-          {(invoice.profit !== undefined && invoice.profit !== 0) && (
+
+          {invoice.profit !== undefined && invoice.profit !== 0 && (
             <div className="flex justify-between text-sm text-muted-foreground">
               <span>Profit Margin ({invoice.settings?.profitMargin || 0}%):</span>
               <span>{formatCurrency(invoice.profit)}</span>
             </div>
           )}
-          
+
           {invoice.settings?.vatRegistered && (
             <div className="flex justify-between text-sm">
               <span>VAT ({invoice.settings?.vatRate || 20}%):</span>
               <span className="font-medium">{formatCurrency(invoice.vatAmount || 0)}</span>
             </div>
           )}
-          
+
           <div className="flex justify-between text-lg font-bold pt-2 border-t border-primary/20">
             <span>Total Amount Due:</span>
             <span>{formatCurrency(invoice.total || 0)}</span>

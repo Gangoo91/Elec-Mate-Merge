@@ -12,9 +12,11 @@ const SmartHomeModule7Section5Summary = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          This section demonstrated that customer handover and app training are critical components of successful smart home installations, directly impacting client satisfaction and system adoption.
+          This section demonstrated that customer handover and app training are critical components
+          of successful smart home installations, directly impacting client satisfaction and system
+          adoption.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="p-3 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Handover Fundamentals</h4>
@@ -24,7 +26,7 @@ const SmartHomeModule7Section5Summary = () => {
               <li>• Focus on features clients will actually use in daily operation</li>
             </ul>
           </div>
-          
+
           <div className="p-3 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Professional Standards</h4>
             <ul className="text-sm space-y-1">
@@ -34,13 +36,17 @@ const SmartHomeModule7Section5Summary = () => {
             </ul>
           </div>
         </div>
-        
+
         <p>
-          The real-world example highlighted how poor handovers lead to system abandonment and client dissatisfaction, whilst proper training results in confident users and positive outcomes.
+          The real-world example highlighted how poor handovers lead to system abandonment and
+          client dissatisfaction, whilst proper training results in confident users and positive
+          outcomes.
         </p>
 
         <p>
-          Professional electricians understand that installation quality means nothing if clients cannot use their systems effectively. A structured handover approach protects reputation and builds long-term client relationships.
+          Professional electricians understand that installation quality means nothing if clients
+          cannot use their systems effectively. A structured handover approach protects reputation
+          and builds long-term client relationships.
         </p>
       </CardContent>
     </Card>

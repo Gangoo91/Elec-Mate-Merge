@@ -1,40 +1,43 @@
-import { ArrowLeft, ClipboardCheck, Wrench, Shield, Scale } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ClipboardCheck, Wrench, Shield, Scale } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Pre-Assembly Planning",
+    title: 'Pre-Assembly Planning',
     icon: ClipboardCheck,
-    description: "Site survey, ground assessment, overhead hazards, exclusion zones, method statement",
+    description:
+      'Site survey, ground assessment, overhead hazards, exclusion zones, method statement',
   },
   {
     id: 2,
-    title: "3T Method — Through The Trap",
+    title: '3T Method — Through The Trap',
     icon: Wrench,
-    description: "Step-by-step base-to-top assembly, guardrail installation, trapdoor use",
+    description: 'Step-by-step base-to-top assembly, guardrail installation, trapdoor use',
   },
   {
     id: 3,
-    title: "AGR Method — Advance Guard Rail",
+    title: 'AGR Method — Advance Guard Rail',
     icon: Shield,
-    description: "How AGR frames work, step-by-step, 3T vs AGR comparison, when to use each",
+    description: 'How AGR frames work, step-by-step, 3T vs AGR comparison, when to use each',
   },
   {
     id: 4,
-    title: "Stability Principles",
+    title: 'Stability Principles',
     icon: Scale,
-    description: "Centre of gravity, height-to-base ratios, stabilisers, wind loading, worked examples",
+    description:
+      'Centre of gravity, height-to-base ratios, stabilisers, wind loading, worked examples',
   },
 ];
 
 export default function PasmaModule3() {
   useSEO({
-    title: "Module 3: Assembly Methods | PASMA Towers for Users",
-    description: "Pre-assembly planning, 3T and AGR assembly methods, stability principles, and wind loading for mobile access towers.",
+    title: 'Module 3: Assembly Methods | PASMA Towers for Users',
+    description:
+      'Pre-assembly planning, 3T and AGR assembly methods, stability principles, and wind loading for mobile access towers.',
   });
 
   return (
@@ -69,11 +72,10 @@ export default function PasmaModule3() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">40 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Assembly Methods
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Assembly Methods</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Site planning, Through The Trap and Advance Guard Rail assembly methods, and the stability principles that keep towers safe
+              Site planning, Through The Trap and Advance Guard Rail assembly methods, and the
+              stability principles that keep towers safe
             </p>
           </div>
 

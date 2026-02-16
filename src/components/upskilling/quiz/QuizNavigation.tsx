@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 
 interface QuizNavigationProps {
@@ -10,13 +9,13 @@ interface QuizNavigationProps {
   isLastQuestion: boolean;
 }
 
-const QuizNavigation = ({ 
-  currentQuestion, 
-  totalQuestions, 
-  selectedAnswer, 
-  onPrevious, 
-  onNext, 
-  isLastQuestion 
+const QuizNavigation = ({
+  currentQuestion,
+  totalQuestions,
+  selectedAnswer,
+  onPrevious,
+  onNext,
+  isLastQuestion,
 }: QuizNavigationProps) => {
   return (
     <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">

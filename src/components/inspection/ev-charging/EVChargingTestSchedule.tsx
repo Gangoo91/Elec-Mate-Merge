@@ -12,10 +12,24 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, TestTube, Zap, Shield, CheckCircle2, XCircle, Calculator, AlertTriangle, Info, Thermometer } from 'lucide-react';
+import {
+  ChevronDown,
+  TestTube,
+  Zap,
+  Shield,
+  CheckCircle2,
+  XCircle,
+  Calculator,
+  AlertTriangle,
+  Info,
+  Thermometer,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useEVChargingSmartForm, TestResultValidation } from '@/hooks/inspection/useEVChargingSmartForm';
+import {
+  useEVChargingSmartForm,
+  TestResultValidation,
+} from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingTestScheduleProps {
   formData: any;
@@ -31,34 +45,48 @@ const TestResultSelect: React.FC<{
   <Select value={value || ''} onValueChange={(v) => onChange(v as TestResult)}>
     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
       <SelectValue placeholder="Select">
-        {value === 'pass' && <span className="flex items-center gap-2 text-green-400"><CheckCircle2 className="h-4 w-4" /> Pass</span>}
-        {value === 'fail' && <span className="flex items-center gap-2 text-red-400"><XCircle className="h-4 w-4" /> Fail</span>}
+        {value === 'pass' && (
+          <span className="flex items-center gap-2 text-green-400">
+            <CheckCircle2 className="h-4 w-4" /> Pass
+          </span>
+        )}
+        {value === 'fail' && (
+          <span className="flex items-center gap-2 text-red-400">
+            <XCircle className="h-4 w-4" /> Fail
+          </span>
+        )}
         {!value && <span className="text-muted-foreground">Select</span>}
       </SelectValue>
     </SelectTrigger>
     <SelectContent className="z-[100] bg-background border-border text-foreground">
       <SelectItem value="pass">
-        <span className="flex items-center gap-2 text-green-400"><CheckCircle2 className="h-4 w-4" /> Pass</span>
+        <span className="flex items-center gap-2 text-green-400">
+          <CheckCircle2 className="h-4 w-4" /> Pass
+        </span>
       </SelectItem>
       <SelectItem value="fail">
-        <span className="flex items-center gap-2 text-red-400"><XCircle className="h-4 w-4" /> Fail</span>
+        <span className="flex items-center gap-2 text-red-400">
+          <XCircle className="h-4 w-4" /> Fail
+        </span>
       </SelectItem>
     </SelectContent>
   </Select>
 );
 
 // Validation badge component
-const ValidationBadge: React.FC<{ validation: TestResultValidation | undefined }> = ({ validation }) => {
+const ValidationBadge: React.FC<{ validation: TestResultValidation | undefined }> = ({
+  validation,
+}) => {
   if (!validation) return null;
 
   return (
     <Badge
       variant="outline"
       className={cn(
-        "text-[10px] px-1.5 py-0 font-medium ml-2",
-        validation.status === 'pass' && "border-green-500/50 bg-green-500/10 text-green-400",
-        validation.status === 'fail' && "border-red-500/50 bg-red-500/10 text-red-400",
-        validation.status === 'warning' && "border-orange-500/50 bg-orange-500/10 text-orange-400"
+        'text-[10px] px-1.5 py-0 font-medium ml-2',
+        validation.status === 'pass' && 'border-green-500/50 bg-green-500/10 text-green-400',
+        validation.status === 'fail' && 'border-red-500/50 bg-red-500/10 text-red-400',
+        validation.status === 'warning' && 'border-orange-500/50 bg-orange-500/10 text-orange-400'
       )}
     >
       {validation.status === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
@@ -69,10 +97,7 @@ const ValidationBadge: React.FC<{ validation: TestResultValidation | undefined }
   );
 };
 
-const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
   const { calculateZs, validateTestResults } = useEVChargingSmartForm();
 
@@ -143,16 +168,16 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
 
     // Convert array to lookup object
     const lookup: Record<string, TestResultValidation> = {};
-    results.forEach(v => {
+    results.forEach((v) => {
       lookup[v.field] = v;
     });
     return lookup;
   }, [testResults, validateTestResults]);
 
   return (
-    <div className={cn(isMobile ? "space-y-0" : "space-y-6")}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
       {/* Circuit Tests */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -164,10 +189,12 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   <h3 className="font-semibold text-foreground">Circuit Tests</h3>
                   <span className="text-xs text-muted-foreground">R1+R2, Zs, insulation</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.circuit && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.circuit && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -177,15 +204,17 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">Circuit Tests</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.circuit && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.circuit && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Zs Auto-calculation Info Box */}
               {calculatedZs && (
                 <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-lg p-3">
@@ -195,13 +224,22 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-medium text-foreground">Auto-calculated Zs</span>
-                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-blue-500/50 text-blue-400">
+                        <span className="text-sm font-medium text-foreground">
+                          Auto-calculated Zs
+                        </span>
+                        <Badge
+                          variant="outline"
+                          className="text-[10px] px-1.5 py-0 border-blue-500/50 text-blue-400"
+                        >
                           {zsIsManual ? 'Manual Override' : 'Live'}
                         </Badge>
                       </div>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Ze ({formData.ze}Ω) + R1+R2 ({testResults.r1r2}Ω) × {applyTempCorrection ? '1.2' : '1.0'} = <span className="font-medium text-blue-400">{calculatedZs.calculatedZs.toFixed(2)}Ω</span>
+                        Ze ({formData.ze}Ω) + R1+R2 ({testResults.r1r2}Ω) ×{' '}
+                        {applyTempCorrection ? '1.2' : '1.0'} ={' '}
+                        <span className="font-medium text-blue-400">
+                          {calculatedZs.calculatedZs.toFixed(2)}Ω
+                        </span>
                       </p>
                       {zsIsManual && (
                         <button
@@ -223,7 +261,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   <Thermometer className="h-4 w-4 text-orange-400" />
                   <div>
                     <Label className="text-sm">Temperature Correction (1.2×)</Label>
-                    <p className="text-xs text-muted-foreground">Per BS 7671 for 70°C operating temp</p>
+                    <p className="text-xs text-muted-foreground">
+                      Per BS 7671 for 70°C operating temp
+                    </p>
                   </div>
                 </div>
                 <Switch
@@ -272,9 +312,11 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                       value={testResults.zs || ''}
                       onChange={(e) => handleZsChange(e.target.value)}
                       className={cn(
-                        "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                        validations.zs?.status === 'pass' && "border-green-500/50 focus:border-green-500",
-                        validations.zs?.status === 'fail' && "border-red-500/50 focus:border-red-500"
+                        'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                        validations.zs?.status === 'pass' &&
+                          'border-green-500/50 focus:border-green-500',
+                        validations.zs?.status === 'fail' &&
+                          'border-red-500/50 focus:border-red-500'
                       )}
                     />
                     {!zsIsManual && calculatedZs && (
@@ -287,10 +329,12 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     )}
                   </div>
                   {validations.zs && (
-                    <p className={cn(
-                      "text-[10px]",
-                      validations.zs.status === 'pass' ? "text-green-400" : "text-red-400"
-                    )}>
+                    <p
+                      className={cn(
+                        'text-[10px]',
+                        validations.zs.status === 'pass' ? 'text-green-400' : 'text-red-400'
+                      )}
+                    >
                       {validations.zs.message}
                     </p>
                   )}
@@ -326,9 +370,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     value={testResults.insulationResistance || ''}
                     onChange={(e) => updateTestResult('insulationResistance', e.target.value)}
                     className={cn(
-                      "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                      validations.insulationResistance?.status === 'pass' && "border-green-500/50",
-                      validations.insulationResistance?.status === 'fail' && "border-red-500/50"
+                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      validations.insulationResistance?.status === 'pass' && 'border-green-500/50',
+                      validations.insulationResistance?.status === 'fail' && 'border-red-500/50'
                     )}
                   />
                   <p className="text-[10px] text-muted-foreground">Min 1MΩ required</p>
@@ -342,14 +386,20 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     value={testResults.polarity || ''}
                     onValueChange={(value) => updateTestResult('polarity', value)}
                   >
-                    <SelectTrigger className={cn(
-                      "h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                      validations.polarity?.status === 'pass' && "border-green-500/50",
-                      validations.polarity?.status === 'fail' && "border-red-500/50"
-                    )}>
+                    <SelectTrigger
+                      className={cn(
+                        'h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                        validations.polarity?.status === 'pass' && 'border-green-500/50',
+                        validations.polarity?.status === 'fail' && 'border-red-500/50'
+                      )}
+                    >
                       <SelectValue placeholder="Select">
-                        {testResults.polarity === 'correct' && <span className="text-green-400">Correct</span>}
-                        {testResults.polarity === 'incorrect' && <span className="text-red-400">Incorrect</span>}
+                        {testResults.polarity === 'correct' && (
+                          <span className="text-green-400">Correct</span>
+                        )}
+                        {testResults.polarity === 'incorrect' && (
+                          <span className="text-red-400">Incorrect</span>
+                        )}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground">
@@ -377,7 +427,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
       </div>
 
       {/* RCD Tests */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.rcd} onOpenChange={() => toggleSection('rcd')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -389,10 +439,12 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   <h3 className="font-semibold text-foreground">RCD Tests</h3>
                   <span className="text-xs text-muted-foreground">Trip times, test button</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.rcd && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.rcd && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -402,15 +454,17 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">RCD Tests</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.rcd && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.rcd && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center flex-wrap">
@@ -423,16 +477,20 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     value={testResults.rcdTripTime || ''}
                     onChange={(e) => updateTestResult('rcdTripTime', e.target.value)}
                     className={cn(
-                      "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                      validations.rcdTripTime?.status === 'pass' && "border-green-500/50",
-                      validations.rcdTripTime?.status === 'fail' && "border-red-500/50"
+                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      validations.rcdTripTime?.status === 'pass' && 'border-green-500/50',
+                      validations.rcdTripTime?.status === 'fail' && 'border-red-500/50'
                     )}
                   />
                   {validations.rcdTripTime ? (
-                    <p className={cn(
-                      "text-[10px]",
-                      validations.rcdTripTime.status === 'pass' ? "text-green-400" : "text-red-400"
-                    )}>
+                    <p
+                      className={cn(
+                        'text-[10px]',
+                        validations.rcdTripTime.status === 'pass'
+                          ? 'text-green-400'
+                          : 'text-red-400'
+                      )}
+                    >
                       {validations.rcdTripTime.message}
                     </p>
                   ) : (
@@ -450,16 +508,20 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     value={testResults.rcdTripTimeX5 || ''}
                     onChange={(e) => updateTestResult('rcdTripTimeX5', e.target.value)}
                     className={cn(
-                      "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                      validations.rcdTripTimeX5?.status === 'pass' && "border-green-500/50",
-                      validations.rcdTripTimeX5?.status === 'fail' && "border-red-500/50"
+                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      validations.rcdTripTimeX5?.status === 'pass' && 'border-green-500/50',
+                      validations.rcdTripTimeX5?.status === 'fail' && 'border-red-500/50'
                     )}
                   />
                   {validations.rcdTripTimeX5 ? (
-                    <p className={cn(
-                      "text-[10px]",
-                      validations.rcdTripTimeX5.status === 'pass' ? "text-green-400" : "text-red-400"
-                    )}>
+                    <p
+                      className={cn(
+                        'text-[10px]',
+                        validations.rcdTripTimeX5.status === 'pass'
+                          ? 'text-green-400'
+                          : 'text-red-400'
+                      )}
+                    >
                       {validations.rcdTripTimeX5.message}
                     </p>
                   ) : (
@@ -483,8 +545,11 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
       </div>
 
       {/* Functional Tests */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
-        <Collapsible open={openSections.functional} onOpenChange={() => toggleSection('functional')}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible
+          open={openSections.functional}
+          onOpenChange={() => toggleSection('functional')}
+        >
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
               <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
@@ -495,10 +560,12 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   <h3 className="font-semibold text-foreground">Functional Tests</h3>
                   <span className="text-xs text-muted-foreground">Charger, load, verification</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.functional && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.functional && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -508,15 +575,17 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">Functional Tests</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.functional && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.functional && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Charger Functional Test</Label>
@@ -524,7 +593,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     value={testResults.functionalTest || ''}
                     onChange={(v) => updateTestResult('functionalTest', v)}
                   />
-                  <p className="text-xs text-muted-foreground mt-1">Verify charger powers up and communicates</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Verify charger powers up and communicates
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <Label>Load Test</Label>
@@ -532,7 +603,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                     value={testResults.loadTest || ''}
                     onChange={(v) => updateTestResult('loadTest', v)}
                   />
-                  <p className="text-xs text-muted-foreground mt-1">Verify charging function with EV or load box</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Verify charging function with EV or load box
+                  </p>
                 </div>
               </div>
 
@@ -607,7 +680,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
       </div>
 
       {/* Smart Features */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.smart} onOpenChange={() => toggleSection('smart')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -617,12 +690,16 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Smart Features</h3>
-                  <span className="text-xs text-muted-foreground">App control, load management</span>
+                  <span className="text-xs text-muted-foreground">
+                    App control, load management
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.smart && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.smart && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -632,15 +709,17 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">Smart Features</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.smart && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.smart && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
                   <Checkbox

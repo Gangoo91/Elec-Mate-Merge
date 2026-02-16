@@ -1,10 +1,26 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import {
-  X, Check, DollarSign, Clock, User, Briefcase,
-  Receipt, Calendar, AlertCircle, Trash2, Edit,
-  Wrench, Car, ParkingCircle, Hammer, HardHat,
-  GraduationCap, UtensilsCrossed, Package, ExternalLink
+  X,
+  Check,
+  DollarSign,
+  Clock,
+  User,
+  Briefcase,
+  Receipt,
+  Calendar,
+  AlertCircle,
+  Trash2,
+  Edit,
+  Wrench,
+  Car,
+  ParkingCircle,
+  Hammer,
+  HardHat,
+  GraduationCap,
+  UtensilsCrossed,
+  Package,
+  ExternalLink,
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -104,10 +120,7 @@ export function ExpenseDetailSheet({
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent
           side={isMobile ? 'bottom' : 'right'}
-          className={cn(
-            "flex flex-col p-0",
-            isMobile ? "h-[90vh] rounded-t-2xl" : "w-[450px]"
-          )}
+          className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
         >
           {/* Header */}
           <SheetHeader className="p-4 border-b border-border shrink-0">
@@ -115,7 +128,7 @@ export function ExpenseDetailSheet({
               <SheetTitle>Expense Details</SheetTitle>
               <Badge
                 variant="outline"
-                className={cn("gap-1", status.bgColor, status.color, "border-transparent")}
+                className={cn('gap-1', status.bgColor, status.color, 'border-transparent')}
               >
                 <StatusIcon className="h-3 w-3" />
                 {expense.status}
@@ -209,10 +222,12 @@ export function ExpenseDetailSheet({
                 <div className="space-y-3">
                   {expense.approved_date && (
                     <div className="flex items-start gap-3">
-                      <div className={cn(
-                        "p-1.5 rounded-full",
-                        isRejected ? "bg-red-500/10" : "bg-green-500/10"
-                      )}>
+                      <div
+                        className={cn(
+                          'p-1.5 rounded-full',
+                          isRejected ? 'bg-red-500/10' : 'bg-green-500/10'
+                        )}
+                      >
                         {isRejected ? (
                           <X className="h-4 w-4 text-red-500" />
                         ) : (
@@ -253,9 +268,7 @@ export function ExpenseDetailSheet({
                   <AlertCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-medium text-red-500">Rejection Reason</p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {expense.rejection_reason}
-                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">{expense.rejection_reason}</p>
                   </div>
                 </div>
               </Card>
@@ -303,11 +316,7 @@ export function ExpenseDetailSheet({
             {(isRejected || expense.status === 'Paid') && (
               <div className="flex gap-3 w-full">
                 {onEdit && isPending && (
-                  <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => onEdit(expense)}
-                  >
+                  <Button variant="outline" className="flex-1" onClick={() => onEdit(expense)}>
                     <Edit className="h-4 w-4 mr-2" />
                     Edit
                   </Button>
@@ -369,10 +378,7 @@ export function ExpenseDetailSheet({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-red-500 hover:bg-red-600"
-            >
+            <AlertDialogAction onClick={handleDelete} className="bg-red-500 hover:bg-red-600">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

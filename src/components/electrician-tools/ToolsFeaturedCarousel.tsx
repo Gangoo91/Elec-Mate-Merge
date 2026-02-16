@@ -1,17 +1,26 @@
-import { useState } from "react";
-import { format } from "date-fns";
-import { DollarSign, Package, Eye, Star, ExternalLink, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
+import { useState } from 'react';
+import { format } from 'date-fns';
+import {
+  DollarSign,
+  Package,
+  Eye,
+  Star,
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+  ShoppingCart,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import { cn } from '@/lib/utils';
+import { useToolsData, type ToolItem } from '@/hooks/useToolsData';
 
 interface ToolsFeaturedCarouselProps {
   className?: string;
@@ -22,8 +31,8 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
 
   // Get featured tools - prioritize deals, then fill with regular tools to ensure 6 items
   const getFeaturedTools = (allTools: ToolItem[]) => {
-    const dealsFirst = allTools.filter(tool => tool.isOnSale || tool.salePrice);
-    const regularTools = allTools.filter(tool => !tool.isOnSale && !tool.salePrice);
+    const dealsFirst = allTools.filter((tool) => tool.isOnSale || tool.salePrice);
+    const regularTools = allTools.filter((tool) => !tool.isOnSale && !tool.salePrice);
     const combined = [...dealsFirst, ...regularTools];
     return combined.slice(0, 6);
   };
@@ -52,15 +61,17 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Hand Tools": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Power Tools": "bg-orange-500/20 border-orange-500/30 text-orange-300",
-      "Testing Equipment": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Safety Equipment": "bg-red-500/20 border-red-500/30 text-red-300",
-      "Cable & Wire": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Electrical Components": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
-      "Tools": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
+      'Hand Tools': 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+      'Power Tools': 'bg-orange-500/20 border-orange-500/30 text-orange-300',
+      'Testing Equipment': 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+      'Safety Equipment': 'bg-red-500/20 border-red-500/30 text-red-300',
+      'Cable & Wire': 'bg-green-500/20 border-green-500/30 text-green-300',
+      'Electrical Components': 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
+      Tools: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-300',
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return (
+      colors[category as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80'
+    );
   };
 
   const getStockStatusColor = (status: string) => {
@@ -82,12 +93,19 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
     }
     // Default tool category images
     const categoryImages = {
-      "Hand Tools": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format",
-      "Power Tools": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&h=250&fit=crop&auto=format",
-      "Testing Equipment": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format",
-      "Safety Equipment": "https://images.unsplash.com/photo-1581093458791-9d15c0f8e8d6?w=400&h=250&fit=crop&auto=format",
+      'Hand Tools':
+        'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format',
+      'Power Tools':
+        'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&h=250&fit=crop&auto=format',
+      'Testing Equipment':
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format',
+      'Safety Equipment':
+        'https://images.unsplash.com/photo-1581093458791-9d15c0f8e8d6?w=400&h=250&fit=crop&auto=format',
     };
-    return categoryImages[tool.category as keyof typeof categoryImages] || "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format";
+    return (
+      categoryImages[tool.category as keyof typeof categoryImages] ||
+      'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format'
+    );
   };
 
   const calculateDiscount = (price: string, salePrice: string) => {
@@ -100,7 +118,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
   };
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {/* Section Header */}
       <div className="space-y-1">
         <h2 className="text-xl sm:text-2xl font-bold text-foreground">
@@ -114,7 +132,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
       {/* Carousel */}
       <Carousel
         opts={{
-          align: "start",
+          align: 'start',
           loop: true,
           skipSnaps: false,
           dragFree: true,
@@ -127,7 +145,10 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
             const isDeal = tool.isOnSale || discount > 0;
 
             return (
-              <CarouselItem key={tool.id || index} className="pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]">
+              <CarouselItem
+                key={tool.id || index}
+                className="pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]"
+              >
                 <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full">
                   {/* Image */}
                   <div className="relative h-40 sm:h-48 overflow-hidden">
@@ -138,23 +159,34 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                    
+
                     {/* Category Badge */}
                     <div className="absolute top-3 left-3">
-                      <Badge className={cn("text-xs font-medium", getCategoryColor(tool.category || "Tools"))}>
-                        {tool.category || "Tools"}
+                      <Badge
+                        className={cn(
+                          'text-xs font-medium',
+                          getCategoryColor(tool.category || 'Tools')
+                        )}
+                      >
+                        {tool.category || 'Tools'}
                       </Badge>
                     </div>
 
                     {/* Deal/Supplier Badge */}
                     <div className="absolute top-3 right-3">
                       {isDeal ? (
-                        <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs bg-elec-yellow/10">
-                          {discount > 0 ? `${discount}% OFF` : "DEAL"}
+                        <Badge
+                          variant="outline"
+                          className="border-elec-yellow/30 text-elec-yellow text-xs bg-elec-yellow/10"
+                        >
+                          {discount > 0 ? `${discount}% OFF` : 'DEAL'}
                         </Badge>
                       ) : (
-                        <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
-                          {tool.supplier || "Screwfix"}
+                        <Badge
+                          variant="outline"
+                          className="border-elec-yellow/30 text-elec-yellow text-xs"
+                        >
+                          {tool.supplier || 'Screwfix'}
                         </Badge>
                       )}
                     </div>
@@ -171,13 +203,13 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                         </div>
                         <div className="flex items-center gap-1">
                           <Package className="h-3 w-3" />
-                          <span className={getStockStatusColor(tool.stockStatus || "In Stock")}>
-                            {tool.stockStatus || "In Stock"}
+                          <span className={getStockStatusColor(tool.stockStatus || 'In Stock')}>
+                            {tool.stockStatus || 'In Stock'}
                           </span>
                         </div>
                       </div>
                       <div className="flex items-center gap-1">
-                        <span>{tool.supplier || "Screwfix"}</span>
+                        <span>{tool.supplier || 'Screwfix'}</span>
                       </div>
                     </div>
 
@@ -190,7 +222,9 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                     <div className="space-y-1 flex-grow">
                       <div className="flex items-center gap-2">
                         {tool.salePrice && (
-                          <span className="text-foreground/60 line-through text-xs">{tool.price}</span>
+                          <span className="text-foreground/60 line-through text-xs">
+                            {tool.price}
+                          </span>
                         )}
                         <span className="text-elec-yellow font-medium text-sm">
                           {tool.salePrice || tool.price}
@@ -209,13 +243,16 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                         <ShoppingCart className="h-3 w-3" />
                         <span>Order today</span>
                       </div>
-                      
+
                       <Button
                         size="sm"
                         variant="ghost"
                         className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
                         onClick={() => {
-                          const url = tool.productUrl || tool.view_product_url || `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
+                          const url =
+                            tool.productUrl ||
+                            tool.view_product_url ||
+                            `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
                           window.open(url, '_blank');
                         }}
                       >
@@ -229,7 +266,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
             );
           })}
         </CarouselContent>
-        
+
         {/* Navigation Arrows - Hidden on mobile, visible on desktop */}
         <CarouselPrevious className="hidden md:flex -left-4 h-10 w-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50" />
         <CarouselNext className="hidden md:flex -right-4 h-10 w-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50" />

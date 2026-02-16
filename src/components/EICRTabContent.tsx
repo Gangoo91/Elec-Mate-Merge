@@ -44,7 +44,7 @@ const EICRTabContent = ({
   isCurrentTabComplete,
   currentTabHasRequiredFields,
   onToggleComplete,
-  onOpenBoardScan
+  onOpenBoardScan,
 }: EICRTabContentProps) => {
   const [isInspectorSectionOpen, setIsInspectorSectionOpen] = useState(true);
 
@@ -73,14 +73,22 @@ const EICRTabContent = ({
       case 'inspection':
         return <EICRInspectionChecklist formData={formData} onUpdate={onUpdate} />;
       case 'testing':
-        return <EICRScheduleOfTests formData={formData} onUpdate={onUpdate} onOpenBoardScan={onOpenBoardScan} />;
+        return (
+          <EICRScheduleOfTests
+            formData={formData}
+            onUpdate={onUpdate}
+            onOpenBoardScan={onOpenBoardScan}
+          />
+        );
       case 'inspector':
-        return <EICRInspectorDetails 
-          formData={formData} 
-          onUpdate={onUpdate}
-          isOpen={isInspectorSectionOpen}
-          onToggle={() => setIsInspectorSectionOpen(!isInspectorSectionOpen)}
-        />;
+        return (
+          <EICRInspectorDetails
+            formData={formData}
+            onUpdate={onUpdate}
+            isOpen={isInspectorSectionOpen}
+            onToggle={() => setIsInspectorSectionOpen(!isInspectorSectionOpen)}
+          />
+        );
       case 'certificate':
         return <EICRSummary formData={formData} onUpdate={onUpdate} />;
       default:
@@ -88,9 +96,8 @@ const EICRTabContent = ({
     }
   };
 
-  const containerClasses = tabValue === 'testing' 
-    ? "w-full max-w-none space-y-6" 
-    : "md:max-w-6xl mx-auto space-y-6";
+  const containerClasses =
+    tabValue === 'testing' ? 'w-full max-w-none space-y-6' : 'md:max-w-6xl mx-auto space-y-6';
 
   return (
     <div className={containerClasses}>

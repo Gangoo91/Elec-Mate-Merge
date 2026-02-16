@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Copy, CheckCircle } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { Copy, CheckCircle } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const CopyableOverview = () => {
   const [copied, setCopied] = useState(false);
@@ -136,20 +135,21 @@ const CopyableOverview = () => {
 - Overall project: ~45% complete`;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(overview)
+    navigator.clipboard
+      .writeText(overview)
       .then(() => {
         setCopied(true);
         toast({
-          title: "Copied to clipboard",
-          description: "You can now paste the overview anywhere you need it."
+          title: 'Copied to clipboard',
+          description: 'You can now paste the overview anywhere you need it.',
         });
         setTimeout(() => setCopied(false), 3000);
       })
       .catch((err) => {
         toast({
-          variant: "destructive",
-          title: "Failed to copy",
-          description: "Please try again or copy manually."
+          variant: 'destructive',
+          title: 'Failed to copy',
+          description: 'Please try again or copy manually.',
         });
       });
   };
@@ -158,29 +158,27 @@ const CopyableOverview = () => {
     <div className="p-4 bg-elec-gray rounded-md shadow-md">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-elec-yellow">Project Overview</h2>
-        <Button 
+        <Button
           onClick={handleCopy}
-          variant="outline" 
+          variant="outline"
           size="sm"
           className="border-elec-yellow/30 hover:bg-elec-yellow/10"
         >
           {copied ? (
             <>
-              <CheckCircle className="mr-2 h-4 w-4 text-green-500" /> 
+              <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
               Copied
             </>
           ) : (
             <>
-              <Copy className="mr-2 h-4 w-4" /> 
+              <Copy className="mr-2 h-4 w-4" />
               Copy Overview
             </>
           )}
         </Button>
       </div>
       <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-md p-4 max-h-[400px] overflow-y-auto">
-        <pre className="whitespace-pre-wrap text-sm font-mono text-elec-light">
-          {overview}
-        </pre>
+        <pre className="whitespace-pre-wrap text-sm font-mono text-elec-light">{overview}</pre>
       </div>
     </div>
   );

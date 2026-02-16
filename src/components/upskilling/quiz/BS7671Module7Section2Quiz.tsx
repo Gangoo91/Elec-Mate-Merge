@@ -15,64 +15,59 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: "What regulation covers EV charging points?",
-    options: [
-      "Part 720",
-      "Part 722",
-      "Part 725",
-      "Part 730"
-    ],
+    question: 'What regulation covers EV charging points?',
+    options: ['Part 720', 'Part 722', 'Part 725', 'Part 730'],
     correctAnswer: 1,
-    explanation: "BS 7671 Part 722 specifically covers electric vehicle charging installations and their requirements."
+    explanation:
+      'BS 7671 Part 722 specifically covers electric vehicle charging installations and their requirements.',
   },
   {
     id: 2,
-    question: "Is PME earthing allowed?",
+    question: 'Is PME earthing allowed?',
     options: [
-      "Never allowed for EV charging",
-      "Yes, but with additional protective measures",
-      "Only for single-phase installations",
-      "Only for commercial installations"
+      'Never allowed for EV charging',
+      'Yes, but with additional protective measures',
+      'Only for single-phase installations',
+      'Only for commercial installations',
     ],
     correctAnswer: 1,
-    explanation: "PME earthing is allowed for EV charging but requires additional protective measures including PEN fault detection and disconnection devices."
+    explanation:
+      'PME earthing is allowed for EV charging but requires additional protective measures including PEN fault detection and disconnection devices.',
   },
   {
     id: 3,
-    question: "What RCD type is required?",
-    options: [
-      "Type AC is sufficient",
-      "Type A or Type B RCD",
-      "Type B only",
-      "No RCD required"
-    ],
+    question: 'What RCD type is required?',
+    options: ['Type AC is sufficient', 'Type A or Type B RCD', 'Type B only', 'No RCD required'],
     correctAnswer: 1,
-    explanation: "EV charging installations require Type A or Type B RCDs due to the DC fault currents that can occur in EV charging systems."
+    explanation:
+      'EV charging installations require Type A or Type B RCDs due to the DC fault currents that can occur in EV charging systems.',
   },
   {
     id: 4,
-    question: "What happens if a PEN conductor breaks?",
+    question: 'What happens if a PEN conductor breaks?',
     options: [
-      "Nothing - system continues normally",
-      "The vehicle chassis could become live",
-      "Only the charging stops",
-      "A fuse will blow"
+      'Nothing - system continues normally',
+      'The vehicle chassis could become live',
+      'Only the charging stops',
+      'A fuse will blow',
     ],
     correctAnswer: 1,
-    explanation: "If a PEN conductor breaks in a PME system, the vehicle chassis and exposed metalwork could rise to dangerous potentials, creating shock risk."
+    explanation:
+      'If a PEN conductor breaks in a PME system, the vehicle chassis and exposed metalwork could rise to dangerous potentials, creating shock risk.',
   },
   {
     id: 5,
-    question: "What must installers check when using PME?",
+    question: 'What must installers check when using PME?',
     options: [
-      "Only the RCD operation",
-      "PEN fault detection and disconnection systems",
-      "Cable colours only",
-      "Charging speed settings"
+      'Only the RCD operation',
+      'PEN fault detection and disconnection systems',
+      'Cable colours only',
+      'Charging speed settings',
     ],
     correctAnswer: 1,
-    explanation: "When using PME earthing for EV charging, installers must ensure proper PEN fault detection and automatic disconnection systems are in place."
-  }
+    explanation:
+      'When using PME earthing for EV charging, installers must ensure proper PEN fault detection and automatic disconnection systems are in place.',
+  },
 ];
 
 const BS7671Module7Section2Quiz = () => {
@@ -129,9 +124,10 @@ const BS7671Module7Section2Quiz = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Test your understanding of EV charging installation requirements with this 5-question quiz.
+            Test your understanding of EV charging installation requirements with this 5-question
+            quiz.
           </p>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -155,10 +151,14 @@ const BS7671Module7Section2Quiz = () => {
               {score}/{quizData.length}
             </div>
             <p className="text-gray-300 mt-2">
-              {score >= 4 ? 'Excellent knowledge of EV charging requirements!' : score >= 3 ? 'Good understanding!' : 'Review the material and try again!'}
+              {score >= 4
+                ? 'Excellent knowledge of EV charging requirements!'
+                : score >= 3
+                  ? 'Good understanding!'
+                  : 'Review the material and try again!'}
             </p>
           </div>
-          
+
           <div className="space-y-3">
             {quizData.map((question, index) => (
               <div key={question.id} className="bg-elec-dark p-3 rounded-md border border-gray-600">
@@ -172,16 +172,14 @@ const BS7671Module7Section2Quiz = () => {
                     <p className="text-sm font-semibold text-foreground mb-1">
                       {question.id}. {question.question}
                     </p>
-                    <p className="text-xs text-gray-400">
-                      {question.explanation}
-                    </p>
+                    <p className="text-xs text-gray-400">{question.explanation}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleRestart}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -205,7 +203,7 @@ const BS7671Module7Section2Quiz = () => {
           </Badge>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           ></div>
@@ -216,7 +214,7 @@ const BS7671Module7Section2Quiz = () => {
           <p className="text-foreground font-semibold mb-4">
             {question.id}. {question.question}
           </p>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => {
               const answered = selectedAnswers[currentQuestion] !== undefined;
@@ -258,13 +256,17 @@ const BS7671Module7Section2Quiz = () => {
                   )}
                   <div>
                     <p className="text-sm font-semibold text-foreground">
-                      {selectedAnswers[currentQuestion] === question.correctAnswer ? 'Correct' : 'Incorrect'}
+                      {selectedAnswers[currentQuestion] === question.correctAnswer
+                        ? 'Correct'
+                        : 'Incorrect'}
                     </p>
                     <p className="text-xs text-gray-400">{question.explanation}</p>
                     {selectedAnswers[currentQuestion] !== question.correctAnswer && (
                       <p className="text-xs text-gray-400 mt-1">
-                        Correct answer: <span className="text-elec-yellow font-medium">
-                          {String.fromCharCode(65 + question.correctAnswer)}. {question.options[question.correctAnswer]}
+                        Correct answer:{' '}
+                        <span className="text-elec-yellow font-medium">
+                          {String.fromCharCode(65 + question.correctAnswer)}.{' '}
+                          {question.options[question.correctAnswer]}
                         </span>
                       </p>
                     )}
@@ -274,7 +276,7 @@ const BS7671Module7Section2Quiz = () => {
             )}
           </div>
         </div>
-        
+
         <div className="flex justify-between">
           <Button
             onClick={handlePrevious}
@@ -284,7 +286,7 @@ const BS7671Module7Section2Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

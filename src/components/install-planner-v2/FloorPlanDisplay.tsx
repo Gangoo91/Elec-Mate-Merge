@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home } from "lucide-react";
-import { CircuitData } from "@/lib/diagramGenerator/layoutEngine";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Home } from 'lucide-react';
+import { CircuitData } from '@/lib/diagramGenerator/layoutEngine';
 
 interface FloorPlanDisplayProps {
   circuits: CircuitData[];
@@ -10,7 +10,7 @@ interface FloorPlanDisplayProps {
 export const FloorPlanDisplay = ({ circuits, roomLayout }: FloorPlanDisplayProps) => {
   // Parse room information from circuit data
   const rooms = new Set<string>();
-  circuits.forEach(circuit => {
+  circuits.forEach((circuit) => {
     const name = circuit.name.toLowerCase();
     if (name.includes('kitchen')) rooms.add('Kitchen');
     if (name.includes('bathroom')) rooms.add('Bathroom');
@@ -61,7 +61,7 @@ export const FloorPlanDisplay = ({ circuits, roomLayout }: FloorPlanDisplayProps
                     strokeWidth="2"
                     className="text-primary/30"
                   />
-                  
+
                   {/* Room label */}
                   <text
                     x={x + roomWidth / 2}
@@ -76,7 +76,7 @@ export const FloorPlanDisplay = ({ circuits, roomLayout }: FloorPlanDisplayProps
 
                   {/* Find circuits for this room */}
                   {circuits
-                    .filter(c => c.name.toLowerCase().includes(room.toLowerCase()))
+                    .filter((c) => c.name.toLowerCase().includes(room.toLowerCase()))
                     .map((circuit, circuitIdx) => {
                       const isSocket = circuit.loadType === 'socket';
                       const isLighting = circuit.loadType === 'lighting';
@@ -137,7 +137,8 @@ export const FloorPlanDisplay = ({ circuits, roomLayout }: FloorPlanDisplayProps
                             fontSize="10"
                             className="fill-muted-foreground"
                           >
-                            {circuit.cableSize ?? 'N/A'}mm² · {circuit.protectionDevice?.rating ?? 'N/A'}A
+                            {circuit.cableSize ?? 'N/A'}mm² ·{' '}
+                            {circuit.protectionDevice?.rating ?? 'N/A'}A
                           </text>
                         </g>
                       );
@@ -148,19 +149,56 @@ export const FloorPlanDisplay = ({ circuits, roomLayout }: FloorPlanDisplayProps
 
             {/* Legend */}
             <g transform="translate(20, 360)">
-              <text fontSize="10" fontWeight="bold" className="fill-foreground">Legend:</text>
-              <rect x="50" y="-8" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent" />
-              <text x="70" y="3" fontSize="9" className="fill-muted-foreground">Socket</text>
-              <circle cx="127" cy="0" r="7" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-warning" />
-              <text x="140" y="3" fontSize="9" className="fill-muted-foreground">Lighting</text>
-              <line x1="195" y1="0" x2="215" y2="0" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" className="text-primary/40" />
-              <text x="220" y="3" fontSize="9" className="fill-muted-foreground">Cable Route</text>
+              <text fontSize="10" fontWeight="bold" className="fill-foreground">
+                Legend:
+              </text>
+              <rect
+                x="50"
+                y="-8"
+                width="15"
+                height="15"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-accent"
+              />
+              <text x="70" y="3" fontSize="9" className="fill-muted-foreground">
+                Socket
+              </text>
+              <circle
+                cx="127"
+                cy="0"
+                r="7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-warning"
+              />
+              <text x="140" y="3" fontSize="9" className="fill-muted-foreground">
+                Lighting
+              </text>
+              <line
+                x1="195"
+                y1="0"
+                x2="215"
+                y2="0"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="5,5"
+                className="text-primary/40"
+              />
+              <text x="220" y="3" fontSize="9" className="fill-muted-foreground">
+                Cable Route
+              </text>
             </g>
           </svg>
         </div>
-        
+
         <div className="mt-3 text-xs text-muted-foreground">
-          <p>Note: This is a simplified schematic showing approximate cable routes. Actual installation routes may vary based on building structure.</p>
+          <p>
+            Note: This is a simplified schematic showing approximate cable routes. Actual
+            installation routes may vary based on building structure.
+          </p>
         </div>
       </CardContent>
     </Card>

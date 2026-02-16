@@ -1,51 +1,51 @@
-import { ArrowLeft, Cog, Layers, Package, Wrench, CheckCircle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Cog, Layers, Package, Wrench, CheckCircle } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Surface vs Concealed Wiring Installations",
-    description: "Differences between surface and concealed installation methods",
+    number: 'Subsection 1',
+    title: 'Surface vs Concealed Wiring Installations',
+    description: 'Differences between surface and concealed installation methods',
     icon: Cog,
-    href: "4-1"
+    href: '4-1',
   },
   {
-    number: "Subsection 2",
-    title: "First Fix and Second Fix Explained",
-    description: "Understanding the stages of electrical installation work",
+    number: 'Subsection 2',
+    title: 'First Fix and Second Fix Explained',
+    description: 'Understanding the stages of electrical installation work',
     icon: Layers,
-    href: "4-2"
+    href: '4-2',
   },
   {
-    number: "Subsection 3",
-    title: "Terminating Cables: Sleeving, Ferrules, and Crimps",
-    description: "Proper methods for cable termination and identification",
+    number: 'Subsection 3',
+    title: 'Terminating Cables: Sleeving, Ferrules, and Crimps',
+    description: 'Proper methods for cable termination and identification',
     icon: Package,
-    href: "4-3"
+    href: '4-3',
   },
   {
-    number: "Subsection 4",
-    title: "Jointing and Glanding Techniques",
-    description: "Methods for joining cables and cable entry techniques",
+    number: 'Subsection 4',
+    title: 'Jointing and Glanding Techniques',
+    description: 'Methods for joining cables and cable entry techniques',
     icon: Wrench,
-    href: "4-4"
+    href: '4-4',
   },
   {
-    number: "Subsection 5",
-    title: "Supporting and Securing Cables",
-    description: "Techniques for properly supporting cable runs",
+    number: 'Subsection 5',
+    title: 'Supporting and Securing Cables',
+    description: 'Techniques for properly supporting cable runs',
     icon: CheckCircle,
-    href: "4-5"
+    href: '4-5',
   },
   {
-    number: "Subsection 6",
-    title: "Installing Accessories (Sockets, Switches, FCUs)",
-    description: "Installation of common electrical accessories",
+    number: 'Subsection 6',
+    title: 'Installing Accessories (Sockets, Switches, FCUs)',
+    description: 'Installation of common electrical accessories',
     icon: Cog,
-    href: "4-6"
-  }
+    href: '4-6',
+  },
 ];
 
 const Section4 = () => {

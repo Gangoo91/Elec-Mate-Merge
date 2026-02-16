@@ -22,7 +22,7 @@ const rcdPresets: RcdPreset[] = [
     bsStandard: 'BS EN 61008',
     type: 'AC',
     rating: '30',
-    ratingA: '40'
+    ratingA: '40',
   },
   {
     id: 'high-sensitivity',
@@ -31,7 +31,7 @@ const rcdPresets: RcdPreset[] = [
     bsStandard: 'BS EN 61008',
     type: 'A',
     rating: '10',
-    ratingA: '40'
+    ratingA: '40',
   },
   {
     id: 'ev-shower',
@@ -40,7 +40,7 @@ const rcdPresets: RcdPreset[] = [
     bsStandard: 'BS EN 61008',
     type: 'A',
     rating: '30',
-    ratingA: '63'
+    ratingA: '63',
   },
   {
     id: 'industrial',
@@ -49,7 +49,7 @@ const rcdPresets: RcdPreset[] = [
     bsStandard: 'BS EN 61008',
     type: 'B',
     rating: '30',
-    ratingA: '63'
+    ratingA: '63',
   },
   {
     id: 'time-delay',
@@ -58,8 +58,8 @@ const rcdPresets: RcdPreset[] = [
     bsStandard: 'BS EN 61009',
     type: 'S',
     rating: '300',
-    ratingA: '100'
-  }
+    ratingA: '100',
+  },
 ];
 
 interface QuickRcdPresetsProps {
@@ -82,7 +82,7 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
   };
 
   const selectAllCircuits = () => {
-    setSelectedCircuits(new Set(testResults.map(r => r.id)));
+    setSelectedCircuits(new Set(testResults.map((r) => r.id)));
   };
 
   const clearSelection = () => {
@@ -91,16 +91,16 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
 
   const handleApplyPreset = (preset: RcdPreset) => {
     const circuitIds = Array.from(selectedCircuits);
-    
+
     if (circuitIds.length === 0) {
-      toast.error("No Circuits Selected", {
-        description: "Please select at least one circuit first",
+      toast.error('No Circuits Selected', {
+        description: 'Please select at least one circuit first',
       });
       return;
     }
 
     onApplyToCircuits(circuitIds, preset);
-    
+
     toast.success(`✓ ${preset.label} Applied`, {
       description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
       duration: 2000,
@@ -109,7 +109,7 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
 
   return (
     <Card className="border-2 border-primary/20 bg-gradient-to-br from-card to-primary/5">
-      <CardHeader 
+      <CardHeader
         className="cursor-pointer hover:bg-accent/5 active:bg-accent/10 transition-all touch-manipulation"
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -131,17 +131,17 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold">Select Circuits:</p>
               <div className="flex gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={selectAllCircuits}
                   className="h-7 text-xs"
                 >
                   All
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={clearSelection}
                   className="h-7 text-xs"
                 >
@@ -149,9 +149,9 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
                 </Button>
               </div>
             </div>
-            
+
             <div className="flex flex-wrap gap-2">
-              {testResults.map(result => (
+              {testResults.map((result) => (
                 <button
                   key={result.id}
                   onClick={() => toggleCircuit(result.id)}
@@ -171,7 +171,7 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
           <div className="space-y-2">
             <p className="text-sm font-semibold">Choose Preset:</p>
             <div className="grid grid-cols-1 gap-2">
-              {rcdPresets.map(preset => (
+              {rcdPresets.map((preset) => (
                 <button
                   key={preset.id}
                   onClick={() => handleApplyPreset(preset)}
@@ -183,9 +183,7 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
                       <div className="font-bold text-base text-foreground group-hover:text-primary transition-colors">
                         {preset.label}
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        {preset.description}
-                      </div>
+                      <div className="text-xs text-muted-foreground">{preset.description}</div>
                       <div className="flex flex-wrap gap-2 mt-2">
                         <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
                           {preset.bsStandard}

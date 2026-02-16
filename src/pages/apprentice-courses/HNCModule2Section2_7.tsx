@@ -1,12 +1,12 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const HNCModule2Section2_7 = () => {
   useSEO(
-    "Applications in Water Distribution and Duct Systems - HNC Module 2",
-    "Practical applications of fluid mechanics in building services systems"
+    'Applications in Water Distribution and Duct Systems - HNC Module 2',
+    'Practical applications of fluid mechanics in building services systems'
   );
 
   return (
@@ -14,7 +14,11 @@ const HNCModule2Section2_7 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="../section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -30,7 +34,8 @@ const HNCModule2Section2_7 = () => {
             2.7 Applications in Water Distribution and Duct Systems
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl">
-            Practical applications of fluid mechanics principles in building services systems design.
+            Practical applications of fluid mechanics principles in building services systems
+            design.
           </p>
         </div>
       </div>

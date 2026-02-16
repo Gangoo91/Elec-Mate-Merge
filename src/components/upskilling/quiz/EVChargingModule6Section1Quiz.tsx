@@ -15,124 +15,121 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the first step when arriving at an EV charging installation site?",
+    question: 'What is the first step when arriving at an EV charging installation site?',
     options: [
-      "Start unloading equipment",
-      "Conduct a site risk assessment",
-      "Begin electrical isolation",
-      "Test the supply voltage"
+      'Start unloading equipment',
+      'Conduct a site risk assessment',
+      'Begin electrical isolation',
+      'Test the supply voltage',
     ],
     correctAnswer: 1,
-    explanation: "A comprehensive site risk assessment must be conducted first to identify hazards and plan safe working procedures before any work begins."
+    explanation:
+      'A comprehensive site risk assessment must be conducted first to identify hazards and plan safe working procedures before any work begins.',
   },
   {
     id: 2,
-    question: "According to BS 7671, what is the minimum isolation distance required before working on electrical circuits?",
+    question:
+      'According to BS 7671, what is the minimum isolation distance required before working on electrical circuits?',
     options: [
-      "Switching off at the consumer unit only",
-      "Visible break isolation with proof of dead testing",
-      "Removing the main fuse",
-      "Using a non-contact voltage tester"
+      'Switching off at the consumer unit only',
+      'Visible break isolation with proof of dead testing',
+      'Removing the main fuse',
+      'Using a non-contact voltage tester',
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 requires visible break isolation followed by proving dead with an approved voltage indicator on all conductors."
+    explanation:
+      'BS 7671 requires visible break isolation followed by proving dead with an approved voltage indicator on all conductors.',
   },
   {
     id: 3,
-    question: "What PPE is mandatory when working on EV charging installations?",
+    question: 'What PPE is mandatory when working on EV charging installations?',
     options: [
-      "Safety glasses only",
-      "Hard hat and high-vis vest",
-      "Arc flash protection rated to 8 cal/cm²",
-      "Safety glasses, hard hat, and electrical safety footwear"
+      'Safety glasses only',
+      'Hard hat and high-vis vest',
+      'Arc flash protection rated to 8 cal/cm²',
+      'Safety glasses, hard hat, and electrical safety footwear',
     ],
     correctAnswer: 3,
-    explanation: "Minimum PPE includes safety glasses, hard hat, and electrical safety footwear. Arc flash PPE may be required for specific work."
+    explanation:
+      'Minimum PPE includes safety glasses, hard hat, and electrical safety footwear. Arc flash PPE may be required for specific work.',
   },
   {
     id: 4,
-    question: "When must a permit to work system be implemented?",
+    question: 'When must a permit to work system be implemented?',
     options: [
-      "For all EV charging installations",
-      "Only for commercial installations",
-      "For work on live systems or high-risk activities",
-      "Never required for qualified electricians"
+      'For all EV charging installations',
+      'Only for commercial installations',
+      'For work on live systems or high-risk activities',
+      'Never required for qualified electricians',
     ],
     correctAnswer: 2,
-    explanation: "Permit to work systems are mandatory for live working and high-risk activities to ensure proper safety controls are in place."
+    explanation:
+      'Permit to work systems are mandatory for live working and high-risk activities to ensure proper safety controls are in place.',
   },
   {
     id: 5,
-    question: "What is the maximum earth fault loop impedance for a 32A Type B MCB protecting an EV charging circuit?",
-    options: [
-      "1.37Ω",
-      "1.45Ω",
-      "2.3Ω",
-      "0.87Ω"
-    ],
+    question:
+      'What is the maximum earth fault loop impedance for a 32A Type B MCB protecting an EV charging circuit?',
+    options: ['1.37Ω', '1.45Ω', '2.3Ω', '0.87Ω'],
     correctAnswer: 0,
-    explanation: "For a 32A Type B MCB, the maximum Zs is 1.37Ω to ensure disconnection within the required time under fault conditions."
+    explanation:
+      'For a 32A Type B MCB, the maximum Zs is 1.37Ω to ensure disconnection within the required time under fault conditions.',
   },
   {
     id: 6,
-    question: "What type of RCD is required for EV charging points under BS 7671:2018+A2:2022?",
-    options: [
-      "Type AC RCD",
-      "Type A RCD",
-      "Type B RCD or RCM",
-      "Standard 30mA RCD"
-    ],
+    question: 'What type of RCD is required for EV charging points under BS 7671:2018+A2:2022?',
+    options: ['Type AC RCD', 'Type A RCD', 'Type B RCD or RCM', 'Standard 30mA RCD'],
     correctAnswer: 2,
-    explanation: "Type B RCD or residual current monitoring (RCM) is required to detect DC fault currents that can occur in EV charging systems."
+    explanation:
+      'Type B RCD or residual current monitoring (RCM) is required to detect DC fault currents that can occur in EV charging systems.',
   },
   {
     id: 7,
-    question: "What is the minimum cable burial depth for EV charging supply cables?",
-    options: [
-      "300mm",
-      "450mm",
-      "600mm",
-      "750mm"
-    ],
+    question: 'What is the minimum cable burial depth for EV charging supply cables?',
+    options: ['300mm', '450mm', '600mm', '750mm'],
     correctAnswer: 2,
-    explanation: "Underground cables must be buried at a minimum depth of 600mm with appropriate protection and warning tape."
+    explanation:
+      'Underground cables must be buried at a minimum depth of 600mm with appropriate protection and warning tape.',
   },
   {
     id: 8,
-    question: "When working near underground services, what detection method should be used?",
+    question: 'When working near underground services, what detection method should be used?',
     options: [
-      "Visual inspection only",
-      "CAT scanner and hand digging",
-      "Mechanical excavation",
-      "Trial pit digging"
+      'Visual inspection only',
+      'CAT scanner and hand digging',
+      'Mechanical excavation',
+      'Trial pit digging',
     ],
     correctAnswer: 1,
-    explanation: "CAT scanner detection followed by careful hand digging is required to locate and avoid damage to existing underground services."
+    explanation:
+      'CAT scanner detection followed by careful hand digging is required to locate and avoid damage to existing underground services.',
   },
   {
     id: 9,
-    question: "What documentation must be completed before starting installation work?",
+    question: 'What documentation must be completed before starting installation work?',
     options: [
-      "Installation certificate only",
-      "Risk assessment, method statement, and permits",
-      "Test sheet only",
-      "Customer agreement"
+      'Installation certificate only',
+      'Risk assessment, method statement, and permits',
+      'Test sheet only',
+      'Customer agreement',
     ],
     correctAnswer: 1,
-    explanation: "Risk assessment, method statement, and any required permits must be completed before work commences to ensure safe working."
+    explanation:
+      'Risk assessment, method statement, and any required permits must be completed before work commences to ensure safe working.',
   },
   {
     id: 10,
-    question: "How should temporary electrical connections be protected during installation?",
+    question: 'How should temporary electrical connections be protected during installation?',
     options: [
-      "Basic tape covering",
-      "IP44 rated protection with RCD",
-      "No protection needed",
-      "Plastic sheeting"
+      'Basic tape covering',
+      'IP44 rated protection with RCD',
+      'No protection needed',
+      'Plastic sheeting',
     ],
     correctAnswer: 1,
-    explanation: "Temporary connections must have appropriate IP rating and RCD protection to ensure safety during the installation process."
-  }
+    explanation:
+      'Temporary connections must have appropriate IP rating and RCD protection to ensure safety during the installation process.',
+  },
 ];
 
 export function EVChargingModule6Section1Quiz() {
@@ -205,7 +202,7 @@ export function EVChargingModule6Section1Quiz() {
             {quizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <div key={question.id} className="bg-[#323232] p-4 rounded-lg">
                   <div className="flex items-start gap-3 mb-3">
@@ -217,13 +214,15 @@ export function EVChargingModule6Section1Quiz() {
                     <div className="flex-1">
                       <p className="text-foreground font-medium mb-2">{question.question}</p>
                       <p className="text-sm text-gray-300 mb-2">
-                        Your answer: <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
+                        Your answer:{' '}
+                        <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
                           {question.options[userAnswer]}
                         </span>
                       </p>
                       {!isCorrect && (
                         <p className="text-sm text-gray-300 mb-2">
-                          Correct answer: <span className="text-green-400">
+                          Correct answer:{' '}
+                          <span className="text-green-400">
                             {question.options[question.correctAnswer]}
                           </span>
                         </p>
@@ -237,7 +236,7 @@ export function EVChargingModule6Section1Quiz() {
           </div>
 
           <div className="text-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-400"
             >
@@ -265,7 +264,7 @@ export function EVChargingModule6Section1Quiz() {
           </Badge>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
@@ -286,11 +285,13 @@ export function EVChargingModule6Section1Quiz() {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-elec-yellow'
-                      : 'border-gray-500'
-                  }`}>
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'border-elec-yellow'
+                        : 'border-gray-500'
+                    }`}
+                  >
                     {selectedAnswers[currentQuestion] === index && (
                       <div className="w-2 h-2 rounded-full bg-elec-yellow" />
                     )}
@@ -312,7 +313,7 @@ export function EVChargingModule6Section1Quiz() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

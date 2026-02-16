@@ -1,11 +1,19 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Book, Clock, AlertTriangle, Lightbulb, CheckCircle, ArrowRight, Shield, Activity } from "lucide-react";
-import InteractiveTestingGuide from "./InteractiveTestingGuide";
-import { allBS7671Tests, BS7671Test } from "@/data/bs7671-testing/allBS7671Tests";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Book,
+  Clock,
+  AlertTriangle,
+  Lightbulb,
+  CheckCircle,
+  ArrowRight,
+  Shield,
+  Activity,
+} from 'lucide-react';
+import InteractiveTestingGuide from './InteractiveTestingGuide';
+import { allBS7671Tests, BS7671Test } from '@/data/bs7671-testing/allBS7671Tests';
 
 const ComprehensiveTestingGuidesTab = () => {
   const [selectedGuide, setSelectedGuide] = useState<BS7671Test | null>(null);
@@ -15,7 +23,7 @@ const ComprehensiveTestingGuidesTab = () => {
   };
 
   const handleGuideComplete = () => {
-    console.log("Guide completed!");
+    console.log('Guide completed!');
     setSelectedGuide(null);
   };
 
@@ -25,10 +33,18 @@ const ComprehensiveTestingGuidesTab = () => {
 
   const getDifficultyConfig = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
-      case 'Intermediate': return { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', border: 'border-elec-yellow/30' };
-      case 'Advanced': return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
-      default: return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' };
+      case 'Beginner':
+        return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+      case 'Intermediate':
+        return {
+          bg: 'bg-elec-yellow/10',
+          text: 'text-elec-yellow',
+          border: 'border-elec-yellow/30',
+        };
+      case 'Advanced':
+        return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
+      default:
+        return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' };
     }
   };
 
@@ -57,9 +73,9 @@ const ComprehensiveTestingGuidesTab = () => {
         </CardHeader>
         <CardContent className="relative space-y-6">
           <p className="text-white/70">
-            Detailed, step-by-step testing procedures with technical specifications, safety warnings,
-            and troubleshooting guidance. Each guide includes regulation references and practical tips
-            from industry professionals.
+            Detailed, step-by-step testing procedures with technical specifications, safety
+            warnings, and troubleshooting guidance. Each guide includes regulation references and
+            practical tips from industry professionals.
           </p>
 
           <div className="grid grid-cols-3 gap-3">
@@ -93,13 +109,18 @@ const ComprehensiveTestingGuidesTab = () => {
         {allBS7671Tests.map((guide) => {
           const difficultyConfig = getDifficultyConfig(guide.difficulty);
           return (
-            <Card key={guide.id} className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 overflow-hidden relative group">
+            <Card
+              key={guide.id}
+              className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 overflow-hidden relative group"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
               <CardHeader className="relative">
                 <div className="space-y-3">
                   <CardTitle className="text-white text-lg leading-tight">{guide.title}</CardTitle>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge className={`${difficultyConfig.bg} ${difficultyConfig.text} border ${difficultyConfig.border}`}>
+                    <Badge
+                      className={`${difficultyConfig.bg} ${difficultyConfig.text} border ${difficultyConfig.border}`}
+                    >
                       {guide.difficulty}
                     </Badge>
                     <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30">
@@ -124,7 +145,9 @@ const ComprehensiveTestingGuidesTab = () => {
                       {guide.testLimits.map((limit, index) => (
                         <div key={index} className="text-sm text-white/70 flex justify-between">
                           <span>{limit.parameter}:</span>
-                          <span className="font-mono text-green-300">{limit.limit} {limit.unit}</span>
+                          <span className="font-mono text-green-300">
+                            {limit.limit} {limit.unit}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -203,10 +226,10 @@ const ComprehensiveTestingGuidesTab = () => {
               </div>
               <ul className="space-y-2">
                 {[
-                  "Always complete safe isolation procedure first",
-                  "Ensure test equipment is calibrated and functioning",
-                  "Have circuit diagrams and schedules available",
-                  "Plan your testing sequence to avoid repeated isolation"
+                  'Always complete safe isolation procedure first',
+                  'Ensure test equipment is calibrated and functioning',
+                  'Have circuit diagrams and schedules available',
+                  'Plan your testing sequence to avoid repeated isolation',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-white/70">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
@@ -225,9 +248,9 @@ const ComprehensiveTestingGuidesTab = () => {
               <ul className="space-y-2">
                 {[
                   "Record all readings, even if they're within limits",
-                  "Take photos of test setups for documentation",
-                  "Double-check readings that seem unusual",
-                  "Keep detailed notes for future reference"
+                  'Take photos of test setups for documentation',
+                  'Double-check readings that seem unusual',
+                  'Keep detailed notes for future reference',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-white/70">
                     <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />

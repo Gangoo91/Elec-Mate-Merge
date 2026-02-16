@@ -1,51 +1,59 @@
-import { ArrowLeft, FileText, Lightbulb, MapPin, Package, Users, MessageSquare } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  FileText,
+  Lightbulb,
+  MapPin,
+  Package,
+  Users,
+  MessageSquare,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "What Is a Specification and Why It Matters",
-    description: "Understanding the importance of specifications in electrical work",
+    number: 'Subsection 1',
+    title: 'What Is a Specification and Why It Matters',
+    description: 'Understanding the importance of specifications in electrical work',
     icon: FileText,
-    href: "1-1"
+    href: '1-1',
   },
   {
-    number: "Subsection 2",
-    title: "Reading Basic Electrical Installation Drawings",
-    description: "Interpreting electrical installation drawings and plans",
+    number: 'Subsection 2',
+    title: 'Reading Basic Electrical Installation Drawings',
+    description: 'Interpreting electrical installation drawings and plans',
     icon: Lightbulb,
-    href: "1-2"
+    href: '1-2',
   },
   {
-    number: "Subsection 3",
-    title: "Symbols and Conventions (BS 7671 and Common Site Use)",
-    description: "Understanding electrical symbols and drawing conventions",
+    number: 'Subsection 3',
+    title: 'Symbols and Conventions (BS 7671 and Common Site Use)',
+    description: 'Understanding electrical symbols and drawing conventions',
     icon: MapPin,
-    href: "1-3"
+    href: '1-3',
   },
   {
-    number: "Subsection 4",
-    title: "Interpreting Floorplans, Circuit Layouts, and Cable Routes",
-    description: "Reading and understanding building plans and electrical layouts",
+    number: 'Subsection 4',
+    title: 'Interpreting Floorplans, Circuit Layouts, and Cable Routes',
+    description: 'Reading and understanding building plans and electrical layouts',
     icon: Package,
-    href: "1-4"
+    href: '1-4',
   },
   {
-    number: "Subsection 5",
-    title: "Identifying Installation Requirements from Drawings",
-    description: "Determining what work needs to be done from technical drawings",
+    number: 'Subsection 5',
+    title: 'Identifying Installation Requirements from Drawings',
+    description: 'Determining what work needs to be done from technical drawings',
     icon: Users,
-    href: "1-5"
+    href: '1-5',
   },
   {
-    number: "Subsection 6",
-    title: "Dealing with Incomplete or Conflicting Information",
-    description: "Managing situations where drawings or specifications are unclear",
+    number: 'Subsection 6',
+    title: 'Dealing with Incomplete or Conflicting Information',
+    description: 'Managing situations where drawings or specifications are unclear',
     icon: MessageSquare,
-    href: "1-6"
-  }
+    href: '1-6',
+  },
 ];
 
 const Section1 = () => {

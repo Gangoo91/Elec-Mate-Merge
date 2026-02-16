@@ -1,5 +1,12 @@
-
-import React, { createContext, useContext, useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useCloudSync, SyncNowImmediateResult } from '@/hooks/useCloudSync';
@@ -11,7 +18,7 @@ import { draftStorage } from '@/utils/draftStorage';
 import {
   validateLoadedData,
   saveToLocalStorageBackup,
-  logIntegrityEvent
+  logIntegrityEvent,
 } from '@/utils/dataIntegrity';
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
@@ -20,17 +27,17 @@ import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusInd
 import {
   findCustomerByName,
   createCustomerFromCertificate,
-  linkCustomerToReport
+  linkCustomerToReport,
 } from '@/utils/customerHelper';
 import { supabase } from '@/integrations/supabase/client';
 
 interface EICRFormContextType {
   formData: any;
   updateFormData: (field: string, value: any) => void;
-  getLatestFormData: () => any;  // Returns the absolute latest form data (bypasses closure issues)
+  getLatestFormData: () => any; // Returns the absolute latest form data (bypasses closure issues)
   currentReportId: string | null;
   effectiveReportId: string;
-  databaseId: string | null;  // The actual database UUID for queries
+  databaseId: string | null; // The actual database UUID for queries
   setCurrentReportId: (id: string | null) => void;
   showStartNewDialog: boolean;
   setShowStartNewDialog: (value: boolean) => void;
@@ -45,7 +52,7 @@ interface EICRFormContextType {
   isLoadingReport: boolean;
   lastSavedTime: Date | null;
   syncNow: (() => void) | undefined;
-  syncNowImmediate: (() => Promise<SyncNowImmediateResult>) | undefined;  // For PDF generation - returns saved data
+  syncNowImmediate: (() => Promise<SyncNowImmediateResult>) | undefined; // For PDF generation - returns saved data
   getSyncIndicatorState: () => SyncState;
 }
 
@@ -66,7 +73,7 @@ interface EICRFormProviderProps {
 
 export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   children,
-  initialReportId
+  initialReportId,
 }) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -74,7 +81,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const { getDefaultProfile, isLoading: isLoadingProfiles } = useInspectorProfiles();
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
-  const [databaseId, setDatabaseId] = useState<string | null>(null);  // Actual database UUID
+  const [databaseId, setDatabaseId] = useState<string | null>(null); // Actual database UUID
   const [isLoadingReport, setIsLoadingReport] = useState(!!initialReportId);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
@@ -82,7 +89,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const [userId, setUserId] = useState<string | null>(null);
   const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
   const lastSaveErrorToastRef = useRef<number>(0);
-  
+
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
@@ -101,153 +108,153 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     // Otherwise initialize with certificate number to be generated
     return {
       // Certificate Details
-      certificateNumber: '',  // Will be generated asynchronously
-    
-    // Client Details
-    clientName: '',
-    clientPhone: '',
-    clientEmail: '',
-    clientAddress: '',
-    sameAsClientAddress: 'false',
-    installationAddress: '',
-    description: '',
-    installationType: '',
-    estimatedAge: '',
-    ageUnit: 'years',
-    evidenceOfAlterations: 'no',
-    alterationsDetails: '',
-    lastInspectionType: 'unknown',
-    dateOfLastInspection: '',
-    
-    // Purpose & Inspection Details
-    purposeOfInspection: '',
-    otherPurpose: '',
-    inspectionDate: '',
-    nextInspectionDate: '',
-    inspectionInterval: '',
-    extentOfInspection: '',
-    limitationsOfInspection: '',
-    
-    // Supply Characteristics - Default to most common UK domestic values
-    dnoName: '',
-    mpan: '',
-    cutoutLocation: '',
-    supplyVoltage: '230',
-    supplyVoltageCustom: '',
-    supplyFrequency: '50',
-    phases: 'single',
-    supplyPME: '',
-    earthingArrangement: 'tncs',
-    earthElectrodeType: '',
-    mainProtectiveDevice: '',
-    mainProtectiveDeviceCustom: '',
-    rcdMainSwitch: '',
-    rcdRating: '',
-    rcdType: '',
-    mainSwitchRating: '',
-    breakingCapacity: '',
-    serviceEntry: '',
-    supplyType: '',
+      certificateNumber: '', // Will be generated asynchronously
 
-    // Earthing & Bonding
-    earthElectrodeResistance: '',
-    mainEarthingConductorType: '',
-    mainEarthingConductorSize: '',
-    mainEarthingConductorSizeCustom: '',
-    mainBondingConductorType: '',
-    mainBondingSize: '',
-    mainBondingSizeCustom: '',
-    mainBondingLocations: '',
-    bondingCompliance: '',
-    supplementaryBonding: '',
-    supplementaryBondingSize: '',
-    supplementaryBondingSizeCustom: '',
-    equipotentialBonding: '',
-    
-    // Consumer Unit
-    cuLocation: '',
-    cuManufacturer: '',
-    cuType: '',
-    
-    // Electrical Installation Details
-    boardSize: '',
-    intakeCableSize: '',
-    intakeCableType: '',
-    tailsSize: '',
-    tailsLength: '',
-    circuits: [],
-    scheduleOfTests: [],
-    distributionBoards: [],
+      // Client Details
+      clientName: '',
+      clientPhone: '',
+      clientEmail: '',
+      clientAddress: '',
+      sameAsClientAddress: 'false',
+      installationAddress: '',
+      description: '',
+      installationType: '',
+      estimatedAge: '',
+      ageUnit: 'years',
+      evidenceOfAlterations: 'no',
+      alterationsDetails: '',
+      lastInspectionType: 'unknown',
+      dateOfLastInspection: '',
 
-    // Test Instrument Details
-    testInstrumentMake: '',
-    customTestInstrument: '',
-    testInstrumentSerial: '',
-    calibrationDate: '',
-    testTemperature: '',
-    testMethod: '',
-    testVoltage: '',
-    testNotes: '',
+      // Purpose & Inspection Details
+      purposeOfInspection: '',
+      otherPurpose: '',
+      inspectionDate: '',
+      nextInspectionDate: '',
+      inspectionInterval: '',
+      extentOfInspection: '',
+      limitationsOfInspection: '',
 
-    // Standards Compliance
-    designStandard: 'BS7671',
-    partPCompliance: '',
-    bs7671Compliance: false,
-    buildingRegsCompliance: false,
-    
-    // Overall Assessment
-    overallAssessment: '',
-    satisfactoryForContinuedUse: '',
-    additionalComments: '',
-    inspectedBySignature: '',
-    reportAuthorisedBySignature: '',
-    inspectedByName: '',
-    inspectedByForOnBehalfOf: '',
-    inspectedByPosition: '',
-    inspectedByAddress: '',
-    inspectedByCpScheme: '',
-    inspectedByCpSchemeNA: false,
-    reportAuthorisedByName: '',
-    reportAuthorisedByDate: new Date().toISOString().split('T')[0],
-    reportAuthorisedByForOnBehalfOf: '',
-    reportAuthorisedByPosition: '',
-    reportAuthorisedByAddress: '',
-    reportAuthorisedByMembershipNo: '',
-    
-    // Inspector Details
-    inspectorName: '',
-    inspectorQualifications: '',
-    inspectorSignature: '',
-    inspectorDate: new Date().toISOString().split('T')[0],
-    companyDetails: '',
-    registrationScheme: '',
-    registrationNumber: '',
-    registrationExpiry: '',
-    insuranceProvider: '',
-    insurancePolicyNumber: '',
-    insuranceCoverage: '',
-    insuranceExpiry: '',
-    companyName: '',
-    companyAddress: '',
-    companyPhone: '',
-    companyEmail: '',
-    companyLogo: '',
-    companyWebsite: '',
-    companyTagline: '',
-    companyAccentColor: '',
-    companyRegistrationNumber: '',
-    vatNumber: '',
-    
-    // Inspection Data
-    inspectionItems: [],
-    defectObservations: [],
-    generalObservations: [],
-    
-    // Metadata
-    completedSections: {},
-    
-    // Legacy support
-    observations: [],
+      // Supply Characteristics - Default to most common UK domestic values
+      dnoName: '',
+      mpan: '',
+      cutoutLocation: '',
+      supplyVoltage: '230',
+      supplyVoltageCustom: '',
+      supplyFrequency: '50',
+      phases: 'single',
+      supplyPME: '',
+      earthingArrangement: 'tncs',
+      earthElectrodeType: '',
+      mainProtectiveDevice: '',
+      mainProtectiveDeviceCustom: '',
+      rcdMainSwitch: '',
+      rcdRating: '',
+      rcdType: '',
+      mainSwitchRating: '',
+      breakingCapacity: '',
+      serviceEntry: '',
+      supplyType: '',
+
+      // Earthing & Bonding
+      earthElectrodeResistance: '',
+      mainEarthingConductorType: '',
+      mainEarthingConductorSize: '',
+      mainEarthingConductorSizeCustom: '',
+      mainBondingConductorType: '',
+      mainBondingSize: '',
+      mainBondingSizeCustom: '',
+      mainBondingLocations: '',
+      bondingCompliance: '',
+      supplementaryBonding: '',
+      supplementaryBondingSize: '',
+      supplementaryBondingSizeCustom: '',
+      equipotentialBonding: '',
+
+      // Consumer Unit
+      cuLocation: '',
+      cuManufacturer: '',
+      cuType: '',
+
+      // Electrical Installation Details
+      boardSize: '',
+      intakeCableSize: '',
+      intakeCableType: '',
+      tailsSize: '',
+      tailsLength: '',
+      circuits: [],
+      scheduleOfTests: [],
+      distributionBoards: [],
+
+      // Test Instrument Details
+      testInstrumentMake: '',
+      customTestInstrument: '',
+      testInstrumentSerial: '',
+      calibrationDate: '',
+      testTemperature: '',
+      testMethod: '',
+      testVoltage: '',
+      testNotes: '',
+
+      // Standards Compliance
+      designStandard: 'BS7671',
+      partPCompliance: '',
+      bs7671Compliance: false,
+      buildingRegsCompliance: false,
+
+      // Overall Assessment
+      overallAssessment: '',
+      satisfactoryForContinuedUse: '',
+      additionalComments: '',
+      inspectedBySignature: '',
+      reportAuthorisedBySignature: '',
+      inspectedByName: '',
+      inspectedByForOnBehalfOf: '',
+      inspectedByPosition: '',
+      inspectedByAddress: '',
+      inspectedByCpScheme: '',
+      inspectedByCpSchemeNA: false,
+      reportAuthorisedByName: '',
+      reportAuthorisedByDate: new Date().toISOString().split('T')[0],
+      reportAuthorisedByForOnBehalfOf: '',
+      reportAuthorisedByPosition: '',
+      reportAuthorisedByAddress: '',
+      reportAuthorisedByMembershipNo: '',
+
+      // Inspector Details
+      inspectorName: '',
+      inspectorQualifications: '',
+      inspectorSignature: '',
+      inspectorDate: new Date().toISOString().split('T')[0],
+      companyDetails: '',
+      registrationScheme: '',
+      registrationNumber: '',
+      registrationExpiry: '',
+      insuranceProvider: '',
+      insurancePolicyNumber: '',
+      insuranceCoverage: '',
+      insuranceExpiry: '',
+      companyName: '',
+      companyAddress: '',
+      companyPhone: '',
+      companyEmail: '',
+      companyLogo: '',
+      companyWebsite: '',
+      companyTagline: '',
+      companyAccentColor: '',
+      companyRegistrationNumber: '',
+      vatNumber: '',
+
+      // Inspection Data
+      inspectionItems: [],
+      defectObservations: [],
+      generalObservations: [],
+
+      // Metadata
+      completedSections: {},
+
+      // Legacy support
+      observations: [],
     };
   });
 
@@ -260,7 +267,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       scheduleOfTests: formData.scheduleOfTests?.length || 0,
       inspectionItems: formData.inspectionItems?.length || 0,
       defectObservations: formData.defectObservations?.length || 0,
-      clientName: formData.clientName || 'empty'
+      clientName: formData.clientName || 'empty',
     });
   }, [formData]);
 
@@ -272,7 +279,10 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
 
     console.log('[getLatestFormData] ===== DATA COMPARISON =====');
     console.log('[getLatestFormData] REF scheduleOfTests:', refData?.scheduleOfTests?.length || 0);
-    console.log('[getLatestFormData] CLOSURE scheduleOfTests:', closureData?.scheduleOfTests?.length || 0);
+    console.log(
+      '[getLatestFormData] CLOSURE scheduleOfTests:',
+      closureData?.scheduleOfTests?.length || 0
+    );
     console.log('[getLatestFormData] REF clientName:', refData?.clientName || 'empty');
     console.log('[getLatestFormData] CLOSURE clientName:', closureData?.clientName || 'empty');
     console.log('[getLatestFormData] Using:', refData ? 'REF' : 'CLOSURE');
@@ -329,11 +339,14 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             console.log('[EICRFormProvider] Using logo from company_profiles:', companyLogo);
           }
         } catch (error) {
-          console.warn('[EICRFormProvider] Failed to fetch company profile for logo fallback:', error);
+          console.warn(
+            '[EICRFormProvider] Failed to fetch company profile for logo fallback:',
+            error
+          );
         }
       }
 
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         inspectorName: defaultProfile.name,
         inspectorQualifications: defaultProfile.qualifications.join(', '),
@@ -353,7 +366,8 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         companyWebsite: defaultProfile.companyWebsite || '',
         companyRegistrationNumber: defaultProfile.companyRegistrationNumber || '',
         vatNumber: defaultProfile.vatNumber || '',
-        registrationSchemeLogo: companyProfile?.registration_scheme_logo || defaultProfile.registrationSchemeLogo || '',
+        registrationSchemeLogo:
+          companyProfile?.registration_scheme_logo || defaultProfile.registrationSchemeLogo || '',
       }));
     }
   };
@@ -361,12 +375,16 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   // Track user ID for customer linking
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       setUserId(session?.user?.id || null);
     };
     checkAuth();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUserId(session?.user?.id || null);
     });
 
@@ -397,7 +415,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         if (localDraft?.data) {
           console.log('[EICR] Using local draft (not authenticated)');
           const loadedData = localDraft.data;
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
             ...loadedData,
             inspectionItems: loadedData.inspectionItems || [],
@@ -431,7 +449,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         if (localDraft?.data) {
           console.log('[EICR] Using local draft (offline)');
           const loadedData = localDraft.data;
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
             ...loadedData,
             inspectionItems: loadedData.inspectionItems || [],
@@ -466,8 +484,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       // Step 3: Compare timestamps - use whichever is NEWER
       if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
         const loadedCloudData = cloudResult.data as any;
-        const cloudTime = new Date(cloudResult.updatedAt || cloudResult.lastSyncedAt || 0).getTime();
-        const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
+        const cloudTime = new Date(
+          cloudResult.updatedAt || cloudResult.lastSyncedAt || 0
+        ).getTime();
+        const localTime = localDraft?.lastModified
+          ? new Date(localDraft.lastModified).getTime()
+          : 0;
 
         // Store the database UUID for photo queries
         if (cloudResult.databaseId) {
@@ -486,7 +508,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             reportType: 'eicr',
             reportId: initialReportId,
             fieldCount: integrity.fieldCount,
-            error: integrity.warnings.join('; ')
+            error: integrity.warnings.join('; '),
           });
 
           // Try localStorage backup if cloud data is empty
@@ -495,7 +517,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             if (localIntegrity.hasData) {
               console.log('[EICR] Cloud data empty, using local backup');
               const loadedData = localDraft.data;
-              setFormData(prev => ({
+              setFormData((prev) => ({
                 ...prev,
                 ...loadedData,
                 inspectionItems: loadedData.inspectionItems || [],
@@ -519,9 +541,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
 
         if (localDraft?.data && localTime > cloudTime) {
           // Local is newer - use local data
-          console.log('[EICR] Using LOCAL draft (newer than cloud by', Math.round((localTime - cloudTime) / 1000), 'seconds)');
+          console.log(
+            '[EICR] Using LOCAL draft (newer than cloud by',
+            Math.round((localTime - cloudTime) / 1000),
+            'seconds)'
+          );
           const loadedData = localDraft.data;
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
             ...loadedData,
             inspectionItems: loadedData.inspectionItems || [],
@@ -536,7 +562,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             reportType: 'eicr',
             reportId: initialReportId,
             fieldCount: Object.keys(loadedData).length,
-            source: 'local'
+            source: 'local',
           });
           toast({
             title: 'Recovered unsaved changes',
@@ -545,7 +571,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         } else {
           // Cloud is newer or same - use cloud data
           console.log('[EICR] Using CLOUD data');
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
             ...loadedCloudData,
             inspectionItems: loadedCloudData.inspectionItems || [],
@@ -560,7 +586,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             reportType: 'eicr',
             reportId: initialReportId,
             fieldCount: integrity.fieldCount,
-            source: 'cloud'
+            source: 'cloud',
           });
         }
         setCurrentReportId(initialReportId);
@@ -568,7 +594,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         // Cloud failed but we have local - use local
         console.log('[EICR] Cloud load failed, using local draft');
         const loadedData = localDraft.data;
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           ...loadedData,
           inspectionItems: loadedData.inspectionItems || [],
@@ -583,7 +609,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         logIntegrityEvent('recovery_success', {
           reportType: 'eicr',
           reportId: initialReportId,
-          source: 'local'
+          source: 'local',
         });
         toast({
           title: 'Loaded from local storage',
@@ -593,7 +619,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         logIntegrityEvent('recovery_failed', {
           reportType: 'eicr',
           reportId: initialReportId,
-          error: 'No data found in cloud or local'
+          error: 'No data found in cloud or local',
         });
         toast({
           title: 'Report not found',
@@ -627,11 +653,14 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     const draft = draftStorage.loadDraft('eicr', null);
     if (draft?.data && !formData.clientName) {
       // Auto-recover if form is empty and draft has meaningful data
-      if (draft.data.clientName || draft.data.installationAddress ||
-          (draft.data.circuits && draft.data.circuits.length > 0) ||
-          (draft.data.scheduleOfTests && draft.data.scheduleOfTests.length > 0)) {
+      if (
+        draft.data.clientName ||
+        draft.data.installationAddress ||
+        (draft.data.circuits && draft.data.circuits.length > 0) ||
+        (draft.data.scheduleOfTests && draft.data.scheduleOfTests.length > 0)
+      ) {
         console.log('[EICR] Auto-recovering draft for new report');
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           ...draft.data,
           // Preserve any existing certificate number
@@ -648,7 +677,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   // Pre-fill customer details if navigating from customer page
   useEffect(() => {
     if (customerDataFromNav && !initialReportId) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         clientName: customerDataFromNav.name || '',
         clientPhone: customerDataFromNav.phone || '',
@@ -663,11 +692,16 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const certNumberGenerated = React.useRef(false);
   useEffect(() => {
     const initCertificateNumber = async () => {
-      if (!formData.certificateNumber && !currentReportId && !initialReportId && !certNumberGenerated.current) {
+      if (
+        !formData.certificateNumber &&
+        !currentReportId &&
+        !initialReportId &&
+        !certNumberGenerated.current
+      ) {
         certNumberGenerated.current = true;
         const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
         const certNumber = await generateCertificateNumber('eicr');
-        setFormData(prev => ({ ...prev, certificateNumber: certNumber }));
+        setFormData((prev) => ({ ...prev, certificateNumber: certNumber }));
       }
     };
     initCertificateNumber();
@@ -683,16 +717,22 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     const sanitizedValue = typeof value === 'string' ? sanitizeTextInput(value) : value;
 
     // DEBUG: Log every form data update
-    console.log('[updateFormData] Updating field:', field,
-      Array.isArray(sanitizedValue) ? `(${sanitizedValue.length} items)` :
-      typeof sanitizedValue === 'object' ? '(object)' : sanitizedValue);
+    console.log(
+      '[updateFormData] Updating field:',
+      field,
+      Array.isArray(sanitizedValue)
+        ? `(${sanitizedValue.length} items)`
+        : typeof sanitizedValue === 'object'
+          ? '(object)'
+          : sanitizedValue
+    );
 
-    setFormData(prev => {
+    setFormData((prev) => {
       const newData = { ...prev, [field]: sanitizedValue };
       console.log('[updateFormData] New state will have:', {
         scheduleOfTests: newData.scheduleOfTests?.length || 0,
         inspectionItems: newData.inspectionItems?.length || 0,
-        defectObservations: newData.defectObservations?.length || 0
+        defectObservations: newData.defectObservations?.length || 0,
       });
       return newData;
     });
@@ -702,9 +742,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const handleManualSave = async () => {
     if (!isAuthenticated) {
       toast({
-        title: "Sign in required",
-        description: "Please sign in to save your report.",
-        variant: "destructive",
+        title: 'Sign in required',
+        description: 'Please sign in to save your report.',
+        variant: 'destructive',
       });
       return;
     }
@@ -712,8 +752,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     // Mark as completed if inspector has signed off
     const updatedData = {
       ...formData,
-      status: formData.satisfactoryForContinuedUse && formData.inspectorSignature ? 'completed' :
-              (formData.clientName || formData.inspectionDate) ? 'in-progress' : 'draft'
+      status:
+        formData.satisfactoryForContinuedUse && formData.inspectorSignature
+          ? 'completed'
+          : formData.clientName || formData.inspectionDate
+            ? 'in-progress'
+            : 'draft',
     };
 
     setFormData(updatedData);
@@ -726,12 +770,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       logIntegrityEvent('backup_saved', {
         reportType: 'eicr',
         reportId: reportIdForBackup,
-        fieldCount: Object.keys(updatedData).filter(k => !k.startsWith('_')).length
+        fieldCount: Object.keys(updatedData).filter((k) => !k.startsWith('_')).length,
       });
     }
 
     const result = await syncToCloud(true);
-    
+
     if (result.success) {
       setLastSavedTime(new Date());
 
@@ -753,19 +797,19 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         }
       }
       setHasUnsavedChanges(false);
-      
+
       // Invalidate queries to refresh dashboard
       queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
       queryClient.invalidateQueries({ queryKey: ['expiry-reminders'] });
-      
+
       toast({
-        title: "Saved",
-        description: "Your EICR report has been saved to the cloud.",
+        title: 'Saved',
+        description: 'Your EICR report has been saved to the cloud.',
       });
     } else if (!isOnline) {
       toast({
-        title: "Queued for sync",
+        title: 'Queued for sync',
         description: "You're offline. Changes will sync when you reconnect.",
       });
     } else {
@@ -774,9 +818,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       if (now - lastSaveErrorToastRef.current > 30000) {
         lastSaveErrorToastRef.current = now;
         toast({
-          title: "Save failed",
-          description: "Failed to save the report. Please try again.",
-          variant: "destructive",
+          title: 'Save failed',
+          description: 'Failed to save the report. Please try again.',
+          variant: 'destructive',
         });
       }
     }
@@ -794,24 +838,24 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     const result = await createCustomerFromCertificate(userId, customerData);
     if (result.error) {
       toast({
-        title: "Failed to create customer",
-        description: "Could not save customer details.",
-        variant: "destructive",
+        title: 'Failed to create customer',
+        description: 'Could not save customer details.',
+        variant: 'destructive',
       });
       return;
     }
 
     // Link customer to report
     await linkCustomerToReport(pendingReportId, result.id);
-    
+
     // Invalidate customer queries
     queryClient.invalidateQueries({ queryKey: ['customers'] });
-    
+
     toast({
-      title: "Customer created",
+      title: 'Customer created',
       description: `${customerData.name} has been added to your customers.`,
     });
-    
+
     setPendingReportId(null);
   };
 
@@ -949,29 +993,30 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       completedSections: {},
       observations: [],
     };
-    
+
     setFormData(newFormData);
     setCurrentReportId(null);
     setShowStartNewDialog(false);
     setHasUnsavedChanges(false);
-    
+
     setTimeout(() => loadDefaultInspectorProfile(), 0);
-    
+
     toast({
-      title: "New EICR started",
-      description: "Started a new EICR report.",
+      title: 'New EICR started',
+      description: 'Started a new EICR report.',
     });
   };
 
   const confirmDuplicate = async () => {
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('eicr');
-    
+
     // Deep clone current form data with polyfill (preserves Date objects)
-    const duplicatedData: any = (typeof structuredClone === 'function' 
-      ? structuredClone(formData)
-      : JSON.parse(JSON.stringify(formData)));
-    
+    const duplicatedData: any =
+      typeof structuredClone === 'function'
+        ? structuredClone(formData)
+        : JSON.parse(JSON.stringify(formData));
+
     // Reset metadata fields
     delete duplicatedData.id;
     delete duplicatedData.report_id;
@@ -981,14 +1026,14 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     delete duplicatedData.updated_at;
     duplicatedData.certificateNumber = certificateNumber;
     duplicatedData.status = 'draft';
-    
+
     setFormData(duplicatedData);
     setCurrentReportId(null);
     setShowStartNewDialog(false);
     setHasUnsavedChanges(true);
-    
+
     toast({
-      title: "Report duplicated",
+      title: 'Report duplicated',
       description: `New certificate number: ${certificateNumber}`,
     });
   };

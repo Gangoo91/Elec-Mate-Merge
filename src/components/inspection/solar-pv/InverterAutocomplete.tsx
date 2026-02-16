@@ -21,11 +21,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -74,20 +70,23 @@ export function InverterAutocomplete({
     if (!value) return null;
     // Search through all inverters to find match
     const allInverters = Object.values(invertersGrouped).flat();
-    return allInverters.find(i => `${i.make} ${i.model}` === value) || null;
+    return allInverters.find((i) => `${i.make} ${i.model}` === value) || null;
   }, [value, invertersGrouped]);
 
   // Handle inverter selection
-  const handleSelect = React.useCallback((inverter: SolarInverter) => {
-    const newValue = `${inverter.make} ${inverter.model}`;
-    const isDeselecting = value === newValue;
+  const handleSelect = React.useCallback(
+    (inverter: SolarInverter) => {
+      const newValue = `${inverter.make} ${inverter.model}`;
+      const isDeselecting = value === newValue;
 
-    onValueChange?.(isDeselecting ? '' : inverter.id);
-    onInverterSelect?.(isDeselecting ? null : inverter);
+      onValueChange?.(isDeselecting ? '' : inverter.id);
+      onInverterSelect?.(isDeselecting ? null : inverter);
 
-    setOpen(false);
-    setSearch('');
-  }, [value, onValueChange, onInverterSelect]);
+      setOpen(false);
+      setSearch('');
+    },
+    [value, onValueChange, onInverterSelect]
+  );
 
   // Format display value
   const displayValue = React.useMemo(() => {
@@ -105,10 +104,14 @@ export function InverterAutocomplete({
   // Get type badge color
   const getTypeBadgeColor = (type: string) => {
     switch (type) {
-      case 'hybrid': return 'bg-green-500/20 text-green-400';
-      case 'micro': return 'bg-purple-500/20 text-purple-400';
-      case 'central': return 'bg-orange-500/20 text-orange-400';
-      default: return 'bg-blue-500/20 text-blue-400';
+      case 'hybrid':
+        return 'bg-green-500/20 text-green-400';
+      case 'micro':
+        return 'bg-purple-500/20 text-purple-400';
+      case 'central':
+        return 'bg-orange-500/20 text-orange-400';
+      default:
+        return 'bg-blue-500/20 text-blue-400';
     }
   };
 
@@ -130,10 +133,7 @@ export function InverterAutocomplete({
         className
       )}
     >
-      <span className={cn(
-        'truncate',
-        !selectedInverter && 'text-muted-foreground'
-      )}>
+      <span className={cn('truncate', !selectedInverter && 'text-muted-foreground')}>
         {displayValue}
       </span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -148,10 +148,10 @@ export function InverterAutocomplete({
         key={inverter.id}
         onClick={() => handleSelect(inverter)}
         className={cn(
-          "rounded-lg cursor-pointer transition-colors flex items-center",
-          forMobile ? "px-4 py-4 min-h-[56px]" : "px-2 py-2",
-          "hover:bg-elec-yellow/10 active:bg-elec-yellow/20",
-          isSelected && "bg-elec-yellow/20"
+          'rounded-lg cursor-pointer transition-colors flex items-center',
+          forMobile ? 'px-4 py-4 min-h-[56px]' : 'px-2 py-2',
+          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
+          isSelected && 'bg-elec-yellow/20'
         )}
       >
         <Check
@@ -162,23 +162,26 @@ export function InverterAutocomplete({
           )}
         />
         <div className="flex flex-col flex-1 min-w-0">
-          <span className={cn("font-medium truncate", forMobile && "text-base")}>
+          <span className={cn('font-medium truncate', forMobile && 'text-base')}>
             {showMake ? `${inverter.make} ${inverter.model}` : inverter.model}
           </span>
-          <span className={cn("text-gray-400 truncate", forMobile ? "text-sm" : "text-xs")}>
-            {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} • {inverter.mpptCount} MPPT
+          <span className={cn('text-gray-400 truncate', forMobile ? 'text-sm' : 'text-xs')}>
+            {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} •{' '}
+            {inverter.mpptCount} MPPT
           </span>
         </div>
         <div className="ml-2 flex items-center gap-1">
-          <span className={cn(
-            'px-1.5 py-0.5 font-medium rounded',
-            forMobile ? 'text-xs' : 'text-xs',
-            getTypeBadgeColor(inverter.type)
-          )}>
+          <span
+            className={cn(
+              'px-1.5 py-0.5 font-medium rounded',
+              forMobile ? 'text-xs' : 'text-xs',
+              getTypeBadgeColor(inverter.type)
+            )}
+          >
             {inverter.type}
           </span>
           {inverter.hybridCapable && (
-            <Battery className={cn("text-green-400", forMobile ? "h-4 w-4" : "h-3 w-3")} />
+            <Battery className={cn('text-green-400', forMobile ? 'h-4 w-4' : 'h-3 w-3')} />
           )}
         </div>
       </div>
@@ -224,7 +227,9 @@ export function InverterAutocomplete({
             <div className="flex-1 overflow-y-auto momentum-scroll-y">
               {filteredInverters && filteredInverters.length > 0 ? (
                 <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">Search Results</p>
+                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">
+                    Search Results
+                  </p>
                   <div className="space-y-1">
                     {filteredInverters.map((inverter) => renderInverterItem(inverter, true, true))}
                   </div>
@@ -275,9 +280,7 @@ export function InverterAutocomplete({
   return (
     <div className="relative">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          {triggerButton}
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
           className="w-[var(--radix-popover-trigger-width)] p-0 bg-elec-gray border border-white/20 shadow-lg z-[100]"
           align="start"
@@ -291,9 +294,7 @@ export function InverterAutocomplete({
               className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
             />
             <CommandList className="bg-elec-gray max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-gray-400">
-                No inverters found.
-              </CommandEmpty>
+              <CommandEmpty className="p-4 text-sm text-gray-400">No inverters found.</CommandEmpty>
 
               {/* Show search results if searching */}
               {filteredInverters && filteredInverters.length > 0 ? (
@@ -308,7 +309,9 @@ export function InverterAutocomplete({
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4 shrink-0',
-                          selectedInverter?.id === inverter.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+                          selectedInverter?.id === inverter.id
+                            ? 'opacity-100 text-elec-yellow'
+                            : 'opacity-0'
                         )}
                       />
                       <div className="flex flex-col flex-1 min-w-0">
@@ -316,16 +319,20 @@ export function InverterAutocomplete({
                           {inverter.make} {inverter.model}
                         </span>
                         <span className="text-xs text-gray-400 truncate">
-                          {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} • {inverter.mpptCount} MPPT
+                          {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} •{' '}
+                          {inverter.mpptCount} MPPT
                         </span>
                       </div>
                       <div className="ml-2 flex items-center gap-1">
-                        <span className={cn('px-1.5 py-0.5 text-xs font-medium rounded', getTypeBadgeColor(inverter.type))}>
+                        <span
+                          className={cn(
+                            'px-1.5 py-0.5 text-xs font-medium rounded',
+                            getTypeBadgeColor(inverter.type)
+                          )}
+                        >
                           {inverter.type}
                         </span>
-                        {inverter.hybridCapable && (
-                          <Battery className="h-3 w-3 text-green-400" />
-                        )}
+                        {inverter.hybridCapable && <Battery className="h-3 w-3 text-green-400" />}
                       </div>
                     </CommandItem>
                   ))}
@@ -344,7 +351,9 @@ export function InverterAutocomplete({
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4 shrink-0',
-                            selectedInverter?.id === inverter.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+                            selectedInverter?.id === inverter.id
+                              ? 'opacity-100 text-elec-yellow'
+                              : 'opacity-0'
                           )}
                         />
                         <div className="flex flex-col flex-1 min-w-0">
@@ -402,17 +411,15 @@ export function InverterInfoDisplay({ inverterId, className }: InverterInfoDispl
   if (!inverter) return null;
 
   return (
-    <div className={cn(
-      'p-3 bg-elec-gray/50 border border-white/10 rounded-lg text-sm',
-      className
-    )}>
+    <div className={cn('p-3 bg-elec-gray/50 border border-white/10 rounded-lg text-sm', className)}>
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="font-medium text-foreground">
             {inverter.make} {inverter.model}
           </p>
           <p className="text-xs text-gray-400 mt-0.5">
-            {inverter.type} inverter • {inverter.phases === 'three' ? 'Three Phase' : 'Single Phase'}
+            {inverter.type} inverter •{' '}
+            {inverter.phases === 'three' ? 'Three Phase' : 'Single Phase'}
           </p>
         </div>
         <span className="px-2 py-1 text-xs font-semibold bg-blue-500/20 text-blue-400 rounded">
@@ -446,18 +453,14 @@ export function InverterInfoDisplay({ inverterId, className }: InverterInfoDispl
             MCS
           </span>
         )}
-        {inverter.g98g99Compliant && (
-          <span className="text-xs text-gray-400">G98/G99</span>
-        )}
+        {inverter.g98g99Compliant && <span className="text-xs text-gray-400">G98/G99</span>}
         {inverter.hybridCapable && (
           <span className="flex items-center gap-1 text-green-400 text-xs">
             <Battery className="h-3 w-3" />
             Hybrid
           </span>
         )}
-        {inverter.wifi && (
-          <span className="text-xs text-gray-400">WiFi</span>
-        )}
+        {inverter.wifi && <span className="text-xs text-gray-400">WiFi</span>}
       </div>
     </div>
   );

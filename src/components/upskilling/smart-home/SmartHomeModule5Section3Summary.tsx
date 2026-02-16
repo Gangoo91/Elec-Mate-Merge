@@ -12,11 +12,11 @@ export const SmartHomeModule5Section3Summary = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p className="text-base leading-relaxed">
-          This section explored door/window contact sensors and PIR motion detectors as essential 
-          components of smart home security systems, demonstrating how these technologies create 
+          This section explored door/window contact sensors and PIR motion detectors as essential
+          components of smart home security systems, demonstrating how these technologies create
           effective layered detection for comprehensive perimeter and interior monitoring.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-elec-dark p-4 rounded-lg">
             <h4 className="text-foreground font-semibold mb-3 flex items-center gap-2">
@@ -26,7 +26,9 @@ export const SmartHomeModule5Section3Summary = () => {
             <ul className="text-sm space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
-                <span>Contact sensors: magnetic switch operation and immediate entry detection</span>
+                <span>
+                  Contact sensors: magnetic switch operation and immediate entry detection
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
@@ -42,11 +44,14 @@ export const SmartHomeModule5Section3Summary = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
-                <span>Installation best practices: placement, alignment, and environmental considerations</span>
+                <span>
+                  Installation best practices: placement, alignment, and environmental
+                  considerations
+                </span>
               </li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-dark p-4 rounded-lg">
             <h4 className="text-foreground font-semibold mb-3 flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-blue-500" />
@@ -76,7 +81,7 @@ export const SmartHomeModule5Section3Summary = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
           <h4 className="text-blue-400 font-semibold mb-3">Key Installation Considerations</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -100,16 +105,19 @@ export const SmartHomeModule5Section3Summary = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-          <h4 className="text-green-400 font-semibold mb-2">Next Steps in Your Smart Home Security Journey</h4>
+          <h4 className="text-green-400 font-semibold mb-2">
+            Next Steps in Your Smart Home Security Journey
+          </h4>
           <p className="text-sm text-foreground mb-3">
-            Having mastered contact sensors and PIR technology, you're ready to explore advanced 
-            security integration, including CCTV systems, smart locks, and comprehensive monitoring platforms.
+            Having mastered contact sensors and PIR technology, you're ready to explore advanced
+            security integration, including CCTV systems, smart locks, and comprehensive monitoring
+            platforms.
           </p>
           <p className="text-sm text-foreground">
-            Continue to the next section to learn about complete security ecosystem design 
-            and professional-grade integration strategies for maximum protection.
+            Continue to the next section to learn about complete security ecosystem design and
+            professional-grade integration strategies for maximum protection.
           </p>
         </div>
       </CardContent>

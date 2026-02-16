@@ -1,27 +1,32 @@
-
-import { useState } from "react";
-import { Search, Filter, SlidersHorizontal, MapPin, Star } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Search, Filter, SlidersHorizontal, MapPin, Star } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const ToolSearch = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
   const popularSearches = [
-    "Multifunction tester", "Cordless drill", "Wire strippers", "LED work light", 
-    "Cable detector", "Socket tester", "Inspection torch", "Screwdriver set"
+    'Multifunction tester',
+    'Cordless drill',
+    'Wire strippers',
+    'LED work light',
+    'Cable detector',
+    'Socket tester',
+    'Inspection torch',
+    'Screwdriver set',
   ];
 
   const quickFilters = [
-    { label: "On Sale", count: 127, active: false },
-    { label: "In Stock", count: 890, active: true },
-    { label: "Next Day", count: 234, active: false },
-    { label: "Trade Price", count: 567, active: false },
-    { label: "4+ Stars", count: 445, active: false }
+    { label: 'On Sale', count: 127, active: false },
+    { label: 'In Stock', count: 890, active: true },
+    { label: 'Next Day', count: 234, active: false },
+    { label: 'Trade Price', count: 567, active: false },
+    { label: '4+ Stars', count: 445, active: false },
   ];
 
   return (
@@ -37,16 +42,16 @@ const ToolSearch = () => {
                 )}
                 <Input
                   placeholder="Search tools, brands, model numbers..."
-                  className={cn("h-12 text-base", !searchQuery && "pl-10")}
+                  className={cn('h-12 text-base', !searchQuery && 'pl-10')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div className="flex gap-2">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="border-elec-yellow/30 hover:bg-elec-yellow/10"
                 onClick={() => setShowFilters(!showFilters)}
               >
@@ -62,13 +67,13 @@ const ToolSearch = () => {
           {/* Quick Filters */}
           <div className="flex flex-wrap gap-2 mt-4">
             {quickFilters.map((filter, index) => (
-              <Badge 
+              <Badge
                 key={index}
-                variant={filter.active ? "default" : "outline"}
+                variant={filter.active ? 'default' : 'outline'}
                 className={`cursor-pointer transition-all ${
-                  filter.active 
-                    ? "bg-elec-yellow text-black" 
-                    : "border-elec-yellow/30 hover:bg-elec-yellow/10"
+                  filter.active
+                    ? 'bg-elec-yellow text-black'
+                    : 'border-elec-yellow/30 hover:bg-elec-yellow/10'
                 }`}
               >
                 {filter.label} ({filter.count})
@@ -90,9 +95,11 @@ const ToolSearch = () => {
                     <option>PPE & Safety</option>
                   </select>
                 </div>
-                
+
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">Price Range</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block">
+                    Price Range
+                  </label>
                   <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground">
                     <option>Any Price</option>
                     <option>Under £50</option>
@@ -101,7 +108,7 @@ const ToolSearch = () => {
                     <option>Over £500</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">Supplier</label>
                   <select className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground">
@@ -113,7 +120,7 @@ const ToolSearch = () => {
                   </select>
                 </div>
               </div>
-              
+
               <div className="flex gap-2 mt-4">
                 <Button variant="outline" size="sm" className="border-elec-yellow/30">
                   Clear Filters

@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { BookOpen, FileText, Video } from 'lucide-react';
 
 interface Resource {
   id: string;
   title: string;
-  type: "video" | "learning" | "document"; // Specific string literals only
+  type: 'video' | 'learning' | 'document'; // Specific string literals only
   completed?: boolean;
 }
 
@@ -20,15 +19,15 @@ const UnitResourceList: React.FC<UnitResourceListProps> = ({
   resources,
   onResourceClick,
   onToggleComplete,
-  completedResources
+  completedResources,
 }) => {
-  const getIcon = (type: "video" | "learning" | "document") => {
+  const getIcon = (type: 'video' | 'learning' | 'document') => {
     switch (type) {
-      case "video":
+      case 'video':
         return <Video className="h-4 w-4 text-blue-500" />;
-      case "learning":
+      case 'learning':
         return <BookOpen className="h-4 w-4 text-green-500" />;
-      case "document":
+      case 'document':
         return <FileText className="h-4 w-4 text-amber-500" />;
       default:
         return <FileText className="h-4 w-4" />;
@@ -38,7 +37,7 @@ const UnitResourceList: React.FC<UnitResourceListProps> = ({
   return (
     <div className="space-y-3">
       {resources.map((resource) => (
-        <div 
+        <div
           key={resource.id}
           className="flex items-center justify-between p-3 rounded-md border border-white/20 bg-white/10 shadow-sm hover:shadow transition cursor-pointer"
           onClick={() => onResourceClick(resource.id)}
@@ -48,9 +47,9 @@ const UnitResourceList: React.FC<UnitResourceListProps> = ({
             <span>{resource.title}</span>
           </div>
           <div>
-            <input 
-              type="checkbox" 
-              checked={!!completedResources[resource.id]} 
+            <input
+              type="checkbox"
+              checked={!!completedResources[resource.id]}
               onChange={(e) => {
                 e.stopPropagation();
                 onToggleComplete(resource.id);

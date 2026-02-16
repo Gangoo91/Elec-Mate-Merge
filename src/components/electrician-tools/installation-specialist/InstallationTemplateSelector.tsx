@@ -2,7 +2,12 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { InstallationTemplate, DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES } from '@/lib/installation-templates';
+import {
+  InstallationTemplate,
+  DOMESTIC_TEMPLATES,
+  COMMERCIAL_TEMPLATES,
+  INDUSTRIAL_TEMPLATES,
+} from '@/lib/installation-templates';
 import { Home, Building2, Factory, Star, Clock, Zap } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
@@ -23,7 +28,13 @@ const getComplexityColor = (complexity: 'basic' | 'intermediate' | 'advanced') =
   }
 };
 
-const TemplateCard = ({ template, onSelect }: { template: InstallationTemplate; onSelect: () => void }) => (
+const TemplateCard = ({
+  template,
+  onSelect,
+}: {
+  template: InstallationTemplate;
+  onSelect: () => void;
+}) => (
   <Card
     className="p-3 sm:p-4 cursor-pointer hover:border-blue-400/40 hover:scale-[1.02] transition-all duration-200 touch-manipulation active:scale-[0.98] min-h-[44px]"
     onClick={onSelect}
@@ -44,7 +55,10 @@ const TemplateCard = ({ template, onSelect }: { template: InstallationTemplate; 
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-        <Badge variant="outline" className={`${getComplexityColor(template.complexity)} text-xs sm:text-sm`}>
+        <Badge
+          variant="outline"
+          className={`${getComplexityColor(template.complexity)} text-xs sm:text-sm`}
+        >
           {template.complexity}
         </Badge>
         <Badge variant="secondary" className="gap-1 text-xs sm:text-sm">
@@ -59,12 +73,12 @@ const TemplateCard = ({ template, onSelect }: { template: InstallationTemplate; 
 export const InstallationTemplateSelector = ({
   selectedCategory,
   onCategoryChange,
-  onSelectTemplate
+  onSelectTemplate,
 }: InstallationTemplateSelectorProps) => {
   const handleSelectTemplate = (template: InstallationTemplate) => {
     onSelectTemplate(template);
     toast({
-      title: "Template Selected",
+      title: 'Template Selected',
       description: `${template.name} - ${template.estimatedDuration}`,
     });
   };
@@ -83,15 +97,24 @@ export const InstallationTemplateSelector = ({
 
         <Tabs value={selectedCategory} onValueChange={(v: any) => onCategoryChange(v)}>
           <TabsList className="grid w-full grid-cols-3 h-11 sm:h-10">
-            <TabsTrigger value="domestic" className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation">
+            <TabsTrigger
+              value="domestic"
+              className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation"
+            >
               <Home className="h-5 w-5 sm:h-4 sm:w-4" />
               <span className="text-xs sm:text-sm">Home</span>
             </TabsTrigger>
-            <TabsTrigger value="commercial" className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation">
+            <TabsTrigger
+              value="commercial"
+              className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation"
+            >
               <Building2 className="h-5 w-5 sm:h-4 sm:w-4" />
               <span className="text-xs sm:text-sm">Comm</span>
             </TabsTrigger>
-            <TabsTrigger value="industrial" className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation">
+            <TabsTrigger
+              value="industrial"
+              className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation"
+            >
               <Factory className="h-5 w-5 sm:h-4 sm:w-4" />
               <span className="text-xs sm:text-sm">Indust</span>
             </TabsTrigger>

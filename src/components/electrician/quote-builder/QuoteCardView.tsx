@@ -1,7 +1,20 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, Eye, Calendar, Check, X, Receipt, User, ArrowRight, CheckCheck, Trash2, RefreshCw, Send } from 'lucide-react';
+import {
+  Download,
+  Eye,
+  Calendar,
+  Check,
+  X,
+  Receipt,
+  User,
+  ArrowRight,
+  CheckCheck,
+  Trash2,
+  RefreshCw,
+  Send,
+} from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
@@ -49,7 +62,12 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
 
   // Get initials from client name
   const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   const getStatusInfo = (quote: Quote) => {
@@ -59,7 +77,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
         color: 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
         borderColor: 'border-l-blue-500',
         label: 'Invoiced',
-        icon: Receipt
+        icon: Receipt,
       };
     }
 
@@ -69,7 +87,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
         color: 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300',
         borderColor: 'border-l-green-500',
         label: 'Ready to Invoice',
-        icon: CheckCheck
+        icon: CheckCheck,
       };
     }
 
@@ -79,17 +97,21 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
         color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
         borderColor: 'border-l-green-500',
         label: 'Approved',
-        icon: Check
+        icon: Check,
       };
     }
 
     // Sent + Awaiting response
-    if (quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected') {
+    if (
+      quote.status === 'sent' &&
+      quote.acceptance_status !== 'accepted' &&
+      quote.acceptance_status !== 'rejected'
+    ) {
       return {
         color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
         borderColor: 'border-l-amber-500',
         label: 'Sent',
-        icon: Send
+        icon: Send,
       };
     }
 
@@ -99,7 +121,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
         color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300',
         borderColor: 'border-l-red-500',
         label: 'Declined',
-        icon: X
+        icon: X,
       };
     }
 
@@ -109,7 +131,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
         color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300',
         borderColor: 'border-l-muted-foreground/40',
         label: 'Draft',
-        icon: Eye
+        icon: Eye,
       };
     }
 
@@ -118,15 +140,17 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
       color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300',
       borderColor: 'border-l-muted-foreground/40',
       label: quote.status,
-      icon: Eye
+      icon: Eye,
     };
   };
 
   // Check if quote can be resent (sent but not yet accepted/rejected)
   const canResend = (quote: Quote) => {
-    return quote.status === 'sent' &&
-           quote.acceptance_status !== 'accepted' &&
-           quote.acceptance_status !== 'rejected';
+    return (
+      quote.status === 'sent' &&
+      quote.acceptance_status !== 'accepted' &&
+      quote.acceptance_status !== 'rejected'
+    );
   };
 
   return (
@@ -143,180 +167,193 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
             className="animate-fade-in"
             style={{ animationDelay: `${index * 50}ms` }}
           >
-          <SwipeableCard
-            leftAction={{
-              icon: <Trash2 className="h-5 w-5" />,
-              bgColor: 'bg-red-500',
-              onAction: () => onDeleteQuote(quote),
-              label: 'Delete'
-            }}
-            rightAction={canSwipeAccept ? {
-              icon: <Check className="h-5 w-5" />,
-              bgColor: 'bg-green-500',
-              onAction: () => handleActionClick(quote, 'accept'),
-              label: 'Accept'
-            } : undefined}
-            disabled={isCompleted}
-          >
-          <div
-            id={`quote-${quote.id}`}
-            className={cn(
-              "relative bg-card rounded-xl overflow-hidden transition-all border border-border/50 border-l-4 min-h-[80px]",
-              statusInfo.borderColor
-            )}
-          >
-            {/* Content Container */}
-            <div className="relative p-4">
-              {/* Top Row: Quote Number & Status */}
-              <div className="flex items-start justify-between mb-3">
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-base font-bold">#{quote.quoteNumber}</h3>
-                    <Badge className={`text-[10px] ${statusInfo.color} border-0 flex items-center gap-1`}>
-                      <StatusIcon className="h-3 w-3" />
-                      <span className="hidden sm:inline">{statusInfo.label}</span>
-                    </Badge>
-                  </div>
-                  {quote.acceptance_status === 'accepted' && quote.accepted_by_name && (
-                    <p className="text-[10px] text-muted-foreground">
-                      Signed by {quote.accepted_by_name}
-                    </p>
-                  )}
-                  {hasInvoiceRaised(quote) && onViewInvoice && (
-                    <button
-                      onClick={() => onViewInvoice(quote)}
-                      className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1"
+            <SwipeableCard
+              leftAction={{
+                icon: <Trash2 className="h-5 w-5" />,
+                bgColor: 'bg-red-500',
+                onAction: () => onDeleteQuote(quote),
+                label: 'Delete',
+              }}
+              rightAction={
+                canSwipeAccept
+                  ? {
+                      icon: <Check className="h-5 w-5" />,
+                      bgColor: 'bg-green-500',
+                      onAction: () => handleActionClick(quote, 'accept'),
+                      label: 'Accept',
+                    }
+                  : undefined
+              }
+              disabled={isCompleted}
+            >
+              <div
+                id={`quote-${quote.id}`}
+                className={cn(
+                  'relative bg-card rounded-xl overflow-hidden transition-all border border-border/50 border-l-4 min-h-[80px]',
+                  statusInfo.borderColor
+                )}
+              >
+                {/* Content Container */}
+                <div className="relative p-4">
+                  {/* Top Row: Quote Number & Status */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base font-bold">#{quote.quoteNumber}</h3>
+                        <Badge
+                          className={`text-[10px] ${statusInfo.color} border-0 flex items-center gap-1`}
+                        >
+                          <StatusIcon className="h-3 w-3" />
+                          <span className="hidden sm:inline">{statusInfo.label}</span>
+                        </Badge>
+                      </div>
+                      {quote.acceptance_status === 'accepted' && quote.accepted_by_name && (
+                        <p className="text-[10px] text-muted-foreground">
+                          Signed by {quote.accepted_by_name}
+                        </p>
+                      )}
+                      {hasInvoiceRaised(quote) && onViewInvoice && (
+                        <button
+                          onClick={() => onViewInvoice(quote)}
+                          className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                        >
+                          <Receipt className="h-3 w-3" />
+                          Invoice #{quote.invoice_number}
+                        </button>
+                      )}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
                     >
-                      <Receipt className="h-3 w-3" />
-                      Invoice #{quote.invoice_number}
-                    </button>
-                  )}
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {/* Client and Amount Row */}
-              <div className="flex items-center justify-between py-3 border-y border-border/30 mb-3">
-                <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <Avatar className="h-10 w-10 flex-shrink-0 bg-elec-yellow/20">
-                    <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow text-sm font-medium">
-                      {getInitials(quote.client.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium truncate">{quote.client.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {format(new Date(quote.createdAt), "dd MMM")} • {quote.items.length} items
-                    </p>
+                      <Eye className="h-4 w-4" />
+                    </Button>
                   </div>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <p className="text-lg font-bold text-elec-yellow">{formatCurrency(quote.total)}</p>
-                </div>
-              </div>
 
-              {/* Action Buttons - Compact Grid */}
-              <div className="space-y-2">
-                {/* Primary Actions Row */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleRegeneratePDF(quote)}
-                    disabled={loadingAction === `pdf-${quote.id}`}
-                    className="flex-1 h-10 bg-elec-gray hover:bg-elec-gray/80 border border-border/50 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50"
-                  >
-                    <Download className="h-3.5 w-3.5" />
-                    PDF
-                  </button>
-                  <button
-                    onClick={() => onNavigate(`/electrician/quotes/view/${quote.id}`)}
-                    className="flex-1 h-10 bg-elec-gray hover:bg-elec-gray/80 border border-border/50 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium"
-                  >
-                    <Eye className="h-3.5 w-3.5" />
-                    View
-                  </button>
-                  <button
-                    onClick={() => onDeleteQuote(quote)}
-                    className="h-10 w-10 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-500 rounded-lg flex items-center justify-center"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-
-                {/* Send Options - Only for non-sent quotes */}
-                {!canResend(quote) && (
-                  <QuoteSendDropdown
-                    quote={quote}
-                    onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
-                    disabled={!quote.client?.email}
-                  />
-                )}
-
-                {/* Conditional Action Buttons */}
-                {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && !hasInvoiceRaised(quote) && onMarkWorkComplete && (
-                  <button
-                    onClick={() => onMarkWorkComplete(quote)}
-                    disabled={loadingAction === `work-complete-${quote.id}`}
-                    className="w-full h-10 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-500 rounded-lg flex items-center justify-center gap-2 text-xs font-semibold disabled:opacity-50"
-                  >
-                    <CheckCheck className="h-4 w-4" />
-                    {loadingAction === `work-complete-${quote.id}` ? 'Updating...' : 'Mark Work Complete'}
-                  </button>
-                )}
-
-                {/* Resend + Accept/Reject for sent quotes awaiting response */}
-                {canResend(quote) && (
-                  <div className="space-y-2">
-                    {/* Prominent Resend Button */}
-                    <QuoteSendDropdown
-                      quote={quote}
-                      onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
-                      disabled={!quote.client?.email}
-                      variant="resend"
-                    />
-
-                    {/* Accept/Reject if you have response from client */}
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleActionClick(quote, 'accept')}
-                        disabled={loadingAction === `action-${quote.id}`}
-                        className="flex-1 h-10 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50 touch-manipulation"
-                      >
-                        <Check className="h-3.5 w-3.5" />
-                        Accept
-                      </button>
-                      <button
-                        onClick={() => handleActionClick(quote, 'reject')}
-                        disabled={loadingAction === `action-${quote.id}`}
-                        className="flex-1 h-10 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50 touch-manipulation"
-                      >
-                        <X className="h-3.5 w-3.5" />
-                        Reject
-                      </button>
+                  {/* Client and Amount Row */}
+                  <div className="flex items-center justify-between py-3 border-y border-border/30 mb-3">
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
+                      <Avatar className="h-10 w-10 flex-shrink-0 bg-elec-yellow/20">
+                        <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow text-sm font-medium">
+                          {getInitials(quote.client.name)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium truncate">{quote.client.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(quote.createdAt), 'dd MMM')} • {quote.items.length} items
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-lg font-bold text-elec-yellow">
+                        {formatCurrency(quote.total)}
+                      </p>
                     </div>
                   </div>
-                )}
 
-                {canRaiseInvoice(quote) && (
-                  <button
-                    onClick={() => onInvoiceAction(quote)}
-                    disabled={loadingAction === `invoice-${quote.id}`}
-                    className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark rounded-lg flex items-center justify-center gap-2 text-sm font-bold disabled:opacity-50"
-                  >
-                    <Receipt className="h-4 w-4" />
-                    {loadingAction === `invoice-${quote.id}` ? 'Creating...' : 'Raise Invoice'}
-                  </button>
-                )}
+                  {/* Action Buttons - Compact Grid */}
+                  <div className="space-y-2">
+                    {/* Primary Actions Row */}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleRegeneratePDF(quote)}
+                        disabled={loadingAction === `pdf-${quote.id}`}
+                        className="flex-1 h-10 bg-elec-gray hover:bg-elec-gray/80 border border-border/50 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50"
+                      >
+                        <Download className="h-3.5 w-3.5" />
+                        PDF
+                      </button>
+                      <button
+                        onClick={() => onNavigate(`/electrician/quotes/view/${quote.id}`)}
+                        className="flex-1 h-10 bg-elec-gray hover:bg-elec-gray/80 border border-border/50 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium"
+                      >
+                        <Eye className="h-3.5 w-3.5" />
+                        View
+                      </button>
+                      <button
+                        onClick={() => onDeleteQuote(quote)}
+                        className="h-10 w-10 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-500 rounded-lg flex items-center justify-center"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+
+                    {/* Send Options - Only for non-sent quotes */}
+                    {!canResend(quote) && (
+                      <QuoteSendDropdown
+                        quote={quote}
+                        onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+                        disabled={!quote.client?.email}
+                      />
+                    )}
+
+                    {/* Conditional Action Buttons */}
+                    {quote.acceptance_status === 'accepted' &&
+                      !isWorkComplete(quote) &&
+                      !hasInvoiceRaised(quote) &&
+                      onMarkWorkComplete && (
+                        <button
+                          onClick={() => onMarkWorkComplete(quote)}
+                          disabled={loadingAction === `work-complete-${quote.id}`}
+                          className="w-full h-10 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-500 rounded-lg flex items-center justify-center gap-2 text-xs font-semibold disabled:opacity-50"
+                        >
+                          <CheckCheck className="h-4 w-4" />
+                          {loadingAction === `work-complete-${quote.id}`
+                            ? 'Updating...'
+                            : 'Mark Work Complete'}
+                        </button>
+                      )}
+
+                    {/* Resend + Accept/Reject for sent quotes awaiting response */}
+                    {canResend(quote) && (
+                      <div className="space-y-2">
+                        {/* Prominent Resend Button */}
+                        <QuoteSendDropdown
+                          quote={quote}
+                          onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+                          disabled={!quote.client?.email}
+                          variant="resend"
+                        />
+
+                        {/* Accept/Reject if you have response from client */}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleActionClick(quote, 'accept')}
+                            disabled={loadingAction === `action-${quote.id}`}
+                            className="flex-1 h-10 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50 touch-manipulation"
+                          >
+                            <Check className="h-3.5 w-3.5" />
+                            Accept
+                          </button>
+                          <button
+                            onClick={() => handleActionClick(quote, 'reject')}
+                            disabled={loadingAction === `action-${quote.id}`}
+                            className="flex-1 h-10 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50 touch-manipulation"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                            Reject
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {canRaiseInvoice(quote) && (
+                      <button
+                        onClick={() => onInvoiceAction(quote)}
+                        disabled={loadingAction === `invoice-${quote.id}`}
+                        className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark rounded-lg flex items-center justify-center gap-2 text-sm font-bold disabled:opacity-50"
+                      >
+                        <Receipt className="h-4 w-4" />
+                        {loadingAction === `invoice-${quote.id}` ? 'Creating...' : 'Raise Invoice'}
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
-          </div>
-        </div>
-          </SwipeableCard>
+            </SwipeableCard>
           </div>
         );
       })}

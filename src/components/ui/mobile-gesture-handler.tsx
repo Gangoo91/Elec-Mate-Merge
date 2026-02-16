@@ -1,6 +1,6 @@
-import React, { useRef, useCallback } from "react";
-import { useSwipeable } from "react-swipeable";
-import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
+import React, { useRef, useCallback } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 
 interface MobileGestureHandlerProps {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export const MobileGestureHandler: React.FC<MobileGestureHandlerProps> = ({
   onTap,
   onLongPress,
   className,
-  disabled = false
+  disabled = false,
 }) => {
   const { touchSupport } = useMobileEnhanced();
   const longPressTimer = useRef<NodeJS.Timeout>();
@@ -31,7 +31,7 @@ export const MobileGestureHandler: React.FC<MobileGestureHandlerProps> = ({
 
   const handleTouchStart = useCallback(() => {
     if (!onLongPress || disabled) return;
-    
+
     isLongPress.current = false;
     longPressTimer.current = setTimeout(() => {
       isLongPress.current = true;
@@ -47,7 +47,7 @@ export const MobileGestureHandler: React.FC<MobileGestureHandlerProps> = ({
     if (longPressTimer.current) {
       clearTimeout(longPressTimer.current);
     }
-    
+
     if (!isLongPress.current && onTap && !disabled) {
       // Light haptic feedback for tap
       if ('vibrate' in navigator) {
@@ -65,7 +65,7 @@ export const MobileGestureHandler: React.FC<MobileGestureHandlerProps> = ({
     trackMouse: false,
     trackTouch: touchSupport,
     preventScrollOnSwipe: false,
-    delta: 60
+    delta: 60,
   });
 
   if (!touchSupport || disabled) {

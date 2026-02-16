@@ -7,14 +7,7 @@ import React from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Check,
-  X,
-  CheckCircle2,
-  Circle,
-  Sparkles,
-  Store
-} from 'lucide-react';
+import { Check, X, CheckCircle2, Circle, Sparkles, Store } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScanResult, ScannedInvoiceItem, MaterialMatch } from '@/types/invoice-scanner';
 
@@ -38,11 +31,11 @@ export function InvoiceScanResults({
   onUpdateItem,
   onSelectAll,
   onDeselectAll,
-  onConfirm
+  onConfirm,
 }: InvoiceScanResultsProps) {
   if (!result || !result.success) return null;
 
-  const selectedCount = result.items.filter(i => i.selected).length;
+  const selectedCount = result.items.filter((i) => i.selected).length;
   const totalItems = result.items.length;
 
   const formatCurrency = (amount: number) =>
@@ -50,8 +43,8 @@ export function InvoiceScanResults({
 
   // Calculate totals
   const selectedTotal = result.items
-    .filter(i => i.selected)
-    .reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    .filter((i) => i.selected)
+    .reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -89,9 +82,7 @@ export function InvoiceScanResults({
 
           {/* Selection Controls */}
           <div className="px-4 py-2.5 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.02]">
-            <span className="text-[13px] text-white/60">
-              {selectedCount} selected
-            </span>
+            <span className="text-[13px] text-white/60">{selectedCount} selected</span>
             <div className="flex gap-1">
               <button
                 className="text-[12px] text-elec-yellow font-medium px-3 py-1.5 rounded-lg hover:bg-elec-yellow/10 touch-manipulation"
@@ -152,7 +143,9 @@ export function InvoiceScanResults({
                       />
                       <span className="text-white/40">×</span>
                       <div className="relative">
-                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[14px] text-white/40">£</span>
+                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[14px] text-white/40">
+                          £
+                        </span>
                         <Input
                           type="number"
                           value={item.unitPrice === 0 ? '' : item.unitPrice.toFixed(2)}

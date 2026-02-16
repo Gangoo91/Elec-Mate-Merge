@@ -1,5 +1,15 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Wifi, Lightbulb, Thermometer, Shield, Smartphone, Wrench, ClipboardCheck } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Wifi,
+  Lightbulb,
+  Thermometer,
+  Shield,
+  Smartphone,
+  Wrench,
+  ClipboardCheck,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,61 +25,61 @@ const SmartHomeCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Smart Home Systems",
-      description: "Smart home fundamentals and core concepts",
-      duration: "40 mins",
-      icon: BookOpen
+      title: 'Introduction to Smart Home Systems',
+      description: 'Smart home fundamentals and core concepts',
+      duration: '40 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "Smart Protocols: Zigbee, Z-Wave, Wi-Fi, and More",
-      description: "Communication protocols and system compatibility",
-      duration: "55 mins",
-      icon: Wifi
+      title: 'Smart Protocols: Zigbee, Z-Wave, Wi-Fi, and More',
+      description: 'Communication protocols and system compatibility',
+      duration: '55 mins',
+      icon: Wifi,
     },
     {
       id: 3,
-      title: "Smart Lighting and Scene Programming",
-      description: "Lighting systems and scene-based control",
-      duration: "50 mins",
-      icon: Lightbulb
+      title: 'Smart Lighting and Scene Programming',
+      description: 'Lighting systems and scene-based control',
+      duration: '50 mins',
+      icon: Lightbulb,
     },
     {
       id: 4,
-      title: "Heating, HVAC, and Environmental Control",
-      description: "Smart heating and environmental monitoring",
-      duration: "60 mins",
-      icon: Thermometer
+      title: 'Heating, HVAC, and Environmental Control',
+      description: 'Smart heating and environmental monitoring',
+      duration: '60 mins',
+      icon: Thermometer,
     },
     {
       id: 5,
-      title: "Access Control, CCTV, and Security Integration",
-      description: "Smart security systems and integration",
-      duration: "55 mins",
-      icon: Shield
+      title: 'Access Control, CCTV, and Security Integration',
+      description: 'Smart security systems and integration',
+      duration: '55 mins',
+      icon: Shield,
     },
     {
       id: 6,
-      title: "Smart Hubs, Voice Assistants, and Interoperability",
-      description: "Centralising control and system compatibility",
-      duration: "45 mins",
-      icon: Smartphone
+      title: 'Smart Hubs, Voice Assistants, and Interoperability',
+      description: 'Centralising control and system compatibility',
+      duration: '45 mins',
+      icon: Smartphone,
     },
     {
       id: 7,
-      title: "Installation, Testing, and Safety Requirements",
-      description: "Professional installation and safety compliance",
-      duration: "50 mins",
-      icon: Wrench
+      title: 'Installation, Testing, and Safety Requirements',
+      description: 'Professional installation and safety compliance',
+      duration: '50 mins',
+      icon: Wrench,
     },
     {
       id: 8,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "60 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '60 mins',
       icon: ClipboardCheck,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -94,9 +104,7 @@ const SmartHomeCourse = () => {
       <div className="px-4 sm:px-6 py-6 sm:py-8">
         {/* Course Header */}
         <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Smart Home Technology
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Smart Home Technology</h1>
           <p className="text-white/60 text-sm sm:text-base">
             Home automation, IoT integration, and intelligent building systems
           </p>

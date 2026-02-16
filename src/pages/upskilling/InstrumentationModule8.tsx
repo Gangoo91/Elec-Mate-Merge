@@ -1,4 +1,12 @@
-import { ArrowLeft, Search, AlertTriangle, Wrench, Clipboard, FileText, Shield } from 'lucide-react';
+import {
+  ArrowLeft,
+  Search,
+  AlertTriangle,
+  Wrench,
+  Clipboard,
+  FileText,
+  Shield,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,40 +15,40 @@ const InstrumentationModule8 = () => {
   const sections = [
     {
       id: 1,
-      title: "Systematic Approach to Fault Diagnosis",
+      title: 'Systematic Approach to Fault Diagnosis',
       icon: Search,
-      description: "Methodical troubleshooting techniques for instrumentation systems"
+      description: 'Methodical troubleshooting techniques for instrumentation systems',
     },
     {
       id: 2,
-      title: "Symptoms of Sensor, Loop, or Signal Failure",
+      title: 'Symptoms of Sensor, Loop, or Signal Failure',
       icon: AlertTriangle,
-      description: "Identifying common failure modes and their symptoms"
+      description: 'Identifying common failure modes and their symptoms',
     },
     {
       id: 3,
-      title: "Using Loop Calibrators and Simulators for Diagnostics",
+      title: 'Using Loop Calibrators and Simulators for Diagnostics',
       icon: Wrench,
-      description: "Practical use of test equipment for fault finding"
+      description: 'Practical use of test equipment for fault finding',
     },
     {
       id: 4,
-      title: "Preventive Maintenance Routines",
+      title: 'Preventive Maintenance Routines',
       icon: Clipboard,
-      description: "Scheduled maintenance to prevent system failures"
+      description: 'Scheduled maintenance to prevent system failures',
     },
     {
       id: 5,
-      title: "Documenting Faults and Generating Service Reports",
+      title: 'Documenting Faults and Generating Service Reports',
       icon: FileText,
-      description: "Proper documentation and reporting procedures"
+      description: 'Proper documentation and reporting procedures',
     },
     {
       id: 6,
-      title: "Safety Considerations During Troubleshooting",
+      title: 'Safety Considerations During Troubleshooting',
       icon: Shield,
-      description: "Safe working practices when diagnosing faults"
-    }
+      description: 'Safe working practices when diagnosing faults',
+    },
   ];
 
   return (

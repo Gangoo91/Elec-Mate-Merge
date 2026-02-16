@@ -6,15 +6,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Briefcase,
-  MapPin,
-  Calendar,
-  ChevronRight,
-  X,
-  Loader2,
-  Filter,
-} from 'lucide-react';
+import { Briefcase, MapPin, Calendar, ChevronRight, X, Loader2, Filter } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -57,15 +49,16 @@ export function MyJobsSheet({ open, onOpenChange }: MyJobsSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
             <div className="flex items-center justify-between">
               <div className="w-10" />
-              <SheetTitle className="text-lg font-semibold flex-1 text-center">
-                My Jobs
-              </SheetTitle>
+              <SheetTitle className="text-lg font-semibold flex-1 text-center">My Jobs</SheetTitle>
               <SheetDescription className="sr-only">
                 View your assigned jobs and current assignments
               </SheetDescription>

@@ -1,15 +1,15 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, FileText, ChevronRight, User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, MapPin, FileText, ChevronRight, User } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface CertificateCardProps {
   title: string;
-  type: "EICR" | "EIC" | "Minor Works";
+  type: 'EICR' | 'EIC' | 'Minor Works';
   location?: string;
   client?: string;
   date: string;
-  status: "Draft" | "Completed" | "In Progress" | "Submitted";
+  status: 'Draft' | 'Completed' | 'In Progress' | 'Submitted';
   progress?: number;
   reference?: string;
   onClick?: () => void;
@@ -18,44 +18,44 @@ interface CertificateCardProps {
 
 const getStatusColour = (status: string) => {
   switch (status) {
-    case "Completed":
-      return "border-l-success";
-    case "In Progress":
-      return "border-l-warning";
-    case "Draft":
-      return "border-l-muted-foreground";
-    case "Submitted":
-      return "border-l-info";
+    case 'Completed':
+      return 'border-l-success';
+    case 'In Progress':
+      return 'border-l-warning';
+    case 'Draft':
+      return 'border-l-muted-foreground';
+    case 'Submitted':
+      return 'border-l-info';
     default:
-      return "border-l-border";
+      return 'border-l-border';
   }
 };
 
-const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
+const getStatusVariant = (status: string): 'default' | 'secondary' | 'destructive' | 'outline' => {
   switch (status) {
-    case "Completed":
-      return "default";
-    case "In Progress":
-      return "secondary";
-    case "Draft":
-      return "outline";
-    case "Submitted":
-      return "default";
+    case 'Completed':
+      return 'default';
+    case 'In Progress':
+      return 'secondary';
+    case 'Draft':
+      return 'outline';
+    case 'Submitted':
+      return 'default';
     default:
-      return "outline";
+      return 'outline';
   }
 };
 
 const getTypeColor = (type: string) => {
   switch (type) {
-    case "EICR":
-      return "bg-blue-500/10 text-blue-600 dark:text-blue-400";
-    case "EIC":
-      return "bg-green-500/10 text-green-600 dark:text-green-400";
-    case "Minor Works":
-      return "bg-orange-500/10 text-orange-600 dark:text-orange-400";
+    case 'EICR':
+      return 'bg-blue-500/10 text-blue-600 dark:text-blue-400';
+    case 'EIC':
+      return 'bg-green-500/10 text-green-600 dark:text-green-400';
+    case 'Minor Works':
+      return 'bg-orange-500/10 text-orange-600 dark:text-orange-400';
     default:
-      return "bg-muted text-muted-foreground";
+      return 'bg-muted text-muted-foreground';
   }
 };
 
@@ -69,13 +69,13 @@ export function CertificateCard({
   progress,
   reference,
   onClick,
-  className
+  className,
 }: CertificateCardProps) {
   return (
     <Card
       className={cn(
-        "cursor-pointer transition-all duration-200 active:scale-[0.98] border-l-4 overflow-hidden",
-        "hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5",
+        'cursor-pointer transition-all duration-200 active:scale-[0.98] border-l-4 overflow-hidden',
+        'hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5',
         getStatusColour(status),
         className
       )}
@@ -87,16 +87,12 @@ export function CertificateCard({
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 mb-1">
               <FileText className="h-4 w-4 text-primary/70 shrink-0" />
-              <Badge className={cn("text-[10px]", getTypeColor(type))}>
-                {type}
-              </Badge>
+              <Badge className={cn('text-[10px]', getTypeColor(type))}>{type}</Badge>
             </div>
             <h3 className="font-semibold text-foreground truncate text-base leading-tight">
               {title}
             </h3>
-            {client && (
-              <p className="text-sm text-muted-foreground mt-0.5 truncate">{client}</p>
-            )}
+            {client && <p className="text-sm text-muted-foreground mt-0.5 truncate">{client}</p>}
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <Badge variant={getStatusVariant(status)} className="text-[10px]">
@@ -115,7 +111,7 @@ export function CertificateCard({
         )}
 
         {/* Progress Bar (if in progress) */}
-        {progress !== undefined && status === "In Progress" && (
+        {progress !== undefined && status === 'In Progress' && (
           <div className="space-y-1.5">
             <div className="flex justify-between items-center text-xs">
               <span className="text-muted-foreground">Progress</span>

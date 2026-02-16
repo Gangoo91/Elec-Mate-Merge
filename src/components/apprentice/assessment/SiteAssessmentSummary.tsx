@@ -1,13 +1,11 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Download, Share2, Trash2, CheckCircle, AlertTriangle,
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { siteAssessmentChecklist, getTotalItemCount } from "./data/siteAssessmentChecklist";
-import type { useAssessmentProgress } from "./hooks/useAssessmentProgress";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Download, Share2, Trash2, CheckCircle, AlertTriangle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { siteAssessmentChecklist, getTotalItemCount } from './data/siteAssessmentChecklist';
+import type { useAssessmentProgress } from './hooks/useAssessmentProgress';
 
 interface SiteAssessmentSummaryProps {
   progress: ReturnType<typeof useAssessmentProgress>;
@@ -21,9 +19,9 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
   const allDone = progress.completedCount === totalCount;
 
   const handleExport = () => {
-    const categories = siteAssessmentChecklist.map(cat => ({
+    const categories = siteAssessmentChecklist.map((cat) => ({
       name: cat.name,
-      items: cat.items.map(item => ({ id: item.id, text: item.text })),
+      items: cat.items.map((item) => ({ id: item.id, text: item.text })),
     }));
     const text = progress.exportAsText(totalCount, categories);
     const blob = new Blob([text], { type: 'text/plain' });
@@ -35,13 +33,13 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    toast({ title: "Report downloaded", description: "Your assessment report has been saved." });
+    toast({ title: 'Report downloaded', description: 'Your assessment report has been saved.' });
   };
 
   const handleShare = async () => {
-    const categories = siteAssessmentChecklist.map(cat => ({
+    const categories = siteAssessmentChecklist.map((cat) => ({
       name: cat.name,
-      items: cat.items.map(item => ({ id: item.id, text: item.text })),
+      items: cat.items.map((item) => ({ id: item.id, text: item.text })),
     }));
     const text = progress.exportAsText(totalCount, categories);
 
@@ -57,9 +55,16 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
     } else {
       try {
         await navigator.clipboard.writeText(text);
-        toast({ title: "Copied to clipboard", description: "Assessment report copied. You can paste it anywhere." });
+        toast({
+          title: 'Copied to clipboard',
+          description: 'Assessment report copied. You can paste it anywhere.',
+        });
       } catch {
-        toast({ title: "Could not copy", description: "Please use the download button instead.", variant: "destructive" });
+        toast({
+          title: 'Could not copy',
+          description: 'Please use the download button instead.',
+          variant: 'destructive',
+        });
       }
     }
   };
@@ -67,7 +72,7 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
   const handleClear = () => {
     progress.clearProgress();
     setShowConfirm(false);
-    toast({ title: "Progress cleared", description: "All checklist progress has been reset." });
+    toast({ title: 'Progress cleared', description: 'All checklist progress has been reset.' });
   };
 
   return (
@@ -82,11 +87,15 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
               <AlertTriangle className="h-6 w-6 text-elec-yellow" />
             )}
             <div>
-              <div className="text-lg font-bold text-white">{progress.completedCount}/{totalCount}</div>
+              <div className="text-lg font-bold text-white">
+                {progress.completedCount}/{totalCount}
+              </div>
               <div className="text-xs text-white">checks completed</div>
             </div>
           </div>
-          <Badge className={`${allDone ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'}`}>
+          <Badge
+            className={`${allDone ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'}`}
+          >
             {percentage}%
           </Badge>
         </div>
@@ -105,19 +114,24 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
 
         {/* Category breakdown */}
         <div className="grid grid-cols-3 gap-2">
-          {['pre-job', 'site-condition', 'electrical'].map(section => {
-            const cats = siteAssessmentChecklist.filter(c => c.section === section);
-            const sectionIds = cats.flatMap(c => c.items.map(i => i.id));
+          {['pre-job', 'site-condition', 'electrical'].map((section) => {
+            const cats = siteAssessmentChecklist.filter((c) => c.section === section);
+            const sectionIds = cats.flatMap((c) => c.items.map((i) => i.id));
             const sectionProgress = progress.getCategoryProgress(sectionIds);
             const sectionDone = sectionProgress.checked === sectionProgress.total;
             const sectionLabels: Record<string, string> = {
               'pre-job': 'Pre-Job',
               'site-condition': 'Site',
-              'electrical': 'Electrical',
+              electrical: 'Electrical',
             };
             return (
-              <div key={section} className="p-2 rounded-lg bg-white/5 border border-white/10 text-center">
-                <div className={`text-sm font-bold ${sectionDone ? 'text-green-400' : 'text-white'}`}>
+              <div
+                key={section}
+                className="p-2 rounded-lg bg-white/5 border border-white/10 text-center"
+              >
+                <div
+                  className={`text-sm font-bold ${sectionDone ? 'text-green-400' : 'text-white'}`}
+                >
                   {sectionProgress.checked}/{sectionProgress.total}
                 </div>
                 <div className="text-xs text-white">{sectionLabels[section]}</div>

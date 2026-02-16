@@ -60,7 +60,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
       label: 'Installation',
       icon: <Building2 className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "pb-24" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-5xl mx-auto space-y-6')}>
           <EmergencyLightingInstallationDetails formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation {...tabNavigationProps} />
         </div>
@@ -71,7 +71,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
       label: 'Luminaires',
       icon: <Lightbulb className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "pb-24" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-5xl mx-auto space-y-6')}>
           <EmergencyLightingLuminaireSchedule formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation {...tabNavigationProps} />
         </div>
@@ -82,7 +82,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
       label: 'Testing',
       icon: <TestTube className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "pb-24" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-5xl mx-auto space-y-6')}>
           <EmergencyLightingTestResults formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation {...tabNavigationProps} />
         </div>
@@ -93,7 +93,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
       label: 'Declarations',
       icon: <FileText className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? "pb-24" : "md:max-w-5xl mx-auto space-y-6")}>
+        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-5xl mx-auto space-y-6')}>
           <EmergencyLightingDeclarations formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation
             {...tabNavigationProps}

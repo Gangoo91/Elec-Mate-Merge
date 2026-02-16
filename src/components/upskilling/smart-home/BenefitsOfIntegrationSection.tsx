@@ -12,9 +12,10 @@ export const BenefitsOfIntegrationSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Proper integration of smart controls with heating equipment delivers significant improvements in comfort, efficiency, and environmental impact.
+          Proper integration of smart controls with heating equipment delivers significant
+          improvements in comfort, efficiency, and environmental impact.
         </p>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-elec-gray border border-blue-600 rounded-lg p-4">
             <h4 className="font-semibold text-blue-200 mb-3">Smart TRV Benefits</h4>
@@ -26,7 +27,7 @@ export const BenefitsOfIntegrationSection = () => {
               <li>• Improved system responsiveness</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-green-600 rounded-lg p-4">
             <h4 className="font-semibold text-green-200 mb-3">Boiler Integration Benefits</h4>
             <ul className="space-y-2 text-sm text-green-100">
@@ -37,7 +38,7 @@ export const BenefitsOfIntegrationSection = () => {
               <li>• Optimised performance</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-purple-600 rounded-lg p-4">
             <h4 className="font-semibold text-purple-200 mb-3">Heat Pump Benefits</h4>
             <ul className="space-y-2 text-sm text-purple-100">
@@ -48,7 +49,7 @@ export const BenefitsOfIntegrationSection = () => {
               <li>• Weather compensation</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-orange-600 rounded-lg p-4">
             <h4 className="font-semibold text-orange-200 mb-3">Overall System Benefits</h4>
             <ul className="space-y-2 text-sm text-orange-100">

@@ -1,72 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m7s3-check1",
-    question: "What is the preferred file format for uploading documents to the OZEV portal?",
-    options: ["Word (.docx)", "PDF", "JPEG only", "Any format"],
+    id: 'evcharging-m7s3-check1',
+    question: 'What is the preferred file format for uploading documents to the OZEV portal?',
+    options: ['Word (.docx)', 'PDF', 'JPEG only', 'Any format'],
     correctIndex: 1,
-    explanation: "PDF is the preferred format for document uploads as it maintains quality and formatting. High-resolution JPEGs are acceptable for photographs. Documents should be minimum 300 DPI resolution."
+    explanation:
+      'PDF is the preferred format for document uploads as it maintains quality and formatting. High-resolution JPEGs are acceptable for photographs. Documents should be minimum 300 DPI resolution.',
   },
   {
-    id: "evcharging-m7s3-check2",
-    question: "Within how many days of installation completion must evidence be submitted?",
-    options: ["7 days", "14 days", "30 days", "60 days"],
+    id: 'evcharging-m7s3-check2',
+    question: 'Within how many days of installation completion must evidence be submitted?',
+    options: ['7 days', '14 days', '30 days', '60 days'],
     correctIndex: 2,
-    explanation: "Evidence must be submitted within 30 days of installation completion. Document uploads should follow within 14 days of evidence submission. Missing deadlines can result in claim rejection."
+    explanation:
+      'Evidence must be submitted within 30 days of installation completion. Document uploads should follow within 14 days of evidence submission. Missing deadlines can result in claim rejection.',
   },
   {
-    id: "evcharging-m7s3-check3",
-    question: "What photo evidence is required for charging point serial numbers?",
-    options: ["Not required", "Distance shot only", "Clear close-up of label", "Hand-drawn sketch"],
+    id: 'evcharging-m7s3-check3',
+    question: 'What photo evidence is required for charging point serial numbers?',
+    options: ['Not required', 'Distance shot only', 'Clear close-up of label', 'Hand-drawn sketch'],
     correctIndex: 2,
-    explanation: "A clear close-up photograph showing the equipment serial number plate is required. This verifies the correct equipment was installed and enables warranty tracking."
-  }
+    explanation:
+      'A clear close-up photograph showing the equipment serial number plate is required. This verifies the correct equipment was installed and enables warranty tracking.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How long does grant payment processing take?",
-    answer: "From submission to payment typically takes 4-8 weeks. Initial review is 5-10 days, technical assessment 10-15 days, and payment processing 10-15 working days after approval."
+    question: 'How long does grant payment processing take?',
+    answer:
+      'From submission to payment typically takes 4-8 weeks. Initial review is 5-10 days, technical assessment 10-15 days, and payment processing 10-15 working days after approval.',
   },
   {
-    question: "What happens if documents are rejected?",
-    answer: "You'll receive notification of the issue and have 7 days to respond with corrected documents. Common issues include poor image quality, incomplete information, or missing mandatory documents."
+    question: 'What happens if documents are rejected?',
+    answer:
+      "You'll receive notification of the issue and have 7 days to respond with corrected documents. Common issues include poor image quality, incomplete information, or missing mandatory documents.",
   },
   {
-    question: "Can I claim before the customer has paid?",
-    answer: "For WCS claims, you need proof of payment to installer. For EVHS, the customer must have completed their contribution. Payment evidence is mandatory for claim submission."
+    question: 'Can I claim before the customer has paid?',
+    answer:
+      'For WCS claims, you need proof of payment to installer. For EVHS, the customer must have completed their contribution. Payment evidence is mandatory for claim submission.',
   },
   {
     question: "What if photos don't meet quality standards?",
-    answer: "Retake photos in good lighting with minimum 2MP resolution. Ensure equipment is fully visible, in focus, and includes date/time metadata. Multiple angles are recommended."
-  }
+    answer:
+      'Retake photos in good lighting with minimum 2MP resolution. Ensure equipment is fully visible, in focus, and includes date/time metadata. Multiple angles are recommended.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An installer completes a WCS installation on March 1st. What is the absolute latest date they can submit their evidence?",
-  options: [
-    "March 15th (14 days)",
-    "March 31st (30 days)",
-    "April 30th (60 days)",
-    "August 31st (6 months)"
-  ],
-  correctAnswer: 1,
-  explanation: "Evidence must be submitted within 30 days of completion, making March 31st the deadline. Document uploads must follow within 14 days of evidence submission. Final claim deadline is 60 days post-installation."
-  }
+    question:
+      'An installer completes a WCS installation on March 1st. What is the absolute latest date they can submit their evidence?',
+    options: [
+      'March 15th (14 days)',
+      'March 31st (30 days)',
+      'April 30th (60 days)',
+      'August 31st (6 months)',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Evidence must be submitted within 30 days of completion, making March 31st the deadline. Document uploads must follow within 14 days of evidence submission. Final claim deadline is 60 days post-installation.',
+  },
 ];
 
 const EVChargingModule7Section3 = () => {
   useSEO({
-    title: "Uploading Documents and Claiming Grants | EV Charging Module 7.3",
-    description: "Master the grant application process including document upload, evidence submission, and successful grant claims for EV charging installations."
+    title: 'Uploading Documents and Claiming Grants | EV Charging Module 7.3',
+    description:
+      'Master the grant application process including document upload, evidence submission, and successful grant claims for EV charging installations.',
   });
 
   return (
@@ -108,17 +118,29 @@ const EVChargingModule7Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Format:</strong> PDF preferred, 300+ DPI</li>
-              <li><strong>Deadline:</strong> 30 days after completion</li>
-              <li><strong>Processing:</strong> 4-8 weeks typical</li>
+              <li>
+                <strong>Format:</strong> PDF preferred, 300+ DPI
+              </li>
+              <li>
+                <strong>Deadline:</strong> 30 days after completion
+              </li>
+              <li>
+                <strong>Processing:</strong> 4-8 weeks typical
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Critical Documents</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>EIC:</strong> Electrical Installation Certificate</li>
-              <li><strong>Photos:</strong> Before, during, after sequence</li>
-              <li><strong>Invoice:</strong> Itemised with payment proof</li>
+              <li>
+                <strong>EIC:</strong> Electrical Installation Certificate
+              </li>
+              <li>
+                <strong>Photos:</strong> Before, during, after sequence
+              </li>
+              <li>
+                <strong>Invoice:</strong> Itemised with payment proof
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +150,12 @@ const EVChargingModule7Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Prepare high-quality documentation for grants",
-              "Navigate the OZEV portal efficiently",
-              "Understand evidence requirements by grant type",
-              "Manage claims from submission to payment",
-              "Avoid common documentation errors",
-              "Maintain records for audit compliance"
+              'Prepare high-quality documentation for grants',
+              'Navigate the OZEV portal efficiently',
+              'Understand evidence requirements by grant type',
+              'Manage claims from submission to payment',
+              'Avoid common documentation errors',
+              'Maintain records for audit compliance',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,20 +175,32 @@ const EVChargingModule7Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Successfully claiming OZEV grants requires meticulous documentation. Understanding
-              the specific requirements for file format, quality, and organisation is essential
-              for first-time submission success.
+              Successfully claiming OZEV grants requires meticulous documentation. Understanding the
+              specific requirements for file format, quality, and organisation is essential for
+              first-time submission success.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Technical Specifications</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Technical Specifications
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Format:</strong> PDF preferred, high-res JPEG</li>
-                  <li><strong>Resolution:</strong> Minimum 300 DPI</li>
-                  <li><strong>File size:</strong> Maximum 10MB per document</li>
-                  <li><strong>Clarity:</strong> All text must be legible</li>
-                  <li><strong>Orientation:</strong> Correct rotation</li>
+                  <li>
+                    <strong>Format:</strong> PDF preferred, high-res JPEG
+                  </li>
+                  <li>
+                    <strong>Resolution:</strong> Minimum 300 DPI
+                  </li>
+                  <li>
+                    <strong>File size:</strong> Maximum 10MB per document
+                  </li>
+                  <li>
+                    <strong>Clarity:</strong> All text must be legible
+                  </li>
+                  <li>
+                    <strong>Orientation:</strong> Correct rotation
+                  </li>
                 </ul>
               </div>
               <div>
@@ -193,13 +227,15 @@ const EVChargingModule7Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different grant schemes have specific evidence requirements. Ensure you understand
-              and collect all mandatory documentation for the scheme you're claiming under.
+              Different grant schemes have specific evidence requirements. Ensure you understand and
+              collect all mandatory documentation for the scheme you're claiming under.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Workplace Charging Scheme (WCS)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Workplace Charging Scheme (WCS)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Electrical Installation Certificate</li>
                   <li>Photos: before/during/after</li>
@@ -211,7 +247,9 @@ const EVChargingModule7Section3 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">EV Homecharge Scheme (EVHS)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  EV Homecharge Scheme (EVHS)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Electrical Installation Certificate</li>
                   <li>Off-street parking photos</li>
@@ -236,29 +274,53 @@ const EVChargingModule7Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              High-quality photographic evidence is critical for successful grant claims.
-              Photos must clearly document the installation process and final result.
+              High-quality photographic evidence is critical for successful grant claims. Photos
+              must clearly document the installation process and final result.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Photo Quality Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Photo Quality Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Resolution:</strong> Minimum 2MP</li>
-                  <li><strong>Lighting:</strong> Good, even illumination</li>
-                  <li><strong>Focus:</strong> Sharp throughout</li>
-                  <li><strong>Angles:</strong> Multiple views provided</li>
-                  <li><strong>Metadata:</strong> Date/time stamp intact</li>
+                  <li>
+                    <strong>Resolution:</strong> Minimum 2MP
+                  </li>
+                  <li>
+                    <strong>Lighting:</strong> Good, even illumination
+                  </li>
+                  <li>
+                    <strong>Focus:</strong> Sharp throughout
+                  </li>
+                  <li>
+                    <strong>Angles:</strong> Multiple views provided
+                  </li>
+                  <li>
+                    <strong>Metadata:</strong> Date/time stamp intact
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Required Photo Sequence</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Required Photo Sequence
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Pre-install:</strong> Site overview, supply point</li>
-                  <li><strong>During:</strong> Cable routes, connections</li>
-                  <li><strong>Post-install:</strong> Final installation</li>
-                  <li><strong>Detail:</strong> Serial numbers, labelling</li>
-                  <li><strong>Context:</strong> Parking area, signage</li>
+                  <li>
+                    <strong>Pre-install:</strong> Site overview, supply point
+                  </li>
+                  <li>
+                    <strong>During:</strong> Cable routes, connections
+                  </li>
+                  <li>
+                    <strong>Post-install:</strong> Final installation
+                  </li>
+                  <li>
+                    <strong>Detail:</strong> Serial numbers, labelling
+                  </li>
+                  <li>
+                    <strong>Context:</strong> Parking area, signage
+                  </li>
                 </ul>
               </div>
             </div>
@@ -299,10 +361,18 @@ const EVChargingModule7Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Submission Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Poor image quality:</strong> — Use good lighting and steady camera</li>
-                <li><strong>Incomplete documentation:</strong> — Use OZEV checklist before submission</li>
-                <li><strong>Wrong file format:</strong> — Convert to PDF or JPEG, max 10MB</li>
-                <li><strong>Missing serial numbers:</strong> — Close-up photos of equipment labels</li>
+                <li>
+                  <strong>Poor image quality:</strong> — Use good lighting and steady camera
+                </li>
+                <li>
+                  <strong>Incomplete documentation:</strong> — Use OZEV checklist before submission
+                </li>
+                <li>
+                  <strong>Wrong file format:</strong> — Convert to PDF or JPEG, max 10MB
+                </li>
+                <li>
+                  <strong>Missing serial numbers:</strong> — Close-up photos of equipment labels
+                </li>
               </ul>
             </div>
           </div>
@@ -348,10 +418,7 @@ const EVChargingModule7Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

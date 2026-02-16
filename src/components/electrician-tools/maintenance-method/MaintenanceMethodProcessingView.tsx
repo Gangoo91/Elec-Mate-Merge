@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wrench, Clock, XCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { MaintenanceEquipmentDetails } from "@/types/maintenance-method";
+import { MaintenanceEquipmentDetails } from '@/types/maintenance-method';
 
 interface MaintenanceMethodProcessingViewProps {
   progress: number;
@@ -20,7 +20,7 @@ const STAGES = [
   { name: 'Analyse', icon: '📊' },
   { name: 'Generate', icon: '🔧' },
   { name: 'Validate', icon: '✓' },
-  { name: 'Done', icon: '✨' }
+  { name: 'Done', icon: '✨' },
 ];
 
 const ESTIMATED_TIME = 300; // 5 minutes
@@ -28,7 +28,7 @@ const ESTIMATED_TIME = 300; // 5 minutes
 export const MaintenanceMethodProcessingView = ({
   progress,
   onCancel,
-  isCancelling = false
+  isCancelling = false,
 }: MaintenanceMethodProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
@@ -56,12 +56,11 @@ export const MaintenanceMethodProcessingView = ({
         <motion.div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-elec-yellow/5 blur-[80px]"
           animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
       <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
-
         {/* Header */}
         <div className="text-center space-y-3">
           <div className="flex justify-center">
@@ -76,7 +75,7 @@ export const MaintenanceMethodProcessingView = ({
                 className="absolute inset-0 rounded-full border border-elec-yellow/10"
                 style={{ width: 84, height: 84, margin: -12 }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
               />
               <motion.div
                 className="w-[60px] h-[60px] rounded-full bg-elec-yellow/10 flex items-center justify-center"
@@ -128,7 +127,7 @@ export const MaintenanceMethodProcessingView = ({
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   animate={{ x: ['-100%', '200%'] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
                 />
               </motion.div>
             </div>
@@ -144,12 +143,12 @@ export const MaintenanceMethodProcessingView = ({
               <motion.div
                 key={idx}
                 className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
+                  'w-2 h-2 rounded-full transition-all duration-300',
                   idx < currentStage
-                    ? "bg-elec-yellow"
+                    ? 'bg-elec-yellow'
                     : idx === currentStage
-                    ? "bg-elec-yellow shadow-[0_0_6px_rgba(247,208,44,0.8)]"
-                    : "bg-white/10"
+                      ? 'bg-elec-yellow shadow-[0_0_6px_rgba(247,208,44,0.8)]'
+                      : 'bg-white/10'
                 )}
                 animate={idx === currentStage ? { scale: [1, 1.3, 1] } : {}}
                 transition={{ duration: 1, repeat: Infinity }}
@@ -180,9 +179,7 @@ export const MaintenanceMethodProcessingView = ({
               <Clock className="h-3 w-3 text-white/40" />
               <span className="text-[10px] text-white/40">Elapsed</span>
             </div>
-            <p className="text-lg font-bold text-white tabular-nums">
-              {formatTime(elapsedTime)}
-            </p>
+            <p className="text-lg font-bold text-white tabular-nums">{formatTime(elapsedTime)}</p>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
@@ -216,9 +213,13 @@ export const MaintenanceMethodProcessingView = ({
             className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
           >
             {isCancelling ? (
-              <><Loader2 className="w-3 h-3 animate-spin" /> Cancelling...</>
+              <>
+                <Loader2 className="w-3 h-3 animate-spin" /> Cancelling...
+              </>
             ) : (
-              <><XCircle className="w-3 h-3" /> Cancel</>
+              <>
+                <XCircle className="w-3 h-3" /> Cancel
+              </>
             )}
           </button>
         )}

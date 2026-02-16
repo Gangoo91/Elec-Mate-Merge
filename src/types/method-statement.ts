@@ -135,7 +135,7 @@ export interface MethodStatementData {
   duration: string;
   teamSize: string;
   description: string;
-  
+
   // Emergency contacts and site personnel
   siteManagerName?: string;
   siteManagerPhone?: string;
@@ -159,7 +159,7 @@ export interface MethodStatementData {
   complianceRegulations?: string[];
   complianceWarnings?: string[];
   requiredQualifications?: string[];
-  
+
   // Enhanced AI-generated fields
   riskAssessment?: MethodStatementRiskAssessment;
   ppeDetails?: MethodStatementPPE[];
@@ -168,7 +168,7 @@ export interface MethodStatementData {
   conditionalProcedures?: MethodStatementConditionalProcedures;
   scopeOfWork?: MethodStatementScopeOfWork;
   scheduleDetails?: MethodStatementSchedule;
-  
+
   // RAG citations from both agents
   ragCitations?: Array<{
     source: 'health-safety' | 'installer';
@@ -176,7 +176,7 @@ export interface MethodStatementData {
     content: string;
     linkedToStep?: number;
   }>;
-  
+
   // Agent metadata
   agentMetadata?: {
     healthSafetyVersion?: string;

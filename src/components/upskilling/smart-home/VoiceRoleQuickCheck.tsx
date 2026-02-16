@@ -7,12 +7,12 @@ export const VoiceRoleQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is the primary role of a voice assistant in a smart home?";
+  const question = 'What is the primary role of a voice assistant in a smart home?';
   const options = [
-    "To act as the central hub connecting all devices",
-    "To provide an interface for controlling compatible devices and hubs",
-    "To store all smart home data locally",
-    "To replace all physical switches and controls"
+    'To act as the central hub connecting all devices',
+    'To provide an interface for controlling compatible devices and hubs',
+    'To store all smart home data locally',
+    'To replace all physical switches and controls',
   ];
   const correctAnswer = 1;
 
@@ -35,7 +35,7 @@ export const VoiceRoleQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -47,8 +47,8 @@ export const VoiceRoleQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-900/30 border-green-500 text-green-300'
                     : index === selectedAnswer
-                    ? 'bg-red-900/30 border-red-500 text-red-300'
-                    : 'bg-gray-800/30 border-gray-600 text-gray-400'
+                      ? 'bg-red-900/30 border-red-500 text-red-300'
+                      : 'bg-gray-800/30 border-gray-600 text-gray-400'
                   : 'bg-elec-gray border-gray-600 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
               }`}
             >
@@ -67,16 +67,17 @@ export const VoiceRoleQuickCheck = () => {
 
         {showResult && (
           <div className="space-y-3">
-            <div className={`p-4 rounded-lg border ${
-              selectedAnswer === correctAnswer
-                ? 'bg-green-900/20 border-green-500/30'
-                : 'bg-red-900/20 border-red-500/30'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'bg-green-900/20 border-green-500/30'
+                  : 'bg-red-900/20 border-red-500/30'
+              }`}
+            >
               <p className="text-foreground text-sm">
                 {selectedAnswer === correctAnswer
-                  ? "Correct! Voice assistants act as an interface that translates voice commands into actions, working with existing hubs and compatible devices rather than acting as hubs themselves."
-                  : "Not quite. Voice assistants serve as an interface to control devices and hubs through voice commands, but they don't act as the central hub themselves."
-                }
+                  ? 'Correct! Voice assistants act as an interface that translates voice commands into actions, working with existing hubs and compatible devices rather than acting as hubs themselves.'
+                  : "Not quite. Voice assistants serve as an interface to control devices and hubs through voice commands, but they don't act as the central hub themselves."}
               </p>
             </div>
 

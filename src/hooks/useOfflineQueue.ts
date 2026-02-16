@@ -62,7 +62,7 @@ export function useOfflineQueue() {
     const handleOffline = () => {
       setIsOnline(false);
       toast({
-        title: 'You\'re Offline',
+        title: "You're Offline",
         description: 'Messages will be sent when you reconnect.',
         variant: 'destructive',
       });
@@ -87,23 +87,26 @@ export function useOfflineQueue() {
   /**
    * Add message to offline queue
    */
-  const addToQueue = useCallback((message: Omit<QueuedMessage, 'id' | 'queuedAt' | 'retryCount'>) => {
-    const queuedMessage: QueuedMessage = {
-      ...message,
-      id: `offline-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      queuedAt: Date.now(),
-      retryCount: 0,
-    };
+  const addToQueue = useCallback(
+    (message: Omit<QueuedMessage, 'id' | 'queuedAt' | 'retryCount'>) => {
+      const queuedMessage: QueuedMessage = {
+        ...message,
+        id: `offline-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        queuedAt: Date.now(),
+        retryCount: 0,
+      };
 
-    setQueue(prev => [...prev, queuedMessage]);
-    return queuedMessage.id;
-  }, []);
+      setQueue((prev) => [...prev, queuedMessage]);
+      return queuedMessage.id;
+    },
+    []
+  );
 
   /**
    * Remove message from queue
    */
   const removeFromQueue = useCallback((id: string) => {
-    setQueue(prev => prev.filter(m => m.id !== id));
+    setQueue((prev) => prev.filter((m) => m.id !== id));
   }, []);
 
   /**
@@ -149,7 +152,7 @@ export function useOfflineQueue() {
           toRemove.push(message.id);
           toast({
             title: 'Message Failed',
-            description: 'A message couldn\'t be sent after multiple attempts.',
+            description: "A message couldn't be sent after multiple attempts.",
             variant: 'destructive',
           });
         }
@@ -157,11 +160,11 @@ export function useOfflineQueue() {
     }
 
     // Update queue
-    setQueue(prev => {
-      const remaining = prev.filter(m => !toRemove.includes(m.id));
+    setQueue((prev) => {
+      const remaining = prev.filter((m) => !toRemove.includes(m.id));
       // Update retry counts
-      return remaining.map(m => {
-        const retry = toRetry.find(r => r.id === m.id);
+      return remaining.map((m) => {
+        const retry = toRetry.find((r) => r.id === m.id);
         return retry || m;
       });
     });
@@ -195,14 +198,17 @@ export function useOfflineQueue() {
   /**
    * Get queue status for a specific conversation
    */
-  const getConversationQueueStatus = useCallback((conversationId: string) => {
-    const conversationQueue = queue.filter(m => m.conversationId === conversationId);
-    return {
-      count: conversationQueue.length,
-      messages: conversationQueue,
-      hasPending: conversationQueue.length > 0,
-    };
-  }, [queue]);
+  const getConversationQueueStatus = useCallback(
+    (conversationId: string) => {
+      const conversationQueue = queue.filter((m) => m.conversationId === conversationId);
+      return {
+        count: conversationQueue.length,
+        messages: conversationQueue,
+        hasPending: conversationQueue.length > 0,
+      };
+    },
+    [queue]
+  );
 
   return {
     isOnline,
@@ -226,65 +232,68 @@ export function useOfflineSendMessage(
 ) {
   const [pendingMessages, setPendingMessages] = useState<Map<string, string>>(new Map());
 
-  const send = useCallback(async (params: {
-    conversation_id: string;
-    sender_type: 'employer' | 'electrician';
-    sender_id: string;
-    content: string;
-    message_type?: string;
-    metadata?: Record<string, unknown>;
-  }) => {
-    const tempId = `temp-${Date.now()}`;
+  const send = useCallback(
+    async (params: {
+      conversation_id: string;
+      sender_type: 'employer' | 'electrician';
+      sender_id: string;
+      content: string;
+      message_type?: string;
+      metadata?: Record<string, unknown>;
+    }) => {
+      const tempId = `temp-${Date.now()}`;
 
-    if (!offlineQueue.isOnline) {
-      // Queue for later
-      const queuedId = offlineQueue.addToQueue({
-        conversationId: params.conversation_id,
-        content: params.content,
-        senderType: params.sender_type,
-        senderId: params.sender_id,
-        messageType: params.message_type || 'text',
-        metadata: params.metadata,
-      });
+      if (!offlineQueue.isOnline) {
+        // Queue for later
+        const queuedId = offlineQueue.addToQueue({
+          conversationId: params.conversation_id,
+          content: params.content,
+          senderType: params.sender_type,
+          senderId: params.sender_id,
+          messageType: params.message_type || 'text',
+          metadata: params.metadata,
+        });
 
-      setPendingMessages(prev => new Map(prev).set(queuedId, params.conversation_id));
+        setPendingMessages((prev) => new Map(prev).set(queuedId, params.conversation_id));
 
-      return {
-        id: queuedId,
-        conversation_id: params.conversation_id,
-        content: params.content,
-        sender_type: params.sender_type,
-        sender_id: params.sender_id,
-        message_type: params.message_type || 'text',
-        metadata: params.metadata || {},
-        sent_at: new Date().toISOString(),
-        delivered_at: null,
-        read_at: null,
-        created_at: new Date().toISOString(),
-        _isQueued: true,
-      };
-    }
+        return {
+          id: queuedId,
+          conversation_id: params.conversation_id,
+          content: params.content,
+          sender_type: params.sender_type,
+          sender_id: params.sender_id,
+          message_type: params.message_type || 'text',
+          metadata: params.metadata || {},
+          sent_at: new Date().toISOString(),
+          delivered_at: null,
+          read_at: null,
+          created_at: new Date().toISOString(),
+          _isQueued: true,
+        };
+      }
 
-    // Online - send immediately
-    try {
-      const result = await sendMessageFn(params);
-      return result;
-    } catch (error) {
-      // Failed to send - queue for retry
-      const queuedId = offlineQueue.addToQueue({
-        conversationId: params.conversation_id,
-        content: params.content,
-        senderType: params.sender_type,
-        senderId: params.sender_id,
-        messageType: params.message_type || 'text',
-        metadata: params.metadata,
-      });
+      // Online - send immediately
+      try {
+        const result = await sendMessageFn(params);
+        return result;
+      } catch (error) {
+        // Failed to send - queue for retry
+        const queuedId = offlineQueue.addToQueue({
+          conversationId: params.conversation_id,
+          content: params.content,
+          senderType: params.sender_type,
+          senderId: params.sender_id,
+          messageType: params.message_type || 'text',
+          metadata: params.metadata,
+        });
 
-      setPendingMessages(prev => new Map(prev).set(queuedId, params.conversation_id));
+        setPendingMessages((prev) => new Map(prev).set(queuedId, params.conversation_id));
 
-      throw error;
-    }
-  }, [offlineQueue, sendMessageFn]);
+        throw error;
+      }
+    },
+    [offlineQueue, sendMessageFn]
+  );
 
   return {
     send,

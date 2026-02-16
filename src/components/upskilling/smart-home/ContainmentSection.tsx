@@ -42,8 +42,8 @@ const ContainmentSection = () => {
                 <div>
                   <h5 className="font-semibold text-green-200 mb-1">Safety Benefits</h5>
                   <p className="text-green-100 text-sm">
-                    Containment improves safety, prevents mechanical damage, and supports fire resistance. 
-                    It's not just aesthetic - it's a safety requirement.
+                    Containment improves safety, prevents mechanical damage, and supports fire
+                    resistance. It's not just aesthetic - it's a safety requirement.
                   </p>
                 </div>
               </div>

@@ -1,65 +1,65 @@
-import { ArrowLeft, Scale, Zap, FileWarning, Shield, Wrench, Mountain, Users } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, Zap, FileWarning, Shield, Wrench, Mountain, Users } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "1.1",
-    title: "Health & Safety at Work Act (HASAWA) 1974",
-    description: "Foundation legislation for workplace health and safety requirements",
+    number: '1.1',
+    title: 'Health & Safety at Work Act (HASAWA) 1974',
+    description: 'Foundation legislation for workplace health and safety requirements',
     icon: Scale,
-    href: "../level3-module1-section1-1",
+    href: '../level3-module1-section1-1',
   },
   {
-    number: "1.2",
-    title: "Electricity at Work Regulations (EAWR) 1989",
-    description: "Specific regulations governing electrical work safety and compliance",
+    number: '1.2',
+    title: 'Electricity at Work Regulations (EAWR) 1989',
+    description: 'Specific regulations governing electrical work safety and compliance',
     icon: Zap,
-    href: "../level3-module1-section1-2",
+    href: '../level3-module1-section1-2',
   },
   {
-    number: "1.3",
-    title: "RIDDOR (Reporting of Injuries, Diseases & Dangerous Occurrences Regulations)",
-    description: "Mandatory reporting requirements for workplace incidents and accidents",
+    number: '1.3',
+    title: 'RIDDOR (Reporting of Injuries, Diseases & Dangerous Occurrences Regulations)',
+    description: 'Mandatory reporting requirements for workplace incidents and accidents',
     icon: FileWarning,
-    href: "../level3-module1-section1-3",
+    href: '../level3-module1-section1-3',
   },
   {
-    number: "1.4",
-    title: "COSHH (Control of Substances Hazardous to Health)",
-    description: "Regulations for managing and controlling hazardous substances in the workplace",
+    number: '1.4',
+    title: 'COSHH (Control of Substances Hazardous to Health)',
+    description: 'Regulations for managing and controlling hazardous substances in the workplace',
     icon: Shield,
-    href: "../level3-module1-section1-4",
+    href: '../level3-module1-section1-4',
   },
   {
-    number: "1.5",
-    title: "PUWER & LOLER (equipment and lifting regs)",
-    description: "Equipment safety regulations and lifting operations requirements",
+    number: '1.5',
+    title: 'PUWER & LOLER (equipment and lifting regs)',
+    description: 'Equipment safety regulations and lifting operations requirements',
     icon: Wrench,
-    href: "../level3-module1-section1-5",
+    href: '../level3-module1-section1-5',
   },
   {
-    number: "1.6",
-    title: "Working at Height Regulations",
-    description: "Legal requirements for safe working at height and fall prevention",
+    number: '1.6',
+    title: 'Working at Height Regulations',
+    description: 'Legal requirements for safe working at height and fall prevention',
     icon: Mountain,
-    href: "../level3-module1-section1-6",
+    href: '../level3-module1-section1-6',
   },
   {
-    number: "1.7",
-    title: "Employer vs. employee responsibilities under law",
-    description: "Legal duties and responsibilities of employers and employees in workplace safety",
+    number: '1.7',
+    title: 'Employer vs. employee responsibilities under law',
+    description: 'Legal duties and responsibilities of employers and employees in workplace safety',
     icon: Users,
-    href: "../level3-module1-section1-7",
+    href: '../level3-module1-section1-7',
   },
 ];
 
 const Level3Module1Section1 = () => {
   useSEO(
-    "Section 1: Legislation and Regulations - Level 3 Module 1",
-    "Key legislation, regulations and standards governing electrical work and building services"
+    'Section 1: Legislation and Regulations - Level 3 Module 1',
+    'Key legislation, regulations and standards governing electrical work and building services'
   );
 
   return (
@@ -84,26 +84,22 @@ const Level3Module1Section1 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

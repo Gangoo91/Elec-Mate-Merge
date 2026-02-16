@@ -28,14 +28,10 @@ export const useCommunications = (activeOnly = false) => {
   useEffect(() => {
     const channel = supabase
       .channel('communications-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'communications' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
-          queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
-        }
-      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'communications' }, () => {
+        queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
+        queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
+      })
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'communication_recipients' },
@@ -142,10 +138,17 @@ export const useMarkAsRead = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ communicationId, employeeId }: { communicationId: string; employeeId: string }) =>
-      markAsRead(communicationId, employeeId),
+    mutationFn: ({
+      communicationId,
+      employeeId,
+    }: {
+      communicationId: string;
+      employeeId: string;
+    }) => markAsRead(communicationId, employeeId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: [...COMMUNICATIONS_KEY, variables.communicationId, 'recipients'] });
+      queryClient.invalidateQueries({
+        queryKey: [...COMMUNICATIONS_KEY, variables.communicationId, 'recipients'],
+      });
       queryClient.invalidateQueries({ queryKey: [...COMMUNICATIONS_KEY, 'unread'] });
       queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
     },
@@ -156,10 +159,17 @@ export const useAcknowledgeMessage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ communicationId, employeeId }: { communicationId: string; employeeId: string }) =>
-      acknowledgeMessage(communicationId, employeeId),
+    mutationFn: ({
+      communicationId,
+      employeeId,
+    }: {
+      communicationId: string;
+      employeeId: string;
+    }) => acknowledgeMessage(communicationId, employeeId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: [...COMMUNICATIONS_KEY, variables.communicationId, 'recipients'] });
+      queryClient.invalidateQueries({
+        queryKey: [...COMMUNICATIONS_KEY, variables.communicationId, 'recipients'],
+      });
       queryClient.invalidateQueries({ queryKey: [...COMMUNICATIONS_KEY, 'unread'] });
       queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
     },

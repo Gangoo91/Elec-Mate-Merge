@@ -13,8 +13,8 @@ const RCDTestingPractical = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-4 sm:space-y-6">
           <p className="text-sm sm:text-base leading-relaxed">
-            Follow these step-by-step procedures for safe and accurate RCD testing in 
-            real installation environments.
+            Follow these step-by-step procedures for safe and accurate RCD testing in real
+            installation environments.
           </p>
         </CardContent>
       </Card>
@@ -26,7 +26,9 @@ const RCDTestingPractical = () => {
         <CardContent className="text-foreground space-y-4 sm:space-y-6">
           <div className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-              <h4 className="text-elec-yellow font-semibold mb-3">Step 1: Preparation and Safety</h4>
+              <h4 className="text-elec-yellow font-semibold mb-3">
+                Step 1: Preparation and Safety
+              </h4>
               <ul className="space-y-2 text-sm sm:text-base">
                 <li>• Isolate all loads from the circuit under test</li>
                 <li>• Verify RCD is energised and functional</li>
@@ -60,7 +62,9 @@ const RCDTestingPractical = () => {
             </div>
 
             <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-              <h4 className="text-elec-yellow font-semibold mb-3">Step 4: Results and Documentation</h4>
+              <h4 className="text-elec-yellow font-semibold mb-3">
+                Step 4: Results and Documentation
+              </h4>
               <ul className="space-y-2 text-sm sm:text-base">
                 <li>• Record all test results on appropriate certificate</li>
                 <li>• Note RCD type, rating, and location</li>
@@ -112,19 +116,31 @@ const RCDTestingPractical = () => {
           <div className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
               <h4 className="text-elec-yellow font-semibold mb-2">Incorrect Test Location</h4>
-              <p className="text-sm sm:text-base">Testing from the distribution board doesn't prove circuit integrity. Always test from the furthest practical point.</p>
+              <p className="text-sm sm:text-base">
+                Testing from the distribution board doesn't prove circuit integrity. Always test
+                from the furthest practical point.
+              </p>
             </div>
             <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
               <h4 className="text-elec-yellow font-semibold mb-2">Wrong RCD Type Selection</h4>
-              <p className="text-sm sm:text-base">Ensure tester is set for correct RCD type (AC, A, or B) to avoid invalid test results.</p>
+              <p className="text-sm sm:text-base">
+                Ensure tester is set for correct RCD type (AC, A, or B) to avoid invalid test
+                results.
+              </p>
             </div>
             <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
               <h4 className="text-elec-yellow font-semibold mb-2">Parallel Earth Paths</h4>
-              <p className="text-sm sm:text-base">Bonding connections can create parallel paths affecting test results. Consider disconnecting where safe to do so.</p>
+              <p className="text-sm sm:text-base">
+                Bonding connections can create parallel paths affecting test results. Consider
+                disconnecting where safe to do so.
+              </p>
             </div>
             <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
               <h4 className="text-elec-yellow font-semibold mb-2">Insufficient Supply Voltage</h4>
-              <p className="text-sm sm:text-base">Low supply voltage can affect RCD operation. Verify supply voltage is within normal limits before testing.</p>
+              <p className="text-sm sm:text-base">
+                Low supply voltage can affect RCD operation. Verify supply voltage is within normal
+                limits before testing.
+              </p>
             </div>
           </div>
         </CardContent>
@@ -167,7 +183,7 @@ const RCDTestingPractical = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-4 sm:space-y-6">
           <p className="text-sm sm:text-base leading-relaxed">
-            Three-phase RCDs require testing between each line conductor and neutral to ensure 
+            Three-phase RCDs require testing between each line conductor and neutral to ensure
             balanced protection across all phases.
           </p>
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">

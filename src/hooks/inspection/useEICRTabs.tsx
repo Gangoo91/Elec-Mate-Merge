@@ -12,42 +12,50 @@ const tabConfigs: TabConfig[] = [
   {
     id: 'details',
     label: 'Details',
-    requiredFields: ['clientName', 'installationAddress', 'inspectionDate', 'phases', 'supplyVoltage', 'earthingArrangement', 'mainProtectiveDevice']
+    requiredFields: [
+      'clientName',
+      'installationAddress',
+      'inspectionDate',
+      'phases',
+      'supplyVoltage',
+      'earthingArrangement',
+      'mainProtectiveDevice',
+    ],
   },
   {
     id: 'inspection',
     label: 'Inspection',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'testing',
     label: 'Testing',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'inspector',
     label: 'Inspector',
-    requiredFields: ['inspectorName', 'inspectorQualifications']
+    requiredFields: ['inspectorName', 'inspectorQualifications'],
   },
   {
     id: 'certificate',
     label: 'Certificate',
-    requiredFields: ['overallAssessment', 'satisfactoryForContinuedUse']
-  }
+    requiredFields: ['overallAssessment', 'satisfactoryForContinuedUse'],
+  },
 ];
 
 export const useEICRTabs = (formData: any) => {
   const [currentTab, setCurrentTab] = useState<EICRTabValue>('details');
 
-  const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
+  const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
   const totalTabs = tabConfigs.length;
 
   // Check if required fields are filled for a tab
   const hasRequiredFields = (tabId: EICRTabValue): boolean => {
-    const tab = tabConfigs.find(t => t.id === tabId);
+    const tab = tabConfigs.find((t) => t.id === tabId);
     if (!tab) return false;
 
-    return tab.requiredFields.every(field => {
+    return tab.requiredFields.every((field) => {
       const value = formData[field];
       return value && value.toString().trim() !== '';
     });
@@ -70,11 +78,14 @@ export const useEICRTabs = (formData: any) => {
   };
 
   // Mark a tab as complete or incomplete
-  const toggleTabComplete = (tabId: EICRTabValue, onUpdate: (field: string, value: any) => void): void => {
+  const toggleTabComplete = (
+    tabId: EICRTabValue,
+    onUpdate: (field: string, value: any) => void
+  ): void => {
     const completedSections = formData.completedSections || {};
     const newCompletedSections = {
       ...completedSections,
-      [tabId]: !completedSections[tabId]
+      [tabId]: !completedSections[tabId],
     };
     onUpdate('completedSections', newCompletedSections);
   };
@@ -130,6 +141,6 @@ export const useEICRTabs = (formData: any) => {
     navigatePrevious,
     getProgressPercentage,
     isCurrentTabComplete,
-    currentTabHasRequiredFields
+    currentTabHasRequiredFields,
   };
 };

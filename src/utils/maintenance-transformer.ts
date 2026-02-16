@@ -113,16 +113,16 @@ export function transformMaintenanceOutputToPDF(
       location: equipmentSummary.location || projectDetails.location || 'Not specified',
       age: equipmentSummary.installationAge || projectDetails.installationAge || 'Not specified',
       maintenanceType: equipmentSummary.maintenanceType,
-      riskLevel: equipmentSummary.overallRiskLevel
+      riskLevel: equipmentSummary.overallRiskLevel,
     },
     overview: response,
     sections: [],
-    appendices: []
+    appendices: [],
   };
 
   // Section 1: Pre-Work Requirements
   const preWorkContent = maintenanceOutput.preWorkRequirements
-    .map(req => {
+    .map((req) => {
       const mandatoryLabel = req.mandatory ? '**[MANDATORY]**' : '[RECOMMENDED]';
       const regRef = req.bs7671Reference ? ` (${req.bs7671Reference})` : '';
       return `• ${mandatoryLabel} **${req.category.toUpperCase()}**: ${req.requirement}${regRef}`;
@@ -132,17 +132,19 @@ export function transformMaintenanceOutputToPDF(
   pdfData.sections.push({
     title: 'SECTION 1: PRE-WORK REQUIREMENTS',
     content: 'Complete the following before starting maintenance work:',
-    subsections: [{
-      title: 'Safety Requirements',
-      content: preWorkContent,
-      type: 'list'
-    }]
+    subsections: [
+      {
+        title: 'Safety Requirements',
+        content: preWorkContent,
+        type: 'list',
+      },
+    ],
   });
 
   // Section 2: Visual Inspection
   const visualInspectionContent = maintenanceOutput.visualInspection
     .sort((a, b) => a.stepNumber - b.stepNumber)
-    .map(step => {
+    .map((step) => {
       const regRef = step.bs7671Reference ? ` *(${step.bs7671Reference})*` : '';
       let content = `**Step ${step.stepNumber}: ${step.checkpoint}**${regRef}\n`;
       content += `  - ✓ Acceptance Criteria: ${step.acceptanceCriteria}\n`;
@@ -156,20 +158,22 @@ export function transformMaintenanceOutputToPDF(
   pdfData.sections.push({
     title: 'SECTION 2: VISUAL INSPECTION SEQUENCE',
     content: 'Perform systematic visual inspection in the following order:',
-    subsections: [{
-      title: 'Inspection Checkpoints',
-      content: visualInspectionContent,
-      type: 'paragraph'
-    }]
+    subsections: [
+      {
+        title: 'Inspection Checkpoints',
+        content: visualInspectionContent,
+        type: 'paragraph',
+      },
+    ],
   });
 
   // Section 3: Testing Procedures
   const deadTests = maintenanceOutput.testingProcedures
-    .filter(t => t.testType === 'dead')
+    .filter((t) => t.testType === 'dead')
     .sort((a, b) => a.sequence - b.sequence);
-  
+
   const liveTests = maintenanceOutput.testingProcedures
-    .filter(t => t.testType === 'live')
+    .filter((t) => t.testType === 'live')
     .sort((a, b) => a.sequence - b.sequence);
 
   const formatTest = (test: MaintenanceAgentOutput['testingProcedures'][0]) => {
@@ -198,20 +202,20 @@ export function transformMaintenanceOutputToPDF(
       {
         title: '3.1 Dead Tests (Isolation Required)',
         content: deadTests.map(formatTest).join('\n\n'),
-        type: 'paragraph'
+        type: 'paragraph',
       },
       {
         title: '3.2 Live Tests',
         content: liveTests.map(formatTest).join('\n\n'),
-        type: 'paragraph'
-      }
-    ]
+        type: 'paragraph',
+      },
+    ],
   });
 
   // Section 4: Servicing Tasks (if applicable)
   if (maintenanceOutput.servicingTasks && maintenanceOutput.servicingTasks.length > 0) {
     const servicingContent = maintenanceOutput.servicingTasks
-      .map(task => {
+      .map((task) => {
         let content = `**Component: ${task.component}**\n`;
         content += `  - Task: ${task.task}\n`;
         if (task.frequency) {
@@ -234,22 +238,24 @@ export function transformMaintenanceOutputToPDF(
     pdfData.sections.push({
       title: 'SECTION 4: SERVICING TASKS',
       content: servicingContent,
-      subsections: []
+      subsections: [],
     });
   }
 
   // Section 5: Documentation & Sign-Off
-  const docContent = `**Records Required:**\n${maintenanceOutput.documentation.recordsRequired.map(r => `• ${r}`).join('\n')}\n\n` +
-    `**Sign-Off Requirements:**\n${maintenanceOutput.documentation.signOffRequirements.map(r => `• ${r}`).join('\n')}\n\n` +
+  const docContent =
+    `**Records Required:**\n${maintenanceOutput.documentation.recordsRequired.map((r) => `• ${r}`).join('\n')}\n\n` +
+    `**Sign-Off Requirements:**\n${maintenanceOutput.documentation.signOffRequirements.map((r) => `• ${r}`).join('\n')}\n\n` +
     `**Next Due Calculation:**\n${maintenanceOutput.documentation.nextDueCalculation}` +
-    (maintenanceOutput.documentation.certificatesIssued && maintenanceOutput.documentation.certificatesIssued.length > 0 
-      ? `\n\n**Certificates to Issue:**\n${maintenanceOutput.documentation.certificatesIssued.map(c => `• ${c}`).join('\n')}` 
+    (maintenanceOutput.documentation.certificatesIssued &&
+    maintenanceOutput.documentation.certificatesIssued.length > 0
+      ? `\n\n**Certificates to Issue:**\n${maintenanceOutput.documentation.certificatesIssued.map((c) => `• ${c}`).join('\n')}`
       : '');
 
   pdfData.sections.push({
     title: 'SECTION 5: DOCUMENTATION & SIGN-OFF',
     content: docContent,
-    subsections: []
+    subsections: [],
   });
 
   // Appendix A: Common Faults (if applicable)
@@ -269,18 +275,18 @@ export function transformMaintenanceOutputToPDF(
 
     pdfData.appendices.push({
       title: 'APPENDIX A: COMMON FAULTS & DIAGNOSIS',
-      content: faultsContent
+      content: faultsContent,
     });
   }
 
   // Appendix B: BS 7671 References
   const referencesContent = maintenanceOutput.bs7671References
-    .map(ref => `**${ref.regulation}** - ${ref.title}\n  ${ref.relevance}`)
+    .map((ref) => `**${ref.regulation}** - ${ref.title}\n  ${ref.relevance}`)
     .join('\n\n');
 
   pdfData.appendices.push({
     title: 'APPENDIX B: BS 7671 REFERENCES',
-    content: referencesContent
+    content: referencesContent,
   });
 
   return pdfData;

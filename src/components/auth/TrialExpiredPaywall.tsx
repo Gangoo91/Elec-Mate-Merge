@@ -12,7 +12,7 @@ import {
   Shield,
   BookOpen,
   ClipboardCheck,
-  Calculator
+  Calculator,
 } from 'lucide-react';
 
 const TrialExpiredPaywall = () => {
@@ -68,10 +68,12 @@ const TrialExpiredPaywall = () => {
               Your 7-day free trial expired
               {trialEndsAt && (
                 <span className="text-amber-400">
-                  {' '}on {new Date(trialEndsAt).toLocaleDateString('en-GB', {
+                  {' '}
+                  on{' '}
+                  {new Date(trialEndsAt).toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric'
+                    year: 'numeric',
                   })}
                 </span>
               )}
@@ -88,7 +90,10 @@ const TrialExpiredPaywall = () => {
               </div>
               <div className="space-y-3">
                 {features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/5 border border-white/5">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 p-2.5 rounded-lg bg-white/5 border border-white/5"
+                  >
                     <div className="p-1.5 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
                       <feature.icon className="h-4 w-4 text-yellow-400" />
                     </div>

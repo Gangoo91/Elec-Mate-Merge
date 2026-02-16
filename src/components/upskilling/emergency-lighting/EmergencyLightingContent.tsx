@@ -24,7 +24,7 @@ export const EmergencyLightingContent = () => {
               <li>Covers most non-domestic premises in England and Wales</li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-elec-yellow font-semibold mb-2">
               Building Regulations (Approved Document B)
@@ -59,7 +59,7 @@ export const EmergencyLightingContent = () => {
               <li>Referenced by Building Regulations and industry guidance</li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-elec-yellow font-semibold mb-2">
               BS EN 1838:2013 - Lighting Applications
@@ -94,7 +94,7 @@ export const EmergencyLightingContent = () => {
                 <li>Document design decisions</li>
               </ul>
             </div>
-            
+
             <div>
               <h5 className="text-foreground font-medium mb-2">Implementation & Maintenance</h5>
               <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -128,7 +128,7 @@ export const EmergencyLightingContent = () => {
                 <li>Premises with vulnerable occupants</li>
               </ul>
             </div>
-            
+
             <div>
               <h5 className="text-foreground font-medium mb-2">Risk-Based Assessment</h5>
               <ul className="list-disc pl-4 space-y-1 text-sm">

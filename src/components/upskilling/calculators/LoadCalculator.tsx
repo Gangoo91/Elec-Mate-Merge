@@ -12,27 +12,27 @@ interface ChargerLoad {
 
 export const LoadCalculator = () => {
   const [chargerLoads, setChargerLoads] = useState<ChargerLoad[]>([
-    { id: 1, power: 7, quantity: 1 }
+    { id: 1, power: 7, quantity: 1 },
   ]);
   const [diversityFactor, setDiversityFactor] = useState<number>(100);
   const [safetyFactor, setSafetyFactor] = useState<number>(15);
   const [existingLoad, setExistingLoad] = useState<number>(0);
 
   const addChargerLoad = () => {
-    const newId = Math.max(...chargerLoads.map(c => c.id), 0) + 1;
+    const newId = Math.max(...chargerLoads.map((c) => c.id), 0) + 1;
     setChargerLoads([...chargerLoads, { id: newId, power: 7, quantity: 1 }]);
   };
 
   const removeChargerLoad = (id: number) => {
     if (chargerLoads.length > 1) {
-      setChargerLoads(chargerLoads.filter(c => c.id !== id));
+      setChargerLoads(chargerLoads.filter((c) => c.id !== id));
     }
   };
 
   const updateChargerLoad = (id: number, field: 'power' | 'quantity', value: number) => {
-    setChargerLoads(chargerLoads.map(c => 
-      c.id === id ? { ...c, [field]: Math.max(0, value) } : c
-    ));
+    setChargerLoads(
+      chargerLoads.map((c) => (c.id === id ? { ...c, [field]: Math.max(0, value) } : c))
+    );
   };
 
   const resetCalculator = () => {
@@ -43,8 +43,9 @@ export const LoadCalculator = () => {
   };
 
   // Calculate connected load
-  const connectedLoad = chargerLoads.reduce((total, charger) => 
-    total + (charger.power * charger.quantity), 0
+  const connectedLoad = chargerLoads.reduce(
+    (total, charger) => total + charger.power * charger.quantity,
+    0
   );
 
   // Calculate maximum demand
@@ -59,13 +60,13 @@ export const LoadCalculator = () => {
     const totalChargers = chargerLoads.reduce((total, charger) => total + charger.quantity, 0);
 
     // Check for excessive individual charger power
-    const highPowerChargers = chargerLoads.filter(charger => charger.power > 22);
+    const highPowerChargers = chargerLoads.filter((charger) => charger.power > 22);
     if (highPowerChargers.length > 0) {
       feedback.push({
         type: 'warning',
         title: 'High Power Chargers Detected',
         message: `Chargers above 22kW require special considerations under BS 7671. Consider if rapid charging is necessary and ensure adequate supply capacity.`,
-        regulation: 'BS 7671 Section 722'
+        regulation: 'BS 7671 Section 722',
       });
     }
 
@@ -75,7 +76,7 @@ export const LoadCalculator = () => {
         type: 'info',
         title: 'Consider Higher Diversity',
         message: `With ${totalChargers} chargers, you could typically apply 80-85% diversity factor. Current ${diversityFactor}% may be overly conservative.`,
-        regulation: 'IET Code of Practice'
+        regulation: 'IET Code of Practice',
       });
     }
 
@@ -84,7 +85,7 @@ export const LoadCalculator = () => {
         type: 'info',
         title: 'Diversity Factor Optimisation',
         message: `For ${totalChargers} chargers, consider 70-75% diversity with proper load management systems.`,
-        regulation: 'Industry Best Practice'
+        regulation: 'Industry Best Practice',
       });
     }
 
@@ -94,7 +95,7 @@ export const LoadCalculator = () => {
         type: 'warning',
         title: 'High Total Demand',
         message: `${totalMaxDemand.toFixed(1)}kW exceeds typical domestic supply (60-100A). DNO consultation likely required.`,
-        regulation: 'G99 Connection Requirements'
+        regulation: 'G99 Connection Requirements',
       });
     }
 
@@ -105,7 +106,7 @@ export const LoadCalculator = () => {
         type: 'warning',
         title: 'High Current Demand',
         message: `${currentDemand.toFixed(0)}A demand requires substantial cable infrastructure. Consider load management or phased installation.`,
-        regulation: 'BS 7671 Chapter 52'
+        regulation: 'BS 7671 Chapter 52',
       });
     }
 
@@ -114,8 +115,9 @@ export const LoadCalculator = () => {
       feedback.push({
         type: 'warning',
         title: 'Low Safety Factor',
-        message: 'Safety factor below 10% may not provide adequate margin for future growth and operational variations.',
-        regulation: 'BS 7671 Best Practice'
+        message:
+          'Safety factor below 10% may not provide adequate margin for future growth and operational variations.',
+        regulation: 'BS 7671 Best Practice',
       });
     }
 
@@ -123,8 +125,9 @@ export const LoadCalculator = () => {
       feedback.push({
         type: 'info',
         title: 'High Safety Factor',
-        message: 'Safety factor above 25% may result in oversized installation. Consider if this level is necessary.',
-        regulation: 'Cost Optimisation'
+        message:
+          'Safety factor above 25% may result in oversized installation. Consider if this level is necessary.',
+        regulation: 'Cost Optimisation',
       });
     }
 
@@ -133,8 +136,9 @@ export const LoadCalculator = () => {
       feedback.push({
         type: 'info',
         title: 'Single High-Power Domestic Charger',
-        message: 'Consider if 7-11kW would meet requirements. Higher power increases infrastructure costs.',
-        regulation: 'Domestic Installation Guidance'
+        message:
+          'Consider if 7-11kW would meet requirements. Higher power increases infrastructure costs.',
+        regulation: 'Domestic Installation Guidance',
       });
     }
 
@@ -153,7 +157,9 @@ export const LoadCalculator = () => {
     return 65;
   };
 
-  const recommendedDiversity = getDiversityRecommendation(chargerLoads.reduce((sum, c) => sum + c.quantity, 0));
+  const recommendedDiversity = getDiversityRecommendation(
+    chargerLoads.reduce((sum, c) => sum + c.quantity, 0)
+  );
 
   return (
     <Card className="bg-elec-gray border-elec-yellow/20 shadow-lg">
@@ -168,7 +174,10 @@ export const LoadCalculator = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-foreground">EV Charger Loads</h3>
           {chargerLoads.map((charger) => (
-            <div key={charger.id} className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
+            <div
+              key={charger.id}
+              className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20"
+            >
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">
                   Power Rating (kW)
@@ -176,20 +185,26 @@ export const LoadCalculator = () => {
                 <Input
                   type="number"
                   value={charger.power === 0 ? '' : charger.power}
-                  onChange={(e) => updateChargerLoad(charger.id, 'power', e.target.value === '' ? 0 : parseFloat(e.target.value))}
+                  onChange={(e) =>
+                    updateChargerLoad(
+                      charger.id,
+                      'power',
+                      e.target.value === '' ? 0 : parseFloat(e.target.value)
+                    )
+                  }
                   className="bg-elec-dark border-gray-600 text-foreground"
                   min="0"
                   step="0.1"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Quantity
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Quantity</label>
                 <Input
                   type="number"
                   value={charger.quantity}
-                  onChange={(e) => updateChargerLoad(charger.id, 'quantity', parseInt(e.target.value) || 0)}
+                  onChange={(e) =>
+                    updateChargerLoad(charger.id, 'quantity', parseInt(e.target.value) || 0)
+                  }
                   className="bg-elec-dark border-gray-600 text-foreground"
                   min="1"
                 />
@@ -208,7 +223,7 @@ export const LoadCalculator = () => {
               </div>
             </div>
           ))}
-          
+
           <div className="flex flex-col sm:flex-row gap-2">
             <Button
               variant="outline"
@@ -237,7 +252,9 @@ export const LoadCalculator = () => {
           <Input
             type="number"
             value={existingLoad === 0 ? '' : existingLoad}
-            onChange={(e) => setExistingLoad(e.target.value === '' ? 0 : parseFloat(e.target.value))}
+            onChange={(e) =>
+              setExistingLoad(e.target.value === '' ? 0 : parseFloat(e.target.value))
+            }
             className="bg-elec-dark border-gray-600 text-foreground"
             min="0"
             step="0.1"
@@ -254,7 +271,9 @@ export const LoadCalculator = () => {
             <Input
               type="number"
               value={diversityFactor === 0 ? '' : diversityFactor}
-              onChange={(e) => setDiversityFactor(e.target.value === '' ? 0 : parseFloat(e.target.value))}
+              onChange={(e) =>
+                setDiversityFactor(e.target.value === '' ? 0 : parseFloat(e.target.value))
+              }
               className="bg-elec-dark border-gray-600 text-foreground"
               min="0"
               max="100"
@@ -272,9 +291,7 @@ export const LoadCalculator = () => {
 
         {/* Safety Factor */}
         <div className="space-y-2">
-          <label className="block text-lg font-semibold text-foreground">
-            Safety Factor (%)
-          </label>
+          <label className="block text-lg font-semibold text-foreground">Safety Factor (%)</label>
           <Input
             type="number"
             value={safetyFactor}
@@ -293,11 +310,11 @@ export const LoadCalculator = () => {
               Regulatory Guidance & Recommendations
             </h3>
             {feedback.map((item, index) => (
-              <div 
+              <div
                 key={index}
                 className={`p-4 rounded-lg border ${
-                  item.type === 'warning' 
-                    ? 'bg-amber-900/20 border-amber-500/30' 
+                  item.type === 'warning'
+                    ? 'bg-amber-900/20 border-amber-500/30'
                     : 'bg-blue-900/20 border-blue-500/30'
                 }`}
               >
@@ -308,17 +325,15 @@ export const LoadCalculator = () => {
                     <CheckCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   )}
                   <div className="space-y-1">
-                    <h4 className={`font-semibold ${
-                      item.type === 'warning' ? 'text-amber-400' : 'text-blue-400'
-                    }`}>
+                    <h4
+                      className={`font-semibold ${
+                        item.type === 'warning' ? 'text-amber-400' : 'text-blue-400'
+                      }`}
+                    >
                       {item.title}
                     </h4>
-                    <p className="text-gray-300 text-sm">
-                      {item.message}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Reference: {item.regulation}
-                    </p>
+                    <p className="text-gray-300 text-sm">{item.message}</p>
+                    <p className="text-xs text-gray-500">Reference: {item.regulation}</p>
                   </div>
                 </div>
               </div>
@@ -329,7 +344,7 @@ export const LoadCalculator = () => {
         {/* Calculation Results */}
         <div className="space-y-4 p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
           <h3 className="text-lg font-semibold text-elec-yellow">Calculation Results</h3>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <p className="text-gray-300">
@@ -342,10 +357,12 @@ export const LoadCalculator = () => {
               </p>
               <p className="text-gray-300">
                 <span className="font-medium">With Existing Load:</span>
-                <span className="text-foreground ml-2">{(chargingDemand + existingLoad).toFixed(1)} kW</span>
+                <span className="text-foreground ml-2">
+                  {(chargingDemand + existingLoad).toFixed(1)} kW
+                </span>
               </p>
             </div>
-            
+
             <div className="space-y-2">
               <p className="text-elec-yellow font-semibold text-lg">
                 Maximum Demand: {totalMaxDemand.toFixed(1)} kW
@@ -367,9 +384,16 @@ export const LoadCalculator = () => {
             <div className="text-sm text-gray-300 space-y-1">
               <p>• Typical domestic supply: 60-100A (13.8-23kW @ 230V)</p>
               <p>• Small commercial: 100-200A (23-46kW @ 230V)</p>
-              <p>• Your calculated demand: <span className="text-amber-400 font-semibold">{currentAt230V.toFixed(0)}A @ 230V</span></p>
+              <p>
+                • Your calculated demand:{' '}
+                <span className="text-amber-400 font-semibold">
+                  {currentAt230V.toFixed(0)}A @ 230V
+                </span>
+              </p>
               {currentAt230V > 100 && (
-                <p className="text-red-400 font-semibold">⚠️ May require supply upgrade - consult DNO</p>
+                <p className="text-red-400 font-semibold">
+                  ⚠️ May require supply upgrade - consult DNO
+                </p>
               )}
             </div>
           </div>

@@ -1,31 +1,16 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import {
-  Wrench,
-  Package,
-  Truck,
-  Building2,
-  TrendingUp,
-  Calculator,
-} from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  useJobFinancial,
-  useUpdateBudgetValues,
-} from "@/hooks/useJobFinancials";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Wrench, Package, Truck, Building2, TrendingUp, Calculator } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useJobFinancial, useUpdateBudgetValues } from '@/hooks/useJobFinancials';
 
 interface EditJobBudgetSheetProps {
   open: boolean;
@@ -35,19 +20,19 @@ interface EditJobBudgetSheetProps {
 }
 
 const budgetFields = [
-  { id: "labour", label: "Labour", icon: Wrench, color: "blue" },
-  { id: "materials", label: "Materials", icon: Package, color: "green" },
-  { id: "equipment", label: "Equipment", icon: Truck, color: "purple" },
-  { id: "overheads", label: "Overheads", icon: Building2, color: "orange" },
-  { id: "profit", label: "Profit Margin", icon: TrendingUp, color: "yellow" },
+  { id: 'labour', label: 'Labour', icon: Wrench, color: 'blue' },
+  { id: 'materials', label: 'Materials', icon: Package, color: 'green' },
+  { id: 'equipment', label: 'Equipment', icon: Truck, color: 'purple' },
+  { id: 'overheads', label: 'Overheads', icon: Building2, color: 'orange' },
+  { id: 'profit', label: 'Profit Margin', icon: TrendingUp, color: 'yellow' },
 ] as const;
 
 const formSchema = z.object({
-  labour: z.coerce.number().min(0, "Must be 0 or greater"),
-  materials: z.coerce.number().min(0, "Must be 0 or greater"),
-  equipment: z.coerce.number().min(0, "Must be 0 or greater"),
-  overheads: z.coerce.number().min(0, "Must be 0 or greater"),
-  profit: z.coerce.number().min(0, "Must be 0 or greater"),
+  labour: z.coerce.number().min(0, 'Must be 0 or greater'),
+  materials: z.coerce.number().min(0, 'Must be 0 or greater'),
+  equipment: z.coerce.number().min(0, 'Must be 0 or greater'),
+  overheads: z.coerce.number().min(0, 'Must be 0 or greater'),
+  profit: z.coerce.number().min(0, 'Must be 0 or greater'),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -74,7 +59,13 @@ export function EditJobBudgetSheet({
     },
   });
 
-  const { watch, setValue, handleSubmit, formState: { errors, isDirty }, reset } = form;
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { errors, isDirty },
+    reset,
+  } = form;
   const values = watch();
 
   // Load existing values when financial data is available
@@ -109,9 +100,9 @@ export function EditJobBudgetSheet({
   };
 
   const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
       minimumFractionDigits: 0,
     }).format(amount);
 
@@ -134,18 +125,13 @@ export function EditJobBudgetSheet({
   return (
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
-        side={isMobile ? "bottom" : "right"}
-        className={cn(
-          "flex flex-col p-0",
-          isMobile ? "h-[85vh] rounded-t-2xl" : "w-[450px]"
-        )}
+        side={isMobile ? 'bottom' : 'right'}
+        className={cn('flex flex-col p-0', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
           <SheetTitle>Edit Job Budget</SheetTitle>
-          {jobTitle && (
-            <p className="text-sm text-muted-foreground">{jobTitle}</p>
-          )}
+          {jobTitle && <p className="text-sm text-muted-foreground">{jobTitle}</p>}
         </SheetHeader>
 
         {/* Content */}
@@ -176,12 +162,14 @@ export function EditJobBudgetSheet({
                         min="0"
                         placeholder="0"
                         className={cn(
-                          "pl-8 h-11",
-                          errors[id as keyof FormData] && "border-red-500"
+                          'pl-8 h-11',
+                          errors[id as keyof FormData] && 'border-red-500'
                         )}
-                        value={values[id as keyof FormData] || ""}
+                        value={values[id as keyof FormData] || ''}
                         onChange={(e) =>
-                          setValue(id as keyof FormData, parseFloat(e.target.value) || 0, { shouldDirty: true })
+                          setValue(id as keyof FormData, parseFloat(e.target.value) || 0, {
+                            shouldDirty: true,
+                          })
                         }
                       />
                     </div>
@@ -225,23 +213,21 @@ export function EditJobBudgetSheet({
               {isDirty && (
                 <Card
                   className={cn(
-                    "p-3",
+                    'p-3',
                     difference >= 0
-                      ? "bg-green-500/10 border-green-500/30"
-                      : "bg-red-500/10 border-red-500/30"
+                      ? 'bg-green-500/10 border-green-500/30'
+                      : 'bg-red-500/10 border-red-500/30'
                   )}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">
-                      Change from original
-                    </span>
+                    <span className="text-sm text-muted-foreground">Change from original</span>
                     <span
                       className={cn(
-                        "font-bold",
-                        difference >= 0 ? "text-green-500" : "text-red-500"
+                        'font-bold',
+                        difference >= 0 ? 'text-green-500' : 'text-red-500'
                       )}
                     >
-                      {difference >= 0 ? "+" : ""}
+                      {difference >= 0 ? '+' : ''}
                       {formatCurrency(difference)}
                     </span>
                   </div>
@@ -252,10 +238,9 @@ export function EditJobBudgetSheet({
               {financial && Number(financial.actual_total) > 0 && (
                 <Card className="p-3 bg-amber-500/10 border-amber-500/30">
                   <p className="text-sm text-amber-500">
-                    <strong>Note:</strong> This job has{" "}
-                    {formatCurrency(Number(financial.actual_total))} in actual
-                    costs recorded. Changing the budget will affect variance
-                    calculations.
+                    <strong>Note:</strong> This job has{' '}
+                    {formatCurrency(Number(financial.actual_total))} in actual costs recorded.
+                    Changing the budget will affect variance calculations.
                   </p>
                 </Card>
               )}
@@ -266,11 +251,7 @@ export function EditJobBudgetSheet({
         {/* Footer */}
         <div className="p-4 border-t border-border shrink-0 pb-safe">
           <div className="flex gap-3">
-            <Button
-              variant="outline"
-              className="flex-1 h-12"
-              onClick={handleClose}
-            >
+            <Button variant="outline" className="flex-1 h-12" onClick={handleClose}>
               Cancel
             </Button>
             <Button
@@ -278,7 +259,7 @@ export function EditJobBudgetSheet({
               onClick={handleSubmit(handleFormSubmit)}
               disabled={!isDirty || updateBudget.isPending}
             >
-              {updateBudget.isPending ? "Saving..." : "Save Budget"}
+              {updateBudget.isPending ? 'Saving...' : 'Save Budget'}
             </Button>
           </div>
         </div>

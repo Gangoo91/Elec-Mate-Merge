@@ -1,29 +1,44 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import MobileOptimizedInput from "@/components/install-planner/MobileOptimizedInput";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Zap, Info, Calculator, RotateCcw, Settings, Shield, AlertTriangle, CheckCircle, Lightbulb } from "lucide-react";
-import { useState } from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { calculateTransformer, transformerPresets, type TransformerInputs, type TransformerResults } from "@/lib/transformer-calcs";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import MobileOptimizedInput from '@/components/install-planner/MobileOptimizedInput';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import {
+  Zap,
+  Info,
+  Calculator,
+  RotateCcw,
+  Settings,
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  Lightbulb,
+} from 'lucide-react';
+import { useState } from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
+import {
+  calculateTransformer,
+  transformerPresets,
+  type TransformerInputs,
+  type TransformerResults,
+} from '@/lib/transformer-calcs';
 
 const TransformerCalculator = () => {
   const [advancedMode, setAdvancedMode] = useState(false);
-  const [primaryVoltage, setPrimaryVoltage] = useState<string>("");
-  const [secondaryVoltage, setSecondaryVoltage] = useState<string>("");
-  const [kvaRating, setKvaRating] = useState<string>("");
-  const [powerFactor, setPowerFactor] = useState<string>("0.85");
-  const [phase, setPhase] = useState<string>("three");
-  const [frequency, setFrequency] = useState<string>("50");
-  const [percentImpedance, setPercentImpedance] = useState<string>("6");
-  const [connectionType, setConnectionType] = useState<string>("Dyn11");
-  const [sourceFaultLevel, setSourceFaultLevel] = useState<string>("");
-  const [ambientTemp, setAmbientTemp] = useState<string>("40");
-  const [altitude, setAltitude] = useState<string>("0");
+  const [primaryVoltage, setPrimaryVoltage] = useState<string>('');
+  const [secondaryVoltage, setSecondaryVoltage] = useState<string>('');
+  const [kvaRating, setKvaRating] = useState<string>('');
+  const [powerFactor, setPowerFactor] = useState<string>('0.85');
+  const [phase, setPhase] = useState<string>('three');
+  const [frequency, setFrequency] = useState<string>('50');
+  const [percentImpedance, setPercentImpedance] = useState<string>('6');
+  const [connectionType, setConnectionType] = useState<string>('Dyn11');
+  const [sourceFaultLevel, setSourceFaultLevel] = useState<string>('');
+  const [ambientTemp, setAmbientTemp] = useState<string>('40');
+  const [altitude, setAltitude] = useState<string>('0');
   const [harmonics, setHarmonics] = useState(false);
   const [result, setResult] = useState<TransformerResults | null>(null);
 
@@ -40,7 +55,7 @@ const TransformerCalculator = () => {
       ambientTemp: parseFloat(ambientTemp),
       altitude: parseFloat(altitude),
       harmonics,
-      connectionType
+      connectionType,
     };
 
     if (inputs.primaryVoltage > 0 && inputs.secondaryVoltage > 0 && inputs.kvaRating > 0) {
@@ -52,41 +67,44 @@ const TransformerCalculator = () => {
   // Enhanced calculations for better guidance
   const getComplianceStatus = (result: TransformerResults) => {
     const issues = [];
-    if (result.voltageRegulation > 0.05) issues.push("High voltage regulation");
-    if (result.efficiency < 0.9) issues.push("Low efficiency");
-    if (result.transformerFaultCurrent > 35000) issues.push("Very high fault current");
-    
+    if (result.voltageRegulation > 0.05) issues.push('High voltage regulation');
+    if (result.efficiency < 0.9) issues.push('Low efficiency');
+    if (result.transformerFaultCurrent > 35000) issues.push('Very high fault current');
+
     return {
-      status: issues.length === 0 ? "compliant" : issues.length <= 1 ? "caution" : "review",
-      issues
+      status: issues.length === 0 ? 'compliant' : issues.length <= 1 ? 'caution' : 'review',
+      issues,
     };
   };
 
   const getRecommendedMCCB = (current: number) => {
-    const standardSizes = [16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600];
-    return standardSizes.find(size => size >= current * 1.25) || "Contact manufacturer";
+    const standardSizes = [
+      16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250,
+      1600,
+    ];
+    return standardSizes.find((size) => size >= current * 1.25) || 'Contact manufacturer';
   };
 
   const getSwitchgearBreakingCapacity = (faultCurrent: number) => {
-    if (faultCurrent <= 10000) return "10kA minimum";
-    if (faultCurrent <= 25000) return "25kA minimum";
-    if (faultCurrent <= 36000) return "36kA minimum";
-    if (faultCurrent <= 50000) return "50kA minimum";
-    return "65kA+ specialist required";
+    if (faultCurrent <= 10000) return '10kA minimum';
+    if (faultCurrent <= 25000) return '25kA minimum';
+    if (faultCurrent <= 36000) return '36kA minimum';
+    if (faultCurrent <= 50000) return '50kA minimum';
+    return '65kA+ specialist required';
   };
 
   const reset = () => {
-    setPrimaryVoltage("");
-    setSecondaryVoltage("");
-    setKvaRating("");
-    setPowerFactor("0.85");
-    setPhase("three");
-    setFrequency("50");
-    setPercentImpedance("6");
-    setConnectionType("Dyn11");
-    setSourceFaultLevel("");
-    setAmbientTemp("40");
-    setAltitude("0");
+    setPrimaryVoltage('');
+    setSecondaryVoltage('');
+    setKvaRating('');
+    setPowerFactor('0.85');
+    setPhase('three');
+    setFrequency('50');
+    setPercentImpedance('6');
+    setConnectionType('Dyn11');
+    setSourceFaultLevel('');
+    setAmbientTemp('40');
+    setAltitude('0');
     setHarmonics(false);
     setResult(null);
   };
@@ -99,11 +117,13 @@ const TransformerCalculator = () => {
           <CardTitle>Transformer Calculator</CardTitle>
         </div>
         <CardDescription>
-          Comprehensive transformer calculations with BS 7671 18th Edition compliance. Enter primary and secondary parameters.
+          Comprehensive transformer calculations with BS 7671 18th Edition compliance. Enter primary
+          and secondary parameters.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-6">{/* Changed from grid layout to single column for better mobile experience */}
+        <div className="space-y-6">
+          {/* Changed from grid layout to single column for better mobile experience */}
           {/* Input Section */}
           <div className="space-y-4">
             <MobileOptimizedInput
@@ -211,7 +231,7 @@ const TransformerCalculator = () => {
                     unit="Hz"
                     description="Supply frequency"
                   />
-                  
+
                   <MobileOptimizedInput
                     id="ambientTemp"
                     label="Ambient Temperature"
@@ -247,11 +267,7 @@ const TransformerCalculator = () => {
                 />
 
                 <div className="flex items-center gap-2">
-                  <Switch
-                    id="harmonics"
-                    checked={harmonics}
-                    onCheckedChange={setHarmonics}
-                  />
+                  <Switch id="harmonics" checked={harmonics} onCheckedChange={setHarmonics} />
                   <Label htmlFor="harmonics" className="text-sm">
                     Harmonic loads present (K-factor rated)
                   </Label>
@@ -260,10 +276,10 @@ const TransformerCalculator = () => {
             )}
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <MobileButton 
-                onClick={handleCalculate} 
-                className="flex-1 min-h-[48px]" 
-                variant="elec" 
+              <MobileButton
+                onClick={handleCalculate}
+                className="flex-1 min-h-[48px]"
+                variant="elec"
                 icon={<Calculator className="h-4 w-4" />}
                 disabled={!primaryVoltage || !secondaryVoltage || !kvaRating}
               >
@@ -283,18 +299,31 @@ const TransformerCalculator = () => {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-elec-yellow">Transformer Analysis</h3>
+                      <h3 className="text-lg font-semibold text-elec-yellow">
+                        Transformer Analysis
+                      </h3>
                       {(() => {
                         const compliance = getComplianceStatus(result);
                         return (
-                          <Badge 
-                            variant={compliance.status === "compliant" ? "default" : "destructive"}
-                            className={compliance.status === "compliant" ? "bg-green-600" : 
-                                     compliance.status === "caution" ? "bg-amber-600" : "bg-red-600"}
+                          <Badge
+                            variant={compliance.status === 'compliant' ? 'default' : 'destructive'}
+                            className={
+                              compliance.status === 'compliant'
+                                ? 'bg-green-600'
+                                : compliance.status === 'caution'
+                                  ? 'bg-amber-600'
+                                  : 'bg-red-600'
+                            }
                           >
-                            {compliance.status === "compliant" && <CheckCircle className="h-3 w-3 mr-1" />}
-                            {compliance.status === "caution" && <AlertTriangle className="h-3 w-3 mr-1" />}
-                            {compliance.status === "review" && <AlertTriangle className="h-3 w-3 mr-1" />}
+                            {compliance.status === 'compliant' && (
+                              <CheckCircle className="h-3 w-3 mr-1" />
+                            )}
+                            {compliance.status === 'caution' && (
+                              <AlertTriangle className="h-3 w-3 mr-1" />
+                            )}
+                            {compliance.status === 'review' && (
+                              <AlertTriangle className="h-3 w-3 mr-1" />
+                            )}
                             {compliance.status.toUpperCase()}
                           </Badge>
                         );
@@ -303,7 +332,8 @@ const TransformerCalculator = () => {
 
                     <div className="text-center mb-4">
                       <Badge variant="secondary" className="text-sm">
-                        {result.transformerType.toUpperCase()} • {result.voltageRatio.toFixed(2)}:1 Ratio
+                        {result.transformerType.toUpperCase()} • {result.voltageRatio.toFixed(2)}:1
+                        Ratio
                       </Badge>
                     </div>
 
@@ -311,32 +341,44 @@ const TransformerCalculator = () => {
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <div className="text-sm text-white">Primary Current:</div>
-                        <div className="font-mono text-elec-yellow text-xl font-bold">{result.primaryRatedCurrent.toFixed(1)} A</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">
+                          {result.primaryRatedCurrent.toFixed(1)} A
+                        </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="text-sm text-white">Secondary Current:</div>
-                        <div className="font-mono text-elec-yellow text-xl font-bold">{result.secondaryRatedCurrent.toFixed(1)} A</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">
+                          {result.secondaryRatedCurrent.toFixed(1)} A
+                        </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="text-sm text-white">Real Power:</div>
-                        <div className="font-mono text-elec-yellow text-xl font-bold">{result.kw.toFixed(1)} kW</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">
+                          {result.kw.toFixed(1)} kW
+                        </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="text-sm text-white">Efficiency:</div>
-                        <div className="font-mono text-elec-yellow text-xl font-bold">{(result.efficiency * 100).toFixed(1)}%</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">
+                          {(result.efficiency * 100).toFixed(1)}%
+                        </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="text-sm text-white">Fault Current:</div>
-                        <div className="font-mono text-elec-yellow text-xl font-bold">{(result.transformerFaultCurrent / 1000).toFixed(1)} kA</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">
+                          {(result.transformerFaultCurrent / 1000).toFixed(1)} kA
+                        </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="text-sm text-white">Voltage Regulation:</div>
-                        <div className="font-mono text-elec-yellow text-xl font-bold">{(result.voltageRegulation * 100).toFixed(1)}%</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">
+                          {(result.voltageRegulation * 100).toFixed(1)}%
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -354,17 +396,23 @@ const TransformerCalculator = () => {
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <div className="text-sm text-white">Recommended MCCB Rating:</div>
-                        <div className="font-mono text-elec-yellow text-xl font-bold">{getRecommendedMCCB(result.secondaryRatedCurrent)}A</div>
+                        <div className="font-mono text-elec-yellow text-xl font-bold">
+                          {getRecommendedMCCB(result.secondaryRatedCurrent)}A
+                        </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="text-sm text-white">Minimum Breaking Capacity:</div>
-                        <div className="font-mono text-elec-yellow text-lg font-bold">{getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}</div>
+                        <div className="font-mono text-elec-yellow text-lg font-bold">
+                          {getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}
+                        </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="text-sm text-white">Inrush Current:</div>
-                        <div className="font-mono text-elec-yellow text-lg font-bold">{(result.inrushCurrent / 1000).toFixed(1)} kA for {result.inrushDuration}s</div>
+                        <div className="font-mono text-elec-yellow text-lg font-bold">
+                          {(result.inrushCurrent / 1000).toFixed(1)} kA for {result.inrushDuration}s
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -383,7 +431,12 @@ const TransformerCalculator = () => {
                       <div className="text-purple-300">
                         <div className="text-xs text-purple-400 mb-1">Step 1: Voltage Ratio</div>
                         <div>n = Vp ÷ Vs</div>
-                        <div>n = {primaryVoltage}V ÷ {secondaryVoltage}V = <span className="text-purple-200 font-bold">{result.voltageRatio.toFixed(2)}</span></div>
+                        <div>
+                          n = {primaryVoltage}V ÷ {secondaryVoltage}V ={' '}
+                          <span className="text-purple-200 font-bold">
+                            {result.voltageRatio.toFixed(2)}
+                          </span>
+                        </div>
                       </div>
 
                       <Separator className="bg-purple-500/20" />
@@ -393,14 +446,29 @@ const TransformerCalculator = () => {
                         {phase === 'three' ? (
                           <>
                             <div>Ip = (kVA × 1000) ÷ (√3 × Vp)</div>
-                            <div>Ip = ({kvaRating} × 1000) ÷ (1.732 × {primaryVoltage})</div>
-                            <div>Ip = {parseFloat(kvaRating) * 1000} ÷ {(1.732 * parseFloat(primaryVoltage)).toFixed(1)} = <span className="text-purple-200 font-bold">{result.primaryRatedCurrent.toFixed(1)}A</span></div>
+                            <div>
+                              Ip = ({kvaRating} × 1000) ÷ (1.732 × {primaryVoltage})
+                            </div>
+                            <div>
+                              Ip = {parseFloat(kvaRating) * 1000} ÷{' '}
+                              {(1.732 * parseFloat(primaryVoltage)).toFixed(1)} ={' '}
+                              <span className="text-purple-200 font-bold">
+                                {result.primaryRatedCurrent.toFixed(1)}A
+                              </span>
+                            </div>
                           </>
                         ) : (
                           <>
                             <div>Ip = (kVA × 1000) ÷ Vp</div>
-                            <div>Ip = ({kvaRating} × 1000) ÷ {primaryVoltage}</div>
-                            <div>Ip = {parseFloat(kvaRating) * 1000} ÷ {primaryVoltage} = <span className="text-purple-200 font-bold">{result.primaryRatedCurrent.toFixed(1)}A</span></div>
+                            <div>
+                              Ip = ({kvaRating} × 1000) ÷ {primaryVoltage}
+                            </div>
+                            <div>
+                              Ip = {parseFloat(kvaRating) * 1000} ÷ {primaryVoltage} ={' '}
+                              <span className="text-purple-200 font-bold">
+                                {result.primaryRatedCurrent.toFixed(1)}A
+                              </span>
+                            </div>
                           </>
                         )}
                       </div>
@@ -408,18 +476,35 @@ const TransformerCalculator = () => {
                       <Separator className="bg-purple-500/20" />
 
                       <div className="text-purple-300">
-                        <div className="text-xs text-purple-400 mb-1">Step 3: Secondary Current</div>
+                        <div className="text-xs text-purple-400 mb-1">
+                          Step 3: Secondary Current
+                        </div>
                         {phase === 'three' ? (
                           <>
                             <div>Is = (kVA × 1000) ÷ (√3 × Vs)</div>
-                            <div>Is = ({kvaRating} × 1000) ÷ (1.732 × {secondaryVoltage})</div>
-                            <div>Is = {parseFloat(kvaRating) * 1000} ÷ {(1.732 * parseFloat(secondaryVoltage)).toFixed(1)} = <span className="text-purple-200 font-bold">{result.secondaryRatedCurrent.toFixed(1)}A</span></div>
+                            <div>
+                              Is = ({kvaRating} × 1000) ÷ (1.732 × {secondaryVoltage})
+                            </div>
+                            <div>
+                              Is = {parseFloat(kvaRating) * 1000} ÷{' '}
+                              {(1.732 * parseFloat(secondaryVoltage)).toFixed(1)} ={' '}
+                              <span className="text-purple-200 font-bold">
+                                {result.secondaryRatedCurrent.toFixed(1)}A
+                              </span>
+                            </div>
                           </>
                         ) : (
                           <>
                             <div>Is = (kVA × 1000) ÷ Vs</div>
-                            <div>Is = ({kvaRating} × 1000) ÷ {secondaryVoltage}</div>
-                            <div>Is = {parseFloat(kvaRating) * 1000} ÷ {secondaryVoltage} = <span className="text-purple-200 font-bold">{result.secondaryRatedCurrent.toFixed(1)}A</span></div>
+                            <div>
+                              Is = ({kvaRating} × 1000) ÷ {secondaryVoltage}
+                            </div>
+                            <div>
+                              Is = {parseFloat(kvaRating) * 1000} ÷ {secondaryVoltage} ={' '}
+                              <span className="text-purple-200 font-bold">
+                                {result.secondaryRatedCurrent.toFixed(1)}A
+                              </span>
+                            </div>
                           </>
                         )}
                       </div>
@@ -429,28 +514,73 @@ const TransformerCalculator = () => {
                       <div className="text-purple-300">
                         <div className="text-xs text-purple-400 mb-1">Step 4: Real Power (kW)</div>
                         <div>P = S × pf</div>
-                        <div>P = {kvaRating}kVA × {powerFactor} = <span className="text-purple-200 font-bold">{result.kw.toFixed(1)}kW</span></div>
+                        <div>
+                          P = {kvaRating}kVA × {powerFactor} ={' '}
+                          <span className="text-purple-200 font-bold">
+                            {result.kw.toFixed(1)}kW
+                          </span>
+                        </div>
                       </div>
 
                       <Separator className="bg-purple-500/20" />
 
                       <div className="text-purple-300">
-                        <div className="text-xs text-purple-400 mb-1">Step 5: Fault Current (3-phase)</div>
+                        <div className="text-xs text-purple-400 mb-1">
+                          Step 5: Fault Current (3-phase)
+                        </div>
                         <div>Zbase = Vs² ÷ (kVA × 1000)</div>
-                        <div>Zbase = {secondaryVoltage}² ÷ ({kvaRating} × 1000) = {((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000)).toFixed(4)}Ω</div>
+                        <div>
+                          Zbase = {secondaryVoltage}² ÷ ({kvaRating} × 1000) ={' '}
+                          {(
+                            parseFloat(secondaryVoltage) ** 2 /
+                            (parseFloat(kvaRating) * 1000)
+                          ).toFixed(4)}
+                          Ω
+                        </div>
                         <div className="mt-1">Zt = (Z% ÷ 100) × Zbase</div>
-                        <div>Zt = ({percentImpedance}% ÷ 100) × {((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000)).toFixed(4)} = {((parseFloat(percentImpedance) / 100) * ((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000))).toFixed(5)}Ω</div>
+                        <div>
+                          Zt = ({percentImpedance}% ÷ 100) ×{' '}
+                          {(
+                            parseFloat(secondaryVoltage) ** 2 /
+                            (parseFloat(kvaRating) * 1000)
+                          ).toFixed(4)}{' '}
+                          ={' '}
+                          {(
+                            (parseFloat(percentImpedance) / 100) *
+                            (parseFloat(secondaryVoltage) ** 2 / (parseFloat(kvaRating) * 1000))
+                          ).toFixed(5)}
+                          Ω
+                        </div>
                         <div className="mt-1">Isc = Vs ÷ (√3 × Zt)</div>
-                        <div>Isc = {secondaryVoltage} ÷ (1.732 × {((parseFloat(percentImpedance) / 100) * ((parseFloat(secondaryVoltage) ** 2) / (parseFloat(kvaRating) * 1000))).toFixed(5)})</div>
-                        <div>Isc = <span className="text-purple-200 font-bold">{(result.transformerFaultCurrent / 1000).toFixed(2)}kA</span></div>
+                        <div>
+                          Isc = {secondaryVoltage} ÷ (1.732 ×{' '}
+                          {(
+                            (parseFloat(percentImpedance) / 100) *
+                            (parseFloat(secondaryVoltage) ** 2 / (parseFloat(kvaRating) * 1000))
+                          ).toFixed(5)}
+                          )
+                        </div>
+                        <div>
+                          Isc ={' '}
+                          <span className="text-purple-200 font-bold">
+                            {(result.transformerFaultCurrent / 1000).toFixed(2)}kA
+                          </span>
+                        </div>
                       </div>
 
                       <Separator className="bg-purple-500/20" />
 
                       <div className="text-purple-300">
-                        <div className="text-xs text-purple-400 mb-1">Step 6: Voltage Regulation</div>
+                        <div className="text-xs text-purple-400 mb-1">
+                          Step 6: Voltage Regulation
+                        </div>
                         <div>VR = (R% × pf + X% × sin(θ)) ÷ 100</div>
-                        <div>VR ≈ <span className="text-purple-200 font-bold">{(result.voltageRegulation * 100).toFixed(2)}%</span></div>
+                        <div>
+                          VR ≈{' '}
+                          <span className="text-purple-200 font-bold">
+                            {(result.voltageRegulation * 100).toFixed(2)}%
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -468,19 +598,36 @@ const TransformerCalculator = () => {
                     <div className="space-y-2 text-sm text-blue-100">
                       <div className="flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
-                        <span>{result.transformerType} configuration {result.voltageRatio > 1 ? 'reduces' : result.voltageRatio < 1 ? 'increases' : 'maintains'} voltage level</span>
+                        <span>
+                          {result.transformerType} configuration{' '}
+                          {result.voltageRatio > 1
+                            ? 'reduces'
+                            : result.voltageRatio < 1
+                              ? 'increases'
+                              : 'maintains'}{' '}
+                          voltage level
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
-                        <span>{(result.efficiency * 100).toFixed(1)}% efficiency means {((1 - result.efficiency) * 100).toFixed(1)}% energy lost as heat</span>
+                        <span>
+                          {(result.efficiency * 100).toFixed(1)}% efficiency means{' '}
+                          {((1 - result.efficiency) * 100).toFixed(1)}% energy lost as heat
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
-                        <span>{(result.transformerFaultCurrent / 1000).toFixed(1)} kA fault current requires appropriate breaking capacity</span>
+                        <span>
+                          {(result.transformerFaultCurrent / 1000).toFixed(1)} kA fault current
+                          requires appropriate breaking capacity
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
-                        <span>{(result.voltageRegulation * 100).toFixed(1)}% regulation indicates voltage drop under full load</span>
+                        <span>
+                          {(result.voltageRegulation * 100).toFixed(1)}% regulation indicates
+                          voltage drop under full load
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -498,19 +645,40 @@ const TransformerCalculator = () => {
                     <div className="space-y-3 text-sm">
                       <div className="flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
-                        <span>Install {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB for secondary protection</span>
+                        <span>
+                          Install {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB for
+                          secondary protection
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
-                        <span>Ensure switchgear has {getSwitchgearBreakingCapacity(result.transformerFaultCurrent)} breaking capacity</span>
+                        <span>
+                          Ensure switchgear has{' '}
+                          {getSwitchgearBreakingCapacity(result.transformerFaultCurrent)} breaking
+                          capacity
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
-                        <span>Consider soft-start if inrush current ({(result.inrushCurrent / 1000).toFixed(1)} kA) causes supply issues</span>
+                        <span>
+                          Consider soft-start if inrush current (
+                          {(result.inrushCurrent / 1000).toFixed(1)} kA) causes supply issues
+                        </span>
                       </div>
-                      {result.voltageRegulation > 0.05 && <p>• High voltage regulation - consider tap changer or voltage stabiliser</p>}
-                      {result.efficiency < 0.95 && <p>• Low efficiency transformer - consider upgrading for energy savings</p>}
-                      {result.temperatureDerating && <p>• Apply {((1 - result.temperatureDerating) * 100).toFixed(0)}% derating for high ambient temperature</p>}
+                      {result.voltageRegulation > 0.05 && (
+                        <p>
+                          • High voltage regulation - consider tap changer or voltage stabiliser
+                        </p>
+                      )}
+                      {result.efficiency < 0.95 && (
+                        <p>• Low efficiency transformer - consider upgrading for energy savings</p>
+                      )}
+                      {result.temperatureDerating && (
+                        <p>
+                          • Apply {((1 - result.temperatureDerating) * 100).toFixed(0)}% derating
+                          for high ambient temperature
+                        </p>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

@@ -1,5 +1,11 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
@@ -15,17 +21,17 @@ interface InsulationCellsProps {
   onBulkUpdate?: (field: keyof TestResult, value: string) => void;
 }
 
-const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({ 
-  result, 
-  onUpdate, 
+const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
+  result,
+  onUpdate,
   validation,
   allResults,
-  onBulkUpdate
+  onBulkUpdate,
 }) => {
   // Use specific fields for Live-Live and Live-Earth
   const liveLiveValue = result.insulationLiveNeutral || '';
   const liveEarthValue = result.insulationLiveEarth || '';
-  
+
   return (
     <>
       {/* Column 21: Test voltage (V) */}
@@ -39,14 +45,18 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
           </SelectTrigger>
           <SelectContent className="bg-background border border-border rounded-md z-[100]">
             {insulationTestVoltageOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.value}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </TableCell>
-      
+
       {/* Column 22: Live - Live (MΩ) */}
       <TableCell className="p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]">
         <div className="flex items-center gap-1">
@@ -68,7 +78,7 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
           )}
         </div>
       </TableCell>
-      
+
       {/* Column 23: Live - Earth (MΩ) */}
       <TableCell className="p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]">
         <div className="flex items-center gap-1">

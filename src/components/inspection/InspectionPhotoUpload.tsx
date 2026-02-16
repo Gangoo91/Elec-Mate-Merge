@@ -24,7 +24,9 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
 
     // Validate file size
     if (file.size > maxSize) {
-      alert(`File size too large. Maximum allowed size is 10MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB.`);
+      alert(
+        `File size too large. Maximum allowed size is 10MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB.`
+      );
       e.target.value = ''; // Reset input
       return;
     }
@@ -39,8 +41,8 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
     // Validate file extension (double check)
     const fileName = file.name.toLowerCase();
     const validExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
-    const hasValidExtension = validExtensions.some(ext => fileName.endsWith(ext));
-    
+    const hasValidExtension = validExtensions.some((ext) => fileName.endsWith(ext));
+
     if (!hasValidExtension) {
       alert('Invalid file extension. Only .jpg, .jpeg, .png, and .webp files are allowed.');
       e.target.value = ''; // Reset input
@@ -49,7 +51,7 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
 
     // All validation passed, proceed with upload
     await onPhotoCapture(file);
-    
+
     // Reset input
     e.target.value = '';
   };

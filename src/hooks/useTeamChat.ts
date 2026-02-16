@@ -27,7 +27,7 @@ const DM_MESSAGES_KEY = ['dm-messages'];
 export function useTeamChannels(employerId: string | undefined) {
   return useQuery({
     queryKey: [...TEAM_CHANNELS_KEY, employerId],
-    queryFn: () => employerId ? teamChannelService.getChannels(employerId) : [],
+    queryFn: () => (employerId ? teamChannelService.getChannels(employerId) : []),
     enabled: !!employerId,
   });
 }
@@ -62,7 +62,7 @@ export function useCreateChannel() {
 export function useChannelMembers(channelId: string | undefined) {
   return useQuery({
     queryKey: [...TEAM_CHANNELS_KEY, channelId, 'members'],
-    queryFn: () => channelId ? teamChannelService.getMembers(channelId) : [],
+    queryFn: () => (channelId ? teamChannelService.getMembers(channelId) : []),
     enabled: !!channelId,
   });
 }
@@ -81,26 +81,23 @@ export function useChannelMessages(channelId: string | undefined) {
   useEffect(() => {
     if (!channelId) return;
 
-    const unsubscribe = teamChannelMessageService.subscribeToMessages(
-      channelId,
-      (newMessage) => {
-        queryClient.setQueryData<TeamChannelMessage[]>(
-          [...CHANNEL_MESSAGES_KEY, channelId],
-          (old) => {
-            if (!old) return [newMessage];
-            if (old.some(m => m.id === newMessage.id)) return old;
-            return [...old, newMessage];
-          }
-        );
-      }
-    );
+    const unsubscribe = teamChannelMessageService.subscribeToMessages(channelId, (newMessage) => {
+      queryClient.setQueryData<TeamChannelMessage[]>(
+        [...CHANNEL_MESSAGES_KEY, channelId],
+        (old) => {
+          if (!old) return [newMessage];
+          if (old.some((m) => m.id === newMessage.id)) return old;
+          return [...old, newMessage];
+        }
+      );
+    });
 
     return unsubscribe;
   }, [channelId, queryClient]);
 
   return useQuery({
     queryKey: [...CHANNEL_MESSAGES_KEY, channelId],
-    queryFn: () => channelId ? teamChannelMessageService.getMessages(channelId) : [],
+    queryFn: () => (channelId ? teamChannelMessageService.getMessages(channelId) : []),
     enabled: !!channelId,
   });
 }
@@ -119,7 +116,7 @@ export function useSendChannelMessage() {
         [...CHANNEL_MESSAGES_KEY, variables.channelId],
         (old) => {
           if (!old) return [data];
-          if (old.some(m => m.id === data.id)) return old;
+          if (old.some((m) => m.id === data.id)) return old;
           return [...old, data];
         }
       );
@@ -163,7 +160,7 @@ export function useTeamDMConversations(employerId: string | undefined) {
 
   return useQuery({
     queryKey: [...TEAM_DMS_KEY, employerId],
-    queryFn: () => employerId ? teamDMService.getConversations(employerId) : [],
+    queryFn: () => (employerId ? teamDMService.getConversations(employerId) : []),
     enabled: !!employerId,
   });
 }
@@ -194,22 +191,19 @@ export function useTeamDMMessages(conversationId: string | undefined) {
   useEffect(() => {
     if (!conversationId) return;
 
-    const unsubscribe = teamDMService.subscribeToMessages(
-      conversationId,
-      (newMessage) => {
-        setMessages((old) => {
-          if (old.some(m => m.id === newMessage.id)) return old;
-          return [...old, newMessage];
-        });
-      }
-    );
+    const unsubscribe = teamDMService.subscribeToMessages(conversationId, (newMessage) => {
+      setMessages((old) => {
+        if (old.some((m) => m.id === newMessage.id)) return old;
+        return [...old, newMessage];
+      });
+    });
 
     return unsubscribe;
   }, [conversationId]);
 
   const query = useQuery({
     queryKey: [...DM_MESSAGES_KEY, conversationId],
-    queryFn: () => conversationId ? teamDMService.getMessages(conversationId) : [],
+    queryFn: () => (conversationId ? teamDMService.getMessages(conversationId) : []),
     enabled: !!conversationId,
   });
 
@@ -264,7 +258,7 @@ export function useSendTeamDM() {
       if (context?.queryKey) {
         queryClient.setQueryData<TeamDMMessage[]>(context.queryKey, (old) => {
           if (!old) return [data];
-          return old.map(m => m.id.startsWith('temp-') ? data : m);
+          return old.map((m) => (m.id.startsWith('temp-') ? data : m));
         });
       }
       queryClient.invalidateQueries({ queryKey: TEAM_DMS_KEY });

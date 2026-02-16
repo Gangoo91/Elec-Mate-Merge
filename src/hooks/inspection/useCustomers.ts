@@ -17,7 +17,13 @@ export interface Customer {
   lastActivityAt?: string;
 }
 
-export type SortField = 'name' | 'email' | 'createdAt' | 'lastActivityAt' | 'certificateCount' | 'propertyCount';
+export type SortField =
+  | 'name'
+  | 'email'
+  | 'createdAt'
+  | 'lastActivityAt'
+  | 'certificateCount'
+  | 'propertyCount';
 export type SortDirection = 'asc' | 'desc';
 
 interface UseCustomersOptions {
@@ -40,65 +46,77 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   const searchTerm = options?.searchTerm || '';
 
   // Load customers with stats
-  const loadCustomers = useCallback(async (page: number = 1) => {
-    try {
-      setIsLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setCustomers([]);
-        setTotalCount(0);
-        return;
+  const loadCustomers = useCallback(
+    async (page: number = 1) => {
+      try {
+        setIsLoading(true);
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) {
+          setCustomers([]);
+          setTotalCount(0);
+          return;
+        }
+
+        // Build the query with stats
+        let query = supabase.from('customers').select('*', { count: 'exact' });
+
+        // Apply search filter
+        if (searchTerm) {
+          query = query.or(
+            `name.ilike.%${searchTerm}%,email.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%,address.ilike.%${searchTerm}%`
+          );
+        }
+
+        // Apply sorting
+        const sortColumn =
+          sortField === 'lastActivityAt'
+            ? 'last_activity_at'
+            : sortField === 'certificateCount'
+              ? 'certificate_count'
+              : sortField === 'propertyCount'
+                ? 'property_count'
+                : sortField === 'createdAt'
+                  ? 'created_at'
+                  : sortField;
+
+        query = query.order(sortColumn, { ascending: sortDirection === 'asc', nullsFirst: false });
+
+        // Apply pagination
+        const from = (page - 1) * pageSize;
+        const to = from + pageSize - 1;
+        query = query.range(from, to);
+
+        const { data, error, count } = await query;
+
+        if (error) throw error;
+
+        setTotalCount(count || 0);
+        setCurrentPage(page);
+        setCustomers(
+          (data || []).map((c) => ({
+            id: c.id,
+            name: c.name,
+            email: c.email || undefined,
+            phone: c.phone || undefined,
+            address: c.address || undefined,
+            notes: c.notes || undefined,
+            createdAt: c.created_at,
+            updatedAt: c.updated_at,
+            certificateCount: c.certificate_count || 0,
+            propertyCount: c.property_count || 0,
+            lastActivityAt: c.last_activity_at || undefined,
+          }))
+        );
+      } catch (error) {
+        console.error('Failed to load customers:', error);
+      } finally {
+        setIsLoading(false);
       }
-
-      // Build the query with stats
-      let query = supabase
-        .from('customers')
-        .select('*', { count: 'exact' });
-
-      // Apply search filter
-      if (searchTerm) {
-        query = query.or(`name.ilike.%${searchTerm}%,email.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%,address.ilike.%${searchTerm}%`);
-      }
-
-      // Apply sorting
-      const sortColumn = sortField === 'lastActivityAt' ? 'last_activity_at' :
-                         sortField === 'certificateCount' ? 'certificate_count' :
-                         sortField === 'propertyCount' ? 'property_count' :
-                         sortField === 'createdAt' ? 'created_at' :
-                         sortField;
-
-      query = query.order(sortColumn, { ascending: sortDirection === 'asc', nullsFirst: false });
-
-      // Apply pagination
-      const from = (page - 1) * pageSize;
-      const to = from + pageSize - 1;
-      query = query.range(from, to);
-
-      const { data, error, count } = await query;
-
-      if (error) throw error;
-
-      setTotalCount(count || 0);
-      setCurrentPage(page);
-      setCustomers((data || []).map(c => ({
-        id: c.id,
-        name: c.name,
-        email: c.email || undefined,
-        phone: c.phone || undefined,
-        address: c.address || undefined,
-        notes: c.notes || undefined,
-        createdAt: c.created_at,
-        updatedAt: c.updated_at,
-        certificateCount: c.certificate_count || 0,
-        propertyCount: c.property_count || 0,
-        lastActivityAt: c.last_activity_at || undefined,
-      })));
-    } catch (error) {
-      console.error('Failed to load customers:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pageSize, sortField, sortDirection, searchTerm]);
+    },
+    [pageSize, sortField, sortDirection, searchTerm]
+  );
 
   // Load on mount and when options change
   useEffect(() => {
@@ -108,11 +126,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   // Get single customer by ID
   const getCustomer = useCallback(async (id: string): Promise<Customer | null> => {
     try {
-      const { data, error } = await supabase
-        .from('customers')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data, error } = await supabase.from('customers').select('*').eq('id', id).single();
 
       if (error) throw error;
 
@@ -136,9 +150,16 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   }, []);
 
   // Save customer
-  const saveCustomer = async (customer: Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | 'certificateCount' | 'propertyCount' | 'lastActivityAt'>) => {
+  const saveCustomer = async (
+    customer: Omit<
+      Customer,
+      'id' | 'createdAt' | 'updatedAt' | 'certificateCount' | 'propertyCount' | 'lastActivityAt'
+    >
+  ) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data, error } = await supabase
@@ -174,7 +195,15 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   };
 
   // Update customer
-  const updateCustomer = async (id: string, updates: Partial<Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | 'certificateCount' | 'propertyCount' | 'lastActivityAt'>>) => {
+  const updateCustomer = async (
+    id: string,
+    updates: Partial<
+      Omit<
+        Customer,
+        'id' | 'createdAt' | 'updatedAt' | 'certificateCount' | 'propertyCount' | 'lastActivityAt'
+      >
+    >
+  ) => {
     try {
       const { error } = await supabase
         .from('customers')
@@ -206,10 +235,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   // Delete customer
   const deleteCustomer = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('customers')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('customers').delete().eq('id', id);
 
       if (error) throw error;
 
@@ -234,16 +260,22 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   const exportCustomers = useCallback(async () => {
     try {
       // Fetch all customers for export (no pagination)
-      const { data, error } = await supabase
-        .from('customers')
-        .select('*')
-        .order('name');
+      const { data, error } = await supabase.from('customers').select('*').order('name');
 
       if (error) throw error;
 
       const csvContent = [
-        ['Name', 'Email', 'Phone', 'Address', 'Notes', 'Certificates', 'Properties', 'Last Activity'],
-        ...(data || []).map(c => [
+        [
+          'Name',
+          'Email',
+          'Phone',
+          'Address',
+          'Notes',
+          'Certificates',
+          'Properties',
+          'Last Activity',
+        ],
+        ...(data || []).map((c) => [
           c.name,
           c.email || '',
           c.phone || '',
@@ -251,10 +283,10 @@ export const useCustomers = (options?: UseCustomersOptions) => {
           c.notes || '',
           (c.certificate_count || 0).toString(),
           (c.property_count || 0).toString(),
-          c.last_activity_at ? new Date(c.last_activity_at).toLocaleDateString('en-GB') : ''
-        ])
+          c.last_activity_at ? new Date(c.last_activity_at).toLocaleDateString('en-GB') : '',
+        ]),
       ]
-        .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+        .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
         .join('\n');
 
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -285,11 +317,14 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   const hasNextPage = currentPage < totalPages;
   const hasPrevPage = currentPage > 1;
 
-  const goToPage = useCallback((page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      loadCustomers(page);
-    }
-  }, [loadCustomers, totalPages]);
+  const goToPage = useCallback(
+    (page: number) => {
+      if (page >= 1 && page <= totalPages) {
+        loadCustomers(page);
+      }
+    },
+    [loadCustomers, totalPages]
+  );
 
   const nextPage = useCallback(() => {
     if (hasNextPage) {

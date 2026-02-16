@@ -3,34 +3,34 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const InterferenceOverviewSection = () => {
   const symptoms = [
-    "Devices randomly go offline or become unresponsive",
-    "Slow response times to commands and automations",
-    "Frequent reconnection attempts by smart devices",
-    "Poor video quality or dropped calls on cameras",
-    "Failed firmware updates or over-the-air updates"
+    'Devices randomly go offline or become unresponsive',
+    'Slow response times to commands and automations',
+    'Frequent reconnection attempts by smart devices',
+    'Poor video quality or dropped calls on cameras',
+    'Failed firmware updates or over-the-air updates',
   ];
 
   const primaryCauses = [
-    "Multiple devices using the same frequency band",
-    "Overlapping wireless channels from neighbouring networks",
-    "Physical obstructions like walls and metal objects",
-    "Electromagnetic interference from household appliances"
+    'Multiple devices using the same frequency band',
+    'Overlapping wireless channels from neighbouring networks',
+    'Physical obstructions like walls and metal objects',
+    'Electromagnetic interference from household appliances',
   ];
 
   const commonSources = [
-    "Microwave ovens (2.4 GHz interference)",
-    "Baby monitors and cordless phones",
-    "Bluetooth headsets and speakers",
-    "Neighbouring Wi-Fi networks",
-    "Fluorescent lights and LED drivers"
+    'Microwave ovens (2.4 GHz interference)',
+    'Baby monitors and cordless phones',
+    'Bluetooth headsets and speakers',
+    'Neighbouring Wi-Fi networks',
+    'Fluorescent lights and LED drivers',
   ];
 
   const whenNoticed = [
-    "During peak usage times (evenings)",
-    "When running complex automation scenes",
-    "During device firmware updates",
-    "In homes with many connected devices",
-    "Near kitchen appliances or office equipment"
+    'During peak usage times (evenings)',
+    'When running complex automation scenes',
+    'During device firmware updates',
+    'In homes with many connected devices',
+    'Near kitchen appliances or office equipment',
   ];
 
   return (
@@ -43,7 +43,9 @@ export const InterferenceOverviewSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          Wireless interference occurs when multiple devices or signals compete for the same frequency space, causing degraded performance or complete communication failure. Understanding interference is crucial for designing reliable smart home systems.
+          Wireless interference occurs when multiple devices or signals compete for the same
+          frequency space, causing degraded performance or complete communication failure.
+          Understanding interference is crucial for designing reliable smart home systems.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 h-fit">
@@ -114,7 +116,9 @@ export const InterferenceOverviewSection = () => {
 
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Quick Check:</h4>
-          <p className="text-sm text-foreground">Why might smart home devices work fine during the day but struggle in the evening?</p>
+          <p className="text-sm text-foreground">
+            Why might smart home devices work fine during the day but struggle in the evening?
+          </p>
         </div>
       </CardContent>
     </Card>

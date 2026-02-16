@@ -5,8 +5,19 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import {
-  Save, X, Trash2, Shield, Wrench, Clock, Plus, AlertTriangle,
-  BookOpen, Package, GraduationCap, CheckCircle2, ShieldAlert
+  Save,
+  X,
+  Trash2,
+  Shield,
+  Wrench,
+  Clock,
+  Plus,
+  AlertTriangle,
+  BookOpen,
+  Package,
+  GraduationCap,
+  CheckCircle2,
+  ShieldAlert,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { InstallationStep, SafetyNote } from '@/types/installation-method';
@@ -25,28 +36,36 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
   open,
   onOpenChange,
   onSave,
-  onDelete
+  onDelete,
 }) => {
   const [editedTitle, setEditedTitle] = useState(step.title);
   const [editedDescription, setEditedDescription] = useState(step.content || '');
   const [editedSafety, setEditedSafety] = useState<string[]>(
-    (step.safety || []).map(s => typeof s === 'string' ? s : s.note)
+    (step.safety || []).map((s) => (typeof s === 'string' ? s : s.note))
   );
   const [editedTools, setEditedTools] = useState<string[]>(step.toolsRequired || []);
   const [editedMaterials, setEditedMaterials] = useState<string[]>(step.materialsNeeded || []);
-  const [editedCheckpoints, setEditedCheckpoints] = useState<string[]>((step as any).inspectionCheckpoints || []);
-  const [editedQualifications, setEditedQualifications] = useState<string[]>(step.qualifications || []);
-  const [editedReferences, setEditedReferences] = useState<string[]>((step as any).bsReferences || []);
+  const [editedCheckpoints, setEditedCheckpoints] = useState<string[]>(
+    (step as any).inspectionCheckpoints || []
+  );
+  const [editedQualifications, setEditedQualifications] = useState<string[]>(
+    step.qualifications || []
+  );
+  const [editedReferences, setEditedReferences] = useState<string[]>(
+    (step as any).bsReferences || []
+  );
   const [editedHazards, setEditedHazards] = useState<string[]>((step as any).linkedHazards || []);
   const [editedDuration, setEditedDuration] = useState(step.estimatedDuration || '');
-  const [editedRiskLevel, setEditedRiskLevel] = useState<'low' | 'medium' | 'high'>(step.riskLevel || 'low');
+  const [editedRiskLevel, setEditedRiskLevel] = useState<'low' | 'medium' | 'high'>(
+    step.riskLevel || 'low'
+  );
   const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
     if (open) {
       setEditedTitle(step.title);
       setEditedDescription(step.content || '');
-      setEditedSafety((step.safety || []).map(s => typeof s === 'string' ? s : s.note));
+      setEditedSafety((step.safety || []).map((s) => (typeof s === 'string' ? s : s.note)));
       setEditedTools(step.toolsRequired || []);
       setEditedMaterials(step.materialsNeeded || []);
       setEditedCheckpoints((step as any).inspectionCheckpoints || []);
@@ -66,15 +85,15 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
       ...step,
       title: editedTitle,
       content: editedDescription,
-      safety: editedSafety.filter(s => s.trim()),
-      toolsRequired: editedTools.filter(t => t.trim()),
-      materialsNeeded: editedMaterials.filter(m => m.trim()),
-      inspectionCheckpoints: editedCheckpoints.filter(c => c.trim()),
-      qualifications: editedQualifications.filter(q => q.trim()),
-      bsReferences: editedReferences.filter(r => r.trim()),
-      linkedHazards: editedHazards.filter(h => h.trim()),
+      safety: editedSafety.filter((s) => s.trim()),
+      toolsRequired: editedTools.filter((t) => t.trim()),
+      materialsNeeded: editedMaterials.filter((m) => m.trim()),
+      inspectionCheckpoints: editedCheckpoints.filter((c) => c.trim()),
+      qualifications: editedQualifications.filter((q) => q.trim()),
+      bsReferences: editedReferences.filter((r) => r.trim()),
+      linkedHazards: editedHazards.filter((h) => h.trim()),
       estimatedDuration: editedDuration,
-      riskLevel: editedRiskLevel
+      riskLevel: editedRiskLevel,
     });
     toast({
       title: 'Step Updated',
@@ -102,24 +121,28 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
   };
 
   const addItem = (setter: React.Dispatch<React.SetStateAction<string[]>>) => {
-    setter(prev => [...prev, '']);
+    setter((prev) => [...prev, '']);
     markChanged();
   };
 
   const removeItem = (setter: React.Dispatch<React.SetStateAction<string[]>>, index: number) => {
-    setter(prev => prev.filter((_, i) => i !== index));
+    setter((prev) => prev.filter((_, i) => i !== index));
     markChanged();
   };
 
-  const updateItem = (setter: React.Dispatch<React.SetStateAction<string[]>>, index: number, value: string) => {
-    setter(prev => prev.map((item, i) => i === index ? value : item));
+  const updateItem = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+    value: string
+  ) => {
+    setter((prev) => prev.map((item, i) => (i === index ? value : item)));
     markChanged();
   };
 
   const riskColors = {
     low: 'bg-green-500/20 text-green-400 border-green-500/30',
     medium: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    high: 'bg-red-500/20 text-red-400 border-red-500/30'
+    high: 'bg-red-500/20 text-red-400 border-red-500/30',
   };
 
   return (
@@ -141,7 +164,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
             <label className="text-sm font-semibold text-foreground">Step Title</label>
             <Input
               value={editedTitle}
-              onChange={(e) => { setEditedTitle(e.target.value); markChanged(); }}
+              onChange={(e) => {
+                setEditedTitle(e.target.value);
+                markChanged();
+              }}
               className="text-base min-h-[48px] touch-manipulation"
               placeholder="e.g., Install consumer unit"
             />
@@ -152,7 +178,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
             <label className="text-sm font-semibold text-foreground">Description</label>
             <Textarea
               value={editedDescription}
-              onChange={(e) => { setEditedDescription(e.target.value); markChanged(); }}
+              onChange={(e) => {
+                setEditedDescription(e.target.value);
+                markChanged();
+              }}
               className="min-h-[120px] text-base touch-manipulation"
               placeholder="Detailed description of this step..."
             />
@@ -167,7 +196,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               </label>
               <Input
                 value={editedDuration}
-                onChange={(e) => { setEditedDuration(e.target.value); markChanged(); }}
+                onChange={(e) => {
+                  setEditedDuration(e.target.value);
+                  markChanged();
+                }}
                 placeholder="e.g., 2-3 hours"
                 className="min-h-[48px] touch-manipulation"
               />
@@ -179,7 +211,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               </label>
               <select
                 value={editedRiskLevel}
-                onChange={(e) => { setEditedRiskLevel(e.target.value as 'low' | 'medium' | 'high'); markChanged(); }}
+                onChange={(e) => {
+                  setEditedRiskLevel(e.target.value as 'low' | 'medium' | 'high');
+                  markChanged();
+                }}
                 className="w-full min-h-[48px] px-3 rounded-lg border border-primary/30 bg-background text-base font-medium touch-manipulation"
               >
                 <option value="low">Low Risk</option>

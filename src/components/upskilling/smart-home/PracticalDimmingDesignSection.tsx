@@ -53,14 +53,14 @@ export const PracticalDimmingDesignSection = () => {
             </div>
             <div className="space-y-2">
               {[
-                "Verify dimmer compatibility with LED specifications",
-                "Check minimum load requirements",
-                "Test for flicker at all dimming levels",
-                "Configure colour temperature ranges",
-                "Set up default brightness levels",
-                "Program circadian rhythm schedules",
-                "Create user-friendly scene names",
-                "Document system configuration for client"
+                'Verify dimmer compatibility with LED specifications',
+                'Check minimum load requirements',
+                'Test for flicker at all dimming levels',
+                'Configure colour temperature ranges',
+                'Set up default brightness levels',
+                'Program circadian rhythm schedules',
+                'Create user-friendly scene names',
+                'Document system configuration for client',
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -74,7 +74,7 @@ export const PracticalDimmingDesignSection = () => {
         <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-600/30">
           <h5 className="font-semibold text-purple-300 mb-2">Pro Tip</h5>
           <p className="text-gray-300 text-sm">
-            Always demonstrate the full dimming range to clients and explain how different 
+            Always demonstrate the full dimming range to clients and explain how different
             brightness levels affect energy consumption and bulb lifespan.
           </p>
         </div>

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 export const BandwidthQuickCheck = () => {
-  const [answers, setAnswers] = useState<{[key: string]: string}>({});
+  const [answers, setAnswers] = useState<{ [key: string]: string }>({});
   const [showFeedback, setShowFeedback] = useState(false);
 
   const devices = [
@@ -13,11 +13,11 @@ export const BandwidthQuickCheck = () => {
     { name: 'Smart switches', correct: 'low', category: 'Low' },
     { name: 'Video doorbells', correct: 'high', category: 'High' },
     { name: 'Temperature sensors', correct: 'low', category: 'Low' },
-    { name: 'Smart speakers', correct: 'high', category: 'High' }
+    { name: 'Smart speakers', correct: 'high', category: 'High' },
   ];
 
   const handleDrop = (device: string, category: string) => {
-    setAnswers(prev => ({ ...prev, [device]: category }));
+    setAnswers((prev) => ({ ...prev, [device]: category }));
   };
 
   const handleSubmit = () => {
@@ -30,7 +30,7 @@ export const BandwidthQuickCheck = () => {
   };
 
   const getScore = () => {
-    const correct = devices.filter(device => answers[device.name] === device.correct).length;
+    const correct = devices.filter((device) => answers[device.name] === device.correct).length;
     return `${correct}/${devices.length}`;
   };
 
@@ -43,8 +43,10 @@ export const BandwidthQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 text-foreground">
-        <p className="text-foreground font-medium">Drag each device to its correct bandwidth category:</p>
-        
+        <p className="text-foreground font-medium">
+          Drag each device to its correct bandwidth category:
+        </p>
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <h4 className="text-blue-400 font-medium">Available Devices</h4>
@@ -61,10 +63,11 @@ export const BandwidthQuickCheck = () => {
                   {device.name}
                   {showFeedback && (
                     <span className="ml-2">
-                      {answers[device.name] === device.correct ? 
-                        <Check className="inline h-3 w-3 text-green-400" /> : 
+                      {answers[device.name] === device.correct ? (
+                        <Check className="inline h-3 w-3 text-green-400" />
+                      ) : (
                         <X className="inline h-3 w-3 text-red-400" />
-                      }
+                      )}
                     </span>
                   )}
                 </div>
@@ -116,7 +119,7 @@ export const BandwidthQuickCheck = () => {
         </div>
 
         {!showFeedback && Object.keys(answers).length === devices.length && (
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -129,13 +132,13 @@ export const BandwidthQuickCheck = () => {
             <div className="p-3 rounded-lg border border-blue-600/20 bg-blue-600/10">
               <p className="text-blue-400 font-medium">Score: {getScore()}</p>
               <p className="text-sm text-foreground mt-1">
-                Low bandwidth: Sensors and switches send small data packets infrequently. 
-                High bandwidth: Cameras and speakers stream continuous audio/video data.
+                Low bandwidth: Sensors and switches send small data packets infrequently. High
+                bandwidth: Cameras and speakers stream continuous audio/video data.
               </p>
             </div>
-            <Button 
+            <Button
               onClick={handleReset}
-              variant="outline" 
+              variant="outline"
               className="border-gray-600 text-gray-300 hover:bg-[#323232]"
             >
               Try Again

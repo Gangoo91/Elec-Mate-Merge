@@ -21,15 +21,15 @@ const STAGES = [
   { name: 'Designing', icon: '🤖' },
   { name: 'Validating', icon: '✓' },
   { name: 'Finalising', icon: '📄' },
-  { name: 'Complete', icon: '✨' }
+  { name: 'Complete', icon: '✨' },
 ];
 
 // Rotating tips during processing
 const TIPS = [
-  "BS 7671 requires appropriate overcurrent protection for all circuits",
-  "Voltage drop: max 3% for lighting, 5% for other circuits",
-  "RCDs mandatory for socket outlets ≤32A in domestic premises",
-  "Zs must not exceed the max for the protective device"
+  'BS 7671 requires appropriate overcurrent protection for all circuits',
+  'Voltage drop: max 3% for lighting, 5% for other circuits',
+  'RCDs mandatory for socket outlets ≤32A in domestic premises',
+  'Zs must not exceed the max for the protective device',
 ];
 
 export const DesignProcessingView = ({
@@ -37,7 +37,7 @@ export const DesignProcessingView = ({
   retryMessage,
   onCancel,
   userRequest,
-  totalCircuits = 0
+  totalCircuits = 0,
 }: DesignProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
@@ -71,7 +71,7 @@ export const DesignProcessingView = ({
   // Rotate tips
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTip(prev => (prev + 1) % TIPS.length);
+      setCurrentTip((prev) => (prev + 1) % TIPS.length);
     }, 6000);
     return () => clearInterval(interval);
   }, []);
@@ -90,7 +90,7 @@ export const DesignProcessingView = ({
     if (Math.abs(diff) > 0) {
       const increment = diff / 20;
       const interval = setInterval(() => {
-        setDisplayPercent(prev => {
+        setDisplayPercent((prev) => {
           const next = prev + increment;
           if (Math.abs(currentPercent - next) < Math.abs(increment)) {
             clearInterval(interval);
@@ -109,12 +109,13 @@ export const DesignProcessingView = ({
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return mins > 0 ? `${mins}:${secs.toString().padStart(2, '0')}` : `0:${secs.toString().padStart(2, '0')}`;
+    return mins > 0
+      ? `${mins}:${secs.toString().padStart(2, '0')}`
+      : `0:${secs.toString().padStart(2, '0')}`;
   };
 
-  const estimatedCompleted = totalCircuits > 0
-    ? Math.floor((currentPercent / 100) * totalCircuits)
-    : 0;
+  const estimatedCompleted =
+    totalCircuits > 0 ? Math.floor((currentPercent / 100) * totalCircuits) : 0;
 
   const EXPECTED_TOTAL_SECONDS = 240;
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
@@ -126,7 +127,7 @@ export const DesignProcessingView = ({
         <motion.div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-elec-yellow/5 blur-[80px]"
           animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
@@ -138,13 +139,12 @@ export const DesignProcessingView = ({
             linear-gradient(to right, hsl(47 100% 50%) 1px, transparent 1px),
             linear-gradient(to bottom, hsl(47 100% 50%) 1px, transparent 1px)
           `,
-          backgroundSize: '32px 32px'
+          backgroundSize: '32px 32px',
         }}
       />
 
       {/* Main Content */}
       <div className="relative z-10 flex-1 flex flex-col justify-evenly px-3 py-4 w-full">
-
         {/* Header Section */}
         <div className="text-center space-y-3">
           {/* Animated Icon */}
@@ -167,7 +167,7 @@ export const DesignProcessingView = ({
                   style={{
                     top: `${30 + 40 * Math.sin((i * Math.PI * 2) / 6)}px`,
                     left: `${30 + 40 * Math.cos((i * Math.PI * 2) / 6)}px`,
-                    transform: 'translate(-50%, -50%)'
+                    transform: 'translate(-50%, -50%)',
                   }}
                 />
               ))}
@@ -181,7 +181,7 @@ export const DesignProcessingView = ({
                     exit={{ opacity: 0 }}
                     className="absolute inset-0 rounded-full border-2 border-elec-yellow"
                     style={{ width: 60, height: 60 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
                   />
                 )}
               </AnimatePresence>
@@ -196,7 +196,7 @@ export const DesignProcessingView = ({
                 className="absolute inset-0 rounded-full border border-elec-yellow/10"
                 style={{ width: 84, height: 84, margin: -12 }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
               />
               <motion.div
                 className="w-[60px] h-[60px] rounded-full bg-elec-yellow/10 flex items-center justify-center"
@@ -251,7 +251,7 @@ export const DesignProcessingView = ({
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   animate={{ x: ['-100%', '200%'] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
                 />
               </motion.div>
             </div>
@@ -267,12 +267,12 @@ export const DesignProcessingView = ({
               <motion.div
                 key={idx}
                 className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
+                  'w-2 h-2 rounded-full transition-all duration-300',
                   idx < currentStage
-                    ? "bg-elec-yellow"
+                    ? 'bg-elec-yellow'
                     : idx === currentStage
-                    ? "bg-elec-yellow shadow-[0_0_6px_rgba(247,208,44,0.8)]"
-                    : "bg-white/10"
+                      ? 'bg-elec-yellow shadow-[0_0_6px_rgba(247,208,44,0.8)]'
+                      : 'bg-white/10'
                 )}
                 animate={idx === currentStage ? { scale: [1, 1.3, 1] } : {}}
                 transition={{ duration: 1, repeat: Infinity }}
@@ -303,9 +303,7 @@ export const DesignProcessingView = ({
               <Clock className="h-3 w-3 text-white/40" />
               <span className="text-[10px] text-white/40">Elapsed</span>
             </div>
-            <p className="text-lg font-bold text-white tabular-nums">
-              {formatTime(elapsedTime)}
-            </p>
+            <p className="text-lg font-bold text-white tabular-nums">{formatTime(elapsedTime)}</p>
           </div>
 
           {totalCircuits > 0 && (
@@ -333,10 +331,7 @@ export const DesignProcessingView = ({
         </div>
 
         {/* Tip Card */}
-        <div className={cn(
-          "p-3 rounded-xl",
-          "bg-white/[0.03] border border-white/[0.08]"
-        )}>
+        <div className={cn('p-3 rounded-xl', 'bg-white/[0.03] border border-white/[0.08]')}>
           <div className="flex items-start gap-2">
             <Sparkles className="h-3 w-3 text-elec-yellow shrink-0 mt-0.5" />
             <AnimatePresence mode="wait">
@@ -361,7 +356,8 @@ export const DesignProcessingView = ({
             className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20"
           >
             <p className="text-[10px] text-orange-300 text-center">
-              {retryMessage || "Taking longer than usual. Complex installations may take up to 5 minutes."}
+              {retryMessage ||
+                'Taking longer than usual. Complex installations may take up to 5 minutes.'}
             </p>
           </motion.div>
         )}

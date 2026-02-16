@@ -9,11 +9,11 @@ import {
   Calendar,
   CheckCircle,
   Badge as BadgeIcon,
-} from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { formatSalaryRange, type VacancyFormData, type SalaryPeriod } from "./schema";
+} from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { formatSalaryRange, type VacancyFormData, type SalaryPeriod } from './schema';
 
 interface VacancyPreviewCardProps {
   data: Partial<VacancyFormData>;
@@ -23,7 +23,7 @@ interface VacancyPreviewCardProps {
 
 export function VacancyPreviewCard({
   data,
-  companyName = "Your Company",
+  companyName = 'Your Company',
   className,
 }: VacancyPreviewCardProps) {
   const {
@@ -33,7 +33,7 @@ export function VacancyPreviewCard({
     workArrangement,
     salaryMin,
     salaryMax,
-    salaryPeriod = "year",
+    salaryPeriod = 'year',
     benefits = [],
     requirements = [],
     experienceLevel,
@@ -45,11 +45,11 @@ export function VacancyPreviewCard({
 
   const getArrangementIcon = () => {
     switch (workArrangement) {
-      case "On-site":
+      case 'On-site':
         return <Building2 className="h-4 w-4" />;
-      case "Remote":
+      case 'Remote':
         return <Laptop className="h-4 w-4" />;
-      case "Hybrid":
+      case 'Hybrid':
         return <Home className="h-4 w-4" />;
       default:
         return <Building2 className="h-4 w-4" />;
@@ -59,8 +59,8 @@ export function VacancyPreviewCard({
   return (
     <Card
       className={cn(
-        "bg-gradient-to-br from-elec-gray to-elec-dark",
-        "border border-white/10 overflow-hidden",
+        'bg-gradient-to-br from-elec-gray to-elec-dark',
+        'border border-white/10 overflow-hidden',
         className
       )}
     >
@@ -75,19 +75,14 @@ export function VacancyPreviewCard({
               </div>
               <div>
                 <p className="text-sm text-white/60">{companyName}</p>
-                <Badge
-                  variant="outline"
-                  className="text-xs border-green-500/30 text-green-400"
-                >
+                <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
                   Direct from Employer
                 </Badge>
               </div>
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold text-white">
-              {title || "Job Title"}
-            </h3>
+            <h3 className="text-xl font-semibold text-white">{title || 'Job Title'}</h3>
 
             {/* Key details */}
             <div className="flex flex-wrap items-center gap-3 text-sm text-white/60">
@@ -177,7 +172,7 @@ export function VacancyPreviewCard({
             <div
               className="text-sm text-white/60 line-clamp-4 prose prose-invert prose-sm max-w-none"
               dangerouslySetInnerHTML={{
-                __html: description.substring(0, 300) + (description.length > 300 ? "..." : ""),
+                __html: description.substring(0, 300) + (description.length > 300 ? '...' : ''),
               }}
             />
           </div>

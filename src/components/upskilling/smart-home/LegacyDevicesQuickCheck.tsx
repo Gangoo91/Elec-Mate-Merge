@@ -11,7 +11,7 @@ const LegacyDevicesQuickCheck = () => {
     setShowFeedback(true);
   };
 
-  const correctAnswer = "Wired intruder alarm system";
+  const correctAnswer = 'Wired intruder alarm system';
 
   return (
     <Card className="bg-blue-500/10 border-blue-500/30">
@@ -20,15 +20,17 @@ const LegacyDevicesQuickCheck = () => {
           <CheckCircle className="h-5 w-5 text-blue-400" />
           <h4 className="text-lg font-semibold text-foreground">👉 Quick Check</h4>
         </div>
-        
-        <p className="text-foreground mb-4 font-medium">Give one example of a legacy system that might need bridging:</p>
-        
+
+        <p className="text-foreground mb-4 font-medium">
+          Give one example of a legacy system that might need bridging:
+        </p>
+
         <div className="space-y-2 mb-4">
           {[
-            "New smart thermostat",
-            "Wi-Fi enabled security camera",
-            "Wired intruder alarm system",
-            "Modern smart lighting"
+            'New smart thermostat',
+            'Wi-Fi enabled security camera',
+            'Wired intruder alarm system',
+            'Modern smart lighting',
           ].map((option, index) => (
             <button
               key={index}
@@ -39,8 +41,8 @@ const LegacyDevicesQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-500/20 border-green-500/50 text-green-300'
                     : option === selectedAnswer
-                    ? 'bg-red-500/20 border-red-500/50 text-red-300'
-                    : 'bg-elec-gray/50 border-gray-600 text-gray-400'
+                      ? 'bg-red-500/20 border-red-500/50 text-red-300'
+                      : 'bg-elec-gray/50 border-gray-600 text-gray-400'
                   : 'bg-elec-gray/50 border-gray-600 text-foreground hover:bg-elec-gray hover:border-elec-yellow/50'
               }`}
             >
@@ -50,25 +52,30 @@ const LegacyDevicesQuickCheck = () => {
         </div>
 
         {showFeedback && (
-          <div className={`p-3 rounded border ${
-            selectedAnswer === correctAnswer
-              ? 'bg-green-500/10 border-green-500/30'
-              : 'bg-red-500/10 border-red-500/30'
-          }`}>
+          <div
+            className={`p-3 rounded border ${
+              selectedAnswer === correctAnswer
+                ? 'bg-green-500/10 border-green-500/30'
+                : 'bg-red-500/10 border-red-500/30'
+            }`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {selectedAnswer === correctAnswer ? (
                 <CheckCircle className="h-4 w-4 text-green-400" />
               ) : (
                 <AlertCircle className="h-4 w-4 text-red-400" />
               )}
-              <span className={`font-semibold ${
-                selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
-              }`}>
+              <span
+                className={`font-semibold ${
+                  selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
                 {selectedAnswer === correctAnswer ? 'Correct!' : 'Not quite right'}
               </span>
             </div>
             <p className="text-foreground text-sm">
-              Wired intruder alarm systems are common legacy devices that often need bridging to integrate with modern smart home platforms.
+              Wired intruder alarm systems are common legacy devices that often need bridging to
+              integrate with modern smart home platforms.
             </p>
           </div>
         )}

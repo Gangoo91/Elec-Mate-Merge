@@ -7,34 +7,34 @@ const EmergencyLightingModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Cable Types and Installation Requirements",
+      title: 'Cable Types and Installation Requirements',
       icon: Cable,
-      description: "Cable specifications and installation methods"
+      description: 'Cable specifications and installation methods',
     },
     {
       id: 2,
-      title: "Self-Contained vs Central Battery Systems",
+      title: 'Self-Contained vs Central Battery Systems',
       icon: Battery,
-      description: "System architectures and backup power options"
+      description: 'System architectures and backup power options',
     },
     {
       id: 3,
-      title: "Battery Sizing and Autonomy Duration",
+      title: 'Battery Sizing and Autonomy Duration',
       icon: Clock,
-      description: "Battery capacity calculations and runtime requirements"
+      description: 'Battery capacity calculations and runtime requirements',
     },
     {
       id: 4,
-      title: "Circuit Segregation and Fire Integrity",
+      title: 'Circuit Segregation and Fire Integrity',
       icon: Flame,
-      description: "Fire-resistant cabling and circuit protection"
+      description: 'Fire-resistant cabling and circuit protection',
     },
     {
       id: 5,
-      title: "Remote Testing and Monitoring Systems",
+      title: 'Remote Testing and Monitoring Systems',
       icon: Monitor,
-      description: "Automated testing and monitoring solutions"
-    }
+      description: 'Automated testing and monitoring solutions',
+    },
   ];
 
   return (

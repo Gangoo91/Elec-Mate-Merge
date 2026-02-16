@@ -1,13 +1,12 @@
-
-import { useState } from "react";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import SmartInputSuggestions from "../smart-features/SmartInputSuggestions";
+import { useState } from 'react';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import SmartInputSuggestions from '../smart-features/SmartInputSuggestions';
 
 interface PowerFactorInputsProps {
-  calculationMethod: "power" | "currentVoltage";
-  setCalculationMethod: (method: "power" | "currentVoltage") => void;
+  calculationMethod: 'power' | 'currentVoltage';
+  setCalculationMethod: (method: 'power' | 'currentVoltage') => void;
   activePower: string;
   setActivePower: (value: string) => void;
   apparentPower: string;
@@ -18,7 +17,7 @@ interface PowerFactorInputsProps {
   setVoltage: (value: string) => void;
   targetPF: string;
   setTargetPF: (value: string) => void;
-  errors: {[key: string]: string};
+  errors: { [key: string]: string };
   clearError: (field: string) => void;
   calculatePowerFactor: () => void;
   resetCalculator: () => void;
@@ -40,38 +39,37 @@ const PowerFactorInputs = ({
   errors,
   clearError,
   calculatePowerFactor,
-  resetCalculator
+  resetCalculator,
 }: PowerFactorInputsProps) => {
-  
   return (
     <div className="space-y-4">
       {/* Calculator Method Selection */}
       <div className="flex gap-2 mb-4">
-        <Button 
-          variant={calculationMethod === "power" ? "default" : "outline"}
-          onClick={() => setCalculationMethod("power")}
+        <Button
+          variant={calculationMethod === 'power' ? 'default' : 'outline'}
+          onClick={() => setCalculationMethod('power')}
           className="flex-1"
         >
           Using Power Values
         </Button>
-        <Button 
-          variant={calculationMethod === "currentVoltage" ? "default" : "outline"}
-          onClick={() => setCalculationMethod("currentVoltage")}
+        <Button
+          variant={calculationMethod === 'currentVoltage' ? 'default' : 'outline'}
+          onClick={() => setCalculationMethod('currentVoltage')}
           className="flex-1"
         >
           Using I & V
         </Button>
       </div>
 
-      {calculationMethod === "power" ? (
+      {calculationMethod === 'power' ? (
         <>
           <div className="space-y-2">
-            <MobileInput 
-              id="active-power" 
+            <MobileInput
+              id="active-power"
               label="Active Power (kW or W)"
               type="text"
               inputMode="decimal"
-              placeholder="Enter active power" 
+              placeholder="Enter active power"
               className="bg-white/10 border-elec-yellow/20"
               value={activePower}
               onChange={(e) => {
@@ -89,12 +87,12 @@ const PowerFactorInputs = ({
             />
           </div>
           <div className="space-y-2">
-            <MobileInput 
-              id="apparent-power" 
+            <MobileInput
+              id="apparent-power"
               label="Apparent Power (kVA or VA)"
               type="text"
               inputMode="decimal"
-              placeholder="Enter apparent power" 
+              placeholder="Enter apparent power"
               className="bg-white/10 border-elec-yellow/20"
               value={apparentPower}
               onChange={(e) => {
@@ -115,12 +113,12 @@ const PowerFactorInputs = ({
       ) : (
         <>
           <div className="space-y-2">
-            <MobileInput 
-              id="active-power-iv" 
+            <MobileInput
+              id="active-power-iv"
               label="Active Power (kW or W)"
               type="text"
               inputMode="decimal"
-              placeholder="Enter active power" 
+              placeholder="Enter active power"
               className="bg-white/10 border-elec-yellow/20"
               value={activePower}
               onChange={(e) => {
@@ -137,12 +135,12 @@ const PowerFactorInputs = ({
             />
           </div>
           <div className="space-y-2">
-            <MobileInput 
-              id="voltage" 
+            <MobileInput
+              id="voltage"
               label="Voltage (V)"
               type="text"
               inputMode="decimal"
-              placeholder="Enter voltage" 
+              placeholder="Enter voltage"
               className="bg-white/10 border-elec-yellow/20"
               value={voltage}
               onChange={(e) => {
@@ -159,12 +157,12 @@ const PowerFactorInputs = ({
             />
           </div>
           <div className="space-y-2">
-            <MobileInput 
-              id="current" 
+            <MobileInput
+              id="current"
               label="Current (A)"
               type="text"
               inputMode="decimal"
-              placeholder="Enter current" 
+              placeholder="Enter current"
               className="bg-white/10 border-elec-yellow/20"
               value={current}
               onChange={(e) => {
@@ -184,12 +182,12 @@ const PowerFactorInputs = ({
       )}
 
       <div className="space-y-2">
-        <MobileInput 
-          id="target-pf" 
+        <MobileInput
+          id="target-pf"
           label="Target Power Factor"
           type="text"
           inputMode="decimal"
-          placeholder="e.g., 0.95" 
+          placeholder="e.g., 0.95"
           className="bg-white/10 border-elec-yellow/20"
           value={targetPF}
           onChange={(e) => {
@@ -202,8 +200,12 @@ const PowerFactorInputs = ({
       </div>
 
       <div className="flex space-x-3 pt-2">
-        <Button onClick={calculatePowerFactor} className="flex-1">Calculate</Button>
-        <Button variant="outline" onClick={resetCalculator} className="flex-1">Reset</Button>
+        <Button onClick={calculatePowerFactor} className="flex-1">
+          Calculate
+        </Button>
+        <Button variant="outline" onClick={resetCalculator} className="flex-1">
+          Reset
+        </Button>
       </div>
     </div>
   );

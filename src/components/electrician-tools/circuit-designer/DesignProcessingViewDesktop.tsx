@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, Clock, XCircle, Loader2, CircuitBoard, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { DesignProgress } from "@/hooks/useAIDesigner";
+import { DesignProgress } from '@/hooks/useAIDesigner';
 
 interface DesignProcessingViewDesktopProps {
   progress: DesignProgress | null;
@@ -18,14 +18,14 @@ const STAGES = [
   { name: 'Checking Regs', icon: '📚' },
   { name: 'Designing', icon: '🤖' },
   { name: 'Validating', icon: '✓' },
-  { name: 'Complete', icon: '✨' }
+  { name: 'Complete', icon: '✨' },
 ];
 
 const TIPS = [
-  "BS 7671 requires appropriate overcurrent protection for all circuits",
-  "Voltage drop: max 3% for lighting, 5% for other circuits",
-  "RCDs mandatory for socket outlets ≤32A in domestic premises",
-  "Zs must not exceed the max for the protective device"
+  'BS 7671 requires appropriate overcurrent protection for all circuits',
+  'Voltage drop: max 3% for lighting, 5% for other circuits',
+  'RCDs mandatory for socket outlets ≤32A in domestic premises',
+  'Zs must not exceed the max for the protective device',
 ];
 
 export const DesignProcessingViewDesktop = ({
@@ -33,7 +33,7 @@ export const DesignProcessingViewDesktop = ({
   userRequest,
   totalCircuits = 0,
   onCancel,
-  retryMessage
+  retryMessage,
 }: DesignProcessingViewDesktopProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
@@ -63,14 +63,13 @@ export const DesignProcessingViewDesktop = ({
   // Rotate tips
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTip(prev => (prev + 1) % TIPS.length);
+      setCurrentTip((prev) => (prev + 1) % TIPS.length);
     }, 6000);
     return () => clearInterval(interval);
   }, []);
 
-  const estimatedCompleted = totalCircuits > 0
-    ? Math.floor((currentPercent / 100) * totalCircuits)
-    : 0;
+  const estimatedCompleted =
+    totalCircuits > 0 ? Math.floor((currentPercent / 100) * totalCircuits) : 0;
 
   const EXPECTED_TOTAL_SECONDS = 240;
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
@@ -88,7 +87,7 @@ export const DesignProcessingViewDesktop = ({
         <motion.div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-elec-yellow/5 blur-[100px]"
           animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
@@ -100,13 +99,12 @@ export const DesignProcessingViewDesktop = ({
             linear-gradient(to right, hsl(47 100% 50%) 1px, transparent 1px),
             linear-gradient(to bottom, hsl(47 100% 50%) 1px, transparent 1px)
           `,
-          backgroundSize: '40px 40px'
+          backgroundSize: '40px 40px',
         }}
       />
 
       {/* Main Content */}
       <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-lg mx-auto w-full">
-
         {/* Header Section */}
         <div className="text-center space-y-4">
           {/* Animated Icon */}
@@ -129,7 +127,7 @@ export const DesignProcessingViewDesktop = ({
                   style={{
                     top: `${36 + 50 * Math.sin((i * Math.PI * 2) / 6)}px`,
                     left: `${36 + 50 * Math.cos((i * Math.PI * 2) / 6)}px`,
-                    transform: 'translate(-50%, -50%)'
+                    transform: 'translate(-50%, -50%)',
                   }}
                 />
               ))}
@@ -143,7 +141,7 @@ export const DesignProcessingViewDesktop = ({
                     exit={{ opacity: 0 }}
                     className="absolute inset-0 rounded-full border-2 border-elec-yellow"
                     style={{ width: 72, height: 72 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
                   />
                 )}
               </AnimatePresence>
@@ -158,7 +156,7 @@ export const DesignProcessingViewDesktop = ({
                 className="absolute inset-0 rounded-full border border-elec-yellow/10"
                 style={{ width: 100, height: 100, margin: -14 }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
               />
               <motion.div
                 className="w-[72px] h-[72px] rounded-full bg-elec-yellow/10 flex items-center justify-center"
@@ -213,7 +211,7 @@ export const DesignProcessingViewDesktop = ({
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   animate={{ x: ['-100%', '200%'] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
                 />
               </motion.div>
             </div>
@@ -229,12 +227,12 @@ export const DesignProcessingViewDesktop = ({
               <motion.div
                 key={idx}
                 className={cn(
-                  "w-2.5 h-2.5 rounded-full transition-all duration-300",
+                  'w-2.5 h-2.5 rounded-full transition-all duration-300',
                   idx < currentStage
-                    ? "bg-elec-yellow"
+                    ? 'bg-elec-yellow'
                     : idx === currentStage
-                    ? "bg-elec-yellow shadow-[0_0_8px_rgba(247,208,44,0.8)]"
-                    : "bg-white/10"
+                      ? 'bg-elec-yellow shadow-[0_0_8px_rgba(247,208,44,0.8)]'
+                      : 'bg-white/10'
                 )}
                 animate={idx === currentStage ? { scale: [1, 1.3, 1] } : {}}
                 transition={{ duration: 1, repeat: Infinity }}
@@ -265,9 +263,7 @@ export const DesignProcessingViewDesktop = ({
               <Clock className="h-4 w-4 text-white/40" />
               <span className="text-xs text-white/40">Elapsed</span>
             </div>
-            <p className="text-xl font-bold text-white tabular-nums">
-              {formatTime(elapsedTime)}
-            </p>
+            <p className="text-xl font-bold text-white tabular-nums">{formatTime(elapsedTime)}</p>
           </div>
 
           {totalCircuits > 0 && (
@@ -295,10 +291,7 @@ export const DesignProcessingViewDesktop = ({
         </div>
 
         {/* Tip Card */}
-        <div className={cn(
-          "p-3 rounded-xl",
-          "bg-white/[0.03] border border-white/[0.08]"
-        )}>
+        <div className={cn('p-3 rounded-xl', 'bg-white/[0.03] border border-white/[0.08]')}>
           <div className="flex items-start gap-3">
             <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
             <AnimatePresence mode="wait">

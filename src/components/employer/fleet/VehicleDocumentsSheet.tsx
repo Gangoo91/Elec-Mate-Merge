@@ -1,21 +1,16 @@
-import { useState, useRef } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+import { useState, useRef } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   FileText,
   X,
@@ -26,8 +21,8 @@ import {
   ExternalLink,
   AlertCircle,
   Calendar,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useVehicleDocuments,
   useExpiringDocuments,
@@ -35,8 +30,8 @@ import {
   useDeleteDocument,
   DOCUMENT_TYPES,
   type DocumentType,
-} from "@/hooks/useVehicleDocuments";
-import type { Vehicle } from "@/hooks/useFleet";
+} from '@/hooks/useVehicleDocuments';
+import type { Vehicle } from '@/hooks/useFleet';
 
 interface VehicleDocumentsSheetProps {
   open: boolean;
@@ -44,11 +39,7 @@ interface VehicleDocumentsSheetProps {
   vehicle: Vehicle;
 }
 
-export function VehicleDocumentsSheet({
-  open,
-  onOpenChange,
-  vehicle,
-}: VehicleDocumentsSheetProps) {
+export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDocumentsSheetProps) {
   const [showUploadForm, setShowUploadForm] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -75,18 +66,18 @@ export function VehicleDocumentsSheet({
       {
         file: selectedFile,
         vehicleId: vehicle.id,
-        documentType: formData.get("document_type") as DocumentType,
-        name: formData.get("name") as string,
-        expiryDate: (formData.get("expiry_date") as string) || undefined,
-        issueDate: (formData.get("issue_date") as string) || undefined,
-        referenceNumber: (formData.get("reference_number") as string) || undefined,
-        provider: (formData.get("provider") as string) || undefined,
+        documentType: formData.get('document_type') as DocumentType,
+        name: formData.get('name') as string,
+        expiryDate: (formData.get('expiry_date') as string) || undefined,
+        issueDate: (formData.get('issue_date') as string) || undefined,
+        referenceNumber: (formData.get('reference_number') as string) || undefined,
+        provider: (formData.get('provider') as string) || undefined,
       },
       {
         onSuccess: () => {
           setShowUploadForm(false);
           setSelectedFile(null);
-          if (fileInputRef.current) fileInputRef.current.value = "";
+          if (fileInputRef.current) fileInputRef.current.value = '';
         },
       }
     );
@@ -104,23 +95,23 @@ export function VehicleDocumentsSheet({
 
   const getExpiryStatus = (expiryDate: string | undefined) => {
     if (!expiryDate) return null;
-    const today = new Date().toISOString().split("T")[0];
-    const sevenDays = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
-    const thirtyDays = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+    const today = new Date().toISOString().split('T')[0];
+    const sevenDays = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    const thirtyDays = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
-    if (expiryDate < today) return "expired";
-    if (expiryDate <= sevenDays) return "expiring-soon";
-    if (expiryDate <= thirtyDays) return "expiring";
-    return "valid";
+    if (expiryDate < today) return 'expired';
+    if (expiryDate <= sevenDays) return 'expiring-soon';
+    if (expiryDate <= thirtyDays) return 'expiring';
+    return 'valid';
   };
 
   const getExpiryBadge = (status: string | null) => {
     switch (status) {
-      case "expired":
+      case 'expired':
         return <Badge className="bg-red-500/20 text-red-400 border-0">Expired</Badge>;
-      case "expiring-soon":
+      case 'expiring-soon':
         return <Badge className="bg-orange-500/20 text-orange-400 border-0">Expiring Soon</Badge>;
-      case "expiring":
+      case 'expiring':
         return <Badge className="bg-yellow-500/20 text-yellow-400 border-0">Expiring</Badge>;
       default:
         return null;
@@ -163,7 +154,7 @@ export function VehicleDocumentsSheet({
                 <AlertCircle className="h-5 w-5 text-red-400" />
                 <span className="text-red-400 font-medium">
                   {expiring.expired > 0 && `${expiring.expired} expired`}
-                  {expiring.expired > 0 && expiring.expiringIn7Days > 0 && ", "}
+                  {expiring.expired > 0 && expiring.expiringIn7Days > 0 && ', '}
                   {expiring.expiringIn7Days > 0 && `${expiring.expiringIn7Days} expiring soon`}
                 </span>
               </div>
@@ -193,14 +184,14 @@ export function VehicleDocumentsSheet({
                     {selectedFile ? (
                       <>
                         <FileText className="h-8 w-8 text-blue-400" />
-                        <span className="text-sm text-foreground font-medium">{selectedFile.name}</span>
+                        <span className="text-sm text-foreground font-medium">
+                          {selectedFile.name}
+                        </span>
                       </>
                     ) : (
                       <>
                         <Upload className="h-8 w-8 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">
-                          Tap to select file
-                        </span>
+                        <span className="text-sm text-muted-foreground">Tap to select file</span>
                       </>
                     )}
                   </Button>
@@ -236,11 +227,19 @@ export function VehicleDocumentsSheet({
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <Label className="text-sm font-medium">Issue Date</Label>
-                    <Input name="issue_date" type="date" className="h-11 mt-1.5 touch-manipulation text-base" />
+                    <Input
+                      name="issue_date"
+                      type="date"
+                      className="h-11 mt-1.5 touch-manipulation text-base"
+                    />
                   </div>
                   <div>
                     <Label className="text-sm font-medium">Expiry Date</Label>
-                    <Input name="expiry_date" type="date" className="h-11 mt-1.5 touch-manipulation text-base" />
+                    <Input
+                      name="expiry_date"
+                      type="date"
+                      className="h-11 mt-1.5 touch-manipulation text-base"
+                    />
                   </div>
                 </div>
 
@@ -283,7 +282,7 @@ export function VehicleDocumentsSheet({
                     {uploadDocument.isPending ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
-                      "Upload"
+                      'Upload'
                     )}
                   </Button>
                 </div>
@@ -320,12 +319,12 @@ export function VehicleDocumentsSheet({
                         <div
                           key={doc.id}
                           className={cn(
-                            "p-4 rounded-xl border bg-card/50 touch-manipulation",
-                            expiryStatus === "expired"
-                              ? "border-red-500/30"
-                              : expiryStatus === "expiring-soon"
-                              ? "border-orange-500/30"
-                              : "border-border"
+                            'p-4 rounded-xl border bg-card/50 touch-manipulation',
+                            expiryStatus === 'expired'
+                              ? 'border-red-500/30'
+                              : expiryStatus === 'expiring-soon'
+                                ? 'border-orange-500/30'
+                                : 'border-border'
                           )}
                         >
                           <div className="flex items-start justify-between mb-2">
@@ -342,7 +341,7 @@ export function VehicleDocumentsSheet({
                                 variant="ghost"
                                 size="icon"
                                 className="h-11 w-11 touch-manipulation"
-                                onClick={() => window.open(doc.file_url, "_blank")}
+                                onClick={() => window.open(doc.file_url, '_blank')}
                               >
                                 <ExternalLink className="h-5 w-5" />
                               </Button>
@@ -374,12 +373,16 @@ export function VehicleDocumentsSheet({
                           {doc.expiry_date && (
                             <div className="flex items-center gap-2 mt-3 text-sm">
                               <Calendar className="h-4 w-4 text-muted-foreground" />
-                              <span className={cn(
-                                expiryStatus === "expired" ? "text-red-400" :
-                                expiryStatus === "expiring-soon" ? "text-orange-400" :
-                                "text-muted-foreground"
-                              )}>
-                                Expires: {new Date(doc.expiry_date).toLocaleDateString("en-GB")}
+                              <span
+                                className={cn(
+                                  expiryStatus === 'expired'
+                                    ? 'text-red-400'
+                                    : expiryStatus === 'expiring-soon'
+                                      ? 'text-orange-400'
+                                      : 'text-muted-foreground'
+                                )}
+                              >
+                                Expires: {new Date(doc.expiry_date).toLocaleDateString('en-GB')}
                               </span>
                             </div>
                           )}

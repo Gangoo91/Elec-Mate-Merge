@@ -1,8 +1,7 @@
-
 // Re-export everything from the new modular structure for backward compatibility
-export { 
-  checkRegulationCompliance, 
+export {
+  checkRegulationCompliance,
   checkAllResultsCompliance,
   type RegulationWarning,
-  type RegulationCheckResult 
+  type RegulationCheckResult,
 } from './regulationChecker';

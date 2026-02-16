@@ -1,4 +1,3 @@
-
 import { createContext, useContext, ReactNode, useEffect, useRef, useMemo } from 'react';
 import { useAuthSession } from '@/hooks/auth/useAuthSession';
 import { useSubscriptionStatus } from '@/hooks/auth/useSubscriptionStatus';
@@ -20,7 +19,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (user?.id) {
-      logger.info('User authenticated', { userId: user.id, email: user.email, role: profile?.role });
+      logger.info('User authenticated', {
+        userId: user.id,
+        email: user.email,
+        role: profile?.role,
+      });
       logger.action('User session started', 'auth', { userId: user.id });
 
       // Start presence tracking when user logs in
@@ -57,28 +60,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     hasCompletedInitialCheck,
     lastError,
     lastCheckedAt,
-    checkSubscriptionStatus
+    checkSubscriptionStatus,
   } = useSubscriptionStatus(profile);
   const { isDevelopmentMode, toggleDevelopmentMode } = useDevelopmentMode();
-  const { signIn, signUp, signOut, resetPassword, updatePassword, resendConfirmationEmail, updateProfile } = useAuthentication();
-
-
-  const value: AuthContextType = useMemo(() => ({
-    session,
-    user,
-    profile,
-    isLoading,
-    isTrialActive,
-    trialEndsAt,
-    isSubscribed,
-    subscriptionTier,
-    isCheckingStatus,
-    hasCompletedInitialCheck,
-    lastError,
-    lastCheckedAt,
-    checkSubscriptionStatus,
-    isDevelopmentMode,
-    toggleDevelopmentMode,
+  const {
     signIn,
     signUp,
     signOut,
@@ -86,32 +71,60 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     updatePassword,
     resendConfirmationEmail,
     updateProfile,
-    fetchProfile,
-  }), [
-    session,
-    user,
-    profile,
-    isLoading,
-    isTrialActive,
-    trialEndsAt,
-    isSubscribed,
-    subscriptionTier,
-    isCheckingStatus,
-    hasCompletedInitialCheck,
-    lastError,
-    lastCheckedAt,
-    checkSubscriptionStatus,
-    isDevelopmentMode,
-    toggleDevelopmentMode,
-    signIn,
-    signUp,
-    signOut,
-    resetPassword,
-    updatePassword,
-    resendConfirmationEmail,
-    updateProfile,
-    fetchProfile,
-  ]);
+  } = useAuthentication();
+
+  const value: AuthContextType = useMemo(
+    () => ({
+      session,
+      user,
+      profile,
+      isLoading,
+      isTrialActive,
+      trialEndsAt,
+      isSubscribed,
+      subscriptionTier,
+      isCheckingStatus,
+      hasCompletedInitialCheck,
+      lastError,
+      lastCheckedAt,
+      checkSubscriptionStatus,
+      isDevelopmentMode,
+      toggleDevelopmentMode,
+      signIn,
+      signUp,
+      signOut,
+      resetPassword,
+      updatePassword,
+      resendConfirmationEmail,
+      updateProfile,
+      fetchProfile,
+    }),
+    [
+      session,
+      user,
+      profile,
+      isLoading,
+      isTrialActive,
+      trialEndsAt,
+      isSubscribed,
+      subscriptionTier,
+      isCheckingStatus,
+      hasCompletedInitialCheck,
+      lastError,
+      lastCheckedAt,
+      checkSubscriptionStatus,
+      isDevelopmentMode,
+      toggleDevelopmentMode,
+      signIn,
+      signUp,
+      signOut,
+      resetPassword,
+      updatePassword,
+      resendConfirmationEmail,
+      updateProfile,
+      fetchProfile,
+    ]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

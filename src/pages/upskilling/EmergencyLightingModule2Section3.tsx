@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m2s3-check1",
-    question: "What is the minimum illumination level for high-risk task area lighting?",
-    options: ["1 lux", "5 lux", "10% of normal lighting", "15 lux or 10% of normal"],
+    id: 'emergencylighting-m2s3-check1',
+    question: 'What is the minimum illumination level for high-risk task area lighting?',
+    options: ['1 lux', '5 lux', '10% of normal lighting', '15 lux or 10% of normal'],
     correctIndex: 3,
-    explanation: "High-risk task areas require 10% of normal task illumination or 15 lux minimum, whichever is greater. This ensures operators can safely shut down hazardous processes."
+    explanation:
+      'High-risk task areas require 10% of normal task illumination or 15 lux minimum, whichever is greater. This ensures operators can safely shut down hazardous processes.',
   },
   {
-    id: "emergencylighting-m2s3-check2",
-    question: "What determines if an area requires high-risk task lighting?",
-    options: ["Floor area only", "Fire risk assessment only", "Specific risk assessment", "Building type"],
+    id: 'emergencylighting-m2s3-check2',
+    question: 'What determines if an area requires high-risk task lighting?',
+    options: [
+      'Floor area only',
+      'Fire risk assessment only',
+      'Specific risk assessment',
+      'Building type',
+    ],
     correctIndex: 2,
-    explanation: "High-risk task areas are identified through specific risk assessment, not general fire risk assessment. The assessment must identify processes where sudden darkness creates danger."
+    explanation:
+      'High-risk task areas are identified through specific risk assessment, not general fire risk assessment. The assessment must identify processes where sudden darkness creates danger.',
   },
   {
-    id: "emergencylighting-m2s3-check3",
-    question: "How quickly must high-risk task lighting reach full output?",
-    options: ["5 seconds (0.5 second preferred)", "15 seconds", "30 seconds", "60 seconds"],
+    id: 'emergencylighting-m2s3-check3',
+    question: 'How quickly must high-risk task lighting reach full output?',
+    options: ['5 seconds (0.5 second preferred)', '15 seconds', '30 seconds', '60 seconds'],
     correctIndex: 0,
-    explanation: "High-risk task lighting must reach full output within 5 seconds, but 0.5 seconds is preferred to enable immediate safe shutdown of hazardous processes."
-  }
+    explanation:
+      'High-risk task lighting must reach full output within 5 seconds, but 0.5 seconds is preferred to enable immediate safe shutdown of hazardous processes.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What are examples of high-risk task areas?",
-    answer: "Operating rotating machinery, chemical handling processes, work at height, operating lifting equipment, control room operations, laboratory work with hazardous substances, and switchgear operation."
+    question: 'What are examples of high-risk task areas?',
+    answer:
+      'Operating rotating machinery, chemical handling processes, work at height, operating lifting equipment, control room operations, laboratory work with hazardous substances, and switchgear operation.',
   },
   {
-    question: "How do I determine the required illumination level?",
-    answer: "Calculate 10% of the normal task illumination for the specific work area. If this is less than 15 lux, use 15 lux as minimum. The risk assessment should specify exact requirements."
+    question: 'How do I determine the required illumination level?',
+    answer:
+      'Calculate 10% of the normal task illumination for the specific work area. If this is less than 15 lux, use 15 lux as minimum. The risk assessment should specify exact requirements.',
   },
   {
-    question: "Is high-risk task lighting always maintained?",
-    answer: "Not necessarily. The key requirement is instant availability - full output within 5 seconds (0.5 seconds preferred). This can be achieved with non-maintained luminaires with fast response batteries."
+    question: 'Is high-risk task lighting always maintained?',
+    answer:
+      'Not necessarily. The key requirement is instant availability - full output within 5 seconds (0.5 seconds preferred). This can be achieved with non-maintained luminaires with fast response batteries.',
   },
   {
-    question: "Who determines which areas need high-risk task lighting?",
-    answer: "The employer or responsible person through risk assessment, often with input from health and safety professionals. It requires process-specific knowledge beyond general fire risk assessment."
-  }
+    question: 'Who determines which areas need high-risk task lighting?',
+    answer:
+      'The employer or responsible person through risk assessment, often with input from health and safety professionals. It requires process-specific knowledge beyond general fire risk assessment.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A machine shop has normal task lighting of 500 lux. What is the minimum emergency illumination required for high-risk task lighting?",
-  options: [
-    "15 lux (minimum standard)",
-    "25 lux (5% of normal)",
-    "50 lux (10% of normal)",
-    "100 lux (20% of normal)"
-  ],
-  correctAnswer: 2,
-  explanation: "10% of 500 lux = 50 lux. Since this exceeds the 15 lux minimum, 50 lux is required. High-risk task lighting uses the higher of 10% normal lighting or 15 lux."
-  }
+    question:
+      'A machine shop has normal task lighting of 500 lux. What is the minimum emergency illumination required for high-risk task lighting?',
+    options: [
+      '15 lux (minimum standard)',
+      '25 lux (5% of normal)',
+      '50 lux (10% of normal)',
+      '100 lux (20% of normal)',
+    ],
+    correctAnswer: 2,
+    explanation:
+      '10% of 500 lux = 50 lux. Since this exceeds the 15 lux minimum, 50 lux is required. High-risk task lighting uses the higher of 10% normal lighting or 15 lux.',
+  },
 ];
 
 const EmergencyLightingModule2Section3 = () => {
   useSEO({
-    title: "High-Risk Task Area Lighting | Emergency Lighting Module 2.3",
-    description: "Learn about high-risk task area emergency lighting requirements, 15 lux minimum standards, risk assessment, and installation for dangerous work environments."
+    title: 'High-Risk Task Area Lighting | Emergency Lighting Module 2.3',
+    description:
+      'Learn about high-risk task area emergency lighting requirements, 15 lux minimum standards, risk assessment, and installation for dangerous work environments.',
   });
 
   return (
@@ -108,17 +123,29 @@ const EmergencyLightingModule2Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Level:</strong> 10% of normal or 15 lux</li>
-              <li><strong>Response:</strong> 5 seconds (0.5s preferred)</li>
-              <li><strong>Purpose:</strong> Safe shutdown of hazards</li>
+              <li>
+                <strong>Level:</strong> 10% of normal or 15 lux
+              </li>
+              <li>
+                <strong>Response:</strong> 5 seconds (0.5s preferred)
+              </li>
+              <li>
+                <strong>Purpose:</strong> Safe shutdown of hazards
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Risk Assessment</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Required:</strong> Specific task analysis</li>
-              <li><strong>Identifies:</strong> Hazardous processes</li>
-              <li><strong>Determines:</strong> Illumination needs</li>
+              <li>
+                <strong>Required:</strong> Specific task analysis
+              </li>
+              <li>
+                <strong>Identifies:</strong> Hazardous processes
+              </li>
+              <li>
+                <strong>Determines:</strong> Illumination needs
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +155,12 @@ const EmergencyLightingModule2Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify high-risk task areas",
-              "Calculate required illumination levels",
-              "Understand response time requirements",
-              "Apply risk assessment findings",
-              "Select appropriate luminaires",
-              "Position lighting for task visibility"
+              'Identify high-risk task areas',
+              'Calculate required illumination levels',
+              'Understand response time requirements',
+              'Apply risk assessment findings',
+              'Select appropriate luminaires',
+              'Position lighting for task visibility',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -154,13 +181,15 @@ const EmergencyLightingModule2Section3 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               High-risk task area lighting is required where a sudden loss of lighting would create
-              immediate danger. Unlike escape and anti-panic lighting, it's focused on enabling
-              safe shutdown of hazardous processes rather than evacuation.
+              immediate danger. Unlike escape and anti-panic lighting, it's focused on enabling safe
+              shutdown of hazardous processes rather than evacuation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical High-Risk Areas</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Typical High-Risk Areas
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Rotating machinery operation</li>
                   <li>Chemical handling processes</li>
@@ -194,27 +223,43 @@ const EmergencyLightingModule2Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              High-risk task lighting has the most demanding requirements of any emergency
-              lighting category, reflecting the serious consequences of inadequate illumination.
+              High-risk task lighting has the most demanding requirements of any emergency lighting
+              category, reflecting the serious consequences of inadequate illumination.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Illumination Level</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Calculation:</strong> 10% of normal task level</li>
-                  <li><strong>Minimum:</strong> 15 lux regardless</li>
-                  <li><strong>Apply:</strong> Higher of the two values</li>
-                  <li><strong>Uniformity:</strong> 10:1 maximum ratio</li>
+                  <li>
+                    <strong>Calculation:</strong> 10% of normal task level
+                  </li>
+                  <li>
+                    <strong>Minimum:</strong> 15 lux regardless
+                  </li>
+                  <li>
+                    <strong>Apply:</strong> Higher of the two values
+                  </li>
+                  <li>
+                    <strong>Uniformity:</strong> 10:1 maximum ratio
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Response Time</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Maximum:</strong> 5 seconds to full output</li>
-                  <li><strong>Preferred:</strong> 0.5 seconds</li>
-                  <li><strong>Duration:</strong> As per risk assessment</li>
-                  <li><strong>CRI:</strong> Ra 40 minimum</li>
+                  <li>
+                    <strong>Maximum:</strong> 5 seconds to full output
+                  </li>
+                  <li>
+                    <strong>Preferred:</strong> 0.5 seconds
+                  </li>
+                  <li>
+                    <strong>Duration:</strong> As per risk assessment
+                  </li>
+                  <li>
+                    <strong>CRI:</strong> Ra 40 minimum
+                  </li>
                 </ul>
               </div>
             </div>
@@ -246,18 +291,28 @@ const EmergencyLightingModule2Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Unlike general emergency lighting determined by fire risk assessment, high-risk
-              task areas require specific process-based risk assessment.
+              Unlike general emergency lighting determined by fire risk assessment, high-risk task
+              areas require specific process-based risk assessment.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Assessment Steps:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Identify:</strong> All processes where sudden darkness causes danger</li>
-                <li><strong>Evaluate:</strong> Consequence of lighting failure during operation</li>
-                <li><strong>Determine:</strong> Required illumination for safe shutdown</li>
-                <li><strong>Specify:</strong> Response time requirements</li>
-                <li><strong>Document:</strong> Findings and design requirements</li>
+                <li>
+                  <strong>Identify:</strong> All processes where sudden darkness causes danger
+                </li>
+                <li>
+                  <strong>Evaluate:</strong> Consequence of lighting failure during operation
+                </li>
+                <li>
+                  <strong>Determine:</strong> Required illumination for safe shutdown
+                </li>
+                <li>
+                  <strong>Specify:</strong> Response time requirements
+                </li>
+                <li>
+                  <strong>Document:</strong> Findings and design requirements
+                </li>
               </ul>
             </div>
           </div>
@@ -270,7 +325,9 @@ const EmergencyLightingModule2Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Considerations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Design Considerations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Position luminaires to illuminate task area directly</li>
                 <li>Consider glare - operators need to see controls clearly</li>
@@ -282,10 +339,18 @@ const EmergencyLightingModule2Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Design Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Using escape route standards:</strong> — 15 lux not 1 lux required</li>
-                <li><strong>Slow response luminaires:</strong> — 0.5 seconds preferred, 5s max</li>
-                <li><strong>No risk assessment:</strong> — Process-specific assessment mandatory</li>
-                <li><strong>Wrong uniformity:</strong> — 10:1 not 40:1 for task areas</li>
+                <li>
+                  <strong>Using escape route standards:</strong> — 15 lux not 1 lux required
+                </li>
+                <li>
+                  <strong>Slow response luminaires:</strong> — 0.5 seconds preferred, 5s max
+                </li>
+                <li>
+                  <strong>No risk assessment:</strong> — Process-specific assessment mandatory
+                </li>
+                <li>
+                  <strong>Wrong uniformity:</strong> — 10:1 not 40:1 for task areas
+                </li>
               </ul>
             </div>
           </div>
@@ -331,10 +396,7 @@ const EmergencyLightingModule2Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

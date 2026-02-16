@@ -9,7 +9,18 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Search, X, Bookmark, Video, Clock, ExternalLink, BookOpen, Award, Zap } from 'lucide-react';
+import {
+  ArrowLeft,
+  Search,
+  X,
+  Bookmark,
+  Video,
+  Clock,
+  ExternalLink,
+  BookOpen,
+  Award,
+  Zap,
+} from 'lucide-react';
 import {
   curatedVideos,
   getAvailableCategories,
@@ -33,7 +44,7 @@ export default function LearningVideos() {
   useEffect(() => {
     const playId = searchParams.get('play');
     if (playId && !selectedVideo) {
-      const video = curatedVideos.find(v => v.id === playId);
+      const video = curatedVideos.find((v) => v.id === playId);
       if (video) {
         setSelectedVideo(video);
         trackVideoWatched(video.id);
@@ -49,16 +60,17 @@ export default function LearningVideos() {
     let videos = curatedVideos;
 
     if (activeCategory !== 'all') {
-      videos = videos.filter(v => v.category === activeCategory);
+      videos = videos.filter((v) => v.category === activeCategory);
     }
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      videos = videos.filter(v =>
-        v.title.toLowerCase().includes(q) ||
-        v.channel.toLowerCase().includes(q) ||
-        v.tags.some(t => t.toLowerCase().includes(q)) ||
-        categoryLabels[v.category].toLowerCase().includes(q)
+      videos = videos.filter(
+        (v) =>
+          v.title.toLowerCase().includes(q) ||
+          v.channel.toLowerCase().includes(q) ||
+          v.tags.some((t) => t.toLowerCase().includes(q)) ||
+          categoryLabels[v.category].toLowerCase().includes(q)
       );
     }
 
@@ -69,7 +81,7 @@ export default function LearningVideos() {
   const relatedVideos = useMemo(() => {
     if (!selectedVideo) return [];
     return curatedVideos
-      .filter(v => v.category === selectedVideo.category && v.id !== selectedVideo.id)
+      .filter((v) => v.category === selectedVideo.category && v.id !== selectedVideo.id)
       .slice(0, 8);
   }, [selectedVideo]);
 
@@ -114,7 +126,9 @@ export default function LearningVideos() {
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 className={`h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation transition-colors ${
-                  searchOpen ? 'bg-elec-yellow/15 text-elec-yellow' : 'active:bg-white/10 text-white'
+                  searchOpen
+                    ? 'bg-elec-yellow/15 text-elec-yellow'
+                    : 'active:bg-white/10 text-white'
                 }`}
               >
                 <Search className="h-5 w-5" />
@@ -172,7 +186,7 @@ export default function LearningVideos() {
             >
               All
             </button>
-            {categories.map(cat => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -194,121 +208,121 @@ export default function LearningVideos() {
         /* ─── INLINE PLAYER VIEW ─── */
         <div className="flex-1 overflow-y-auto overscroll-contain">
           <div>
-              {/* YouTube iframe -- immediately visible, full width, 16:9 */}
-              <div className="relative w-full aspect-video bg-black">
-                <iframe
-                  src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1&rel=0&modestbranding=1`}
-                  title={selectedVideo.title}
-                  className="absolute inset-0 w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+            {/* YouTube iframe -- immediately visible, full width, 16:9 */}
+            <div className="relative w-full aspect-video bg-black">
+              <iframe
+                src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1&rel=0&modestbranding=1`}
+                title={selectedVideo.title}
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
 
-              {/* Video info */}
-              <div className="px-4 pt-4 pb-6 space-y-4 max-w-3xl mx-auto">
-                {/* Title */}
-                <h2 className="text-[15px] sm:text-base font-semibold text-white leading-snug">
-                  {selectedVideo.title}
-                </h2>
+            {/* Video info */}
+            <div className="px-4 pt-4 pb-6 space-y-4 max-w-3xl mx-auto">
+              {/* Title */}
+              <h2 className="text-[15px] sm:text-base font-semibold text-white leading-snug">
+                {selectedVideo.title}
+              </h2>
 
-                {/* Metadata chips */}
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[13px] text-white">{selectedVideo.channel}</span>
-                  <span className="text-white/30">|</span>
-                  <span className="flex items-center gap-1 text-[13px] text-white">
-                    <Clock className="h-3.5 w-3.5" />
-                    {selectedVideo.duration}
-                  </span>
-                  <span className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${
+              {/* Metadata chips */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[13px] text-white">{selectedVideo.channel}</span>
+                <span className="text-white/30">|</span>
+                <span className="flex items-center gap-1 text-[13px] text-white">
+                  <Clock className="h-3.5 w-3.5" />
+                  {selectedVideo.duration}
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${
                     selectedVideo.level === 'beginner'
                       ? 'text-green-400 bg-green-400/10 border-green-400/20'
                       : selectedVideo.level === 'intermediate'
                         ? 'text-amber-400 bg-amber-400/10 border-amber-400/20'
                         : 'text-red-400 bg-red-400/10 border-red-400/20'
-                  }`}>
-                    {selectedVideo.level.charAt(0).toUpperCase() + selectedVideo.level.slice(1)}
-                  </span>
-                  <span className="px-2 py-0.5 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-[11px] font-medium">
-                    {categoryLabels[selectedVideo.category]}
-                  </span>
-                </div>
+                  }`}
+                >
+                  {selectedVideo.level.charAt(0).toUpperCase() + selectedVideo.level.slice(1)}
+                </span>
+                <span className="px-2 py-0.5 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-[11px] font-medium">
+                  {categoryLabels[selectedVideo.category]}
+                </span>
+              </div>
 
-                {/* Action row */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleBookmarkToggle(selectedVideo)}
-                    className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
-                      isBookmarked(selectedVideo.id)
-                        ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
-                        : 'bg-white/[0.05] border-white/[0.08] text-white'
-                    }`}
-                  >
-                    <Bookmark
-                      className={`h-4 w-4 ${isBookmarked(selectedVideo.id) ? 'fill-elec-yellow' : ''}`}
-                    />
-                    <span className="text-sm font-medium">
-                      {isBookmarked(selectedVideo.id) ? 'Saved' : 'Save'}
+              {/* Action row */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleBookmarkToggle(selectedVideo)}
+                  className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
+                    isBookmarked(selectedVideo.id)
+                      ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
+                      : 'bg-white/[0.05] border-white/[0.08] text-white'
+                  }`}
+                >
+                  <Bookmark
+                    className={`h-4 w-4 ${isBookmarked(selectedVideo.id) ? 'fill-elec-yellow' : ''}`}
+                  />
+                  <span className="text-sm font-medium">
+                    {isBookmarked(selectedVideo.id) ? 'Saved' : 'Save'}
+                  </span>
+                </button>
+                <a
+                  href={`https://www.youtube.com/watch?v=${selectedVideo.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  <span className="text-sm font-medium">Open in YouTube</span>
+                </a>
+              </div>
+
+              {/* Description */}
+              {selectedVideo.description && (
+                <p className="text-[13px] text-white leading-relaxed">
+                  {selectedVideo.description}
+                </p>
+              )}
+
+              {/* Tags */}
+              {selectedVideo.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedVideo.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[11px] text-white"
+                    >
+                      {tag}
                     </span>
-                  </button>
-                  <a
-                    href={`https://www.youtube.com/watch?v=${selectedVideo.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    <span className="text-sm font-medium">Open in YouTube</span>
-                  </a>
+                  ))}
                 </div>
+              )}
 
-                {/* Description */}
-                {selectedVideo.description && (
-                  <p className="text-[13px] text-white leading-relaxed">
-                    {selectedVideo.description}
-                  </p>
-                )}
+              {/* Creator promotion */}
+              {selectedVideo.channel === 'Craig Wiltshire' && <CreatorPromoCard />}
+              {selectedVideo.channel === 'The Engineering Mindset' && (
+                <EngineeringMindsetPromoCard />
+              )}
 
-                {/* Tags */}
-                {selectedVideo.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedVideo.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[11px] text-white"
-                      >
-                        {tag}
-                      </span>
+              {/* Related videos */}
+              {relatedVideos.length > 0 && (
+                <div className="pt-4 border-t border-white/[0.06]">
+                  <h4 className="text-sm font-semibold text-white mb-3">More like this</h4>
+                  <div className="space-y-2">
+                    {relatedVideos.map((rv) => (
+                      <RelatedVideoRow
+                        key={rv.id}
+                        video={rv}
+                        isBookmarked={isBookmarked(rv.id)}
+                        onTap={() => handleVideoTap(rv)}
+                        onBookmarkToggle={() => handleBookmarkToggle(rv)}
+                      />
                     ))}
                   </div>
-                )}
-
-                {/* Creator promotion */}
-                {selectedVideo.channel === 'Craig Wiltshire' && (
-                  <CreatorPromoCard />
-                )}
-                {selectedVideo.channel === 'The Engineering Mindset' && (
-                  <EngineeringMindsetPromoCard />
-                )}
-
-                {/* Related videos */}
-                {relatedVideos.length > 0 && (
-                  <div className="pt-4 border-t border-white/[0.06]">
-                    <h4 className="text-sm font-semibold text-white mb-3">More like this</h4>
-                    <div className="space-y-2">
-                      {relatedVideos.map(rv => (
-                        <RelatedVideoRow
-                          key={rv.id}
-                          video={rv}
-                          isBookmarked={isBookmarked(rv.id)}
-                          onTap={() => handleVideoTap(rv)}
-                          onBookmarkToggle={() => handleBookmarkToggle(rv)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       ) : (
@@ -334,7 +348,7 @@ export default function LearningVideos() {
               )}
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
-                {filteredVideos.map(video => (
+                {filteredVideos.map((video) => (
                   <VideoTile
                     key={video.id}
                     video={video}
@@ -365,11 +379,12 @@ function VideoTile({
   onTap: () => void;
   onBookmarkToggle: () => void;
 }) {
-  const levelDot = video.level === 'beginner'
-    ? 'bg-green-400'
-    : video.level === 'intermediate'
-      ? 'bg-amber-400'
-      : 'bg-red-400';
+  const levelDot =
+    video.level === 'beginner'
+      ? 'bg-green-400'
+      : video.level === 'intermediate'
+        ? 'bg-amber-400'
+        : 'bg-red-400';
 
   return (
     <div className="group relative rounded-xl overflow-hidden bg-white/[0.03] active:bg-white/[0.06] transition-colors">
@@ -444,9 +459,9 @@ function CreatorPromoCard() {
       <div className="p-4 space-y-3">
         {/* Bio */}
         <p className="text-[13px] text-white leading-relaxed">
-          Craig is an experienced NVQ assessor and electrical training specialist who's
-          helped hundreds of apprentices achieve their electrotechnical qualifications
-          through his straightforward, no-nonsense teaching style.
+          Craig is an experienced NVQ assessor and electrical training specialist who's helped
+          hundreds of apprentices achieve their electrotechnical qualifications through his
+          straightforward, no-nonsense teaching style.
         </p>
 
         {/* Book + Channel — side by side on desktop, stacked on mobile */}
@@ -461,8 +476,8 @@ function CreatorPromoCard() {
               Electrotechnical NVQ — The Ultimate Guide
             </p>
             <p className="text-[12px] text-white leading-relaxed">
-              Everything you need to pass your Electrotechnical NVQ — practical tips,
-              assessment guidance, and insider knowledge.
+              Everything you need to pass your Electrotechnical NVQ — practical tips, assessment
+              guidance, and insider knowledge.
             </p>
             <a
               href="https://www.amazon.co.uk/Electrotechnical-NVQ-ultimate-guide-busting/dp/B0DWLDSTF4/"
@@ -522,17 +537,17 @@ function EngineeringMindsetPromoCard() {
       <div className="p-4 space-y-3">
         {/* Bio */}
         <p className="text-[13px] text-white leading-relaxed">
-          Paul Evans breaks down complex electrical engineering concepts with brilliant
-          animations and clear explanations. His channel has helped millions of students
-          and apprentices understand the theory behind electrical systems.
+          Paul Evans breaks down complex electrical engineering concepts with brilliant animations
+          and clear explanations. His channel has helped millions of students and apprentices
+          understand the theory behind electrical systems.
         </p>
 
         {/* US voltage note */}
         <div className="flex gap-2 rounded-lg bg-indigo-500/[0.08] border border-indigo-500/15 p-3">
           <Zap className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
           <p className="text-[12px] text-white leading-relaxed">
-            Some videos use US voltage examples (120V/240V) — the principles are identical.
-            UK mains is 230V single phase, 400V three phase.
+            Some videos use US voltage examples (120V/240V) — the principles are identical. UK mains
+            is 230V single phase, 400V three phase.
           </p>
         </div>
 

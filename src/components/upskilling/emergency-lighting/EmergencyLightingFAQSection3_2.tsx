@@ -8,17 +8,20 @@ export const EmergencyLightingFAQSection3_2 = () => {
 
   const faqs = [
     {
-      question: "Do all stairways need emergency lighting?",
-      answer: "Yes, every flight of stairs and landing must be illuminated, as they are critical escape routes and present significant hazards during evacuation."
+      question: 'Do all stairways need emergency lighting?',
+      answer:
+        'Yes, every flight of stairs and landing must be illuminated, as they are critical escape routes and present significant hazards during evacuation.',
     },
     {
-      question: "Is a corridor wider than 2 metres just treated as an escape route?",
-      answer: "No, it must also be treated as an open area requiring anti-panic lighting. Wide corridors need both escape route lighting for guidance and general illumination to prevent panic."
+      question: 'Is a corridor wider than 2 metres just treated as an escape route?',
+      answer:
+        'No, it must also be treated as an open area requiring anti-panic lighting. Wide corridors need both escape route lighting for guidance and general illumination to prevent panic.',
     },
     {
-      question: "Can exit signage alone be considered sufficient lighting?",
-      answer: "No, exit signs provide direction, but luminaires are required for safe movement along the route. Signs show where to go, but lighting ensures you can see to get there safely."
-    }
+      question: 'Can exit signage alone be considered sufficient lighting?',
+      answer:
+        'No, exit signs provide direction, but luminaires are required for safe movement along the route. Signs show where to go, but lighting ensures you can see to get there safely.',
+    },
   ];
 
   const toggleFAQ = (index: number) => {

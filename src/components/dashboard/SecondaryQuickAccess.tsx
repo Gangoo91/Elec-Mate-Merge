@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { BookOpen, ClipboardCheck, Calculator, Heart, Sparkles, FileText } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { Card } from '@/components/ui/card';
+import { BookOpen, ClipboardCheck, Calculator, Heart, Sparkles, FileText } from 'lucide-react';
 
 interface QuickAccessItemProps {
   title: string;
@@ -22,13 +22,15 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
       onClick={() => navigate(path)}
     >
       <div className="p-2.5 sm:p-3 flex items-center gap-2 sm:gap-2.5">
-        <div className="
+        <div
+          className="
           p-1.5 sm:p-2 rounded-lg
           bg-elec-yellow/10 text-elec-yellow/80
           group-hover:text-elec-yellow
           transition-colors duration-150
           flex-shrink-0
-        ">
+        "
+        >
           {icon}
         </div>
         <span className="text-xs sm:text-sm font-medium text-white/70 group-hover:text-white transition-colors truncate">
@@ -47,36 +49,36 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
 export function SecondaryQuickAccess() {
   const items: QuickAccessItemProps[] = [
     {
-      title: "Study Centre",
+      title: 'Study Centre',
       icon: <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
-      path: "/study-centre"
+      path: '/study-centre',
     },
     {
-      title: "Inspection",
+      title: 'Inspection',
       icon: <ClipboardCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
-      path: "/electrician/inspection-testing"
+      path: '/electrician/inspection-testing',
     },
     {
-      title: "Quotes",
+      title: 'Quotes',
       icon: <Calculator className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
-      path: "/electrician/quotes"
+      path: '/electrician/quotes',
     },
     {
-      title: "Wellbeing",
+      title: 'Wellbeing',
       icon: <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
-      path: "/mental-health"
+      path: '/mental-health',
     },
     {
-      title: "AI Tools",
+      title: 'AI Tools',
       icon: <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
-      path: "/electrician-tools/ai-tooling",
-      badge: "New"
+      path: '/electrician-tools/ai-tooling',
+      badge: 'New',
     },
     {
-      title: "Documents",
+      title: 'Documents',
       icon: <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
-      path: "/electrician/inspection-testing?section=my-reports"
-    }
+      path: '/electrician/inspection-testing?section=my-reports',
+    },
   ];
 
   return (

@@ -12,9 +12,11 @@ export const SmartHomeModule4Section5Intro = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="leading-relaxed">
-          Heating, ventilation, and air conditioning (HVAC) systems often run simultaneously in homes and commercial buildings. 
-          Without proper integration and interlocks, heating and cooling can work against each other, wasting energy and reducing comfort. 
-          Smart controls ensure that HVAC systems operate in harmony, responding to sensors, schedules, and user demands.
+          Heating, ventilation, and air conditioning (HVAC) systems often run simultaneously in
+          homes and commercial buildings. Without proper integration and interlocks, heating and
+          cooling can work against each other, wasting energy and reducing comfort. Smart controls
+          ensure that HVAC systems operate in harmony, responding to sensors, schedules, and user
+          demands.
         </p>
 
         {/* Key Concept Cards */}
@@ -25,7 +27,8 @@ export const SmartHomeModule4Section5Intro = () => {
               <h3 className="font-semibold text-blue-200">Integration</h3>
             </div>
             <p className="text-blue-100 text-sm">
-              Connecting heating, cooling, and ventilation systems into one coordinated control network for optimal performance.
+              Connecting heating, cooling, and ventilation systems into one coordinated control
+              network for optimal performance.
             </p>
           </div>
 
@@ -35,7 +38,8 @@ export const SmartHomeModule4Section5Intro = () => {
               <h3 className="font-semibold text-green-200">Interlocks</h3>
             </div>
             <p className="text-green-100 text-sm">
-              Safety and efficiency features that prevent conflicting systems from operating simultaneously, reducing waste.
+              Safety and efficiency features that prevent conflicting systems from operating
+              simultaneously, reducing waste.
             </p>
           </div>
 
@@ -45,7 +49,8 @@ export const SmartHomeModule4Section5Intro = () => {
               <h3 className="font-semibold text-purple-200">Efficiency</h3>
             </div>
             <p className="text-purple-100 text-sm">
-              Smart coordination prevents energy waste, extends equipment life, and maintains optimal comfort levels throughout the building.
+              Smart coordination prevents energy waste, extends equipment life, and maintains
+              optimal comfort levels throughout the building.
             </p>
           </div>
         </div>

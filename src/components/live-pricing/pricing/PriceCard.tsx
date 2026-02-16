@@ -1,8 +1,18 @@
-import { useState } from "react";
-import { ChevronDown, MapPin, Clock, Users, TrendingUp, Zap, BadgeCheck, Sparkles, PlusCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
-import ConfidenceMeter from "../ui/ConfidenceMeter";
-import TrendArrow from "../ui/TrendArrow";
+import { useState } from 'react';
+import {
+  ChevronDown,
+  MapPin,
+  Clock,
+  Users,
+  TrendingUp,
+  Zap,
+  BadgeCheck,
+  Sparkles,
+  PlusCircle,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import ConfidenceMeter from '../ui/ConfidenceMeter';
+import TrendArrow from '../ui/TrendArrow';
 
 interface PriceCardProps {
   jobType: string;
@@ -16,17 +26,15 @@ interface PriceCardProps {
   sampleSize: number;
   lastUpdated: string;
   trend?: number;
-  complexityLevel?: "simple" | "medium" | "complex";
-  dataSource?: "community" | "market" | "estimated";
+  complexityLevel?: 'simple' | 'medium' | 'complex';
+  dataSource?: 'community' | 'market' | 'estimated';
   onSubmitPrice?: () => void;
   className?: string;
 }
 
 // Convert snake_case to Title Case
 const formatJobType = (jobType: string): string => {
-  return jobType
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
+  return jobType.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 };
 
 const PriceCard = ({
@@ -41,10 +49,10 @@ const PriceCard = ({
   sampleSize,
   lastUpdated,
   trend = 0,
-  complexityLevel = "medium",
-  dataSource = "market",
+  complexityLevel = 'medium',
+  dataSource = 'market',
   onSubmitPrice,
-  className
+  className,
 }: PriceCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -53,30 +61,30 @@ const PriceCard = ({
 
   const getDataSourceBadge = () => {
     switch (dataSource) {
-      case "community":
+      case 'community':
         return {
           icon: BadgeCheck,
-          label: "Community Verified",
-          bg: "bg-emerald-500/20",
-          text: "text-emerald-400",
-          border: "border-emerald-500/30"
+          label: 'Community Verified',
+          bg: 'bg-emerald-500/20',
+          text: 'text-emerald-400',
+          border: 'border-emerald-500/30',
         };
-      case "market":
+      case 'market':
         return {
           icon: TrendingUp,
-          label: "Market Data",
-          bg: "bg-blue-500/20",
-          text: "text-blue-400",
-          border: "border-blue-500/30"
+          label: 'Market Data',
+          bg: 'bg-blue-500/20',
+          text: 'text-blue-400',
+          border: 'border-blue-500/30',
         };
-      case "estimated":
+      case 'estimated':
       default:
         return {
           icon: Sparkles,
-          label: "Estimated",
-          bg: "bg-purple-500/20",
-          text: "text-purple-400",
-          border: "border-purple-500/30"
+          label: 'Estimated',
+          bg: 'bg-purple-500/20',
+          text: 'text-purple-400',
+          border: 'border-purple-500/30',
         };
     }
   };
@@ -88,30 +96,30 @@ const PriceCard = ({
       style: 'currency',
       currency: 'GBP',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(price);
   };
 
   const getComplexityConfig = () => {
     const configs: Record<string, { bg: string; text: string; border: string; label: string }> = {
       simple: {
-        bg: "bg-emerald-500/20",
-        text: "text-emerald-400",
-        border: "border-emerald-500/40",
-        label: "Quick Job"
+        bg: 'bg-emerald-500/20',
+        text: 'text-emerald-400',
+        border: 'border-emerald-500/40',
+        label: 'Quick Job',
       },
       medium: {
-        bg: "bg-amber-500/20",
-        text: "text-amber-400",
-        border: "border-amber-500/40",
-        label: "Standard"
+        bg: 'bg-amber-500/20',
+        text: 'text-amber-400',
+        border: 'border-amber-500/40',
+        label: 'Standard',
       },
       complex: {
-        bg: "bg-rose-500/20",
-        text: "text-rose-400",
-        border: "border-rose-500/40",
-        label: "Complex"
-      }
+        bg: 'bg-rose-500/20',
+        text: 'text-rose-400',
+        border: 'border-rose-500/40',
+        label: 'Complex',
+      },
     };
     return configs[complexityLevel] || configs.medium;
   };
@@ -123,8 +131,8 @@ const PriceCard = ({
     const now = new Date();
     const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays}d ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
     return date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
@@ -139,11 +147,11 @@ const PriceCard = ({
     return (
       <div
         className={cn(
-          "rounded-xl overflow-hidden transition-all duration-300",
-          "bg-elec-dark/50",
-          "border-2 border-dashed border-white/20",
-          "hover:border-elec-yellow/40",
-          "touch-manipulation",
+          'rounded-xl overflow-hidden transition-all duration-300',
+          'bg-elec-dark/50',
+          'border-2 border-dashed border-white/20',
+          'hover:border-elec-yellow/40',
+          'touch-manipulation',
           className
         )}
       >
@@ -152,11 +160,17 @@ const PriceCard = ({
           <div className="flex items-start justify-between gap-4 mb-4">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-2">
-                <h3 className="text-lg font-bold text-white leading-tight">{formatJobType(jobType)}</h3>
-                <span className={cn(
-                  "px-2.5 py-1 text-xs font-semibold rounded-lg border",
-                  complexity.bg, complexity.text, complexity.border
-                )}>
+                <h3 className="text-lg font-bold text-white leading-tight">
+                  {formatJobType(jobType)}
+                </h3>
+                <span
+                  className={cn(
+                    'px-2.5 py-1 text-xs font-semibold rounded-lg border',
+                    complexity.bg,
+                    complexity.text,
+                    complexity.border
+                  )}
+                >
                   {complexity.label}
                 </span>
               </div>
@@ -173,7 +187,9 @@ const PriceCard = ({
               <PlusCircle className="h-6 w-6 text-elec-yellow" />
             </div>
             <p className="text-base font-semibold text-white mb-1">No prices yet</p>
-            <p className="text-sm text-white/60">Be the first to submit a price for this job in {postcodeDistrict || region}!</p>
+            <p className="text-sm text-white/60">
+              Be the first to submit a price for this job in {postcodeDistrict || region}!
+            </p>
           </div>
 
           {/* Submit CTA - Prominent for empty state */}
@@ -194,26 +210,27 @@ const PriceCard = ({
   return (
     <div
       className={cn(
-        "rounded-xl overflow-hidden transition-all duration-300",
-        "bg-elec-dark",
-        "border border-white/[0.08]",
-        "hover:border-elec-yellow/40 active:scale-[0.99]",
-        "touch-manipulation",
-        isExpanded && "border-elec-yellow/30",
+        'rounded-xl overflow-hidden transition-all duration-300',
+        'bg-elec-dark',
+        'border border-white/[0.08]',
+        'hover:border-elec-yellow/40 active:scale-[0.99]',
+        'touch-manipulation',
+        isExpanded && 'border-elec-yellow/30',
         className
       )}
     >
       {/* Main Content - Tappable */}
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full text-left p-5"
-      >
+      <button onClick={() => setIsExpanded(!isExpanded)} className="w-full text-left p-5">
         {/* Data Source Badge - Top */}
         <div className="flex items-center justify-between mb-3">
-          <div className={cn(
-            "inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border",
-            dataSourceBadge.bg, dataSourceBadge.text, dataSourceBadge.border
-          )}>
+          <div
+            className={cn(
+              'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border',
+              dataSourceBadge.bg,
+              dataSourceBadge.text,
+              dataSourceBadge.border
+            )}
+          >
             <dataSourceBadge.icon className="h-3.5 w-3.5" />
             {dataSourceBadge.label}
           </div>
@@ -230,11 +247,17 @@ const PriceCard = ({
           <div className="flex-1 min-w-0">
             {/* Job Type & Badge */}
             <div className="flex items-center gap-2 flex-wrap mb-2">
-              <h3 className="text-lg font-bold text-white leading-tight">{formatJobType(jobType)}</h3>
-              <span className={cn(
-                "px-2.5 py-1 text-xs font-semibold rounded-lg border",
-                complexity.bg, complexity.text, complexity.border
-              )}>
+              <h3 className="text-lg font-bold text-white leading-tight">
+                {formatJobType(jobType)}
+              </h3>
+              <span
+                className={cn(
+                  'px-2.5 py-1 text-xs font-semibold rounded-lg border',
+                  complexity.bg,
+                  complexity.text,
+                  complexity.border
+                )}
+              >
                 {complexity.label}
               </span>
             </div>
@@ -251,9 +274,7 @@ const PriceCard = ({
             <div className="text-3xl font-black text-elec-yellow tracking-tight">
               {formatPrice(avgPrice)}
             </div>
-            <div className="text-xs text-white/60 font-medium mt-1">
-              avg price
-            </div>
+            <div className="text-xs text-white/60 font-medium mt-1">avg price</div>
           </div>
         </div>
 
@@ -266,19 +287,26 @@ const PriceCard = ({
             {/* Min price label - left */}
             <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
               <div className="text-lg font-bold text-white">{formatPrice(minPrice)}</div>
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-wide">Low</div>
+              <div className="text-[10px] text-white/60 font-medium uppercase tracking-wide">
+                Low
+              </div>
             </div>
 
             {/* Max price label - right */}
             <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-right">
               <div className="text-lg font-bold text-white">{formatPrice(maxPrice)}</div>
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-wide">High</div>
+              <div className="text-[10px] text-white/60 font-medium uppercase tracking-wide">
+                High
+              </div>
             </div>
 
             {/* Average marker - positioned dynamically */}
             <div
               className="absolute top-1/2 -translate-y-1/2 z-20"
-              style={{ left: `${Math.max(25, Math.min(75, avgPosition))}%`, transform: 'translate(-50%, -50%)' }}
+              style={{
+                left: `${Math.max(25, Math.min(75, avgPosition))}%`,
+                transform: 'translate(-50%, -50%)',
+              }}
             >
               <div className="flex flex-col items-center">
                 <div className="w-1 h-6 bg-elec-yellow rounded-full shadow-lg shadow-elec-yellow/50" />
@@ -301,14 +329,18 @@ const PriceCard = ({
 
           <div className="flex items-center gap-3">
             {trend !== 0 && <TrendArrow value={trend} size="sm" />}
-            <div className={cn(
-              "flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300",
-              isExpanded ? "bg-elec-yellow/20 rotate-180" : "bg-white/10"
-            )}>
-              <ChevronDown className={cn(
-                "h-5 w-5 transition-colors",
-                isExpanded ? "text-elec-yellow" : "text-white/60"
-              )} />
+            <div
+              className={cn(
+                'flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300',
+                isExpanded ? 'bg-elec-yellow/20 rotate-180' : 'bg-white/10'
+              )}
+            >
+              <ChevronDown
+                className={cn(
+                  'h-5 w-5 transition-colors',
+                  isExpanded ? 'text-elec-yellow' : 'text-white/60'
+                )}
+              />
             </div>
           </div>
         </div>
@@ -346,7 +378,7 @@ const PriceCard = ({
             <div className="p-3 rounded-xl bg-white/5">
               <div className="text-xs text-white/60 font-medium mb-1">Data Quality</div>
               <div className="text-sm font-semibold text-white">
-                {confidenceScore >= 80 ? "High" : confidenceScore >= 60 ? "Good" : "Growing"}
+                {confidenceScore >= 80 ? 'High' : confidenceScore >= 60 ? 'Good' : 'Growing'}
               </div>
             </div>
           </div>

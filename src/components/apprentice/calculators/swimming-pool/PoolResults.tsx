@@ -1,21 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ResultCard } from "@/components/ui/result-card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { PoolCalculationResult } from "@/lib/swimming-pool";
-import { 
-  Zap, 
-  Shield, 
-  Cable, 
-  AlertTriangle, 
-  CheckCircle, 
-  XCircle, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ResultCard } from '@/components/ui/result-card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { PoolCalculationResult } from '@/lib/swimming-pool';
+import {
+  Zap,
+  Shield,
+  Cable,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
   Settings,
   Eye,
   Droplets,
-  Clock
-} from "lucide-react";
+  Clock,
+} from 'lucide-react';
 
 interface PoolResultsProps {
   result: PoolCalculationResult;
@@ -24,19 +24,27 @@ interface PoolResultsProps {
 const PoolResults = ({ result }: PoolResultsProps) => {
   const getComplianceIcon = (status: string) => {
     switch (status) {
-      case 'compliant': return <CheckCircle className="h-4 w-4 text-green-400" />;
-      case 'warning': return <AlertTriangle className="h-4 w-4 text-yellow-400" />;
-      case 'non-compliant': return <XCircle className="h-4 w-4 text-red-400" />;
-      default: return <Settings className="h-4 w-4 text-white" />;
+      case 'compliant':
+        return <CheckCircle className="h-4 w-4 text-green-400" />;
+      case 'warning':
+        return <AlertTriangle className="h-4 w-4 text-yellow-400" />;
+      case 'non-compliant':
+        return <XCircle className="h-4 w-4 text-red-400" />;
+      default:
+        return <Settings className="h-4 w-4 text-white" />;
     }
   };
 
   const getComplianceColor = (status: string) => {
     switch (status) {
-      case 'compliant': return 'bg-green-500/10 border-green-500/30';
-      case 'warning': return 'bg-yellow-500/10 border-yellow-500/30';
-      case 'non-compliant': return 'bg-red-500/10 border-red-500/30';
-      default: return 'bg-white/5 border-white/30';
+      case 'compliant':
+        return 'bg-green-500/10 border-green-500/30';
+      case 'warning':
+        return 'bg-yellow-500/10 border-yellow-500/30';
+      case 'non-compliant':
+        return 'bg-red-500/10 border-red-500/30';
+      default:
+        return 'bg-white/5 border-white/30';
     }
   };
 
@@ -49,8 +57,8 @@ const PoolResults = ({ result }: PoolResultsProps) => {
             <Zap className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-base lg:text-lg font-semibold text-white">Installation Overview</h3>
           </div>
-          <Badge 
-            variant={result.regulatoryCompliance.bs7671Section702 ? "default" : "destructive"}
+          <Badge
+            variant={result.regulatoryCompliance.bs7671Section702 ? 'default' : 'destructive'}
             className="self-start sm:self-center bg-red-600 text-white px-3 py-1 text-sm font-medium"
           >
             BS 7671 Section 702
@@ -66,7 +74,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
               <span className="text-sm text-white/70 ml-1">W</span>
             </div>
           </div>
-          
+
           <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
             <div className="text-xs text-white/60 uppercase tracking-wide">Total Current</div>
             <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
@@ -74,14 +82,14 @@ const PoolResults = ({ result }: PoolResultsProps) => {
               <span className="text-sm text-white/70 ml-1">A</span>
             </div>
           </div>
-          
+
           <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
             <div className="text-xs text-white/60 uppercase tracking-wide">Diversity Factor</div>
             <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.safetyFactors.diversityFactor}
             </div>
           </div>
-          
+
           <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
             <div className="text-xs text-white/60 uppercase tracking-wide">Safety Margin</div>
             <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
@@ -115,42 +123,58 @@ const PoolResults = ({ result }: PoolResultsProps) => {
           <Cable className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base lg:text-lg font-semibold text-white">Circuit Schedule</h3>
         </div>
-        
+
         <div className="space-y-3">
           {result.circuits.map((circuit, index) => (
-            <div key={index} className={`${getComplianceColor(circuit.complianceStatus)} border transition-all hover:border-opacity-60 p-3 lg:p-4 rounded-lg`}>
+            <div
+              key={index}
+              className={`${getComplianceColor(circuit.complianceStatus)} border transition-all hover:border-opacity-60 p-3 lg:p-4 rounded-lg`}
+            >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                 <h4 className="font-semibold flex items-center gap-2 text-sm lg:text-base text-white">
                   {getComplianceIcon(circuit.complianceStatus)}
                   {circuit.name}
                 </h4>
-                <Badge variant="outline" className="self-start sm:self-center border-white/50 text-white/70 text-xs">
+                <Badge
+                  variant="outline"
+                  className="self-start sm:self-center border-white/50 text-white/70 text-xs"
+                >
                   {circuit.ipRating}
                 </Badge>
               </div>
-              
+
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3 text-sm">
                 <div>
                   <div className="text-white/60 text-xs mb-1">Load</div>
-                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.load}W</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">
+                    {circuit.load}W
+                  </div>
                 </div>
                 <div>
                   <div className="text-white/60 text-xs mb-1">Current</div>
-                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.current.toFixed(1)}A</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">
+                    {circuit.current.toFixed(1)}A
+                  </div>
                 </div>
                 <div>
                   <div className="text-white/60 text-xs mb-1">Cable</div>
-                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.cableSize}</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">
+                    {circuit.cableSize}
+                  </div>
                 </div>
                 <div>
                   <div className="text-white/60 text-xs mb-1">Protection</div>
-                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">{circuit.protectionRating}A</div>
+                  <div className="font-mono text-elec-yellow font-semibold text-xs lg:text-sm">
+                    {circuit.protectionRating}A
+                  </div>
                 </div>
               </div>
 
               {circuit.specialRequirements.length > 0 && (
                 <div className="mt-3">
-                  <div className="text-xs text-white/60 mb-2 font-medium">Special Requirements:</div>
+                  <div className="text-xs text-white/60 mb-2 font-medium">
+                    Special Requirements:
+                  </div>
                   <ul className="text-xs text-white space-y-1">
                     {circuit.specialRequirements.map((req, i) => (
                       <li key={i} className="flex items-start gap-2">
@@ -172,7 +196,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
           <Shield className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-lg sm:text-xl font-semibold text-white">Earthing & Bonding</h3>
         </div>
-        
+
         <div className="space-y-6">
           <div>
             <h4 className="font-semibold text-green-300 mb-3 text-base">Earthing Arrangements</h4>
@@ -199,21 +223,29 @@ const PoolResults = ({ result }: PoolResultsProps) => {
       <div className="space-y-4">
         <div className="flex items-center gap-2 mb-4">
           <Eye className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg sm:text-xl font-semibold text-white">Zone Classification Requirements</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-white">
+            Zone Classification Requirements
+          </h3>
         </div>
-        
+
         <div className="space-y-4">
           {Object.entries(result.zonalCompliance).map(([zone, requirements]) => (
-            <div key={zone} className="border border-elec-yellow/20 bg-white/5 p-4 sm:p-6 rounded-lg">
+            <div
+              key={zone}
+              className="border border-elec-yellow/20 bg-white/5 p-4 sm:p-6 rounded-lg"
+            >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <h4 className="font-semibold text-elec-yellow text-base sm:text-lg">
                   Zone {zone.slice(-1)} Classification
                 </h4>
-                <Badge variant="outline" className="self-start sm:self-center border-elec-yellow/50 text-elec-yellow">
+                <Badge
+                  variant="outline"
+                  className="self-start sm:self-center border-elec-yellow/50 text-elec-yellow"
+                >
                   {requirements.ipRating}
                 </Badge>
               </div>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h5 className="text-sm font-semibold text-green-300 mb-3 flex items-center gap-2">
@@ -222,14 +254,17 @@ const PoolResults = ({ result }: PoolResultsProps) => {
                   </h5>
                   <ul className="space-y-2">
                     {requirements.permitted.map((item, i) => (
-                      <li key={i} className="text-xs text-white flex items-start gap-2 leading-relaxed">
+                      <li
+                        key={i}
+                        className="text-xs text-white flex items-start gap-2 leading-relaxed"
+                      >
                         <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                
+
                 <div>
                   <h5 className="text-sm font-semibold text-red-300 mb-3 flex items-center gap-2">
                     <XCircle className="h-4 w-4" />
@@ -237,7 +272,10 @@ const PoolResults = ({ result }: PoolResultsProps) => {
                   </h5>
                   <ul className="space-y-2">
                     {requirements.prohibited.map((item, i) => (
-                      <li key={i} className="text-xs text-white flex items-start gap-2 leading-relaxed">
+                      <li
+                        key={i}
+                        className="text-xs text-white flex items-start gap-2 leading-relaxed"
+                      >
                         <XCircle className="h-3 w-3 text-red-400 mt-1 flex-shrink-0" />
                         {item}
                       </li>
@@ -251,13 +289,16 @@ const PoolResults = ({ result }: PoolResultsProps) => {
       </div>
 
       {/* Compliance Status */}
-      {(result.regulatoryCompliance.issues.length > 0 || result.regulatoryCompliance.recommendations.length > 0) && (
+      {(result.regulatoryCompliance.issues.length > 0 ||
+        result.regulatoryCompliance.recommendations.length > 0) && (
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-4">
             <AlertTriangle className="h-5 w-5 text-orange-400" />
-            <h3 className="text-lg sm:text-xl font-semibold text-white">Compliance & Recommendations</h3>
+            <h3 className="text-lg sm:text-xl font-semibold text-white">
+              Compliance & Recommendations
+            </h3>
           </div>
-          
+
           <div className="space-y-4">
             {result.regulatoryCompliance.issues.length > 0 && (
               <Alert className="border-red-500/30 bg-red-500/10">

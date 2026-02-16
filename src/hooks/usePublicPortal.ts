@@ -1,5 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 // Types
 export interface PortalData {
@@ -54,7 +54,7 @@ export interface PortalPhoto {
 export interface PortalMessage {
   id: string;
   message: string;
-  sender_type: "client" | "employer";
+  sender_type: 'client' | 'employer';
   created_at: string;
   read_at: string | null;
 }
@@ -62,16 +62,16 @@ export interface PortalMessage {
 // Fetch portal data by token
 export function usePortalData(token: string | undefined) {
   return useQuery({
-    queryKey: ["portal", token],
+    queryKey: ['portal', token],
     queryFn: async (): Promise<PortalData | null> => {
       if (!token) return null;
 
-      const { data, error } = await supabase.rpc("get_portal_by_token", {
+      const { data, error } = await supabase.rpc('get_portal_by_token', {
         p_token: token,
       });
 
       if (error) {
-        console.error("Error fetching portal:", error);
+        console.error('Error fetching portal:', error);
         throw error;
       }
 
@@ -93,7 +93,7 @@ export function usePortalData(token: string | undefined) {
         job_start_date: row.job_start_date,
         job_end_date: row.job_end_date,
         job_progress: row.job_progress || 0,
-        company_name: row.company_name || "Your Contractor",
+        company_name: row.company_name || 'Your Contractor',
       };
     },
     enabled: !!token,
@@ -105,16 +105,16 @@ export function usePortalData(token: string | undefined) {
 // Fetch progress logs for portal
 export function usePortalProgressLogs(token: string | undefined) {
   return useQuery({
-    queryKey: ["portal-progress-logs", token],
+    queryKey: ['portal-progress-logs', token],
     queryFn: async (): Promise<ProgressLog[]> => {
       if (!token) return [];
 
-      const { data, error } = await supabase.rpc("get_portal_progress_logs", {
+      const { data, error } = await supabase.rpc('get_portal_progress_logs', {
         p_token: token,
       });
 
       if (error) {
-        console.error("Error fetching progress logs:", error);
+        console.error('Error fetching progress logs:', error);
         return [];
       }
 
@@ -137,28 +137,28 @@ export function usePortalProgressLogs(token: string | undefined) {
 // Fetch photos for portal
 export function usePortalPhotos(token: string | undefined) {
   return useQuery({
-    queryKey: ["portal-photos", token],
+    queryKey: ['portal-photos', token],
     queryFn: async (): Promise<PortalPhoto[]> => {
       if (!token) return [];
 
-      const { data, error } = await supabase.rpc("get_portal_photos", {
+      const { data, error } = await supabase.rpc('get_portal_photos', {
         p_token: token,
       });
 
       if (error) {
-        console.error("Error fetching photos:", error);
+        console.error('Error fetching photos:', error);
         return [];
       }
 
       // Get public URLs for photos
       const photos = await Promise.all(
         (data || []).map(async (row: Record<string, unknown>) => {
-          let url = "";
+          let url = '';
           if (row.storage_path) {
             const { data: urlData } = supabase.storage
-              .from("visual-uploads")
+              .from('visual-uploads')
               .getPublicUrl(row.storage_path as string);
-            url = urlData?.publicUrl || "";
+            url = urlData?.publicUrl || '';
           }
 
           return {
@@ -183,23 +183,23 @@ export function usePortalPhotos(token: string | undefined) {
 // Fetch messages for portal
 export function usePortalMessages(token: string | undefined) {
   return useQuery({
-    queryKey: ["portal-messages", token],
+    queryKey: ['portal-messages', token],
     queryFn: async (): Promise<PortalMessage[]> => {
       if (!token) return [];
 
-      const { data, error } = await supabase.rpc("get_portal_messages", {
+      const { data, error } = await supabase.rpc('get_portal_messages', {
         p_token: token,
       });
 
       if (error) {
-        console.error("Error fetching messages:", error);
+        console.error('Error fetching messages:', error);
         return [];
       }
 
       return (data || []).map((row: Record<string, unknown>) => ({
         id: row.id as string,
         message: row.message as string,
-        sender_type: row.sender_type as "client" | "employer",
+        sender_type: row.sender_type as 'client' | 'employer',
         created_at: row.created_at as string,
         read_at: row.read_at as string | null,
       }));
@@ -216,9 +216,9 @@ export function useSendPortalMessage(token: string | undefined) {
 
   return useMutation({
     mutationFn: async (message: string) => {
-      if (!token) throw new Error("No token provided");
+      if (!token) throw new Error('No token provided');
 
-      const { data, error } = await supabase.rpc("send_portal_message", {
+      const { data, error } = await supabase.rpc('send_portal_message', {
         p_token: token,
         p_message: message,
       });
@@ -230,7 +230,7 @@ export function useSendPortalMessage(token: string | undefined) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["portal-messages", token] });
+      queryClient.invalidateQueries({ queryKey: ['portal-messages', token] });
     },
   });
 }

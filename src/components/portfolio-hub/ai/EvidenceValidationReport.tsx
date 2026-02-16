@@ -6,12 +6,7 @@
  */
 
 import { useState } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import {
   Sparkles,
@@ -31,10 +26,7 @@ import type {
   EvidenceValidationResult,
   ACValidation,
 } from '@/hooks/portfolio/useEvidenceValidator';
-import {
-  getGradeColour,
-  getStatusColour,
-} from '@/hooks/portfolio/useEvidenceValidator';
+import { getGradeColour, getStatusColour } from '@/hooks/portfolio/useEvidenceValidator';
 
 interface EvidenceValidationReportProps {
   open: boolean;
@@ -82,10 +74,7 @@ export function EvidenceValidationReport({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="px-5 pt-5 pb-3 border-b border-border">
@@ -123,9 +112,7 @@ export function EvidenceValidationReport({
                   <Sparkles className="h-8 w-8 text-elec-yellow" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-foreground">
-                    Validate your evidence
-                  </p>
+                  <p className="text-sm font-medium text-foreground">Validate your evidence</p>
                   <p className="text-xs text-white/40 mt-1">
                     AI will check if your evidence meets each claimed AC
                   </p>
@@ -151,16 +138,11 @@ export function EvidenceValidationReport({
                     )}
                   >
                     <span
-                      className={cn(
-                        'text-3xl font-bold',
-                        getGradeColour(result.overallGrade).text
-                      )}
+                      className={cn('text-3xl font-bold', getGradeColour(result.overallGrade).text)}
                     >
                       {result.overallGrade}
                     </span>
-                    <span className="text-[10px] text-white/40">
-                      {result.overallScore}/100
-                    </span>
+                    <span className="text-[10px] text-white/40">{result.overallScore}/100</span>
                   </div>
                   <div className="flex-1">
                     <p
@@ -185,9 +167,7 @@ export function EvidenceValidationReport({
                       Assessor Summary
                     </span>
                   </div>
-                  <p className="text-sm text-white/70 leading-relaxed">
-                    {result.assessorSummary}
-                  </p>
+                  <p className="text-sm text-white/70 leading-relaxed">{result.assessorSummary}</p>
                 </div>
 
                 {/* Per-AC Breakdown */}
@@ -200,11 +180,7 @@ export function EvidenceValidationReport({
                       key={ac.acCode}
                       ac={ac}
                       expanded={expandedAC === ac.acCode}
-                      onToggle={() =>
-                        setExpandedAC(
-                          expandedAC === ac.acCode ? null : ac.acCode
-                        )
-                      }
+                      onToggle={() => setExpandedAC(expandedAC === ac.acCode ? null : ac.acCode)}
                     />
                   ))}
                 </div>
@@ -229,19 +205,14 @@ export function EvidenceValidationReport({
                             {i + 1}
                           </span>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm text-foreground">
-                              {action.action}
-                            </p>
+                            <p className="text-sm text-foreground">{action.action}</p>
                             {action.acCode && (
                               <p className="text-[10px] text-white/30 mt-0.5">
                                 Related to: {action.acCode}
                               </p>
                             )}
                           </div>
-                          <Badge
-                            variant="outline"
-                            className="text-[10px] shrink-0"
-                          >
+                          <Badge variant="outline" className="text-[10px] shrink-0">
                             {action.priority}
                           </Badge>
                         </div>
@@ -282,13 +253,9 @@ function ACValidationCard({
         onClick={onToggle}
         className="w-full flex items-center gap-3 p-3 text-left touch-manipulation active:bg-white/[0.02]"
       >
-        <StatusIcon
-          className={cn('h-4 w-4 shrink-0', statusColour.text)}
-        />
+        <StatusIcon className={cn('h-4 w-4 shrink-0', statusColour.text)} />
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-foreground truncate">
-            {ac.acCode}
-          </p>
+          <p className="text-sm font-medium text-foreground truncate">{ac.acCode}</p>
           <p className="text-xs text-white/40 truncate">{ac.acText}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
@@ -299,9 +266,7 @@ function ACValidationCard({
               style={{ width: `${ac.sufficiencyScore}%` }}
             />
           </div>
-          <span className="text-xs text-white/40 w-8 text-right">
-            {ac.sufficiencyScore}
-          </span>
+          <span className="text-xs text-white/40 w-8 text-right">{ac.sufficiencyScore}</span>
           {expanded ? (
             <ChevronDown className="h-4 w-4 text-white/30" />
           ) : (
@@ -312,10 +277,7 @@ function ACValidationCard({
 
       {expanded && (
         <div className="px-3 pb-3 space-y-2 border-t border-white/5 pt-2">
-          <Badge
-            variant="outline"
-            className={cn('text-[10px]', statusColour.text)}
-          >
+          <Badge variant="outline" className={cn('text-[10px]', statusColour.text)}>
             {STATUS_LABELS[ac.status]}
           </Badge>
           <p className="text-sm text-white/60">{ac.feedback}</p>
@@ -325,10 +287,7 @@ function ACValidationCard({
                 Suggested Additions
               </p>
               {ac.suggestedAdditions.map((addition, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-2 text-xs text-white/50"
-                >
+                <div key={i} className="flex items-start gap-2 text-xs text-white/50">
                   <span className="text-elec-yellow mt-0.5">•</span>
                   {addition}
                 </div>

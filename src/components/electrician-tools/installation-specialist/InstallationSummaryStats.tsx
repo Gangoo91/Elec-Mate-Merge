@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import { Wrench, Clock, AlertTriangle, Shield, Hammer } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { Wrench, Clock, AlertTriangle, Shield, Hammer } from 'lucide-react';
 
 interface InstallationSummaryStatsProps {
   totalSteps: number;
@@ -25,7 +25,7 @@ export const InstallationSummaryStats = ({
   estimatedDuration,
   riskLevel,
   hazardsCount,
-  toolsCount
+  toolsCount,
 }: InstallationSummaryStatsProps) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
@@ -44,7 +44,10 @@ export const InstallationSummaryStats = ({
           <Clock className="h-4 w-4" />
           <span className="text-xs font-medium">Duration</span>
         </div>
-        <div className="text-lg lg:text-2xl font-black text-foreground truncate" title={estimatedDuration}>
+        <div
+          className="text-lg lg:text-2xl font-black text-foreground truncate"
+          title={estimatedDuration}
+        >
           {estimatedDuration?.split(' ')[0] || 'N/A'}
         </div>
       </div>

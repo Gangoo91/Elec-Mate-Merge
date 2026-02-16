@@ -18,7 +18,10 @@ interface AvailableSupportersProps {
 const SupporterListSkeleton = () => (
   <div className="space-y-3">
     {[1, 2, 3].map((i) => (
-      <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+      <div
+        key={i}
+        className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/10"
+      >
         <Skeleton className="w-14 h-14 rounded-xl bg-white/10 shrink-0" />
         <div className="flex-1 space-y-2">
           <div className="flex items-center gap-2">
@@ -47,45 +50,55 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Use cached hook for supporters
-  const { data: supporters = [], isLoading, isError, refetch } = useAvailableSupporters(excludeUserId);
+  const {
+    data: supporters = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useAvailableSupporters(excludeUserId);
 
   // Subscribe to real-time presence updates
   useEffect(() => {
-    const unsubscribe = peerPresenceService.subscribeToAvailability((updatedSupporter, eventType) => {
-      if (excludeUserId && updatedSupporter.user_id === excludeUserId) return;
+    const unsubscribe = peerPresenceService.subscribeToAvailability(
+      (updatedSupporter, eventType) => {
+        if (excludeUserId && updatedSupporter.user_id === excludeUserId) return;
 
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
+
+        debounceTimerRef.current = setTimeout(() => {
+          queryClient.setQueryData<PeerSupporter[]>(
+            ['available-supporters', excludeUserId],
+            (old) => {
+              if (!old) return old;
+
+              if (eventType === 'DELETE') {
+                return old.filter((s) => s.id !== updatedSupporter.id);
+              }
+
+              if (eventType === 'INSERT') {
+                if (updatedSupporter.is_available && updatedSupporter.is_active) {
+                  return [...old, updatedSupporter];
+                }
+                return old;
+              }
+
+              // UPDATE event
+              if (updatedSupporter.is_available && updatedSupporter.is_active) {
+                const exists = old.find((s) => s.id === updatedSupporter.id);
+                if (exists) {
+                  return old.map((s) => (s.id === updatedSupporter.id ? updatedSupporter : s));
+                }
+                return [...old, updatedSupporter];
+              } else {
+                return old.filter((s) => s.id !== updatedSupporter.id);
+              }
+            }
+          );
+        }, 200);
       }
-
-      debounceTimerRef.current = setTimeout(() => {
-        queryClient.setQueryData<PeerSupporter[]>(['available-supporters', excludeUserId], (old) => {
-          if (!old) return old;
-
-          if (eventType === 'DELETE') {
-            return old.filter(s => s.id !== updatedSupporter.id);
-          }
-
-          if (eventType === 'INSERT') {
-            if (updatedSupporter.is_available && updatedSupporter.is_active) {
-              return [...old, updatedSupporter];
-            }
-            return old;
-          }
-
-          // UPDATE event
-          if (updatedSupporter.is_available && updatedSupporter.is_active) {
-            const exists = old.find(s => s.id === updatedSupporter.id);
-            if (exists) {
-              return old.map(s => s.id === updatedSupporter.id ? updatedSupporter : s);
-            }
-            return [...old, updatedSupporter];
-          } else {
-            return old.filter(s => s.id !== updatedSupporter.id);
-          }
-        });
-      }, 200);
-    });
+    );
 
     return () => {
       unsubscribe();
@@ -141,8 +154,8 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         </div>
         <h3 className="font-semibold text-white mb-2">No one available right now</h3>
         <p className="text-sm text-white/60 max-w-xs mx-auto mb-4">
-          All our Mental Health Mates are currently offline. Check back later or consider
-          becoming a supporter yourself!
+          All our Mental Health Mates are currently offline. Check back later or consider becoming a
+          supporter yourself!
         </p>
         <Button
           variant="ghost"
@@ -165,9 +178,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
           </span>
-          <h3 className="text-sm font-medium text-white">
-            Available Now ({supporters.length})
-          </h3>
+          <h3 className="text-sm font-medium text-white">Available Now ({supporters.length})</h3>
         </div>
         <Button
           variant="ghost"

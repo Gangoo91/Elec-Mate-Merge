@@ -78,7 +78,9 @@ export const SensorLimitationsSection = () => {
         <div className="bg-gradient-to-r from-red-900/20 to-orange-900/20 border border-red-600/50 rounded-lg p-4">
           <h4 className="font-semibold text-red-200 mb-2">Mitigation Strategies</h4>
           <p className="text-red-100 text-sm">
-            Address limitations through proper system design: use multiple sensor types, implement regular maintenance schedules, ensure secure mounting, and choose compatible protocols for reliable integration.
+            Address limitations through proper system design: use multiple sensor types, implement
+            regular maintenance schedules, ensure secure mounting, and choose compatible protocols
+            for reliable integration.
           </p>
         </div>
       </CardContent>

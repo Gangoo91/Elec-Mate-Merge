@@ -2,7 +2,14 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Plus, FileText, Target, TrendingUp, AlertTriangle, RefreshCw } from 'lucide-react';
 import { DropdownTabs } from '@/components/ui/dropdown-tabs';
 import { PortfolioEntry } from '@/types/portfolio';
@@ -16,11 +23,20 @@ import { useQualifications } from '@/hooks/qualification/useQualifications';
 
 const SmartPortfolioManager = () => {
   const { userSelection } = useQualifications();
-  const { entries, categories, analytics, isLoading, addEntry, updateEntry, deleteEntry, hasQualificationSelected } = usePortfolioDataWithQualifications();
+  const {
+    entries,
+    categories,
+    analytics,
+    isLoading,
+    addEntry,
+    updateEntry,
+    deleteEntry,
+    hasQualificationSelected,
+  } = usePortfolioDataWithQualifications();
   const [showAddForm, setShowAddForm] = useState(false);
   const [showChangeCourseDialog, setShowChangeCourseDialog] = useState(false);
   const [showChangeCourseSelector, setShowChangeCourseSelector] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState('overview');
 
   if (isLoading) {
     return (
@@ -60,7 +76,7 @@ const SmartPortfolioManager = () => {
     return (
       <div className="space-y-6">
         <QualificationSelector />
-        
+
         <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle>Smart Portfolio System</CardTitle>
@@ -105,7 +121,7 @@ const SmartPortfolioManager = () => {
 
       {/* Quick Actions */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <Button 
+        <Button
           onClick={() => setShowAddForm(true)}
           className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           size="lg"
@@ -113,7 +129,7 @@ const SmartPortfolioManager = () => {
           <Plus className="h-4 w-4" />
           Add Portfolio Entry
         </Button>
-        <Button 
+        <Button
           onClick={() => setShowChangeCourseDialog(true)}
           variant="outline"
           className="flex items-center gap-2 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
@@ -157,7 +173,9 @@ const SmartPortfolioManager = () => {
                 <TrendingUp className="h-5 w-5 text-purple-400" />
                 <div>
                   <p className="text-sm text-white">Time Logged</p>
-                  <p className="text-2xl font-bold text-purple-400">{Math.round(analytics.totalTimeSpent / 60)}h</p>
+                  <p className="text-2xl font-bold text-purple-400">
+                    {Math.round(analytics.totalTimeSpent / 60)}h
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -172,30 +190,40 @@ const SmartPortfolioManager = () => {
         onValueChange={setActiveTab}
         tabs={[
           {
-            value: "overview",
-            label: "Overview",
+            value: 'overview',
+            label: 'Overview',
             icon: Target,
             content: (
               <div className="space-y-6 mt-4">
                 <div className="grid gap-4">
                   {categories.map((category) => {
-                    const categoryEntries = entries.filter(e => e.category.id === category.id);
-                    const completedEntries = categoryEntries.filter(e => e.status === 'completed').length;
-                    const progressPercentage = Math.round((completedEntries / category.requiredEntries) * 100);
+                    const categoryEntries = entries.filter((e) => e.category.id === category.id);
+                    const completedEntries = categoryEntries.filter(
+                      (e) => e.status === 'completed'
+                    ).length;
+                    const progressPercentage = Math.round(
+                      (completedEntries / category.requiredEntries) * 100
+                    );
 
                     return (
                       <Card key={category.id} className="border-elec-yellow/20 bg-white/10">
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between mb-2">
                             <h3 className="font-semibold">{category.name}</h3>
-                            <Badge variant={progressPercentage >= 100 ? "default" : "secondary"} 
-                                   className={progressPercentage >= 100 ? "bg-elec-yellow text-elec-dark" : "border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow"}>
+                            <Badge
+                              variant={progressPercentage >= 100 ? 'default' : 'secondary'}
+                              className={
+                                progressPercentage >= 100
+                                  ? 'bg-elec-yellow text-elec-dark'
+                                  : 'border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow'
+                              }
+                            >
                               {completedEntries}/{category.requiredEntries}
                             </Badge>
                           </div>
                           <p className="text-sm text-white mb-3">{category.description}</p>
                           <div className="w-full bg-white/5 rounded-full h-2">
-                            <div 
+                            <div
                               className="bg-elec-yellow h-2 rounded-full transition-all duration-500"
                               style={{ width: `${Math.min(progressPercentage, 100)}%` }}
                             />
@@ -207,32 +235,32 @@ const SmartPortfolioManager = () => {
                   })}
                 </div>
               </div>
-            )
+            ),
           },
           {
-            value: "entries",
-            label: "Portfolio Entries",
+            value: 'entries',
+            label: 'Portfolio Entries',
             icon: FileText,
             content: (
               <div className="mt-4">
-                <PortfolioEntriesList 
+                <PortfolioEntriesList
                   entries={entries}
                   onUpdateEntry={updateEntry}
                   onDeleteEntry={deleteEntry}
                 />
               </div>
-            )
+            ),
           },
           {
-            value: "compliance",
-            label: "Compliance Progress",
+            value: 'compliance',
+            label: 'Compliance Progress',
             icon: TrendingUp,
             content: (
               <div className="mt-4">
                 <QualificationCompliance />
               </div>
-            )
-          }
+            ),
+          },
         ]}
       />
 
@@ -268,13 +296,15 @@ const SmartPortfolioManager = () => {
                 Changing your course will have the following effects:
               </DialogDescription>
             </DialogHeader>
-            
+
             <div className="space-y-4">
               <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-yellow-500 mb-2">Important Notice:</h4>
                 <ul className="space-y-2 text-sm text-white">
                   <li>• Your compliance tracking will be reset for the new qualification</li>
-                  <li>• Portfolio entries will remain but may need reassignment to new categories</li>
+                  <li>
+                    • Portfolio entries will remain but may need reassignment to new categories
+                  </li>
                   <li>• Progress analytics will be recalculated</li>
                   <li>• You'll need to select a new qualification from the available options</li>
                 </ul>
@@ -282,14 +312,14 @@ const SmartPortfolioManager = () => {
             </div>
 
             <DialogFooter className="flex gap-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setShowChangeCourseDialog(false)}
                 className="border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={() => {
                   setShowChangeCourseDialog(false);
                   setShowChangeCourseSelector(true);

@@ -1,4 +1,15 @@
-import { TrendingUp, Zap, Battery, Cpu, Shield, Home, Info, AlertTriangle, CheckCircle, Star } from 'lucide-react';
+import {
+  TrendingUp,
+  Zap,
+  Battery,
+  Cpu,
+  Shield,
+  Home,
+  Info,
+  AlertTriangle,
+  CheckCircle,
+  Star,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -15,38 +26,69 @@ export const Amendment2Content = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            Amendment 2 represents the most significant update to BS 7671 in decades, introducing comprehensive provisions for modern 
-            electrical installations including energy storage, electric vehicles, smart technology, and enhanced safety measures. 
-            These changes reflect the transformation of electrical installations from simple power distribution to intelligent energy management systems.
+            Amendment 2 represents the most significant update to BS 7671 in decades, introducing
+            comprehensive provisions for modern electrical installations including energy storage,
+            electric vehicles, smart technology, and enhanced safety measures. These changes reflect
+            the transformation of electrical installations from simple power distribution to
+            intelligent energy management systems.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-              <h4 className="text-green-300 font-semibold text-lg mb-3">Key Drivers for Amendment 2</h4>
+              <h4 className="text-green-300 font-semibold text-lg mb-3">
+                Key Drivers for Amendment 2
+              </h4>
               <ul className="text-sm space-y-2">
-                <li>• <strong>Net Zero Carbon Targets:</strong> Government commitment to net zero by 2050</li>
-                <li>• <strong>Renewable Energy Growth:</strong> Massive expansion of solar PV and wind generation</li>
-                <li>• <strong>Electric Vehicle Adoption:</strong> Rapid growth in EV ownership and charging infrastructure</li>
-                <li>• <strong>Smart Technology Integration:</strong> IoT devices and intelligent control systems</li>
-                <li>• <strong>Energy Storage Revolution:</strong> Battery systems becoming economically viable</li>
-                <li>• <strong>Grid Modernisation:</strong> Smart grids and bidirectional energy flow</li>
+                <li>
+                  • <strong>Net Zero Carbon Targets:</strong> Government commitment to net zero by
+                  2050
+                </li>
+                <li>
+                  • <strong>Renewable Energy Growth:</strong> Massive expansion of solar PV and wind
+                  generation
+                </li>
+                <li>
+                  • <strong>Electric Vehicle Adoption:</strong> Rapid growth in EV ownership and
+                  charging infrastructure
+                </li>
+                <li>
+                  • <strong>Smart Technology Integration:</strong> IoT devices and intelligent
+                  control systems
+                </li>
+                <li>
+                  • <strong>Energy Storage Revolution:</strong> Battery systems becoming
+                  economically viable
+                </li>
+                <li>
+                  • <strong>Grid Modernisation:</strong> Smart grids and bidirectional energy flow
+                </li>
               </ul>
             </div>
 
             <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
-              <h4 className="text-blue-300 font-semibold text-lg mb-3">Amendment 2 Timeline and Implementation</h4>
+              <h4 className="text-blue-300 font-semibold text-lg mb-3">
+                Amendment 2 Timeline and Implementation
+              </h4>
               <div className="space-y-3">
                 <div className="bg-blue-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm">Publication: March 2022</p>
-                  <p className="text-xs text-foreground">Amendment 2 officially published and available</p>
+                  <p className="text-xs text-foreground">
+                    Amendment 2 officially published and available
+                  </p>
                 </div>
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm">Implementation: September 2022</p>
-                  <p className="text-xs text-foreground">Mandatory compliance for all new installations</p>
+                  <p className="text-foreground font-semibold text-sm">
+                    Implementation: September 2022
+                  </p>
+                  <p className="text-xs text-foreground">
+                    Mandatory compliance for all new installations
+                  </p>
                 </div>
                 <div className="bg-blue-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm">Existing Installations</p>
-                  <p className="text-xs text-foreground">No retrospective requirements, but recommended for major alterations</p>
+                  <p className="text-xs text-foreground">
+                    No retrospective requirements, but recommended for major alterations
+                  </p>
                 </div>
               </div>
             </div>
@@ -64,8 +106,9 @@ export const Amendment2Content = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            The introduction of Prosumer Electrical Installations (PEI) recognition represents a fundamental shift in how BS 7671 
-            views modern electrical installations. No longer just consumers of electricity, buildings now actively participate in energy generation, 
+            The introduction of Prosumer Electrical Installations (PEI) recognition represents a
+            fundamental shift in how BS 7671 views modern electrical installations. No longer just
+            consumers of electricity, buildings now actively participate in energy generation,
             storage, and grid services.
           </p>
 
@@ -95,7 +138,9 @@ export const Amendment2Content = () => {
                   </ul>
                 </div>
                 <div className="bg-green-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm">Combined Heat and Power (CHP)</p>
+                  <p className="text-foreground font-semibold text-sm">
+                    Combined Heat and Power (CHP)
+                  </p>
                   <ul className="text-xs space-y-1 mt-1">
                     <li>• Gas-fired micro-CHP units</li>
                     <li>• Fuel cell systems</li>
@@ -131,7 +176,9 @@ export const Amendment2Content = () => {
                   </ul>
                 </div>
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm">Installation Considerations</p>
+                  <p className="text-foreground font-semibold text-sm">
+                    Installation Considerations
+                  </p>
                   <ul className="text-xs space-y-1 mt-1">
                     <li>• Location and access</li>
                     <li>• Temperature control</li>
@@ -182,8 +229,9 @@ export const Amendment2Content = () => {
           <Alert className="border-green-600/30 bg-green-900/20">
             <Info className="h-4 w-4 text-green-400" />
             <AlertDescription className="text-foreground">
-              <strong className="text-green-300">PEI Design Principle:</strong> Amendment 2 requires that PEI installations are designed from the outset 
-              to accommodate bidirectional energy flow, future expansion, and integration with smart grid services.
+              <strong className="text-green-300">PEI Design Principle:</strong> Amendment 2 requires
+              that PEI installations are designed from the outset to accommodate bidirectional
+              energy flow, future expansion, and integration with smart grid services.
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -201,11 +249,18 @@ export const Amendment2Content = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Arc Fault Detection Devices */}
             <div className="bg-red-600/10 p-4 rounded-lg border border-red-600/30">
-              <h4 className="text-red-300 font-semibold text-lg mb-3">Arc Fault Detection Devices (AFDD)</h4>
+              <h4 className="text-red-300 font-semibold text-lg mb-3">
+                Arc Fault Detection Devices (AFDD)
+              </h4>
               <div className="space-y-3">
-                <p className="text-sm">AFDDs detect dangerous arcing conditions that traditional protective devices cannot identify.</p>
+                <p className="text-sm">
+                  AFDDs detect dangerous arcing conditions that traditional protective devices
+                  cannot identify.
+                </p>
                 <div className="bg-red-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Mandatory Applications:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Mandatory Applications:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• AC final circuits in houses of multiple occupation (HMO)</li>
                     <li>• Sleeping accommodation circuits</li>
@@ -214,7 +269,9 @@ export const Amendment2Content = () => {
                   </ul>
                 </div>
                 <div className="bg-red-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Technical Requirements:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Technical Requirements:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Detection algorithms for series and parallel arcs</li>
                     <li>• Immunity to normal switching operations</li>
@@ -227,11 +284,18 @@ export const Amendment2Content = () => {
 
             {/* Surge Protection Devices */}
             <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-600/30">
-              <h4 className="text-yellow-300 font-semibold text-lg mb-3">Surge Protection Devices (SPD)</h4>
+              <h4 className="text-yellow-300 font-semibold text-lg mb-3">
+                Surge Protection Devices (SPD)
+              </h4>
               <div className="space-y-3">
-                <p className="text-sm">Enhanced requirements for surge protection due to increased electronic equipment sensitivity.</p>
+                <p className="text-sm">
+                  Enhanced requirements for surge protection due to increased electronic equipment
+                  sensitivity.
+                </p>
                 <div className="bg-yellow-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Installation Requirements:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Installation Requirements:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Risk assessment to determine SPD necessity</li>
                     <li>• Type 1 SPDs at main distribution board</li>
@@ -240,7 +304,9 @@ export const Amendment2Content = () => {
                   </ul>
                 </div>
                 <div className="bg-yellow-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Coordination Strategy:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Coordination Strategy:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Proper voltage protection levels (Up)</li>
                     <li>• Current handling capabilities</li>
@@ -253,11 +319,17 @@ export const Amendment2Content = () => {
 
             {/* RCD Enhancements */}
             <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
-              <h4 className="text-blue-300 font-semibold text-lg mb-3">RCD Protection Enhancements</h4>
+              <h4 className="text-blue-300 font-semibold text-lg mb-3">
+                RCD Protection Enhancements
+              </h4>
               <div className="space-y-3">
-                <p className="text-sm">Amendment 2 introduces more stringent RCD requirements and new applications.</p>
+                <p className="text-sm">
+                  Amendment 2 introduces more stringent RCD requirements and new applications.
+                </p>
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Enhanced Requirements:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Enhanced Requirements:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Type A RCDs for EV charging circuits</li>
                     <li>• Type B RCDs for certain DC applications</li>
@@ -279,9 +351,13 @@ export const Amendment2Content = () => {
 
             {/* Fire Safety Measures */}
             <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-              <h4 className="text-orange-300 font-semibold text-lg mb-3">Fire Safety and Emergency Provisions</h4>
+              <h4 className="text-orange-300 font-semibold text-lg mb-3">
+                Fire Safety and Emergency Provisions
+              </h4>
               <div className="space-y-3">
-                <p className="text-sm">Enhanced fire safety measures reflecting lessons learned from tragic events.</p>
+                <p className="text-sm">
+                  Enhanced fire safety measures reflecting lessons learned from tragic events.
+                </p>
                 <div className="bg-orange-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-2">Cable Selection:</p>
                   <ul className="text-xs space-y-1">
@@ -316,13 +392,16 @@ export const Amendment2Content = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            Appendix 17 has been significantly expanded to provide comprehensive guidance on energy efficiency measures, 
-            reflecting the critical importance of reducing electrical energy consumption and carbon emissions.
+            Appendix 17 has been significantly expanded to provide comprehensive guidance on energy
+            efficiency measures, reflecting the critical importance of reducing electrical energy
+            consumption and carbon emissions.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-              <h4 className="text-green-300 font-semibold text-lg mb-3">Design for Energy Efficiency</h4>
+              <h4 className="text-green-300 font-semibold text-lg mb-3">
+                Design for Energy Efficiency
+              </h4>
               <div className="space-y-3">
                 <div className="bg-green-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-2">Load Management:</p>
@@ -355,7 +434,9 @@ export const Amendment2Content = () => {
             </div>
 
             <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
-              <h4 className="text-blue-300 font-semibold text-lg mb-3">Monitoring and Control Systems</h4>
+              <h4 className="text-blue-300 font-semibold text-lg mb-3">
+                Monitoring and Control Systems
+              </h4>
               <div className="space-y-3">
                 <div className="bg-blue-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-2">Smart Metering:</p>
@@ -367,7 +448,9 @@ export const Amendment2Content = () => {
                   </ul>
                 </div>
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Building Management Integration:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Building Management Integration:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• HVAC system coordination</li>
                     <li>• Lighting control integration</li>
@@ -376,7 +459,9 @@ export const Amendment2Content = () => {
                   </ul>
                 </div>
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Performance Optimization:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Performance Optimization:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Continuous commissioning</li>
                     <li>• Performance benchmarking</li>
@@ -392,7 +477,9 @@ export const Amendment2Content = () => {
             <h4 className="text-purple-300 font-semibold text-lg mb-3">Carbon Impact Assessment</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <p className="text-foreground font-semibold text-sm mb-2">Lifecycle Considerations:</p>
+                <p className="text-foreground font-semibold text-sm mb-2">
+                  Lifecycle Considerations:
+                </p>
                 <ul className="text-xs space-y-1">
                   <li>• Embodied carbon in equipment</li>
                   <li>• Manufacturing impact</li>
@@ -401,7 +488,9 @@ export const Amendment2Content = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-foreground font-semibold text-sm mb-2">Operational Efficiency:</p>
+                <p className="text-foreground font-semibold text-sm mb-2">
+                  Operational Efficiency:
+                </p>
                 <ul className="text-xs space-y-1">
                   <li>• Grid carbon intensity factors</li>
                   <li>• Peak vs. off-peak emissions</li>
@@ -437,7 +526,9 @@ export const Amendment2Content = () => {
               <h4 className="text-blue-300 font-semibold text-lg mb-3">Transition Planning</h4>
               <div className="space-y-3">
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Training Requirements:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Training Requirements:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Updated technical knowledge</li>
                     <li>• New testing procedures</li>
@@ -485,9 +576,10 @@ export const Amendment2Content = () => {
           <Alert className="border-yellow-600/30 bg-yellow-900/20">
             <AlertTriangle className="h-4 w-4 text-yellow-400" />
             <AlertDescription className="text-foreground">
-              <strong className="text-yellow-300">Professional Development Priority:</strong> Amendment 2 represents a paradigm shift 
-              requiring continuous professional development. Staying current with these changes is essential for maintaining competence 
-              and delivering value to clients in the evolving electrical industry.
+              <strong className="text-yellow-300">Professional Development Priority:</strong>{' '}
+              Amendment 2 represents a paradigm shift requiring continuous professional development.
+              Staying current with these changes is essential for maintaining competence and
+              delivering value to clients in the evolving electrical industry.
             </AlertDescription>
           </Alert>
         </CardContent>

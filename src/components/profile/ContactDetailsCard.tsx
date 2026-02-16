@@ -106,11 +106,15 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
                 key={row.label}
                 className={`flex items-center gap-3 px-4 py-3 ${!isLast ? 'border-b border-white/[0.04]' : ''}`}
               >
-                <div className={`w-8 h-8 rounded-lg ${row.iconBg} flex items-center justify-center flex-shrink-0`}>
+                <div
+                  className={`w-8 h-8 rounded-lg ${row.iconBg} flex items-center justify-center flex-shrink-0`}
+                >
                   <Icon className={`h-4 w-4 ${row.iconColor}`} />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">{row.label}</p>
+                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                    {row.label}
+                  </p>
                   <p className="text-[15px] text-white truncate">{row.value}</p>
                   {row.subtitle && (
                     <p className="text-[12px] text-white/40 mt-0.5">{row.subtitle}</p>
@@ -123,7 +127,10 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
       </motion.div>
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -144,7 +151,11 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (

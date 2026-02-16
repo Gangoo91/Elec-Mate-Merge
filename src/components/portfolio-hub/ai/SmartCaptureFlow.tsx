@@ -66,7 +66,14 @@ export function SmartCaptureFlow({
   const [captureData, setCaptureData] = useState<CaptureData>({
     title: '',
     description: '',
-    type: initialType === 'photo' ? 'image' : initialType === 'document' ? 'document' : initialType === 'video' ? 'video' : 'text',
+    type:
+      initialType === 'photo'
+        ? 'image'
+        : initialType === 'document'
+          ? 'document'
+          : initialType === 'video'
+            ? 'video'
+            : 'text',
     selectedKSBs: [],
     selectedTags: [],
   });
@@ -74,90 +81,95 @@ export function SmartCaptureFlow({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const handleFileSelect = useCallback(async (file: File) => {
-    if (!user?.id) return;
+  const handleFileSelect = useCallback(
+    async (file: File) => {
+      if (!user?.id) return;
 
-    // Validate file
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    if (file.size > maxSize) {
-      toast({
-        title: "File too large",
-        description: "Maximum file size is 10MB",
-        variant: "destructive"
-      });
-      return;
-    }
+      // Validate file
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      if (file.size > maxSize) {
+        toast({
+          title: 'File too large',
+          description: 'Maximum file size is 10MB',
+          variant: 'destructive',
+        });
+        return;
+      }
 
-    // Determine type
-    let type: 'image' | 'document' | 'video' = 'document';
-    if (file.type.startsWith('image/')) type = 'image';
-    else if (file.type.startsWith('video/')) type = 'video';
+      // Determine type
+      let type: 'image' | 'document' | 'video' = 'document';
+      if (file.type.startsWith('image/')) type = 'image';
+      else if (file.type.startsWith('video/')) type = 'video';
 
-    // Create preview
-    if (type === 'image') {
-      const reader = new FileReader();
-      reader.onload = (e) => setPreviewUrl(e.target?.result as string);
-      reader.readAsDataURL(file);
-    }
+      // Create preview
+      if (type === 'image') {
+        const reader = new FileReader();
+        reader.onload = (e) => setPreviewUrl(e.target?.result as string);
+        reader.readAsDataURL(file);
+      }
 
-    // Upload to storage
-    setIsUploading(true);
-    setUploadProgress(0);
+      // Upload to storage
+      setIsUploading(true);
+      setUploadProgress(0);
 
-    try {
-      const fileId = `${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${user.id}/temp/${fileId}.${fileExt}`;
+      try {
+        const fileId = `${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+        const fileExt = file.name.split('.').pop();
+        const filePath = `${user.id}/temp/${fileId}.${fileExt}`;
 
-      setUploadProgress(30);
+        setUploadProgress(30);
 
-      const { data, error } = await supabase.storage
-        .from('portfolio-evidence')
-        .upload(filePath, file, { cacheControl: '3600', upsert: false });
+        const { data, error } = await supabase.storage
+          .from('portfolio-evidence')
+          .upload(filePath, file, { cacheControl: '3600', upsert: false });
 
-      if (error) throw error;
+        if (error) throw error;
 
-      setUploadProgress(80);
+        setUploadProgress(80);
 
-      const { data: urlData } = supabase.storage
-        .from('portfolio-evidence')
-        .getPublicUrl(data.path);
+        const { data: urlData } = supabase.storage
+          .from('portfolio-evidence')
+          .getPublicUrl(data.path);
 
-      setUploadProgress(100);
+        setUploadProgress(100);
 
-      setCaptureData(prev => ({
-        ...prev,
-        file,
-        fileUrl: urlData.publicUrl,
-        type,
-        title: prev.title || file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' '),
-      }));
+        setCaptureData((prev) => ({
+          ...prev,
+          file,
+          fileUrl: urlData.publicUrl,
+          type,
+          title: prev.title || file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' '),
+        }));
 
-      toast({
-        title: "File uploaded",
-        description: "Ready for AI analysis",
-      });
+        toast({
+          title: 'File uploaded',
+          description: 'Ready for AI analysis',
+        });
 
-      // Move to details step
-      setStep('details');
+        // Move to details step
+        setStep('details');
+      } catch (error) {
+        console.error('Upload error:', error);
+        toast({
+          title: 'Upload failed',
+          description: error instanceof Error ? error.message : 'Failed to upload file',
+          variant: 'destructive',
+        });
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [user?.id, toast]
+  );
 
-    } catch (error) {
-      console.error('Upload error:', error);
-      toast({
-        title: "Upload failed",
-        description: error instanceof Error ? error.message : "Failed to upload file",
-        variant: "destructive"
-      });
-    } finally {
-      setIsUploading(false);
-    }
-  }, [user?.id, toast]);
-
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file) handleFileSelect(file);
-  }, [handleFileSelect]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file) handleFileSelect(file);
+    },
+    [handleFileSelect]
+  );
 
   const handleAnalyze = async () => {
     if (!captureData.fileUrl) return;
@@ -172,16 +184,12 @@ export function SmartCaptureFlow({
     });
 
     if (result) {
-      setCaptureData(prev => ({
+      setCaptureData((prev) => ({
         ...prev,
         aiAnalysis: result,
         // Auto-select high-confidence suggestions
-        selectedKSBs: result.ksb_suggestions
-          .filter(k => k.confidence >= 80)
-          .map(k => k.code),
-        selectedTags: result.tag_suggestions
-          .filter(t => t.confidence >= 80)
-          .map(t => t.tag),
+        selectedKSBs: result.ksb_suggestions.filter((k) => k.confidence >= 80).map((k) => k.code),
+        selectedTags: result.tag_suggestions.filter((t) => t.confidence >= 80).map((t) => t.tag),
       }));
       setStep('review');
     } else {
@@ -191,39 +199,39 @@ export function SmartCaptureFlow({
   };
 
   const handleAcceptKSB = (ksb: { code: string }) => {
-    setCaptureData(prev => ({
+    setCaptureData((prev) => ({
       ...prev,
       selectedKSBs: [...prev.selectedKSBs, ksb.code],
     }));
   };
 
   const handleRejectKSB = (ksb: { code: string }) => {
-    setCaptureData(prev => ({
+    setCaptureData((prev) => ({
       ...prev,
-      selectedKSBs: prev.selectedKSBs.filter(k => k !== ksb.code),
+      selectedKSBs: prev.selectedKSBs.filter((k) => k !== ksb.code),
     }));
   };
 
   const handleAcceptTag = (tag: { tag: string }) => {
-    setCaptureData(prev => ({
+    setCaptureData((prev) => ({
       ...prev,
       selectedTags: [...prev.selectedTags, tag.tag],
     }));
   };
 
   const handleRejectTag = (tag: { tag: string }) => {
-    setCaptureData(prev => ({
+    setCaptureData((prev) => ({
       ...prev,
-      selectedTags: prev.selectedTags.filter(t => t !== tag.tag),
+      selectedTags: prev.selectedTags.filter((t) => t !== tag.tag),
     }));
   };
 
   const handleAcceptAll = () => {
     if (!aiResult) return;
-    setCaptureData(prev => ({
+    setCaptureData((prev) => ({
       ...prev,
-      selectedKSBs: aiResult.ksb_suggestions.map(k => k.code),
-      selectedTags: aiResult.tag_suggestions.map(t => t.tag),
+      selectedKSBs: aiResult.ksb_suggestions.map((k) => k.code),
+      selectedTags: aiResult.tag_suggestions.map((t) => t.tag),
     }));
   };
 
@@ -238,8 +246,8 @@ export function SmartCaptureFlow({
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         className={cn(
-          "relative border-2 border-dashed rounded-xl p-8 text-center transition-all",
-          "border-elec-yellow/30 hover:border-elec-yellow/50 bg-muted/30"
+          'relative border-2 border-dashed rounded-xl p-8 text-center transition-all',
+          'border-elec-yellow/30 hover:border-elec-yellow/50 bg-muted/30'
         )}
       >
         <input
@@ -264,12 +272,8 @@ export function SmartCaptureFlow({
               <Upload className="h-10 w-10 text-elec-yellow" />
             </div>
             <div>
-              <p className="text-base font-medium text-foreground">
-                Drag and drop your evidence
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">
-                or choose how to capture
-              </p>
+              <p className="text-base font-medium text-foreground">Drag and drop your evidence</p>
+              <p className="text-sm text-muted-foreground mt-1">or choose how to capture</p>
             </div>
           </div>
         )}
@@ -345,18 +349,14 @@ export function SmartCaptureFlow({
       {/* Preview */}
       {previewUrl && (
         <div className="relative rounded-lg overflow-hidden bg-muted aspect-video">
-          <img
-            src={previewUrl}
-            alt="Preview"
-            className="w-full h-full object-contain"
-          />
+          <img src={previewUrl} alt="Preview" className="w-full h-full object-contain" />
           <Button
             variant="ghost"
             size="icon"
             className="absolute top-2 right-2 h-8 w-8 bg-background/80 hover:bg-background"
             onClick={() => {
               setPreviewUrl(null);
-              setCaptureData(prev => ({ ...prev, file: undefined, fileUrl: undefined }));
+              setCaptureData((prev) => ({ ...prev, file: undefined, fileUrl: undefined }));
               setStep('capture');
             }}
           >
@@ -373,7 +373,7 @@ export function SmartCaptureFlow({
             id="title"
             placeholder="e.g., Consumer Unit Installation"
             value={captureData.title}
-            onChange={(e) => setCaptureData(prev => ({ ...prev, title: e.target.value }))}
+            onChange={(e) => setCaptureData((prev) => ({ ...prev, title: e.target.value }))}
             className="mt-1"
           />
         </div>
@@ -383,7 +383,7 @@ export function SmartCaptureFlow({
             id="description"
             placeholder="Describe what this evidence shows..."
             value={captureData.description}
-            onChange={(e) => setCaptureData(prev => ({ ...prev, description: e.target.value }))}
+            onChange={(e) => setCaptureData((prev) => ({ ...prev, description: e.target.value }))}
             className="mt-1 min-h-[80px]"
           />
         </div>
@@ -437,23 +437,19 @@ export function SmartCaptureFlow({
       <div className="flex items-start gap-4">
         {previewUrl && (
           <div className="w-20 h-20 rounded-lg overflow-hidden bg-muted shrink-0">
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="w-full h-full object-cover"
-            />
+            <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
           </div>
         )}
         <div className="flex-1 min-w-0">
           <h3 className="font-medium text-foreground truncate">{captureData.title}</h3>
           <p className="text-sm text-muted-foreground line-clamp-2">{captureData.description}</p>
           <div className="flex flex-wrap gap-1 mt-2">
-            {captureData.selectedKSBs.map(ksb => (
+            {captureData.selectedKSBs.map((ksb) => (
               <Badge key={ksb} variant="outline" className="text-xs">
                 {ksb}
               </Badge>
             ))}
-            {captureData.selectedTags.map(tag => (
+            {captureData.selectedTags.map((tag) => (
               <Badge key={tag} className="text-xs bg-elec-yellow/20 text-elec-yellow">
                 {tag}
               </Badge>
@@ -535,9 +531,7 @@ export function SmartCaptureFlow({
         onOpenChange={setShowACPicker}
         qualificationCode={qualificationCode}
         selectedACs={captureData.selectedKSBs}
-        onDone={(acs) =>
-          setCaptureData((prev) => ({ ...prev, selectedKSBs: acs }))
-        }
+        onDone={(acs) => setCaptureData((prev) => ({ ...prev, selectedKSBs: acs }))}
       />
     </div>
   );
@@ -566,12 +560,12 @@ export function SmartCaptureFlow({
             <div key={s} className="flex items-center gap-2 flex-1">
               <div
                 className={cn(
-                  "h-2 flex-1 rounded-full transition-colors",
+                  'h-2 flex-1 rounded-full transition-colors',
                   step === s
-                    ? "bg-elec-yellow"
+                    ? 'bg-elec-yellow'
                     : ['capture', 'details', 'analyze', 'review'].indexOf(step) > i
-                    ? "bg-elec-yellow/50"
-                    : "bg-muted"
+                      ? 'bg-elec-yellow/50'
+                      : 'bg-muted'
                 )}
               />
             </div>

@@ -1,5 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { HelpCircle } from 'lucide-react';
 
 export const BMSModule7Section5FAQ = () => {
@@ -18,8 +23,9 @@ export const BMSModule7Section5FAQ = () => {
               What happens if pre-functional testing is skipped?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Skipping pre-functional testing leads to wasted time during functional commissioning when basic wiring 
-              and power issues are discovered. It can also damage equipment if fundamental electrical problems exist.
+              Skipping pre-functional testing leads to wasted time during functional commissioning
+              when basic wiring and power issues are discovered. It can also damage equipment if
+              fundamental electrical problems exist.
             </AccordionContent>
           </AccordionItem>
 
@@ -28,8 +34,9 @@ export const BMSModule7Section5FAQ = () => {
               How long does commissioning typically take?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Pre-functional commissioning usually takes 1-3 days per major system, while functional commissioning 
-              can take 1-2 weeks depending on system complexity and the number of sequences to test.
+              Pre-functional commissioning usually takes 1-3 days per major system, while functional
+              commissioning can take 1-2 weeks depending on system complexity and the number of
+              sequences to test.
             </AccordionContent>
           </AccordionItem>
 
@@ -38,9 +45,9 @@ export const BMSModule7Section5FAQ = () => {
               What should be done if functional testing reveals wiring errors?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Stop testing immediately, isolate power safely, correct the wiring error, verify the fix with 
-              multimeter testing, update documentation, and restart functional testing from the beginning of 
-              that sequence.
+              Stop testing immediately, isolate power safely, correct the wiring error, verify the
+              fix with multimeter testing, update documentation, and restart functional testing from
+              the beginning of that sequence.
             </AccordionContent>
           </AccordionItem>
 
@@ -49,9 +56,9 @@ export const BMSModule7Section5FAQ = () => {
               Why is documentation so important during commissioning?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Documentation provides proof that systems work correctly, creates troubleshooting references for 
-              future maintenance, satisfies warranty requirements, and ensures building operators understand 
-              system operation.
+              Documentation provides proof that systems work correctly, creates troubleshooting
+              references for future maintenance, satisfies warranty requirements, and ensures
+              building operators understand system operation.
             </AccordionContent>
           </AccordionItem>
 
@@ -60,9 +67,9 @@ export const BMSModule7Section5FAQ = () => {
               Can commissioning be done remotely?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Some functional testing can be done remotely through network connections, but pre-functional 
-              commissioning and safety testing must be done on-site with physical verification of wiring 
-              and equipment operation.
+              Some functional testing can be done remotely through network connections, but
+              pre-functional commissioning and safety testing must be done on-site with physical
+              verification of wiring and equipment operation.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

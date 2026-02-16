@@ -1,6 +1,5 @@
-
-import React from "react";
-import { Book } from "lucide-react";
+import React from 'react';
+import { Book } from 'lucide-react';
 
 type SectionHeaderProps = {
   sectionNumber: number | string;

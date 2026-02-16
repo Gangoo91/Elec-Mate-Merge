@@ -27,27 +27,29 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
   // If already migrated (has distributionBoards array), ensure all fields exist
   if (formData.distributionBoards?.length > 0) {
     // Ensure all boards have required fields (handles boards saved before new fields were added)
-    const boardsWithDefaults = formData.distributionBoards.map((board: Partial<DistributionBoard>) => ({
-      // Start with defaults from createDefaultBoard pattern
-      id: board.id || MAIN_BOARD_ID,
-      name: board.name || 'Board',
-      reference: board.reference || board.name || 'Board',
-      order: board.order ?? 0,
-      zdb: board.zdb || '',
-      ipf: board.ipf || '',
-      confirmedCorrectPolarity: board.confirmedCorrectPolarity ?? false,
-      confirmedPhaseSequence: board.confirmedPhaseSequence ?? false,
-      spdOperationalStatus: board.spdOperationalStatus ?? false,
-      spdNA: board.spdNA ?? false,
-      // Optional fields
-      location: board.location,
-      make: board.make,
-      model: board.model,
-      type: board.type,
-      totalWays: board.totalWays,
-      createdAt: board.createdAt,
-      updatedAt: board.updatedAt,
-    }));
+    const boardsWithDefaults = formData.distributionBoards.map(
+      (board: Partial<DistributionBoard>) => ({
+        // Start with defaults from createDefaultBoard pattern
+        id: board.id || MAIN_BOARD_ID,
+        name: board.name || 'Board',
+        reference: board.reference || board.name || 'Board',
+        order: board.order ?? 0,
+        zdb: board.zdb || '',
+        ipf: board.ipf || '',
+        confirmedCorrectPolarity: board.confirmedCorrectPolarity ?? false,
+        confirmedPhaseSequence: board.confirmedPhaseSequence ?? false,
+        spdOperationalStatus: board.spdOperationalStatus ?? false,
+        spdNA: board.spdNA ?? false,
+        // Optional fields
+        location: board.location,
+        make: board.make,
+        model: board.model,
+        type: board.type,
+        totalWays: board.totalWays,
+        createdAt: board.createdAt,
+        updatedAt: board.updatedAt,
+      })
+    );
 
     return {
       distributionBoards: boardsWithDefaults,
@@ -94,17 +96,14 @@ export const getBoardById = (
   boards: DistributionBoard[],
   boardId: string
 ): DistributionBoard | undefined => {
-  return boards.find(b => b.id === boardId) || boards.find(b => b.order === 0);
+  return boards.find((b) => b.id === boardId) || boards.find((b) => b.order === 0);
 };
 
 /**
  * Get circuits for a specific board
  */
-export const getCircuitsForBoard = (
-  circuits: TestResult[],
-  boardId: string
-): TestResult[] => {
-  return circuits.filter(c => (c.boardId || MAIN_BOARD_ID) === boardId);
+export const getCircuitsForBoard = (circuits: TestResult[], boardId: string): TestResult[] => {
+  return circuits.filter((c) => (c.boardId || MAIN_BOARD_ID) === boardId);
 };
 
 /**
@@ -133,19 +132,19 @@ export const removeBoard = (
     return { boards, circuits };
   }
 
-  const boardToRemove = boards.find(b => b.id === boardId);
+  const boardToRemove = boards.find((b) => b.id === boardId);
   if (!boardToRemove) {
     return { boards, circuits };
   }
 
   // Move circuits from removed board to main board
-  const updatedCircuits = circuits.map(c =>
+  const updatedCircuits = circuits.map((c) =>
     c.boardId === boardId ? { ...c, boardId: MAIN_BOARD_ID } : c
   );
 
   // Remove the board and reorder remaining boards
   const remainingBoards = boards
-    .filter(b => b.id !== boardId)
+    .filter((b) => b.id !== boardId)
     .map((b, index) => ({ ...b, order: index }));
 
   return {
@@ -162,11 +161,7 @@ export const updateBoard = (
   boardId: string,
   updates: Partial<DistributionBoard>
 ): DistributionBoard[] => {
-  return boards.map(b =>
-    b.id === boardId
-      ? { ...b, ...updates, updatedAt: new Date() }
-      : b
-  );
+  return boards.map((b) => (b.id === boardId ? { ...b, ...updates, updatedAt: new Date() } : b));
 };
 
 /**
@@ -177,9 +172,7 @@ export const moveCircuitToBoard = (
   circuitId: string,
   newBoardId: string
 ): TestResult[] => {
-  return circuits.map(c =>
-    c.id === circuitId ? { ...c, boardId: newBoardId } : c
-  );
+  return circuits.map((c) => (c.id === circuitId ? { ...c, boardId: newBoardId } : c));
 };
 
 /**
@@ -189,10 +182,10 @@ export const getBoardStatistics = (
   boards: DistributionBoard[],
   circuits: TestResult[]
 ): { boardId: string; name: string; circuitCount: number; completedCount: number }[] => {
-  return boards.map(board => {
+  return boards.map((board) => {
     const boardCircuits = getCircuitsForBoard(circuits, board.id);
-    const completedCount = boardCircuits.filter(c =>
-      c.zs && c.polarity && (c.insulationLiveEarth || c.insulationResistance)
+    const completedCount = boardCircuits.filter(
+      (c) => c.zs && c.polarity && (c.insulationLiveEarth || c.insulationResistance)
     ).length;
 
     return {
@@ -237,7 +230,7 @@ export const formatBoardsForFormData = (
   circuits: TestResult[]
 ): any => {
   // For backward compatibility, also set legacy single-board fields from main board
-  const mainBoard = boards.find(b => b.order === 0) || boards[0];
+  const mainBoard = boards.find((b) => b.order === 0) || boards[0];
 
   return {
     distributionBoards: boards,

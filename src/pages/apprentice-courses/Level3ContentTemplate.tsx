@@ -14,18 +14,18 @@
  * - Readable font sizes (text-sm minimum)
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 // ============================================
 // SEO CONFIGURATION
 // ============================================
-const TITLE = "[Section Title] - Level 3 Module [X] Section [Y.Z]";
-const DESCRIPTION = "[Clear, informative description for search engines - max 160 chars]";
+const TITLE = '[Section Title] - Level 3 Module [X] Section [Y.Z]';
+const DESCRIPTION = '[Clear, informative description for search engines - max 160 chars]';
 
 // ============================================
 // INLINE CHECK QUESTIONS (3-4 per page)
@@ -33,38 +33,33 @@ const DESCRIPTION = "[Clear, informative description for search engines - max 16
 // ============================================
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "[Question text - concise, tests understanding]",
-    options: [
-      "[Option A]",
-      "[Option B - correct answer]",
-      "[Option C]",
-      "[Option D]"
-    ],
+    id: 'check-1',
+    question: '[Question text - concise, tests understanding]',
+    options: ['[Option A]', '[Option B - correct answer]', '[Option C]', '[Option D]'],
     correctIndex: 1,
-    explanation: "[Brief explanation that teaches, not just confirms]"
+    explanation: '[Brief explanation that teaches, not just confirms]',
   },
   {
-    id: "check-2",
-    question: "[Question 2]",
-    options: ["[A]", "[B]", "[C]", "[D]"],
+    id: 'check-2',
+    question: '[Question 2]',
+    options: ['[A]', '[B]', '[C]', '[D]'],
     correctIndex: 0,
-    explanation: "[Explanation]"
+    explanation: '[Explanation]',
   },
   {
-    id: "check-3",
-    question: "[Question 3]",
-    options: ["[A]", "[B]", "[C]", "[D]"],
+    id: 'check-3',
+    question: '[Question 3]',
+    options: ['[A]', '[B]', '[C]', '[D]'],
     correctIndex: 2,
-    explanation: "[Explanation]"
+    explanation: '[Explanation]',
   },
   {
-    id: "check-4",
-    question: "[Question 4]",
-    options: ["[A]", "[B]", "[C]", "[D]"],
+    id: 'check-4',
+    question: '[Question 4]',
+    options: ['[A]', '[B]', '[C]', '[D]'],
     correctIndex: 1,
-    explanation: "[Explanation]"
-  }
+    explanation: '[Explanation]',
+  },
 ];
 
 // ============================================
@@ -74,17 +69,17 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: "[Quiz question 1]",
-    options: ["[A]", "[B]", "[C]", "[D]"],
+    question: '[Quiz question 1]',
+    options: ['[A]', '[B]', '[C]', '[D]'],
     correctAnswer: 0,
-    explanation: "[Detailed explanation]"
+    explanation: '[Detailed explanation]',
   },
   {
     id: 2,
-    question: "[Quiz question 2]",
-    options: ["[A]", "[B]", "[C]", "[D]"],
+    question: '[Quiz question 2]',
+    options: ['[A]', '[B]', '[C]', '[D]'],
     correctAnswer: 1,
-    explanation: "[Detailed explanation]"
+    explanation: '[Detailed explanation]',
   },
   // ... questions 3-10
 ];
@@ -94,12 +89,12 @@ const quizQuestions = [
 // ============================================
 const faqs = [
   {
-    question: "[Common question 1]",
-    answer: "[Clear, practical answer that addresses the question fully]"
+    question: '[Common question 1]',
+    answer: '[Clear, practical answer that addresses the question fully]',
   },
   {
-    question: "[Common question 2]",
-    answer: "[Answer]"
+    question: '[Common question 2]',
+    answer: '[Answer]',
   },
   // ... more FAQs
 ];
@@ -112,7 +107,6 @@ const Level3ContentTemplate = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* ========================================
           STICKY HEADER - Minimal back navigation
           ======================================== */}
@@ -136,11 +130,9 @@ const Level3ContentTemplate = () => {
           MAIN ARTICLE CONTENT
           ======================================== */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* ----------------------------------------
             HEADER - Centered title with badge
             ---------------------------------------- */}
-        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -150,18 +142,32 @@ const Level3ContentTemplate = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Key Point 1:</strong> [Brief explanation]</li>
-              <li><strong>Key Point 2:</strong> [Brief explanation]</li>
-              <li><strong>Key Point 3:</strong> [Brief explanation]</li>
-              <li><strong>Key Point 4:</strong> [Brief explanation]</li>
+              <li>
+                <strong>Key Point 1:</strong> [Brief explanation]
+              </li>
+              <li>
+                <strong>Key Point 2:</strong> [Brief explanation]
+              </li>
+              <li>
+                <strong>Key Point 3:</strong> [Brief explanation]
+              </li>
+              <li>
+                <strong>Key Point 4:</strong> [Brief explanation]
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> [What to look for on site]</li>
-              <li><strong>Use:</strong> [How to apply this knowledge]</li>
-              <li><strong>Apply:</strong> [Practical application]</li>
+              <li>
+                <strong>Spot:</strong> [What to look for on site]
+              </li>
+              <li>
+                <strong>Use:</strong> [How to apply this knowledge]
+              </li>
+              <li>
+                <strong>Apply:</strong> [Practical application]
+              </li>
             </ul>
           </div>
         </div>
@@ -170,9 +176,6 @@ const Level3ContentTemplate = () => {
             LEARNING OUTCOMES
             What You'll Learn section
             ---------------------------------------- */}
-        
-
-        
 
         {/* ----------------------------------------
             CONTENT SECTION 01
@@ -183,9 +186,7 @@ const Level3ContentTemplate = () => {
             [Section 1 Title]
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              [Main content paragraph - explain the concept clearly]
-            </p>
+            <p>[Main content paragraph - explain the concept clearly]</p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">[Subsection heading]:</p>
@@ -324,9 +325,15 @@ const Level3ContentTemplate = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>[Mistake 1]</strong> — [Why it's wrong and consequence]</li>
-                <li><strong>[Mistake 2]</strong> — [Why it's wrong and consequence]</li>
-                <li><strong>[Mistake 3]</strong> — [Why it's wrong and consequence]</li>
+                <li>
+                  <strong>[Mistake 1]</strong> — [Why it's wrong and consequence]
+                </li>
+                <li>
+                  <strong>[Mistake 2]</strong> — [Why it's wrong and consequence]
+                </li>
+                <li>
+                  <strong>[Mistake 3]</strong> — [Why it's wrong and consequence]
+                </li>
               </ul>
             </div>
           </div>
@@ -381,10 +388,7 @@ const Level3ContentTemplate = () => {
             QUIZ
             ---------------------------------------- */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* ----------------------------------------
@@ -414,7 +418,6 @@ const Level3ContentTemplate = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

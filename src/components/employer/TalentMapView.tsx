@@ -1,23 +1,14 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from 'react';
 import { GoogleMap, Marker, InfoWindow, Circle } from '@react-google-maps/api';
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Slider } from "@/components/ui/slider";
-import { 
-  MapPin, 
-  Star, 
-  CheckCircle, 
-  Navigation,
-  X,
-  Plus,
-  Minus,
-  Crosshair
-} from "lucide-react";
-import { useGoogleMaps } from "@/contexts/GoogleMapsContext";
-import { GoogleMapsApiKeyInput } from "./GoogleMapsApiKeyInput";
-import type { EnhancedElectrician } from "./SparkProfileSheet";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Slider } from '@/components/ui/slider';
+import { MapPin, Star, CheckCircle, Navigation, X, Plus, Minus, Crosshair } from 'lucide-react';
+import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
+import { GoogleMapsApiKeyInput } from './GoogleMapsApiKeyInput';
+import type { EnhancedElectrician } from './SparkProfileSheet';
 
 // Manchester city centre
 const BASE_LAT = 53.4808;
@@ -34,12 +25,15 @@ interface TalentMapViewProps {
 // Haversine formula for distance calculation
 const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
   const R = 3959; // Earth's radius in miles
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-            Math.sin(dLon/2) * Math.sin(dLon/2);
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 };
 
 export function TalentMapView({
@@ -55,7 +49,7 @@ export function TalentMapView({
 
   // Filter electricians by distance from centre
   const filteredElectricians = useMemo(() => {
-    return electricians.filter(e => {
+    return electricians.filter((e) => {
       if (!e.coordinates) return false;
       const distance = calculateDistance(BASE_LAT, BASE_LNG, e.coordinates.lat, e.coordinates.lng);
       return distance <= radius[0];
@@ -75,22 +69,22 @@ export function TalentMapView({
 
   const handleFitBounds = () => {
     if (!map || filteredElectricians.length === 0) return;
-    
+
     const bounds = new google.maps.LatLngBounds();
     bounds.extend(DEFAULT_CENTER);
-    filteredElectricians.forEach(e => {
+    filteredElectricians.forEach((e) => {
       if (e.coordinates) {
         bounds.extend({ lat: e.coordinates.lat, lng: e.coordinates.lng });
       }
     });
-    
+
     map.fitBounds(bounds, 50);
   };
 
   // API key input screen
   if (!apiKey) {
     return (
-      <GoogleMapsApiKeyInput 
+      <GoogleMapsApiKeyInput
         title="Enable Map View"
         description="Enter your Google Maps API key to view electricians on the map."
       />
@@ -102,11 +96,7 @@ export function TalentMapView({
       <Card className="bg-elec-gray border-border">
         <CardContent className="p-6 text-center">
           <p className="text-destructive">Error loading Google Maps. Please check your API key.</p>
-          <Button 
-            variant="outline" 
-            className="mt-4"
-            onClick={clearApiKey}
-          >
+          <Button variant="outline" className="mt-4" onClick={clearApiKey}>
             Reset API Key
           </Button>
         </CardContent>
@@ -202,7 +192,7 @@ export function TalentMapView({
               if (!elec.coordinates) return null;
               const isInLabourBank = labourBankIds.includes(elec.id);
               const isSelected = selectedMarker?.id === elec.id;
-              
+
               return (
                 <Marker
                   key={elec.id}
@@ -216,12 +206,15 @@ export function TalentMapView({
                     strokeWeight: isSelected ? 3 : 2,
                   }}
                   label={{
-                    text: elec.name.split(' ').map(n => n[0]).join(''),
+                    text: elec.name
+                      .split(' ')
+                      .map((n) => n[0])
+                      .join(''),
                     color: '#ffffff',
                     fontSize: '10px',
                     fontWeight: 'bold',
                   }}
-                  onClick={() => setSelectedMarker(prev => prev?.id === elec.id ? null : elec)}
+                  onClick={() => setSelectedMarker((prev) => (prev?.id === elec.id ? null : elec))}
                 />
               );
             })}
@@ -229,48 +222,57 @@ export function TalentMapView({
             {/* Selected electrician InfoWindow */}
             {selectedMarker && selectedMarker.coordinates && (
               <InfoWindow
-                position={{ lat: selectedMarker.coordinates.lat, lng: selectedMarker.coordinates.lng }}
+                position={{
+                  lat: selectedMarker.coordinates.lat,
+                  lng: selectedMarker.coordinates.lng,
+                }}
                 onCloseClick={() => setSelectedMarker(null)}
               >
                 <div className="p-1 min-w-[120px]">
                   <p className="font-semibold text-gray-900">{selectedMarker.name}</p>
                   <p className="text-xs text-gray-600">{selectedMarker.ecsCardType}</p>
                   <p className="text-xs text-gray-500 mt-1">
-                    {calculateDistance(BASE_LAT, BASE_LNG, selectedMarker.coordinates.lat, selectedMarker.coordinates.lng).toFixed(1)} miles away
+                    {calculateDistance(
+                      BASE_LAT,
+                      BASE_LNG,
+                      selectedMarker.coordinates.lat,
+                      selectedMarker.coordinates.lng
+                    ).toFixed(1)}{' '}
+                    miles away
                   </p>
                 </div>
               </InfoWindow>
             )}
           </GoogleMap>
-          
+
           {/* Custom zoom controls */}
           <div className="absolute bottom-4 right-4 flex flex-col gap-2 z-10">
-            <Button 
-              variant="secondary" 
-              size="icon" 
+            <Button
+              variant="secondary"
+              size="icon"
               className="h-10 w-10 shadow-lg"
               onClick={handleZoomIn}
             >
               <Plus className="h-5 w-5" />
             </Button>
-            <Button 
-              variant="secondary" 
-              size="icon" 
+            <Button
+              variant="secondary"
+              size="icon"
               className="h-10 w-10 shadow-lg"
               onClick={handleZoomOut}
             >
               <Minus className="h-5 w-5" />
             </Button>
-            <Button 
-              variant="secondary" 
-              size="icon" 
+            <Button
+              variant="secondary"
+              size="icon"
               className="h-10 w-10 shadow-lg"
               onClick={handleCentre}
             >
               <Crosshair className="h-5 w-5" />
             </Button>
           </div>
-          
+
           {/* Fit to bounds button */}
           <Button
             variant="secondary"
@@ -291,14 +293,19 @@ export function TalentMapView({
               <Avatar className="w-14 h-14">
                 <AvatarImage src={selectedMarker.avatar} alt={selectedMarker.name} />
                 <AvatarFallback className="bg-elec-yellow text-elec-dark font-bold">
-                  {selectedMarker.name.split(' ').map(n => n[0]).join('')}
+                  {selectedMarker.name
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')}
                 </AvatarFallback>
               </Avatar>
-              
+
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <h3 className="font-semibold truncate">{selectedMarker.name}</h3>
-                  {selectedMarker.verified && <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />}
+                  {selectedMarker.verified && (
+                    <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
+                  )}
                 </div>
                 <p className="text-sm text-muted-foreground">{selectedMarker.ecsCardType}</p>
                 <div className="flex items-center gap-3 mt-1 text-sm">
@@ -308,11 +315,19 @@ export function TalentMapView({
                   </span>
                   <span className="flex items-center gap-1 text-muted-foreground">
                     <MapPin className="h-3.5 w-3.5" />
-                    {selectedMarker.coordinates ? 
-                      calculateDistance(BASE_LAT, BASE_LNG, selectedMarker.coordinates.lat, selectedMarker.coordinates.lng).toFixed(1) : 
-                      selectedMarker.distance}mi
+                    {selectedMarker.coordinates
+                      ? calculateDistance(
+                          BASE_LAT,
+                          BASE_LNG,
+                          selectedMarker.coordinates.lat,
+                          selectedMarker.coordinates.lng
+                        ).toFixed(1)
+                      : selectedMarker.distance}
+                    mi
                   </span>
-                  <span className={`${selectedMarker.availability === 'Immediate' ? 'text-green-500' : 'text-muted-foreground'}`}>
+                  <span
+                    className={`${selectedMarker.availability === 'Immediate' ? 'text-green-500' : 'text-muted-foreground'}`}
+                  >
                     {selectedMarker.availability}
                   </span>
                 </div>
@@ -332,8 +347,8 @@ export function TalentMapView({
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            
-            <Button 
+
+            <Button
               className="w-full mt-3 h-12"
               onClick={() => onSelectElectrician(selectedMarker)}
             >
@@ -345,9 +360,13 @@ export function TalentMapView({
 
       {/* Stats */}
       <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
-        <span>{filteredElectricians.length} sparks within {radius[0]} miles</span>
+        <span>
+          {filteredElectricians.length} sparks within {radius[0]} miles
+        </span>
         <span>•</span>
-        <span>{filteredElectricians.filter(e => e.availability === 'Immediate').length} available now</span>
+        <span>
+          {filteredElectricians.filter((e) => e.availability === 'Immediate').length} available now
+        </span>
       </div>
     </div>
   );

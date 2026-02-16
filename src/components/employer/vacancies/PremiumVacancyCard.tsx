@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Briefcase,
   MapPin,
@@ -17,11 +17,11 @@ import {
   Flame,
   AlertTriangle,
   Timer,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { differenceInDays } from "date-fns";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { differenceInDays } from 'date-fns';
 
 // Urgency indicator types
 type UrgencyType = 'closing' | 'noApplicants' | 'hot' | null;
@@ -42,9 +42,7 @@ const getUrgencyIndicator = (
 ): UrgencyIndicator | null => {
   if (status !== 'Open') return null;
 
-  const daysToClose = closingDate
-    ? differenceInDays(new Date(closingDate), new Date())
-    : null;
+  const daysToClose = closingDate ? differenceInDays(new Date(closingDate), new Date()) : null;
   const daysSincePosted = differenceInDays(new Date(), new Date(postedAt));
 
   // Priority: Closing soon > No applicants > Hot
@@ -83,7 +81,7 @@ interface PremiumVacancyCardProps {
   title: string;
   location: string;
   type: string;
-  status: "Open" | "Closed" | "Draft";
+  status: 'Open' | 'Closed' | 'Draft';
   salaryMin?: number;
   salaryMax?: number;
   salaryPeriod?: string;
@@ -108,13 +106,13 @@ export function PremiumVacancyCard({
   status,
   salaryMin,
   salaryMax,
-  salaryPeriod = "year",
+  salaryPeriod = 'year',
   applicantCount,
   views,
   postedAt,
   closingDate,
   workArrangement,
-  companyInitial = "E",
+  companyInitial = 'E',
   onEdit,
   onDuplicate,
   onToggleStatus,
@@ -128,62 +126,63 @@ export function PremiumVacancyCard({
 
   const statusConfig: Record<string, { bg: string; text: string; border: string; dot: string }> = {
     Open: {
-      bg: "bg-emerald-500/10",
-      text: "text-emerald-500",
-      border: "border-emerald-500/30",
-      dot: "bg-emerald-500",
+      bg: 'bg-emerald-500/10',
+      text: 'text-emerald-500',
+      border: 'border-emerald-500/30',
+      dot: 'bg-emerald-500',
     },
     open: {
-      bg: "bg-emerald-500/10",
-      text: "text-emerald-500",
-      border: "border-emerald-500/30",
-      dot: "bg-emerald-500",
+      bg: 'bg-emerald-500/10',
+      text: 'text-emerald-500',
+      border: 'border-emerald-500/30',
+      dot: 'bg-emerald-500',
     },
     Closed: {
-      bg: "bg-gray-500/10",
-      text: "text-gray-400",
-      border: "border-gray-500/30",
-      dot: "bg-gray-500",
+      bg: 'bg-gray-500/10',
+      text: 'text-gray-400',
+      border: 'border-gray-500/30',
+      dot: 'bg-gray-500',
     },
     closed: {
-      bg: "bg-gray-500/10",
-      text: "text-gray-400",
-      border: "border-gray-500/30",
-      dot: "bg-gray-500",
+      bg: 'bg-gray-500/10',
+      text: 'text-gray-400',
+      border: 'border-gray-500/30',
+      dot: 'bg-gray-500',
     },
     Draft: {
-      bg: "bg-amber-500/10",
-      text: "text-amber-500",
-      border: "border-amber-500/30",
-      dot: "bg-amber-500",
+      bg: 'bg-amber-500/10',
+      text: 'text-amber-500',
+      border: 'border-amber-500/30',
+      dot: 'bg-amber-500',
     },
     draft: {
-      bg: "bg-amber-500/10",
-      text: "text-amber-500",
-      border: "border-amber-500/30",
-      dot: "bg-amber-500",
+      bg: 'bg-amber-500/10',
+      text: 'text-amber-500',
+      border: 'border-amber-500/30',
+      dot: 'bg-amber-500',
     },
   };
 
   // Fallback for unknown status
   const defaultConfig = {
-    bg: "bg-gray-500/10",
-    text: "text-gray-400",
-    border: "border-gray-500/30",
-    dot: "bg-gray-500",
+    bg: 'bg-gray-500/10',
+    text: 'text-gray-400',
+    border: 'border-gray-500/30',
+    dot: 'bg-gray-500',
   };
 
   const config = statusConfig[status] || defaultConfig;
 
   const formatSalary = (min?: number, max?: number, period?: string) => {
     if (!min && !max) return null;
-    const periodLabel = {
-      year: "/yr",
-      month: "/mo",
-      week: "/wk",
-      day: "/day",
-      hour: "/hr",
-    }[period || "year"] || "/yr";
+    const periodLabel =
+      {
+        year: '/yr',
+        month: '/mo',
+        week: '/wk',
+        day: '/day',
+        hour: '/hr',
+      }[period || 'year'] || '/yr';
 
     if (min && max) {
       return `£${min.toLocaleString()} - £${max.toLocaleString()}${periodLabel}`;
@@ -202,20 +201,20 @@ export function PremiumVacancyCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       className={cn(
-        "relative overflow-hidden rounded-xl",
-        "bg-elec-gray/80 backdrop-blur-sm",
-        "border border-white/10",
-        "hover:border-elec-yellow/40",
-        "transition-all duration-300",
-        "hover:shadow-lg hover:shadow-elec-yellow/5",
-        "group"
+        'relative overflow-hidden rounded-xl',
+        'bg-elec-gray/80 backdrop-blur-sm',
+        'border border-white/10',
+        'hover:border-elec-yellow/40',
+        'transition-all duration-300',
+        'hover:shadow-lg hover:shadow-elec-yellow/5',
+        'group'
       )}
     >
       {/* Status indicator line */}
       <div
         className={cn(
-          "absolute left-0 top-0 bottom-0 w-1 rounded-l-xl",
-          status === "Open" ? "bg-emerald-500" : status === "Draft" ? "bg-amber-500" : "bg-gray-500"
+          'absolute left-0 top-0 bottom-0 w-1 rounded-l-xl',
+          status === 'Open' ? 'bg-emerald-500' : status === 'Draft' ? 'bg-amber-500' : 'bg-gray-500'
         )}
       />
 
@@ -272,10 +271,7 @@ export function PremiumVacancyCard({
                 {urgency && (
                   <Badge
                     variant="outline"
-                    className={cn(
-                      "text-xs font-medium px-2 py-1 animate-pulse",
-                      urgency.className
-                    )}
+                    className={cn('text-xs font-medium px-2 py-1 animate-pulse', urgency.className)}
                   >
                     {urgency.icon}
                     <span className="ml-1">{urgency.label}</span>
@@ -284,19 +280,19 @@ export function PremiumVacancyCard({
                 <Badge
                   variant="outline"
                   className={cn(
-                    "text-xs font-medium px-2.5 py-1",
+                    'text-xs font-medium px-2.5 py-1',
                     config.bg,
                     config.text,
                     config.border
                   )}
                 >
-                  <span className={cn("w-1.5 h-1.5 rounded-full mr-1.5", config.dot)} />
+                  <span className={cn('w-1.5 h-1.5 rounded-full mr-1.5', config.dot)} />
                   {status}
                 </Badge>
                 <ChevronRight
                   className={cn(
-                    "h-5 w-5 text-white/40 transition-transform duration-300",
-                    isExpanded && "rotate-90"
+                    'h-5 w-5 text-white/40 transition-transform duration-300',
+                    isExpanded && 'rotate-90'
                   )}
                 />
               </div>
@@ -369,7 +365,7 @@ export function PremiumVacancyCard({
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
@@ -419,17 +415,17 @@ export function PremiumVacancyCard({
                   variant="outline"
                   size="sm"
                   className={cn(
-                    "h-11 text-xs",
-                    status === "Open"
-                      ? "bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
-                      : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
+                    'h-11 text-xs',
+                    status === 'Open'
+                      ? 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20'
+                      : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20'
                   )}
                   onClick={(e) => {
                     e.stopPropagation();
                     onToggleStatus();
                   }}
                 >
-                  {status === "Open" ? (
+                  {status === 'Open' ? (
                     <>
                       <XCircle className="h-3.5 w-3.5 mr-1.5" />
                       Close

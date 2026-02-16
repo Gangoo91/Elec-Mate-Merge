@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer } from "vaul";
-import { motion, AnimatePresence } from "framer-motion";
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Drawer } from 'vaul';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
   Wrench,
@@ -44,18 +44,18 @@ import {
   BadgeCheck,
   Target,
   Flame,
-} from "lucide-react";
-import { UK_ELECTRICAL_SKILLS, SKILL_LEVELS, SkillLevel } from "@/data/uk-electrician-constants";
-import { useNotifications } from "@/components/notifications/NotificationProvider";
-import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+} from 'lucide-react';
+import { UK_ELECTRICAL_SKILLS, SKILL_LEVELS, SkillLevel } from '@/data/uk-electrician-constants';
+import { useNotifications } from '@/components/notifications/NotificationProvider';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
 import {
   getSkillsByProfileId,
   addElecIdSkill,
   updateElecIdSkill,
   deleteElecIdSkill,
   ElecIdSkill,
-} from "@/services/elecIdService";
+} from '@/services/elecIdService';
 
 interface Skill {
   id: string;
@@ -113,11 +113,11 @@ const ElecIdSkills = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedSkill, setSelectedSkill] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedSkill, setSelectedSkill] = useState<string>('');
   const [formData, setFormData] = useState({
-    level: "" as SkillLevel | "",
-    yearsExperience: "",
+    level: '' as SkillLevel | '',
+    yearsExperience: '',
   });
 
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -144,9 +144,9 @@ const ElecIdSkills = () => {
       } catch (error) {
         console.error('Error fetching skills:', error);
         addNotification({
-          title: "Error",
-          message: "Failed to load skills",
-          type: "error",
+          title: 'Error',
+          message: 'Failed to load skills',
+          type: 'error',
         });
       } finally {
         setIsFetching(false);
@@ -159,9 +159,9 @@ const ElecIdSkills = () => {
   const handleAddSkill = async () => {
     if (!profile?.id) {
       addNotification({
-        title: "Error",
-        message: "Profile not found. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Profile not found. Please try again.',
+        type: 'error',
       });
       return;
     }
@@ -190,16 +190,16 @@ const ElecIdSkills = () => {
       resetForm();
 
       addNotification({
-        title: "Skill Added",
+        title: 'Skill Added',
         message: `${selectedSkill} has been added to your profile.`,
-        type: "success",
+        type: 'success',
       });
     } catch (error) {
       console.error('Error adding skill:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to add skill. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to add skill. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -233,16 +233,16 @@ const ElecIdSkills = () => {
       resetForm();
 
       addNotification({
-        title: "Skill Updated",
-        message: "Your skill details have been updated.",
-        type: "success",
+        title: 'Skill Updated',
+        message: 'Your skill details have been updated.',
+        type: 'success',
       });
     } catch (error) {
       console.error('Error updating skill:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to update skill. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to update skill. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -261,18 +261,18 @@ const ElecIdSkills = () => {
       setDeleteConfirm({ open: false, id: null });
 
       addNotification({
-        title: "Skill Removed",
+        title: 'Skill Removed',
         message: deletedSkill
           ? `${deletedSkill.skillName} has been removed.`
-          : "Skill has been removed.",
-        type: "info",
+          : 'Skill has been removed.',
+        type: 'info',
       });
     } catch (error) {
       console.error('Error deleting skill:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to delete skill. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to delete skill. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -291,11 +291,11 @@ const ElecIdSkills = () => {
   };
 
   const resetForm = () => {
-    setSelectedCategory("");
-    setSelectedSkill("");
+    setSelectedCategory('');
+    setSelectedSkill('');
     setFormData({
-      level: "",
-      yearsExperience: "",
+      level: '',
+      yearsExperience: '',
     });
   };
 
@@ -309,10 +309,30 @@ const ElecIdSkills = () => {
 
   const getLevelColor = (level: SkillLevel) => {
     const colors = {
-      beginner: { bg: "bg-blue-500/20", text: "text-blue-400", border: "border-blue-500/30", gradient: "from-blue-500 to-blue-600" },
-      intermediate: { bg: "bg-green-500/20", text: "text-green-400", border: "border-green-500/30", gradient: "from-green-500 to-emerald-600" },
-      advanced: { bg: "bg-orange-500/20", text: "text-orange-400", border: "border-orange-500/30", gradient: "from-orange-500 to-amber-600" },
-      expert: { bg: "bg-elec-yellow/20", text: "text-elec-yellow", border: "border-elec-yellow/30", gradient: "from-yellow-400 to-amber-500" },
+      beginner: {
+        bg: 'bg-blue-500/20',
+        text: 'text-blue-400',
+        border: 'border-blue-500/30',
+        gradient: 'from-blue-500 to-blue-600',
+      },
+      intermediate: {
+        bg: 'bg-green-500/20',
+        text: 'text-green-400',
+        border: 'border-green-500/30',
+        gradient: 'from-green-500 to-emerald-600',
+      },
+      advanced: {
+        bg: 'bg-orange-500/20',
+        text: 'text-orange-400',
+        border: 'border-orange-500/30',
+        gradient: 'from-orange-500 to-amber-600',
+      },
+      expert: {
+        bg: 'bg-elec-yellow/20',
+        text: 'text-elec-yellow',
+        border: 'border-elec-yellow/30',
+        gradient: 'from-yellow-400 to-amber-500',
+      },
     };
     return colors[level] || colors.intermediate;
   };
@@ -333,14 +353,26 @@ const ElecIdSkills = () => {
 
   const getCategoryColor = (categoryKey: string) => {
     const colors: Record<string, { bg: string; text: string; border: string }> = {
-      installation: { bg: "bg-yellow-500/20", text: "text-yellow-400", border: "border-yellow-500/30" },
-      testing: { bg: "bg-blue-500/20", text: "text-blue-400", border: "border-blue-500/30" },
-      specialist: { bg: "bg-purple-500/20", text: "text-purple-400", border: "border-purple-500/30" },
-      renewable: { bg: "bg-green-500/20", text: "text-green-400", border: "border-green-500/30" },
-      maintenance: { bg: "bg-orange-500/20", text: "text-orange-400", border: "border-orange-500/30" },
-      design: { bg: "bg-cyan-500/20", text: "text-cyan-400", border: "border-cyan-500/30" },
-      safety: { bg: "bg-red-500/20", text: "text-red-400", border: "border-red-500/30" },
-      software: { bg: "bg-indigo-500/20", text: "text-indigo-400", border: "border-indigo-500/30" },
+      installation: {
+        bg: 'bg-yellow-500/20',
+        text: 'text-yellow-400',
+        border: 'border-yellow-500/30',
+      },
+      testing: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30' },
+      specialist: {
+        bg: 'bg-purple-500/20',
+        text: 'text-purple-400',
+        border: 'border-purple-500/30',
+      },
+      renewable: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30' },
+      maintenance: {
+        bg: 'bg-orange-500/20',
+        text: 'text-orange-400',
+        border: 'border-orange-500/30',
+      },
+      design: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30' },
+      safety: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' },
+      software: { bg: 'bg-indigo-500/20', text: 'text-indigo-400', border: 'border-indigo-500/30' },
     };
     return colors[categoryKey] || colors.installation;
   };
@@ -361,7 +393,9 @@ const ElecIdSkills = () => {
       {/* Step 1: Category Selection - Visual Grid */}
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-          <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs font-bold">1</span>
+          <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs font-bold">
+            1
+          </span>
           <span>Select Category</span>
         </div>
 
@@ -377,32 +411,35 @@ const ElecIdSkills = () => {
                 onClick={() => {
                   if (!isEdit) {
                     setSelectedCategory(key);
-                    setSelectedSkill(""); // Reset skill when category changes
+                    setSelectedSkill(''); // Reset skill when category changes
                   }
                 }}
                 disabled={isEdit}
                 className={cn(
-                  "p-3 rounded-xl border transition-all touch-manipulation text-left",
+                  'p-3 rounded-xl border transition-all touch-manipulation text-left',
                   isSelected
                     ? `${colors.bg} ${colors.border}`
-                    : "bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]",
-                  isEdit && "opacity-50 cursor-not-allowed"
+                    : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]',
+                  isEdit && 'opacity-50 cursor-not-allowed'
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center",
-                    isSelected ? colors.bg : "bg-white/[0.06]"
-                  )}>
-                    <Icon className={cn(
-                      "h-4 w-4",
-                      isSelected ? colors.text : "text-foreground/60"
-                    )} />
+                  <div
+                    className={cn(
+                      'w-8 h-8 rounded-lg flex items-center justify-center',
+                      isSelected ? colors.bg : 'bg-white/[0.06]'
+                    )}
+                  >
+                    <Icon
+                      className={cn('h-4 w-4', isSelected ? colors.text : 'text-foreground/60')}
+                    />
                   </div>
-                  <span className={cn(
-                    "text-sm font-medium",
-                    isSelected ? colors.text : "text-foreground"
-                  )}>
+                  <span
+                    className={cn(
+                      'text-sm font-medium',
+                      isSelected ? colors.text : 'text-foreground'
+                    )}
+                  >
                     {cat.label}
                   </span>
                 </div>
@@ -419,7 +456,9 @@ const ElecIdSkills = () => {
       {selectedCategory && (
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-            <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">2</span>
+            <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">
+              2
+            </span>
             <span>Select Skill</span>
           </div>
 
@@ -434,27 +473,25 @@ const ElecIdSkills = () => {
                   onClick={() => !isEdit && setSelectedSkill(skill)}
                   disabled={isEdit}
                   className={cn(
-                    "w-full flex items-center gap-3 p-3 border-b border-white/[0.04] last:border-0 transition-all touch-manipulation",
-                    isSelected
-                      ? `${catColors.bg}`
-                      : "hover:bg-white/[0.04] active:bg-white/[0.08]",
-                    isEdit && "opacity-50 cursor-not-allowed"
+                    'w-full flex items-center gap-3 p-3 border-b border-white/[0.04] last:border-0 transition-all touch-manipulation',
+                    isSelected ? `${catColors.bg}` : 'hover:bg-white/[0.04] active:bg-white/[0.08]',
+                    isEdit && 'opacity-50 cursor-not-allowed'
                   )}
                 >
-                  <div className={cn(
-                    "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
-                    isSelected
-                      ? `${catColors.border} ${catColors.bg}`
-                      : "border-white/30"
-                  )}>
-                    {isSelected && (
-                      <CheckCircle2 className={cn("h-3 w-3", catColors.text)} />
+                  <div
+                    className={cn(
+                      'w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0',
+                      isSelected ? `${catColors.border} ${catColors.bg}` : 'border-white/30'
                     )}
+                  >
+                    {isSelected && <CheckCircle2 className={cn('h-3 w-3', catColors.text)} />}
                   </div>
-                  <span className={cn(
-                    "text-sm text-left",
-                    isSelected ? catColors.text + " font-medium" : "text-foreground/80"
-                  )}>
+                  <span
+                    className={cn(
+                      'text-sm text-left',
+                      isSelected ? catColors.text + ' font-medium' : 'text-foreground/80'
+                    )}
+                  >
                     {skill}
                   </span>
                 </button>
@@ -467,7 +504,9 @@ const ElecIdSkills = () => {
       {/* Step 3: Proficiency Level - Visual Cards */}
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-          <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">3</span>
+          <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">
+            3
+          </span>
           <span>Your Proficiency</span>
         </div>
 
@@ -482,29 +521,30 @@ const ElecIdSkills = () => {
                 type="button"
                 onClick={() => setFormData({ ...formData, level: level.value })}
                 className={cn(
-                  "p-4 rounded-xl border-2 text-left transition-all touch-manipulation active:scale-[0.98]",
+                  'p-4 rounded-xl border-2 text-left transition-all touch-manipulation active:scale-[0.98]',
                   isSelected
                     ? `${colors.bg} ${colors.border}`
-                    : "bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]"
+                    : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
                 )}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center",
-                    isSelected ? `bg-gradient-to-br ${colors.gradient}` : "bg-white/[0.08]"
-                  )}>
-                    <Icon className={cn(
-                      "h-4 w-4",
-                      isSelected ? "text-white" : "text-foreground/60"
-                    )} />
+                  <div
+                    className={cn(
+                      'w-8 h-8 rounded-lg flex items-center justify-center',
+                      isSelected ? `bg-gradient-to-br ${colors.gradient}` : 'bg-white/[0.08]'
+                    )}
+                  >
+                    <Icon
+                      className={cn('h-4 w-4', isSelected ? 'text-white' : 'text-foreground/60')}
+                    />
                   </div>
-                  <span className={cn("font-semibold", isSelected ? colors.text : "text-foreground")}>
+                  <span
+                    className={cn('font-semibold', isSelected ? colors.text : 'text-foreground')}
+                  >
                     {level.label}
                   </span>
                 </div>
-                <p className="text-xs text-foreground/60 leading-relaxed">
-                  {level.description}
-                </p>
+                <p className="text-xs text-foreground/60 leading-relaxed">{level.description}</p>
               </button>
             );
           })}
@@ -514,7 +554,9 @@ const ElecIdSkills = () => {
       {/* Step 4: Years of Experience */}
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-          <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">4</span>
+          <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">
+            4
+          </span>
           <span>Years of Experience</span>
         </div>
 
@@ -546,10 +588,10 @@ const ElecIdSkills = () => {
               type="button"
               onClick={() => setFormData({ ...formData, yearsExperience: years.toString() })}
               className={cn(
-                "flex-1 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation",
+                'flex-1 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation',
                 formData.yearsExperience === years.toString()
-                  ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                  : "bg-white/[0.04] text-foreground/60 hover:bg-white/[0.08]"
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                  : 'bg-white/[0.04] text-foreground/60 hover:bg-white/[0.08]'
               )}
             >
               {years}y
@@ -569,16 +611,25 @@ const ElecIdSkills = () => {
               const levelColors = getLevelColor(formData.level as SkillLevel);
               return (
                 <>
-                  <div className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center",
-                    catColors.bg
-                  )}>
-                    <CatIcon className={cn("h-5 w-5", catColors.text)} />
+                  <div
+                    className={cn(
+                      'w-10 h-10 rounded-xl flex items-center justify-center',
+                      catColors.bg
+                    )}
+                  >
+                    <CatIcon className={cn('h-5 w-5', catColors.text)} />
                   </div>
                   <div className="flex-1">
                     <p className="font-medium text-foreground">{selectedSkill}</p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <Badge className={cn("text-xs", levelColors.bg, levelColors.text, levelColors.border)}>
+                      <Badge
+                        className={cn(
+                          'text-xs',
+                          levelColors.bg,
+                          levelColors.text,
+                          levelColors.border
+                        )}
+                      >
                         {getLevelInfo(formData.level as SkillLevel)?.label}
                       </Badge>
                       {formData.yearsExperience && (
@@ -602,7 +653,7 @@ const ElecIdSkills = () => {
     open,
     onOpenChange,
     title,
-    isEdit = false
+    isEdit = false,
   }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -620,9 +671,7 @@ const ElecIdSkills = () => {
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-            <Drawer.Title className="text-lg font-semibold text-foreground">
-              {title}
-            </Drawer.Title>
+            <Drawer.Title className="text-lg font-semibold text-foreground">{title}</Drawer.Title>
             <button
               onClick={() => {
                 onOpenChange(false);
@@ -656,19 +705,18 @@ const ElecIdSkills = () => {
               className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.98]"
               onClick={isEdit ? handleEditSkill : handleAddSkill}
               disabled={
-                (!isEdit && (!selectedCategory || !selectedSkill || !formData.level)) ||
-                isLoading
+                (!isEdit && (!selectedCategory || !selectedSkill || !formData.level)) || isLoading
               }
             >
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  {isEdit ? "Saving..." : "Adding..."}
+                  {isEdit ? 'Saving...' : 'Adding...'}
                 </>
               ) : isEdit ? (
-                "Save Changes"
+                'Save Changes'
               ) : (
-                "Add Skill"
+                'Add Skill'
               )}
             </Button>
           </div>
@@ -682,7 +730,7 @@ const ElecIdSkills = () => {
     open,
     onOpenChange,
     title,
-    isEdit = false
+    isEdit = false,
   }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -711,19 +759,18 @@ const ElecIdSkills = () => {
             className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
             onClick={isEdit ? handleEditSkill : handleAddSkill}
             disabled={
-              (!isEdit && (!selectedCategory || !selectedSkill || !formData.level)) ||
-              isLoading
+              (!isEdit && (!selectedCategory || !selectedSkill || !formData.level)) || isLoading
             }
           >
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                {isEdit ? "Saving..." : "Adding..."}
+                {isEdit ? 'Saving...' : 'Adding...'}
               </>
             ) : isEdit ? (
-              "Save Changes"
+              'Save Changes'
             ) : (
-              "Add Skill"
+              'Add Skill'
             )}
           </Button>
         </div>
@@ -750,11 +797,7 @@ const ElecIdSkills = () => {
 
       {/* Add Sheet - Mobile or Desktop */}
       {isMobile ? (
-        <MobileFormSheet
-          open={isAddSheetOpen}
-          onOpenChange={setIsAddSheetOpen}
-          title="Add Skill"
-        />
+        <MobileFormSheet open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen} title="Add Skill" />
       ) : (
         <DesktopFormDialog
           open={isAddSheetOpen}
@@ -785,7 +828,7 @@ const ElecIdSkills = () => {
         <div>
           <h3 className="text-lg font-semibold text-foreground">Your Skills</h3>
           <p className="text-sm text-foreground/70">
-            {skills.length} skill{skills.length !== 1 ? "s" : ""} recorded
+            {skills.length} skill{skills.length !== 1 ? 's' : ''} recorded
           </p>
         </div>
         <Button
@@ -852,20 +895,24 @@ const ElecIdSkills = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.05 }}
                   className={cn(
-                    "text-center p-3 rounded-xl border transition-all",
+                    'text-center p-3 rounded-xl border transition-all',
                     count > 0
                       ? `${colors.bg} ${colors.border}`
-                      : "bg-white/[0.02] border-white/[0.04]"
+                      : 'bg-white/[0.02] border-white/[0.04]'
                   )}
                 >
-                  <Icon className={cn(
-                    "h-4 w-4 mx-auto mb-1",
-                    count > 0 ? colors.text : "text-foreground/30"
-                  )} />
-                  <div className={cn(
-                    "text-lg font-bold",
-                    count > 0 ? colors.text : "text-foreground/30"
-                  )}>
+                  <Icon
+                    className={cn(
+                      'h-4 w-4 mx-auto mb-1',
+                      count > 0 ? colors.text : 'text-foreground/30'
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      'text-lg font-bold',
+                      count > 0 ? colors.text : 'text-foreground/30'
+                    )}
+                  >
                     {count}
                   </div>
                   <div className="text-[10px] text-foreground/50 uppercase tracking-wide">
@@ -893,30 +940,27 @@ const ElecIdSkills = () => {
                   className="rounded-2xl border border-white/[0.08] overflow-hidden"
                 >
                   {/* Category Header */}
-                  <div className={cn(
-                    "px-4 py-3 flex items-center gap-3",
-                    catColors.bg
-                  )}>
-                    <div className={cn(
-                      "w-10 h-10 rounded-xl flex items-center justify-center",
-                      catColors.bg,
-                      catColors.border,
-                      "border"
-                    )}>
-                      <CatIcon className={cn("h-5 w-5", catColors.text)} />
+                  <div className={cn('px-4 py-3 flex items-center gap-3', catColors.bg)}>
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center',
+                        catColors.bg,
+                        catColors.border,
+                        'border'
+                      )}
+                    >
+                      <CatIcon className={cn('h-5 w-5', catColors.text)} />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-foreground">
-                        {category.label}
-                      </h4>
+                      <h4 className="font-semibold text-foreground">{category.label}</h4>
                       <p className="text-xs text-foreground/60">
-                        {categorySkills.length} skill{categorySkills.length !== 1 ? 's' : ''} recorded
+                        {categorySkills.length} skill{categorySkills.length !== 1 ? 's' : ''}{' '}
+                        recorded
                       </p>
                     </div>
-                    <Badge className={cn(
-                      "text-xs",
-                      catColors.bg, catColors.text, catColors.border
-                    )}>
+                    <Badge
+                      className={cn('text-xs', catColors.bg, catColors.text, catColors.border)}
+                    >
                       {categorySkills.length}
                     </Badge>
                   </div>
@@ -945,11 +989,14 @@ const ElecIdSkills = () => {
                             >
                               <div className="flex items-start gap-3">
                                 {/* Level Icon */}
-                                <div className={cn(
-                                  "w-12 h-12 rounded-xl flex flex-col items-center justify-center border",
-                                  levelColors.bg, levelColors.border
-                                )}>
-                                  <LevelIcon className={cn("h-5 w-5", levelColors.text)} />
+                                <div
+                                  className={cn(
+                                    'w-12 h-12 rounded-xl flex flex-col items-center justify-center border',
+                                    levelColors.bg,
+                                    levelColors.border
+                                  )}
+                                >
+                                  <LevelIcon className={cn('h-5 w-5', levelColors.text)} />
                                 </div>
 
                                 {/* Skill Info */}
@@ -963,15 +1010,20 @@ const ElecIdSkills = () => {
 
                                   {/* Stats Row */}
                                   <div className="flex items-center gap-3 mt-2">
-                                    <Badge className={cn(
-                                      "text-xs",
-                                      levelColors.bg, levelColors.text, levelColors.border
-                                    )}>
+                                    <Badge
+                                      className={cn(
+                                        'text-xs',
+                                        levelColors.bg,
+                                        levelColors.text,
+                                        levelColors.border
+                                      )}
+                                    >
                                       {levelInfo?.label}
                                     </Badge>
                                     <span className="text-xs text-foreground/50 flex items-center gap-1">
                                       <Clock className="h-3 w-3" />
-                                      {skill.yearsExperience} year{skill.yearsExperience !== 1 ? 's' : ''}
+                                      {skill.yearsExperience} year
+                                      {skill.yearsExperience !== 1 ? 's' : ''}
                                     </span>
                                     {skill.isVerified && (
                                       <span className="text-xs text-emerald-400 flex items-center gap-1">
@@ -1011,7 +1063,8 @@ const ElecIdSkills = () => {
             })}
 
             {/* Ungrouped skills (if category doesn't match) */}
-            {skills.filter(s => !Object.keys(UK_ELECTRICAL_SKILLS).includes(s.category)).length > 0 && (
+            {skills.filter((s) => !Object.keys(UK_ELECTRICAL_SKILLS).includes(s.category)).length >
+              0 && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -1028,7 +1081,7 @@ const ElecIdSkills = () => {
 
                 <div className="p-2 space-y-2 bg-white/[0.01]">
                   {skills
-                    .filter(s => !Object.keys(UK_ELECTRICAL_SKILLS).includes(s.category))
+                    .filter((s) => !Object.keys(UK_ELECTRICAL_SKILLS).includes(s.category))
                     .map((skill, index) => {
                       const levelInfo = getLevelInfo(skill.level);
                       const levelColors = getLevelColor(skill.level);
@@ -1043,19 +1096,32 @@ const ElecIdSkills = () => {
                           onClick={() => openEditSheet(skill)}
                           className="w-full p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center gap-3 touch-manipulation hover:bg-white/[0.05]"
                         >
-                          <div className={cn(
-                            "w-10 h-10 rounded-xl flex items-center justify-center",
-                            levelColors.bg, levelColors.border, "border"
-                          )}>
-                            <LevelIcon className={cn("h-5 w-5", levelColors.text)} />
+                          <div
+                            className={cn(
+                              'w-10 h-10 rounded-xl flex items-center justify-center',
+                              levelColors.bg,
+                              levelColors.border,
+                              'border'
+                            )}
+                          >
+                            <LevelIcon className={cn('h-5 w-5', levelColors.text)} />
                           </div>
                           <div className="flex-1 text-left">
                             <p className="font-medium text-foreground text-sm">{skill.skillName}</p>
                             <div className="flex items-center gap-2 mt-1">
-                              <Badge className={cn("text-xs", levelColors.bg, levelColors.text, levelColors.border)}>
+                              <Badge
+                                className={cn(
+                                  'text-xs',
+                                  levelColors.bg,
+                                  levelColors.text,
+                                  levelColors.border
+                                )}
+                              >
                                 {levelInfo?.label}
                               </Badge>
-                              <span className="text-xs text-foreground/50">{skill.yearsExperience}y</span>
+                              <span className="text-xs text-foreground/50">
+                                {skill.yearsExperience}y
+                              </span>
                             </div>
                           </div>
                           <ChevronRight className="h-4 w-4 text-foreground/30" />
@@ -1069,11 +1135,7 @@ const ElecIdSkills = () => {
         </>
       ) : (
         /* Empty State - Enhanced */
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="py-6"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="py-6">
           <div className="rounded-2xl border border-dashed border-white/[0.15] bg-gradient-to-br from-white/[0.02] to-transparent p-8 text-center">
             <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-600/10 flex items-center justify-center">
               <Zap className="h-10 w-10 text-elec-yellow" />
@@ -1113,22 +1175,27 @@ const ElecIdSkills = () => {
 
             {/* Category Preview */}
             <div className="flex flex-wrap justify-center gap-2 mb-6">
-              {Object.entries(UK_ELECTRICAL_SKILLS).slice(0, 4).map(([key, cat]) => {
-                const Icon = getCategoryIcon(key);
-                const colors = getCategoryColor(key);
-                return (
-                  <div
-                    key={key}
-                    className={cn(
-                      "px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs",
-                      colors.bg, colors.text, colors.border, "border"
-                    )}
-                  >
-                    <Icon className="h-3 w-3" />
-                    {cat.label}
-                  </div>
-                );
-              })}
+              {Object.entries(UK_ELECTRICAL_SKILLS)
+                .slice(0, 4)
+                .map(([key, cat]) => {
+                  const Icon = getCategoryIcon(key);
+                  const colors = getCategoryColor(key);
+                  return (
+                    <div
+                      key={key}
+                      className={cn(
+                        'px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs',
+                        colors.bg,
+                        colors.text,
+                        colors.border,
+                        'border'
+                      )}
+                    >
+                      <Icon className="h-3 w-3" />
+                      {cat.label}
+                    </div>
+                  );
+                })}
               <div className="px-3 py-1.5 rounded-full bg-white/[0.05] text-foreground/50 text-xs">
                 +{Object.keys(UK_ELECTRICAL_SKILLS).length - 4} more
               </div>

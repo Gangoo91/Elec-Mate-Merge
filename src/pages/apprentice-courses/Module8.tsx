@@ -1,21 +1,31 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft, FileText, Clock, Target, BarChart3, CheckCircle, AlertTriangle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
+import { Link } from 'react-router-dom';
+import {
+  ArrowLeft,
+  FileText,
+  Clock,
+  Target,
+  BarChart3,
+  CheckCircle,
+  AlertTriangle,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Mock Exams",
-    description: "Complete practice examinations that simulate the real Level 2 electrical installation exam conditions and timing.",
+    number: 'Section 1',
+    title: 'Mock Exams',
+    description:
+      'Complete practice examinations that simulate the real Level 2 electrical installation exam conditions and timing.',
     icon: FileText,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
-    title: "How to Pass Exams – Tips and Techniques",
-    description: "Essential exam strategies, time management techniques, and proven methods to maximise your examination performance.",
+    number: 'Section 2',
+    title: 'How to Pass Exams – Tips and Techniques',
+    description:
+      'Essential exam strategies, time management techniques, and proven methods to maximise your examination performance.',
     icon: Clock,
-    href: "section2"
+    href: 'section2',
   },
 ];
 
@@ -24,15 +34,15 @@ const Module8 = () => {
     <div className="bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-4 mb-8">
-          <Link 
-            to=".." 
+          <Link
+            to=".."
             className="inline-flex items-center text-white/70 hover:text-white transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Level 2 Overview
           </Link>
         </div>
-        
+
         <div className="mb-8">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
             Module 8: Mock Examinations & Assessment

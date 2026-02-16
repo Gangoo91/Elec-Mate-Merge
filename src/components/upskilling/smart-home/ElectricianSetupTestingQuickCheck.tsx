@@ -7,14 +7,15 @@ export const ElectricianSetupTestingQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why is electrician setup and testing critical for lighting scenes to work properly?";
+  const question =
+    'Why is electrician setup and testing critical for lighting scenes to work properly?';
   const options = [
-    "To increase the installation cost",
-    "To ensure reliable communication, proper wiring, and safety compliance",
-    "Scenes work automatically without any setup",
-    "Only for aesthetic reasons"
+    'To increase the installation cost',
+    'To ensure reliable communication, proper wiring, and safety compliance',
+    'Scenes work automatically without any setup',
+    'Only for aesthetic reasons',
   ];
-  const correctAnswer = "To ensure reliable communication, proper wiring, and safety compliance";
+  const correctAnswer = 'To ensure reliable communication, proper wiring, and safety compliance';
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer);
@@ -36,14 +37,14 @@ export const ElectricianSetupTestingQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground text-sm font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <Button
               key={index}
               variant="outline"
               className={`w-full text-left p-3 h-auto justify-start text-sm ${
-                !showResult 
+                !showResult
                   ? 'bg-elec-dark text-foreground border-gray-600 hover:bg-gray-700'
                   : selectedAnswer === option && option === correctAnswer
                     ? 'bg-green-600/20 text-green-400 border-green-600/40'
@@ -56,9 +57,7 @@ export const ElectricianSetupTestingQuickCheck = () => {
               onClick={() => !showResult && handleAnswerSelect(option)}
               disabled={showResult}
             >
-              <span className="mr-2 font-bold">
-                {String.fromCharCode(65 + index)}.
-              </span>
+              <span className="mr-2 font-bold">{String.fromCharCode(65 + index)}.</span>
               {option}
               {showResult && option === correctAnswer && (
                 <CheckCircle className="ml-auto h-4 w-4 text-green-400" />
@@ -71,32 +70,37 @@ export const ElectricianSetupTestingQuickCheck = () => {
         </div>
 
         {showResult && (
-          <div className={`p-3 rounded-lg border text-sm ${
-            selectedAnswer === correctAnswer 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-lg border text-sm ${
+              selectedAnswer === correctAnswer
+                ? 'bg-green-600/10 border-green-600/30'
+                : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-start gap-2 mb-2">
               {selectedAnswer === correctAnswer ? (
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
               ) : (
                 <XCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
               )}
-              <span className={`font-semibold ${
-                selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
-              }`}>
+              <span
+                className={`font-semibold ${
+                  selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
                 {selectedAnswer === correctAnswer ? 'Correct!' : 'Incorrect'}
               </span>
             </div>
             <p className="text-foreground">
-              Professional setup ensures proper electrical circuits, reliable device communication, 
-              safety compliance, and thorough testing of all emergency functions for reliable operation.
+              Professional setup ensures proper electrical circuits, reliable device communication,
+              safety compliance, and thorough testing of all emergency functions for reliable
+              operation.
             </p>
           </div>
         )}
 
         {showResult && (
-          <Button 
+          <Button
             onClick={resetQuestion}
             variant="outline"
             className="bg-transparent border-purple-600 text-purple-400 hover:bg-purple-600/10 text-sm"

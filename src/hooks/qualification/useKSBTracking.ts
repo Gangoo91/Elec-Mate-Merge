@@ -3,6 +3,10 @@
  *
  * Hook for managing Knowledge, Skills, and Behaviours (KSBs)
  * tracking for apprenticeship qualifications.
+ *
+ * ST0152 has K1-K8 (Knowledge) and B1-B8 (Behaviours).
+ * Skills are integrated into knowledge units — there is no separate skills category.
+ * The hook still exposes `skills` for backward compatibility (always empty for ST0152).
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -15,42 +19,67 @@ import type {
   KSBProgressStatus,
   KSBSummary,
   KSBType,
+  KSBUnitMapping,
 } from '@/types/qualification';
 
 interface UseKSBTrackingOptions {
   qualificationId?: string;
+  /** Filter by route — shows 'core' + selected route KSBs */
+  route?: 'installation' | 'maintenance';
 }
 
 export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
   const { user } = useAuth();
-  const { qualificationId } = options;
+  const { qualificationId, route } = options;
 
   const [ksbs, setKsbs] = useState<ApprenticeshipKSB[]>([]);
   const [progress, setProgress] = useState<UserKSBProgress[]>([]);
   const [summary, setSummary] = useState<KSBSummary[]>([]);
+  const [unitMappings, setUnitMappings] = useState<KSBUnitMapping[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch KSBs for a qualification
-  const fetchKSBs = useCallback(async (qualId?: string) => {
-    const targetQualId = qualId || qualificationId;
-    if (!targetQualId) return [];
+  const fetchKSBs = useCallback(
+    async (qualId?: string) => {
+      const targetQualId = qualId || qualificationId;
+      if (!targetQualId) return [];
+
+      try {
+        const { data, error: fetchError } = await supabase
+          .from('apprenticeship_ksbs')
+          .select('*')
+          .eq('qualification_id', targetQualId)
+          .order('ksb_type')
+          .order('sort_order');
+
+        if (fetchError) throw fetchError;
+        return data || [];
+      } catch (err) {
+        console.error('Error fetching KSBs:', err);
+        return [];
+      }
+    },
+    [qualificationId]
+  );
+
+  // Fetch KSB unit mappings
+  const fetchUnitMappings = useCallback(async (ksbIds: string[]) => {
+    if (ksbIds.length === 0) return [];
 
     try {
       const { data, error: fetchError } = await supabase
-        .from('apprenticeship_ksbs')
+        .from('ksb_unit_mapping')
         .select('*')
-        .eq('qualification_id', targetQualId)
-        .order('ksb_type')
-        .order('sort_order');
+        .in('ksb_id', ksbIds);
 
       if (fetchError) throw fetchError;
       return data || [];
     } catch (err) {
-      console.error('Error fetching KSBs:', err);
+      console.error('Error fetching unit mappings:', err);
       return [];
     }
-  }, [qualificationId]);
+  }, []);
 
   // Fetch user's KSB progress
   const fetchProgress = useCallback(async () => {
@@ -59,10 +88,12 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
     try {
       const { data, error: fetchError } = await supabase
         .from('user_ksb_progress')
-        .select(`
+        .select(
+          `
           *,
           ksb:apprenticeship_ksbs(*)
-        `)
+        `
+        )
         .eq('user_id', user.id);
 
       if (fetchError) throw fetchError;
@@ -74,25 +105,28 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
   }, [user]);
 
   // Fetch KSB summary by type
-  const fetchSummary = useCallback(async (qualId?: string) => {
-    if (!user) return [];
-    const targetQualId = qualId || qualificationId;
-    if (!targetQualId) return [];
+  const fetchSummary = useCallback(
+    async (qualId?: string) => {
+      if (!user) return [];
+      const targetQualId = qualId || qualificationId;
+      if (!targetQualId) return [];
 
-    try {
-      const { data, error: fetchError } = await supabase
-        .from('apprentice_ksb_summary')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('qualification_id', targetQualId);
+      try {
+        const { data, error: fetchError } = await supabase
+          .from('apprentice_ksb_summary')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('qualification_id', targetQualId);
 
-      if (fetchError) throw fetchError;
-      return data || [];
-    } catch (err) {
-      console.error('Error fetching KSB summary:', err);
-      return [];
-    }
-  }, [user, qualificationId]);
+        if (fetchError) throw fetchError;
+        return data || [];
+      } catch (err) {
+        console.error('Error fetching KSB summary:', err);
+        return [];
+      }
+    },
+    [user, qualificationId]
+  );
 
   // Load all data
   const loadData = useCallback(async () => {
@@ -109,41 +143,41 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
       setKsbs(ksbData);
       setProgress(progressData);
       setSummary(summaryData);
+
+      // Fetch unit mappings for all KSBs
+      if (ksbData.length > 0) {
+        const mappings = await fetchUnitMappings(ksbData.map((k) => k.id));
+        setUnitMappings(mappings);
+      }
     } catch (err) {
       setError('Failed to load KSB data');
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, [fetchKSBs, fetchProgress, fetchSummary]);
+  }, [fetchKSBs, fetchProgress, fetchSummary, fetchUnitMappings]);
 
   // Update KSB progress
   const updateKSBProgress = useCallback(
-    async (
-      ksbId: string,
-      status: KSBProgressStatus,
-      notes?: string
-    ): Promise<boolean> => {
+    async (ksbId: string, status: KSBProgressStatus, notes?: string): Promise<boolean> => {
       if (!user) {
         toast.error('You must be logged in');
         return false;
       }
 
       try {
-        const { error: upsertError } = await supabase
-          .from('user_ksb_progress')
-          .upsert(
-            {
-              user_id: user.id,
-              ksb_id: ksbId,
-              status,
-              notes,
-              updated_at: new Date().toISOString(),
-            },
-            {
-              onConflict: 'user_id,ksb_id',
-            }
-          );
+        const { error: upsertError } = await supabase.from('user_ksb_progress').upsert(
+          {
+            user_id: user.id,
+            ksb_id: ksbId,
+            status,
+            notes,
+            updated_at: new Date().toISOString(),
+          },
+          {
+            onConflict: 'user_id,ksb_id',
+          }
+        );
 
         if (upsertError) throw upsertError;
 
@@ -182,20 +216,18 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
           return true;
         }
 
-        const { error: updateError } = await supabase
-          .from('user_ksb_progress')
-          .upsert(
-            {
-              user_id: user.id,
-              ksb_id: ksbId,
-              evidence_portfolio_ids: [...currentIds, portfolioItemId],
-              status: 'evidence_submitted',
-              updated_at: new Date().toISOString(),
-            },
-            {
-              onConflict: 'user_id,ksb_id',
-            }
-          );
+        const { error: updateError } = await supabase.from('user_ksb_progress').upsert(
+          {
+            user_id: user.id,
+            ksb_id: ksbId,
+            evidence_portfolio_ids: [...currentIds, portfolioItemId],
+            status: 'evidence_submitted',
+            updated_at: new Date().toISOString(),
+          },
+          {
+            onConflict: 'user_id,ksb_id',
+          }
+        );
 
         if (updateError) throw updateError;
 
@@ -271,6 +303,14 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
     [progress]
   );
 
+  // Get unit mappings for a specific KSB
+  const getUnitMappings = useCallback(
+    (ksbId: string): KSBUnitMapping[] => {
+      return unitMappings.filter((m) => m.ksb_id === ksbId);
+    },
+    [unitMappings]
+  );
+
   // Calculate overall completion
   const getOverallCompletion = useCallback((): number => {
     if (ksbs.length === 0) return 0;
@@ -279,6 +319,12 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
     ).length;
     return Math.round((completedCount / ksbs.length) * 100);
   }, [ksbs, progress]);
+
+  // Filter KSBs by route (core + selected route)
+  const filteredKSBs = ksbs.filter((k) => {
+    if (!route) return true;
+    return k.route === 'core' || k.route === route;
+  });
 
   // Initial load
   useEffect(() => {
@@ -289,9 +335,10 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
 
   return {
     // Data
-    ksbs,
+    ksbs: filteredKSBs,
     progress,
     summary,
+    unitMappings,
     isLoading,
     error,
 
@@ -304,12 +351,13 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
     // Helpers
     getKSBsByType,
     getKSBProgress,
+    getUnitMappings,
     getOverallCompletion,
 
-    // Grouped KSBs
-    knowledge: getKSBsByType('knowledge'),
-    skills: getKSBsByType('skill'),
-    behaviours: getKSBsByType('behaviour'),
+    // Grouped KSBs (filtered by route)
+    knowledge: filteredKSBs.filter((k) => k.ksb_type === 'knowledge'),
+    skills: filteredKSBs.filter((k) => k.ksb_type === 'skill'),
+    behaviours: filteredKSBs.filter((k) => k.ksb_type === 'behaviour'),
   };
 }
 

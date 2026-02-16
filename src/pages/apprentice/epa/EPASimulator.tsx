@@ -8,13 +8,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
-import {
-  Target,
-  MessageSquare,
-  FileText,
-  Clock,
-  Award,
-} from 'lucide-react';
+import { Target, MessageSquare, FileText, Clock, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
@@ -36,8 +30,7 @@ const TABS: { id: TabId; label: string; icon: typeof Target }[] = [
 const EPASimulator = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = (searchParams.get('tab') as TabId) || 'readiness';
-  const setActiveTab = (tab: TabId) =>
-    setSearchParams({ tab }, { replace: false });
+  const setActiveTab = (tab: TabId) => setSearchParams({ tab }, { replace: false });
 
   const { user } = useAuth();
   const { qualificationCode, qualificationId } = useStudentQualification();
@@ -135,9 +128,7 @@ const EPASimulator = () => {
             <Award className="h-7 w-7 text-elec-yellow" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white">
-              EPA Simulator
-            </h1>
+            <h1 className="text-2xl font-bold tracking-tight text-white">EPA Simulator</h1>
             <p className="text-white text-sm">
               Practise for your End Point Assessment with AI-powered mock sessions
             </p>
@@ -201,9 +192,7 @@ const EPASimulator = () => {
           />
         )}
 
-        {activeTab === 'history' && (
-          <HistoryTab items={history} isLoading={isLoadingHistory} />
-        )}
+        {activeTab === 'history' && <HistoryTab items={history} isLoading={isLoadingHistory} />}
       </div>
     </div>
   );
@@ -225,13 +214,7 @@ const GRADE_COLOURS: Record<string, string> = {
   fail: 'text-red-400',
 };
 
-function HistoryTab({
-  items,
-  isLoading,
-}: {
-  items: HistoryItem[];
-  isLoading: boolean;
-}) {
+function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boolean }) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-16">
@@ -253,9 +236,7 @@ function HistoryTab({
 
   return (
     <div className="space-y-2 px-4 py-5">
-      <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-        Past Sessions
-      </h3>
+      <h3 className="text-xs font-semibold text-white uppercase tracking-wider">Past Sessions</h3>
       {items.map((item) => (
         <div
           key={item.id}
@@ -282,15 +263,8 @@ function HistoryTab({
             </p>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-lg font-bold text-foreground">
-              {item.score}
-            </p>
-            <p
-              className={cn(
-                'text-[10px] capitalize',
-                GRADE_COLOURS[item.grade] || 'text-white'
-              )}
-            >
+            <p className="text-lg font-bold text-foreground">{item.score}</p>
+            <p className={cn('text-[10px] capitalize', GRADE_COLOURS[item.grade] || 'text-white')}>
               {item.grade === 'not_yet_ready'
                 ? 'Fail'
                 : item.grade === 'merit'

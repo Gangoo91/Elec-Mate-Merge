@@ -16,22 +16,25 @@ export const EmergencyLightingRealWorldSection4_3 = () => {
             <Building2 className="h-4 w-4" />
             London Office Block Case Study
           </h3>
-          
+
           <div className="space-y-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold text-red-300 mb-2">The Problem:</h4>
                 <p className="text-sm">
-                  An office block in London installed self-contained emergency fittings with 1-hour batteries. 
-                  A fire risk audit revealed evacuation could take up to 90 minutes due to building layout and 
-                  the presence of disabled occupants requiring assisted evacuation.
+                  An office block in London installed self-contained emergency fittings with 1-hour
+                  batteries. A fire risk audit revealed evacuation could take up to 90 minutes due
+                  to building layout and the presence of disabled occupants requiring assisted
+                  evacuation.
                 </p>
               </div>
             </div>
 
             <div className="bg-gray-800/50 rounded-lg p-3">
-              <h4 className="font-semibold text-orange-300 mb-2">Initial Installation Specification:</h4>
+              <h4 className="font-semibold text-orange-300 mb-2">
+                Initial Installation Specification:
+              </h4>
               <ul className="text-sm space-y-1">
                 <li>• 45 self-contained LED luminaires</li>
                 <li>• 1-hour autonomy batteries (NiCd, 1.2Ah per unit)</li>
@@ -45,12 +48,14 @@ export const EmergencyLightingRealWorldSection4_3 = () => {
               <div>
                 <h4 className="font-semibold text-green-300 mb-2">The Solution:</h4>
                 <p className="text-sm mb-3">
-                  The fittings had to be retrofitted with 3-hour batteries to meet the extended evacuation 
-                  time requirements. This involved removing all existing luminaires, replacing battery packs, 
-                  and re-testing the entire system.
+                  The fittings had to be retrofitted with 3-hour batteries to meet the extended
+                  evacuation time requirements. This involved removing all existing luminaires,
+                  replacing battery packs, and re-testing the entire system.
                 </p>
                 <div className="bg-gray-800/50 rounded-lg p-3">
-                  <h5 className="font-semibold text-green-300 mb-2 text-xs">Retrofit Specification:</h5>
+                  <h5 className="font-semibold text-green-300 mb-2 text-xs">
+                    Retrofit Specification:
+                  </h5>
                   <ul className="text-xs space-y-1">
                     <li>• Replace all 45 battery packs with 3-hour units</li>
                     <li>• Upgrade to NiMH 3.6Ah batteries</li>
@@ -87,8 +92,8 @@ export const EmergencyLightingRealWorldSection4_3 = () => {
             </div>
           </div>
           <p className="text-sm text-foreground mt-3">
-            This represents a 75% increase over the original installation cost—all of which could have been 
-            avoided with proper autonomy assessment during the design phase.
+            This represents a 75% increase over the original installation cost—all of which could
+            have been avoided with proper autonomy assessment during the design phase.
           </p>
         </div>
 
@@ -116,8 +121,8 @@ export const EmergencyLightingRealWorldSection4_3 = () => {
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow mt-0.5">•</span>
               <span>
-                When in doubt, specify 3-hour batteries—the marginal cost difference is minimal compared 
-                to retrofit costs
+                When in doubt, specify 3-hour batteries—the marginal cost difference is minimal
+                compared to retrofit costs
               </span>
             </li>
             <li className="flex items-start gap-2">
@@ -131,9 +136,9 @@ export const EmergencyLightingRealWorldSection4_3 = () => {
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <p className="text-elec-yellow font-medium">
-            <strong>Critical Lesson:</strong> Had the autonomy requirement been calculated correctly from the 
-            outset based on a proper evacuation assessment, the issue—and the significant additional cost and 
-            disruption—could have been completely avoided.
+            <strong>Critical Lesson:</strong> Had the autonomy requirement been calculated correctly
+            from the outset based on a proper evacuation assessment, the issue—and the significant
+            additional cost and disruption—could have been completely avoided.
           </p>
         </div>
       </CardContent>

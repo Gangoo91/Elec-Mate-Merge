@@ -39,7 +39,9 @@ interface UseCircuitDesignGenerationReturn {
 // Installation agent timeout - 5 minutes
 const INSTALLATION_TIMEOUT_MS = 5 * 60 * 1000;
 
-export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesignGenerationReturn => {
+export const useCircuitDesignGeneration = (
+  jobId: string | null
+): UseCircuitDesignGenerationReturn => {
   const [job, setJob] = useState<CircuitDesignJob | null>(null);
   const [stuckCheckTimeout, setStuckCheckTimeout] = useState<number | null>(null);
   // Track when installation agent started processing for timeout detection
@@ -78,25 +80,25 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     // Poll as fallback every 3s for faster completion detection
     const pollInterval = setInterval(async () => {
       if (!jobId) return;
-      
+
       const { data, error } = await supabase
         .from('circuit_design_jobs' as any)
         .select('*')
         .eq('id', jobId)
         .single();
-      
+
       if (!error && data) {
         const jobStatus = (data as any).status;
         const jobProgress = (data as any).progress;
         console.log('📊 Polling update:', jobStatus, jobProgress + '%');
-        
+
         // Only update if progress moves forward or status changes (prevent regression display)
-        setJob(prev => {
+        setJob((prev) => {
           if (!prev) return data as any as CircuitDesignJob;
           // Never allow progress to go backwards in UI
           if (jobProgress < prev.progress && jobStatus === 'processing') {
             console.warn('⚠️ Ignoring progress regression:', prev.progress, '->', jobProgress);
-            return { ...data as any, progress: prev.progress } as CircuitDesignJob;
+            return { ...(data as any), progress: prev.progress } as CircuitDesignJob;
           }
           return data as any as CircuitDesignJob;
         });
@@ -105,12 +107,16 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
         const installAgentStatus = (data as any).installation_agent_status;
         if (jobStatus === 'complete' && installAgentStatus === 'processing') {
           // Installation agent is still processing after main design is complete
-          setInstallationStartTime(prev => prev ?? Date.now());
-        } else if (installAgentStatus === 'complete' || installAgentStatus === 'failed' || installAgentStatus === 'skipped') {
+          setInstallationStartTime((prev) => prev ?? Date.now());
+        } else if (
+          installAgentStatus === 'complete' ||
+          installAgentStatus === 'failed' ||
+          installAgentStatus === 'skipped'
+        ) {
           // Clear timeout tracking when installation agent finishes
           setInstallationStartTime(null);
         }
-        
+
         // Stop polling when job reaches terminal state
         if (jobStatus === 'complete' || jobStatus === 'failed' || jobStatus === 'cancelled') {
           console.log('✅ Job finished, stopping poll interval');
@@ -128,24 +134,28 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
           event: 'UPDATE',
           schema: 'public',
           table: 'circuit_design_jobs',
-          filter: `id=eq.${jobId}`
+          filter: `id=eq.${jobId}`,
         },
         (payload) => {
           const updatedJob = payload.new as CircuitDesignJob;
           console.log('🔄 Realtime update:', {
             status: updatedJob.status,
             progress: updatedJob.progress + '%',
-            step: updatedJob.current_step
+            step: updatedJob.current_step,
           });
-          
+
           setJob(updatedJob);
-          
+
           // Unsubscribe when job completes
-          if (updatedJob.status === 'complete' || updatedJob.status === 'failed' || updatedJob.status === 'cancelled') {
+          if (
+            updatedJob.status === 'complete' ||
+            updatedJob.status === 'failed' ||
+            updatedJob.status === 'cancelled'
+          ) {
             console.log('✅ Job finished, unsubscribing from Realtime');
             supabase.removeChannel(channel);
           }
-          
+
           // Clear any existing timeout when job updates
           if (stuckCheckTimeout) {
             clearTimeout(stuckCheckTimeout);
@@ -155,11 +165,11 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
       )
       .subscribe((status, err) => {
         console.log('📡 Subscription status:', status);
-        
+
         if (status === 'CHANNEL_ERROR') {
           console.error('❌ Realtime channel error, polling will continue');
         }
-        
+
         if (status === 'TIMED_OUT') {
           console.warn('⏱️ Realtime timed out, polling will continue');
         }
@@ -193,12 +203,12 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
       if (Date.now() - installationStartTime > INSTALLATION_TIMEOUT_MS) {
         console.warn('⏱️ Installation agent timed out after 5 minutes');
         // Mark installation agent as timed out locally
-        setJob(prev => {
+        setJob((prev) => {
           if (!prev) return prev;
           return {
             ...prev,
             installation_agent_status: 'timeout',
-            current_step: 'Installation guidance timed out'
+            current_step: 'Installation guidance timed out',
           };
         });
         setInstallationStartTime(null);
@@ -265,7 +275,10 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     }
 
     // Installation agent timed out or skipped
-    if (job.installation_agent_status === 'timeout' || job.installation_agent_status === 'skipped') {
+    if (
+      job.installation_agent_status === 'timeout' ||
+      job.installation_agent_status === 'skipped'
+    ) {
       return 'Design complete (installation guidance skipped)';
     }
 
@@ -287,9 +300,8 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     const installContribution = Math.min(job.installation_agent_progress || 0, 100) * 0.5; // 50-100%
 
     // Use job.progress if available, otherwise calculate
-    const calculatedProgress = job.progress > 0
-      ? job.progress
-      : Math.round(designerContribution + installContribution);
+    const calculatedProgress =
+      job.progress > 0 ? job.progress : Math.round(designerContribution + installContribution);
 
     return Math.max(calculatedProgress, 0);
   };
@@ -297,12 +309,12 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
   return {
     job,
     progress: getSmoothedProgress(),
-    status: jobId ? ((job?.status as any) || 'pending') : 'idle',
+    status: jobId ? (job?.status as any) || 'pending' : 'idle',
     currentStep: getProgressMessage(),
     estimatedTimeRemaining: getEstimatedTimeRemaining(),
     designData: job?.design_data,
     installationGuidance: job?.installation_guidance,
     installationAgentStatus: job?.installation_agent_status,
-    error: job?.error_message
+    error: job?.error_message,
   };
 };

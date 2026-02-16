@@ -9,7 +9,7 @@ const generateQRCode = async (text: string): Promise<string> => {
     canvas.width = size;
     canvas.height = size;
     const ctx = canvas.getContext('2d');
-    
+
     if (ctx) {
       // Simple QR placeholder - draw a bordered box with text
       ctx.fillStyle = '#ffffff';
@@ -21,17 +21,17 @@ const generateQRCode = async (text: string): Promise<string> => {
       ctx.font = 'bold 10px monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      
+
       // Wrap text
       const words = text.match(/.{1,8}/g) || [text];
       const lineHeight = 14;
       const startY = (size - words.length * lineHeight) / 2;
-      
+
       words.forEach((word, i) => {
         ctx.fillText(word, size / 2, startY + i * lineHeight + lineHeight / 2);
       });
     }
-    
+
     resolve(canvas.toDataURL());
   });
 };
@@ -57,21 +57,21 @@ const getCableTypeName = (cableType: string): string => {
     'xlpe-single': 'XLPE Single Core (90°C)',
     'pvc-twin-earth': 'PVC Twin & Earth',
     'xlpe-twin-earth': 'XLPE Twin & Earth (90°C)',
-    'swa': 'SWA Armoured Cable',
-    'micc': 'Mineral Insulated (MICC)',
-    'aluminium-xlpe': 'Aluminium XLPE'
+    swa: 'SWA Armoured Cable',
+    micc: 'Mineral Insulated (MICC)',
+    'aluminium-xlpe': 'Aluminium XLPE',
   };
   return names[cableType] || cableType;
 };
 
 const getLocationName = (location?: string): string => {
   const names: Record<string, string> = {
-    'inside': 'Inside building',
-    'outside': 'External',
-    'underground': 'Underground',
-    'loft': 'Loft space',
+    inside: 'Inside building',
+    outside: 'External',
+    underground: 'Underground',
+    loft: 'Loft space',
     'plant-room': 'Plant room',
-    'data-center': 'Data centre'
+    'data-center': 'Data centre',
   };
   return location ? names[location] || location : 'Inside building';
 };
@@ -85,10 +85,10 @@ export const generateInstallationPlanPDF = async (
   const designCurrent = (planData.totalLoad / planData.voltage).toFixed(1);
   const cableTypeName = getCableTypeName(planData.cableType);
   const locationName = getLocationName(planData.location);
-  
+
   // Generate QR code for plan reference
   const qrCodeDataUrl = await generateQRCode(planReference);
-  
+
   const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
@@ -576,7 +576,9 @@ export const generateInstallationPlanPDF = async (
                     </tr>
                 </thead>
                 <tbody>
-                    ${result.materials.map(material => `
+                    ${result.materials
+                      .map(
+                        (material) => `
                     <tr>
                         <td>${material.name}</td>
                         <td>${material.specification}</td>
@@ -584,7 +586,9 @@ export const generateInstallationPlanPDF = async (
                         <td class="text-right">${material.unitCost ? `£${material.unitCost.toFixed(2)}` : '-'}</td>
                         <td class="text-right">${material.totalCost ? `£${material.totalCost.toFixed(2)}` : '-'}</td>
                     </tr>
-                    `).join('')}
+                    `
+                      )
+                      .join('')}
                 </tbody>
             </table>
 
@@ -612,34 +616,46 @@ export const generateInstallationPlanPDF = async (
             </div>
         </div>
 
-        ${result.warnings.length > 0 ? `
+        ${
+          result.warnings.length > 0
+            ? `
         <div class="warning-box">
             <h3>⚠️ Important Warnings</h3>
             <ul>
-                ${result.warnings.map(warning => `<li>${warning}</li>`).join('')}
+                ${result.warnings.map((warning) => `<li>${warning}</li>`).join('')}
             </ul>
         </div>
-        ` : ''}
+        `
+            : ''
+        }
 
-        ${result.recommendations.length > 0 ? `
+        ${
+          result.recommendations.length > 0
+            ? `
         <div class="recommendation-box">
             <h3>💡 Recommendations</h3>
             <ul>
-                ${result.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                ${result.recommendations.map((rec) => `<li>${rec}</li>`).join('')}
             </ul>
         </div>
-        ` : ''}
+        `
+            : ''
+        }
 
         <div class="section">
             <h2 class="section-title">Practical Installation Guidance</h2>
-            ${result.practicalGuidance.map(guide => `
+            ${result.practicalGuidance
+              .map(
+                (guide) => `
             <div class="guidance-item">
                 <div class="guidance-title">${guide.title}</div>
                 <ul>
-                    ${guide.points.map(point => `<li>${point}</li>`).join('')}
+                    ${guide.points.map((point) => `<li>${point}</li>`).join('')}
                 </ul>
             </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
 
         <div class="section">
@@ -734,16 +750,16 @@ export const generateInstallationPlanPDF = async (
     margin: 0,
     filename: `Installation_Plan_${planReference}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
+    html2canvas: {
       scale: 2,
       useCORS: true,
-      letterRendering: true
+      letterRendering: true,
     },
-    jsPDF: { 
-      unit: 'mm', 
-      format: 'a4', 
-      orientation: 'portrait'
-    }
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait',
+    },
   };
 
   await html2pdf().set(options).from(htmlContent).save();

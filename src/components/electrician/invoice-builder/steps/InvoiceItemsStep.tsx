@@ -2,7 +2,27 @@ import { useState, useMemo } from 'react';
 import { InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Plus, Trash2, Calculator, Wrench, Package, Zap, Clock, FileText, Copy, Search, ChevronDown, ChevronUp, Check, User, HardHat, Hammer, Lightbulb, Camera, Scan } from 'lucide-react';
+import {
+  Plus,
+  Trash2,
+  Calculator,
+  Wrench,
+  Package,
+  Zap,
+  Clock,
+  FileText,
+  Copy,
+  Search,
+  ChevronDown,
+  ChevronUp,
+  Check,
+  User,
+  HardHat,
+  Hammer,
+  Lightbulb,
+  Camera,
+  Scan,
+} from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
 import { cn } from '@/lib/utils';
@@ -19,7 +39,7 @@ import {
   materialCategories,
   commonMaterials,
   equipmentCategories,
-  commonEquipment
+  commonEquipment,
 } from '@/data/electrician/presetData';
 
 interface InvoiceItemsStepProps {
@@ -40,11 +60,16 @@ type Category = 'labour' | 'materials' | 'equipment';
 // Worker type icons
 const getWorkerIcon = (id: string) => {
   switch (id) {
-    case 'electrician': return Lightbulb;
-    case 'apprentice': return HardHat;
-    case 'labourer': return Hammer;
-    case 'designer': return User;
-    default: return Wrench;
+    case 'electrician':
+      return Lightbulb;
+    case 'apprentice':
+      return HardHat;
+    case 'labourer':
+      return Hammer;
+    case 'designer':
+      return User;
+    default:
+      return Wrench;
   }
 };
 
@@ -82,18 +107,18 @@ export const InvoiceItemsStep = ({
 
     // If user has saved custom worker rates, use them
     if (savedRates) {
-      return defaultWorkerTypes.map(worker => {
+      return defaultWorkerTypes.map((worker) => {
         const savedRate = savedRates[worker.id as keyof typeof savedRates];
         return {
           ...worker,
-          defaultHourlyRate: savedRate ?? worker.defaultHourlyRate
+          defaultHourlyRate: savedRate ?? worker.defaultHourlyRate,
         };
       });
     }
 
     // Fall back to percentage calculation if no saved rates
     const userRate = companyProfile?.hourly_rate || 45;
-    return defaultWorkerTypes.map(worker => {
+    return defaultWorkerTypes.map((worker) => {
       let rate = worker.defaultHourlyRate;
       switch (worker.id) {
         case 'electrician':
@@ -139,7 +164,7 @@ export const InvoiceItemsStep = ({
   };
 
   const handleTemplateSelect = (template: JobTemplate) => {
-    template.items.forEach(item => {
+    template.items.forEach((item) => {
       onAddItem(item);
     });
     toast({
@@ -149,7 +174,7 @@ export const InvoiceItemsStep = ({
   };
 
   const handleCategoryChange = (category: Category) => {
-    setNewItem(prev => ({
+    setNewItem((prev) => ({
       ...prev,
       category,
       subcategory: '',
@@ -159,58 +184,58 @@ export const InvoiceItemsStep = ({
       materialCode: '',
       equipmentCode: '',
       unitPrice: 0,
-      unit: category === 'labour' ? 'hour' : 'each'
+      unit: category === 'labour' ? 'hour' : 'each',
     }));
   };
 
   const handleWorkerTypeChange = (workerTypeId: string) => {
-    const worker = workerTypes.find(w => w.id === workerTypeId);
+    const worker = workerTypes.find((w) => w.id === workerTypeId);
     if (worker) {
-      setNewItem(prev => ({
+      setNewItem((prev) => ({
         ...prev,
         workerType: workerTypeId,
         hourlyRate: worker.defaultHourlyRate,
         unitPrice: worker.defaultHourlyRate,
-        description: prev.description || `${worker.name} - ${worker.description}`
+        description: prev.description || `${worker.name} - ${worker.description}`,
       }));
     }
     setWorkerSheetOpen(false);
   };
 
   const handleMaterialSelect = (materialId: string) => {
-    const material = commonMaterials.find(m => m.id === materialId);
+    const material = commonMaterials.find((m) => m.id === materialId);
     if (material) {
-      setNewItem(prev => ({
+      setNewItem((prev) => ({
         ...prev,
         materialCode: materialId,
         description: material.name,
         unitPrice: calculateAdjustedPrice(material.defaultPrice),
-        unit: material.unit
+        unit: material.unit,
       }));
     }
     setMaterialSheetOpen(false);
   };
 
   const handleEquipmentSelect = (equipmentId: string) => {
-    const equipment = commonEquipment.find(e => e.id === equipmentId);
+    const equipment = commonEquipment.find((e) => e.id === equipmentId);
     if (equipment) {
-      setNewItem(prev => ({
+      setNewItem((prev) => ({
         ...prev,
         equipmentCode: equipmentId,
         description: equipment.name,
         unitPrice: equipment.dailyRate,
-        unit: equipment.unit
+        unit: equipment.unit,
       }));
     }
     setEquipmentSheetOpen(false);
   };
 
   const handleHoursChange = (hours: number) => {
-    setNewItem(prev => ({
+    setNewItem((prev) => ({
       ...prev,
       hours,
       quantity: hours,
-      unitPrice: prev.hourlyRate
+      unitPrice: prev.hourlyRate,
     }));
     setHoursSheetOpen(false);
   };
@@ -236,7 +261,7 @@ export const InvoiceItemsStep = ({
 
   const handleConfirmScannedItems = () => {
     const items = scanner.getSelectedItems();
-    items.forEach(item => {
+    items.forEach((item) => {
       onAddItem(item);
     });
 
@@ -273,11 +298,12 @@ export const InvoiceItemsStep = ({
 
     const itemToAdd = {
       ...newItem,
-      quantity: newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity
+      quantity:
+        newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity,
     };
     onAddItem(itemToAdd);
 
-    setNewItem(prev => ({
+    setNewItem((prev) => ({
       description: '',
       quantity: 1,
       unit: prev.category === 'labour' ? 'hour' : 'each',
@@ -289,16 +315,20 @@ export const InvoiceItemsStep = ({
       hourlyRate: 0,
       materialCode: '',
       equipmentCode: '',
-      notes: ''
+      notes: '',
     }));
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'labour': return <Wrench className="h-4 w-4" />;
-      case 'materials': return <Package className="h-4 w-4" />;
-      case 'equipment': return <Zap className="h-4 w-4" />;
-      default: return <Package className="h-4 w-4" />;
+      case 'labour':
+        return <Wrench className="h-4 w-4" />;
+      case 'materials':
+        return <Package className="h-4 w-4" />;
+      case 'equipment':
+        return <Zap className="h-4 w-4" />;
+      default:
+        return <Package className="h-4 w-4" />;
     }
   };
 
@@ -315,7 +345,7 @@ export const InvoiceItemsStep = ({
       hourlyRate: item.hourlyRate,
       materialCode: item.materialCode,
       equipmentCode: item.equipmentCode,
-      notes: item.notes
+      notes: item.notes,
     };
     onAddItem(duplicate);
   };
@@ -323,13 +353,14 @@ export const InvoiceItemsStep = ({
   const filteredMaterials = useMemo(() => {
     let filtered = commonMaterials;
     if (newItem.subcategory && newItem.subcategory !== 'all-categories') {
-      filtered = filtered.filter(m => m.category === newItem.subcategory);
+      filtered = filtered.filter((m) => m.category === newItem.subcategory);
     }
     if (materialSearch.trim().length >= 2) {
       const searchTerm = materialSearch.toLowerCase();
-      filtered = filtered.filter(material =>
-        material.name.toLowerCase().includes(searchTerm) ||
-        material.category.toLowerCase().includes(searchTerm)
+      filtered = filtered.filter(
+        (material) =>
+          material.name.toLowerCase().includes(searchTerm) ||
+          material.category.toLowerCase().includes(searchTerm)
       );
     }
     return filtered;
@@ -338,12 +369,11 @@ export const InvoiceItemsStep = ({
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
-
-  const selectedWorker = workerTypes.find(w => w.id === newItem.workerType);
-  const selectedMaterial = commonMaterials.find(m => m.id === newItem.materialCode);
-  const selectedEquipment = commonEquipment.find(e => e.id === newItem.equipmentCode);
-  const selectedCategory = materialCategories.find(c => c.id === newItem.subcategory);
-  const selectedEquipmentCategory = equipmentCategories.find(c => c.id === newItem.subcategory);
+  const selectedWorker = workerTypes.find((w) => w.id === newItem.workerType);
+  const selectedMaterial = commonMaterials.find((m) => m.id === newItem.materialCode);
+  const selectedEquipment = commonEquipment.find((e) => e.id === newItem.equipmentCode);
+  const selectedCategory = materialCategories.find((c) => c.id === newItem.subcategory);
+  const selectedEquipmentCategory = equipmentCategories.find((c) => c.id === newItem.subcategory);
 
   const hourOptions = [0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 24, 40];
 
@@ -382,15 +412,26 @@ export const InvoiceItemsStep = ({
             <span className="text-[12px] font-semibold text-white/60 uppercase tracking-wider">
               Quote Items ({originalItems.length})
             </span>
-            {showOriginalItems ? <ChevronUp className="h-4 w-4 text-white/40" /> : <ChevronDown className="h-4 w-4 text-white/40" />}
+            {showOriginalItems ? (
+              <ChevronUp className="h-4 w-4 text-white/40" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-white/40" />
+            )}
           </button>
           {showOriginalItems && (
             <div className="space-y-2">
               {originalItems.map((item) => (
-                <div key={item.id} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                <div
+                  key={item.id}
+                  className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3"
+                >
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">{item.description}</p>
-                    <p className="text-[13px] font-bold text-elec-yellow">{formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}</p>
+                    <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">
+                      {item.description}
+                    </p>
+                    <p className="text-[13px] font-bold text-elec-yellow">
+                      {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                    </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Input
@@ -400,7 +441,10 @@ export const InvoiceItemsStep = ({
                         const val = e.target.value;
                         const quantity = val === '' ? 0 : parseFloat(val);
                         if (!isNaN(quantity)) {
-                          onUpdateItem(item.id, { quantity, totalPrice: quantity * item.unitPrice });
+                          onUpdateItem(item.id, {
+                            quantity,
+                            totalPrice: quantity * item.unitPrice,
+                          });
                         }
                       }}
                       className="h-8 w-16 text-[13px] bg-white/[0.05] border-white/[0.06]"
@@ -413,7 +457,10 @@ export const InvoiceItemsStep = ({
                         const val = e.target.value;
                         const unitPrice = val === '' ? 0 : parseFloat(val);
                         if (!isNaN(unitPrice)) {
-                          onUpdateItem(item.id, { unitPrice, totalPrice: item.quantity * unitPrice });
+                          onUpdateItem(item.id, {
+                            unitPrice,
+                            totalPrice: item.quantity * unitPrice,
+                          });
                         }
                       }}
                       className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
@@ -502,7 +549,9 @@ export const InvoiceItemsStep = ({
                 </div>
                 <div className="flex items-center gap-2">
                   {selectedWorker && (
-                    <span className="text-[14px] font-semibold text-elec-yellow">£{selectedWorker.defaultHourlyRate}/hr</span>
+                    <span className="text-[14px] font-semibold text-elec-yellow">
+                      £{selectedWorker.defaultHourlyRate}/hr
+                    </span>
                   )}
                   <ChevronDown className="h-5 w-5 text-white/40" />
                 </div>
@@ -520,7 +569,9 @@ export const InvoiceItemsStep = ({
                   <div className="text-left">
                     <p className="text-[11px] text-white/60 uppercase tracking-wide">Hours</p>
                     <p className="text-[15px] font-medium text-white">
-                      {newItem.hours > 0 ? `${newItem.hours} ${newItem.hours === 1 ? 'hour' : 'hours'}` : 'Select hours'}
+                      {newItem.hours > 0
+                        ? `${newItem.hours} ${newItem.hours === 1 ? 'hour' : 'hours'}`
+                        : 'Select hours'}
                     </p>
                   </div>
                 </div>
@@ -604,7 +655,7 @@ export const InvoiceItemsStep = ({
               <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                 <span className="text-[12px] text-white/60 uppercase tracking-wide">Markup</span>
                 <div className="flex gap-1">
-                  {[0, 10, 15, 20].map(markup => (
+                  {[0, 10, 15, 20].map((markup) => (
                     <button
                       key={markup}
                       onClick={() => setPriceAdjustment(markup)}
@@ -637,7 +688,9 @@ export const InvoiceItemsStep = ({
                   <div className="text-left">
                     <p className="text-[11px] text-white/60 uppercase tracking-wide">Category</p>
                     <p className="text-[15px] font-medium text-white">
-                      {selectedEquipmentCategory ? selectedEquipmentCategory.name : 'Select category'}
+                      {selectedEquipmentCategory
+                        ? selectedEquipmentCategory.name
+                        : 'Select category'}
                     </p>
                   </div>
                 </div>
@@ -661,7 +714,9 @@ export const InvoiceItemsStep = ({
                 </div>
                 <div className="flex items-center gap-2">
                   {selectedEquipment && (
-                    <span className="text-[14px] font-semibold text-elec-yellow">£{selectedEquipment.dailyRate}/day</span>
+                    <span className="text-[14px] font-semibold text-elec-yellow">
+                      £{selectedEquipment.dailyRate}/day
+                    </span>
                   )}
                   <ChevronDown className="h-5 w-5 text-white/40" />
                 </div>
@@ -685,17 +740,21 @@ export const InvoiceItemsStep = ({
         <div className="space-y-3">
           <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
             <div className="p-4 border-b border-white/[0.06]">
-              <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">Description *</label>
+              <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">
+                Description *
+              </label>
               <input
                 value={newItem.description}
-                onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
+                onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
                 placeholder="Enter item description"
                 className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-elec-yellow"
               />
             </div>
             <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
               <div className="p-4">
-                <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">Quantity</label>
+                <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">
+                  Quantity
+                </label>
                 <input
                   type="number"
                   value={newItem.quantity === 0 ? '' : newItem.quantity}
@@ -703,7 +762,7 @@ export const InvoiceItemsStep = ({
                     const val = e.target.value;
                     const quantity = val === '' ? 0 : parseFloat(val);
                     if (!isNaN(quantity)) {
-                      setNewItem(prev => ({ ...prev, quantity }));
+                      setNewItem((prev) => ({ ...prev, quantity }));
                     }
                   }}
                   className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
@@ -711,7 +770,9 @@ export const InvoiceItemsStep = ({
                 />
               </div>
               <div className="p-4">
-                <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">Unit Price (£)</label>
+                <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">
+                  Unit Price (£)
+                </label>
                 <input
                   type="number"
                   value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
@@ -719,7 +780,7 @@ export const InvoiceItemsStep = ({
                     const val = e.target.value;
                     const unitPrice = val === '' ? 0 : parseFloat(val);
                     if (!isNaN(unitPrice)) {
-                      setNewItem(prev => ({ ...prev, unitPrice }));
+                      setNewItem((prev) => ({ ...prev, unitPrice }));
                     }
                   }}
                   className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
@@ -749,9 +810,7 @@ export const InvoiceItemsStep = ({
       )}
 
       {/* Templates */}
-      {activeAddMethod === 'templates' && (
-        <JobTemplates onSelectTemplate={handleTemplateSelect} />
-      )}
+      {activeAddMethod === 'templates' && <JobTemplates onSelectTemplate={handleTemplateSelect} />}
 
       {/* Scan Invoice */}
       {activeAddMethod === 'scan' && (
@@ -764,7 +823,9 @@ export const InvoiceItemsStep = ({
               </div>
               <div>
                 <p className="text-[14px] font-medium text-white">Scan Supplier Invoice</p>
-                <p className="text-[12px] text-white/60">Take a photo or upload an invoice to auto-import materials</p>
+                <p className="text-[12px] text-white/60">
+                  Take a photo or upload an invoice to auto-import materials
+                </p>
               </div>
             </div>
           </div>
@@ -780,16 +841,20 @@ export const InvoiceItemsStep = ({
 
           {/* Tips */}
           <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-            <p className="text-[11px] text-white/40 uppercase tracking-wide mb-3">Supported Suppliers</p>
+            <p className="text-[11px] text-white/40 uppercase tracking-wide mb-3">
+              Supported Suppliers
+            </p>
             <div className="flex flex-wrap gap-2">
-              {['Screwfix', 'Toolstation', 'CEF', 'Edmundson', 'Rexel', 'Others'].map((supplier) => (
-                <span
-                  key={supplier}
-                  className="px-2.5 py-1 rounded-lg bg-white/[0.05] text-[12px] text-white/60"
-                >
-                  {supplier}
-                </span>
-              ))}
+              {['Screwfix', 'Toolstation', 'CEF', 'Edmundson', 'Rexel', 'Others'].map(
+                (supplier) => (
+                  <span
+                    key={supplier}
+                    className="px-2.5 py-1 rounded-lg bg-white/[0.05] text-[12px] text-white/60"
+                  >
+                    {supplier}
+                  </span>
+                )
+              )}
             </div>
           </div>
         </div>
@@ -803,13 +868,18 @@ export const InvoiceItemsStep = ({
           </p>
           <div className="space-y-2">
             {additionalItems.map((item) => (
-              <div key={item.id} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+              <div
+                key={item.id}
+                className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3"
+              >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <div className="w-7 h-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                       {getCategoryIcon(item.category)}
                     </div>
-                    <p className="text-[13px] font-medium text-white truncate">{item.description}</p>
+                    <p className="text-[13px] font-medium text-white truncate">
+                      {item.description}
+                    </p>
                   </div>
                   <div className="flex items-center gap-1 ml-2">
                     <button
@@ -853,7 +923,9 @@ export const InvoiceItemsStep = ({
                     className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
                   />
                   <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>
-                  <span className="text-[13px] font-bold text-elec-yellow">{formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}</span>
+                  <span className="text-[13px] font-bold text-elec-yellow">
+                    {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                  </span>
                 </div>
               </div>
             ))}
@@ -868,7 +940,7 @@ export const InvoiceItemsStep = ({
             <SheetTitle className="text-white text-left">Select Worker Type</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(70vh-60px)]">
-            {workerTypes.map(worker => {
+            {workerTypes.map((worker) => {
               const WorkerIcon = getWorkerIcon(worker.id);
               const isSelected = newItem.workerType === worker.id;
               return (
@@ -880,18 +952,24 @@ export const InvoiceItemsStep = ({
                     isSelected && 'bg-elec-yellow/10'
                   )}
                 >
-                  <div className={cn(
-                    'w-12 h-12 rounded-xl flex items-center justify-center',
-                    isSelected ? 'bg-elec-yellow' : 'bg-white/[0.05]'
-                  )}>
-                    <WorkerIcon className={cn('h-6 w-6', isSelected ? 'text-black' : 'text-white/70')} />
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-xl flex items-center justify-center',
+                      isSelected ? 'bg-elec-yellow' : 'bg-white/[0.05]'
+                    )}
+                  >
+                    <WorkerIcon
+                      className={cn('h-6 w-6', isSelected ? 'text-black' : 'text-white/70')}
+                    />
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[16px] font-medium text-white">{worker.name}</p>
                     <p className="text-[13px] text-white/50">{worker.description}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-[16px] font-bold text-elec-yellow">£{worker.defaultHourlyRate}/hr</span>
+                    <span className="text-[16px] font-bold text-elec-yellow">
+                      £{worker.defaultHourlyRate}/hr
+                    </span>
                     {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                   </div>
                 </button>
@@ -908,7 +986,7 @@ export const InvoiceItemsStep = ({
             <SheetTitle className="text-white text-left">Select Hours</SheetTitle>
           </SheetHeader>
           <div className="grid grid-cols-3 gap-2 p-4">
-            {hourOptions.map(h => {
+            {hourOptions.map((h) => {
               const isSelected = newItem.hours === h;
               return (
                 <button
@@ -938,7 +1016,10 @@ export const InvoiceItemsStep = ({
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(60vh-60px)]">
             <button
-              onClick={() => { setNewItem(prev => ({ ...prev, subcategory: '', materialCode: '' })); setCategorySheetOpen(false); }}
+              onClick={() => {
+                setNewItem((prev) => ({ ...prev, subcategory: '', materialCode: '' }));
+                setCategorySheetOpen(false);
+              }}
               className={cn(
                 'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
                 !newItem.subcategory && 'bg-elec-yellow/10'
@@ -947,12 +1028,15 @@ export const InvoiceItemsStep = ({
               <span className="text-[16px] font-medium text-white">All Categories</span>
               {!newItem.subcategory && <Check className="h-5 w-5 text-elec-yellow" />}
             </button>
-            {materialCategories.map(cat => {
+            {materialCategories.map((cat) => {
               const isSelected = newItem.subcategory === cat.id;
               return (
                 <button
                   key={cat.id}
-                  onClick={() => { setNewItem(prev => ({ ...prev, subcategory: cat.id, materialCode: '' })); setCategorySheetOpen(false); }}
+                  onClick={() => {
+                    setNewItem((prev) => ({ ...prev, subcategory: cat.id, materialCode: '' }));
+                    setCategorySheetOpen(false);
+                  }}
                   className={cn(
                     'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
                     isSelected && 'bg-elec-yellow/10'
@@ -974,7 +1058,7 @@ export const InvoiceItemsStep = ({
             <SheetTitle className="text-white text-left">Select Material</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(80vh-60px)]">
-            {filteredMaterials.map(material => {
+            {filteredMaterials.map((material) => {
               const isSelected = newItem.materialCode === material.id;
               const price = calculateAdjustedPrice(material.defaultPrice);
               return (
@@ -991,7 +1075,9 @@ export const InvoiceItemsStep = ({
                     <p className="text-[12px] text-white/50">{material.category}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-[15px] font-bold text-elec-yellow">£{price.toFixed(2)}</span>
+                    <span className="text-[15px] font-bold text-elec-yellow">
+                      £{price.toFixed(2)}
+                    </span>
                     {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                   </div>
                 </button>
@@ -1008,12 +1094,15 @@ export const InvoiceItemsStep = ({
             <SheetTitle className="text-white text-left">Select Category</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(50vh-60px)]">
-            {equipmentCategories.map(cat => {
+            {equipmentCategories.map((cat) => {
               const isSelected = newItem.subcategory === cat.id;
               return (
                 <button
                   key={cat.id}
-                  onClick={() => { setNewItem(prev => ({ ...prev, subcategory: cat.id })); setEquipmentCategorySheetOpen(false); }}
+                  onClick={() => {
+                    setNewItem((prev) => ({ ...prev, subcategory: cat.id }));
+                    setEquipmentCategorySheetOpen(false);
+                  }}
                   className={cn(
                     'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
                     isSelected && 'bg-elec-yellow/10'
@@ -1036,8 +1125,8 @@ export const InvoiceItemsStep = ({
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(70vh-60px)]">
             {commonEquipment
-              .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
-              .map(equipment => {
+              .filter((e) => !newItem.subcategory || e.category === newItem.subcategory)
+              .map((equipment) => {
                 const isSelected = newItem.equipmentCode === equipment.id;
                 return (
                   <button
@@ -1053,7 +1142,9 @@ export const InvoiceItemsStep = ({
                       <p className="text-[12px] text-white/50">{equipment.category}</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-[15px] font-bold text-elec-yellow">£{equipment.dailyRate}/{equipment.unit}</span>
+                      <span className="text-[15px] font-bold text-elec-yellow">
+                        £{equipment.dailyRate}/{equipment.unit}
+                      </span>
                       {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                     </div>
                   </button>
@@ -1069,7 +1160,11 @@ export const InvoiceItemsStep = ({
         onOpenChange={setScannerSheetOpen}
         onCapture={handleScanCapture}
         onUpload={handleScanUpload}
-        isProcessing={scanner.state === 'processing' || scanner.state === 'matching' || scanner.state === 'uploading'}
+        isProcessing={
+          scanner.state === 'processing' ||
+          scanner.state === 'matching' ||
+          scanner.state === 'uploading'
+        }
         progress={scanner.progress}
       />
 

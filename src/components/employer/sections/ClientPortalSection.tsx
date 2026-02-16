@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { Switch } from "@/components/ui/switch";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { QuickStats } from "@/components/employer/QuickStats";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
+import { Switch } from '@/components/ui/switch';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { QuickStats } from '@/components/employer/QuickStats';
 import {
   useClientPortalLinks,
   usePortalLinkByJob,
@@ -21,9 +21,9 @@ import {
   useDeletePortalLink,
   type PortalPermissions,
   type ClientPortalLink,
-} from "@/hooks/useClientPortal";
-import { useJobs } from "@/hooks/useJobs";
-import { useProgressLogs } from "@/hooks/useProgressLogs";
+} from '@/hooks/useClientPortal';
+import { useJobs } from '@/hooks/useJobs';
+import { useProgressLogs } from '@/hooks/useProgressLogs';
 import {
   ExternalLink,
   Copy,
@@ -43,11 +43,11 @@ import {
   Loader2,
   AlertTriangle,
   Trash2,
-  Power
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
+  Power,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export function ClientPortalSection() {
   const isMobile = useIsMobile();
@@ -58,7 +58,9 @@ export function ClientPortalSection() {
   const { data: jobs, isLoading: jobsLoading } = useJobs();
   const { data: portalLinks, isLoading: linksLoading } = useClientPortalLinks();
   const { data: stats } = usePortalStats();
-  const { data: portalLink, isLoading: linkLoading } = usePortalLinkByJob(selectedJobId || undefined);
+  const { data: portalLink, isLoading: linkLoading } = usePortalLinkByJob(
+    selectedJobId || undefined
+  );
   const { data: progressLogs } = useProgressLogs();
 
   const createPortalLink = useCreatePortalLink();
@@ -68,7 +70,7 @@ export function ClientPortalSection() {
   const deleteLink = useDeletePortalLink();
 
   // Filter for active and completed jobs
-  const activeJobs = jobs?.filter(j => j.status === "Active" || j.status === "Completed") || [];
+  const activeJobs = jobs?.filter((j) => j.status === 'Active' || j.status === 'Completed') || [];
 
   // Select first job by default
   useEffect(() => {
@@ -77,8 +79,8 @@ export function ClientPortalSection() {
     }
   }, [activeJobs, selectedJobId]);
 
-  const selectedJob = activeJobs.find(j => j.id === selectedJobId);
-  const jobLogs = progressLogs?.filter(l => l.job_id === selectedJobId) || [];
+  const selectedJob = activeJobs.find((j) => j.id === selectedJobId);
+  const jobLogs = progressLogs?.filter((l) => l.job_id === selectedJobId) || [];
 
   // Portal settings from the current link
   const portalSettings: PortalPermissions = portalLink?.permissions || {
@@ -95,7 +97,7 @@ export function ClientPortalSection() {
   };
 
   const getPortalUrl = () => {
-    if (!portalLink) return "";
+    if (!portalLink) return '';
     return `${window.location.origin}/portal/${portalLink.access_token}`;
   };
 
@@ -103,22 +105,22 @@ export function ClientPortalSection() {
     if (portalLink) {
       navigator.clipboard.writeText(getPortalUrl());
       toast({
-        title: "Link Copied",
-        description: "Client portal link copied to clipboard.",
+        title: 'Link Copied',
+        description: 'Client portal link copied to clipboard.',
       });
     }
   };
 
   const handleOpenPortal = () => {
     if (portalLink) {
-      window.open(getPortalUrl(), "_blank");
+      window.open(getPortalUrl(), '_blank');
     }
   };
 
   const handleSendEmail = () => {
     if (selectedJob) {
       toast({
-        title: "Email Sent",
+        title: 'Email Sent',
         description: `Portal link sent to ${portalLink?.client_name || selectedJob.client}.`,
       });
     }
@@ -127,7 +129,7 @@ export function ClientPortalSection() {
   const handleRefreshLink = async () => {
     if (portalLink) {
       await regenerateToken.mutateAsync(portalLink.id);
-      toast({ title: "Link refreshed", description: "A new portal link has been generated" });
+      toast({ title: 'Link refreshed', description: 'A new portal link has been generated' });
     }
   };
 
@@ -136,7 +138,7 @@ export function ClientPortalSection() {
 
     await createPortalLink.mutateAsync({
       job_id: selectedJob.id,
-      client_name: selectedJob.client || "Client",
+      client_name: selectedJob.client || 'Client',
       client_email: undefined,
     });
   };
@@ -178,7 +180,9 @@ export function ClientPortalSection() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-foreground">Project Progress</span>
-              <span className="text-xl font-bold text-elec-yellow">{selectedJob.progress || 0}%</span>
+              <span className="text-xl font-bold text-elec-yellow">
+                {selectedJob.progress || 0}%
+              </span>
             </div>
             <Progress value={selectedJob.progress || 0} className="h-3" />
           </div>
@@ -193,8 +197,8 @@ export function ClientPortalSection() {
               </p>
               <p className="text-sm font-semibold text-foreground">
                 {selectedJob.start_date
-                  ? new Date(selectedJob.start_date).toLocaleDateString("en-GB")
-                  : "TBC"}
+                  ? new Date(selectedJob.start_date).toLocaleDateString('en-GB')
+                  : 'TBC'}
               </p>
             </div>
             <div className="p-3 bg-muted/50 rounded-lg">
@@ -203,8 +207,8 @@ export function ClientPortalSection() {
               </p>
               <p className="text-sm font-semibold text-foreground">
                 {selectedJob.end_date
-                  ? new Date(selectedJob.end_date).toLocaleDateString("en-GB")
-                  : "TBC"}
+                  ? new Date(selectedJob.end_date).toLocaleDateString('en-GB')
+                  : 'TBC'}
               </p>
             </div>
           </div>
@@ -219,7 +223,7 @@ export function ClientPortalSection() {
                 <div key={log.id} className="p-2 bg-muted/50 rounded-lg">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-medium text-foreground">
-                      {new Date(log.date).toLocaleDateString("en-GB")}
+                      {new Date(log.date).toLocaleDateString('en-GB')}
                     </span>
                     {log.hours_worked && (
                       <Badge variant="secondary" className="text-[10px]">
@@ -241,7 +245,10 @@ export function ClientPortalSection() {
             <h3 className="text-sm font-semibold text-foreground mb-2">Progress Photos</h3>
             <div className="flex gap-2 flex-wrap">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="w-16 h-16 bg-muted/50 rounded-lg flex items-center justify-center">
+                <div
+                  key={i}
+                  className="w-16 h-16 bg-muted/50 rounded-lg flex items-center justify-center"
+                >
                   <Camera className="h-5 w-5 text-muted-foreground" />
                 </div>
               ))}
@@ -264,7 +271,12 @@ export function ClientPortalSection() {
         {portalSettings.allowMessages && (
           <Button
             className="w-full touch-manipulation"
-            onClick={() => toast({ title: "Preview Mode", description: "Clients can message you from their portal link" })}
+            onClick={() =>
+              toast({
+                title: 'Preview Mode',
+                description: 'Clients can message you from their portal link',
+              })
+            }
           >
             <Mail className="h-4 w-4 mr-2" />
             Send Message
@@ -313,20 +325,20 @@ export function ClientPortalSection() {
           {
             icon: Link2,
             value: stats?.active || 0,
-            label: "Active Links",
-            color: "green",
+            label: 'Active Links',
+            color: 'green',
           },
           {
             icon: Eye,
             value: stats?.totalViews || 0,
-            label: "Total Views",
-            color: "blue",
+            label: 'Total Views',
+            color: 'blue',
           },
           {
             icon: Users,
             value: stats?.recentlyViewed || 0,
-            label: "Recent Views",
-            color: "yellow",
+            label: 'Recent Views',
+            color: 'yellow',
           },
         ]}
       />
@@ -345,23 +357,25 @@ export function ClientPortalSection() {
           ) : (
             <div className="space-y-2">
               {activeJobs.map((job) => {
-                const hasLink = portalLinks?.some(l => l.job_id === job.id);
+                const hasLink = portalLinks?.some((l) => l.job_id === job.id);
 
                 return (
                   <Card
                     key={job.id}
                     className={cn(
-                      "cursor-pointer transition-all touch-manipulation",
+                      'cursor-pointer transition-all touch-manipulation',
                       selectedJobId === job.id
-                        ? "ring-2 ring-elec-yellow bg-elec-yellow/5"
-                        : "hover:bg-muted/50"
+                        ? 'ring-2 ring-elec-yellow bg-elec-yellow/5'
+                        : 'hover:bg-muted/50'
                     )}
                     onClick={() => setSelectedJobId(job.id)}
                   >
                     <CardContent className="p-3">
                       <div className="flex items-center justify-between gap-2">
                         <div className="min-w-0">
-                          <h4 className="font-medium text-foreground text-sm truncate">{job.title}</h4>
+                          <h4 className="font-medium text-foreground text-sm truncate">
+                            {job.title}
+                          </h4>
                           <p className="text-xs text-muted-foreground truncate">{job.client}</p>
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
@@ -371,7 +385,10 @@ export function ClientPortalSection() {
                               Linked
                             </Badge>
                           )}
-                          <Badge variant={job.status === "Active" ? "default" : "secondary"} className="text-[10px]">
+                          <Badge
+                            variant={job.status === 'Active' ? 'default' : 'secondary'}
+                            className="text-[10px]"
+                          >
                             {job.progress || 0}%
                           </Badge>
                           {isMobile && <ChevronRight className="h-4 w-4 text-muted-foreground" />}
@@ -398,8 +415,14 @@ export function ClientPortalSection() {
                       Portal Link
                     </span>
                     {portalLink && (
-                      <Badge className={portalLink.is_active ? "bg-green-500/20 text-green-400" : "bg-gray-500/20 text-gray-400"}>
-                        {portalLink.is_active ? "Active" : "Inactive"}
+                      <Badge
+                        className={
+                          portalLink.is_active
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-gray-500/20 text-gray-400'
+                        }
+                      >
+                        {portalLink.is_active ? 'Active' : 'Inactive'}
                       </Badge>
                     )}
                   </CardTitle>
@@ -410,12 +433,13 @@ export function ClientPortalSection() {
                   ) : portalLink ? (
                     <>
                       <div className="flex gap-2">
-                        <Input
-                          value={getPortalUrl()}
-                          readOnly
-                          className="bg-muted text-xs h-10"
-                        />
-                        <Button variant="outline" size="icon" onClick={handleCopyLink} className="flex-shrink-0 touch-manipulation h-10 w-10">
+                        <Input value={getPortalUrl()} readOnly className="bg-muted text-xs h-10" />
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={handleCopyLink}
+                          className="flex-shrink-0 touch-manipulation h-10 w-10"
+                        >
                           <Copy className="h-4 w-4" />
                         </Button>
                         <Button
@@ -433,7 +457,10 @@ export function ClientPortalSection() {
                         </Button>
                       </div>
                       <div className="flex flex-col sm:flex-row gap-2">
-                        <Button onClick={handleSendEmail} className="flex-1 h-11 touch-manipulation">
+                        <Button
+                          onClick={handleSendEmail}
+                          className="flex-1 h-11 touch-manipulation"
+                        >
                           <Mail className="h-4 w-4 mr-2" />
                           Email to Client
                         </Button>
@@ -448,7 +475,7 @@ export function ClientPortalSection() {
                           ) : (
                             <>
                               <Power className="h-4 w-4 mr-2" />
-                              {portalLink.is_active ? "Disable" : "Enable"}
+                              {portalLink.is_active ? 'Disable' : 'Enable'}
                             </>
                           )}
                         </Button>
@@ -460,7 +487,10 @@ export function ClientPortalSection() {
                                 Preview
                               </Button>
                             </SheetTrigger>
-                            <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
+                            <SheetContent
+                              side="bottom"
+                              className="h-[85vh] p-0 rounded-t-2xl flex flex-col"
+                            >
                               <SheetHeader className="p-4 border-b border-border">
                                 <SheetTitle>Client View Preview</SheetTitle>
                               </SheetHeader>
@@ -470,7 +500,11 @@ export function ClientPortalSection() {
                             </SheetContent>
                           </Sheet>
                         ) : (
-                          <Button variant="outline" className="h-11 touch-manipulation" onClick={handleOpenPortal}>
+                          <Button
+                            variant="outline"
+                            className="h-11 touch-manipulation"
+                            onClick={handleOpenPortal}
+                          >
                             <ExternalLink className="h-4 w-4 mr-2" />
                             Open Portal
                           </Button>
@@ -484,7 +518,8 @@ export function ClientPortalSection() {
                           </span>
                           {portalLink.last_accessed_at && (
                             <span>
-                              Last viewed: {new Date(portalLink.last_accessed_at).toLocaleDateString("en-GB")}
+                              Last viewed:{' '}
+                              {new Date(portalLink.last_accessed_at).toLocaleDateString('en-GB')}
                             </span>
                           )}
                         </div>
@@ -492,7 +527,9 @@ export function ClientPortalSection() {
                     </>
                   ) : (
                     <div className="text-center py-4">
-                      <p className="text-sm text-muted-foreground mb-3">No portal link for this job</p>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        No portal link for this job
+                      </p>
                       <Button
                         onClick={handleCreateLink}
                         disabled={createPortalLink.isPending}
@@ -524,17 +561,22 @@ export function ClientPortalSection() {
                   <CardContent className="p-3 md:p-4 pt-0">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {[
-                        { key: "showProgress", label: "Show Progress" },
-                        { key: "showPhotos", label: "Show Photos" },
-                        { key: "showTimeline", label: "Show Timeline" },
-                        { key: "showIssues", label: "Show Issues" },
-                        { key: "allowMessages", label: "Allow Messages" },
+                        { key: 'showProgress', label: 'Show Progress' },
+                        { key: 'showPhotos', label: 'Show Photos' },
+                        { key: 'showTimeline', label: 'Show Timeline' },
+                        { key: 'showIssues', label: 'Show Issues' },
+                        { key: 'allowMessages', label: 'Allow Messages' },
                       ].map(({ key, label }) => (
-                        <div key={key} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
+                        <div
+                          key={key}
+                          className="flex items-center justify-between p-2 bg-muted/50 rounded-lg"
+                        >
                           <span className="text-xs md:text-sm text-foreground">{label}</span>
                           <Switch
                             checked={portalSettings[key as keyof PortalPermissions]}
-                            onCheckedChange={(checked) => handleToggleSetting(key as keyof PortalPermissions, checked)}
+                            onCheckedChange={(checked) =>
+                              handleToggleSetting(key as keyof PortalPermissions, checked)
+                            }
                             disabled={updatePermissions.isPending}
                           />
                         </div>
@@ -556,17 +598,42 @@ export function ClientPortalSection() {
                   <CardContent className="p-3 md:p-4 pt-0">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {[
-                        { key: "showBeforePhotos", label: "Before", color: "bg-blue-500/20 text-blue-400" },
-                        { key: "showDuringPhotos", label: "During", color: "bg-amber-500/20 text-amber-400" },
-                        { key: "showAfterPhotos", label: "After", color: "bg-emerald-500/20 text-emerald-400" },
-                        { key: "showCompletionPhotos", label: "Completion", color: "bg-purple-500/20 text-purple-400" },
-                        { key: "showIssuePhotos", label: "Issue", color: "bg-red-500/20 text-red-400" },
+                        {
+                          key: 'showBeforePhotos',
+                          label: 'Before',
+                          color: 'bg-blue-500/20 text-blue-400',
+                        },
+                        {
+                          key: 'showDuringPhotos',
+                          label: 'During',
+                          color: 'bg-amber-500/20 text-amber-400',
+                        },
+                        {
+                          key: 'showAfterPhotos',
+                          label: 'After',
+                          color: 'bg-emerald-500/20 text-emerald-400',
+                        },
+                        {
+                          key: 'showCompletionPhotos',
+                          label: 'Completion',
+                          color: 'bg-purple-500/20 text-purple-400',
+                        },
+                        {
+                          key: 'showIssuePhotos',
+                          label: 'Issue',
+                          color: 'bg-red-500/20 text-red-400',
+                        },
                       ].map(({ key, label, color }) => (
-                        <div key={key} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
+                        <div
+                          key={key}
+                          className="flex items-center justify-between p-2 bg-muted/50 rounded-lg"
+                        >
                           <Badge className={`text-[10px] ${color}`}>{label}</Badge>
                           <Switch
                             checked={portalSettings[key as keyof PortalPermissions]}
-                            onCheckedChange={(checked) => handleToggleSetting(key as keyof PortalPermissions, checked)}
+                            onCheckedChange={(checked) =>
+                              handleToggleSetting(key as keyof PortalPermissions, checked)
+                            }
                             disabled={updatePermissions.isPending}
                           />
                         </div>
@@ -605,7 +672,9 @@ export function ClientPortalSection() {
                         <Eye className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
                         <CardTitle className="text-sm md:text-base">Client View Preview</CardTitle>
                       </div>
-                      <Badge variant="outline" className="text-[10px]">Live Preview</Badge>
+                      <Badge variant="outline" className="text-[10px]">
+                        Live Preview
+                      </Badge>
                     </div>
                   </CardHeader>
                   <CardContent className="p-4 md:p-6">

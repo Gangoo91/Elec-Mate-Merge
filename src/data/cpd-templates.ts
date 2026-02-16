@@ -8,16 +8,17 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'regulations-standards',
     type: 'formal-training',
     estimatedHours: 8,
-    description: 'Comprehensive training on the latest BS 7671 wiring regulations including amendments and updates.',
+    description:
+      'Comprehensive training on the latest BS 7671 wiring regulations including amendments and updates.',
     provider: 'IET/NICEIC/ECA',
     learningOutcomes: [
       'Understanding of new EV charging requirements',
       'Energy storage system regulations',
       'Updated inspection and testing procedures',
-      'Arc fault detection devices (AFDDs)'
+      'Arc fault detection devices (AFDDs)',
     ],
     evidenceRequired: ['certificate', 'attendance-record'],
-    isPopular: true
+    isPopular: true,
   },
   {
     id: 'building-regs-part-p',
@@ -25,14 +26,15 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'regulations-standards',
     type: 'formal-training',
     estimatedHours: 4,
-    description: 'Understanding Building Regulations Part P requirements for electrical work in domestic properties.',
+    description:
+      'Understanding Building Regulations Part P requirements for electrical work in domestic properties.',
     learningOutcomes: [
       'Notifiable vs non-notifiable work',
       'Competent person scheme requirements',
-      'Certification procedures'
+      'Certification procedures',
     ],
     evidenceRequired: ['certificate', 'assessment-results'],
-    isPopular: true
+    isPopular: true,
   },
 
   // Technical Skills
@@ -42,15 +44,16 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'technical-skills',
     type: 'formal-training',
     estimatedHours: 16,
-    description: 'Complete training on solar photovoltaic system design, installation, and commissioning.',
+    description:
+      'Complete training on solar photovoltaic system design, installation, and commissioning.',
     learningOutcomes: [
       'PV system design principles',
       'Installation techniques and safety',
       'Commissioning and testing procedures',
-      'Grid connection requirements'
+      'Grid connection requirements',
     ],
     evidenceRequired: ['certificate', 'site-photo', 'assessment-results'],
-    isPopular: true
+    isPopular: true,
   },
   {
     id: 'ev-charging-installation',
@@ -58,15 +61,16 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'technical-skills',
     type: 'formal-training',
     estimatedHours: 8,
-    description: 'Training on EV charging point installation, including domestic and commercial applications.',
+    description:
+      'Training on EV charging point installation, including domestic and commercial applications.',
     learningOutcomes: [
       'EV charging standards and regulations',
       'Installation requirements',
       'Load balancing and smart charging',
-      'Testing and commissioning'
+      'Testing and commissioning',
     ],
     evidenceRequired: ['certificate', 'site-photo'],
-    isPopular: true
+    isPopular: true,
   },
   {
     id: 'fault-finding-techniques',
@@ -74,15 +78,16 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'technical-skills',
     type: 'work-based-learning',
     estimatedHours: 4,
-    description: 'Practical application of advanced fault finding methods on live electrical systems.',
+    description:
+      'Practical application of advanced fault finding methods on live electrical systems.',
     learningOutcomes: [
       'Systematic fault finding approach',
       'Use of advanced test equipment',
       'Safety considerations during testing',
-      'Documentation of findings'
+      'Documentation of findings',
     ],
     evidenceRequired: ['reflection-notes', 'site-photo', 'technical-document'],
-    isPopular: false
+    isPopular: false,
   },
 
   // Safety & Health
@@ -92,15 +97,16 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'safety-health',
     type: 'formal-training',
     estimatedHours: 6,
-    description: 'Essential training on working safely at height including ladder safety and fall protection.',
+    description:
+      'Essential training on working safely at height including ladder safety and fall protection.',
     learningOutcomes: [
       'Risk assessment for working at height',
       'Proper use of access equipment',
       'Fall protection systems',
-      'Emergency procedures'
+      'Emergency procedures',
     ],
     evidenceRequired: ['certificate', 'attendance-record'],
-    isPopular: true
+    isPopular: true,
   },
   {
     id: 'electrical-safety-training',
@@ -108,15 +114,16 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'safety-health',
     type: 'formal-training',
     estimatedHours: 4,
-    description: 'Comprehensive electrical safety training covering hazards, PPE, and safe working practices.',
+    description:
+      'Comprehensive electrical safety training covering hazards, PPE, and safe working practices.',
     learningOutcomes: [
       'Electrical hazard identification',
       'Proper PPE selection and use',
       'Lock out/tag out procedures',
-      'Emergency response'
+      'Emergency response',
     ],
     evidenceRequired: ['certificate', 'assessment-results'],
-    isPopular: true
+    isPopular: true,
   },
   {
     id: 'toolbox-talk-delivery',
@@ -128,10 +135,10 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     learningOutcomes: [
       'Communication of safety procedures',
       'Team engagement on safety topics',
-      'Risk awareness raising'
+      'Risk awareness raising',
     ],
     evidenceRequired: ['toolbox-talk', 'reflection-notes'],
-    isPopular: false
+    isPopular: false,
   },
 
   // Business & Commercial
@@ -146,10 +153,10 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
       'Effective communication techniques',
       'Managing customer expectations',
       'Complaint resolution',
-      'Building customer relationships'
+      'Building customer relationships',
     ],
     evidenceRequired: ['certificate', 'reflection-notes'],
-    isPopular: false
+    isPopular: false,
   },
   {
     id: 'business-development',
@@ -162,10 +169,10 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
       'Business planning and strategy',
       'Marketing and customer acquisition',
       'Financial management',
-      'Legal requirements'
+      'Legal requirements',
     ],
     evidenceRequired: ['reflection-notes', 'technical-document'],
-    isPopular: false
+    isPopular: false,
   },
 
   // Professional Ethics
@@ -175,15 +182,16 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
     category: 'professional-ethics',
     type: 'self-directed-study',
     estimatedHours: 2,
-    description: 'Understanding professional responsibilities and ethical conduct in electrical work.',
+    description:
+      'Understanding professional responsibilities and ethical conduct in electrical work.',
     learningOutcomes: [
       'Professional codes of conduct',
       'Ethical decision making',
       'Conflict of interest management',
-      'Professional integrity'
+      'Professional integrity',
     ],
     evidenceRequired: ['reflection-notes'],
-    isPopular: false
+    isPopular: false,
   },
 
   // Environmental & Sustainability
@@ -198,10 +206,10 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
       'Energy efficiency principles',
       'LED lighting systems',
       'Power factor correction',
-      'Environmental impact assessment'
+      'Environmental impact assessment',
     ],
     evidenceRequired: ['certificate', 'technical-document'],
-    isPopular: false
+    isPopular: false,
   },
 
   // Digital Technology
@@ -216,10 +224,10 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
       'Smart switch and socket installation',
       'Home automation systems',
       'Network configuration',
-      'Troubleshooting connectivity issues'
+      'Troubleshooting connectivity issues',
     ],
     evidenceRequired: ['certificate', 'site-photo'],
-    isPopular: true
+    isPopular: true,
   },
   {
     id: 'digital-testing-equipment',
@@ -232,11 +240,11 @@ export const CPD_ACTIVITY_TEMPLATES: CPDActivityTemplate[] = [
       'Advanced multimeter functions',
       'Digital insulation testers',
       'Power quality analyzers',
-      'Data logging and analysis'
+      'Data logging and analysis',
     ],
     evidenceRequired: ['reflection-notes', 'site-photo'],
-    isPopular: false
-  }
+    isPopular: false,
+  },
 ];
 
 export const QUICK_ACTIVITY_TEMPLATES = [
@@ -245,36 +253,36 @@ export const QUICK_ACTIVITY_TEMPLATES = [
     title: 'Technical Publication Reading',
     category: 'self-directed-study' as ActivityType,
     estimatedHours: 1,
-    description: 'Reading industry publications, technical journals, or standards documents'
+    description: 'Reading industry publications, technical journals, or standards documents',
   },
   {
     id: 'online-webinar',
     title: 'Industry Webinar Attendance',
     category: 'conferences-seminars' as ActivityType,
     estimatedHours: 1,
-    description: 'Attending online webinars or virtual conferences'
+    description: 'Attending online webinars or virtual conferences',
   },
   {
     id: 'peer-discussion',
     title: 'Peer Learning Discussion',
     category: 'professional-activities' as ActivityType,
     estimatedHours: 0.5,
-    description: 'Technical discussions with colleagues or peers'
+    description: 'Technical discussions with colleagues or peers',
   },
   {
     id: 'manufacturer-training',
     title: 'Manufacturer Product Training',
     category: 'formal-training' as ActivityType,
     estimatedHours: 2,
-    description: 'Training sessions provided by equipment manufacturers'
+    description: 'Training sessions provided by equipment manufacturers',
   },
   {
     id: 'site-observation',
     title: 'Site Learning Observation',
     category: 'work-based-learning' as ActivityType,
     estimatedHours: 2,
-    description: 'Learning through observation of new techniques or installations'
-  }
+    description: 'Learning through observation of new techniques or installations',
+  },
 ];
 
 export const POPULAR_PROVIDERS = [
@@ -290,5 +298,5 @@ export const POPULAR_PROVIDERS = [
   'Manufacturer Training',
   'Online Learning Platform',
   'Professional Conference',
-  'Industry Association'
+  'Industry Association',
 ];

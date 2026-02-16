@@ -37,8 +37,8 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={onBack}
             className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
           >
@@ -60,7 +60,9 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-white/80 text-sm">Total Quizzes</p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">{overallStats.totalQuizzes}</p>
+                <p className="text-xl sm:text-2xl font-bold text-foreground">
+                  {overallStats.totalQuizzes}
+                </p>
               </div>
               <BarChart3 className="h-8 w-8 text-elec-yellow" />
             </div>
@@ -72,7 +74,9 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-white/80 text-sm">Average Score</p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">{overallStats.averageScore}%</p>
+                <p className="text-xl sm:text-2xl font-bold text-foreground">
+                  {overallStats.averageScore}%
+                </p>
               </div>
               <Target className="h-8 w-8 text-green-500" />
             </div>
@@ -84,7 +88,9 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-white/80 text-sm">Best Score</p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">{overallStats.bestScore}%</p>
+                <p className="text-xl sm:text-2xl font-bold text-foreground">
+                  {overallStats.bestScore}%
+                </p>
               </div>
               <TrendingUp className="h-8 w-8 text-blue-500" />
             </div>
@@ -124,7 +130,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
                 </span>
               </div>
               <div className="w-full bg-muted rounded-full h-3">
-                <div 
+                <div
                   className={`h-3 rounded-full ${category.color} transition-all duration-500`}
                   style={{ width: `${category.score}%` }}
                 />
@@ -145,21 +151,30 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
         <CardContent>
           {recentResults.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-white/80">No quiz results yet. Complete a quiz to see your history here!</p>
+              <p className="text-white/80">
+                No quiz results yet. Complete a quiz to see your history here!
+              </p>
             </div>
           ) : (
             <div className="space-y-4">
               {recentResults.map((result, index) => (
-                <div key={result.id} className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                <div
+                  key={result.id}
+                  className="flex items-center justify-between p-4 bg-muted rounded-lg"
+                >
                   <div className="space-y-1">
-                    <p className="text-foreground font-medium">Assessment #{result.assessment_id}</p>
+                    <p className="text-foreground font-medium">
+                      Assessment #{result.assessment_id}
+                    </p>
                     <p className="text-white/80 text-sm">
-                      {new Date(result.completed_at).toLocaleDateString('en-GB')} • 
+                      {new Date(result.completed_at).toLocaleDateString('en-GB')} •
                       {Math.round(result.time_spent / 60)} minutes
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-foreground font-bold text-lg">{Math.round(result.percentage)}%</p>
+                    <p className="text-foreground font-bold text-lg">
+                      {Math.round(result.percentage)}%
+                    </p>
                     <p className="text-white/80 text-sm">
                       {result.correct_answers}/{result.total_questions} correct
                     </p>

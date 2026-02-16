@@ -31,9 +31,7 @@ const InstrumentationModule9 = () => {
             <span className="text-white/40 text-xs">•</span>
             <span className="text-white/60 text-xs">120 mins</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Mock Exam
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
           <p className="text-white/60 text-sm sm:text-base">
             Comprehensive assessment covering all instrumentation course modules
           </p>

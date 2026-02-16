@@ -1,44 +1,49 @@
-import { ArrowLeft, Layers, Building2, Wrench, ShieldCheck, Target } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Layers, Building2, Wrench, ShieldCheck, Target } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     sectionNumber: 1,
-    title: "Types of Mobile Access Towers",
-    description: "Standard aluminium, GRP/fibreglass, single-width, double-width, stairwell, and folding towers",
+    title: 'Types of Mobile Access Towers',
+    description:
+      'Standard aluminium, GRP/fibreglass, single-width, double-width, stairwell, and folding towers',
     icon: Building2,
-    link: "../ipaf-module-2-section-1",
+    link: '../ipaf-module-2-section-1',
   },
   {
     sectionNumber: 2,
-    title: "Components & Terminology",
-    description: "Frames, braces, platforms, guardrails, toeboards, stabilisers, outriggers, castors, and base plates",
+    title: 'Components & Terminology',
+    description:
+      'Frames, braces, platforms, guardrails, toeboards, stabilisers, outriggers, castors, and base plates',
     icon: Wrench,
-    link: "../ipaf-module-2-section-2",
+    link: '../ipaf-module-2-section-2',
   },
   {
     sectionNumber: 3,
-    title: "Stability & Safe Working Loads",
-    description: "275kg per platform, wind limits, lateral forces, manufacturer instructions, and the 3:1 ratio myth",
+    title: 'Stability & Safe Working Loads',
+    description:
+      '275kg per platform, wind limits, lateral forces, manufacturer instructions, and the 3:1 ratio myth',
     icon: ShieldCheck,
-    link: "../ipaf-module-2-section-3",
+    link: '../ipaf-module-2-section-3',
   },
   {
     sectionNumber: 4,
-    title: "Selecting the Right Tower",
-    description: "Matching tower type to task — indoor vs outdoor, height, load, width, and access requirements",
+    title: 'Selecting the Right Tower',
+    description:
+      'Matching tower type to task — indoor vs outdoor, height, load, width, and access requirements',
     icon: Target,
-    link: "../ipaf-module-2-section-4",
+    link: '../ipaf-module-2-section-4',
   },
 ];
 
 export default function IpafModule2() {
   useSEO({
-    title: "Module 2: Tower Types & Components | IPAF Mobile Scaffold Training",
-    description: "Learn about different mobile access tower types, components, stability principles, safe working loads, and how to select the right tower for the job.",
+    title: 'Module 2: Tower Types & Components | IPAF Mobile Scaffold Training',
+    description:
+      'Learn about different mobile access tower types, components, stability principles, safe working loads, and how to select the right tower for the job.',
   });
 
   return (
@@ -72,7 +77,8 @@ export default function IpafModule2() {
               Tower Types & Components
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground">
-              Understand the different types of mobile access towers, their components, stability principles, and how to select the right tower for the job
+              Understand the different types of mobile access towers, their components, stability
+              principles, and how to select the right tower for the job
             </p>
           </div>
 

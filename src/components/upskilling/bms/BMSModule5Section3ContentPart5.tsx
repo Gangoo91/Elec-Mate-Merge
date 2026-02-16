@@ -12,10 +12,11 @@ export const BMSModule5Section3ContentPart5 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Understanding the performance characteristics of Modbus helps electricians make informed decisions about 
-          system design and troubleshooting. Real-world performance depends on many factors beyond basic specifications.
+          Understanding the performance characteristics of Modbus helps electricians make informed
+          decisions about system design and troubleshooting. Real-world performance depends on many
+          factors beyond basic specifications.
         </p>
-        
+
         <div className="space-y-3">
           <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2 mb-2">
@@ -27,7 +28,9 @@ export const BMSModule5Section3ContentPart5 = () => {
                 <p className="text-foreground font-medium">Polling Speed Limitations:</p>
                 <p className="text-foreground">• 30 devices at 9600 bps = ~3 second update cycle</p>
                 <p className="text-foreground">• Each transaction takes ~100-200ms minimum</p>
-                <p className="text-foreground">• Higher baud rates help but distance limits apply</p>
+                <p className="text-foreground">
+                  • Higher baud rates help but distance limits apply
+                </p>
               </div>
               <div className="space-y-1">
                 <p className="text-foreground font-medium">Distance vs Speed Trade-offs:</p>
@@ -44,11 +47,21 @@ export const BMSModule5Section3ContentPart5 = () => {
               TCP/IP Performance Benefits
             </h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground">• Concurrent connections: Multiple masters can communicate simultaneously</p>
-              <p className="text-foreground">• Faster response times: Typically 10-50ms vs 100-200ms for RTU</p>
-              <p className="text-foreground">• Better error detection: TCP handles packet loss and retransmission</p>
-              <p className="text-foreground">• Scalability: Hundreds of devices possible on single network</p>
-              <p className="text-foreground">• Remote access: Can monitor devices across IP networks</p>
+              <p className="text-foreground">
+                • Concurrent connections: Multiple masters can communicate simultaneously
+              </p>
+              <p className="text-foreground">
+                • Faster response times: Typically 10-50ms vs 100-200ms for RTU
+              </p>
+              <p className="text-foreground">
+                • Better error detection: TCP handles packet loss and retransmission
+              </p>
+              <p className="text-foreground">
+                • Scalability: Hundreds of devices possible on single network
+              </p>
+              <p className="text-foreground">
+                • Remote access: Can monitor devices across IP networks
+              </p>
             </div>
           </div>
 
@@ -68,7 +81,9 @@ export const BMSModule5Section3ContentPart5 = () => {
               <div>
                 <p className="text-foreground font-medium">For TCP/IP Networks:</p>
                 <p className="text-foreground">• Use keep-alive connections to reduce overhead</p>
-                <p className="text-foreground">• Implement quality of service (QoS) for critical data</p>
+                <p className="text-foreground">
+                  • Implement quality of service (QoS) for critical data
+                </p>
                 <p className="text-foreground">• Monitor network utilisation and plan capacity</p>
                 <p className="text-foreground">• Use VLANs to separate traffic types</p>
               </div>
@@ -79,9 +94,10 @@ export const BMSModule5Section3ContentPart5 = () => {
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Real-World Performance Example</h4>
           <p className="text-foreground text-sm">
-            A building with 50 electricity meters on Modbus RTU at 19200 bps achieved a 5-minute update cycle for all points. 
-            When upgraded to Modbus TCP/IP, the same data updated every 30 seconds with much better reliability. The TCP/IP 
-            version also allowed real-time alarms and remote monitoring capabilities that weren't practical with RTU.
+            A building with 50 electricity meters on Modbus RTU at 19200 bps achieved a 5-minute
+            update cycle for all points. When upgraded to Modbus TCP/IP, the same data updated every
+            30 seconds with much better reliability. The TCP/IP version also allowed real-time
+            alarms and remote monitoring capabilities that weren't practical with RTU.
           </p>
         </div>
       </CardContent>

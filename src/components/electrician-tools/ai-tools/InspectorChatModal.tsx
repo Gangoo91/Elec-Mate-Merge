@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2, X, ChevronDown, ChevronUp } from "lucide-react";
-import { useStreamingChat } from "@/hooks/useStreamingChat";
-import { InspectorMessage } from "./InspectorMessage";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { toast } from "sonner";
+import { useState, useRef, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Send, Loader2, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { useStreamingChat } from '@/hooks/useStreamingChat';
+import { InspectorMessage } from './InspectorMessage';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { toast } from 'sonner';
 
 interface Finding {
   description: string;
@@ -34,22 +34,24 @@ interface Message {
   agentName?: string;
 }
 
-export const InspectorChatModal = ({ 
-  isOpen, 
-  onClose, 
-  findings, 
+export const InspectorChatModal = ({
+  isOpen,
+  onClose,
+  findings,
   imageUrl,
   analysisMode,
-  userContext
+  userContext,
 }: InspectorChatModalProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [reasoningSteps, setReasoningSteps] = useState<Array<{
-    agent: string;
-    status: 'pending' | 'active' | 'complete';
-    reasoning?: string;
-  }>>([]);
+  const [reasoningSteps, setReasoningSteps] = useState<
+    Array<{
+      agent: string;
+      status: 'pending' | 'active' | 'complete';
+      reasoning?: string;
+    }>
+  >([]);
   const [showReasoning, setShowReasoning] = useState(false); // Start collapsed
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
@@ -57,9 +59,9 @@ export const InspectorChatModal = ({
 
   const { streamMessage, isStreaming } = useStreamingChat({
     onAgentStart: (agent, index, total) => {
-      setReasoningSteps(prev => {
+      setReasoningSteps((prev) => {
         const newSteps = [...prev];
-        const existingIndex = newSteps.findIndex(s => s.agent === agent);
+        const existingIndex = newSteps.findIndex((s) => s.agent === agent);
         if (existingIndex >= 0) {
           newSteps[existingIndex] = { agent, status: 'active' };
         } else {
@@ -69,38 +71,43 @@ export const InspectorChatModal = ({
       });
     },
     onAgentResponse: (agent, response) => {
-      setReasoningSteps(prev => 
-        prev.map(s => s.agent === agent ? { ...s, status: 'complete', reasoning: response.slice(0, 100) + '...' } : s)
+      setReasoningSteps((prev) =>
+        prev.map((s) =>
+          s.agent === agent
+            ? { ...s, status: 'complete', reasoning: response.slice(0, 100) + '...' }
+            : s
+        )
       );
     },
     onAgentComplete: (agent, nextAgent) => {
-      setReasoningSteps(prev => 
-        prev.map(s => s.agent === agent ? { ...s, status: 'complete' } : s)
+      setReasoningSteps((prev) =>
+        prev.map((s) => (s.agent === agent ? { ...s, status: 'complete' } : s))
       );
       if (nextAgent) {
-        setReasoningSteps(prev => [...prev, { agent: nextAgent, status: 'pending' }]);
+        setReasoningSteps((prev) => [...prev, { agent: nextAgent, status: 'pending' }]);
       }
     },
     onError: (error) => {
       toast.error(error);
       setIsLoading(false);
-    }
+    },
   });
 
   // Auto-generate initial question when modal opens
   useEffect(() => {
     if (isOpen && findings.length > 0 && messages.length === 0) {
       const initialQuestion = generateInitialQuestion();
-      
+
       // Add assistant greeting
       const greeting: Message = {
         role: 'assistant',
-        content: "Right, let me have a look at what you've found. I'll analyse the safety classification, required tests, and how to verify these defects properly.",
-        agentName: 'inspector'
+        content:
+          "Right, let me have a look at what you've found. I'll analyse the safety classification, required tests, and how to verify these defects properly.",
+        agentName: 'inspector',
       };
-      
+
       setMessages([greeting]);
-      
+
       // Auto-send the initial question
       setTimeout(() => {
         handleSendInitialMessage(initialQuestion);
@@ -109,9 +116,12 @@ export const InspectorChatModal = ({
   }, [isOpen, findings]);
 
   const generateInitialQuestion = (): string => {
-    const findingsList = findings.map((f, i) => 
-      `${i + 1}. [${f.eicr_code}] ${f.description}\n   BS 7671: ${f.bs7671_clauses.join(', ')}`
-    ).join('\n\n');
+    const findingsList = findings
+      .map(
+        (f, i) =>
+          `${i + 1}. [${f.eicr_code}] ${f.description}\n   BS 7671: ${f.bs7671_clauses.join(', ')}`
+      )
+      .join('\n\n');
 
     return `I've completed a visual inspection and identified the following issues:\n\n${findingsList}\n\nPlease help me:\n1. Confirm the safety classification for each finding\n2. Specify which tests I need to perform to verify these defects\n3. Explain the safety implications\n4. Advise on remediation approach`;
   };
@@ -119,47 +129,47 @@ export const InspectorChatModal = ({
   const handleSendInitialMessage = async (question: string) => {
     const userMessage: Message = {
       role: 'user',
-      content: question
+      content: question,
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     setStreamingMessageIndex(1); // Next message will be at index 1
 
     const assistantMessage: Message = {
       role: 'assistant',
       content: '',
-      activeAgents: ['inspector']
+      activeAgents: ['inspector'],
     };
 
-    setMessages(prev => [...prev, assistantMessage]);
+    setMessages((prev) => [...prev, assistantMessage]);
 
     try {
       await streamMessage(
         [userMessage],
         { findings, analysisMode, userContext },
         (token) => {
-          setMessages(prev => {
+          setMessages((prev) => {
             const newMessages = [...prev];
             const lastIndex = newMessages.length - 1;
             if (newMessages[lastIndex].role === 'assistant') {
               newMessages[lastIndex] = {
                 ...newMessages[lastIndex],
-                content: newMessages[lastIndex].content + token
+                content: newMessages[lastIndex].content + token,
               };
             }
             return newMessages;
           });
         },
         (fullMessage, data) => {
-          setMessages(prev => {
+          setMessages((prev) => {
             const newMessages = [...prev];
             const lastIndex = newMessages.length - 1;
             newMessages[lastIndex] = {
               ...newMessages[lastIndex],
               content: fullMessage,
               citations: data.citations,
-              activeAgents: data.activeAgents
+              activeAgents: data.activeAgents,
             };
             return newMessages;
           });
@@ -179,11 +189,11 @@ export const InspectorChatModal = ({
 
     const userMessage: Message = {
       role: 'user',
-      content: input
+      content: input,
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInput("");
+    setMessages((prev) => [...prev, userMessage]);
+    setInput('');
     setIsLoading(true);
 
     const currentStreamIndex = messages.length + 1;
@@ -192,37 +202,37 @@ export const InspectorChatModal = ({
     const assistantMessage: Message = {
       role: 'assistant',
       content: '',
-      activeAgents: []
+      activeAgents: [],
     };
 
-    setMessages(prev => [...prev, assistantMessage]);
+    setMessages((prev) => [...prev, assistantMessage]);
 
     try {
       await streamMessage(
         [...messages, userMessage],
         { findings, analysisMode, userContext },
         (token) => {
-          setMessages(prev => {
+          setMessages((prev) => {
             const newMessages = [...prev];
             const lastIndex = newMessages.length - 1;
             if (newMessages[lastIndex].role === 'assistant') {
               newMessages[lastIndex] = {
                 ...newMessages[lastIndex],
-                content: newMessages[lastIndex].content + token
+                content: newMessages[lastIndex].content + token,
               };
             }
             return newMessages;
           });
         },
         (fullMessage, data) => {
-          setMessages(prev => {
+          setMessages((prev) => {
             const newMessages = [...prev];
             const lastIndex = newMessages.length - 1;
             newMessages[lastIndex] = {
               ...newMessages[lastIndex],
               content: fullMessage,
               citations: data.citations,
-              activeAgents: data.activeAgents
+              activeAgents: data.activeAgents,
             };
             return newMessages;
           });
@@ -239,7 +249,7 @@ export const InspectorChatModal = ({
   // Only auto-scroll if user hasn't manually scrolled up
   useEffect(() => {
     if (shouldAutoScroll) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, shouldAutoScroll]);
 
@@ -256,7 +266,9 @@ export const InspectorChatModal = ({
         <DialogHeader className="p-4 sm:p-6 pb-3 border-b">
           <div className="flex items-center justify-between">
             <div>
-              <DialogTitle className="text-lg sm:text-xl font-semibold">Inspector AI Consultation</DialogTitle>
+              <DialogTitle className="text-lg sm:text-xl font-semibold">
+                Inspector AI Consultation
+              </DialogTitle>
               <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 BS 7671 Part 6 Inspection & Testing Analysis
               </p>
@@ -273,7 +285,7 @@ export const InspectorChatModal = ({
         </DialogHeader>
 
         {/* Messages */}
-        <div 
+        <div
           className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 scroll-smooth"
           onScroll={handleScroll}
         >
@@ -289,18 +301,22 @@ export const InspectorChatModal = ({
                 <div className="flex items-center gap-2">
                   <span className="text-elec-yellow">🔍</span>
                   <span className="text-muted-foreground">
-                    {reasoningSteps.find(s => s.status === 'active') 
-                      ? 'Inspector analysing...' 
+                    {reasoningSteps.find((s) => s.status === 'active')
+                      ? 'Inspector analysing...'
                       : `Analysis complete`}
                   </span>
                 </div>
-                {showReasoning ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                {showReasoning ? (
+                  <ChevronUp className="h-3 w-3" />
+                ) : (
+                  <ChevronDown className="h-3 w-3" />
+                )}
               </Button>
-              
+
               {showReasoning && (
                 <div className="mt-2 space-y-1">
                   {reasoningSteps.map((step, index) => (
-                    <div 
+                    <div
                       key={index}
                       className="flex items-center gap-2 p-2 rounded bg-elec-dark/30 border border-elec-yellow/10 text-xs"
                     >
@@ -308,9 +324,7 @@ export const InspectorChatModal = ({
                         {step.status === 'active' && (
                           <Loader2 className="h-3 w-3 animate-spin text-elec-yellow" />
                         )}
-                        {step.status === 'complete' && (
-                          <span className="text-green-500">✓</span>
-                        )}
+                        {step.status === 'complete' && <span className="text-green-500">✓</span>}
                         {step.status === 'pending' && (
                           <div className="h-3 w-3 rounded-full border border-muted-foreground/30" />
                         )}
@@ -326,8 +340,8 @@ export const InspectorChatModal = ({
           )}
 
           {messages.map((message, index) => (
-            <InspectorMessage 
-              key={index} 
+            <InspectorMessage
+              key={index}
               message={message}
               isStreaming={index === streamingMessageIndex}
             />

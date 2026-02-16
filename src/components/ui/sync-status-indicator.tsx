@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Cloud, CloudOff, CheckCircle2, AlertCircle, Loader2, WifiOff, HardDrive, CloudUpload } from 'lucide-react';
+import {
+  Cloud,
+  CloudOff,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  WifiOff,
+  HardDrive,
+  CloudUpload,
+} from 'lucide-react';
 import { SyncStatus } from '@/hooks/useCloudSync';
 import { cn } from '@/lib/utils';
 
@@ -14,7 +23,7 @@ interface SyncStatusIndicatorProps {
   isAuthenticated: boolean;
   className?: string;
   showLocalStatus?: boolean;
-  onSyncNow?: () => void;  // Optional callback for manual sync
+  onSyncNow?: () => void; // Optional callback for manual sync
 }
 
 export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
@@ -30,7 +39,7 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
   // Force re-render every 10 seconds to update "saved X ago" text
   const [, forceUpdate] = useState(0);
   useEffect(() => {
-    const interval = setInterval(() => forceUpdate(n => n + 1), 10000);
+    const interval = setInterval(() => forceUpdate((n) => n + 1), 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -171,9 +180,7 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
   return (
     <div className={cn('flex items-center gap-2', className)}>
       {getStatusIcon()}
-      <span className={cn('text-sm font-medium', getStatusColor())}>
-        {getStatusText()}
-      </span>
+      <span className={cn('text-sm font-medium', getStatusColor())}>{getStatusText()}</span>
     </div>
   );
 };

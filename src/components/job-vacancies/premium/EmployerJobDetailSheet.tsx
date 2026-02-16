@@ -3,12 +3,12 @@
  * Features "Apply with Elec-ID" with profile preview
  */
 
-import { useState, useRef } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Drawer } from "vaul";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { Drawer } from 'vaul';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   X,
   Briefcase,
@@ -30,9 +30,9 @@ import {
   Eye,
   Users,
   Award,
-} from "lucide-react";
-import { fadeUpVariants } from "./animations/variants";
-import type { UnifiedJobListing } from "@/types/unified-jobs";
+} from 'lucide-react';
+import { fadeUpVariants } from './animations/variants';
+import type { UnifiedJobListing } from '@/types/unified-jobs';
 
 interface EmployerJobDetailSheetProps {
   job: UnifiedJobListing | null;
@@ -45,18 +45,12 @@ interface EmployerJobDetailSheetProps {
 }
 
 // Company logo with employer styling
-const CompanyLogo = ({
-  company,
-  imageUrl,
-}: {
-  company: string;
-  imageUrl?: string;
-}) => {
+const CompanyLogo = ({ company, imageUrl }: { company: string; imageUrl?: string }) => {
   const initials = company
-    .split(" ")
+    .split(' ')
     .slice(0, 2)
     .map((word) => word[0])
-    .join("")
+    .join('')
     .toUpperCase();
 
   if (imageUrl) {
@@ -66,7 +60,7 @@ const CompanyLogo = ({
         alt={company}
         className="w-20 h-20 rounded-2xl object-cover border-2 border-emerald-400/30 shadow-2xl"
         onError={(e) => {
-          e.currentTarget.style.display = "none";
+          e.currentTarget.style.display = 'none';
         }}
       />
     );
@@ -115,7 +109,7 @@ const CollapsibleSection = ({
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
@@ -133,7 +127,7 @@ const StatItem = ({
   icon: Icon,
   label,
   value,
-  iconColor = "text-emerald-400",
+  iconColor = 'text-emerald-400',
 }: {
   icon: typeof Briefcase;
   label: string;
@@ -142,7 +136,7 @@ const StatItem = ({
 }) => (
   <div className="bg-white/[0.03] rounded-xl p-3 border border-white/5">
     <div className="flex items-center gap-2 mb-1">
-      <Icon className={cn("h-4 w-4", iconColor)} />
+      <Icon className={cn('h-4 w-4', iconColor)} />
       <span className="text-xs text-white/50">{label}</span>
     </div>
     <p className="font-semibold text-white text-sm">{value}</p>
@@ -156,10 +150,10 @@ const formatPostedDate = (date: string) => {
   const diffMs = now.getTime() - posted.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays} days ago`;
-  return posted.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  return posted.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 };
 
 // Check if job is fresh
@@ -306,7 +300,7 @@ const EmployerJobDetailSheet = ({
                 <StatItem
                   icon={Banknote}
                   label="Salary"
-                  value={job.salary || "Competitive"}
+                  value={job.salary || 'Competitive'}
                   iconColor="text-emerald-400"
                 />
                 <StatItem
@@ -342,7 +336,9 @@ const EmployerJobDetailSheet = ({
             <div className="px-6 pb-32">
               {/* Job Description */}
               <CollapsibleSection title="Job Description" icon={FileText} defaultOpen>
-                <p className="whitespace-pre-wrap">{job.description || "No description available."}</p>
+                <p className="whitespace-pre-wrap">
+                  {job.description || 'No description available.'}
+                </p>
               </CollapsibleSection>
 
               {/* Requirements */}
@@ -397,7 +393,8 @@ const EmployerJobDetailSheet = ({
                     </div>
                   </div>
                   <p className="text-white/60">
-                    This job is posted directly by the employer. When you apply, your complete Elec-ID profile will be shared with them.
+                    This job is posted directly by the employer. When you apply, your complete
+                    Elec-ID profile will be shared with them.
                   </p>
                 </div>
               </CollapsibleSection>
@@ -445,13 +442,13 @@ const EmployerJobDetailSheet = ({
                   size="lg"
                   onClick={() => onSave(job.id)}
                   className={cn(
-                    "h-12 px-4 border-white/20 rounded-xl",
+                    'h-12 px-4 border-white/20 rounded-xl',
                     isSaved
-                      ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
-                      : "text-white hover:text-white hover:bg-white/10"
+                      ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                      : 'text-white hover:text-white hover:bg-white/10'
                   )}
                 >
-                  <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />
+                  <Bookmark className={cn('h-5 w-5', isSaved && 'fill-current')} />
                 </Button>
               )}
 
@@ -483,10 +480,10 @@ const EmployerJobDetailSheet = ({
                 onClick={handleApply}
                 disabled={job.has_applied}
                 className={cn(
-                  "flex-1 h-12 font-semibold shadow-lg rounded-xl",
+                  'flex-1 h-12 font-semibold shadow-lg rounded-xl',
                   job.has_applied
-                    ? "bg-slate-600 text-white shadow-slate-500/25"
-                    : "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-400 hover:to-teal-400 shadow-emerald-500/25"
+                    ? 'bg-slate-600 text-white shadow-slate-500/25'
+                    : 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-400 hover:to-teal-400 shadow-emerald-500/25'
                 )}
               >
                 {job.has_applied ? (

@@ -19,9 +19,7 @@ export const ElecAiBanner = () => {
                   AI
                 </span>
               </div>
-              <p className="text-xs text-white/60">
-                Your personal electrical advisor
-              </p>
+              <p className="text-xs text-white/60">Your personal electrical advisor</p>
             </div>
           </div>
           <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-purple-400 group-hover:translate-x-0.5 transition-all" />

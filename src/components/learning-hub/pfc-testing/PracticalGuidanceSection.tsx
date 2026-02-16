@@ -1,12 +1,25 @@
 import React from 'react';
-import { AlertTriangle, CheckCircle2, Target, Wrench, Clock, Zap, Shield, TrendingUp, Settings, Users } from 'lucide-react';
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Target,
+  Wrench,
+  Clock,
+  Zap,
+  Shield,
+  TrendingUp,
+  Settings,
+  Users,
+} from 'lucide-react';
 
 const PracticalGuidanceSection = () => (
   <div className="space-y-4 sm:space-y-6">
     <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Target className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-blue-400">Quick Assessment Guidelines</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-blue-400">
+          Quick Assessment Guidelines
+        </h4>
       </div>
       <div className="space-y-4 text-xs sm:text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -16,7 +29,9 @@ const PracticalGuidanceSection = () => (
               <p className="font-medium text-green-400">Excellent (Pass)</p>
             </div>
             <div className="space-y-1 text-xs">
-              <p><strong>PFC &gt; 10× minimum required</strong></p>
+              <p>
+                <strong>PFC &gt; 10× minimum required</strong>
+              </p>
               <p>• 32A Type B: &gt;1600A</p>
               <p>• 20A Type B: &gt;1000A</p>
               <p>• 16A Type C: &gt;1600A</p>
@@ -31,7 +46,9 @@ const PracticalGuidanceSection = () => (
               <p className="font-medium text-yellow-400">Acceptable (Pass)</p>
             </div>
             <div className="space-y-1 text-xs">
-              <p><strong>PFC = 2-10× minimum required</strong></p>
+              <p>
+                <strong>PFC = 2-10× minimum required</strong>
+              </p>
               <p>• 32A Type B: 320-1600A</p>
               <p>• 20A Type B: 200-1000A</p>
               <p>• 16A Type C: 320-1600A</p>
@@ -46,7 +63,9 @@ const PracticalGuidanceSection = () => (
               <p className="font-medium text-red-400">Marginal/Fail</p>
             </div>
             <div className="space-y-1 text-xs">
-              <p><strong>PFC &lt; 2× minimum required</strong></p>
+              <p>
+                <strong>PFC &lt; 2× minimum required</strong>
+              </p>
               <p>• 32A Type B: &lt;320A</p>
               <p>• 20A Type B: &lt;200A</p>
               <p>• 16A Type C: &lt;320A</p>
@@ -62,7 +81,9 @@ const PracticalGuidanceSection = () => (
     <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">Practical Live Testing Tips</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-green-400">
+          Practical Live Testing Tips
+        </h4>
       </div>
       <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -263,11 +284,21 @@ const PracticalGuidanceSection = () => (
           <div className="bg-card rounded p-3">
             <p className="font-medium text-purple-400 mb-2">Popular Test Instruments:</p>
             <div className="space-y-1 text-xs">
-              <p>• <strong>Kewtech KT64:</strong> Dedicated PFC tester</p>
-              <p>• <strong>Megger MFT1741:</strong> Multifunction capability</p>
-              <p>• <strong>Fluke 1664FC:</strong> Advanced features</p>
-              <p>• <strong>Metrel MI3152:</strong> Professional range</p>
-              <p>• <strong>Socket & See PFCT1:</strong> Budget option</p>
+              <p>
+                • <strong>Kewtech KT64:</strong> Dedicated PFC tester
+              </p>
+              <p>
+                • <strong>Megger MFT1741:</strong> Multifunction capability
+              </p>
+              <p>
+                • <strong>Fluke 1664FC:</strong> Advanced features
+              </p>
+              <p>
+                • <strong>Metrel MI3152:</strong> Professional range
+              </p>
+              <p>
+                • <strong>Socket & See PFCT1:</strong> Budget option
+              </p>
               <p>• All require annual calibration</p>
             </div>
           </div>
@@ -375,7 +406,9 @@ const PracticalGuidanceSection = () => (
       </div>
       <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
-          <p className="font-medium text-cyan-400 mb-3">Example 1: Domestic Kitchen Ring Circuit (Live Test)</p>
+          <p className="font-medium text-cyan-400 mb-3">
+            Example 1: Domestic Kitchen Ring Circuit (Live Test)
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div>
               <p className="font-medium text-foreground mb-2">Live Test Results:</p>
@@ -390,7 +423,9 @@ const PracticalGuidanceSection = () => (
             <div>
               <p className="font-medium text-foreground mb-2">Live Test Assessment:</p>
               <div className="space-y-1">
-                <p>• <strong>Result: SATISFACTORY ✓</strong></p>
+                <p>
+                  • <strong>Result: SATISFACTORY ✓</strong>
+                </p>
                 <p>• Exceeds minimum requirements when tested live</p>
                 <p>• Good safety margin provided</p>
                 <p>• Magnetic operation assured with live supply</p>
@@ -402,7 +437,9 @@ const PracticalGuidanceSection = () => (
         </div>
 
         <div className="bg-card rounded p-4">
-          <p className="font-medium text-cyan-400 mb-3">Example 2: Commercial Lighting Circuit (Live Test)</p>
+          <p className="font-medium text-cyan-400 mb-3">
+            Example 2: Commercial Lighting Circuit (Live Test)
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div>
               <p className="font-medium text-foreground mb-2">Live Test Results:</p>
@@ -417,7 +454,9 @@ const PracticalGuidanceSection = () => (
             <div>
               <p className="font-medium text-foreground mb-2">Live Test Assessment:</p>
               <div className="space-y-1">
-                <p>• <strong>Result: UNSATISFACTORY ✗</strong></p>
+                <p>
+                  • <strong>Result: UNSATISFACTORY ✗</strong>
+                </p>
                 <p>• Below minimum requirements even with live supply</p>
                 <p>• Magnetic operation not assured</p>
                 <p>• Remedial action required</p>
@@ -429,7 +468,9 @@ const PracticalGuidanceSection = () => (
         </div>
 
         <div className="bg-card rounded p-4">
-          <p className="font-medium text-cyan-400 mb-3">Example 3: Outbuilding Supply (TT System Live Test)</p>
+          <p className="font-medium text-cyan-400 mb-3">
+            Example 3: Outbuilding Supply (TT System Live Test)
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div>
               <p className="font-medium text-foreground mb-2">Live Test Results:</p>
@@ -444,8 +485,12 @@ const PracticalGuidanceSection = () => (
             <div>
               <p className="font-medium text-foreground mb-2">Live Test Assessment:</p>
               <div className="space-y-1">
-                <p>• <strong>MCB protection: INADEQUATE</strong></p>
-                <p>• <strong>RCD protection: EFFECTIVE ✓</strong></p>
+                <p>
+                  • <strong>MCB protection: INADEQUATE</strong>
+                </p>
+                <p>
+                  • <strong>RCD protection: EFFECTIVE ✓</strong>
+                </p>
                 <p>• TT system - RCD essential for safety</p>
                 <p>• 30mA RCD provides required protection</p>
                 <p>• Earth electrode resistance limits live PFC</p>
@@ -465,7 +510,9 @@ const PracticalGuidanceSection = () => (
       <div className="space-y-4 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-3">
-            <p className="font-medium text-indigo-400 mb-2">Explaining PFC to Non-Technical Clients:</p>
+            <p className="font-medium text-indigo-400 mb-2">
+              Explaining PFC to Non-Technical Clients:
+            </p>
             <div className="space-y-1 text-xs">
               <p>• "Tests the ability to cut power quickly during faults"</p>
               <p>• "Like checking brakes work properly on a car"</p>
@@ -494,13 +541,21 @@ const PracticalGuidanceSection = () => (
             <div>
               <p className="font-medium text-foreground mb-2">Satisfactory Results:</p>
               <div className="bg-muted rounded p-2">
-                <p>"The prospective fault current tests show that your electrical safety devices will operate correctly in the event of a fault. This confirms that your installation meets current safety standards and provides good protection for users."</p>
+                <p>
+                  "The prospective fault current tests show that your electrical safety devices will
+                  operate correctly in the event of a fault. This confirms that your installation
+                  meets current safety standards and provides good protection for users."
+                </p>
               </div>
             </div>
             <div>
               <p className="font-medium text-foreground mb-2">Unsatisfactory Results:</p>
               <div className="bg-muted rounded p-2">
-                <p>"The tests indicate that some protective devices may not operate quickly enough during electrical faults. This could present a safety risk. I recommend [specific remedial work] to bring the installation up to current safety standards."</p>
+                <p>
+                  "The tests indicate that some protective devices may not operate quickly enough
+                  during electrical faults. This could present a safety risk. I recommend [specific
+                  remedial work] to bring the installation up to current safety standards."
+                </p>
               </div>
             </div>
           </div>

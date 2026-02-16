@@ -8,21 +8,21 @@ interface PageTransitionProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    x: 8
+    x: 8,
   },
   animate: {
     opacity: 1,
-    x: 0
+    x: 0,
   },
   exit: {
     opacity: 0,
-    x: -8
-  }
+    x: -8,
+  },
 };
 
 const pageTransition = {
   duration: 0.15,
-  ease: 'easeOut'
+  ease: 'easeOut',
 };
 
 export const PageTransition = ({ children }: PageTransitionProps) => (

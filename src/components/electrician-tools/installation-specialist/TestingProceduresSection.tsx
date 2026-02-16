@@ -1,7 +1,12 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { FlaskConical, FileCheck } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { FlaskConical, FileCheck } from 'lucide-react';
 
 interface TestingProcedure {
   testName: string;
@@ -52,7 +57,9 @@ export const TestingProceduresSection = ({ procedures }: TestingProceduresSectio
                   <div className="text-sm text-foreground">{procedure.standard}</div>
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-muted-foreground mb-1">Acceptance Criteria</div>
+                  <div className="text-xs font-semibold text-muted-foreground mb-1">
+                    Acceptance Criteria
+                  </div>
                   <div className="text-sm text-foreground">{procedure.acceptanceCriteria}</div>
                 </div>
                 {procedure.certificateRequired && (
@@ -60,7 +67,9 @@ export const TestingProceduresSection = ({ procedures }: TestingProceduresSectio
                     <FileCheck className="h-4 w-4 text-primary" />
                     <div className="text-xs">
                       <span className="font-semibold">Certificate: </span>
-                      <Badge variant="outline" className="ml-1">{procedure.certificateRequired}</Badge>
+                      <Badge variant="outline" className="ml-1">
+                        {procedure.certificateRequired}
+                      </Badge>
                     </div>
                   </div>
                 )}

@@ -22,7 +22,7 @@ export const useJobChecklist = (jobId: string) => {
         .select('*')
         .eq('job_id', jobId)
         .order('position');
-      
+
       if (error) throw error;
       return data as JobChecklistItem[];
     },
@@ -38,12 +38,12 @@ export const useAllJobChecklistSummaries = () => {
       const { data, error } = await supabase
         .from('employer_job_checklist_items')
         .select('job_id, is_completed');
-      
+
       if (error) throw error;
-      
+
       // Group by job_id and calculate completed/total
       const summaries: Record<string, { completed: number; total: number }> = {};
-      (data as { job_id: string; is_completed: boolean }[]).forEach(item => {
+      (data as { job_id: string; is_completed: boolean }[]).forEach((item) => {
         if (!summaries[item.job_id]) {
           summaries[item.job_id] = { completed: 0, total: 0 };
         }
@@ -52,7 +52,7 @@ export const useAllJobChecklistSummaries = () => {
           summaries[item.job_id].completed++;
         }
       });
-      
+
       return summaries;
     },
   });
@@ -61,7 +61,7 @@ export const useAllJobChecklistSummaries = () => {
 // Add a checklist item
 export const useAddChecklistItem = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async ({ jobId, title }: { jobId: string; title: string }) => {
       // Get max position
@@ -71,15 +71,16 @@ export const useAddChecklistItem = () => {
         .eq('job_id', jobId)
         .order('position', { ascending: false })
         .limit(1);
-      
-      const position = existing && existing.length > 0 ? (existing[0] as { position: number }).position + 1 : 0;
-      
+
+      const position =
+        existing && existing.length > 0 ? (existing[0] as { position: number }).position + 1 : 0;
+
       const { data, error } = await supabase
         .from('employer_job_checklist_items')
         .insert({ job_id: jobId, title, position })
         .select()
         .single();
-      
+
       if (error) throw error;
       return data as JobChecklistItem;
     },
@@ -96,14 +97,22 @@ export const useAddChecklistItem = () => {
 // Toggle checklist item completion
 export const useToggleChecklistItem = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: async ({ id, isCompleted, jobId }: { id: string; isCompleted: boolean; jobId: string }) => {
+    mutationFn: async ({
+      id,
+      isCompleted,
+      jobId,
+    }: {
+      id: string;
+      isCompleted: boolean;
+      jobId: string;
+    }) => {
       const { error } = await supabase
         .from('employer_job_checklist_items')
         .update({ is_completed: isCompleted })
         .eq('id', id);
-      
+
       if (error) throw error;
       return { id, isCompleted, jobId };
     },
@@ -120,14 +129,11 @@ export const useToggleChecklistItem = () => {
 // Delete a checklist item
 export const useDeleteChecklistItem = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async ({ id, jobId }: { id: string; jobId: string }) => {
-      const { error } = await supabase
-        .from('employer_job_checklist_items')
-        .delete()
-        .eq('id', id);
-      
+      const { error } = await supabase.from('employer_job_checklist_items').delete().eq('id', id);
+
       if (error) throw error;
       return { id, jobId };
     },

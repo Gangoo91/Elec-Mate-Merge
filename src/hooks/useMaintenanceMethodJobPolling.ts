@@ -16,10 +16,10 @@ interface MaintenanceMethodJob {
 export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
   const [job, setJob] = useState<MaintenanceMethodJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
-  
+
   // Use ref for polling state to avoid stale closure issues
   const isPollingRef = useRef(false);
-  
+
   // Activity tracking for stuck job detection
   const lastProgressRef = useRef(0);
   const lastCurrentStepRef = useRef<string>('');
@@ -36,7 +36,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
         .single();
 
       if (error) throw error;
-      
+
       // Debug: Log raw polling data
       console.log('🔄 Maintenance job polling:', {
         id: data.id,
@@ -44,12 +44,12 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
         progress: data.progress,
         currentStep: data.current_step,
         hasMethodData: !!data.method_data,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
-      
+
       const jobData = {
         ...data,
-        method_data: (data.method_data as unknown) as MaintenanceMethodData | null
+        method_data: data.method_data as unknown as MaintenanceMethodData | null,
       } as MaintenanceMethodJob;
 
       // Force state update immediately
@@ -59,20 +59,25 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
       if (data.status === 'processing') {
         const hasProgressChanged = data.progress !== lastProgressRef.current;
         const hasStepChanged = data.current_step !== lastCurrentStepRef.current;
-        
+
         if (hasProgressChanged || hasStepChanged) {
           lastProgressRef.current = data.progress;
           lastCurrentStepRef.current = data.current_step || '';
           lastActivityUpdateRef.current = Date.now();
         } else {
           const stuckDuration = Date.now() - lastActivityUpdateRef.current;
-          if (stuckDuration > 360000) { // 6 minutes
-            console.error('❌ STUCK JOB DETECTED: No activity for 6 minutes at', data.progress + '%');
+          if (stuckDuration > 360000) {
+            // 6 minutes
+            console.error(
+              '❌ STUCK JOB DETECTED: No activity for 6 minutes at',
+              data.progress + '%'
+            );
             await supabase
               .from('maintenance_method_jobs')
               .update({
                 status: 'failed',
-                error_message: 'Generation timed out - no progress for 6 minutes. Please try again.'
+                error_message:
+                  'Generation timed out - no progress for 6 minutes. Please try again.',
               })
               .eq('id', jobId);
             isPollingRef.current = false;
@@ -88,7 +93,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
         isPollingRef.current = false;
         setIsPolling(false);
       }
-      
+
       return jobData;
     } catch (error) {
       console.error('Error fetching maintenance method job:', error);
@@ -103,7 +108,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     if (!jobId) return;
 
     console.log('📡 Setting up realtime subscription for job:', jobId);
-    
+
     const channel = supabase
       .channel(`maintenance-job-${jobId}`)
       .on(
@@ -112,22 +117,26 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
           event: 'UPDATE',
           schema: 'public',
           table: 'maintenance_method_jobs',
-          filter: `id=eq.${jobId}`
+          filter: `id=eq.${jobId}`,
         },
         (payload) => {
           console.log('📡 Realtime update received:', payload.new);
           const data = payload.new as any;
-          
+
           const jobData = {
             ...data,
-            method_data: (data.method_data as unknown) as MaintenanceMethodData | null
+            method_data: data.method_data as unknown as MaintenanceMethodData | null,
           } as MaintenanceMethodJob;
-          
+
           // Force immediate state update from realtime
           setJob(jobData);
-          
+
           // Stop polling if terminal state
-          if (data.status === 'completed' || data.status === 'failed' || data.status === 'cancelled') {
+          if (
+            data.status === 'completed' ||
+            data.status === 'failed' ||
+            data.status === 'cancelled'
+          ) {
             console.log('📡 Realtime: Job terminal state detected, stopping polling');
             isPollingRef.current = false;
             setIsPolling(false);
@@ -170,10 +179,10 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     const poll = () => {
       // Use ref to check current polling state (avoids stale closure)
       if (!isPollingRef.current) return;
-      
+
       fetchJob();
       pollCount++;
-      
+
       // Stay at 1.5s for first 200 polls (5 minutes)
       // Then slow to 3s for polls 201-300 (another 5 mins)
       // Only go to 5s after 10 minutes of processing
@@ -185,7 +194,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
         pollInterval = 5000;
         console.log('📊 Polling: Switching to 5s interval after ~10 mins');
       }
-      
+
       timeoutId = window.setTimeout(poll, pollInterval);
     };
 
@@ -205,11 +214,11 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
 
     try {
       const { error } = await supabase.functions.invoke('cancel-maintenance-method-job', {
-        body: { jobId }
+        body: { jobId },
       });
 
       if (error) throw error;
-      
+
       // Refresh job status
       await fetchJob();
     } catch (error) {
@@ -221,6 +230,6 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     job,
     isPolling,
     cancelJob,
-    refetch: fetchJob
+    refetch: fetchJob,
   };
 };

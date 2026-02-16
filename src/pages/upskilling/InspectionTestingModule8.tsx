@@ -8,7 +8,8 @@ const sections = [
   {
     id: 1,
     title: 'Initial Visual Inspection Checklist',
-    description: 'Systematic approach to visual inspection before testing, covering all BS 7671 requirements',
+    description:
+      'Systematic approach to visual inspection before testing, covering all BS 7671 requirements',
     icon: ClipboardList,
   },
   {
@@ -26,7 +27,8 @@ const sections = [
   {
     id: 4,
     title: 'Electrical Installation Certificates',
-    description: 'Completing EICs for new installations including design, construction, and inspection details',
+    description:
+      'Completing EICs for new installations including design, construction, and inspection details',
     icon: FileCheck,
   },
   {
@@ -40,7 +42,8 @@ const sections = [
 export default function InspectionTestingModule8() {
   useSEO({
     title: 'Module 8: Visual Inspection & Documentation | Inspection & Testing',
-    description: 'Master visual inspection procedures and certification documentation including EICs, minor works certificates, and periodic inspection reports.',
+    description:
+      'Master visual inspection procedures and certification documentation including EICs, minor works certificates, and periodic inspection reports.',
   });
 
   return (
@@ -74,7 +77,8 @@ export default function InspectionTestingModule8() {
             Visual Inspection & Documentation
           </h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Learn systematic visual inspection techniques and master the documentation required for electrical installation certification
+            Learn systematic visual inspection techniques and master the documentation required for
+            electrical installation certification
           </p>
         </div>
 

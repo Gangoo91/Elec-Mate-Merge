@@ -34,13 +34,13 @@ interface ElevenLabsToolCardProps {
   defaultExpanded?: boolean;
 }
 
-export function ElevenLabsToolCard({ 
-  tool, 
-  index, 
+export function ElevenLabsToolCard({
+  tool,
+  index,
   totalTools = 307,
-  isConfigured, 
+  isConfigured,
   onToggleConfigured,
-  defaultExpanded = false 
+  defaultExpanded = false,
 }: ElevenLabsToolCardProps) {
   const [isOpen, setIsOpen] = useState(defaultExpanded);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -56,7 +56,15 @@ export function ElevenLabsToolCard({
     }
   };
 
-  const CopyButton = ({ text, fieldName, size = 'sm' }: { text: string; fieldName: string; size?: 'sm' | 'xs' }) => (
+  const CopyButton = ({
+    text,
+    fieldName,
+    size = 'sm',
+  }: {
+    text: string;
+    fieldName: string;
+    size?: 'sm' | 'xs';
+  }) => (
     <Button
       variant="ghost"
       size="icon"
@@ -76,17 +84,25 @@ export function ElevenLabsToolCard({
 
   const getDataType = (type: string) => {
     switch (type) {
-      case 'string': return 'String';
-      case 'number': return 'Number';
-      case 'boolean': return 'Boolean';
-      case 'array': return 'Array';
-      case 'object': return 'Object';
-      default: return 'String';
+      case 'string':
+        return 'String';
+      case 'number':
+        return 'Number';
+      case 'boolean':
+        return 'Boolean';
+      case 'array':
+        return 'Array';
+      case 'object':
+        return 'Object';
+      default:
+        return 'String';
     }
   };
 
   return (
-    <Card className={`border-2 ${isConfigured ? 'border-green-500/50 bg-green-500/5' : 'border-border'} ${index % 2 === 0 ? 'bg-elec-gray' : 'bg-muted/20'}`}>
+    <Card
+      className={`border-2 ${isConfigured ? 'border-green-500/50 bg-green-500/5' : 'border-border'} ${index % 2 === 0 ? 'bg-elec-gray' : 'bg-muted/20'}`}
+    >
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
           <div className="flex items-center justify-between p-3 sm:p-4 cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
@@ -151,13 +167,20 @@ export function ElevenLabsToolCard({
                 <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                   Parameters ({tool.parameters.length})
                 </label>
-                
+
                 {tool.parameters.map((param, paramIndex) => (
-                  <div key={param.name} className="bg-muted/30 rounded-lg p-3 space-y-2 border border-border/50">
+                  <div
+                    key={param.name}
+                    className="bg-muted/30 rounded-lg p-3 space-y-2 border border-border/50"
+                  >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-elec-yellow">Parameter #{paramIndex + 1}</span>
+                      <span className="text-xs font-medium text-elec-yellow">
+                        Parameter #{paramIndex + 1}
+                      </span>
                       {param.required && (
-                        <Badge variant="destructive" className="text-xs">Required</Badge>
+                        <Badge variant="destructive" className="text-xs">
+                          Required
+                        </Badge>
                       )}
                     </div>
 
@@ -173,7 +196,11 @@ export function ElevenLabsToolCard({
                         <span className="text-muted-foreground">Identifier:</span>
                         <div className="flex items-center gap-1">
                           <code className="text-elec-yellow font-mono">{param.name}</code>
-                          <CopyButton text={param.name} fieldName={`param-${param.name}`} size="xs" />
+                          <CopyButton
+                            text={param.name}
+                            fieldName={`param-${param.name}`}
+                            size="xs"
+                          />
                         </div>
                       </div>
 
@@ -195,7 +222,11 @@ export function ElevenLabsToolCard({
                       <div className="py-1 border-b border-border/30">
                         <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">Description:</span>
-                          <CopyButton text={param.description} fieldName={`param-desc-${param.name}`} size="xs" />
+                          <CopyButton
+                            text={param.description}
+                            fieldName={`param-desc-${param.name}`}
+                            size="xs"
+                          />
                         </div>
                         <p className="text-foreground/80 mt-1">{param.description}</p>
                       </div>
@@ -204,17 +235,25 @@ export function ElevenLabsToolCard({
                       {param.enum && param.enum.length > 0 && (
                         <div className="py-1">
                           <div className="flex items-center justify-between mb-2">
-                            <span className="text-muted-foreground">Enum Values ({param.enum.length}):</span>
+                            <span className="text-muted-foreground">
+                              Enum Values ({param.enum.length}):
+                            </span>
                             <Button
                               variant="outline"
                               size="sm"
                               className="h-6 text-xs"
-                              onClick={() => copyToClipboard(param.enum!.join('\n'), `enums-${param.name}`)}
+                              onClick={() =>
+                                copyToClipboard(param.enum!.join('\n'), `enums-${param.name}`)
+                              }
                             >
                               {copiedField === `enums-${param.name}` ? (
-                                <><Check className="h-3 w-3 mr-1" /> Copied</>
+                                <>
+                                  <Check className="h-3 w-3 mr-1" /> Copied
+                                </>
                               ) : (
-                                <><Copy className="h-3 w-3 mr-1" /> Copy All</>
+                                <>
+                                  <Copy className="h-3 w-3 mr-1" /> Copy All
+                                </>
                               )}
                             </Button>
                           </div>
@@ -227,7 +266,9 @@ export function ElevenLabsToolCard({
                                 onClick={() => copyToClipboard(value, `enum-${value}`)}
                               >
                                 {value}
-                                {copiedField === `enum-${value}` && <Check className="h-2 w-2 ml-1" />}
+                                {copiedField === `enum-${value}` && (
+                                  <Check className="h-2 w-2 ml-1" />
+                                )}
                               </Badge>
                             ))}
                           </div>
@@ -268,9 +309,13 @@ export function ElevenLabsToolCard({
                 onClick={() => onToggleConfigured(tool.name)}
               >
                 {isConfigured ? (
-                  <><CheckCircle2 className="h-4 w-4 mr-2" /> Marked as Configured</>
+                  <>
+                    <CheckCircle2 className="h-4 w-4 mr-2" /> Marked as Configured
+                  </>
                 ) : (
-                  <><Circle className="h-4 w-4 mr-2" /> Mark as Configured</>
+                  <>
+                    <Circle className="h-4 w-4 mr-2" /> Mark as Configured
+                  </>
                 )}
               </Button>
             </div>

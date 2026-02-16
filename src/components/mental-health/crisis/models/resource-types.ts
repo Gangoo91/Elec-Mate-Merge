@@ -1,4 +1,3 @@
-
 // Define the type for local resources
 export interface LocalResource {
   name: string;

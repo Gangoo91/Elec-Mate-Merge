@@ -12,15 +12,16 @@ export const BS7671Module7Section5Intro = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Part 8 of BS 7671:2018+A2:2022 introduces revolutionary standards for installations that both 
-          consume and generate energy – known as "Prosumer Electrical Installations" (PEIs). This groundbreaking 
-          section addresses the growing complexity of modern energy systems that integrate renewable generation, 
-          energy storage, and intelligent load management.
+          Part 8 of BS 7671:2018+A2:2022 introduces revolutionary standards for installations that
+          both consume and generate energy – known as "Prosumer Electrical Installations" (PEIs).
+          This groundbreaking section addresses the growing complexity of modern energy systems that
+          integrate renewable generation, energy storage, and intelligent load management.
         </p>
         <p>
-          These installations represent the future of electrical infrastructure, supporting the UK's transition 
-          to net-zero carbon emissions whilst maintaining the highest safety standards. From domestic solar-plus-battery 
-          systems to commercial microgrids, PEIs are transforming how we generate, store, and consume electrical energy.
+          These installations represent the future of electrical infrastructure, supporting the UK's
+          transition to net-zero carbon emissions whilst maintaining the highest safety standards.
+          From domestic solar-plus-battery systems to commercial microgrids, PEIs are transforming
+          how we generate, store, and consume electrical energy.
         </p>
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
           <h4 className="text-elec-yellow font-semibold mb-2">Key Learning Areas:</h4>

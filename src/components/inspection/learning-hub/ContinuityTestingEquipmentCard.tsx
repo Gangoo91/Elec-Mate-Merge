@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -28,12 +27,12 @@ const ContinuityTestingEquipmentCard = () => {
         'Test current: minimum 200mA DC for protective conductors',
         'Resolution: 0.01Ω or better',
         'Accuracy: ±2% of reading + 2 digits',
-        'Open circuit voltage: 4V-24V DC'
+        'Open circuit voltage: 4V-24V DC',
       ],
       required: true,
       category: 'primary',
       calibrationRequired: true,
-      regulationRef: 'BS 7671 Regulation 612.2.2'
+      regulationRef: 'BS 7671 Regulation 612.2.2',
     },
     {
       id: 'test-leads',
@@ -43,11 +42,11 @@ const ContinuityTestingEquipmentCard = () => {
         'Low resistance (typically <0.01Ω per lead)',
         'Robust construction with secure connections',
         'Appropriate length for testing requirements',
-        'Insulated to working voltage'
+        'Insulated to working voltage',
       ],
       required: true,
       category: 'accessories',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'test-probes',
@@ -57,11 +56,11 @@ const ContinuityTestingEquipmentCard = () => {
         'Sharp pointed probes for penetrating connections',
         'Crocodile clips for secure long-term connections',
         'Long-nose probes for confined spaces',
-        'Magnetic probes for steel structures'
+        'Magnetic probes for steel structures',
       ],
       required: true,
       category: 'accessories',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'temporary-bonding',
@@ -71,11 +70,11 @@ const ContinuityTestingEquipmentCard = () => {
         'Adequate current carrying capacity',
         'Secure connection methods',
         'Appropriate length and flexibility',
-        'Clear identification markings'
+        'Clear identification markings',
       ],
       required: true,
       category: 'accessories',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'ppe',
@@ -85,11 +84,11 @@ const ContinuityTestingEquipmentCard = () => {
         'Safety glasses with side protection',
         'Insulated gloves (if required)',
         'Non-conductive footwear',
-        'Appropriate work clothing'
+        'Appropriate work clothing',
       ],
       required: true,
       category: 'safety',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'isolation-devices',
@@ -99,11 +98,11 @@ const ContinuityTestingEquipmentCard = () => {
         'Safety padlocks with unique keys',
         'Warning labels and tags',
         'Lockout/tagout devices',
-        'Circuit identification materials'
+        'Circuit identification materials',
       ],
       required: true,
       category: 'safety',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'documentation',
@@ -113,11 +112,11 @@ const ContinuityTestingEquipmentCard = () => {
         'Test result schedules',
         'Certificate templates',
         'Calibration certificates',
-        'Circuit identification records'
+        'Circuit identification records',
       ],
       required: true,
       category: 'documentation',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'multimeter',
@@ -127,45 +126,55 @@ const ContinuityTestingEquipmentCard = () => {
         'True RMS capability',
         'Low resistance measurement capability',
         'CAT III/IV safety rating',
-        'Current calibration certificate'
+        'Current calibration certificate',
       ],
       required: false,
       category: 'primary',
-      calibrationRequired: true
-    }
+      calibrationRequired: true,
+    },
   ];
 
   const handleItemCheck = (itemId: string) => {
-    setCheckedItems(prev => 
-      prev.includes(itemId)
-        ? prev.filter(id => id !== itemId)
-        : [...prev, itemId]
+    setCheckedItems((prev) =>
+      prev.includes(itemId) ? prev.filter((id) => id !== itemId) : [...prev, itemId]
     );
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'primary': return <Zap className="h-4 w-4 text-blue-400" />;
-      case 'accessories': return <Settings className="h-4 w-4 text-purple-400" />;
-      case 'safety': return <Shield className="h-4 w-4 text-green-400" />;
-      case 'documentation': return <CheckCircle2 className="h-4 w-4 text-orange-400" />;
-      default: return <Wrench className="h-4 w-4 text-gray-400" />;
+      case 'primary':
+        return <Zap className="h-4 w-4 text-blue-400" />;
+      case 'accessories':
+        return <Settings className="h-4 w-4 text-purple-400" />;
+      case 'safety':
+        return <Shield className="h-4 w-4 text-green-400" />;
+      case 'documentation':
+        return <CheckCircle2 className="h-4 w-4 text-orange-400" />;
+      default:
+        return <Wrench className="h-4 w-4 text-gray-400" />;
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'primary': return 'border-blue-500/20 bg-blue-500/5';
-      case 'accessories': return 'border-purple-500/20 bg-purple-500/5';
-      case 'safety': return 'border-green-500/20 bg-green-500/5';
-      case 'documentation': return 'border-orange-500/20 bg-orange-500/5';
-      default: return 'border-gray-500/20 bg-gray-500/5';
+      case 'primary':
+        return 'border-blue-500/20 bg-blue-500/5';
+      case 'accessories':
+        return 'border-purple-500/20 bg-purple-500/5';
+      case 'safety':
+        return 'border-green-500/20 bg-green-500/5';
+      case 'documentation':
+        return 'border-orange-500/20 bg-orange-500/5';
+      default:
+        return 'border-gray-500/20 bg-gray-500/5';
     }
   };
 
-  const requiredItems = equipment.filter(item => item.required);
-  const checkedRequiredItems = requiredItems.filter(item => checkedItems.includes(item.id));
-  const completionPercentage = Math.round((checkedRequiredItems.length / requiredItems.length) * 100);
+  const requiredItems = equipment.filter((item) => item.required);
+  const checkedRequiredItems = requiredItems.filter((item) => checkedItems.includes(item.id));
+  const completionPercentage = Math.round(
+    (checkedRequiredItems.length / requiredItems.length) * 100
+  );
 
   return (
     <Card className="bg-card border-border">
@@ -180,14 +189,18 @@ const ContinuityTestingEquipmentCard = () => {
         <div className="mt-2 text-sm">
           <span className="text-foreground">Equipment Check: </span>
           <span className="text-elec-yellow font-medium">
-            {checkedRequiredItems.length}/{requiredItems.length} required items ({completionPercentage}%)
+            {checkedRequiredItems.length}/{requiredItems.length} required items (
+            {completionPercentage}%)
           </span>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {equipment.map((item) => (
-            <div key={item.id} className={`p-4 border rounded-lg ${getCategoryColor(item.category)}`}>
+            <div
+              key={item.id}
+              className={`p-4 border rounded-lg ${getCategoryColor(item.category)}`}
+            >
               <div className="flex items-start gap-3">
                 <Checkbox
                   checked={checkedItems.includes(item.id)}
@@ -200,17 +213,22 @@ const ContinuityTestingEquipmentCard = () => {
                     <h4 className="font-medium text-foreground">
                       {item.name}
                       {item.required && (
-                        <Badge variant="destructive" className="ml-2 bg-red-500/20 text-red-400 border-red-500/30">
+                        <Badge
+                          variant="destructive"
+                          className="ml-2 bg-red-500/20 text-red-400 border-red-500/30"
+                        >
                           Required
                         </Badge>
                       )}
                     </h4>
                   </div>
                   <p className="text-gray-300 text-sm mb-3">{item.description}</p>
-                  
+
                   {/* Specifications */}
                   <div className="space-y-1 mb-3">
-                    <h5 className="text-xs font-medium text-gray-400 uppercase tracking-wide">Specifications</h5>
+                    <h5 className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+                      Specifications
+                    </h5>
                     {item.specifications.map((spec, index) => (
                       <div key={index} className="text-xs text-gray-300 flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>

@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   ArrowLeft,
   ExternalLink,
@@ -14,9 +13,9 @@ import {
   TrendingUp,
   MapPin,
   RefreshCw,
-  Star
-} from "lucide-react";
-import { AccreditationOption } from "./enhancedAccreditationData";
+  Star,
+} from 'lucide-react';
+import { AccreditationOption } from './enhancedAccreditationData';
 
 interface AccreditationDetailViewProps {
   accreditation: AccreditationOption;
@@ -26,11 +25,16 @@ interface AccreditationDetailViewProps {
 const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailViewProps) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Entry Level": return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Intermediate": return "bg-amber-500/10 text-amber-400 border-amber-500/30";
-      case "Advanced": return "bg-red-500/10 text-red-400 border-red-500/30";
-      case "Expert": return "bg-purple-500/10 text-purple-400 border-purple-500/30";
-      default: return "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30";
+      case 'Entry Level':
+        return 'bg-green-500/10 text-green-400 border-green-500/30';
+      case 'Intermediate':
+        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+      case 'Advanced':
+        return 'bg-red-500/10 text-red-400 border-red-500/30';
+      case 'Expert':
+        return 'bg-purple-500/10 text-purple-400 border-purple-500/30';
+      default:
+        return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30';
     }
   };
 
@@ -68,19 +72,23 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                 {accreditation.title}
               </CardTitle>
               <p className="text-lg text-elec-yellow mb-3">{accreditation.provider}</p>
-              <p className="text-white/80 leading-relaxed">
-                {accreditation.description}
-              </p>
+              <p className="text-white/80 leading-relaxed">{accreditation.description}</p>
             </div>
             <div className="flex flex-col gap-3">
               <Badge variant="outline" className={getDifficultyColor(accreditation.difficulty)}>
                 {accreditation.level}
               </Badge>
-              <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+              <Badge
+                variant="outline"
+                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+              >
                 {accreditation.category}
               </Badge>
               {accreditation.onlineAvailable && (
-                <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
+                <Badge
+                  variant="outline"
+                  className="bg-blue-500/10 text-blue-400 border-blue-500/30"
+                >
                   Online Available
                 </Badge>
               )}
@@ -146,11 +154,36 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
       {/* Detailed Information Tabs */}
       <Tabs defaultValue="benefits" className="space-y-4">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-1 bg-white/5 border border-white/10 p-1 rounded-xl">
-          <TabsTrigger value="benefits" className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">Benefits</TabsTrigger>
-          <TabsTrigger value="requirements" className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">Requirements</TabsTrigger>
-          <TabsTrigger value="process" className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">Process</TabsTrigger>
-          <TabsTrigger value="getting-started" className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">Get Started</TabsTrigger>
-          <TabsTrigger value="details" className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">Details</TabsTrigger>
+          <TabsTrigger
+            value="benefits"
+            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+          >
+            Benefits
+          </TabsTrigger>
+          <TabsTrigger
+            value="requirements"
+            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+          >
+            Requirements
+          </TabsTrigger>
+          <TabsTrigger
+            value="process"
+            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+          >
+            Process
+          </TabsTrigger>
+          <TabsTrigger
+            value="getting-started"
+            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+          >
+            Get Started
+          </TabsTrigger>
+          <TabsTrigger
+            value="details"
+            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+          >
+            Details
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="benefits">
@@ -171,11 +204,17 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
                     <h5 className="font-medium text-elec-yellow mb-2">Industry Standing</h5>
-                    <p className="text-sm text-white/80">Gain instant credibility and recognition within the electrical industry, setting you apart from non-accredited professionals.</p>
+                    <p className="text-sm text-white/80">
+                      Gain instant credibility and recognition within the electrical industry,
+                      setting you apart from non-accredited professionals.
+                    </p>
                   </div>
                   <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
                     <h5 className="font-medium text-elec-yellow mb-2">Consumer Trust</h5>
-                    <p className="text-sm text-white/80">Customers actively seek accredited professionals, providing immediate confidence in your services and expertise.</p>
+                    <p className="text-sm text-white/80">
+                      Customers actively seek accredited professionals, providing immediate
+                      confidence in your services and expertise.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -186,15 +225,24 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
                     <h5 className="font-medium text-green-400 mb-2">Higher Rates</h5>
-                    <p className="text-sm text-white/80">Command premium pricing - accredited professionals typically charge 15-25% more than non-accredited competitors.</p>
+                    <p className="text-sm text-white/80">
+                      Command premium pricing - accredited professionals typically charge 15-25%
+                      more than non-accredited competitors.
+                    </p>
                   </div>
                   <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl">
                     <h5 className="font-medium text-blue-400 mb-2">Marketing Edge</h5>
-                    <p className="text-sm text-white/80">Use accreditation logos and marketing materials to win more contracts and build trust with potential clients.</p>
+                    <p className="text-sm text-white/80">
+                      Use accreditation logos and marketing materials to win more contracts and
+                      build trust with potential clients.
+                    </p>
                   </div>
                   <div className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl">
                     <h5 className="font-medium text-purple-400 mb-2">Insurance Discounts</h5>
-                    <p className="text-sm text-white/80">Access reduced insurance premiums and preferred rates through accreditation body partnerships.</p>
+                    <p className="text-sm text-white/80">
+                      Access reduced insurance premiums and preferred rates through accreditation
+                      body partnerships.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -204,7 +252,10 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                 <h4 className="text-lg font-semibold text-elec-yellow">Professional Support</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {accreditation.benefits.map((benefit, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10">
+                    <div
+                      key={idx}
+                      className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10"
+                    >
                       <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-white/80">{benefit}</span>
                     </div>
@@ -214,8 +265,13 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Financial Benefits */}
               <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-xl">
-                <h4 className="text-lg font-semibold text-elec-yellow mb-3">Return on Investment</h4>
-                <p className="text-white/80 mb-3">Most professionals recoup their annual membership costs within the first 2-3 contracts through:</p>
+                <h4 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Return on Investment
+                </h4>
+                <p className="text-white/80 mb-3">
+                  Most professionals recoup their annual membership costs within the first 2-3
+                  contracts through:
+                </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -288,15 +344,24 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl">
                     <h5 className="font-medium text-blue-400 mb-2">Years Required</h5>
-                    <p className="text-sm text-white/80">Minimum 2-4 years post-qualification experience in electrical installation, testing, or design work.</p>
+                    <p className="text-sm text-white/80">
+                      Minimum 2-4 years post-qualification experience in electrical installation,
+                      testing, or design work.
+                    </p>
                   </div>
                   <div className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl">
                     <h5 className="font-medium text-purple-400 mb-2">Type of Work</h5>
-                    <p className="text-sm text-white/80">Domestic, commercial, or industrial electrical work with evidence of competence across multiple areas.</p>
+                    <p className="text-sm text-white/80">
+                      Domestic, commercial, or industrial electrical work with evidence of
+                      competence across multiple areas.
+                    </p>
                   </div>
                   <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
                     <h5 className="font-medium text-green-400 mb-2">Portfolio</h5>
-                    <p className="text-sm text-white/80">Documented evidence of completed projects, installations, and ongoing professional development.</p>
+                    <p className="text-sm text-white/80">
+                      Documented evidence of completed projects, installations, and ongoing
+                      professional development.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -358,7 +423,10 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                   <h4 className="text-lg font-semibold text-red-400">Critical Prerequisites</h4>
                   <div className="space-y-2">
                     {accreditation.prerequisites.map((prerequisite, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/30 rounded-xl">
+                      <div
+                        key={idx}
+                        className="flex items-start gap-3 p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/30 rounded-xl"
+                      >
                         <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-white/80 font-medium">{prerequisite}</span>
                       </div>
@@ -384,7 +452,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             <CardContent className="space-y-6 relative">
               {/* Preparation Phase */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Phase 1: Preparation (2-4 weeks)</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Phase 1: Preparation (2-4 weeks)
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl">
                     <h5 className="font-medium text-blue-400 mb-3">Self-Assessment</h5>
@@ -409,10 +479,15 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Application Process */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Phase 2: Application Process (1-2 weeks)</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Phase 2: Application Process (1-2 weeks)
+                </h4>
                 <div className="space-y-3">
                   {accreditation.nextSteps.map((step, idx) => (
-                    <div key={idx} className="flex items-start gap-4 p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
+                    <div
+                      key={idx}
+                      className="flex items-start gap-4 p-4 bg-white/5 rounded-xl border border-elec-yellow/20"
+                    >
                       <div className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-elec-dark rounded-full flex items-center justify-center text-sm font-bold">
                         {idx + 1}
                       </div>
@@ -426,7 +501,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Assessment Stage */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Phase 3: Assessment (2-6 weeks)</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Phase 3: Assessment (2-6 weeks)
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl">
                     <h5 className="font-medium text-purple-400 mb-3">Technical Assessment</h5>
@@ -460,7 +537,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Success & Setup */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Phase 4: Approval & Setup (1-2 weeks)</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Phase 4: Approval & Setup (1-2 weeks)
+                </h4>
                 <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-xl">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -487,7 +566,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Timeline Overview */}
               <div className="p-4 bg-white/5 border border-elec-yellow/20 rounded-xl">
-                <h5 className="font-medium text-elec-yellow mb-3">Total Timeline: 6-12 weeks from start to finish</h5>
+                <h5 className="font-medium text-elec-yellow mb-3">
+                  Total Timeline: 6-12 weeks from start to finish
+                </h5>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-white/80">
                   <div className="text-center p-3 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 rounded-lg border border-elec-yellow/20">
                     <p className="font-medium text-white">Preparation</p>
@@ -525,7 +606,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             <CardContent className="space-y-6 relative">
               {/* Readiness Assessment */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Readiness Assessment Checklist</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Readiness Assessment Checklist
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
                     <h5 className="font-medium text-green-400 mb-3">✅ Ready to Apply</h5>
@@ -552,10 +635,14 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Preparation Timeline */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">3-6 Month Preparation Plan</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  3-6 Month Preparation Plan
+                </h4>
                 <div className="space-y-4">
                   <div className="p-4 bg-white/5 border border-blue-500/20 rounded-xl">
-                    <h5 className="font-medium text-blue-400 mb-3">Months 1-2: Foundation Building</h5>
+                    <h5 className="font-medium text-blue-400 mb-3">
+                      Months 1-2: Foundation Building
+                    </h5>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/80">
                       <div>
                         <p className="font-medium text-white mb-2">Qualifications</p>
@@ -573,7 +660,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                   </div>
 
                   <div className="p-4 bg-white/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-3">Months 3-4: Experience & Portfolio</h5>
+                    <h5 className="font-medium text-green-400 mb-3">
+                      Months 3-4: Experience & Portfolio
+                    </h5>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/80">
                       <div>
                         <p className="font-medium text-white mb-2">Gain Experience</p>
@@ -591,7 +680,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                   </div>
 
                   <div className="p-4 bg-white/5 border border-purple-500/20 rounded-xl">
-                    <h5 className="font-medium text-purple-400 mb-3">Months 5-6: Final Preparation</h5>
+                    <h5 className="font-medium text-purple-400 mb-3">
+                      Months 5-6: Final Preparation
+                    </h5>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/80">
                       <div>
                         <p className="font-medium text-white mb-2">Knowledge Review</p>
@@ -619,7 +710,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                     <div className="space-y-2 text-sm text-white/80">
                       <div className="flex justify-between">
                         <span>Application fee:</span>
-                        <span className="font-medium text-white">{accreditation.cost.split(' ')[0]}</span>
+                        <span className="font-medium text-white">
+                          {accreditation.cost.split(' ')[0]}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span>Assessment cost:</span>
@@ -665,17 +758,40 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Common Mistakes */}
               <div className="p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-xl">
-                <h4 className="text-lg font-semibold text-red-400 mb-3">Avoid These Common Mistakes</h4>
+                <h4 className="text-lg font-semibold text-red-400 mb-3">
+                  Avoid These Common Mistakes
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2 text-sm text-white/80">
-                    <p>• <span className="font-medium text-red-400">Rushing the application</span> - Take time to prepare properly</p>
-                    <p>• <span className="font-medium text-red-400">Incomplete documentation</span> - Gather all required evidence</p>
-                    <p>• <span className="font-medium text-red-400">Outdated knowledge</span> - Update regulation understanding</p>
+                    <p>
+                      • <span className="font-medium text-red-400">Rushing the application</span> -
+                      Take time to prepare properly
+                    </p>
+                    <p>
+                      • <span className="font-medium text-red-400">Incomplete documentation</span> -
+                      Gather all required evidence
+                    </p>
+                    <p>
+                      • <span className="font-medium text-red-400">Outdated knowledge</span> -
+                      Update regulation understanding
+                    </p>
                   </div>
                   <div className="space-y-2 text-sm text-white/80">
-                    <p>• <span className="font-medium text-red-400">Insufficient experience</span> - Build diverse work portfolio</p>
-                    <p>• <span className="font-medium text-red-400">Poor preparation for assessment</span> - Practice and review</p>
-                    <p>• <span className="font-medium text-red-400">Inadequate insurance</span> - Ensure proper coverage</p>
+                    <p>
+                      • <span className="font-medium text-red-400">Insufficient experience</span> -
+                      Build diverse work portfolio
+                    </p>
+                    <p>
+                      •{' '}
+                      <span className="font-medium text-red-400">
+                        Poor preparation for assessment
+                      </span>{' '}
+                      - Practice and review
+                    </p>
+                    <p>
+                      • <span className="font-medium text-red-400">Inadequate insurance</span> -
+                      Ensure proper coverage
+                    </p>
                   </div>
                 </div>
               </div>
@@ -697,26 +813,39 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             <CardContent className="space-y-6 relative">
               {/* Industry Recognition */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Industry Recognition & Standing</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Industry Recognition & Standing
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 bg-white/5 rounded-xl border border-blue-500/20">
                     <h5 className="font-medium text-blue-400 mb-2">Market Recognition</h5>
-                    <p className="text-sm text-white/80">Recognised by {accreditation.popularity}% of UK electrical professionals and trusted by major contractors nationwide.</p>
+                    <p className="text-sm text-white/80">
+                      Recognised by {accreditation.popularity}% of UK electrical professionals and
+                      trusted by major contractors nationwide.
+                    </p>
                   </div>
                   <div className="p-4 bg-white/5 rounded-xl border border-green-500/20">
                     <h5 className="font-medium text-green-400 mb-2">Consumer Awareness</h5>
-                    <p className="text-sm text-white/80">High consumer recognition with active promotion through government and industry channels.</p>
+                    <p className="text-sm text-white/80">
+                      High consumer recognition with active promotion through government and
+                      industry channels.
+                    </p>
                   </div>
                   <div className="p-4 bg-white/5 rounded-xl border border-purple-500/20">
                     <h5 className="font-medium text-purple-400 mb-2">Regulatory Standing</h5>
-                    <p className="text-sm text-white/80">Full government recognition for Building Regulations compliance and notification rights.</p>
+                    <p className="text-sm text-white/80">
+                      Full government recognition for Building Regulations compliance and
+                      notification rights.
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Career Progression */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Career Progression Opportunities</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Career Progression Opportunities
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
                     <h5 className="font-medium text-elec-yellow mb-3">Next Steps</h5>
@@ -743,7 +872,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Time Commitment */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Ongoing Commitment & Maintenance</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Ongoing Commitment & Maintenance
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 rounded-xl">
                     <h5 className="font-medium text-amber-400 mb-3">Annual Requirements</h5>
@@ -770,17 +901,23 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
               {/* Accreditation Details */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Accreditation Specifications</h4>
+                <h4 className="text-lg font-semibold text-elec-yellow">
+                  Accreditation Specifications
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
                     <h5 className="font-medium text-elec-yellow mb-2">Accrediting Body</h5>
                     <p className="text-sm text-white/80 mb-3">{accreditation.accreditationBody}</p>
 
                     <h5 className="font-medium text-elec-yellow mb-2">Coverage Areas</h5>
-                    <p className="text-sm text-white/80 mb-3">{accreditation.locations.join(", ")}</p>
+                    <p className="text-sm text-white/80 mb-3">
+                      {accreditation.locations.join(', ')}
+                    </p>
 
                     <h5 className="font-medium text-elec-yellow mb-2">Difficulty Assessment</h5>
-                    <p className="text-sm text-white/80">{accreditation.difficulty} - suitable for experienced electrical professionals</p>
+                    <p className="text-sm text-white/80">
+                      {accreditation.difficulty} - suitable for experienced electrical professionals
+                    </p>
                   </div>
 
                   {accreditation.renewalPeriod && (
@@ -792,7 +929,10 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                       <p className="text-sm text-white/80 mb-3">{accreditation.renewalPeriod}</p>
 
                       <h5 className="font-medium text-elec-yellow mb-2">Member Support</h5>
-                      <p className="text-sm text-white/80">24/7 technical helpline, online resources, member forums, and regular updates on regulation changes.</p>
+                      <p className="text-sm text-white/80">
+                        24/7 technical helpline, online resources, member forums, and regular
+                        updates on regulation changes.
+                      </p>
                     </div>
                   )}
                 </div>
@@ -803,12 +943,24 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                 <h4 className="text-lg font-semibold text-elec-yellow mb-4">Success Stories</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 bg-white/5 rounded-xl border border-green-500/20">
-                    <p className="text-sm text-white/80 italic mb-2">"Within 6 months of gaining accreditation, I increased my rates by 20% and secured three major commercial contracts that I wouldn't have been considered for previously."</p>
-                    <p className="text-xs text-green-400">- Sarah M., Electrical Contractor, Manchester</p>
+                    <p className="text-sm text-white/80 italic mb-2">
+                      "Within 6 months of gaining accreditation, I increased my rates by 20% and
+                      secured three major commercial contracts that I wouldn't have been considered
+                      for previously."
+                    </p>
+                    <p className="text-xs text-green-400">
+                      - Sarah M., Electrical Contractor, Manchester
+                    </p>
                   </div>
                   <div className="p-3 bg-white/5 rounded-xl border border-blue-500/20">
-                    <p className="text-sm text-white/80 italic mb-2">"The credibility this accreditation gives me with clients is invaluable. Customers trust me immediately, and I've seen a 40% increase in repeat business."</p>
-                    <p className="text-xs text-blue-400">- James T., Independent Electrician, Birmingham</p>
+                    <p className="text-sm text-white/80 italic mb-2">
+                      "The credibility this accreditation gives me with clients is invaluable.
+                      Customers trust me immediately, and I've seen a 40% increase in repeat
+                      business."
+                    </p>
+                    <p className="text-xs text-blue-400">
+                      - James T., Independent Electrician, Birmingham
+                    </p>
                   </div>
                 </div>
               </div>
@@ -819,7 +971,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-4">
-        {accreditation.website !== "Various providers" && (
+        {accreditation.website !== 'Various providers' && (
           <Button
             className="h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all"
             onClick={() => window.open(accreditation.website, '_blank')}

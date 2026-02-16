@@ -1,43 +1,69 @@
-import { ArrowLeft, ArrowRight, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Dividing the Circuit into Zones (Split and Isolate) - Module 7.4.4 | Level 2 Electrical Course";
-const DESCRIPTION = "Systematic approach to fault location by dividing circuits into manageable sections for efficient diagnosis.";
+const TITLE =
+  'Dividing the Circuit into Zones (Split and Isolate) - Module 7.4.4 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Systematic approach to fault location by dividing circuits into manageable sections for efficient diagnosis.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
-        id: "1",
-    question: "What does splitting and isolating a circuit mean?",
-    options: ["Testing everything at once", "Dividing the circuit into sections and testing each separately", "Replacing all components", "Using different test equipment"],
+    id: '1',
+    question: 'What does splitting and isolating a circuit mean?',
+    options: [
+      'Testing everything at once',
+      'Dividing the circuit into sections and testing each separately',
+      'Replacing all components',
+      'Using different test equipment',
+    ],
     correctIndex: 1,
-    explanation: "Splitting and isolating means dividing the circuit into sections or 'zones' and testing each separately to quickly narrow down fault locations."
+    explanation:
+      "Splitting and isolating means dividing the circuit into sections or 'zones' and testing each separately to quickly narrow down fault locations.",
   },
   {
-        id: "2",
-    question: "How can this method be applied to a ring final circuit?",
-    options: ["Test all sockets simultaneously", "Disconnect at mid-point and test each half separately", "Replace all sockets", "Test only at consumer unit"],
+    id: '2',
+    question: 'How can this method be applied to a ring final circuit?',
+    options: [
+      'Test all sockets simultaneously',
+      'Disconnect at mid-point and test each half separately',
+      'Replace all sockets',
+      'Test only at consumer unit',
+    ],
     correctIndex: 1,
-    explanation: "In a ring final circuit, disconnect at the mid-point and test each half separately. The faulty half is then divided again until the exact fault location is found."
+    explanation:
+      'In a ring final circuit, disconnect at the mid-point and test each half separately. The faulty half is then divided again until the exact fault location is found.',
   },
   {
-        id: "3",
-    question: "How should zones be created in large commercial installations?",
-    options: ["Random sections", "Using distribution boards and sub-boards as natural division points", "Equal length sections only", "Single component divisions"],
+    id: '3',
+    question: 'How should zones be created in large commercial installations?',
+    options: [
+      'Random sections',
+      'Using distribution boards and sub-boards as natural division points',
+      'Equal length sections only',
+      'Single component divisions',
+    ],
     correctIndex: 1,
-    explanation: "In large installations, use distribution boards or sub-boards as natural points for dividing and testing sections, as they provide logical circuit separation points."
+    explanation:
+      'In large installations, use distribution boards or sub-boards as natural points for dividing and testing sections, as they provide logical circuit separation points.',
   },
   {
-        id: "4",
-    question: "Why is accurate labelling essential during split-and-isolate testing?",
-    options: ["For decoration", "To track which sections have been tested and avoid confusion", "To meet regulations", "To use more equipment"],
+    id: '4',
+    question: 'Why is accurate labelling essential during split-and-isolate testing?',
+    options: [
+      'For decoration',
+      'To track which sections have been tested and avoid confusion',
+      'To meet regulations',
+      'To use more equipment',
+    ],
     correctIndex: 1,
-    explanation: "Accurate labelling is essential to track which sections have been tested and which remain unchecked, preventing confusion and ensuring systematic progression."
-  }
+    explanation:
+      'Accurate labelling is essential to track which sections have been tested and which remain unchecked, preventing confusion and ensuring systematic progression.',
+  },
 ];
 
 const Module7Section4_4 = () => {
@@ -46,143 +72,154 @@ const Module7Section4_4 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What does splitting and isolating a circuit mean?",
+      question: 'What does splitting and isolating a circuit mean?',
       options: [
-        "Testing all components together",
-        "Testing parts of a circuit separately instead of all at once",
-        "Replacing faulty components",
-        "Using multiple test instruments"
+        'Testing all components together',
+        'Testing parts of a circuit separately instead of all at once',
+        'Replacing faulty components',
+        'Using multiple test instruments',
       ],
       correctAnswer: 1,
-      explanation: "Splitting and isolating means testing parts of a circuit separately instead of all at once, which helps narrow down fault locations systematically."
+      explanation:
+        'Splitting and isolating means testing parts of a circuit separately instead of all at once, which helps narrow down fault locations systematically.',
     },
     {
       id: 2,
-      question: "Why does dividing the circuit help in fault diagnosis?",
+      question: 'Why does dividing the circuit help in fault diagnosis?',
       options: [
-        "It uses less equipment",
-        "It halves the problem each time, quickly narrowing down the fault location",
+        'It uses less equipment',
+        'It halves the problem each time, quickly narrowing down the fault location',
         "It's required by regulations",
-        "It prevents damage to components"
+        'It prevents damage to components',
       ],
       correctAnswer: 1,
-      explanation: "Dividing the circuit halves the problem each time, quickly narrowing down the fault location by eliminating sections that test correctly."
+      explanation:
+        'Dividing the circuit halves the problem each time, quickly narrowing down the fault location by eliminating sections that test correctly.',
     },
     {
       id: 3,
-      question: "How can this method be applied to a ring final circuit?",
+      question: 'How can this method be applied to a ring final circuit?',
       options: [
-        "Test all sockets at once",
-        "Disconnect at mid-point and test each half separately",
-        "Replace all socket outlets",
-        "Test only the consumer unit"
+        'Test all sockets at once',
+        'Disconnect at mid-point and test each half separately',
+        'Replace all socket outlets',
+        'Test only the consumer unit',
       ],
       correctAnswer: 1,
-      explanation: "In a ring final circuit, disconnect at the mid-point and test each half separately. The faulty half is then divided again until the exact location is found."
+      explanation:
+        'In a ring final circuit, disconnect at the mid-point and test each half separately. The faulty half is then divided again until the exact location is found.',
     },
     {
       id: 4,
-      question: "What fault was found in the real-world housing site example?",
+      question: 'What fault was found in the real-world housing site example?',
       options: [
-        "Faulty consumer unit",
-        "Broken cable in the wall",
-        "CPC not connected properly at a socket",
-        "Damaged socket outlet"
+        'Faulty consumer unit',
+        'Broken cable in the wall',
+        'CPC not connected properly at a socket',
+        'Damaged socket outlet',
       ],
       correctAnswer: 2,
-      explanation: "The fault was a CPC (circuit protective conductor) that had not been connected properly at a socket, discovered through systematic splitting and testing."
+      explanation:
+        'The fault was a CPC (circuit protective conductor) that had not been connected properly at a socket, discovered through systematic splitting and testing.',
     },
     {
       id: 5,
-      question: "Why is record-keeping important during split-and-isolate testing?",
+      question: 'Why is record-keeping important during split-and-isolate testing?',
       options: [
-        "For regulatory compliance only",
-        "To avoid confusion and track which areas have been tested",
-        "To increase testing time",
-        "To use more paperwork"
+        'For regulatory compliance only',
+        'To avoid confusion and track which areas have been tested',
+        'To increase testing time',
+        'To use more paperwork',
       ],
       correctAnswer: 1,
-      explanation: "Record-keeping is essential to avoid confusion and track which areas have been tested and which remain unchecked during systematic fault location."
+      explanation:
+        'Record-keeping is essential to avoid confusion and track which areas have been tested and which remain unchecked during systematic fault location.',
     },
     {
       id: 6,
-      question: "Can this method be applied to lighting circuits?",
+      question: 'Can this method be applied to lighting circuits?',
       options: [
-        "No, only for power circuits",
-        "Yes, by splitting at junction boxes or isolating groups of lights",
-        "Only in commercial installations",
-        "Only for emergency lighting"
+        'No, only for power circuits',
+        'Yes, by splitting at junction boxes or isolating groups of lights',
+        'Only in commercial installations',
+        'Only for emergency lighting',
       ],
       correctAnswer: 1,
-      explanation: "Yes, this method applies to lighting circuits by splitting the run at junction boxes or isolating groups of lights to narrow down fault locations."
+      explanation:
+        'Yes, this method applies to lighting circuits by splitting the run at junction boxes or isolating groups of lights to narrow down fault locations.',
     },
     {
       id: 7,
-      question: "True or False: Splitting and isolating only works on small domestic installations.",
+      question:
+        'True or False: Splitting and isolating only works on small domestic installations.',
       options: [
-        "True - only for small installations",
-        "False - it works on installations of all sizes",
-        "True - large installations need different methods",
-        "False - only for industrial systems"
+        'True - only for small installations',
+        'False - it works on installations of all sizes',
+        'True - large installations need different methods',
+        'False - only for industrial systems',
       ],
       correctAnswer: 1,
-      explanation: "False. Splitting and isolating works effectively on installations of all sizes, from small domestic circuits to large industrial systems."
+      explanation:
+        'False. Splitting and isolating works effectively on installations of all sizes, from small domestic circuits to large industrial systems.',
     },
     {
       id: 8,
-      question: "How should zones be created in large commercial installations?",
+      question: 'How should zones be created in large commercial installations?',
       options: [
-        "Random equal sections",
-        "Using distribution boards or sub-boards as natural division points",
-        "Single component zones only",
-        "Based on cable length only"
+        'Random equal sections',
+        'Using distribution boards or sub-boards as natural division points',
+        'Single component zones only',
+        'Based on cable length only',
       ],
       correctAnswer: 1,
-      explanation: "In large installations, use distribution boards or sub-boards as natural points for dividing and testing sections, as they provide logical circuit separation."
+      explanation:
+        'In large installations, use distribution boards or sub-boards as natural points for dividing and testing sections, as they provide logical circuit separation.',
     },
     {
       id: 9,
-      question: "What is the main advantage of splitting circuits into zones?",
+      question: 'What is the main advantage of splitting circuits into zones?',
       options: [
-        "Uses less test equipment",
-        "Quickly narrows down fault location by halving the problem",
-        "Eliminates the need for documentation",
-        "Reduces safety requirements"
+        'Uses less test equipment',
+        'Quickly narrows down fault location by halving the problem',
+        'Eliminates the need for documentation',
+        'Reduces safety requirements',
       ],
       correctAnswer: 1,
-      explanation: "The main advantage is quickly narrowing down fault location by halving the problem each time, leading to efficient fault diagnosis."
+      explanation:
+        'The main advantage is quickly narrowing down fault location by halving the problem each time, leading to efficient fault diagnosis.',
     },
     {
       id: 10,
-      question: "In the warehouse example, what fault was located using this method?",
+      question: 'In the warehouse example, what fault was located using this method?',
       options: [
-        "Faulty distribution board",
-        "Loose neutral conductor in a junction box",
-        "Damaged light fittings",
-        "Incorrect cable sizing"
+        'Faulty distribution board',
+        'Loose neutral conductor in a junction box',
+        'Damaged light fittings',
+        'Incorrect cable sizing',
       ],
       correctAnswer: 1,
-      explanation: "The fault was a loose neutral conductor in a junction box, quickly located by dividing the warehouse lighting into zones and testing systematically."
-    }
+      explanation:
+        'The fault was a loose neutral conductor in a junction box, quickly located by dividing the warehouse lighting into zones and testing systematically.',
+    },
   ];
 
   const faqs = [
     {
-      question: "What does dividing a circuit into zones mean?",
-      answer: "Testing parts of a circuit separately instead of all at once."
+      question: 'What does dividing a circuit into zones mean?',
+      answer: 'Testing parts of a circuit separately instead of all at once.',
     },
     {
-      question: "Why is this method effective?",
-      answer: "It halves the problem each time, quickly narrowing down the fault location."
+      question: 'Why is this method effective?',
+      answer: 'It halves the problem each time, quickly narrowing down the fault location.',
     },
     {
-      question: "Is it only used for ring circuits?",
-      answer: "No. It applies to all circuits, including lighting and large installations."
+      question: 'Is it only used for ring circuits?',
+      answer: 'No. It applies to all circuits, including lighting and large installations.',
     },
     {
-      question: "What is essential when using this method?",
-      answer: "Accurate labelling and recording of test results to avoid confusion."
-    }
+      question: 'What is essential when using this method?',
+      answer: 'Accurate labelling and recording of test results to avoid confusion.',
+    },
   ];
 
   return (
@@ -217,9 +254,7 @@ const Module7Section4_4 = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Dividing the Circuit into Zones
             </h1>
-            <p className="text-white/70 text-lg">
-              Split and Isolate Method
-            </p>
+            <p className="text-white/70 text-lg">Split and Isolate Method</p>
           </header>
 
           {/* In 30 Seconds Summary */}
@@ -256,11 +291,15 @@ const Module7Section4_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Dividing circuits into zones is essentially about halving the problem repeatedly. Instead of testing an entire circuit, electricians isolate sections and test each half separately, quickly determining which contains the fault.
+                Dividing circuits into zones is essentially about halving the problem repeatedly.
+                Instead of testing an entire circuit, electricians isolate sections and test each
+                half separately, quickly determining which contains the fault.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-3">Mathematical Efficiency of Zone Division</p>
+                <p className="font-medium text-white mb-3">
+                  Mathematical Efficiency of Zone Division
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white/90 mb-2">Halving Progression</p>
@@ -273,7 +312,9 @@ const Module7Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Time Efficiency Benefits</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Time Efficiency Benefits
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1">
                       <li>• Exponential reduction in testing time</li>
                       <li>• Prevents exhaustive component checking</li>
@@ -289,7 +330,9 @@ const Module7Section4_4 = () => {
                 <p className="font-medium text-white mb-3">Strategic Zone Selection Principles</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Logical Division Points</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Logical Division Points
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1">
                       <li>• Junction boxes and connection points</li>
                       <li>• Distribution board outgoing ways</li>
@@ -311,7 +354,10 @@ const Module7Section4_4 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm text-white/80">
-                  <strong className="text-white">Core principle:</strong> By halving the search area with each test, electricians can locate faults in large, complex circuits with remarkably few testing steps, making this the most efficient diagnostic method available.
+                  <strong className="text-white">Core principle:</strong> By halving the search area
+                  with each test, electricians can locate faults in large, complex circuits with
+                  remarkably few testing steps, making this the most efficient diagnostic method
+                  available.
                 </p>
               </div>
             </div>
@@ -335,14 +381,18 @@ const Module7Section4_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Ring final circuits are ideal for zone division testing. By disconnecting at strategic mid-points and testing each half independently, faults can be located with precision and minimal disruption.
+                Ring final circuits are ideal for zone division testing. By disconnecting at
+                strategic mid-points and testing each half independently, faults can be located with
+                precision and minimal disruption.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Strategic Mid-Point Selection</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Optimal Division Points</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Optimal Division Points
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1">
                       <li>• Socket outlet roughly halfway around ring</li>
                       <li>• Accessible junction boxes or connection points</li>
@@ -391,17 +441,34 @@ const Module7Section4_4 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Progressive Fault Narrowing Process</p>
                 <ul className="text-sm text-white/70 space-y-1">
-                  <li>• <strong className="text-white/90">First division:</strong> Fault located to specific half of ring (50% reduction)</li>
-                  <li>• <strong className="text-white/90">Second division:</strong> Faulty half subdivided again (75% total elimination)</li>
-                  <li>• <strong className="text-white/90">Third division:</strong> Further subdivision narrows to small section (87.5% elimination)</li>
-                  <li>• <strong className="text-white/90">Final location:</strong> Fault pinpointed to specific cable run or connection</li>
-                  <li>• <strong className="text-white/90">Verification:</strong> Final testing confirms exact fault location and type</li>
+                  <li>
+                    • <strong className="text-white/90">First division:</strong> Fault located to
+                    specific half of ring (50% reduction)
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Second division:</strong> Faulty half
+                    subdivided again (75% total elimination)
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Third division:</strong> Further subdivision
+                    narrows to small section (87.5% elimination)
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Final location:</strong> Fault pinpointed to
+                    specific cable run or connection
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Verification:</strong> Final testing
+                    confirms exact fault location and type
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm text-white/80">
-                  <strong className="text-white">Ring final advantage:</strong> The loop nature of ring circuits makes them ideal for zone division, as each half can be tested independently while maintaining circuit integrity for progressive fault location.
+                  <strong className="text-white">Ring final advantage:</strong> The loop nature of
+                  ring circuits makes them ideal for zone division, as each half can be tested
+                  independently while maintaining circuit integrity for progressive fault location.
                 </p>
               </div>
             </div>
@@ -425,14 +492,18 @@ const Module7Section4_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Zone division extends beyond ring finals to lighting circuits and large installations. Junction boxes, distribution boards, and sub-boards provide natural splitting points for systematic fault location.
+                Zone division extends beyond ring finals to lighting circuits and large
+                installations. Junction boxes, distribution boards, and sub-boards provide natural
+                splitting points for systematic fault location.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Lighting Circuit Zone Division</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Natural Division Points</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Natural Division Points
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1">
                       <li>• Junction boxes between groups of lights</li>
                       <li>• Intermediate switch positions in two-way circuits</li>
@@ -455,20 +526,40 @@ const Module7Section4_4 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-3">Large Installation Hierarchical Approach</p>
+                <p className="font-medium text-white mb-3">
+                  Large Installation Hierarchical Approach
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Distribution System Levels</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Distribution System Levels
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1">
-                      <li>• <strong className="text-white/90">Level 1:</strong> Main distribution board zones</li>
-                      <li>• <strong className="text-white/90">Level 2:</strong> Sub-distribution board areas</li>
-                      <li>• <strong className="text-white/90">Level 3:</strong> Floor or wing sections</li>
-                      <li>• <strong className="text-white/90">Level 4:</strong> Individual final circuits</li>
-                      <li>• <strong className="text-white/90">Level 5:</strong> Component-level testing</li>
+                      <li>
+                        • <strong className="text-white/90">Level 1:</strong> Main distribution
+                        board zones
+                      </li>
+                      <li>
+                        • <strong className="text-white/90">Level 2:</strong> Sub-distribution board
+                        areas
+                      </li>
+                      <li>
+                        • <strong className="text-white/90">Level 3:</strong> Floor or wing sections
+                      </li>
+                      <li>
+                        • <strong className="text-white/90">Level 4:</strong> Individual final
+                        circuits
+                      </li>
+                      <li>
+                        • <strong className="text-white/90">Level 5:</strong> Component-level
+                        testing
+                      </li>
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Progressive Testing Method</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Progressive Testing Method
+                    </p>
                     <ol className="text-sm text-white/70 space-y-1 list-decimal pl-4">
                       <li>Test at highest level first (main DB)</li>
                       <li>Identify affected sub-distribution area</li>
@@ -481,20 +572,42 @@ const Module7Section4_4 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-3">Commercial and Industrial Zone Planning</p>
+                <p className="font-medium text-white mb-3">
+                  Commercial and Industrial Zone Planning
+                </p>
                 <ul className="text-sm text-white/70 space-y-1">
-                  <li>• <strong className="text-white/90">Office buildings:</strong> Floor-by-floor or department-based zones</li>
-                  <li>• <strong className="text-white/90">Factories:</strong> Production line or process area divisions</li>
-                  <li>• <strong className="text-white/90">Retail spaces:</strong> Trading area or department zones</li>
-                  <li>• <strong className="text-white/90">Hospitals:</strong> Ward or department-based isolation</li>
-                  <li>• <strong className="text-white/90">Schools:</strong> Building or teaching area sections</li>
-                  <li>• <strong className="text-white/90">Data centres:</strong> Rack row or hall-based divisions</li>
+                  <li>
+                    • <strong className="text-white/90">Office buildings:</strong> Floor-by-floor or
+                    department-based zones
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Factories:</strong> Production line or
+                    process area divisions
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Retail spaces:</strong> Trading area or
+                    department zones
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Hospitals:</strong> Ward or department-based
+                    isolation
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Schools:</strong> Building or teaching area
+                    sections
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Data centres:</strong> Rack row or
+                    hall-based divisions
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm text-white/80">
-                  <strong className="text-white">Large installation benefit:</strong> Natural hierarchical structure of large installations provides multiple logical division points, making zone-based fault location highly efficient for complex systems.
+                  <strong className="text-white">Large installation benefit:</strong> Natural
+                  hierarchical structure of large installations provides multiple logical division
+                  points, making zone-based fault location highly efficient for complex systems.
                 </p>
               </div>
             </div>
@@ -518,7 +631,9 @@ const Module7Section4_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Successful zone division requires meticulous labelling, careful record-keeping, and proper safety procedures. Working systematically with clear documentation prevents confusion and ensures safety.
+                Successful zone division requires meticulous labelling, careful record-keeping, and
+                proper safety procedures. Working systematically with clear documentation prevents
+                confusion and ensures safety.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -553,14 +668,28 @@ const Module7Section4_4 = () => {
                   <div>
                     <p className="text-sm font-medium text-white/90 mb-2">Role Division</p>
                     <ul className="text-sm text-white/70 space-y-1">
-                      <li>• <strong className="text-white/90">Tester:</strong> Carries out measurements and tests</li>
-                      <li>• <strong className="text-white/90">Recorder:</strong> Documents results and progress</li>
-                      <li>• <strong className="text-white/90">Both:</strong> Verify isolation and safety procedures</li>
-                      <li>• <strong className="text-white/90">Communication:</strong> Constant liaison on progress</li>
+                      <li>
+                        • <strong className="text-white/90">Tester:</strong> Carries out
+                        measurements and tests
+                      </li>
+                      <li>
+                        • <strong className="text-white/90">Recorder:</strong> Documents results and
+                        progress
+                      </li>
+                      <li>
+                        • <strong className="text-white/90">Both:</strong> Verify isolation and
+                        safety procedures
+                      </li>
+                      <li>
+                        • <strong className="text-white/90">Communication:</strong> Constant liaison
+                        on progress
+                      </li>
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Benefits of Pair Working</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Benefits of Pair Working
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1">
                       <li>• Reduces errors and oversight</li>
                       <li>• Ensures systematic progression</li>
@@ -574,18 +703,39 @@ const Module7Section4_4 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Safety and Isolation Procedures</p>
                 <ul className="text-sm text-white/70 space-y-1">
-                  <li>• <strong className="text-white/90">Safe isolation:</strong> Verify each zone is properly isolated before testing</li>
-                  <li>• <strong className="text-white/90">Proving unit:</strong> Test voltage indicators before and after each measurement</li>
-                  <li>• <strong className="text-white/90">Lockout/tagout:</strong> Secure isolation points to prevent accidental re-energisation</li>
-                  <li>• <strong className="text-white/90">PPE requirements:</strong> Appropriate protective equipment for each testing phase</li>
-                  <li>• <strong className="text-white/90">Communication:</strong> Clear communication with other personnel about testing activities</li>
-                  <li>• <strong className="text-white/90">Emergency procedures:</strong> Establish emergency stop and rescue procedures</li>
+                  <li>
+                    • <strong className="text-white/90">Safe isolation:</strong> Verify each zone is
+                    properly isolated before testing
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Proving unit:</strong> Test voltage
+                    indicators before and after each measurement
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Lockout/tagout:</strong> Secure isolation
+                    points to prevent accidental re-energisation
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">PPE requirements:</strong> Appropriate
+                    protective equipment for each testing phase
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Communication:</strong> Clear communication
+                    with other personnel about testing activities
+                  </li>
+                  <li>
+                    • <strong className="text-white/90">Emergency procedures:</strong> Establish
+                    emergency stop and rescue procedures
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm text-white/80">
-                  <strong className="text-white">Critical success factor:</strong> The effectiveness of zone division depends entirely on systematic approach, clear labelling, and accurate record-keeping - these administrative tasks are as important as the technical testing itself.
+                  <strong className="text-white">Critical success factor:</strong> The effectiveness
+                  of zone division depends entirely on systematic approach, clear labelling, and
+                  accurate record-keeping - these administrative tasks are as important as the
+                  technical testing itself.
                 </p>
               </div>
             </div>
@@ -610,33 +760,59 @@ const Module7Section4_4 = () => {
             <div className="space-y-6">
               {/* Case Study 1 */}
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h3 className="font-medium text-white mb-2">Case Study 1: New-Build Housing Site Ring Final Circuit</h3>
-                <p className="text-sm text-white/60 mb-4">CPC fault located through systematic halving</p>
+                <h3 className="font-medium text-white mb-2">
+                  Case Study 1: New-Build Housing Site Ring Final Circuit
+                </h3>
+                <p className="text-sm text-white/60 mb-4">
+                  CPC fault located through systematic halving
+                </p>
 
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-white/90 mb-2">Scenario</p>
                     <p className="text-sm text-white/70">
-                      On a new-build housing site, a ring final circuit failed continuity testing during commissioning. The circuit served multiple socket outlets across a large property, making visual inspection impractical.
+                      On a new-build housing site, a ring final circuit failed continuity testing
+                      during commissioning. The circuit served multiple socket outlets across a
+                      large property, making visual inspection impractical.
                     </p>
                   </div>
 
                   <div>
                     <p className="text-sm font-medium text-white/90 mb-2">Zone Division Process</p>
                     <ol className="text-sm text-white/70 space-y-1 list-decimal pl-4">
-                      <li><strong className="text-white/90">Initial division:</strong> Split circuit into two halves at consumer unit - one half tested correctly, other showed open circuit on CPC</li>
-                      <li><strong className="text-white/90">Second division:</strong> Faulty half split again at socket roughly midway along run - second half tested fine</li>
-                      <li><strong className="text-white/90">Final location:</strong> Fault narrowed to specific section between two sockets</li>
-                      <li><strong className="text-white/90">Fault identified:</strong> CPC not connected properly at one socket outlet</li>
-                      <li><strong className="text-white/90">Repair completed:</strong> Proper connection restored, full circuit retested successfully</li>
+                      <li>
+                        <strong className="text-white/90">Initial division:</strong> Split circuit
+                        into two halves at consumer unit - one half tested correctly, other showed
+                        open circuit on CPC
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Second division:</strong> Faulty half
+                        split again at socket roughly midway along run - second half tested fine
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Final location:</strong> Fault narrowed to
+                        specific section between two sockets
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Fault identified:</strong> CPC not
+                        connected properly at one socket outlet
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Repair completed:</strong> Proper
+                        connection restored, full circuit retested successfully
+                      </li>
                     </ol>
                   </div>
 
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Time and Efficiency Benefits</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Time and Efficiency Benefits
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1 list-disc pl-4">
                       <li>Fault located in under one hour using systematic division</li>
-                      <li>Avoided testing every socket individually (would have taken much longer)</li>
+                      <li>
+                        Avoided testing every socket individually (would have taken much longer)
+                      </li>
                       <li>Prevented unnecessary damage to walls or installations</li>
                       <li>Clear documentation provided for quality control records</li>
                     </ul>
@@ -646,25 +822,48 @@ const Module7Section4_4 = () => {
 
               {/* Case Study 2 */}
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h3 className="font-medium text-white mb-2">Case Study 2: Commercial Warehouse Lighting Failures</h3>
-                <p className="text-sm text-white/60 mb-4">Zone isolation locates neutral conductor fault</p>
+                <h3 className="font-medium text-white mb-2">
+                  Case Study 2: Commercial Warehouse Lighting Failures
+                </h3>
+                <p className="text-sm text-white/60 mb-4">
+                  Zone isolation locates neutral conductor fault
+                </p>
 
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-white/90 mb-2">Scenario</p>
                     <p className="text-sm text-white/70">
-                      A commercial warehouse reported frequent lighting failures affecting dozens of fittings across a large space. Random failures made pattern identification difficult.
+                      A commercial warehouse reported frequent lighting failures affecting dozens of
+                      fittings across a large space. Random failures made pattern identification
+                      difficult.
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Systematic Zone Approach</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Systematic Zone Approach
+                    </p>
                     <ol className="text-sm text-white/70 space-y-1 list-decimal pl-4">
-                      <li><strong className="text-white/90">Level 1 division:</strong> Isolated one half of warehouse lighting at distribution board</li>
-                      <li><strong className="text-white/90">Fault identification:</strong> Problems only occurred in isolated half, confirming fault location</li>
-                      <li><strong className="text-white/90">Level 2 division:</strong> Further divided faulty half into smaller zones using sub-circuits</li>
-                      <li><strong className="text-white/90">Final location:</strong> Narrowed fault to specific junction box serving affected area</li>
-                      <li><strong className="text-white/90">Root cause:</strong> Loose neutral conductor in junction box caused intermittent failures</li>
+                      <li>
+                        <strong className="text-white/90">Level 1 division:</strong> Isolated one
+                        half of warehouse lighting at distribution board
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Fault identification:</strong> Problems
+                        only occurred in isolated half, confirming fault location
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Level 2 division:</strong> Further divided
+                        faulty half into smaller zones using sub-circuits
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Final location:</strong> Narrowed fault to
+                        specific junction box serving affected area
+                      </li>
+                      <li>
+                        <strong className="text-white/90">Root cause:</strong> Loose neutral
+                        conductor in junction box caused intermittent failures
+                      </li>
                     </ol>
                   </div>
 
@@ -706,13 +905,21 @@ const Module7Section4_4 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-white/80">
-                Dividing the circuit into zones, or splitting and isolating, is a methodical way of locating faults in large or complex installations. By testing each half of the circuit separately, electricians can quickly determine which part contains the fault. The process is repeated, narrowing down the faulty zone until the exact fault location is found. This approach saves time, avoids unnecessary work, and ensures accuracy in diagnosis.
+                Dividing the circuit into zones, or splitting and isolating, is a methodical way of
+                locating faults in large or complex installations. By testing each half of the
+                circuit separately, electricians can quickly determine which part contains the
+                fault. The process is repeated, narrowing down the faulty zone until the exact fault
+                location is found. This approach saves time, avoids unnecessary work, and ensures
+                accuracy in diagnosis.
               </p>
             </div>
           </section>
 
           {/* Quiz */}
-          <Quiz questions={quizQuestions} title="Test Your Knowledge: Zone Division and Fault Isolation" />
+          <Quiz
+            questions={quizQuestions}
+            title="Test Your Knowledge: Zone Division and Fault Isolation"
+          />
 
           {/* Navigation */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">

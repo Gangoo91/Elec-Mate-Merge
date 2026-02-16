@@ -7,9 +7,9 @@ const EICCompletionTab = () => {
       <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
         <h4 className="font-semibold text-green-400 mb-3">EIC Completion Requirements</h4>
         <p className="text-sm mb-3">
-          The Electrical Installation Certificate is required for all new electrical installations and substantial 
-          modifications. It demonstrates that the design, construction, inspection, and testing have been completed 
-          in accordance with BS 7671.
+          The Electrical Installation Certificate is required for all new electrical installations
+          and substantial modifications. It demonstrates that the design, construction, inspection,
+          and testing have been completed in accordance with BS 7671.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
@@ -41,16 +41,46 @@ const EICCompletionTab = () => {
       <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-4">
         <h4 className="font-semibold text-indigo-400 mb-3">Step-by-Step EIC Completion</h4>
         <ol className="space-y-3 text-sm">
-          <li><strong>1. Installation Details:</strong> Complete full address, description of work, and installation characteristics</li>
-          <li><strong>2. Design Information:</strong> Record design current, protective device ratings, earthing arrangements</li>
-          <li><strong>3. Supply Characteristics:</strong> Note supply type (TN-S, TN-C-S, TT), voltage, frequency, and supply authority details</li>
-          <li><strong>4. Earthing and Bonding:</strong> Record earthing conductor sizes, bonding arrangements, and electrode details</li>
-          <li><strong>5. Protective Devices:</strong> List all consumer units, RCDs, MCBs with ratings and characteristics</li>
-          <li><strong>6. Circuit Information:</strong> Complete circuit schedule with all required technical details</li>
-          <li><strong>7. Test Results:</strong> Attach completed Schedule of Test Results with all measurements</li>
-          <li><strong>8. Inspection:</strong> Complete Schedule of Inspections noting any defects or limitations</li>
-          <li><strong>9. Recommendations:</strong> Note any improvements needed or future maintenance requirements</li>
-          <li><strong>10. Signatures:</strong> Ensure all responsible persons sign with dates and qualifications</li>
+          <li>
+            <strong>1. Installation Details:</strong> Complete full address, description of work,
+            and installation characteristics
+          </li>
+          <li>
+            <strong>2. Design Information:</strong> Record design current, protective device
+            ratings, earthing arrangements
+          </li>
+          <li>
+            <strong>3. Supply Characteristics:</strong> Note supply type (TN-S, TN-C-S, TT),
+            voltage, frequency, and supply authority details
+          </li>
+          <li>
+            <strong>4. Earthing and Bonding:</strong> Record earthing conductor sizes, bonding
+            arrangements, and electrode details
+          </li>
+          <li>
+            <strong>5. Protective Devices:</strong> List all consumer units, RCDs, MCBs with ratings
+            and characteristics
+          </li>
+          <li>
+            <strong>6. Circuit Information:</strong> Complete circuit schedule with all required
+            technical details
+          </li>
+          <li>
+            <strong>7. Test Results:</strong> Attach completed Schedule of Test Results with all
+            measurements
+          </li>
+          <li>
+            <strong>8. Inspection:</strong> Complete Schedule of Inspections noting any defects or
+            limitations
+          </li>
+          <li>
+            <strong>9. Recommendations:</strong> Note any improvements needed or future maintenance
+            requirements
+          </li>
+          <li>
+            <strong>10. Signatures:</strong> Ensure all responsible persons sign with dates and
+            qualifications
+          </li>
         </ol>
       </div>
 
@@ -88,9 +118,9 @@ const EICCompletionTab = () => {
         <h4 className="font-semibold text-blue-400 mb-3">Design Responsibility and Calculations</h4>
         <div className="text-sm space-y-3">
           <p>
-            The design section must clearly identify who was responsible for the design and 
-            verify that appropriate calculations and selections have been made. This is critical 
-            for safety and compliance.
+            The design section must clearly identify who was responsible for the design and verify
+            that appropriate calculations and selections have been made. This is critical for safety
+            and compliance.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -107,7 +137,9 @@ const EICCompletionTab = () => {
               </ul>
             </div>
             <div>
-              <h5 className="font-medium text-foreground mb-2">When Design Responsibility Applies:</h5>
+              <h5 className="font-medium text-foreground mb-2">
+                When Design Responsibility Applies:
+              </h5>
               <ul className="space-y-1">
                 <li>• Complete new installations (domestic, commercial, industrial)</li>
                 <li>• Consumer unit replacements (main switch, RCD protection)</li>

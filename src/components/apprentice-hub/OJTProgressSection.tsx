@@ -19,15 +19,7 @@
  */
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  PieChart,
-  Pie,
-  Cell,
-  ReferenceLine,
-} from 'recharts';
+import { BarChart, Bar, XAxis, PieChart, Pie, Cell, ReferenceLine } from 'recharts';
 import {
   Clock,
   Plus,
@@ -54,12 +46,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -67,12 +54,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import type { ChartConfig } from '@/components/ui/chart';
+import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
@@ -189,14 +173,11 @@ export function OJTProgressSection() {
   // Compliance forecast message
   const forecastMessage = useMemo(() => {
     if (yearlyHours >= yearlyTarget) return 'Target achieved!';
-    if (insights.forecastData.weeklyRate <= 0)
-      return 'Start logging to see your forecast';
+    if (insights.forecastData.weeklyRate <= 0) return 'Start logging to see your forecast';
 
     const remainingHours = yearlyTarget - yearlyHours;
     const weeksRemaining = remainingHours / insights.forecastData.weeklyRate;
-    const estimatedDate = new Date(
-      Date.now() + weeksRemaining * 7 * 24 * 60 * 60 * 1000
-    );
+    const estimatedDate = new Date(Date.now() + weeksRemaining * 7 * 24 * 60 * 60 * 1000);
 
     const deadline = otjGoal?.deadline
       ? new Date(otjGoal.deadline)
@@ -206,10 +187,7 @@ export function OJTProgressSection() {
     if (onTrack) {
       return `On track \u2014 est. completion ${estimatedDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;
     }
-    const weeksLeft = Math.max(
-      1,
-      (deadline.getTime() - Date.now()) / (7 * 24 * 60 * 60 * 1000)
-    );
+    const weeksLeft = Math.max(1, (deadline.getTime() - Date.now()) / (7 * 24 * 60 * 60 * 1000));
     const neededRate = remainingHours / weeksLeft;
     return `Need ${neededRate.toFixed(1)}h/week to meet target`;
   }, [yearlyHours, yearlyTarget, insights.forecastData, otjGoal]);
@@ -237,13 +215,10 @@ export function OJTProgressSection() {
     const startOfWeek = new Date(now);
     startOfWeek.setDate(now.getDate() - ((now.getDay() + 6) % 7));
     startOfWeek.setHours(0, 0, 0, 0);
-    const weekEntries = allEntries.filter(
-      (e) => new Date(e.date) >= startOfWeek
-    );
+    const weekEntries = allEntries.filter((e) => new Date(e.date) >= startOfWeek);
     const sessionCount = weekEntries.length;
     const totalMins = weekEntries.reduce((sum, e) => sum + e.duration, 0);
-    const avgMins =
-      sessionCount > 0 ? Math.round(totalMins / sessionCount) : 0;
+    const avgMins = sessionCount > 0 ? Math.round(totalMins / sessionCount) : 0;
     return { sessionCount, avgMins };
   }, [entries]);
 
@@ -274,10 +249,7 @@ export function OJTProgressSection() {
 
   // Active goals (non-completed, non-cancelled)
   const activeGoals = useMemo(
-    () =>
-      goals.filter(
-        (g) => g.status !== 'completed' && g.status !== 'cancelled'
-      ),
+    () => goals.filter((g) => g.status !== 'completed' && g.status !== 'cancelled'),
     [goals]
   );
 
@@ -321,10 +293,7 @@ export function OJTProgressSection() {
   // Milestone celebrations
   useEffect(() => {
     if (yearlyHours <= 0) return;
-    const lastCelebrated = parseInt(
-      localStorage.getItem('ojt_last_milestone') || '0',
-      10
-    );
+    const lastCelebrated = parseInt(localStorage.getItem('ojt_last_milestone') || '0', 10);
     const milestoneValues = [50, 100, 150, 200, 250, 300, 350, 400];
     const reached = milestoneValues.filter((m) => yearlyHours >= m);
     const currentMilestone = reached.length > 0 ? reached[reached.length - 1] : 0;
@@ -464,10 +433,12 @@ export function OJTProgressSection() {
       return;
     }
 
-    const lines = unverified.slice(0, 10).map(
-      (e) =>
-        `- ${e.activity} (${(e.duration / 60).toFixed(1)}h) on ${new Date(e.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
-    );
+    const lines = unverified
+      .slice(0, 10)
+      .map(
+        (e) =>
+          `- ${e.activity} (${(e.duration / 60).toFixed(1)}h) on ${new Date(e.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
+      );
 
     const text = `OJT Verification Request\n\nHi, could you please verify my training sessions?\n\n${lines.join('\n')}${unverified.length > 10 ? `\n...and ${unverified.length - 10} more` : ''}\n\nThank you!`;
 
@@ -496,19 +467,13 @@ export function OJTProgressSection() {
       {/* ── 1. Header with streak badge ── */}
       <div className="flex items-start justify-between">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold text-foreground">
-            Off-the-Job Training
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Track your 20% off-the-job training hours
-          </p>
+          <h2 className="text-xl font-bold text-foreground">Off-the-Job Training</h2>
+          <p className="text-sm text-white">Track your 20% off-the-job training hours</p>
         </div>
         {insights.streak.current > 0 && (
           <div className="flex items-center gap-1.5 bg-orange-500/10 px-3 py-1.5 rounded-full">
             <Flame className="h-4 w-4 text-orange-500" />
-            <span className="text-sm font-bold text-orange-500">
-              {insights.streak.current}
-            </span>
+            <span className="text-sm font-bold text-orange-500">{insights.streak.current}</span>
           </div>
         )}
       </div>
@@ -520,12 +485,10 @@ export function OJTProgressSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <p className="text-sm text-muted-foreground">This Week</p>
+                <p className="text-sm text-white">This Week</p>
                 <p className="text-3xl font-bold text-foreground">
                   {weeklyHours.toFixed(1)}
-                  <span className="text-lg text-muted-foreground">
-                    /{weeklyTarget}h
-                  </span>
+                  <span className="text-lg text-white">/{weeklyTarget}h</span>
                 </p>
               </div>
               <div
@@ -561,7 +524,7 @@ export function OJTProgressSection() {
                   style={{ width: `${Math.min(weeklyPercent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 {weeklyPercent >= 100
                   ? 'Target achieved!'
                   : `${(weeklyTarget - weeklyHours).toFixed(1)}h remaining`}
@@ -575,12 +538,10 @@ export function OJTProgressSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <p className="text-sm text-muted-foreground">This Year</p>
+                <p className="text-sm text-white">This Year</p>
                 <p className="text-3xl font-bold text-foreground">
                   {yearlyHours}
-                  <span className="text-lg text-muted-foreground">
-                    /{yearlyTarget}h
-                  </span>
+                  <span className="text-lg text-white">/{yearlyTarget}h</span>
                 </p>
               </div>
               <div
@@ -616,9 +577,8 @@ export function OJTProgressSection() {
                   style={{ width: `${Math.min(yearlyPercent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
-                {yearlyPercent}% complete &bull; {yearlyTarget - yearlyHours}h
-                remaining
+              <p className="text-xs text-white">
+                {yearlyPercent}% complete &bull; {yearlyTarget - yearlyHours}h remaining
               </p>
               <p
                 className={cn(
@@ -638,8 +598,8 @@ export function OJTProgressSection() {
 
       {/* ── 3. Compliance forecast ── */}
       <div className="flex items-center gap-2 px-1">
-        <TrendingUp className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-        <p className="text-xs text-muted-foreground">
+        <TrendingUp className="h-3.5 w-3.5 text-white shrink-0" />
+        <p className="text-xs text-white">
           {insights.forecastData.weeklyRate > 0 && (
             <span className="text-foreground font-medium">
               {insights.forecastData.weeklyRate}h/week avg
@@ -707,10 +667,7 @@ export function OJTProgressSection() {
             </div>
             {/* Activity picker for timer */}
             <Select
-              value={
-                ACTIVITY_TYPES.find((t) => t.label === timerActivity)?.value ||
-                ''
-              }
+              value={ACTIVITY_TYPES.find((t) => t.label === timerActivity)?.value || ''}
               onValueChange={(value) => {
                 const type = ACTIVITY_TYPES.find((t) => t.value === value);
                 if (type) setTimerActivity(type.label);
@@ -721,11 +678,7 @@ export function OJTProgressSection() {
               </SelectTrigger>
               <SelectContent className="z-[100] bg-background border-border">
                 {ACTIVITY_TYPES.map((type) => (
-                  <SelectItem
-                    key={type.value}
-                    value={type.value}
-                    className="py-3"
-                  >
+                  <SelectItem key={type.value} value={type.value} className="py-3">
                     <span className="flex items-center gap-2">
                       <span>{type.icon}</span>
                       <span className="text-sm">{type.label}</span>
@@ -746,10 +699,8 @@ export function OJTProgressSection() {
             <div className="flex-1 min-w-0">
               <p className="text-sm text-foreground">
                 You usually do{' '}
-                <span className="font-medium">
-                  {insights.smartSuggestion.activity}
-                </span>{' '}
-                on {insights.smartSuggestion.dayName}s
+                <span className="font-medium">{insights.smartSuggestion.activity}</span> on{' '}
+                {insights.smartSuggestion.dayName}s
               </p>
             </div>
             <Button
@@ -772,20 +723,12 @@ export function OJTProgressSection() {
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
-          <ChartContainer
-            config={weeklyChartConfig}
-            className="aspect-auto h-[180px] w-full"
-          >
+          <ChartContainer config={weeklyChartConfig} className="aspect-auto h-[180px] w-full">
             <BarChart
               data={insights.weeklyChartData}
               margin={{ top: 20, right: 8, bottom: 0, left: -24 }}
             >
-              <XAxis
-                dataKey="label"
-                tick={{ fontSize: 11 }}
-                tickLine={false}
-                axisLine={false}
-              />
+              <XAxis dataKey="label" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
               <ReferenceLine
                 y={7.5}
                 stroke="hsl(var(--muted-foreground))"
@@ -794,18 +737,13 @@ export function OJTProgressSection() {
               />
               <Bar dataKey="hours" radius={[6, 6, 0, 0]} maxBarSize={48}>
                 {insights.weeklyChartData.map((entry, index) => (
-                  <Cell
-                    key={index}
-                    fill={entry.hours >= 7.5 ? '#22C55E' : '#EAB308'}
-                  />
+                  <Cell key={index} fill={entry.hours >= 7.5 ? '#22C55E' : '#EAB308'} />
                 ))}
               </Bar>
-              <ChartTooltip
-                content={<ChartTooltipContent hideLabel />}
-              />
+              <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             </BarChart>
           </ChartContainer>
-          <p className="text-[10px] text-muted-foreground text-center mt-1">
+          <p className="text-[10px] text-white text-center mt-1">
             Dashed line = 7.5h weekly target
           </p>
         </CardContent>
@@ -815,40 +753,33 @@ export function OJTProgressSection() {
       <div className="grid grid-cols-3 gap-2">
         <Card className="bg-card border-border">
           <CardContent className="p-2.5 text-center">
-            <p className="text-lg font-bold text-foreground">
-              {summaryStats.sessionCount}
-            </p>
-            <p className="text-[10px] text-muted-foreground">This week</p>
+            <p className="text-lg font-bold text-foreground">{summaryStats.sessionCount}</p>
+            <p className="text-[10px] text-white">This week</p>
           </CardContent>
         </Card>
         <Card className="bg-card border-border">
           <CardContent className="p-2.5 text-center">
             <p className="text-lg font-bold text-foreground">
-              {summaryStats.avgMins > 0
-                ? `${(summaryStats.avgMins / 60).toFixed(1)}h`
-                : '\u2014'}
+              {summaryStats.avgMins > 0 ? `${(summaryStats.avgMins / 60).toFixed(1)}h` : '\u2014'}
             </p>
-            <p className="text-[10px] text-muted-foreground">Avg session</p>
+            <p className="text-[10px] text-white">Avg session</p>
           </CardContent>
         </Card>
         <Card className="bg-card border-border">
           <CardContent className="p-2.5 text-center">
-            <p className="text-lg font-bold text-foreground">
-              {verificationStats.rate}%
-            </p>
-            <p className="text-[10px] text-muted-foreground">Verified</p>
-            {verificationStats.total > 0 &&
-              verificationStats.rate < 100 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleRemindSupervisor}
-                  className="h-11 px-2 text-xs text-elec-yellow font-medium flex items-center gap-1 mx-auto mt-1 touch-manipulation active:scale-95"
-                >
-                  <Share2 className="h-3.5 w-3.5" />
-                  Remind
-                </Button>
-              )}
+            <p className="text-lg font-bold text-foreground">{verificationStats.rate}%</p>
+            <p className="text-[10px] text-white">Verified</p>
+            {verificationStats.total > 0 && verificationStats.rate < 100 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleRemindSupervisor}
+                className="h-11 px-2 text-xs text-elec-yellow font-medium flex items-center gap-1 mx-auto mt-1 touch-manipulation active:scale-95"
+              >
+                <Share2 className="h-3.5 w-3.5" />
+                Remind
+              </Button>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -857,9 +788,7 @@ export function OJTProgressSection() {
       {insights.categoryData.length > 0 && (
         <Card className="bg-card border-border">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base font-semibold">
-              Training Mix
-            </CardTitle>
+            <CardTitle className="text-base font-semibold">Training Mix</CardTitle>
           </CardHeader>
           <CardContent className="pt-0">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
@@ -882,9 +811,7 @@ export function OJTProgressSection() {
                       <Cell key={i} fill={cat.colour} />
                     ))}
                   </Pie>
-                  <ChartTooltip
-                    content={<ChartTooltipContent nameKey="name" />}
-                  />
+                  <ChartTooltip content={<ChartTooltipContent nameKey="name" />} />
                 </PieChart>
               </ChartContainer>
 
@@ -896,15 +823,11 @@ export function OJTProgressSection() {
                       className="w-2.5 h-2.5 rounded-sm shrink-0"
                       style={{ backgroundColor: cat.colour }}
                     />
-                    <span className="text-xs text-foreground truncate flex-1">
-                      {cat.name}
-                    </span>
-                    <span className="text-xs text-muted-foreground tabular-nums">
+                    <span className="text-xs text-foreground truncate flex-1">{cat.name}</span>
+                    <span className="text-xs text-white tabular-nums">
                       {cat.percentage}%
                     </span>
-                    <span className="text-xs text-muted-foreground tabular-nums">
-                      {cat.hours}h
-                    </span>
+                    <span className="text-xs text-white tabular-nums">{cat.hours}h</span>
                   </div>
                 ))}
               </div>
@@ -928,14 +851,13 @@ export function OJTProgressSection() {
                     ? `${insights.streak.current} day streak`
                     : 'No active streak'}
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   {insights.streak.isActiveToday
                     ? 'Logged today'
                     : insights.streak.current > 0
                       ? 'Log today to continue'
                       : 'Log today to start one'}
-                  {insights.streak.longest > 0 &&
-                    ` \u00B7 Best: ${insights.streak.longest} days`}
+                  {insights.streak.longest > 0 && ` \u00B7 Best: ${insights.streak.longest} days`}
                 </p>
               </div>
             </div>
@@ -944,12 +866,12 @@ export function OJTProgressSection() {
           {/* Milestones */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+              <p className="text-xs font-medium text-white flex items-center gap-1.5">
                 <Award className="h-3.5 w-3.5" />
                 Milestones
               </p>
               {insights.nextMilestone && (
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   Next: {insights.nextMilestone.label}
                 </p>
               )}
@@ -967,10 +889,8 @@ export function OJTProgressSection() {
               ))}
             </div>
             <div className="flex justify-between mt-1">
-              <span className="text-[10px] text-muted-foreground">0h</span>
-              <span className="text-[10px] text-muted-foreground">
-                {yearlyTarget}h
-              </span>
+              <span className="text-[10px] text-white">0h</span>
+              <span className="text-[10px] text-white">{yearlyTarget}h</span>
             </div>
           </div>
         </CardContent>
@@ -987,17 +907,14 @@ export function OJTProgressSection() {
           </CardHeader>
           <CardContent className="pt-0 space-y-3">
             {activeGoals.slice(0, 3).map((goal) => {
-              const progress = goal.target_value > 0
-                ? Math.round(
-                    ((goal.current_value || 0) / goal.target_value) * 100
-                  )
-                : 0;
+              const progress =
+                goal.target_value > 0
+                  ? Math.round(((goal.current_value || 0) / goal.target_value) * 100)
+                  : 0;
               return (
                 <div key={goal.id} className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {goal.title}
-                    </p>
+                    <p className="text-sm font-medium text-foreground truncate">{goal.title}</p>
                     <div className="flex items-center gap-2 shrink-0">
                       {goal.priority === 'high' && (
                         <Badge
@@ -1007,15 +924,14 @@ export function OJTProgressSection() {
                           High
                         </Badge>
                       )}
-                      <span className="text-xs text-muted-foreground tabular-nums">
-                        {goal.current_value || 0}/{goal.target_value}{' '}
-                        {goal.unit}
+                      <span className="text-xs text-white tabular-nums">
+                        {goal.current_value || 0}/{goal.target_value} {goal.unit}
                       </span>
                     </div>
                   </div>
                   <Progress value={Math.min(progress, 100)} className="h-1.5" />
                   {goal.deadline && (
-                    <p className="text-[10px] text-muted-foreground">
+                    <p className="text-[10px] text-white">
                       Due{' '}
                       {new Date(goal.deadline).toLocaleDateString('en-GB', {
                         day: 'numeric',
@@ -1039,12 +955,10 @@ export function OJTProgressSection() {
               onClick={() => setShowMonthly(!showMonthly)}
               className="w-full flex items-center justify-between touch-manipulation min-h-[44px]"
             >
-              <CardTitle className="text-base font-semibold">
-                Monthly History
-              </CardTitle>
+              <CardTitle className="text-base font-semibold">Monthly History</CardTitle>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-muted-foreground transition-transform',
+                  'h-4 w-4 text-white transition-transform',
                   showMonthly && 'rotate-180'
                 )}
               />
@@ -1058,13 +972,10 @@ export function OJTProgressSection() {
                   className="flex items-center gap-3 py-2 px-1 border-b border-border last:border-0"
                 >
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">
-                      {month.label}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-sm font-medium text-foreground">{month.label}</p>
+                    <p className="text-xs text-white">
                       {month.sessionCount} session
-                      {month.sessionCount !== 1 ? 's' : ''} &middot;{' '}
-                      {month.topCategory}
+                      {month.sessionCount !== 1 ? 's' : ''} &middot; {month.topCategory}
                     </p>
                   </div>
                   <p className="text-sm font-bold text-foreground tabular-nums shrink-0">
@@ -1080,18 +991,14 @@ export function OJTProgressSection() {
       {/* ── 13. Recent sessions — day-grouped ── */}
       <Card className="bg-card border-border">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold">
-            Recent Sessions
-          </CardTitle>
+          <CardTitle className="text-base font-semibold">Recent Sessions</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           {groupedSessions.length === 0 ? (
             <div className="text-center py-8">
-              <Clock className="h-10 w-10 text-muted-foreground/30 mx-auto mb-2" />
-              <p className="text-sm font-medium text-foreground">
-                No sessions logged
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <Clock className="h-10 w-10 text-white/20 mx-auto mb-2" />
+              <p className="text-sm font-medium text-foreground">No sessions logged</p>
+              <p className="text-xs text-white mt-1">
                 Start tracking your off-the-job training
               </p>
               <Button
@@ -1125,21 +1032,14 @@ export function OJTProgressSection() {
                       className="w-full flex items-center gap-3 py-3 px-2 rounded-lg hover:bg-muted/50 touch-manipulation active:bg-muted/70 transition-colors"
                     >
                       <div className="flex items-center gap-2">
-                        <div
-                          className={cn(
-                            'w-2 h-2 rounded-full shrink-0',
-                            dayDot
-                          )}
-                        />
+                        <div className={cn('w-2 h-2 rounded-full shrink-0', dayDot)} />
                         <div className="p-2 rounded-lg bg-muted">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <Calendar className="h-4 w-4 text-white" />
                         </div>
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <p className="text-sm font-medium text-foreground">
-                          {group.label}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-sm font-medium text-foreground">{group.label}</p>
+                        <p className="text-xs text-white">
                           {group.entries.length} session
                           {group.entries.length !== 1 ? 's' : ''}
                         </p>
@@ -1151,7 +1051,7 @@ export function OJTProgressSection() {
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-muted-foreground transition-transform',
+                          'h-4 w-4 text-white transition-transform',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -1185,25 +1085,17 @@ export function OJTProgressSection() {
             {upcomingAssessments.slice(0, 4).map((assessment) => {
               const due = new Date(assessment.due_date);
               const now = new Date();
-              const daysUntil = Math.ceil(
-                (due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
-              );
+              const daysUntil = Math.ceil((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
               const isOverdue = daysUntil < 0;
 
               return (
-                <div
-                  key={assessment.id}
-                  className="flex items-center gap-3 py-2"
-                >
+                <div key={assessment.id} className="flex items-center gap-3 py-2">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">
                       {assessment.title}
                     </p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <Badge
-                        variant="outline"
-                        className="text-[10px] capitalize"
-                      >
+                      <Badge variant="outline" className="text-[10px] capitalize">
                         {assessment.type}
                       </Badge>
                       <span
@@ -1213,7 +1105,7 @@ export function OJTProgressSection() {
                             ? 'text-red-400 font-medium'
                             : daysUntil <= 3
                               ? 'text-orange-400'
-                              : 'text-muted-foreground'
+                              : 'text-white'
                         )}
                       >
                         {isOverdue
@@ -1234,13 +1126,13 @@ export function OJTProgressSection() {
       {/* ── 15. What counts as OJT? ── */}
       <Card className="border-border bg-muted/30">
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm text-muted-foreground flex items-center gap-1.5">
+          <CardTitle className="text-sm text-white flex items-center gap-1.5">
             <Info className="h-3.5 w-3.5" />
             What counts as off-the-job training?
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="text-xs text-muted-foreground space-y-1">
+          <ul className="text-xs text-white space-y-1 list-disc pl-4">
             <li>College / training provider sessions</li>
             <li>Online learning and courses</li>
             <li>Shadowing and mentoring</li>
@@ -1248,7 +1140,7 @@ export function OJTProgressSection() {
             <li>Written assignments and projects</li>
             <li>Industry visits and events</li>
           </ul>
-          <p className="text-[10px] text-muted-foreground mt-2">
+          <p className="text-[10px] text-white mt-2">
             Must be at least 20% of your working hours (ESFA funding rules)
           </p>
         </CardContent>
@@ -1272,7 +1164,7 @@ export function OJTProgressSection() {
               <SheetTitle className="text-lg font-bold text-foreground">
                 Log Training Time
               </SheetTitle>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Record your off-the-job training hours
               </p>
             </SheetHeader>
@@ -1289,10 +1181,8 @@ export function OJTProgressSection() {
                   <Zap className="h-4 w-4 text-elec-yellow shrink-0" />
                   <span className="text-sm text-foreground text-left flex-1">
                     Use suggestion:{' '}
-                    <span className="font-medium">
-                      {insights.smartSuggestion.activity}
-                    </span>{' '}
-                    ({(insights.smartSuggestion.duration / 60).toFixed(1)}h)
+                    <span className="font-medium">{insights.smartSuggestion.activity}</span> (
+                    {(insights.smartSuggestion.duration / 60).toFixed(1)}h)
                   </span>
                   <ChevronRight className="h-4 w-4 text-elec-yellow shrink-0" />
                 </button>
@@ -1301,16 +1191,12 @@ export function OJTProgressSection() {
               {/* Activity Type */}
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-elec-yellow/60 pl-3">
-                  <span className="text-sm font-semibold text-foreground">
-                    Activity Type
-                  </span>
+                  <span className="text-sm font-semibold text-foreground">Activity Type</span>
                 </div>
                 <Select
                   value={logData.type}
                   onValueChange={(value) => {
-                    const type = ACTIVITY_TYPES.find(
-                      (t) => t.value === value
-                    );
+                    const type = ACTIVITY_TYPES.find((t) => t.value === value);
                     setLogData({
                       ...logData,
                       type: value,
@@ -1323,11 +1209,7 @@ export function OJTProgressSection() {
                   </SelectTrigger>
                   <SelectContent className="z-[100] bg-background border-border">
                     {ACTIVITY_TYPES.map((type) => (
-                      <SelectItem
-                        key={type.value}
-                        value={type.value}
-                        className="py-3"
-                      >
+                      <SelectItem key={type.value} value={type.value} className="py-3">
                         <span className="flex items-center gap-3">
                           <span className="text-lg">{type.icon}</span>
                           <span className="text-sm">{type.label}</span>
@@ -1341,16 +1223,12 @@ export function OJTProgressSection() {
               {/* Description */}
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-blue-500/60 pl-3">
-                  <span className="text-sm font-semibold text-foreground">
-                    Description
-                  </span>
+                  <span className="text-sm font-semibold text-foreground">Description</span>
                 </div>
                 <Input
                   placeholder="What did you work on?"
                   value={logData.activity}
-                  onChange={(e) =>
-                    setLogData({ ...logData, activity: e.target.value })
-                  }
+                  onChange={(e) => setLogData({ ...logData, activity: e.target.value })}
                   className="h-12 text-base touch-manipulation bg-muted/50 border-border focus:border-elec-yellow focus:ring-elec-yellow"
                 />
               </div>
@@ -1359,9 +1237,7 @@ export function OJTProgressSection() {
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-purple-500/60 pl-3">
                   <Clock className="h-3.5 w-3.5 text-purple-400" />
-                  <span className="text-sm font-semibold text-foreground">
-                    Duration
-                  </span>
+                  <span className="text-sm font-semibold text-foreground">Duration</span>
                 </div>
 
                 {/* Preset chips */}
@@ -1370,9 +1246,7 @@ export function OJTProgressSection() {
                     <button
                       key={preset.value}
                       type="button"
-                      onClick={() =>
-                        setLogData({ ...logData, duration: preset.value })
-                      }
+                      onClick={() => setLogData({ ...logData, duration: preset.value })}
                       className={cn(
                         'h-11 px-4 rounded-xl text-sm font-medium touch-manipulation active:scale-95 transition-all border',
                         logData.duration === preset.value
@@ -1387,9 +1261,7 @@ export function OJTProgressSection() {
 
                 {/* Custom input */}
                 <div className="flex items-center gap-3">
-                  <span className="text-xs text-muted-foreground whitespace-nowrap">
-                    or enter:
-                  </span>
+                  <span className="text-xs text-white whitespace-nowrap">or enter:</span>
                   <Input
                     type="number"
                     step="0.5"
@@ -1397,12 +1269,10 @@ export function OJTProgressSection() {
                     inputMode="decimal"
                     placeholder="Custom hours"
                     value={logData.duration}
-                    onChange={(e) =>
-                      setLogData({ ...logData, duration: e.target.value })
-                    }
+                    onChange={(e) => setLogData({ ...logData, duration: e.target.value })}
                     className="h-11 text-base touch-manipulation bg-muted/50 border-border focus:border-elec-yellow focus:ring-elec-yellow flex-1"
                   />
-                  <span className="text-sm text-muted-foreground">hours</span>
+                  <span className="text-sm text-white">hours</span>
                 </div>
               </div>
 
@@ -1410,16 +1280,12 @@ export function OJTProgressSection() {
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-amber-500/60 pl-3">
                   <Calendar className="h-3.5 w-3.5 text-amber-400" />
-                  <span className="text-sm font-semibold text-foreground">
-                    Date
-                  </span>
+                  <span className="text-sm font-semibold text-foreground">Date</span>
                 </div>
                 <Input
                   type="date"
                   value={logData.date}
-                  onChange={(e) =>
-                    setLogData({ ...logData, date: e.target.value })
-                  }
+                  onChange={(e) => setLogData({ ...logData, date: e.target.value })}
                   className="h-12 text-base touch-manipulation bg-muted/50 border-border focus:border-elec-yellow focus:ring-elec-yellow w-full"
                 />
               </div>
@@ -1431,26 +1297,20 @@ export function OJTProgressSection() {
                   <span className="text-sm font-semibold text-foreground">
                     Location & Supervisor
                   </span>
-                  <span className="text-xs text-muted-foreground">
-                    (optional)
-                  </span>
+                  <span className="text-xs text-white">(optional)</span>
                 </div>
                 <Input
                   placeholder="e.g., College campus, Sellafield"
                   value={logData.location}
-                  onChange={(e) =>
-                    setLogData({ ...logData, location: e.target.value })
-                  }
+                  onChange={(e) => setLogData({ ...logData, location: e.target.value })}
                   className="h-12 text-base touch-manipulation bg-muted/50 border-border focus:border-elec-yellow focus:ring-elec-yellow"
                 />
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     placeholder="Supervisor name"
                     value={logData.supervisor}
-                    onChange={(e) =>
-                      setLogData({ ...logData, supervisor: e.target.value })
-                    }
+                    onChange={(e) => setLogData({ ...logData, supervisor: e.target.value })}
                     className="h-12 text-base touch-manipulation bg-muted/50 border-border focus:border-elec-yellow focus:ring-elec-yellow pl-10"
                   />
                 </div>
@@ -1459,19 +1319,13 @@ export function OJTProgressSection() {
               {/* Notes */}
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-white/20 pl-3">
-                  <span className="text-sm font-semibold text-foreground">
-                    Notes
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    (optional)
-                  </span>
+                  <span className="text-sm font-semibold text-foreground">Notes</span>
+                  <span className="text-xs text-white">(optional)</span>
                 </div>
                 <Textarea
                   placeholder="Any additional details about this training session..."
                   value={logData.notes}
-                  onChange={(e) =>
-                    setLogData({ ...logData, notes: e.target.value })
-                  }
+                  onChange={(e) => setLogData({ ...logData, notes: e.target.value })}
                   rows={3}
                   className="text-base touch-manipulation bg-muted/50 border-border focus:border-elec-yellow focus:ring-elec-yellow min-h-[80px]"
                 />

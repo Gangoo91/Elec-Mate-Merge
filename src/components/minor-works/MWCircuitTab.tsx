@@ -45,14 +45,14 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
   const [openSections, setOpenSections] = useState({
     circuit: true,
     protection: true,
-    cable: true
+    cable: true,
   });
 
   // Helper for conditional section card styling - no card on mobile, full card on desktop
-  const sectionCardClass = cn(isMobile ? "" : "eicr-section-card");
+  const sectionCardClass = cn(isMobile ? '' : 'eicr-section-card');
 
   const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   // Handle smart defaults application
@@ -101,7 +101,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     if (!formData.overcurrentDeviceBsEn) return PROTECTIVE_DEVICE_TYPES;
     const allowedTypes = STANDARD_TO_DEVICE_TYPES[formData.overcurrentDeviceBsEn];
     if (!allowedTypes || allowedTypes.length === 0) return PROTECTIVE_DEVICE_TYPES;
-    return PROTECTIVE_DEVICE_TYPES.filter(d => allowedTypes.includes(d.value));
+    return PROTECTIVE_DEVICE_TYPES.filter((d) => allowedTypes.includes(d.value));
   }, [formData.overcurrentDeviceBsEn]);
 
   // Get filtered ratings based on selected device type
@@ -110,7 +110,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     const deviceKey = getDeviceCategory(formData.protectiveDeviceType);
     const allowedRatings = DEVICE_TYPE_RATINGS[deviceKey];
     if (!allowedRatings) return DEVICE_RATINGS;
-    return DEVICE_RATINGS.filter(r => allowedRatings.includes(parseInt(r.value, 10)));
+    return DEVICE_RATINGS.filter((r) => allowedRatings.includes(parseInt(r.value, 10)));
   }, [formData.protectiveDeviceType]);
 
   // Get filtered kA ratings based on selected device type
@@ -119,7 +119,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     const deviceKey = getDeviceCategory(formData.protectiveDeviceType);
     const allowedKa = DEVICE_TYPE_KA_RATINGS[deviceKey];
     if (!allowedKa) return BREAKING_CAPACITIES;
-    return BREAKING_CAPACITIES.filter(k => allowedKa.includes(parseFloat(k.value)));
+    return BREAKING_CAPACITIES.filter((k) => allowedKa.includes(parseFloat(k.value)));
   }, [formData.protectiveDeviceType]);
 
   // Get filtered CPC sizes based on live conductor (BS 7671 Table 54.7)
@@ -137,7 +137,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     // But always show at least up to 16mm² as minimum practical range
     const maxCpc = Math.max(liveSize, 16);
 
-    return CONDUCTOR_SIZES.filter(o => parseFloat(o.value) <= maxCpc);
+    return CONDUCTOR_SIZES.filter((o) => parseFloat(o.value) <= maxCpc);
   }, [formData.liveConductorSize]);
 
   // Handle BS EN standard change with cascading reset
@@ -211,7 +211,6 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     value={formData.distributionBoard || ''}
                     onChange={(e) => onUpdate('distributionBoard', e.target.value)}
                     placeholder="e.g., Main DB, Sub DB"
-                    
                   />
                 </div>
                 <div className="space-y-2">
@@ -220,7 +219,6 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     value={formData.dbLocationType || ''}
                     onChange={(e) => onUpdate('dbLocationType', e.target.value)}
                     placeholder="e.g., Under stairs, Split-load CU"
-                    
                   />
                 </div>
               </div>
@@ -232,7 +230,10 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     value={formData.circuitDesignation || ''}
                     onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
                     placeholder="e.g., Circuit 1, MCB 5"
-                    className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500", !formData.circuitDesignation && "border-red-500/50")}
+                    className={cn(
+                      'h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500',
+                      !formData.circuitDesignation && 'border-red-500/50'
+                    )}
                   />
                 </div>
                 <div className="space-y-2">
@@ -241,19 +242,23 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     value={formData.circuitDescription || ''}
                     onChange={(e) => onUpdate('circuitDescription', e.target.value)}
                     placeholder="e.g., Kitchen sockets, Lighting circuit"
-                    
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label className="text-sm">Circuit Type</Label>
-                <Select value={formData.circuitType || 'radial'} onValueChange={(v) => onUpdate('circuitType', v === '__clear__' ? '' : v)}>
+                <Select
+                  value={formData.circuitType || 'radial'}
+                  onValueChange={(v) => onUpdate('circuitType', v === '__clear__' ? '' : v)}
+                >
                   <SelectTrigger className="">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                    <SelectItem value="__clear__">
+                      <span className="text-muted-foreground">Clear selection</span>
+                    </SelectItem>
                     {CIRCUIT_TYPES.map((opt) => (
                       <SelectItem key={opt.value} value={opt.value}>
                         {opt.label}
@@ -269,7 +274,10 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
 
       {/* Protective Device */}
       <div className={sectionCardClass}>
-        <Collapsible open={openSections.protection} onOpenChange={() => toggleSection('protection')}>
+        <Collapsible
+          open={openSections.protection}
+          onOpenChange={() => toggleSection('protection')}
+        >
           <CollapsibleTrigger className="w-full">
             <SectionHeader
               title="Protective Device"
@@ -283,12 +291,17 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">BS (EN) Standard</Label>
-                  <Select value={formData.overcurrentDeviceBsEn || ''} onValueChange={handleStandardChange}>
+                  <Select
+                    value={formData.overcurrentDeviceBsEn || ''}
+                    onValueChange={handleStandardChange}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {BS_EN_STANDARDS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -299,15 +312,19 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Device Type *</Label>
-                  <Select value={formData.protectiveDeviceType || ''} onValueChange={handleDeviceTypeChange}>
-                    <SelectTrigger className={cn(
-                      "",
-                      !formData.protectiveDeviceType && "border-red-500/50"
-                    )}>
+                  <Select
+                    value={formData.protectiveDeviceType || ''}
+                    onValueChange={handleDeviceTypeChange}
+                  >
+                    <SelectTrigger
+                      className={cn('', !formData.protectiveDeviceType && 'border-red-500/50')}
+                    >
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {filteredDeviceTypes.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -315,23 +332,30 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       ))}
                     </SelectContent>
                   </Select>
-                  {formData.overcurrentDeviceBsEn && filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Filtered for {formData.overcurrentDeviceBsEn}
-                    </p>
-                  )}
+                  {formData.overcurrentDeviceBsEn &&
+                    filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Filtered for {formData.overcurrentDeviceBsEn}
+                      </p>
+                    )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Rating (A) *</Label>
-                  <Select value={formData.protectiveDeviceRating || ''} onValueChange={(v) => onUpdate('protectiveDeviceRating', v === '__clear__' ? '' : v)}>
-                    <SelectTrigger className={cn(
-                      "",
-                      !formData.protectiveDeviceRating && "border-red-500/50"
-                    )}>
+                  <Select
+                    value={formData.protectiveDeviceRating || ''}
+                    onValueChange={(v) =>
+                      onUpdate('protectiveDeviceRating', v === '__clear__' ? '' : v)
+                    }
+                  >
+                    <SelectTrigger
+                      className={cn('', !formData.protectiveDeviceRating && 'border-red-500/50')}
+                    >
                       <SelectValue placeholder="Rating" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {filteredRatings.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -339,20 +363,31 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       ))}
                     </SelectContent>
                   </Select>
-                  {formData.protectiveDeviceType && filteredRatings.length < DEVICE_RATINGS.length && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      BS 7671 ratings for {PROTECTIVE_DEVICE_TYPES.find(d => d.value === formData.protectiveDeviceType)?.label || formData.protectiveDeviceType}
-                    </p>
-                  )}
+                  {formData.protectiveDeviceType &&
+                    filteredRatings.length < DEVICE_RATINGS.length && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        BS 7671 ratings for{' '}
+                        {PROTECTIVE_DEVICE_TYPES.find(
+                          (d) => d.value === formData.protectiveDeviceType
+                        )?.label || formData.protectiveDeviceType}
+                      </p>
+                    )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Breaking Capacity (kA)</Label>
-                  <Select value={formData.protectiveDeviceKaRating || ''} onValueChange={(v) => onUpdate('protectiveDeviceKaRating', v === '__clear__' ? '' : v)}>
+                  <Select
+                    value={formData.protectiveDeviceKaRating || ''}
+                    onValueChange={(v) =>
+                      onUpdate('protectiveDeviceKaRating', v === '__clear__' ? '' : v)
+                    }
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="kA rating" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {filteredKaRatings.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -360,11 +395,15 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       ))}
                     </SelectContent>
                   </Select>
-                  {formData.protectiveDeviceType && filteredKaRatings.length < BREAKING_CAPACITIES.length && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Typical for {PROTECTIVE_DEVICE_TYPES.find(d => d.value === formData.protectiveDeviceType)?.label || formData.protectiveDeviceType}
-                    </p>
-                  )}
+                  {formData.protectiveDeviceType &&
+                    filteredKaRatings.length < BREAKING_CAPACITIES.length && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Typical for{' '}
+                        {PROTECTIVE_DEVICE_TYPES.find(
+                          (d) => d.value === formData.protectiveDeviceType
+                        )?.label || formData.protectiveDeviceType}
+                      </p>
+                    )}
                 </div>
               </div>
 
@@ -376,16 +415,21 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     { id: 'protectionRcd', label: 'RCD' },
                     { id: 'protectionRcbo', label: 'RCBO' },
                     { id: 'protectionAfdd', label: 'AFDD' },
-                    { id: 'protectionSpd', label: 'SPD' }
+                    { id: 'protectionSpd', label: 'SPD' },
                   ].map((item) => (
-                    <div key={item.id} className="flex items-center gap-2 p-3 min-h-[44px] rounded-lg bg-card/50">
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-2 p-3 min-h-[44px] rounded-lg bg-card/50"
+                    >
                       <Checkbox
                         id={item.id}
                         checked={formData[item.id] || false}
                         onCheckedChange={(c) => onUpdate(item.id, c)}
                         className="h-5 w-5 border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500 touch-manipulation"
                       />
-                      <Label htmlFor={item.id} className="text-sm cursor-pointer">{item.label}</Label>
+                      <Label htmlFor={item.id} className="text-sm cursor-pointer">
+                        {item.label}
+                      </Label>
                     </div>
                   ))}
                 </div>
@@ -399,17 +443,26 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </div>
                   <div className="p-4 space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
-                      <Select value={formData.rcdBsEn || ''} onValueChange={(v) => onUpdate('rcdBsEn', v === '__clear__' ? '' : v)}>
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        BS (EN) Standard
+                      </label>
+                      <Select
+                        value={formData.rcdBsEn || ''}
+                        onValueChange={(v) => onUpdate('rcdBsEn', v === '__clear__' ? '' : v)}
+                      >
                         <SelectTrigger className="">
                           <SelectValue placeholder="Select standard" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                          <SelectItem value="__clear__">
+                            <span className="text-muted-foreground">Clear selection</span>
+                          </SelectItem>
                           <SelectItem value="BS EN 61008">
                             <div className="flex flex-col">
                               <span>BS EN 61008</span>
-                              <span className="text-xs text-white/50">RCDs without overcurrent protection</span>
+                              <span className="text-xs text-white/50">
+                                RCDs without overcurrent protection
+                              </span>
                             </div>
                           </SelectItem>
                           <SelectItem value="BS EN 61009">
@@ -429,13 +482,20 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Type</label>
-                        <Select value={formData.rcdType || ''} onValueChange={(v) => onUpdate('rcdType', v === '__clear__' ? '' : v)}>
+                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                          Type
+                        </label>
+                        <Select
+                          value={formData.rcdType || ''}
+                          onValueChange={(v) => onUpdate('rcdType', v === '__clear__' ? '' : v)}
+                        >
                           <SelectTrigger className="">
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                            <SelectItem value="__clear__">
+                              <span className="text-muted-foreground">Clear selection</span>
+                            </SelectItem>
                             {RCD_TYPES.map((opt) => (
                               <SelectItem key={opt.value} value={opt.value}>
                                 {opt.label}
@@ -445,7 +505,9 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                         </Select>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Rating (A)</label>
+                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                          Rating (A)
+                        </label>
                         <Input
                           type="number"
                           value={formData.rcdRatingAmps || ''}
@@ -456,13 +518,20 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       </div>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">IΔn (mA)</label>
-                      <Select value={formData.rcdIdn || ''} onValueChange={(v) => onUpdate('rcdIdn', v === '__clear__' ? '' : v)}>
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        IΔn (mA)
+                      </label>
+                      <Select
+                        value={formData.rcdIdn || ''}
+                        onValueChange={(v) => onUpdate('rcdIdn', v === '__clear__' ? '' : v)}
+                      >
                         <SelectTrigger className="">
                           <SelectValue placeholder="Select rating" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                          <SelectItem value="__clear__">
+                            <span className="text-muted-foreground">Clear selection</span>
+                          </SelectItem>
                           {RCD_RATINGS.map((opt) => (
                             <SelectItem key={opt.value} value={opt.value}>
                               {opt.label}
@@ -483,24 +552,35 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </div>
                   <div className="p-4 space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
-                      <Select value={formData.afddBsEn || ''} onValueChange={(v) => onUpdate('afddBsEn', v === '__clear__' ? '' : v)}>
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        BS (EN) Standard
+                      </label>
+                      <Select
+                        value={formData.afddBsEn || ''}
+                        onValueChange={(v) => onUpdate('afddBsEn', v === '__clear__' ? '' : v)}
+                      >
                         <SelectTrigger className="">
                           <SelectValue placeholder="Select standard" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                          <SelectItem value="__clear__">
+                            <span className="text-muted-foreground">Clear selection</span>
+                          </SelectItem>
                           <SelectItem value="BS EN 62606">
                             <div className="flex flex-col">
                               <span>BS EN 62606</span>
-                              <span className="text-xs text-white/50">Arc Fault Detection Devices</span>
+                              <span className="text-xs text-white/50">
+                                Arc Fault Detection Devices
+                              </span>
                             </div>
                           </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Rating (A)</label>
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        Rating (A)
+                      </label>
                       <Input
                         type="number"
                         value={formData.afddRating || ''}
@@ -521,40 +601,60 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </div>
                   <div className="p-4 space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
-                      <Select value={formData.spdBsEn || ''} onValueChange={(v) => onUpdate('spdBsEn', v === '__clear__' ? '' : v)}>
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        BS (EN) Standard
+                      </label>
+                      <Select
+                        value={formData.spdBsEn || ''}
+                        onValueChange={(v) => onUpdate('spdBsEn', v === '__clear__' ? '' : v)}
+                      >
                         <SelectTrigger className="">
                           <SelectValue placeholder="Select standard" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                          <SelectItem value="__clear__">
+                            <span className="text-muted-foreground">Clear selection</span>
+                          </SelectItem>
                           <SelectItem value="BS EN 61643-11">
                             <div className="flex flex-col">
                               <span>BS EN 61643-11</span>
-                              <span className="text-xs text-white/50">Surge Protective Devices</span>
+                              <span className="text-xs text-white/50">
+                                Surge Protective Devices
+                              </span>
                             </div>
                           </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Type</label>
-                      <Select value={formData.spdType || ''} onValueChange={(v) => onUpdate('spdType', v === '__clear__' ? '' : v)}>
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        Type
+                      </label>
+                      <Select
+                        value={formData.spdType || ''}
+                        onValueChange={(v) => onUpdate('spdType', v === '__clear__' ? '' : v)}
+                      >
                         <SelectTrigger className="">
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                          <SelectItem value="__clear__">
+                            <span className="text-muted-foreground">Clear selection</span>
+                          </SelectItem>
                           <SelectItem value="1">
                             <div className="flex flex-col">
                               <span>Type 1</span>
-                              <span className="text-xs text-white/50">Lightning current arrestor</span>
+                              <span className="text-xs text-white/50">
+                                Lightning current arrestor
+                              </span>
                             </div>
                           </SelectItem>
                           <SelectItem value="2">
                             <div className="flex flex-col">
                               <span>Type 2</span>
-                              <span className="text-xs text-white/50">Overvoltage limiting device</span>
+                              <span className="text-xs text-white/50">
+                                Overvoltage limiting device
+                              </span>
                             </div>
                           </SelectItem>
                           <SelectItem value="3">
@@ -602,15 +702,19 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Live Conductor Size *</Label>
-                  <Select value={formData.liveConductorSize || ''} onValueChange={(v) => onUpdate('liveConductorSize', v === '__clear__' ? '' : v)}>
-                    <SelectTrigger className={cn(
-                      "",
-                      !formData.liveConductorSize && "border-red-500/50"
-                    )}>
+                  <Select
+                    value={formData.liveConductorSize || ''}
+                    onValueChange={(v) => onUpdate('liveConductorSize', v === '__clear__' ? '' : v)}
+                  >
+                    <SelectTrigger
+                      className={cn('', !formData.liveConductorSize && 'border-red-500/50')}
+                    >
                       <SelectValue placeholder="Size" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {CONDUCTOR_SIZES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -621,12 +725,17 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">CPC Size</Label>
-                  <Select value={formData.cpcSize || ''} onValueChange={(v) => onUpdate('cpcSize', v === '__clear__' ? '' : v)}>
+                  <Select
+                    value={formData.cpcSize || ''}
+                    onValueChange={(v) => onUpdate('cpcSize', v === '__clear__' ? '' : v)}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="Size" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {filteredCpcSizes.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -642,12 +751,17 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Cable Type</Label>
-                  <Select value={formData.cableType || ''} onValueChange={(v) => onUpdate('cableType', v === '__clear__' ? '' : v)}>
+                  <Select
+                    value={formData.cableType || ''}
+                    onValueChange={(v) => onUpdate('cableType', v === '__clear__' ? '' : v)}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {CABLE_TYPES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -661,12 +775,17 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Installation Method</Label>
-                  <Select value={formData.installationMethod || ''} onValueChange={handleInstallationMethodChange}>
+                  <Select
+                    value={formData.installationMethod || ''}
+                    onValueChange={handleInstallationMethodChange}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="Method" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {INSTALLATION_METHODS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -677,12 +796,17 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Reference Method</Label>
-                  <Select value={formData.referenceMethod || ''} onValueChange={(v) => onUpdate('referenceMethod', v === '__clear__' ? '' : v)}>
+                  <Select
+                    value={formData.referenceMethod || ''}
+                    onValueChange={(v) => onUpdate('referenceMethod', v === '__clear__' ? '' : v)}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="e.g., A, B, C" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
                       {REFERENCE_METHODS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           <div className="flex flex-col">
@@ -697,7 +821,10 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </Select>
                   {formData.referenceMethod && (
                     <p className="text-xs text-muted-foreground mt-1">
-                      {REFERENCE_METHODS.find(r => r.value === formData.referenceMethod)?.description}
+                      {
+                        REFERENCE_METHODS.find((r) => r.value === formData.referenceMethod)
+                          ?.description
+                      }
                     </p>
                   )}
                 </div>

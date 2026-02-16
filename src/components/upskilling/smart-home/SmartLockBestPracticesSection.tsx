@@ -6,41 +6,65 @@ export const SmartLockBestPracticesSection = () => {
   const practices = [
     {
       icon: Key,
-      title: "Always Provide Mechanical Key Override",
-      description: "Never rely solely on electronic access",
-      tips: ["Keep backup key in secure location", "Test mechanical override regularly", "Inform family members of backup key location"]
+      title: 'Always Provide Mechanical Key Override',
+      description: 'Never rely solely on electronic access',
+      tips: [
+        'Keep backup key in secure location',
+        'Test mechanical override regularly',
+        'Inform family members of backup key location',
+      ],
     },
     {
       icon: ShieldCheck,
-      title: "Use Strong PIN Codes", 
-      description: "Avoid common or easily guessed combinations",
-      tips: ["Avoid '1234', '0000', or birthdates", "Use 6+ digit codes when possible", "Mix up number patterns"]
+      title: 'Use Strong PIN Codes',
+      description: 'Avoid common or easily guessed combinations',
+      tips: [
+        "Avoid '1234', '0000', or birthdates",
+        'Use 6+ digit codes when possible',
+        'Mix up number patterns',
+      ],
     },
     {
       icon: RefreshCw,
-      title: "Keep Firmware Updated",
-      description: "Regular updates patch security vulnerabilities",
-      tips: ["Enable automatic updates where available", "Check manufacturer websites monthly", "Update immediately after security advisories"]
+      title: 'Keep Firmware Updated',
+      description: 'Regular updates patch security vulnerabilities',
+      tips: [
+        'Enable automatic updates where available',
+        'Check manufacturer websites monthly',
+        'Update immediately after security advisories',
+      ],
     },
     {
       icon: Users,
-      title: "Educate Clients on Access Management",
-      description: "Proper code management prevents security breaches",
-      tips: ["Revoke old codes promptly", "Use temporary codes for guests", "Monitor access logs regularly"]
-    }
+      title: 'Educate Clients on Access Management',
+      description: 'Proper code management prevents security breaches',
+      tips: [
+        'Revoke old codes promptly',
+        'Use temporary codes for guests',
+        'Monitor access logs regularly',
+      ],
+    },
   ];
 
   const risks = [
     {
       icon: AlertTriangle,
-      title: "Security Risks",
-      items: ["Hacking or poor encryption", "Code sharing reduces security", "Installation errors affect operation"]
+      title: 'Security Risks',
+      items: [
+        'Hacking or poor encryption',
+        'Code sharing reduces security',
+        'Installation errors affect operation',
+      ],
     },
     {
       icon: Settings,
-      title: "Technical Challenges",
-      items: ["Power failure/battery depletion", "Wi-Fi connectivity issues", "Mechanical alignment problems"]
-    }
+      title: 'Technical Challenges',
+      items: [
+        'Power failure/battery depletion',
+        'Wi-Fi connectivity issues',
+        'Mechanical alignment problems',
+      ],
+    },
   ];
 
   return (
@@ -53,7 +77,9 @@ export const SmartLockBestPracticesSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          Proper installation and ongoing management are crucial for smart lock security and reliability. Following these best practices ensures optimal performance and client satisfaction.
+          Proper installation and ongoing management are crucial for smart lock security and
+          reliability. Following these best practices ensures optimal performance and client
+          satisfaction.
         </p>
 
         <div className="space-y-4">
@@ -91,7 +117,10 @@ export const SmartLockBestPracticesSection = () => {
                     <h5 className="font-medium text-red-200 mb-2">{risk.title}</h5>
                     <ul className="space-y-1">
                       {risk.items.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-xs text-gray-400 flex items-center gap-2">
+                        <li
+                          key={itemIndex}
+                          className="text-xs text-gray-400 flex items-center gap-2"
+                        >
                           <div className="w-1 h-1 rounded-full bg-red-400" />
                           {item}
                         </li>

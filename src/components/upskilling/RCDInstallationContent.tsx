@@ -1,32 +1,43 @@
-import { Book, CheckCircle, Zap, Settings, AlertTriangle, Shield, Info, Target, Wrench, Cable } from 'lucide-react';
+import {
+  Book,
+  CheckCircle,
+  Zap,
+  Settings,
+  AlertTriangle,
+  Shield,
+  Info,
+  Target,
+  Wrench,
+  Cable,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const RCDInstallationContent = () => {
   const learningObjectives = [
-    "Understand BS 7671 requirements for RCD protection",
-    "Identify circuits requiring mandatory RCD protection",
-    "Select appropriate RCD types for different applications",
-    "Apply correct installation procedures and wiring methods",
-    "Implement proper earthing and bonding arrangements",
-    "Ensure compliance with discrimination requirements"
+    'Understand BS 7671 requirements for RCD protection',
+    'Identify circuits requiring mandatory RCD protection',
+    'Select appropriate RCD types for different applications',
+    'Apply correct installation procedures and wiring methods',
+    'Implement proper earthing and bonding arrangements',
+    'Ensure compliance with discrimination requirements',
   ];
 
   const installationSteps = [
-    { step: 1, action: "Verify circuit requirements and load calculations" },
-    { step: 2, action: "Select appropriate RCD type and rating" },
-    { step: 3, action: "Install RCD in correct position within distribution board" },
-    { step: 4, action: "Connect line and neutral conductors correctly" },
-    { step: 5, action: "Verify earth continuity and bonding arrangements" },
-    { step: 6, action: "Test installation and document compliance" }
+    { step: 1, action: 'Verify circuit requirements and load calculations' },
+    { step: 2, action: 'Select appropriate RCD type and rating' },
+    { step: 3, action: 'Install RCD in correct position within distribution board' },
+    { step: 4, action: 'Connect line and neutral conductors correctly' },
+    { step: 5, action: 'Verify earth continuity and bonding arrangements' },
+    { step: 6, action: 'Test installation and document compliance' },
   ];
 
   const mandatoryProtection = [
-    "Socket outlets up to 20A in domestic installations",
-    "Mobile equipment used outdoors",
-    "Circuits in bathrooms and shower rooms",
-    "Circuits in locations with increased shock risk",
-    "Swimming pool and fountain installations",
-    "Caravan and camping site supply equipment"
+    'Socket outlets up to 20A in domestic installations',
+    'Mobile equipment used outdoors',
+    'Circuits in bathrooms and shower rooms',
+    'Circuits in locations with increased shock risk',
+    'Swimming pool and fountain installations',
+    'Caravan and camping site supply equipment',
   ];
 
   return (
@@ -38,20 +49,20 @@ const RCDInstallationContent = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* What are RCD Installation Requirements */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">RCD Installation Requirements</h3>
           <div className="bg-[#323232] rounded-lg p-4 space-y-3">
             <p className="text-foreground text-sm sm:text-base leading-relaxed">
-              RCD installation must comply with BS 7671 requirements to ensure proper protection against electric shock and fire. 
-              Correct installation is essential for reliable operation and regulatory compliance.
+              RCD installation must comply with BS 7671 requirements to ensure proper protection
+              against electric shock and fire. Correct installation is essential for reliable
+              operation and regulatory compliance.
             </p>
             <div className="flex items-start gap-3 bg-green-600/10 border border-green-600/20 rounded p-3">
               <Shield className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-foreground text-sm sm:text-base">
-                <strong>Remember:</strong> RCD protection is mandatory for many circuit types and must be 
-                installed by competent persons following current regulations.
+                <strong>Remember:</strong> RCD protection is mandatory for many circuit types and
+                must be installed by competent persons following current regulations.
               </p>
             </div>
           </div>
@@ -64,22 +75,24 @@ const RCDInstallationContent = () => {
             <div className="bg-blue-600/10 border border-blue-600/20 rounded p-3">
               <h4 className="text-blue-200 font-medium mb-2">Section 411.3.3</h4>
               <p className="text-foreground text-sm sm:text-base">
-                Additional protection by means of an RCD having characteristics specified in 
-                Section 415.1 shall be provided for socket-outlets with a rated current not exceeding 20A.
+                Additional protection by means of an RCD having characteristics specified in Section
+                415.1 shall be provided for socket-outlets with a rated current not exceeding 20A.
               </p>
             </div>
             <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-3">
               <h4 className="text-yellow-200 font-medium mb-2">Section 701.411.3.3</h4>
               <p className="text-foreground text-sm sm:text-base">
-                In locations containing a bath or shower, additional protection shall be provided 
-                for all low voltage circuits by RCDs having a rated residual operating current not exceeding 30mA.
+                In locations containing a bath or shower, additional protection shall be provided
+                for all low voltage circuits by RCDs having a rated residual operating current not
+                exceeding 30mA.
               </p>
             </div>
             <div className="bg-red-600/10 border border-red-600/20 rounded p-3">
               <h4 className="text-red-200 font-medium mb-2">Section 415.1.1</h4>
               <p className="text-foreground text-sm sm:text-base">
-                For additional protection against electric shock, RCDs shall have a rated residual 
-                operating current not exceeding 30mA and an operating time not exceeding 40ms at 5IΔn.
+                For additional protection against electric shock, RCDs shall have a rated residual
+                operating current not exceeding 30mA and an operating time not exceeding 40ms at
+                5IΔn.
               </p>
             </div>
           </div>
@@ -90,7 +103,10 @@ const RCDInstallationContent = () => {
           <h3 className="text-xl font-semibold text-foreground">Mandatory RCD Protection</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {mandatoryProtection.map((requirement, index) => (
-              <div key={index} className="bg-[#323232] rounded-lg p-4 border-l-4 border-elec-yellow/50">
+              <div
+                key={index}
+                className="bg-[#323232] rounded-lg p-4 border-l-4 border-elec-yellow/50"
+              >
                 <div className="flex items-start gap-3">
                   <Shield className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <p className="text-foreground text-sm sm:text-base">{requirement}</p>
@@ -105,7 +121,10 @@ const RCDInstallationContent = () => {
           <h3 className="text-xl font-semibold text-foreground">Learning Objectives</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {learningObjectives.map((objective, index) => (
-              <div key={index} className="bg-[#323232] rounded-lg p-4 border-l-4 border-blue-600/50">
+              <div
+                key={index}
+                className="bg-[#323232] rounded-lg p-4 border-l-4 border-blue-600/50"
+              >
                 <div className="flex items-start gap-3">
                   <Target className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <p className="text-foreground text-sm sm:text-base">{objective}</p>
@@ -158,7 +177,10 @@ const RCDInstallationContent = () => {
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="space-y-3">
               {installationSteps.map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-3 rounded bg-gray-600/10 border border-gray-600/20">
+                <div
+                  key={index}
+                  className="flex items-center gap-4 p-3 rounded bg-gray-600/10 border border-gray-600/20"
+                >
                   <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                     {item.step}
                   </span>
@@ -168,7 +190,8 @@ const RCDInstallationContent = () => {
             </div>
             <div className="mt-4 bg-blue-600/10 border border-blue-600/20 rounded p-3">
               <p className="text-foreground text-sm sm:text-base">
-                <strong>Purpose:</strong> To ensure RCD installation meets regulatory requirements and provides effective protection.
+                <strong>Purpose:</strong> To ensure RCD installation meets regulatory requirements
+                and provides effective protection.
               </p>
             </div>
           </div>
@@ -203,7 +226,9 @@ const RCDInstallationContent = () => {
 
         {/* Installation Considerations */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Important Installation Considerations</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Important Installation Considerations
+          </h3>
           <div className="space-y-3">
             <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
               <div className="flex items-start gap-3">
@@ -211,7 +236,8 @@ const RCDInstallationContent = () => {
                 <div>
                   <h4 className="text-orange-200 font-medium mb-2">Neutral Conductor Management</h4>
                   <p className="text-foreground text-sm sm:text-base">
-                    Ensure proper neutral integrity - shared neutrals can cause unwanted tripping and compromise protection.
+                    Ensure proper neutral integrity - shared neutrals can cause unwanted tripping
+                    and compromise protection.
                   </p>
                 </div>
               </div>
@@ -222,7 +248,8 @@ const RCDInstallationContent = () => {
                 <div>
                   <h4 className="text-red-200 font-medium mb-2">Load Balancing</h4>
                   <p className="text-foreground text-sm sm:text-base">
-                    Maintain balanced loads on three-phase RCDs to prevent nuisance tripping from natural imbalance.
+                    Maintain balanced loads on three-phase RCDs to prevent nuisance tripping from
+                    natural imbalance.
                   </p>
                 </div>
               </div>
@@ -233,7 +260,8 @@ const RCDInstallationContent = () => {
                 <div>
                   <h4 className="text-blue-200 font-medium mb-2">Environmental Factors</h4>
                   <p className="text-foreground text-sm sm:text-base">
-                    Consider ambient temperature, humidity, and electromagnetic interference when selecting installation location.
+                    Consider ambient temperature, humidity, and electromagnetic interference when
+                    selecting installation location.
                   </p>
                 </div>
               </div>
@@ -244,14 +272,14 @@ const RCDInstallationContent = () => {
                 <div>
                   <h4 className="text-yellow-200 font-medium mb-2">Future Expansion</h4>
                   <p className="text-foreground text-sm sm:text-base">
-                    Plan for future circuit additions and ensure adequate RCD capacity and discrimination timing.
+                    Plan for future circuit additions and ensure adequate RCD capacity and
+                    discrimination timing.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

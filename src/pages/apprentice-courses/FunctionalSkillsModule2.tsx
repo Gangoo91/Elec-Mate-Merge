@@ -1,9 +1,9 @@
-import { ChevronLeft, FileText, BookOpen, PenTool, MessageSquare, SpellCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import { ChevronLeft, FileText, BookOpen, PenTool, MessageSquare, SpellCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const container = {
   hidden: { opacity: 0 },
@@ -17,42 +17,39 @@ const item = {
 
 const FunctionalSkillsModule2 = () => {
   useSEO(
-    "Module 2: English for Electricians",
-    "Technical reading, writing, communication skills and professional documentation for the electrical trade"
+    'Module 2: English for Electricians',
+    'Technical reading, writing, communication skills and professional documentation for the electrical trade'
   );
 
   const sections = [
     {
-      number: "2.1",
-      title: "Reading Technical Documents",
-      description:
-        "BS 7671, datasheets, regulations, method statements and O&M manuals",
+      number: '2.1',
+      title: 'Reading Technical Documents',
+      description: 'BS 7671, datasheets, regulations, method statements and O&M manuals',
       icon: BookOpen,
-      href: "/study-centre/apprentice/functional-skills/module2/section1",
+      href: '/study-centre/apprentice/functional-skills/module2/section1',
     },
     {
-      number: "2.2",
-      title: "Technical Writing",
-      description:
-        "EICR/EIC forms, method statements, emails, reports and site notes",
+      number: '2.2',
+      title: 'Technical Writing',
+      description: 'EICR/EIC forms, method statements, emails, reports and site notes',
       icon: PenTool,
-      href: "/study-centre/apprentice/functional-skills/module2/section2",
+      href: '/study-centre/apprentice/functional-skills/module2/section2',
     },
     {
-      number: "2.3",
-      title: "Communication Skills",
+      number: '2.3',
+      title: 'Communication Skills',
       description:
-        "Client communication, site meetings, telephone manner and explaining technical work",
+        'Client communication, site meetings, telephone manner and explaining technical work',
       icon: MessageSquare,
-      href: "/study-centre/apprentice/functional-skills/module2/section3",
+      href: '/study-centre/apprentice/functional-skills/module2/section3',
     },
     {
-      number: "2.4",
-      title: "Spelling, Grammar & Punctuation",
-      description:
-        "Trade vocabulary, homophones, technical terminology and proofreading",
+      number: '2.4',
+      title: 'Spelling, Grammar & Punctuation',
+      description: 'Trade vocabulary, homophones, technical terminology and proofreading',
       icon: SpellCheck,
-      href: "/study-centre/apprentice/functional-skills/module2/section4",
+      href: '/study-centre/apprentice/functional-skills/module2/section4',
     },
   ];
 
@@ -84,9 +81,7 @@ const FunctionalSkillsModule2 = () => {
           <FileText className="w-10 h-10 text-white/90" />
           <div>
             <p className="text-green-100 text-sm font-medium">Module 2</p>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">
-              English for Electricians
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">English for Electricians</h1>
           </div>
         </div>
       </motion.div>

@@ -12,9 +12,10 @@ export const WhatIsSmartThermostatSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          A smart thermostat is an electronic device that allows app/voice/web-based temperature control, replacing traditional wall thermostats with enhanced functions and connectivity.
+          A smart thermostat is an electronic device that allows app/voice/web-based temperature
+          control, replacing traditional wall thermostats with enhanced functions and connectivity.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Popular Examples</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">

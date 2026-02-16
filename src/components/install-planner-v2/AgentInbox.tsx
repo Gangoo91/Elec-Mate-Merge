@@ -22,13 +22,13 @@ interface AgentInboxProps {
 }
 
 const AGENT_NAMES: Record<string, string> = {
-  'designer': 'Circuit Designer',
+  designer: 'Circuit Designer',
   'cost-engineer': 'Cost Engineer',
-  'installer': 'Installation Specialist',
+  installer: 'Installation Specialist',
   'health-safety': 'Health & Safety',
-  'commissioning': 'Testing & Commissioning',
-  'maintenance': 'Maintenance Specialist',
-  'project-manager': 'Project Manager'
+  commissioning: 'Testing & Commissioning',
+  maintenance: 'Maintenance Specialist',
+  'project-manager': 'Project Manager',
 };
 
 export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
@@ -38,7 +38,7 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
 
   useEffect(() => {
     fetchTasks();
-    
+
     // Subscribe to new tasks
     const channel = supabase
       .channel('agent-tasks')
@@ -48,7 +48,7 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
           event: 'INSERT',
           schema: 'public',
           table: 'agent_task_queue',
-          filter: `target_agent=eq.${currentAgent}`
+          filter: `target_agent=eq.${currentAgent}`,
         },
         () => {
           fetchTasks();
@@ -63,7 +63,9 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
 
   const fetchTasks = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -96,10 +98,10 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
 
       // Pass context to parent
       onTaskAccept(task.context_data, task.user_instruction);
-      
+
       // Remove from UI
-      setTasks(prev => prev.filter(t => t.id !== task.id));
-      
+      setTasks((prev) => prev.filter((t) => t.id !== task.id));
+
       toast.success(`Loaded context from ${AGENT_NAMES[task.source_agent]}`);
     } catch (error) {
       console.error('Error accepting task:', error);
@@ -116,8 +118,8 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
         .eq('id', taskId);
 
       if (error) throw error;
-      
-      setTasks(prev => prev.filter(t => t.id !== taskId));
+
+      setTasks((prev) => prev.filter((t) => t.id !== taskId));
       toast.success('Task dismissed');
     } catch (error) {
       console.error('Error dismissing task:', error);
@@ -151,21 +153,17 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
             <Badge variant="secondary">{tasks.length}</Badge>
           </div>
         </div>
-        <CardDescription>
-          Work forwarded from other agents
-        </CardDescription>
+        <CardDescription>Work forwarded from other agents</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <div
             key={task.id}
             className="flex items-start justify-between gap-4 p-3 rounded-lg border bg-background"
           >
             <div className="flex-1 space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">
-                  From: {AGENT_NAMES[task.source_agent]}
-                </span>
+                <span className="text-sm font-medium">From: {AGENT_NAMES[task.source_agent]}</span>
                 {task.priority > 0 && (
                   <Badge variant="destructive" className="text-xs">
                     Priority
@@ -173,9 +171,7 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
                 )}
               </div>
               {task.user_instruction && (
-                <p className="text-sm text-muted-foreground">
-                  "{task.user_instruction}"
-                </p>
+                <p className="text-sm text-muted-foreground">"{task.user_instruction}"</p>
               )}
               <p className="text-xs text-muted-foreground">
                 {new Date(task.created_at).toLocaleString()}
@@ -194,11 +190,7 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
                   <X className="h-4 w-4" />
                 )}
               </Button>
-              <Button
-                size="sm"
-                className="gap-2"
-                onClick={() => handleAccept(task)}
-              >
+              <Button size="sm" className="gap-2" onClick={() => handleAccept(task)}>
                 Load
                 <ArrowRight className="h-4 w-4" />
               </Button>

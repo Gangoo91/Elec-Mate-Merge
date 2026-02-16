@@ -63,7 +63,9 @@ export async function loadPdfLibraries(): Promise<{
  * Create a new jsPDF document (convenience function)
  * Handles the lazy loading internally
  */
-export async function createPdfDocument(options?: ConstructorParameters<typeof jsPDFType>[0]): Promise<jsPDFType> {
+export async function createPdfDocument(
+  options?: ConstructorParameters<typeof jsPDFType>[0]
+): Promise<jsPDFType> {
   const jsPDF = await loadJsPDF();
   return new jsPDF(options);
 }

@@ -51,15 +51,15 @@ export interface FireAlarmPanel {
   productCode?: string;
   panelType: PanelType;
   protocol: DetectorProtocol;
-  loopCapacity: number;           // Number of loops (0 for conventional)
-  zoneCapacity: number;           // Number of zones
-  deviceCapacity?: number;        // Max devices per loop (addressable)
-  networkable: boolean;           // Can be networked with other panels
-  maxNetworkPanels?: number;      // Max panels in network
+  loopCapacity: number; // Number of loops (0 for conventional)
+  zoneCapacity: number; // Number of zones
+  deviceCapacity?: number; // Max devices per loop (addressable)
+  networkable: boolean; // Can be networked with other panels
+  maxNetworkPanels?: number; // Max panels in network
   repeatersSupport: boolean;
   graphicDisplaySupport: boolean;
   causeEffectProgramming: boolean;
-  approvals: string[];            // EN54, LPCB, etc.
+  approvals: string[]; // EN54, LPCB, etc.
   features: string[];
   notes?: string;
 }
@@ -69,11 +69,24 @@ export interface FireAlarmDetector {
   manufacturer: string;
   model: string;
   productCode?: string;
-  type: 'optical-smoke' | 'ionisation-smoke' | 'heat-fixed' | 'heat-ror' | 'multi-sensor' | 'beam' | 'aspirating' | 'flame' | 'co' | 'call-point' | 'sounder' | 'sounder-beacon' | 'visual-alarm';
+  type:
+    | 'optical-smoke'
+    | 'ionisation-smoke'
+    | 'heat-fixed'
+    | 'heat-ror'
+    | 'multi-sensor'
+    | 'beam'
+    | 'aspirating'
+    | 'flame'
+    | 'co'
+    | 'call-point'
+    | 'sounder'
+    | 'sounder-beacon'
+    | 'visual-alarm';
   protocol: DetectorProtocol;
   addressable: boolean;
-  coverage?: string;              // e.g., "100m² typical"
-  sensitivity?: string;           // Sensitivity range
+  coverage?: string; // e.g., "100m² typical"
+  sensitivity?: string; // Sensitivity range
   approvals: string[];
   features: string[];
   notes?: string;
@@ -102,8 +115,14 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     graphicDisplaySupport: true,
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
-    features: ['Multi-protocol', 'Touch screen', 'USB upload', 'Event log 10000', 'Network redundancy'],
-    notes: 'Supports Apollo, Hochiki, System Sensor protocols'
+    features: [
+      'Multi-protocol',
+      'Touch screen',
+      'USB upload',
+      'Event log 10000',
+      'Network redundancy',
+    ],
+    notes: 'Supports Apollo, Hochiki, System Sensor protocols',
   },
   {
     id: 'advanced-mxpro5-2',
@@ -121,8 +140,14 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     graphicDisplaySupport: true,
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
-    features: ['Multi-protocol', 'Touch screen', 'USB upload', 'Event log 10000', 'Network redundancy'],
-    notes: 'Supports Apollo, Hochiki, System Sensor protocols'
+    features: [
+      'Multi-protocol',
+      'Touch screen',
+      'USB upload',
+      'Event log 10000',
+      'Network redundancy',
+    ],
+    notes: 'Supports Apollo, Hochiki, System Sensor protocols',
   },
   {
     id: 'advanced-mxpro5-4',
@@ -140,8 +165,14 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     graphicDisplaySupport: true,
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
-    features: ['Multi-protocol', 'Touch screen', 'USB upload', 'Event log 10000', 'Network redundancy'],
-    notes: 'Ideal for medium-large installations'
+    features: [
+      'Multi-protocol',
+      'Touch screen',
+      'USB upload',
+      'Event log 10000',
+      'Network redundancy',
+    ],
+    notes: 'Ideal for medium-large installations',
   },
   {
     id: 'advanced-mxpro5-8',
@@ -159,8 +190,14 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     graphicDisplaySupport: true,
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
-    features: ['Multi-protocol', 'Touch screen', 'USB upload', 'Event log 10000', 'Network redundancy'],
-    notes: 'Large installation capability'
+    features: [
+      'Multi-protocol',
+      'Touch screen',
+      'USB upload',
+      'Event log 10000',
+      'Network redundancy',
+    ],
+    notes: 'Large installation capability',
   },
   {
     id: 'advanced-quickzone-4',
@@ -177,7 +214,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['Budget friendly', 'Simple installation', 'LED indicators'],
-    notes: 'Ideal for small premises'
+    notes: 'Ideal for small premises',
   },
   {
     id: 'advanced-quickzone-8',
@@ -194,7 +231,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['Budget friendly', 'Simple installation', 'LED indicators'],
-    notes: 'Ideal for small-medium premises'
+    notes: 'Ideal for small-medium premises',
   },
 
   // ============================================
@@ -217,7 +254,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Colour touch screen', 'USB programming', 'EN54-13 remote'],
-    notes: 'Popular commercial panel'
+    notes: 'Popular commercial panel',
   },
   {
     id: 'morley-dxc2',
@@ -236,7 +273,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Colour touch screen', 'USB programming', 'EN54-13 remote'],
-    notes: 'Medium installations'
+    notes: 'Medium installations',
   },
   {
     id: 'morley-dxc4',
@@ -255,7 +292,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Colour touch screen', 'USB programming', 'EN54-13 remote'],
-    notes: 'Large commercial installations'
+    notes: 'Large commercial installations',
   },
   {
     id: 'morley-horizon-1',
@@ -274,7 +311,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Large network capability', 'Colour display', 'Comprehensive logging'],
-    notes: 'High-end commercial/industrial'
+    notes: 'High-end commercial/industrial',
   },
 
   // ============================================
@@ -297,7 +334,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB', 'VdS'],
     features: ['S-Quad protocol', 'Colour graphics', 'Ethernet networking'],
-    notes: 'Premium quality system'
+    notes: 'Premium quality system',
   },
   {
     id: 'gent-vigilon-2',
@@ -316,7 +353,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB', 'VdS'],
     features: ['S-Quad protocol', 'Colour graphics', 'Ethernet networking'],
-    notes: 'Premium quality system'
+    notes: 'Premium quality system',
   },
   {
     id: 'gent-compact-1',
@@ -335,7 +372,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['S-Quad protocol', 'Compact size', 'Cost effective'],
-    notes: 'Budget-friendly Gent option'
+    notes: 'Budget-friendly Gent option',
   },
 
   // ============================================
@@ -358,7 +395,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['ESP protocol', 'Touch screen', 'Graphic mimic support'],
-    notes: 'High quality Japanese engineering'
+    notes: 'High quality Japanese engineering',
   },
   {
     id: 'hochiki-latitude-2',
@@ -377,7 +414,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['ESP protocol', 'Touch screen', 'Graphic mimic support'],
-    notes: 'Medium-large installations'
+    notes: 'Medium-large installations',
   },
   {
     id: 'hochiki-latitude-4',
@@ -396,7 +433,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['ESP protocol', 'Touch screen', 'Graphic mimic support'],
-    notes: 'Large installations'
+    notes: 'Large installations',
   },
   {
     id: 'hochiki-firescape',
@@ -414,7 +451,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['Integrated emergency lighting control', 'ESP protocol'],
-    notes: 'Combined fire alarm and emergency lighting'
+    notes: 'Combined fire alarm and emergency lighting',
   },
 
   // ============================================
@@ -437,7 +474,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Apollo protocol', 'Touch screen option', 'Cost effective'],
-    notes: 'Popular budget-friendly addressable panel'
+    notes: 'Popular budget-friendly addressable panel',
   },
   {
     id: 'kentec-syncro-2',
@@ -456,7 +493,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Apollo protocol', 'Touch screen option', 'Cost effective'],
-    notes: 'Medium installations'
+    notes: 'Medium installations',
   },
   {
     id: 'kentec-syncro-4',
@@ -475,7 +512,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Apollo protocol', 'Touch screen option', 'Cost effective'],
-    notes: 'Large installations'
+    notes: 'Large installations',
   },
   {
     id: 'kentec-sigma-cp-4',
@@ -492,7 +529,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['Budget friendly', 'Simple', 'Reliable'],
-    notes: 'Small premises'
+    notes: 'Small premises',
   },
   {
     id: 'kentec-sigma-cp-8',
@@ -509,7 +546,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['Budget friendly', 'Simple', 'Reliable'],
-    notes: 'Small-medium premises'
+    notes: 'Small-medium premises',
   },
 
   // ============================================
@@ -532,7 +569,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Apollo XP95/Discovery compatible', 'Touch screen', 'UK made'],
-    notes: 'UK manufactured quality'
+    notes: 'UK manufactured quality',
   },
   {
     id: 'ctec-xfp-2',
@@ -551,7 +588,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Apollo XP95/Discovery compatible', 'Touch screen', 'UK made'],
-    notes: 'Medium installations'
+    notes: 'Medium installations',
   },
   {
     id: 'ctec-cfp-4',
@@ -568,7 +605,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['UK made', 'Relay outputs', 'Compact'],
-    notes: 'Budget-friendly conventional'
+    notes: 'Budget-friendly conventional',
   },
   {
     id: 'ctec-cfp-8',
@@ -585,7 +622,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['UK made', 'Relay outputs', 'Compact'],
-    notes: 'Budget-friendly conventional'
+    notes: 'Budget-friendly conventional',
   },
 
   // ============================================
@@ -608,7 +645,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB', 'FM'],
     features: ['OPAL protocol', 'Colour display', 'Large event log'],
-    notes: 'Premium commercial/industrial'
+    notes: 'Premium commercial/industrial',
   },
   {
     id: 'notifier-id3000-4',
@@ -627,7 +664,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB', 'FM'],
     features: ['OPAL protocol', 'Colour display', 'Large event log'],
-    notes: 'Large installations'
+    notes: 'Large installations',
   },
   {
     id: 'notifier-nfs-320',
@@ -646,7 +683,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'UL', 'FM'],
     features: ['FLASHSCAN technology', 'VeriFire Tools programming'],
-    notes: 'International standard panel'
+    notes: 'International standard panel',
   },
 
   // ============================================
@@ -669,7 +706,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Apollo protocol', 'Colour touch screen', 'Ethernet'],
-    notes: 'Commercial grade'
+    notes: 'Commercial grade',
   },
   {
     id: 'eaton-cf3000-2',
@@ -688,7 +725,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Apollo protocol', 'Colour touch screen', 'Ethernet'],
-    notes: 'Medium-large installations'
+    notes: 'Medium-large installations',
   },
   {
     id: 'eaton-mf9000-4',
@@ -705,7 +742,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['Cost effective', 'Simple installation'],
-    notes: 'Small premises'
+    notes: 'Small premises',
   },
   {
     id: 'eaton-mf9000-8',
@@ -722,7 +759,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['EN54-2', 'EN54-4'],
     features: ['Cost effective', 'Simple installation'],
-    notes: 'Small-medium premises'
+    notes: 'Small-medium premises',
   },
 
   // ============================================
@@ -745,7 +782,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Native Discovery protocol', 'Touch screen', 'USB config'],
-    notes: 'Apollo native panel'
+    notes: 'Apollo native panel',
   },
   {
     id: 'apollo-xplorer-2',
@@ -764,7 +801,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: true,
     approvals: ['EN54-2', 'EN54-4', 'LPCB'],
     features: ['Native Discovery protocol', 'Touch screen', 'USB config'],
-    notes: 'Apollo native panel - medium installations'
+    notes: 'Apollo native panel - medium installations',
   },
 
   // ============================================
@@ -788,7 +825,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['BS 5839-6'],
     features: ['SmartLINK app', 'Real-time monitoring', 'Remote notifications', 'Data logging'],
-    notes: 'Smart home integration gateway for Ei3000 series - HMO/domestic'
+    notes: 'Smart home integration gateway for Ei3000 series - HMO/domestic',
   },
   {
     id: 'aico-ei414',
@@ -807,7 +844,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['BS 5839-6'],
     features: ['Relay outputs', 'Monitored inputs', 'Telecare compatible', 'Volt-free contacts'],
-    notes: 'Interface for connecting to telecare/warden call systems'
+    notes: 'Interface for connecting to telecare/warden call systems',
   },
   {
     id: 'aico-ei450',
@@ -826,7 +863,7 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['BS 5839-6'],
     features: ['Locate function', 'Test button', 'Hush function', 'Battery powered'],
-    notes: 'Handheld controller for RadioLINK+ systems'
+    notes: 'Handheld controller for RadioLINK+ systems',
   },
   {
     id: 'aico-ei168rc',
@@ -845,8 +882,8 @@ export const FIRE_ALARM_PANELS: FireAlarmPanel[] = [
     causeEffectProgramming: false,
     approvals: ['BS 5839-6'],
     features: ['House coding', 'Interconnection base', 'Easy retrofit'],
-    notes: 'Converts hard-wired alarms to wireless interconnection'
-  }
+    notes: 'Converts hard-wired alarms to wireless interconnection',
+  },
 ];
 
 /**
@@ -865,7 +902,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '100m² typical',
     approvals: ['EN54-7', 'LPCB'],
     features: ['360° optical chamber', 'High immunity to false alarms'],
-    notes: 'Most common UK detector'
+    notes: 'Most common UK detector',
   },
   {
     id: 'apollo-discovery-heat',
@@ -878,7 +915,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '50m² typical',
     approvals: ['EN54-5', 'LPCB'],
     features: ['Rate of rise detection', 'A1R classification'],
-    notes: 'For kitchens, dusty areas'
+    notes: 'For kitchens, dusty areas',
   },
   {
     id: 'apollo-discovery-multi',
@@ -891,7 +928,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '100m² typical',
     approvals: ['EN54-5', 'EN54-7', 'LPCB'],
     features: ['Combined smoke and heat', 'Drift compensation'],
-    notes: 'Best for varied fire risks'
+    notes: 'Best for varied fire risks',
   },
   {
     id: 'apollo-xp95-optical',
@@ -904,7 +941,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '100m² typical',
     approvals: ['EN54-7', 'LPCB'],
     features: ['Legacy XP95 protocol', 'Widely installed'],
-    notes: 'For existing XP95 systems'
+    notes: 'For existing XP95 systems',
   },
   {
     id: 'apollo-soteria-optical',
@@ -917,7 +954,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '100m² typical',
     approvals: ['EN54-7', 'LPCB'],
     features: ['Open protocol', 'Advanced analytics'],
-    notes: 'Latest Apollo technology'
+    notes: 'Latest Apollo technology',
   },
 
   // Hochiki
@@ -932,7 +969,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '100m² typical',
     approvals: ['EN54-7', 'LPCB'],
     features: ['ESP protocol', 'High sensitivity'],
-    notes: 'Premium quality'
+    notes: 'Premium quality',
   },
   {
     id: 'hochiki-atj-en-heat',
@@ -945,7 +982,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '50m² typical',
     approvals: ['EN54-5', 'LPCB'],
     features: ['ESP protocol', 'Rate of rise'],
-    notes: 'For harsh environments'
+    notes: 'For harsh environments',
   },
   {
     id: 'hochiki-acc-en-multi',
@@ -958,7 +995,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: '100m² typical',
     approvals: ['EN54-5', 'EN54-7', 'LPCB'],
     features: ['ESP protocol', 'Optical + Heat'],
-    notes: 'Premium multisensor'
+    notes: 'Premium multisensor',
   },
 
   // Call Points
@@ -972,7 +1009,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: true,
     approvals: ['EN54-11', 'LPCB'],
     features: ['Resettable element', 'Weatherproof option'],
-    notes: 'Standard call point'
+    notes: 'Standard call point',
   },
   {
     id: 'hochiki-ccp-e-mcp',
@@ -984,7 +1021,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: true,
     approvals: ['EN54-11', 'LPCB'],
     features: ['Resettable', 'Short circuit isolator'],
-    notes: 'ESP protocol call point'
+    notes: 'ESP protocol call point',
   },
   {
     id: 'kac-mcp-conv',
@@ -996,7 +1033,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     approvals: ['EN54-11'],
     features: ['Break glass', 'Resettable options'],
-    notes: 'Budget conventional'
+    notes: 'Budget conventional',
   },
 
   // Sounders
@@ -1010,7 +1047,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: true,
     approvals: ['EN54-3'],
     features: ['32 tones', 'Adjustable volume'],
-    notes: 'Addressable sounder'
+    notes: 'Addressable sounder',
   },
   {
     id: 'apollo-conv-sounder',
@@ -1022,7 +1059,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     approvals: ['EN54-3'],
     features: ['Multiple tones', 'High output'],
-    notes: 'Standard sounder'
+    notes: 'Standard sounder',
   },
   {
     id: 'hochiki-chq-wsb-sounder-beacon',
@@ -1034,7 +1071,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: true,
     approvals: ['EN54-3', 'EN54-23'],
     features: ['Combined sounder and beacon', 'Multiple colours'],
-    notes: 'Wall mounted'
+    notes: 'Wall mounted',
   },
 
   // Visual Alarm Devices
@@ -1048,7 +1085,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: true,
     approvals: ['EN54-23'],
     features: ['Wall or ceiling mount', 'High intensity'],
-    notes: 'Visual alarm device'
+    notes: 'Visual alarm device',
   },
   {
     id: 'hochiki-chq-ab-beacon',
@@ -1060,7 +1097,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: true,
     approvals: ['EN54-23'],
     features: ['Multiple flash rates', 'Colour options'],
-    notes: 'Addressable beacon'
+    notes: 'Addressable beacon',
   },
 
   // ============================================
@@ -1079,8 +1116,14 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     coverage: 'Single room',
     approvals: ['BS EN 14604', 'BS 5839-6'],
-    features: ['10-year sealed lithium battery', 'Mains powered', 'AudioLINK+', 'RadioLINK+ compatible', 'Easi-fit base'],
-    notes: 'Premium domestic optical smoke alarm - HMO compliant'
+    features: [
+      '10-year sealed lithium battery',
+      'Mains powered',
+      'AudioLINK+',
+      'RadioLINK+ compatible',
+      'Easi-fit base',
+    ],
+    notes: 'Premium domestic optical smoke alarm - HMO compliant',
   },
   {
     id: 'aico-ei3014',
@@ -1092,8 +1135,14 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     coverage: 'Kitchen/garage',
     approvals: ['BS EN 14604', 'BS 5839-6'],
-    features: ['10-year sealed lithium battery', 'Mains powered', 'AudioLINK+', 'RadioLINK+ compatible', 'Easi-fit base'],
-    notes: 'For kitchens and garages where smoke alarms not suitable'
+    features: [
+      '10-year sealed lithium battery',
+      'Mains powered',
+      'AudioLINK+',
+      'RadioLINK+ compatible',
+      'Easi-fit base',
+    ],
+    notes: 'For kitchens and garages where smoke alarms not suitable',
   },
   {
     id: 'aico-ei3018',
@@ -1105,8 +1154,14 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     coverage: 'Single room',
     approvals: ['BS EN 50291-1', 'BS 5839-6'],
-    features: ['10-year sealed lithium battery', 'Mains powered', 'AudioLINK+', 'RadioLINK+ compatible', 'LCD display'],
-    notes: 'Carbon monoxide alarm with interconnection'
+    features: [
+      '10-year sealed lithium battery',
+      'Mains powered',
+      'AudioLINK+',
+      'RadioLINK+ compatible',
+      'LCD display',
+    ],
+    notes: 'Carbon monoxide alarm with interconnection',
   },
   {
     id: 'aico-ei3024',
@@ -1118,8 +1173,14 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     coverage: 'Single room',
     approvals: ['BS EN 14604', 'BS 5839-6'],
-    features: ['10-year sealed lithium battery', 'Mains powered', 'AudioLINK+', 'RadioLINK+ compatible', 'Optical + heat'],
-    notes: 'Multi-sensor for reduced false alarms - ideal for hallways'
+    features: [
+      '10-year sealed lithium battery',
+      'Mains powered',
+      'AudioLINK+',
+      'RadioLINK+ compatible',
+      'Optical + heat',
+    ],
+    notes: 'Multi-sensor for reduced false alarms - ideal for hallways',
   },
   {
     id: 'aico-ei3028',
@@ -1131,8 +1192,14 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     coverage: 'Single room',
     approvals: ['BS EN 14604', 'BS EN 50291-1', 'BS 5839-6'],
-    features: ['10-year sealed lithium battery', 'Mains powered', 'AudioLINK+', 'RadioLINK+ compatible', 'Fire + CO detection'],
-    notes: 'Combined fire and CO detection in one unit'
+    features: [
+      '10-year sealed lithium battery',
+      'Mains powered',
+      'AudioLINK+',
+      'RadioLINK+ compatible',
+      'Fire + CO detection',
+    ],
+    notes: 'Combined fire and CO detection in one unit',
   },
 
   // Ei600 Series - Battery Powered (10-year sealed lithium)
@@ -1146,8 +1213,13 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     coverage: 'Single room',
     approvals: ['BS EN 14604', 'BS 5839-6'],
-    features: ['10-year sealed lithium battery', 'Battery only', 'RadioLINK+ compatible', 'Test/hush button'],
-    notes: 'Battery-only optical smoke alarm - no mains required'
+    features: [
+      '10-year sealed lithium battery',
+      'Battery only',
+      'RadioLINK+ compatible',
+      'Test/hush button',
+    ],
+    notes: 'Battery-only optical smoke alarm - no mains required',
   },
   {
     id: 'aico-ei650irf',
@@ -1160,7 +1232,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: 'Single room',
     approvals: ['BS EN 14604', 'BS 5839-6'],
     features: ['10-year sealed lithium battery', 'Built-in RadioLINK+', 'No module needed'],
-    notes: 'Battery smoke alarm with built-in wireless interconnect'
+    notes: 'Battery smoke alarm with built-in wireless interconnect',
   },
   {
     id: 'aico-ei603trf',
@@ -1173,7 +1245,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: 'Kitchen/garage',
     approvals: ['BS EN 14604', 'BS 5839-6'],
     features: ['10-year sealed lithium battery', 'Built-in RadioLINK+', 'No module needed'],
-    notes: 'Battery heat alarm with built-in wireless interconnect'
+    notes: 'Battery heat alarm with built-in wireless interconnect',
   },
   {
     id: 'aico-ei208',
@@ -1186,7 +1258,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: 'Single room',
     approvals: ['BS EN 50291-1'],
     features: ['7-year sealed lithium battery', 'LCD display', 'Test button', 'Memory feature'],
-    notes: 'Standalone CO alarm - best seller'
+    notes: 'Standalone CO alarm - best seller',
   },
   {
     id: 'aico-ei208irf',
@@ -1199,7 +1271,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     coverage: 'Single room',
     approvals: ['BS EN 50291-1'],
     features: ['10-year sealed lithium battery', 'Built-in RadioLINK+', 'LCD display'],
-    notes: 'CO alarm with wireless interconnect'
+    notes: 'CO alarm with wireless interconnect',
   },
 
   // Accessories
@@ -1213,7 +1285,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     approvals: ['BS 5839-6'],
     features: ['Adds RadioLINK+ to Ei3000 series', 'House coding', 'Easy fit'],
-    notes: 'Wireless interconnect module for Ei3000 alarms'
+    notes: 'Wireless interconnect module for Ei3000 alarms',
   },
   {
     id: 'aico-ei170rf',
@@ -1224,8 +1296,12 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     protocol: 'aico-radiolink',
     addressable: false,
     approvals: ['BS 5839-6'],
-    features: ['Volt-free relay output', 'RadioLINK+ compatible', 'Interface to third-party systems'],
-    notes: 'Relay module for external signalling'
+    features: [
+      'Volt-free relay output',
+      'RadioLINK+ compatible',
+      'Interface to third-party systems',
+    ],
+    notes: 'Relay module for external signalling',
   },
   {
     id: 'aico-ei159',
@@ -1237,7 +1313,7 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     approvals: ['BS 5839-6'],
     features: ['Remote testing', 'Mains powered', 'LED indicator'],
-    notes: 'Wall-mounted remote test switch for hard-to-reach alarms'
+    notes: 'Wall-mounted remote test switch for hard-to-reach alarms',
   },
   {
     id: 'aico-ei128',
@@ -1249,8 +1325,8 @@ export const FIRE_ALARM_DETECTORS: FireAlarmDetector[] = [
     addressable: false,
     approvals: ['BS 5446-3'],
     features: ['Strobe light', 'Vibrating pad', 'Interconnects with Aico alarms'],
-    notes: 'For deaf and hard of hearing - includes strobe and vibrating pad'
-  }
+    notes: 'For deaf and hard of hearing - includes strobe and vibrating pad',
+  },
 ];
 
 // ============================================
@@ -1264,8 +1340,9 @@ export function searchPanels(query: string): FireAlarmPanel[] {
   const normalizedQuery = query.toLowerCase().trim();
   if (!normalizedQuery) return FIRE_ALARM_PANELS;
 
-  return FIRE_ALARM_PANELS.filter(panel => {
-    const searchText = `${panel.manufacturer} ${panel.model} ${panel.productCode || ''}`.toLowerCase();
+  return FIRE_ALARM_PANELS.filter((panel) => {
+    const searchText =
+      `${panel.manufacturer} ${panel.model} ${panel.productCode || ''}`.toLowerCase();
     return searchText.includes(normalizedQuery);
   });
 }
@@ -1274,17 +1351,20 @@ export function searchPanels(query: string): FireAlarmPanel[] {
  * Find a specific panel by manufacturer and model
  */
 export function findPanel(manufacturer: string, model: string): FireAlarmPanel | null {
-  return FIRE_ALARM_PANELS.find(
-    p => p.manufacturer.toLowerCase() === manufacturer.toLowerCase() &&
-         p.model.toLowerCase() === model.toLowerCase()
-  ) || null;
+  return (
+    FIRE_ALARM_PANELS.find(
+      (p) =>
+        p.manufacturer.toLowerCase() === manufacturer.toLowerCase() &&
+        p.model.toLowerCase() === model.toLowerCase()
+    ) || null
+  );
 }
 
 /**
  * Find a panel by ID
  */
 export function findPanelById(id: string): FireAlarmPanel | null {
-  return FIRE_ALARM_PANELS.find(p => p.id === id) || null;
+  return FIRE_ALARM_PANELS.find((p) => p.id === id) || null;
 }
 
 /**
@@ -1292,7 +1372,7 @@ export function findPanelById(id: string): FireAlarmPanel | null {
  */
 export function getPanelsByManufacturer(manufacturer: string): FireAlarmPanel[] {
   return FIRE_ALARM_PANELS.filter(
-    p => p.manufacturer.toLowerCase() === manufacturer.toLowerCase()
+    (p) => p.manufacturer.toLowerCase() === manufacturer.toLowerCase()
   );
 }
 
@@ -1300,14 +1380,14 @@ export function getPanelsByManufacturer(manufacturer: string): FireAlarmPanel[] 
  * Get all panels by type
  */
 export function getPanelsByType(panelType: PanelType): FireAlarmPanel[] {
-  return FIRE_ALARM_PANELS.filter(p => p.panelType === panelType);
+  return FIRE_ALARM_PANELS.filter((p) => p.panelType === panelType);
 }
 
 /**
  * Get unique manufacturer list
  */
 export function getPanelManufacturers(): string[] {
-  const manufacturers = new Set(FIRE_ALARM_PANELS.map(p => p.manufacturer));
+  const manufacturers = new Set(FIRE_ALARM_PANELS.map((p) => p.manufacturer));
   return Array.from(manufacturers).sort();
 }
 
@@ -1315,13 +1395,16 @@ export function getPanelManufacturers(): string[] {
  * Get panels grouped by manufacturer
  */
 export function getPanelsGroupedByManufacturer(): Record<string, FireAlarmPanel[]> {
-  return FIRE_ALARM_PANELS.reduce((acc, panel) => {
-    if (!acc[panel.manufacturer]) {
-      acc[panel.manufacturer] = [];
-    }
-    acc[panel.manufacturer].push(panel);
-    return acc;
-  }, {} as Record<string, FireAlarmPanel[]>);
+  return FIRE_ALARM_PANELS.reduce(
+    (acc, panel) => {
+      if (!acc[panel.manufacturer]) {
+        acc[panel.manufacturer] = [];
+      }
+      acc[panel.manufacturer].push(panel);
+      return acc;
+    },
+    {} as Record<string, FireAlarmPanel[]>
+  );
 }
 
 /**
@@ -1337,12 +1420,17 @@ export function getPanelDefaults(panelId: string): {
   if (!panel) return null;
 
   return {
-    networkType: panel.panelType === 'conventional' ? 'conventional' :
-                 panel.panelType === 'addressable' || panel.panelType === 'analogue-addressable' ? 'addressable' :
-                 panel.panelType === 'wireless' ? 'wireless' : 'networked',
+    networkType:
+      panel.panelType === 'conventional'
+        ? 'conventional'
+        : panel.panelType === 'addressable' || panel.panelType === 'analogue-addressable'
+          ? 'addressable'
+          : panel.panelType === 'wireless'
+            ? 'wireless'
+            : 'networked',
     zonesCount: panel.zoneCapacity,
     loopCapacity: panel.loopCapacity,
-    protocol: panel.protocol
+    protocol: panel.protocol,
   };
 }
 
@@ -1353,8 +1441,9 @@ export function searchDetectors(query: string): FireAlarmDetector[] {
   const normalizedQuery = query.toLowerCase().trim();
   if (!normalizedQuery) return FIRE_ALARM_DETECTORS;
 
-  return FIRE_ALARM_DETECTORS.filter(detector => {
-    const searchText = `${detector.manufacturer} ${detector.model} ${detector.productCode || ''} ${detector.type}`.toLowerCase();
+  return FIRE_ALARM_DETECTORS.filter((detector) => {
+    const searchText =
+      `${detector.manufacturer} ${detector.model} ${detector.productCode || ''} ${detector.type}`.toLowerCase();
     return searchText.includes(normalizedQuery);
   });
 }
@@ -1363,7 +1452,9 @@ export function searchDetectors(query: string): FireAlarmDetector[] {
  * Get detectors by protocol (for panel compatibility)
  */
 export function getDetectorsByProtocol(protocol: DetectorProtocol): FireAlarmDetector[] {
-  return FIRE_ALARM_DETECTORS.filter(d => d.protocol === protocol || d.protocol === 'conventional');
+  return FIRE_ALARM_DETECTORS.filter(
+    (d) => d.protocol === protocol || d.protocol === 'conventional'
+  );
 }
 
 /**
@@ -1375,27 +1466,29 @@ export function getCompatibleDetectors(panelId: string): FireAlarmDetector[] {
 
   // Multi-protocol panels support multiple detector types
   if (panel.protocol === 'multi-protocol') {
-    return FIRE_ALARM_DETECTORS.filter(d =>
-      d.protocol === 'apollo-discovery' ||
-      d.protocol === 'apollo-xp95' ||
-      d.protocol === 'hochiki-esp' ||
-      d.protocol === 'system-sensor' ||
-      d.protocol === 'conventional'
+    return FIRE_ALARM_DETECTORS.filter(
+      (d) =>
+        d.protocol === 'apollo-discovery' ||
+        d.protocol === 'apollo-xp95' ||
+        d.protocol === 'hochiki-esp' ||
+        d.protocol === 'system-sensor' ||
+        d.protocol === 'conventional'
     );
   }
 
   // Aico RadioLINK and SmartLINK are compatible with each other
   if (panel.protocol === 'aico-radiolink' || panel.protocol === 'aico-smartlink') {
-    return FIRE_ALARM_DETECTORS.filter(d =>
-      d.protocol === 'aico-radiolink' ||
-      d.protocol === 'aico-smartlink' ||
-      d.protocol === 'conventional'
+    return FIRE_ALARM_DETECTORS.filter(
+      (d) =>
+        d.protocol === 'aico-radiolink' ||
+        d.protocol === 'aico-smartlink' ||
+        d.protocol === 'conventional'
     );
   }
 
   // Get detectors matching the panel's protocol
-  return FIRE_ALARM_DETECTORS.filter(d =>
-    d.protocol === panel.protocol || d.protocol === 'conventional'
+  return FIRE_ALARM_DETECTORS.filter(
+    (d) => d.protocol === panel.protocol || d.protocol === 'conventional'
   );
 }
 
@@ -1403,9 +1496,13 @@ export function getCompatibleDetectors(panelId: string): FireAlarmDetector[] {
  * Get Aico domestic alarms (BS 5839-6 Grade D)
  */
 export function getAicoDomesticAlarms(): FireAlarmDetector[] {
-  return FIRE_ALARM_DETECTORS.filter(d =>
-    d.manufacturer === 'Aico' &&
-    (d.type === 'optical-smoke' || d.type === 'heat-fixed' || d.type === 'multi-sensor' || d.type === 'co')
+  return FIRE_ALARM_DETECTORS.filter(
+    (d) =>
+      d.manufacturer === 'Aico' &&
+      (d.type === 'optical-smoke' ||
+        d.type === 'heat-fixed' ||
+        d.type === 'multi-sensor' ||
+        d.type === 'co')
   );
 }
 
@@ -1413,10 +1510,11 @@ export function getAicoDomesticAlarms(): FireAlarmDetector[] {
  * Get Aico system devices (interfaces, modules, controllers)
  */
 export function getAicoSystemDevices(): (FireAlarmPanel | FireAlarmDetector)[] {
-  const panels = FIRE_ALARM_PANELS.filter(p => p.manufacturer === 'Aico');
-  const modules = FIRE_ALARM_DETECTORS.filter(d =>
-    d.manufacturer === 'Aico' &&
-    (d.type === 'sounder' || d.type === 'call-point' || d.type === 'visual-alarm')
+  const panels = FIRE_ALARM_PANELS.filter((p) => p.manufacturer === 'Aico');
+  const modules = FIRE_ALARM_DETECTORS.filter(
+    (d) =>
+      d.manufacturer === 'Aico' &&
+      (d.type === 'sounder' || d.type === 'call-point' || d.type === 'visual-alarm')
   );
   return [...panels, ...modules];
 }

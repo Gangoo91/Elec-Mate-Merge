@@ -23,29 +23,30 @@ export const useCustomers = () => {
   const loadCustomers = async () => {
     try {
       setIsLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         setCustomers([]);
         return;
       }
 
-      const { data, error } = await supabase
-        .from('customers')
-        .select('*')
-        .order('name');
+      const { data, error } = await supabase.from('customers').select('*').order('name');
 
       if (error) throw error;
 
-      setCustomers(data.map(c => ({
-        id: c.id,
-        name: c.name,
-        email: c.email || undefined,
-        phone: c.phone || undefined,
-        address: c.address || undefined,
-        notes: c.notes || undefined,
-        createdAt: c.created_at,
-        updatedAt: c.updated_at,
-      })));
+      setCustomers(
+        data.map((c) => ({
+          id: c.id,
+          name: c.name,
+          email: c.email || undefined,
+          phone: c.phone || undefined,
+          address: c.address || undefined,
+          notes: c.notes || undefined,
+          createdAt: c.created_at,
+          updatedAt: c.updated_at,
+        }))
+      );
     } catch (error) {
       console.error('Failed to load customers:', error);
     } finally {
@@ -61,7 +62,9 @@ export const useCustomers = () => {
   // Save customer (checks for duplicates first)
   const saveCustomer = async (customer: Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // Check for existing customer with same email (if email provided)
@@ -102,16 +105,14 @@ export const useCustomers = () => {
         }
       }
 
-      const { error } = await supabase
-        .from('customers')
-        .insert({
-          user_id: user.id,
-          name: customer.name,
-          email: customer.email?.trim().toLowerCase() || null,
-          phone: customer.phone,
-          address: customer.address,
-          notes: customer.notes,
-        });
+      const { error } = await supabase.from('customers').insert({
+        user_id: user.id,
+        name: customer.name,
+        email: customer.email?.trim().toLowerCase() || null,
+        phone: customer.phone,
+        address: customer.address,
+        notes: customer.notes,
+      });
 
       if (error) throw error;
 
@@ -141,12 +142,12 @@ export const useCustomers = () => {
   };
 
   // Update customer
-  const updateCustomer = async (id: string, updates: Partial<Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>>) => {
+  const updateCustomer = async (
+    id: string,
+    updates: Partial<Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>>
+  ) => {
     try {
-      const { error } = await supabase
-        .from('customers')
-        .update(updates)
-        .eq('id', id);
+      const { error } = await supabase.from('customers').update(updates).eq('id', id);
 
       if (error) throw error;
 
@@ -168,10 +169,7 @@ export const useCustomers = () => {
   // Delete customer
   const deleteCustomer = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('customers')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('customers').delete().eq('id', id);
 
       if (error) throw error;
 
@@ -194,15 +192,15 @@ export const useCustomers = () => {
   const exportCustomers = () => {
     const csvContent = [
       ['Name', 'Email', 'Phone', 'Address', 'Notes'],
-      ...customers.map(c => [
+      ...customers.map((c) => [
         c.name,
         c.email || '',
         c.phone || '',
         c.address || '',
-        c.notes || ''
-      ])
+        c.notes || '',
+      ]),
     ]
-      .map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(','))
+      .map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(','))
       .join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -214,7 +212,7 @@ export const useCustomers = () => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    
+
     toast({
       title: 'Export successful',
       description: `Exported ${customers.length} customers to CSV.`,

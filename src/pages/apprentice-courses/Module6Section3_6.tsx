@@ -1,122 +1,170 @@
-import { ArrowLeft, CheckCircle, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section3_6 = () => {
   useSEO(
-    "When to Use Each Instrument and Why - Level 2 Electrical Testing & Inspection",
-    "Selecting the correct instrument for electrical testing and why it matters"
+    'When to Use Each Instrument and Why - Level 2 Electrical Testing & Inspection',
+    'Selecting the correct instrument for electrical testing and why it matters'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "Which instrument is safest for proving dead?",
-      options: ["Multimeter", "Two-pole voltage tester (GS38 compliant)", "Voltage pen", "Neon screwdriver"],
+      question: 'Which instrument is safest for proving dead?',
+      options: [
+        'Multimeter',
+        'Two-pole voltage tester (GS38 compliant)',
+        'Voltage pen',
+        'Neon screwdriver',
+      ],
       correctAnswer: 1,
-      explanation: "Two-pole voltage testers that comply with GS38 are the safest and most reliable instruments for proving dead."
+      explanation:
+        'Two-pole voltage testers that comply with GS38 are the safest and most reliable instruments for proving dead.',
     },
     {
       id: 2,
-      question: "What is an IR tester used for?",
-      options: ["Measuring voltage", "Checking insulation resistance between conductors and earth", "Testing continuity", "Proving dead"],
+      question: 'What is an IR tester used for?',
+      options: [
+        'Measuring voltage',
+        'Checking insulation resistance between conductors and earth',
+        'Testing continuity',
+        'Proving dead',
+      ],
       correctAnswer: 1,
-      explanation: "IR testers are specifically designed to check insulation resistance between conductors and between live conductors and earth."
+      explanation:
+        'IR testers are specifically designed to check insulation resistance between conductors and between live conductors and earth.',
     },
     {
       id: 3,
-      question: "Can continuity testers be used on live circuits?",
-      options: ["Yes, always", "No — only on isolated circuits", "Only at low voltage", "Only with special adapters"],
+      question: 'Can continuity testers be used on live circuits?',
+      options: [
+        'Yes, always',
+        'No — only on isolated circuits',
+        'Only at low voltage',
+        'Only with special adapters',
+      ],
       correctAnswer: 1,
-      explanation: "Continuity testers must only be used on isolated circuits to prevent damage to the instrument and ensure accurate readings."
+      explanation:
+        'Continuity testers must only be used on isolated circuits to prevent damage to the instrument and ensure accurate readings.',
     },
     {
       id: 4,
-      question: "Why are multimeters not recommended for safe isolation?",
-      options: ["They're too expensive", "They can give misleading results if incorrectly set", "They're too slow", "They're not accurate enough"],
+      question: 'Why are multimeters not recommended for safe isolation?',
+      options: [
+        "They're too expensive",
+        'They can give misleading results if incorrectly set',
+        "They're too slow",
+        "They're not accurate enough",
+      ],
       correctAnswer: 1,
-      explanation: "Multimeters can give misleading results if left on the wrong range, potentially showing zero reading even when circuits are live."
+      explanation:
+        'Multimeters can give misleading results if left on the wrong range, potentially showing zero reading even when circuits are live.',
     },
     {
       id: 5,
-      question: "What instrument would you use for ring final circuit verification?",
-      options: ["Multimeter", "IR tester", "Continuity tester", "Voltage pen"],
+      question: 'What instrument would you use for ring final circuit verification?',
+      options: ['Multimeter', 'IR tester', 'Continuity tester', 'Voltage pen'],
       correctAnswer: 2,
-      explanation: "Continuity testers are specifically designed for verifying unbroken paths in conductors, including ring final circuits."
+      explanation:
+        'Continuity testers are specifically designed for verifying unbroken paths in conductors, including ring final circuits.',
     },
     {
       id: 6,
-      question: "What additional device must always be used with a two-pole tester?",
-      options: ["Multimeter", "A proving unit", "Voltage pen", "Calculator"],
+      question: 'What additional device must always be used with a two-pole tester?',
+      options: ['Multimeter', 'A proving unit', 'Voltage pen', 'Calculator'],
       correctAnswer: 1,
-      explanation: "A proving unit is essential to verify that the two-pole tester is working correctly before and after use."
+      explanation:
+        'A proving unit is essential to verify that the two-pole tester is working correctly before and after use.',
     },
     {
       id: 7,
-      question: "True or False: A voltage pen can be used as proof of dead.",
-      options: ["True", "False"],
+      question: 'True or False: A voltage pen can be used as proof of dead.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Voltage pens are unreliable and should never be used as proof of dead - only GS38-compliant two-pole testers are suitable."
+      explanation:
+        'False. Voltage pens are unreliable and should never be used as proof of dead - only GS38-compliant two-pole testers are suitable.',
     },
     {
       id: 8,
-      question: "What should always be confirmed before using an IR tester?",
-      options: ["The weather is dry", "That the circuit is isolated and disconnected", "The battery level", "The time of day"],
+      question: 'What should always be confirmed before using an IR tester?',
+      options: [
+        'The weather is dry',
+        'That the circuit is isolated and disconnected',
+        'The battery level',
+        'The time of day',
+      ],
       correctAnswer: 1,
-      explanation: "IR testing must only be performed on isolated and disconnected circuits to prevent damage and ensure safety."
+      explanation:
+        'IR testing must only be performed on isolated and disconnected circuits to prevent damage and ensure safety.',
     },
     {
       id: 9,
-      question: "Which instrument is most commonly used for diagnostic fault-finding?",
-      options: ["IR tester", "Continuity tester", "Multimeter", "Proving unit"],
+      question: 'Which instrument is most commonly used for diagnostic fault-finding?',
+      options: ['IR tester', 'Continuity tester', 'Multimeter', 'Proving unit'],
       correctAnswer: 2,
-      explanation: "Multimeters are versatile instruments that can measure voltage, current, and resistance, making them ideal for diagnostic work."
+      explanation:
+        'Multimeters are versatile instruments that can measure voltage, current, and resistance, making them ideal for diagnostic work.',
     },
     {
       id: 10,
-      question: "What is the consequence of using the wrong instrument for a task?",
-      options: ["Nothing significant", "Slightly longer work time", "Inaccurate readings, wasted time, or serious safety risks", "Better results"],
+      question: 'What is the consequence of using the wrong instrument for a task?',
+      options: [
+        'Nothing significant',
+        'Slightly longer work time',
+        'Inaccurate readings, wasted time, or serious safety risks',
+        'Better results',
+      ],
       correctAnswer: 2,
-      explanation: "Using incorrect instruments can lead to inaccurate readings, wasted time, equipment damage, or serious safety risks including injury or death."
-    }
+      explanation:
+        'Using incorrect instruments can lead to inaccurate readings, wasted time, equipment damage, or serious safety risks including injury or death.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Can I use an IR tester on live circuits?",
-      answer: "No — insulation resistance testing must only be done on isolated circuits. Applying the test voltage to live circuits can damage equipment and create serious safety hazards. The high test voltage (typically 500V or 1000V DC) can destroy electronic components and create dangerous conditions."
+      question: 'Can I use an IR tester on live circuits?',
+      answer:
+        'No — insulation resistance testing must only be done on isolated circuits. Applying the test voltage to live circuits can damage equipment and create serious safety hazards. The high test voltage (typically 500V or 1000V DC) can destroy electronic components and create dangerous conditions.',
     },
     {
-      question: "Is it acceptable to use a voltage pen for quick checks?",
-      answer: "Only as a preliminary check — never as proof of dead. Voltage pens can be unreliable and should only be used to give an initial indication, followed by proper testing with a GS38-compliant two-pole tester. They can give false readings due to electromagnetic interference or faulty sensing circuits."
+      question: 'Is it acceptable to use a voltage pen for quick checks?',
+      answer:
+        'Only as a preliminary check — never as proof of dead. Voltage pens can be unreliable and should only be used to give an initial indication, followed by proper testing with a GS38-compliant two-pole tester. They can give false readings due to electromagnetic interference or faulty sensing circuits.',
     },
     {
-      question: "Why use continuity testers instead of multimeters for continuity?",
-      answer: "Continuity testers are specifically designed for this purpose, are easier to use, and provide more reliable results. They typically have lower test currents and clearer indications for continuity testing. The higher test current (typically 200mA) ensures reliable operation of audible and visual indicators."
+      question: 'Why use continuity testers instead of multimeters for continuity?',
+      answer:
+        'Continuity testers are specifically designed for this purpose, are easier to use, and provide more reliable results. They typically have lower test currents and clearer indications for continuity testing. The higher test current (typically 200mA) ensures reliable operation of audible and visual indicators.',
     },
     {
-      question: "What happens if I use the wrong test voltage for IR testing?",
-      answer: "Using too low a voltage may not detect insulation breakdown that could occur at operating voltage. Using too high a voltage can damage cable insulation or electronic equipment. Always match the test voltage to the circuit operating voltage as specified in BS 7671."
+      question: 'What happens if I use the wrong test voltage for IR testing?',
+      answer:
+        'Using too low a voltage may not detect insulation breakdown that could occur at operating voltage. Using too high a voltage can damage cable insulation or electronic equipment. Always match the test voltage to the circuit operating voltage as specified in BS 7671.',
     },
     {
-      question: "How often should test instruments be calibrated?",
-      answer: "Test instruments should be calibrated annually or according to manufacturer recommendations. More frequent calibration may be required for instruments used in harsh environments or for safety-critical applications. Always check calibration certificates before important tests."
+      question: 'How often should test instruments be calibrated?',
+      answer:
+        'Test instruments should be calibrated annually or according to manufacturer recommendations. More frequent calibration may be required for instruments used in harsh environments or for safety-critical applications. Always check calibration certificates before important tests.',
     },
     {
-      question: "Can I share test instruments between different voltage systems?",
-      answer: "Only if the instrument CAT rating is suitable for the highest voltage system you will encounter. CAT III instruments are suitable for distribution circuits, while CAT IV instruments are required for overhead lines and service entrances. Never exceed the instrument ratings."
+      question: 'Can I share test instruments between different voltage systems?',
+      answer:
+        'Only if the instrument CAT rating is suitable for the highest voltage system you will encounter. CAT III instruments are suitable for distribution circuits, while CAT IV instruments are required for overhead lines and service entrances. Never exceed the instrument ratings.',
     },
     {
-      question: "What should I do if my voltage tester fails the proving unit test?",
-      answer: "Stop work immediately and do not proceed with proving dead. The instrument must be repaired or replaced before any electrical work can commence. Never assume circuits are dead if you cannot verify your tester is working correctly."
+      question: 'What should I do if my voltage tester fails the proving unit test?',
+      answer:
+        'Stop work immediately and do not proceed with proving dead. The instrument must be repaired or replaced before any electrical work can commence. Never assume circuits are dead if you cannot verify your tester is working correctly.',
     },
     {
-      question: "Why must I test all conductor combinations during IR testing?",
-      answer: "Different insulation paths may have different conditions. For example, L-N insulation could be perfect while L-E insulation has deteriorated. Testing all combinations (L-N, L-E, N-E) ensures complete verification of insulation integrity."
-    }
+      question: 'Why must I test all conductor combinations during IR testing?',
+      answer:
+        'Different insulation paths may have different conditions. For example, L-N insulation could be perfect while L-E insulation has deteriorated. Testing all combinations (L-N, L-E, N-E) ensures complete verification of insulation integrity.',
+    },
   ];
 
   return (
@@ -186,13 +234,22 @@ const Module6Section3_6 = () => {
           <section className="mb-10">
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Different electrical tests require different instruments. Using the wrong tool can give inaccurate results or even create dangerous situations. This subsection explains when to use a multimeter, insulation resistance tester (IR tester), and continuity tester, and why each one is essential to safe and compliant inspection and testing.
+                Different electrical tests require different instruments. Using the wrong tool can
+                give inaccurate results or even create dangerous situations. This subsection
+                explains when to use a multimeter, insulation resistance tester (IR tester), and
+                continuity tester, and why each one is essential to safe and compliant inspection
+                and testing.
               </p>
               <p>
-                The choice of instrument is not just about convenience or availability - it is a critical safety decision that can mean the difference between life and death. Every year, electrical accidents occur because electricians use inappropriate instruments for safety-critical tasks such as proving dead.
+                The choice of instrument is not just about convenience or availability - it is a
+                critical safety decision that can mean the difference between life and death. Every
+                year, electrical accidents occur because electricians use inappropriate instruments
+                for safety-critical tasks such as proving dead.
               </p>
               <p>
-                BS 7671 and the Electricity at Work Regulations specify requirements for electrical testing instruments, particularly emphasising the use of GS38-compliant equipment for safety applications.
+                BS 7671 and the Electricity at Work Regulations specify requirements for electrical
+                testing instruments, particularly emphasising the use of GS38-compliant equipment
+                for safety applications.
               </p>
             </div>
           </section>
@@ -204,11 +261,16 @@ const Module6Section3_6 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-white/80 mb-3">By the end of this subsection, you will be able to:</p>
+              <p className="text-white/80 mb-3">
+                By the end of this subsection, you will be able to:
+              </p>
               <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                  <span>Identify the correct instrument for continuity, insulation resistance, and voltage testing</span>
+                  <span>
+                    Identify the correct instrument for continuity, insulation resistance, and
+                    voltage testing
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
@@ -238,7 +300,9 @@ const Module6Section3_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <div>
-                <p className="font-medium text-white mb-2">Use when: Measuring AC/DC voltage, current, or resistance.</p>
+                <p className="font-medium text-white mb-2">
+                  Use when: Measuring AC/DC voltage, current, or resistance.
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Fault diagnosis and troubleshooting electrical problems</li>
                   <li>• Measuring voltage drops across components</li>
@@ -250,7 +314,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Why: Provides quick, accurate measurements for diagnostics.</p>
+                <p className="font-medium text-white mb-2">
+                  Why: Provides quick, accurate measurements for diagnostics.
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• High accuracy and resolution for precise measurements</li>
                   <li>• Auto-ranging feature eliminates range selection errors</li>
@@ -262,7 +328,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <p className="font-medium text-white mb-2">Do not use for: Proving dead (multimeters can mislead if on wrong range).</p>
+                <p className="font-medium text-white mb-2">
+                  Do not use for: Proving dead (multimeters can mislead if on wrong range).
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Safe isolation procedures - use GS38-compliant two-pole testers only</li>
                   <li>• Confirming circuits are dead before work begins</li>
@@ -277,7 +345,12 @@ const Module6Section3_6 = () => {
             <InlineCheck
               id="multimeter-use"
               question="What is the primary use of a multimeter?"
-              options={["Proving dead", "Diagnostics and measuring voltage/current/resistance", "Insulation testing", "Continuity only"]}
+              options={[
+                'Proving dead',
+                'Diagnostics and measuring voltage/current/resistance',
+                'Insulation testing',
+                'Continuity only',
+              ]}
               correctIndex={1}
               explanation="Multimeters are primarily used for diagnostic work, measuring AC/DC voltage, current, and resistance accurately."
             />
@@ -291,7 +364,10 @@ const Module6Section3_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <div>
-                <p className="font-medium text-white mb-2">Use when: Checking the quality of insulation between conductors and between live conductors and earth.</p>
+                <p className="font-medium text-white mb-2">
+                  Use when: Checking the quality of insulation between conductors and between live
+                  conductors and earth.
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Testing new installations before first energisation</li>
                   <li>• Periodic testing of existing installations (EICR)</li>
@@ -304,7 +380,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Why: Confirms no leakage currents or breakdown of insulation, ensuring safety.</p>
+                <p className="font-medium text-white mb-2">
+                  Why: Confirms no leakage currents or breakdown of insulation, ensuring safety.
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Prevents electric shock from damaged insulation</li>
                   <li>• Identifies potential fire risks from leakage currents</li>
@@ -327,7 +405,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <p className="font-medium text-white mb-2">Do not use for: Live systems — circuits must be disconnected and isolated.</p>
+                <p className="font-medium text-white mb-2">
+                  Do not use for: Live systems — circuits must be disconnected and isolated.
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Circuits containing electronic equipment (unless disconnected)</li>
                   <li>• Systems with surge protection devices connected</li>
@@ -343,7 +423,12 @@ const Module6Section3_6 = () => {
             <InlineCheck
               id="ir-tester-safety"
               question="When can IR testers be used?"
-              options={["On live circuits", "Only on isolated circuits", "On any circuit below 230V", "With special safety equipment"]}
+              options={[
+                'On live circuits',
+                'Only on isolated circuits',
+                'On any circuit below 230V',
+                'With special safety equipment',
+              ]}
               correctIndex={1}
               explanation="IR testers must only be used on isolated and disconnected circuits to prevent equipment damage and ensure safety."
             />
@@ -357,7 +442,10 @@ const Module6Section3_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <div>
-                <p className="font-medium text-white mb-2">Use when: Verifying unbroken paths in conductors (e.g., ring final circuits, bonding, CPCs).</p>
+                <p className="font-medium text-white mb-2">
+                  Use when: Verifying unbroken paths in conductors (e.g., ring final circuits,
+                  bonding, CPCs).
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Testing ring final circuit continuity (R1 + R2 method)</li>
                   <li>• Verifying protective conductor continuity (CPC)</li>
@@ -370,7 +458,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Why: Ensures protective conductors and circuits are complete.</p>
+                <p className="font-medium text-white mb-2">
+                  Why: Ensures protective conductors and circuits are complete.
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Confirms fault current path back to source</li>
                   <li>• Ensures automatic disconnection will operate correctly</li>
@@ -408,7 +498,12 @@ const Module6Section3_6 = () => {
             <InlineCheck
               id="continuity-purpose"
               question="What does a continuity tester verify?"
-              options={["Voltage levels", "Unbroken paths in conductors", "Insulation quality", "Power consumption"]}
+              options={[
+                'Voltage levels',
+                'Unbroken paths in conductors',
+                'Insulation quality',
+                'Power consumption',
+              ]}
               correctIndex={1}
               explanation="Continuity testers verify that there are complete, unbroken paths in conductors such as ring circuits and protective conductors."
             />
@@ -423,7 +518,9 @@ const Module6Section3_6 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
               <div className="text-white/80 space-y-4 leading-relaxed">
                 <div>
-                  <p className="font-medium text-white mb-2">Use when: Proving circuits live or dead.</p>
+                  <p className="font-medium text-white mb-2">
+                    Use when: Proving circuits live or dead.
+                  </p>
                   <ul className="ml-4 space-y-1 text-sm">
                     <li>• Safe isolation procedures before electrical work</li>
                     <li>• Confirming circuit status at isolation points</li>
@@ -436,7 +533,9 @@ const Module6Section3_6 = () => {
                 </div>
 
                 <div>
-                  <p className="font-medium text-white mb-2">Why: Safest and most reliable instrument for proving dead.</p>
+                  <p className="font-medium text-white mb-2">
+                    Why: Safest and most reliable instrument for proving dead.
+                  </p>
                   <ul className="ml-4 space-y-1 text-sm">
                     <li>• GS38 compliance ensures appropriate safety features</li>
                     <li>• Two-pole testing prevents false readings from broken earths</li>
@@ -470,7 +569,9 @@ const Module6Section3_6 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Fault-finding (e.g., "why isn't the socket working?") → Multimeter</p>
+                <p className="font-medium text-white mb-2">
+                  Fault-finding (e.g., "why isn't the socket working?") → Multimeter
+                </p>
                 <ul className="ml-4 space-y-1 text-sm text-white/80">
                   <li>• Check voltage at socket outlets</li>
                   <li>• Measure current draw of appliances</li>
@@ -480,7 +581,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Insulation check before energising → IR Tester</p>
+                <p className="font-medium text-white mb-2">
+                  Insulation check before energising → IR Tester
+                </p>
                 <ul className="ml-4 space-y-1 text-sm text-white/80">
                   <li>• New installation commissioning</li>
                   <li>• After cable pulling and termination</li>
@@ -490,7 +593,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Ring final circuit verification → Continuity Tester</p>
+                <p className="font-medium text-white mb-2">
+                  Ring final circuit verification → Continuity Tester
+                </p>
                 <ul className="ml-4 space-y-1 text-sm text-white/80">
                   <li>• R1 + R2 testing of socket circuits</li>
                   <li>• CPC continuity verification</li>
@@ -500,7 +605,9 @@ const Module6Section3_6 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
-                <p className="font-medium text-white mb-2">Safe isolation → Two-Pole Voltage Tester + Proving Unit</p>
+                <p className="font-medium text-white mb-2">
+                  Safe isolation → Two-Pole Voltage Tester + Proving Unit
+                </p>
                 <ul className="ml-4 space-y-1 text-sm text-white/80">
                   <li>• Proving dead before any electrical work</li>
                   <li>• Confirming isolation effectiveness</li>
@@ -623,22 +730,33 @@ const Module6Section3_6 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-                <p className="font-medium text-white mb-3">Case Study 1: The Wrong Tool Nearly Caused a Serious Accident</p>
+                <p className="font-medium text-white mb-3">
+                  Case Study 1: The Wrong Tool Nearly Caused a Serious Accident
+                </p>
                 <p className="text-white/80 mb-3">
-                  On a commercial project, an electrician used a multimeter to prove a circuit was dead. The meter was accidentally left on the wrong range, giving a zero reading even though the circuit was live. He received an electric shock when handling the conductor.
+                  On a commercial project, an electrician used a multimeter to prove a circuit was
+                  dead. The meter was accidentally left on the wrong range, giving a zero reading
+                  even though the circuit was live. He received an electric shock when handling the
+                  conductor.
                 </p>
                 <p className="text-white/80">
-                  <strong>Prevention:</strong> Using a GS38-compliant two-pole tester with a proving unit would have clearly indicated the live circuit and prevented the accident.
+                  <strong>Prevention:</strong> Using a GS38-compliant two-pole tester with a proving
+                  unit would have clearly indicated the live circuit and prevented the accident.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-white mb-3">Case Study 2: IR Testing Disaster</p>
                 <p className="text-white/80 mb-3">
-                  An apprentice was asked to test the insulation resistance of a new circuit. Without proper training, he connected the IR tester to a live circuit containing electronic equipment.
+                  An apprentice was asked to test the insulation resistance of a new circuit.
+                  Without proper training, he connected the IR tester to a live circuit containing
+                  electronic equipment.
                 </p>
                 <p className="text-white/80">
-                  <strong>The result:</strong> The 500V test voltage destroyed £2,000 worth of control equipment. <strong>Lesson learned:</strong> IR testing must only be performed on isolated circuits, and all electronic equipment must be disconnected first.
+                  <strong>The result:</strong> The 500V test voltage destroyed £2,000 worth of
+                  control equipment. <strong>Lesson learned:</strong> IR testing must only be
+                  performed on isolated circuits, and all electronic equipment must be disconnected
+                  first.
                 </p>
               </div>
             </div>
@@ -697,10 +815,18 @@ const Module6Section3_6 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Instrument Roles:</p>
                 <ul className="space-y-1 text-sm text-white/80">
-                  <li>• <strong>Multimeters:</strong> Diagnostics - never for proving dead</li>
-                  <li>• <strong>IR Testers:</strong> Check insulation on isolated circuits</li>
-                  <li>• <strong>Continuity Testers:</strong> Verify unbroken conductor paths</li>
-                  <li>• <strong>Two-Pole Testers:</strong> The only safe way to prove dead</li>
+                  <li>
+                    • <strong>Multimeters:</strong> Diagnostics - never for proving dead
+                  </li>
+                  <li>
+                    • <strong>IR Testers:</strong> Check insulation on isolated circuits
+                  </li>
+                  <li>
+                    • <strong>Continuity Testers:</strong> Verify unbroken conductor paths
+                  </li>
+                  <li>
+                    • <strong>Two-Pole Testers:</strong> The only safe way to prove dead
+                  </li>
                 </ul>
               </div>
               <div>
@@ -726,10 +852,7 @@ const Module6Section3_6 = () => {
 
           {/* Quiz */}
           <section className="mb-10">
-            <Quiz
-              title="Test Your Knowledge: Instrument Selection"
-              questions={quizQuestions}
-            />
+            <Quiz title="Test Your Knowledge: Instrument Selection" questions={quizQuestions} />
           </section>
 
           {/* Navigation Footer */}

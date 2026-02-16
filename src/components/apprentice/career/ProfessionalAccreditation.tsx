@@ -1,5 +1,4 @@
-
-import EnhancedProfessionalAccreditation from "./EnhancedProfessionalAccreditation";
+import EnhancedProfessionalAccreditation from './EnhancedProfessionalAccreditation';
 
 const ProfessionalAccreditation = () => {
   return <EnhancedProfessionalAccreditation />;

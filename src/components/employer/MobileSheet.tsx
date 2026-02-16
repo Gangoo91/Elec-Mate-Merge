@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { X, ChevronLeft } from "lucide-react";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/sheet';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/ui/button';
+import { X, ChevronLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface MobileSheetProps {
   open: boolean;
@@ -23,14 +23,14 @@ interface MobileSheetProps {
   className?: string;
   contentClassName?: string;
   /** Height of the sheet: 'full' (95vh), 'large' (85vh), 'medium' (70vh), 'auto' (fit content) */
-  size?: "full" | "large" | "medium" | "auto";
+  size?: 'full' | 'large' | 'medium' | 'auto';
 }
 
 const sizeMap = {
-  full: "h-[95vh]",
-  large: "h-[85vh]",
-  medium: "h-[70vh]",
-  auto: "max-h-[90vh]",
+  full: 'h-[95vh]',
+  large: 'h-[85vh]',
+  medium: 'h-[70vh]',
+  auto: 'max-h-[90vh]',
 };
 
 /**
@@ -48,18 +48,11 @@ export function MobileSheet({
   onBack,
   className,
   contentClassName,
-  size = "full",
+  size = 'full',
 }: MobileSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className={cn(
-          "p-0 rounded-t-2xl",
-          sizeMap[size],
-          className
-        )}
-      >
+      <SheetContent side="bottom" className={cn('p-0 rounded-t-2xl', sizeMap[size], className)}>
         <div className="flex flex-col h-full">
           {/* Header with drag indicator */}
           <div className="flex flex-col">
@@ -73,19 +66,16 @@ export function MobileSheet({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   {showBack && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 -ml-1"
-                      onClick={onBack}
-                    >
+                    <Button variant="ghost" size="icon" className="h-8 w-8 -ml-1" onClick={onBack}>
                       <ChevronLeft className="h-5 w-5" />
                     </Button>
                   )}
                   <div>
                     <SheetTitle className="text-base sm:text-lg text-left">{title}</SheetTitle>
                     {description && (
-                      <SheetDescription className="text-xs text-left">{description}</SheetDescription>
+                      <SheetDescription className="text-xs text-left">
+                        {description}
+                      </SheetDescription>
                     )}
                   </div>
                 </div>
@@ -102,17 +92,13 @@ export function MobileSheet({
           </div>
 
           {/* Content */}
-          <ScrollArea className={cn("flex-1", contentClassName)}>
-            <div className="px-4 py-4 pb-safe">
-              {children}
-            </div>
+          <ScrollArea className={cn('flex-1', contentClassName)}>
+            <div className="px-4 py-4 pb-safe">{children}</div>
           </ScrollArea>
 
           {/* Footer */}
           {footer && (
-            <div className="px-4 py-3 border-t border-border bg-background pb-safe">
-              {footer}
-            </div>
+            <div className="px-4 py-3 border-t border-border bg-background pb-safe">{footer}</div>
           )}
         </div>
       </SheetContent>
@@ -130,31 +116,31 @@ interface MobileSheetFooterProps {
   submitLabel?: string;
   isSubmitting?: boolean;
   submitDisabled?: boolean;
-  variant?: "single" | "double" | "stacked";
+  variant?: 'single' | 'double' | 'stacked';
 }
 
 export function MobileSheetFooter({
   onCancel,
   onSubmit,
-  cancelLabel = "Cancel",
-  submitLabel = "Save",
+  cancelLabel = 'Cancel',
+  submitLabel = 'Save',
   isSubmitting = false,
   submitDisabled = false,
-  variant = "double",
+  variant = 'double',
 }: MobileSheetFooterProps) {
-  if (variant === "single") {
+  if (variant === 'single') {
     return (
       <Button
         onClick={onSubmit}
         disabled={isSubmitting || submitDisabled}
         className="w-full h-12 text-base"
       >
-        {isSubmitting ? "Saving..." : submitLabel}
+        {isSubmitting ? 'Saving...' : submitLabel}
       </Button>
     );
   }
 
-  if (variant === "stacked") {
+  if (variant === 'stacked') {
     return (
       <div className="flex flex-col gap-2">
         <Button
@@ -162,13 +148,9 @@ export function MobileSheetFooter({
           disabled={isSubmitting || submitDisabled}
           className="w-full h-12 text-base"
         >
-          {isSubmitting ? "Saving..." : submitLabel}
+          {isSubmitting ? 'Saving...' : submitLabel}
         </Button>
-        <Button
-          variant="ghost"
-          onClick={onCancel}
-          className="w-full h-10 text-base"
-        >
+        <Button variant="ghost" onClick={onCancel} className="w-full h-10 text-base">
           {cancelLabel}
         </Button>
       </div>
@@ -177,11 +159,7 @@ export function MobileSheetFooter({
 
   return (
     <div className="flex gap-3">
-      <Button
-        variant="outline"
-        onClick={onCancel}
-        className="flex-1 h-12 text-base"
-      >
+      <Button variant="outline" onClick={onCancel} className="flex-1 h-12 text-base">
         {cancelLabel}
       </Button>
       <Button
@@ -189,7 +167,7 @@ export function MobileSheetFooter({
         disabled={isSubmitting || submitDisabled}
         className="flex-1 h-12 text-base"
       >
-        {isSubmitting ? "Saving..." : submitLabel}
+        {isSubmitting ? 'Saving...' : submitLabel}
       </Button>
     </div>
   );
@@ -216,18 +194,14 @@ export function MobileFormField({
   className,
 }: MobileFormFieldProps) {
   return (
-    <div className={cn("space-y-2", className)}>
+    <div className={cn('space-y-2', className)}>
       <label className="text-sm font-medium text-foreground flex items-center gap-1">
         {label}
         {required && <span className="text-destructive">*</span>}
       </label>
       {children}
-      {hint && !error && (
-        <p className="text-xs text-muted-foreground">{hint}</p>
-      )}
-      {error && (
-        <p className="text-xs text-destructive">{error}</p>
-      )}
+      {hint && !error && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
   );
 }

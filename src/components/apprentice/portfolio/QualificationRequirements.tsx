@@ -10,7 +10,16 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
-import { ChevronDown, ChevronRight, BookOpen, CheckCircle2, Circle, Search, X, Camera } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronRight,
+  BookOpen,
+  CheckCircle2,
+  Circle,
+  Search,
+  X,
+  Camera,
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface QualificationRequirement {
@@ -71,7 +80,9 @@ export function QualificationRequirements({
       try {
         const { data, error } = await supabase
           .from('qualification_requirements')
-          .select('id, qualification_code, unit_code, unit_title, lo_number, lo_text, ac_code, ac_text')
+          .select(
+            'id, qualification_code, unit_code, unit_title, lo_number, lo_text, ac_code, ac_text'
+          )
           .eq('qualification_code', qualificationCode!)
           .order('unit_code', { ascending: true })
           .order('lo_number', { ascending: true })
@@ -211,9 +222,7 @@ export function QualificationRequirements({
                 <BookOpen className="h-4.5 w-4.5 text-elec-yellow" />
                 Qualification Requirements
               </SheetTitle>
-              <p className="text-xs text-white/50 mt-0.5">
-                {qualificationCode || 'Loading...'}
-              </p>
+              <p className="text-xs text-white/50 mt-0.5">{qualificationCode || 'Loading...'}</p>
             </div>
 
             {/* Search */}
@@ -315,9 +324,7 @@ export function QualificationRequirements({
                                       LO{lo.loNumber}
                                     </span>
                                   )}
-                                  <p className="text-xs text-white leading-relaxed">
-                                    {lo.loText}
-                                  </p>
+                                  <p className="text-xs text-white leading-relaxed">{lo.loText}</p>
                                 </div>
                               </button>
 
@@ -335,9 +342,7 @@ export function QualificationRequirements({
                                         )}
                                         <p
                                           className={`text-[11px] leading-relaxed flex-1 min-w-0 ${
-                                            status === 'evidenced'
-                                              ? 'text-green-400'
-                                              : 'text-white'
+                                            status === 'evidenced' ? 'text-green-400' : 'text-white'
                                           }`}
                                         >
                                           <span className="font-medium">{ac.ac_code}</span>{' '}

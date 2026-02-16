@@ -1,8 +1,7 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Play, Pause, RotateCcw } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Play, Pause, RotateCcw } from 'lucide-react';
 
 const BreathingExercise = () => {
   const [isActive, setIsActive] = useState(false);
@@ -14,7 +13,7 @@ const BreathingExercise = () => {
     inhale: { duration: 4, next: 'hold', instruction: 'Breathe in slowly' },
     hold: { duration: 4, next: 'exhale', instruction: 'Hold your breath' },
     exhale: { duration: 6, next: 'pause', instruction: 'Breathe out slowly' },
-    pause: { duration: 2, next: 'inhale', instruction: 'Rest' }
+    pause: { duration: 2, next: 'inhale', instruction: 'Rest' },
   };
 
   useEffect(() => {
@@ -22,17 +21,17 @@ const BreathingExercise = () => {
 
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft(time => time - 1);
+        setTimeLeft((time) => time - 1);
       }, 1000);
     } else if (isActive && timeLeft === 0) {
       const currentPhase = phases[phase];
       const nextPhase = currentPhase.next as keyof typeof phases;
-      
+
       setPhase(nextPhase);
       setTimeLeft(phases[nextPhase].duration);
-      
+
       if (nextPhase === 'inhale') {
-        setCycle(prev => prev + 1);
+        setCycle((prev) => prev + 1);
       }
     }
 
@@ -64,14 +63,12 @@ const BreathingExercise = () => {
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <CardTitle className="text-elec-yellow">4-4-6 Breathing Exercise</CardTitle>
-        <p className="text-sm text-white">
-          A calming technique to reduce stress and anxiety
-        </p>
+        <p className="text-sm text-white">A calming technique to reduce stress and anxiety</p>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex flex-col items-center space-y-4">
           <div className="relative w-32 h-32 flex items-center justify-center">
-            <div 
+            <div
               className="w-24 h-24 rounded-full bg-elec-yellow/20 border-2 border-elec-yellow transition-transform duration-1000 ease-in-out flex items-center justify-center"
               style={{ transform: `scale(${getCircleScale()})` }}
             >
@@ -81,11 +78,9 @@ const BreathingExercise = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="text-center space-y-2">
-            <h3 className="text-lg font-medium text-foreground">
-              {phases[phase].instruction}
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">{phases[phase].instruction}</h3>
             <p className="text-sm text-white">
               Cycle {cycle} • {phase.charAt(0).toUpperCase() + phase.slice(1)} phase
             </p>
@@ -111,7 +106,7 @@ const BreathingExercise = () => {
               Pause
             </Button>
           )}
-          
+
           <Button
             onClick={resetExercise}
             variant="outline"
@@ -130,9 +125,7 @@ const BreathingExercise = () => {
             <div>• Exhale for 6 seconds</div>
             <div>• Pause for 2 seconds</div>
           </div>
-          <p className="text-xs text-white pt-2">
-            Aim for 5-10 cycles for maximum benefit
-          </p>
+          <p className="text-xs text-white pt-2">Aim for 5-10 cycles for maximum benefit</p>
         </div>
       </CardContent>
     </Card>

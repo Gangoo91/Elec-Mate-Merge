@@ -7,14 +7,14 @@ export const SecurityRiskQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is one security risk associated with remote access?";
+  const question = 'What is one security risk associated with remote access?';
   const options = [
-    "Devices consuming too much electricity",
-    "Weak passwords allowing unauthorised access",
-    "Faster internet connection requirements",
-    "Increased monthly subscription costs"
+    'Devices consuming too much electricity',
+    'Weak passwords allowing unauthorised access',
+    'Faster internet connection requirements',
+    'Increased monthly subscription costs',
   ];
-  const correctAnswer = "Weak passwords allowing unauthorised access";
+  const correctAnswer = 'Weak passwords allowing unauthorised access';
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer);
@@ -36,14 +36,14 @@ export const SecurityRiskQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground text-sm font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <Button
               key={index}
               variant="outline"
               className={`w-full text-left p-3 h-auto justify-start text-sm ${
-                !showResult 
+                !showResult
                   ? 'bg-elec-dark text-foreground border-gray-600 hover:bg-gray-700'
                   : selectedAnswer === option && option === correctAnswer
                     ? 'bg-green-600/20 text-green-400 border-green-600/40'
@@ -56,9 +56,7 @@ export const SecurityRiskQuickCheck = () => {
               onClick={() => !showResult && handleAnswerSelect(option)}
               disabled={showResult}
             >
-              <span className="mr-2 font-bold">
-                {String.fromCharCode(65 + index)}.
-              </span>
+              <span className="mr-2 font-bold">{String.fromCharCode(65 + index)}.</span>
               {option}
               {showResult && option === correctAnswer && (
                 <CheckCircle className="ml-auto h-4 w-4 text-green-400" />
@@ -71,33 +69,37 @@ export const SecurityRiskQuickCheck = () => {
         </div>
 
         {showResult && (
-          <div className={`p-3 rounded-lg border text-sm ${
-            selectedAnswer === correctAnswer 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-lg border text-sm ${
+              selectedAnswer === correctAnswer
+                ? 'bg-green-600/10 border-green-600/30'
+                : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-start gap-2 mb-2">
               {selectedAnswer === correctAnswer ? (
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
               ) : (
                 <XCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
               )}
-              <span className={`font-semibold ${
-                selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
-              }`}>
+              <span
+                className={`font-semibold ${
+                  selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
                 {selectedAnswer === correctAnswer ? 'Correct!' : 'Incorrect'}
               </span>
             </div>
             <p className="text-foreground">
-              Weak passwords are a major cybersecurity risk that can allow unauthorised individuals to 
-              gain access to smart home systems, potentially compromising security, privacy, and control 
-              of home devices.
+              Weak passwords are a major cybersecurity risk that can allow unauthorised individuals
+              to gain access to smart home systems, potentially compromising security, privacy, and
+              control of home devices.
             </p>
           </div>
         )}
 
         {showResult && (
-          <Button 
+          <Button
             onClick={resetQuestion}
             variant="outline"
             className="bg-transparent border-red-600 text-red-400 hover:bg-red-600/10 text-sm"

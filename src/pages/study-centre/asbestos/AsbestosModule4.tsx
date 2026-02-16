@@ -1,40 +1,45 @@
-import { ArrowLeft, HardHat, Layers, ClipboardCheck, Shield, Wrench } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HardHat, Layers, ClipboardCheck, Shield, Wrench } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Categories of Asbestos Work",
+    title: 'Categories of Asbestos Work',
     icon: Layers,
-    description: "Licensed, notifiable non-licensed, and non-licensed work — requirements and restrictions for each",
+    description:
+      'Licensed, notifiable non-licensed, and non-licensed work — requirements and restrictions for each',
   },
   {
     id: 2,
-    title: "Risk Assessment & Method Statements",
+    title: 'Risk Assessment & Method Statements',
     icon: ClipboardCheck,
-    description: "RAMS for asbestos work, hierarchy of controls, task-specific assessment, and HSE Essentials",
+    description:
+      'RAMS for asbestos work, hierarchy of controls, task-specific assessment, and HSE Essentials',
   },
   {
     id: 3,
-    title: "RPE & PPE Selection",
+    title: 'RPE & PPE Selection',
     icon: Shield,
-    description: "FFP3, half-mask, full-face, powered air — face-fit testing, coveralls, and decontamination sequence",
+    description:
+      'FFP3, half-mask, full-face, powered air — face-fit testing, coveralls, and decontamination sequence',
   },
   {
     id: 4,
-    title: "Controlled Work Techniques",
+    title: 'Controlled Work Techniques',
     icon: Wrench,
-    description: "Wet working, shadow vacuuming, glove bags, enclosures, Class H vacuums, and prohibited tools",
+    description:
+      'Wet working, shadow vacuuming, glove bags, enclosures, Class H vacuums, and prohibited tools',
   },
 ];
 
 export default function AsbestosModule4() {
   useSEO({
-    title: "Module 4: Safe Working Practices & PPE | Asbestos Awareness",
-    description: "Work categories, risk assessment, RPE and PPE selection, decontamination procedures, and controlled asbestos work techniques.",
+    title: 'Module 4: Safe Working Practices & PPE | Asbestos Awareness',
+    description:
+      'Work categories, risk assessment, RPE and PPE selection, decontamination procedures, and controlled asbestos work techniques.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function AsbestosModule4() {
               Safe Working Practices & PPE
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Work categories, risk controls, respiratory protection, and the techniques used for safe asbestos work
+              Work categories, risk controls, respiratory protection, and the techniques used for
+              safe asbestos work
             </p>
           </div>
 

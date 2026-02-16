@@ -14,31 +14,52 @@ export const TerminationTakeaways = () => {
         <ul className="space-y-3">
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span><strong>Tool Quality Matters:</strong> Professional-grade tools with calibration are essential for consistent results</span>
+            <span>
+              <strong>Tool Quality Matters:</strong> Professional-grade tools with calibration are
+              essential for consistent results
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span><strong>Regular Calibration:</strong> Quarterly calibration maintains tool accuracy and compliance standards</span>
+            <span>
+              <strong>Regular Calibration:</strong> Quarterly calibration maintains tool accuracy
+              and compliance standards
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span><strong>Technique Consistency:</strong> Standardised procedures ensure reliable, repeatable terminations</span>
+            <span>
+              <strong>Technique Consistency:</strong> Standardised procedures ensure reliable,
+              repeatable terminations
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span><strong>Quality Control:</strong> Post-termination testing and documentation verify installation integrity</span>
+            <span>
+              <strong>Quality Control:</strong> Post-termination testing and documentation verify
+              installation integrity
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span><strong>Cable Category Specific:</strong> Different cable types require appropriate tools and techniques</span>
+            <span>
+              <strong>Cable Category Specific:</strong> Different cable types require appropriate
+              tools and techniques
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span><strong>Environmental Considerations:</strong> Choose termination method based on installation environment</span>
+            <span>
+              <strong>Environmental Considerations:</strong> Choose termination method based on
+              installation environment
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span><strong>Documentation Essential:</strong> Record termination parameters and test results for quality assurance</span>
+            <span>
+              <strong>Documentation Essential:</strong> Record termination parameters and test
+              results for quality assurance
+            </span>
           </li>
         </ul>
       </CardContent>

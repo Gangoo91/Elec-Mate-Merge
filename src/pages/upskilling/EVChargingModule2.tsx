@@ -7,34 +7,34 @@ const EVChargingModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Mode 1–4 and Charging Speeds",
+      title: 'Mode 1–4 and Charging Speeds',
       icon: Gauge,
-      description: "Understanding charging modes and power levels"
+      description: 'Understanding charging modes and power levels',
     },
     {
       id: 2,
-      title: "Socketed vs Tethered EVSE",
+      title: 'Socketed vs Tethered EVSE',
       icon: Plug,
-      description: "Different EVSE connection types and their applications"
+      description: 'Different EVSE connection types and their applications',
     },
     {
       id: 3,
-      title: "Smart Chargers, App Control, and APIs",
+      title: 'Smart Chargers, App Control, and APIs',
       icon: Smartphone,
-      description: "Connected charging systems and remote management"
+      description: 'Connected charging systems and remote management',
     },
     {
       id: 4,
-      title: "IEC 61851, 62196 Connectors",
+      title: 'IEC 61851, 62196 Connectors',
       icon: Cable,
-      description: "International charging standards and connector types"
+      description: 'International charging standards and connector types',
     },
     {
       id: 5,
-      title: "Compatibility by Manufacturer (BMW, Tesla, etc.)",
+      title: 'Compatibility by Manufacturer (BMW, Tesla, etc.)',
       icon: Car,
-      description: "Vehicle-specific charging requirements and compatibility"
-    }
+      description: 'Vehicle-specific charging requirements and compatibility',
+    },
   ];
 
   return (

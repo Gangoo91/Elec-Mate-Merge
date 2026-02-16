@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Copy, RefreshCw, User } from 'lucide-react';
@@ -10,11 +9,11 @@ interface QuickActionsSectionProps {
   onReloadProfile?: () => void;
 }
 
-const QuickActionsSection = ({ 
-  formData, 
-  onAutoFillDate, 
+const QuickActionsSection = ({
+  formData,
+  onAutoFillDate,
   onCopyFromClient,
-  onReloadProfile
+  onReloadProfile,
 }: QuickActionsSectionProps) => {
   return (
     <>
@@ -52,7 +51,6 @@ const QuickActionsSection = ({
           </Button>
         )}
       </div>
-
     </>
   );
 };

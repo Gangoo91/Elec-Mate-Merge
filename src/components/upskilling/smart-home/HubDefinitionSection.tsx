@@ -29,7 +29,7 @@ export const HubDefinitionSection = () => {
               </li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-green-900/10 border border-green-600/20 rounded-lg">
             <h4 className="font-semibold text-green-200 mb-3">Protocol Bridging</h4>
             <ul className="text-green-100 text-sm space-y-2">

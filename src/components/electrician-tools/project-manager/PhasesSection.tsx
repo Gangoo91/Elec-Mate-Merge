@@ -1,12 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar, CheckCircle2, Lightbulb } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { addDays, format } from "date-fns";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Calendar, CheckCircle2, Lightbulb } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { addDays, format } from 'date-fns';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface Phase {
   phase: string;
@@ -38,7 +38,7 @@ const PhasesSection = ({
   totalDurationUnit,
   phaseProgress,
   onTogglePhase,
-  startDate
+  startDate,
 }: PhasesSectionProps) => {
   const [openPhases, setOpenPhases] = useState<Record<number, boolean>>({});
 
@@ -74,15 +74,15 @@ const PhasesSection = ({
             <Collapsible
               key={idx}
               open={isOpen}
-              onOpenChange={(open) => setOpenPhases(prev => ({ ...prev, [idx]: open }))}
+              onOpenChange={(open) => setOpenPhases((prev) => ({ ...prev, [idx]: open }))}
             >
-              <div 
+              <div
                 className={`rounded-lg border p-5 sm:p-6 transition-all duration-200 ${
-                  isComplete 
-                    ? 'bg-success/10 border-success/30' 
-                    : phase.criticalPath 
-                    ? 'border-l-4 border-l-pink-400 border-border/20 bg-transparent' 
-                    : 'border-border/20 bg-transparent'
+                  isComplete
+                    ? 'bg-success/10 border-success/30'
+                    : phase.criticalPath
+                      ? 'border-l-4 border-l-pink-400 border-border/20 bg-transparent'
+                      : 'border-border/20 bg-transparent'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -95,21 +95,28 @@ const PhasesSection = ({
                     {/* Phase Header */}
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
-                        <div className={`font-semibold flex items-center gap-2 flex-wrap ${
-                          isComplete ? 'line-through text-muted-foreground' : ''
-                        }`}>
-                          <span className="text-base sm:text-lg">{phase.phaseName || phase.phase || `Phase ${idx + 1}`}</span>
+                        <div
+                          className={`font-semibold flex items-center gap-2 flex-wrap ${
+                            isComplete ? 'line-through text-muted-foreground' : ''
+                          }`}
+                        >
+                          <span className="text-base sm:text-lg">
+                            {phase.phaseName || phase.phase || `Phase ${idx + 1}`}
+                          </span>
                           {phase.criticalPath && !isComplete && (
-                            <Badge variant="outline" className="text-xs bg-pink-400/20 border-pink-400/40 text-pink-400">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-pink-400/20 border-pink-400/40 text-pink-400"
+                            >
                               Critical Path
                             </Badge>
                           )}
-                          {isComplete && (
-                            <CheckCircle2 className="h-4 w-4 text-success" />
-                          )}
+                          {isComplete && <CheckCircle2 className="h-4 w-4 text-success" />}
                         </div>
                         <div className="flex items-center gap-3 mt-1 text-sm text-foreground/70">
-                          <span>{phase.duration} {phase.durationUnit || 'days'}</span>
+                          <span>
+                            {phase.duration} {phase.durationUnit || 'days'}
+                          </span>
                           {calculatedDate && (
                             <>
                               <span>•</span>
@@ -146,18 +153,24 @@ const PhasesSection = ({
                         </h5>
                         <ul className="space-y-4">
                           {phase.tasks.slice(0, 3).map((task, idx) => {
-                            const taskText = typeof task === 'string' ? task : task.task || task.name || '';
+                            const taskText =
+                              typeof task === 'string' ? task : task.task || task.name || '';
                             const taskDuration = typeof task !== 'string' ? task.duration : null;
-                            
+
                             // Extract valuable information
-                            const hasSupplier = /CEF|TLC|Screwfix|Toolstation|wholesaler/i.test(taskText);
+                            const hasSupplier = /CEF|TLC|Screwfix|Toolstation|wholesaler/i.test(
+                              taskText
+                            );
                             const hasOrder = /order|purchase|buy/i.test(taskText);
                             const hasInstall = /install|fit|mount/i.test(taskText);
                             const hasTest = /test|inspect|verify/i.test(taskText);
                             const hasWarning = /asap|urgent|critical|before|must/i.test(taskText);
 
                             return (
-                              <li key={idx} className="flex gap-3 text-sm sm:text-base text-foreground leading-relaxed items-start border-l-2 border-pink-400/30 pl-4">
+                              <li
+                                key={idx}
+                                className="flex gap-3 text-sm sm:text-base text-foreground leading-relaxed items-start border-l-2 border-pink-400/30 pl-4"
+                              >
                                 <span className="flex-shrink-0 mt-1">
                                   {hasOrder && '📦'}
                                   {hasInstall && '🔧'}
@@ -165,7 +178,9 @@ const PhasesSection = ({
                                   {!hasOrder && !hasInstall && !hasTest && '→'}
                                 </span>
                                 <div className="flex-1">
-                                  <span className={hasWarning ? 'font-medium text-elec-yellow' : ''}>
+                                  <span
+                                    className={hasWarning ? 'font-medium text-elec-yellow' : ''}
+                                  >
                                     {taskText}
                                   </span>
                                   {(taskDuration || hasSupplier || hasWarning) && (
@@ -194,7 +209,9 @@ const PhasesSection = ({
                         </ul>
                         {phase.tasks.length > 3 && (
                           <CollapsibleTrigger className="w-full mt-4 text-sm text-pink-400 hover:text-pink-300 transition-colors flex items-center gap-2 justify-center touch-manipulation min-h-[48px] sm:min-h-[44px] rounded-lg hover:bg-pink-400/10">
-                            <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                            <ChevronDown
+                              className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                            />
                             {isOpen ? 'Show less' : `Show ${phase.tasks.length - 3} more actions`}
                           </CollapsibleTrigger>
                         )}
@@ -202,7 +219,8 @@ const PhasesSection = ({
                     )}
 
                     {/* Dependencies & Milestones */}
-                    {(phase.dependencies && phase.dependencies.length > 0) || (phase.milestones && phase.milestones.length > 0) ? (
+                    {(phase.dependencies && phase.dependencies.length > 0) ||
+                    (phase.milestones && phase.milestones.length > 0) ? (
                       <div className="flex items-center gap-3 flex-wrap text-sm text-foreground/70">
                         {phase.dependencies && phase.dependencies.length > 0 && (
                           <div>
@@ -228,13 +246,19 @@ const PhasesSection = ({
                   <div className="bg-card/50 rounded-lg p-4 sm:p-5 border border-border/40 mt-3 ml-11">
                     <ul className="space-y-3">
                       {phase.tasks.slice(3).map((task, idx) => {
-                        const taskText = typeof task === 'string' ? task : task.task || task.name || '';
+                        const taskText =
+                          typeof task === 'string' ? task : task.task || task.name || '';
                         const taskDuration = typeof task !== 'string' ? task.duration : null;
-                        const hasSupplier = /CEF|TLC|Screwfix|Toolstation|wholesaler/i.test(taskText);
+                        const hasSupplier = /CEF|TLC|Screwfix|Toolstation|wholesaler/i.test(
+                          taskText
+                        );
                         const hasWarning = /asap|urgent|critical|before|must/i.test(taskText);
 
                         return (
-                          <li key={idx} className="flex gap-3 text-sm sm:text-base text-foreground leading-relaxed items-start">
+                          <li
+                            key={idx}
+                            className="flex gap-3 text-sm sm:text-base text-foreground leading-relaxed items-start"
+                          >
                             <span className="text-pink-400 mt-1 flex-shrink-0">•</span>
                             <div className="flex-1">
                               <span className={hasWarning ? 'font-medium text-elec-yellow' : ''}>

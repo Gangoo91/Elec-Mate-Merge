@@ -14,16 +14,23 @@ export const BS7671Module7Section3RealWorld = () => {
         <div className="grid gap-6">
           {/* Case Study 1 */}
           <div className="bg-elec-dark p-4 rounded-md border border-red-600/50">
-            <h5 className="text-red-400 font-semibold mb-3">Case Study 1: UV Cable Degradation - Dairy Farm, Somerset</h5>
-            
+            <h5 className="text-red-400 font-semibold mb-3">
+              Case Study 1: UV Cable Degradation - Dairy Farm, Somerset
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">The Incident:</h6>
                 <p className="text-sm mb-3">
-                  A dairy farm installed standard PVC-sheathed cables for external lighting without UV protection. After 18 months of direct sunlight exposure, the outer sheath cracked and split, exposing inner conductors. This created a serious risk of electric shock to livestock and workers, particularly during wet conditions.
+                  A dairy farm installed standard PVC-sheathed cables for external lighting without
+                  UV protection. After 18 months of direct sunlight exposure, the outer sheath
+                  cracked and split, exposing inner conductors. This created a serious risk of
+                  electric shock to livestock and workers, particularly during wet conditions.
                 </p>
                 <p className="text-sm">
-                  The failure occurred during routine maintenance when a worker received a minor shock from the exposed conductor. Immediate testing revealed multiple insulation failures across the installation.
+                  The failure occurred during routine maintenance when a worker received a minor
+                  shock from the exposed conductor. Immediate testing revealed multiple insulation
+                  failures across the installation.
                 </p>
               </div>
               <div>
@@ -38,26 +45,35 @@ export const BS7671Module7Section3RealWorld = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-red-800/30 border border-red-500/50 rounded">
               <p className="text-red-200 text-sm">
-                <strong>Lesson Learned:</strong> Initial cost savings from using standard cables resulted in complete reinstallation costs and safety risks. UV-resistant cables would have cost only 15% more initially.
+                <strong>Lesson Learned:</strong> Initial cost savings from using standard cables
+                resulted in complete reinstallation costs and safety risks. UV-resistant cables
+                would have cost only 15% more initially.
               </p>
             </div>
           </div>
 
           {/* Case Study 2 */}
           <div className="bg-elec-dark p-4 rounded-md border border-orange-600/50">
-            <h5 className="text-orange-400 font-semibold mb-3">Case Study 2: Livestock Electrocution - Pig Farm, Yorkshire</h5>
-            
+            <h5 className="text-orange-400 font-semibold mb-3">
+              Case Study 2: Livestock Electrocution - Pig Farm, Yorkshire
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">The Incident:</h6>
                 <p className="text-sm mb-3">
-                  A pig farming operation experienced unexplained animal stress and reduced feeding behaviour. Investigation revealed that metal water troughs were carrying a 15V potential due to inadequate equipotential bonding. While not immediately fatal, the chronic exposure was causing stress and production losses.
+                  A pig farming operation experienced unexplained animal stress and reduced feeding
+                  behaviour. Investigation revealed that metal water troughs were carrying a 15V
+                  potential due to inadequate equipotential bonding. While not immediately fatal,
+                  the chronic exposure was causing stress and production losses.
                 </p>
                 <p className="text-sm">
-                  The problem was traced to a neutral-earth fault in the main distribution board, combined with incomplete equipotential bonding of metalwork within the animal housing areas.
+                  The problem was traced to a neutral-earth fault in the main distribution board,
+                  combined with incomplete equipotential bonding of metalwork within the animal
+                  housing areas.
                 </p>
               </div>
               <div>
@@ -72,26 +88,35 @@ export const BS7671Module7Section3RealWorld = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-orange-800/30 border border-orange-500/50 rounded">
               <p className="text-orange-200 text-sm">
-                <strong>Economic Impact:</strong> Production returned to normal levels within one week of remedial work completion, justifying the £3,000 investment through improved animal welfare and productivity.
+                <strong>Economic Impact:</strong> Production returned to normal levels within one
+                week of remedial work completion, justifying the £3,000 investment through improved
+                animal welfare and productivity.
               </p>
             </div>
           </div>
 
           {/* Case Study 3 */}
           <div className="bg-elec-dark p-4 rounded-md border border-blue-600/50">
-            <h5 className="text-blue-400 font-semibold mb-3">Case Study 3: Water Ingress Failure - Market Garden, Kent</h5>
-            
+            <h5 className="text-blue-400 font-semibold mb-3">
+              Case Study 3: Water Ingress Failure - Market Garden, Kent
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">The Problem:</h6>
                 <p className="text-sm mb-3">
-                  An automated irrigation system control panel was installed with inadequate IP rating (IP43) for its location near high-pressure washing areas. Repeated water ingress caused control system failures, crop loss, and eventual fire damage to the control cabinet.
+                  An automated irrigation system control panel was installed with inadequate IP
+                  rating (IP43) for its location near high-pressure washing areas. Repeated water
+                  ingress caused control system failures, crop loss, and eventual fire damage to the
+                  control cabinet.
                 </p>
                 <p className="text-sm">
-                  The incident occurred during routine cleaning operations when high-pressure water penetrated the control panel, causing short circuits and igniting insulation materials.
+                  The incident occurred during routine cleaning operations when high-pressure water
+                  penetrated the control panel, causing short circuits and igniting insulation
+                  materials.
                 </p>
               </div>
               <div>
@@ -106,26 +131,35 @@ export const BS7671Module7Section3RealWorld = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-blue-800/30 border border-blue-500/50 rounded">
               <p className="text-blue-200 text-sm">
-                <strong>Prevention Strategy:</strong> Implementation of environmental zone mapping ensures appropriate IP ratings are specified for each installation location based on actual operating conditions.
+                <strong>Prevention Strategy:</strong> Implementation of environmental zone mapping
+                ensures appropriate IP ratings are specified for each installation location based on
+                actual operating conditions.
               </p>
             </div>
           </div>
 
           {/* Case Study 4 */}
           <div className="bg-elec-dark p-4 rounded-md border border-green-600/50">
-            <h5 className="text-green-400 font-semibold mb-3">Case Study 4: Chemical Corrosion - Poultry Farm, Norfolk</h5>
-            
+            <h5 className="text-green-400 font-semibold mb-3">
+              Case Study 4: Chemical Corrosion - Poultry Farm, Norfolk
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">The Challenge:</h6>
                 <p className="text-sm mb-3">
-                  A large-scale poultry operation experienced rapid corrosion of electrical components due to high ammonia concentrations from bird waste. Standard steel conduits and standard-grade cable glands failed within 6 months, causing frequent electrical failures and maintenance issues.
+                  A large-scale poultry operation experienced rapid corrosion of electrical
+                  components due to high ammonia concentrations from bird waste. Standard steel
+                  conduits and standard-grade cable glands failed within 6 months, causing frequent
+                  electrical failures and maintenance issues.
                 </p>
                 <p className="text-sm">
-                  The ammonia-rich environment was particularly aggressive, with concentrations reaching 25ppm during peak occupancy periods, well above the 5ppm threshold for standard electrical equipment.
+                  The ammonia-rich environment was particularly aggressive, with concentrations
+                  reaching 25ppm during peak occupancy periods, well above the 5ppm threshold for
+                  standard electrical equipment.
                 </p>
               </div>
               <div>
@@ -140,10 +174,12 @@ export const BS7671Module7Section3RealWorld = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-green-800/30 border border-green-500/50 rounded">
               <p className="text-green-200 text-sm">
-                <strong>Long-term Success:</strong> The upgraded installation has now operated successfully for over 5 years with minimal maintenance requirements, demonstrating the importance of proper material selection for aggressive environments.
+                <strong>Long-term Success:</strong> The upgraded installation has now operated
+                successfully for over 5 years with minimal maintenance requirements, demonstrating
+                the importance of proper material selection for aggressive environments.
               </p>
             </div>
           </div>

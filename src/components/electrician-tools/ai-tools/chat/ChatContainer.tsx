@@ -19,18 +19,15 @@ interface ChatContainerProps {
  * - Native momentum scrolling on mobile
  * - Fixed input area at bottom (via children)
  */
-export function ChatContainer({
-  children,
-  className,
-}: ChatContainerProps) {
+export function ChatContainer({ children, className }: ChatContainerProps) {
   return (
     <div
       className={cn(
         // Fill parent container (not 100dvh - parent handles that)
-        "flex flex-col h-full w-full",
+        'flex flex-col h-full w-full',
         // Premium ambient background
-        "bg-gradient-to-br from-background via-background to-background/98",
-        "overflow-hidden relative",
+        'bg-gradient-to-br from-background via-background to-background/98',
+        'overflow-hidden relative',
         className
       )}
     >
@@ -39,9 +36,7 @@ export function ChatContainer({
         <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-elec-yellow/[0.03] rounded-full blur-3xl" />
         <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-elec-blue/[0.03] rounded-full blur-3xl" />
       </div>
-      <div className="relative flex flex-col h-full z-10">
-        {children}
-      </div>
+      <div className="relative flex flex-col h-full z-10">{children}</div>
     </div>
   );
 }
@@ -68,34 +63,37 @@ export function ChatMessagesArea({
   onScrollTop,
   onScroll,
   autoScrollToBottom = true,
-  messagesEndRef
+  messagesEndRef,
 }: ChatMessagesAreaProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const { scrollTop } = el;
+  const handleScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const el = e.currentTarget;
+      const { scrollTop } = el;
 
-    // Load more messages when scrolled to top
-    if (scrollTop < 50 && onScrollTop) {
-      onScrollTop();
-    }
+      // Load more messages when scrolled to top
+      if (scrollTop < 50 && onScrollTop) {
+        onScrollTop();
+      }
 
-    // Pass scroll event to parent for position tracking
-    onScroll?.(e);
-  }, [onScrollTop, onScroll]);
+      // Pass scroll event to parent for position tracking
+      onScroll?.(e);
+    },
+    [onScrollTop, onScroll]
+  );
 
   return (
     <div
       ref={containerRef}
       onScroll={handleScroll}
       className={cn(
-        "flex-1 overflow-y-auto overscroll-none",
+        'flex-1 overflow-y-auto overscroll-none',
         // Native momentum scrolling on iOS
-        "scroll-smooth webkit-overflow-scrolling-touch",
+        'scroll-smooth webkit-overflow-scrolling-touch',
         // Custom scrollbar styling
-        "scrollbar-thin scrollbar-thumb-border/40 scrollbar-track-transparent",
-        "hover:scrollbar-thumb-border/60",
+        'scrollbar-thin scrollbar-thumb-border/40 scrollbar-track-transparent',
+        'hover:scrollbar-thumb-border/60',
         className
       )}
       style={{
@@ -123,12 +121,12 @@ export function ChatInputArea({ children, className }: ChatInputAreaProps) {
     <div
       className={cn(
         // Fixed at bottom, not sticky
-        "shrink-0 z-20",
+        'shrink-0 z-20',
         // Premium gradient backdrop
-        "bg-gradient-to-t from-background via-background to-background/95",
-        "backdrop-blur-xl",
+        'bg-gradient-to-t from-background via-background to-background/95',
+        'backdrop-blur-xl',
         // Safe area padding for mobile
-        "pb-safe pt-1.5 px-2 sm:px-3",
+        'pb-safe pt-1.5 px-2 sm:px-3',
         className
       )}
     >

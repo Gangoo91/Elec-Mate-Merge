@@ -1,31 +1,30 @@
-
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Clock } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect, useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Clock } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const OJTRatioCard = () => {
   const [totalOJTTime, setTotalOJTTime] = useState(0);
   const isMobile = useIsMobile();
-  
+
   // Mock data - would come from time tracking system
   const totalWorkTime = 1600; // 40 hours * 40 weeks = 1600 hours per year
   const requiredOJTTime = totalWorkTime * 0.2; // 20% of total time = 320 hours
-  
+
   // Load course time from localStorage
   useEffect(() => {
     let totalCourseTimeSeconds = 0;
-    
-    Object.keys(localStorage).forEach(key => {
+
+    Object.keys(localStorage).forEach((key) => {
       if (key.startsWith('course_') && key.endsWith('_todayTime')) {
         const timeValue = parseInt(localStorage.getItem(key) || '0');
         totalCourseTimeSeconds += timeValue;
       }
     });
-    
+
     // Convert to hours (3600 seconds = 1 hour)
     const courseHours = totalCourseTimeSeconds / 3600;
-    
+
     // Add to mock data (120 hours) plus course hours
     setTotalOJTTime(120 + courseHours);
   }, []);
@@ -56,7 +55,7 @@ const OJTRatioCard = () => {
       </Card>
     );
   }
-  
+
   // Mobile version (much simpler as per the screenshot)
   return null; // We've moved this functionality to the TrainingManagementCard for mobile
 };

@@ -4,9 +4,9 @@ import { Badge } from '@/components/ui/badge';
 
 export const TestEquipmentLearningOutcomes = () => {
   const outcomes = [
-    "Set up test equipment correctly",
-    "Follow GS38 safety practices", 
-    "Minimise personal risk during live testing"
+    'Set up test equipment correctly',
+    'Follow GS38 safety practices',
+    'Minimise personal risk during live testing',
   ];
 
   return (
@@ -24,8 +24,8 @@ export const TestEquipmentLearningOutcomes = () => {
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge 
-                variant="secondary" 
+              <Badge
+                variant="secondary"
                 className="bg-elec-yellow/20 text-elec-yellow mt-0.5 text-xs"
               >
                 {index + 1}

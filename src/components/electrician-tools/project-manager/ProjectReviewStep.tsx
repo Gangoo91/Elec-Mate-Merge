@@ -1,17 +1,17 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  ArrowLeft, 
-  Zap, 
-  Calendar, 
-  MapPin, 
-  User, 
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  ArrowLeft,
+  Zap,
+  Calendar,
+  MapPin,
+  User,
   FileText,
   Package,
   AlertCircle,
-  Clock
-} from "lucide-react";
+  Clock,
+} from 'lucide-react';
 
 interface ProjectReviewStepProps {
   projectType: 'domestic' | 'commercial' | 'industrial';
@@ -40,20 +40,14 @@ export const ProjectReviewStep = ({
   constraints,
   templateName,
   onBack,
-  onGenerate
+  onGenerate,
 }: ProjectReviewStepProps) => {
-  
-  const hasConstraints = Object.values(constraints).some(v => v);
-  
+  const hasConstraints = Object.values(constraints).some((v) => v);
+
   return (
     <div className="space-y-4 sm:space-y-6 pb-6">
       <div className="flex items-center gap-3">
-        <Button 
-          variant="ghost" 
-          size="sm"
-          onClick={onBack}
-          className="gap-2"
-        >
+        <Button variant="ghost" size="sm" onClick={onBack} className="gap-2">
           <ArrowLeft className="h-4 w-4" />
           Back to Edit
         </Button>
@@ -75,10 +69,7 @@ export const ProjectReviewStep = ({
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
             Project Type
           </h3>
-          <Badge 
-            variant="outline" 
-            className="text-sm capitalize"
-          >
+          <Badge variant="outline" className="text-sm capitalize">
             {projectType}
           </Badge>
         </div>
@@ -88,9 +79,7 @@ export const ProjectReviewStep = ({
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
             Requirements
           </h3>
-          <p className="text-sm leading-relaxed">
-            {prompt}
-          </p>
+          <p className="text-sm leading-relaxed">{prompt}</p>
         </div>
 
         {/* Template Used */}
@@ -184,15 +173,18 @@ export const ProjectReviewStep = ({
                 </div>
               )}
               {constraints.occupiedProperty && (
-                <Badge variant="outline" className="text-xs">Occupied Property</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Occupied Property
+                </Badge>
               )}
               {constraints.medicalEquipment && (
-                <Badge variant="outline" className="text-xs">Medical Equipment Present</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Medical Equipment Present
+                </Badge>
               )}
               {constraints.budgetLimit && (
                 <div>
-                  <span className="font-medium">Budget Limit: </span>
-                  £{constraints.budgetLimit}
+                  <span className="font-medium">Budget Limit: </span>£{constraints.budgetLimit}
                 </div>
               )}
               {constraints.otherTrades && (
@@ -218,8 +210,8 @@ export const ProjectReviewStep = ({
             <div className="space-y-1">
               <p className="text-sm font-medium">AI Generation Time</p>
               <p className="text-xs text-muted-foreground">
-                Generating a comprehensive project plan takes 2-3 minutes. The AI will analyze regulations, 
-                create phases, identify risks, and develop a detailed timeline.
+                Generating a comprehensive project plan takes 2-3 minutes. The AI will analyze
+                regulations, create phases, identify risks, and develop a detailed timeline.
               </p>
             </div>
           </div>
@@ -228,12 +220,7 @@ export const ProjectReviewStep = ({
 
       {/* Action Buttons */}
       <div className="flex gap-3">
-        <Button
-          variant="outline"
-          onClick={onBack}
-          className="flex-1"
-          size="lg"
-        >
+        <Button variant="outline" onClick={onBack} className="flex-1" size="lg">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Edit Details
         </Button>

@@ -60,7 +60,9 @@ const QuizPage = () => {
         // Load questions from question bank
         const questionData = getRandomQuestions(id, 20);
         if (!questionData || questionData.length === 0) {
-          setError(`No questions available for "${assessmentData.title}". Question bank is being developed.`);
+          setError(
+            `No questions available for "${assessmentData.title}". Question bank is being developed.`
+          );
           setQuizState('error');
           return;
         }
@@ -92,7 +94,7 @@ const QuizPage = () => {
       await completeQuiz({
         result: quizResult,
         assessmentId: assessment.id,
-        sessionId: `session-${Date.now()}`
+        sessionId: `session-${Date.now()}`,
       });
     }
 
@@ -281,12 +283,7 @@ const QuizPage = () => {
 
   // Celebration state (shown before results for passing scores)
   if (showCelebration && result && result.percentage >= 70) {
-    return (
-      <QuizPassCelebration
-        score={result.percentage}
-        onContinue={handleCelebrationComplete}
-      />
-    );
+    return <QuizPassCelebration score={result.percentage} onContinue={handleCelebrationComplete} />;
   }
 
   // Results state
@@ -326,16 +323,23 @@ const QuizPage = () => {
 
           <div className="space-y-4">
             {questions.map((question, index) => {
-              const answer = answers.find(a => a.questionId === question.id);
+              const answer = answers.find((a) => a.questionId === question.id);
               const isCorrect = answer?.isCorrect;
 
               return (
-                <Card key={question.id} className={`border-2 ${isCorrect ? 'border-green-500/30' : 'border-red-500/30'}`}>
+                <Card
+                  key={question.id}
+                  className={`border-2 ${isCorrect ? 'border-green-500/30' : 'border-red-500/30'}`}
+                >
                   <CardContent className="p-4 sm:p-6 space-y-4">
                     <div className="flex items-start gap-3">
-                      <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                        isCorrect ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                      }`}>
+                      <span
+                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                          isCorrect
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-red-500/20 text-red-400'
+                        }`}
+                      >
                         {index + 1}
                       </span>
                       <div className="space-y-3 flex-1">
@@ -358,8 +362,12 @@ const QuizPage = () => {
                                 }`}
                               >
                                 {option}
-                                {isCorrectOption && <span className="ml-2 text-green-400">(Correct)</span>}
-                                {isSelected && !isCorrectOption && <span className="ml-2 text-red-400">(Your answer)</span>}
+                                {isCorrectOption && (
+                                  <span className="ml-2 text-green-400">(Correct)</span>
+                                )}
+                                {isSelected && !isCorrectOption && (
+                                  <span className="ml-2 text-red-400">(Your answer)</span>
+                                )}
                               </div>
                             );
                           })}

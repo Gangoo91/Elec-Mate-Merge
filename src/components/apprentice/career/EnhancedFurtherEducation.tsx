@@ -1,18 +1,29 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target, Calculator } from "lucide-react";
-import EducationSearchForm, { SearchFilters } from "./education/EducationSearchForm";
-import EnhancedEducationCard from "./education/EnhancedEducationCard";
-import EducationAnalyticsDashboard from "./education/EducationAnalyticsDashboard";
-import FundingCalculator from "./education/FundingCalculator";
-import { enhancedEducationOptions, EnhancedEducationOption } from "./education/enhancedEducationData";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  GraduationCap,
+  ArrowLeft,
+  BookOpen,
+  PoundSterling,
+  Users,
+  Target,
+  Calculator,
+} from 'lucide-react';
+import EducationSearchForm, { SearchFilters } from './education/EducationSearchForm';
+import EnhancedEducationCard from './education/EnhancedEducationCard';
+import EducationAnalyticsDashboard from './education/EducationAnalyticsDashboard';
+import FundingCalculator from './education/FundingCalculator';
+import {
+  enhancedEducationOptions,
+  EnhancedEducationOption,
+} from './education/enhancedEducationData';
 
 const EnhancedFurtherEducation = () => {
-  const [filteredOptions, setFilteredOptions] = useState<EnhancedEducationOption[]>(enhancedEducationOptions);
+  const [filteredOptions, setFilteredOptions] =
+    useState<EnhancedEducationOption[]>(enhancedEducationOptions);
   const [selectedOption, setSelectedOption] = useState<EnhancedEducationOption | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "details" | "funding">("grid");
+  const [viewMode, setViewMode] = useState<'grid' | 'details' | 'funding'>('grid');
 
   const handleSearch = (filters: SearchFilters) => {
     let filtered = enhancedEducationOptions;
@@ -20,41 +31,42 @@ const EnhancedFurtherEducation = () => {
     // Apply search term filter
     if (filters.searchTerm) {
       const searchLower = filters.searchTerm.toLowerCase();
-      filtered = filtered.filter(option => 
-        option.title.toLowerCase().includes(searchLower) ||
-        option.institution.toLowerCase().includes(searchLower) ||
-        option.description.toLowerCase().includes(searchLower) ||
-        option.keyTopics.some(topic => topic.toLowerCase().includes(searchLower))
+      filtered = filtered.filter(
+        (option) =>
+          option.title.toLowerCase().includes(searchLower) ||
+          option.institution.toLowerCase().includes(searchLower) ||
+          option.description.toLowerCase().includes(searchLower) ||
+          option.keyTopics.some((topic) => topic.toLowerCase().includes(searchLower))
       );
     }
 
     // Apply category filter
-    if (filters.category && filters.category !== "All Categories") {
-      filtered = filtered.filter(option => option.category === filters.category);
+    if (filters.category && filters.category !== 'All Categories') {
+      filtered = filtered.filter((option) => option.category === filters.category);
     }
 
     // Apply study mode filter
-    if (filters.studyMode && filters.studyMode !== "All Study Modes") {
-      filtered = filtered.filter(option => option.studyMode === filters.studyMode);
+    if (filters.studyMode && filters.studyMode !== 'All Study Modes') {
+      filtered = filtered.filter((option) => option.studyMode === filters.studyMode);
     }
 
     // Apply location filter
     if (filters.location) {
       const locationLower = filters.location.toLowerCase();
-      filtered = filtered.filter(option => 
-        option.locations.some(loc => loc.toLowerCase().includes(locationLower))
+      filtered = filtered.filter((option) =>
+        option.locations.some((loc) => loc.toLowerCase().includes(locationLower))
       );
     }
 
     // Apply level filter
     if (filters.level) {
-      filtered = filtered.filter(option => option.level === filters.level);
+      filtered = filtered.filter((option) => option.level === filters.level);
     }
 
     // Apply funding type filter
     if (filters.fundingType) {
-      filtered = filtered.filter(option => 
-        option.fundingOptions.some(funding => funding.includes(filters.fundingType))
+      filtered = filtered.filter((option) =>
+        option.fundingOptions.some((funding) => funding.includes(filters.fundingType))
       );
     }
 
@@ -67,19 +79,19 @@ const EnhancedFurtherEducation = () => {
 
   const handleViewDetails = (option: EnhancedEducationOption) => {
     setSelectedOption(option);
-    setViewMode("details");
+    setViewMode('details');
   };
 
   const handleBackToGrid = () => {
     setSelectedOption(null);
-    setViewMode("grid");
+    setViewMode('grid');
   };
 
   const handleShowFundingCalculator = () => {
-    setViewMode("funding");
+    setViewMode('funding');
   };
 
-  if (viewMode === "funding") {
+  if (viewMode === 'funding') {
     return (
       <div className="space-y-6">
         <div className="flex items-center gap-4">
@@ -93,7 +105,7 @@ const EnhancedFurtherEducation = () => {
     );
   }
 
-  if (viewMode === "details" && selectedOption) {
+  if (viewMode === 'details' && selectedOption) {
     return (
       <div className="space-y-6">
         <div className="flex items-center gap-4">
@@ -102,7 +114,7 @@ const EnhancedFurtherEducation = () => {
             Back to Education Options
           </Button>
         </div>
-        
+
         <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="text-2xl">{selectedOption.title}</CardTitle>
@@ -110,7 +122,7 @@ const EnhancedFurtherEducation = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <p className="text-white">{selectedOption.description}</p>
-            
+
             {/* Detailed information sections would go here */}
             <div className="text-center py-8">
               <p className="text-white">
@@ -133,8 +145,9 @@ const EnhancedFurtherEducation = () => {
           Further Education
         </h2>
         <p className="text-white">
-          Discover comprehensive educational pathways to advance your career in the electrical industry. 
-          From HNC certificates to master's degrees, find the right qualification to achieve your professional goals.
+          Discover comprehensive educational pathways to advance your career in the electrical
+          industry. From HNC certificates to master's degrees, find the right qualification to
+          achieve your professional goals.
         </p>
       </div>
 
@@ -143,7 +156,7 @@ const EnhancedFurtherEducation = () => {
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
-        <Button 
+        <Button
           onClick={handleShowFundingCalculator}
           variant="outline"
           className="border-elec-yellow/30 hover:bg-elec-yellow/10"
@@ -208,21 +221,22 @@ const EnhancedFurtherEducation = () => {
               <div>
                 <h5 className="font-medium text-white">Advanced Learner Loan (19+)</h5>
                 <p className="text-xs text-white mt-1">
-                  Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
-                  9% of income above threshold.
+                  Available for Level 3-6 qualifications. No upfront fees, only repay when earning
+                  £25,000+. 9% of income above threshold.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Student Finance England</h5>
                 <p className="text-xs text-white mt-1">
-                  Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
-                  Repayment at 9% above £27,295.
+                  Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on
+                  household income. Repayment at 9% above £27,295.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Postgraduate Loan</h5>
                 <p className="text-xs text-white mt-1">
-                  Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
+                  Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as
+                  undergraduate loans.
                 </p>
               </div>
             </div>
@@ -233,19 +247,22 @@ const EnhancedFurtherEducation = () => {
               <div>
                 <h5 className="font-medium text-white">Apprenticeship Levy</h5>
                 <p className="text-xs text-white mt-1">
-                  Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
+                  Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund
+                  degree apprenticeships.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Professional Body Grants</h5>
                 <p className="text-xs text-white mt-1">
-                  IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
+                  IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries
+                  for electrical study.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Career Development Loans</h5>
                 <p className="text-xs text-white mt-1">
-                  Bank loans for vocational training. Government pays interest during study and one month after.
+                  Bank loans for vocational training. Government pays interest during study and one
+                  month after.
                 </p>
               </div>
             </div>

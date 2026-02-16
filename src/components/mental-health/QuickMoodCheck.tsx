@@ -1,10 +1,9 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Check, TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { useMentalHealth } from "@/contexts/MentalHealthContext";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { ArrowLeft, Check, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { useMentalHealth } from '@/contexts/MentalHealthContext';
 
 interface QuickMoodCheckProps {
   onClose: () => void;
@@ -14,14 +13,49 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
   const { moodHistory, addMoodEntry } = useMentalHealth();
   const [step, setStep] = useState<'select' | 'note' | 'complete'>('select');
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState('');
 
   const moods = [
-    { value: 1, emoji: "😢", label: "Struggling", color: "from-red-500 to-rose-500", bg: "bg-red-500/20", desc: "Finding things difficult right now" },
-    { value: 2, emoji: "😔", label: "Low", color: "from-orange-500 to-amber-500", bg: "bg-orange-500/20", desc: "Not my best, but managing" },
-    { value: 3, emoji: "😐", label: "Okay", color: "from-yellow-500 to-amber-400", bg: "bg-yellow-500/20", desc: "Neither good nor bad" },
-    { value: 4, emoji: "🙂", label: "Good", color: "from-green-500 to-emerald-500", bg: "bg-green-500/20", desc: "Feeling positive today" },
-    { value: 5, emoji: "😊", label: "Great", color: "from-emerald-500 to-teal-500", bg: "bg-emerald-500/20", desc: "Feeling really good!" }
+    {
+      value: 1,
+      emoji: '😢',
+      label: 'Struggling',
+      color: 'from-red-500 to-rose-500',
+      bg: 'bg-red-500/20',
+      desc: 'Finding things difficult right now',
+    },
+    {
+      value: 2,
+      emoji: '😔',
+      label: 'Low',
+      color: 'from-orange-500 to-amber-500',
+      bg: 'bg-orange-500/20',
+      desc: 'Not my best, but managing',
+    },
+    {
+      value: 3,
+      emoji: '😐',
+      label: 'Okay',
+      color: 'from-yellow-500 to-amber-400',
+      bg: 'bg-yellow-500/20',
+      desc: 'Neither good nor bad',
+    },
+    {
+      value: 4,
+      emoji: '🙂',
+      label: 'Good',
+      color: 'from-green-500 to-emerald-500',
+      bg: 'bg-green-500/20',
+      desc: 'Feeling positive today',
+    },
+    {
+      value: 5,
+      emoji: '😊',
+      label: 'Great',
+      color: 'from-emerald-500 to-teal-500',
+      bg: 'bg-emerald-500/20',
+      desc: 'Feeling really good!',
+    },
   ];
 
   const handleMoodSelect = (value: number) => {
@@ -36,7 +70,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
     addMoodEntry({
       date: today,
       mood: selectedMood,
-      notes: note.trim() || undefined
+      notes: note.trim() || undefined,
     });
     setStep('complete');
   };
@@ -47,7 +81,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
     const today = new Date().toISOString().split('T')[0];
     addMoodEntry({
       date: today,
-      mood: selectedMood
+      mood: selectedMood,
     });
     setStep('complete');
   };
@@ -65,7 +99,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
     return 'stable';
   };
 
-  const selectedMoodData = moods.find(m => m.value === selectedMood);
+  const selectedMoodData = moods.find((m) => m.value === selectedMood);
 
   return (
     <div className="min-h-[70vh] flex flex-col">
@@ -86,9 +120,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
           <div className="w-full max-w-sm space-y-6 animate-fade-in">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-foreground mb-2">How are you feeling?</h2>
-              <p className="text-white text-sm">
-                Take a moment to check in with yourself
-              </p>
+              <p className="text-white text-sm">Take a moment to check in with yourself</p>
             </div>
 
             <div className="space-y-3">
@@ -115,15 +147,15 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
           <>
             <div className="w-full max-w-sm space-y-6 animate-fade-in">
               <div className="text-center">
-                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full ${selectedMoodData.bg} mb-4`}>
+                <div
+                  className={`inline-flex items-center justify-center w-20 h-20 rounded-full ${selectedMoodData.bg} mb-4`}
+                >
                   <span className="text-5xl">{selectedMoodData.emoji}</span>
                 </div>
                 <h2 className="text-xl font-bold text-foreground mb-1">
                   Feeling {selectedMoodData.label.toLowerCase()}
                 </h2>
-                <p className="text-white text-sm">
-                  Want to add a note? (optional)
-                </p>
+                <p className="text-white text-sm">Want to add a note? (optional)</p>
               </div>
 
               <Textarea
@@ -159,15 +191,15 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
 
         {step === 'complete' && selectedMoodData && (
           <div className="w-full max-w-sm space-y-6 animate-fade-in text-center">
-            <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br ${selectedMoodData.color}`}>
+            <div
+              className={`inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br ${selectedMoodData.color}`}
+            >
               <Check className="h-12 w-12 text-foreground" />
             </div>
 
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-2">Check-In Saved</h2>
-              <p className="text-white">
-                Thanks for taking a moment to check in.
-              </p>
+              <p className="text-white">Thanks for taking a moment to check in.</p>
             </div>
 
             {/* Stats */}
@@ -198,9 +230,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
                           <span className="text-lg font-bold text-blue-400">Stable</span>
                         </>
                       )}
-                      {!getTrend() && (
-                        <span className="text-sm text-white">Keep tracking</span>
-                      )}
+                      {!getTrend() && <span className="text-sm text-white">Keep tracking</span>}
                     </div>
                     <div className="text-xs text-white">Trend</div>
                   </div>
@@ -213,7 +243,8 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
               <Card className="border-amber-500/20 bg-amber-500/5">
                 <CardContent className="p-4">
                   <p className="text-sm text-amber-200">
-                    It's okay to not be okay. Consider reaching out to someone you trust, or explore our support resources.
+                    It's okay to not be okay. Consider reaching out to someone you trust, or explore
+                    our support resources.
                   </p>
                 </CardContent>
               </Card>

@@ -31,8 +31,10 @@ import { AtRiskPredictor } from '@/components/college/widgets/AtRiskPredictor';
 import { EPACountdown } from '@/components/college/widgets/EPACountdown';
 import { ActivityFeed } from '@/components/college/widgets/ActivityFeed';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
-import { useCollege } from '@/contexts/CollegeContext';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useSubmissionQueue } from '@/hooks/college/usePortfolioSubmissions';
 import { useAuth } from '@/contexts/AuthContext';
+import { Loader2, FolderCheck } from 'lucide-react';
 
 interface CollegeOverviewSectionProps {
   onNavigate: (section: CollegeSection) => void;
@@ -493,22 +495,35 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
   const {
     staff,
     students,
-    cohorts,
     epaRecords,
+    isLoading,
     getStaffByRole,
-    getPendingAssessments,
-    getOverdueILPReviews,
-    getUpcomingLessons,
-  } = useCollege();
+    getPendingGradesData,
+    getOverdueILPReviewsData,
+    getUpcomingLessonsData,
+  } = useCollegeSupabase();
+
+  const { stats: submissionStats } = useSubmissionQueue();
 
   const activeTutors = getStaffByRole('tutor').length;
   const activeStudents = students.filter((s) => s.status === 'Active').length;
-  const pendingAssessments = getPendingAssessments().length;
-  const overdueILPReviews = getOverdueILPReviews().length;
-  const upcomingLessons = getUpcomingLessons(7);
+  const pendingAssessments = getPendingGradesData().length;
+  const overdueILPReviews = getOverdueILPReviewsData().length;
+  const upcomingLessons = getUpcomingLessonsData();
   const studentsAtGateway = epaRecords.filter(
     (e) => e.status === 'Pre-Gateway' || e.status === 'Gateway Ready'
   ).length;
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center space-y-3">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mx-auto" />
+          <p className="text-sm text-white">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -588,6 +603,19 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
           />
         )}
       </motion.section>
+
+      {/* Portfolio Review Queue */}
+      {submissionStats.total > 0 && (
+        <motion.section variants={itemVariants}>
+          <QuickActionCard
+            icon={FolderCheck}
+            title="Portfolio Reviews Pending"
+            description={`${submissionStats.highPriority > 0 ? `${submissionStats.highPriority} high priority • ` : ''}${submissionStats.total} submissions awaiting review`}
+            onClick={() => onNavigate('portfolio')}
+            badge={submissionStats.total}
+          />
+        </motion.section>
+      )}
 
       {/* Quick Actions */}
       <motion.section variants={itemVariants} className="space-y-4">

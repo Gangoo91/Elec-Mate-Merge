@@ -3,16 +3,18 @@ import { Camera, Upload, X, Image, Loader2, ZoomIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { CertificatePhoto, Luminaire } from '@/types/emergency-lighting';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 interface EmergencyLightingPhotosProps {
   photos: CertificatePhoto[];
@@ -37,7 +39,8 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   certificateId,
 }) => {
   const [isUploading, setIsUploading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<CertificatePhoto['category']>('installation');
+  const [selectedCategory, setSelectedCategory] =
+    useState<CertificatePhoto['category']>('installation');
   const [selectedLinkedId, setSelectedLinkedId] = useState<string>('');
   const [caption, setCaption] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -97,7 +100,9 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   const uploadPhoto = async (file: File) => {
     setIsUploading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // Compress the image
@@ -120,9 +125,9 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('inspection-photos')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('inspection-photos').getPublicUrl(filePath);
 
       // Create photo object
       const newPhoto: CertificatePhoto = {
@@ -162,7 +167,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   };
 
   const deletePhoto = async (photoId: string) => {
-    const photo = photos.find(p => p.id === photoId);
+    const photo = photos.find((p) => p.id === photoId);
     if (!photo) return;
 
     try {
@@ -176,7 +181,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
       console.error('Error deleting from storage:', error);
     }
 
-    onPhotosChange(photos.filter(p => p.id !== photoId));
+    onPhotosChange(photos.filter((p) => p.id !== photoId));
     toast.success('Photo deleted');
   };
 
@@ -184,12 +189,12 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
     if (!photo.linkedItemId) return '';
 
     if (photo.category === 'luminaire') {
-      const luminaire = luminaires.find(l => l.id === photo.linkedItemId);
+      const luminaire = luminaires.find((l) => l.id === photo.linkedItemId);
       return luminaire ? `#${luminaires.indexOf(luminaire) + 1} - ${luminaire.location}` : '';
     }
 
     if (photo.category === 'defect') {
-      const defect = defects.find(d => d.id === photo.linkedItemId);
+      const defect = defects.find((d) => d.id === photo.linkedItemId);
       return defect ? defect.description.substring(0, 30) + '...' : '';
     }
 
@@ -197,13 +202,13 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   };
 
   const getCategoryLabel = (category: CertificatePhoto['category']): string => {
-    return PHOTO_CATEGORIES.find(c => c.value === category)?.label || category;
+    return PHOTO_CATEGORIES.find((c) => c.value === category)?.label || category;
   };
 
-  const photosByCategory = PHOTO_CATEGORIES.map(cat => ({
+  const photosByCategory = PHOTO_CATEGORIES.map((cat) => ({
     ...cat,
-    photos: photos.filter(p => p.category === cat.value),
-  })).filter(cat => cat.photos.length > 0);
+    photos: photos.filter((p) => p.category === cat.value),
+  })).filter((cat) => cat.photos.length > 0);
 
   return (
     <div className="space-y-6">
@@ -217,13 +222,18 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-xs text-muted-foreground">Photo Category</Label>
-            <Select value={selectedCategory} onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}>
+            <Select
+              value={selectedCategory}
+              onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}
+            >
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {PHOTO_CATEGORIES.map(cat => (
-                  <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
+                {PHOTO_CATEGORIES.map((cat) => (
+                  <SelectItem key={cat.value} value={cat.value}>
+                    {cat.label}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -247,8 +257,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
               </Select>
             </div>
           )}
-
-                  </div>
+        </div>
 
         <div className="space-y-2">
           <Label className="text-xs text-muted-foreground">Caption (Optional)</Label>
@@ -293,14 +302,14 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
       {/* Photos Grid */}
       {photos.length > 0 ? (
         <div className="space-y-4">
-          {photosByCategory.map(category => (
+          {photosByCategory.map((category) => (
             <div key={category.value} className="space-y-2">
               <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <Image className="h-4 w-4" />
                 {category.label} ({category.photos.length})
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {category.photos.map(photo => (
+                {category.photos.map((photo) => (
                   <div key={photo.id} className="relative group">
                     <Dialog>
                       <DialogTrigger asChild>
@@ -322,7 +331,9 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
                           className="w-full h-auto rounded-lg"
                         />
                         {photo.caption && (
-                          <p className="text-center text-sm text-muted-foreground mt-2">{photo.caption}</p>
+                          <p className="text-center text-sm text-muted-foreground mt-2">
+                            {photo.caption}
+                          </p>
                         )}
                       </DialogContent>
                     </Dialog>

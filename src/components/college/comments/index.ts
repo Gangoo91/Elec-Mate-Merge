@@ -1,2 +1,2 @@
-export { CommentThread } from "./CommentThread";
-export { AddCommentDialog } from "./AddCommentDialog";
+export { CommentThread } from './CommentThread';
+export { AddCommentDialog } from './AddCommentDialog';

@@ -1,15 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Shield, 
-  MapPin, 
-  Settings, 
+import {
+  Shield,
+  MapPin,
+  Settings,
   TestTube,
   Eye,
   Navigation,
   CheckCircle,
   AlertCircle,
   Clock,
-  Lightbulb
+  Lightbulb,
 } from 'lucide-react';
 
 export const EmergencyLightingContent2_5 = () => {
@@ -25,7 +25,8 @@ export const EmergencyLightingContent2_5 = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-foreground leading-relaxed">
-            Exit signs guide occupants safely towards final exits in the event of an emergency. They must:
+            Exit signs guide occupants safely towards final exits in the event of an emergency. They
+            must:
           </p>
 
           <div className="grid gap-4">
@@ -57,7 +58,9 @@ export const EmergencyLightingContent2_5 = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">Which symbol standard must emergency exit signs comply with in the UK?</p>
+            <p className="text-foreground">
+              Which symbol standard must emergency exit signs comply with in the UK?
+            </p>
             <p className="text-green-400 mt-2 font-medium">Answer: ISO 7010</p>
           </div>
         </CardContent>
@@ -73,7 +76,8 @@ export const EmergencyLightingContent2_5 = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-foreground">
-            Signs must be positioned so there is always clear guidance along an escape route. Requirements include:
+            Signs must be positioned so there is always clear guidance along an escape route.
+            Requirements include:
           </p>
 
           <div className="grid md:grid-cols-2 gap-4">
@@ -123,8 +127,12 @@ export const EmergencyLightingContent2_5 = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">Name two locations where exit signs must be installed.</p>
-            <p className="text-green-400 mt-2 font-medium">Answer: At every final exit and at every change of direction</p>
+            <p className="text-foreground">
+              Name two locations where exit signs must be installed.
+            </p>
+            <p className="text-green-400 mt-2 font-medium">
+              Answer: At every final exit and at every change of direction
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -138,7 +146,9 @@ export const EmergencyLightingContent2_5 = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
-          <p className="text-foreground">There are different sign types, depending on the building and occupancy:</p>
+          <p className="text-foreground">
+            There are different sign types, depending on the building and occupancy:
+          </p>
 
           <div className="grid gap-4">
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
@@ -147,21 +157,35 @@ export const EmergencyLightingContent2_5 = () => {
                 <div className="space-y-3">
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Maintained Signs</h4>
-                    <p className="text-foreground text-sm">Remain illuminated at all times (essential in public buildings such as theatres, cinemas, hospitals)</p>
+                    <p className="text-foreground text-sm">
+                      Remain illuminated at all times (essential in public buildings such as
+                      theatres, cinemas, hospitals)
+                    </p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Non-maintained Signs</h4>
-                    <p className="text-foreground text-sm">Only illuminate when the mains supply fails (suitable in workplaces where staff are familiar with escape routes)</p>
+                    <p className="text-foreground text-sm">
+                      Only illuminate when the mains supply fails (suitable in workplaces where
+                      staff are familiar with escape routes)
+                    </p>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Externally Illuminated Signs</h4>
-                    <p className="text-foreground text-sm">Standard safety signs lit by emergency luminaires</p>
+                    <h4 className="font-semibold text-foreground mb-2">
+                      Externally Illuminated Signs
+                    </h4>
+                    <p className="text-foreground text-sm">
+                      Standard safety signs lit by emergency luminaires
+                    </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Internally Illuminated Signs</h4>
-                    <p className="text-foreground text-sm">Self-contained units with internal light sources</p>
+                    <h4 className="font-semibold text-foreground mb-2">
+                      Internally Illuminated Signs
+                    </h4>
+                    <p className="text-foreground text-sm">
+                      Self-contained units with internal light sources
+                    </p>
                   </div>
                 </div>
               </div>
@@ -173,8 +197,13 @@ export const EmergencyLightingContent2_5 = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">What is the difference between maintained and non-maintained exit signs?</p>
-            <p className="text-green-400 mt-2 font-medium">Answer: Maintained signs remain illuminated at all times, non-maintained signs only illuminate during mains failure</p>
+            <p className="text-foreground">
+              What is the difference between maintained and non-maintained exit signs?
+            </p>
+            <p className="text-green-400 mt-2 font-medium">
+              Answer: Maintained signs remain illuminated at all times, non-maintained signs only
+              illuminate during mains failure
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -235,8 +264,13 @@ export const EmergencyLightingContent2_5 = () => {
               <CheckCircle className="h-4 w-4 text-green-400" />
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
-            <p className="text-foreground">Why should exit signage be checked for legibility as part of routine inspections?</p>
-            <p className="text-green-400 mt-2 font-medium">Answer: To ensure symbols are not obstructed or faded and remain visible during emergencies</p>
+            <p className="text-foreground">
+              Why should exit signage be checked for legibility as part of routine inspections?
+            </p>
+            <p className="text-green-400 mt-2 font-medium">
+              Answer: To ensure symbols are not obstructed or faded and remain visible during
+              emergencies
+            </p>
           </div>
         </CardContent>
       </Card>

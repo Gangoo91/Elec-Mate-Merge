@@ -12,15 +12,18 @@ const SmartHomeModule7Section3RealWorld = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <h4 className="font-semibold text-foreground">Case Study: Rural Property Heating System</h4>
-          
+          <h4 className="font-semibold text-foreground">
+            Case Study: Rural Property Heating System
+          </h4>
+
           <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h5 className="font-semibold text-red-200 mb-2">The Problem</h5>
                 <p className="text-red-100 text-sm mb-3">
-                  A smart heating system in a rural property kept dropping offline, despite devices being properly wired and powered:
+                  A smart heating system in a rural property kept dropping offline, despite devices
+                  being properly wired and powered:
                 </p>
                 <ul className="space-y-1 text-red-100 text-sm ml-4">
                   <li>• Smart thermostats frequently showed as "offline"</li>

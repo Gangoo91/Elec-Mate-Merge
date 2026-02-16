@@ -1,10 +1,6 @@
-import { BookOpen, ExternalLink } from "lucide-react";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Badge } from "@/components/ui/badge";
+import { BookOpen, ExternalLink } from 'lucide-react';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Badge } from '@/components/ui/badge';
 
 interface BS7671ReferenceTooltipProps {
   reference: string;
@@ -12,41 +8,46 @@ interface BS7671ReferenceTooltipProps {
 
 // Common BS 7671 regulation explanations
 const REGULATION_INFO: Record<string, { title: string; description: string }> = {
-  "411": {
-    title: "Protection against electric shock",
-    description: "Requirements for protective measures against direct and indirect contact, including earthing and bonding."
+  '411': {
+    title: 'Protection against electric shock',
+    description:
+      'Requirements for protective measures against direct and indirect contact, including earthing and bonding.',
   },
-  "314": {
-    title: "Division of installation",
-    description: "Guidance on dividing electrical installations into circuits to avoid hazards and facilitate testing and maintenance."
+  '314': {
+    title: 'Division of installation',
+    description:
+      'Guidance on dividing electrical installations into circuits to avoid hazards and facilitate testing and maintenance.',
   },
-  "522": {
-    title: "Selection and erection of wiring systems",
-    description: "Requirements for cable installation methods, support, and mechanical protection."
+  '522': {
+    title: 'Selection and erection of wiring systems',
+    description: 'Requirements for cable installation methods, support, and mechanical protection.',
   },
-  "543": {
-    title: "Protective conductors",
-    description: "Requirements for the sizing and installation of protective conductors (CPCs)."
+  '543': {
+    title: 'Protective conductors',
+    description: 'Requirements for the sizing and installation of protective conductors (CPCs).',
   },
-  "559": {
-    title: "Luminaires and lighting installations",
-    description: "Special requirements for the selection and erection of luminaires and lighting installations."
+  '559': {
+    title: 'Luminaires and lighting installations',
+    description:
+      'Special requirements for the selection and erection of luminaires and lighting installations.',
   },
-  "701": {
-    title: "Locations containing a bath or shower",
-    description: "Special requirements for electrical installations in bathrooms and shower rooms, including zones and protection."
+  '701': {
+    title: 'Locations containing a bath or shower',
+    description:
+      'Special requirements for electrical installations in bathrooms and shower rooms, including zones and protection.',
   },
-  "702": {
-    title: "Swimming pools and other basins",
-    description: "Special requirements for electrical installations in and around swimming pools."
+  '702': {
+    title: 'Swimming pools and other basins',
+    description: 'Special requirements for electrical installations in and around swimming pools.',
   },
-  "705": {
-    title: "Agricultural and horticultural premises",
-    description: "Special requirements for installations in agricultural buildings and horticultural premises."
+  '705': {
+    title: 'Agricultural and horticultural premises',
+    description:
+      'Special requirements for installations in agricultural buildings and horticultural premises.',
   },
-  "706": {
-    title: "Conducting locations with restricted movement",
-    description: "Requirements for confined conductive locations such as boilers and metal tanks."
+  '706': {
+    title: 'Conducting locations with restricted movement',
+    description: 'Requirements for confined conductive locations such as boilers and metal tanks.',
   },
 };
 
@@ -58,8 +59,8 @@ export const BS7671ReferenceTooltip = ({ reference }: BS7671ReferenceTooltipProp
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Badge 
-          variant="outline" 
+        <Badge
+          variant="outline"
           className="cursor-help bg-primary/5 border-primary/20 text-primary hover:bg-primary/10 transition-colors"
         >
           <BookOpen className="h-3 w-3 mr-1" />
@@ -83,7 +84,7 @@ export const BS7671ReferenceTooltip = ({ reference }: BS7671ReferenceTooltipProp
             </p>
           )}
           <div className="pt-2 border-t border-border/40">
-            <a 
+            <a
               href={`https://electrical.theiet.org/bs-7671/`}
               target="_blank"
               rel="noopener noreferrer"

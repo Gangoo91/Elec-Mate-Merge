@@ -1,91 +1,90 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Quote, RefreshCw, Heart, Share2 } from "lucide-react";
-import { toast } from "sonner";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Quote, RefreshCw, Heart, Share2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const affirmations = [
   {
-    text: "You are capable of handling whatever today brings.",
-    category: "strength"
+    text: 'You are capable of handling whatever today brings.',
+    category: 'strength',
   },
   {
     text: "Your skills and expertise make a real difference in people's lives.",
-    category: "purpose"
+    category: 'purpose',
   },
   {
     text: "It's okay to ask for help. That's a sign of strength, not weakness.",
-    category: "support"
+    category: 'support',
   },
   {
-    text: "Every expert was once a beginner. Your progress matters.",
-    category: "growth"
+    text: 'Every expert was once a beginner. Your progress matters.',
+    category: 'growth',
   },
   {
     text: "Taking breaks is not lazy - it's essential for doing your best work.",
-    category: "self-care"
+    category: 'self-care',
   },
   {
-    text: "You deserve to feel safe, valued, and respected at work.",
-    category: "worth"
+    text: 'You deserve to feel safe, valued, and respected at work.',
+    category: 'worth',
   },
   {
     text: "Difficult days don't define you. Your resilience does.",
-    category: "resilience"
+    category: 'resilience',
   },
   {
-    text: "Your mental health is just as important as physical safety on site.",
-    category: "awareness"
+    text: 'Your mental health is just as important as physical safety on site.',
+    category: 'awareness',
   },
   {
-    text: "Small steps forward are still progress. Be patient with yourself.",
-    category: "patience"
+    text: 'Small steps forward are still progress. Be patient with yourself.',
+    category: 'patience',
   },
   {
-    text: "You bring unique value to your team. Your contribution matters.",
-    category: "value"
+    text: 'You bring unique value to your team. Your contribution matters.',
+    category: 'value',
   },
   {
     text: "It's okay to not be okay. What matters is reaching out when you need to.",
-    category: "vulnerability"
+    category: 'vulnerability',
   },
   {
-    text: "Your wellbeing comes first. Everything else can wait.",
-    category: "priority"
+    text: 'Your wellbeing comes first. Everything else can wait.',
+    category: 'priority',
   },
   {
     text: "You've overcome challenges before. You'll overcome this too.",
-    category: "experience"
+    category: 'experience',
   },
   {
     text: "Taking time for yourself isn't selfish - it's necessary.",
-    category: "self-care"
+    category: 'self-care',
   },
   {
     text: "Your feelings are valid. Don't let anyone dismiss them.",
-    category: "validation"
+    category: 'validation',
   },
   {
-    text: "Every job completed safely is a success worth celebrating.",
-    category: "achievement"
+    text: 'Every job completed safely is a success worth celebrating.',
+    category: 'achievement',
   },
   {
-    text: "Connecting with others who understand is a powerful form of support.",
-    category: "community"
+    text: 'Connecting with others who understand is a powerful form of support.',
+    category: 'community',
   },
   {
     text: "Your best is enough. You don't need to be perfect.",
-    category: "acceptance"
+    category: 'acceptance',
   },
   {
-    text: "Rest is productive. Your mind and body need recovery time.",
-    category: "rest"
+    text: 'Rest is productive. Your mind and body need recovery time.',
+    category: 'rest',
   },
   {
-    text: "You are more than your job. Your whole self matters.",
-    category: "identity"
-  }
+    text: 'You are more than your job. Your whole self matters.',
+    category: 'identity',
+  },
 ];
 
 const DailyAffirmation = () => {
@@ -148,7 +147,7 @@ const DailyAffirmation = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          text: shareText
+          text: shareText,
         });
       } catch (err) {
         // User cancelled or error
@@ -156,7 +155,7 @@ const DailyAffirmation = () => {
     } else {
       // Fallback: copy to clipboard
       await navigator.clipboard.writeText(shareText);
-      toast.success("Copied to clipboard!");
+      toast.success('Copied to clipboard!');
     }
   };
 

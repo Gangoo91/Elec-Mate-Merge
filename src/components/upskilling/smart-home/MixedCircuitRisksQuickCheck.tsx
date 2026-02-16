@@ -7,15 +7,20 @@ const MixedCircuitRisksQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const question = "Why is it risky to mix mains and low-voltage wiring without proper segregation?";
+  const question =
+    'Why is it risky to mix mains and low-voltage wiring without proper segregation?';
   const options = [
-    { id: 'a', text: "It makes the installation look unprofessional", correct: false },
-    { id: 'b', text: "It can cause cross-contamination, overvoltage damage, and shock hazards", correct: true },
-    { id: 'c', text: "It increases the cost of materials unnecessarily", correct: false },
-    { id: 'd', text: "It makes troubleshooting more difficult for technicians", correct: false }
+    { id: 'a', text: 'It makes the installation look unprofessional', correct: false },
+    {
+      id: 'b',
+      text: 'It can cause cross-contamination, overvoltage damage, and shock hazards',
+      correct: true,
+    },
+    { id: 'c', text: 'It increases the cost of materials unnecessarily', correct: false },
+    { id: 'd', text: 'It makes troubleshooting more difficult for technicians', correct: false },
   ];
-  
-  const correctAnswer = options.find(opt => opt.correct);
+
+  const correctAnswer = options.find((opt) => opt.correct);
 
   const handleSubmit = () => {
     setShowAnswer(true);
@@ -31,10 +36,13 @@ const MixedCircuitRisksQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
-            <label key={option.id} className="flex items-start gap-3 p-3 bg-[#1a1a1a] rounded-lg cursor-pointer hover:bg-[#252525] active:bg-[#303030] transition-all touch-manipulation">
+            <label
+              key={option.id}
+              className="flex items-start gap-3 p-3 bg-[#1a1a1a] rounded-lg cursor-pointer hover:bg-[#252525] active:bg-[#303030] transition-all touch-manipulation"
+            >
               <input
                 type="radio"
                 name="mixed-circuit-risks"
@@ -44,10 +52,17 @@ const MixedCircuitRisksQuickCheck = () => {
                 className="mt-1"
                 disabled={showAnswer}
               />
-              <span className={`text-sm ${showAnswer 
-                ? (option.correct ? 'text-green-300' : selectedAnswer === option.id ? 'text-red-300' : 'text-gray-300')
-                : 'text-gray-300'
-              }`}>
+              <span
+                className={`text-sm ${
+                  showAnswer
+                    ? option.correct
+                      ? 'text-green-300'
+                      : selectedAnswer === option.id
+                        ? 'text-red-300'
+                        : 'text-gray-300'
+                    : 'text-gray-300'
+                }`}
+              >
                 {option.text}
               </span>
               {showAnswer && option.correct && (
@@ -61,7 +76,10 @@ const MixedCircuitRisksQuickCheck = () => {
         </div>
 
         {!showAnswer && selectedAnswer && (
-          <Button onClick={handleSubmit} className="bg-elec-yellow text-elec-dark hover:bg-yellow-500">
+          <Button
+            onClick={handleSubmit}
+            className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
+          >
             Check Answer
           </Button>
         )}
@@ -72,9 +90,10 @@ const MixedCircuitRisksQuickCheck = () => {
               {selectedAnswer === correctAnswer?.id ? '✓ Correct!' : '✗ Incorrect'}
             </p>
             <p className="text-foreground text-sm">
-              <strong>Explanation:</strong> Mixing mains and low-voltage wiring without proper segregation creates multiple 
-              safety risks: mains voltage can contaminate low-voltage circuits causing equipment damage, shock hazards arise 
-              from unexpected live conductors, and fire risks increase from improper cable ratings and connections.
+              <strong>Explanation:</strong> Mixing mains and low-voltage wiring without proper
+              segregation creates multiple safety risks: mains voltage can contaminate low-voltage
+              circuits causing equipment damage, shock hazards arise from unexpected live
+              conductors, and fire risks increase from improper cable ratings and connections.
             </p>
           </div>
         )}

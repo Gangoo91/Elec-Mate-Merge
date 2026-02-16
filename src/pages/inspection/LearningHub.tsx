@@ -1,101 +1,101 @@
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Zap, GraduationCap, Shield, Clock, CheckCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, BookOpen, Zap, GraduationCap, Shield, Clock, CheckCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 export default function LearningHub() {
   const navigate = useNavigate();
 
   const learningModules = [
     {
-      id: "safe-isolation",
-      title: "Safe Isolation Procedures",
-      description: "Learn the correct GS38 safe isolation procedure step-by-step",
+      id: 'safe-isolation',
+      title: 'Safe Isolation Procedures',
+      description: 'Learn the correct GS38 safe isolation procedure step-by-step',
       icon: Shield,
-      color: "text-red-500",
-      bgColor: "bg-red-500/10",
-      duration: "20 min",
+      color: 'text-red-500',
+      bgColor: 'bg-red-500/10',
+      duration: '20 min',
       items: 8,
-      progress: 0
+      progress: 0,
     },
     {
-      id: "testing-procedures",
-      title: "Testing Procedures",
-      description: "Complete guide to electrical testing methods and sequences",
+      id: 'testing-procedures',
+      title: 'Testing Procedures',
+      description: 'Complete guide to electrical testing methods and sequences',
       icon: Zap,
-      color: "text-orange-500",
-      bgColor: "bg-orange-500/10",
-      duration: "35 min",
+      color: 'text-orange-500',
+      bgColor: 'bg-orange-500/10',
+      duration: '35 min',
       items: 18,
-      progress: 0
+      progress: 0,
     },
     {
-      id: "continuity-testing",
-      title: "Continuity Testing",
-      description: "CPC continuity, ring final circuit testing, and recording results",
+      id: 'continuity-testing',
+      title: 'Continuity Testing',
+      description: 'CPC continuity, ring final circuit testing, and recording results',
       icon: CheckCircle,
-      color: "text-blue-500",
-      bgColor: "bg-blue-500/10",
-      duration: "25 min",
+      color: 'text-blue-500',
+      bgColor: 'bg-blue-500/10',
+      duration: '25 min',
       items: 12,
-      progress: 0
+      progress: 0,
     },
     {
-      id: "insulation-resistance",
-      title: "Insulation Resistance Testing",
-      description: "IR testing at 500V and 250V with correct procedures",
+      id: 'insulation-resistance',
+      title: 'Insulation Resistance Testing',
+      description: 'IR testing at 500V and 250V with correct procedures',
       icon: Zap,
-      color: "text-purple-500",
-      bgColor: "bg-purple-500/10",
-      duration: "20 min",
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-500/10',
+      duration: '20 min',
       items: 10,
-      progress: 0
+      progress: 0,
     },
     {
-      id: "rcd-testing",
-      title: "RCD Testing",
-      description: "Testing RCDs and RCBOs with correct trip times",
+      id: 'rcd-testing',
+      title: 'RCD Testing',
+      description: 'Testing RCDs and RCBOs with correct trip times',
       icon: Shield,
-      color: "text-green-500",
-      bgColor: "bg-green-500/10",
-      duration: "15 min",
+      color: 'text-green-500',
+      bgColor: 'bg-green-500/10',
+      duration: '15 min',
       items: 8,
-      progress: 0
+      progress: 0,
     },
     {
-      id: "fault-finding",
-      title: "Fault Finding",
-      description: "Systematic approach to diagnosing electrical faults",
+      id: 'fault-finding',
+      title: 'Fault Finding',
+      description: 'Systematic approach to diagnosing electrical faults',
       icon: Zap,
-      color: "text-yellow-500",
-      bgColor: "bg-yellow-500/10",
-      duration: "40 min",
+      color: 'text-yellow-500',
+      bgColor: 'bg-yellow-500/10',
+      duration: '40 min',
       items: 20,
-      progress: 0
+      progress: 0,
     },
     {
-      id: "bs7671-reference",
-      title: "BS 7671 Quick Reference",
-      description: "Key regulations and requirements for inspection & testing",
+      id: 'bs7671-reference',
+      title: 'BS 7671 Quick Reference',
+      description: 'Key regulations and requirements for inspection & testing',
       icon: BookOpen,
-      color: "text-indigo-500",
-      bgColor: "bg-indigo-500/10",
-      duration: "45 min",
+      color: 'text-indigo-500',
+      bgColor: 'bg-indigo-500/10',
+      duration: '45 min',
       items: 24,
-      progress: 0
+      progress: 0,
     },
     {
-      id: "quiz-assessment",
-      title: "Knowledge Assessment",
-      description: "Test your understanding with quizzes and mock exams",
+      id: 'quiz-assessment',
+      title: 'Knowledge Assessment',
+      description: 'Test your understanding with quizzes and mock exams',
       icon: GraduationCap,
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-      duration: "30 min",
+      color: 'text-primary',
+      bgColor: 'bg-primary/10',
+      duration: '30 min',
       items: 50,
-      progress: 0
-    }
+      progress: 0,
+    },
   ];
 
   return (
@@ -106,7 +106,7 @@ export default function LearningHub() {
           <Button
             variant="ghost"
             className="text-muted-foreground hover:text-foreground p-0 mb-4"
-            onClick={() => navigate("/electrician/inspection-testing")}
+            onClick={() => navigate('/electrician/inspection-testing')}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Inspection & Testing
@@ -165,7 +165,9 @@ export default function LearningHub() {
             >
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
-                  <div className={`w-10 h-10 rounded-lg ${module.bgColor} flex items-center justify-center`}>
+                  <div
+                    className={`w-10 h-10 rounded-lg ${module.bgColor} flex items-center justify-center`}
+                  >
                     <module.icon className={`h-5 w-5 ${module.color}`} />
                   </div>
                   <Badge variant="outline" className="text-xs">

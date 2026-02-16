@@ -28,7 +28,7 @@ export const QuickActionButtons = ({
   const handlePortalOpen = (portalType: PortalType, submittedField: string) => {
     const portal = PORTAL_LINKS[portalType];
     window.open(portal.url, '_blank', 'noopener,noreferrer');
-    
+
     // Update submission timestamp
     const now = new Date().toISOString();
     onUpdate(notificationId, {
@@ -65,7 +65,7 @@ export const QuickActionButtons = ({
           {niceicSubmitted ? 'NICEIC ✓' : 'Open NICEIC'}
         </Button>
       )}
-      
+
       {showNapit && (
         <Button
           size="sm"

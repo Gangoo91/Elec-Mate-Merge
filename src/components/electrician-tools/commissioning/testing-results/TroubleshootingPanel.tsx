@@ -1,6 +1,11 @@
-import { AlertTriangle, Lightbulb, XCircle } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Card } from "@/components/ui/card";
+import { AlertTriangle, Lightbulb, XCircle } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Card } from '@/components/ui/card';
 
 interface TroubleshootingPanelProps {
   troubleshooting?: string[];
@@ -8,10 +13,10 @@ interface TroubleshootingPanelProps {
   proTips?: string[];
 }
 
-export const TroubleshootingPanel = ({ 
-  troubleshooting, 
-  commonMistakes, 
-  proTips 
+export const TroubleshootingPanel = ({
+  troubleshooting,
+  commonMistakes,
+  proTips,
 }: TroubleshootingPanelProps) => {
   const hasTroubleshooting = troubleshooting && troubleshooting.length > 0;
   const hasCommonMistakes = commonMistakes && commonMistakes.length > 0;
@@ -39,15 +44,17 @@ export const TroubleshootingPanel = ({
                 const solution = hasStructure ? parts.slice(1).join(':').trim() : item;
 
                 return (
-                  <AccordionItem 
-                    key={idx} 
+                  <AccordionItem
+                    key={idx}
                     value={`troubleshoot-${idx}`}
                     className="border border-elec-yellow/20 rounded-lg bg-elec-dark/40"
                   >
                     <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-elec-yellow/5 text-left">
                       <div className="flex items-start gap-2 w-full">
                         <AlertTriangle className="shrink-0 h-4 w-4 text-amber-400 mt-0.5" />
-                        <span className="text-sm sm:text-base text-foreground font-medium">{symptom}</span>
+                        <span className="text-sm sm:text-base text-foreground font-medium">
+                          {symptom}
+                        </span>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="px-4 pb-3">
@@ -75,7 +82,9 @@ export const TroubleshootingPanel = ({
               {commonMistakes.map((mistake, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <XCircle className="shrink-0 h-4 w-4 text-red-400 mt-0.5" />
-                  <span className="text-sm sm:text-base text-foreground/90 leading-relaxed">{mistake}</span>
+                  <span className="text-sm sm:text-base text-foreground/90 leading-relaxed">
+                    {mistake}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -95,7 +104,9 @@ export const TroubleshootingPanel = ({
               {proTips.map((tip, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <Lightbulb className="shrink-0 h-4 w-4 text-elec-yellow mt-0.5" />
-                  <span className="text-sm sm:text-base text-foreground/90 leading-relaxed">{tip}</span>
+                  <span className="text-sm sm:text-base text-foreground/90 leading-relaxed">
+                    {tip}
+                  </span>
                 </li>
               ))}
             </ul>

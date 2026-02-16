@@ -18,24 +18,35 @@ export const SmartHomeModule2Section1Summary = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                  <span>Wireless protocols define how smart devices communicate and determine system performance</span>
+                  <span>
+                    Wireless protocols define how smart devices communicate and determine system
+                    performance
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                  <span>Each protocol has strengths: Wi-Fi for bandwidth, Zigbee/Z-Wave for battery life, Bluetooth for mobile integration</span>
+                  <span>
+                    Each protocol has strengths: Wi-Fi for bandwidth, Zigbee/Z-Wave for battery
+                    life, Bluetooth for mobile integration
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                  <span>Mesh protocols (Zigbee, Z-Wave, Thread) create self-healing networks that extend range</span>
+                  <span>
+                    Mesh protocols (Zigbee, Z-Wave, Thread) create self-healing networks that extend
+                    range
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                  <span>Protocol choice affects compatibility, power use, reliability, and security</span>
+                  <span>
+                    Protocol choice affects compatibility, power use, reliability, and security
+                  </span>
                 </li>
               </ul>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div>
               <h4 className="font-semibold text-foreground mb-3">Practical Applications</h4>
@@ -67,8 +78,9 @@ export const SmartHomeModule2Section1Summary = () => {
             <h4 className="font-semibold text-foreground">Next: Zigbee vs Z-Wave Deep Dive</h4>
           </div>
           <p className="text-sm text-gray-300">
-            In the next section, we'll explore the detailed differences between Zigbee and Z-Wave protocols, 
-            comparing their mesh networking capabilities, range characteristics, and power consumption in real-world scenarios.
+            In the next section, we'll explore the detailed differences between Zigbee and Z-Wave
+            protocols, comparing their mesh networking capabilities, range characteristics, and
+            power consumption in real-world scenarios.
           </p>
         </div>
       </CardContent>

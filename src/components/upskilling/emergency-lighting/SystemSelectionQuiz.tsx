@@ -64,7 +64,9 @@ export const SystemSelectionQuiz = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="text-center space-y-4">
-            <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full ${passed ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+            <div
+              className={`inline-flex items-center justify-center w-24 h-24 rounded-full ${passed ? 'bg-green-500/20' : 'bg-red-500/20'}`}
+            >
               {passed ? (
                 <CheckCircle2 className="h-12 w-12 text-green-400" />
               ) : (
@@ -85,7 +87,10 @@ export const SystemSelectionQuiz = () => {
             {quizData.map((question, index) => {
               const isCorrect = selectedAnswers[index] === question.correctAnswer;
               return (
-                <div key={index} className={`border rounded-lg p-4 ${isCorrect ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'}`}>
+                <div
+                  key={index}
+                  className={`border rounded-lg p-4 ${isCorrect ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'}`}
+                >
                   <div className="flex items-start gap-3 mb-2">
                     {isCorrect ? (
                       <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -93,11 +98,17 @@ export const SystemSelectionQuiz = () => {
                       <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     )}
                     <div className="flex-1">
-                      <p className="text-foreground font-medium mb-2">Question {index + 1}: {question.question}</p>
+                      <p className="text-foreground font-medium mb-2">
+                        Question {index + 1}: {question.question}
+                      </p>
                       {!isCorrect && (
                         <>
-                          <p className="text-red-400 text-sm mb-1">Your answer: {selectedAnswers[index]}</p>
-                          <p className="text-green-400 text-sm mb-2">Correct answer: {question.correctAnswer}</p>
+                          <p className="text-red-400 text-sm mb-1">
+                            Your answer: {selectedAnswers[index]}
+                          </p>
+                          <p className="text-green-400 text-sm mb-2">
+                            Correct answer: {question.correctAnswer}
+                          </p>
                         </>
                       )}
                       <p className="text-gray-300 text-sm">{question.explanation}</p>
@@ -108,7 +119,7 @@ export const SystemSelectionQuiz = () => {
             })}
           </div>
 
-          <Button 
+          <Button
             onClick={resetQuiz}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           >
@@ -128,7 +139,9 @@ export const SystemSelectionQuiz = () => {
         <CardTitle className="text-foreground">Knowledge Check Quiz</CardTitle>
         <div className="space-y-2 pt-2">
           <div className="flex justify-between text-sm text-gray-400">
-            <span>Question {currentQuestion + 1} of {quizData.length}</span>
+            <span>
+              Question {currentQuestion + 1} of {quizData.length}
+            </span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
           <Progress value={progress} className="h-2" />
@@ -140,9 +153,15 @@ export const SystemSelectionQuiz = () => {
           <RadioGroup value={selectedAnswers[currentQuestion]} onValueChange={handleAnswerSelect}>
             <div className="space-y-3">
               {question.options.map((option, index) => (
-                <div key={index} className="flex items-center space-x-3 bg-elec-dark/50 p-4 rounded-lg border border-gray-700 hover:border-elec-yellow/50 transition-colors">
+                <div
+                  key={index}
+                  className="flex items-center space-x-3 bg-elec-dark/50 p-4 rounded-lg border border-gray-700 hover:border-elec-yellow/50 transition-colors"
+                >
                   <RadioGroupItem value={option} id={`option-${index}`} />
-                  <Label htmlFor={`option-${index}`} className="text-foreground cursor-pointer flex-1">
+                  <Label
+                    htmlFor={`option-${index}`}
+                    className="text-foreground cursor-pointer flex-1"
+                  >
                     {option}
                   </Label>
                 </div>

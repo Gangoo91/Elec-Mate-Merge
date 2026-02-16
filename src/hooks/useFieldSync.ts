@@ -31,20 +31,23 @@ export function useFieldSync<T>(
     }
   }, [initialValue]);
 
-  const handleChange = useCallback((value: T) => {
-    setLocalValue(value);
+  const handleChange = useCallback(
+    (value: T) => {
+      setLocalValue(value);
 
-    // Clear existing timeout
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+      // Clear existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-    // Set new debounced commit
-    timeoutRef.current = setTimeout(() => {
-      onCommit(value);
-      lastCommittedRef.current = value;
-    }, debounceMs);
-  }, [onCommit, debounceMs]);
+      // Set new debounced commit
+      timeoutRef.current = setTimeout(() => {
+        onCommit(value);
+        lastCommittedRef.current = value;
+      }, debounceMs);
+    },
+    [onCommit, debounceMs]
+  );
 
   // Flush: immediately commit any pending changes
   const flush = useCallback(() => {
@@ -94,11 +97,11 @@ export function useMultiFieldSync<T extends Record<string, any>>(
   // Sync with external value changes
   useEffect(() => {
     const hasExternalChanges = Object.keys(initialValues).some(
-      key => initialValues[key] !== lastCommittedRef.current[key]
+      (key) => initialValues[key] !== lastCommittedRef.current[key]
     );
 
     if (hasExternalChanges) {
-      setLocalValues(prev => ({
+      setLocalValues((prev) => ({
         ...prev,
         ...initialValues,
       }));
@@ -124,17 +127,23 @@ export function useMultiFieldSync<T extends Record<string, any>>(
     }, debounceMs);
   }, [onCommit, debounceMs]);
 
-  const setValue = useCallback((field: keyof T, value: T[keyof T]) => {
-    setLocalValues(prev => ({ ...prev, [field]: value }));
-    pendingChangesRef.current[field] = value;
-    scheduleCommit();
-  }, [scheduleCommit]);
+  const setValue = useCallback(
+    (field: keyof T, value: T[keyof T]) => {
+      setLocalValues((prev) => ({ ...prev, [field]: value }));
+      pendingChangesRef.current[field] = value;
+      scheduleCommit();
+    },
+    [scheduleCommit]
+  );
 
-  const setValues = useCallback((updates: Partial<T>) => {
-    setLocalValues(prev => ({ ...prev, ...updates }));
-    pendingChangesRef.current = { ...pendingChangesRef.current, ...updates };
-    scheduleCommit();
-  }, [scheduleCommit]);
+  const setValues = useCallback(
+    (updates: Partial<T>) => {
+      setLocalValues((prev) => ({ ...prev, ...updates }));
+      pendingChangesRef.current = { ...pendingChangesRef.current, ...updates };
+      scheduleCommit();
+    },
+    [scheduleCommit]
+  );
 
   const flush = useCallback(() => {
     if (timeoutRef.current) {

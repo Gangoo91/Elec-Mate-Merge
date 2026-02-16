@@ -1,110 +1,140 @@
-import { ArrowLeft, Shield, AlertTriangle, Target, FileText, Eye } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, Shield, AlertTriangle, Target, FileText, Eye } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section3_2 = () => {
   useSEO(
-    "GS38 compliance and tester safety - Level 2 Electrical Testing & Inspection",
-    "Understanding and implementing GS38 safety requirements for electrical test instruments"
+    'GS38 compliance and tester safety - Level 2 Electrical Testing & Inspection',
+    'Understanding and implementing GS38 safety requirements for electrical test instruments'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What does GS38 relate to?",
-      options: ["Building regulations", "Test equipment safety", "Fire alarms", "Electrical theory"],
+      question: 'What does GS38 relate to?',
+      options: [
+        'Building regulations',
+        'Test equipment safety',
+        'Fire alarms',
+        'Electrical theory',
+      ],
       correctAnswer: 1,
-      explanation: "GS38 is HSE guidance specifically for test equipment safety in electrical work."
+      explanation:
+        'GS38 is HSE guidance specifically for test equipment safety in electrical work.',
     },
     {
       id: 2,
-      question: "What is the maximum exposed length of a GS38 probe tip?",
-      options: ["10 mm", "6 mm", "4 mm", "2 mm"],
+      question: 'What is the maximum exposed length of a GS38 probe tip?',
+      options: ['10 mm', '6 mm', '4 mm', '2 mm'],
       correctAnswer: 2,
-      explanation: "GS38 specifies that probe tips must not have more than 4 mm of exposed metal."
+      explanation: 'GS38 specifies that probe tips must not have more than 4 mm of exposed metal.',
     },
     {
       id: 3,
-      question: "Why must test leads be fused?",
-      options: ["To protect against short circuits", "To make readings faster", "To improve accuracy", "To save battery"],
+      question: 'Why must test leads be fused?',
+      options: [
+        'To protect against short circuits',
+        'To make readings faster',
+        'To improve accuracy',
+        'To save battery',
+      ],
       correctAnswer: 0,
-      explanation: "Fused leads protect the user and instrument from dangerous fault currents."
+      explanation: 'Fused leads protect the user and instrument from dangerous fault currents.',
     },
     {
       id: 4,
       question: "Which rating indicates a tester's suitability for different environments?",
-      options: ["CAT rating", "IP rating", "Voltage scale", "Battery rating"],
+      options: ['CAT rating', 'IP rating', 'Voltage scale', 'Battery rating'],
       correctAnswer: 0,
-      explanation: "CAT (Category) ratings indicate the maximum transient voltage the instrument can safely handle."
+      explanation:
+        'CAT (Category) ratings indicate the maximum transient voltage the instrument can safely handle.',
     },
     {
       id: 5,
-      question: "What should you always do before and after using a voltage tester?",
-      options: ["Shake it", "Prove it on a proving unit", "Turn it off and on", "Check the leads"],
+      question: 'What should you always do before and after using a voltage tester?',
+      options: ['Shake it', 'Prove it on a proving unit', 'Turn it off and on', 'Check the leads'],
       correctAnswer: 1,
-      explanation: "Proving the tester ensures it's working correctly before and after use."
+      explanation: "Proving the tester ensures it's working correctly before and after use.",
     },
     {
       id: 6,
-      question: "True or False: Neon screwdrivers are GS38 compliant.",
-      options: ["True", "False"],
+      question: 'True or False: Neon screwdrivers are GS38 compliant.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "Neon screwdrivers are not considered safe or reliable for proving dead according to GS38."
+      explanation:
+        'Neon screwdrivers are not considered safe or reliable for proving dead according to GS38.',
     },
     {
       id: 7,
-      question: "Which of these is not a GS38 requirement?",
-      options: ["Insulated leads", "Exposed 12 mm probes", "Fused leads", "Shrouded probes"],
+      question: 'Which of these is not a GS38 requirement?',
+      options: ['Insulated leads', 'Exposed 12 mm probes', 'Fused leads', 'Shrouded probes'],
       correctAnswer: 1,
-      explanation: "GS38 specifically prohibits exposed probe tips greater than 4 mm."
+      explanation: 'GS38 specifically prohibits exposed probe tips greater than 4 mm.',
     },
     {
       id: 8,
-      question: "What could happen if cracked insulation is ignored?",
-      options: ["Slightly inaccurate readings", "Electric shock or arcing", "No effect", "Better conductivity"],
+      question: 'What could happen if cracked insulation is ignored?',
+      options: [
+        'Slightly inaccurate readings',
+        'Electric shock or arcing',
+        'No effect',
+        'Better conductivity',
+      ],
       correctAnswer: 1,
-      explanation: "Damaged insulation can expose the user to dangerous voltages and cause arcing."
+      explanation: 'Damaged insulation can expose the user to dangerous voltages and cause arcing.',
     },
     {
       id: 9,
-      question: "Which category rating is typically required for distribution board testing?",
-      options: ["CAT I", "CAT II", "CAT III", "CAT IV"],
+      question: 'Which category rating is typically required for distribution board testing?',
+      options: ['CAT I', 'CAT II', 'CAT III', 'CAT IV'],
       correctAnswer: 2,
-      explanation: "CAT III is typically required for distribution board testing due to higher transient voltages."
+      explanation:
+        'CAT III is typically required for distribution board testing due to higher transient voltages.',
     },
     {
       id: 10,
-      question: "Why is GS38 compliance essential?",
-      options: ["To pass exams", "To ensure safe live testing", "To avoid paperwork", "To save money"],
+      question: 'Why is GS38 compliance essential?',
+      options: [
+        'To pass exams',
+        'To ensure safe live testing',
+        'To avoid paperwork',
+        'To save money',
+      ],
       correctAnswer: 1,
-      explanation: "GS38 compliance is essential for ensuring the safety of electricians during live testing work."
-    }
+      explanation:
+        'GS38 compliance is essential for ensuring the safety of electricians during live testing work.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Can I still use my old multimeter if the leads are not shrouded?",
-      answer: "No, GS38 requires properly shrouded probes for safe testing. Replace the leads immediately with GS38-compliant alternatives."
+      question: 'Can I still use my old multimeter if the leads are not shrouded?',
+      answer:
+        'No, GS38 requires properly shrouded probes for safe testing. Replace the leads immediately with GS38-compliant alternatives.',
     },
     {
-      question: "Why do I need fused leads?",
-      answer: "Fused leads protect both you and the instrument if the circuit suddenly faults, limiting dangerous current flow and preventing equipment damage."
+      question: 'Why do I need fused leads?',
+      answer:
+        'Fused leads protect both you and the instrument if the circuit suddenly faults, limiting dangerous current flow and preventing equipment damage.',
     },
     {
-      question: "Are cheap testers safe if they work?",
-      answer: "Not necessarily. If they are not GS38-compliant, they are unsafe and should not be used. Quality and compliance are more important than cost."
+      question: 'Are cheap testers safe if they work?',
+      answer:
+        'Not necessarily. If they are not GS38-compliant, they are unsafe and should not be used. Quality and compliance are more important than cost.',
     },
     {
       question: "What's the difference between CAT II and CAT III ratings?",
-      answer: "CAT II is for local level circuits (up to 600V), while CAT III is for distribution level with higher transient voltages (up to 1000V). Use the appropriate rating for your application."
+      answer:
+        'CAT II is for local level circuits (up to 600V), while CAT III is for distribution level with higher transient voltages (up to 1000V). Use the appropriate rating for your application.',
     },
     {
-      question: "How often should I replace test leads?",
-      answer: "Replace immediately if damaged, or as recommended by the manufacturer - typically every 2-3 years with regular use. Keep spare sets available."
-    }
+      question: 'How often should I replace test leads?',
+      answer:
+        'Replace immediately if damaged, or as recommended by the manufacturer - typically every 2-3 years with regular use. Keep spare sets available.',
+    },
   ];
 
   return (
@@ -138,7 +168,8 @@ const Module6Section3_2 = () => {
               GS38 Compliance and Tester Safety
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding and implementing GS38 safety requirements for electrical test instruments
+              Understanding and implementing GS38 safety requirements for electrical test
+              instruments
             </p>
           </header>
 
@@ -161,9 +192,15 @@ const Module6Section3_2 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Spot / Use / Check</p>
                 <ul className="space-y-1.5">
-                  <li><strong>Spot:</strong> Non-compliant equipment, exposed probes</li>
-                  <li><strong>Use:</strong> GS38-compliant testers; proving units</li>
-                  <li><strong>Check:</strong> Probe shrouding ≤4mm; CAT ratings</li>
+                  <li>
+                    <strong>Spot:</strong> Non-compliant equipment, exposed probes
+                  </li>
+                  <li>
+                    <strong>Use:</strong> GS38-compliant testers; proving units
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Probe shrouding ≤4mm; CAT ratings
+                  </li>
                 </ul>
               </div>
             </div>
@@ -177,10 +214,15 @@ const Module6Section3_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Electrical testing instruments are critical tools for ensuring safety and compliance in electrical installations. However, test instruments themselves can pose significant safety risks if they are not compliant with recognised safety standards.
+                Electrical testing instruments are critical tools for ensuring safety and compliance
+                in electrical installations. However, test instruments themselves can pose
+                significant safety risks if they are not compliant with recognised safety standards.
               </p>
               <p>
-                GS38 is a guidance document published by the Health and Safety Executive (HSE) that specifies the safety requirements for electrical test equipment used in hazardous live environments. Understanding and implementing GS38 compliance is essential for protecting electricians and ensuring accurate, safe testing procedures.
+                GS38 is a guidance document published by the Health and Safety Executive (HSE) that
+                specifies the safety requirements for electrical test equipment used in hazardous
+                live environments. Understanding and implementing GS38 compliance is essential for
+                protecting electricians and ensuring accurate, safe testing procedures.
               </p>
             </div>
           </section>
@@ -191,7 +233,9 @@ const Module6Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">By the end of this subsection, you will be able to:</p>
+            <p className="text-white/80 mb-4">
+              By the end of this subsection, you will be able to:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-white/80">
               <li>Explain what GS38 is and why it is important for electrical testing safety.</li>
               <li>Identify the key features of GS38-compliant test equipment.</li>
@@ -209,7 +253,9 @@ const Module6Section3_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                GS38 (Guidance on the Use of Electrical Test Equipment) is a Health and Safety Executive (HSE) document that provides essential safety guidance for electrical test equipment used in potentially hazardous environments.
+                GS38 (Guidance on the Use of Electrical Test Equipment) is a Health and Safety
+                Executive (HSE) document that provides essential safety guidance for electrical test
+                equipment used in potentially hazardous environments.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
@@ -240,7 +286,7 @@ const Module6Section3_2 = () => {
           <InlineCheck
             id="gs38-check"
             question="Who publishes GS38 guidance?"
-            options={["IET", "HSE", "NICEIC", "BSI"]}
+            options={['IET', 'HSE', 'NICEIC', 'BSI']}
             correctIndex={1}
             explanation="GS38 is published by the Health and Safety Executive (HSE) to provide safety guidance for electrical test equipment."
           />
@@ -253,7 +299,8 @@ const Module6Section3_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                GS38-compliant test equipment incorporates specific design features to minimise the risk of electric shock and ensure safe operation in live electrical environments.
+                GS38-compliant test equipment incorporates specific design features to minimise the
+                risk of electric shock and ensure safe operation in live electrical environments.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
@@ -284,7 +331,7 @@ const Module6Section3_2 = () => {
           <InlineCheck
             id="probe-tip-check"
             question="What is the maximum exposed probe tip length for GS38 compliance?"
-            options={["2mm", "4mm", "6mm", "10mm"]}
+            options={['2mm', '4mm', '6mm', '10mm']}
             correctIndex={1}
             explanation="GS38 specifies a maximum of 4mm exposed probe tip to minimise the risk of accidental contact."
           />
@@ -297,7 +344,9 @@ const Module6Section3_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Using non-compliant test equipment poses serious safety risks and can result in severe injury or death. Understanding these dangers is critical for making informed equipment choices.
+                Using non-compliant test equipment poses serious safety risks and can result in
+                severe injury or death. Understanding these dangers is critical for making informed
+                equipment choices.
               </p>
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
@@ -361,7 +410,12 @@ const Module6Section3_2 = () => {
           <InlineCheck
             id="safe-practices-check"
             question="What should you do before and after using test instruments?"
-            options={["Clean the probes", "Prove on known live source", "Check the battery", "Read the manual"]}
+            options={[
+              'Clean the probes',
+              'Prove on known live source',
+              'Check the battery',
+              'Read the manual',
+            ]}
             correctIndex={1}
             explanation="You should always prove test instruments on a known live source before and after use to ensure they are working correctly."
           />
@@ -376,17 +430,27 @@ const Module6Section3_2 = () => {
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50 mb-4">
               <h3 className="font-semibold text-white mb-3">Understanding CAT Ratings</h3>
               <ul className="text-sm text-white/80 space-y-2">
-                <li><strong>CAT I:</strong> Electronic equipment, domestic appliances (300V max)</li>
-                <li><strong>CAT II:</strong> Local level circuits, socket outlets (600V max)</li>
-                <li><strong>CAT III:</strong> Distribution boards, fixed installations (1000V max)</li>
-                <li><strong>CAT IV:</strong> Origin of supply, overhead lines (1500V max)</li>
+                <li>
+                  <strong>CAT I:</strong> Electronic equipment, domestic appliances (300V max)
+                </li>
+                <li>
+                  <strong>CAT II:</strong> Local level circuits, socket outlets (600V max)
+                </li>
+                <li>
+                  <strong>CAT III:</strong> Distribution boards, fixed installations (1000V max)
+                </li>
+                <li>
+                  <strong>CAT IV:</strong> Origin of supply, overhead lines (1500V max)
+                </li>
               </ul>
             </div>
 
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="font-medium text-amber-400 mb-2">Important</p>
               <p className="text-sm text-white/80">
-                Always use equipment with a CAT rating that matches or exceeds the environment you're working in. Using equipment with an inadequate CAT rating can result in equipment failure, injury, or death.
+                Always use equipment with a CAT rating that matches or exceeds the environment
+                you're working in. Using equipment with an inadequate CAT rating can result in
+                equipment failure, injury, or death.
               </p>
             </div>
           </section>
@@ -398,12 +462,19 @@ const Module6Section3_2 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <h3 className="font-semibold text-amber-400 mb-3">Case Study: Non-Compliant Equipment Incident</h3>
+              <h3 className="font-semibold text-amber-400 mb-3">
+                Case Study: Non-Compliant Equipment Incident
+              </h3>
               <p className="text-white/80 mb-4">
-                An electrician was testing a commercial three-phase distribution board using non-GS38 compliant test probes. The probes had excessive exposed tips (10mm) and no finger guards. During voltage testing, the electrician accidentally contacted both probes simultaneously while reaching across the panel.
+                An electrician was testing a commercial three-phase distribution board using
+                non-GS38 compliant test probes. The probes had excessive exposed tips (10mm) and no
+                finger guards. During voltage testing, the electrician accidentally contacted both
+                probes simultaneously while reaching across the panel.
               </p>
               <p className="text-white/80 mb-4">
-                The result was an immediate short circuit between phases, causing an arc flash that resulted in second-degree burns to the electrician's hands and face, damaged equipment, and a site shutdown lasting several days.
+                The result was an immediate short circuit between phases, causing an arc flash that
+                resulted in second-degree burns to the electrician's hands and face, damaged
+                equipment, and a site shutdown lasting several days.
               </p>
               <div className="grid sm:grid-cols-2 gap-3 mt-4">
                 <div className="p-3 bg-red-500/10 rounded border-l-2 border-red-500/50">
@@ -434,7 +505,10 @@ const Module6Section3_2 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
                   <p className="text-sm text-white/80">A: {faq.answer}</p>
                 </div>
@@ -456,23 +530,33 @@ const Module6Section3_2 = () => {
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">Verify fused leads: current limiting protection</span>
+                  <span className="text-white/90">
+                    Verify fused leads: current limiting protection
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">Confirm CAT rating: matches installation voltage</span>
+                  <span className="text-white/90">
+                    Confirm CAT rating: matches installation voltage
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">Visual inspection: check for damage before use</span>
+                  <span className="text-white/90">
+                    Visual inspection: check for damage before use
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">Prove before/after: test on known live source</span>
+                  <span className="text-white/90">
+                    Prove before/after: test on known live source
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">Never use: neon screwdrivers for proving dead</span>
+                  <span className="text-white/90">
+                    Never use: neon screwdrivers for proving dead
+                  </span>
                 </div>
               </div>
             </div>
@@ -512,7 +596,10 @@ const Module6Section3_2 = () => {
               </div>
             </div>
             <p className="text-white/80">
-              GS38 compliance is not optional - it's a legal and professional requirement that protects electricians and ensures safe testing practices. Always use compliant equipment and follow proper procedures to prevent accidents and maintain professional standards.
+              GS38 compliance is not optional - it's a legal and professional requirement that
+              protects electricians and ensures safe testing practices. Always use compliant
+              equipment and follow proper procedures to prevent accidents and maintain professional
+              standards.
             </p>
           </section>
 

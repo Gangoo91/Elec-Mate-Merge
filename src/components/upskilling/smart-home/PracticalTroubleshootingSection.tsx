@@ -3,37 +3,37 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const PracticalTroubleshootingSection = () => {
   const diagnosticSteps = [
-    "Use Wi-Fi analyser app to scan all networks in your area",
-    "Check device signal strength (RSSI) readings",
-    "Test connection during peak interference times",
-    "Monitor for packet loss and connection drops",
-    "Document which devices fail and when"
+    'Use Wi-Fi analyser app to scan all networks in your area',
+    'Check device signal strength (RSSI) readings',
+    'Test connection during peak interference times',
+    'Monitor for packet loss and connection drops',
+    'Document which devices fail and when',
   ];
 
   const commonScenarios = [
     {
-      title: "Smart doorbell keeps disconnecting",
-      symptoms: "Video cuts out, notifications delayed, device shows offline",
-      solution: "Move to 5GHz Wi-Fi, check power supply, relocate router or add extender"
+      title: 'Smart doorbell keeps disconnecting',
+      symptoms: 'Video cuts out, notifications delayed, device shows offline',
+      solution: 'Move to 5GHz Wi-Fi, check power supply, relocate router or add extender',
     },
     {
-      title: "Zigbee lights respond slowly",
-      symptoms: "2-3 second delays, some commands ignored, worse in evenings",
-      solution: "Change Zigbee channel (try 15, 20, 25), move hub away from router"
+      title: 'Zigbee lights respond slowly',
+      symptoms: '2-3 second delays, some commands ignored, worse in evenings',
+      solution: 'Change Zigbee channel (try 15, 20, 25), move hub away from router',
     },
     {
-      title: "Whole network sluggish at peak times",
-      symptoms: "All devices slow 6-9pm, streaming stutters, automation fails",
-      solution: "Upgrade router, use QoS prioritisation, separate IoT network"
-    }
+      title: 'Whole network sluggish at peak times',
+      symptoms: 'All devices slow 6-9pm, streaming stutters, automation fails',
+      solution: 'Upgrade router, use QoS prioritisation, separate IoT network',
+    },
   ];
 
   const quickFixes = [
-    "Reboot router and hubs - fixes 60% of temporary issues",
-    "Check for firmware updates - often improves compatibility",
-    "Factory reset problem devices - clears corrupted settings",
-    "Change Wi-Fi channel to 1, 6, or 11 - avoids overlap",
-    "Move metal objects away from wireless devices"
+    'Reboot router and hubs - fixes 60% of temporary issues',
+    'Check for firmware updates - often improves compatibility',
+    'Factory reset problem devices - clears corrupted settings',
+    'Change Wi-Fi channel to 1, 6, or 11 - avoids overlap',
+    'Move metal objects away from wireless devices',
   ];
 
   return (
@@ -46,7 +46,8 @@ export const PracticalTroubleshootingSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          Real-world interference problems need systematic diagnosis. Here's how to identify and fix issues step-by-step.
+          Real-world interference problems need systematic diagnosis. Here's how to identify and fix
+          issues step-by-step.
         </p>
 
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
@@ -69,7 +70,10 @@ export const PracticalTroubleshootingSection = () => {
         <div className="space-y-4">
           <h4 className="text-foreground font-semibold">Common Problem Scenarios</h4>
           {commonScenarios.map((scenario, index) => (
-            <div key={index} className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
+            <div
+              key={index}
+              className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4"
+            >
               <h5 className="text-orange-400 font-medium mb-2">{scenario.title}</h5>
               <p className="text-sm text-foreground mb-2">
                 <span className="font-medium">Symptoms:</span> {scenario.symptoms}
@@ -99,9 +103,9 @@ export const PracticalTroubleshootingSection = () => {
             Practice Activity:
           </h4>
           <p className="text-sm text-foreground">
-            You're called to a home where smart lights work fine during the day but fail most evenings. 
-            The Zigbee hub is on channel 11, and you notice strong Wi-Fi networks on channels 6 and 11. 
-            What's your diagnosis and solution?
+            You're called to a home where smart lights work fine during the day but fail most
+            evenings. The Zigbee hub is on channel 11, and you notice strong Wi-Fi networks on
+            channels 6 and 11. What's your diagnosis and solution?
           </p>
         </div>
       </CardContent>

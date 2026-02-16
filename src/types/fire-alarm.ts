@@ -5,16 +5,21 @@
 
 // System category as defined in BS 5839
 export type FireAlarmSystemCategory =
-  | 'L1' | 'L2' | 'L3' | 'L4' | 'L5'  // Life safety categories
-  | 'M'                                 // Manual system
-  | 'P1' | 'P2';                        // Property protection
+  | 'L1'
+  | 'L2'
+  | 'L3'
+  | 'L4'
+  | 'L5' // Life safety categories
+  | 'M' // Manual system
+  | 'P1'
+  | 'P2'; // Property protection
 
 // Detection types
 export type DetectorType =
   | 'optical-smoke'
   | 'ionisation-smoke'
   | 'heat-fixed'
-  | 'heat-ror'           // Rate of rise
+  | 'heat-ror' // Rate of rise
   | 'multi-sensor'
   | 'beam'
   | 'aspirating'
@@ -22,11 +27,7 @@ export type DetectorType =
   | 'co';
 
 // Sounder types
-export type SounderType =
-  | 'bell'
-  | 'electronic-sounder'
-  | 'voice-alarm'
-  | 'visual-beacon';
+export type SounderType = 'bell' | 'electronic-sounder' | 'voice-alarm' | 'visual-beacon';
 
 export interface FireAlarmZone {
   id: string;
@@ -86,14 +87,14 @@ export interface FireAlarmFormData {
   certificateNumber: string;
   certificateType: 'installation' | 'commissioning' | 'periodic';
   inspectionDate: string;
-  previousCertificateRef: string;  // For periodic testing - reference to previous cert
+  previousCertificateRef: string; // For periodic testing - reference to previous cert
 
   // Third-party certification
   thirdPartyCertification: {
-    bafeRegistration: string;      // BAFE SP203-1 registration number
-    fiaMembership: string;         // FIA membership number
+    bafeRegistration: string; // BAFE SP203-1 registration number
+    fiaMembership: string; // FIA membership number
     nsiSsaibCertification: string; // NSI/SSAIB certification number
-    otherAccreditation: string;    // Any other accreditation
+    otherAccreditation: string; // Any other accreditation
   };
 
   // Fire Risk Assessment reference
@@ -107,7 +108,7 @@ export interface FireAlarmFormData {
   // Monitoring/ARC details
   monitoringDetails: {
     isMonitored: boolean;
-    arcName: string;               // Alarm Receiving Centre name
+    arcName: string; // Alarm Receiving Centre name
     arcContactNumber: string;
     arcAccountNumber: string;
     signallingRoute: 'dual-path' | 'single-path' | 'redcare' | 'dualcom' | 'gsm' | 'other' | '';
@@ -133,7 +134,7 @@ export interface FireAlarmFormData {
   systemModel: string;
   panelLocation: string;
   panelSerialNumber: string;
-  panelSerialPhoto: string;  // Base64 or URL of serial number photo
+  panelSerialPhoto: string; // Base64 or URL of serial number photo
   zonesCount: number;
   repeatersInstalled: boolean;
   networkType: 'standalone' | 'networked' | 'addressable' | 'conventional';

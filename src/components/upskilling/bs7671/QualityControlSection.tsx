@@ -10,7 +10,9 @@ const QualityControlSection = () => {
           <CheckSquare className="h-6 w-6 text-elec-yellow" />
           Quality Control Procedures and Checklists
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">Systematic Verification</Badge>
+        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">
+          Systematic Verification
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
@@ -21,48 +23,70 @@ const QualityControlSection = () => {
               <div className="space-y-2">
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Maximum demand calculated using appropriate diversity factors</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Maximum demand calculated using appropriate diversity factors
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Future expansion requirements considered (EV charging, heat pumps)</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Future expansion requirements considered (EV charging, heat pumps)
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Special loads identified and accommodated (motors, welders, IT equipment)</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Special loads identified and accommodated (motors, welders, IT equipment)
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Supply capacity adequate for total connected load</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Supply capacity adequate for total connected load
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Three-phase balance achieved where applicable</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Three-phase balance achieved where applicable
+                  </span>
                 </div>
               </div>
             </div>
             <div>
-              <h6 className="text-yellow-400 font-medium mb-2">Protection Coordination Checklist:</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                Protection Coordination Checklist:
+              </h6>
               <div className="space-y-2">
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Protective device ratings appropriate for circuit design current</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Protective device ratings appropriate for circuit design current
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Discrimination achieved between upstream and downstream devices</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Discrimination achieved between upstream and downstream devices
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Earth fault loop impedance values comply with tabulated limits</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Earth fault loop impedance values comply with tabulated limits
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">RCD protection provided where required by regulations</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    RCD protection provided where required by regulations
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 py-2 touch-manipulation">
                   <input type="checkbox" className="rounded mt-1 w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">Arc fault protection considered for high-risk applications</span>
+                  <span className="text-sm sm:text-base leading-relaxed">
+                    Arc fault protection considered for high-risk applications
+                  </span>
                 </div>
               </div>
             </div>
@@ -70,11 +94,15 @@ const QualityControlSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Installation Quality Verification:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Installation Quality Verification:
+          </h5>
+
           <div className="space-y-4">
             <div className="bg-gray-800 p-4 rounded border-l-4 border-green-400">
-              <h6 className="font-bold text-green-400 mb-3 text-sm sm:text-base">Cable Installation Standards</h6>
+              <h6 className="font-bold text-green-400 mb-3 text-sm sm:text-base">
+                Cable Installation Standards
+              </h6>
               <ul className="text-sm sm:text-base space-y-2">
                 <li>☐ Appropriate cable types selected for environment</li>
                 <li>☐ Installation methods comply with manufacturer specifications</li>
@@ -84,9 +112,11 @@ const QualityControlSection = () => {
                 <li>☐ Segregation from other services maintained</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-blue-400">
-              <h6 className="font-bold text-blue-400 mb-3 text-sm sm:text-base">Earthing and Bonding Verification</h6>
+              <h6 className="font-bold text-blue-400 mb-3 text-sm sm:text-base">
+                Earthing and Bonding Verification
+              </h6>
               <ul className="text-sm sm:text-base space-y-2">
                 <li>☐ Main earthing terminal properly connected</li>
                 <li>☐ Equipotential bonding to water and gas services</li>
@@ -96,9 +126,11 @@ const QualityControlSection = () => {
                 <li>☐ Bonding conductor sizes comply with regulations</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-yellow-400">
-              <h6 className="font-bold text-yellow-400 mb-3 text-sm sm:text-base">Consumer Unit Installation</h6>
+              <h6 className="font-bold text-yellow-400 mb-3 text-sm sm:text-base">
+                Consumer Unit Installation
+              </h6>
               <ul className="text-sm sm:text-base space-y-2">
                 <li>☐ Non-combustible enclosure used</li>
                 <li>☐ Height and accessibility appropriate</li>
@@ -112,7 +144,9 @@ const QualityControlSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
               <div className="bg-gray-800 p-4 rounded touch-manipulation">
                 <Settings className="h-6 w-6 text-elec-yellow mb-3" />
-                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">Workmanship Standards</h6>
+                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">
+                  Workmanship Standards
+                </h6>
                 <ul className="text-sm space-y-2">
                   <li>☐ Neat and professional appearance</li>
                   <li>☐ Appropriate tools and techniques used</li>
@@ -122,7 +156,9 @@ const QualityControlSection = () => {
               </div>
               <div className="bg-gray-800 p-4 rounded touch-manipulation">
                 <Target className="h-6 w-6 text-elec-yellow mb-3" />
-                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">Safety Measures</h6>
+                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">
+                  Safety Measures
+                </h6>
                 <ul className="text-sm space-y-2">
                   <li>☐ Live working minimised and controlled</li>
                   <li>☐ Adequate PPE used throughout</li>
@@ -132,7 +168,9 @@ const QualityControlSection = () => {
               </div>
               <div className="bg-gray-800 p-4 rounded touch-manipulation">
                 <CheckSquare className="h-6 w-6 text-elec-yellow mb-3" />
-                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">Documentation Control</h6>
+                <h6 className="font-bold text-foreground mb-3 text-sm sm:text-base">
+                  Documentation Control
+                </h6>
                 <ul className="text-sm space-y-2">
                   <li>☐ Installation records maintained</li>
                   <li>☐ Material certificates available</li>
@@ -145,7 +183,9 @@ const QualityControlSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Testing and Verification Procedures:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Testing and Verification Procedures:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Pre-Testing Verification:</h6>
@@ -177,21 +217,32 @@ const QualityControlSection = () => {
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-purple-400">
               <h6 className="font-bold text-purple-400 mb-1">ISO 9001 Integration</h6>
-              <p className="text-sm">Quality management systems provide framework for consistent delivery, continuous improvement, and customer satisfaction in electrical installation work.</p>
+              <p className="text-sm">
+                Quality management systems provide framework for consistent delivery, continuous
+                improvement, and customer satisfaction in electrical installation work.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <h6 className="font-bold text-green-400 mb-1">Competence Management</h6>
-              <p className="text-sm">Regular training, competence assessment, and professional development ensure personnel maintain current knowledge and skills for quality delivery.</p>
+              <p className="text-sm">
+                Regular training, competence assessment, and professional development ensure
+                personnel maintain current knowledge and skills for quality delivery.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Customer Communication</h6>
-              <p className="text-sm">Clear communication of scope, limitations, recommendations, and maintenance requirements ensures customer understanding and satisfaction.</p>
+              <p className="text-sm">
+                Clear communication of scope, limitations, recommendations, and maintenance
+                requirements ensures customer understanding and satisfaction.
+              </p>
             </div>
           </div>
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Common Quality Issues and Prevention:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Common Quality Issues and Prevention:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-red-400 font-medium mb-2">Frequent Problems:</h6>

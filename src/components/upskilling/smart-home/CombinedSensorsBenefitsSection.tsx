@@ -18,7 +18,8 @@ export const CombinedSensorsBenefitsSection = () => {
               Perimeter Security
             </h4>
             <p className="text-blue-100 text-sm">
-              Contact sensors secure the perimeter by detecting when doors and windows are opened, providing the first line of defence.
+              Contact sensors secure the perimeter by detecting when doors and windows are opened,
+              providing the first line of defence.
             </p>
           </div>
 
@@ -28,7 +29,8 @@ export const CombinedSensorsBenefitsSection = () => {
               Interior Monitoring
             </h4>
             <p className="text-green-100 text-sm">
-              PIR sensors monitor movement inside the property, detecting anyone who may have already gained entry.
+              PIR sensors monitor movement inside the property, detecting anyone who may have
+              already gained entry.
             </p>
           </div>
         </div>
@@ -39,7 +41,8 @@ export const CombinedSensorsBenefitsSection = () => {
             Multi-Layered Security
           </h4>
           <p className="text-purple-100 text-sm mb-3">
-            Together, contact sensors and PIR create comprehensive coverage that reduces blind spots and provides redundant detection.
+            Together, contact sensors and PIR create comprehensive coverage that reduces blind spots
+            and provides redundant detection.
           </p>
           <ul className="text-purple-100 text-sm space-y-1">
             <li>• Multiple detection methods increase reliability</li>
@@ -55,7 +58,8 @@ export const CombinedSensorsBenefitsSection = () => {
               CCTV Integration
             </h4>
             <p className="text-orange-100 text-sm">
-              Sensor triggers can activate CCTV recording, ensuring evidence capture when activity is detected.
+              Sensor triggers can activate CCTV recording, ensuring evidence capture when activity
+              is detected.
             </p>
           </div>
 
@@ -65,7 +69,8 @@ export const CombinedSensorsBenefitsSection = () => {
               Lighting Deterrence
             </h4>
             <p className="text-yellow-100 text-sm">
-              Integration with lighting systems provides visual deterrence and improves CCTV image quality.
+              Integration with lighting systems provides visual deterrence and improves CCTV image
+              quality.
             </p>
           </div>
         </div>

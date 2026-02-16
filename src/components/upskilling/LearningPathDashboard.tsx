@@ -28,14 +28,16 @@ interface LearningModule {
 
 export const LearningPathDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const selectedPath = (searchParams.get("path") as 'systematic' | 'competency' | 'refresher') || 'systematic';
+  const selectedPath =
+    (searchParams.get('path') as 'systematic' | 'competency' | 'refresher') || 'systematic';
   const setSelectedPath = (path: string) => setSearchParams({ path }, { replace: false });
 
   const modules: LearningModule[] = [
     {
       id: 'legal-framework',
       title: 'Legal Framework & Responsibilities',
-      description: 'Understand legal obligations, competency requirements, and regulatory compliance for electrical inspection and testing.',
+      description:
+        'Understand legal obligations, competency requirements, and regulatory compliance for electrical inspection and testing.',
       estimatedTime: '2.5 hours',
       difficulty: 'Foundation',
       prerequisites: [],
@@ -43,23 +45,60 @@ export const LearningPathDashboard = () => {
         'Understand BS7671 requirements for inspection and testing',
         'Identify legal responsibilities and liability',
         'Recognise competency requirements',
-        'Apply health and safety obligations'
+        'Apply health and safety obligations',
       ],
       sections: [
-        { id: 'intro', title: 'Introduction to Legal Framework', type: 'content', completed: true, duration: '20 min' },
-        { id: 'bs7671', title: 'BS7671 Requirements', type: 'content', completed: true, duration: '30 min' },
-        { id: 'competency', title: 'Competency & Training', type: 'content', completed: false, duration: '25 min' },
-        { id: 'liability', title: 'Legal Liability', type: 'content', completed: false, duration: '20 min' },
-        { id: 'safety', title: 'Health & Safety Requirements', type: 'content', completed: false, duration: '30 min' },
-        { id: 'quiz', title: 'Knowledge Check', type: 'quiz', completed: false, duration: '15 min' }
+        {
+          id: 'intro',
+          title: 'Introduction to Legal Framework',
+          type: 'content',
+          completed: true,
+          duration: '20 min',
+        },
+        {
+          id: 'bs7671',
+          title: 'BS7671 Requirements',
+          type: 'content',
+          completed: true,
+          duration: '30 min',
+        },
+        {
+          id: 'competency',
+          title: 'Competency & Training',
+          type: 'content',
+          completed: false,
+          duration: '25 min',
+        },
+        {
+          id: 'liability',
+          title: 'Legal Liability',
+          type: 'content',
+          completed: false,
+          duration: '20 min',
+        },
+        {
+          id: 'safety',
+          title: 'Health & Safety Requirements',
+          type: 'content',
+          completed: false,
+          duration: '30 min',
+        },
+        {
+          id: 'quiz',
+          title: 'Knowledge Check',
+          type: 'quiz',
+          completed: false,
+          duration: '15 min',
+        },
       ],
       progress: 35,
-      nextRecommended: 'test-equipment'
+      nextRecommended: 'test-equipment',
     },
     {
       id: 'test-equipment',
       title: 'Test Equipment & Calibration',
-      description: 'Learn about electrical test instruments, calibration requirements, and proper equipment selection.',
+      description:
+        'Learn about electrical test instruments, calibration requirements, and proper equipment selection.',
       estimatedTime: '3 hours',
       difficulty: 'Foundation',
       prerequisites: ['legal-framework'],
@@ -67,18 +106,54 @@ export const LearningPathDashboard = () => {
         'Select appropriate test equipment for different tests',
         'Understand calibration requirements and validity',
         'Apply safety considerations when using test equipment',
-        'Interpret equipment specifications and limitations'
+        'Interpret equipment specifications and limitations',
       ],
       sections: [
-        { id: 'intro', title: 'Equipment Overview', type: 'content', completed: false, duration: '25 min' },
-        { id: 'types', title: 'Types of Test Equipment', type: 'content', completed: false, duration: '40 min' },
-        { id: 'calibration', title: 'Calibration & Accuracy', type: 'content', completed: false, duration: '30 min' },
-        { id: 'safety', title: 'Equipment Safety', type: 'content', completed: false, duration: '25 min' },
-        { id: 'selection', title: 'Equipment Selection Guide', type: 'content', completed: false, duration: '30 min' },
+        {
+          id: 'intro',
+          title: 'Equipment Overview',
+          type: 'content',
+          completed: false,
+          duration: '25 min',
+        },
+        {
+          id: 'types',
+          title: 'Types of Test Equipment',
+          type: 'content',
+          completed: false,
+          duration: '40 min',
+        },
+        {
+          id: 'calibration',
+          title: 'Calibration & Accuracy',
+          type: 'content',
+          completed: false,
+          duration: '30 min',
+        },
+        {
+          id: 'safety',
+          title: 'Equipment Safety',
+          type: 'content',
+          completed: false,
+          duration: '25 min',
+        },
+        {
+          id: 'selection',
+          title: 'Equipment Selection Guide',
+          type: 'content',
+          completed: false,
+          duration: '30 min',
+        },
         { id: 'quiz', title: 'Equipment Quiz', type: 'quiz', completed: false, duration: '20 min' },
-        { id: 'scenario', title: 'Equipment Selection Scenario', type: 'scenario', completed: false, duration: '10 min' }
+        {
+          id: 'scenario',
+          title: 'Equipment Selection Scenario',
+          type: 'scenario',
+          completed: false,
+          duration: '10 min',
+        },
       ],
-      progress: 0
+      progress: 0,
     },
     {
       id: 'visual-inspection',
@@ -91,17 +166,53 @@ export const LearningPathDashboard = () => {
         'Conduct systematic visual inspections',
         'Identify common visual defects',
         'Apply appropriate defect classification',
-        'Document inspection findings effectively'
+        'Document inspection findings effectively',
       ],
       sections: [
-        { id: 'what-is', title: 'What is Visual Inspection?', type: 'content', completed: false, duration: '15 min' },
-        { id: 'when', title: 'When to Inspect', type: 'content', completed: false, duration: '15 min' },
-        { id: 'systematic', title: 'Systematic Approach', type: 'content', completed: false, duration: '25 min' },
-        { id: 'defects', title: 'Common Defects', type: 'content', completed: false, duration: '30 min' },
-        { id: 'documentation', title: 'Documentation', type: 'content', completed: false, duration: '20 min' },
-        { id: 'quiz', title: 'Visual Inspection Quiz', type: 'quiz', completed: false, duration: '15 min' }
+        {
+          id: 'what-is',
+          title: 'What is Visual Inspection?',
+          type: 'content',
+          completed: false,
+          duration: '15 min',
+        },
+        {
+          id: 'when',
+          title: 'When to Inspect',
+          type: 'content',
+          completed: false,
+          duration: '15 min',
+        },
+        {
+          id: 'systematic',
+          title: 'Systematic Approach',
+          type: 'content',
+          completed: false,
+          duration: '25 min',
+        },
+        {
+          id: 'defects',
+          title: 'Common Defects',
+          type: 'content',
+          completed: false,
+          duration: '30 min',
+        },
+        {
+          id: 'documentation',
+          title: 'Documentation',
+          type: 'content',
+          completed: false,
+          duration: '20 min',
+        },
+        {
+          id: 'quiz',
+          title: 'Visual Inspection Quiz',
+          type: 'quiz',
+          completed: false,
+          duration: '15 min',
+        },
       ],
-      progress: 0
+      progress: 0,
     },
     {
       id: 'electrical-testing',
@@ -114,20 +225,62 @@ export const LearningPathDashboard = () => {
         'Perform all required electrical tests safely',
         'Interpret test results correctly',
         'Apply appropriate test sequences',
-        'Troubleshoot test equipment issues'
+        'Troubleshoot test equipment issues',
       ],
       sections: [
-        { id: 'continuity', title: 'Continuity Testing', type: 'content', completed: false, duration: '35 min' },
-        { id: 'insulation', title: 'Insulation Resistance', type: 'content', completed: false, duration: '40 min' },
-        { id: 'polarity', title: 'Polarity Testing', type: 'content', completed: false, duration: '30 min' },
-        { id: 'earth-loop', title: 'Earth Fault Loop Impedance', type: 'content', completed: false, duration: '45 min' },
+        {
+          id: 'continuity',
+          title: 'Continuity Testing',
+          type: 'content',
+          completed: false,
+          duration: '35 min',
+        },
+        {
+          id: 'insulation',
+          title: 'Insulation Resistance',
+          type: 'content',
+          completed: false,
+          duration: '40 min',
+        },
+        {
+          id: 'polarity',
+          title: 'Polarity Testing',
+          type: 'content',
+          completed: false,
+          duration: '30 min',
+        },
+        {
+          id: 'earth-loop',
+          title: 'Earth Fault Loop Impedance',
+          type: 'content',
+          completed: false,
+          duration: '45 min',
+        },
         { id: 'rcd', title: 'RCD Testing', type: 'content', completed: false, duration: '35 min' },
-        { id: 'calculations', title: 'Test Calculations', type: 'calculation', completed: false, duration: '25 min' },
-        { id: 'quiz', title: 'Testing Methods Quiz', type: 'quiz', completed: false, duration: '20 min' },
-        { id: 'scenario', title: 'Testing Scenarios', type: 'scenario', completed: false, duration: '15 min' }
+        {
+          id: 'calculations',
+          title: 'Test Calculations',
+          type: 'calculation',
+          completed: false,
+          duration: '25 min',
+        },
+        {
+          id: 'quiz',
+          title: 'Testing Methods Quiz',
+          type: 'quiz',
+          completed: false,
+          duration: '20 min',
+        },
+        {
+          id: 'scenario',
+          title: 'Testing Scenarios',
+          type: 'scenario',
+          completed: false,
+          duration: '15 min',
+        },
       ],
-      progress: 0
-    }
+      progress: 0,
+    },
   ];
 
   const learningPaths = {
@@ -136,26 +289,26 @@ export const LearningPathDashboard = () => {
       description: 'Comprehensive course covering all aspects from basics to advanced topics',
       modules: ['legal-framework', 'test-equipment', 'visual-inspection', 'electrical-testing'],
       estimatedTime: '11.5 hours',
-      bestFor: 'New learners or comprehensive review'
+      bestFor: 'New learners or comprehensive review',
     },
     competency: {
       title: 'Competency-Focused Path',
       description: 'Targeted learning for specific competency gaps',
       modules: ['visual-inspection', 'electrical-testing'],
       estimatedTime: '6 hours',
-      bestFor: 'Experienced practitioners updating skills'
+      bestFor: 'Experienced practitioners updating skills',
     },
     refresher: {
       title: 'Refresher Path',
       description: 'Quick review of key concepts and recent updates',
       modules: ['legal-framework', 'electrical-testing'],
       estimatedTime: '6.5 hours',
-      bestFor: 'Periodic competency maintenance'
-    }
+      bestFor: 'Periodic competency maintenance',
+    },
   };
 
   const currentPath = learningPaths[selectedPath];
-  const pathModules = modules.filter(m => currentPath.modules.includes(m.id));
+  const pathModules = modules.filter((m) => currentPath.modules.includes(m.id));
 
   const calculateOverallProgress = () => {
     const totalProgress = pathModules.reduce((sum, module) => sum + module.progress, 0);
@@ -164,10 +317,14 @@ export const LearningPathDashboard = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Foundation': return 'bg-green-500';
-      case 'Intermediate': return 'bg-yellow-500';
-      case 'Advanced': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case 'Foundation':
+        return 'bg-green-500';
+      case 'Intermediate':
+        return 'bg-yellow-500';
+      case 'Advanced':
+        return 'bg-red-500';
+      default:
+        return 'bg-gray-500';
     }
   };
 
@@ -181,15 +338,28 @@ export const LearningPathDashboard = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs value={selectedPath} onValueChange={(value) => setSelectedPath(value as any)} className="space-y-4">
+          <Tabs
+            value={selectedPath}
+            onValueChange={(value) => setSelectedPath(value as any)}
+            className="space-y-4"
+          >
             <TabsList className="grid w-full grid-cols-3 bg-elec-dark">
-              <TabsTrigger value="systematic" className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black">
+              <TabsTrigger
+                value="systematic"
+                className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+              >
                 Systematic
               </TabsTrigger>
-              <TabsTrigger value="competency" className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black">
+              <TabsTrigger
+                value="competency"
+                className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+              >
                 Competency
               </TabsTrigger>
-              <TabsTrigger value="refresher" className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black">
+              <TabsTrigger
+                value="refresher"
+                className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+              >
                 Refresher
               </TabsTrigger>
             </TabsList>
@@ -199,12 +369,16 @@ export const LearningPathDashboard = () => {
               <div className="bg-elec-dark p-6 rounded-lg">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">{currentPath.title}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {currentPath.title}
+                    </h3>
                     <p className="text-gray-300 mb-2">{currentPath.description}</p>
                     <p className="text-sm text-gray-400">Best for: {currentPath.bestFor}</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-elec-yellow">{calculateOverallProgress()}%</div>
+                    <div className="text-2xl font-bold text-elec-yellow">
+                      {calculateOverallProgress()}%
+                    </div>
                     <p className="text-sm text-gray-400">Complete</p>
                   </div>
                 </div>
@@ -227,33 +401,48 @@ export const LearningPathDashboard = () => {
               <div className="space-y-4">
                 {pathModules.map((module, index) => {
                   const isUnlocked = index === 0 || pathModules[index - 1].progress === 100;
-                  const completedSections = module.sections.filter(s => s.completed).length;
-                  
+                  const completedSections = module.sections.filter((s) => s.completed).length;
+
                   return (
-                    <Card key={module.id} className={`bg-elec-dark border-transparent ${!isUnlocked ? 'opacity-60' : ''}`}>
+                    <Card
+                      key={module.id}
+                      className={`bg-elec-dark border-transparent ${!isUnlocked ? 'opacity-60' : ''}`}
+                    >
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-4">
-                            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                              module.progress === 100 ? 'bg-green-500' : 
-                              module.progress > 0 ? 'bg-yellow-500' : 'bg-gray-600'
-                            }`}>
+                            <div
+                              className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                                module.progress === 100
+                                  ? 'bg-green-500'
+                                  : module.progress > 0
+                                    ? 'bg-yellow-500'
+                                    : 'bg-gray-600'
+                              }`}
+                            >
                               {module.progress === 100 ? (
                                 <CheckCircle className="h-6 w-6 text-foreground" />
                               ) : (
                                 <BookOpen className="h-6 w-6 text-foreground" />
                               )}
                             </div>
-                            
+
                             <div>
-                              <h4 className="text-lg font-semibold text-foreground">{module.title}</h4>
+                              <h4 className="text-lg font-semibold text-foreground">
+                                {module.title}
+                              </h4>
                               <p className="text-gray-300 text-sm mb-2">{module.description}</p>
-                              
+
                               <div className="flex items-center gap-4">
-                                <Badge variant="outline" className={`text-xs ${getDifficultyColor(module.difficulty)} text-foreground border-transparent`}>
+                                <Badge
+                                  variant="outline"
+                                  className={`text-xs ${getDifficultyColor(module.difficulty)} text-foreground border-transparent`}
+                                >
                                   {module.difficulty}
                                 </Badge>
-                                <span className="text-xs text-gray-400">{module.estimatedTime}</span>
+                                <span className="text-xs text-gray-400">
+                                  {module.estimatedTime}
+                                </span>
                                 <span className="text-xs text-gray-400">
                                   {completedSections}/{module.sections.length} sections
                                 </span>
@@ -265,7 +454,7 @@ export const LearningPathDashboard = () => {
                             <div className="text-xl font-bold text-elec-yellow mb-1">
                               {module.progress}%
                             </div>
-                            <Button 
+                            <Button
                               size="sm"
                               disabled={!isUnlocked}
                               className="bg-elec-yellow text-black hover:bg-yellow-500"
@@ -290,7 +479,9 @@ export const LearningPathDashboard = () => {
                         {/* Learning Outcomes */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <h5 className="text-sm font-medium text-foreground mb-2">Learning Outcomes:</h5>
+                            <h5 className="text-sm font-medium text-foreground mb-2">
+                              Learning Outcomes:
+                            </h5>
                             <ul className="text-xs text-gray-400 space-y-1">
                               {module.learningOutcomes.slice(0, 2).map((outcome, i) => (
                                 <li key={i} className="flex items-start gap-2">
@@ -302,13 +493,21 @@ export const LearningPathDashboard = () => {
                           </div>
 
                           <div>
-                            <h5 className="text-sm font-medium text-foreground mb-2">Section Types:</h5>
+                            <h5 className="text-sm font-medium text-foreground mb-2">
+                              Section Types:
+                            </h5>
                             <div className="flex flex-wrap gap-1">
-                              {Array.from(new Set(module.sections.map(s => s.type))).map(type => (
-                                <Badge key={type} variant="secondary" className="text-xs bg-gray-700 text-gray-300">
-                                  {type}
-                                </Badge>
-                              ))}
+                              {Array.from(new Set(module.sections.map((s) => s.type))).map(
+                                (type) => (
+                                  <Badge
+                                    key={type}
+                                    variant="secondary"
+                                    className="text-xs bg-gray-700 text-gray-300"
+                                  >
+                                    {type}
+                                  </Badge>
+                                )
+                              )}
                             </div>
                           </div>
                         </div>

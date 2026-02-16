@@ -19,7 +19,10 @@ export const BMSModule7Section3Practical = () => {
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
-              <span>Assign addresses systematically (e.g., Modbus meters numbered sequentially across boards)</span>
+              <span>
+                Assign addresses systematically (e.g., Modbus meters numbered sequentially across
+                boards)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
@@ -39,7 +42,9 @@ export const BMSModule7Section3Practical = () => {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <FileText className="h-5 w-5 text-green-400" />
-            <h3 className="text-xl font-semibold text-foreground">Best Practices for Device Mapping</h3>
+            <h3 className="text-xl font-semibold text-foreground">
+              Best Practices for Device Mapping
+            </h3>
           </div>
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
@@ -52,7 +57,9 @@ export const BMSModule7Section3Practical = () => {
             </li>
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-              <span>Test each point during commissioning — don't assume wiring matches documentation</span>
+              <span>
+                Test each point during commissioning — don't assume wiring matches documentation
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>

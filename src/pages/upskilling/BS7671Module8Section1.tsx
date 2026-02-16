@@ -1,82 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m8s1-check1",
-    question: "Where would you find maximum Zs values for circuits protected by MCBs?",
-    options: [
-      "Appendix 1",
-      "Appendix 3 (Tables 41.2-41.4)",
-      "Appendix 12",
-      "Part 7"
-    ],
+    id: 'bs7671-m8s1-check1',
+    question: 'Where would you find maximum Zs values for circuits protected by MCBs?',
+    options: ['Appendix 1', 'Appendix 3 (Tables 41.2-41.4)', 'Appendix 12', 'Part 7'],
     correctIndex: 1,
-    explanation: "Maximum Zs values are found in Appendix 3, specifically Tables 41.2 (Type B MCBs), 41.3 (Type C), and 41.4 (Type D). These ensure disconnection within required times."
+    explanation:
+      'Maximum Zs values are found in Appendix 3, specifically Tables 41.2 (Type B MCBs), 41.3 (Type C), and 41.4 (Type D). These ensure disconnection within required times.',
   },
   {
-    id: "bs7671-m8s1-check2",
-    question: "What does the correction factor Cg account for in cable sizing?",
-    options: [
-      "Temperature",
-      "Grouping of cables",
-      "Thermal insulation",
-      "Voltage drop"
-    ],
+    id: 'bs7671-m8s1-check2',
+    question: 'What does the correction factor Cg account for in cable sizing?',
+    options: ['Temperature', 'Grouping of cables', 'Thermal insulation', 'Voltage drop'],
     correctIndex: 1,
-    explanation: "Cg is the grouping correction factor applied when cables are installed together. Grouped cables dissipate heat less effectively, requiring derating of their current-carrying capacity."
+    explanation:
+      'Cg is the grouping correction factor applied when cables are installed together. Grouped cables dissipate heat less effectively, requiring derating of their current-carrying capacity.',
   },
   {
-    id: "bs7671-m8s1-check3",
-    question: "What is the maximum voltage drop allowed for lighting circuits?",
-    options: ["3%", "4%", "5%", "6%"],
+    id: 'bs7671-m8s1-check3',
+    question: 'What is the maximum voltage drop allowed for lighting circuits?',
+    options: ['3%', '4%', '5%', '6%'],
     correctIndex: 0,
-    explanation: "BS 7671 recommends a maximum 3% voltage drop for lighting circuits from origin to load. This limit helps maintain lamp performance and prevents visible flickering."
-  }
+    explanation:
+      'BS 7671 recommends a maximum 3% voltage drop for lighting circuits from origin to load. This limit helps maintain lamp performance and prevents visible flickering.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I use the Zs tables to verify fault protection?",
-    answer: "Measure actual Zs, apply temperature correction factor (0.8 for measured values), then compare with maximum tabulated Zs for your protective device type and rating. Measured value must be less than tabulated maximum."
+    question: 'How do I use the Zs tables to verify fault protection?',
+    answer:
+      'Measure actual Zs, apply temperature correction factor (0.8 for measured values), then compare with maximum tabulated Zs for your protective device type and rating. Measured value must be less than tabulated maximum.',
   },
   {
-    question: "Why are there different current-carrying capacity tables?",
-    answer: "Different tables apply to different installation methods. Appendix 4 has tables for cables in conduit, trunking, clipped direct, buried, etc. Each method affects heat dissipation differently."
+    question: 'Why are there different current-carrying capacity tables?',
+    answer:
+      'Different tables apply to different installation methods. Appendix 4 has tables for cables in conduit, trunking, clipped direct, buried, etc. Each method affects heat dissipation differently.',
   },
   {
     question: "What's the difference between design current (Ib) and rated current (In)?",
-    answer: "Design current (Ib) is the actual expected load current. Rated current (In) is the protective device rating. In must be ≥ Ib, and the cable's current-carrying capacity (Iz) must be ≥ In."
+    answer:
+      "Design current (Ib) is the actual expected load current. Rated current (In) is the protective device rating. In must be ≥ Ib, and the cable's current-carrying capacity (Iz) must be ≥ In.",
   },
   {
-    question: "How do I account for thermal insulation contact?",
-    answer: "Apply correction factor Ci from Table 52.2. Values range from 0.5 (totally surrounded) to 1.0 (no contact). This significantly reduces cable current-carrying capacity."
-  }
+    question: 'How do I account for thermal insulation contact?',
+    answer:
+      'Apply correction factor Ci from Table 52.2. Values range from 0.5 (totally surrounded) to 1.0 (no contact). This significantly reduces cable current-carrying capacity.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A circuit is installed in a 35°C ambient temperature environment. What must you do when selecting cable size?",
-  options: [
-    "Use the next size up automatically",
-    "Apply ambient temperature correction factor from Table 4B1",
-    "Ignore temperature as BS 7671 tables are conservative",
-    "Use the same size as for 30°C ambient"
-  ],
-  correctAnswer: 1,
-  explanation: "Apply the ambient temperature correction factor from Table 4B1 (or equivalent in Appendix 4). At 35°C, this reduces the cable's current-carrying capacity, potentially requiring a larger cable size."
-  }
+    question:
+      'A circuit is installed in a 35°C ambient temperature environment. What must you do when selecting cable size?',
+    options: [
+      'Use the next size up automatically',
+      'Apply ambient temperature correction factor from Table 4B1',
+      'Ignore temperature as BS 7671 tables are conservative',
+      'Use the same size as for 30°C ambient',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Apply the ambient temperature correction factor from Table 4B1 (or equivalent in Appendix 4). At 35°C, this reduces the cable's current-carrying capacity, potentially requiring a larger cable size.",
+  },
 ];
 
 const BS7671Module8Section1 = () => {
   useSEO({
-    title: "Navigating Key Appendices | BS7671 Module 8.1",
-    description: "Master BS 7671 appendices including Zs tables, conductor sizing tables, and voltage drop calculations for electrical installations."
+    title: 'Navigating Key Appendices | BS7671 Module 8.1',
+    description:
+      'Master BS 7671 appendices including Zs tables, conductor sizing tables, and voltage drop calculations for electrical installations.',
   });
 
   return (
@@ -118,16 +118,26 @@ const BS7671Module8Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Appendix 3:</strong> Zs values for fault protection</li>
-              <li><strong>Appendix 4:</strong> Current-carrying capacities</li>
-              <li><strong>Appendix 12:</strong> Voltage drop data</li>
+              <li>
+                <strong>Appendix 3:</strong> Zs values for fault protection
+              </li>
+              <li>
+                <strong>Appendix 4:</strong> Current-carrying capacities
+              </li>
+              <li>
+                <strong>Appendix 12:</strong> Voltage drop data
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Every design calculation, every test verification</li>
-              <li><strong>Use:</strong> Cross-reference tables systematically</li>
+              <li>
+                <strong>Spot:</strong> Every design calculation, every test verification
+              </li>
+              <li>
+                <strong>Use:</strong> Cross-reference tables systematically
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +147,12 @@ const BS7671Module8Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Navigating BS 7671 appendix structure",
-              "Using Zs tables for protection verification",
-              "Cable sizing using current-carrying capacity tables",
-              "Applying correction factors correctly",
-              "Calculating voltage drop",
-              "Selecting cables for thermal constraints"
+              'Navigating BS 7671 appendix structure',
+              'Using Zs tables for protection verification',
+              'Cable sizing using current-carrying capacity tables',
+              'Applying correction factors correctly',
+              'Calculating voltage drop',
+              'Selecting cables for thermal constraints',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -169,21 +179,39 @@ const BS7671Module8Section1 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commonly Used Appendices</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Commonly Used Appendices
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Appendix 1:</strong> British Standards referenced</li>
-                  <li><strong>Appendix 3:</strong> Time/current characteristics</li>
-                  <li><strong>Appendix 4:</strong> Current-carrying capacities</li>
-                  <li><strong>Appendix 12:</strong> Voltage drop</li>
+                  <li>
+                    <strong>Appendix 1:</strong> British Standards referenced
+                  </li>
+                  <li>
+                    <strong>Appendix 3:</strong> Time/current characteristics
+                  </li>
+                  <li>
+                    <strong>Appendix 4:</strong> Current-carrying capacities
+                  </li>
+                  <li>
+                    <strong>Appendix 12:</strong> Voltage drop
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Other Key Appendices</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Appendix 5:</strong> Classification of influences</li>
-                  <li><strong>Appendix 6:</strong> Model forms</li>
-                  <li><strong>Appendix 14:</strong> Methods of measurement</li>
-                  <li><strong>Appendix 15:</strong> Ring final circuits</li>
+                  <li>
+                    <strong>Appendix 5:</strong> Classification of influences
+                  </li>
+                  <li>
+                    <strong>Appendix 6:</strong> Model forms
+                  </li>
+                  <li>
+                    <strong>Appendix 14:</strong> Methods of measurement
+                  </li>
+                  <li>
+                    <strong>Appendix 15:</strong> Ring final circuits
+                  </li>
                 </ul>
               </div>
             </div>
@@ -222,11 +250,21 @@ const BS7671Module8Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Zs Table Selection:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Table 41.2:</strong> Type B MCBs (3-5× In trip)</li>
-                <li><strong>Table 41.3:</strong> Type C MCBs (5-10× In trip)</li>
-                <li><strong>Table 41.4:</strong> Type D MCBs (10-20× In trip)</li>
-                <li><strong>Table 41.5:</strong> BS 3036 fuses (rewirable)</li>
-                <li><strong>Table 41.6:</strong> BS 88 fuses (HRC)</li>
+                <li>
+                  <strong>Table 41.2:</strong> Type B MCBs (3-5× In trip)
+                </li>
+                <li>
+                  <strong>Table 41.3:</strong> Type C MCBs (5-10× In trip)
+                </li>
+                <li>
+                  <strong>Table 41.4:</strong> Type D MCBs (10-20× In trip)
+                </li>
+                <li>
+                  <strong>Table 41.5:</strong> BS 3036 fuses (rewirable)
+                </li>
+                <li>
+                  <strong>Table 41.6:</strong> BS 88 fuses (HRC)
+                </li>
               </ul>
             </div>
 
@@ -266,20 +304,38 @@ const BS7671Module8Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Methods</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Method A:</strong> In conduit in insulated wall</li>
-                  <li><strong>Method B:</strong> In conduit on wall</li>
-                  <li><strong>Method C:</strong> Clipped direct</li>
-                  <li><strong>Method D:</strong> In ground</li>
-                  <li><strong>Method E:</strong> Free air (perforated tray)</li>
+                  <li>
+                    <strong>Method A:</strong> In conduit in insulated wall
+                  </li>
+                  <li>
+                    <strong>Method B:</strong> In conduit on wall
+                  </li>
+                  <li>
+                    <strong>Method C:</strong> Clipped direct
+                  </li>
+                  <li>
+                    <strong>Method D:</strong> In ground
+                  </li>
+                  <li>
+                    <strong>Method E:</strong> Free air (perforated tray)
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Correction Factors</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Ca:</strong> Ambient temperature</li>
-                  <li><strong>Cg:</strong> Grouping of cables</li>
-                  <li><strong>Ci:</strong> Thermal insulation</li>
-                  <li><strong>Cc:</strong> Semi-enclosed fuse factor</li>
+                  <li>
+                    <strong>Ca:</strong> Ambient temperature
+                  </li>
+                  <li>
+                    <strong>Cg:</strong> Grouping of cables
+                  </li>
+                  <li>
+                    <strong>Ci:</strong> Thermal insulation
+                  </li>
+                  <li>
+                    <strong>Cc:</strong> Semi-enclosed fuse factor
+                  </li>
                 </ul>
               </div>
             </div>
@@ -314,10 +370,18 @@ const BS7671Module8Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage Drop Limits</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Lighting:</strong> 3% maximum</li>
-                  <li><strong>Other circuits:</strong> 5% maximum</li>
-                  <li><strong>From origin:</strong> Total to point of use</li>
-                  <li><strong>Public supply:</strong> -6% to +10%</li>
+                  <li>
+                    <strong>Lighting:</strong> 3% maximum
+                  </li>
+                  <li>
+                    <strong>Other circuits:</strong> 5% maximum
+                  </li>
+                  <li>
+                    <strong>From origin:</strong> Total to point of use
+                  </li>
+                  <li>
+                    <strong>Public supply:</strong> -6% to +10%
+                  </li>
                 </ul>
               </div>
               <div>
@@ -361,10 +425,18 @@ const BS7671Module8Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong table:</strong> — Using wrong installation method table</li>
-                <li><strong>Missing factors:</strong> — Forgetting grouping or temperature correction</li>
-                <li><strong>Zs confusion:</strong> — Using wrong MCB type table</li>
-                <li><strong>Unit errors:</strong> — mV/A/m requires careful unit conversion</li>
+                <li>
+                  <strong>Wrong table:</strong> — Using wrong installation method table
+                </li>
+                <li>
+                  <strong>Missing factors:</strong> — Forgetting grouping or temperature correction
+                </li>
+                <li>
+                  <strong>Zs confusion:</strong> — Using wrong MCB type table
+                </li>
+                <li>
+                  <strong>Unit errors:</strong> — mV/A/m requires careful unit conversion
+                </li>
               </ul>
             </div>
           </div>
@@ -408,10 +480,7 @@ const BS7671Module8Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -3,11 +3,11 @@ import { Target } from 'lucide-react';
 
 export const EmergencyLightingModule5Section3LearningOutcomes = () => {
   const outcomes = [
-    "Describe the legal and regulatory requirements for emergency lighting testing",
-    "Differentiate between monthly functional tests and annual duration tests",
-    "Carry out the correct procedures for each test",
-    "Record and maintain test results in compliance with BS 5266-8",
-    "Recognise the consequences of missed or incomplete testing"
+    'Describe the legal and regulatory requirements for emergency lighting testing',
+    'Differentiate between monthly functional tests and annual duration tests',
+    'Carry out the correct procedures for each test',
+    'Record and maintain test results in compliance with BS 5266-8',
+    'Recognise the consequences of missed or incomplete testing',
   ];
 
   return (

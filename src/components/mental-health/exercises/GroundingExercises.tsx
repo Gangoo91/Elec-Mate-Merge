@@ -1,7 +1,6 @@
-
-import { useState, useEffect, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect, useRef } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Anchor,
   Eye,
@@ -19,10 +18,10 @@ import {
   Clock,
   Sparkles,
   Cloud,
-  CloudOff
-} from "lucide-react";
-import { useGroundingProgress } from "@/hooks/useMentalHealthSync";
-import { useAuth } from "@/contexts/AuthContext";
+  CloudOff,
+} from 'lucide-react';
+import { useGroundingProgress } from '@/hooks/useMentalHealthSync';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Exercise {
   id: string;
@@ -39,157 +38,162 @@ interface Exercise {
 
 const exercises: Exercise[] = [
   {
-    id: "5-4-3-2-1",
-    name: "5-4-3-2-1 Senses",
-    shortName: "5-4-3-2-1",
+    id: '5-4-3-2-1',
+    name: '5-4-3-2-1 Senses',
+    shortName: '5-4-3-2-1',
     icon: Eye,
-    color: "purple",
-    duration: "2-3 min",
-    description: "Ground yourself using all five senses",
-    type: "interactive",
+    color: 'purple',
+    duration: '2-3 min',
+    description: 'Ground yourself using all five senses',
+    type: 'interactive',
     steps: [
-      "Name 5 things you can SEE",
-      "Name 4 things you can TOUCH",
-      "Name 3 things you can HEAR",
-      "Name 2 things you can SMELL",
-      "Name 1 thing you can TASTE"
+      'Name 5 things you can SEE',
+      'Name 4 things you can TOUCH',
+      'Name 3 things you can HEAR',
+      'Name 2 things you can SMELL',
+      'Name 1 thing you can TASTE',
     ],
     interactiveData: {
       senses: [
-        { sense: "SEE", count: 5, emoji: "👁️", prompt: "Look around. What catches your eye?" },
-        { sense: "TOUCH", count: 4, emoji: "🖐️", prompt: "Feel the textures around you" },
-        { sense: "HEAR", count: 3, emoji: "👂", prompt: "Listen carefully. What sounds are there?" },
-        { sense: "SMELL", count: 2, emoji: "👃", prompt: "Take a deep breath. What do you smell?" },
-        { sense: "TASTE", count: 1, emoji: "👅", prompt: "What can you taste right now?" }
-      ]
-    }
+        { sense: 'SEE', count: 5, emoji: '👁️', prompt: 'Look around. What catches your eye?' },
+        { sense: 'TOUCH', count: 4, emoji: '🖐️', prompt: 'Feel the textures around you' },
+        {
+          sense: 'HEAR',
+          count: 3,
+          emoji: '👂',
+          prompt: 'Listen carefully. What sounds are there?',
+        },
+        { sense: 'SMELL', count: 2, emoji: '👃', prompt: 'Take a deep breath. What do you smell?' },
+        { sense: 'TASTE', count: 1, emoji: '👅', prompt: 'What can you taste right now?' },
+      ],
+    },
   },
   {
-    id: "box-breathing",
-    name: "Box Breathing",
-    shortName: "Box",
+    id: 'box-breathing',
+    name: 'Box Breathing',
+    shortName: 'Box',
     icon: Square,
-    color: "blue",
-    duration: "2-4 min",
-    description: "Calm your nervous system with this Navy SEAL technique",
-    type: "guided",
+    color: 'blue',
+    duration: '2-4 min',
+    description: 'Calm your nervous system with this Navy SEAL technique',
+    type: 'guided',
     steps: [
-      "Breathe IN for 4 seconds",
-      "HOLD your breath for 4 seconds",
-      "Breathe OUT for 4 seconds",
-      "HOLD empty for 4 seconds",
-      "Repeat the cycle"
-    ]
+      'Breathe IN for 4 seconds',
+      'HOLD your breath for 4 seconds',
+      'Breathe OUT for 4 seconds',
+      'HOLD empty for 4 seconds',
+      'Repeat the cycle',
+    ],
   },
   {
-    id: "body-scan",
-    name: "Quick Body Scan",
-    shortName: "Body Scan",
+    id: 'body-scan',
+    name: 'Quick Body Scan',
+    shortName: 'Body Scan',
     icon: Hand,
-    color: "green",
-    duration: "3-5 min",
-    description: "Release tension from head to toe",
-    type: "guided",
+    color: 'green',
+    duration: '3-5 min',
+    description: 'Release tension from head to toe',
+    type: 'guided',
     steps: [
-      "Close your eyes and take 3 deep breaths",
-      "Focus on your HEAD - release any tension in your forehead, jaw",
-      "Move to your SHOULDERS - let them drop away from your ears",
-      "Notice your ARMS and HANDS - unclench your fists",
-      "Feel your CHEST and STOMACH - breathe into any tightness",
-      "Relax your LEGS and FEET - let them feel heavy",
-      "Take 3 more breaths and slowly open your eyes"
-    ]
+      'Close your eyes and take 3 deep breaths',
+      'Focus on your HEAD - release any tension in your forehead, jaw',
+      'Move to your SHOULDERS - let them drop away from your ears',
+      'Notice your ARMS and HANDS - unclench your fists',
+      'Feel your CHEST and STOMACH - breathe into any tightness',
+      'Relax your LEGS and FEET - let them feel heavy',
+      'Take 3 more breaths and slowly open your eyes',
+    ],
   },
   {
-    id: "cold-water",
-    name: "Cold Water Reset",
-    shortName: "Cold Water",
+    id: 'cold-water',
+    name: 'Cold Water Reset',
+    shortName: 'Cold Water',
     icon: Droplets,
-    color: "cyan",
-    duration: "1 min",
+    color: 'cyan',
+    duration: '1 min',
     description: "Activate your body's calming response instantly",
-    type: "timed",
+    type: 'timed',
     steps: [
-      "Get cold water (or ice if available)",
-      "Splash cold water on your face",
-      "Hold cold water on your wrists",
-      "Focus on the sensation",
-      "This activates your dive reflex and calms your heart rate"
-    ]
+      'Get cold water (or ice if available)',
+      'Splash cold water on your face',
+      'Hold cold water on your wrists',
+      'Focus on the sensation',
+      'This activates your dive reflex and calms your heart rate',
+    ],
   },
   {
-    id: "grounding-feet",
-    name: "Feet Grounding",
-    shortName: "Feet",
+    id: 'grounding-feet',
+    name: 'Feet Grounding',
+    shortName: 'Feet',
     icon: Footprints,
-    color: "amber",
-    duration: "1-2 min",
-    description: "Connect with the ground beneath you",
-    type: "guided",
+    color: 'amber',
+    duration: '1-2 min',
+    description: 'Connect with the ground beneath you',
+    type: 'guided',
     steps: [
-      "Stand or sit with both feet flat on the floor",
-      "Press your feet firmly into the ground",
-      "Notice the pressure under your heels",
-      "Feel the pressure under your toes",
-      "Imagine roots growing from your feet into the earth",
-      "You are stable, grounded, and secure"
-    ]
+      'Stand or sit with both feet flat on the floor',
+      'Press your feet firmly into the ground',
+      'Notice the pressure under your heels',
+      'Feel the pressure under your toes',
+      'Imagine roots growing from your feet into the earth',
+      'You are stable, grounded, and secure',
+    ],
   },
   {
-    id: "4-7-8-breathing",
-    name: "4-7-8 Breathing",
-    shortName: "4-7-8",
+    id: '4-7-8-breathing',
+    name: '4-7-8 Breathing',
+    shortName: '4-7-8',
     icon: Wind,
-    color: "indigo",
-    duration: "2-3 min",
-    description: "A natural tranquiliser for the nervous system",
-    type: "guided",
+    color: 'indigo',
+    duration: '2-3 min',
+    description: 'A natural tranquiliser for the nervous system',
+    type: 'guided',
     steps: [
-      "Breathe IN through your nose for 4 seconds",
-      "HOLD your breath for 7 seconds",
-      "Breathe OUT through your mouth for 8 seconds",
-      "This is one breath cycle",
-      "Repeat 3-4 times"
-    ]
+      'Breathe IN through your nose for 4 seconds',
+      'HOLD your breath for 7 seconds',
+      'Breathe OUT through your mouth for 8 seconds',
+      'This is one breath cycle',
+      'Repeat 3-4 times',
+    ],
   },
   {
-    id: "safe-place",
-    name: "Safe Place Visualisation",
-    shortName: "Safe Place",
+    id: 'safe-place',
+    name: 'Safe Place Visualisation',
+    shortName: 'Safe Place',
     icon: Anchor,
-    color: "rose",
-    duration: "3-5 min",
-    description: "Create a mental sanctuary you can visit anytime",
-    type: "guided",
+    color: 'rose',
+    duration: '3-5 min',
+    description: 'Create a mental sanctuary you can visit anytime',
+    type: 'guided',
     steps: [
-      "Close your eyes and take slow breaths",
-      "Imagine a place where you feel completely safe",
-      "It could be real or imaginary - a beach, forest, or cosy room",
-      "Notice what you SEE in this place",
-      "Notice what you HEAR around you",
-      "Feel the temperature and textures",
-      "Stay here as long as you need",
-      "Know you can return here anytime"
-    ]
+      'Close your eyes and take slow breaths',
+      'Imagine a place where you feel completely safe',
+      'It could be real or imaginary - a beach, forest, or cosy room',
+      'Notice what you SEE in this place',
+      'Notice what you HEAR around you',
+      'Feel the temperature and textures',
+      'Stay here as long as you need',
+      'Know you can return here anytime',
+    ],
   },
   {
-    id: "muscle-release",
-    name: "Quick Muscle Release",
-    shortName: "Muscle",
+    id: 'muscle-release',
+    name: 'Quick Muscle Release',
+    shortName: 'Muscle',
     icon: Hand,
-    color: "orange",
-    duration: "2-3 min",
-    description: "Tense and release to relieve physical stress",
-    type: "timed",
+    color: 'orange',
+    duration: '2-3 min',
+    description: 'Tense and release to relieve physical stress',
+    type: 'timed',
     steps: [
-      "Make tight FISTS - hold 5 seconds - release",
-      "Scrunch your FACE - hold 5 seconds - release",
-      "Raise your SHOULDERS to ears - hold 5 seconds - release",
-      "Tense your STOMACH - hold 5 seconds - release",
-      "Curl your TOES tight - hold 5 seconds - release",
-      "Notice the difference between tension and relaxation"
-    ]
-  }
+      'Make tight FISTS - hold 5 seconds - release',
+      'Scrunch your FACE - hold 5 seconds - release',
+      'Raise your SHOULDERS to ears - hold 5 seconds - release',
+      'Tense your STOMACH - hold 5 seconds - release',
+      'Curl your TOES tight - hold 5 seconds - release',
+      'Notice the difference between tension and relaxation',
+    ],
+  },
 ];
 
 const GroundingExercises = () => {
@@ -229,14 +233,54 @@ const GroundingExercises = () => {
 
   const getColorClasses = (color: string) => {
     const colors: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
-      purple: { bg: "bg-purple-500/20", text: "text-purple-400", border: "border-purple-500/20", gradient: "from-purple-500/10" },
-      blue: { bg: "bg-blue-500/20", text: "text-blue-400", border: "border-blue-500/20", gradient: "from-blue-500/10" },
-      green: { bg: "bg-green-500/20", text: "text-green-400", border: "border-green-500/20", gradient: "from-green-500/10" },
-      cyan: { bg: "bg-cyan-500/20", text: "text-cyan-400", border: "border-cyan-500/20", gradient: "from-cyan-500/10" },
-      amber: { bg: "bg-amber-500/20", text: "text-amber-400", border: "border-amber-500/20", gradient: "from-amber-500/10" },
-      indigo: { bg: "bg-indigo-500/20", text: "text-indigo-400", border: "border-indigo-500/20", gradient: "from-indigo-500/10" },
-      rose: { bg: "bg-rose-500/20", text: "text-rose-400", border: "border-rose-500/20", gradient: "from-rose-500/10" },
-      orange: { bg: "bg-orange-500/20", text: "text-orange-400", border: "border-orange-500/20", gradient: "from-orange-500/10" }
+      purple: {
+        bg: 'bg-purple-500/20',
+        text: 'text-purple-400',
+        border: 'border-purple-500/20',
+        gradient: 'from-purple-500/10',
+      },
+      blue: {
+        bg: 'bg-blue-500/20',
+        text: 'text-blue-400',
+        border: 'border-blue-500/20',
+        gradient: 'from-blue-500/10',
+      },
+      green: {
+        bg: 'bg-green-500/20',
+        text: 'text-green-400',
+        border: 'border-green-500/20',
+        gradient: 'from-green-500/10',
+      },
+      cyan: {
+        bg: 'bg-cyan-500/20',
+        text: 'text-cyan-400',
+        border: 'border-cyan-500/20',
+        gradient: 'from-cyan-500/10',
+      },
+      amber: {
+        bg: 'bg-amber-500/20',
+        text: 'text-amber-400',
+        border: 'border-amber-500/20',
+        gradient: 'from-amber-500/10',
+      },
+      indigo: {
+        bg: 'bg-indigo-500/20',
+        text: 'text-indigo-400',
+        border: 'border-indigo-500/20',
+        gradient: 'from-indigo-500/10',
+      },
+      rose: {
+        bg: 'bg-rose-500/20',
+        text: 'text-rose-400',
+        border: 'border-rose-500/20',
+        gradient: 'from-rose-500/10',
+      },
+      orange: {
+        bg: 'bg-orange-500/20',
+        text: 'text-orange-400',
+        border: 'border-orange-500/20',
+        gradient: 'from-orange-500/10',
+      },
     };
     return colors[color] || colors.blue;
   };
@@ -251,9 +295,7 @@ const GroundingExercises = () => {
             <Anchor className="h-6 w-6 text-purple-400" />
           </div>
           <h2 className="text-xl font-bold text-foreground mb-1">Grounding Exercises</h2>
-          <p className="text-sm text-white">
-            Techniques to bring you back to the present moment
-          </p>
+          <p className="text-sm text-white">Techniques to bring you back to the present moment</p>
         </div>
 
         {/* Cloud Sync Status */}
@@ -286,7 +328,7 @@ const GroundingExercises = () => {
 
         {/* Quick Access */}
         <div className="grid grid-cols-4 gap-2">
-          {exercises.slice(0, 4).map(ex => {
+          {exercises.slice(0, 4).map((ex) => {
             const colors = getColorClasses(ex.color);
             const Icon = ex.icon;
             const isComplete = completed.includes(ex.id);
@@ -310,7 +352,7 @@ const GroundingExercises = () => {
         {/* Exercise List */}
         <div className="space-y-2">
           <h3 className="text-sm font-medium text-white">All Exercises</h3>
-          {exercises.map(exercise => {
+          {exercises.map((exercise) => {
             const colors = getColorClasses(exercise.color);
             const Icon = exercise.icon;
             const isComplete = completed.includes(exercise.id);
@@ -323,7 +365,9 @@ const GroundingExercises = () => {
               >
                 <CardContent className={`p-3 bg-gradient-to-r ${colors.gradient} to-transparent`}>
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}>
+                    <div
+                      className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}
+                    >
                       <Icon className={`h-5 w-5 ${colors.text}`} />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -362,7 +406,7 @@ const GroundingExercises = () => {
   const Icon = selectedExercise.icon;
 
   // 5-4-3-2-1 Interactive Exercise
-  if (selectedExercise.id === "5-4-3-2-1") {
+  if (selectedExercise.id === '5-4-3-2-1') {
     const senses = selectedExercise.interactiveData.senses;
     const currentSense = senses[senseIndex];
     const isFinished = senseIndex >= senses.length;
@@ -382,7 +426,9 @@ const GroundingExercises = () => {
 
         {/* Title */}
         <div className="text-center">
-          <div className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}>
+          <div
+            className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}
+          >
             <Icon className={`h-7 w-7 ${colors.text}`} />
           </div>
           <h2 className="text-xl font-bold text-foreground">{selectedExercise.name}</h2>
@@ -395,14 +441,15 @@ const GroundingExercises = () => {
               <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
               <h3 className="text-lg font-bold text-foreground mb-2">Well done!</h3>
               <p className="text-sm text-white mb-4">
-                You've grounded yourself using all five senses.
-                How do you feel now?
+                You've grounded yourself using all five senses. How do you feel now?
               </p>
               <div className="flex gap-2">
                 <Button
                   variant="outline"
                   className="flex-1"
-                  onClick={() => { resetExercise(); }}
+                  onClick={() => {
+                    resetExercise();
+                  }}
                 >
                   Try Again
                 </Button>
@@ -426,20 +473,25 @@ const GroundingExercises = () => {
                 <div
                   key={i}
                   className={`w-10 h-1 rounded-full transition-all ${
-                    i < senseIndex ? 'bg-green-400' :
-                    i === senseIndex ? colors.text.replace('text-', 'bg-') :
-                    'bg-white/20'
+                    i < senseIndex
+                      ? 'bg-green-400'
+                      : i === senseIndex
+                        ? colors.text.replace('text-', 'bg-')
+                        : 'bg-white/20'
                   }`}
                 />
               ))}
             </div>
 
             {/* Current Sense */}
-            <Card className={`${colors.border} bg-gradient-to-br ${colors.gradient} to-transparent`}>
+            <Card
+              className={`${colors.border} bg-gradient-to-br ${colors.gradient} to-transparent`}
+            >
               <CardContent className="p-6 text-center">
                 <span className="text-4xl mb-3 block">{currentSense.emoji}</span>
                 <h3 className="text-2xl font-bold text-foreground mb-2">
-                  {currentSense.count} things you can <span className={colors.text}>{currentSense.sense}</span>
+                  {currentSense.count} things you can{' '}
+                  <span className={colors.text}>{currentSense.sense}</span>
                 </h3>
                 <p className="text-sm text-white">{currentSense.prompt}</p>
               </CardContent>
@@ -498,7 +550,9 @@ const GroundingExercises = () => {
 
       {/* Title */}
       <div className="text-center">
-        <div className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}>
+        <div
+          className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}
+        >
           <Icon className={`h-7 w-7 ${colors.text}`} />
         </div>
         <h2 className="text-xl font-bold text-foreground">{selectedExercise.name}</h2>
@@ -511,9 +565,11 @@ const GroundingExercises = () => {
           <div
             key={i}
             className={`h-1 rounded-full transition-all ${
-              i < currentStep ? 'bg-green-400 w-8' :
-              i === currentStep ? `${colors.text.replace('text-', 'bg-')} w-8` :
-              'bg-white/20 w-4'
+              i < currentStep
+                ? 'bg-green-400 w-8'
+                : i === currentStep
+                  ? `${colors.text.replace('text-', 'bg-')} w-8`
+                  : 'bg-white/20 w-4'
             }`}
           />
         ))}
@@ -525,7 +581,9 @@ const GroundingExercises = () => {
           <Card className={`${colors.border} bg-gradient-to-br ${colors.gradient} to-transparent`}>
             <CardContent className="p-6">
               <div className="flex items-start gap-3">
-                <div className={`w-8 h-8 rounded-full ${colors.bg} flex items-center justify-center flex-shrink-0`}>
+                <div
+                  className={`w-8 h-8 rounded-full ${colors.bg} flex items-center justify-center flex-shrink-0`}
+                >
                   <span className={`text-sm font-bold ${colors.text}`}>{currentStep + 1}</span>
                 </div>
                 <p className="text-lg text-foreground leading-relaxed pt-1">
@@ -570,11 +628,7 @@ const GroundingExercises = () => {
               Take a moment to notice how you feel now compared to when you started.
             </p>
             <div className="flex gap-2">
-              <Button
-                variant="outline"
-                className="flex-1"
-                onClick={resetExercise}
-              >
+              <Button variant="outline" className="flex-1" onClick={resetExercise}>
                 Repeat
               </Button>
               <Button

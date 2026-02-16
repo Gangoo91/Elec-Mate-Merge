@@ -1,77 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m6s5-check1",
-    question: "What is the minimum recommended duration for a comprehensive customer walkthrough?",
-    options: ["15 minutes", "30 minutes", "40 minutes", "60 minutes"],
+    id: 'evcharging-m6s5-check1',
+    question: 'What is the minimum recommended duration for a comprehensive customer walkthrough?',
+    options: ['15 minutes', '30 minutes', '40 minutes', '60 minutes'],
     correctIndex: 2,
-    explanation: "A comprehensive walkthrough should take 40 minutes minimum: 10 min system overview, 15 min operation demonstration, 10 min maintenance explanation, and 5 min documentation handover."
+    explanation:
+      'A comprehensive walkthrough should take 40 minutes minimum: 10 min system overview, 15 min operation demonstration, 10 min maintenance explanation, and 5 min documentation handover.',
   },
   {
-    id: "evcharging-m6s5-check2",
-    question: "Which BS 7671 section covers labelling and identification requirements?",
-    options: ["Section 512", "Section 514", "Section 521", "Section 531"],
+    id: 'evcharging-m6s5-check2',
+    question: 'Which BS 7671 section covers labelling and identification requirements?',
+    options: ['Section 512', 'Section 514', 'Section 521', 'Section 531'],
     correctIndex: 1,
-    explanation: "BS 7671 Section 514 covers 'Identification and Notices' including labelling requirements for electrical installations, circuits, and protective devices."
+    explanation:
+      "BS 7671 Section 514 covers 'Identification and Notices' including labelling requirements for electrical installations, circuits, and protective devices.",
   },
   {
-    id: "evcharging-m6s5-check3",
-    question: "What type of labels are required for outdoor EV charging installations?",
+    id: 'evcharging-m6s5-check3',
+    question: 'What type of labels are required for outdoor EV charging installations?',
     options: [
-      "Standard paper labels",
-      "Laminated paper labels",
-      "Marine-grade vinyl or aluminium with UV-stable inks",
-      "Any waterproof material"
+      'Standard paper labels',
+      'Laminated paper labels',
+      'Marine-grade vinyl or aluminium with UV-stable inks',
+      'Any waterproof material',
     ],
     correctIndex: 2,
-    explanation: "Outdoor labels must be marine-grade vinyl or aluminium with UV-stable inks, weather-resistant adhesive, temperature tolerance -20°C to +80°C, and minimum 15-year durability."
-  }
+    explanation:
+      'Outdoor labels must be marine-grade vinyl or aluminium with UV-stable inks, weather-resistant adhesive, temperature tolerance -20°C to +80°C, and minimum 15-year durability.',
+  },
 ];
 
 const faqs = [
   {
     question: "What happens if the customer isn't available for the walkthrough?",
-    answer: "The installation cannot be considered complete until the walkthrough is conducted. Schedule a specific appointment and ensure the customer understands this is mandatory for warranty validation and safety compliance."
+    answer:
+      'The installation cannot be considered complete until the walkthrough is conducted. Schedule a specific appointment and ensure the customer understands this is mandatory for warranty validation and safety compliance.',
   },
   {
-    question: "How often should RCD testing be demonstrated to customers?",
-    answer: "Demonstrate the monthly RCD test procedure during walkthrough and provide written instructions. Emphasize this is a legal requirement under BS 7671 and essential for continued protection."
+    question: 'How often should RCD testing be demonstrated to customers?',
+    answer:
+      'Demonstrate the monthly RCD test procedure during walkthrough and provide written instructions. Emphasize this is a legal requirement under BS 7671 and essential for continued protection.',
   },
   {
-    question: "What documentation must be provided to the customer?",
-    answer: "Provide installation certificate, test results, user manual, warranty information, maintenance schedule, emergency contact details, and commissioning checklist — all within 28 days of completion."
+    question: 'What documentation must be provided to the customer?',
+    answer:
+      'Provide installation certificate, test results, user manual, warranty information, maintenance schedule, emergency contact details, and commissioning checklist — all within 28 days of completion.',
   },
   {
-    question: "How should emergency procedures be communicated?",
-    answer: "Emergency procedures must be clearly explained during walkthrough, provided in written form, and prominently displayed near the charging equipment. Include isolation points, emergency contacts, and evacuation procedures."
-  }
+    question: 'How should emergency procedures be communicated?',
+    answer:
+      'Emergency procedures must be clearly explained during walkthrough, provided in written form, and prominently displayed near the charging equipment. Include isolation points, emergency contacts, and evacuation procedures.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A customer complains they can't find any information about their EV charger installation after 6 months. What documentation should they have received?",
-  options: [
-    "Just the receipt for payment",
-    "Only the manufacturer's user manual",
-    "Installation certificate, test results, user manual, warranty info, and maintenance schedule",
-    "A simple completion note"
-  ],
-  correctAnswer: 2,
-  explanation: "A complete handover package includes: installation certificate with test results, manufacturer's user manual, warranty documentation, maintenance schedule, emergency contacts, and commissioning checklist. All must be provided within 28 days of completion."
-  }
+    question:
+      "A customer complains they can't find any information about their EV charger installation after 6 months. What documentation should they have received?",
+    options: [
+      'Just the receipt for payment',
+      "Only the manufacturer's user manual",
+      'Installation certificate, test results, user manual, warranty info, and maintenance schedule',
+      'A simple completion note',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "A complete handover package includes: installation certificate with test results, manufacturer's user manual, warranty documentation, maintenance schedule, emergency contacts, and commissioning checklist. All must be provided within 28 days of completion.",
+  },
 ];
 
 const EVChargingModule6Section5 = () => {
   useSEO({
-    title: "Customer Walkthrough and Labelling | EV Charging Module 6.5",
-    description: "Learn customer walkthrough procedures and system labelling requirements for EV charging installations. Master handover protocols and BS 7671 compliance."
+    title: 'Customer Walkthrough and Labelling | EV Charging Module 6.5',
+    description:
+      'Learn customer walkthrough procedures and system labelling requirements for EV charging installations. Master handover protocols and BS 7671 compliance.',
   });
 
   return (
@@ -113,17 +123,29 @@ const EVChargingModule6Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Walkthrough:</strong> 40 min minimum, structured approach</li>
-              <li><strong>Labelling:</strong> BS 7671 Section 514 compliance</li>
-              <li><strong>Documentation:</strong> Within 28 days to customer</li>
+              <li>
+                <strong>Walkthrough:</strong> 40 min minimum, structured approach
+              </li>
+              <li>
+                <strong>Labelling:</strong> BS 7671 Section 514 compliance
+              </li>
+              <li>
+                <strong>Documentation:</strong> Within 28 days to customer
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Requirements</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Outdoor labels:</strong> Marine-grade, UV-stable</li>
-              <li><strong>Indoor labels:</strong> 10-year minimum durability</li>
-              <li><strong>Monthly RCD test:</strong> Demonstrate and document</li>
+              <li>
+                <strong>Outdoor labels:</strong> Marine-grade, UV-stable
+              </li>
+              <li>
+                <strong>Indoor labels:</strong> 10-year minimum durability
+              </li>
+              <li>
+                <strong>Monthly RCD test:</strong> Demonstrate and document
+              </li>
             </ul>
           </div>
         </div>
@@ -133,12 +155,12 @@ const EVChargingModule6Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Plan and conduct effective customer walkthroughs",
-              "Demonstrate safe operation procedures",
-              "Understand BS 7671 labelling requirements",
-              "Apply correct labelling standards and materials",
-              "Document customer training and handover",
-              "Provide ongoing support information"
+              'Plan and conduct effective customer walkthroughs',
+              'Demonstrate safe operation procedures',
+              'Understand BS 7671 labelling requirements',
+              'Apply correct labelling standards and materials',
+              'Document customer training and handover',
+              'Provide ongoing support information',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -159,13 +181,15 @@ const EVChargingModule6Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               A professional customer walkthrough ensures the customer can safely operate their
-              charging equipment and understands maintenance requirements. Use a structured
-              approach to cover all essential topics.
+              charging equipment and understands maintenance requirements. Use a structured approach
+              to cover all essential topics.
             </p>
 
             <div className="my-6 space-y-4">
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">1. System Overview (10 minutes)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  1. System Overview (10 minutes)
+                </p>
                 <ul className="text-xs text-white space-y-1 ml-4">
                   <li>• Complete system layout explanation</li>
                   <li>• Key components and their functions</li>
@@ -174,7 +198,9 @@ const EVChargingModule6Section5 = () => {
                 </ul>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">2. Operation Demonstration (15 minutes)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  2. Operation Demonstration (15 minutes)
+                </p>
                 <ul className="text-xs text-white space-y-1 ml-4">
                   <li>• Normal charging procedure start-to-finish</li>
                   <li>• Authentication methods (RFID, app, etc.)</li>
@@ -184,7 +210,9 @@ const EVChargingModule6Section5 = () => {
                 </ul>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">3. Maintenance and Care (10 minutes)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  3. Maintenance and Care (10 minutes)
+                </p>
                 <ul className="text-xs text-white space-y-1 ml-4">
                   <li>• Regular cleaning and inspection</li>
                   <li>• Monthly RCD testing procedure (demonstrate)</li>
@@ -193,7 +221,9 @@ const EVChargingModule6Section5 = () => {
                 </ul>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">4. Documentation Handover (5 minutes)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  4. Documentation Handover (5 minutes)
+                </p>
                 <ul className="text-xs text-white space-y-1 ml-4">
                   <li>• Installation certificate explanation</li>
                   <li>• Warranty terms and conditions</li>
@@ -216,8 +246,8 @@ const EVChargingModule6Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               BS 7671 Section 514 mandates specific labelling requirements for electrical
-              installations. EV charging installations have particular needs due to their
-              location and operational requirements.
+              installations. EV charging installations have particular needs due to their location
+              and operational requirements.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -232,7 +262,9 @@ const EVChargingModule6Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Charging Point Labels</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Charging Point Labels
+                </p>
                 <ul className="text-xs text-white space-y-1">
                   <li>• Maximum charging current</li>
                   <li>• Voltage and phase info</li>
@@ -265,8 +297,8 @@ const EVChargingModule6Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Label materials must be appropriate for the installation environment.
-              Indoor and outdoor applications have different requirements.
+              Label materials must be appropriate for the installation environment. Indoor and
+              outdoor applications have different requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -312,13 +344,15 @@ const EVChargingModule6Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Complete documentation must be provided within 28 days of installation.
-              A well-organized package reduces support calls and protects both parties.
+              Complete documentation must be provided within 28 days of installation. A
+              well-organized package reduces support calls and protects both parties.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-Walkthrough Preparation</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Pre-Walkthrough Preparation
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Installation certificate completed</li>
                   <li>• Test results recorded and verified</li>
@@ -346,7 +380,9 @@ const EVChargingModule6Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Walkthrough Best Practice</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Walkthrough Best Practice
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Allow customer to perform operations under supervision</li>
                 <li>Use simple, non-technical language where possible</li>
@@ -358,10 +394,18 @@ const EVChargingModule6Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Rushed walkthrough:</strong> — customer won't retain information</li>
-                <li><strong>Technical jargon:</strong> — confuses rather than educates</li>
-                <li><strong>No written backup:</strong> — customer forgets verbal instructions</li>
-                <li><strong>Skipping RCD demo:</strong> — monthly testing won't happen</li>
+                <li>
+                  <strong>Rushed walkthrough:</strong> — customer won't retain information
+                </li>
+                <li>
+                  <strong>Technical jargon:</strong> — confuses rather than educates
+                </li>
+                <li>
+                  <strong>No written backup:</strong> — customer forgets verbal instructions
+                </li>
+                <li>
+                  <strong>Skipping RCD demo:</strong> — monthly testing won't happen
+                </li>
               </ul>
             </div>
           </div>
@@ -406,10 +450,7 @@ const EVChargingModule6Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

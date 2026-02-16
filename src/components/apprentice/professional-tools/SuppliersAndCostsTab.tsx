@@ -1,160 +1,170 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Store, MapPin, CreditCard, Truck, Phone, Globe, Info, AlertTriangle, CheckCircle, Percent } from "lucide-react";
-import BudgetPlanningCalculator from "@/components/apprentice/tools-guide/BudgetPlanningCalculator";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Store,
+  MapPin,
+  CreditCard,
+  Truck,
+  Phone,
+  Globe,
+  Info,
+  AlertTriangle,
+  CheckCircle,
+  Percent,
+} from 'lucide-react';
+import BudgetPlanningCalculator from '@/components/apprentice/tools-guide/BudgetPlanningCalculator';
 
 const SuppliersAndCostsTab = () => {
   const ukSuppliers = [
     {
-      name: "CEF (City Electrical Factors)",
-      type: "National Chain",
-      speciality: "Comprehensive electrical supplies",
-      pros: ["Nationwide coverage", "Trade accounts available", "Good apprentice support"],
-      cons: ["Can be pricey", "Limited tool selection"],
-      apprenticeSupport: "10% apprentice discount with valid ID",
-      locations: "200+ branches across UK",
-      website: "cef.co.uk",
-      bestFor: "Electrical components and basic tools"
+      name: 'CEF (City Electrical Factors)',
+      type: 'National Chain',
+      speciality: 'Comprehensive electrical supplies',
+      pros: ['Nationwide coverage', 'Trade accounts available', 'Good apprentice support'],
+      cons: ['Can be pricey', 'Limited tool selection'],
+      apprenticeSupport: '10% apprentice discount with valid ID',
+      locations: '200+ branches across UK',
+      website: 'cef.co.uk',
+      bestFor: 'Electrical components and basic tools',
     },
     {
-      name: "Screwfix",
-      type: "Retail Chain",
-      speciality: "Tools and hardware",
-      pros: ["Competitive prices", "Click & collect", "Good return policy"],
-      cons: ["Limited electrical expertise", "Quality varies"],
-      apprenticeSupport: "Student discount available",
-      locations: "800+ stores nationwide",
-      website: "screwfix.com",
-      bestFor: "General tools and consumables"
+      name: 'Screwfix',
+      type: 'Retail Chain',
+      speciality: 'Tools and hardware',
+      pros: ['Competitive prices', 'Click & collect', 'Good return policy'],
+      cons: ['Limited electrical expertise', 'Quality varies'],
+      apprenticeSupport: 'Student discount available',
+      locations: '800+ stores nationwide',
+      website: 'screwfix.com',
+      bestFor: 'General tools and consumables',
     },
     {
-      name: "TLC Electrical",
-      type: "Online/Trade",
-      speciality: "Professional electrical supplies",
-      pros: ["Professional focus", "Technical support", "Competitive pricing"],
-      cons: ["Mainly online", "Minimum orders"],
-      apprenticeSupport: "Education pricing available",
-      locations: "Online + regional depots",
-      website: "tlc-direct.co.uk",
-      bestFor: "Professional test equipment"
+      name: 'TLC Electrical',
+      type: 'Online/Trade',
+      speciality: 'Professional electrical supplies',
+      pros: ['Professional focus', 'Technical support', 'Competitive pricing'],
+      cons: ['Mainly online', 'Minimum orders'],
+      apprenticeSupport: 'Education pricing available',
+      locations: 'Online + regional depots',
+      website: 'tlc-direct.co.uk',
+      bestFor: 'Professional test equipment',
     },
     {
-      name: "RS Components",
-      type: "Industrial Supplier",
-      speciality: "Technical products",
-      pros: ["High quality", "Technical data", "Next day delivery"],
-      cons: ["Higher prices", "Complex ordering"],
-      apprenticeSupport: "Educational discounts available",
-      locations: "Online + trade counters",
-      website: "rs-online.com",
-      bestFor: "Precision instruments and components"
-    }
+      name: 'RS Components',
+      type: 'Industrial Supplier',
+      speciality: 'Technical products',
+      pros: ['High quality', 'Technical data', 'Next day delivery'],
+      cons: ['Higher prices', 'Complex ordering'],
+      apprenticeSupport: 'Educational discounts available',
+      locations: 'Online + trade counters',
+      website: 'rs-online.com',
+      bestFor: 'Precision instruments and components',
+    },
   ];
 
   const budgetingStrategies = [
     {
-      strategy: "Spread Purchase Plan",
-      description: "Distribute tool purchases over 12-18 months",
-      monthlyBudget: "£100-200",
-      benefits: ["Manageable payments", "Learn tool preferences", "Avoid debt"],
+      strategy: 'Spread Purchase Plan',
+      description: 'Distribute tool purchases over 12-18 months',
+      monthlyBudget: '£100-200',
+      benefits: ['Manageable payments', 'Learn tool preferences', 'Avoid debt'],
       timeline: [
-        "Month 1-3: Safety gear and basic hand tools",
-        "Month 4-6: Power tools and storage",
-        "Month 7-12: Test equipment and specialists",
-        "Month 13+: Upgrades and additional tools"
-      ]
+        'Month 1-3: Safety gear and basic hand tools',
+        'Month 4-6: Power tools and storage',
+        'Month 7-12: Test equipment and specialists',
+        'Month 13+: Upgrades and additional tools',
+      ],
     },
     {
-      strategy: "Priority-Based Purchasing",
-      description: "Buy essential tools first, then upgrade",
-      monthlyBudget: "£150-300",
-      benefits: ["Immediate functionality", "Shorter setup time", "Professional appearance"],
+      strategy: 'Priority-Based Purchasing',
+      description: 'Buy essential tools first, then upgrade',
+      monthlyBudget: '£150-300',
+      benefits: ['Immediate functionality', 'Shorter setup time', 'Professional appearance'],
       timeline: [
-        "Week 1: PPE and basic safety",
-        "Month 1: Essential hand tools",
-        "Month 2-3: Basic power tools",
-        "Month 4-6: Test equipment"
-      ]
+        'Week 1: PPE and basic safety',
+        'Month 1: Essential hand tools',
+        'Month 2-3: Basic power tools',
+        'Month 4-6: Test equipment',
+      ],
     },
     {
-      strategy: "Quality Investment Plan",
-      description: "Buy fewer, higher-quality tools",
-      monthlyBudget: "£200-400",
-      benefits: ["Long-term value", "Better performance", "Professional image"],
+      strategy: 'Quality Investment Plan',
+      description: 'Buy fewer, higher-quality tools',
+      monthlyBudget: '£200-400',
+      benefits: ['Long-term value', 'Better performance', 'Professional image'],
       timeline: [
-        "Research extensively before purchasing",
-        "Buy one tool category at a time",
-        "Focus on lifetime value",
-        "Maintain and care properly"
-      ]
-    }
+        'Research extensively before purchasing',
+        'Buy one tool category at a time',
+        'Focus on lifetime value',
+        'Maintain and care properly',
+      ],
+    },
   ];
 
   const savingTips = [
     {
-      tip: "Timing Your Purchases",
-      description: "Take advantage of seasonal sales and promotions",
-      savings: "10-30%",
+      tip: 'Timing Your Purchases',
+      description: 'Take advantage of seasonal sales and promotions',
+      savings: '10-30%',
       details: [
-        "Black Friday and January sales",
-        "End of financial year clearances",
-        "Tool brand promotional periods",
-        "Trade show discounts"
-      ]
+        'Black Friday and January sales',
+        'End of financial year clearances',
+        'Tool brand promotional periods',
+        'Trade show discounts',
+      ],
     },
     {
-      tip: "Group Buying with Peers",
-      description: "Coordinate purchases with other apprentices",
-      savings: "5-15%",
+      tip: 'Group Buying with Peers',
+      description: 'Coordinate purchases with other apprentices',
+      savings: '5-15%',
       details: [
-        "Bulk purchase discounts",
-        "Shared delivery costs",
-        "Group negotiation power",
-        "Split specialised tools"
-      ]
+        'Bulk purchase discounts',
+        'Shared delivery costs',
+        'Group negotiation power',
+        'Split specialised tools',
+      ],
     },
     {
-      tip: "Second-Hand Quality Tools",
-      description: "Buy premium brands at reduced prices",
-      savings: "30-50%",
+      tip: 'Second-Hand Quality Tools',
+      description: 'Buy premium brands at reduced prices',
+      savings: '30-50%',
       details: [
-        "Check eBay and Facebook Marketplace",
-        "Verify tool condition thoroughly",
-        "Ensure safety certifications valid",
-        "Test before purchasing when possible"
-      ]
-    }
+        'Check eBay and Facebook Marketplace',
+        'Verify tool condition thoroughly',
+        'Ensure safety certifications valid',
+        'Test before purchasing when possible',
+      ],
+    },
   ];
 
   const financingOptions = [
     {
-      option: "Apprentice Loans",
-      rate: "0-3% APR",
-      amount: "£500-3000",
-      term: "12-36 months",
-      eligibility: "Enrolled apprentices with regular income",
-      pros: ["Low interest", "Flexible terms", "Build credit history"],
-      cons: ["Debt commitment", "Income requirements"]
+      option: 'Apprentice Loans',
+      rate: '0-3% APR',
+      amount: '£500-3000',
+      term: '12-36 months',
+      eligibility: 'Enrolled apprentices with regular income',
+      pros: ['Low interest', 'Flexible terms', 'Build credit history'],
+      cons: ['Debt commitment', 'Income requirements'],
     },
     {
-      option: "0% Credit Cards",
-      rate: "0% for 6-24 months",
-      amount: "£500-5000",
-      term: "Promotional period",
-      eligibility: "Good credit score required",
-      pros: ["No interest if paid on time", "Purchase protection"],
-      cons: ["High APR after promotion", "Credit requirements"]
+      option: '0% Credit Cards',
+      rate: '0% for 6-24 months',
+      amount: '£500-5000',
+      term: 'Promotional period',
+      eligibility: 'Good credit score required',
+      pros: ['No interest if paid on time', 'Purchase protection'],
+      cons: ['High APR after promotion', 'Credit requirements'],
     },
     {
-      option: "Employer Schemes",
-      rate: "Varies",
-      amount: "£1000-5000",
-      term: "12-60 months",
-      eligibility: "Company-dependent",
-      pros: ["Employer guaranteed", "Payroll deduction"],
-      cons: ["Limited to company suppliers", "Employment dependent"]
-    }
+      option: 'Employer Schemes',
+      rate: 'Varies',
+      amount: '£1000-5000',
+      term: '12-60 months',
+      eligibility: 'Company-dependent',
+      pros: ['Employer guaranteed', 'Payroll deduction'],
+      cons: ['Limited to company suppliers', 'Employment dependent'],
+    },
   ];
 
   return (
@@ -168,7 +178,8 @@ const SuppliersAndCostsTab = () => {
           <div>
             <p className="font-medium text-blue-400 mb-1">Smart Purchasing Guide</p>
             <p className="text-sm text-white/70">
-              Smart supplier selection and budgeting can save you hundreds of pounds on your professional toolkit while ensuring you get quality tools.
+              Smart supplier selection and budgeting can save you hundreds of pounds on your
+              professional toolkit while ensuring you get quality tools.
             </p>
           </div>
         </div>
@@ -191,13 +202,19 @@ const SuppliersAndCostsTab = () => {
         <CardContent className="relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {ukSuppliers.map((supplier, index) => (
-              <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10 hover:border-elec-yellow/30 transition-all space-y-3">
+              <div
+                key={index}
+                className="p-4 rounded-xl bg-white/10 border border-white/10 hover:border-elec-yellow/30 transition-all space-y-3"
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-semibold text-white">{supplier.name}</h3>
                     <p className="text-sm text-white/60">{supplier.speciality}</p>
                   </div>
-                  <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow">
+                  <Badge
+                    variant="outline"
+                    className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+                  >
                     {supplier.type}
                   </Badge>
                 </div>
@@ -248,10 +265,16 @@ const SuppliersAndCostsTab = () => {
         <CardContent className="relative">
           <div className="space-y-4">
             {budgetingStrategies.map((strategy, index) => (
-              <div key={index} className="p-5 rounded-xl bg-green-500/5 border border-green-500/20 hover:border-green-500/40 transition-all">
+              <div
+                key={index}
+                className="p-5 rounded-xl bg-green-500/5 border border-green-500/20 hover:border-green-500/40 transition-all"
+              >
                 <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
                   <h3 className="font-semibold text-white">{strategy.strategy}</h3>
-                  <Badge variant="outline" className="bg-green-500/10 border-green-500/30 text-green-400">
+                  <Badge
+                    variant="outline"
+                    className="bg-green-500/10 border-green-500/30 text-green-400"
+                  >
                     {strategy.monthlyBudget}/month
                   </Badge>
                 </div>
@@ -304,10 +327,16 @@ const SuppliersAndCostsTab = () => {
         <CardContent className="relative">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {savingTips.map((tip, index) => (
-              <div key={index} className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/20 hover:border-orange-500/40 transition-all">
+              <div
+                key={index}
+                className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/20 hover:border-orange-500/40 transition-all"
+              >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-white text-sm">{tip.tip}</h3>
-                  <Badge variant="outline" className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-xs">
+                  <Badge
+                    variant="outline"
+                    className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-xs"
+                  >
                     Save {tip.savings}
                   </Badge>
                 </div>
@@ -343,10 +372,16 @@ const SuppliersAndCostsTab = () => {
         <CardContent className="relative">
           <div className="space-y-4">
             {financingOptions.map((option, index) => (
-              <div key={index} className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 hover:border-purple-500/40 transition-all">
+              <div
+                key={index}
+                className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 hover:border-purple-500/40 transition-all"
+              >
                 <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
                   <h3 className="font-semibold text-white">{option.option}</h3>
-                  <Badge variant="outline" className="bg-purple-500/10 border-purple-500/30 text-purple-400">
+                  <Badge
+                    variant="outline"
+                    className="bg-purple-500/10 border-purple-500/30 text-purple-400"
+                  >
                     {option.rate}
                   </Badge>
                 </div>
@@ -405,7 +440,9 @@ const SuppliersAndCostsTab = () => {
           <div>
             <p className="font-medium text-red-400 mb-1">Financial Warning</p>
             <p className="text-sm text-white/70">
-              Only borrow what you can afford to repay. Tool purchases are an investment, but debt can impact your financial future. Consider starting with essential items and upgrading gradually.
+              Only borrow what you can afford to repay. Tool purchases are an investment, but debt
+              can impact your financial future. Consider starting with essential items and upgrading
+              gradually.
             </p>
           </div>
         </div>

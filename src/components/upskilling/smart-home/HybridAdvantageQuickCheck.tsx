@@ -9,9 +9,9 @@ export const HybridAdvantageQuickCheck = () => {
 
   const options = [
     { text: "They're the cheapest option", correct: false },
-    { text: "They combine wired reliability with wireless flexibility", correct: true },
-    { text: "They work without electricity", correct: false },
-    { text: "They only need one bulb per room", correct: false }
+    { text: 'They combine wired reliability with wireless flexibility', correct: true },
+    { text: 'They work without electricity', correct: false },
+    { text: 'They only need one bulb per room', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +32,10 @@ export const HybridAdvantageQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q4: Give one advantage of hybrid lighting systems.</p>
-        
+        <p className="text-foreground font-medium">
+          Q4: Give one advantage of hybrid lighting systems.
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +60,9 @@ export const HybridAdvantageQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +72,9 @@ export const HybridAdvantageQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Hybrid systems offer the best of both worlds - wired infrastructure for reliable core lighting and wireless components for easy expansion and sensor placement.
+              <strong>Correct:</strong> Hybrid systems offer the best of both worlds - wired
+              infrastructure for reliable core lighting and wireless components for easy expansion
+              and sensor placement.
             </p>
           </div>
         )}

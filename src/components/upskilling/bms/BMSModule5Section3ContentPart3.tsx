@@ -12,11 +12,11 @@ export const BMSModule5Section3ContentPart3 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Modbus TCP/IP encapsulates Modbus data within standard Ethernet frames, allowing it to run over 
-          IP networks. This provides significant advantages in speed, scalability, and integration with 
-          existing IT infrastructure.
+          Modbus TCP/IP encapsulates Modbus data within standard Ethernet frames, allowing it to run
+          over IP networks. This provides significant advantages in speed, scalability, and
+          integration with existing IT infrastructure.
         </p>
-        
+
         <div className="space-y-3">
           <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2 mb-2">
@@ -53,7 +53,9 @@ export const BMSModule5Section3ContentPart3 = () => {
               <p className="text-foreground">• Requires coordination with IT departments</p>
               <p className="text-foreground">• IP address management and VLAN setup</p>
               <p className="text-foreground">• Network security and firewall configuration</p>
-              <p className="text-foreground">• Potential conflicts with corporate network policies</p>
+              <p className="text-foreground">
+                • Potential conflicts with corporate network policies
+              </p>
             </div>
           </div>
         </div>
@@ -61,8 +63,8 @@ export const BMSModule5Section3ContentPart3 = () => {
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Practical Example</h4>
           <p className="text-foreground text-sm">
-            A modern chiller communicates over Modbus TCP/IP, providing detailed operating data 
-            (temperatures, pressures, alarms, energy consumption) directly to the BMS without the 
+            A modern chiller communicates over Modbus TCP/IP, providing detailed operating data
+            (temperatures, pressures, alarms, energy consumption) directly to the BMS without the
             speed and distance limitations of RS-485 serial communication.
           </p>
         </div>
@@ -91,10 +93,14 @@ export const BMSModule5Section3ContentPart3 = () => {
           <h4 className="text-foreground font-semibold mb-2">Security Considerations for TCP/IP</h4>
           <div className="space-y-2 text-sm">
             <p className="text-foreground">• Modbus TCP has no built-in security features</p>
-            <p className="text-foreground">• Use VLANs to segregate BMS traffic from corporate networks</p>
+            <p className="text-foreground">
+              • Use VLANs to segregate BMS traffic from corporate networks
+            </p>
             <p className="text-foreground">• Consider VPN connections for remote access</p>
             <p className="text-foreground">• Implement firewall rules to restrict access</p>
-            <p className="text-foreground">• Monitor network traffic for unauthorised access attempts</p>
+            <p className="text-foreground">
+              • Monitor network traffic for unauthorised access attempts
+            </p>
           </div>
         </div>
       </CardContent>

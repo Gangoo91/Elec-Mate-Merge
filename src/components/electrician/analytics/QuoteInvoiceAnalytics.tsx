@@ -15,11 +15,32 @@ import {
   RefreshCw,
   Wallet,
   Timer,
-  FileText
+  FileText,
 } from 'lucide-react';
-import { differenceInDays, subDays, isAfter, format, startOfMonth, endOfMonth, eachDayOfInterval, eachMonthOfInterval, subMonths, formatDistanceToNow } from 'date-fns';
+import {
+  differenceInDays,
+  subDays,
+  isAfter,
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  eachMonthOfInterval,
+  subMonths,
+  formatDistanceToNow,
+} from 'date-fns';
 import { cn } from '@/lib/utils';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, Line, ComposedChart, Bar } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Line,
+  ComposedChart,
+  Bar,
+} from 'recharts';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface QuoteInvoiceAnalyticsProps {
@@ -73,54 +94,59 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
   // Filter data by date range
   const getDateThreshold = (range: DateRange) => {
     switch (range) {
-      case '7d': return subDays(new Date(), 7);
-      case '30d': return subDays(new Date(), 30);
-      case '90d': return subDays(new Date(), 90);
-      case '12m': return subMonths(new Date(), 12);
+      case '7d':
+        return subDays(new Date(), 7);
+      case '30d':
+        return subDays(new Date(), 30);
+      case '90d':
+        return subDays(new Date(), 90);
+      case '12m':
+        return subMonths(new Date(), 12);
     }
   };
 
   const filteredQuotes = useMemo(() => {
     const threshold = getDateThreshold(dateRange);
-    return quotes.filter(q => isAfter(new Date(q.createdAt), threshold));
+    return quotes.filter((q) => isAfter(new Date(q.createdAt), threshold));
   }, [quotes, dateRange]);
 
   const filteredInvoices = useMemo(() => {
     const threshold = getDateThreshold(dateRange);
-    return invoices.filter(i => i.invoice_date && isAfter(new Date(i.invoice_date), threshold));
+    return invoices.filter((i) => i.invoice_date && isAfter(new Date(i.invoice_date), threshold));
   }, [invoices, dateRange]);
 
   // Calculate metrics
   const metrics = useMemo(() => {
-    const sentQuotes = filteredQuotes.filter(q => q.status === 'sent' || q.acceptance_status);
-    const acceptedQuotes = filteredQuotes.filter(q => q.acceptance_status === 'accepted');
-    const rejectedQuotes = filteredQuotes.filter(q => q.acceptance_status === 'rejected');
-    const draftQuotes = filteredQuotes.filter(q => q.status === 'draft');
+    const sentQuotes = filteredQuotes.filter((q) => q.status === 'sent' || q.acceptance_status);
+    const acceptedQuotes = filteredQuotes.filter((q) => q.acceptance_status === 'accepted');
+    const rejectedQuotes = filteredQuotes.filter((q) => q.acceptance_status === 'rejected');
+    const draftQuotes = filteredQuotes.filter((q) => q.status === 'draft');
 
-    const paidInvoices = filteredInvoices.filter(i => i.invoice_status === 'paid');
-    const unpaidInvoices = filteredInvoices.filter(i => i.invoice_status !== 'paid');
-    const overdueInvoices = filteredInvoices.filter(i =>
-      i.invoice_status !== 'paid' &&
-      i.invoice_due_date &&
-      isAfter(new Date(), new Date(i.invoice_due_date))
+    const paidInvoices = filteredInvoices.filter((i) => i.invoice_status === 'paid');
+    const unpaidInvoices = filteredInvoices.filter((i) => i.invoice_status !== 'paid');
+    const overdueInvoices = filteredInvoices.filter(
+      (i) =>
+        i.invoice_status !== 'paid' &&
+        i.invoice_due_date &&
+        isAfter(new Date(), new Date(i.invoice_due_date))
     );
 
     // Win rate
-    const winRate = sentQuotes.length > 0
-      ? Math.round((acceptedQuotes.length / sentQuotes.length) * 100)
-      : 0;
+    const winRate =
+      sentQuotes.length > 0 ? Math.round((acceptedQuotes.length / sentQuotes.length) * 100) : 0;
 
     // Average quote value
-    const avgQuoteValue = filteredQuotes.length > 0
-      ? filteredQuotes.reduce((sum, q) => sum + q.total, 0) / filteredQuotes.length
-      : 0;
+    const avgQuoteValue =
+      filteredQuotes.length > 0
+        ? filteredQuotes.reduce((sum, q) => sum + q.total, 0) / filteredQuotes.length
+        : 0;
 
     // Total revenue (paid invoices)
     const totalRevenue = paidInvoices.reduce((sum, i) => sum + i.total, 0);
 
     // Pipeline value (accepted quotes that haven't been invoiced yet OR unpaid invoices)
     const pipelineFromQuotes = acceptedQuotes
-      .filter(q => !q.invoice_raised)
+      .filter((q) => !q.invoice_raised)
       .reduce((sum, q) => sum + q.total, 0);
     const pipelineValue = pipelineFromQuotes;
 
@@ -128,21 +154,22 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
     const outstandingAmount = unpaidInvoices.reduce((sum, i) => sum + i.total, 0);
 
     // Average days to payment
-    const paidWithDates = paidInvoices.filter(i => i.invoice_date && i.invoice_paid_at);
-    const avgDaysToPayment = paidWithDates.length > 0
-      ? Math.round(
-          paidWithDates.reduce((sum, i) => {
-            const days = differenceInDays(
-              new Date(i.invoice_paid_at!),
-              new Date(i.invoice_date!)
-            );
-            return sum + days;
-          }, 0) / paidWithDates.length
-        )
-      : 0;
+    const paidWithDates = paidInvoices.filter((i) => i.invoice_date && i.invoice_paid_at);
+    const avgDaysToPayment =
+      paidWithDates.length > 0
+        ? Math.round(
+            paidWithDates.reduce((sum, i) => {
+              const days = differenceInDays(
+                new Date(i.invoice_paid_at!),
+                new Date(i.invoice_date!)
+              );
+              return sum + days;
+            }, 0) / paidWithDates.length
+          )
+        : 0;
 
     // Pipeline values for funnel
-    const invoicedQuotes = filteredQuotes.filter(q => q.invoice_number);
+    const invoicedQuotes = filteredQuotes.filter((q) => q.invoice_number);
 
     return {
       winRate,
@@ -162,10 +189,13 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
       },
       values: {
         drafts: draftQuotes.reduce((s, q) => s + q.total, 0),
-        sent: (sentQuotes.length - acceptedQuotes.length - rejectedQuotes.length) > 0
-          ? filteredQuotes.filter(q => q.status === 'sent' && !q.acceptance_status).reduce((s, q) => s + q.total, 0)
-          : 0,
-        accepted: acceptedQuotes.filter(q => !q.invoice_number).reduce((s, q) => s + q.total, 0),
+        sent:
+          sentQuotes.length - acceptedQuotes.length - rejectedQuotes.length > 0
+            ? filteredQuotes
+                .filter((q) => q.status === 'sent' && !q.acceptance_status)
+                .reduce((s, q) => s + q.total, 0)
+            : 0,
+        accepted: acceptedQuotes.filter((q) => !q.invoice_number).reduce((s, q) => s + q.total, 0),
         invoiced: invoicedQuotes.reduce((s, q) => s + q.total, 0),
         paid: totalRevenue,
       },
@@ -181,17 +211,17 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
     if (dateRange === '12m') {
       // Monthly data for 12 months
       const months = eachMonthOfInterval({ start: threshold, end: now });
-      return months.map(month => {
+      return months.map((month) => {
         const monthStart = startOfMonth(month);
         const monthEnd = endOfMonth(month);
 
-        const monthInvoices = invoices.filter(i => {
+        const monthInvoices = invoices.filter((i) => {
           if (!i.invoice_paid_at) return false;
           const paidDate = new Date(i.invoice_paid_at);
           return paidDate >= monthStart && paidDate <= monthEnd;
         });
 
-        const monthQuotes = quotes.filter(q => {
+        const monthQuotes = quotes.filter((q) => {
           const created = new Date(q.createdAt);
           return created >= monthStart && created <= monthEnd;
         });
@@ -205,16 +235,16 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
     } else {
       // Daily data
       const days = eachDayOfInterval({ start: threshold, end: now });
-      return days.map(day => {
+      return days.map((day) => {
         const dayStr = format(day, 'yyyy-MM-dd');
 
-        const dayInvoices = invoices.filter(i => {
+        const dayInvoices = invoices.filter((i) => {
           if (!i.invoice_paid_at) return false;
           return format(new Date(i.invoice_paid_at), 'yyyy-MM-dd') === dayStr;
         });
 
-        const dayQuotes = quotes.filter(q =>
-          format(new Date(q.createdAt), 'yyyy-MM-dd') === dayStr
+        const dayQuotes = quotes.filter(
+          (q) => format(new Date(q.createdAt), 'yyyy-MM-dd') === dayStr
         );
 
         return {
@@ -228,11 +258,11 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
 
   // Check if chart has any revenue data
   const hasRevenueData = useMemo(() => {
-    return chartData.some(d => d.revenue > 0);
+    return chartData.some((d) => d.revenue > 0);
   }, [chartData]);
 
   const hasQuoteData = useMemo(() => {
-    return chartData.some(d => d.quotes > 0);
+    return chartData.some((d) => d.quotes > 0);
   }, [chartData]);
 
   const dateRangeOptions: { value: DateRange; label: string }[] = [
@@ -275,15 +305,15 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
         {/* Date Range Selector + Refresh */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex gap-1 overflow-x-auto scrollbar-hide">
-            {dateRangeOptions.map(option => (
+            {dateRangeOptions.map((option) => (
               <button
                 key={option.value}
                 onClick={() => setDateRange(option.value)}
                 className={cn(
-                  "px-3 sm:px-4 py-2 sm:py-2.5 h-10 sm:h-11 rounded-xl text-[13px] font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.98]",
+                  'px-3 sm:px-4 py-2 sm:py-2.5 h-10 sm:h-11 rounded-xl text-[13px] font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.98]',
                   dateRange === option.value
-                    ? "bg-elec-yellow text-black font-semibold"
-                    : "bg-white/[0.05] text-white border border-white/[0.06]"
+                    ? 'bg-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.05] text-white border border-white/[0.06]'
                 )}
               >
                 {option.label}
@@ -299,20 +329,18 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
                 onClick={handleRefresh}
                 disabled={isLoading}
                 className={cn(
-                  "p-2 rounded-lg bg-white/[0.05] border border-white/[0.06] touch-manipulation active:scale-[0.95] transition-all",
-                  isLoading && "opacity-50"
+                  'p-2 rounded-lg bg-white/[0.05] border border-white/[0.06] touch-manipulation active:scale-[0.95] transition-all',
+                  isLoading && 'opacity-50'
                 )}
               >
-                <RefreshCw className={cn("h-4 w-4", isLoading && "animate-spin")} />
+                <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
               </button>
             )}
           </div>
         </div>
 
         {/* Mobile: Show last updated below date range */}
-        <p className="text-[11px] text-white/40 sm:hidden -mt-2">
-          Updated {relativeUpdateTime}
-        </p>
+        <p className="text-[11px] text-white/40 sm:hidden -mt-2">Updated {relativeUpdateTime}</p>
 
         {/* Metric Cards Grid - 6 cards in 3x2 on mobile, 2x3 on desktop */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
@@ -338,7 +366,11 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             value={formatCurrency(metrics.pipelineValue)}
             icon={<FileText className="h-5 w-5" />}
             color="purple"
-            trend={metrics.pipelineValue > 0 ? { value: `${metrics.counts.accepted} jobs`, isPositive: true } : undefined}
+            trend={
+              metrics.pipelineValue > 0
+                ? { value: `${metrics.counts.accepted} jobs`, isPositive: true }
+                : undefined
+            }
             isUpdating={isUpdating}
             compact
           />
@@ -347,7 +379,11 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             value={formatCurrency(metrics.totalRevenue)}
             icon={<PoundSterling className="h-5 w-5" />}
             color="green"
-            trend={metrics.counts.paid > 0 ? { value: `${metrics.counts.paid} paid`, isPositive: true } : undefined}
+            trend={
+              metrics.counts.paid > 0
+                ? { value: `${metrics.counts.paid} paid`, isPositive: true }
+                : undefined
+            }
             isUpdating={isUpdating}
             compact
           />
@@ -356,7 +392,11 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             value={formatCurrency(metrics.outstandingAmount)}
             icon={<Wallet className="h-5 w-5" />}
             color={metrics.overdueCount > 0 ? 'red' : 'amber'}
-            trend={metrics.overdueCount > 0 ? { value: `${metrics.overdueCount} overdue`, isPositive: false } : undefined}
+            trend={
+              metrics.overdueCount > 0
+                ? { value: `${metrics.overdueCount} overdue`, isPositive: false }
+                : undefined
+            }
             isUpdating={isUpdating}
             compact
           />
@@ -364,7 +404,13 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             label="Days to Pay"
             value={metrics.avgDaysToPayment > 0 ? `${metrics.avgDaysToPayment}d` : '—'}
             icon={<Timer className="h-5 w-5" />}
-            color={metrics.avgDaysToPayment <= 14 ? 'emerald' : metrics.avgDaysToPayment <= 30 ? 'amber' : 'red'}
+            color={
+              metrics.avgDaysToPayment <= 14
+                ? 'emerald'
+                : metrics.avgDaysToPayment <= 30
+                  ? 'amber'
+                  : 'red'
+            }
             isUpdating={isUpdating}
             compact
           />
@@ -393,7 +439,10 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             ) : (
               <div className="h-40 sm:h-48">
                 <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                  <ComposedChart
+                    data={chartData}
+                    margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+                  >
                     <defs>
                       <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3} />
@@ -412,7 +461,9 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
                       tick={{ fill: '#888', fontSize: 10 }}
                       axisLine={{ stroke: '#333' }}
                       tickLine={false}
-                      tickFormatter={(value) => value >= 1000 ? `£${(value / 1000).toFixed(0)}k` : `£${value}`}
+                      tickFormatter={(value) =>
+                        value >= 1000 ? `£${(value / 1000).toFixed(0)}k` : `£${value}`
+                      }
                     />
                     <YAxis
                       yAxisId="quotes"

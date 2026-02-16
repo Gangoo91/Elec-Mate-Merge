@@ -1,10 +1,15 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Calculator, Target } from 'lucide-react';
 import { ZsTestResult } from './types';
 import { getMcbZsLimit, getFuseZsLimit, type FuseType } from '@/data/zsLimits';
@@ -28,7 +33,7 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
     { value: 'fuse-5', label: '5A Fuse' },
     { value: 'fuse-13', label: '13A Fuse' },
     { value: 'fuse-20', label: '20A Fuse' },
-    { value: 'fuse-32', label: '32A Fuse' }
+    { value: 'fuse-32', label: '32A Fuse' },
   ];
 
   const getMaxZs = (device: string) => {
@@ -42,7 +47,7 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
       const curveMap: Record<string, 'typeB' | 'typeC' | 'typeD'> = {
         b: 'typeB',
         c: 'typeC',
-        d: 'typeD'
+        d: 'typeD',
       };
       const curve = curveMap[curveLetter ?? ''];
       if (!curve) return '';
@@ -67,19 +72,27 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
     return '';
   };
 
-  const calculateTemperatureCorrection = (zs: number, testTemp: number, maxTemp: number = 70): number => {
+  const calculateTemperatureCorrection = (
+    zs: number,
+    testTemp: number,
+    maxTemp: number = 70
+  ): number => {
     const factor = (230 + maxTemp) / (230 + testTemp);
     return zs * factor;
   };
 
   const updateCurrentTest = (field: string, value: string) => {
-    let updatedTest = {...currentTest, [field]: value};
-    
+    let updatedTest = { ...currentTest, [field]: value };
+
     if (field === 'protectiveDevice') {
       updatedTest.zsMaxPermitted = getMaxZs(value);
     }
-    
-    if ((field === 'zsReading' || field === 'temperature') && updatedTest.zsReading && updatedTest.temperature) {
+
+    if (
+      (field === 'zsReading' || field === 'temperature') &&
+      updatedTest.zsReading &&
+      updatedTest.temperature
+    ) {
       const zsReading = parseFloat(updatedTest.zsReading);
       const testTemp = parseFloat(updatedTest.temperature);
       if (!isNaN(zsReading) && !isNaN(testTemp)) {
@@ -87,7 +100,7 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
         updatedTest.correctedZs = corrected.toFixed(2);
       }
     }
-    
+
     onUpdateTest(field, updatedTest[field as keyof ZsTestResult] as string);
   };
 
@@ -115,7 +128,10 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
           </div>
           <div className="space-y-2">
             <Label htmlFor="protectiveDevice">Protective Device</Label>
-            <Select value={currentTest.protectiveDevice} onValueChange={(value) => updateCurrentTest('protectiveDevice', value)}>
+            <Select
+              value={currentTest.protectiveDevice}
+              onValueChange={(value) => updateCurrentTest('protectiveDevice', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select protective device" />
               </SelectTrigger>
@@ -171,10 +187,12 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
           </div>
         </div>
 
-        <Button 
+        <Button
           onClick={onAddTest}
           className="w-full bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
-          disabled={!currentTest.circuitRef || !currentTest.zsReading || !currentTest.protectiveDevice}
+          disabled={
+            !currentTest.circuitRef || !currentTest.zsReading || !currentTest.protectiveDevice
+          }
         >
           <Calculator className="h-4 w-4 mr-2" />
           Add Zs Test Result

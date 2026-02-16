@@ -1,5 +1,11 @@
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -28,8 +34,8 @@ export const StickyFilterBar = ({
   return (
     <div
       className={cn(
-        "bg-gradient-to-br from-neutral-900 to-neutral-800 border-b border-border transition-all duration-200",
-        isMobile && "sticky top-0 z-40 shadow-lg"
+        'bg-gradient-to-br from-neutral-900 to-neutral-800 border-b border-border transition-all duration-200',
+        isMobile && 'sticky top-0 z-40 shadow-lg'
       )}
     >
       <div className="p-4 sm:p-4 space-y-3">
@@ -41,8 +47,8 @@ export const StickyFilterBar = ({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className={cn(
-              "pl-10 bg-card border-border text-foreground placeholder:text-neutral-500",
-              isMobile && "min-h-[48px] text-base"
+              'pl-10 bg-card border-border text-foreground placeholder:text-neutral-500',
+              isMobile && 'min-h-[48px] text-base'
             )}
             aria-label="Search certificates"
           />
@@ -50,7 +56,12 @@ export const StickyFilterBar = ({
 
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <Select value={timeRange} onValueChange={onTimeRangeChange}>
-            <SelectTrigger className={cn("flex-1 bg-card border-border text-foreground", isMobile && "min-h-[48px] text-base")}>
+            <SelectTrigger
+              className={cn(
+                'flex-1 bg-card border-border text-foreground',
+                isMobile && 'min-h-[48px] text-base'
+              )}
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -63,7 +74,12 @@ export const StickyFilterBar = ({
           </Select>
 
           <Select value={statusFilter} onValueChange={onStatusFilterChange}>
-            <SelectTrigger className={cn("flex-1 bg-card border-border text-foreground", isMobile && "min-h-[48px] text-base")}>
+            <SelectTrigger
+              className={cn(
+                'flex-1 bg-card border-border text-foreground',
+                isMobile && 'min-h-[48px] text-base'
+              )}
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,9 +5,9 @@ import { Button } from '@/components/ui/button';
 const QuizCustomBuilder = () => {
   const focusAreas = [
     'Part 4 - Protection',
-    'Part 5 - Installation', 
+    'Part 5 - Installation',
     'Part 6 - Testing',
-    'Part 7 - Special Locations'
+    'Part 7 - Special Locations',
   ];
 
   return (
@@ -59,7 +58,10 @@ const QuizCustomBuilder = () => {
           <Button className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90">
             Create Custom Quiz
           </Button>
-          <Button variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black">
+          <Button
+            variant="outline"
+            className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
+          >
             Save Template
           </Button>
         </div>

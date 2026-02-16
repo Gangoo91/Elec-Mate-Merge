@@ -1,6 +1,13 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Wrench } from "lucide-react";
-import { motion } from "framer-motion";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Wrench } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface LabourPlanTableProps {
   tasks: any[];
@@ -26,7 +33,9 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
           </motion.div>
           <div>
             <h3 className="text-base sm:text-lg text-white font-bold">Labour Plan</h3>
-            <p className="text-xs sm:text-sm text-white/60">{tasks.length} tasks • {totalHours.toFixed(1)} hours</p>
+            <p className="text-xs sm:text-sm text-white/60">
+              {tasks.length} tasks • {totalHours.toFixed(1)} hours
+            </p>
           </div>
         </div>
       </div>
@@ -42,19 +51,27 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
               transition={{ delay: idx * 0.05 }}
               className="p-4 rounded-xl bg-black/30 border border-white/10"
             >
-              <div className="text-sm font-medium text-white mb-3 leading-snug">{task.description}</div>
+              <div className="text-sm font-medium text-white mb-3 leading-snug">
+                {task.description}
+              </div>
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="p-2.5 rounded-lg bg-white/5">
                   <div className="text-xs text-white/60 mb-1">Hours</div>
-                  <div className="font-mono text-xs font-medium text-white">{task.hours.toFixed(1)}h</div>
+                  <div className="font-mono text-xs font-medium text-white">
+                    {task.hours.toFixed(1)}h
+                  </div>
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5">
                   <div className="text-xs text-white/60 mb-1">Rate</div>
-                  <div className="font-mono text-xs font-medium text-white">£{task.rate?.toFixed(0)}/hr</div>
+                  <div className="font-mono text-xs font-medium text-white">
+                    £{task.rate?.toFixed(0)}/hr
+                  </div>
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5">
                   <div className="text-xs text-white/60 mb-1">Total</div>
-                  <div className="font-mono text-xs font-bold text-orange-400">£{task.total?.toFixed(0)}</div>
+                  <div className="font-mono text-xs font-bold text-orange-400">
+                    £{task.total?.toFixed(0)}
+                  </div>
                 </div>
               </div>
               {(task.electricianHours || task.apprenticeHours) && (
@@ -82,10 +99,18 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
           <Table>
             <TableHeader>
               <TableRow className="border-white/10">
-                <TableHead className="text-left text-white/70 font-semibold text-xs">Task</TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">Hours</TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">Rate</TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">Total</TableHead>
+                <TableHead className="text-left text-white/70 font-semibold text-xs">
+                  Task
+                </TableHead>
+                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                  Hours
+                </TableHead>
+                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                  Rate
+                </TableHead>
+                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                  Total
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -95,7 +120,8 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
                     {task.description}
                     {(task.electricianHours || task.apprenticeHours) && (
                       <div className="text-xs text-white/60 text-left">
-                        {task.electricianHours && `Electrician: ${task.electricianHours.toFixed(2)}h `}
+                        {task.electricianHours &&
+                          `Electrician: ${task.electricianHours.toFixed(2)}h `}
                         {task.apprenticeHours && `Apprentice: ${task.apprenticeHours.toFixed(2)}h`}
                       </div>
                     )}
@@ -113,9 +139,13 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
               ))}
               <TableRow className="bg-orange-500/10 font-bold border-t border-orange-500/30">
                 <TableCell className="text-white">Total Labour:</TableCell>
-                <TableCell className="text-right font-mono text-white">{totalHours.toFixed(1)}h</TableCell>
+                <TableCell className="text-right font-mono text-white">
+                  {totalHours.toFixed(1)}h
+                </TableCell>
                 <TableCell></TableCell>
-                <TableCell className="text-right font-mono text-orange-400 text-lg">£{totalCost.toFixed(2)}</TableCell>
+                <TableCell className="text-right font-mono text-orange-400 text-lg">
+                  £{totalCost.toFixed(2)}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>

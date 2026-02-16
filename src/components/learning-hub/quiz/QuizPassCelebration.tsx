@@ -8,10 +8,7 @@ interface QuizPassCelebrationProps {
   onContinue: () => void;
 }
 
-const QuizPassCelebration: React.FC<QuizPassCelebrationProps> = ({
-  score,
-  onContinue
-}) => {
+const QuizPassCelebration: React.FC<QuizPassCelebrationProps> = ({ score, onContinue }) => {
   const [displayScore, setDisplayScore] = useState(0);
   const [showButton, setShowButton] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -181,7 +178,10 @@ const QuizPassCelebration: React.FC<QuizPassCelebrationProps> = ({
           {(isPerfect || isOutstanding) && (
             <>
               <Sparkles className="absolute -top-2 -right-2 h-6 w-6 text-yellow-400 animate-pulse" />
-              <Star className="absolute -bottom-1 -left-2 h-5 w-5 text-yellow-400 animate-pulse" style={{ animationDelay: '0.3s' }} />
+              <Star
+                className="absolute -bottom-1 -left-2 h-5 w-5 text-yellow-400 animate-pulse"
+                style={{ animationDelay: '0.3s' }}
+              />
             </>
           )}
         </div>

@@ -1,24 +1,28 @@
-import { useState, useEffect } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Plus, 
-  Trash2, 
-  Package, 
-  Calculator,
-  Truck,
-  ShoppingCart
-} from "lucide-react";
-import { useCreateMaterialOrder, useNextOrderNumber, useSuppliers, usePriceBook } from "@/hooks/useFinance";
-import { useJobs } from "@/hooks/useJobs";
-import { useOptionalVoiceFormContext } from "@/contexts/VoiceFormContext";
+import { useState, useEffect } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Plus, Trash2, Package, Calculator, Truck, ShoppingCart } from 'lucide-react';
+import {
+  useCreateMaterialOrder,
+  useNextOrderNumber,
+  useSuppliers,
+  usePriceBook,
+} from '@/hooks/useFinance';
+import { useJobs } from '@/hooks/useJobs';
+import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 
 interface OrderItem {
   id: string;
@@ -34,12 +38,17 @@ interface CreateOrderDialogProps {
   prefillItem?: string;
 }
 
-export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefillItem }: CreateOrderDialogProps) {
-  const [supplierId, setSupplierId] = useState(prefillSupplier || "");
+export function CreateOrderDialog({
+  open,
+  onOpenChange,
+  prefillSupplier,
+  prefillItem,
+}: CreateOrderDialogProps) {
+  const [supplierId, setSupplierId] = useState(prefillSupplier || '');
   const [jobId, setJobId] = useState<string | null>(null);
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState('');
   const [items, setItems] = useState<OrderItem[]>([]);
-  const [newItem, setNewItem] = useState({ name: prefillItem || "", qty: 1, price: 0 });
+  const [newItem, setNewItem] = useState({ name: prefillItem || '', qty: 1, price: 0 });
 
   const { data: orderNumber } = useNextOrderNumber();
   const { data: suppliers = [] } = useSuppliers();
@@ -47,15 +56,15 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
   const { data: jobs = [] } = useJobs();
   const createOrderMutation = useCreateMaterialOrder();
 
-  const activeJobs = jobs.filter(j => j.status === "Active");
-  const total = items.reduce((sum, item) => sum + (item.qty * item.price), 0);
+  const activeJobs = jobs.filter((j) => j.status === 'Active');
+  const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
-  
+
   useEffect(() => {
     if (!open || !voiceContext) return;
-    
+
     voiceContext.registerForm({
       formId: 'create-order',
       formName: 'Create Order',
@@ -69,61 +78,77 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
         const strValue = String(value);
         switch (field) {
           case 'supplier':
-            const sup = suppliers.find(s => s.name.toLowerCase().includes(strValue.toLowerCase()));
+            const sup = suppliers.find((s) =>
+              s.name.toLowerCase().includes(strValue.toLowerCase())
+            );
             if (sup) setSupplierId(sup.id);
             break;
           case 'job':
-            const job = activeJobs.find(j => j.title.toLowerCase().includes(strValue.toLowerCase()));
+            const job = activeJobs.find((j) =>
+              j.title.toLowerCase().includes(strValue.toLowerCase())
+            );
             if (job) setJobId(job.id);
             break;
-          case 'notes': setNotes(strValue); break;
+          case 'notes':
+            setNotes(strValue);
+            break;
         }
       },
       onAction: (action, params) => {
         if (action === 'add_item' && params) {
-          setItems(prev => [...prev, {
-            id: crypto.randomUUID(),
-            name: String(params.name || 'Item'),
-            qty: Number(params.qty) || 1,
-            price: Number(params.price) || 0
-          }]);
+          setItems((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              name: String(params.name || 'Item'),
+              qty: Number(params.qty) || 1,
+              price: Number(params.price) || 0,
+            },
+          ]);
         }
       },
       onSubmit: handleSubmit,
-      onCancel: () => { resetForm(); onOpenChange(false); },
+      onCancel: () => {
+        resetForm();
+        onOpenChange(false);
+      },
     });
-    
+
     return () => voiceContext.unregisterForm('create-order');
   }, [open, voiceContext, suppliers, activeJobs]);
 
   const addItem = () => {
     if (!newItem.name) return;
-    setItems([...items, {
-      id: crypto.randomUUID(),
-      name: newItem.name,
-      qty: newItem.qty,
-      price: newItem.price
-    }]);
-    setNewItem({ name: "", qty: 1, price: 0 });
+    setItems([
+      ...items,
+      {
+        id: crypto.randomUUID(),
+        name: newItem.name,
+        qty: newItem.qty,
+        price: newItem.price,
+      },
+    ]);
+    setNewItem({ name: '', qty: 1, price: 0 });
   };
 
   const addFromPriceBook = (pbItem: any) => {
-    setItems([...items, {
-      id: crypto.randomUUID(),
-      name: pbItem.name,
-      qty: 1,
-      price: Number(pbItem.buy_price)
-    }]);
+    setItems([
+      ...items,
+      {
+        id: crypto.randomUUID(),
+        name: pbItem.name,
+        qty: 1,
+        price: Number(pbItem.buy_price),
+      },
+    ]);
   };
 
   const removeItem = (id: string) => {
-    setItems(items.filter(item => item.id !== id));
+    setItems(items.filter((item) => item.id !== id));
   };
 
   const updateItemQty = (id: string, qty: number) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, qty } : item
-    ));
+    setItems(items.map((item) => (item.id === id ? { ...item, qty } : item)));
   };
 
   const handleSubmit = async () => {
@@ -135,11 +160,11 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
       job_id: jobId,
       items: items,
       total,
-      status: "Processing",
+      status: 'Processing',
       order_date: new Date().toISOString().split('T')[0],
       delivery_date: null,
-      ordered_by: "Admin",
-      notes: notes || null
+      ordered_by: 'Admin',
+      notes: notes || null,
     });
 
     resetForm();
@@ -147,14 +172,14 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
   };
 
   const resetForm = () => {
-    setSupplierId("");
+    setSupplierId('');
     setJobId(null);
-    setNotes("");
+    setNotes('');
     setItems([]);
-    setNewItem({ name: "", qty: 1, price: 0 });
+    setNewItem({ name: '', qty: 1, price: 0 });
   };
 
-  const selectedSupplier = suppliers.find(s => s.id === supplierId);
+  const selectedSupplier = suppliers.find((s) => s.id === supplierId);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -190,7 +215,9 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
                       <SelectItem key={supplier.id} value={supplier.id}>
                         {supplier.name}
                         {supplier.discount_percent > 0 && (
-                          <span className="text-success ml-2">({supplier.discount_percent}% off)</span>
+                          <span className="text-success ml-2">
+                            ({supplier.discount_percent}% off)
+                          </span>
                         )}
                       </SelectItem>
                     ))}
@@ -198,7 +225,9 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
                 </Select>
                 {selectedSupplier && (
                   <p className="text-xs text-muted-foreground">
-                    {selectedSupplier.delivery_days === 0 ? "Same day delivery" : `${selectedSupplier.delivery_days} day delivery`}
+                    {selectedSupplier.delivery_days === 0
+                      ? 'Same day delivery'
+                      : `${selectedSupplier.delivery_days} day delivery`}
                   </p>
                 )}
               </div>
@@ -206,7 +235,10 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
               {/* Link to Job */}
               <div className="space-y-2">
                 <Label>Link to Job (Optional)</Label>
-                <Select value={jobId || "none"} onValueChange={(v) => setJobId(v === "none" ? null : v)}>
+                <Select
+                  value={jobId || 'none'}
+                  onValueChange={(v) => setJobId(v === 'none' ? null : v)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select job (optional)" />
                   </SelectTrigger>
@@ -239,14 +271,16 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
                                 className="w-16 h-8 text-sm"
                                 min={1}
                               />
-                              <span className="text-xs text-muted-foreground">× £{item.price.toFixed(2)}</span>
+                              <span className="text-xs text-muted-foreground">
+                                × £{item.price.toFixed(2)}
+                              </span>
                             </div>
                           </div>
                           <div className="text-right shrink-0">
                             <p className="font-bold">£{(item.qty * item.price).toFixed(2)}</p>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
+                            <Button
+                              variant="ghost"
+                              size="sm"
                               className="h-6 w-6 p-0 mt-1"
                               onClick={() => removeItem(item.id)}
                             >
@@ -311,9 +345,9 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
                       />
                     </div>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="w-full"
                     onClick={addItem}
                     disabled={!newItem.name}
@@ -350,7 +384,7 @@ export function CreateOrderDialog({ open, onOpenChange, prefillSupplier, prefill
 
           {/* Footer */}
           <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <Button 
+            <Button
               className="w-full"
               onClick={handleSubmit}
               disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}

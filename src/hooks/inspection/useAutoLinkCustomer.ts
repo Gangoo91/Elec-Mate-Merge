@@ -36,7 +36,15 @@ interface AutoLinkParams {
  */
 export const useAutoLinkCustomer = () => {
   const autoLinkCustomer = useCallback(async (params: AutoLinkParams) => {
-    const { reportId, userId, selectedCustomerId, clientName, clientEmail, clientPhone, clientAddress } = params;
+    const {
+      reportId,
+      userId,
+      selectedCustomerId,
+      clientName,
+      clientEmail,
+      clientPhone,
+      clientAddress,
+    } = params;
 
     if (!reportId || !userId) return;
 

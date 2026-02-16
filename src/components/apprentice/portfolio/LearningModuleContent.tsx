@@ -1,15 +1,14 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, CheckCircle, Play } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { ArrowLeft, ArrowRight, CheckCircle, Play } from 'lucide-react';
+import { useState } from 'react';
 
 interface ModuleContent {
   id: string;
   title: string;
   content: string;
-  type: "text" | "video" | "interactive";
+  type: 'text' | 'video' | 'interactive';
   duration: number;
 }
 
@@ -47,7 +46,7 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
 
   const renderLessonContent = () => {
     switch (currentLesson.type) {
-      case "video":
+      case 'video':
         return (
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-8 text-center border border-blue-500/20">
@@ -64,8 +63,8 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
             </div>
           </div>
         );
-      
-      case "interactive":
+
+      case 'interactive':
         return (
           <div className="space-y-4">
             <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg p-6 border border-purple-500/20">
@@ -82,14 +81,12 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
             </div>
           </div>
         );
-      
+
       default:
         return (
           <div className="prose prose-invert max-w-none">
             <h4 className="text-lg font-medium text-white mb-4">{currentLesson.title}</h4>
-            <div className="text-white whitespace-pre-line">
-              {currentLesson.content}
-            </div>
+            <div className="text-white whitespace-pre-line">{currentLesson.content}</div>
           </div>
         );
     }
@@ -110,25 +107,30 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
             <span className="text-white">
               Lesson {currentLessonIndex + 1} of {module.lessons.length}
             </span>
-            <span className="text-cyan-400">{Math.round((currentLessonIndex + 1) / module.lessons.length * 100)}% Complete</span>
+            <span className="text-cyan-400">
+              {Math.round(((currentLessonIndex + 1) / module.lessons.length) * 100)}% Complete
+            </span>
           </div>
-          <Progress value={(currentLessonIndex + 1) / module.lessons.length * 100} className="h-2" />
+          <Progress
+            value={((currentLessonIndex + 1) / module.lessons.length) * 100}
+            className="h-2"
+          />
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
           {renderLessonContent()}
-          
+
           <div className="flex items-center justify-between">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={handlePreviousLesson}
               disabled={currentLessonIndex === 0}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Button>
-            
+
             {currentLessonIndex < module.lessons.length - 1 ? (
               <Button onClick={handleNextLesson}>
                 Next Lesson

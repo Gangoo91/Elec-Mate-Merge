@@ -1,5 +1,5 @@
-import { ArrowLeft, Menu, Bell, School } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, Menu, Bell, School } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface CollegeAppHeaderProps {
   showBack?: boolean;
@@ -13,21 +13,11 @@ export function CollegeAppHeader({ showBack, onBack, onMenuClick }: CollegeAppHe
       <div className="flex items-center justify-between h-14 px-4 max-w-7xl mx-auto">
         <div className="flex items-center gap-2">
           {showBack ? (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="h-9 w-9"
-            >
+            <Button variant="ghost" size="icon" onClick={onBack} className="h-9 w-9">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onMenuClick}
-              className="h-9 w-9 md:hidden"
-            >
+            <Button variant="ghost" size="icon" onClick={onMenuClick} className="h-9 w-9 md:hidden">
               <Menu className="h-5 w-5" />
             </Button>
           )}

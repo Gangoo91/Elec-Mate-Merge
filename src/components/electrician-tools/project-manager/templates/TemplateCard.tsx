@@ -1,7 +1,18 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Home, Building2, Factory, Zap, ChefHat, ShoppingBag, Box, Lightbulb, Settings, Building } from 'lucide-react';
+import {
+  Home,
+  Building2,
+  Factory,
+  Zap,
+  ChefHat,
+  ShoppingBag,
+  Box,
+  Lightbulb,
+  Settings,
+  Building,
+} from 'lucide-react';
 
 interface TemplateCardProps {
   templateName: string;

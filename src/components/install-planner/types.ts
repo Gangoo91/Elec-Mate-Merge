@@ -1,28 +1,27 @@
-
 export interface InstallPlanData {
   // Installation Type
   installationType: string;
   installationPurpose?: string;
   loadType: string;
-  
+
   // Load Details
   totalLoad: number;
   voltage: number;
-  phases: "single" | "three" | "dc";
+  phases: 'single' | 'three' | 'dc';
   powerFactor?: number;
-  
+
   // Cable Run
   cableLength: number;
   installationMethod: string;
   cableType: string;
-  
+
   // Environment - Enhanced for multi-circuit
   environmentalSettings: EnvironmentalSettings;
-  
+
   // Multi-circuit fields
   circuits?: Circuit[];
-  designMode?: "single" | "multi";
-  
+  designMode?: 'single' | 'multi';
+
   // Legacy single-circuit environment fields (for backward compatibility)
   ambientTemperature?: number;
   groupingFactor?: number;
@@ -43,17 +42,17 @@ export interface EnvironmentalSettings {
   environmentalConditions: string;
   earthingSystem: string;
   ze: number;
-  
+
   // Circuit-specific overrides
   circuitEnvironments?: { [circuitId: string]: CircuitEnvironmentalOverride };
-  
+
   // System-wide settings
   globalGroupingFactor: number;
   specialRequirements: string[];
   hazardousArea?: string;
   fireRating?: string;
   mechanicalProtection?: string;
-  
+
   // Installation-specific environmental factors
   installationZones?: InstallationZone[];
   corrosionCategory?: string;
@@ -86,7 +85,7 @@ export interface Circuit {
   loadType: string;
   totalLoad: number;
   voltage: number;
-  phases: "single" | "three" | "dc";
+  phases: 'single' | 'three' | 'dc';
   powerFactor?: number;
   cableLength: number;
   installationMethod: string;
@@ -94,7 +93,7 @@ export interface Circuit {
   protectiveDevice: string;
   enabled: boolean;
   notes?: string;
-  
+
   // Environmental context
   environmentalOverride?: CircuitEnvironmentalOverride;
   installationZone?: string;
@@ -106,13 +105,13 @@ export interface CableRecommendation {
   currentCarryingCapacity: number;
   voltageDropPercentage: number;
   ratedCurrent: number;
-  suitability: "suitable" | "marginal" | "unsuitable";
+  suitability: 'suitable' | 'marginal' | 'unsuitable';
   notes: string[];
-  cost?: "low" | "medium" | "high" | "very-high";
-  availability?: "common" | "limited" | "special-order";
-  installationComplexity?: "simple" | "moderate" | "complex";
+  cost?: 'low' | 'medium' | 'high' | 'very-high';
+  availability?: 'common' | 'limited' | 'special-order';
+  installationComplexity?: 'simple' | 'moderate' | 'complex';
   specialConsiderations?: string[];
-  
+
   // Environmental considerations
   temperatureDerating?: number;
   groupingDerating?: number;
@@ -132,7 +131,7 @@ export interface InstallPlanResult {
   recommendations: string[];
   suggestions: InstallationSuggestion[];
   complianceChecks: ComplianceCheck[];
-  
+
   // Environmental analysis
   environmentalAnalysis?: EnvironmentalAnalysis;
 }
@@ -154,7 +153,7 @@ export interface MultiCircuitResult {
   complianceChecks: ComplianceCheck[];
   warnings: string[];
   recommendations: string[];
-  
+
   // Enhanced environmental analysis
   environmentalAnalysis: MultiCircuitEnvironmentalAnalysis;
 }
@@ -169,7 +168,7 @@ export interface CircuitResult {
   zsCompliance: boolean;
   voltageDropCompliance: boolean;
   warnings: string[];
-  
+
   // Environmental factors applied
   appliedEnvironmentalFactors: AppliedEnvironmentalFactors;
 }
@@ -213,25 +212,32 @@ export interface ZoneEnvironmentalAnalysis {
 export interface EnvironmentalComplianceCheck {
   requirement: string;
   standard: string;
-  status: "compliant" | "non-compliant" | "requires-attention";
+  status: 'compliant' | 'non-compliant' | 'requires-attention';
   details: string;
   affectedCircuits: string[];
   recommendedActions: string[];
 }
 
 export interface InstallationSuggestion {
-  type: "cable-upgrade" | "installation-method" | "protective-device" | "cost-optimization" | "safety" | "environmental" | "regulatory";
+  type:
+    | 'cable-upgrade'
+    | 'installation-method'
+    | 'protective-device'
+    | 'cost-optimization'
+    | 'safety'
+    | 'environmental'
+    | 'regulatory';
   title: string;
   description: string;
-  impact: "high" | "medium" | "low";
-  cost?: "low" | "medium" | "high" | "very-high";
+  impact: 'high' | 'medium' | 'low';
+  cost?: 'low' | 'medium' | 'high' | 'very-high';
   regulation?: string;
 }
 
 export interface ComplianceCheck {
   regulation: string;
   requirement: string;
-  status: "pass" | "fail" | "warning";
+  status: 'pass' | 'fail' | 'warning';
   reference: string;
   details?: string;
 }

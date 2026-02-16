@@ -1,77 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m7s2-check1",
-    question: "What is the minimum IP rating for outdoor EV charging equipment?",
-    options: ["IP44", "IP55", "IP65", "IP67"],
+    id: 'bs7671-m7s2-check1',
+    question: 'What is the minimum IP rating for outdoor EV charging equipment?',
+    options: ['IP44', 'IP55', 'IP65', 'IP67'],
     correctIndex: 0,
-    explanation: "Outdoor EV charging equipment requires a minimum of IP44 protection, though IP55 or higher is often specified for fully exposed locations."
+    explanation:
+      'Outdoor EV charging equipment requires a minimum of IP44 protection, though IP55 or higher is often specified for fully exposed locations.',
   },
   {
-    id: "bs7671-m7s2-check2",
-    question: "Why is PME earthing a concern for EV charging installations?",
+    id: 'bs7671-m7s2-check2',
+    question: 'Why is PME earthing a concern for EV charging installations?',
     options: [
-      "It increases electricity costs",
-      "Open circuit PEN conductor creates shock risk via vehicle chassis",
-      "It slows down charging speed",
-      "It requires larger cable sizes"
+      'It increases electricity costs',
+      'Open circuit PEN conductor creates shock risk via vehicle chassis',
+      'It slows down charging speed',
+      'It requires larger cable sizes',
     ],
     correctIndex: 1,
-    explanation: "With PME supplies, an open-circuit PEN conductor can cause dangerous voltages on exposed metalwork, including vehicle chassis. Special protective measures are required."
+    explanation:
+      'With PME supplies, an open-circuit PEN conductor can cause dangerous voltages on exposed metalwork, including vehicle chassis. Special protective measures are required.',
   },
   {
-    id: "bs7671-m7s2-check3",
-    question: "What is the maximum disconnection time for a 32A EV charger circuit?",
-    options: ["0.2 seconds", "0.4 seconds", "1 second", "5 seconds"],
+    id: 'bs7671-m7s2-check3',
+    question: 'What is the maximum disconnection time for a 32A EV charger circuit?',
+    options: ['0.2 seconds', '0.4 seconds', '1 second', '5 seconds'],
     correctIndex: 1,
-    explanation: "For circuits up to 32A, the maximum disconnection time is 0.4 seconds under fault conditions. This ensures rapid isolation to prevent electric shock."
-  }
+    explanation:
+      'For circuits up to 32A, the maximum disconnection time is 0.4 seconds under fault conditions. This ensures rapid isolation to prevent electric shock.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I install an EV charger on a TT earthing system?",
-    answer: "Yes, TT systems are often preferred for EV installations as they avoid PME concerns. Ensure adequate earth electrode resistance and use appropriate RCD protection."
+    question: 'Can I install an EV charger on a TT earthing system?',
+    answer:
+      'Yes, TT systems are often preferred for EV installations as they avoid PME concerns. Ensure adequate earth electrode resistance and use appropriate RCD protection.',
   },
   {
-    question: "What cable size is needed for a 7.4kW home charger?",
-    answer: "A 7.4kW (32A single-phase) charger typically requires 6mm² cable for runs up to 20m, or 10mm² for longer runs. Always calculate volt drop for the specific installation."
+    question: 'What cable size is needed for a 7.4kW home charger?',
+    answer:
+      'A 7.4kW (32A single-phase) charger typically requires 6mm² cable for runs up to 20m, or 10mm² for longer runs. Always calculate volt drop for the specific installation.',
   },
   {
-    question: "Is a dedicated circuit required for EV charging?",
-    answer: "Yes, BS 7671 requires a dedicated final circuit for EV charging equipment. This circuit should have its own protective device and cannot be shared with other loads."
+    question: 'Is a dedicated circuit required for EV charging?',
+    answer:
+      'Yes, BS 7671 requires a dedicated final circuit for EV charging equipment. This circuit should have its own protective device and cannot be shared with other loads.',
   },
   {
-    question: "What RCD protection is required for EV chargers?",
-    answer: "Type A or Type B RCD protection is required, depending on the charger type. Most Mode 3 chargers with DC fault protection allow Type A RCDs; otherwise Type B is needed."
-  }
+    question: 'What RCD protection is required for EV chargers?',
+    answer:
+      'Type A or Type B RCD protection is required, depending on the charger type. Most Mode 3 chargers with DC fault protection allow Type A RCDs; otherwise Type B is needed.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An EV charger is being installed on a PME supply. What additional protective measure must be considered?",
-  options: [
-    "Larger cable cross-section",
-    "Earth electrode and protective equipotential bonding",
-    "Higher rated MCB",
-    "Longer circuit length"
-  ],
-  correctAnswer: 1,
-  explanation: "For PME supplies, additional earth electrode installation and protective equipotential bonding to the vehicle charging location are required to mitigate open-circuit PEN conductor risks."
-  }
+    question:
+      'An EV charger is being installed on a PME supply. What additional protective measure must be considered?',
+    options: [
+      'Larger cable cross-section',
+      'Earth electrode and protective equipotential bonding',
+      'Higher rated MCB',
+      'Longer circuit length',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'For PME supplies, additional earth electrode installation and protective equipotential bonding to the vehicle charging location are required to mitigate open-circuit PEN conductor risks.',
+  },
 ];
 
 const BS7671Module7Section2 = () => {
   useSEO({
-    title: "EV Charging Installations | BS7671 Module 7.2",
-    description: "Learn BS 7671 Part 722 requirements for safe electric vehicle charging infrastructure including PME considerations and protection requirements."
+    title: 'EV Charging Installations | BS7671 Module 7.2',
+    description:
+      'Learn BS 7671 Part 722 requirements for safe electric vehicle charging infrastructure including PME considerations and protection requirements.',
   });
 
   return (
@@ -103,9 +113,7 @@ const BS7671Module7Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electric Vehicle Charging Installations
           </h1>
-          <p className="text-white/80">
-            BS 7671 Part 722 requirements for safe EV infrastructure
-          </p>
+          <p className="text-white/80">BS 7671 Part 722 requirements for safe EV infrastructure</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -113,16 +121,27 @@ const BS7671Module7Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Part 722:</strong> Dedicated section for EV charging</li>
-              <li><strong>PME risk:</strong> Open PEN = shock via vehicle</li>
-              <li><strong>Protection:</strong> Type A or B RCD required</li>
+              <li>
+                <strong>Part 722:</strong> Dedicated section for EV charging
+              </li>
+              <li>
+                <strong>PME risk:</strong> Open PEN = shock via vehicle
+              </li>
+              <li>
+                <strong>Protection:</strong> Type A or B RCD required
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Domestic garages, car parks, commercial premises</li>
-              <li><strong>Use:</strong> Verify earthing, install correct RCD type, check PME mitigation</li>
+              <li>
+                <strong>Spot:</strong> Domestic garages, car parks, commercial premises
+              </li>
+              <li>
+                <strong>Use:</strong> Verify earthing, install correct RCD type, check PME
+                mitigation
+              </li>
             </ul>
           </div>
         </div>
@@ -132,12 +151,12 @@ const BS7671Module7Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Part 722 scope and application",
-              "EV charging modes (Mode 1-4)",
-              "PME supply considerations and mitigation",
-              "Cable sizing for EV circuits",
-              "RCD selection (Type A vs Type B)",
-              "Installation and testing requirements"
+              'Part 722 scope and application',
+              'EV charging modes (Mode 1-4)',
+              'PME supply considerations and mitigation',
+              'Cable sizing for EV circuits',
+              'RCD selection (Type A vs Type B)',
+              'Installation and testing requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -158,25 +177,39 @@ const BS7671Module7Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               EV charging is categorised into four modes based on power levels and communication
-              protocols. Understanding these modes is essential for correct equipment selection
-              and installation.
+              protocols. Understanding these modes is essential for correct equipment selection and
+              installation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">AC Charging (Mode 1-3)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  AC Charging (Mode 1-3)
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Mode 1:</strong> Standard socket (rarely used UK)</li>
-                  <li><strong>Mode 2:</strong> Socket + in-cable control box</li>
-                  <li><strong>Mode 3:</strong> Dedicated EVSE with Type 2 socket</li>
+                  <li>
+                    <strong>Mode 1:</strong> Standard socket (rarely used UK)
+                  </li>
+                  <li>
+                    <strong>Mode 2:</strong> Socket + in-cable control box
+                  </li>
+                  <li>
+                    <strong>Mode 3:</strong> Dedicated EVSE with Type 2 socket
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">DC Charging (Mode 4)</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>High power:</strong> 50kW to 350kW+</li>
-                  <li><strong>Connectors:</strong> CCS, CHAdeMO</li>
-                  <li><strong>Application:</strong> Public rapid chargers</li>
+                  <li>
+                    <strong>High power:</strong> 50kW to 350kW+
+                  </li>
+                  <li>
+                    <strong>Connectors:</strong> CCS, CHAdeMO
+                  </li>
+                  <li>
+                    <strong>Application:</strong> Public rapid chargers
+                  </li>
                 </ul>
               </div>
             </div>
@@ -208,9 +241,9 @@ const BS7671Module7Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Most UK domestic supplies use PME (Protective Multiple Earthing). While effective
-              for fixed installations, PME presents specific risks for EV charging due to the
-              vehicle's connection to true earth through its tyres.
+              Most UK domestic supplies use PME (Protective Multiple Earthing). While effective for
+              fixed installations, PME presents specific risks for EV charging due to the vehicle's
+              connection to true earth through its tyres.
             </p>
 
             <div className="my-6">
@@ -224,11 +257,19 @@ const BS7671Module7Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">PME Mitigation Options:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                PME Mitigation Options:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Option 1:</strong> TT earthing with local earth electrode</li>
-                <li><strong>Option 2:</strong> PME earthing + protective equipotential bonding</li>
-                <li><strong>Option 3:</strong> Use compliant EVSE with in-built protection</li>
+                <li>
+                  <strong>Option 1:</strong> TT earthing with local earth electrode
+                </li>
+                <li>
+                  <strong>Option 2:</strong> PME earthing + protective equipotential bonding
+                </li>
+                <li>
+                  <strong>Option 3:</strong> Use compliant EVSE with in-built protection
+                </li>
               </ul>
             </div>
 
@@ -249,25 +290,37 @@ const BS7671Module7Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              EV charging circuits require careful consideration of protection coordination,
-              cable sizing, and RCD selection to ensure safety and performance.
+              EV charging circuits require careful consideration of protection coordination, cable
+              sizing, and RCD selection to ensure safety and performance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Selection</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Type A:</strong> AC + pulsating DC faults</li>
-                  <li><strong>Type B:</strong> All fault types including smooth DC</li>
-                  <li><strong>Type A + DC detection:</strong> Alternative to Type B</li>
+                  <li>
+                    <strong>Type A:</strong> AC + pulsating DC faults
+                  </li>
+                  <li>
+                    <strong>Type B:</strong> All fault types including smooth DC
+                  </li>
+                  <li>
+                    <strong>Type A + DC detection:</strong> Alternative to Type B
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Sizing (7.4kW)</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Up to 20m:</strong> 6mm² minimum</li>
-                  <li><strong>20-35m:</strong> 10mm² typical</li>
-                  <li><strong>35m+:</strong> Calculate volt drop</li>
+                  <li>
+                    <strong>Up to 20m:</strong> 6mm² minimum
+                  </li>
+                  <li>
+                    <strong>20-35m:</strong> 10mm² typical
+                  </li>
+                  <li>
+                    <strong>35m+:</strong> Calculate volt drop
+                  </li>
                 </ul>
               </div>
             </div>
@@ -290,7 +343,9 @@ const BS7671Module7Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Verify supply earthing type (TN-C-S, TN-S, TT)</li>
                 <li>Assess DNO supply capacity and diversity</li>
@@ -302,10 +357,18 @@ const BS7671Module7Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong RCD type:</strong> — Using Type AC instead of Type A/B</li>
-                <li><strong>Ignoring PME:</strong> — Not considering open PEN risk</li>
-                <li><strong>Undersized cables:</strong> — Not accounting for continuous load</li>
-                <li><strong>No diversity:</strong> — Overloading existing supply</li>
+                <li>
+                  <strong>Wrong RCD type:</strong> — Using Type AC instead of Type A/B
+                </li>
+                <li>
+                  <strong>Ignoring PME:</strong> — Not considering open PEN risk
+                </li>
+                <li>
+                  <strong>Undersized cables:</strong> — Not accounting for continuous load
+                </li>
+                <li>
+                  <strong>No diversity:</strong> — Overloading existing supply
+                </li>
               </ul>
             </div>
           </div>
@@ -349,10 +412,7 @@ const BS7671Module7Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

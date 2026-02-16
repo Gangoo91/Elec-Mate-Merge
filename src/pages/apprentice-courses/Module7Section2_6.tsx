@@ -1,135 +1,142 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
 const Module7Section2_6 = () => {
   useSEO(
-    "Loose or Poor Connections - Level 2 Module 7 Section 2.6",
-    "Detecting, correcting and preventing loose or poor electrical connections"
+    'Loose or Poor Connections - Level 2 Module 7 Section 2.6',
+    'Detecting, correcting and preventing loose or poor electrical connections'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is a loose connection in electrical terms?",
+      question: 'What is a loose connection in electrical terms?',
       options: [
-        "A connection that carries too much current",
-        "A conductor not securely fastened within a terminal",
-        "A connection with too much insulation",
-        "A connection that is properly earthed"
+        'A connection that carries too much current',
+        'A conductor not securely fastened within a terminal',
+        'A connection with too much insulation',
+        'A connection that is properly earthed',
       ],
       correctAnswer: 1,
-      explanation: "A loose connection occurs when a conductor is not securely fastened within a terminal, or the contact surface is not clean and tight enough to carry current effectively."
+      explanation:
+        'A loose connection occurs when a conductor is not securely fastened within a terminal, or the contact surface is not clean and tight enough to carry current effectively.',
     },
     {
       id: 2,
-      question: "Give two causes of loose connections.",
+      question: 'Give two causes of loose connections.',
       options: [
-        "High voltage and low current",
-        "Poor workmanship and vibration",
-        "Too much earthing and insulation",
-        "Correct tools and proper torque"
+        'High voltage and low current',
+        'Poor workmanship and vibration',
+        'Too much earthing and insulation',
+        'Correct tools and proper torque',
       ],
       correctAnswer: 1,
-      explanation: "Poor workmanship (not tightening screws properly) and vibration or movement are common causes of loose connections."
+      explanation:
+        'Poor workmanship (not tightening screws properly) and vibration or movement are common causes of loose connections.',
     },
     {
       id: 3,
-      question: "How can thermal cycling loosen a connection?",
+      question: 'How can thermal cycling loosen a connection?',
       options: [
-        "It increases the voltage",
-        "It causes metal to expand and contract, gradually loosening connections",
-        "It improves conductivity",
-        "It reduces electrical resistance"
+        'It increases the voltage',
+        'It causes metal to expand and contract, gradually loosening connections',
+        'It improves conductivity',
+        'It reduces electrical resistance',
       ],
       correctAnswer: 1,
-      explanation: "Thermal cycling causes heating and cooling, which makes metal expand and contract, gradually loosening connections over time."
+      explanation:
+        'Thermal cycling causes heating and cooling, which makes metal expand and contract, gradually loosening connections over time.',
     },
     {
       id: 4,
-      question: "Why are loose connections dangerous even without high currents?",
+      question: 'Why are loose connections dangerous even without high currents?',
       options: [
-        "They improve efficiency",
-        "They cause resistance which generates heat, leading to arcing and fire",
-        "They reduce voltage drops",
-        "They make protective devices work better"
+        'They improve efficiency',
+        'They cause resistance which generates heat, leading to arcing and fire',
+        'They reduce voltage drops',
+        'They make protective devices work better',
       ],
       correctAnswer: 1,
-      explanation: "Loose connections create resistance, which generates heat when current flows. This can lead to arcing, insulation damage, and fire even with normal currents."
+      explanation:
+        'Loose connections create resistance, which generates heat when current flows. This can lead to arcing, insulation damage, and fire even with normal currents.',
     },
     {
       id: 5,
-      question: "What kind of damage can arcing from a loose connection cause?",
+      question: 'What kind of damage can arcing from a loose connection cause?',
       options: [
-        "Improved electrical efficiency",
-        "Better voltage regulation",
-        "Damage to insulation and fire risk",
-        "Enhanced conductor performance"
+        'Improved electrical efficiency',
+        'Better voltage regulation',
+        'Damage to insulation and fire risk',
+        'Enhanced conductor performance',
       ],
       correctAnswer: 2,
-      explanation: "Arcing from loose connections can damage insulation, create fire hazards, and cause progressive deterioration of the electrical installation."
+      explanation:
+        'Arcing from loose connections can damage insulation, create fire hazards, and cause progressive deterioration of the electrical installation.',
     },
     {
       id: 6,
-      question: "True or False: Protective devices always trip when a connection is loose.",
-      options: [
-        "True",
-        "False"
-      ],
+      question: 'True or False: Protective devices always trip when a connection is loose.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Loose connections often develop slowly and may not draw enough excess current to trip protective devices until the fault becomes severe."
+      explanation:
+        'False. Loose connections often develop slowly and may not draw enough excess current to trip protective devices until the fault becomes severe.',
     },
     {
       id: 7,
-      question: "What test might show a poor connection in continuity results?",
+      question: 'What test might show a poor connection in continuity results?',
       options: [
-        "Very low resistance readings",
-        "High resistance readings indicating poor conductivity",
-        "No resistance readings",
-        "Variable voltage readings"
+        'Very low resistance readings',
+        'High resistance readings indicating poor conductivity',
+        'No resistance readings',
+        'Variable voltage readings',
       ],
       correctAnswer: 1,
-      explanation: "Poor connections show up as higher than expected resistance readings in continuity or loop impedance tests."
+      explanation:
+        'Poor connections show up as higher than expected resistance readings in continuity or loop impedance tests.',
     },
     {
       id: 8,
-      question: "How can thermal imaging help detect loose connections?",
+      question: 'How can thermal imaging help detect loose connections?',
       options: [
-        "It shows voltage levels",
-        "It identifies hot spots in electrical equipment",
-        "It measures current flow",
-        "It tests insulation resistance"
+        'It shows voltage levels',
+        'It identifies hot spots in electrical equipment',
+        'It measures current flow',
+        'It tests insulation resistance',
       ],
       correctAnswer: 1,
-      explanation: "Thermal imaging can detect hot spots caused by the heating effect of resistance in loose connections, especially in distribution boards."
+      explanation:
+        'Thermal imaging can detect hot spots caused by the heating effect of resistance in loose connections, especially in distribution boards.',
     },
     {
       id: 9,
-      question: "What should be done after tightening or re-terminating a conductor?",
+      question: 'What should be done after tightening or re-terminating a conductor?',
       options: [
-        "Leave it as is",
-        "Add more insulation",
-        "Record the work and retest the circuit",
-        "Increase the voltage"
+        'Leave it as is',
+        'Add more insulation',
+        'Record the work and retest the circuit',
+        'Increase the voltage',
       ],
       correctAnswer: 2,
-      explanation: "After correcting loose connections, the work should be recorded and the circuit should be retested to confirm the fault is corrected."
+      explanation:
+        'After correcting loose connections, the work should be recorded and the circuit should be retested to confirm the fault is corrected.',
     },
     {
       id: 10,
-      question: "In the real-world example, what gave the first sign of a loose neutral conductor?",
+      question: 'In the real-world example, what gave the first sign of a loose neutral conductor?',
       options: [
-        "The lights flickered",
-        "A burning smell from the socket",
-        "The circuit breaker tripped",
-        "The voltage was too high"
+        'The lights flickered',
+        'A burning smell from the socket',
+        'The circuit breaker tripped',
+        'The voltage was too high',
       ],
       correctAnswer: 1,
-      explanation: "In the retail shop example, staff noticed a burning smell from the socket, which led to the discovery of the loose neutral conductor and overheated terminal."
-    }
+      explanation:
+        'In the retail shop example, staff noticed a burning smell from the socket, which led to the discovery of the loose neutral conductor and overheated terminal.',
+    },
   ];
 
   return (
@@ -212,7 +219,13 @@ const Module7Section2_6 = () => {
               What Are Loose or Poor Connections?
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>A loose connection occurs when a conductor is not securely fastened within a terminal, or the contact surface is not clean and tight enough to carry current effectively. Poor connections can also result from incorrect termination, such as too much insulation stripped away, or multiple conductors crammed into a terminal not designed for them.</p>
+              <p>
+                A loose connection occurs when a conductor is not securely fastened within a
+                terminal, or the contact surface is not clean and tight enough to carry current
+                effectively. Poor connections can also result from incorrect termination, such as
+                too much insulation stripped away, or multiple conductors crammed into a terminal
+                not designed for them.
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Types of poor connections:</h3>
@@ -226,17 +239,20 @@ const Module7Section2_6 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
                 <h3 className="font-medium text-elec-yellow mb-2">Physics principle:</h3>
-                <p className="text-sm">Poor connections create high resistance. Using Ohm's Law (P = I²R), even small increases in resistance cause significant heat generation.</p>
+                <p className="text-sm">
+                  Poor connections create high resistance. Using Ohm's Law (P = I²R), even small
+                  increases in resistance cause significant heat generation.
+                </p>
               </div>
 
               <InlineCheck
                 id="loose-connection-definition"
                 question="What is meant by a 'loose connection' in an electrical installation?"
                 options={[
-                  "A connection that carries too much current",
-                  "A conductor not securely fastened within a terminal",
-                  "A connection with excessive insulation",
-                  "A properly earthed connection"
+                  'A connection that carries too much current',
+                  'A conductor not securely fastened within a terminal',
+                  'A connection with excessive insulation',
+                  'A properly earthed connection',
                 ]}
                 correctIndex={1}
                 explanation="A loose connection occurs when a conductor is not securely fastened within a terminal, creating poor electrical contact."
@@ -274,22 +290,29 @@ const Module7Section2_6 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Progressive deterioration cycle:</h3>
-                <p className="text-sm">Loose connections create a cycle: increased resistance → heat generation → thermal expansion → further loosening → more resistance. This process accelerates over time.</p>
+                <p className="text-sm">
+                  Loose connections create a cycle: increased resistance → heat generation → thermal
+                  expansion → further loosening → more resistance. This process accelerates over
+                  time.
+                </p>
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
                 <h3 className="font-medium text-elec-yellow mb-2">Manufacturer specifications:</h3>
-                <p className="text-sm">Always follow torque settings - typically 1.0-1.2 Nm for 2.5mm² terminals, 1.2-1.5 Nm for 4mm² terminals.</p>
+                <p className="text-sm">
+                  Always follow torque settings - typically 1.0-1.2 Nm for 2.5mm² terminals, 1.2-1.5
+                  Nm for 4mm² terminals.
+                </p>
               </div>
 
               <InlineCheck
                 id="loose-connection-causes"
                 question="Give two reasons why a connection might become loose over time."
                 options={[
-                  "High voltage and excessive current",
-                  "Thermal cycling and vibration",
-                  "Too much earthing and insulation",
-                  "Correct torque and proper tools"
+                  'High voltage and excessive current',
+                  'Thermal cycling and vibration',
+                  'Too much earthing and insulation',
+                  'Correct torque and proper tools',
                 ]}
                 correctIndex={1}
                 explanation="Thermal cycling (heating and cooling) and vibration are common reasons why connections become loose over time."
@@ -304,7 +327,10 @@ const Module7Section2_6 = () => {
               Dangers and Consequences
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Loose connections cause resistance, which generates heat according to I²R losses. The consequences escalate progressively:</p>
+              <p>
+                Loose connections cause resistance, which generates heat according to I²R losses.
+                The consequences escalate progressively:
+              </p>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
@@ -329,17 +355,21 @@ const Module7Section2_6 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <h3 className="font-medium text-red-400 mb-2">Critical safety point:</h3>
-                <p className="text-sm">Loose connections can cause fires without tripping protective devices because increased resistance may not create enough excess current to operate overcurrent protection.</p>
+                <p className="text-sm">
+                  Loose connections can cause fires without tripping protective devices because
+                  increased resistance may not create enough excess current to operate overcurrent
+                  protection.
+                </p>
               </div>
 
               <InlineCheck
                 id="loose-connection-dangers"
                 question="Why might a loose connection cause a fire even without tripping a breaker?"
                 options={[
-                  "It improves electrical efficiency",
-                  "Resistance creates heat which can cause arcing and ignition without excess current",
-                  "It reduces the voltage in the circuit",
-                  "It makes protective devices work better"
+                  'It improves electrical efficiency',
+                  'Resistance creates heat which can cause arcing and ignition without excess current',
+                  'It reduces the voltage in the circuit',
+                  'It makes protective devices work better',
                 ]}
                 correctIndex={1}
                 explanation="Loose connections create resistance that generates heat and arcing, which can cause fires without drawing enough current to trip protective devices."
@@ -354,7 +384,10 @@ const Module7Section2_6 = () => {
               Detection, Correction, and Prevention
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Early detection and proper correction techniques are essential for preventing serious consequences:</p>
+              <p>
+                Early detection and proper correction techniques are essential for preventing
+                serious consequences:
+              </p>
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 mb-4">
                 <h3 className="font-medium text-green-400 mb-2">Detection methods:</h3>
@@ -389,17 +422,20 @@ const Module7Section2_6 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
                 <h3 className="font-medium text-elec-yellow mb-2">Professional best practice:</h3>
-                <p className="text-sm">Always retest after correction and document findings. High resistance readings often indicate connection problems before visual signs appear.</p>
+                <p className="text-sm">
+                  Always retest after correction and document findings. High resistance readings
+                  often indicate connection problems before visual signs appear.
+                </p>
               </div>
 
               <InlineCheck
                 id="loose-connection-detection"
                 question="What test result might indicate a poor connection in a protective conductor?"
                 options={[
-                  "Very low resistance reading",
-                  "High resistance reading in continuity test",
-                  "No resistance reading at all",
-                  "Variable voltage reading"
+                  'Very low resistance reading',
+                  'High resistance reading in continuity test',
+                  'No resistance reading at all',
+                  'Variable voltage reading',
                 ]}
                 correctIndex={1}
                 explanation="A high resistance reading in a continuity test would indicate a poor connection in a protective conductor, which should have very low resistance."
@@ -412,21 +448,31 @@ const Module7Section2_6 = () => {
             <h2 className="text-xl font-semibold text-white mb-4">Practical Guidance</h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
-                <li>Always check every connection during installation, not just assume it is secure</li>
-                <li>Use the correct screwdriver and torque settings recommended by manufacturers</li>
+                <li>
+                  Always check every connection during installation, not just assume it is secure
+                </li>
+                <li>
+                  Use the correct screwdriver and torque settings recommended by manufacturers
+                </li>
                 <li>Inspect for signs of overheating when carrying out maintenance or EICRs</li>
-                <li>Record any loose connections found and confirm corrective action with a retest</li>
+                <li>
+                  Record any loose connections found and confirm corrective action with a retest
+                </li>
               </ul>
             </div>
           </section>
 
           {/* Real-World Case Study */}
           <section className="mb-10">
-            <h2 className="text-xl font-semibold text-white mb-4">Real-World Example: Near-Miss Fire Incident</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Real-World Example: Near-Miss Fire Incident
+            </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
               <h3 className="font-medium text-amber-400 mb-3">Retail Shop Case Study</h3>
               <p className="text-sm text-white/80 mb-4">
-                In a busy retail clothing shop, staff noticed a burning smell during peak Saturday trading. Investigation revealed a loose neutral conductor in a socket terminal that had overheated, melting the faceplate and scorching the wall behind.
+                In a busy retail clothing shop, staff noticed a burning smell during peak Saturday
+                trading. Investigation revealed a loose neutral conductor in a socket terminal that
+                had overheated, melting the faceplate and scorching the wall behind.
               </p>
 
               <div className="grid gap-4 sm:grid-cols-2 mb-4">
@@ -453,14 +499,17 @@ const Module7Section2_6 = () => {
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 mb-4">
                 <h4 className="font-medium text-white mb-2 text-sm">Root cause:</h4>
                 <p className="text-xs text-white/70">
-                  Poor termination during original installation, worsened by thermal cycling from high-current till equipment, with no routine maintenance programme in place.
+                  Poor termination during original installation, worsened by thermal cycling from
+                  high-current till equipment, with no routine maintenance programme in place.
                 </p>
               </div>
 
               <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
                 <h4 className="font-medium text-elec-yellow mb-2 text-sm">Lesson:</h4>
                 <p className="text-xs text-white/70">
-                  Without quick response, this could have ignited the wall cavity, potentially causing a major fire in a crowded shopping centre. Quality installation and routine maintenance are essential fire prevention measures.
+                  Without quick response, this could have ignited the wall cavity, potentially
+                  causing a major fire in a crowded shopping centre. Quality installation and
+                  routine maintenance are essential fire prevention measures.
                 </p>
               </div>
             </div>
@@ -471,16 +520,29 @@ const Module7Section2_6 = () => {
             <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h3 className="font-medium text-white mb-2">Q: Do loose connections always cause immediate faults?</h3>
-                <p className="text-sm text-white/70">A: No, they often develop slowly and may only show symptoms after prolonged use.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Do loose connections always cause immediate faults?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: No, they often develop slowly and may only show symptoms after prolonged use.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h3 className="font-medium text-white mb-2">Q: Can vibration cause connections to loosen?</h3>
-                <p className="text-sm text-white/70">A: Yes, particularly in industrial, commercial, or transport applications.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Can vibration cause connections to loosen?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: Yes, particularly in industrial, commercial, or transport applications.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h3 className="font-medium text-white mb-2">Q: How can electricians prevent loose connections?</h3>
-                <p className="text-sm text-white/70">A: By using correct torque settings, good workmanship, and thorough inspection/testing.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: How can electricians prevent loose connections?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: By using correct torque settings, good workmanship, and thorough
+                  inspection/testing.
+                </p>
               </div>
             </div>
           </section>
@@ -488,34 +550,42 @@ const Module7Section2_6 = () => {
           {/* Summary */}
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-gradient-to-r from-elec-yellow/10 to-red-500/10 border border-white/10">
-              <h2 className="text-xl font-semibold text-white mb-4">Professional Knowledge Summary</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">
+                Professional Knowledge Summary
+              </h2>
 
               <div className="grid gap-3 sm:grid-cols-2 mb-4">
                 <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                  <h3 className="font-medium text-elec-yellow mb-2 text-sm">Definition & Physics:</h3>
+                  <h3 className="font-medium text-elec-yellow mb-2 text-sm">
+                    Definition & Physics:
+                  </h3>
                   <p className="text-xs text-white/70">
-                    Conductors not securely fastened create high resistance. Using P = I²R, even small resistance increases cause significant heat generation.
+                    Conductors not securely fastened create high resistance. Using P = I²R, even
+                    small resistance increases cause significant heat generation.
                   </p>
                 </div>
 
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
                   <h3 className="font-medium text-red-400 mb-2 text-sm">Hidden Danger:</h3>
                   <p className="text-xs text-white/70">
-                    Can cause fires without tripping protective devices. Heat generation occurs without excess current draw.
+                    Can cause fires without tripping protective devices. Heat generation occurs
+                    without excess current draw.
                   </p>
                 </div>
 
                 <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/30">
                   <h3 className="font-medium text-orange-400 mb-2 text-sm">Progressive Nature:</h3>
                   <p className="text-xs text-white/70">
-                    Creates deterioration cycle: poor connection → resistance → heat → expansion → worse connection → more heat.
+                    Creates deterioration cycle: poor connection → resistance → heat → expansion →
+                    worse connection → more heat.
                   </p>
                 </div>
 
                 <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
                   <h3 className="font-medium text-green-400 mb-2 text-sm">Detection Methods:</h3>
                   <p className="text-xs text-white/70">
-                    Visual inspection, thermal imaging, high resistance in tests, burning odours, and warm components.
+                    Visual inspection, thermal imaging, high resistance in tests, burning odours,
+                    and warm components.
                   </p>
                 </div>
 
@@ -527,17 +597,26 @@ const Module7Section2_6 = () => {
                 </div>
 
                 <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                  <h3 className="font-medium text-blue-400 mb-2 text-sm">Prevention & Correction:</h3>
+                  <h3 className="font-medium text-blue-400 mb-2 text-sm">
+                    Prevention & Correction:
+                  </h3>
                   <p className="text-xs text-white/70">
-                    Calibrated torque tools, regular maintenance, quality control, safe isolation, clean and re-terminate, test and document.
+                    Calibrated torque tools, regular maintenance, quality control, safe isolation,
+                    clean and re-terminate, test and document.
                   </p>
                 </div>
               </div>
 
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="font-medium text-red-400 mb-2 text-sm">Critical Professional Insight:</h3>
+                <h3 className="font-medium text-red-400 mb-2 text-sm">
+                  Critical Professional Insight:
+                </h3>
                 <p className="text-xs text-white/70">
-                  Loose connections are a leading cause of electrical fires, often developing slowly over years without obvious symptoms. The physics is unforgiving: poor connections create resistance, resistance creates heat, and heat causes damage that can ignite surrounding materials. Quality installation and regular maintenance are the only defences against this progressive threat to life and property.
+                  Loose connections are a leading cause of electrical fires, often developing slowly
+                  over years without obvious symptoms. The physics is unforgiving: poor connections
+                  create resistance, resistance creates heat, and heat causes damage that can ignite
+                  surrounding materials. Quality installation and regular maintenance are the only
+                  defences against this progressive threat to life and property.
                 </p>
               </div>
             </div>

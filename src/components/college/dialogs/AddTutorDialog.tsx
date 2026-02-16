@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -10,17 +10,17 @@ import {
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
-} from "@/components/ui/responsive-dialog";
+} from '@/components/ui/responsive-dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useCollege } from "@/contexts/CollegeContext";
-import { UserPlus, Loader2 } from "lucide-react";
-import type { StaffRole } from "@/data/collegeMockData";
+} from '@/components/ui/select';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import type { StaffRole } from '@/contexts/CollegeSupabaseContext';
+import { UserPlus, Loader2 } from 'lucide-react';
 
 interface AddTutorDialogProps {
   open: boolean;
@@ -28,43 +28,41 @@ interface AddTutorDialogProps {
 }
 
 const DEPARTMENTS = [
-  "Electrical Installation",
-  "Electrical Engineering",
-  "Building Services",
-  "Plumbing",
-  "Construction",
-  "Health & Safety",
-  "General Studies",
+  'Electrical Installation',
+  'Electrical Engineering',
+  'Building Services',
+  'Plumbing',
+  'Construction',
+  'Health & Safety',
+  'General Studies',
 ];
 
 const SPECIALIZATIONS = [
-  "18th Edition",
-  "Inspection & Testing",
-  "Installation",
-  "Domestic",
-  "Commercial",
-  "Industrial",
-  "Solar PV",
-  "EV Charging",
-  "Fire Alarms",
-  "Emergency Lighting",
-  "PAT Testing",
+  '18th Edition',
+  'Inspection & Testing',
+  'Installation',
+  'Domestic',
+  'Commercial',
+  'Industrial',
+  'Solar PV',
+  'EV Charging',
+  'Fire Alarms',
+  'Emergency Lighting',
+  'PAT Testing',
 ];
 
 export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
-  const { addStaff } = useCollege();
+  const { addStaff } = useCollegeSupabase();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    role: "tutor" as StaffRole,
-    department: "",
-    employmentType: "Full-time" as "Full-time" | "Part-time" | "Agency" | "Contractor",
-    startDate: new Date().toISOString().split('T')[0],
-    maxTeachingHours: "",
-    teachingQual: "",
-    assessorQual: "",
+    name: '',
+    email: '',
+    phone: '',
+    role: 'tutor' as StaffRole,
+    department: '',
+    max_teaching_hours: '',
+    teaching_qual: '',
+    assessor_qual: '',
     specialisations: [] as string[],
   });
 
@@ -73,61 +71,54 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     setIsSubmitting(true);
 
     try {
-      // Generate avatar initials from name
-      const nameParts = formData.name.trim().split(' ');
-      const avatarInitials = nameParts.length >= 2
-        ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
-        : formData.name.substring(0, 2).toUpperCase();
-
-      addStaff({
+      await addStaff({
         name: formData.name,
         email: formData.email,
-        phone: formData.phone,
+        phone: formData.phone || null,
         role: formData.role,
-        department: formData.department,
+        department: formData.department || null,
         status: 'Active',
         specialisations: formData.specialisations,
-        qualifications: [],
-        avatarInitials,
-        employmentType: formData.employmentType,
-        startDate: formData.startDate,
-        maxTeachingHours: formData.maxTeachingHours ? parseInt(formData.maxTeachingHours) : undefined,
-        teachingQual: formData.teachingQual || undefined,
-        assessorQual: formData.assessorQual || undefined,
+        teaching_qual: formData.teaching_qual || null,
+        assessor_qual: formData.assessor_qual || null,
+        iqa_qual: null,
+        max_teaching_hours: formData.max_teaching_hours
+          ? parseInt(formData.max_teaching_hours)
+          : null,
+        college_id: null,
+        user_id: null,
+        photo_url: null,
       });
 
-      // Reset form and close dialog
       setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        role: "tutor",
-        department: "",
-        employmentType: "Full-time",
-        startDate: new Date().toISOString().split('T')[0],
-        maxTeachingHours: "",
-        teachingQual: "",
-        assessorQual: "",
+        name: '',
+        email: '',
+        phone: '',
+        role: 'tutor',
+        department: '',
+        max_teaching_hours: '',
+        teaching_qual: '',
+        assessor_qual: '',
         specialisations: [],
       });
       onOpenChange(false);
     } catch (error) {
-      console.error("Failed to add tutor:", error);
+      console.error('Failed to add tutor:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const toggleSpecialisation = (spec: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       specialisations: prev.specialisations.includes(spec)
-        ? prev.specialisations.filter(s => s !== spec)
-        : [...prev.specialisations, spec]
+        ? prev.specialisations.filter((s) => s !== spec)
+        : [...prev.specialisations, spec],
     }));
   };
 
@@ -145,169 +136,133 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
         </ResponsiveDialogHeader>
 
         <ResponsiveDialogBody>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Personal Information */}
-          <div className="space-y-3">
-            <div>
-              <Label htmlFor="name">Full Name *</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                placeholder="John Smith"
-                required
-              />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-3">
+              <div>
+                <Label htmlFor="name">Full Name *</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => handleChange('name', e.target.value)}
+                  placeholder="John Smith"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label htmlFor="email">Email *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    placeholder="john.smith@college.ac.uk"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone *</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                    placeholder="07XXX XXXXXX"
+                    required
+                  />
+                </div>
+              </div>
             </div>
+
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="role">Role *</Label>
+                <Select
+                  value={formData.role}
+                  onValueChange={(value) => handleChange('role', value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tutor">Tutor</SelectItem>
+                    <SelectItem value="head_of_department">Head of Department</SelectItem>
+                    <SelectItem value="support">Support Staff</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="department">Department *</Label>
+                <Select
+                  value={formData.department}
+                  onValueChange={(value) => handleChange('department', value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select department" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DEPARTMENTS.map((dept) => (
+                      <SelectItem key={dept} value={dept}>
+                        {dept}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <Label htmlFor="max_teaching_hours">Max Hours/Week</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  placeholder="john.smith@college.ac.uk"
-                  required
+                  id="max_teaching_hours"
+                  type="number"
+                  min="0"
+                  max="40"
+                  value={formData.max_teaching_hours}
+                  onChange={(e) => handleChange('max_teaching_hours', e.target.value)}
+                  placeholder="35"
                 />
               </div>
               <div>
-                <Label htmlFor="phone">Phone *</Label>
+                <Label htmlFor="teaching_qual">Teaching Qual</Label>
                 <Input
-                  id="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => handleChange("phone", e.target.value)}
-                  placeholder="07XXX XXXXXX"
-                  required
+                  id="teaching_qual"
+                  value={formData.teaching_qual}
+                  onChange={(e) => handleChange('teaching_qual', e.target.value)}
+                  placeholder="PGCE, AET"
+                />
+              </div>
+              <div>
+                <Label htmlFor="assessor_qual">Assessor Qual</Label>
+                <Input
+                  id="assessor_qual"
+                  value={formData.assessor_qual}
+                  onChange={(e) => handleChange('assessor_qual', e.target.value)}
+                  placeholder="L3 TAQA"
                 />
               </div>
             </div>
-          </div>
 
-          {/* Role & Department */}
-          <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label htmlFor="role">Role *</Label>
-              <Select
-                value={formData.role}
-                onValueChange={(value) => handleChange("role", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="tutor">Tutor</SelectItem>
-                  <SelectItem value="assessor">Assessor</SelectItem>
-                  <SelectItem value="head_of_department">Head of Department</SelectItem>
-                  <SelectItem value="support">Support Staff</SelectItem>
-                  <SelectItem value="admin">Admin</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label>Specialisations</Label>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {SPECIALIZATIONS.map((spec) => (
+                  <Button
+                    key={spec}
+                    type="button"
+                    variant={formData.specialisations.includes(spec) ? 'default' : 'outline'}
+                    size="sm"
+                    className={`h-11 touch-manipulation ${formData.specialisations.includes(spec) ? 'bg-elec-yellow hover:bg-elec-yellow/90 text-black' : ''}`}
+                    onClick={() => toggleSpecialisation(spec)}
+                  >
+                    {spec}
+                  </Button>
+                ))}
+              </div>
             </div>
-            <div>
-              <Label htmlFor="department">Department *</Label>
-              <Select
-                value={formData.department}
-                onValueChange={(value) => handleChange("department", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select department" />
-                </SelectTrigger>
-                <SelectContent>
-                  {DEPARTMENTS.map((dept) => (
-                    <SelectItem key={dept} value={dept}>
-                      {dept}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Employment */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <Label htmlFor="employmentType">Employment Type *</Label>
-              <Select
-                value={formData.employmentType}
-                onValueChange={(value) => handleChange("employmentType", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Full-time">Full-time</SelectItem>
-                  <SelectItem value="Part-time">Part-time</SelectItem>
-                  <SelectItem value="Agency">Agency</SelectItem>
-                  <SelectItem value="Contractor">Contractor</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="startDate">Start Date *</Label>
-              <Input
-                id="startDate"
-                type="date"
-                value={formData.startDate}
-                onChange={(e) => handleChange("startDate", e.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          {/* Teaching Details */}
-          <div className="grid grid-cols-3 gap-3">
-            <div>
-              <Label htmlFor="maxTeachingHours">Max Hours/Week</Label>
-              <Input
-                id="maxTeachingHours"
-                type="number"
-                min="0"
-                max="40"
-                value={formData.maxTeachingHours}
-                onChange={(e) => handleChange("maxTeachingHours", e.target.value)}
-                placeholder="35"
-              />
-            </div>
-            <div>
-              <Label htmlFor="teachingQual">Teaching Qual</Label>
-              <Input
-                id="teachingQual"
-                value={formData.teachingQual}
-                onChange={(e) => handleChange("teachingQual", e.target.value)}
-                placeholder="PGCE, AET"
-              />
-            </div>
-            <div>
-              <Label htmlFor="assessorQual">Assessor Qual</Label>
-              <Input
-                id="assessorQual"
-                value={formData.assessorQual}
-                onChange={(e) => handleChange("assessorQual", e.target.value)}
-                placeholder="L3 TAQA"
-              />
-            </div>
-          </div>
-
-          {/* Specialisations */}
-          <div>
-            <Label>Specialisations</Label>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {SPECIALIZATIONS.map((spec) => (
-                <Button
-                  key={spec}
-                  type="button"
-                  variant={formData.specialisations.includes(spec) ? "default" : "outline"}
-                  size="sm"
-                  className={`h-11 touch-manipulation ${formData.specialisations.includes(spec) ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black" : ""}`}
-                  onClick={() => toggleSpecialisation(spec)}
-                >
-                  {spec}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </form>
+          </form>
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
@@ -332,7 +287,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
                 Adding...
               </>
             ) : (
-              "Add Tutor"
+              'Add Tutor'
             )}
           </Button>
         </ResponsiveDialogFooter>

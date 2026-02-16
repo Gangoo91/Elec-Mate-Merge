@@ -12,7 +12,8 @@ export const SmartHomeSection3Intro = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p className="text-lg font-medium text-foreground mb-4">
-          Smart homes rely on three fundamental components that work together to create intelligent automation systems:
+          Smart homes rely on three fundamental components that work together to create intelligent
+          automation systems:
         </p>
         <div className="grid md:grid-cols-3 gap-4 mb-6">
           <div className="p-3 bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-600 rounded-lg text-center hover:scale-105 transition-transform">
@@ -25,14 +26,21 @@ export const SmartHomeSection3Intro = () => {
           </div>
           <div className="p-3 bg-gradient-to-br from-purple-900/30 to-purple-800/30 border border-purple-600 rounded-lg text-center hover:scale-105 transition-transform">
             <h4 className="font-semibold text-purple-200 mb-2">Controllers</h4>
-            <p className="text-sm text-purple-100">Process information and coordinate system responses</p>
+            <p className="text-sm text-purple-100">
+              Process information and coordinate system responses
+            </p>
           </div>
         </div>
         <p>
-          Understanding these core components is essential for designing, implementing, and troubleshooting smart home systems. Each component plays a crucial role in the automation ecosystem, and their effective integration determines the overall system performance and user experience.
+          Understanding these core components is essential for designing, implementing, and
+          troubleshooting smart home systems. Each component plays a crucial role in the automation
+          ecosystem, and their effective integration determines the overall system performance and
+          user experience.
         </p>
         <p>
-          This section provides detailed coverage of how these devices function individually and collectively, their various types and applications, communication methods, integration challenges, and emerging trends that will shape the future of smart home technology.
+          This section provides detailed coverage of how these devices function individually and
+          collectively, their various types and applications, communication methods, integration
+          challenges, and emerging trends that will shape the future of smart home technology.
         </p>
       </CardContent>
     </Card>

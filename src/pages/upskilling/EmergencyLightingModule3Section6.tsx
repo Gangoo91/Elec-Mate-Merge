@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m3s6-check1",
-    question: "What type of file is used to import luminaire data into lighting design software?",
-    options: [".PDF", ".IES or .LDT", ".CAD", ".BIM"],
+    id: 'emergencylighting-m3s6-check1',
+    question: 'What type of file is used to import luminaire data into lighting design software?',
+    options: ['.PDF', '.IES or .LDT', '.CAD', '.BIM'],
     correctIndex: 1,
-    explanation: "IES (Illuminating Engineering Society) and LDT (EULUMDAT) files contain photometric data that lighting design software uses to calculate illumination levels and uniformity."
+    explanation:
+      'IES (Illuminating Engineering Society) and LDT (EULUMDAT) files contain photometric data that lighting design software uses to calculate illumination levels and uniformity.',
   },
   {
-    id: "emergencylighting-m3s6-check2",
-    question: "What does DIALux calculate for emergency lighting design?",
-    options: ["Battery capacity only", "Lux levels and uniformity", "Cable sizes", "Fire ratings"],
+    id: 'emergencylighting-m3s6-check2',
+    question: 'What does DIALux calculate for emergency lighting design?',
+    options: ['Battery capacity only', 'Lux levels and uniformity', 'Cable sizes', 'Fire ratings'],
     correctIndex: 1,
-    explanation: "DIALux and similar software calculate lux levels at working planes, uniformity ratios, and can produce isolux diagrams. This verifies compliance with BS 5266-1 illumination requirements."
+    explanation:
+      'DIALux and similar software calculate lux levels at working planes, uniformity ratios, and can produce isolux diagrams. This verifies compliance with BS 5266-1 illumination requirements.',
   },
   {
-    id: "emergencylighting-m3s6-check3",
-    question: "What should you verify after software calculations?",
-    options: ["Software version only", "Results against BS 5266-1 requirements", "Computer specifications", "Internet connection"],
+    id: 'emergencylighting-m3s6-check3',
+    question: 'What should you verify after software calculations?',
+    options: [
+      'Software version only',
+      'Results against BS 5266-1 requirements',
+      'Computer specifications',
+      'Internet connection',
+    ],
     correctIndex: 1,
-    explanation: "Software calculations must be verified against BS 5266-1 requirements - minimum lux levels (1 lux escape, 0.5 lux anti-panic), uniformity ratios (40:1), and mandatory luminaire positions."
-  }
+    explanation:
+      'Software calculations must be verified against BS 5266-1 requirements - minimum lux levels (1 lux escape, 0.5 lux anti-panic), uniformity ratios (40:1), and mandatory luminaire positions.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Is lighting design software mandatory for emergency lighting?",
-    answer: "Not mandatory, but highly recommended for complex installations. Software provides documented calculations, isolux diagrams, and uniformity verification. Simple installations may use manufacturer spacing tables."
+    question: 'Is lighting design software mandatory for emergency lighting?',
+    answer:
+      'Not mandatory, but highly recommended for complex installations. Software provides documented calculations, isolux diagrams, and uniformity verification. Simple installations may use manufacturer spacing tables.',
   },
   {
-    question: "Which software is commonly used for emergency lighting design?",
-    answer: "DIALux and Relux are popular free options. AGi32 and Lighting Reality are commercial alternatives. Many manufacturers also provide proprietary design tools for their products."
+    question: 'Which software is commonly used for emergency lighting design?',
+    answer:
+      'DIALux and Relux are popular free options. AGi32 and Lighting Reality are commercial alternatives. Many manufacturers also provide proprietary design tools for their products.',
   },
   {
-    question: "How accurate are software calculations?",
-    answer: "Accuracy depends on correct input data - accurate room dimensions, surface reflectances, and valid photometric files. Results should be verified with on-site measurements after installation."
+    question: 'How accurate are software calculations?',
+    answer:
+      'Accuracy depends on correct input data - accurate room dimensions, surface reflectances, and valid photometric files. Results should be verified with on-site measurements after installation.',
   },
   {
-    question: "Can I use spreadsheets for calculations?",
-    answer: "Simple calculations (spacing, lux levels) can use spreadsheets or manual methods. However, software provides better visualisation, easier uniformity checking, and more comprehensive documentation."
-  }
+    question: 'Can I use spreadsheets for calculations?',
+    answer:
+      'Simple calculations (spacing, lux levels) can use spreadsheets or manual methods. However, software provides better visualisation, easier uniformity checking, and more comprehensive documentation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A designer needs to verify that a proposed emergency lighting layout achieves 40:1 uniformity. What is the best approach?",
-  options: [
-    "Visual estimation from the drawing",
-    "Lighting design software calculation",
-    "Counting luminaires",
-    "Measuring after installation only"
-  ],
-  correctAnswer: 1,
-  explanation: "Lighting design software calculates uniformity ratios across the defined area, identifying any points that exceed the 40:1 maximum. This allows design adjustments before installation."
-  }
+    question:
+      'A designer needs to verify that a proposed emergency lighting layout achieves 40:1 uniformity. What is the best approach?',
+    options: [
+      'Visual estimation from the drawing',
+      'Lighting design software calculation',
+      'Counting luminaires',
+      'Measuring after installation only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Lighting design software calculates uniformity ratios across the defined area, identifying any points that exceed the 40:1 maximum. This allows design adjustments before installation.',
+  },
 ];
 
 const EmergencyLightingModule3Section6 = () => {
   useSEO({
-    title: "Software and Calculation Tools | Emergency Lighting Module 3.6",
-    description: "Use DIALux, Relux, and other lighting design software for emergency lighting calculations, lux plotting, and compliance verification."
+    title: 'Software and Calculation Tools | Emergency Lighting Module 3.6',
+    description:
+      'Use DIALux, Relux, and other lighting design software for emergency lighting calculations, lux plotting, and compliance verification.',
   });
 
   return (
@@ -108,17 +123,29 @@ const EmergencyLightingModule3Section6 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>DIALux/Relux:</strong> Free design software</li>
-              <li><strong>IES/LDT:</strong> Photometric data files</li>
-              <li><strong>Output:</strong> Lux levels, uniformity</li>
+              <li>
+                <strong>DIALux/Relux:</strong> Free design software
+              </li>
+              <li>
+                <strong>IES/LDT:</strong> Photometric data files
+              </li>
+              <li>
+                <strong>Output:</strong> Lux levels, uniformity
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Benefits</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Accuracy:</strong> Calculated verification</li>
-              <li><strong>Visualisation:</strong> Isolux diagrams</li>
-              <li><strong>Documentation:</strong> Compliance evidence</li>
+              <li>
+                <strong>Accuracy:</strong> Calculated verification
+              </li>
+              <li>
+                <strong>Visualisation:</strong> Isolux diagrams
+              </li>
+              <li>
+                <strong>Documentation:</strong> Compliance evidence
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +155,12 @@ const EmergencyLightingModule3Section6 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Use lighting design software",
-              "Import photometric data files",
-              "Create room models",
-              "Interpret calculation results",
-              "Verify compliance requirements",
-              "Generate design documentation"
+              'Use lighting design software',
+              'Import photometric data files',
+              'Create room models',
+              'Interpret calculation results',
+              'Verify compliance requirements',
+              'Generate design documentation',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,18 +180,26 @@ const EmergencyLightingModule3Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Lighting design software provides accurate calculations of illumination
-              levels and uniformity, essential for verifying emergency lighting compliance.
+              Lighting design software provides accurate calculations of illumination levels and
+              uniformity, essential for verifying emergency lighting compliance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Popular Options</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>DIALux:</strong> Free, widely used</li>
-                  <li><strong>Relux:</strong> Free alternative</li>
-                  <li><strong>AGi32:</strong> Commercial option</li>
-                  <li><strong>Manufacturer tools:</strong> Product-specific</li>
+                  <li>
+                    <strong>DIALux:</strong> Free, widely used
+                  </li>
+                  <li>
+                    <strong>Relux:</strong> Free alternative
+                  </li>
+                  <li>
+                    <strong>AGi32:</strong> Commercial option
+                  </li>
+                  <li>
+                    <strong>Manufacturer tools:</strong> Product-specific
+                  </li>
                 </ul>
               </div>
               <div>
@@ -205,24 +240,31 @@ const EmergencyLightingModule3Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Accurate calculations require manufacturer photometric data. This data
-              describes how each luminaire distributes light.
+              Accurate calculations require manufacturer photometric data. This data describes how
+              each luminaire distributes light.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">File Types:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>IES (.ies):</strong> North American format, widely supported</li>
-                <li><strong>EULUMDAT (.ldt):</strong> European format</li>
-                <li><strong>Content:</strong> Intensity distribution, luminous flux, dimensions</li>
-                <li><strong>Source:</strong> Manufacturer websites, product databases</li>
+                <li>
+                  <strong>IES (.ies):</strong> North American format, widely supported
+                </li>
+                <li>
+                  <strong>EULUMDAT (.ldt):</strong> European format
+                </li>
+                <li>
+                  <strong>Content:</strong> Intensity distribution, luminous flux, dimensions
+                </li>
+                <li>
+                  <strong>Source:</strong> Manufacturer websites, product databases
+                </li>
               </ul>
             </div>
 
             <p>
-              Using actual photometric files rather than generic data ensures calculations
-              reflect real luminaire performance. Always use data for the specific model
-              being installed.
+              Using actual photometric files rather than generic data ensures calculations reflect
+              real luminaire performance. Always use data for the specific model being installed.
             </p>
           </div>
         </section>
@@ -237,18 +279,26 @@ const EmergencyLightingModule3Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Software calculations must be checked against BS 5266-1 requirements.
-              The software shows results, but the designer must verify compliance.
+              Software calculations must be checked against BS 5266-1 requirements. The software
+              shows results, but the designer must verify compliance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Check Points</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Minimum lux:</strong> 1 lux escape routes</li>
-                  <li><strong>Anti-panic:</strong> 0.5 lux minimum</li>
-                  <li><strong>Uniformity:</strong> 40:1 maximum ratio</li>
-                  <li><strong>Mandatory positions:</strong> 2m from exits</li>
+                  <li>
+                    <strong>Minimum lux:</strong> 1 lux escape routes
+                  </li>
+                  <li>
+                    <strong>Anti-panic:</strong> 0.5 lux minimum
+                  </li>
+                  <li>
+                    <strong>Uniformity:</strong> 40:1 maximum ratio
+                  </li>
+                  <li>
+                    <strong>Mandatory positions:</strong> 2m from exits
+                  </li>
                 </ul>
               </div>
               <div>
@@ -284,10 +334,18 @@ const EmergencyLightingModule3Section6 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Software Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong photometric file:</strong> — Use exact model being installed</li>
-                <li><strong>Unrealistic reflectances:</strong> — Dark surfaces absorb more light</li>
-                <li><strong>Missing maintained factor:</strong> — Account for light loss over time</li>
-                <li><strong>Wrong calculation plane:</strong> — Must be at floor level</li>
+                <li>
+                  <strong>Wrong photometric file:</strong> — Use exact model being installed
+                </li>
+                <li>
+                  <strong>Unrealistic reflectances:</strong> — Dark surfaces absorb more light
+                </li>
+                <li>
+                  <strong>Missing maintained factor:</strong> — Account for light loss over time
+                </li>
+                <li>
+                  <strong>Wrong calculation plane:</strong> — Must be at floor level
+                </li>
               </ul>
             </div>
           </div>
@@ -333,10 +391,7 @@ const EmergencyLightingModule3Section6 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

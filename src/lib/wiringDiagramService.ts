@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 export interface WiringGuidanceRequest {
   component_image_url: string;
@@ -59,12 +59,9 @@ export interface WiringGuidanceResponse {
 export async function generateWiringGuidance(
   request: WiringGuidanceRequest
 ): Promise<WiringGuidanceResponse> {
-  const { data, error } = await supabase.functions.invoke(
-    'wiring-diagram-generator-rag',
-    {
-      body: request,
-    }
-  );
+  const { data, error } = await supabase.functions.invoke('wiring-diagram-generator-rag', {
+    body: request,
+  });
 
   if (error) {
     console.error('❌ Wiring guidance generation failed:', error);

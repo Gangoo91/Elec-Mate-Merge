@@ -1,4 +1,4 @@
-import PortfolioManager from "@/components/portfolio/UltraFastPortfolioManager";
+import PortfolioManager from '@/components/portfolio/UltraFastPortfolioManager';
 import LiveTrackingMetrics from './LiveTrackingMetrics';
 
 const PortfolioBuildingTab = () => {

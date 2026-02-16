@@ -1,35 +1,44 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Tripping MCBs or RCDs - Module 7.3.1 | Level 2 Electrical Course";
-const DESCRIPTION = "Understanding the causes and professional response to tripping MCBs and RCDs in electrical installations according to BS 7671.";
+const TITLE = 'Tripping MCBs or RCDs - Module 7.3.1 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Understanding the causes and professional response to tripping MCBs and RCDs in electrical installations according to BS 7671.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What does an MCB protect against?",
-    options: ["Earth leakage", "Overcurrent conditions", "Voltage drop", "Power factor"],
+    question: 'What does an MCB protect against?',
+    options: ['Earth leakage', 'Overcurrent conditions', 'Voltage drop', 'Power factor'],
     correctIndex: 1,
-    explanation: "MCBs protect against overcurrent, which may result from overload or short circuit conditions, protecting conductors and equipment from overheating."
+    explanation:
+      'MCBs protect against overcurrent, which may result from overload or short circuit conditions, protecting conductors and equipment from overheating.',
   },
   {
     id: 2,
-    question: "What does an RCD protect against?",
-    options: ["Overload conditions", "Earth leakage and electric shock", "Short circuits", "Voltage fluctuations"],
+    question: 'What does an RCD protect against?',
+    options: [
+      'Overload conditions',
+      'Earth leakage and electric shock',
+      'Short circuits',
+      'Voltage fluctuations',
+    ],
     correctIndex: 1,
-    explanation: "RCDs protect against earth leakage and electric shock by monitoring current balance between line and neutral conductors."
+    explanation:
+      'RCDs protect against earth leakage and electric shock by monitoring current balance between line and neutral conductors.',
   },
   {
     id: 3,
-    question: "How quickly does an RCD typically trip at 30mA leakage?",
-    options: ["Within 5 seconds", "Within 40 milliseconds", "Within 1 minute", "Within 10 seconds"],
+    question: 'How quickly does an RCD typically trip at 30mA leakage?',
+    options: ['Within 5 seconds', 'Within 40 milliseconds', 'Within 1 minute', 'Within 10 seconds'],
     correctIndex: 1,
-    explanation: "RCDs trip almost instantly, usually within 40 milliseconds at 30mA leakage current to prevent electric shock."
-  }
+    explanation:
+      'RCDs trip almost instantly, usually within 40 milliseconds at 30mA leakage current to prevent electric shock.',
+  },
 ];
 
 const Module7Section3_1 = () => {
@@ -38,147 +47,163 @@ const Module7Section3_1 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What does an MCB protect against?",
+      question: 'What does an MCB protect against?',
       options: [
-        "Earth leakage current",
-        "Overcurrent conditions",
-        "Voltage drop",
-        "Power factor correction"
+        'Earth leakage current',
+        'Overcurrent conditions',
+        'Voltage drop',
+        'Power factor correction',
       ],
       correctAnswer: 1,
-      explanation: "MCBs protect against overcurrent, which may result from overload or short circuit conditions."
+      explanation:
+        'MCBs protect against overcurrent, which may result from overload or short circuit conditions.',
     },
     {
       id: 2,
-      question: "What does an RCD protect against?",
+      question: 'What does an RCD protect against?',
       options: [
-        "Overload conditions only",
-        "Earth leakage and electric shock",
-        "Short circuits only",
-        "Voltage fluctuations"
+        'Overload conditions only',
+        'Earth leakage and electric shock',
+        'Short circuits only',
+        'Voltage fluctuations',
       ],
       correctAnswer: 1,
-      explanation: "RCDs protect against earth leakage and electric shock by monitoring current balance."
+      explanation:
+        'RCDs protect against earth leakage and electric shock by monitoring current balance.',
     },
     {
       id: 3,
-      question: "How does an RCD detect a fault?",
+      question: 'How does an RCD detect a fault?',
       options: [
-        "By measuring voltage levels",
-        "By monitoring current balance between line and neutral",
-        "By checking resistance values",
-        "By measuring frequency changes"
+        'By measuring voltage levels',
+        'By monitoring current balance between line and neutral',
+        'By checking resistance values',
+        'By measuring frequency changes',
       ],
       correctAnswer: 1,
-      explanation: "RCDs work by constantly monitoring the balance between current flowing out through line and returning through neutral."
+      explanation:
+        'RCDs work by constantly monitoring the balance between current flowing out through line and returning through neutral.',
     },
     {
       id: 4,
-      question: "Give one common cause of repeated MCB tripping.",
+      question: 'Give one common cause of repeated MCB tripping.',
       options: [
-        "Low voltage supply",
-        "Overloaded circuit with too many appliances",
-        "High resistance connections",
-        "Poor power factor"
+        'Low voltage supply',
+        'Overloaded circuit with too many appliances',
+        'High resistance connections',
+        'Poor power factor',
       ],
       correctAnswer: 1,
-      explanation: "Overloaded circuits with too many appliances connected are a common cause of repeated MCB tripping."
+      explanation:
+        'Overloaded circuits with too many appliances connected are a common cause of repeated MCB tripping.',
     },
     {
       id: 5,
-      question: "Give one common cause of repeated RCD tripping.",
+      question: 'Give one common cause of repeated RCD tripping.',
       options: [
-        "Too many lights on the circuit",
-        "Moisture ingress or deteriorating insulation",
-        "High current demand",
-        "Low voltage conditions"
+        'Too many lights on the circuit',
+        'Moisture ingress or deteriorating insulation',
+        'High current demand',
+        'Low voltage conditions',
       ],
       correctAnswer: 1,
-      explanation: "Moisture ingress, deteriorating insulation, or faulty appliances leaking current to earth commonly cause RCD tripping."
+      explanation:
+        'Moisture ingress, deteriorating insulation, or faulty appliances leaking current to earth commonly cause RCD tripping.',
     },
     {
       id: 6,
-      question: "Why must frequent tripping never be ignored?",
+      question: 'Why must frequent tripping never be ignored?',
       options: [
         "It's inconvenient for users",
-        "It indicates dangerous conditions that could lead to fire or shock",
-        "It increases electricity bills",
-        "It damages the protective device"
+        'It indicates dangerous conditions that could lead to fire or shock',
+        'It increases electricity bills',
+        'It damages the protective device',
       ],
       correctAnswer: 1,
-      explanation: "Frequent tripping indicates dangerous conditions; ignoring it risks fire, injury, and potentially prosecution."
+      explanation:
+        'Frequent tripping indicates dangerous conditions; ignoring it risks fire, injury, and potentially prosecution.',
     },
     {
       id: 7,
-      question: "What sequence of steps should an electrician follow after a device trips?",
+      question: 'What sequence of steps should an electrician follow after a device trips?',
       options: [
-        "Reset immediately and monitor",
-        "Isolate, test, identify, repair, then re-energise",
-        "Replace the device with a higher rating",
-        "Bypass the device temporarily"
+        'Reset immediately and monitor',
+        'Isolate, test, identify, repair, then re-energise',
+        'Replace the device with a higher rating',
+        'Bypass the device temporarily',
       ],
       correctAnswer: 1,
-      explanation: "The professional process is: isolate the circuit, test using appropriate instruments, identify and correct the fault, then re-energise."
+      explanation:
+        'The professional process is: isolate the circuit, test using appropriate instruments, identify and correct the fault, then re-energise.',
     },
     {
       id: 8,
-      question: "What risk arises from repeatedly resetting a device without investigation?",
+      question: 'What risk arises from repeatedly resetting a device without investigation?',
       options: [
-        "Increased electricity costs",
-        "Escalating hazard potentially leading to fires or shocks",
-        "Faster wear of the device",
-        "Reduced system efficiency"
+        'Increased electricity costs',
+        'Escalating hazard potentially leading to fires or shocks',
+        'Faster wear of the device',
+        'Reduced system efficiency',
       ],
       correctAnswer: 1,
-      explanation: "Resetting without finding the cause risks escalating the hazard, potentially leading to fires, shocks, or equipment damage."
+      explanation:
+        'Resetting without finding the cause risks escalating the hazard, potentially leading to fires, shocks, or equipment damage.',
     },
     {
       id: 9,
-      question: "Why is it dangerous to replace a tripping breaker with a higher-rated one?",
+      question: 'Why is it dangerous to replace a tripping breaker with a higher-rated one?',
       options: [
-        "It costs more money",
-        "It removes the safety barrier that prevents serious accidents",
-        "It reduces system efficiency",
-        "It's not approved by manufacturers"
+        'It costs more money',
+        'It removes the safety barrier that prevents serious accidents',
+        'It reduces system efficiency',
+        "It's not approved by manufacturers",
       ],
       correctAnswer: 1,
-      explanation: "Uprating removes the safety barrier designed to protect against dangerous conditions, increasing risk of fire and injury."
+      explanation:
+        'Uprating removes the safety barrier designed to protect against dangerous conditions, increasing risk of fire and injury.',
     },
     {
       id: 10,
-      question: "In the real-world example of the student flats, what fault caused the RCD to trip?",
+      question:
+        'In the real-world example of the student flats, what fault caused the RCD to trip?',
       options: [
-        "Overloaded circuit",
-        "Internal insulation fault in microwave",
-        "Damaged cable",
-        "Poor connections"
+        'Overloaded circuit',
+        'Internal insulation fault in microwave',
+        'Damaged cable',
+        'Poor connections',
       ],
       correctAnswer: 1,
-      explanation: "The microwave had developed an internal insulation fault, causing current to leak to earth and trip the RCD repeatedly."
-    }
+      explanation:
+        'The microwave had developed an internal insulation fault, causing current to leak to earth and trip the RCD repeatedly.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Do MCBs and RCDs protect against the same conditions?",
-      answer: "No. MCBs protect against overcurrent conditions (overloads and short circuits), while RCDs protect against earth leakage and electric shock. They serve different protective functions."
+      question: 'Do MCBs and RCDs protect against the same conditions?',
+      answer:
+        'No. MCBs protect against overcurrent conditions (overloads and short circuits), while RCDs protect against earth leakage and electric shock. They serve different protective functions.',
     },
     {
-      question: "Can an appliance cause tripping?",
-      answer: "Yes, faulty or damp appliances are a common cause of RCD trips. Appliances with insulation faults or moisture ingress can leak current to earth, causing the RCD to operate."
+      question: 'Can an appliance cause tripping?',
+      answer:
+        'Yes, faulty or damp appliances are a common cause of RCD trips. Appliances with insulation faults or moisture ingress can leak current to earth, causing the RCD to operate.',
     },
     {
-      question: "Should you ever repeatedly reset a tripping device without investigating?",
-      answer: "Absolutely not. The cause must be identified and corrected before restoring power. Repeated resetting without investigation risks escalating dangerous conditions."
+      question: 'Should you ever repeatedly reset a tripping device without investigating?',
+      answer:
+        'Absolutely not. The cause must be identified and corrected before restoring power. Repeated resetting without investigation risks escalating dangerous conditions.',
     },
     {
-      question: "What tests should be carried out after a protective device trips?",
-      answer: "Appropriate tests include continuity and insulation resistance tests, earth fault loop impedance testing, and RCD trip-time testing to verify correct operation."
+      question: 'What tests should be carried out after a protective device trips?',
+      answer:
+        'Appropriate tests include continuity and insulation resistance tests, earth fault loop impedance testing, and RCD trip-time testing to verify correct operation.',
     },
     {
-      question: "How can you identify whether the fault is in the wiring or an appliance?",
-      answer: "Ask occupants about the circumstances - if tripping occurs only when a specific appliance is used, the fault likely lies with that appliance rather than the fixed wiring."
-    }
+      question: 'How can you identify whether the fault is in the wiring or an appliance?',
+      answer:
+        'Ask occupants about the circumstances - if tripping occurs only when a specific appliance is used, the fault likely lies with that appliance rather than the fixed wiring.',
+    },
   ];
 
   return (
@@ -213,7 +238,8 @@ const Module7Section3_1 = () => {
               Tripping MCBs or RCDs
             </h1>
             <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
-              Understanding the causes and professional response to protective device operation in electrical installations.
+              Understanding the causes and professional response to protective device operation in
+              electrical installations.
             </p>
           </header>
 
@@ -222,8 +248,13 @@ const Module7Section3_1 = () => {
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
             <ul className="text-white/80 space-y-1 text-sm list-disc pl-4">
               <li>MCBs and RCDs trip to prevent dangerous conditions, not as inconveniences.</li>
-              <li>MCBs protect against overcurrent; RCDs protect against earth leakage and shock.</li>
-              <li>Every trip must be investigated - resetting without finding the cause escalates risk.</li>
+              <li>
+                MCBs protect against overcurrent; RCDs protect against earth leakage and shock.
+              </li>
+              <li>
+                Every trip must be investigated - resetting without finding the cause escalates
+                risk.
+              </li>
             </ul>
           </div>
 
@@ -235,10 +266,20 @@ const Module7Section3_1 = () => {
             </h2>
             <ul className="text-white/80 space-y-2 text-sm list-disc pl-4">
               <li>Explain the function of MCBs and RCDs in electrical protection systems.</li>
-              <li>Describe the conditions that cause protective devices to trip and their warning significance.</li>
-              <li>Interpret tripping as a warning sign of underlying electrical faults requiring investigation.</li>
-              <li>Outline the correct professional response sequence when protective devices operate.</li>
-              <li>Apply systematic fault-finding techniques to identify and resolve tripping causes.</li>
+              <li>
+                Describe the conditions that cause protective devices to trip and their warning
+                significance.
+              </li>
+              <li>
+                Interpret tripping as a warning sign of underlying electrical faults requiring
+                investigation.
+              </li>
+              <li>
+                Outline the correct professional response sequence when protective devices operate.
+              </li>
+              <li>
+                Apply systematic fault-finding techniques to identify and resolve tripping causes.
+              </li>
             </ul>
           </section>
 
@@ -250,14 +291,22 @@ const Module7Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                When a Miniature Circuit Breaker (MCB) or Residual Current Device (RCD) trips, it is never just an inconvenience. These protective devices are designed to disconnect electrical supply in dangerous situations, preventing electric shock, overheating, and fire.
+                When a Miniature Circuit Breaker (MCB) or Residual Current Device (RCD) trips, it is
+                never just an inconvenience. These protective devices are designed to disconnect
+                electrical supply in dangerous situations, preventing electric shock, overheating,
+                and fire.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">MCB Protection Functions</p>
-                <p className="text-sm mb-2"><strong className="text-white">Overcurrent protection:</strong> MCBs protect against excessive current flow.</p>
+                <p className="text-sm mb-2">
+                  <strong className="text-white">Overcurrent protection:</strong> MCBs protect
+                  against excessive current flow.
+                </p>
                 <ul className="text-sm list-disc pl-4 space-y-1">
-                  <li>Protects against overload conditions when circuit current exceeds safe limits</li>
+                  <li>
+                    Protects against overload conditions when circuit current exceeds safe limits
+                  </li>
                   <li>Protects against short circuit faults with very high fault currents</li>
                   <li>Prevents conductor overheating that could cause fires</li>
                   <li>Protects accessories and equipment from thermal damage</li>
@@ -266,7 +315,10 @@ const Module7Section3_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">RCD Protection Functions</p>
-                <p className="text-sm mb-2"><strong className="text-white">Earth leakage protection:</strong> RCDs protect against shock and fire from earth faults.</p>
+                <p className="text-sm mb-2">
+                  <strong className="text-white">Earth leakage protection:</strong> RCDs protect
+                  against shock and fire from earth faults.
+                </p>
                 <ul className="text-sm list-disc pl-4 space-y-1">
                   <li>Monitors current balance between line and neutral conductors</li>
                   <li>Detects current leaking to earth through faults or human contact</li>
@@ -293,19 +345,26 @@ const Module7Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                When either device trips, the underlying reason must be investigated. Understanding common causes helps direct fault-finding efforts.
+                When either device trips, the underlying reason must be investigated. Understanding
+                common causes helps direct fault-finding efforts.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">MCB Tripping Causes</p>
-                <p className="text-sm mb-2"><strong className="text-white">Overload conditions:</strong> Too much load connected to the circuit.</p>
+                <p className="text-sm mb-2">
+                  <strong className="text-white">Overload conditions:</strong> Too much load
+                  connected to the circuit.
+                </p>
                 <ul className="text-sm list-disc pl-4 space-y-1 mb-3">
                   <li>Multiple high-current appliances used simultaneously</li>
                   <li>Extension leads with multiple devices plugged in</li>
                   <li>Gradual increase in load over time without circuit review</li>
                   <li>Appliances drawing more current than their rating due to faults</li>
                 </ul>
-                <p className="text-sm mb-2"><strong className="text-white">Short circuit faults:</strong> Direct connection between live conductors.</p>
+                <p className="text-sm mb-2">
+                  <strong className="text-white">Short circuit faults:</strong> Direct connection
+                  between live conductors.
+                </p>
                 <ul className="text-sm list-disc pl-4 space-y-1">
                   <li>Damaged cable insulation allowing conductor contact</li>
                   <li>Loose connections causing arcing and eventual short circuit</li>
@@ -316,7 +375,10 @@ const Module7Section3_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">RCD Tripping Causes</p>
-                <p className="text-sm mb-2"><strong className="text-white">Current leakage to earth:</strong> Through various paths.</p>
+                <p className="text-sm mb-2">
+                  <strong className="text-white">Current leakage to earth:</strong> Through various
+                  paths.
+                </p>
                 <ul className="text-sm list-disc pl-4 space-y-1">
                   <li>Moisture ingress into electrical equipment or accessories</li>
                   <li>Deteriorating insulation in cables or appliances</li>
@@ -343,7 +405,8 @@ const Module7Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                A professional electrician follows a clear, systematic process when protective devices trip.
+                A professional electrician follows a clear, systematic process when protective
+                devices trip.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
@@ -397,16 +460,24 @@ const Module7Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Electricians should also consider the information provided by occupants. For example, if an RCD trips only when a certain appliance is in use, the fault may lie with that appliance rather than the fixed wiring. If an MCB trips whenever several heaters or kettles are used at once, this points to an overload condition rather than a fault in the wiring itself.
+                Electricians should also consider the information provided by occupants. For
+                example, if an RCD trips only when a certain appliance is in use, the fault may lie
+                with that appliance rather than the fixed wiring. If an MCB trips whenever several
+                heaters or kettles are used at once, this points to an overload condition rather
+                than a fault in the wiring itself.
               </p>
               <p>
-                Asking the right questions often reveals important clues. Above all, protective devices must never be bypassed or uprated simply to stop tripping. Doing so removes the safety barrier that prevents serious accidents.
+                Asking the right questions often reveals important clues. Above all, protective
+                devices must never be bypassed or uprated simply to stop tripping. Doing so removes
+                the safety barrier that prevents serious accidents.
               </p>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
                 <p className="font-medium text-amber-400 mb-2">Critical Safety Point</p>
                 <p className="text-sm">
-                  Never bypass or uprate protective devices to stop tripping. This removes essential safety protection and significantly increases the risk of fire, electric shock, and equipment damage.
+                  Never bypass or uprate protective devices to stop tripping. This removes essential
+                  safety protection and significantly increases the risk of fire, electric shock,
+                  and equipment damage.
                 </p>
               </div>
             </div>
@@ -422,26 +493,38 @@ const Module7Section3_1 = () => {
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Student Flats RCD Tripping</p>
                 <p className="text-white/80 text-sm mb-2">
-                  In a block of student flats, residents reported that the RCD protecting their kitchen circuits tripped several times a day. Maintenance staff repeatedly reset it without investigation, telling students to "just plug things in more carefully."
+                  In a block of student flats, residents reported that the RCD protecting their
+                  kitchen circuits tripped several times a day. Maintenance staff repeatedly reset
+                  it without investigation, telling students to "just plug things in more
+                  carefully."
                 </p>
                 <p className="text-white/80 text-sm mb-2">
-                  Eventually, one student received a shock from the metal casing of a microwave, which had developed an internal insulation fault. The RCD had been providing repeated warnings that current was leaking to earth, but these were ignored until someone was injured.
+                  Eventually, one student received a shock from the metal casing of a microwave,
+                  which had developed an internal insulation fault. The RCD had been providing
+                  repeated warnings that current was leaking to earth, but these were ignored until
+                  someone was injured.
                 </p>
                 <p className="text-white/60 text-sm italic">
-                  A proper investigation at the first sign of tripping would have identified the faulty appliance and prevented harm.
+                  A proper investigation at the first sign of tripping would have identified the
+                  faulty appliance and prevented harm.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Office Circuit Overload</p>
                 <p className="text-white/80 text-sm mb-2">
-                  An office experienced frequent tripping of a ring circuit breaker during winter. Staff had plugged multiple portable heaters into extension leads, overloading the circuit.
+                  An office experienced frequent tripping of a ring circuit breaker during winter.
+                  Staff had plugged multiple portable heaters into extension leads, overloading the
+                  circuit.
                 </p>
                 <p className="text-white/80 text-sm mb-2">
-                  Instead of upgrading the breaker, the investigating electrician explained the cause and arranged for additional circuits to be installed. By addressing the underlying problem, the risk of overheating and fire was eliminated.
+                  Instead of upgrading the breaker, the investigating electrician explained the
+                  cause and arranged for additional circuits to be installed. By addressing the
+                  underlying problem, the risk of overheating and fire was eliminated.
                 </p>
                 <p className="text-white/60 text-sm italic">
-                  Proper load assessment and circuit provision resolved the issue safely without compromising protection.
+                  Proper load assessment and circuit provision resolved the issue safely without
+                  compromising protection.
                 </p>
               </div>
             </div>
@@ -472,13 +555,20 @@ const Module7Section3_1 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <div className="text-white/80 space-y-3 text-sm">
                 <p>
-                  Tripping MCBs and RCDs are not inconveniences; they are safety mechanisms designed to signal dangerous conditions. An MCB trips when a circuit carries too much current, protecting against overloads and short circuits. An RCD trips when current leaks to earth, protecting against electric shock.
+                  Tripping MCBs and RCDs are not inconveniences; they are safety mechanisms designed
+                  to signal dangerous conditions. An MCB trips when a circuit carries too much
+                  current, protecting against overloads and short circuits. An RCD trips when
+                  current leaks to earth, protecting against electric shock.
                 </p>
                 <p>
-                  Frequent tripping is a symptom of underlying faults, such as damaged insulation, overloading, or faulty appliances. The correct professional response is to isolate, test, identify, repair, and only then re-energise.
+                  Frequent tripping is a symptom of underlying faults, such as damaged insulation,
+                  overloading, or faulty appliances. The correct professional response is to
+                  isolate, test, identify, repair, and only then re-energise.
                 </p>
                 <p>
-                  Ignoring or bypassing these devices risks fire, injury, and prosecution. Every operation of protective devices should be treated as a warning requiring immediate investigation and appropriate corrective action.
+                  Ignoring or bypassing these devices risks fire, injury, and prosecution. Every
+                  operation of protective devices should be treated as a warning requiring immediate
+                  investigation and appropriate corrective action.
                 </p>
               </div>
             </div>
@@ -486,10 +576,7 @@ const Module7Section3_1 = () => {
 
           {/* Quiz */}
           <section className="mb-10">
-            <Quiz
-              questions={quizQuestions}
-              title="Tripping MCBs or RCDs"
-            />
+            <Quiz questions={quizQuestions} title="Tripping MCBs or RCDs" />
           </section>
 
           {/* Navigation */}

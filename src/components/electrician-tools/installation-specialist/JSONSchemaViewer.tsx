@@ -1,9 +1,12 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Code, Copy, Check, ChevronDown, Database } from "lucide-react";
-import { useState } from "react";
-import { INSTALLATION_METHOD_FULL_SCHEMA, INSTALLATION_METHOD_SIMPLIFIED_SCHEMA } from "@/types/installation-method-schema";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Code, Copy, Check, ChevronDown, Database } from 'lucide-react';
+import { useState } from 'react';
+import {
+  INSTALLATION_METHOD_FULL_SCHEMA,
+  INSTALLATION_METHOD_SIMPLIFIED_SCHEMA,
+} from '@/types/installation-method-schema';
 
 interface JSONSchemaViewerProps {
   fullMethodStatement: any;
@@ -14,16 +17,16 @@ export const JSONSchemaViewer = ({ fullMethodStatement, mode = 'full' }: JSONSch
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'data' | 'schema'>('data');
-  
-  const schema = mode === 'full' 
-    ? INSTALLATION_METHOD_FULL_SCHEMA 
-    : INSTALLATION_METHOD_SIMPLIFIED_SCHEMA;
+
+  const schema =
+    mode === 'full' ? INSTALLATION_METHOD_FULL_SCHEMA : INSTALLATION_METHOD_SIMPLIFIED_SCHEMA;
 
   const handleCopy = async () => {
-    const content = activeTab === 'schema' 
-      ? JSON.stringify(schema, null, 2)
-      : JSON.stringify(fullMethodStatement, null, 2);
-    
+    const content =
+      activeTab === 'schema'
+        ? JSON.stringify(schema, null, 2)
+        : JSON.stringify(fullMethodStatement, null, 2);
+
     try {
       await navigator.clipboard.writeText(content);
       setCopied(true);
@@ -44,16 +47,18 @@ export const JSONSchemaViewer = ({ fullMethodStatement, mode = 'full' }: JSONSch
                   <Database className="h-5 w-5 sm:h-4 sm:w-4 text-slate-400" />
                 </div>
                 <div className="text-center sm:text-left">
-                  <h3 className="font-bold text-base sm:text-lg text-foreground">JSON Schema & Output Data</h3>
+                  <h3 className="font-bold text-base sm:text-lg text-foreground">
+                    JSON Schema & Output Data
+                  </h3>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     View structured output and API schema ({mode} mode)
                   </p>
                 </div>
               </div>
-              <ChevronDown 
+              <ChevronDown
                 className={`h-5 w-5 text-muted-foreground transition-transform ${
                   isOpen ? 'rotate-180' : ''
-                }`} 
+                }`}
               />
             </div>
           </CollapsibleTrigger>
@@ -84,7 +89,7 @@ export const JSONSchemaViewer = ({ fullMethodStatement, mode = 'full' }: JSONSch
                 variant="outline"
                 onClick={handleCopy}
                 className="px-3 h-9"
-                title={copied ? "Copied!" : "Copy to clipboard"}
+                title={copied ? 'Copied!' : 'Copy to clipboard'}
               >
                 {copied ? (
                   <Check className="h-4 w-4 text-green-500" />
@@ -97,18 +102,18 @@ export const JSONSchemaViewer = ({ fullMethodStatement, mode = 'full' }: JSONSch
             {/* JSON Display */}
             <div className="bg-slate-950 rounded-lg p-3 sm:p-4 overflow-x-auto max-h-[400px] sm:max-h-[500px] overflow-y-auto border border-slate-800">
               <pre className="text-[10px] sm:text-xs font-mono text-slate-200 leading-relaxed">
-                {activeTab === 'schema' 
+                {activeTab === 'schema'
                   ? JSON.stringify(schema, null, 2)
-                  : JSON.stringify(fullMethodStatement, null, 2)
-                }
+                  : JSON.stringify(fullMethodStatement, null, 2)}
               </pre>
             </div>
 
             {/* Info Footer */}
             <div className="mt-3 pt-3 border-t border-border/50">
               <p className="text-xs text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">Developer Note:</strong> This schema describes the Installation Method Agent's structured output. 
-                Use this for API integration, custom PDF templates, or data export workflows.
+                <strong className="text-foreground">Developer Note:</strong> This schema describes
+                the Installation Method Agent's structured output. Use this for API integration,
+                custom PDF templates, or data export workflows.
               </p>
             </div>
           </CollapsibleContent>

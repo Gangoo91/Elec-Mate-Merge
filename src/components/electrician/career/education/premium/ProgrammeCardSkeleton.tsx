@@ -3,21 +3,18 @@
  * Matches exact layout for seamless loading experience
  */
 
-import { motion } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 interface ProgrammeCardSkeletonProps {
   count?: number;
   className?: string;
 }
 
-const ProgrammeCardSkeleton = ({
-  count = 1,
-  className,
-}: ProgrammeCardSkeletonProps) => {
+const ProgrammeCardSkeleton = ({ count = 1, className }: ProgrammeCardSkeletonProps) => {
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {Array.from({ length: count }).map((_, index) => (
         <motion.div
           key={index}

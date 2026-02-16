@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { MessageSquare, User, Heart, PhoneCall } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { MessageSquare, User, Heart, PhoneCall } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const TalkToSomeone = () => {
   const [isRequestSubmitted, setIsRequestSubmitted] = useState(false);
 
   const handleCounselorRequest = () => {
     setIsRequestSubmitted(true);
-    toast.success("A counselor will contact you within 24 hours", {
-      description: "For immediate support, call Samaritans at 116 123"
+    toast.success('A counselor will contact you within 24 hours', {
+      description: 'For immediate support, call Samaritans at 116 123',
     });
   };
 
@@ -45,8 +45,10 @@ const TalkToSomeone = () => {
       <div className="grid grid-cols-2 gap-3">
         {/* Message a Mate - Blue */}
         <Link to="/electrician/mental-health" className="block">
-          <div className="p-4 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/20 to-blue-600/10
-            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col">
+          <div
+            className="p-4 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/20 to-blue-600/10
+            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
+          >
             <div className="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center mb-2">
               <MessageSquare className="h-6 w-6 text-blue-400" />
             </div>
@@ -57,8 +59,10 @@ const TalkToSomeone = () => {
 
         {/* Find a Mentor - Emerald */}
         <Link to="/apprentice/mentor" className="block">
-          <div className="p-4 rounded-xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10
-            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col">
+          <div
+            className="p-4 rounded-xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10
+            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
+          >
             <div className="w-12 h-12 rounded-full bg-emerald-500/30 flex items-center justify-center mb-2">
               <User className="h-6 w-6 text-emerald-400" />
             </div>
@@ -73,28 +77,35 @@ const TalkToSomeone = () => {
           disabled={isRequestSubmitted}
           className="text-left w-full"
         >
-          <div className={`p-4 rounded-xl border transition-all duration-300 min-h-[100px] flex flex-col
+          <div
+            className={`p-4 rounded-xl border transition-all duration-300 min-h-[100px] flex flex-col
             touch-manipulation active:scale-[0.98]
-            ${isRequestSubmitted
-              ? 'border-purple-500/50 bg-purple-500/20'
-              : 'border-purple-500/30 bg-gradient-to-br from-purple-500/20 to-purple-600/10'
-            }`}>
+            ${
+              isRequestSubmitted
+                ? 'border-purple-500/50 bg-purple-500/20'
+                : 'border-purple-500/30 bg-gradient-to-br from-purple-500/20 to-purple-600/10'
+            }`}
+          >
             <div className="w-12 h-12 rounded-full bg-purple-500/30 flex items-center justify-center mb-2">
-              <Heart className={`h-6 w-6 ${isRequestSubmitted ? 'text-purple-300' : 'text-purple-400'}`} />
+              <Heart
+                className={`h-6 w-6 ${isRequestSubmitted ? 'text-purple-300' : 'text-purple-400'}`}
+              />
             </div>
             <div className="text-sm font-medium text-foreground">
               {isRequestSubmitted ? 'Request Sent' : 'Request Counselor'}
             </div>
             <div className="text-xs text-white/70">
-              {isRequestSubmitted ? 'We\'ll contact you soon' : 'Professional support'}
+              {isRequestSubmitted ? "We'll contact you soon" : 'Professional support'}
             </div>
           </div>
         </button>
 
         {/* Text SHOUT - Green */}
         <a href="sms:85258?body=SHOUT" className="block">
-          <div className="p-4 rounded-xl border border-green-500/30 bg-gradient-to-br from-green-500/20 to-green-600/10
-            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col">
+          <div
+            className="p-4 rounded-xl border border-green-500/30 bg-gradient-to-br from-green-500/20 to-green-600/10
+            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
+          >
             <div className="w-12 h-12 rounded-full bg-green-500/30 flex items-center justify-center mb-2">
               <MessageSquare className="h-6 w-6 text-green-400" />
             </div>

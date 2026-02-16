@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, XCircle, RotateCcw } from 'lucide-react';
@@ -19,10 +18,13 @@ const QuizResults = ({ questions, selectedAnswers, onRestart }: QuizResultsProps
 
   const getScoreMessage = (score: number) => {
     const percentage = (score / questions.length) * 100;
-    if (percentage >= 80) return "Excellent! You have a strong understanding of inspection and testing fundamentals.";
-    if (percentage >= 60) return "Good work! You have a solid grasp of the basics with room for improvement.";
-    if (percentage >= 40) return "Fair effort. Consider reviewing the material to strengthen your understanding.";
-    return "You may need to review the content more thoroughly before proceeding.";
+    if (percentage >= 80)
+      return 'Excellent! You have a strong understanding of inspection and testing fundamentals.';
+    if (percentage >= 60)
+      return 'Good work! You have a solid grasp of the basics with room for improvement.';
+    if (percentage >= 40)
+      return 'Fair effort. Consider reviewing the material to strengthen your understanding.';
+    return 'You may need to review the content more thoroughly before proceeding.';
   };
 
   const score = calculateScore();
@@ -38,16 +40,14 @@ const QuizResults = ({ questions, selectedAnswers, onRestart }: QuizResultsProps
             <div className="text-3xl font-bold text-elec-yellow mb-2">
               {score} / {questions.length}
             </div>
-            <div className="text-foreground mb-4">
-              {getScoreMessage(score)}
-            </div>
+            <div className="text-foreground mb-4">{getScoreMessage(score)}</div>
           </div>
-          
+
           <div className="space-y-4">
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <Card key={question.id} className="bg-elec-gray border-transparent">
                   <CardContent className="p-4">
@@ -61,12 +61,15 @@ const QuizResults = ({ questions, selectedAnswers, onRestart }: QuizResultsProps
                         <p className="text-foreground font-medium text-sm mb-2">
                           {question.question}
                         </p>
-                        <p className={`text-xs mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                        <p
+                          className={`text-xs mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}
+                        >
                           <strong>Your answer:</strong> {question.options[userAnswer]}
                         </p>
                         {!isCorrect && (
                           <p className="text-green-400 text-xs mb-2">
-                            <strong>Correct answer:</strong> {question.options[question.correctAnswer]}
+                            <strong>Correct answer:</strong>{' '}
+                            {question.options[question.correctAnswer]}
                           </p>
                         )}
                         <p className="text-foreground text-xs">
@@ -79,12 +82,9 @@ const QuizResults = ({ questions, selectedAnswers, onRestart }: QuizResultsProps
               );
             })}
           </div>
-          
+
           <div className="text-center pt-4">
-            <Button 
-              onClick={onRestart}
-              className="bg-elec-yellow text-black hover:bg-yellow-400"
-            >
+            <Button onClick={onRestart} className="bg-elec-yellow text-black hover:bg-yellow-400">
               <RotateCcw className="mr-2 h-4 w-4" />
               Retake Quiz
             </Button>

@@ -9,14 +9,14 @@
  * - "Other / Unlisted Job" option at bottom
  */
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo } from 'react';
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from '@/components/ui/drawer';
 import {
   Command,
   CommandEmpty,
@@ -24,10 +24,10 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
-import { useJobTypes, JobTypeConfig } from "@/hooks/useJobTypes";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/command';
+import { Button } from '@/components/ui/button';
+import { useJobTypes, JobTypeConfig } from '@/hooks/useJobTypes';
+import { cn } from '@/lib/utils';
 import {
   FileText,
   ChevronDown,
@@ -43,19 +43,19 @@ import {
   Home,
   X,
   Check,
-} from "lucide-react";
+} from 'lucide-react';
 
 // Category icons
 const CATEGORY_ICONS: Record<string, typeof Zap> = {
-  "EV Charging": Zap,
-  "Installation & Wiring": Plug,
-  "Emergency & Call-outs": AlertTriangle,
-  "Consumer Units & Boards": Shield,
-  "Earthing & Bonding": Cable,
-  "Repairs & Maintenance": Wrench,
-  "Commercial & Industrial": Building2,
-  "Testing & Certification": ClipboardCheck,
-  "Smart Home": Home,
+  'EV Charging': Zap,
+  'Installation & Wiring': Plug,
+  'Emergency & Call-outs': AlertTriangle,
+  'Consumer Units & Boards': Shield,
+  'Earthing & Bonding': Cable,
+  'Repairs & Maintenance': Wrench,
+  'Commercial & Industrial': Building2,
+  'Testing & Certification': ClipboardCheck,
+  'Smart Home': Home,
 };
 
 interface JobTypeSelectorMobileProps {
@@ -70,14 +70,14 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
   className,
 }) => {
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { data } = useJobTypes();
   const byCategory = data?.byCategory ?? {};
   const configs = data?.configs ?? [];
 
   // Find selected config
   const selectedConfig = useMemo(() => {
-    if (!value || value === "Other") return null;
+    if (!value || value === 'Other') return null;
     return configs.find((c) => c.job_type === value) || null;
   }, [value, configs]);
 
@@ -105,7 +105,7 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
   const handleSelect = (jobType: string, config: JobTypeConfig | null) => {
     onChange(jobType, config);
     setOpen(false);
-    setSearch("");
+    setSearch('');
   };
 
   const handleClear = (e: React.MouseEvent) => {
@@ -122,25 +122,20 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
           <Button
             variant="outline"
             className={cn(
-              "w-full h-14 justify-between text-left font-normal",
-              "bg-neutral-800 border-2 border-white/10 hover:border-yellow-400/50 hover:bg-neutral-800",
-              "rounded-xl px-4 touch-manipulation",
-              value && "border-yellow-400/30"
+              'w-full h-14 justify-between text-left font-normal',
+              'bg-neutral-800 border-2 border-white/10 hover:border-yellow-400/50 hover:bg-neutral-800',
+              'rounded-xl px-4 touch-manipulation',
+              value && 'border-yellow-400/30'
             )}
           >
             <div className="flex items-center gap-3 min-w-0 flex-1">
               <div
                 className={cn(
-                  "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0",
-                  value ? "bg-yellow-400/20" : "bg-white/10"
+                  'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
+                  value ? 'bg-yellow-400/20' : 'bg-white/10'
                 )}
               >
-                <FileText
-                  className={cn(
-                    "h-5 w-5",
-                    value ? "text-yellow-400" : "text-white/60"
-                  )}
-                />
+                <FileText className={cn('h-5 w-5', value ? 'text-yellow-400' : 'text-white/60')} />
               </div>
               <div className="min-w-0 flex-1">
                 {value ? (
@@ -171,9 +166,7 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
         <DrawerContent className="h-[85vh] bg-neutral-900 border-white/10">
           <DrawerHeader className="pb-0 text-left">
             <DrawerTitle className="text-white">Select Job Type</DrawerTitle>
-            <p className="text-sm text-white/60">
-              Choose from 77 tracked job types
-            </p>
+            <p className="text-sm text-white/60">Choose from 77 tracked job types</p>
           </DrawerHeader>
 
           <Command className="bg-transparent" shouldFilter={false}>
@@ -185,8 +178,8 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
                   value={search}
                   onValueChange={setSearch}
                   className={cn(
-                    "h-12 pl-10 bg-neutral-800 border-white/10 rounded-xl text-white",
-                    "placeholder:text-white/30 focus:border-yellow-400/50"
+                    'h-12 pl-10 bg-neutral-800 border-white/10 rounded-xl text-white',
+                    'placeholder:text-white/30 focus:border-yellow-400/50'
                   )}
                 />
               </div>
@@ -200,7 +193,7 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
                   <Button
                     variant="link"
                     className="text-yellow-400 mt-2"
-                    onClick={() => handleSelect("Other", null)}
+                    onClick={() => handleSelect('Other', null)}
                   >
                     Use "Other / Unlisted Job"
                   </Button>
@@ -216,9 +209,7 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
                       <div className="flex items-center gap-2 py-2 text-white/70">
                         <CategoryIcon className="h-4 w-4 text-yellow-400" />
                         <span className="font-semibold">{category}</span>
-                        <span className="text-xs text-white/40">
-                          ({jobs.length})
-                        </span>
+                        <span className="text-xs text-white/40">({jobs.length})</span>
                       </div>
                     }
                     className="mb-2"
@@ -229,22 +220,18 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
                         value={job.job_type}
                         onSelect={() => handleSelect(job.job_type, job)}
                         className={cn(
-                          "h-14 rounded-xl cursor-pointer mb-1 touch-manipulation",
-                          "hover:bg-white/5 active:bg-white/10",
-                          value === job.job_type && "bg-yellow-400/10 border border-yellow-400/30"
+                          'h-14 rounded-xl cursor-pointer mb-1 touch-manipulation',
+                          'hover:bg-white/5 active:bg-white/10',
+                          value === job.job_type && 'bg-yellow-400/10 border border-yellow-400/30'
                         )}
                       >
                         <div className="flex items-center justify-between w-full">
                           <div className="min-w-0 flex-1">
-                            <p className="font-medium text-white truncate">
-                              {job.job_type}
-                            </p>
+                            <p className="font-medium text-white truncate">{job.job_type}</p>
                             <p className="text-xs text-white/50">
                               Per {job.unit}
                               {job.attributes && job.attributes.length > 0 && (
-                                <span className="text-yellow-400/70 ml-1">
-                                  • Has options
-                                </span>
+                                <span className="text-yellow-400/70 ml-1">• Has options</span>
                               )}
                             </p>
                           </div>
@@ -262,11 +249,11 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
               <div className="pt-4 border-t border-white/10 mt-4">
                 <CommandItem
                   value="Other"
-                  onSelect={() => handleSelect("Other", null)}
+                  onSelect={() => handleSelect('Other', null)}
                   className={cn(
-                    "h-14 rounded-xl cursor-pointer touch-manipulation",
-                    "hover:bg-white/5 active:bg-white/10",
-                    value === "Other" && "bg-yellow-400/10 border border-yellow-400/30"
+                    'h-14 rounded-xl cursor-pointer touch-manipulation',
+                    'hover:bg-white/5 active:bg-white/10',
+                    value === 'Other' && 'bg-yellow-400/10 border border-yellow-400/30'
                   )}
                 >
                   <div className="flex items-center justify-between w-full">
@@ -275,17 +262,11 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
                         <FileText className="h-5 w-5 text-white/60" />
                       </div>
                       <div>
-                        <p className="font-medium text-white">
-                          Other / Unlisted Job
-                        </p>
-                        <p className="text-xs text-white/50">
-                          Describe your job manually
-                        </p>
+                        <p className="font-medium text-white">Other / Unlisted Job</p>
+                        <p className="text-xs text-white/50">Describe your job manually</p>
                       </div>
                     </div>
-                    {value === "Other" && (
-                      <Check className="h-5 w-5 text-yellow-400" />
-                    )}
+                    {value === 'Other' && <Check className="h-5 w-5 text-yellow-400" />}
                   </div>
                 </CommandItem>
               </div>

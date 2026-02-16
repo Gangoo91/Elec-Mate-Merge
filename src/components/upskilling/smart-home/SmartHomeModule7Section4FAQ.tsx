@@ -5,24 +5,29 @@ const SmartHomeModule7Section4FAQ = () => {
   const faqs = [
     {
       question: "Can I use the smart device's app to turn off power for installation?",
-      answer: "No. Software controls and apps cannot provide safe isolation. Always isolate at the consumer unit using mechanical lock-off devices and verify with proving units."
+      answer:
+        'No. Software controls and apps cannot provide safe isolation. Always isolate at the consumer unit using mechanical lock-off devices and verify with proving units.',
     },
     {
-      question: "Do low-voltage smart devices like door sensors need RCD protection?",
-      answer: "The sensors themselves don't need RCD protection, but any mains circuits that power hubs or controllers typically do under BS 7671. Check the specific installation requirements."
+      question: 'Do low-voltage smart devices like door sensors need RCD protection?',
+      answer:
+        "The sensors themselves don't need RCD protection, but any mains circuits that power hubs or controllers typically do under BS 7671. Check the specific installation requirements.",
     },
     {
       question: "What's the minimum insulation resistance reading for smart home circuits?",
-      answer: "BS 7671 requires minimum 1 MΩ for new installations. However, some sensitive electronic devices may require disconnection during testing to avoid damage."
+      answer:
+        'BS 7671 requires minimum 1 MΩ for new installations. However, some sensitive electronic devices may require disconnection during testing to avoid damage.',
     },
     {
-      question: "Can I run smart device cables in the same trunking as mains cables?",
-      answer: "Only if using segregated trunking with physical barriers between mains and low-voltage circuits, or if using appropriate cable types (e.g., SWA for data)."
+      question: 'Can I run smart device cables in the same trunking as mains cables?',
+      answer:
+        'Only if using segregated trunking with physical barriers between mains and low-voltage circuits, or if using appropriate cable types (e.g., SWA for data).',
     },
     {
-      question: "How often should I test RCD protection in smart home installations?",
-      answer: "Test during initial installation and commissioning. Recommend quarterly testing to clients using the test button, with annual professional testing for critical systems."
-    }
+      question: 'How often should I test RCD protection in smart home installations?',
+      answer:
+        'Test during initial installation and commissioning. Recommend quarterly testing to clients using the test button, with annual professional testing for critical systems.',
+    },
   ];
 
   return (

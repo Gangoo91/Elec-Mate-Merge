@@ -1,4 +1,13 @@
-import { Wrench, CheckCircle, AlertTriangle, Settings, Shield, Eye, Battery, Target } from 'lucide-react';
+import {
+  Wrench,
+  CheckCircle,
+  AlertTriangle,
+  Settings,
+  Shield,
+  Eye,
+  Battery,
+  Target,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const TestEquipmentPractical = () => {
@@ -11,18 +20,24 @@ export const TestEquipmentPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6 pt-0">
-        
         {/* Pre-Test Setup Procedure */}
         <div className="space-y-3 sm:space-y-4">
-          <h3 className="text-lg sm:text-xl font-semibold text-foreground">Pre-Test Setup Procedure</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground">
+            Pre-Test Setup Procedure
+          </h3>
           <div className="bg-[#323232] rounded-lg p-3 sm:p-4">
             <div className="space-y-3 sm:space-y-4">
-              
               <div className="flex gap-3 sm:gap-4">
-                <span className="w-7 h-7 sm:w-8 sm:h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs sm:text-sm font-bold flex-shrink-0">1</span>
+                <span className="w-7 h-7 sm:w-8 sm:h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs sm:text-sm font-bold flex-shrink-0">
+                  1
+                </span>
                 <div>
-                  <h4 className="text-foreground font-medium text-sm sm:text-base">Equipment Inspection</h4>
-                  <p className="text-foreground text-xs sm:text-sm mb-2">Perform comprehensive visual and functional checks</p>
+                  <h4 className="text-foreground font-medium text-sm sm:text-base">
+                    Equipment Inspection
+                  </h4>
+                  <p className="text-foreground text-xs sm:text-sm mb-2">
+                    Perform comprehensive visual and functional checks
+                  </p>
                   <ul className="text-foreground text-xs space-y-1">
                     <li>• Check equipment exterior for damage</li>
                     <li>• Verify all controls and displays function correctly</li>
@@ -33,10 +48,14 @@ export const TestEquipmentPractical = () => {
               </div>
 
               <div className="flex gap-4">
-                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  2
+                </span>
                 <div>
                   <h4 className="text-foreground font-medium">Test Lead Verification</h4>
-                  <p className="text-foreground text-sm mb-2">Ensure test leads are safe and accurate</p>
+                  <p className="text-foreground text-sm mb-2">
+                    Ensure test leads are safe and accurate
+                  </p>
                   <ul className="text-foreground text-xs space-y-1">
                     <li>• Inspect lead insulation for damage or wear</li>
                     <li>• Test continuity through each lead</li>
@@ -47,10 +66,14 @@ export const TestEquipmentPractical = () => {
               </div>
 
               <div className="flex gap-4">
-                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  3
+                </span>
                 <div>
                   <h4 className="text-foreground font-medium">Reference Standard Check</h4>
-                  <p className="text-foreground text-sm mb-2">Verify accuracy using known references</p>
+                  <p className="text-foreground text-sm mb-2">
+                    Verify accuracy using known references
+                  </p>
                   <ul className="text-foreground text-xs space-y-1">
                     <li>• Test against calibrated reference resistor</li>
                     <li>• Verify voltage measurement accuracy</li>
@@ -61,10 +84,14 @@ export const TestEquipmentPractical = () => {
               </div>
 
               <div className="flex gap-4">
-                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  4
+                </span>
                 <div>
                   <h4 className="text-foreground font-medium">Environmental Assessment</h4>
-                  <p className="text-foreground text-sm mb-2">Record conditions that may affect measurements</p>
+                  <p className="text-foreground text-sm mb-2">
+                    Record conditions that may affect measurements
+                  </p>
                   <ul className="text-foreground text-xs space-y-1">
                     <li>• Measure and record ambient temperature</li>
                     <li>• Note humidity levels if significant</li>
@@ -80,8 +107,7 @@ export const TestEquipmentPractical = () => {
         {/* Test Mode Configuration */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Test Mode Configuration</h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
-            
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
             <div className="bg-[#323232] rounded-lg p-3 sm:p-4">
               <h4 className="text-foreground font-medium mb-3 flex items-center gap-2 text-sm sm:text-base">
                 <Settings className="h-5 w-5 text-elec-yellow" />
@@ -140,14 +166,16 @@ export const TestEquipmentPractical = () => {
 
         {/* Safety Protocols */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Safety Protocols for Live Testing</h3>
-          
+          <h3 className="text-xl font-semibold text-foreground">
+            Safety Protocols for Live Testing
+          </h3>
+
           <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4 space-y-4">
             <div className="flex items-center gap-3">
               <Shield className="h-6 w-6 text-red-400" />
               <h4 className="text-red-200 font-medium">Critical Safety Procedures</h4>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <h5 className="text-red-200 text-sm font-medium mb-2">Before Testing:</h5>
@@ -176,15 +204,16 @@ export const TestEquipmentPractical = () => {
         {/* Troubleshooting Common Issues */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Troubleshooting Common Issues</h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
-            
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
             <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-3 sm:p-4">
               <h4 className="text-yellow-200 font-medium mb-3 flex items-center gap-2 text-sm sm:text-base">
                 <AlertTriangle className="h-5 w-5" />
                 Unstable Readings
               </h4>
               <div className="space-y-2">
-                <p className="text-foreground text-xs sm:text-sm">When measurements fluctuate significantly:</p>
+                <p className="text-foreground text-xs sm:text-sm">
+                  When measurements fluctuate significantly:
+                </p>
                 <ul className="text-foreground text-xs space-y-1">
                   <li>• Check test lead connections for security</li>
                   <li>• Clean contact points to remove oxidation</li>
@@ -201,7 +230,9 @@ export const TestEquipmentPractical = () => {
                 High Readings
               </h4>
               <div className="space-y-2">
-                <p className="text-foreground text-xs sm:text-sm">When impedance readings are higher than expected:</p>
+                <p className="text-foreground text-xs sm:text-sm">
+                  When impedance readings are higher than expected:
+                </p>
                 <ul className="text-foreground text-xs space-y-1">
                   <li>• Verify correct circuit identification</li>
                   <li>• Check for open circuit conditions</li>
@@ -218,7 +249,9 @@ export const TestEquipmentPractical = () => {
                 Equipment Malfunction
               </h4>
               <div className="space-y-2">
-                <p className="text-foreground text-xs sm:text-sm">When equipment fails to operate correctly:</p>
+                <p className="text-foreground text-xs sm:text-sm">
+                  When equipment fails to operate correctly:
+                </p>
                 <ul className="text-foreground text-xs space-y-1">
                   <li>• Check battery voltage and connections</li>
                   <li>• Verify correct test lead connection</li>
@@ -250,8 +283,10 @@ export const TestEquipmentPractical = () => {
 
         {/* Environmental Considerations */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Environmental Adaptation Strategies</h3>
-          
+          <h3 className="text-xl font-semibold text-foreground">
+            Environmental Adaptation Strategies
+          </h3>
+
           <div className="bg-[#323232] rounded-lg p-4 space-y-4">
             <h4 className="text-foreground font-medium">Temperature Compensation Techniques</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -264,7 +299,7 @@ export const TestEquipmentPractical = () => {
                   <li>• Use heated storage between tests</li>
                 </ul>
               </div>
-              
+
               <div className="bg-red-600/10 border border-red-600/20 rounded p-3">
                 <h5 className="text-red-200 text-sm font-medium mb-2">Hot Conditions</h5>
                 <ul className="text-foreground text-xs space-y-1">
@@ -274,7 +309,7 @@ export const TestEquipmentPractical = () => {
                   <li>• Schedule testing during cooler periods</li>
                 </ul>
               </div>
-              
+
               <div className="bg-green-600/10 border border-green-600/20 rounded p-3">
                 <h5 className="text-green-200 text-sm font-medium mb-2">High Humidity</h5>
                 <ul className="text-foreground text-xs space-y-1">
@@ -338,7 +373,6 @@ export const TestEquipmentPractical = () => {
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

@@ -59,15 +59,24 @@ const CircuitCardInner = ({
     const zsOk = hasZs ? parseFloat(circuit.zs) <= parseFloat(circuit.maxZs) : null;
     const hasInsulation = circuit.insulationResistance || circuit.insulationLiveNeutral;
     const insulationValue = circuit.insulationResistance || circuit.insulationLiveNeutral;
-    const insulationOk = insulationValue ?
-      (insulationValue.startsWith('>') || parseFloat(insulationValue.replace('>', '')) >= 1) : null;
+    const insulationOk = insulationValue
+      ? insulationValue.startsWith('>') || parseFloat(insulationValue.replace('>', '')) >= 1
+      : null;
     const hasPolarity = circuit.polarity;
-    const polarityOk = hasPolarity ?
-      (circuit.polarity === 'Correct' || circuit.polarity === 'Satisfactory' || circuit.polarity === '✓') : null;
+    const polarityOk = hasPolarity
+      ? circuit.polarity === 'Correct' ||
+        circuit.polarity === 'Satisfactory' ||
+        circuit.polarity === '✓'
+      : null;
     const hasR1R2 = circuit.r1r2;
 
     // RCD checks
-    const hasRcd = !!(circuit.rcdRating || circuit.rcdOneX || circuit.protectiveDeviceType?.includes('RCD') || circuit.protectiveDeviceType?.includes('RCBO'));
+    const hasRcd = !!(
+      circuit.rcdRating ||
+      circuit.rcdOneX ||
+      circuit.protectiveDeviceType?.includes('RCD') ||
+      circuit.protectiveDeviceType?.includes('RCBO')
+    );
     const rcdOk = circuit.rcdOneX ? parseFloat(circuit.rcdOneX) < 300 : null;
 
     // Validations for each field
@@ -81,7 +90,8 @@ const CircuitCardInner = ({
 
     // Count completed tests
     const completedTests = [hasR1R2, hasInsulation, hasZs, hasPolarity].filter(Boolean).length;
-    const hasFail = zsOk === false || insulationOk === false || polarityOk === false || rcdOk === false;
+    const hasFail =
+      zsOk === false || insulationOk === false || polarityOk === false || rcdOk === false;
 
     // Determine status
     let statusLevel: 'success' | 'warning' | 'error' | 'pending';
@@ -89,8 +99,14 @@ const CircuitCardInner = ({
 
     if (hasFail) {
       statusLevel = 'error';
-      statusLabel = zsOk === false ? 'Zs Fail' : rcdOk === false ? 'RCD Fail' :
-                   insulationOk === false ? 'Ir Fail' : 'Fail';
+      statusLabel =
+        zsOk === false
+          ? 'Zs Fail'
+          : rcdOk === false
+            ? 'RCD Fail'
+            : insulationOk === false
+              ? 'Ir Fail'
+              : 'Fail';
     } else if (completedTests === 4) {
       statusLevel = 'success';
       statusLabel = 'Complete';
@@ -169,7 +185,8 @@ const CircuitCardInner = ({
             <div className="flex items-center gap-2 mt-1">
               {/* Protection Device Badge */}
               <Badge variant="secondary" className="h-5 px-2 text-[11px] font-medium bg-muted/80">
-                {circuit.protectiveDeviceType || 'MCB'} {circuit.protectiveDeviceCurve || ''}{circuit.protectiveDeviceRating || '--'}A
+                {circuit.protectiveDeviceType || 'MCB'} {circuit.protectiveDeviceCurve || ''}
+                {circuit.protectiveDeviceRating || '--'}A
               </Badge>
               {/* RCD Indicator */}
               {hasRcd && (
@@ -221,7 +238,11 @@ const CircuitCardInner = ({
           />
           <ValueTile
             label="Polarity"
-            value={circuit.polarity === 'Correct' || circuit.polarity === 'Satisfactory' ? '✓' : circuit.polarity}
+            value={
+              circuit.polarity === 'Correct' || circuit.polarity === 'Satisfactory'
+                ? '✓'
+                : circuit.polarity
+            }
             validation={validations.polarity}
             isStatus
             onTap={onQuickEdit ? () => onQuickEdit('polarity') : undefined}
@@ -231,11 +252,7 @@ const CircuitCardInner = ({
         {/* RCD Row - Only if RCD protected */}
         {hasRcd && (
           <div className="grid grid-cols-4 gap-2 mt-2 pt-2 border-t border-border/30">
-            <ValueTile
-              label="RCD Type"
-              value={circuit.rcdType || '--'}
-              compact
-            />
+            <ValueTile label="RCD Type" value={circuit.rcdType || '--'} compact />
             <ValueTile
               label="Trip"
               value={circuit.rcdOneX}
@@ -245,7 +262,11 @@ const CircuitCardInner = ({
             />
             <ValueTile
               label="Test Btn"
-              value={circuit.rcdTestButton === 'Pass' || circuit.rcdTestButton === '✓' ? '✓' : circuit.rcdTestButton}
+              value={
+                circuit.rcdTestButton === 'Pass' || circuit.rcdTestButton === '✓'
+                  ? '✓'
+                  : circuit.rcdTestButton
+              }
               isStatus
               compact
             />
@@ -412,27 +433,33 @@ const ValueTile: React.FC<ValueTileProps> = ({
       }}
     >
       {/* Label */}
-      <span className={cn(
-        'text-muted-foreground font-medium leading-none',
-        compact ? 'text-[9px]' : 'text-[10px]'
-      )}>
+      <span
+        className={cn(
+          'text-muted-foreground font-medium leading-none',
+          compact ? 'text-[9px]' : 'text-[10px]'
+        )}
+      >
         {label}
       </span>
 
       {/* Value */}
-      <span className={cn(
-        'font-bold leading-tight mt-0.5',
-        compact ? 'text-sm' : 'text-lg',
-        valueColors[statusValidation],
-        isStatus && displayValue === '✓' && 'text-green-500',
-        isStatus && displayValue === '✗' && 'text-red-500'
-      )}>
+      <span
+        className={cn(
+          'font-bold leading-tight mt-0.5',
+          compact ? 'text-sm' : 'text-lg',
+          valueColors[statusValidation],
+          isStatus && displayValue === '✓' && 'text-green-500',
+          isStatus && displayValue === '✗' && 'text-red-500'
+        )}
+      >
         {displayValue}
         {value && unit && !isStatus && (
-          <span className={cn(
-            'font-normal text-muted-foreground ml-0.5',
-            compact ? 'text-[8px]' : 'text-[10px]'
-          )}>
+          <span
+            className={cn(
+              'font-normal text-muted-foreground ml-0.5',
+              compact ? 'text-[8px]' : 'text-[10px]'
+            )}
+          >
             {unit}
           </span>
         )}
@@ -440,9 +467,7 @@ const ValueTile: React.FC<ValueTileProps> = ({
 
       {/* Sub Value (e.g., max Zs) */}
       {subValue && !compact && (
-        <span className="text-[9px] text-muted-foreground leading-none mt-0.5">
-          {subValue}
-        </span>
+        <span className="text-[9px] text-muted-foreground leading-none mt-0.5">{subValue}</span>
       )}
     </div>
   );

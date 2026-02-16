@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Drawer,
   DrawerContent,
@@ -6,22 +6,29 @@ import {
   DrawerTitle,
   DrawerDescription,
   DrawerFooter,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Calendar, Mail, Check, Loader2, X, ChevronDown, 
-  Clock, FileText, AlertTriangle 
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Employee } from "@/services/employeeService";
-import { JobAssignmentWithDetails } from "@/services/jobAssignmentService";
-import { Job } from "@/services/jobService";
+} from '@/components/ui/drawer';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Calendar,
+  Mail,
+  Check,
+  Loader2,
+  X,
+  ChevronDown,
+  Clock,
+  FileText,
+  AlertTriangle,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Employee } from '@/services/employeeService';
+import { JobAssignmentWithDetails } from '@/services/jobAssignmentService';
+import { Job } from '@/services/jobService';
 
 interface AssignmentDetailsSheetProps {
   open: boolean;
@@ -51,9 +58,11 @@ export function AssignmentDetailsSheet({
   onRemoveWorker,
   isSubmitting,
 }: AssignmentDetailsSheetProps) {
-  const [startDate, setStartDate] = useState(job.start_date || new Date().toISOString().split('T')[0]);
-  const [endDate, setEndDate] = useState(job.end_date || "");
-  const [notes, setNotes] = useState("");
+  const [startDate, setStartDate] = useState(
+    job.start_date || new Date().toISOString().split('T')[0]
+  );
+  const [endDate, setEndDate] = useState(job.end_date || '');
+  const [notes, setNotes] = useState('');
   const [sendEmail, setSendEmail] = useState(true);
 
   const hasClashes = Object.keys(clashWarnings).length > 0;
@@ -75,9 +84,7 @@ export function AssignmentDetailsSheet({
             <Calendar className="h-5 w-5 text-elec-yellow" />
             Assignment Details
           </DrawerTitle>
-          <DrawerDescription>
-            Configure dates and notification settings
-          </DrawerDescription>
+          <DrawerDescription>Configure dates and notification settings</DrawerDescription>
         </DrawerHeader>
 
         <ScrollArea className="flex-1 px-4">
@@ -94,10 +101,8 @@ export function AssignmentDetailsSheet({
                     <div
                       key={worker.id}
                       className={cn(
-                        "flex items-center gap-2 pl-1 pr-2 py-1 rounded-full border transition-all",
-                        hasClash 
-                          ? "bg-warning/10 border-warning/30" 
-                          : "bg-muted border-transparent"
+                        'flex items-center gap-2 pl-1 pr-2 py-1 rounded-full border transition-all',
+                        hasClash ? 'bg-warning/10 border-warning/30' : 'bg-muted border-transparent'
                       )}
                     >
                       <Avatar className="h-6 w-6">
@@ -109,9 +114,7 @@ export function AssignmentDetailsSheet({
                         </AvatarFallback>
                       </Avatar>
                       <span className="text-sm font-medium">{worker.name.split(' ')[0]}</span>
-                      {hasClash && (
-                        <AlertTriangle className="h-3.5 w-3.5 text-warning" />
-                      )}
+                      {hasClash && <AlertTriangle className="h-3.5 w-3.5 text-warning" />}
                       <button
                         onClick={() => onRemoveWorker(worker.id)}
                         className="h-5 w-5 rounded-full hover:bg-background flex items-center justify-center"
@@ -142,7 +145,10 @@ export function AssignmentDetailsSheet({
             {/* Date Fields */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="start-date" className="text-sm font-medium flex items-center gap-1.5">
+                <Label
+                  htmlFor="start-date"
+                  className="text-sm font-medium flex items-center gap-1.5"
+                >
                   <Clock className="h-4 w-4 text-muted-foreground" />
                   Start Date
                 </Label>
@@ -186,14 +192,16 @@ export function AssignmentDetailsSheet({
             </div>
 
             {/* Email Notification */}
-            <div 
+            <div
               className="flex items-center gap-3 p-4 rounded-xl bg-muted/50 border cursor-pointer"
               onClick={() => setSendEmail(!sendEmail)}
             >
-              <div className={cn(
-                "shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all",
-                sendEmail ? "bg-elec-yellow border-elec-yellow" : "border-muted-foreground/30"
-              )}>
+              <div
+                className={cn(
+                  'shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all',
+                  sendEmail ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground/30'
+                )}
+              >
                 {sendEmail && <Check className="h-4 w-4 text-elec-yellow-foreground" />}
               </div>
               <div className="flex-1">
@@ -228,11 +236,7 @@ export function AssignmentDetailsSheet({
               </>
             )}
           </Button>
-          <Button
-            variant="ghost"
-            onClick={() => onOpenChange(false)}
-            className="w-full"
-          >
+          <Button variant="ghost" onClick={() => onOpenChange(false)} className="w-full">
             Back to Selection
           </Button>
         </DrawerFooter>

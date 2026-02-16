@@ -9,10 +9,14 @@ export const SignOffTransferQuickCheck = () => {
           <AlertCircle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
           <div className="space-y-2">
             <p className="font-semibold text-blue-400 text-sm sm:text-base">
-              Quick Check: What document confirms the transfer of responsibility from installer to client?
+              Quick Check: What document confirms the transfer of responsibility from installer to
+              client?
             </p>
             <div className="text-foreground text-sm sm:text-base">
-              <p className="mb-2"><strong>Answer:</strong> The <strong>Handover Form</strong> (or Handover Certificate)</p>
+              <p className="mb-2">
+                <strong>Answer:</strong> The <strong>Handover Form</strong> (or Handover
+                Certificate)
+              </p>
               <p className="mb-2">This document must include:</p>
               <ul className="list-disc list-inside space-y-1 ml-2">
                 <li>Client or Responsible Person's signature acknowledging receipt</li>
@@ -21,7 +25,9 @@ export const SignOffTransferQuickCheck = () => {
                 <li>Confirmation of training provided</li>
                 <li>Installer's signature and company details</li>
               </ul>
-              <p className="mt-3 text-amber-400 font-semibold">⚠️ Both parties must retain a signed copy for their records.</p>
+              <p className="mt-3 text-amber-400 font-semibold">
+                ⚠️ Both parties must retain a signed copy for their records.
+              </p>
             </div>
           </div>
         </div>

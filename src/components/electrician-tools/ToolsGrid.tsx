@@ -1,8 +1,8 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { DollarSign, Package, Eye, Star, Clock, ExternalLink, ShoppingCart } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { type ToolItem } from "@/hooks/useToolsData";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { DollarSign, Package, Eye, Star, Clock, ExternalLink, ShoppingCart } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { type ToolItem } from '@/hooks/useToolsData';
 
 interface ToolsGridProps {
   tools: ToolItem[];
@@ -10,21 +10,21 @@ interface ToolsGridProps {
 }
 
 const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
-  const filteredTools = tools.filter(tool => 
-    !excludeIds.includes(tool.id || 0)
-  );
+  const filteredTools = tools.filter((tool) => !excludeIds.includes(tool.id || 0));
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Hand Tools": "bg-blue-600/90 border-blue-400 text-foreground",
-      "Power Tools": "bg-orange-600/90 border-orange-400 text-foreground",
-      "Testing Equipment": "bg-purple-600/90 border-purple-400 text-foreground",
-      "Safety Equipment": "bg-red-600/90 border-red-400 text-foreground",
-      "Cable & Wire": "bg-green-600/90 border-green-400 text-foreground",
-      "Electrical Components": "bg-cyan-600/90 border-cyan-400 text-foreground",
-      "Tools": "bg-yellow-600/90 border-yellow-400 text-elec-dark",
+      'Hand Tools': 'bg-blue-600/90 border-blue-400 text-foreground',
+      'Power Tools': 'bg-orange-600/90 border-orange-400 text-foreground',
+      'Testing Equipment': 'bg-purple-600/90 border-purple-400 text-foreground',
+      'Safety Equipment': 'bg-red-600/90 border-red-400 text-foreground',
+      'Cable & Wire': 'bg-green-600/90 border-green-400 text-foreground',
+      'Electrical Components': 'bg-cyan-600/90 border-cyan-400 text-foreground',
+      Tools: 'bg-yellow-600/90 border-yellow-400 text-elec-dark',
     };
-    return colors[category as keyof typeof colors] || "bg-elec-light/90 border-white/30 text-foreground";
+    return (
+      colors[category as keyof typeof colors] || 'bg-elec-light/90 border-white/30 text-foreground'
+    );
   };
 
   const getToolImage = (tool: ToolItem) => {
@@ -33,12 +33,19 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
     }
     // Default tool category images
     const categoryImages = {
-      "Hand Tools": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format",
-      "Power Tools": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&h=250&fit=crop&auto=format",
-      "Testing Equipment": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format",
-      "Safety Equipment": "https://images.unsplash.com/photo-1581093458791-9d15c0f8e8d6?w=400&h=250&fit=crop&auto=format",
+      'Hand Tools':
+        'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format',
+      'Power Tools':
+        'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&h=250&fit=crop&auto=format',
+      'Testing Equipment':
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format',
+      'Safety Equipment':
+        'https://images.unsplash.com/photo-1581093458791-9d15c0f8e8d6?w=400&h=250&fit=crop&auto=format',
     };
-    return categoryImages[tool.category as keyof typeof categoryImages] || "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format";
+    return (
+      categoryImages[tool.category as keyof typeof categoryImages] ||
+      'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format'
+    );
   };
 
   const getStockStatusColor = (status: string) => {
@@ -84,11 +91,14 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
           const isDeal = tool.isOnSale || discount > 0;
 
           return (
-            <div 
+            <div
               key={tool.id || index}
               className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
               onClick={() => {
-                const url = tool.productUrl || tool.view_product_url || `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
+                const url =
+                  tool.productUrl ||
+                  tool.view_product_url ||
+                  `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
                 window.open(url, '_blank', 'noopener,noreferrer');
               }}
             >
@@ -104,23 +114,34 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                
+
                 {/* Category Badge */}
                 <div className="absolute top-3 left-3 z-10">
-                  <Badge className={cn("text-xs font-medium shadow-lg backdrop-blur-sm", getCategoryColor(tool.category || "Tools"))}>
-                    {tool.category || "Tools"}
+                  <Badge
+                    className={cn(
+                      'text-xs font-medium shadow-lg backdrop-blur-sm',
+                      getCategoryColor(tool.category || 'Tools')
+                    )}
+                  >
+                    {tool.category || 'Tools'}
                   </Badge>
                 </div>
 
                 {/* Deal/Supplier Badge */}
                 <div className="absolute top-3 right-3 z-10">
                   {isDeal ? (
-                    <Badge variant="outline" className="border-elec-yellow bg-elec-dark/90 text-elec-yellow text-xs shadow-lg backdrop-blur-sm">
-                      {discount > 0 ? `${discount}% OFF` : "DEAL"}
+                    <Badge
+                      variant="outline"
+                      className="border-elec-yellow bg-elec-dark/90 text-elec-yellow text-xs shadow-lg backdrop-blur-sm"
+                    >
+                      {discount > 0 ? `${discount}% OFF` : 'DEAL'}
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="border-white/30 bg-elec-dark/90 text-foreground text-xs shadow-lg backdrop-blur-sm">
-                      {tool.supplier || "Screwfix"}
+                    <Badge
+                      variant="outline"
+                      className="border-white/30 bg-elec-dark/90 text-foreground text-xs shadow-lg backdrop-blur-sm"
+                    >
+                      {tool.supplier || 'Screwfix'}
                     </Badge>
                   )}
                 </div>
@@ -137,18 +158,21 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                     </div>
                     <div className="flex items-center gap-1">
                       <Package className="h-3 w-3" />
-                      <span className={getStockStatusColor(tool.stockStatus || "In Stock")}>
-                        {tool.stockStatus || "In Stock"}
+                      <span className={getStockStatusColor(tool.stockStatus || 'In Stock')}>
+                        {tool.stockStatus || 'In Stock'}
                       </span>
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
-                    <span>{tool.supplier || "Screwfix"}</span>
+                    <span>{tool.supplier || 'Screwfix'}</span>
                   </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                <h3
+                  className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base"
+                  style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
+                >
                   {tool.name}
                 </h3>
 
@@ -163,7 +187,10 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                     </span>
                   </div>
                   {tool.highlights && tool.highlights.length > 0 && (
-                    <p className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+                    <p
+                      className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm"
+                      style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}
+                    >
                       {tool.highlights[0]}
                     </p>
                   )}
@@ -175,14 +202,17 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                     <ShoppingCart className="h-3 w-3" />
                     <span>Order today</span>
                   </div>
-                  
+
                   <Button
                     size="sm"
                     variant="ghost"
                     className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
                     onClick={(e) => {
                       e.stopPropagation();
-                      const url = tool.productUrl || tool.view_product_url || `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
+                      const url =
+                        tool.productUrl ||
+                        tool.view_product_url ||
+                        `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
                       window.open(url, '_blank', 'noopener,noreferrer');
                     }}
                   >

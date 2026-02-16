@@ -7,34 +7,34 @@ const EnergyEfficiencyModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Walkthrough and Inventory Surveys",
+      title: 'Walkthrough and Inventory Surveys',
       icon: Eye,
-      description: "Conducting comprehensive site surveys and equipment inventories"
+      description: 'Conducting comprehensive site surveys and equipment inventories',
     },
     {
       id: 2,
-      title: "Data Collection (Manual, Smart Meters, Logs)",
+      title: 'Data Collection (Manual, Smart Meters, Logs)',
       icon: ClipboardList,
-      description: "Methods for gathering energy consumption data"
+      description: 'Methods for gathering energy consumption data',
     },
     {
       id: 3,
-      title: "Comparing to Benchmarks and Tariffs",
+      title: 'Comparing to Benchmarks and Tariffs',
       icon: TrendingUp,
-      description: "Benchmarking performance against industry standards"
+      description: 'Benchmarking performance against industry standards',
     },
     {
       id: 4,
-      title: "Tools and Software for Audits",
+      title: 'Tools and Software for Audits',
       icon: Wrench,
-      description: "Software tools and equipment for energy auditing"
+      description: 'Software tools and equipment for energy auditing',
     },
     {
       id: 5,
-      title: "Audit Reports and Cost/Carbon Breakdown",
+      title: 'Audit Reports and Cost/Carbon Breakdown',
       icon: FileText,
-      description: "Creating comprehensive audit reports with recommendations"
-    }
+      description: 'Creating comprehensive audit reports with recommendations',
+    },
   ];
 
   return (

@@ -7,34 +7,34 @@ const PATTestingModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Overview of Appliance Classes",
+      title: 'Overview of Appliance Classes',
       icon: Layers,
-      description: "Introduction to Class I, II, and III classification system"
+      description: 'Introduction to Class I, II, and III classification system',
     },
     {
       id: 2,
-      title: "Class I: Protective Earthing Explained",
+      title: 'Class I: Protective Earthing Explained',
       icon: Shield,
-      description: "Understanding earthed appliances and protection methods"
+      description: 'Understanding earthed appliances and protection methods',
     },
     {
       id: 3,
-      title: "Class II: Double Insulation Principles",
+      title: 'Class II: Double Insulation Principles',
       icon: HardHat,
-      description: "Double-insulated appliances and safety principles"
+      description: 'Double-insulated appliances and safety principles',
     },
     {
       id: 4,
-      title: "Class III: Extra-Low Voltage and SELV",
+      title: 'Class III: Extra-Low Voltage and SELV',
       icon: Zap,
-      description: "Low-voltage appliances and safety systems"
+      description: 'Low-voltage appliances and safety systems',
     },
     {
       id: 5,
-      title: "Identifying Appliance Class by Markings and Labels",
+      title: 'Identifying Appliance Class by Markings and Labels',
       icon: Tag,
-      description: "Visual identification of appliance classes"
-    }
+      description: 'Visual identification of appliance classes',
+    },
   ];
 
   return (

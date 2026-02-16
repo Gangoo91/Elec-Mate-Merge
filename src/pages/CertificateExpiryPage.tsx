@@ -48,13 +48,8 @@ type TimeFilter = 'all' | 'overdue' | '30days' | '60days' | '90days';
 
 export default function CertificateExpiryPage() {
   const navigate = useNavigate();
-  const {
-    reminders,
-    isLoading,
-    markAsContacted,
-    markAsBooked,
-    deleteReminder,
-  } = useExpiryReminders();
+  const { reminders, isLoading, markAsContacted, markAsBooked, deleteReminder } =
+    useExpiryReminders();
 
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('all');
   const [selectedReminder, setSelectedReminder] = useState<ExpiryReminder | null>(null);
@@ -152,269 +147,276 @@ export default function CertificateExpiryPage() {
       </header>
 
       <main className="p-4 pb-24 space-y-4 max-w-4xl mx-auto">
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Card className="border-red-500/20 bg-red-500/5">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-red-500">{stats.overdue}</p>
-            <p className="text-xs text-muted-foreground">Overdue</p>
-          </CardContent>
-        </Card>
-        <Card className="border-orange-500/20 bg-orange-500/5">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-orange-500">{stats.urgent}</p>
-            <p className="text-xs text-muted-foreground">Within 30 days</p>
-          </CardContent>
-        </Card>
-        <Card className="border-yellow-500/20 bg-yellow-500/5">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-yellow-500">{stats.warning}</p>
-            <p className="text-xs text-muted-foreground">30-60 days</p>
-          </CardContent>
-        </Card>
-        <Card className="border-green-500/20 bg-green-500/5">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-green-500">
-              <PoundSterling className="h-5 w-5 inline -mt-1" />
-              {stats.revenue.toLocaleString()}
-            </p>
-            <p className="text-xs text-muted-foreground">Revenue opportunity</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Filter */}
-      <div className="flex items-center gap-3">
-        <Select value={timeFilter} onValueChange={(v) => setTimeFilter(v as TimeFilter)}>
-          <SelectTrigger className="w-[180px] h-11 touch-manipulation">
-            <SelectValue placeholder="Filter by time" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All certificates</SelectItem>
-            <SelectItem value="overdue">Overdue</SelectItem>
-            <SelectItem value="30days">Next 30 days</SelectItem>
-            <SelectItem value="60days">Next 60 days</SelectItem>
-            <SelectItem value="90days">Next 90 days</SelectItem>
-          </SelectContent>
-        </Select>
-        <Badge variant="outline">{filteredReminders.length} certificates</Badge>
-      </div>
-
-      {/* Reminders List */}
-      {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <Card className="border-red-500/20 bg-red-500/5">
+            <CardContent className="p-4 text-center">
+              <p className="text-2xl font-bold text-red-500">{stats.overdue}</p>
+              <p className="text-xs text-muted-foreground">Overdue</p>
+            </CardContent>
+          </Card>
+          <Card className="border-orange-500/20 bg-orange-500/5">
+            <CardContent className="p-4 text-center">
+              <p className="text-2xl font-bold text-orange-500">{stats.urgent}</p>
+              <p className="text-xs text-muted-foreground">Within 30 days</p>
+            </CardContent>
+          </Card>
+          <Card className="border-yellow-500/20 bg-yellow-500/5">
+            <CardContent className="p-4 text-center">
+              <p className="text-2xl font-bold text-yellow-500">{stats.warning}</p>
+              <p className="text-xs text-muted-foreground">30-60 days</p>
+            </CardContent>
+          </Card>
+          <Card className="border-green-500/20 bg-green-500/5">
+            <CardContent className="p-4 text-center">
+              <p className="text-2xl font-bold text-green-500">
+                <PoundSterling className="h-5 w-5 inline -mt-1" />
+                {stats.revenue.toLocaleString()}
+              </p>
+              <p className="text-xs text-muted-foreground">Revenue opportunity</p>
+            </CardContent>
+          </Card>
         </div>
-      ) : filteredReminders.length === 0 ? (
-        <div className="text-center py-12 space-y-4">
-          <Calendar className="h-12 w-12 mx-auto text-muted-foreground" />
-          <div>
-            <p className="text-lg font-medium">
-              {reminders?.length === 0 ? 'No expiring certificates' : 'No certificates match filter'}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {reminders?.length === 0
-                ? 'Complete some inspections and they will appear here'
-                : 'Try selecting a different time range'}
-            </p>
+
+        {/* Filter */}
+        <div className="flex items-center gap-3">
+          <Select value={timeFilter} onValueChange={(v) => setTimeFilter(v as TimeFilter)}>
+            <SelectTrigger className="w-[180px] h-11 touch-manipulation">
+              <SelectValue placeholder="Filter by time" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All certificates</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
+              <SelectItem value="30days">Next 30 days</SelectItem>
+              <SelectItem value="60days">Next 60 days</SelectItem>
+              <SelectItem value="90days">Next 90 days</SelectItem>
+            </SelectContent>
+          </Select>
+          <Badge variant="outline">{filteredReminders.length} certificates</Badge>
+        </div>
+
+        {/* Reminders List */}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
           </div>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {filteredReminders.map((reminder) => {
-            const urgency = getExpiryUrgency(reminder.expiry_date);
-            const colors = getExpiryColorClasses(urgency);
-            const days = getDaysUntilExpiry(reminder.expiry_date);
-
-            return (
-              <Card
-                key={reminder.id}
-                className={`cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all touch-manipulation ${colors.border}`}
-                onClick={() => setSelectedReminder(reminder)}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                        <p className="font-medium truncate">
-                          {reminder.client_name || 'Unknown Client'}
-                        </p>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {reminder.installation_address || 'No address'}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                        <p className="text-sm text-muted-foreground">
-                          {reminder.certificate_number}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="text-right space-y-1">
-                      <Badge className={colors.badge}>
-                        {days < 0 ? `${Math.abs(days)}d overdue` : `${days}d left`}
-                      </Badge>
-                      <p className="text-xs text-muted-foreground">
-                        Expires {formatDate(reminder.expiry_date)}
-                      </p>
-                      {reminder.reminder_status !== 'pending' && (
-                        <Badge variant="outline" className="text-xs">
-                          {reminder.reminder_status}
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Reminder Detail Sheet */}
-      <Sheet open={!!selectedReminder} onOpenChange={(open) => !open && setSelectedReminder(null)}>
-        <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl flex flex-col">
-          {selectedReminder && (
-            <div className="flex flex-col h-full">
-              <SheetHeader className="border-b pb-4">
-                <SheetTitle className="text-left">
-                  {selectedReminder.client_name || 'Unknown Client'}
-                </SheetTitle>
-                <div className="flex items-center gap-2">
-                  {(() => {
-                    const urgency = getExpiryUrgency(selectedReminder.expiry_date);
-                    const colors = getExpiryColorClasses(urgency);
-                    return (
-                      <Badge className={colors.badge}>
-                        {formatExpiryStatus(selectedReminder.expiry_date)}
-                      </Badge>
-                    );
-                  })()}
-                  <Badge variant="outline">{selectedReminder.reminder_status}</Badge>
-                </div>
-              </SheetHeader>
-
-              <div className="flex-1 overflow-y-auto overscroll-contain py-4 space-y-6">
-                {/* Details */}
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-card">
-                    <MapPin className="h-5 w-5 text-elec-yellow mt-0.5" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Address</p>
-                      <p className="font-medium">
-                        {selectedReminder.installation_address || 'No address'}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
-                    <FileText className="h-5 w-5 text-elec-yellow" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Certificate</p>
-                      <p className="font-medium">{selectedReminder.certificate_number}</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
-                      <Calendar className="h-5 w-5 text-elec-yellow" />
-                      <div>
-                        <p className="text-sm text-muted-foreground">Inspected</p>
-                        <p className="font-medium">{formatDate(selectedReminder.inspection_date)}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
-                      <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                      <div>
-                        <p className="text-sm text-muted-foreground">Expires</p>
-                        <p className="font-medium">{formatDate(selectedReminder.expiry_date)}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {selectedReminder.contacted_at && (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
-                      <Phone className="h-5 w-5 text-green-500" />
-                      <div>
-                        <p className="text-sm text-muted-foreground">Contacted</p>
-                        <p className="font-medium">{formatDate(selectedReminder.contacted_at)}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {selectedReminder.booked_for_date && (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
-                      <CalendarCheck className="h-5 w-5 text-green-500" />
-                      <div>
-                        <p className="text-sm text-muted-foreground">Booked for</p>
-                        <p className="font-medium">{formatDate(selectedReminder.booked_for_date)}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {selectedReminder.notes && (
-                    <div className="p-3 rounded-lg bg-card">
-                      <p className="text-sm text-muted-foreground mb-1">Notes</p>
-                      <p className="text-sm">{selectedReminder.notes}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="border-t pt-4 space-y-3">
-                <div className="flex gap-3">
-                  {selectedReminder.reminder_status === 'pending' && (
-                    <Button
-                      variant="outline"
-                      className="flex-1 h-11 gap-2 touch-manipulation"
-                      onClick={() => handleMarkContacted(selectedReminder.id)}
-                    >
-                      <Phone className="h-4 w-4" />
-                      Mark Contacted
-                    </Button>
-                  )}
-                  {(selectedReminder.reminder_status === 'pending' ||
-                    selectedReminder.reminder_status === 'contacted') && (
-                    <Button
-                      variant="accent"
-                      className="flex-1 h-11 gap-2 touch-manipulation"
-                      onClick={() => handleMarkBooked(selectedReminder.id)}
-                    >
-                      <CalendarCheck className="h-4 w-4" />
-                      Mark Booked
-                    </Button>
-                  )}
-                  {selectedReminder.reminder_status === 'booked' && (
-                    <Button
-                      variant="accent"
-                      className="flex-1 h-11 gap-2 touch-manipulation"
-                      onClick={() => handleMarkBooked(selectedReminder.id)}
-                    >
-                      <CheckCircle2 className="h-4 w-4" />
-                      Complete
-                    </Button>
-                  )}
-                </div>
-                <Button
-                  variant="ghost"
-                  className="w-full h-11 text-red-500 hover:text-red-600 hover:bg-red-500/10 touch-manipulation"
-                  onClick={() => setDeleteConfirmId(selectedReminder.id)}
-                >
-                  Remove from list
-                </Button>
-              </div>
+        ) : filteredReminders.length === 0 ? (
+          <div className="text-center py-12 space-y-4">
+            <Calendar className="h-12 w-12 mx-auto text-muted-foreground" />
+            <div>
+              <p className="text-lg font-medium">
+                {reminders?.length === 0
+                  ? 'No expiring certificates'
+                  : 'No certificates match filter'}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {reminders?.length === 0
+                  ? 'Complete some inspections and they will appear here'
+                  : 'Try selecting a different time range'}
+              </p>
             </div>
-          )}
-        </SheetContent>
-      </Sheet>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filteredReminders.map((reminder) => {
+              const urgency = getExpiryUrgency(reminder.expiry_date);
+              const colors = getExpiryColorClasses(urgency);
+              const days = getDaysUntilExpiry(reminder.expiry_date);
 
+              return (
+                <Card
+                  key={reminder.id}
+                  className={`cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all touch-manipulation ${colors.border}`}
+                  onClick={() => setSelectedReminder(reminder)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                          <p className="font-medium truncate">
+                            {reminder.client_name || 'Unknown Client'}
+                          </p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                          <p className="text-sm text-muted-foreground line-clamp-2">
+                            {reminder.installation_address || 'No address'}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">
+                            {reminder.certificate_number}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="text-right space-y-1">
+                        <Badge className={colors.badge}>
+                          {days < 0 ? `${Math.abs(days)}d overdue` : `${days}d left`}
+                        </Badge>
+                        <p className="text-xs text-muted-foreground">
+                          Expires {formatDate(reminder.expiry_date)}
+                        </p>
+                        {reminder.reminder_status !== 'pending' && (
+                          <Badge variant="outline" className="text-xs">
+                            {reminder.reminder_status}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Reminder Detail Sheet */}
+        <Sheet
+          open={!!selectedReminder}
+          onOpenChange={(open) => !open && setSelectedReminder(null)}
+        >
+          <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl flex flex-col">
+            {selectedReminder && (
+              <div className="flex flex-col h-full">
+                <SheetHeader className="border-b pb-4">
+                  <SheetTitle className="text-left">
+                    {selectedReminder.client_name || 'Unknown Client'}
+                  </SheetTitle>
+                  <div className="flex items-center gap-2">
+                    {(() => {
+                      const urgency = getExpiryUrgency(selectedReminder.expiry_date);
+                      const colors = getExpiryColorClasses(urgency);
+                      return (
+                        <Badge className={colors.badge}>
+                          {formatExpiryStatus(selectedReminder.expiry_date)}
+                        </Badge>
+                      );
+                    })()}
+                    <Badge variant="outline">{selectedReminder.reminder_status}</Badge>
+                  </div>
+                </SheetHeader>
+
+                <div className="flex-1 overflow-y-auto overscroll-contain py-4 space-y-6">
+                  {/* Details */}
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-card">
+                      <MapPin className="h-5 w-5 text-elec-yellow mt-0.5" />
+                      <div>
+                        <p className="text-sm text-muted-foreground">Address</p>
+                        <p className="font-medium">
+                          {selectedReminder.installation_address || 'No address'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
+                      <FileText className="h-5 w-5 text-elec-yellow" />
+                      <div>
+                        <p className="text-sm text-muted-foreground">Certificate</p>
+                        <p className="font-medium">{selectedReminder.certificate_number}</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
+                        <Calendar className="h-5 w-5 text-elec-yellow" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Inspected</p>
+                          <p className="font-medium">
+                            {formatDate(selectedReminder.inspection_date)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
+                        <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Expires</p>
+                          <p className="font-medium">{formatDate(selectedReminder.expiry_date)}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {selectedReminder.contacted_at && (
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
+                        <Phone className="h-5 w-5 text-green-500" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Contacted</p>
+                          <p className="font-medium">{formatDate(selectedReminder.contacted_at)}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedReminder.booked_for_date && (
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-card">
+                        <CalendarCheck className="h-5 w-5 text-green-500" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Booked for</p>
+                          <p className="font-medium">
+                            {formatDate(selectedReminder.booked_for_date)}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedReminder.notes && (
+                      <div className="p-3 rounded-lg bg-card">
+                        <p className="text-sm text-muted-foreground mb-1">Notes</p>
+                        <p className="text-sm">{selectedReminder.notes}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="border-t pt-4 space-y-3">
+                  <div className="flex gap-3">
+                    {selectedReminder.reminder_status === 'pending' && (
+                      <Button
+                        variant="outline"
+                        className="flex-1 h-11 gap-2 touch-manipulation"
+                        onClick={() => handleMarkContacted(selectedReminder.id)}
+                      >
+                        <Phone className="h-4 w-4" />
+                        Mark Contacted
+                      </Button>
+                    )}
+                    {(selectedReminder.reminder_status === 'pending' ||
+                      selectedReminder.reminder_status === 'contacted') && (
+                      <Button
+                        variant="accent"
+                        className="flex-1 h-11 gap-2 touch-manipulation"
+                        onClick={() => handleMarkBooked(selectedReminder.id)}
+                      >
+                        <CalendarCheck className="h-4 w-4" />
+                        Mark Booked
+                      </Button>
+                    )}
+                    {selectedReminder.reminder_status === 'booked' && (
+                      <Button
+                        variant="accent"
+                        className="flex-1 h-11 gap-2 touch-manipulation"
+                        onClick={() => handleMarkBooked(selectedReminder.id)}
+                      >
+                        <CheckCircle2 className="h-4 w-4" />
+                        Complete
+                      </Button>
+                    )}
+                  </div>
+                  <Button
+                    variant="ghost"
+                    className="w-full h-11 text-red-500 hover:text-red-600 hover:bg-red-500/10 touch-manipulation"
+                    onClick={() => setDeleteConfirmId(selectedReminder.id)}
+                  >
+                    Remove from list
+                  </Button>
+                </div>
+              </div>
+            )}
+          </SheetContent>
+        </Sheet>
       </main>
 
       {/* Delete Confirmation */}
@@ -423,13 +425,16 @@ export default function CertificateExpiryPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Remove Reminder?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will remove this certificate from the expiry tracking list.
-              The original certificate will not be affected.
+              This will remove this certificate from the expiry tracking list. The original
+              certificate will not be affected.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel className="touch-manipulation">Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700 touch-manipulation">
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-red-600 hover:bg-red-700 touch-manipulation"
+            >
               Remove
             </AlertDialogAction>
           </AlertDialogFooter>

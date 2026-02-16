@@ -7,124 +7,135 @@ import { CheckCircle, XCircle, BookOpen, ArrowRight, RotateCcw } from 'lucide-re
 const questions = [
   {
     id: 1,
-    question: "Which observation code should be used for a socket outlet with exposed live parts accessible to touch?",
+    question:
+      'Which observation code should be used for a socket outlet with exposed live parts accessible to touch?',
     options: [
-      "C3 - Improvement recommended",
-      "C2 - Potentially dangerous", 
-      "C1 - Danger present",
-      "FI - Further investigation required"
+      'C3 - Improvement recommended',
+      'C2 - Potentially dangerous',
+      'C1 - Danger present',
+      'FI - Further investigation required',
     ],
     correct: 2,
-    explanation: "C1 indicates immediate danger present. Exposed live parts accessible to touch present an immediate risk of electric shock and must be addressed immediately."
+    explanation:
+      'C1 indicates immediate danger present. Exposed live parts accessible to touch present an immediate risk of electric shock and must be addressed immediately.',
   },
   {
     id: 2,
-    question: "When documenting a defect, which information is most critical to include?",
+    question: 'When documenting a defect, which information is most critical to include?',
     options: [
-      "Cost estimate for repairs",
+      'Cost estimate for repairs',
       "Client's preferred solution",
-      "Specific location and regulation reference",
-      "Installation date of the equipment"
+      'Specific location and regulation reference',
+      'Installation date of the equipment',
     ],
     correct: 2,
-    explanation: "Clear location identification and relevant regulation references provide the technical and legal foundation for any defect observation."
+    explanation:
+      'Clear location identification and relevant regulation references provide the technical and legal foundation for any defect observation.',
   },
   {
     id: 3,
-    question: "How should inspection limitations be documented?",
+    question: 'How should inspection limitations be documented?',
     options: [
       "Generally mention 'some areas not accessible'",
-      "Only note if they affect test results",
+      'Only note if they affect test results',
       "Specifically detail what couldn't be accessed and why",
-      "Include only if client requests documentation"
+      'Include only if client requests documentation',
     ],
     correct: 2,
-    explanation: "Specific documentation of limitations protects the inspector legally and helps others understand the inspection scope and any potential risks."
+    explanation:
+      'Specific documentation of limitations protects the inspector legally and helps others understand the inspection scope and any potential risks.',
   },
   {
     id: 4,
-    question: "What is the primary legal purpose of inspection documentation?",
+    question: 'What is the primary legal purpose of inspection documentation?',
     options: [
-      "To provide cost estimates for repairs",
-      "To demonstrate professional competence and due diligence",
-      "To satisfy insurance requirements only",
-      "To create maintenance schedules"
+      'To provide cost estimates for repairs',
+      'To demonstrate professional competence and due diligence',
+      'To satisfy insurance requirements only',
+      'To create maintenance schedules',
     ],
     correct: 1,
-    explanation: "Documentation serves as legal evidence of your professional assessment and compliance with standards, protecting both you and the client."
+    explanation:
+      'Documentation serves as legal evidence of your professional assessment and compliance with standards, protecting both you and the client.',
   },
   {
     id: 5,
-    question: "When should observation code FI be used instead of C1, C2, or C3?",
+    question: 'When should observation code FI be used instead of C1, C2, or C3?',
     options: [
-      "When repairs are too expensive",
-      "When client disagrees with findings",
-      "When full investigation is prevented by access or safety limitations",
-      "When defects are older installations"
+      'When repairs are too expensive',
+      'When client disagrees with findings',
+      'When full investigation is prevented by access or safety limitations',
+      'When defects are older installations',
     ],
     correct: 2,
-    explanation: "FI is used when you suspect problems but cannot fully investigate due to access limitations, safety concerns, or need for specialised equipment."
+    explanation:
+      'FI is used when you suspect problems but cannot fully investigate due to access limitations, safety concerns, or need for specialised equipment.',
   },
   {
     id: 6,
     question: "When should the 'LIM' observation code be used?",
     options: [
-      "When equipment is limited by design",
-      "When inspection is limited by access or safety constraints",
-      "When time is limited for the inspection",
-      "When the client limits the scope of work"
+      'When equipment is limited by design',
+      'When inspection is limited by access or safety constraints',
+      'When time is limited for the inspection',
+      'When the client limits the scope of work',
     ],
     correct: 1,
-    explanation: "LIM (Limitation) is used when the inspection cannot be completed due to access restrictions, safety constraints, or other physical limitations."
+    explanation:
+      'LIM (Limitation) is used when the inspection cannot be completed due to access restrictions, safety constraints, or other physical limitations.',
   },
   {
     id: 7,
-    question: "Which certificate should be used for replacing a single socket outlet?",
+    question: 'Which certificate should be used for replacing a single socket outlet?',
     options: [
-      "Electrical Installation Certificate (EIC)",
-      "Electrical Installation Condition Report (EICR)",
-      "Minor Electrical Installation Works Certificate (MEIWC)",
-      "Periodic Inspection Report"
+      'Electrical Installation Certificate (EIC)',
+      'Electrical Installation Condition Report (EICR)',
+      'Minor Electrical Installation Works Certificate (MEIWC)',
+      'Periodic Inspection Report',
     ],
     correct: 2,
-    explanation: "A MEIWC is appropriate for small additions and alterations like replacing a single socket outlet, as it's a minor work that doesn't require a full EIC."
+    explanation:
+      "A MEIWC is appropriate for small additions and alterations like replacing a single socket outlet, as it's a minor work that doesn't require a full EIC.",
   },
   {
     id: 8,
     question: "What does observation code 'NA' indicate?",
     options: [
-      "Not Accessible during inspection",
-      "Not Applicable to this installation",
-      "Needs Assessment by specialist",
-      "No Action required"
+      'Not Accessible during inspection',
+      'Not Applicable to this installation',
+      'Needs Assessment by specialist',
+      'No Action required',
     ],
     correct: 1,
-    explanation: "NA (Not Applicable) indicates that a particular requirement or regulation doesn't apply to the specific installation being inspected."
+    explanation:
+      "NA (Not Applicable) indicates that a particular requirement or regulation doesn't apply to the specific installation being inspected.",
   },
   {
     id: 9,
-    question: "How long should EICR documentation be retained?",
+    question: 'How long should EICR documentation be retained?',
     options: [
-      "Until the next inspection",
-      "For 3 years minimum",
-      "For 6 years minimum",
-      "Permanently"
+      'Until the next inspection',
+      'For 3 years minimum',
+      'For 6 years minimum',
+      'Permanently',
     ],
     correct: 2,
-    explanation: "BS 7671 recommends retaining inspection and test records for at least 6 years, though some regulations may require longer retention periods."
+    explanation:
+      'BS 7671 recommends retaining inspection and test records for at least 6 years, though some regulations may require longer retention periods.',
   },
   {
     id: 10,
     question: "When using observation code 'NV', what must be clearly documented?",
     options: [
-      "The cost of verification",
-      "Why verification could not be completed",
+      'The cost of verification',
+      'Why verification could not be completed',
       "The client's refusal to allow verification",
-      "The age of the installation"
+      'The age of the installation',
     ],
     correct: 1,
-    explanation: "NV (Not Verified) requires clear documentation explaining why verification couldn't be completed, such as energised circuits that couldn't be safely isolated."
-  }
+    explanation:
+      "NV (Not Verified) requires clear documentation explaining why verification couldn't be completed, such as energised circuits that couldn't be safely isolated.",
+  },
 ];
 
 export const RecordingQuizNewStyle = () => {
@@ -191,14 +202,14 @@ export const RecordingQuizNewStyle = () => {
             <div className={`text-4xl font-bold mb-2 ${getScoreColor(score)}`}>
               {score}/{questions.length}
             </div>
-            <div className={`text-2xl mb-4 ${getScoreColor(score)}`}>
-              {percentage}%
-            </div>
-            <Badge 
-              variant={percentage >= 80 ? "default" : percentage >= 60 ? "secondary" : "destructive"}
+            <div className={`text-2xl mb-4 ${getScoreColor(score)}`}>{percentage}%</div>
+            <Badge
+              variant={
+                percentage >= 80 ? 'default' : percentage >= 60 ? 'secondary' : 'destructive'
+              }
               className="text-sm px-3 py-1"
             >
-              {percentage >= 80 ? "Excellent" : percentage >= 60 ? "Good" : "Needs Improvement"}
+              {percentage >= 80 ? 'Excellent' : percentage >= 60 ? 'Good' : 'Needs Improvement'}
             </Badge>
           </div>
 
@@ -206,7 +217,7 @@ export const RecordingQuizNewStyle = () => {
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
                 <div key={question.id} className="bg-[#2a2a2a] rounded-lg p-4">
                   <div className="flex items-start gap-3 mb-3">
@@ -220,7 +231,9 @@ export const RecordingQuizNewStyle = () => {
                         Question {index + 1}: {question.question}
                       </h4>
                       <div className="space-y-2 text-sm">
-                        <div className={`p-2 rounded ${isCorrect ? 'bg-green-900/30 border border-green-600/20' : 'bg-red-900/30 border border-red-600/20'}`}>
+                        <div
+                          className={`p-2 rounded ${isCorrect ? 'bg-green-900/30 border border-green-600/20' : 'bg-red-900/30 border border-red-600/20'}`}
+                        >
                           <span className="text-foreground font-medium">Your answer: </span>
                           <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
                             {question.options[userAnswer]}
@@ -229,7 +242,9 @@ export const RecordingQuizNewStyle = () => {
                         {!isCorrect && (
                           <div className="bg-green-900/30 border border-green-600/20 p-2 rounded">
                             <span className="text-foreground font-medium">Correct answer: </span>
-                            <span className="text-green-400">{question.options[question.correct]}</span>
+                            <span className="text-green-400">
+                              {question.options[question.correct]}
+                            </span>
                           </div>
                         )}
                         <div className="bg-blue-900/30 border border-blue-600/20 p-2 rounded">
@@ -245,7 +260,7 @@ export const RecordingQuizNewStyle = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={resetQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500 font-semibold"
             >
@@ -269,11 +284,13 @@ export const RecordingQuizNewStyle = () => {
           Knowledge Check
         </CardTitle>
         <div className="flex items-center justify-between text-sm text-foreground">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <span>{Math.round(progress)}% Complete</span>
         </div>
         <div className="w-full bg-gray-600 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
@@ -281,9 +298,7 @@ export const RecordingQuizNewStyle = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-foreground text-lg font-medium mb-4">
-            {question.question}
-          </h3>
+          <h3 className="text-foreground text-lg font-medium mb-4">{question.question}</h3>
           <div className="space-y-3 sm:space-y-4">
             {question.options.map((option, index) => (
               <button
@@ -296,11 +311,13 @@ export const RecordingQuizNewStyle = () => {
                 }`}
               >
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold mt-0.5 flex-shrink-0 ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
-                      : 'border-white/60 text-foreground'
-                  }`}>
+                  <span
+                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold mt-0.5 flex-shrink-0 ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                        : 'border-white/60 text-foreground'
+                    }`}
+                  >
                     {String.fromCharCode(65 + index)}
                   </span>
                   <span className="flex-1 text-sm sm:text-base">{option}</span>
@@ -319,7 +336,7 @@ export const RecordingQuizNewStyle = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

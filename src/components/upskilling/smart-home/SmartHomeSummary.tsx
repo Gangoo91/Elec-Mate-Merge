@@ -12,11 +12,12 @@ export const SmartHomeSummary = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-base leading-relaxed">
-          This section provided a comprehensive introduction to smart homes as integrated systems that use 
-          interconnected devices, communication protocols, and control interfaces to automate, monitor, 
-          and control home functions for improved convenience, security, and energy efficiency.
+          This section provided a comprehensive introduction to smart homes as integrated systems
+          that use interconnected devices, communication protocols, and control interfaces to
+          automate, monitor, and control home functions for improved convenience, security, and
+          energy efficiency.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-elec-dark p-4 rounded-lg">
             <h4 className="text-foreground font-semibold mb-3 flex items-center gap-2">
@@ -26,27 +27,38 @@ export const SmartHomeSummary = () => {
             <ul className="text-sm space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
-                <span>Smart home definition: interconnected devices providing automation, monitoring, and control</span>
+                <span>
+                  Smart home definition: interconnected devices providing automation, monitoring,
+                  and control
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
-                <span>Communication protocols: Zigbee, Z-Wave, Wi-Fi, Bluetooth for device connectivity</span>
+                <span>
+                  Communication protocols: Zigbee, Z-Wave, Wi-Fi, Bluetooth for device connectivity
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
-                <span>Core components: smart devices, communication networks, control interfaces</span>
+                <span>
+                  Core components: smart devices, communication networks, control interfaces
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
-                <span>Benefits: energy efficiency, enhanced security, convenience, accessibility</span>
+                <span>
+                  Benefits: energy efficiency, enhanced security, convenience, accessibility
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
-                <span>Implementation challenges: interoperability, security, costs, complexity</span>
+                <span>
+                  Implementation challenges: interoperability, security, costs, complexity
+                </span>
               </li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-dark p-4 rounded-lg">
             <h4 className="text-foreground font-semibold mb-3 flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-blue-500" />
@@ -76,12 +88,14 @@ export const SmartHomeSummary = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
           <h4 className="text-blue-400 font-semibold mb-3">Key Takeaways for Practitioners</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Technical Considerations:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Technical Considerations:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Protocol selection impacts reliability and expandability</li>
                 <li>• Network design crucial for system performance</li>
@@ -100,16 +114,17 @@ export const SmartHomeSummary = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
           <h4 className="text-green-400 font-semibold mb-2">Next Steps in Your Learning Journey</h4>
           <p className="text-sm text-gray-300 mb-3">
-            Having completed this introduction to smart homes, you're ready to explore specific 
-            implementation aspects, including device selection, system design, and integration strategies.
+            Having completed this introduction to smart homes, you're ready to explore specific
+            implementation aspects, including device selection, system design, and integration
+            strategies.
           </p>
           <p className="text-sm text-gray-300">
-            Continue to the next section to dive deeper into smart home communication protocols 
-            and learn how to design robust, scalable smart home networks.
+            Continue to the next section to dive deeper into smart home communication protocols and
+            learn how to design robust, scalable smart home networks.
           </p>
         </div>
       </CardContent>

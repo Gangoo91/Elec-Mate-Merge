@@ -1,7 +1,6 @@
-
-import { useState, useMemo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useMemo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   TrendingUp,
   TrendingDown,
@@ -14,16 +13,16 @@ import {
   Sparkles,
   Sun,
   Moon,
-  Clock
-} from "lucide-react";
-import { useMentalHealth } from "@/contexts/MentalHealthContext";
+  Clock,
+} from 'lucide-react';
+import { useMentalHealth } from '@/contexts/MentalHealthContext';
 
 const moodEmojis = [
-  { value: 1, emoji: "😢", label: "Struggling", color: "bg-red-500" },
-  { value: 2, emoji: "😔", label: "Low", color: "bg-orange-500" },
-  { value: 3, emoji: "😐", label: "Okay", color: "bg-yellow-500" },
-  { value: 4, emoji: "🙂", label: "Good", color: "bg-lime-500" },
-  { value: 5, emoji: "😊", label: "Great", color: "bg-green-500" }
+  { value: 1, emoji: '😢', label: 'Struggling', color: 'bg-red-500' },
+  { value: 2, emoji: '😔', label: 'Low', color: 'bg-orange-500' },
+  { value: 3, emoji: '😐', label: 'Okay', color: 'bg-yellow-500' },
+  { value: 4, emoji: '🙂', label: 'Good', color: 'bg-lime-500' },
+  { value: 5, emoji: '😊', label: 'Great', color: 'bg-green-500' },
 ];
 
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -37,7 +36,7 @@ const MoodInsights = () => {
     const now = new Date();
     const days = viewPeriod === 'week' ? 7 : 30;
     const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
-    return moodHistory.filter(e => new Date(e.date) >= cutoff);
+    return moodHistory.filter((e) => new Date(e.date) >= cutoff);
   }, [moodHistory, viewPeriod]);
 
   // Calculate statistics
@@ -49,20 +48,21 @@ const MoodInsights = () => {
 
     // Mood distribution
     const distribution = [0, 0, 0, 0, 0];
-    filteredEntries.forEach(e => distribution[e.mood - 1]++);
+    filteredEntries.forEach((e) => distribution[e.mood - 1]++);
 
     // Day of week analysis
     const dayMoods: number[][] = [[], [], [], [], [], [], []];
-    filteredEntries.forEach(e => {
+    filteredEntries.forEach((e) => {
       const day = new Date(e.date).getDay();
       dayMoods[day].push(e.mood);
     });
-    const dayAverages = dayMoods.map(moods =>
+    const dayAverages = dayMoods.map((moods) =>
       moods.length > 0 ? moods.reduce((a, b) => a + b, 0) / moods.length : 0
     );
 
     // Find best and worst days
-    let bestDay = 0, worstDay = 0;
+    let bestDay = 0,
+      worstDay = 0;
     dayAverages.forEach((avg, i) => {
       if (avg > dayAverages[bestDay] && avg > 0) bestDay = i;
       if ((avg < dayAverages[worstDay] || dayAverages[worstDay] === 0) && avg > 0) worstDay = i;
@@ -90,7 +90,7 @@ const MoodInsights = () => {
       worstDay,
       trend,
       mostCommon,
-      totalEntries: filteredEntries.length
+      totalEntries: filteredEntries.length,
     };
   }, [filteredEntries]);
 
@@ -102,9 +102,15 @@ const MoodInsights = () => {
 
     // Trend insight
     if (stats.trend > 0.3) {
-      insights.push({ text: "Your mood has been improving recently! Keep up what you're doing.", type: 'positive' });
+      insights.push({
+        text: "Your mood has been improving recently! Keep up what you're doing.",
+        type: 'positive',
+      });
     } else if (stats.trend < -0.3) {
-      insights.push({ text: "Your mood has been lower lately. Consider reaching out for support.", type: 'concern' });
+      insights.push({
+        text: 'Your mood has been lower lately. Consider reaching out for support.',
+        type: 'concern',
+      });
     }
 
     // Day pattern insight
@@ -112,21 +118,30 @@ const MoodInsights = () => {
       if (stats.dayAverages[stats.bestDay] - stats.dayAverages[stats.worstDay] > 0.5) {
         insights.push({
           text: `${dayNames[stats.bestDay]}s tend to be your best days. ${dayNames[stats.worstDay]}s are harder.`,
-          type: 'neutral'
+          type: 'neutral',
         });
       }
     }
 
     // Average mood insight
     if (stats.average >= 4) {
-      insights.push({ text: "You've been feeling good overall. That's wonderful!", type: 'positive' });
+      insights.push({
+        text: "You've been feeling good overall. That's wonderful!",
+        type: 'positive',
+      });
     } else if (stats.average < 2.5) {
-      insights.push({ text: "You've been going through a tough time. Remember, it's okay to ask for help.", type: 'concern' });
+      insights.push({
+        text: "You've been going through a tough time. Remember, it's okay to ask for help.",
+        type: 'concern',
+      });
     }
 
     // Consistency insight
     if (stats.totalEntries >= 5 && viewPeriod === 'week') {
-      insights.push({ text: "Great job tracking regularly! This builds self-awareness.", type: 'positive' });
+      insights.push({
+        text: 'Great job tracking regularly! This builds self-awareness.',
+        type: 'positive',
+      });
     }
 
     return insights;
@@ -141,9 +156,7 @@ const MoodInsights = () => {
             <BarChart3 className="h-6 w-6 text-blue-400" />
           </div>
           <h2 className="text-xl font-bold text-foreground mb-1">Mood Insights</h2>
-          <p className="text-sm text-white">
-            Track patterns in how you feel
-          </p>
+          <p className="text-sm text-white">Track patterns in how you feel</p>
         </div>
 
         <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/5">
@@ -151,8 +164,8 @@ const MoodInsights = () => {
             <Lightbulb className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
             <h3 className="font-medium text-foreground mb-2">Not enough data yet</h3>
             <p className="text-sm text-white max-w-xs mx-auto">
-              Log your mood a few more times to start seeing patterns and insights.
-              Check in regularly to understand yourself better.
+              Log your mood a few more times to start seeing patterns and insights. Check in
+              regularly to understand yourself better.
             </p>
           </CardContent>
         </Card>
@@ -168,9 +181,7 @@ const MoodInsights = () => {
           <BarChart3 className="h-6 w-6 text-blue-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Mood Insights</h2>
-        <p className="text-sm text-white">
-          Understanding your patterns
-        </p>
+        <p className="text-sm text-white">Understanding your patterns</p>
       </div>
 
       {/* Period Toggle */}
@@ -200,9 +211,11 @@ const MoodInsights = () => {
             <Card className="border-blue-500/20 bg-blue-500/5">
               <CardContent className="p-2 sm:p-3 text-center">
                 <div className="text-xl sm:text-2xl mb-1">
-                  {moodEmojis.find(m => m.value === Math.round(stats.average))?.emoji || "😐"}
+                  {moodEmojis.find((m) => m.value === Math.round(stats.average))?.emoji || '😐'}
                 </div>
-                <div className="text-lg sm:text-xl font-bold text-blue-400">{stats.average.toFixed(1)}</div>
+                <div className="text-lg sm:text-xl font-bold text-blue-400">
+                  {stats.average.toFixed(1)}
+                </div>
                 <div className="text-[11px] sm:text-xs text-white">Average</div>
               </CardContent>
             </Card>
@@ -215,12 +228,17 @@ const MoodInsights = () => {
                 ) : (
                   <Minus className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 mx-auto mb-1" />
                 )}
-                <div className={`text-lg sm:text-xl font-bold ${
-                  stats.trend > 0 ? 'text-green-400' :
-                  stats.trend < 0 ? 'text-red-400' :
-                  'text-yellow-400'
-                }`}>
-                  {stats.trend > 0 ? '+' : ''}{stats.trend.toFixed(1)}
+                <div
+                  className={`text-lg sm:text-xl font-bold ${
+                    stats.trend > 0
+                      ? 'text-green-400'
+                      : stats.trend < 0
+                        ? 'text-red-400'
+                        : 'text-yellow-400'
+                  }`}
+                >
+                  {stats.trend > 0 ? '+' : ''}
+                  {stats.trend.toFixed(1)}
                 </div>
                 <div className="text-[11px] sm:text-xs text-white">Trend</div>
               </CardContent>
@@ -228,7 +246,9 @@ const MoodInsights = () => {
             <Card className="border-green-500/20 bg-green-500/5">
               <CardContent className="p-2 sm:p-3 text-center">
                 <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mx-auto mb-1" />
-                <div className="text-lg sm:text-xl font-bold text-green-400">{stats.totalEntries}</div>
+                <div className="text-lg sm:text-xl font-bold text-green-400">
+                  {stats.totalEntries}
+                </div>
                 <div className="text-[11px] sm:text-xs text-white">Check-ins</div>
               </CardContent>
             </Card>
@@ -280,17 +300,21 @@ const MoodInsights = () => {
                     <div
                       key={day}
                       className={`p-1 sm:p-2 rounded-lg text-center ${
-                        isBest ? 'bg-green-500/20 ring-1 ring-green-500/40' :
-                        isWorst ? 'bg-red-500/20 ring-1 ring-red-500/40' :
-                        'bg-white/5'
+                        isBest
+                          ? 'bg-green-500/20 ring-1 ring-green-500/40'
+                          : isWorst
+                            ? 'bg-red-500/20 ring-1 ring-red-500/40'
+                            : 'bg-white/5'
                       }`}
                     >
                       <span className="text-base sm:text-lg block mb-0.5 sm:mb-1">
-                        {mood ? mood.emoji : "—"}
+                        {mood ? mood.emoji : '—'}
                       </span>
                       <span className="text-[10px] sm:text-xs text-white block">{day}</span>
                       {avg > 0 && (
-                        <span className="text-[10px] sm:text-xs text-foreground/50 hidden sm:block">{avg.toFixed(1)}</span>
+                        <span className="text-[10px] sm:text-xs text-foreground/50 hidden sm:block">
+                          {avg.toFixed(1)}
+                        </span>
                       )}
                     </div>
                   );
@@ -312,9 +336,11 @@ const MoodInsights = () => {
                     <div
                       key={i}
                       className={`p-3 rounded-lg text-sm ${
-                        insight.type === 'positive' ? 'bg-green-500/10 text-green-200' :
-                        insight.type === 'concern' ? 'bg-red-500/10 text-red-200' :
-                        'bg-white/5 text-foreground/80'
+                        insight.type === 'positive'
+                          ? 'bg-green-500/10 text-green-200'
+                          : insight.type === 'concern'
+                            ? 'bg-red-500/10 text-red-200'
+                            : 'bg-white/5 text-foreground/80'
                       }`}
                     >
                       {insight.text}
@@ -329,8 +355,8 @@ const MoodInsights = () => {
           <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-indigo-500/5">
             <CardContent className="p-4">
               <p className="text-sm text-blue-200">
-                <strong className="text-blue-400">Keep tracking:</strong> The more data you log,
-                the better insights you'll get about your mental health patterns.
+                <strong className="text-blue-400">Keep tracking:</strong> The more data you log, the
+                better insights you'll get about your mental health patterns.
               </p>
             </CardContent>
           </Card>

@@ -1,45 +1,45 @@
-import { ArrowLeft, Building2, PenTool, HardHat, Users } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Building2, PenTool, HardHat, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The Client",
+    title: 'The Client',
     icon: Building2,
     description:
       "The client's duties under CDM 2015 including making suitable arrangements for managing a project, ensuring adequate time and resources, and appointing duty holders",
   },
   {
     id: 2,
-    title: "Principal Designer",
+    title: 'Principal Designer',
     icon: PenTool,
     description:
       "The principal designer's role in planning, managing, and coordinating the pre-construction phase, ensuring designers comply with their duties, and preparing the health and safety file",
   },
   {
     id: 3,
-    title: "Principal Contractor",
+    title: 'Principal Contractor',
     icon: HardHat,
     description:
       "The principal contractor's responsibilities for planning, managing, and coordinating the construction phase, producing the construction phase plan, and organising cooperation between contractors",
   },
   {
     id: 4,
-    title: "Designers, Contractors & Workers",
+    title: 'Designers, Contractors & Workers',
     icon: Users,
     description:
-      "The duties of designers to eliminate and reduce risk through design, contractors to plan and manage their own work safely, and workers to cooperate and report unsafe conditions",
+      'The duties of designers to eliminate and reduce risk through design, contractors to plan and manage their own work safely, and workers to cooperate and report unsafe conditions',
   },
 ];
 
 export default function CdmRegulationsModule2() {
   useSEO({
-    title: "Module 2: Duty Holders & Their Roles | CDM Regulations Awareness",
+    title: 'Module 2: Duty Holders & Their Roles | CDM Regulations Awareness',
     description:
-      "Learn about CDM 2015 duty holders including the client, principal designer, principal contractor, designers, contractors, and workers.",
+      'Learn about CDM 2015 duty holders including the client, principal designer, principal contractor, designers, contractors, and workers.',
   });
 
   return (

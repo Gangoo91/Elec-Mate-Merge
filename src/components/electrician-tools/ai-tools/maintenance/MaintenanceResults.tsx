@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  AlertTriangle, 
-  CheckCircle2, 
-  Download, 
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Download,
   Calendar,
   Clock,
   PoundSterling,
@@ -15,15 +15,23 @@ import {
   Wrench,
   BookOpen,
   Package,
-  Zap
-} from "lucide-react";
-import { MaintenanceResults as MaintenanceResultsType } from "./useMaintenanceAdvisor";
-import { toast } from "sonner";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
-import { generateMaintenanceSchedulePDF, MaintenanceScheduleData } from "@/utils/pdf-generators/maintenance-schedule-pdf";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+  Zap,
+} from 'lucide-react';
+import { MaintenanceResults as MaintenanceResultsType } from './useMaintenanceAdvisor';
+import { toast } from 'sonner';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
+import {
+  generateMaintenanceSchedulePDF,
+  MaintenanceScheduleData,
+} from '@/utils/pdf-generators/maintenance-schedule-pdf';
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 interface MaintenanceResultsProps {
   results: MaintenanceResultsType;
@@ -35,29 +43,42 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
 
   const getRiskColor = (level?: string) => {
     switch (level) {
-      case 'critical': return 'text-red-400 border-red-400/30 bg-red-400/10';
-      case 'high': return 'text-orange-400 border-orange-400/30 bg-orange-400/10';
-      case 'medium': return 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10';
-      case 'low': return 'text-green-400 border-green-400/30 bg-green-400/10';
-      default: return 'text-elec-light/60 border-elec-gray/30 bg-elec-dark/30';
+      case 'critical':
+        return 'text-red-400 border-red-400/30 bg-red-400/10';
+      case 'high':
+        return 'text-orange-400 border-orange-400/30 bg-orange-400/10';
+      case 'medium':
+        return 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10';
+      case 'low':
+        return 'text-green-400 border-green-400/30 bg-green-400/10';
+      default:
+        return 'text-elec-light/60 border-elec-gray/30 bg-elec-dark/30';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-400/10 text-red-400 border-red-400/30';
-      case 'medium': return 'bg-yellow-400/10 text-yellow-400 border-yellow-400/30';
-      case 'low': return 'bg-green-400/10 text-green-400 border-green-400/30';
-      default: return 'bg-elec-dark/50 text-elec-light/60 border-elec-gray/30';
+      case 'high':
+        return 'bg-red-400/10 text-red-400 border-red-400/30';
+      case 'medium':
+        return 'bg-yellow-400/10 text-yellow-400 border-yellow-400/30';
+      case 'low':
+        return 'bg-green-400/10 text-green-400 border-green-400/30';
+      default:
+        return 'bg-elec-dark/50 text-elec-light/60 border-elec-gray/30';
     }
   };
 
   const getComplianceColor = (status?: string) => {
     switch (status) {
-      case 'compliant': return 'text-green-400 border-green-400/30 bg-green-400/10';
-      case 'attention-needed': return 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10';
-      case 'non-compliant': return 'text-red-400 border-red-400/30 bg-red-400/10';
-      default: return 'text-elec-light/60 border-elec-gray/30 bg-elec-dark/30';
+      case 'compliant':
+        return 'text-green-400 border-green-400/30 bg-green-400/10';
+      case 'attention-needed':
+        return 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10';
+      case 'non-compliant':
+        return 'text-red-400 border-red-400/30 bg-red-400/10';
+      default:
+        return 'text-elec-light/60 border-elec-gray/30 bg-elec-dark/30';
     }
   };
 
@@ -67,46 +88,49 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       const pdfData: MaintenanceScheduleData = {
         projectName: `${results.equipmentType} - ${results.location}`,
         installationAddress: results.location,
-        preparedBy: "Maintenance Advisor AI",
+        preparedBy: 'Maintenance Advisor AI',
         preparedDate: new Date().toLocaleDateString('en-GB'),
         tasks: (results.schedule || []).map((task) => ({
           equipment: results.equipmentType,
           task: task.task,
           frequency: task.interval,
-          lastCompleted: "",
+          lastCompleted: '',
           nextDue: task.nextDue || calculateNextDue(task.interval),
-          responsible: task.priority === 'high' ? 'Qualified Electrician' : 'Competent Person'
+          responsible: task.priority === 'high' ? 'Qualified Electrician' : 'Competent Person',
         })),
         inspectionIntervals: [
           {
-            inspectionType: "Periodic Inspection (EICR)",
+            inspectionType: 'Periodic Inspection (EICR)',
             interval: determineEICRInterval(results.ageYears),
-            nextDue: results.nextEICRDue || calculateEICRNextDue(results.ageYears)
-          }
+            nextDue: results.nextEICRDue || calculateEICRNextDue(results.ageYears),
+          },
         ],
-        notes: results.recommendations.join('\n\n')
+        notes: results.recommendations.join('\n\n'),
       };
 
       const pdf = generateMaintenanceSchedulePDF(pdfData);
-      pdf.save(`Maintenance_Schedule_${results.equipmentType.replace(/\s+/g, '_')}_${Date.now()}.pdf`);
-      toast.success("PDF exported successfully");
+      pdf.save(
+        `Maintenance_Schedule_${results.equipmentType.replace(/\s+/g, '_')}_${Date.now()}.pdf`
+      );
+      toast.success('PDF exported successfully');
     } catch (err) {
       console.error('PDF export error:', err);
-      toast.error("Failed to export PDF");
+      toast.error('Failed to export PDF');
     } finally {
       setIsExportingPDF(false);
     }
   };
 
   const handleCopy = () => {
-    const text = `MAINTENANCE SCHEDULE\n\n` +
+    const text =
+      `MAINTENANCE SCHEDULE\n\n` +
       `Equipment: ${results.equipmentType}\n` +
       `Location: ${results.location}\n` +
       `Age: ${results.ageYears} years\n\n` +
       `TASKS:\n${(results.schedule || []).map((t, i) => `${i + 1}. [${t.interval}] ${t.task} (${t.priority})`).join('\n')}\n\n` +
       `RECOMMENDATIONS:\n${(results.recommendations || []).join('\n')}`;
     navigator.clipboard.writeText(text);
-    toast.success("Schedule copied to clipboard");
+    toast.success('Schedule copied to clipboard');
   };
 
   const calculateNextDue = (interval: string): string => {
@@ -116,17 +140,25 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
     const value = parseInt(match[1]);
     const unit = match[2].toLowerCase();
     switch (unit) {
-      case 'day': now.setDate(now.getDate() + value); break;
-      case 'week': now.setDate(now.getDate() + (value * 7)); break;
-      case 'month': now.setMonth(now.getMonth() + value); break;
-      case 'year': now.setFullYear(now.getFullYear() + value); break;
+      case 'day':
+        now.setDate(now.getDate() + value);
+        break;
+      case 'week':
+        now.setDate(now.getDate() + value * 7);
+        break;
+      case 'month':
+        now.setMonth(now.getMonth() + value);
+        break;
+      case 'year':
+        now.setFullYear(now.getFullYear() + value);
+        break;
     }
     return now.toLocaleDateString('en-GB');
   };
 
   const determineEICRInterval = (age: number): string => {
-    if (age > 10) return "5 Years (Older Installation)";
-    return "10 Years (Domestic) / 5 Years (Commercial)";
+    if (age > 10) return '5 Years (Older Installation)';
+    return '10 Years (Domestic) / 5 Years (Commercial)';
   };
 
   const calculateEICRNextDue = (age: number): string => {
@@ -150,11 +182,19 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="space-y-2 text-left">
             <div>
               <p className="text-sm text-foreground font-medium">Equipment</p>
-              <p className="text-base text-foreground">{results.originalInput.equipmentType.replace('-', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</p>
+              <p className="text-base text-foreground">
+                {results.originalInput.equipmentType
+                  .replace('-', ' ')
+                  .split(' ')
+                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                  .join(' ')}
+              </p>
             </div>
             <div>
               <p className="text-sm text-foreground font-medium">Description</p>
-              <p className="text-base text-foreground">{results.originalInput.equipmentDescription}</p>
+              <p className="text-base text-foreground">
+                {results.originalInput.equipmentDescription}
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
@@ -171,13 +211,17 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                 {results.originalInput.buildingType && (
                   <div>
                     <span className="text-foreground font-medium">Building: </span>
-                    <span className="text-foreground capitalize">{results.originalInput.buildingType}</span>
+                    <span className="text-foreground capitalize">
+                      {results.originalInput.buildingType}
+                    </span>
                   </div>
                 )}
                 {results.originalInput.environment && (
                   <div>
                     <span className="text-foreground font-medium">Environment: </span>
-                    <span className="text-foreground capitalize">{results.originalInput.environment}</span>
+                    <span className="text-foreground capitalize">
+                      {results.originalInput.environment}
+                    </span>
                   </div>
                 )}
               </div>
@@ -195,20 +239,22 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               <div className="text-left">
                 <p className="text-sm font-medium text-yellow-400">Partial Plan Generated</p>
                 <p className="text-sm text-foreground mt-1">
-                  Some sections may be incomplete: {results.missingSections?.join(', ') || 'Check details'}
+                  Some sections may be incomplete:{' '}
+                  {results.missingSections?.join(', ') || 'Check details'}
                 </p>
               </div>
             </div>
           </CardContent>
         </Card>
       )}
-      
+
       {/* Header Actions */}
       <div className="flex flex-col gap-4">
         <div>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Maintenance Plan</h2>
           <p className="text-base text-foreground mt-2">
-            {results.schedule?.length || 0} tasks • Generated {new Date().toLocaleDateString('en-GB')}
+            {results.schedule?.length || 0} tasks • Generated{' '}
+            {new Date().toLocaleDateString('en-GB')}
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
@@ -225,7 +271,11 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
             disabled={isExportingPDF}
             className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 touch-manipulation flex-1 sm:flex-none"
           >
-            {isExportingPDF ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
+            {isExportingPDF ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Download className="mr-2 h-4 w-4" />
+            )}
             Export PDF
           </Button>
           <Button
@@ -246,7 +296,9 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
             <AlertTriangle className={`h-4 w-4 ${getRiskColor(results.riskLevel).split(' ')[0]}`} />
             <span className="text-xs text-white/50">Risk Level</span>
           </div>
-          <p className={`text-2xl sm:text-3xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
+          <p
+            className={`text-2xl sm:text-3xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}
+          >
             {results.riskScore || 0}
           </p>
           <Badge className={`mt-2 ${getRiskColor(results.riskLevel)}`}>
@@ -257,7 +309,9 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
         {/* Compliance Status */}
         <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
           <div className="flex items-center gap-2 mb-2">
-            <CheckCircle2 className={`h-4 w-4 ${getComplianceColor(results.complianceStatus).split(' ')[0]}`} />
+            <CheckCircle2
+              className={`h-4 w-4 ${getComplianceColor(results.complianceStatus).split(' ')[0]}`}
+            />
             <span className="text-xs text-white/50">Compliance</span>
           </div>
           <Badge className={`${getComplianceColor(results.complianceStatus)}`}>
@@ -279,9 +333,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               <p className="text-xl sm:text-2xl font-bold text-foreground">
                 £{results.annualCostEstimate.min}
               </p>
-              <p className="text-xs text-foreground mt-1">
-                to £{results.annualCostEstimate.max}
-              </p>
+              <p className="text-xs text-foreground mt-1">to £{results.annualCostEstimate.max}</p>
             </>
           ) : (
             <p className="text-lg text-foreground">N/A</p>
@@ -310,7 +362,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               <div className="text-left">
                 <p className="text-sm font-medium text-orange-400">Installation Age Warning</p>
                 <p className="text-sm text-foreground mt-1">
-                  Installation is {results.ageYears} years old. EICR recommended within 6 months (BS 7671 Section 631.1)
+                  Installation is {results.ageYears} years old. EICR recommended within 6 months (BS
+                  7671 Section 631.1)
                 </p>
               </div>
             </div>
@@ -333,13 +386,19 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
             </div>
             <div className="flex gap-2 text-xs sm:text-sm flex-wrap">
               <Badge variant="outline" className="border-red-400/30 text-red-400 whitespace-nowrap">
-                {results.schedule?.filter(t => t.priority === 'high').length || 0} High
+                {results.schedule?.filter((t) => t.priority === 'high').length || 0} High
               </Badge>
-              <Badge variant="outline" className="border-yellow-400/30 text-yellow-400 whitespace-nowrap">
-                {results.schedule?.filter(t => t.priority === 'medium').length || 0} Med
+              <Badge
+                variant="outline"
+                className="border-yellow-400/30 text-yellow-400 whitespace-nowrap"
+              >
+                {results.schedule?.filter((t) => t.priority === 'medium').length || 0} Med
               </Badge>
-              <Badge variant="outline" className="border-green-400/30 text-green-400 whitespace-nowrap">
-                {results.schedule?.filter(t => t.priority === 'low').length || 0} Low
+              <Badge
+                variant="outline"
+                className="border-green-400/30 text-green-400 whitespace-nowrap"
+              >
+                {results.schedule?.filter((t) => t.priority === 'low').length || 0} Low
               </Badge>
             </div>
           </div>
@@ -348,108 +407,124 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           {!results.schedule || results.schedule.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-left">
               <AlertCircle className="h-12 w-12 text-elec-yellow/50 mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">No Maintenance Tasks Identified</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                No Maintenance Tasks Identified
+              </h3>
               <p className="text-sm text-foreground max-w-md">
-                The system could not generate specific maintenance tasks for this equipment. 
-                Please try again with more detailed equipment information or contact support.
+                The system could not generate specific maintenance tasks for this equipment. Please
+                try again with more detailed equipment information or contact support.
               </p>
             </div>
           ) : (
             <Accordion type="single" collapsible className="space-y-4">
               {results.schedule.map((task, idx) => (
-              <AccordionItem 
-                key={idx} 
-                value={`task-${idx}`}
-                className="border border-elec-yellow/20 rounded-xl px-4 sm:px-5 bg-gradient-to-r from-elec-card/50 to-elec-dark/30 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-card/70 data-[state=open]:to-elec-dark/50 data-[state=open]:border-elec-yellow/60 touch-manipulation"
-              >
-                <AccordionTrigger className="hover:no-underline py-5 sm:py-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full text-left pr-8 sm:pr-10">
-                    <Badge className={`${getPriorityColor(task.priority)} transition-colors text-sm self-start sm:self-center shrink-0`}>
-                      {task.priority}
-                    </Badge>
-                    <div className="flex-1 min-w-0 overflow-hidden">
-                      <p className="font-semibold text-foreground text-base sm:text-lg leading-tight sm:leading-normal break-words overflow-wrap-anywhere">{task.task}</p>
-                      <p className="text-sm text-foreground mt-2 leading-tight break-words">
-                        {task.interval} • {task.regulation || 'Industry standard'}
-                      </p>
+                <AccordionItem
+                  key={idx}
+                  value={`task-${idx}`}
+                  className="border border-elec-yellow/20 rounded-xl px-4 sm:px-5 bg-gradient-to-r from-elec-card/50 to-elec-dark/30 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-card/70 data-[state=open]:to-elec-dark/50 data-[state=open]:border-elec-yellow/60 touch-manipulation"
+                >
+                  <AccordionTrigger className="hover:no-underline py-5 sm:py-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full text-left pr-8 sm:pr-10">
+                      <Badge
+                        className={`${getPriorityColor(task.priority)} transition-colors text-sm self-start sm:self-center shrink-0`}
+                      >
+                        {task.priority}
+                      </Badge>
+                      <div className="flex-1 min-w-0 overflow-hidden">
+                        <p className="font-semibold text-foreground text-base sm:text-lg leading-tight sm:leading-normal break-words overflow-wrap-anywhere">
+                          {task.task}
+                        </p>
+                        <p className="text-sm text-foreground mt-2 leading-tight break-words">
+                          {task.interval} • {task.regulation || 'Industry standard'}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="pb-6 pt-2">
-                  <div className="space-y-4 pl-2">
-                    {task.estimatedDurationMinutes && (
-                      <div className="flex items-start gap-3 text-base">
-                        <Clock className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-foreground">
-                          Duration: {task.estimatedDurationMinutes} minutes
-                        </span>
-                      </div>
-                    )}
-                    {task.estimatedCost && (
-                      <div className="flex items-start gap-3 text-base">
-                        <PoundSterling className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-foreground">
-                          Cost: £{task.estimatedCost.min} - £{task.estimatedCost.max}
-                        </span>
-                      </div>
-                    )}
-                    {task.requiredQualifications && task.requiredQualifications.length > 0 && (
-                      <div className="flex items-start gap-3 text-base">
-                        <FileText className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                        <div className="flex-1 text-left">
-                          <p className="text-foreground font-semibold">Required Qualifications:</p>
-                          <p className="text-foreground text-sm mt-1">
-                            {task.requiredQualifications.join(', ')}
-                          </p>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-6 pt-2">
+                    <div className="space-y-4 pl-2">
+                      {task.estimatedDurationMinutes && (
+                        <div className="flex items-start gap-3 text-base">
+                          <Clock className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+                          <span className="text-foreground">
+                            Duration: {task.estimatedDurationMinutes} minutes
+                          </span>
                         </div>
-                      </div>
-                    )}
-                    {task.toolsRequired && task.toolsRequired.length > 0 && (
-                      <div className="flex items-start gap-2 text-sm">
-                        <Wrench className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <div className="flex-1 text-left">
-                          <p className="text-foreground font-medium">Tools Required:</p>
-                          <p className="text-foreground text-xs mt-1">
-                            {task.toolsRequired.join(', ')}
-                          </p>
+                      )}
+                      {task.estimatedCost && (
+                        <div className="flex items-start gap-3 text-base">
+                          <PoundSterling className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+                          <span className="text-foreground">
+                            Cost: £{task.estimatedCost.min} - £{task.estimatedCost.max}
+                          </span>
                         </div>
-                      </div>
-                    )}
-                    {task.procedure && Array.isArray(task.procedure) && task.procedure.length > 0 && (
-                      <div className="flex items-start gap-2 text-sm">
-                        <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <div className="flex-1 text-left">
-                          <p className="text-foreground font-medium">Procedure:</p>
-                          <ol className="text-foreground text-xs mt-1 space-y-1 list-decimal list-inside">
-                            {task.procedure
-                              .filter(step => step && step.trim().length > 0)
-                              .map((step, i) => (
-                                <li key={i} className="leading-relaxed">{step}</li>
-                              ))
-                            }
-                          </ol>
+                      )}
+                      {task.requiredQualifications && task.requiredQualifications.length > 0 && (
+                        <div className="flex items-start gap-3 text-base">
+                          <FileText className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+                          <div className="flex-1 text-left">
+                            <p className="text-foreground font-semibold">
+                              Required Qualifications:
+                            </p>
+                            <p className="text-foreground text-sm mt-1">
+                              {task.requiredQualifications.join(', ')}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                    {task.safetyPrecautions && Array.isArray(task.safetyPrecautions) && task.safetyPrecautions.length > 0 && (
-                      <div className="flex items-start gap-2 text-sm p-3 bg-orange-400/5 border border-orange-400/20 rounded-lg">
-                        <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
-                        <div className="flex-1 text-left">
-                          <p className="text-foreground font-medium">Safety Precautions:</p>
-                          <ul className="text-foreground text-xs mt-1 space-y-1 list-disc list-inside">
-                            {task.safetyPrecautions
-                              .filter(precaution => precaution && precaution.trim().length > 0)
-                              .map((precaution, i) => (
-                                <li key={i} className="leading-relaxed">{precaution}</li>
-                              ))
-                            }
-                          </ul>
+                      )}
+                      {task.toolsRequired && task.toolsRequired.length > 0 && (
+                        <div className="flex items-start gap-2 text-sm">
+                          <Wrench className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+                          <div className="flex-1 text-left">
+                            <p className="text-foreground font-medium">Tools Required:</p>
+                            <p className="text-foreground text-xs mt-1">
+                              {task.toolsRequired.join(', ')}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+                      )}
+                      {task.procedure &&
+                        Array.isArray(task.procedure) &&
+                        task.procedure.length > 0 && (
+                          <div className="flex items-start gap-2 text-sm">
+                            <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+                            <div className="flex-1 text-left">
+                              <p className="text-foreground font-medium">Procedure:</p>
+                              <ol className="text-foreground text-xs mt-1 space-y-1 list-decimal list-inside">
+                                {task.procedure
+                                  .filter((step) => step && step.trim().length > 0)
+                                  .map((step, i) => (
+                                    <li key={i} className="leading-relaxed">
+                                      {step}
+                                    </li>
+                                  ))}
+                              </ol>
+                            </div>
+                          </div>
+                        )}
+                      {task.safetyPrecautions &&
+                        Array.isArray(task.safetyPrecautions) &&
+                        task.safetyPrecautions.length > 0 && (
+                          <div className="flex items-start gap-2 text-sm p-3 bg-orange-400/5 border border-orange-400/20 rounded-lg">
+                            <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
+                            <div className="flex-1 text-left">
+                              <p className="text-foreground font-medium">Safety Precautions:</p>
+                              <ul className="text-foreground text-xs mt-1 space-y-1 list-disc list-inside">
+                                {task.safetyPrecautions
+                                  .filter(
+                                    (precaution) => precaution && precaution.trim().length > 0
+                                  )
+                                  .map((precaution, i) => (
+                                    <li key={i} className="leading-relaxed">
+                                      {precaution}
+                                    </li>
+                                  ))}
+                              </ul>
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
             </Accordion>
           )}
@@ -470,7 +545,10 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           </CardHeader>
           <CardContent className="space-y-4">
             {results.commonFailureModes.map((failure, idx) => (
-              <div key={idx} className="p-4 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left">
+              <div
+                key={idx}
+                className="p-4 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left"
+              >
                 <div className="flex items-start justify-between mb-2">
                   <p className="font-medium text-foreground">{failure.failure}</p>
                   <Badge variant="outline" className="border-yellow-400/30 text-yellow-400">
@@ -508,7 +586,10 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent>
             <div className="space-y-2">
               {results.recommendedParts.map((part, idx) => (
-                <div key={idx} className="flex items-center justify-between p-3 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left">
+                <div
+                  key={idx}
+                  className="flex items-center justify-between p-3 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left"
+                >
                   <div>
                     <p className="font-medium text-foreground">{part.part}</p>
                     <p className="text-xs text-foreground mt-0.5">{part.purpose}</p>
@@ -540,7 +621,10 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           </CardHeader>
           <CardContent className="space-y-3">
             {results.regulations.map((reg, idx) => (
-              <div key={idx} className="p-4 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left">
+              <div
+                key={idx}
+                className="p-4 bg-elec-dark/30 border border-elec-gray/20 rounded-lg text-left"
+              >
                 <div className="flex items-start justify-between mb-2">
                   <p className="font-medium text-elec-yellow">{reg.regulationNumber}</p>
                   {reg.confidence && (

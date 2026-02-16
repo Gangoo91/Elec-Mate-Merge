@@ -10,35 +10,35 @@ export interface BreadcrumbItem {
 // Route label mapping - customize these for your app
 const routeLabels: Record<string, string> = {
   '': 'Home',
-  'dashboard': 'Dashboard',
-  'profile': 'Profile',
-  'settings': 'Settings',
-  'notifications': 'Notifications',
-  'subscriptions': 'Subscriptions',
-  'apprentice': 'Apprentice',
-  'electrician': 'Electrician Hub',
-  'employer': 'Employer',
-  'college': 'College',
+  dashboard: 'Dashboard',
+  profile: 'Profile',
+  settings: 'Settings',
+  notifications: 'Notifications',
+  subscriptions: 'Subscriptions',
+  apprentice: 'Apprentice',
+  electrician: 'Electrician Hub',
+  employer: 'Employer',
+  college: 'College',
   'study-centre': 'Study Centre',
-  'admin': 'Admin',
+  admin: 'Admin',
   'inspection-testing': 'Inspection & Testing',
-  'upskilling': 'Upskilling',
-  'calculators': 'Calculators',
-  'materials': 'Materials',
-  'quotes': 'Quotes',
-  'invoices': 'Invoices',
-  'customers': 'Customers',
+  upskilling: 'Upskilling',
+  calculators: 'Calculators',
+  materials: 'Materials',
+  quotes: 'Quotes',
+  invoices: 'Invoices',
+  customers: 'Customers',
   'mental-health': 'Mental Health',
   'rights-and-pay': 'Rights & Pay',
-  'level2': 'Level 2',
-  'level3': 'Level 3',
-  'am2': 'AM2',
+  level2: 'Level 2',
+  level3: 'Level 3',
+  am2: 'AM2',
   'cable-sizing': 'Cable Sizing',
   'voltage-drop': 'Voltage Drop',
-  'adiabatic': 'Adiabatic',
+  adiabatic: 'Adiabatic',
   'circuit-designer': 'Circuit Designer',
-  'eicr': 'EICR',
-  'eic': 'EIC',
+  eicr: 'EICR',
+  eic: 'EIC',
   'minor-works': 'Minor Works',
 };
 
@@ -95,7 +95,7 @@ function isUUID(str: string): boolean {
 function formatSegmentLabel(segment: string): string {
   return segment
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
 

@@ -1,23 +1,18 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useState, useMemo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/select';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Label } from '@/components/ui/label';
 import {
   Award,
   Search,
@@ -31,8 +26,8 @@ import {
   Trash2,
   FileText,
   ExternalLink,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useEmployeeQualifications,
   useCreateQualification,
@@ -40,33 +35,33 @@ import {
   useSyncEcsFromElecId,
   type EmployeeQualification,
   type QualificationType,
-} from "@/hooks/useEmployeeQualifications";
-import { useEmployees } from "@/hooks/useEmployees";
-import { format, differenceInDays, parseISO } from "date-fns";
+} from '@/hooks/useEmployeeQualifications';
+import { useEmployees } from '@/hooks/useEmployees';
+import { format, differenceInDays, parseISO } from 'date-fns';
 
 const QUALIFICATION_TYPES: { value: QualificationType; label: string }[] = [
-  { value: "ecs_card", label: "ECS Card" },
-  { value: "18th_edition", label: "18th Edition" },
-  { value: "2391", label: "2391 Inspection & Testing" },
-  { value: "2394", label: "2394 Initial Verification" },
-  { value: "2395", label: "2395 Periodic Inspection" },
-  { value: "nvq_l3", label: "NVQ Level 3" },
-  { value: "cscs", label: "CSCS Card" },
-  { value: "cpcs", label: "CPCS Card" },
-  { value: "first_aid", label: "First Aid" },
-  { value: "ipaf", label: "IPAF" },
-  { value: "pasma", label: "PASMA" },
-  { value: "asbestos", label: "Asbestos Awareness" },
-  { value: "confined_space", label: "Confined Space" },
-  { value: "driving_licence", label: "Driving Licence" },
-  { value: "other", label: "Other" },
+  { value: 'ecs_card', label: 'ECS Card' },
+  { value: '18th_edition', label: '18th Edition' },
+  { value: '2391', label: '2391 Inspection & Testing' },
+  { value: '2394', label: '2394 Initial Verification' },
+  { value: '2395', label: '2395 Periodic Inspection' },
+  { value: 'nvq_l3', label: 'NVQ Level 3' },
+  { value: 'cscs', label: 'CSCS Card' },
+  { value: 'cpcs', label: 'CPCS Card' },
+  { value: 'first_aid', label: 'First Aid' },
+  { value: 'ipaf', label: 'IPAF' },
+  { value: 'pasma', label: 'PASMA' },
+  { value: 'asbestos', label: 'Asbestos Awareness' },
+  { value: 'confined_space', label: 'Confined Space' },
+  { value: 'driving_licence', label: 'Driving Licence' },
+  { value: 'other', label: 'Other' },
 ];
 
 function getStatusBadge(status: string, expiryDate?: string) {
-  const isExpired = status === "expired";
-  const isExpiring = status === "expiring";
+  const isExpired = status === 'expired';
+  const isExpiring = status === 'expiring';
 
-  let daysText = "";
+  let daysText = '';
   if (expiryDate) {
     const days = differenceInDays(parseISO(expiryDate), new Date());
     if (days < 0) {
@@ -103,19 +98,19 @@ function getStatusBadge(status: string, expiryDate?: string) {
 }
 
 export function QualificationTracker() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterType, setFilterType] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
   const [addSheetOpen, setAddSheetOpen] = useState(false);
 
   // Form state
-  const [selectedEmployee, setSelectedEmployee] = useState("");
-  const [qualType, setQualType] = useState<QualificationType>("18th_edition");
-  const [qualName, setQualName] = useState("");
-  const [issuingBody, setIssuingBody] = useState("");
-  const [certNumber, setCertNumber] = useState("");
-  const [issueDate, setIssueDate] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
+  const [selectedEmployee, setSelectedEmployee] = useState('');
+  const [qualType, setQualType] = useState<QualificationType>('18th_edition');
+  const [qualName, setQualName] = useState('');
+  const [issuingBody, setIssuingBody] = useState('');
+  const [certNumber, setCertNumber] = useState('');
+  const [issueDate, setIssueDate] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
 
   const { data: qualifications = [], isLoading } = useEmployeeQualifications();
   const { data: employees = [] } = useEmployees();
@@ -135,12 +130,12 @@ export function QualificationTracker() {
       }
 
       // Type filter
-      if (filterType !== "all" && q.qualification_type !== filterType) {
+      if (filterType !== 'all' && q.qualification_type !== filterType) {
         return false;
       }
 
       // Status filter
-      if (filterStatus !== "all" && q.status !== filterStatus) {
+      if (filterStatus !== 'all' && q.status !== filterStatus) {
         return false;
       }
 
@@ -152,7 +147,7 @@ export function QualificationTracker() {
   const groupedByEmployee = useMemo(() => {
     const groups: Record<string, EmployeeQualification[]> = {};
     filteredQualifications.forEach((q) => {
-      const employeeName = q.employee?.name || "Unknown";
+      const employeeName = q.employee?.name || 'Unknown';
       if (!groups[employeeName]) {
         groups[employeeName] = [];
       }
@@ -167,7 +162,8 @@ export function QualificationTracker() {
     await createQualification.mutateAsync({
       employee_id: selectedEmployee,
       qualification_type: qualType,
-      qualification_name: qualName || QUALIFICATION_TYPES.find(t => t.value === qualType)?.label || qualType,
+      qualification_name:
+        qualName || QUALIFICATION_TYPES.find((t) => t.value === qualType)?.label || qualType,
       issuing_body: issuingBody || undefined,
       certificate_number: certNumber || undefined,
       issue_date: issueDate || undefined,
@@ -175,13 +171,13 @@ export function QualificationTracker() {
     });
 
     // Reset form
-    setSelectedEmployee("");
-    setQualType("18th_edition");
-    setQualName("");
-    setIssuingBody("");
-    setCertNumber("");
-    setIssueDate("");
-    setExpiryDate("");
+    setSelectedEmployee('');
+    setQualType('18th_edition');
+    setQualName('');
+    setIssuingBody('');
+    setCertNumber('');
+    setIssueDate('');
+    setExpiryDate('');
     setAddSheetOpen(false);
   };
 
@@ -215,7 +211,7 @@ export function QualificationTracker() {
             placeholder="Search qualifications..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("h-11", !searchQuery && "pl-9")}
+            className={cn('h-11', !searchQuery && 'pl-9')}
           />
         </div>
         <Select value={filterType} onValueChange={setFilterType}>
@@ -256,13 +252,11 @@ export function QualificationTracker() {
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
             <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-medium text-foreground mb-2">
-              No qualifications found
-            </h3>
+            <h3 className="font-medium text-foreground mb-2">No qualifications found</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              {searchQuery || filterType !== "all" || filterStatus !== "all"
-                ? "Try adjusting your filters"
-                : "Add employee qualifications to track certifications and expiry dates"}
+              {searchQuery || filterType !== 'all' || filterStatus !== 'all'
+                ? 'Try adjusting your filters'
+                : 'Add employee qualifications to track certifications and expiry dates'}
             </p>
             <Button
               onClick={() => setAddSheetOpen(true)}
@@ -294,7 +288,9 @@ export function QualificationTracker() {
                       disabled={syncEcs.isPending}
                       className="text-xs"
                     >
-                      <RefreshCw className={cn("h-3 w-3 mr-1", syncEcs.isPending && "animate-spin")} />
+                      <RefreshCw
+                        className={cn('h-3 w-3 mr-1', syncEcs.isPending && 'animate-spin')}
+                      />
                       Sync ECS
                     </Button>
                   )}
@@ -313,13 +309,11 @@ export function QualificationTracker() {
                             {qual.qualification_name}
                           </p>
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            {qual.certificate_number && (
-                              <span>#{qual.certificate_number}</span>
-                            )}
+                            {qual.certificate_number && <span>#{qual.certificate_number}</span>}
                             {qual.expiry_date && (
                               <span className="flex items-center gap-1">
                                 <Calendar className="h-3 w-3" />
-                                Expires {format(parseISO(qual.expiry_date), "dd/MM/yyyy")}
+                                Expires {format(parseISO(qual.expiry_date), 'dd/MM/yyyy')}
                               </span>
                             )}
                           </div>
@@ -332,7 +326,7 @@ export function QualificationTracker() {
                             size="sm"
                             variant="ghost"
                             className="h-8 w-8 p-0"
-                            onClick={() => window.open(qual.file_url, "_blank")}
+                            onClick={() => window.open(qual.file_url, '_blank')}
                           >
                             <ExternalLink className="h-3.5 w-3.5" />
                           </Button>
@@ -466,7 +460,7 @@ export function QualificationTracker() {
                 disabled={!selectedEmployee || createQualification.isPending}
                 className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
               >
-                {createQualification.isPending ? "Adding..." : "Add Qualification"}
+                {createQualification.isPending ? 'Adding...' : 'Add Qualification'}
               </Button>
             </div>
           </div>

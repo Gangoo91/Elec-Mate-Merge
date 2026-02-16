@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Zap } from 'lucide-react';
@@ -23,12 +22,8 @@ const TestingProceduresHeader = ({ onBack }: TestingProceduresHeaderProps) => {
           <Zap className="h-5 w-5 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <h1 className="text-base font-semibold text-white truncate">
-            Testing Procedures
-          </h1>
-          <p className="text-[11px] text-white/50">
-            BS 7671 Part 6
-          </p>
+          <h1 className="text-base font-semibold text-white truncate">Testing Procedures</h1>
+          <p className="text-[11px] text-white/50">BS 7671 Part 6</p>
         </div>
       </div>
     </header>

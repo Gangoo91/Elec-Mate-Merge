@@ -1,45 +1,45 @@
-import { ArrowLeft, HandHeart, GitBranch, Rocket, MessageSquare } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HandHeart, GitBranch, Rocket, MessageSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Building Trust and Earning Respect",
+    title: 'Building Trust and Earning Respect',
     icon: HandHeart,
     description:
-      "Why trust is the foundation of leadership, how to earn it on site, and what destroys it",
+      'Why trust is the foundation of leadership, how to earn it on site, and what destroys it',
   },
   {
     id: 2,
-    title: "Delegating Effectively",
+    title: 'Delegating Effectively',
     icon: GitBranch,
     description:
-      "Matching tasks to people, setting clear expectations, and letting go without losing control",
+      'Matching tasks to people, setting clear expectations, and letting go without losing control',
   },
   {
     id: 3,
-    title: "Motivating Your Team",
+    title: 'Motivating Your Team',
     icon: Rocket,
     description:
-      "What drives people at work, recognising effort, and keeping morale high on difficult jobs",
+      'What drives people at work, recognising effort, and keeping morale high on difficult jobs',
   },
   {
     id: 4,
-    title: "Giving Feedback That Sticks",
+    title: 'Giving Feedback That Sticks',
     icon: MessageSquare,
     description:
-      "Constructive feedback techniques, the SBI model, and having praise land as well as criticism",
+      'Constructive feedback techniques, the SBI model, and having praise land as well as criticism',
   },
 ];
 
 export default function LeadershipModule2() {
   useSEO({
-    title: "Module 2: Leading Your Team | Leadership on Site",
+    title: 'Module 2: Leading Your Team | Leadership on Site',
     description:
-      "Building trust, delegating effectively, motivating your team, and giving feedback that sticks.",
+      'Building trust, delegating effectively, motivating your team, and giving feedback that sticks.',
   });
 
   return (
@@ -66,20 +66,16 @@ export default function LeadershipModule2() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 2
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 2</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">35 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Leading Your Team
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Leading Your Team</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Building trust, delegating work, keeping your team motivated, and
-              giving feedback that actually makes a difference
+              Building trust, delegating work, keeping your team motivated, and giving feedback that
+              actually makes a difference
             </p>
           </div>
 

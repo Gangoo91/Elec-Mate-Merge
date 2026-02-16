@@ -20,10 +20,14 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   formData,
   onUpdate,
   onAutoCreateObservation,
-  onNavigateToObservations
+  onNavigateToObservations,
 }) => {
   const getInspectionItems = (): EICInspectionItem[] => {
-    if (formData.inspectionItems && Array.isArray(formData.inspectionItems) && formData.inspectionItems.length > 0) {
+    if (
+      formData.inspectionItems &&
+      Array.isArray(formData.inspectionItems) &&
+      formData.inspectionItems.length > 0
+    ) {
       return formData.inspectionItems;
     }
     return bs7671EICInspectionItems;
@@ -33,17 +37,20 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
 
   const updateInspectionItem = (id: string, field: keyof EICInspectionItem, value: any) => {
     onUpdate('inspectionItems', (prevItems: EICInspectionItem[]) => {
-      const items = (prevItems && Array.isArray(prevItems) && prevItems.length > 0)
-        ? prevItems
-        : bs7671EICInspectionItems;
-      return items.map(item =>
-        item.id === id ? { ...item, [field]: value } : item
-      );
+      const items =
+        prevItems && Array.isArray(prevItems) && prevItems.length > 0
+          ? prevItems
+          : bs7671EICInspectionItems;
+      return items.map((item) => (item.id === id ? { ...item, [field]: value } : item));
     });
   };
 
   useEffect(() => {
-    if (!formData.inspectionItems || !Array.isArray(formData.inspectionItems) || formData.inspectionItems.length === 0) {
+    if (
+      !formData.inspectionItems ||
+      !Array.isArray(formData.inspectionItems) ||
+      formData.inspectionItems.length === 0
+    ) {
       onUpdate('inspectionItems', [...bs7671EICInspectionItems]);
     }
   }, []);

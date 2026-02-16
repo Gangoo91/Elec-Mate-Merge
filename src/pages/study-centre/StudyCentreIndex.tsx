@@ -1,12 +1,28 @@
-import { useNavigate, Link } from "react-router-dom";
-import { GraduationCap, Zap, BookOpen, Award, Clock, Target, TrendingUp, Play, ChevronRight, Flame, Star, Sparkles, ArrowLeft, Shield, Compass } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { useStudyStreak } from "@/hooks/useStudyStreak";
-import { useQuizResults } from "@/hooks/useQuizResults";
-import { useAuth } from "@/contexts/AuthContext";
-import useSEO from "@/hooks/useSEO";
+import { useNavigate, Link } from 'react-router-dom';
+import {
+  GraduationCap,
+  Zap,
+  BookOpen,
+  Award,
+  Clock,
+  Target,
+  TrendingUp,
+  Play,
+  ChevronRight,
+  Flame,
+  Star,
+  Sparkles,
+  ArrowLeft,
+  Shield,
+  Compass,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { useStudyStreak } from '@/hooks/useStudyStreak';
+import { useQuizResults } from '@/hooks/useQuizResults';
+import { useAuth } from '@/contexts/AuthContext';
+import useSEO from '@/hooks/useSEO';
 
 export default function StudyCentreIndex() {
   const navigate = useNavigate();
@@ -17,11 +33,13 @@ export default function StudyCentreIndex() {
   // SEO for study centre - high priority for Google ranking
   useSEO({
     title: 'Study Centre | Electrical Training & CPD Courses',
-    description: 'Comprehensive electrical training for apprentices and qualified electricians. Level 2 & 3 courses, 18th Edition BS 7671, inspection & testing, EV charging, solar PV, and 2,000+ practice questions.',
+    description:
+      'Comprehensive electrical training for apprentices and qualified electricians. Level 2 & 3 courses, 18th Edition BS 7671, inspection & testing, EV charging, solar PV, and 2,000+ practice questions.',
     schema: {
       '@type': 'CollectionPage',
       name: 'Elec-Mate Study Centre',
-      description: 'Educational hub for UK electrical professionals - apprenticeship training and CPD courses',
+      description:
+        'Educational hub for UK electrical professionals - apprenticeship training and CPD courses',
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
@@ -32,9 +50,12 @@ export default function StudyCentreIndex() {
   const currentStreak = studyStreakData?.streak?.currentStreak || 0;
   const quizResults = quizData?.results || [];
   const totalQuizzesTaken = quizResults.length;
-  const averageScore = quizResults.length > 0
-    ? Math.round(quizResults.reduce((acc: number, r: any) => acc + (r.score || 0), 0) / quizResults.length)
-    : 0;
+  const averageScore =
+    quizResults.length > 0
+      ? Math.round(
+          quizResults.reduce((acc: number, r: any) => acc + (r.score || 0), 0) / quizResults.length
+        )
+      : 0;
 
   return (
     <div className="pb-24 momentum-scroll-y">
@@ -101,10 +122,25 @@ export default function StudyCentreIndex() {
             className="mt-6 grid grid-cols-4 gap-2 touch-grid"
           >
             {[
-              { value: "46", label: "Courses", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
-              { value: totalQuizzesTaken || "0", label: "Quizzes", icon: Target, color: "from-purple-500 to-pink-400" },
-              { value: averageScore > 0 ? `${averageScore}%` : "—", label: "Score", icon: Award, color: "from-emerald-500 to-teal-400" },
-              { value: currentStreak || "0", label: "Streak", icon: Flame, color: "from-orange-500 to-red-400" },
+              { value: '46', label: 'Courses', icon: BookOpen, color: 'from-blue-500 to-cyan-400' },
+              {
+                value: totalQuizzesTaken || '0',
+                label: 'Quizzes',
+                icon: Target,
+                color: 'from-purple-500 to-pink-400',
+              },
+              {
+                value: averageScore > 0 ? `${averageScore}%` : '—',
+                label: 'Score',
+                icon: Award,
+                color: 'from-emerald-500 to-teal-400',
+              },
+              {
+                value: currentStreak || '0',
+                label: 'Streak',
+                icon: Flame,
+                color: 'from-orange-500 to-red-400',
+              },
             ].map((stat, idx) => (
               <motion.div
                 key={idx}
@@ -113,15 +149,20 @@ export default function StudyCentreIndex() {
                 transition={{ delay: 0.2 + idx * 0.05 }}
                 className="relative group"
               >
-                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity rounded-xl blur-lg"
-                  style={{ backgroundImage: `linear-gradient(to bottom right, var(--tw-gradient-stops))` }}
+                <div
+                  className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity rounded-xl blur-lg"
+                  style={{
+                    backgroundImage: `linear-gradient(to bottom right, var(--tw-gradient-stops))`,
+                  }}
                 />
                 <div className="relative flex flex-col items-center p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all">
-                  <div className={cn("p-1.5 rounded-lg bg-gradient-to-br mb-1.5", stat.color)}>
+                  <div className={cn('p-1.5 rounded-lg bg-gradient-to-br mb-1.5', stat.color)}>
                     <stat.icon className="h-3.5 w-3.5 text-white" />
                   </div>
                   <span className="text-lg font-bold text-white">{stat.value}</span>
-                  <span className="text-[10px] text-white/70 uppercase tracking-wider font-medium">{stat.label}</span>
+                  <span className="text-[10px] text-white/70 uppercase tracking-wider font-medium">
+                    {stat.label}
+                  </span>
                 </div>
               </motion.div>
             ))}
@@ -136,7 +177,7 @@ export default function StudyCentreIndex() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          onClick={() => navigate("/study-centre/apprentice")}
+          onClick={() => navigate('/study-centre/apprentice')}
           className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
         >
           {/* Multi-layer background */}
@@ -176,15 +217,27 @@ export default function StudyCentreIndex() {
             {/* Feature Tags */}
             <div className="flex flex-wrap gap-1.5 mb-5">
               {[
-                { label: "Level 2", color: "from-blue-500/20 to-blue-600/20 border-blue-500/30 text-blue-300" },
-                { label: "Level 3", color: "from-purple-500/20 to-purple-600/20 border-purple-500/30 text-purple-300" },
-                { label: "AM2", color: "from-cyan-500/20 to-cyan-600/20 border-cyan-500/30 text-cyan-300" },
-                { label: "Mock Exams", color: "from-indigo-500/20 to-indigo-600/20 border-indigo-500/30 text-indigo-300" },
+                {
+                  label: 'Level 2',
+                  color: 'from-blue-500/20 to-blue-600/20 border-blue-500/30 text-blue-300',
+                },
+                {
+                  label: 'Level 3',
+                  color: 'from-purple-500/20 to-purple-600/20 border-purple-500/30 text-purple-300',
+                },
+                {
+                  label: 'AM2',
+                  color: 'from-cyan-500/20 to-cyan-600/20 border-cyan-500/30 text-cyan-300',
+                },
+                {
+                  label: 'Mock Exams',
+                  color: 'from-indigo-500/20 to-indigo-600/20 border-indigo-500/30 text-indigo-300',
+                },
               ].map((tag) => (
                 <span
                   key={tag.label}
                   className={cn(
-                    "px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border",
+                    'px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border',
                     tag.color
                   )}
                 >
@@ -213,7 +266,7 @@ export default function StudyCentreIndex() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
-          onClick={() => navigate("/study-centre/upskilling")}
+          onClick={() => navigate('/study-centre/upskilling')}
           className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
         >
           {/* Multi-layer background */}
@@ -257,15 +310,28 @@ export default function StudyCentreIndex() {
             {/* Feature Tags */}
             <div className="flex flex-wrap gap-1.5 mb-5">
               {[
-                { label: "BS7671", color: "from-elec-yellow/20 to-amber-500/20 border-elec-yellow/30 text-elec-yellow" },
-                { label: "EV Charging", color: "from-green-500/20 to-emerald-500/20 border-green-500/30 text-green-400" },
-                { label: "Solar PV", color: "from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-400" },
-                { label: "Smart Home", color: "from-cyan-500/20 to-blue-500/20 border-cyan-500/30 text-cyan-400" },
+                {
+                  label: 'BS7671',
+                  color:
+                    'from-elec-yellow/20 to-amber-500/20 border-elec-yellow/30 text-elec-yellow',
+                },
+                {
+                  label: 'EV Charging',
+                  color: 'from-green-500/20 to-emerald-500/20 border-green-500/30 text-green-400',
+                },
+                {
+                  label: 'Solar PV',
+                  color: 'from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-400',
+                },
+                {
+                  label: 'Smart Home',
+                  color: 'from-cyan-500/20 to-blue-500/20 border-cyan-500/30 text-cyan-400',
+                },
               ].map((tag) => (
                 <span
                   key={tag.label}
                   className={cn(
-                    "px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border",
+                    'px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border',
                     tag.color
                   )}
                 >
@@ -294,7 +360,7 @@ export default function StudyCentreIndex() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45 }}
-          onClick={() => navigate("/study-centre/general-upskilling")}
+          onClick={() => navigate('/study-centre/general-upskilling')}
           className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
         >
           {/* Multi-layer background */}
@@ -328,21 +394,35 @@ export default function StudyCentreIndex() {
               General Upskilling
             </h3>
             <p className="text-sm text-white/50 mb-4 leading-relaxed">
-              Cross-industry safety training — IPAF, first aid, working at height, and essential site skills
+              Cross-industry safety training — IPAF, first aid, working at height, and essential
+              site skills
             </p>
 
             {/* Feature Tags */}
             <div className="flex flex-wrap gap-1.5 mb-5">
               {[
-                { label: "IPAF Scaffold", color: "from-emerald-500/20 to-green-500/20 border-emerald-500/30 text-emerald-400" },
-                { label: "First Aid", color: "from-red-500/20 to-rose-500/20 border-red-500/30 text-red-400" },
-                { label: "COSHH", color: "from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-400" },
-                { label: "Fire Safety", color: "from-yellow-500/20 to-amber-500/20 border-yellow-500/30 text-yellow-400" },
+                {
+                  label: 'IPAF Scaffold',
+                  color:
+                    'from-emerald-500/20 to-green-500/20 border-emerald-500/30 text-emerald-400',
+                },
+                {
+                  label: 'First Aid',
+                  color: 'from-red-500/20 to-rose-500/20 border-red-500/30 text-red-400',
+                },
+                {
+                  label: 'COSHH',
+                  color: 'from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-400',
+                },
+                {
+                  label: 'Fire Safety',
+                  color: 'from-yellow-500/20 to-amber-500/20 border-yellow-500/30 text-yellow-400',
+                },
               ].map((tag) => (
                 <span
                   key={tag.label}
                   className={cn(
-                    "px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border",
+                    'px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border',
                     tag.color
                   )}
                 >
@@ -371,7 +451,7 @@ export default function StudyCentreIndex() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
-          onClick={() => navigate("/study-centre/personal-development")}
+          onClick={() => navigate('/study-centre/personal-development')}
           className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
         >
           {/* Multi-layer background */}
@@ -405,21 +485,34 @@ export default function StudyCentreIndex() {
               Personal Development
             </h3>
             <p className="text-sm text-white mb-4 leading-relaxed">
-              Leadership, emotional intelligence, resilience, and becoming the best version of yourself
+              Leadership, emotional intelligence, resilience, and becoming the best version of
+              yourself
             </p>
 
             {/* Feature Tags */}
             <div className="flex flex-wrap gap-1.5 mb-5">
               {[
-                { label: "Leadership", color: "from-rose-500/20 to-pink-500/20 border-rose-500/30 text-rose-400" },
-                { label: "Mental Health", color: "from-purple-500/20 to-violet-500/20 border-purple-500/30 text-purple-400" },
-                { label: "Communication", color: "from-sky-500/20 to-blue-500/20 border-sky-500/30 text-sky-400" },
-                { label: "Resilience", color: "from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400" },
+                {
+                  label: 'Leadership',
+                  color: 'from-rose-500/20 to-pink-500/20 border-rose-500/30 text-rose-400',
+                },
+                {
+                  label: 'Mental Health',
+                  color: 'from-purple-500/20 to-violet-500/20 border-purple-500/30 text-purple-400',
+                },
+                {
+                  label: 'Communication',
+                  color: 'from-sky-500/20 to-blue-500/20 border-sky-500/30 text-sky-400',
+                },
+                {
+                  label: 'Resilience',
+                  color: 'from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400',
+                },
               ].map((tag) => (
                 <span
                   key={tag.label}
                   className={cn(
-                    "px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border",
+                    'px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border',
                     tag.color
                   )}
                 >
@@ -462,14 +555,10 @@ export default function StudyCentreIndex() {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <p className="text-base font-bold text-white">
-                    {currentStreak} Day Streak!
-                  </p>
+                  <p className="text-base font-bold text-white">{currentStreak} Day Streak!</p>
                   <Sparkles className="h-4 w-4 text-elec-yellow animate-pulse" />
                 </div>
-                <p className="text-xs text-white/50">
-                  Keep learning daily to maintain your streak
-                </p>
+                <p className="text-xs text-white/50">Keep learning daily to maintain your streak</p>
               </div>
             </div>
           </div>
@@ -485,11 +574,14 @@ export default function StudyCentreIndex() {
       >
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="h-4 w-4 text-elec-yellow" />
-          <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">Quick Tip</span>
+          <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">
+            Quick Tip
+          </span>
         </div>
         <div className="p-3 rounded-xl bg-white/5 border border-white/10">
           <p className="text-xs text-white/50 leading-relaxed">
-            Complete at least one quiz daily to build your streak and reinforce your learning. Consistency beats intensity!
+            Complete at least one quiz daily to build your streak and reinforce your learning.
+            Consistency beats intensity!
           </p>
         </div>
       </motion.div>

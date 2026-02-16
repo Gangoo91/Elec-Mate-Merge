@@ -1,19 +1,24 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useTrainingRequests } from "@/hooks/useTrainingRequests";
+import { useState } from 'react';
 import {
-  GraduationCap,
-  Building2,
-  Calendar,
-  FileText,
-  Loader2,
-  AlertCircle
-} from "lucide-react";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useTrainingRequests } from '@/hooks/useTrainingRequests';
+import { GraduationCap, Building2, Calendar, FileText, Loader2, AlertCircle } from 'lucide-react';
 
 interface Worker {
   id: string;
@@ -28,28 +33,28 @@ interface AddTrainingRequestDialogProps {
 }
 
 const COMMON_PROVIDERS = [
-  "City & Guilds",
-  "EAL",
-  "NICEIC",
-  "NAPIT",
-  "JIB",
-  "In-house Training",
-  "Other",
+  'City & Guilds',
+  'EAL',
+  'NICEIC',
+  'NAPIT',
+  'JIB',
+  'In-house Training',
+  'Other',
 ];
 
 const COMMON_TRAINING = [
-  "18th Edition BS7671",
-  "Inspection & Testing",
-  "PAT Testing",
-  "EV Charging Installation",
-  "Solar PV Installation",
-  "Fire Alarm Systems",
-  "Emergency Lighting",
-  "Safe Isolation",
-  "Working at Heights",
-  "Manual Handling",
-  "First Aid at Work",
-  "Other",
+  '18th Edition BS7671',
+  'Inspection & Testing',
+  'PAT Testing',
+  'EV Charging Installation',
+  'Solar PV Installation',
+  'Fire Alarm Systems',
+  'Emergency Lighting',
+  'Safe Isolation',
+  'Working at Heights',
+  'Manual Handling',
+  'First Aid at Work',
+  'Other',
 ];
 
 export function AddTrainingRequestDialog({
@@ -59,27 +64,27 @@ export function AddTrainingRequestDialog({
 }: AddTrainingRequestDialogProps) {
   const { createRequest, isSubmitting } = useTrainingRequests();
 
-  const [trainingName, setTrainingName] = useState("");
-  const [customTraining, setCustomTraining] = useState("");
-  const [provider, setProvider] = useState("");
-  const [customProvider, setCustomProvider] = useState("");
-  const [completedDate, setCompletedDate] = useState("");
-  const [notes, setNotes] = useState("");
+  const [trainingName, setTrainingName] = useState('');
+  const [customTraining, setCustomTraining] = useState('');
+  const [provider, setProvider] = useState('');
+  const [customProvider, setCustomProvider] = useState('');
+  const [completedDate, setCompletedDate] = useState('');
+  const [notes, setNotes] = useState('');
 
   const resetForm = () => {
-    setTrainingName("");
-    setCustomTraining("");
-    setProvider("");
-    setCustomProvider("");
-    setCompletedDate("");
-    setNotes("");
+    setTrainingName('');
+    setCustomTraining('');
+    setProvider('');
+    setCustomProvider('');
+    setCompletedDate('');
+    setNotes('');
   };
 
   const handleSubmit = async () => {
     if (!worker?.elecIdProfileId) return;
 
-    const finalTrainingName = trainingName === "Other" ? customTraining : trainingName;
-    const finalProvider = provider === "Other" ? customProvider : provider;
+    const finalTrainingName = trainingName === 'Other' ? customTraining : trainingName;
+    const finalProvider = provider === 'Other' ? customProvider : provider;
 
     if (!finalTrainingName) {
       return;
@@ -109,7 +114,8 @@ export function AddTrainingRequestDialog({
             Add Training Record
           </DialogTitle>
           <DialogDescription>
-            Request to add a training record to {worker.name}'s Elec-ID profile. They will need to approve this addition.
+            Request to add a training record to {worker.name}'s Elec-ID profile. They will need to
+            approve this addition.
           </DialogDescription>
         </DialogHeader>
 
@@ -131,13 +137,15 @@ export function AddTrainingRequestDialog({
               </SelectTrigger>
               <SelectContent>
                 {COMMON_TRAINING.map((t) => (
-                  <SelectItem key={t} value={t}>{t}</SelectItem>
+                  <SelectItem key={t} value={t}>
+                    {t}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
-          {trainingName === "Other" && (
+          {trainingName === 'Other' && (
             <div className="space-y-2">
               <Label htmlFor="customTraining">Custom Training Name</Label>
               <Input
@@ -159,13 +167,15 @@ export function AddTrainingRequestDialog({
               </SelectTrigger>
               <SelectContent>
                 {COMMON_PROVIDERS.map((p) => (
-                  <SelectItem key={p} value={p}>{p}</SelectItem>
+                  <SelectItem key={p} value={p}>
+                    {p}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
-          {provider === "Other" && (
+          {provider === 'Other' && (
             <div className="space-y-2">
               <Label htmlFor="customProvider">Custom Provider Name</Label>
               <div className="relative">
@@ -223,7 +233,9 @@ export function AddTrainingRequestDialog({
           <Button
             className="flex-1 h-11"
             onClick={handleSubmit}
-            disabled={isSubmitting || !trainingName || (trainingName === "Other" && !customTraining)}
+            disabled={
+              isSubmitting || !trainingName || (trainingName === 'Other' && !customTraining)
+            }
           >
             {isSubmitting ? (
               <>

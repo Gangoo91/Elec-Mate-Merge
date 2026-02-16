@@ -12,7 +12,13 @@ import { Zap, Upload, Scan, FileText, CheckCircle2, Loader2, X } from 'lucide-re
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export type AnalysisStage = 'idle' | 'uploading' | 'detecting' | 'reading' | 'verifying' | 'complete';
+export type AnalysisStage =
+  | 'idle'
+  | 'uploading'
+  | 'detecting'
+  | 'reading'
+  | 'verifying'
+  | 'complete';
 
 interface AnalysisProgressProps {
   stage: AnalysisStage;
@@ -24,12 +30,15 @@ interface AnalysisProgressProps {
   onCancel?: () => void;
 }
 
-const stageConfig: Record<AnalysisStage, {
-  label: string;
-  icon: React.ReactNode;
-  minProgress: number;
-  maxProgress: number;
-}> = {
+const stageConfig: Record<
+  AnalysisStage,
+  {
+    label: string;
+    icon: React.ReactNode;
+    minProgress: number;
+    maxProgress: number;
+  }
+> = {
   idle: {
     label: 'Ready to scan',
     icon: <Scan className="h-5 w-5" />,
@@ -100,10 +109,12 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
       )}
 
       {/* Bottom half: Progress info */}
-      <div className={cn(
-        "flex flex-col items-center justify-center space-y-4 py-4",
-        !photoUrl && "flex-1"
-      )}>
+      <div
+        className={cn(
+          'flex flex-col items-center justify-center space-y-4 py-4',
+          !photoUrl && 'flex-1'
+        )}
+      >
         {/* Stage Indicator Dots */}
         <div className="flex justify-center gap-2">
           {stages.slice(0, -1).map((s, i) => (
@@ -111,9 +122,10 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
               key={s}
               initial={false}
               animate={{
-                backgroundColor: i <= currentStageIndex - 1 || (i === currentStageIndex && stage !== 'complete')
-                  ? 'var(--elec-yellow, #FACC15)'
-                  : 'var(--muted, #404040)',
+                backgroundColor:
+                  i <= currentStageIndex - 1 || (i === currentStageIndex && stage !== 'complete')
+                    ? 'var(--elec-yellow, #FACC15)'
+                    : 'var(--muted, #404040)',
                 scale: i === currentStageIndex ? 1.2 : 1,
               }}
               className="w-2.5 h-2.5 rounded-full transition-colors"
@@ -133,7 +145,11 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
           >
             <motion.div
               animate={{ rotate: stage === 'complete' ? 0 : 360 }}
-              transition={{ duration: 1, repeat: stage === 'complete' ? 0 : Infinity, ease: 'linear' }}
+              transition={{
+                duration: 1,
+                repeat: stage === 'complete' ? 0 : Infinity,
+                ease: 'linear',
+              }}
             >
               {stage === 'complete' ? (
                 <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -169,8 +185,8 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
           {stage === 'reading' || stage === 'verifying'
             ? 'Reading device ratings and labels...'
             : stage === 'complete'
-            ? 'Review the detected circuits before adding them'
-            : 'This usually takes 10-15 seconds'}
+              ? 'Review the detected circuits before adding them'
+              : 'This usually takes 10-15 seconds'}
         </p>
 
         {/* Cancel button */}

@@ -1,40 +1,45 @@
-import { ArrowLeft, Activity, Stethoscope, Siren, BookOpen } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Activity, Stethoscope, Siren, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Workplace Monitoring",
+    title: 'Workplace Monitoring',
     icon: Activity,
-    description: "Air monitoring techniques, surface sampling, biological monitoring, and interpreting results against WELs",
+    description:
+      'Air monitoring techniques, surface sampling, biological monitoring, and interpreting results against WELs',
   },
   {
     id: 2,
-    title: "Health Surveillance",
+    title: 'Health Surveillance',
     icon: Stethoscope,
-    description: "When health surveillance is required, types of surveillance, medical questionnaires, and record-keeping obligations",
+    description:
+      'When health surveillance is required, types of surveillance, medical questionnaires, and record-keeping obligations',
   },
   {
     id: 3,
-    title: "Emergency Procedures",
+    title: 'Emergency Procedures',
     icon: Siren,
-    description: "Spill and leak response, first aid for chemical exposure, decontamination procedures, and emergency planning",
+    description:
+      'Spill and leak response, first aid for chemical exposure, decontamination procedures, and emergency planning',
   },
   {
     id: 4,
-    title: "Training, Record Keeping & Review",
+    title: 'Training, Record Keeping & Review',
     icon: BookOpen,
-    description: "COSHH training requirements, assessment review cycles, documentation standards, and continuous improvement",
+    description:
+      'COSHH training requirements, assessment review cycles, documentation standards, and continuous improvement',
   },
 ];
 
 export default function CoshhAwarenessModule5() {
   useSEO({
-    title: "Module 5: Monitoring, Surveillance & Emergencies | COSHH Awareness",
-    description: "Learn about workplace monitoring, health surveillance programmes, emergency procedures for chemical incidents, and COSHH training and record-keeping requirements.",
+    title: 'Module 5: Monitoring, Surveillance & Emergencies | COSHH Awareness',
+    description:
+      'Learn about workplace monitoring, health surveillance programmes, emergency procedures for chemical incidents, and COSHH training and record-keeping requirements.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function CoshhAwarenessModule5() {
               Monitoring, Surveillance & Emergencies
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              How to monitor workplace exposure, when health surveillance is needed, how to respond to chemical emergencies, and the training and record-keeping duties under COSHH
+              How to monitor workplace exposure, when health surveillance is needed, how to respond
+              to chemical emergencies, and the training and record-keeping duties under COSHH
             </p>
           </div>
 

@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const PolarityMethodsLearningOutcomes = () => {
   const outcomes = [
-    "Perform polarity tests using a continuity tester or MFT",
-    "Identify the correct points to test at switches, sockets, and lighting points", 
-    "Confirm correct connection of line conductors at all relevant accessories",
-    "Use known reference points for accurate testing",
-    "Verify correct terminal identification at all accessories"
+    'Perform polarity tests using a continuity tester or MFT',
+    'Identify the correct points to test at switches, sockets, and lighting points',
+    'Confirm correct connection of line conductors at all relevant accessories',
+    'Use known reference points for accurate testing',
+    'Verify correct terminal identification at all accessories',
   ];
 
   return (
@@ -19,9 +19,7 @@ export const PolarityMethodsLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-foreground">

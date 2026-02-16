@@ -1,65 +1,82 @@
-import { ArrowLeft, Construction, BookOpen, Scale, Wrench, ClipboardCheck, ShieldCheck, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Construction,
+  BookOpen,
+  Scale,
+  Wrench,
+  ClipboardCheck,
+  ShieldCheck,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Introduction to Scaffolding",
-    description: "Types of scaffolding, terminology, components, and their roles in construction safety",
+    title: 'Introduction to Scaffolding',
+    description:
+      'Types of scaffolding, terminology, components, and their roles in construction safety',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../scaffolding-awareness-module-1",
+    duration: '30 mins',
+    link: '../scaffolding-awareness-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Scaffold Regulations & Standards",
-    description: "Work at Height Regulations 2005, NASC guidance, TG20 compliance, and BS EN 12811",
+    title: 'Scaffold Regulations & Standards',
+    description: 'Work at Height Regulations 2005, NASC guidance, TG20 compliance, and BS EN 12811',
     icon: Scale,
-    duration: "30 mins",
-    link: "../scaffolding-awareness-module-2",
+    duration: '30 mins',
+    link: '../scaffolding-awareness-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Scaffold Components & Assembly",
-    description: "Standards, ledgers, transoms, braces, base plates, sole boards, and safe assembly sequences",
+    title: 'Scaffold Components & Assembly',
+    description:
+      'Standards, ledgers, transoms, braces, base plates, sole boards, and safe assembly sequences',
     icon: Wrench,
-    duration: "30 mins",
-    link: "../scaffolding-awareness-module-3",
+    duration: '30 mins',
+    link: '../scaffolding-awareness-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Scaffold Inspection & Tagging",
-    description: "7-day inspections, scaffold tags, competent person requirements, and inspection records",
+    title: 'Scaffold Inspection & Tagging',
+    description:
+      '7-day inspections, scaffold tags, competent person requirements, and inspection records',
     icon: ClipboardCheck,
-    duration: "30 mins",
-    link: "../scaffolding-awareness-module-4",
+    duration: '30 mins',
+    link: '../scaffolding-awareness-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Safe Use & Hazard Awareness",
-    description: "Working safely on scaffolds, loading limits, weather conditions, and common hazards",
+    title: 'Safe Use & Hazard Awareness',
+    description:
+      'Working safely on scaffolds, loading limits, weather conditions, and common hazards',
     icon: ShieldCheck,
-    duration: "30 mins",
-    link: "../scaffolding-awareness-module-5",
+    duration: '30 mins',
+    link: '../scaffolding-awareness-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../scaffolding-awareness-module-6",
+    duration: '30 mins',
+    link: '../scaffolding-awareness-module-6',
     isExam: true,
   },
 ];
 
 export default function ScaffoldingAwarenessCourse() {
   useSEO({
-    title: "Scaffolding Awareness | General Upskilling",
-    description: "Complete scaffolding awareness training covering scaffold safety, inspection requirements, hazard awareness, and mock exam preparation.",
+    title: 'Scaffolding Awareness | General Upskilling',
+    description:
+      'Complete scaffolding awareness training covering scaffold safety, inspection requirements, hazard awareness, and mock exam preparation.',
   });
 
   return (

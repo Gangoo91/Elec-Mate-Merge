@@ -62,7 +62,8 @@ export const FinalCTA = () => {
           </h2>
 
           <p className="text-base sm:text-lg text-white/50 mb-8 sm:mb-10 max-w-xl mx-auto">
-            AI-powered tools, certifications, training & job management. Everything you need to excel.
+            AI-powered tools, certifications, training & job management. Everything you need to
+            excel.
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4 max-w-sm sm:max-w-none mx-auto">

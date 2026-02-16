@@ -33,18 +33,10 @@ export function PWAUpdatePrompt() {
             A new version of Elec-Mate is available.
           </p>
           <div className="flex gap-2 mt-3">
-            <Button
-              size="sm"
-              onClick={() => updateServiceWorker(true)}
-              className="flex-1"
-            >
+            <Button size="sm" onClick={() => updateServiceWorker(true)} className="flex-1">
               Update Now
             </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={close}
-            >
+            <Button size="sm" variant="outline" onClick={close}>
               <X className="h-4 w-4" />
             </Button>
           </div>

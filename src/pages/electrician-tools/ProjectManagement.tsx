@@ -1,5 +1,4 @@
-
-import ProjectManagementPage from "./project-management/ProjectManagementPage";
+import ProjectManagementPage from './project-management/ProjectManagementPage';
 
 const ProjectManagement = () => {
   return <ProjectManagementPage />;

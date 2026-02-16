@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Search,
   TrendingUp,
@@ -19,21 +19,21 @@ import {
   Filter,
   Briefcase,
   Edit,
-  PoundSterling
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
+  PoundSterling,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   useJobFinancials,
   useJobFinancialStats,
   useCreateVariationOrder,
   useUpdateVariationOrderStatus,
   type JobFinancialWithJob,
-  type VariationOrder
-} from "@/hooks/useJobFinancials";
-import { RecordActualCostSheet } from "./sheets/RecordActualCostSheet";
-import { EditJobBudgetSheet } from "./sheets/EditJobBudgetSheet";
-import { VariationOrderDetailSheet } from "./sheets/VariationOrderDetailSheet";
+  type VariationOrder,
+} from '@/hooks/useJobFinancials';
+import { RecordActualCostSheet } from './sheets/RecordActualCostSheet';
+import { EditJobBudgetSheet } from './sheets/EditJobBudgetSheet';
+import { VariationOrderDetailSheet } from './sheets/VariationOrderDetailSheet';
 import {
   Dialog,
   DialogContent,
@@ -41,22 +41,31 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 export function JobFinancialsSection() {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [expandedJob, setExpandedJob] = useState<string | null>(null);
   const [showAddVariation, setShowAddVariation] = useState<string | null>(null);
-  const [variationDesc, setVariationDesc] = useState("");
-  const [variationValue, setVariationValue] = useState("");
+  const [variationDesc, setVariationDesc] = useState('');
+  const [variationValue, setVariationValue] = useState('');
 
   // New sheet states
-  const [showRecordCostSheet, setShowRecordCostSheet] = useState<{ jobId: string; jobTitle: string } | null>(null);
-  const [showEditBudgetSheet, setShowEditBudgetSheet] = useState<{ jobId: string; jobTitle: string } | null>(null);
-  const [showVariationSheet, setShowVariationSheet] = useState<{ vo: VariationOrder; jobTitle: string } | null>(null);
+  const [showRecordCostSheet, setShowRecordCostSheet] = useState<{
+    jobId: string;
+    jobTitle: string;
+  } | null>(null);
+  const [showEditBudgetSheet, setShowEditBudgetSheet] = useState<{
+    jobId: string;
+    jobTitle: string;
+  } | null>(null);
+  const [showVariationSheet, setShowVariationSheet] = useState<{
+    vo: VariationOrder;
+    jobTitle: string;
+  } | null>(null);
 
   const { data: financials = [], isLoading } = useJobFinancials();
   const stats = useJobFinancialStats();
@@ -64,8 +73,9 @@ export function JobFinancialsSection() {
   const updateVariationStatusMutation = useUpdateVariationOrderStatus();
 
   const filteredFinancials = financials.filter(
-    fin => fin.job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-           fin.job?.client?.toLowerCase().includes(searchQuery.toLowerCase())
+    (fin) =>
+      fin.job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      fin.job?.client?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleAddVariation = async () => {
@@ -78,8 +88,8 @@ export function JobFinancialsSection() {
     });
 
     setShowAddVariation(null);
-    setVariationDesc("");
-    setVariationValue("");
+    setVariationDesc('');
+    setVariationValue('');
   };
 
   const handleApproveVariation = (vo: VariationOrder) => {
@@ -115,7 +125,9 @@ export function JobFinancialsSection() {
       <div className="flex flex-col gap-3">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-foreground">Job Financials</h1>
-          <p className="text-sm text-muted-foreground">Budget tracking and profitability analysis</p>
+          <p className="text-sm text-muted-foreground">
+            Budget tracking and profitability analysis
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -127,7 +139,7 @@ export function JobFinancialsSection() {
               placeholder="Search jobs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn("w-full bg-elec-gray", !searchQuery && "pl-9")}
+              className={cn('w-full bg-elec-gray', !searchQuery && 'pl-9')}
             />
           </div>
           <Button variant="outline" className="touch-feedback">
@@ -182,7 +194,9 @@ export function JobFinancialsSection() {
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-lg md:text-2xl font-bold text-success">{stats.avgMargin.toFixed(1)}%</p>
+                <p className="text-lg md:text-2xl font-bold text-success">
+                  {stats.avgMargin.toFixed(1)}%
+                </p>
                 <p className="text-xs md:text-sm text-muted-foreground">Avg Margin</p>
               </div>
               <TrendingUp className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
@@ -199,8 +213,8 @@ export function JobFinancialsSection() {
             <h3 className="font-semibold text-lg mb-2">No Job Financials</h3>
             <p className="text-sm text-muted-foreground">
               {searchQuery
-                ? "No jobs match your search criteria."
-                : "Create jobs to start tracking financials. Financial tracking is automatically created for each job."}
+                ? 'No jobs match your search criteria.'
+                : 'Create jobs to start tracking financials. Financial tracking is automatically created for each job.'}
             </p>
           </CardContent>
         </Card>
@@ -210,9 +224,8 @@ export function JobFinancialsSection() {
       <div className="space-y-3">
         {filteredFinancials.map((fin) => {
           const isExpanded = expandedJob === fin.id;
-          const budgetUsed = fin.budget_total > 0
-            ? (Number(fin.actual_total) / Number(fin.budget_total)) * 100
-            : 0;
+          const budgetUsed =
+            fin.budget_total > 0 ? (Number(fin.actual_total) / Number(fin.budget_total)) * 100 : 0;
           const isOverBudget = Number(fin.actual_total) > Number(fin.budget_total);
 
           return (
@@ -231,24 +244,32 @@ export function JobFinancialsSection() {
                             {fin.job?.title || 'Untitled Job'}
                           </h4>
                           <Badge
-                            variant={fin.status === "On Budget" ? "default" : "secondary"}
+                            variant={fin.status === 'On Budget' ? 'default' : 'secondary'}
                             className={cn(
-                              "text-[10px]",
-                              fin.status === "On Budget" && "bg-success",
-                              fin.status === "Over Budget" && "bg-destructive"
+                              'text-[10px]',
+                              fin.status === 'On Budget' && 'bg-success',
+                              fin.status === 'Over Budget' && 'bg-destructive'
                             )}
                           >
                             {fin.status}
                           </Badge>
                         </div>
-                        <p className="text-xs text-muted-foreground">{fin.job?.client || 'No client'}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {fin.job?.client || 'No client'}
+                        </p>
                       </div>
                       <div className="flex items-center gap-3 flex-shrink-0">
                         <div className="text-center">
-                          <p className={cn(
-                            "text-lg font-bold",
-                            Number(fin.margin) > 20 ? "text-success" : Number(fin.margin) > 10 ? "text-warning" : "text-destructive"
-                          )}>
+                          <p
+                            className={cn(
+                              'text-lg font-bold',
+                              Number(fin.margin) > 20
+                                ? 'text-success'
+                                : Number(fin.margin) > 10
+                                  ? 'text-warning'
+                                  : 'text-destructive'
+                            )}
+                          >
                             {Number(fin.margin).toFixed(0)}%
                           </p>
                           <p className="text-[10px] text-muted-foreground">Margin</p>
@@ -266,19 +287,19 @@ export function JobFinancialsSection() {
                     <div className="space-y-1">
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-muted-foreground">Budget Used</span>
-                        <span className={cn(
-                          "font-medium",
-                          isOverBudget ? "text-destructive" : "text-foreground"
-                        )}>
-                          £{(Number(fin.actual_total) / 1000).toFixed(0)}k / £{(Number(fin.budget_total) / 1000).toFixed(0)}k
+                        <span
+                          className={cn(
+                            'font-medium',
+                            isOverBudget ? 'text-destructive' : 'text-foreground'
+                          )}
+                        >
+                          £{(Number(fin.actual_total) / 1000).toFixed(0)}k / £
+                          {(Number(fin.budget_total) / 1000).toFixed(0)}k
                         </span>
                       </div>
                       <Progress
                         value={Math.min(budgetUsed, 100)}
-                        className={cn(
-                          "h-2",
-                          isOverBudget && "[&>div]:bg-destructive"
-                        )}
+                        className={cn('h-2', isOverBudget && '[&>div]:bg-destructive')}
                       />
                     </div>
                   </div>
@@ -287,38 +308,60 @@ export function JobFinancialsSection() {
                 {/* Expanded Content */}
                 {isExpanded && (
                   <div className="border-t border-border p-3 md:p-4 bg-muted/30 space-y-4">
-
                     {/* Budget vs Actual Breakdown */}
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <h5 className="text-xs font-semibold text-foreground mb-3">Budget Breakdown</h5>
+                        <h5 className="text-xs font-semibold text-foreground mb-3">
+                          Budget Breakdown
+                        </h5>
                         <div className="space-y-2">
                           {[
-                            { key: 'labour', label: 'Labour', budget: fin.budget_labour, actual: fin.actual_labour },
-                            { key: 'materials', label: 'Materials', budget: fin.budget_materials, actual: fin.actual_materials },
-                            { key: 'equipment', label: 'Equipment', budget: fin.budget_equipment, actual: fin.actual_equipment },
-                            { key: 'overheads', label: 'Overheads', budget: fin.budget_overheads, actual: fin.actual_overheads },
+                            {
+                              key: 'labour',
+                              label: 'Labour',
+                              budget: fin.budget_labour,
+                              actual: fin.actual_labour,
+                            },
+                            {
+                              key: 'materials',
+                              label: 'Materials',
+                              budget: fin.budget_materials,
+                              actual: fin.actual_materials,
+                            },
+                            {
+                              key: 'equipment',
+                              label: 'Equipment',
+                              budget: fin.budget_equipment,
+                              actual: fin.actual_equipment,
+                            },
+                            {
+                              key: 'overheads',
+                              label: 'Overheads',
+                              budget: fin.budget_overheads,
+                              actual: fin.actual_overheads,
+                            },
                           ].map(({ key, label, budget, actual }) => {
-                            const percentage = Number(budget) > 0 ? (Number(actual) / Number(budget)) * 100 : 0;
+                            const percentage =
+                              Number(budget) > 0 ? (Number(actual) / Number(budget)) * 100 : 0;
                             const isOver = percentage > 100;
 
                             return (
                               <div key={key}>
                                 <div className="flex items-center justify-between text-xs mb-1">
                                   <span className="capitalize text-muted-foreground">{label}</span>
-                                  <span className={cn(
-                                    "font-medium",
-                                    isOver ? "text-destructive" : "text-foreground"
-                                  )}>
-                                    £{(Number(actual) / 1000).toFixed(1)}k / £{(Number(budget) / 1000).toFixed(1)}k
+                                  <span
+                                    className={cn(
+                                      'font-medium',
+                                      isOver ? 'text-destructive' : 'text-foreground'
+                                    )}
+                                  >
+                                    £{(Number(actual) / 1000).toFixed(1)}k / £
+                                    {(Number(budget) / 1000).toFixed(1)}k
                                   </span>
                                 </div>
                                 <Progress
                                   value={Math.min(percentage, 100)}
-                                  className={cn(
-                                    "h-1.5",
-                                    isOver && "[&>div]:bg-destructive"
-                                  )}
+                                  className={cn('h-1.5', isOver && '[&>div]:bg-destructive')}
                                 />
                               </div>
                             );
@@ -327,7 +370,9 @@ export function JobFinancialsSection() {
                       </div>
 
                       <div>
-                        <h5 className="text-xs font-semibold text-foreground mb-3">Payment Status</h5>
+                        <h5 className="text-xs font-semibold text-foreground mb-3">
+                          Payment Status
+                        </h5>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs">
                             <span className="text-muted-foreground">Total Value</span>
@@ -362,27 +407,36 @@ export function JobFinancialsSection() {
                     {/* Variation Orders */}
                     {fin.variation_orders && fin.variation_orders.length > 0 && (
                       <div>
-                        <h5 className="text-xs font-semibold text-foreground mb-2">Variation Orders</h5>
+                        <h5 className="text-xs font-semibold text-foreground mb-2">
+                          Variation Orders
+                        </h5>
                         <div className="space-y-2">
                           {fin.variation_orders.map((vo) => (
                             <div
                               key={vo.id}
                               className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
-                              onClick={() => setShowVariationSheet({ vo, jobTitle: fin.job?.title || 'Untitled Job' })}
+                              onClick={() =>
+                                setShowVariationSheet({
+                                  vo,
+                                  jobTitle: fin.job?.title || 'Untitled Job',
+                                })
+                              }
                             >
                               <div className="min-w-0">
-                                <p className="font-medium text-foreground truncate">{vo.description}</p>
+                                <p className="font-medium text-foreground truncate">
+                                  {vo.description}
+                                </p>
                                 <p className="text-muted-foreground">
                                   {new Date(vo.created_at).toLocaleDateString()}
                                 </p>
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 <Badge
-                                  variant={vo.status === "Approved" ? "default" : "secondary"}
+                                  variant={vo.status === 'Approved' ? 'default' : 'secondary'}
                                   className={cn(
-                                    "text-[10px]",
-                                    vo.status === "Approved" && "bg-success",
-                                    vo.status === "Rejected" && "bg-destructive"
+                                    'text-[10px]',
+                                    vo.status === 'Approved' && 'bg-success',
+                                    vo.status === 'Rejected' && 'bg-destructive'
                                   )}
                                 >
                                   {vo.status}
@@ -417,7 +471,12 @@ export function JobFinancialsSection() {
                         variant="outline"
                         size="sm"
                         className="touch-feedback"
-                        onClick={() => setShowRecordCostSheet({ jobId: fin.job_id, jobTitle: fin.job?.title || 'Untitled Job' })}
+                        onClick={() =>
+                          setShowRecordCostSheet({
+                            jobId: fin.job_id,
+                            jobTitle: fin.job?.title || 'Untitled Job',
+                          })
+                        }
                       >
                         <PoundSterling className="h-4 w-4 mr-1" />
                         Record Cost
@@ -426,7 +485,12 @@ export function JobFinancialsSection() {
                         variant="outline"
                         size="sm"
                         className="touch-feedback"
-                        onClick={() => setShowEditBudgetSheet({ jobId: fin.job_id, jobTitle: fin.job?.title || 'Untitled Job' })}
+                        onClick={() =>
+                          setShowEditBudgetSheet({
+                            jobId: fin.job_id,
+                            jobTitle: fin.job?.title || 'Untitled Job',
+                          })
+                        }
                       >
                         <Edit className="h-4 w-4 mr-1" />
                         Edit Budget
@@ -501,7 +565,7 @@ export function JobFinancialsSection() {
       <RecordActualCostSheet
         open={!!showRecordCostSheet}
         onOpenChange={() => setShowRecordCostSheet(null)}
-        jobId={showRecordCostSheet?.jobId || ""}
+        jobId={showRecordCostSheet?.jobId || ''}
         jobTitle={showRecordCostSheet?.jobTitle}
       />
 
@@ -509,7 +573,7 @@ export function JobFinancialsSection() {
       <EditJobBudgetSheet
         open={!!showEditBudgetSheet}
         onOpenChange={() => setShowEditBudgetSheet(null)}
-        jobId={showEditBudgetSheet?.jobId || ""}
+        jobId={showEditBudgetSheet?.jobId || ''}
         jobTitle={showEditBudgetSheet?.jobTitle}
       />
 

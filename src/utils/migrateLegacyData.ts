@@ -38,7 +38,9 @@ export const migrateLegacyData = {
   /**
    * Migrate all local reports to cloud
    */
-  async migrateToCloud(userId: string): Promise<{ success: number; failed: number; errors: string[] }> {
+  async migrateToCloud(
+    userId: string
+  ): Promise<{ success: number; failed: number; errors: string[] }> {
     const result = { success: 0, failed: 0, errors: [] as string[] };
     return result;
   },

@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Target } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Target } from 'lucide-react';
 
 interface FutureWorkPipelineCardProps {
   pipeline: any[];
@@ -10,11 +10,15 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
   const totalValue = pipeline.reduce((sum, p) => sum + (p.estimatedValue || 0), 0);
 
   const getPriorityColor = (priority: string) => {
-    switch(priority) {
-      case 'high': return 'bg-red-500/20 text-red-500 border-red-500/30';
-      case 'medium': return 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30';
-      case 'low': return 'bg-blue-500/20 text-blue-500 border-blue-500/30';
-      default: return 'bg-gray-500/20 text-gray-500 border-gray-500/30';
+    switch (priority) {
+      case 'high':
+        return 'bg-red-500/20 text-red-500 border-red-500/30';
+      case 'medium':
+        return 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30';
+      case 'low':
+        return 'bg-blue-500/20 text-blue-500 border-blue-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-500 border-gray-500/30';
     }
   };
 
@@ -34,32 +38,31 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
         <div className="space-y-3">
           {pipeline.map((item, idx) => (
-            <div key={idx} className="p-4 rounded-lg bg-background/30 border border-border/30 text-left space-y-3">
+            <div
+              key={idx}
+              className="p-4 rounded-lg bg-background/30 border border-border/30 text-left space-y-3"
+            >
               <div className="flex items-start justify-between gap-3">
                 <div className="font-medium text-foreground text-base leading-snug flex-1">
                   {item.opportunity}
                 </div>
-                <Badge className={getPriorityColor(item.priority)}>
-                  {item.priority}
-                </Badge>
+                <Badge className={getPriorityColor(item.priority)}>{item.priority}</Badge>
               </div>
-              
-              <div className="text-base text-foreground leading-relaxed">
-                {item.description}
-              </div>
-              
+
+              <div className="text-base text-foreground leading-relaxed">{item.description}</div>
+
               <div className="space-y-2 text-sm text-foreground">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                   <span>{item.timing}</span>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-medium text-base">
                     £{item.estimatedValue.toFixed(0)}
                   </span>
                 </div>
-                
+
                 {item.trigger && (
                   <div className="flex items-start gap-2 pt-1">
                     <span className="text-foreground/70 flex-shrink-0">Trigger:</span>

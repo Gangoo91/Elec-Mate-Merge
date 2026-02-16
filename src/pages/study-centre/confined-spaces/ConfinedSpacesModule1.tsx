@@ -1,45 +1,45 @@
-import { ArrowLeft, DoorOpen, MapPin, AlertTriangle, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, DoorOpen, MapPin, AlertTriangle, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Is a Confined Space?",
+    title: 'What Is a Confined Space?',
     icon: DoorOpen,
     description:
-      "Legal definition under the Confined Spaces Regulations 1997, key characteristics: enclosed, limited access, not designed for continuous occupancy, and foreseeable risk of serious injury",
+      'Legal definition under the Confined Spaces Regulations 1997, key characteristics: enclosed, limited access, not designed for continuous occupancy, and foreseeable risk of serious injury',
   },
   {
     id: 2,
-    title: "Common Confined Space Examples",
+    title: 'Common Confined Space Examples',
     icon: MapPin,
     description:
-      "Tanks, vessels, silos, pits, chambers, ducts, sewers, manholes, ceiling voids, and cable tunnels found in construction and electrical work",
+      'Tanks, vessels, silos, pits, chambers, ducts, sewers, manholes, ceiling voids, and cable tunnels found in construction and electrical work',
   },
   {
     id: 3,
-    title: "Why Confined Spaces Kill",
+    title: 'Why Confined Spaces Kill',
     icon: AlertTriangle,
     description:
-      "Statistics showing approximately 15 deaths per year in the UK with 60% being rescuers, rapid atmospheric changes, and human behaviour factors",
+      'Statistics showing approximately 15 deaths per year in the UK with 60% being rescuers, rapid atmospheric changes, and human behaviour factors',
   },
   {
     id: 4,
-    title: "Confined Spaces in Electrical Work",
+    title: 'Confined Spaces in Electrical Work',
     icon: Zap,
     description:
-      "Cable ducts, transformer chambers, substations, plant rooms, risers, and ceiling voids encountered by electricians",
+      'Cable ducts, transformer chambers, substations, plant rooms, risers, and ceiling voids encountered by electricians',
   },
 ];
 
 export default function ConfinedSpacesModule1() {
   useSEO({
-    title: "Module 1: Understanding Confined Spaces | Confined Spaces Awareness",
+    title: 'Module 1: Understanding Confined Spaces | Confined Spaces Awareness',
     description:
-      "Learn the legal definition of confined spaces, common examples, fatality statistics, and how confined spaces affect electrical work.",
+      'Learn the legal definition of confined spaces, common examples, fatality statistics, and how confined spaces affect electrical work.',
   });
 
   return (

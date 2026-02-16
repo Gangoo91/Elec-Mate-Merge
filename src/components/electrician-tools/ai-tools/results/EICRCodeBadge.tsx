@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { AlertTriangle, AlertCircle, Info, HelpCircle } from "lucide-react";
+import { cn } from '@/lib/utils';
+import { AlertTriangle, AlertCircle, Info, HelpCircle } from 'lucide-react';
 
 type EICRCode = 'C1' | 'C2' | 'C3' | 'FI';
 
@@ -11,14 +11,17 @@ interface EICRCodeBadgeProps {
   className?: string;
 }
 
-const codeConfig: Record<EICRCode, {
-  bg: string;
-  border: string;
-  text: string;
-  label: string;
-  description: string;
-  icon: typeof AlertTriangle;
-}> = {
+const codeConfig: Record<
+  EICRCode,
+  {
+    bg: string;
+    border: string;
+    text: string;
+    label: string;
+    description: string;
+    icon: typeof AlertTriangle;
+  }
+> = {
   C1: {
     bg: 'bg-red-500/10',
     border: 'border-red-500/30',
@@ -76,8 +79,8 @@ export function EICRCodeBadge({
     return (
       <div
         className={cn(
-          "relative overflow-hidden rounded-xl p-4",
-          "border-2",
+          'relative overflow-hidden rounded-xl p-4',
+          'border-2',
           config.bg,
           config.border,
           className
@@ -89,29 +92,20 @@ export function EICRCodeBadge({
         <div className="relative space-y-1">
           {/* Large count */}
           {count !== undefined && (
-            <div className={cn("text-4xl sm:text-5xl font-bold", config.text)}>
-              {count}
-            </div>
+            <div className={cn('text-4xl sm:text-5xl font-bold', config.text)}>{count}</div>
           )}
 
           {/* Code label */}
-          <div className={cn("text-xl font-bold", config.text)}>
-            {code}
-          </div>
+          <div className={cn('text-xl font-bold', config.text)}>{code}</div>
 
           {/* Description */}
           {showLabel && (
-            <div className="text-xs text-muted-foreground font-medium">
-              {config.label}
-            </div>
+            <div className="text-xs text-muted-foreground font-medium">{config.label}</div>
           )}
         </div>
 
         {/* Background icon */}
-        <Icon className={cn(
-          "absolute -right-2 -bottom-2 h-16 w-16 opacity-10",
-          config.text
-        )} />
+        <Icon className={cn('absolute -right-2 -bottom-2 h-16 w-16 opacity-10', config.text)} />
       </div>
     );
   }
@@ -120,10 +114,10 @@ export function EICRCodeBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5",
-        "px-2.5 py-1 rounded-md",
-        "text-sm font-bold",
-        "border",
+        'inline-flex items-center gap-1.5',
+        'px-2.5 py-1 rounded-md',
+        'text-sm font-bold',
+        'border',
         config.bg,
         config.border,
         config.text,
@@ -132,9 +126,7 @@ export function EICRCodeBadge({
     >
       <Icon className="h-3.5 w-3.5" />
       {code}
-      {count !== undefined && (
-        <span className="ml-1 opacity-80">({count})</span>
-      )}
+      {count !== undefined && <span className="ml-1 opacity-80">({count})</span>}
     </span>
   );
 }
@@ -150,15 +142,9 @@ interface EICRCodeGridProps {
   className?: string;
 }
 
-export function EICRCodeGrid({
-  c1Count,
-  c2Count,
-  c3Count,
-  fiCount,
-  className,
-}: EICRCodeGridProps) {
+export function EICRCodeGrid({ c1Count, c2Count, c3Count, fiCount, className }: EICRCodeGridProps) {
   return (
-    <div className={cn("grid grid-cols-4 gap-3", className)}>
+    <div className={cn('grid grid-cols-4 gap-3', className)}>
       <EICRCodeBadge code="C1" count={c1Count} size="lg" showLabel />
       <EICRCodeBadge code="C2" count={c2Count} size="lg" showLabel />
       <EICRCodeBadge code="C3" count={c3Count} size="lg" showLabel />

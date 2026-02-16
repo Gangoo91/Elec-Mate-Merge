@@ -12,9 +12,10 @@ export const HandsOnScheduleConfigurationSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Step-by-step procedures for implementing common lighting schedules across different platforms:
+          Step-by-step procedures for implementing common lighting schedules across different
+          platforms:
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <h4 className="font-semibold text-blue-200 mb-2">Basic Time-Based Schedule Setup</h4>
@@ -30,7 +31,9 @@ export const HandsOnScheduleConfigurationSection = () => {
           </div>
 
           <div className="p-3 bg-green-600/10 border border-green-600/20 rounded-lg">
-            <h4 className="font-semibold text-green-200 mb-2">Motion-Activated Scene Configuration</h4>
+            <h4 className="font-semibold text-green-200 mb-2">
+              Motion-Activated Scene Configuration
+            </h4>
             <ol className="text-sm text-green-100 space-y-1 list-decimal list-inside">
               <li>Ensure motion sensor is paired and positioned correctly</li>
               <li>Create automation: "Hallway Night Light"</li>
@@ -43,17 +46,33 @@ export const HandsOnScheduleConfigurationSection = () => {
           </div>
 
           <div className="p-3 bg-purple-600/10 border border-purple-600/20 rounded-lg">
-            <h4 className="font-semibold text-purple-200 mb-2">Complex Condition-Based Automation</h4>
+            <h4 className="font-semibold text-purple-200 mb-2">
+              Complex Condition-Based Automation
+            </h4>
             <div className="space-y-2">
               <h5 className="font-medium text-purple-100">Example: "Smart Security Lighting"</h5>
               <ol className="text-sm text-purple-100 space-y-1 list-decimal list-inside">
-                <li><strong>Condition 1:</strong> House mode = "Away" (via app or geofencing)</li>
-                <li><strong>Condition 2:</strong> Time between sunset and sunrise</li>
-                <li><strong>Condition 3:</strong> Motion detected in driveway/garden</li>
-                <li><strong>Action 1:</strong> Turn on outdoor floods to 100% bright white</li>
-                <li><strong>Action 2:</strong> Turn on random indoor lights (simulate occupancy)</li>
-                <li><strong>Action 3:</strong> Send notification to phone (if supported)</li>
-                <li><strong>Timeout:</strong> Reset after 10 minutes if no further motion</li>
+                <li>
+                  <strong>Condition 1:</strong> House mode = "Away" (via app or geofencing)
+                </li>
+                <li>
+                  <strong>Condition 2:</strong> Time between sunset and sunrise
+                </li>
+                <li>
+                  <strong>Condition 3:</strong> Motion detected in driveway/garden
+                </li>
+                <li>
+                  <strong>Action 1:</strong> Turn on outdoor floods to 100% bright white
+                </li>
+                <li>
+                  <strong>Action 2:</strong> Turn on random indoor lights (simulate occupancy)
+                </li>
+                <li>
+                  <strong>Action 3:</strong> Send notification to phone (if supported)
+                </li>
+                <li>
+                  <strong>Timeout:</strong> Reset after 10 minutes if no further motion
+                </li>
               </ol>
             </div>
           </div>

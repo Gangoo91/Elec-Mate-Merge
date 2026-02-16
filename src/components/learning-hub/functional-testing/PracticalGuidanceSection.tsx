@@ -1,8 +1,16 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Shield, AlertTriangle, CheckCircle2, Target, Clock, Users, FileText, Zap } from 'lucide-react';
+import {
+  Shield,
+  AlertTriangle,
+  CheckCircle2,
+  Target,
+  Clock,
+  Users,
+  FileText,
+  Zap,
+} from 'lucide-react';
 
 const PracticalGuidanceSection = () => {
   return (
@@ -10,10 +18,11 @@ const PracticalGuidanceSection = () => {
       <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
         <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
           <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-          <h4 className="text-base sm:text-lg font-semibold text-green-400">Practical Guidance & Best Practices</h4>
+          <h4 className="text-base sm:text-lg font-semibold text-green-400">
+            Practical Guidance & Best Practices
+          </h4>
         </div>
         <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm text-white leading-relaxed">
-          
           {/* Best Practices Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -24,19 +33,31 @@ const PracticalGuidanceSection = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
                   <h6 className="font-medium text-green-400 mb-1">Coordination is Key</h6>
-                  <p className="text-xs">Always coordinate functional testing with site operations team. Unexpected shutdowns can be dangerous and costly.</p>
+                  <p className="text-xs">
+                    Always coordinate functional testing with site operations team. Unexpected
+                    shutdowns can be dangerous and costly.
+                  </p>
                 </div>
                 <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                   <h6 className="font-medium text-blue-400 mb-1">Monthly RCD Testing</h6>
-                  <p className="text-xs">Test RCD buttons monthly as part of routine maintenance. This simple test can prevent serious electrical accidents.</p>
+                  <p className="text-xs">
+                    Test RCD buttons monthly as part of routine maintenance. This simple test can
+                    prevent serious electrical accidents.
+                  </p>
                 </div>
                 <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
                   <h6 className="font-medium text-purple-400 mb-1">Clear Labelling</h6>
-                  <p className="text-xs">Ensure all emergency stops and safety controls are clearly labelled and accessible. Update labels if they become unclear.</p>
+                  <p className="text-xs">
+                    Ensure all emergency stops and safety controls are clearly labelled and
+                    accessible. Update labels if they become unclear.
+                  </p>
                 </div>
                 <div className="p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg">
                   <h6 className="font-medium text-orange-400 mb-1">Document Everything</h6>
-                  <p className="text-xs">Record all functional issues found during testing. This helps track equipment deterioration and plan maintenance.</p>
+                  <p className="text-xs">
+                    Record all functional issues found during testing. This helps track equipment
+                    deterioration and plan maintenance.
+                  </p>
                 </div>
               </div>
             </div>
@@ -49,23 +70,43 @@ const PracticalGuidanceSection = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                   <h6 className="font-medium text-red-400 mb-1">RCD Test Button Failure</h6>
-                  <p className="text-xs mb-1"><strong>Issue:</strong> Button doesn't trip RCD</p>
-                  <p className="text-xs"><strong>Solution:</strong> Check mechanism, clean contacts, or replace RCD if internally faulty</p>
+                  <p className="text-xs mb-1">
+                    <strong>Issue:</strong> Button doesn't trip RCD
+                  </p>
+                  <p className="text-xs">
+                    <strong>Solution:</strong> Check mechanism, clean contacts, or replace RCD if
+                    internally faulty
+                  </p>
                 </div>
                 <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                   <h6 className="font-medium text-amber-400 mb-1">Emergency Stop Incomplete</h6>
-                  <p className="text-xs mb-1"><strong>Issue:</strong> Not all equipment stops</p>
-                  <p className="text-xs"><strong>Solution:</strong> Review circuit design, check contactors and interlocks</p>
+                  <p className="text-xs mb-1">
+                    <strong>Issue:</strong> Not all equipment stops
+                  </p>
+                  <p className="text-xs">
+                    <strong>Solution:</strong> Review circuit design, check contactors and
+                    interlocks
+                  </p>
                 </div>
                 <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
                   <h6 className="font-medium text-yellow-400 mb-1">Stiff Controls</h6>
-                  <p className="text-xs mb-1"><strong>Issue:</strong> Switches hard to operate</p>
-                  <p className="text-xs"><strong>Solution:</strong> Clean mechanisms, lubricate if appropriate, check for corrosion</p>
+                  <p className="text-xs mb-1">
+                    <strong>Issue:</strong> Switches hard to operate
+                  </p>
+                  <p className="text-xs">
+                    <strong>Solution:</strong> Clean mechanisms, lubricate if appropriate, check for
+                    corrosion
+                  </p>
                 </div>
                 <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-lg">
                   <h6 className="font-medium text-cyan-400 mb-1">Reset Procedure Problems</h6>
-                  <p className="text-xs mb-1"><strong>Issue:</strong> Cannot reset after emergency stop</p>
-                  <p className="text-xs"><strong>Solution:</strong> Check all interlocks, safety systems, and reset sequence</p>
+                  <p className="text-xs mb-1">
+                    <strong>Issue:</strong> Cannot reset after emergency stop
+                  </p>
+                  <p className="text-xs">
+                    <strong>Solution:</strong> Check all interlocks, safety systems, and reset
+                    sequence
+                  </p>
                 </div>
               </div>
             </div>
@@ -77,7 +118,7 @@ const PracticalGuidanceSection = () => {
               <Target className="h-4 w-4 text-green-400" />
               Site-Specific Considerations
             </h4>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <Card className="bg-muted/30 border-border">
                 <CardHeader className="pb-3">
@@ -141,26 +182,34 @@ const PracticalGuidanceSection = () => {
               <Clock className="h-4 w-4 text-blue-400" />
               Testing Timing & Scheduling
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h6 className="font-medium text-white">Optimal Testing Times</h6>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
                     <span>RCD Monthly Tests</span>
-                    <Badge variant="outline" className="text-green-400 border-green-400 text-xs">Low Impact</Badge>
+                    <Badge variant="outline" className="text-green-400 border-green-400 text-xs">
+                      Low Impact
+                    </Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
                     <span>Emergency Stop Tests</span>
-                    <Badge variant="outline" className="text-amber-400 border-amber-400 text-xs">Planned Windows</Badge>
+                    <Badge variant="outline" className="text-amber-400 border-amber-400 text-xs">
+                      Planned Windows
+                    </Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
                     <span>Switch Operation</span>
-                    <Badge variant="outline" className="text-blue-400 border-blue-400 text-xs">During Maintenance</Badge>
+                    <Badge variant="outline" className="text-blue-400 border-blue-400 text-xs">
+                      During Maintenance
+                    </Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
                     <span>Safety System Tests</span>
-                    <Badge variant="outline" className="text-red-400 border-red-400 text-xs">Shutdown Required</Badge>
+                    <Badge variant="outline" className="text-red-400 border-red-400 text-xs">
+                      Shutdown Required
+                    </Badge>
                   </div>
                 </div>
               </div>

@@ -1,9 +1,16 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calculator, LayoutGrid, Wrench, PlusCircle, Loader2, TrendingUp, Package } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useToolStats } from "@/hooks/useToolStats";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  Calculator,
+  LayoutGrid,
+  Wrench,
+  PlusCircle,
+  Loader2,
+  TrendingUp,
+  Package,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useToolStats } from '@/hooks/useToolStats';
 
 // ToolStats interface is now imported from useToolStats hook
 
@@ -17,9 +24,7 @@ const ProjectManagement = () => {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Electrical Workshop</CardTitle>
-              <CardDescription>
-                Live toolkit with real-time tool data and pricing.
-              </CardDescription>
+              <CardDescription>Live toolkit with real-time tool data and pricing.</CardDescription>
             </div>
             <Link to="/electrician/tools">
               <Button className="flex items-center gap-2">
@@ -39,11 +44,7 @@ const ProjectManagement = () => {
               <p className="text-muted-foreground mb-4">
                 Failed to load tool data. Please try again.
               </p>
-              <Button 
-                variant="outline" 
-                onClick={() => refetch()}
-                className="w-full sm:w-auto"
-              >
+              <Button variant="outline" onClick={() => refetch()} className="w-full sm:w-auto">
                 Retry
               </Button>
             </div>
@@ -57,7 +58,9 @@ const ProjectManagement = () => {
                 </div>
                 <div className="rounded-lg border border-elec-yellow/20 bg-elec-dark p-4 text-center">
                   <TrendingUp className="h-6 w-6 mx-auto mb-2 text-elec-yellow" />
-                  <div className="text-2xl font-bold text-foreground">{toolStats.trending.length}</div>
+                  <div className="text-2xl font-bold text-foreground">
+                    {toolStats.trending.length}
+                  </div>
                   <div className="text-sm text-muted-foreground">Trending Categories</div>
                 </div>
                 <div className="rounded-lg border border-elec-yellow/20 bg-elec-dark p-4 text-center">
@@ -72,7 +75,10 @@ const ProjectManagement = () => {
                 <h4 className="font-medium text-foreground mb-2">Categories Available:</h4>
                 <div className="flex flex-wrap gap-2">
                   {toolStats.categories.map((category) => (
-                    <span key={category.name} className="px-2 py-1 bg-elec-yellow/20 text-elec-yellow text-sm rounded">
+                    <span
+                      key={category.name}
+                      className="px-2 py-1 bg-elec-yellow/20 text-elec-yellow text-sm rounded"
+                    >
                       {category.name} ({category.count})
                     </span>
                   ))}
@@ -81,21 +87,15 @@ const ProjectManagement = () => {
             </div>
           ) : (
             <div className="rounded-lg border border-elec-yellow/20 bg-elec-dark p-6 text-center">
-              <p className="text-muted-foreground mb-4">
-                No tool data available.
-              </p>
-              <Button 
-                variant="outline" 
-                onClick={() => refetch()}
-                className="w-full sm:w-auto"
-              >
+              <p className="text-muted-foreground mb-4">No tool data available.</p>
+              <Button variant="outline" onClick={() => refetch()} className="w-full sm:w-auto">
                 Load Data
               </Button>
             </div>
           )}
         </CardContent>
       </Card>
-      
+
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
@@ -106,14 +106,17 @@ const ProjectManagement = () => {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Browse {toolStats?.totalTools || 'live'} tools with real-time pricing and availability.
+              Browse {toolStats?.totalTools || 'live'} tools with real-time pricing and
+              availability.
             </p>
             <Link to="/electrician/tools">
-              <Button variant="outline" className="w-full">Browse Tools</Button>
+              <Button variant="outline" className="w-full">
+                Browse Tools
+              </Button>
             </Link>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
@@ -126,11 +129,13 @@ const ProjectManagement = () => {
               Track materials and tools across different projects with live pricing.
             </p>
             <Link to="/electrician/materials">
-              <Button variant="outline" className="w-full">Open Tracker</Button>
+              <Button variant="outline" className="w-full">
+                Open Tracker
+              </Button>
             </Link>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
@@ -140,10 +145,13 @@ const ProjectManagement = () => {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Calculate project costs with {toolStats?.trending.length || 'trending'} categories and live pricing.
+              Calculate project costs with {toolStats?.trending.length || 'trending'} categories and
+              live pricing.
             </p>
             <Link to="/electrician/tools?tab=guides">
-              <Button variant="outline" className="w-full">Use Calculator</Button>
+              <Button variant="outline" className="w-full">
+                Use Calculator
+              </Button>
             </Link>
           </CardContent>
         </Card>

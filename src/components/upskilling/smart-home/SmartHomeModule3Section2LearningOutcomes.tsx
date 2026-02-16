@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule3Section2LearningOutcomes = () => {
   const outcomes = [
-    "Define what a lighting scene is and give examples",
-    "Explain how schedules and routines are programmed",
-    "Compare different scheduling methods (time-based, event-based, occupancy-based)",
-    "Recognise the benefits of scenes for comfort, security, and energy use",
-    "Create example scene and schedule configurations for clients"
+    'Define what a lighting scene is and give examples',
+    'Explain how schedules and routines are programmed',
+    'Compare different scheduling methods (time-based, event-based, occupancy-based)',
+    'Recognise the benefits of scenes for comfort, security, and energy use',
+    'Create example scene and schedule configurations for clients',
   ];
 
   return (

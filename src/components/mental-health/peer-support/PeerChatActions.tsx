@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { MoreVertical, ShieldAlert, Flag, UserX } from "lucide-react";
-import { BlockUserDialog } from "./BlockUserDialog";
-import { ReportUserDialog } from "./ReportUserDialog";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { MoreVertical, ShieldAlert, Flag, UserX } from 'lucide-react';
+import { BlockUserDialog } from './BlockUserDialog';
+import { ReportUserDialog } from './ReportUserDialog';
 
 interface PeerChatActionsProps {
   otherUserId: string;
@@ -20,7 +20,7 @@ interface PeerChatActionsProps {
 
 export function PeerChatActions({
   otherUserId,
-  otherUserName = "this user",
+  otherUserName = 'this user',
   conversationId,
   onBlocked,
 }: PeerChatActionsProps) {

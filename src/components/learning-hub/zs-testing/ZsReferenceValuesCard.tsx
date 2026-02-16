@@ -6,19 +6,29 @@ const ZsReferenceValuesCard = () => (
   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
     <div className="flex items-center gap-2 mb-3">
       <BookOpen className="h-4 w-4 text-blue-400" />
-      <h4 className="font-medium text-blue-400">Maximum Zs Values (BS 7671 Tables 41.2, 41.3, 41.4)</h4>
+      <h4 className="font-medium text-blue-400">
+        Maximum Zs Values (BS 7671 Tables 41.2, 41.3, 41.4)
+      </h4>
     </div>
-    
+
     <Tabs defaultValue="mcb" className="w-full">
       <TabsList className="grid w-full grid-cols-3 mb-3">
-        <TabsTrigger value="mcb" className="text-xs">MCB/RCBO</TabsTrigger>
-        <TabsTrigger value="fuse04" className="text-xs">Fuses 0.4s</TabsTrigger>
-        <TabsTrigger value="fuse5" className="text-xs">Fuses 5s</TabsTrigger>
+        <TabsTrigger value="mcb" className="text-xs">
+          MCB/RCBO
+        </TabsTrigger>
+        <TabsTrigger value="fuse04" className="text-xs">
+          Fuses 0.4s
+        </TabsTrigger>
+        <TabsTrigger value="fuse5" className="text-xs">
+          Fuses 5s
+        </TabsTrigger>
       </TabsList>
-      
+
       <TabsContent value="mcb" className="space-y-3">
-        <p className="text-xs text-muted-foreground mb-2">Table 41.3 - 0.4s disconnection (final circuits)</p>
-        
+        <p className="text-xs text-muted-foreground mb-2">
+          Table 41.3 - 0.4s disconnection (final circuits)
+        </p>
+
         <div className="space-y-2">
           <div className="text-xs">
             <strong className="text-blue-400">Type B:</strong>
@@ -33,7 +43,7 @@ const ZsReferenceValuesCard = () => (
               <span>50A: 0.87Ω</span>
             </div>
           </div>
-          
+
           <div className="text-xs">
             <strong className="text-yellow-400">Type C:</strong>
             <div className="grid grid-cols-4 gap-1 mt-1 text-white">
@@ -47,7 +57,7 @@ const ZsReferenceValuesCard = () => (
               <span>50A: 0.44Ω</span>
             </div>
           </div>
-          
+
           <div className="text-xs">
             <strong className="text-red-400">Type D:</strong>
             <div className="grid grid-cols-4 gap-1 mt-1 text-white">
@@ -63,10 +73,12 @@ const ZsReferenceValuesCard = () => (
           </div>
         </div>
       </TabsContent>
-      
+
       <TabsContent value="fuse04" className="space-y-3">
-        <p className="text-xs text-muted-foreground mb-2">Table 41.2 - 0.4s disconnection (final circuits)</p>
-        
+        <p className="text-xs text-muted-foreground mb-2">
+          Table 41.2 - 0.4s disconnection (final circuits)
+        </p>
+
         <div className="space-y-2">
           <div className="text-xs">
             <strong className="text-blue-400">BS 88-2 gG (HRC):</strong>
@@ -81,7 +93,7 @@ const ZsReferenceValuesCard = () => (
               <span>50A: 0.57Ω</span>
             </div>
           </div>
-          
+
           <div className="text-xs">
             <strong className="text-yellow-400">BS 3036 (Rewirable):</strong>
             <div className="grid grid-cols-4 gap-1 mt-1 text-white">
@@ -93,7 +105,7 @@ const ZsReferenceValuesCard = () => (
               <span>60A: 0.40Ω</span>
             </div>
           </div>
-          
+
           <div className="text-xs">
             <strong className="text-green-400">BS 1362 (Plug-Top):</strong>
             <div className="grid grid-cols-4 gap-1 mt-1 text-white">
@@ -103,10 +115,12 @@ const ZsReferenceValuesCard = () => (
           </div>
         </div>
       </TabsContent>
-      
+
       <TabsContent value="fuse5" className="space-y-3">
-        <p className="text-xs text-muted-foreground mb-2">Table 41.4 - 5s disconnection (distribution circuits)</p>
-        
+        <p className="text-xs text-muted-foreground mb-2">
+          Table 41.4 - 5s disconnection (distribution circuits)
+        </p>
+
         <div className="space-y-2">
           <div className="text-xs">
             <strong className="text-blue-400">BS 88-2 gG (HRC):</strong>
@@ -121,7 +135,7 @@ const ZsReferenceValuesCard = () => (
               <span>80A: 0.55Ω</span>
             </div>
           </div>
-          
+
           <div className="text-xs">
             <strong className="text-yellow-400">BS 3036 (Rewirable):</strong>
             <div className="grid grid-cols-4 gap-1 mt-1 text-white">
@@ -133,7 +147,7 @@ const ZsReferenceValuesCard = () => (
               <span>60A: 1.07Ω</span>
             </div>
           </div>
-          
+
           <div className="text-xs">
             <strong className="text-green-400">BS 1362 (Plug-Top):</strong>
             <div className="grid grid-cols-4 gap-1 mt-1 text-white">
@@ -144,7 +158,7 @@ const ZsReferenceValuesCard = () => (
         </div>
       </TabsContent>
     </Tabs>
-    
+
     <p className="text-xs text-muted-foreground mt-3 border-t border-border/30 pt-2">
       Note: Values include Cmin = 0.95 as per BS 7671 Table Notes
     </p>

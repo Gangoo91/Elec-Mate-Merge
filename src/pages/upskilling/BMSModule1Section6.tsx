@@ -1,85 +1,95 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import { bmsModule1Section6QuizData } from "@/data/upskilling/bmsModule1Section6QuizData";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { bmsModule1Section6QuizData } from '@/data/upskilling/bmsModule1Section6QuizData';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bms-components",
-    question: "Which option provides two examples of BMS components an electrician may be required to install?",
+    id: 'bms-components',
+    question:
+      'Which option provides two examples of BMS components an electrician may be required to install?',
     options: [
-      "Temperature sensors and valve actuators",
-      "Software databases and algorithms",
-      "Mechanical pumps and boilers",
-      "Architectural drawings and specifications"
+      'Temperature sensors and valve actuators',
+      'Software databases and algorithms',
+      'Mechanical pumps and boilers',
+      'Architectural drawings and specifications',
     ],
     correctIndex: 0,
-    explanation: "Electricians install the physical components of BMS systems including sensors (temperature, humidity, CO2, occupancy), actuators (valves, dampers, relays), controllers, and the associated wiring infrastructure."
+    explanation:
+      'Electricians install the physical components of BMS systems including sensors (temperature, humidity, CO2, occupancy), actuators (valves, dampers, relays), controllers, and the associated wiring infrastructure.',
   },
   {
-    id: "cable-segregation",
-    question: "Why must mains and data cables be segregated in BMS installations?",
+    id: 'cable-segregation',
+    question: 'Why must mains and data cables be segregated in BMS installations?',
     options: [
-      "To reduce cable costs",
-      "To prevent electromagnetic interference and ensure safety compliance",
-      "To make installation faster",
-      "To improve cable appearance"
+      'To reduce cable costs',
+      'To prevent electromagnetic interference and ensure safety compliance',
+      'To make installation faster',
+      'To improve cable appearance',
     ],
     correctIndex: 1,
-    explanation: "BS 7671 requires segregation to prevent electromagnetic interference (EMI) that can cause false sensor readings and communication errors. It also ensures electrical safety by preventing dangerous voltage transfer between circuits."
+    explanation:
+      'BS 7671 requires segregation to prevent electromagnetic interference (EMI) that can cause false sensor readings and communication errors. It also ensures electrical safety by preventing dangerous voltage transfer between circuits.',
   },
   {
-    id: "hvac-collaboration",
-    question: "Why is collaboration with HVAC engineers important during a BMS installation?",
+    id: 'hvac-collaboration',
+    question: 'Why is collaboration with HVAC engineers important during a BMS installation?',
     options: [
-      "HVAC engineers do the electrical work",
-      "Electricians install the wiring that connects HVAC equipment to BMS controllers",
-      "It reduces project costs",
-      "HVAC engineers provide electrical materials"
+      'HVAC engineers do the electrical work',
+      'Electricians install the wiring that connects HVAC equipment to BMS controllers',
+      'It reduces project costs',
+      'HVAC engineers provide electrical materials',
     ],
     correctIndex: 1,
-    explanation: "HVAC engineers design mechanical systems, but electricians must correctly wire actuators, sensors, and control interfaces that allow the BMS to monitor and control HVAC equipment. Without proper electrical installation, even the best HVAC design cannot function."
+    explanation:
+      'HVAC engineers design mechanical systems, but electricians must correctly wire actuators, sensors, and control interfaces that allow the BMS to monitor and control HVAC equipment. Without proper electrical installation, even the best HVAC design cannot function.',
   },
   {
-    id: "wiring-quality",
-    question: "How does poor wiring quality affect the performance of a BMS?",
+    id: 'wiring-quality',
+    question: 'How does poor wiring quality affect the performance of a BMS?',
     options: [
-      "It improves system efficiency",
-      "It causes false readings, poor control, and potential system failure",
-      "It has no impact on performance",
-      "It only affects the appearance"
+      'It improves system efficiency',
+      'It causes false readings, poor control, and potential system failure',
+      'It has no impact on performance',
+      'It only affects the appearance',
     ],
     correctIndex: 1,
-    explanation: "Poor wiring quality can cause sensors to provide false readings, actuators to malfunction, communication networks to fail, and even complete system breakdowns. This leads to poor environmental control, energy waste, equipment damage, and expensive repairs."
-  }
+    explanation:
+      'Poor wiring quality can cause sensors to provide false readings, actuators to malfunction, communication networks to fail, and even complete system breakdowns. This leads to poor environmental control, energy waste, equipment damage, and expensive repairs.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What qualifications do I need to work on BMS installations?",
-    answer: "A full electrical qualification (e.g., Level 3 NVQ or equivalent) plus BMS-specific training. Many manufacturers offer courses on their specific systems. Understanding of BS 7671 and data cabling principles is essential."
+    question: 'What qualifications do I need to work on BMS installations?',
+    answer:
+      'A full electrical qualification (e.g., Level 3 NVQ or equivalent) plus BMS-specific training. Many manufacturers offer courses on their specific systems. Understanding of BS 7671 and data cabling principles is essential.',
   },
   {
-    question: "How is BMS wiring different from standard electrical installation?",
-    answer: "BMS wiring often involves low voltage circuits (24V DC/AC), data communications (RS485, Ethernet), and analogue signals (0-10V, 4-20mA). Stricter segregation requirements apply, and connections must be precise to prevent control errors."
+    question: 'How is BMS wiring different from standard electrical installation?',
+    answer:
+      'BMS wiring often involves low voltage circuits (24V DC/AC), data communications (RS485, Ethernet), and analogue signals (0-10V, 4-20mA). Stricter segregation requirements apply, and connections must be precise to prevent control errors.',
   },
   {
-    question: "What happens if I connect a sensor to the wrong terminals?",
-    answer: "Depending on the sensor type, this could cause incorrect readings (temperature showing 50°C when room is 20°C), sensor damage, or control logic errors. Always verify terminal assignments against manufacturer documentation before connecting."
+    question: 'What happens if I connect a sensor to the wrong terminals?',
+    answer:
+      'Depending on the sensor type, this could cause incorrect readings (temperature showing 50°C when room is 20°C), sensor damage, or control logic errors. Always verify terminal assignments against manufacturer documentation before connecting.',
   },
   {
-    question: "Do I need to understand the BMS programming to install the wiring?",
-    answer: "Basic understanding helps, but detailed programming knowledge isn't required. Focus on accurate wiring to design specifications, clear labelling, and good documentation. The commissioning engineer will handle the programming."
-  }
+    question: 'Do I need to understand the BMS programming to install the wiring?',
+    answer:
+      "Basic understanding helps, but detailed programming knowledge isn't required. Focus on accurate wiring to design specifications, clear labelling, and good documentation. The commissioning engineer will handle the programming.",
+  },
 ];
 
 const BMSModule1Section6 = () => {
   useSEO({
     title: "The Electrician's Role in BMS Installations | BMS Course",
-    description: "Learn about the professional responsibilities and best practices for electricians working on Building Management System installations."
+    description:
+      'Learn about the professional responsibilities and best practices for electricians working on Building Management System installations.',
   });
 
   return (
@@ -111,9 +121,7 @@ const BMSModule1Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Electrician's Role in BMS Installations
           </h1>
-          <p className="text-white/80">
-            Professional responsibilities and best practices
-          </p>
+          <p className="text-white/80">Professional responsibilities and best practices</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -121,17 +129,29 @@ const BMSModule1Section6 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Core role:</strong> Install sensors, actuators, controllers, and cabling</li>
-              <li><strong>Compliance:</strong> BS 7671 plus manufacturer specifications</li>
-              <li><strong>Collaboration:</strong> Work with HVAC, IT, and commissioning engineers</li>
+              <li>
+                <strong>Core role:</strong> Install sensors, actuators, controllers, and cabling
+              </li>
+              <li>
+                <strong>Compliance:</strong> BS 7671 plus manufacturer specifications
+              </li>
+              <li>
+                <strong>Collaboration:</strong> Work with HVAC, IT, and commissioning engineers
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">On Site</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Install:</strong> Temperature sensors, valve actuators, control panels</li>
-              <li><strong>Wire:</strong> RS485, Ethernet, 24V power circuits</li>
-              <li><strong>Document:</strong> Label everything, complete as-built drawings</li>
+              <li>
+                <strong>Install:</strong> Temperature sensors, valve actuators, control panels
+              </li>
+              <li>
+                <strong>Wire:</strong> RS485, Ethernet, 24V power circuits
+              </li>
+              <li>
+                <strong>Document:</strong> Label everything, complete as-built drawings
+              </li>
             </ul>
           </div>
         </div>
@@ -141,10 +161,10 @@ const BMSModule1Section6 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify the key BMS components electricians typically install",
-              "Understand the wiring and containment requirements for BMS systems",
+              'Identify the key BMS components electricians typically install',
+              'Understand the wiring and containment requirements for BMS systems',
               "Recognise the electrician's role in collaboration with other trades",
-              "Explain why correct installation directly affects system performance"
+              'Explain why correct installation directly affects system performance',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -164,31 +184,52 @@ const BMSModule1Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A Building Management System involves many disciplines — IT specialists, mechanical engineers,
-              and commissioning engineers — but <strong>electricians are at the core of installation</strong>.
-              From wiring sensors and actuators to integrating panels with lighting or HVAC equipment, electricians
-              ensure the system is safe, compliant, and functional.
+              A Building Management System involves many disciplines — IT specialists, mechanical
+              engineers, and commissioning engineers — but{' '}
+              <strong>electricians are at the core of installation</strong>. From wiring sensors and
+              actuators to integrating panels with lighting or HVAC equipment, electricians ensure
+              the system is safe, compliant, and functional.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sensors</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Temperature:</strong> -40°C to +85°C range, RTD or thermistor</li>
-                  <li><strong>Humidity:</strong> 0-100% RH, usually combined with temperature</li>
-                  <li><strong>CO2:</strong> 0-5000ppm range for air quality monitoring</li>
-                  <li><strong>Occupancy:</strong> PIR or ultrasonic for presence detection</li>
-                  <li><strong>Pressure:</strong> For ductwork and water systems</li>
+                  <li>
+                    <strong>Temperature:</strong> -40°C to +85°C range, RTD or thermistor
+                  </li>
+                  <li>
+                    <strong>Humidity:</strong> 0-100% RH, usually combined with temperature
+                  </li>
+                  <li>
+                    <strong>CO2:</strong> 0-5000ppm range for air quality monitoring
+                  </li>
+                  <li>
+                    <strong>Occupancy:</strong> PIR or ultrasonic for presence detection
+                  </li>
+                  <li>
+                    <strong>Pressure:</strong> For ductwork and water systems
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Actuators</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Valve actuators:</strong> Modulating or on/off for heating/cooling</li>
-                  <li><strong>Damper actuators:</strong> Air flow control in ductwork</li>
-                  <li><strong>Relay modules:</strong> Switching pumps, fans, and lighting</li>
-                  <li><strong>Variable speed drives:</strong> Motor speed control integration</li>
-                  <li><strong>Smart switches:</strong> Intelligent lighting control</li>
+                  <li>
+                    <strong>Valve actuators:</strong> Modulating or on/off for heating/cooling
+                  </li>
+                  <li>
+                    <strong>Damper actuators:</strong> Air flow control in ductwork
+                  </li>
+                  <li>
+                    <strong>Relay modules:</strong> Switching pumps, fans, and lighting
+                  </li>
+                  <li>
+                    <strong>Variable speed drives:</strong> Motor speed control integration
+                  </li>
+                  <li>
+                    <strong>Smart switches:</strong> Intelligent lighting control
+                  </li>
                 </ul>
               </div>
             </div>
@@ -197,21 +238,41 @@ const BMSModule1Section6 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Controllers & Panels</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Room controllers:</strong> Local processing and I/O expansion</li>
-                  <li><strong>Plant controllers:</strong> Central equipment management</li>
-                  <li><strong>Gateway devices:</strong> Protocol conversion and communication</li>
-                  <li><strong>Control panels:</strong> Housing for controllers and power supplies</li>
-                  <li><strong>HMI displays:</strong> Local operator interfaces</li>
+                  <li>
+                    <strong>Room controllers:</strong> Local processing and I/O expansion
+                  </li>
+                  <li>
+                    <strong>Plant controllers:</strong> Central equipment management
+                  </li>
+                  <li>
+                    <strong>Gateway devices:</strong> Protocol conversion and communication
+                  </li>
+                  <li>
+                    <strong>Control panels:</strong> Housing for controllers and power supplies
+                  </li>
+                  <li>
+                    <strong>HMI displays:</strong> Local operator interfaces
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Network Cabling</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>RS485 twisted pair:</strong> For BACnet/Modbus communications</li>
-                  <li><strong>Cat5e/Cat6 Ethernet:</strong> IP-based protocols and web interfaces</li>
-                  <li><strong>Screened cables:</strong> EMC protection in industrial environments</li>
-                  <li><strong>Low voltage power:</strong> 24V DC/AC for sensors and actuators</li>
-                  <li><strong>Fibre optic:</strong> Long distance, high-speed connections</li>
+                  <li>
+                    <strong>RS485 twisted pair:</strong> For BACnet/Modbus communications
+                  </li>
+                  <li>
+                    <strong>Cat5e/Cat6 Ethernet:</strong> IP-based protocols and web interfaces
+                  </li>
+                  <li>
+                    <strong>Screened cables:</strong> EMC protection in industrial environments
+                  </li>
+                  <li>
+                    <strong>Low voltage power:</strong> 24V DC/AC for sensors and actuators
+                  </li>
+                  <li>
+                    <strong>Fibre optic:</strong> Long distance, high-speed connections
+                  </li>
                 </ul>
               </div>
             </div>
@@ -228,15 +289,20 @@ const BMSModule1Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50 my-6">
-              <p className="text-red-400/90 text-sm font-medium mb-2">Critical BS 7671 Requirements</p>
+              <p className="text-red-400/90 text-sm font-medium mb-2">
+                Critical BS 7671 Requirements
+              </p>
               <p className="text-sm text-white">
-                BMS installations must comply with BS 7671 wiring regulations while meeting manufacturer specifications.
-                Incorrect segregation or poor containment can cause system failures and safety hazards.
+                BMS installations must comply with BS 7671 wiring regulations while meeting
+                manufacturer specifications. Incorrect segregation or poor containment can cause
+                system failures and safety hazards.
               </p>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Cable Segregation Requirements</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+                Cable Segregation Requirements
+              </p>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Mains Voltage Circuits</p>
@@ -259,7 +325,8 @@ const BMSModule1Section6 = () => {
               </div>
               <div className="p-3 mt-4 rounded bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="text-sm text-white">
-                  <strong>Minimum separation:</strong> 300mm for parallel runs, or use screened cable with earthed screen
+                  <strong>Minimum separation:</strong> 300mm for parallel runs, or use screened
+                  cable with earthed screen
                 </p>
               </div>
             </div>
@@ -269,15 +336,21 @@ const BMSModule1Section6 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Trunking</p>
-                  <p className="text-white text-xs">Compartmentalised for segregation, clean appearance</p>
+                  <p className="text-white text-xs">
+                    Compartmentalised for segregation, clean appearance
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Conduit</p>
-                  <p className="text-white text-xs">Individual circuit protection, suitable for wet areas</p>
+                  <p className="text-white text-xs">
+                    Individual circuit protection, suitable for wet areas
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Cable Tray</p>
-                  <p className="text-white text-xs">High capacity, natural cooling, cost-effective</p>
+                  <p className="text-white text-xs">
+                    High capacity, natural cooling, cost-effective
+                  </p>
                 </div>
               </div>
             </div>
@@ -287,15 +360,24 @@ const BMSModule1Section6 = () => {
               <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                  <span><strong>Neat and secure connections:</strong> Use proper crimping tools, avoid loose connections</span>
+                  <span>
+                    <strong>Neat and secure connections:</strong> Use proper crimping tools, avoid
+                    loose connections
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                  <span><strong>Clear cable labelling:</strong> Consistent system matching circuit schedules</span>
+                  <span>
+                    <strong>Clear cable labelling:</strong> Consistent system matching circuit
+                    schedules
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                  <span><strong>Future maintenance access:</strong> Terminations accessible without disturbing adjacent circuits</span>
+                  <span>
+                    <strong>Future maintenance access:</strong> Terminations accessible without
+                    disturbing adjacent circuits
+                  </span>
                 </li>
               </ul>
             </div>
@@ -313,11 +395,14 @@ const BMSModule1Section6 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               BMS installation requires seamless coordination between multiple disciplines.
-              <strong> Electricians are often the critical link</strong> that enables other trades to complete their work successfully.
+              <strong> Electricians are often the critical link</strong> that enables other trades
+              to complete their work successfully.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Working with HVAC Engineers</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+                Working with HVAC Engineers
+              </p>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">HVAC Dependencies</p>
@@ -343,7 +428,9 @@ const BMSModule1Section6 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">IT/Network Team Collaboration</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+                IT/Network Team Collaboration
+              </p>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Network Infrastructure</p>
@@ -369,11 +456,14 @@ const BMSModule1Section6 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Commissioning Engineers</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+                Commissioning Engineers
+              </p>
               <div className="p-3 rounded bg-elec-yellow/5 border border-elec-yellow/20 mb-4">
                 <p className="text-sm text-white">
-                  <strong>Critical relationship:</strong> Commissioning engineers depend entirely on correct electrical installation
-                  to programme and test the BMS. Poor wiring quality directly impacts their ability to complete the project.
+                  <strong>Critical relationship:</strong> Commissioning engineers depend entirely on
+                  correct electrical installation to programme and test the BMS. Poor wiring quality
+                  directly impacts their ability to complete the project.
                 </p>
               </div>
               <div className="grid sm:grid-cols-2 gap-6">
@@ -401,9 +491,14 @@ const BMSModule1Section6 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50 my-6">
-              <p className="text-red-400/90 text-sm font-medium mb-2">Communication Breakdown Consequences</p>
+              <p className="text-red-400/90 text-sm font-medium mb-2">
+                Communication Breakdown Consequences
+              </p>
               <ul className="text-sm text-white space-y-1">
-                <li>Poor communication is the most common cause of BMS project delays and cost overruns:</li>
+                <li>
+                  Poor communication is the most common cause of BMS project delays and cost
+                  overruns:
+                </li>
                 <li>• Rework due to conflicts between systems</li>
                 <li>• Extended commissioning periods</li>
                 <li>• Client dissatisfaction and contract disputes</li>
@@ -423,29 +518,56 @@ const BMSModule1Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Every aspect of BMS performance traces back to installation quality. The foundation you build determines
-              whether the system achieves its design intent.
+              Every aspect of BMS performance traces back to installation quality. The foundation
+              you build determines whether the system achieves its design intent.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-red-400/80 mb-2">Poor Installation Consequences</p>
+                <p className="text-sm font-medium text-red-400/80 mb-2">
+                  Poor Installation Consequences
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>False sensor readings:</strong> Wrong temperature, humidity, or CO2 data</li>
-                  <li><strong>Actuator malfunction:</strong> Valves and dampers operate incorrectly</li>
-                  <li><strong>Communication failures:</strong> Network issues prevent coordination</li>
-                  <li><strong>System downtime:</strong> Critical building services unavailable</li>
-                  <li><strong>Expensive call-backs:</strong> Emergency repairs and extended commissioning</li>
+                  <li>
+                    <strong>False sensor readings:</strong> Wrong temperature, humidity, or CO2 data
+                  </li>
+                  <li>
+                    <strong>Actuator malfunction:</strong> Valves and dampers operate incorrectly
+                  </li>
+                  <li>
+                    <strong>Communication failures:</strong> Network issues prevent coordination
+                  </li>
+                  <li>
+                    <strong>System downtime:</strong> Critical building services unavailable
+                  </li>
+                  <li>
+                    <strong>Expensive call-backs:</strong> Emergency repairs and extended
+                    commissioning
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Installation Benefits</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Quality Installation Benefits
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Accurate control:</strong> Precise environmental management</li>
-                  <li><strong>Reliable operation:</strong> Consistent performance with minimal faults</li>
-                  <li><strong>Easy maintenance:</strong> Clear documentation and accessible terminations</li>
-                  <li><strong>Client satisfaction:</strong> System meets performance expectations</li>
-                  <li><strong>Professional reputation:</strong> Successful projects lead to future work</li>
+                  <li>
+                    <strong>Accurate control:</strong> Precise environmental management
+                  </li>
+                  <li>
+                    <strong>Reliable operation:</strong> Consistent performance with minimal faults
+                  </li>
+                  <li>
+                    <strong>Easy maintenance:</strong> Clear documentation and accessible
+                    terminations
+                  </li>
+                  <li>
+                    <strong>Client satisfaction:</strong> System meets performance expectations
+                  </li>
+                  <li>
+                    <strong>Professional reputation:</strong> Successful projects lead to future
+                    work
+                  </li>
                 </ul>
               </div>
             </div>
@@ -478,7 +600,9 @@ const BMSModule1Section6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Installation</p>
+                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                    Quality Installation
+                  </p>
                   <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Temperature accuracy ±0.5°C</li>
                     <li>Humidity readings ±3% accurate</li>
@@ -489,14 +613,17 @@ const BMSModule1Section6 = () => {
               </div>
               <div className="p-3 mt-4 rounded bg-elec-yellow/5 border border-elec-yellow/20">
                 <p className="text-sm text-white">
-                  <strong>Result:</strong> Accurate sensors enable precise control, reducing energy consumption by up to 30%
-                  and ensuring optimal comfort conditions for building occupants.
+                  <strong>Result:</strong> Accurate sensors enable precise control, reducing energy
+                  consumption by up to 30% and ensuring optimal comfort conditions for building
+                  occupants.
                 </p>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Documentation and Labelling Impact</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
+                Documentation and Labelling Impact
+              </p>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-red-400/80 mb-2">Poor Labelling</p>
@@ -509,7 +636,9 @@ const BMSModule1Section6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Documentation</p>
+                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                    Quality Documentation
+                  </p>
                   <ul className="text-sm text-white space-y-1 ml-4">
                     <li>15-30 minutes to resolve issues</li>
                     <li>Clear identification prevents accidents</li>
@@ -530,12 +659,26 @@ const BMSModule1Section6 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Excellence</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Excellence
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Treat BMS wiring with the same precision as mains installation — every connection matters</li>
-                <li>Label every termination point — clear labelling prevents hours of troubleshooting later</li>
-                <li>Check manufacturer datasheets — always verify wiring requirements before connecting devices</li>
-                <li>Maintain clear communication — keep commissioning engineers informed of installation progress</li>
+                <li>
+                  Treat BMS wiring with the same precision as mains installation — every connection
+                  matters
+                </li>
+                <li>
+                  Label every termination point — clear labelling prevents hours of troubleshooting
+                  later
+                </li>
+                <li>
+                  Check manufacturer datasheets — always verify wiring requirements before
+                  connecting devices
+                </li>
+                <li>
+                  Maintain clear communication — keep commissioning engineers informed of
+                  installation progress
+                </li>
               </ul>
             </div>
             <div>
@@ -552,10 +695,21 @@ const BMSModule1Section6 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Poor segregation:</strong> — mixing mains and data cables causes EMI and safety issues</li>
-                <li><strong>Skipping labelling:</strong> — unlabelled circuits create hours of troubleshooting later</li>
-                <li><strong>Incorrect polarity:</strong> — reversed sensor wiring gives false readings</li>
-                <li><strong>Inadequate documentation:</strong> — incomplete records make maintenance impossible</li>
+                <li>
+                  <strong>Poor segregation:</strong> — mixing mains and data cables causes EMI and
+                  safety issues
+                </li>
+                <li>
+                  <strong>Skipping labelling:</strong> — unlabelled circuits create hours of
+                  troubleshooting later
+                </li>
+                <li>
+                  <strong>Incorrect polarity:</strong> — reversed sensor wiring gives false readings
+                </li>
+                <li>
+                  <strong>Inadequate documentation:</strong> — incomplete records make maintenance
+                  impossible
+                </li>
               </ul>
             </div>
           </div>
@@ -569,9 +723,10 @@ const BMSModule1Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A large office project in Manchester required BMS installation for HVAC and lighting control across
-              five floors. The electrical contractor installed over 200 sensors, 150 actuators, and 15 control panels
-              with extensive data and power cabling throughout the building.
+              A large office project in Manchester required BMS installation for HVAC and lighting
+              control across five floors. The electrical contractor installed over 200 sensors, 150
+              actuators, and 15 control panels with extensive data and power cabling throughout the
+              building.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -598,9 +753,10 @@ const BMSModule1Section6 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50 my-6">
               <p className="text-red-400/90 text-sm font-medium mb-2">Investigation Process</p>
               <p className="text-sm text-white">
-                The commissioning team spent <strong>3 days</strong> fault-finding, checking sensor readings against
-                actual conditions. They discovered that several temperature sensors were reading 5-10°C incorrectly
-                due to wiring errors. Without clear cable labels, tracing each circuit took hours.
+                The commissioning team spent <strong>3 days</strong> fault-finding, checking sensor
+                readings against actual conditions. They discovered that several temperature sensors
+                were reading 5-10°C incorrectly due to wiring errors. Without clear cable labels,
+                tracing each circuit took hours.
               </p>
             </div>
 
@@ -627,10 +783,11 @@ const BMSModule1Section6 = () => {
 
             <div className="p-3 rounded bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm text-white">
-                <strong>Key Lesson:</strong> This project demonstrates how electrician workmanship directly impacts
-                BMS performance. Quality installation from the start would have prevented delays, additional costs,
-                and client dissatisfaction. The extra time spent on proper installation is always less than the time
-                needed for fault-finding and correction.
+                <strong>Key Lesson:</strong> This project demonstrates how electrician workmanship
+                directly impacts BMS performance. Quality installation from the start would have
+                prevented delays, additional costs, and client dissatisfaction. The extra time spent
+                on proper installation is always less than the time needed for fault-finding and
+                correction.
               </p>
             </div>
           </div>
@@ -679,10 +836,10 @@ const BMSModule1Section6 = () => {
           <h2 className="text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="space-y-2">
             {[
-              "Electricians are responsible for installing sensors, actuators, controllers, and cabling that form the BMS foundation",
-              "Wiring and containment must be neat, labelled, and compliant with BS 7671 while meeting manufacturer specifications",
-              "Collaboration with HVAC, IT, and commissioning engineers is essential for project success",
-              "Installation quality directly affects BMS reliability, performance, and long-term client satisfaction"
+              'Electricians are responsible for installing sensors, actuators, controllers, and cabling that form the BMS foundation',
+              'Wiring and containment must be neat, labelled, and compliant with BS 7671 while meeting manufacturer specifications',
+              'Collaboration with HVAC, IT, and commissioning engineers is essential for project success',
+              'Installation quality directly affects BMS reliability, performance, and long-term client satisfaction',
             ].map((point, index) => (
               <div key={index} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -694,10 +851,7 @@ const BMSModule1Section6 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10">
-          <SingleQuestionQuiz
-            questions={bmsModule1Section6QuizData}
-            title="Test Your Knowledge"
-          />
+          <SingleQuestionQuiz questions={bmsModule1Section6QuizData} title="Test Your Knowledge" />
         </section>
 
         {/* Bottom Navigation */}

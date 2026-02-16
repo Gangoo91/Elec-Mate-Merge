@@ -3,12 +3,12 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BS7671Module7Section1LearningOutcomes = () => {
   const outcomes = [
-    "Define and identify the different zones in bathrooms and shower rooms according to BS 7671 Section 701",
-    "Explain the specific requirements for swimming pools and fountain installations under Section 702", 
-    "Apply appropriate IP ratings for equipment installed in wet locations",
-    "Determine correct RCD protection requirements for each zone classification",
-    "Assess suitable cable types and installation methods for wet environments",
-    "Identify prohibited equipment and restricted areas within each zone"
+    'Define and identify the different zones in bathrooms and shower rooms according to BS 7671 Section 701',
+    'Explain the specific requirements for swimming pools and fountain installations under Section 702',
+    'Apply appropriate IP ratings for equipment installed in wet locations',
+    'Determine correct RCD protection requirements for each zone classification',
+    'Assess suitable cable types and installation methods for wet environments',
+    'Identify prohibited equipment and restricted areas within each zone',
   ];
 
   return (

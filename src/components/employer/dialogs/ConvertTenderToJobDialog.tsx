@@ -1,10 +1,23 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Briefcase, Loader2, Trophy, MapPin } from 'lucide-react';
 import { useCreateJob } from '@/hooks/useJobs';
 import { useUpdateTender, type Tender } from '@/hooks/useTenders';
@@ -16,7 +29,11 @@ interface ConvertTenderToJobDialogProps {
   tender: Tender | null;
 }
 
-export function ConvertTenderToJobDialog({ open, onOpenChange, tender }: ConvertTenderToJobDialogProps) {
+export function ConvertTenderToJobDialog({
+  open,
+  onOpenChange,
+  tender,
+}: ConvertTenderToJobDialogProps) {
   const createJobMutation = useCreateJob();
   const updateTenderMutation = useUpdateTender();
 
@@ -71,19 +88,20 @@ export function ConvertTenderToJobDialog({ open, onOpenChange, tender }: Convert
       await updateTenderMutation.mutateAsync({
         id: tender.id,
         data: {
-          notes: `${tender.notes || ''}\n\n[Converted to job on ${new Date().toLocaleDateString('en-GB')}]`.trim()
-        }
+          notes:
+            `${tender.notes || ''}\n\n[Converted to job on ${new Date().toLocaleDateString('en-GB')}]`.trim(),
+        },
       });
 
       toast.success('Job created from tender!', {
-        description: `"${formData.title}" has been added to your jobs.`
+        description: `"${formData.title}" has been added to your jobs.`,
       });
 
       onOpenChange(false);
     } catch (error: any) {
       console.error('Error converting tender:', error);
       toast.error('Failed to create job', {
-        description: error.message
+        description: error.message,
       });
     }
   };
@@ -110,7 +128,9 @@ export function ConvertTenderToJobDialog({ open, onOpenChange, tender }: Convert
           <div className="p-3 bg-success/10 rounded-lg border border-success/20">
             <p className="text-xs text-muted-foreground">Converting from tender:</p>
             <p className="font-medium text-success">{tender.title}</p>
-            <p className="text-sm text-muted-foreground">{tender.client} • £{Number(tender.value).toLocaleString()}</p>
+            <p className="text-sm text-muted-foreground">
+              {tender.client} • £{Number(tender.value).toLocaleString()}
+            </p>
           </div>
 
           {/* Job Title */}
@@ -168,7 +188,9 @@ export function ConvertTenderToJobDialog({ open, onOpenChange, tender }: Convert
                 type="number"
                 min={1}
                 value={formData.workers_count}
-                onChange={(e) => setFormData({ ...formData, workers_count: Number(e.target.value) })}
+                onChange={(e) =>
+                  setFormData({ ...formData, workers_count: Number(e.target.value) })
+                }
               />
             </div>
           </div>
@@ -179,7 +201,9 @@ export function ConvertTenderToJobDialog({ open, onOpenChange, tender }: Convert
               <Label htmlFor="status">Initial Status</Label>
               <Select
                 value={formData.status}
-                onValueChange={(value: 'Pending' | 'Active') => setFormData({ ...formData, status: value })}
+                onValueChange={(value: 'Pending' | 'Active') =>
+                  setFormData({ ...formData, status: value })
+                }
               >
                 <SelectTrigger>
                   <SelectValue />

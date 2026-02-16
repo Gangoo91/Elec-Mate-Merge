@@ -1,82 +1,81 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Brain, RefreshCw, Users, Target } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Brain, RefreshCw, Users, Target } from 'lucide-react';
 
 const RevisionTechniquesTab = () => {
   const techniques = [
     {
-      technique: "Active Recall",
+      technique: 'Active Recall',
       icon: Brain,
-      description: "Test yourself without looking at notes",
+      description: 'Test yourself without looking at notes',
       effectiveness: 90,
-      howTo: "Cover your notes and try to write down everything you remember about a topic",
-      example: "Cover formulas and try to write them from memory, then check your accuracy",
-      benefits: ["Strengthens memory pathways", "Identifies knowledge gaps", "Builds confidence"]
+      howTo: 'Cover your notes and try to write down everything you remember about a topic',
+      example: 'Cover formulas and try to write them from memory, then check your accuracy',
+      benefits: ['Strengthens memory pathways', 'Identifies knowledge gaps', 'Builds confidence'],
     },
     {
-      technique: "Spaced Repetition",
+      technique: 'Spaced Repetition',
       icon: RefreshCw,
-      description: "Review material at increasing intervals",
+      description: 'Review material at increasing intervals',
       effectiveness: 85,
-      howTo: "Review today, then in 3 days, 1 week, 2 weeks, and 1 month",
-      example: "Study cable calculations today, review them Tuesday, next Monday, then next month",
-      benefits: ["Prevents forgetting", "Efficient use of time", "Long-term retention"]
+      howTo: 'Review today, then in 3 days, 1 week, 2 weeks, and 1 month',
+      example: 'Study cable calculations today, review them Tuesday, next Monday, then next month',
+      benefits: ['Prevents forgetting', 'Efficient use of time', 'Long-term retention'],
     },
     {
-      technique: "Teaching Others",
+      technique: 'Teaching Others',
       icon: Users,
-      description: "Explain concepts to fellow apprentices",
+      description: 'Explain concepts to fellow apprentices',
       effectiveness: 95,
-      howTo: "Form study groups and take turns teaching different topics",
-      example: "Explain three-phase power calculations to your study group",
-      benefits: ["Deepens understanding", "Reveals gaps", "Builds communication skills"]
+      howTo: 'Form study groups and take turns teaching different topics',
+      example: 'Explain three-phase power calculations to your study group',
+      benefits: ['Deepens understanding', 'Reveals gaps', 'Builds communication skills'],
     },
     {
-      technique: "Practice Testing",
+      technique: 'Practice Testing',
       icon: Target,
-      description: "Take mock exams under real conditions",
+      description: 'Take mock exams under real conditions',
       effectiveness: 80,
-      howTo: "Set timer, use only allowed materials, no interruptions",
-      example: "Complete a full 18th Edition practice paper in 2 hours",
-      benefits: ["Reduces exam anxiety", "Improves time management", "Identifies weak areas"]
-    }
+      howTo: 'Set timer, use only allowed materials, no interruptions',
+      example: 'Complete a full 18th Edition practice paper in 2 hours',
+      benefits: ['Reduces exam anxiety', 'Improves time management', 'Identifies weak areas'],
+    },
   ];
 
   const studyMethods = [
     {
-      method: "The Feynman Technique",
+      method: 'The Feynman Technique',
       steps: [
-        "Choose a concept you want to learn",
-        "Explain it in simple terms as if teaching a child",
-        "Identify gaps in your explanation",
-        "Go back to source material to fill gaps",
-        "Repeat until you can explain clearly"
+        'Choose a concept you want to learn',
+        'Explain it in simple terms as if teaching a child',
+        'Identify gaps in your explanation',
+        'Go back to source material to fill gaps',
+        'Repeat until you can explain clearly',
       ],
-      bestFor: "Complex electrical theory concepts"
+      bestFor: 'Complex electrical theory concepts',
     },
     {
-      method: "Mind Mapping",
+      method: 'Mind Mapping',
       steps: [
-        "Start with main topic in centre",
-        "Add major branches for subtopics",
-        "Include formulas, diagrams, examples",
-        "Use colours and symbols",
-        "Review and update regularly"
+        'Start with main topic in centre',
+        'Add major branches for subtopics',
+        'Include formulas, diagrams, examples',
+        'Use colours and symbols',
+        'Review and update regularly',
       ],
-      bestFor: "Connecting related topics and regulations"
+      bestFor: 'Connecting related topics and regulations',
     },
     {
-      method: "The Pomodoro Technique",
+      method: 'The Pomodoro Technique',
       steps: [
-        "Study for 25 minutes focused",
-        "Take 5 minute break",
-        "Repeat 3-4 times",
-        "Take longer 15-30 minute break",
-        "Track what you accomplished"
+        'Study for 25 minutes focused',
+        'Take 5 minute break',
+        'Repeat 3-4 times',
+        'Take longer 15-30 minute break',
+        'Track what you accomplished',
       ],
-      bestFor: "Maintaining concentration and avoiding burnout"
-    }
+      bestFor: 'Maintaining concentration and avoiding burnout',
+    },
   ];
 
   return (
@@ -101,11 +100,13 @@ const RevisionTechniquesTab = () => {
                       <p className="text-sm text-white">{technique.description}</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm text-elec-yellow font-medium">{technique.effectiveness}% effective</div>
+                      <div className="text-sm text-elec-yellow font-medium">
+                        {technique.effectiveness}% effective
+                      </div>
                       <Progress value={technique.effectiveness} className="w-20 mt-1" />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-medium text-white mb-2">How to do it</h4>
@@ -115,12 +116,15 @@ const RevisionTechniquesTab = () => {
                         <p className="text-sm text-white">{technique.example}</p>
                       </div>
                     </div>
-                    
+
                     <div>
                       <h4 className="font-medium text-white mb-2">Benefits</h4>
                       <ul className="space-y-1">
                         {technique.benefits.map((benefit, benefitIndex) => (
-                          <li key={benefitIndex} className="text-sm text-white flex items-start gap-2">
+                          <li
+                            key={benefitIndex}
+                            className="text-sm text-white flex items-start gap-2"
+                          >
                             <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                             {benefit}
                           </li>

@@ -106,11 +106,7 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
             disabled={isSaving || syncState?.status === 'syncing'}
             className="h-14 w-14 shrink-0 -mr-4 touch-manipulation active:scale-95 transition-transform"
           >
-            {isSaving ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              <Save className="h-5 w-5" />
-            )}
+            {isSaving ? <Loader2 className="h-5 w-5 animate-spin" /> : <Save className="h-5 w-5" />}
           </Button>
 
           {/* More options menu (Dev tools, New Certificate) */}

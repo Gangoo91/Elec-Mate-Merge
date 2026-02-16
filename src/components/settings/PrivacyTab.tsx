@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
-import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
+import { Link } from 'react-router-dom';
 import {
   Shield,
   Database,
@@ -19,14 +19,14 @@ import {
   Loader2,
   FileText,
   ExternalLink,
-} from "lucide-react";
+} from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 }
-  }
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
+  },
 };
 
 const itemVariants = {
@@ -34,8 +34,8 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' }
-  }
+    transition: { duration: 0.2, ease: 'easeOut' },
+  },
 };
 
 const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
@@ -79,14 +79,16 @@ const PrivacyTab = () => {
     addNotification({
       title: 'Cookie Preferences Updated',
       message: `Analytics cookies ${newPrefs.analytics ? 'enabled' : 'disabled'}`,
-      type: 'success'
+      type: 'success',
     });
   };
 
   const handleDataDownload = async () => {
     setIsExporting(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
         throw new Error('Not authenticated');
       }
@@ -115,14 +117,15 @@ const PrivacyTab = () => {
       addNotification({
         title: 'Data Exported',
         message: 'Your data has been downloaded successfully.',
-        type: 'success'
+        type: 'success',
       });
     } catch (error) {
       console.error('Data export error:', error);
       addNotification({
         title: 'Export Failed',
-        message: error instanceof Error ? error.message : 'Failed to export your data. Please try again.',
-        type: 'error'
+        message:
+          error instanceof Error ? error.message : 'Failed to export your data. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsExporting(false);
@@ -133,7 +136,7 @@ const PrivacyTab = () => {
     addNotification({
       title: 'Delete Request',
       message: 'Please contact support@elec-mate.com to request account deletion.',
-      type: 'info'
+      type: 'info',
     });
   };
 
@@ -145,7 +148,10 @@ const PrivacyTab = () => {
       className="space-y-6"
     >
       {/* Header */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="p-4 md:p-6">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
@@ -162,7 +168,10 @@ const PrivacyTab = () => {
       </motion.div>
 
       {/* Cookie Preferences */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Cookie className="h-4 w-4 text-elec-yellow" />
@@ -198,10 +207,14 @@ const PrivacyTab = () => {
             onClick={() => handleCookieToggle('analytics')}
           >
             <div className="flex items-center gap-3 min-w-0">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'
-              }`}>
-                <BarChart3 className={`h-5 w-5 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-muted-foreground'}`} />
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                  cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'
+                }`}
+              >
+                <BarChart3
+                  className={`h-5 w-5 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-muted-foreground'}`}
+                />
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-medium text-foreground">Analytics Cookies</p>
@@ -227,7 +240,10 @@ const PrivacyTab = () => {
       </motion.div>
 
       {/* Your Data Rights */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Database className="h-4 w-4 text-elec-yellow" />
@@ -246,7 +262,8 @@ const PrivacyTab = () => {
             <div>
               <p className="text-sm font-medium text-foreground">Data Retention</p>
               <p className="text-xs text-muted-foreground mt-1">
-                We keep your data for as long as your account is active. If you delete your account, we'll remove your data within 30 days.
+                We keep your data for as long as your account is active. If you delete your account,
+                we'll remove your data within 30 days.
               </p>
             </div>
           </div>
@@ -283,7 +300,8 @@ const PrivacyTab = () => {
             <div>
               <p className="text-sm font-medium text-foreground">Account Deletion</p>
               <p className="text-xs text-muted-foreground mt-1">
-                Deleting your account is permanent. All your data, certificates, Elec-ID, and study progress will be permanently removed.
+                Deleting your account is permanent. All your data, certificates, Elec-ID, and study
+                progress will be permanently removed.
               </p>
             </div>
           </div>
@@ -291,7 +309,10 @@ const PrivacyTab = () => {
       </motion.div>
 
       {/* Legal Documents */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <FileText className="h-4 w-4 text-elec-yellow" />

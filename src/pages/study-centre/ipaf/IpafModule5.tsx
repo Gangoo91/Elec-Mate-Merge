@@ -1,40 +1,52 @@
-import { ArrowLeft, AlertTriangle, TriangleAlert, ClipboardCheck, LifeBuoy, Move } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  AlertTriangle,
+  TriangleAlert,
+  ClipboardCheck,
+  LifeBuoy,
+  Move,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Common Hazards & Accident Causes",
+    title: 'Common Hazards & Accident Causes',
     icon: TriangleAlert,
-    description: "Falls from height, tower collapse, overturning, electrocution, falling objects, and fatigue-related errors",
+    description:
+      'Falls from height, tower collapse, overturning, electrocution, falling objects, and fatigue-related errors',
   },
   {
     id: 2,
-    title: "Risk Assessment for Tower Use",
+    title: 'Risk Assessment for Tower Use',
     icon: ClipboardCheck,
-    description: "HSE 5-step process, site-specific factors, hierarchy of control, method statements, and dynamic assessment",
+    description:
+      'HSE 5-step process, site-specific factors, hierarchy of control, method statements, and dynamic assessment',
   },
   {
     id: 3,
-    title: "Rescue Procedures & Emergency Planning",
+    title: 'Rescue Procedures & Emergency Planning',
     icon: LifeBuoy,
-    description: "PASMA rescue hierarchy, written rescue plans, communication methods, suspension trauma awareness",
+    description:
+      'PASMA rescue hierarchy, written rescue plans, communication methods, suspension trauma awareness',
   },
   {
     id: 4,
-    title: "Moving & Repositioning Towers Safely",
+    title: 'Moving & Repositioning Towers Safely',
     icon: Move,
-    description: "Pre-move checks, wind limits, ground conditions, zero-tolerance rules, and post-move verification",
+    description:
+      'Pre-move checks, wind limits, ground conditions, zero-tolerance rules, and post-move verification',
   },
 ];
 
 export default function IpafModule5() {
   useSEO({
-    title: "Module 5: Hazards, Risk Assessment & Rescue | IPAF Mobile Scaffold",
-    description: "Common hazards, HSE 5-step risk assessment, rescue procedures, emergency planning, and safe tower repositioning for mobile access tower work.",
+    title: 'Module 5: Hazards, Risk Assessment & Rescue | IPAF Mobile Scaffold',
+    description:
+      'Common hazards, HSE 5-step risk assessment, rescue procedures, emergency planning, and safe tower repositioning for mobile access tower work.',
   });
 
   return (
@@ -78,7 +90,8 @@ export default function IpafModule5() {
               Hazards, Risk Assessment & Rescue
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Common hazards, 5-step risk assessment, rescue procedures, and safe tower repositioning for mobile access tower work
+              Common hazards, 5-step risk assessment, rescue procedures, and safe tower
+              repositioning for mobile access tower work
             </p>
           </div>
 

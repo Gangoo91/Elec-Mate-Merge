@@ -12,30 +12,10 @@ import { motion } from 'framer-motion';
 export type ActivityVariant = 'orange' | 'green' | 'purple' | 'yellow';
 
 const intensityMap: Record<ActivityVariant, string[]> = {
-  orange: [
-    'bg-white/[0.06]',
-    'bg-orange-500/25',
-    'bg-orange-500/50',
-    'bg-orange-500/80',
-  ],
-  green: [
-    'bg-white/[0.06]',
-    'bg-green-500/25',
-    'bg-green-500/50',
-    'bg-green-500/80',
-  ],
-  purple: [
-    'bg-white/[0.06]',
-    'bg-purple-500/25',
-    'bg-purple-500/50',
-    'bg-purple-500/80',
-  ],
-  yellow: [
-    'bg-white/[0.06]',
-    'bg-elec-yellow/25',
-    'bg-elec-yellow/50',
-    'bg-elec-yellow/80',
-  ],
+  orange: ['bg-white/[0.06]', 'bg-orange-500/25', 'bg-orange-500/50', 'bg-orange-500/80'],
+  green: ['bg-white/[0.06]', 'bg-green-500/25', 'bg-green-500/50', 'bg-green-500/80'],
+  purple: ['bg-white/[0.06]', 'bg-purple-500/25', 'bg-purple-500/50', 'bg-purple-500/80'],
+  yellow: ['bg-white/[0.06]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
 };
 
 function getIntensity(count: number): number {
@@ -61,7 +41,11 @@ export function ActivityGrid({ activityMap, variant }: ActivityGridProps) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
     const dateStr = d.toLocaleDateString('en-CA'); // YYYY-MM-DD
-    const dayLabel = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+    const dayLabel = d.toLocaleDateString('en-GB', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+    });
     days.push({
       date: dateStr,
       count: activityMap[dateStr] || 0,
@@ -74,7 +58,9 @@ export function ActivityGrid({ activityMap, variant }: ActivityGridProps) {
       <div className="grid grid-cols-7 gap-1.5">
         {/* Day labels */}
         {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-          <div key={i} className="text-[10px] text-white/40 text-center mb-0.5 font-medium">{d}</div>
+          <div key={i} className="text-[10px] text-white/40 text-center mb-0.5 font-medium">
+            {d}
+          </div>
         ))}
         {/* Cells */}
         {days.map((day, index) => {
@@ -85,10 +71,7 @@ export function ActivityGrid({ activityMap, variant }: ActivityGridProps) {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.25, delay: index * 0.015, ease: 'easeOut' }}
-              className={cn(
-                'aspect-square rounded-[4px]',
-                colours[intensity]
-              )}
+              className={cn('aspect-square rounded-[4px]', colours[intensity])}
               title={`${day.label}: ${day.count} activities`}
             />
           );

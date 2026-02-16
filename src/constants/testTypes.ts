@@ -1,4 +1,3 @@
-
 export interface TestType {
   id: string;
   name: string;
@@ -16,7 +15,7 @@ export const testTypes: TestType[] = [
     unit: 'Ω',
     description: 'Test protective conductor continuity',
     icon: '🔗',
-    requiredForAll: true
+    requiredForAll: true,
   },
   {
     id: 'insulation',
@@ -24,7 +23,7 @@ export const testTypes: TestType[] = [
     unit: 'MΩ',
     description: 'Test insulation between conductors',
     icon: '⚡',
-    requiredForAll: true
+    requiredForAll: true,
   },
   {
     id: 'zs',
@@ -32,7 +31,7 @@ export const testTypes: TestType[] = [
     unit: 'Ω',
     description: 'Test earth fault loop impedance',
     icon: '🌍',
-    requiredForAll: true
+    requiredForAll: true,
   },
   {
     id: 'rcd',
@@ -40,7 +39,7 @@ export const testTypes: TestType[] = [
     unit: 'ms',
     description: 'Test RCD trip times (where applicable)',
     icon: '🛡️',
-    requiredForCircuits: ['rcd', 'socket', 'bathroom']
+    requiredForCircuits: ['rcd', 'socket', 'bathroom'],
   },
   {
     id: 'polarity',
@@ -48,6 +47,6 @@ export const testTypes: TestType[] = [
     unit: 'Pass/Fail',
     description: 'Verify correct polarity',
     icon: '🔄',
-    requiredForAll: true
-  }
+    requiredForAll: true,
+  },
 ];

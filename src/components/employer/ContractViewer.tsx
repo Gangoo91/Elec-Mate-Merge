@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
+import { useState, useEffect, useCallback } from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
 import {
   ResponsiveFormModal,
   ResponsiveFormModalContent,
@@ -9,12 +9,12 @@ import {
   ResponsiveFormModalTitle,
   ResponsiveFormModalBody,
   ResponsiveFormModalFooter,
-} from "@/components/ui/responsive-form-modal";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/responsive-form-modal';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import {
   FileText,
   Download,
@@ -38,26 +38,26 @@ import {
   Heading3,
   Undo,
   Redo,
-} from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import {
   type EmploymentContractTemplate,
   type Contract,
   useAdoptContractTemplate,
   useUpdateContractContent,
-} from "@/hooks/useContracts";
-import { useEmployees } from "@/hooks/useEmployees";
-import { downloadContractPDF } from "@/utils/contract-pdf";
-import { useToast } from "@/hooks/use-toast";
-import { sanitizeHtmlSafe } from "@/utils/inputSanitization";
+} from '@/hooks/useContracts';
+import { useEmployees } from '@/hooks/useEmployees';
+import { downloadContractPDF } from '@/utils/contract-pdf';
+import { useToast } from '@/hooks/use-toast';
+import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 interface ContractViewerProps {
   open: boolean;
@@ -67,7 +67,7 @@ interface ContractViewerProps {
   isAdopted?: boolean;
 }
 
-const DRAFT_KEY_PREFIX = "contract-viewer-draft-";
+const DRAFT_KEY_PREFIX = 'contract-viewer-draft-';
 
 export function ContractViewer({
   open,
@@ -84,12 +84,12 @@ export function ContractViewer({
   const [isExporting, setIsExporting] = useState(false);
 
   // Adopt form state
-  const [companyName, setCompanyName] = useState("");
-  const [employeeName, setEmployeeName] = useState("");
-  const [selectedEmployee, setSelectedEmployee] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [salary, setSalary] = useState("");
+  const [companyName, setCompanyName] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [salary, setSalary] = useState('');
 
   const adoptContract = useAdoptContractTemplate();
   const updateContract = useUpdateContractContent();
@@ -98,10 +98,10 @@ export function ContractViewer({
   // Use either the template or user contract for display
   const contract = userContract || template;
   const isTemplate = !userContract;
-  const content = userContract?.content || template?.content || "";
-  const name = userContract?.title || template?.name || "";
-  const category = template?.category || "Employment";
-  const draftKey = userContract ? `${DRAFT_KEY_PREFIX}${userContract.id}` : "";
+  const content = userContract?.content || template?.content || '';
+  const name = userContract?.title || template?.name || '';
+  const category = template?.category || 'Employment';
+  const draftKey = userContract ? `${DRAFT_KEY_PREFIX}${userContract.id}` : '';
 
   // Initialize TipTap editor
   const editor = useEditor({
@@ -110,8 +110,8 @@ export function ContractViewer({
         heading: { levels: [2, 3] },
       }),
       Placeholder.configure({
-        placeholder: "Start writing...",
-        emptyEditorClass: "is-editor-empty",
+        placeholder: 'Start writing...',
+        emptyEditorClass: 'is-editor-empty',
       }),
     ],
     content: content,
@@ -125,17 +125,17 @@ export function ContractViewer({
     editorProps: {
       attributes: {
         class: cn(
-          "prose prose-invert prose-sm max-w-none focus:outline-none",
-          "prose-headings:text-white prose-headings:font-semibold",
-          "prose-p:text-white/80 prose-p:leading-relaxed",
-          "prose-li:text-white/80",
-          "prose-strong:text-white prose-strong:font-semibold",
-          "[&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4",
-          "[&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3",
-          "[&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2",
-          "[&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1",
-          "[&_table]:w-full [&_td]:py-1 [&_td]:pr-4",
-          isEditing ? "min-h-[300px] p-4" : ""
+          'prose prose-invert prose-sm max-w-none focus:outline-none',
+          'prose-headings:text-white prose-headings:font-semibold',
+          'prose-p:text-white/80 prose-p:leading-relaxed',
+          'prose-li:text-white/80',
+          'prose-strong:text-white prose-strong:font-semibold',
+          '[&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4',
+          '[&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3',
+          '[&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2',
+          '[&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1',
+          '[&_table]:w-full [&_td]:py-1 [&_td]:pr-4',
+          isEditing ? 'min-h-[300px] p-4' : ''
         ),
       },
     },
@@ -149,7 +149,7 @@ export function ContractViewer({
         const draft = localStorage.getItem(draftKey);
         if (draft && draft !== content) {
           const useDraft = window.confirm(
-            "You have unsaved changes from a previous session. Restore them?"
+            'You have unsaved changes from a previous session. Restore them?'
           );
           if (useDraft) {
             editor.commands.setContent(draft);
@@ -177,12 +177,12 @@ export function ContractViewer({
       setShowAdoptForm(false);
       setIsEditing(false);
       setHasChanges(false);
-      setCompanyName("");
-      setEmployeeName("");
-      setSelectedEmployee("");
-      setJobTitle("");
-      setStartDate("");
-      setSalary("");
+      setCompanyName('');
+      setEmployeeName('');
+      setSelectedEmployee('');
+      setJobTitle('');
+      setStartDate('');
+      setSalary('');
     }
   }, [open]);
 
@@ -191,14 +191,14 @@ export function ContractViewer({
     try {
       await downloadContractPDF({ template, userContract });
       toast({
-        title: "PDF Downloaded",
-        description: "Your contract document has been exported.",
+        title: 'PDF Downloaded',
+        description: 'Your contract document has been exported.',
       });
     } catch (error) {
       toast({
-        title: "Export Failed",
-        description: "Could not generate the PDF. Please try again.",
-        variant: "destructive",
+        title: 'Export Failed',
+        description: 'Could not generate the PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsExporting(false);
@@ -210,16 +210,16 @@ export function ContractViewer({
 
     try {
       const placeholders: Record<string, string> = {};
-      if (companyName) placeholders["[Company Name]"] = companyName;
-      if (employeeName) placeholders["[Employee Name]"] = employeeName;
-      if (employeeName) placeholders["[Subcontractor Name]"] = employeeName;
-      if (employeeName) placeholders["[Candidate Name]"] = employeeName;
-      if (jobTitle) placeholders["[Job Title]"] = jobTitle;
+      if (companyName) placeholders['[Company Name]'] = companyName;
+      if (employeeName) placeholders['[Employee Name]'] = employeeName;
+      if (employeeName) placeholders['[Subcontractor Name]'] = employeeName;
+      if (employeeName) placeholders['[Candidate Name]'] = employeeName;
+      if (jobTitle) placeholders['[Job Title]'] = jobTitle;
       if (startDate) {
-        const formattedDate = new Date(startDate).toLocaleDateString("en-GB");
-        placeholders["[Start Date]"] = formattedDate;
+        const formattedDate = new Date(startDate).toLocaleDateString('en-GB');
+        placeholders['[Start Date]'] = formattedDate;
       }
-      if (salary) placeholders["[Salary]"] = salary;
+      if (salary) placeholders['[Salary]'] = salary;
 
       await adoptContract.mutateAsync({
         template_id: template.id,
@@ -230,12 +230,12 @@ export function ContractViewer({
       });
 
       setShowAdoptForm(false);
-      setCompanyName("");
-      setEmployeeName("");
-      setSelectedEmployee("");
-      setJobTitle("");
-      setStartDate("");
-      setSalary("");
+      setCompanyName('');
+      setEmployeeName('');
+      setSelectedEmployee('');
+      setJobTitle('');
+      setStartDate('');
+      setSalary('');
       onOpenChange(false);
     } catch (error) {
       // Error handled by mutation
@@ -259,8 +259,8 @@ export function ContractViewer({
       setIsEditing(false);
 
       toast({
-        title: "Contract saved",
-        description: "Your changes have been saved.",
+        title: 'Contract saved',
+        description: 'Your changes have been saved.',
       });
     } catch (error) {
       // Error handled by mutation
@@ -269,9 +269,7 @@ export function ContractViewer({
 
   const handleCancelEdit = useCallback(() => {
     if (hasChanges) {
-      const confirmCancel = window.confirm(
-        "You have unsaved changes. Discard them?"
-      );
+      const confirmCancel = window.confirm('You have unsaved changes. Discard them?');
       if (!confirmCancel) return;
     }
     if (draftKey) {
@@ -286,9 +284,7 @@ export function ContractViewer({
 
   const handleClose = useCallback(() => {
     if (isEditing && hasChanges) {
-      const confirmClose = window.confirm(
-        "You have unsaved changes. Close anyway?"
-      );
+      const confirmClose = window.confirm('You have unsaved changes. Close anyway?');
       if (!confirmClose) return;
     }
     if (draftKey) {
@@ -301,24 +297,24 @@ export function ContractViewer({
 
   const getCategoryColor = (cat: string) => {
     switch (cat) {
-      case "Employment":
-        return "bg-elec-yellow/10 text-elec-yellow";
-      case "Subcontractor":
-        return "bg-info/10 text-info";
-      case "HR Letters":
-        return "bg-success/10 text-success";
+      case 'Employment':
+        return 'bg-elec-yellow/10 text-elec-yellow';
+      case 'Subcontractor':
+        return 'bg-info/10 text-info';
+      case 'HR Letters':
+        return 'bg-success/10 text-success';
       default:
-        return "bg-muted text-muted-foreground";
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const getCategoryIcon = (cat: string) => {
     switch (cat) {
-      case "Employment":
+      case 'Employment':
         return Briefcase;
-      case "Subcontractor":
+      case 'Subcontractor':
         return Users;
-      case "HR Letters":
+      case 'HR Letters':
         return FileCheck;
       default:
         return FileText;
@@ -345,10 +341,10 @@ export function ContractViewer({
       onClick={onClick}
       title={title}
       className={cn(
-        "h-8 w-8 p-0 rounded-lg touch-manipulation",
+        'h-8 w-8 p-0 rounded-lg touch-manipulation',
         isActive
-          ? "bg-elec-yellow/20 text-elec-yellow"
-          : "text-white/60 hover:text-white hover:bg-white/10"
+          ? 'bg-elec-yellow/20 text-elec-yellow'
+          : 'text-white/60 hover:text-white hover:bg-white/10'
       )}
     >
       {children}
@@ -357,7 +353,7 @@ export function ContractViewer({
 
   return (
     <ResponsiveFormModal open={open} onOpenChange={handleClose}>
-      <ResponsiveFormModalContent className={cn(isMobile ? "" : "max-w-4xl")}>
+      <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-4xl')}>
         {/* Header */}
         <ResponsiveFormModalHeader className="border-b border-border/50">
           <div className="flex items-center justify-between">
@@ -367,27 +363,23 @@ export function ContractViewer({
                   <CategoryIcon className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <span className="text-lg font-semibold line-clamp-1">
-                    {name}
-                  </span>
+                  <span className="text-lg font-semibold line-clamp-1">{name}</span>
                   <div className="flex items-center gap-2 mt-1">
                     <Badge variant="secondary" className={getCategoryColor(category)}>
                       {category}
                     </Badge>
                     {template?.version && (
-                      <span className="text-xs text-muted-foreground">
-                        v{template.version}
-                      </span>
+                      <span className="text-xs text-muted-foreground">v{template.version}</span>
                     )}
                     {userContract && (
                       <Badge
                         variant="secondary"
                         className={
-                          userContract.status === "Active"
-                            ? "bg-success/10 text-success"
-                            : userContract.status === "Draft"
-                            ? "bg-muted"
-                            : "bg-warning/10 text-warning"
+                          userContract.status === 'Active'
+                            ? 'bg-success/10 text-success'
+                            : userContract.status === 'Draft'
+                              ? 'bg-muted'
+                              : 'bg-warning/10 text-warning'
                         }
                       >
                         {userContract.status}
@@ -415,12 +407,10 @@ export function ContractViewer({
           {showAdoptForm ? (
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-info/10 border border-info/20">
-                <h3 className="font-medium text-foreground mb-2">
-                  Use This Template
-                </h3>
+                <h3 className="font-medium text-foreground mb-2">Use This Template</h3>
                 <p className="text-sm text-muted-foreground">
-                  Fill in the details below to personalise this contract.
-                  Placeholders like [Company Name] will be replaced with your values.
+                  Fill in the details below to personalise this contract. Placeholders like [Company
+                  Name] will be replaced with your values.
                 </p>
               </div>
 
@@ -442,7 +432,9 @@ export function ContractViewer({
                 <div className="space-y-2">
                   <Label htmlFor="employeeName" className="flex items-center gap-2">
                     <User className="h-4 w-4" />
-                    {category === "Subcontractor" ? "Subcontractor Name" : "Employee/Candidate Name"}
+                    {category === 'Subcontractor'
+                      ? 'Subcontractor Name'
+                      : 'Employee/Candidate Name'}
                   </Label>
                   <Input
                     id="employeeName"
@@ -453,15 +445,15 @@ export function ContractViewer({
                   />
                 </div>
 
-                {category !== "Subcontractor" && (
+                {category !== 'Subcontractor' && (
                   <div className="space-y-2">
                     <Label className="flex items-center gap-2">
                       <Users className="h-4 w-4" />
                       Link to Employee (Optional)
                     </Label>
                     <Select
-                      value={selectedEmployee || "__none__"}
-                      onValueChange={(v) => setSelectedEmployee(v === "__none__" ? "" : v)}
+                      value={selectedEmployee || '__none__'}
+                      onValueChange={(v) => setSelectedEmployee(v === '__none__' ? '' : v)}
                     >
                       <SelectTrigger className="h-11">
                         <SelectValue placeholder="Select employee..." />
@@ -506,7 +498,7 @@ export function ContractViewer({
                   />
                 </div>
 
-                {category === "Employment" && (
+                {category === 'Employment' && (
                   <div className="space-y-2">
                     <Label htmlFor="salary">Salary (Annual)</Label>
                     <Input
@@ -525,9 +517,7 @@ export function ContractViewer({
               {/* Summary if available */}
               {template?.summary && !isEditing && (
                 <div className="p-4 rounded-lg bg-muted/50 border">
-                  <p className="text-sm text-muted-foreground">
-                    {template.summary}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{template.summary}</p>
                 </div>
               )}
 
@@ -536,7 +526,7 @@ export function ContractViewer({
                 <div className="flex flex-wrap items-center gap-1 p-2 bg-white/5 rounded-xl border border-white/10">
                   <ToolbarButton
                     onClick={() => editor.chain().focus().toggleBold().run()}
-                    isActive={editor.isActive("bold")}
+                    isActive={editor.isActive('bold')}
                     title="Bold"
                   >
                     <Bold className="h-4 w-4" />
@@ -544,7 +534,7 @@ export function ContractViewer({
 
                   <ToolbarButton
                     onClick={() => editor.chain().focus().toggleItalic().run()}
-                    isActive={editor.isActive("italic")}
+                    isActive={editor.isActive('italic')}
                     title="Italic"
                   >
                     <Italic className="h-4 w-4" />
@@ -554,7 +544,7 @@ export function ContractViewer({
 
                   <ToolbarButton
                     onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                    isActive={editor.isActive("heading", { level: 2 })}
+                    isActive={editor.isActive('heading', { level: 2 })}
                     title="Heading 2"
                   >
                     <Heading2 className="h-4 w-4" />
@@ -562,7 +552,7 @@ export function ContractViewer({
 
                   <ToolbarButton
                     onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                    isActive={editor.isActive("heading", { level: 3 })}
+                    isActive={editor.isActive('heading', { level: 3 })}
                     title="Heading 3"
                   >
                     <Heading3 className="h-4 w-4" />
@@ -572,7 +562,7 @@ export function ContractViewer({
 
                   <ToolbarButton
                     onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    isActive={editor.isActive("bulletList")}
+                    isActive={editor.isActive('bulletList')}
                     title="Bullet List"
                   >
                     <List className="h-4 w-4" />
@@ -580,7 +570,7 @@ export function ContractViewer({
 
                   <ToolbarButton
                     onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                    isActive={editor.isActive("orderedList")}
+                    isActive={editor.isActive('orderedList')}
                     title="Numbered List"
                   >
                     <ListOrdered className="h-4 w-4" />
@@ -588,17 +578,11 @@ export function ContractViewer({
 
                   <div className="flex-1" />
 
-                  <ToolbarButton
-                    onClick={() => editor.chain().focus().undo().run()}
-                    title="Undo"
-                  >
+                  <ToolbarButton onClick={() => editor.chain().focus().undo().run()} title="Undo">
                     <Undo className="h-4 w-4" />
                   </ToolbarButton>
 
-                  <ToolbarButton
-                    onClick={() => editor.chain().focus().redo().run()}
-                    title="Redo"
-                  >
+                  <ToolbarButton onClick={() => editor.chain().focus().redo().run()} title="Redo">
                     <Redo className="h-4 w-4" />
                   </ToolbarButton>
                 </div>
@@ -607,10 +591,10 @@ export function ContractViewer({
               {/* Contract content - TipTap editor */}
               <div
                 className={cn(
-                  "rounded-xl transition-colors",
+                  'rounded-xl transition-colors',
                   isEditing
-                    ? "bg-white/5 border border-white/10 focus-within:border-elec-yellow/30"
-                    : ""
+                    ? 'bg-white/5 border border-white/10 focus-within:border-elec-yellow/30'
+                    : ''
                 )}
               >
                 {editor ? (
@@ -638,7 +622,7 @@ export function ContractViewer({
                       <div>
                         <span className="text-muted-foreground">Created:</span>
                         <p className="font-medium">
-                          {new Date(userContract.adopted_at).toLocaleDateString("en-GB")}
+                          {new Date(userContract.adopted_at).toLocaleDateString('en-GB')}
                         </p>
                       </div>
                     )}
@@ -646,7 +630,7 @@ export function ContractViewer({
                       <div>
                         <span className="text-muted-foreground">Start Date:</span>
                         <p className="font-medium">
-                          {new Date(userContract.start_date).toLocaleDateString("en-GB")}
+                          {new Date(userContract.start_date).toLocaleDateString('en-GB')}
                         </p>
                       </div>
                     )}

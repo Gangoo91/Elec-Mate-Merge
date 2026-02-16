@@ -6,12 +6,7 @@
  * Simplified: 85vh, iframe immediately visible, drag handle overlays video.
  */
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import { Bookmark, Clock, ExternalLink, ChevronDown } from 'lucide-react';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
 import { categoryLabels } from '@/data/apprentice/curatedVideos';
@@ -41,11 +36,12 @@ export function VideoPlayerSheet({
 }: VideoPlayerSheetProps) {
   if (!video) return null;
 
-  const levelColour = video.level === 'beginner'
-    ? 'text-green-400 bg-green-400/10 border-green-400/20'
-    : video.level === 'intermediate'
-      ? 'text-amber-400 bg-amber-400/10 border-amber-400/20'
-      : 'text-red-400 bg-red-400/10 border-red-400/20';
+  const levelColour =
+    video.level === 'beginner'
+      ? 'text-green-400 bg-green-400/10 border-green-400/20'
+      : video.level === 'intermediate'
+        ? 'text-amber-400 bg-amber-400/10 border-amber-400/20'
+        : 'text-red-400 bg-red-400/10 border-red-400/20';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -91,7 +87,9 @@ export function VideoPlayerSheet({
                   <Clock className="h-3.5 w-3.5" />
                   {video.duration}
                 </span>
-                <span className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${levelColour}`}>
+                <span
+                  className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${levelColour}`}
+                >
                   {video.level.charAt(0).toUpperCase() + video.level.slice(1)}
                 </span>
                 <span className="px-2 py-0.5 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-[11px] font-medium">
@@ -109,9 +107,7 @@ export function VideoPlayerSheet({
                   }`}
                 >
                   <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-elec-yellow' : ''}`} />
-                  <span className="text-sm font-medium">
-                    {isBookmarked ? 'Saved' : 'Save'}
-                  </span>
+                  <span className="text-sm font-medium">{isBookmarked ? 'Saved' : 'Save'}</span>
                 </button>
                 <a
                   href={`https://www.youtube.com/watch?v=${video.id}`}
@@ -125,16 +121,14 @@ export function VideoPlayerSheet({
               </div>
 
               {video.description && (
-                <p className="text-[13px] text-white/45 leading-relaxed">
-                  {video.description}
-                </p>
+                <p className="text-[13px] text-white/45 leading-relaxed">{video.description}</p>
               )}
 
               {relatedVideos.length > 0 && (
                 <div className="pt-4 border-t border-white/[0.06]">
                   <h4 className="text-sm font-semibold text-white mb-3">More like this</h4>
                   <div className="space-y-2">
-                    {relatedVideos.map(rv => (
+                    {relatedVideos.map((rv) => (
                       <RelatedVideoRow
                         key={rv.id}
                         video={rv}

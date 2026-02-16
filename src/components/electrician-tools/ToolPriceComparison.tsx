@@ -1,11 +1,11 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Scale, Search, ExternalLink, X, Star, Zap, Wrench } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { ToolItem } from "@/hooks/useToolsData";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Scale, Search, ExternalLink, X, Star, Zap, Wrench } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { ToolItem } from '@/hooks/useToolsData';
 
 interface ToolPriceComparisonProps {
   initialQuery?: string;
@@ -14,9 +14,9 @@ interface ToolPriceComparisonProps {
 }
 
 const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
-  initialQuery = "",
+  initialQuery = '',
   selectedItems = [],
-  onClearSelection
+  onClearSelection,
 }) => {
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const isMobile = useIsMobile();
@@ -28,11 +28,15 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
     // Extract specifications from tool name and description
     const specs: Record<string, string> = {};
     const name = tool.name.toLowerCase();
-    
+
     if (name.includes('multimeter')) {
       specs['Type'] = 'Digital Multimeter';
       specs['True RMS'] = name.includes('true rms') ? 'Yes' : 'Standard';
-      specs['CAT Rating'] = name.includes('cat iii') ? 'CAT III' : name.includes('cat iv') ? 'CAT IV' : 'CAT II';
+      specs['CAT Rating'] = name.includes('cat iii')
+        ? 'CAT III'
+        : name.includes('cat iv')
+          ? 'CAT IV'
+          : 'CAT II';
     } else if (name.includes('tester')) {
       specs['Type'] = 'Multifunction Tester';
       specs['Standards'] = '17th/18th Edition';
@@ -42,22 +46,22 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
       specs['Test Voltages'] = '250V/500V/1000V';
       specs['IP Rating'] = name.includes('ip54') ? 'IP54' : 'IP40';
     }
-    
+
     return specs;
   };
 
   const comparisonData = useMemo(() => {
     if (comparisonTools.length === 0) return null;
-    
+
     // Get all unique specifications
     const allSpecs = new Set<string>();
-    comparisonTools.forEach(tool => {
-      Object.keys(getToolSpecs(tool)).forEach(spec => allSpecs.add(spec));
+    comparisonTools.forEach((tool) => {
+      Object.keys(getToolSpecs(tool)).forEach((spec) => allSpecs.add(spec));
     });
-    
+
     return {
       tools: comparisonTools,
-      specifications: Array.from(allSpecs)
+      specifications: Array.from(allSpecs),
     };
   }, [comparisonTools]);
 
@@ -67,13 +71,13 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
 
   const findBestValue = () => {
     if (comparisonTools.length === 0) return null;
-    
-    const toolsWithValue = comparisonTools.map(tool => ({
+
+    const toolsWithValue = comparisonTools.map((tool) => ({
       ...tool,
-      priceValue: getPriceValue(tool.price)
+      priceValue: getPriceValue(tool.price),
     }));
-    
-    return toolsWithValue.reduce((best, current) => 
+
+    return toolsWithValue.reduce((best, current) =>
       current.priceValue < best.priceValue ? current : best
     );
   };
@@ -87,7 +91,8 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
           <Scale className="h-12 w-12 text-elec-yellow mx-auto" />
           <h3 className="text-xl font-semibold">Compare Tools</h3>
           <p className="text-muted-foreground">
-            Select tools from the browse section to compare features, prices, and specifications side by side.
+            Select tools from the browse section to compare features, prices, and specifications
+            side by side.
           </p>
           <div className="flex items-center justify-center gap-2 max-w-md mx-auto">
             <Input
@@ -149,21 +154,16 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
         {comparisonData.tools.map((tool, index) => (
           <Card key={tool.id} className="border-elec-yellow/20 bg-elec-gray relative">
             {tool.id === bestValue?.id && (
-              <Badge 
-                variant="gold" 
-                className="absolute -top-2 left-4 z-10"
-              >
+              <Badge variant="gold" className="absolute -top-2 left-4 z-10">
                 Best Value
               </Badge>
             )}
-            
+
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between gap-2">
-                <CardTitle className="text-base line-clamp-2 flex-1">
-                  {tool.name}
-                </CardTitle>
+                <CardTitle className="text-base line-clamp-2 flex-1">{tool.name}</CardTitle>
                 {tool.stockStatus && (
-                  <Badge 
+                  <Badge
                     variant={tool.stockStatus === 'In Stock' ? 'success' : 'warning'}
                     className="text-xs"
                   >
@@ -175,25 +175,23 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
                 {tool.supplier}
               </Badge>
             </CardHeader>
-            
+
             <CardContent className="space-y-4">
               {/* Image */}
               <div className="aspect-square overflow-hidden rounded-md bg-muted">
-                <img 
-                  src={tool.image || "/placeholder.svg"} 
+                <img
+                  src={tool.image || '/placeholder.svg'}
                   alt={tool.name}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
+                    (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
                   }}
                 />
               </div>
-              
+
               {/* Price */}
               <div className="text-center">
-                <div className="text-2xl font-bold text-elec-yellow mb-1">
-                  {tool.price}
-                </div>
+                <div className="text-2xl font-bold text-elec-yellow mb-1">{tool.price}</div>
                 {tool.reviews && (
                   <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
                     <Star className="h-3 w-3 fill-current text-yellow-500" />
@@ -201,14 +199,14 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
                   </div>
                 )}
               </div>
-              
+
               {/* Specifications */}
               <div className="space-y-2">
                 <h4 className="font-medium text-sm flex items-center gap-1">
                   <Wrench className="h-3 w-3" />
                   Specifications
                 </h4>
-                {comparisonData.specifications.map(spec => {
+                {comparisonData.specifications.map((spec) => {
                   const toolSpecs = getToolSpecs(tool);
                   const value = toolSpecs[spec];
                   return (
@@ -221,7 +219,7 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
                   );
                 })}
               </div>
-              
+
               {/* Key Features */}
               {tool.highlights && tool.highlights.length > 0 && (
                 <div className="space-y-2">
@@ -235,14 +233,10 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
                   </ul>
                 </div>
               )}
-              
+
               {/* Action Button */}
               <Button variant="gold" size="sm" className="w-full" asChild>
-                <a 
-                  href={tool.productUrl || "#"} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
+                <a href={tool.productUrl || '#'} target="_blank" rel="noopener noreferrer">
                   View Product
                   <ExternalLink className="h-3 w-3 ml-2" />
                 </a>
@@ -267,7 +261,7 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
                 <thead>
                   <tr className="border-b border-elec-yellow/20">
                     <th className="text-left p-2">Feature</th>
-                    {comparisonData.tools.map(tool => (
+                    {comparisonData.tools.map((tool) => (
                       <th key={tool.id} className="text-left p-2 min-w-[200px]">
                         {tool.name.split(' ').slice(0, 3).join(' ')}
                       </th>
@@ -277,7 +271,7 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
                 <tbody>
                   <tr className="border-b border-elec-yellow/10">
                     <td className="p-2 font-medium">Price</td>
-                    {comparisonData.tools.map(tool => (
+                    {comparisonData.tools.map((tool) => (
                       <td key={tool.id} className="p-2 text-elec-yellow font-semibold">
                         {tool.price}
                       </td>
@@ -285,14 +279,16 @@ const ToolPriceComparison: React.FC<ToolPriceComparisonProps> = ({
                   </tr>
                   <tr className="border-b border-elec-yellow/10">
                     <td className="p-2 font-medium">Supplier</td>
-                    {comparisonData.tools.map(tool => (
-                      <td key={tool.id} className="p-2">{tool.supplier}</td>
+                    {comparisonData.tools.map((tool) => (
+                      <td key={tool.id} className="p-2">
+                        {tool.supplier}
+                      </td>
                     ))}
                   </tr>
-                  {comparisonData.specifications.map(spec => (
+                  {comparisonData.specifications.map((spec) => (
                     <tr key={spec} className="border-b border-elec-yellow/10">
                       <td className="p-2 font-medium">{spec}</td>
-                      {comparisonData.tools.map(tool => {
+                      {comparisonData.tools.map((tool) => {
                         const toolSpecs = getToolSpecs(tool);
                         const value = toolSpecs[spec];
                         return (

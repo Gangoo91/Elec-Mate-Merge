@@ -1,4 +1,3 @@
-
 // BS 7671:2018+A2:2022 Appendix 4, Table 4D5 - Reference Method C (clipped direct)
 // Current carrying capacities for single-phase 70°C thermoplastic insulated (PVC) cables
 // Note: Large sizes (150mm²+) typically use XLPE - capacities shown are indicative
@@ -32,7 +31,7 @@ export const referenceMethodOptions = [
   { value: 'D', label: 'D' },
   { value: 'E', label: 'E' },
   { value: 'F', label: 'F' },
-  { value: 'G', label: 'G' }
+  { value: 'G', label: 'G' },
 ];
 
 export const bondingConductorSizes = [
@@ -62,4 +61,3 @@ export const meterTailsSizes = [
   { value: '240mm', label: '240mm²' },
   { value: '300mm', label: '300mm²' },
 ];
-

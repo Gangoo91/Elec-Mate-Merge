@@ -3,11 +3,11 @@ import { CheckCircle2 } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection4_2 = () => {
   const outcomes = [
-    "Describe the principles of self-contained and central battery emergency lighting systems",
-    "Compare the advantages and disadvantages of each system type",
-    "Identify the types of buildings best suited to each system architecture",
-    "Explain the installation and maintenance implications of both system types",
-    "Ensure system choice aligns with BS 5266-1 requirements and client needs"
+    'Describe the principles of self-contained and central battery emergency lighting systems',
+    'Compare the advantages and disadvantages of each system type',
+    'Identify the types of buildings best suited to each system architecture',
+    'Explain the installation and maintenance implications of both system types',
+    'Ensure system choice aligns with BS 5266-1 requirements and client needs',
   ];
 
   return (

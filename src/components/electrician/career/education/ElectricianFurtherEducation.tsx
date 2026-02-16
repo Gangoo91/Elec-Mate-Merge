@@ -5,7 +5,7 @@
  * Features: swipeable cards, pull-to-refresh, bookmarks, programme comparison.
  */
 
-import { PremiumEducationHub } from "./premium";
+import { PremiumEducationHub } from './premium';
 
 const ElectricianFurtherEducation = () => {
   return <PremiumEducationHub />;

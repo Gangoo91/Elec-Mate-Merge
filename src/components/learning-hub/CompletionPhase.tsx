@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -34,7 +33,7 @@ const CompletionPhase = ({
   allTestsValid,
   canComplete,
   certificateGenerated,
-  onGenerateCertificate
+  onGenerateCertificate,
 }: CompletionPhaseProps) => {
   return (
     <div className="space-y-6">
@@ -59,11 +58,15 @@ const CompletionPhase = ({
               <CardContent className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-white">Steps Completed:</span>
-                  <span className="text-elec-yellow">{completedSteps}/{totalSteps}</span>
+                  <span className="text-elec-yellow">
+                    {completedSteps}/{totalSteps}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white">Critical Steps:</span>
-                  <span className="text-green-400">{criticalStepsCompleted}/{totalCriticalSteps}</span>
+                  <span className="text-green-400">
+                    {criticalStepsCompleted}/{totalCriticalSteps}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white">Test Results:</span>
@@ -104,7 +107,7 @@ const CompletionPhase = ({
           </div>
 
           <div className="flex gap-4">
-            <Button 
+            <Button
               onClick={onGenerateCertificate}
               className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
               disabled={!canComplete || certificateGenerated}
@@ -113,7 +116,7 @@ const CompletionPhase = ({
               {certificateGenerated ? 'Certificate Generated' : 'Generate Certificate'}
             </Button>
             {certificateGenerated && (
-              <Button 
+              <Button
                 variant="outline"
                 className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
               >
@@ -130,7 +133,8 @@ const CompletionPhase = ({
                 <span className="font-medium text-green-400">Procedure Complete</span>
               </div>
               <p className="text-white text-sm">
-                Safe isolation procedure completed successfully. Certificate generated and ready for download.
+                Safe isolation procedure completed successfully. Certificate generated and ready for
+                download.
               </p>
             </div>
           )}

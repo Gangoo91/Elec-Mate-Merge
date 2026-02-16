@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, RefreshCw, Mail } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { AlertTriangle, RefreshCw, Mail } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface ErrorAnalysisCardProps {
   onRetry: () => void;
@@ -10,13 +10,12 @@ interface ErrorAnalysisCardProps {
 }
 
 const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardProps) => {
-  
   const handleContactSupport = () => {
-    navigator.clipboard.writeText("support@example.com");
+    navigator.clipboard.writeText('support@example.com');
     toast({
-      title: "Email copied",
-      description: "Support email copied to clipboard",
-      variant: "success"
+      title: 'Email copied',
+      description: 'Support email copied to clipboard',
+      variant: 'success',
     });
   };
 
@@ -28,7 +27,8 @@ const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardPr
             Analysis Needs Your Help
           </CardTitle>
           <p className="text-sm sm:text-base text-amber-700 dark:text-amber-300 leading-relaxed">
-            The AI couldn't process this image properly. This usually happens with complex installations or unclear photos.
+            The AI couldn't process this image properly. This usually happens with complex
+            installations or unclear photos.
           </p>
         </div>
       </CardHeader>
@@ -78,14 +78,14 @@ const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardPr
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
-          <Button 
-            onClick={onRetry} 
+          <Button
+            onClick={onRetry}
             className="bg-amber-600 hover:bg-amber-700 text-foreground min-h-[48px] text-base"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             Try Again with Quick Mode
           </Button>
-          <Button 
+          <Button
             onClick={handleContactSupport}
             variant="outline"
             className="border-amber-300 dark:border-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30 min-h-[48px] text-base"
@@ -97,7 +97,10 @@ const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardPr
 
         {/* Technical Details Badge */}
         <div className="pt-2">
-          <Badge variant="outline" className="text-xs text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-700">
+          <Badge
+            variant="outline"
+            className="text-xs text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-700"
+          >
             Error Code: PARSE_FAILED
           </Badge>
         </div>

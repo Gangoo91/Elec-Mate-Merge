@@ -1,110 +1,109 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Video, FileText, Globe, Download, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { BookOpen, Video, FileText, Globe, Download, ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const ResourcesTab = () => {
   const resourceCategories = [
     {
-      title: "Essential Textbooks",
+      title: 'Essential Textbooks',
       icon: BookOpen,
-      description: "Core reference materials for electrical training",
+      description: 'Core reference materials for electrical training',
       resources: [
         {
-          name: "BS 7671:2018 (18th Edition IET Wiring Regulations)",
-          description: "The definitive guide to electrical installation standards in the UK",
-          type: "Official Standard",
-          link: "https://electrical.theiet.org/wiring-regulations/"
+          name: 'BS 7671:2018 (18th Edition IET Wiring Regulations)',
+          description: 'The definitive guide to electrical installation standards in the UK',
+          type: 'Official Standard',
+          link: 'https://electrical.theiet.org/wiring-regulations/',
         },
         {
-          name: "Guidance Note 3: Inspection & Testing",
-          description: "Comprehensive guide to electrical testing procedures",
-          type: "IET Publication",
-          link: "https://electrical.theiet.org/guidance-notes/"
+          name: 'Guidance Note 3: Inspection & Testing',
+          description: 'Comprehensive guide to electrical testing procedures',
+          type: 'IET Publication',
+          link: 'https://electrical.theiet.org/guidance-notes/',
         },
         {
-          name: "On-Site Guide (BS 7671:2018)",
-          description: "Simplified guidance for electrical installations",
-          type: "IET Publication",
-          link: "https://electrical.theiet.org/on-site-guide/"
-        }
-      ]
+          name: 'On-Site Guide (BS 7671:2018)',
+          description: 'Simplified guidance for electrical installations',
+          type: 'IET Publication',
+          link: 'https://electrical.theiet.org/on-site-guide/',
+        },
+      ],
     },
     {
-      title: "Online Learning Platforms",
+      title: 'Online Learning Platforms',
       icon: Globe,
-      description: "Digital resources and interactive learning",
+      description: 'Digital resources and interactive learning',
       resources: [
         {
-          name: "City & Guilds SmartScreen",
-          description: "Official digital learning resources for City & Guilds qualifications",
-          type: "Learning Platform",
-          link: "https://www.cityandguilds.com/smartscreen"
+          name: 'City & Guilds SmartScreen',
+          description: 'Official digital learning resources for City & Guilds qualifications',
+          type: 'Learning Platform',
+          link: 'https://www.cityandguilds.com/smartscreen',
         },
         {
-          name: "EAL Digital Learning",
-          description: "Interactive modules for EAL electrical qualifications",
-          type: "Learning Platform",
-          link: "https://www.eal.org.uk/"
+          name: 'EAL Digital Learning',
+          description: 'Interactive modules for EAL electrical qualifications',
+          type: 'Learning Platform',
+          link: 'https://www.eal.org.uk/',
         },
         {
-          name: "JTL Learning Portal",
-          description: "Comprehensive apprenticeship learning resources",
-          type: "Training Provider",
-          link: "https://www.jtltraining.com/"
-        }
-      ]
+          name: 'JTL Learning Portal',
+          description: 'Comprehensive apprenticeship learning resources',
+          type: 'Training Provider',
+          link: 'https://www.jtltraining.com/',
+        },
+      ],
     },
     {
-      title: "Video Learning",
+      title: 'Video Learning',
       icon: Video,
-      description: "Visual learning resources and demonstrations",
+      description: 'Visual learning resources and demonstrations',
       resources: [
         {
-          name: "IET TV",
-          description: "Professional electrical engineering videos and webinars",
-          type: "Video Library",
-          link: "https://tv.theiet.org/"
+          name: 'IET TV',
+          description: 'Professional electrical engineering videos and webinars',
+          type: 'Video Library',
+          link: 'https://tv.theiet.org/',
         },
         {
-          name: "Electrical Installation Work YouTube Channel",
-          description: "Practical demonstrations and explanations",
-          type: "Free Video Series",
-          link: "https://www.youtube.com/"
+          name: 'eFIXX — Electrical Standards Explained',
+          description: 'UK-focused electrical installation videos, regulation updates, and testing demos',
+          type: 'Free Video Series',
+          link: 'https://www.youtube.com/@eFIXX',
         },
         {
-          name: "City & Guilds Skills Bank",
-          description: "Practical skills demonstrations for electrical work",
-          type: "Video Resource",
-          link: "https://www.cityandguilds.com/"
-        }
-      ]
+          name: 'City & Guilds SmartScreen Videos',
+          description: 'Practical skills demonstrations for electrical qualifications',
+          type: 'Video Resource',
+          link: 'https://www.cityandguilds.com/smartscreen',
+        },
+      ],
     },
     {
-      title: "Reference Materials",
+      title: 'Reference Materials',
       icon: FileText,
-      description: "Quick reference guides and charts",
+      description: 'Quick reference guides and charts',
       resources: [
         {
-          name: "Cable Capacity Charts",
-          description: "Current carrying capacity tables for various cable types",
-          type: "Reference Chart",
-          downloadable: true
+          name: 'Cable Capacity Charts',
+          description: 'Current carrying capacity tables for various cable types',
+          type: 'Reference Chart',
+          downloadable: true,
         },
         {
-          name: "Electrical Symbols Guide",
-          description: "Comprehensive guide to electrical schematic symbols",
-          type: "Reference Guide",
-          downloadable: true
+          name: 'Electrical Symbols Guide',
+          description: 'Comprehensive guide to electrical schematic symbols',
+          type: 'Reference Guide',
+          downloadable: true,
         },
         {
-          name: "Fault Finding Flowcharts",
-          description: "Step-by-step troubleshooting procedures",
-          type: "Flowchart",
-          downloadable: true
-        }
-      ]
-    }
+          name: 'Fault Finding Flowcharts',
+          description: 'Step-by-step troubleshooting procedures',
+          type: 'Flowchart',
+          downloadable: true,
+        },
+      ],
+    },
   ];
 
   return (
@@ -118,8 +117,9 @@ const ResourcesTab = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            A curated collection of essential resources for electrical apprentices and students. 
-            These materials cover everything from basic principles to advanced installation techniques.
+            A curated collection of essential resources for electrical apprentices and students.
+            These materials cover everything from basic principles to advanced installation
+            techniques.
           </p>
         </CardContent>
       </Card>
@@ -141,10 +141,13 @@ const ResourcesTab = () => {
               <CardContent>
                 <div className="space-y-4">
                   {category.resources.map((resource, resourceIndex) => (
-                    <div key={resourceIndex} className="border border-muted/30 rounded-lg p-4 bg-background/30">
+                    <div
+                      key={resourceIndex}
+                      className="border border-muted/30 rounded-lg p-4 bg-background/30"
+                    >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <h4 className="font-medium text-foreground mb-1">{resource.name}</h4>
+                          <h4 className="font-medium text-white mb-1">{resource.name}</h4>
                           <p className="text-sm text-white mb-2">{resource.description}</p>
                           <span className="inline-block px-2 py-1 bg-muted/50 rounded text-xs text-white">
                             {resource.type}
@@ -152,12 +155,21 @@ const ResourcesTab = () => {
                         </div>
                         <div className="ml-4 flex gap-2">
                           {resource.downloadable ? (
-                            <Button size="sm" variant="outline" className="border-green-500/30 hover:bg-green-500/10">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-green-500/30 hover:bg-green-500/10"
+                            >
                               <Download className="h-3 w-3 mr-1" />
                               Download
                             </Button>
                           ) : (
-                            <Button size="sm" variant="outline" className="border-blue-500/30 hover:bg-blue-500/10" asChild>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-blue-500/30 hover:bg-blue-500/10"
+                              asChild
+                            >
                               <a href={resource.link} target="_blank" rel="noopener noreferrer">
                                 <ExternalLink className="h-3 w-3 mr-1" />
                                 Visit
@@ -182,7 +194,7 @@ const ResourcesTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h4 className="font-medium mb-2">Effective Resource Management</h4>
+              <h4 className="font-medium text-white mb-2">Effective Resource Management</h4>
               <ul className="text-sm text-white space-y-1">
                 <li>• Create a personal resource library with bookmarks</li>
                 <li>• Download key reference materials for offline access</li>
@@ -191,7 +203,7 @@ const ResourcesTab = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-2">Quality Assurance</h4>
+              <h4 className="font-medium text-white mb-2">Quality Assurance</h4>
               <ul className="text-sm text-white space-y-1">
                 <li>• Always use current edition materials (especially BS 7671)</li>
                 <li>• Verify information from multiple sources</li>

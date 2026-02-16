@@ -1,43 +1,54 @@
-
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, CheckSquare, AlertTriangle, BookOpen, Calculator, Timer, ClipboardCheck } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { Checkbox } from "@/components/ui/checkbox";
-import { enhancedBS7671Steps } from "@/data/bs7671-steps/enhancedStepData";
-import { safeIsolationEnhancedData } from "@/data/bs7671-steps/safeIsolationEnhancedData";
-import TestingInstructions from "@/components/apprentice/bs7671/TestingInstructions";
-import TroubleshootingGuide from "@/components/apprentice/bs7671/TroubleshootingGuide";
-import SystemTypeSelector from "@/components/apprentice/bs7671/SystemTypeSelector";
-import DiagramDisplay from "@/components/apprentice/bs7671/DiagramDisplay";
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckSquare,
+  AlertTriangle,
+  BookOpen,
+  Calculator,
+  Timer,
+  ClipboardCheck,
+} from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Checkbox } from '@/components/ui/checkbox';
+import { enhancedBS7671Steps } from '@/data/bs7671-steps/enhancedStepData';
+import { safeIsolationEnhancedData } from '@/data/bs7671-steps/safeIsolationEnhancedData';
+import TestingInstructions from '@/components/apprentice/bs7671/TestingInstructions';
+import TroubleshootingGuide from '@/components/apprentice/bs7671/TroubleshootingGuide';
+import SystemTypeSelector from '@/components/apprentice/bs7671/SystemTypeSelector';
+import DiagramDisplay from '@/components/apprentice/bs7671/DiagramDisplay';
 
 const BS7671StepDetail = () => {
   const { stepId } = useParams<{ stepId: string }>();
-  const currentStep = parseInt(stepId || "1");
+  const currentStep = parseInt(stepId || '1');
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [stepCompleted, setStepCompleted] = useState(false);
-  const [systemType, setSystemType] = useState<string>("");
-  const [installationType, setInstallationType] = useState<string>("");
+  const [systemType, setSystemType] = useState<string>('');
+  const [installationType, setInstallationType] = useState<string>('');
 
   // Get step data from enhanced steps or safe isolation data
-  const stepData = enhancedBS7671Steps.find(step => step.id === currentStep);
+  const stepData = enhancedBS7671Steps.find((step) => step.id === currentStep);
   const isSafeIsolationStep = currentStep === 4;
-  
+
   // For safe isolation step, we need to adapt the data structure
-  const adaptedStepData = isSafeIsolationStep ? {
-    ...stepData,
-    checklist: safeIsolationEnhancedData.procedureSteps.flatMap(step => step.actions),
-    safetyNotes: safeIsolationEnhancedData.safetyNotes,
-    regulations: [
-      "BS 7671 Regulation 537.2.1.1 - Isolation",
-      "HSE Guidance HSG85 - Electricity at work: Safe working practices", 
-      "HSE Guidance GS38 - Electrical test equipment for use on low voltage electrical systems"
-    ],
-    nextSteps: "With the installation safely isolated, begin continuity testing of protective conductors"
-  } : stepData;
+  const adaptedStepData = isSafeIsolationStep
+    ? {
+        ...stepData,
+        checklist: safeIsolationEnhancedData.procedureSteps.flatMap((step) => step.actions),
+        safetyNotes: safeIsolationEnhancedData.safetyNotes,
+        regulations: [
+          'BS 7671 Regulation 537.2.1.1 - Isolation',
+          'HSE Guidance HSG85 - Electricity at work: Safe working practices',
+          'HSE Guidance GS38 - Electrical test equipment for use on low voltage electrical systems',
+        ],
+        nextSteps:
+          'With the installation safely isolated, begin continuity testing of protective conductors',
+      }
+    : stepData;
 
   const totalItems = adaptedStepData?.checklist?.length || 0;
   const completionPercentage = totalItems > 0 ? (checkedItems.size / totalItems) * 100 : 0;
@@ -56,7 +67,9 @@ const BS7671StepDetail = () => {
     if (completionPercentage === 100) {
       setStepCompleted(true);
       // In a real app, this would save to localStorage or database
-      console.log(`Step ${currentStep} completed with system: ${systemType}, installation: ${installationType}`);
+      console.log(
+        `Step ${currentStep} completed with system: ${systemType}, installation: ${installationType}`
+      );
     }
   };
 
@@ -80,15 +93,20 @@ const BS7671StepDetail = () => {
         </Card>
       </div>
     );
-  };
+  }
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Safety Critical": return "text-red-400 bg-card border-red-500/30";
-      case "Electrical Testing": return "text-blue-400 bg-blue-500/10 border-blue-500/30";
-      case "Visual Inspection": return "text-green-400 bg-card border-green-500/30";
-      case "Documentation": return "text-purple-400 bg-purple-500/10 border-purple-500/30";
-      default: return "text-elec-yellow bg-elec-yellow/10 border-elec-yellow/30";
+      case 'Safety Critical':
+        return 'text-red-400 bg-card border-red-500/30';
+      case 'Electrical Testing':
+        return 'text-blue-400 bg-blue-500/10 border-blue-500/30';
+      case 'Visual Inspection':
+        return 'text-green-400 bg-card border-green-500/30';
+      case 'Documentation':
+        return 'text-purple-400 bg-purple-500/10 border-purple-500/30';
+      default:
+        return 'text-elec-yellow bg-elec-yellow/10 border-elec-yellow/30';
     }
   };
 
@@ -101,7 +119,9 @@ const BS7671StepDetail = () => {
             <h1 className="text-2xl font-bold tracking-tight">
               Step {currentStep}: {adaptedStepData.title}
             </h1>
-            <div className={`px-2 py-1 rounded text-xs border ${getCategoryColor(adaptedStepData.category)}`}>
+            <div
+              className={`px-2 py-1 rounded text-xs border ${getCategoryColor(adaptedStepData.category)}`}
+            >
               {adaptedStepData.category}
             </div>
           </div>
@@ -115,7 +135,7 @@ const BS7671StepDetail = () => {
       </div>
 
       {/* System Type Selection - Show for first step or testing steps */}
-      {(currentStep === 1 || adaptedStepData.category === "Electrical Testing") && (
+      {(currentStep === 1 || adaptedStepData.category === 'Electrical Testing') && (
         <SystemTypeSelector onSelectionChange={handleSystemSelection} />
       )}
 
@@ -128,7 +148,9 @@ const BS7671StepDetail = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span>Checklist Items</span>
-              <span>{checkedItems.size} of {totalItems}</span>
+              <span>
+                {checkedItems.size} of {totalItems}
+              </span>
             </div>
             <Progress value={completionPercentage} className="h-2" />
           </div>
@@ -136,33 +158,35 @@ const BS7671StepDetail = () => {
       </Card>
 
       {/* Diagram Display - New visual guide section */}
-      <DiagramDisplay 
-        stepData={adaptedStepData} 
-        systemType={systemType} 
-        installationType={installationType} 
+      <DiagramDisplay
+        stepData={adaptedStepData}
+        systemType={systemType}
+        installationType={installationType}
       />
 
       {/* Safety Notes */}
-      {adaptedStepData.safetyNotes && Array.isArray(adaptedStepData.safetyNotes) && adaptedStepData.safetyNotes.length > 0 && (
-        <Card className="border-red-500/20 bg-red-900/10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-red-400">
-              <AlertTriangle className="h-5 w-5" />
-              Safety Notes
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {adaptedStepData.safetyNotes.map((note, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-red-100">
-                  <span className="text-red-400 mt-1">⚠️</span>
-                  {note}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
+      {adaptedStepData.safetyNotes &&
+        Array.isArray(adaptedStepData.safetyNotes) &&
+        adaptedStepData.safetyNotes.length > 0 && (
+          <Card className="border-red-500/20 bg-red-900/10">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-red-400">
+                <AlertTriangle className="h-5 w-5" />
+                Safety Notes
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {adaptedStepData.safetyNotes.map((note, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm text-red-100">
+                    <span className="text-red-400 mt-1">⚠️</span>
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
 
       {/* Testing Instructions - MFT Settings, Connections, Expected Results */}
       <TestingInstructions stepData={adaptedStepData} />
@@ -173,12 +197,15 @@ const BS7671StepDetail = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-indigo-300">
               <BookOpen className="h-5 w-5" />
-              {installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation Guidance
+              {installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation
+              Guidance
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {adaptedStepData.installationTypes[installationType as keyof typeof adaptedStepData.installationTypes]?.map((item, index) => (
+              {adaptedStepData.installationTypes[
+                installationType as keyof typeof adaptedStepData.installationTypes
+              ]?.map((item, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-indigo-100">
                   <span className="text-indigo-400 mt-1">•</span>
                   {item}
@@ -199,24 +226,25 @@ const BS7671StepDetail = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {adaptedStepData.checklist && adaptedStepData.checklist.map((item, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <Checkbox
-                  id={`item-${index}`}
-                  checked={checkedItems.has(item)}
-                  onCheckedChange={(checked) => handleChecklistChange(item, checked as boolean)}
-                  className="mt-1"
-                />
-                <label 
-                  htmlFor={`item-${index}`}
-                  className={`text-sm cursor-pointer leading-relaxed ${
-                    checkedItems.has(item) ? 'text-green-400 line-through' : ''
-                  }`}
-                >
-                  {item}
-                </label>
-              </div>
-            ))}
+            {adaptedStepData.checklist &&
+              adaptedStepData.checklist.map((item, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <Checkbox
+                    id={`item-${index}`}
+                    checked={checkedItems.has(item)}
+                    onCheckedChange={(checked) => handleChecklistChange(item, checked as boolean)}
+                    className="mt-1"
+                  />
+                  <label
+                    htmlFor={`item-${index}`}
+                    className={`text-sm cursor-pointer leading-relaxed ${
+                      checkedItems.has(item) ? 'text-green-400 line-through' : ''
+                    }`}
+                  >
+                    {item}
+                  </label>
+                </div>
+              ))}
           </div>
         </CardContent>
       </Card>
@@ -234,12 +262,13 @@ const BS7671StepDetail = () => {
         </CardHeader>
         <CardContent>
           <ul className="space-y-2">
-            {adaptedStepData.regulations && adaptedStepData.regulations.map((reg, index) => (
-              <li key={index} className="text-sm text-blue-100 flex items-start gap-2">
-                <span className="text-blue-400 mt-1">📋</span>
-                {reg}
-              </li>
-            ))}
+            {adaptedStepData.regulations &&
+              adaptedStepData.regulations.map((reg, index) => (
+                <li key={index} className="text-sm text-blue-100 flex items-start gap-2">
+                  <span className="text-blue-400 mt-1">📋</span>
+                  {reg}
+                </li>
+              ))}
           </ul>
         </CardContent>
       </Card>
@@ -305,7 +334,7 @@ const BS7671StepDetail = () => {
             </Link>
           )}
         </div>
-        
+
         <div className="flex gap-2">
           {completionPercentage === 100 && !stepCompleted && (
             <Button onClick={markStepComplete} className="bg-green-600 hover:bg-green-700">
@@ -313,7 +342,7 @@ const BS7671StepDetail = () => {
               Mark Complete
             </Button>
           )}
-          
+
           {currentStep < enhancedBS7671Steps.length && (
             <Link to={`/apprentice/on-job-tools/bs7671-runthrough/step/${currentStep + 1}`}>
               <Button>

@@ -1,912 +1,616 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSearchParams } from "react-router-dom";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import {
-  GraduationCap,
   Clock,
-  CheckCircle,
-  AlertTriangle,
-  Users,
+  ChevronRight,
+  PoundSterling,
   BookOpen,
-  ArrowRight,
-  Calendar,
-  Target,
-  TrendingUp,
-  Zap,
   Award,
   Shield,
   Wrench,
   Briefcase,
-  Heart,
-  Phone,
-  Mail,
-  Building,
-  Star,
-  ChevronRight,
-  CircleDot,
+  Calendar,
   FileText,
-  PoundSterling,
-  Timer,
-  Coffee
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import SalaryProgressionChart from "@/components/apprentice/apprenticeship-expectations/SalaryProgressionChart";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
+  Target,
+  TrendingUp,
+  Users,
+  Heart,
+  Zap,
+  CreditCard,
+  CheckCircle,
+  GraduationCap,
+  MapPin,
+  Lightbulb,
+  BadgeCheck,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import SalaryProgressionChart from '@/components/apprentice/apprenticeship-expectations/SalaryProgressionChart';
 
+/* ─── Bullet item (icon + text) used inside InfoCard ─── */
+const Bullet = ({
+  icon: Icon,
+  colour,
+  children,
+}: {
+  icon: React.ElementType;
+  colour: string;
+  children: React.ReactNode;
+}) => (
+  <li className="flex items-start gap-2">
+    <Icon className={`h-3 w-3 ${colour} flex-shrink-0 mt-0.5`} />
+    <span>{children}</span>
+  </li>
+);
+
+/* ─── Section header (coloured dot + bold title) ─── */
+const SectionHeader = ({
+  colour,
+  children,
+}: {
+  colour: string;
+  children: React.ReactNode;
+}) => (
+  <div className="flex items-center gap-2 pt-6 pb-3">
+    <div className={`w-2 h-2 rounded-full ${colour}`} />
+    <h2 className="text-white font-bold text-base">{children}</h2>
+  </div>
+);
+
+/* ─── Static info card (no navigation) ─── */
+const InfoCard = ({
+  borderColour,
+  title,
+  children,
+}: {
+  borderColour: string;
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <div
+    className={`p-4 rounded-xl border border-white/10 border-l-4 ${borderColour} bg-white/5`}
+  >
+    <h3 className="text-white font-semibold text-[15px] leading-snug">{title}</h3>
+    <div className="mt-2 text-white text-xs leading-relaxed space-y-1.5">{children}</div>
+  </div>
+);
+
+/* ─── Year journey card (navigable → year detail page) ─── */
+const YearCard = ({
+  year,
+  title,
+  subtitle,
+  salary,
+  colour,
+  to,
+}: {
+  year: number;
+  title: string;
+  subtitle: string;
+  salary: string;
+  colour: string;
+  to: string;
+}) => (
+  <Link to={to} className="block">
+    <div
+      className={`p-4 rounded-xl border border-white/10 border-l-4 ${colour}
+        bg-white/5 touch-manipulation active:scale-[0.98] active:bg-white/10 transition-all cursor-pointer`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-white font-semibold text-[15px] leading-snug">{title}</h3>
+          <p className="text-white text-xs mt-1">{subtitle}</p>
+          <div className="flex items-center gap-3 mt-2 text-xs text-white">
+            <span className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+              Yr {year}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="h-3 w-3" />
+              12 months
+            </span>
+            <span className="flex items-center gap-1">
+              <PoundSterling className="h-3 w-3" />
+              {salary}
+            </span>
+          </div>
+        </div>
+        <div className="flex-shrink-0 mt-1">
+          <ChevronRight className="h-5 w-5 text-white" />
+        </div>
+      </div>
+    </div>
+  </Link>
+);
+
+/* ─── Career path card ─── */
+const CareerCard = ({
+  borderColour,
+  title,
+  description,
+  salary,
+  badge,
+  dotColour,
+}: {
+  borderColour: string;
+  title: string;
+  description: string;
+  salary: string;
+  badge: string;
+  dotColour: string;
+}) => (
+  <div
+    className={`p-4 rounded-xl border border-white/10 border-l-4 ${borderColour} bg-white/5`}
+  >
+    <h3 className="text-white font-semibold text-[15px] leading-snug">{title}</h3>
+    <p className="text-white text-xs mt-1">{description}</p>
+    <div className="flex items-center gap-3 mt-2 text-xs text-white">
+      <span className="flex items-center gap-1">
+        <div className={`w-1.5 h-1.5 rounded-full ${dotColour}`} />
+        {badge}
+      </span>
+      <span className="flex items-center gap-1">
+        <PoundSterling className="h-3 w-3" />
+        {salary}
+      </span>
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════════════════
+   Main Page
+   ═══════════════════════════════════════════════════════════════════ */
 const ApprenticeshipExpectations = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "overview";
-  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
-  const isMobile = useIsMobile();
-
-  const quickStats = [
-    { label: "Duration", value: "4 Years", sublabel: "48 months full-time", icon: Clock, color: "text-blue-400" },
-    { label: "Qualification", value: "Level 3", sublabel: "Advanced Apprenticeship", icon: Award, color: "text-purple-400" },
-    { label: "Training Split", value: "80/20", sublabel: "Work / College", icon: BookOpen, color: "text-green-400" },
-    { label: "Starting Salary", value: "£15-18k", sublabel: "Year 1 average", icon: PoundSterling, color: "text-elec-yellow" },
-  ];
-
-  const apprenticeshipStages = [
-    {
-      year: 1,
-      title: "Foundation Year",
-      duration: "Months 1-12",
-      focus: "Basic electrical principles, safety fundamentals, and workplace orientation",
-      salary: "£15,000 - £18,000",
-      salaryNote: "National Minimum Wage for apprentices applies",
-      keyMilestones: [
-        "Health & Safety certification (CSCS card)",
-        "Basic electrical theory mastery",
-        "Tool familiarisation & safe usage",
-        "First college assessments passed",
-        "Portfolio started with first entries"
-      ],
-      skills: ["Cable stripping", "Basic wiring", "Tool usage", "Safety procedures"],
-      challenges: [
-        "Adjusting to early starts and physical work",
-        "Learning vast amounts of technical vocabulary",
-        "Balancing college work with site experience"
-      ],
-      dayInLife: "Arrive on site by 7:30am. Shadow qualified electricians, assist with basic tasks, attend toolbox talks. College one day per week.",
-      quote: "The first year is tough but rewarding. You learn something new every single day."
-    },
-    {
-      year: 2,
-      title: "Development Year",
-      duration: "Months 13-24",
-      focus: "Installation methods, BS 7671 Wiring Regulations, and testing basics",
-      salary: "£18,000 - £22,000",
-      salaryNote: "Typically a 15-20% increase from Year 1",
-      keyMilestones: [
-        "BS 7671 Wiring Regulations understanding",
-        "Installation techniques proficiency",
-        "Basic testing and inspection skills",
-        "Portfolio development with substantial evidence",
-        "First independent work under supervision"
-      ],
-      skills: ["Conduit work", "Trunking", "Consumer units", "Basic testing"],
-      challenges: [
-        "Complex regulation interpretation",
-        "Applying theory to real installations",
-        "Increased responsibility and expectations"
-      ],
-      dayInLife: "More hands-on work. Installing sockets, switches, running cables. Starting to do work with less direct supervision.",
-      quote: "Year 2 is when it starts clicking. The regs make sense, and you feel like a real sparky."
-    },
-    {
-      year: 3,
-      title: "Progression Year",
-      duration: "Months 25-36",
-      focus: "Advanced installations, fault-finding, and commercial work",
-      salary: "£24,000 - £28,000",
-      salaryNote: "Significant jump reflecting your increased value",
-      keyMilestones: [
-        "Advanced fault diagnosis skills",
-        "Commercial installation experience",
-        "Supervisory experience with Year 1s",
-        "EPA preparation begins",
-        "Specialisation interests identified"
-      ],
-      skills: ["Three-phase systems", "Fault finding", "Commercial work", "Supervision"],
-      challenges: [
-        "Leading and teaching junior apprentices",
-        "Complex problem-solving under pressure",
-        "EPA preparation alongside work"
-      ],
-      dayInLife: "Running your own jobs with check-ins. Training new apprentices. Taking on commercial projects.",
-      quote: "Year 3 you realise how much you've learned. New apprentices ask you questions!"
-    },
-    {
-      year: 4,
-      title: "Mastery Year",
-      duration: "Months 37-48",
-      focus: "Specialisation, EPA completion, and career preparation",
-      salary: "£28,000 - £35,000",
-      salaryNote: "Close to qualified rates by end of year",
-      keyMilestones: [
-        "End Point Assessment completion",
-        "Specialisation area chosen",
-        "Industry certifications (18th Edition)",
-        "JIB grading application",
-        "Full qualification achieved"
-      ],
-      skills: ["Specialisation", "EPA skills", "Industry certs", "Career planning"],
-      challenges: [
-        "EPA examination pressure",
-        "Career path decisions",
-        "Job market navigation"
-      ],
-      dayInLife: "Working almost independently. Final college work. Preparing for EPA. Planning your qualified career.",
-      quote: "The finish line is in sight. Four years of hard work about to pay off!"
-    }
-  ];
-
-  const expectationCategories = [
-    {
-      title: "Learning Structure",
-      icon: BookOpen,
-      color: "blue",
-      items: [
-        { text: "20% off-the-job training (~7.5 hours/week)", detail: "College, self-study, online learning" },
-        { text: "80% on-the-job practical experience", detail: "Real installations with supervision" },
-        { text: "Regular college attendance (typically 1 day/week)", detail: "Day release or block release" },
-        { text: "Portfolio development throughout", detail: "Evidence collection from day one" },
-        { text: "Regular progress reviews with assessor", detail: "Every 6-8 weeks typically" }
-      ]
-    },
-    {
-      title: "Assessment Methods",
-      icon: Target,
-      color: "purple",
-      items: [
-        { text: "Continuous practical skill assessments", detail: "Ongoing throughout apprenticeship" },
-        { text: "Written examinations at college", detail: "Theory tests and assignments" },
-        { text: "Portfolio evidence collection", detail: "Photos, worksheets, sign-offs" },
-        { text: "End Point Assessment (EPA)", detail: "Final assessment in Year 4" },
-        { text: "Workplace observations", detail: "Assessor visits to your workplace" }
-      ]
-    },
-    {
-      title: "Support Available",
-      icon: Users,
-      color: "green",
-      items: [
-        { text: "Workplace mentor/supervisor", detail: "Day-to-day guidance and support" },
-        { text: "College tutor support", detail: "Academic help and pastoral care" },
-        { text: "Training provider coordinator", detail: "Overall apprenticeship management" },
-        { text: "Peer learning with other apprentices", detail: "Share experiences and tips" },
-        { text: "Mental health & wellbeing resources", detail: "Confidential support available" }
-      ]
-    },
-    {
-      title: "Career Progression",
-      icon: TrendingUp,
-      color: "yellow",
-      items: [
-        { text: "Fully qualified electrician status", detail: "JIB Approved Electrician grade" },
-        { text: "Specialisation opportunities", detail: "EV, Solar, Fire Alarm, Data" },
-        { text: "Further education pathways", detail: "HNC, Degree, Management" },
-        { text: "Self-employment options", detail: "Start your own business" },
-        { text: "Supervisor/management routes", detail: "Lead teams and projects" }
-      ]
-    }
-  ];
-
-  const whatsProvided = [
-    { item: "Basic hand tools", note: "Most employers provide a starter kit", icon: Wrench },
-    { item: "Safety equipment & PPE", note: "Hard hat, boots, hi-vis, gloves", icon: Shield },
-    { item: "College tuition fees", note: "100% covered by funding", icon: GraduationCap },
-    { item: "Regular wage", note: "Paid throughout your training", icon: PoundSterling },
-    { item: "Workplace training", note: "Supervised practical experience", icon: Building },
-    { item: "Professional qualification", note: "Level 3 Diploma & EPA", icon: Award }
-  ];
-
-  const yourResponsibilities = [
-    { item: "Attend college regularly", note: "Missing sessions affects progress", icon: Calendar },
-    { item: "Maintain your portfolio", note: "Update weekly, not monthly!", icon: FileText },
-    { item: "Professional behaviour", note: "Punctuality, respect, work ethic", icon: Briefcase },
-    { item: "Commitment to learning", note: "Study in your own time too", icon: BookOpen },
-    { item: "Follow safety procedures", note: "No shortcuts, ever", icon: Shield },
-    { item: "Meet assessment deadlines", note: "Plan ahead, don't rush", icon: Clock }
-  ];
-
-  const weeklySchedule = [
-    { day: "Monday", activity: "Site Work", hours: "7:30-16:30", type: "work" },
-    { day: "Tuesday", activity: "College Day", hours: "9:00-16:00", type: "college" },
-    { day: "Wednesday", activity: "Site Work", hours: "7:30-16:30", type: "work" },
-    { day: "Thursday", activity: "Site Work", hours: "7:30-16:30", type: "work" },
-    { day: "Friday", activity: "Site Work", hours: "7:30-16:00", type: "work" },
-    { day: "Weekend", activity: "Self-Study (1-2hrs)", hours: "Flexible", type: "study" }
-  ];
-
-  const industryStats = [
-    { stat: "25,000+", label: "New electricians needed annually in UK" },
-    { stat: "96%", label: "Employment rate after qualification" },
-    { stat: "£42k", label: "Average qualified electrician salary" },
-    { stat: "4.5★", label: "Job satisfaction rating" }
-  ];
-
-  const renderOverviewTab = () => (
-    <div className="space-y-6 sm:space-y-8">
-      {/* Hero Section */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-orange-500/5 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-orange-500/10 rounded-full translate-y-1/2 -translate-x-1/2" />
-        <CardHeader className="pb-2">
-          <CardTitle className="text-elec-yellow flex items-center gap-3 text-xl sm:text-2xl">
-            <div className="p-2 bg-elec-yellow/20 rounded-lg">
-              <Zap className="h-6 w-6 sm:h-7 sm:w-7" />
-            </div>
-            Your Electrical Apprenticeship Journey
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <p className="text-white text-base sm:text-lg leading-relaxed">
-            An electrical apprenticeship is a <span className="text-elec-yellow font-semibold">4-year career investment</span> that
-            combines hands-on practical training with college-based learning. You'll progress from complete beginner to
-            <span className="text-green-400 font-semibold"> fully qualified electrician</span>, earning while you learn.
-          </p>
-
-          {/* Quick Stats Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {quickStats.map((stat, index) => (
-              <div key={index} className="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-3 sm:p-4 border border-white/10 hover:border-elec-yellow/30 transition-all">
-                <div className="flex items-center gap-2 mb-2">
-                  <stat.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${stat.color}`} />
-                  <span className="text-white text-xs sm:text-sm">{stat.label}</span>
-                </div>
-                <div className="text-xl sm:text-2xl font-bold text-white">{stat.value}</div>
-                <div className="text-white text-xs">{stat.sublabel}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Industry Demand Banner */}
-          <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/10 border border-green-500/30 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Star className="h-5 w-5 text-green-400" />
-              <h4 className="font-semibold text-green-400">High Demand Industry</h4>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {industryStats.map((item, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-xl sm:text-2xl font-bold text-white">{item.stat}</div>
-                  <div className="text-white text-xs">{item.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* What Makes It Special */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Award className="h-5 w-5" />
-            Why Electrical Apprenticeships Stand Out
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { title: "Earn While You Learn", desc: "Get paid from day one, no student debt", icon: PoundSterling },
-              { title: "Hands-On Training", desc: "Real work experience, not just theory", icon: Wrench },
-              { title: "Guaranteed Qualification", desc: "Level 3 Diploma + Industry recognition", icon: Award },
-              { title: "Career Security", desc: "Essential trade that's always in demand", icon: Shield },
-              { title: "Clear Progression", desc: "Defined path from apprentice to qualified", icon: TrendingUp },
-              { title: "Diverse Opportunities", desc: "Domestic, commercial, industrial, specialist", icon: Building }
-            ].map((item, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
-                <div className="p-2 bg-blue-500/20 rounded-lg flex-shrink-0">
-                  <item.icon className="h-4 w-4 text-blue-400" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-white text-sm">{item.title}</h4>
-                  <p className="text-white text-xs">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Expectation Categories */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-        {expectationCategories.map((category, index) => (
-          <Card key={index} className={`border-${category.color}-500/20 bg-white/5 hover:border-${category.color}-500/40 transition-all`}>
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <div className={`p-2 bg-${category.color}-500/20 rounded-lg`}>
-                  <category.icon className={`h-5 w-5 text-${category.color}-400`} />
-                </div>
-                <span className="text-white">{category.title}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
-                {category.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="group">
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <span className="text-white text-sm font-medium">{item.text}</span>
-                        <p className="text-white text-xs mt-0.5">{item.detail}</p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Key Takeaways */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-yellow/10 to-orange-500/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Target className="h-5 w-5" />
-            Key Takeaways
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { text: "Commit to 4 years of training", icon: Calendar },
-              { text: "Balance work and college learning", icon: BookOpen },
-              { text: "Build your portfolio from day one", icon: FileText },
-              { text: "Stay safe - no shortcuts ever", icon: Shield }
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
-                <item.icon className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                <span className="text-white text-sm">{item.text}</span>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-
-  const renderJourneyTab = () => (
-    <div className="space-y-6">
-      {/* Journey Timeline Visual */}
-      <div className="relative">
-        <div className="hidden lg:block absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-elec-yellow via-green-400 to-blue-400 transform -translate-x-1/2 rounded-full" />
-
-        <div className="space-y-6">
-          {apprenticeshipStages.map((stage, index) => (
-            <Card key={index} className="border-elec-yellow/20 bg-white/5 relative overflow-hidden hover:border-elec-yellow/40 transition-all">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-elec-yellow/10 to-transparent" />
-
-              {/* Year Badge */}
-              <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-elec-yellow rounded-full flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg sm:text-2xl">{stage.year}</span>
-                </div>
-              </div>
-
-              <CardHeader className="pr-20 sm:pr-24">
-                <div className="flex items-center gap-3 mb-2">
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
-                    {stage.duration}
-                  </Badge>
-                  <Badge variant="outline" className="text-green-400 border-green-400/30">
-                    {stage.salary}
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl sm:text-2xl text-white">{stage.title}</CardTitle>
-                <p className="text-white mt-1">{stage.focus}</p>
-              </CardHeader>
-
-              <CardContent className="space-y-6">
-                {/* Key Milestones */}
-                <div>
-                  <h4 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                    <Target className="h-4 w-4" />
-                    Key Milestones
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {stage.keyMilestones.map((milestone, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-sm bg-white/5 border border-white/10 p-2 rounded-lg">
-                        <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                        <span className="text-white">{milestone}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Skills & Day in Life */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <h5 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                      <Wrench className="h-4 w-4" />
-                      Skills You'll Develop
-                    </h5>
-                    <div className="flex flex-wrap gap-2">
-                      {stage.skills.map((skill, idx) => (
-                        <Badge key={idx} variant="outline" className="text-white border-white/20">
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <h5 className="font-semibold text-purple-400 mb-2 flex items-center gap-2">
-                      <Coffee className="h-4 w-4" />
-                      Day in the Life
-                    </h5>
-                    <p className="text-white text-sm">{stage.dayInLife}</p>
-                  </div>
-                </div>
-
-                {/* Challenges */}
-                <div className="border-t border-elec-yellow/10 pt-4">
-                  <h4 className="font-semibold text-orange-400 mb-3 flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4" />
-                    Common Challenges
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {stage.challenges.map((challenge, idx) => (
-                      <Badge key={idx} variant="outline" className="text-orange-400/80 border-orange-400/30 text-xs">
-                        {challenge}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Quote */}
-                <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border-l-4 border-elec-yellow">
-                  <p className="text-white italic text-sm">"{stage.quote}"</p>
-                  <p className="text-white text-xs mt-1">- Former Year {stage.year} Apprentice</p>
-                </div>
-
-                {/* View Details Button */}
-                <Link to={`/apprentice/toolbox/apprenticeship-expectations/year-${stage.year}`}>
-                  <Button className="w-full sm:w-auto bg-elec-yellow/20 hover:bg-elec-yellow/30 text-elec-yellow border border-elec-yellow/30">
-                    View Year {stage.year} Details
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Progression Summary */}
-      <Card className="border-green-500/20 bg-green-500/5">
-        <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            Your Progression at a Glance
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {apprenticeshipStages.map((stage, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="w-16 text-center">
-                  <Badge className="bg-elec-yellow text-elec-dark">Yr {stage.year}</Badge>
-                </div>
-                <div className="flex-1">
-                  <Progress value={(index + 1) * 25} className="h-3" />
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-white text-sm font-semibold">{stage.salary.split(' - ')[1]}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-
-  const renderExpectationsTab = () => (
-    <div className="space-y-6">
-      {/* Timeline Overview */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Calendar className="h-5 w-5 text-elec-yellow" />
-            What to Expect Throughout Your Apprenticeship
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Timeline Phases */}
-          <div className="space-y-4">
-            {[
-              {
-                title: "First Few Months",
-                color: "elec-yellow",
-                icon: Star,
-                items: [
-                  "Workplace induction and comprehensive safety training",
-                  "Basic tool introduction and proper handling techniques",
-                  "College enrolment and initial diagnostic assessments",
-                  "Meeting your mentor, supervisors, and training assessor",
-                  "Understanding company policies and procedures",
-                  "Getting your CSCS card and required certifications"
-                ]
-              },
-              {
-                title: "Mid-Apprenticeship (Years 2-3)",
-                color: "blue-400",
-                icon: Zap,
-                items: [
-                  "Increased independence on real installations",
-                  "More complex college assignments and exams",
-                  "Substantial portfolio evidence building",
-                  "Potential for specialisation choices emerging",
-                  "Taking on supervisory responsibilities",
-                  "Regular progress reviews with assessor"
-                ]
-              },
-              {
-                title: "Final Year",
-                color: "green-400",
-                icon: Award,
-                items: [
-                  "Intensive End Point Assessment preparation",
-                  "Advanced project work and complex installations",
-                  "Career planning and job market research",
-                  "Professional qualification completion",
-                  "Industry certification (18th Edition)",
-                  "JIB grading and registration"
-                ]
-              }
-            ].map((phase, index) => (
-              <div key={index} className={`border-l-4 border-${phase.color} pl-4 py-2`}>
-                <div className="flex items-center gap-2 mb-3">
-                  <phase.icon className={`h-5 w-5 text-${phase.color}`} />
-                  <h4 className={`font-semibold text-${phase.color} text-lg`}>{phase.title}</h4>
-                </div>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {phase.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm">
-                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Weekly Schedule Example */}
-      <Card className="border-purple-500/20 bg-purple-500/5">
-        <CardHeader>
-          <CardTitle className="text-purple-400 flex items-center gap-2">
-            <Clock className="h-5 w-5" />
-            Typical Weekly Schedule
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {weeklySchedule.map((day, index) => (
-              <div
-                key={index}
-                className={`p-3 rounded-lg text-center ${
-                  day.type === 'college' ? 'bg-blue-500/20 border border-blue-500/30' :
-                  day.type === 'study' ? 'bg-purple-500/20 border border-purple-500/30' :
-                  'bg-white/5 border border-white/10'
-                }`}
-              >
-                <div className="font-semibold text-white text-sm">{day.day}</div>
-                <div className={`text-xs mt-1 ${
-                  day.type === 'college' ? 'text-blue-400' :
-                  day.type === 'study' ? 'text-purple-400' :
-                  'text-elec-yellow'
-                }`}>
-                  {day.activity}
-                </div>
-                <div className="text-white text-xs mt-1">{day.hours}</div>
-              </div>
-            ))}
-          </div>
-          <p className="text-white text-sm mt-4 text-center">
-            Note: Schedules vary by employer and training provider. Some use block release instead of day release.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* What's Provided vs Responsibilities */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-green-500/30 bg-green-500/5">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5" />
-              What's Provided For You
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {whatsProvided.map((item, index) => (
-                <li key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-green-500/10 transition-colors">
-                  <div className="p-2 bg-green-500/20 rounded-lg flex-shrink-0">
-                    <item.icon className="h-4 w-4 text-green-400" />
-                  </div>
-                  <div>
-                    <span className="text-white font-medium">{item.item}</span>
-                    <p className="text-white text-xs">{item.note}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-
-        <Card className="border-orange-500/30 bg-orange-500/5">
-          <CardHeader>
-            <CardTitle className="text-orange-400 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Your Responsibilities
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {yourResponsibilities.map((item, index) => (
-                <li key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-orange-500/10 transition-colors">
-                  <div className="p-2 bg-orange-500/20 rounded-lg flex-shrink-0">
-                    <item.icon className="h-4 w-4 text-orange-400" />
-                  </div>
-                  <div>
-                    <span className="text-white font-medium">{item.item}</span>
-                    <p className="text-white text-xs">{item.note}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Support Network */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Users className="h-5 w-5" />
-            Your Support Network
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { role: "Workplace Mentor", desc: "Day-to-day guidance on site", icon: Wrench, contact: "Ask questions anytime" },
-              { role: "College Tutor", desc: "Academic support and guidance", icon: BookOpen, contact: "During college hours" },
-              { role: "Training Assessor", desc: "Progress reviews and portfolio", icon: Target, contact: "Regular visits" },
-              { role: "HR/Apprentice Lead", desc: "Pastoral support and admin", icon: Heart, contact: "For any concerns" }
-            ].map((person, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg text-center">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <person.icon className="h-6 w-6 text-blue-400" />
-                </div>
-                <h4 className="font-semibold text-white">{person.role}</h4>
-                <p className="text-white text-sm mt-1">{person.desc}</p>
-                <Badge variant="outline" className="mt-2 text-xs text-white">{person.contact}</Badge>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-
-  const renderSalaryTab = () => (
-    <div className="space-y-6">
-      <SalaryProgressionChart />
-
-      {/* Additional Salary Info */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-blue-500/20 bg-blue-500/5">
-          <CardHeader>
-            <CardTitle className="text-blue-400 flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Factors Affecting Your Salary
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {[
-                { factor: "Location", desc: "London pays ~20% more than other regions", impact: "High" },
-                { factor: "Company Size", desc: "Larger companies often pay more", impact: "Medium" },
-                { factor: "Sector", desc: "Commercial/Industrial pays more than domestic", impact: "Medium" },
-                { factor: "Overtime", desc: "Many sites offer overtime at 1.5x rate", impact: "High" },
-                { factor: "Performance", desc: "Good reviews can accelerate pay rises", impact: "Medium" }
-              ].map((item, index) => (
-                <li key={index} className="flex items-start justify-between gap-3 p-2 bg-white/5 border border-white/10 rounded-lg">
-                  <div>
-                    <span className="text-white font-medium">{item.factor}</span>
-                    <p className="text-white text-xs">{item.desc}</p>
-                  </div>
-                  <Badge variant="outline" className={`text-xs flex-shrink-0 ${
-                    item.impact === 'High' ? 'text-green-400 border-green-400/30' : 'text-blue-400 border-blue-400/30'
-                  }`}>
-                    {item.impact} Impact
-                  </Badge>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-
-        <Card className="border-purple-500/20 bg-purple-500/5">
-          <CardHeader>
-            <CardTitle className="text-purple-400 flex items-center gap-2">
-              <Award className="h-5 w-5" />
-              Benefits Beyond Salary
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {[
-                { benefit: "Paid Holiday", value: "20-28 days + bank holidays" },
-                { benefit: "Sick Pay", value: "Statutory minimum, often enhanced" },
-                { benefit: "Pension", value: "Workplace pension contributions" },
-                { benefit: "Training", value: "All course fees covered" },
-                { benefit: "Tools", value: "Basic kit provided by employer" },
-                { benefit: "PPE", value: "All safety equipment provided" }
-              ].map((item, index) => (
-                <li key={index} className="flex items-center justify-between p-2 bg-white/5 border border-white/10 rounded-lg">
-                  <span className="text-white">{item.benefit}</span>
-                  <span className="text-purple-400 text-sm font-medium">{item.value}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* After Qualification */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
-        <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Career Earnings After Qualification
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { title: "Employed Electrician", salary: "£34k - £45k", desc: "Working for a company" },
-              { title: "Self-Employed", salary: "£45k - £70k+", desc: "Running your own business" },
-              { title: "Supervisor/Foreman", salary: "£45k - £55k", desc: "Leading teams on site" },
-              { title: "Specialist (EV/Solar)", salary: "£50k - £70k+", desc: "Growing demand areas" }
-            ].map((path, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg text-center">
-                <h4 className="font-semibold text-white">{path.title}</h4>
-                <div className="text-2xl font-bold text-green-400 my-2">{path.salary}</div>
-                <p className="text-white text-xs">{path.desc}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-
-  // Mobile Tab Content using Accordion
-  const renderMobileContent = () => (
-    <MobileAccordion type="single" collapsible defaultValue="overview" className="w-full">
-      <MobileAccordionItem value="overview">
-        <MobileAccordionTrigger className="text-elec-yellow">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5" />
-            Overview
-          </div>
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderOverviewTab()}
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="journey">
-        <MobileAccordionTrigger className="text-elec-yellow">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Journey
-          </div>
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderJourneyTab()}
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="expectations">
-        <MobileAccordionTrigger className="text-elec-yellow">
-          <div className="flex items-center gap-2">
-            <Target className="h-5 w-5" />
-            Expectations
-          </div>
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderExpectationsTab()}
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="salary">
-        <MobileAccordionTrigger className="text-elec-yellow">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            Salary
-          </div>
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderSalaryTab()}
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-    </MobileAccordion>
-  );
-
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* Header */}
-      <div className="flex flex-col items-center justify-center mb-6 text-center">
-        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
-          <GraduationCap className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
-          Apprenticeship Expectations
-        </h1>
-        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Your comprehensive guide to what to expect during your electrical apprenticeship journey -
-          from day one to qualification day
-        </p>
+    <div className="max-w-2xl mx-auto px-4 py-6 space-y-3 animate-fade-in pb-20">
+      {/* ── Header ── */}
+      <div className="flex items-center gap-3">
         <SmartBackButton />
+        <h1 className="text-xl font-bold text-white">Apprenticeship Expectations</h1>
       </div>
 
-      {/* Desktop Tabs / Mobile Accordion */}
-      {isMobile ? (
-        renderMobileContent()
-      ) : (
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-white/5 border border-white/10">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
-              <GraduationCap className="h-4 w-4" />
-              <span className="hidden sm:inline">Overview</span>
-            </TabsTrigger>
-            <TabsTrigger value="journey" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
-              <Calendar className="h-4 w-4" />
-              <span className="hidden sm:inline">Journey</span>
-            </TabsTrigger>
-            <TabsTrigger value="expectations" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
-              <Target className="h-4 w-4" />
-              <span className="hidden sm:inline">Expectations</span>
-            </TabsTrigger>
-            <TabsTrigger value="salary" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
-              <TrendingUp className="h-4 w-4" />
-              <span className="hidden sm:inline">Salary</span>
-            </TabsTrigger>
-          </TabsList>
+      {/* ── Stats strip ── */}
+      <div className="grid grid-cols-4 gap-2 p-3 rounded-xl bg-white/5 border border-white/10">
+        <div className="text-center">
+          <div className="text-white font-bold text-sm">4 Years</div>
+          <div className="text-white text-[10px]">Duration</div>
+        </div>
+        <div className="text-center">
+          <div className="text-white font-bold text-sm">Level 3</div>
+          <div className="text-white text-[10px]">Standard</div>
+        </div>
+        <div className="text-center">
+          <div className="text-white font-bold text-sm">ECS Card</div>
+          <div className="text-white text-[10px]">Required (JIB)</div>
+        </div>
+        <div className="text-center">
+          <div className="text-white font-bold text-sm">£15k+</div>
+          <div className="text-white text-[10px]">Starting</div>
+        </div>
+      </div>
 
-          <TabsContent value="overview" className="mt-6">
-            {renderOverviewTab()}
-          </TabsContent>
+      {/* ═══════════════════════════════════════════════════
+         Section 1 — Your 4-Year Journey
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-amber-400">Your 4-Year Journey</SectionHeader>
 
-          <TabsContent value="journey" className="mt-6">
-            {renderJourneyTab()}
-          </TabsContent>
+      <div className="space-y-3">
+        <YearCard
+          year={1}
+          title="Year 1 — Foundation"
+          subtitle="Safety, basics, ECS card, portfolio started"
+          salary="£15-18k"
+          colour="border-l-amber-400"
+          to="/apprentice/toolbox/apprenticeship-expectations/year-1"
+        />
+        <YearCard
+          year={2}
+          title="Year 2 — Development"
+          subtitle="BS 7671, installations, testing basics"
+          salary="£18-22k"
+          colour="border-l-amber-400"
+          to="/apprentice/toolbox/apprenticeship-expectations/year-2"
+        />
+        <YearCard
+          year={3}
+          title="Year 3 — Progression"
+          subtitle="Commercial work, fault-finding, supervision"
+          salary="£24-28k"
+          colour="border-l-amber-400"
+          to="/apprentice/toolbox/apprenticeship-expectations/year-3"
+        />
+        <YearCard
+          year={4}
+          title="Year 4 — Mastery"
+          subtitle="AM2S, 18th Edition, JIB grading"
+          salary="£27-33k"
+          colour="border-l-amber-400"
+          to="/apprentice/toolbox/apprenticeship-expectations/year-4"
+        />
+      </div>
 
-          <TabsContent value="expectations" className="mt-6">
-            {renderExpectationsTab()}
-          </TabsContent>
+      {/* ═══════════════════════════════════════════════════
+         Section 2 — Salary & Pay
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-elec-yellow">Salary &amp; Pay</SectionHeader>
 
-          <TabsContent value="salary" className="mt-6">
-            {renderSalaryTab()}
-          </TabsContent>
-        </Tabs>
-      )}
+      <div className="space-y-3">
+        {/* Chart */}
+        <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
+          <SalaryProgressionChart />
+        </div>
+
+        {/* NMW & JIB Rates */}
+        <InfoCard borderColour="border-l-elec-yellow" title="NMW & JIB Rates">
+          <ul className="space-y-1.5 list-none">
+            <Bullet icon={PoundSterling} colour="text-elec-yellow">
+              Apprentice NMW: £7.55/hr (Apr 2025), rising to £8.00/hr (Apr 2026)
+            </Bullet>
+            <Bullet icon={PoundSterling} colour="text-elec-yellow">
+              JIB rates are higher — most electrical employers follow JIB
+            </Bullet>
+            <Bullet icon={PoundSterling} colour="text-elec-yellow">
+              JIB Stage 1: £8.16/hr → Stage 2: £9.89/hr → Stage 3: £11.70/hr → Stage 4: £14.03/hr
+              (national)
+            </Bullet>
+            <Bullet icon={MapPin} colour="text-elec-yellow">
+              London rates approximately 12-15% higher
+            </Bullet>
+            <Bullet icon={CheckCircle} colour="text-elec-yellow">
+              Same rate at college as on site (JIB 2025 change)
+            </Bullet>
+          </ul>
+        </InfoCard>
+
+        {/* Benefits Beyond Pay */}
+        <InfoCard borderColour="border-l-elec-yellow" title="Benefits Beyond Pay">
+          <ul className="space-y-1.5 list-none">
+            <Bullet icon={Calendar} colour="text-elec-yellow">
+              20 days annual leave + 8 bank holidays (28 days total statutory minimum)
+            </Bullet>
+            <Bullet icon={Shield} colour="text-elec-yellow">
+              Statutory sick pay (often enhanced by employer)
+            </Bullet>
+            <Bullet icon={PoundSterling} colour="text-elec-yellow">
+              Workplace pension contributions from employer
+            </Bullet>
+            <Bullet icon={GraduationCap} colour="text-elec-yellow">
+              All college fees covered (100% government-funded)
+            </Bullet>
+            <Bullet icon={Wrench} colour="text-elec-yellow">
+              Basic tool kit provided by employer
+            </Bullet>
+            <Bullet icon={Shield} colour="text-elec-yellow">
+              All PPE provided (hard hat, boots, hi-vis, gloves)
+            </Bullet>
+          </ul>
+        </InfoCard>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+         Section 3 — Training & Qualifications
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-blue-400">Training &amp; Qualifications</SectionHeader>
+
+      <div className="space-y-3">
+        <InfoCard borderColour="border-l-blue-500" title="College & Off-the-Job Training">
+          <ul className="space-y-1.5 list-none">
+            <Bullet icon={CheckCircle} colour="text-blue-400">
+              Off-the-job training hours now fixed per standard (since August 2025, replacing the old
+              20% rule)
+            </Bullet>
+            <Bullet icon={Calendar} colour="text-blue-400">
+              Typically 1 day/week at college (day release) or block release
+            </Bullet>
+            <Bullet icon={FileText} colour="text-blue-400">
+              Portfolio evidence collection throughout — photos, worksheets, sign-offs
+            </Bullet>
+            <Bullet icon={Target} colour="text-blue-400">
+              Progress reviews with training assessor every 6-8 weeks
+            </Bullet>
+            <Bullet icon={Lightbulb} colour="text-blue-400">
+              T-Level in Building Services Engineering is an alternative 2-year college route (not a
+              replacement for the apprenticeship)
+            </Bullet>
+          </ul>
+        </InfoCard>
+
+        <InfoCard borderColour="border-l-blue-500" title="Qualifications You'll Gain">
+          <ul className="space-y-1.5 list-none">
+            <Bullet icon={Award} colour="text-blue-400">
+              <span className="font-medium">Knowledge:</span> City &amp; Guilds 2365-03 Level 3
+              Diploma (or EAL equivalent)
+            </Bullet>
+            <Bullet icon={Award} colour="text-blue-400">
+              <span className="font-medium">Competence:</span> NVQ Level 3 Electrotechnical Services
+              (C&amp;G 5357 or EAL equivalent)
+            </Bullet>
+            <Bullet icon={Award} colour="text-blue-400">
+              <span className="font-medium">EPA:</span> AM2S End Point Assessment
+            </Bullet>
+            <Bullet icon={BookOpen} colour="text-blue-400">
+              <span className="font-medium">Industry:</span> 18th Edition BS 7671:2018+A3:2024 (Amd
+              4 expected 2026)
+            </Bullet>
+            <Bullet icon={CreditCard} colour="text-blue-400">
+              <span className="font-medium">Card:</span> ECS Apprentice → ECS Electrician on
+              qualification
+            </Bullet>
+          </ul>
+        </InfoCard>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+         Section 4 — Assessment & EPA
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-purple-400">Assessment &amp; EPA</SectionHeader>
+
+      <div className="space-y-3">
+        <InfoCard borderColour="border-l-purple-500" title="On-Programme Assessment">
+          <ul className="space-y-1.5 list-none">
+            <Bullet icon={CheckCircle} colour="text-purple-400">
+              Continuous practical skill assessments on site
+            </Bullet>
+            <Bullet icon={CheckCircle} colour="text-purple-400">
+              Written theory examinations at college
+            </Bullet>
+            <Bullet icon={CheckCircle} colour="text-purple-400">
+              Portfolio evidence collection — photos, work logs, supervisor sign-offs
+            </Bullet>
+            <Bullet icon={CheckCircle} colour="text-purple-400">
+              Regular workplace observations by training assessor
+            </Bullet>
+          </ul>
+        </InfoCard>
+
+        <InfoCard borderColour="border-l-purple-500" title="End Point Assessment (AM2S)">
+          <div className="flex items-center gap-3 mb-2 text-xs text-white">
+            <span className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+              NET
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="h-3 w-3" />
+              ~2.5 days
+            </span>
+            <span className="flex items-center gap-1">
+              <Target className="h-3 w-3" />3 parts
+            </span>
+          </div>
+          <ul className="space-y-1.5 list-none">
+            <Bullet icon={BadgeCheck} colour="text-purple-400">
+              Sole EPAO: NET (National Electrotechnical Training)
+            </Bullet>
+            <Bullet icon={Wrench} colour="text-purple-400">
+              17-hour practical (~2.5 days) in equipped assessment booths
+            </Bullet>
+            <Bullet icon={Users} colour="text-purple-400">
+              90-minute professional discussion with assessor
+            </Bullet>
+            <Bullet icon={BookOpen} colour="text-purple-400">
+              90-minute knowledge test (multiple-choice)
+            </Bullet>
+            <Bullet icon={Award} colour="text-purple-400">
+              <span className="font-medium">Grading:</span> Distinction / Pass / Fail
+            </Bullet>
+            <Bullet icon={CheckCircle} colour="text-purple-400">
+              Gateway: must complete all on-programme training before EPA entry
+            </Bullet>
+            <Bullet icon={FileText} colour="text-purple-400">
+              ST0152 v1.2 (July 2025) has revised EPA plan
+            </Bullet>
+          </ul>
+        </InfoCard>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+         Section 5 — Your Support Network
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-cyan-400">Your Support Network</SectionHeader>
+
+      <div className="space-y-3">
+        <InfoCard borderColour="border-l-cyan-500" title="Workplace Mentor">
+          <p>
+            A qualified electrician on your site who provides day-to-day guidance. They demonstrate
+            techniques, answer questions, and help you develop practical skills. Available throughout
+            every working day.
+          </p>
+        </InfoCard>
+        <InfoCard borderColour="border-l-cyan-500" title="College Tutor">
+          <p>
+            Your academic point of contact at college. Provides pastoral support, helps with theory
+            concepts, and monitors your academic progress. Available during college hours and often by
+            email.
+          </p>
+        </InfoCard>
+        <InfoCard borderColour="border-l-cyan-500" title="Training Assessor">
+          <p>
+            Visits your workplace every 6-8 weeks for formal progress reviews. Checks your portfolio,
+            conducts workplace observations, and ensures you're on track for gateway and EPA.
+          </p>
+        </InfoCard>
+        <InfoCard borderColour="border-l-cyan-500" title="HR / Apprentice Lead">
+          <p>
+            Your employer's pastoral support contact. Handles any workplace concerns, wellbeing issues,
+            or administrative queries. Can also liaise between you and the training provider if needed.
+          </p>
+        </InfoCard>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+         Section 6 — What's Provided
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-blue-400">What&apos;s Provided</SectionHeader>
+
+      <InfoCard borderColour="border-l-blue-500" title="Provided by Your Employer & Government">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-1">
+          <div className="flex items-start gap-2">
+            <Wrench className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Hand Tools</span>
+              <p className="text-white text-[10px]">Starter kit from day one</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Shield className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">PPE</span>
+              <p className="text-white text-[10px]">Hat, boots, hi-vis, gloves</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <GraduationCap className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">College Fees</span>
+              <p className="text-white text-[10px]">100% government-funded</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <PoundSterling className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Regular Wage</span>
+              <p className="text-white text-[10px]">From day one inc. college</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Users className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Supervision</span>
+              <p className="text-white text-[10px]">Qualified electricians</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Award className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Qualification</span>
+              <p className="text-white text-[10px]">L3 Diploma, NVQ, AM2S</p>
+            </div>
+          </div>
+        </div>
+      </InfoCard>
+
+      {/* ═══════════════════════════════════════════════════
+         Section 7 — Your Responsibilities
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-amber-400">Your Responsibilities</SectionHeader>
+
+      <InfoCard borderColour="border-l-amber-400" title="What's Expected of You">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-1">
+          <div className="flex items-start gap-2">
+            <Calendar className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Attend College</span>
+              <p className="text-white text-[10px]">Missing sessions affects funding</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <FileText className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Portfolio Weekly</span>
+              <p className="text-white text-[10px]">Update every week, not monthly</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Briefcase className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Be Professional</span>
+              <p className="text-white text-[10px]">Punctual, respectful, reliable</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <BookOpen className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Self-Study</span>
+              <p className="text-white text-[10px]">1-2 hrs/week outside work</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Shield className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Safety First</span>
+              <p className="text-white text-[10px]">No shortcuts, ever</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Clock className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-medium">Meet Deadlines</span>
+              <p className="text-white text-[10px]">Exams, assignments, sign-offs</p>
+            </div>
+          </div>
+        </div>
+      </InfoCard>
+
+      {/* ═══════════════════════════════════════════════════
+         Section 8 — After Qualification
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-elec-yellow">After Qualification</SectionHeader>
+
+      <div className="space-y-3">
+        <CareerCard
+          borderColour="border-l-elec-yellow"
+          title="Employed Electrician"
+          description="Working for a contractor on domestic, commercial, or industrial projects"
+          badge="JIB Graded"
+          salary="£35-45k"
+          dotColour="bg-elec-yellow"
+        />
+        <CareerCard
+          borderColour="border-l-elec-yellow"
+          title="Self-Employed"
+          description="Running your own business — higher earning potential, more responsibility"
+          badge="Varies"
+          salary="£45-65k+"
+          dotColour="bg-elec-yellow"
+        />
+        <CareerCard
+          borderColour="border-l-elec-yellow"
+          title="Supervisor / Foreman"
+          description="Leading teams on site, managing projects and junior electricians"
+          badge="JIB Technician"
+          salary="£44-55k"
+          dotColour="bg-elec-yellow"
+        />
+        <CareerCard
+          borderColour="border-l-elec-yellow"
+          title="Specialist (EV / Solar / Data)"
+          description="Growing demand sectors — electric vehicles, renewables, smart buildings"
+          badge="PAYE"
+          salary="£40-60k"
+          dotColour="bg-elec-yellow"
+        />
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+         Section 9 — Industry Outlook
+         ═══════════════════════════════════════════════════ */}
+      <SectionHeader colour="bg-red-400">Industry Outlook</SectionHeader>
+
+      <InfoCard borderColour="border-l-red-500" title="UK Electrical Industry 2025/2026">
+        <ul className="space-y-1.5 list-none">
+          <Bullet icon={Zap} colour="text-red-400">
+            National shortage: 9,600+ unfilled positions (227:1 job-to-apprentice ratio)
+          </Bullet>
+          <Bullet icon={TrendingUp} colour="text-red-400">
+            Median salary: approximately £39k (ONS April 2025)
+          </Bullet>
+          <Bullet icon={Zap} colour="text-red-400">
+            Demand driven by net zero, EV infrastructure, heat pumps, and housing
+          </Bullet>
+          <Bullet icon={BookOpen} colour="text-red-400">
+            BS 7671 Amendment 4 expected 2026
+          </Bullet>
+        </ul>
+      </InfoCard>
+
+      {/* ═══════════════════════════════════════════════════
+         Footer — JIB Grade Progression
+         ═══════════════════════════════════════════════════ */}
+      <div className="mt-6 p-4 rounded-xl bg-white/5 border border-white/10">
+        <h3 className="text-white font-semibold text-sm mb-2">JIB Grade Progression</h3>
+        <p className="text-white text-xs leading-relaxed">
+          Electrician → Approved Electrician (2 yr + Inspection &amp; Testing quals) → Technician (5
+          yr + Level 4 qualification)
+        </p>
+      </div>
     </div>
   );
 };

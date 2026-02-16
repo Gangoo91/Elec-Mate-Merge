@@ -11,7 +11,6 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
-        
         {/* Section 1: Purpose of Remote Testing */}
         <div className="space-y-4">
           <div className="flex items-start gap-3">
@@ -28,9 +27,10 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p className="text-foreground">
-              Remote systems replace or support manual inspections by automatically carrying out essential tests 
-              and maintaining compliance records. These systems transform emergency lighting maintenance from a 
-              labour-intensive task into an efficient, automated process.
+              Remote systems replace or support manual inspections by automatically carrying out
+              essential tests and maintaining compliance records. These systems transform emergency
+              lighting maintenance from a labour-intensive task into an efficient, automated
+              process.
             </p>
 
             <div className="bg-green-900/20 border-l-4 border-green-500 p-4 rounded-r">
@@ -40,28 +40,40 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                   <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">Monthly Function Tests:</span>
-                    <span className="text-foreground"> System automatically tests each luminaire for 1-2 minutes to verify operation</span>
+                    <span className="text-foreground">
+                      {' '}
+                      System automatically tests each luminaire for 1-2 minutes to verify operation
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">Annual Full-Duration Tests:</span>
-                    <span className="text-foreground"> Complete 3-hour discharge tests conducted automatically</span>
+                    <span className="text-foreground">
+                      {' '}
+                      Complete 3-hour discharge tests conducted automatically
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">Electronic Logging:</span>
-                    <span className="text-foreground"> All test results recorded digitally with time stamps for compliance audits</span>
+                    <span className="text-foreground">
+                      {' '}
+                      All test results recorded digitally with time stamps for compliance audits
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">Instant Fault Alerts:</span>
-                    <span className="text-foreground"> Immediate notification when a luminaire or battery fails</span>
+                    <span className="text-foreground">
+                      {' '}
+                      Immediate notification when a luminaire or battery fails
+                    </span>
                   </div>
                 </div>
               </div>
@@ -72,12 +84,17 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                 <CheckCircle2 className="h-5 w-5" />
                 Quick Check
               </h4>
-              <p className="text-foreground text-sm mb-2">Which two mandatory tests can remote systems automate?</p>
+              <p className="text-foreground text-sm mb-2">
+                Which two mandatory tests can remote systems automate?
+              </p>
               <details className="text-foreground text-sm">
-                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">Show Answer</summary>
+                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">
+                  Show Answer
+                </summary>
                 <p className="mt-2 pl-4 border-l-2 border-elec-yellow">
-                  Monthly function tests and annual full-duration tests. These are the two primary testing requirements 
-                  under BS 5266-1 that remote systems can fully automate, ensuring consistent compliance without manual intervention.
+                  Monthly function tests and annual full-duration tests. These are the two primary
+                  testing requirements under BS 5266-1 that remote systems can fully automate,
+                  ensuring consistent compliance without manual intervention.
                 </p>
               </details>
             </div>
@@ -100,8 +117,9 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p className="text-foreground">
-              There are three main types of remote testing systems, each with different installation requirements 
-              and capabilities. The choice depends on building size, existing infrastructure, and budget.
+              There are three main types of remote testing systems, each with different installation
+              requirements and capabilities. The choice depends on building size, existing
+              infrastructure, and budget.
             </p>
 
             {/* Self-Test Luminaires */}
@@ -109,24 +127,24 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
               <h4 className="font-semibold text-green-300 mb-3">Self-Test Luminaires</h4>
               <div className="space-y-2 text-foreground text-sm">
                 <p>
-                  <span className="font-medium text-green-200">Description:</span> Each fitting carries out its own 
-                  automated test independently. No central controller required.
+                  <span className="font-medium text-green-200">Description:</span> Each fitting
+                  carries out its own automated test independently. No central controller required.
                 </p>
                 <p>
-                  <span className="font-medium text-green-200">Indication Method:</span> Pass/fail status shown via 
-                  an LED on the luminaire (green = pass, red = fail).
+                  <span className="font-medium text-green-200">Indication Method:</span> Pass/fail
+                  status shown via an LED on the luminaire (green = pass, red = fail).
                 </p>
                 <p>
-                  <span className="font-medium text-green-200">Best For:</span> Small to medium sites (50-200 fittings) 
-                  where visual checks of LED indicators are manageable.
+                  <span className="font-medium text-green-200">Best For:</span> Small to medium
+                  sites (50-200 fittings) where visual checks of LED indicators are manageable.
                 </p>
                 <p>
-                  <span className="font-medium text-green-200">Installation:</span> No additional wiring required beyond 
-                  standard emergency lighting circuit.
+                  <span className="font-medium text-green-200">Installation:</span> No additional
+                  wiring required beyond standard emergency lighting circuit.
                 </p>
                 <p>
-                  <span className="font-medium text-green-200">Limitation:</span> Still requires personnel to physically 
-                  inspect each luminaire to check LED status.
+                  <span className="font-medium text-green-200">Limitation:</span> Still requires
+                  personnel to physically inspect each luminaire to check LED status.
                 </p>
               </div>
             </div>
@@ -136,24 +154,28 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
               <h4 className="font-semibold text-blue-300 mb-3">Networked Systems</h4>
               <div className="space-y-2 text-foreground text-sm">
                 <p>
-                  <span className="font-medium text-blue-200">Description:</span> All luminaires connected to a central 
-                  controller or building management system (BMS) via data cables.
+                  <span className="font-medium text-blue-200">Description:</span> All luminaires
+                  connected to a central controller or building management system (BMS) via data
+                  cables.
                 </p>
                 <p>
-                  <span className="font-medium text-blue-200">Control Method:</span> Centralised testing, monitoring, 
-                  and reporting from a single interface.
+                  <span className="font-medium text-blue-200">Control Method:</span> Centralised
+                  testing, monitoring, and reporting from a single interface.
                 </p>
                 <p>
-                  <span className="font-medium text-blue-200">Best For:</span> Large sites (200+ fittings), high-security 
-                  buildings, or facilities with existing BMS infrastructure.
+                  <span className="font-medium text-blue-200">Best For:</span> Large sites (200+
+                  fittings), high-security buildings, or facilities with existing BMS
+                  infrastructure.
                 </p>
                 <p>
-                  <span className="font-medium text-blue-200">Installation:</span> Requires data cable runs (typically CAT5/6) 
-                  from each luminaire to central controller or network switches.
+                  <span className="font-medium text-blue-200">Installation:</span> Requires data
+                  cable runs (typically CAT5/6) from each luminaire to central controller or network
+                  switches.
                 </p>
                 <p>
-                  <span className="font-medium text-blue-200">Advantages:</span> Real-time monitoring, instant alerts, 
-                  comprehensive reporting, integration with other building systems.
+                  <span className="font-medium text-blue-200">Advantages:</span> Real-time
+                  monitoring, instant alerts, comprehensive reporting, integration with other
+                  building systems.
                 </p>
               </div>
             </div>
@@ -163,24 +185,26 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
               <h4 className="font-semibold text-purple-300 mb-3">Wireless Monitoring Systems</h4>
               <div className="space-y-2 text-foreground text-sm">
                 <p>
-                  <span className="font-medium text-purple-200">Description:</span> Use radio communication (typically 
-                  868 MHz or similar licensed bands) to avoid complex cabling.
+                  <span className="font-medium text-purple-200">Description:</span> Use radio
+                  communication (typically 868 MHz or similar licensed bands) to avoid complex
+                  cabling.
                 </p>
                 <p>
-                  <span className="font-medium text-purple-200">Communication:</span> Mesh network or star topology 
-                  connecting luminaires to wireless gateway.
+                  <span className="font-medium text-purple-200">Communication:</span> Mesh network
+                  or star topology connecting luminaires to wireless gateway.
                 </p>
                 <p>
-                  <span className="font-medium text-purple-200">Best For:</span> Refurbishments, listed buildings, 
-                  or sites where data cabling is impractical or costly.
+                  <span className="font-medium text-purple-200">Best For:</span> Refurbishments,
+                  listed buildings, or sites where data cabling is impractical or costly.
                 </p>
                 <p>
-                  <span className="font-medium text-purple-200">Installation:</span> Minimal additional wiring — only 
-                  wireless gateway requires network/internet connection.
+                  <span className="font-medium text-purple-200">Installation:</span> Minimal
+                  additional wiring — only wireless gateway requires network/internet connection.
                 </p>
                 <p>
-                  <span className="font-medium text-purple-200">Advantages:</span> Fast installation, lower disruption, 
-                  ideal for retrofit applications, cloud-based monitoring available.
+                  <span className="font-medium text-purple-200">Advantages:</span> Fast
+                  installation, lower disruption, ideal for retrofit applications, cloud-based
+                  monitoring available.
                 </p>
               </div>
             </div>
@@ -190,15 +214,25 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
               <table className="w-full border border-gray-600 text-sm">
                 <thead className="bg-elec-dark">
                   <tr>
-                    <th className="border border-gray-600 p-3 text-left text-foreground">Feature</th>
-                    <th className="border border-gray-600 p-3 text-left text-green-300">Self-Test</th>
-                    <th className="border border-gray-600 p-3 text-left text-blue-300">Networked</th>
-                    <th className="border border-gray-600 p-3 text-left text-purple-300">Wireless</th>
+                    <th className="border border-gray-600 p-3 text-left text-foreground">
+                      Feature
+                    </th>
+                    <th className="border border-gray-600 p-3 text-left text-green-300">
+                      Self-Test
+                    </th>
+                    <th className="border border-gray-600 p-3 text-left text-blue-300">
+                      Networked
+                    </th>
+                    <th className="border border-gray-600 p-3 text-left text-purple-300">
+                      Wireless
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="text-foreground">
                   <tr>
-                    <td className="border border-gray-600 p-3 font-medium">Installation Complexity</td>
+                    <td className="border border-gray-600 p-3 font-medium">
+                      Installation Complexity
+                    </td>
                     <td className="border border-gray-600 p-3 text-green-300">Low</td>
                     <td className="border border-gray-600 p-3 text-yellow-300">High</td>
                     <td className="border border-gray-600 p-3 text-green-300">Medium</td>
@@ -236,14 +270,19 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                 <CheckCircle2 className="h-5 w-5" />
                 Quick Check
               </h4>
-              <p className="text-foreground text-sm mb-2">What is the main difference between a self-test luminaire and a networked system?</p>
+              <p className="text-foreground text-sm mb-2">
+                What is the main difference between a self-test luminaire and a networked system?
+              </p>
               <details className="text-foreground text-sm">
-                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">Show Answer</summary>
+                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">
+                  Show Answer
+                </summary>
                 <p className="mt-2 pl-4 border-l-2 border-elec-yellow">
-                  Self-test luminaires operate independently with local LED indication, requiring physical inspection 
-                  of each fitting. Networked systems connect all luminaires to a central controller, providing real-time 
-                  monitoring, instant alerts, and comprehensive reporting from a single interface without needing to 
-                  physically check each luminaire.
+                  Self-test luminaires operate independently with local LED indication, requiring
+                  physical inspection of each fitting. Networked systems connect all luminaires to a
+                  central controller, providing real-time monitoring, instant alerts, and
+                  comprehensive reporting from a single interface without needing to physically
+                  check each luminaire.
                 </p>
               </details>
             </div>
@@ -266,8 +305,9 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p className="text-foreground">
-              Remote systems generate digital logs which transform compliance documentation from a manual, 
-              paper-based process into an efficient, auditable electronic system that meets BS 5266-8 requirements.
+              Remote systems generate digital logs which transform compliance documentation from a
+              manual, paper-based process into an efficient, auditable electronic system that meets
+              BS 5266-8 requirements.
             </p>
 
             <div className="bg-yellow-900/20 border-l-4 border-yellow-500 p-4 rounded-r">
@@ -277,35 +317,53 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                   <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">Time-Stamped Records:</span>
-                    <span className="text-foreground"> Every test recorded with exact date, time, and duration for audit trails</span>
+                    <span className="text-foreground">
+                      {' '}
+                      Every test recorded with exact date, time, and duration for audit trails
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <span className="text-foreground font-medium">Instant Failure Identification:</span>
-                    <span className="text-foreground"> Failures highlighted immediately, reducing inspection time by 70-80%</span>
+                    <span className="text-foreground font-medium">
+                      Instant Failure Identification:
+                    </span>
+                    <span className="text-foreground">
+                      {' '}
+                      Failures highlighted immediately, reducing inspection time by 70-80%
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">BMS/Cloud Integration:</span>
-                    <span className="text-foreground"> Data accessible via building management dashboards or cloud platforms</span>
+                    <span className="text-foreground">
+                      {' '}
+                      Data accessible via building management dashboards or cloud platforms
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">Mobile Access:</span>
-                    <span className="text-foreground"> Maintenance teams can access reports and receive alerts via smartphone apps</span>
+                    <span className="text-foreground">
+                      {' '}
+                      Maintenance teams can access reports and receive alerts via smartphone apps
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-foreground font-medium">BS 5266-8 Compliance:</span>
-                    <span className="text-foreground"> Automatic documentation meets all regulatory requirements without manual record-keeping</span>
+                    <span className="text-foreground">
+                      {' '}
+                      Automatic documentation meets all regulatory requirements without manual
+                      record-keeping
+                    </span>
                   </div>
                 </div>
               </div>
@@ -324,12 +382,18 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                 <div className="text-red-400">✗ Failed: 3 (0.9%)</div>
                 <div>-------------------------------------------</div>
                 <div className="text-red-400">FAILURES:</div>
-                <div className="text-red-400">→ Luminaire ID: L2-034 | Location: Floor 2 East Corridor</div>
-                <div className="text-red-400">  Reason: Battery voltage low (9.2V)</div>
-                <div className="text-red-400">→ Luminaire ID: L3-089 | Location: Floor 3 Lab Room</div>
-                <div className="text-red-400">  Reason: LED failure detected</div>
-                <div className="text-red-400">→ Luminaire ID: L1-156 | Location: Ground Floor Reception</div>
-                <div className="text-red-400">  Reason: No response (check mains supply)</div>
+                <div className="text-red-400">
+                  → Luminaire ID: L2-034 | Location: Floor 2 East Corridor
+                </div>
+                <div className="text-red-400"> Reason: Battery voltage low (9.2V)</div>
+                <div className="text-red-400">
+                  → Luminaire ID: L3-089 | Location: Floor 3 Lab Room
+                </div>
+                <div className="text-red-400"> Reason: LED failure detected</div>
+                <div className="text-red-400">
+                  → Luminaire ID: L1-156 | Location: Ground Floor Reception
+                </div>
+                <div className="text-red-400"> Reason: No response (check mains supply)</div>
                 <div>-------------------------------------------</div>
                 <div>Next Test Due: 15/04/2025</div>
                 <div>Report Generated: 15/03/2025 02:47:33</div>
@@ -371,14 +435,19 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                 <CheckCircle2 className="h-5 w-5" />
                 Quick Check
               </h4>
-              <p className="text-foreground text-sm mb-2">Why are digital logs preferable to paper logbooks in large sites?</p>
+              <p className="text-foreground text-sm mb-2">
+                Why are digital logs preferable to paper logbooks in large sites?
+              </p>
               <details className="text-foreground text-sm">
-                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">Show Answer</summary>
+                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">
+                  Show Answer
+                </summary>
                 <p className="mt-2 pl-4 border-l-2 border-elec-yellow">
-                  Digital logs provide instant access to records, cannot be lost or damaged, are searchable for audits, 
-                  highlight failures immediately without manual inspection, and ensure consistent BS 5266-8 compliance. 
-                  In large sites with hundreds of luminaires, they reduce inspection time by 70-80% compared to manual 
-                  paper-based systems.
+                  Digital logs provide instant access to records, cannot be lost or damaged, are
+                  searchable for audits, highlight failures immediately without manual inspection,
+                  and ensure consistent BS 5266-8 compliance. In large sites with hundreds of
+                  luminaires, they reduce inspection time by 70-80% compared to manual paper-based
+                  systems.
                 </p>
               </details>
             </div>
@@ -401,9 +470,9 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p className="text-foreground">
-              Remote testing systems are not appropriate for every building. The decision depends on site size, 
-              occupancy risk, maintenance resources, and budget. Understanding when to recommend these systems 
-              is crucial for providing cost-effective solutions.
+              Remote testing systems are not appropriate for every building. The decision depends on
+              site size, occupancy risk, maintenance resources, and budget. Understanding when to
+              recommend these systems is crucial for providing cost-effective solutions.
             </p>
 
             {/* Best Suited For */}
@@ -416,7 +485,8 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                     Airports and Transport Hubs
                   </h5>
                   <p className="text-foreground text-sm">
-                    Large areas, 24/7 operation, high occupancy, strict compliance requirements. Typical: 500-2000+ luminaires.
+                    Large areas, 24/7 operation, high occupancy, strict compliance requirements.
+                    Typical: 500-2000+ luminaires.
                   </p>
                 </div>
                 <div className="bg-elec-dark/50 p-3 rounded border border-gray-600">
@@ -425,7 +495,8 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                     Hospitals and Healthcare
                   </h5>
                   <p className="text-foreground text-sm">
-                    Critical life-safety requirements, vulnerable occupants, can't afford system downtime. Typical: 300-1500 luminaires.
+                    Critical life-safety requirements, vulnerable occupants, can't afford system
+                    downtime. Typical: 300-1500 luminaires.
                   </p>
                 </div>
                 <div className="bg-elec-dark/50 p-3 rounded border border-gray-600">
@@ -434,7 +505,8 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                     Universities and Schools
                   </h5>
                   <p className="text-foreground text-sm">
-                    Multiple buildings, large campuses, limited maintenance staff, high public scrutiny. Typical: 200-1000 luminaires.
+                    Multiple buildings, large campuses, limited maintenance staff, high public
+                    scrutiny. Typical: 200-1000 luminaires.
                   </p>
                 </div>
                 <div className="bg-elec-dark/50 p-3 rounded border border-gray-600">
@@ -443,7 +515,8 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                     Shopping Centres and Retail
                   </h5>
                   <p className="text-foreground text-sm">
-                    High public occupancy, complex layouts, tenant coordination challenges. Typical: 300-1200 luminaires.
+                    High public occupancy, complex layouts, tenant coordination challenges. Typical:
+                    300-1200 luminaires.
                   </p>
                 </div>
                 <div className="bg-elec-dark/50 p-3 rounded border border-gray-600">
@@ -452,7 +525,8 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                     Hotels and Large Accommodation
                   </h5>
                   <p className="text-foreground text-sm">
-                    Guest safety priority, 24/7 operation, testing must not disturb occupants. Typical: 200-800 luminaires.
+                    Guest safety priority, 24/7 operation, testing must not disturb occupants.
+                    Typical: 200-800 luminaires.
                   </p>
                 </div>
               </div>
@@ -463,19 +537,20 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
               <h4 className="font-semibold text-orange-300 mb-3">Less Critical Applications</h4>
               <div className="space-y-2 text-foreground text-sm">
                 <p>
-                  <span className="font-medium text-orange-200">Small Offices:</span> Under 50 luminaires — manual 
-                  testing is quick and cost-effective.
+                  <span className="font-medium text-orange-200">Small Offices:</span> Under 50
+                  luminaires — manual testing is quick and cost-effective.
                 </p>
                 <p>
-                  <span className="font-medium text-orange-200">Small Retail Units:</span> Limited occupancy, single-floor 
-                  premises with straightforward testing requirements.
+                  <span className="font-medium text-orange-200">Small Retail Units:</span> Limited
+                  occupancy, single-floor premises with straightforward testing requirements.
                 </p>
                 <p>
-                  <span className="font-medium text-orange-200">Low-Occupancy Buildings:</span> Warehouses, storage facilities 
-                  with minimal staff presence.
+                  <span className="font-medium text-orange-200">Low-Occupancy Buildings:</span>{' '}
+                  Warehouses, storage facilities with minimal staff presence.
                 </p>
                 <p className="text-foreground italic mt-3">
-                  In these cases, the cost of remote testing systems typically exceeds the labour savings achieved.
+                  In these cases, the cost of remote testing systems typically exceeds the labour
+                  savings achieved.
                 </p>
               </div>
             </div>
@@ -484,21 +559,22 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
             <div className="bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-r">
               <h4 className="font-semibold text-blue-300 mb-3">Hybrid Implementation Strategy</h4>
               <p className="text-foreground text-sm mb-3">
-                Some sites benefit from combining manual and remote testing approaches to optimise cost and efficiency:
+                Some sites benefit from combining manual and remote testing approaches to optimise
+                cost and efficiency:
               </p>
               <div className="space-y-2 text-foreground text-sm">
                 <p>
-                  <span className="font-medium text-blue-200">Main Building:</span> Networked or wireless system for 
-                  primary occupied areas with high luminaire density.
+                  <span className="font-medium text-blue-200">Main Building:</span> Networked or
+                  wireless system for primary occupied areas with high luminaire density.
                 </p>
                 <p>
-                  <span className="font-medium text-blue-200">Ancillary Areas:</span> Self-test luminaires or manual 
-                  testing for car parks, plant rooms, or storage areas.
+                  <span className="font-medium text-blue-200">Ancillary Areas:</span> Self-test
+                  luminaires or manual testing for car parks, plant rooms, or storage areas.
                 </p>
                 <p>
-                  <span className="font-medium text-blue-200">Example:</span> A hospital might use a networked system 
-                  for wards, corridors, and clinical areas, but manual testing for small equipment stores and roof-level 
-                  plant rooms.
+                  <span className="font-medium text-blue-200">Example:</span> A hospital might use a
+                  networked system for wards, corridors, and clinical areas, but manual testing for
+                  small equipment stores and roof-level plant rooms.
                 </p>
               </div>
             </div>
@@ -508,36 +584,62 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
               <table className="w-full border border-gray-600 text-sm">
                 <thead className="bg-elec-dark">
                   <tr>
-                    <th className="border border-gray-600 p-3 text-left text-foreground">Site Characteristic</th>
-                    <th className="border border-gray-600 p-3 text-center text-green-300">Remote Testing Recommended</th>
-                    <th className="border border-gray-600 p-3 text-center text-orange-300">Manual Testing Acceptable</th>
+                    <th className="border border-gray-600 p-3 text-left text-foreground">
+                      Site Characteristic
+                    </th>
+                    <th className="border border-gray-600 p-3 text-center text-green-300">
+                      Remote Testing Recommended
+                    </th>
+                    <th className="border border-gray-600 p-3 text-center text-orange-300">
+                      Manual Testing Acceptable
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="text-foreground">
                   <tr>
                     <td className="border border-gray-600 p-3 font-medium">Number of Luminaires</td>
                     <td className="border border-gray-600 p-3 text-center text-green-300">100+</td>
-                    <td className="border border-gray-600 p-3 text-center text-orange-300">&lt; 100</td>
+                    <td className="border border-gray-600 p-3 text-center text-orange-300">
+                      &lt; 100
+                    </td>
                   </tr>
                   <tr className="bg-elec-dark/50">
                     <td className="border border-gray-600 p-3 font-medium">Occupancy Risk Level</td>
-                    <td className="border border-gray-600 p-3 text-center text-green-300">High (public/vulnerable)</td>
-                    <td className="border border-gray-600 p-3 text-center text-orange-300">Low (staff only)</td>
+                    <td className="border border-gray-600 p-3 text-center text-green-300">
+                      High (public/vulnerable)
+                    </td>
+                    <td className="border border-gray-600 p-3 text-center text-orange-300">
+                      Low (staff only)
+                    </td>
                   </tr>
                   <tr>
-                    <td className="border border-gray-600 p-3 font-medium">Maintenance Resources</td>
-                    <td className="border border-gray-600 p-3 text-center text-green-300">Limited staff availability</td>
-                    <td className="border border-gray-600 p-3 text-center text-orange-300">Dedicated maintenance team</td>
+                    <td className="border border-gray-600 p-3 font-medium">
+                      Maintenance Resources
+                    </td>
+                    <td className="border border-gray-600 p-3 text-center text-green-300">
+                      Limited staff availability
+                    </td>
+                    <td className="border border-gray-600 p-3 text-center text-orange-300">
+                      Dedicated maintenance team
+                    </td>
                   </tr>
                   <tr className="bg-elec-dark/50">
                     <td className="border border-gray-600 p-3 font-medium">Building Complexity</td>
-                    <td className="border border-gray-600 p-3 text-center text-green-300">Multi-storey, large campus</td>
-                    <td className="border border-gray-600 p-3 text-center text-orange-300">Single building, simple layout</td>
+                    <td className="border border-gray-600 p-3 text-center text-green-300">
+                      Multi-storey, large campus
+                    </td>
+                    <td className="border border-gray-600 p-3 text-center text-orange-300">
+                      Single building, simple layout
+                    </td>
                   </tr>
                   <tr>
                     <td className="border border-gray-600 p-3 font-medium">Compliance Scrutiny</td>
-                    <td className="border border-gray-600 p-3 text-center text-green-300">High (regulated sector)</td>
-                    <td className="border border-gray-600 p-3 text-center text-orange-300">Standard commercial</td>
+                    <td className="border border-gray-600 p-3 text-center text-green-300">
+                      High (regulated sector)
+                    </td>
+                    <td className="border border-gray-600 p-3 text-center text-orange-300">
+                      Standard commercial
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -548,19 +650,23 @@ export const EmergencyLightingTechnicalSection4_5 = () => {
                 <CheckCircle2 className="h-5 w-5" />
                 Quick Check
               </h4>
-              <p className="text-foreground text-sm mb-2">Name one type of site where remote testing provides major benefits.</p>
+              <p className="text-foreground text-sm mb-2">
+                Name one type of site where remote testing provides major benefits.
+              </p>
               <details className="text-foreground text-sm">
-                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">Show Answer</summary>
+                <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80">
+                  Show Answer
+                </summary>
                 <p className="mt-2 pl-4 border-l-2 border-elec-yellow">
-                  Airports, hospitals, universities, shopping centres, or hotels — any building with 100+ luminaires, 
-                  high public occupancy, 24/7 operation, or limited maintenance staff. Remote testing reduces labour 
-                  costs significantly whilst ensuring consistent compliance and instant fault detection in these complex environments.
+                  Airports, hospitals, universities, shopping centres, or hotels — any building with
+                  100+ luminaires, high public occupancy, 24/7 operation, or limited maintenance
+                  staff. Remote testing reduces labour costs significantly whilst ensuring
+                  consistent compliance and instant fault detection in these complex environments.
                 </p>
               </details>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

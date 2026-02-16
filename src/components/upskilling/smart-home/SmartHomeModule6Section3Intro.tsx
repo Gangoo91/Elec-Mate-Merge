@@ -9,9 +9,11 @@ const SmartHomeModule6Section3Intro = () => {
           <h2 className="text-2xl font-bold text-foreground mb-4">Introduction</h2>
           <div className="space-y-4">
             <p className="text-foreground leading-relaxed">
-              Voice assistants are powerful, but their true value comes from automation. Instead of controlling devices one at a time, 
-              routines and logic mapping allow multiple actions to happen with a single command. For electricians, this means understanding 
-              not just how to connect devices, but how to program and test routines that match the client's lifestyle and safety needs.
+              Voice assistants are powerful, but their true value comes from automation. Instead of
+              controlling devices one at a time, routines and logic mapping allow multiple actions
+              to happen with a single command. For electricians, this means understanding not just
+              how to connect devices, but how to program and test routines that match the client's
+              lifestyle and safety needs.
             </p>
           </div>
         </CardContent>
@@ -22,7 +24,9 @@ const SmartHomeModule6Section3Intro = () => {
           <CardContent className="p-4 text-center">
             <Zap className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-foreground mb-2">Automation</h3>
-            <p className="text-foreground text-sm">Multiple actions triggered by single commands or events</p>
+            <p className="text-foreground text-sm">
+              Multiple actions triggered by single commands or events
+            </p>
           </CardContent>
         </Card>
 
@@ -30,7 +34,9 @@ const SmartHomeModule6Section3Intro = () => {
           <CardContent className="p-4 text-center">
             <Command className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-foreground mb-2">Control</h3>
-            <p className="text-foreground text-sm">IF-THEN logic for intelligent device responses</p>
+            <p className="text-foreground text-sm">
+              IF-THEN logic for intelligent device responses
+            </p>
           </CardContent>
         </Card>
 
@@ -38,7 +44,9 @@ const SmartHomeModule6Section3Intro = () => {
           <CardContent className="p-4 text-center">
             <TrendingUp className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-foreground mb-2">Efficiency</h3>
-            <p className="text-foreground text-sm">Save time and improve convenience for homeowners</p>
+            <p className="text-foreground text-sm">
+              Save time and improve convenience for homeowners
+            </p>
           </CardContent>
         </Card>
       </div>

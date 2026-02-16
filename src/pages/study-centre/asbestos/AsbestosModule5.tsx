@@ -1,40 +1,45 @@
-import { ArrowLeft, Siren, ShieldAlert, Trash2, HeartPulse, Users } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Siren, ShieldAlert, Trash2, HeartPulse, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Accidental Disturbance Procedures",
+    title: 'Accidental Disturbance Procedures',
     icon: ShieldAlert,
-    description: "STOP, SEAL, SIGN, SUMMON — the 4-S emergency response, immediate actions, and incident recording",
+    description:
+      'STOP, SEAL, SIGN, SUMMON — the 4-S emergency response, immediate actions, and incident recording',
   },
   {
     id: 2,
-    title: "Decontamination & Waste Disposal",
+    title: 'Decontamination & Waste Disposal',
     icon: Trash2,
-    description: "Personal and area decontamination, double-bagging, consignment notes, and licensed waste carriers",
+    description:
+      'Personal and area decontamination, double-bagging, consignment notes, and licensed waste carriers',
   },
   {
     id: 3,
-    title: "Health Surveillance & Medical Monitoring",
+    title: 'Health Surveillance & Medical Monitoring',
     icon: HeartPulse,
-    description: "Medical examinations, lung function tests, screening schedules, record keeping, and compensation",
+    description:
+      'Medical examinations, lung function tests, screening schedules, record keeping, and compensation',
   },
   {
     id: 4,
-    title: "Roles, Responsibilities & Your Legal Duties",
+    title: 'Roles, Responsibilities & Your Legal Duties',
     icon: Users,
-    description: "Employer, employee, dutyholder, and HSE responsibilities, enforcement, and whistleblowing rights",
+    description:
+      'Employer, employee, dutyholder, and HSE responsibilities, enforcement, and whistleblowing rights',
   },
 ];
 
 export default function AsbestosModule5() {
   useSEO({
-    title: "Module 5: Emergency Procedures & Responsibilities | Asbestos Awareness",
-    description: "Accidental disturbance response, decontamination, waste disposal, health surveillance, and legal responsibilities for asbestos work.",
+    title: 'Module 5: Emergency Procedures & Responsibilities | Asbestos Awareness',
+    description:
+      'Accidental disturbance response, decontamination, waste disposal, health surveillance, and legal responsibilities for asbestos work.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function AsbestosModule5() {
               Emergency Procedures & Responsibilities
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              What to do if asbestos is disturbed, how to decontaminate, health monitoring, and your legal duties
+              What to do if asbestos is disturbed, how to decontaminate, health monitoring, and your
+              legal duties
             </p>
           </div>
 

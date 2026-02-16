@@ -12,16 +12,16 @@ export const BMSModule5Section1ContentPart1 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          A communication protocol is a set of rules and standards that defines how devices exchange 
-          information over a network. In Building Management Systems (BMS), protocols are the digital 
-          "languages" that enable different building systems to communicate effectively.
+          A communication protocol is a set of rules and standards that defines how devices exchange
+          information over a network. In Building Management Systems (BMS), protocols are the
+          digital "languages" that enable different building systems to communicate effectively.
         </p>
-        
+
         <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Think of it Like This</h4>
           <p className="text-foreground">
-            Imagine a hospital where departments speak different languages. The BMS acts as a universal 
-            translator, ensuring all departments can coordinate effectively.
+            Imagine a hospital where departments speak different languages. The BMS acts as a
+            universal translator, ensuring all departments can coordinate effectively.
           </p>
         </div>
 

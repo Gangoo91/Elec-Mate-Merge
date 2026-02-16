@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Wrench,
@@ -15,190 +15,166 @@ import {
   Hammer,
   Power,
   Activity,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
-    id: "insulation-tester",
-    question: "What is the purpose of an insulation resistance tester?",
+    id: 'insulation-tester',
+    question: 'What is the purpose of an insulation resistance tester?',
     options: [
-      "To measure current flow",
-      "To test insulation quality between conductors",
-      "To check voltage levels",
+      'To measure current flow',
+      'To test insulation quality between conductors',
+      'To check voltage levels',
     ],
     correctIndex: 1,
     explanation:
-      "Insulation resistance testers apply high test voltage (typically 500V DC) to detect insulation breakdown and verify the quality of insulation between conductors and earth.",
+      'Insulation resistance testers apply high test voltage (typically 500V DC) to detect insulation breakdown and verify the quality of insulation between conductors and earth.',
   },
   {
-    id: "voltage-indicator",
-    question: "Which tester is essential for safe isolation procedures?",
-    options: [
-      "Multimeter",
-      "Voltage indicator (two-pole tester)",
-      "RCD tester",
-    ],
+    id: 'voltage-indicator',
+    question: 'Which tester is essential for safe isolation procedures?',
+    options: ['Multimeter', 'Voltage indicator (two-pole tester)', 'RCD tester'],
     correctIndex: 1,
     explanation:
-      "Voltage indicators are essential for confirming circuits are dead before work begins, forming a critical part of safe isolation procedures.",
+      'Voltage indicators are essential for confirming circuits are dead before work begins, forming a critical part of safe isolation procedures.',
   },
   {
-    id: "calibration-importance",
-    question: "Why must test instruments be calibrated regularly?",
+    id: 'calibration-importance',
+    question: 'Why must test instruments be calibrated regularly?',
     options: [
-      "To make them look professional",
-      "To ensure accuracy and compliance",
-      "To increase their value",
+      'To make them look professional',
+      'To ensure accuracy and compliance',
+      'To increase their value',
     ],
     correctIndex: 1,
     explanation:
-      "Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable results.",
+      'Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable results.',
   },
   {
-    id: "continuity-test",
-    question: "What does a continuity tester check?",
+    id: 'continuity-test',
+    question: 'What does a continuity tester check?',
     options: [
-      "Voltage levels in circuits",
-      "That conductors are continuous without breaks",
-      "RCD trip times",
+      'Voltage levels in circuits',
+      'That conductors are continuous without breaks',
+      'RCD trip times',
     ],
     correctIndex: 1,
     explanation:
-      "Continuity testers verify that conductors provide an unbroken electrical path from one end to the other, essential for earth continuity and ring circuit testing.",
+      'Continuity testers verify that conductors provide an unbroken electrical path from one end to the other, essential for earth continuity and ring circuit testing.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which instrument is used to measure voltage, current, and resistance?",
-    options: [
-      "Continuity tester",
-      "Multimeter",
-      "RCD tester",
-      "Insulation resistance tester",
-    ],
+    question: 'Which instrument is used to measure voltage, current, and resistance?',
+    options: ['Continuity tester', 'Multimeter', 'RCD tester', 'Insulation resistance tester'],
     correctAnswer: 1,
     explanation:
-      "Multimeters are versatile instruments capable of measuring voltage, current, and resistance, making them essential for general electrical testing.",
+      'Multimeters are versatile instruments capable of measuring voltage, current, and resistance, making them essential for general electrical testing.',
   },
   {
     id: 2,
-    question: "What voltage does an insulation resistance tester typically apply for testing?",
-    options: [
-      "50 V DC",
-      "230 V AC",
-      "500 V DC",
-      "12 V DC",
-    ],
+    question: 'What voltage does an insulation resistance tester typically apply for testing?',
+    options: ['50 V DC', '230 V AC', '500 V DC', '12 V DC'],
     correctAnswer: 2,
     explanation:
-      "Insulation resistance testers typically apply 500V DC to test insulation quality, providing sufficient voltage to detect potential breakdown.",
+      'Insulation resistance testers typically apply 500V DC to test insulation quality, providing sufficient voltage to detect potential breakdown.',
   },
   {
     id: 3,
-    question: "True or False: You can perform an insulation resistance test on a live circuit.",
-    options: ["True", "False"],
+    question: 'True or False: You can perform an insulation resistance test on a live circuit.',
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False. Insulation resistance tests must only be performed on de-energised circuits to prevent equipment damage and ensure safety.",
+      'False. Insulation resistance tests must only be performed on de-energised circuits to prevent equipment damage and ensure safety.',
   },
   {
     id: 4,
-    question: "Name one test you can perform with a continuity tester.",
+    question: 'Name one test you can perform with a continuity tester.',
     options: [
-      "Voltage measurement",
-      "Earth continuity check",
-      "RCD trip time",
-      "Insulation resistance",
+      'Voltage measurement',
+      'Earth continuity check',
+      'RCD trip time',
+      'Insulation resistance',
     ],
     correctAnswer: 1,
     explanation:
-      "Continuity testers are used for earth continuity checks, ring final circuit testing, and verifying bonding conductor integrity.",
+      'Continuity testers are used for earth continuity checks, ring final circuit testing, and verifying bonding conductor integrity.',
   },
   {
     id: 5,
-    question: "Which tester should always be proved before and after use?",
-    options: [
-      "Voltage indicator",
-      "Multimeter",
-      "RCD tester",
-      "Clamp meter",
-    ],
+    question: 'Which tester should always be proved before and after use?',
+    options: ['Voltage indicator', 'Multimeter', 'RCD tester', 'Clamp meter'],
     correctAnswer: 0,
     explanation:
-      "Voltage indicators must be proved on a known live source before and after testing to ensure they are working correctly.",
+      'Voltage indicators must be proved on a known live source before and after testing to ensure they are working correctly.',
   },
   {
     id: 6,
-    question: "What is the main purpose of an RCD tester?",
+    question: 'What is the main purpose of an RCD tester?',
     options: [
-      "Measure resistance of conductors",
-      "Measure trip time and trip current",
-      "Check cable length",
-      "Identify polarity",
+      'Measure resistance of conductors',
+      'Measure trip time and trip current',
+      'Check cable length',
+      'Identify polarity',
     ],
     correctAnswer: 1,
     explanation:
-      "RCD testers measure both trip time and trip current to verify that RCDs operate within BS 7671 requirements for protection.",
+      'RCD testers measure both trip time and trip current to verify that RCDs operate within BS 7671 requirements for protection.',
   },
   {
     id: 7,
-    question: "Why is regular calibration important for test equipment?",
+    question: 'Why is regular calibration important for test equipment?',
     options: [
-      "To maintain warranty coverage",
-      "To ensure accuracy and compliance with standards",
-      "To increase resale value",
-      "To reduce testing time",
+      'To maintain warranty coverage',
+      'To ensure accuracy and compliance with standards',
+      'To increase resale value',
+      'To reduce testing time',
     ],
     correctAnswer: 1,
     explanation:
-      "Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable results.",
+      'Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable results.',
   },
   {
     id: 8,
-    question: "Name one PPE item recommended when testing live circuits.",
-    options: [
-      "Hard hat",
-      "Insulated gloves",
-      "High-vis vest",
-      "Steel toe boots",
-    ],
+    question: 'Name one PPE item recommended when testing live circuits.',
+    options: ['Hard hat', 'Insulated gloves', 'High-vis vest', 'Steel toe boots'],
     correctAnswer: 1,
     explanation:
-      "Insulated gloves provide essential protection against electric shock when testing live circuits, along with safety glasses and other appropriate PPE.",
+      'Insulated gloves provide essential protection against electric shock when testing live circuits, along with safety glasses and other appropriate PPE.',
   },
 ];
 
 const Module3Section3_3: React.FC = () => {
-  console.log("Module3Section3_3 component loaded");
+  console.log('Module3Section3_3 component loaded');
 
   useSEO(
-    "Test Equipment for Installation Work (Overview) – Module 3 (3.3.3)",
-    "Overview of essential electrical test equipment. Multimeters, insulation testers, continuity testers, voltage indicators and safety practices."
+    'Test Equipment for Installation Work (Overview) – Module 3 (3.3.3)',
+    'Overview of essential electrical test equipment. Multimeters, insulation testers, continuity testers, voltage indicators and safety practices.'
   );
 
   const faqs = [
     {
-      q: "Can a multimeter replace an RCD tester?",
-      a: "No — a multimeter cannot measure RCD trip times or currents accurately. Specialist RCD testers are required for compliance testing.",
+      q: 'Can a multimeter replace an RCD tester?',
+      a: 'No — a multimeter cannot measure RCD trip times or currents accurately. Specialist RCD testers are required for compliance testing.',
     },
     {
-      q: "Is it safe to carry out insulation resistance tests on live circuits?",
-      a: "No — these tests must only be carried out on de-energised circuits to prevent equipment damage and ensure safety.",
+      q: 'Is it safe to carry out insulation resistance tests on live circuits?',
+      a: 'No — these tests must only be carried out on de-energised circuits to prevent equipment damage and ensure safety.',
     },
     {
       q: "What's the difference between a voltage indicator and a multimeter?",
-      a: "A voltage indicator only shows presence/absence of voltage, while a multimeter measures actual voltage values and other parameters.",
+      a: 'A voltage indicator only shows presence/absence of voltage, while a multimeter measures actual voltage values and other parameters.',
     },
     {
-      q: "How often should test equipment be calibrated?",
-      a: "Typically annually or as specified by the manufacturer, though more frequent calibration may be required for heavily used equipment.",
+      q: 'How often should test equipment be calibrated?',
+      a: 'Typically annually or as specified by the manufacturer, though more frequent calibration may be required for heavily used equipment.',
     },
   ];
 
@@ -235,7 +211,8 @@ const Module3Section3_3: React.FC = () => {
             Test Equipment for Installation Work (Overview Only)
           </h1>
           <p className="text-white/70">
-            Essential electrical test equipment for safe, compliant installations and professional testing practices.
+            Essential electrical test equipment for safe, compliant installations and professional
+            testing practices.
           </p>
         </header>
 
@@ -259,13 +236,15 @@ const Module3Section3_3: React.FC = () => {
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  <strong>Spot:</strong> Digital displays, test leads, range selectors, calibration labels.
+                  <strong>Spot:</strong> Digital displays, test leads, range selectors, calibration
+                  labels.
                 </li>
                 <li>
                   <strong>Use:</strong> Right tester for each test - never compromise on safety.
                 </li>
                 <li>
-                  <strong>Check:</strong> Calibration dates, lead condition, battery levels, proving units.
+                  <strong>Check:</strong> Calibration dates, lead condition, battery levels, proving
+                  units.
                 </li>
               </ul>
             </div>
@@ -480,7 +459,9 @@ const Module3Section3_3: React.FC = () => {
                     <p className="font-medium text-white mb-1">Test Parameters</p>
                     <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Trip current measurement (typically 30mA for general use)</li>
-                      <li>Trip time at rated current (less than or equal to 300ms for 30mA RCDs)</li>
+                      <li>
+                        Trip time at rated current (less than or equal to 300ms for 30mA RCDs)
+                      </li>
                       <li>Trip time at 5x rated current (less than or equal to 40ms)</li>
                       <li>No-trip test at 50% rated current</li>
                     </ul>
@@ -570,19 +551,40 @@ const Module3Section3_3: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Using uncalibrated equipment</strong> - Inaccurate results, compliance failures</li>
-                <li><strong>Testing live circuits with insulation tester</strong> - Equipment damage, safety risk</li>
-                <li><strong>Not proving voltage indicators</strong> - False confidence in dead circuits</li>
-                <li><strong>Wrong test lead connections</strong> - Meter damage, incorrect readings</li>
+                <li>
+                  <strong>Using uncalibrated equipment</strong> - Inaccurate results, compliance
+                  failures
+                </li>
+                <li>
+                  <strong>Testing live circuits with insulation tester</strong> - Equipment damage,
+                  safety risk
+                </li>
+                <li>
+                  <strong>Not proving voltage indicators</strong> - False confidence in dead
+                  circuits
+                </li>
+                <li>
+                  <strong>Wrong test lead connections</strong> - Meter damage, incorrect readings
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Inadequate record keeping</strong> - Compliance problems, traceability issues</li>
-                <li><strong>Skipping continuity tests</strong> - Undetected earth faults, safety risks</li>
-                <li><strong>Wrong test voltage selection</strong> - Inappropriate stress on insulation</li>
-                <li><strong>Ignoring manufacturer guidance</strong> - Incorrect operation, invalid results</li>
+                <li>
+                  <strong>Inadequate record keeping</strong> - Compliance problems, traceability
+                  issues
+                </li>
+                <li>
+                  <strong>Skipping continuity tests</strong> - Undetected earth faults, safety risks
+                </li>
+                <li>
+                  <strong>Wrong test voltage selection</strong> - Inappropriate stress on insulation
+                </li>
+                <li>
+                  <strong>Ignoring manufacturer guidance</strong> - Incorrect operation, invalid
+                  results
+                </li>
               </ul>
             </div>
           </div>
@@ -598,10 +600,18 @@ const Module3Section3_3: React.FC = () => {
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">Testing Requirements</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Part 6:</strong> Inspection and testing of electrical installations</li>
-                <li><strong>Section 610:</strong> Initial verification requirements</li>
-                <li><strong>Section 612:</strong> Testing procedures and acceptance criteria</li>
-                <li><strong>Appendix 13:</strong> Methods for measuring earth fault loop impedance</li>
+                <li>
+                  <strong>Part 6:</strong> Inspection and testing of electrical installations
+                </li>
+                <li>
+                  <strong>Section 610:</strong> Initial verification requirements
+                </li>
+                <li>
+                  <strong>Section 612:</strong> Testing procedures and acceptance criteria
+                </li>
+                <li>
+                  <strong>Appendix 13:</strong> Methods for measuring earth fault loop impedance
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
@@ -625,9 +635,10 @@ const Module3Section3_3: React.FC = () => {
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Insulation Test Prevents Major Fault</p>
             <p className="text-sm mb-4">
-              On a commercial fit-out, an electrician used an insulation resistance tester before energising the lighting circuits.
-              The test revealed a damaged cable caused by a screw through the wall, which would have caused a fault if energised.
-              The damage was repaired before final connection, avoiding downtime and potential danger.
+              On a commercial fit-out, an electrician used an insulation resistance tester before
+              energising the lighting circuits. The test revealed a damaged cable caused by a screw
+              through the wall, which would have caused a fault if energised. The damage was
+              repaired before final connection, avoiding downtime and potential danger.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
@@ -677,8 +688,9 @@ const Module3Section3_3: React.FC = () => {
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
-              Test equipment is vital for ensuring installations are safe, compliant, and fault-free. Knowing which tester to use,
-              how to operate it correctly, and how to interpret results is a fundamental skill for all electricians.
+              Test equipment is vital for ensuring installations are safe, compliant, and
+              fault-free. Knowing which tester to use, how to operate it correctly, and how to
+              interpret results is a fundamental skill for all electricians.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
@@ -750,12 +762,24 @@ const Module3Section3_3: React.FC = () => {
               <div>
                 <p className="font-medium mb-2">Test Equipment Guide</p>
                 <ul className="space-y-1">
-                  <li><strong>Multimeter:</strong> V, I, R measurements</li>
-                  <li><strong>Insulation Tester:</strong> 500V DC test</li>
-                  <li><strong>Continuity:</strong> Earth paths, ring circuits</li>
-                  <li><strong>Voltage Indicator:</strong> Live/dead confirmation</li>
-                  <li><strong>RCD Tester:</strong> Trip time & current</li>
-                  <li><strong>Loop Tester:</strong> Earth fault impedance</li>
+                  <li>
+                    <strong>Multimeter:</strong> V, I, R measurements
+                  </li>
+                  <li>
+                    <strong>Insulation Tester:</strong> 500V DC test
+                  </li>
+                  <li>
+                    <strong>Continuity:</strong> Earth paths, ring circuits
+                  </li>
+                  <li>
+                    <strong>Voltage Indicator:</strong> Live/dead confirmation
+                  </li>
+                  <li>
+                    <strong>RCD Tester:</strong> Trip time & current
+                  </li>
+                  <li>
+                    <strong>Loop Tester:</strong> Earth fault impedance
+                  </li>
                 </ul>
               </div>
               <div>
@@ -780,10 +804,18 @@ const Module3Section3_3: React.FC = () => {
             Key References
           </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
-            <p><strong>BS 7671:</strong> IET Wiring Regulations (18th Edition) - Part 6</p>
-            <p><strong>GS38:</strong> Electrical test equipment for use by electricians</p>
-            <p><strong>BS EN 61557:</strong> Electrical safety in low voltage distribution systems</p>
-            <p><strong>IET Code of Practice:</strong> In-service Inspection and Testing</p>
+            <p>
+              <strong>BS 7671:</strong> IET Wiring Regulations (18th Edition) - Part 6
+            </p>
+            <p>
+              <strong>GS38:</strong> Electrical test equipment for use by electricians
+            </p>
+            <p>
+              <strong>BS EN 61557:</strong> Electrical safety in low voltage distribution systems
+            </p>
+            <p>
+              <strong>IET Code of Practice:</strong> In-service Inspection and Testing
+            </p>
           </div>
         </section>
 
@@ -798,7 +830,11 @@ const Module3Section3_3: React.FC = () => {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../3-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Common Power Tools

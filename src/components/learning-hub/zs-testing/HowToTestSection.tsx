@@ -1,29 +1,35 @@
-
 import React from 'react';
 import { Zap, AlertTriangle, TestTube2, Shield, ThermometerSun, Plug } from 'lucide-react';
 
 const HowToTestSection = () => (
   <div className="space-y-4 sm:space-y-6">
-    
     <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Plug className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">Socket Outlet Testing (Most Common Method)</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-green-400">
+          Socket Outlet Testing (Most Common Method)
+        </h4>
       </div>
       <div className="space-y-3 text-xs sm:text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Standard socket testing procedure:</p>
           <p className="ml-4">• Simply plug the Zs tester directly into the socket outlet</p>
           <p className="ml-4">• Ensure the socket is switched on and energised</p>
-          <p className="ml-4">• The tester automatically connects between phase and earth via the socket pins</p>
+          <p className="ml-4">
+            • The tester automatically connects between phase and earth via the socket pins
+          </p>
           <p className="ml-4">• Press the test button and record the reading immediately</p>
-          <p className="ml-4">• Test multiple sockets on ring circuits to find the highest reading</p>
+          <p className="ml-4">
+            • Test multiple sockets on ring circuits to find the highest reading
+          </p>
         </div>
         <div>
           <p className="font-medium text-foreground">Why this method is preferred:</p>
           <p className="ml-4">• Quick and efficient - no dismantling required</p>
           <p className="ml-4">• Tests the complete installation as used by the end user</p>
-          <p className="ml-4">• Includes all connections: socket, back box, and cable terminations</p>
+          <p className="ml-4">
+            • Includes all connections: socket, back box, and cable terminations
+          </p>
           <p className="ml-4">• Safer than working with exposed terminals</p>
           <p className="ml-4">• Represents real-world fault conditions accurately</p>
         </div>
@@ -37,11 +43,13 @@ const HowToTestSection = () => (
         </div>
       </div>
     </div>
-    
+
     <div className="bg-red-500/10 border border-red-500/20 border-l-4 border-l-red-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-red-400">Live Testing Method (BS 7671 Standard Approach)</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-red-400">
+          Live Testing Method (BS 7671 Standard Approach)
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div>
@@ -49,15 +57,25 @@ const HowToTestSection = () => (
           <p className="ml-4">• Use GS38 compliant test leads and voltage indicator</p>
           <p className="ml-4">• Wear appropriate PPE including insulated gloves</p>
           <p className="ml-4">• Ensure test equipment is calibrated and in good condition</p>
-          <p className="ml-4">• Verify supply voltage is within normal operating range (207-253V)</p>
+          <p className="ml-4">
+            • Verify supply voltage is within normal operating range (207-253V)
+          </p>
           <p className="ml-4">• Check tester battery condition and functional operation</p>
         </div>
         <div>
           <p className="font-medium text-foreground">Step 2: Test point selection and access</p>
-          <p className="ml-4">• <strong>Socket circuits:</strong> Plug tester directly into socket outlets</p>
-          <p className="ml-4">• <strong>Lighting circuits:</strong> Test at light switches or ceiling roses</p>
-          <p className="ml-4">• <strong>Fixed appliances:</strong> Test at appliance connection points</p>
-          <p className="ml-4">• <strong>Distribution boards:</strong> Test at MCB terminals if accessible</p>
+          <p className="ml-4">
+            • <strong>Socket circuits:</strong> Plug tester directly into socket outlets
+          </p>
+          <p className="ml-4">
+            • <strong>Lighting circuits:</strong> Test at light switches or ceiling roses
+          </p>
+          <p className="ml-4">
+            • <strong>Fixed appliances:</strong> Test at appliance connection points
+          </p>
+          <p className="ml-4">
+            • <strong>Distribution boards:</strong> Test at MCB terminals if accessible
+          </p>
           <p className="ml-4">• Always choose the furthest accessible point from the origin</p>
         </div>
         <div>
@@ -71,7 +89,9 @@ const HowToTestSection = () => (
         <div>
           <p className="font-medium text-foreground">Step 4: Record and interpret results</p>
           <p className="ml-4">• Record the reading and ambient temperature immediately</p>
-          <p className="ml-4">• Apply temperature correction to 70°C conductor operating temperature</p>
+          <p className="ml-4">
+            • Apply temperature correction to 70°C conductor operating temperature
+          </p>
           <p className="ml-4">• Compare with maximum values from BS 7671 Appendix 3</p>
           <p className="ml-4">• Document any readings that exceed permitted values</p>
           <p className="ml-4">• Consider remedial action if readings are marginal</p>
@@ -133,7 +153,9 @@ const HowToTestSection = () => (
     <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
       <div className="flex items-center gap-2 mb-3">
         <TestTube2 className="h-4 w-4 text-yellow-400" />
-        <h4 className="font-medium text-yellow-400">Dead Testing Method (Alternative When Required)</h4>
+        <h4 className="font-medium text-yellow-400">
+          Dead Testing Method (Alternative When Required)
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div>
@@ -156,8 +178,9 @@ const HowToTestSection = () => (
         <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
           <p className="font-medium text-orange-400 mb-2">Dead Testing Accuracy Considerations:</p>
           <p className="text-sm text-white">
-            Dead testing doesn't account for parallel earth paths or the load impedance that exists during actual fault conditions. 
-            Results are therefore conservative but may not reflect true fault loop impedance under operating conditions.
+            Dead testing doesn't account for parallel earth paths or the load impedance that exists
+            during actual fault conditions. Results are therefore conservative but may not reflect
+            true fault loop impedance under operating conditions.
           </p>
         </div>
       </div>
@@ -178,10 +201,18 @@ const HowToTestSection = () => (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-medium text-foreground mb-2">Understanding the factors:</p>
-            <p>• <strong>70°C:</strong> Maximum conductor operating temperature for PVC cables</p>
-            <p>• <strong>230:</strong> Temperature coefficient constant for copper conductors</p>
-            <p>• <strong>Test temperature:</strong> Ambient temperature during testing</p>
-            <p>• <strong>Critical requirement:</strong> All readings must be temperature corrected</p>
+            <p>
+              • <strong>70°C:</strong> Maximum conductor operating temperature for PVC cables
+            </p>
+            <p>
+              • <strong>230:</strong> Temperature coefficient constant for copper conductors
+            </p>
+            <p>
+              • <strong>Test temperature:</strong> Ambient temperature during testing
+            </p>
+            <p>
+              • <strong>Critical requirement:</strong> All readings must be temperature corrected
+            </p>
           </div>
           <div>
             <p className="font-medium text-foreground mb-2">Practical implications:</p>
@@ -236,8 +267,9 @@ const HowToTestSection = () => (
         <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
           <p className="font-medium text-red-400 mb-2">Important Safety Note:</p>
           <p className="text-sm text-white">
-            Never disable RCD protection unless you are competent and have implemented appropriate alternative safety measures. 
-            Always restore RCD protection immediately after testing and verify correct operation.
+            Never disable RCD protection unless you are competent and have implemented appropriate
+            alternative safety measures. Always restore RCD protection immediately after testing and
+            verify correct operation.
           </p>
         </div>
       </div>

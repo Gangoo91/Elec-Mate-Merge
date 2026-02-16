@@ -3,7 +3,16 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Loader2, Zap, CheckCircle2, AlertTriangle, Mail, Sparkles, RefreshCw, ArrowRight } from 'lucide-react';
+import {
+  Loader2,
+  Zap,
+  CheckCircle2,
+  AlertTriangle,
+  Mail,
+  Sparkles,
+  RefreshCw,
+  ArrowRight,
+} from 'lucide-react';
 
 type VerificationState = 'verifying' | 'success' | 'error';
 
@@ -163,8 +172,8 @@ const ConfirmEmail = () => {
             const { data: elecIdResult } = await supabase.functions.invoke('generate-elec-id', {
               body: {
                 user_id: userId,
-                ecs_card_type: elecIdData.ecsCardType || null
-              }
+                ecs_card_type: elecIdData.ecsCardType || null,
+              },
             });
             if (elecIdResult?.elec_id_number) {
               setGeneratedElecId(elecIdResult.elec_id_number);
@@ -178,18 +187,20 @@ const ConfirmEmail = () => {
       }
 
       // 4. Send welcome email (non-blocking)
-      supabase.functions.invoke('send-welcome-email', {
-        body: {
-          userId: userId,
-          email: email,
-          fullName: fullName,
-        },
-      }).then(() => {
-        console.log('Welcome email sent');
-      }).catch((emailErr) => {
-        console.warn('Welcome email failed (non-critical):', emailErr);
-      });
-
+      supabase.functions
+        .invoke('send-welcome-email', {
+          body: {
+            userId: userId,
+            email: email,
+            fullName: fullName,
+          },
+        })
+        .then(() => {
+          console.log('Welcome email sent');
+        })
+        .catch((emailErr) => {
+          console.warn('Welcome email failed (non-critical):', emailErr);
+        });
     } catch (error) {
       console.error('Error in post-confirmation tasks:', error);
     }
@@ -257,9 +268,7 @@ const ConfirmEmail = () => {
                     <Loader2 className="h-10 w-10 animate-spin text-yellow-400" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-2">Verifying your email...</h3>
-                  <p className="text-gray-300 text-sm">
-                    Please wait while we confirm your account
-                  </p>
+                  <p className="text-gray-300 text-sm">Please wait while we confirm your account</p>
                 </div>
               )}
 
@@ -296,9 +305,7 @@ const ConfirmEmail = () => {
                     </Button>
                   ) : (
                     <>
-                      <p className="text-gray-400 text-sm mb-4">
-                        Redirecting to your dashboard...
-                      </p>
+                      <p className="text-gray-400 text-sm mb-4">Redirecting to your dashboard...</p>
                       <div className="flex justify-center">
                         <Loader2 className="h-5 w-5 animate-spin text-yellow-400" />
                       </div>
@@ -314,15 +321,15 @@ const ConfirmEmail = () => {
                     <AlertTriangle className="h-10 w-10 text-red-400" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-2">Verification failed</h3>
-                  <p className="text-gray-300 text-sm mb-6">
-                    {errorMessage}
-                  </p>
+                  <p className="text-gray-300 text-sm mb-6">{errorMessage}</p>
 
                   {resendSuccess ? (
                     <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30 mb-5 animate-fade-in">
                       <div className="flex items-center gap-2 justify-center text-green-400">
                         <Mail className="h-5 w-5" />
-                        <span className="text-sm font-medium">New email sent! Check your inbox.</span>
+                        <span className="text-sm font-medium">
+                          New email sent! Check your inbox.
+                        </span>
                       </div>
                     </div>
                   ) : (

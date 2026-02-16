@@ -5,15 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import {
-  Brain,
-  Search,
-  CheckCircle2,
-  Circle,
-  ChevronRight,
-  BookOpen,
-  Loader2,
-} from 'lucide-react';
+import { Brain, Search, CheckCircle2, Circle, ChevronRight, BookOpen, Loader2 } from 'lucide-react';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import {
   useQualificationACs,
@@ -66,22 +58,16 @@ export function KSBMappingAssistant({
           .map((lo) => ({
             ...lo,
             assessmentCriteria: lo.assessmentCriteria.filter(
-              (ac) =>
-                ac.acText.toLowerCase().includes(q) ||
-                ac.acFullRef.toLowerCase().includes(q),
+              (ac) => ac.acText.toLowerCase().includes(q) || ac.acFullRef.toLowerCase().includes(q)
             ),
           }))
-          .filter(
-            (lo) =>
-              lo.assessmentCriteria.length > 0 ||
-              lo.loText.toLowerCase().includes(q),
-          ),
+          .filter((lo) => lo.assessmentCriteria.length > 0 || lo.loText.toLowerCase().includes(q)),
       }))
       .filter(
         (unit) =>
           unit.learningOutcomes.length > 0 ||
           unit.unitTitle.toLowerCase().includes(q) ||
-          unit.unitCode.toLowerCase().includes(q),
+          unit.unitCode.toLowerCase().includes(q)
       );
   }, [tree.units, searchTerm]);
 
@@ -158,7 +144,7 @@ export function KSBMappingAssistant({
             placeholder="Search criteria..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={cn(!searchTerm && "pl-9")}
+            className={cn(!searchTerm && 'pl-9')}
           />
         </div>
 
@@ -181,11 +167,9 @@ export function KSBMappingAssistant({
             <div className="space-y-3">
               {filteredUnits.map((unit) => {
                 const isExpanded = expandedUnit === unit.unitCode;
-                const unitACs = unit.learningOutcomes.flatMap(
-                  (lo) => lo.assessmentCriteria,
-                );
+                const unitACs = unit.learningOutcomes.flatMap((lo) => lo.assessmentCriteria);
                 const completedInUnit = unitACs.filter((ac) =>
-                  completedSet.has(ac.acFullRef),
+                  completedSet.has(ac.acFullRef)
                 ).length;
 
                 return (
@@ -194,9 +178,7 @@ export function KSBMappingAssistant({
                     className="border border-border rounded-lg overflow-hidden"
                   >
                     <button
-                      onClick={() =>
-                        setExpandedUnit(isExpanded ? null : unit.unitCode)
-                      }
+                      onClick={() => setExpandedUnit(isExpanded ? null : unit.unitCode)}
                       className="w-full flex items-center justify-between p-3 hover:bg-muted/50 transition-colors touch-manipulation active:bg-muted/70"
                     >
                       <div className="flex items-center gap-3">
@@ -204,9 +186,7 @@ export function KSBMappingAssistant({
                           <BookOpen className="h-4 w-4 text-elec-yellow" />
                         </div>
                         <div className="text-left">
-                          <p className="text-xs font-bold text-elec-yellow">
-                            Unit {unit.unitCode}
-                          </p>
+                          <p className="text-xs font-bold text-elec-yellow">Unit {unit.unitCode}</p>
                           <p className="text-sm font-medium text-foreground line-clamp-1">
                             {unit.unitTitle}
                           </p>
@@ -218,7 +198,7 @@ export function KSBMappingAssistant({
                       <ChevronRight
                         className={cn(
                           'h-4 w-4 text-muted-foreground transition-transform',
-                          isExpanded && 'rotate-90',
+                          isExpanded && 'rotate-90'
                         )}
                       />
                     </button>
@@ -232,18 +212,12 @@ export function KSBMappingAssistant({
                                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
                                   LO{lo.loNumber}
                                 </p>
-                                <p className="text-xs text-foreground/80">
-                                  {lo.loText}
-                                </p>
+                                <p className="text-xs text-foreground/80">{lo.loText}</p>
                               </div>
                             )}
                             {lo.assessmentCriteria.map((ac) => {
-                              const isSelected = selectedKSBs.includes(
-                                ac.acFullRef,
-                              );
-                              const isCompleted = completedSet.has(
-                                ac.acFullRef,
-                              );
+                              const isSelected = selectedKSBs.includes(ac.acFullRef);
+                              const isCompleted = completedSet.has(ac.acFullRef);
 
                               return (
                                 <div
@@ -251,7 +225,7 @@ export function KSBMappingAssistant({
                                   className={cn(
                                     'p-3 pl-12 transition-colors cursor-pointer touch-manipulation active:bg-muted/50',
                                     isSelected && 'bg-elec-yellow/10',
-                                    isCompleted && 'bg-green-500/5',
+                                    isCompleted && 'bg-green-500/5'
                                   )}
                                   onClick={() => toggleKSB(ac.acFullRef)}
                                 >
@@ -266,15 +240,10 @@ export function KSBMappingAssistant({
                                       )}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                      <Badge
-                                        variant="outline"
-                                        className="font-mono text-xs mb-1"
-                                      >
+                                      <Badge variant="outline" className="font-mono text-xs mb-1">
                                         {ac.acFullRef}
                                       </Badge>
-                                      <p className="text-sm text-foreground">
-                                        {ac.acText}
-                                      </p>
+                                      <p className="text-sm text-foreground">{ac.acText}</p>
                                     </div>
                                   </div>
                                 </div>

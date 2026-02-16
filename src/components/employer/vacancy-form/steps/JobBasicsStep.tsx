@@ -1,15 +1,15 @@
-import { useFormContext, Controller } from "react-hook-form";
-import { Briefcase, MapPin, Building2, Home, Laptop } from "lucide-react";
-import { IOSInput } from "@/components/ui/ios-input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { useFormContext, Controller } from 'react-hook-form';
+import { Briefcase, MapPin, Building2, Home, Laptop } from 'lucide-react';
+import { IOSInput } from '@/components/ui/ios-input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 import {
   employmentTypes,
   workArrangements,
   type VacancyFormData,
   type EmploymentType,
   type WorkArrangement,
-} from "../schema";
+} from '../schema';
 
 export function JobBasicsStep() {
   const {
@@ -19,16 +19,16 @@ export function JobBasicsStep() {
     watch,
   } = useFormContext<VacancyFormData>();
 
-  const selectedType = watch("type");
-  const selectedArrangement = watch("workArrangement");
+  const selectedType = watch('type');
+  const selectedArrangement = watch('workArrangement');
 
   const getWorkArrangementIcon = (arrangement: WorkArrangement) => {
     switch (arrangement) {
-      case "On-site":
+      case 'On-site':
         return <Building2 className="h-4 w-4" />;
-      case "Remote":
+      case 'Remote':
         return <Laptop className="h-4 w-4" />;
-      case "Hybrid":
+      case 'Hybrid':
         return <Home className="h-4 w-4" />;
     }
   };
@@ -42,7 +42,7 @@ export function JobBasicsStep() {
           placeholder="e.g., Qualified Electrician"
           icon={<Briefcase className="h-5 w-5" />}
           error={errors.title?.message}
-          {...register("title")}
+          {...register('title')}
         />
       </div>
 
@@ -60,11 +60,11 @@ export function JobBasicsStep() {
                   type="button"
                   onClick={() => field.onChange(type)}
                   className={cn(
-                    "p-3 rounded-xl border-2 text-sm font-medium transition-all duration-200",
-                    "touch-manipulation min-h-[48px]",
+                    'p-3 rounded-xl border-2 text-sm font-medium transition-all duration-200',
+                    'touch-manipulation min-h-[48px]',
                     selectedType === type
-                      ? "border-elec-yellow bg-elec-yellow/10 text-elec-yellow"
-                      : "border-white/10 bg-white/5 text-white/70 hover:border-white/20"
+                      ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
+                      : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20'
                   )}
                 >
                   {type}
@@ -73,9 +73,7 @@ export function JobBasicsStep() {
             </div>
           )}
         />
-        {errors.type?.message && (
-          <p className="text-xs text-red-400">{errors.type.message}</p>
-        )}
+        {errors.type?.message && <p className="text-xs text-red-400">{errors.type.message}</p>}
       </div>
 
       {/* Location */}
@@ -86,7 +84,7 @@ export function JobBasicsStep() {
           icon={<MapPin className="h-5 w-5" />}
           error={errors.location?.message}
           hint="Enter city, town or postcode"
-          {...register("location")}
+          {...register('location')}
         />
 
         {/* Postcode - optional for more precise location */}
@@ -95,7 +93,7 @@ export function JobBasicsStep() {
           placeholder="e.g., M1 1AA"
           error={errors.postcode?.message}
           hint="For map display and distance matching"
-          {...register("postcode")}
+          {...register('postcode')}
         />
       </div>
 
@@ -113,12 +111,12 @@ export function JobBasicsStep() {
                   type="button"
                   onClick={() => field.onChange(arrangement)}
                   className={cn(
-                    "flex flex-col items-center gap-2 p-4 rounded-xl border-2",
-                    "text-sm font-medium transition-all duration-200",
-                    "touch-manipulation min-h-[80px]",
+                    'flex flex-col items-center gap-2 p-4 rounded-xl border-2',
+                    'text-sm font-medium transition-all duration-200',
+                    'touch-manipulation min-h-[80px]',
                     selectedArrangement === arrangement
-                      ? "border-elec-yellow bg-elec-yellow/10 text-elec-yellow"
-                      : "border-white/10 bg-white/5 text-white/70 hover:border-white/20"
+                      ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
+                      : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20'
                   )}
                 >
                   {getWorkArrangementIcon(arrangement)}
@@ -136,8 +134,8 @@ export function JobBasicsStep() {
       {/* Helper text */}
       <div className="p-4 rounded-xl bg-info/10 border border-info/20">
         <p className="text-sm text-info">
-          <strong>Tip:</strong> Be specific with your location to attract nearby candidates.
-          Jobs with postcodes get 40% more relevant applications.
+          <strong>Tip:</strong> Be specific with your location to attract nearby candidates. Jobs
+          with postcodes get 40% more relevant applications.
         </p>
       </div>
     </div>

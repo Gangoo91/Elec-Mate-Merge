@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 import {
   FileText,
   Shield,
@@ -16,14 +16,14 @@ import {
   Mail,
   ChevronRight,
   Download,
-} from "lucide-react";
+} from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 }
-  }
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
+  },
 };
 
 const itemVariants = {
@@ -31,77 +31,77 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' }
-  }
+    transition: { duration: 0.2, ease: 'easeOut' },
+  },
 };
 
 const LegalTab = () => {
   const legalDocuments = [
     {
-      title: "Terms of Service",
-      description: "Our terms and conditions for using Elec-Mate",
+      title: 'Terms of Service',
+      description: 'Our terms and conditions for using Elec-Mate',
       icon: ScrollText,
       iconColor: 'text-blue-400',
       bgColor: 'bg-blue-500/10',
-      url: "/terms",
-      lastUpdated: "5 Jan 2026"
+      url: '/terms',
+      lastUpdated: '5 Jan 2026',
     },
     {
-      title: "Privacy Policy",
-      description: "How we collect, use, and protect your data",
+      title: 'Privacy Policy',
+      description: 'How we collect, use, and protect your data',
       icon: Shield,
       iconColor: 'text-green-400',
       bgColor: 'bg-green-500/10',
-      url: "/privacy",
-      lastUpdated: "5 Jan 2026"
+      url: '/privacy',
+      lastUpdated: '5 Jan 2026',
     },
     {
-      title: "Cookie Policy",
-      description: "Information about cookies we use",
+      title: 'Cookie Policy',
+      description: 'Information about cookies we use',
       icon: Cookie,
       iconColor: 'text-amber-400',
       bgColor: 'bg-amber-500/10',
-      url: "/cookies",
-      lastUpdated: "30 Jan 2026"
+      url: '/cookies',
+      lastUpdated: '30 Jan 2026',
     },
     {
-      title: "Acceptable Use Policy",
-      description: "Guidelines for using our platform responsibly",
+      title: 'Acceptable Use Policy',
+      description: 'Guidelines for using our platform responsibly',
       icon: Scale,
       iconColor: 'text-purple-400',
       bgColor: 'bg-purple-500/10',
-      url: "/acceptable-use",
-      lastUpdated: "30 Jan 2026"
+      url: '/acceptable-use',
+      lastUpdated: '30 Jan 2026',
     },
     {
-      title: "Data Processing Agreement",
-      description: "For business and enterprise customers",
+      title: 'Data Processing Agreement',
+      description: 'For business and enterprise customers',
       icon: FileText,
       iconColor: 'text-cyan-400',
       bgColor: 'bg-cyan-500/10',
-      url: "/dpa",
-      lastUpdated: "30 Jan 2026"
-    }
+      url: '/dpa',
+      lastUpdated: '30 Jan 2026',
+    },
   ];
 
   const complianceBadges = [
     {
-      title: "GDPR Compliant",
-      description: "Your data is protected under EU data protection laws",
+      title: 'GDPR Compliant',
+      description: 'Your data is protected under EU data protection laws',
       icon: Shield,
       color: 'text-green-400',
       bgColor: 'bg-green-500/10',
     },
     {
-      title: "UK Data Protection",
-      description: "Compliant with UK GDPR and Data Protection Act 2018",
+      title: 'UK Data Protection',
+      description: 'Compliant with UK GDPR and Data Protection Act 2018',
       icon: Lock,
       color: 'text-blue-400',
       bgColor: 'bg-blue-500/10',
     },
     {
-      title: "ISO 27001",
-      description: "Information security management certified",
+      title: 'ISO 27001',
+      description: 'Information security management certified',
       icon: CheckCircle,
       color: 'text-purple-400',
       bgColor: 'bg-purple-500/10',
@@ -116,7 +116,10 @@ const LegalTab = () => {
       className="space-y-6"
     >
       {/* Header */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="p-4 md:p-6">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
@@ -133,7 +136,10 @@ const LegalTab = () => {
       </motion.div>
 
       {/* Legal Documents */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground">Legal Documents</h3>
         </div>
@@ -147,7 +153,9 @@ const LegalTab = () => {
                 className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left group touch-manipulation active:bg-white/[0.08]"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className={`w-10 h-10 rounded-lg ${doc.bgColor} flex items-center justify-center flex-shrink-0`}>
+                  <div
+                    className={`w-10 h-10 rounded-lg ${doc.bgColor} flex items-center justify-center flex-shrink-0`}
+                  >
                     <Icon className={`h-5 w-5 ${doc.iconColor}`} />
                   </div>
                   <div className="min-w-0">
@@ -168,7 +176,10 @@ const LegalTab = () => {
       </motion.div>
 
       {/* Compliance Badges */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Shield className="h-4 w-4 text-elec-yellow" />
@@ -184,7 +195,9 @@ const LegalTab = () => {
                   key={index}
                   className="p-4 rounded-lg bg-white/5 border border-white/10 text-center"
                 >
-                  <div className={`w-12 h-12 rounded-xl ${badge.bgColor} flex items-center justify-center mx-auto mb-3`}>
+                  <div
+                    className={`w-12 h-12 rounded-xl ${badge.bgColor} flex items-center justify-center mx-auto mb-3`}
+                  >
                     <Icon className={`h-6 w-6 ${badge.color}`} />
                   </div>
                   <p className="text-sm font-medium text-foreground mb-1">{badge.title}</p>
@@ -197,7 +210,10 @@ const LegalTab = () => {
       </motion.div>
 
       {/* Data Storage Info */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Globe className="h-4 w-4 text-elec-yellow" />
@@ -233,7 +249,10 @@ const LegalTab = () => {
       </motion.div>
 
       {/* Your Rights */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground">Your Data Rights</h3>
         </div>
@@ -275,7 +294,10 @@ const LegalTab = () => {
       </motion.div>
 
       {/* Legal Contact */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-blue-500/10 border border-blue-500/20 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-blue-500/10 border border-blue-500/20 overflow-hidden"
+      >
         <div className="p-4 md:p-6">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
@@ -284,7 +306,8 @@ const LegalTab = () => {
             <div>
               <p className="text-sm font-medium text-foreground mb-1">Legal Inquiries</p>
               <p className="text-sm text-muted-foreground">
-                For any legal questions or data protection inquiries, please contact our legal team at{' '}
+                For any legal questions or data protection inquiries, please contact our legal team
+                at{' '}
                 <a href="mailto:legal@elec-mate.com" className="text-blue-400 hover:underline">
                   legal@elec-mate.com
                 </a>
@@ -295,7 +318,10 @@ const LegalTab = () => {
       </motion.div>
 
       {/* Company Info */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="p-4 md:p-6">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
@@ -304,8 +330,10 @@ const LegalTab = () => {
             <div>
               <p className="text-sm font-medium text-foreground mb-1">Company Information</p>
               <p className="text-sm text-muted-foreground">
-                Elec-Mate Ltd<br />
-                Registered in England & Wales<br />
+                Elec-Mate Ltd
+                <br />
+                Registered in England & Wales
+                <br />
                 Company No: 12345678
               </p>
             </div>

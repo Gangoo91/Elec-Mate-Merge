@@ -81,20 +81,14 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
   const quizQuestions = [
     {
-      question:
-        'What is the standard depth dimension for a TS35-7.5 DIN rail as per EN 60715?',
+      question: 'What is the standard depth dimension for a TS35-7.5 DIN rail as per EN 60715?',
       options: ['5.5mm', '7.5mm', '15mm', '35mm'],
       correctAnswer: '7.5mm',
     },
     {
       question:
         'When installing DIN rail in an enclosure, what is the recommended distance from the rail to the enclosure side wall?',
-      options: [
-        'Minimum 10mm',
-        'Minimum 25mm',
-        'Minimum 50mm',
-        'No minimum requirement',
-      ],
+      options: ['Minimum 10mm', 'Minimum 25mm', 'Minimum 50mm', 'No minimum requirement'],
       correctAnswer: 'Minimum 25mm',
     },
     {
@@ -115,8 +109,7 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
       correctAnswer: 'Additional mechanical fixing independent of DIN rail clip',
     },
     {
-      question:
-        'What is the purpose of using slotted DIN rail mounting holes in enclosures?',
+      question: 'What is the purpose of using slotted DIN rail mounting holes in enclosures?',
       options: [
         'To reduce material cost',
         'To allow for thermal expansion and alignment adjustment',
@@ -171,13 +164,13 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
     {
       question: 'How do I calculate the thermal derating for densely packed enclosures?',
       answer:
-        'Start with the manufacturer\'s derating curves for ambient temperature. For every 10 degrees C above 30 degrees C internal enclosure temperature, apply approximately 5-10% additional derating. Factor in mounting position (horizontal mounting adds 20% derating), adjacent heat sources, and air circulation. Use thermal imaging during commissioning to verify actual temperatures. Many manufacturers provide software tools for precise calculations, and AS/NZS 3000 Appendix C provides guidance for Australian installations.',
+        "Start with the manufacturer's derating curves for ambient temperature. For every 10 degrees C above 30 degrees C internal enclosure temperature, apply approximately 5-10% additional derating. Factor in mounting position (horizontal mounting adds 20% derating), adjacent heat sources, and air circulation. Use thermal imaging during commissioning to verify actual temperatures. Many manufacturers provide software tools for precise calculations, and AS/NZS 3000 Appendix C provides guidance for Australian installations.",
     },
     {
       question:
         'What is the correct procedure for mounting heavy components like large contactors?',
       answer:
-        'For components exceeding 500g: First, mount the DIN rail with reduced fixing centres (200mm instead of 300mm). Install the component on the rail, then add a supplementary mounting bracket that fixes directly to the enclosure backplate, independent of the DIN rail clip. Use the mounting holes provided on larger contactors for this purpose. In high-vibration environments, consider dedicated mounting plates for components over 1kg. Always verify the combined weight doesn\'t exceed the rail\'s load capacity.',
+        "For components exceeding 500g: First, mount the DIN rail with reduced fixing centres (200mm instead of 300mm). Install the component on the rail, then add a supplementary mounting bracket that fixes directly to the enclosure backplate, independent of the DIN rail clip. Use the mounting holes provided on larger contactors for this purpose. In high-vibration environments, consider dedicated mounting plates for components over 1kg. Always verify the combined weight doesn't exceed the rail's load capacity.",
     },
     {
       question: 'How should I organise components for optimal cable routing?',
@@ -185,8 +178,7 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
         'Follow the "power flows down, signals flow across" principle. Mount incoming supply components at the top, main switching devices in the upper-middle section, distribution components (MCBs, RCDs) in the middle, and terminal blocks at the bottom. Keep power and control/signal wiring separated by at least 50mm or use segregated cable ducting. Position PLCs and sensitive electronics away from contactors and VSDs. Allow for 1.5x the installed cable volume in ducting for future modifications.',
     },
     {
-      question:
-        'What are the requirements for DIN rail earthing in industrial installations?',
+      question: 'What are the requirements for DIN rail earthing in industrial installations?',
       answer:
         'DIN rails must be earthed as part of the enclosure protective earthing system per AS/NZS 3000. Use dedicated DIN rail earth terminal blocks with direct metal-to-rail contact (not through paint). For painted rails, use serrated washers or dedicated earthing clips that penetrate the coating. The earth connection should be made at one end of each rail run, with a minimum 4mm squared conductor to the main earth bar. Verify continuity (less than 0.1 ohm) between the rail and main earth during testing.',
     },
@@ -202,7 +194,12 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -218,9 +215,12 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10">
             <Layers className="w-8 h-8 text-elec-yellow" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Component Mounting and DIN Rail Organisation</h1>
+          <h1 className="text-2xl font-bold text-foreground">
+            Component Mounting and DIN Rail Organisation
+          </h1>
           <p className="text-muted-foreground">
-            Professional component mounting techniques, EN 60715 standards, and industrial installation best practices
+            Professional component mounting techniques, EN 60715 standards, and industrial
+            installation best practices
           </p>
         </div>
 
@@ -231,13 +231,12 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
             <div>
               <h2 className="font-semibold text-foreground mb-2">Section Overview</h2>
               <p className="text-sm text-muted-foreground">
-                Professional component mounting is fundamental to reliable industrial
-                electrical installations. This section covers EN 60715 DIN rail
-                standards, manufacturer spacing requirements, thermal management through
-                proper component orientation, and the workmanship standards expected in
-                commercial and industrial environments. Mastering these techniques
-                ensures installations that are safe, maintainable, and compliant with
-                UK standards.
+                Professional component mounting is fundamental to reliable industrial electrical
+                installations. This section covers EN 60715 DIN rail standards, manufacturer spacing
+                requirements, thermal management through proper component orientation, and the
+                workmanship standards expected in commercial and industrial environments. Mastering
+                these techniques ensures installations that are safe, maintainable, and compliant
+                with UK standards.
               </p>
             </div>
           </div>
@@ -252,9 +251,9 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              DIN rails provide the standardised mounting system for industrial
-              electrical components. EN 60715 (IEC 60715) defines the specifications
-              that ensure component interchangeability across manufacturers.
+              DIN rails provide the standardised mounting system for industrial electrical
+              components. EN 60715 (IEC 60715) defines the specifications that ensure component
+              interchangeability across manufacturers.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -266,28 +265,26 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
                 <div className="border-l-2 border-elec-yellow pl-4">
                   <h4 className="font-medium text-foreground">TS35 (TH35-7.5) - Top Hat 35mm</h4>
                   <p className="mt-1">
-                    The industry standard for modern installations. 35mm wide with 7.5mm
-                    depth. Used for MCBs, RCDs, contactors, timers, relays, PLCs, and
-                    most industrial components. Available in steel (1.0mm thickness) or
-                    aluminium for weight-sensitive applications.
+                    The industry standard for modern installations. 35mm wide with 7.5mm depth. Used
+                    for MCBs, RCDs, contactors, timers, relays, PLCs, and most industrial
+                    components. Available in steel (1.0mm thickness) or aluminium for
+                    weight-sensitive applications.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400 pl-4">
                   <h4 className="font-medium text-foreground">TS32 (TH35-15) - Deep Top Hat</h4>
                   <p className="mt-1">
-                    35mm wide with 15mm depth. Used for heavier components requiring
-                    additional mounting stability or specific terminal blocks. Less
-                    common but essential for certain legacy equipment and high-current
-                    terminals.
+                    35mm wide with 15mm depth. Used for heavier components requiring additional
+                    mounting stability or specific terminal blocks. Less common but essential for
+                    certain legacy equipment and high-current terminals.
                   </p>
                 </div>
                 <div className="border-l-2 border-green-400 pl-4">
                   <h4 className="font-medium text-foreground">G-Type (G32) - G-Profile</h4>
                   <p className="mt-1">
-                    32mm wide with a distinctive G-shaped cross-section. Primarily used
-                    for specific terminal block ranges, particularly larger power
-                    terminals and some European equipment. Provides excellent mechanical
-                    grip for high-vibration environments.
+                    32mm wide with a distinctive G-shaped cross-section. Primarily used for specific
+                    terminal block ranges, particularly larger power terminals and some European
+                    equipment. Provides excellent mechanical grip for high-vibration environments.
                   </p>
                 </div>
               </div>
@@ -301,8 +298,12 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
                   <ul className="text-sm text-muted-foreground mt-2 space-y-1">
                     <li>- Check component datasheet for compatible rail type before ordering</li>
                     <li>- Steel rails (1.0mm) for loads up to 10kg/metre standard installations</li>
-                    <li>- Consider perforated rail for improved earthing contact and heat dissipation</li>
-                    <li>- Marine/corrosive environments require stainless steel or hot-dip galvanised</li>
+                    <li>
+                      - Consider perforated rail for improved earthing contact and heat dissipation
+                    </li>
+                    <li>
+                      - Marine/corrosive environments require stainless steel or hot-dip galvanised
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -319,10 +320,9 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Proper spacing ensures adequate cooling, prevents electromagnetic
-              interference, allows for maintenance access, and meets manufacturer
-              warranty requirements. These spacings are not suggestions - they are
-              engineering requirements.
+              Proper spacing ensures adequate cooling, prevents electromagnetic interference, allows
+              for maintenance access, and meets manufacturer warranty requirements. These spacings
+              are not suggestions - they are engineering requirements.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -435,9 +435,9 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Component mounting orientation directly affects thermal performance and
-              operating characteristics. Thermal magnetic devices, in particular, rely
-              on convective airflow for proper operation of their bimetallic elements.
+              Component mounting orientation directly affects thermal performance and operating
+              characteristics. Thermal magnetic devices, in particular, rely on convective airflow
+              for proper operation of their bimetallic elements.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -497,10 +497,22 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-blue-300">Thermal Management Principles</h4>
                   <ul className="text-sm text-muted-foreground mt-2 space-y-1">
-                    <li>- <strong>Heat rises:</strong> Mount heat-generating components (VSDs, transformers) at the top of enclosures</li>
-                    <li>- <strong>Convection flow:</strong> Ensure unobstructed vertical airflow path from bottom vents to top vents</li>
-                    <li>- <strong>Ambient derating:</strong> Add 2-3% derating per degree C above 40 degrees C enclosure temperature</li>
-                    <li>- <strong>Forced cooling:</strong> Fan cooling can restore ratings but add maintenance requirements</li>
+                    <li>
+                      - <strong>Heat rises:</strong> Mount heat-generating components (VSDs,
+                      transformers) at the top of enclosures
+                    </li>
+                    <li>
+                      - <strong>Convection flow:</strong> Ensure unobstructed vertical airflow path
+                      from bottom vents to top vents
+                    </li>
+                    <li>
+                      - <strong>Ambient derating:</strong> Add 2-3% derating per degree C above 40
+                      degrees C enclosure temperature
+                    </li>
+                    <li>
+                      - <strong>Forced cooling:</strong> Fan cooling can restore ratings but add
+                      maintenance requirements
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -517,49 +529,46 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Rail accessories ensure component retention, proper earthing, and
-              professional appearance. These items are essential, not optional, for
-              installations meeting BS EN 61439 assembly requirements.
+              Rail accessories ensure component retention, proper earthing, and professional
+              appearance. These items are essential, not optional, for installations meeting BS EN
+              61439 assembly requirements.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-background/50 rounded-lg p-4">
                 <h3 className="font-medium text-elec-yellow mb-2">End Stops/Brackets</h3>
                 <p className="text-sm text-muted-foreground">
-                  Required at both ends of every DIN rail section. Prevents component
-                  migration during vibration and shipping. Use metal end stops for rails
-                  carrying heavy components; plastic acceptable for light loads. Some
-                  designs include integrated earthing points.
+                  Required at both ends of every DIN rail section. Prevents component migration
+                  during vibration and shipping. Use metal end stops for rails carrying heavy
+                  components; plastic acceptable for light loads. Some designs include integrated
+                  earthing points.
                 </p>
               </div>
 
               <div className="bg-background/50 rounded-lg p-4">
                 <h3 className="font-medium text-elec-yellow mb-2">Rail Couplers</h3>
                 <p className="text-sm text-muted-foreground">
-                  Join multiple rail sections for long runs. Must maintain electrical
-                  continuity for earthing. Use sleeved couplers where thermal expansion
-                  is significant. Maximum coupler spacing varies with component weight -
-                  check manufacturer data.
+                  Join multiple rail sections for long runs. Must maintain electrical continuity for
+                  earthing. Use sleeved couplers where thermal expansion is significant. Maximum
+                  coupler spacing varies with component weight - check manufacturer data.
                 </p>
               </div>
 
               <div className="bg-background/50 rounded-lg p-4">
                 <h3 className="font-medium text-elec-yellow mb-2">Earthing Terminals</h3>
                 <p className="text-sm text-muted-foreground">
-                  DIN rail mount earth terminals provide the connection point between
-                  the rail (and hence mounted equipment frames) and the main earth bar.
-                  Use serrated base types for painted rails to ensure metallic contact.
-                  One per rail section minimum.
+                  DIN rail mount earth terminals provide the connection point between the rail (and
+                  hence mounted equipment frames) and the main earth bar. Use serrated base types
+                  for painted rails to ensure metallic contact. One per rail section minimum.
                 </p>
               </div>
 
               <div className="bg-background/50 rounded-lg p-4">
                 <h3 className="font-medium text-elec-yellow mb-2">Blanking Plates</h3>
                 <p className="text-sm text-muted-foreground">
-                  Cover unused rail sections for professional appearance and to prevent
-                  accumulation of debris. Available in various widths to fill gaps.
-                  Important for panels with IP-rated doors - maintains finger-safe access
-                  to live parts.
+                  Cover unused rail sections for professional appearance and to prevent accumulation
+                  of debris. Available in various widths to fill gaps. Important for panels with
+                  IP-rated doors - maintains finger-safe access to live parts.
                 </p>
               </div>
             </div>
@@ -570,11 +579,10 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-green-300">Professional Practice</h4>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Always install end stops before mounting any components. This
-                    establishes the working area and prevents the frustration of
-                    components sliding during installation. Use marker strips to label
-                    terminal positions - pre-printed or site-printed markers are essential
-                    for maintainability.
+                    Always install end stops before mounting any components. This establishes the
+                    working area and prevents the frustration of components sliding during
+                    installation. Use marker strips to label terminal positions - pre-printed or
+                    site-printed markers are essential for maintainability.
                   </p>
                 </div>
               </div>
@@ -600,11 +608,11 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Components exceeding 500g require additional mechanical support beyond
-              the standard DIN rail clip. This is an EN 60439-1 and BS EN 61439
-              requirement, not merely a recommendation. Failure to properly secure heavy
-              components can result in rail distortion, component damage during
-              transport, and safety hazards from falling equipment.
+              Components exceeding 500g require additional mechanical support beyond the standard
+              DIN rail clip. This is an EN 60439-1 and BS EN 61439 requirement, not merely a
+              recommendation. Failure to properly secure heavy components can result in rail
+              distortion, component damage during transport, and safety hazards from falling
+              equipment.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -617,40 +625,39 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
                 <div className="border-l-2 border-elec-yellow pl-4">
                   <h4 className="font-medium text-foreground">Supplementary Bracket Method</h4>
                   <p className="mt-1">
-                    Mount component on DIN rail, then install an L-bracket from the
-                    component's mounting holes to the enclosure backplate. The DIN rail
-                    clip provides location; the bracket provides retention. Use
-                    manufacturer-supplied brackets where available.
+                    Mount component on DIN rail, then install an L-bracket from the component's
+                    mounting holes to the enclosure backplate. The DIN rail clip provides location;
+                    the bracket provides retention. Use manufacturer-supplied brackets where
+                    available.
                   </p>
                 </div>
 
                 <div className="border-l-2 border-blue-400 pl-4">
                   <h4 className="font-medium text-foreground">Reduced Rail Fixing Centres</h4>
                   <p className="mt-1">
-                    For heavy component zones, reduce DIN rail fixing centres from
-                    standard 300mm to 150-200mm. This distributes the load across more
-                    fixings and reduces rail deflection. Essential for rails carrying
-                    multiple large contactors or VSDs.
+                    For heavy component zones, reduce DIN rail fixing centres from standard 300mm to
+                    150-200mm. This distributes the load across more fixings and reduces rail
+                    deflection. Essential for rails carrying multiple large contactors or VSDs.
                   </p>
                 </div>
 
                 <div className="border-l-2 border-green-400 pl-4">
                   <h4 className="font-medium text-foreground">Direct Panel Mounting</h4>
                   <p className="mt-1">
-                    For very heavy items (transformers, large soft starters), bypass DIN
-                    rail entirely. Mount directly to the backplate using the component's
-                    integral mounting feet. Use isolation mounts for vibrating equipment.
-                    Ensure adequate load spreading - backing plates may be required.
+                    For very heavy items (transformers, large soft starters), bypass DIN rail
+                    entirely. Mount directly to the backplate using the component's integral
+                    mounting feet. Use isolation mounts for vibrating equipment. Ensure adequate
+                    load spreading - backing plates may be required.
                   </p>
                 </div>
 
                 <div className="border-l-2 border-purple-400 pl-4">
                   <h4 className="font-medium text-foreground">Double Rail Configuration</h4>
                   <p className="mt-1">
-                    Some large components span two parallel DIN rails. Install rails at
-                    the exact spacing specified in component documentation. Both clips
-                    must engage fully. This method provides excellent stability for
-                    components like large VSDs with integral top-hat rail adapters.
+                    Some large components span two parallel DIN rails. Install rails at the exact
+                    spacing specified in component documentation. Both clips must engage fully. This
+                    method provides excellent stability for components like large VSDs with integral
+                    top-hat rail adapters.
                   </p>
                 </div>
               </div>
@@ -662,11 +669,10 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-red-300">Critical Warning</h4>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Never rely solely on DIN rail clips for components over 500g in
-                    installations subject to vibration (industrial machinery, mobile
-                    applications, seismic zones). The retaining clips are designed for
-                    static loads only. Vibration will cause progressive clip fatigue and
-                    eventual component release.
+                    Never rely solely on DIN rail clips for components over 500g in installations
+                    subject to vibration (industrial machinery, mobile applications, seismic zones).
+                    The retaining clips are designed for static loads only. Vibration will cause
+                    progressive clip fatigue and eventual component release.
                   </p>
                 </div>
               </div>
@@ -683,9 +689,9 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Professional workmanship distinguishes quality industrial installations.
-              These techniques ensure your work meets industry expectations, passes
-              inspection, and provides reliable long-term performance.
+              Professional workmanship distinguishes quality industrial installations. These
+              techniques ensure your work meets industry expectations, passes inspection, and
+              provides reliable long-term performance.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -695,28 +701,64 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
               </div>
               <ol className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex gap-3">
-                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">1</span>
-                  <span><strong className="text-foreground">Layout planning:</strong> Mark rail positions on backplate using manufacturer templates. Verify spacing allows for all components plus 20% spare capacity.</span>
+                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                    1
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Layout planning:</strong> Mark rail
+                    positions on backplate using manufacturer templates. Verify spacing allows for
+                    all components plus 20% spare capacity.
+                  </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">2</span>
-                  <span><strong className="text-foreground">Rail cutting:</strong> Use dedicated rail cutters for clean cuts. Deburr cut ends to prevent injury and ensure end stop seating. File sharp edges smooth.</span>
+                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                    2
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Rail cutting:</strong> Use dedicated rail
+                    cutters for clean cuts. Deburr cut ends to prevent injury and ensure end stop
+                    seating. File sharp edges smooth.
+                  </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">3</span>
-                  <span><strong className="text-foreground">Rail mounting:</strong> Use slotted holes for adjustment. Check level with spirit level. Torque fixings to manufacturer specification - typically 2-3Nm for M4/M5 screws.</span>
+                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                    3
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Rail mounting:</strong> Use slotted holes
+                    for adjustment. Check level with spirit level. Torque fixings to manufacturer
+                    specification - typically 2-3Nm for M4/M5 screws.
+                  </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">4</span>
-                  <span><strong className="text-foreground">End stops first:</strong> Install end stops/brackets before any components. Position to allow for planned components plus spare.</span>
+                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                    4
+                  </span>
+                  <span>
+                    <strong className="text-foreground">End stops first:</strong> Install end
+                    stops/brackets before any components. Position to allow for planned components
+                    plus spare.
+                  </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">5</span>
-                  <span><strong className="text-foreground">Component mounting:</strong> Work from one end to the other systematically. Verify each clip is fully engaged. Add supplementary fixings for heavy items.</span>
+                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                    5
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Component mounting:</strong> Work from one
+                    end to the other systematically. Verify each clip is fully engaged. Add
+                    supplementary fixings for heavy items.
+                  </span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">6</span>
-                  <span><strong className="text-foreground">Earthing verification:</strong> Confirm rail earthing continuity with low-resistance ohmmeter. Record readings in test documentation.</span>
+                  <span className="bg-elec-yellow text-black w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                    6
+                  </span>
+                  <span>
+                    <strong className="text-foreground">Earthing verification:</strong> Confirm rail
+                    earthing continuity with low-resistance ohmmeter. Record readings in test
+                    documentation.
+                  </span>
                 </li>
               </ol>
             </div>
@@ -774,7 +816,9 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <h3 className="font-medium text-foreground text-sm mb-2">DIN Rail Types (EN 60715)</h3>
+                <h3 className="font-medium text-foreground text-sm mb-2">
+                  DIN Rail Types (EN 60715)
+                </h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
                   <li>- TS35 (TH35-7.5): 35mm x 7.5mm - Standard</li>
                   <li>- TS32 (TH35-15): 35mm x 15mm - Deep</li>
@@ -784,7 +828,9 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="font-medium text-foreground text-sm mb-2">Key Spacing Requirements</h3>
+                <h3 className="font-medium text-foreground text-sm mb-2">
+                  Key Spacing Requirements
+                </h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
                   <li>- VSDs: 100mm above, 50mm below</li>
                   <li>- PLCs: 50mm all sides, 100mm from VSDs</li>
@@ -816,9 +862,9 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
             <div className="mt-4 pt-4 border-t border-white/10">
               <p className="text-xs text-muted-foreground">
-                <strong className="text-elec-yellow">Standards Reference:</strong> EN 60715
-                (DIN rail profiles), BS EN 61439 (Switchboard assemblies), EN 60439-1
-                (Low-voltage switchgear), BS 7671 (Wiring Regulations)
+                <strong className="text-elec-yellow">Standards Reference:</strong> EN 60715 (DIN
+                rail profiles), BS EN 61439 (Switchboard assemblies), EN 60439-1 (Low-voltage
+                switchgear), BS 7671 (Wiring Regulations)
               </p>
             </div>
           </div>
@@ -829,7 +875,10 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
           <h2 className="text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {faqItems.map((faq, index) => (
-              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+              <div
+                key={index}
+                className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4"
+              >
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
                 <p className="text-sm text-muted-foreground">{faq.answer}</p>
               </div>
@@ -857,7 +906,12 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-3/section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Layout Planning

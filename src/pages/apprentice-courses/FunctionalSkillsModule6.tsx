@@ -1,14 +1,14 @@
-import { ChevronLeft, Award, Target } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import { ChevronLeft, Award, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const FunctionalSkillsModule6 = () => {
   useSEO(
-    "Module 6: Mock Examination - Functional Skills",
-    "Practice examination with 20 random questions from a 200-question bank covering all five modules"
+    'Module 6: Mock Examination - Functional Skills',
+    'Practice examination with 20 random questions from a 200-question bank covering all five modules'
   );
 
   return (
@@ -60,7 +60,8 @@ const FunctionalSkillsModule6 = () => {
               </span>
             </h1>
             <p className="text-sm text-white/50 max-w-lg mx-auto">
-              Practice examination with 20 random questions from a 200-question bank covering all five modules
+              Practice examination with 20 random questions from a 200-question bank covering all
+              five modules
             </p>
           </motion.div>
         </div>

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface TerminalConnection {
   terminal: string;
@@ -15,15 +15,15 @@ interface TerminalDiagramProps {
 
 // UK standard wire colors
 const wireColors: Record<string, string> = {
-  'brown': '#8B4513',
-  'blue': '#0066CC',
+  brown: '#8B4513',
+  blue: '#0066CC',
   'green/yellow': '#228B22',
   'green yellow': '#228B22',
-  'grey': '#6B7280',
-  'black': '#1F2937',
-  'red': '#DC2626',
-  'yellow': '#EAB308',
-  'white': '#F3F4F6',
+  grey: '#6B7280',
+  black: '#1F2937',
+  red: '#DC2626',
+  yellow: '#EAB308',
+  white: '#F3F4F6',
 };
 
 function getWireColor(wireColor: string): string {
@@ -42,7 +42,7 @@ function getWireColor(wireColor: string): string {
  */
 export function TerminalDiagram({
   connections,
-  title = "Terminal Connections",
+  title = 'Terminal Connections',
   className,
 }: TerminalDiagramProps) {
   const height = Math.max(120, connections.length * 35 + 40);
@@ -50,15 +50,13 @@ export function TerminalDiagram({
   return (
     <div
       className={cn(
-        "rounded-xl p-5",
-        "bg-gradient-to-br from-elec-dark to-background",
-        "border border-border/30",
+        'rounded-xl p-5',
+        'bg-gradient-to-br from-elec-dark to-background',
+        'border border-border/30',
         className
       )}
     >
-      {title && (
-        <h4 className="text-sm font-semibold text-foreground mb-4">{title}</h4>
-      )}
+      {title && <h4 className="text-sm font-semibold text-foreground mb-4">{title}</h4>}
 
       <div className="flex gap-6 items-start">
         {/* SVG Diagram */}
@@ -150,10 +148,7 @@ export function TerminalDiagram({
         {/* Legend */}
         <div className="flex-1 space-y-3">
           {connections.map((conn, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-3 p-2 rounded-lg bg-background/50"
-            >
+            <div key={index} className="flex items-center gap-3 p-2 rounded-lg bg-background/50">
               {/* Wire color indicator */}
               <div
                 className="w-8 h-2 rounded-full flex-shrink-0"
@@ -162,17 +157,11 @@ export function TerminalDiagram({
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-foreground text-sm">
-                    {conn.terminal}
-                  </span>
-                  <span className="text-muted-foreground text-sm">
-                    {conn.wire}
-                  </span>
+                  <span className="font-bold text-foreground text-sm">{conn.terminal}</span>
+                  <span className="text-muted-foreground text-sm">{conn.wire}</span>
                 </div>
                 {conn.notes && (
-                  <p className="text-xs text-muted-foreground mt-0.5 truncate">
-                    {conn.notes}
-                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5 truncate">{conn.notes}</p>
                 )}
               </div>
             </div>

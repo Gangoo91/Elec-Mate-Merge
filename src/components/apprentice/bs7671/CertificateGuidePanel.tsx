@@ -1,8 +1,4 @@
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
 import {
   ChevronDown,
@@ -51,35 +47,47 @@ const renderCertCard = (cert: CertificateType) => {
 
   return (
     <Collapsible key={cert.id}>
-      <CollapsibleTrigger className={`w-full flex items-center justify-between p-4 rounded-xl ${colors.bg} border ${colors.border} touch-manipulation h-auto min-h-[44px]`}>
+      <CollapsibleTrigger
+        className={`w-full flex items-center justify-between p-4 rounded-xl ${colors.bg} border ${colors.border} touch-manipulation h-auto min-h-[44px]`}
+      >
         <div className="flex items-center gap-3 min-w-0">
           <div className={`p-1.5 rounded-lg ${colors.bg} flex-shrink-0`}>
             <Icon className={`h-4 w-4 ${colors.text}`} />
           </div>
           <div className="text-left min-w-0">
             <div className="text-sm font-semibold text-white truncate">{cert.title}</div>
-            <Badge className={`mt-0.5 text-[10px] px-1.5 py-0 ${colors.bg} ${colors.text} border ${colors.border}`}>
+            <Badge
+              className={`mt-0.5 text-[10px] px-1.5 py-0 ${colors.bg} ${colors.text} border ${colors.border}`}
+            >
               {cert.abbreviation}
             </Badge>
           </div>
         </div>
-        <ChevronDown className={`h-4 w-4 ${colors.text} flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180`} />
+        <ChevronDown
+          className={`h-4 w-4 ${colors.text} flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180`}
+        />
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-sm rounded-b-xl bg-white/[0.02]">
           {/* When Required */}
           <div>
-            <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-1`}>When Required</h4>
+            <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-1`}>
+              When Required
+            </h4>
             <p className="text-white">{cert.whenRequired}</p>
           </div>
 
           {/* Key Requirements */}
           <div>
-            <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-2`}>Key Requirements</h4>
+            <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-2`}>
+              Key Requirements
+            </h4>
             <div className="space-y-1.5">
               {cert.keyRequirements.map((req, idx) => (
                 <div key={idx} className="flex items-start gap-2">
-                  <span className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${colors.text.replace('text-', 'bg-')}`} />
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${colors.text.replace('text-', 'bg-')}`}
+                  />
                   <span className="text-white">{req}</span>
                 </div>
               ))}
@@ -88,7 +96,9 @@ const renderCertCard = (cert: CertificateType) => {
 
           {/* Sections to Complete */}
           <div>
-            <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-2`}>Sections to Complete</h4>
+            <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-2`}>
+              Sections to Complete
+            </h4>
             <div className="space-y-1.5">
               {cert.sectionsToComplete.map((section, idx) => (
                 <div key={idx} className="flex items-start gap-2">
@@ -147,9 +157,7 @@ const CertificateGuidePanel = () => {
   return (
     <div className="space-y-6 text-left">
       {/* Certificate Types */}
-      <div className="space-y-3">
-        {certificateTypes.map(renderCertCard)}
-      </div>
+      <div className="space-y-3">{certificateTypes.map(renderCertCard)}</div>
 
       {/* EICR Observation Codes */}
       <div className="space-y-3">
@@ -158,12 +166,17 @@ const CertificateGuidePanel = () => {
           EICR Observation Codes
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {eicrObservationCodes.map(code => {
+          {eicrObservationCodes.map((code) => {
             const colors = observationColorMap[code.color] || observationColorMap.blue;
             return (
-              <div key={code.code} className={`p-3 rounded-xl ${colors.bg} border ${colors.border}`}>
+              <div
+                key={code.code}
+                className={`p-3 rounded-xl ${colors.bg} border ${colors.border}`}
+              >
                 <div className="flex items-center gap-2 mb-2">
-                  <Badge className={`text-xs font-bold ${colors.bg} ${colors.text} border ${colors.border}`}>
+                  <Badge
+                    className={`text-xs font-bold ${colors.bg} ${colors.text} border ${colors.border}`}
+                  >
                     {code.code}
                   </Badge>
                   <span className={`text-sm font-semibold ${colors.text}`}>{code.label}</span>

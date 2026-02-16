@@ -1,67 +1,66 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, CheckCircle, X, ThumbsUp } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { AlertTriangle, CheckCircle, X, ThumbsUp } from 'lucide-react';
 
 const LearningFromMistakes = () => {
   const safeMistakes = [
     {
-      mistake: "Forgetting to label cables during first fix",
-      consequence: "Confusion during second fix, extra time needed",
-      lesson: "Always label as you go - it saves hours later",
-      severity: "Minor"
+      mistake: 'Forgetting to label cables during first fix',
+      consequence: 'Confusion during second fix, extra time needed',
+      lesson: 'Always label as you go - it saves hours later',
+      severity: 'Minor',
     },
     {
-      mistake: "Mixing up line and neutral on a light switch",
+      mistake: 'Mixing up line and neutral on a light switch',
       consequence: "Switch doesn't work, quick fix needed",
-      lesson: "Double-check connections before testing",
-      severity: "Minor"
+      lesson: 'Double-check connections before testing',
+      severity: 'Minor',
     },
     {
-      mistake: "Cutting cable too short for termination",
-      consequence: "Need to splice or run new cable",
+      mistake: 'Cutting cable too short for termination',
+      consequence: 'Need to splice or run new cable',
       lesson: "Always leave extra length - you can cut off but can't add on",
-      severity: "Minor"
+      severity: 'Minor',
     },
     {
-      mistake: "Forgetting to turn off power before opening consumer unit",
-      consequence: "Could cause serious injury or death",
-      lesson: "ALWAYS isolate and test before touching anything live",
-      severity: "Dangerous"
-    }
+      mistake: 'Forgetting to turn off power before opening consumer unit',
+      consequence: 'Could cause serious injury or death',
+      lesson: 'ALWAYS isolate and test before touching anything live',
+      severity: 'Dangerous',
+    },
   ];
 
   const copingStrategies = [
     {
-      strategy: "Own Your Mistakes",
+      strategy: 'Own Your Mistakes',
       description: "Admit when you've made an error - hiding it makes things worse",
-      example: "Tell your supervisor immediately, don't try to fix it secretly"
+      example: "Tell your supervisor immediately, don't try to fix it secretly",
     },
     {
-      strategy: "Ask Questions", 
-      description: "Better to ask and look inexperienced than guess and cause problems",
-      example: "If you're not 100% sure, check with someone qualified"
+      strategy: 'Ask Questions',
+      description: 'Better to ask and look inexperienced than guess and cause problems',
+      example: "If you're not 100% sure, check with someone qualified",
     },
     {
       strategy: "Learn the 'Why'",
-      description: "Understand why something went wrong, not just what went wrong",
-      example: "Why did that cable fail? What was I trying to achieve?"
+      description: 'Understand why something went wrong, not just what went wrong',
+      example: 'Why did that cable fail? What was I trying to achieve?',
     },
     {
-      strategy: "Keep a Learning Journal",
-      description: "Write down mistakes and lessons learned",
-      example: "Date, what happened, what you learned, how to prevent it"
-    }
+      strategy: 'Keep a Learning Journal',
+      description: 'Write down mistakes and lessons learned',
+      example: 'Date, what happened, what you learned, how to prevent it',
+    },
   ];
 
   const confidenceBuilders = [
-    "Everyone makes mistakes - even master electricians",
-    "Mistakes in training are learning opportunities",
+    'Everyone makes mistakes - even master electricians',
+    'Mistakes in training are learning opportunities',
     "Your questions show you're thinking critically",
-    "Supervisors expect mistakes from apprentices",
-    "Each mistake makes you a better electrician",
-    "Safety mistakes are serious, everything else is fixable"
+    'Supervisors expect mistakes from apprentices',
+    'Each mistake makes you a better electrician',
+    'Safety mistakes are serious, everything else is fixable',
   ];
 
   return (
@@ -69,7 +68,8 @@ const LearningFromMistakes = () => {
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Learning From Mistakes</h1>
         <p className="text-white text-center max-w-2xl mb-4">
-          Understanding which mistakes are normal learning experiences and which ones are serious safety issues
+          Understanding which mistakes are normal learning experiences and which ones are serious
+          safety issues
         </p>
         <SmartBackButton />
       </div>
@@ -84,16 +84,21 @@ const LearningFromMistakes = () => {
         <CardContent>
           <div className="space-y-4">
             {safeMistakes.map((item, index) => (
-              <div key={index} className={`border rounded-lg p-4 ${
-                item.severity === 'Dangerous' 
-                  ? 'border-red-500/50 bg-card' 
-                  : 'border-elec-yellow/20 bg-white/5 border border-white/10'
-              }`}>
+              <div
+                key={index}
+                className={`border rounded-lg p-4 ${
+                  item.severity === 'Dangerous'
+                    ? 'border-red-500/50 bg-card'
+                    : 'border-elec-yellow/20 bg-white/5 border border-white/10'
+                }`}
+              >
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-semibold text-white">{item.mistake}</h4>
-                  <Badge 
+                  <Badge
                     variant={item.severity === 'Dangerous' ? 'destructive' : 'outline'}
-                    className={item.severity === 'Dangerous' ? '' : 'border-elec-yellow/40 text-elec-yellow'}
+                    className={
+                      item.severity === 'Dangerous' ? '' : 'border-elec-yellow/40 text-elec-yellow'
+                    }
                   >
                     {item.severity}
                   </Badge>
@@ -158,12 +163,12 @@ const LearningFromMistakes = () => {
             <div className="bg-elec-yellow/10 p-4 rounded-lg">
               <h4 className="font-semibold text-elec-yellow mb-2">Imposter Syndrome is Normal</h4>
               <p className="text-sm text-white mb-3">
-                Feeling like you don't belong or aren't good enough is incredibly common. 
-                Even experienced electricians felt this way during their apprenticeships.
+                Feeling like you don't belong or aren't good enough is incredibly common. Even
+                experienced electricians felt this way during their apprenticeships.
               </p>
               <p className="text-sm text-white">
-                The fact that you're worried about doing well probably means you care 
-                about quality work - that's exactly what the industry needs.
+                The fact that you're worried about doing well probably means you care about quality
+                work - that's exactly what the industry needs.
               </p>
             </div>
           </div>
@@ -182,15 +187,15 @@ const LearningFromMistakes = () => {
             <div>
               <h4 className="font-semibold text-white mb-2">Safety Shortcuts</h4>
               <p className="text-sm text-white">
-                Taking shortcuts with safety procedures, working live when you shouldn't, 
-                or ignoring isolation procedures.
+                Taking shortcuts with safety procedures, working live when you shouldn't, or
+                ignoring isolation procedures.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-2">Covering Up Problems</h4>
               <p className="text-sm text-white">
-                Hiding mistakes, not reporting dangerous conditions, or pretending 
-                you understand when you don't.
+                Hiding mistakes, not reporting dangerous conditions, or pretending you understand
+                when you don't.
               </p>
             </div>
           </div>
@@ -203,10 +208,10 @@ const LearningFromMistakes = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            You're an apprentice, which means you're learning. Mistakes are part of learning, 
-            but safety is non-negotiable. Ask questions, admit when you're unsure, and remember 
-            that every skilled electrician was exactly where you are now. Focus on getting better 
-            every day, not on being perfect from day one.
+            You're an apprentice, which means you're learning. Mistakes are part of learning, but
+            safety is non-negotiable. Ask questions, admit when you're unsure, and remember that
+            every skilled electrician was exactly where you are now. Focus on getting better every
+            day, not on being perfect from day one.
           </p>
         </CardContent>
       </Card>

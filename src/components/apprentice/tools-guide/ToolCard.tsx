@@ -1,15 +1,14 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ReactNode } from "react";
-import { Star, Shield, Zap, CheckCircle, Check, ExternalLink } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ReactNode } from 'react';
+import { Star, Shield, Zap, CheckCircle, Check, ExternalLink } from 'lucide-react';
 
 interface Tool {
   name: string;
   description: string;
   priceRange: string;
-  priority: "essential" | "recommended" | "optional";
+  priority: 'essential' | 'recommended' | 'optional';
   ukStandard?: string;
 }
 
@@ -22,43 +21,54 @@ interface ToolCardProps {
   ukConsideration: string;
 }
 
-const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsideration }: ToolCardProps) => {
+const ToolCard = ({
+  title,
+  icon,
+  description,
+  items,
+  apprenticeTip,
+  ukConsideration,
+}: ToolCardProps) => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "essential": return "destructive";
-      case "recommended": return "warning";
-      case "optional": return "success";
-      default: return "secondary";
+      case 'essential':
+        return 'destructive';
+      case 'recommended':
+        return 'warning';
+      case 'optional':
+        return 'success';
+      default:
+        return 'secondary';
     }
   };
 
   const getInfoGridData = (tool: Tool) => [
     {
       icon: <Zap className="w-4 h-4 text-elec-yellow" />,
-      label: "Specifications",
-      value: tool.description.split(' ').slice(0, 2).join(' ') || "Professional Grade"
+      label: 'Specifications',
+      value: tool.description.split(' ').slice(0, 2).join(' ') || 'Professional Grade',
     },
     {
       icon: <Shield className="w-4 h-4 text-blue-400" />,
-      label: "Standard",
-      value: tool.ukStandard || "BS7671 18th"
+      label: 'Standard',
+      value: tool.ukStandard || 'BS7671 18th',
     },
     {
       icon: <Star className="w-4 h-4 text-yellow-400" />,
-      label: "Rating",
-      value: "4.5/5"
+      label: 'Rating',
+      value: '4.5/5',
     },
     {
       icon: <CheckCircle className="w-4 h-4 text-green-400" />,
-      label: "Stock",
-      value: "In Stock"
-    }
+      label: 'Stock',
+      value: 'In Stock',
+    },
   ];
 
   const getFeatures = (tool: Tool) => [
-    "Professional quality construction",
-    "BS7671 18th edition compliant",
-    "Suitable for commercial use"
+    'Professional quality construction',
+    'BS7671 18th edition compliant',
+    'Suitable for commercial use',
   ];
 
   return (
@@ -91,7 +101,10 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
             {/* 2x2 Information Grid */}
             <div className="grid grid-cols-2 gap-2">
               {getInfoGridData(item).map((info, idx) => (
-                <div key={idx} className="border border-white/10 bg-white/5 rounded-lg p-3 space-y-2">
+                <div
+                  key={idx}
+                  className="border border-white/10 bg-white/5 rounded-lg p-3 space-y-2"
+                >
                   <div className="flex items-center gap-2">
                     {info.icon}
                     <span className="text-xs text-white/60">{info.label}</span>

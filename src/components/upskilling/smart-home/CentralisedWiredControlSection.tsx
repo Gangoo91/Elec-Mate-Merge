@@ -12,16 +12,23 @@ export const CentralisedWiredControlSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Professional-grade systems where all devices are wired back to a central panel, controlled by a hub or Building Management System (BMS).
+          Professional-grade systems where all devices are wired back to a central panel, controlled
+          by a hub or Building Management System (BMS).
         </p>
-        
+
         <div className="space-y-4">
           <div>
             <h4 className="font-semibold text-elec-yellow mb-2">Leading Systems</h4>
             <ul className="list-disc pl-6 space-y-1">
-              <li><strong>KNX/EIB</strong> - European standard, highly reliable</li>
-              <li><strong>Lutron</strong> - Premium dimming and shading control</li>
-              <li><strong>Crestron</strong> - Integrated automation platform</li>
+              <li>
+                <strong>KNX/EIB</strong> - European standard, highly reliable
+              </li>
+              <li>
+                <strong>Lutron</strong> - Premium dimming and shading control
+              </li>
+              <li>
+                <strong>Crestron</strong> - Integrated automation platform
+              </li>
             </ul>
           </div>
 
@@ -60,7 +67,8 @@ export const CentralisedWiredControlSection = () => {
           <div className="p-3 bg-yellow-600/10 border border-yellow-600/20 rounded-lg">
             <h5 className="font-semibold text-yellow-200 mb-2">Best Applications</h5>
             <p className="text-sm text-yellow-100">
-              High-end homes, new builds, commercial buildings, and applications requiring ultimate reliability and integration with other building systems.
+              High-end homes, new builds, commercial buildings, and applications requiring ultimate
+              reliability and integration with other building systems.
             </p>
           </div>
         </div>

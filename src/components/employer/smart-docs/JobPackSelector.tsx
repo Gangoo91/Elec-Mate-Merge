@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useJobPacks } from "@/hooks/useJobPacks";
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useJobPacks } from '@/hooks/useJobPacks';
 import {
   Package,
   MapPin,
@@ -20,8 +20,8 @@ import {
   Users,
   Plus,
   CheckCircle,
-  AlertTriangle
-} from "lucide-react";
+  AlertTriangle,
+} from 'lucide-react';
 
 interface JobPackSelectorProps {
   selectedJobPackId: string | null;
@@ -38,10 +38,10 @@ export function JobPackSelector({
 }: JobPackSelectorProps) {
   const { data: jobPacks = [], isLoading } = useJobPacks();
 
-  const selectedJobPack = jobPacks.find(jp => jp.id === selectedJobPackId);
+  const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
   // Get status badges for a job pack
-  const getDocumentStatus = (jp: typeof jobPacks[0]) => {
+  const getDocumentStatus = (jp: (typeof jobPacks)[0]) => {
     const statuses = [];
     if (jp.rams_generated) statuses.push({ label: 'RAMS', complete: true });
     else statuses.push({ label: 'RAMS', complete: false });
@@ -69,10 +69,7 @@ export function JobPackSelector({
       {/* Job Pack Selector */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-foreground">Select Job Pack</label>
-        <Select
-          value={selectedJobPackId || ""}
-          onValueChange={(value) => onSelect(value || null)}
-        >
+        <Select value={selectedJobPackId || ''} onValueChange={(value) => onSelect(value || null)}>
           <SelectTrigger className="w-full bg-elec-gray border-elec-yellow/20">
             <SelectValue placeholder="Choose a job pack..." />
           </SelectTrigger>
@@ -83,7 +80,7 @@ export function JobPackSelector({
               </SelectItem>
             ) : (
               jobPacks
-                .filter(jp => jp.status !== 'Completed')
+                .filter((jp) => jp.status !== 'Completed')
                 .map((jp) => (
                   <SelectItem key={jp.id} value={jp.id}>
                     <div className="flex items-center gap-2">
@@ -132,8 +129,8 @@ export function JobPackSelector({
                   selectedJobPack.status === 'In Progress'
                     ? 'bg-success/20 text-success'
                     : selectedJobPack.status === 'Draft'
-                    ? 'bg-warning/20 text-warning'
-                    : ''
+                      ? 'bg-warning/20 text-warning'
+                      : ''
                 }
               >
                 {selectedJobPack.status}

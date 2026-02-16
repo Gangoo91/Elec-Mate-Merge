@@ -1,17 +1,29 @@
-import { CheckCircle, Shield, Target, Award, BookOpen, AlertTriangle, Eye, FileCheck, XCircle, Wrench, Timer } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import useSEO from "@/hooks/useSEO";
+import {
+  CheckCircle,
+  Shield,
+  Target,
+  Award,
+  BookOpen,
+  AlertTriangle,
+  Eye,
+  FileCheck,
+  XCircle,
+  Wrench,
+  Timer,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module1Section4 = () => {
   useSEO(
-    "Section 4: Common Reasons for Failure - AM2 Preparation",
-    "Understanding the main reasons candidates fail the AM2 assessment and how to avoid these critical mistakes"
+    'Section 4: Common Reasons for Failure - AM2 Preparation',
+    'Understanding the main reasons candidates fail the AM2 assessment and how to avoid these critical mistakes'
   );
 
   const quizQuestions = [
@@ -19,63 +31,69 @@ const AM2Module1Section4 = () => {
       id: 1,
       question: "What's the most common single reason for AM2 failure?",
       options: [
-        "Poor workmanship",
-        "Safe isolation errors",
-        "Time management issues",
-        "Wrong cable selection"
+        'Poor workmanship',
+        'Safe isolation errors',
+        'Time management issues',
+        'Wrong cable selection',
       ],
       correctAnswer: 1,
-      explanation: "Safe isolation errors are highlighted by NET as the single biggest cause of AM2 failure."
+      explanation:
+        'Safe isolation errors are highlighted by NET as the single biggest cause of AM2 failure.',
     },
     {
       id: 2,
       question: "What's the final step in safe isolation?",
       options: [
-        "Lock off the circuit",
-        "Attach warning notices",
-        "Re-prove your tester",
-        "Test the isolated circuit"
+        'Lock off the circuit',
+        'Attach warning notices',
+        'Re-prove your tester',
+        'Test the isolated circuit',
       ],
       correctAnswer: 2,
-      explanation: "Re-proving your tester after isolation confirms it still works and completes the safe isolation procedure."
+      explanation:
+        'Re-proving your tester after isolation confirms it still works and completes the safe isolation procedure.',
     },
     {
       id: 3,
-      question: "True or false: If your installation works but doesn't match the drawing, you still pass.",
-      options: ["True", "False"],
+      question:
+        "True or false: If your installation works but doesn't match the drawing, you still pass.",
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Deviations from specifications lose marks even if the circuit functions correctly."
+      explanation:
+        'False. Deviations from specifications lose marks even if the circuit functions correctly.',
     },
     {
       id: 4,
-      question: "Which IET document defines the testing sequence used in AM2?",
+      question: 'Which IET document defines the testing sequence used in AM2?',
       options: [
-        "BS 7671 Wiring Regulations",
-        "GN3 Guidance Note 3",
-        "GN1 Guidance Note 1",
-        "IET Code of Practice"
+        'BS 7671 Wiring Regulations',
+        'GN3 Guidance Note 3',
+        'GN1 Guidance Note 1',
+        'IET Code of Practice',
       ],
       correctAnswer: 1,
-      explanation: "IET Guidance Note 3 (GN3) sets out the correct testing sequence used in the AM2 assessment."
+      explanation:
+        'IET Guidance Note 3 (GN3) sets out the correct testing sequence used in the AM2 assessment.',
     },
     {
       id: 5,
-      question: "In fault diagnosis, what three things must you identify for each fault?",
+      question: 'In fault diagnosis, what three things must you identify for each fault?',
       options: [
-        "Location, type, and rectification method",
-        "Circuit, voltage, and current",
-        "Cause, effect, and prevention",
-        "Test, measure, and record"
+        'Location, type, and rectification method',
+        'Circuit, voltage, and current',
+        'Cause, effect, and prevention',
+        'Test, measure, and record',
       ],
       correctAnswer: 0,
-      explanation: "You must identify the precise location, type of fault, and how to rectify it for full marks."
-    }
+      explanation:
+        'You must identify the precise location, type of fault, and how to rectify it for full marks.',
+    },
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module1"
-      breadcrumbs={["AM2", "Module 1", "Section 4"]}
+      breadcrumbs={['AM2', 'Module 1', 'Section 4']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -139,25 +157,30 @@ const AM2Module1Section4 = () => {
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-4">
           <p className="text-ios-footnote text-amber-400 font-semibold mb-1">Important Reality:</p>
           <p className="text-ios-callout text-white/80">
-            Every year, candidates fail the AM2 for the same reasons. NET publishes "Common Errors" in its Pre-Assessment Manual,
-            and training centres confirm the same patterns. These aren't just minor mistakes - they are avoidable errors that can
-            cost you marks, time, and even result in an automatic fail.
+            Every year, candidates fail the AM2 for the same reasons. NET publishes "Common Errors"
+            in its Pre-Assessment Manual, and training centres confirm the same patterns. These
+            aren't just minor mistakes - they are avoidable errors that can cost you marks, time,
+            and even result in an automatic fail.
           </p>
         </div>
         <p className="text-ios-body text-white/90">
-          This section gives you a clear view of the top reasons candidates fail, why they happen, and how to avoid them.
-          Learning from others' mistakes is one of the most effective ways to ensure your own success.
+          This section gives you a clear view of the top reasons candidates fail, why they happen,
+          and how to avoid them. Learning from others' mistakes is one of the most effective ways to
+          ensure your own success.
         </p>
       </AM2ContentCard>
 
       {/* 1. Safe Isolation Mistakes */}
       <AM2CriticalWarning title="1. Safe Isolation Mistakes (The #1 Fail Point)">
         <p className="text-ios-body text-white/80 mb-4">
-          NET highlights safe isolation errors as the single biggest cause of failure. These are critical safety issues that result in automatic fails.
+          NET highlights safe isolation errors as the single biggest cause of failure. These are
+          critical safety issues that result in automatic fails.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Common Isolation Errors:</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+              Common Isolation Errors:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -178,7 +201,9 @@ const AM2Module1Section4 = () => {
             </ul>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Why These Happen:</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+              Why These Happen:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -205,10 +230,10 @@ const AM2Module1Section4 = () => {
         id="isolation-final-step"
         question="What's the final step in safe isolation before starting work?"
         options={[
-          "Lock off the circuit breaker",
-          "Attach warning notice",
-          "Re-prove your tester to confirm it still works",
-          "Test the circuit is dead"
+          'Lock off the circuit breaker',
+          'Attach warning notice',
+          'Re-prove your tester to confirm it still works',
+          'Test the circuit is dead',
         ]}
         correctIndex={2}
         explanation="Re-proving your tester confirms it still works after proving dead, completing the safe isolation procedure."
@@ -221,11 +246,14 @@ const AM2Module1Section4 = () => {
           2. Not Following the Specification
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Even small deviations from the specification can cost significant marks. Assessors check installations against drawings precisely:
+          Even small deviations from the specification can cost significant marks. Assessors check
+          installations against drawings precisely:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-amber-400 font-semibold mb-2">Common Spec Errors:</h4>
+            <h4 className="text-ios-headline text-amber-400 font-semibold mb-2">
+              Common Spec Errors:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -246,7 +274,9 @@ const AM2Module1Section4 = () => {
             </ul>
           </div>
           <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">Prevention Strategies:</h4>
+            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
+              Prevention Strategies:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -273,10 +303,10 @@ const AM2Module1Section4 = () => {
         id="specification-deviation"
         question="If the drawing shows sockets at 300mm height and you install them at 400mm, will you lose marks?"
         options={[
-          "No, if they still work properly",
-          "Yes, deviations from spec lose marks even if the circuit works",
-          "Only if the assessor notices",
-          "No, close enough is acceptable"
+          'No, if they still work properly',
+          'Yes, deviations from spec lose marks even if the circuit works',
+          'Only if the assessor notices',
+          'No, close enough is acceptable',
         ]}
         correctIndex={1}
         explanation="Yes - deviations from specifications lose marks even if the circuit works. Precision is essential in following drawings."
@@ -289,10 +319,13 @@ const AM2Module1Section4 = () => {
           3. Inspection, Testing & Certification Errors
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          NET emphasises mistakes in this area as a major failure cause. Testing must follow exact procedures:
+          NET emphasises mistakes in this area as a major failure cause. Testing must follow exact
+          procedures:
         </p>
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">Major Testing Failures:</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">
+            Major Testing Failures:
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-medium mb-2">Procedural Errors:</p>
@@ -331,7 +364,9 @@ const AM2Module1Section4 = () => {
           </div>
         </div>
         <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-green-400 font-semibold mb-2">How to Avoid Testing Failures:</h4>
+          <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
+            How to Avoid Testing Failures:
+          </h4>
           <ul className="text-ios-callout text-white/70 space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
@@ -357,10 +392,10 @@ const AM2Module1Section4 = () => {
         id="testing-sequence"
         question="Which document sets out the correct test sequence for AM2?"
         options={[
-          "BS 7671 Wiring Regulations",
-          "IET Guidance Note 3 (GN3)",
-          "NET Assessment Manual",
-          "City & Guilds Guidelines"
+          'BS 7671 Wiring Regulations',
+          'IET Guidance Note 3 (GN3)',
+          'NET Assessment Manual',
+          'City & Guilds Guidelines',
         ]}
         correctIndex={1}
         explanation="IET Guidance Note 3 (GN3) provides the step-by-step testing sequence that must be followed in the AM2."
@@ -373,15 +408,20 @@ const AM2Module1Section4 = () => {
           4. Fault Diagnosis Mistakes
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Fault finding requires precision in identification and clear explanation of rectification methods:
+          Fault finding requires precision in identification and clear explanation of rectification
+          methods:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Common Fault-Finding Errors:</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+              Common Fault-Finding Errors:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span>Vague fault location (e.g., "lighting circuit" instead of precise terminal)</span>
+                <span>
+                  Vague fault location (e.g., "lighting circuit" instead of precise terminal)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -398,7 +438,9 @@ const AM2Module1Section4 = () => {
             </ul>
           </div>
           <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">Successful Fault Diagnosis:</h4>
+            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
+              Successful Fault Diagnosis:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -425,10 +467,10 @@ const AM2Module1Section4 = () => {
         id="fault-diagnosis-requirements"
         question="If you identify a fault but don't explain how to rectify it, do you get full marks?"
         options={[
-          "Yes, finding the fault is enough",
-          "No, rectification method is part of the mark",
-          "Only if you find all other faults",
-          "Yes, if the location is precise"
+          'Yes, finding the fault is enough',
+          'No, rectification method is part of the mark',
+          'Only if you find all other faults',
+          'Yes, if the location is precise',
         ]}
         correctIndex={1}
         explanation="No - you must identify the location, type, and rectification method for each fault to achieve full marks."
@@ -445,7 +487,9 @@ const AM2Module1Section4 = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Critical Safety Errors:</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+              Critical Safety Errors:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -466,7 +510,9 @@ const AM2Module1Section4 = () => {
             </ul>
           </div>
           <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">Safety Best Practices:</h4>
+            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
+              Safety Best Practices:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -557,10 +603,10 @@ const AM2Module1Section4 = () => {
         id="time-pressure-choice"
         question="If you're short of time, is it better to leave a section incomplete but safe, or rush it and risk unsafe work?"
         options={[
-          "Rush it to complete everything",
-          "Leave safe - unsafe work can cause failure",
-          "Ask for extra time",
-          "Skip to the next section"
+          'Rush it to complete everything',
+          'Leave safe - unsafe work can cause failure',
+          'Ask for extra time',
+          'Skip to the next section',
         ]}
         correctIndex={1}
         explanation="Always prioritise safety. Leaving work incomplete but safe is better than rushing and creating unsafe conditions that could result in automatic failure."
@@ -573,11 +619,14 @@ const AM2Module1Section4 = () => {
           7. Neatness and Workmanship Issues
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Professional workmanship is assessed throughout the AM2. Poor standards can significantly impact your score:
+          Professional workmanship is assessed throughout the AM2. Poor standards can significantly
+          impact your score:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Poor Workmanship Examples:</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+              Poor Workmanship Examples:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -598,7 +647,9 @@ const AM2Module1Section4 = () => {
             </ul>
           </div>
           <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">Professional Standards:</h4>
+            <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
+              Professional Standards:
+            </h4>
             <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -623,27 +674,36 @@ const AM2Module1Section4 = () => {
 
       {/* Real-world Failure Examples */}
       <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Real-world Failure Examples</h2>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
+          Real-world Failure Examples
+        </h2>
         <div className="space-y-3">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">Candidate A: Safe Isolation Fail</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
+              Candidate A: Safe Isolation Fail
+            </h4>
             <p className="text-ios-callout text-white/70">
-              Installed circuits correctly and completed all sections well, but failed to re-prove the tester during safe isolation.
-              Result: Automatic fail despite otherwise competent performance.
+              Installed circuits correctly and completed all sections well, but failed to re-prove
+              the tester during safe isolation. Result: Automatic fail despite otherwise competent
+              performance.
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">Candidate B: Specification Deviation</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
+              Candidate B: Specification Deviation
+            </h4>
             <p className="text-ios-callout text-white/70">
-              Completed installation neatly and safely but used 2.5mm cable where 4mm was specified on the drawing.
-              Lost significant marks for not following specifications exactly.
+              Completed installation neatly and safely but used 2.5mm cable where 4mm was specified
+              on the drawing. Lost significant marks for not following specifications exactly.
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">Candidate C: Testing Procedure Error</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
+              Candidate C: Testing Procedure Error
+            </h4>
             <p className="text-ios-callout text-white/70">
-              Rushed through testing section and wrote down "perfect" textbook values instead of actual measurements.
-              Assessor identified inconsistencies - marked as procedural fail.
+              Rushed through testing section and wrote down "perfect" textbook values instead of
+              actual measurements. Assessor identified inconsistencies - marked as procedural fail.
             </p>
           </div>
         </div>
@@ -653,24 +713,22 @@ const AM2Module1Section4 = () => {
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Summary</h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Candidates fail AM2 mainly due to seven key areas: unsafe isolation, not following specifications, incorrect testing
-          and certification, poor fault diagnosis, health & safety breaches, time management issues, and workmanship below
-          professional standards.
+          Candidates fail AM2 mainly due to seven key areas: unsafe isolation, not following
+          specifications, incorrect testing and certification, poor fault diagnosis, health & safety
+          breaches, time management issues, and workmanship below professional standards.
         </p>
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Key Takeaway:</p>
           <p className="text-ios-callout text-white/80">
-            Avoiding these errors isn't about luck - it's about strict practice, sticking to procedures, and working to
-            professional standards every time. Learn from others' mistakes to ensure your own success.
+            Avoiding these errors isn't about luck - it's about strict practice, sticking to
+            procedures, and working to professional standards every time. Learn from others'
+            mistakes to ensure your own success.
           </p>
         </div>
       </AM2ContentCard>
 
       {/* Quiz Section */}
-      <Quiz
-        questions={quizQuestions}
-        title="AM2 Common Failures Quiz"
-      />
+      <Quiz questions={quizQuestions} title="AM2 Common Failures Quiz" />
 
       {/* Navigation Footer */}
       <AM2NavigationFooter

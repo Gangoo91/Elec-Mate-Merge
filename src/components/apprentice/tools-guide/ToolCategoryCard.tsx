@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 interface ToolCategoryCardProps {
   title: string;
@@ -22,17 +21,13 @@ const ToolCategoryCard = ({ title, icon, description, link, itemCount }: ToolCat
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 flex flex-col h-full">
-        <p className="text-sm text-white leading-relaxed flex-1">
-          {description}
-        </p>
-        
+        <p className="text-sm text-white leading-relaxed flex-1">{description}</p>
+
         <div className="flex items-center justify-between">
-          <span className="text-xs text-elec-yellow/70">
-            {itemCount} essential items
-          </span>
-          <Button 
-            asChild 
-            variant="outline" 
+          <span className="text-xs text-elec-yellow/70">{itemCount} essential items</span>
+          <Button
+            asChild
+            variant="outline"
             size="sm"
             className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-300"
           >

@@ -1,15 +1,14 @@
-
-import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import JobGrid from "./JobGrid";
-import JobPagination from "./JobPagination";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { Search, MapPin } from "lucide-react";
-import { JobListing } from "@/pages/electrician/JobVacancies";
-import SearchError from "@/components/mental-health/crisis/components/SearchError";
-import { cn } from "@/lib/utils";
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import JobGrid from './JobGrid';
+import JobPagination from './JobPagination';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { Search, MapPin } from 'lucide-react';
+import { JobListing } from '@/pages/electrician/JobVacancies';
+import SearchError from '@/components/mental-health/crisis/components/SearchError';
+import { cn } from '@/lib/utils';
 
 interface ReedJobsViewProps {
   handleApply: (jobId: string, url: string) => void;
@@ -19,8 +18,8 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
   const [jobs, setJobs] = useState<JobListing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
-  const [keywords, setKeywords] = useState("electrical,electrician,electrical engineer");
-  const [location, setLocation] = useState("");
+  const [keywords, setKeywords] = useState('electrical,electrician,electrical engineer');
+  const [location, setLocation] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
@@ -29,45 +28,44 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
   const fetchReedJobs = async (page: number = 1) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const { data, error } = await supabase.functions.invoke('reed-job-listings', {
-        body: { 
+        body: {
           keywords,
           location,
           page,
           permanent: true,
-          fullTime: true
+          fullTime: true,
         },
       });
-      
+
       if (error) throw new Error(error.message);
       if (data.error) throw new Error(data.error);
-      
+
       setJobs(data.jobs);
       setTotalResults(data.totalResults);
       setTotalPages(Math.ceil(data.totalResults / 100));
       setCurrentPage(data.currentPage);
-      
+
       if (data.jobs.length === 0) {
         toast({
-          title: "No jobs found",
-          description: "Try adjusting your search criteria",
+          title: 'No jobs found',
+          description: 'Try adjusting your search criteria',
         });
       } else {
         toast({
-          title: "Jobs loaded",
+          title: 'Jobs loaded',
           description: `Found ${data.totalResults} electrical jobs`,
         });
       }
-      
     } catch (error) {
       console.error('Error fetching jobs:', error);
-      setError(error instanceof Error ? error.message : "Failed to get job listings");
+      setError(error instanceof Error ? error.message : 'Failed to get job listings');
       toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to get job listings",
-        variant: "destructive",
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to get job listings',
+        variant: 'destructive',
       });
       setJobs([]);
     } finally {
@@ -96,7 +94,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
     // Scroll job into view if not visible
     const jobElement = document.getElementById(`job-${jobId}`);
     if (jobElement) {
-      jobElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      jobElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
 
@@ -113,7 +111,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
               placeholder="Job keywords (e.g., Electrician, Engineer, Technician)"
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
-              className={cn(!keywords && "pl-10")}
+              className={cn(!keywords && 'pl-10')}
               aria-label="Search keywords"
             />
           </div>
@@ -126,16 +124,12 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
               placeholder="Location (e.g., London, Manchester)"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className={cn(!location && "pl-10")}
+              className={cn(!location && 'pl-10')}
               aria-label="Search location"
             />
           </div>
-          <Button 
-            type="submit" 
-            className="md:w-auto flex-shrink-0" 
-            disabled={isLoading}
-          >
-            {isLoading ? "Searching..." : "Search Jobs"}
+          <Button type="submit" className="md:w-auto flex-shrink-0" disabled={isLoading}>
+            {isLoading ? 'Searching...' : 'Search Jobs'}
           </Button>
         </form>
       </div>
@@ -148,12 +142,12 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
             Showing {jobs.length} of {totalResults} jobs
             {location && ` in ${location}`}
           </p>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             onClick={() => {
-              setKeywords("electrical,electrician,electrical engineer");
-              setLocation("");
+              setKeywords('electrical,electrician,electrical engineer');
+              setLocation('');
               setCurrentPage(1);
               fetchReedJobs(1);
             }}
@@ -164,16 +158,16 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
         </div>
       )}
 
-      <JobGrid 
-        jobs={jobs} 
-        selectedJob={selectedJob} 
+      <JobGrid
+        jobs={jobs}
+        selectedJob={selectedJob}
         handleApply={(jobId, url) => {
           handleJobSelect(jobId);
           handleApply(jobId, url);
         }}
         resetFilters={() => {
-          setKeywords("electrical,electrician,electrical engineer");
-          setLocation("");
+          setKeywords('electrical,electrician,electrical engineer');
+          setLocation('');
           setCurrentPage(1);
           fetchReedJobs(1);
         }}
@@ -181,7 +175,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
       />
 
       {totalPages > 1 && (
-        <JobPagination 
+        <JobPagination
           currentPage={currentPage}
           totalPages={totalPages}
           paginate={handlePageChange}

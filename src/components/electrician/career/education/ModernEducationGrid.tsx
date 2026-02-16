@@ -1,8 +1,16 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Star, Clock, ExternalLink, GraduationCap, TrendingUp } from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Calendar,
+  MapPin,
+  Star,
+  Clock,
+  ExternalLink,
+  GraduationCap,
+  TrendingUp,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
 
 interface ModernEducationGridProps {
   programmes: LiveEducationData[];
@@ -10,48 +18,63 @@ interface ModernEducationGridProps {
   onProgrammeClick?: (programme: LiveEducationData) => void;
 }
 
-const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: ModernEducationGridProps) => {
-  const filteredProgrammes = excludeId 
-    ? programmes.filter(programme => programme.id !== excludeId)
+const ModernEducationGrid = ({
+  programmes,
+  excludeId,
+  onProgrammeClick,
+}: ModernEducationGridProps) => {
+  const filteredProgrammes = excludeId
+    ? programmes.filter((programme) => programme.id !== excludeId)
     : programmes;
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Degree": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Certificate": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Diploma": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Apprenticeship": "bg-orange-500/20 border-orange-500/30 text-orange-300",
-      "Foundation": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
-      "Master": "bg-red-500/20 border-red-500/30 text-red-300",
-      "HNC": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
-      "HND": "bg-pink-500/20 border-pink-500/30 text-pink-300",
+      Degree: 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+      Certificate: 'bg-green-500/20 border-green-500/30 text-green-300',
+      Diploma: 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+      Apprenticeship: 'bg-orange-500/20 border-orange-500/30 text-orange-300',
+      Foundation: 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
+      Master: 'bg-red-500/20 border-red-500/30 text-red-300',
+      HNC: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-300',
+      HND: 'bg-pink-500/20 border-pink-500/30 text-pink-300',
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return (
+      colors[category as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80'
+    );
   };
 
   const getLevelColor = (level: string) => {
     const colors = {
-      "Level 3": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Level 4": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Level 5": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Level 6": "bg-red-500/20 border-red-500/30 text-red-300",
-      "Level 7": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
+      'Level 3': 'bg-green-500/20 border-green-500/30 text-green-300',
+      'Level 4': 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+      'Level 5': 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+      'Level 6': 'bg-red-500/20 border-red-500/30 text-red-300',
+      'Level 7': 'bg-yellow-500/20 border-yellow-500/30 text-yellow-300',
     };
-    return colors[level as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return colors[level as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80';
   };
 
   const getCategoryImage = (category: string) => {
     const images = {
-      "Degree": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format",
-      "Certificate": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop&auto=format",
-      "Diploma": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format",
-      "Apprenticeship": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format",
-      "Foundation": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format",
-      "Master": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop&auto=format",
-      "HNC": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop&auto=format",
-      "HND": "https://images.unsplash.com/photo-1574188041339-3d9d896ce7f8?w=400&h=250&fit=crop&auto=format",
+      Degree:
+        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format',
+      Certificate:
+        'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop&auto=format',
+      Diploma:
+        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format',
+      Apprenticeship:
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format',
+      Foundation:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format',
+      Master:
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop&auto=format',
+      HNC: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop&auto=format',
+      HND: 'https://images.unsplash.com/photo-1574188041339-3d9d896ce7f8?w=400&h=250&fit=crop&auto=format',
     };
-    return images[category as keyof typeof images] || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format";
+    return (
+      images[category as keyof typeof images] ||
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop&auto=format'
+    );
   };
 
   const formatDuration = (duration: string) => {
@@ -60,7 +83,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
       { regex: /(\d+)\s*years?/i, format: (n: number) => `${n} year${n > 1 ? 's' : ''}` },
       { regex: /(\d+)\s*months?/i, format: (n: number) => `${n} month${n > 1 ? 's' : ''}` },
       { regex: /(\d+)\s*weeks?/i, format: (n: number) => `${n} week${n > 1 ? 's' : ''}` },
-      { regex: /(\d+)\s*days?/i, format: (n: number) => `${n} day${n > 1 ? 's' : ''}` }
+      { regex: /(\d+)\s*days?/i, format: (n: number) => `${n} day${n > 1 ? 's' : ''}` },
     ];
 
     for (const pattern of patterns) {
@@ -94,7 +117,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
       {/* Main Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredProgrammes.map((programme) => (
-          <div 
+          <div
             key={programme.id}
             className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
             onClick={() => onProgrammeClick?.(programme)}
@@ -111,17 +134,17 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              
+
               {/* Category Badge */}
               <div className="absolute top-2 left-2">
-                <Badge className={cn("text-xs font-medium", getCategoryColor(programme.category))}>
+                <Badge className={cn('text-xs font-medium', getCategoryColor(programme.category))}>
                   {programme.category}
                 </Badge>
               </div>
 
               {/* Level Badge */}
               <div className="absolute top-2 right-2">
-                <Badge className={cn("text-xs font-medium", getLevelColor(programme.level))}>
+                <Badge className={cn('text-xs font-medium', getLevelColor(programme.level))}>
                   {programme.level}
                 </Badge>
               </div>
@@ -163,7 +186,10 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
               </div>
 
               {/* Title */}
-              <h3 className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+              <h3
+                className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base"
+                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
+              >
                 {programme.title}
               </h3>
 
@@ -173,7 +199,10 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
               </p>
 
               {/* Description */}
-              <p className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+              <p
+                className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm"
+                style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}
+              >
                 {programme.description}
               </p>
 
@@ -199,7 +228,7 @@ const ModernEducationGrid = ({ programmes, excludeId, onProgrammeClick }: Modern
                 <div className="text-xs text-foreground/80">
                   <span className="font-medium">{programme.tuitionFees}</span>
                 </div>
-                
+
                 <Button
                   size="sm"
                   variant="ghost"

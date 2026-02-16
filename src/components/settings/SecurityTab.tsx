@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import {
   Shield,
@@ -21,7 +21,7 @@ import {
   Loader2,
   CheckCircle2,
   Clock,
-} from "lucide-react";
+} from 'lucide-react';
 
 const SecurityTab = () => {
   const { addNotification } = useNotifications();
@@ -62,11 +62,11 @@ const SecurityTab = () => {
   ];
 
   const handleSecurityChange = (key: keyof typeof securitySettings, value: boolean) => {
-    setSecuritySettings(prev => ({ ...prev, [key]: value }));
+    setSecuritySettings((prev) => ({ ...prev, [key]: value }));
     addNotification({
       title: 'Security Setting Updated',
       message: `${key === 'twoFactorAuth' ? 'Two-factor authentication' : key === 'loginNotifications' ? 'Login notifications' : 'Security updates'} ${value ? 'enabled' : 'disabled'}`,
-      type: 'success'
+      type: 'success',
     });
   };
 
@@ -75,7 +75,7 @@ const SecurityTab = () => {
       addNotification({
         title: 'Password Mismatch',
         message: 'New passwords do not match',
-        type: 'info'
+        type: 'info',
       });
       return;
     }
@@ -84,20 +84,20 @@ const SecurityTab = () => {
       addNotification({
         title: 'Password Too Short',
         message: 'Password must be at least 8 characters',
-        type: 'info'
+        type: 'info',
       });
       return;
     }
 
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsLoading(false);
     setIsChangingPassword(false);
     setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
     addNotification({
       title: 'Password Updated',
       message: 'Your password has been changed successfully',
-      type: 'success'
+      type: 'success',
     });
   };
 
@@ -105,7 +105,7 @@ const SecurityTab = () => {
     addNotification({
       title: 'Device Signed Out',
       message: 'The device has been signed out of your account',
-      type: 'info'
+      type: 'info',
     });
   };
 
@@ -113,11 +113,15 @@ const SecurityTab = () => {
     addNotification({
       title: 'All Devices Signed Out',
       message: 'All other devices have been signed out',
-      type: 'info'
+      type: 'info',
     });
   };
 
-  const securityScore = securitySettings.twoFactorAuth ? 100 : securitySettings.loginNotifications ? 70 : 40;
+  const securityScore = securitySettings.twoFactorAuth
+    ? 100
+    : securitySettings.loginNotifications
+      ? 70
+      : 40;
 
   return (
     <div className="space-y-6">
@@ -125,9 +129,15 @@ const SecurityTab = () => {
       <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="p-4 md:p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
-              securityScore >= 80 ? 'bg-green-500/10' : securityScore >= 50 ? 'bg-amber-500/10' : 'bg-red-500/10'
-            }`}>
+            <div
+              className={`w-14 h-14 rounded-xl flex items-center justify-center ${
+                securityScore >= 80
+                  ? 'bg-green-500/10'
+                  : securityScore >= 50
+                    ? 'bg-amber-500/10'
+                    : 'bg-red-500/10'
+              }`}
+            >
               {securityScore >= 80 ? (
                 <ShieldCheck className="h-7 w-7 text-green-400" />
               ) : securityScore >= 50 ? (
@@ -139,22 +149,34 @@ const SecurityTab = () => {
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-foreground">Security Score</h3>
               <p className="text-sm text-muted-foreground mb-2">
-                {securityScore >= 80 ? 'Your account is well protected' :
-                 securityScore >= 50 ? 'Your account security could be improved' :
-                 'Your account needs better protection'}
+                {securityScore >= 80
+                  ? 'Your account is well protected'
+                  : securityScore >= 50
+                    ? 'Your account security could be improved'
+                    : 'Your account needs better protection'}
               </p>
               <div className="w-full bg-white/10 rounded-full h-2">
                 <div
                   className={`h-2 rounded-full transition-all duration-500 ${
-                    securityScore >= 80 ? 'bg-green-400' : securityScore >= 50 ? 'bg-amber-400' : 'bg-red-400'
+                    securityScore >= 80
+                      ? 'bg-green-400'
+                      : securityScore >= 50
+                        ? 'bg-amber-400'
+                        : 'bg-red-400'
                   }`}
                   style={{ width: `${securityScore}%` }}
                 />
               </div>
             </div>
-            <span className={`text-2xl font-bold ${
-              securityScore >= 80 ? 'text-green-400' : securityScore >= 50 ? 'text-amber-400' : 'text-red-400'
-            }`}>
+            <span
+              className={`text-2xl font-bold ${
+                securityScore >= 80
+                  ? 'text-green-400'
+                  : securityScore >= 50
+                    ? 'text-amber-400'
+                    : 'text-red-400'
+              }`}
+            >
               {securityScore}%
             </span>
           </div>
@@ -166,10 +188,17 @@ const SecurityTab = () => {
             <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground">Enable Two-Factor Authentication</p>
-                <p className="text-xs text-muted-foreground">Add an extra layer of security to your account</p>
+                <p className="text-sm font-medium text-foreground">
+                  Enable Two-Factor Authentication
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Add an extra layer of security to your account
+                </p>
               </div>
-              <Button size="sm" className="h-11 touch-manipulation active:scale-[0.98] bg-amber-500 hover:bg-amber-600 text-foreground flex-shrink-0">
+              <Button
+                size="sm"
+                className="h-11 touch-manipulation active:scale-[0.98] bg-amber-500 hover:bg-amber-600 text-foreground flex-shrink-0"
+              >
                 Enable
               </Button>
             </div>
@@ -186,9 +215,11 @@ const SecurityTab = () => {
           {/* 2FA */}
           <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                securitySettings.twoFactorAuth ? 'bg-green-500/10' : 'bg-white/10'
-              }`}>
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                  securitySettings.twoFactorAuth ? 'bg-green-500/10' : 'bg-white/10'
+                }`}
+              >
                 {securitySettings.twoFactorAuth ? (
                   <Lock className="h-5 w-5 text-green-400" />
                 ) : (
@@ -197,7 +228,9 @@ const SecurityTab = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-foreground">Two-Factor Authentication</p>
-                <p className="text-xs text-muted-foreground">Secure your account with a verification code</p>
+                <p className="text-xs text-muted-foreground">
+                  Secure your account with a verification code
+                </p>
               </div>
             </div>
             <Switch
@@ -231,7 +264,9 @@ const SecurityTab = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-foreground">Security Updates</p>
-                <p className="text-xs text-muted-foreground">Receive emails about security enhancements</p>
+                <p className="text-xs text-muted-foreground">
+                  Receive emails about security enhancements
+                </p>
               </div>
             </div>
             <Switch
@@ -273,7 +308,9 @@ const SecurityTab = () => {
                 <Input
                   type={showCurrentPassword ? 'text' : 'password'}
                   value={passwordForm.currentPassword}
-                  onChange={(e) => setPasswordForm(prev => ({ ...prev, currentPassword: e.target.value }))}
+                  onChange={(e) =>
+                    setPasswordForm((prev) => ({ ...prev, currentPassword: e.target.value }))
+                  }
                   className="h-11 text-base touch-manipulation bg-white/5 border-white/10 pr-12"
                   placeholder="Enter current password"
                 />
@@ -282,7 +319,11 @@ const SecurityTab = () => {
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                   className="absolute right-2 top-1/2 -translate-y-1/2 p-2 touch-manipulation text-muted-foreground hover:text-foreground"
                 >
-                  {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showCurrentPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -293,7 +334,9 @@ const SecurityTab = () => {
                 <Input
                   type={showNewPassword ? 'text' : 'password'}
                   value={passwordForm.newPassword}
-                  onChange={(e) => setPasswordForm(prev => ({ ...prev, newPassword: e.target.value }))}
+                  onChange={(e) =>
+                    setPasswordForm((prev) => ({ ...prev, newPassword: e.target.value }))
+                  }
                   className="h-11 text-base touch-manipulation bg-white/5 border-white/10 pr-12"
                   placeholder="Enter new password"
                 />
@@ -312,7 +355,9 @@ const SecurityTab = () => {
               <Input
                 type="password"
                 value={passwordForm.confirmPassword}
-                onChange={(e) => setPasswordForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                onChange={(e) =>
+                  setPasswordForm((prev) => ({ ...prev, confirmPassword: e.target.value }))
+                }
                 className="h-11 text-base touch-manipulation bg-white/5 border-white/10"
                 placeholder="Confirm new password"
               />
@@ -354,7 +399,9 @@ const SecurityTab = () => {
         <div className="px-4 md:px-6 py-4 border-b border-white/10 flex items-center justify-between">
           <div>
             <h3 className="text-base font-semibold text-foreground">Active Devices</h3>
-            <p className="text-xs text-muted-foreground">{devices.length} devices currently signed in</p>
+            <p className="text-xs text-muted-foreground">
+              {devices.length} devices currently signed in
+            </p>
           </div>
           <Button
             variant="outline"
@@ -391,7 +438,9 @@ const SecurityTab = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className={`text-xs ${device.current ? 'text-green-400' : 'text-muted-foreground'}`}>
+                  <span
+                    className={`text-xs ${device.current ? 'text-green-400' : 'text-muted-foreground'}`}
+                  >
                     {device.lastActive}
                   </span>
                   {!device.current && (

@@ -18,7 +18,10 @@ export const PIRSensorsSection = () => {
               How They Work
             </h4>
             <p className="text-gray-300 text-sm">
-              PIR sensors detect <strong className="text-foreground">infrared radiation from body heat</strong>. When a warm body moves through the detection zone, it creates changes in IR levels that trigger the sensor.
+              PIR sensors detect{' '}
+              <strong className="text-foreground">infrared radiation from body heat</strong>. When a
+              warm body moves through the detection zone, it creates changes in IR levels that
+              trigger the sensor.
             </p>
           </div>
 

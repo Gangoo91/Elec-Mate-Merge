@@ -1,9 +1,16 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertTriangle, TrendingUp, DollarSign, Lightbulb, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { InstallPlanDataV2, CalculationResult } from "./types";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  CheckCircle2,
+  AlertTriangle,
+  TrendingUp,
+  DollarSign,
+  Lightbulb,
+  Loader2,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { InstallPlanDataV2, CalculationResult } from './types';
 
 interface InstallationInsightsProps {
   planData: InstallPlanDataV2;
@@ -27,7 +34,7 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
       setIsLoading(true);
       try {
         const { data, error } = await supabase.functions.invoke('validate-installation', {
-          body: { planData, result }
+          body: { planData, result },
         });
 
         if (error) throw error;
@@ -125,7 +132,9 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
             </h4>
             <div className="space-y-0.5 md:space-y-1">
               {insights.warnings.map((warning, idx) => (
-                <div key={idx} className="text-xs text-foreground/90 text-left">• {warning}</div>
+                <div key={idx} className="text-xs text-foreground/90 text-left">
+                  • {warning}
+                </div>
               ))}
             </div>
           </div>
@@ -134,10 +143,14 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
         {/* Recommendations */}
         {insights.recommendations && insights.recommendations.length > 0 && (
           <div>
-            <h4 className="text-xs md:text-sm font-semibold mb-1.5 md:mb-2 text-foreground">Best Practice</h4>
+            <h4 className="text-xs md:text-sm font-semibold mb-1.5 md:mb-2 text-foreground">
+              Best Practice
+            </h4>
             <div className="space-y-0.5 md:space-y-1">
               {insights.recommendations.map((rec, idx) => (
-                <div key={idx} className="text-xs text-foreground/90 text-left">• {rec}</div>
+                <div key={idx} className="text-xs text-foreground/90 text-left">
+                  • {rec}
+                </div>
               ))}
             </div>
           </div>

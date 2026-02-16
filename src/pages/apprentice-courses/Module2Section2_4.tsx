@@ -1,132 +1,131 @@
-import { ArrowLeft, Calculator, CheckCircle, Zap, Flame, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import { PowerCalculator } from "@/components/apprentice-courses/PowerCalculator";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Calculator, CheckCircle, Zap, Flame, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import { PowerCalculator } from '@/components/apprentice-courses/PowerCalculator';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Power calculations (P=VI, I²R, V²/R) - Level 2 Module 2 Section 2.4";
-const DESCRIPTION = "Choose the right power formula for real jobs and understand where heat occurs. Level 2 friendly, UK‑focused.";
+const TITLE = 'Power calculations (P=VI, I²R, V²/R) - Level 2 Module 2 Section 2.4';
+const DESCRIPTION =
+  'Choose the right power formula for real jobs and understand where heat occurs. Level 2 friendly, UK‑focused.';
 
 const quickCheckQuestions = [
   {
-    id: "power-formula-selection",
-    question: "For V = 230V and I = 13A, power is…",
-    options: [
-      "2990 W",
-      "17.7 W",
-      "243 W",
-      "299 kW"
-    ],
+    id: 'power-formula-selection',
+    question: 'For V = 230V and I = 13A, power is…',
+    options: ['2990 W', '17.7 W', '243 W', '299 kW'],
     correctIndex: 0,
-    explanation: "P = V×I = 230×13 = 2990 W (≈ 3kW)"
+    explanation: 'P = V×I = 230×13 = 2990 W (≈ 3kW)',
   },
   {
-    id: "heating-calculation",
-    question: "Cable heating mainly depends on:",
-    options: [
-      "I²R",
-      "V only",
-      "Cable colour",
-      "Ambient temperature only"
-    ],
+    id: 'heating-calculation',
+    question: 'Cable heating mainly depends on:',
+    options: ['I²R', 'V only', 'Cable colour', 'Ambient temperature only'],
     correctIndex: 0,
-    explanation: "Heat generated in conductors is proportional to I²R (current squared times resistance)."
-  }
+    explanation:
+      'Heat generated in conductors is proportional to I²R (current squared times resistance).',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "A 230V, 8A heater. Power is roughly…",
-    options: ["184 W", "1.84 kW", "18.4 kW", "0.034 kW"],
+    question: 'A 230V, 8A heater. Power is roughly…',
+    options: ['184 W', '1.84 kW', '18.4 kW', '0.034 kW'],
     correctAnswer: 1,
-    explanation: "P = V×I = 230×8 ≈ 1840 W = 1.84 kW."
+    explanation: 'P = V×I = 230×8 ≈ 1840 W = 1.84 kW.',
   },
   {
     id: 2,
-    question: "Cable I²R heating mainly depends on…",
-    options: ["Voltage", "Current and resistance", "Colour", "Frequency only"],
+    question: 'Cable I²R heating mainly depends on…',
+    options: ['Voltage', 'Current and resistance', 'Colour', 'Frequency only'],
     correctAnswer: 1,
-    explanation: "Heating is proportional to I²×R in the conductor/termination."
+    explanation: 'Heating is proportional to I²×R in the conductor/termination.',
   },
   {
     id: 3,
-    question: "At fixed 230V, which has higher power?",
-    options: ["460 Ω load", "920 Ω load", "Both same", "Need current"],
+    question: 'At fixed 230V, which has higher power?',
+    options: ['460 Ω load', '920 Ω load', 'Both same', 'Need current'],
     correctAnswer: 0,
-    explanation: "P = V²/R; lower R means higher power at fixed V."
+    explanation: 'P = V²/R; lower R means higher power at fixed V.',
   },
   {
     id: 4,
-    question: "Which formula fits: known I and R?",
-    options: ["P = VI", "P = I²R", "P = V²/R", "P = V/I"],
+    question: 'Which formula fits: known I and R?',
+    options: ['P = VI', 'P = I²R', 'P = V²/R', 'P = V/I'],
     correctAnswer: 1,
-    explanation: "Use P = I²R when current and resistance are known."
+    explanation: 'Use P = I²R when current and resistance are known.',
   },
   {
     id: 5,
-    question: "Which action reduces cable heating?",
-    options: ["Tighter grouping in insulation", "Higher current on same CSA", "Upsize CSA or shorten run", "Loose terminations"],
+    question: 'Which action reduces cable heating?',
+    options: [
+      'Tighter grouping in insulation',
+      'Higher current on same CSA',
+      'Upsize CSA or shorten run',
+      'Loose terminations',
+    ],
     correctAnswer: 2,
-    explanation: "Lower resistance and good routes reduce I²R heating."
+    explanation: 'Lower resistance and good routes reduce I²R heating.',
   },
   {
     id: 6,
-    question: "Convert 3000W to kW:",
-    options: ["3 kW", "0.3 kW", "30 kW", "300 kW"],
+    question: 'Convert 3000W to kW:',
+    options: ['3 kW', '0.3 kW', '30 kW', '300 kW'],
     correctAnswer: 0,
-    explanation: "Divide by 1000: 3000W ÷ 1000 = 3 kW."
+    explanation: 'Divide by 1000: 3000W ÷ 1000 = 3 kW.',
   },
   {
     id: 7,
-    question: "A 17.6Ω element at 230V draws approximately:",
-    options: ["13 A", "4 A", "40 A", "1.3 A"],
+    question: 'A 17.6Ω element at 230V draws approximately:',
+    options: ['13 A', '4 A', '40 A', '1.3 A'],
     correctAnswer: 0,
-    explanation: "I = V/R = 230/17.6 ≈ 13 A."
+    explanation: 'I = V/R = 230/17.6 ≈ 13 A.',
   },
   {
     id: 8,
-    question: "Doubling current in a cable increases heating by:",
-    options: ["2 times", "4 times", "Same", "Half"],
+    question: 'Doubling current in a cable increases heating by:',
+    options: ['2 times', '4 times', 'Same', 'Half'],
     correctAnswer: 1,
-    explanation: "Heat ∝ I²R, so doubling I gives 4× the heating."
+    explanation: 'Heat ∝ I²R, so doubling I gives 4× the heating.',
   },
   {
     id: 9,
-    question: "Most appropriate formula for appliance nameplate (V and I given):",
-    options: ["P = V×I", "P = I²R", "P = V²/R", "All equal"],
+    question: 'Most appropriate formula for appliance nameplate (V and I given):',
+    options: ['P = V×I', 'P = I²R', 'P = V²/R', 'All equal'],
     correctAnswer: 0,
-    explanation: "Use P = V×I when voltage and current are directly available."
+    explanation: 'Use P = V×I when voltage and current are directly available.',
   },
   {
     id: 10,
-    question: "A 5kW motor at 400V draws approximately:",
-    options: ["12.5 A", "8 A", "20 A", "2 A"],
+    question: 'A 5kW motor at 400V draws approximately:',
+    options: ['12.5 A', '8 A', '20 A', '2 A'],
     correctAnswer: 0,
-    explanation: "I = P/V = 5000/400 = 12.5 A (single phase approximation)."
-  }
+    explanation: 'I = P/V = 5000/400 = 12.5 A (single phase approximation).',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why three power formulas?",
-    answer: "Start with P = V×I. If voltage is fixed and resistance is known, P = V²/R. If current is known with resistance, P = I²R."
+    question: 'Why three power formulas?',
+    answer:
+      'Start with P = V×I. If voltage is fixed and resistance is known, P = V²/R. If current is known with resistance, P = I²R.',
   },
   {
-    question: "Does power factor matter here?",
-    answer: "At Level 2 we focus on DC/resistive loads. Power factor comes later. Labels and datasheets guide practice."
+    question: 'Does power factor matter here?',
+    answer:
+      'At Level 2 we focus on DC/resistive loads. Power factor comes later. Labels and datasheets guide practice.',
   },
   {
-    question: "Does higher voltage always mean more power?",
-    answer: "Only if current stays the same. P depends on both V and I."
+    question: 'Does higher voltage always mean more power?',
+    answer: 'Only if current stays the same. P depends on both V and I.',
   },
   {
-    question: "Why does a device feel hot within rating?",
-    answer: "All real devices have losses. Ventilation and correct terminations help manage heat."
-  }
+    question: 'Why does a device feel hot within rating?',
+    answer: 'All real devices have losses. Ventilation and correct terminations help manage heat.',
+  },
 ];
 
 const Module2Section2_4: React.FC = () => {
@@ -137,7 +136,11 @@ const Module2Section2_4: React.FC = () => {
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -171,19 +174,43 @@ const Module2Section2_4: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Power formulas:</strong> P = V×I (most common), P = I²R (heating), P = V²/R (fixed voltage).</li>
-                <li><strong>Choose by knowns:</strong> Use V×I for nameplate data, I²R for cable heating, V²/R for fixed loads.</li>
-                <li><strong>Heat relationship:</strong> Power converts to heat—I²R losses cause conductor heating.</li>
-                <li><strong>Practical use:</strong> Cable sizing, load calculations, fault diagnosis, component selection.</li>
-                <li><strong>Safety focus:</strong> Avoid overheating through proper calculation and component selection.</li>
+                <li>
+                  <strong>Power formulas:</strong> P = V×I (most common), P = I²R (heating), P =
+                  V²/R (fixed voltage).
+                </li>
+                <li>
+                  <strong>Choose by knowns:</strong> Use V×I for nameplate data, I²R for cable
+                  heating, V²/R for fixed loads.
+                </li>
+                <li>
+                  <strong>Heat relationship:</strong> Power converts to heat—I²R losses cause
+                  conductor heating.
+                </li>
+                <li>
+                  <strong>Practical use:</strong> Cable sizing, load calculations, fault diagnosis,
+                  component selection.
+                </li>
+                <li>
+                  <strong>Safety focus:</strong> Avoid overheating through proper calculation and
+                  component selection.
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Appliance nameplates (230V, 13A), heating elements, cable specifications, circuit breakers.</li>
-                <li><strong>Use:</strong> Calculate appliance power, assess cable heating, size protective devices, verify ratings.</li>
-                <li><strong>Apply:</strong> P=VI for nameplate checks, I²R for cable sizing, V²/R for fixed-voltage loads.</li>
+                <li>
+                  <strong>Spot:</strong> Appliance nameplates (230V, 13A), heating elements, cable
+                  specifications, circuit breakers.
+                </li>
+                <li>
+                  <strong>Use:</strong> Calculate appliance power, assess cable heating, size
+                  protective devices, verify ratings.
+                </li>
+                <li>
+                  <strong>Apply:</strong> P=VI for nameplate checks, I²R for cable sizing, V²/R for
+                  fixed-voltage loads.
+                </li>
               </ul>
             </div>
           </div>
@@ -235,29 +262,33 @@ const Module2Section2_4: React.FC = () => {
             </h2>
             <div className="space-y-6 text-white">
               <p className="text-base leading-relaxed">
-                <strong>Power</strong> is the rate of energy consumption or conversion. In electrical circuits,
-                power can be calculated using three formulas, each suited to different scenarios.
+                <strong>Power</strong> is the rate of energy consumption or conversion. In
+                electrical circuits, power can be calculated using three formulas, each suited to
+                different scenarios.
               </p>
 
               <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20 shadow-sm">
-                <h3 className="font-bold text-white mb-6 text-center text-lg">The Three Power Formulas</h3>
+                <h3 className="font-bold text-white mb-6 text-center text-lg">
+                  The Three Power Formulas
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
                   {/* P = V × I */}
                   <div className="group relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/10 rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
                     <div className="relative bg-card/90 backdrop-blur-sm p-6 rounded-xl border border-border/30 hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/20 text-center">
-                       <div className="bg-gradient-to-br from-elec-yellow to-elec-yellow text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
-                         <div className="text-base md:text-lg font-bold font-mono tracking-tight leading-none text-center whitespace-nowrap">
-                           P = V×I
-                         </div>
-                       </div>
+                      <div className="bg-gradient-to-br from-elec-yellow to-elec-yellow text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
+                        <div className="text-base md:text-lg font-bold font-mono tracking-tight leading-none text-center whitespace-nowrap">
+                          P = V×I
+                        </div>
+                      </div>
                       <h4 className="font-semibold text-white mb-2">Most Common</h4>
                       <p className="text-sm text-white mb-3">When you know voltage and current</p>
                       <div className="bg-card rounded-lg p-3">
                         <p className="text-xs text-elec-yellow font-medium">
-                          Nameplate data<br/>
-                          Meter readings<br/>
+                          Nameplate data
+                          <br />
+                          Meter readings
+                          <br />
                           Quick estimates
                         </p>
                       </div>
@@ -268,17 +299,21 @@ const Module2Section2_4: React.FC = () => {
                   <div className="group relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
                     <div className="relative bg-card/90 backdrop-blur-sm p-6 rounded-xl border border-border/30 hover:border-orange-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/20 text-center">
-                       <div className="bg-gradient-to-br from-orange-500 to-red-500 text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
-                         <div className="text-base md:text-lg font-bold font-mono tracking-tight leading-none text-center whitespace-nowrap">
-                           P = I²R
-                         </div>
-                       </div>
+                      <div className="bg-gradient-to-br from-orange-500 to-red-500 text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
+                        <div className="text-base md:text-lg font-bold font-mono tracking-tight leading-none text-center whitespace-nowrap">
+                          P = I²R
+                        </div>
+                      </div>
                       <h4 className="font-semibold text-white mb-2">For Heating</h4>
-                      <p className="text-sm text-white mb-3">When you know current and resistance</p>
+                      <p className="text-sm text-white mb-3">
+                        When you know current and resistance
+                      </p>
                       <div className="bg-card rounded-lg p-3">
                         <p className="text-xs text-elec-yellow font-medium">
-                          Cable losses<br/>
-                          Heat generation<br/>
+                          Cable losses
+                          <br />
+                          Heat generation
+                          <br />
                           I²R calculations
                         </p>
                       </div>
@@ -289,17 +324,21 @@ const Module2Section2_4: React.FC = () => {
                   <div className="group relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
                     <div className="relative bg-card/90 backdrop-blur-sm p-6 rounded-xl border border-border/30 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 text-center">
-                       <div className="bg-gradient-to-br from-purple-500 to-indigo-500 text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
-                         <div className="text-base md:text-lg font-bold font-mono tracking-tight leading-none text-center whitespace-nowrap">
-                           P = V²÷R
-                         </div>
-                       </div>
+                      <div className="bg-gradient-to-br from-purple-500 to-indigo-500 text-white rounded-full w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mx-auto mb-4 shadow-lg flex-shrink-0">
+                        <div className="text-base md:text-lg font-bold font-mono tracking-tight leading-none text-center whitespace-nowrap">
+                          P = V²÷R
+                        </div>
+                      </div>
                       <h4 className="font-semibold text-white mb-2">Fixed Voltage</h4>
-                      <p className="text-sm text-white mb-3">When you know voltage and resistance</p>
+                      <p className="text-sm text-white mb-3">
+                        When you know voltage and resistance
+                      </p>
                       <div className="bg-card rounded-lg p-3">
                         <p className="text-xs text-elec-yellow font-medium">
-                          Heater elements<br/>
-                          Resistive loads<br/>
+                          Heater elements
+                          <br />
+                          Resistive loads
+                          <br />
                           Component sizing
                         </p>
                       </div>
@@ -315,8 +354,8 @@ const Module2Section2_4: React.FC = () => {
                     <div>
                       <p className="text-white text-sm font-medium mb-1">Key Insight</p>
                       <p className="text-white text-sm">
-                        All three formulas give the same answer for the same circuit.
-                        Choose based on what values you have available and what you're trying to find.
+                        All three formulas give the same answer for the same circuit. Choose based
+                        on what values you have available and what you're trying to find.
                       </p>
                     </div>
                   </div>
@@ -335,16 +374,35 @@ const Module2Section2_4: React.FC = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p className="text-sm text-white mb-4">
-                Power calculations follow a systematic approach. Master this process and you'll confidently handle any power-related scenario on site.
+                Power calculations follow a systematic approach. Master this process and you'll
+                confidently handle any power-related scenario on site.
               </p>
 
               <ol className="list-decimal pl-6 space-y-2">
-                <li><strong>Identify what you know:</strong> voltage, current, or resistance values from nameplates, measurements, or specifications.</li>
-                <li><strong>Choose the appropriate formula:</strong> P = V×I, P = I²R, or P = V²/R based on available data.</li>
-                <li><strong>Convert units if needed:</strong> ensure consistent units (W, V, A, Ω) - watch for kW, mA, kΩ.</li>
-                <li><strong>Calculate and round:</strong> keep appropriate significant figures for practical use.</li>
-                <li><strong>Sanity‑check:</strong> does the result make practical sense for the application?</li>
-                <li><strong>Apply safety margin:</strong> consider derating factors and safety requirements.</li>
+                <li>
+                  <strong>Identify what you know:</strong> voltage, current, or resistance values
+                  from nameplates, measurements, or specifications.
+                </li>
+                <li>
+                  <strong>Choose the appropriate formula:</strong> P = V×I, P = I²R, or P = V²/R
+                  based on available data.
+                </li>
+                <li>
+                  <strong>Convert units if needed:</strong> ensure consistent units (W, V, A, Ω) -
+                  watch for kW, mA, kΩ.
+                </li>
+                <li>
+                  <strong>Calculate and round:</strong> keep appropriate significant figures for
+                  practical use.
+                </li>
+                <li>
+                  <strong>Sanity‑check:</strong> does the result make practical sense for the
+                  application?
+                </li>
+                <li>
+                  <strong>Apply safety margin:</strong> consider derating factors and safety
+                  requirements.
+                </li>
               </ol>
 
               <div className="bg-accent/5 rounded-lg p-4 border border-accent/20 mt-4">
@@ -371,11 +429,12 @@ const Module2Section2_4: React.FC = () => {
           </h2>
           <div className="space-y-6">
             <div className="grid md:grid-cols-1 gap-6">
-
               {/* P = V × I */}
               <div className="bg-card border-l-2 border-elec-yellow p-4 rounded-r-lg">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">P = V × I</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                    P = V × I
+                  </span>
                   Most Common - Use First
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -391,8 +450,8 @@ const Module2Section2_4: React.FC = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Example scenario:</p>
                     <p className="text-white">
-                      "The washing machine shows 230V, 10A on its nameplate.
-                      Is this suitable for a 13A socket circuit?"
+                      "The washing machine shows 230V, 10A on its nameplate. Is this suitable for a
+                      13A socket circuit?"
                     </p>
                     <p className="text-green-600 text-xs mt-1">
                       P = 230 × 10 = 2.3kW - Well within 13A limit
@@ -404,7 +463,9 @@ const Module2Section2_4: React.FC = () => {
               {/* P = I²R */}
               <div className="bg-card border-l-2 border-orange-500 p-4 rounded-r-lg">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">I²R</span>
+                  <span className="bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                    I²R
+                  </span>
                   For Heating Analysis
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -420,12 +481,11 @@ const Module2Section2_4: React.FC = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Example scenario:</p>
                     <p className="text-white">
-                      "A 32A circuit uses 30m of 6mm² cable.
-                      How much power is lost as heat?"
+                      "A 32A circuit uses 30m of 6mm² cable. How much power is lost as heat?"
                     </p>
                     <p className="text-orange-600 text-xs mt-1">
-                      Cable R = 30m × 3.08mΩ = 92.4mΩ<br/>
-                      P = 32² × 0.0924 = 94.6W heating
+                      Cable R = 30m × 3.08mΩ = 92.4mΩ
+                      <br />P = 32² × 0.0924 = 94.6W heating
                     </p>
                   </div>
                 </div>
@@ -434,7 +494,9 @@ const Module2Section2_4: React.FC = () => {
               {/* P = V²/R */}
               <div className="bg-card border-l-2 border-purple-500 p-4 rounded-r-lg">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">V²/R</span>
+                  <span className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                    V²/R
+                  </span>
                   For Fixed Voltage Loads
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -450,11 +512,12 @@ const Module2Section2_4: React.FC = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Example scenario:</p>
                     <p className="text-white">
-                      "Customer wants to replace a broken 3kW
-                      immersion heater element. What resistance should it be?"
+                      "Customer wants to replace a broken 3kW immersion heater element. What
+                      resistance should it be?"
                     </p>
                     <p className="text-purple-600 text-xs mt-1">
-                      R = V²/P = 230²/3000 = 17.6Ω<br/>
+                      R = V²/P = 230²/3000 = 17.6Ω
+                      <br />
                       Order a 17.6Ω element for 230V supply
                     </p>
                   </div>
@@ -480,15 +543,21 @@ const Module2Section2_4: React.FC = () => {
                 <ul className="space-y-3 text-sm">
                   <li className="bg-card border-l-2 border-red-500 p-3 rounded-r">
                     <p className="font-medium text-white">Unit confusion</p>
-                    <p className="text-white">Using kW instead of W, or mA instead of A in calculations</p>
+                    <p className="text-white">
+                      Using kW instead of W, or mA instead of A in calculations
+                    </p>
                   </li>
                   <li className="bg-card border-l-2 border-red-500 p-3 rounded-r">
                     <p className="font-medium text-white">Wrong formula choice</p>
-                    <p className="text-white">Using P = V²/R when you don't actually know the resistance</p>
+                    <p className="text-white">
+                      Using P = V²/R when you don't actually know the resistance
+                    </p>
                   </li>
                   <li className="bg-card border-l-2 border-red-500 p-3 rounded-r">
                     <p className="font-medium text-white">Ignoring power factor</p>
-                    <p className="text-white">Applying DC formulas to AC inductive loads without consideration</p>
+                    <p className="text-white">
+                      Applying DC formulas to AC inductive loads without consideration
+                    </p>
                   </li>
                 </ul>
               </div>
@@ -500,15 +569,21 @@ const Module2Section2_4: React.FC = () => {
                 <ul className="space-y-3 text-sm">
                   <li className="bg-card border-l-2 border-green-500 p-3 rounded-r">
                     <p className="font-medium text-white">Always convert to base units first</p>
-                    <p className="text-white">Convert kW to W, mA to A, kΩ to Ω before calculating</p>
+                    <p className="text-white">
+                      Convert kW to W, mA to A, kΩ to Ω before calculating
+                    </p>
                   </li>
                   <li className="bg-card border-l-2 border-green-500 p-3 rounded-r">
                     <p className="font-medium text-white">Double-check your knowns</p>
-                    <p className="text-white">Verify you actually have reliable values for V, I, or R</p>
+                    <p className="text-white">
+                      Verify you actually have reliable values for V, I, or R
+                    </p>
                   </li>
                   <li className="bg-card border-l-2 border-green-500 p-3 rounded-r">
                     <p className="font-medium text-white">Sanity check results</p>
-                    <p className="text-white">Does a 100kW kettle make sense? Always verify reasonableness</p>
+                    <p className="text-white">
+                      Does a 100kW kettle make sense? Always verify reasonableness
+                    </p>
                   </li>
                 </ul>
               </div>
@@ -523,7 +598,8 @@ const Module2Section2_4: React.FC = () => {
             Interactive Power Calculator
           </h2>
           <p className="text-white mb-6">
-            Practice with this calculator. Enter any two values and it will calculate power using the appropriate formula.
+            Practice with this calculator. Enter any two values and it will calculate power using
+            the appropriate formula.
           </p>
           <PowerCalculator />
         </section>
@@ -542,16 +618,26 @@ const Module2Section2_4: React.FC = () => {
           <div className="bg-accent/5 rounded-lg p-4 border border-accent/20">
             <h3 className="font-semibold text-white mb-3">Cable Heating Assessment</h3>
             <p className="text-xs sm:text-sm text-white mb-3">
-              You're installing a 32A radial circuit using 6mm² T&E cable over a 40m run. The client is concerned
-              about cable heating and wants to understand the power loss.
+              You're installing a 32A radial circuit using 6mm² T&E cable over a 40m run. The client
+              is concerned about cable heating and wants to understand the power loss.
             </p>
             <div className="space-y-2 text-sm">
-              <p><strong>Given:</strong> I = 32A, Cable resistance ≈ 3.08mΩ/m, Length = 40m</p>
-              <p><strong>Step 1:</strong> Calculate total resistance: R = 3.08 × 40 = 123.2mΩ = 0.1232Ω</p>
-              <p><strong>Step 2:</strong> Calculate power loss: P = I²R = 32² × 0.1232 = 126W</p>
-              <p><strong>Check:</strong> 126W heating in 40m of 6mm² cable - within acceptable limits</p>
+              <p>
+                <strong>Given:</strong> I = 32A, Cable resistance ≈ 3.08mΩ/m, Length = 40m
+              </p>
+              <p>
+                <strong>Step 1:</strong> Calculate total resistance: R = 3.08 × 40 = 123.2mΩ =
+                0.1232Ω
+              </p>
+              <p>
+                <strong>Step 2:</strong> Calculate power loss: P = I²R = 32² × 0.1232 = 126W
+              </p>
+              <p>
+                <strong>Check:</strong> 126W heating in 40m of 6mm² cable - within acceptable limits
+              </p>
               <p className="text-white italic">
-                This demonstrates how I²R calculations help assess cable suitability and heating effects.
+                This demonstrates how I²R calculations help assess cable suitability and heating
+                effects.
               </p>
             </div>
           </div>
@@ -564,25 +650,31 @@ const Module2Section2_4: React.FC = () => {
             Detailed Worked Examples
           </h2>
           <div className="space-y-6">
-
             {/* Example 1: Kitchen Circuit Loading */}
             <div className="border border-white/10 rounded-lg p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">1</div>
-                <h3 className="text-lg font-semibold text-white">Kitchen Circuit Loading Assessment</h3>
+                <div className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                  1
+                </div>
+                <h3 className="text-lg font-semibold text-white">
+                  Kitchen Circuit Loading Assessment
+                </h3>
               </div>
 
               <div className="bg-card rounded-lg p-4 mb-4 border border-elec-yellow/20">
                 <p className="text-xs sm:text-sm text-white mb-2">
-                  <strong>Scenario:</strong> A client wants to add a dishwasher (2.5kW) to a kitchen ring final circuit
-                  that already has a kettle (2kW), microwave (800W), and toaster (1.2kW). Will the 32A circuit cope?
+                  <strong>Scenario:</strong> A client wants to add a dishwasher (2.5kW) to a kitchen
+                  ring final circuit that already has a kettle (2kW), microwave (800W), and toaster
+                  (1.2kW). Will the 32A circuit cope?
                 </p>
               </div>
 
               <div className="space-y-3 text-sm">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-semibold text-white mb-2">Step 1: Calculate individual currents</p>
+                    <p className="font-semibold text-white mb-2">
+                      Step 1: Calculate individual currents
+                    </p>
                     <ul className="space-y-1 text-white pl-4">
                       <li>Dishwasher: I = P/V = 2500/230 = 10.9A</li>
                       <li>Kettle: I = P/V = 2000/230 = 8.7A</li>
@@ -603,8 +695,9 @@ const Module2Section2_4: React.FC = () => {
 
                 <div className="bg-card border-l-2 border-green-500 p-3 rounded-r mt-4">
                   <p className="text-white text-sm">
-                    <strong>Conclusion:</strong> The 32A ring final can handle the additional dishwasher.
-                    Even with simultaneous operation of major appliances, current stays well below circuit capacity.
+                    <strong>Conclusion:</strong> The 32A ring final can handle the additional
+                    dishwasher. Even with simultaneous operation of major appliances, current stays
+                    well below circuit capacity.
                   </p>
                 </div>
               </div>
@@ -613,14 +706,19 @@ const Module2Section2_4: React.FC = () => {
             {/* Example 2: Immersion Heater Sizing */}
             <div className="border border-white/10 rounded-lg p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">2</div>
-                <h3 className="text-lg font-semibold text-white">Immersion Heater Element Replacement</h3>
+                <div className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                  2
+                </div>
+                <h3 className="text-lg font-semibold text-white">
+                  Immersion Heater Element Replacement
+                </h3>
               </div>
 
               <div className="bg-card rounded-lg p-4 mb-4 border border-purple-500/20">
                 <p className="text-xs sm:text-sm text-white mb-2">
-                  <strong>Scenario:</strong> A customer's 3kW immersion heater element has failed. They want to upgrade
-                  to a more powerful 4kW element but are concerned about their existing 20A circuit and cable sizing.
+                  <strong>Scenario:</strong> A customer's 3kW immersion heater element has failed.
+                  They want to upgrade to a more powerful 4kW element but are concerned about their
+                  existing 20A circuit and cable sizing.
                 </p>
               </div>
 
@@ -648,8 +746,9 @@ const Module2Section2_4: React.FC = () => {
 
                 <div className="bg-card border-l-2 border-orange-500 p-3 rounded-r mt-4">
                   <p className="text-white text-sm">
-                    <strong>Conclusion:</strong> The upgrade to 4kW is possible with the existing installation.
-                    Current increases to 17.4A, still comfortably within the 20A circuit rating.
+                    <strong>Conclusion:</strong> The upgrade to 4kW is possible with the existing
+                    installation. Current increases to 17.4A, still comfortably within the 20A
+                    circuit rating.
                   </p>
                 </div>
               </div>
@@ -658,14 +757,17 @@ const Module2Section2_4: React.FC = () => {
             {/* Example 3: Motor Cable Sizing */}
             <div className="border border-white/10 rounded-lg p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                <div className="bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                  3
+                </div>
                 <h3 className="text-lg font-semibold text-white">Workshop Motor Installation</h3>
               </div>
 
               <div className="bg-card rounded-lg p-4 mb-4 border border-orange-500/20">
                 <p className="text-xs sm:text-sm text-white mb-2">
-                  <strong>Scenario:</strong> Installing a 5kW three-phase motor in a workshop. The cable run is 50m from the
-                  distribution board to the motor starter. Calculate current and assess 6mm² SWA cable heating.
+                  <strong>Scenario:</strong> Installing a 5kW three-phase motor in a workshop. The
+                  cable run is 50m from the distribution board to the motor starter. Calculate
+                  current and assess 6mm² SWA cable heating.
                 </p>
               </div>
 
@@ -693,8 +795,9 @@ const Module2Section2_4: React.FC = () => {
 
                 <div className="bg-card border-l-2 border-green-500 p-3 rounded-r mt-4">
                   <p className="text-white text-sm">
-                    <strong>Conclusion:</strong> 6mm² SWA cable is more than adequate. Total power loss is only 29.7W (less than 0.6% of motor power),
-                    resulting in minimal heating and excellent efficiency.
+                    <strong>Conclusion:</strong> 6mm² SWA cable is more than adequate. Total power
+                    loss is only 29.7W (less than 0.6% of motor power), resulting in minimal heating
+                    and excellent efficiency.
                   </p>
                 </div>
               </div>
@@ -710,28 +813,45 @@ const Module2Section2_4: React.FC = () => {
           </h2>
           <div className="space-y-4">
             <p className="text-white">
-              It's crucial to understand the difference between power (rate of energy use) and energy (total consumption over time).
-              This affects customer bills and installation sizing.
+              It's crucial to understand the difference between power (rate of energy use) and
+              energy (total consumption over time). This affects customer bills and installation
+              sizing.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="bg-card border-l-2 border-elec-yellow p-4 rounded-r">
                 <h3 className="font-semibold text-white mb-3">Power (P) - Instantaneous</h3>
                 <ul className="text-sm text-white space-y-2">
-                  <li><strong>Unit:</strong> Watts (W) or Kilowatts (kW)</li>
-                  <li><strong>What it tells us:</strong> How fast energy is being used right now</li>
-                  <li><strong>Determines:</strong> Cable sizing, protective device ratings</li>
-                  <li><strong>Example:</strong> A 3kW kettle draws 3000W while heating</li>
+                  <li>
+                    <strong>Unit:</strong> Watts (W) or Kilowatts (kW)
+                  </li>
+                  <li>
+                    <strong>What it tells us:</strong> How fast energy is being used right now
+                  </li>
+                  <li>
+                    <strong>Determines:</strong> Cable sizing, protective device ratings
+                  </li>
+                  <li>
+                    <strong>Example:</strong> A 3kW kettle draws 3000W while heating
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-card border-l-2 border-green-500 p-4 rounded-r">
                 <h3 className="font-semibold text-white mb-3">Energy (E) - Over Time</h3>
                 <ul className="text-sm text-white space-y-2">
-                  <li><strong>Unit:</strong> Kilowatt-hours (kWh)</li>
-                  <li><strong>What it tells us:</strong> Total energy consumed over a period</li>
-                  <li><strong>Determines:</strong> Electricity bills, environmental impact</li>
-                  <li><strong>Example:</strong> Kettle on for 0.1 hours = 3kW × 0.1h = 0.3kWh</li>
+                  <li>
+                    <strong>Unit:</strong> Kilowatt-hours (kWh)
+                  </li>
+                  <li>
+                    <strong>What it tells us:</strong> Total energy consumed over a period
+                  </li>
+                  <li>
+                    <strong>Determines:</strong> Electricity bills, environmental impact
+                  </li>
+                  <li>
+                    <strong>Example:</strong> Kettle on for 0.1 hours = 3kW × 0.1h = 0.3kWh
+                  </li>
                 </ul>
               </div>
             </div>
@@ -740,10 +860,15 @@ const Module2Section2_4: React.FC = () => {
               <h4 className="font-semibold text-white mb-2">Practical Example: Cost Comparison</h4>
               <div className="text-sm text-white space-y-1">
                 <p>Two customers ask about running costs:</p>
-                <p><strong>Customer A:</strong> 3kW immersion heater, 2 hours/day = 6kWh/day</p>
-                <p><strong>Customer B:</strong> 1kW space heater, 8 hours/day = 8kWh/day</p>
+                <p>
+                  <strong>Customer A:</strong> 3kW immersion heater, 2 hours/day = 6kWh/day
+                </p>
+                <p>
+                  <strong>Customer B:</strong> 1kW space heater, 8 hours/day = 8kWh/day
+                </p>
                 <p className="text-green-600 mt-2">
-                  <strong>Result:</strong> Despite lower power rating, Customer B pays more (higher energy consumption)
+                  <strong>Result:</strong> Despite lower power rating, Customer B pays more (higher
+                  energy consumption)
                 </p>
               </div>
             </div>
@@ -773,12 +898,13 @@ const Module2Section2_4: React.FC = () => {
             Summary
           </h2>
           <p className="text-white mb-4">
-            Power calculations are essential for safe electrical installations. Choose P = V×I for nameplate verification,
-            P = I²R for heating analysis, and P = V²/R for fixed voltage scenarios. Always consider the practical
-            implications of your calculations.
+            Power calculations are essential for safe electrical installations. Choose P = V×I for
+            nameplate verification, P = I²R for heating analysis, and P = V²/R for fixed voltage
+            scenarios. Always consider the practical implications of your calculations.
           </p>
           <p className="text-white text-sm">
-            Remember: Heat is proportional to I² - small increases in current create large increases in heating!
+            Remember: Heat is proportional to I² - small increases in current create large increases
+            in heating!
           </p>
         </section>
 
@@ -787,11 +913,26 @@ const Module2Section2_4: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/apprentice/level2/module2/section2/2-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="/study-centre/apprentice/level2/module2/section2/2-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous
+            </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/apprentice/level2/module2/section2/2-5">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="/study-centre/apprentice/level2/module2/section2/2-5">
+              Next
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
           </Button>
         </nav>
       </div>
@@ -801,11 +942,11 @@ const Module2Section2_4: React.FC = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
+            '@context': 'https://schema.org',
+            '@type': 'Article',
             headline: TITLE,
             description: DESCRIPTION,
-            inLanguage: "en-GB",
+            inLanguage: 'en-GB',
             isAccessibleForFree: true,
           }),
         }}

@@ -1,26 +1,39 @@
-import { Zap, CheckCircle, AlertTriangle, Target, BookOpen, Timer, Settings, Play, Wrench, TrendingUp, Eye, Lightbulb } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
-import useSEO from "@/hooks/useSEO";
+import {
+  Zap,
+  CheckCircle,
+  AlertTriangle,
+  Target,
+  BookOpen,
+  Timer,
+  Settings,
+  Play,
+  Wrench,
+  TrendingUp,
+  Eye,
+  Lightbulb,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module4Section4 = () => {
   useSEO(
-    "Functional and Operational Testing | AM2 Module 4 Section 4",
-    "Master functional and operational testing procedures for AM2 electrical assessment success"
+    'Functional and Operational Testing | AM2 Module 4 Section 4',
+    'Master functional and operational testing procedures for AM2 electrical assessment success'
   );
 
   const learningOutcomes = [
-    "Perform functional testing of lighting, power, and motor circuits",
-    "Carry out RCD testing and confirm trip times within specified limits",
-    "Check polarity and operation of switches, sockets, and protective devices",
-    "Demonstrate functional testing confidently to an assessor",
-    "Record functional results correctly on certification"
+    'Perform functional testing of lighting, power, and motor circuits',
+    'Carry out RCD testing and confirm trip times within specified limits',
+    'Check polarity and operation of switches, sockets, and protective devices',
+    'Demonstrate functional testing confidently to an assessor',
+    'Record functional results correctly on certification',
   ];
 
   const quickCheckQuestions: Array<{
@@ -31,41 +44,44 @@ const AM2Module4Section4 = () => {
     explanation: string;
   }> = [
     {
-      id: "functional-vs-insulation",
+      id: 'functional-vs-insulation',
       question: "What's the difference between insulation resistance and functional testing?",
       options: [
-        "They are the same test",
-        "Insulation resistance checks safety of wiring; functional testing checks operation of equipment and circuits",
-        "Functional testing is optional",
-        "Insulation resistance is for motors only"
+        'They are the same test',
+        'Insulation resistance checks safety of wiring; functional testing checks operation of equipment and circuits',
+        'Functional testing is optional',
+        'Insulation resistance is for motors only',
       ],
       correctIndex: 1,
-      explanation: "Insulation resistance tests the safety and integrity of cable insulation, while functional testing confirms that circuits and equipment operate correctly as designed."
+      explanation:
+        'Insulation resistance tests the safety and integrity of cable insulation, while functional testing confirms that circuits and equipment operate correctly as designed.',
     },
     {
-      id: "rcd-failure",
+      id: 'rcd-failure',
       question: "What's the required action if an RCD fails to trip within the permitted time?",
       options: [
-        "Continue with other tests",
-        "Record non-compliance and fail the RCD test",
-        "Try the test again",
-        "Adjust the settings"
+        'Continue with other tests',
+        'Record non-compliance and fail the RCD test',
+        'Try the test again',
+        'Adjust the settings',
       ],
       correctIndex: 1,
-      explanation: "If an RCD fails to trip within BS 7671 specified times, it must be recorded as non-compliant and the test marked as a failure. The RCD requires investigation or replacement."
+      explanation:
+        'If an RCD fails to trip within BS 7671 specified times, it must be recorded as non-compliant and the test marked as a failure. The RCD requires investigation or replacement.',
     },
     {
-      id: "testing-completeness",
-      question: "Why is it important to test every lighting switch combination?",
+      id: 'testing-completeness',
+      question: 'Why is it important to test every lighting switch combination?',
       options: [
-        "To save time",
+        'To save time',
         "It's not necessary if some work",
-        "To ensure all switching functions operate correctly as designed",
-        "Only for three-way switching"
+        'To ensure all switching functions operate correctly as designed',
+        'Only for three-way switching',
       ],
       correctIndex: 2,
-      explanation: "Every switching combination must be tested to confirm correct wiring and operation. Missing any combination could hide wiring errors that compromise safety or functionality."
-    }
+      explanation:
+        'Every switching combination must be tested to confirm correct wiring and operation. Missing any combination could hide wiring errors that compromise safety or functionality.',
+    },
   ];
 
   const quizQuestions = [
@@ -74,112 +90,122 @@ const AM2Module4Section4 = () => {
       question: "What's the difference between insulation resistance and functional testing?",
       options: [
         "No difference - they're the same",
-        "Insulation resistance checks safety of wiring; functional testing checks operation of equipment",
-        "Functional testing is electrical, insulation is mechanical",
-        "Only insulation resistance is required"
+        'Insulation resistance checks safety of wiring; functional testing checks operation of equipment',
+        'Functional testing is electrical, insulation is mechanical',
+        'Only insulation resistance is required',
       ],
       correctAnswer: 1,
-      explanation: "Insulation resistance tests electrical safety of cable insulation, while functional testing verifies that circuits and equipment operate correctly as designed."
+      explanation:
+        'Insulation resistance tests electrical safety of cable insulation, while functional testing verifies that circuits and equipment operate correctly as designed.',
     },
     {
       id: 2,
-      question: "What must be tested on every lighting circuit?",
+      question: 'What must be tested on every lighting circuit?',
       options: [
-        "Only the main switch",
-        "Every switching combination and lamp operation",
-        "Just the circuit breaker",
-        "Only two-way switches"
+        'Only the main switch',
+        'Every switching combination and lamp operation',
+        'Just the circuit breaker',
+        'Only two-way switches',
       ],
       correctAnswer: 1,
-      explanation: "All switches (one-way, two-way, intermediate) and their combinations must be tested to confirm correct operation and lamp control."
+      explanation:
+        'All switches (one-way, two-way, intermediate) and their combinations must be tested to confirm correct operation and lamp control.',
     },
     {
       id: 3,
-      question: "Which device is tested at x1 and x5 IΔn?",
-      options: ["MCB", "RCD/RCBO", "Isolator", "Fuse"],
+      question: 'Which device is tested at x1 and x5 IΔn?',
+      options: ['MCB', 'RCD/RCBO', 'Isolator', 'Fuse'],
       correctAnswer: 1,
-      explanation: "RCDs and RCBOs must be tested at both 1x and 5x their rated tripping current (IΔn) to verify correct operation and timing."
+      explanation:
+        'RCDs and RCBOs must be tested at both 1x and 5x their rated tripping current (IΔn) to verify correct operation and timing.',
     },
     {
       id: 4,
-      question: "What unit are RCD trip times recorded in?",
-      options: ["Seconds (s)", "Milliseconds (ms)", "Minutes (min)", "Microseconds (us)"],
+      question: 'What unit are RCD trip times recorded in?',
+      options: ['Seconds (s)', 'Milliseconds (ms)', 'Minutes (min)', 'Microseconds (us)'],
       correctAnswer: 1,
-      explanation: "RCD trip times are measured and recorded in milliseconds (ms) as per BS 7671 requirements."
+      explanation:
+        'RCD trip times are measured and recorded in milliseconds (ms) as per BS 7671 requirements.',
     },
     {
       id: 5,
-      question: "What happens if an RCD fails to trip within limits?",
+      question: 'What happens if an RCD fails to trip within limits?',
       options: [
-        "Try again later",
-        "Record non-compliance and fail the test",
-        "Adjust the test current",
-        "Skip the test"
+        'Try again later',
+        'Record non-compliance and fail the test',
+        'Adjust the test current',
+        'Skip the test',
       ],
       correctAnswer: 1,
-      explanation: "If an RCD fails to trip within the required time limits, it must be recorded as non-compliant and the test marked as failed."
+      explanation:
+        'If an RCD fails to trip within the required time limits, it must be recorded as non-compliant and the test marked as failed.',
     },
     {
       id: 6,
-      question: "True or false: Functional testing can be skipped if electrical tests pass.",
-      options: ["True", "False"],
+      question: 'True or false: Functional testing can be skipped if electrical tests pass.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Functional testing is mandatory and cannot be skipped. It proves that circuits operate correctly, which electrical tests alone cannot confirm."
+      explanation:
+        'False. Functional testing is mandatory and cannot be skipped. It proves that circuits operate correctly, which electrical tests alone cannot confirm.',
     },
     {
       id: 7,
-      question: "Why must you test every lighting switch combination?",
+      question: 'Why must you test every lighting switch combination?',
       options: [
         "It's not necessary",
-        "To ensure all switching functions operate correctly as designed",
-        "Only for show",
-        "To waste time"
+        'To ensure all switching functions operate correctly as designed',
+        'Only for show',
+        'To waste time',
       ],
       correctAnswer: 1,
-      explanation: "Testing every switch combination ensures correct wiring and operation of all lighting control functions as per the design."
+      explanation:
+        'Testing every switch combination ensures correct wiring and operation of all lighting control functions as per the design.',
     },
     {
       id: 8,
-      question: "What test tool can be used to check socket polarity?",
+      question: 'What test tool can be used to check socket polarity?',
       options: [
-        "Multimeter only",
-        "Polarity tester or plug-in socket tester",
-        "Insulation tester",
-        "Continuity tester"
+        'Multimeter only',
+        'Polarity tester or plug-in socket tester',
+        'Insulation tester',
+        'Continuity tester',
       ],
       correctAnswer: 1,
-      explanation: "Polarity testers or plug-in socket testers can quickly verify correct polarity and supply presence at socket outlets."
+      explanation:
+        'Polarity testers or plug-in socket testers can quickly verify correct polarity and supply presence at socket outlets.',
     },
     {
       id: 9,
-      question: "What function must you confirm in motor circuits?",
+      question: 'What function must you confirm in motor circuits?',
       options: [
-        "Only the motor runs",
-        "Start and stop controls, and overload reset operation",
-        "Just the electrical supply",
-        "Only the speed"
+        'Only the motor runs',
+        'Start and stop controls, and overload reset operation',
+        'Just the electrical supply',
+        'Only the speed',
       ],
       correctAnswer: 1,
-      explanation: "Motor circuits require testing of start/stop controls, overload protection operation, and correct reset functionality for safety."
+      explanation:
+        'Motor circuits require testing of start/stop controls, overload protection operation, and correct reset functionality for safety.',
     },
     {
       id: 10,
       question: "What's the final step after functional testing?",
       options: [
-        "Leave everything on",
-        "Leave installation in a safe state",
-        "Remove all fuses",
-        "Turn off main supply"
+        'Leave everything on',
+        'Leave installation in a safe state',
+        'Remove all fuses',
+        'Turn off main supply',
       ],
       correctAnswer: 1,
-      explanation: "After functional testing, the installation must be left in a safe state with all systems operating normally and safely."
-    }
+      explanation:
+        'After functional testing, the installation must be left in a safe state with all systems operating normally and safely.',
+    },
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module4"
-      breadcrumbs={["AM2", "Module 4", "Section 4"]}
+      breadcrumbs={['AM2', 'Module 4', 'Section 4']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -192,10 +218,13 @@ const AM2Module4Section4 = () => {
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Functional Testing is Mandatory">
         <p className="text-ios-callout text-white/80 mb-2">
-          Assessors want to see you approach this like you would on-site: check, operate, and confirm every circuit behaves as designed. Skipping or rushing these checks is a common reason candidates lose marks.
+          Assessors want to see you approach this like you would on-site: check, operate, and
+          confirm every circuit behaves as designed. Skipping or rushing these checks is a common
+          reason candidates lose marks.
         </p>
         <p className="text-ios-callout text-white/90 font-medium">
-          Functional testing cannot be skipped even if all electrical tests pass. It proves real-world operation and safety.
+          Functional testing cannot be skipped even if all electrical tests pass. It proves
+          real-world operation and safety.
         </p>
       </AM2CriticalWarning>
 
@@ -212,18 +241,24 @@ const AM2Module4Section4 = () => {
         </h2>
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-white font-semibold mb-2">Definition and Purpose:</h4>
+          <h4 className="text-ios-headline text-white font-semibold mb-2">
+            Definition and Purpose:
+          </h4>
           <p className="text-ios-callout text-white/80 mb-3">
-            Functional testing confirms the installation operates as intended. It goes beyond electrical tests - checks real-world usability and operational safety.
+            Functional testing confirms the installation operates as intended. It goes beyond
+            electrical tests - checks real-world usability and operational safety.
           </p>
           <p className="text-ios-callout text-elec-yellow">
-            <strong>Key Principle:</strong> Proving that circuits and equipment actually work correctly in practice, not just that they pass electrical measurements.
+            <strong>Key Principle:</strong> Proving that circuits and equipment actually work
+            correctly in practice, not just that they pass electrical measurements.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-3">Functional Testing Covers:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-3">
+              Functional Testing Covers:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -399,7 +434,9 @@ const AM2Module4Section4 = () => {
 
         {/* RCD Testing Requirements */}
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">Detailed RCD Testing Requirements:</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">
+            Detailed RCD Testing Requirements:
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-semibold mb-2">Standard RCD (30mA):</p>
@@ -419,7 +456,9 @@ const AM2Module4Section4 = () => {
               </ul>
             </div>
             <div>
-              <p className="text-ios-callout text-white font-semibold mb-2">Recording Requirements:</p>
+              <p className="text-ios-callout text-white font-semibold mb-2">
+                Recording Requirements:
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -465,7 +504,9 @@ const AM2Module4Section4 = () => {
           </div>
 
           <div>
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Recording and Procedure Errors:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Recording and Procedure Errors:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
@@ -556,10 +597,14 @@ const AM2Module4Section4 = () => {
         </div>
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h4 className="text-ios-headline text-white font-semibold mb-3">What Assessors Specifically Look For:</h4>
+          <h4 className="text-ios-headline text-white font-semibold mb-3">
+            What Assessors Specifically Look For:
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <p className="text-ios-callout text-elec-yellow font-semibold mb-2">Systematic Testing:</p>
+              <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
+                Systematic Testing:
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -576,7 +621,9 @@ const AM2Module4Section4 = () => {
               </ul>
             </div>
             <div>
-              <p className="text-ios-callout text-elec-yellow font-semibold mb-2">Professional Communication:</p>
+              <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
+                Professional Communication:
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -606,7 +653,9 @@ const AM2Module4Section4 = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Lighting Circuit Testing:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Lighting Circuit Testing:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -644,7 +693,9 @@ const AM2Module4Section4 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">RCD Testing Procedure:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                RCD Testing Procedure:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
@@ -662,7 +713,9 @@ const AM2Module4Section4 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Motor Circuit Testing:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Motor Circuit Testing:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
@@ -682,7 +735,9 @@ const AM2Module4Section4 = () => {
         </div>
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">Time Management and Professional Tips:</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">
+            Time Management and Professional Tips:
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-semibold mb-2">Efficient Testing:</p>
@@ -702,7 +757,9 @@ const AM2Module4Section4 = () => {
               </ul>
             </div>
             <div>
-              <p className="text-ios-callout text-white font-semibold mb-2">Professional Approach:</p>
+              <p className="text-ios-callout text-white font-semibold mb-2">
+                Professional Approach:
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -739,32 +796,44 @@ const AM2Module4Section4 = () => {
 
         <div className="space-y-3">
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 1: Incomplete Switch Testing</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 1: Incomplete Switch Testing
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate did full electrical tests but didn't test two-way switching. Assessor flagged incomplete - <strong className="text-red-400">lost marks</strong>
+              Candidate did full electrical tests but didn't test two-way switching. Assessor
+              flagged incomplete - <strong className="text-red-400">lost marks</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
-              Lesson: Every switching combination must be tested. Missing any combination could hide wiring errors.
+              Lesson: Every switching combination must be tested. Missing any combination could hide
+              wiring errors.
             </p>
           </div>
 
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 2: Incomplete RCD Testing</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 2: Incomplete RCD Testing
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate only did RCD x1 trip test, forgot x5. Incomplete - <strong className="text-red-400">lost marks</strong>
+              Candidate only did RCD x1 trip test, forgot x5. Incomplete -{' '}
+              <strong className="text-red-400">lost marks</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
-              Lesson: Both x1 and x5 IΔn tests are mandatory. Incomplete testing = incomplete certification.
+              Lesson: Both x1 and x5 IΔn tests are mandatory. Incomplete testing = incomplete
+              certification.
             </p>
           </div>
 
           <div className="border-l-4 border-l-emerald-500 bg-emerald-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 3: Professional Excellence</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 3: Professional Excellence
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate tested all lighting switching combinations, RCDs, sockets, and motor circuit methodically. <strong className="text-emerald-400">Full marks</strong>
+              Candidate tested all lighting switching combinations, RCDs, sockets, and motor circuit
+              methodically. <strong className="text-emerald-400">Full marks</strong>
             </p>
             <p className="text-ios-footnote text-emerald-400">
-              Lesson: Systematic, complete testing with clear communication demonstrates professional competence.
+              Lesson: Systematic, complete testing with clear communication demonstrates
+              professional competence.
             </p>
           </div>
         </div>
@@ -779,7 +848,9 @@ const AM2Module4Section4 = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Troubleshooting Failed Tests:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Troubleshooting Failed Tests:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -801,7 +872,9 @@ const AM2Module4Section4 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Professional Documentation:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Professional Documentation:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -824,11 +897,14 @@ const AM2Module4Section4 = () => {
         </div>
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Industry Best Practices:</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+            Industry Best Practices:
+          </h4>
           <p className="text-ios-callout text-white/80">
-            Professional electricians use functional testing to verify that installations will operate safely and reliably
-            in service. This testing phase often reveals issues that purely electrical tests miss, making it essential
-            for both AM2 success and real-world competence.
+            Professional electricians use functional testing to verify that installations will
+            operate safely and reliably in service. This testing phase often reveals issues that
+            purely electrical tests miss, making it essential for both AM2 success and real-world
+            competence.
           </p>
         </div>
       </AM2ContentCard>
@@ -845,11 +921,15 @@ const AM2Module4Section4 = () => {
           <ul className="text-ios-callout text-white/80 space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Functional and operational testing proves that circuits and devices actually work</span>
+              <span>
+                Functional and operational testing proves that circuits and devices actually work
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Test all switching combinations, RCDs at x1 and x5 IΔn, and motor controls</span>
+              <span>
+                Test all switching combinations, RCDs at x1 and x5 IΔn, and motor controls
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
@@ -869,7 +949,8 @@ const AM2Module4Section4 = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Next Steps:</h4>
           <p className="text-ios-callout text-white/80">
-            You have now completed essential testing procedures. The next section will cover identifying and reporting non-compliances.
+            You have now completed essential testing procedures. The next section will cover
+            identifying and reporting non-compliances.
           </p>
         </div>
       </AM2ContentCard>

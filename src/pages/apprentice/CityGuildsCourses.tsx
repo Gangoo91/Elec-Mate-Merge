@@ -1,16 +1,15 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { BookOpen, Loader2 } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useQualifications } from "@/hooks/qualification/useQualifications";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { BookOpen, Loader2 } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useQualifications } from '@/hooks/qualification/useQualifications';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Button } from '@/components/ui/button';
 
 const CityGuildsCourses = () => {
   const isMobile = useIsMobile();
   const { awardingBodies, loading, error } = useQualifications();
-  
+
   // Get City & Guilds courses from the awarding bodies data
   const cityGuildsCourses = awardingBodies?.['City & Guilds'] || [];
 
@@ -26,24 +25,30 @@ const CityGuildsCourses = () => {
               Industry-standard vocational qualifications for electrical professionals
             </p>
           </div>
-<SmartBackButton />
+          <SmartBackButton />
         </div>
 
         {loading ? (
           <div className="flex justify-center items-center py-8 sm:py-12">
             <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
-            <span className="ml-2 text-white text-sm sm:text-base">Loading City & Guilds courses...</span>
+            <span className="ml-2 text-white text-sm sm:text-base">
+              Loading City & Guilds courses...
+            </span>
           </div>
         ) : error ? (
           <div className="text-center py-8 sm:py-12">
-            <p className="text-destructive mb-4 text-sm sm:text-base">Error loading courses: {error}</p>
+            <p className="text-destructive mb-4 text-sm sm:text-base">
+              Error loading courses: {error}
+            </p>
             <Button variant="outline" onClick={() => window.location.reload()}>
               Try Again
             </Button>
           </div>
         ) : cityGuildsCourses.length === 0 ? (
           <div className="text-center py-8 sm:py-12">
-            <p className="text-white text-sm sm:text-base">No City & Guilds courses available at the moment.</p>
+            <p className="text-white text-sm sm:text-base">
+              No City & Guilds courses available at the moment.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
@@ -57,7 +62,10 @@ const CityGuildsCourses = () => {
                   <CardContent className="text-center space-y-2 sm:space-y-3 p-3 sm:p-4 flex-grow flex flex-col justify-center">
                     <div className="flex justify-center">
                       <div className="p-2 sm:p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                        <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-primary" strokeWidth={1.5} />
+                        <BookOpen
+                          className="h-6 w-6 sm:h-8 sm:w-8 text-primary"
+                          strokeWidth={1.5}
+                        />
                       </div>
                     </div>
                     <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">

@@ -1,44 +1,44 @@
-import { ArrowLeft, Cloud, Thermometer, Droplets, Sun, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Cloud, Thermometer, Droplets, Sun, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Understanding External Influences (BS 7671 Overview)",
-    description: "Introduction to external influences in electrical installations",
+    number: 'Subsection 1',
+    title: 'Understanding External Influences (BS 7671 Overview)',
+    description: 'Introduction to external influences in electrical installations',
     icon: Cloud,
-    href: "5-1"
+    href: '5-1',
   },
   {
-    number: "Subsection 2",
-    title: "IP Ratings and Water/Dust Protection",
-    description: "Ingress protection ratings and their applications",
+    number: 'Subsection 2',
+    title: 'IP Ratings and Water/Dust Protection',
+    description: 'Ingress protection ratings and their applications',
     icon: Thermometer,
-    href: "5-2"
+    href: '5-2',
   },
   {
-    number: "Subsection 3",
-    title: "UV, Temperature, and Mechanical Damage Risks",
-    description: "Environmental factors that can damage electrical installations",
+    number: 'Subsection 3',
+    title: 'UV, Temperature, and Mechanical Damage Risks',
+    description: 'Environmental factors that can damage electrical installations',
     icon: Droplets,
-    href: "5-3"
+    href: '5-3',
   },
   {
-    number: "Subsection 4",
-    title: "Selecting Materials for Corrosive or Damp Areas",
-    description: "Choosing appropriate materials for harsh environments",
+    number: 'Subsection 4',
+    title: 'Selecting Materials for Corrosive or Damp Areas',
+    description: 'Choosing appropriate materials for harsh environments',
     icon: Sun,
-    href: "5-4"
+    href: '5-4',
   },
   {
-    number: "Subsection 5",
-    title: "Working in Special Locations (Bathrooms, Outdoors – Basic Awareness)",
-    description: "Basic considerations for special location installations",
+    number: 'Subsection 5',
+    title: 'Working in Special Locations (Bathrooms, Outdoors – Basic Awareness)',
+    description: 'Basic considerations for special location installations',
     icon: Shield,
-    href: "5-5"
-  }
+    href: '5-5',
+  },
 ];
 
 const Section5 = () => {

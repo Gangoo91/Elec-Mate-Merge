@@ -12,7 +12,10 @@ export const LegalRecordsQuickCheck = () => {
               Quick Check: What legal risk arises from not keeping maintenance records?
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              The Responsible Person can face enforcement notices, unlimited fines, criminal prosecution, and even imprisonment under the Regulatory Reform (Fire Safety) Order 2005. Insurance policies may become void, and civil liability increases significantly if fire-related injury or death occurs due to non-compliance.
+              The Responsible Person can face enforcement notices, unlimited fines, criminal
+              prosecution, and even imprisonment under the Regulatory Reform (Fire Safety) Order
+              2005. Insurance policies may become void, and civil liability increases significantly
+              if fire-related injury or death occurs due to non-compliance.
             </p>
           </div>
         </div>

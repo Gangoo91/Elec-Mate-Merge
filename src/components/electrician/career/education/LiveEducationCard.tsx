@@ -1,12 +1,18 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  GraduationCap, MapPin, Clock, PoundSterling, 
-  Star, ExternalLink, Calendar, Users, TrendingUp
-} from "lucide-react";
-import { LiveEducationData } from "@/hooks/useLiveEducationData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  GraduationCap,
+  MapPin,
+  Clock,
+  PoundSterling,
+  Star,
+  ExternalLink,
+  Calendar,
+  Users,
+  TrendingUp,
+} from 'lucide-react';
+import { LiveEducationData } from '@/hooks/useLiveEducationData';
 
 interface LiveEducationCardProps {
   option: LiveEducationData;
@@ -41,11 +47,11 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
       case 'apprenticeship':
         return '🎓';
       case 'engineering':
-      case 'bachelor\'s degree':
+      case "bachelor's degree":
         return '⚡';
       case 'professional certification':
         return '🏆';
-      case 'master\'s degree':
+      case "master's degree":
         return '🎖️';
       default:
         return '📚';
@@ -57,8 +63,8 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
       {/* Course Image */}
       {option.imageUrl && (
         <div className="relative h-40 w-full overflow-hidden">
-          <img 
-            src={option.imageUrl} 
+          <img
+            src={option.imageUrl}
             alt={`${option.title} course image`}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             onError={(e) => {
@@ -69,12 +75,15 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
           <div className="absolute inset-0 bg-gradient-to-t from-elec-gray/80 to-transparent"></div>
         </div>
       )}
-      
+
       <CardHeader className="space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
             <span className="text-lg">{getCategoryIcon(option.category)}</span>
-            <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
+            <Badge
+              variant="outline"
+              className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs"
+            >
               {option.level || 'Level Not Specified'}
             </Badge>
           </div>
@@ -84,11 +93,11 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
             </Badge>
           )}
         </div>
-        
+
         <CardTitle className="text-lg leading-tight group-hover:text-elec-yellow transition-colors">
           {option.title}
         </CardTitle>
-        
+
         <div className="flex items-center gap-2 text-sm text-amber-400">
           <GraduationCap className="h-4 w-4" />
           <span className="font-medium">{option.institution}</span>
@@ -96,9 +105,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-3">
-          {option.description}
-        </p>
+        <p className="text-sm text-muted-foreground line-clamp-3">{option.description}</p>
 
         {/* Key Metrics */}
         <div className="grid grid-cols-2 gap-3 text-xs">
@@ -120,7 +127,10 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
             <Clock className="h-3 w-3" />
             <span>{option.duration}</span>
           </div>
-          <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
+          <Badge
+            variant="outline"
+            className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs"
+          >
             {option.studyMode}
           </Badge>
         </div>
@@ -156,16 +166,19 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
             <span className="text-xs font-medium text-muted-foreground">Key Topics:</span>
             <div className="flex flex-wrap gap-1">
               {option.keyTopics.slice(0, 3).map((topic, idx) => (
-                <Badge 
-                  key={idx} 
-                  variant="outline" 
+                <Badge
+                  key={idx}
+                  variant="outline"
                   className="bg-elec-dark/50 text-foreground border-elec-yellow/20 text-xs"
                 >
                   {topic}
                 </Badge>
               ))}
               {option.keyTopics.length > 3 && (
-                <Badge variant="outline" className="bg-elec-dark/50 text-muted-foreground border-elec-yellow/20 text-xs">
+                <Badge
+                  variant="outline"
+                  className="bg-elec-dark/50 text-muted-foreground border-elec-yellow/20 text-xs"
+                >
                   +{option.keyTopics.length - 3} more
                 </Badge>
               )}
@@ -175,7 +188,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
 
         {/* Action Buttons */}
         <div className="flex gap-2 pt-2">
-          <Button 
+          <Button
             onClick={() => onViewDetails(option)}
             variant="outline"
             className="flex-1 border-elec-yellow/30 hover:bg-elec-yellow/10 text-xs"
@@ -183,8 +196,8 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
             View Details
           </Button>
           {option.courseUrl && (
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               className="px-2 hover:bg-elec-yellow/10"
               onClick={(e) => {

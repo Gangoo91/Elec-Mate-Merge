@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { CheckCircle, Mail, Phone, FileText, Calendar, Zap } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { useSearchParams } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Confetti } from "@/components/ui/confetti";
-import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from 'react';
+import { CheckCircle, Mail, Phone, FileText, Calendar, Zap } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Confetti } from '@/components/ui/confetti';
+import { supabase } from '@/integrations/supabase/client';
 
 interface InvoiceData {
   invoice_number: string;
@@ -24,8 +24,8 @@ interface InvoiceData {
  */
 const InvoicePaymentSuccess = () => {
   const [searchParams] = useSearchParams();
-  const invoiceId = searchParams.get("invoice");
-  const sessionId = searchParams.get("session_id");
+  const invoiceId = searchParams.get('invoice');
+  const sessionId = searchParams.get('session_id');
 
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ const InvoicePaymentSuccess = () => {
 
       try {
         const { data, error } = await supabase.functions.invoke('get-invoice-public', {
-          body: { invoice_id: invoiceId, session_id: sessionId }
+          body: { invoice_id: invoiceId, session_id: sessionId },
         });
 
         if (error) {
@@ -97,7 +97,7 @@ const InvoicePaymentSuccess = () => {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: 'spring',
         stiffness: 100,
         damping: 12,
       },
@@ -110,7 +110,7 @@ const InvoicePaymentSuccess = () => {
       scale: 1,
       rotate: 0,
       transition: {
-        type: "spring",
+        type: 'spring',
         stiffness: 200,
         damping: 15,
         delay: 0.1,
@@ -140,10 +140,7 @@ const InvoicePaymentSuccess = () => {
         animate="visible"
       >
         {/* Success Icon with Glow */}
-        <motion.div
-          className="flex justify-center mb-6"
-          variants={successIconVariants}
-        >
+        <motion.div className="flex justify-center mb-6" variants={successIconVariants}>
           <div className="relative">
             {/* Pulsing glow ring */}
             <div className="absolute inset-0 rounded-full bg-green-500/30 animate-ping" />
@@ -163,9 +160,7 @@ const InvoicePaymentSuccess = () => {
                 Payment Successful
               </h1>
               {invoiceData?.client_name && (
-                <p className="text-muted-foreground">
-                  Thank you, {invoiceData.client_name}!
-                </p>
+                <p className="text-muted-foreground">Thank you, {invoiceData.client_name}!</p>
               )}
             </motion.div>
 
@@ -224,12 +219,8 @@ const InvoicePaymentSuccess = () => {
                 className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6"
                 variants={itemVariants}
               >
-                <p className="text-sm text-yellow-400 mb-3 font-medium">
-                  Questions? Contact:
-                </p>
-                <p className="font-semibold text-foreground mb-2">
-                  {invoiceData.company_name}
-                </p>
+                <p className="text-sm text-yellow-400 mb-3 font-medium">Questions? Contact:</p>
+                <p className="font-semibold text-foreground mb-2">{invoiceData.company_name}</p>
 
                 <div className="space-y-2">
                   {invoiceData.company_phone && (
@@ -261,17 +252,12 @@ const InvoicePaymentSuccess = () => {
             >
               <div className="flex items-center justify-center gap-2 text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                <p className="text-sm">
-                  A confirmation email has been sent to you.
-                </p>
+                <p className="text-sm">A confirmation email has been sent to you.</p>
               </div>
             </motion.div>
 
             {/* Close Message */}
-            <motion.p
-              className="text-xs text-center text-muted-foreground"
-              variants={itemVariants}
-            >
+            <motion.p className="text-xs text-center text-muted-foreground" variants={itemVariants}>
               You can safely close this page.
             </motion.p>
           </Card>
@@ -281,32 +267,24 @@ const InvoicePaymentSuccess = () => {
         {!invoiceData && !loading && (
           <motion.div variants={itemVariants}>
             <Card className="border border-green-500/30 bg-card/95 backdrop-blur-lg p-6 sm:p-8 text-center">
-              <h1 className="text-2xl font-bold text-foreground mb-2">
-                Payment Successful
-              </h1>
+              <h1 className="text-2xl font-bold text-foreground mb-2">Payment Successful</h1>
               <p className="text-muted-foreground mb-6">
-                Thank you for your payment. Your invoice has been marked as paid and the electrician has been notified.
+                Thank you for your payment. Your invoice has been marked as paid and the electrician
+                has been notified.
               </p>
               <div className="bg-muted/30 rounded-lg p-4 mb-6">
                 <div className="flex items-center justify-center gap-2 text-muted-foreground">
                   <Mail className="h-4 w-4" />
-                  <p className="text-sm">
-                    A confirmation email has been sent to you.
-                  </p>
+                  <p className="text-sm">A confirmation email has been sent to you.</p>
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground">
-                You can safely close this page.
-              </p>
+              <p className="text-xs text-muted-foreground">You can safely close this page.</p>
             </Card>
           </motion.div>
         )}
 
         {/* Powered by ElecMate Footer */}
-        <motion.div
-          className="mt-6 text-center"
-          variants={itemVariants}
-        >
+        <motion.div className="mt-6 text-center" variants={itemVariants}>
           <div className="inline-flex items-center gap-2 text-muted-foreground">
             <Zap className="h-4 w-4 text-yellow-500" />
             <span className="text-sm font-medium">

@@ -3,11 +3,11 @@ import { BookOpen, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingSummary3_2 = () => {
   const keyPoints = [
-    "Escape routes require 1 lux minimum along the centre line with specific placement at exits, stairs, direction changes, and fire points",
-    "Routes wider than 2m must be treated as both escape routes and open areas, requiring additional anti-panic lighting",
-    "Exit signage and luminaires must be integrated - incorrect directional arrows are a common compliance failure",
-    "Physical site surveys are essential to identify obstructions and hazards that may affect coverage",
-    "Documentation of placement decisions is crucial for inspection and maintenance purposes"
+    'Escape routes require 1 lux minimum along the centre line with specific placement at exits, stairs, direction changes, and fire points',
+    'Routes wider than 2m must be treated as both escape routes and open areas, requiring additional anti-panic lighting',
+    'Exit signage and luminaires must be integrated - incorrect directional arrows are a common compliance failure',
+    'Physical site surveys are essential to identify obstructions and hazards that may affect coverage',
+    'Documentation of placement decisions is crucial for inspection and maintenance purposes',
   ];
 
   return (

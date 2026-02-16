@@ -7,40 +7,40 @@ const FiberOpticsModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Singlemode vs Multimode Fibre",
+      title: 'Singlemode vs Multimode Fibre',
       icon: Layers,
-      description: "Understanding fiber types and core differences"
+      description: 'Understanding fiber types and core differences',
     },
     {
       id: 2,
-      title: "OM and OS Standards Explained",
+      title: 'OM and OS Standards Explained',
       icon: Award,
-      description: "Optical multimode and singlemode classifications"
+      description: 'Optical multimode and singlemode classifications',
     },
     {
       id: 3,
-      title: "Connector Types (LC, SC, ST, MTP)",
+      title: 'Connector Types (LC, SC, ST, MTP)',
       icon: Plug,
-      description: "Common connector types and applications"
+      description: 'Common connector types and applications',
     },
     {
       id: 4,
-      title: "Polish Grades (UPC, APC)",
+      title: 'Polish Grades (UPC, APC)',
       icon: Target,
-      description: "Connector polish types and specifications"
+      description: 'Connector polish types and specifications',
     },
     {
       id: 5,
-      title: "Patch Panels and Transceivers",
+      title: 'Patch Panels and Transceivers',
       icon: Grid,
-      description: "Network equipment and interface devices"
+      description: 'Network equipment and interface devices',
     },
     {
       id: 6,
-      title: "Connector Compatibility",
+      title: 'Connector Compatibility',
       icon: Link2,
-      description: "Ensuring proper connector matching and performance"
-    }
+      description: 'Ensuring proper connector matching and performance',
+    },
   ];
 
   return (

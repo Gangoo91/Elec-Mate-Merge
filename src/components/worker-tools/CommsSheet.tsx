@@ -34,7 +34,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
-import { Communication, CommunicationPriority, CommunicationType } from '@/services/communicationService';
+import {
+  Communication,
+  CommunicationPriority,
+  CommunicationType,
+} from '@/services/communicationService';
 
 type CommsStep = 'list' | 'detail';
 
@@ -97,7 +101,10 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
   } = useWorkerSelfService();
 
   const [step, setStep] = useState<CommsStep>('list');
-  const [selectedComm, setSelectedComm] = useState<(Communication & { recipient: { read_at: string | null; acknowledged_at: string | null } }) | null>(null);
+  const [selectedComm, setSelectedComm] = useState<
+    | (Communication & { recipient: { read_at: string | null; acknowledged_at: string | null } })
+    | null
+  >(null);
   const [isAcknowledging, setIsAcknowledging] = useState(false);
 
   const handleClose = () => {
@@ -109,7 +116,9 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
     }, 300);
   };
 
-  const handleSelectComm = async (comm: Communication & { recipient: { read_at: string | null; acknowledged_at: string | null } }) => {
+  const handleSelectComm = async (
+    comm: Communication & { recipient: { read_at: string | null; acknowledged_at: string | null } }
+  ) => {
     setSelectedComm(comm);
     setStep('detail');
 
@@ -136,10 +145,14 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
         employeeId,
       });
       toast.success('Message acknowledged');
-      setSelectedComm(prev => prev ? {
-        ...prev,
-        recipient: { ...prev.recipient, acknowledged_at: new Date().toISOString() },
-      } : null);
+      setSelectedComm((prev) =>
+        prev
+          ? {
+              ...prev,
+              recipient: { ...prev.recipient, acknowledged_at: new Date().toISOString() },
+            }
+          : null
+      );
     } catch {
       toast.error('Failed to acknowledge message');
     } finally {
@@ -164,7 +177,10 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -261,7 +277,12 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                             )}
                           >
                             <div className="flex items-start gap-3">
-                              <div className={cn('p-2 rounded-lg flex-shrink-0', colourClass.split(' ')[1])}>
+                              <div
+                                className={cn(
+                                  'p-2 rounded-lg flex-shrink-0',
+                                  colourClass.split(' ')[1]
+                                )}
+                              >
                                 <Icon className={cn('h-4 w-4', colourClass.split(' ')[0])} />
                               </div>
 
@@ -270,10 +291,12 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                                   {comm.is_pinned && (
                                     <Pin className="h-3 w-3 text-elec-yellow flex-shrink-0" />
                                   )}
-                                  <p className={cn(
-                                    'text-sm font-medium truncate',
-                                    isUnread ? 'text-white' : 'text-white/80'
-                                  )}>
+                                  <p
+                                    className={cn(
+                                      'text-sm font-medium truncate',
+                                      isUnread ? 'text-white' : 'text-white/80'
+                                    )}
+                                  >
                                     {comm.title}
                                   </p>
                                   {getPriorityBadge(comm.priority)}
@@ -285,19 +308,20 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
 
                                 <div className="flex items-center justify-between">
                                   <p className="text-[10px] text-white/40">
-                                    {formatDistanceToNow(parseISO(comm.created_at), { addSuffix: true })}
+                                    {formatDistanceToNow(parseISO(comm.created_at), {
+                                      addSuffix: true,
+                                    })}
                                   </p>
 
                                   <div className="flex items-center gap-1">
-                                    {needsAck && (
-                                      isAcked ? (
+                                    {needsAck &&
+                                      (isAcked ? (
                                         <CheckCheck className="h-3.5 w-3.5 text-green-400" />
                                       ) : (
                                         <Badge className="bg-amber-500/20 text-amber-400 border-0 text-[9px] px-1.5">
                                           Needs Ack
                                         </Badge>
-                                      )
-                                    )}
+                                      ))}
                                   </div>
                                 </div>
                               </div>
@@ -325,10 +349,17 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                     <div className="p-4 space-y-4">
                       {/* Type and priority badges */}
                       <div className="flex items-center gap-2 flex-wrap">
-                        <Badge className={cn(
-                          'border-0 capitalize',
-                          getTypeColour(selectedComm.type, selectedComm.priority).replace('text-', 'bg-').replace('bg-', 'text-').split(' ').map((c, i) => i === 0 ? c.replace('text', 'bg') + '/20' : c).join(' ')
-                        )}>
+                        <Badge
+                          className={cn(
+                            'border-0 capitalize',
+                            getTypeColour(selectedComm.type, selectedComm.priority)
+                              .replace('text-', 'bg-')
+                              .replace('bg-', 'text-')
+                              .split(' ')
+                              .map((c, i) => (i === 0 ? c.replace('text', 'bg') + '/20' : c))
+                              .join(' ')
+                          )}
+                        >
                           {selectedComm.type}
                         </Badge>
                         {getPriorityBadge(selectedComm.priority)}
@@ -341,14 +372,14 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                       </div>
 
                       {/* Title */}
-                      <h2 className="text-xl font-semibold text-white">
-                        {selectedComm.title}
-                      </h2>
+                      <h2 className="text-xl font-semibold text-white">{selectedComm.title}</h2>
 
                       {/* Meta */}
                       <div className="flex items-center gap-2 text-xs text-white/50">
                         <p>
-                          {formatDistanceToNow(parseISO(selectedComm.created_at), { addSuffix: true })}
+                          {formatDistanceToNow(parseISO(selectedComm.created_at), {
+                            addSuffix: true,
+                          })}
                         </p>
                         {selectedComm.recipient.read_at && (
                           <>
@@ -380,27 +411,28 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                   </ScrollArea>
 
                   {/* Acknowledge footer */}
-                  {(selectedComm.priority === 'urgent' || selectedComm.priority === 'high') && !selectedComm.recipient.acknowledged_at && (
-                    <div className="border-t border-white/[0.06] p-4 flex-shrink-0">
-                      <Button
-                        onClick={handleAcknowledge}
-                        disabled={isAcknowledging}
-                        className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation"
-                      >
-                        {isAcknowledging ? (
-                          <>
-                            <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                            Acknowledging...
-                          </>
-                        ) : (
-                          <>
-                            <CheckCheck className="h-5 w-5 mr-2" />
-                            Acknowledge Message
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  )}
+                  {(selectedComm.priority === 'urgent' || selectedComm.priority === 'high') &&
+                    !selectedComm.recipient.acknowledged_at && (
+                      <div className="border-t border-white/[0.06] p-4 flex-shrink-0">
+                        <Button
+                          onClick={handleAcknowledge}
+                          disabled={isAcknowledging}
+                          className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation"
+                        >
+                          {isAcknowledging ? (
+                            <>
+                              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                              Acknowledging...
+                            </>
+                          ) : (
+                            <>
+                              <CheckCheck className="h-5 w-5 mr-2" />
+                              Acknowledge Message
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    )}
                 </motion.div>
               )}
             </AnimatePresence>

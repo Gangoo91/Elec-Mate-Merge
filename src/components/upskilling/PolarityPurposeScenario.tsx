@@ -17,18 +17,19 @@ export const PolarityPurposeScenario = () => {
             <div>
               <h3 className="text-red-200 font-medium mb-2">The Scenario</h3>
               <p className="text-foreground text-sm leading-relaxed mb-3">
-                An electrician wires a new lighting circuit in a home office. Eager to demonstrate the 
-                installation works, they skip the polarity test and energise the circuit immediately. 
-                The lights operate normally when switched on and off.
+                An electrician wires a new lighting circuit in a home office. Eager to demonstrate
+                the installation works, they skip the polarity test and energise the circuit
+                immediately. The lights operate normally when switched on and off.
               </p>
               <p className="text-foreground text-sm leading-relaxed mb-3">
-                Three weeks later, the homeowner changes a bulb. Despite switching off the light, they 
-                receive an electric shock when touching the metal screw thread of the lampholder.
+                Three weeks later, the homeowner changes a bulb. Despite switching off the light,
+                they receive an electric shock when touching the metal screw thread of the
+                lampholder.
               </p>
               <h4 className="text-red-200 font-medium mb-2">What Went Wrong?</h4>
               <p className="text-foreground text-sm leading-relaxed">
-                The switch was incorrectly wired to break the neutral conductor instead of the line. 
-                When 'switched off', the circuit remained live at 230V, making the lampholder screw 
+                The switch was incorrectly wired to break the neutral conductor instead of the line.
+                When 'switched off', the circuit remained live at 230V, making the lampholder screw
                 thread dangerous to touch.
               </p>
             </div>

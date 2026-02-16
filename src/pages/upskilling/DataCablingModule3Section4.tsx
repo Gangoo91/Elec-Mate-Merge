@@ -1,79 +1,84 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Loss Budgets and OTDR Basics | Data Cabling Module 3.4";
-const DESCRIPTION = "Learn to calculate optical loss budgets and understand OTDR testing, including setup, trace interpretation, and pass/fail guidance.";
+const TITLE = 'Loss Budgets and OTDR Basics | Data Cabling Module 3.4';
+const DESCRIPTION =
+  'Learn to calculate optical loss budgets and understand OTDR testing, including setup, trace interpretation, and pass/fail guidance.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m3s4-check1",
-    question: "What is the typical singlemode attenuation at 1310nm?",
-    options: ["0.1 dB/km", "0.35 dB/km", "1.5 dB/km", "3.5 dB/km"],
+    id: 'datacabling-m3s4-check1',
+    question: 'What is the typical singlemode attenuation at 1310nm?',
+    options: ['0.1 dB/km', '0.35 dB/km', '1.5 dB/km', '3.5 dB/km'],
     correctIndex: 1,
-    explanation: "OS2 singlemode attenuation is typically 0.35 dB/km at 1310nm and approximately 0.25 dB/km at 1550nm."
+    explanation:
+      'OS2 singlemode attenuation is typically 0.35 dB/km at 1310nm and approximately 0.25 dB/km at 1550nm.',
   },
   {
-    id: "datacabling-m3s4-check2",
-    question: "What is an OTDR dead zone?",
+    id: 'datacabling-m3s4-check2',
+    question: 'What is an OTDR dead zone?',
     options: [
-      "A zone where fibres cannot be connected",
-      "A section near the instrument where events cannot be resolved",
-      "The part of fibre with no attenuation",
-      "A fault that stops all transmission"
+      'A zone where fibres cannot be connected',
+      'A section near the instrument where events cannot be resolved',
+      'The part of fibre with no attenuation',
+      'A fault that stops all transmission',
     ],
     correctIndex: 1,
-    explanation: "The dead zone is the region after the launch pulse where near-end events are not resolvable. Use launch/receive leads to move dead zones away from the first/last connectors."
+    explanation:
+      'The dead zone is the region after the launch pulse where near-end events are not resolvable. Use launch/receive leads to move dead zones away from the first/last connectors.',
   },
   {
-    id: "datacabling-m3s4-check3",
-    question: "Why use both launch and receive fibres for OTDR tests?",
+    id: 'datacabling-m3s4-check3',
+    question: 'Why use both launch and receive fibres for OTDR tests?',
     options: [
-      "To increase measured loss",
-      "To reduce wavelength",
-      "To characterise the first and last connectors accurately",
-      "To avoid using a power meter"
+      'To increase measured loss',
+      'To reduce wavelength',
+      'To characterise the first and last connectors accurately',
+      'To avoid using a power meter',
     ],
     correctIndex: 2,
-    explanation: "Launch and receive leads allow the OTDR to separate the first and last connectors from the dead zones for accurate measurement."
-  }
+    explanation:
+      'Launch and receive leads allow the OTDR to separate the first and last connectors from the dead zones for accurate measurement.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I calculate a fibre link loss budget?",
-    answer: "Sum fibre attenuation (length × dB/km), connector losses (typically 0.3 dB each), splice losses (0.1 dB fusion), and add a design margin (1-3 dB). Compare against transceiver power budget to ensure link viability."
+    question: 'How do I calculate a fibre link loss budget?',
+    answer:
+      'Sum fibre attenuation (length × dB/km), connector losses (typically 0.3 dB each), splice losses (0.1 dB fusion), and add a design margin (1-3 dB). Compare against transceiver power budget to ensure link viability.',
   },
   {
-    question: "What pulse width should I use for OTDR testing?",
-    answer: "Use short pulse widths for better near-end resolution on short links, and longer pulse widths for better signal-to-noise ratio on long links. Start with auto mode, then refine manually based on link characteristics."
+    question: 'What pulse width should I use for OTDR testing?',
+    answer:
+      'Use short pulse widths for better near-end resolution on short links, and longer pulse widths for better signal-to-noise ratio on long links. Start with auto mode, then refine manually based on link characteristics.',
   },
   {
-    question: "Why is bi-directional OTDR testing important?",
-    answer: "Bi-directional testing allows averaging of splice losses to eliminate direction-dependent variations caused by differences in core diameter between fibres. This provides more accurate loss values for splices."
+    question: 'Why is bi-directional OTDR testing important?',
+    answer:
+      'Bi-directional testing allows averaging of splice losses to eliminate direction-dependent variations caused by differences in core diameter between fibres. This provides more accurate loss values for splices.',
   },
   {
-    question: "What causes a gain or apparent negative loss in an OTDR trace?",
-    answer: "This occurs at splices between fibres with different backscatter coefficients or core sizes. The larger-core fibre produces more backscatter, making the splice appear as a gain. Bi-directional averaging eliminates this artefact."
-  }
+    question: 'What causes a gain or apparent negative loss in an OTDR trace?',
+    answer:
+      'This occurs at splices between fibres with different backscatter coefficients or core sizes. The larger-core fibre produces more backscatter, making the splice appear as a gain. Bi-directional averaging eliminates this artefact.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A 2 km OS2 link with two connectors (0.3 dB each) and one fusion splice (0.1 dB) has what expected loss at 1310nm?",
-  options: [
-    "0.8 dB",
-    "1.0 dB",
-    "1.4 dB",
-    "2.0 dB"
-  ],
-  correctAnswer: 2,
-  explanation: "Fibre loss: 2 km × 0.35 dB/km = 0.70 dB. Connectors: 2 × 0.3 dB = 0.6 dB. Splice: 0.1 dB. Total = 0.70 + 0.6 + 0.1 = 1.4 dB."
-  }
+    question:
+      'A 2 km OS2 link with two connectors (0.3 dB each) and one fusion splice (0.1 dB) has what expected loss at 1310nm?',
+    options: ['0.8 dB', '1.0 dB', '1.4 dB', '2.0 dB'],
+    correctAnswer: 2,
+    explanation:
+      'Fibre loss: 2 km × 0.35 dB/km = 0.70 dB. Connectors: 2 × 0.3 dB = 0.6 dB. Splice: 0.1 dB. Total = 0.70 + 0.6 + 0.1 = 1.4 dB.',
+  },
 ];
 
 const DataCablingModule3Section4 = () => {
@@ -108,9 +113,7 @@ const DataCablingModule3Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Loss Budgets and OTDR Basics
           </h1>
-          <p className="text-white/80">
-            Practical loss calculations and OTDR trace interpretation
-          </p>
+          <p className="text-white/80">Practical loss calculations and OTDR trace interpretation</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -118,16 +121,26 @@ const DataCablingModule3Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>SM 1310nm:</strong> 0.35 dB/km typical attenuation</li>
-              <li><strong>Connector:</strong> ≤0.3 dB (Grade A)</li>
-              <li><strong>Fusion splice:</strong> ≤0.1 dB typical</li>
+              <li>
+                <strong>SM 1310nm:</strong> 0.35 dB/km typical attenuation
+              </li>
+              <li>
+                <strong>Connector:</strong> ≤0.3 dB (Grade A)
+              </li>
+              <li>
+                <strong>Fusion splice:</strong> ≤0.1 dB typical
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Launch/receive leads on OTDR setup</li>
-              <li><strong>Use:</strong> Calculate budget before installation</li>
+              <li>
+                <strong>Spot:</strong> Launch/receive leads on OTDR setup
+              </li>
+              <li>
+                <strong>Use:</strong> Calculate budget before installation
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +150,12 @@ const DataCablingModule3Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Build complete loss budgets with design margin",
-              "Use OTDR with launch/receive fibres correctly",
-              "Identify events on traces and estimate losses",
-              "Set pass/fail thresholds from budgets",
-              "Interpret bi-directional test results",
-              "Document results for handover"
+              'Build complete loss budgets with design margin',
+              'Use OTDR with launch/receive fibres correctly',
+              'Identify events on traces and estimate losses',
+              'Set pass/fail thresholds from budgets',
+              'Interpret bi-directional test results',
+              'Document results for handover',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -162,27 +175,46 @@ const DataCablingModule3Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Loss budgets confirm whether a link will support the intended application before equipment
-              is connected. They combine fibre attenuation, connector and splice losses, and design margin.
+              Loss budgets confirm whether a link will support the intended application before
+              equipment is connected. They combine fibre attenuation, connector and splice losses,
+              and design margin.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Attenuation Values</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Typical Attenuation Values
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>MM 850nm:</strong> 3.5 dB/km</li>
-                  <li><strong>MM 1300nm:</strong> 1.5 dB/km</li>
-                  <li><strong>SM 1310nm:</strong> 0.35 dB/km</li>
-                  <li><strong>SM 1550nm:</strong> 0.25 dB/km</li>
+                  <li>
+                    <strong>MM 850nm:</strong> 3.5 dB/km
+                  </li>
+                  <li>
+                    <strong>MM 1300nm:</strong> 1.5 dB/km
+                  </li>
+                  <li>
+                    <strong>SM 1310nm:</strong> 0.35 dB/km
+                  </li>
+                  <li>
+                    <strong>SM 1550nm:</strong> 0.25 dB/km
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Component Losses</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Connector (Grade A):</strong> ≤0.3 dB</li>
-                  <li><strong>Connector (Grade B):</strong> ≤0.5 dB</li>
-                  <li><strong>Fusion splice:</strong> ≤0.1 dB</li>
-                  <li><strong>Design margin:</strong> 1-3 dB</li>
+                  <li>
+                    <strong>Connector (Grade A):</strong> ≤0.3 dB
+                  </li>
+                  <li>
+                    <strong>Connector (Grade B):</strong> ≤0.5 dB
+                  </li>
+                  <li>
+                    <strong>Fusion splice:</strong> ≤0.1 dB
+                  </li>
+                  <li>
+                    <strong>Design margin:</strong> 1-3 dB
+                  </li>
                 </ul>
               </div>
             </div>
@@ -194,7 +226,9 @@ const DataCablingModule3Section4 = () => {
                 <li>Fibre: 0.55 km × 3.5 dB/km = 1.93 dB</li>
                 <li>Connectors: 2 × 0.3 dB = 0.6 dB</li>
                 <li>Design margin: 1.0 dB</li>
-                <li><strong>Total budget: 3.53 dB</strong></li>
+                <li>
+                  <strong>Total budget: 3.53 dB</strong>
+                </li>
               </ul>
             </div>
           </div>
@@ -225,7 +259,9 @@ const DataCablingModule3Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why Launch/Receive Leads?</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Why Launch/Receive Leads?
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Move dead zones away from link ends</li>
                   <li>Accurately measure first connector</li>
@@ -269,10 +305,18 @@ const DataCablingModule3Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Event Signatures:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Connector:</strong> Reflective spike at an event (reflection + loss)</li>
-                <li><strong>Splice:</strong> Small non-reflective step (loss only)</li>
-                <li><strong>Break:</strong> Large reflective end event</li>
-                <li><strong>Macro-bend:</strong> Gradual slope increase</li>
+                <li>
+                  <strong>Connector:</strong> Reflective spike at an event (reflection + loss)
+                </li>
+                <li>
+                  <strong>Splice:</strong> Small non-reflective step (loss only)
+                </li>
+                <li>
+                  <strong>Break:</strong> Large reflective end event
+                </li>
+                <li>
+                  <strong>Macro-bend:</strong> Gradual slope increase
+                </li>
               </ul>
             </div>
 
@@ -318,10 +362,19 @@ const DataCablingModule3Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping launch/receive leads:</strong> — First/last connectors not measured</li>
-                <li><strong>Wrong pulse width:</strong> — Too long hides near events</li>
-                <li><strong>One-direction only:</strong> — Splice losses inaccurate</li>
-                <li><strong>Ignoring reflections:</strong> — Can indicate connector damage</li>
+                <li>
+                  <strong>Skipping launch/receive leads:</strong> — First/last connectors not
+                  measured
+                </li>
+                <li>
+                  <strong>Wrong pulse width:</strong> — Too long hides near events
+                </li>
+                <li>
+                  <strong>One-direction only:</strong> — Splice losses inaccurate
+                </li>
+                <li>
+                  <strong>Ignoring reflections:</strong> — Can indicate connector damage
+                </li>
               </ul>
             </div>
           </div>
@@ -365,10 +418,7 @@ const DataCablingModule3Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -1,4 +1,3 @@
-
 import { Users, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -17,15 +16,15 @@ export const TestProceduresScenario = () => {
           <p className="text-foreground leading-relaxed mb-4">
             You test a radial circuit and get a CPC reading of 1.7 ohms. The run is only 8 metres.
           </p>
-          
+
           <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="text-red-200 font-medium mb-2">Analysis</h4>
                 <p className="text-foreground text-sm leading-relaxed">
-                  <strong>Answer:</strong> That's too high for that length. Investigate further—possible 
-                  loose connection or damaged CPC.
+                  <strong>Answer:</strong> That's too high for that length. Investigate
+                  further—possible loose connection or damaged CPC.
                 </p>
               </div>
             </div>

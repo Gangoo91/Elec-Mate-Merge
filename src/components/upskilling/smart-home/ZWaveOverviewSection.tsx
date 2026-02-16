@@ -4,55 +4,79 @@ import { Waves, Signal, Shield, AlertCircle } from 'lucide-react';
 export const ZWaveOverviewSection = () => {
   const zwaveFeatures = [
     {
-      aspect: "Operating Frequency",
-      value: "Sub-1GHz",
-      description: "868MHz (Europe), 908MHz (US), varies by region",
-      icon: Waves
+      aspect: 'Operating Frequency',
+      value: 'Sub-1GHz',
+      description: '868MHz (Europe), 908MHz (US), varies by region',
+      icon: Waves,
     },
     {
-      aspect: "Typical Range",
-      value: "30-100m indoors",
-      description: "Excellent wall penetration due to lower frequency",
-      icon: Signal
+      aspect: 'Typical Range',
+      value: '30-100m indoors',
+      description: 'Excellent wall penetration due to lower frequency',
+      icon: Signal,
     },
     {
-      aspect: "Network Capacity",
-      value: "232 devices",
-      description: "Maximum per network, can have multiple networks",
-      icon: Shield
+      aspect: 'Network Capacity',
+      value: '232 devices',
+      description: 'Maximum per network, can have multiple networks',
+      icon: Shield,
     },
     {
-      aspect: "Interference Risk",
-      value: "Very Low",
-      description: "Dedicated frequency band, minimal interference",
-      icon: AlertCircle
-    }
+      aspect: 'Interference Risk',
+      value: 'Very Low',
+      description: 'Dedicated frequency band, minimal interference',
+      icon: AlertCircle,
+    },
   ];
 
   const commonDevices = [
-    { category: "Smart Locks", examples: "Yale, Kwikset, Schlage door locks", reason: "Reliable security applications" },
-    { category: "Thermostats", examples: "Honeywell, Trane HVAC controls", reason: "Professional HVAC integration" },
-    { category: "Lighting Controls", examples: "Leviton, GE switches and dimmers", reason: "Reliable lighting automation" },
-    { category: "Security Systems", examples: "Ring, ADT professional systems", reason: "Mission-critical reliability" },
-    { category: "Window Coverings", examples: "Somfy, Lutron motorized blinds", reason: "Large motor control applications" },
-    { category: "Pool/Spa Controls", examples: "Pentair, Hayward automation", reason: "Outdoor and industrial reliability" }
+    {
+      category: 'Smart Locks',
+      examples: 'Yale, Kwikset, Schlage door locks',
+      reason: 'Reliable security applications',
+    },
+    {
+      category: 'Thermostats',
+      examples: 'Honeywell, Trane HVAC controls',
+      reason: 'Professional HVAC integration',
+    },
+    {
+      category: 'Lighting Controls',
+      examples: 'Leviton, GE switches and dimmers',
+      reason: 'Reliable lighting automation',
+    },
+    {
+      category: 'Security Systems',
+      examples: 'Ring, ADT professional systems',
+      reason: 'Mission-critical reliability',
+    },
+    {
+      category: 'Window Coverings',
+      examples: 'Somfy, Lutron motorized blinds',
+      reason: 'Large motor control applications',
+    },
+    {
+      category: 'Pool/Spa Controls',
+      examples: 'Pentair, Hayward automation',
+      reason: 'Outdoor and industrial reliability',
+    },
   ];
 
   const advantages = [
-    "Excellent range and wall penetration",
-    "Minimal interference from other devices",
-    "Strong backward compatibility",
-    "Professional-grade reliability",
-    "Dedicated frequency allocation",
-    "Interoperability certification (Z-Wave Plus)"
+    'Excellent range and wall penetration',
+    'Minimal interference from other devices',
+    'Strong backward compatibility',
+    'Professional-grade reliability',
+    'Dedicated frequency allocation',
+    'Interoperability certification (Z-Wave Plus)',
   ];
 
   const limitations = [
-    "Proprietary standard (Silicon Labs ownership)",
-    "Higher device costs compared to Zigbee",
-    "Limited to 232 devices per network",
-    "Fewer manufacturers compared to Zigbee",
-    "Regional frequency variations"
+    'Proprietary standard (Silicon Labs ownership)',
+    'Higher device costs compared to Zigbee',
+    'Limited to 232 devices per network',
+    'Fewer manufacturers compared to Zigbee',
+    'Regional frequency variations',
   ];
 
   return (
@@ -65,9 +89,10 @@ export const ZWaveOverviewSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg font-medium text-foreground mb-4">
-          Z-Wave is a proprietary wireless protocol optimised for reliability and range in smart home applications.
+          Z-Wave is a proprietary wireless protocol optimised for reliability and range in smart
+          home applications.
         </p>
-        
+
         {/* Key Specifications */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {zwaveFeatures.map((feature, index) => (
@@ -115,7 +140,7 @@ export const ZWaveOverviewSection = () => {
               ))}
             </ul>
           </div>
-          
+
           <div className="p-4 bg-red-900/20 border border-red-600 rounded-lg">
             <h4 className="font-semibold text-red-200 mb-3">Limitations</h4>
             <ul className="space-y-2 text-sm">
@@ -161,9 +186,10 @@ export const ZWaveOverviewSection = () => {
             Key Strength: Superior Range & Penetration
           </h4>
           <p className="text-blue-100 text-sm">
-            <strong>Sub-1GHz advantage:</strong> Z-Wave's lower frequency provides significantly better wall penetration 
-            and longer range compared to 2.4GHz protocols. This makes it ideal for large homes, thick-walled buildings, 
-            and professional installations where reliability is paramount.
+            <strong>Sub-1GHz advantage:</strong> Z-Wave's lower frequency provides significantly
+            better wall penetration and longer range compared to 2.4GHz protocols. This makes it
+            ideal for large homes, thick-walled buildings, and professional installations where
+            reliability is paramount.
           </p>
         </div>
 
@@ -176,15 +202,21 @@ export const ZWaveOverviewSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div>
               <span className="font-medium text-purple-200">Reliability:</span>
-              <span className="text-purple-100 ml-2">Consistent performance in challenging environments</span>
+              <span className="text-purple-100 ml-2">
+                Consistent performance in challenging environments
+              </span>
             </div>
             <div>
               <span className="font-medium text-purple-200">Certification:</span>
-              <span className="text-purple-100 ml-2">Guaranteed interoperability between devices</span>
+              <span className="text-purple-100 ml-2">
+                Guaranteed interoperability between devices
+              </span>
             </div>
             <div>
               <span className="font-medium text-purple-200">Support:</span>
-              <span className="text-purple-100 ml-2">Professional installer training and support</span>
+              <span className="text-purple-100 ml-2">
+                Professional installer training and support
+              </span>
             </div>
             <div>
               <span className="font-medium text-purple-200">Warranty:</span>

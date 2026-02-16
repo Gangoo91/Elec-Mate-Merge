@@ -1,44 +1,43 @@
-
 import { AlertTriangle } from 'lucide-react';
 
 export const VisualInspectionCommonDefects = () => {
   const commonDefects = [
     {
-      category: "Terminations & Connections",
+      category: 'Terminations & Connections',
       items: [
-        "Loose terminations causing overheating",
-        "Inadequate torque on gland entries",
-        "Poor crimping of cable lugs",
-        "Incorrect terminal block usage"
-      ]
+        'Loose terminations causing overheating',
+        'Inadequate torque on gland entries',
+        'Poor crimping of cable lugs',
+        'Incorrect terminal block usage',
+      ],
     },
     {
-      category: "Cable Management",
+      category: 'Cable Management',
       items: [
-        "Inadequate cable support intervals",
-        "Sharp edges damaging cable sheathing",
-        "Cables in contact with hot surfaces",
-        "Mixing of different cable types inappropriately"
-      ]
+        'Inadequate cable support intervals',
+        'Sharp edges damaging cable sheathing',
+        'Cables in contact with hot surfaces',
+        'Mixing of different cable types inappropriately',
+      ],
     },
     {
-      category: "Protection & Safety",
+      category: 'Protection & Safety',
       items: [
-        "Missing or damaged protective covers",
-        "Inadequate ingress protection for environment",
-        "Missing warning labels and notices",
-        "Inadequate segregation of circuits"
-      ]
+        'Missing or damaged protective covers',
+        'Inadequate ingress protection for environment',
+        'Missing warning labels and notices',
+        'Inadequate segregation of circuits',
+      ],
     },
     {
-      category: "Environmental Factors",
+      category: 'Environmental Factors',
       items: [
-        "Corrosion on metalwork and enclosures",
-        "Water ingress or moisture damage",
-        "Dust accumulation affecting cooling",
-        "UV degradation of cables and enclosures"
-      ]
-    }
+        'Corrosion on metalwork and enclosures',
+        'Water ingress or moisture damage',
+        'Dust accumulation affecting cooling',
+        'UV degradation of cables and enclosures',
+      ],
+    },
   ];
 
   return (

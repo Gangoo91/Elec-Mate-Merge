@@ -1,8 +1,7 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import {
   Bot,
   MessageSquare,
@@ -14,11 +13,15 @@ import {
   GraduationCap,
   Sparkles,
   HelpCircle,
-  Zap
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { ChatContainer, ChatMessagesArea, ChatInputArea } from '@/components/electrician-tools/ai-tools/chat/ChatContainer';
+  Zap,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import {
+  ChatContainer,
+  ChatMessagesArea,
+  ChatInputArea,
+} from '@/components/electrician-tools/ai-tools/chat/ChatContainer';
 import { MobileChatInput } from '@/components/electrician-tools/ai-tools/chat/MobileChatInput';
 import { InspectorMessage } from '@/components/electrician-tools/ai-tools/InspectorMessage';
 import { ChatImageUpload, ImagePreviewBadge } from './ChatImageUpload';
@@ -73,96 +76,96 @@ const HelpBotTab = () => {
 
   const quickQuestionCategories: QuickQuestionCategory[] = [
     {
-      id: "safety",
-      name: "Safety",
+      id: 'safety',
+      name: 'Safety',
       icon: Shield,
-      color: "text-red-400",
-      bgColor: "bg-red-500/20",
+      color: 'text-red-400',
+      bgColor: 'bg-red-500/20',
       questions: [
-        "Walk me through the safe isolation procedure",
-        "What PPE do I need for electrical work?",
-        "How do I safely test if a circuit is dead?",
-        "Explain lock-off/tag-out procedures"
-      ]
+        'Walk me through the safe isolation procedure',
+        'What PPE do I need for electrical work?',
+        'How do I safely test if a circuit is dead?',
+        'Explain lock-off/tag-out procedures',
+      ],
     },
     {
-      id: "regs",
-      name: "BS 7671",
+      id: 'regs',
+      name: 'BS 7671',
       icon: BookOpen,
-      color: "text-orange-400",
-      bgColor: "bg-orange-500/20",
+      color: 'text-orange-400',
+      bgColor: 'bg-orange-500/20',
       questions: [
-        "Requirements for bathroom installations?",
-        "When is RCD protection required?",
-        "Bonding requirements for domestic?",
-        "Consumer unit upgrade requirements?"
-      ]
+        'Requirements for bathroom installations?',
+        'When is RCD protection required?',
+        'Bonding requirements for domestic?',
+        'Consumer unit upgrade requirements?',
+      ],
     },
     {
-      id: "testing",
-      name: "Testing",
+      id: 'testing',
+      name: 'Testing',
       icon: Zap,
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/20",
+      color: 'text-yellow-400',
+      bgColor: 'bg-yellow-500/20',
       questions: [
-        "Correct sequence for initial verification?",
-        "How do I test a ring circuit?",
-        "Expected R1+R2 readings?",
-        "Pass/fail for insulation resistance?"
-      ]
+        'Correct sequence for initial verification?',
+        'How do I test a ring circuit?',
+        'Expected R1+R2 readings?',
+        'Pass/fail for insulation resistance?',
+      ],
     },
     {
-      id: "calculations",
-      name: "Calculations",
+      id: 'calculations',
+      name: 'Calculations',
       icon: Calculator,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20",
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/20',
       questions: [
-        "Calculate cable size for cooker circuit",
-        "How to calculate voltage drop?",
-        "Adiabatic equation explained",
-        "Design current (Ib) calculation"
-      ]
+        'Calculate cable size for cooker circuit',
+        'How to calculate voltage drop?',
+        'Adiabatic equation explained',
+        'Design current (Ib) calculation',
+      ],
     },
     {
-      id: "practical",
-      name: "Practical",
+      id: 'practical',
+      name: 'Practical',
       icon: Wrench,
-      color: "text-green-400",
-      bgColor: "bg-green-500/20",
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/20',
       questions: [
-        "Routing cables through joists?",
-        "Terminate SWA cable properly",
-        "Tips for neat CU wiring",
-        "Identify cables in existing install"
-      ]
+        'Routing cables through joists?',
+        'Terminate SWA cable properly',
+        'Tips for neat CU wiring',
+        'Identify cables in existing install',
+      ],
     },
     {
-      id: "portfolio",
-      name: "Portfolio",
+      id: 'portfolio',
+      name: 'Portfolio',
       icon: FileText,
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/20",
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/20',
       questions: [
-        "Evidence needed for portfolio?",
-        "Write up a job for evidence",
-        "What to expect in EPA?",
-        "Photograph installation work"
-      ]
+        'Evidence needed for portfolio?',
+        'Write up a job for evidence',
+        'What to expect in EPA?',
+        'Photograph installation work',
+      ],
     },
     {
-      id: "career",
-      name: "Career",
+      id: 'career',
+      name: 'Career',
       icon: GraduationCap,
-      color: "text-cyan-400",
-      bgColor: "bg-cyan-500/20",
+      color: 'text-cyan-400',
+      bgColor: 'bg-cyan-500/20',
       questions: [
-        "Qualifications after apprenticeship?",
-        "How to get ECS/JIB card?",
-        "Route to qualified supervisor?",
-        "Set up own electrical business?"
-      ]
-    }
+        'Qualifications after apprenticeship?',
+        'How to get ECS/JIB card?',
+        'Route to qualified supervisor?',
+        'Set up own electrical business?',
+      ],
+    },
   ];
 
   // Generate follow-up questions based on the last response
@@ -174,21 +177,21 @@ const HelpBotTab = () => {
       followUps.push("What's the exact regulation number?");
     }
     if (content.toLowerCase().includes('test') || content.toLowerCase().includes('verify')) {
-      followUps.push("What equipment do I need for this?");
+      followUps.push('What equipment do I need for this?');
     }
     if (content.toLowerCase().includes('cable') || content.toLowerCase().includes('size')) {
-      followUps.push("Can you show me the calculation?");
+      followUps.push('Can you show me the calculation?');
     }
     if (content.toLowerCase().includes('safety') || content.toLowerCase().includes('safe')) {
-      followUps.push("What are common mistakes to avoid?");
+      followUps.push('What are common mistakes to avoid?');
     }
 
     // Always add generic useful follow-ups
     if (followUps.length < 3) {
-      followUps.push("Can you explain that in more detail?");
+      followUps.push('Can you explain that in more detail?');
     }
     if (followUps.length < 3) {
-      followUps.push("Any tips from your experience?");
+      followUps.push('Any tips from your experience?');
     }
 
     return followUps.slice(0, 3);
@@ -210,38 +213,43 @@ const HelpBotTab = () => {
       content: textToSend.trim(),
       role: 'user',
       timestamp: new Date(),
-      imageUrl: imageToSend || undefined
+      imageUrl: imageToSend || undefined,
     };
 
     const aiMessageId = (Date.now() + 1).toString();
 
-    setChatMessages(prev => [...prev, userMessage]);
+    setChatMessages((prev) => [...prev, userMessage]);
     setCurrentMessage('');
     setAttachedImage('');
     setIsLoading(true);
     setStreamingMessageId(aiMessageId);
 
     // Add empty AI message for streaming
-    setChatMessages(prev => [...prev, {
-      id: aiMessageId,
-      content: '',
-      role: 'assistant',
-      timestamp: new Date()
-    }]);
+    setChatMessages((prev) => [
+      ...prev,
+      {
+        id: aiMessageId,
+        content: '',
+        role: 'assistant',
+        timestamp: new Date(),
+      },
+    ]);
 
     // Scroll to show the new message
     setTimeout(() => scrollToBottom(), 50);
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co'}/functions/v1/chat-assistant`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+            Authorization: `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
           },
           body: JSON.stringify({
             message: textToSend.trim(),
@@ -253,10 +261,10 @@ const HelpBotTab = () => {
             qualificationCode: qualificationCode || undefined,
             qualificationName: qualificationName || undefined,
             history: chatMessages
-              .filter(m => m.content.trim() !== '')
+              .filter((m) => m.content.trim() !== '')
               .slice(-10)
-              .map(m => ({ role: m.role, content: m.content }))
-          })
+              .map((m) => ({ role: m.role, content: m.content })),
+          }),
         }
       );
 
@@ -298,28 +306,30 @@ const HelpBotTab = () => {
       }
 
       // Flush any remaining buffered content and get final text
-      const finalContent = flushStream() || fullContent || "I'm here to help with your electrical apprentice questions!";
+      const finalContent =
+        flushStream() ||
+        fullContent ||
+        "I'm here to help with your electrical apprentice questions!";
 
       // Update the message with final content (single React update)
-      setChatMessages(prev =>
-        prev.map(msg =>
-          msg.id === aiMessageId
-            ? { ...msg, content: finalContent }
-            : msg
-        )
+      setChatMessages((prev) =>
+        prev.map((msg) => (msg.id === aiMessageId ? { ...msg, content: finalContent } : msg))
       );
 
       // Generate follow-up questions
       setFollowUpQuestions(generateFollowUps(finalContent));
-
     } catch (error) {
       console.error('Error sending message:', error);
       toast.error('Sorry, I encountered an issue. Please try again.');
 
-      setChatMessages(prev =>
-        prev.map(msg =>
+      setChatMessages((prev) =>
+        prev.map((msg) =>
           msg.id === aiMessageId
-            ? { ...msg, content: "I apologise, but I'm having trouble responding right now. Please try your question again in a moment." }
+            ? {
+                ...msg,
+                content:
+                  "I apologise, but I'm having trouble responding right now. Please try your question again in a moment.",
+              }
             : msg
         )
       );
@@ -361,7 +371,10 @@ const HelpBotTab = () => {
       </div>
 
       <h3 className="font-bold text-lg sm:text-xl mb-0.5 sm:mb-1">Hey, I'm Dave!</h3>
-      <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-[10px] sm:text-xs mb-2 sm:mb-3">
+      <Badge
+        variant="outline"
+        className="border-elec-yellow/50 text-elec-yellow text-[10px] sm:text-xs mb-2 sm:mb-3"
+      >
         20+ Years in the Trade
       </Badge>
       {qualificationName && (
@@ -369,12 +382,13 @@ const HelpBotTab = () => {
       )}
 
       <p className="text-white/70 text-xs sm:text-sm max-w-xs mb-3 sm:mb-4 hidden sm:block">
-        Qualified sparky with decades of UK experience. Ask me about regs, testing, calcs, or your apprenticeship.
+        Qualified sparky with decades of UK experience. Ask me about regs, testing, calcs, or your
+        apprenticeship.
       </p>
 
       {/* Quick Start Suggestions */}
       <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-sm">
-        {["Safe isolation", "Cable sizing", "Test sequence", "RCD rules"].map((topic, i) => (
+        {['Safe isolation', 'Cable sizing', 'Test sequence', 'RCD rules'].map((topic, i) => (
           <button
             key={i}
             onClick={() => handleSendMessage(`Tell me about ${topic.toLowerCase()}`)}
@@ -397,9 +411,18 @@ const HelpBotTab = () => {
         <div className="text-xs text-muted-foreground mb-1 font-medium">Dave</div>
         <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl rounded-tl-sm px-4 py-3 inline-block">
           <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            <div
+              className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
+              style={{ animationDelay: '0ms' }}
+            />
+            <div
+              className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
+              style={{ animationDelay: '150ms' }}
+            />
+            <div
+              className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
+              style={{ animationDelay: '300ms' }}
+            />
           </div>
         </div>
       </div>
@@ -409,9 +432,7 @@ const HelpBotTab = () => {
   return (
     <div className="h-full sm:h-[600px]">
       <ChatContainer>
-        <ChatMessagesArea
-          messagesEndRef={messagesEndRef}
-        >
+        <ChatMessagesArea messagesEndRef={messagesEndRef}>
           {chatMessages.length === 0 ? (
             <WelcomeScreen />
           ) : (
@@ -433,7 +454,7 @@ const HelpBotTab = () => {
                       role: message.role,
                       content: displayContent,
                       agentName: message.role === 'assistant' ? 'Dave' : undefined,
-                      imageUrl: message.imageUrl
+                      imageUrl: message.imageUrl,
                     }}
                     isStreaming={isCurrentlyStreaming && displayContent !== ''}
                   />
@@ -447,7 +468,9 @@ const HelpBotTab = () => {
           {/* Compact Follow-up chips - horizontal scroll on mobile */}
           {followUpQuestions.length > 0 && !isLoading && (
             <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1 mb-2 -mx-1 px-1">
-              <span className="text-[10px] text-muted-foreground shrink-0 hidden sm:inline">Try:</span>
+              <span className="text-[10px] text-muted-foreground shrink-0 hidden sm:inline">
+                Try:
+              </span>
               {followUpQuestions.slice(0, 2).map((q, i) => (
                 <button
                   key={i}
@@ -480,7 +503,10 @@ const HelpBotTab = () => {
                     Quick Questions
                   </SheetTitle>
                 </SheetHeader>
-                <div className="overflow-y-auto h-[calc(70vh-80px)] p-4" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <div
+                  className="overflow-y-auto h-[calc(70vh-80px)] p-4"
+                  style={{ WebkitOverflowScrolling: 'touch' }}
+                >
                   {!selectedCategory ? (
                     <div className="grid grid-cols-2 gap-3">
                       {quickQuestionCategories.map((category) => (
@@ -491,7 +517,9 @@ const HelpBotTab = () => {
                         >
                           <category.icon className={`h-6 w-6 ${category.color} mb-2`} />
                           <span className="font-medium text-sm">{category.name}</span>
-                          <p className="text-xs text-white/50 mt-1">{category.questions.length} questions</p>
+                          <p className="text-xs text-white/50 mt-1">
+                            {category.questions.length} questions
+                          </p>
                         </button>
                       ))}
                     </div>
@@ -503,16 +531,18 @@ const HelpBotTab = () => {
                       >
                         ← Back to categories
                       </button>
-                      {quickQuestionCategories.find(c => c.id === selectedCategory)?.questions.map((question, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleQuickQuestion(question)}
-                          disabled={isLoading}
-                          className="w-full text-left p-3 rounded-xl bg-white/5 hover:bg-elec-yellow/10 border border-white/10 hover:border-elec-yellow/30 transition-all touch-manipulation"
-                        >
-                          <span className="text-sm text-white/90">{question}</span>
-                        </button>
-                      ))}
+                      {quickQuestionCategories
+                        .find((c) => c.id === selectedCategory)
+                        ?.questions.map((question, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleQuickQuestion(question)}
+                            disabled={isLoading}
+                            className="w-full text-left p-3 rounded-xl bg-white/5 hover:bg-elec-yellow/10 border border-white/10 hover:border-elec-yellow/30 transition-all touch-manipulation"
+                          >
+                            <span className="text-sm text-white/90">{question}</span>
+                          </button>
+                        ))}
                     </div>
                   )}
                 </div>
@@ -524,10 +554,7 @@ const HelpBotTab = () => {
           <AnimatePresence>
             {attachedImage && (
               <div className="mb-1.5">
-                <ImagePreviewBadge
-                  imageUrl={attachedImage}
-                  onRemove={() => setAttachedImage('')}
-                />
+                <ImagePreviewBadge imageUrl={attachedImage} onRemove={() => setAttachedImage('')} />
               </div>
             )}
           </AnimatePresence>
@@ -540,7 +567,7 @@ const HelpBotTab = () => {
             onClear={handleClearConversation}
             onCameraPress={() => setImageUploadOpen(true)}
             isStreaming={isLoading}
-            placeholder={attachedImage ? "What do you see?" : "Ask Dave anything..."}
+            placeholder={attachedImage ? 'What do you see?' : 'Ask Dave anything...'}
             messageCount={chatMessages.length}
             showClearButton={chatMessages.length > 0}
           />

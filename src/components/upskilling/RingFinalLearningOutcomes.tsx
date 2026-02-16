@@ -1,14 +1,13 @@
-
 import { Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const RingFinalLearningOutcomes = () => {
   const outcomes = [
-    "Understand the purpose of ring continuity testing",
-    "Carry out the three-stage ring test correctly", 
-    "Interpret readings to confirm correct wiring and connections",
-    "Identify common ring circuit faults and issues",
-    "Apply proper safety procedures during ring testing"
+    'Understand the purpose of ring continuity testing',
+    'Carry out the three-stage ring test correctly',
+    'Interpret readings to confirm correct wiring and connections',
+    'Identify common ring circuit faults and issues',
+    'Apply proper safety procedures during ring testing',
   ];
 
   return (
@@ -20,9 +19,7 @@ export const RingFinalLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-foreground">

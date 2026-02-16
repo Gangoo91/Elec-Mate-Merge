@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { QuizQuestion as QuizQuestionType } from '@/types/quiz';
 
@@ -10,26 +9,30 @@ interface QuizQuestionProps {
   onToggleFlag?: () => void;
 }
 
-const QuizQuestion = ({ question, selectedAnswer, onAnswerSelect, isFlagged, onToggleFlag }: QuizQuestionProps) => {
+const QuizQuestion = ({
+  question,
+  selectedAnswer,
+  onAnswerSelect,
+  isFlagged,
+  onToggleFlag,
+}: QuizQuestionProps) => {
   return (
     <Card className="bg-[#323232] border-transparent">
       <CardHeader className="relative">
-        <CardTitle className="text-foreground text-lg pr-10">
-          {question.question}
-        </CardTitle>
+        <CardTitle className="text-foreground text-lg pr-10">{question.question}</CardTitle>
         {onToggleFlag && (
           <button
             onClick={onToggleFlag}
             className="absolute top-6 right-6 h-11 w-11 flex items-center justify-center rounded-lg transition-colors touch-manipulation active:scale-95"
-            aria-label={isFlagged ? "Unflag question" : "Flag question for review"}
+            aria-label={isFlagged ? 'Unflag question' : 'Flag question for review'}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
               viewBox="0 0 24 24"
-              fill={isFlagged ? "hsl(var(--primary))" : "none"}
-              stroke={isFlagged ? "hsl(var(--primary))" : "hsl(0 0% 64%)"}
+              fill={isFlagged ? 'hsl(var(--primary))' : 'none'}
+              stroke={isFlagged ? 'hsl(var(--primary))' : 'hsl(0 0% 64%)'}
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -53,14 +56,12 @@ const QuizQuestion = ({ question, selectedAnswer, onAnswerSelect, isFlagged, onT
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                selectedAnswer === index
-                  ? 'border-elec-yellow bg-elec-yellow'
-                  : 'border-white/30'
-              }`}>
-                {selectedAnswer === index && (
-                  <div className="w-2 h-2 rounded-full bg-black"></div>
-                )}
+              <div
+                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                  selectedAnswer === index ? 'border-elec-yellow bg-elec-yellow' : 'border-white/30'
+                }`}
+              >
+                {selectedAnswer === index && <div className="w-2 h-2 rounded-full bg-black"></div>}
               </div>
               <span className="text-sm">{option}</span>
             </div>

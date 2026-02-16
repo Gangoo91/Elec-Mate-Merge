@@ -14,27 +14,38 @@ export const EmergencyLightingContent4 = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
           <p className="text-gray-300">
-            BS 5266-1:2016 is the comprehensive British Standard providing guidance on the provision and installation of emergency lighting systems for premises other than dwellings.
+            BS 5266-1:2016 is the comprehensive British Standard providing guidance on the provision
+            and installation of emergency lighting systems for premises other than dwellings.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <h4 className="text-blue-300 font-semibold">Key Sections of BS 5266-1</h4>
               <div className="space-y-2 text-sm">
                 <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                  <p><strong>Section 4:</strong> Risk assessment and emergency lighting strategy</p>
+                  <p>
+                    <strong>Section 4:</strong> Risk assessment and emergency lighting strategy
+                  </p>
                 </div>
                 <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                  <p><strong>Section 5:</strong> System design criteria and illumination levels</p>
+                  <p>
+                    <strong>Section 5:</strong> System design criteria and illumination levels
+                  </p>
                 </div>
                 <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                  <p><strong>Section 6:</strong> Installation requirements and best practices</p>
+                  <p>
+                    <strong>Section 6:</strong> Installation requirements and best practices
+                  </p>
                 </div>
                 <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                  <p><strong>Section 7:</strong> Commissioning and handover procedures</p>
+                  <p>
+                    <strong>Section 7:</strong> Commissioning and handover procedures
+                  </p>
                 </div>
                 <div className="p-2 bg-blue-500/10 border-l-2 border-blue-500 rounded">
-                  <p><strong>Section 8:</strong> Operation, testing, and maintenance</p>
+                  <p>
+                    <strong>Section 8:</strong> Operation, testing, and maintenance
+                  </p>
                 </div>
               </div>
             </div>
@@ -68,11 +79,15 @@ export const EmergencyLightingContent4 = () => {
               <div className="space-y-3">
                 <div className="p-3 bg-purple-500/10 border border-purple-500/40 rounded">
                   <p className="font-medium text-purple-200">BS EN 1838:2013</p>
-                  <p className="text-sm">Emergency lighting photometric requirements and measurement methods</p>
+                  <p className="text-sm">
+                    Emergency lighting photometric requirements and measurement methods
+                  </p>
                 </div>
                 <div className="p-3 bg-purple-500/10 border border-purple-500/40 rounded">
                   <p className="font-medium text-purple-200">BS EN 50172:2004</p>
-                  <p className="text-sm">Emergency escape lighting systems - Operation and testing requirements</p>
+                  <p className="text-sm">
+                    Emergency escape lighting systems - Operation and testing requirements
+                  </p>
                 </div>
                 <div className="p-3 bg-purple-500/10 border border-purple-500/40 rounded">
                   <p className="font-medium text-purple-200">BS EN 60598-2-22:2014</p>
@@ -84,12 +99,20 @@ export const EmergencyLightingContent4 = () => {
               <h4 className="text-amber-300 font-semibold">UK Regulations</h4>
               <div className="space-y-3">
                 <div className="p-3 bg-amber-500/10 border border-amber-500/40 rounded">
-                  <p className="font-medium text-amber-200">Building Regulations (England & Wales)</p>
-                  <p className="text-sm">Approved Document B - Fire Safety provisions and escape lighting</p>
+                  <p className="font-medium text-amber-200">
+                    Building Regulations (England & Wales)
+                  </p>
+                  <p className="text-sm">
+                    Approved Document B - Fire Safety provisions and escape lighting
+                  </p>
                 </div>
                 <div className="p-3 bg-amber-500/10 border border-amber-500/40 rounded">
-                  <p className="font-medium text-amber-200">Regulatory Reform (Fire Safety) Order 2005</p>
-                  <p className="text-sm">Legal duties for responsible persons and fire risk assessments</p>
+                  <p className="font-medium text-amber-200">
+                    Regulatory Reform (Fire Safety) Order 2005
+                  </p>
+                  <p className="text-sm">
+                    Legal duties for responsible persons and fire risk assessments
+                  </p>
                 </div>
                 <div className="p-3 bg-amber-500/10 border border-amber-500/40 rounded">
                   <p className="font-medium text-amber-200">The Workplace Regulations 1992</p>
@@ -113,22 +136,33 @@ export const EmergencyLightingContent4 = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h4 className="text-green-300 font-semibold">BS 5266-8:2004</h4>
-              <p className="text-sm">Code of practice for the periodic inspection and testing of emergency lighting systems</p>
+              <p className="text-sm">
+                Code of practice for the periodic inspection and testing of emergency lighting
+                systems
+              </p>
               <div className="space-y-2 text-sm mt-3">
                 <div className="p-2 bg-green-500/10 border-l-2 border-green-500 rounded">
-                  <p><strong>Daily:</strong> Visual inspection of indicator lights and signage</p>
+                  <p>
+                    <strong>Daily:</strong> Visual inspection of indicator lights and signage
+                  </p>
                 </div>
                 <div className="p-2 bg-green-500/10 border-l-2 border-green-500 rounded">
-                  <p><strong>Monthly:</strong> Brief functional test (switch test) for short duration</p>
+                  <p>
+                    <strong>Monthly:</strong> Brief functional test (switch test) for short duration
+                  </p>
                 </div>
                 <div className="p-2 bg-green-500/10 border-l-2 border-green-500 rounded">
-                  <p><strong>Annually:</strong> Full duration test and comprehensive inspection</p>
+                  <p>
+                    <strong>Annually:</strong> Full duration test and comprehensive inspection
+                  </p>
                 </div>
               </div>
             </div>
             <div className="space-y-4">
               <h4 className="text-teal-300 font-semibold">BS EN 50172:2004</h4>
-              <p className="text-sm">Emergency escape lighting systems - Operation and testing procedures</p>
+              <p className="text-sm">
+                Emergency escape lighting systems - Operation and testing procedures
+              </p>
               <div className="space-y-2 text-sm mt-3">
                 <p>• Defines testing frequencies and procedures</p>
                 <p>• Specifies record-keeping requirements</p>
@@ -179,7 +213,7 @@ export const EmergencyLightingContent4 = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="mt-6 p-4 bg-gradient-to-r from-red-600/20 to-red-800/20 border border-red-500/40 rounded-lg">
             <h4 className="text-red-300 font-semibold mb-2 flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
@@ -258,11 +292,12 @@ export const EmergencyLightingContent4 = () => {
               </tbody>
             </table>
           </div>
-          
+
           <div className="mt-4 p-3 bg-cyan-500/10 border border-cyan-500/40 rounded">
             <p className="text-cyan-200 text-sm">
-              <strong>Key Principle:</strong> Standards work together as a hierarchy - statutory regulations provide the legal framework, 
-              while British Standards offer detailed technical guidance on how to achieve compliance.
+              <strong>Key Principle:</strong> Standards work together as a hierarchy - statutory
+              regulations provide the legal framework, while British Standards offer detailed
+              technical guidance on how to achieve compliance.
             </p>
           </div>
         </CardContent>

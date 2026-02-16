@@ -6,28 +6,28 @@ export const CCTVBestPracticesSection = () => {
   const practices = [
     {
       icon: MapPin,
-      title: "Strategic Positioning",
-      description: "Position cameras to cover entrances, exits, and vulnerable areas",
-      tips: ["Cover all entry points", "Avoid blind spots", "Consider lighting conditions"]
+      title: 'Strategic Positioning',
+      description: 'Position cameras to cover entrances, exits, and vulnerable areas',
+      tips: ['Cover all entry points', 'Avoid blind spots', 'Consider lighting conditions'],
     },
     {
       icon: BarChart3,
-      title: "Balance Resolution with Storage",
-      description: "Balance resolution with storage and bandwidth availability",
-      tips: ["Match resolution to purpose", "Consider storage costs", "Plan for bandwidth limits"]
+      title: 'Balance Resolution with Storage',
+      description: 'Balance resolution with storage and bandwidth availability',
+      tips: ['Match resolution to purpose', 'Consider storage costs', 'Plan for bandwidth limits'],
     },
     {
       icon: Shield,
-      title: "GDPR and Privacy Compliance",
-      description: "Always check GDPR and privacy compliance for recording",
-      tips: ["Display warning signs", "Limit recording areas", "Secure data storage"]
+      title: 'GDPR and Privacy Compliance',
+      description: 'Always check GDPR and privacy compliance for recording',
+      tips: ['Display warning signs', 'Limit recording areas', 'Secure data storage'],
     },
     {
       icon: PoundSterling,
-      title: "Client Education",
-      description: "Ensure clients understand maintenance and subscription costs",
-      tips: ["Explain ongoing costs", "Maintenance schedules", "Software updates"]
-    }
+      title: 'Client Education',
+      description: 'Ensure clients understand maintenance and subscription costs',
+      tips: ['Explain ongoing costs', 'Maintenance schedules', 'Software updates'],
+    },
   ];
 
   return (
@@ -49,7 +49,11 @@ export const CCTVBestPracticesSection = () => {
                   <p className="text-gray-400 text-sm mb-3">{practice.description}</p>
                   <div className="flex flex-wrap gap-1">
                     {practice.tips.map((tip, idx) => (
-                      <Badge key={idx} variant="outline" className="border-green-500/30 text-green-400 text-xs">
+                      <Badge
+                        key={idx}
+                        variant="outline"
+                        className="border-green-500/30 text-green-400 text-xs"
+                      >
                         {tip}
                       </Badge>
                     ))}

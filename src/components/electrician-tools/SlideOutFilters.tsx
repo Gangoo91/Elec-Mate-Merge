@@ -1,17 +1,10 @@
-import { useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  X,
-  SlidersHorizontal,
-  Tag,
-  Store,
-  Package,
-  Check,
-} from "lucide-react";
-import { ToolItem } from "@/hooks/useToolsData";
+import { useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { X, SlidersHorizontal, Tag, Store, Package, Check } from 'lucide-react';
+import { ToolItem } from '@/hooks/useToolsData';
 
 export interface FilterState {
   brands: string[];
@@ -29,15 +22,15 @@ interface SlideOutFiltersProps {
 }
 
 const PRICE_RANGES = [
-  "Under £25",
-  "£25 - £50",
-  "£50 - £100",
-  "£100 - £250",
-  "£250 - £500",
-  "Over £500",
+  'Under £25',
+  '£25 - £50',
+  '£50 - £100',
+  '£100 - £250',
+  '£250 - £500',
+  'Over £500',
 ];
 
-const AVAILABILITY_OPTIONS = ["In Stock", "Low Stock"];
+const AVAILABILITY_OPTIONS = ['In Stock', 'Low Stock'];
 
 const SlideOutFilters = ({
   isOpen,
@@ -56,7 +49,7 @@ const SlideOutFilters = ({
       if (tool.brand) {
         brandSet.add(tool.brand);
       } else {
-        const firstWord = tool.name?.split(" ")[0];
+        const firstWord = tool.name?.split(' ')[0];
         if (firstWord && firstWord.length > 2) {
           brandSet.add(firstWord);
         }
@@ -79,10 +72,7 @@ const SlideOutFilters = ({
     filters.availability.length +
     filters.suppliers.length;
 
-  const toggleFilter = (
-    category: keyof FilterState,
-    value: string
-  ) => {
+  const toggleFilter = (category: keyof FilterState, value: string) => {
     const current = filters[category];
     const updated = current.includes(value)
       ? current.filter((v) => v !== value)
@@ -114,7 +104,7 @@ const SlideOutFilters = ({
       <div
         className={`fixed top-0 right-0 z-50 h-full w-full sm:w-[360px] bg-background border-l border-border
                     transform transition-transform duration-300 ease-ios-spring
-                    ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+                    ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
@@ -125,9 +115,7 @@ const SlideOutFilters = ({
             <div>
               <h2 className="text-lg font-bold text-white">Filters</h2>
               {activeFiltersCount > 0 && (
-                <p className="text-xs text-muted-foreground">
-                  {activeFiltersCount} active
-                </p>
+                <p className="text-xs text-muted-foreground">{activeFiltersCount} active</p>
               )}
             </div>
           </div>
@@ -150,7 +138,7 @@ const SlideOutFilters = ({
               title="Price Range"
               options={PRICE_RANGES}
               selected={filters.priceRanges}
-              onToggle={(value) => toggleFilter("priceRanges", value)}
+              onToggle={(value) => toggleFilter('priceRanges', value)}
             />
 
             {/* Availability */}
@@ -159,7 +147,7 @@ const SlideOutFilters = ({
               title="Availability"
               options={AVAILABILITY_OPTIONS}
               selected={filters.availability}
-              onToggle={(value) => toggleFilter("availability", value)}
+              onToggle={(value) => toggleFilter('availability', value)}
             />
 
             {/* Suppliers */}
@@ -169,7 +157,7 @@ const SlideOutFilters = ({
                 title="Supplier"
                 options={suppliers}
                 selected={filters.suppliers}
-                onToggle={(value) => toggleFilter("suppliers", value)}
+                onToggle={(value) => toggleFilter('suppliers', value)}
               />
             )}
 
@@ -180,7 +168,7 @@ const SlideOutFilters = ({
                 title="Brand"
                 options={brands}
                 selected={filters.brands}
-                onToggle={(value) => toggleFilter("brands", value)}
+                onToggle={(value) => toggleFilter('brands', value)}
               />
             )}
           </div>
@@ -220,13 +208,7 @@ interface FilterSectionProps {
   onToggle: (value: string) => void;
 }
 
-const FilterSection = ({
-  icon: Icon,
-  title,
-  options,
-  selected,
-  onToggle,
-}: FilterSectionProps) => {
+const FilterSection = ({ icon: Icon, title, options, selected, onToggle }: FilterSectionProps) => {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
@@ -251,8 +233,8 @@ const FilterSection = ({
               className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all
                          ${
                            isSelected
-                             ? "bg-primary/10 border border-primary/30"
-                             : "bg-white/5 border border-white/10 hover:bg-white/10"
+                             ? 'bg-primary/10 border border-primary/30'
+                             : 'bg-white/5 border border-white/10 hover:bg-white/10'
                          }`}
             >
               <Checkbox
@@ -261,9 +243,7 @@ const FilterSection = ({
                 className="border-white/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
               <span
-                className={`text-sm ${
-                  isSelected ? "text-white font-medium" : "text-white/80"
-                }`}
+                className={`text-sm ${isSelected ? 'text-white font-medium' : 'text-white/80'}`}
               >
                 {option}
               </span>

@@ -1,38 +1,53 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Star, Shield, Clock, Users, MessageSquare, Award, AlertTriangle, Heart, Monitor } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionContent,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+} from '@/components/ui/mobile-accordion';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Star,
+  Shield,
+  Clock,
+  Users,
+  MessageSquare,
+  Award,
+  AlertTriangle,
+  Heart,
+  Monitor,
+} from 'lucide-react';
 
 const CustomerExperienceTab = () => {
   const isMobile = useIsMobile();
 
   const experienceMetrics = [
     {
-      metric: "Customer Satisfaction Rate",
-      data: "95%+ target satisfaction score",
+      metric: 'Customer Satisfaction Rate',
+      data: '95%+ target satisfaction score',
       icon: <Star className="h-5 w-5 text-cyan-400" />,
-      detail: "Measure of service excellence and quality delivery"
+      detail: 'Measure of service excellence and quality delivery',
     },
     {
-      metric: "First-Time Fix Rate",
-      data: "85%+ problems resolved first visit",
+      metric: 'First-Time Fix Rate',
+      data: '85%+ problems resolved first visit',
       icon: <Shield className="h-5 w-5 text-green-400" />,
-      detail: "Competence indicator reducing customer inconvenience"
+      detail: 'Competence indicator reducing customer inconvenience',
     },
     {
-      metric: "On-Time Arrival Rate",
-      data: "98%+ punctuality performance",
+      metric: 'On-Time Arrival Rate',
+      data: '98%+ punctuality performance',
       icon: <Clock className="h-5 w-5 text-blue-400" />,
-      detail: "Reliability and professionalism measurement"
+      detail: 'Reliability and professionalism measurement',
     },
     {
-      metric: "Customer Retention Rate",
-      data: "80%+ customers return for future work",
+      metric: 'Customer Retention Rate',
+      data: '80%+ customers return for future work',
       icon: <Heart className="h-5 w-5 text-purple-400" />,
-      detail: "Long-term relationship building success"
-    }
+      detail: 'Long-term relationship building success',
+    },
   ];
 
   return (
@@ -40,17 +55,24 @@ const CustomerExperienceTab = () => {
       <Alert className="border-cyan-400/50 bg-cyan-400/10">
         <Star className="h-4 w-4 text-cyan-400" />
         <AlertDescription className="text-cyan-400">
-          Exceptional customer experience increases referral rates by 400% and customer lifetime value by 200-300%.
+          Exceptional customer experience increases referral rates by 400% and customer lifetime
+          value by 200-300%.
         </AlertDescription>
       </Alert>
 
-      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+      <div
+        className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}
+      >
         {experienceMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
+                {metric.metric}
+              </div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                {metric.data}
+              </div>
             </div>
           </Card>
         ))}
@@ -65,23 +87,37 @@ const CustomerExperienceTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                <p className="text-sm text-slate-200">Consistent professional standards ensure every customer interaction reflects your commitment to quality and service excellence, building trust and credibility from first contact.</p>
+                <p className="text-sm text-slate-200">
+                  Consistent professional standards ensure every customer interaction reflects your
+                  commitment to quality and service excellence, building trust and credibility from
+                  first contact.
+                </p>
               </div>
-              
+
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-emerald-400 mb-3">Professional Appearance Standards</h4>
+                <h4 className="font-semibold text-emerald-400 mb-3">
+                  Professional Appearance Standards
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
-                  <li>• Clean, branded uniforms or workwear with company logo and contact details</li>
-                  <li>• Professional ID badges clearly visible with current certifications displayed</li>
+                  <li>
+                    • Clean, branded uniforms or workwear with company logo and contact details
+                  </li>
+                  <li>
+                    • Professional ID badges clearly visible with current certifications displayed
+                  </li>
                   <li>• Well-maintained vehicles and modern testing equipment</li>
                   <li>• Personal grooming and hygiene standards appropriate for customer homes</li>
                   <li>• Protective shoe covers and dust sheets for customer property protection</li>
-                  <li>• Professional business cards and branded paperwork ready for distribution</li>
+                  <li>
+                    • Professional business cards and branded paperwork ready for distribution
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-amber-400 mb-3">Professional Conduct Guidelines</h4>
+                <h4 className="font-semibold text-amber-400 mb-3">
+                  Professional Conduct Guidelines
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• Treat customer property with utmost respect and care</li>
                   <li>• Use dust sheets and protective covers for all work areas</li>
@@ -93,12 +129,16 @@ const CustomerExperienceTab = () => {
               </div>
 
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-purple-400 mb-3">Quality Presentation Benefits</h4>
+                <h4 className="font-semibold text-purple-400 mb-3">
+                  Quality Presentation Benefits
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• Increases customer confidence and willingness to pay premium rates</li>
                   <li>• Generates positive word-of-mouth referrals and online reviews</li>
                   <li>• Differentiates your service from less professional competitors</li>
-                  <li>• Builds long-term customer relationships and repeat business opportunities</li>
+                  <li>
+                    • Builds long-term customer relationships and repeat business opportunities
+                  </li>
                   <li>• Supports higher pricing and premium service positioning</li>
                   <li>• Reduces customer complaints and service recovery incidents</li>
                 </ul>
@@ -106,7 +146,7 @@ const CustomerExperienceTab = () => {
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
-        
+
         <MobileAccordionItem value="communication">
           <MobileAccordionTrigger icon={<MessageSquare className="h-5 w-5 text-blue-400" />}>
             Customer Communication Framework
@@ -115,14 +155,21 @@ const CustomerExperienceTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-400 mb-2">Communication Strategy</h4>
-                <p className="text-sm text-slate-200">Clear, timely communication throughout the service process builds trust, prevents misunderstandings, and demonstrates professionalism at every customer touchpoint.</p>
+                <p className="text-sm text-slate-200">
+                  Clear, timely communication throughout the service process builds trust, prevents
+                  misunderstandings, and demonstrates professionalism at every customer touchpoint.
+                </p>
               </div>
-              
+
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-emerald-400 mb-3">Pre-Work Communication Protocol</h4>
+                <h4 className="font-semibold text-emerald-400 mb-3">
+                  Pre-Work Communication Protocol
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• Confirm appointment 24 hours ahead with SMS and phone call</li>
-                  <li>• Provide specific arrival time window (not just "morning" or "afternoon")</li>
+                  <li>
+                    • Provide specific arrival time window (not just "morning" or "afternoon")
+                  </li>
                   <li>• Explain clearly what work will involve and expected duration</li>
                   <li>• List any customer preparations needed (access, power isolation, pets)</li>
                   <li>• Share assigned electrician's direct contact details</li>
@@ -131,7 +178,9 @@ const CustomerExperienceTab = () => {
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-amber-400 mb-3">On-Site Communication Excellence</h4>
+                <h4 className="font-semibold text-amber-400 mb-3">
+                  On-Site Communication Excellence
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• Explain work being undertaken in clear, non-technical language</li>
                   <li>• Discuss any unexpected discoveries or necessary changes immediately</li>
@@ -156,7 +205,7 @@ const CustomerExperienceTab = () => {
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
-        
+
         <MobileAccordionItem value="quality">
           <MobileAccordionTrigger icon={<Award className="h-5 w-5 text-green-400" />}>
             Quality Assurance & Compliance
@@ -165,11 +214,17 @@ const CustomerExperienceTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-400 mb-2">Quality Strategy</h4>
-                <p className="text-sm text-slate-200">Maintaining high technical standards and compliance ensures customer safety, builds long-term trust, and demonstrates professional competence in all electrical work.</p>
+                <p className="text-sm text-slate-200">
+                  Maintaining high technical standards and compliance ensures customer safety,
+                  builds long-term trust, and demonstrates professional competence in all electrical
+                  work.
+                </p>
               </div>
-              
+
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-emerald-400 mb-3">Technical Compliance Standards</h4>
+                <h4 className="font-semibold text-emerald-400 mb-3">
+                  Technical Compliance Standards
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• BS7671:2018+A3:2024 (18th Edition Wiring Regulations) full compliance</li>
                   <li>• Proper testing and inspection procedures with calibrated equipment</li>
@@ -206,7 +261,7 @@ const CustomerExperienceTab = () => {
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
-        
+
         <MobileAccordionItem value="feedback">
           <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
             Customer Feedback & Improvement
@@ -215,11 +270,17 @@ const CustomerExperienceTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-400 mb-2">Feedback Strategy</h4>
-                <p className="text-sm text-slate-200">Systematic feedback collection and service recovery processes ensure continuous improvement, customer satisfaction, and long-term business growth through customer insights.</p>
+                <p className="text-sm text-slate-200">
+                  Systematic feedback collection and service recovery processes ensure continuous
+                  improvement, customer satisfaction, and long-term business growth through customer
+                  insights.
+                </p>
               </div>
-              
+
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-emerald-400 mb-3">Comprehensive Feedback Collection</h4>
+                <h4 className="font-semibold text-emerald-400 mb-3">
+                  Comprehensive Feedback Collection
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• Immediate verbal feedback at job completion with satisfaction rating</li>
                   <li>• Quick satisfaction survey forms left with customers</li>
@@ -243,7 +304,9 @@ const CustomerExperienceTab = () => {
               </div>
 
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-purple-400 mb-3">Continuous Improvement Impact</h4>
+                <h4 className="font-semibold text-purple-400 mb-3">
+                  Continuous Improvement Impact
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• Identifies service gaps before they become widespread issues</li>
                   <li>• Builds customer loyalty through demonstration of care</li>
@@ -256,7 +319,7 @@ const CustomerExperienceTab = () => {
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
-        
+
         <MobileAccordionItem value="digital">
           <MobileAccordionTrigger icon={<Monitor className="h-5 w-5 text-orange-400" />}>
             Digital Customer Experience
@@ -265,18 +328,28 @@ const CustomerExperienceTab = () => {
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-400 mb-2">Digital Strategy</h4>
-                <p className="text-sm text-slate-200">Leveraging digital tools and platforms to enhance customer convenience, streamline communication, and create a superior service experience that differentiates your electrical business.</p>
+                <p className="text-sm text-slate-200">
+                  Leveraging digital tools and platforms to enhance customer convenience, streamline
+                  communication, and create a superior service experience that differentiates your
+                  electrical business.
+                </p>
               </div>
-              
+
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-emerald-400 mb-3">Digital Service Platform</h4>
                 <ul className="space-y-2 text-sm text-slate-200">
-                  <li>• Online booking system with real-time availability and instant confirmation</li>
+                  <li>
+                    • Online booking system with real-time availability and instant confirmation
+                  </li>
                   <li>• Customer portal for appointment tracking and service history access</li>
-                  <li>• Digital invoicing and multiple payment options (card, bank transfer, mobile)</li>
+                  <li>
+                    • Digital invoicing and multiple payment options (card, bank transfer, mobile)
+                  </li>
                   <li>• Electronic certificates and warranties with secure cloud storage</li>
                   <li>• Photo documentation of completed work with before/after comparisons</li>
-                  <li>• QR codes linking to service manuals, support guides, and contact information</li>
+                  <li>
+                    • QR codes linking to service manuals, support guides, and contact information
+                  </li>
                 </ul>
               </div>
 
@@ -293,7 +366,9 @@ const CustomerExperienceTab = () => {
               </div>
 
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-purple-400 mb-3">Customer Self-Service & Analytics</h4>
+                <h4 className="font-semibold text-purple-400 mb-3">
+                  Customer Self-Service & Analytics
+                </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
                   <li>• Comprehensive online FAQ and electrical troubleshooting guides</li>
                   <li>• Emergency contact information portal with 24/7 availability</li>

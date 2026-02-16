@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Plus, Trash2, ListChecks } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Card, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Plus, Trash2, ListChecks } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useJobChecklist,
   useAddChecklistItem,
   useToggleChecklistItem,
   useDeleteChecklistItem,
-} from "@/hooks/useJobChecklists";
+} from '@/hooks/useJobChecklists';
 
 interface JobChecklistProps {
   jobId: string;
 }
 
 export function JobChecklist({ jobId }: JobChecklistProps) {
-  const [newItemTitle, setNewItemTitle] = useState("");
+  const [newItemTitle, setNewItemTitle] = useState('');
   const [isAddingItem, setIsAddingItem] = useState(false);
 
   const { data: items = [], isLoading } = useJobChecklist(jobId);
@@ -32,9 +32,9 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
 
   const handleAddItem = async () => {
     if (!newItemTitle.trim()) return;
-    
+
     await addItem.mutateAsync({ jobId, title: newItemTitle.trim() });
-    setNewItemTitle("");
+    setNewItemTitle('');
     setIsAddingItem(false);
   };
 
@@ -76,9 +76,7 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
           )}
         </div>
 
-        {totalCount > 0 && (
-          <Progress value={progressPercent} className="h-1.5" />
-        )}
+        {totalCount > 0 && <Progress value={progressPercent} className="h-1.5" />}
 
         {/* Checklist Items */}
         <div className="space-y-2">
@@ -86,8 +84,8 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
             <div
               key={item.id}
               className={cn(
-                "flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 group transition-colors",
-                item.is_completed && "opacity-60"
+                'flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 group transition-colors',
+                item.is_completed && 'opacity-60'
               )}
             >
               <Checkbox
@@ -97,8 +95,8 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
               />
               <span
                 className={cn(
-                  "flex-1 text-sm text-foreground",
-                  item.is_completed && "line-through text-muted-foreground"
+                  'flex-1 text-sm text-foreground',
+                  item.is_completed && 'line-through text-muted-foreground'
                 )}
               >
                 {item.title}
@@ -125,8 +123,8 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
               className="h-9 flex-1"
               autoFocus
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleAddItem();
-                if (e.key === "Escape") setIsAddingItem(false);
+                if (e.key === 'Enter') handleAddItem();
+                if (e.key === 'Escape') setIsAddingItem(false);
               }}
             />
             <Button
@@ -143,7 +141,7 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
               className="h-9"
               onClick={() => {
                 setIsAddingItem(false);
-                setNewItemTitle("");
+                setNewItemTitle('');
               }}
             >
               Cancel
@@ -166,24 +164,18 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
 }
 
 // Compact progress indicator for cards
-export function JobChecklistProgress({ 
-  completed, 
-  total 
-}: { 
-  completed: number; 
-  total: number;
-}) {
+export function JobChecklistProgress({ completed, total }: { completed: number; total: number }) {
   if (total === 0) return null;
-  
+
   const percent = (completed / total) * 100;
-  
+
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
         <div
           className={cn(
-            "h-full rounded-full transition-all",
-            percent === 100 ? "bg-success" : "bg-elec-yellow"
+            'h-full rounded-full transition-all',
+            percent === 100 ? 'bg-success' : 'bg-elec-yellow'
           )}
           style={{ width: `${percent}%` }}
         />

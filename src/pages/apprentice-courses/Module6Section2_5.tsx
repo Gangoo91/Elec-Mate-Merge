@@ -1,87 +1,131 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section2_5 = () => {
   useSEO(
-    "Confirming Circuit Labelling and Identification - Level 2 Electrical Installation",
-    "BS 7671 labelling and identification requirements for DBs, devices, and isolation"
+    'Confirming Circuit Labelling and Identification - Level 2 Electrical Installation',
+    'BS 7671 labelling and identification requirements for DBs, devices, and isolation'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the main reason for labelling circuits?",
-      options: ["To look professional", "Safety – so circuits can be identified and isolated quickly", "To reduce costs", "To impress clients"],
+      question: 'What is the main reason for labelling circuits?',
+      options: [
+        'To look professional',
+        'Safety – so circuits can be identified and isolated quickly',
+        'To reduce costs',
+        'To impress clients',
+      ],
       correctAnswer: 1,
-      explanation: "Safety is the primary reason for labelling circuits, allowing for quick identification and safe isolation."
+      explanation:
+        'Safety is the primary reason for labelling circuits, allowing for quick identification and safe isolation.',
     },
     {
       id: 2,
-      question: "Which regulation requires circuits to be identifiable?",
-      options: ["BS 5839", "BS 7671", "BS 6423", "BS 1362"],
+      question: 'Which regulation requires circuits to be identifiable?',
+      options: ['BS 5839', 'BS 7671', 'BS 6423', 'BS 1362'],
       correctAnswer: 1,
-      explanation: "BS 7671 (IET Wiring Regulations) requires all circuits to be identifiable."
+      explanation: 'BS 7671 (IET Wiring Regulations) requires all circuits to be identifiable.',
     },
     {
       id: 3,
-      question: "Name two places where labels are required.",
-      options: ["Only on distribution boards", "Distribution boards and protective devices", "Only on isolators", "Only on cables"],
+      question: 'Name two places where labels are required.',
+      options: [
+        'Only on distribution boards',
+        'Distribution boards and protective devices',
+        'Only on isolators',
+        'Only on cables',
+      ],
       correctAnswer: 1,
-      explanation: "Labels are required on distribution boards, protective devices, isolators, and cables (on larger projects)."
+      explanation:
+        'Labels are required on distribution boards, protective devices, isolators, and cables (on larger projects).',
     },
     {
       id: 4,
-      question: "What should be included in a distribution board schedule?",
-      options: ["Only circuit numbers", "Circuit reference, description, device rating, RCD/RCBO protection", "Only device ratings", "Only descriptions"],
+      question: 'What should be included in a distribution board schedule?',
+      options: [
+        'Only circuit numbers',
+        'Circuit reference, description, device rating, RCD/RCBO protection',
+        'Only device ratings',
+        'Only descriptions',
+      ],
       correctAnswer: 1,
-      explanation: "A DB schedule must include circuit reference, load description, device rating, and RCD/RCBO protection details."
+      explanation:
+        'A DB schedule must include circuit reference, load description, device rating, and RCD/RCBO protection details.',
     },
     {
       id: 5,
-      question: "True or False: Labelling is optional if the electrician remembers the circuits.",
-      options: ["True", "False"],
+      question: 'True or False: Labelling is optional if the electrician remembers the circuits.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False — labelling is a regulatory requirement regardless of personal knowledge."
+      explanation:
+        'False — labelling is a regulatory requirement regardless of personal knowledge.',
     },
     {
       id: 6,
-      question: "What type of labels are preferred for durability?",
-      options: ["Handwritten labels", "Printed labels", "Pencil markings", "Temporary stickers"],
+      question: 'What type of labels are preferred for durability?',
+      options: ['Handwritten labels', 'Printed labels', 'Pencil markings', 'Temporary stickers'],
       correctAnswer: 1,
-      explanation: "Printed labels are preferred as they are more durable and legible than handwritten alternatives."
+      explanation:
+        'Printed labels are preferred as they are more durable and legible than handwritten alternatives.',
     },
     {
       id: 7,
-      question: "What risk is created by poor labelling?",
-      options: ["Increased costs", "Isolating the wrong circuit and creating safety hazards", "Longer installation time", "Client complaints"],
+      question: 'What risk is created by poor labelling?',
+      options: [
+        'Increased costs',
+        'Isolating the wrong circuit and creating safety hazards',
+        'Longer installation time',
+        'Client complaints',
+      ],
       correctAnswer: 1,
-      explanation: "Poor labelling can lead to isolating the wrong circuit, creating serious safety hazards."
+      explanation:
+        'Poor labelling can lead to isolating the wrong circuit, creating serious safety hazards.',
     },
     {
       id: 8,
-      question: "Who is responsible for updating circuit labels after changes?",
-      options: ["The client", "The electrician carrying out the work", "The inspector", "The building owner"],
+      question: 'Who is responsible for updating circuit labels after changes?',
+      options: [
+        'The client',
+        'The electrician carrying out the work',
+        'The inspector',
+        'The building owner',
+      ],
       correctAnswer: 1,
-      explanation: "The electrician performing modifications must update all relevant labelling immediately."
+      explanation:
+        'The electrician performing modifications must update all relevant labelling immediately.',
     },
     {
       id: 9,
-      question: "Where should the circuit schedule be fixed?",
-      options: ["In the office files only", "Inside or adjacent to the distribution board", "On the wall nearby", "In the client handbook"],
+      question: 'Where should the circuit schedule be fixed?',
+      options: [
+        'In the office files only',
+        'Inside or adjacent to the distribution board',
+        'On the wall nearby',
+        'In the client handbook',
+      ],
       correctAnswer: 1,
-      explanation: "The circuit schedule must be fixed inside or adjacent to the distribution board for easy reference."
+      explanation:
+        'The circuit schedule must be fixed inside or adjacent to the distribution board for easy reference.',
     },
     {
       id: 10,
-      question: "In the real-world example, what happened due to poor labelling?",
-      options: ["Power was lost to the whole building", "Emergency lighting was isolated by mistake, creating a safety risk", "The fire alarm stopped working", "All circuits were damaged"],
+      question: 'In the real-world example, what happened due to poor labelling?',
+      options: [
+        'Power was lost to the whole building',
+        'Emergency lighting was isolated by mistake, creating a safety risk',
+        'The fire alarm stopped working',
+        'All circuits were damaged',
+      ],
       correctAnswer: 1,
-      explanation: "Emergency lighting was accidentally isolated instead of classroom lighting, creating a safety risk during evacuation drills."
-    }
+      explanation:
+        'Emergency lighting was accidentally isolated instead of classroom lighting, creating a safety risk during evacuation drills.',
+    },
   ];
 
   return (
@@ -134,8 +178,12 @@ const Module6Section2_5 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Spot it / Use it</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Spot:</strong> Missing labels, illegible text, outdated information</li>
-                  <li><strong>Use:</strong> Printed labels; cross-check to DB schedule</li>
+                  <li>
+                    <strong>Spot:</strong> Missing labels, illegible text, outdated information
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Printed labels; cross-check to DB schedule
+                  </li>
                 </ul>
               </div>
             </div>
@@ -149,7 +197,10 @@ const Module6Section2_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Clear and accurate labelling of circuits is vital for safety, compliance, and efficiency. Labels allow electricians, inspectors, and end users to quickly identify which circuits control which areas or equipment. Poor or missing labels can cause confusion, wasted time, and dangerous mistakes such as isolating the wrong circuit.
+                Clear and accurate labelling of circuits is vital for safety, compliance, and
+                efficiency. Labels allow electricians, inspectors, and end users to quickly identify
+                which circuits control which areas or equipment. Poor or missing labels can cause
+                confusion, wasted time, and dangerous mistakes such as isolating the wrong circuit.
               </p>
             </div>
           </section>
@@ -209,7 +260,8 @@ const Module6Section2_5 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Safety Critical</p>
                 <p className="text-sm">
-                  Poor labelling is a contributing factor in many electrical accidents. Clear identification is not optional - it's a life-safety requirement.
+                  Poor labelling is a contributing factor in many electrical accidents. Clear
+                  identification is not optional - it's a life-safety requirement.
                 </p>
               </div>
             </div>
@@ -218,7 +270,12 @@ const Module6Section2_5 = () => {
               <InlineCheck
                 id="labelling-importance-check"
                 question="Why must all circuits be labelled?"
-                options={["To look professional", "For safety - quick identification and isolation", "To reduce costs", "Client preference"]}
+                options={[
+                  'To look professional',
+                  'For safety - quick identification and isolation',
+                  'To reduce costs',
+                  'Client preference',
+                ]}
                 correctIndex={1}
                 explanation="Circuit labelling is essential for safety, enabling quick identification and safe isolation of circuits."
               />
@@ -255,7 +312,8 @@ const Module6Section2_5 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Best Practice</p>
                 <p className="text-sm">
-                  Use consistent naming conventions throughout the installation. Avoid abbreviations that may not be understood by others.
+                  Use consistent naming conventions throughout the installation. Avoid abbreviations
+                  that may not be understood by others.
                 </p>
               </div>
             </div>
@@ -264,7 +322,12 @@ const Module6Section2_5 = () => {
               <InlineCheck
                 id="label-content-check"
                 question="What should a label on an MCB include?"
-                options={["Just the circuit number", "Device rating, type, circuit description, and RCD protection", "Only the area served", "Manufacturer information"]}
+                options={[
+                  'Just the circuit number',
+                  'Device rating, type, circuit description, and RCD protection',
+                  'Only the area served',
+                  'Manufacturer information',
+                ]}
                 correctIndex={1}
                 explanation="MCB labels should include device rating and type, circuit description, and RCD/RCBO protection details."
               />
@@ -311,7 +374,8 @@ const Module6Section2_5 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Compliance Note</p>
                 <p className="text-sm">
-                  The schedule or chart required by BS 7671 must be durable and clearly visible. Temporary or handwritten schedules should be replaced with permanent versions.
+                  The schedule or chart required by BS 7671 must be durable and clearly visible.
+                  Temporary or handwritten schedules should be replaced with permanent versions.
                 </p>
               </div>
             </div>
@@ -320,7 +384,12 @@ const Module6Section2_5 = () => {
               <InlineCheck
                 id="label-location-check"
                 question="Where should the circuit schedule be displayed?"
-                options={["In a filing cabinet", "Inside or adjacent to the distribution board", "On the office wall", "In the client manual only"]}
+                options={[
+                  'In a filing cabinet',
+                  'Inside or adjacent to the distribution board',
+                  'On the office wall',
+                  'In the client manual only',
+                ]}
                 correctIndex={1}
                 explanation="The circuit schedule must be fixed inside or adjacent to the distribution board for immediate reference."
               />
@@ -367,7 +436,9 @@ const Module6Section2_5 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-2">Critical Warning</p>
                 <p className="text-sm">
-                  Poor labelling has been identified as a contributing factor in electrical accidents. The consequences can include serious injury, death, and legal liability.
+                  Poor labelling has been identified as a contributing factor in electrical
+                  accidents. The consequences can include serious injury, death, and legal
+                  liability.
                 </p>
               </div>
             </div>
@@ -376,7 +447,12 @@ const Module6Section2_5 = () => {
               <InlineCheck
                 id="labelling-risks-check"
                 question="What risk is created by poor labelling?"
-                options={["Higher electricity bills", "Isolating the wrong circuit and creating safety hazards", "Reduced equipment life", "Poor appearance"]}
+                options={[
+                  'Higher electricity bills',
+                  'Isolating the wrong circuit and creating safety hazards',
+                  'Reduced equipment life',
+                  'Poor appearance',
+                ]}
                 correctIndex={1}
                 explanation="Poor labelling can lead to isolating the wrong circuit, potentially causing shock, fire, or equipment damage."
               />
@@ -404,9 +480,18 @@ const Module6Section2_5 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Tools & Techniques</p>
                 <div className="text-sm space-y-1">
-                  <p><strong>Label Printers:</strong> Professional thermal or laser printers for consistent, durable labels</p>
-                  <p><strong>Engraved Tags:</strong> For harsh environments or permanent installations</p>
-                  <p><strong>Cable Identification:</strong> Heat-shrink sleeves, tie-on tags, or printed cable markers</p>
+                  <p>
+                    <strong>Label Printers:</strong> Professional thermal or laser printers for
+                    consistent, durable labels
+                  </p>
+                  <p>
+                    <strong>Engraved Tags:</strong> For harsh environments or permanent
+                    installations
+                  </p>
+                  <p>
+                    <strong>Cable Identification:</strong> Heat-shrink sleeves, tie-on tags, or
+                    printed cable markers
+                  </p>
                 </div>
               </div>
             </div>
@@ -421,13 +506,18 @@ const Module6Section2_5 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="font-medium text-red-400 mb-3">School Emergency Lighting Incident</p>
               <p className="text-sm text-white/80 mb-3">
-                During routine maintenance in a school, an electrician attempted to isolate the lighting in a classroom. Due to poor labelling, they accidentally isolated the emergency lighting circuit instead.
+                During routine maintenance in a school, an electrician attempted to isolate the
+                lighting in a classroom. Due to poor labelling, they accidentally isolated the
+                emergency lighting circuit instead.
               </p>
               <p className="text-sm text-white/80 mb-3">
-                This left an area of the building without safety lighting during evacuation drills. The emergency lighting remained off for several hours before the error was discovered.
+                This left an area of the building without safety lighting during evacuation drills.
+                The emergency lighting remained off for several hours before the error was
+                discovered.
               </p>
               <p className="text-sm font-medium text-white">
-                Outcome: Accurate labelling would have prevented this dangerous situation. The incident required a full review and comprehensive re-labelling programme.
+                Outcome: Accurate labelling would have prevented this dangerous situation. The
+                incident required a full review and comprehensive re-labelling programme.
               </p>
             </div>
           </section>

@@ -7,12 +7,16 @@ export const WiFiReliabilityQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why might Wi-Fi become unreliable in hubless setups?";
+  const question = 'Why might Wi-Fi become unreliable in hubless setups?';
   const options = [
     { id: 'a', text: 'Wi-Fi signals are inherently weaker than other protocols', correct: false },
-    { id: 'b', text: 'Network congestion and channel contention as device count increases', correct: true },
+    {
+      id: 'b',
+      text: 'Network congestion and channel contention as device count increases',
+      correct: true,
+    },
     { id: 'c', text: 'Smart devices consume too much internet bandwidth', correct: false },
-    { id: 'd', text: 'Wi-Fi routers can\'t handle encrypted traffic', correct: false }
+    { id: 'd', text: "Wi-Fi routers can't handle encrypted traffic", correct: false },
   ];
 
   const handleAnswerSelect = (optionId: string) => {
@@ -31,7 +35,7 @@ export const WiFiReliabilityQuickCheck = () => {
     setShowResult(false);
   };
 
-  const selectedOption = options.find(opt => opt.id === selectedAnswer);
+  const selectedOption = options.find((opt) => opt.id === selectedAnswer);
   const isCorrect = selectedOption?.correct || false;
 
   return (
@@ -44,7 +48,7 @@ export const WiFiReliabilityQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
             <Button
@@ -52,10 +56,10 @@ export const WiFiReliabilityQuickCheck = () => {
               variant="outline"
               onClick={() => handleAnswerSelect(option.id)}
               className={`w-full justify-start text-left p-4 h-auto border-gray-600 hover:bg-gray-700 ${
-                selectedAnswer === option.id 
-                  ? showResult 
-                    ? option.correct 
-                      ? 'bg-green-900/20 border-green-600 text-green-100' 
+                selectedAnswer === option.id
+                  ? showResult
+                    ? option.correct
+                      ? 'bg-green-900/20 border-green-600 text-green-100'
                       : 'bg-red-900/20 border-red-600 text-red-100'
                     : 'bg-blue-900/20 border-blue-600 text-blue-100'
                   : 'text-gray-300'
@@ -78,7 +82,7 @@ export const WiFiReliabilityQuickCheck = () => {
         </div>
 
         {!showResult && selectedAnswer && (
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
           >
@@ -87,7 +91,9 @@ export const WiFiReliabilityQuickCheck = () => {
         )}
 
         {showResult && (
-          <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}>
+          <div
+            className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400" />
@@ -99,12 +105,11 @@ export const WiFiReliabilityQuickCheck = () => {
               </span>
             </div>
             <p className={`text-sm ${isCorrect ? 'text-green-100' : 'text-red-100'}`}>
-              {isCorrect 
+              {isCorrect
                 ? 'Exactly! As more devices connect to Wi-Fi, they compete for airtime and channels. This leads to congestion, packet loss, and slower response times. Mesh protocols like Zigbee are designed to handle many devices more efficiently.'
-                : 'The main issue is network congestion. As device count increases, Wi-Fi channels become congested with competing traffic, leading to packet collisions, retransmissions, and degraded performance.'
-              }
+                : 'The main issue is network congestion. As device count increases, Wi-Fi channels become congested with competing traffic, leading to packet collisions, retransmissions, and degraded performance.'}
             </p>
-            <Button 
+            <Button
               onClick={resetCheck}
               variant="outline"
               className="mt-3 border-gray-600 text-gray-300 hover:bg-gray-700"

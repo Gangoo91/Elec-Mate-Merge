@@ -1,13 +1,12 @@
-
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { JobListing } from "@/pages/electrician/JobVacancies";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { JobListing } from '@/pages/electrician/JobVacancies';
 
 export const useJobListings = () => {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
-  const [locationFilter, setLocationFilter] = useState<string>("all");
-  const [jobTypeFilter, setJobTypeFilter] = useState<string>("all");
+  const [locationFilter, setLocationFilter] = useState<string>('all');
+  const [jobTypeFilter, setJobTypeFilter] = useState<string>('all');
   const [jobs, setJobs] = useState<JobListing[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [locations, setLocations] = useState<string[]>([]);
@@ -21,12 +20,12 @@ export const useJobListings = () => {
 
   const fetchJobListings = async () => {
     setIsLoading(true);
-    
+
     try {
       const { data, error } = await supabase
-        .from("job_listings")
-        .select("*")
-        .order("posted_date", { ascending: false });
+        .from('job_listings')
+        .select('*')
+        .order('posted_date', { ascending: false });
 
       if (error) {
         throw error;
@@ -34,20 +33,20 @@ export const useJobListings = () => {
 
       if (data) {
         setJobs(data);
-        
+
         // Extract unique locations and job types for filters
-        const uniqueLocations = Array.from(new Set(data.map(job => job.location)));
-        const uniqueJobTypes = Array.from(new Set(data.map(job => job.type)));
-        
+        const uniqueLocations = Array.from(new Set(data.map((job) => job.location)));
+        const uniqueJobTypes = Array.from(new Set(data.map((job) => job.type)));
+
         setLocations(uniqueLocations);
         setJobTypes(uniqueJobTypes);
       }
     } catch (error) {
-      console.error("Error fetching job listings:", error);
+      console.error('Error fetching job listings:', error);
       toast({
-        title: "Error",
-        description: "Failed to load job listings. Please try again later.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load job listings. Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -59,41 +58,39 @@ export const useJobListings = () => {
     // Open external application URL in new tab
     window.open(url, '_blank');
     toast({
-      title: "Application Started",
+      title: 'Application Started',
       description: "You've been redirected to the employer's application page.",
     });
   };
 
   const applyFilters = async () => {
     setIsLoading(true);
-    
+
     try {
-      let query = supabase
-        .from("job_listings")
-        .select("*");
-      
-      if (locationFilter !== "all") {
-        query = query.eq("location", locationFilter);
+      let query = supabase.from('job_listings').select('*');
+
+      if (locationFilter !== 'all') {
+        query = query.eq('location', locationFilter);
       }
-      
-      if (jobTypeFilter !== "all") {
-        query = query.eq("type", jobTypeFilter);
+
+      if (jobTypeFilter !== 'all') {
+        query = query.eq('type', jobTypeFilter);
       }
-      
-      const { data, error } = await query.order("posted_date", { ascending: false });
-      
+
+      const { data, error } = await query.order('posted_date', { ascending: false });
+
       if (error) {
         throw error;
       }
-      
+
       setJobs(data || []);
       setCurrentPage(1);
     } catch (error) {
-      console.error("Error filtering job listings:", error);
+      console.error('Error filtering job listings:', error);
       toast({
-        title: "Error",
-        description: "Failed to filter job listings. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to filter job listings. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -101,8 +98,8 @@ export const useJobListings = () => {
   };
 
   const resetFilters = () => {
-    setLocationFilter("all");
-    setJobTypeFilter("all");
+    setLocationFilter('all');
+    setJobTypeFilter('all');
     fetchJobListings();
     setCurrentPage(1);
   };
@@ -125,12 +122,12 @@ export const useJobListings = () => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0);
   };
-  
+
   return {
     jobs,
     currentJobs,
     isLoading,
-    selectedJob, 
+    selectedJob,
     setSelectedJob,
     locationFilter,
     jobTypeFilter,
@@ -143,6 +140,6 @@ export const useJobListings = () => {
     handleJobTypeChange,
     applyFilters,
     resetFilters,
-    paginate
+    paginate,
   };
 };

@@ -1,8 +1,8 @@
-import { ReactNode, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { LucideIcon } from "lucide-react";
+import { ReactNode, useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { LucideIcon } from 'lucide-react';
 
 interface InputCardSectionProps {
   title: string;
@@ -13,13 +13,13 @@ interface InputCardSectionProps {
   defaultOpen?: boolean;
 }
 
-export const InputCardSection = ({ 
-  title, 
+export const InputCardSection = ({
+  title,
   subtitle,
-  icon: Icon, 
+  icon: Icon,
   badge,
   children,
-  defaultOpen = true
+  defaultOpen = true,
 }: InputCardSectionProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -46,26 +46,22 @@ export const InputCardSection = ({
                   )}
                 </div>
                 {subtitle && (
-                  <p className="text-xs sm:text-sm text-foreground/80 mt-0.5">
-                    {subtitle}
-                  </p>
+                  <p className="text-xs sm:text-sm text-foreground/80 mt-0.5">{subtitle}</p>
                 )}
               </div>
             </div>
-            <ChevronDown 
+            <ChevronDown
               className={cn(
-                "h-5 w-5 text-elec-yellow transition-transform flex-shrink-0 ml-2",
-                isOpen && "rotate-180"
+                'h-5 w-5 text-elec-yellow transition-transform flex-shrink-0 ml-2',
+                isOpen && 'rotate-180'
               )}
             />
           </div>
         </button>
-        
+
         {isOpen && (
           <div className="px-3 pb-3 sm:px-4 sm:pb-4 border-t border-elec-yellow/10">
-            <div className="pt-3 sm:pt-4">
-              {children}
-            </div>
+            <div className="pt-3 sm:pt-4">{children}</div>
           </div>
         )}
       </Card>

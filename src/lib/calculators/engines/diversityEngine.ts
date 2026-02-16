@@ -3,7 +3,15 @@ import { CalculationError, validateInput } from '../utils/calculatorUtils';
 
 export interface CircuitLoad {
   id: string;
-  type: 'lighting' | 'small-power' | 'water-heating' | 'space-heating' | 'motor' | 'cooker' | 'shower' | 'socket-outlet';
+  type:
+    | 'lighting'
+    | 'small-power'
+    | 'water-heating'
+    | 'space-heating'
+    | 'motor'
+    | 'cooker'
+    | 'shower'
+    | 'socket-outlet';
   designCurrent: number;
   installedPower: number; // kW
   quantity: number;
@@ -30,46 +38,49 @@ const diversityFactors = {
   lighting: {
     domestic: 0.66, // 66% per BS 7671 Table A1
     commercial: 0.9, // 90% per BS 7671 Table A1
-    industrial: 0.9 // 90% per BS 7671 Table A1
+    industrial: 0.9, // 90% per BS 7671 Table A1
   },
   'small-power': {
     domestic: 0.4, // First 10A at 100%, remainder at 40% per BS 7671 Table A1
     commercial: 0.75, // 75% per BS 7671 Table A1
-    industrial: 0.8 // 80% per BS 7671 Table A1
+    industrial: 0.8, // 80% per BS 7671 Table A1
   },
   'water-heating': {
     domestic: 1.0, // 100% no diversity per BS 7671 Table A1
     commercial: 1.0, // 100% no diversity per BS 7671 Table A1
-    industrial: 1.0 // 100% no diversity per BS 7671 Table A1
+    industrial: 1.0, // 100% no diversity per BS 7671 Table A1
   },
   'space-heating': {
     domestic: 1.0, // 100% of largest unit + 75% of remainder per BS 7671 Table A1
     commercial: 0.75, // 75% per BS 7671 Table A1
-    industrial: 0.8 // 80% per BS 7671 Table A1
+    industrial: 0.8, // 80% per BS 7671 Table A1
   },
   motor: {
     domestic: 1.0, // 100% per BS 7671 Table A1
     commercial: 0.8, // Largest at 100%, remainder at 80% per BS 7671 Table A1
-    industrial: 0.8 // Largest at 100%, remainder at 80% per BS 7671 Table A1
+    industrial: 0.8, // Largest at 100%, remainder at 80% per BS 7671 Table A1
   },
   cooker: {
     domestic: 0.6, // First 10A at 100%, remainder at 30% per BS 7671 Table A1
     commercial: 0.8, // 80% per BS 7671 Table A1
-    industrial: 0.8 // 80% per BS 7671 Table A1
+    industrial: 0.8, // 80% per BS 7671 Table A1
   },
   shower: {
     domestic: 1.0, // 100% no diversity per BS 7671
     commercial: 1.0, // 100% no diversity per BS 7671
-    industrial: 1.0 // 100% no diversity per BS 7671
+    industrial: 1.0, // 100% no diversity per BS 7671
   },
   'socket-outlet': {
     domestic: 0.4, // First 10A at 100%, remainder at 40% per BS 7671 Table A1
     commercial: 0.75, // 75% per BS 7671 Table A1
-    industrial: 0.8 // 80% per BS 7671 Table A1
-  }
+    industrial: 0.8, // 80% per BS 7671 Table A1
+  },
 };
 
-export const calculateDiversity = (circuits: CircuitLoad[], voltage: number = 230): DiversityResult => {
+export const calculateDiversity = (
+  circuits: CircuitLoad[],
+  voltage: number = 230
+): DiversityResult => {
   validateInput(voltage, 200, 440, 'Voltage');
 
   if (circuits.length === 0) {
@@ -82,39 +93,43 @@ export const calculateDiversity = (circuits: CircuitLoad[], voltage: number = 23
   let totalDiversifiedLoad = 0;
 
   // Group circuits by type
-  const circuitsByType = circuits.reduce((acc, circuit) => {
-    if (!acc[circuit.type]) acc[circuit.type] = [];
-    acc[circuit.type].push(circuit);
-    return acc;
-  }, {} as Record<string, CircuitLoad[]>);
+  const circuitsByType = circuits.reduce(
+    (acc, circuit) => {
+      if (!acc[circuit.type]) acc[circuit.type] = [];
+      acc[circuit.type].push(circuit);
+      return acc;
+    },
+    {} as Record<string, CircuitLoad[]>
+  );
 
   // Calculate diversity for each circuit type
   Object.entries(circuitsByType).forEach(([type, typeCircuits]) => {
     const installedLoad = typeCircuits.reduce((sum, circuit) => sum + circuit.installedPower, 0);
     const location = typeCircuits[0].location;
-    
-    let diversityFactor = diversityFactors[type as keyof typeof diversityFactors]?.[location] || 1.0;
+
+    let diversityFactor =
+      diversityFactors[type as keyof typeof diversityFactors]?.[location] || 1.0;
     let diversifiedLoad = installedLoad * diversityFactor;
 
     // Apply special diversity rules per BS 7671
     if (type === 'small-power' && location === 'domestic') {
       // First 10A at 100%, remainder at 40%
-      const firstTenAmps = Math.min(10 * voltage / 1000, installedLoad);
+      const firstTenAmps = Math.min((10 * voltage) / 1000, installedLoad);
       const remainder = Math.max(0, installedLoad - firstTenAmps);
-      diversifiedLoad = firstTenAmps + (remainder * 0.4);
+      diversifiedLoad = firstTenAmps + remainder * 0.4;
       diversityFactor = diversifiedLoad / installedLoad;
     } else if (type === 'cooker' && location === 'domestic') {
       // First 10A at 100%, remainder at 30%
-      const firstTenAmps = Math.min(10 * voltage / 1000, installedLoad);
+      const firstTenAmps = Math.min((10 * voltage) / 1000, installedLoad);
       const remainder = Math.max(0, installedLoad - firstTenAmps);
-      diversifiedLoad = firstTenAmps + (remainder * 0.3);
+      diversifiedLoad = firstTenAmps + remainder * 0.3;
       diversityFactor = diversifiedLoad / installedLoad;
     } else if (type === 'space-heating') {
       // Largest unit at 100%, remainder at 75%
-      const sortedLoads = typeCircuits.map(c => c.installedPower).sort((a, b) => b - a);
+      const sortedLoads = typeCircuits.map((c) => c.installedPower).sort((a, b) => b - a);
       const largestLoad = sortedLoads[0] || 0;
       const remainderLoad = sortedLoads.slice(1).reduce((sum, load) => sum + load, 0);
-      diversifiedLoad = largestLoad + (remainderLoad * 0.75);
+      diversifiedLoad = largestLoad + remainderLoad * 0.75;
       diversityFactor = diversifiedLoad / installedLoad;
     }
 
@@ -125,22 +140,28 @@ export const calculateDiversity = (circuits: CircuitLoad[], voltage: number = 23
       type,
       installedLoad,
       diversityFactor,
-      diversifiedLoad
+      diversifiedLoad,
     });
 
     // Add compliance notes with exact BS 7671 references
     if (diversityFactor < 1.0) {
       const diversityPercent = (diversityFactor * 100).toFixed(0);
       if (type === 'socket-outlet' || type === 'small-power') {
-        complianceNotes.push(`${type}: First 10A at 100%, remainder at ${diversityPercent}% per BS 7671 Table A1`);
+        complianceNotes.push(
+          `${type}: First 10A at 100%, remainder at ${diversityPercent}% per BS 7671 Table A1`
+        );
       } else if (type === 'cooker') {
         complianceNotes.push(`${type}: First 10A at 100%, remainder at 30% per BS 7671 Table A1`);
       } else if (type === 'space-heating') {
         complianceNotes.push(`${type}: Largest unit 100%, others 75% per BS 7671 Table A1`);
       } else if (type === 'motor') {
-        complianceNotes.push(`${type}: Largest unit 100%, others ${diversityPercent}% per BS 7671 Table A1`);
+        complianceNotes.push(
+          `${type}: Largest unit 100%, others ${diversityPercent}% per BS 7671 Table A1`
+        );
       } else {
-        complianceNotes.push(`${type}: Applied ${diversityPercent}% diversity factor per BS 7671 Table A1`);
+        complianceNotes.push(
+          `${type}: Applied ${diversityPercent}% diversity factor per BS 7671 Table A1`
+        );
       }
     } else {
       complianceNotes.push(`${type}: 100% diversity - no reduction applied per BS 7671`);
@@ -154,7 +175,7 @@ export const calculateDiversity = (circuits: CircuitLoad[], voltage: number = 23
 
   // Add general compliance notes
   complianceNotes.push('Diversity calculations comply with BS 7671 Appendix 1');
-  
+
   if (overallDiversityFactor < 0.6) {
     complianceNotes.push('High diversity applied - verify load patterns match typical usage');
   }
@@ -166,7 +187,7 @@ export const calculateDiversity = (circuits: CircuitLoad[], voltage: number = 23
     diversifiedCurrent: Math.round(diversifiedCurrent * 10) / 10,
     overallDiversityFactor: Math.round(overallDiversityFactor * 100) / 100,
     breakdownByType,
-    complianceNotes
+    complianceNotes,
   };
 };
 
@@ -186,7 +207,7 @@ export const calculateDomesticDiversity = (
       designCurrent: (lightingLoad * 1000) / 230,
       installedPower: lightingLoad,
       quantity: 1,
-      location: 'domestic'
+      location: 'domestic',
     });
   }
 
@@ -197,7 +218,7 @@ export const calculateDomesticDiversity = (
       designCurrent: (socketLoad * 1000) / 230,
       installedPower: socketLoad,
       quantity: 1,
-      location: 'domestic'
+      location: 'domestic',
     });
   }
 
@@ -208,7 +229,7 @@ export const calculateDomesticDiversity = (
       designCurrent: (cookerLoad * 1000) / 230,
       installedPower: cookerLoad,
       quantity: 1,
-      location: 'domestic'
+      location: 'domestic',
     });
   }
 
@@ -219,7 +240,7 @@ export const calculateDomesticDiversity = (
       designCurrent: (showerLoad * 1000) / 230,
       installedPower: showerLoad,
       quantity: 1,
-      location: 'domestic'
+      location: 'domestic',
     });
   }
 

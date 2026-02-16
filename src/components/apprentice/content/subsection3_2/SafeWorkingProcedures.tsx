@@ -1,25 +1,24 @@
-
-import React from "react";
-import { ShieldAlert } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React from 'react';
+import { ShieldAlert } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const SafeWorkingProcedures = () => {
   const isMobile = useIsMobile();
-  
+
   return (
     <div className="mb-8">
       <h3 className="text-xl font-bold text-elec-yellow flex items-center mb-4">
         <ShieldAlert className="h-6 w-6 mr-2" />
         Safe Working Procedures
       </h3>
-      
+
       <p className="mb-4 text-elec-light/90">
-        Adhering to proper safe working procedures is paramount when working with electrical systems. 
-        The Health and Safety Executive (HSE) in the UK provides strict guidelines that must be followed 
-        to protect both workers and the public from electrical hazards.
+        Adhering to proper safe working procedures is paramount when working with electrical
+        systems. The Health and Safety Executive (HSE) in the UK provides strict guidelines that
+        must be followed to protect both workers and the public from electrical hazards.
       </p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h4 className="font-semibold text-elec-yellow mb-3">Before Starting Work:</h4>
@@ -33,7 +32,7 @@ const SafeWorkingProcedures = () => {
             <li>Perform a visual inspection of all equipment to be used</li>
           </ul>
         </div>
-        
+
         <div>
           <h4 className="font-semibold text-elec-yellow mb-3">During Work:</h4>
           <ul className="list-disc pl-5 space-y-2">

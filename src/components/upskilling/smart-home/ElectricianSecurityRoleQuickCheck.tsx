@@ -7,14 +7,14 @@ export const ElectricianSecurityRoleQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What should an electrician do before handing over a smart home installation?";
+  const question = 'What should an electrician do before handing over a smart home installation?';
   const options = [
-    "Leave everything as it comes from the factory",
-    "Change all default passwords and verify security settings",
-    "Only test that the lights work",
-    "Give the client the instruction manuals"
+    'Leave everything as it comes from the factory',
+    'Change all default passwords and verify security settings',
+    'Only test that the lights work',
+    'Give the client the instruction manuals',
   ];
-  const correctAnswer = "Change all default passwords and verify security settings";
+  const correctAnswer = 'Change all default passwords and verify security settings';
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer);
@@ -33,9 +33,9 @@ export const ElectricianSecurityRoleQuickCheck = () => {
           <HelpCircle className="h-4 w-4 text-blue-400" />
           <h4 className="font-semibold text-blue-400">Quick Check</h4>
         </div>
-        
+
         <p className="text-foreground mb-4 font-medium">{question}</p>
-        
+
         {!showResult ? (
           <div className="space-y-2">
             {options.map((option, index) => (
@@ -51,43 +51,47 @@ export const ElectricianSecurityRoleQuickCheck = () => {
           </div>
         ) : (
           <div className="space-y-3">
-            <div className={`p-3 rounded-lg border ${
-              selectedAnswer === correctAnswer 
-                ? 'bg-green-950/30 border-green-800/50' 
-                : 'bg-red-950/30 border-red-800/50'
-            }`}>
+            <div
+              className={`p-3 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'bg-green-950/30 border-green-800/50'
+                  : 'bg-red-950/30 border-red-800/50'
+              }`}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {selectedAnswer === correctAnswer ? (
                   <CheckCircle className="h-4 w-4 text-green-400" />
                 ) : (
                   <XCircle className="h-4 w-4 text-red-400" />
                 )}
-                <span className={`font-semibold ${
-                  selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
-                }`}>
+                <span
+                  className={`font-semibold ${
+                    selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
+                  }`}
+                >
                   {selectedAnswer === correctAnswer ? 'Correct!' : 'Incorrect'}
                 </span>
               </div>
-              
+
               {selectedAnswer !== correctAnswer && (
                 <p className="text-gray-300 text-sm mb-2">
                   <strong>Your answer:</strong> {selectedAnswer}
                 </p>
               )}
-              
+
               <p className="text-gray-300 text-sm">
                 <strong>Correct answer:</strong> {correctAnswer}
               </p>
-              
+
               <p className="text-gray-300 text-sm mt-2">
-                Professional electricians must ensure secure handover by changing default passwords, 
+                Professional electricians must ensure secure handover by changing default passwords,
                 verifying security settings, educating clients, and documenting security measures.
               </p>
             </div>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
+
+            <Button
+              variant="outline"
+              size="sm"
               onClick={resetQuiz}
               className="border-gray-600 text-gray-300 hover:bg-gray-700"
             >

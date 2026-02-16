@@ -1,30 +1,32 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Search, Plus } from "lucide-react";
-import { hazardCategories, type HazardCategory } from "@/data/hazards";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Badge } from '@/components/ui/badge';
+import { AlertTriangle, Search, Plus } from 'lucide-react';
+import { hazardCategories, type HazardCategory } from '@/data/hazards';
+import { cn } from '@/lib/utils';
 
 interface HazardIdentificationMatrixProps {
   onHazardSelected: (hazard: string) => void;
 }
 
 const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMatrixProps) => {
-  const [customHazard, setCustomHazard] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [customHazard, setCustomHazard] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredHazards = hazardCategories.map(category => ({
-    ...category,
-    hazards: category.hazards.filter(hazard =>
-      hazard.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  })).filter(category =>
-    category.hazards.length > 0 ||
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredHazards = hazardCategories
+    .map((category) => ({
+      ...category,
+      hazards: category.hazards.filter((hazard) =>
+        hazard.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    }))
+    .filter(
+      (category) =>
+        category.hazards.length > 0 ||
+        category.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const handleHazardSelect = (hazard: string) => {
     onHazardSelected(hazard);
@@ -33,7 +35,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
   const handleCustomHazardSubmit = () => {
     if (customHazard.trim()) {
       onHazardSelected(customHazard.trim());
-      setCustomHazard("");
+      setCustomHazard('');
     }
   };
 
@@ -61,7 +63,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
                 placeholder="Search hazards..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn(!searchTerm && "pl-10")}
+                className={cn(!searchTerm && 'pl-10')}
               />
             </div>
 

@@ -13,7 +13,11 @@ interface CircuitStateReturn {
   testResults: TestResult[];
   setTestResults: React.Dispatch<React.SetStateAction<TestResult[]>>;
   addCircuit: () => { circuitNumber: string };
-  createCircuit: (useAutoFill?: boolean, circuitType?: string, suggestions?: Partial<TestResult>) => void;
+  createCircuit: (
+    useAutoFill?: boolean,
+    circuitType?: string,
+    suggestions?: Partial<TestResult>
+  ) => void;
   updateCircuit: (id: string, field: keyof TestResult, value: string) => void;
   removeCircuit: (id: string) => void;
   removeAllCircuits: () => void;
@@ -35,7 +39,9 @@ export function useCircuitState({
   autoSaveDebounceMs = 1000,
 }: UseCircuitStateOptions): CircuitStateReturn {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
-  const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
+  const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(
+    null
+  );
   const [newCircuitNumber, setNewCircuitNumber] = useState('');
   const [isBulkUpdating, setIsBulkUpdating] = useState(false);
 
@@ -151,28 +157,27 @@ export function useCircuitState({
   }, [testResults.length]);
 
   // Create circuit with optional auto-fill
-  const createCircuit = useCallback((
-    useAutoFill = false,
-    circuitType?: string,
-    suggestions?: Partial<TestResult>
-  ) => {
-    const baseResult = createEmptyCircuit(newCircuitNumber);
+  const createCircuit = useCallback(
+    (useAutoFill = false, circuitType?: string, suggestions?: Partial<TestResult>) => {
+      const baseResult = createEmptyCircuit(newCircuitNumber);
 
-    // Apply auto-fill suggestions if provided
-    const newResult = suggestions
-      ? {
-          ...baseResult,
-          ...suggestions,
-          circuitDescription: circuitType || '',
-          type: circuitType || '',
-          autoFilled: true,
-        }
-      : baseResult;
+      // Apply auto-fill suggestions if provided
+      const newResult = suggestions
+        ? {
+            ...baseResult,
+            ...suggestions,
+            circuitDescription: circuitType || '',
+            type: circuitType || '',
+            autoFilled: true,
+          }
+        : baseResult;
 
-    const updatedResults = [...testResults, newResult];
-    setTestResults(updatedResults);
-    onSave(updatedResults);
-  }, [newCircuitNumber, testResults, onSave]);
+      const updatedResults = [...testResults, newResult];
+      setTestResults(updatedResults);
+      onSave(updatedResults);
+    },
+    [newCircuitNumber, testResults, onSave]
+  );
 
   // Update single circuit field
   const updateCircuit = useCallback((id: string, field: keyof TestResult, value: string) => {
@@ -214,92 +219,105 @@ export function useCircuitState({
   }, []);
 
   // Remove circuit with undo capability
-  const removeCircuit = useCallback((id: string) => {
-    setTestResults((prev) => {
-      const index = prev.findIndex((result) => result.id === id);
-      if (index === -1) return prev;
+  const removeCircuit = useCallback(
+    (id: string) => {
+      setTestResults((prev) => {
+        const index = prev.findIndex((result) => result.id === id);
+        if (index === -1) return prev;
 
-      const deletedCircuit = prev[index];
-      setLastDeleted({ circuit: deletedCircuit, index });
+        const deletedCircuit = prev[index];
+        setLastDeleted({ circuit: deletedCircuit, index });
 
-      const updatedResults = prev.filter((result) => result.id !== id);
-      onSave(updatedResults);
+        const updatedResults = prev.filter((result) => result.id !== id);
+        onSave(updatedResults);
 
-      toast.success('Circuit deleted', {
-        description: `Circuit ${deletedCircuit.circuitNumber || deletedCircuit.circuitDesignation} removed`,
-        action: {
-          label: 'Undo',
-          onClick: () => {
-            setTestResults((current) => {
-              const restored = [...current];
-              restored.splice(index, 0, deletedCircuit);
-              onSave(restored);
-              return restored;
-            });
-            setLastDeleted(null);
+        toast.success('Circuit deleted', {
+          description: `Circuit ${deletedCircuit.circuitNumber || deletedCircuit.circuitDesignation} removed`,
+          action: {
+            label: 'Undo',
+            onClick: () => {
+              setTestResults((current) => {
+                const restored = [...current];
+                restored.splice(index, 0, deletedCircuit);
+                onSave(restored);
+                return restored;
+              });
+              setLastDeleted(null);
+            },
           },
-        },
-      });
+        });
 
-      return updatedResults;
-    });
-  }, [onSave]);
+        return updatedResults;
+      });
+    },
+    [onSave]
+  );
 
   // Remove all circuits
   const removeAllCircuits = useCallback(() => {
-    if (window.confirm('Are you sure you want to remove all test results? This action cannot be undone.')) {
+    if (
+      window.confirm(
+        'Are you sure you want to remove all test results? This action cannot be undone.'
+      )
+    ) {
       setTestResults([]);
       onSave([]);
     }
   }, [onSave]);
 
   // Bulk update single circuit with multiple fields
-  const bulkUpdate = useCallback((id: string, updates: Partial<TestResult>) => {
-    setTestResults((prev) => {
-      const updatedResults = prev.map((result) => {
-        if (result.id === id) {
-          const updatedResult = { ...result, ...updates };
+  const bulkUpdate = useCallback(
+    (id: string, updates: Partial<TestResult>) => {
+      setTestResults((prev) => {
+        const updatedResults = prev.map((result) => {
+          if (result.id === id) {
+            const updatedResult = { ...result, ...updates };
 
-          // Apply same auto-update logic
-          if (updates.circuitNumber) {
-            updatedResult.circuitDesignation = `C${updates.circuitNumber}`;
-          }
-          if (updates.liveSize) {
-            updatedResult.cableSize = updates.liveSize;
-          }
-          if (updates.protectiveDeviceRating) {
-            updatedResult.protectiveDevice = updates.protectiveDeviceRating;
-          }
-          if (updates.cableSize) {
-            updatedResult.liveSize = updates.cableSize;
-          }
-          if (updates.protectiveDevice) {
-            updatedResult.protectiveDeviceRating = updates.protectiveDevice.replace(/\D/g, '');
-          }
+            // Apply same auto-update logic
+            if (updates.circuitNumber) {
+              updatedResult.circuitDesignation = `C${updates.circuitNumber}`;
+            }
+            if (updates.liveSize) {
+              updatedResult.cableSize = updates.liveSize;
+            }
+            if (updates.protectiveDeviceRating) {
+              updatedResult.protectiveDevice = updates.protectiveDeviceRating;
+            }
+            if (updates.cableSize) {
+              updatedResult.liveSize = updates.cableSize;
+            }
+            if (updates.protectiveDevice) {
+              updatedResult.protectiveDeviceRating = updates.protectiveDevice.replace(/\D/g, '');
+            }
 
-          return updatedResult;
-        }
-        return result;
+            return updatedResult;
+          }
+          return result;
+        });
+        onSave(updatedResults);
+        return updatedResults;
       });
-      onSave(updatedResults);
-      return updatedResults;
-    });
-  }, [onSave]);
+    },
+    [onSave]
+  );
 
   // Bulk update all circuits with same field value
-  const bulkFieldUpdate = useCallback((field: keyof TestResult, value: string) => {
-    setIsBulkUpdating(true);
-    setTestResults((prev) => {
-      const updatedResults = prev.map((result) => ({
-        ...result,
-        [field]: value,
-        autoFilled: result.autoFilled ? false : result.autoFilled,
-      }));
-      onSave(updatedResults);
-      return updatedResults;
-    });
-    setTimeout(() => setIsBulkUpdating(false), 100);
-  }, [onSave]);
+  const bulkFieldUpdate = useCallback(
+    (field: keyof TestResult, value: string) => {
+      setIsBulkUpdating(true);
+      setTestResults((prev) => {
+        const updatedResults = prev.map((result) => ({
+          ...result,
+          [field]: value,
+          autoFilled: result.autoFilled ? false : result.autoFilled,
+        }));
+        onSave(updatedResults);
+        return updatedResults;
+      });
+      setTimeout(() => setIsBulkUpdating(false), 100);
+    },
+    [onSave]
+  );
 
   // Undo last delete
   const undoLastDelete = useCallback(() => {

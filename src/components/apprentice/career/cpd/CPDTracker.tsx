@@ -1,19 +1,18 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
-import { Clock, Target, TrendingUp, Award, Construction, ArrowLeft } from "lucide-react";
-import CPDOverview from "./CPDOverview";
-import CPDEntryForm from "./CPDEntryForm";
-import CPDHistory from "./CPDHistory";
-import CPDGoals from "./CPDGoals";
-import CPDDashboard from "./enhanced/CPDDashboard";
-import MobileCPDTracker from "./enhanced/MobileCPDTracker";
-import { useCPDAutoTracking } from "@/hooks/cpd/useCPDAutoTracking";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { DropdownTabs, DropdownTab } from '@/components/ui/dropdown-tabs';
+import { Clock, Target, TrendingUp, Award, Construction, ArrowLeft } from 'lucide-react';
+import CPDOverview from './CPDOverview';
+import CPDEntryForm from './CPDEntryForm';
+import CPDHistory from './CPDHistory';
+import CPDGoals from './CPDGoals';
+import CPDDashboard from './enhanced/CPDDashboard';
+import MobileCPDTracker from './enhanced/MobileCPDTracker';
+import { useCPDAutoTracking } from '@/hooks/cpd/useCPDAutoTracking';
 
 const CPDTracker = () => {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState('overview');
   const [isMobile, setIsMobile] = useState(false);
   const [showComingSoonBanner, setShowComingSoonBanner] = useState(true);
 
@@ -21,7 +20,7 @@ const CPDTracker = () => {
   const { startTracking, stopTracking } = useCPDAutoTracking({
     enabled: true,
     minimumMinutes: 15,
-    sources: ['CPD Management', 'Professional Development']
+    sources: ['CPD Management', 'Professional Development'],
   });
 
   useEffect(() => {
@@ -42,20 +41,20 @@ const CPDTracker = () => {
   }, [startTracking, stopTracking]);
 
   const handleAddEntry = () => {
-    setActiveTab("log-activity");
+    setActiveTab('log-activity');
   };
 
   const handleViewHistory = () => {
-    setActiveTab("history");
+    setActiveTab('history');
   };
 
   const handleManageGoals = () => {
-    setActiveTab("goals");
+    setActiveTab('goals');
   };
 
   const handleViewEntry = (id: string) => {
     // Navigate to specific entry in history
-    setActiveTab("history");
+    setActiveTab('history');
   };
 
   // Mobile-first responsive design
@@ -91,11 +90,10 @@ const CPDTracker = () => {
                 <Construction className="h-5 w-5 text-amber-400" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-amber-400 mb-1">
-                  Coming Soon
-                </h3>
+                <h3 className="text-base font-bold text-amber-400 mb-1">Coming Soon</h3>
                 <p className="text-sm text-white/80">
-                  Enhanced CPD features are currently in development. All existing functionality remains fully accessible below.
+                  Enhanced CPD features are currently in development. All existing functionality
+                  remains fully accessible below.
                 </p>
               </div>
             </div>
@@ -104,21 +102,21 @@ const CPDTracker = () => {
 
         {/* Mobile Content */}
         <div className="p-4">
-          {activeTab === "overview" && (
+          {activeTab === 'overview' && (
             <MobileCPDTracker
               onAddEntry={handleAddEntry}
               onViewEntry={handleViewEntry}
               onViewHistory={handleViewHistory}
             />
           )}
-          {activeTab === "log-activity" && (
+          {activeTab === 'log-activity' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">Add CPD Entry</h2>
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setActiveTab("overview")}
+                  onClick={() => setActiveTab('overview')}
                   className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
@@ -128,14 +126,14 @@ const CPDTracker = () => {
               <CPDEntryForm />
             </div>
           )}
-          {activeTab === "history" && (
+          {activeTab === 'history' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">CPD History</h2>
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setActiveTab("overview")}
+                  onClick={() => setActiveTab('overview')}
                   className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
@@ -145,14 +143,14 @@ const CPDTracker = () => {
               <CPDHistory />
             </div>
           )}
-          {activeTab === "goals" && (
+          {activeTab === 'goals' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">CPD Goals</h2>
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setActiveTab("overview")}
+                  onClick={() => setActiveTab('overview')}
                   className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
@@ -169,35 +167,35 @@ const CPDTracker = () => {
 
   const cpdTabs: DropdownTab[] = [
     {
-      value: "overview",
-      label: "Overview",
+      value: 'overview',
+      label: 'Overview',
       icon: TrendingUp,
       content: (
-        <CPDDashboard 
+        <CPDDashboard
           onAddEntry={handleAddEntry}
           onViewHistory={handleViewHistory}
           onManageGoals={handleManageGoals}
         />
-      )
+      ),
     },
     {
-      value: "log-activity",
-      label: "Log Activity",
+      value: 'log-activity',
+      label: 'Log Activity',
       icon: Clock,
-      content: <CPDEntryForm />
+      content: <CPDEntryForm />,
     },
     {
-      value: "history",
-      label: "History",
+      value: 'history',
+      label: 'History',
       icon: Award,
-      content: <CPDHistory />
+      content: <CPDHistory />,
     },
     {
-      value: "goals",
-      label: "Goals",
+      value: 'goals',
+      label: 'Goals',
       icon: Target,
-      content: <CPDGoals />
-    }
+      content: <CPDGoals />,
+    },
   ];
 
   // Desktop layout
@@ -212,8 +210,8 @@ const CPDTracker = () => {
           <h1 className="text-3xl font-bold text-white">CPD Tracker</h1>
         </div>
         <p className="text-white/80 max-w-2xl mx-auto">
-          Track your Continuing Professional Development activities and maintain compliance
-          with professional body requirements. Set goals, log activities, and monitor your progress.
+          Track your Continuing Professional Development activities and maintain compliance with
+          professional body requirements. Set goals, log activities, and monitor your progress.
         </p>
       </div>
 
@@ -234,11 +232,10 @@ const CPDTracker = () => {
                 <Construction className="h-6 w-6 text-amber-400" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-amber-400 mb-1">
-                  Coming Soon
-                </h3>
+                <h3 className="text-xl font-bold text-amber-400 mb-1">Coming Soon</h3>
                 <p className="text-base text-white/80">
-                  Enhanced CPD features are currently in development. All existing functionality remains fully accessible below.
+                  Enhanced CPD features are currently in development. All existing functionality
+                  remains fully accessible below.
                 </p>
               </div>
             </div>

@@ -14,73 +14,73 @@ export const MATERIAL_PRICES = {
     '1.5mm_twin_earth': { price: 0.58, supplier: 'Screwfix' },
     '2.5mm_twin_earth': { price: 0.95, supplier: 'CEF' },
     '4mm_twin_earth': { price: 1.45, supplier: 'CEF' },
-    '6mm_twin_earth': { price: 2.20, supplier: 'CEF' },
+    '6mm_twin_earth': { price: 2.2, supplier: 'CEF' },
     '10mm_twin_earth': { price: 3.85, supplier: 'TLC Direct' },
-    '16mm_twin_earth': { price: 6.20, supplier: 'TLC Direct' },
+    '16mm_twin_earth': { price: 6.2, supplier: 'TLC Direct' },
     '2.5mm_3core_earth': { price: 1.35, supplier: 'CEF' },
-    '4mm_3core_earth': { price: 2.10, supplier: 'CEF' },
+    '4mm_3core_earth': { price: 2.1, supplier: 'CEF' },
     '6mm_3core_earth': { price: 3.45, supplier: 'TLC Direct' },
     '10mm_3core_earth': { price: 5.95, supplier: 'TLC Direct' },
   },
 
   // Protection devices
   mcb: {
-    'type_b_6a': { price: 4.50, supplier: 'Screwfix' },
-    'type_b_10a': { price: 4.50, supplier: 'Screwfix' },
-    'type_b_16a': { price: 4.50, supplier: 'Screwfix' },
-    'type_b_32a': { price: 4.80, supplier: 'Screwfix' },
-    'type_b_40a': { price: 5.20, supplier: 'CEF' },
-    'type_c_16a': { price: 5.20, supplier: 'CEF' },
-    'type_c_32a': { price: 5.50, supplier: 'CEF' },
-    'type_c_40a': { price: 6.20, supplier: 'CEF' },
+    type_b_6a: { price: 4.5, supplier: 'Screwfix' },
+    type_b_10a: { price: 4.5, supplier: 'Screwfix' },
+    type_b_16a: { price: 4.5, supplier: 'Screwfix' },
+    type_b_32a: { price: 4.8, supplier: 'Screwfix' },
+    type_b_40a: { price: 5.2, supplier: 'CEF' },
+    type_c_16a: { price: 5.2, supplier: 'CEF' },
+    type_c_32a: { price: 5.5, supplier: 'CEF' },
+    type_c_40a: { price: 6.2, supplier: 'CEF' },
   },
 
   rcbo: {
-    'type_b_6a_30ma': { price: 18.50, supplier: 'Screwfix' },
-    'type_b_16a_30ma': { price: 18.50, supplier: 'Screwfix' },
-    'type_b_32a_30ma': { price: 19.50, supplier: 'CEF' },
-    'type_b_40a_30ma': { price: 22.00, supplier: 'CEF' },
+    type_b_6a_30ma: { price: 18.5, supplier: 'Screwfix' },
+    type_b_16a_30ma: { price: 18.5, supplier: 'Screwfix' },
+    type_b_32a_30ma: { price: 19.5, supplier: 'CEF' },
+    type_b_40a_30ma: { price: 22.0, supplier: 'CEF' },
   },
 
   rcd: {
-    '30ma_63a_double_pole': { price: 28.00, supplier: 'Screwfix' },
-    '30ma_80a_double_pole': { price: 32.00, supplier: 'CEF' },
-    '100ma_63a_time_delay': { price: 45.00, supplier: 'CEF' },
+    '30ma_63a_double_pole': { price: 28.0, supplier: 'Screwfix' },
+    '30ma_80a_double_pole': { price: 32.0, supplier: 'CEF' },
+    '100ma_63a_time_delay': { price: 45.0, supplier: 'CEF' },
   },
 
   // Accessories
   accessories: {
-    'metal_clad_socket_single': { price: 3.80, supplier: 'Screwfix' },
-    'metal_clad_socket_double': { price: 4.50, supplier: 'Screwfix' },
-    'metal_clad_switch_1gang': { price: 2.90, supplier: 'Screwfix' },
-    'metal_clad_switch_2gang': { price: 3.40, supplier: 'Screwfix' },
-    'plastic_socket_double': { price: 1.95, supplier: 'Screwfix' },
-    'plastic_switch_1gang': { price: 1.20, supplier: 'Screwfix' },
-    'ceiling_rose': { price: 1.80, supplier: 'Screwfix' },
-    'cooker_switch_45a': { price: 8.50, supplier: 'Screwfix' },
-    'fused_spur_13a': { price: 3.20, supplier: 'Screwfix' },
+    metal_clad_socket_single: { price: 3.8, supplier: 'Screwfix' },
+    metal_clad_socket_double: { price: 4.5, supplier: 'Screwfix' },
+    metal_clad_switch_1gang: { price: 2.9, supplier: 'Screwfix' },
+    metal_clad_switch_2gang: { price: 3.4, supplier: 'Screwfix' },
+    plastic_socket_double: { price: 1.95, supplier: 'Screwfix' },
+    plastic_switch_1gang: { price: 1.2, supplier: 'Screwfix' },
+    ceiling_rose: { price: 1.8, supplier: 'Screwfix' },
+    cooker_switch_45a: { price: 8.5, supplier: 'Screwfix' },
+    fused_spur_13a: { price: 3.2, supplier: 'Screwfix' },
   },
 
   // Consumer units
   consumer_units: {
-    '6way_metal_dual_rcd': { price: 85.00, supplier: 'Screwfix' },
-    '10way_metal_dual_rcd': { price: 110.00, supplier: 'CEF' },
-    '12way_metal_dual_rcd': { price: 135.00, supplier: 'CEF' },
-    '16way_metal_rcbo': { price: 180.00, supplier: 'TLC Direct' },
+    '6way_metal_dual_rcd': { price: 85.0, supplier: 'Screwfix' },
+    '10way_metal_dual_rcd': { price: 110.0, supplier: 'CEF' },
+    '12way_metal_dual_rcd': { price: 135.0, supplier: 'CEF' },
+    '16way_metal_rcbo': { price: 180.0, supplier: 'TLC Direct' },
   },
 
   // Installation materials
   sundries: {
-    'metal_back_box_single': { price: 0.65, supplier: 'Screwfix' },
-    'metal_back_box_double': { price: 0.85, supplier: 'Screwfix' },
-    'plastic_conduit_20mm_per_m': { price: 0.95, supplier: 'Screwfix' },
-    'metal_conduit_20mm_per_m': { price: 2.40, supplier: 'CEF' },
-    'cable_clips_100pack': { price: 2.50, supplier: 'Screwfix' },
-    'grommets_100pack': { price: 3.20, supplier: 'Screwfix' },
-    'junction_box_20a': { price: 1.80, supplier: 'Screwfix' },
-    'junction_box_30a': { price: 2.40, supplier: 'CEF' },
-    'earth_clamp': { price: 1.20, supplier: 'Screwfix' },
-    'wago_connectors_5pack': { price: 4.50, supplier: 'Screwfix' },
+    metal_back_box_single: { price: 0.65, supplier: 'Screwfix' },
+    metal_back_box_double: { price: 0.85, supplier: 'Screwfix' },
+    plastic_conduit_20mm_per_m: { price: 0.95, supplier: 'Screwfix' },
+    metal_conduit_20mm_per_m: { price: 2.4, supplier: 'CEF' },
+    cable_clips_100pack: { price: 2.5, supplier: 'Screwfix' },
+    grommets_100pack: { price: 3.2, supplier: 'Screwfix' },
+    junction_box_20a: { price: 1.8, supplier: 'Screwfix' },
+    junction_box_30a: { price: 2.4, supplier: 'CEF' },
+    earth_clamp: { price: 1.2, supplier: 'Screwfix' },
+    wago_connectors_5pack: { price: 4.5, supplier: 'Screwfix' },
   },
 };
 
@@ -92,26 +92,26 @@ export const LABOUR_RATES = {
   // Base hourly rates by qualification (JIB 2025)
   hourly: {
     apprentice_year1: 12.21, // National Living Wage
-    apprentice_year2: 13.50,
-    apprentice_year3: 15.00,
-    improver: 22.00,
-    electrician: 28.00,
-    approved_electrician: 32.00,
-    technician: 38.00,
-    supervisor: 45.00,
+    apprentice_year2: 13.5,
+    apprentice_year3: 15.0,
+    improver: 22.0,
+    electrician: 28.0,
+    approved_electrician: 32.0,
+    technician: 38.0,
+    supervisor: 45.0,
   },
 
   // Typical day rates (8 hours + overheads)
   daily: {
-    electrician: 280.00, // £35/hr equivalent
-    approved_electrician: 320.00, // £40/hr equivalent
+    electrician: 280.0, // £35/hr equivalent
+    approved_electrician: 320.0, // £40/hr equivalent
   },
 
   // Overhead multipliers for different business structures
   overheadMultipliers: {
     sole_trader: 1.15, // 15% overhead
     small_company: 1.35, // 35% overhead
-    medium_company: 1.50, // 50% overhead
+    medium_company: 1.5, // 50% overhead
     large_contractor: 1.65, // 65% overhead
   },
 };
@@ -190,9 +190,9 @@ export const COMPLEXITY_FACTORS = {
 // ============================================================================
 
 export const PROFIT_MARGINS = {
-  materials: 0.20, // 20% markup on materials
+  materials: 0.2, // 20% markup on materials
   labour: 0.15, // 15% profit on labour
-  minimum_call_out: 75.00, // Minimum charge for any job
+  minimum_call_out: 75.0, // Minimum charge for any job
 };
 
 // ============================================================================
@@ -249,12 +249,15 @@ export function calculateJobPrice(input: PricingInput): PricingBreakdown {
   const materialItems: PricingBreakdown['materials']['items'] = [];
 
   input.materials.forEach((mat) => {
-    const category = MATERIAL_PRICES[mat.category] as Record<string, { price: number; supplier: string }>;
+    const category = MATERIAL_PRICES[mat.category] as Record<
+      string,
+      { price: number; supplier: string }
+    >;
     if (category && mat.item in category) {
       const item = category[mat.item];
       const total = item.price * mat.quantity;
       materialsSubtotal += total;
-      
+
       materialItems.push({
         name: mat.item.replace(/_/g, ' '),
         quantity: mat.quantity,
@@ -269,16 +272,16 @@ export function calculateJobPrice(input: PricingInput): PricingBreakdown {
   const baseLabourRate = LABOUR_RATES.hourly.electrician;
   const regionalMultiplier = MARKET_RATES_2025.regionalMultipliers[input.region];
   const regionalRate = baseLabourRate * regionalMultiplier;
-  
+
   const complexityMultiplier = COMPLEXITY_FACTORS.access[input.complexity];
   const buildingMultiplier = COMPLEXITY_FACTORS.building_type[input.buildingType];
   const urgencyMultiplier = input.urgency ? COMPLEXITY_FACTORS.urgency[input.urgency] : 1.0;
-  
+
   const adjustedRate = regionalRate * complexityMultiplier * buildingMultiplier * urgencyMultiplier;
-  const businessMultiplier = input.businessType 
+  const businessMultiplier = input.businessType
     ? LABOUR_RATES.overheadMultipliers[input.businessType]
     : LABOUR_RATES.overheadMultipliers.small_company;
-  
+
   const labourTotal = adjustedRate * input.labourHours * businessMultiplier;
 
   // 3. Apply markups
@@ -289,7 +292,7 @@ export function calculateJobPrice(input: PricingInput): PricingBreakdown {
   // 4. Calculate totals
   const subtotal = materialsSubtotal + labourTotal + totalMarkup;
   const finalSubtotal = Math.max(subtotal, PROFIT_MARGINS.minimum_call_out);
-  const vat = finalSubtotal * 0.20;
+  const vat = finalSubtotal * 0.2;
   const total = finalSubtotal + vat;
 
   // 5. Generate breakdown text
@@ -336,9 +339,12 @@ export function calculateJobPrice(input: PricingInput): PricingBreakdown {
 function generateBreakdownText(data: any): string {
   return `
 **Materials Breakdown:**
-${data.materialItems.map((item: any) => 
-  `- ${item.name}: ${item.quantity}x £${item.unitPrice.toFixed(2)} = £${item.total.toFixed(2)} (${item.supplier})`
-).join('\n')}
+${data.materialItems
+  .map(
+    (item: any) =>
+      `- ${item.name}: ${item.quantity}x £${item.unitPrice.toFixed(2)} = £${item.total.toFixed(2)} (${item.supplier})`
+  )
+  .join('\n')}
 Materials subtotal: £${data.materialsSubtotal.toFixed(2)}
 
 **Labour Breakdown:**
@@ -369,7 +375,7 @@ export function estimateSocketCircuit(
   complexity: keyof typeof COMPLEXITY_FACTORS.access = 'standard'
 ): PricingBreakdown {
   const cableLength = numSockets * 5; // Estimate 5m per socket
-  
+
   return calculateJobPrice({
     jobType: 'socket_circuit',
     materials: [
@@ -394,7 +400,7 @@ export function estimateShowerInstall(
 ): PricingBreakdown {
   const cableSize = showerKw >= 9.5 ? '10mm_twin_earth' : '6mm_twin_earth';
   const mcbSize = showerKw >= 9.5 ? 'type_b_40a' : 'type_b_32a';
-  
+
   return calculateJobPrice({
     jobType: 'shower_circuit',
     materials: [
@@ -415,18 +421,23 @@ export function estimateConsumerUnitReplacement(
   region: keyof typeof MARKET_RATES_2025.regionalMultipliers,
   upgradeType: 'like_for_like' | 'upgrade' = 'upgrade'
 ): PricingBreakdown {
-  const cuType = numWays <= 6 ? '6way_metal_dual_rcd' : 
-                 numWays <= 10 ? '10way_metal_dual_rcd' : '12way_metal_dual_rcd';
-  
+  const cuType =
+    numWays <= 6
+      ? '6way_metal_dual_rcd'
+      : numWays <= 10
+        ? '10way_metal_dual_rcd'
+        : '12way_metal_dual_rcd';
+
   return calculateJobPrice({
     jobType: 'consumer_unit_replacement',
     materials: [
       { category: 'consumer_units', item: cuType, quantity: 1 },
       { category: 'sundries', item: 'earth_clamp', quantity: 2 },
     ],
-    labourHours: upgradeType === 'like_for_like' 
-      ? INSTALLATION_TIMES.consumer_unit.replacement_like_for_like
-      : INSTALLATION_TIMES.consumer_unit.replacement_upgrade,
+    labourHours:
+      upgradeType === 'like_for_like'
+        ? INSTALLATION_TIMES.consumer_unit.replacement_like_for_like
+        : INSTALLATION_TIMES.consumer_unit.replacement_upgrade,
     region,
     complexity: 'standard',
     buildingType: 'modern_house',

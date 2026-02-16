@@ -1,4 +1,3 @@
-
 import { TestResult } from './testResult';
 
 // Calculate intelligent points served based on circuit description and type
@@ -10,15 +9,15 @@ export const calculatePointsServed = (
   const desc = (circuitDescription || '').toLowerCase();
   const type = (circuitType || '').toLowerCase();
   const deviceType = (protectiveDeviceType || '').toLowerCase();
-  
+
   // Sockets and Lighting circuits - leave blank for user to fill
   if (type.includes('socket') || desc.includes('socket')) return '';
   if (type.includes('light') || desc.includes('light')) return '';
-  
+
   // Standalone protective devices (RCD, Main Switch) - 1 point
   if (deviceType.includes('rcd') && !deviceType.includes('rcbo')) return '1';
   if (desc.includes('main switch') || desc.includes('mainswitch')) return '1';
-  
+
   // Fixed appliances - 1 point each
   if (desc.includes('cooker')) return '1';
   if (desc.includes('shower')) return '1';
@@ -31,7 +30,7 @@ export const calculatePointsServed = (
   if (desc.includes('water heater')) return '1';
   if (desc.includes('extractor')) return '1';
   if (desc.includes('fan')) return '1';
-  
+
   // Default: 1 point for other circuits
   return '1';
 };
@@ -39,7 +38,7 @@ export const calculatePointsServed = (
 // Auto-fill suggestions function
 export const getAutoFillSuggestions = (circuitType: string): Partial<TestResult> => {
   const suggestions: Partial<TestResult> = {};
-  
+
   switch (circuitType) {
     case 'Lighting':
       suggestions.liveSize = '1.5mm';
@@ -79,6 +78,6 @@ export const getAutoFillSuggestions = (circuitType: string): Partial<TestResult>
     default:
       break;
   }
-  
+
   return suggestions;
 };

@@ -7,22 +7,22 @@ const BS7671Module8 = () => {
   const sections = [
     {
       id: 1,
-      title: "Navigating Key Appendices",
-      description: "Zs Tables, Conductor Sizing, Volt Drop",
+      title: 'Navigating Key Appendices',
+      description: 'Zs Tables, Conductor Sizing, Volt Drop',
       icon: BookOpen,
     },
     {
       id: 2,
-      title: "Schedules, Checklists, and Reference Charts",
-      description: "Documentation tools and quality control",
+      title: 'Schedules, Checklists, and Reference Charts',
+      description: 'Documentation tools and quality control',
       icon: FileText,
     },
     {
       id: 3,
-      title: "Amendment 3 Highlights",
-      description: "Latest updates and enhanced requirements",
+      title: 'Amendment 3 Highlights',
+      description: 'Latest updates and enhanced requirements',
       icon: AlertCircle,
-    }
+    },
   ];
 
   return (

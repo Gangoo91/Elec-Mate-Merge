@@ -23,7 +23,15 @@ interface InspectionsStepProps {
   onOpenFaultFinder?: () => void;
 }
 
-type OutcomeType = 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+type OutcomeType =
+  | 'satisfactory'
+  | 'C1'
+  | 'C2'
+  | 'C3'
+  | 'not-applicable'
+  | 'not-verified'
+  | 'limitation'
+  | '';
 
 /**
  * Step: Inspections
@@ -40,7 +48,8 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
 
   // Calculate stats
   const stats = {
-    total: inspectionItems.length || bs7671InspectionSections.reduce((t, s) => t + s.items.length, 0),
+    total:
+      inspectionItems.length || bs7671InspectionSections.reduce((t, s) => t + s.items.length, 0),
     completed: inspectionItems.filter((i: any) => i.outcome && i.outcome !== '').length,
     satisfactory: inspectionItems.filter((i: any) => i.outcome === 'satisfactory').length,
     c1: inspectionItems.filter((i: any) => i.outcome === 'C1').length,
@@ -54,15 +63,15 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
   // Initialize inspection items if not present
   React.useEffect(() => {
     if (!data.inspectionItems || data.inspectionItems.length === 0) {
-      const initialItems = bs7671InspectionSections.flatMap(section =>
-        section.items.map(item => ({
+      const initialItems = bs7671InspectionSections.flatMap((section) =>
+        section.items.map((item) => ({
           id: item.id,
           section: section.title,
           item: item.item,
           clause: item.clause,
           inspected: false,
           outcome: '' as OutcomeType,
-          notes: ''
+          notes: '',
         }))
       );
       onChange({ inspectionItems: initialItems });
@@ -70,9 +79,9 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
   }, []);
 
   const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [sectionId]: !prev[sectionId]
+      [sectionId]: !prev[sectionId],
     }));
   };
 
@@ -83,7 +92,7 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
       items[index] = {
         ...items[index],
         outcome,
-        inspected: outcome !== '' && outcome !== 'not-applicable'
+        inspected: outcome !== '' && outcome !== 'not-applicable',
       };
       onChange({ inspectionItems: items });
 
@@ -100,7 +109,7 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
             description: `${item.item} - requires attention`,
             recommendation: 'Investigate and rectify as required to comply with BS 7671',
             rectified: false,
-            inspectionItemId: itemId
+            inspectionItemId: itemId,
           };
           onChange({ defectObservations: [...existingObservations, newObservation] });
         }
@@ -109,11 +118,11 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
   };
 
   const bulkMarkSatisfactory = (sectionId: string) => {
-    const section = bs7671InspectionSections.find(s => s.id === sectionId);
+    const section = bs7671InspectionSections.find((s) => s.id === sectionId);
     if (!section) return;
 
     const items = [...inspectionItems];
-    section.items.forEach(sItem => {
+    section.items.forEach((sItem) => {
       const index = items.findIndex((i: any) => i.id === sItem.id);
       if (index !== -1) {
         items[index] = { ...items[index], outcome: 'satisfactory', inspected: true };
@@ -123,11 +132,11 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
   };
 
   const bulkMarkNA = (sectionId: string) => {
-    const section = bs7671InspectionSections.find(s => s.id === sectionId);
+    const section = bs7671InspectionSections.find((s) => s.id === sectionId);
     if (!section) return;
 
     const items = [...inspectionItems];
-    section.items.forEach(sItem => {
+    section.items.forEach((sItem) => {
       const index = items.findIndex((i: any) => i.id === sItem.id);
       if (index !== -1) {
         items[index] = { ...items[index], outcome: 'not-applicable', inspected: false };
@@ -138,16 +147,16 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
 
   // Get section stats
   const getSectionStats = (sectionId: string) => {
-    const section = bs7671InspectionSections.find(s => s.id === sectionId);
+    const section = bs7671InspectionSections.find((s) => s.id === sectionId);
     if (!section) return { total: 0, completed: 0, issues: 0 };
 
-    const sectionItemIds = section.items.map(i => i.id);
+    const sectionItemIds = section.items.map((i) => i.id);
     const sectionItems = inspectionItems.filter((i: any) => sectionItemIds.includes(i.id));
 
     return {
       total: section.items.length,
       completed: sectionItems.filter((i: any) => i.outcome && i.outcome !== '').length,
-      issues: sectionItems.filter((i: any) => ['C1', 'C2', 'C3'].includes(i.outcome)).length
+      issues: sectionItems.filter((i: any) => ['C1', 'C2', 'C3'].includes(i.outcome)).length,
     };
   };
 
@@ -167,7 +176,9 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
           {/* Stats Row */}
           <div className="grid grid-cols-5 gap-2 text-center">
             <div className="p-2 rounded bg-green-50 dark:bg-green-950/30">
-              <p className="text-lg font-bold text-green-600 dark:text-green-400">{stats.satisfactory}</p>
+              <p className="text-lg font-bold text-green-600 dark:text-green-400">
+                {stats.satisfactory}
+              </p>
               <p className="text-xs text-muted-foreground">Pass</p>
             </div>
             <div className="p-2 rounded bg-red-50 dark:bg-red-950/30">
@@ -203,9 +214,7 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
               </div>
               <div className="flex-1">
                 <p className="font-semibold">AI Fault Finder</p>
-                <p className="text-sm text-muted-foreground">
-                  Get help diagnosing issues
-                </p>
+                <p className="text-sm text-muted-foreground">Get help diagnosing issues</p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
             </button>
@@ -215,12 +224,11 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
 
       {/* Inspection Sections */}
       <div className="space-y-3">
-        {bs7671InspectionSections.map(section => {
+        {bs7671InspectionSections.map((section) => {
           const sectionStats = getSectionStats(section.id);
           const isExpanded = expandedSections[section.id];
-          const sectionProgress = sectionStats.total > 0
-            ? (sectionStats.completed / sectionStats.total) * 100
-            : 0;
+          const sectionProgress =
+            sectionStats.total > 0 ? (sectionStats.completed / sectionStats.total) * 100 : 0;
 
           return (
             <Card key={section.id}>
@@ -229,14 +237,16 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
                 onClick={() => toggleSection(section.id)}
                 className="w-full p-4 flex items-center gap-3 text-left hover:bg-accent/50 transition-colors"
               >
-                <div className={cn(
-                  'p-2 rounded-lg',
-                  sectionStats.issues > 0
-                    ? 'bg-red-100 dark:bg-red-900/30'
-                    : sectionProgress === 100
-                      ? 'bg-green-100 dark:bg-green-900/30'
-                      : 'bg-muted'
-                )}>
+                <div
+                  className={cn(
+                    'p-2 rounded-lg',
+                    sectionStats.issues > 0
+                      ? 'bg-red-100 dark:bg-red-900/30'
+                      : sectionProgress === 100
+                        ? 'bg-green-100 dark:bg-green-900/30'
+                        : 'bg-muted'
+                  )}
+                >
                   {sectionStats.issues > 0 ? (
                     <AlertTriangle className="h-4 w-4 text-red-500" />
                   ) : sectionProgress === 100 ? (
@@ -293,7 +303,7 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
 
                   {/* Inspection Items */}
                   <div className="space-y-2">
-                    {section.items.map(item => {
+                    {section.items.map((item) => {
                       const itemData = inspectionItems.find((i: any) => i.id === item.id);
                       const outcome = itemData?.outcome || '';
 
@@ -302,11 +312,16 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
                           key={item.id}
                           className={cn(
                             'p-3 rounded-lg border',
-                            outcome === 'satisfactory' && 'bg-green-50/50 dark:bg-green-950/20 border-green-200 dark:border-green-800',
-                            outcome === 'C1' && 'bg-red-50/50 dark:bg-red-950/20 border-red-200 dark:border-red-800',
-                            outcome === 'C2' && 'bg-orange-50/50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800',
-                            outcome === 'C3' && 'bg-amber-50/50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800',
-                            outcome === 'not-applicable' && 'bg-gray-50/50 dark:bg-gray-950/20 border-gray-200 dark:border-gray-800',
+                            outcome === 'satisfactory' &&
+                              'bg-green-50/50 dark:bg-green-950/20 border-green-200 dark:border-green-800',
+                            outcome === 'C1' &&
+                              'bg-red-50/50 dark:bg-red-950/20 border-red-200 dark:border-red-800',
+                            outcome === 'C2' &&
+                              'bg-orange-50/50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800',
+                            outcome === 'C3' &&
+                              'bg-amber-50/50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800',
+                            outcome === 'not-applicable' &&
+                              'bg-gray-50/50 dark:bg-gray-950/20 border-gray-200 dark:border-gray-800',
                             !outcome && 'bg-background border-border'
                           )}
                         >
@@ -318,10 +333,12 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
                           </div>
 
                           {/* Outcome Buttons */}
-                          <div className={cn(
-                            'grid gap-1 mt-3',
-                            isMobile ? 'grid-cols-3' : 'grid-cols-6'
-                          )}>
+                          <div
+                            className={cn(
+                              'grid gap-1 mt-3',
+                              isMobile ? 'grid-cols-3' : 'grid-cols-6'
+                            )}
+                          >
                             <OutcomeButton
                               label="Pass"
                               value="satisfactory"

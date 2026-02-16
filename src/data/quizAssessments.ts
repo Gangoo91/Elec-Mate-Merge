@@ -11,7 +11,7 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'Visual Inspection',
     color: 'border-emerald-500/20 bg-emerald-500/5',
-    regulation: 'BS 7671:643.1'
+    regulation: 'BS 7671:643.1',
   },
   {
     id: 'continuity-testing',
@@ -23,7 +23,7 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'Continuity Testing',
     color: 'border-blue-500/20 bg-blue-500/5',
-    regulation: 'BS 7671:643.2'
+    regulation: 'BS 7671:643.2',
   },
   {
     id: 'insulation-resistance',
@@ -35,7 +35,7 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'Insulation Resistance',
     color: 'border-purple-500/20 bg-purple-500/5',
-    regulation: 'BS 7671:643.3'
+    regulation: 'BS 7671:643.3',
   },
   {
     id: 'polarity-testing',
@@ -47,7 +47,7 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'Polarity Testing',
     color: 'border-green-500/20 bg-green-500/5',
-    regulation: 'BS 7671:643.4'
+    regulation: 'BS 7671:643.4',
   },
   {
     id: 'earth-fault-loop',
@@ -59,7 +59,7 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'Earth Fault Loop Impedance',
     color: 'border-red-500/20 bg-red-500/5',
-    regulation: 'BS 7671:643.5'
+    regulation: 'BS 7671:643.5',
   },
   {
     id: 'rcd-testing',
@@ -71,7 +71,7 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'RCD Testing',
     color: 'border-orange-500/20 bg-orange-500/5',
-    regulation: 'BS 7671:643.6'
+    regulation: 'BS 7671:643.6',
   },
   {
     id: 'prospective-fault',
@@ -83,7 +83,7 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'Prospective Fault Current',
     color: 'border-cyan-500/20 bg-cyan-500/5',
-    regulation: 'BS 7671:643.7'
+    regulation: 'BS 7671:643.7',
   },
   {
     id: 'functional-testing',
@@ -95,12 +95,12 @@ export const quizAssessments: Assessment[] = [
     score: null,
     category: 'Functional Testing',
     color: 'border-teal-500/20 bg-teal-500/5',
-    regulation: 'BS 7671:643.8'
-  }
+    regulation: 'BS 7671:643.8',
+  },
 ];
 
 export const getAssessmentById = (id: string): Assessment | undefined => {
-  return quizAssessments.find(assessment => assessment.id === id);
+  return quizAssessments.find((assessment) => assessment.id === id);
 };
 
 export const getAllAssessments = (): Assessment[] => {

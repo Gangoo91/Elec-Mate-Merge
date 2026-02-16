@@ -1,13 +1,12 @@
-
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Users, UserCircle, BriefcaseIcon, Clock, Award } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Users, UserCircle, BriefcaseIcon, Clock, Award } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const StaffManagement = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "team";
+  const activeTab = searchParams.get('tab') || 'team';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   // Remove toast notifications and replace with console.log
@@ -59,40 +58,31 @@ const StaffManagement = () => {
                 <CardDescription>View your current team structure and roles.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Team Structure")}
-                >
+                <Button className="w-full" onClick={() => handleAction('View Team Structure')}>
                   View Team Structure
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Add Team Member</CardTitle>
                 <CardDescription>Add a new team member to your organization.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Add Team Member")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Add Team Member')}>
                   Add Team Member
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Team Reports</CardTitle>
                 <CardDescription>Generate reports on team performance.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Team Reports")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Team Reports')}>
                   Generate Reports
                 </Button>
               </CardContent>
@@ -108,10 +98,7 @@ const StaffManagement = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Employee Records")}
-                >
+                <Button className="w-full" onClick={() => handleAction('View Employee Records')}>
                   View Employee Records
                 </Button>
               </div>
@@ -127,10 +114,7 @@ const StaffManagement = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Manage Assignments")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Manage Assignments')}>
                   Manage Assignments
                 </Button>
               </div>
@@ -146,10 +130,7 @@ const StaffManagement = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Track Hours")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Track Hours')}>
                   View Hours Log
                 </Button>
               </div>
@@ -165,10 +146,7 @@ const StaffManagement = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Manage Qualifications")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Manage Qualifications')}>
                   View Qualifications
                 </Button>
               </div>

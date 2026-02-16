@@ -113,28 +113,52 @@ const TestEquipmentPractical = () => {
               <h4 className="font-semibold text-elec-yellow mb-3">I-V Curve Testing Procedure</h4>
               <div className="space-y-2">
                 <div className="flex items-center gap-3 p-2 bg-blue-900/30 rounded">
-                  <Badge variant="outline" className="bg-blue-500 text-foreground">1</Badge>
-                  <span className="text-foreground text-sm">Ensure clear, sunny conditions ({'>'}800 W/m²)</span>
+                  <Badge variant="outline" className="bg-blue-500 text-foreground">
+                    1
+                  </Badge>
+                  <span className="text-foreground text-sm">
+                    Ensure clear, sunny conditions ({'>'}800 W/m²)
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-blue-900/30 rounded">
-                  <Badge variant="outline" className="bg-blue-500 text-foreground">2</Badge>
-                  <span className="text-foreground text-sm">Isolate string at DC combiner or inverter</span>
+                  <Badge variant="outline" className="bg-blue-500 text-foreground">
+                    2
+                  </Badge>
+                  <span className="text-foreground text-sm">
+                    Isolate string at DC combiner or inverter
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-blue-900/30 rounded">
-                  <Badge variant="outline" className="bg-blue-500 text-foreground">3</Badge>
-                  <span className="text-foreground text-sm">Connect PV analyser with correct polarity</span>
+                  <Badge variant="outline" className="bg-blue-500 text-foreground">
+                    3
+                  </Badge>
+                  <span className="text-foreground text-sm">
+                    Connect PV analyser with correct polarity
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-blue-900/30 rounded">
-                  <Badge variant="outline" className="bg-blue-500 text-foreground">4</Badge>
-                  <span className="text-foreground text-sm">Measure irradiance and cell temperature</span>
+                  <Badge variant="outline" className="bg-blue-500 text-foreground">
+                    4
+                  </Badge>
+                  <span className="text-foreground text-sm">
+                    Measure irradiance and cell temperature
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-blue-900/30 rounded">
-                  <Badge variant="outline" className="bg-blue-500 text-foreground">5</Badge>
-                  <span className="text-foreground text-sm">Initiate curve trace and record data</span>
+                  <Badge variant="outline" className="bg-blue-500 text-foreground">
+                    5
+                  </Badge>
+                  <span className="text-foreground text-sm">
+                    Initiate curve trace and record data
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-blue-900/30 rounded">
-                  <Badge variant="outline" className="bg-blue-500 text-foreground">6</Badge>
-                  <span className="text-foreground text-sm">Compare with manufacturer specifications</span>
+                  <Badge variant="outline" className="bg-blue-500 text-foreground">
+                    6
+                  </Badge>
+                  <span className="text-foreground text-sm">
+                    Compare with manufacturer specifications
+                  </span>
                 </div>
               </div>
             </div>
@@ -143,23 +167,33 @@ const TestEquipmentPractical = () => {
               <h4 className="font-semibold text-elec-yellow mb-3">Insulation Resistance Testing</h4>
               <div className="space-y-2">
                 <div className="flex items-center gap-3 p-2 bg-green-900/30 rounded">
-                  <Badge variant="outline" className="bg-green-500 text-foreground">1</Badge>
+                  <Badge variant="outline" className="bg-green-500 text-foreground">
+                    1
+                  </Badge>
                   <span className="text-foreground text-sm">Ensure all equipment is isolated</span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-green-900/30 rounded">
-                  <Badge variant="outline" className="bg-green-500 text-foreground">2</Badge>
+                  <Badge variant="outline" className="bg-green-500 text-foreground">
+                    2
+                  </Badge>
                   <span className="text-foreground text-sm">Short DC+ and DC- together</span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-green-900/30 rounded">
-                  <Badge variant="outline" className="bg-green-500 text-foreground">3</Badge>
+                  <Badge variant="outline" className="bg-green-500 text-foreground">
+                    3
+                  </Badge>
                   <span className="text-foreground text-sm">Test between DC and earth at 500V</span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-green-900/30 rounded">
-                  <Badge variant="outline" className="bg-green-500 text-foreground">4</Badge>
+                  <Badge variant="outline" className="bg-green-500 text-foreground">
+                    4
+                  </Badge>
                   <span className="text-foreground text-sm">Record reading after 1 minute</span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-green-900/30 rounded">
-                  <Badge variant="outline" className="bg-green-500 text-foreground">5</Badge>
+                  <Badge variant="outline" className="bg-green-500 text-foreground">
+                    5
+                  </Badge>
                   <span className="text-foreground text-sm">Verify reading ≥1MΩ (BS 7671)</span>
                 </div>
               </div>

@@ -40,7 +40,7 @@ const mockHistoryData: CircuitHistoryEntry[] = [
       zs: '0.35',
       rcdOneX: '28',
       // ... other fields
-    } as TestResult
+    } as TestResult,
   },
   {
     id: '2',
@@ -57,14 +57,14 @@ const mockHistoryData: CircuitHistoryEntry[] = [
       zs: '0.32',
       rcdOneX: '25',
       // ... other fields
-    } as TestResult
-  }
+    } as TestResult,
+  },
 ];
 
 const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
   circuitId,
   circuitDescription,
-  className
+  className,
 }) => {
   const [historyData, setHistoryData] = useState<CircuitHistoryEntry[]>([]);
   const [selectedEntry, setSelectedEntry] = useState<CircuitHistoryEntry | null>(null);
@@ -78,12 +78,12 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
   const getTestValueTrend = (current: string, previous: string, testType: string) => {
     const currentVal = parseFloat(current);
     const previousVal = parseFloat(previous);
-    
+
     if (isNaN(currentVal) || isNaN(previousVal)) return null;
-    
+
     const percentChange = ((currentVal - previousVal) / previousVal) * 100;
     const isIncreasing = currentVal > previousVal;
-    
+
     // Determine if trend is concerning based on test type
     let isConcerning = false;
     if (testType === 'zs' || testType === 'r1r2') {
@@ -91,38 +91,38 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
     } else if (testType === 'insulation') {
       isConcerning = !isIncreasing && Math.abs(percentChange) > 20;
     }
-    
+
     return {
       percentChange: Math.abs(percentChange),
       isIncreasing,
       isConcerning,
-      icon: isIncreasing ? TrendingUp : TrendingDown
+      icon: isIncreasing ? TrendingUp : TrendingDown,
     };
   };
 
   const compareResults = (current: TestResult, previous: TestResult) => {
     const comparisons = [];
-    
+
     if (current.r1r2 && previous.r1r2) {
       const trend = getTestValueTrend(current.r1r2, previous.r1r2, 'r1r2');
       comparisons.push({
         test: 'R1+R2',
         current: current.r1r2,
         previous: previous.r1r2,
-        trend
+        trend,
       });
     }
-    
+
     if (current.zs && previous.zs) {
       const trend = getTestValueTrend(current.zs, previous.zs, 'zs');
       comparisons.push({
         test: 'Zs',
         current: current.zs,
         previous: previous.zs,
-        trend
+        trend,
       });
     }
-    
+
     if (current.insulationLiveNeutral && previous.insulationLiveNeutral) {
       const currentVal = current.insulationLiveNeutral.replace('>', '');
       const previousVal = previous.insulationLiveNeutral.replace('>', '');
@@ -131,10 +131,10 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
         test: 'Insulation L-N',
         current: current.insulationLiveNeutral,
         previous: previous.insulationLiveNeutral,
-        trend
+        trend,
       });
     }
-    
+
     return comparisons;
   };
 
@@ -150,9 +150,7 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
         <CardContent>
           <Alert>
             <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              No historical test data available for this circuit.
-            </AlertDescription>
+            <AlertDescription>No historical test data available for this circuit.</AlertDescription>
           </Alert>
         </CardContent>
       </Card>
@@ -170,14 +168,14 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
       <CardContent className="space-y-4">
         <div className="flex gap-2">
           <Button
-            variant={!showComparison ? "default" : "outline"}
+            variant={!showComparison ? 'default' : 'outline'}
             size="sm"
             onClick={() => setShowComparison(false)}
           >
             Timeline
           </Button>
           <Button
-            variant={showComparison ? "default" : "outline"}
+            variant={showComparison ? 'default' : 'outline'}
             size="sm"
             onClick={() => setShowComparison(true)}
             disabled={historyData.length < 2}
@@ -190,8 +188,11 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
           <ScrollArea className="h-[300px]">
             <div className="space-y-3">
               {historyData.map((entry, index) => (
-                <Card key={entry.id} className="p-3 cursor-pointer hover:bg-muted/50"
-                      onClick={() => setSelectedEntry(entry)}>
+                <Card
+                  key={entry.id}
+                  className="p-3 cursor-pointer hover:bg-muted/50"
+                  onClick={() => setSelectedEntry(entry)}
+                >
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="font-medium text-sm">{entry.date}</div>
@@ -199,11 +200,15 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
                         {entry.testType} • {entry.inspector}
                       </div>
                     </div>
-                    <Badge variant={entry.overallCondition === 'Satisfactory' ? 'outline' : 'destructive'}>
+                    <Badge
+                      variant={
+                        entry.overallCondition === 'Satisfactory' ? 'outline' : 'destructive'
+                      }
+                    >
                       {entry.overallCondition}
                     </Badge>
                   </div>
-                  
+
                   {selectedEntry?.id === entry.id && (
                     <div className="mt-3 pt-3 border-t">
                       <div className="grid grid-cols-3 gap-2 text-xs">
@@ -228,34 +233,39 @@ const CircuitHistoryPanel: React.FC<CircuitHistoryPanelProps> = ({
           </ScrollArea>
         ) : (
           <div className="space-y-4">
-            <div className="text-sm font-medium">
-              Comparing latest two test results:
-            </div>
-            
+            <div className="text-sm font-medium">Comparing latest two test results:</div>
+
             {historyData.length >= 2 && (
               <div className="space-y-3">
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>Latest ({historyData[0].date})</span>
                   <span>Previous ({historyData[1].date})</span>
                 </div>
-                
-                {compareResults(historyData[0].testResult, historyData[1].testResult).map((comparison, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-muted rounded">
-                    <div className="font-medium text-sm">{comparison.test}</div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{comparison.current}</span>
-                      {comparison.trend && (
-                        <div className={`flex items-center gap-1 ${comparison.trend.isConcerning ? 'text-red-600' : 'text-muted-foreground'}`}>
-                          <comparison.trend.icon className="h-3 w-3" />
-                          <span className="text-xs">
-                            {comparison.trend.percentChange.toFixed(1)}%
-                          </span>
-                        </div>
-                      )}
-                      <span className="text-sm text-muted-foreground">{comparison.previous}</span>
+
+                {compareResults(historyData[0].testResult, historyData[1].testResult).map(
+                  (comparison, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-2 bg-muted rounded"
+                    >
+                      <div className="font-medium text-sm">{comparison.test}</div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">{comparison.current}</span>
+                        {comparison.trend && (
+                          <div
+                            className={`flex items-center gap-1 ${comparison.trend.isConcerning ? 'text-red-600' : 'text-muted-foreground'}`}
+                          >
+                            <comparison.trend.icon className="h-3 w-3" />
+                            <span className="text-xs">
+                              {comparison.trend.percentChange.toFixed(1)}%
+                            </span>
+                          </div>
+                        )}
+                        <span className="text-sm text-muted-foreground">{comparison.previous}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             )}
           </div>

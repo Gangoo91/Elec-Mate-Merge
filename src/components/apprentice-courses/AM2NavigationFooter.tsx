@@ -38,12 +38,7 @@ export const AM2NavigationFooter = memo(function AM2NavigationFooter({
   const resolvedPrevHref = prevHref || previousHref;
   const resolvedPrevLabel = prevLabel || previousLabel || 'Previous';
   return (
-    <nav
-      className={cn(
-        'pt-8 mt-8 border-t border-white/10 safe-bottom',
-        className
-      )}
-    >
+    <nav className={cn('pt-8 mt-8 border-t border-white/10 safe-bottom', className)}>
       {/* Progress Dots */}
       <div className="flex items-center justify-center gap-2 mb-6">
         {Array.from({ length: totalSections }, (_, index) => (
@@ -54,8 +49,8 @@ export const AM2NavigationFooter = memo(function AM2NavigationFooter({
               index + 1 === currentSection
                 ? 'bg-elec-yellow w-6'
                 : index + 1 < currentSection
-                ? 'bg-elec-yellow/50'
-                : 'bg-white/20'
+                  ? 'bg-elec-yellow/50'
+                  : 'bg-white/20'
             )}
           />
         ))}

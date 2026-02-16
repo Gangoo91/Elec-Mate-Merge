@@ -1,6 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, FileText, Loader2, Mail } from 'lucide-react';
@@ -15,14 +21,14 @@ interface PDFExportProgressProps {
   onEmailClick?: () => void;
 }
 
-const PDFExportProgress = ({ 
-  isOpen, 
-  onClose, 
-  exportType, 
-  progress, 
+const PDFExportProgress = ({
+  isOpen,
+  onClose,
+  exportType,
+  progress,
   status,
   formData,
-  onEmailClick
+  onEmailClick,
 }: PDFExportProgressProps) => {
   const [displayProgress, setDisplayProgress] = useState(0);
 
@@ -74,29 +80,22 @@ const PDFExportProgress = ({
             {getIcon()}
             Exporting {exportType === 'complete' ? 'Complete EICR' : 'Observations'} to PDF
           </DialogTitle>
-          <DialogDescription>
-            {getStatusText()}
-          </DialogDescription>
+          <DialogDescription>{getStatusText()}</DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4">
-          <Progress 
-            value={displayProgress} 
-            className="w-full" 
-          />
-          
+          <Progress value={displayProgress} className="w-full" />
+
           <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              {displayProgress}% Complete
-            </p>
+            <p className="text-sm text-muted-foreground">{displayProgress}% Complete</p>
           </div>
-          
+
           {status === 'complete' && (
             <div className="text-center text-sm text-green-600">
               Your PDF has been downloaded successfully!
             </div>
           )}
-          
+
           {status === 'error' && (
             <div className="text-center text-sm text-red-600">
               Please try again or contact support if the problem persists.

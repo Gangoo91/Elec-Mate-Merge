@@ -1,13 +1,13 @@
-import { useState, useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { QuickStats } from "@/components/employer/QuickStats";
-import { ContractViewer } from "@/components/employer/ContractViewer";
+import { useState, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { QuickStats } from '@/components/employer/QuickStats';
+import { ContractViewer } from '@/components/employer/ContractViewer';
 import {
   useContracts,
   useEmploymentContractTemplates,
@@ -16,7 +16,7 @@ import {
   useDeleteContract,
   type Contract,
   type EmploymentContractTemplate,
-} from "@/hooks/useContracts";
+} from '@/hooks/useContracts';
 import {
   FileText,
   Briefcase,
@@ -31,16 +31,17 @@ import {
   AlertTriangle,
   RefreshCw,
   Trash2,
-} from "lucide-react";
+} from 'lucide-react';
 
 export function ContractsSection() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState<EmploymentContractTemplate | null>(null);
   const [selectedContract, setSelectedContract] = useState<Contract | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
 
   // Fetch data
-  const { data: systemTemplates = [], isLoading: templatesLoading } = useEmploymentContractTemplates();
+  const { data: systemTemplates = [], isLoading: templatesLoading } =
+    useEmploymentContractTemplates();
   const { data: userContracts = [], isLoading: contractsLoading, error, refetch } = useContracts();
   const { data: adoptedTemplateIds = [] } = useAdoptedContractTemplateIds();
   const { data: stats } = useContractStats();
@@ -50,23 +51,25 @@ export function ContractsSection() {
 
   // Filter templates and user contracts
   const filteredTemplates = useMemo(() => {
-    return systemTemplates.filter(t =>
-      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.category.toLowerCase().includes(searchQuery.toLowerCase())
+    return systemTemplates.filter(
+      (t) =>
+        t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [systemTemplates, searchQuery]);
 
   const filteredUserContracts = useMemo(() => {
-    return userContracts.filter(c =>
-      c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.party_name?.toLowerCase().includes(searchQuery.toLowerCase())
+    return userContracts.filter(
+      (c) =>
+        c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.party_name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [userContracts, searchQuery]);
 
   // Group templates by category
-  const employmentTemplates = filteredTemplates.filter(t => t.category === "Employment");
-  const subcontractorTemplates = filteredTemplates.filter(t => t.category === "Subcontractor");
-  const hrLettersTemplates = filteredTemplates.filter(t => t.category === "HR Letters");
+  const employmentTemplates = filteredTemplates.filter((t) => t.category === 'Employment');
+  const subcontractorTemplates = filteredTemplates.filter((t) => t.category === 'Subcontractor');
+  const hrLettersTemplates = filteredTemplates.filter((t) => t.category === 'HR Letters');
 
   // Stats
   const totalTemplates = systemTemplates.length;
@@ -87,18 +90,18 @@ export function ContractsSection() {
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm("Are you sure you want to delete this contract?")) {
+    if (confirm('Are you sure you want to delete this contract?')) {
       await deleteContract.mutateAsync(id);
     }
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "Employment":
+      case 'Employment':
         return Briefcase;
-      case "Subcontractor":
+      case 'Subcontractor':
         return Users;
-      case "HR Letters":
+      case 'HR Letters':
         return FileCheck;
       default:
         return FileText;
@@ -107,27 +110,27 @@ export function ContractsSection() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Employment":
-        return "text-elec-yellow";
-      case "Subcontractor":
-        return "text-info";
-      case "HR Letters":
-        return "text-success";
+      case 'Employment':
+        return 'text-elec-yellow';
+      case 'Subcontractor':
+        return 'text-info';
+      case 'HR Letters':
+        return 'text-success';
       default:
-        return "text-muted-foreground";
+        return 'text-muted-foreground';
     }
   };
 
   const getCategoryBgColor = (category: string) => {
     switch (category) {
-      case "Employment":
-        return "bg-elec-yellow/10 text-elec-yellow";
-      case "Subcontractor":
-        return "bg-info/10 text-info";
-      case "HR Letters":
-        return "bg-success/10 text-success";
+      case 'Employment':
+        return 'bg-elec-yellow/10 text-elec-yellow';
+      case 'Subcontractor':
+        return 'bg-info/10 text-info';
+      case 'HR Letters':
+        return 'bg-success/10 text-success';
       default:
-        return "bg-muted text-muted-foreground";
+        return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -158,7 +161,7 @@ export function ContractsSection() {
           <Skeleton className="h-16 w-24 shrink-0" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          {[1, 2, 3, 4].map(i => (
+          {[1, 2, 3, 4].map((i) => (
             <Skeleton key={i} className="h-20" />
           ))}
         </div>
@@ -182,7 +185,7 @@ export function ContractsSection() {
           placeholder="Search contracts and templates..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn("h-11", !searchQuery && "pl-9")}
+          className={cn('h-11', !searchQuery && 'pl-9')}
         />
       </div>
 
@@ -192,22 +195,26 @@ export function ContractsSection() {
           {
             icon: FileCheck,
             value: totalTemplates,
-            label: "Templates",
-            color: "blue",
+            label: 'Templates',
+            color: 'blue',
           },
           {
             icon: CheckCircle2,
             value: adoptedCount,
-            label: "My Contracts",
-            color: "green",
+            label: 'My Contracts',
+            color: 'green',
           },
-          ...(expiringSoon > 0 ? [{
-            icon: Clock,
-            value: expiringSoon,
-            label: "Expiring Soon",
-            color: "yellow" as const,
-            pulse: true,
-          }] : []),
+          ...(expiringSoon > 0
+            ? [
+                {
+                  icon: Clock,
+                  value: expiringSoon,
+                  label: 'Expiring Soon',
+                  color: 'yellow' as const,
+                  pulse: true,
+                },
+              ]
+            : []),
         ]}
       />
 
@@ -223,7 +230,7 @@ export function ContractsSection() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {filteredUserContracts.map((contract) => {
-              const CategoryIcon = getCategoryIcon(contract.contract_type || "Employment");
+              const CategoryIcon = getCategoryIcon(contract.contract_type || 'Employment');
               return (
                 <Card
                   key={contract.id}
@@ -234,20 +241,18 @@ export function ContractsSection() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3 min-w-0">
                         <CategoryIcon
-                          className={`h-5 w-5 ${getCategoryColor(contract.contract_type || "Employment")}`}
+                          className={`h-5 w-5 ${getCategoryColor(contract.contract_type || 'Employment')}`}
                         />
                         <div className="min-w-0">
                           <p className="font-medium text-foreground text-sm truncate">
                             {contract.title}
                           </p>
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            {contract.party_name && (
-                              <span>{contract.party_name}</span>
-                            )}
+                            {contract.party_name && <span>{contract.party_name}</span>}
                             {contract.start_date && (
                               <span className="flex items-center gap-1">
                                 <Calendar className="h-3 w-3" />
-                                {new Date(contract.start_date).toLocaleDateString("en-GB")}
+                                {new Date(contract.start_date).toLocaleDateString('en-GB')}
                               </span>
                             )}
                           </div>
@@ -257,11 +262,11 @@ export function ContractsSection() {
                         <Badge
                           variant="secondary"
                           className={
-                            contract.status === "Active"
-                              ? "bg-success/10 text-success"
-                              : contract.status === "Draft"
-                              ? "bg-muted"
-                              : "bg-warning/10 text-warning"
+                            contract.status === 'Active'
+                              ? 'bg-success/10 text-success'
+                              : contract.status === 'Draft'
+                                ? 'bg-muted'
+                                : 'bg-warning/10 text-warning'
                           }
                         >
                           {contract.status}
@@ -299,8 +304,8 @@ export function ContractsSection() {
                   Pre-Written Contracts & HR Documents
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Browse the templates below and click <strong>Use This Template</strong> to
-                  create your own customised contracts. Templates include employment contracts,
+                  Browse the templates below and click <strong>Use This Template</strong> to create
+                  your own customised contracts. Templates include employment contracts,
                   subcontractor agreements, and HR letters.
                 </p>
               </div>
@@ -356,12 +361,8 @@ export function ContractsSection() {
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
             <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-medium text-foreground mb-2">
-              No contracts found
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search query
-            </p>
+            <h3 className="font-medium text-foreground mb-2">No contracts found</h3>
+            <p className="text-sm text-muted-foreground">Try adjusting your search query</p>
           </CardContent>
         </Card>
       )}
@@ -372,11 +373,7 @@ export function ContractsSection() {
         onOpenChange={setViewerOpen}
         template={selectedTemplate}
         userContract={selectedContract}
-        isAdopted={
-          selectedTemplate
-            ? adoptedTemplateIds.includes(selectedTemplate.id)
-            : false
-        }
+        isAdopted={selectedTemplate ? adoptedTemplateIds.includes(selectedTemplate.id) : false}
       />
     </div>
   );
@@ -416,7 +413,7 @@ function TemplateCategory({
             <Card
               key={template.id}
               className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-                isAdopted ? "border-success/20 bg-success/5" : ""
+                isAdopted ? 'border-success/20 bg-success/5' : ''
               }`}
               onClick={() => onView(template)}
             >
@@ -435,10 +432,7 @@ function TemplateCategory({
                   </div>
                   <div className="flex items-center gap-2">
                     {isAdopted ? (
-                      <Badge
-                        variant="secondary"
-                        className="bg-success/10 text-success"
-                      >
+                      <Badge variant="secondary" className="bg-success/10 text-success">
                         <CheckCircle2 className="h-3 w-3 mr-1" />
                         Used
                       </Badge>

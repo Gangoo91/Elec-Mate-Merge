@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, XCircle, Brain } from 'lucide-react';
@@ -10,10 +9,10 @@ interface TestProceduresQuizResultsProps {
   onRestart: () => void;
 }
 
-export const TestProceduresQuizResults = ({ 
-  questions, 
-  selectedAnswers, 
-  onRestart 
+export const TestProceduresQuizResults = ({
+  questions,
+  selectedAnswers,
+  onRestart,
 }: TestProceduresQuizResultsProps) => {
   const calculateScore = () => {
     return selectedAnswers.reduce((score, answer, index) => {
@@ -48,9 +47,11 @@ export const TestProceduresQuizResults = ({
             {percentage}%
           </div>
           <p className="text-foreground">
-            {percentage >= 80 ? 'Excellent work!' : 
-             percentage >= 60 ? 'Good effort! Review the areas you missed.' : 
-             'Keep studying! Review the content and try again.'}
+            {percentage >= 80
+              ? 'Excellent work!'
+              : percentage >= 60
+                ? 'Good effort! Review the areas you missed.'
+                : 'Keep studying! Review the content and try again.'}
           </p>
         </div>
 
@@ -58,7 +59,7 @@ export const TestProceduresQuizResults = ({
           {questions.map((question, index) => {
             const userAnswer = selectedAnswers[index];
             const isCorrect = userAnswer === question.correctAnswer;
-            
+
             return (
               <div key={question.id} className="bg-[#323232] rounded-lg p-4">
                 <div className="flex items-start gap-3 mb-3">
@@ -86,10 +87,7 @@ export const TestProceduresQuizResults = ({
         </div>
 
         <div className="flex justify-center">
-          <Button
-            onClick={onRestart}
-            className="bg-elec-yellow text-black hover:bg-yellow-400"
-          >
+          <Button onClick={onRestart} className="bg-elec-yellow text-black hover:bg-yellow-400">
             Retake Quiz
           </Button>
         </div>

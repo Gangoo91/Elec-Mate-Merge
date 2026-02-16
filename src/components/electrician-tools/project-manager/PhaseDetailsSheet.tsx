@@ -4,22 +4,22 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { 
-  AlertTriangle, 
-  CheckCircle2, 
-  Clock, 
-  Users, 
-  Package, 
+} from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  Users,
+  Package,
   AlertCircle,
   Lightbulb,
   XCircle,
-  ChevronRight
-} from "lucide-react";
-import ReactMarkdown from "react-markdown";
-import { ScrollArea } from "@/components/ui/scroll-area";
+  ChevronRight,
+} from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface PhaseDetailsSheetProps {
   open: boolean;
@@ -28,7 +28,12 @@ interface PhaseDetailsSheetProps {
   phaseNumber: number;
 }
 
-export const PhaseDetailsSheet = ({ open, onOpenChange, phase, phaseNumber }: PhaseDetailsSheetProps) => {
+export const PhaseDetailsSheet = ({
+  open,
+  onOpenChange,
+  phase,
+  phaseNumber,
+}: PhaseDetailsSheetProps) => {
   if (!phase) return null;
 
   const phaseName = phase.phaseName || phase.phase || `Phase ${phaseNumber}`;
@@ -60,11 +65,13 @@ export const PhaseDetailsSheet = ({ open, onOpenChange, phase, phaseNumber }: Ph
             {/* Header */}
             <SheetHeader>
               <div className="flex items-center gap-3 mb-2">
-                <div className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold ${
-                  isCritical 
-                    ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-foreground' 
-                    : 'bg-gradient-to-br from-elec-yellow to-yellow-400 text-gray-900'
-                }`}>
+                <div
+                  className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold ${
+                    isCritical
+                      ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-foreground'
+                      : 'bg-gradient-to-br from-elec-yellow to-yellow-400 text-gray-900'
+                  }`}
+                >
                   {phaseNumber}
                 </div>
                 <div>
@@ -72,7 +79,10 @@ export const PhaseDetailsSheet = ({ open, onOpenChange, phase, phaseNumber }: Ph
                   <SheetDescription className="text-left">
                     {phase.duration || 1} {phase.durationUnit || 'days'}
                     {isCritical && (
-                      <Badge variant="outline" className="ml-2 bg-pink-500/20 text-pink-400 border-pink-500/40">
+                      <Badge
+                        variant="outline"
+                        className="ml-2 bg-pink-500/20 text-pink-400 border-pink-500/40"
+                      >
                         Critical Path
                       </Badge>
                     )}
@@ -107,7 +117,10 @@ export const PhaseDetailsSheet = ({ open, onOpenChange, phase, phaseNumber }: Ph
                   {phase.tasks.map((task: any, idx: number) => {
                     const taskText = typeof task === 'string' ? task : task.task || task.name || '';
                     return (
-                      <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                      <div
+                        key={idx}
+                        className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                      >
                         <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex-shrink-0 mt-0.5">
                           {idx + 1}
                         </div>
@@ -227,7 +240,10 @@ export const PhaseDetailsSheet = ({ open, onOpenChange, phase, phaseNumber }: Ph
                 </div>
                 <div className="space-y-1">
                   {phase.dependencies.map((dep: string, idx: number) => (
-                    <div key={idx} className="text-sm text-muted-foreground flex items-center gap-2 p-2 rounded bg-muted/30">
+                    <div
+                      key={idx}
+                      className="text-sm text-muted-foreground flex items-center gap-2 p-2 rounded bg-muted/30"
+                    >
                       <ChevronRight className="h-4 w-4" />
                       {dep}
                     </div>

@@ -11,20 +11,56 @@ import type { SelectOption } from '@/components/ui/mobile-select-picker';
 
 export const PROTECTIVE_DEVICE_TYPES: SelectOption[] = [
   // MCB Types
-  { value: 'mcb-type-a', label: 'MCB Type A', description: 'Very sensitive to overload (rarely used in UK)' },
-  { value: 'mcb-type-b', label: 'MCB Type B', description: 'Standard - trips at 3-5x rated current' },
-  { value: 'mcb-type-c', label: 'MCB Type C', description: 'Motor starting - trips at 5-10x rated current' },
-  { value: 'mcb-type-d', label: 'MCB Type D', description: 'High inrush - trips at 10-20x rated current' },
+  {
+    value: 'mcb-type-a',
+    label: 'MCB Type A',
+    description: 'Very sensitive to overload (rarely used in UK)',
+  },
+  {
+    value: 'mcb-type-b',
+    label: 'MCB Type B',
+    description: 'Standard - trips at 3-5x rated current',
+  },
+  {
+    value: 'mcb-type-c',
+    label: 'MCB Type C',
+    description: 'Motor starting - trips at 5-10x rated current',
+  },
+  {
+    value: 'mcb-type-d',
+    label: 'MCB Type D',
+    description: 'High inrush - trips at 10-20x rated current',
+  },
   // RCBO Types
-  { value: 'rcbo-type-ac', label: 'RCBO Type AC', description: 'AC residual currents only (basic)' },
+  {
+    value: 'rcbo-type-ac',
+    label: 'RCBO Type AC',
+    description: 'AC residual currents only (basic)',
+  },
   { value: 'rcbo-type-a', label: 'RCBO Type A', description: 'AC + pulsating DC (recommended)' },
-  { value: 'rcbo-type-f', label: 'RCBO Type F', description: 'For VFDs/inverters (high frequency)' },
-  { value: 'rcbo-type-b', label: 'RCBO Type B', description: 'All residual currents incl. smooth DC' },
+  {
+    value: 'rcbo-type-f',
+    label: 'RCBO Type F',
+    description: 'For VFDs/inverters (high frequency)',
+  },
+  {
+    value: 'rcbo-type-b',
+    label: 'RCBO Type B',
+    description: 'All residual currents incl. smooth DC',
+  },
   // Fuses
-  { value: 'fuse-bs88', label: 'Fuse BS 88-2', description: 'HRC fuse - industrial/commercial (gG)' },
+  {
+    value: 'fuse-bs88',
+    label: 'Fuse BS 88-2',
+    description: 'HRC fuse - industrial/commercial (gG)',
+  },
   { value: 'fuse-bs88-3', label: 'Fuse BS 88-3', description: 'HRC fuse - domestic (System C)' },
   { value: 'fuse-bs3036', label: 'Fuse BS 3036', description: 'Rewireable fuse (semi-enclosed)' },
-  { value: 'fuse-bs1361', label: 'Fuse BS 1361', description: 'Cartridge fuse - cut-out/consumer unit' },
+  {
+    value: 'fuse-bs1361',
+    label: 'Fuse BS 1361',
+    description: 'Cartridge fuse - cut-out/consumer unit',
+  },
   { value: 'fuse-bs1362', label: 'Fuse BS 1362', description: 'Plug-top cartridge fuse' },
   // Other
   { value: 'mccb', label: 'MCCB', description: 'Moulded Case Circuit Breaker' },
@@ -35,19 +71,19 @@ export const PROTECTIVE_DEVICE_TYPES: SelectOption[] = [
 export const PROTECTIVE_DEVICE_GROUPS = {
   mcb: {
     label: 'MCB (Miniature Circuit Breaker)',
-    options: PROTECTIVE_DEVICE_TYPES.filter(o => o.value.startsWith('mcb-')),
+    options: PROTECTIVE_DEVICE_TYPES.filter((o) => o.value.startsWith('mcb-')),
   },
   rcbo: {
     label: 'RCBO (RCD + MCB Combined)',
-    options: PROTECTIVE_DEVICE_TYPES.filter(o => o.value.startsWith('rcbo-')),
+    options: PROTECTIVE_DEVICE_TYPES.filter((o) => o.value.startsWith('rcbo-')),
   },
   fuse: {
     label: 'Fuses',
-    options: PROTECTIVE_DEVICE_TYPES.filter(o => o.value.startsWith('fuse-')),
+    options: PROTECTIVE_DEVICE_TYPES.filter((o) => o.value.startsWith('fuse-')),
   },
   other: {
     label: 'Other',
-    options: PROTECTIVE_DEVICE_TYPES.filter(o => ['mccb', 'other'].includes(o.value)),
+    options: PROTECTIVE_DEVICE_TYPES.filter((o) => ['mccb', 'other'].includes(o.value)),
   },
 };
 
@@ -60,7 +96,11 @@ export const BS_EN_STANDARDS: SelectOption[] = [
   { value: 'BS EN 60898', label: 'BS EN 60898', description: 'MCBs for household and similar' },
   // RCDs/RCBOs
   { value: 'BS EN 61009', label: 'BS EN 61009', description: 'RCBOs' },
-  { value: 'BS EN 61008', label: 'BS EN 61008', description: 'RCDs without overcurrent protection' },
+  {
+    value: 'BS EN 61008',
+    label: 'BS EN 61008',
+    description: 'RCDs without overcurrent protection',
+  },
   { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
   // MCCBs
   { value: 'BS EN 60947-2', label: 'BS EN 60947-2', description: 'MCCBs (circuit-breakers)' },
@@ -163,7 +203,11 @@ export const SUPPLY_VOLTAGES: SelectOption[] = [
 export const CABLE_TYPES: SelectOption[] = [
   // Domestic/General
   { value: 'twin-earth', label: 'Twin & Earth', description: '6242Y - Standard domestic wiring' },
-  { value: '3-core-earth', label: '3 Core + Earth', description: '6243Y - 2-way switching/3-phase' },
+  {
+    value: '3-core-earth',
+    label: '3 Core + Earth',
+    description: '6243Y - 2-way switching/3-phase',
+  },
   { value: 'flex', label: 'Flex', description: 'Flexible cord for appliances' },
   // Singles
   { value: 'singles-pvc', label: 'Singles PVC', description: 'Single core in conduit/trunking' },
@@ -171,7 +215,11 @@ export const CABLE_TYPES: SelectOption[] = [
   // Armoured
   { value: 'swa-pvc', label: 'SWA PVC', description: 'Steel Wire Armoured - PVC insulated' },
   { value: 'swa-xlpe', label: 'SWA XLPE', description: 'Steel Wire Armoured - XLPE (higher temp)' },
-  { value: 'armoured-singles', label: 'Armoured Singles', description: 'Large armoured single conductors' },
+  {
+    value: 'armoured-singles',
+    label: 'Armoured Singles',
+    description: 'Large armoured single conductors',
+  },
   // Specialty
   { value: 'micc', label: 'MICC', description: 'Mineral Insulated Copper Clad (Pyro)' },
   { value: 'fire-resistant', label: 'Fire Resistant', description: 'FP200/fire alarm cables' },
@@ -184,19 +232,21 @@ export const CABLE_TYPES: SelectOption[] = [
 export const CABLE_TYPE_GROUPS = {
   domestic: {
     label: 'Domestic/General',
-    options: CABLE_TYPES.filter(o => ['twin-earth', '3-core-earth', 'flex'].includes(o.value)),
+    options: CABLE_TYPES.filter((o) => ['twin-earth', '3-core-earth', 'flex'].includes(o.value)),
   },
   singles: {
     label: 'Singles (Conduit/Trunking)',
-    options: CABLE_TYPES.filter(o => o.value.startsWith('singles-')),
+    options: CABLE_TYPES.filter((o) => o.value.startsWith('singles-')),
   },
   armoured: {
     label: 'Armoured',
-    options: CABLE_TYPES.filter(o => o.value.includes('swa') || o.value === 'armoured-singles'),
+    options: CABLE_TYPES.filter((o) => o.value.includes('swa') || o.value === 'armoured-singles'),
   },
   specialty: {
     label: 'Specialty',
-    options: CABLE_TYPES.filter(o => ['micc', 'fire-resistant', 'data-cable', 'coax', 'other'].includes(o.value)),
+    options: CABLE_TYPES.filter((o) =>
+      ['micc', 'fire-resistant', 'data-cable', 'coax', 'other'].includes(o.value)
+    ),
   },
 };
 
@@ -206,17 +256,49 @@ export const CABLE_TYPE_GROUPS = {
 
 export const INSTALLATION_METHODS: SelectOption[] = [
   { value: 'clipped-direct', label: 'Clipped Direct', description: 'On surface (Ref Method C)' },
-  { value: 'surface-conduit', label: 'Surface Conduit', description: 'Conduit on surface (Ref Method B)' },
-  { value: 'concealed-conduit', label: 'Concealed Conduit', description: 'In thermally insulated wall (Ref Method A)' },
-  { value: 'surface-trunking', label: 'Surface Trunking', description: 'Trunking on surface (Ref Method B)' },
-  { value: 'flush-trunking', label: 'Flush Trunking', description: 'Trunking in wall/floor (Ref Method B)' },
+  {
+    value: 'surface-conduit',
+    label: 'Surface Conduit',
+    description: 'Conduit on surface (Ref Method B)',
+  },
+  {
+    value: 'concealed-conduit',
+    label: 'Concealed Conduit',
+    description: 'In thermally insulated wall (Ref Method A)',
+  },
+  {
+    value: 'surface-trunking',
+    label: 'Surface Trunking',
+    description: 'Trunking on surface (Ref Method B)',
+  },
+  {
+    value: 'flush-trunking',
+    label: 'Flush Trunking',
+    description: 'Trunking in wall/floor (Ref Method B)',
+  },
   { value: 'cable-tray', label: 'Cable Tray', description: 'Perforated tray (Ref Method C/E)' },
   { value: 'cable-basket', label: 'Cable Basket', description: 'Wire mesh tray (Ref Method E)' },
-  { value: 'under-plaster', label: 'Under Plaster', description: 'Cables in plaster (Ref Method A)' },
-  { value: 'thermally-insulated', label: 'Thermally Insulated', description: 'Surrounded by insulation (Ref Method 100)' },
-  { value: 'accessible-floor', label: 'Accessible Floor Void', description: 'Raised floor (Ref Method C)' },
+  {
+    value: 'under-plaster',
+    label: 'Under Plaster',
+    description: 'Cables in plaster (Ref Method A)',
+  },
+  {
+    value: 'thermally-insulated',
+    label: 'Thermally Insulated',
+    description: 'Surrounded by insulation (Ref Method 100)',
+  },
+  {
+    value: 'accessible-floor',
+    label: 'Accessible Floor Void',
+    description: 'Raised floor (Ref Method C)',
+  },
   { value: 'ceiling-void', label: 'Ceiling Void', description: 'Above ceiling (Ref Method C)' },
-  { value: 'buried-direct', label: 'Buried Direct', description: 'Direct in ground (Ref Method D)' },
+  {
+    value: 'buried-direct',
+    label: 'Buried Direct',
+    description: 'Direct in ground (Ref Method D)',
+  },
   { value: 'in-duct', label: 'In Duct', description: 'Underground duct (Ref Method D)' },
   { value: 'other', label: 'Other', description: 'Specify in notes' },
 ];
@@ -234,9 +316,21 @@ export const REFERENCE_METHODS: SelectOption[] = [
   { value: 'F', label: 'Method F', description: 'Free air/cable tray (touching)' },
   { value: 'G', label: 'Method G', description: 'Spaced from surface (cleats)' },
   { value: '100', label: 'Method 100', description: 'Enclosed in thermal insulation (derated)' },
-  { value: '101', label: 'Method 101', description: 'In contact with thermal insulation on one side' },
-  { value: '102', label: 'Method 102', description: 'Surrounded by thermal insulation - heavily derated' },
-  { value: '103', label: 'Method 103', description: 'In building void - partially surrounded by insulation' },
+  {
+    value: '101',
+    label: 'Method 101',
+    description: 'In contact with thermal insulation on one side',
+  },
+  {
+    value: '102',
+    label: 'Method 102',
+    description: 'Surrounded by thermal insulation - heavily derated',
+  },
+  {
+    value: '103',
+    label: 'Method 103',
+    description: 'In building void - partially surrounded by insulation',
+  },
 ];
 
 // ============================================================================
@@ -270,23 +364,23 @@ export const CONDUCTOR_SIZES: SelectOption[] = [
 export const CONDUCTOR_SIZE_GROUPS = {
   lighting: {
     label: 'Lighting',
-    options: CONDUCTOR_SIZES.filter(o => ['1.0', '1.5'].includes(o.value)),
+    options: CONDUCTOR_SIZES.filter((o) => ['1.0', '1.5'].includes(o.value)),
   },
   power: {
     label: 'Power Circuits',
-    options: CONDUCTOR_SIZES.filter(o => ['2.5', '4.0', '6.0', '10.0'].includes(o.value)),
+    options: CONDUCTOR_SIZES.filter((o) => ['2.5', '4.0', '6.0', '10.0'].includes(o.value)),
   },
   submains: {
     label: 'Sub-mains',
-    options: CONDUCTOR_SIZES.filter(o => ['16.0', '25.0', '35.0'].includes(o.value)),
+    options: CONDUCTOR_SIZES.filter((o) => ['16.0', '25.0', '35.0'].includes(o.value)),
   },
   mains: {
     label: 'Main Cables',
-    options: CONDUCTOR_SIZES.filter(o => parseFloat(o.value) >= 50),
+    options: CONDUCTOR_SIZES.filter((o) => parseFloat(o.value) >= 50),
   },
   other: {
     label: 'Other',
-    options: CONDUCTOR_SIZES.filter(o => parseFloat(o.value) < 1),
+    options: CONDUCTOR_SIZES.filter((o) => parseFloat(o.value) < 1),
   },
 };
 
@@ -368,43 +462,45 @@ export const TEST_EQUIPMENT: SelectOption[] = [
 export const TEST_EQUIPMENT_GROUPS = {
   fluke: {
     label: 'Fluke',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Fluke')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('Fluke')),
   },
   megger: {
     label: 'Megger',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Megger')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('Megger')),
   },
   kewtech: {
     label: 'Kewtech',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Kewtech')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('Kewtech')),
   },
   metrel: {
     label: 'Metrel',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Metrel')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('Metrel')),
   },
   seaward: {
     label: 'Seaward',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Seaward')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('Seaward')),
   },
   dilog: {
     label: 'Di-Log',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Di-Log')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('Di-Log')),
   },
   tis: {
     label: 'TIS',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('TIS')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('TIS')),
   },
   robin: {
     label: 'Robin / Amprobe',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Robin') || o.value.startsWith('Amprobe')),
+    options: TEST_EQUIPMENT.filter(
+      (o) => o.value.startsWith('Robin') || o.value.startsWith('Amprobe')
+    ),
   },
   martindale: {
     label: 'Martindale',
-    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Martindale')),
+    options: TEST_EQUIPMENT.filter((o) => o.value.startsWith('Martindale')),
   },
   other: {
     label: 'Other',
-    options: TEST_EQUIPMENT.filter(o => o.value === 'other'),
+    options: TEST_EQUIPMENT.filter((o) => o.value === 'other'),
   },
 };
 
@@ -413,8 +509,16 @@ export const TEST_EQUIPMENT_GROUPS = {
 // ============================================================================
 
 export const EARTHING_ARRANGEMENTS: SelectOption[] = [
-  { value: 'TN-C-S', label: 'TN-C-S (PME)', description: 'Combined neutral/earth in supply, separate in installation' },
-  { value: 'TN-S', label: 'TN-S', description: 'Separate neutral and protective conductors throughout' },
+  {
+    value: 'TN-C-S',
+    label: 'TN-C-S (PME)',
+    description: 'Combined neutral/earth in supply, separate in installation',
+  },
+  {
+    value: 'TN-S',
+    label: 'TN-S',
+    description: 'Separate neutral and protective conductors throughout',
+  },
   { value: 'TT', label: 'TT', description: 'Installation earth electrode independent of supply' },
   { value: 'IT', label: 'IT', description: 'Isolated or impedance earthed supply' },
 ];
@@ -441,8 +545,16 @@ export const EARTHING_CONDUCTOR_SIZES: SelectOption[] = [
 // ============================================================================
 
 export const CIRCUIT_TYPES: SelectOption[] = [
-  { value: 'radial', label: 'Radial Circuit', description: 'Single feed circuit from DB to final point' },
-  { value: 'ring', label: 'Ring Final Circuit', description: 'Loop from DB returning to same way (sockets)' },
+  {
+    value: 'radial',
+    label: 'Radial Circuit',
+    description: 'Single feed circuit from DB to final point',
+  },
+  {
+    value: 'ring',
+    label: 'Ring Final Circuit',
+    description: 'Loop from DB returning to same way (sockets)',
+  },
 ];
 
 // ============================================================================
@@ -450,9 +562,21 @@ export const CIRCUIT_TYPES: SelectOption[] = [
 // ============================================================================
 
 export const WORK_TYPES: SelectOption[] = [
-  { value: 'addition', label: 'Addition to Existing Circuit', description: 'Adding socket/light to existing circuit' },
-  { value: 'alteration', label: 'Alteration to Existing Circuit', description: 'Modifying existing circuit' },
-  { value: 'replacement', label: 'Replacement of Equipment', description: 'Like-for-like replacement' },
+  {
+    value: 'addition',
+    label: 'Addition to Existing Circuit',
+    description: 'Adding socket/light to existing circuit',
+  },
+  {
+    value: 'alteration',
+    label: 'Alteration to Existing Circuit',
+    description: 'Modifying existing circuit',
+  },
+  {
+    value: 'replacement',
+    label: 'Replacement of Equipment',
+    description: 'Like-for-like replacement',
+  },
   { value: 'new', label: 'New Circuit', description: 'Installing new circuit' },
   { value: 'repair', label: 'Repair', description: 'Fault repair' },
   { value: 'other', label: 'Other', description: 'Specify in description' },
@@ -472,7 +596,11 @@ export const QUALIFICATION_LEVELS: SelectOption[] = [
   { value: 'eal-level3', label: 'EAL Level 3', description: 'Electrical Installation' },
   { value: 'eal-2391', label: 'EAL 2391 Equivalent', description: 'Inspection & Testing' },
   { value: 'am2', label: 'AM2/AM2S', description: 'Assessment of Competence' },
-  { value: 'jib-approved', label: 'JIB Approved Electrician', description: 'JIB grade card holder' },
+  {
+    value: 'jib-approved',
+    label: 'JIB Approved Electrician',
+    description: 'JIB grade card holder',
+  },
   { value: 'other', label: 'Other', description: 'Specify in notes' },
 ];
 
@@ -619,6 +747,8 @@ export const SMART_DEFAULTS: SmartDefault[] = [
 // Helper function to get flat options list from grouped options
 // ============================================================================
 
-export function flattenGroups(groups: { [key: string]: { label: string; options: SelectOption[] } }): SelectOption[] {
-  return Object.values(groups).flatMap(g => g.options);
+export function flattenGroups(groups: {
+  [key: string]: { label: string; options: SelectOption[] };
+}): SelectOption[] {
+  return Object.values(groups).flatMap((g) => g.options);
 }

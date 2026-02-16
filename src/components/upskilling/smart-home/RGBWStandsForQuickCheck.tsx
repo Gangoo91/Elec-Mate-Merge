@@ -8,10 +8,10 @@ export const RGBWStandsForQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "Really Good Bright White", correct: false },
-    { text: "Red, Green, Blue, White", correct: true },
-    { text: "Radio Generated Broadcast Wireless", correct: false },
-    { text: "Retro Gaming Blue Wave", correct: false }
+    { text: 'Really Good Bright White', correct: false },
+    { text: 'Red, Green, Blue, White', correct: true },
+    { text: 'Radio Generated Broadcast Wireless', correct: false },
+    { text: 'Retro Gaming Blue Wave', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -33,7 +33,7 @@ export const RGBWStandsForQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">Q1: What does RGBW stand for?</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +58,9 @@ export const RGBWStandsForQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +70,8 @@ export const RGBWStandsForQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> RGBW stands for Red, Green, Blue, White - the four LED channels that create millions of colours plus accurate white light.
+              <strong>Correct:</strong> RGBW stands for Red, Green, Blue, White - the four LED
+              channels that create millions of colours plus accurate white light.
             </p>
           </div>
         )}

@@ -1,5 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Clock, XCircle, Loader2, CheckCircle2, Shield, Zap, Search, FileCheck } from 'lucide-react';
+import {
+  FileText,
+  Clock,
+  XCircle,
+  Loader2,
+  CheckCircle2,
+  Shield,
+  Zap,
+  Search,
+  FileCheck,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MethodStatementProcessingViewProps {
@@ -18,7 +28,7 @@ const STAGES = [
   { name: 'Regs', icon: Search, description: 'BS 7671 check' },
   { name: 'Build', icon: FileText, description: 'Creating steps' },
   { name: 'Check', icon: FileCheck, description: 'Quality review' },
-  { name: 'Done', icon: CheckCircle2, description: 'Complete' }
+  { name: 'Done', icon: CheckCircle2, description: 'Complete' },
 ];
 
 export const MethodStatementProcessingView: React.FC<MethodStatementProcessingViewProps> = ({
@@ -27,7 +37,7 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
   elapsedTime,
   estimatedTimeRemaining,
   onCancel,
-  isCancelling = false
+  isCancelling = false,
 }) => {
   const currentStageIndex = Math.min(
     Math.floor((overallProgress / 100) * (STAGES.length - 1)),
@@ -50,12 +60,11 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
         <motion.div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-emerald-500/5 blur-[80px]"
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.4, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
       <div className="relative z-10 flex-1 flex flex-col justify-center px-5 py-8 max-w-sm mx-auto w-full">
-
         {/* Main Icon - Compact for mobile */}
         <div className="flex justify-center mb-6">
           <div className="relative">
@@ -123,12 +132,12 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
               <motion.div
                 className="h-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 rounded-full relative"
                 style={{ width: `${overallProgress}%` }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   animate={{ x: ['-100%', '200%'] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
                 />
               </motion.div>
             </div>
@@ -149,20 +158,23 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
               <motion.div
                 key={idx}
                 className={cn(
-                  "transition-all duration-300",
-                  isComplete && "opacity-100",
-                  isCurrent && "opacity-100",
-                  !isComplete && !isCurrent && "opacity-30"
+                  'transition-all duration-300',
+                  isComplete && 'opacity-100',
+                  isCurrent && 'opacity-100',
+                  !isComplete && !isCurrent && 'opacity-30'
                 )}
                 animate={isCurrent ? { scale: [1, 1.15, 1] } : {}}
                 transition={{ duration: 1, repeat: isCurrent ? Infinity : 0 }}
               >
-                <div className={cn(
-                  "w-9 h-9 rounded-xl flex items-center justify-center transition-all",
-                  isComplete && "bg-emerald-500/30 text-emerald-400",
-                  isCurrent && "bg-emerald-500/40 text-emerald-300 shadow-md shadow-emerald-500/30",
-                  !isComplete && !isCurrent && "bg-white/5 text-white/30"
-                )}>
+                <div
+                  className={cn(
+                    'w-9 h-9 rounded-xl flex items-center justify-center transition-all',
+                    isComplete && 'bg-emerald-500/30 text-emerald-400',
+                    isCurrent &&
+                      'bg-emerald-500/40 text-emerald-300 shadow-md shadow-emerald-500/30',
+                    !isComplete && !isCurrent && 'bg-white/5 text-white/30'
+                  )}
+                >
                   {isComplete ? (
                     <CheckCircle2 className="h-4 w-4" />
                   ) : (
@@ -178,9 +190,7 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
         <div className="flex items-center justify-center gap-6 mb-6 p-3 rounded-xl bg-white/[0.03] border border-white/10">
           <div className="text-center">
             <p className="text-[10px] text-white/40 uppercase tracking-wide">Elapsed</p>
-            <p className="text-lg font-bold text-white tabular-nums">
-              {formatTime(elapsedTime)}
-            </p>
+            <p className="text-lg font-bold text-white tabular-nums">{formatTime(elapsedTime)}</p>
           </div>
           <div className="w-px h-8 bg-white/10" />
           <div className="text-center">

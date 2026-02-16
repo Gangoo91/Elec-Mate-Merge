@@ -7,40 +7,40 @@ const SmartHomeModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Smart Thermostats and Room Zoning",
+      title: 'Smart Thermostats and Room Zoning',
       icon: Thermometer,
-      description: "Installing and configuring smart heating controls"
+      description: 'Installing and configuring smart heating controls',
     },
     {
       id: 2,
-      title: "Radiator Valves, Boilers, and Heat Pumps",
+      title: 'Radiator Valves, Boilers, and Heat Pumps',
       icon: MapPin,
-      description: "Integrating with different heating system types"
+      description: 'Integrating with different heating system types',
     },
     {
       id: 3,
-      title: "Environmental Sensors (Humidity, CO2, Air Quality)",
+      title: 'Environmental Sensors (Humidity, CO2, Air Quality)',
       icon: Gauge,
-      description: "Monitoring and responding to environmental conditions"
+      description: 'Monitoring and responding to environmental conditions',
     },
     {
       id: 4,
-      title: "Schedule vs AI Learning Control",
+      title: 'Schedule vs AI Learning Control',
       icon: Calendar,
-      description: "Different approaches to heating automation"
+      description: 'Different approaches to heating automation',
     },
     {
       id: 5,
-      title: "HVAC Integration and Interlocks",
+      title: 'HVAC Integration and Interlocks',
       icon: Building,
-      description: "Connecting heating systems with other building services"
+      description: 'Connecting heating systems with other building services',
     },
     {
       id: 6,
-      title: "BMS Light Integration for Larger Sites",
+      title: 'BMS Light Integration for Larger Sites',
       icon: Network,
-      description: "Scaling up to building management system integration"
-    }
+      description: 'Scaling up to building management system integration',
+    },
   ];
 
   return (

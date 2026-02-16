@@ -7,16 +7,18 @@ const BS7671Module9 = () => {
   const sections = [
     {
       id: 1,
-      title: "Mock Exam",
-      description: "Complete practice examination under timed conditions covering all BS 7671 requirements",
+      title: 'Mock Exam',
+      description:
+        'Complete practice examination under timed conditions covering all BS 7671 requirements',
       icon: FileCheck,
     },
     {
       id: 2,
-      title: "Hints & Tips",
-      description: "Essential guidance, best practices, and expert tips for successful examination completion",
+      title: 'Hints & Tips',
+      description:
+        'Essential guidance, best practices, and expert tips for successful examination completion',
       icon: HelpCircle,
-    }
+    },
   ];
 
   return (
@@ -48,9 +50,7 @@ const BS7671Module9 = () => {
             <span className="text-white/40 text-xs">•</span>
             <span className="text-white/60 text-xs">90 mins</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Mock Exam
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
           <p className="text-white/60 text-sm sm:text-base">
             Comprehensive practice examination to test your knowledge of BS 7671
           </p>

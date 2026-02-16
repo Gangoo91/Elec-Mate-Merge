@@ -41,7 +41,7 @@ export function getRiskColorsByLevel(level: RiskLevel): RiskLevelColors {
         text: 'text-white',
         border: 'border-green-500',
         badge: 'bg-green-100 text-green-800 border-green-500/30',
-        glow: 'shadow-[0_0_15px_rgba(34,197,94,0.3)]'
+        glow: 'shadow-[0_0_15px_rgba(34,197,94,0.3)]',
       };
     case 'medium':
       return {
@@ -49,7 +49,7 @@ export function getRiskColorsByLevel(level: RiskLevel): RiskLevelColors {
         text: 'text-elec-dark',
         border: 'border-amber-500',
         badge: 'bg-amber-100 text-amber-800 border-amber-500/30',
-        glow: 'shadow-[0_0_15px_rgba(245,158,11,0.3)]'
+        glow: 'shadow-[0_0_15px_rgba(245,158,11,0.3)]',
       };
     case 'high':
       return {
@@ -57,7 +57,7 @@ export function getRiskColorsByLevel(level: RiskLevel): RiskLevelColors {
         text: 'text-white',
         border: 'border-red-500',
         badge: 'bg-red-100 text-red-800 border-red-500/30',
-        glow: 'shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse'
+        glow: 'shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse',
       };
   }
 }
@@ -82,7 +82,7 @@ export function getTotalHazardCount(risks: any[]): number {
  */
 export function getHighestRiskScore(risks: any[]): number {
   if (!risks || risks.length === 0) return 0;
-  return Math.max(...risks.map(r => r.riskRating || 0));
+  return Math.max(...risks.map((r) => r.riskRating || 0));
 }
 
 /**

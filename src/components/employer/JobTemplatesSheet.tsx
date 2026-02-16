@@ -1,15 +1,15 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { LayoutTemplate, Plus, MapPin, Loader2 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useCreateJob } from "@/hooks/useJobs";
-import { useJobChecklist, useAddChecklistItem } from "@/hooks/useJobChecklists";
-import { useJobLabelAssignments, useAssignLabel } from "@/hooks/useJobLabels";
-import { toast } from "sonner";
-import { useState } from "react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { LayoutTemplate, Plus, MapPin, Loader2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useCreateJob } from '@/hooks/useJobs';
+import { useJobChecklist, useAddChecklistItem } from '@/hooks/useJobChecklists';
+import { useJobLabelAssignments, useAssignLabel } from '@/hooks/useJobLabels';
+import { toast } from 'sonner';
+import { useState } from 'react';
 
 interface JobTemplatesSheetProps {
   open: boolean;
@@ -30,7 +30,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
   const createJob = useCreateJob();
   const addChecklistItem = useAddChecklistItem();
   const assignLabel = useAssignLabel();
-  
+
   const { data: templates = [], isLoading } = useQuery({
     queryKey: ['job-templates'],
     queryFn: async (): Promise<TemplateJob[]> => {
@@ -40,7 +40,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
         .eq('is_template', true)
         .is('archived_at', null)
         .order('title');
-      
+
       if (error) throw error;
       return data as TemplateJob[];
     },
@@ -49,14 +49,21 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
 
   const handleCreateFromTemplate = async (template: TemplateJob) => {
     setCreatingFromId(template.id);
-    
+
     try {
       // Fetch template's checklist items and labels
       const [checklistRes, labelsRes] = await Promise.all([
-        supabase.from('employer_job_checklist_items').select('title').eq('job_id', template.id).order('position'),
-        supabase.from('employer_job_label_assignments').select('label_id').eq('job_id', template.id),
+        supabase
+          .from('employer_job_checklist_items')
+          .select('title')
+          .eq('job_id', template.id)
+          .order('position'),
+        supabase
+          .from('employer_job_label_assignments')
+          .select('label_id')
+          .eq('job_id', template.id),
       ]);
-      
+
       // Create new job from template
       const newJob = await createJob.mutateAsync({
         title: `New ${template.title}`,
@@ -72,25 +79,25 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
         end_date: null,
         description: template.description,
       });
-      
+
       // Copy checklist items
       if (checklistRes.data) {
         for (const item of checklistRes.data) {
           await addChecklistItem.mutateAsync({ jobId: newJob.id, title: item.title });
         }
       }
-      
+
       // Copy labels
       if (labelsRes.data) {
         for (const assignment of labelsRes.data) {
           await assignLabel.mutateAsync({ jobId: newJob.id, labelId: assignment.label_id });
         }
       }
-      
-      toast.success("Job created from template");
+
+      toast.success('Job created from template');
       onOpenChange(false);
     } catch (error) {
-      toast.error("Failed to create job from template");
+      toast.error('Failed to create job from template');
     } finally {
       setCreatingFromId(null);
     }
@@ -105,7 +112,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
             Job Templates
           </SheetTitle>
         </SheetHeader>
-        
+
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />

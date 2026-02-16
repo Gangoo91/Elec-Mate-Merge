@@ -1,7 +1,6 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Book, GraduationCap, FileText } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Book, GraduationCap, FileText } from 'lucide-react';
 
 const CourseContent = () => {
   return (
@@ -10,18 +9,16 @@ const CourseContent = () => {
         <h1 className="text-3xl font-bold tracking-tight mb-4">Course Content</h1>
         <SmartBackButton />
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Book className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Core Modules</h2>
-            <p className="text-centre text-white">
-              Essential electrical theory and practice
-            </p>
+            <p className="text-centre text-white">Essential electrical theory and practice</p>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <GraduationCap className="h-12 w-12 text-elec-yellow mb-4" />
@@ -31,24 +28,22 @@ const CourseContent = () => {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <FileText className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Study Materials</h2>
-            <p className="text-centre text-white">
-              Comprehensive resources and learning guides
-            </p>
+            <p className="text-centre text-white">Comprehensive resources and learning guides</p>
           </CardContent>
         </Card>
       </div>
-      
+
       <div className="mt-8 p-6 border border-elec-yellow/20 rounded-md bg-white/5">
         <h3 className="text-xl font-bold mb-4">Getting Started with Your Course</h3>
         <p>
-          Welcome to your electrical coursework! This section provides access to your core curriculum,
-          technical certification paths, and supplementary study materials designed to support your
-          learning journey. Select a category above to explore the available content.
+          Welcome to your electrical coursework! This section provides access to your core
+          curriculum, technical certification paths, and supplementary study materials designed to
+          support your learning journey. Select a category above to explore the available content.
         </p>
       </div>
     </div>

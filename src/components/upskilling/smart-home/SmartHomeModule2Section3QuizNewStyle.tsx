@@ -10,16 +10,16 @@ export const SmartHomeModule2Section3QuizNewStyle = () => {
   const [showResults, setShowResults] = useState(false);
 
   // Transform the quiz data to match the expected format
-  const questions = smartHomeModule2Section3QuizQuestions.map(q => ({
+  const questions = smartHomeModule2Section3QuizQuestions.map((q) => ({
     question: q.question,
     options: q.options,
-    correct: q.correct
+    correct: q.correct,
   }));
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -42,7 +42,7 @@ export const SmartHomeModule2Section3QuizNewStyle = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = Math.round((score / questions.length) * 100);
-    
+
     return (
       <Card className="bg-elec-gray border-gray-700">
         <CardHeader>
@@ -55,18 +55,15 @@ export const SmartHomeModule2Section3QuizNewStyle = () => {
           <div className="text-4xl font-bold text-elec-yellow">
             {score}/{questions.length}
           </div>
-          <div className="text-xl text-foreground">
-            {percentage}% Correct
-          </div>
+          <div className="text-xl text-foreground">{percentage}% Correct</div>
           <div className="text-foreground">
-            {percentage >= 80 ? "Excellent understanding of modern smart home protocols!" : 
-             percentage >= 60 ? "Good grasp of Wi-Fi, Bluetooth, Thread & Matter - review the key differences." : 
-             "Keep studying the protocol characteristics and applications."}
+            {percentage >= 80
+              ? 'Excellent understanding of modern smart home protocols!'
+              : percentage >= 60
+                ? 'Good grasp of Wi-Fi, Bluetooth, Thread & Matter - review the key differences.'
+                : 'Keep studying the protocol characteristics and applications.'}
           </div>
-          <Button 
-            onClick={resetQuiz}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
-          >
+          <Button onClick={resetQuiz} className="bg-elec-yellow text-elec-dark hover:bg-yellow-600">
             Retake Quiz
           </Button>
         </CardContent>
@@ -84,14 +81,19 @@ export const SmartHomeModule2Section3QuizNewStyle = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex gap-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}
@@ -102,7 +104,7 @@ export const SmartHomeModule2Section3QuizNewStyle = () => {
           <h3 className="text-lg font-semibold text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
@@ -131,7 +133,7 @@ export const SmartHomeModule2Section3QuizNewStyle = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           {currentQuestion === questions.length - 1 ? (
             <Button
               onClick={() => setShowResults(true)}

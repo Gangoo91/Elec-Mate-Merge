@@ -67,9 +67,7 @@ export const LandingHero = () => {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/20 to-amber-500/10 border border-yellow-500/20 backdrop-blur-sm">
               <Sparkles className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm font-medium text-yellow-400/90">
-                7-Day Free Trial
-              </span>
+              <span className="text-sm font-medium text-yellow-400/90">7-Day Free Trial</span>
             </span>
           </motion.div>
 
@@ -95,7 +93,8 @@ export const LandingHero = () => {
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-base sm:text-lg md:text-xl text-white/60 max-w-xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2"
           >
-            AI-powered tools, certifications, training & job management. Everything you need in one place.
+            AI-powered tools, certifications, training & job management. Everything you need in one
+            place.
           </motion.p>
 
           {/* CTA buttons - stacked on mobile, full width */}
@@ -133,12 +132,16 @@ export const LandingHero = () => {
           >
             <div className="flex items-center gap-2 shrink-0">
               <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-green-400/80" />
-              <span className="text-xs sm:text-sm font-medium whitespace-nowrap">BS 7671 Compliant</span>
+              <span className="text-xs sm:text-sm font-medium whitespace-nowrap">
+                BS 7671 Compliant
+              </span>
             </div>
             <div className="w-px h-4 bg-white/10 shrink-0" />
             <div className="flex items-center gap-2 shrink-0">
               <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400/80" />
-              <span className="text-xs sm:text-sm font-medium whitespace-nowrap">No Card Required</span>
+              <span className="text-xs sm:text-sm font-medium whitespace-nowrap">
+                No Card Required
+              </span>
             </div>
             <div className="w-px h-4 bg-white/10 shrink-0 hidden sm:block" />
             <div className="items-center gap-2 shrink-0 hidden sm:flex">
@@ -156,7 +159,7 @@ export const LandingHero = () => {
         animate={{ opacity: 1, y: prefersReducedMotion ? 0 : [0, 8, 0] }}
         transition={{
           opacity: { delay: 0.6, duration: 0.4 },
-          y: { duration: 2, repeat: Infinity, ease: 'easeInOut' }
+          y: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
         }}
         aria-label="Scroll to content"
       >

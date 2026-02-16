@@ -64,10 +64,7 @@ const generateFilePath = (conversationId: string, fileName: string): string => {
 /**
  * Upload a file to Supabase Storage
  */
-export const uploadFile = async (
-  file: File,
-  conversationId: string
-): Promise<FileUploadResult> => {
+export const uploadFile = async (file: File, conversationId: string): Promise<FileUploadResult> => {
   const validation = validateFile(file);
   if (!validation.valid) {
     throw new Error(validation.error);
@@ -75,12 +72,10 @@ export const uploadFile = async (
 
   const filePath = generateFilePath(conversationId, file.name);
 
-  const { data, error } = await supabase.storage
-    .from(BUCKET_NAME)
-    .upload(filePath, file, {
-      cacheControl: '3600',
-      upsert: false,
-    });
+  const { data, error } = await supabase.storage.from(BUCKET_NAME).upload(filePath, file, {
+    cacheControl: '3600',
+    upsert: false,
+  });
 
   if (error) {
     console.error('Error uploading file:', error);
@@ -88,9 +83,7 @@ export const uploadFile = async (
   }
 
   // Get public URL
-  const { data: urlData } = supabase.storage
-    .from(BUCKET_NAME)
-    .getPublicUrl(filePath);
+  const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(filePath);
 
   return {
     path: data.path,
@@ -108,9 +101,7 @@ export const uploadFiles = async (
   files: File[],
   conversationId: string
 ): Promise<FileUploadResult[]> => {
-  const results = await Promise.all(
-    files.map(file => uploadFile(file, conversationId))
-  );
+  const results = await Promise.all(files.map((file) => uploadFile(file, conversationId)));
   return results;
 };
 
@@ -118,9 +109,7 @@ export const uploadFiles = async (
  * Delete a file from storage
  */
 export const deleteFile = async (filePath: string): Promise<void> => {
-  const { error } = await supabase.storage
-    .from(BUCKET_NAME)
-    .remove([filePath]);
+  const { error } = await supabase.storage.from(BUCKET_NAME).remove([filePath]);
 
   if (error) {
     console.error('Error deleting file:', error);

@@ -1,40 +1,45 @@
-import { ArrowLeft, Microscope, Clock3, FlaskConical, MapPin, HeartPulse } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Microscope, Clock3, FlaskConical, MapPin, HeartPulse } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "History, Properties & Why It Was Used",
+    title: 'History, Properties & Why It Was Used',
     icon: Clock3,
-    description: "Natural mineral fibre, six types, fireproof properties, peak UK use, and the timeline of discovery",
+    description:
+      'Natural mineral fibre, six types, fireproof properties, peak UK use, and the timeline of discovery',
   },
   {
     id: 2,
-    title: "Types of Asbestos Fibres",
+    title: 'Types of Asbestos Fibres',
     icon: FlaskConical,
-    description: "Chrysotile, amosite, crocidolite — serpentine vs amphibole, properties, and relative dangers",
+    description:
+      'Chrysotile, amosite, crocidolite — serpentine vs amphibole, properties, and relative dangers',
   },
   {
     id: 3,
-    title: "Where Asbestos Is Found",
+    title: 'Where Asbestos Is Found',
     icon: MapPin,
-    description: "Common locations in pre-2000 buildings — roofs, walls, floors, services, and domestic properties",
+    description:
+      'Common locations in pre-2000 buildings — roofs, walls, floors, services, and domestic properties',
   },
   {
     id: 4,
-    title: "Health Effects of Asbestos Exposure",
+    title: 'Health Effects of Asbestos Exposure',
     icon: HeartPulse,
-    description: "Mesothelioma, lung cancer, asbestosis, pleural disease — latency periods and the single-fibre theory",
+    description:
+      'Mesothelioma, lung cancer, asbestosis, pleural disease — latency periods and the single-fibre theory',
   },
 ];
 
 export default function AsbestosModule1() {
   useSEO({
-    title: "Module 1: What Is Asbestos? | Asbestos Awareness",
-    description: "History, fibre types, where asbestos is found in buildings, and the health effects of exposure including mesothelioma and asbestosis.",
+    title: 'Module 1: What Is Asbestos? | Asbestos Awareness',
+    description:
+      'History, fibre types, where asbestos is found in buildings, and the health effects of exposure including mesothelioma and asbestosis.',
   });
 
   return (
@@ -67,11 +72,10 @@ export default function AsbestosModule1() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">30 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              What Is Asbestos?
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">What Is Asbestos?</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The history, properties, types, locations, and devastating health effects of this once widely-used mineral fibre
+              The history, properties, types, locations, and devastating health effects of this once
+              widely-used mineral fibre
             </p>
           </div>
 

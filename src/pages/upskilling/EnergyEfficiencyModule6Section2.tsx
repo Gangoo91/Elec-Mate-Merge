@@ -7,44 +7,57 @@ import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'ROI Models: Payback, IRR, Life Cycle Costing - Energy Efficiency Module 6 Section 2';
-const DESCRIPTION = 'Master financial analysis for energy efficiency projects. Learn payback periods, NPV, IRR, and Life Cycle Costing with UK public sector discount rates and practical Excel functions.';
+const DESCRIPTION =
+  'Master financial analysis for energy efficiency projects. Learn payback periods, NPV, IRR, and Life Cycle Costing with UK public sector discount rates and practical Excel functions.';
 
 const quickCheckQuestions = [
   {
     id: 'ee-m6s2-qc1',
-    question: 'A £10,000 LED lighting upgrade saves £2,500 per year. What is the simple payback period?',
+    question:
+      'A £10,000 LED lighting upgrade saves £2,500 per year. What is the simple payback period?',
     options: ['2.5 years', '4 years', '5 years', '10 years'],
     correctIndex: 1,
-    explanation: 'Simple payback = Initial cost / Annual savings = £10,000 / £2,500 = 4 years. This is the time required to recover the initial investment through energy savings.'
+    explanation:
+      'Simple payback = Initial cost / Annual savings = £10,000 / £2,500 = 4 years. This is the time required to recover the initial investment through energy savings.',
   },
   {
     id: 'ee-m6s2-qc2',
-    question: 'What does a positive Net Present Value (NPV) indicate about an energy efficiency project?',
+    question:
+      'What does a positive Net Present Value (NPV) indicate about an energy efficiency project?',
     options: [
       'The project will break even',
       'The project destroys value and should be rejected',
       'The project creates value above the required rate of return',
-      'The payback period is less than 5 years'
+      'The payback period is less than 5 years',
     ],
     correctIndex: 2,
-    explanation: 'A positive NPV means the present value of future cash flows exceeds the initial investment when discounted at the required rate of return. The project creates value and should generally be accepted.'
+    explanation:
+      'A positive NPV means the present value of future cash flows exceeds the initial investment when discounted at the required rate of return. The project creates value and should generally be accepted.',
   },
   {
     id: 'ee-m6s2-qc3',
-    question: 'What is the current UK Treasury Green Book discount rate for public sector projects?',
+    question:
+      'What is the current UK Treasury Green Book discount rate for public sector projects?',
     options: ['1.5%', '3.5%', '5%', '8%'],
     correctIndex: 1,
-    explanation: 'The UK Treasury Green Book specifies a 3.5% discount rate for public sector project appraisal (reducing to 3% for periods beyond 30 years). This rate is used to calculate present values of future costs and benefits.'
-  }
+    explanation:
+      'The UK Treasury Green Book specifies a 3.5% discount rate for public sector project appraisal (reducing to 3% for periods beyond 30 years). This rate is used to calculate present values of future costs and benefits.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
     question: 'Which financial metric accounts for the time value of money?',
-    options: ['Simple payback period', 'Return on investment percentage', 'Net Present Value (NPV)', 'Annual savings'],
+    options: [
+      'Simple payback period',
+      'Return on investment percentage',
+      'Net Present Value (NPV)',
+      'Annual savings',
+    ],
     correctAnswer: 2,
-    explanation: 'NPV discounts future cash flows to their present value, accounting for the time value of money - the principle that money available today is worth more than the same amount in the future.'
+    explanation:
+      'NPV discounts future cash flows to their present value, accounting for the time value of money - the principle that money available today is worth more than the same amount in the future.',
   },
   {
     id: 2,
@@ -53,10 +66,11 @@ const quizQuestions = [
       'The annual energy savings as a percentage',
       'The discount rate at which NPV equals zero',
       'The percentage reduction in energy consumption',
-      'The inflation rate used in calculations'
+      'The inflation rate used in calculations',
     ],
     correctAnswer: 1,
-    explanation: 'IRR is the discount rate that makes the NPV of all cash flows equal to zero. It represents the effective annual return rate of the investment.'
+    explanation:
+      'IRR is the discount rate that makes the NPV of all cash flows equal to zero. It represents the effective annual return rate of the investment.',
   },
   {
     id: 3,
@@ -65,10 +79,11 @@ const quizQuestions = [
       'Only initial capital costs',
       'Initial costs plus operating costs',
       'Initial, operating, maintenance, and disposal costs',
-      'Only energy costs over the project lifetime'
+      'Only energy costs over the project lifetime',
     ],
     correctAnswer: 2,
-    explanation: 'Life Cycle Costing includes all costs over the asset\'s lifetime: initial capital, installation, operating (energy), maintenance, repairs, and end-of-life disposal or replacement costs.'
+    explanation:
+      "Life Cycle Costing includes all costs over the asset's lifetime: initial capital, installation, operating (energy), maintenance, repairs, and end-of-life disposal or replacement costs.",
   },
   {
     id: 4,
@@ -77,48 +92,60 @@ const quizQuestions = [
       'It is too complicated to calculate',
       'It ignores savings beyond the payback period and the time value of money',
       'It always underestimates the investment value',
-      'It cannot be used for lighting projects'
+      'It cannot be used for lighting projects',
     ],
     correctAnswer: 1,
-    explanation: 'Simple payback ignores any benefits after the payback period and doesn\'t account for the time value of money. A project with a 5-year payback and 20-year life creates far more value than simple payback suggests.'
+    explanation:
+      "Simple payback ignores any benefits after the payback period and doesn't account for the time value of money. A project with a 5-year payback and 20-year life creates far more value than simple payback suggests.",
   },
   {
     id: 5,
     question: 'What Excel function calculates Net Present Value?',
     options: ['=PAYBACK()', '=NPV(rate, values)', '=IRR(values)', '=FV(rate, nper, pmt)'],
     correctAnswer: 1,
-    explanation: 'The =NPV(rate, values) function calculates Net Present Value. Note: Excel\'s NPV function assumes cash flows occur at the end of each period, so the initial investment is typically added separately.'
+    explanation:
+      "The =NPV(rate, values) function calculates Net Present Value. Note: Excel's NPV function assumes cash flows occur at the end of each period, so the initial investment is typically added separately.",
   },
   {
     id: 6,
-    question: 'A project has an IRR of 12% and the company\'s hurdle rate is 8%. Should the project be accepted?',
+    question:
+      "A project has an IRR of 12% and the company's hurdle rate is 8%. Should the project be accepted?",
     options: [
       'No, because IRR should be lower than the hurdle rate',
       'Yes, because IRR exceeds the hurdle rate',
       'Cannot determine without NPV',
-      'No, because the difference is only 4%'
+      'No, because the difference is only 4%',
     ],
     correctAnswer: 1,
-    explanation: 'When IRR exceeds the hurdle rate (required rate of return), the project creates value and should generally be accepted. The 12% return exceeds the 8% minimum requirement.'
+    explanation:
+      'When IRR exceeds the hurdle rate (required rate of return), the project creates value and should generally be accepted. The 12% return exceeds the 8% minimum requirement.',
   },
   {
     id: 7,
     question: 'What is the discount rate used for NHS and other public sector energy projects?',
-    options: ['Bank of England base rate', '3.5% per Green Book guidance', '0% as public money', '10% commercial rate'],
+    options: [
+      'Bank of England base rate',
+      '3.5% per Green Book guidance',
+      '0% as public money',
+      '10% commercial rate',
+    ],
     correctAnswer: 1,
-    explanation: 'The UK Treasury Green Book mandates 3.5% for public sector project appraisal. This social time preference rate reflects opportunity cost of public funds.'
+    explanation:
+      'The UK Treasury Green Book mandates 3.5% for public sector project appraisal. This social time preference rate reflects opportunity cost of public funds.',
   },
   {
     id: 8,
-    question: 'Which factor should be included when calculating total cost of ownership for lighting?',
+    question:
+      'Which factor should be included when calculating total cost of ownership for lighting?',
     options: [
       'Only the lamp purchase price',
       'Lamp cost, energy cost, and maintenance/replacement labour',
       'Only energy costs over the lamp life',
-      'Just the installation cost'
+      'Just the installation cost',
     ],
     correctAnswer: 1,
-    explanation: 'Total cost of ownership includes purchase price, energy consumption costs, maintenance costs, and labour for replacements over the product lifetime.'
+    explanation:
+      'Total cost of ownership includes purchase price, energy consumption costs, maintenance costs, and labour for replacements over the product lifetime.',
   },
   {
     id: 9,
@@ -127,10 +154,11 @@ const quizQuestions = [
       'It has no effect on calculations',
       'Energy prices typically rise with inflation, improving future savings',
       'It always makes projects look worse',
-      'It is illegal to include inflation in business cases'
+      'It is illegal to include inflation in business cases',
     ],
     correctAnswer: 1,
-    explanation: 'Energy prices often rise faster than general inflation. Including realistic price escalation in analysis typically improves the business case for energy efficiency investments.'
+    explanation:
+      'Energy prices often rise faster than general inflation. Including realistic price escalation in analysis typically improves the business case for energy efficiency investments.',
   },
   {
     id: 10,
@@ -139,38 +167,45 @@ const quizQuestions = [
       'IRR cannot be calculated in Excel',
       'IRR assumes reinvestment at the IRR rate, which may be unrealistic',
       'IRR is always lower than NPV',
-      'IRR only works for 10-year projects'
+      'IRR only works for 10-year projects',
     ],
     correctAnswer: 1,
-    explanation: 'IRR implicitly assumes cash flows can be reinvested at the IRR rate. For projects with high IRRs, this may be unrealistic. NPV uses a more realistic reinvestment assumption (the discount rate).'
-  }
+    explanation:
+      'IRR implicitly assumes cash flows can be reinvested at the IRR rate. For projects with high IRRs, this may be unrealistic. NPV uses a more realistic reinvestment assumption (the discount rate).',
+  },
 ];
 
 const faqs = [
   {
     question: 'Which financial metric should I use when presenting to clients?',
-    answer: 'Match the metric to your audience. Simple payback resonates with small business owners who want to know "how long until I get my money back?" NPV and IRR are appropriate for finance departments and public sector clients. For maintenance managers, emphasise total cost of ownership. Always calculate multiple metrics and lead with the one most relevant to the decision-maker.'
+    answer:
+      'Match the metric to your audience. Simple payback resonates with small business owners who want to know "how long until I get my money back?" NPV and IRR are appropriate for finance departments and public sector clients. For maintenance managers, emphasise total cost of ownership. Always calculate multiple metrics and lead with the one most relevant to the decision-maker.',
   },
   {
     question: 'How do I account for energy price uncertainty?',
-    answer: 'Use sensitivity analysis to show outcomes under different price scenarios. Present a base case using current prices with modest inflation (2-3% real increase), a conservative case with flat real prices, and an optimistic case with higher price escalation. This demonstrates robustness and helps clients understand risk.'
+    answer:
+      'Use sensitivity analysis to show outcomes under different price scenarios. Present a base case using current prices with modest inflation (2-3% real increase), a conservative case with flat real prices, and an optimistic case with higher price escalation. This demonstrates robustness and helps clients understand risk.',
   },
   {
     question: 'Should maintenance savings be included in the business case?',
-    answer: 'Yes, but be realistic and document assumptions. LED lighting reduces lamp replacement frequency significantly - a 50,000-hour LED versus 1,000-hour halogen represents 50x fewer replacements. Include labour savings for reduced maintenance access, especially in difficult locations like high ceilings or clean rooms. Get quotes for current maintenance costs to support figures.'
+    answer:
+      'Yes, but be realistic and document assumptions. LED lighting reduces lamp replacement frequency significantly - a 50,000-hour LED versus 1,000-hour halogen represents 50x fewer replacements. Include labour savings for reduced maintenance access, especially in difficult locations like high ceilings or clean rooms. Get quotes for current maintenance costs to support figures.',
   },
   {
     question: 'How do I handle projects with different lifetimes?',
-    answer: 'Use equivalent annual cost (EAC) to compare projects with different lifetimes on a like-for-like basis. Calculate NPV for each project, then convert to an annual equivalent using the annuity formula. This allows fair comparison between, for example, a 5-year solution and a 15-year alternative.'
+    answer:
+      'Use equivalent annual cost (EAC) to compare projects with different lifetimes on a like-for-like basis. Calculate NPV for each project, then convert to an annual equivalent using the annuity formula. This allows fair comparison between, for example, a 5-year solution and a 15-year alternative.',
   },
   {
     question: 'What about carbon pricing in investment analysis?',
-    answer: 'The UK government uses shadow carbon prices for policy appraisal, currently around £80-250/tonne CO2. For private sector, include carbon if there is a carbon tax, ETS obligation, or corporate carbon pricing policy. For public sector, Green Book requires carbon valuation. Always separate financial and carbon benefits clearly.'
+    answer:
+      'The UK government uses shadow carbon prices for policy appraisal, currently around £80-250/tonne CO2. For private sector, include carbon if there is a carbon tax, ETS obligation, or corporate carbon pricing policy. For public sector, Green Book requires carbon valuation. Always separate financial and carbon benefits clearly.',
   },
   {
     question: 'How do I calculate savings for variable loads?',
-    answer: 'Obtain actual energy consumption data rather than using nameplate ratings. Request utility bills or sub-meter data covering at least 12 months. Calculate load factors (actual consumption / theoretical maximum) and apply these to efficiency improvement calculations. Be conservative - measured savings often fall short of theoretical calculations due to operational factors.'
-  }
+    answer:
+      'Obtain actual energy consumption data rather than using nameplate ratings. Request utility bills or sub-meter data covering at least 12 months. Calculate load factors (actual consumption / theoretical maximum) and apply these to efficiency improvement calculations. Be conservative - measured savings often fall short of theoretical calculations due to operational factors.',
+  },
 ];
 
 const EnergyEfficiencyModule6Section2: React.FC = () => {
@@ -179,8 +214,14 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
   useSEO({
     title: TITLE,
     description: DESCRIPTION,
-    keywords: ['ROI energy efficiency', 'payback period calculation', 'NPV energy projects', 'IRR', 'life cycle costing'],
-    canonicalUrl: '/study-centre/upskilling/energy-efficiency/module-6/section-2'
+    keywords: [
+      'ROI energy efficiency',
+      'payback period calculation',
+      'NPV energy projects',
+      'IRR',
+      'life cycle costing',
+    ],
+    canonicalUrl: '/study-centre/upskilling/energy-efficiency/module-6/section-2',
   });
 
   return (
@@ -188,7 +229,12 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -218,19 +264,35 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">Key Metrics</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Simple Payback:</strong> Years to recover investment</li>
-              <li><strong>NPV:</strong> Present value of all cash flows</li>
-              <li><strong>IRR:</strong> Effective annual return rate</li>
-              <li><strong>LCC:</strong> Total lifetime ownership cost</li>
+              <li>
+                <strong>Simple Payback:</strong> Years to recover investment
+              </li>
+              <li>
+                <strong>NPV:</strong> Present value of all cash flows
+              </li>
+              <li>
+                <strong>IRR:</strong> Effective annual return rate
+              </li>
+              <li>
+                <strong>LCC:</strong> Total lifetime ownership cost
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">UK Public Sector</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Discount rate:</strong> 3.5% (Green Book)</li>
-              <li><strong>Carbon pricing:</strong> Required for appraisal</li>
-              <li><strong>Salix funding:</strong> 0% interest available</li>
-              <li><strong>ESOS/SECR:</strong> Compliance benefits</li>
+              <li>
+                <strong>Discount rate:</strong> 3.5% (Green Book)
+              </li>
+              <li>
+                <strong>Carbon pricing:</strong> Required for appraisal
+              </li>
+              <li>
+                <strong>Salix funding:</strong> 0% interest available
+              </li>
+              <li>
+                <strong>ESOS/SECR:</strong> Compliance benefits
+              </li>
             </ul>
           </div>
         </div>
@@ -245,7 +307,7 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
               'Understand UK public sector discount rates',
               'Perform life cycle cost analysis',
               'Use Excel functions for financial analysis',
-              'Present investment cases to different audiences'
+              'Present investment cases to different audiences',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -265,7 +327,9 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Simple payback is the most intuitive financial metric - it answers the question "how long until I get my money back?" It divides the initial investment by the annual savings to determine the number of years to recover the capital cost.
+              Simple payback is the most intuitive financial metric - it answers the question "how
+              long until I get my money back?" It divides the initial investment by the annual
+              savings to determine the number of years to recover the capital cost.
             </p>
 
             <div className="my-6">
@@ -282,7 +346,9 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
                 <li>Annual energy savings: £3,500</li>
                 <li>Reduced maintenance: £500/year</li>
                 <li>Total annual benefit: £4,000</li>
-                <li><strong>Payback = £15,000 / £4,000 = 3.75 years</strong></li>
+                <li>
+                  <strong>Payback = £15,000 / £4,000 = 3.75 years</strong>
+                </li>
               </ul>
             </div>
 
@@ -301,7 +367,9 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Ignores savings after payback period</li>
                 <li>Does not account for time value of money</li>
-                <li>Treats all payback periods equally (5 years = 5 years regardless of project life)</li>
+                <li>
+                  Treats all payback periods equally (5 years = 5 years regardless of project life)
+                </li>
                 <li>Can favour short-term thinking over better long-term investments</li>
               </ul>
             </div>
@@ -318,7 +386,10 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              NPV accounts for the time value of money - the principle that £1 today is worth more than £1 in the future because today's pound can be invested to earn interest. NPV discounts future cash flows to their present value and sums them with the initial investment.
+              NPV accounts for the time value of money - the principle that £1 today is worth more
+              than £1 in the future because today's pound can be invested to earn interest. NPV
+              discounts future cash flows to their present value and sums them with the initial
+              investment.
             </p>
 
             <div className="my-6">
@@ -341,19 +412,33 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">UK discount rates:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Public sector:</strong> 3.5% (Treasury Green Book)</li>
-                <li><strong>Long-term public (&gt;30 years):</strong> 3.0%</li>
-                <li><strong>Private sector:</strong> Typically 8-15% depending on risk</li>
-                <li><strong>Salix-funded:</strong> 0% interest (essentially free capital)</li>
+                <li>
+                  <strong>Public sector:</strong> 3.5% (Treasury Green Book)
+                </li>
+                <li>
+                  <strong>Long-term public (&gt;30 years):</strong> 3.0%
+                </li>
+                <li>
+                  <strong>Private sector:</strong> Typically 8-15% depending on risk
+                </li>
+                <li>
+                  <strong>Salix-funded:</strong> 0% interest (essentially free capital)
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Decision rule:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>NPV &gt; 0:</strong> Accept the project (creates value)</li>
-                <li><strong>NPV = 0:</strong> Indifferent (meets required return)</li>
-                <li><strong>NPV &lt; 0:</strong> Reject the project (destroys value)</li>
+                <li>
+                  <strong>NPV &gt; 0:</strong> Accept the project (creates value)
+                </li>
+                <li>
+                  <strong>NPV = 0:</strong> Indifferent (meets required return)
+                </li>
+                <li>
+                  <strong>NPV &lt; 0:</strong> Reject the project (destroys value)
+                </li>
               </ul>
             </div>
           </div>
@@ -369,7 +454,9 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              IRR is the discount rate at which NPV equals zero. It represents the effective annual return rate of the investment. IRR is useful for comparing projects of different sizes because it is expressed as a percentage rather than an absolute value.
+              IRR is the discount rate at which NPV equals zero. It represents the effective annual
+              return rate of the investment. IRR is useful for comparing projects of different sizes
+              because it is expressed as a percentage rather than an absolute value.
             </p>
 
             <div className="my-6">
@@ -382,20 +469,36 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Decision rule:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>IRR &gt; Hurdle rate:</strong> Accept the project</li>
-                <li><strong>IRR = Hurdle rate:</strong> Indifferent</li>
-                <li><strong>IRR &lt; Hurdle rate:</strong> Reject the project</li>
+                <li>
+                  <strong>IRR &gt; Hurdle rate:</strong> Accept the project
+                </li>
+                <li>
+                  <strong>IRR = Hurdle rate:</strong> Indifferent
+                </li>
+                <li>
+                  <strong>IRR &lt; Hurdle rate:</strong> Reject the project
+                </li>
                 <li>The hurdle rate is typically the company's cost of capital</li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Typical IRRs for energy projects:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Typical IRRs for energy projects:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>LED lighting:</strong> 20-40% (short payback, long life)</li>
-                <li><strong>Motors and drives:</strong> 15-30%</li>
-                <li><strong>Building fabric:</strong> 5-15% (longer payback)</li>
-                <li><strong>Solar PV:</strong> 8-15% (depending on tariffs)</li>
+                <li>
+                  <strong>LED lighting:</strong> 20-40% (short payback, long life)
+                </li>
+                <li>
+                  <strong>Motors and drives:</strong> 15-30%
+                </li>
+                <li>
+                  <strong>Building fabric:</strong> 5-15% (longer payback)
+                </li>
+                <li>
+                  <strong>Solar PV:</strong> 8-15% (depending on tariffs)
+                </li>
               </ul>
             </div>
 
@@ -421,22 +524,37 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Life Cycle Costing captures all costs associated with an asset over its entire lifetime, from acquisition through operation to disposal. This prevents decisions being made on purchase price alone when operating costs dominate total cost of ownership.
+              Life Cycle Costing captures all costs associated with an asset over its entire
+              lifetime, from acquisition through operation to disposal. This prevents decisions
+              being made on purchase price alone when operating costs dominate total cost of
+              ownership.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">LCC components:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Acquisition costs:</strong> Purchase price, delivery, installation</li>
-                <li><strong>Operating costs:</strong> Energy consumption, consumables</li>
-                <li><strong>Maintenance costs:</strong> Routine servicing, repairs, parts</li>
-                <li><strong>Downtime costs:</strong> Lost production, temporary solutions</li>
-                <li><strong>End-of-life costs:</strong> Disposal, decommissioning, or residual value</li>
+                <li>
+                  <strong>Acquisition costs:</strong> Purchase price, delivery, installation
+                </li>
+                <li>
+                  <strong>Operating costs:</strong> Energy consumption, consumables
+                </li>
+                <li>
+                  <strong>Maintenance costs:</strong> Routine servicing, repairs, parts
+                </li>
+                <li>
+                  <strong>Downtime costs:</strong> Lost production, temporary solutions
+                </li>
+                <li>
+                  <strong>End-of-life costs:</strong> Disposal, decommissioning, or residual value
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example - Lighting comparison:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example - Lighting comparison:
+              </p>
               <table className="text-sm text-white w-full mt-2">
                 <thead>
                   <tr className="border-b border-white/10">
@@ -495,14 +613,28 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Building a business case:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Building a business case:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Step 1:</strong> Document baseline energy consumption (kWh and £)</li>
-                <li><strong>Step 2:</strong> Calculate expected savings from the improvement</li>
-                <li><strong>Step 3:</strong> Obtain accurate installation and equipment costs</li>
-                <li><strong>Step 4:</strong> Identify maintenance cost changes</li>
-                <li><strong>Step 5:</strong> Calculate payback, NPV, and IRR</li>
-                <li><strong>Step 6:</strong> Present appropriate metrics to decision-makers</li>
+                <li>
+                  <strong>Step 1:</strong> Document baseline energy consumption (kWh and £)
+                </li>
+                <li>
+                  <strong>Step 2:</strong> Calculate expected savings from the improvement
+                </li>
+                <li>
+                  <strong>Step 3:</strong> Obtain accurate installation and equipment costs
+                </li>
+                <li>
+                  <strong>Step 4:</strong> Identify maintenance cost changes
+                </li>
+                <li>
+                  <strong>Step 5:</strong> Calculate payback, NPV, and IRR
+                </li>
+                <li>
+                  <strong>Step 6:</strong> Present appropriate metrics to decision-makers
+                </li>
               </ul>
             </div>
 
@@ -534,27 +666,51 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Presenting to different audiences</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Presenting to different audiences
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>SME owners:</strong> Lead with simple payback, emphasise cash flow</li>
-                <li><strong>Finance directors:</strong> NPV and IRR, compare to cost of capital</li>
-                <li><strong>Public sector:</strong> NPV at 3.5%, include carbon valuation</li>
-                <li><strong>Operations managers:</strong> Total cost of ownership, reliability benefits</li>
+                <li>
+                  <strong>SME owners:</strong> Lead with simple payback, emphasise cash flow
+                </li>
+                <li>
+                  <strong>Finance directors:</strong> NPV and IRR, compare to cost of capital
+                </li>
+                <li>
+                  <strong>Public sector:</strong> NPV at 3.5%, include carbon valuation
+                </li>
+                <li>
+                  <strong>Operations managers:</strong> Total cost of ownership, reliability
+                  benefits
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Common pitfalls to avoid</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Common pitfalls to avoid
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Using nameplate ratings</strong> - Always use measured or realistic load data</li>
-                <li><strong>Ignoring installation costs</strong> - Include all costs in the investment</li>
-                <li><strong>Overstating savings</strong> - Be conservative; underselling builds trust</li>
-                <li><strong>Wrong discount rate</strong> - Use rates appropriate to the organisation</li>
+                <li>
+                  <strong>Using nameplate ratings</strong> - Always use measured or realistic load
+                  data
+                </li>
+                <li>
+                  <strong>Ignoring installation costs</strong> - Include all costs in the investment
+                </li>
+                <li>
+                  <strong>Overstating savings</strong> - Be conservative; underselling builds trust
+                </li>
+                <li>
+                  <strong>Wrong discount rate</strong> - Use rates appropriate to the organisation
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Data sources for calculations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Data sources for calculations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Utility bills for baseline consumption and tariffs</li>
                 <li>Sub-meter readings for specific equipment</li>
@@ -620,21 +776,27 @@ const EnergyEfficiencyModule6Section2: React.FC = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-3">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

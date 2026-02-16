@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section1LearningOutcomes = () => {
   const outcomes = [
-    "Explain the role of IO lists in a BMS project",
-    "Interpret typical BMS schematics and understand their purpose",
-    "Describe different network topologies used in BMS (bus, star, hybrid)",
-    "Apply best practices to support design documentation and installation"
+    'Explain the role of IO lists in a BMS project',
+    'Interpret typical BMS schematics and understand their purpose',
+    'Describe different network topologies used in BMS (bus, star, hybrid)',
+    'Apply best practices to support design documentation and installation',
   ];
 
   return (

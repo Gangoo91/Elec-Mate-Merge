@@ -1,6 +1,5 @@
-
-import React from "react";
-import { Shield } from "lucide-react";
+import React from 'react';
+import { Shield } from 'lucide-react';
 
 const PPECategories = () => {
   return (
@@ -15,7 +14,9 @@ const PPECategories = () => {
           <ul className="list-disc pl-5 space-y-2">
             <li>
               <span className="font-medium">Insulating gloves</span>
-              <p className="text-sm mt-1">Must be certified to BS EN 60903 standard with appropriate class rating (Class 00-4)</p>
+              <p className="text-sm mt-1">
+                Must be certified to BS EN 60903 standard with appropriate class rating (Class 00-4)
+              </p>
             </li>
             <li>
               <span className="font-medium">Insulating mats</span>
@@ -27,7 +28,9 @@ const PPECategories = () => {
             </li>
             <li>
               <span className="font-medium">Insulating blankets</span>
-              <p className="text-sm mt-1">For covering exposed live parts, BS EN 61112 compliance</p>
+              <p className="text-sm mt-1">
+                For covering exposed live parts, BS EN 61112 compliance
+              </p>
             </li>
           </ul>
         </div>
@@ -36,7 +39,9 @@ const PPECategories = () => {
           <ul className="list-disc pl-5 space-y-2">
             <li>
               <span className="font-medium">Arc flash rated clothing</span>
-              <p className="text-sm mt-1">Rated in cal/cm², typically 8-40 cal/cm² based on risk assessment</p>
+              <p className="text-sm mt-1">
+                Rated in cal/cm², typically 8-40 cal/cm² based on risk assessment
+              </p>
             </li>
             <li>
               <span className="font-medium">Face shields</span>

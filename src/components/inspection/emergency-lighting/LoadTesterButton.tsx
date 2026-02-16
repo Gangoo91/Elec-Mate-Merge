@@ -90,8 +90,8 @@ const LoadTesterButton: React.FC<LoadTesterButtonProps> = ({
       onClick={handleLoad}
       disabled={isLoading || showSuccess}
       className={cn(
-        "touch-manipulation transition-all duration-200",
-        showSuccess && "bg-green-500/20 border-green-500/50 text-green-400",
+        'touch-manipulation transition-all duration-200',
+        showSuccess && 'bg-green-500/20 border-green-500/50 text-green-400',
         className
       )}
     >

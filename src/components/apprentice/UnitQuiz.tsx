@@ -1,22 +1,21 @@
+import { useState, useEffect } from 'react';
+import { QuizQuestion } from '@/data/unitQuizzes';
+import { QuizProps } from '@/types/quiz';
+import QuizNavigation from './quiz/QuizNavigation';
+import QuestionComponent from './quiz/QuizQuestion';
+import QuizControls from './quiz/QuizControls';
+import QuizResults from './quiz/QuizResults';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
 
-import { useState, useEffect } from "react";
-import { QuizQuestion } from "@/data/unitQuizzes";
-import { QuizProps } from "@/types/quiz";
-import QuizNavigation from "./quiz/QuizNavigation";
-import QuestionComponent from "./quiz/QuizQuestion";
-import QuizControls from "./quiz/QuizControls";
-import QuizResults from "./quiz/QuizResults";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
-
-const UnitQuiz = ({ 
-  unitCode, 
-  questions, 
+const UnitQuiz = ({
+  unitCode,
+  questions,
   onQuizComplete,
   questionCount = 30, // Changed default from 10 to 30
   timeLimit,
   currentTime,
-  isSubmitted = false
+  isSubmitted = false,
 }: QuizProps) => {
   const { toast } = useToast();
   const [activeQuestion, setActiveQuestion] = useState(0);
@@ -57,7 +56,7 @@ const UnitQuiz = ({
 
   const handleAnswer = (selectedIndex: number) => {
     if (isAnswered) return;
-    
+
     // Store the user's answer
     const updatedAnswers = [...userAnswers];
     updatedAnswers[activeQuestion] = selectedIndex;
@@ -67,16 +66,16 @@ const UnitQuiz = ({
 
     // Check if answer is correct
     if (selectedIndex === quizQuestions[activeQuestion]?.correctAnswer) {
-      setScore(prev => prev + 1);
+      setScore((prev) => prev + 1);
     }
   };
 
   const handleNextQuestion = () => {
     setSelectedAnswer(null);
     setIsAnswered(false);
-    
+
     if (activeQuestion < quizQuestions.length - 1) {
-      setActiveQuestion(prev => prev + 1);
+      setActiveQuestion((prev) => prev + 1);
     } else {
       setQuizCompleted(true);
       handleQuizCompletion(score, quizQuestions.length);
@@ -98,32 +97,32 @@ const UnitQuiz = ({
     // Calculate time taken
     const timeTaken = Math.floor((Date.now() - quizStartTime) / 1000); // in seconds
     const percentage = Math.round((finalScore / totalQuestions) * 100);
-    
+
     try {
       // First attempt to save to Supabase if user is logged in
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (user) {
         // If user is authenticated, save to Supabase
         try {
-          const { error } = await supabase
-            .from('quiz_attempts')
-            .insert({
-              user_id: user.id,
-              unit_code: unitCode,
-              score: finalScore,
-              total_questions: totalQuestions,
-              percentage: percentage,
-              time_taken: timeTaken
-            });
-            
+          const { error } = await supabase.from('quiz_attempts').insert({
+            user_id: user.id,
+            unit_code: unitCode,
+            score: finalScore,
+            total_questions: totalQuestions,
+            percentage: percentage,
+            time_taken: timeTaken,
+          });
+
           if (error) {
             console.error('Error saving quiz attempt to Supabase:', error);
             saveQuizLocalStorage(unitCode, finalScore, totalQuestions, percentage, timeTaken);
           } else {
             toast({
-              title: "Quiz result saved",
-              description: "Your result has been saved to your profile.",
+              title: 'Quiz result saved',
+              description: 'Your result has been saved to your profile.',
             });
           }
         } catch (e) {
@@ -134,10 +133,9 @@ const UnitQuiz = ({
         // If not authenticated, save to localStorage
         saveQuizLocalStorage(unitCode, finalScore, totalQuestions, percentage, timeTaken);
       }
-      
+
       // Call the parent callback
       onQuizComplete(finalScore, totalQuestions);
-      
     } catch (error) {
       console.error('Error handling quiz completion:', error);
       // Fallback to localStorage
@@ -145,44 +143,44 @@ const UnitQuiz = ({
       onQuizComplete(finalScore, totalQuestions);
     }
   };
-  
+
   // Fallback method to save quiz attempts to localStorage
   const saveQuizLocalStorage = (
-    unitCode: string, 
-    score: number, 
-    totalQuestions: number, 
-    percentage: number, 
+    unitCode: string,
+    score: number,
+    totalQuestions: number,
+    percentage: number,
     timeTaken: number
   ) => {
     const storageKey = `unit_${unitCode}_quiz_attempts`;
-    
+
     try {
       // Get existing attempts
       const existingAttemptsJson = localStorage.getItem(storageKey);
       const existingAttempts = existingAttemptsJson ? JSON.parse(existingAttemptsJson) : [];
-      
+
       // Add new attempt
       existingAttempts.push({
         date: new Date().toISOString(),
         score,
         totalQuestions,
         percentage,
-        timeTaken
+        timeTaken,
       });
-      
+
       // Save back to localStorage
       localStorage.setItem(storageKey, JSON.stringify(existingAttempts));
-      
+
       toast({
-        title: "Quiz result saved locally",
-        description: "Your result has been saved on this device.",
+        title: 'Quiz result saved locally',
+        description: 'Your result has been saved on this device.',
       });
     } catch (e) {
-      console.error("Error saving quiz attempt to localStorage:", e);
+      console.error('Error saving quiz attempt to localStorage:', e);
       toast({
-        title: "Could not save quiz result",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Could not save quiz result',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     }
   };
@@ -194,7 +192,7 @@ const UnitQuiz = ({
     setScore(0);
     setQuizCompleted(false);
     setQuizStartTime(Date.now());
-    
+
     // Shuffle questions again for a new attempt
     const shuffled = [...questions].sort(() => 0.5 - Math.random());
     setQuizQuestions(shuffled.slice(0, questionCount));
@@ -207,18 +205,18 @@ const UnitQuiz = ({
 
   if (quizCompleted) {
     return (
-      <QuizResults 
-        score={score} 
-        totalQuestions={quizQuestions.length} 
-        questions={quizQuestions} 
-        userAnswers={userAnswers} 
-        onRetry={handleRetryQuiz} 
+      <QuizResults
+        score={score}
+        totalQuestions={quizQuestions.length}
+        questions={quizQuestions}
+        userAnswers={userAnswers}
+        onRetry={handleRetryQuiz}
       />
     );
   }
 
   const currentQuestion = quizQuestions[activeQuestion];
-  const answeredCount = userAnswers.filter(answer => answer !== null).length;
+  const answeredCount = userAnswers.filter((answer) => answer !== null).length;
   const isLastQuestion = activeQuestion === quizQuestions.length - 1;
 
   return (
@@ -229,25 +227,25 @@ const UnitQuiz = ({
           {activeQuestion + 1} of {quizQuestions.length} questions
         </div>
       </div>
-      
+
       {/* Simplified question navigation */}
-      <QuizNavigation 
-        questionsCount={quizQuestions.length} 
-        activeQuestion={activeQuestion} 
-        userAnswers={userAnswers} 
-        onNavigate={handleNavigateToQuestion} 
+      <QuizNavigation
+        questionsCount={quizQuestions.length}
+        activeQuestion={activeQuestion}
+        userAnswers={userAnswers}
+        onNavigate={handleNavigateToQuestion}
       />
-      
+
       {/* Current question */}
       <QuestionComponent
-        question={currentQuestion} 
-        selectedAnswer={selectedAnswer} 
-        isAnswered={isAnswered} 
-        onAnswer={handleAnswer} 
+        question={currentQuestion}
+        selectedAnswer={selectedAnswer}
+        isAnswered={isAnswered}
+        onAnswer={handleAnswer}
       />
 
       {/* Quiz controls */}
-      <QuizControls 
+      <QuizControls
         isAnswered={isAnswered}
         isLastQuestion={isLastQuestion}
         answeredCount={answeredCount}

@@ -2,15 +2,32 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SmartTabs } from '@/components/ui/smart-tabs';
-import { Settings, CheckCircle2, AlertTriangle, Clock, Shield, Target, Wrench, BookOpen, Zap, Activity, Gauge, TestTube, FileText, TrendingUp, Award, ClipboardList } from 'lucide-react';
+import {
+  Settings,
+  CheckCircle2,
+  AlertTriangle,
+  Clock,
+  Shield,
+  Target,
+  Wrench,
+  BookOpen,
+  Zap,
+  Activity,
+  Gauge,
+  TestTube,
+  FileText,
+  TrendingUp,
+  Award,
+  ClipboardList,
+} from 'lucide-react';
 import CertificateGuideTab from './supplementary-testing/CertificateGuideTab';
 import ScheduleGuideTab from './supplementary-testing/ScheduleGuideTab';
 
 const SupplementaryTestCard = () => {
   const smartTabs = [
     {
-      value: "earth-electrode",
-      label: "Earth Electrode",
+      value: 'earth-electrode',
+      label: 'Earth Electrode',
       icon: <Shield className="h-4 w-4" />,
       content: (
         <Card className="bg-card border-border">
@@ -71,14 +88,38 @@ const SupplementaryTestCard = () => {
                 Step-by-Step Test Procedure
               </h4>
               <ol className="space-y-2 text-sm">
-                <li><strong>1. Pre-test Safety:</strong> Isolate installation and verify dead using approved voltage indicator</li>
-                <li><strong>2. Disconnect Earth:</strong> Safely disconnect earth electrode from main earthing terminal</li>
-                <li><strong>3. Visual Inspection:</strong> Check electrode condition and connections for corrosion/damage</li>
-                <li><strong>4. Position Test Spikes:</strong> Place current and potential spikes at correct distances (Fall of Potential method)</li>
-                <li><strong>5. Connect Tester:</strong> Connect earth electrode tester using manufacturer's instructions</li>
-                <li><strong>6. Perform Test:</strong> Conduct multiple measurements at different spike positions</li>
-                <li><strong>7. Record Results:</strong> Document all measurements and calculate average resistance</li>
-                <li><strong>8. Reconnect System:</strong> Safely reconnect earth electrode to main earthing terminal</li>
+                <li>
+                  <strong>1. Pre-test Safety:</strong> Isolate installation and verify dead using
+                  approved voltage indicator
+                </li>
+                <li>
+                  <strong>2. Disconnect Earth:</strong> Safely disconnect earth electrode from main
+                  earthing terminal
+                </li>
+                <li>
+                  <strong>3. Visual Inspection:</strong> Check electrode condition and connections
+                  for corrosion/damage
+                </li>
+                <li>
+                  <strong>4. Position Test Spikes:</strong> Place current and potential spikes at
+                  correct distances (Fall of Potential method)
+                </li>
+                <li>
+                  <strong>5. Connect Tester:</strong> Connect earth electrode tester using
+                  manufacturer's instructions
+                </li>
+                <li>
+                  <strong>6. Perform Test:</strong> Conduct multiple measurements at different spike
+                  positions
+                </li>
+                <li>
+                  <strong>7. Record Results:</strong> Document all measurements and calculate
+                  average resistance
+                </li>
+                <li>
+                  <strong>8. Reconnect System:</strong> Safely reconnect earth electrode to main
+                  earthing terminal
+                </li>
               </ol>
             </div>
 
@@ -166,11 +207,11 @@ const SupplementaryTestCard = () => {
             </div>
           </CardContent>
         </Card>
-      )
+      ),
     },
     {
-      value: "voltage-drop",
-      label: "Voltage Drop",
+      value: 'voltage-drop',
+      label: 'Voltage Drop',
       icon: <Zap className="h-4 w-4" />,
       content: (
         <Card className="bg-card border-border">
@@ -206,11 +247,11 @@ const SupplementaryTestCard = () => {
             </div>
           </CardContent>
         </Card>
-      )
+      ),
     },
     {
-      value: "phase-sequence",
-      label: "Phase Sequence",
+      value: 'phase-sequence',
+      label: 'Phase Sequence',
       icon: <Gauge className="h-4 w-4" />,
       content: (
         <Card className="bg-card border-border">
@@ -223,15 +264,17 @@ const SupplementaryTestCard = () => {
           <CardContent className="space-y-6 text-white">
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-3">Phase Sequence Verification</h4>
-              <p className="text-sm">Ensures correct phase rotation for three-phase equipment operation.</p>
+              <p className="text-sm">
+                Ensures correct phase rotation for three-phase equipment operation.
+              </p>
             </div>
           </CardContent>
         </Card>
-      )
+      ),
     },
     {
-      value: "touch-voltage",
-      label: "Touch Voltage",
+      value: 'touch-voltage',
+      label: 'Touch Voltage',
       icon: <Zap className="h-4 w-4" />,
       content: (
         <Card className="bg-card border-border">
@@ -244,15 +287,17 @@ const SupplementaryTestCard = () => {
           <CardContent className="space-y-6 text-white">
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-3">Safety Assessment</h4>
-              <p className="text-sm">Measures potential voltage differences accessible to persons.</p>
+              <p className="text-sm">
+                Measures potential voltage differences accessible to persons.
+              </p>
             </div>
           </CardContent>
         </Card>
-      )
+      ),
     },
     {
-      value: "temperature",
-      label: "Temperature",
+      value: 'temperature',
+      label: 'Temperature',
       icon: <Activity className="h-4 w-4" />,
       content: (
         <Card className="bg-card border-border">
@@ -265,15 +310,17 @@ const SupplementaryTestCard = () => {
           <CardContent className="space-y-6 text-white">
             <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-purple-400 mb-3">Thermal Assessment</h4>
-              <p className="text-sm">Verification of thermal effects in electrical installations.</p>
+              <p className="text-sm">
+                Verification of thermal effects in electrical installations.
+              </p>
             </div>
           </CardContent>
         </Card>
-      )
+      ),
     },
     {
-      value: "neutral-integrity",
-      label: "Neutral",
+      value: 'neutral-integrity',
+      label: 'Neutral',
       icon: <Settings className="h-4 w-4" />,
       content: (
         <Card className="bg-card border-border">
@@ -290,20 +337,20 @@ const SupplementaryTestCard = () => {
             </div>
           </CardContent>
         </Card>
-      )
+      ),
     },
     {
-      value: "certificate-guide",
-      label: "Certificate Guide",
+      value: 'certificate-guide',
+      label: 'Certificate Guide',
       icon: <Award className="h-4 w-4" />,
-      content: <CertificateGuideTab />
+      content: <CertificateGuideTab />,
     },
     {
-      value: "schedule-guide",
-      label: "Schedule Guide",
+      value: 'schedule-guide',
+      label: 'Schedule Guide',
       icon: <ClipboardList className="h-4 w-4" />,
-      content: <ScheduleGuideTab />
-    }
+      content: <ScheduleGuideTab />,
+    },
   ];
 
   return (
@@ -313,8 +360,12 @@ const SupplementaryTestCard = () => {
           <Activity className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400" />
         </div>
         <div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Supplementary Testing</h1>
-          <p className="text-sm sm:text-base text-white">Additional tests required or recommended by BS 7671</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+            Supplementary Testing
+          </h1>
+          <p className="text-sm sm:text-base text-white">
+            Additional tests required or recommended by BS 7671
+          </p>
         </div>
       </div>
 
@@ -325,7 +376,9 @@ const SupplementaryTestCard = () => {
               <Activity className="h-6 w-6 text-purple-400" />
             </div>
             <div>
-              <CardTitle className="text-purple-400 text-xl">Supplementary Testing Overview</CardTitle>
+              <CardTitle className="text-purple-400 text-xl">
+                Supplementary Testing Overview
+              </CardTitle>
               <CardDescription className="text-white">
                 Additional electrical tests beyond core verification procedures
               </CardDescription>
@@ -333,7 +386,10 @@ const SupplementaryTestCard = () => {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary" className="bg-purple-500/20 text-purple-400 border-purple-500/30">
+            <Badge
+              variant="secondary"
+              className="bg-purple-500/20 text-purple-400 border-purple-500/30"
+            >
               Additional Tests
             </Badge>
             <Badge variant="outline" className="text-white border-gray-500">
@@ -349,16 +405,16 @@ const SupplementaryTestCard = () => {
               Purpose of Supplementary Testing
             </h4>
             <p className="text-sm text-white">
-              Supplementary tests are performed in addition to the standard verification tests 
-              to confirm specific aspects of electrical installations. These tests may be 
-              required based on the type of installation, environmental conditions, or 
-              specific regulatory requirements.
+              Supplementary tests are performed in addition to the standard verification tests to
+              confirm specific aspects of electrical installations. These tests may be required
+              based on the type of installation, environmental conditions, or specific regulatory
+              requirements.
             </p>
           </div>
         </CardContent>
       </Card>
 
-      <SmartTabs 
+      <SmartTabs
         tabs={smartTabs}
         defaultValue="earth-electrode"
         className="w-full"

@@ -1,85 +1,94 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import { bmsModule2Section2QuizData } from "@/data/upskilling/bmsModule2Section2QuizData";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { bmsModule2Section2QuizData } from '@/data/upskilling/bmsModule2Section2QuizData';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "temp-sensor-use",
-    question: "Give one example of where a temperature sensor is used in a BMS.",
+    id: 'temp-sensor-use',
+    question: 'Give one example of where a temperature sensor is used in a BMS.',
     options: [
-      "Detecting occupancy in meeting rooms",
-      "Measuring CO2 levels in classrooms",
-      "Controlling chilled water temperature in HVAC systems",
-      "Monitoring door security contacts"
+      'Detecting occupancy in meeting rooms',
+      'Measuring CO2 levels in classrooms',
+      'Controlling chilled water temperature in HVAC systems',
+      'Monitoring door security contacts',
     ],
     correctIndex: 2,
-    explanation: "Temperature sensors are commonly used to monitor and control chilled water temperature in HVAC systems, ensuring optimal cooling performance and energy efficiency."
+    explanation:
+      'Temperature sensors are commonly used to monitor and control chilled water temperature in HVAC systems, ensuring optimal cooling performance and energy efficiency.',
   },
   {
-    id: "humidity-output",
-    question: "What type of output signal do most humidity sensors provide?",
+    id: 'humidity-output',
+    question: 'What type of output signal do most humidity sensors provide?',
     options: [
-      "Digital on/off switching only",
-      "Analog signals (0-10V or 4-20mA)",
-      "High-frequency pulse trains",
-      "230V relay contact switching"
+      'Digital on/off switching only',
+      'Analog signals (0-10V or 4-20mA)',
+      'High-frequency pulse trains',
+      '230V relay contact switching',
     ],
     correctIndex: 1,
-    explanation: "Most humidity sensors provide analog output signals (0-10V or 4-20mA) that correspond to the relative humidity percentage, allowing precise monitoring and control by the BMS."
+    explanation:
+      'Most humidity sensors provide analog output signals (0-10V or 4-20mA) that correspond to the relative humidity percentage, allowing precise monitoring and control by the BMS.',
   },
   {
-    id: "co2-ventilation",
-    question: "Why does a BMS increase ventilation when CO2 levels rise?",
+    id: 'co2-ventilation',
+    question: 'Why does a BMS increase ventilation when CO2 levels rise?',
     options: [
-      "To reduce energy consumption in the building",
-      "To ensure good air quality and prevent drowsiness",
-      "To lower the room temperature automatically",
-      "To activate fire safety systems"
+      'To reduce energy consumption in the building',
+      'To ensure good air quality and prevent drowsiness',
+      'To lower the room temperature automatically',
+      'To activate fire safety systems',
     ],
     correctIndex: 1,
-    explanation: "When CO2 levels rise, it indicates poor air quality and insufficient fresh air. The BMS increases ventilation to bring in fresh air, maintaining good indoor air quality and preventing occupant drowsiness."
+    explanation:
+      'When CO2 levels rise, it indicates poor air quality and insufficient fresh air. The BMS increases ventilation to bring in fresh air, maintaining good indoor air quality and preventing occupant drowsiness.',
   },
   {
-    id: "occupancy-sensor",
-    question: "What type of sensor is commonly used to detect movement in offices?",
+    id: 'occupancy-sensor',
+    question: 'What type of sensor is commonly used to detect movement in offices?',
     options: [
-      "Temperature sensor for heat detection",
-      "PIR (Passive Infrared) sensor",
-      "CO2 sensor for breathing detection",
-      "Humidity sensor for air quality"
+      'Temperature sensor for heat detection',
+      'PIR (Passive Infrared) sensor',
+      'CO2 sensor for breathing detection',
+      'Humidity sensor for air quality',
     ],
     correctIndex: 1,
-    explanation: "PIR (Passive Infrared) sensors are commonly used to detect occupancy in offices. They detect movement by sensing changes in infrared radiation from warm bodies moving through their detection zone."
-  }
+    explanation:
+      'PIR (Passive Infrared) sensors are commonly used to detect occupancy in offices. They detect movement by sensing changes in infrared radiation from warm bodies moving through their detection zone.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How accurate are temperature sensors in BMS applications?",
-    answer: "RTD sensors (Pt100/Pt1000) provide ±0.1°C to ±0.3°C accuracy. Thermistors typically achieve ±0.1°C to ±0.5°C. Choose based on application requirements - precision control needs higher accuracy."
+    question: 'How accurate are temperature sensors in BMS applications?',
+    answer:
+      'RTD sensors (Pt100/Pt1000) provide ±0.1°C to ±0.3°C accuracy. Thermistors typically achieve ±0.1°C to ±0.5°C. Choose based on application requirements - precision control needs higher accuracy.',
   },
   {
-    question: "Why are CO2 sensors important for energy efficiency?",
-    answer: "CO2 sensors enable demand-controlled ventilation (DCV), providing only the ventilation needed based on actual occupancy rather than designed maximum. This can reduce ventilation energy by 20-40% while maintaining air quality."
+    question: 'Why are CO2 sensors important for energy efficiency?',
+    answer:
+      'CO2 sensors enable demand-controlled ventilation (DCV), providing only the ventilation needed based on actual occupancy rather than designed maximum. This can reduce ventilation energy by 20-40% while maintaining air quality.',
   },
   {
     question: "What's the difference between PIR and ultrasonic occupancy sensors?",
-    answer: "PIR detects body heat movement and is best for general occupancy. Ultrasonic uses sound waves and detects small movements like typing. Dual-technology sensors combine both for enhanced accuracy and reduced false triggers."
+    answer:
+      'PIR detects body heat movement and is best for general occupancy. Ultrasonic uses sound waves and detects small movements like typing. Dual-technology sensors combine both for enhanced accuracy and reduced false triggers.',
   },
   {
-    question: "How often should BMS sensors be calibrated?",
-    answer: "Temperature and humidity sensors: annually. CO2 sensors: every 2-3 years or as manufacturer recommends. Occupancy sensors: typically don't need calibration, but sensitivity may need adjustment after installation."
-  }
+    question: 'How often should BMS sensors be calibrated?',
+    answer:
+      "Temperature and humidity sensors: annually. CO2 sensors: every 2-3 years or as manufacturer recommends. Occupancy sensors: typically don't need calibration, but sensitivity may need adjustment after installation.",
+  },
 ];
 
 const BMSModule2Section2 = () => {
   useSEO({
-    title: "Types of Sensors | BMS Course",
-    description: "Learn about temperature, humidity, CO2, and occupancy sensors in Building Management Systems. Understand sensor types, applications, wiring, and installation."
+    title: 'Types of Sensors | BMS Course',
+    description:
+      'Learn about temperature, humidity, CO2, and occupancy sensors in Building Management Systems. Understand sensor types, applications, wiring, and installation.',
   });
 
   return (
@@ -111,9 +120,7 @@ const BMSModule2Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Types of Sensors
           </h1>
-          <p className="text-white">
-            Temperature, Humidity, CO2, and Occupancy Sensors
-          </p>
+          <p className="text-white">Temperature, Humidity, CO2, and Occupancy Sensors</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -121,17 +128,29 @@ const BMSModule2Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Sensors:</strong> "Eyes and ears" of the BMS</li>
-              <li><strong>Types:</strong> Temperature, humidity, CO2, occupancy</li>
-              <li><strong>Output:</strong> Analog (0-10V, 4-20mA) or digital signals</li>
+              <li>
+                <strong>Sensors:</strong> "Eyes and ears" of the BMS
+              </li>
+              <li>
+                <strong>Types:</strong> Temperature, humidity, CO2, occupancy
+              </li>
+              <li>
+                <strong>Output:</strong> Analog (0-10V, 4-20mA) or digital signals
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">On Site</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Position:</strong> Away from heat sources, draughts, direct sunlight</li>
-              <li><strong>Wiring:</strong> Screened cables for analog, separate from mains</li>
-              <li><strong>Calibrate:</strong> During commissioning using certified references</li>
+              <li>
+                <strong>Position:</strong> Away from heat sources, draughts, direct sunlight
+              </li>
+              <li>
+                <strong>Wiring:</strong> Screened cables for analog, separate from mains
+              </li>
+              <li>
+                <strong>Calibrate:</strong> During commissioning using certified references
+              </li>
             </ul>
           </div>
         </div>
@@ -141,10 +160,10 @@ const BMSModule2Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify the four main sensor types used in BMS applications",
-              "Explain the purpose and operation of each sensor type",
-              "Understand signal types and wiring requirements",
-              "Recognise common applications and installation requirements"
+              'Identify the four main sensor types used in BMS applications',
+              'Explain the purpose and operation of each sensor type',
+              'Understand signal types and wiring requirements',
+              'Recognise common applications and installation requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -164,16 +183,25 @@ const BMSModule2Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Temperature sensors measure air or water temperature and provide critical input to BMS for HVAC control,
-              energy optimisation, and comfort management.
+              Temperature sensors measure air or water temperature and provide critical input to BMS
+              for HVAC control, energy optimisation, and comfort management.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sensor Types</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Thermistors (NTC/PTC):</strong> Resistance changes with temperature, 10kΩ or 20kΩ at 25°C typical</li>
-                <li><strong>RTDs (Pt100/Pt1000):</strong> Highly accurate platinum resistance, 100Ω or 1000Ω at 0°C</li>
-                <li><strong>Thermocouples:</strong> High-temperature industrial applications, up to 1000°C+</li>
+                <li>
+                  <strong>Thermistors (NTC/PTC):</strong> Resistance changes with temperature, 10kΩ
+                  or 20kΩ at 25°C typical
+                </li>
+                <li>
+                  <strong>RTDs (Pt100/Pt1000):</strong> Highly accurate platinum resistance, 100Ω or
+                  1000Ω at 0°C
+                </li>
+                <li>
+                  <strong>Thermocouples:</strong> High-temperature industrial applications, up to
+                  1000°C+
+                </li>
               </ul>
             </div>
 
@@ -181,9 +209,15 @@ const BMSModule2Section2 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Technical Specs</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Thermistor accuracy:</strong> ±0.1°C to ±0.5°C</li>
-                  <li><strong>RTD accuracy:</strong> ±0.1°C (Class A), ±0.3°C (Class B)</li>
-                  <li><strong>RTD wiring:</strong> 2-wire, 3-wire, or 4-wire configurations</li>
+                  <li>
+                    <strong>Thermistor accuracy:</strong> ±0.1°C to ±0.5°C
+                  </li>
+                  <li>
+                    <strong>RTD accuracy:</strong> ±0.1°C (Class A), ±0.3°C (Class B)
+                  </li>
+                  <li>
+                    <strong>RTD wiring:</strong> 2-wire, 3-wire, or 4-wire configurations
+                  </li>
                 </ul>
               </div>
               <div>
@@ -218,8 +252,8 @@ const BMSModule2Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Humidity sensors measure relative humidity (RH) in air, providing essential data for comfort control,
-              condensation prevention, and maintaining optimal indoor air quality.
+              Humidity sensors measure relative humidity (RH) in air, providing essential data for
+              comfort control, condensation prevention, and maintaining optimal indoor air quality.
             </p>
 
             <div className="my-6">
@@ -236,8 +270,12 @@ const BMSModule2Section2 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sensor Technologies</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Capacitive:</strong> Most common, ±2-3% RH accuracy</li>
-                  <li><strong>Resistive:</strong> Lower cost, ±3-5% RH accuracy</li>
+                  <li>
+                    <strong>Capacitive:</strong> Most common, ±2-3% RH accuracy
+                  </li>
+                  <li>
+                    <strong>Resistive:</strong> Lower cost, ±3-5% RH accuracy
+                  </li>
                 </ul>
               </div>
               <div>
@@ -252,7 +290,9 @@ const BMSModule2Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Guidelines</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Guidelines
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Install away from direct air streams, heat sources, and moisture sources</li>
                 <li>Representative of space conditions, typically 1.5m above floor level</li>
@@ -273,38 +313,61 @@ const BMSModule2Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              CO2 sensors measure carbon dioxide levels in parts per million (ppm) and provide essential input for
-              demand-controlled ventilation systems, ensuring good air quality and energy efficiency.
+              CO2 sensors measure carbon dioxide levels in parts per million (ppm) and provide
+              essential input for demand-controlled ventilation systems, ensuring good air quality
+              and energy efficiency.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical CO2 Levels</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Outside air:</strong> 400-450 ppm</li>
-                  <li><strong>Good indoor:</strong> 400-700 ppm</li>
-                  <li><strong>Acceptable:</strong> 700-1000 ppm</li>
-                  <li><strong>Stuffy/drowsy:</strong> 1000-2000 ppm</li>
-                  <li><strong>Poor quality:</strong> &gt;2000 ppm</li>
+                  <li>
+                    <strong>Outside air:</strong> 400-450 ppm
+                  </li>
+                  <li>
+                    <strong>Good indoor:</strong> 400-700 ppm
+                  </li>
+                  <li>
+                    <strong>Acceptable:</strong> 700-1000 ppm
+                  </li>
+                  <li>
+                    <strong>Stuffy/drowsy:</strong> 1000-2000 ppm
+                  </li>
+                  <li>
+                    <strong>Poor quality:</strong> &gt;2000 ppm
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Setpoints</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Ventilation increase:</strong> 1000 ppm</li>
-                  <li><strong>Maximum ventilation:</strong> 1500 ppm</li>
-                  <li><strong>Alarm level:</strong> 2000 ppm</li>
-                  <li><strong>Immediate action:</strong> 5000 ppm</li>
+                  <li>
+                    <strong>Ventilation increase:</strong> 1000 ppm
+                  </li>
+                  <li>
+                    <strong>Maximum ventilation:</strong> 1500 ppm
+                  </li>
+                  <li>
+                    <strong>Alarm level:</strong> 2000 ppm
+                  </li>
+                  <li>
+                    <strong>Immediate action:</strong> 5000 ppm
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sensor Technology (NDIR)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Sensor Technology (NDIR)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Non-Dispersive Infrared — uses IR light absorption at 4.26μm wavelength</li>
                 <li>Dual beam technology compensates for lamp aging and drift</li>
-                <li>Auto-calibration (ABC) uses lowest reading over 7 days as baseline (~400ppm)</li>
+                <li>
+                  Auto-calibration (ABC) uses lowest reading over 7 days as baseline (~400ppm)
+                </li>
                 <li>Allow 30-60 minutes warm-up time for stable readings</li>
               </ul>
             </div>
@@ -312,7 +375,9 @@ const BMSModule2Section2 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 my-6">
               <p className="text-elec-yellow/90 text-sm font-medium mb-2">Installation Notes</p>
               <ul className="text-sm text-white space-y-1">
-                <li>Install in return air paths or representative locations within occupied zones</li>
+                <li>
+                  Install in return air paths or representative locations within occupied zones
+                </li>
                 <li>Avoid direct ventilation air streams and outdoor air intakes</li>
                 <li>Calibrate using certified CO2 gas (typically 1000ppm and 2000ppm)</li>
               </ul>
@@ -330,17 +395,29 @@ const BMSModule2Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Occupancy sensors detect whether spaces are occupied and provide digital input signals to control
-              lighting, HVAC, and security systems, helping reduce energy waste and improve building efficiency.
+              Occupancy sensors detect whether spaces are occupied and provide digital input signals
+              to control lighting, HVAC, and security systems, helping reduce energy waste and
+              improve building efficiency.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sensor Technologies</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>PIR (Passive Infrared):</strong> Detects body heat movement, most common type</li>
-                <li><strong>Ultrasonic:</strong> Detects motion using sound waves, sensitive to small movements</li>
-                <li><strong>Dual-Technology:</strong> Combines PIR and ultrasonic for enhanced accuracy</li>
-                <li><strong>Microwave:</strong> High sensitivity, can detect through thin barriers</li>
+                <li>
+                  <strong>PIR (Passive Infrared):</strong> Detects body heat movement, most common
+                  type
+                </li>
+                <li>
+                  <strong>Ultrasonic:</strong> Detects motion using sound waves, sensitive to small
+                  movements
+                </li>
+                <li>
+                  <strong>Dual-Technology:</strong> Combines PIR and ultrasonic for enhanced
+                  accuracy
+                </li>
+                <li>
+                  <strong>Microwave:</strong> High sensitivity, can detect through thin barriers
+                </li>
               </ul>
             </div>
 
@@ -366,9 +443,13 @@ const BMSModule2Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Guidelines</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Guidelines
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Mounting height:</strong> PIR: 2.4-3.0m, Ultrasonic: 2.4-4.0m</li>
+                <li>
+                  <strong>Mounting height:</strong> PIR: 2.4-3.0m, Ultrasonic: 2.4-4.0m
+                </li>
                 <li>Account for dead zones behind furniture, ensure adequate overlap</li>
                 <li>Avoid heat sources for PIR, consider air movement for ultrasonic</li>
                 <li>Match sensor zones to lighting circuits and HVAC zones</li>
@@ -378,8 +459,12 @@ const BMSModule2Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Time Delay Settings</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>On-delay:</strong> 0-30 seconds typical</li>
-                <li><strong>Off-delay:</strong> 5-30 minutes based on application</li>
+                <li>
+                  <strong>On-delay:</strong> 0-30 seconds typical
+                </li>
+                <li>
+                  <strong>Off-delay:</strong> 5-30 minutes based on application
+                </li>
                 <li>Longer delays for HVAC, shorter for lighting</li>
               </ul>
             </div>
@@ -393,11 +478,20 @@ const BMSModule2Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Installation Practices</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Essential Installation Practices
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Always confirm whether a sensor uses analog (0–10V, 4–20mA) or digital output before wiring</li>
-                <li>Position sensors carefully — avoid direct sunlight, draughts, and obstructions</li>
-                <li>Calibrate CO2 sensors during commissioning using certified calibration gases</li>
+                <li>
+                  Always confirm whether a sensor uses analog (0–10V, 4–20mA) or digital output
+                  before wiring
+                </li>
+                <li>
+                  Position sensors carefully — avoid direct sunlight, draughts, and obstructions
+                </li>
+                <li>
+                  Calibrate CO2 sensors during commissioning using certified calibration gases
+                </li>
                 <li>Label and record sensor locations, types, and settings for maintenance</li>
                 <li>Keep sensor signal cables separate from mains power cables</li>
               </ul>
@@ -405,10 +499,20 @@ const BMSModule2Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Poor placement:</strong> — CO2 sensors near windows give false low readings</li>
-                <li><strong>Missing calibration:</strong> — uncalibrated sensors give inaccurate data</li>
-                <li><strong>Wrong signal type:</strong> — wiring analog sensor to digital input</li>
-                <li><strong>Environmental interference:</strong> — heat sources affecting temperature sensors</li>
+                <li>
+                  <strong>Poor placement:</strong> — CO2 sensors near windows give false low
+                  readings
+                </li>
+                <li>
+                  <strong>Missing calibration:</strong> — uncalibrated sensors give inaccurate data
+                </li>
+                <li>
+                  <strong>Wrong signal type:</strong> — wiring analog sensor to digital input
+                </li>
+                <li>
+                  <strong>Environmental interference:</strong> — heat sources affecting temperature
+                  sensors
+                </li>
               </ul>
             </div>
           </div>
@@ -422,9 +526,9 @@ const BMSModule2Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A school installed CO2 sensors in classrooms to control ventilation for improved air quality.
-              Initially, some sensors were placed too close to open windows, giving false low readings from
-              the incoming fresh air.
+              A school installed CO2 sensors in classrooms to control ventilation for improved air
+              quality. Initially, some sensors were placed too close to open windows, giving false
+              low readings from the incoming fresh air.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -450,8 +554,9 @@ const BMSModule2Section2 = () => {
 
             <div className="p-3 rounded bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm text-white">
-                <strong>Key Lesson:</strong> Proper sensor placement is critical for system performance. Consider airflow
-                patterns, external influences, and representative measurement locations during planning.
+                <strong>Key Lesson:</strong> Proper sensor placement is critical for system
+                performance. Consider airflow patterns, external influences, and representative
+                measurement locations during planning.
               </p>
             </div>
           </div>
@@ -498,11 +603,11 @@ const BMSModule2Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="space-y-2">
             {[
-              "Temperature sensors (thermistors, RTDs) monitor air and water temperatures for HVAC control",
-              "Humidity sensors prevent condensation and maintain comfort between 40-60% RH",
-              "CO2 sensors enable demand-controlled ventilation based on actual occupancy",
-              "Occupancy sensors reduce energy waste by controlling lighting and HVAC in unoccupied spaces",
-              "Correct installation, positioning, and calibration are essential for accurate performance"
+              'Temperature sensors (thermistors, RTDs) monitor air and water temperatures for HVAC control',
+              'Humidity sensors prevent condensation and maintain comfort between 40-60% RH',
+              'CO2 sensors enable demand-controlled ventilation based on actual occupancy',
+              'Occupancy sensors reduce energy waste by controlling lighting and HVAC in unoccupied spaces',
+              'Correct installation, positioning, and calibration are essential for accurate performance',
             ].map((point, index) => (
               <div key={index} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -514,10 +619,7 @@ const BMSModule2Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10">
-          <SingleQuestionQuiz
-            questions={bmsModule2Section2QuizData}
-            title="Test Your Knowledge"
-          />
+          <SingleQuestionQuiz questions={bmsModule2Section2QuizData} title="Test Your Knowledge" />
         </section>
 
         {/* Bottom Navigation */}

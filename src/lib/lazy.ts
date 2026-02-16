@@ -53,8 +53,9 @@ export function withTimeout<T>(
 
             // Clear caches on last retry
             if (attempts === MAX_RETRIES && 'caches' in window) {
-              caches.keys()
-                .then(keys => Promise.all(keys.map(k => caches.delete(k))))
+              caches
+                .keys()
+                .then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
                 .finally(() => setTimeout(attemptLoad, 500 * attempts));
             } else {
               setTimeout(attemptLoad, 500 * attempts);
@@ -72,10 +73,7 @@ export function withTimeout<T>(
 /**
  * Tracks import for debugging purposes
  */
-export function trackImport<T>(
-  name: string,
-  importFn: () => Promise<T>
-): Promise<T> {
+export function trackImport<T>(name: string, importFn: () => Promise<T>): Promise<T> {
   const startTime = performance.now();
 
   return importFn().then((module) => {

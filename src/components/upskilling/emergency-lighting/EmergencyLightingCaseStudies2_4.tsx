@@ -46,7 +46,8 @@ export const EmergencyLightingCaseStudies2_4 = () => {
           </div>
           <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 mt-4">
             <p className="text-foreground">
-              <strong>Result:</strong> Full BS 5266 compliance achieved with 25% reduction in evacuation time during fire drills.
+              <strong>Result:</strong> Full BS 5266 compliance achieved with 25% reduction in
+              evacuation time during fire drills.
             </p>
           </div>
         </div>
@@ -60,7 +61,8 @@ export const EmergencyLightingCaseStudies2_4 = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-foreground mb-2">Challenge</h4>
               <p className="text-foreground">
-                Multi-level shopping centre with complex escape routes, multiple tenant areas, and varying ceiling heights requiring comprehensive lighting design.
+                Multi-level shopping centre with complex escape routes, multiple tenant areas, and
+                varying ceiling heights requiring comprehensive lighting design.
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
@@ -101,7 +103,8 @@ export const EmergencyLightingCaseStudies2_4 = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-foreground mb-2">Special Considerations</h4>
               <p className="text-foreground">
-                Primary school requiring child-friendly escape route lighting with enhanced visibility and durability for high traffic areas.
+                Primary school requiring child-friendly escape route lighting with enhanced
+                visibility and durability for high traffic areas.
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">

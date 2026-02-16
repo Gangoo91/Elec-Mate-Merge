@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,9 +28,13 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-4">
                   <div className="font-medium text-foreground">{test.circuitRef}</div>
-                  <Badge 
+                  <Badge
                     variant={test.result === 'pass' ? 'default' : 'destructive'}
-                    className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
+                    className={
+                      test.result === 'pass'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-red-500/20 text-red-400'
+                    }
                   >
                     {test.result.toUpperCase()}
                   </Badge>
@@ -48,7 +51,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                   Remove
                 </Button>
               </div>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm mb-3">
                 <div>
                   <span className="text-white/80">Device:</span>
@@ -67,7 +70,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                   <span className="text-foreground ml-1">{test.zsMaxPermitted}Ω</span>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4 text-sm text-white/80">
                 <span>Test temp: {test.temperature}°C</span>
                 {test.notes && <span>Notes: {test.notes}</span>}

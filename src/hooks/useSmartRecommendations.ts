@@ -77,12 +77,12 @@ export function useSmartRecommendations(maxResults = 5) {
       const topSet = setsWithDue[0];
       recs.push({
         id: 'due-cards',
-        title: totalDue > topSet.dueCount
-          ? `Review ${totalDue} due cards`
-          : `Review ${topSet.title}`,
-        description: totalDue > topSet.dueCount
-          ? `${topSet.dueCount} in ${topSet.title} and ${totalDue - topSet.dueCount} more across other sets.`
-          : `${topSet.dueCount} card${topSet.dueCount !== 1 ? 's' : ''} due for review to strengthen your memory.`,
+        title:
+          totalDue > topSet.dueCount ? `Review ${totalDue} due cards` : `Review ${topSet.title}`,
+        description:
+          totalDue > topSet.dueCount
+            ? `${topSet.dueCount} in ${topSet.title} and ${totalDue - topSet.dueCount} more across other sets.`
+            : `${topSet.dueCount} card${topSet.dueCount !== 1 ? 's' : ''} due for review to strengthen your memory.`,
         actionLabel: 'Review now',
         actionPath: '/apprentice/on-job-tools/flashcards',
         priority: 1,
@@ -131,12 +131,12 @@ export function useSmartRecommendations(maxResults = 5) {
 
       recs.push({
         id: `revise-${best.id}`,
-        title: best.progress.progressPercentage > 0
-          ? `Revise ${best.title}`
-          : `Study ${best.title}`,
-        description: best.progress.progressPercentage > 0
-          ? `${best.progress.progressPercentage}% mastered — keep building on your progress.`
-          : 'Key topic for your qualification. Start with a quick session.',
+        title:
+          best.progress.progressPercentage > 0 ? `Revise ${best.title}` : `Study ${best.title}`,
+        description:
+          best.progress.progressPercentage > 0
+            ? `${best.progress.progressPercentage}% mastered — keep building on your progress.`
+            : 'Key topic for your qualification. Start with a quick session.',
         actionLabel: 'Study now',
         actionPath: '/apprentice/on-job-tools/flashcards',
         priority: 3,
@@ -280,10 +280,16 @@ export function useSmartRecommendations(maxResults = 5) {
     }
 
     // Sort by priority and limit
-    return recs
-      .sort((a, b) => a.priority - b.priority)
-      .slice(0, maxResults);
-  }, [quizResults, getPerformanceByCategory, getOverallStats, getSetProgress, getDueCards, streak, stats]);
+    return recs.sort((a, b) => a.priority - b.priority).slice(0, maxResults);
+  }, [
+    quizResults,
+    getPerformanceByCategory,
+    getOverallStats,
+    getSetProgress,
+    getDueCards,
+    streak,
+    stats,
+  ]);
 
   return { recommendations };
 }

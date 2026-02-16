@@ -9,7 +9,9 @@ import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
 
 export const EmergencyHighRiskLightingQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(emergencyHighRiskQuizData.questions.length).fill(-1));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    new Array(emergencyHighRiskQuizData.questions.length).fill(-1)
+  );
   const [showResults, setShowResults] = useState(false);
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -55,22 +57,20 @@ export const EmergencyHighRiskLightingQuiz = () => {
           <AlertTriangle className="h-5 w-5 text-red-400" />
           {emergencyHighRiskQuizData.title}
         </CardTitle>
-        <p className="text-gray-300 text-sm">
-          {emergencyHighRiskQuizData.description}
-        </p>
+        <p className="text-gray-300 text-sm">{emergencyHighRiskQuizData.description}</p>
       </CardHeader>
       <CardContent className="space-y-6">
         <QuizProgress
           currentQuestion={currentQuestion}
           totalQuestions={emergencyHighRiskQuizData.questions.length}
         />
-        
+
         <QuizQuestion
           question={emergencyHighRiskQuizData.questions[currentQuestion]}
           selectedAnswer={selectedAnswers[currentQuestion]}
           onAnswerSelect={handleAnswerSelect}
         />
-        
+
         <QuizNavigation
           currentQuestion={currentQuestion}
           totalQuestions={emergencyHighRiskQuizData.questions.length}

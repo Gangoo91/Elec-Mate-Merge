@@ -12,9 +12,10 @@ export const BenefitsOfSmartThermostatsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Smart thermostats offer significant advantages over traditional heating controls, delivering both practical benefits and cost savings.
+          Smart thermostats offer significant advantages over traditional heating controls,
+          delivering both practical benefits and cost savings.
         </p>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-elec-gray border border-green-600 rounded-lg p-4">
             <h4 className="font-semibold text-green-200 mb-3">Energy Efficiency</h4>
@@ -25,7 +26,7 @@ export const BenefitsOfSmartThermostatsSection = () => {
               <li>• Automatic setback</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-blue-600 rounded-lg p-4">
             <h4 className="font-semibold text-blue-200 mb-3">Convenience</h4>
             <ul className="space-y-2 text-sm text-blue-100">
@@ -35,7 +36,7 @@ export const BenefitsOfSmartThermostatsSection = () => {
               <li>• Status notifications</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-purple-600 rounded-lg p-4">
             <h4 className="font-semibold text-purple-200 mb-3">Comfort</h4>
             <ul className="space-y-2 text-sm text-purple-100">
@@ -45,7 +46,7 @@ export const BenefitsOfSmartThermostatsSection = () => {
               <li>• Zone-based heating</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-orange-600 rounded-lg p-4">
             <h4 className="font-semibold text-orange-200 mb-3">Integration</h4>
             <ul className="space-y-2 text-sm text-orange-100">

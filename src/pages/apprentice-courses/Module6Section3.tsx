@@ -1,51 +1,51 @@
-import { ArrowLeft, Wrench, TestTube, Eye, Zap, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Wrench, TestTube, Eye, Zap, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Introduction to Test Instruments (Multimeter, IR Tester, Continuity Tester)",
-    description: "Overview of essential electrical testing equipment",
+    number: 'Subsection 1',
+    title: 'Introduction to Test Instruments (Multimeter, IR Tester, Continuity Tester)',
+    description: 'Overview of essential electrical testing equipment',
     icon: Wrench,
-    href: "3-1"
+    href: '3-1',
   },
   {
-    number: "Subsection 2",
-    title: "GS38 Compliance and Tester Safety",
-    description: "Safety requirements for electrical test equipment",
+    number: 'Subsection 2',
+    title: 'GS38 Compliance and Tester Safety',
+    description: 'Safety requirements for electrical test equipment',
     icon: TestTube,
-    href: "3-2"
+    href: '3-2',
   },
   {
-    number: "Subsection 3",
-    title: "Setting Up and Zeroing Instruments",
-    description: "Proper preparation and calibration of test equipment",
+    number: 'Subsection 3',
+    title: 'Setting Up and Zeroing Instruments',
+    description: 'Proper preparation and calibration of test equipment',
     icon: Eye,
-    href: "3-3"
+    href: '3-3',
   },
   {
-    number: "Subsection 4",
-    title: "Proving Dead and Safe to Test",
-    description: "Essential safety procedure before testing begins",
+    number: 'Subsection 4',
+    title: 'Proving Dead and Safe to Test',
+    description: 'Essential safety procedure before testing begins',
     icon: Zap,
-    href: "3-4"
+    href: '3-4',
   },
   {
-    number: "Subsection 5",
-    title: "Using a Proving Unit and Two-Pole Voltage Tester",
-    description: "Safe voltage testing procedures and equipment",
+    number: 'Subsection 5',
+    title: 'Using a Proving Unit and Two-Pole Voltage Tester',
+    description: 'Safe voltage testing procedures and equipment',
     icon: Shield,
-    href: "3-5"
+    href: '3-5',
   },
   {
-    number: "Subsection 6",
-    title: "When to Use Each Instrument and Why",
-    description: "Selecting appropriate test equipment for different applications",
+    number: 'Subsection 6',
+    title: 'When to Use Each Instrument and Why',
+    description: 'Selecting appropriate test equipment for different applications',
     icon: Wrench,
-    href: "3-6"
-  }
+    href: '3-6',
+  },
 ];
 
 const Section3 = () => {

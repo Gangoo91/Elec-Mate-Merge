@@ -10,18 +10,18 @@ export type AccountingStatus = 'connected' | 'pending' | 'error' | 'disconnected
 export interface AccountingIntegration {
   provider: AccountingProvider;
   status: AccountingStatus;
-  tenantId?: string;        // Organisation/company ID in accounting system
-  tenantName?: string;      // "ABC Electrical Ltd" display name
-  connectedAt?: string;     // ISO date string
-  lastSyncAt?: string;      // ISO date string
+  tenantId?: string; // Organisation/company ID in accounting system
+  tenantName?: string; // "ABC Electrical Ltd" display name
+  connectedAt?: string; // ISO date string
+  lastSyncAt?: string; // ISO date string
   autoSyncEnabled: boolean;
-  error?: string;           // Error message if status is 'error'
+  error?: string; // Error message if status is 'error'
 }
 
 export interface AccountingInvoicePayload {
   invoiceNumber: string;
-  invoiceDate: string;      // ISO date string
-  dueDate: string;          // ISO date string
+  invoiceDate: string; // ISO date string
+  dueDate: string; // ISO date string
   clientName: string;
   clientEmail?: string;
   clientAddress?: string;
@@ -30,8 +30,8 @@ export interface AccountingInvoicePayload {
   subtotal: number;
   vatAmount: number;
   total: number;
-  currency: string;         // 'GBP', 'USD', etc.
-  reference?: string;       // Job reference or PO number
+  currency: string; // 'GBP', 'USD', etc.
+  reference?: string; // Job reference or PO number
   notes?: string;
 }
 
@@ -40,8 +40,8 @@ export interface AccountingLineItem {
   quantity: number;
   unitPrice: number;
   total: number;
-  vatRate?: number;         // VAT percentage (e.g., 20 for 20%)
-  accountCode?: string;     // Chart of accounts code
+  vatRate?: number; // VAT percentage (e.g., 20 for 20%)
+  accountCode?: string; // Chart of accounts code
 }
 
 export interface AccountingInvoiceSync {
@@ -49,7 +49,7 @@ export interface AccountingInvoiceSync {
   userId: string;
   invoiceId: string;
   provider: AccountingProvider;
-  externalInvoiceId?: string;  // ID in the accounting system
+  externalInvoiceId?: string; // ID in the accounting system
   status: 'pending' | 'synced' | 'error';
   errorMessage?: string;
   syncedAt?: string;
@@ -73,20 +73,27 @@ export interface AccountingProviderConfig {
   id: AccountingProvider;
   name: string;
   description: string;
-  logoColor: string;        // Tailwind color class
-  bgColor: string;          // Background color class
-  scopes: string[];         // OAuth scopes required
-  authUrl: string;          // OAuth authorization URL
+  logoColor: string; // Tailwind color class
+  bgColor: string; // Background color class
+  scopes: string[]; // OAuth scopes required
+  authUrl: string; // OAuth authorization URL
 }
 
 export const ACCOUNTING_PROVIDERS: Record<AccountingProvider, AccountingProviderConfig> = {
   xero: {
     id: 'xero',
     name: 'Xero',
-    description: 'UK\'s #1 small business accounting',
+    description: "UK's #1 small business accounting",
     logoColor: 'text-[#13B5EA]',
     bgColor: 'bg-[#13B5EA]/15',
-    scopes: ['openid', 'profile', 'email', 'accounting.transactions', 'accounting.contacts', 'offline_access'],
+    scopes: [
+      'openid',
+      'profile',
+      'email',
+      'accounting.transactions',
+      'accounting.contacts',
+      'offline_access',
+    ],
     authUrl: 'https://login.xero.com/identity/connect/authorize',
   },
   quickbooks: {
@@ -128,7 +135,7 @@ export const isProviderConnected = (
   integrations: AccountingIntegration[] | undefined,
   provider: AccountingProvider
 ): boolean => {
-  return integrations?.some(i => i.provider === provider && i.status === 'connected') || false;
+  return integrations?.some((i) => i.provider === provider && i.status === 'connected') || false;
 };
 
 // Helper to get integration by provider
@@ -136,5 +143,5 @@ export const getIntegration = (
   integrations: AccountingIntegration[] | undefined,
   provider: AccountingProvider
 ): AccountingIntegration | undefined => {
-  return integrations?.find(i => i.provider === provider);
+  return integrations?.find((i) => i.provider === provider);
 };

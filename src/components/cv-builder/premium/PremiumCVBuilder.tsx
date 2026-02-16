@@ -3,15 +3,15 @@
  * 5-step wizard flow with template selection and AI assistance
  */
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
 import {
   ArrowLeft,
   ChevronLeft,
@@ -30,34 +30,34 @@ import {
   Download,
   Upload,
   IdCard,
-} from "lucide-react";
+} from 'lucide-react';
 
 // Premium components
-import CVBuilderHero from "./CVBuilderHero";
-import CVTemplateShowcase, { CVTemplateId } from "./CVTemplateShowcase";
-import CVSectionCard, { CVEntryCard, CVAddButton } from "./CVSectionCard";
-import AIAssistantPanel from "./AIAssistantPanel";
-import CVPreviewSheet from "./CVPreviewSheet";
+import CVBuilderHero from './CVBuilderHero';
+import CVTemplateShowcase, { CVTemplateId } from './CVTemplateShowcase';
+import CVSectionCard, { CVEntryCard, CVAddButton } from './CVSectionCard';
+import AIAssistantPanel from './AIAssistantPanel';
+import CVPreviewSheet from './CVPreviewSheet';
 
 // Types and utilities
-import { CVData, defaultCVData, WorkExperience, Education } from "../types";
-import { generateCVPDFByTemplate } from "../pdfGenerators";
-import { AIService } from "../ai/AIService";
-import { getCurrentUserElecIdForCV, saveCV } from "@/services/elecIdService";
-import { toast } from "@/hooks/use-toast";
-import { pageVariants, stepSlideVariants, listContainerVariants } from "./animations/variants";
+import { CVData, defaultCVData, WorkExperience, Education } from '../types';
+import { generateCVPDFByTemplate } from '../pdfGenerators';
+import { AIService } from '../ai/AIService';
+import { getCurrentUserElecIdForCV, saveCV } from '@/services/elecIdService';
+import { toast } from '@/hooks/use-toast';
+import { pageVariants, stepSlideVariants, listContainerVariants } from './animations/variants';
 
 // Storage key
-const CV_STORAGE_KEY = "elecmate-cv-draft";
-const TEMPLATE_STORAGE_KEY = "elecmate-cv-template";
+const CV_STORAGE_KEY = 'elecmate-cv-draft';
+const TEMPLATE_STORAGE_KEY = 'elecmate-cv-template';
 
 // Step configuration
 const STEPS = [
-  { id: "template", title: "Template", icon: FileText },
-  { id: "personal", title: "Personal", icon: User },
-  { id: "experience", title: "Experience", icon: Briefcase },
-  { id: "education", title: "Education", icon: GraduationCap },
-  { id: "skills", title: "Skills", icon: Wrench },
+  { id: 'template', title: 'Template', icon: FileText },
+  { id: 'personal', title: 'Personal', icon: User },
+  { id: 'experience', title: 'Experience', icon: Briefcase },
+  { id: 'education', title: 'Education', icon: GraduationCap },
+  { id: 'skills', title: 'Skills', icon: Wrench },
 ];
 
 const PremiumCVBuilder = () => {
@@ -65,11 +65,11 @@ const PremiumCVBuilder = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(0);
   const [cvData, setCvData] = useState<CVData>(defaultCVData);
-  const [template, setTemplate] = useState<CVTemplateId>("modern");
+  const [template, setTemplate] = useState<CVTemplateId>('modern');
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isAIPanelOpen, setIsAIPanelOpen] = useState(false);
-  const [aiSectionContext, setAISectionContext] = useState("");
-  const [aiCurrentContent, setAICurrentContent] = useState("");
+  const [aiSectionContext, setAISectionContext] = useState('');
+  const [aiCurrentContent, setAICurrentContent] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
@@ -84,7 +84,7 @@ const PremiumCVBuilder = () => {
       try {
         setCvData(JSON.parse(savedCV));
       } catch (e) {
-        console.error("Error loading CV draft:", e);
+        console.error('Error loading CV draft:', e);
       }
     }
 
@@ -147,7 +147,7 @@ const PremiumCVBuilder = () => {
   };
 
   // AI Assistant handlers
-  const openAIPanel = (context: string, content: string = "") => {
+  const openAIPanel = (context: string, content: string = '') => {
     setAISectionContext(context);
     setAICurrentContent(content);
     setIsAIPanelOpen(true);
@@ -156,8 +156,8 @@ const PremiumCVBuilder = () => {
   const handleGenerateSuggestion = async (prompt: string): Promise<string> => {
     return await AIService.generateProfessionalSummary(
       {
-        targetRole: "Electrician",
-        experience: "Experienced",
+        targetRole: 'Electrician',
+        experience: 'Experienced',
         personalInfo: cvData.personalInfo,
         previousRoles: cvData.experience,
         skills: cvData.skills,
@@ -167,7 +167,7 @@ const PremiumCVBuilder = () => {
   };
 
   const handleAcceptSuggestion = (content: string) => {
-    if (aiSectionContext === "Professional Summary") {
+    if (aiSectionContext === 'Professional Summary') {
       setCvData((prev) => ({
         ...prev,
         personalInfo: { ...prev.personalInfo, professionalSummary: content },
@@ -179,13 +179,13 @@ const PremiumCVBuilder = () => {
   const addExperience = () => {
     const newExp: WorkExperience = {
       id: Date.now().toString(),
-      jobTitle: "",
-      company: "",
-      location: "",
-      startDate: "",
-      endDate: "",
+      jobTitle: '',
+      company: '',
+      location: '',
+      startDate: '',
+      endDate: '',
       current: false,
-      description: "",
+      description: '',
     };
     setCvData((prev) => ({
       ...prev,
@@ -196,9 +196,7 @@ const PremiumCVBuilder = () => {
   const updateExperience = (id: string, field: keyof WorkExperience, value: any) => {
     setCvData((prev) => ({
       ...prev,
-      experience: prev.experience.map((exp) =>
-        exp.id === id ? { ...exp, [field]: value } : exp
-      ),
+      experience: prev.experience.map((exp) => (exp.id === id ? { ...exp, [field]: value } : exp)),
     }));
   };
 
@@ -213,13 +211,13 @@ const PremiumCVBuilder = () => {
   const addEducation = () => {
     const newEdu: Education = {
       id: Date.now().toString(),
-      qualification: "",
-      institution: "",
-      location: "",
-      startDate: "",
-      endDate: "",
+      qualification: '',
+      institution: '',
+      location: '',
+      startDate: '',
+      endDate: '',
       current: false,
-      grade: "",
+      grade: '',
     };
     setCvData((prev) => ({
       ...prev,
@@ -230,9 +228,7 @@ const PremiumCVBuilder = () => {
   const updateEducation = (id: string, field: keyof Education, value: any) => {
     setCvData((prev) => ({
       ...prev,
-      education: prev.education.map((edu) =>
-        edu.id === id ? { ...edu, [field]: value } : edu
-      ),
+      education: prev.education.map((edu) => (edu.id === id ? { ...edu, [field]: value } : edu)),
     }));
   };
 
@@ -244,7 +240,7 @@ const PremiumCVBuilder = () => {
   };
 
   // Skills handlers
-  const [newSkill, setNewSkill] = useState("");
+  const [newSkill, setNewSkill] = useState('');
 
   const addSkill = () => {
     if (newSkill.trim() && !cvData.skills.includes(newSkill.trim())) {
@@ -252,7 +248,7 @@ const PremiumCVBuilder = () => {
         ...prev,
         skills: [...prev.skills, newSkill.trim()],
       }));
-      setNewSkill("");
+      setNewSkill('');
     }
   };
 
@@ -269,15 +265,15 @@ const PremiumCVBuilder = () => {
     try {
       await generateCVPDFByTemplate(cvData, template);
       toast({
-        title: "CV Downloaded",
+        title: 'CV Downloaded',
         description: `Your ${template.charAt(0).toUpperCase() + template.slice(1)} CV has been downloaded as a PDF.`,
       });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
-        title: "Download Failed",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
+        title: 'Download Failed',
+        description: 'Failed to generate PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -292,9 +288,9 @@ const PremiumCVBuilder = () => {
 
       if (!profile && !userInfo) {
         toast({
-          title: "No Elec-ID Found",
-          description: "Please set up your Elec-ID profile first to import data.",
-          variant: "destructive",
+          title: 'No Elec-ID Found',
+          description: 'Please set up your Elec-ID profile first to import data.',
+          variant: 'destructive',
         });
         return;
       }
@@ -321,8 +317,8 @@ const PremiumCVBuilder = () => {
         })),
         education: [], // Education typically separate from Elec-ID
         skills: (profile?.skills || []).map((s) => s.skill_name),
-        certifications: (profile?.qualifications || []).map((q) =>
-          `${q.qualification_name}${q.awarding_body ? ` - ${q.awarding_body}` : ''}`
+        certifications: (profile?.qualifications || []).map(
+          (q) => `${q.qualification_name}${q.awarding_body ? ` - ${q.awarding_body}` : ''}`
         ),
       };
 
@@ -334,11 +330,14 @@ const PremiumCVBuilder = () => {
           phone: importedData.personalInfo?.phone || prev.personalInfo.phone,
           address: prev.personalInfo.address,
           postcode: prev.personalInfo.postcode,
-          professionalSummary: importedData.personalInfo?.professionalSummary || prev.personalInfo.professionalSummary,
+          professionalSummary:
+            importedData.personalInfo?.professionalSummary || prev.personalInfo.professionalSummary,
         },
         experience: importedData.experience?.length ? importedData.experience : prev.experience,
         education: prev.education,
-        skills: importedData.skills?.length ? [...new Set([...prev.skills, ...importedData.skills])] : prev.skills,
+        skills: importedData.skills?.length
+          ? [...new Set([...prev.skills, ...importedData.skills])]
+          : prev.skills,
         certifications: importedData.certifications?.length
           ? [...new Set([...prev.certifications, ...importedData.certifications])]
           : prev.certifications,
@@ -346,15 +345,15 @@ const PremiumCVBuilder = () => {
 
       setHasImportedElecId(true);
       toast({
-        title: "Elec-ID Data Imported",
-        description: "Your profile information has been imported successfully.",
+        title: 'Elec-ID Data Imported',
+        description: 'Your profile information has been imported successfully.',
       });
     } catch (error) {
       console.error('Import error:', error);
       toast({
-        title: "Import Failed",
-        description: "Failed to import Elec-ID data. Please try again.",
-        variant: "destructive",
+        title: 'Import Failed',
+        description: 'Failed to import Elec-ID data. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsImporting(false);
@@ -372,15 +371,15 @@ const PremiumCVBuilder = () => {
         is_primary: true,
       });
       toast({
-        title: "CV Saved",
-        description: "Your CV has been saved to your profile.",
+        title: 'CV Saved',
+        description: 'Your CV has been saved to your profile.',
       });
     } catch (error) {
       console.error('Save error:', error);
       toast({
-        title: "Save Failed",
-        description: "Failed to save CV. Please try again.",
-        variant: "destructive",
+        title: 'Save Failed',
+        description: 'Failed to save CV. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSaving(false);
@@ -391,12 +390,7 @@ const PremiumCVBuilder = () => {
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
-        return (
-          <CVTemplateShowcase
-            selectedTemplate={template}
-            onSelectTemplate={setTemplate}
-          />
-        );
+        return <CVTemplateShowcase selectedTemplate={template} onSelectTemplate={setTemplate} />;
 
       case 2:
         return (
@@ -447,9 +441,7 @@ const PremiumCVBuilder = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
-                      Phone
-                    </label>
+                    <label className="text-xs font-medium text-white/60 mb-1.5 block">Phone</label>
                     <Input
                       type="tel"
                       value={cvData.personalInfo.phone}
@@ -481,9 +473,7 @@ const PremiumCVBuilder = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-white/60 mb-1.5 block">
-                    Address
-                  </label>
+                  <label className="text-xs font-medium text-white/60 mb-1.5 block">Address</label>
                   <Input
                     value={cvData.personalInfo.address}
                     onChange={(e) =>
@@ -505,7 +495,7 @@ const PremiumCVBuilder = () => {
               icon={<FileText className="h-5 w-5" />}
               isCompleted={!!cvData.personalInfo.professionalSummary}
               onAIAssist={() =>
-                openAIPanel("Professional Summary", cvData.personalInfo.professionalSummary)
+                openAIPanel('Professional Summary', cvData.personalInfo.professionalSummary)
               }
               defaultExpanded
             >
@@ -541,7 +531,10 @@ const PremiumCVBuilder = () => {
                 </div>
               )}
               {cvData.experience.map((exp, index) => (
-                <div key={exp.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-4">
+                <div
+                  key={exp.id}
+                  className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-4"
+                >
                   {/* Job badge */}
                   <div className="flex items-center justify-between">
                     <Badge variant="outline" className="text-xs text-white/60 border-white/20">
@@ -562,7 +555,7 @@ const PremiumCVBuilder = () => {
                       </label>
                       <Input
                         value={exp.jobTitle}
-                        onChange={(e) => updateExperience(exp.id, "jobTitle", e.target.value)}
+                        onChange={(e) => updateExperience(exp.id, 'jobTitle', e.target.value)}
                         placeholder="e.g., Qualified Electrician"
                         className="bg-white/5 border-white/10 text-white h-11"
                       />
@@ -573,7 +566,7 @@ const PremiumCVBuilder = () => {
                       </label>
                       <Input
                         value={exp.company}
-                        onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
+                        onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
                         placeholder="e.g., ABC Electrical Ltd"
                         className="bg-white/5 border-white/10 text-white h-11"
                       />
@@ -587,7 +580,7 @@ const PremiumCVBuilder = () => {
                     </label>
                     <Input
                       value={exp.location}
-                      onChange={(e) => updateExperience(exp.id, "location", e.target.value)}
+                      onChange={(e) => updateExperience(exp.id, 'location', e.target.value)}
                       placeholder="e.g., London, UK"
                       className="bg-white/5 border-white/10 text-white h-11"
                     />
@@ -603,7 +596,7 @@ const PremiumCVBuilder = () => {
                         <Input
                           type="month"
                           value={exp.startDate}
-                          onChange={(e) => updateExperience(exp.id, "startDate", e.target.value)}
+                          onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
                           className="bg-white/5 border-white/10 text-white h-11"
                         />
                       </div>
@@ -614,9 +607,9 @@ const PremiumCVBuilder = () => {
                         <Input
                           type="month"
                           value={exp.endDate}
-                          onChange={(e) => updateExperience(exp.id, "endDate", e.target.value)}
+                          onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
                           disabled={exp.current}
-                          placeholder={exp.current ? "Present" : ""}
+                          placeholder={exp.current ? 'Present' : ''}
                           className="bg-white/5 border-white/10 text-white h-11 disabled:opacity-50"
                         />
                       </div>
@@ -625,7 +618,7 @@ const PremiumCVBuilder = () => {
                       <Checkbox
                         id={`current-${exp.id}`}
                         checked={exp.current}
-                        onCheckedChange={(checked) => updateExperience(exp.id, "current", checked)}
+                        onCheckedChange={(checked) => updateExperience(exp.id, 'current', checked)}
                         className="border-white/40 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
                       />
                       <label
@@ -647,7 +640,7 @@ const PremiumCVBuilder = () => {
                         type="button"
                         variant="ghost"
                         size="sm"
-                        onClick={() => openAIPanel("Job Description", exp.description)}
+                        onClick={() => openAIPanel('Job Description', exp.description)}
                         className="h-7 text-xs text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
                       >
                         <Sparkles className="h-3 w-3 mr-1" />
@@ -656,7 +649,7 @@ const PremiumCVBuilder = () => {
                     </div>
                     <Textarea
                       value={exp.description}
-                      onChange={(e) => updateExperience(exp.id, "description", e.target.value)}
+                      onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
                       placeholder="• Installed and maintained electrical systems in commercial buildings&#10;• Carried out testing and inspection to BS 7671 standards&#10;• Supervised apprentices and junior electricians"
                       className="min-h-[100px] bg-white/5 border-white/10 text-white resize-none"
                     />
@@ -701,7 +694,10 @@ const PremiumCVBuilder = () => {
                 </div>
               )}
               {cvData.education.map((edu, index) => (
-                <div key={edu.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-4">
+                <div
+                  key={edu.id}
+                  className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-4"
+                >
                   {/* Qualification badge */}
                   <div className="flex items-center justify-between">
                     <Badge variant="outline" className="text-xs text-white/60 border-white/20">
@@ -722,7 +718,7 @@ const PremiumCVBuilder = () => {
                       </label>
                       <Input
                         value={edu.qualification}
-                        onChange={(e) => updateEducation(edu.id, "qualification", e.target.value)}
+                        onChange={(e) => updateEducation(edu.id, 'qualification', e.target.value)}
                         placeholder="e.g., City & Guilds 2391"
                         className="bg-white/5 border-white/10 text-white h-11"
                       />
@@ -733,7 +729,7 @@ const PremiumCVBuilder = () => {
                       </label>
                       <Input
                         value={edu.institution}
-                        onChange={(e) => updateEducation(edu.id, "institution", e.target.value)}
+                        onChange={(e) => updateEducation(edu.id, 'institution', e.target.value)}
                         placeholder="e.g., Electrical Training College"
                         className="bg-white/5 border-white/10 text-white h-11"
                       />
@@ -747,7 +743,7 @@ const PremiumCVBuilder = () => {
                     </label>
                     <Input
                       value={edu.location}
-                      onChange={(e) => updateEducation(edu.id, "location", e.target.value)}
+                      onChange={(e) => updateEducation(edu.id, 'location', e.target.value)}
                       placeholder="e.g., Birmingham, UK"
                       className="bg-white/5 border-white/10 text-white h-11"
                     />
@@ -763,7 +759,7 @@ const PremiumCVBuilder = () => {
                         <Input
                           type="month"
                           value={edu.startDate}
-                          onChange={(e) => updateEducation(edu.id, "startDate", e.target.value)}
+                          onChange={(e) => updateEducation(edu.id, 'startDate', e.target.value)}
                           className="bg-white/5 border-white/10 text-white h-11"
                         />
                       </div>
@@ -774,9 +770,9 @@ const PremiumCVBuilder = () => {
                         <Input
                           type="month"
                           value={edu.endDate}
-                          onChange={(e) => updateEducation(edu.id, "endDate", e.target.value)}
+                          onChange={(e) => updateEducation(edu.id, 'endDate', e.target.value)}
                           disabled={edu.current}
-                          placeholder={edu.current ? "Present" : ""}
+                          placeholder={edu.current ? 'Present' : ''}
                           className="bg-white/5 border-white/10 text-white h-11 disabled:opacity-50"
                         />
                       </div>
@@ -785,7 +781,7 @@ const PremiumCVBuilder = () => {
                       <Checkbox
                         id={`current-edu-${edu.id}`}
                         checked={edu.current}
-                        onCheckedChange={(checked) => updateEducation(edu.id, "current", checked)}
+                        onCheckedChange={(checked) => updateEducation(edu.id, 'current', checked)}
                         className="border-white/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
                       />
                       <label
@@ -804,7 +800,7 @@ const PremiumCVBuilder = () => {
                     </label>
                     <Input
                       value={edu.grade}
-                      onChange={(e) => updateEducation(edu.id, "grade", e.target.value)}
+                      onChange={(e) => updateEducation(edu.id, 'grade', e.target.value)}
                       placeholder="e.g., Distinction, Pass, 2:1"
                       className="bg-white/5 border-white/10 text-white h-11"
                     />
@@ -840,7 +836,7 @@ const PremiumCVBuilder = () => {
             icon={<Wrench className="h-5 w-5" />}
             completionCount={cvData.skills.length}
             totalCount={3}
-            onAIAssist={() => openAIPanel("Skills", cvData.skills.join(", "))}
+            onAIAssist={() => openAIPanel('Skills', cvData.skills.join(', '))}
             defaultExpanded
           >
             <div className="space-y-4">
@@ -848,7 +844,7 @@ const PremiumCVBuilder = () => {
                 <Input
                   value={newSkill}
                   onChange={(e) => setNewSkill(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && addSkill()}
+                  onKeyPress={(e) => e.key === 'Enter' && addSkill()}
                   placeholder="Add a skill..."
                   className="bg-white/5 border-white/10 text-white"
                 />
@@ -881,14 +877,14 @@ const PremiumCVBuilder = () => {
                 <p className="text-xs text-white/50 mb-2">Suggested for electricians:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {[
-                    "18th Edition",
-                    "Testing & Inspection",
-                    "PAT Testing",
-                    "Fault Finding",
-                    "Commercial Installation",
-                    "Domestic Wiring",
-                    "Solar PV",
-                    "EV Charging",
+                    '18th Edition',
+                    'Testing & Inspection',
+                    'PAT Testing',
+                    'Fault Finding',
+                    'Commercial Installation',
+                    'Domestic Wiring',
+                    'Solar PV',
+                    'EV Charging',
                   ]
                     .filter((s) => !cvData.skills.includes(s))
                     .map((skill) => (
@@ -940,7 +936,9 @@ const PremiumCVBuilder = () => {
             </Button>
             <div>
               <h1 className="text-lg font-bold text-white">CV Builder</h1>
-              <p className="text-xs text-white/50">Step {currentStep} of {STEPS.length}</p>
+              <p className="text-xs text-white/50">
+                Step {currentStep} of {STEPS.length}
+              </p>
             </div>
           </div>
 
@@ -1054,7 +1052,7 @@ const PremiumCVBuilder = () => {
           setIsPreviewOpen(false);
           // Map section to step
           const stepMap: Record<string, number> = {
-            "personal-info": 2,
+            'personal-info': 2,
             experience: 3,
             education: 4,
             skills: 5,

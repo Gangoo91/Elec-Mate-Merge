@@ -1,45 +1,43 @@
-import { ArrowLeft, Dumbbell, MoveHorizontal, Users, Boxes } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Dumbbell, MoveHorizontal, Users, Boxes } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The Kinetic Lifting Technique",
+    title: 'The Kinetic Lifting Technique',
     icon: Dumbbell,
     description:
-      "The eight-step safe lift, base of support, centre of gravity, and smooth controlled movements",
+      'The eight-step safe lift, base of support, centre of gravity, and smooth controlled movements',
   },
   {
     id: 2,
-    title: "Pushing, Pulling & Carrying",
+    title: 'Pushing, Pulling & Carrying',
     icon: MoveHorizontal,
     description:
-      "Force requirements, body positioning, reducing friction, and safe carrying techniques",
+      'Force requirements, body positioning, reducing friction, and safe carrying techniques',
   },
   {
     id: 3,
-    title: "Team Handling & Communication",
+    title: 'Team Handling & Communication',
     icon: Users,
-    description:
-      "Coordinated lifts, verbal signals, planning team lifts, and maximum team sizes",
+    description: 'Coordinated lifts, verbal signals, planning team lifts, and maximum team sizes',
   },
   {
     id: 4,
-    title: "Awkward Loads & Restricted Spaces",
+    title: 'Awkward Loads & Restricted Spaces',
     icon: Boxes,
-    description:
-      "Long loads, uneven loads, hot or sharp items, and handling in confined areas",
+    description: 'Long loads, uneven loads, hot or sharp items, and handling in confined areas',
   },
 ];
 
 export default function ManualHandlingModule2() {
   useSEO({
-    title: "Module 2: Principles of Safe Lifting | Manual Handling",
+    title: 'Module 2: Principles of Safe Lifting | Manual Handling',
     description:
-      "The kinetic lifting technique, pushing, pulling, carrying, team handling, and managing awkward loads in restricted spaces.",
+      'The kinetic lifting technique, pushing, pulling, carrying, team handling, and managing awkward loads in restricted spaces.',
   });
 
   return (
@@ -66,9 +64,7 @@ export default function ManualHandlingModule2() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3">
-              <span className="text-emerald-400 text-xs font-semibold">
-                MODULE 2
-              </span>
+              <span className="text-emerald-400 text-xs font-semibold">MODULE 2</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +74,8 @@ export default function ManualHandlingModule2() {
               Principles of Safe Lifting
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The kinetic lifting technique, pushing, pulling, carrying, team
-              handling, and managing awkward loads
+              The kinetic lifting technique, pushing, pulling, carrying, team handling, and managing
+              awkward loads
             </p>
           </div>
 

@@ -8,52 +8,70 @@ export const CostDisruptionSection = () => {
 
   const costComparison = [
     {
-      factor: "Initial Investment",
-      retrofit: { amount: "£500-2,000", description: "Lower upfront cost, device-by-device purchase" },
-      newbuild: { amount: "£5,000-25,000", description: "Higher upfront cost, comprehensive system" }
+      factor: 'Initial Investment',
+      retrofit: {
+        amount: '£500-2,000',
+        description: 'Lower upfront cost, device-by-device purchase',
+      },
+      newbuild: {
+        amount: '£5,000-25,000',
+        description: 'Higher upfront cost, comprehensive system',
+      },
     },
     {
-      factor: "Installation Cost",
-      retrofit: { amount: "£0-500", description: "DIY friendly, minimal labour costs" },
-      newbuild: { amount: "£2,000-8,000", description: "Professional installation during construction" }
+      factor: 'Installation Cost',
+      retrofit: { amount: '£0-500', description: 'DIY friendly, minimal labour costs' },
+      newbuild: {
+        amount: '£2,000-8,000',
+        description: 'Professional installation during construction',
+      },
     },
     {
-      factor: "Disruption Level",
-      retrofit: { amount: "Minimal", description: "No construction work, immediate use" },
-      newbuild: { amount: "None (post-build)", description: "Disruption only during construction phase" }
+      factor: 'Disruption Level',
+      retrofit: { amount: 'Minimal', description: 'No construction work, immediate use' },
+      newbuild: {
+        amount: 'None (post-build)',
+        description: 'Disruption only during construction phase',
+      },
     },
     {
-      factor: "Aesthetic Impact",
-      retrofit: { amount: "Visible devices", description: "Surface-mounted devices, cable routing" },
-      newbuild: { amount: "Hidden integration", description: "Concealed wiring, professional finish" }
-    }
+      factor: 'Aesthetic Impact',
+      retrofit: {
+        amount: 'Visible devices',
+        description: 'Surface-mounted devices, cable routing',
+      },
+      newbuild: {
+        amount: 'Hidden integration',
+        description: 'Concealed wiring, professional finish',
+      },
+    },
   ];
 
   const practicalScenarios = [
     {
-      scenario: "Young Professional Renter",
+      scenario: 'Young Professional Renter',
       icon: Clock,
-      approach: "Retrofit",
-      reasoning: "Temporary installation, low cost, take devices when moving",
-      typical_spend: "£300-800",
-      devices: "Smart bulbs, plugs, wireless thermostat, security camera"
+      approach: 'Retrofit',
+      reasoning: 'Temporary installation, low cost, take devices when moving',
+      typical_spend: '£300-800',
+      devices: 'Smart bulbs, plugs, wireless thermostat, security camera',
     },
     {
-      scenario: "Family Home Owner",
+      scenario: 'Family Home Owner',
       icon: Hammer,
-      approach: "Retrofit + Gradual Expansion",
-      reasoning: "Budget constraints, test before major investment",
-      typical_spend: "£1,500-4,000 over time",
-      devices: "Start basic, add automation, eventually integrate systems"
+      approach: 'Retrofit + Gradual Expansion',
+      reasoning: 'Budget constraints, test before major investment',
+      typical_spend: '£1,500-4,000 over time',
+      devices: 'Start basic, add automation, eventually integrate systems',
     },
     {
-      scenario: "Custom New Build",
+      scenario: 'Custom New Build',
       icon: Eye,
-      approach: "Comprehensive New Build",
-      reasoning: "One-time opportunity, long-term home, maximum integration",
-      typical_spend: "£15,000-40,000",
-      devices: "Whole-home automation, AV systems, security, HVAC control"
-    }
+      approach: 'Comprehensive New Build',
+      reasoning: 'One-time opportunity, long-term home, maximum integration',
+      typical_spend: '£15,000-40,000',
+      devices: 'Whole-home automation, AV systems, security, HVAC control',
+    },
   ];
 
   return (
@@ -70,7 +88,7 @@ export const CostDisruptionSection = () => {
           <p className="text-lg font-medium text-foreground mb-4">
             Understanding the financial and practical implications of each installation approach.
           </p>
-          
+
           {/* Cost Comparison Table */}
           <div>
             <h4 className="font-semibold text-foreground mb-4">Cost Comparison Analysis</h4>
@@ -101,7 +119,9 @@ export const CostDisruptionSection = () => {
 
           {/* Practical Scenarios */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4 text-lg">Real-World Cost Scenarios</h4>
+            <h4 className="font-semibold text-foreground mb-4 text-lg">
+              Real-World Cost Scenarios
+            </h4>
             <div className="grid grid-cols-1 gap-4">
               {practicalScenarios.map((scenario, index) => (
                 <div key={index} className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
@@ -110,7 +130,9 @@ export const CostDisruptionSection = () => {
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
                         <h5 className="font-semibold text-foreground">{scenario.scenario}</h5>
-                        <span className="text-elec-yellow font-medium">{scenario.typical_spend}</span>
+                        <span className="text-elec-yellow font-medium">
+                          {scenario.typical_spend}
+                        </span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                         <div>
@@ -156,7 +178,7 @@ export const CostDisruptionSection = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-elec-gray border border-gray-600 rounded-lg">
               <h4 className="font-semibold text-foreground mb-3">When New Build Makes Sense</h4>
               <ul className="space-y-2 text-sm text-gray-300">
@@ -193,24 +215,34 @@ export const CostDisruptionSection = () => {
         <CardContent className="space-y-4">
           <div className="space-y-3">
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q1: Which installation type typically has lower upfront costs and why?</p>
+              <p className="font-medium text-foreground">
+                Q1: Which installation type typically has lower upfront costs and why?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q2: What is the main aesthetic advantage of new build installations?</p>
+              <p className="font-medium text-foreground">
+                Q2: What is the main aesthetic advantage of new build installations?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q3: Why might retrofit be better for testing smart home concepts?</p>
+              <p className="font-medium text-foreground">
+                Q3: Why might retrofit be better for testing smart home concepts?
+              </p>
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={() => setShowAnswers(!showAnswers)}
-            variant="outline" 
+            variant="outline"
             className="w-full border-gray-600 text-gray-300 hover:bg-[#323232] hover:text-foreground"
           >
-            {showAnswers ? <ChevronUp className="mr-2 h-4 w-4" /> : <ChevronDown className="mr-2 h-4 w-4" />}
+            {showAnswers ? (
+              <ChevronUp className="mr-2 h-4 w-4" />
+            ) : (
+              <ChevronDown className="mr-2 h-4 w-4" />
+            )}
             {showAnswers ? 'Hide Answers' : 'Show Answers'}
           </Button>
 
@@ -218,17 +250,26 @@ export const CostDisruptionSection = () => {
             <div className="space-y-3 pt-4 border-t border-gray-600">
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A1:</p>
-                <p className="text-gray-300">Retrofit has lower upfront costs because you can purchase devices gradually and many are DIY-friendly, avoiding professional installation fees.</p>
+                <p className="text-gray-300">
+                  Retrofit has lower upfront costs because you can purchase devices gradually and
+                  many are DIY-friendly, avoiding professional installation fees.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A2:</p>
-                <p className="text-gray-300">Hidden integration - all wiring is concealed within walls, creating a professional finish without visible cables or surface-mounted devices.</p>
+                <p className="text-gray-300">
+                  Hidden integration - all wiring is concealed within walls, creating a professional
+                  finish without visible cables or surface-mounted devices.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A3:</p>
-                <p className="text-gray-300">Lower financial risk - you can try different devices and systems without major investment, learning what works before committing to larger systems.</p>
+                <p className="text-gray-300">
+                  Lower financial risk - you can try different devices and systems without major
+                  investment, learning what works before committing to larger systems.
+                </p>
               </div>
             </div>
           )}

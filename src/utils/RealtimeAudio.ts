@@ -15,8 +15,8 @@ export class AudioRecorder {
           channelCount: 1,
           echoCancellation: true,
           noiseSuppression: true,
-          autoGainControl: true
-        }
+          autoGainControl: true,
+        },
       });
 
       this.audioContext = new AudioContext({
@@ -49,7 +49,7 @@ export class AudioRecorder {
       this.processor = null;
     }
     if (this.stream) {
-      this.stream.getTracks().forEach(track => track.stop());
+      this.stream.getTracks().forEach((track) => track.stop());
       this.stream = null;
     }
     if (this.audioContext) {
@@ -64,7 +64,7 @@ export const encodeAudioForAPI = (float32Array: Float32Array): string => {
   const int16Array = new Int16Array(float32Array.length);
   for (let i = 0; i < float32Array.length; i++) {
     const s = Math.max(-1, Math.min(1, float32Array[i]));
-    int16Array[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+    int16Array[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
   }
 
   const uint8Array = new Uint8Array(int16Array.buffer as ArrayBuffer);

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Shield, Zap, TestTube2, BookOpen } from 'lucide-react';
 import { SmartTabs } from '@/components/ui/smart-tabs';
@@ -10,23 +9,23 @@ import RcdTestDiagram from './RcdTestDiagram';
 const RcdTestCard = () => {
   const smartTabs = [
     {
-      value: "why-test",
-      label: "Why Test RCDs?",
+      value: 'why-test',
+      label: 'Why Test RCDs?',
       icon: <Shield className="h-4 w-4" />,
-      content: <WhyTestSection />
+      content: <WhyTestSection />,
     },
     {
-      value: "how-to-test", 
-      label: "How to Test",
+      value: 'how-to-test',
+      label: 'How to Test',
       icon: <TestTube2 className="h-4 w-4" />,
-      content: <HowToTestSection />
+      content: <HowToTestSection />,
     },
     {
-      value: "practical-guidance",
-      label: "Practical Guidance",
+      value: 'practical-guidance',
+      label: 'Practical Guidance',
       icon: <BookOpen className="h-4 w-4" />,
-      content: <PracticalGuidanceSection />
-    }
+      content: <PracticalGuidanceSection />,
+    },
   ];
 
   return (
@@ -35,18 +34,15 @@ const RcdTestCard = () => {
         <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
         <div>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">RCD Testing</h2>
-          <p className="text-sm sm:text-base text-gray-300">Residual Current Device testing procedures and guidance</p>
+          <p className="text-sm sm:text-base text-gray-300">
+            Residual Current Device testing procedures and guidance
+          </p>
         </div>
       </div>
 
       <RcdTestDiagram />
 
-      <SmartTabs 
-        tabs={smartTabs}
-        defaultValue="why-test"
-        className="w-full"
-        breakpoint={4}
-      />
+      <SmartTabs tabs={smartTabs} defaultValue="why-test" className="w-full" breakpoint={4} />
     </div>
   );
 };

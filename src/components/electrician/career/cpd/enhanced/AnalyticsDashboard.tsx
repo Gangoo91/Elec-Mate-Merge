@@ -3,31 +3,31 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  ResponsiveContainer, 
-  PieChart, 
-  Pie, 
-  Cell, 
-  LineChart, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
   Line,
   Tooltip,
-  Legend
+  Legend,
 } from 'recharts';
-import { 
-  TrendingUp, 
-  Award, 
-  Target, 
-  Clock, 
-  Users, 
+import {
+  TrendingUp,
+  Award,
+  Target,
+  Clock,
+  Users,
   BookOpen,
   Star,
   AlertTriangle,
-  CheckCircle
+  CheckCircle,
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 
@@ -35,7 +35,7 @@ const AnalyticsDashboard = () => {
   const { getAnalytics } = useEnhancedCPD();
   const [selectedPeriod, setSelectedPeriod] = useState('current-year');
   const [analytics, setAnalytics] = useState<any>(null);
-  
+
   useEffect(() => {
     const loadAnalytics = async () => {
       const data = await getAnalytics();
@@ -65,7 +65,7 @@ const AnalyticsDashboard = () => {
     categoryBreakdown,
     providerBreakdown,
     learningEffectiveness,
-    competencyGaps
+    competencyGaps,
   } = analytics;
 
   // Chart colors
@@ -77,7 +77,7 @@ const AnalyticsDashboard = () => {
     '#ffc658',
     '#ff7300',
     '#00ff00',
-    '#ff00ff'
+    '#ff00ff',
   ];
 
   return (
@@ -169,11 +169,11 @@ const AnalyticsDashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
                   <YAxis stroke="hsl(var(--muted-foreground))" />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: 'hsl(var(--card))',
                       border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px'
+                      borderRadius: '8px',
                     }}
                   />
                   <Bar dataKey="hours" fill="hsl(var(--primary))" />
@@ -193,17 +193,17 @@ const AnalyticsDashboard = () => {
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
                     <YAxis stroke="hsl(var(--muted-foreground))" />
-                    <Tooltip 
-                      contentStyle={{ 
+                    <Tooltip
+                      contentStyle={{
                         backgroundColor: 'hsl(var(--card))',
                         border: '1px solid hsl(var(--border))',
-                        borderRadius: '8px'
+                        borderRadius: '8px',
                       }}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="activities" 
-                      stroke="hsl(var(--primary))" 
+                    <Line
+                      type="monotone"
+                      dataKey="activities"
+                      stroke="hsl(var(--primary))"
                       strokeWidth={2}
                     />
                   </LineChart>
@@ -232,8 +232,8 @@ const AnalyticsDashboard = () => {
                           </Badge>
                         </div>
                       </div>
-                      <Progress 
-                        value={(provider.hours / providerBreakdown[0]?.hours) * 100} 
+                      <Progress
+                        value={(provider.hours / providerBreakdown[0]?.hours) * 100}
                         className="h-2"
                       />
                     </div>
@@ -283,7 +283,7 @@ const AnalyticsDashboard = () => {
                     <div key={category.category} className="space-y-2">
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                          <div 
+                          <div
                             className="w-3 h-3 rounded-full"
                             style={{ backgroundColor: COLORS[index % COLORS.length] }}
                           />
@@ -300,8 +300,11 @@ const AnalyticsDashboard = () => {
                           </Badge>
                         </div>
                       </div>
-                      <Progress 
-                        value={(category.hours / Math.max(...categoryBreakdown.map(c => c.hours))) * 100} 
+                      <Progress
+                        value={
+                          (category.hours / Math.max(...categoryBreakdown.map((c) => c.hours))) *
+                          100
+                        }
                         className="h-2"
                       />
                     </div>
@@ -364,9 +367,7 @@ const AnalyticsDashboard = () => {
                     </div>
                   </div>
                   <Progress value={learningEffectiveness.reflectionRate} className="h-2" />
-                  <p className="text-xs text-muted-foreground">
-                    Activities with reflection notes
-                  </p>
+                  <p className="text-xs text-muted-foreground">Activities with reflection notes</p>
                 </div>
               </CardContent>
             </Card>
@@ -392,9 +393,7 @@ const AnalyticsDashboard = () => {
                     </div>
                   </div>
                   <Progress value={learningEffectiveness.verificationRate} className="h-2" />
-                  <p className="text-xs text-muted-foreground">
-                    Verified activities
-                  </p>
+                  <p className="text-xs text-muted-foreground">Verified activities</p>
                 </div>
               </CardContent>
             </Card>
@@ -412,12 +411,13 @@ const AnalyticsDashboard = () => {
                     <div>
                       <p className="font-medium text-yellow-400">Improve Evidence Collection</p>
                       <p className="text-sm text-muted-foreground">
-                        Consider uploading certificates, photos, or documents for more of your CPD activities.
+                        Consider uploading certificates, photos, or documents for more of your CPD
+                        activities.
                       </p>
                     </div>
                   </div>
                 )}
-                
+
                 {learningEffectiveness.reflectionRate < 60 && (
                   <div className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
                     <BookOpen className="h-5 w-5 text-blue-400 mt-0.5" />
@@ -436,7 +436,8 @@ const AnalyticsDashboard = () => {
                     <div>
                       <p className="font-medium text-green-400">Excellent Learning Quality!</p>
                       <p className="text-sm text-muted-foreground">
-                        Your CPD activities are well-documented and reflective. Keep up the great work!
+                        Your CPD activities are well-documented and reflective. Keep up the great
+                        work!
                       </p>
                     </div>
                   </div>
@@ -458,9 +459,7 @@ const AnalyticsDashboard = () => {
                   <div className="text-3xl font-bold text-foreground mb-2">
                     {competencyGaps.completionPercentage}%
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Overall Competency Progress
-                  </p>
+                  <p className="text-sm text-muted-foreground">Overall Competency Progress</p>
                   <Progress value={competencyGaps.completionPercentage} className="h-3 mt-3" />
                 </div>
 
@@ -518,7 +517,8 @@ const AnalyticsDashboard = () => {
                     <div key={index} className="p-3 bg-muted/20 rounded-lg">
                       <h4 className="font-medium text-foreground mb-2">{gap}</h4>
                       <p className="text-sm text-muted-foreground mb-2">
-                        Consider looking for training opportunities in this area to strengthen your competency profile.
+                        Consider looking for training opportunities in this area to strengthen your
+                        competency profile.
                       </p>
                       <Badge variant="outline" className="text-xs">
                         High Priority

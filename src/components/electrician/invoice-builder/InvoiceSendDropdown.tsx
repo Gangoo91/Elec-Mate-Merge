@@ -9,7 +9,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, CreditCard, Zap, CheckCircle, Calculator, ExternalLink } from 'lucide-react';
+import {
+  Mail,
+  MessageCircle,
+  Loader2,
+  CreditCard,
+  Zap,
+  CheckCircle,
+  Calculator,
+  ExternalLink,
+} from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { toast as sonnerToast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -37,7 +46,9 @@ export const InvoiceSendDropdown = ({
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isConnectingStripe, setIsConnectingStripe] = useState(false);
-  const [stripeStatus, setStripeStatus] = useState<'loading' | 'not_connected' | 'pending' | 'active'>('loading');
+  const [stripeStatus, setStripeStatus] = useState<
+    'loading' | 'not_connected' | 'pending' | 'active'
+  >('loading');
   const [isSyncingAccounting, setIsSyncingAccounting] = useState(false);
 
   // Accounting integrations hook
@@ -54,7 +65,9 @@ export const InvoiceSendDropdown = ({
   useEffect(() => {
     const checkStripeStatus = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
         if (!session) {
           setStripeStatus('not_connected');
           return;
@@ -112,7 +125,10 @@ export const InvoiceSendDropdown = ({
   }, [refreshKey]);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
-  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+  const pollPdfDownloadUrl = async (
+    documentId: string,
+    accessToken: string
+  ): Promise<string | null> => {
     for (let i = 0; i < 45; i++) {
       const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { documentId, mode: 'status' },
@@ -135,16 +151,20 @@ export const InvoiceSendDropdown = ({
       const cleanTo = invoice.client?.email?.trim();
       if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
         toast({
-          title: "Invalid Client Email",
-          description: "Client email address is invalid. Please correct it in the invoice and try again.",
-          variant: "destructive",
+          title: 'Invalid Client Email',
+          description:
+            'Client email address is invalid. Please correct it in the invoice and try again.',
+          variant: 'destructive',
         });
         setIsSendingEmail(false);
         return;
       }
 
       // Get current session
-      let { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      let {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
 
       if (sessionError || !session) {
         const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
@@ -163,7 +183,7 @@ export const InvoiceSendDropdown = ({
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`,
+            Authorization: `Bearer ${session.access_token}`,
           },
           body: JSON.stringify({ invoiceId: invoice.id }),
         }
@@ -217,7 +237,7 @@ export const InvoiceSendDropdown = ({
                 size="sm"
                 variant="outline"
                 className="border-indigo-500/30 hover:bg-indigo-500/10"
-                onClick={() => window.location.href = '/settings?tab=billing'}
+                onClick={() => (window.location.href = '/settings?tab=billing')}
               >
                 <CreditCard className="h-4 w-4 mr-1" />
                 Set up
@@ -233,7 +253,7 @@ export const InvoiceSendDropdown = ({
         .from('quotes')
         .update({
           invoice_status: 'sent',
-          invoice_sent_at: new Date().toISOString()
+          invoice_sent_at: new Date().toISOString(),
         })
         .eq('id', invoice.id);
 
@@ -251,13 +271,14 @@ export const InvoiceSendDropdown = ({
     }
   };
 
-
   const handleShareWhatsApp = async () => {
     try {
       setIsSharingWhatsApp(true);
 
       // ALWAYS regenerate PDF for guaranteed freshness - fetch latest data first
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
       }
@@ -285,28 +306,33 @@ export const InvoiceSendDropdown = ({
       }
 
       // Step 2: Generate fresh PDF with latest data (silently)
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
         throw new Error('User not authenticated');
       }
 
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: freshInvoice, // Use fresh data from database
-          companyProfile: companyData,
-          invoice_mode: true,
-          force_regenerate: true
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-pdf-monkey',
+        {
+          body: {
+            quote: freshInvoice, // Use fresh data from database
+            companyProfile: companyData,
+            invoice_mode: true,
+            force_regenerate: true,
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
         }
-      });
+      );
 
       let pdfUrl = pdfData?.downloadUrl;
       const documentId = pdfData?.documentId;
 
       if (!pdfUrl && documentId) {
-        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        pdfUrl = (await pollPdfDownloadUrl(documentId, session.access_token)) || undefined;
       }
 
       if (pdfError || !pdfUrl) {
@@ -322,7 +348,7 @@ export const InvoiceSendDropdown = ({
           .update({
             pdf_document_id: documentId,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: newVersion
+            pdf_version: newVersion,
           })
           .eq('id', invoice.id);
       }
@@ -331,16 +357,17 @@ export const InvoiceSendDropdown = ({
       const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
 
       // Step 5: Create professional WhatsApp message with cache-busted URL
-      const clientData = typeof freshInvoice.client_data === 'string' 
-        ? JSON.parse(freshInvoice.client_data) 
-        : freshInvoice.client_data;
+      const clientData =
+        typeof freshInvoice.client_data === 'string'
+          ? JSON.parse(freshInvoice.client_data)
+          : freshInvoice.client_data;
       const clientName = clientData?.name || 'Valued Client';
       const companyName = companyData?.company_name || 'Your Company';
       const totalAmount = freshInvoice.total || 0;
-      const dueDate = freshInvoice.invoice_due_date 
+      const dueDate = freshInvoice.invoice_due_date
         ? format(new Date(freshInvoice.invoice_due_date), 'dd MMMM yyyy')
         : format(new Date(), 'dd MMMM yyyy');
-      
+
       const message = `📄 *Invoice ${freshInvoice.invoice_number}*
 
 Dear ${clientName},
@@ -360,7 +387,7 @@ ${companyName}`;
 
       // Step 6: Open WhatsApp with message and fresh PDF link
       const clientPhone = clientData?.phone;
-      
+
       let whatsappUrl: string;
       if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
         // UK number - direct to client
@@ -482,7 +509,9 @@ ${companyName}`;
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);
-      const errorMessage = error?.message || error?.error ||
+      const errorMessage =
+        error?.message ||
+        error?.error ||
         (typeof error === 'string' ? error : 'Failed to connect Stripe');
       sonnerToast.error(errorMessage);
     } finally {
@@ -509,7 +538,8 @@ ${companyName}`;
     window.location.href = '/settings?tab=business';
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp || isConnectingStripe || isSyncingAccounting;
+  const isLoading =
+    isSendingEmail || isSharingWhatsApp || isConnectingStripe || isSyncingAccounting;
 
   return (
     <DropdownMenu>
@@ -537,7 +567,9 @@ ${companyName}`;
             ) : (
               <Mail className="h-4 w-4 sm:mr-2" />
             )}
-            <span className="hidden sm:inline">{isLoading ? (isSendingEmail ? 'Sending...' : 'Loading...') : 'Send'}</span>
+            <span className="hidden sm:inline">
+              {isLoading ? (isSendingEmail ? 'Sending...' : 'Loading...') : 'Send'}
+            </span>
           </Button>
         )}
       </DropdownMenuTrigger>
@@ -599,7 +631,12 @@ ${companyName}`;
                 </div>
                 <div className="flex flex-col">
                   <span className="font-semibold text-sm text-emerald-400">
-                    Synced to {invoice.external_invoice_provider ? ACCOUNTING_PROVIDERS[invoice.external_invoice_provider as keyof typeof ACCOUNTING_PROVIDERS]?.name || invoice.external_invoice_provider : 'Accounting'}
+                    Synced to{' '}
+                    {invoice.external_invoice_provider
+                      ? ACCOUNTING_PROVIDERS[
+                          invoice.external_invoice_provider as keyof typeof ACCOUNTING_PROVIDERS
+                        ]?.name || invoice.external_invoice_provider
+                      : 'Accounting'}
                   </span>
                   <span className="text-xs text-muted-foreground">
                     Invoice is in your accounting software
@@ -609,19 +646,23 @@ ${companyName}`;
             ) : hasAccountingConnected ? (
               <>
                 {accountingIntegrations
-                  .filter(i => i.status === 'connected')
-                  .map(integration => (
+                  .filter((i) => i.status === 'connected')
+                  .map((integration) => (
                     <DropdownMenuItem
                       key={integration.provider}
                       onClick={handleSyncToAccounting}
                       disabled={isSyncingAccounting}
                       className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
                     >
-                      <div className={`h-10 w-10 rounded-xl ${ACCOUNTING_PROVIDERS[integration.provider].bgColor} flex items-center justify-center mr-3 flex-shrink-0`}>
+                      <div
+                        className={`h-10 w-10 rounded-xl ${ACCOUNTING_PROVIDERS[integration.provider].bgColor} flex items-center justify-center mr-3 flex-shrink-0`}
+                      >
                         {isSyncingAccounting ? (
                           <Loader2 className="h-5 w-5 text-purple-400 animate-spin" />
                         ) : (
-                          <Calculator className={`h-5 w-5 ${ACCOUNTING_PROVIDERS[integration.provider].logoColor}`} />
+                          <Calculator
+                            className={`h-5 w-5 ${ACCOUNTING_PROVIDERS[integration.provider].logoColor}`}
+                          />
                         )}
                       </div>
                       <div className="flex flex-col">
@@ -645,7 +686,9 @@ ${companyName}`;
                 </div>
                 <div className="flex flex-col">
                   <span className="font-semibold text-sm">Connect Accounting</span>
-                  <span className="text-xs text-muted-foreground">Xero, QuickBooks, Sage & more</span>
+                  <span className="text-xs text-muted-foreground">
+                    Xero, QuickBooks, Sage & more
+                  </span>
                 </div>
                 <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
               </DropdownMenuItem>
@@ -675,7 +718,9 @@ ${companyName}`;
               </div>
               <div className="flex flex-col">
                 <span className="font-semibold text-sm text-foreground">Connect Stripe</span>
-                <span className="text-[10px] text-green-400 font-medium">Instant - just log in</span>
+                <span className="text-[10px] text-green-400 font-medium">
+                  Instant - just log in
+                </span>
               </div>
             </DropdownMenuItem>
             {/* Secondary: Small link for users without Stripe */}
@@ -709,7 +754,9 @@ ${companyName}`;
                 <span className="font-semibold text-sm flex items-center gap-1">
                   {isConnectingStripe ? 'Loading...' : 'Finish Stripe Setup'}
                 </span>
-                <span className="text-xs text-muted-foreground">Complete verification to accept payments</span>
+                <span className="text-xs text-muted-foreground">
+                  Complete verification to accept payments
+                </span>
               </div>
             </DropdownMenuItem>
           </>

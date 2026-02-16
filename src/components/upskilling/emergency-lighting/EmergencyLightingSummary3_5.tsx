@@ -3,14 +3,14 @@ import { BookOpen, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingSummary3_5 = () => {
   const keyPoints = [
-    "Layout drawings bridge the gap between design intent and installation, providing essential visual documentation for compliance, maintenance, and emergency response",
-    "Compliant drawings must include comprehensive information: escape routes, luminaire types/positions, mounting heights, circuit references, testing points, and control systems",
-    "Standardised symbols from BS 5266-1 and BS EN ISO 7010 must be used consistently, with complete legends and the running man pictogram for all exit signage",
+    'Layout drawings bridge the gap between design intent and installation, providing essential visual documentation for compliance, maintenance, and emergency response',
+    'Compliant drawings must include comprehensive information: escape routes, luminaire types/positions, mounting heights, circuit references, testing points, and control systems',
+    'Standardised symbols from BS 5266-1 and BS EN ISO 7010 must be used consistently, with complete legends and the running man pictogram for all exit signage',
     "As-built drawings must accurately reflect final installations and be maintained throughout the building's operational life as permanent fire safety documentation",
-    "Professional CAD software and BIM integration provide precision, coordination, and data management capabilities essential for modern construction projects",
-    "Legal responsibilities under Building Regulations and fire safety legislation require proper handover procedures and ongoing document maintenance",
-    "Common errors include missing escape route markings, inconsistent symbols, and inadequate revision control - quality assurance procedures prevent costly compliance failures",
-    "Regular drawing reviews, updates, and integration with testing procedures ensure ongoing compliance and reduce operational risks and liability"
+    'Professional CAD software and BIM integration provide precision, coordination, and data management capabilities essential for modern construction projects',
+    'Legal responsibilities under Building Regulations and fire safety legislation require proper handover procedures and ongoing document maintenance',
+    'Common errors include missing escape route markings, inconsistent symbols, and inadequate revision control - quality assurance procedures prevent costly compliance failures',
+    'Regular drawing reviews, updates, and integration with testing procedures ensure ongoing compliance and reduce operational risks and liability',
   ];
 
   return (

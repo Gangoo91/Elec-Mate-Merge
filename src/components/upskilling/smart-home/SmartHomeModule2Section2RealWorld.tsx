@@ -12,7 +12,8 @@ export const SmartHomeModule2Section2RealWorld = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p className="text-lg font-medium text-foreground mb-4">
-          An installer is working on two different projects with distinct requirements. Each calls for a different protocol approach.
+          An installer is working on two different projects with distinct requirements. Each calls
+          for a different protocol approach.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -22,7 +23,7 @@ export const SmartHomeModule2Section2RealWorld = () => {
               <Building className="h-6 w-6 text-blue-400" />
               <h4 className="font-semibold text-foreground">Project A: Modern Apartment</h4>
             </div>
-            
+
             <div className="space-y-3 text-sm">
               <div>
                 <span className="font-medium text-blue-200">Property:</span>
@@ -30,17 +31,23 @@ export const SmartHomeModule2Section2RealWorld = () => {
               </div>
               <div>
                 <span className="font-medium text-blue-200">Requirements:</span>
-                <span className="text-gray-300 ml-2">60+ smart bulbs, colour-changing lighting throughout</span>
+                <span className="text-gray-300 ml-2">
+                  60+ smart bulbs, colour-changing lighting throughout
+                </span>
               </div>
               <div>
                 <span className="font-medium text-blue-200">Budget:</span>
-                <span className="text-gray-300 ml-2">Cost-conscious, wants maximum devices for money</span>
+                <span className="text-gray-300 ml-2">
+                  Cost-conscious, wants maximum devices for money
+                </span>
               </div>
               <div>
                 <span className="font-medium text-blue-200">Challenges:</span>
-                <span className="text-gray-300 ml-2">Dense device deployment, budget constraints</span>
+                <span className="text-gray-300 ml-2">
+                  Dense device deployment, budget constraints
+                </span>
               </div>
-              
+
               <div className="mt-4 p-3 bg-blue-900/30 border border-blue-700 rounded">
                 <h5 className="font-medium text-blue-200 mb-2">Recommended: Zigbee</h5>
                 <ul className="space-y-1 text-blue-100 text-xs">
@@ -59,25 +66,33 @@ export const SmartHomeModule2Section2RealWorld = () => {
               <Home className="h-6 w-6 text-green-400" />
               <h4 className="font-semibold text-foreground">Project B: Large Detached Home</h4>
             </div>
-            
+
             <div className="space-y-3 text-sm">
               <div>
                 <span className="font-medium text-green-200">Property:</span>
-                <span className="text-gray-300 ml-2">5-bedroom stone house, 3,500 sq ft, thick walls</span>
+                <span className="text-gray-300 ml-2">
+                  5-bedroom stone house, 3,500 sq ft, thick walls
+                </span>
               </div>
               <div>
                 <span className="font-medium text-green-200">Requirements:</span>
-                <span className="text-gray-300 ml-2">Security system, access control, lighting control</span>
+                <span className="text-gray-300 ml-2">
+                  Security system, access control, lighting control
+                </span>
               </div>
               <div>
                 <span className="font-medium text-green-200">Budget:</span>
-                <span className="text-gray-300 ml-2">Premium installation, reliability priority</span>
+                <span className="text-gray-300 ml-2">
+                  Premium installation, reliability priority
+                </span>
               </div>
               <div>
                 <span className="font-medium text-green-200">Challenges:</span>
-                <span className="text-gray-300 ml-2">Thick stone walls, long distances, security critical</span>
+                <span className="text-gray-300 ml-2">
+                  Thick stone walls, long distances, security critical
+                </span>
               </div>
-              
+
               <div className="mt-4 p-3 bg-green-900/30 border border-green-700 rounded">
                 <h5 className="font-medium text-green-200 mb-2">Recommended: Z-Wave</h5>
                 <ul className="space-y-1 text-green-100 text-xs">
@@ -100,7 +115,8 @@ export const SmartHomeModule2Section2RealWorld = () => {
             Which protocol would you choose for each project and why?
           </p>
           <p className="text-sm text-gray-400">
-            Consider factors like device count, range requirements, building materials, budget, and reliability needs...
+            Consider factors like device count, range requirements, building materials, budget, and
+            reliability needs...
           </p>
         </div>
 

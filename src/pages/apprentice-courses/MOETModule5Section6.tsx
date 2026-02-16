@@ -1,44 +1,44 @@
-import { ArrowLeft, Cable, Globe, Wifi, Shield } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Cable, Globe, Wifi, Shield } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule5Section6 = () => {
   useSEO(
-    "Section 5.6: Networking and Industrial Communication - MOET Module 5",
-    "Fieldbus, industrial Ethernet, wireless IoT and cybersecurity in industrial networks"
+    'Section 5.6: Networking and Industrial Communication - MOET Module 5',
+    'Fieldbus, industrial Ethernet, wireless IoT and cybersecurity in industrial networks'
   );
 
   const subsections = [
     {
-      number: "5.6.1",
-      title: "Fieldbus and Profibus Systems",
-      description: "Fieldbus protocols, Profibus networks and device integration",
+      number: '5.6.1',
+      title: 'Fieldbus and Profibus Systems',
+      description: 'Fieldbus protocols, Profibus networks and device integration',
       icon: Cable,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section6-1"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section6-1',
     },
     {
-      number: "5.6.2",
-      title: "Industrial Ethernet",
-      description: "Ethernet protocols, network topology and industrial applications",
+      number: '5.6.2',
+      title: 'Industrial Ethernet',
+      description: 'Ethernet protocols, network topology and industrial applications',
       icon: Globe,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section6-2"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section6-2',
     },
     {
-      number: "5.6.3",
-      title: "Wireless and IoT in Industry",
-      description: "Wireless technologies, IoT devices and Industry 4.0 concepts",
+      number: '5.6.3',
+      title: 'Wireless and IoT in Industry',
+      description: 'Wireless technologies, IoT devices and Industry 4.0 concepts',
       icon: Wifi,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section6-3"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section6-3',
     },
     {
-      number: "5.6.4",
-      title: "Cybersecurity in Industrial Networks",
-      description: "Network security, firewalls and protection strategies",
+      number: '5.6.4',
+      title: 'Cybersecurity in Industrial Networks',
+      description: 'Network security, firewalls and protection strategies',
       icon: Shield,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section6-4"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module5-section6-4',
+    },
   ];
 
   return (
@@ -46,7 +46,11 @@ const MOETModule5Section6 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5

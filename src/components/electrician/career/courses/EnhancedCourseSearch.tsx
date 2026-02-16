@@ -1,16 +1,31 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Search, Filter, X, MapPin, Calendar, PoundSterling, 
-  Clock, Users, TrendingUp, SlidersHorizontal, Star
-} from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
-import { courseCategories } from "@/components/apprentice/career/courses/enhancedCoursesData";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  Search,
+  Filter,
+  X,
+  MapPin,
+  Calendar,
+  PoundSterling,
+  Clock,
+  Users,
+  TrendingUp,
+  SlidersHorizontal,
+  Star,
+} from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { courseCategories } from '@/components/apprentice/career/courses/enhancedCoursesData';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface SearchFilters {
   searchQuery: string;
@@ -30,16 +45,16 @@ interface EnhancedCourseSearchProps {
   onReset: () => void;
   totalResults: number;
   isSearching?: boolean;
-  viewMode?: "grid" | "list" | "map";
+  viewMode?: 'grid' | 'list' | 'map';
 }
 
-const EnhancedCourseSearch = ({ 
-  filters, 
-  onFiltersChange, 
-  onReset, 
+const EnhancedCourseSearch = ({
+  filters,
+  onFiltersChange,
+  onReset,
   totalResults,
   isSearching = false,
-  viewMode = "grid"
+  viewMode = 'grid',
 }: EnhancedCourseSearchProps) => {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const isMobile = useIsMobile();
@@ -50,15 +65,15 @@ const EnhancedCourseSearch = ({
 
   const clearFilter = (key: keyof SearchFilters) => {
     const defaultValues: SearchFilters = {
-      searchQuery: "",
-      category: "All Categories",
-      level: "All Levels",
-      location: "All Locations",
+      searchQuery: '',
+      category: 'All Categories',
+      level: 'All Levels',
+      location: 'All Locations',
       priceRange: [0, 2000],
-      duration: "Any Duration",
-      industryDemand: "All",
-      format: "All Formats",
-      rating: 0
+      duration: 'Any Duration',
+      industryDemand: 'All',
+      format: 'All Formats',
+      rating: 0,
     };
     handleFilterChange(key, defaultValues[key]);
   };
@@ -66,19 +81,18 @@ const EnhancedCourseSearch = ({
   const getActiveFiltersCount = () => {
     let count = 0;
     if (filters.searchQuery) count++;
-    if (filters.category !== "All Categories") count++;
-    if (filters.level !== "All Levels") count++;
-    if (filters.location !== "All Locations") count++;
+    if (filters.category !== 'All Categories') count++;
+    if (filters.level !== 'All Levels') count++;
+    if (filters.location !== 'All Locations') count++;
     if (filters.priceRange[0] > 0 || filters.priceRange[1] < 2000) count++;
-    if (filters.duration !== "Any Duration") count++;
-    if (filters.industryDemand !== "All") count++;
-    if (filters.format !== "All Formats") count++;
+    if (filters.duration !== 'Any Duration') count++;
+    if (filters.industryDemand !== 'All') count++;
+    if (filters.format !== 'All Formats') count++;
     if (filters.rating > 0) count++;
     return count;
   };
 
   const activeFiltersCount = getActiveFiltersCount();
-
 
   return (
     <div className="space-y-6">
@@ -88,16 +102,20 @@ const EnhancedCourseSearch = ({
           {/* Header */}
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-bold text-foreground">Find Your Perfect Course</h2>
-            <p className="text-foreground/80">Search through {totalResults} professional courses and training programmes</p>
+            <p className="text-foreground/80">
+              Search through {totalResults} professional courses and training programmes
+            </p>
           </div>
-          
+
           {/* Main Search Bar */}
           <div className="relative">
-            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isSearching ? 'animate-pulse text-elec-yellow' : 'text-foreground/60'}`} />
+            <Search
+              className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isSearching ? 'animate-pulse text-elec-yellow' : 'text-foreground/60'}`}
+            />
             <Input
               placeholder="Search courses, providers, locations, topics..."
               value={filters.searchQuery}
-              onChange={(e) => handleFilterChange("searchQuery", e.target.value)}
+              onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
               className={`pl-12 pr-12 h-12 text-lg bg-white/10 border-white/20 text-foreground placeholder:text-foreground/60 focus:border-elec-yellow/50 focus:bg-white/15 ${isSearching ? 'border-elec-yellow/50' : ''}`}
               disabled={isSearching}
             />
@@ -111,7 +129,7 @@ const EnhancedCourseSearch = ({
                 variant="ghost"
                 size="sm"
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-white/20"
-                onClick={() => clearFilter("searchQuery")}
+                onClick={() => clearFilter('searchQuery')}
               >
                 <X className="h-4 w-4 text-foreground" />
               </Button>
@@ -123,12 +141,18 @@ const EnhancedCourseSearch = ({
             {courseCategories.slice(1, 6).map((category) => (
               <Button
                 key={category}
-                variant={filters.category === category ? "default" : "outline"}
+                variant={filters.category === category ? 'default' : 'outline'}
                 size="sm"
-                onClick={() => handleFilterChange("category", filters.category === category ? "All Categories" : category)}
-                className={filters.category === category ? 
-                  "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : 
-                  "border-white/30 text-foreground hover:bg-white/10 hover:border-elec-yellow/50"
+                onClick={() =>
+                  handleFilterChange(
+                    'category',
+                    filters.category === category ? 'All Categories' : category
+                  )
+                }
+                className={
+                  filters.category === category
+                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                    : 'border-white/30 text-foreground hover:bg-white/10 hover:border-elec-yellow/50'
                 }
               >
                 {category}
@@ -144,7 +168,10 @@ const EnhancedCourseSearch = ({
           <div className="flex flex-col lg:flex-row lg:items-center gap-4">
             {/* Filter Controls */}
             <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+              <Select
+                value={filters.category}
+                onValueChange={(value) => handleFilterChange('category', value)}
+              >
                 <SelectTrigger className="bg-background border-border/50 hover:border-elec-yellow/50 transition-colors">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
@@ -157,7 +184,10 @@ const EnhancedCourseSearch = ({
                 </SelectContent>
               </Select>
 
-              <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
+              <Select
+                value={filters.level}
+                onValueChange={(value) => handleFilterChange('level', value)}
+              >
                 <SelectTrigger className="bg-background border-border/50 hover:border-elec-yellow/50 transition-colors">
                   <SelectValue placeholder="Level" />
                 </SelectTrigger>
@@ -169,7 +199,10 @@ const EnhancedCourseSearch = ({
                 </SelectContent>
               </Select>
 
-              <Select value={filters.location} onValueChange={(value) => handleFilterChange("location", value)}>
+              <Select
+                value={filters.location}
+                onValueChange={(value) => handleFilterChange('location', value)}
+              >
                 <SelectTrigger className="bg-background border-border/50 hover:border-elec-yellow/50 transition-colors">
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
@@ -192,7 +225,10 @@ const EnhancedCourseSearch = ({
                 <Filter className="h-4 w-4 mr-2" />
                 More Filters
                 {activeFiltersCount > 3 && (
-                  <Badge variant="secondary" className="ml-2 h-5 px-2 bg-elec-yellow text-elec-dark">
+                  <Badge
+                    variant="secondary"
+                    className="ml-2 h-5 px-2 bg-elec-yellow text-elec-dark"
+                  >
                     {activeFiltersCount - 3}
                   </Badge>
                 )}
@@ -201,11 +237,19 @@ const EnhancedCourseSearch = ({
 
             {/* Results & Clear */}
             <div className="flex items-center gap-3">
-              <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-sm px-3 py-1">
+              <Badge
+                variant="outline"
+                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-sm px-3 py-1"
+              >
                 {totalResults} courses
               </Badge>
               {activeFiltersCount > 0 && (
-                <Button variant="outline" size="sm" onClick={onReset} className="hover:bg-destructive/10 hover:text-destructive">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onReset}
+                  className="hover:bg-destructive/10 hover:text-destructive"
+                >
                   <X className="h-4 w-4 mr-1" />
                   Clear ({activeFiltersCount})
                 </Button>
@@ -214,7 +258,6 @@ const EnhancedCourseSearch = ({
           </div>
         </CardContent>
       </Card>
-
 
       {/* Advanced Filters Collapsible */}
       {showAdvancedFilters && (
@@ -239,7 +282,7 @@ const EnhancedCourseSearch = ({
               </div>
               <Slider
                 value={filters.priceRange}
-                onValueChange={(value) => handleFilterChange("priceRange", value)}
+                onValueChange={(value) => handleFilterChange('priceRange', value)}
                 max={2000}
                 min={0}
                 step={50}
@@ -249,7 +292,10 @@ const EnhancedCourseSearch = ({
 
             {/* Additional Filters */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <Select value={filters.duration} onValueChange={(value) => handleFilterChange("duration", value)}>
+              <Select
+                value={filters.duration}
+                onValueChange={(value) => handleFilterChange('duration', value)}
+              >
                 <SelectTrigger className="bg-background border-border/50 hover:border-elec-yellow/50">
                   <Clock className="h-4 w-4 mr-2 text-elec-yellow" />
                   <SelectValue placeholder="Duration" />
@@ -264,7 +310,10 @@ const EnhancedCourseSearch = ({
                 </SelectContent>
               </Select>
 
-              <Select value={filters.industryDemand} onValueChange={(value) => handleFilterChange("industryDemand", value)}>
+              <Select
+                value={filters.industryDemand}
+                onValueChange={(value) => handleFilterChange('industryDemand', value)}
+              >
                 <SelectTrigger className="bg-background border-border/50 hover:border-elec-yellow/50">
                   <TrendingUp className="h-4 w-4 mr-2 text-elec-yellow" />
                   <SelectValue placeholder="Industry Demand" />
@@ -277,7 +326,10 @@ const EnhancedCourseSearch = ({
                 </SelectContent>
               </Select>
 
-              <Select value={filters.format} onValueChange={(value) => handleFilterChange("format", value)}>
+              <Select
+                value={filters.format}
+                onValueChange={(value) => handleFilterChange('format', value)}
+              >
                 <SelectTrigger className="bg-background border-border/50 hover:border-elec-yellow/50">
                   <Users className="h-4 w-4 mr-2 text-elec-yellow" />
                   <SelectValue placeholder="Format" />
@@ -302,15 +354,16 @@ const EnhancedCourseSearch = ({
                 {[0, 3, 4, 4.5].map((rating) => (
                   <Button
                     key={rating}
-                    variant={filters.rating === rating ? "default" : "outline"}
+                    variant={filters.rating === rating ? 'default' : 'outline'}
                     size="sm"
-                    onClick={() => handleFilterChange("rating", rating)}
-                    className={filters.rating === rating ? 
-                      "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : 
-                      "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    onClick={() => handleFilterChange('rating', rating)}
+                    className={
+                      filters.rating === rating
+                        ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                        : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
                     }
                   >
-                    {rating === 0 ? "Any" : `${rating}+`}
+                    {rating === 0 ? 'Any' : `${rating}+`}
                     {rating > 0 && <Star className="h-3 w-3 ml-1 fill-current" />}
                   </Button>
                 ))}
@@ -326,53 +379,65 @@ const EnhancedCourseSearch = ({
           <CardContent className="p-4">
             <div className="flex flex-wrap gap-2">
               {filters.searchQuery && (
-                <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
+                <Badge
+                  variant="outline"
+                  className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40"
+                >
                   Search: "{filters.searchQuery}"
                   <Button
                     variant="ghost"
                     size="sm"
                     className="ml-2 h-4 w-4 p-0 hover:bg-elec-yellow/20"
-                    onClick={() => clearFilter("searchQuery")}
+                    onClick={() => clearFilter('searchQuery')}
                   >
                     <X className="h-3 w-3" />
                   </Button>
                 </Badge>
               )}
-              {filters.category !== "All Categories" && (
-                <Badge variant="outline" className="bg-blue-500/20 text-blue-300 border-blue-500/40">
+              {filters.category !== 'All Categories' && (
+                <Badge
+                  variant="outline"
+                  className="bg-blue-500/20 text-blue-300 border-blue-500/40"
+                >
                   {filters.category}
                   <Button
                     variant="ghost"
                     size="sm"
                     className="ml-2 h-4 w-4 p-0 hover:bg-blue-500/20"
-                    onClick={() => clearFilter("category")}
+                    onClick={() => clearFilter('category')}
                   >
                     <X className="h-3 w-3" />
                   </Button>
                 </Badge>
               )}
-              {filters.level !== "All Levels" && (
-                <Badge variant="outline" className="bg-green-500/20 text-green-300 border-green-500/40">
+              {filters.level !== 'All Levels' && (
+                <Badge
+                  variant="outline"
+                  className="bg-green-500/20 text-green-300 border-green-500/40"
+                >
                   {filters.level}
                   <Button
                     variant="ghost"
                     size="sm"
                     className="ml-2 h-4 w-4 p-0 hover:bg-green-500/20"
-                    onClick={() => clearFilter("level")}
+                    onClick={() => clearFilter('level')}
                   >
                     <X className="h-3 w-3" />
                   </Button>
                 </Badge>
               )}
-              {filters.location !== "All Locations" && (
-                <Badge variant="outline" className="bg-purple-500/20 text-purple-300 border-purple-500/40">
+              {filters.location !== 'All Locations' && (
+                <Badge
+                  variant="outline"
+                  className="bg-purple-500/20 text-purple-300 border-purple-500/40"
+                >
                   <MapPin className="h-3 w-3 mr-1" />
                   {filters.location}
                   <Button
                     variant="ghost"
                     size="sm"
                     className="ml-2 h-4 w-4 p-0 hover:bg-purple-500/20"
-                    onClick={() => clearFilter("location")}
+                    onClick={() => clearFilter('location')}
                   >
                     <X className="h-3 w-3" />
                   </Button>

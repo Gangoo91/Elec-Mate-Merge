@@ -3,14 +3,14 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule4Section4LearningOutcomes = () => {
   const outcomes = [
-    "Explain the role of shading, blinds, and façade systems in building performance",
-    "Describe how these systems integrate with BMS for comfort and efficiency",
+    'Explain the role of shading, blinds, and façade systems in building performance',
+    'Describe how these systems integrate with BMS for comfort and efficiency',
     "Recognise the electrician's responsibilities when installing motorised blinds and controls",
-    "Apply best-practice wiring, positioning, and commissioning methods",
-    "Understand solar tracking and daylight harvesting strategies",
-    "Identify different types of façade automation technologies",
-    "Implement safety and override systems for occupant control",
-    "Coordinate shading systems with HVAC and lighting controls for optimal performance"
+    'Apply best-practice wiring, positioning, and commissioning methods',
+    'Understand solar tracking and daylight harvesting strategies',
+    'Identify different types of façade automation technologies',
+    'Implement safety and override systems for occupant control',
+    'Coordinate shading systems with HVAC and lighting controls for optimal performance',
   ];
 
   return (

@@ -1,13 +1,23 @@
-
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { MobileTabs, MobileTabsList, MobileTabsTrigger, MobileTabsContent } from '@/components/ui/mobile-tabs';
+import {
+  MobileTabs,
+  MobileTabsList,
+  MobileTabsTrigger,
+  MobileTabsContent,
+} from '@/components/ui/mobile-tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus, X, Star, Trash2, Settings } from 'lucide-react';
 import { InspectorProfile, useInspectorProfiles } from '@/hooks/useInspectorProfiles';
@@ -18,16 +28,17 @@ interface InspectorProfileDialogProps {
 
 const qualificationOptions = [
   'C&G 2391-50 (Inspection & Testing)',
-  'C&G 2391-52 (Inspection & Testing)', 
+  'C&G 2391-52 (Inspection & Testing)',
   '18th Edition BS7671',
   'C&G 2394/2395 (Design & Verification)',
   'AM2 (Achievement Measurement)',
   'EAL Level 3 Inspection & Testing',
-  'EAL Level 4 Inspection & Testing'
+  'EAL Level 4 Inspection & Testing',
 ];
 
 const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogProps) => {
-  const { profiles, addProfile, updateProfile, deleteProfile, setDefaultProfile } = useInspectorProfiles();
+  const { profiles, addProfile, updateProfile, deleteProfile, setDefaultProfile } =
+    useInspectorProfiles();
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('manage');
   const [editingProfile, setEditingProfile] = useState<InspectorProfile | null>(null);
@@ -107,16 +118,18 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
   const toggleQualification = (qual: string) => {
     const current = formData.qualifications;
-    const updated = current.includes(qual)
-      ? current.filter(q => q !== qual)
-      : [...current, qual];
+    const updated = current.includes(qual) ? current.filter((q) => q !== qual) : [...current, qual];
     setFormData({ ...formData, qualifications: updated });
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="flex items-center gap-2 bg-card border-border text-gray-300 hover:bg-muted hover:text-foreground">
+        <Button
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2 bg-card border-border text-gray-300 hover:bg-muted hover:text-foreground"
+        >
           <Settings className="h-4 w-4" />
           Manage Profiles
         </Button>
@@ -131,8 +144,16 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
         <MobileTabs value={activeTab} onValueChange={setActiveTab}>
           <MobileTabsList className="grid w-full grid-cols-2 bg-muted border-border">
-            <MobileTabsTrigger value="manage" className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Manage Profiles</MobileTabsTrigger>
-            <MobileTabsTrigger value="form" className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black">
+            <MobileTabsTrigger
+              value="manage"
+              className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+            >
+              Manage Profiles
+            </MobileTabsTrigger>
+            <MobileTabsTrigger
+              value="form"
+              className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+            >
               {editingProfile ? 'Edit Profile' : 'New Profile'}
             </MobileTabsTrigger>
           </MobileTabsList>
@@ -140,7 +161,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
           <MobileTabsContent value="manage" className="space-y-4">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-medium text-foreground">Saved Profiles</h3>
-              <Button 
+              <Button
                 onClick={() => {
                   resetForm();
                   setActiveTab('form');
@@ -165,9 +186,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                             <Star className="h-4 w-4 text-elec-yellow fill-current" />
                           )}
                         </CardTitle>
-                        <p className="text-sm text-gray-400 mt-1">
-                          {profile.companyName}
-                        </p>
+                        <p className="text-sm text-gray-400 mt-1">{profile.companyName}</p>
                       </div>
                       <div className="flex gap-2">
                         <Button
@@ -212,7 +231,11 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                   <CardContent>
                     <div className="flex flex-wrap gap-1 mb-2">
                       {profile.qualifications.map((qual) => (
-                        <Badge key={qual} variant="secondary" className="text-xs bg-elec-yellow/20 text-gray-300 border border-elec-yellow/30">
+                        <Badge
+                          key={qual}
+                          variant="secondary"
+                          className="text-xs bg-elec-yellow/20 text-gray-300 border border-elec-yellow/30"
+                        >
                           {qual}
                         </Badge>
                       ))}
@@ -236,7 +259,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
           <MobileTabsContent value="form" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="profileName" className="text-gray-300">Inspector Name *</Label>
+                <Label htmlFor="profileName" className="text-gray-300">
+                  Inspector Name *
+                </Label>
                 <Input
                   id="profileName"
                   value={formData.name}
@@ -249,12 +274,14 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 <Checkbox
                   id="defaultProfile"
                   checked={formData.isDefault}
-                  onCheckedChange={(checked) => 
+                  onCheckedChange={(checked) =>
                     setFormData({ ...formData, isDefault: checked as boolean })
                   }
                   className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                 />
-                <Label htmlFor="defaultProfile" className="text-gray-300">Set as default profile</Label>
+                <Label htmlFor="defaultProfile" className="text-gray-300">
+                  Set as default profile
+                </Label>
               </div>
             </div>
 
@@ -269,7 +296,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                       onCheckedChange={() => toggleQualification(qual)}
                       className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                     />
-                    <Label htmlFor={qual} className="text-sm text-gray-300 cursor-pointer">{qual}</Label>
+                    <Label htmlFor={qual} className="text-sm text-gray-300 cursor-pointer">
+                      {qual}
+                    </Label>
                   </div>
                 ))}
               </div>
@@ -277,7 +306,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="companyName" className="text-gray-300">Company Name</Label>
+                <Label htmlFor="companyName" className="text-gray-300">
+                  Company Name
+                </Label>
                 <Input
                   id="companyName"
                   value={formData.companyName}
@@ -287,7 +318,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 />
               </div>
               <div>
-                <Label htmlFor="registrationNumber" className="text-gray-300">Registration Number</Label>
+                <Label htmlFor="registrationNumber" className="text-gray-300">
+                  Registration Number
+                </Label>
                 <Input
                   id="registrationNumber"
                   value={formData.registrationNumber}
@@ -299,7 +332,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
             </div>
 
             <div>
-              <Label htmlFor="companyAddress" className="text-gray-300">Company Address</Label>
+              <Label htmlFor="companyAddress" className="text-gray-300">
+                Company Address
+              </Label>
               <Textarea
                 id="companyAddress"
                 value={formData.companyAddress}
@@ -312,7 +347,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="companyPhone" className="text-gray-300">Phone Number</Label>
+                <Label htmlFor="companyPhone" className="text-gray-300">
+                  Phone Number
+                </Label>
                 <Input
                   id="companyPhone"
                   value={formData.companyPhone}
@@ -322,7 +359,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 />
               </div>
               <div>
-                <Label htmlFor="companyEmail" className="text-gray-300">Email Address</Label>
+                <Label htmlFor="companyEmail" className="text-gray-300">
+                  Email Address
+                </Label>
                 <Input
                   id="companyEmail"
                   type="email"
@@ -346,7 +385,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="registrationNumber" className="text-gray-300">Registration Number</Label>
+                <Label htmlFor="registrationNumber" className="text-gray-300">
+                  Registration Number
+                </Label>
                 <Input
                   id="registrationNumber"
                   value={formData.registrationNumber}
@@ -356,7 +397,9 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 />
               </div>
               <div>
-                <Label htmlFor="insuranceProvider" className="text-gray-300">Insurance Provider</Label>
+                <Label htmlFor="insuranceProvider" className="text-gray-300">
+                  Insurance Provider
+                </Label>
                 <Input
                   id="insuranceProvider"
                   value={formData.insuranceProvider}
@@ -368,13 +411,17 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
             </div>
 
             <div className="flex justify-end gap-2 pt-4">
-              <Button variant="outline" onClick={() => {
-                resetForm();
-                setActiveTab('manage');
-              }} className="border-border text-gray-300 hover:bg-muted hover:text-foreground">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  resetForm();
+                  setActiveTab('manage');
+                }}
+                className="border-border text-gray-300 hover:bg-muted hover:text-foreground"
+              >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={handleSave}
                 disabled={!formData.name.trim()}
                 className="bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50"

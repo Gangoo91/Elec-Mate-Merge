@@ -7,7 +7,8 @@ import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Incentives and Funding Opportunities - Energy Efficiency Module 6 Section 3';
-const DESCRIPTION = 'Learn about UK government grants, ECO4 scheme, Enhanced Capital Allowances, green finance, and local authority funding for energy efficiency improvements.';
+const DESCRIPTION =
+  'Learn about UK government grants, ECO4 scheme, Enhanced Capital Allowances, green finance, and local authority funding for energy efficiency improvements.';
 
 const quickCheckQuestions = [
   {
@@ -17,10 +18,11 @@ const quickCheckQuestions = [
       'All UK households regardless of income',
       'Only households in fuel poverty or on qualifying benefits',
       'Only owner-occupied properties',
-      'Only properties built after 2000'
+      'Only properties built after 2000',
     ],
     correctIndex: 1,
-    explanation: 'ECO4 targets households in fuel poverty or receiving qualifying benefits such as Universal Credit, Pension Credit, or Child Tax Credits. The scheme aims to improve energy efficiency in the homes that need it most.'
+    explanation:
+      'ECO4 targets households in fuel poverty or receiving qualifying benefits such as Universal Credit, Pension Credit, or Child Tax Credits. The scheme aims to improve energy efficiency in the homes that need it most.',
   },
   {
     id: 'ee-m6s3-qc2',
@@ -29,10 +31,11 @@ const quickCheckQuestions = [
       'Free equipment from the government',
       'Reduced VAT on energy-efficient products',
       '100% first-year tax deduction on qualifying equipment',
-      'Lower interest rates on business loans'
+      'Lower interest rates on business loans',
     ],
     correctIndex: 2,
-    explanation: 'ECAs allow businesses to deduct 100% of the cost of qualifying energy-efficient equipment from taxable profits in the year of purchase, rather than spreading the deduction over several years through normal depreciation.'
+    explanation:
+      'ECAs allow businesses to deduct 100% of the cost of qualifying energy-efficient equipment from taxable profits in the year of purchase, rather than spreading the deduction over several years through normal depreciation.',
   },
   {
     id: 'ee-m6s3-qc3',
@@ -41,11 +44,12 @@ const quickCheckQuestions = [
       'Any UK business',
       'Only large corporations',
       'Public sector organisations (NHS, schools, councils)',
-      'Only renewable energy companies'
+      'Only renewable energy companies',
     ],
     correctIndex: 2,
-    explanation: 'Salix Finance provides interest-free loans specifically to public sector organisations including NHS trusts, schools, universities, and local authorities for energy efficiency improvements.'
-  }
+    explanation:
+      'Salix Finance provides interest-free loans specifically to public sector organisations including NHS trusts, schools, universities, and local authorities for energy efficiency improvements.',
+  },
 ];
 
 const quizQuestions = [
@@ -54,14 +58,21 @@ const quizQuestions = [
     question: 'What percentage of equipment cost can be claimed under Enhanced Capital Allowances?',
     options: ['25%', '50%', '75%', '100%'],
     correctAnswer: 3,
-    explanation: 'ECAs provide 100% first-year allowance, meaning the full cost can be deducted from taxable profits in the year of purchase.'
+    explanation:
+      'ECAs provide 100% first-year allowance, meaning the full cost can be deducted from taxable profits in the year of purchase.',
   },
   {
     id: 2,
     question: 'Which database lists products qualifying for Enhanced Capital Allowances?',
-    options: ['OFGEM Register', 'Energy Technology List (ETL)', 'Carbon Trust Database', 'BEIS Product Register'],
+    options: [
+      'OFGEM Register',
+      'Energy Technology List (ETL)',
+      'Carbon Trust Database',
+      'BEIS Product Register',
+    ],
     correctAnswer: 1,
-    explanation: 'The Energy Technology List (ETL) is maintained by the government and lists all products and technologies qualifying for ECAs.'
+    explanation:
+      'The Energy Technology List (ETL) is maintained by the government and lists all products and technologies qualifying for ECAs.',
   },
   {
     id: 3,
@@ -70,24 +81,32 @@ const quizQuestions = [
       'Reducing commercial energy bills',
       'Upgrading the national grid',
       'Improving energy efficiency in fuel-poor homes',
-      'Installing smart meters nationwide'
+      'Installing smart meters nationwide',
     ],
     correctAnswer: 2,
-    explanation: 'ECO4 (Energy Company Obligation) requires large energy suppliers to fund energy efficiency improvements in fuel-poor and vulnerable households.'
+    explanation:
+      'ECO4 (Energy Company Obligation) requires large energy suppliers to fund energy efficiency improvements in fuel-poor and vulnerable households.',
   },
   {
     id: 4,
     question: 'How long does Salix Finance typically allow for loan repayment?',
     options: ['1-2 years', '5-8 years', 'Up to 12 years', 'No repayment required'],
     correctAnswer: 1,
-    explanation: 'Salix loans are typically repaid over 5-8 years using the energy cost savings generated by the improvements, making them cash-flow neutral.'
+    explanation:
+      'Salix loans are typically repaid over 5-8 years using the energy cost savings generated by the improvements, making them cash-flow neutral.',
   },
   {
     id: 5,
     question: 'Which measure is typically NOT covered by ECO4 funding?',
-    options: ['Loft insulation', 'Cavity wall insulation', 'Solar PV panels', 'First-time central heating'],
+    options: [
+      'Loft insulation',
+      'Cavity wall insulation',
+      'Solar PV panels',
+      'First-time central heating',
+    ],
     correctAnswer: 2,
-    explanation: 'ECO4 focuses on fabric improvements and heating system upgrades rather than electricity generation. Solar PV is not typically funded under ECO4.'
+    explanation:
+      'ECO4 focuses on fabric improvements and heating system upgrades rather than electricity generation. Solar PV is not typically funded under ECO4.',
   },
   {
     id: 6,
@@ -96,10 +115,11 @@ const quizQuestions = [
       'UK manufacturing origin',
       'Listing on the Energy Technology List',
       'Minimum 10-year warranty',
-      'EU energy label A++'
+      'EU energy label A++',
     ],
     correctAnswer: 1,
-    explanation: 'Products must be listed on the Energy Technology List (ETL), which is regularly updated by DESNZ (Department for Energy Security and Net Zero).'
+    explanation:
+      'Products must be listed on the Energy Technology List (ETL), which is regularly updated by DESNZ (Department for Energy Security and Net Zero).',
   },
   {
     id: 7,
@@ -108,29 +128,34 @@ const quizQuestions = [
       'A government grant scheme',
       'Property-assessed clean energy loans repaid through property tax',
       'An energy company rebate programme',
-      'Power purchase agreement for solar'
+      'Power purchase agreement for solar',
     ],
     correctAnswer: 1,
-    explanation: 'PACE (Property Assessed Clean Energy) allows property owners to finance energy improvements and repay through an assessment on the property, transferring obligation to future owners if sold.'
+    explanation:
+      'PACE (Property Assessed Clean Energy) allows property owners to finance energy improvements and repay through an assessment on the property, transferring obligation to future owners if sold.',
   },
   {
     id: 8,
-    question: 'Which organisation administers the Green Homes Grant Local Authority Delivery scheme?',
+    question:
+      'Which organisation administers the Green Homes Grant Local Authority Delivery scheme?',
     options: ['OFGEM', 'Local councils', 'Energy suppliers', 'Carbon Trust'],
     correctAnswer: 1,
-    explanation: 'The Local Authority Delivery (LAD) scheme is administered by local councils who identify eligible properties and coordinate improvements in their areas.'
+    explanation:
+      'The Local Authority Delivery (LAD) scheme is administered by local councils who identify eligible properties and coordinate improvements in their areas.',
   },
   {
     id: 9,
-    question: 'What does the Super-deduction (now Full Expensing) allow for qualifying plant and machinery?',
+    question:
+      'What does the Super-deduction (now Full Expensing) allow for qualifying plant and machinery?',
     options: [
       '25% immediate deduction',
       '50% immediate deduction',
       '100% immediate deduction',
-      '130% immediate deduction'
+      '130% immediate deduction',
     ],
     correctAnswer: 2,
-    explanation: 'Full Expensing (replacing the 130% super-deduction from April 2023) allows 100% first-year deduction for qualifying plant and machinery investments.'
+    explanation:
+      'Full Expensing (replacing the 130% super-deduction from April 2023) allows 100% first-year deduction for qualifying plant and machinery investments.',
   },
   {
     id: 10,
@@ -139,38 +164,45 @@ const quizQuestions = [
       'Apply for funding after completing works',
       'Combine multiple funding sources without declaration',
       'Pre-approve funding before commencing work',
-      'Only apply for grants over £10,000'
+      'Only apply for grants over £10,000',
     ],
     correctAnswer: 2,
-    explanation: 'Most funding schemes require pre-approval before work begins. Starting work early can disqualify the project from funding. Always confirm funding approval first.'
-  }
+    explanation:
+      'Most funding schemes require pre-approval before work begins. Starting work early can disqualify the project from funding. Always confirm funding approval first.',
+  },
 ];
 
 const faqs = [
   {
     question: 'Can my client combine multiple funding sources?',
-    answer: 'Often yes, but it depends on the specific schemes. For example, a public sector client might combine Salix funding with ECAs on qualifying equipment. However, you cannot "double-dip" on the same costs - each scheme must fund different elements. Always check scheme rules carefully and declare other funding sources in applications.'
+    answer:
+      'Often yes, but it depends on the specific schemes. For example, a public sector client might combine Salix funding with ECAs on qualifying equipment. However, you cannot "double-dip" on the same costs - each scheme must fund different elements. Always check scheme rules carefully and declare other funding sources in applications.',
   },
   {
     question: 'How do I find ECO4 installers or become one?',
-    answer: 'To become an ECO installer, you need TrustMark registration and appropriate PAS (Publicly Available Specification) certifications for the measures you want to install. Contact energy suppliers\' ECO teams directly or join installer networks like TrustMark and Retrofit Works. For clients, start with their energy supplier or use the Simple Energy Advice service.'
+    answer:
+      "To become an ECO installer, you need TrustMark registration and appropriate PAS (Publicly Available Specification) certifications for the measures you want to install. Contact energy suppliers' ECO teams directly or join installer networks like TrustMark and Retrofit Works. For clients, start with their energy supplier or use the Simple Energy Advice service.",
   },
   {
     question: 'What records should be kept for tax relief claims?',
-    answer: 'Maintain invoices showing the product description and Energy Technology List (ETL) reference, proof that products were new (not second-hand), installation certificates, commissioning records, and evidence of the purchase date. Keep records for at least 6 years as HMRC may enquire.'
+    answer:
+      'Maintain invoices showing the product description and Energy Technology List (ETL) reference, proof that products were new (not second-hand), installation certificates, commissioning records, and evidence of the purchase date. Keep records for at least 6 years as HMRC may enquire.',
   },
   {
     question: 'Are there funding schemes for SMEs?',
-    answer: 'Yes, several options exist including ECAs (tax relief), low-interest green loans from banks, Carbon Trust Green Business Fund (when open), local authority business grants, and some energy supplier programmes. The British Business Bank also promotes green finance initiatives. Check your local Growth Hub for area-specific schemes.'
+    answer:
+      'Yes, several options exist including ECAs (tax relief), low-interest green loans from banks, Carbon Trust Green Business Fund (when open), local authority business grants, and some energy supplier programmes. The British Business Bank also promotes green finance initiatives. Check your local Growth Hub for area-specific schemes.',
   },
   {
     question: 'What happens if funding is reduced mid-project?',
-    answer: 'This risk exists with some schemes that have limited budgets. Protect yourself by getting funding confirmation in writing before starting, having a contract clause explaining the contingency if funding falls through, ensuring the client understands their liability, and considering staged applications for large projects.'
+    answer:
+      'This risk exists with some schemes that have limited budgets. Protect yourself by getting funding confirmation in writing before starting, having a contract clause explaining the contingency if funding falls through, ensuring the client understands their liability, and considering staged applications for large projects.',
   },
   {
     question: 'How can electricians help clients access funding?',
-    answer: 'Electricians can add value by staying informed about current schemes, providing energy assessments to support applications, supplying product specifications meeting ETL requirements, writing supporting letters describing energy savings, connecting clients with specialist funding advisers, and ensuring installations meet scheme requirements for sign-off.'
-  }
+    answer:
+      'Electricians can add value by staying informed about current schemes, providing energy assessments to support applications, supplying product specifications meeting ETL requirements, writing supporting letters describing energy savings, connecting clients with specialist funding advisers, and ensuring installations meet scheme requirements for sign-off.',
+  },
 ];
 
 const EnergyEfficiencyModule6Section3: React.FC = () => {
@@ -179,8 +211,14 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
   useSEO({
     title: TITLE,
     description: DESCRIPTION,
-    keywords: ['ECO4', 'Enhanced Capital Allowances', 'Salix Finance', 'energy efficiency funding', 'green finance UK'],
-    canonicalUrl: '/study-centre/upskilling/energy-efficiency/module-6/section-3'
+    keywords: [
+      'ECO4',
+      'Enhanced Capital Allowances',
+      'Salix Finance',
+      'energy efficiency funding',
+      'green finance UK',
+    ],
+    canonicalUrl: '/study-centre/upskilling/energy-efficiency/module-6/section-3',
   });
 
   return (
@@ -188,7 +226,12 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -208,9 +251,7 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Incentives and Funding Opportunities
           </h1>
-          <p className="text-white/80">
-            UK schemes to fund energy efficiency improvements
-          </p>
+          <p className="text-white/80">UK schemes to fund energy efficiency improvements</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -218,19 +259,35 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">Key Schemes</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>ECO4:</strong> Free insulation for fuel-poor homes</li>
-              <li><strong>ECAs:</strong> 100% tax deduction on equipment</li>
-              <li><strong>Salix:</strong> Interest-free public sector loans</li>
-              <li><strong>LAD:</strong> Local authority delivery grants</li>
+              <li>
+                <strong>ECO4:</strong> Free insulation for fuel-poor homes
+              </li>
+              <li>
+                <strong>ECAs:</strong> 100% tax deduction on equipment
+              </li>
+              <li>
+                <strong>Salix:</strong> Interest-free public sector loans
+              </li>
+              <li>
+                <strong>LAD:</strong> Local authority delivery grants
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Eligibility Tips</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>ECO4:</strong> Benefits, low EPC, fuel poverty</li>
-              <li><strong>ECAs:</strong> Products on Energy Technology List</li>
-              <li><strong>Salix:</strong> NHS, councils, schools only</li>
-              <li><strong>Pre-approval:</strong> Always secure before work</li>
+              <li>
+                <strong>ECO4:</strong> Benefits, low EPC, fuel poverty
+              </li>
+              <li>
+                <strong>ECAs:</strong> Products on Energy Technology List
+              </li>
+              <li>
+                <strong>Salix:</strong> NHS, councils, schools only
+              </li>
+              <li>
+                <strong>Pre-approval:</strong> Always secure before work
+              </li>
             </ul>
           </div>
         </div>
@@ -245,7 +302,7 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
               'Salix Finance for public sector clients',
               'Local authority funding schemes',
               'Green finance options for commercial clients',
-              'How to help clients access funding'
+              'How to help clients access funding',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -265,13 +322,19 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              ECO4 is the fourth phase of the Energy Company Obligation, running from 2022 to 2026. It requires large energy suppliers to fund energy efficiency improvements in fuel-poor homes. As an electrician, understanding ECO4 helps you connect vulnerable clients with free or subsidised improvements.
+              ECO4 is the fourth phase of the Energy Company Obligation, running from 2022 to 2026.
+              It requires large energy suppliers to fund energy efficiency improvements in fuel-poor
+              homes. As an electrician, understanding ECO4 helps you connect vulnerable clients with
+              free or subsidised improvements.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Eligible households:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Households on qualifying benefits (Universal Credit, Pension Credit, Child Tax Credits, etc.)</li>
+                <li>
+                  Households on qualifying benefits (Universal Credit, Pension Credit, Child Tax
+                  Credits, etc.)
+                </li>
                 <li>Low-income households in fuel poverty</li>
                 <li>Properties with EPC rating D, E, F, or G</li>
                 <li>Referrals through local authority flex eligibility</li>
@@ -291,7 +354,9 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">How electricians can help:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                How electricians can help:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Install heating controls and programmable thermostats</li>
                 <li>Upgrade electric heating systems</li>
@@ -312,7 +377,10 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Enhanced Capital Allowances allow businesses to deduct 100% of the cost of qualifying energy-efficient equipment from taxable profits in the year of purchase. This accelerates tax relief compared to standard writing-down allowances spread over several years.
+              Enhanced Capital Allowances allow businesses to deduct 100% of the cost of qualifying
+              energy-efficient equipment from taxable profits in the year of purchase. This
+              accelerates tax relief compared to standard writing-down allowances spread over
+              several years.
             </p>
 
             <div className="my-6">
@@ -326,13 +394,25 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Qualifying equipment categories:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Qualifying equipment categories:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Motors and drives:</strong> Variable speed drives, high-efficiency motors</li>
-                <li><strong>Lighting:</strong> LED luminaires, lighting controls</li>
-                <li><strong>HVAC:</strong> Air conditioning, chillers, heat pumps</li>
-                <li><strong>Building controls:</strong> BEMS, automatic controls</li>
-                <li><strong>Refrigeration:</strong> Efficient commercial refrigeration</li>
+                <li>
+                  <strong>Motors and drives:</strong> Variable speed drives, high-efficiency motors
+                </li>
+                <li>
+                  <strong>Lighting:</strong> LED luminaires, lighting controls
+                </li>
+                <li>
+                  <strong>HVAC:</strong> Air conditioning, chillers, heat pumps
+                </li>
+                <li>
+                  <strong>Building controls:</strong> BEMS, automatic controls
+                </li>
+                <li>
+                  <strong>Refrigeration:</strong> Efficient commercial refrigeration
+                </li>
               </ul>
             </div>
 
@@ -358,7 +438,9 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Salix Finance provides interest-free loans to public sector organisations for energy efficiency improvements. The loans are designed to be cash-flow neutral - repayments are funded by the energy savings generated by the improvements.
+              Salix Finance provides interest-free loans to public sector organisations for energy
+              efficiency improvements. The loans are designed to be cash-flow neutral - repayments
+              are funded by the energy savings generated by the improvements.
             </p>
 
             <div className="my-6">
@@ -407,7 +489,9 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Local authorities deliver various energy efficiency programmes funded by central government, energy companies, and their own budgets. These schemes often target specific areas or demographics and can complement national programmes.
+              Local authorities deliver various energy efficiency programmes funded by central
+              government, energy companies, and their own budgets. These schemes often target
+              specific areas or demographics and can complement national programmes.
             </p>
 
             <div className="my-6">
@@ -450,7 +534,9 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Beyond government schemes, commercial green finance options are expanding rapidly. Banks and specialist lenders offer products tailored to energy efficiency investments, often with preferential rates reflecting the reduced risk of lower energy bills.
+              Beyond government schemes, commercial green finance options are expanding rapidly.
+              Banks and specialist lenders offer products tailored to energy efficiency investments,
+              often with preferential rates reflecting the reduced risk of lower energy bills.
             </p>
 
             <div className="my-6">
@@ -516,10 +602,18 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-red-400/80 mb-2">Common pitfalls:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Starting before approval</strong> - Most schemes require pre-approval</li>
-                <li><strong>Wrong products</strong> - Check ETL listing for ECAs</li>
-                <li><strong>Missing deadlines</strong> - Funding windows close; apply early</li>
-                <li><strong>Incomplete records</strong> - Retain all documentation</li>
+                <li>
+                  <strong>Starting before approval</strong> - Most schemes require pre-approval
+                </li>
+                <li>
+                  <strong>Wrong products</strong> - Check ETL listing for ECAs
+                </li>
+                <li>
+                  <strong>Missing deadlines</strong> - Funding windows close; apply early
+                </li>
+                <li>
+                  <strong>Incomplete records</strong> - Retain all documentation
+                </li>
               </ul>
             </div>
           </div>
@@ -531,7 +625,9 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Advising domestic clients</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Advising domestic clients
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Ask about benefits to check ECO4 eligibility</li>
                 <li>Refer to energy supplier or Simple Energy Advice</li>
@@ -541,7 +637,9 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Advising business clients</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Advising business clients
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Mention Enhanced Capital Allowances in quotations</li>
                 <li>Specify ETL-listed products where possible</li>
@@ -551,7 +649,9 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Advising public sector clients</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Advising public sector clients
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Highlight Salix 0% finance option</li>
                 <li>Emphasise cash-flow neutral repayments</li>
@@ -616,21 +716,27 @@ const EnergyEfficiencyModule6Section3: React.FC = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-4">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

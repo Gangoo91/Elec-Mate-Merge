@@ -13,7 +13,7 @@ export const hncQuestionBank: StandardMockQuestion[] = [
   ...questionsPart1,
   ...questionsPart2,
   ...questionsPart3,
-  ...questionsPart4
+  ...questionsPart4,
 ];
 
 /**
@@ -38,9 +38,9 @@ export function getRandomQuestions(
   distribution: DifficultyDistribution = DEFAULT_DIFFICULTY_DISTRIBUTION
 ): StandardMockQuestion[] {
   // Group questions by difficulty
-  const basicQuestions = hncQuestionBank.filter(q => q.difficulty === 'basic');
-  const intermediateQuestions = hncQuestionBank.filter(q => q.difficulty === 'intermediate');
-  const advancedQuestions = hncQuestionBank.filter(q => q.difficulty === 'advanced');
+  const basicQuestions = hncQuestionBank.filter((q) => q.difficulty === 'basic');
+  const intermediateQuestions = hncQuestionBank.filter((q) => q.difficulty === 'intermediate');
+  const advancedQuestions = hncQuestionBank.filter((q) => q.difficulty === 'advanced');
 
   // Calculate target counts for each difficulty
   const basicCount = Math.round(count * distribution.basic);
@@ -57,7 +57,7 @@ export function getRandomQuestions(
 
   // If we don't have enough questions in some categories, fill from others
   if (combined.length < count) {
-    const remaining = shuffle(hncQuestionBank.filter(q => !combined.includes(q)));
+    const remaining = shuffle(hncQuestionBank.filter((q) => !combined.includes(q)));
     combined.push(...remaining.slice(0, count - combined.length));
   }
 

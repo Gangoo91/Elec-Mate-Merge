@@ -1,8 +1,14 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { CheckCircle2, ChevronDown, ChevronUp, AlertTriangle, Lightbulb, TestTube } from 'lucide-react';
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  AlertTriangle,
+  Lightbulb,
+  TestTube,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface IsolationStep {
@@ -27,7 +33,9 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Card className={`border-2 ${step.critical ? 'border-red-500/30 bg-red-500/5' : 'border-border bg-card'}`}>
+    <Card
+      className={`border-2 ${step.critical ? 'border-red-500/30 bg-red-500/5' : 'border-border bg-card'}`}
+    >
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <Checkbox
@@ -37,7 +45,9 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
           />
           <div className="flex-grow">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className="font-medium text-foreground">Step {step.id}: {step.title}</h4>
+              <h4 className="font-medium text-foreground">
+                Step {step.id}: {step.title}
+              </h4>
               {step.critical && (
                 <span className="text-xs px-2 py-1 bg-red-500/20 text-red-400 rounded-full border border-red-500/30">
                   Critical
@@ -52,7 +62,7 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
             </div>
             <p className="text-gray-300 text-sm mb-2">{step.description}</p>
             <p className="text-xs text-elec-yellow mb-3">{step.regulation}</p>
-            
+
             <Button
               variant="ghost"
               size="sm"
@@ -116,9 +126,7 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
               </div>
             )}
           </div>
-          {step.completed && (
-            <CheckCircle2 className="h-5 w-5 text-green-400 mt-1" />
-          )}
+          {step.completed && <CheckCircle2 className="h-5 w-5 text-green-400 mt-1" />}
         </div>
       </CardContent>
     </Card>

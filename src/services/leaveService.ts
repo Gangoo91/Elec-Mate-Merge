@@ -5,15 +5,19 @@ import { LeaveRequest, HolidayAllowance, LeaveFilters, LeaveType } from './types
 import { differenceInBusinessDays, parseISO, isWeekend, eachDayOfInterval, format } from 'date-fns';
 
 // Calculate business days between dates (excluding weekends)
-export const calculateLeaveDays = (startDate: string, endDate: string, halfDay?: 'am' | 'pm'): number => {
+export const calculateLeaveDays = (
+  startDate: string,
+  endDate: string,
+  halfDay?: 'am' | 'pm'
+): number => {
   if (halfDay) return 0.5;
-  
+
   const start = parseISO(startDate);
   const end = parseISO(endDate);
-  
+
   const allDays = eachDayOfInterval({ start, end });
-  const businessDays = allDays.filter(day => !isWeekend(day));
-  
+  const businessDays = allDays.filter((day) => !isWeekend(day));
+
   return businessDays.length;
 };
 
@@ -30,13 +34,15 @@ export const getLeaveRequestById = async (id: string): Promise<LeaveRequest | nu
   return null;
 };
 
-export const createLeaveRequest = async (request: Omit<LeaveRequest, 'id' | 'createdAt'>): Promise<LeaveRequest> => {
+export const createLeaveRequest = async (
+  request: Omit<LeaveRequest, 'id' | 'createdAt'>
+): Promise<LeaveRequest> => {
   // In production: return supabase.from('leave_requests').insert({ ...request, createdAt: new Date().toISOString() }).select().single();
   const id = `LR-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  return { 
-    ...request, 
-    id, 
-    createdAt: new Date().toISOString() 
+  return {
+    ...request,
+    id,
+    createdAt: new Date().toISOString(),
   };
 };
 
@@ -46,7 +52,11 @@ export const approveLeaveRequest = async (id: string, approvedBy: string): Promi
   return true;
 };
 
-export const rejectLeaveRequest = async (id: string, rejectedBy: string, reason?: string): Promise<boolean> => {
+export const rejectLeaveRequest = async (
+  id: string,
+  rejectedBy: string,
+  reason?: string
+): Promise<boolean> => {
   // In production: return supabase.from('leave_requests').update({ status: 'rejected', rejectedReason: reason }).eq('id', id);
   console.log('rejectLeaveRequest called:', id, rejectedBy, reason);
   return true;
@@ -59,7 +69,10 @@ export const cancelLeaveRequest = async (id: string): Promise<boolean> => {
 };
 
 // Holiday allowance operations
-export const getHolidayAllowance = async (employeeId: string, year?: number): Promise<HolidayAllowance | null> => {
+export const getHolidayAllowance = async (
+  employeeId: string,
+  year?: number
+): Promise<HolidayAllowance | null> => {
   // In production: return supabase.from('holiday_allowances').select('*').eq('employeeId', employeeId).eq('year', year).single();
   console.log('getHolidayAllowance called:', employeeId, year);
   return null;
@@ -71,7 +84,10 @@ export const getAllHolidayAllowances = async (year?: number): Promise<HolidayAll
   return [];
 };
 
-export const updateHolidayAllowance = async (id: string, updates: Partial<HolidayAllowance>): Promise<boolean> => {
+export const updateHolidayAllowance = async (
+  id: string,
+  updates: Partial<HolidayAllowance>
+): Promise<boolean> => {
   // In production: return supabase.from('holiday_allowances').update(updates).eq('id', id);
   console.log('updateHolidayAllowance called:', id, updates);
   return true;
@@ -86,31 +102,32 @@ export const checkLeaveClashes = (
   const newStart = parseISO(newRequest.startDate);
   const newEnd = parseISO(newRequest.endDate);
   const newDays = eachDayOfInterval({ start: newStart, end: newEnd });
-  
+
   const clashingEmployees: string[] = [];
-  
-  newDays.forEach(day => {
+
+  newDays.forEach((day) => {
     if (isWeekend(day)) return;
-    
+
     const dayStr = format(day, 'yyyy-MM-dd');
     const employeesOff = leaveRequests
-      .filter(lr => 
-        lr.status === 'approved' &&
-        lr.employeeId !== newRequest.employeeId &&
-        lr.startDate <= dayStr &&
-        lr.endDate >= dayStr
+      .filter(
+        (lr) =>
+          lr.status === 'approved' &&
+          lr.employeeId !== newRequest.employeeId &&
+          lr.startDate <= dayStr &&
+          lr.endDate >= dayStr
       )
-      .map(lr => lr.employeeName);
-    
+      .map((lr) => lr.employeeName);
+
     if (employeesOff.length >= maxAllowedOff) {
-      employeesOff.forEach(emp => {
+      employeesOff.forEach((emp) => {
         if (!clashingEmployees.includes(emp)) {
           clashingEmployees.push(emp);
         }
       });
     }
   });
-  
+
   return {
     hasClash: clashingEmployees.length > 0,
     clashingEmployees,

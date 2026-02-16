@@ -28,11 +28,10 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   showStartNewDialog,
   onCloseStartNewDialog,
   onConfirmStartNew,
-  onConfirmDuplicate
+  onConfirmDuplicate,
 }) => {
   return (
     <div className="px-2 md:px-4">
-
       <DraftHeaderActions
         hasDraft={hasDraft}
         draftTimestamp={draftTimestamp}

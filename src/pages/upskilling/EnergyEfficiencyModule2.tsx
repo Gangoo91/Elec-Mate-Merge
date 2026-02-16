@@ -7,34 +7,34 @@ const EnergyEfficiencyModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Power Quality Factors (Harmonics, Flicker, etc.)",
+      title: 'Power Quality Factors (Harmonics, Flicker, etc.)',
       icon: Activity,
-      description: "Understanding power quality issues and their impact"
+      description: 'Understanding power quality issues and their impact',
     },
     {
       id: 2,
-      title: "Analysing Loads and Demand Patterns",
+      title: 'Analysing Loads and Demand Patterns',
       icon: BarChart,
-      description: "Load analysis techniques and demand profiling"
+      description: 'Load analysis techniques and demand profiling',
     },
     {
       id: 3,
-      title: "kW vs kVA vs kWh Explained",
+      title: 'kW vs kVA vs kWh Explained',
       icon: Zap,
-      description: "Understanding different electrical measurements and their applications"
+      description: 'Understanding different electrical measurements and their applications',
     },
     {
       id: 4,
-      title: "Equipment for Power Monitoring",
+      title: 'Equipment for Power Monitoring',
       icon: Gauge,
-      description: "Selecting and using power monitoring equipment"
+      description: 'Selecting and using power monitoring equipment',
     },
     {
       id: 5,
-      title: "Reporting Load Profiles and Variations",
+      title: 'Reporting Load Profiles and Variations',
       icon: FileBarChart,
-      description: "Creating meaningful reports from power monitoring data"
-    }
+      description: 'Creating meaningful reports from power monitoring data',
+    },
   ];
 
   return (

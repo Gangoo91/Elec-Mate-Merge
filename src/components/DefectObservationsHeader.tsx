@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CardTitle } from '@/components/ui/card';
 import { Circle, CheckCircle } from 'lucide-react';
@@ -9,10 +8,10 @@ interface DefectObservationsHeaderProps {
   improvements: number;
 }
 
-const DefectObservationsHeader = ({ 
-  hasUnsavedChanges, 
-  criticalIssues, 
-  improvements 
+const DefectObservationsHeader = ({
+  hasUnsavedChanges,
+  criticalIssues,
+  improvements,
 }: DefectObservationsHeaderProps) => {
   return (
     <CardTitle className="text-elec-yellow">

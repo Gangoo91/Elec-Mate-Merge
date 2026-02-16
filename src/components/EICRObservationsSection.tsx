@@ -16,18 +16,34 @@ interface DefectObservation {
 interface EICRObservationsSectionProps {
   defectObservations: DefectObservation[];
   reportId: string;
-  onUpdateObservation: (id: string, field: keyof DefectObservation | '__BULK__', value: any) => void;
+  onUpdateObservation: (
+    id: string,
+    field: keyof DefectObservation | '__BULK__',
+    value: any
+  ) => void;
   onRemoveObservation: (id: string) => void;
   formData?: any;
   onUpdateFormData?: (data: any) => void;
 }
 
 const EICRObservationsSection = React.forwardRef<HTMLDivElement, EICRObservationsSectionProps>(
-  ({ defectObservations, reportId, onUpdateObservation, onRemoveObservation, formData, onUpdateFormData }, ref) => {
+  (
+    {
+      defectObservations,
+      reportId,
+      onUpdateObservation,
+      onRemoveObservation,
+      formData,
+      onUpdateFormData,
+    },
+    ref
+  ) => {
     // Note: Auto-save is now handled by EICRFormProvider via useCloudSync
 
-    const criticalIssues = defectObservations.filter(obs => ['C1', 'C2'].includes(obs.defectCode)).length;
-    const improvements = defectObservations.filter(obs => obs.defectCode === 'C3').length;
+    const criticalIssues = defectObservations.filter((obs) =>
+      ['C1', 'C2'].includes(obs.defectCode)
+    ).length;
+    const improvements = defectObservations.filter((obs) => obs.defectCode === 'C3').length;
 
     // Build certificate context from formData for photo documentation
     const certificateContext = {

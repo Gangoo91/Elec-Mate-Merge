@@ -12,7 +12,7 @@ interface CostEngineerHeroProps {
 export function CostEngineerHero({
   businessSettings,
   onOpenSettings,
-  hasConfiguredSettings
+  hasConfiguredSettings,
 }: CostEngineerHeroProps) {
   const labourRate = businessSettings?.labourRates?.electrician || 50;
   const targetMargin = businessSettings?.profitTargets?.target || 25;
@@ -28,7 +28,7 @@ export function CostEngineerHero({
       <motion.div
         className="absolute -top-20 -right-20 w-60 h-60 bg-elec-yellow/10 rounded-full blur-3xl"
         animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* Hero content */}
@@ -39,7 +39,7 @@ export function CostEngineerHero({
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
+              transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
               className="mb-3"
             >
               <div className="relative inline-flex">
@@ -88,9 +88,7 @@ export function CostEngineerHero({
             >
               <Settings className="h-4 w-4 mr-1.5" />
               <span className="text-sm">Settings</span>
-              {hasConfiguredSettings && (
-                <Check className="h-3 w-3 ml-1.5 text-emerald-400" />
-              )}
+              {hasConfiguredSettings && <Check className="h-3 w-3 ml-1.5 text-emerald-400" />}
             </Button>
           </motion.div>
         </div>

@@ -1,80 +1,119 @@
-import { ArrowLeft, ArrowRight, Thermometer, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Thermometer, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Smart Thermostats and Room Zoning";
-const DESCRIPTION = "Learn to install and configure smart thermostats and room zoning systems for precise temperature control and energy efficiency in residential properties.";
+const TITLE = 'Smart Thermostats and Room Zoning';
+const DESCRIPTION =
+  'Learn to install and configure smart thermostats and room zoning systems for precise temperature control and energy efficiency in residential properties.';
 
 const quickCheckQuestions = [
   {
-    question: "What is the main advantage of a smart thermostat over a traditional programmable thermostat?",
-    options: ["Lower purchase price", "Remote access and learning capabilities", "Simpler installation", "Longer battery life"],
+    question:
+      'What is the main advantage of a smart thermostat over a traditional programmable thermostat?',
+    options: [
+      'Lower purchase price',
+      'Remote access and learning capabilities',
+      'Simpler installation',
+      'Longer battery life',
+    ],
     correctAnswer: 1,
-    explanation: "Smart thermostats offer remote access via smartphone apps and can learn household patterns to automatically optimise heating schedules, features not available on traditional programmable models."
+    explanation:
+      'Smart thermostats offer remote access via smartphone apps and can learn household patterns to automatically optimise heating schedules, features not available on traditional programmable models.',
   },
   {
-    question: "What is room zoning in the context of heating systems?",
-    options: ["Installing multiple boilers", "Controlling temperature independently in different areas", "Connecting rooms with ducts", "Measuring outdoor temperature"],
+    question: 'What is room zoning in the context of heating systems?',
+    options: [
+      'Installing multiple boilers',
+      'Controlling temperature independently in different areas',
+      'Connecting rooms with ducts',
+      'Measuring outdoor temperature',
+    ],
     correctAnswer: 1,
-    explanation: "Room zoning allows different areas of a property to be heated to different temperatures independently, improving comfort and efficiency by only heating occupied spaces."
+    explanation:
+      'Room zoning allows different areas of a property to be heated to different temperatures independently, improving comfort and efficiency by only heating occupied spaces.',
   },
   {
-    question: "What type of valve is commonly used for radiator-based room zoning?",
-    options: ["Gate valve", "Smart thermostatic radiator valve (TRV)", "Ball valve", "Check valve"],
+    question: 'What type of valve is commonly used for radiator-based room zoning?',
+    options: ['Gate valve', 'Smart thermostatic radiator valve (TRV)', 'Ball valve', 'Check valve'],
     correctAnswer: 1,
-    explanation: "Smart TRVs (thermostatic radiator valves) replace manual TRVs and can be controlled wirelessly to regulate the temperature of individual radiators as part of a zoning system."
-  }
+    explanation:
+      'Smart TRVs (thermostatic radiator valves) replace manual TRVs and can be controlled wirelessly to regulate the temperature of individual radiators as part of a zoning system.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "Which feature allows smart thermostats to pre-heat a home before occupants arrive?",
-    options: ["Weather compensation", "Geofencing", "Load balancing", "Demand response"],
+    question: 'Which feature allows smart thermostats to pre-heat a home before occupants arrive?',
+    options: ['Weather compensation', 'Geofencing', 'Load balancing', 'Demand response'],
     correctAnswer: 1,
-    explanation: "Geofencing uses smartphone location to detect when occupants are heading home, allowing the thermostat to start heating in advance so the property is warm on arrival."
+    explanation:
+      'Geofencing uses smartphone location to detect when occupants are heading home, allowing the thermostat to start heating in advance so the property is warm on arrival.',
   },
   {
-    question: "What is weather compensation in smart heating systems?",
-    options: ["Adjusting heating based on outdoor temperature forecasts", "Compensating for wind chill factor", "Balancing humidity levels", "Measuring solar gain"],
+    question: 'What is weather compensation in smart heating systems?',
+    options: [
+      'Adjusting heating based on outdoor temperature forecasts',
+      'Compensating for wind chill factor',
+      'Balancing humidity levels',
+      'Measuring solar gain',
+    ],
     correctAnswer: 0,
-    explanation: "Weather compensation adjusts the heating output based on outdoor temperature data or forecasts, running the boiler more efficiently by reducing flow temperature on milder days."
+    explanation:
+      'Weather compensation adjusts the heating output based on outdoor temperature data or forecasts, running the boiler more efficiently by reducing flow temperature on milder days.',
   },
   {
-    question: "For underfloor heating, what is the typical method for zone control?",
-    options: ["Smart TRVs on each loop", "Motorised zone valves on manifold", "Individual boilers per zone", "Manual adjustment only"],
+    question: 'For underfloor heating, what is the typical method for zone control?',
+    options: [
+      'Smart TRVs on each loop',
+      'Motorised zone valves on manifold',
+      'Individual boilers per zone',
+      'Manual adjustment only',
+    ],
     correctAnswer: 1,
-    explanation: "Underfloor heating systems typically use motorised zone valves fitted to the manifold, controlled by room thermostats to regulate water flow to each heating zone."
+    explanation:
+      'Underfloor heating systems typically use motorised zone valves fitted to the manifold, controlled by room thermostats to regulate water flow to each heating zone.',
   },
   {
-    question: "What protocol do many smart TRVs use to communicate with their hub?",
-    options: ["Ethernet", "Zigbee or Z-Wave", "HDMI", "USB"],
+    question: 'What protocol do many smart TRVs use to communicate with their hub?',
+    options: ['Ethernet', 'Zigbee or Z-Wave', 'HDMI', 'USB'],
     correctAnswer: 1,
-    explanation: "Most smart TRVs communicate via Zigbee or Z-Wave wireless protocols, which are designed for low-power, reliable communication in smart home applications."
+    explanation:
+      'Most smart TRVs communicate via Zigbee or Z-Wave wireless protocols, which are designed for low-power, reliable communication in smart home applications.',
   },
   {
-    question: "What is a key consideration when retrofitting smart zoning to an existing heating system?",
-    options: ["The colour of the radiators", "Compatibility with existing boiler controls", "The age of the property", "Carpet thickness"],
+    question:
+      'What is a key consideration when retrofitting smart zoning to an existing heating system?',
+    options: [
+      'The colour of the radiators',
+      'Compatibility with existing boiler controls',
+      'The age of the property',
+      'Carpet thickness',
+    ],
     correctAnswer: 1,
-    explanation: "When retrofitting smart zoning, compatibility with the existing boiler and its controls is crucial. Some systems require specific boiler relay connections or compatible OpenTherm interfaces."
-  }
+    explanation:
+      'When retrofitting smart zoning, compatibility with the existing boiler and its controls is crucial. Some systems require specific boiler relay connections or compatible OpenTherm interfaces.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Do smart thermostats work with all boiler types?",
-    answer: "Most smart thermostats work with standard on/off boilers via relay control. For maximum efficiency, look for thermostats with OpenTherm support, which allows two-way communication with compatible boilers to modulate output rather than simply switching on and off."
+    question: 'Do smart thermostats work with all boiler types?',
+    answer:
+      'Most smart thermostats work with standard on/off boilers via relay control. For maximum efficiency, look for thermostats with OpenTherm support, which allows two-way communication with compatible boilers to modulate output rather than simply switching on and off.',
   },
   {
-    question: "How many zones should a typical home have?",
-    answer: "This depends on the property size and layout. As a minimum, separating upstairs from downstairs is beneficial. Larger homes benefit from individual room control. For most 3-4 bedroom homes, 4-6 zones provide a good balance of control and complexity."
+    question: 'How many zones should a typical home have?',
+    answer:
+      'This depends on the property size and layout. As a minimum, separating upstairs from downstairs is beneficial. Larger homes benefit from individual room control. For most 3-4 bedroom homes, 4-6 zones provide a good balance of control and complexity.',
   },
   {
-    question: "Can smart TRVs work without a smart thermostat?",
-    answer: "Smart TRVs can work independently to control individual radiator temperatures, but for full system control (including boiler firing), they typically need to connect to a hub or smart thermostat that can signal the boiler to run when heat is required in any zone."
-  }
+    question: 'Can smart TRVs work without a smart thermostat?',
+    answer:
+      'Smart TRVs can work independently to control individual radiator temperatures, but for full system control (including boiler firing), they typically need to connect to a hub or smart thermostat that can signal the boiler to run when heat is required in any zone.',
+  },
 ];
 
 const SmartHomeModule4Section1 = () => {
@@ -133,11 +172,11 @@ const SmartHomeModule4Section1 = () => {
           </h2>
           <ul className="space-y-3">
             {[
-              "Explain the features and benefits of smart thermostats",
-              "Understand room zoning principles and applications",
-              "Install and configure smart TRVs and zone controls",
-              "Integrate smart heating with existing boiler systems",
-              "Advise customers on energy-saving heating strategies"
+              'Explain the features and benefits of smart thermostats',
+              'Understand room zoning principles and applications',
+              'Install and configure smart TRVs and zone controls',
+              'Integrate smart heating with existing boiler systems',
+              'Advise customers on energy-saving heating strategies',
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3 text-white">
                 <CheckCircle className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
@@ -154,30 +193,30 @@ const SmartHomeModule4Section1 = () => {
             What is a Smart Thermostat?
           </h2>
           <p className="text-white mb-4">
-            A smart thermostat is a Wi-Fi connected heating controller that offers advanced
-            features beyond simple time-based programming. Unlike traditional thermostats,
-            smart models can be controlled remotely and often incorporate learning algorithms.
+            A smart thermostat is a Wi-Fi connected heating controller that offers advanced features
+            beyond simple time-based programming. Unlike traditional thermostats, smart models can
+            be controlled remotely and often incorporate learning algorithms.
           </p>
           <div className="space-y-3">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Remote Control</h4>
               <p className="text-white text-sm">
-                Adjust heating from anywhere using a smartphone app. Useful for turning
-                heating on before arriving home or off when leaving unexpectedly.
+                Adjust heating from anywhere using a smartphone app. Useful for turning heating on
+                before arriving home or off when leaving unexpectedly.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Learning Algorithms</h4>
               <p className="text-white text-sm">
-                Many smart thermostats learn household routines and automatically create
-                efficient heating schedules without manual programming.
+                Many smart thermostats learn household routines and automatically create efficient
+                heating schedules without manual programming.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Energy Reporting</h4>
               <p className="text-white text-sm">
-                Track energy usage over time, compare heating costs, and receive suggestions
-                for improving efficiency through the companion app.
+                Track energy usage over time, compare heating costs, and receive suggestions for
+                improving efficiency through the companion app.
               </p>
             </div>
           </div>
@@ -240,8 +279,8 @@ const SmartHomeModule4Section1 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Motorised Zone Valves (UFH)</h4>
               <p className="text-white text-sm mb-2">
-                Used with underfloor heating manifolds. Actuators fitted to each loop
-                control water flow based on room thermostat signals.
+                Used with underfloor heating manifolds. Actuators fitted to each loop control water
+                flow based on room thermostat signals.
               </p>
               <p className="text-white text-sm">
                 <span className="text-elec-yellow">Installation:</span> Requires manifold access.
@@ -251,8 +290,8 @@ const SmartHomeModule4Section1 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Multi-Zone Controllers</h4>
               <p className="text-white text-sm mb-2">
-                Centralised control units that manage multiple zones through wired connections
-                to room thermostats and zone valves.
+                Centralised control units that manage multiple zones through wired connections to
+                room thermostats and zone valves.
               </p>
               <p className="text-white text-sm">
                 <span className="text-elec-yellow">Installation:</span> Hardwired system. Requires
@@ -278,35 +317,45 @@ const SmartHomeModule4Section1 = () => {
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-white/20">
-                  <th className="text-left py-3 px-4 text-elec-yellow font-medium">Integration Type</th>
+                  <th className="text-left py-3 px-4 text-elec-yellow font-medium">
+                    Integration Type
+                  </th>
                   <th className="text-left py-3 px-4 text-elec-yellow font-medium">Description</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-white/10">
                   <td className="py-3 px-4 text-white font-medium">Relay Control</td>
-                  <td className="py-3 px-4 text-white">Simple on/off switching via volt-free contacts</td>
+                  <td className="py-3 px-4 text-white">
+                    Simple on/off switching via volt-free contacts
+                  </td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 px-4 text-white font-medium">OpenTherm</td>
-                  <td className="py-3 px-4 text-white">Two-way digital communication for modulating boilers</td>
+                  <td className="py-3 px-4 text-white">
+                    Two-way digital communication for modulating boilers
+                  </td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 px-4 text-white font-medium">Bus Systems</td>
-                  <td className="py-3 px-4 text-white">eBus, EMS+ for advanced boiler integration</td>
+                  <td className="py-3 px-4 text-white">
+                    eBus, EMS+ for advanced boiler integration
+                  </td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4 text-white font-medium">Heat Link</td>
-                  <td className="py-3 px-4 text-white">Proprietary receivers (e.g., Nest, Hive heat link)</td>
+                  <td className="py-3 px-4 text-white">
+                    Proprietary receivers (e.g., Nest, Hive heat link)
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-white text-sm">
-              <span className="text-elec-yellow font-medium">Installer note:</span> Always check
-              the smart thermostat's compatibility with the existing boiler before purchasing.
-              Some systems require specific wiring configurations or additional receiver units.
+              <span className="text-elec-yellow font-medium">Installer note:</span> Always check the
+              smart thermostat's compatibility with the existing boiler before purchasing. Some
+              systems require specific wiring configurations or additional receiver units.
             </p>
           </div>
         </section>
@@ -321,24 +370,22 @@ const SmartHomeModule4Section1 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="font-medium text-white mb-2">Battery Life Management</h4>
               <p className="text-white text-sm">
-                Smart TRVs are battery powered. In a typical 10-radiator home, expect to
-                replace batteries throughout the year. Some users find this maintenance
-                burden inconvenient.
+                Smart TRVs are battery powered. In a typical 10-radiator home, expect to replace
+                batteries throughout the year. Some users find this maintenance burden inconvenient.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="font-medium text-white mb-2">Boiler Short-Cycling</h4>
               <p className="text-white text-sm">
-                With individual room control, the boiler may fire frequently for short
-                periods. Quality systems include call-for-heat aggregation to minimise
-                this issue.
+                With individual room control, the boiler may fire frequently for short periods.
+                Quality systems include call-for-heat aggregation to minimise this issue.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="font-medium text-white mb-2">Wi-Fi Dependency</h4>
               <p className="text-white text-sm">
-                Smart features require reliable internet connection. Most systems maintain
-                basic operation during outages but lose remote access and learning features.
+                Smart features require reliable internet connection. Most systems maintain basic
+                operation during outages but lose remote access and learning features.
               </p>
             </div>
           </div>
@@ -362,11 +409,7 @@ const SmartHomeModule4Section1 = () => {
 
         {/* Section Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Section 1 Knowledge Check"
-            questions={quizQuestions}
-            passingScore={80}
-          />
+          <Quiz title="Section 1 Knowledge Check" questions={quizQuestions} passingScore={80} />
         </section>
 
         {/* Navigation */}

@@ -1,51 +1,54 @@
-import { ArrowLeft, Target, BookOpen, Users, Shield, Leaf, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Target, BookOpen, Users, Shield, Leaf, Zap } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "1.1",
-    title: "Purpose of Electrical System Design",
-    description: "Understanding the fundamental purpose and objectives of electrical system design",
+    number: '1.1',
+    title: 'Purpose of Electrical System Design',
+    description: 'Understanding the fundamental purpose and objectives of electrical system design',
     icon: Target,
-    href: "../level3-module6-section1-1",
+    href: '../level3-module6-section1-1',
   },
   {
-    number: "1.2",
-    title: "Compliance with BS 7671 and Building Regulations",
-    description: "Ensuring designs comply with BS7671 wiring regulations and relevant building regulations",
+    number: '1.2',
+    title: 'Compliance with BS 7671 and Building Regulations',
+    description:
+      'Ensuring designs comply with BS7671 wiring regulations and relevant building regulations',
     icon: BookOpen,
-    href: "../level3-module6-section1-2",
+    href: '../level3-module6-section1-2',
   },
   {
-    number: "1.3",
-    title: "Client Requirements and Design Specifications",
-    description: "Understanding and interpreting client requirements to create appropriate design specifications",
+    number: '1.3',
+    title: 'Client Requirements and Design Specifications',
+    description:
+      'Understanding and interpreting client requirements to create appropriate design specifications',
     icon: Users,
-    href: "../level3-module6-section1-3",
+    href: '../level3-module6-section1-3',
   },
   {
-    number: "1.4",
-    title: "Designing for Safety, Reliability, and Usability",
-    description: "Incorporating safety, reliability and usability principles into electrical system design",
+    number: '1.4',
+    title: 'Designing for Safety, Reliability, and Usability',
+    description:
+      'Incorporating safety, reliability and usability principles into electrical system design',
     icon: Shield,
-    href: "../level3-module6-section1-4",
+    href: '../level3-module6-section1-4',
   },
   {
-    number: "1.5",
-    title: "Designing for Energy Efficiency and Sustainability",
-    description: "Creating energy-efficient and sustainable electrical system designs",
+    number: '1.5',
+    title: 'Designing for Energy Efficiency and Sustainability',
+    description: 'Creating energy-efficient and sustainable electrical system designs',
     icon: Leaf,
-    href: "../level3-module6-section1-5",
+    href: '../level3-module6-section1-5',
   },
 ];
 
 const Level3Module6Section1 = () => {
   useSEO(
-    "Section 1: Design Principles and Requirements - Level 3 Module 6",
-    "Understanding fundamental design principles, compliance requirements and client specifications"
+    'Section 1: Design Principles and Requirements - Level 3 Module 6',
+    'Understanding fundamental design principles, compliance requirements and client specifications'
   );
 
   return (
@@ -70,26 +73,22 @@ const Level3Module6Section1 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

@@ -6,34 +6,54 @@ export const SmartLockBenefitsSection = () => {
   const benefits = [
     {
       icon: Key,
-      title: "Convenience",
-      description: "Keyless entry eliminates the need to carry or find physical keys",
-      examples: ["Hands-free entry when carrying groceries", "No more hiding spare keys", "Easy access for family members"]
+      title: 'Convenience',
+      description: 'Keyless entry eliminates the need to carry or find physical keys',
+      examples: [
+        'Hands-free entry when carrying groceries',
+        'No more hiding spare keys',
+        'Easy access for family members',
+      ],
     },
     {
       icon: Shield,
-      title: "Access Control", 
-      description: "Different codes for different users with varying permission levels",
-      examples: ["Separate codes for family, cleaners, guests", "Time-limited access", "Instant code revocation"]
+      title: 'Access Control',
+      description: 'Different codes for different users with varying permission levels',
+      examples: [
+        'Separate codes for family, cleaners, guests',
+        'Time-limited access',
+        'Instant code revocation',
+      ],
     },
     {
       icon: Smartphone,
-      title: "Remote Management",
-      description: "Lock/unlock from anywhere with internet connection",
-      examples: ["Let in unexpected visitors", "Check if door is locked", "Emergency access control"]
+      title: 'Remote Management',
+      description: 'Lock/unlock from anywhere with internet connection',
+      examples: [
+        'Let in unexpected visitors',
+        'Check if door is locked',
+        'Emergency access control',
+      ],
     },
     {
       icon: BarChart3,
-      title: "Audit Trail",
-      description: "Track who entered and when for security and monitoring",
-      examples: ["Know when kids arrive home", "Monitor service provider access", "Security breach investigation"]
+      title: 'Audit Trail',
+      description: 'Track who entered and when for security and monitoring',
+      examples: [
+        'Know when kids arrive home',
+        'Monitor service provider access',
+        'Security breach investigation',
+      ],
     },
     {
       icon: Clock,
-      title: "Smart Integration",
-      description: "Trigger security scenes and automation when unlocking",
-      examples: ["Unlock disarms alarm system", "Lights turn on automatically", "HVAC adjusts to occupied mode"]
-    }
+      title: 'Smart Integration',
+      description: 'Trigger security scenes and automation when unlocking',
+      examples: [
+        'Unlock disarms alarm system',
+        'Lights turn on automatically',
+        'HVAC adjusts to occupied mode',
+      ],
+    },
   ];
 
   return (
@@ -46,7 +66,8 @@ export const SmartLockBenefitsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          Smart locks offer significant advantages over traditional mechanical locks, providing enhanced security, convenience, and integration capabilities for modern homes.
+          Smart locks offer significant advantages over traditional mechanical locks, providing
+          enhanced security, convenience, and integration capabilities for modern homes.
         </p>
 
         <div className="space-y-4">
@@ -86,7 +107,7 @@ export const SmartLockBenefitsSection = () => {
                 <li>• Music starts playing</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-gradient-to-br from-green-900/20 to-teal-900/20 border border-green-600 rounded-lg">
               <h5 className="font-medium text-green-200 mb-2">Guest Access</h5>
               <p className="text-green-100 text-sm mb-2">Temporary visitor code:</p>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Project } from '@/types/project';
@@ -40,30 +39,30 @@ export const useProjects = () => {
       updatedAt: new Date().toISOString(),
     };
 
-    setProjects(prev => [...prev, newProject]);
+    setProjects((prev) => [...prev, newProject]);
     return newProject;
   };
 
   const updateProject = (id: string, projectData: Partial<Project>) => {
-    setProjects(prev => 
-      prev.map(project => 
-        project.id === id 
-          ? { 
-              ...project, 
-              ...projectData, 
-              updatedAt: new Date().toISOString() 
-            } 
+    setProjects((prev) =>
+      prev.map((project) =>
+        project.id === id
+          ? {
+              ...project,
+              ...projectData,
+              updatedAt: new Date().toISOString(),
+            }
           : project
       )
     );
   };
 
   const deleteProject = (id: string) => {
-    setProjects(prev => prev.filter(project => project.id !== id));
+    setProjects((prev) => prev.filter((project) => project.id !== id));
   };
 
   const getProject = (id: string) => {
-    return projects.find(project => project.id === id);
+    return projects.find((project) => project.id === id);
   };
 
   return {

@@ -11,60 +11,79 @@ export const BMSModule4Section5Practical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
-        
         {/* System Integration Planning */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">System Integration Planning and Installation</h3>
-          
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            System Integration Planning and Installation
+          </h3>
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-3 bg-gray-800 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold mb-1">Zone Definition and Mapping</h4>
-                  <p className="text-sm text-gray-300">Define control zones where HVAC and lighting operate together. Create detailed zone plans showing sensor coverage, equipment locations, and control boundaries.</p>
+                  <p className="text-sm text-gray-300">
+                    Define control zones where HVAC and lighting operate together. Create detailed
+                    zone plans showing sensor coverage, equipment locations, and control boundaries.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3 p-3 bg-gray-800 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold mb-1">Communication Network Design</h4>
-                  <p className="text-sm text-gray-300">Plan BACnet or Modbus networks enabling HVAC and lighting systems to share sensor data and coordinate control responses effectively.</p>
+                  <p className="text-sm text-gray-300">
+                    Plan BACnet or Modbus networks enabling HVAC and lighting systems to share
+                    sensor data and coordinate control responses effectively.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3 p-3 bg-gray-800 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold mb-1">Load Calculation Integration</h4>
-                  <p className="text-sm text-gray-300">Calculate lighting heat gains and their impact on HVAC loads. Size systems accounting for coordinated operation rather than independent peak loads.</p>
+                  <p className="text-sm text-gray-300">
+                    Calculate lighting heat gains and their impact on HVAC loads. Size systems
+                    accounting for coordinated operation rather than independent peak loads.
+                  </p>
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-3 bg-gray-800 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold mb-1">Sensor Sharing Strategy</h4>
-                  <p className="text-sm text-gray-300">Use single sensors (PIR, CO₂, photocells) for multiple systems. Install interface relays and signal conditioning to prevent system conflicts.</p>
+                  <p className="text-sm text-gray-300">
+                    Use single sensors (PIR, CO₂, photocells) for multiple systems. Install
+                    interface relays and signal conditioning to prevent system conflicts.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3 p-3 bg-gray-800 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold mb-1">Timing Coordination</h4>
-                  <p className="text-sm text-gray-300">Program appropriate delays between lighting and HVAC responses. Prevent system conflicts while maintaining occupant comfort during transitions.</p>
+                  <p className="text-sm text-gray-300">
+                    Program appropriate delays between lighting and HVAC responses. Prevent system
+                    conflicts while maintaining occupant comfort during transitions.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3 p-3 bg-gray-800 rounded-lg">
                 <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold mb-1">Override and Safety Systems</h4>
-                  <p className="text-sm text-gray-300">Install local override controls for occupants whilst preventing permanent system disabling that compromises energy-saving strategies.</p>
+                  <p className="text-sm text-gray-300">
+                    Install local override controls for occupants whilst preventing permanent system
+                    disabling that compromises energy-saving strategies.
+                  </p>
                 </div>
               </div>
             </div>
@@ -73,54 +92,112 @@ export const BMSModule4Section5Practical = () => {
 
         {/* Detailed Installation Specifications */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Installation Specifications and Requirements</h3>
-          
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            Installation Specifications and Requirements
+          </h3>
+
           <div className="overflow-x-auto">
             <table className="w-full border-collapse border border-gray-600 text-sm">
               <thead>
                 <tr className="bg-gray-800">
-                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">Installation Task</th>
-                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">Technical Specification</th>
-                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">Best Practice Requirements</th>
-                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">Common Issues & Solutions</th>
+                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">
+                    Installation Task
+                  </th>
+                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">
+                    Technical Specification
+                  </th>
+                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">
+                    Best Practice Requirements
+                  </th>
+                  <th className="border border-gray-600 px-4 py-3 text-left font-semibold">
+                    Common Issues & Solutions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-600 px-4 py-2"><strong>Multi-System PIR Sensors</strong></td>
-                  <td className="border border-gray-600 px-4 py-2">Dual-output sensors with NO/NC contacts</td>
-                  <td className="border border-gray-600 px-4 py-2">Mount at 2.4m height, 60° coverage angle</td>
-                  <td className="border border-gray-600 px-4 py-2">False triggers from heat sources - adjust sensitivity</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    <strong>Multi-System PIR Sensors</strong>
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Dual-output sensors with NO/NC contacts
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Mount at 2.4m height, 60° coverage angle
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    False triggers from heat sources - adjust sensitivity
+                  </td>
                 </tr>
                 <tr className="bg-gray-800/50">
-                  <td className="border border-gray-600 px-4 py-2"><strong>Daylight Sensor Integration</strong></td>
-                  <td className="border border-gray-600 px-4 py-2">0-10V outputs for both lighting and BMS</td>
-                  <td className="border border-gray-600 px-4 py-2">North-facing mounting, avoid reflections</td>
-                  <td className="border border-gray-600 px-4 py-2">Signal drift over time - annual calibration needed</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    <strong>Daylight Sensor Integration</strong>
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    0-10V outputs for both lighting and BMS
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    North-facing mounting, avoid reflections
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Signal drift over time - annual calibration needed
+                  </td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-600 px-4 py-2"><strong>Interface Relay Installation</strong></td>
-                  <td className="border border-gray-600 px-4 py-2">Interposing relays, 24V DC coils preferred</td>
-                  <td className="border border-gray-600 px-4 py-2">Panel-mount in accessible locations</td>
-                  <td className="border border-gray-600 px-4 py-2">Relay chatter from voltage fluctuations</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    <strong>Interface Relay Installation</strong>
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Interposing relays, 24V DC coils preferred
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Panel-mount in accessible locations
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Relay chatter from voltage fluctuations
+                  </td>
                 </tr>
                 <tr className="bg-gray-800/50">
-                  <td className="border border-gray-600 px-4 py-2"><strong>Communication Wiring</strong></td>
-                  <td className="border border-gray-600 px-4 py-2">RS-485 twisted pair, 120Ω termination</td>
-                  <td className="border border-gray-600 px-4 py-2">Separate conduits from power cables</td>
-                  <td className="border border-gray-600 px-4 py-2">Communication errors from EMI interference</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    <strong>Communication Wiring</strong>
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    RS-485 twisted pair, 120Ω termination
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Separate conduits from power cables
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Communication errors from EMI interference
+                  </td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-600 px-4 py-2"><strong>Power Supply Coordination</strong></td>
-                  <td className="border border-gray-600 px-4 py-2">UPS backup for critical control circuits</td>
-                  <td className="border border-gray-600 px-4 py-2">Dedicated neutrals, surge protection</td>
-                  <td className="border border-gray-600 px-4 py-2">System lockup during power fluctuations</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    <strong>Power Supply Coordination</strong>
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    UPS backup for critical control circuits
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Dedicated neutrals, surge protection
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    System lockup during power fluctuations
+                  </td>
                 </tr>
                 <tr className="bg-gray-800/50">
-                  <td className="border border-gray-600 px-4 py-2"><strong>Control Panel Integration</strong></td>
-                  <td className="border border-gray-600 px-4 py-2">Modular design allowing future expansion</td>
-                  <td className="border border-gray-600 px-4 py-2">Clear labelling, circuit documentation</td>
-                  <td className="border border-gray-600 px-4 py-2">Difficulty tracing circuits during commissioning</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    <strong>Control Panel Integration</strong>
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Modular design allowing future expansion
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Clear labelling, circuit documentation
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    Difficulty tracing circuits during commissioning
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -129,42 +206,84 @@ export const BMSModule4Section5Practical = () => {
 
         {/* Advanced Control System Specifications */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Advanced Control System Components</h3>
-          
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            Advanced Control System Components
+          </h3>
+
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             <div className="bg-gray-800 rounded-lg p-4">
               <h5 className="font-semibold mb-3 text-foreground">Occupancy Detection Systems</h5>
               <div className="space-y-2 text-sm text-gray-300">
-                <p><strong>PIR Sensors:</strong> Ceiling-mount, 360° coverage, adjustable sensitivity</p>
-                <p><strong>Ultrasonic:</strong> Motion detection in cubicles, 40kHz frequency</p>
-                <p><strong>CO₂ Sensors:</strong> Air quality monitoring, 0-2000ppm range</p>
-                <p><strong>Desk Sensors:</strong> Personal occupancy detection, USB powered</p>
-                <p><strong>Integration:</strong> Multi-technology sensors for accuracy</p>
-                <p><strong>Networking:</strong> BACnet or Modbus integration capability</p>
+                <p>
+                  <strong>PIR Sensors:</strong> Ceiling-mount, 360° coverage, adjustable sensitivity
+                </p>
+                <p>
+                  <strong>Ultrasonic:</strong> Motion detection in cubicles, 40kHz frequency
+                </p>
+                <p>
+                  <strong>CO₂ Sensors:</strong> Air quality monitoring, 0-2000ppm range
+                </p>
+                <p>
+                  <strong>Desk Sensors:</strong> Personal occupancy detection, USB powered
+                </p>
+                <p>
+                  <strong>Integration:</strong> Multi-technology sensors for accuracy
+                </p>
+                <p>
+                  <strong>Networking:</strong> BACnet or Modbus integration capability
+                </p>
               </div>
             </div>
 
             <div className="bg-gray-800 rounded-lg p-4">
-              <h5 className="font-semibold mb-3 text-foreground">Environmental Control Interfaces</h5>
+              <h5 className="font-semibold mb-3 text-foreground">
+                Environmental Control Interfaces
+              </h5>
               <div className="space-y-2 text-sm text-gray-300">
-                <p><strong>Photocell Sensors:</strong> 0-10V output, weatherproof IP65 rating</p>
-                <p><strong>Temperature Sensors:</strong> ±0.5°C accuracy, wireless capability</p>
-                <p><strong>Humidity Sensors:</strong> RH measurement, dewpoint calculation</p>
-                <p><strong>Weather Stations:</strong> Wind, rain, solar irradiance monitoring</p>
-                <p><strong>Air Quality:</strong> VOC, particulate matter detection</p>
-                <p><strong>Energy Meters:</strong> Real-time power monitoring and feedback</p>
+                <p>
+                  <strong>Photocell Sensors:</strong> 0-10V output, weatherproof IP65 rating
+                </p>
+                <p>
+                  <strong>Temperature Sensors:</strong> ±0.5°C accuracy, wireless capability
+                </p>
+                <p>
+                  <strong>Humidity Sensors:</strong> RH measurement, dewpoint calculation
+                </p>
+                <p>
+                  <strong>Weather Stations:</strong> Wind, rain, solar irradiance monitoring
+                </p>
+                <p>
+                  <strong>Air Quality:</strong> VOC, particulate matter detection
+                </p>
+                <p>
+                  <strong>Energy Meters:</strong> Real-time power monitoring and feedback
+                </p>
               </div>
             </div>
 
             <div className="bg-gray-800 rounded-lg p-4">
-              <h5 className="font-semibold mb-3 text-foreground">Control and Communication Hardware</h5>
+              <h5 className="font-semibold mb-3 text-foreground">
+                Control and Communication Hardware
+              </h5>
               <div className="space-y-2 text-sm text-gray-300">
-                <p><strong>BMS Controllers:</strong> Modular I/O, expandable architecture</p>
-                <p><strong>Lighting Gateways:</strong> DALI to BACnet protocol conversion</p>
-                <p><strong>HVAC Interfaces:</strong> Direct digital control integration</p>
-                <p><strong>Network Switches:</strong> Managed Ethernet for system backbone</p>
-                <p><strong>HMI Panels:</strong> Touch-screen user interfaces with graphics</p>
-                <p><strong>Mobile Apps:</strong> Remote monitoring and control capability</p>
+                <p>
+                  <strong>BMS Controllers:</strong> Modular I/O, expandable architecture
+                </p>
+                <p>
+                  <strong>Lighting Gateways:</strong> DALI to BACnet protocol conversion
+                </p>
+                <p>
+                  <strong>HVAC Interfaces:</strong> Direct digital control integration
+                </p>
+                <p>
+                  <strong>Network Switches:</strong> Managed Ethernet for system backbone
+                </p>
+                <p>
+                  <strong>HMI Panels:</strong> Touch-screen user interfaces with graphics
+                </p>
+                <p>
+                  <strong>Mobile Apps:</strong> Remote monitoring and control capability
+                </p>
               </div>
             </div>
           </div>
@@ -172,8 +291,10 @@ export const BMSModule4Section5Practical = () => {
 
         {/* Testing and Commissioning */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Testing, Commissioning and Documentation</h3>
-          
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            Testing, Commissioning and Documentation
+          </h3>
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-4 bg-blue-900/30 rounded-lg border border-blue-600/40">
@@ -189,7 +310,7 @@ export const BMSModule4Section5Practical = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3 p-4 bg-green-900/30 rounded-lg border border-green-600/40">
                 <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
@@ -204,7 +325,7 @@ export const BMSModule4Section5Practical = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-4 bg-yellow-900/30 rounded-lg border border-yellow-600/40">
                 <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
@@ -219,11 +340,13 @@ export const BMSModule4Section5Practical = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3 p-4 bg-purple-900/30 rounded-lg border border-purple-600/40">
                 <Shield className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-semibold mb-2 text-purple-400">Ongoing Maintenance Strategy</h4>
+                  <h4 className="font-semibold mb-2 text-purple-400">
+                    Ongoing Maintenance Strategy
+                  </h4>
                   <ul className="space-y-1 text-sm text-gray-300">
                     <li>• Schedule annual sensor calibration and performance checks</li>
                     <li>• Monitor system performance metrics and energy savings</li>
@@ -239,7 +362,9 @@ export const BMSModule4Section5Practical = () => {
 
         {/* Safety and Compliance */}
         <div className="bg-red-900/30 border border-red-600/40 rounded-lg p-5">
-          <h3 className="text-lg font-semibold text-red-400 mb-4">Safety and Compliance Considerations</h3>
+          <h3 className="text-lg font-semibold text-red-400 mb-4">
+            Safety and Compliance Considerations
+          </h3>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-semibold mb-3 text-foreground">Electrical Safety Requirements</h4>
@@ -252,7 +377,9 @@ export const BMSModule4Section5Practical = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-foreground">Building Regulations Compliance</h4>
+              <h4 className="font-semibold mb-3 text-foreground">
+                Building Regulations Compliance
+              </h4>
               <ul className="space-y-2 text-sm text-foreground">
                 <li>• Ensure emergency lighting remains independent of normal control systems</li>
                 <li>• Maintain fire alarm integration with automatic system shutdown</li>

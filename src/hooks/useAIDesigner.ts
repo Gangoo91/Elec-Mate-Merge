@@ -62,7 +62,8 @@ export const useAIDesigner = () => {
     // Validate inputs - must have either circuits OR a prompt description
     if ((!inputs.circuits || inputs.circuits.length === 0) && !inputs.additionalPrompt?.trim()) {
       toast.error('No circuits or description provided', {
-        description: 'Please either add circuits manually or describe your requirements in the AI prompt.'
+        description:
+          'Please either add circuits manually or describe your requirements in the AI prompt.',
       });
       setIsProcessing(false);
       return false;
@@ -72,12 +73,22 @@ export const useAIDesigner = () => {
     // Total: ~180s to match typical processing time for batch designs
     const stages = [
       { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 5 },
-      { stage: 2, message: 'Extracting circuits from description (may take 20-30s)...', duration: 20000, targetPercent: 15 },
+      {
+        stage: 2,
+        message: 'Extracting circuits from description (may take 20-30s)...',
+        duration: 20000,
+        targetPercent: 15,
+      },
       { stage: 3, message: 'Searching BS 7671 regulations...', duration: 10000, targetPercent: 20 },
-      { stage: 4, message: 'AI designing circuits (this may take 2-3 minutes)...', duration: 125000, targetPercent: 85 },
+      {
+        stage: 4,
+        message: 'AI designing circuits (this may take 2-3 minutes)...',
+        duration: 125000,
+        targetPercent: 85,
+      },
       { stage: 5, message: 'Running compliance validation...', duration: 10000, targetPercent: 95 },
       { stage: 6, message: 'Finalising documentation...', duration: 3000, targetPercent: 97 },
-      { stage: 7, message: 'Downloading design data...', duration: 5000, targetPercent: 99 }
+      { stage: 7, message: 'Downloading design data...', duration: 5000, targetPercent: 99 },
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
@@ -90,35 +101,50 @@ export const useAIDesigner = () => {
     let healthCheckPassed = false;
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        const { data: healthData, error: healthError } = await supabase.functions.invoke('designer-agent-v2', {
-          method: 'GET'
-        });
-        
+        const { data: healthData, error: healthError } = await supabase.functions.invoke(
+          'designer-agent-v2',
+          {
+            method: 'GET',
+          }
+        );
+
         if (!healthError && healthData?.status) {
           console.log(`✅ Design service healthy - Version: ${healthData.version}`, healthData);
           healthCheckPassed = true;
           break;
         }
-        
+
         if (attempt < 3) {
-          setProgressWithPersistence({ stage: 0, message: `Service starting up (${attempt}/3)...`, percent: 0 });
+          setProgressWithPersistence({
+            stage: 0,
+            message: `Service starting up (${attempt}/3)...`,
+            percent: 0,
+          });
           console.warn(`⚠️ Health check attempt ${attempt}/3 failed, retrying in 5s...`);
-          await new Promise(resolve => setTimeout(resolve, 5000));
+          await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       } catch (e) {
         if (attempt < 3) {
-          setProgressWithPersistence({ stage: 0, message: `Initialising service (${attempt}/3)...`, percent: 0 });
+          setProgressWithPersistence({
+            stage: 0,
+            message: `Initialising service (${attempt}/3)...`,
+            percent: 0,
+          });
           console.warn(`⚠️ Health check attempt ${attempt}/3 failed, retrying in 5s...`);
-          await new Promise(resolve => setTimeout(resolve, 5000));
+          await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       }
     }
-    
+
     // Add 10s pre-warm delay if cold start detected
     if (!healthCheckPassed) {
-      setProgressWithPersistence({ stage: 0, message: 'Warming up service, please wait...', percent: 0 });
+      setProgressWithPersistence({
+        stage: 0,
+        message: 'Warming up service, please wait...',
+        percent: 0,
+      });
       console.log('🔥 Cold start detected, adding 10s pre-warm delay');
-      await new Promise(resolve => setTimeout(resolve, 10000));
+      await new Promise((resolve) => setTimeout(resolve, 10000));
     }
 
     const invokeWithRetry = async (attempt = 1, maxAttempts = 3): Promise<any> => {
@@ -129,7 +155,7 @@ export const useAIDesigner = () => {
         } else {
           setRetryMessage('');
         }
-        
+
         // Create abort controller for timeout safety
         const abortController = new AbortController();
         const timeoutId = setTimeout(() => {
@@ -142,11 +168,11 @@ export const useAIDesigner = () => {
         const keepaliveInterval = setInterval(() => {
           const elapsedSeconds = Math.floor((Date.now() - invokeStartTime) / 1000);
           console.log(`⏱️ Request still active after ${elapsedSeconds}s`);
-          setProgress(prev => {
+          setProgress((prev) => {
             if (!prev) return prev;
             return {
               ...prev,
-              message: `${prev.message.split(' (')[0]} (${elapsedSeconds}s elapsed)`
+              message: `${prev.message.split(' (')[0]} (${elapsedSeconds}s elapsed)`,
             };
           });
         }, 5000); // Update every 5 seconds (more responsive)
@@ -158,30 +184,30 @@ export const useAIDesigner = () => {
               mode: 'batch-design',
               projectInfo: {
                 name: inputs.projectName,
-                installationType: inputs.propertyType
+                installationType: inputs.propertyType,
               },
               supply: {
                 voltage: inputs.voltage || 230,
                 phases: inputs.phases || 'single',
                 ze: inputs.ze || 0.35,
                 pfc: (inputs.pscc || 3500) / 1000, // Convert from A to kA
-                earthingSystem: inputs.earthingSystem || 'TN-C-S'
+                earthingSystem: inputs.earthingSystem || 'TN-C-S',
               },
               additionalPrompt: inputs.additionalPrompt || '', // Move to root level
               installationType: inputs.propertyType || 'domestic', // Pass installation type for context-aware RAG
-              circuits: inputs.circuits.map(c => ({
+              circuits: inputs.circuits.map((c) => ({
                 name: c.name,
                 loadType: c.loadType,
                 loadPower: c.loadPower,
                 cableLength: c.cableLength,
                 phases: c.phases,
                 specialLocation: c.specialLocation,
-                notes: c.notes
-              }))
-            }
+                notes: c.notes,
+              })),
+            },
           });
-          
-          // Wrap with extended client-side timeout  
+
+          // Wrap with extended client-side timeout
           const result = await withTimeout(invokePromise, 360000); // 6 minutes - matches CLIENT_TIMEOUT_MS
           data = result.data;
           invokeError = result.error;
@@ -190,25 +216,31 @@ export const useAIDesigner = () => {
         }
 
         clearTimeout(timeoutId);
-        
+
         // NEW: Monitor response size
         if (data) {
           const responseSize = JSON.stringify(data).length;
           const responseSizeKB = (responseSize / 1024).toFixed(1);
           console.log(`📦 Response received: ${responseSizeKB}KB`);
-          
-          if (responseSize > 500000) { // >500KB
-            console.warn(`⚠️ Large response detected (${responseSizeKB}KB) - may take a few seconds to parse`);
-            setProgressWithPersistence({ stage: 7, message: `Processing large design (${responseSizeKB}KB)...`, percent: 98 });
+
+          if (responseSize > 500000) {
+            // >500KB
+            console.warn(
+              `⚠️ Large response detected (${responseSizeKB}KB) - may take a few seconds to parse`
+            );
+            setProgressWithPersistence({
+              stage: 7,
+              message: `Processing large design (${responseSizeKB}KB)...`,
+              percent: 98,
+            });
           }
         }
-        
+
         if (invokeError) throw invokeError;
         setRetryMessage(''); // Clear retry message on success
         return { data, error: null };
       } catch (error: any) {
-        
-        const isTransient = 
+        const isTransient =
           error?.message?.includes('Failed to send a request to the Edge Function') ||
           error?.message?.includes('fetch') ||
           error?.message?.includes('network') ||
@@ -226,15 +258,18 @@ export const useAIDesigner = () => {
           let delay = 2000; // Base delay 2s
           if (attempt === 2) delay = 5000; // 5s on second retry
           if (attempt === 3) delay = 10000; // 10s on third retry
-          
+
           // Extra delay for 503/504 (cold start indicators)
           if (error?.message?.includes('503') || error?.message?.includes('504')) {
             delay += 5000;
             console.warn(`⚠️ Cold start detected (${error.message}), adding extra delay`);
           }
-          
-          console.warn(`⚠️ Attempt ${attempt}/${maxAttempts} failed, retrying in ${delay}ms...`, error.message);
-          await new Promise(resolve => setTimeout(resolve, delay));
+
+          console.warn(
+            `⚠️ Attempt ${attempt}/${maxAttempts} failed, retrying in ${delay}ms...`,
+            error.message
+          );
+          await new Promise((resolve) => setTimeout(resolve, delay));
           return invokeWithRetry(attempt + 1, maxAttempts);
         }
 
@@ -243,7 +278,7 @@ export const useAIDesigner = () => {
           console.warn('🚨 All retry attempts exhausted', {
             attempts: maxAttempts,
             lastError: error.message,
-            payload: { circuits: inputs.circuits.length }
+            payload: { circuits: inputs.circuits.length },
           });
         }
 
@@ -268,34 +303,36 @@ export const useAIDesigner = () => {
 
         progressInterval = setInterval(() => {
           const elapsed = Math.min(Date.now() - startTime, totalDuration * 0.99);
-          
+
           // Find current stage based on cumulative durations
-          const stageIndex = cumulativeDurations.findIndex(t => elapsed < t);
+          const stageIndex = cumulativeDurations.findIndex((t) => elapsed < t);
           const currentStage = stageIndex === -1 ? stages.length - 1 : stageIndex;
-          
+
           const stageStartTime = currentStage === 0 ? 0 : cumulativeDurations[currentStage - 1];
           const stageDuration = stages[currentStage].duration;
           const stageElapsed = Math.max(0, elapsed - stageStartTime);
           const stageFraction = Math.min(1, stageElapsed / stageDuration);
-          
+
           const prevPercent = currentStage === 0 ? 0 : stages[currentStage - 1].targetPercent;
           const targetPercent = stages[currentStage].targetPercent;
-          const computedPercent = Math.floor(prevPercent + (targetPercent - prevPercent) * stageFraction);
-          
+          const computedPercent = Math.floor(
+            prevPercent + (targetPercent - prevPercent) * stageFraction
+          );
+
           // Ensure monotonic progress
           currentPercent = Math.max(currentPercent, computedPercent);
-          
+
           setProgressWithPersistence({
             stage: currentStage + 1,
             message: stages[currentStage].message,
-            percent: currentPercent
+            percent: currentPercent,
           });
         }, 1000);
       }
 
       console.log('🔧 Generating installation design', {
         circuits: inputs.circuits.length,
-        projectName: inputs.projectName
+        projectName: inputs.projectName,
       });
 
       const { data, error: invokeError } = await invokeWithRetry();
@@ -305,7 +342,7 @@ export const useAIDesigner = () => {
       if (invokeError) {
         let errorMessage = invokeError.message || 'Unknown error occurred';
         let errorDetails: string | undefined;
-        
+
         // Try to parse structured error from backend
         try {
           const errorData = typeof data === 'object' && data !== null ? data : {};
@@ -316,7 +353,7 @@ export const useAIDesigner = () => {
         } catch (e) {
           // Ignore parsing errors
         }
-        
+
         // Friendly error messages based on status patterns
         if (invokeError.message?.includes('429')) {
           errorMessage = 'Too many requests. Please wait a moment and try again.';
@@ -328,7 +365,7 @@ export const useAIDesigner = () => {
           errorMessage = 'Design service error. Please try again or check the logs for details.';
           errorDetails = invokeError.message;
         }
-        
+
         const fullError = errorDetails ? `${errorMessage}\n${errorDetails}` : errorMessage;
         throw new Error(fullError);
       }
@@ -337,34 +374,36 @@ export const useAIDesigner = () => {
       if (!data.success) {
         // Clear progress immediately for known errors
         setProgressWithPersistence(null);
-        
+
         const errorMsg = data.error || 'Design generation failed';
         const code = data.code || 'UNKNOWN_ERROR';
         setErrorCode(code);
-        
+
         // Handle non-compliant design errors (PHASE 6)
         if (code === 'NON_COMPLIANT_DESIGN' && data.technicalDetails?.validationErrors) {
           console.error('❌ Design validation failed:', data.technicalDetails.validationErrors);
-          
+
           // Build detailed error message
-          const errorDetails = data.technicalDetails.validationErrors.map((e: any) => 
-            `• ${e.circuit}: ${e.message}${e.regulation ? ` (${e.regulation})` : ''}`
-          ).join('\n');
-          
+          const errorDetails = data.technicalDetails.validationErrors
+            .map(
+              (e: any) => `• ${e.circuit}: ${e.message}${e.regulation ? ` (${e.regulation})` : ''}`
+            )
+            .join('\n');
+
           toast.error('Design Non-Compliant with BS 7671', {
             description: `${data.technicalDetails.validationErrors.length} compliance error(s) detected. Review and adjust parameters.`,
-            duration: 10000
+            duration: 10000,
           });
-          
+
           // Store validation errors for display
           setError(`${errorMsg}\n\n${errorDetails}`);
-          
+
           // Don't throw - allow frontend to display structured errors
           return false;
         }
-        
+
         const isKnownError = errorCode === 'NO_CIRCUITS' || errorCode;
-        
+
         if (isKnownError) {
           // Friendly message for known errors - no retry needed
           throw new Error(errorMsg);
@@ -376,7 +415,7 @@ export const useAIDesigner = () => {
 
       // Complete progress to 100%
       setProgressWithPersistence({ stage: 8, message: 'Design complete!', percent: 100 });
-      
+
       // Comprehensive circuit structure validation
       const validateCircuitStructure = (circuit: any): boolean => {
         return !!(
@@ -397,10 +436,10 @@ export const useAIDesigner = () => {
         console.error('Invalid circuits detected:', invalidCircuits);
         throw new Error(
           `${invalidCircuits.length} circuit(s) have incomplete data structure: ${invalidNames}. ` +
-          `All circuits must have valid cableSize, cpcSize, cableLength, protectionDevice, and calculations.`
+            `All circuits must have valid cableSize, cpcSize, cableLength, protectionDevice, and calculations.`
         );
       }
-      
+
       // Wrap backend response into InstallationDesign format with safe property access
       const design: InstallationDesign = {
         projectName: data.projectInfo?.name || inputs.projectName,
@@ -418,46 +457,46 @@ export const useAIDesigner = () => {
             phases: data.supply?.phases || inputs.phases || 'single',
             incomingPFC: (data.supply?.pfc || inputs.pscc || 3500) * 1000,
             Ze: data.supply?.ze || inputs.ze || 0.35,
-            earthingSystem: data.supply?.earthingSystem || inputs.earthingSystem || 'TN-C-S'
-          }
+            earthingSystem: data.supply?.earthingSystem || inputs.earthingSystem || 'TN-C-S',
+          },
         },
         materials: [],
-        practicalGuidance: []
+        practicalGuidance: [],
       };
-      
+
       // PHASE 4: Client-side calculation backfill for missing voltage drop / Zs
       console.log('🔍 Checking for missing calculations...');
       let backfilledCount = 0;
       design.circuits = design.circuits.map((circuit: any) => {
         const { circuit: updatedCircuit, modified } = ensureCalculations(
-          circuit, 
+          circuit,
           design.consumerUnit.incomingSupply
         );
         if (modified) backfilledCount++;
         return updatedCircuit;
       });
-      
+
       if (backfilledCount > 0) {
         console.warn(`⚠️ Backfilled ${backfilledCount} circuit(s) with client-side calculations`);
         toast.info(`Calculations Completed`, {
           description: `${backfilledCount} circuit(s) had missing data - calculations added automatically`,
-          duration: 3000
+          duration: 3000,
         });
       }
-      
+
       console.log('🔍 Design object created:', {
         circuitCount: design.circuits?.length,
         circuits: design.circuits,
         projectName: design.projectName,
         hasCircuits: !!design.circuits && design.circuits.length > 0,
-        backfilledCircuits: backfilledCount
+        backfilledCircuits: backfilledCount,
       });
       console.log('✅ Design generated successfully', design);
       setDesignData(design);
 
       // Calculate generation time
       const generationTime = Math.round((Date.now() - startTime) / 1000);
-      
+
       toast.success('Circuit Design Complete ⚡', {
         description: `${design.circuits.length} circuit${design.circuits.length !== 1 ? 's' : ''} designed in ${generationTime}s`,
         duration: 5000,
@@ -467,7 +506,6 @@ export const useAIDesigner = () => {
       setTimeout(() => setProgressWithPersistence(null), 800);
 
       return true;
-
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       console.error('❌ Design generation failed:', errorMessage, err);
@@ -482,10 +520,10 @@ export const useAIDesigner = () => {
       const details = errorMessage.split('\n').slice(1).join(' ');
 
       toast.error(isTimeout ? 'Design Service Timeout' : 'Design generation failed', {
-        description: isTimeout 
-          ? 'Design service didn\'t respond in time. Please try again.'
-          : (details || mainError),
-        duration: 6000
+        description: isTimeout
+          ? "Design service didn't respond in time. Please try again."
+          : details || mainError,
+        duration: 6000,
       });
 
       return false;
@@ -510,6 +548,6 @@ export const useAIDesigner = () => {
     error,
     errorCode,
     progress,
-    retryMessage
+    retryMessage,
   };
 };

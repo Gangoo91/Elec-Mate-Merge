@@ -22,7 +22,7 @@ export function ExpenseSummaryCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       className={cn(
-        "rounded-xl bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.08] p-4",
+        'rounded-xl bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.08] p-4',
         className
       )}
     >
@@ -30,18 +30,30 @@ export function ExpenseSummaryCard({
       <div className="flex items-center justify-between">
         <span className="text-xs text-muted-foreground uppercase tracking-wider">This Month</span>
         <span className="text-2xl font-bold text-elec-yellow">
-          £{stats.monthlyAmount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          £
+          {stats.monthlyAmount.toLocaleString('en-GB', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </span>
       </div>
 
       {/* Row 2: Inline pills */}
       <div className="flex items-center gap-2 mt-2.5 flex-wrap">
         <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-muted-foreground">
-          YTD £{stats.yearToDateAmount.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+          YTD £
+          {stats.yearToDateAmount.toLocaleString('en-GB', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })}
         </span>
         <span className="text-[11px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 flex items-center gap-1">
-          <TrendingUp className="h-2.5 w-2.5" />
-          £{stats.totalTaxDeductible.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} deductible
+          <TrendingUp className="h-2.5 w-2.5" />£
+          {stats.totalTaxDeductible.toLocaleString('en-GB', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })}{' '}
+          deductible
         </span>
         <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-muted-foreground flex items-center gap-1">
           <Receipt className="h-2.5 w-2.5" />

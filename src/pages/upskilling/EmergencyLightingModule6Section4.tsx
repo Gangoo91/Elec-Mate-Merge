@@ -1,72 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m6s4-check1",
-    question: "Why is documentation as important as the installation itself?",
-    options: ["It reduces costs", "It provides legal compliance evidence", "It improves light output", "It extends battery life"],
+    id: 'emergencylighting-m6s4-check1',
+    question: 'Why is documentation as important as the installation itself?',
+    options: [
+      'It reduces costs',
+      'It provides legal compliance evidence',
+      'It improves light output',
+      'It extends battery life',
+    ],
     correctIndex: 1,
-    explanation: "Documentation provides legal evidence that the system was designed, installed, tested, and maintained correctly. Without a complete paper trail, compliance cannot be demonstrated regardless of system performance."
+    explanation:
+      'Documentation provides legal evidence that the system was designed, installed, tested, and maintained correctly. Without a complete paper trail, compliance cannot be demonstrated regardless of system performance.',
   },
   {
-    id: "emergencylighting-m6s4-check2",
-    question: "Where should emergency lighting records normally be stored?",
-    options: ["In a locked safe off-site", "Near the fire alarm panel or security office", "With the building owner at home", "In a computer only"],
+    id: 'emergencylighting-m6s4-check2',
+    question: 'Where should emergency lighting records normally be stored?',
+    options: [
+      'In a locked safe off-site',
+      'Near the fire alarm panel or security office',
+      'With the building owner at home',
+      'In a computer only',
+    ],
     correctIndex: 1,
-    explanation: "Records must be kept on-site and immediately accessible to inspectors, typically near the main fire alarm panel or security office, with both digital and paper copies available."
+    explanation:
+      'Records must be kept on-site and immediately accessible to inspectors, typically near the main fire alarm panel or security office, with both digital and paper copies available.',
   },
   {
-    id: "emergencylighting-m6s4-check3",
-    question: "How long must emergency lighting records be retained?",
-    options: ["1 year", "3 years", "At least 6 years", "12 months only"],
+    id: 'emergencylighting-m6s4-check3',
+    question: 'How long must emergency lighting records be retained?',
+    options: ['1 year', '3 years', 'At least 6 years', '12 months only'],
     correctIndex: 2,
-    explanation: "Records should be retained for at least 6 years, ideally for the life of the installation. This ensures a complete system history is available for inspections and demonstrates ongoing compliance."
-  }
+    explanation:
+      'Records should be retained for at least 6 years, ideally for the life of the installation. This ensures a complete system history is available for inspections and demonstrates ongoing compliance.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can digital records replace paper ones?",
-    answer: "Yes, if they're securely stored, easily accessible, and printable during an inspection. However, you must be able to produce them immediately when requested, so both digital backups and readily available paper copies are recommended."
+    question: 'Can digital records replace paper ones?',
+    answer:
+      "Yes, if they're securely stored, easily accessible, and printable during an inspection. However, you must be able to produce them immediately when requested, so both digital backups and readily available paper copies are recommended.",
   },
   {
-    question: "Who is responsible for maintaining documentation?",
-    answer: "The building's Responsible Person under the RRO 2005, often supported by maintenance contractors. The Responsible Person has ultimate legal accountability for ensuring all records are complete, accurate, and accessible."
+    question: 'Who is responsible for maintaining documentation?',
+    answer:
+      "The building's Responsible Person under the RRO 2005, often supported by maintenance contractors. The Responsible Person has ultimate legal accountability for ensuring all records are complete, accurate, and accessible.",
   },
   {
-    question: "What happens if documents are missing during an audit?",
-    answer: "Missing documentation can result in Improvement Notices requiring corrective action, Prohibition Notices restricting building use, or fines and prosecution for serious breaches - even if the physical system works correctly."
+    question: 'What happens if documents are missing during an audit?',
+    answer:
+      'Missing documentation can result in Improvement Notices requiring corrective action, Prohibition Notices restricting building use, or fines and prosecution for serious breaches - even if the physical system works correctly.',
   },
   {
-    question: "What certificates are required at handover?",
-    answer: "Commissioning certificate (BS 5266-1 Annex G), Electrical Installation Certificate (BS 7671), and Design Declaration Certificate verifying standards compliance. These form the core of compliance demonstration."
-  }
+    question: 'What certificates are required at handover?',
+    answer:
+      'Commissioning certificate (BS 5266-1 Annex G), Electrical Installation Certificate (BS 7671), and Design Declaration Certificate verifying standards compliance. These form the core of compliance demonstration.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "During a fire safety audit, which three documents form the core of compliance demonstration?",
+    question:
+      'During a fire safety audit, which three documents form the core of compliance demonstration?',
     options: [
-      "Invoice, warranty card, and delivery note",
-      "System drawings, logbook, and commissioning certificate",
-      "Building plans, insurance policy, and tenancy agreement",
-      "Manufacturer brochure, price list, and installation photos"
+      'Invoice, warranty card, and delivery note',
+      'System drawings, logbook, and commissioning certificate',
+      'Building plans, insurance policy, and tenancy agreement',
+      'Manufacturer brochure, price list, and installation photos',
     ],
     correctAnswer: 1,
-    explanation: "The three core documents are: (1) System design drawings, (2) Emergency lighting logbook with all monthly and annual test entries, and (3) Commissioning certificate (BS 5266-1 Annex G)."
-  }
+    explanation:
+      'The three core documents are: (1) System design drawings, (2) Emergency lighting logbook with all monthly and annual test entries, and (3) Commissioning certificate (BS 5266-1 Annex G).',
+  },
 ];
 
 const EmergencyLightingModule6Section4 = () => {
   useSEO({
-    title: "Documentation for Audits and Fire Authorities | Emergency Lighting Module 6.4",
-    description: "Learn BS 5266-1 documentation requirements for emergency lighting audits, Fire Authority inspections, and compliance record-keeping under UK fire safety regulations."
+    title: 'Documentation for Audits and Fire Authorities | Emergency Lighting Module 6.4',
+    description:
+      'Learn BS 5266-1 documentation requirements for emergency lighting audits, Fire Authority inspections, and compliance record-keeping under UK fire safety regulations.',
   });
 
   return (
@@ -108,17 +128,29 @@ const EmergencyLightingModule6Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Key:</strong> Documentation = compliance</li>
-              <li><strong>Retention:</strong> Minimum 6 years</li>
-              <li><strong>Location:</strong> On-site, accessible</li>
+              <li>
+                <strong>Key:</strong> Documentation = compliance
+              </li>
+              <li>
+                <strong>Retention:</strong> Minimum 6 years
+              </li>
+              <li>
+                <strong>Location:</strong> On-site, accessible
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Core Documents</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Logbook:</strong> Test records</li>
-              <li><strong>Certificate:</strong> BS 5266-1 Annex G</li>
-              <li><strong>Drawings:</strong> As-built system</li>
+              <li>
+                <strong>Logbook:</strong> Test records
+              </li>
+              <li>
+                <strong>Certificate:</strong> BS 5266-1 Annex G
+              </li>
+              <li>
+                <strong>Drawings:</strong> As-built system
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +160,12 @@ const EmergencyLightingModule6Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand documentation requirements",
-              "Prepare for Fire Authority audits",
-              "Maintain compliant records",
-              "Avoid common audit failures",
-              "Present accessible documentation",
-              "Protect against legal liability"
+              'Understand documentation requirements',
+              'Prepare for Fire Authority audits',
+              'Maintain compliant records',
+              'Avoid common audit failures',
+              'Present accessible documentation',
+              'Protect against legal liability',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,9 +185,9 @@ const EmergencyLightingModule6Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Emergency lighting is among the first items inspected during fire safety audits.
-              Even a perfectly functioning system can fail inspection if required documentation
-              is missing, incomplete, or inconsistent.
+              Emergency lighting is among the first items inspected during fire safety audits. Even
+              a perfectly functioning system can fail inspection if required documentation is
+              missing, incomplete, or inconsistent.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -206,8 +238,8 @@ const EmergencyLightingModule6Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire Authorities expect specific documentation during inspections.
-              Having these readily available demonstrates professional compliance.
+              Fire Authorities expect specific documentation during inspections. Having these
+              readily available demonstrates professional compliance.
             </p>
 
             <div className="my-6">
@@ -249,8 +281,8 @@ const EmergencyLightingModule6Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire inspectors regularly identify recurring documentation issues that
-              lead to enforcement action, even when the physical system works correctly.
+              Fire inspectors regularly identify recurring documentation issues that lead to
+              enforcement action, even when the physical system works correctly.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -277,8 +309,8 @@ const EmergencyLightingModule6Section4 = () => {
             </div>
 
             <p>
-              Such issues can result in enforcement action regardless of whether
-              the emergency lighting system physically operates correctly.
+              Such issues can result in enforcement action regardless of whether the emergency
+              lighting system physically operates correctly.
             </p>
           </div>
         </section>
@@ -303,10 +335,18 @@ const EmergencyLightingModule6Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Avoid These Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Incomplete entries:</strong> — All fields must be completed</li>
-                <li><strong>Missing signatures:</strong> — Tester must sign each entry</li>
-                <li><strong>Wrong dates:</strong> — Certificates must match installation</li>
-                <li><strong>Outdated drawings:</strong> — Must reflect current system</li>
+                <li>
+                  <strong>Incomplete entries:</strong> — All fields must be completed
+                </li>
+                <li>
+                  <strong>Missing signatures:</strong> — Tester must sign each entry
+                </li>
+                <li>
+                  <strong>Wrong dates:</strong> — Certificates must match installation
+                </li>
+                <li>
+                  <strong>Outdated drawings:</strong> — Must reflect current system
+                </li>
               </ul>
             </div>
           </div>
@@ -352,10 +392,7 @@ const EmergencyLightingModule6Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

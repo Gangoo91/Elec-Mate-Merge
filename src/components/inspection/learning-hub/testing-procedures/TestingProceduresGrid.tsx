@@ -1,11 +1,23 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import TestingProcedureCard from './TestingProcedureCard';
 import { TestingProcedure } from './TestingProcedureData';
-import { Shield, Zap, BookOpen, Clock, AlertTriangle, CheckCircle2, RotateCcw, Target, Settings, Activity, FileText, ClipboardList } from 'lucide-react';
+import {
+  Shield,
+  Zap,
+  BookOpen,
+  Clock,
+  AlertTriangle,
+  CheckCircle2,
+  RotateCcw,
+  Target,
+  Settings,
+  Activity,
+  FileText,
+  ClipboardList,
+} from 'lucide-react';
 
 interface TestingProceduresGridProps {
   procedures: TestingProcedure[];
@@ -40,7 +52,7 @@ const TestingProceduresGrid = ({
   onStartCertificateGuide,
   onStartScheduleGuide,
   onPreviewProcedure,
-  onClearFilters
+  onClearFilters,
 }: TestingProceduresGridProps) => {
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6 px-3 sm:px-4">
@@ -48,21 +60,28 @@ const TestingProceduresGrid = ({
       <div>
         <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
           <AlertTriangle className="h-5 w-5 text-red-400" />
-          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">Essential Safety Procedure</h3>
+          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">
+            Essential Safety Procedure
+          </h3>
         </div>
-        
+
         <Card className="bg-card/50 border-border border-l-4 border-l-red-500 hover:bg-card hover:border-border transition-all touch-manipulation">
           <CardHeader className="p-4 sm:p-5 md:p-6">
             <div className="flex items-start justify-between gap-3 mb-2">
               <div className="flex items-center gap-2 flex-1 min-w-0">
                 <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
-                <CardTitle className="text-red-400 text-base sm:text-lg md:text-xl">Safe Isolation Procedure</CardTitle>
+                <CardTitle className="text-red-400 text-base sm:text-lg md:text-xl">
+                  Safe Isolation Procedure
+                </CardTitle>
               </div>
               <Badge className="bg-red-500/10 text-red-400 border-red-400/20 text-xs shrink-0">
                 Critical
               </Badge>
             </div>
-            <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+            <Badge
+              variant="outline"
+              className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+            >
               BS 7671 Regulation 612.1
             </Badge>
             <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -80,7 +99,7 @@ const TestingProceduresGrid = ({
                 <span>High Risk</span>
               </div>
             </div>
-            <Button 
+            <Button
               onClick={onStartSafeIsolation}
               className="w-full bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
             >
@@ -94,9 +113,11 @@ const TestingProceduresGrid = ({
       <div>
         <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
           <Zap className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">Electrical Testing Procedures</h3>
+          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">
+            Electrical Testing Procedures
+          </h3>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
           {/* Continuity Testing */}
           <Card className="bg-card/50 border-border border-l-4 border-l-blue-500 hover:bg-card hover:border-border transition-all touch-manipulation">
@@ -104,13 +125,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-                  <CardTitle className="text-blue-400 text-base sm:text-lg md:text-xl">Continuity Testing</CardTitle>
+                  <CardTitle className="text-blue-400 text-base sm:text-lg md:text-xl">
+                    Continuity Testing
+                  </CardTitle>
                 </div>
                 <Badge className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs shrink-0">
                   Essential
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Section 612.2
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -128,7 +154,7 @@ const TestingProceduresGrid = ({
                   <span>Dead Test</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartContinuityTesting}
                 className="w-full bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -143,13 +169,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400 shrink-0" />
-                  <CardTitle className="text-purple-400 text-base sm:text-lg md:text-xl">Insulation Resistance</CardTitle>
+                  <CardTitle className="text-purple-400 text-base sm:text-lg md:text-xl">
+                    Insulation Resistance
+                  </CardTitle>
                 </div>
                 <Badge className="bg-purple-500/10 text-purple-400 border-purple-400/20 text-xs shrink-0">
                   Essential
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Section 612.3
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -167,7 +198,7 @@ const TestingProceduresGrid = ({
                   <span>Dead Test</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartInsulationTesting}
                 className="w-full bg-purple-500/20 text-purple-400 border border-purple-500/30 hover:bg-purple-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -182,13 +213,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <RotateCcw className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-400 shrink-0" />
-                  <CardTitle className="text-indigo-400 text-base sm:text-lg md:text-xl">Polarity Testing</CardTitle>
+                  <CardTitle className="text-indigo-400 text-base sm:text-lg md:text-xl">
+                    Polarity Testing
+                  </CardTitle>
                 </div>
                 <Badge className="bg-indigo-500/10 text-indigo-400 border-indigo-400/20 text-xs shrink-0">
                   Essential
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Section 612.6
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -206,7 +242,7 @@ const TestingProceduresGrid = ({
                   <span>Dead Test</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartPolarityTesting}
                 className="w-full bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -221,13 +257,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <Target className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
-                  <CardTitle className="text-red-400 text-base sm:text-lg md:text-xl">Zs Testing</CardTitle>
+                  <CardTitle className="text-red-400 text-base sm:text-lg md:text-xl">
+                    Zs Testing
+                  </CardTitle>
                 </div>
                 <Badge className="bg-red-500/10 text-red-400 border-red-400/20 text-xs shrink-0">
                   Essential
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Sections 612.9 & 411.4.5
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -245,7 +286,7 @@ const TestingProceduresGrid = ({
                   <span>Live Test</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartZsTesting}
                 className="w-full bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -260,13 +301,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-teal-400 shrink-0" />
-                  <CardTitle className="text-teal-400 text-base sm:text-lg md:text-xl">RCD Testing</CardTitle>
+                  <CardTitle className="text-teal-400 text-base sm:text-lg md:text-xl">
+                    RCD Testing
+                  </CardTitle>
                 </div>
                 <Badge className="bg-teal-500/10 text-teal-400 border-teal-400/20 text-xs shrink-0">
                   Essential
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Sections 612.10 & 612.13
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -284,7 +330,7 @@ const TestingProceduresGrid = ({
                   <span>Live Test</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartRcdTesting}
                 className="w-full bg-teal-500/20 text-teal-400 border border-teal-500/30 hover:bg-teal-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -299,13 +345,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <Target className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
-                  <CardTitle className="text-orange-400 text-base sm:text-lg md:text-xl">PFC Testing</CardTitle>
+                  <CardTitle className="text-orange-400 text-base sm:text-lg md:text-xl">
+                    PFC Testing
+                  </CardTitle>
                 </div>
                 <Badge className="bg-orange-500/10 text-orange-400 border-orange-400/20 text-xs shrink-0">
                   Essential
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Sections 612.11 & 434.5.2
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -323,7 +374,7 @@ const TestingProceduresGrid = ({
                   <span>Live Test</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartPfcTesting}
                 className="w-full bg-orange-500/20 text-orange-400 border border-orange-500/30 hover:bg-orange-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -338,13 +389,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-                  <CardTitle className="text-green-400 text-base sm:text-lg md:text-xl">Functional Testing</CardTitle>
+                  <CardTitle className="text-green-400 text-base sm:text-lg md:text-xl">
+                    Functional Testing
+                  </CardTitle>
                 </div>
                 <Badge className="bg-green-500/10 text-green-400 border-green-400/20 text-xs shrink-0">
                   Essential
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Section 612.13
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -362,7 +418,7 @@ const TestingProceduresGrid = ({
                   <span>Functional Test</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartFunctionalTesting}
                 className="w-full bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -377,13 +433,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400 shrink-0" />
-                  <CardTitle className="text-purple-400 text-base sm:text-lg md:text-xl">Supplementary Testing</CardTitle>
+                  <CardTitle className="text-purple-400 text-base sm:text-lg md:text-xl">
+                    Supplementary Testing
+                  </CardTitle>
                 </div>
                 <Badge className="bg-purple-500/10 text-purple-400 border-purple-400/20 text-xs shrink-0">
                   Additional
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Various Sections
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -401,7 +462,7 @@ const TestingProceduresGrid = ({
                   <span>Specialist Tests</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={onStartSupplementaryTesting}
                 className="w-full bg-purple-500/20 text-purple-400 border border-purple-500/30 hover:bg-purple-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -416,13 +477,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-cyan-400 shrink-0" />
-                  <CardTitle className="text-cyan-400 text-base sm:text-lg md:text-xl">Certificate Guide</CardTitle>
+                  <CardTitle className="text-cyan-400 text-base sm:text-lg md:text-xl">
+                    Certificate Guide
+                  </CardTitle>
                 </div>
                 <Badge className="bg-cyan-500/10 text-cyan-400 border-cyan-400/20 text-xs shrink-0">
                   Documentation
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 BS 7671 Compliance
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -440,7 +506,7 @@ const TestingProceduresGrid = ({
                   <span>Documentation</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={() => onStartCertificateGuide?.()}
                 className="w-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -455,13 +521,18 @@ const TestingProceduresGrid = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <ClipboardList className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400 shrink-0" />
-                  <CardTitle className="text-emerald-400 text-base sm:text-lg md:text-xl">Schedule Guide</CardTitle>
+                  <CardTitle className="text-emerald-400 text-base sm:text-lg md:text-xl">
+                    Schedule Guide
+                  </CardTitle>
                 </div>
                 <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-400/20 text-xs shrink-0">
                   Documentation
                 </Badge>
               </div>
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2">
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
+              >
                 Testing Standards
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
@@ -479,7 +550,7 @@ const TestingProceduresGrid = ({
                   <span>Documentation</span>
                 </div>
               </div>
-              <Button 
+              <Button
                 onClick={() => onStartScheduleGuide?.()}
                 className="w-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
@@ -495,9 +566,11 @@ const TestingProceduresGrid = ({
         <div>
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
             <BookOpen className="h-5 w-5 text-elec-yellow" />
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">Additional Testing Procedures</h3>
+            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">
+              Additional Testing Procedures
+            </h3>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
             {procedures.map((procedure) => (
               <TestingProcedureCard

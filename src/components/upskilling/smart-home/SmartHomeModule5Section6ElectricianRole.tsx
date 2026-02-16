@@ -101,7 +101,7 @@ export const SmartHomeModule5Section6ElectricianRole = () => {
         <div className="bg-blue-950/20 p-4 rounded-lg border border-blue-800/30">
           <h4 className="font-semibold text-blue-400 mb-2">Professional Responsibility</h4>
           <p className="text-gray-300 text-sm mb-2">
-            As a professional electrician, you have a duty of care to ensure that smart home systems 
+            As a professional electrician, you have a duty of care to ensure that smart home systems
             are installed securely. This includes:
           </p>
           <ul className="space-y-1 text-gray-300 text-sm">

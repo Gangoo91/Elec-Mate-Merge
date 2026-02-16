@@ -21,14 +21,14 @@ export interface MockExamConfig {
   examId: string;
   examTitle: string;
   totalQuestions: number;
-  timeLimit: number;  // seconds
-  passThreshold: number;  // percentage
+  timeLimit: number; // seconds
+  passThreshold: number; // percentage
   exitPath: string;
   categories: string[];
 }
 
 export interface DifficultyDistribution {
-  basic: number;      // 0-1 (e.g., 0.35 = 35%)
+  basic: number; // 0-1 (e.g., 0.35 = 35%)
   intermediate: number;
   advanced: number;
 }
@@ -36,7 +36,7 @@ export interface DifficultyDistribution {
 export const DEFAULT_DIFFICULTY_DISTRIBUTION: DifficultyDistribution = {
   basic: 0.35,
   intermediate: 0.45,
-  advanced: 0.2
+  advanced: 0.2,
 };
 
 export interface CategoryBreakdown {

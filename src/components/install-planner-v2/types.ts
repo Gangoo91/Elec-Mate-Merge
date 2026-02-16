@@ -76,39 +76,39 @@ export interface FullCircuitDesign {
 export interface InstallPlanDataV2 {
   // Mode
   mode: 'express' | 'professional' | 'multi' | 'ai-guided';
-  
+
   // Agent Selection (for ai-guided mode)
   selectedAgents?: string[];
-  
+
   // Core Required
   installationType: 'domestic' | 'commercial' | 'industrial';
   loadType: string;
   totalLoad: number;
   voltage: number;
   phases: 'single' | 'three';
-  
+
   // Cable Required
   cableLength: number;
   cableType: string;
   installationMethod: string;
-  
+
   // Installation Context (NEW)
   location?: 'inside' | 'outside' | 'underground' | 'loft' | 'plant-room' | 'data-center';
   cableRun?: string; // Installation method detail
   mechanicalProtection?: boolean;
   fireProtection?: 'none' | 'fire-alarm' | 'escape-route' | 'fire-compartment';
-  
+
   // Environment
   environmentalProfile: EnvironmentalProfile;
-  
+
   // Optional fields
   powerFactor?: number;
   circuits?: CircuitV2[];
-  
+
   // Site & Project Information
   siteInfo?: SiteInfo;
   projectInfo?: ProjectInfo;
-  
+
   // State Management
   savedAt?: Date;
   resumeToken?: string;

@@ -1,18 +1,18 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
 
 interface FormSectionProps {
   /** Optional section title */
-  title?: string
+  title?: string;
   /** Optional section description */
-  description?: string
+  description?: string;
   /** The form field groups */
-  children: React.ReactNode
+  children: React.ReactNode;
   /** Show a divider above the section */
-  showDivider?: boolean
+  showDivider?: boolean;
   /** Additional className */
-  className?: string
+  className?: string;
 }
 
 /**
@@ -36,35 +36,25 @@ interface FormSectionProps {
 export const FormSection = React.forwardRef<HTMLDivElement, FormSectionProps>(
   ({ title, description, children, showDivider = false, className }, ref) => {
     return (
-      <div ref={ref} className={cn("space-y-4", className)}>
+      <div ref={ref} className={cn('space-y-4', className)}>
         {/* Divider */}
         {showDivider && <Separator className="bg-border/50" />}
 
         {/* Section header */}
         {(title || description) && (
           <div className="space-y-1">
-            {title && (
-              <h3 className="text-base font-semibold text-foreground">
-                {title}
-              </h3>
-            )}
-            {description && (
-              <p className="text-sm text-muted-foreground">
-                {description}
-              </p>
-            )}
+            {title && <h3 className="text-base font-semibold text-foreground">{title}</h3>}
+            {description && <p className="text-sm text-muted-foreground">{description}</p>}
           </div>
         )}
 
         {/* Form fields */}
-        <div className="space-y-4">
-          {children}
-        </div>
+        <div className="space-y-4">{children}</div>
       </div>
-    )
+    );
   }
-)
+);
 
-FormSection.displayName = "FormSection"
+FormSection.displayName = 'FormSection';
 
-export default FormSection
+export default FormSection;

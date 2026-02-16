@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import {
   Crown,
   Loader2,
@@ -19,13 +19,13 @@ import {
   CreditCard,
   ChevronLeft,
   Sparkles,
-} from "lucide-react";
+} from 'lucide-react';
 
 const PASSWORD_REQUIREMENTS = [
-  { id: "length", label: "8+", test: (p: string) => p.length >= 8 },
-  { id: "uppercase", label: "A-Z", test: (p: string) => /[A-Z]/.test(p) },
-  { id: "lowercase", label: "a-z", test: (p: string) => /[a-z]/.test(p) },
-  { id: "number", label: "0-9", test: (p: string) => /[0-9]/.test(p) },
+  { id: 'length', label: '8+', test: (p: string) => p.length >= 8 },
+  { id: 'uppercase', label: 'A-Z', test: (p: string) => /[A-Z]/.test(p) },
+  { id: 'lowercase', label: 'a-z', test: (p: string) => /[a-z]/.test(p) },
+  { id: 'number', label: '0-9', test: (p: string) => /[0-9]/.test(p) },
 ];
 
 // InputField component
@@ -49,7 +49,7 @@ interface InputFieldProps {
 
 const InputField = ({
   label,
-  type = "text",
+  type = 'text',
   value,
   onChange,
   placeholder,
@@ -65,20 +65,18 @@ const InputField = ({
   readOnly = false,
 }: InputFieldProps) => (
   <div className="space-y-2">
-    <label className="block text-[13px] font-medium text-white/70 ml-1">
-      {label}
-    </label>
+    <label className="block text-[13px] font-medium text-white/70 ml-1">{label}</label>
     <div className="relative">
       <div
         className={cn(
-          "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
-          focusedField === field ? "text-yellow-400" : "text-white/40"
+          'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+          focusedField === field ? 'text-yellow-400' : 'text-white/40'
         )}
       >
         <Icon className="h-5 w-5" />
       </div>
       <input
-        type={showToggle ? (isVisible ? "text" : "password") : type}
+        type={showToggle ? (isVisible ? 'text' : 'password') : type}
         value={value}
         onChange={onChange}
         onFocus={() => setFocusedField(field)}
@@ -86,22 +84,16 @@ const InputField = ({
         placeholder={placeholder}
         disabled={disabled}
         readOnly={readOnly}
-        autoComplete={
-          type === "email"
-            ? "email"
-            : type === "password"
-            ? "new-password"
-            : "off"
-        }
+        autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'off'}
         className={cn(
-          "w-full h-14 pl-14 pr-12 rounded-2xl",
-          "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
-          "text-[16px] outline-none transition-all duration-200",
+          'w-full h-14 pl-14 pr-12 rounded-2xl',
+          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+          'text-[16px] outline-none transition-all duration-200',
           disabled || readOnly
-            ? "opacity-70 cursor-not-allowed border-white/5 bg-white/[0.03]"
+            ? 'opacity-70 cursor-not-allowed border-white/5 bg-white/[0.03]'
             : focusedField === field
-            ? "border-yellow-400/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(250,204,21,0.1)]"
-            : "border-white/10 hover:border-white/20"
+              ? 'border-yellow-400/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(250,204,21,0.1)]'
+              : 'border-white/10 hover:border-white/20'
         )}
       />
       {showToggle && !disabled && !readOnly && (
@@ -110,11 +102,7 @@ const InputField = ({
           onClick={onToggle}
           className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
         >
-          {isVisible ? (
-            <EyeOff className="h-5 w-5" />
-          ) : (
-            <Eye className="h-5 w-5" />
-          )}
+          {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
         </button>
       )}
       {showSuccess && (
@@ -135,29 +123,26 @@ const InputField = ({
 export default function FounderSignup() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const token = searchParams.get("token");
-  const cancelled = searchParams.get("cancelled");
+  const token = searchParams.get('token');
+  const cancelled = searchParams.get('cancelled');
 
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [valid, setValid] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
   const [hasExistingAccount, setHasExistingAccount] = useState(false);
   const [isAlreadySubscribed, setIsAlreadySubscribed] = useState(false);
 
-  const [fullName, setFullName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
-  const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every((req) =>
-    req.test(password)
-  );
-  const passwordsMatch =
-    password === confirmPassword && confirmPassword.length > 0;
+  const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every((req) => req.test(password));
+  const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
 
   useEffect(() => {
     validateToken();
@@ -165,18 +150,15 @@ export default function FounderSignup() {
 
   const validateToken = async () => {
     if (!token) {
-      setError("No invite token provided");
+      setError('No invite token provided');
       setLoading(false);
       return;
     }
 
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "founder-checkout",
-        {
-          body: { action: "validate", token },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('founder-checkout', {
+        body: { action: 'validate', token },
+      });
 
       if (error) throw error;
 
@@ -189,10 +171,10 @@ export default function FounderSignup() {
         setIsAlreadySubscribed(true);
         setError(data?.reason || "You're already subscribed as a Founder!");
       } else {
-        setError(data?.reason || "Invalid invite");
+        setError(data?.reason || 'Invalid invite');
       }
     } catch (err: any) {
-      setError(err.message || "Failed to validate invite");
+      setError(err.message || 'Failed to validate invite');
     } finally {
       setLoading(false);
     }
@@ -204,15 +186,12 @@ export default function FounderSignup() {
     setError(null);
 
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "founder-checkout",
-        {
-          body: {
-            action: "create_checkout",
-            token,
-          },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('founder-checkout', {
+        body: {
+          action: 'create_checkout',
+          token,
+        },
+      });
 
       if (error) throw error;
 
@@ -229,10 +208,10 @@ export default function FounderSignup() {
         // Redirect to Stripe checkout
         window.location.href = data.url;
       } else {
-        throw new Error("No checkout URL returned");
+        throw new Error('No checkout URL returned');
       }
     } catch (err: any) {
-      setError(err.message || "Failed to start checkout");
+      setError(err.message || 'Failed to start checkout');
       setSubmitting(false);
     }
   };
@@ -242,35 +221,32 @@ export default function FounderSignup() {
     setError(null);
 
     if (!fullName.trim()) {
-      setError("Please enter your full name");
+      setError('Please enter your full name');
       return;
     }
 
     if (!allPasswordRequirementsMet) {
-      setError("Password needs: 8+ chars, uppercase, lowercase, number");
+      setError('Password needs: 8+ chars, uppercase, lowercase, number');
       return;
     }
 
     if (!passwordsMatch) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       return;
     }
 
     setSubmitting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "founder-checkout",
-        {
-          body: {
-            action: "create_account",
-            token,
-            password,
-            fullName: fullName.trim(),
-            role: "Electrician",
-          },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('founder-checkout', {
+        body: {
+          action: 'create_account',
+          token,
+          password,
+          fullName: fullName.trim(),
+          role: 'Electrician',
+        },
+      });
 
       if (error) throw error;
 
@@ -287,10 +263,10 @@ export default function FounderSignup() {
         // Redirect to Stripe checkout
         window.location.href = data.checkoutUrl;
       } else {
-        throw new Error("No checkout URL returned");
+        throw new Error('No checkout URL returned');
       }
     } catch (err: any) {
-      setError(err.message || "Failed to create account");
+      setError(err.message || 'Failed to create account');
       setSubmitting(false);
     }
   };
@@ -320,8 +296,12 @@ export default function FounderSignup() {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-sm w-full"
         >
-          <div className={`p-8 rounded-3xl bg-white/[0.04] border ${isAlreadySubscribed ? 'border-green-500/30' : 'border-red-500/30'} text-center`}>
-            <div className={`w-16 h-16 rounded-full ${isAlreadySubscribed ? 'bg-green-500/10' : 'bg-red-500/10'} flex items-center justify-center mx-auto mb-4`}>
+          <div
+            className={`p-8 rounded-3xl bg-white/[0.04] border ${isAlreadySubscribed ? 'border-green-500/30' : 'border-red-500/30'} text-center`}
+          >
+            <div
+              className={`w-16 h-16 rounded-full ${isAlreadySubscribed ? 'bg-green-500/10' : 'bg-red-500/10'} flex items-center justify-center mx-auto mb-4`}
+            >
               {isAlreadySubscribed ? (
                 <CheckCircle2 className="h-8 w-8 text-green-400" />
               ) : (
@@ -329,21 +309,21 @@ export default function FounderSignup() {
               )}
             </div>
             <h1 className="text-xl font-bold text-white mb-2">
-              {isAlreadySubscribed ? "You're Already a Founder!" : "Invalid Invite"}
+              {isAlreadySubscribed ? "You're Already a Founder!" : 'Invalid Invite'}
             </h1>
             <p className="text-muted-foreground mb-6">{error}</p>
             {isAlreadySubscribed ? (
               <div className="space-y-3">
                 <Button
                   className="w-full h-11 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black font-bold"
-                  onClick={() => navigate("/auth/signin")}
+                  onClick={() => navigate('/auth/signin')}
                 >
                   Sign In to Your Account
                 </Button>
                 <Button
                   variant="outline"
                   className="w-full h-11 touch-manipulation"
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate('/')}
                 >
                   Go to Homepage
                 </Button>
@@ -352,7 +332,7 @@ export default function FounderSignup() {
               <Button
                 variant="outline"
                 className="h-11 touch-manipulation"
-                onClick={() => navigate("/")}
+                onClick={() => navigate('/')}
               >
                 Go to Homepage
               </Button>
@@ -372,7 +352,7 @@ export default function FounderSignup() {
             scale: [1, 1.2, 1],
             opacity: [0.08, 0.12, 0.08],
           }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-yellow-400/20 blur-[150px]"
         />
       </div>
@@ -431,9 +411,7 @@ export default function FounderSignup() {
             <motion.h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
               Join as Founder
             </motion.h1>
-            <p className="text-[15px] text-white/50">
-              Create your account and subscribe
-            </p>
+            <p className="text-[15px] text-white/50">Create your account and subscribe</p>
           </div>
 
           {/* Price Card */}
@@ -454,15 +432,11 @@ export default function FounderSignup() {
                 </div>
               </div>
               <div className="text-right">
-                <span className="line-through text-sm text-muted-foreground">
-                  £9.99
-                </span>
+                <span className="line-through text-sm text-muted-foreground">£9.99</span>
                 <Badge className="ml-2 bg-green-500/20 text-green-400 border-green-500/30">
                   60% OFF
                 </Badge>
-                <p className="text-[10px] text-yellow-400 mt-1">
-                  Locked forever
-                </p>
+                <p className="text-[10px] text-yellow-400 mt-1">Locked forever</p>
               </div>
             </div>
           </motion.div>
@@ -549,10 +523,10 @@ export default function FounderSignup() {
                   onClick={handleExistingUserCheckout}
                   disabled={submitting}
                   className={cn(
-                    "w-full h-14 rounded-2xl text-[16px] font-bold",
-                    "bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black",
-                    "shadow-lg shadow-yellow-500/25 transition-all duration-200",
-                    "disabled:opacity-50 disabled:cursor-not-allowed"
+                    'w-full h-14 rounded-2xl text-[16px] font-bold',
+                    'bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black',
+                    'shadow-lg shadow-yellow-500/25 transition-all duration-200',
+                    'disabled:opacity-50 disabled:cursor-not-allowed'
                   )}
                 >
                   {submitting ? (
@@ -599,9 +573,7 @@ export default function FounderSignup() {
                       className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white/70 text-[16px] outline-none cursor-not-allowed"
                     />
                   </div>
-                  <p className="text-[11px] text-green-400 ml-1">
-                    Email verified from your invite
-                  </p>
+                  <p className="text-[11px] text-green-400 ml-1">Email verified from your invite</p>
                 </div>
 
                 <InputField
@@ -638,10 +610,10 @@ export default function FounderSignup() {
                         <div
                           key={req.id}
                           className={cn(
-                            "flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all",
+                            'flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all',
                             req.test(password)
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-white/5 text-white/40"
+                              ? 'bg-green-500/20 text-green-400'
+                              : 'bg-white/5 text-white/40'
                           )}
                         >
                           {req.label}
@@ -671,12 +643,14 @@ export default function FounderSignup() {
                 <div className="pt-2">
                   <Button
                     type="submit"
-                    disabled={submitting || !fullName || !allPasswordRequirementsMet || !passwordsMatch}
+                    disabled={
+                      submitting || !fullName || !allPasswordRequirementsMet || !passwordsMatch
+                    }
                     className={cn(
-                      "w-full h-14 rounded-2xl text-[16px] font-bold",
-                      "bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black",
-                      "shadow-lg shadow-yellow-500/25 transition-all duration-200",
-                      "disabled:opacity-50 disabled:cursor-not-allowed"
+                      'w-full h-14 rounded-2xl text-[16px] font-bold',
+                      'bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black',
+                      'shadow-lg shadow-yellow-500/25 transition-all duration-200',
+                      'disabled:opacity-50 disabled:cursor-not-allowed'
                     )}
                   >
                     {submitting ? (
@@ -707,17 +681,13 @@ export default function FounderSignup() {
               {/* Divider */}
               <div className="flex items-center gap-4 my-6">
                 <div className="flex-1 h-px bg-white/10" />
-                <span className="text-[12px] text-white/30 uppercase tracking-wider">
-                  or
-                </span>
+                <span className="text-[12px] text-white/30 uppercase tracking-wider">or</span>
                 <div className="flex-1 h-px bg-white/10" />
               </div>
 
               {/* Sign in link */}
               <div className="text-center pb-8">
-                <p className="text-[14px] text-white/40 mb-3">
-                  Already have an account?
-                </p>
+                <p className="text-[14px] text-white/40 mb-3">Already have an account?</p>
                 <Link to="/auth/signin">
                   <Button
                     variant="outline"

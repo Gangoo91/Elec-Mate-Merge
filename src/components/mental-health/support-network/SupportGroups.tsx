@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Users, Clock, Monitor, ExternalLink, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { Users, Clock, Monitor, ExternalLink, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 interface SupportGroup {
   name: string;
@@ -23,9 +23,9 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
 
   const handleJoinGroup = (group: SupportGroup) => {
     if (group.url) {
-      window.open(group.url, "_blank", "noopener,noreferrer");
+      window.open(group.url, '_blank', 'noopener,noreferrer');
     } else {
-      toast.success("Request sent!", {
+      toast.success('Request sent!', {
         description: "We'll contact you with details about joining the support group.",
       });
     }
@@ -51,11 +51,16 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
           </div>
           <div className="text-left">
             <h3 className="font-semibold text-foreground">Support Groups</h3>
-            <p className="text-xs text-white/70">{groups.length} group{groups.length !== 1 ? 's' : ''} • {totalMembers} total members</p>
+            <p className="text-xs text-white/70">
+              {groups.length} group{groups.length !== 1 ? 's' : ''} • {totalMembers} total members
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+          <Badge
+            variant="outline"
+            className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+          >
             {totalMembers}
           </Badge>
           <div
@@ -84,7 +89,10 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground text-sm">{group.name}</h4>
-                    <Badge variant="outline" className="mt-1 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
+                    <Badge
+                      variant="outline"
+                      className="mt-1 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs"
+                    >
                       {group.members} members
                     </Badge>
                   </div>

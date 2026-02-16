@@ -31,11 +31,34 @@ interface EPAReadinessDashboardProps {
   onStartKnowledgeTest: () => void;
 }
 
-const STATUS_COLOURS: Record<ReadinessStatus, { bg: string; text: string; border: string; ring: string }> = {
-  ready: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', ring: 'stroke-emerald-500' },
-  nearly_ready: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30', ring: 'stroke-blue-500' },
-  needs_work: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30', ring: 'stroke-amber-500' },
-  not_ready: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30', ring: 'stroke-red-500' },
+const STATUS_COLOURS: Record<
+  ReadinessStatus,
+  { bg: string; text: string; border: string; ring: string }
+> = {
+  ready: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/30',
+    ring: 'stroke-emerald-500',
+  },
+  nearly_ready: {
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/30',
+    ring: 'stroke-blue-500',
+  },
+  needs_work: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/30',
+    ring: 'stroke-amber-500',
+  },
+  not_ready: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/30',
+    ring: 'stroke-red-500',
+  },
 };
 
 const STATUS_LABELS: Record<ReadinessStatus, string> = {
@@ -105,9 +128,7 @@ function RadialRing({
           strokeDashoffset={offset}
         />
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        {children}
-      </div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">{children}</div>
     </div>
   );
 }
@@ -125,9 +146,7 @@ export function EPAReadinessDashboard({
       <div className="flex items-center gap-4 py-16 px-4">
         <Loader2 className="h-8 w-8 animate-spin text-elec-yellow shrink-0" />
         <div>
-          <p className="text-sm font-medium text-white">
-            Calculating readiness...
-          </p>
+          <p className="text-sm font-medium text-white">Calculating readiness...</p>
           <p className="text-xs text-white mt-1">
             Analysing portfolio, evidence quality, and mock results
           </p>
@@ -144,12 +163,9 @@ export function EPAReadinessDashboard({
             <Target className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>
-            <p className="text-sm font-medium text-white">
-              EPA Readiness Score
-            </p>
+            <p className="text-sm font-medium text-white">EPA Readiness Score</p>
             <p className="text-xs text-white mt-1">
-              Start building your portfolio and taking mock assessments to see
-              your readiness score.
+              Start building your portfolio and taking mock assessments to see your readiness score.
             </p>
           </div>
         </div>
@@ -164,9 +180,7 @@ export function EPAReadinessDashboard({
   }
 
   const statusColour = STATUS_COLOURS[data.overallStatus];
-  const allGood = Object.values(data.components).every(
-    (c) => c.score >= 70
-  );
+  const allGood = Object.values(data.components).every((c) => c.score >= 70);
 
   return (
     <div className="space-y-5 px-4 py-5">
@@ -190,20 +204,13 @@ export function EPAReadinessDashboard({
             strokeWidth={10}
             ringClass={statusColour.ring}
           >
-            <span className={cn('text-4xl font-bold', statusColour.text)}>
-              {data.overallScore}
-            </span>
+            <span className={cn('text-4xl font-bold', statusColour.text)}>{data.overallScore}</span>
             <span className="text-xs text-white">/100</span>
           </RadialRing>
 
           <div className="flex-1 space-y-2">
             <Badge
-              className={cn(
-                'text-xs',
-                statusColour.bg,
-                statusColour.text,
-                statusColour.border
-              )}
+              className={cn('text-xs', statusColour.bg, statusColour.text, statusColour.border)}
             >
               {STATUS_LABELS[data.overallStatus]}
             </Badge>
@@ -221,9 +228,7 @@ export function EPAReadinessDashboard({
         <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-500/15 to-emerald-500/5 border border-emerald-500/30 flex items-center gap-3">
           <ShieldCheck className="h-7 w-7 text-emerald-400 shrink-0" />
           <div>
-            <p className="text-sm font-semibold text-emerald-400">
-              EPA Gateway Ready
-            </p>
+            <p className="text-sm font-semibold text-emerald-400">EPA Gateway Ready</p>
             <p className="text-xs text-white">
               All components at 70%+ — you meet the gateway threshold
             </p>
@@ -233,9 +238,7 @@ export function EPAReadinessDashboard({
         <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/15 to-amber-500/5 border border-amber-500/30 flex items-center gap-3">
           <AlertTriangle className="h-7 w-7 text-amber-400 shrink-0" />
           <div>
-            <p className="text-sm font-semibold text-amber-400">
-              Not Gateway Ready Yet
-            </p>
+            <p className="text-sm font-semibold text-amber-400">Not Gateway Ready Yet</p>
             <p className="text-xs text-white">
               Some components are below the 70% threshold — see gaps below
             </p>
@@ -273,10 +276,7 @@ export function EPAReadinessDashboard({
             return (
               <div
                 key={i}
-                className={cn(
-                  'p-3.5 rounded-xl border border-white/10 border-l-4',
-                  priorityColour
-                )}
+                className={cn('p-3.5 rounded-xl border border-white/10 border-l-4', priorityColour)}
               >
                 <div className="flex items-start gap-3">
                   <span
@@ -289,19 +289,12 @@ export function EPAReadinessDashboard({
                   </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-white">
-                        {gap.area}
-                      </p>
-                      <Badge
-                        variant="outline"
-                        className={cn('text-[10px] shrink-0', priorityText)}
-                      >
+                      <p className="text-sm font-medium text-white">{gap.area}</p>
+                      <Badge variant="outline" className={cn('text-[10px] shrink-0', priorityText)}>
                         {gap.priority}
                       </Badge>
                     </div>
-                    <p className="text-xs text-white mt-1">
-                      {gap.description}
-                    </p>
+                    <p className="text-xs text-white mt-1">{gap.description}</p>
                     <p className="text-xs text-white mt-1 font-medium">{gap.action}</p>
                   </div>
                 </div>
@@ -350,6 +343,12 @@ function ComponentCard({
   componentKey: string;
   component: ReadinessComponent;
 }) {
+  // Show claimed vs validated warning for portfolio when they differ
+  const showValidationSplit =
+    componentKey === 'portfolio' &&
+    component.claimedCount !== undefined &&
+    component.validatedCount !== undefined &&
+    component.claimedCount !== component.validatedCount;
   const Icon = COMPONENT_ICONS[componentKey] || Target;
   const accent = COMPONENT_ACCENT[componentKey] || 'border-l-white/30 bg-white/5 text-white';
   const accentParts = accent.split(' ');
@@ -373,10 +372,7 @@ function ComponentCard({
     >
       {/* Icon */}
       <div
-        className={cn(
-          'h-10 w-10 rounded-lg flex items-center justify-center shrink-0',
-          bgColour
-        )}
+        className={cn('h-10 w-10 rounded-lg flex items-center justify-center shrink-0', bgColour)}
       >
         <Icon className={cn('h-5 w-5', iconColour)} />
       </div>
@@ -384,12 +380,13 @@ function ComponentCard({
       {/* Label + detail */}
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-white">{component.label}</p>
-        {component.detail && (
-          <p className="text-xs text-white truncate">{component.detail}</p>
+        {component.detail && <p className="text-xs text-white truncate">{component.detail}</p>}
+        {showValidationSplit && (
+          <p className="text-[10px] text-amber-400 mt-0.5">
+            {component.claimedCount! - component.validatedCount!} ACs claimed without evidence
+          </p>
         )}
-        <p className="text-xs text-white">
-          {Math.round(component.weight * 100)}% weight
-        </p>
+        <p className="text-xs text-white">{Math.round(component.weight * 100)}% weight</p>
       </div>
 
       {/* Score + mini bar */}

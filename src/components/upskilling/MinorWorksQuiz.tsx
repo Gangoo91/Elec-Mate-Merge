@@ -3,10 +3,7 @@ import { minorWorksQuizQuestions } from '@/data/upskilling/minorWorksQuizData';
 
 const MinorWorksQuiz = () => {
   return (
-    <SingleQuestionQuiz 
-      questions={minorWorksQuizQuestions}
-      title="Minor Works Certificate Quiz"
-    />
+    <SingleQuestionQuiz questions={minorWorksQuizQuestions} title="Minor Works Certificate Quiz" />
   );
 };
 

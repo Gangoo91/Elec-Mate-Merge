@@ -1,9 +1,22 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import {
-  Check, X, DollarSign, Clock, Receipt, MoreHorizontal,
-  Wrench, Car, ParkingCircle, Hammer, HardHat,
-  GraduationCap, UtensilsCrossed, Package, ChevronDown, ChevronUp
+  Check,
+  X,
+  DollarSign,
+  Clock,
+  Receipt,
+  MoreHorizontal,
+  Wrench,
+  Car,
+  ParkingCircle,
+  Hammer,
+  HardHat,
+  GraduationCap,
+  UtensilsCrossed,
+  Package,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import {
   Table,
@@ -104,7 +117,10 @@ export function ExpenseTable({
 
   const SortableHeader = ({ field, children }: { field: string; children: React.ReactNode }) => (
     <TableHead
-      className={cn("cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation", onSort && "select-none")}
+      className={cn(
+        'cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation',
+        onSort && 'select-none'
+      )}
       onClick={() => onSort?.(field)}
     >
       <div className="flex items-center gap-1">
@@ -125,7 +141,7 @@ export function ExpenseTable({
                   checked={allSelected}
                   onCheckedChange={handleSelectAll}
                   aria-label="Select all"
-                  className={cn(someSelected && "data-[state=checked]:bg-muted")}
+                  className={cn(someSelected && 'data-[state=checked]:bg-muted')}
                 />
               </TableHead>
             )}
@@ -142,7 +158,10 @@ export function ExpenseTable({
         <TableBody>
           {expenses.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={readOnly ? 7 : 9} className="text-center py-8 text-muted-foreground">
+              <TableCell
+                colSpan={readOnly ? 7 : 9}
+                className="text-center py-8 text-muted-foreground"
+              >
                 No expenses found
               </TableCell>
             </TableRow>
@@ -159,8 +178,8 @@ export function ExpenseTable({
                 <TableRow
                   key={expense.id}
                   className={cn(
-                    "cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation",
-                    isSelected && "bg-elec-yellow/5"
+                    'cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation',
+                    isSelected && 'bg-elec-yellow/5'
                   )}
                   onClick={() => onView(expense)}
                 >
@@ -205,16 +224,19 @@ export function ExpenseTable({
                   <TableCell>
                     <Badge
                       variant="outline"
-                      className={cn("gap-1 text-xs", status.bgColor, status.color, "border-transparent")}
+                      className={cn(
+                        'gap-1 text-xs',
+                        status.bgColor,
+                        status.color,
+                        'border-transparent'
+                      )}
                     >
                       <StatusIcon className="h-3 w-3" />
                       {expense.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    {expense.receipt_url && (
-                      <Receipt className="h-4 w-4 text-muted-foreground" />
-                    )}
+                    {expense.receipt_url && <Receipt className="h-4 w-4 text-muted-foreground" />}
                   </TableCell>
                   {!readOnly && (
                     <TableCell onClick={(e) => e.stopPropagation()}>

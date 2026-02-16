@@ -17,13 +17,15 @@ interface MobileHorizontalScrollTableHeaderProps {
   onFillAllRcdRatingA?: (value: string) => void;
 }
 
-export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollTableHeaderProps> = ({
+export const MobileHorizontalScrollTableHeader: React.FC<
+  MobileHorizontalScrollTableHeaderProps
+> = ({
   onFillAllRcdTestButton,
   onFillAllAfdd,
   onFillAllRcdBsStandard,
   onFillAllRcdType,
   onFillAllRcdRating,
-  onFillAllRcdRatingA
+  onFillAllRcdRatingA,
 }) => {
   return (
     <TableHeader className="sticky top-14 z-40 bg-elec-gray shadow-sm border-b h-14">
@@ -80,7 +82,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdBsStandardOptions.map((o) => <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>)}
+                  {rcdBsStandardOptions.map((o) => (
+                    <SelectItem key={o.value} value={o.value} className="text-xs">
+                      {o.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -95,7 +101,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdTypeOptions.map((o) => <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>)}
+                  {rcdTypeOptions.map((o) => (
+                    <SelectItem key={o.value} value={o.value} className="text-xs">
+                      {o.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -110,7 +120,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {['10', '30', '100', '300', '500'].map((v) => <SelectItem key={v} value={v} className="text-xs">{v}mA</SelectItem>)}
+                  {['10', '30', '100', '300', '500'].map((v) => (
+                    <SelectItem key={v} value={v} className="text-xs">
+                      {v}mA
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -125,7 +139,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {['40', '63', '80', '100'].map((v) => <SelectItem key={v} value={v} className="text-xs">{v}A</SelectItem>)}
+                  {['40', '63', '80', '100'].map((v) => (
+                    <SelectItem key={v} value={v} className="text-xs">
+                      {v}A
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}

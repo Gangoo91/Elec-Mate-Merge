@@ -1,51 +1,51 @@
-import { ArrowLeft, Zap, Calculator, BarChart3, Ruler, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, Calculator, BarChart3, Ruler, FileText } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule2Section1 = () => {
   useSEO(
-    "Electrical Fundamentals - MOET Module 2",
+    'Electrical Fundamentals - MOET Module 2',
     "Voltage, current, resistance, power, Ohm's and Watt's laws, units and symbols"
   );
 
   const subsections = [
     {
-      number: "2.1.1",
-      title: "Voltage, Current, Resistance, Power",
-      description: "Understanding fundamental electrical quantities and relationships",
+      number: '2.1.1',
+      title: 'Voltage, Current, Resistance, Power',
+      description: 'Understanding fundamental electrical quantities and relationships',
       icon: Zap,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section1-1"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section1-1',
     },
     {
-      number: "2.1.2", 
+      number: '2.1.2',
       title: "Ohm's Law and Watt's Law",
-      description: "Application of fundamental electrical laws and calculations",
+      description: 'Application of fundamental electrical laws and calculations',
       icon: Calculator,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section1-2"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section1-2',
     },
     {
-      number: "2.1.3",
-      title: "Energy and Efficiency", 
-      description: "Energy calculations and efficiency considerations in electrical systems",
+      number: '2.1.3',
+      title: 'Energy and Efficiency',
+      description: 'Energy calculations and efficiency considerations in electrical systems',
       icon: BarChart3,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section1-3"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section1-3',
     },
     {
-      number: "2.1.4",
-      title: "Units and Measurement",
-      description: "Electrical units, prefixes and measurement principles",
+      number: '2.1.4',
+      title: 'Units and Measurement',
+      description: 'Electrical units, prefixes and measurement principles',
       icon: Ruler,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section1-4"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section1-4',
     },
     {
-      number: "2.1.5",
-      title: "Electrical Symbols and Conventions",
-      description: "Standard electrical symbols and schematic conventions",
+      number: '2.1.5',
+      title: 'Electrical Symbols and Conventions',
+      description: 'Standard electrical symbols and schematic conventions',
       icon: FileText,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section1-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module2-section1-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule2Section1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2

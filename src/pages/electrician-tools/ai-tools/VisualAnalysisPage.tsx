@@ -1,34 +1,37 @@
-import VisualAnalysisRedesigned from "@/components/electrician-tools/ai-tools/VisualAnalysisRedesigned";
-import { ArrowLeft, Camera, Search, Wrench, AlertTriangle, CheckCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { AnalysisMode } from "@/components/electrician-tools/ai-tools/ModeSelector";
+import VisualAnalysisRedesigned from '@/components/electrician-tools/ai-tools/VisualAnalysisRedesigned';
+import { ArrowLeft, Camera, Search, Wrench, AlertTriangle, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { AnalysisMode } from '@/components/electrician-tools/ai-tools/ModeSelector';
 
 // Mode configuration for dynamic page title/icon
-const modeConfig: Record<string, { title: string; subtitle: string; icon: typeof Camera; gradient: string }> = {
+const modeConfig: Record<
+  string,
+  { title: string; subtitle: string; icon: typeof Camera; gradient: string }
+> = {
   'component-identify': {
     title: 'Component Identification',
     subtitle: 'Identify specs & BS 7671 requirements',
     icon: Search,
-    gradient: 'from-blue-500/20 to-blue-500/10'
+    gradient: 'from-blue-500/20 to-blue-500/10',
   },
   'wiring-instruction': {
     title: 'Wiring Instructions',
     subtitle: 'Step-by-step UK wiring guide',
     icon: Wrench,
-    gradient: 'from-emerald-500/20 to-green-500/10'
+    gradient: 'from-emerald-500/20 to-green-500/10',
   },
   'fault-diagnosis': {
     title: 'Fault Diagnosis',
     subtitle: 'Identify issues & rectification steps',
     icon: AlertTriangle,
-    gradient: 'from-orange-500/20 to-red-500/10'
+    gradient: 'from-orange-500/20 to-red-500/10',
   },
   'installation-verify': {
     title: 'Installation Verification',
     subtitle: 'BS 7671 compliance check',
     icon: CheckCircle,
-    gradient: 'from-cyan-500/20 to-teal-500/10'
-  }
+    gradient: 'from-cyan-500/20 to-teal-500/10',
+  },
 };
 
 const VisualAnalysisPage = () => {
@@ -41,7 +44,7 @@ const VisualAnalysisPage = () => {
     'component-identify': 'component_identify',
     'wiring-instruction': 'wiring_instruction',
     'fault-diagnosis': 'fault_diagnosis',
-    'installation-verify': 'installation_verify'
+    'installation-verify': 'installation_verify',
   };
 
   const mode = modeMap[modeParam] || 'fault_diagnosis';
@@ -66,7 +69,9 @@ const VisualAnalysisPage = () => {
       <main className="px-4 py-4 space-y-5">
         {/* Hero Header */}
         <div className="flex items-center gap-3">
-          <div className={`p-3 rounded-xl bg-gradient-to-br ${config.gradient} border border-white/10`}>
+          <div
+            className={`p-3 rounded-xl bg-gradient-to-br ${config.gradient} border border-white/10`}
+          >
             <IconComponent className="h-6 w-6 text-white" />
           </div>
           <div>

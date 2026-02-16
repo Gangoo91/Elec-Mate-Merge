@@ -1,58 +1,58 @@
-import { ArrowLeft, Cable, FileText, Zap, Shield, Package } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Cable, FileText, Zap, Shield, Package } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Overview of Common Wiring Systems",
-    description: "Introduction to different types of electrical wiring systems",
+    number: 'Subsection 1',
+    title: 'Overview of Common Wiring Systems',
+    description: 'Introduction to different types of electrical wiring systems',
     icon: Cable,
-    href: "1-1"
+    href: '1-1',
   },
   {
-    number: "Subsection 2",
-    title: "Twin and Earth (Flat PVC Sheathed Cable)",
-    description: "Understanding twin and earth cable construction and applications",
+    number: 'Subsection 2',
+    title: 'Twin and Earth (Flat PVC Sheathed Cable)',
+    description: 'Understanding twin and earth cable construction and applications',
     icon: FileText,
-    href: "1-2"
+    href: '1-2',
   },
   {
-    number: "Subsection 3",
-    title: "Singles in Conduit or Trunking",
-    description: "Single core cables used in containment systems",
+    number: 'Subsection 3',
+    title: 'Singles in Conduit or Trunking',
+    description: 'Single core cables used in containment systems',
     icon: Zap,
-    href: "1-3"
+    href: '1-3',
   },
   {
-    number: "Subsection 4",
-    title: "Steel Wire Armoured (SWA) Cables",
-    description: "Construction and applications of SWA cables",
+    number: 'Subsection 4',
+    title: 'Steel Wire Armoured (SWA) Cables',
+    description: 'Construction and applications of SWA cables',
     icon: Shield,
-    href: "1-4"
+    href: '1-4',
   },
   {
-    number: "Subsection 5",
-    title: "Flexible Cords and Flex Outlets",
-    description: "Flexible cables and their connection points",
+    number: 'Subsection 5',
+    title: 'Flexible Cords and Flex Outlets',
+    description: 'Flexible cables and their connection points',
     icon: Package,
-    href: "1-5"
+    href: '1-5',
   },
   {
-    number: "Subsection 6",
-    title: "Data, Signal, and Low Voltage Cabling (Basic Awareness)",
-    description: "Introduction to data and low voltage cable systems",
+    number: 'Subsection 6',
+    title: 'Data, Signal, and Low Voltage Cabling (Basic Awareness)',
+    description: 'Introduction to data and low voltage cable systems',
     icon: Cable,
-    href: "1-6"
+    href: '1-6',
   },
   {
-    number: "Subsection 7",
-    title: "Selecting Cables Based on Application and Environment",
-    description: "Criteria for choosing appropriate cables for different installations",
+    number: 'Subsection 7',
+    title: 'Selecting Cables Based on Application and Environment',
+    description: 'Criteria for choosing appropriate cables for different installations',
     icon: FileText,
-    href: "1-7"
-  }
+    href: '1-7',
+  },
 ];
 
 const Section1 = () => {

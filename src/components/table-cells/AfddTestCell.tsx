@@ -1,5 +1,11 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 
@@ -19,9 +25,15 @@ export const AfddTestCell: React.FC<AfddTestCellProps> = ({ result, onUpdate }) 
           <SelectValue placeholder="AFDD" />
         </SelectTrigger>
         <SelectContent className="bg-background border border-border rounded-md z-[100]">
-          <SelectItem value="✓" className="text-sm text-green-400 font-medium">✓ Pass</SelectItem>
-          <SelectItem value="✗" className="text-sm text-red-400 font-medium">✗ Fail</SelectItem>
-          <SelectItem value="N/A" className="text-sm">N/A</SelectItem>
+          <SelectItem value="✓" className="text-sm text-green-400 font-medium">
+            ✓ Pass
+          </SelectItem>
+          <SelectItem value="✗" className="text-sm text-red-400 font-medium">
+            ✗ Fail
+          </SelectItem>
+          <SelectItem value="N/A" className="text-sm">
+            N/A
+          </SelectItem>
         </SelectContent>
       </Select>
     </TableCell>

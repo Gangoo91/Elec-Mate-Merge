@@ -12,7 +12,8 @@ const SmartHomeModule7Section5Practical = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground mb-4">
-          As an electrician conducting smart home handovers, these practical tips ensure professional client training that builds confidence and reduces callbacks:
+          As an electrician conducting smart home handovers, these practical tips ensure
+          professional client training that builds confidence and reduces callbacks:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

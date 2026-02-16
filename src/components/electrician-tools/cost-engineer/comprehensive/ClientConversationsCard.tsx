@@ -1,6 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { MessageSquare } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { MessageSquare } from 'lucide-react';
 
 interface ClientConversationsCardProps {
   conversations: any;
@@ -21,7 +26,9 @@ const ClientConversationsCard = ({ conversations }: ClientConversationsCardProps
           {conversations.opening && (
             <AccordionItem value="opening">
               <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[56px]">
-                <span className="font-medium text-foreground text-base sm:text-sm">💬 Opening Pitch</span>
+                <span className="font-medium text-foreground text-base sm:text-sm">
+                  💬 Opening Pitch
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30 text-left">
@@ -37,7 +44,9 @@ const ClientConversationsCard = ({ conversations }: ClientConversationsCardProps
           {conversations.tooExpensive && (
             <AccordionItem value="too-expensive">
               <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[56px]">
-                <span className="font-medium text-foreground text-base sm:text-sm">💰 "That seems high" Objection</span>
+                <span className="font-medium text-foreground text-base sm:text-sm">
+                  💰 "That seems high" Objection
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30 text-left">
@@ -53,7 +62,9 @@ const ClientConversationsCard = ({ conversations }: ClientConversationsCardProps
           {conversations.discountRequest && (
             <AccordionItem value="discount">
               <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[56px]">
-                <span className="font-medium text-foreground text-base sm:text-sm">🤝 "Can you do cheaper?" Negotiation</span>
+                <span className="font-medium text-foreground text-base sm:text-sm">
+                  🤝 "Can you do cheaper?" Negotiation
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30 text-left">

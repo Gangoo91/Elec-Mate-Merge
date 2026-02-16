@@ -1,84 +1,91 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, Clock, Users } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, AlertTriangle, Clock, Users } from 'lucide-react';
 
 const ApprenticeshipExpectations = () => {
   const day1Checklist = [
-    "Arrive 15 minutes early",
-    "Bring basic PPE (hard hat, hi-vis, safety boots)",
-    "Have a notepad and pen ready",
-    "Bring your apprenticeship agreement/paperwork",
-    "Dress appropriately for the trade",
-    "Bring lunch and water bottle"
+    'Arrive 15 minutes early',
+    'Bring basic PPE (hard hat, hi-vis, safety boots)',
+    'Have a notepad and pen ready',
+    'Bring your apprenticeship agreement/paperwork',
+    'Dress appropriately for the trade',
+    'Bring lunch and water bottle',
   ];
 
   const siteEtiquette = [
     {
-      rule: "Follow the Chain of Command",
-      description: "Always speak to your supervisor first, not the client or main contractor directly"
+      rule: 'Follow the Chain of Command',
+      description:
+        'Always speak to your supervisor first, not the client or main contractor directly',
     },
     {
-      rule: "Ask Questions the Right Way",
-      description: "Say 'I want to make sure I do this correctly, can you show me?' instead of just 'I don't know'"
+      rule: 'Ask Questions the Right Way',
+      description:
+        "Say 'I want to make sure I do this correctly, can you show me?' instead of just 'I don't know'",
     },
     {
-      rule: "Listen Before Speaking",
-      description: "Observe for your first few days. Learn names, routines, and site-specific rules"
+      rule: 'Listen Before Speaking',
+      description:
+        'Observe for your first few days. Learn names, routines, and site-specific rules',
     },
     {
-      rule: "Respect the Tea Fund",
-      description: "Contribute to communal expenses and don't take without giving back"
-    }
+      rule: 'Respect the Tea Fund',
+      description: "Contribute to communal expenses and don't take without giving back",
+    },
   ];
 
   const essentialTools = [
-    { category: "Hand Tools", items: ["Basic screwdriver set", "Wire strippers", "Side cutters", "Long nose pliers"] },
-    { category: "Measuring", items: ["Tape measure", "Spirit level", "Voltage tester pen"] },
-    { category: "PPE", items: ["Safety boots", "Hard hat", "Hi-vis vest", "Safety glasses"] },
-    { category: "Organisation", items: ["Tool bag/box", "Knee pads", "Head torch"] }
+    {
+      category: 'Hand Tools',
+      items: ['Basic screwdriver set', 'Wire strippers', 'Side cutters', 'Long nose pliers'],
+    },
+    { category: 'Measuring', items: ['Tape measure', 'Spirit level', 'Voltage tester pen'] },
+    { category: 'PPE', items: ['Safety boots', 'Hard hat', 'Hi-vis vest', 'Safety glasses'] },
+    { category: 'Organisation', items: ['Tool bag/box', 'Knee pads', 'Head torch'] },
   ];
 
   const yearExpectations = [
     {
-      year: "First Year",
+      year: 'First Year',
       expectations: [
-        "Learn basic safety procedures and follow them religiously",
-        "Carry materials and assist qualified electricians",
-        "Practise basic wiring techniques under supervision",
-        "Learn to use basic hand tools properly",
-        "Start understanding electrical theory at college"
+        'Learn basic safety procedures and follow them religiously',
+        'Carry materials and assist qualified electricians',
+        'Practise basic wiring techniques under supervision',
+        'Learn to use basic hand tools properly',
+        'Start understanding electrical theory at college',
       ],
       responsibilities: [
-        "Keep work area clean and tidy",
-        "Ask questions when unsure",
-        "Be on time and reliable",
-        "Complete college assignments"
-      ]
+        'Keep work area clean and tidy',
+        'Ask questions when unsure',
+        'Be on time and reliable',
+        'Complete college assignments',
+      ],
     },
     {
-      year: "Second Year",
+      year: 'Second Year',
       expectations: [
-        "Work more independently on basic tasks",
-        "Understand circuit design basics",
-        "Use power tools safely and effectively",
-        "Help with installation planning",
-        "Prepare for 18th Edition exam"
+        'Work more independently on basic tasks',
+        'Understand circuit design basics',
+        'Use power tools safely and effectively',
+        'Help with installation planning',
+        'Prepare for 18th Edition exam',
       ],
       responsibilities: [
-        "Take ownership of specific tasks",
-        "Help train newer apprentices",
-        "Complete more complex college work",
-        "Start building your portfolio"
-      ]
-    }
+        'Take ownership of specific tasks',
+        'Help train newer apprentices',
+        'Complete more complex college work',
+        'Start building your portfolio',
+      ],
+    },
   ];
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">What to Expect in Your Apprenticeship</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-4">
+          What to Expect in Your Apprenticeship
+        </h1>
         <p className="text-white text-center max-w-2xl mb-4">
           Essential guidance for starting your electrical apprenticeship and succeeding from day one
         </p>
@@ -108,8 +115,8 @@ const ApprenticeshipExpectations = () => {
             <div className="bg-elec-yellow/10 p-4 rounded-lg">
               <h4 className="font-semibold text-elec-yellow mb-2">Pro Tip</h4>
               <p className="text-sm text-white">
-                Your first impression matters. Being prepared shows you're serious about the trade and 
-                sets you up for success from day one.
+                Your first impression matters. Being prepared shows you're serious about the trade
+                and sets you up for success from day one.
               </p>
             </div>
           </div>
@@ -139,7 +146,8 @@ const ApprenticeshipExpectations = () => {
         <CardHeader>
           <CardTitle className="text-elec-yellow">Tools You Should Own (Not Borrow)</CardTitle>
           <p className="text-white text-sm">
-            Investing in your own tools shows professionalism and ensures you always have what you need
+            Investing in your own tools shows professionalism and ensures you always have what you
+            need
           </p>
         </CardHeader>
         <CardContent>
@@ -207,9 +215,9 @@ const ApprenticeshipExpectations = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Every site is different, but these fundamentals will serve you well anywhere. Stay curious, 
-            work safely, and remember that everyone was new once. Your attitude and willingness to learn 
-            matter more than what you don't know yet.
+            Every site is different, but these fundamentals will serve you well anywhere. Stay
+            curious, work safely, and remember that everyone was new once. Your attitude and
+            willingness to learn matter more than what you don't know yet.
           </p>
         </CardContent>
       </Card>

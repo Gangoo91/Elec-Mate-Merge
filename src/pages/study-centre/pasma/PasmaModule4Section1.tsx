@@ -1,171 +1,196 @@
-import { ArrowLeft, ArrowDownToLine, CheckCircle, AlertTriangle, Users, ShieldAlert, ListOrdered } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowDownToLine,
+  CheckCircle,
+  AlertTriangle,
+  Users,
+  ShieldAlert,
+  ListOrdered,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "pasma-dismantle-golden-rule",
-    question: "What is the golden rule of dismantling a mobile scaffold tower?",
+    id: 'pasma-dismantle-golden-rule',
+    question: 'What is the golden rule of dismantling a mobile scaffold tower?',
     options: [
-      "Always start from the bottom up",
-      "Dismantling is always the reverse of the assembly sequence",
-      "Remove the platform first to reduce weight",
-      "Only the site supervisor needs to be present"
+      'Always start from the bottom up',
+      'Dismantling is always the reverse of the assembly sequence',
+      'Remove the platform first to reduce weight',
+      'Only the site supervisor needs to be present',
     ],
     correctIndex: 1,
-    explanation: "The golden rule of dismantling is that it must always follow the exact reverse of the assembly sequence. Skipping steps or removing components out of order creates serious fall and collapse hazards."
+    explanation:
+      'The golden rule of dismantling is that it must always follow the exact reverse of the assembly sequence. Skipping steps or removing components out of order creates serious fall and collapse hazards.',
   },
   {
-    id: "pasma-dismantle-lowering",
-    question: "How should components be transferred from height during dismantling?",
+    id: 'pasma-dismantle-lowering',
+    question: 'How should components be transferred from height during dismantling?',
     options: [
-      "Thrown down to a catcher at ground level",
-      "Dropped onto a crash mat below the tower",
-      "Lowered safely by hand-to-hand, rope and bag, or component chute",
-      "Left on the platform and removed once the tower is on the ground"
+      'Thrown down to a catcher at ground level',
+      'Dropped onto a crash mat below the tower',
+      'Lowered safely by hand-to-hand, rope and bag, or component chute',
+      'Left on the platform and removed once the tower is on the ground',
     ],
     correctIndex: 2,
-    explanation: "Components must never be thrown from height. They should be lowered safely using controlled methods such as hand-to-hand passing, a rope and bag system, or a dedicated component chute. Thrown components can cause serious head injuries even from low heights."
+    explanation:
+      'Components must never be thrown from height. They should be lowered safely using controlled methods such as hand-to-hand passing, a rope and bag system, or a dedicated component chute. Thrown components can cause serious head injuries even from low heights.',
   },
   {
-    id: "pasma-partial-dismantle",
-    question: "If a tower is left partially dismantled, what must be in place at the working level?",
+    id: 'pasma-partial-dismantle',
+    question:
+      'If a tower is left partially dismantled, what must be in place at the working level?',
     options: [
-      "A warning sign only",
-      "Guardrails and the tower must be stable",
-      "A padlock on the access point",
-      "Nothing — partial dismantling is always prohibited"
+      'A warning sign only',
+      'Guardrails and the tower must be stable',
+      'A padlock on the access point',
+      'Nothing — partial dismantling is always prohibited',
     ],
     correctIndex: 1,
-    explanation: "A partially dismantled tower must remain stable, have guardrails at the working level, and be clearly signed to prevent unauthorised access. Leaving a partially dismantled tower without these precautions creates an immediate fall hazard."
-  }
+    explanation:
+      'A partially dismantled tower must remain stable, have guardrails at the working level, and be clearly signed to prevent unauthorised access. Leaving a partially dismantled tower without these precautions creates an immediate fall hazard.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can one person dismantle a mobile scaffold tower alone?",
-    answer: "No. Dismantling a mobile scaffold tower requires a minimum of two people, and in many cases more depending on the tower size and component weight. One person cannot safely lower components while maintaining their own stability on the tower. The assembly and dismantling instruction manual will specify the minimum crew size required."
+    question: 'Can one person dismantle a mobile scaffold tower alone?',
+    answer:
+      'No. Dismantling a mobile scaffold tower requires a minimum of two people, and in many cases more depending on the tower size and component weight. One person cannot safely lower components while maintaining their own stability on the tower. The assembly and dismantling instruction manual will specify the minimum crew size required.',
   },
   {
-    question: "What is the difference between dismantling a 3T tower and an AGR tower?",
-    answer: "With a 3T (through-the-trap) tower, guardrails are removed from below through the trapdoor platform before ascending to the next level down. With an AGR (advance guardrail) tower, the guardrails are unlocked and folded down from the platform level above before the operative descends. The sequence is reversed from assembly in both cases, but the specific steps differ because the guardrail systems work differently."
+    question: 'What is the difference between dismantling a 3T tower and an AGR tower?',
+    answer:
+      'With a 3T (through-the-trap) tower, guardrails are removed from below through the trapdoor platform before ascending to the next level down. With an AGR (advance guardrail) tower, the guardrails are unlocked and folded down from the platform level above before the operative descends. The sequence is reversed from assembly in both cases, but the specific steps differ because the guardrail systems work differently.',
   },
   {
-    question: "Can I dismantle a tower in windy conditions?",
-    answer: "You should not dismantle a tower in wind speeds above Beaufort Force 4 (approximately 13-18 mph or when small branches start moving). High winds make handling lightweight components dangerous, can affect your balance at height, and increase the risk of components being caught by the wind when being lowered. The site risk assessment should specify the wind speed limit."
+    question: 'Can I dismantle a tower in windy conditions?',
+    answer:
+      'You should not dismantle a tower in wind speeds above Beaufort Force 4 (approximately 13-18 mph or when small branches start moving). High winds make handling lightweight components dangerous, can affect your balance at height, and increase the risk of components being caught by the wind when being lowered. The site risk assessment should specify the wind speed limit.',
   },
   {
-    question: "What should I do if I discover damage to a component during dismantling?",
-    answer: "Any damaged component found during dismantling must be immediately separated from serviceable components, tagged with a red defect tag, and reported to the supervisor. The damage must be recorded in writing, including the date, component description, and nature of the defect. The damaged component must not be returned to general storage where it could be used again."
-  }
+    question: 'What should I do if I discover damage to a component during dismantling?',
+    answer:
+      'Any damaged component found during dismantling must be immediately separated from serviceable components, tagged with a red defect tag, and reported to the supervisor. The damage must be recorded in writing, including the date, component description, and nature of the defect. The damaged component must not be returned to general storage where it could be used again.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the first component to be removed when dismantling a 3T tower from the top?",
+    question: 'What is the first component to be removed when dismantling a 3T tower from the top?',
     options: [
-      "The platform at the top level",
-      "The guardrails at the top level",
-      "The diagonal braces below the platform",
-      "The castors at the base"
+      'The platform at the top level',
+      'The guardrails at the top level',
+      'The diagonal braces below the platform',
+      'The castors at the base',
     ],
     correctAnswer: 1,
-    explanation: "When dismantling a 3T tower, guardrails at the top level are removed first (from below, through the trapdoor), as they were the last components fitted during assembly. Dismantling always follows the exact reverse of the build sequence."
+    explanation:
+      'When dismantling a 3T tower, guardrails at the top level are removed first (from below, through the trapdoor), as they were the last components fitted during assembly. Dismantling always follows the exact reverse of the build sequence.',
   },
   {
     id: 2,
-    question: "Why must components NEVER be thrown from a tower during dismantling?",
+    question: 'Why must components NEVER be thrown from a tower during dismantling?',
     options: [
-      "It damages the paintwork on the components",
-      "It creates noise that disturbs other workers",
-      "Falling components can cause serious head injuries and death",
-      "It voids the manufacturer's warranty"
+      'It damages the paintwork on the components',
+      'It creates noise that disturbs other workers',
+      'Falling components can cause serious head injuries and death',
+      "It voids the manufacturer's warranty",
     ],
     correctAnswer: 2,
-    explanation: "Thrown components — even lightweight ones like brace clips — can cause serious head injuries or death if they strike someone below. A steel brace dropped from just 3 metres generates enough force to cause a fatal head injury."
+    explanation:
+      'Thrown components — even lightweight ones like brace clips — can cause serious head injuries or death if they strike someone below. A steel brace dropped from just 3 metres generates enough force to cause a fatal head injury.',
   },
   {
     id: 3,
-    question: "During AGR tower dismantling, how are the advance guardrails removed?",
+    question: 'During AGR tower dismantling, how are the advance guardrails removed?',
     options: [
-      "They are cut off with a grinder",
-      "They are unlocked and folded down from the platform above",
-      "They are removed from below by reaching up",
-      "They are left in place and the tower is moved whole"
+      'They are cut off with a grinder',
+      'They are unlocked and folded down from the platform above',
+      'They are removed from below by reaching up',
+      'They are left in place and the tower is moved whole',
     ],
     correctAnswer: 1,
-    explanation: "AGR (advance guardrail) systems are unlocked and folded down from the platform level. This is the reverse of the assembly process where they are raised and locked into position from below."
+    explanation:
+      'AGR (advance guardrail) systems are unlocked and folded down from the platform level. This is the reverse of the assembly process where they are raised and locked into position from below.',
   },
   {
     id: 4,
-    question: "What should be established on the ground before any dismantling begins?",
+    question: 'What should be established on the ground before any dismantling begins?',
     options: [
-      "A tea station for the crew",
-      "An exclusion zone preventing people from walking beneath the tower",
-      "A vehicle for transporting components",
-      "A concrete pad for stacking"
+      'A tea station for the crew',
+      'An exclusion zone preventing people from walking beneath the tower',
+      'A vehicle for transporting components',
+      'A concrete pad for stacking',
     ],
     correctAnswer: 1,
-    explanation: "An exclusion zone must be established at the base of the tower before dismantling begins. This prevents anyone on the ground from being struck by a component that is accidentally dropped during the lowering process."
+    explanation:
+      'An exclusion zone must be established at the base of the tower before dismantling begins. This prevents anyone on the ground from being struck by a component that is accidentally dropped during the lowering process.',
   },
   {
     id: 5,
-    question: "When is it acceptable to leave a tower partially dismantled?",
+    question: 'When is it acceptable to leave a tower partially dismantled?',
     options: [
-      "Never — dismantling must always be completed in one go",
-      "When the tower remains stable, has guardrails at the working level, and is clearly signed",
-      "Whenever the crew needs a break",
-      "Only if the tower is indoors"
+      'Never — dismantling must always be completed in one go',
+      'When the tower remains stable, has guardrails at the working level, and is clearly signed',
+      'Whenever the crew needs a break',
+      'Only if the tower is indoors',
     ],
     correctAnswer: 1,
-    explanation: "A tower may be left partially dismantled provided it remains stable, has guardrails at the working level, and is clearly signed to prevent unauthorised access. This may be necessary when reducing height for relocation or when work is interrupted."
+    explanation:
+      'A tower may be left partially dismantled provided it remains stable, has guardrails at the working level, and is clearly signed to prevent unauthorised access. This may be necessary when reducing height for relocation or when work is interrupted.',
   },
   {
     id: 6,
-    question: "Who is permitted to dismantle a mobile scaffold tower?",
+    question: 'Who is permitted to dismantle a mobile scaffold tower?',
     options: [
-      "Any site operative over the age of 18",
-      "Only the person who originally assembled the tower",
-      "PASMA-trained and competent persons only",
-      "The site first aider"
+      'Any site operative over the age of 18',
+      'Only the person who originally assembled the tower',
+      'PASMA-trained and competent persons only',
+      'The site first aider',
     ],
     correctAnswer: 2,
-    explanation: "Only persons who have received appropriate PASMA training and are competent to dismantle the specific type of tower being used may carry out the dismantling. This is a legal requirement under the Work at Height Regulations 2005."
+    explanation:
+      'Only persons who have received appropriate PASMA training and are competent to dismantle the specific type of tower being used may carry out the dismantling. This is a legal requirement under the Work at Height Regulations 2005.',
   },
   {
     id: 7,
-    question: "What is a common error that creates immediate danger during dismantling?",
+    question: 'What is a common error that creates immediate danger during dismantling?',
     options: [
-      "Using gloves while handling components",
-      "Removing guardrails and then climbing down without edge protection",
-      "Passing components hand to hand",
-      "Briefing the team before starting"
+      'Using gloves while handling components',
+      'Removing guardrails and then climbing down without edge protection',
+      'Passing components hand to hand',
+      'Briefing the team before starting',
     ],
     correctAnswer: 1,
-    explanation: "Removing guardrails and then descending without edge protection is extremely dangerous. The operative is exposed to an unprotected edge at height. The 3T method exists specifically to ensure guardrails are only removed from below, keeping the operative protected at all times."
+    explanation:
+      'Removing guardrails and then descending without edge protection is extremely dangerous. The operative is exposed to an unprotected edge at height. The 3T method exists specifically to ensure guardrails are only removed from below, keeping the operative protected at all times.',
   },
   {
     id: 8,
-    question: "What must happen after dismantling is complete?",
+    question: 'What must happen after dismantling is complete?',
     options: [
-      "Components are left where they fall for the next crew",
-      "The area is immediately released without checks",
-      "Components are inspected, sorted, and the completion is handed over to the supervisor",
-      "Nothing — the job is done once the last piece is removed"
+      'Components are left where they fall for the next crew',
+      'The area is immediately released without checks',
+      'Components are inspected, sorted, and the completion is handed over to the supervisor',
+      'Nothing — the job is done once the last piece is removed',
     ],
     correctAnswer: 2,
-    explanation: "After dismantling, all components must be inspected for damage, sorted by type, and prepared for storage or transport. The completion of dismantling should be formally handed over to the supervisor, and any defects found must be reported and recorded."
-  }
+    explanation:
+      'After dismantling, all components must be inspected for damage, sorted by type, and prepared for storage or transport. The completion of dismantling should be formally handed over to the supervisor, and any defects found must be reported and recorded.',
+  },
 ];
 
 export default function PasmaModule4Section1() {
   useSEO({
-    title: "Dismantling Procedure | PASMA Module 4.1",
-    description: "Safe mobile scaffold tower dismantling procedures including 3T and AGR methods, component lowering techniques, partial dismantling rules, and supervision requirements.",
+    title: 'Dismantling Procedure | PASMA Module 4.1',
+    description:
+      'Safe mobile scaffold tower dismantling procedures including 3T and AGR methods, component lowering techniques, partial dismantling rules, and supervision requirements.',
   });
 
   return (
@@ -194,13 +219,16 @@ export default function PasmaModule4Section1() {
             <ArrowDownToLine className="h-7 w-7 text-elec-yellow" />
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3 mx-auto">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 4 &middot; SECTION 1</span>
+            <span className="text-elec-yellow text-xs font-semibold">
+              MODULE 4 &middot; SECTION 1
+            </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Dismantling Procedure
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
-            Safe step-by-step dismantling of mobile scaffold towers using 3T and AGR methods, component lowering techniques, and supervision requirements
+            Safe step-by-step dismantling of mobile scaffold towers using 3T and AGR methods,
+            component lowering techniques, and supervision requirements
           </p>
         </header>
 
@@ -209,17 +237,30 @@ export default function PasmaModule4Section1() {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
-              <li><strong>Golden rule:</strong> reverse of assembly sequence</li>
-              <li><strong>Never throw</strong> components &mdash; always lower safely</li>
-              <li><strong>Competence:</strong> must be done by PASMA-trained operatives</li>
+              <li>
+                <strong>Golden rule:</strong> reverse of assembly sequence
+              </li>
+              <li>
+                <strong>Never throw</strong> components &mdash; always lower safely
+              </li>
+              <li>
+                <strong>Competence:</strong> must be done by PASMA-trained operatives
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-base font-medium mb-2">On Site</p>
             <ul className="text-base text-white space-y-1.5">
-              <li><strong>Before:</strong> Plan dismantling, check conditions, brief team</li>
-              <li><strong>During:</strong> Follow reverse sequence, lower components, maintain edge protection</li>
-              <li><strong>After:</strong> Inspect and sort components for storage</li>
+              <li>
+                <strong>Before:</strong> Plan dismantling, check conditions, brief team
+              </li>
+              <li>
+                <strong>During:</strong> Follow reverse sequence, lower components, maintain edge
+                protection
+              </li>
+              <li>
+                <strong>After:</strong> Inspect and sort components for storage
+              </li>
             </ul>
           </div>
         </div>
@@ -229,12 +270,12 @@ export default function PasmaModule4Section1() {
           <h2 className="text-lg font-semibold text-white mb-4">Learning Outcomes</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Explain the golden rule of dismantling",
-              "Describe the 3T dismantling step-by-step sequence",
-              "Describe the AGR dismantling sequence",
-              "List safe methods for lowering components from height",
-              "Identify common dismantling errors and their consequences",
-              "Understand partial dismantling rules and supervision requirements"
+              'Explain the golden rule of dismantling',
+              'Describe the 3T dismantling step-by-step sequence',
+              'Describe the AGR dismantling sequence',
+              'List safe methods for lowering components from height',
+              'Identify common dismantling errors and their consequences',
+              'Understand partial dismantling rules and supervision requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -264,8 +305,8 @@ export default function PasmaModule4Section1() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-elec-yellow">Key Point:</strong> Dismantling is always
-                  the exact reverse of assembly. If the manufacturer&rsquo;s instruction manual
+                  <strong className="text-elec-yellow">Key Point:</strong> Dismantling is always the
+                  exact reverse of assembly. If the manufacturer&rsquo;s instruction manual
                   specifies a build sequence of steps 1 through 20, dismantling proceeds from step
                   20 back to step 1. Never skip steps. Never remove components out of order.
                 </p>
@@ -273,21 +314,23 @@ export default function PasmaModule4Section1() {
 
               <p>
                 This principle exists because each component in a mobile tower serves a structural
-                role that depends on the components above and below it. Removing a brace before
-                the platform it supports has been taken out can cause a sudden structural failure.
-                Removing guardrails before descending leaves the operative exposed to an
-                unprotected edge at height.
+                role that depends on the components above and below it. Removing a brace before the
+                platform it supports has been taken out can cause a sudden structural failure.
+                Removing guardrails before descending leaves the operative exposed to an unprotected
+                edge at height.
               </p>
 
               <p>
                 Before any dismantling begins, the operative in charge must review the
-                manufacturer&rsquo;s instruction manual and confirm the correct reverse sequence.
-                If the manual is not available on site, dismantling must not proceed until it is
+                manufacturer&rsquo;s instruction manual and confirm the correct reverse sequence. If
+                the manual is not available on site, dismantling must not proceed until it is
                 obtained. This is a legal requirement under the Work at Height Regulations 2005.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">Why the Reverse Sequence Matters</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Why the Reverse Sequence Matters
+                </p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -331,16 +374,44 @@ export default function PasmaModule4Section1() {
               </p>
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                <p className="text-sm font-medium text-elec-yellow mb-3">3T Reverse Sequence (Top Down)</p>
+                <p className="text-sm font-medium text-elec-yellow mb-3">
+                  3T Reverse Sequence (Top Down)
+                </p>
                 <div className="space-y-2 text-sm text-white/80">
-                  <p><strong className="text-white">Step 1:</strong> From the platform level below the top guardrails, reach up through the trapdoor opening and remove the top guardrails. Pass them down to ground level.</p>
-                  <p><strong className="text-white">Step 2:</strong> Remove the top platform by lifting it through the trapdoor opening and lowering it safely to the ground.</p>
-                  <p><strong className="text-white">Step 3:</strong> Descend to the next level down using the internal ladder or built-in climbing system.</p>
-                  <p><strong className="text-white">Step 4:</strong> From this lower level, reach up through the trapdoor and remove the guardrails from the level you have just left.</p>
-                  <p><strong className="text-white">Step 5:</strong> Remove the platform from the level above and lower it safely.</p>
-                  <p><strong className="text-white">Step 6:</strong> Remove the horizontal braces and diagonal braces from the lift above.</p>
-                  <p><strong className="text-white">Step 7:</strong> Remove the frames from the lift above and lower them to the ground.</p>
-                  <p><strong className="text-white">Step 8:</strong> Repeat steps 3&ndash;7 for each successive lift until you reach the base.</p>
+                  <p>
+                    <strong className="text-white">Step 1:</strong> From the platform level below
+                    the top guardrails, reach up through the trapdoor opening and remove the top
+                    guardrails. Pass them down to ground level.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 2:</strong> Remove the top platform by
+                    lifting it through the trapdoor opening and lowering it safely to the ground.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 3:</strong> Descend to the next level down
+                    using the internal ladder or built-in climbing system.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 4:</strong> From this lower level, reach up
+                    through the trapdoor and remove the guardrails from the level you have just
+                    left.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 5:</strong> Remove the platform from the
+                    level above and lower it safely.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 6:</strong> Remove the horizontal braces and
+                    diagonal braces from the lift above.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 7:</strong> Remove the frames from the lift
+                    above and lower them to the ground.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 8:</strong> Repeat steps 3&ndash;7 for each
+                    successive lift until you reach the base.
+                  </p>
                 </div>
               </div>
 
@@ -358,10 +429,10 @@ export default function PasmaModule4Section1() {
               </div>
 
               <p>
-                Throughout the process, all removed components must be lowered to ground level
-                using a controlled method. A ground-level operative should be stationed to receive
-                components, stack them by type, and maintain the exclusion zone around the base
-                of the tower.
+                Throughout the process, all removed components must be lowered to ground level using
+                a controlled method. A ground-level operative should be stationed to receive
+                components, stack them by type, and maintain the exclusion zone around the base of
+                the tower.
               </p>
             </div>
           </div>
@@ -385,15 +456,39 @@ export default function PasmaModule4Section1() {
               </p>
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                <p className="text-sm font-medium text-elec-yellow mb-3">AGR Reverse Sequence (Top Down)</p>
+                <p className="text-sm font-medium text-elec-yellow mb-3">
+                  AGR Reverse Sequence (Top Down)
+                </p>
                 <div className="space-y-2 text-sm text-white/80">
-                  <p><strong className="text-white">Step 1:</strong> Standing on the top platform (with guardrails protecting you), unlock the AGR guardrails at your level using the release mechanism.</p>
-                  <p><strong className="text-white">Step 2:</strong> Fold the guardrails down from your platform level. They collapse downward to the level below.</p>
-                  <p><strong className="text-white">Step 3:</strong> Remove the top platform and lower it to ground level.</p>
-                  <p><strong className="text-white">Step 4:</strong> Descend to the next level down. You are now protected by the guardrails at this level.</p>
-                  <p><strong className="text-white">Step 5:</strong> Remove horizontal and diagonal braces from the lift above, then remove the frames from that lift.</p>
-                  <p><strong className="text-white">Step 6:</strong> Unlock and fold down the AGR guardrails at your current level.</p>
-                  <p><strong className="text-white">Step 7:</strong> Continue descending and repeating until the base is reached.</p>
+                  <p>
+                    <strong className="text-white">Step 1:</strong> Standing on the top platform
+                    (with guardrails protecting you), unlock the AGR guardrails at your level using
+                    the release mechanism.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 2:</strong> Fold the guardrails down from
+                    your platform level. They collapse downward to the level below.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 3:</strong> Remove the top platform and
+                    lower it to ground level.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 4:</strong> Descend to the next level down.
+                    You are now protected by the guardrails at this level.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 5:</strong> Remove horizontal and diagonal
+                    braces from the lift above, then remove the frames from that lift.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 6:</strong> Unlock and fold down the AGR
+                    guardrails at your current level.
+                  </p>
+                  <p>
+                    <strong className="text-white">Step 7:</strong> Continue descending and
+                    repeating until the base is reached.
+                  </p>
                 </div>
               </div>
 
@@ -429,9 +524,10 @@ export default function PasmaModule4Section1() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 One of the most dangerous aspects of dismantling is transferring components from
-                height to ground level. <strong>Components must never be thrown from a tower.</strong>
-                Even a small clip or pin dropped from a few metres can cause a serious head
-                injury. A steel brace thrown from a standard working height can be fatal.
+                height to ground level.{' '}
+                <strong>Components must never be thrown from a tower.</strong>
+                Even a small clip or pin dropped from a few metres can cause a serious head injury.
+                A steel brace thrown from a standard working height can be fatal.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
@@ -440,19 +536,37 @@ export default function PasmaModule4Section1() {
                   <p className="text-sm font-medium text-red-400">Zero Tolerance</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  Throwing components from a mobile scaffold tower is a <strong>zero-tolerance
-                  offence</strong> on most construction sites. It can result in immediate removal
-                  from site, disciplinary action, and potential prosecution under the Health and
-                  Safety at Work etc. Act 1974 Section 7 (employee duty of care).
+                  Throwing components from a mobile scaffold tower is a{' '}
+                  <strong>zero-tolerance offence</strong> on most construction sites. It can result
+                  in immediate removal from site, disciplinary action, and potential prosecution
+                  under the Health and Safety at Work etc. Act 1974 Section 7 (employee duty of
+                  care).
                 </p>
               </div>
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                <p className="text-sm font-medium text-elec-yellow mb-3">Approved Lowering Methods</p>
+                <p className="text-sm font-medium text-elec-yellow mb-3">
+                  Approved Lowering Methods
+                </p>
                 <div className="space-y-2 text-sm text-white/80">
-                  <p><strong className="text-white">Hand to hand:</strong> The operative on the tower passes the component down to a colleague stationed at a lower level or on the ground. Suitable for lighter items and lower heights. Requires good coordination and communication.</p>
-                  <p><strong className="text-white">Rope and bag:</strong> Components are placed in a canvas bag or tied with a lowering rope and lowered in a controlled manner to the ground. The bag must be rated for the weight being lowered. A tag line prevents swinging.</p>
-                  <p><strong className="text-white">Component chute:</strong> A dedicated chute or slide system attached to the tower allows components to be slid down to ground level in a controlled manner. Particularly effective for braces and smaller items.</p>
+                  <p>
+                    <strong className="text-white">Hand to hand:</strong> The operative on the tower
+                    passes the component down to a colleague stationed at a lower level or on the
+                    ground. Suitable for lighter items and lower heights. Requires good coordination
+                    and communication.
+                  </p>
+                  <p>
+                    <strong className="text-white">Rope and bag:</strong> Components are placed in a
+                    canvas bag or tied with a lowering rope and lowered in a controlled manner to
+                    the ground. The bag must be rated for the weight being lowered. A tag line
+                    prevents swinging.
+                  </p>
+                  <p>
+                    <strong className="text-white">Component chute:</strong> A dedicated chute or
+                    slide system attached to the tower allows components to be slid down to ground
+                    level in a controlled manner. Particularly effective for braces and smaller
+                    items.
+                  </p>
                 </div>
               </div>
 
@@ -460,11 +574,14 @@ export default function PasmaModule4Section1() {
                 An exclusion zone must be established around the base of the tower before any
                 dismantling begins. The zone should extend far enough to protect anyone on the
                 ground from a component that might be accidentally dropped. Barriers or a banksman
-                should prevent anyone from entering the exclusion zone during dismantling operations.
+                should prevent anyone from entering the exclusion zone during dismantling
+                operations.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">Injury Risks from Thrown Components</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Injury Risks from Thrown Components
+                </p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -503,18 +620,37 @@ export default function PasmaModule4Section1() {
           <div className="border-l-2 border-cyan-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Investigations into tower-related incidents repeatedly identify the same
-                dismantling errors. Knowing these common mistakes helps you recognise dangerous
-                situations before they lead to injury or death.
+                Investigations into tower-related incidents repeatedly identify the same dismantling
+                errors. Knowing these common mistakes helps you recognise dangerous situations
+                before they lead to injury or death.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
-                <p className="text-sm font-medium text-red-400 mb-3">Critical Errors That Cause Incidents</p>
+                <p className="text-sm font-medium text-red-400 mb-3">
+                  Critical Errors That Cause Incidents
+                </p>
                 <div className="space-y-2 text-sm text-white/80">
-                  <p><strong className="text-white">Removing guardrails before descending:</strong> The operative removes the guardrails at their level and then attempts to climb down without edge protection. This is the leading cause of falls during dismantling.</p>
-                  <p><strong className="text-white">Throwing components from height:</strong> Components are tossed over the side instead of being lowered safely. This causes struck-by injuries to ground-level workers.</p>
-                  <p><strong className="text-white">Skipping braces during removal:</strong> Diagonal or horizontal braces are left out of the dismantling sequence, compromising the structural integrity of the remaining tower.</p>
-                  <p><strong className="text-white">Working alone:</strong> A single operative attempts to dismantle the tower without assistance. This prevents safe component handling and eliminates the safety of a second pair of eyes.</p>
+                  <p>
+                    <strong className="text-white">Removing guardrails before descending:</strong>{' '}
+                    The operative removes the guardrails at their level and then attempts to climb
+                    down without edge protection. This is the leading cause of falls during
+                    dismantling.
+                  </p>
+                  <p>
+                    <strong className="text-white">Throwing components from height:</strong>{' '}
+                    Components are tossed over the side instead of being lowered safely. This causes
+                    struck-by injuries to ground-level workers.
+                  </p>
+                  <p>
+                    <strong className="text-white">Skipping braces during removal:</strong> Diagonal
+                    or horizontal braces are left out of the dismantling sequence, compromising the
+                    structural integrity of the remaining tower.
+                  </p>
+                  <p>
+                    <strong className="text-white">Working alone:</strong> A single operative
+                    attempts to dismantle the tower without assistance. This prevents safe component
+                    handling and eliminates the safety of a second pair of eyes.
+                  </p>
                 </div>
               </div>
 
@@ -525,10 +661,10 @@ export default function PasmaModule4Section1() {
                 </div>
                 <p className="text-sm text-white/80">
                   Dismantling in high winds (above Beaufort Force 4) is extremely dangerous.
-                  Lightweight components can act as sails, pulling the operative off balance.
-                  Braces and platforms caught by the wind can strike other workers. If wind
-                  conditions deteriorate during dismantling, stop work immediately and secure
-                  the tower in its current state.
+                  Lightweight components can act as sails, pulling the operative off balance. Braces
+                  and platforms caught by the wind can strike other workers. If wind conditions
+                  deteriorate during dismantling, stop work immediately and secure the tower in its
+                  current state.
                 </p>
               </div>
 
@@ -537,11 +673,15 @@ export default function PasmaModule4Section1() {
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>Leaving a partially dismantled tower unattended without signage or barriers</span>
+                    <span>
+                      Leaving a partially dismantled tower unattended without signage or barriers
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>Not checking conditions (weather, ground, overhead hazards) before starting</span>
+                    <span>
+                      Not checking conditions (weather, ground, overhead hazards) before starting
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -549,7 +689,9 @@ export default function PasmaModule4Section1() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>Failing to brief the team on the dismantling sequence before starting</span>
+                    <span>
+                      Failing to brief the team on the dismantling sequence before starting
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -571,17 +713,21 @@ export default function PasmaModule4Section1() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 There are legitimate situations where a tower may need to be partially dismantled
-                rather than fully taken down. This includes reducing the height before moving
-                the tower, adapting the tower to a new task, or relocating the tower to a
-                different part of the site where a lower height is needed.
+                rather than fully taken down. This includes reducing the height before moving the
+                tower, adapting the tower to a new task, or relocating the tower to a different part
+                of the site where a lower height is needed.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">When Partial Dismantling May Be Required</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  When Partial Dismantling May Be Required
+                </p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>Reducing height to comply with the maximum moving height (typically 4 metres)</span>
+                    <span>
+                      Reducing height to comply with the maximum moving height (typically 4 metres)
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -589,11 +735,15 @@ export default function PasmaModule4Section1() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>Removing top lifts to pass under an overhead obstruction during relocation</span>
+                    <span>
+                      Removing top lifts to pass under an overhead obstruction during relocation
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>End-of-shift stoppage where full dismantling cannot be completed safely</span>
+                    <span>
+                      End-of-shift stoppage where full dismantling cannot be completed safely
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -601,11 +751,10 @@ export default function PasmaModule4Section1() {
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
                   <strong className="text-elec-yellow">Key Point:</strong> A partially dismantled
-                  tower must remain structurally stable at all times. It must have guardrails at
-                  the highest working level, must be clearly signed as &ldquo;under
-                  construction/dismantling&rdquo;, and must prevent unauthorised access.
-                  Partially dismantled towers must never be left overnight without these
-                  precautions.
+                  tower must remain structurally stable at all times. It must have guardrails at the
+                  highest working level, must be clearly signed as &ldquo;under
+                  construction/dismantling&rdquo;, and must prevent unauthorised access. Partially
+                  dismantled towers must never be left overnight without these precautions.
                 </p>
               </div>
 
@@ -663,10 +812,10 @@ export default function PasmaModule4Section1() {
               </div>
 
               <p>
-                If a tower is partially dismantled and left for any period, a fresh inspection
-                must be carried out before it is used again or before dismantling continues. The
-                inspection should verify that the remaining structure is stable, that no
-                components have been disturbed, and that all connections remain secure.
+                If a tower is partially dismantled and left for any period, a fresh inspection must
+                be carried out before it is used again or before dismantling continues. The
+                inspection should verify that the remaining structure is stable, that no components
+                have been disturbed, and that all connections remain secure.
               </p>
             </div>
           </div>
@@ -686,8 +835,8 @@ export default function PasmaModule4Section1() {
                 The Work at Height Regulations 2005 require that mobile scaffold towers are only
                 dismantled by persons who are competent to do so, or by persons under the direct
                 supervision of a competent person. In practice, this means every member of the
-                dismantling team must hold a current PASMA certificate for the type of tower
-                being dismantled.
+                dismantling team must hold a current PASMA certificate for the type of tower being
+                dismantled.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -698,15 +847,24 @@ export default function PasmaModule4Section1() {
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span><strong>PASMA-trained operatives</strong> who hold a current Towers for Users or Towers for Advanced Users card</span>
+                    <span>
+                      <strong>PASMA-trained operatives</strong> who hold a current Towers for Users
+                      or Towers for Advanced Users card
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span><strong>Trainees</strong> who are working under the direct supervision of a PASMA-certified person</span>
+                    <span>
+                      <strong>Trainees</strong> who are working under the direct supervision of a
+                      PASMA-certified person
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                    <span>The specific PASMA card held must cover the type of tower being dismantled (e.g. standard tower, complex configuration, or linked tower)</span>
+                    <span>
+                      The specific PASMA card held must cover the type of tower being dismantled
+                      (e.g. standard tower, complex configuration, or linked tower)
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -714,25 +872,25 @@ export default function PasmaModule4Section1() {
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
                   <strong className="text-elec-yellow">Key Point:</strong> Supervision during
-                  dismantling means active, on-site oversight &mdash; not a phone call away.
-                  The supervisor must be present, must be able to see the work being carried out,
-                  and must have the authority to stop work if unsafe practices are observed.
+                  dismantling means active, on-site oversight &mdash; not a phone call away. The
+                  supervisor must be present, must be able to see the work being carried out, and
+                  must have the authority to stop work if unsafe practices are observed.
                 </p>
               </div>
 
               <p>
-                Effective team communication is critical during dismantling. Before work begins,
-                the team leader should conduct a brief covering the dismantling sequence, the
-                lowering method, individual roles, the exclusion zone, and what to do if conditions
-                change (such as increasing wind). Clear verbal commands should be used throughout
-                &mdash; particularly when lowering components.
+                Effective team communication is critical during dismantling. Before work begins, the
+                team leader should conduct a brief covering the dismantling sequence, the lowering
+                method, individual roles, the exclusion zone, and what to do if conditions change
+                (such as increasing wind). Clear verbal commands should be used throughout &mdash;
+                particularly when lowering components.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Handover After Completion</p>
                 <p className="text-sm text-white/80 mb-3">
-                  Once dismantling is complete, the team leader must formally hand over to the
-                  site supervisor or tower coordinator. The handover should confirm:
+                  Once dismantling is complete, the team leader must formally hand over to the site
+                  supervisor or tower coordinator. The handover should confirm:
                 </p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
@@ -775,10 +933,7 @@ export default function PasmaModule4Section1() {
         </section>
 
         {/* Quiz */}
-        <Quiz
-          title="Section 1 Knowledge Check"
-          questions={quizQuestions}
-        />
+        <Quiz title="Section 1 Knowledge Check" questions={quizQuestions} />
 
         {/* Bottom Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">

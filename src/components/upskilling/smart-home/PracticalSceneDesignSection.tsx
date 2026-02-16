@@ -12,9 +12,10 @@ export const PracticalSceneDesignSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Use this systematic approach to design effective lighting scenes that truly enhance client lifestyles:
+          Use this systematic approach to design effective lighting scenes that truly enhance client
+          lifestyles:
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <h4 className="font-semibold text-blue-200 mb-2">1. Activity Analysis</h4>
@@ -80,21 +81,39 @@ export const PracticalSceneDesignSection = () => {
             <h4 className="font-semibold text-purple-200 mb-2">3. Scene Parameter Guidelines</h4>
             <div className="space-y-3">
               <div>
-                <h5 className="font-medium text-purple-100 mb-1">Brightness Levels (% of maximum):</h5>
+                <h5 className="font-medium text-purple-100 mb-1">
+                  Brightness Levels (% of maximum):
+                </h5>
                 <ul className="text-sm text-purple-100 space-y-1">
-                  <li>• <strong>Task lighting:</strong> 80-100% for detailed work</li>
-                  <li>• <strong>General ambient:</strong> 40-70% for comfortable living</li>
-                  <li>• <strong>Relaxation:</strong> 20-40% for evening wind-down</li>
-                  <li>• <strong>Navigation:</strong> 5-15% for safe movement at night</li>
+                  <li>
+                    • <strong>Task lighting:</strong> 80-100% for detailed work
+                  </li>
+                  <li>
+                    • <strong>General ambient:</strong> 40-70% for comfortable living
+                  </li>
+                  <li>
+                    • <strong>Relaxation:</strong> 20-40% for evening wind-down
+                  </li>
+                  <li>
+                    • <strong>Navigation:</strong> 5-15% for safe movement at night
+                  </li>
                 </ul>
               </div>
               <div>
                 <h5 className="font-medium text-purple-100 mb-1">Colour Temperature (Kelvin):</h5>
                 <ul className="text-sm text-purple-100 space-y-1">
-                  <li>• <strong>Focus work:</strong> 4000-6500K (cool, alerting)</li>
-                  <li>• <strong>General daytime:</strong> 3000-4000K (neutral white)</li>
-                  <li>• <strong>Evening relax:</strong> 2200-2700K (warm, calming)</li>
-                  <li>• <strong>Bedtime:</strong> 1800-2200K (very warm, sleep-friendly)</li>
+                  <li>
+                    • <strong>Focus work:</strong> 4000-6500K (cool, alerting)
+                  </li>
+                  <li>
+                    • <strong>General daytime:</strong> 3000-4000K (neutral white)
+                  </li>
+                  <li>
+                    • <strong>Evening relax:</strong> 2200-2700K (warm, calming)
+                  </li>
+                  <li>
+                    • <strong>Bedtime:</strong> 1800-2200K (very warm, sleep-friendly)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -103,10 +122,21 @@ export const PracticalSceneDesignSection = () => {
           <div className="p-3 bg-orange-600/10 border border-orange-600/20 rounded-lg">
             <h4 className="font-semibold text-orange-200 mb-2">4. Multi-Room Coordination</h4>
             <ul className="text-sm text-orange-100 space-y-1">
-              <li>• <strong>Zone grouping:</strong> Related areas change together (living + dining for entertaining)</li>
-              <li>• <strong>Progressive dimming:</strong> Gradual brightness reduction from active to quiet areas</li>
-              <li>• <strong>Path lighting:</strong> Ensure safe navigation routes between spaces</li>
-              <li>• <strong>Activity isolation:</strong> Allow different activities in adjacent rooms without interference</li>
+              <li>
+                • <strong>Zone grouping:</strong> Related areas change together (living + dining for
+                entertaining)
+              </li>
+              <li>
+                • <strong>Progressive dimming:</strong> Gradual brightness reduction from active to
+                quiet areas
+              </li>
+              <li>
+                • <strong>Path lighting:</strong> Ensure safe navigation routes between spaces
+              </li>
+              <li>
+                • <strong>Activity isolation:</strong> Allow different activities in adjacent rooms
+                without interference
+              </li>
             </ul>
           </div>
 

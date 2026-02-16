@@ -1,7 +1,6 @@
-
-import React from "react";
-import { LockKeyhole, Check, AlertTriangle, Lightbulb, Zap } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import React from 'react';
+import { LockKeyhole, Check, AlertTriangle, Lightbulb, Zap } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 const SafeIsolationProcedures = () => {
   return (
@@ -12,20 +11,21 @@ const SafeIsolationProcedures = () => {
           <h4 className="text-xl font-semibold text-elec-yellow">Safe Isolation Procedures</h4>
         </div>
       </CardHeader>
-      
+
       <CardContent className="pt-4 space-y-6">
         <p className="text-sm">
-          Safe isolation is a critical procedure that ensures electrical circuits are disconnected from their power source 
-          before work begins, protecting electricians from electric shock, burns, and other injuries.
+          Safe isolation is a critical procedure that ensures electrical circuits are disconnected
+          from their power source before work begins, protecting electricians from electric shock,
+          burns, and other injuries.
         </p>
-        
+
         <div className="space-y-4">
           {/* Essential Steps */}
           <h5 className="font-medium text-elec-yellow">The Essential 7-Step Procedure:</h5>
           <div className="grid grid-cols-1 gap-3">
             {steps.map((step, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="p-3 bg-white/10 border border-elec-yellow/20 rounded-lg flex gap-3 hover:border-elec-yellow/40 transition-colors"
               >
                 <div className="bg-elec-yellow/10 h-8 w-8 rounded-full flex items-center justify-center shrink-0 mt-0.5">
@@ -38,7 +38,7 @@ const SafeIsolationProcedures = () => {
               </div>
             ))}
           </div>
-          
+
           {/* Required Equipment */}
           <div className="mt-6">
             <h5 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
@@ -68,7 +68,7 @@ const SafeIsolationProcedures = () => {
               </li>
             </ul>
           </div>
-          
+
           {/* Warning Box */}
           <div className="p-3 bg-red-900/20 border border-red-500/30 rounded-lg mt-4">
             <div className="flex items-start gap-2">
@@ -76,22 +76,25 @@ const SafeIsolationProcedures = () => {
               <div>
                 <h6 className="font-medium text-red-400">Critical Safety Warning</h6>
                 <p className="text-sm text-white/80 mt-1">
-                  Never rely on isolation switches alone. Always follow the complete safe isolation procedure and verify
-                  the absence of voltage before beginning work.
+                  Never rely on isolation switches alone. Always follow the complete safe isolation
+                  procedure and verify the absence of voltage before beginning work.
                 </p>
               </div>
             </div>
           </div>
-          
+
           {/* Regulations */}
           <div className="p-3 bg-white/10 rounded-lg border border-elec-yellow/20 mt-2">
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm text-elec-yellow font-medium">Electricity at Work Regulations 1989</span>
+              <span className="text-sm text-elec-yellow font-medium">
+                Electricity at Work Regulations 1989
+              </span>
             </div>
             <p className="text-xs text-white/80 mt-1">
-              Regulation 13 specifically requires that adequate precautions are taken to prevent electrical equipment that has 
-              been made dead from becoming live while work is carried out.
+              Regulation 13 specifically requires that adequate precautions are taken to prevent
+              electrical equipment that has been made dead from becoming live while work is carried
+              out.
             </p>
           </div>
         </div>
@@ -103,33 +106,33 @@ const SafeIsolationProcedures = () => {
 // Data for the steps
 const steps = [
   {
-    title: "Identify",
-    description: "Correctly identify the circuit or equipment to be worked on."
+    title: 'Identify',
+    description: 'Correctly identify the circuit or equipment to be worked on.',
   },
   {
-    title: "Isolate",
-    description: "Switch off and secure the correct isolation device."
+    title: 'Isolate',
+    description: 'Switch off and secure the correct isolation device.',
   },
   {
-    title: "Prove the tester",
-    description: "Test your voltage indicator on a known live source."
+    title: 'Prove the tester',
+    description: 'Test your voltage indicator on a known live source.',
   },
   {
-    title: "Test dead",
-    description: "Verify the circuit or equipment is not energized."
+    title: 'Test dead',
+    description: 'Verify the circuit or equipment is not energized.',
   },
   {
-    title: "Reprove the tester",
-    description: "Test your voltage indicator again on a known live source."
+    title: 'Reprove the tester',
+    description: 'Test your voltage indicator again on a known live source.',
   },
   {
-    title: "Lock off and tag",
-    description: "Apply locks and warning notices to prevent reconnection."
+    title: 'Lock off and tag',
+    description: 'Apply locks and warning notices to prevent reconnection.',
   },
   {
-    title: "Issue permit-to-work",
-    description: "For complex systems, issue formal authorization documents."
-  }
+    title: 'Issue permit-to-work',
+    description: 'For complex systems, issue formal authorization documents.',
+  },
 ];
 
 export default SafeIsolationProcedures;

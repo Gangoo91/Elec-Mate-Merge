@@ -12,17 +12,21 @@ export const SmartHomeModule5Section4PracticalGuidance = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/30">
-          <h4 className="text-foreground font-semibold mb-3">Installation and Setup Responsibilities</h4>
+          <h4 className="text-foreground font-semibold mb-3">
+            Installation and Setup Responsibilities
+          </h4>
           <p className="text-sm mb-3">
-            As an electrician installing smart home systems, your role extends beyond basic wiring 
-            to include network configuration, security setup, and customer education. Proper 
-            remote access configuration is critical for system reliability and user satisfaction.
+            As an electrician installing smart home systems, your role extends beyond basic wiring
+            to include network configuration, security setup, and customer education. Proper remote
+            access configuration is critical for system reliability and user satisfaction.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Pre-Installation Checklist</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Pre-Installation Checklist
+            </h4>
             <div className="space-y-3">
               <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                 <p className="text-blue-400 font-semibold text-sm mb-1">Network Assessment</p>
@@ -55,7 +59,9 @@ export const SmartHomeModule5Section4PracticalGuidance = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Configuration Best Practices</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Configuration Best Practices
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-orange-400 font-semibold text-sm mb-1">Network Setup</p>

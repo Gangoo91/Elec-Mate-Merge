@@ -28,54 +28,72 @@ export function useToolConfigProgress() {
   // Save to localStorage whenever state changes
   const saveProgress = useCallback((tools: Set<string>, index: number) => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        configuredTools: Array.from(tools),
-        lastToolIndex: index
-      }));
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          configuredTools: Array.from(tools),
+          lastToolIndex: index,
+        })
+      );
     } catch (e) {
       console.error('Failed to save tool config progress:', e);
     }
   }, []);
 
-  const markToolConfigured = useCallback((toolName: string) => {
-    setConfiguredTools(prev => {
-      const updated = new Set(prev);
-      updated.add(toolName);
-      saveProgress(updated, lastToolIndex);
-      return updated;
-    });
-  }, [lastToolIndex, saveProgress]);
-
-  const unmarkToolConfigured = useCallback((toolName: string) => {
-    setConfiguredTools(prev => {
-      const updated = new Set(prev);
-      updated.delete(toolName);
-      saveProgress(updated, lastToolIndex);
-      return updated;
-    });
-  }, [lastToolIndex, saveProgress]);
-
-  const toggleToolConfigured = useCallback((toolName: string) => {
-    setConfiguredTools(prev => {
-      const updated = new Set(prev);
-      if (updated.has(toolName)) {
-        updated.delete(toolName);
-      } else {
+  const markToolConfigured = useCallback(
+    (toolName: string) => {
+      setConfiguredTools((prev) => {
+        const updated = new Set(prev);
         updated.add(toolName);
-      }
-      saveProgress(updated, lastToolIndex);
-      return updated;
-    });
-  }, [lastToolIndex, saveProgress]);
+        saveProgress(updated, lastToolIndex);
+        return updated;
+      });
+    },
+    [lastToolIndex, saveProgress]
+  );
 
-  const updateLastToolIndex = useCallback((index: number) => {
-    setLastToolIndex(index);
-    saveProgress(configuredTools, index);
-  }, [configuredTools, saveProgress]);
+  const unmarkToolConfigured = useCallback(
+    (toolName: string) => {
+      setConfiguredTools((prev) => {
+        const updated = new Set(prev);
+        updated.delete(toolName);
+        saveProgress(updated, lastToolIndex);
+        return updated;
+      });
+    },
+    [lastToolIndex, saveProgress]
+  );
 
-  const isToolConfigured = useCallback((toolName: string) => {
-    return configuredTools.has(toolName);
-  }, [configuredTools]);
+  const toggleToolConfigured = useCallback(
+    (toolName: string) => {
+      setConfiguredTools((prev) => {
+        const updated = new Set(prev);
+        if (updated.has(toolName)) {
+          updated.delete(toolName);
+        } else {
+          updated.add(toolName);
+        }
+        saveProgress(updated, lastToolIndex);
+        return updated;
+      });
+    },
+    [lastToolIndex, saveProgress]
+  );
+
+  const updateLastToolIndex = useCallback(
+    (index: number) => {
+      setLastToolIndex(index);
+      saveProgress(configuredTools, index);
+    },
+    [configuredTools, saveProgress]
+  );
+
+  const isToolConfigured = useCallback(
+    (toolName: string) => {
+      return configuredTools.has(toolName);
+    },
+    [configuredTools]
+  );
 
   const getConfiguredCount = useCallback(() => {
     return configuredTools.size;
@@ -96,6 +114,6 @@ export function useToolConfigProgress() {
     updateLastToolIndex,
     isToolConfigured,
     getConfiguredCount,
-    resetProgress
+    resetProgress,
   };
 }

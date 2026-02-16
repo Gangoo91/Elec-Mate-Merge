@@ -1,63 +1,93 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2, CheckCheck, Trash2, Bell, Clock, Check, Shield } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  MessageSquare,
+  ArrowLeft,
+  Building2,
+  Briefcase,
+  Heart,
+  Hash,
+  GraduationCap,
+  Send,
+  Loader2,
+  CheckCheck,
+  Trash2,
+  Bell,
+  Clock,
+  Check,
+  Shield,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Hooks
-import { useConversations, useElectricianConversations } from "@/hooks/useConversations";
-import { useMessages, useSendMessage, useMarkAllAsRead, useTypingIndicator } from "@/hooks/useMessages";
-import { useAuth } from "@/contexts/AuthContext";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { toast } from "@/hooks/use-toast";
+import { useConversations, useElectricianConversations } from '@/hooks/useConversations';
+import {
+  useMessages,
+  useSendMessage,
+  useMarkAllAsRead,
+  useTypingIndicator,
+} from '@/hooks/useMessages';
+import { useAuth } from '@/contexts/AuthContext';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { toast } from '@/hooks/use-toast';
 
 // Team chat hooks
-import { useMyTeamChannels, useTeamDMConversations, useTeamChatUnread } from "@/hooks/useTeamChat";
+import { useMyTeamChannels, useTeamDMConversations, useTeamChatUnread } from '@/hooks/useTeamChat';
 
 // College chat hooks
-import { useCollegeConversations } from "@/hooks/useCollegeChat";
+import { useCollegeConversations } from '@/hooks/useCollegeChat';
 
 // Admin messages
-import { useAdminMessages } from "@/hooks/useAdminMessages";
+import { useAdminMessages } from '@/hooks/useAdminMessages';
 
 // Employer components
-import { ConversationList } from "@/components/employer/vacancies/ConversationList";
-import { MessageList } from "@/components/employer/messaging/MessageList";
-import { MessageInput } from "@/components/employer/messaging/MessageInput";
+import { ConversationList } from '@/components/employer/vacancies/ConversationList';
+import { MessageList } from '@/components/employer/messaging/MessageList';
+import { MessageInput } from '@/components/employer/messaging/MessageInput';
 
 // Electrician components
-import { ElectricianConversationList } from "@/components/electrician/messaging/ElectricianConversationList";
+import { ElectricianConversationList } from '@/components/electrician/messaging/ElectricianConversationList';
 
 // Team chat components
-import { TeamChatList, TeamChatView } from "@/components/employer/team-chat";
+import { TeamChatList, TeamChatView } from '@/components/employer/team-chat';
 
 // College chat components
-import { CollegeChatList, CollegeChatView } from "@/components/college/chat";
+import { CollegeChatList, CollegeChatView } from '@/components/college/chat';
 
 // Peer support
-import { peerConversationService, peerMessageService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
-import { usePeerMessages, useSendPeerMessage, useMarkPeerMessagesAsRead } from "@/hooks/usePeerChat";
+import {
+  peerConversationService,
+  peerMessageService,
+  PeerConversation,
+  PeerMessage,
+} from '@/services/peerSupportService';
+import {
+  usePeerMessages,
+  useSendPeerMessage,
+  useMarkPeerMessagesAsRead,
+} from '@/hooks/usePeerChat';
 
 // Notifications
-import { useNotifications } from "@/components/notifications/NotificationProvider";
-import { PeerChatActions } from "@/components/mental-health/peer-support/PeerChatActions";
+import { useNotifications } from '@/components/notifications/NotificationProvider';
+import { PeerChatActions } from '@/components/mental-health/peer-support/PeerChatActions';
 
 // Types
-import type { Conversation, ElectricianConversation } from "@/services/conversationService";
-import { deleteConversation } from "@/services/conversationService";
-import type { TeamChannel, TeamDirectMessage } from "@/services/teamChatService";
-import type { CollegeConversation } from "@/services/collegeChatService";
-import { cn } from "@/lib/utils";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formatDistanceToNow } from "date-fns";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
+import type { Conversation, ElectricianConversation } from '@/services/conversationService';
+import { deleteConversation } from '@/services/conversationService';
+import type { TeamChannel, TeamDirectMessage } from '@/services/teamChatService';
+import type { CollegeConversation } from '@/services/collegeChatService';
+import { cn } from '@/lib/utils';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { formatDistanceToNow } from 'date-fns';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Input } from '@/components/ui/input';
 
 type ActiveConversation = Conversation | ElectricianConversation;
 type ChatMode = 'job' | 'team' | 'college' | 'peer' | 'admin';
@@ -81,9 +111,14 @@ function PeerConversationListItem({
 }) {
   const isSupporter = conversation.supporter?.user_id === currentUserId;
   const otherName = isSupporter
-    ? (conversation.seeker?.full_name?.split(' ')[0] || 'Mate')
-    : (conversation.supporter?.display_name || 'Peer Supporter');
-  const initials = otherName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    ? conversation.seeker?.full_name?.split(' ')[0] || 'Mate'
+    : conversation.supporter?.display_name || 'Peer Supporter';
+  const initials = otherName
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
   const timeAgo = conversation.last_message_at
     ? formatDistanceToNow(new Date(conversation.last_message_at), { addSuffix: false })
     : null;
@@ -104,12 +139,13 @@ function PeerConversationListItem({
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2">
               <h3 className="font-semibold truncate text-foreground">{otherName}</h3>
-              {timeAgo && (
-                <span className="text-xs text-muted-foreground shrink-0">{timeAgo}</span>
-              )}
+              {timeAgo && <span className="text-xs text-muted-foreground shrink-0">{timeAgo}</span>}
             </div>
             <div className="flex items-center gap-2 mt-1">
-              <Badge variant="outline" className="text-xs px-2 py-0 bg-pink-500/10 text-pink-500 border-pink-500/30">
+              <Badge
+                variant="outline"
+                className="text-xs px-2 py-0 bg-pink-500/10 text-pink-500 border-pink-500/30"
+              >
                 <Heart className="h-3 w-3 mr-1" />
                 {isSupporter ? 'Supporting' : 'Peer Support'}
               </Badge>
@@ -144,9 +180,9 @@ function PeerConversationList({ onSelect }: { onSelect: (conv: PeerConversation)
     try {
       await peerMessageService.deleteConversation(conv.id);
       queryClient.invalidateQueries({ queryKey: ['peer-conversations'] });
-      toast({ title: "Conversation deleted" });
+      toast({ title: 'Conversation deleted' });
     } catch (error) {
-      toast({ title: "Failed to delete", variant: "destructive" });
+      toast({ title: 'Failed to delete', variant: 'destructive' });
     }
   };
 
@@ -205,7 +241,7 @@ function PeerChatView({
   currentUserId: string;
   onBack: () => void;
 }) {
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState('');
 
   // Use centralized hooks (shared cache with MessagesDropdown and PeerSupportHub)
   const { data: messages = [], isLoading } = usePeerMessages(conversation.id);
@@ -223,12 +259,12 @@ function PeerChatView({
     sendPeerMessage.mutate(
       { conversationId: conversation.id, content: newMessage.trim() },
       {
-        onSuccess: () => setNewMessage(""),
+        onSuccess: () => setNewMessage(''),
         onError: () => {
           toast({
-            title: "Failed to send",
-            description: "Please try again",
-            variant: "destructive",
+            title: 'Failed to send',
+            description: 'Please try again',
+            variant: 'destructive',
           });
         },
       }
@@ -236,7 +272,7 @@ function PeerChatView({
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -257,31 +293,24 @@ function PeerChatView({
           {messages.length === 0 ? (
             <div className="text-center py-8">
               <Heart className="h-12 w-12 text-pink-500/30 mx-auto mb-3" />
-              <p className="text-muted-foreground">
-                Start the conversation with a message
-              </p>
+              <p className="text-muted-foreground">Start the conversation with a message</p>
             </div>
           ) : (
             messages.map((msg) => {
               const isMine = msg.sender_id === currentUserId;
               return (
-                <div
-                  key={msg.id}
-                  className={cn("flex", isMine ? "justify-end" : "justify-start")}
-                >
+                <div key={msg.id} className={cn('flex', isMine ? 'justify-end' : 'justify-start')}>
                   <div
                     className={cn(
-                      "max-w-[80%] rounded-2xl px-4 py-2",
-                      isMine
-                        ? "bg-pink-500 text-white"
-                        : "bg-muted text-foreground"
+                      'max-w-[80%] rounded-2xl px-4 py-2',
+                      isMine ? 'bg-pink-500 text-white' : 'bg-muted text-foreground'
                     )}
                   >
                     <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                     <p
                       className={cn(
-                        "text-[10px] mt-1",
-                        isMine ? "text-pink-200" : "text-muted-foreground"
+                        'text-[10px] mt-1',
+                        isMine ? 'text-pink-200' : 'text-muted-foreground'
                       )}
                     >
                       {formatDistanceToNow(new Date(msg.created_at), {
@@ -343,7 +372,7 @@ function AdminChatView({
   deleteMessage?: (id: string) => void;
   isDeleting?: boolean;
 }) {
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState('');
   const [messageToDelete, setMessageToDelete] = useState<string | null>(null);
 
   // Safely filter out any malformed messages
@@ -364,24 +393,24 @@ function AdminChatView({
     if (!newMessage.trim() || isSending) return;
 
     try {
-      await sendReply({ message: newMessage.trim(), subject: "Support Request" });
-      setNewMessage("");
+      await sendReply({ message: newMessage.trim(), subject: 'Support Request' });
+      setNewMessage('');
       toast({
-        title: "Message sent",
-        description: "The admin team will respond soon",
+        title: 'Message sent',
+        description: 'The admin team will respond soon',
       });
     } catch (error) {
-      console.error("Failed to send:", error);
+      console.error('Failed to send:', error);
       toast({
-        title: "Failed to send",
-        description: "Please try again",
-        variant: "destructive",
+        title: 'Failed to send',
+        description: 'Please try again',
+        variant: 'destructive',
       });
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -392,7 +421,7 @@ function AdminChatView({
       deleteMessage(msgId);
       setMessageToDelete(null);
       toast({
-        title: "Message deleted",
+        title: 'Message deleted',
       });
     }
   };
@@ -404,12 +433,8 @@ function AdminChatView({
           {safeMessages.length === 0 ? (
             <div className="text-center py-8">
               <Shield className="h-12 w-12 text-red-400/30 mx-auto mb-3" />
-              <p className="text-muted-foreground text-sm mb-2">
-                Need help or have feedback?
-              </p>
-              <p className="text-xs text-muted-foreground/70">
-                Send a message to the admin team
-              </p>
+              <p className="text-muted-foreground text-sm mb-2">Need help or have feedback?</p>
+              <p className="text-xs text-muted-foreground/70">Send a message to the admin team</p>
             </div>
           ) : (
             safeMessages.map((msg) => {
@@ -417,29 +442,35 @@ function AdminChatView({
               return (
                 <div
                   key={msg.id}
-                  className={cn("flex group", isFromUser ? "justify-end" : "justify-start")}
+                  className={cn('flex group', isFromUser ? 'justify-end' : 'justify-start')}
                 >
                   <div className="relative">
                     <div
                       className={cn(
-                        "max-w-[85%] rounded-2xl px-4 py-3",
+                        'max-w-[85%] rounded-2xl px-4 py-3',
                         isFromUser
-                          ? "bg-blue-500 text-white rounded-br-md"
-                          : "bg-muted text-foreground rounded-bl-md"
+                          ? 'bg-blue-500 text-white rounded-br-md'
+                          : 'bg-muted text-foreground rounded-bl-md'
                       )}
                     >
-                      {!isFromUser && msg.subject && msg.subject !== "Reply" && msg.subject !== "Support" && msg.subject !== "Support Request" && (
-                        <p className="text-xs font-semibold mb-1 opacity-70">{msg.subject}</p>
-                      )}
+                      {!isFromUser &&
+                        msg.subject &&
+                        msg.subject !== 'Reply' &&
+                        msg.subject !== 'Support' &&
+                        msg.subject !== 'Support Request' && (
+                          <p className="text-xs font-semibold mb-1 opacity-70">{msg.subject}</p>
+                        )}
                       <p className="text-sm whitespace-pre-wrap">{msg.message}</p>
-                      <div className={cn(
-                        "flex items-center gap-2 mt-1.5",
-                        isFromUser ? "justify-end" : "justify-start"
-                      )}>
+                      <div
+                        className={cn(
+                          'flex items-center gap-2 mt-1.5',
+                          isFromUser ? 'justify-end' : 'justify-start'
+                        )}
+                      >
                         <p
                           className={cn(
-                            "text-[10px]",
-                            isFromUser ? "text-blue-100" : "text-muted-foreground"
+                            'text-[10px]',
+                            isFromUser ? 'text-blue-100' : 'text-muted-foreground'
                           )}
                         >
                           {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
@@ -452,10 +483,10 @@ function AdminChatView({
                         onClick={() => handleDelete(msg.id)}
                         disabled={isDeleting}
                         className={cn(
-                          "absolute -top-2 opacity-0 group-hover:opacity-100 transition-opacity",
-                          "w-6 h-6 rounded-full bg-red-500/90 hover:bg-red-500 flex items-center justify-center",
-                          "text-white shadow-md touch-manipulation",
-                          isFromUser ? "-left-2" : "-right-2"
+                          'absolute -top-2 opacity-0 group-hover:opacity-100 transition-opacity',
+                          'w-6 h-6 rounded-full bg-red-500/90 hover:bg-red-500 flex items-center justify-center',
+                          'text-white shadow-md touch-manipulation',
+                          isFromUser ? '-left-2' : '-right-2'
                         )}
                       >
                         <Trash2 className="h-3 w-3" />
@@ -505,10 +536,13 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
 
   const [activeTab, setActiveTab] = useState<ChatMode>('job');
   const [selectedConversation, setSelectedConversation] = useState<ActiveConversation | null>(null);
-  const [selectedPeerConversation, setSelectedPeerConversation] = useState<PeerConversation | null>(null);
+  const [selectedPeerConversation, setSelectedPeerConversation] = useState<PeerConversation | null>(
+    null
+  );
   const [selectedTeamChannel, setSelectedTeamChannel] = useState<TeamChannel | null>(null);
   const [selectedTeamDM, setSelectedTeamDM] = useState<TeamDirectMessage | null>(null);
-  const [selectedCollegeConversation, setSelectedCollegeConversation] = useState<CollegeConversation | null>(null);
+  const [selectedCollegeConversation, setSelectedCollegeConversation] =
+    useState<CollegeConversation | null>(null);
   const [selectedAdminMessage, setSelectedAdminMessage] = useState<any>(null);
   const [peerMessages, setPeerMessages] = useState<PeerMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
@@ -536,8 +570,16 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const employerId = isEmployerContext ? user?.id : undefined;
 
   // Conversations data
-  const { data: employerConversations = [], isLoading: employerLoading, totalUnread: employerUnread } = useConversations();
-  const { data: electricianConversations = [], isLoading: electricianLoading, totalUnread: electricianUnread } = useElectricianConversations(elecIdProfile?.id);
+  const {
+    data: employerConversations = [],
+    isLoading: employerLoading,
+    totalUnread: employerUnread,
+  } = useConversations();
+  const {
+    data: electricianConversations = [],
+    isLoading: electricianLoading,
+    totalUnread: electricianUnread,
+  } = useElectricianConversations(elecIdProfile?.id);
   const { data: peerConversations = [] } = useQuery({
     queryKey: ['peer-conversations'],
     queryFn: () => peerConversationService.getMyConversations(),
@@ -545,7 +587,8 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const teamChatUnread = useTeamChatUnread(employerId);
 
   // College chat - only fetch when in college context to avoid 400 errors
-  const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations(isCollegeContext);
+  const { data: collegeConversations = [], totalUnread: collegeUnread } =
+    useCollegeConversations(isCollegeContext);
 
   // Admin messages
   const {
@@ -570,7 +613,9 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const totalUnread = jobUnread + teamChatUnread + collegeUnread + peerUnread + adminUnread;
 
   // Messages for selected job conversation
-  const { data: messages = [], isLoading: messagesLoading } = useMessages(selectedConversation?.id || '');
+  const { data: messages = [], isLoading: messagesLoading } = useMessages(
+    selectedConversation?.id || ''
+  );
   const sendMessage = useSendMessage();
   const markAllAsRead = useMarkAllAsRead();
 
@@ -582,12 +627,12 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
       if (success) {
         queryClient.invalidateQueries({ queryKey: ['conversations'] });
         queryClient.invalidateQueries({ queryKey: ['electrician-conversations'] });
-        toast({ title: "Conversation deleted" });
+        toast({ title: 'Conversation deleted' });
       } else {
         throw new Error('Delete failed');
       }
     } catch (error) {
-      toast({ title: "Failed to delete", variant: "destructive" });
+      toast({ title: 'Failed to delete', variant: 'destructive' });
     }
   };
 
@@ -631,11 +676,15 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
     if (!selectedConversation || !user) return;
 
     // For electrician: check if they can reply
-    if (!isEmployerContext && 'electrician_can_reply' in selectedConversation && !selectedConversation.electrician_can_reply) {
+    if (
+      !isEmployerContext &&
+      'electrician_can_reply' in selectedConversation &&
+      !selectedConversation.electrician_can_reply
+    ) {
       toast({
-        title: "Cannot Reply Yet",
-        description: "Apply to a vacancy from this employer to unlock messaging.",
-        variant: "destructive",
+        title: 'Cannot Reply Yet',
+        description: 'Apply to a vacancy from this employer to unlock messaging.',
+        variant: 'destructive',
       });
       return;
     }
@@ -651,26 +700,32 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
       });
     } catch (error) {
       toast({
-        title: "Failed to Send",
+        title: 'Failed to Send',
         description: "Your message couldn't be sent. Please try again.",
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setIsSending(false);
     }
   };
 
-  const isInChat = selectedConversation || selectedPeerConversation || selectedTeamChannel || selectedTeamDM || selectedCollegeConversation || selectedAdminMessage;
+  const isInChat =
+    selectedConversation ||
+    selectedPeerConversation ||
+    selectedTeamChannel ||
+    selectedTeamDM ||
+    selectedCollegeConversation ||
+    selectedAdminMessage;
   const isInTeamChat = selectedTeamChannel || selectedTeamDM;
   const isInCollegeChat = !!selectedCollegeConversation;
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
-        side={isMobile ? "bottom" : "right"}
+        side={isMobile ? 'bottom' : 'right'}
         className={cn(
-          "p-0 flex flex-col bg-background",
-          isMobile ? "h-[95vh] rounded-t-2xl" : "w-[420px] max-w-[420px]"
+          'p-0 flex flex-col bg-background',
+          isMobile ? 'h-[95vh] rounded-t-2xl' : 'w-[420px] max-w-[420px]'
         )}
       >
         {/* List View */}
@@ -681,9 +736,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                 <MessageSquare className="h-5 w-5 text-elec-yellow" />
                 Messages
                 {totalUnread > 0 && (
-                  <Badge className="bg-elec-yellow text-black">
-                    {totalUnread}
-                  </Badge>
+                  <Badge className="bg-elec-yellow text-black">{totalUnread}</Badge>
                 )}
                 {totalUnread > 0 && (
                   <Button
@@ -692,9 +745,12 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     onClick={async () => {
                       // Mark all job conversations as read
                       jobConversations.forEach((conv) => {
-                        const unreadCount = 'unread_employer' in conv
-                          ? (isEmployerContext ? conv.unread_employer : conv.unread_electrician)
-                          : 0;
+                        const unreadCount =
+                          'unread_employer' in conv
+                            ? isEmployerContext
+                              ? conv.unread_employer
+                              : conv.unread_electrician
+                            : 0;
                         if (unreadCount > 0) {
                           markAllAsRead.mutate({
                             conversationId: conv.id,
@@ -719,8 +775,8 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                       }
 
                       toast({
-                        title: "All cleared",
-                        description: "All messages marked as read",
+                        title: 'All cleared',
+                        description: 'All messages marked as read',
                       });
                     }}
                     className="ml-auto h-8 text-xs text-white/70 hover:text-white"
@@ -733,10 +789,17 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
             </SheetHeader>
 
             {/* Tabs for different message types */}
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as ChatMode)} className="flex-1 flex flex-col overflow-hidden">
+            <Tabs
+              value={activeTab}
+              onValueChange={(v) => setActiveTab(v as ChatMode)}
+              className="flex-1 flex flex-col overflow-hidden"
+            >
               <TabsList className="mx-4 mt-2 grid grid-cols-3 shrink-0 h-12 p-1 bg-muted/50 rounded-xl">
                 {/* Jobs Tab */}
-                <TabsTrigger value="job" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <TabsTrigger
+                  value="job"
+                  className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
                   <Briefcase className="h-4 w-4" />
                   <span className="text-xs font-medium">Jobs</span>
                   {jobUnread > 0 && (
@@ -748,7 +811,10 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
 
                 {/* Mates Tab (for non-college) / Team Tab (for employer) / College Tab */}
                 {isEmployerContext ? (
-                  <TabsTrigger value="team" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                  <TabsTrigger
+                    value="team"
+                    className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                  >
                     <Hash className="h-4 w-4" />
                     <span className="text-xs font-medium">Team</span>
                     {teamChatUnread > 0 && (
@@ -758,7 +824,10 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     )}
                   </TabsTrigger>
                 ) : isCollegeContext ? (
-                  <TabsTrigger value="college" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                  <TabsTrigger
+                    value="college"
+                    className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                  >
                     <GraduationCap className="h-4 w-4" />
                     <span className="text-xs font-medium">College</span>
                     {collegeUnread > 0 && (
@@ -768,7 +837,10 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     )}
                   </TabsTrigger>
                 ) : (
-                  <TabsTrigger value="peer" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                  <TabsTrigger
+                    value="peer"
+                    className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                  >
                     <Heart className="h-4 w-4" />
                     <span className="text-xs font-medium">Mates</span>
                     {peerUnread > 0 && (
@@ -780,7 +852,10 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                 )}
 
                 {/* Admin Tab - Always show */}
-                <TabsTrigger value="admin" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <TabsTrigger
+                  value="admin"
+                  className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
                   <Shield className="h-4 w-4" />
                   <span className="text-xs font-medium">Admin</span>
                   {adminUnread > 0 && (
@@ -853,7 +928,9 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                           variant="outline"
                           size="sm"
                           className="mt-4 h-10 touch-manipulation border-red-500/30 text-red-400 hover:bg-red-500/10"
-                          onClick={() => setSelectedAdminMessage({ id: 'new', subject: 'New Message' })}
+                          onClick={() =>
+                            setSelectedAdminMessage({ id: 'new', subject: 'New Message' })
+                          }
                         >
                           <Send className="h-4 w-4 mr-2" />
                           Message Admin
@@ -867,7 +944,9 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                             variant="outline"
                             size="sm"
                             className="h-9 touch-manipulation text-xs"
-                            onClick={() => setSelectedAdminMessage({ id: 'new', subject: 'New Message' })}
+                            onClick={() =>
+                              setSelectedAdminMessage({ id: 'new', subject: 'New Message' })
+                            }
                           >
                             <Send className="h-3.5 w-3.5 mr-1.5" />
                             New Message
@@ -879,7 +958,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                             onClick={() => {
                               if (confirm('Delete all messages? This cannot be undone.')) {
                                 deleteAllAdminMessages();
-                                toast({ title: "All messages deleted" });
+                                toast({ title: 'All messages deleted' });
                               }
                             }}
                             disabled={isDeletingAdmin}
@@ -895,12 +974,12 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                             <div
                               key={msg.id}
                               className={cn(
-                                "relative group flex items-start gap-3 p-4 rounded-xl text-left transition-all",
+                                'relative group flex items-start gap-3 p-4 rounded-xl text-left transition-all',
                                 isUnread
-                                  ? "bg-elec-yellow/10 border border-elec-yellow/20"
+                                  ? 'bg-elec-yellow/10 border border-elec-yellow/20'
                                   : isFromUser
-                                  ? "bg-blue-500/5 border border-blue-500/10"
-                                  : "bg-muted/30 border border-transparent"
+                                    ? 'bg-blue-500/5 border border-blue-500/10'
+                                    : 'bg-muted/30 border border-transparent'
                               )}
                             >
                               {/* Click area for opening chat */}
@@ -915,19 +994,25 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                               />
 
                               {/* Icon */}
-                              <div className={cn(
-                                "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 relative z-10",
-                                isFromUser
-                                  ? "bg-blue-500/20"
-                                  : isUnread ? "bg-red-500/20" : "bg-muted"
-                              )}>
+                              <div
+                                className={cn(
+                                  'w-10 h-10 rounded-xl flex items-center justify-center shrink-0 relative z-10',
+                                  isFromUser
+                                    ? 'bg-blue-500/20'
+                                    : isUnread
+                                      ? 'bg-red-500/20'
+                                      : 'bg-muted'
+                                )}
+                              >
                                 {isFromUser ? (
                                   <Send className="h-5 w-5 text-blue-400" />
                                 ) : (
-                                  <Shield className={cn(
-                                    "h-5 w-5",
-                                    isUnread ? "text-red-400" : "text-muted-foreground"
-                                  )} />
+                                  <Shield
+                                    className={cn(
+                                      'h-5 w-5',
+                                      isUnread ? 'text-red-400' : 'text-muted-foreground'
+                                    )}
+                                  />
                                 )}
                               </div>
 
@@ -935,14 +1020,21 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                               <div className="flex-1 min-w-0 relative z-10 pointer-events-none">
                                 <div className="flex items-start justify-between gap-2">
                                   <div className="flex items-center gap-2">
-                                    <p className={cn(
-                                      "text-sm leading-tight",
-                                      isUnread ? "font-semibold text-foreground" : "text-foreground/80"
-                                    )}>
-                                      {isFromUser ? "You" : "Admin"}
+                                    <p
+                                      className={cn(
+                                        'text-sm leading-tight',
+                                        isUnread
+                                          ? 'font-semibold text-foreground'
+                                          : 'text-foreground/80'
+                                      )}
+                                    >
+                                      {isFromUser ? 'You' : 'Admin'}
                                     </p>
                                     {isFromUser && (
-                                      <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4 bg-blue-500/10 text-blue-400 border-blue-500/20">
+                                      <Badge
+                                        variant="outline"
+                                        className="text-[9px] px-1.5 py-0 h-4 bg-blue-500/10 text-blue-400 border-blue-500/20"
+                                      >
                                         Sent
                                       </Badge>
                                     )}
@@ -955,7 +1047,9 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                                   {msg.message}
                                 </p>
                                 <p className="text-[10px] text-muted-foreground/60 mt-2">
-                                  {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
+                                  {formatDistanceToNow(new Date(msg.created_at), {
+                                    addSuffix: true,
+                                  })}
                                 </p>
                               </div>
 
@@ -989,15 +1083,17 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
               </Button>
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-foreground truncate">
-                  {selectedConversation && ('company_name' in selectedConversation ? selectedConversation.company_name : selectedConversation.vacancy_title)}
+                  {selectedConversation &&
+                    ('company_name' in selectedConversation
+                      ? selectedConversation.company_name
+                      : selectedConversation.vacancy_title)}
                   {selectedTeamChannel && `#${selectedTeamChannel.name}`}
                   {selectedTeamDM && 'Direct Message'}
                   {selectedCollegeConversation && selectedCollegeConversation.title}
-                  {selectedPeerConversation && (
-                    selectedPeerConversation.supporter?.user_id === user?.id
-                      ? (selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate')
-                      : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
-                  )}
+                  {selectedPeerConversation &&
+                    (selectedPeerConversation.supporter?.user_id === user?.id
+                      ? selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate'
+                      : selectedPeerConversation.supporter?.display_name || 'Peer Supporter')}
                   {selectedAdminMessage && 'Admin Support'}
                 </h3>
               </div>
@@ -1007,12 +1103,12 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   otherUserId={
                     selectedPeerConversation.supporter?.user_id === user?.id
                       ? selectedPeerConversation.seeker_id
-                      : (selectedPeerConversation.supporter?.user_id || '')
+                      : selectedPeerConversation.supporter?.user_id || ''
                   }
                   otherUserName={
                     selectedPeerConversation.supporter?.user_id === user?.id
-                      ? (selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate')
-                      : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
+                      ? selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate'
+                      : selectedPeerConversation.supporter?.display_name || 'Peer Supporter'
                   }
                   conversationId={selectedPeerConversation.id}
                   onBlocked={() => {
@@ -1052,7 +1148,11 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     <MessageInput
                       onSend={handleSendJobMessage}
                       isSending={isSending}
-                      disabled={!isEmployerContext && 'electrician_can_reply' in selectedConversation && !selectedConversation.electrician_can_reply}
+                      disabled={
+                        !isEmployerContext &&
+                        'electrician_can_reply' in selectedConversation &&
+                        !selectedConversation.electrician_can_reply
+                      }
                     />
                   </div>
                 </div>

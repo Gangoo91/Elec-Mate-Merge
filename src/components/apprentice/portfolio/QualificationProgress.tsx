@@ -8,7 +8,17 @@
  */
 
 import { useState, useEffect, useMemo } from 'react';
-import { Target, TrendingUp, AlertTriangle, ChevronDown, ChevronUp, ChevronRight, BookOpen, CheckCircle2, Circle } from 'lucide-react';
+import {
+  Target,
+  TrendingUp,
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp,
+  ChevronRight,
+  BookOpen,
+  CheckCircle2,
+  Circle,
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface QualificationRequirement {
@@ -60,7 +70,9 @@ export function QualificationProgress({
       try {
         const { data, error } = await supabase
           .from('qualification_requirements')
-          .select('id, qualification_code, unit_code, unit_title, lo_number, lo_text, ac_code, ac_text')
+          .select(
+            'id, qualification_code, unit_code, unit_title, lo_number, lo_text, ac_code, ac_text'
+          )
           .eq('qualification_code', qualificationCode!)
           .order('unit_code', { ascending: true })
           .order('lo_number', { ascending: true })
@@ -136,7 +148,10 @@ export function QualificationProgress({
 
   // Group requirements by unit → LO for accordion display
   const unitLOGroups = useMemo(() => {
-    const result: Map<string, { loNumber: number | null; loText: string; acs: QualificationRequirement[] }[]> = new Map();
+    const result: Map<
+      string,
+      { loNumber: number | null; loText: string; acs: QualificationRequirement[] }[]
+    > = new Map();
 
     for (const req of requirements) {
       if (!result.has(req.unit_code)) {
@@ -240,135 +255,143 @@ export function QualificationProgress({
           )}
         </button>
 
-        {showBreakdown && <div className="divide-y divide-border max-h-[60vh] overflow-y-auto overscroll-contain border-t border-border">
-          {unitProgress.map((unit) => {
-            const isExpanded = expandedUnits.has(unit.unitCode);
-            const loGroups = unitLOGroups.get(unit.unitCode) || [];
+        {showBreakdown && (
+          <div className="divide-y divide-border max-h-[60vh] overflow-y-auto overscroll-contain border-t border-border">
+            {unitProgress.map((unit) => {
+              const isExpanded = expandedUnits.has(unit.unitCode);
+              const loGroups = unitLOGroups.get(unit.unitCode) || [];
 
-            return (
-              <div key={unit.unitCode}>
-                {/* Unit header — clickable */}
-                <button
-                  onClick={() => {
-                    setExpandedUnits((prev) => {
-                      const next = new Set(prev);
-                      if (next.has(unit.unitCode)) {
-                        next.delete(unit.unitCode);
-                      } else {
-                        next.add(unit.unitCode);
-                      }
-                      return next;
-                    });
-                  }}
-                  className="w-full px-4 py-3 touch-manipulation active:bg-card transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-1.5">
-                    <div className="flex items-center gap-2 flex-1 min-w-0 mr-3">
-                      {isExpanded ? (
-                        <ChevronDown className="h-3.5 w-3.5 text-white flex-shrink-0" />
-                      ) : (
-                        <ChevronRight className="h-3.5 w-3.5 text-white flex-shrink-0" />
-                      )}
-                      <div className="flex-1 min-w-0 text-left">
-                        <span className="text-[10px] font-bold text-elec-yellow">
-                          Unit {unit.unitCode}
-                        </span>
-                        <p className="text-xs text-white truncate">{unit.unitTitle}</p>
-                      </div>
-                    </div>
-                    <span
-                      className={`text-xs font-medium flex-shrink-0 ${textColour(unit.percentage)}`}
-                    >
-                      {unit.evidencedACs}/{unit.totalACs}
-                    </span>
-                  </div>
-
-                  <div className="h-1.5 rounded-full bg-muted overflow-hidden" style={{ marginLeft: '22px' }}>
-                    <div
-                      className={`h-full rounded-full transition-all duration-500 ${progressBarColour(unit.percentage)}`}
-                      style={{ width: `${unit.percentage}%` }}
-                    />
-                  </div>
-                </button>
-
-                {/* Expanded: LO accordion */}
-                {isExpanded && loGroups.length > 0 && (
-                  <div className="border-t border-border">
-                    {loGroups.map((lo) => {
-                      const loKey = `${unit.unitCode}-${lo.loNumber}`;
-                      const loExpanded = expandedLOs.has(loKey);
-
-                      return (
-                        <div key={loKey} className="border-b border-border last:border-b-0">
-                          {/* LO header — clickable */}
-                          <button
-                            onClick={() => {
-                              setExpandedLOs((prev) => {
-                                const next = new Set(prev);
-                                if (next.has(loKey)) {
-                                  next.delete(loKey);
-                                } else {
-                                  next.add(loKey);
-                                }
-                                return next;
-                              });
-                            }}
-                            className="w-full flex items-start gap-2 px-4 py-2.5 touch-manipulation active:bg-muted transition-colors min-h-[44px]"
-                            style={{ paddingLeft: '36px' }}
-                          >
-                            {loExpanded ? (
-                              <ChevronDown className="h-3 w-3 text-white mt-1 flex-shrink-0" />
-                            ) : (
-                              <ChevronRight className="h-3 w-3 text-white mt-1 flex-shrink-0" />
-                            )}
-                            <div className="flex-1 text-left">
-                              {lo.loNumber != null && (
-                                <span className="text-[10px] font-semibold text-elec-yellow uppercase tracking-wider">
-                                  LO{lo.loNumber}
-                                </span>
-                              )}
-                              <p className="text-[11px] text-white leading-relaxed">
-                                {lo.loText}
-                              </p>
-                            </div>
-                          </button>
-
-                          {/* ACs under this LO */}
-                          {loExpanded && (
-                            <div className="pb-2.5 space-y-1" style={{ paddingLeft: '56px', paddingRight: '16px' }}>
-                              {lo.acs.map((ac) => {
-                                const fullRef = `${ac.unit_code}.${ac.ac_code}`;
-                                const isEvidenced =
-                                  evidencedACs.has(fullRef) || evidencedACs.has(ac.ac_code);
-                                return (
-                                  <div key={ac.id} className="flex items-start gap-2">
-                                    {isEvidenced ? (
-                                      <CheckCircle2 className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                                    ) : (
-                                      <Circle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
-                                    )}
-                                    <p
-                                      className={`text-[11px] leading-relaxed ${
-                                        isEvidenced ? 'text-green-400' : 'text-white'
-                                      }`}
-                                    >
-                                      <span className="font-semibold">{ac.ac_code}</span>{' '}
-                                      {ac.ac_text}
-                                    </p>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          )}
+              return (
+                <div key={unit.unitCode}>
+                  {/* Unit header — clickable */}
+                  <button
+                    onClick={() => {
+                      setExpandedUnits((prev) => {
+                        const next = new Set(prev);
+                        if (next.has(unit.unitCode)) {
+                          next.delete(unit.unitCode);
+                        } else {
+                          next.add(unit.unitCode);
+                        }
+                        return next;
+                      });
+                    }}
+                    className="w-full px-4 py-3 touch-manipulation active:bg-card transition-colors"
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2 flex-1 min-w-0 mr-3">
+                        {isExpanded ? (
+                          <ChevronDown className="h-3.5 w-3.5 text-white flex-shrink-0" />
+                        ) : (
+                          <ChevronRight className="h-3.5 w-3.5 text-white flex-shrink-0" />
+                        )}
+                        <div className="flex-1 min-w-0 text-left">
+                          <span className="text-[10px] font-bold text-elec-yellow">
+                            Unit {unit.unitCode}
+                          </span>
+                          <p className="text-xs text-white truncate">{unit.unitTitle}</p>
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>}
+                      </div>
+                      <span
+                        className={`text-xs font-medium flex-shrink-0 ${textColour(unit.percentage)}`}
+                      >
+                        {unit.evidencedACs}/{unit.totalACs}
+                      </span>
+                    </div>
+
+                    <div
+                      className="h-1.5 rounded-full bg-muted overflow-hidden"
+                      style={{ marginLeft: '22px' }}
+                    >
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${progressBarColour(unit.percentage)}`}
+                        style={{ width: `${unit.percentage}%` }}
+                      />
+                    </div>
+                  </button>
+
+                  {/* Expanded: LO accordion */}
+                  {isExpanded && loGroups.length > 0 && (
+                    <div className="border-t border-border">
+                      {loGroups.map((lo) => {
+                        const loKey = `${unit.unitCode}-${lo.loNumber}`;
+                        const loExpanded = expandedLOs.has(loKey);
+
+                        return (
+                          <div key={loKey} className="border-b border-border last:border-b-0">
+                            {/* LO header — clickable */}
+                            <button
+                              onClick={() => {
+                                setExpandedLOs((prev) => {
+                                  const next = new Set(prev);
+                                  if (next.has(loKey)) {
+                                    next.delete(loKey);
+                                  } else {
+                                    next.add(loKey);
+                                  }
+                                  return next;
+                                });
+                              }}
+                              className="w-full flex items-start gap-2 px-4 py-2.5 touch-manipulation active:bg-muted transition-colors min-h-[44px]"
+                              style={{ paddingLeft: '36px' }}
+                            >
+                              {loExpanded ? (
+                                <ChevronDown className="h-3 w-3 text-white mt-1 flex-shrink-0" />
+                              ) : (
+                                <ChevronRight className="h-3 w-3 text-white mt-1 flex-shrink-0" />
+                              )}
+                              <div className="flex-1 text-left">
+                                {lo.loNumber != null && (
+                                  <span className="text-[10px] font-semibold text-elec-yellow uppercase tracking-wider">
+                                    LO{lo.loNumber}
+                                  </span>
+                                )}
+                                <p className="text-[11px] text-white leading-relaxed">
+                                  {lo.loText}
+                                </p>
+                              </div>
+                            </button>
+
+                            {/* ACs under this LO */}
+                            {loExpanded && (
+                              <div
+                                className="pb-2.5 space-y-1"
+                                style={{ paddingLeft: '56px', paddingRight: '16px' }}
+                              >
+                                {lo.acs.map((ac) => {
+                                  const fullRef = `${ac.unit_code}.${ac.ac_code}`;
+                                  const isEvidenced =
+                                    evidencedACs.has(fullRef) || evidencedACs.has(ac.ac_code);
+                                  return (
+                                    <div key={ac.id} className="flex items-start gap-2">
+                                      {isEvidenced ? (
+                                        <CheckCircle2 className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
+                                      ) : (
+                                        <Circle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
+                                      )}
+                                      <p
+                                        className={`text-[11px] leading-relaxed ${
+                                          isEvidenced ? 'text-green-400' : 'text-white'
+                                        }`}
+                                      >
+                                        <span className="font-semibold">{ac.ac_code}</span>{' '}
+                                        {ac.ac_text}
+                                      </p>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Gap analysis */}

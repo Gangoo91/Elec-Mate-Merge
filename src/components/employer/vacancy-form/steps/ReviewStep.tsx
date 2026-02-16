@@ -1,11 +1,11 @@
-import { useFormContext } from "react-hook-form";
-import { Calendar, Save, Send, Eye, AlertCircle, FileText } from "lucide-react";
-import { IOSInput } from "@/components/ui/ios-input";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { VacancyPreviewCard } from "../VacancyPreviewCard";
-import type { VacancyFormData } from "../schema";
-import { useEmployer } from "@/contexts/EmployerContext";
+import { useFormContext } from 'react-hook-form';
+import { Calendar, Save, Send, Eye, AlertCircle, FileText } from 'lucide-react';
+import { IOSInput } from '@/components/ui/ios-input';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { VacancyPreviewCard } from '../VacancyPreviewCard';
+import type { VacancyFormData } from '../schema';
+import { useEmployer } from '@/contexts/EmployerContext';
 
 interface ReviewStepProps {
   onPublish: () => void;
@@ -32,19 +32,19 @@ export function ReviewStep({
   // Calculate minimum closing date (tomorrow)
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  const minDate = tomorrow.toISOString().split("T")[0];
+  const minDate = tomorrow.toISOString().split('T')[0];
 
   // Validation summary
   const validationIssues: string[] = [];
-  if (!formData.title) validationIssues.push("Job title is required");
-  if (!formData.location) validationIssues.push("Location is required");
+  if (!formData.title) validationIssues.push('Job title is required');
+  if (!formData.location) validationIssues.push('Location is required');
   if (!formData.description || formData.description.length < 50) {
-    validationIssues.push("Description must be at least 50 characters");
+    validationIssues.push('Description must be at least 50 characters');
   }
   if (!formData.requirements || formData.requirements.length === 0) {
-    validationIssues.push("At least one requirement is needed");
+    validationIssues.push('At least one requirement is needed');
   }
-  if (!formData.closingDate) validationIssues.push("Closing date is required");
+  if (!formData.closingDate) validationIssues.push('Closing date is required');
 
   return (
     <div className="space-y-6">
@@ -57,7 +57,7 @@ export function ReviewStep({
 
         <VacancyPreviewCard
           data={formData}
-          companyName={employer?.company_name || "Your Company"}
+          companyName={employer?.company_name || 'Your Company'}
         />
       </div>
 
@@ -70,7 +70,7 @@ export function ReviewStep({
         hint="The job listing will automatically close on this date"
         min={minDate}
         className="[color-scheme:dark]"
-        {...register("closingDate")}
+        {...register('closingDate')}
       />
 
       {/* Validation Summary */}
@@ -96,8 +96,8 @@ export function ReviewStep({
       {validationIssues.length === 0 && (
         <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
           <p className="text-sm text-green-400">
-            <strong>Ready to publish!</strong> Your job listing looks complete.
-            Hit publish to make it live.
+            <strong>Ready to publish!</strong> Your job listing looks complete. Hit publish to make
+            it live.
           </p>
         </div>
       )}
@@ -110,13 +110,13 @@ export function ReviewStep({
           onClick={onPublish}
           disabled={validationIssues.length > 0 || isSubmitting}
           className={cn(
-            "w-full h-14 text-base font-semibold",
-            "bg-elec-yellow text-black hover:bg-elec-yellow/90",
-            "disabled:opacity-50 disabled:cursor-not-allowed"
+            'w-full h-14 text-base font-semibold',
+            'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+            'disabled:opacity-50 disabled:cursor-not-allowed'
           )}
         >
           <Send className="h-5 w-5 mr-2" />
-          {isSubmitting ? "Publishing..." : "Publish Job Listing"}
+          {isSubmitting ? 'Publishing...' : 'Publish Job Listing'}
         </Button>
 
         {/* Secondary actions */}
@@ -126,10 +126,7 @@ export function ReviewStep({
             variant="outline"
             onClick={onSaveDraft}
             disabled={isSubmitting}
-            className={cn(
-              "h-12 text-sm",
-              "border-white/20 text-white/80 hover:bg-white/10"
-            )}
+            className={cn('h-12 text-sm', 'border-white/20 text-white/80 hover:bg-white/10')}
           >
             <Save className="h-4 w-4 mr-2" />
             Save as Draft
@@ -140,10 +137,7 @@ export function ReviewStep({
             variant="outline"
             onClick={onSaveAsTemplate}
             disabled={isSubmitting || !formData.title}
-            className={cn(
-              "h-12 text-sm",
-              "border-white/20 text-white/80 hover:bg-white/10"
-            )}
+            className={cn('h-12 text-sm', 'border-white/20 text-white/80 hover:bg-white/10')}
           >
             <FileText className="h-4 w-4 mr-2" />
             Save Template
@@ -154,9 +148,9 @@ export function ReviewStep({
       {/* Info tip */}
       <div className="p-4 rounded-xl bg-white/5 border border-white/10">
         <p className="text-sm text-white/60">
-          <strong className="text-white/80">After publishing:</strong> Your job
-          will appear in the Jobs section where qualified electricians can view
-          and apply. You'll receive notifications when candidates apply.
+          <strong className="text-white/80">After publishing:</strong> Your job will appear in the
+          Jobs section where qualified electricians can view and apply. You'll receive notifications
+          when candidates apply.
         </p>
       </div>
     </div>

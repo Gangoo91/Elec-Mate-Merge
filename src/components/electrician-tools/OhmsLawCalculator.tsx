@@ -1,22 +1,29 @@
-
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, RotateCcw, Zap } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
-import { CalculatorValidator, ValidationResult } from "@/services/calculatorValidation";
-import ValidationIndicator from "@/components/apprentice/calculators/ValidationIndicator";
-import CalculationReport from "@/components/apprentice/calculators/CalculationReport";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Calculator, RotateCcw, Zap } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import { CalculatorValidator, ValidationResult } from '@/services/calculatorValidation';
+import ValidationIndicator from '@/components/apprentice/calculators/ValidationIndicator';
+import CalculationReport from '@/components/apprentice/calculators/CalculationReport';
 
 const OhmsLawCalculator = () => {
-  const [voltage, setVoltage] = useState<string>("");
-  const [current, setCurrent] = useState<string>("");
-  const [resistance, setResistance] = useState<string>("");
-  const [calculationType, setCalculationType] = useState<"voltage" | "current" | "resistance">("voltage");
-  const [result, setResult] = useState<string>("");
+  const [voltage, setVoltage] = useState<string>('');
+  const [current, setCurrent] = useState<string>('');
+  const [resistance, setResistance] = useState<string>('');
+  const [calculationType, setCalculationType] = useState<'voltage' | 'current' | 'resistance'>(
+    'voltage'
+  );
+  const [result, setResult] = useState<string>('');
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [calculationInputs, setCalculationInputs] = useState<any>({});
   const [calculationResults, setCalculationResults] = useState<any>({});
@@ -31,12 +38,12 @@ const OhmsLawCalculator = () => {
     let validationResult: ValidationResult;
 
     try {
-      if (calculationType === "voltage") {
+      if (calculationType === 'voltage') {
         if (!current || !resistance) {
           toast({
-            title: "Input Required",
-            description: "Please enter current and resistance values to calculate voltage.",
-            variant: "destructive",
+            title: 'Input Required',
+            description: 'Please enter current and resistance values to calculate voltage.',
+            variant: 'destructive',
           });
           return;
         }
@@ -45,12 +52,12 @@ const OhmsLawCalculator = () => {
         setResult(`${calculatedValue.toFixed(2)} V`);
         setCalculationInputs({ current: i, resistance: r });
         setCalculationResults({ voltage: calculatedValue, power: calculatedValue * i });
-      } else if (calculationType === "current") {
+      } else if (calculationType === 'current') {
         if (!voltage || !resistance) {
           toast({
-            title: "Input Required",
-            description: "Please enter voltage and resistance values to calculate current.",
-            variant: "destructive",
+            title: 'Input Required',
+            description: 'Please enter voltage and resistance values to calculate current.',
+            variant: 'destructive',
           });
           return;
         }
@@ -62,9 +69,9 @@ const OhmsLawCalculator = () => {
       } else {
         if (!voltage || !current) {
           toast({
-            title: "Input Required",
-            description: "Please enter voltage and current values to calculate resistance.",
-            variant: "destructive",
+            title: 'Input Required',
+            description: 'Please enter voltage and current values to calculate resistance.',
+            variant: 'destructive',
           });
           return;
         }
@@ -79,31 +86,31 @@ const OhmsLawCalculator = () => {
 
       if (validationResult.isValid && validationResult.warnings.length === 0) {
         toast({
-          title: "Calculation Complete",
+          title: 'Calculation Complete',
           description: `${calculationType.charAt(0).toUpperCase() + calculationType.slice(1)} calculated successfully - BS 7671 compliant`,
-          variant: "default",
+          variant: 'default',
         });
       } else if (validationResult.warnings.length > 0) {
         toast({
-          title: "Calculation Complete with Warnings",
-          description: "Please review validation warnings below",
-          variant: "default",
+          title: 'Calculation Complete with Warnings',
+          description: 'Please review validation warnings below',
+          variant: 'default',
         });
       }
     } catch (error) {
       toast({
-        title: "Calculation Error",
-        description: "Please check your input values.",
-        variant: "destructive",
+        title: 'Calculation Error',
+        description: 'Please check your input values.',
+        variant: 'destructive',
       });
     }
   };
 
   const resetCalculator = () => {
-    setVoltage("");
-    setCurrent("");
-    setResistance("");
-    setResult("");
+    setVoltage('');
+    setCurrent('');
+    setResistance('');
+    setResult('');
     setValidation(null);
     setCalculationInputs({});
     setCalculationResults({});
@@ -118,7 +125,8 @@ const OhmsLawCalculator = () => {
             <CardTitle>Ohm's Law Calculator</CardTitle>
           </div>
           <CardDescription>
-            Calculate voltage, current, or resistance using Ohm's Law (V = I × R) with BS 7671 validation.
+            Calculate voltage, current, or resistance using Ohm's Law (V = I × R) with BS 7671
+            validation.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -126,7 +134,12 @@ const OhmsLawCalculator = () => {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="calculation-type">Calculate</Label>
-                <Select value={calculationType} onValueChange={(value: "voltage" | "current" | "resistance") => setCalculationType(value)}>
+                <Select
+                  value={calculationType}
+                  onValueChange={(value: 'voltage' | 'current' | 'resistance') =>
+                    setCalculationType(value)
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -138,7 +151,7 @@ const OhmsLawCalculator = () => {
                 </Select>
               </div>
 
-              {calculationType !== "voltage" && (
+              {calculationType !== 'voltage' && (
                 <div>
                   <Label htmlFor="voltage">Voltage (V)</Label>
                   <Input
@@ -151,7 +164,7 @@ const OhmsLawCalculator = () => {
                 </div>
               )}
 
-              {calculationType !== "current" && (
+              {calculationType !== 'current' && (
                 <div>
                   <Label htmlFor="current">Current (A)</Label>
                   <Input
@@ -164,7 +177,7 @@ const OhmsLawCalculator = () => {
                 </div>
               )}
 
-              {calculationType !== "resistance" && (
+              {calculationType !== 'resistance' && (
                 <div>
                   <Label htmlFor="resistance">Resistance (Ω)</Label>
                   <Input
@@ -178,11 +191,19 @@ const OhmsLawCalculator = () => {
               )}
 
               <div className="flex gap-2">
-                <Button onClick={calculate} className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                <Button
+                  onClick={calculate}
+                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                >
                   <Calculator className="mr-2 h-4 w-4" />
                   Calculate
                 </Button>
-                <Button onClick={resetCalculator} variant="outline" size="icon" className="border-elec-yellow/20">
+                <Button
+                  onClick={resetCalculator}
+                  variant="outline"
+                  size="icon"
+                  className="border-elec-yellow/20"
+                >
                   <RotateCcw className="h-4 w-4" />
                 </Button>
               </div>
@@ -193,9 +214,7 @@ const OhmsLawCalculator = () => {
               {result ? (
                 <div className="space-y-2">
                   <div className="text-2xl font-bold text-foreground">{result}</div>
-                  <div className="text-sm text-muted-foreground">
-                    Using Ohm's Law: V = I × R
-                  </div>
+                  <div className="text-sm text-muted-foreground">Using Ohm's Law: V = I × R</div>
                 </div>
               ) : (
                 <div className="text-muted-foreground">

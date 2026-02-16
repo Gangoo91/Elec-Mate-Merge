@@ -71,11 +71,7 @@ export const formatDate = (dateString: string): string => {
 /**
  * Get date range string for experience/education
  */
-export const getDateRange = (
-  startDate: string,
-  endDate: string,
-  current: boolean
-): string => {
+export const getDateRange = (startDate: string, endDate: string, current: boolean): string => {
   const start = formatDate(startDate);
   const end = current ? 'Present' : formatDate(endDate);
   return `${start} - ${end}`;
@@ -116,7 +112,11 @@ export const addWrappedText = (
 /**
  * Set hex colour for PDF (converts hex to RGB)
  */
-export const setColor = (pdf: jsPDF, hexColor: string, type: 'fill' | 'draw' | 'text' = 'text'): void => {
+export const setColor = (
+  pdf: jsPDF,
+  hexColor: string,
+  type: 'fill' | 'draw' | 'text' = 'text'
+): void => {
   const r = parseInt(hexColor.slice(1, 3), 16);
   const g = parseInt(hexColor.slice(3, 5), 16);
   const b = parseInt(hexColor.slice(5, 7), 16);
@@ -197,14 +197,10 @@ export const calculateExperienceYears = (experience: WorkExperience[]): number =
     if (!exp.startDate) return;
 
     const start = new Date(exp.startDate + '-01');
-    const end = exp.current
-      ? new Date()
-      : exp.endDate
-      ? new Date(exp.endDate + '-01')
-      : new Date();
+    const end = exp.current ? new Date() : exp.endDate ? new Date(exp.endDate + '-01') : new Date();
 
-    const months = (end.getFullYear() - start.getFullYear()) * 12 +
-      (end.getMonth() - start.getMonth());
+    const months =
+      (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
     totalMonths += Math.max(0, months);
   });
 
@@ -218,9 +214,7 @@ export const formatContactLine = (cvData: CVData): string => {
   const parts = [
     cvData.personalInfo.email,
     cvData.personalInfo.phone,
-    [cvData.personalInfo.address, cvData.personalInfo.postcode]
-      .filter(Boolean)
-      .join(', '),
+    [cvData.personalInfo.address, cvData.personalInfo.postcode].filter(Boolean).join(', '),
   ].filter(Boolean);
 
   return parts.join(' | ');
@@ -266,12 +260,9 @@ export const addPageFooter = (
   setColor(pdf, color);
 
   // Page number - right aligned
-  pdf.text(
-    `Page ${pageNum} of ${totalPages}`,
-    pageWidth - margin,
-    pageHeight - 8,
-    { align: 'right' }
-  );
+  pdf.text(`Page ${pageNum} of ${totalPages}`, pageWidth - margin, pageHeight - 8, {
+    align: 'right',
+  });
 
   // Generated date - left aligned
   const today = format(new Date(), 'dd MMM yyyy');
@@ -284,32 +275,62 @@ export const addPageFooter = (
  */
 export const getSkillProficiency = (skill: string): number => {
   const coreSkills = [
-    '18th edition', 'bs 7671', 'testing', 'inspection', 'installation',
-    'wiring', 'fault finding', 'pat testing', 'commercial', 'domestic',
-    'industrial', 'maintenance', 'repairs', 'rewiring', 'consumer unit',
-    'distribution board', 'three phase', '3 phase', 'single phase',
-    'lighting', 'power', 'fire alarm', 'emergency lighting', 'data cabling',
+    '18th edition',
+    'bs 7671',
+    'testing',
+    'inspection',
+    'installation',
+    'wiring',
+    'fault finding',
+    'pat testing',
+    'commercial',
+    'domestic',
+    'industrial',
+    'maintenance',
+    'repairs',
+    'rewiring',
+    'consumer unit',
+    'distribution board',
+    'three phase',
+    '3 phase',
+    'single phase',
+    'lighting',
+    'power',
+    'fire alarm',
+    'emergency lighting',
+    'data cabling',
   ];
 
   const advancedSkills = [
-    'solar', 'pv', 'ev charging', 'heat pump', 'smart home', 'automation',
-    'plc', 'bms', 'hvac', 'high voltage', 'hv', 'generator', 'ups',
+    'solar',
+    'pv',
+    'ev charging',
+    'heat pump',
+    'smart home',
+    'automation',
+    'plc',
+    'bms',
+    'hvac',
+    'high voltage',
+    'hv',
+    'generator',
+    'ups',
   ];
 
   const skillLower = skill.toLowerCase();
 
   // Core electrical skills - high proficiency
-  if (coreSkills.some(core => skillLower.includes(core))) {
+  if (coreSkills.some((core) => skillLower.includes(core))) {
     return 0.85 + Math.random() * 0.15; // 85-100%
   }
 
   // Advanced/specialist skills - medium-high proficiency
-  if (advancedSkills.some(adv => skillLower.includes(adv))) {
-    return 0.70 + Math.random() * 0.20; // 70-90%
+  if (advancedSkills.some((adv) => skillLower.includes(adv))) {
+    return 0.7 + Math.random() * 0.2; // 70-90%
   }
 
   // Other skills - medium proficiency
-  return 0.60 + Math.random() * 0.25; // 60-85%
+  return 0.6 + Math.random() * 0.25; // 60-85%
 };
 
 /**
@@ -318,13 +339,13 @@ export const getSkillProficiency = (skill: string): number => {
 export const generateProfessionalTitle = (cvData: CVData): string => {
   const yearsExp = calculateExperienceYears(cvData.experience);
   const hasCertifications = cvData.certifications.length > 0;
-  const skills = cvData.skills.map(s => s.toLowerCase());
+  const skills = cvData.skills.map((s) => s.toLowerCase());
 
   // Check for specialisations
-  const isCommercial = skills.some(s => s.includes('commercial'));
-  const isIndustrial = skills.some(s => s.includes('industrial'));
-  const isSolar = skills.some(s => s.includes('solar') || s.includes('pv'));
-  const isEV = skills.some(s => s.includes('ev') || s.includes('charging'));
+  const isCommercial = skills.some((s) => s.includes('commercial'));
+  const isIndustrial = skills.some((s) => s.includes('industrial'));
+  const isSolar = skills.some((s) => s.includes('solar') || s.includes('pv'));
+  const isEV = skills.some((s) => s.includes('ev') || s.includes('charging'));
 
   let title = '';
 
@@ -376,21 +397,34 @@ export const formatContactItems = (cvData: CVData): { icon: string; text: string
 /**
  * Highlight key electrical qualifications in certifications
  */
-export const categoriseCertifications = (certifications: string[]): {
+export const categoriseCertifications = (
+  certifications: string[]
+): {
   essential: string[];
   additional: string[];
 } => {
   const essentialKeywords = [
-    '18th', 'bs 7671', '2391', '2360', '2365', 'jib', 'ecs', 'gold card',
-    'am2', 'level 3', 'nvq', 'city & guilds', 'city and guilds',
+    '18th',
+    'bs 7671',
+    '2391',
+    '2360',
+    '2365',
+    'jib',
+    'ecs',
+    'gold card',
+    'am2',
+    'level 3',
+    'nvq',
+    'city & guilds',
+    'city and guilds',
   ];
 
   const essential: string[] = [];
   const additional: string[] = [];
 
-  certifications.forEach(cert => {
+  certifications.forEach((cert) => {
     const certLower = cert.toLowerCase();
-    if (essentialKeywords.some(keyword => certLower.includes(keyword))) {
+    if (essentialKeywords.some((keyword) => certLower.includes(keyword))) {
       essential.push(cert);
     } else {
       additional.push(cert);
@@ -404,12 +438,12 @@ export const categoriseCertifications = (certifications: string[]): {
  * ECS Card type to badge colour mapping
  */
 export const ECS_CARD_COLORS: Record<string, { bg: string; text: string; label: string }> = {
-  'Gold': { bg: '#D4AF37', text: '#000000', label: 'Approved Electrician' },
-  'Blue': { bg: '#2563eb', text: '#FFFFFF', label: 'Electrician' },
-  'White': { bg: '#F8F9FA', text: '#000000', label: 'Provisional' },
-  'Yellow': { bg: '#FFC107', text: '#000000', label: 'Trainee' },
-  'Green': { bg: '#10B981', text: '#FFFFFF', label: 'Apprentice' },
-  'Black': { bg: '#1F2937', text: '#FFFFFF', label: 'Manager/Senior' },
+  Gold: { bg: '#D4AF37', text: '#000000', label: 'Approved Electrician' },
+  Blue: { bg: '#2563eb', text: '#FFFFFF', label: 'Electrician' },
+  White: { bg: '#F8F9FA', text: '#000000', label: 'Provisional' },
+  Yellow: { bg: '#FFC107', text: '#000000', label: 'Trainee' },
+  Green: { bg: '#10B981', text: '#FFFFFF', label: 'Apprentice' },
+  Black: { bg: '#1F2937', text: '#FFFFFF', label: 'Manager/Senior' },
 };
 
 /**
@@ -481,7 +515,13 @@ export const addProfessionalCardsSection = (
 
   // ECS Card
   if (hasECS) {
-    currentY = addECSBadge(pdf, professionalCards.ecsCardType || '', professionalCards.ecsExpiry, x, currentY);
+    currentY = addECSBadge(
+      pdf,
+      professionalCards.ecsCardType || '',
+      professionalCards.ecsExpiry,
+      x,
+      currentY
+    );
   }
 
   // CSCS Card
@@ -613,7 +653,7 @@ export const addReferencesSection = (
   const refWidth = maxWidth / Math.min(references.length, 2);
 
   references.slice(0, 2).forEach((ref, index) => {
-    const refX = x + (index * refWidth);
+    const refX = x + index * refWidth;
 
     setColor(pdf, colors.text);
     pdf.setFontSize(10);
@@ -715,7 +755,7 @@ export const getCVCompletenessScore = (cvData: CVData): number => {
   // Experience (25 points)
   if (cvData.experience.length > 0) score += 15;
   if (cvData.experience.length > 1) score += 5;
-  if (cvData.experience.some(e => e.description)) score += 5;
+  if (cvData.experience.some((e) => e.description)) score += 5;
 
   // Key projects (10 points)
   if (cvData.keyProjects.length > 0) score += 10;

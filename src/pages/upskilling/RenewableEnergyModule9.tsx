@@ -1,4 +1,12 @@
-import { ArrowLeft, PoundSterling, TrendingUp, Calculator, Wrench, CreditCard, Scale } from 'lucide-react';
+import {
+  ArrowLeft,
+  PoundSterling,
+  TrendingUp,
+  Calculator,
+  Wrench,
+  CreditCard,
+  Scale,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,40 +15,40 @@ const RenewableEnergyModule9 = () => {
   const sections = [
     {
       id: 1,
-      title: "Feed-in Tariff (Legacy), SEG, and Net Metering",
+      title: 'Feed-in Tariff (Legacy), SEG, and Net Metering',
       icon: PoundSterling,
-      description: "Understanding payment schemes and energy export mechanisms"
+      description: 'Understanding payment schemes and energy export mechanisms',
     },
     {
       id: 2,
-      title: "Understanding ROI, Payback Periods, and System Lifespan",
+      title: 'Understanding ROI, Payback Periods, and System Lifespan',
       icon: TrendingUp,
-      description: "Financial metrics and return on investment calculations"
+      description: 'Financial metrics and return on investment calculations',
     },
     {
       id: 3,
-      title: "Cost-Benefit Analysis (Domestic vs Commercial Systems)",
+      title: 'Cost-Benefit Analysis (Domestic vs Commercial Systems)',
       icon: Calculator,
-      description: "Comparing financial benefits across different system types"
+      description: 'Comparing financial benefits across different system types',
     },
     {
       id: 4,
-      title: "Tools for Estimating Yield and Return (PV*Sol, SAP, etc.)",
+      title: 'Tools for Estimating Yield and Return (PV*Sol, SAP, etc.)',
       icon: Wrench,
-      description: "Software tools for financial modelling and yield estimation"
+      description: 'Software tools for financial modelling and yield estimation',
     },
     {
       id: 5,
-      title: "Green Finance and Funding Options",
+      title: 'Green Finance and Funding Options',
       icon: CreditCard,
-      description: "Government schemes, commercial finance structures, and green loan products"
+      description: 'Government schemes, commercial finance structures, and green loan products',
     },
     {
       id: 6,
-      title: "Tax Implications and Legal Considerations",
+      title: 'Tax Implications and Legal Considerations',
       icon: Scale,
-      description: "VAT treatment, tax allowances, planning requirements, and consumer protection"
-    }
+      description: 'VAT treatment, tax allowances, planning requirements, and consumer protection',
+    },
   ];
 
   return (

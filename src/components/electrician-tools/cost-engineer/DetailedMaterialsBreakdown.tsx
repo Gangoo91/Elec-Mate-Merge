@@ -1,10 +1,17 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Package, CheckCircle2, AlertCircle, Clock, ExternalLink } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Package, CheckCircle2, AlertCircle, Clock, ExternalLink } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
 interface MaterialItemDetailed {
   description: string;
@@ -43,12 +50,12 @@ export const DetailedMaterialsBreakdown = ({
   subtotal,
   wastagePercent = 0,
   wastageAmount = 0,
-  finalTotal
+  finalTotal,
 }: DetailedMaterialsBreakdownProps) => {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
 
   const toggleItem = (index: number) => {
-    setExpandedItems(prev => {
+    setExpandedItems((prev) => {
       const next = new Set(prev);
       next.has(index) ? next.delete(index) : next.add(index);
       return next;
@@ -58,7 +65,10 @@ export const DetailedMaterialsBreakdown = ({
   const getStockStatusBadge = (inStock: boolean, inDatabase: boolean) => {
     if (!inDatabase) {
       return (
-        <Badge variant="outline" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 text-xs">
+        <Badge
+          variant="outline"
+          className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 text-xs"
+        >
           <AlertCircle className="h-3 w-3 mr-1" />
           Estimated Price
         </Badge>
@@ -66,14 +76,20 @@ export const DetailedMaterialsBreakdown = ({
     }
     if (inStock) {
       return (
-        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 text-xs">
+        <Badge
+          variant="outline"
+          className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 text-xs"
+        >
           <CheckCircle2 className="h-3 w-3 mr-1" />
           In Stock
         </Badge>
       );
     }
     return (
-      <Badge variant="outline" className="bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 text-xs">
+      <Badge
+        variant="outline"
+        className="bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 text-xs"
+      >
         <Clock className="h-3 w-3 mr-1" />
         3-5 Days
       </Badge>
@@ -139,16 +155,17 @@ export const DetailedMaterialsBreakdown = ({
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <span className="text-sm">{material.supplier}</span>
-                      {material.alternativeSuppliers && material.alternativeSuppliers.length > 0 && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 px-2 text-xs"
-                          onClick={() => toggleItem(idx)}
-                        >
-                          +{material.alternativeSuppliers.length}
-                        </Button>
-                      )}
+                      {material.alternativeSuppliers &&
+                        material.alternativeSuppliers.length > 0 && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 px-2 text-xs"
+                            onClick={() => toggleItem(idx)}
+                          >
+                            +{material.alternativeSuppliers.length}
+                          </Button>
+                        )}
                     </div>
                   </TableCell>
                   <TableCell>
@@ -172,9 +189,7 @@ export const DetailedMaterialsBreakdown = ({
                       {material.quantity} {material.unit} × £{material.unitPrice.toFixed(2)}
                     </p>
                   </div>
-                  <p className="font-bold text-lg text-foreground">
-                    £{material.total.toFixed(2)}
-                  </p>
+                  <p className="font-bold text-lg text-foreground">£{material.total.toFixed(2)}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-sm">
@@ -192,13 +207,9 @@ export const DetailedMaterialsBreakdown = ({
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-foreground">
-                      {material.supplier}
-                    </span>
+                    <span className="text-sm font-medium text-foreground">{material.supplier}</span>
                     {material.supplierCode && (
-                      <span className="text-xs text-foreground">
-                        #{material.supplierCode}
-                      </span>
+                      <span className="text-xs text-foreground">#{material.supplierCode}</span>
                     )}
                   </div>
                   {getStockStatusBadge(material.inStock, material.inDatabase)}
@@ -208,12 +219,16 @@ export const DetailedMaterialsBreakdown = ({
                   <Collapsible open={expandedItems.has(idx)} onOpenChange={() => toggleItem(idx)}>
                     <CollapsibleTrigger asChild>
                       <Button variant="outline" size="sm" className="w-full text-xs">
-                        View {material.alternativeSuppliers.length} Alternative Supplier{material.alternativeSuppliers.length > 1 ? 's' : ''}
+                        View {material.alternativeSuppliers.length} Alternative Supplier
+                        {material.alternativeSuppliers.length > 1 ? 's' : ''}
                       </Button>
                     </CollapsibleTrigger>
                     <CollapsibleContent className="mt-2 space-y-1">
                       {material.alternativeSuppliers.map((alt, altIdx) => (
-                        <div key={altIdx} className="flex items-center justify-between px-3 py-2 rounded bg-muted/30 text-sm">
+                        <div
+                          key={altIdx}
+                          className="flex items-center justify-between px-3 py-2 rounded bg-muted/30 text-sm"
+                        >
                           <span className="text-foreground">{alt.name}</span>
                           <div className="flex items-center gap-2">
                             <span className="font-medium">£{alt.price.toFixed(2)}</span>
@@ -251,9 +266,7 @@ export const DetailedMaterialsBreakdown = ({
           </div>
           {wastageAmount > 0 && (
             <div className="flex items-center justify-between px-4 py-2 rounded bg-muted/30">
-              <span className="text-sm text-foreground">
-                Wastage Allowance ({wastagePercent}%)
-              </span>
+              <span className="text-sm text-foreground">Wastage Allowance ({wastagePercent}%)</span>
               <span className="font-semibold text-foreground">+£{wastageAmount.toFixed(2)}</span>
             </div>
           )}

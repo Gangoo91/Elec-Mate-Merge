@@ -1,4 +1,3 @@
-
 import { TestResult } from '@/types/testResult';
 import { RegulationCheckResult, RegulationWarning } from './types';
 import { checkCableProtectiveDeviceMatch } from './cableProtectiveDeviceValidator';
@@ -16,22 +15,24 @@ export const checkRegulationCompliance = (result: TestResult): RegulationCheckRe
     ...checkEarthingRequirements(result),
     ...checkTestValues(result),
     ...checkZsCompliance(result),
-    ...checkDeviceDirectionality(result) // Amendment 3:2024 compliance
+    ...checkDeviceDirectionality(result), // Amendment 3:2024 compliance
   ];
 
-  const hasCriticalIssues = allWarnings.some(warning => warning.severity === 'critical');
+  const hasCriticalIssues = allWarnings.some((warning) => warning.severity === 'critical');
 
   return {
     isCompliant: !hasCriticalIssues,
-    warnings: allWarnings
+    warnings: allWarnings,
   };
 };
 
 // Batch check multiple results
-export const checkAllResultsCompliance = (results: TestResult[]): Map<string, RegulationCheckResult> => {
+export const checkAllResultsCompliance = (
+  results: TestResult[]
+): Map<string, RegulationCheckResult> => {
   const complianceMap = new Map<string, RegulationCheckResult>();
-  
-  results.forEach(result => {
+
+  results.forEach((result) => {
     complianceMap.set(result.id, checkRegulationCompliance(result));
   });
 

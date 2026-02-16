@@ -1,20 +1,16 @@
-import { useState } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Zap, Wrench, Info, ChevronDown, Lightbulb } from "lucide-react";
-import { MaintenanceEquipmentDetails } from "@/types/maintenance-method";
-import { InlineMaintenanceTypeSelector } from "./InlineMaintenanceTypeSelector";
-import { MaintenanceTemplateGrid } from "./MaintenanceTemplateGrid";
-import { MaintenanceEquipmentDetailsForm } from "./MaintenanceEquipmentDetails";
-import { MaintenanceTemplate } from "@/lib/maintenance-templates";
-import { cn } from "@/lib/utils";
-import { StickySubmitButton } from "@/components/agents/shared/StickySubmitButton";
-import { AGENT_CONFIG } from "@/components/agents/shared/AgentConfig";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { useState } from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Zap, Wrench, Info, ChevronDown, Lightbulb } from 'lucide-react';
+import { MaintenanceEquipmentDetails } from '@/types/maintenance-method';
+import { InlineMaintenanceTypeSelector } from './InlineMaintenanceTypeSelector';
+import { MaintenanceTemplateGrid } from './MaintenanceTemplateGrid';
+import { MaintenanceEquipmentDetailsForm } from './MaintenanceEquipmentDetails';
+import { MaintenanceTemplate } from '@/lib/maintenance-templates';
+import { cn } from '@/lib/utils';
+import { StickySubmitButton } from '@/components/agents/shared/StickySubmitButton';
+import { AGENT_CONFIG } from '@/components/agents/shared/AgentConfig';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface MaintenanceInputProps {
   query: string;
@@ -33,7 +29,7 @@ export const MaintenanceInput = ({
   onQueryChange,
   onEquipmentDetailsChange,
   onGenerate,
-  isProcessing
+  isProcessing,
 }: MaintenanceInputProps) => {
   const [hasEquipmentDetails, setHasEquipmentDetails] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
@@ -63,7 +59,8 @@ export const MaintenanceInput = ({
     return 'text-amber-400';
   };
 
-  const canGenerate = query.trim().length >= 50 && equipmentDetails.equipmentType && equipmentDetails.location;
+  const canGenerate =
+    query.trim().length >= 50 && equipmentDetails.equipmentType && equipmentDetails.location;
 
   return (
     <div className="space-y-4 pb-24 sm:pb-6">
@@ -72,19 +69,18 @@ export const MaintenanceInput = ({
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label className="text-base sm:text-lg font-semibold flex items-center gap-2">
-              <div
-                className="p-1.5 rounded-lg"
-                style={{ background: `${config.gradientFrom}20` }}
-              >
+              <div className="p-1.5 rounded-lg" style={{ background: `${config.gradientFrom}20` }}>
                 <Wrench className="h-4 w-4" style={{ color: config.gradientFrom }} />
               </div>
               Equipment & Requirements
             </Label>
-            <span className={cn(
-              "text-xs font-medium px-2 py-1 rounded-lg transition-colors",
-              getCharCountClass(),
-              charCount >= 50 && "bg-white/5"
-            )}>
+            <span
+              className={cn(
+                'text-xs font-medium px-2 py-1 rounded-lg transition-colors',
+                getCharCountClass(),
+                charCount >= 50 && 'bg-white/5'
+              )}
+            >
               {charCount} {charCount >= 50 && '✓'}
             </span>
           </div>
@@ -113,7 +109,9 @@ export const MaintenanceInput = ({
           <Label className="text-base sm:text-lg font-semibold">Installation Type</Label>
           <InlineMaintenanceTypeSelector
             selectedType={equipmentDetails.installationType}
-            onChange={(type) => onEquipmentDetailsChange({ ...equipmentDetails, installationType: type })}
+            onChange={(type) =>
+              onEquipmentDetailsChange({ ...equipmentDetails, installationType: type })
+            }
             disabled={isProcessing}
           />
         </div>
@@ -121,7 +119,10 @@ export const MaintenanceInput = ({
 
       {/* Quick Start Templates */}
       <Collapsible open={showTemplates} onOpenChange={setShowTemplates}>
-        <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
+        <div
+          className="agent-card overflow-hidden"
+          style={{ borderColor: `${config.gradientFrom}15` }}
+        >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <Lightbulb className="h-4 w-4 text-white/60" />
@@ -130,10 +131,12 @@ export const MaintenanceInput = ({
                 Templates
               </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
-              showTemplates && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/40 transition-transform duration-200',
+                showTemplates && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">
@@ -147,22 +150,31 @@ export const MaintenanceInput = ({
 
       {/* Equipment Details */}
       <Collapsible open={showEquipmentDetails} onOpenChange={setShowEquipmentDetails}>
-        <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
+        <div
+          className="agent-card overflow-hidden"
+          style={{ borderColor: `${config.gradientFrom}15` }}
+        >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <Info className="h-4 w-4 text-white/60" />
               <span className="text-sm sm:text-base font-medium">Equipment Details</span>
-              <span className={cn(
-                "text-[10px] sm:text-xs px-2 py-0.5 rounded-full",
-                hasEquipmentDetails ? "bg-emerald-500/20 text-emerald-400" : "bg-white/10 text-white/50"
-              )}>
-                {hasEquipmentDetails ? "✓ Configured" : "Optional"}
+              <span
+                className={cn(
+                  'text-[10px] sm:text-xs px-2 py-0.5 rounded-full',
+                  hasEquipmentDetails
+                    ? 'bg-emerald-500/20 text-emerald-400'
+                    : 'bg-white/10 text-white/50'
+                )}
+              >
+                {hasEquipmentDetails ? '✓ Configured' : 'Optional'}
               </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
-              showEquipmentDetails && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/40 transition-transform duration-200',
+                showEquipmentDetails && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">

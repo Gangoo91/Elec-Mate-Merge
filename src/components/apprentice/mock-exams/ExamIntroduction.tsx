@@ -1,8 +1,7 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, FileText } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Clock, FileText } from 'lucide-react';
 
 interface ExamIntroductionProps {
   exam: {
@@ -23,7 +22,7 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>{exam.description}</p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-elec-yellow" />
@@ -34,7 +33,7 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
               <span>Questions: {exam.questionCount}</span>
             </div>
           </div>
-          
+
           <div className="bg-white/10 p-4 rounded-md mt-6">
             <h3 className="font-semibold mb-2">Important Notes:</h3>
             <ul className="list-disc list-inside space-y-1 text-sm">

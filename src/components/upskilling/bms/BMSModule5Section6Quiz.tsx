@@ -3,7 +3,7 @@ import { bmsModule5Section6QuizQuestions } from '@/data/upskilling/bmsModule5Sec
 
 export const BMSModule5Section6Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={bmsModule5Section6QuizQuestions}
       title="Section 6 Quiz: Network Planning, Segmentation, and Latency Management"
     />

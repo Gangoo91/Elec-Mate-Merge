@@ -61,35 +61,38 @@ export function useLastStudyLocation() {
   }, [fetchLastLocation]);
 
   // Update last study location
-  const updateLastLocation = useCallback(async (path: string, title: string) => {
-    if (!user) return;
+  const updateLastLocation = useCallback(
+    async (path: string, title: string) => {
+      if (!user) return;
 
-    try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          last_study_path: path,
-          last_study_title: title,
-          last_study_at: new Date().toISOString(),
-        })
-        .eq('id', user.id);
+      try {
+        const { error } = await supabase
+          .from('profiles')
+          .update({
+            last_study_path: path,
+            last_study_title: title,
+            last_study_at: new Date().toISOString(),
+          })
+          .eq('id', user.id);
 
-      if (error) {
-        // Columns may not exist yet - fail silently
-        console.warn('Could not update last study location:', error.message);
-        return;
+        if (error) {
+          // Columns may not exist yet - fail silently
+          console.warn('Could not update last study location:', error.message);
+          return;
+        }
+
+        // Update local state
+        setLastLocation({
+          path,
+          title,
+          lastStudiedAt: new Date().toISOString(),
+        });
+      } catch (error) {
+        console.error('Error updating last study location:', error);
       }
-
-      // Update local state
-      setLastLocation({
-        path,
-        title,
-        lastStudiedAt: new Date().toISOString(),
-      });
-    } catch (error) {
-      console.error('Error updating last study location:', error);
-    }
-  }, [user]);
+    },
+    [user]
+  );
 
   // Format the last studied time
   const getLastStudiedDisplay = useCallback(() => {

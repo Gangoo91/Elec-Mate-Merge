@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection2_4 = () => {
   const outcomes = [
-    "Explain the purpose and requirements of escape route lighting",
-    "Identify all areas that must be covered under BS 5266",
-    "Apply lux level and placement standards to installations", 
-    "Ensure escape route lighting links correctly with exit signage",
-    "Carry out inspections, testing, and record-keeping for compliance"
+    'Explain the purpose and requirements of escape route lighting',
+    'Identify all areas that must be covered under BS 5266',
+    'Apply lux level and placement standards to installations',
+    'Ensure escape route lighting links correctly with exit signage',
+    'Carry out inspections, testing, and record-keeping for compliance',
   ];
 
   return (

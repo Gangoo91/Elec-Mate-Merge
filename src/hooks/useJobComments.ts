@@ -21,7 +21,7 @@ export const useJobComments = (jobId: string) => {
         .select('*')
         .eq('job_id', jobId)
         .order('created_at', { ascending: false });
-      
+
       if (error) throw error;
       return data as JobComment[];
     },
@@ -32,30 +32,30 @@ export const useJobComments = (jobId: string) => {
 // Add a comment
 export const useAddComment = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: async ({ 
-      jobId, 
-      content, 
+    mutationFn: async ({
+      jobId,
+      content,
       authorName = 'System',
-      commentType = 'comment' 
-    }: { 
-      jobId: string; 
-      content: string; 
+      commentType = 'comment',
+    }: {
+      jobId: string;
+      content: string;
       authorName?: string;
       commentType?: JobComment['comment_type'];
     }) => {
       const { data, error } = await supabase
         .from('employer_job_comments')
-        .insert({ 
-          job_id: jobId, 
-          content, 
+        .insert({
+          job_id: jobId,
+          content,
           author_name: authorName,
-          comment_type: commentType
+          comment_type: commentType,
         })
         .select()
         .single();
-      
+
       if (error) throw error;
       return data as JobComment;
     },
@@ -71,14 +71,11 @@ export const useAddComment = () => {
 // Delete a comment
 export const useDeleteComment = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async ({ id, jobId }: { id: string; jobId: string }) => {
-      const { error } = await supabase
-        .from('employer_job_comments')
-        .delete()
-        .eq('id', id);
-      
+      const { error } = await supabase.from('employer_job_comments').delete().eq('id', id);
+
       if (error) throw error;
       return { id, jobId };
     },
@@ -95,28 +92,28 @@ export const useDeleteComment = () => {
 // Log activity (status changes, assignments, etc.)
 export const useLogJobActivity = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: async ({ 
-      jobId, 
-      content, 
-      commentType 
-    }: { 
-      jobId: string; 
-      content: string; 
+    mutationFn: async ({
+      jobId,
+      content,
+      commentType,
+    }: {
+      jobId: string;
+      content: string;
       commentType: JobComment['comment_type'];
     }) => {
       const { data, error } = await supabase
         .from('employer_job_comments')
-        .insert({ 
-          job_id: jobId, 
-          content, 
+        .insert({
+          job_id: jobId,
+          content,
           author_name: 'System',
-          comment_type: commentType
+          comment_type: commentType,
         })
         .select()
         .single();
-      
+
       if (error) throw error;
       return data as JobComment;
     },

@@ -5,13 +5,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import {
-  FileText,
-  Clock,
-  ChevronRight,
-  Trash2,
-  X
-} from 'lucide-react';
+import { FileText, Clock, ChevronRight, Trash2, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
@@ -33,10 +27,7 @@ interface RecoverUnsavedWorkProps {
   className?: string;
 }
 
-const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({
-  onNavigate,
-  className
-}) => {
+const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, className }) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [user, setUser] = useState<any>(null);
@@ -85,10 +76,14 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({
 
   const getTypeLabel = (type: string) => {
     switch (type) {
-      case 'minor-works': return 'MW';
-      case 'eic': return 'EIC';
-      case 'eicr': return 'EICR';
-      default: return 'CERT';
+      case 'minor-works':
+        return 'MW';
+      case 'eic':
+        return 'EIC';
+      case 'eicr':
+        return 'EICR';
+      default:
+        return 'CERT';
     }
   };
 
@@ -138,9 +133,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-semibold text-elec-yellow">
-                Unsaved Work
-              </span>
+              <span className="text-sm font-semibold text-elec-yellow">Unsaved Work</span>
               <span className="text-[10px] font-medium px-2 py-0.5 rounded-lg bg-elec-yellow/20 text-elec-yellow">
                 {autoDrafts.length}
               </span>
@@ -215,9 +208,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({
 
         {/* Footer */}
         <div className="px-4 py-2 bg-black/20 border-t border-white/5">
-          <p className="text-[10px] text-white/30">
-            Auto-deleted after 7 days
-          </p>
+          <p className="text-[10px] text-white/30">Auto-deleted after 7 days</p>
         </div>
       </motion.div>
 

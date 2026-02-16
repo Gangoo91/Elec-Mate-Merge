@@ -22,10 +22,13 @@ import {
   RefreshCw,
   ArrowLeft,
   LayoutGrid,
-  List
+  List,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useCollegePortfolios, useStudentPortfolioDetail } from '@/hooks/college/useCollegePortfolios';
+import {
+  useCollegePortfolios,
+  useStudentPortfolioDetail,
+} from '@/hooks/college/useCollegePortfolios';
 import StudentPortfolioCard from './StudentPortfolioCard';
 import CoverageMatrixView from './CoverageMatrixView';
 import PortfolioReviewQueue from './PortfolioReviewQueue';
@@ -37,18 +40,15 @@ import StudentRequirementsPanel from './StudentRequirementsPanel';
 type ViewMode = 'list' | 'student-detail' | 'submission-review';
 
 const CollegePortfolioHub: React.FC = () => {
-  const {
-    studentPortfolios,
-    portfoliosAwaitingReview,
-    atRiskStudents,
-    stats,
-    isLoading,
-    refetch
-  } = useCollegePortfolios();
+  const { studentPortfolios, portfoliosAwaitingReview, atRiskStudents, stats, isLoading, refetch } =
+    useCollegePortfolios();
 
   const [activeTab, setActiveTab] = useState('overview');
   const [viewMode, setViewMode] = useState<ViewMode>('list');
-  const [selectedStudent, setSelectedStudent] = useState<{ id: string; qualificationId: string } | null>(null);
+  const [selectedStudent, setSelectedStudent] = useState<{
+    id: string;
+    qualificationId: string;
+  } | null>(null);
   const [selectedSubmission, setSelectedSubmission] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
@@ -60,8 +60,9 @@ const CollegePortfolioHub: React.FC = () => {
     selectedStudent?.qualificationId || ''
   );
 
-  const filteredPortfolios = studentPortfolios.filter(portfolio => {
-    const matchesSearch = searchTerm === '' ||
+  const filteredPortfolios = studentPortfolios.filter((portfolio) => {
+    const matchesSearch =
+      searchTerm === '' ||
       portfolio.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       portfolio.qualificationTitle.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = !statusFilter || portfolio.status === statusFilter;
@@ -119,12 +120,8 @@ const CollegePortfolioHub: React.FC = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h2 className="text-xl font-bold">
-              {portfolioDetail?.studentName || 'Loading...'}
-            </h2>
-            <p className="text-sm text-white/60">
-              {portfolioDetail?.qualificationTitle}
-            </p>
+            <h2 className="text-xl font-bold">{portfolioDetail?.studentName || 'Loading...'}</h2>
+            <p className="text-sm text-white/60">{portfolioDetail?.qualificationTitle}</p>
           </div>
         </div>
 
@@ -143,7 +140,7 @@ const CollegePortfolioHub: React.FC = () => {
             <TabsContent value="coverage" className="mt-4">
               <CoverageMatrixView
                 coverageMatrix={portfolioDetail.coverageMatrix}
-                ksbMappings={portfolioDetail.portfolioItems.flatMap(item => item.ksbMappings)}
+                ksbMappings={portfolioDetail.portfolioItems.flatMap((item) => item.ksbMappings)}
                 studentName={portfolioDetail.studentName}
                 qualificationTitle={portfolioDetail.qualificationTitle}
               />
@@ -259,7 +256,9 @@ const CollegePortfolioHub: React.FC = () => {
             <TabsTrigger value="review">
               Review Queue
               {stats.awaitingReview > 0 && (
-                <Badge className="ml-2 bg-amber-500/20 text-amber-400">{stats.awaitingReview}</Badge>
+                <Badge className="ml-2 bg-amber-500/20 text-amber-400">
+                  {stats.awaitingReview}
+                </Badge>
               )}
             </TabsTrigger>
             <TabsTrigger value="iqa">IQA Sampling</TabsTrigger>
@@ -288,10 +287,13 @@ const CollegePortfolioHub: React.FC = () => {
                 placeholder="Search students..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn("bg-white/5 border-elec-gray/40", !searchTerm && "pl-8")}
+                className={cn('bg-white/5 border-elec-gray/40', !searchTerm && 'pl-8')}
               />
             </div>
-            <Select value={statusFilter || 'all'} onValueChange={(v) => setStatusFilter(v === 'all' ? null : v)}>
+            <Select
+              value={statusFilter || 'all'}
+              onValueChange={(v) => setStatusFilter(v === 'all' ? null : v)}
+            >
               <SelectTrigger className="w-full sm:w-40 bg-white/5 border-elec-gray/40">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
@@ -356,7 +358,7 @@ const CollegePortfolioHub: React.FC = () => {
             </Card>
           ) : displayMode === 'grid' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredPortfolios.map(portfolio => (
+              {filteredPortfolios.map((portfolio) => (
                 <StudentPortfolioCard
                   key={portfolio.id}
                   portfolio={portfolio}
@@ -371,11 +373,13 @@ const CollegePortfolioHub: React.FC = () => {
             <Card className="bg-white/5 border-elec-gray/40">
               <CardContent className="p-0">
                 <div className="divide-y divide-elec-gray/40">
-                  {filteredPortfolios.map(portfolio => (
+                  {filteredPortfolios.map((portfolio) => (
                     <div
                       key={portfolio.id}
                       className="p-4 flex items-center justify-between hover:bg-white/5 cursor-pointer active:bg-white/10 transition-all touch-manipulation"
-                      onClick={() => handleViewDetails(portfolio.studentId, portfolio.qualificationId)}
+                      onClick={() =>
+                        handleViewDetails(portfolio.studentId, portfolio.qualificationId)
+                      }
                     >
                       <div className="flex items-center gap-4">
                         <div>

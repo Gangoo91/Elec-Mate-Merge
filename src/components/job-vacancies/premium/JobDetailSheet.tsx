@@ -3,12 +3,12 @@
  * Parallax header, collapsible sections, sticky apply CTA
  */
 
-import { useState, useRef } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Drawer } from "vaul";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { Drawer } from 'vaul';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   X,
   Briefcase,
@@ -27,9 +27,9 @@ import {
   Users,
   Calendar,
   FileText,
-} from "lucide-react";
-import { fadeUpVariants } from "./animations/variants";
-import type { UnifiedJob } from "@/hooks/job-vacancies/useUnifiedJobSearch";
+} from 'lucide-react';
+import { fadeUpVariants } from './animations/variants';
+import type { UnifiedJob } from '@/hooks/job-vacancies/useUnifiedJobSearch';
 
 interface JobDetailSheetProps {
   job: UnifiedJob | null;
@@ -43,10 +43,10 @@ interface JobDetailSheetProps {
 // Company logo fallback
 const CompanyLogo = ({ company, imageUrl }: { company: string; imageUrl?: string | null }) => {
   const initials = company
-    .split(" ")
+    .split(' ')
     .slice(0, 2)
     .map((word) => word[0])
-    .join("")
+    .join('')
     .toUpperCase();
 
   if (imageUrl) {
@@ -56,8 +56,8 @@ const CompanyLogo = ({ company, imageUrl }: { company: string; imageUrl?: string
         alt={company}
         className="w-20 h-20 rounded-2xl object-cover border-2 border-white/20 shadow-2xl"
         onError={(e) => {
-          e.currentTarget.style.display = "none";
-          e.currentTarget.nextElementSibling?.classList.remove("hidden");
+          e.currentTarget.style.display = 'none';
+          e.currentTarget.nextElementSibling?.classList.remove('hidden');
         }}
       />
     );
@@ -98,10 +98,7 @@ const CollapsibleSection = ({
             {title}
           </span>
         </div>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
+        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
           <ChevronDown className="h-5 w-5 text-white/40" />
         </motion.div>
       </button>
@@ -109,14 +106,12 @@ const CollapsibleSection = ({
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="pb-4 px-1 text-sm text-white/70 leading-relaxed">
-              {children}
-            </div>
+            <div className="pb-4 px-1 text-sm text-white/70 leading-relaxed">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -129,7 +124,7 @@ const StatItem = ({
   icon: Icon,
   label,
   value,
-  iconColor = "text-amber-400",
+  iconColor = 'text-amber-400',
 }: {
   icon: typeof Briefcase;
   label: string;
@@ -138,7 +133,7 @@ const StatItem = ({
 }) => (
   <div className="bg-white/[0.03] rounded-xl p-3 border border-white/5">
     <div className="flex items-center gap-2 mb-1">
-      <Icon className={cn("h-4 w-4", iconColor)} />
+      <Icon className={cn('h-4 w-4', iconColor)} />
       <span className="text-xs text-white/50">{label}</span>
     </div>
     <p className="font-semibold text-white text-sm">{value}</p>
@@ -152,10 +147,10 @@ const formatPostedDate = (date: string) => {
   const diffMs = now.getTime() - posted.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays} days ago`;
-  return posted.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  return posted.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 };
 
 // Check if job is fresh
@@ -168,13 +163,13 @@ const isJobFresh = (postedDate: string) => {
 // Source badge color
 const getSourceColor = (source: string) => {
   const colors: Record<string, string> = {
-    Reed: "bg-blue-500/20 border-blue-500/30 text-blue-300",
-    Indeed: "bg-purple-500/20 border-purple-500/30 text-purple-300",
-    TotalJobs: "bg-green-500/20 border-green-500/30 text-green-300",
-    "CV Library": "bg-orange-500/20 border-orange-500/30 text-orange-300",
-    "Jobs.co.uk": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
+    Reed: 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+    Indeed: 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+    TotalJobs: 'bg-green-500/20 border-green-500/30 text-green-300',
+    'CV Library': 'bg-orange-500/20 border-orange-500/30 text-orange-300',
+    'Jobs.co.uk': 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
   };
-  return colors[source] || "bg-white/10 border-white/20 text-white/70";
+  return colors[source] || 'bg-white/10 border-white/20 text-white/70';
 };
 
 const JobDetailSheet = ({
@@ -201,7 +196,7 @@ const JobDetailSheet = ({
     if (onApply) {
       onApply(job);
     } else if (job.url) {
-      window.open(job.url, "_blank", "noopener,noreferrer");
+      window.open(job.url, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -240,10 +235,7 @@ const JobDetailSheet = ({
           </button>
 
           {/* Scrollable Content */}
-          <div
-            ref={scrollContainerRef}
-            className="flex-1 overflow-y-auto overscroll-contain"
-          >
+          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto overscroll-contain">
             {/* Parallax Header */}
             <motion.div
               style={{ y: headerY, opacity: headerOpacity, scale: headerScale }}
@@ -264,7 +256,7 @@ const JobDetailSheet = ({
                       </Badge>
                     )}
                     {job.source && (
-                      <Badge className={cn("text-xs font-medium", getSourceColor(job.source))}>
+                      <Badge className={cn('text-xs font-medium', getSourceColor(job.source))}>
                         {job.source}
                       </Badge>
                     )}
@@ -272,9 +264,7 @@ const JobDetailSheet = ({
                 </div>
 
                 {/* Job Title */}
-                <h2 className="text-2xl font-bold text-white leading-tight mb-2">
-                  {job.title}
-                </h2>
+                <h2 className="text-2xl font-bold text-white leading-tight mb-2">{job.title}</h2>
 
                 {/* Company */}
                 <div className="flex items-center gap-2 mb-4">
@@ -313,7 +303,7 @@ const JobDetailSheet = ({
                 <StatItem
                   icon={Banknote}
                   label="Salary"
-                  value={job.salary || "Not specified"}
+                  value={job.salary || 'Not specified'}
                   iconColor="text-emerald-400"
                 />
                 <StatItem
@@ -344,7 +334,7 @@ const JobDetailSheet = ({
                 <div
                   className="prose prose-invert prose-sm max-w-none"
                   dangerouslySetInnerHTML={{
-                    __html: job.description || "No description available.",
+                    __html: job.description || 'No description available.',
                   }}
                 />
               </CollapsibleSection>
@@ -407,7 +397,8 @@ const JobDetailSheet = ({
                     </div>
                   )}
                   <p className="text-white/60">
-                    Visit the company website or apply through the job listing to learn more about this employer.
+                    Visit the company website or apply through the job listing to learn more about
+                    this employer.
                   </p>
                 </div>
               </CollapsibleSection>
@@ -424,13 +415,13 @@ const JobDetailSheet = ({
                   size="lg"
                   onClick={() => onSave(job.id)}
                   className={cn(
-                    "h-12 px-4 border-white/20 rounded-xl",
+                    'h-12 px-4 border-white/20 rounded-xl',
                     isSaved
-                      ? "bg-blue-500/20 border-blue-500/40 text-blue-300"
-                      : "text-white hover:text-white hover:bg-white/10"
+                      ? 'bg-blue-500/20 border-blue-500/40 text-blue-300'
+                      : 'text-white hover:text-white hover:bg-white/10'
                   )}
                 >
-                  <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />
+                  <Bookmark className={cn('h-5 w-5', isSaved && 'fill-current')} />
                 </Button>
               )}
 

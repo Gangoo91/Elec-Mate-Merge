@@ -1,69 +1,68 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Target, AlertCircle, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Clock, Target, AlertCircle, CheckCircle } from 'lucide-react';
 
 const TimeManagementFundamentalsTab = () => {
   const principles = [
     {
-      title: "Priority Matrix (Eisenhower Method)",
-      description: "Categorise tasks by urgency and importance",
+      title: 'Priority Matrix (Eisenhower Method)',
+      description: 'Categorise tasks by urgency and importance',
       icon: Target,
-      color: "border-blue-500/20 bg-blue-500/10",
+      color: 'border-blue-500/20 bg-blue-500/10',
       steps: [
-        "Urgent & Important: Do immediately (safety issues, deadlines)",
-        "Important, Not Urgent: Schedule (study time, skills development)",
-        "Urgent, Not Important: Delegate or minimise (interruptions)",
-        "Neither: Eliminate (time wasters, excessive social media)"
-      ]
+        'Urgent & Important: Do immediately (safety issues, deadlines)',
+        'Important, Not Urgent: Schedule (study time, skills development)',
+        'Urgent, Not Important: Delegate or minimise (interruptions)',
+        'Neither: Eliminate (time wasters, excessive social media)',
+      ],
     },
     {
-      title: "Time Blocking",
-      description: "Allocate specific time slots for different activities",
+      title: 'Time Blocking',
+      description: 'Allocate specific time slots for different activities',
       icon: Clock,
-      color: "border-green-500/20 bg-green-500/10",
+      color: 'border-green-500/20 bg-green-500/10',
       steps: [
-        "Block work hours (including travel time)",
-        "Schedule study sessions with specific topics",
-        "Reserve time for breaks and meals",
-        "Plan personal time and relationships"
-      ]
+        'Block work hours (including travel time)',
+        'Schedule study sessions with specific topics',
+        'Reserve time for breaks and meals',
+        'Plan personal time and relationships',
+      ],
     },
     {
-      title: "The 2-Minute Rule",
-      description: "If it takes less than 2 minutes, do it now",
+      title: 'The 2-Minute Rule',
+      description: 'If it takes less than 2 minutes, do it now',
       icon: CheckCircle,
-      color: "border-purple-500/20 bg-purple-500/10",
+      color: 'border-purple-500/20 bg-purple-500/10',
       steps: [
-        "Reply to quick messages immediately",
-        "File documents as you receive them",
-        "Complete small administrative tasks",
-        "Tidy workspace at end of each day"
-      ]
-    }
+        'Reply to quick messages immediately',
+        'File documents as you receive them',
+        'Complete small administrative tasks',
+        'Tidy workspace at end of each day',
+      ],
+    },
   ];
 
   const commonChallenges = [
     {
-      challenge: "Irregular work hours",
-      solution: "Create flexible routines that adapt to shift patterns",
-      tip: "Use travel time for audio learning content"
+      challenge: 'Irregular work hours',
+      solution: 'Create flexible routines that adapt to shift patterns',
+      tip: 'Use travel time for audio learning content',
     },
     {
-      challenge: "Physical exhaustion",
-      solution: "Schedule demanding study during peak energy hours",
-      tip: "Take power naps (15-20 minutes) when possible"
+      challenge: 'Physical exhaustion',
+      solution: 'Schedule demanding study during peak energy hours',
+      tip: 'Take power naps (15-20 minutes) when possible',
     },
     {
-      challenge: "Multiple deadlines",
-      solution: "Break large tasks into smaller, manageable chunks",
-      tip: "Use backwards planning from deadline dates"
+      challenge: 'Multiple deadlines',
+      solution: 'Break large tasks into smaller, manageable chunks',
+      tip: 'Use backwards planning from deadline dates',
     },
     {
-      challenge: "Distractions at home",
-      solution: "Create a dedicated study space and set boundaries",
-      tip: "Use noise-cancelling headphones or white noise"
-    }
+      challenge: 'Distractions at home',
+      solution: 'Create a dedicated study space and set boundaries',
+      tip: 'Use noise-cancelling headphones or white noise',
+    },
   ];
 
   return (
@@ -79,7 +78,7 @@ const TimeManagementFundamentalsTab = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {principles.map((principle, index) => {
               const IconComponent = principle.icon;
-              
+
               return (
                 <div key={index} className={`border rounded-lg p-6 ${principle.color}`}>
                   <div className="flex items-center gap-3 mb-4">
@@ -89,7 +88,7 @@ const TimeManagementFundamentalsTab = () => {
                       <p className="text-sm text-white">{principle.description}</p>
                     </div>
                   </div>
-                  
+
                   <ul className="space-y-2">
                     {principle.steps.map((step, stepIndex) => (
                       <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
@@ -141,7 +140,7 @@ const TimeManagementFundamentalsTab = () => {
                 <li>• Note major time wasters and distractions</li>
               </ul>
             </div>
-            
+
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Day 3-4: Planning</h4>
               <ul className="text-sm text-white space-y-1">
@@ -150,7 +149,7 @@ const TimeManagementFundamentalsTab = () => {
                 <li>• Choose your planning tools and apps</li>
               </ul>
             </div>
-            
+
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Day 5-7: Implementation</h4>
               <ul className="text-sm text-white space-y-1">

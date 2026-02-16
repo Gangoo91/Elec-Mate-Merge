@@ -1,7 +1,6 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Briefcase, Camera, FileText, Clock } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Briefcase, Camera, FileText, Clock } from 'lucide-react';
 
 const OnSiteSkills = () => {
   return (
@@ -10,7 +9,7 @@ const OnSiteSkills = () => {
         <h1 className="text-3xl font-bold tracking-tight mb-4">On-Site Apprenticeship Skills</h1>
         <SmartBackButton />
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
@@ -21,7 +20,7 @@ const OnSiteSkills = () => {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Camera className="h-12 w-12 text-elec-yellow mb-4" />
@@ -31,7 +30,7 @@ const OnSiteSkills = () => {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <FileText className="h-12 w-12 text-elec-yellow mb-4" />
@@ -41,7 +40,7 @@ const OnSiteSkills = () => {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Briefcase className="h-12 w-12 text-elec-yellow mb-4" />

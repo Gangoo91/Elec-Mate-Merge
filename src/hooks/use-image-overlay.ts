@@ -27,15 +27,15 @@ export const useImageOverlay = () => {
   }, []);
 
   const toggleOverlays = useCallback(() => {
-    setShowOverlays(prev => !prev);
+    setShowOverlays((prev) => !prev);
   }, []);
 
   const zoomIn = useCallback(() => {
-    setZoom(prev => Math.min(prev * 1.2, 3));
+    setZoom((prev) => Math.min(prev * 1.2, 3));
   }, []);
 
   const zoomOut = useCallback(() => {
-    setZoom(prev => Math.max(prev / 1.2, 0.5));
+    setZoom((prev) => Math.max(prev / 1.2, 0.5));
   }, []);
 
   const resetView = useCallback(() => {

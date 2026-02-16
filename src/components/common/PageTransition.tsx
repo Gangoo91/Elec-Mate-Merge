@@ -11,11 +11,7 @@ interface PageTransitionProps {
  * Use this to wrap the main content of each page for consistent transitions.
  */
 export function PageTransition({ children, className }: PageTransitionProps) {
-  return (
-    <div className={cn('animate-fade-in', className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('animate-fade-in', className)}>{children}</div>;
 }
 
 export default PageTransition;

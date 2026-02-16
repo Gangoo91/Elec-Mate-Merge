@@ -1,51 +1,51 @@
-import { ArrowLeft, TestTube, FileText, Wrench, CheckCircle, Ruler, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, TestTube, FileText, Wrench, CheckCircle, Ruler, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Performing a Visual Inspection",
-    description: "Systematic visual inspection of completed installation work",
+    number: 'Subsection 1',
+    title: 'Performing a Visual Inspection',
+    description: 'Systematic visual inspection of completed installation work',
     icon: TestTube,
-    href: "6-1"
+    href: '6-1',
   },
   {
-    number: "Subsection 2",
-    title: "Continuity and Polarity Checks (Functional, Non-Certified)",
-    description: "Basic functional testing for continuity and polarity",
+    number: 'Subsection 2',
+    title: 'Continuity and Polarity Checks (Functional, Non-Certified)',
+    description: 'Basic functional testing for continuity and polarity',
     icon: FileText,
-    href: "6-2"
+    href: '6-2',
   },
   {
-    number: "Subsection 3",
-    title: "Basic Insulation Resistance Testing (Introduction Only)",
-    description: "Introduction to insulation resistance testing principles",
+    number: 'Subsection 3',
+    title: 'Basic Insulation Resistance Testing (Introduction Only)',
+    description: 'Introduction to insulation resistance testing principles',
     icon: Wrench,
-    href: "6-3"
+    href: '6-3',
   },
   {
-    number: "Subsection 4",
-    title: "Checking Fixings, Cable Routes, and Terminations",
-    description: "Verifying all fixings and connections are secure",
+    number: 'Subsection 4',
+    title: 'Checking Fixings, Cable Routes, and Terminations',
+    description: 'Verifying all fixings and connections are secure',
     icon: CheckCircle,
-    href: "6-4"
+    href: '6-4',
   },
   {
-    number: "Subsection 5",
-    title: "Identifying and Rectifying Defects",
-    description: "Finding and correcting installation defects",
+    number: 'Subsection 5',
+    title: 'Identifying and Rectifying Defects',
+    description: 'Finding and correcting installation defects',
     icon: Ruler,
-    href: "6-5"
+    href: '6-5',
   },
   {
-    number: "Subsection 6",
-    title: "Recording Inspection and Test Results",
-    description: "Legal requirements and best practices for documenting test results",
+    number: 'Subsection 6',
+    title: 'Recording Inspection and Test Results',
+    description: 'Legal requirements and best practices for documenting test results',
     icon: Shield,
-    href: "6-6"
-  }
+    href: '6-6',
+  },
 ];
 
 const Section6 = () => {

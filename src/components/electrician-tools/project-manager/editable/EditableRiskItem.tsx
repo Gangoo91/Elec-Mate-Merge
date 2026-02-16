@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { MobileInput } from '@/components/ui/mobile-input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Edit2, Trash2, Check, X } from 'lucide-react';
 import { ProjectRisk } from '@/types/projectPlan';
 
@@ -11,11 +17,7 @@ interface EditableRiskItemProps {
   onDelete: () => void;
 }
 
-export const EditableRiskItem = ({
-  risk,
-  onUpdate,
-  onDelete,
-}: EditableRiskItemProps) => {
+export const EditableRiskItem = ({ risk, onUpdate, onDelete }: EditableRiskItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(risk.description);
   const [editedMitigation, setEditedMitigation] = useState(risk.mitigation);
@@ -101,17 +103,14 @@ export const EditableRiskItem = ({
               {risk.status.charAt(0).toUpperCase() + risk.status.slice(1)}
             </span>
           </div>
-          
+
           <p className="text-sm font-medium">{risk.description}</p>
           <p className="text-sm text-muted-foreground">
             <strong>Mitigation:</strong> {risk.mitigation}
           </p>
 
           <div className="flex gap-2 flex-wrap">
-            <Select
-              value={risk.status}
-              onValueChange={(value: any) => onUpdate({ status: value })}
-            >
+            <Select value={risk.status} onValueChange={(value: any) => onUpdate({ status: value })}>
               <SelectTrigger className="h-9 w-auto">
                 <SelectValue />
               </SelectTrigger>

@@ -14,39 +14,39 @@ const tabConfigs: TabConfig[] = [
     id: 'client',
     label: 'Client Details',
     shortLabel: 'Client',
-    requiredFields: ['clientName', 'siteAddress']
+    requiredFields: ['clientName', 'siteAddress'],
   },
   {
     id: 'appliances',
     label: 'Appliance List',
     shortLabel: 'Appliances',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'results',
     label: 'Test Results',
     shortLabel: 'Results',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'declarations',
     label: 'Declarations',
     shortLabel: 'Declarations',
-    requiredFields: ['testerName']
-  }
+    requiredFields: ['testerName'],
+  },
 ];
 
 export const usePATTestingTabs = (formData: any) => {
   const [currentTab, setCurrentTab] = useState<PATTestingTabValue>('client');
 
-  const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
+  const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
   const totalTabs = tabConfigs.length;
 
   const hasRequiredFields = (tabId: PATTestingTabValue): boolean => {
-    const tab = tabConfigs.find(t => t.id === tabId);
+    const tab = tabConfigs.find((t) => t.id === tabId);
     if (!tab) return false;
 
-    return tab.requiredFields.every(field => {
+    return tab.requiredFields.every((field) => {
       const value = formData[field];
       return value && value.toString().trim() !== '';
     });
@@ -61,26 +61,28 @@ export const usePATTestingTabs = (formData: any) => {
 
     switch (tabId) {
       case 'client':
-        return completedSections[tabId] ||
-          (formData.clientName && formData.siteAddress);
+        return completedSections[tabId] || (formData.clientName && formData.siteAddress);
       case 'appliances':
-        return completedSections[tabId] || (formData.appliances?.length > 0);
+        return completedSections[tabId] || formData.appliances?.length > 0;
       case 'results':
-        return completedSections[tabId] ||
-          (formData.appliances?.some((a: any) => a.overallResult !== ''));
+        return (
+          completedSections[tabId] || formData.appliances?.some((a: any) => a.overallResult !== '')
+        );
       case 'declarations':
-        return completedSections[tabId] ||
-          (formData.testerName && formData.testerSignature);
+        return completedSections[tabId] || (formData.testerName && formData.testerSignature);
       default:
         return completedSections[tabId] === true;
     }
   };
 
-  const toggleTabComplete = (tabId: PATTestingTabValue, onUpdate: (field: string, value: any) => void): void => {
+  const toggleTabComplete = (
+    tabId: PATTestingTabValue,
+    onUpdate: (field: string, value: any) => void
+  ): void => {
     const completedSections = formData.completedSections || {};
     const newCompletedSections = {
       ...completedSections,
-      [tabId]: !completedSections[tabId]
+      [tabId]: !completedSections[tabId],
     };
     onUpdate('completedSections', newCompletedSections);
   };
@@ -108,12 +110,12 @@ export const usePATTestingTabs = (formData: any) => {
   };
 
   const getProgressPercentage = (): number => {
-    const completedCount = tabConfigs.filter(tab => isTabComplete(tab.id)).length;
+    const completedCount = tabConfigs.filter((tab) => isTabComplete(tab.id)).length;
     return Math.round((completedCount / totalTabs) * 100);
   };
 
   const getCurrentTabLabel = (): string => {
-    const tab = tabConfigs.find(t => t.id === currentTab);
+    const tab = tabConfigs.find((t) => t.id === currentTab);
     return tab?.label || '';
   };
 
@@ -136,6 +138,6 @@ export const usePATTestingTabs = (formData: any) => {
     navigateNext,
     navigatePrevious,
     getProgressPercentage,
-    getCurrentTabLabel
+    getCurrentTabLabel,
   };
 };

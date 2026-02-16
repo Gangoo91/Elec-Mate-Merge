@@ -12,9 +12,10 @@ const SmartHomeModule7Section3Summary = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          This section demonstrated that wireless reliability is essential for smart home success, requiring proper testing, optimisation, and troubleshooting skills.
+          This section demonstrated that wireless reliability is essential for smart home success,
+          requiring proper testing, optimisation, and troubleshooting skills.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="p-3 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Signal Testing</h4>
@@ -25,7 +26,7 @@ const SmartHomeModule7Section3Summary = () => {
               <li>• Document coverage areas and dead zones</li>
             </ul>
           </div>
-          
+
           <div className="p-3 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Coverage Optimisation</h4>
             <ul className="text-sm space-y-1">
@@ -36,13 +37,16 @@ const SmartHomeModule7Section3Summary = () => {
             </ul>
           </div>
         </div>
-        
+
         <p>
-          Troubleshooting connectivity requires systematic approaches: checking power first, then signal strength, interference sources, and firmware updates. Professional installers must design around strong coverage rather than forcing devices into dead zones.
+          Troubleshooting connectivity requires systematic approaches: checking power first, then
+          signal strength, interference sources, and firmware updates. Professional installers must
+          design around strong coverage rather than forcing devices into dead zones.
         </p>
 
         <p>
-          Strong signals reduce call-backs, maintain system stability, and ensure client satisfaction — making wireless verification an essential professional skill.
+          Strong signals reduce call-backs, maintain system stability, and ensure client
+          satisfaction — making wireless verification an essential professional skill.
         </p>
       </CardContent>
     </Card>

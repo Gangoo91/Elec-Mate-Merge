@@ -1,6 +1,17 @@
 import { useState, useRef } from 'react';
 import { motion, PanInfo, useAnimation } from 'framer-motion';
-import { Trash2, Receipt, Calendar, MapPin, ChevronRight, Pencil, CheckCircle2, Coins, CloudUpload, Loader2 } from 'lucide-react';
+import {
+  Trash2,
+  Receipt,
+  Calendar,
+  MapPin,
+  ChevronRight,
+  Pencil,
+  CheckCircle2,
+  Coins,
+  CloudUpload,
+  Loader2,
+} from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { useHaptics } from '@/hooks/useHaptics';
 import { Expense, getCategoryConfig } from '@/types/expense';
@@ -176,7 +187,10 @@ export function ExpenseCard({
       <div
         className="absolute inset-y-0 left-0 right-0 flex items-center justify-end px-6 bg-red-500/20 rounded-xl overflow-hidden"
         style={{
-          opacity: swipeDirection === 'left' ? Math.min(Math.abs(swipeOffset) / Math.abs(DELETE_THRESHOLD), 1) : 0,
+          opacity:
+            swipeDirection === 'left'
+              ? Math.min(Math.abs(swipeOffset) / Math.abs(DELETE_THRESHOLD), 1)
+              : 0,
         }}
       >
         <div className="flex items-center gap-2">
@@ -188,15 +202,15 @@ export function ExpenseCard({
       {/* Card Content */}
       <motion.div
         className={cn(
-          "relative rounded-xl overflow-hidden touch-manipulation",
-          "bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.08]",
-          "hover:border-white/[0.15] transition-colors",
-          onClick && "cursor-pointer active:scale-[0.98]"
+          'relative rounded-xl overflow-hidden touch-manipulation',
+          'bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.08]',
+          'hover:border-white/[0.15] transition-colors',
+          onClick && 'cursor-pointer active:scale-[0.98]'
         )}
         animate={controls}
         style={{ x: swipeOffset }}
         transition={iosSpring}
-        drag={enableSwipe ? "x" : false}
+        drag={enableSwipe ? 'x' : false}
         dragConstraints={{ left: -120, right: onEdit ? 120 : 0 }}
         dragElastic={0.08}
         dragSnapToOrigin
@@ -209,7 +223,7 @@ export function ExpenseCard({
           {/* Category Icon */}
           <div
             className={cn(
-              "w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0",
+              'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
               `bg-${categoryConfig.colour}/15`
             )}
             style={{
@@ -217,7 +231,7 @@ export function ExpenseCard({
             }}
           >
             <CategoryIcon
-              className={cn("h-5 w-5", `text-${categoryConfig.colour}`)}
+              className={cn('h-5 w-5', `text-${categoryConfig.colour}`)}
               style={{ color: `var(--${categoryConfig.colour}, #f97316)` }}
             />
           </div>
@@ -243,30 +257,45 @@ export function ExpenseCard({
             {/* Row 3: Badges */}
             <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-2">
               {expense.receipt_url && (
-                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400"
+                >
                   <Receipt className="h-2.5 w-2.5 mr-0.5" />
                   Receipt
                 </Badge>
               )}
               {expense.category === 'mileage' && expense.mileage_miles && (
-                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-white/20 bg-white/5 text-foreground/70">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] px-1.5 py-0 h-4 border-white/20 bg-white/5 text-foreground/70"
+                >
                   <MapPin className="h-2.5 w-2.5 mr-0.5" />
                   {expense.mileage_miles} mi
                 </Badge>
               )}
               {expense.ai_extracted && (
-                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-blue-500/30 bg-blue-500/10 text-blue-400">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] px-1.5 py-0 h-4 border-blue-500/30 bg-blue-500/10 text-blue-400"
+                >
                   AI
                 </Badge>
               )}
               {expense.tax_deductible && (
-                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-amber-500/30 bg-amber-500/10 text-amber-400">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] px-1.5 py-0 h-4 border-amber-500/30 bg-amber-500/10 text-amber-400"
+                >
                   <Coins className="h-2.5 w-2.5 mr-0.5" />
                   Tax
                 </Badge>
               )}
               {expense.synced_to_accounting && (
-                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400"
+                >
                   <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" />
                   Synced
                 </Badge>
@@ -284,7 +313,10 @@ export function ExpenseCard({
           {/* Sync / Chevron */}
           {showSyncButton && !expense.synced_to_accounting ? (
             <button
-              onClick={(e) => { e.stopPropagation(); onSync?.(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onSync?.();
+              }}
               disabled={isSyncing}
               className="w-11 h-11 flex items-center justify-center rounded-xl bg-amber-500/15 active:scale-[0.95] transition-all touch-manipulation flex-shrink-0"
             >

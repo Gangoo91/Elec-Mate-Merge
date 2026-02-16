@@ -11,7 +11,6 @@ export const PracticalBridgeImplementationSection = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
-        
         <div className="bg-blue-900/10 border border-blue-600/20 rounded-lg p-4">
           <h4 className="text-blue-200 font-semibold mb-3 flex items-center gap-2">
             <Search className="h-4 w-4" />
@@ -43,45 +42,65 @@ export const PracticalBridgeImplementationSection = () => {
 
         <div className="space-y-4">
           <h4 className="text-foreground font-semibold">Step-by-Step Bridge Setup</h4>
-          
+
           <div className="space-y-3">
             <div className="flex items-start gap-3 p-3 bg-gray-800/50 border border-gray-600/30 rounded-lg">
-              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">1</div>
+              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">
+                1
+              </div>
               <div>
                 <h5 className="text-foreground font-medium">Network Preparation</h5>
-                <p className="text-gray-400 text-sm">Ensure stable Wi-Fi coverage, check bandwidth, configure guest networks if needed</p>
+                <p className="text-gray-400 text-sm">
+                  Ensure stable Wi-Fi coverage, check bandwidth, configure guest networks if needed
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-3 bg-gray-800/50 border border-gray-600/30 rounded-lg">
-              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">2</div>
+              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">
+                2
+              </div>
               <div>
                 <h5 className="text-foreground font-medium">Bridge Installation</h5>
-                <p className="text-gray-400 text-sm">Connect bridge to router via Ethernet, power on, verify LED status indicators</p>
+                <p className="text-gray-400 text-sm">
+                  Connect bridge to router via Ethernet, power on, verify LED status indicators
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-3 bg-gray-800/50 border border-gray-600/30 rounded-lg">
-              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">3</div>
+              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">
+                3
+              </div>
               <div>
                 <h5 className="text-foreground font-medium">Device Pairing</h5>
-                <p className="text-gray-400 text-sm">Use manufacturer app to discover and pair target devices with the bridge</p>
+                <p className="text-gray-400 text-sm">
+                  Use manufacturer app to discover and pair target devices with the bridge
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-3 bg-gray-800/50 border border-gray-600/30 rounded-lg">
-              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">4</div>
+              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">
+                4
+              </div>
               <div>
                 <h5 className="text-foreground font-medium">Ecosystem Integration</h5>
-                <p className="text-gray-400 text-sm">Enable skills/integrations in voice assistant apps, test basic commands</p>
+                <p className="text-gray-400 text-sm">
+                  Enable skills/integrations in voice assistant apps, test basic commands
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-3 bg-gray-800/50 border border-gray-600/30 rounded-lg">
-              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">5</div>
+              <div className="bg-blue-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center mt-0.5">
+                5
+              </div>
               <div>
                 <h5 className="text-foreground font-medium">Testing & Validation</h5>
-                <p className="text-gray-400 text-sm">Test all control methods, verify automation triggers, document any limitations</p>
+                <p className="text-gray-400 text-sm">
+                  Test all control methods, verify automation triggers, document any limitations
+                </p>
               </div>
             </div>
           </div>

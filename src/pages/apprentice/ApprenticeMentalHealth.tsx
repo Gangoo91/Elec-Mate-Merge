@@ -1,9 +1,8 @@
-
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Heart,
   BookOpen,
@@ -29,38 +28,38 @@ import {
   Award,
   ArrowLeft,
   X,
-  Headphones
-} from "lucide-react";
-import ResourcesLibraryTab from "@/components/mental-health/tabs/ResourcesLibraryTab";
-import InteractiveToolsTab from "@/components/mental-health/tabs/InteractiveToolsTab";
-import SupportNetworkTab from "@/components/mental-health/tabs/SupportNetworkTab";
-import CrisisResourcesTab from "@/components/mental-health/tabs/CrisisResourcesTab";
-import PodcastsTab from "@/components/mental-health/podcasts/PodcastsTab";
-import { PeerSupportHub } from "@/components/mental-health/peer-support";
-import { MentalHealthProvider, useMentalHealth } from "@/contexts/MentalHealthContext";
-import QuickMoodCheck from "@/components/mental-health/QuickMoodCheck";
-import BreathingExercise from "@/components/mental-health/BreathingExercise";
-import GratitudeJournal from "@/components/mental-health/GratitudeJournal";
-import DailyAffirmation from "@/components/mental-health/DailyAffirmation";
-import WellbeingJournal from "@/components/mental-health/journal/WellbeingJournal";
-import PersonalSafetyPlan from "@/components/mental-health/safety/PersonalSafetyPlan";
-import GroundingExercises from "@/components/mental-health/exercises/GroundingExercises";
-import SleepTracker from "@/components/mental-health/SleepTracker";
-import MoodInsights from "@/components/mental-health/MoodInsights";
-import QuickCopingToolkit from "@/components/mental-health/QuickCopingToolkit";
-import { useAuth } from "@/contexts/AuthContext";
+  Headphones,
+} from 'lucide-react';
+import ResourcesLibraryTab from '@/components/mental-health/tabs/ResourcesLibraryTab';
+import InteractiveToolsTab from '@/components/mental-health/tabs/InteractiveToolsTab';
+import SupportNetworkTab from '@/components/mental-health/tabs/SupportNetworkTab';
+import CrisisResourcesTab from '@/components/mental-health/tabs/CrisisResourcesTab';
+import PodcastsTab from '@/components/mental-health/podcasts/PodcastsTab';
+import { PeerSupportHub } from '@/components/mental-health/peer-support';
+import { MentalHealthProvider, useMentalHealth } from '@/contexts/MentalHealthContext';
+import QuickMoodCheck from '@/components/mental-health/QuickMoodCheck';
+import BreathingExercise from '@/components/mental-health/BreathingExercise';
+import GratitudeJournal from '@/components/mental-health/GratitudeJournal';
+import DailyAffirmation from '@/components/mental-health/DailyAffirmation';
+import WellbeingJournal from '@/components/mental-health/journal/WellbeingJournal';
+import PersonalSafetyPlan from '@/components/mental-health/safety/PersonalSafetyPlan';
+import GroundingExercises from '@/components/mental-health/exercises/GroundingExercises';
+import SleepTracker from '@/components/mental-health/SleepTracker';
+import MoodInsights from '@/components/mental-health/MoodInsights';
+import QuickCopingToolkit from '@/components/mental-health/QuickCopingToolkit';
+import { useAuth } from '@/contexts/AuthContext';
 
 const moodEmojis = [
-  { value: 1, emoji: "😢", label: "Struggling", color: "from-red-500 to-red-600" },
-  { value: 2, emoji: "😔", label: "Low", color: "from-orange-500 to-orange-600" },
-  { value: 3, emoji: "😐", label: "Okay", color: "from-yellow-500 to-yellow-600" },
-  { value: 4, emoji: "🙂", label: "Good", color: "from-lime-500 to-lime-600" },
-  { value: 5, emoji: "😊", label: "Great", color: "from-green-500 to-green-600" }
+  { value: 1, emoji: '😢', label: 'Struggling', color: 'from-red-500 to-red-600' },
+  { value: 2, emoji: '😔', label: 'Low', color: 'from-orange-500 to-orange-600' },
+  { value: 3, emoji: '😐', label: 'Okay', color: 'from-yellow-500 to-yellow-600' },
+  { value: 4, emoji: '🙂', label: 'Good', color: 'from-lime-500 to-lime-600' },
+  { value: 5, emoji: '😊', label: 'Great', color: 'from-green-500 to-green-600' },
 ];
 
 const MentalHealthContent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeSectionParam = searchParams.get("section");
+  const activeSectionParam = searchParams.get('section');
   const [activeSection, setActiveSection] = useState<string | null>(activeSectionParam);
   const [showQuickMood, setShowQuickMood] = useState(false);
 
@@ -69,7 +68,7 @@ const MentalHealthContent = () => {
     if (activeSection) {
       setSearchParams({ section: activeSection }, { replace: false });
     } else {
-      searchParams.delete("section");
+      searchParams.delete('section');
       setSearchParams(searchParams, { replace: false });
     }
   }, [activeSection]);
@@ -78,17 +77,16 @@ const MentalHealthContent = () => {
   const { user } = useAuth();
 
   // Get user's first name
-  const firstName = user?.user_metadata?.full_name?.split(' ')[0] ||
-                    user?.email?.split('@')[0] ||
-                    'there';
+  const firstName =
+    user?.user_metadata?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || 'there';
 
   // Get time-based greeting
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return { text: "Good morning", icon: Sun, color: "text-amber-400" };
-    if (hour < 17) return { text: "Good afternoon", icon: Sun, color: "text-yellow-400" };
-    if (hour < 21) return { text: "Good evening", icon: Sunset, color: "text-orange-400" };
-    return { text: "Good night", icon: Moon, color: "text-indigo-400" };
+    if (hour < 12) return { text: 'Good morning', icon: Sun, color: 'text-amber-400' };
+    if (hour < 17) return { text: 'Good afternoon', icon: Sun, color: 'text-yellow-400' };
+    if (hour < 21) return { text: 'Good evening', icon: Sunset, color: 'text-orange-400' };
+    return { text: 'Good night', icon: Moon, color: 'text-indigo-400' };
   };
 
   const greeting = getGreeting();
@@ -96,7 +94,7 @@ const MentalHealthContent = () => {
 
   // Check if user logged mood today
   const today = new Date().toISOString().split('T')[0];
-  const todaysMood = moodHistory.find(entry => entry.date === today);
+  const todaysMood = moodHistory.find((entry) => entry.date === today);
   const lastMoodEntry = moodHistory[0];
 
   // Calculate streak
@@ -108,7 +106,7 @@ const MentalHealthContent = () => {
       const checkDate = new Date(now);
       checkDate.setDate(now.getDate() - i);
       const dateStr = checkDate.toISOString().split('T')[0];
-      if (moodHistory.some(e => e.date === dateStr)) {
+      if (moodHistory.some((e) => e.date === dateStr)) {
         streak++;
       } else if (i > 0) break;
     }
@@ -142,7 +140,7 @@ const MentalHealthContent = () => {
     if (mood <= 2) {
       setTimeout(() => {
         setShowQuickMood(false);
-        setActiveSection("talk");
+        setActiveSection('talk');
       }, 500);
     } else {
       setTimeout(() => setShowQuickMood(false), 1500);
@@ -151,142 +149,142 @@ const MentalHealthContent = () => {
 
   const quickActions = [
     {
-      id: "coping",
-      title: "Cope",
-      description: "Quick relief",
+      id: 'coping',
+      title: 'Cope',
+      description: 'Quick relief',
       icon: Zap,
-      gradient: "from-yellow-500/30 to-orange-500/20",
-      border: "border-yellow-500/40",
-      iconColor: "text-yellow-400",
-      glow: "shadow-yellow-500/20"
+      gradient: 'from-yellow-500/30 to-orange-500/20',
+      border: 'border-yellow-500/40',
+      iconColor: 'text-yellow-400',
+      glow: 'shadow-yellow-500/20',
     },
     {
-      id: "breathing",
-      title: "Breathe",
-      description: "2-min calm",
+      id: 'breathing',
+      title: 'Breathe',
+      description: '2-min calm',
       icon: Wind,
-      gradient: "from-blue-500/30 to-cyan-500/20",
-      border: "border-blue-500/40",
-      iconColor: "text-blue-400",
-      glow: "shadow-blue-500/20"
+      gradient: 'from-blue-500/30 to-cyan-500/20',
+      border: 'border-blue-500/40',
+      iconColor: 'text-blue-400',
+      glow: 'shadow-blue-500/20',
     },
     {
-      id: "mood",
-      title: "Check In",
-      description: "Log mood",
+      id: 'mood',
+      title: 'Check In',
+      description: 'Log mood',
       icon: Heart,
-      gradient: "from-pink-500/30 to-rose-500/20",
-      border: "border-pink-500/40",
-      iconColor: "text-pink-400",
-      glow: "shadow-pink-500/20",
-      badge: !todaysMood ? "!" : null
+      gradient: 'from-pink-500/30 to-rose-500/20',
+      border: 'border-pink-500/40',
+      iconColor: 'text-pink-400',
+      glow: 'shadow-pink-500/20',
+      badge: !todaysMood ? '!' : null,
     },
     {
-      id: "grounding",
-      title: "Ground",
-      description: "5-4-3-2-1",
+      id: 'grounding',
+      title: 'Ground',
+      description: '5-4-3-2-1',
       icon: Anchor,
-      gradient: "from-amber-500/30 to-yellow-500/20",
-      border: "border-amber-500/40",
-      iconColor: "text-amber-400",
-      glow: "shadow-amber-500/20"
-    }
+      gradient: 'from-amber-500/30 to-yellow-500/20',
+      border: 'border-amber-500/40',
+      iconColor: 'text-amber-400',
+      glow: 'shadow-amber-500/20',
+    },
   ];
 
   const mainSections = [
     {
-      id: "talk",
-      title: "Mental Health Mate",
-      description: "Chat with AI or connect with peer support",
+      id: 'talk',
+      title: 'Mental Health Mate',
+      description: 'Chat with AI or connect with peer support',
       icon: MessageCircle,
-      gradient: "from-purple-500/20 via-pink-500/10 to-transparent",
-      border: "border-purple-500/30",
-      iconBg: "bg-gradient-to-br from-purple-500/30 to-pink-500/20",
-      iconColor: "text-purple-400",
-      badge: { text: "AI + Peers", color: "bg-purple-500/20 text-purple-300" }
+      gradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
+      border: 'border-purple-500/30',
+      iconBg: 'bg-gradient-to-br from-purple-500/30 to-pink-500/20',
+      iconColor: 'text-purple-400',
+      badge: { text: 'AI + Peers', color: 'bg-purple-500/20 text-purple-300' },
     },
     {
-      id: "journal",
-      title: "Wellbeing Journal",
-      description: "Track thoughts, feelings & gratitude",
+      id: 'journal',
+      title: 'Wellbeing Journal',
+      description: 'Track thoughts, feelings & gratitude',
       icon: PenLine,
-      gradient: "from-pink-500/20 via-purple-500/10 to-transparent",
-      border: "border-pink-500/30",
-      iconBg: "bg-gradient-to-br from-pink-500/30 to-purple-500/20",
-      iconColor: "text-pink-400"
+      gradient: 'from-pink-500/20 via-purple-500/10 to-transparent',
+      border: 'border-pink-500/30',
+      iconBg: 'bg-gradient-to-br from-pink-500/30 to-purple-500/20',
+      iconColor: 'text-pink-400',
     },
     {
-      id: "safety-plan",
-      title: "My Safety Plan",
-      description: "Personal crisis prevention toolkit",
+      id: 'safety-plan',
+      title: 'My Safety Plan',
+      description: 'Personal crisis prevention toolkit',
       icon: Shield,
-      gradient: "from-emerald-500/20 via-teal-500/10 to-transparent",
-      border: "border-emerald-500/30",
-      iconBg: "bg-gradient-to-br from-emerald-500/30 to-teal-500/20",
-      iconColor: "text-emerald-400",
-      badge: { text: "Important", color: "bg-emerald-500/20 text-emerald-300" }
+      gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
+      border: 'border-emerald-500/30',
+      iconBg: 'bg-gradient-to-br from-emerald-500/30 to-teal-500/20',
+      iconColor: 'text-emerald-400',
+      badge: { text: 'Important', color: 'bg-emerald-500/20 text-emerald-300' },
     },
     {
-      id: "sleep",
-      title: "Sleep Tracker",
-      description: "Track sleep patterns for better wellbeing",
+      id: 'sleep',
+      title: 'Sleep Tracker',
+      description: 'Track sleep patterns for better wellbeing',
       icon: Moon,
-      gradient: "from-indigo-500/20 via-blue-500/10 to-transparent",
-      border: "border-indigo-500/30",
-      iconBg: "bg-gradient-to-br from-indigo-500/30 to-blue-500/20",
-      iconColor: "text-indigo-400"
+      gradient: 'from-indigo-500/20 via-blue-500/10 to-transparent',
+      border: 'border-indigo-500/30',
+      iconBg: 'bg-gradient-to-br from-indigo-500/30 to-blue-500/20',
+      iconColor: 'text-indigo-400',
     },
     {
-      id: "insights",
-      title: "Mood Insights",
-      description: "Understand your mood patterns",
+      id: 'insights',
+      title: 'Mood Insights',
+      description: 'Understand your mood patterns',
       icon: TrendingUp,
-      gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
-      border: "border-blue-500/30",
-      iconBg: "bg-gradient-to-br from-blue-500/30 to-cyan-500/20",
-      iconColor: "text-blue-400"
+      gradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
+      border: 'border-blue-500/30',
+      iconBg: 'bg-gradient-to-br from-blue-500/30 to-cyan-500/20',
+      iconColor: 'text-blue-400',
     },
     {
-      id: "tools",
-      title: "Interactive Tools",
-      description: "Mood tracking, stress relief, goals",
+      id: 'tools',
+      title: 'Interactive Tools',
+      description: 'Mood tracking, stress relief, goals',
       icon: Target,
-      gradient: "from-yellow-500/20 via-orange-500/10 to-transparent",
-      border: "border-yellow-500/30",
-      iconBg: "bg-gradient-to-br from-yellow-500/30 to-orange-500/20",
-      iconColor: "text-yellow-400"
+      gradient: 'from-yellow-500/20 via-orange-500/10 to-transparent',
+      border: 'border-yellow-500/30',
+      iconBg: 'bg-gradient-to-br from-yellow-500/30 to-orange-500/20',
+      iconColor: 'text-yellow-400',
     },
     {
-      id: "resources",
-      title: "Resources",
-      description: "Guides, videos & self-help",
+      id: 'resources',
+      title: 'Resources',
+      description: 'Guides, videos & self-help',
       icon: BookOpen,
-      gradient: "from-cyan-500/20 via-blue-500/10 to-transparent",
-      border: "border-cyan-500/30",
-      iconBg: "bg-gradient-to-br from-cyan-500/30 to-blue-500/20",
-      iconColor: "text-cyan-400"
+      gradient: 'from-cyan-500/20 via-blue-500/10 to-transparent',
+      border: 'border-cyan-500/30',
+      iconBg: 'bg-gradient-to-br from-cyan-500/30 to-blue-500/20',
+      iconColor: 'text-cyan-400',
     },
     {
-      id: "support",
-      title: "Support Network",
-      description: "Connect with peers & professionals",
+      id: 'support',
+      title: 'Support Network',
+      description: 'Connect with peers & professionals',
       icon: Users,
-      gradient: "from-green-500/20 via-emerald-500/10 to-transparent",
-      border: "border-green-500/30",
-      iconBg: "bg-gradient-to-br from-green-500/30 to-emerald-500/20",
-      iconColor: "text-green-400"
+      gradient: 'from-green-500/20 via-emerald-500/10 to-transparent',
+      border: 'border-green-500/30',
+      iconBg: 'bg-gradient-to-br from-green-500/30 to-emerald-500/20',
+      iconColor: 'text-green-400',
     },
     {
-      id: "podcasts",
-      title: "Podcasts",
-      description: "Mental health podcasts for tradespeople",
+      id: 'podcasts',
+      title: 'Podcasts',
+      description: 'Mental health podcasts for tradespeople',
       icon: Headphones,
-      gradient: "from-orange-500/20 via-amber-500/10 to-transparent",
-      border: "border-orange-500/30",
-      iconBg: "bg-gradient-to-br from-orange-500/30 to-amber-500/20",
-      iconColor: "text-orange-400",
-      badge: { text: "New", color: "bg-orange-500/20 text-orange-300" }
-    }
+      gradient: 'from-orange-500/20 via-amber-500/10 to-transparent',
+      border: 'border-orange-500/30',
+      iconBg: 'bg-gradient-to-br from-orange-500/30 to-amber-500/20',
+      iconColor: 'text-orange-400',
+      badge: { text: 'New', color: 'bg-orange-500/20 text-orange-300' },
+    },
   ];
 
   const renderActiveSection = () => {
@@ -302,87 +300,85 @@ const MentalHealthContent = () => {
     );
 
     switch (activeSection) {
-      case "breathing":
+      case 'breathing':
         return <BreathingExercise onClose={() => setActiveSection(null)} />;
-      case "mood":
+      case 'mood':
         return <QuickMoodCheck onClose={() => setActiveSection(null)} />;
-      case "gratitude":
+      case 'gratitude':
         return <GratitudeJournal onClose={() => setActiveSection(null)} />;
-      case "journal":
+      case 'journal':
         return (
           <div>
             <BackBtn />
             <WellbeingJournal />
           </div>
         );
-      case "grounding":
+      case 'grounding':
         return (
           <div>
             <BackBtn />
             <GroundingExercises />
           </div>
         );
-      case "coping":
+      case 'coping':
         return (
           <div>
             <BackBtn />
             <QuickCopingToolkit />
           </div>
         );
-      case "sleep":
+      case 'sleep':
         return (
           <div>
             <BackBtn />
             <SleepTracker />
           </div>
         );
-      case "insights":
+      case 'insights':
         return (
           <div>
             <BackBtn />
             <MoodInsights />
           </div>
         );
-      case "safety-plan":
+      case 'safety-plan':
         return (
           <div>
             <BackBtn />
             <PersonalSafetyPlan />
           </div>
         );
-      case "talk":
-        return (
-          <PeerSupportHub onClose={() => setActiveSection(null)} />
-        );
-      case "tools":
+      case 'talk':
+        return <PeerSupportHub onClose={() => setActiveSection(null)} />;
+      case 'tools':
         return (
           <div>
             <BackBtn />
             <InteractiveToolsTab />
           </div>
         );
-      case "resources":
+      case 'resources':
         return (
           <div>
             <BackBtn />
             <ResourcesLibraryTab />
           </div>
         );
-      case "support":
+      case 'support':
         return (
           <div>
             <BackBtn />
             <SupportNetworkTab />
           </div>
         );
-      case "podcasts":
+      case 'podcasts':
         return (
           <div>
             <BackBtn />
             <PodcastsTab />
           </div>
         );
-      case "crisis":
+      case 'crisis':
         return (
           <div>
             <BackBtn />
@@ -396,9 +392,7 @@ const MentalHealthContent = () => {
 
   if (activeSection) {
     return (
-      <div className="max-w-4xl mx-auto px-4 pb-24 animate-fade-in">
-        {renderActiveSection()}
-      </div>
+      <div className="max-w-4xl mx-auto px-4 pb-24 animate-fade-in">{renderActiveSection()}</div>
     );
   }
 
@@ -416,13 +410,11 @@ const MentalHealthContent = () => {
                 <GreetingIcon className={`h-5 w-5 ${greeting.color}`} />
                 <span className={`text-sm font-medium ${greeting.color}`}>{greeting.text}</span>
               </div>
-              <h1 className="text-2xl font-bold text-white mb-1">
-                {firstName}
-              </h1>
+              <h1 className="text-2xl font-bold text-white mb-1">{firstName}</h1>
               <p className="text-sm text-white">
                 {todaysMood
                   ? "You've checked in today. How are you now?"
-                  : "How are you feeling today?"}
+                  : 'How are you feeling today?'}
               </p>
             </div>
 
@@ -430,7 +422,7 @@ const MentalHealthContent = () => {
             {todaysMood && (
               <div className="flex flex-col items-center">
                 <span className="text-3xl">
-                  {moodEmojis.find(m => m.value === todaysMood.mood)?.emoji || "😐"}
+                  {moodEmojis.find((m) => m.value === todaysMood.mood)?.emoji || '😐'}
                 </span>
                 <span className="text-[10px] text-white mt-1">Today</span>
               </div>
@@ -446,9 +438,10 @@ const MentalHealthContent = () => {
                   key={mood.value}
                   onClick={() => handleQuickMood(mood.value)}
                   className={`flex-1 py-3 rounded-xl transition-all duration-200
-                    ${selectedQuickMood === mood.value
-                      ? `bg-gradient-to-br ${mood.color} scale-105 shadow-lg`
-                      : 'bg-white/5 hover:bg-white/10 active:scale-95'
+                    ${
+                      selectedQuickMood === mood.value
+                        ? `bg-gradient-to-br ${mood.color} scale-105 shadow-lg`
+                        : 'bg-white/5 hover:bg-white/10 active:scale-95'
                     }`}
                 >
                   <span className="text-2xl">{mood.emoji}</span>
@@ -506,11 +499,9 @@ const MentalHealthContent = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-amber-400">
-                {streak >= 7 ? "Amazing consistency!" : "You're building a habit!"}
+                {streak >= 7 ? 'Amazing consistency!' : "You're building a habit!"}
               </p>
-              <p className="text-xs text-white">
-                {streak} day streak - keep going!
-              </p>
+              <p className="text-xs text-white">{streak} day streak - keep going!</p>
             </div>
             <Sparkles className="h-5 w-5 text-amber-400/50" />
           </CardContent>
@@ -564,14 +555,18 @@ const MentalHealthContent = () => {
                 focus:outline-none focus:ring-2 focus:ring-white/20`}
             >
               <div className="flex items-center gap-3">
-                <div className={`flex-shrink-0 w-11 h-11 rounded-xl ${section.iconBg} flex items-center justify-center`}>
+                <div
+                  className={`flex-shrink-0 w-11 h-11 rounded-xl ${section.iconBg} flex items-center justify-center`}
+                >
                   <section.icon className={`h-5 w-5 ${section.iconColor}`} />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <div className="flex items-center gap-2">
                     <h3 className="font-semibold text-white text-sm">{section.title}</h3>
                     {section.badge && (
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${section.badge.color}`}>
+                      <span
+                        className={`text-[10px] px-2 py-0.5 rounded-full ${section.badge.color}`}
+                      >
                         {section.badge.text}
                       </span>
                     )}
@@ -626,7 +621,7 @@ const MentalHealthContent = () => {
 
       {/* Floating Crisis Button */}
       <button
-        onClick={() => setActiveSection("crisis")}
+        onClick={() => setActiveSection('crisis')}
         className="fixed bottom-20 right-4 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-red-500 to-red-600
           shadow-lg shadow-red-500/30 flex items-center justify-center
           hover:scale-105 active:scale-95 transition-transform"

@@ -1,58 +1,58 @@
-import { ArrowLeft, Eye, Zap, Shield, RotateCcw, TestTube, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Eye, Zap, Shield, RotateCcw, TestTube, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule4Section5 = () => {
   useSEO(
-    "Section 4.5: Testing and Inspection - MOET Module 4",
-    "Visual inspections, continuity, insulation resistance, earth fault testing and functional testing"
+    'Section 4.5: Testing and Inspection - MOET Module 4',
+    'Visual inspections, continuity, insulation resistance, earth fault testing and functional testing'
   );
 
   const subsections = [
     {
-      number: "4.5.1",
-      title: "Visual Inspections",
-      description: "Systematic visual inspection procedures and safety checks",
+      number: '4.5.1',
+      title: 'Visual Inspections',
+      description: 'Systematic visual inspection procedures and safety checks',
       icon: Eye,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section5-1"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-1',
     },
     {
-      number: "4.5.2",
-      title: "Continuity and Polarity Testing",
-      description: "Testing electrical continuity and verifying correct polarity",
+      number: '4.5.2',
+      title: 'Continuity and Polarity Testing',
+      description: 'Testing electrical continuity and verifying correct polarity',
       icon: Zap,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section5-2"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-2',
     },
     {
-      number: "4.5.3",
-      title: "Insulation Resistance",
-      description: "Measuring and evaluating insulation resistance values",
+      number: '4.5.3',
+      title: 'Insulation Resistance',
+      description: 'Measuring and evaluating insulation resistance values',
       icon: Shield,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section5-3"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-3',
     },
     {
-      number: "4.5.4",
-      title: "Earth Fault Loop Impedance",
-      description: "Testing earth fault loop impedance and protective conductor integrity",
+      number: '4.5.4',
+      title: 'Earth Fault Loop Impedance',
+      description: 'Testing earth fault loop impedance and protective conductor integrity',
       icon: RotateCcw,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section5-4"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-4',
     },
     {
-      number: "4.5.5",
-      title: "RCD Testing",
-      description: "Testing residual current devices and protective systems",
+      number: '4.5.5',
+      title: 'RCD Testing',
+      description: 'Testing residual current devices and protective systems',
       icon: TestTube,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section5-5"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-5',
     },
     {
-      number: "4.5.6",
-      title: "Functional Testing of Equipment",
-      description: "Operational testing and performance verification procedures",
+      number: '4.5.6',
+      title: 'Functional Testing of Equipment',
+      description: 'Operational testing and performance verification procedures',
       icon: Settings,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section5-6"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-6',
+    },
   ];
 
   return (
@@ -60,7 +60,11 @@ const MOETModule4Section5 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 4
@@ -76,7 +80,8 @@ const MOETModule4Section5 = () => {
             Section 4.5: Testing and Inspection
           </h1>
           <p className="text-xl text-muted-foreground max-w-5xl">
-            Visual inspections, continuity, insulation resistance, earth fault testing and functional testing.
+            Visual inspections, continuity, insulation resistance, earth fault testing and
+            functional testing.
           </p>
         </div>
 

@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const EmergencyLightingLearningOutcomesSection3_3 = () => {
   const outcomes = [
-    "Explain how mounting height affects light distribution and lux levels",
-    "Identify common photometric terms and data relevant to emergency lighting design",
-    "Use manufacturer spacing tables and polar diagrams for correct placement",
-    "Recognise the risks of poor installation height or beam selection",
-    "Apply photometric principles to real-world emergency lighting installations"
+    'Explain how mounting height affects light distribution and lux levels',
+    'Identify common photometric terms and data relevant to emergency lighting design',
+    'Use manufacturer spacing tables and polar diagrams for correct placement',
+    'Recognise the risks of poor installation height or beam selection',
+    'Apply photometric principles to real-world emergency lighting installations',
   ];
 
   return (

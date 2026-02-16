@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Zap,
   Clock,
@@ -15,29 +15,34 @@ import {
   Users,
   Activity,
   History,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   useAutomationRules,
   useAutomationLogs,
   useAutomationStats,
   useToggleAutomation,
   useRunAutomation,
-} from "@/hooks/useAutomations";
-import { getCategoryInfo, getTriggerTypeInfo, type AutomationRule, type AutomationLog } from "@/services/automationService";
-import { CreateAutomationRuleSheet } from "@/components/employer/dialogs/CreateAutomationRuleSheet";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { formatDistanceToNow } from "date-fns";
+} from '@/hooks/useAutomations';
+import {
+  getCategoryInfo,
+  getTriggerTypeInfo,
+  type AutomationRule,
+  type AutomationLog,
+} from '@/services/automationService';
+import { CreateAutomationRuleSheet } from '@/components/employer/dialogs/CreateAutomationRuleSheet';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { formatDistanceToNow } from 'date-fns';
 
 export function AutomationsSection() {
   const isMobile = useIsMobile();
-  const [activeTab, setActiveTab] = useState("rules");
+  const [activeTab, setActiveTab] = useState('rules');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
 
@@ -48,36 +53,49 @@ export function AutomationsSection() {
   const runMutation = useRunAutomation();
 
   const categories = ['compliance', 'jobs', 'finance', 'hr'];
-  
+
   const filteredRules = selectedCategory
-    ? rules?.filter(r => r.category === selectedCategory)
+    ? rules?.filter((r) => r.category === selectedCategory)
     : rules;
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'compliance': return <Shield className="h-4 w-4" />;
-      case 'jobs': return <Briefcase className="h-4 w-4" />;
-      case 'finance': return <DollarSign className="h-4 w-4" />;
-      case 'hr': return <Users className="h-4 w-4" />;
-      default: return <Zap className="h-4 w-4" />;
+      case 'compliance':
+        return <Shield className="h-4 w-4" />;
+      case 'jobs':
+        return <Briefcase className="h-4 w-4" />;
+      case 'finance':
+        return <DollarSign className="h-4 w-4" />;
+      case 'hr':
+        return <Users className="h-4 w-4" />;
+      default:
+        return <Zap className="h-4 w-4" />;
     }
   };
 
   const getTriggerIcon = (type: string) => {
     switch (type) {
-      case 'schedule': return <Clock className="h-3.5 w-3.5" />;
-      case 'field_change': return <RefreshCw className="h-3.5 w-3.5" />;
-      case 'record_created': return <Plus className="h-3.5 w-3.5" />;
-      default: return <Zap className="h-3.5 w-3.5" />;
+      case 'schedule':
+        return <Clock className="h-3.5 w-3.5" />;
+      case 'field_change':
+        return <RefreshCw className="h-3.5 w-3.5" />;
+      case 'record_created':
+        return <Plus className="h-3.5 w-3.5" />;
+      default:
+        return <Zap className="h-3.5 w-3.5" />;
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'success': return <CheckCircle2 className="h-4 w-4 text-green-500" />;
-      case 'failed': return <XCircle className="h-4 w-4 text-destructive" />;
-      case 'partial': return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
-      default: return null;
+      case 'success':
+        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+      case 'failed':
+        return <XCircle className="h-4 w-4 text-destructive" />;
+      case 'partial':
+        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+      default:
+        return null;
     }
   };
 
@@ -113,7 +131,7 @@ export function AutomationsSection() {
         </div>
         <Button onClick={() => setShowCreateSheet(true)} className="gap-2">
           <Plus className="h-4 w-4" />
-          {!isMobile && "Create Rule"}
+          {!isMobile && 'Create Rule'}
         </Button>
       </div>
 
@@ -124,9 +142,7 @@ export function AutomationsSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-muted-foreground">Active Rules</p>
-                <p className="text-2xl font-bold text-foreground">
-                  {stats?.activeRules || 0}
-                </p>
+                <p className="text-2xl font-bold text-foreground">{stats?.activeRules || 0}</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
                 <Zap className="h-5 w-5 text-elec-yellow" />
@@ -140,9 +156,7 @@ export function AutomationsSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-muted-foreground">Total Executions</p>
-                <p className="text-2xl font-bold text-foreground">
-                  {stats?.totalExecutions || 0}
-                </p>
+                <p className="text-2xl font-bold text-foreground">{stats?.totalExecutions || 0}</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
                 <Activity className="h-5 w-5 text-muted-foreground" />
@@ -159,7 +173,8 @@ export function AutomationsSection() {
                 <p className="text-2xl font-bold text-green-600">
                   {stats?.totalExecutions
                     ? Math.round((stats.successfulExecutions / stats.totalExecutions) * 100)
-                    : 100}%
+                    : 100}
+                  %
                 </p>
               </div>
               <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center">
@@ -174,9 +189,7 @@ export function AutomationsSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-muted-foreground">Actions This Week</p>
-                <p className="text-2xl font-bold text-foreground">
-                  {stats?.actionsThisWeek || 0}
-                </p>
+                <p className="text-2xl font-bold text-foreground">{stats?.actionsThisWeek || 0}</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
                 <History className="h-5 w-5 text-muted-foreground" />
@@ -203,7 +216,7 @@ export function AutomationsSection() {
           {/* Category Filter */}
           <div className="flex flex-wrap gap-2">
             <Button
-              variant={selectedCategory === null ? "default" : "outline"}
+              variant={selectedCategory === null ? 'default' : 'outline'}
               size="sm"
               onClick={() => setSelectedCategory(null)}
             >
@@ -214,7 +227,7 @@ export function AutomationsSection() {
               return (
                 <Button
                   key={cat}
-                  variant={selectedCategory === cat ? "default" : "outline"}
+                  variant={selectedCategory === cat ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(cat)}
                   className="gap-2"
@@ -233,9 +246,7 @@ export function AutomationsSection() {
                 key={rule.id}
                 rule={rule}
                 isMobile={isMobile}
-                onToggle={(isActive) =>
-                  toggleMutation.mutate({ id: rule.id, isActive })
-                }
+                onToggle={(isActive) => toggleMutation.mutate({ id: rule.id, isActive })}
                 onRun={() => runMutation.mutate(rule.id)}
                 isToggling={toggleMutation.isPending}
                 isRunning={runMutation.isPending}
@@ -259,9 +270,7 @@ export function AutomationsSection() {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Recent Activity</CardTitle>
-              <CardDescription>
-                Last 50 automation executions
-              </CardDescription>
+              <CardDescription>Last 50 automation executions</CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               {logsLoading ? (
@@ -298,10 +307,7 @@ export function AutomationsSection() {
       </Tabs>
 
       {/* Create Rule Sheet */}
-      <CreateAutomationRuleSheet
-        open={showCreateSheet}
-        onOpenChange={setShowCreateSheet}
-      />
+      <CreateAutomationRuleSheet open={showCreateSheet} onOpenChange={setShowCreateSheet} />
     </div>
   );
 }
@@ -387,11 +393,7 @@ function AutomationRuleCard({
                 {!isMobile && 'Run Now'}
               </Button>
             )}
-            <Switch
-              checked={rule.is_active}
-              onCheckedChange={onToggle}
-              disabled={isToggling}
-            />
+            <Switch checked={rule.is_active} onCheckedChange={onToggle} disabled={isToggling} />
           </div>
         </div>
       </CardContent>
@@ -406,8 +408,8 @@ interface AutomationLogItemProps {
 }
 
 function AutomationLogItem({ log, rules, getStatusIcon }: AutomationLogItemProps) {
-  const rule = rules.find(r => r.id === log.rule_id);
-  const successfulActions = log.actions_taken?.filter(a => a.success).length || 0;
+  const rule = rules.find((r) => r.id === log.rule_id);
+  const successfulActions = log.actions_taken?.filter((a) => a.success).length || 0;
   const totalActions = log.actions_taken?.length || 0;
 
   return (
@@ -424,8 +426,8 @@ function AutomationLogItem({ log, rules, getStatusIcon }: AutomationLogItemProps
                 log.status === 'success'
                   ? 'default'
                   : log.status === 'failed'
-                  ? 'destructive'
-                  : 'secondary'
+                    ? 'destructive'
+                    : 'secondary'
               }
               className="text-xs"
             >

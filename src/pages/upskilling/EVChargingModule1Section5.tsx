@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m1s5-check1",
-    question: "Which manufacturer specialises in solar PV integration with their EV charger?",
-    options: ["Pod Point", "myenergi (Zappi)", "Wallbox", "Andersen"],
+    id: 'evcharging-m1s5-check1',
+    question: 'Which manufacturer specialises in solar PV integration with their EV charger?',
+    options: ['Pod Point', 'myenergi (Zappi)', 'Wallbox', 'Andersen'],
     correctIndex: 1,
-    explanation: "myenergi's Zappi charger specialises in solar PV integration, offering Eco, Eco+, and Fast charging modes that can use excess solar energy for vehicle charging."
+    explanation:
+      "myenergi's Zappi charger specialises in solar PV integration, offering Eco, Eco+, and Fast charging modes that can use excess solar energy for vehicle charging.",
   },
   {
-    id: "evcharging-m1s5-check2",
-    question: "What does OCPP stand for?",
-    options: ["Open Charge Point Protocol", "Online Charging Power Platform", "Optimised Connector Power Protocol", "Open Cable Point Program"],
+    id: 'evcharging-m1s5-check2',
+    question: 'What does OCPP stand for?',
+    options: [
+      'Open Charge Point Protocol',
+      'Online Charging Power Platform',
+      'Optimised Connector Power Protocol',
+      'Open Cable Point Program',
+    ],
     correctIndex: 0,
-    explanation: "OCPP stands for Open Charge Point Protocol - a vendor-neutral communication standard that enables interoperability between charging equipment and management systems."
+    explanation:
+      'OCPP stands for Open Charge Point Protocol - a vendor-neutral communication standard that enables interoperability between charging equipment and management systems.',
   },
   {
-    id: "evcharging-m1s5-check3",
+    id: 'evcharging-m1s5-check3',
     question: "What power level is typically classified as 'rapid DC charging'?",
-    options: ["7kW", "22kW", "50kW+", "150kW+ only"],
+    options: ['7kW', '22kW', '50kW+', '150kW+ only'],
     correctIndex: 2,
-    explanation: "Rapid DC charging typically starts at 50kW and above. This provides significantly faster charging than AC chargers, with 50kW capable of adding approximately 100 miles of range in 30 minutes for many vehicles."
-  }
+    explanation:
+      'Rapid DC charging typically starts at 50kW and above. This provides significantly faster charging than AC chargers, with 50kW capable of adding approximately 100 miles of range in 30 minutes for many vehicles.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I choose between different charger manufacturers?",
-    answer: "Consider the application (domestic vs commercial), required features (solar integration, load management), customer preferences, total cost of ownership, warranty terms, and manufacturer support. Building relationships with 2-3 key manufacturers provides flexibility while maintaining expertise."
+    question: 'How do I choose between different charger manufacturers?',
+    answer:
+      'Consider the application (domestic vs commercial), required features (solar integration, load management), customer preferences, total cost of ownership, warranty terms, and manufacturer support. Building relationships with 2-3 key manufacturers provides flexibility while maintaining expertise.',
   },
   {
-    question: "What is the difference between tethered and socketed chargers?",
-    answer: "Tethered chargers have a permanently attached cable, offering convenience as users don't need to carry their own. Socketed chargers have a socket outlet requiring users to plug in their own cable. Tethered is common domestically; socketed is preferred for public/commercial where multiple connector types may be needed."
+    question: 'What is the difference between tethered and socketed chargers?',
+    answer:
+      "Tethered chargers have a permanently attached cable, offering convenience as users don't need to carry their own. Socketed chargers have a socket outlet requiring users to plug in their own cable. Tethered is common domestically; socketed is preferred for public/commercial where multiple connector types may be needed.",
   },
   {
-    question: "Should I recommend static or dynamic load management?",
-    answer: "Dynamic load management is recommended for most multi-charger installations as it maximises available capacity and responds to real-time demand. Static is simpler and cheaper but may underutilise available supply capacity. Consider the client's budget and future expansion plans."
+    question: 'Should I recommend static or dynamic load management?',
+    answer:
+      "Dynamic load management is recommended for most multi-charger installations as it maximises available capacity and responds to real-time demand. Static is simpler and cheaper but may underutilise available supply capacity. Consider the client's budget and future expansion plans.",
   },
   {
-    question: "What is V2G and when will it be widely available?",
-    answer: "Vehicle-to-Grid (V2G) allows EVs to discharge power back to the grid or building. CHAdeMO has working V2G capability now (e.g., Nissan Leaf). CCS-based V2G is emerging through ISO 15118. Wider adoption depends on vehicle compatibility, grid regulations, and commercial arrangements."
-  }
+    question: 'What is V2G and when will it be widely available?',
+    answer:
+      'Vehicle-to-Grid (V2G) allows EVs to discharge power back to the grid or building. CHAdeMO has working V2G capability now (e.g., Nissan Leaf). CCS-based V2G is emerging through ISO 15118. Wider adoption depends on vehicle compatibility, grid regulations, and commercial arrangements.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A commercial client wants to install 20 EV chargers but only has 100kW available supply. What hardware feature is essential?",
-  options: [
-    "Premium aesthetic design",
-    "Dynamic load management system",
-    "Tethered cables on all units",
-    "V2G capability"
-  ],
-  correctAnswer: 1,
-  explanation: "Dynamic load management is essential when the total charger capacity exceeds available supply. It intelligently distributes power across active charging sessions, ensuring all vehicles can charge without exceeding supply limits while maximising utilisation."
-  }
+    question:
+      'A commercial client wants to install 20 EV chargers but only has 100kW available supply. What hardware feature is essential?',
+    options: [
+      'Premium aesthetic design',
+      'Dynamic load management system',
+      'Tethered cables on all units',
+      'V2G capability',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Dynamic load management is essential when the total charger capacity exceeds available supply. It intelligently distributes power across active charging sessions, ensuring all vehicles can charge without exceeding supply limits while maximising utilisation.',
+  },
 ];
 
 const EVChargingModule1Section5 = () => {
   useSEO({
-    title: "Market-Ready Hardware | EV Charging Module 1.5",
-    description: "Explore current EV charging hardware from leading manufacturers including domestic, commercial, and rapid charging solutions."
+    title: 'Market-Ready Hardware | EV Charging Module 1.5',
+    description:
+      'Explore current EV charging hardware from leading manufacturers including domestic, commercial, and rapid charging solutions.',
   });
 
   return (
@@ -98,9 +113,7 @@ const EVChargingModule1Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Overview of Market-Ready Hardware
           </h1>
-          <p className="text-white/80">
-            Current charging equipment and manufacturers
-          </p>
+          <p className="text-white/80">Current charging equipment and manufacturers</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +121,26 @@ const EVChargingModule1Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Domestic:</strong> Pod Point, Zappi, Ohme, Wallbox (7kW)</li>
-              <li><strong>Commercial:</strong> ABB, ChargePoint (7-22kW AC)</li>
-              <li><strong>Rapid:</strong> ABB, Tritium, IONITY (50kW+ DC)</li>
+              <li>
+                <strong>Domestic:</strong> Pod Point, Zappi, Ohme, Wallbox (7kW)
+              </li>
+              <li>
+                <strong>Commercial:</strong> ABB, ChargePoint (7-22kW AC)
+              </li>
+              <li>
+                <strong>Rapid:</strong> ABB, Tritium, IONITY (50kW+ DC)
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> OCPP support, load management, smart features</li>
-              <li><strong>Use:</strong> Match hardware to client needs and budget</li>
+              <li>
+                <strong>Spot:</strong> OCPP support, load management, smart features
+              </li>
+              <li>
+                <strong>Use:</strong> Match hardware to client needs and budget
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +150,12 @@ const EVChargingModule1Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify major EV charging manufacturers",
-              "Compare different charging technologies",
-              "Select appropriate hardware for requirements",
-              "Understand smart charging features",
-              "Evaluate total cost of ownership",
-              "Recognise emerging technologies"
+              'Identify major EV charging manufacturers',
+              'Compare different charging technologies',
+              'Select appropriate hardware for requirements',
+              'Understand smart charging features',
+              'Evaluate total cost of ownership',
+              'Recognise emerging technologies',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,8 +175,8 @@ const EVChargingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The domestic EV charging market offers diverse solutions from established manufacturers,
-              each with distinct features and target applications.
+              The domestic EV charging market offers diverse solutions from established
+              manufacturers, each with distinct features and target applications.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -210,16 +233,20 @@ const EVChargingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Commercial installations require robust, manageable equipment with features
-              for access control, payment processing, and multi-user operation.
+              Commercial installations require robust, manageable equipment with features for access
+              control, payment processing, and multi-user operation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div className="p-4 rounded border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Fast AC (7-22kW)</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>ABB Terra AC:</strong> 7-22kW, OCPP 2.0.1</li>
-                  <li><strong>ChargePoint CT4000:</strong> Cloud management</li>
+                  <li>
+                    <strong>ABB Terra AC:</strong> 7-22kW, OCPP 2.0.1
+                  </li>
+                  <li>
+                    <strong>ChargePoint CT4000:</strong> Cloud management
+                  </li>
                   <li>RFID and app authentication</li>
                   <li>Revenue-grade metering available</li>
                 </ul>
@@ -227,8 +254,12 @@ const EVChargingModule1Section5 = () => {
               <div className="p-4 rounded border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Rapid DC (50kW+)</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>ABB Terra 184:</strong> 50-180kW output</li>
-                  <li><strong>Tritium Veefil:</strong> Compact design</li>
+                  <li>
+                    <strong>ABB Terra 184:</strong> 50-180kW output
+                  </li>
+                  <li>
+                    <strong>Tritium Veefil:</strong> Compact design
+                  </li>
                   <li>CCS, CHAdeMO connectors</li>
                   <li>Liquid-cooled cables available</li>
                 </ul>
@@ -238,8 +269,12 @@ const EVChargingModule1Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Ultra-Fast Charging (150kW+):</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>IONITY HPC:</strong> Up to 350kW, highway corridors</li>
-                <li><strong>Tesla Supercharger V3:</strong> 250kW peak, expanding access</li>
+                <li>
+                  <strong>IONITY HPC:</strong> Up to 350kW, highway corridors
+                </li>
+                <li>
+                  <strong>Tesla Supercharger V3:</strong> 250kW peak, expanding access
+                </li>
                 <li>Liquid-cooled cables essential at these power levels</li>
                 <li>Grid reinforcement typically required</li>
               </ul>
@@ -257,8 +292,8 @@ const EVChargingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart charging enables intelligent control, monitoring, and optimisation of
-              EV charging through connectivity and software.
+              Smart charging enables intelligent control, monitoring, and optimisation of EV
+              charging through connectivity and software.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -285,17 +320,21 @@ const EVChargingModule1Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Load Management Types:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Static:</strong> Fixed power allocation, simple implementation</li>
-                <li><strong>Dynamic:</strong> Real-time adjustment based on available capacity</li>
+                <li>
+                  <strong>Static:</strong> Fixed power allocation, simple implementation
+                </li>
+                <li>
+                  <strong>Dynamic:</strong> Real-time adjustment based on available capacity
+                </li>
                 <li>Dynamic recommended for multi-charger installations</li>
               </ul>
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="text-sm text-white">
-                <strong className="text-elec-yellow">V2G Technology:</strong> Vehicle-to-Grid enables
-                EVs to discharge power back to the grid. CHAdeMO has established V2G capability;
-                CCS V2G is emerging through ISO 15118 protocol development.
+                <strong className="text-elec-yellow">V2G Technology:</strong> Vehicle-to-Grid
+                enables EVs to discharge power back to the grid. CHAdeMO has established V2G
+                capability; CCS V2G is emerging through ISO 15118 protocol development.
               </p>
             </div>
           </div>
@@ -311,8 +350,8 @@ const EVChargingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Selecting the right hardware requires balancing technical requirements,
-              commercial considerations, and client expectations.
+              Selecting the right hardware requires balancing technical requirements, commercial
+              considerations, and client expectations.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -354,7 +393,9 @@ const EVChargingModule1Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Manufacturer Relationships</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Manufacturer Relationships
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Build expertise with 2-3 key manufacturers</li>
                 <li>Complete manufacturer training programmes</li>
@@ -366,10 +407,18 @@ const EVChargingModule1Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Over-specifying:</strong> — Match hardware to actual requirements</li>
-                <li><strong>Ignoring software:</strong> — Smart features add significant value</li>
-                <li><strong>Cheapest option:</strong> — Consider TCO, not just purchase price</li>
-                <li><strong>Future-proofing excess:</strong> — Balance today's needs with growth</li>
+                <li>
+                  <strong>Over-specifying:</strong> — Match hardware to actual requirements
+                </li>
+                <li>
+                  <strong>Ignoring software:</strong> — Smart features add significant value
+                </li>
+                <li>
+                  <strong>Cheapest option:</strong> — Consider TCO, not just purchase price
+                </li>
+                <li>
+                  <strong>Future-proofing excess:</strong> — Balance today's needs with growth
+                </li>
               </ul>
             </div>
           </div>
@@ -415,10 +464,7 @@ const EVChargingModule1Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

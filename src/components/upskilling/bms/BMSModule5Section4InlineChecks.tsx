@@ -9,9 +9,7 @@ export const KNXInlineCheck1 = () => {
           <HelpCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
           <div>
             <p className="text-foreground font-medium">Inline Check:</p>
-            <p className="text-foreground text-sm">
-              👉 Why is KNX considered vendor-neutral?
-            </p>
+            <p className="text-foreground text-sm">👉 Why is KNX considered vendor-neutral?</p>
           </div>
         </div>
       </CardContent>
@@ -63,9 +61,7 @@ export const KNXInlineCheck4 = () => {
           <HelpCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
           <div>
             <p className="text-foreground font-medium">Inline Check:</p>
-            <p className="text-foreground text-sm">
-              👉 Why are loops not allowed in KNX topology?
-            </p>
+            <p className="text-foreground text-sm">👉 Why are loops not allowed in KNX topology?</p>
           </div>
         </div>
       </CardContent>

@@ -1,6 +1,14 @@
-
 import React from 'react';
-import { Wrench, Users, Brain, Target, AlertCircle, BookOpen, TrendingUp, Shield } from 'lucide-react';
+import {
+  Wrench,
+  Users,
+  Brain,
+  Target,
+  AlertCircle,
+  BookOpen,
+  TrendingUp,
+  Shield,
+} from 'lucide-react';
 
 const PracticalGuidanceSection = () => (
   <div className="space-y-6">
@@ -39,14 +47,26 @@ const PracticalGuidanceSection = () => (
           <p className="font-medium text-blue-400 mb-2">The "SAFELY" Mnemonic:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div>
-              <p><strong>S</strong> - Switch off at origin</p>
-              <p><strong>A</strong> - Apply isolation device</p>
-              <p><strong>F</strong> - Fix with locks and tags</p>
+              <p>
+                <strong>S</strong> - Switch off at origin
+              </p>
+              <p>
+                <strong>A</strong> - Apply isolation device
+              </p>
+              <p>
+                <strong>F</strong> - Fix with locks and tags
+              </p>
             </div>
             <div>
-              <p><strong>E</strong> - Examine isolation device</p>
-              <p><strong>L</strong> - Look for voltage at work point</p>
-              <p><strong>Y</strong> - Yield to tester proving process</p>
+              <p>
+                <strong>E</strong> - Examine isolation device
+              </p>
+              <p>
+                <strong>L</strong> - Look for voltage at work point
+              </p>
+              <p>
+                <strong>Y</strong> - Yield to tester proving process
+              </p>
             </div>
           </div>
         </div>
@@ -157,9 +177,15 @@ const PracticalGuidanceSection = () => (
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Scenario 1: Emergency Call-Out</p>
           <div className="space-y-2">
-            <p><strong>Situation:</strong> 2 AM fault call to restore power to critical care unit</p>
-            <p><strong>Pressures:</strong> Time pressure, patient safety concerns, tired state</p>
-            <p><strong>Safe Approach:</strong></p>
+            <p>
+              <strong>Situation:</strong> 2 AM fault call to restore power to critical care unit
+            </p>
+            <p>
+              <strong>Pressures:</strong> Time pressure, patient safety concerns, tired state
+            </p>
+            <p>
+              <strong>Safe Approach:</strong>
+            </p>
             <ul className="ml-4 space-y-1 text-xs">
               <li>• Take time to properly assess the situation</li>
               <li>• Follow full isolation procedure despite urgency</li>
@@ -172,9 +198,16 @@ const PracticalGuidanceSection = () => (
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Scenario 2: Multi-Supply System</p>
           <div className="space-y-2">
-            <p><strong>Situation:</strong> Industrial site with main supply, generator, and UPS systems</p>
-            <p><strong>Challenges:</strong> Multiple isolation points, complex switching arrangements</p>
-            <p><strong>Safe Approach:</strong></p>
+            <p>
+              <strong>Situation:</strong> Industrial site with main supply, generator, and UPS
+              systems
+            </p>
+            <p>
+              <strong>Challenges:</strong> Multiple isolation points, complex switching arrangements
+            </p>
+            <p>
+              <strong>Safe Approach:</strong>
+            </p>
             <ul className="ml-4 space-y-1 text-xs">
               <li>• Obtain detailed electrical drawings before starting</li>
               <li>• Identify ALL possible supply sources</li>
@@ -187,9 +220,16 @@ const PracticalGuidanceSection = () => (
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">Scenario 3: Voltage Tester Failure</p>
           <div className="space-y-2">
-            <p><strong>Situation:</strong> Voltage indicator fails to show voltage on known live source</p>
-            <p><strong>Dilemma:</strong> Unsure if installation is actually dead or tester is faulty</p>
-            <p><strong>Safe Approach:</strong></p>
+            <p>
+              <strong>Situation:</strong> Voltage indicator fails to show voltage on known live
+              source
+            </p>
+            <p>
+              <strong>Dilemma:</strong> Unsure if installation is actually dead or tester is faulty
+            </p>
+            <p>
+              <strong>Safe Approach:</strong>
+            </p>
             <ul className="ml-4 space-y-1 text-xs">
               <li>• STOP work immediately - do not proceed</li>
               <li>• Obtain alternative voltage indicator</li>
@@ -331,9 +371,10 @@ const PracticalGuidanceSection = () => (
         <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Innovation in Safety:</p>
           <p className="text-sm text-gray-300">
-            Stay open to new technologies and methods that can improve safety. Whether it's new test equipment,
-            improved lockout devices, or digital systems for managing isolation procedures, embrace innovations
-            that enhance worker protection while maintaining the fundamental principles of safe isolation.
+            Stay open to new technologies and methods that can improve safety. Whether it's new test
+            equipment, improved lockout devices, or digital systems for managing isolation
+            procedures, embrace innovations that enhance worker protection while maintaining the
+            fundamental principles of safe isolation.
           </p>
         </div>
       </div>
@@ -348,18 +389,28 @@ const PracticalGuidanceSection = () => (
         <div className="bg-card rounded p-3">
           <p className="font-medium text-foreground mb-2">The Professional Mindset:</p>
           <div className="space-y-2 text-sm">
-            <p className="italic">"Every procedure I follow correctly today ensures I return home safely to my family."</p>
-            <p className="italic">"My commitment to safety protects not just me, but everyone around me."</p>
-            <p className="italic">"Professionalism means never compromising on safety, regardless of external pressures."</p>
-            <p className="italic">"The few extra minutes spent on proper isolation could prevent a lifetime of regret."</p>
+            <p className="italic">
+              "Every procedure I follow correctly today ensures I return home safely to my family."
+            </p>
+            <p className="italic">
+              "My commitment to safety protects not just me, but everyone around me."
+            </p>
+            <p className="italic">
+              "Professionalism means never compromising on safety, regardless of external
+              pressures."
+            </p>
+            <p className="italic">
+              "The few extra minutes spent on proper isolation could prevent a lifetime of regret."
+            </p>
           </div>
         </div>
         <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded p-3">
           <p className="font-medium text-green-400 mb-2">Your Safety Commitment:</p>
           <p className="text-sm text-foreground">
-            Make a personal commitment to excellence in safe isolation. Your professionalism, attention to detail,
-            and unwavering commitment to safety procedures can inspire others and contribute to a safer industry
-            for everyone. Remember: you are not just protecting yourself - you are setting an example that others will follow.
+            Make a personal commitment to excellence in safe isolation. Your professionalism,
+            attention to detail, and unwavering commitment to safety procedures can inspire others
+            and contribute to a safer industry for everyone. Remember: you are not just protecting
+            yourself - you are setting an example that others will follow.
           </p>
         </div>
       </div>

@@ -1,10 +1,22 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
-import { AlertTriangle, TrendingUp, Calendar, Activity } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+} from 'recharts';
+import { AlertTriangle, TrendingUp, Calendar, Activity } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 const IncidentStats = () => {
   const { user } = useAuth();
@@ -13,7 +25,7 @@ const IncidentStats = () => {
     byType: [] as Array<{ name: string; value: number; color: string }>,
     bySeverity: [] as Array<{ name: string; value: number; color: string }>,
     byStatus: [] as Array<{ name: string; value: number; color: string }>,
-    byMonth: [] as Array<{ month: string; incidents: number }>
+    byMonth: [] as Array<{ month: string; incidents: number }>,
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,7 +58,7 @@ const IncidentStats = () => {
       const statusCount: Record<string, number> = {};
       const monthCount: Record<string, number> = {};
 
-      incidentData.forEach(incident => {
+      incidentData.forEach((incident) => {
         // Type counting
         const type = incident.incident_type;
         typeCount[type] = (typeCount[type] || 0) + 1;
@@ -60,40 +72,54 @@ const IncidentStats = () => {
         statusCount[status] = (statusCount[status] || 0) + 1;
 
         // Month counting
-        const month = new Date(incident.date_occurred).toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'short' 
+        const month = new Date(incident.date_occurred).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
         });
         monthCount[month] = (monthCount[month] || 0) + 1;
       });
 
       // Format for charts
-      const typeColors = ['#f59e0b', '#3b82f6', '#ef4444', '#10b981', '#8b5cf6', '#f97316', '#06b6d4', '#84cc16'];
+      const typeColors = [
+        '#f59e0b',
+        '#3b82f6',
+        '#ef4444',
+        '#10b981',
+        '#8b5cf6',
+        '#f97316',
+        '#06b6d4',
+        '#84cc16',
+      ];
       const byType = Object.entries(typeCount).map(([name, value], index) => ({
-        name: name.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        name: name.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
         value,
-        color: typeColors[index % typeColors.length]
+        color: typeColors[index % typeColors.length],
       }));
 
-      const severityColors = { low: '#10b981', medium: '#f59e0b', high: '#f97316', critical: '#ef4444' };
+      const severityColors = {
+        low: '#10b981',
+        medium: '#f59e0b',
+        high: '#f97316',
+        critical: '#ef4444',
+      };
       const bySeverity = Object.entries(severityCount).map(([name, value]) => ({
         name: name.charAt(0).toUpperCase() + name.slice(1),
         value,
-        color: severityColors[name as keyof typeof severityColors] || '#6b7280'
+        color: severityColors[name as keyof typeof severityColors] || '#6b7280',
       }));
 
       const statusColors = {
         draft: '#6b7280',
-        submitted: '#3b82f6', 
+        submitted: '#3b82f6',
         under_review: '#f59e0b',
         investigating: '#f97316',
         resolved: '#10b981',
-        closed: '#64748b'
+        closed: '#64748b',
       };
       const byStatus = Object.entries(statusCount).map(([name, value]) => ({
-        name: name.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        name: name.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
         value,
-        color: statusColors[name as keyof typeof statusColors] || '#6b7280'
+        color: statusColors[name as keyof typeof statusColors] || '#6b7280',
       }));
 
       const byMonth = Object.entries(monthCount)
@@ -105,9 +131,8 @@ const IncidentStats = () => {
         byType,
         bySeverity,
         byStatus,
-        byMonth
+        byMonth,
       });
-
     } catch (error) {
       console.error('Error loading stats:', error);
     } finally {
@@ -118,7 +143,7 @@ const IncidentStats = () => {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[1, 2, 3, 4].map(i => (
+        {[1, 2, 3, 4].map((i) => (
           <Card key={i} className="border-elec-yellow/20 bg-white/5 animate-pulse">
             <CardContent className="p-6">
               <div className="h-4 bg-white/10 rounded w-3/4 mb-2"></div>
@@ -138,11 +163,11 @@ const IncidentStats = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text 
-        x={x} 
-        y={y} 
-        fill="white" 
-        textAnchor={x > cx ? 'start' : 'end'} 
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
         fontSize={12}
       >
@@ -178,7 +203,7 @@ const IncidentStats = () => {
               <div>
                 <p className="text-sm text-white">Resolved</p>
                 <p className="text-2xl font-bold text-green-400">
-                  {stats.byStatus.find(s => s.name === 'Resolved')?.value || 0}
+                  {stats.byStatus.find((s) => s.name === 'Resolved')?.value || 0}
                 </p>
               </div>
             </div>
@@ -194,9 +219,9 @@ const IncidentStats = () => {
               <div>
                 <p className="text-sm text-white">In Progress</p>
                 <p className="text-2xl font-bold text-orange-400">
-                  {stats.byStatus.filter(s => 
-                    ['Under Review', 'Investigating'].includes(s.name)
-                  ).reduce((sum, s) => sum + s.value, 0)}
+                  {stats.byStatus
+                    .filter((s) => ['Under Review', 'Investigating'].includes(s.name))
+                    .reduce((sum, s) => sum + s.value, 0)}
                 </p>
               </div>
             </div>
@@ -212,7 +237,9 @@ const IncidentStats = () => {
               <div>
                 <p className="text-sm text-white">This Month</p>
                 <p className="text-2xl font-bold text-red-400">
-                  {stats.byMonth.length > 0 ? stats.byMonth[stats.byMonth.length - 1]?.incidents || 0 : 0}
+                  {stats.byMonth.length > 0
+                    ? stats.byMonth[stats.byMonth.length - 1]?.incidents || 0
+                    : 0}
                 </p>
               </div>
             </div>
@@ -268,12 +295,12 @@ const IncidentStats = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                   <XAxis dataKey="name" tick={{ fill: '#9ca3af' }} />
                   <YAxis tick={{ fill: '#9ca3af' }} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1f2937', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#1f2937',
                       border: '1px solid #374151',
-                      borderRadius: '8px'
-                    }} 
+                      borderRadius: '8px',
+                    }}
                   />
                   <Bar dataKey="value" fill="#f59e0b" />
                 </BarChart>
@@ -332,12 +359,12 @@ const IncidentStats = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                   <XAxis dataKey="month" tick={{ fill: '#9ca3af' }} />
                   <YAxis tick={{ fill: '#9ca3af' }} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1f2937', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#1f2937',
                       border: '1px solid #374151',
-                      borderRadius: '8px'
-                    }} 
+                      borderRadius: '8px',
+                    }}
                   />
                   <Line type="monotone" dataKey="incidents" stroke="#f59e0b" strokeWidth={2} />
                 </LineChart>

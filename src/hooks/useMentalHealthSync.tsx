@@ -10,7 +10,7 @@ import {
   MoodEntry,
   JournalEntry,
   SleepEntry,
-  SafetyPlan
+  SafetyPlan,
 } from '@/services/mentalHealthService';
 import { toast } from 'sonner';
 
@@ -65,7 +65,7 @@ export const useMentalHealthSync = (options: UseMentalHealthSyncOptions = { auto
     isLoading,
     isSynced,
     error,
-    syncToCloud
+    syncToCloud,
   };
 };
 
@@ -122,28 +122,31 @@ export const useMoodData = () => {
   }, [loadMoodData]);
 
   // Add mood entry
-  const addMoodEntry = useCallback(async (entry: MoodEntry) => {
-    // Update local state immediately
-    setMoodHistory(prev => {
-      const updated = [...prev.filter(h => h.date !== entry.date), entry]
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .slice(0, 90);
-      // Save to localStorage as backup
-      localStorage.setItem('elec-mate-mood-history', JSON.stringify(updated));
-      return updated;
-    });
+  const addMoodEntry = useCallback(
+    async (entry: MoodEntry) => {
+      // Update local state immediately
+      setMoodHistory((prev) => {
+        const updated = [...prev.filter((h) => h.date !== entry.date), entry]
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .slice(0, 90);
+        // Save to localStorage as backup
+        localStorage.setItem('elec-mate-mood-history', JSON.stringify(updated));
+        return updated;
+      });
 
-    // Sync to cloud if logged in
-    if (user) {
-      try {
-        await moodService.upsert(entry);
-      } catch (err) {
-        console.error('Error syncing mood entry:', err);
-        // Notify user that sync failed but data is saved locally
-        toast.error('Check-in saved locally. Cloud sync will retry when online.');
+      // Sync to cloud if logged in
+      if (user) {
+        try {
+          await moodService.upsert(entry);
+        } catch (err) {
+          console.error('Error syncing mood entry:', err);
+          // Notify user that sync failed but data is saved locally
+          toast.error('Check-in saved locally. Cloud sync will retry when online.');
+        }
       }
-    }
-  }, [user]);
+    },
+    [user]
+  );
 
   return { moodHistory, addMoodEntry, isLoading, refreshMoodData: loadMoodData };
 };
@@ -197,46 +200,52 @@ export const useJournalData = () => {
     loadJournalData();
   }, [loadJournalData]);
 
-  const addEntry = useCallback(async (entry: JournalEntry) => {
-    const newEntry = { ...entry, id: entry.id || Date.now().toString() };
+  const addEntry = useCallback(
+    async (entry: JournalEntry) => {
+      const newEntry = { ...entry, id: entry.id || Date.now().toString() };
 
-    setEntries(prev => {
-      const updated = [newEntry, ...prev];
-      localStorage.setItem('wellbeing-journal', JSON.stringify(updated));
-      return updated;
-    });
+      setEntries((prev) => {
+        const updated = [newEntry, ...prev];
+        localStorage.setItem('wellbeing-journal', JSON.stringify(updated));
+        return updated;
+      });
 
-    if (user) {
-      try {
-        console.log('[Journal] Saving entry to cloud for user:', user.id);
-        const savedEntry = await journalService.create(entry);
-        console.log('[Journal] Entry saved successfully:', savedEntry?.id);
-        toast.success('Journal entry saved');
-      } catch (err: any) {
-        console.error('[Journal] Error syncing journal entry:', err);
-        console.error('[Journal] Error details:', err?.message, err?.code, err?.details);
-        toast.error(`Entry saved locally. Cloud sync failed: ${err?.message || 'Unknown error'}`);
+      if (user) {
+        try {
+          console.log('[Journal] Saving entry to cloud for user:', user.id);
+          const savedEntry = await journalService.create(entry);
+          console.log('[Journal] Entry saved successfully:', savedEntry?.id);
+          toast.success('Journal entry saved');
+        } catch (err: any) {
+          console.error('[Journal] Error syncing journal entry:', err);
+          console.error('[Journal] Error details:', err?.message, err?.code, err?.details);
+          toast.error(`Entry saved locally. Cloud sync failed: ${err?.message || 'Unknown error'}`);
+        }
+      } else {
+        console.log('[Journal] No user logged in, entry saved to localStorage only');
       }
-    } else {
-      console.log('[Journal] No user logged in, entry saved to localStorage only');
-    }
-  }, [user]);
+    },
+    [user]
+  );
 
-  const deleteEntry = useCallback(async (id: string) => {
-    setEntries(prev => {
-      const updated = prev.filter(e => e.id !== id);
-      localStorage.setItem('wellbeing-journal', JSON.stringify(updated));
-      return updated;
-    });
+  const deleteEntry = useCallback(
+    async (id: string) => {
+      setEntries((prev) => {
+        const updated = prev.filter((e) => e.id !== id);
+        localStorage.setItem('wellbeing-journal', JSON.stringify(updated));
+        return updated;
+      });
 
-    if (user) {
-      try {
-        await journalService.delete(id);
-      } catch (err) {
-        console.error('Error deleting journal entry:', err);
+      if (user) {
+        try {
+          await journalService.delete(id);
+        } catch (err) {
+          console.error('Error deleting journal entry:', err);
+        }
       }
-    }
-  }, [user]);
+    },
+    [user]
+  );
 
   return { entries, addEntry, deleteEntry, isLoading, refreshJournalData: loadJournalData };
 };
@@ -290,29 +299,32 @@ export const useSleepData = () => {
     loadSleepData();
   }, [loadSleepData]);
 
-  const saveSleepEntry = useCallback(async (entry: SleepEntry) => {
-    setEntries(prev => {
-      const existingIndex = prev.findIndex(e => e.date === entry.date);
-      let updated;
-      if (existingIndex >= 0) {
-        updated = [...prev];
-        updated[existingIndex] = entry;
-      } else {
-        updated = [entry, ...prev];
-      }
-      localStorage.setItem('sleep-tracker', JSON.stringify(updated));
-      return updated;
-    });
+  const saveSleepEntry = useCallback(
+    async (entry: SleepEntry) => {
+      setEntries((prev) => {
+        const existingIndex = prev.findIndex((e) => e.date === entry.date);
+        let updated;
+        if (existingIndex >= 0) {
+          updated = [...prev];
+          updated[existingIndex] = entry;
+        } else {
+          updated = [entry, ...prev];
+        }
+        localStorage.setItem('sleep-tracker', JSON.stringify(updated));
+        return updated;
+      });
 
-    if (user) {
-      try {
-        await sleepService.upsert(entry);
-      } catch (err) {
-        console.error('Error syncing sleep entry:', err);
-        toast.error('Entry saved locally. Cloud sync will retry when online.');
+      if (user) {
+        try {
+          await sleepService.upsert(entry);
+        } catch (err) {
+          console.error('Error syncing sleep entry:', err);
+          toast.error('Entry saved locally. Cloud sync will retry when online.');
+        }
       }
-    }
-  }, [user]);
+    },
+    [user]
+  );
 
   return { entries, saveSleepEntry, isLoading, refreshSleepData: loadSleepData };
 };
@@ -351,25 +363,30 @@ export const useSafetyPlan = () => {
     loadSafetyPlan();
   }, [loadSafetyPlan]);
 
-  const savePlan = useCallback(async (updatedPlan: SafetyPlan) => {
-    setPlan(updatedPlan);
-    localStorage.setItem('personal-safety-plan', JSON.stringify(updatedPlan));
+  const savePlan = useCallback(
+    async (updatedPlan: SafetyPlan) => {
+      setPlan(updatedPlan);
+      localStorage.setItem('personal-safety-plan', JSON.stringify(updatedPlan));
 
-    if (user) {
-      try {
-        console.log('[SafetyPlan] Saving plan to cloud for user:', user.id);
-        const savedPlan = await safetyPlanService.upsert(updatedPlan);
-        console.log('[SafetyPlan] Plan saved successfully:', savedPlan?.id);
-        toast.success('Safety plan saved');
-      } catch (err: any) {
-        console.error('[SafetyPlan] Error syncing safety plan:', err);
-        console.error('[SafetyPlan] Error details:', err?.message, err?.code, err?.details);
-        toast.error(`Safety plan saved locally. Cloud sync failed: ${err?.message || 'Unknown error'}`);
+      if (user) {
+        try {
+          console.log('[SafetyPlan] Saving plan to cloud for user:', user.id);
+          const savedPlan = await safetyPlanService.upsert(updatedPlan);
+          console.log('[SafetyPlan] Plan saved successfully:', savedPlan?.id);
+          toast.success('Safety plan saved');
+        } catch (err: any) {
+          console.error('[SafetyPlan] Error syncing safety plan:', err);
+          console.error('[SafetyPlan] Error details:', err?.message, err?.code, err?.details);
+          toast.error(
+            `Safety plan saved locally. Cloud sync failed: ${err?.message || 'Unknown error'}`
+          );
+        }
+      } else {
+        console.log('[SafetyPlan] No user logged in, plan saved to localStorage only');
       }
-    } else {
-      console.log('[SafetyPlan] No user logged in, plan saved to localStorage only');
-    }
-  }, [user]);
+    },
+    [user]
+  );
 
   return { plan, savePlan, isLoading, refreshSafetyPlan: loadSafetyPlan };
 };
@@ -426,22 +443,28 @@ export const useGroundingProgress = () => {
     loadProgress();
   }, [loadProgress]);
 
-  const markCompleted = useCallback(async (exerciseId: string) => {
-    const newCompleted = [...completed, exerciseId];
-    setCompleted(newCompleted);
-    localStorage.setItem('grounding-completed-today', JSON.stringify({
-      date: today,
-      exercises: newCompleted
-    }));
+  const markCompleted = useCallback(
+    async (exerciseId: string) => {
+      const newCompleted = [...completed, exerciseId];
+      setCompleted(newCompleted);
+      localStorage.setItem(
+        'grounding-completed-today',
+        JSON.stringify({
+          date: today,
+          exercises: newCompleted,
+        })
+      );
 
-    if (user) {
-      try {
-        await groundingService.markComplete(exerciseId);
-      } catch (err) {
-        console.error('Error syncing grounding progress:', err);
+      if (user) {
+        try {
+          await groundingService.markComplete(exerciseId);
+        } catch (err) {
+          console.error('Error syncing grounding progress:', err);
+        }
       }
-    }
-  }, [user, completed, today]);
+    },
+    [user, completed, today]
+  );
 
   return { completed, markCompleted, isLoading, refreshProgress: loadProgress };
 };

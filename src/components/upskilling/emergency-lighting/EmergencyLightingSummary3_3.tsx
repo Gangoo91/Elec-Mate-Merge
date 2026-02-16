@@ -3,14 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const EmergencyLightingSummary3_3 = () => {
   const keyPoints = [
-    "Mounting height directly affects light distribution and determines whether required lux levels can be achieved",
-    "Photometric data including polar curves, spacing tables, and utilisation factors are essential for proper design",
-    "Emergency mode performance is typically 10-20% lower than mains operation and must be used for calculations",
-    "Luminaire spacing must be calculated using manufacturer data, not estimated or guessed",
-    "Surface reflectances significantly impact light distribution and may require design adjustments",
-    "High ceiling applications require specific high-bay luminaires with appropriate beam angles",
-    "Maintenance access and ongoing testing costs should be considered when selecting mounting heights",
-    "Full commissioning testing with lux measurements is essential to verify photometric performance"
+    'Mounting height directly affects light distribution and determines whether required lux levels can be achieved',
+    'Photometric data including polar curves, spacing tables, and utilisation factors are essential for proper design',
+    'Emergency mode performance is typically 10-20% lower than mains operation and must be used for calculations',
+    'Luminaire spacing must be calculated using manufacturer data, not estimated or guessed',
+    'Surface reflectances significantly impact light distribution and may require design adjustments',
+    'High ceiling applications require specific high-bay luminaires with appropriate beam angles',
+    'Maintenance access and ongoing testing costs should be considered when selecting mounting heights',
+    'Full commissioning testing with lux measurements is essential to verify photometric performance',
   ];
 
   return (
@@ -23,9 +23,11 @@ export const EmergencyLightingSummary3_3 = () => {
       </CardHeader>
       <CardContent>
         <p className="text-indigo-200 mb-4">
-          This section has covered the critical relationship between mounting heights, photometric data, and emergency lighting performance. Understanding these principles ensures compliant and cost-effective installations.
+          This section has covered the critical relationship between mounting heights, photometric
+          data, and emergency lighting performance. Understanding these principles ensures compliant
+          and cost-effective installations.
         </p>
-        
+
         <div className="space-y-3">
           <h4 className="text-indigo-300 font-semibold">Key Learning Points:</h4>
           <ul className="space-y-2">
@@ -37,10 +39,12 @@ export const EmergencyLightingSummary3_3 = () => {
             ))}
           </ul>
         </div>
-        
+
         <div className="mt-6 p-4 bg-gradient-to-br from-purple-600/20 to-purple-800/10 border border-purple-500/40 rounded-lg">
           <p className="text-purple-200 text-sm">
-            <strong>Next Steps:</strong> Use the quiz below to test your understanding of mounting heights and photometric considerations. Then proceed to Section 4 to learn about system integration and control methods.
+            <strong>Next Steps:</strong> Use the quiz below to test your understanding of mounting
+            heights and photometric considerations. Then proceed to Section 4 to learn about system
+            integration and control methods.
           </p>
         </div>
       </CardContent>

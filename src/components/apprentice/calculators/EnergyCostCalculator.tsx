@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from 'react';
 import {
   PoundSterling,
   Info,
@@ -14,13 +14,9 @@ import {
   Factory,
   BookOpen,
   ChevronDown,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -29,14 +25,14 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import { formatCurrency } from "@/lib/format";
+} from '@/components/calculators/shared';
+import { formatCurrency } from '@/lib/format';
 import {
   environmentPresets,
   getCategoriesForEnvironment,
   getAppliancesForCategory,
   type AppliancePreset,
-} from "@/data/presets";
+} from '@/data/presets';
 
 interface Appliance {
   id: string;
@@ -44,25 +40,25 @@ interface Appliance {
   quantity: number;
   powerW: number;
   standbyW: number;
-  usageMode: "hoursPerDay" | "cyclesPerWeek";
+  usageMode: 'hoursPerDay' | 'cyclesPerWeek';
   hoursPerDay?: number;
   cycleHours?: number;
   cyclesPerWeek?: number;
 }
 
-type Environment = "domestic" | "commercial" | "industrial";
+type Environment = 'domestic' | 'commercial' | 'industrial';
 
 const EnergyCostCalculator = () => {
-  const config = CALCULATOR_CONFIG["power"];
+  const config = CALCULATOR_CONFIG['power'];
 
-  const [environment, setEnvironment] = useState<Environment>("domestic");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [environment, setEnvironment] = useState<Environment>('domestic');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [appliances, setAppliances] = useState<Appliance[]>([]);
-  const [dayRate, setDayRate] = useState<string>("0.30");
-  const [nightRate, setNightRate] = useState<string>("0.15");
-  const [nightHours, setNightHours] = useState<string>("7");
-  const [standingCharge, setStandingCharge] = useState<string>("0.60");
-  const [vatRate, setVatRate] = useState<string>("5");
+  const [dayRate, setDayRate] = useState<string>('0.30');
+  const [nightRate, setNightRate] = useState<string>('0.15');
+  const [nightHours, setNightHours] = useState<string>('7');
+  const [standingCharge, setStandingCharge] = useState<string>('0.60');
+  const [vatRate, setVatRate] = useState<string>('5');
   const [useDualRate, setUseDualRate] = useState<boolean>(false);
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
@@ -96,23 +92,23 @@ const EnergyCostCalculator = () => {
 
   // Load state from localStorage on mount
   useEffect(() => {
-    const savedAppliances = localStorage.getItem("energyCost.appliances");
-    const savedEnvironment = localStorage.getItem("energyCost.environment");
-    const savedCategory = localStorage.getItem("energyCost.category");
+    const savedAppliances = localStorage.getItem('energyCost.appliances');
+    const savedEnvironment = localStorage.getItem('energyCost.environment');
+    const savedCategory = localStorage.getItem('energyCost.category');
 
     if (savedAppliances) {
       try {
         setAppliances(JSON.parse(savedAppliances));
       } catch (error) {
-        console.error("Failed to load saved appliances:", error);
+        console.error('Failed to load saved appliances:', error);
       }
     }
 
     if (
       savedEnvironment &&
-      (savedEnvironment === "domestic" ||
-        savedEnvironment === "commercial" ||
-        savedEnvironment === "industrial")
+      (savedEnvironment === 'domestic' ||
+        savedEnvironment === 'commercial' ||
+        savedEnvironment === 'industrial')
     ) {
       setEnvironment(savedEnvironment as Environment);
     }
@@ -124,20 +120,20 @@ const EnergyCostCalculator = () => {
 
   // Save state to localStorage when they change
   useEffect(() => {
-    localStorage.setItem("energyCost.appliances", JSON.stringify(appliances));
+    localStorage.setItem('energyCost.appliances', JSON.stringify(appliances));
   }, [appliances]);
 
   useEffect(() => {
-    localStorage.setItem("energyCost.environment", environment);
+    localStorage.setItem('energyCost.environment', environment);
   }, [environment]);
 
   useEffect(() => {
-    localStorage.setItem("energyCost.category", selectedCategory);
+    localStorage.setItem('energyCost.category', selectedCategory);
   }, [selectedCategory]);
 
   // Reset category when environment changes
   useEffect(() => {
-    setSelectedCategory("");
+    setSelectedCategory('');
   }, [environment]);
 
   const calculateApplianceCosts = useMemo(() => {
@@ -163,16 +159,14 @@ const EnergyCostCalculator = () => {
     appliances.forEach((appliance) => {
       // Calculate hours per day
       let hoursPerDay = 0;
-      if (appliance.usageMode === "hoursPerDay") {
+      if (appliance.usageMode === 'hoursPerDay') {
         hoursPerDay = appliance.hoursPerDay || 0;
-      } else if (appliance.usageMode === "cyclesPerWeek") {
-        hoursPerDay =
-          ((appliance.cycleHours || 0) * (appliance.cyclesPerWeek || 0)) / 7;
+      } else if (appliance.usageMode === 'cyclesPerWeek') {
+        hoursPerDay = ((appliance.cycleHours || 0) * (appliance.cyclesPerWeek || 0)) / 7;
       }
 
       // Calculate energy consumption
-      const activeKWhPerDay =
-        (appliance.powerW * appliance.quantity * hoursPerDay) / 1000;
+      const activeKWhPerDay = (appliance.powerW * appliance.quantity * hoursPerDay) / 1000;
       const standbyKWhPerDay =
         (appliance.standbyW * appliance.quantity * (24 - hoursPerDay)) / 1000;
       const totalApplianceKWh = activeKWhPerDay + standbyKWhPerDay;
@@ -187,9 +181,7 @@ const EnergyCostCalculator = () => {
         const nightKWh = (appliance.powerW * appliance.quantity * nightHrs) / 1000;
 
         applianceEnergyCost =
-          dayKWh * dayRatePerKWh +
-          nightKWh * nightRatePerKWh +
-          standbyKWhPerDay * dayRatePerKWh;
+          dayKWh * dayRatePerKWh + nightKWh * nightRatePerKWh + standbyKWhPerDay * dayRatePerKWh;
       } else {
         applianceEnergyCost = totalApplianceKWh * dayRatePerKWh;
       }
@@ -199,7 +191,7 @@ const EnergyCostCalculator = () => {
 
       applianceBreakdown.push({
         id: appliance.id,
-        name: `${appliance.name}${appliance.quantity > 1 ? ` (×${appliance.quantity})` : ""}`,
+        name: `${appliance.name}${appliance.quantity > 1 ? ` (×${appliance.quantity})` : ''}`,
         dailyKWh: totalApplianceKWh,
         monthlyCost: applianceEnergyCost * 30.44,
         shareOfTotal: 0,
@@ -209,9 +201,7 @@ const EnergyCostCalculator = () => {
     // Calculate shares
     applianceBreakdown.forEach((item) => {
       item.shareOfTotal =
-        totalDailyEnergyCost > 0
-          ? (item.monthlyCost / (totalDailyEnergyCost * 30.44)) * 100
-          : 0;
+        totalDailyEnergyCost > 0 ? (item.monthlyCost / (totalDailyEnergyCost * 30.44)) * 100 : 0;
     });
 
     // Sort by monthly cost descending
@@ -261,11 +251,11 @@ const EnergyCostCalculator = () => {
 
     const newAppliance: Appliance = {
       id: Date.now().toString(),
-      name: preset?.name || "Custom Appliance",
+      name: preset?.name || 'Custom Appliance',
       quantity: 1,
       powerW: preset?.powerW || 0,
       standbyW: preset?.standbyW || 0,
-      usageMode: preset?.usageMode || "hoursPerDay",
+      usageMode: preset?.usageMode || 'hoursPerDay',
       hoursPerDay: preset?.hoursPerDay,
       cycleHours: preset?.cycleHours,
       cyclesPerWeek: preset?.cyclesPerWeek,
@@ -282,14 +272,14 @@ const EnergyCostCalculator = () => {
   };
 
   const reset = () => {
-    setEnvironment("domestic");
-    setSelectedCategory("");
+    setEnvironment('domestic');
+    setSelectedCategory('');
     setAppliances([]);
-    setDayRate("0.30");
-    setNightRate("0.15");
-    setNightHours("7");
-    setStandingCharge("0.60");
-    setVatRate("5");
+    setDayRate('0.30');
+    setNightRate('0.15');
+    setNightHours('7');
+    setStandingCharge('0.60');
+    setVatRate('5');
     setUseDualRate(false);
     setResult(null);
   };
@@ -307,9 +297,9 @@ const EnergyCostCalculator = () => {
 
   // Environment options
   const environmentOptions = [
-    { key: "domestic" as const, label: "Domestic", icon: Home },
-    { key: "commercial" as const, label: "Commercial", icon: Building },
-    { key: "industrial" as const, label: "Industrial", icon: Factory },
+    { key: 'domestic' as const, label: 'Domestic', icon: Home },
+    { key: 'commercial' as const, label: 'Commercial', icon: Building },
+    { key: 'industrial' as const, label: 'Industrial', icon: Factory },
   ];
 
   const categoryOptions = availableCategories.map((cat) => ({
@@ -317,12 +307,10 @@ const EnergyCostCalculator = () => {
     label: cat.name,
   }));
 
-  const applianceOptions = Object.entries(availableAppliances).map(
-    ([key, preset]) => ({
-      value: key,
-      label: preset.name,
-    })
-  );
+  const applianceOptions = Object.entries(availableAppliances).map(([key, preset]) => ({
+    value: key,
+    label: preset.name,
+  }));
 
   return (
     <div className="space-y-4">
@@ -343,10 +331,10 @@ const EnergyCostCalculator = () => {
                   key={env.key}
                   onClick={() => setEnvironment(env.key)}
                   className={cn(
-                    "flex flex-col items-center gap-1.5 p-3 rounded-xl font-medium text-sm transition-all touch-manipulation",
+                    'flex flex-col items-center gap-1.5 p-3 rounded-xl font-medium text-sm transition-all touch-manipulation',
                     environment === env.key
-                      ? "text-black"
-                      : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+                      ? 'text-black'
+                      : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
                   )}
                   style={
                     environment === env.key
@@ -400,9 +388,7 @@ const EnergyCostCalculator = () => {
                   <input
                     type="text"
                     value={appliance.name}
-                    onChange={(e) =>
-                      updateAppliance(appliance.id, { name: e.target.value })
-                    }
+                    onChange={(e) => updateAppliance(appliance.id, { name: e.target.value })}
                     className="flex-1 h-10 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-amber-400/50"
                     placeholder="Appliance name"
                   />
@@ -422,7 +408,7 @@ const EnergyCostCalculator = () => {
                       <input
                         type="text"
                         inputMode="decimal"
-                        value={appliance.powerW?.toString() ?? ""}
+                        value={appliance.powerW?.toString() ?? ''}
                         onChange={(e) =>
                           updateAppliance(appliance.id, {
                             powerW: parseFloat(e.target.value) || 0,
@@ -440,7 +426,7 @@ const EnergyCostCalculator = () => {
                       <input
                         type="text"
                         inputMode="decimal"
-                        value={appliance.standbyW?.toString() ?? ""}
+                        value={appliance.standbyW?.toString() ?? ''}
                         onChange={(e) =>
                           updateAppliance(appliance.id, {
                             standbyW: parseFloat(e.target.value) || 0,
@@ -457,7 +443,7 @@ const EnergyCostCalculator = () => {
                     <input
                       type="text"
                       inputMode="numeric"
-                      value={appliance.quantity?.toString() ?? ""}
+                      value={appliance.quantity?.toString() ?? ''}
                       onChange={(e) =>
                         updateAppliance(appliance.id, {
                           quantity: parseInt(e.target.value) || 1,
@@ -472,27 +458,23 @@ const EnergyCostCalculator = () => {
                 {/* Usage Mode */}
                 <div className="grid grid-cols-2 gap-2">
                   <button
-                    onClick={() =>
-                      updateAppliance(appliance.id, { usageMode: "hoursPerDay" })
-                    }
+                    onClick={() => updateAppliance(appliance.id, { usageMode: 'hoursPerDay' })}
                     className={cn(
-                      "h-9 rounded-lg text-xs font-medium transition-all touch-manipulation",
-                      appliance.usageMode === "hoursPerDay"
-                        ? "bg-amber-400/20 border border-amber-400/40 text-amber-300"
-                        : "bg-white/5 border border-white/10 text-white/60"
+                      'h-9 rounded-lg text-xs font-medium transition-all touch-manipulation',
+                      appliance.usageMode === 'hoursPerDay'
+                        ? 'bg-amber-400/20 border border-amber-400/40 text-amber-300'
+                        : 'bg-white/5 border border-white/10 text-white/60'
                     )}
                   >
                     Hours/day
                   </button>
                   <button
-                    onClick={() =>
-                      updateAppliance(appliance.id, { usageMode: "cyclesPerWeek" })
-                    }
+                    onClick={() => updateAppliance(appliance.id, { usageMode: 'cyclesPerWeek' })}
                     className={cn(
-                      "h-9 rounded-lg text-xs font-medium transition-all touch-manipulation",
-                      appliance.usageMode === "cyclesPerWeek"
-                        ? "bg-amber-400/20 border border-amber-400/40 text-amber-300"
-                        : "bg-white/5 border border-white/10 text-white/60"
+                      'h-9 rounded-lg text-xs font-medium transition-all touch-manipulation',
+                      appliance.usageMode === 'cyclesPerWeek'
+                        ? 'bg-amber-400/20 border border-amber-400/40 text-amber-300'
+                        : 'bg-white/5 border border-white/10 text-white/60'
                     )}
                   >
                     Cycles/week
@@ -500,16 +482,14 @@ const EnergyCostCalculator = () => {
                 </div>
 
                 {/* Usage Input */}
-                {appliance.usageMode === "hoursPerDay" ? (
+                {appliance.usageMode === 'hoursPerDay' ? (
                   <div>
-                    <label className="text-xs text-white/80 mb-1 block">
-                      Hours per day
-                    </label>
+                    <label className="text-xs text-white/80 mb-1 block">Hours per day</label>
                     <div className="flex items-center">
                       <input
                         type="text"
                         inputMode="decimal"
-                        value={appliance.hoursPerDay?.toString() ?? ""}
+                        value={appliance.hoursPerDay?.toString() ?? ''}
                         onChange={(e) =>
                           updateAppliance(appliance.id, {
                             hoursPerDay: parseFloat(e.target.value) || 0,
@@ -524,14 +504,12 @@ const EnergyCostCalculator = () => {
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="text-xs text-white/80 mb-1 block">
-                        Cycle duration
-                      </label>
+                      <label className="text-xs text-white/80 mb-1 block">Cycle duration</label>
                       <div className="flex items-center">
                         <input
                           type="text"
                           inputMode="decimal"
-                          value={appliance.cycleHours?.toString() ?? ""}
+                          value={appliance.cycleHours?.toString() ?? ''}
                           onChange={(e) =>
                             updateAppliance(appliance.id, {
                               cycleHours: parseFloat(e.target.value) || 0,
@@ -544,13 +522,11 @@ const EnergyCostCalculator = () => {
                       </div>
                     </div>
                     <div>
-                      <label className="text-xs text-white/80 mb-1 block">
-                        Cycles/week
-                      </label>
+                      <label className="text-xs text-white/80 mb-1 block">Cycles/week</label>
                       <input
                         type="text"
                         inputMode="numeric"
-                        value={appliance.cyclesPerWeek?.toString() ?? ""}
+                        value={appliance.cyclesPerWeek?.toString() ?? ''}
                         onChange={(e) =>
                           updateAppliance(appliance.id, {
                             cyclesPerWeek: parseInt(e.target.value) || 0,
@@ -574,7 +550,7 @@ const EnergyCostCalculator = () => {
               <select
                 onChange={(e) => {
                   if (e.target.value) addAppliance(e.target.value);
-                  e.target.value = "";
+                  e.target.value = '';
                 }}
                 className="w-full h-12 px-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
                 defaultValue=""
@@ -615,13 +591,11 @@ const EnergyCostCalculator = () => {
             onChange={(e) => setUseDualRate(e.target.checked)}
             className="rounded border-white/20 bg-white/10 text-amber-400 focus:ring-amber-400/50"
           />
-          <span className="text-sm text-white/80">
-            Use dual rate tariff (Economy 7/10)
-          </span>
+          <span className="text-sm text-white/80">Use dual rate tariff (Economy 7/10)</span>
         </label>
 
         <CalculatorInput
-          label={useDualRate ? "Day Rate" : "Rate"}
+          label={useDualRate ? 'Day Rate' : 'Rate'}
           unit="£/kWh"
           type="text"
           inputMode="decimal"
@@ -681,10 +655,8 @@ const EnergyCostCalculator = () => {
             onClick={calculateResults}
             disabled={appliances.length === 0}
             className={cn(
-              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-              appliances.length > 0
-                ? "text-black"
-                : "bg-white/10 text-white/30 cursor-not-allowed"
+              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+              appliances.length > 0 ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
             )}
             style={
               appliances.length > 0
@@ -842,9 +814,7 @@ const EnergyCostCalculator = () => {
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{item.name}</p>
-                      <p className="text-xs text-white/80">
-                        {item.dailyKWh.toFixed(2)} kWh/day
-                      </p>
+                      <p className="text-xs text-white/80">{item.dailyKWh.toFixed(2)} kWh/day</p>
                     </div>
                     <div className="text-right ml-3">
                       <p className="text-sm font-semibold text-amber-400">
@@ -861,10 +831,7 @@ const EnergyCostCalculator = () => {
 
           {/* Guidance */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div
-              className="calculator-card overflow-hidden"
-              style={{ borderColor: "#60a5fa15" }}
-            >
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
@@ -874,8 +841,8 @@ const EnergyCostCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showGuidance && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -907,10 +874,7 @@ const EnergyCostCalculator = () => {
 
       {/* Quick Reference */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div
-          className="calculator-card overflow-hidden"
-          style={{ borderColor: "#fbbf2415" }}
-        >
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
@@ -920,8 +884,8 @@ const EnergyCostCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showReference && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>

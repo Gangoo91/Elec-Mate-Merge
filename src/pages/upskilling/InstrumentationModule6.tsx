@@ -9,38 +9,38 @@ const InstrumentationModule6 = () => {
       id: 1,
       title: "What Is Calibration and Why It's Important",
       icon: Target,
-      description: "Understanding the fundamentals and importance of calibration"
+      description: 'Understanding the fundamentals and importance of calibration',
     },
     {
       id: 2,
-      title: "Calibration Equipment and Reference Standards",
+      title: 'Calibration Equipment and Reference Standards',
       icon: Wrench,
-      description: "Tools and standards used for accurate calibration procedures"
+      description: 'Tools and standards used for accurate calibration procedures',
     },
     {
       id: 3,
-      title: "Step-by-Step Calibration of Pressure, Temp, and Electrical Devices",
+      title: 'Step-by-Step Calibration of Pressure, Temp, and Electrical Devices',
       icon: ClipboardCheck,
-      description: "Practical calibration procedures for different instrument types"
+      description: 'Practical calibration procedures for different instrument types',
     },
     {
       id: 4,
-      title: "Recording and Documenting Calibration Results",
+      title: 'Recording and Documenting Calibration Results',
       icon: FileText,
-      description: "Proper documentation and record-keeping for calibration activities"
+      description: 'Proper documentation and record-keeping for calibration activities',
     },
     {
       id: 5,
-      title: "Calibration Intervals, Certificates, and UKAS Traceability",
+      title: 'Calibration Intervals, Certificates, and UKAS Traceability',
       icon: Shield,
-      description: "Understanding certification requirements and traceability standards"
+      description: 'Understanding certification requirements and traceability standards',
     },
     {
       id: 6,
-      title: "Advanced Calibration Topics and Best Practices",
+      title: 'Advanced Calibration Topics and Best Practices',
       icon: Shield,
-      description: "Advanced techniques, troubleshooting, and future calibration trends"
-    }
+      description: 'Advanced techniques, troubleshooting, and future calibration trends',
+    },
   ];
 
   return (

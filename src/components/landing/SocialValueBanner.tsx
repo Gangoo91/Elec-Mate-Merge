@@ -7,7 +7,10 @@ export const SocialValueBanner = () => {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <section ref={ref} className="w-full py-12 sm:py-16 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-pink-500/10 border-y border-pink-500/20">
+    <section
+      ref={ref}
+      className="w-full py-12 sm:py-16 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-pink-500/10 border-y border-pink-500/20"
+    >
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           className="text-center"
@@ -28,8 +31,8 @@ export const SocialValueBanner = () => {
           </h2>
 
           <p className="text-white/70 text-lg max-w-2xl mx-auto mb-8">
-            From month 6, we're committing £1 from every mobile app subscription to support
-            mental health charities and help self-funded adult learners and apprentices pass their exams.
+            From month 6, we're committing £1 from every mobile app subscription to support mental
+            health charities and help self-funded adult learners and apprentices pass their exams.
           </p>
 
           {/* Two pillars */}
@@ -45,8 +48,8 @@ export const SocialValueBanner = () => {
               </div>
               <h3 className="font-semibold text-white text-lg mb-2">Mental Health Charities</h3>
               <p className="text-sm text-white/60">
-                Supporting Andy's Man Club, Mates in Mind, Electrical Industries Charity,
-                and Lighthouse Construction Industry Charity.
+                Supporting Andy's Man Club, Mates in Mind, Electrical Industries Charity, and
+                Lighthouse Construction Industry Charity.
               </p>
             </motion.div>
 
@@ -61,8 +64,8 @@ export const SocialValueBanner = () => {
               </div>
               <h3 className="font-semibold text-white text-lg mb-2">Learner Support Fund</h3>
               <p className="text-sm text-white/60">
-                Helping self-funded adult learners and apprentices who are struggling to afford exam fees or resits.
-                Everyone deserves a fair chance to qualify.
+                Helping self-funded adult learners and apprentices who are struggling to afford exam
+                fees or resits. Everyone deserves a fair chance to qualify.
               </p>
             </motion.div>
           </div>

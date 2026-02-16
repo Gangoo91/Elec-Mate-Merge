@@ -108,7 +108,9 @@ export const PricingSection = () => {
               </div>
             ))}
           </div>
-          <p className="text-center text-white/30 text-[10px] mt-3 uppercase tracking-wider">Swipe for more</p>
+          <p className="text-center text-white/30 text-[10px] mt-3 uppercase tracking-wider">
+            Swipe for more
+          </p>
         </div>
 
         <motion.div
@@ -149,9 +151,11 @@ const PricingCard = ({ tier }: { tier: PricingTier }) => (
     )}
 
     <div className="flex items-center gap-2.5 mb-3">
-      <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
-        tier.popular ? 'bg-yellow-500/20 text-yellow-400' : 'bg-white/10 text-white'
-      }`}>
+      <div
+        className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+          tier.popular ? 'bg-yellow-500/20 text-yellow-400' : 'bg-white/10 text-white'
+        }`}
+      >
         {tier.icon}
       </div>
       <h3 className="text-lg font-bold text-white">{tier.name}</h3>
@@ -177,9 +181,11 @@ const PricingCard = ({ tier }: { tier: PricingTier }) => (
     <div className="space-y-2.5 mt-auto">
       {tier.features.map((feature, featureIndex) => (
         <div key={featureIndex} className="flex items-start gap-2.5">
-          <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
-            tier.popular ? 'text-yellow-400/80' : 'text-green-400/80'
-          }`} />
+          <Check
+            className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+              tier.popular ? 'text-yellow-400/80' : 'text-green-400/80'
+            }`}
+          />
           <span className="text-xs sm:text-sm text-white/60">{feature}</span>
         </div>
       ))}

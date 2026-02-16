@@ -12,11 +12,12 @@ export const RecordingPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Exercise 1 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 1</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 1
+            </Badge>
             <h3 className="text-foreground font-semibold">Observation Code Classification</h3>
           </div>
           <div className="space-y-4">
@@ -51,13 +52,13 @@ export const RecordingPractical = () => {
         {/* Exercise 2 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 2</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 2
+            </Badge>
             <h3 className="text-foreground font-semibold">Defect Description Workshop</h3>
           </div>
           <div className="space-y-4">
-            <p className="text-foreground">
-              Learn to write clear, precise defect descriptions:
-            </p>
+            <p className="text-foreground">Learn to write clear, precise defect descriptions:</p>
             <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" />
@@ -65,12 +66,24 @@ export const RecordingPractical = () => {
                   <h4 className="text-red-400 font-medium mb-2">Bad vs Good Descriptions:</h4>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-red-300 text-sm"><strong>Bad:</strong> "Socket looks damaged"</p>
-                      <p className="text-green-300 text-sm"><strong>Good:</strong> "Socket outlet in kitchen shows thermal damage to faceplate with burn marks around live terminal. Terminal screw loose causing poor connection. Regulation 134.1.1"</p>
+                      <p className="text-red-300 text-sm">
+                        <strong>Bad:</strong> "Socket looks damaged"
+                      </p>
+                      <p className="text-green-300 text-sm">
+                        <strong>Good:</strong> "Socket outlet in kitchen shows thermal damage to
+                        faceplate with burn marks around live terminal. Terminal screw loose causing
+                        poor connection. Regulation 134.1.1"
+                      </p>
                     </div>
                     <div>
-                      <p className="text-red-300 text-sm"><strong>Bad:</strong> "Cable might be wrong size"</p>
-                      <p className="text-green-300 text-sm"><strong>Good:</strong> "2.5mm² T&E cable feeding 32A MCB in garage distribution board. Cable undersized for protective device rating. Regulation 433.1"</p>
+                      <p className="text-red-300 text-sm">
+                        <strong>Bad:</strong> "Cable might be wrong size"
+                      </p>
+                      <p className="text-green-300 text-sm">
+                        <strong>Good:</strong> "2.5mm² T&E cable feeding 32A MCB in garage
+                        distribution board. Cable undersized for protective device rating.
+                        Regulation 433.1"
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -82,7 +95,9 @@ export const RecordingPractical = () => {
         {/* Exercise 3 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 3</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 3
+            </Badge>
             <h3 className="text-foreground font-semibold">Certificate Completion Practice</h3>
           </div>
           <div className="space-y-4">
@@ -117,7 +132,9 @@ export const RecordingPractical = () => {
         {/* Exercise 4 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 4</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 4
+            </Badge>
             <h3 className="text-foreground font-semibold">Limitation Documentation Exercise</h3>
           </div>
           <div className="space-y-4">
@@ -131,17 +148,27 @@ export const RecordingPractical = () => {
                   <h4 className="text-yellow-400 font-medium mb-2">Limitation Examples:</h4>
                   <div className="space-y-3">
                     <div>
-                      <h5 className="text-foreground text-sm font-medium">Example 1: Physical Access</h5>
+                      <h5 className="text-foreground text-sm font-medium">
+                        Example 1: Physical Access
+                      </h5>
                       <p className="text-foreground text-sm">
-                        <strong>Poor:</strong> "Some areas couldn't be accessed"<br/>
-                        <strong>Better:</strong> "Basement distribution board could not be accessed - locked room, key not available from client. Approximately 40% of installation circuits originate from this location."
+                        <strong>Poor:</strong> "Some areas couldn't be accessed"
+                        <br />
+                        <strong>Better:</strong> "Basement distribution board could not be accessed
+                        - locked room, key not available from client. Approximately 40% of
+                        installation circuits originate from this location."
                       </p>
                     </div>
                     <div>
-                      <h5 className="text-foreground text-sm font-medium">Example 2: Equipment Issues</h5>
+                      <h5 className="text-foreground text-sm font-medium">
+                        Example 2: Equipment Issues
+                      </h5>
                       <p className="text-foreground text-sm">
-                        <strong>Poor:</strong> "Equipment problems"<br/>
-                        <strong>Better:</strong> "RCD testing could not be completed - RCD/RCBO test facility on multifunction tester failed calibration check. Alternative RCD tester not available on inspection date."
+                        <strong>Poor:</strong> "Equipment problems"
+                        <br />
+                        <strong>Better:</strong> "RCD testing could not be completed - RCD/RCBO test
+                        facility on multifunction tester failed calibration check. Alternative RCD
+                        tester not available on inspection date."
                       </p>
                     </div>
                   </div>

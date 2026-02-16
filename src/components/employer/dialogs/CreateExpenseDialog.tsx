@@ -1,26 +1,23 @@
-import { useState, useEffect } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Receipt,
-  Wrench,
-  Car,
-  ParkingCircle,
-  Hammer,
-  HardHat,
-  Package,
-  Send
-} from "lucide-react";
-import { useCreateExpenseClaim } from "@/hooks/useFinance";
-import { useEmployees } from "@/hooks/useEmployees";
-import { useJobs } from "@/hooks/useJobs";
-import { useOptionalVoiceFormContext } from "@/contexts/VoiceFormContext";
+import { useState, useEffect } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Receipt, Wrench, Car, ParkingCircle, Hammer, HardHat, Package, Send } from 'lucide-react';
+import { useCreateExpenseClaim } from '@/hooks/useFinance';
+import { useEmployees } from '@/hooks/useEmployees';
+import { useJobs } from '@/hooks/useJobs';
+import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 
 interface CreateExpenseDialogProps {
   open: boolean;
@@ -28,33 +25,33 @@ interface CreateExpenseDialogProps {
 }
 
 const CATEGORIES = [
-  { value: "Materials", icon: Wrench, emoji: "🔧" },
-  { value: "Travel", icon: Car, emoji: "🚗" },
-  { value: "Parking", icon: ParkingCircle, emoji: "🅿️" },
-  { value: "Tools", icon: Hammer, emoji: "🛠️" },
-  { value: "PPE", icon: HardHat, emoji: "🦺" },
-  { value: "Other", icon: Package, emoji: "📦" },
+  { value: 'Materials', icon: Wrench, emoji: '🔧' },
+  { value: 'Travel', icon: Car, emoji: '🚗' },
+  { value: 'Parking', icon: ParkingCircle, emoji: '🅿️' },
+  { value: 'Tools', icon: Hammer, emoji: '🛠️' },
+  { value: 'PPE', icon: HardHat, emoji: '🦺' },
+  { value: 'Other', icon: Package, emoji: '📦' },
 ];
 
 export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogProps) {
-  const [employeeId, setEmployeeId] = useState("");
-  const [category, setCategory] = useState("Materials");
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
+  const [employeeId, setEmployeeId] = useState('');
+  const [category, setCategory] = useState('Materials');
+  const [amount, setAmount] = useState('');
+  const [description, setDescription] = useState('');
   const [jobId, setJobId] = useState<string | null>(null);
 
   const { data: employees = [] } = useEmployees();
   const { data: jobs = [] } = useJobs();
   const createExpenseMutation = useCreateExpenseClaim();
 
-  const activeJobs = jobs.filter(j => j.status === "Active");
+  const activeJobs = jobs.filter((j) => j.status === 'Active');
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
-  
+
   useEffect(() => {
     if (!open || !voiceContext) return;
-    
+
     voiceContext.registerForm({
       formId: 'create-expense',
       formName: 'Create Expense',
@@ -68,22 +65,31 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
       onFillField: (field, value) => {
         switch (field) {
           case 'employee':
-            const emp = employees.find(e => e.name.toLowerCase().includes(value.toLowerCase()));
+            const emp = employees.find((e) => e.name.toLowerCase().includes(value.toLowerCase()));
             if (emp) setEmployeeId(emp.id);
             break;
-          case 'category': setCategory(value); break;
-          case 'amount': setAmount(value); break;
-          case 'description': setDescription(value); break;
+          case 'category':
+            setCategory(value);
+            break;
+          case 'amount':
+            setAmount(value);
+            break;
+          case 'description':
+            setDescription(value);
+            break;
           case 'job':
-            const job = activeJobs.find(j => j.title.toLowerCase().includes(value.toLowerCase()));
+            const job = activeJobs.find((j) => j.title.toLowerCase().includes(value.toLowerCase()));
             if (job) setJobId(job.id);
             break;
         }
       },
       onSubmit: handleSubmit,
-      onCancel: () => { resetForm(); onOpenChange(false); },
+      onCancel: () => {
+        resetForm();
+        onOpenChange(false);
+      },
     });
-    
+
     return () => voiceContext.unregisterForm('create-expense');
   }, [open, voiceContext, employees, activeJobs]);
 
@@ -96,13 +102,13 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
       amount: Number(amount),
       description,
       job_id: jobId,
-      status: "Pending",
+      status: 'Pending',
       submitted_date: new Date().toISOString().split('T')[0],
       receipt_url: null,
       approved_by: null,
       approved_date: null,
       paid_date: null,
-      rejection_reason: null
+      rejection_reason: null,
     });
 
     resetForm();
@@ -110,14 +116,14 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
   };
 
   const resetForm = () => {
-    setEmployeeId("");
-    setCategory("Materials");
-    setAmount("");
-    setDescription("");
+    setEmployeeId('');
+    setCategory('Materials');
+    setAmount('');
+    setDescription('');
     setJobId(null);
   };
 
-  const selectedCategory = CATEGORIES.find(c => c.value === category);
+  const selectedCategory = CATEGORIES.find((c) => c.value === category);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -161,8 +167,8 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
                     <Card
                       key={cat.value}
                       className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
-                        category === cat.value 
-                          ? 'bg-elec-yellow/20 border-elec-yellow' 
+                        category === cat.value
+                          ? 'bg-elec-yellow/20 border-elec-yellow'
                           : 'bg-elec-gray hover:bg-muted'
                       }`}
                       onClick={() => setCategory(cat.value)}
@@ -180,7 +186,9 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
               <div className="space-y-2">
                 <Label>Amount *</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">£</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    £
+                  </span>
                   <Input
                     type="number"
                     placeholder="0.00"
@@ -207,7 +215,10 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
               {/* Link to Job */}
               <div className="space-y-2">
                 <Label>Link to Job (Optional)</Label>
-                <Select value={jobId || "none"} onValueChange={(v) => setJobId(v === "none" ? null : v)}>
+                <Select
+                  value={jobId || 'none'}
+                  onValueChange={(v) => setJobId(v === 'none' ? null : v)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select job (optional)" />
                   </SelectTrigger>
@@ -236,7 +247,7 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
 
           {/* Footer */}
           <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <Button 
+            <Button
               className="w-full"
               onClick={handleSubmit}
               disabled={!employeeId || !amount || !description || createExpenseMutation.isPending}

@@ -15,9 +15,10 @@ export const SmartHomeSection4RealWorld = () => {
         <div className="p-4 bg-emerald-900/40 border border-emerald-500 rounded-lg">
           <h4 className="font-semibold text-emerald-200 mb-3">The Situation</h4>
           <p className="leading-relaxed">
-            Sarah, a homeowner, initially installed a cloud-based smart home system using Amazon Alexa for voice control, 
-            smart bulbs, and a few switches. Everything worked well until a series of internet outages left her without 
-            any automation - lights wouldn't respond, scheduled routines failed, and even basic switch controls stopped working.
+            Sarah, a homeowner, initially installed a cloud-based smart home system using Amazon
+            Alexa for voice control, smart bulbs, and a few switches. Everything worked well until a
+            series of internet outages left her without any automation - lights wouldn't respond,
+            scheduled routines failed, and even basic switch controls stopped working.
           </p>
         </div>
 
@@ -56,10 +57,10 @@ export const SmartHomeSection4RealWorld = () => {
         <div className="p-4 bg-blue-900/30 border border-blue-500 rounded-lg">
           <h4 className="font-semibold text-blue-200 mb-3">The Hybrid Solution</h4>
           <p className="text-blue-100 mb-4">
-            Sarah decided to implement a hybrid architecture using Hubitat Elevation as her local hub whilst keeping 
-            her Alexa devices for voice control and entertainment.
+            Sarah decided to implement a hybrid architecture using Hubitat Elevation as her local
+            hub whilst keeping her Alexa devices for voice control and entertainment.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h5 className="font-medium text-blue-200 mb-2">Local Processing (Hubitat):</h5>
@@ -118,19 +119,31 @@ export const SmartHomeSection4RealWorld = () => {
           <div className="space-y-3 text-yellow-100 text-sm">
             <div>
               <span className="font-medium">Consider:</span>
-              <span className="ml-2">What are the long-term benefits of Sarah's hybrid approach compared to staying fully cloud-based?</span>
+              <span className="ml-2">
+                What are the long-term benefits of Sarah's hybrid approach compared to staying fully
+                cloud-based?
+              </span>
             </div>
             <div>
               <span className="font-medium">Analyse:</span>
-              <span className="ml-2">What trade-offs still exist in her new system, and how might future technology address them?</span>
+              <span className="ml-2">
+                What trade-offs still exist in her new system, and how might future technology
+                address them?
+              </span>
             </div>
             <div>
               <span className="font-medium">Evaluate:</span>
-              <span className="ml-2">Would this solution work for someone with less technical knowledge? What alternatives might be better?</span>
+              <span className="ml-2">
+                Would this solution work for someone with less technical knowledge? What
+                alternatives might be better?
+              </span>
             </div>
             <div>
               <span className="font-medium">Predict:</span>
-              <span className="ml-2">How might edge computing and Matter protocol improvements change Sarah's architecture choices in the future?</span>
+              <span className="ml-2">
+                How might edge computing and Matter protocol improvements change Sarah's
+                architecture choices in the future?
+              </span>
             </div>
           </div>
         </div>
@@ -141,11 +154,13 @@ export const SmartHomeSection4RealWorld = () => {
           <ul className="space-y-2 text-gray-300 text-sm">
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
-              Architecture decisions aren't permanent - systems can evolve based on experience and changing needs
+              Architecture decisions aren't permanent - systems can evolve based on experience and
+              changing needs
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
-              Hybrid approaches can capture benefits of multiple architectures whilst mitigating their weaknesses
+              Hybrid approaches can capture benefits of multiple architectures whilst mitigating
+              their weaknesses
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>

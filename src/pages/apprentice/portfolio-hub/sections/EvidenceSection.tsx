@@ -2,7 +2,20 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Camera, Filter, Search, Grid, List, Plus, Sparkles, X, Brain, CheckCircle2, Clock, Edit } from 'lucide-react';
+import {
+  Camera,
+  Filter,
+  Search,
+  Grid,
+  List,
+  Plus,
+  Sparkles,
+  X,
+  Brain,
+  CheckCircle2,
+  Clock,
+  Edit,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
   Sheet,
@@ -43,7 +56,8 @@ const STATUS_OPTIONS = [
 ];
 
 export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
-  const { entries, categories, updateEntry, deleteEntry, isLoading, addEntry } = useUltraFastPortfolio();
+  const { entries, categories, updateEntry, deleteEntry, isLoading, addEntry } =
+    useUltraFastPortfolio();
   const { toast } = useToast();
   const { qualificationCode } = useStudentQualification();
   const { tree } = useQualificationACs(qualificationCode);
@@ -60,12 +74,13 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
 
   // Get all KSBs that have been completed/evidenced
   const completedKSBs = entries
-    .filter(e => e.status === 'completed' || e.status === 'reviewed')
-    .flatMap(e => e.assessmentCriteria || []);
+    .filter((e) => e.status === 'completed' || e.status === 'reviewed')
+    .flatMap((e) => e.assessmentCriteria || []);
 
   // Filter entries based on search, category, and status
-  const filteredEntries = entries.filter(entry => {
-    const matchesSearch = searchTerm === '' ||
+  const filteredEntries = entries.filter((entry) => {
+    const matchesSearch =
+      searchTerm === '' ||
       entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       entry.description?.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -90,28 +105,32 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
         description: data.description,
         tags: data.selectedTags,
         assessmentCriteria: data.selectedKSBs,
-        evidenceFiles: data.fileUrl ? [{
-          id: Date.now().toString(),
-          name: data.file?.name || 'Evidence',
-          type: data.type,
-          size: data.file?.size || 0,
-          url: data.fileUrl,
-          uploadDate: new Date().toISOString(),
-        }] : [],
+        evidenceFiles: data.fileUrl
+          ? [
+              {
+                id: Date.now().toString(),
+                name: data.file?.name || 'Evidence',
+                type: data.type,
+                size: data.file?.size || 0,
+                url: data.fileUrl,
+                uploadDate: new Date().toISOString(),
+              },
+            ]
+          : [],
         status: 'draft',
       });
 
       setShowCaptureSheet(false);
 
       toast({
-        title: "Evidence Added",
+        title: 'Evidence Added',
         description: `"${data.title}" has been added to your portfolio with ${data.selectedKSBs.length} KSB mappings`,
       });
     } catch (error) {
       toast({
-        title: "Failed to save",
-        description: error instanceof Error ? error.message : "Could not save evidence",
-        variant: "destructive",
+        title: 'Failed to save',
+        description: error instanceof Error ? error.message : 'Could not save evidence',
+        variant: 'destructive',
       });
     }
   };
@@ -123,7 +142,9 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-foreground">My Evidence</h1>
-            <p className="text-sm text-muted-foreground">{entries.length} items in your portfolio</p>
+            <p className="text-sm text-muted-foreground">
+              {entries.length} items in your portfolio
+            </p>
           </div>
           <div className="flex gap-2">
             <Button
@@ -162,10 +183,10 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
               <Badge
                 variant="outline"
                 className={cn(
-                  "text-xs",
+                  'text-xs',
                   tree.totalACs > 0 && completedKSBs.length >= tree.totalACs * 0.75
-                    ? "bg-green-500/20 text-green-500 border-green-500/30"
-                    : "bg-amber-500/20 text-amber-500 border-amber-500/30"
+                    ? 'bg-green-500/20 text-green-500 border-green-500/30'
+                    : 'bg-amber-500/20 text-amber-500 border-amber-500/30'
                 )}
               >
                 {tree.totalACs > 0
@@ -186,15 +207,15 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
               placeholder="Search evidence..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={cn("bg-card border-border", !searchTerm && "pl-9")}
+              className={cn('bg-card border-border', !searchTerm && 'pl-9')}
             />
           </div>
           <Button
             variant="outline"
             size="icon"
             className={cn(
-              "border-border shrink-0 relative touch-manipulation",
-              activeFilterCount > 0 && "border-elec-yellow/50 bg-elec-yellow/10"
+              'border-border shrink-0 relative touch-manipulation',
+              activeFilterCount > 0 && 'border-elec-yellow/50 bg-elec-yellow/10'
             )}
             onClick={() => setShowFilterSheet(true)}
           >
@@ -209,8 +230,8 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
             variant="outline"
             size="icon"
             className={cn(
-              "border-border shrink-0 hidden sm:flex",
-              viewMode === 'grid' && "bg-elec-yellow/10 border-elec-yellow/30"
+              'border-border shrink-0 hidden sm:flex',
+              viewMode === 'grid' && 'bg-elec-yellow/10 border-elec-yellow/30'
             )}
             onClick={() => setViewMode(viewMode === 'list' ? 'grid' : 'list')}
           >
@@ -223,10 +244,10 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
           <button
             onClick={() => setSelectedCategory(null)}
             className={cn(
-              "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors",
+              'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors',
               !selectedCategory
-                ? "bg-elec-yellow text-black"
-                : "bg-muted text-muted-foreground hover:bg-muted/80"
+                ? 'bg-elec-yellow text-black'
+                : 'bg-muted text-muted-foreground hover:bg-muted/80'
             )}
           >
             All ({entries.length})
@@ -236,13 +257,13 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
               className={cn(
-                "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors",
+                'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors',
                 selectedCategory === cat.id
-                  ? "bg-elec-yellow text-black"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
               )}
             >
-              {cat.name} ({entries.filter(e => e.category?.id === cat.id).length})
+              {cat.name} ({entries.filter((e) => e.category?.id === cat.id).length})
             </button>
           ))}
         </div>
@@ -309,10 +330,7 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
             <SheetTitle>KSB Mapping Assistant</SheetTitle>
           </SheetHeader>
           <div className="h-full overflow-auto -mx-6 px-6">
-            <KSBMappingAssistant
-              completedKSBs={completedKSBs}
-              selectedKSBs={[]}
-            />
+            <KSBMappingAssistant completedKSBs={completedKSBs} selectedKSBs={[]} />
           </div>
         </SheetContent>
       </Sheet>
@@ -323,9 +341,7 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
           <SheetHeader>
             <SheetTitle>Filter Evidence</SheetTitle>
-            <SheetDescription>
-              Narrow down your portfolio entries
-            </SheetDescription>
+            <SheetDescription>Narrow down your portfolio entries</SheetDescription>
           </SheetHeader>
 
           <div className="space-y-6 mt-6">
@@ -338,10 +354,10 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
                     key={status.value}
                     onClick={() => setSelectedStatus(status.value)}
                     className={cn(
-                      "flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all touch-manipulation",
+                      'flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all touch-manipulation',
                       selectedStatus === status.value
-                        ? "bg-elec-yellow text-black"
-                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-muted text-muted-foreground hover:bg-muted/80'
                     )}
                   >
                     {status.icon && <status.icon className="h-4 w-4" />}
@@ -358,10 +374,10 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
                 <button
                   onClick={() => setSelectedCategory(null)}
                   className={cn(
-                    "px-4 py-2.5 rounded-full text-sm font-medium transition-all touch-manipulation",
+                    'px-4 py-2.5 rounded-full text-sm font-medium transition-all touch-manipulation',
                     !selectedCategory
-                      ? "bg-elec-yellow text-black"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
                   )}
                 >
                   All Categories
@@ -371,10 +387,10 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
                     className={cn(
-                      "px-4 py-2.5 rounded-full text-sm font-medium transition-all touch-manipulation",
+                      'px-4 py-2.5 rounded-full text-sm font-medium transition-all touch-manipulation',
                       selectedCategory === cat.id
-                        ? "bg-elec-yellow text-black"
-                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-muted text-muted-foreground hover:bg-muted/80'
                     )}
                   >
                     {cat.name}

@@ -68,15 +68,15 @@ const INSTALLATION_METHOD_CODES: Record<string, string> = {
   'in-trunking': '101',
   'in trunking': '101',
   'Buried Direct': '120',
-  'buried': '120',
+  buried: '120',
   'buried-direct': '120',
   // BS 7671 Table 4A1 reference methods
-  'A1': 'A1',  // Enclosed in conduit in thermally insulated wall
-  'A2': 'A2',  // Enclosed conduit on wall
-  'B': 'B',    // Enclosed in conduit on wall
-  'B1': 'B1',  // Enclosed in conduit on wooden wall
-  'B2': 'B2',  // Enclosed in conduit on masonry wall
-  'C': 'C',    // Direct in thermal insulation
+  A1: 'A1', // Enclosed in conduit in thermally insulated wall
+  A2: 'A2', // Enclosed conduit on wall
+  B: 'B', // Enclosed in conduit on wall
+  B1: 'B1', // Enclosed in conduit on wooden wall
+  B2: 'B2', // Enclosed in conduit on masonry wall
+  C: 'C', // Direct in thermal insulation
   'enclosed-in-wall': 'A1',
   'on-wall': 'A2',
   'free-air': '102',
@@ -92,15 +92,15 @@ const INSTALLATION_METHOD_CODES: Record<string, string> = {
 // BS Standard based on protective device type
 function getBSStandard(deviceType: string): string {
   const standards: Record<string, string> = {
-    'MCB': 'BS EN 60898',
-    'RCBO': 'BS EN 61009',
-    'BS88': 'BS 88-2',
+    MCB: 'BS EN 60898',
+    RCBO: 'BS EN 61009',
+    BS88: 'BS 88-2',
     'BS88-2': 'BS 88-2',
     'BS88-3': 'BS 88-3',
-    'MCCB': 'BS EN 60947-2',
-    'BS1361': 'BS 1361',
-    'BS3036': 'BS 3036',
-    'HRC': 'BS 88-2',
+    MCCB: 'BS EN 60947-2',
+    BS1361: 'BS 1361',
+    BS3036: 'BS 3036',
+    HRC: 'BS 88-2',
   };
   // Check for device type (case-insensitive)
   const upperType = deviceType?.toUpperCase() || '';
@@ -119,24 +119,20 @@ function getReferenceMethodCode(method?: string): string {
 
 function getPointsServed(loadType: string): number {
   const pointsMap: Record<string, number> = {
-    'lighting': 10,
-    'socket': 8,
-    'cooker': 1,
-    'shower': 1,
-    'immersion': 1,
-    'heating': 1,
+    lighting: 10,
+    socket: 8,
+    cooker: 1,
+    shower: 1,
+    immersion: 1,
+    heating: 1,
     'ev-charger': 1,
-    'motor': 1
+    motor: 1,
   };
   return pointsMap[loadType.toLowerCase()] || 1;
 }
 
 // Calculate expected R1+R2 based on cable sizes and length
-export function calculateExpectedR1R2(
-  liveSize: number,
-  cpcSize: number,
-  length: number
-): string {
+export function calculateExpectedR1R2(liveSize: number, cpcSize: number, length: number): string {
   // BS 7671 Table 9A - Conductor resistance (mΩ/m at 20°C)
   const CONDUCTOR_RESISTANCE: Record<number, number> = {
     1.0: 18.1,
@@ -151,7 +147,7 @@ export function calculateExpectedR1R2(
     50: 0.387,
     70: 0.268,
     95: 0.193,
-    120: 0.153
+    120: 0.153,
   };
 
   const r1 = CONDUCTOR_RESISTANCE[liveSize] || 0;
@@ -200,7 +196,7 @@ export function generateEICSchedule(
 
       // To be tested on-site
       pfc: 'To be tested',
-      functionalTesting: 'To be completed'
+      functionalTesting: 'To be completed',
     };
 
     // Add ring circuit fields if applicable
@@ -234,6 +230,6 @@ export function generateEICSchedule(
     designDate: new Date().toISOString(),
     circuits,
     createdAt: new Date().toISOString(),
-    status: 'pending'
+    status: 'pending',
   };
 }

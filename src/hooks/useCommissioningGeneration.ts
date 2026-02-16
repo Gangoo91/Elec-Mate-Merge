@@ -24,14 +24,17 @@ export const useCommissioningGeneration = () => {
     setError(null);
 
     try {
-      const { data, error: createError } = await supabase.functions.invoke('create-commissioning-job', {
-        body: jobInputs
-      });
+      const { data, error: createError } = await supabase.functions.invoke(
+        'create-commissioning-job',
+        {
+          body: jobInputs,
+        }
+      );
 
       if (createError) throw createError;
 
       console.log('✅ Created commissioning job:', data.jobId);
-      
+
       // Start polling for job status
       pollJobStatus(data.jobId);
 
@@ -93,7 +96,7 @@ export const useCommissioningGeneration = () => {
   const cancelJob = async (jobId: string) => {
     try {
       const { error: cancelError } = await supabase.functions.invoke('cancel-commissioning-job', {
-        body: { jobId }
+        body: { jobId },
       });
 
       if (cancelError) throw cancelError;
@@ -111,6 +114,6 @@ export const useCommissioningGeneration = () => {
     isLoading,
     error,
     createJob,
-    cancelJob
+    cancelJob,
   };
 };

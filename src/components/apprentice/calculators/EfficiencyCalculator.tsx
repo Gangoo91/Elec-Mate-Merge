@@ -1,11 +1,7 @@
-import { useMemo, useState } from "react";
-import { Info, BookOpen, ChevronDown } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+import { useMemo, useState } from 'react';
+import { Info, BookOpen, ChevronDown } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -13,14 +9,14 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 const modes = [
-  { key: "efficiency", label: "Find η (%)" },
-  { key: "output", label: "Find Output (W)" },
+  { key: 'efficiency', label: 'Find η (%)' },
+  { key: 'output', label: 'Find Output (W)' },
 ] as const;
 
-type Mode = typeof modes[number]["key"];
+type Mode = (typeof modes)[number]['key'];
 
 const parseNum = (v: string) => {
   const n = parseFloat(v);
@@ -32,10 +28,10 @@ const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min)
 export const EfficiencyCalculator: React.FC = () => {
   const config = CALCULATOR_CONFIG['power'];
 
-  const [mode, setMode] = useState<Mode>("efficiency");
-  const [inputW, setInputW] = useState<string>("");
-  const [outputW, setOutputW] = useState<string>("");
-  const [effPct, setEffPct] = useState<string>("80");
+  const [mode, setMode] = useState<Mode>('efficiency');
+  const [inputW, setInputW] = useState<string>('');
+  const [outputW, setOutputW] = useState<string>('');
+  const [effPct, setEffPct] = useState<string>('80');
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
 
@@ -44,7 +40,7 @@ export const EfficiencyCalculator: React.FC = () => {
     const output = parseNum(outputW);
     const eff = clamp(parseNum(effPct), 0, 100);
 
-    if (mode === "efficiency") {
+    if (mode === 'efficiency') {
       if (input <= 0 || output < 0) return { efficiency: 0, loss: 0, hasResult: false };
       const efficiency = clamp((output / input) * 100, 0, 100);
       const loss = Math.max(input - output, 0);
@@ -59,23 +55,23 @@ export const EfficiencyCalculator: React.FC = () => {
   }, [mode, inputW, outputW, effPct]);
 
   const reset = () => {
-    setInputW("");
-    setOutputW("");
-    setEffPct("80");
+    setInputW('');
+    setOutputW('');
+    setEffPct('80');
   };
 
   const getEfficiencyColor = (eff: number) => {
-    if (eff >= 90) return "text-green-400";
-    if (eff >= 75) return "text-amber-400";
-    return "text-red-400";
+    if (eff >= 90) return 'text-green-400';
+    if (eff >= 75) return 'text-amber-400';
+    return 'text-red-400';
   };
 
   const getEfficiencyRating = (eff: number) => {
-    if (eff >= 95) return "Excellent";
-    if (eff >= 90) return "Very Good";
-    if (eff >= 80) return "Good";
-    if (eff >= 70) return "Fair";
-    return "Poor";
+    if (eff >= 95) return 'Excellent';
+    if (eff >= 90) return 'Very Good';
+    if (eff >= 80) return 'Good';
+    if (eff >= 70) return 'Fair';
+    return 'Poor';
   };
 
   return (
@@ -93,14 +89,18 @@ export const EfficiencyCalculator: React.FC = () => {
               key={m.key}
               onClick={() => setMode(m.key)}
               className={cn(
-                "flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation",
+                'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
                 mode === m.key
-                  ? "text-black"
-                  : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+                  ? 'text-black'
+                  : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
               )}
-              style={mode === m.key ? {
-                background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`
-              } : undefined}
+              style={
+                mode === m.key
+                  ? {
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }
+                  : undefined
+              }
             >
               {m.label}
             </button>
@@ -119,7 +119,7 @@ export const EfficiencyCalculator: React.FC = () => {
           hint="Electrical power consumed"
         />
 
-        {mode === "efficiency" ? (
+        {mode === 'efficiency' ? (
           <CalculatorInput
             label="Output Power"
             unit="W"
@@ -158,25 +158,27 @@ export const EfficiencyCalculator: React.FC = () => {
           <CalculatorResult category="power">
             <div className="text-center pb-4 border-b border-white/10">
               <p className="text-sm text-white/60 mb-1">
-                {mode === "efficiency" ? "Efficiency" : "Output Power"}
+                {mode === 'efficiency' ? 'Efficiency' : 'Output Power'}
               </p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
-                {mode === "efficiency"
+                {mode === 'efficiency'
                   ? `${computed.efficiency.toFixed(1)}%`
                   : `${(computed.out ?? 0).toFixed(0)} W`}
               </div>
-              {mode === "efficiency" && (
-                <p className={cn("text-sm mt-1", getEfficiencyColor(computed.efficiency))}>
+              {mode === 'efficiency' && (
+                <p className={cn('text-sm mt-1', getEfficiencyColor(computed.efficiency))}>
                   {getEfficiencyRating(computed.efficiency)}
                 </p>
               )}
             </div>
 
             <ResultsGrid columns={2}>
-              {mode === "output" && (
+              {mode === 'output' && (
                 <ResultValue
                   label="Efficiency"
                   value={computed.efficiency.toFixed(1)}
@@ -199,7 +201,7 @@ export const EfficiencyCalculator: React.FC = () => {
                 category="power"
                 size="sm"
               />
-              {mode === "efficiency" && (
+              {mode === 'efficiency' && (
                 <ResultValue
                   label="Output Power"
                   value={parseNum(outputW).toFixed(0)}
@@ -218,7 +220,7 @@ export const EfficiencyCalculator: React.FC = () => {
                   className="h-full transition-all duration-300"
                   style={{
                     width: `${computed.efficiency}%`,
-                    background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`
+                    background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
                   }}
                 />
                 <div
@@ -239,12 +241,16 @@ export const EfficiencyCalculator: React.FC = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
@@ -253,11 +259,13 @@ export const EfficiencyCalculator: React.FC = () => {
                     <strong className="text-blue-300">η = Pout ÷ Pin × 100%</strong>
                   </p>
                   <p>
-                    Power lost typically dissipates as heat. Higher efficiency = less energy waste and lower operating costs.
+                    Power lost typically dissipates as heat. Higher efficiency = less energy waste
+                    and lower operating costs.
                   </p>
                   {computed.loss > 0 && (
                     <p>
-                      <strong className="text-blue-300">Heat generated:</strong> ~{computed.loss.toFixed(0)} W of heat needs to be dissipated
+                      <strong className="text-blue-300">Heat generated:</strong> ~
+                      {computed.loss.toFixed(0)} W of heat needs to be dissipated
                     </p>
                   )}
                 </div>
@@ -273,12 +281,16 @@ export const EfficiencyCalculator: React.FC = () => {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">Typical Efficiencies</span>
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                Typical Efficiencies
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showReference && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">

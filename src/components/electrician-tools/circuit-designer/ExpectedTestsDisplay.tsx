@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, XCircle } from 'lucide-react';
 
 interface ExpectedTestValues {
   r1r2: {
@@ -34,18 +34,13 @@ interface ExpectedTestsDisplayProps {
   circuitName: string;
 }
 
-export const ExpectedTestsDisplay = ({
-  expectedTests,
-  circuitName
-}: ExpectedTestsDisplayProps) => {
+export const ExpectedTestsDisplay = ({ expectedTests, circuitName }: ExpectedTestsDisplayProps) => {
   if (!expectedTests) return null;
 
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-4 space-y-2">
-        <CardTitle className="text-lg sm:text-xl">
-          Expected Test Results
-        </CardTitle>
+        <CardTitle className="text-lg sm:text-xl">Expected Test Results</CardTitle>
         <p className="text-sm text-muted-foreground">
           Use these values for EIC testing and commissioning
         </p>
@@ -61,12 +56,18 @@ export const ExpectedTestsDisplay = ({
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">At 20°C</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                At 20°C
+              </p>
               <p className="font-mono text-lg">{expectedTests.r1r2.at20C.toFixed(4)}Ω</p>
             </div>
             <div className="space-y-1">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">At 70°C (Test)</p>
-              <p className="font-mono text-lg font-bold text-primary">{expectedTests.r1r2.at70C.toFixed(4)}Ω</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                At 70°C (Test)
+              </p>
+              <p className="font-mono text-lg font-bold text-primary">
+                {expectedTests.r1r2.at70C.toFixed(4)}Ω
+              </p>
             </div>
           </div>
         </div>
@@ -89,13 +90,19 @@ export const ExpectedTestsDisplay = ({
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Expected Zs</p>
-              <p className={`font-mono text-lg font-bold ${expectedTests.zs.compliant ? 'text-green-600 dark:text-green-400' : 'text-destructive'}`}>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Expected Zs
+              </p>
+              <p
+                className={`font-mono text-lg font-bold ${expectedTests.zs.compliant ? 'text-green-600 dark:text-green-400' : 'text-destructive'}`}
+              >
                 {expectedTests.zs.expected.toFixed(3)}Ω
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Maximum Permitted</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Maximum Permitted
+              </p>
               <p className="font-mono text-lg">{expectedTests.zs.maxPermitted.toFixed(3)}Ω</p>
             </div>
           </div>
@@ -122,12 +129,18 @@ export const ExpectedTestsDisplay = ({
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Test Voltage</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Test Voltage
+              </p>
               <p className="font-mono text-lg">{expectedTests.insulationResistance.testVoltage}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Minimum Required</p>
-              <p className="font-mono text-lg font-bold text-primary">{expectedTests.insulationResistance.minResistance}</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Minimum Required
+              </p>
+              <p className="font-mono text-lg font-bold text-primary">
+                {expectedTests.insulationResistance.minResistance}
+              </p>
             </div>
           </div>
         </div>
@@ -143,12 +156,18 @@ export const ExpectedTestsDisplay = ({
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">RCD Rating</p>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  RCD Rating
+                </p>
                 <p className="font-mono text-lg">{expectedTests.rcd.ratingmA}mA</p>
               </div>
               <div className="space-y-1">
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Max Trip Time (1×IΔn)</p>
-                <p className="font-mono text-lg font-bold text-primary">&lt; {expectedTests.rcd.maxTripTimeMs}ms</p>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  Max Trip Time (1×IΔn)
+                </p>
+                <p className="font-mono text-lg font-bold text-primary">
+                  &lt; {expectedTests.rcd.maxTripTimeMs}ms
+                </p>
               </div>
             </div>
             <p className="text-xs text-muted-foreground pt-2 border-t border-border/30">

@@ -3,12 +3,12 @@
  * Supports pinch-to-zoom and template switching
  */
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Drawer } from "vaul";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Drawer } from 'vaul';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import {
   X,
   Download,
@@ -24,10 +24,10 @@ import {
   AlertCircle,
   CheckCircle2,
   Save,
-} from "lucide-react";
-import { sheetVariants, fadeUpVariants } from "./animations/variants";
-import type { CVData } from "../types";
-import type { CVTemplateId } from "./CVTemplateShowcase";
+} from 'lucide-react';
+import { sheetVariants, fadeUpVariants } from './animations/variants';
+import type { CVData } from '../types';
+import type { CVTemplateId } from './CVTemplateShowcase';
 
 interface CVPreviewSheetProps {
   isOpen: boolean;
@@ -90,7 +90,8 @@ const validateCV = (cvData: CVData): { score: number; items: ValidationItem[] } 
     {
       section: 'experience',
       label: 'Job Descriptions',
-      isComplete: cvData.experience.length > 0 && cvData.experience.every(e => e.description.length >= 30),
+      isComplete:
+        cvData.experience.length > 0 && cvData.experience.every((e) => e.description.length >= 30),
       message: 'Add detailed descriptions to all jobs',
       priority: 'recommended',
     },
@@ -117,9 +118,9 @@ const validateCV = (cvData: CVData): { score: number; items: ValidationItem[] } 
     },
   ];
 
-  const requiredItems = items.filter(i => i.priority === 'required');
-  const completedRequired = requiredItems.filter(i => i.isComplete).length;
-  const completedAll = items.filter(i => i.isComplete).length;
+  const requiredItems = items.filter((i) => i.priority === 'required');
+  const completedRequired = requiredItems.filter((i) => i.isComplete).length;
+  const completedAll = items.filter((i) => i.isComplete).length;
 
   // Score: 60% from required items, 40% from all items
   const requiredScore = (completedRequired / requiredItems.length) * 60;
@@ -133,28 +134,28 @@ const validateCV = (cvData: CVData): { score: number; items: ValidationItem[] } 
 const getTemplateStyles = (template: CVTemplateId) => {
   const styles = {
     classic: {
-      header: "bg-slate-800 text-white",
-      accent: "border-slate-600",
-      section: "border-l-2 border-slate-600 pl-4",
-      name: "text-slate-800",
+      header: 'bg-slate-800 text-white',
+      accent: 'border-slate-600',
+      section: 'border-l-2 border-slate-600 pl-4',
+      name: 'text-slate-800',
     },
     modern: {
-      header: "bg-gradient-to-r from-blue-600 to-blue-800 text-white",
-      accent: "border-blue-500",
-      section: "border-l-4 border-blue-500 pl-4",
-      name: "text-blue-700",
+      header: 'bg-gradient-to-r from-blue-600 to-blue-800 text-white',
+      accent: 'border-blue-500',
+      section: 'border-l-4 border-blue-500 pl-4',
+      name: 'text-blue-700',
     },
     creative: {
-      header: "bg-gradient-to-r from-purple-600 to-pink-600 text-white",
-      accent: "border-purple-500",
-      section: "bg-purple-50 rounded-lg p-4",
-      name: "text-purple-700",
+      header: 'bg-gradient-to-r from-purple-600 to-pink-600 text-white',
+      accent: 'border-purple-500',
+      section: 'bg-purple-50 rounded-lg p-4',
+      name: 'text-purple-700',
     },
     technical: {
-      header: "bg-gradient-to-r from-emerald-600 to-teal-600 text-white",
-      accent: "border-emerald-500",
-      section: "border border-emerald-200 rounded p-4",
-      name: "text-emerald-700",
+      header: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white',
+      accent: 'border-emerald-500',
+      section: 'border border-emerald-200 rounded p-4',
+      name: 'text-emerald-700',
     },
   };
   return styles[template];
@@ -176,15 +177,15 @@ const CVDocument = ({
     <div
       className="bg-white shadow-2xl mx-auto transition-transform duration-200"
       style={{
-        width: "210mm",
-        minHeight: "297mm",
+        width: '210mm',
+        minHeight: '297mm',
         transform: `scale(${scale})`,
-        transformOrigin: "top center",
+        transformOrigin: 'top center',
       }}
     >
       {/* Header */}
-      <div className={cn("p-8", styles.header)}>
-        <h1 className="text-3xl font-bold">{cvData.personalInfo.fullName || "Your Name"}</h1>
+      <div className={cn('p-8', styles.header)}>
+        <h1 className="text-3xl font-bold">{cvData.personalInfo.fullName || 'Your Name'}</h1>
         <div className="flex flex-wrap gap-4 mt-3 text-sm opacity-90">
           {cvData.personalInfo.email && <span>{cvData.personalInfo.email}</span>}
           {cvData.personalInfo.phone && <span>{cvData.personalInfo.phone}</span>}
@@ -196,7 +197,7 @@ const CVDocument = ({
         {/* Professional Summary */}
         {cvData.personalInfo.professionalSummary && (
           <section className={styles.section}>
-            <h2 className={cn("text-lg font-bold mb-2", styles.name)}>Professional Summary</h2>
+            <h2 className={cn('text-lg font-bold mb-2', styles.name)}>Professional Summary</h2>
             <p className="text-gray-700 text-sm leading-relaxed">
               {cvData.personalInfo.professionalSummary}
             </p>
@@ -206,7 +207,7 @@ const CVDocument = ({
         {/* Experience */}
         {cvData.experience.length > 0 && (
           <section className={styles.section}>
-            <h2 className={cn("text-lg font-bold mb-3", styles.name)}>Work Experience</h2>
+            <h2 className={cn('text-lg font-bold mb-3', styles.name)}>Work Experience</h2>
             <div className="space-y-4">
               {cvData.experience.map((exp) => (
                 <div key={exp.id}>
@@ -216,7 +217,7 @@ const CVDocument = ({
                       <p className="text-gray-600 text-sm">{exp.company}</p>
                     </div>
                     <span className="text-xs text-gray-500">
-                      {exp.startDate} - {exp.current ? "Present" : exp.endDate}
+                      {exp.startDate} - {exp.current ? 'Present' : exp.endDate}
                     </span>
                   </div>
                   {exp.description && (
@@ -231,7 +232,9 @@ const CVDocument = ({
         {/* Education */}
         {cvData.education.length > 0 && (
           <section className={styles.section}>
-            <h2 className={cn("text-lg font-bold mb-3", styles.name)}>Education & Qualifications</h2>
+            <h2 className={cn('text-lg font-bold mb-3', styles.name)}>
+              Education & Qualifications
+            </h2>
             <div className="space-y-3">
               {cvData.education.map((edu) => (
                 <div key={edu.id} className="flex justify-between items-start">
@@ -249,17 +252,17 @@ const CVDocument = ({
         {/* Skills */}
         {cvData.skills.length > 0 && (
           <section className={styles.section}>
-            <h2 className={cn("text-lg font-bold mb-3", styles.name)}>Skills</h2>
+            <h2 className={cn('text-lg font-bold mb-3', styles.name)}>Skills</h2>
             <div className="flex flex-wrap gap-2">
               {cvData.skills.map((skill, index) => (
                 <span
                   key={index}
                   className={cn(
-                    "px-3 py-1 rounded-full text-sm",
-                    template === "classic" && "bg-slate-100 text-slate-700",
-                    template === "modern" && "bg-blue-100 text-blue-700",
-                    template === "creative" && "bg-purple-100 text-purple-700",
-                    template === "technical" && "bg-emerald-100 text-emerald-700"
+                    'px-3 py-1 rounded-full text-sm',
+                    template === 'classic' && 'bg-slate-100 text-slate-700',
+                    template === 'modern' && 'bg-blue-100 text-blue-700',
+                    template === 'creative' && 'bg-purple-100 text-purple-700',
+                    template === 'technical' && 'bg-emerald-100 text-emerald-700'
                   )}
                 >
                   {skill}
@@ -272,7 +275,7 @@ const CVDocument = ({
         {/* Certifications */}
         {cvData.certifications.length > 0 && (
           <section className={styles.section}>
-            <h2 className={cn("text-lg font-bold mb-3", styles.name)}>Certifications</h2>
+            <h2 className={cn('text-lg font-bold mb-3', styles.name)}>Certifications</h2>
             <ul className="list-disc list-inside text-gray-700 text-sm space-y-1">
               {cvData.certifications.map((cert, index) => (
                 <li key={index}>{cert}</li>
@@ -304,8 +307,12 @@ const CVPreviewSheet = ({
 
   // Calculate validation score
   const validation = validateCV(cvData);
-  const incompleteRequired = validation.items.filter(i => i.priority === 'required' && !i.isComplete);
-  const incompleteRecommended = validation.items.filter(i => i.priority === 'recommended' && !i.isComplete);
+  const incompleteRequired = validation.items.filter(
+    (i) => i.priority === 'required' && !i.isComplete
+  );
+  const incompleteRecommended = validation.items.filter(
+    (i) => i.priority === 'recommended' && !i.isComplete
+  );
 
   const handleZoomIn = () => setScale((s) => Math.min(s + 0.1, 1));
   const handleZoomOut = () => setScale((s) => Math.max(s - 0.1, 0.3));
@@ -414,101 +421,110 @@ const CVPreviewSheet = ({
           </div>
 
           {/* Validation Panel */}
-          {showValidation && (incompleteRequired.length > 0 || incompleteRecommended.length > 0) && (
-            <div className="px-4 sm:px-6 py-3 bg-black/30 border-b border-white/10">
-              <div className="flex items-start gap-4">
-                {/* Score Circle */}
-                <div className={cn("flex-shrink-0 w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center", getScoreBg(validation.score))}>
-                  <span className={cn("text-xl font-bold", getScoreColor(validation.score))}>{validation.score}%</span>
-                  <span className="text-[10px] text-white/50">Complete</span>
-                </div>
+          {showValidation &&
+            (incompleteRequired.length > 0 || incompleteRecommended.length > 0) && (
+              <div className="px-4 sm:px-6 py-3 bg-black/30 border-b border-white/10">
+                <div className="flex items-start gap-4">
+                  {/* Score Circle */}
+                  <div
+                    className={cn(
+                      'flex-shrink-0 w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center',
+                      getScoreBg(validation.score)
+                    )}
+                  >
+                    <span className={cn('text-xl font-bold', getScoreColor(validation.score))}>
+                      {validation.score}%
+                    </span>
+                    <span className="text-[10px] text-white/50">Complete</span>
+                  </div>
 
-                {/* Incomplete Items */}
-                <div className="flex-1 min-w-0">
-                  {incompleteRequired.length > 0 && (
-                    <div className="mb-2">
-                      <p className="text-xs font-medium text-red-400 mb-1 flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        Required ({incompleteRequired.length})
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {incompleteRequired.slice(0, 3).map((item, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => onEditSection?.(item.section)}
-                            className="text-xs px-2 py-1 rounded bg-red-500/10 text-red-300 hover:bg-red-500/20 transition-colors"
-                          >
-                            {item.label}
-                          </button>
-                        ))}
-                        {incompleteRequired.length > 3 && (
-                          <span className="text-xs text-red-300/60 px-2 py-1">
-                            +{incompleteRequired.length - 3} more
-                          </span>
-                        )}
+                  {/* Incomplete Items */}
+                  <div className="flex-1 min-w-0">
+                    {incompleteRequired.length > 0 && (
+                      <div className="mb-2">
+                        <p className="text-xs font-medium text-red-400 mb-1 flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" />
+                          Required ({incompleteRequired.length})
+                        </p>
+                        <div className="flex flex-wrap gap-1">
+                          {incompleteRequired.slice(0, 3).map((item, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => onEditSection?.(item.section)}
+                              className="text-xs px-2 py-1 rounded bg-red-500/10 text-red-300 hover:bg-red-500/20 transition-colors"
+                            >
+                              {item.label}
+                            </button>
+                          ))}
+                          {incompleteRequired.length > 3 && (
+                            <span className="text-xs text-red-300/60 px-2 py-1">
+                              +{incompleteRequired.length - 3} more
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {incompleteRecommended.length > 0 && (
-                    <div>
-                      <p className="text-xs font-medium text-amber-400 mb-1 flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        Recommended ({incompleteRecommended.length})
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {incompleteRecommended.slice(0, 2).map((item, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => onEditSection?.(item.section)}
-                            className="text-xs px-2 py-1 rounded bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 transition-colors"
-                          >
-                            {item.label}
-                          </button>
-                        ))}
-                        {incompleteRecommended.length > 2 && (
-                          <span className="text-xs text-amber-300/60 px-2 py-1">
-                            +{incompleteRecommended.length - 2} more
-                          </span>
-                        )}
+                    {incompleteRecommended.length > 0 && (
+                      <div>
+                        <p className="text-xs font-medium text-amber-400 mb-1 flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" />
+                          Recommended ({incompleteRecommended.length})
+                        </p>
+                        <div className="flex flex-wrap gap-1">
+                          {incompleteRecommended.slice(0, 2).map((item, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => onEditSection?.(item.section)}
+                              className="text-xs px-2 py-1 rounded bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 transition-colors"
+                            >
+                              {item.label}
+                            </button>
+                          ))}
+                          {incompleteRecommended.length > 2 && (
+                            <span className="text-xs text-amber-300/60 px-2 py-1">
+                              +{incompleteRecommended.length - 2} more
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
 
-                {/* Dismiss Button */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowValidation(false)}
-                  className="text-white/40 hover:text-white/60 -mr-2"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                  {/* Dismiss Button */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowValidation(false)}
+                    className="text-white/40 hover:text-white/60 -mr-2"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* All Complete Banner */}
-          {showValidation && incompleteRequired.length === 0 && incompleteRecommended.length === 0 && (
-            <div className="px-4 sm:px-6 py-3 bg-emerald-500/10 border-b border-emerald-500/20">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-emerald-300">Your CV is complete!</p>
-                  <p className="text-xs text-emerald-300/60">All required and recommended sections are filled in.</p>
+          {showValidation &&
+            incompleteRequired.length === 0 &&
+            incompleteRecommended.length === 0 && (
+              <div className="px-4 sm:px-6 py-3 bg-emerald-500/10 border-b border-emerald-500/20">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-emerald-300">Your CV is complete!</p>
+                    <p className="text-xs text-emerald-300/60">
+                      All required and recommended sections are filled in.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Preview Container */}
-          <div
-            ref={containerRef}
-            className="flex-1 overflow-auto bg-gray-900/50 p-4 sm:p-8"
-          >
+          <div ref={containerRef} className="flex-1 overflow-auto bg-gray-900/50 p-4 sm:p-8">
             <CVDocument cvData={cvData} template={template} scale={scale} />
           </div>
 
@@ -518,12 +534,12 @@ const CVPreviewSheet = ({
               {/* Edit Sections */}
               {onEditSection && (
                 <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
-                  {["Personal Info", "Experience", "Education", "Skills"].map((section) => (
+                  {['Personal Info', 'Experience', 'Education', 'Skills'].map((section) => (
                     <Button
                       key={section}
                       variant="outline"
                       size="sm"
-                      onClick={() => onEditSection(section.toLowerCase().replace(" ", "-"))}
+                      onClick={() => onEditSection(section.toLowerCase().replace(' ', '-'))}
                       className="flex-shrink-0 border-white/10 text-white/70 hover:text-white hover:bg-white/10"
                     >
                       <Edit3 className="h-3.5 w-3.5 mr-1.5" />

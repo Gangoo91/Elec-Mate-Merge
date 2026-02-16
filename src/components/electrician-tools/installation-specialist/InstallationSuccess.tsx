@@ -1,11 +1,8 @@
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle2, Wrench, Clock, AlertTriangle, Shield, Hammer } from "lucide-react";
-import confetti from "canvas-confetti";
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle2, Wrench, Clock, AlertTriangle, Shield, Hammer } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 interface InstallationSuccessProps {
   results: any;
@@ -15,7 +12,13 @@ interface InstallationSuccessProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const InstallationSuccess = ({ results, onViewResults, generationTime, open, onOpenChange }: InstallationSuccessProps) => {
+const InstallationSuccess = ({
+  results,
+  onViewResults,
+  generationTime,
+  open,
+  onOpenChange,
+}: InstallationSuccessProps) => {
   useEffect(() => {
     if (!open) return;
 
@@ -28,7 +31,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
       return Math.random() * (max - min) + min;
     }
 
-    const interval: NodeJS.Timeout = setInterval(function() {
+    const interval: NodeJS.Timeout = setInterval(function () {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
@@ -41,13 +44,13 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
         ...defaults,
         particleCount,
         origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-        colors: ['#3B82F6', '#60A5FA', '#FBBF24', '#F59E0B', '#10B981'] // Blue and yellow theme
+        colors: ['#3B82F6', '#60A5FA', '#FBBF24', '#F59E0B', '#10B981'], // Blue and yellow theme
       });
       confetti({
         ...defaults,
         particleCount,
         origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-        colors: ['#3B82F6', '#60A5FA', '#FBBF24', '#F59E0B', '#10B981']
+        colors: ['#3B82F6', '#60A5FA', '#FBBF24', '#F59E0B', '#10B981'],
       });
     }, 250);
 
@@ -61,11 +64,13 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
 
   // Extract stats from results
   const totalSteps = results?.steps?.length || results?.summary?.totalSteps || 0;
-  const estimatedDuration = results?.summary?.estimatedDuration || results?.estimatedDuration || 'Not specified';
+  const estimatedDuration =
+    results?.summary?.estimatedDuration || results?.estimatedDuration || 'Not specified';
   const riskLevel = results?.summary?.overallRiskLevel || results?.overallRiskLevel || 'medium';
-  const hazardsCount = results?.steps?.reduce((count: number, step: any) => {
-    return count + (step.linkedHazards?.length || 0);
-  }, 0) || 0;
+  const hazardsCount =
+    results?.steps?.reduce((count: number, step: any) => {
+      return count + (step.linkedHazards?.length || 0);
+    }, 0) || 0;
   const toolsCount = results?.summary?.toolsRequired?.length || results?.toolsRequired?.length || 0;
 
   const timeSaved = 180; // 3 hours vs manual method statement creation
@@ -98,7 +103,9 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 py-4 sm:py-6">
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-blue-500/30 hover:border-blue-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
-                <div className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1">{totalSteps}</div>
+                <div className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1">
+                  {totalSteps}
+                </div>
                 <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
                   <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4" />
                   Steps
@@ -108,7 +115,10 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
 
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-blue-500/30 hover:border-blue-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
-                <div className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1 truncate w-full text-center" title={estimatedDuration}>
+                <div
+                  className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1 truncate w-full text-center"
+                  title={estimatedDuration}
+                >
                   {estimatedDuration?.split(' ')[0] || 'N/A'}
                 </div>
                 <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
@@ -120,7 +130,9 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
 
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-amber-500/30 hover:border-amber-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
-                <div className="text-3xl sm:text-3xl font-bold text-amber-400 mb-1">{hazardsCount}</div>
+                <div className="text-3xl sm:text-3xl font-bold text-amber-400 mb-1">
+                  {hazardsCount}
+                </div>
                 <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
                   <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4" />
                   Hazards
@@ -130,7 +142,9 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
 
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-green-500/30 hover:border-green-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
-                <div className="text-3xl sm:text-3xl font-bold text-green-400 mb-1 uppercase">{riskLevel}</div>
+                <div className="text-3xl sm:text-3xl font-bold text-green-400 mb-1 uppercase">
+                  {riskLevel}
+                </div>
                 <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
                   <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
                   Risk Level
@@ -159,7 +173,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
           </div>
 
           {/* View Results Button */}
-          <Button 
+          <Button
             onClick={() => {
               onViewResults();
               onOpenChange(false);

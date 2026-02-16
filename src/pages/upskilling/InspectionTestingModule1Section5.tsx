@@ -1,149 +1,234 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Test Sequence and Documentation - Inspection & Testing";
-const DESCRIPTION = "Learn the correct sequence for electrical tests and how to properly document results including schedules of test results and certification requirements.";
+const TITLE = 'Test Sequence and Documentation - Inspection & Testing';
+const DESCRIPTION =
+  'Learn the correct sequence for electrical tests and how to properly document results including schedules of test results and certification requirements.';
 
 const quickCheckQuestions = [
   {
-    id: "dead-tests-first",
-    question: "What type of tests should always be completed before live tests?",
-    options: ["RCD tests", "Loop impedance tests", "Dead tests (continuity, insulation)", "Functional tests"],
+    id: 'dead-tests-first',
+    question: 'What type of tests should always be completed before live tests?',
+    options: [
+      'RCD tests',
+      'Loop impedance tests',
+      'Dead tests (continuity, insulation)',
+      'Functional tests',
+    ],
     correctIndex: 2,
-    explanation: "Dead tests (continuity and insulation resistance) must be completed before live tests to ensure the installation is safe before energising."
+    explanation:
+      'Dead tests (continuity and insulation resistance) must be completed before live tests to ensure the installation is safe before energising.',
   },
   {
-    id: "visual-inspection",
-    question: "Why must visual inspection be done before testing?",
-    options: ["It's quicker to do first", "To identify obvious faults that could make testing dangerous", "Testing equipment requires it", "It's optional"],
+    id: 'visual-inspection',
+    question: 'Why must visual inspection be done before testing?',
+    options: [
+      "It's quicker to do first",
+      'To identify obvious faults that could make testing dangerous',
+      'Testing equipment requires it',
+      "It's optional",
+    ],
     correctIndex: 1,
-    explanation: "Visual inspection identifies obvious defects, damage, or dangerous conditions that could make testing hazardous. It must be done before energising for testing."
+    explanation:
+      'Visual inspection identifies obvious defects, damage, or dangerous conditions that could make testing hazardous. It must be done before energising for testing.',
   },
   {
-    id: "eicr-use",
-    question: "What certificate is used for periodic inspection of existing installations?",
-    options: ["Electrical Installation Certificate", "Minor Works Certificate", "Electrical Installation Condition Report", "Test Results Schedule"],
+    id: 'eicr-use',
+    question: 'What certificate is used for periodic inspection of existing installations?',
+    options: [
+      'Electrical Installation Certificate',
+      'Minor Works Certificate',
+      'Electrical Installation Condition Report',
+      'Test Results Schedule',
+    ],
     correctIndex: 2,
-    explanation: "An EICR (Electrical Installation Condition Report) is used for periodic inspection of existing installations to report on their condition."
-  }
+    explanation:
+      'An EICR (Electrical Installation Condition Report) is used for periodic inspection of existing installations to report on their condition.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "The correct sequence for electrical testing is:",
-    options: ["Live tests, dead tests, visual inspection", "Dead tests, visual inspection, live tests", "Visual inspection, dead tests, live tests", "Any order is acceptable"],
+    question: 'The correct sequence for electrical testing is:',
+    options: [
+      'Live tests, dead tests, visual inspection',
+      'Dead tests, visual inspection, live tests',
+      'Visual inspection, dead tests, live tests',
+      'Any order is acceptable',
+    ],
     correctAnswer: 2,
-    explanation: "Visual inspection must be done first (with supply off), then dead tests, then live tests. This ensures safety at each stage."
+    explanation:
+      'Visual inspection must be done first (with supply off), then dead tests, then live tests. This ensures safety at each stage.',
   },
   {
     id: 2,
-    question: "Continuity testing should be performed:",
-    options: ["With the supply connected", "Before insulation resistance testing", "After RCD testing", "Only on new installations"],
+    question: 'Continuity testing should be performed:',
+    options: [
+      'With the supply connected',
+      'Before insulation resistance testing',
+      'After RCD testing',
+      'Only on new installations',
+    ],
     correctAnswer: 1,
-    explanation: "Continuity testing is a dead test performed before insulation resistance testing, with the supply isolated."
+    explanation:
+      'Continuity testing is a dead test performed before insulation resistance testing, with the supply isolated.',
   },
   {
     id: 3,
-    question: "Why is test sequence important for safety?",
-    options: ["It makes paperwork easier", "It ensures faults are found before the circuit is energised", "Test equipment requires it", "It's just a recommendation"],
+    question: 'Why is test sequence important for safety?',
+    options: [
+      'It makes paperwork easier',
+      'It ensures faults are found before the circuit is energised',
+      'Test equipment requires it',
+      "It's just a recommendation",
+    ],
     correctAnswer: 1,
-    explanation: "Following the correct sequence means potential faults are identified by dead tests before the circuit is energised for live tests."
+    explanation:
+      'Following the correct sequence means potential faults are identified by dead tests before the circuit is energised for live tests.',
   },
   {
     id: 4,
-    question: "A Schedule of Test Results records:",
-    options: ["Only failed test results", "Only passed test results", "All measured values and test outcomes", "Estimated values"],
+    question: 'A Schedule of Test Results records:',
+    options: [
+      'Only failed test results',
+      'Only passed test results',
+      'All measured values and test outcomes',
+      'Estimated values',
+    ],
     correctAnswer: 2,
-    explanation: "The Schedule of Test Results records all measured values from tests, providing a record of the installation's condition at the time of testing."
+    explanation:
+      "The Schedule of Test Results records all measured values from tests, providing a record of the installation's condition at the time of testing.",
   },
   {
     id: 5,
-    question: "The Schedule of Inspections records:",
-    options: ["Only test results", "Items checked during visual inspection", "Equipment serial numbers", "Client contact details"],
+    question: 'The Schedule of Inspections records:',
+    options: [
+      'Only test results',
+      'Items checked during visual inspection',
+      'Equipment serial numbers',
+      'Client contact details',
+    ],
     correctAnswer: 1,
-    explanation: "The Schedule of Inspections records the items checked during visual inspection and their condition/compliance."
+    explanation:
+      'The Schedule of Inspections records the items checked during visual inspection and their condition/compliance.',
   },
   {
     id: 6,
-    question: "Which document confirms a new installation complies with BS 7671?",
-    options: ["EICR", "Electrical Installation Certificate (EIC)", "Building Control Certificate", "Test Equipment Certificate"],
+    question: 'Which document confirms a new installation complies with BS 7671?',
+    options: [
+      'EICR',
+      'Electrical Installation Certificate (EIC)',
+      'Building Control Certificate',
+      'Test Equipment Certificate',
+    ],
     correctAnswer: 1,
-    explanation: "An Electrical Installation Certificate (EIC) confirms that a new installation meets the requirements of BS 7671."
+    explanation:
+      'An Electrical Installation Certificate (EIC) confirms that a new installation meets the requirements of BS 7671.',
   },
   {
     id: 7,
-    question: "A Minor Works Certificate is appropriate when:",
-    options: ["Installing a new consumer unit", "Adding a socket to an existing circuit", "Installing a new circuit", "Periodic inspection"],
+    question: 'A Minor Works Certificate is appropriate when:',
+    options: [
+      'Installing a new consumer unit',
+      'Adding a socket to an existing circuit',
+      'Installing a new circuit',
+      'Periodic inspection',
+    ],
     correctAnswer: 1,
-    explanation: "Minor Works Certificates are for minor additions/alterations that don't involve a new circuit, such as adding a socket to an existing circuit."
+    explanation:
+      "Minor Works Certificates are for minor additions/alterations that don't involve a new circuit, such as adding a socket to an existing circuit.",
   },
   {
     id: 8,
-    question: "Test results should be recorded:",
-    options: ["From memory at the end of the day", "At the time of testing", "Only if they fail", "Only for new installations"],
+    question: 'Test results should be recorded:',
+    options: [
+      'From memory at the end of the day',
+      'At the time of testing',
+      'Only if they fail',
+      'Only for new installations',
+    ],
     correctAnswer: 1,
-    explanation: "Test results must be recorded at the time of testing to ensure accuracy and prevent errors from relying on memory."
+    explanation:
+      'Test results must be recorded at the time of testing to ensure accuracy and prevent errors from relying on memory.',
   },
   {
     id: 9,
-    question: "What should be done with photographs taken during inspection?",
-    options: ["Delete after the job", "Keep as part of the documentation", "Only take if defects are found", "Post on social media"],
+    question: 'What should be done with photographs taken during inspection?',
+    options: [
+      'Delete after the job',
+      'Keep as part of the documentation',
+      'Only take if defects are found',
+      'Post on social media',
+    ],
     correctAnswer: 1,
-    explanation: "Photographs provide valuable evidence and should be kept as part of the inspection documentation, especially for defects and observations."
+    explanation:
+      'Photographs provide valuable evidence and should be kept as part of the inspection documentation, especially for defects and observations.',
   },
   {
     id: 10,
-    question: "How long should electrical certificates and test results be retained?",
-    options: ["1 year", "Until next inspection", "At least until the next inspection interval", "Forever"],
+    question: 'How long should electrical certificates and test results be retained?',
+    options: [
+      '1 year',
+      'Until next inspection',
+      'At least until the next inspection interval',
+      'Forever',
+    ],
     correctAnswer: 2,
-    explanation: "Records should be retained at least until the next inspection (and longer is better). They provide evidence of the installation's history and condition."
-  }
+    explanation:
+      "Records should be retained at least until the next inspection (and longer is better). They provide evidence of the installation's history and condition.",
+  },
 ];
 
 const faqs = [
   {
     question: "Can I do tests in a different order if I'm pressed for time?",
-    answer: "No - the test sequence is determined by safety requirements, not convenience. Dead tests must be completed before live tests to identify faults before energising. Visual inspection must be done first. Shortcuts can put you at risk."
+    answer:
+      'No - the test sequence is determined by safety requirements, not convenience. Dead tests must be completed before live tests to identify faults before energising. Visual inspection must be done first. Shortcuts can put you at risk.',
   },
   {
     question: "What if some tests can't be completed?",
-    answer: "Document which tests couldn't be completed and why. Note any limitations in the certificate. The client should be informed of any areas that couldn't be tested. Some tests may need to be completed later when access is available."
+    answer:
+      "Document which tests couldn't be completed and why. Note any limitations in the certificate. The client should be informed of any areas that couldn't be tested. Some tests may need to be completed later when access is available.",
   },
   {
-    question: "Do I need to record test results for circuits that pass?",
-    answer: "Yes - all test results must be recorded, not just failures. The schedule provides a baseline for future inspections and demonstrates that proper testing was carried out. It also shows the margin from limits."
+    question: 'Do I need to record test results for circuits that pass?',
+    answer:
+      'Yes - all test results must be recorded, not just failures. The schedule provides a baseline for future inspections and demonstrates that proper testing was carried out. It also shows the margin from limits.',
   },
   {
-    question: "Can test results be recorded electronically?",
-    answer: "Yes - electronic recording is acceptable and has advantages (automatic calculations, neater records, backup capability). The format should match model forms. Many testers can download results directly."
+    question: 'Can test results be recorded electronically?',
+    answer:
+      'Yes - electronic recording is acceptable and has advantages (automatic calculations, neater records, backup capability). The format should match model forms. Many testers can download results directly.',
   },
   {
-    question: "Who keeps the original certificates?",
-    answer: "The original certificate should be given to the person ordering the work (usually the client/property owner). The contractor should retain a copy. For competent person scheme work, the scheme operator also receives copies."
+    question: 'Who keeps the original certificates?',
+    answer:
+      'The original certificate should be given to the person ordering the work (usually the client/property owner). The contractor should retain a copy. For competent person scheme work, the scheme operator also receives copies.',
   },
   {
     question: "What's the difference between observations and defects?",
-    answer: "On an EICR, observations describe departures from current standards or items that may need attention. Defects (coded C1, C2, or C3) indicate items that don't meet safety requirements. All observations and defects should be clearly described."
-  }
+    answer:
+      "On an EICR, observations describe departures from current standards or items that may need attention. Defects (coded C1, C2, or C3) indicate items that don't meet safety requirements. All observations and defects should be clearly described.",
+  },
 ];
 
 const referenceItems = [
-  { label: "Step 1", value: "Visual Inspection" },
-  { label: "Step 2", value: "Continuity (R1+R2)" },
-  { label: "Step 3", value: "Ring Continuity" },
-  { label: "Step 4", value: "Insulation Resistance" },
-  { label: "Step 5", value: "Polarity" },
-  { label: "Step 6", value: "Earth Electrode (if TT)" },
-  { label: "Step 7", value: "Loop Impedance (Ze, Zs)" },
-  { label: "Step 8", value: "Prospective Fault Current" },
-  { label: "Step 9", value: "RCD Operation" },
-  { label: "Step 10", value: "Functional Testing" },
+  { label: 'Step 1', value: 'Visual Inspection' },
+  { label: 'Step 2', value: 'Continuity (R1+R2)' },
+  { label: 'Step 3', value: 'Ring Continuity' },
+  { label: 'Step 4', value: 'Insulation Resistance' },
+  { label: 'Step 5', value: 'Polarity' },
+  { label: 'Step 6', value: 'Earth Electrode (if TT)' },
+  { label: 'Step 7', value: 'Loop Impedance (Ze, Zs)' },
+  { label: 'Step 8', value: 'Prospective Fault Current' },
+  { label: 'Step 9', value: 'RCD Operation' },
+  { label: 'Step 10', value: 'Functional Testing' },
 ];
 
 const InspectionTestingModule1Section5 = () => {
@@ -154,7 +239,12 @@ const InspectionTestingModule1Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -165,7 +255,6 @@ const InspectionTestingModule1Section5 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -176,7 +265,8 @@ const InspectionTestingModule1Section5 = () => {
             Test Sequence and Documentation
           </h1>
           <p className="text-white/80">
-            Understanding the correct order of tests and how to properly record and certify your findings
+            Understanding the correct order of tests and how to properly record and certify your
+            findings
           </p>
         </header>
 
@@ -185,19 +275,35 @@ const InspectionTestingModule1Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Sequence:</strong> Visual inspection, dead tests, live tests</li>
-              <li><strong>Record:</strong> All values at time of testing</li>
-              <li><strong>Safety:</strong> Order prevents dangerous energisation</li>
-              <li><strong>Documents:</strong> EIC, EICR, or Minor Works</li>
+              <li>
+                <strong>Sequence:</strong> Visual inspection, dead tests, live tests
+              </li>
+              <li>
+                <strong>Record:</strong> All values at time of testing
+              </li>
+              <li>
+                <strong>Safety:</strong> Order prevents dangerous energisation
+              </li>
+              <li>
+                <strong>Documents:</strong> EIC, EICR, or Minor Works
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Documents</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>EIC:</strong> New installations</li>
-              <li><strong>EICR:</strong> Periodic inspection</li>
-              <li><strong>Minor Works:</strong> Small additions</li>
-              <li><strong>Schedule:</strong> All test results</li>
+              <li>
+                <strong>EIC:</strong> New installations
+              </li>
+              <li>
+                <strong>EICR:</strong> Periodic inspection
+              </li>
+              <li>
+                <strong>Minor Works:</strong> Small additions
+              </li>
+              <li>
+                <strong>Schedule:</strong> All test results
+              </li>
             </ul>
           </div>
         </div>
@@ -207,12 +313,12 @@ const InspectionTestingModule1Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand the correct test sequence",
-              "Explain why sequence matters for safety",
-              "Document test results correctly",
-              "Complete schedule of test results",
-              "Record observations during inspection",
-              "Use appropriate certification forms"
+              'Understand the correct test sequence',
+              'Explain why sequence matters for safety',
+              'Document test results correctly',
+              'Complete schedule of test results',
+              'Record observations during inspection',
+              'Use appropriate certification forms',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -233,13 +339,17 @@ const InspectionTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The test sequence specified in BS 7671 and GN3 is designed for <strong>safety</strong>. Each stage confirms the installation is safe before proceeding to tests that require energisation.
+              The test sequence specified in BS 7671 and GN3 is designed for <strong>safety</strong>
+              . Each stage confirms the installation is safe before proceeding to tests that require
+              energisation.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 my-6">
               <p className="text-white font-semibold mb-2">Why Sequence Matters</p>
               <p className="text-sm text-white/80">
-                Dead tests identify faults like short circuits and insulation failures that could cause danger when the supply is connected. If you skip to live tests without completing dead tests, unidentified faults could cause shock or fire.
+                Dead tests identify faults like short circuits and insulation failures that could
+                cause danger when the supply is connected. If you skip to live tests without
+                completing dead tests, unidentified faults could cause shock or fire.
               </p>
             </div>
 
@@ -248,15 +358,24 @@ const InspectionTestingModule1Section5 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-blue-400 font-semibold text-sm">Stage 1: Visual Inspection</p>
-                  <p className="text-sm text-white/70">Supply OFF. Check for obvious defects, damage, non-compliance, and anything that would make testing dangerous.</p>
+                  <p className="text-sm text-white/70">
+                    Supply OFF. Check for obvious defects, damage, non-compliance, and anything that
+                    would make testing dangerous.
+                  </p>
                 </div>
                 <div>
                   <p className="text-orange-400 font-semibold text-sm">Stage 2: Dead Tests</p>
-                  <p className="text-sm text-white/70">Supply ISOLATED. Continuity of protective conductors, ring final circuits, insulation resistance, polarity.</p>
+                  <p className="text-sm text-white/70">
+                    Supply ISOLATED. Continuity of protective conductors, ring final circuits,
+                    insulation resistance, polarity.
+                  </p>
                 </div>
                 <div>
                   <p className="text-green-400 font-semibold text-sm">Stage 3: Live Tests</p>
-                  <p className="text-sm text-white/70">Supply CONNECTED. Earth fault loop impedance, prospective fault current, RCD operation, functional testing.</p>
+                  <p className="text-sm text-white/70">
+                    Supply CONNECTED. Earth fault loop impedance, prospective fault current, RCD
+                    operation, functional testing.
+                  </p>
                 </div>
               </div>
             </div>
@@ -271,11 +390,14 @@ const InspectionTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Visual inspection is a thorough examination of the installation without using test instruments. It should identify non-compliance, damage, and potential hazards.
+              Visual inspection is a thorough examination of the installation without using test
+              instruments. It should identify non-compliance, damage, and potential hazards.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Items to Check (Regulation 641)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Key Items to Check (Regulation 641)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Correct selection and erection of equipment for the environment</li>
                 <li>Presence of fire barriers and seals</li>
@@ -290,81 +412,353 @@ const InspectionTestingModule1Section5 = () => {
 
             <div className="my-6 grid sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-1">Schedule of Inspections</p>
-                <p className="text-sm text-white/70">Records all items checked and their compliance status</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-1">
+                  Schedule of Inspections
+                </p>
+                <p className="text-sm text-white/70">
+                  Records all items checked and their compliance status
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Photographs</p>
-                <p className="text-sm text-white/70">Visual evidence of defects, hazards, and notable observations</p>
+                <p className="text-sm text-white/70">
+                  Visual evidence of defects, hazards, and notable observations
+                </p>
               </div>
             </div>
 
             <p className="text-sm text-orange-400/90">
-              <strong>Important:</strong> Visual inspection must be done <strong>before energising</strong> for testing. Defects found may need to be addressed before testing can proceed safely.
+              <strong>Important:</strong> Visual inspection must be done{' '}
+              <strong>before energising</strong> for testing. Defects found may need to be addressed
+              before testing can proceed safely.
             </p>
           </div>
         </section>
 
         {/* Test Sequence Flowchart Diagram */}
         <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
-          <h4 className="text-sm font-bold text-white mb-4">BS 7671 / GN3 Test Sequence Flowchart</h4>
-          <svg viewBox="0 0 800 680" className="w-full h-auto" role="img" aria-label="Test sequence flowchart showing visual inspection, dead tests, then live tests in correct order per BS 7671 Chapter 64 and GN3">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            BS 7671 / GN3 Test Sequence Flowchart
+          </h4>
+          <svg
+            viewBox="0 0 800 680"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Test sequence flowchart showing visual inspection, dead tests, then live tests in correct order per BS 7671 Chapter 64 and GN3"
+          >
             {/* Stage 1: Visual Inspection */}
-            <rect x="200" y="5" width="400" height="30" rx="6" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" />
-            <text x="400" y="25" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold">STAGE 1 — VISUAL INSPECTION (Supply OFF)</text>
+            <rect
+              x="200"
+              y="5"
+              width="400"
+              height="30"
+              rx="6"
+              fill="rgba(59,130,246,0.1)"
+              stroke="rgba(59,130,246,0.3)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="25" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold">
+              STAGE 1 — VISUAL INSPECTION (Supply OFF)
+            </text>
 
-            <rect x="275" y="45" width="250" height="36" rx="8" fill="rgba(59,130,246,0.06)" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
-            <text x="400" y="68" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Visual Inspection (Ch.63)</text>
-            <line x1="400" y1="81" x2="400" y2="100" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="45"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(59,130,246,0.06)"
+              stroke="rgba(59,130,246,0.25)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="68" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              Visual Inspection (Ch.63)
+            </text>
+            <line
+              x1="400"
+              y1="81"
+              x2="400"
+              y2="100"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
             {/* Stage 2: Dead Tests */}
-            <rect x="200" y="100" width="400" height="30" rx="6" fill="rgba(249,115,22,0.1)" stroke="rgba(249,115,22,0.3)" strokeWidth="1.5" />
-            <text x="400" y="120" textAnchor="middle" fill="#F97316" fontSize="11" fontWeight="bold">STAGE 2 — DEAD TESTS (Supply ISOLATED)</text>
+            <rect
+              x="200"
+              y="100"
+              width="400"
+              height="30"
+              rx="6"
+              fill="rgba(249,115,22,0.1)"
+              stroke="rgba(249,115,22,0.3)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="400"
+              y="120"
+              textAnchor="middle"
+              fill="#F97316"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              STAGE 2 — DEAD TESTS (Supply ISOLATED)
+            </text>
 
-            <rect x="275" y="140" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
-            <text x="400" y="163" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">1. Continuity of CPCs (R1+R2)</text>
-            <line x1="400" y1="176" x2="400" y2="192" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="140"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(249,115,22,0.06)"
+              stroke="rgba(249,115,22,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="163" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              1. Continuity of CPCs (R1+R2)
+            </text>
+            <line
+              x1="400"
+              y1="176"
+              x2="400"
+              y2="192"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
-            <rect x="275" y="192" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
-            <text x="400" y="215" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">2. Ring Final Circuit Continuity</text>
-            <line x1="400" y1="228" x2="400" y2="244" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="192"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(249,115,22,0.06)"
+              stroke="rgba(249,115,22,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="215" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              2. Ring Final Circuit Continuity
+            </text>
+            <line
+              x1="400"
+              y1="228"
+              x2="400"
+              y2="244"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
-            <rect x="275" y="244" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
-            <text x="400" y="267" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">3. Insulation Resistance (500V DC)</text>
-            <line x1="400" y1="280" x2="400" y2="296" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="244"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(249,115,22,0.06)"
+              stroke="rgba(249,115,22,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="267" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              3. Insulation Resistance (500V DC)
+            </text>
+            <line
+              x1="400"
+              y1="280"
+              x2="400"
+              y2="296"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
-            <rect x="275" y="296" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
-            <text x="400" y="319" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">4. Polarity (initial check)</text>
-            <line x1="400" y1="332" x2="400" y2="348" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="296"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(249,115,22,0.06)"
+              stroke="rgba(249,115,22,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="319" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              4. Polarity (initial check)
+            </text>
+            <line
+              x1="400"
+              y1="332"
+              x2="400"
+              y2="348"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
             {/* Stage 3: Live Tests */}
-            <rect x="200" y="348" width="400" height="30" rx="6" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" strokeWidth="1.5" />
-            <text x="400" y="368" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">STAGE 3 — LIVE TESTS (Supply CONNECTED)</text>
+            <rect
+              x="200"
+              y="348"
+              width="400"
+              height="30"
+              rx="6"
+              fill="rgba(34,197,94,0.1)"
+              stroke="rgba(34,197,94,0.3)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="400"
+              y="368"
+              textAnchor="middle"
+              fill="#22C55E"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              STAGE 3 — LIVE TESTS (Supply CONNECTED)
+            </text>
 
-            <rect x="275" y="388" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
-            <text x="400" y="411" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">5. Earth Electrode (TT only)</text>
-            <line x1="400" y1="424" x2="400" y2="440" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="388"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(34,197,94,0.06)"
+              stroke="rgba(34,197,94,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="411" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              5. Earth Electrode (TT only)
+            </text>
+            <line
+              x1="400"
+              y1="424"
+              x2="400"
+              y2="440"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
-            <rect x="275" y="440" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
-            <text x="400" y="463" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">6. Earth Fault Loop Impedance</text>
-            <line x1="400" y1="476" x2="400" y2="492" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="440"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(34,197,94,0.06)"
+              stroke="rgba(34,197,94,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="463" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              6. Earth Fault Loop Impedance
+            </text>
+            <line
+              x1="400"
+              y1="476"
+              x2="400"
+              y2="492"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
-            <rect x="275" y="492" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
-            <text x="400" y="515" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">7. Prospective Fault Current</text>
-            <line x1="400" y1="528" x2="400" y2="544" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="492"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(34,197,94,0.06)"
+              stroke="rgba(34,197,94,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="515" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              7. Prospective Fault Current
+            </text>
+            <line
+              x1="400"
+              y1="528"
+              x2="400"
+              y2="544"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
-            <rect x="275" y="544" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
-            <text x="400" y="567" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">8. RCD Operation</text>
-            <line x1="400" y1="580" x2="400" y2="596" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="544"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(34,197,94,0.06)"
+              stroke="rgba(34,197,94,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="567" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              8. RCD Operation
+            </text>
+            <line
+              x1="400"
+              y1="580"
+              x2="400"
+              y2="596"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
-            <rect x="275" y="596" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
-            <text x="400" y="619" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">9. Functional Testing</text>
-            <line x1="400" y1="632" x2="400" y2="648" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+            <rect
+              x="275"
+              y="596"
+              width="250"
+              height="36"
+              rx="8"
+              fill="rgba(34,197,94,0.06)"
+              stroke="rgba(34,197,94,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="619" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">
+              9. Functional Testing
+            </text>
+            <line
+              x1="400"
+              y1="632"
+              x2="400"
+              y2="648"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowTS)"
+            />
 
             {/* Complete */}
-            <rect x="305" y="648" width="190" height="26" rx="13" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.5)" strokeWidth="1.5" />
-            <text x="400" y="666" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">TESTING COMPLETE</text>
+            <rect
+              x="305"
+              y="648"
+              width="190"
+              height="26"
+              rx="13"
+              fill="rgba(34,197,94,0.15)"
+              stroke="rgba(34,197,94,0.5)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="400"
+              y="666"
+              textAnchor="middle"
+              fill="#22C55E"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              TESTING COMPLETE
+            </text>
 
             {/* Arrow marker */}
             <defs>
@@ -373,7 +767,11 @@ const InspectionTestingModule1Section5 = () => {
               </marker>
             </defs>
           </svg>
-          <p className="text-xs text-white/40 mt-3">Test sequence per BS 7671 Chapter 64 and GN3. Visual inspection first, then dead tests (supply isolated), then live tests (supply connected). Never skip stages — each confirms safety for the next.</p>
+          <p className="text-xs text-white/40 mt-3">
+            Test sequence per BS 7671 Chapter 64 and GN3. Visual inspection first, then dead tests
+            (supply isolated), then live tests (supply connected). Never skip stages — each confirms
+            safety for the next.
+          </p>
         </div>
 
         <InlineCheck {...quickCheckQuestions[0]} />
@@ -386,23 +784,41 @@ const InspectionTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Dead tests are performed with the installation isolated from the supply. They verify the integrity of conductors and insulation.
+              Dead tests are performed with the installation isolated from the supply. They verify
+              the integrity of conductors and insulation.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dead Tests in Sequence</p>
               <ol className="text-sm text-white space-y-2 ml-4">
-                <li><span className="text-elec-yellow">1.</span> <strong>Continuity of Protective Conductors</strong> - Test R1+R2 or R2 values. Confirms protective conductors provide a path for fault current.</li>
-                <li><span className="text-elec-yellow">2.</span> <strong>Continuity of Ring Final Circuits</strong> - Verify ring is complete, no interconnections or broken rings.</li>
-                <li><span className="text-elec-yellow">3.</span> <strong>Insulation Resistance</strong> - Test between conductors and to earth at 500V DC. Minimum 1MΩ (typical values much higher).</li>
-                <li><span className="text-elec-yellow">4.</span> <strong>Polarity</strong> - Verify phase and neutral are correctly connected at all points. Can be done dead or live.</li>
+                <li>
+                  <span className="text-elec-yellow">1.</span>{' '}
+                  <strong>Continuity of Protective Conductors</strong> - Test R1+R2 or R2 values.
+                  Confirms protective conductors provide a path for fault current.
+                </li>
+                <li>
+                  <span className="text-elec-yellow">2.</span>{' '}
+                  <strong>Continuity of Ring Final Circuits</strong> - Verify ring is complete, no
+                  interconnections or broken rings.
+                </li>
+                <li>
+                  <span className="text-elec-yellow">3.</span>{' '}
+                  <strong>Insulation Resistance</strong> - Test between conductors and to earth at
+                  500V DC. Minimum 1MΩ (typical values much higher).
+                </li>
+                <li>
+                  <span className="text-elec-yellow">4.</span> <strong>Polarity</strong> - Verify
+                  phase and neutral are correctly connected at all points. Can be done dead or live.
+                </li>
               </ol>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why This Order?</p>
               <p className="text-sm text-white/80">
-                Continuity is tested first because insulation resistance testing at 500V could damage certain equipment. The continuity test at low voltage confirms the installation is safe for IR testing.
+                Continuity is tested first because insulation resistance testing at 500V could
+                damage certain equipment. The continuity test at low voltage confirms the
+                installation is safe for IR testing.
               </p>
             </div>
           </div>
@@ -416,22 +832,43 @@ const InspectionTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Live tests can only proceed after dead tests have confirmed the installation is safe. The supply must be connected for these tests.
+              Live tests can only proceed after dead tests have confirmed the installation is safe.
+              The supply must be connected for these tests.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Live Tests in Sequence</p>
               <ol className="text-sm text-white space-y-2 ml-4">
-                <li><span className="text-green-400">5.</span> <strong>Earth Electrode Resistance (TT Systems)</strong> - Test the resistance of the earth electrode where applicable.</li>
-                <li><span className="text-green-400">6.</span> <strong>Earth Fault Loop Impedance</strong> - Measure Ze at the origin and Zs at each circuit. Compare to maximum values.</li>
-                <li><span className="text-green-400">7.</span> <strong>Prospective Fault Current</strong> - Measure or calculate IPFC at the origin. Verify protective devices are rated appropriately.</li>
-                <li><span className="text-green-400">8.</span> <strong>RCD Operation</strong> - Test trip times at rated current (×1), ×5, and ×0.5 where applicable.</li>
-                <li><span className="text-green-400">9.</span> <strong>Functional Testing</strong> - Verify operation of assemblies, switchgear, controls, and interlocks.</li>
+                <li>
+                  <span className="text-green-400">5.</span>{' '}
+                  <strong>Earth Electrode Resistance (TT Systems)</strong> - Test the resistance of
+                  the earth electrode where applicable.
+                </li>
+                <li>
+                  <span className="text-green-400">6.</span>{' '}
+                  <strong>Earth Fault Loop Impedance</strong> - Measure Ze at the origin and Zs at
+                  each circuit. Compare to maximum values.
+                </li>
+                <li>
+                  <span className="text-green-400">7.</span>{' '}
+                  <strong>Prospective Fault Current</strong> - Measure or calculate IPFC at the
+                  origin. Verify protective devices are rated appropriately.
+                </li>
+                <li>
+                  <span className="text-green-400">8.</span> <strong>RCD Operation</strong> - Test
+                  trip times at rated current (×1), ×5, and ×0.5 where applicable.
+                </li>
+                <li>
+                  <span className="text-green-400">9.</span> <strong>Functional Testing</strong> -
+                  Verify operation of assemblies, switchgear, controls, and interlocks.
+                </li>
               </ol>
             </div>
 
             <p className="text-sm text-orange-400/90">
-              <strong>Safety note:</strong> Live tests present shock hazard. Use GS38 compliant test equipment, appropriate PPE, and follow safe working practices. Two-person rule may apply.
+              <strong>Safety note:</strong> Live tests present shock hazard. Use GS38 compliant test
+              equipment, appropriate PPE, and follow safe working practices. Two-person rule may
+              apply.
             </p>
           </div>
         </section>
@@ -446,7 +883,9 @@ const InspectionTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Test results must be recorded systematically on the <strong>Schedule of Test Results</strong>. This provides a permanent record of the installation's condition.
+              Test results must be recorded systematically on the{' '}
+              <strong>Schedule of Test Results</strong>. This provides a permanent record of the
+              installation's condition.
             </p>
 
             <div className="my-6">
@@ -514,29 +953,59 @@ const InspectionTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different types of certification are required depending on the nature of the work. Using the correct form is essential for compliance.
+              Different types of certification are required depending on the nature of the work.
+              Using the correct form is essential for compliance.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Certification</p>
               <div className="space-y-4">
                 <div>
-                  <p className="text-green-400 font-semibold text-sm">Electrical Installation Certificate (EIC)</p>
-                  <p className="text-sm text-white/70"><strong>Use for:</strong> New installations, additions to installations, alterations</p>
-                  <p className="text-sm text-white/70"><strong>Includes:</strong> Design details, Schedule of Inspections, Schedule of Test Results</p>
-                  <p className="text-sm text-white/70"><strong>Signed by:</strong> Designer, constructor, and inspector (may be same person)</p>
+                  <p className="text-green-400 font-semibold text-sm">
+                    Electrical Installation Certificate (EIC)
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Use for:</strong> New installations, additions to installations,
+                    alterations
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Includes:</strong> Design details, Schedule of Inspections, Schedule of
+                    Test Results
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Signed by:</strong> Designer, constructor, and inspector (may be same
+                    person)
+                  </p>
                 </div>
                 <div>
-                  <p className="text-blue-400 font-semibold text-sm">Electrical Installation Condition Report (EICR)</p>
-                  <p className="text-sm text-white/70"><strong>Use for:</strong> Periodic inspection of existing installations</p>
-                  <p className="text-sm text-white/70"><strong>Includes:</strong> Observations with classification codes, Schedule of Test Results</p>
-                  <p className="text-sm text-white/70"><strong>Signed by:</strong> Inspector only</p>
+                  <p className="text-blue-400 font-semibold text-sm">
+                    Electrical Installation Condition Report (EICR)
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Use for:</strong> Periodic inspection of existing installations
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Includes:</strong> Observations with classification codes, Schedule of
+                    Test Results
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Signed by:</strong> Inspector only
+                  </p>
                 </div>
                 <div>
-                  <p className="text-orange-400 font-semibold text-sm">Minor Electrical Installation Works Certificate</p>
-                  <p className="text-sm text-white/70"><strong>Use for:</strong> Minor work not involving a new circuit</p>
-                  <p className="text-sm text-white/70"><strong>Examples:</strong> Adding socket to existing circuit, replacing consumer unit like-for-like</p>
-                  <p className="text-sm text-white/70"><strong>Signed by:</strong> Person carrying out the work</p>
+                  <p className="text-orange-400 font-semibold text-sm">
+                    Minor Electrical Installation Works Certificate
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Use for:</strong> Minor work not involving a new circuit
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Examples:</strong> Adding socket to existing circuit, replacing consumer
+                    unit like-for-like
+                  </p>
+                  <p className="text-sm text-white/70">
+                    <strong>Signed by:</strong> Person carrying out the work
+                  </p>
                 </div>
               </div>
             </div>
@@ -544,10 +1013,18 @@ const InspectionTestingModule1Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use Each Form</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>New circuit?</strong> EIC required</li>
-                <li><strong>Addition to existing circuit?</strong> Minor Works may be sufficient</li>
-                <li><strong>Periodic inspection?</strong> EICR required</li>
-                <li><strong>Not sure?</strong> EIC is never wrong (more comprehensive)</li>
+                <li>
+                  <strong>New circuit?</strong> EIC required
+                </li>
+                <li>
+                  <strong>Addition to existing circuit?</strong> Minor Works may be sufficient
+                </li>
+                <li>
+                  <strong>Periodic inspection?</strong> EICR required
+                </li>
+                <li>
+                  <strong>Not sure?</strong> EIC is never wrong (more comprehensive)
+                </li>
               </ul>
             </div>
           </div>
@@ -613,36 +1090,38 @@ const InspectionTestingModule1Section5 = () => {
 
         {/* Reference Card */}
         <section className="mb-10">
-          <UnitsPocketCard
-            title="Test Sequence Reference"
-            items={referenceItems}
-          />
+          <UnitsPocketCard title="Test Sequence Reference" items={referenceItems} />
         </section>
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-1/section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-2">
               Next: Module 2
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

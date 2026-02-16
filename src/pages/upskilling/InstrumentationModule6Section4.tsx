@@ -1,15 +1,36 @@
-import { ArrowLeft, FileText, CheckCircle, HelpCircle, Database, Shield, Calendar, Archive, AlertTriangle, TrendingUp, Monitor, ClipboardList } from 'lucide-react';
+import {
+  ArrowLeft,
+  FileText,
+  CheckCircle,
+  HelpCircle,
+  Database,
+  Shield,
+  Calendar,
+  Archive,
+  AlertTriangle,
+  TrendingUp,
+  Monitor,
+  ClipboardList,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule6Section4 = () => {
   useSEO({
-    title: "Recording and Documenting Calibration Results | Instrumentation Module 6",
-    description: "Learn essential calibration documentation requirements, record-keeping best practices, and regulatory compliance for audit readiness.",
-    keywords: ["calibration documentation", "calibration records", "audit compliance", "ISO 17025", "calibration certificates", "record retention"]
+    title: 'Recording and Documenting Calibration Results | Instrumentation Module 6',
+    description:
+      'Learn essential calibration documentation requirements, record-keeping best practices, and regulatory compliance for audit readiness.',
+    keywords: [
+      'calibration documentation',
+      'calibration records',
+      'audit compliance',
+      'ISO 17025',
+      'calibration certificates',
+      'record retention',
+    ],
   });
 
   return (
@@ -17,7 +38,10 @@ const InstrumentationModule6Section4 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-6" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Module 6</span>
           </Link>
@@ -33,9 +57,7 @@ const InstrumentationModule6Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Recording and Documenting Calibration Results
           </h1>
-          <p className="text-white">
-            Module 6 · Section 4 · 16 min read
-          </p>
+          <p className="text-white">Module 6 · Section 4 · 16 min read</p>
         </div>
 
         {/* Quick Summary Box */}
@@ -67,13 +89,19 @@ const InstrumentationModule6Section4 = () => {
         {/* Section 01 - Essential Record Fields */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
-            <h2 className="text-xl font-semibold text-white">Essential Calibration Record Fields</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Essential Calibration Record Fields
+            </h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Comprehensive record-keeping is not optional - it is legal evidence of compliance and quality assurance. Without proper documentation, even perfect calibration work becomes worthless in regulatory audits or legal proceedings.
+              Comprehensive record-keeping is not optional - it is legal evidence of compliance and
+              quality assurance. Without proper documentation, even perfect calibration work becomes
+              worthless in regulatory audits or legal proceedings.
             </p>
 
             {/* Critical Warning */}
@@ -83,7 +111,9 @@ const InstrumentationModule6Section4 = () => {
                 Critical Information
               </h3>
               <p className="text-white text-sm">
-                Missing any of the required fields can invalidate calibration records and cause audit failures. Always ensure complete documentation before closing out any calibration activity.
+                Missing any of the required fields can invalidate calibration records and cause
+                audit failures. Always ensure complete documentation before closing out any
+                calibration activity.
               </p>
             </div>
 
@@ -215,13 +245,17 @@ const InstrumentationModule6Section4 = () => {
         {/* Section 02 - Calibration Certificate Requirements */}
         <section className="mb-10 mt-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Calibration Certificate Format</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Professional calibration certificates must contain specific information to be legally valid and accepted by regulatory bodies. Understanding these requirements ensures your certificates will withstand audit scrutiny.
+              Professional calibration certificates must contain specific information to be legally
+              valid and accepted by regulatory bodies. Understanding these requirements ensures your
+              certificates will withstand audit scrutiny.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -319,13 +353,17 @@ const InstrumentationModule6Section4 = () => {
         {/* Section 03 - Electronic vs Paper Systems */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Electronic vs Paper-Based Systems</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Modern calibration management increasingly relies on electronic systems, but paper records still have their place. Understanding the advantages and requirements of each helps you choose the right approach.
+              Modern calibration management increasingly relies on electronic systems, but paper
+              records still have their place. Understanding the advantages and requirements of each
+              helps you choose the right approach.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -446,13 +484,19 @@ const InstrumentationModule6Section4 = () => {
         {/* Section 04 - Regulatory Compliance */}
         <section className="mb-10 mt-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
-            <h2 className="text-xl font-semibold text-white">Regulatory Compliance and Record Retention</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Regulatory Compliance and Record Retention
+            </h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Different industries have specific regulatory requirements for calibration documentation. Understanding these requirements ensures your records will satisfy auditors and protect your organisation legally.
+              Different industries have specific regulatory requirements for calibration
+              documentation. Understanding these requirements ensures your records will satisfy
+              auditors and protect your organisation legally.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -531,7 +575,9 @@ const InstrumentationModule6Section4 = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">Regulated Industries</h4>
+                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">
+                    Regulated Industries
+                  </h4>
                   <ul className="space-y-1 text-white text-sm">
                     <li>Pharmaceutical: 5-7 years</li>
                     <li>Medical devices: 10+ years</li>
@@ -539,7 +585,9 @@ const InstrumentationModule6Section4 = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">Legal Considerations</h4>
+                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">
+                    Legal Considerations
+                  </h4>
                   <ul className="space-y-1 text-white text-sm">
                     <li>Product liability: 10+ years</li>
                     <li>Insurance claims: As specified</li>
@@ -554,13 +602,17 @@ const InstrumentationModule6Section4 = () => {
         {/* Section 05 - Trend Analysis */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
             <h2 className="text-xl font-semibold text-white">Error Tracking and Trend Analysis</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Systematic tracking of calibration results enables predictive maintenance, optimised calibration intervals, and early detection of instrument degradation. This transforms calibration from a compliance exercise into a valuable quality improvement tool.
+              Systematic tracking of calibration results enables predictive maintenance, optimised
+              calibration intervals, and early detection of instrument degradation. This transforms
+              calibration from a compliance exercise into a valuable quality improvement tool.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -637,7 +689,9 @@ const InstrumentationModule6Section4 = () => {
             Real World Scenario: ISO Audit Identifies Missing Records
           </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            A manufacturing company undergoes an ISO 9001 surveillance audit. The auditor requests calibration records for a critical pressure sensor used in product testing. The technician cannot locate the calibration log for the previous 6 months.
+            A manufacturing company undergoes an ISO 9001 surveillance audit. The auditor requests
+            calibration records for a critical pressure sensor used in product testing. The
+            technician cannot locate the calibration log for the previous 6 months.
           </p>
           <div className="bg-red-500/10 rounded-lg p-3 border border-red-500/20 mb-3">
             <h4 className="font-medium text-red-400 text-sm mb-2">Immediate Consequences:</h4>
@@ -661,7 +715,9 @@ const InstrumentationModule6Section4 = () => {
             </ul>
           </div>
           <div className="bg-green-500/10 rounded-lg p-3 border border-green-500/20 mb-3">
-            <h4 className="font-medium text-green-400 text-sm mb-2">Corrective Actions Implemented:</h4>
+            <h4 className="font-medium text-green-400 text-sm mb-2">
+              Corrective Actions Implemented:
+            </h4>
             <ul className="text-white text-sm space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
@@ -682,7 +738,8 @@ const InstrumentationModule6Section4 = () => {
             </ul>
           </div>
           <p className="text-elec-yellow text-sm italic">
-            Result: Company avoids certificate suspension but spends 150,000 GBP on corrective actions and lost production. This demonstrates why calibration records are not optional.
+            Result: Company avoids certificate suspension but spends 150,000 GBP on corrective
+            actions and lost production. This demonstrates why calibration records are not optional.
           </p>
         </div>
 
@@ -695,30 +752,50 @@ const InstrumentationModule6Section4 = () => {
 
           <div className="space-y-4">
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">What is 21 CFR Part 11 and when does it apply?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                What is 21 CFR Part 11 and when does it apply?
+              </h3>
               <p className="text-white text-sm">
-                21 CFR Part 11 is the FDA regulation governing electronic records and electronic signatures in the United States. It applies to pharmaceutical, medical device, and other FDA-regulated industries. It requires audit trails, access controls, system validation, and secure electronic signatures for compliance.
+                21 CFR Part 11 is the FDA regulation governing electronic records and electronic
+                signatures in the United States. It applies to pharmaceutical, medical device, and
+                other FDA-regulated industries. It requires audit trails, access controls, system
+                validation, and secure electronic signatures for compliance.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">Can I scan paper records and discard the originals?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Can I scan paper records and discard the originals?
+              </h3>
               <p className="text-white text-sm">
-                This depends on your regulatory requirements and company procedures. Some industries require retention of original paper records. If scanning is permitted, the process must be validated, and scanned images must be true representations of the originals. Always check specific regulatory requirements before discarding originals.
+                This depends on your regulatory requirements and company procedures. Some industries
+                require retention of original paper records. If scanning is permitted, the process
+                must be validated, and scanned images must be true representations of the originals.
+                Always check specific regulatory requirements before discarding originals.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">What happens if calibration records are lost or damaged?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                What happens if calibration records are lost or damaged?
+              </h3>
               <p className="text-white text-sm">
-                Lost records create a significant quality and compliance issue. You must document the loss, assess the impact on product quality, potentially re-test affected products, and implement corrective actions to prevent recurrence. In regulated industries, you may need to notify regulatory authorities depending on the severity.
+                Lost records create a significant quality and compliance issue. You must document
+                the loss, assess the impact on product quality, potentially re-test affected
+                products, and implement corrective actions to prevent recurrence. In regulated
+                industries, you may need to notify regulatory authorities depending on the severity.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">How detailed should calibration records be?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                How detailed should calibration records be?
+              </h3>
               <p className="text-white text-sm">
-                Records should be detailed enough that another competent person could reproduce the calibration and understand exactly what was done. This includes all readings, environmental conditions, standards used, adjustments made, and any observations. When in doubt, record more detail rather than less.
+                Records should be detailed enough that another competent person could reproduce the
+                calibration and understand exactly what was done. This includes all readings,
+                environmental conditions, standards used, adjustments made, and any observations.
+                When in doubt, record more detail rather than less.
               </p>
             </div>
           </div>
@@ -729,10 +806,10 @@ const InstrumentationModule6Section4 = () => {
           <SingleQuestionQuiz
             question="What is the minimum recommended record retention period for general industry calibration records?"
             options={[
-              "1 year",
-              "2 years",
-              "3-5 years minimum, 7 years recommended",
-              "Indefinitely"
+              '1 year',
+              '2 years',
+              '3-5 years minimum, 7 years recommended',
+              'Indefinitely',
             ]}
             correctAnswer={2}
             explanation="General industry requires minimum 3-5 years retention, with 7 years recommended as best practice. However, regulated industries (pharmaceutical, medical devices, nuclear) often require much longer retention periods, sometimes for the life of the facility or product."
@@ -741,13 +818,22 @@ const InstrumentationModule6Section4 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border">
-          <Link to="/electrician/upskilling/instrumentation-module-6-section-3" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full h-11 touch-manipulation border-border hover:bg-card">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6-section-3"
+            className="w-full sm:w-auto"
+          >
+            <Button
+              variant="outline"
+              className="w-full h-11 touch-manipulation border-border hover:bg-card"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
           </Link>
-          <Link to="/electrician/upskilling/instrumentation-module-6-section-5" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6-section-5"
+            className="w-full sm:w-auto"
+          >
             <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

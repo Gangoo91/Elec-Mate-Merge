@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,7 +17,11 @@ interface CustomerDetailsPhaseProps {
   onProceed: () => void;
 }
 
-const CustomerDetailsPhase = ({ customerDetails, onCustomerDetailsChange, onProceed }: CustomerDetailsPhaseProps) => {
+const CustomerDetailsPhase = ({
+  customerDetails,
+  onCustomerDetailsChange,
+  onProceed,
+}: CustomerDetailsPhaseProps) => {
   const handleInputChange = (field: keyof CustomerDetails, value: string) => {
     onCustomerDetailsChange({ ...customerDetails, [field]: value });
   };
@@ -40,7 +43,9 @@ const CustomerDetailsPhase = ({ customerDetails, onCustomerDetailsChange, onProc
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Customer Name</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Customer Name
+              </label>
               <input
                 type="text"
                 value={customerDetails.name}
@@ -60,7 +65,9 @@ const CustomerDetailsPhase = ({ customerDetails, onCustomerDetailsChange, onProc
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Email Address
+              </label>
               <input
                 type="email"
                 value={customerDetails.email}
@@ -70,7 +77,9 @@ const CustomerDetailsPhase = ({ customerDetails, onCustomerDetailsChange, onProc
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Installation Address</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Installation Address
+              </label>
               <input
                 type="text"
                 value={customerDetails.address}
@@ -81,7 +90,9 @@ const CustomerDetailsPhase = ({ customerDetails, onCustomerDetailsChange, onProc
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">Work Description</label>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Work Description
+            </label>
             <textarea
               value={customerDetails.workDescription}
               onChange={(e) => handleInputChange('workDescription', e.target.value)}
@@ -90,7 +101,7 @@ const CustomerDetailsPhase = ({ customerDetails, onCustomerDetailsChange, onProc
               placeholder="Describe the work to be carried out"
             />
           </div>
-          <Button 
+          <Button
             onClick={onProceed}
             className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
             disabled={!canProceed}

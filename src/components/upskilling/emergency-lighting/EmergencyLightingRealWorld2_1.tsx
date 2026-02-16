@@ -18,10 +18,10 @@ export const EmergencyLightingRealWorld2_1 = () => {
             Scenario: 3-Storey Office Building
           </h4>
           <p className="text-gray-300 text-sm mb-4">
-            A modern office complex with multiple escape routes, stairwells, and long corridors 
+            A modern office complex with multiple escape routes, stairwells, and long corridors
             requires comprehensive emergency escape lighting to ensure safe evacuation.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <h5 className="text-foreground font-medium">Design Requirements:</h5>
@@ -54,14 +54,20 @@ export const EmergencyLightingRealWorld2_1 = () => {
             <p className="text-xs text-gray-400">Exceeds 1 lux minimum</p>
           </div>
           <div className="bg-elec-dark rounded-lg p-4 border border-gray-600 text-center">
-            <Badge variant="secondary" className="bg-green-600/20 text-green-400 border-green-600/30 mb-2">
+            <Badge
+              variant="secondary"
+              className="bg-green-600/20 text-green-400 border-green-600/30 mb-2"
+            >
               Uniformity Ratio
             </Badge>
             <p className="text-2xl font-bold text-green-400">25:1</p>
             <p className="text-xs text-gray-400">Within 40:1 limit</p>
           </div>
           <div className="bg-elec-dark rounded-lg p-4 border border-gray-600 text-center">
-            <Badge variant="secondary" className="bg-blue-600/20 text-blue-400 border-blue-600/30 mb-2">
+            <Badge
+              variant="secondary"
+              className="bg-blue-600/20 text-blue-400 border-blue-600/30 mb-2"
+            >
               Spacing
             </Badge>
             <p className="text-2xl font-bold text-blue-400">5.4m</p>

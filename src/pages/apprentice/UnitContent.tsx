@@ -1,16 +1,28 @@
-
-import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, CheckCircle, Shield, Users, FileText, Info, Construction, AlertTriangle, Play, LightbulbIcon, Cable, CircuitBoard } from "lucide-react";
-import { getCourseUnitById } from "@/data/courseUnits";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import HealthSafetyUnit from "@/components/apprentice/units/HealthSafetyUnit";
-import ElectricalTheoryUnit from "@/components/apprentice/units/ElectricalTheoryUnit";
-import InstallationMethodsUnit from "@/components/apprentice/units/InstallationMethodsUnit";
-import { useAuth } from "@/contexts/AuthContext";
-import { userKey } from "@/lib/userStorage";
+import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  BookOpen,
+  CheckCircle,
+  Shield,
+  Users,
+  FileText,
+  Info,
+  Construction,
+  AlertTriangle,
+  Play,
+  LightbulbIcon,
+  Cable,
+  CircuitBoard,
+} from 'lucide-react';
+import { getCourseUnitById } from '@/data/courseUnits';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import HealthSafetyUnit from '@/components/apprentice/units/HealthSafetyUnit';
+import ElectricalTheoryUnit from '@/components/apprentice/units/ElectricalTheoryUnit';
+import InstallationMethodsUnit from '@/components/apprentice/units/InstallationMethodsUnit';
+import { useAuth } from '@/contexts/AuthContext';
+import { userKey } from '@/lib/userStorage';
 
 const UnitContent = () => {
   const { unitId } = useParams();
@@ -18,21 +30,23 @@ const UnitContent = () => {
   const { user } = useAuth();
   const [completedSections, setCompletedSections] = useState<Record<string, boolean>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
-  
+
   // Get course unit data
   const unitData = unitId ? getCourseUnitById(unitId) : null;
-  
+
   // Determine which unit to display based on unitId
   const isHealthSafetyUnit = unitId === 'elec2-01';
   const isElectricalTheoryUnit = unitId === 'elec2-04';
   const isInstallationMethodsUnit = unitId === 'elec2-05a';
   const unitCode = unitData?.code || '';
-  
+
   // Load any completed sections and quiz status from localStorage (user-scoped)
   useEffect(() => {
     if (unitId && unitData?.code) {
       const code = unitData.code;
-      const storedQuizStatus = localStorage.getItem(userKey(user?.id, `unit_${code}_quiz_completed`));
+      const storedQuizStatus = localStorage.getItem(
+        userKey(user?.id, `unit_${code}_quiz_completed`)
+      );
       if (storedQuizStatus === 'true') {
         setQuizCompleted(true);
       }
@@ -56,32 +70,33 @@ const UnitContent = () => {
 
       {/* Unit content based on type */}
       {isHealthSafetyUnit && (
-        <HealthSafetyUnit 
+        <HealthSafetyUnit
           unitCode={unitCode}
-          onResourceClick={() => console.log("Resource clicked")}
+          onResourceClick={() => console.log('Resource clicked')}
         />
       )}
-      
+
       {isElectricalTheoryUnit && (
-        <ElectricalTheoryUnit 
+        <ElectricalTheoryUnit
           unitCode={unitCode}
-          onResourceClick={() => console.log("Resource clicked")}
+          onResourceClick={() => console.log('Resource clicked')}
         />
       )}
-      
+
       {isInstallationMethodsUnit && (
-        <InstallationMethodsUnit 
+        <InstallationMethodsUnit
           unitCode={unitCode}
-          onResourceClick={() => console.log("Resource clicked")}
+          onResourceClick={() => console.log('Resource clicked')}
         />
       )}
-      
+
       {/* Fallback content if no specific unit component matches */}
       {!isHealthSafetyUnit && !isElectricalTheoryUnit && !isInstallationMethodsUnit && (
         <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-2">Unit Overview</h2>
           <p className="text-white">
-            {unitData?.description || 'This unit covers essential knowledge and skills for electrical installation work.'}
+            {unitData?.description ||
+              'This unit covers essential knowledge and skills for electrical installation work.'}
           </p>
         </div>
       )}

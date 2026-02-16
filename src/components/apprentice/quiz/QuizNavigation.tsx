@@ -1,13 +1,12 @@
+import { QuizNavigationProps } from '@/types/quiz';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-import { QuizNavigationProps } from "@/types/quiz";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-const QuizNavigation = ({ 
-  questionsCount, 
-  activeQuestion, 
-  userAnswers, 
-  onNavigate 
+const QuizNavigation = ({
+  questionsCount,
+  activeQuestion,
+  userAnswers,
+  onNavigate,
 }: QuizNavigationProps) => {
   const handlePrevious = () => {
     if (activeQuestion > 0) {
@@ -23,7 +22,7 @@ const QuizNavigation = ({
 
   // Create an array of question indices
   const questionIndices = Array.from({ length: questionsCount }, (_, i) => i);
-  
+
   // Group questions into chunks of 10 for better display
   const questionGroups = [];
   for (let i = 0; i < questionIndices.length; i += 10) {
@@ -42,12 +41,12 @@ const QuizNavigation = ({
         >
           <ChevronLeft className="h-4 w-4 mr-1" /> Previous
         </Button>
-        
+
         <span className="text-sm">
           Question {activeQuestion + 1} of {questionsCount}
-          {userAnswers[activeQuestion] !== null && " • Answered"}
+          {userAnswers[activeQuestion] !== null && ' • Answered'}
         </span>
-        
+
         <Button
           variant="outline"
           size="sm"
@@ -58,7 +57,7 @@ const QuizNavigation = ({
           Next <ChevronRight className="h-4 w-4 ml-1" />
         </Button>
       </div>
-      
+
       {/* Question navigation grid */}
       <div className="grid grid-cols-10 gap-1 p-2 bg-white/10 border border-elec-yellow/20 rounded-lg">
         {questionGroups.map((group, groupIndex) => (
@@ -66,7 +65,7 @@ const QuizNavigation = ({
             {group.map((index) => {
               const isActive = index === activeQuestion;
               const isAnswered = userAnswers[index] !== null;
-              
+
               return (
                 <button
                   key={index}

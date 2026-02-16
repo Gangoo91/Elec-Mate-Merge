@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { GraduationCap, Zap, Briefcase, ChevronRight } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { Card } from '@/components/ui/card';
+import { GraduationCap, Zap, Briefcase, ChevronRight } from 'lucide-react';
 
 interface HubCardProps {
   title: string;
@@ -27,12 +27,14 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
       <div className="p-4 sm:p-5 flex flex-col h-full min-h-[140px] sm:min-h-[160px]">
         {/* Top row - Icon and badge */}
         <div className="flex items-start justify-between mb-3">
-          <div className={`
+          <div
+            className={`
             p-2.5 sm:p-3 rounded-xl
             ${iconBg} ${iconColor}
             transition-transform duration-200
             group-hover:scale-105
-          `}>
+          `}
+          >
             {icon}
           </div>
           <span className="text-[10px] sm:text-xs font-medium text-white/40 uppercase tracking-wider px-2 py-1 rounded-md bg-white/[0.04]">
@@ -55,13 +57,15 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
           <span className="text-xs sm:text-sm font-medium text-elec-yellow/70 group-hover:text-elec-yellow transition-colors">
             Open
           </span>
-          <div className="
+          <div
+            className="
             w-7 h-7 sm:w-8 sm:h-8 rounded-full
             bg-white/[0.05] border border-elec-yellow/20
             flex items-center justify-center
             group-hover:bg-elec-yellow group-hover:border-elec-yellow
             transition-all duration-200
-          ">
+          "
+          >
             <ChevronRight className="w-4 h-4 text-white/60 group-hover:text-black group-hover:translate-x-0.5 transition-all" />
           </div>
         </div>
@@ -73,32 +77,32 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
 export function HubGrid() {
   const hubs: HubCardProps[] = [
     {
-      title: "Apprentice Hub",
-      subtitle: "Training",
-      description: "Track your journey, log training hours, and build your portfolio.",
+      title: 'Apprentice Hub',
+      subtitle: 'Training',
+      description: 'Track your journey, log training hours, and build your portfolio.',
       icon: <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6" />,
-      path: "/apprentice",
-      iconColor: "text-blue-400",
-      iconBg: "bg-blue-500/10"
+      path: '/apprentice',
+      iconColor: 'text-blue-400',
+      iconBg: 'bg-blue-500/10',
     },
     {
-      title: "Electrical Hub",
-      subtitle: "Tools",
-      description: "Inspection tools, certificates, pricing, and AI assistants.",
+      title: 'Electrical Hub',
+      subtitle: 'Tools',
+      description: 'Inspection tools, certificates, pricing, and AI assistants.',
       icon: <Zap className="h-5 w-5 sm:h-6 sm:w-6" />,
-      path: "/electrician",
-      iconColor: "text-elec-yellow",
-      iconBg: "bg-elec-yellow/10"
+      path: '/electrician',
+      iconColor: 'text-elec-yellow',
+      iconBg: 'bg-elec-yellow/10',
     },
     {
-      title: "Employer Hub",
-      subtitle: "Manage",
-      description: "Employees, jobs, timesheets, and business management.",
+      title: 'Employer Hub',
+      subtitle: 'Manage',
+      description: 'Employees, jobs, timesheets, and business management.',
       icon: <Briefcase className="h-5 w-5 sm:h-6 sm:w-6" />,
-      path: "/employer",
-      iconColor: "text-purple-400",
-      iconBg: "bg-purple-500/10"
-    }
+      path: '/employer',
+      iconColor: 'text-purple-400',
+      iconBg: 'bg-purple-500/10',
+    },
   ];
 
   return (

@@ -1,174 +1,216 @@
-import { ArrowLeft, Building2, Server, Factory, Zap, CheckCircle, AlertTriangle, BookOpen, Target, Shield, Network, Layers } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Building2,
+  Server,
+  Factory,
+  Zap,
+  CheckCircle,
+  AlertTriangle,
+  BookOpen,
+  Target,
+  Shield,
+  Network,
+  Layers,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Design Scenarios - Fibre Optics Technology";
-const DESCRIPTION = "Learn fibre optic design principles for campus backbones, data centres, and industrial environments including cable selection, pathway design, and future-proofing strategies.";
+const TITLE = 'Design Scenarios - Fibre Optics Technology';
+const DESCRIPTION =
+  'Learn fibre optic design principles for campus backbones, data centres, and industrial environments including cable selection, pathway design, and future-proofing strategies.';
 
 const quickCheckQuestions = [
   {
-    question: "What is the primary advantage of using singlemode fibre for campus backbone links over 300 metres?",
+    question:
+      'What is the primary advantage of using singlemode fibre for campus backbone links over 300 metres?',
     options: [
-      { text: "Lower cable cost", isCorrect: false },
-      { text: "Easier termination", isCorrect: false },
-      { text: "Higher bandwidth capacity and longer distance support", isCorrect: true },
-      { text: "Better bend radius", isCorrect: false }
+      { text: 'Lower cable cost', isCorrect: false },
+      { text: 'Easier termination', isCorrect: false },
+      { text: 'Higher bandwidth capacity and longer distance support', isCorrect: true },
+      { text: 'Better bend radius', isCorrect: false },
     ],
-    explanation: "Singlemode fibre supports virtually unlimited bandwidth over campus distances and doesn't suffer from the distance limitations that affect multimode at high data rates. This makes it ideal for future-proofing campus backbones."
+    explanation:
+      "Singlemode fibre supports virtually unlimited bandwidth over campus distances and doesn't suffer from the distance limitations that affect multimode at high data rates. This makes it ideal for future-proofing campus backbones.",
   },
   {
-    question: "In a data centre, what is the main benefit of using MPO/MTP connectivity?",
+    question: 'In a data centre, what is the main benefit of using MPO/MTP connectivity?',
     options: [
-      { text: "Lower connector cost", isCorrect: false },
-      { text: "High-density parallel connections that support rapid deployment", isCorrect: true },
-      { text: "Better signal quality than LC connectors", isCorrect: false },
-      { text: "Easier cleaning and maintenance", isCorrect: false }
+      { text: 'Lower connector cost', isCorrect: false },
+      { text: 'High-density parallel connections that support rapid deployment', isCorrect: true },
+      { text: 'Better signal quality than LC connectors', isCorrect: false },
+      { text: 'Easier cleaning and maintenance', isCorrect: false },
     ],
-    explanation: "MPO/MTP connectors enable high-density parallel optics (40G, 100G, 400G) with 12 or 24 fibres in a single connector. This supports rapid deployment and efficient space utilisation in data centres."
+    explanation:
+      'MPO/MTP connectors enable high-density parallel optics (40G, 100G, 400G) with 12 or 24 fibres in a single connector. This supports rapid deployment and efficient space utilisation in data centres.',
   },
   {
-    question: "Which cable type is most suitable for an industrial environment with chemical exposure?",
+    question:
+      'Which cable type is most suitable for an industrial environment with chemical exposure?',
     options: [
-      { text: "Standard LSZH indoor cable", isCorrect: false },
-      { text: "Armoured cable with HDPE jacket", isCorrect: true },
-      { text: "Tight-buffered indoor/outdoor cable", isCorrect: false },
-      { text: "Ribbon fibre cable", isCorrect: false }
+      { text: 'Standard LSZH indoor cable', isCorrect: false },
+      { text: 'Armoured cable with HDPE jacket', isCorrect: true },
+      { text: 'Tight-buffered indoor/outdoor cable', isCorrect: false },
+      { text: 'Ribbon fibre cable', isCorrect: false },
     ],
-    explanation: "Armoured cables with HDPE (High-Density Polyethylene) jackets provide excellent chemical resistance along with mechanical protection from the steel armour. LSZH jackets, while safe for fires, have lower chemical resistance."
-  }
+    explanation:
+      'Armoured cables with HDPE (High-Density Polyethylene) jackets provide excellent chemical resistance along with mechanical protection from the steel armour. LSZH jackets, while safe for fires, have lower chemical resistance.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What is the recommended minimum fibre count for a new campus backbone installation?",
+    question: 'What is the recommended minimum fibre count for a new campus backbone installation?',
     options: [
-      { text: "4 fibres", isCorrect: false },
-      { text: "12 fibres", isCorrect: false },
-      { text: "24 fibres minimum, with consideration for future growth", isCorrect: true },
-      { text: "48 fibres is always required", isCorrect: false }
+      { text: '4 fibres', isCorrect: false },
+      { text: '12 fibres', isCorrect: false },
+      { text: '24 fibres minimum, with consideration for future growth', isCorrect: true },
+      { text: '48 fibres is always required', isCorrect: false },
     ],
-    explanation: "While requirements vary, 24 fibres is typically the minimum recommended for campus backbones, allowing for current services plus future expansion. The marginal cost of additional fibres in a cable is low compared to pulling new cable later."
+    explanation:
+      'While requirements vary, 24 fibres is typically the minimum recommended for campus backbones, allowing for current services plus future expansion. The marginal cost of additional fibres in a cable is low compared to pulling new cable later.',
   },
   {
-    question: "In the TIA-942 data centre standard, what topology is recommended for structured cabling?",
+    question:
+      'In the TIA-942 data centre standard, what topology is recommended for structured cabling?',
     options: [
-      { text: "Ring topology", isCorrect: false },
-      { text: "Bus topology", isCorrect: false },
-      { text: "Star topology with hierarchical distribution", isCorrect: true },
-      { text: "Mesh topology", isCorrect: false }
+      { text: 'Ring topology', isCorrect: false },
+      { text: 'Bus topology', isCorrect: false },
+      { text: 'Star topology with hierarchical distribution', isCorrect: true },
+      { text: 'Mesh topology', isCorrect: false },
     ],
-    explanation: "TIA-942 recommends a hierarchical star topology with Main Distribution Area (MDA), Horizontal Distribution Areas (HDA), and Equipment Distribution Areas (EDA). This provides flexibility and manageability."
+    explanation:
+      'TIA-942 recommends a hierarchical star topology with Main Distribution Area (MDA), Horizontal Distribution Areas (HDA), and Equipment Distribution Areas (EDA). This provides flexibility and manageability.',
   },
   {
-    question: "What distance limitation typically determines whether to use multimode or singlemode for a data centre link?",
+    question:
+      'What distance limitation typically determines whether to use multimode or singlemode for a data centre link?',
     options: [
-      { text: "50 metres", isCorrect: false },
-      { text: "100 metres", isCorrect: false },
-      { text: "300-500 metres", isCorrect: true },
-      { text: "1000 metres", isCorrect: false }
+      { text: '50 metres', isCorrect: false },
+      { text: '100 metres', isCorrect: false },
+      { text: '300-500 metres', isCorrect: true },
+      { text: '1000 metres', isCorrect: false },
     ],
-    explanation: "Within a single hall or building (typically under 300m), OM4 multimode can support high-speed links cost-effectively. Beyond this distance, or for future-proofing, singlemode becomes the better choice."
+    explanation:
+      'Within a single hall or building (typically under 300m), OM4 multimode can support high-speed links cost-effectively. Beyond this distance, or for future-proofing, singlemode becomes the better choice.',
   },
   {
-    question: "What cable construction is recommended for outdoor campus backbone routes?",
+    question: 'What cable construction is recommended for outdoor campus backbone routes?',
     options: [
-      { text: "Tight-buffered indoor cable", isCorrect: false },
-      { text: "Loose-tube gel-filled or dry-block cable", isCorrect: true },
-      { text: "LSZH indoor/outdoor rated cable", isCorrect: false },
-      { text: "Ribbon cable without protection", isCorrect: false }
+      { text: 'Tight-buffered indoor cable', isCorrect: false },
+      { text: 'Loose-tube gel-filled or dry-block cable', isCorrect: true },
+      { text: 'LSZH indoor/outdoor rated cable', isCorrect: false },
+      { text: 'Ribbon cable without protection', isCorrect: false },
     ],
-    explanation: "Loose-tube cables with gel-fill or dry-block water blocking provide excellent protection against moisture ingress and temperature extremes found in outdoor environments."
+    explanation:
+      'Loose-tube cables with gel-fill or dry-block water blocking provide excellent protection against moisture ingress and temperature extremes found in outdoor environments.',
   },
   {
-    question: "In an industrial environment with electromagnetic interference, what is fibre's main advantage over copper?",
+    question:
+      "In an industrial environment with electromagnetic interference, what is fibre's main advantage over copper?",
     options: [
-      { text: "Lower cost", isCorrect: false },
-      { text: "Complete immunity to EMI and RFI", isCorrect: true },
-      { text: "Easier installation", isCorrect: false },
-      { text: "Better power delivery", isCorrect: false }
+      { text: 'Lower cost', isCorrect: false },
+      { text: 'Complete immunity to EMI and RFI', isCorrect: true },
+      { text: 'Easier installation', isCorrect: false },
+      { text: 'Better power delivery', isCorrect: false },
     ],
-    explanation: "Fibre optic cables are completely immune to electromagnetic interference (EMI) and radio frequency interference (RFI) as they transmit light, not electrical signals. This is critical in industrial environments with motors, welders, and other EMI sources."
+    explanation:
+      'Fibre optic cables are completely immune to electromagnetic interference (EMI) and radio frequency interference (RFI) as they transmit light, not electrical signals. This is critical in industrial environments with motors, welders, and other EMI sources.',
   },
   {
-    question: "What special consideration applies to fibre installations in hazardous (explosive atmosphere) environments?",
+    question:
+      'What special consideration applies to fibre installations in hazardous (explosive atmosphere) environments?',
     options: [
-      { text: "Use only plastic optical fibre", isCorrect: false },
-      { text: "Limit optical power levels to prevent ignition", isCorrect: true },
-      { text: "Install only armoured cable", isCorrect: false },
-      { text: "Fibre cannot be used in hazardous areas", isCorrect: false }
+      { text: 'Use only plastic optical fibre', isCorrect: false },
+      { text: 'Limit optical power levels to prevent ignition', isCorrect: true },
+      { text: 'Install only armoured cable', isCorrect: false },
+      { text: 'Fibre cannot be used in hazardous areas', isCorrect: false },
     ],
-    explanation: "While fibre is intrinsically safe for EMI, high-power lasers (especially for long-reach singlemode) can potentially create ignition risks. Standards like IEC 60079 specify maximum power levels for optical equipment in hazardous zones."
+    explanation:
+      'While fibre is intrinsically safe for EMI, high-power lasers (especially for long-reach singlemode) can potentially create ignition risks. Standards like IEC 60079 specify maximum power levels for optical equipment in hazardous zones.',
   },
   {
-    question: "For a leaf-spine data centre architecture, where is fibre cabling typically deployed?",
+    question:
+      'For a leaf-spine data centre architecture, where is fibre cabling typically deployed?',
     options: [
-      { text: "Only between spine switches", isCorrect: false },
-      { text: "Between leaf and spine switches, with copper to servers", isCorrect: true },
-      { text: "Only for external connections", isCorrect: false },
-      { text: "Fibre is not used in leaf-spine architecture", isCorrect: false }
+      { text: 'Only between spine switches', isCorrect: false },
+      { text: 'Between leaf and spine switches, with copper to servers', isCorrect: true },
+      { text: 'Only for external connections', isCorrect: false },
+      { text: 'Fibre is not used in leaf-spine architecture', isCorrect: false },
     ],
-    explanation: "In modern data centres, fibre connects leaf switches to spine switches (east-west traffic), while copper (or short-reach fibre) typically connects servers to leaf switches (north-south traffic)."
+    explanation:
+      'In modern data centres, fibre connects leaf switches to spine switches (east-west traffic), while copper (or short-reach fibre) typically connects servers to leaf switches (north-south traffic).',
   },
   {
-    question: "What is the advantage of using pre-terminated trunk cables in data centres?",
+    question: 'What is the advantage of using pre-terminated trunk cables in data centres?',
     options: [
-      { text: "They never need testing", isCorrect: false },
-      { text: "Factory quality connectors and rapid deployment", isCorrect: true },
-      { text: "They cost less than field termination", isCorrect: false },
-      { text: "They can be easily re-terminated on site", isCorrect: false }
+      { text: 'They never need testing', isCorrect: false },
+      { text: 'Factory quality connectors and rapid deployment', isCorrect: true },
+      { text: 'They cost less than field termination', isCorrect: false },
+      { text: 'They can be easily re-terminated on site', isCorrect: false },
     ],
-    explanation: "Pre-terminated (factory terminated) trunk cables provide consistent high-quality terminations, reduce installation time significantly, and eliminate field termination quality concerns. Testing is still required but results are typically excellent."
+    explanation:
+      'Pre-terminated (factory terminated) trunk cables provide consistent high-quality terminations, reduce installation time significantly, and eliminate field termination quality concerns. Testing is still required but results are typically excellent.',
   },
   {
-    question: "What type of pathway protection is recommended for fibre cables routed through a car park or vehicle access area?",
+    question:
+      'What type of pathway protection is recommended for fibre cables routed through a car park or vehicle access area?',
     options: [
-      { text: "Standard PVC conduit", isCorrect: false },
-      { text: "Direct burial without protection", isCorrect: false },
-      { text: "Steel armoured duct or concrete-encased conduit", isCorrect: true },
-      { text: "Innerduct only", isCorrect: false }
+      { text: 'Standard PVC conduit', isCorrect: false },
+      { text: 'Direct burial without protection', isCorrect: false },
+      { text: 'Steel armoured duct or concrete-encased conduit', isCorrect: true },
+      { text: 'Innerduct only', isCorrect: false },
     ],
-    explanation: "Vehicle areas require robust mechanical protection. Steel armoured duct or concrete-encased conduit protects against crushing loads and accidental damage from construction or maintenance activities."
+    explanation:
+      'Vehicle areas require robust mechanical protection. Steel armoured duct or concrete-encased conduit protects against crushing loads and accidental damage from construction or maintenance activities.',
   },
   {
-    question: "What is the recommended approach for fibre count planning when exact future requirements are unknown?",
+    question:
+      'What is the recommended approach for fibre count planning when exact future requirements are unknown?',
     options: [
-      { text: "Install exactly what is needed now", isCorrect: false },
-      { text: "Install 50% more than current needs", isCorrect: false },
-      { text: "Install the maximum cable size the pathway can accommodate", isCorrect: false },
-      { text: "Install 2-3 times current needs or a minimum of 24 fibres", isCorrect: true }
+      { text: 'Install exactly what is needed now', isCorrect: false },
+      { text: 'Install 50% more than current needs', isCorrect: false },
+      { text: 'Install the maximum cable size the pathway can accommodate', isCorrect: false },
+      { text: 'Install 2-3 times current needs or a minimum of 24 fibres', isCorrect: true },
     ],
-    explanation: "The incremental cost of additional fibres is small compared to the cost of pulling new cable later. A factor of 2-3 times current needs, with a practical minimum of 24 fibres for backbones, provides good future flexibility."
-  }
+    explanation:
+      'The incremental cost of additional fibres is small compared to the cost of pulling new cable later. A factor of 2-3 times current needs, with a practical minimum of 24 fibres for backbones, provides good future flexibility.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Should I use singlemode or multimode for my campus backbone?",
-    answer: "For new installations, singlemode is increasingly recommended for campus backbones, even at shorter distances. While multimode transceivers cost less, singlemode provides unlimited bandwidth headroom and is now cost-effective with modern SFP+ modules. For distances over 300m or where 40Gbps+ speeds are anticipated, singlemode is the clear choice."
+    question: 'Should I use singlemode or multimode for my campus backbone?',
+    answer:
+      'For new installations, singlemode is increasingly recommended for campus backbones, even at shorter distances. While multimode transceivers cost less, singlemode provides unlimited bandwidth headroom and is now cost-effective with modern SFP+ modules. For distances over 300m or where 40Gbps+ speeds are anticipated, singlemode is the clear choice.',
   },
   {
-    question: "How do I determine the right fibre count for a new installation?",
-    answer: "Start with current requirements, then multiply by 2-3 for growth. Consider spare pairs for redundancy and future services. For backbones, 24-48 fibres is typical. The incremental cost of additional fibres is minimal compared to future re-cabling, so err on the side of more fibres."
+    question: 'How do I determine the right fibre count for a new installation?',
+    answer:
+      'Start with current requirements, then multiply by 2-3 for growth. Consider spare pairs for redundancy and future services. For backbones, 24-48 fibres is typical. The incremental cost of additional fibres is minimal compared to future re-cabling, so err on the side of more fibres.',
   },
   {
     question: "What's the difference between TIA-942 and EN 50600 for data centres?",
-    answer: "TIA-942 is the North American standard from TIA, while EN 50600 is the European standard. Both cover similar ground but have different tier classifications and specific requirements. EN 50600 integrates more closely with European electrical standards. Most modern data centre designs reference one or both."
+    answer:
+      'TIA-942 is the North American standard from TIA, while EN 50600 is the European standard. Both cover similar ground but have different tier classifications and specific requirements. EN 50600 integrates more closely with European electrical standards. Most modern data centre designs reference one or both.',
   },
   {
-    question: "Can I use indoor/outdoor rated cable throughout my campus?",
-    answer: "Indoor/outdoor (I/O) rated cables can simplify installations by using one cable type throughout. However, they may not offer the same level of protection as dedicated outdoor cables for long direct-buried runs. They work well for short outdoor sections or where cable enters buildings."
+    question: 'Can I use indoor/outdoor rated cable throughout my campus?',
+    answer:
+      'Indoor/outdoor (I/O) rated cables can simplify installations by using one cable type throughout. However, they may not offer the same level of protection as dedicated outdoor cables for long direct-buried runs. They work well for short outdoor sections or where cable enters buildings.',
   },
   {
-    question: "What additional considerations apply to fibre in manufacturing facilities?",
-    answer: "Consider vibration, temperature extremes, chemical exposure, cleaning regimes (high-pressure wash-down), EMI from machinery, and physical protection in traffic areas. Use appropriate cable jackets (HDPE, armoured), robust connectors (industrial IP-rated where needed), and ensure adequate pathway protection."
+    question: 'What additional considerations apply to fibre in manufacturing facilities?',
+    answer:
+      'Consider vibration, temperature extremes, chemical exposure, cleaning regimes (high-pressure wash-down), EMI from machinery, and physical protection in traffic areas. Use appropriate cable jackets (HDPE, armoured), robust connectors (industrial IP-rated where needed), and ensure adequate pathway protection.',
   },
   {
-    question: "How do I future-proof a fibre installation?",
-    answer: "Install more fibres than currently needed (2-3× minimum), use high-quality OS2 singlemode for backbones, ensure pathway capacity for additional cables, install spare ducts/conduits, and document everything thoroughly. Consider higher-grade multimode (OM4/OM5) where multimode is required."
-  }
+    question: 'How do I future-proof a fibre installation?',
+    answer:
+      'Install more fibres than currently needed (2-3× minimum), use high-quality OS2 singlemode for backbones, ensure pathway capacity for additional cables, install spare ducts/conduits, and document everything thoroughly. Consider higher-grade multimode (OM4/OM5) where multimode is required.',
+  },
 ];
 
 const FiberOpticsModule6Section4 = () => {
@@ -179,7 +221,10 @@ const FiberOpticsModule6Section4 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/electrical-upskilling/fiber-optics-module-6" className="flex items-center gap-2 text-elec-yellow hover:text-elec-yellow/80 transition-colors min-h-[44px] touch-manipulation active:scale-[0.98]">
+          <Link
+            to="/electrical-upskilling/fiber-optics-module-6"
+            className="flex items-center gap-2 text-elec-yellow hover:text-elec-yellow/80 transition-colors min-h-[44px] touch-manipulation active:scale-[0.98]"
+          >
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Module 6</span>
           </Link>
@@ -193,11 +238,10 @@ const FiberOpticsModule6Section4 = () => {
           <div className="inline-block bg-elec-yellow/20 text-elec-yellow text-xs font-bold px-3 py-1.5 rounded-full mb-4">
             MODULE 6 · SECTION 4
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            Design Scenarios
-          </h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Design Scenarios</h1>
           <p className="text-white/70 text-lg">
-            Apply fibre design principles to real-world campus, data centre, and industrial environments
+            Apply fibre design principles to real-world campus, data centre, and industrial
+            environments
           </p>
         </div>
       </div>
@@ -231,11 +275,11 @@ const FiberOpticsModule6Section4 = () => {
             </h2>
             <ul className="space-y-3">
               {[
-                "Design fibre optic backbone infrastructure for campus environments",
-                "Apply data centre cabling standards and high-density solutions",
-                "Specify appropriate cable and connector types for industrial applications",
-                "Plan for future capacity and technology upgrades",
-                "Implement pathway and protection strategies for different environments"
+                'Design fibre optic backbone infrastructure for campus environments',
+                'Apply data centre cabling standards and high-density solutions',
+                'Specify appropriate cable and connector types for industrial applications',
+                'Plan for future capacity and technology upgrades',
+                'Implement pathway and protection strategies for different environments',
               ].map((outcome, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -254,7 +298,9 @@ const FiberOpticsModule6Section4 = () => {
 
             <div className="space-y-4 text-white/80 mb-6">
               <p>
-                A campus network connects multiple buildings to a central core, typically from a main equipment room (MER) or data centre. The fibre backbone must handle high bandwidth, provide redundancy, and accommodate future growth.
+                A campus network connects multiple buildings to a central core, typically from a
+                main equipment room (MER) or data centre. The fibre backbone must handle high
+                bandwidth, provide redundancy, and accommodate future growth.
               </p>
             </div>
 
@@ -268,7 +314,9 @@ const FiberOpticsModule6Section4 = () => {
                 <p className="mb-1">├─── Building B (IDF)</p>
                 <p className="mb-1">├─── Building C (IDF)</p>
                 <p className="mb-1">└─── Building D (IDF)</p>
-                <p className="mt-3 text-white/60 text-xs">Star topology with dedicated fibres to each building</p>
+                <p className="mt-3 text-white/60 text-xs">
+                  Star topology with dedicated fibres to each building
+                </p>
               </div>
             </div>
 
@@ -281,7 +329,10 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Fibre Type Selection</h5>
-                    <p className="text-white/60 text-sm">Singlemode (OS2) recommended for backbone runs over 300m. Multimode (OM4) acceptable for shorter distances if 10G is sufficient.</p>
+                    <p className="text-white/60 text-sm">
+                      Singlemode (OS2) recommended for backbone runs over 300m. Multimode (OM4)
+                      acceptable for shorter distances if 10G is sufficient.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -290,7 +341,10 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Fibre Count Planning</h5>
-                    <p className="text-white/60 text-sm">Minimum 24 fibres per building, more for larger buildings. Include spare fibres (50-100% extra) for growth and redundancy.</p>
+                    <p className="text-white/60 text-sm">
+                      Minimum 24 fibres per building, more for larger buildings. Include spare
+                      fibres (50-100% extra) for growth and redundancy.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -299,7 +353,10 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Pathway Planning</h5>
-                    <p className="text-white/60 text-sm">Underground ducts between buildings with adequate spare capacity. Minimum 100mm diameter ducts recommended.</p>
+                    <p className="text-white/60 text-sm">
+                      Underground ducts between buildings with adequate spare capacity. Minimum
+                      100mm diameter ducts recommended.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -308,7 +365,10 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Redundancy</h5>
-                    <p className="text-white/60 text-sm">Consider diverse routing for critical buildings. Ring or dual-star topology for high availability requirements.</p>
+                    <p className="text-white/60 text-sm">
+                      Consider diverse routing for critical buildings. Ring or dual-star topology
+                      for high availability requirements.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -322,7 +382,9 @@ const FiberOpticsModule6Section4 = () => {
                   <thead>
                     <tr className="border-b border-white/20">
                       <th className="text-left py-2 px-3 text-white/60 font-medium">Route Type</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Recommended Cable</th>
+                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                        Recommended Cable
+                      </th>
                       <th className="text-left py-2 px-3 text-white/60 font-medium">Notes</th>
                     </tr>
                   </thead>
@@ -369,7 +431,10 @@ const FiberOpticsModule6Section4 = () => {
 
             <div className="space-y-4 text-white/80 mb-6">
               <p>
-                Data centres require high-density, high-performance fibre infrastructure to support modern cloud, virtualisation, and high-performance computing workloads. The TIA-942 and EN 50600 standards provide guidance for structured cabling in these environments.
+                Data centres require high-density, high-performance fibre infrastructure to support
+                modern cloud, virtualisation, and high-performance computing workloads. The TIA-942
+                and EN 50600 standards provide guidance for structured cabling in these
+                environments.
               </p>
             </div>
 
@@ -382,22 +447,30 @@ const FiberOpticsModule6Section4 = () => {
               <div className="space-y-3">
                 <div className="bg-elec-yellow/10 p-3 rounded-lg border border-elec-yellow/30">
                   <h5 className="text-elec-yellow font-medium">Entrance Room (ER)</h5>
-                  <p className="text-white/60 text-sm">Service provider demarcation, external connections</p>
+                  <p className="text-white/60 text-sm">
+                    Service provider demarcation, external connections
+                  </p>
                 </div>
                 <div className="text-center text-white/40">↓</div>
                 <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/30">
                   <h5 className="text-blue-400 font-medium">Main Distribution Area (MDA)</h5>
-                  <p className="text-white/60 text-sm">Core switches, primary cross-connects, backbone cabling hub</p>
+                  <p className="text-white/60 text-sm">
+                    Core switches, primary cross-connects, backbone cabling hub
+                  </p>
                 </div>
                 <div className="text-center text-white/40">↓</div>
                 <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/30">
                   <h5 className="text-green-400 font-medium">Horizontal Distribution Area (HDA)</h5>
-                  <p className="text-white/60 text-sm">Aggregation layer, zone distribution points</p>
+                  <p className="text-white/60 text-sm">
+                    Aggregation layer, zone distribution points
+                  </p>
                 </div>
                 <div className="text-center text-white/40">↓</div>
                 <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/30">
                   <h5 className="text-purple-400 font-medium">Equipment Distribution Area (EDA)</h5>
-                  <p className="text-white/60 text-sm">Server cabinets, storage arrays, end equipment</p>
+                  <p className="text-white/60 text-sm">
+                    Server cabinets, storage arrays, end equipment
+                  </p>
                 </div>
               </div>
             </div>
@@ -409,7 +482,8 @@ const FiberOpticsModule6Section4 = () => {
                 Leaf-Spine Architecture
               </h4>
               <p className="text-white/70 text-sm mb-3">
-                Modern cloud data centres often use leaf-spine (also called Clos) architecture instead of traditional three-tier designs. This provides:
+                Modern cloud data centres often use leaf-spine (also called Clos) architecture
+                instead of traditional three-tier designs. This provides:
               </p>
               <ul className="text-white/70 text-sm space-y-1">
                 <li>• Consistent low latency between any two servers</li>
@@ -428,7 +502,9 @@ const FiberOpticsModule6Section4 = () => {
                     <tr className="border-b border-white/20">
                       <th className="text-left py-2 px-3 text-white/60 font-medium">Technology</th>
                       <th className="text-left py-2 px-3 text-white/60 font-medium">Fibre Count</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Applications</th>
+                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                        Applications
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="text-white/80">
@@ -509,7 +585,10 @@ const FiberOpticsModule6Section4 = () => {
 
             <div className="space-y-4 text-white/80 mb-6">
               <p>
-                Industrial environments present unique challenges including extreme temperatures, vibration, chemical exposure, EMI from machinery, and physical hazards. Fibre's immunity to electrical interference makes it ideal for these applications, but cable and connector selection is critical.
+                Industrial environments present unique challenges including extreme temperatures,
+                vibration, chemical exposure, EMI from machinery, and physical hazards. Fibre's
+                immunity to electrical interference makes it ideal for these applications, but cable
+                and connector selection is critical.
               </p>
             </div>
 
@@ -559,7 +638,9 @@ const FiberOpticsModule6Section4 = () => {
                   <thead>
                     <tr className="border-b border-white/20">
                       <th className="text-left py-2 px-3 text-white/60 font-medium">Challenge</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Cable Solution</th>
+                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                        Cable Solution
+                      </th>
                       <th className="text-left py-2 px-3 text-white/60 font-medium">Features</th>
                     </tr>
                   </thead>
@@ -607,7 +688,10 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">IP-Rated Connector Housings</h5>
-                    <p className="text-white/60 text-sm">Sealed housings protect standard LC or SC connectors from dust and water ingress</p>
+                    <p className="text-white/60 text-sm">
+                      Sealed housings protect standard LC or SC connectors from dust and water
+                      ingress
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -616,7 +700,9 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Outdoor Connectors (ODC)</h5>
-                    <p className="text-white/60 text-sm">Ruggedised multi-fibre connectors designed for field deployment</p>
+                    <p className="text-white/60 text-sm">
+                      Ruggedised multi-fibre connectors designed for field deployment
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -625,7 +711,9 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Military-Spec Connectors</h5>
-                    <p className="text-white/60 text-sm">Extreme durability for harshest environments (MIL-DTL-38999 style)</p>
+                    <p className="text-white/60 text-sm">
+                      Extreme durability for harshest environments (MIL-DTL-38999 style)
+                    </p>
                   </div>
                 </div>
               </div>
@@ -638,7 +726,10 @@ const FiberOpticsModule6Section4 = () => {
                 Hazardous Area Considerations
               </h4>
               <p className="text-white/70 text-sm">
-                In explosive atmospheres (ATEX/IECEx zones), fibre optic equipment must be certified for the zone classification. While fibre itself doesn't generate sparks, high-power optical sources can potentially cause ignition. Use certified equipment and follow IEC 60079 requirements.
+                In explosive atmospheres (ATEX/IECEx zones), fibre optic equipment must be certified
+                for the zone classification. While fibre itself doesn't generate sparks, high-power
+                optical sources can potentially cause ignition. Use certified equipment and follow
+                IEC 60079 requirements.
               </p>
             </div>
 
@@ -659,7 +750,9 @@ const FiberOpticsModule6Section4 = () => {
 
             <div className="space-y-4 text-white/80 mb-6">
               <p>
-                A well-designed fibre infrastructure should serve the organisation for 15-25 years. Future-proofing requires balancing current needs against anticipated growth and technology evolution.
+                A well-designed fibre infrastructure should serve the organisation for 15-25 years.
+                Future-proofing requires balancing current needs against anticipated growth and
+                technology evolution.
               </p>
             </div>
 
@@ -670,35 +763,50 @@ const FiberOpticsModule6Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Install More Fibres Than Needed</span>
-                    <p className="text-white/60 text-sm">The incremental cost of additional fibres is minimal compared to pulling new cable later. Install 2-3× current needs.</p>
+                    <p className="text-white/60 text-sm">
+                      The incremental cost of additional fibres is minimal compared to pulling new
+                      cable later. Install 2-3× current needs.
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Choose High-Grade Fibre</span>
-                    <p className="text-white/60 text-sm">OS2 singlemode for backbones, OM4 or OM5 where multimode is required. Higher grades cost marginally more but last longer.</p>
+                    <p className="text-white/60 text-sm">
+                      OS2 singlemode for backbones, OM4 or OM5 where multimode is required. Higher
+                      grades cost marginally more but last longer.
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Provide Pathway Capacity</span>
-                    <p className="text-white/60 text-sm">Install larger ducts and trays than currently needed. Include spare ducts for future cables.</p>
+                    <p className="text-white/60 text-sm">
+                      Install larger ducts and trays than currently needed. Include spare ducts for
+                      future cables.
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Design for Higher Speeds</span>
-                    <p className="text-white/60 text-sm">Minimise connections and ensure low insertion loss. Today's 10G backbone may need to support 100G in future.</p>
+                    <p className="text-white/60 text-sm">
+                      Minimise connections and ensure low insertion loss. Today's 10G backbone may
+                      need to support 100G in future.
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Document Thoroughly</span>
-                    <p className="text-white/60 text-sm">Accurate records are essential for future modifications. Test results, as-built drawings, and labelling must be maintained.</p>
+                    <p className="text-white/60 text-sm">
+                      Accurate records are essential for future modifications. Test results,
+                      as-built drawings, and labelling must be maintained.
+                    </p>
                   </div>
                 </li>
               </ul>
@@ -711,7 +819,10 @@ const FiberOpticsModule6Section4 = () => {
                 OM5 Wideband Multimode Fibre
               </h4>
               <p className="text-white/70 text-sm">
-                OM5 fibre is optimised for shortwave wavelength division multiplexing (SWDM), supporting multiple wavelengths (850-953nm) over a single fibre pair. This enables 40G and 100G over duplex connections instead of parallel optics, making it a good choice for data centre future-proofing where multimode is preferred.
+                OM5 fibre is optimised for shortwave wavelength division multiplexing (SWDM),
+                supporting multiple wavelengths (850-953nm) over a single fibre pair. This enables
+                40G and 100G over duplex connections instead of parallel optics, making it a good
+                choice for data centre future-proofing where multimode is preferred.
               </p>
             </div>
           </section>
@@ -819,11 +930,7 @@ const FiberOpticsModule6Section4 = () => {
 
           {/* Quiz Section */}
           <section className="mb-12">
-            <Quiz
-              title="Section 4 Knowledge Check"
-              questions={quizQuestions}
-              passingScore={80}
-            />
+            <Quiz title="Section 4 Knowledge Check" questions={quizQuestions} passingScore={80} />
           </section>
 
           {/* Bottom Navigation */}

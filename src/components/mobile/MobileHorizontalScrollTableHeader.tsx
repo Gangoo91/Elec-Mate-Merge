@@ -18,7 +18,9 @@ interface MobileHorizontalScrollTableHeaderProps {
   onFillAllPolarity?: (value: string) => void;
 }
 
-export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollTableHeaderProps> = ({
+export const MobileHorizontalScrollTableHeader: React.FC<
+  MobileHorizontalScrollTableHeaderProps
+> = ({
   onFillAllRcdTestButton,
   onFillAllAfdd,
   onFillAllRcdBsStandard,
@@ -28,9 +30,10 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
   onFillAllInsulationVoltage,
   onFillAllInsulationLiveNeutral,
   onFillAllInsulationLiveEarth,
-  onFillAllPolarity
+  onFillAllPolarity,
 }) => {
-  const headerCell = "font-semibold text-xs p-0.5 text-center whitespace-nowrap border-r border-border bg-elec-gray text-foreground";
+  const headerCell =
+    'font-semibold text-xs p-0.5 text-center whitespace-nowrap border-r border-border bg-elec-gray text-foreground';
 
   return (
     <TableHeader className="sticky top-14 z-40 bg-elec-gray shadow-sm border-b h-12">
@@ -42,40 +45,20 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
         <TableHead className={`${headerCell} w-[132px] min-w-[132px] max-w-[132px]`}>
           Desc
         </TableHead>
-        <TableHead className={`${headerCell} w-[80px] min-w-[80px] max-w-[80px]`}>
-          Type
-        </TableHead>
-        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>
-          M
-        </TableHead>
-        <TableHead className={`${headerCell} w-[72px] min-w-[72px] max-w-[72px]`}>
-          Pts
-        </TableHead>
+        <TableHead className={`${headerCell} w-[80px] min-w-[80px] max-w-[80px]`}>Type</TableHead>
+        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>M</TableHead>
+        <TableHead className={`${headerCell} w-[72px] min-w-[72px] max-w-[72px]`}>Pts</TableHead>
 
         {/* Conductor Details Group */}
-        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
-          Live
-        </TableHead>
-        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
-          CPC
-        </TableHead>
+        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>Live</TableHead>
+        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>CPC</TableHead>
 
         {/* Protection Group */}
-        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
-          BS
-        </TableHead>
-        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>
-          Ty
-        </TableHead>
-        <TableHead className={`${headerCell} w-[80px] min-w-[80px] max-w-[80px]`}>
-          A
-        </TableHead>
-        <TableHead className={`${headerCell} w-[72px] min-w-[72px] max-w-[72px]`}>
-          kA
-        </TableHead>
-        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
-          Zs
-        </TableHead>
+        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>BS</TableHead>
+        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>Ty</TableHead>
+        <TableHead className={`${headerCell} w-[80px] min-w-[80px] max-w-[80px]`}>A</TableHead>
+        <TableHead className={`${headerCell} w-[72px] min-w-[72px] max-w-[72px]`}>kA</TableHead>
+        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>Zs</TableHead>
 
         {/* RCD Details Group */}
         <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
@@ -87,7 +70,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-3 w-3 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdBsStandardOptions.map((o) => <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>)}
+                  {rcdBsStandardOptions.map((o) => (
+                    <SelectItem key={o.value} value={o.value} className="text-xs">
+                      {o.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -102,7 +89,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-3 w-3 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {rcdTypeOptions.map((o) => <SelectItem key={o.value} value={o.value} className="text-xs">{o.label}</SelectItem>)}
+                  {rcdTypeOptions.map((o) => (
+                    <SelectItem key={o.value} value={o.value} className="text-xs">
+                      {o.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -117,7 +108,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-3 w-3 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {['10', '30', '100', '300', '500'].map((v) => <SelectItem key={v} value={v} className="text-xs">{v}</SelectItem>)}
+                  {['10', '30', '100', '300', '500'].map((v) => (
+                    <SelectItem key={v} value={v} className="text-xs">
+                      {v}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -132,7 +127,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-3 w-3 text-green-600" />
                 </SelectTrigger>
                 <SelectContent>
-                  {['40', '63', '80', '100'].map((v) => <SelectItem key={v} value={v} className="text-xs">{v}</SelectItem>)}
+                  {['40', '63', '80', '100'].map((v) => (
+                    <SelectItem key={v} value={v} className="text-xs">
+                      {v}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -156,9 +155,15 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent className="min-w-[140px]">
-                  <SelectItem value="250V" className="py-3 text-base touch-manipulation">250V</SelectItem>
-                  <SelectItem value="500V" className="py-3 text-base touch-manipulation">500V</SelectItem>
-                  <SelectItem value="1000V" className="py-3 text-base touch-manipulation">1000V</SelectItem>
+                  <SelectItem value="250V" className="py-3 text-base touch-manipulation">
+                    250V
+                  </SelectItem>
+                  <SelectItem value="500V" className="py-3 text-base touch-manipulation">
+                    500V
+                  </SelectItem>
+                  <SelectItem value="1000V" className="py-3 text-base touch-manipulation">
+                    1000V
+                  </SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -173,10 +178,18 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent className="min-w-[140px]">
-                  <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
-                  <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
-                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
-                  <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+                  <SelectItem value=">200" className="py-3 text-base touch-manipulation">
+                    &gt;200 MΩ
+                  </SelectItem>
+                  <SelectItem value=">999" className="py-3 text-base touch-manipulation">
+                    &gt;999 MΩ
+                  </SelectItem>
+                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">
+                    N/A
+                  </SelectItem>
+                  <SelectItem value="LIM" className="py-3 text-base touch-manipulation">
+                    LIM
+                  </SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -191,10 +204,18 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent className="min-w-[140px]">
-                  <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
-                  <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
-                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
-                  <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+                  <SelectItem value=">200" className="py-3 text-base touch-manipulation">
+                    &gt;200 MΩ
+                  </SelectItem>
+                  <SelectItem value=">999" className="py-3 text-base touch-manipulation">
+                    &gt;999 MΩ
+                  </SelectItem>
+                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">
+                    N/A
+                  </SelectItem>
+                  <SelectItem value="LIM" className="py-3 text-base touch-manipulation">
+                    LIM
+                  </SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -211,9 +232,15 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 </SelectTrigger>
                 <SelectContent className="min-w-[160px]">
-                  <SelectItem value="Correct" className="py-3 text-base touch-manipulation">Correct</SelectItem>
-                  <SelectItem value="Incorrect" className="py-3 text-base touch-manipulation">Incorrect</SelectItem>
-                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
+                  <SelectItem value="Correct" className="py-3 text-base touch-manipulation">
+                    Correct
+                  </SelectItem>
+                  <SelectItem value="Incorrect" className="py-3 text-base touch-manipulation">
+                    Incorrect
+                  </SelectItem>
+                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">
+                    N/A
+                  </SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -256,7 +283,9 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
 
         {/* Functional Group */}
         <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>Fn</TableHead>
-        <TableHead className={`${headerCell} w-[132px] min-w-[132px] max-w-[132px]`}>Notes</TableHead>
+        <TableHead className={`${headerCell} w-[132px] min-w-[132px] max-w-[132px]`}>
+          Notes
+        </TableHead>
 
         {/* Actions Column */}
         <TableHead className="border-l border-border font-semibold text-xs p-0.5 text-center whitespace-nowrap bg-elec-gray text-foreground w-[72px] min-w-[72px] max-w-[72px]">

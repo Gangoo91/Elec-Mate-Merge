@@ -1,4 +1,10 @@
-import { useQuery, useMutation, useQueryClient, QueryClient, keepPreviousData } from '@tanstack/react-query';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  keepPreviousData,
+} from '@tanstack/react-query';
 import { useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -158,9 +164,7 @@ export function useAvailableSupporters(excludeUserId?: string) {
     queryKey: [...AVAILABLE_SUPPORTERS_KEY, excludeUserId],
     queryFn: async () => {
       const supporters = await peerSupporterService.getAvailableSupporters();
-      return excludeUserId
-        ? supporters.filter(s => s.user_id !== excludeUserId)
-        : supporters;
+      return excludeUserId ? supporters.filter((s) => s.user_id !== excludeUserId) : supporters;
     },
     staleTime: 30000, // Cache for 30 seconds
     gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
@@ -184,32 +188,26 @@ export function usePeerMessages(conversationId: string | undefined) {
   useEffect(() => {
     if (!conversationId) return;
 
-    const unsubscribe = peerMessageService.subscribeToMessages(
-      conversationId,
-      (newMessage) => {
-        queryClient.setQueryData<PeerMessage[]>(
-          [...PEER_MESSAGES_KEY, conversationId],
-          (old) => {
-            if (!old) return [newMessage];
-            // Deduplicate - don't add if message already exists
-            if (old.some(m => m.id === newMessage.id)) return old;
-            return [...old, newMessage];
-          }
-        );
+    const unsubscribe = peerMessageService.subscribeToMessages(conversationId, (newMessage) => {
+      queryClient.setQueryData<PeerMessage[]>([...PEER_MESSAGES_KEY, conversationId], (old) => {
+        if (!old) return [newMessage];
+        // Deduplicate - don't add if message already exists
+        if (old.some((m) => m.id === newMessage.id)) return old;
+        return [...old, newMessage];
+      });
 
-        // If message is from someone else, refresh conversations to update unread badge
-        if (newMessage.sender_id !== user?.id) {
-          queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
-        }
+      // If message is from someone else, refresh conversations to update unread badge
+      if (newMessage.sender_id !== user?.id) {
+        queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
       }
-    );
+    });
 
     return unsubscribe;
   }, [conversationId, queryClient, user?.id]);
 
   return useQuery({
     queryKey: [...PEER_MESSAGES_KEY, conversationId],
-    queryFn: () => conversationId ? peerMessageService.getMessages(conversationId) : [],
+    queryFn: () => (conversationId ? peerMessageService.getMessages(conversationId) : []),
     enabled: !!conversationId,
     placeholderData: keepPreviousData, // Show previous messages while refetching
   });
@@ -257,12 +255,12 @@ export function useSendPeerMessage() {
         queryClient.setQueryData<PeerMessage[]>(context.queryKey, (old) => {
           if (!old) return [data];
           // Replace temp message with real message, or add if not found
-          const hasTemp = old.some(m => m.id.startsWith('temp-'));
+          const hasTemp = old.some((m) => m.id.startsWith('temp-'));
           if (hasTemp) {
-            return old.map(m => m.id.startsWith('temp-') ? data : m);
+            return old.map((m) => (m.id.startsWith('temp-') ? data : m));
           }
           // Deduplicate
-          if (old.some(m => m.id === data.id)) return old;
+          if (old.some((m) => m.id === data.id)) return old;
           return [...old, data];
         });
       }
@@ -272,7 +270,7 @@ export function useSendPeerMessage() {
       // Send push notification to recipient
       try {
         const conversations = queryClient.getQueryData<PeerConversation[]>(PEER_CONVERSATIONS_KEY);
-        const conversation = conversations?.find(c => c.id === variables.conversationId);
+        const conversation = conversations?.find((c) => c.id === variables.conversationId);
         if (conversation && user) {
           // Determine recipient (the other person in the conversation)
           const isSupporter = conversation.supporter?.user_id === user.id;
@@ -286,17 +284,20 @@ export function useSendPeerMessage() {
             const senderName = profile?.display_name || 'Mental Health Mate';
 
             // Fire and forget - don't block on push notification
-            supabase.functions.invoke('send-push-notification', {
-              body: {
-                userId: recipientId,
-                title: senderName,
-                body: data.content.length > 100 ? data.content.slice(0, 97) + '...' : data.content,
-                type: 'peer',
-                data: { conversationId: variables.conversationId }
-              }
-            }).catch(() => {
-              // Silently fail - push notifications are best effort
-            });
+            supabase.functions
+              .invoke('send-push-notification', {
+                body: {
+                  userId: recipientId,
+                  title: senderName,
+                  body:
+                    data.content.length > 100 ? data.content.slice(0, 97) + '...' : data.content,
+                  type: 'peer',
+                  data: { conversationId: variables.conversationId },
+                },
+              })
+              .catch(() => {
+                // Silently fail - push notifications are best effort
+              });
           }
         }
       } catch {
@@ -325,12 +326,12 @@ export function useMarkPeerMessagesAsRead() {
       await queryClient.cancelQueries({ queryKey: PEER_CONVERSATIONS_KEY });
 
       // Snapshot previous value for rollback
-      const previousConversations = queryClient.getQueryData<PeerConversation[]>(PEER_CONVERSATIONS_KEY);
+      const previousConversations =
+        queryClient.getQueryData<PeerConversation[]>(PEER_CONVERSATIONS_KEY);
 
       // Optimistically update unread_count to 0 for instant badge clearing
-      queryClient.setQueryData<PeerConversation[]>(
-        PEER_CONVERSATIONS_KEY,
-        (old) => old?.map(c => c.id === conversationId ? { ...c, unread_count: 0 } : c)
+      queryClient.setQueryData<PeerConversation[]>(PEER_CONVERSATIONS_KEY, (old) =>
+        old?.map((c) => (c.id === conversationId ? { ...c, unread_count: 0 } : c))
       );
 
       return { previousConversations, conversationId };
@@ -344,9 +345,8 @@ export function useMarkPeerMessagesAsRead() {
     },
     onSuccess: (_, conversationId) => {
       // Update local cache to mark messages as read
-      queryClient.setQueryData<PeerMessage[]>(
-        [...PEER_MESSAGES_KEY, conversationId],
-        (old) => old?.map(m => ({ ...m, is_read: true }))
+      queryClient.setQueryData<PeerMessage[]>([...PEER_MESSAGES_KEY, conversationId], (old) =>
+        old?.map((m) => ({ ...m, is_read: true }))
       );
       // Invalidate conversations to refresh unread counts/badges from server
       queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
@@ -407,23 +407,27 @@ export function usePeerTyping(conversationId: string | undefined) {
   }, [conversationId, user, queryClient]);
 
   // Debounced setTyping function
-  const setTyping = useCallback(async (isTyping: boolean, userName?: string) => {
-    if (!conversationId || !user || !channelRef.current) return;
+  const setTyping = useCallback(
+    async (isTyping: boolean, userName?: string) => {
+      if (!conversationId || !user || !channelRef.current) return;
 
-    await channelRef.current.send({
-      type: 'broadcast',
-      event: 'typing',
-      payload: {
-        userId: user.id,
-        isTyping,
-        userName: userName || 'Someone',
-      },
-    });
-  }, [conversationId, user]);
+      await channelRef.current.send({
+        type: 'broadcast',
+        event: 'typing',
+        payload: {
+          userId: user.id,
+          isTyping,
+          userName: userName || 'Someone',
+        },
+      });
+    },
+    [conversationId, user]
+  );
 
-  const typingState = queryClient.getQueryData<{ isTyping: boolean; userName: string | null }>(
-    ['peer-typing', conversationId]
-  ) || { isTyping: false, userName: null };
+  const typingState = queryClient.getQueryData<{ isTyping: boolean; userName: string | null }>([
+    'peer-typing',
+    conversationId,
+  ]) || { isTyping: false, userName: null };
 
   return {
     isOtherTyping: typingState.isTyping,

@@ -1,42 +1,72 @@
-import React, { useState, useMemo } from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import React, { useState, useMemo } from 'react';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Calculator, TrendingDown, CheckCircle, XCircle, Info } from "lucide-react";
+} from '@/components/ui/select';
+import { Calculator, TrendingDown, CheckCircle, XCircle, Info } from 'lucide-react';
 
 // Enhanced Voltage Drop Calculator with cable selection and mV/A/m lookup
 const mvamData: Record<string, Record<string, Record<number, number>>> = {
-  "Copper T&E": {
-    "Clipped direct": { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
-    "In conduit/trunking": { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
-    "Buried direct": { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
-    "In insulation": { 1: 46, 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0 },
+  'Copper T&E': {
+    'Clipped direct': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+    'In conduit/trunking': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+    'Buried direct': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+    'In insulation': { 1: 46, 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0 },
   },
-  "Copper SWA": {
-    "Clipped direct": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3 },
-    "In tray": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3 },
-    "Buried direct": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3 },
-    "Underground duct": { 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0, 25: 1.9, 35: 1.4 },
+  'Copper SWA': {
+    'Clipped direct': { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3 },
+    'In tray': { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3 },
+    'Buried direct': { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3 },
+    'Underground duct': { 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0, 25: 1.9, 35: 1.4 },
   },
-  "Copper XLPE": {
-    "Clipped direct": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93 },
-    "In tray": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93 },
-    "Buried direct": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93 },
-    "Underground duct": { 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0, 25: 1.9, 35: 1.4, 50: 0.98 },
+  'Copper XLPE': {
+    'Clipped direct': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+    },
+    'In tray': { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93 },
+    'Buried direct': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+    },
+    'Underground duct': {
+      1.5: 31,
+      2.5: 19,
+      4: 12,
+      6: 7.8,
+      10: 4.7,
+      16: 3.0,
+      25: 1.9,
+      35: 1.4,
+      50: 0.98,
+    },
   },
-  "Aluminium SWA": {
-    "Clipped direct": { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.80, 120: 0.63 },
-    "In tray": { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.80, 120: 0.63 },
-    "Buried direct": { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.80, 120: 0.63 },
-    "Underground duct": { 16: 4.9, 25: 3.1, 35: 2.2, 50: 1.6, 70: 1.2, 95: 0.85, 120: 0.67 },
+  'Aluminium SWA': {
+    'Clipped direct': { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.8, 120: 0.63 },
+    'In tray': { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.8, 120: 0.63 },
+    'Buried direct': { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.8, 120: 0.63 },
+    'Underground duct': { 16: 4.9, 25: 3.1, 35: 2.2, 50: 1.6, 70: 1.2, 95: 0.85, 120: 0.67 },
   },
 };
 
@@ -46,18 +76,20 @@ function round(value: number, dp = 2) {
 }
 
 const VoltageDropCalculator: React.FC = () => {
-  const [circuit, setCircuit] = useState<"lighting" | "other">("other");
-  const [family, setFamily] = useState<keyof typeof mvamData>("Copper T&E");
-  const [method, setMethod] = useState<string>("Clipped direct");
-  const [cableSize, setCableSize] = useState<string>("");
-  const [length, setLength] = useState<string>("30");
-  const [current, setCurrent] = useState<string>("16");
+  const [circuit, setCircuit] = useState<'lighting' | 'other'>('other');
+  const [family, setFamily] = useState<keyof typeof mvamData>('Copper T&E');
+  const [method, setMethod] = useState<string>('Clipped direct');
+  const [cableSize, setCableSize] = useState<string>('');
+  const [length, setLength] = useState<string>('30');
+  const [current, setCurrent] = useState<string>('16');
   const [results, setResults] = useState<any>(null);
   const [hasCalculated, setHasCalculated] = useState(false);
 
   const dataForMethod = mvamData[family]?.[method] || {};
-  const sizes = Object.keys(dataForMethod).map(Number).sort((a, b) => a - b);
-  
+  const sizes = Object.keys(dataForMethod)
+    .map(Number)
+    .sort((a, b) => a - b);
+
   // Get mV/A/m value for selected cable size
   const selectedMvam = cableSize ? dataForMethod[Number(cableSize)] : null;
 
@@ -65,14 +97,14 @@ const VoltageDropCalculator: React.FC = () => {
     const I = Number(current);
     const Lroute = Number(length);
     const mvam = selectedMvam;
-    
+
     if (!isFinite(I) || I <= 0 || !isFinite(Lroute) || Lroute <= 0 || !mvam) {
       setResults(null);
       return;
     }
 
     const Ltotal = Lroute * 2; // out + back
-    const limit = circuit === "lighting" ? 3 : 5;
+    const limit = circuit === 'lighting' ? 3 : 5;
     const Vd = (mvam * I * Ltotal) / 1000; // volts
     const pct = (Vd / 230) * 100;
     const within = pct <= limit;
@@ -91,28 +123,28 @@ const VoltageDropCalculator: React.FC = () => {
 
     const recommended = alternatives[0] || null;
 
-    setResults({ 
-      current: I, 
-      length: Lroute, 
-      Vd, 
-      pct, 
-      within, 
-      limit, 
-      mvam, 
+    setResults({
+      current: I,
+      length: Lroute,
+      Vd,
+      pct,
+      within,
+      limit,
+      mvam,
       selectedSize: Number(cableSize),
       alternatives,
-      recommended 
+      recommended,
     });
     setHasCalculated(true);
   };
 
   const reset = () => {
-    setCircuit("other");
-    setFamily("Copper T&E");
-    setMethod("Clipped direct");
-    setCableSize("");
-    setLength("30");
-    setCurrent("16");
+    setCircuit('other');
+    setFamily('Copper T&E');
+    setMethod('Clipped direct');
+    setCableSize('');
+    setLength('30');
+    setCurrent('16');
     setResults(null);
     setHasCalculated(false);
   };
@@ -130,7 +162,7 @@ const VoltageDropCalculator: React.FC = () => {
           <Label className="text-foreground">Circuit type</Label>
           <RadioGroup
             value={circuit}
-            onValueChange={(v) => setCircuit((v as "lighting" | "other") ?? "other")}
+            onValueChange={(v) => setCircuit((v as 'lighting' | 'other') ?? 'other')}
             className="grid grid-cols-1 gap-2"
           >
             <div className="flex items-center gap-2">
@@ -147,17 +179,22 @@ const VoltageDropCalculator: React.FC = () => {
         {/* Cable Family */}
         <div className="space-y-2">
           <Label className="text-foreground">Cable family</Label>
-          <Select value={family} onValueChange={(v) => {
-            setFamily(v as keyof typeof mvamData);
-            setMethod("Clipped direct");
-            setCableSize("");
-          }}>
+          <Select
+            value={family}
+            onValueChange={(v) => {
+              setFamily(v as keyof typeof mvamData);
+              setMethod('Clipped direct');
+              setCableSize('');
+            }}
+          >
             <SelectTrigger className="bg-background">
               <SelectValue placeholder="Select family" />
             </SelectTrigger>
             <SelectContent>
               {Object.keys(mvamData).map((k) => (
-                <SelectItem key={k} value={k}>{k}</SelectItem>
+                <SelectItem key={k} value={k}>
+                  {k}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -168,16 +205,21 @@ const VoltageDropCalculator: React.FC = () => {
         {/* Installation Method */}
         <div className="space-y-2">
           <Label className="text-foreground">Installation method</Label>
-          <Select value={method} onValueChange={(v) => {
-            setMethod(v);
-            setCableSize("");
-          }}>
+          <Select
+            value={method}
+            onValueChange={(v) => {
+              setMethod(v);
+              setCableSize('');
+            }}
+          >
             <SelectTrigger className="bg-background">
               <SelectValue placeholder="Select method" />
             </SelectTrigger>
             <SelectContent>
               {Object.keys(mvamData[family] || {}).map((k) => (
-                <SelectItem key={k} value={k}>{k}</SelectItem>
+                <SelectItem key={k} value={k}>
+                  {k}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -220,7 +262,7 @@ const VoltageDropCalculator: React.FC = () => {
           <Input
             inputMode="decimal"
             value={current}
-            onChange={(e) => setCurrent(e.target.value.replace(/[^0-9.+\-eE]/g, ""))}
+            onChange={(e) => setCurrent(e.target.value.replace(/[^0-9.+\-eE]/g, ''))}
             className="bg-background"
             placeholder="e.g. 16"
           />
@@ -232,18 +274,20 @@ const VoltageDropCalculator: React.FC = () => {
           <Input
             inputMode="decimal"
             value={length}
-            onChange={(e) => setLength(e.target.value.replace(/[^0-9.+\-eE]/g, ""))}
+            onChange={(e) => setLength(e.target.value.replace(/[^0-9.+\-eE]/g, ''))}
             className="bg-background"
             placeholder="e.g. 30"
           />
-          <p className="text-xs text-muted-foreground">One-way route length. Calculator doubles this for total circuit path.</p>
+          <p className="text-xs text-muted-foreground">
+            One-way route length. Calculator doubles this for total circuit path.
+          </p>
         </div>
       </div>
 
       {/* Calculate Button */}
       <div className="flex gap-2 mb-6">
-        <Button 
-          onClick={calculate} 
+        <Button
+          onClick={calculate}
           className="flex-1"
           disabled={!selectedMvam || !current || !length}
         >
@@ -262,10 +306,13 @@ const VoltageDropCalculator: React.FC = () => {
             <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-400/30">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <h4 className="font-semibold text-foreground">Selected cable PASSES: {results.selectedSize}mm²</h4>
+                <h4 className="font-semibold text-foreground">
+                  Selected cable PASSES: {results.selectedSize}mm²
+                </h4>
               </div>
               <p className="text-sm text-foreground mb-2">
-                Voltage drop: {round(results.Vd, 2)} V ({round(results.pct, 2)}%) ≤ {results.limit}% limit
+                Voltage drop: {round(results.Vd, 2)} V ({round(results.pct, 2)}%) ≤ {results.limit}%
+                limit
               </p>
               <p className="text-xs text-muted-foreground">
                 This meets BS 7671 voltage drop guidance for {circuit} circuits.
@@ -275,14 +322,18 @@ const VoltageDropCalculator: React.FC = () => {
             <div className="rounded-lg p-4 bg-red-500/10 border border-red-400/30">
               <div className="flex items-center gap-2 mb-2">
                 <XCircle className="w-5 h-5 text-red-400" />
-                <h4 className="font-semibold text-foreground">Selected cable FAILS: {results.selectedSize}mm²</h4>
+                <h4 className="font-semibold text-foreground">
+                  Selected cable FAILS: {results.selectedSize}mm²
+                </h4>
               </div>
               <p className="text-sm text-foreground mb-2">
-                Voltage drop: {round(results.Vd, 2)} V ({round(results.pct, 2)}%) &gt; {results.limit}% limit
+                Voltage drop: {round(results.Vd, 2)} V ({round(results.pct, 2)}%) &gt;{' '}
+                {results.limit}% limit
               </p>
               {results.recommended && (
                 <p className="text-sm text-foreground">
-                  <strong>Suggested:</strong> Use {results.recommended.size}mm² instead → {round(results.recommended.pct, 2)}% ✓
+                  <strong>Suggested:</strong> Use {results.recommended.size}mm² instead →{' '}
+                  {round(results.recommended.pct, 2)}% ✓
                 </p>
               )}
             </div>
@@ -294,11 +345,14 @@ const VoltageDropCalculator: React.FC = () => {
               <h4 className="font-semibold text-foreground mb-3">Cable sizes that would work:</h4>
               <div className="grid gap-2">
                 {results.alternatives.map((alt: any) => (
-                  <div key={alt.size} className="flex items-center justify-between text-sm p-2 bg-emerald-500/10 rounded">
-                    <span className="text-foreground font-medium">{alt.size}mm² ({alt.mvam} mV/A/m)</span>
-                    <span className="text-emerald-400">
-                      {round(alt.pct, 2)}% ✓
+                  <div
+                    key={alt.size}
+                    className="flex items-center justify-between text-sm p-2 bg-emerald-500/10 rounded"
+                  >
+                    <span className="text-foreground font-medium">
+                      {alt.size}mm² ({alt.mvam} mV/A/m)
                     </span>
+                    <span className="text-emerald-400">{round(alt.pct, 2)}% ✓</span>
                   </div>
                 ))}
               </div>

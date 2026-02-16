@@ -1,18 +1,18 @@
-
-import React from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Zap, Cable, AlertTriangle } from "lucide-react";
+import React from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Zap, Cable, AlertTriangle } from 'lucide-react';
 
 const ElectricalHazards = () => {
   return (
     <div className="border border-elec-yellow/30 rounded-xl p-4 md:p-6 space-y-4">
       <h3 className="text-xl font-bold text-elec-yellow">Electrical Hazards</h3>
-      
+
       <p className="text-sm md:text-base mb-4">
-        Electrical hazards are particularly dangerous because electricity is invisible and often gives no warning before causing harm. 
-        As a qualified electrician, you must be able to identify, assess, and control these hazards effectively.
+        Electrical hazards are particularly dangerous because electricity is invisible and often
+        gives no warning before causing harm. As a qualified electrician, you must be able to
+        identify, assess, and control these hazards effectively.
       </p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
@@ -46,7 +46,7 @@ const ElectricalHazards = () => {
             </ul>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
@@ -79,7 +79,7 @@ const ElectricalHazards = () => {
             </ul>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
@@ -113,7 +113,7 @@ const ElectricalHazards = () => {
           </CardContent>
         </Card>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
@@ -126,24 +126,33 @@ const ElectricalHazards = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>Moisture:</strong> Increasing shock risk and creating paths to earth</span>
+                <span>
+                  <strong>Moisture:</strong> Increasing shock risk and creating paths to earth
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>Dust:</strong> May cause equipment overheating and fire risks</span>
+                <span>
+                  <strong>Dust:</strong> May cause equipment overheating and fire risks
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>Corrosion:</strong> Degrading electrical insulation and components</span>
+                <span>
+                  <strong>Corrosion:</strong> Degrading electrical insulation and components
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>Temperature:</strong> Affecting insulation properties and equipment operation</span>
+                <span>
+                  <strong>Temperature:</strong> Affecting insulation properties and equipment
+                  operation
+                </span>
               </li>
             </ul>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
@@ -155,19 +164,27 @@ const ElectricalHazards = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>Construction Sites:</strong> Temporary installations and damage risks</span>
+                <span>
+                  <strong>Construction Sites:</strong> Temporary installations and damage risks
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>ATEX Zones:</strong> Areas requiring explosion-proof equipment</span>
+                <span>
+                  <strong>ATEX Zones:</strong> Areas requiring explosion-proof equipment
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>Confined Spaces:</strong> Limited access during emergencies</span>
+                <span>
+                  <strong>Confined Spaces:</strong> Limited access during emergencies
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">•</span>
-                <span><strong>Public Areas:</strong> Protection needed from unauthorised access</span>
+                <span>
+                  <strong>Public Areas:</strong> Protection needed from unauthorised access
+                </span>
               </li>
             </ul>
           </CardContent>

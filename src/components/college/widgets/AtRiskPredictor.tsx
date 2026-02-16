@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 import {
   AlertTriangle,
   TrendingDown,
@@ -14,9 +14,9 @@ import {
   UserX,
   Calendar,
   BookOpen,
-} from "lucide-react";
-import { useCollege } from "@/contexts/CollegeContext";
-import type { CollegeSection } from "@/pages/college/CollegeDashboard";
+} from 'lucide-react';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface AtRiskPredictorProps {
   onNavigate?: (section: CollegeSection) => void;
@@ -44,23 +44,25 @@ interface AtRiskStudent {
 }
 
 export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictorProps) {
-  const { students, cohorts, ilps, attendanceRecords, assessments } = useCollege();
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'critical' | 'high' | 'medium'>('all');
+  const { students, cohorts, ilps, attendance: attendanceRecords, grades: assessments } = useCollegeSupabase();
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'critical' | 'high' | 'medium'>(
+    'all'
+  );
 
   // Calculate at-risk students with AI-style predictive scoring
   const atRiskStudents = useMemo(() => {
     const calculateRiskScore = (studentId: string): AtRiskStudent | null => {
-      const student = students.find(s => s.id === studentId);
+      const student = students.find((s) => s.id === studentId);
       if (!student || student.status !== 'Active') return null;
 
       const riskFactors: RiskFactor[] = [];
       let riskScore = 0;
 
       // Get student's cohort
-      const cohort = cohorts.find(c => c.id === student.cohortId);
+      const cohort = cohorts.find((c) => c.id === student.cohortId);
 
       // Get student's ILP
-      const studentILP = ilps.find(i => i.studentId === studentId);
+      const studentILP = ilps.find((i) => i.studentId === studentId);
 
       // 1. Attendance Risk (40% weight)
       const attendanceWeight = 40;
@@ -71,7 +73,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           type: 'attendance',
           label: 'Critical Attendance',
           severity: 'high',
-          description: `Attendance at ${attendance}% (below 70% threshold)`
+          description: `Attendance at ${attendance}% (below 70% threshold)`,
         });
       } else if (attendance < 85) {
         riskScore += attendanceWeight * 0.6;
@@ -79,7 +81,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           type: 'attendance',
           label: 'Low Attendance',
           severity: 'medium',
-          description: `Attendance at ${attendance}% (below 85% target)`
+          description: `Attendance at ${attendance}% (below 85% target)`,
         });
       } else if (attendance < 90) {
         riskScore += attendanceWeight * 0.3;
@@ -87,7 +89,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           type: 'attendance',
           label: 'Attendance Watch',
           severity: 'low',
-          description: `Attendance at ${attendance}% (monitor closely)`
+          description: `Attendance at ${attendance}% (monitor closely)`,
         });
       }
 
@@ -103,7 +105,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           type: 'progress',
           label: 'Behind Schedule',
           severity: 'high',
-          description: `${progressDelta}% behind expected progress`
+          description: `${progressDelta}% behind expected progress`,
         });
       } else if (progressDelta > 10) {
         riskScore += progressWeight * 0.5;
@@ -111,7 +113,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           type: 'progress',
           label: 'Progress Concern',
           severity: 'medium',
-          description: `${progressDelta}% below target progress`
+          description: `${progressDelta}% below target progress`,
         });
       }
 
@@ -123,21 +125,23 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           ? Math.floor((Date.now() - lastReview.getTime()) / (1000 * 60 * 60 * 24))
           : 999;
 
-        if (daysSinceReview > 42) { // More than 6 weeks
+        if (daysSinceReview > 42) {
+          // More than 6 weeks
           riskScore += ilpWeight;
           riskFactors.push({
             type: 'ilp',
             label: 'Overdue ILP Review',
             severity: 'high',
-            description: `Last ILP review ${daysSinceReview} days ago`
+            description: `Last ILP review ${daysSinceReview} days ago`,
           });
-        } else if (daysSinceReview > 28) { // More than 4 weeks
+        } else if (daysSinceReview > 28) {
+          // More than 4 weeks
           riskScore += ilpWeight * 0.5;
           riskFactors.push({
             type: 'ilp',
             label: 'ILP Review Due',
             severity: 'medium',
-            description: `ILP review due (${daysSinceReview} days since last)`
+            description: `ILP review due (${daysSinceReview} days since last)`,
           });
         }
       }
@@ -152,7 +156,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           type: 'engagement',
           label: 'Low Engagement',
           severity: 'medium',
-          description: 'Pattern indicates reduced engagement'
+          description: 'Pattern indicates reduced engagement',
         });
       }
 
@@ -169,24 +173,24 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
       // Generate recommended actions based on risk factors
       const recommendedActions: string[] = [];
 
-      if (riskFactors.some(f => f.type === 'attendance' && f.severity === 'high')) {
+      if (riskFactors.some((f) => f.type === 'attendance' && f.severity === 'high')) {
         recommendedActions.push('Schedule attendance intervention meeting');
         recommendedActions.push('Contact employer to discuss attendance support');
-      } else if (riskFactors.some(f => f.type === 'attendance')) {
+      } else if (riskFactors.some((f) => f.type === 'attendance')) {
         recommendedActions.push('Monitor attendance in next 2 weeks');
       }
 
-      if (riskFactors.some(f => f.type === 'progress')) {
+      if (riskFactors.some((f) => f.type === 'progress')) {
         recommendedActions.push('Create catch-up plan with additional support sessions');
         recommendedActions.push('Review workload and identify barriers');
       }
 
-      if (riskFactors.some(f => f.type === 'ilp')) {
+      if (riskFactors.some((f) => f.type === 'ilp')) {
         recommendedActions.push('Book urgent ILP review meeting');
         recommendedActions.push('Update SMART targets');
       }
 
-      if (riskFactors.some(f => f.type === 'engagement')) {
+      if (riskFactors.some((f) => f.type === 'engagement')) {
         recommendedActions.push('One-to-one check-in with student');
         recommendedActions.push('Consider pastoral support referral');
       }
@@ -206,49 +210,64 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
     };
 
     return students
-      .map(s => calculateRiskScore(s.id))
+      .map((s) => calculateRiskScore(s.id))
       .filter((s): s is AtRiskStudent => s !== null)
       .sort((a, b) => b.riskScore - a.riskScore);
   }, [students, cohorts, ilps, attendanceRecords, assessments]);
 
-  const filteredStudents = selectedFilter === 'all'
-    ? atRiskStudents
-    : atRiskStudents.filter(s => s.riskLevel === selectedFilter);
+  const filteredStudents =
+    selectedFilter === 'all'
+      ? atRiskStudents
+      : atRiskStudents.filter((s) => s.riskLevel === selectedFilter);
 
   const riskCounts = {
-    critical: atRiskStudents.filter(s => s.riskLevel === 'critical').length,
-    high: atRiskStudents.filter(s => s.riskLevel === 'high').length,
-    medium: atRiskStudents.filter(s => s.riskLevel === 'medium').length,
-    watch: atRiskStudents.filter(s => s.riskLevel === 'watch').length,
+    critical: atRiskStudents.filter((s) => s.riskLevel === 'critical').length,
+    high: atRiskStudents.filter((s) => s.riskLevel === 'high').length,
+    medium: atRiskStudents.filter((s) => s.riskLevel === 'medium').length,
+    watch: atRiskStudents.filter((s) => s.riskLevel === 'watch').length,
   };
 
   const getRiskColor = (level: string) => {
     switch (level) {
-      case 'critical': return 'bg-red-500/20 text-red-500 border-red-500/30';
-      case 'high': return 'bg-orange-500/20 text-orange-500 border-orange-500/30';
-      case 'medium': return 'bg-amber-500/20 text-amber-500 border-amber-500/30';
-      case 'watch': return 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30';
-      default: return 'bg-muted text-muted-foreground';
+      case 'critical':
+        return 'bg-red-500/20 text-red-500 border-red-500/30';
+      case 'high':
+        return 'bg-orange-500/20 text-orange-500 border-orange-500/30';
+      case 'medium':
+        return 'bg-amber-500/20 text-amber-500 border-amber-500/30';
+      case 'watch':
+        return 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/20';
     }
   };
 
   const getRiskIcon = (type: string) => {
     switch (type) {
-      case 'attendance': return Clock;
-      case 'progress': return TrendingDown;
-      case 'ilp': return Target;
-      case 'engagement': return UserX;
-      default: return AlertTriangle;
+      case 'attendance':
+        return Clock;
+      case 'progress':
+        return TrendingDown;
+      case 'ilp':
+        return Target;
+      case 'engagement':
+        return UserX;
+      default:
+        return AlertTriangle;
     }
   };
 
   if (compact) {
     return (
-      <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 transition-all duration-300">
+      <Card className="relative overflow-hidden glass-premium hover:border-warning/30 transition-all duration-300">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500" />
+        <div className="absolute -top-8 -right-8 w-24 h-24 bg-orange-500/[0.04] rounded-full blur-3xl pointer-events-none" />
         <CardHeader className="pb-2">
           <CardTitle className="text-sm flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5"><Brain className="h-3.5 w-3.5 text-warning" /></div>
+              <div className="p-1.5 rounded-lg bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5">
+                <Brain className="h-3.5 w-3.5 text-warning" />
+              </div>
               <span>At-Risk Predictor</span>
               <Badge className="bg-elec-yellow/20 text-elec-yellow text-[10px]">
                 <Sparkles className="h-2.5 w-2.5 mr-0.5" />
@@ -267,19 +286,17 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               <Badge className={getRiskColor('high')}>{riskCounts.high} High</Badge>
             )}
           </div>
-          {filteredStudents.slice(0, 2).map(student => (
+          {filteredStudents.slice(0, 2).map((student) => (
             <div
               key={student.id}
               className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
-              onClick={() => onNavigate?.("progresstracking")}
+              onClick={() => onNavigate?.('progresstracking')}
             >
               <div className="min-w-0">
                 <p className="text-sm font-medium truncate">{student.name}</p>
-                <p className="text-xs text-muted-foreground">{student.riskFactors[0]?.label}</p>
+                <p className="text-xs text-white">{student.riskFactors[0]?.label}</p>
               </div>
-              <Badge className={getRiskColor(student.riskLevel)}>
-                {student.riskScore}%
-              </Badge>
+              <Badge className={getRiskColor(student.riskLevel)}>{student.riskScore}%</Badge>
             </div>
           ))}
           {atRiskStudents.length > 2 && (
@@ -287,7 +304,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               variant="ghost"
               size="sm"
               className="w-full mt-2 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
-              onClick={() => onNavigate?.("progresstracking")}
+              onClick={() => onNavigate?.('progresstracking')}
             >
               View all {atRiskStudents.length} at-risk students
               <ChevronRight className="h-4 w-4 ml-1" />
@@ -299,11 +316,15 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
   }
 
   return (
-    <Card className="backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 transition-all duration-300">
+    <Card className="relative overflow-hidden glass-premium hover:border-warning/30 transition-all duration-300">
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500" />
+      <div className="absolute -top-8 -right-8 w-24 h-24 bg-orange-500/[0.04] rounded-full blur-3xl pointer-events-none" />
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5"><Brain className="h-4 w-4 text-warning" /></div>
+            <div className="p-1.5 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5">
+              <Brain className="h-4 w-4 text-warning" />
+            </div>
             <span>At-Risk Predictor</span>
             <Badge className="bg-elec-yellow/20 text-elec-yellow">
               <Sparkles className="h-3 w-3 mr-1" />
@@ -311,7 +332,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
             </Badge>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Total at risk:</span>
+            <span className="text-sm text-white">Total at risk:</span>
             <span className="text-2xl font-bold text-orange-500">{atRiskStudents.length}</span>
           </div>
         </CardTitle>
@@ -324,54 +345,54 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
             className={`p-3 rounded-lg border transition-all ${
               selectedFilter === 'critical'
                 ? 'border-red-500 bg-red-500/10'
-                : 'border-border hover:border-red-500/50'
+                : 'border-white/10 hover:border-red-500/50'
             }`}
           >
             <p className="text-2xl font-bold text-red-500">{riskCounts.critical}</p>
-            <p className="text-xs text-muted-foreground">Critical</p>
+            <p className="text-xs text-white">Critical</p>
           </button>
           <button
             onClick={() => setSelectedFilter(selectedFilter === 'high' ? 'all' : 'high')}
             className={`p-3 rounded-lg border transition-all ${
               selectedFilter === 'high'
                 ? 'border-orange-500 bg-orange-500/10'
-                : 'border-border hover:border-orange-500/50'
+                : 'border-white/10 hover:border-orange-500/50'
             }`}
           >
             <p className="text-2xl font-bold text-orange-500">{riskCounts.high}</p>
-            <p className="text-xs text-muted-foreground">High</p>
+            <p className="text-xs text-white">High</p>
           </button>
           <button
             onClick={() => setSelectedFilter(selectedFilter === 'medium' ? 'all' : 'medium')}
             className={`p-3 rounded-lg border transition-all ${
               selectedFilter === 'medium'
                 ? 'border-amber-500 bg-amber-500/10'
-                : 'border-border hover:border-amber-500/50'
+                : 'border-white/10 hover:border-amber-500/50'
             }`}
           >
             <p className="text-2xl font-bold text-amber-500">{riskCounts.medium}</p>
-            <p className="text-xs text-muted-foreground">Medium</p>
+            <p className="text-xs text-white">Medium</p>
           </button>
           <button
             onClick={() => setSelectedFilter('all')}
             className={`p-3 rounded-lg border transition-all ${
               selectedFilter === 'all'
                 ? 'border-elec-yellow bg-elec-yellow/10'
-                : 'border-border hover:border-elec-yellow/50'
+                : 'border-white/10 hover:border-elec-yellow/50'
             }`}
           >
             <p className="text-2xl font-bold text-elec-yellow">{atRiskStudents.length}</p>
-            <p className="text-xs text-muted-foreground">All</p>
+            <p className="text-xs text-white">All</p>
           </button>
         </div>
 
         {/* Student List */}
         <div className="space-y-3 max-h-[400px] overflow-y-auto">
-          {filteredStudents.map(student => (
+          {filteredStudents.map((student) => (
             <div
               key={student.id}
-              className="p-4 rounded-lg border border-border bg-background hover:border-elec-yellow/30 transition-all cursor-pointer"
-              onClick={() => onNavigate?.("progresstracking")}
+              className="p-4 rounded-lg border border-white/10 bg-white/[0.03] hover:border-elec-yellow/30 transition-all cursor-pointer"
+              onClick={() => onNavigate?.('progresstracking')}
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
@@ -381,11 +402,11 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
                       {student.riskLevel.toUpperCase()}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{student.cohort}</p>
+                  <p className="text-sm text-white">{student.cohort}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-foreground">{student.riskScore}%</p>
-                  <p className="text-xs text-muted-foreground">Risk Score</p>
+                  <p className="text-2xl font-bold text-white">{student.riskScore}%</p>
+                  <p className="text-xs text-white">Risk Score</p>
                 </div>
               </div>
 
@@ -410,39 +431,39 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               <div className="grid grid-cols-2 gap-4 mb-3">
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-muted-foreground">Attendance</span>
-                    <span className={student.attendance < 85 ? 'text-orange-500' : 'text-foreground'}>
+                    <span className="text-white">Attendance</span>
+                    <span
+                      className={student.attendance < 85 ? 'text-orange-500' : 'text-white'}
+                    >
                       {student.attendance}%
                     </span>
                   </div>
-                  <Progress
-                    value={student.attendance}
-                    className="h-1.5"
-                  />
+                  <Progress value={student.attendance} className="h-1.5" />
                 </div>
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-muted-foreground">Progress</span>
-                    <span className={student.progressPercentage < 50 ? 'text-orange-500' : 'text-foreground'}>
+                    <span className="text-white">Progress</span>
+                    <span
+                      className={
+                        student.progressPercentage < 50 ? 'text-orange-500' : 'text-white'
+                      }
+                    >
                       {student.progressPercentage}%
                     </span>
                   </div>
-                  <Progress
-                    value={student.progressPercentage}
-                    className="h-1.5"
-                  />
+                  <Progress value={student.progressPercentage} className="h-1.5" />
                 </div>
               </div>
 
               {/* Recommended Actions */}
-              <div className="border-t border-border pt-3">
-                <p className="text-xs font-medium text-muted-foreground mb-2 flex items-center gap-1">
+              <div className="border-t border-white/10 pt-3">
+                <p className="text-xs font-medium text-white mb-2 flex items-center gap-1">
                   <Sparkles className="h-3 w-3 text-elec-yellow" />
                   AI Recommended Actions
                 </p>
                 <ul className="space-y-1">
                   {student.recommendedActions.slice(0, 2).map((action, idx) => (
-                    <li key={idx} className="text-xs text-foreground flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <ChevronRight className="h-3 w-3 text-elec-yellow mt-0.5 shrink-0" />
                       {action}
                     </li>
@@ -453,7 +474,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           ))}
 
           {filteredStudents.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-white">
               <Brain className="h-12 w-12 mx-auto mb-3 opacity-50" />
               <p>No at-risk students detected</p>
               <p className="text-sm mt-1">All students are on track!</p>

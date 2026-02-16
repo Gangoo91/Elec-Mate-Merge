@@ -1,40 +1,45 @@
-import { ArrowLeft, Search, Layers, Paintbrush, Zap, FlaskConical } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Search, Layers, Paintbrush, Zap, FlaskConical } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Common ACMs — Boards & Sheets",
+    title: 'Common ACMs — Boards & Sheets',
     icon: Layers,
-    description: "Asbestos insulating board and asbestos cement — identification, properties, locations, and risk levels",
+    description:
+      'Asbestos insulating board and asbestos cement — identification, properties, locations, and risk levels',
   },
   {
     id: 2,
-    title: "Common ACMs — Insulation & Coatings",
+    title: 'Common ACMs — Insulation & Coatings',
     icon: Paintbrush,
-    description: "Pipe lagging, sprayed coatings, textured decorative coatings (Artex), rope seals, and millboard",
+    description:
+      'Pipe lagging, sprayed coatings, textured decorative coatings (Artex), rope seals, and millboard',
   },
   {
     id: 3,
-    title: "ACMs in Electrical Installations",
+    title: 'ACMs in Electrical Installations',
     icon: Zap,
-    description: "Flash guards, cable trenching, switchgear, fuse carriers, and electrical backing boards",
+    description:
+      'Flash guards, cable trenching, switchgear, fuse carriers, and electrical backing boards',
   },
   {
     id: 4,
-    title: "Presuming, Sampling & Analysis",
+    title: 'Presuming, Sampling & Analysis',
     icon: FlaskConical,
-    description: "The presumption approach, when to sample, PLM analysis, UKAS-accredited laboratories, and costs",
+    description:
+      'The presumption approach, when to sample, PLM analysis, UKAS-accredited laboratories, and costs',
   },
 ];
 
 export default function AsbestosModule3() {
   useSEO({
-    title: "Module 3: Identifying Asbestos-Containing Materials | Asbestos Awareness",
-    description: "Identifying common ACMs in boards, insulation, coatings, and electrical installations. Sampling, analysis, and the presumption approach.",
+    title: 'Module 3: Identifying Asbestos-Containing Materials | Asbestos Awareness',
+    description:
+      'Identifying common ACMs in boards, insulation, coatings, and electrical installations. Sampling, analysis, and the presumption approach.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function AsbestosModule3() {
               Identifying Asbestos-Containing Materials
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              How to recognise common ACMs in buildings and electrical installations, and the process of sampling and analysis
+              How to recognise common ACMs in buildings and electrical installations, and the
+              process of sampling and analysis
             </p>
           </div>
 

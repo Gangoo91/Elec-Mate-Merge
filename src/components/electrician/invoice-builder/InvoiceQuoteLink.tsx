@@ -1,10 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, CheckCircle, FileText, Calendar, User } from "lucide-react";
-import { format } from "date-fns";
-import { Quote } from "@/types/quote";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ExternalLink, CheckCircle, FileText, Calendar, User } from 'lucide-react';
+import { format } from 'date-fns';
+import { Quote } from '@/types/quote';
+import { Link } from 'react-router-dom';
 
 interface InvoiceQuoteLinkProps {
   quote: Quote;
@@ -13,14 +13,15 @@ interface InvoiceQuoteLinkProps {
 
 export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) => {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
     }).format(amount);
   };
 
   const isAccepted = quote.acceptance_status === 'accepted';
-  const isDigitalSignature = quote.acceptance_method === 'in_app_signature' || quote.acceptance_method === 'docusign';
+  const isDigitalSignature =
+    quote.acceptance_method === 'in_app_signature' || quote.acceptance_method === 'docusign';
 
   return (
     <Card className={className}>
@@ -47,9 +48,7 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
           </div>
           <div>
             <p className="text-sm text-muted-foreground mb-1">Quote Date</p>
-            <p className="font-medium text-foreground">
-              {format(quote.createdAt, 'dd MMM yyyy')}
-            </p>
+            <p className="font-medium text-foreground">{format(quote.createdAt, 'dd MMM yyyy')}</p>
           </div>
         </div>
 
@@ -65,7 +64,7 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
                 </Badge>
               )}
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-7">
               {quote.accepted_at && (
                 <div className="flex items-start gap-2">
@@ -78,7 +77,7 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
                   </div>
                 </div>
               )}
-              
+
               {quote.accepted_by_name && (
                 <div className="flex items-start gap-2">
                   <User className="h-4 w-4 text-muted-foreground mt-0.5" />
@@ -96,9 +95,9 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
             {quote.signature_url && (
               <div className="pl-7">
                 <p className="text-xs text-muted-foreground mb-2">Client Signature</p>
-                <img 
-                  src={quote.signature_url} 
-                  alt="Client signature" 
+                <img
+                  src={quote.signature_url}
+                  alt="Client signature"
                   className="border rounded-lg p-2 bg-background max-w-[200px] h-auto"
                 />
               </div>
@@ -176,7 +175,9 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
                 <p className="text-sm text-muted-foreground">{quote.jobDetails.description}</p>
               )}
               {quote.jobDetails.location && (
-                <p className="text-xs text-muted-foreground">Location: {quote.jobDetails.location}</p>
+                <p className="text-xs text-muted-foreground">
+                  Location: {quote.jobDetails.location}
+                </p>
               )}
             </div>
           </div>

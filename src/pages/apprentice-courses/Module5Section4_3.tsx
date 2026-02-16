@@ -1,229 +1,234 @@
-import { ArrowLeft, ArrowRight, Wrench, CheckCircle, AlertTriangle, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Wrench, CheckCircle, AlertTriangle, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Tool Selection and Availability - Module 5.4.3 | Level 2 Electrical Course";
-const DESCRIPTION = "Master proper tool selection, availability management, and safety standards for electrical installations per BS 7671.";
+const TITLE = 'Tool Selection and Availability - Module 5.4.3 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Master proper tool selection, availability management, and safety standards for electrical installations per BS 7671.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Why is it unsafe to use the wrong tool for a task?",
+    question: 'Why is it unsafe to use the wrong tool for a task?',
     options: [
-      "It might damage the tool",
-      "It increases risk of injury and poor workmanship",
-      "It takes longer to complete",
-      "It costs more money"
+      'It might damage the tool',
+      'It increases risk of injury and poor workmanship',
+      'It takes longer to complete',
+      'It costs more money',
     ],
     correctIndex: 1,
-    explanation: "Using inappropriate tools increases injury risk and can result in poor quality work that fails compliance standards."
+    explanation:
+      'Using inappropriate tools increases injury risk and can result in poor quality work that fails compliance standards.',
   },
   {
     id: 2,
-    question: "Name one specialist tool required in electrical installation.",
-    options: [
-      "Standard screwdriver",
-      "Hammer",
-      "Torque screwdriver",
-      "Measuring tape"
-    ],
+    question: 'Name one specialist tool required in electrical installation.',
+    options: ['Standard screwdriver', 'Hammer', 'Torque screwdriver', 'Measuring tape'],
     correctIndex: 2,
-    explanation: "Specialist tools like torque screwdrivers are essential for meeting BS 7671 compliance requirements."
+    explanation:
+      'Specialist tools like torque screwdrivers are essential for meeting BS 7671 compliance requirements.',
   },
   {
     id: 3,
-    question: "What system helps manage shared tools on site?",
+    question: 'What system helps manage shared tools on site?',
     options: [
-      "First come, first served",
-      "Tool sign-in/out system",
-      "Personal ownership only",
-      "Random allocation"
+      'First come, first served',
+      'Tool sign-in/out system',
+      'Personal ownership only',
+      'Random allocation',
     ],
     correctIndex: 1,
-    explanation: "A sign-in/out system ensures accountability and prevents loss of shared tools on construction sites."
-  }
+    explanation:
+      'A sign-in/out system ensures accountability and prevents loss of shared tools on construction sites.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Why is it important to use the correct tool for each task?",
+    question: 'Why is it important to use the correct tool for each task?',
     options: [
-      "To impress clients",
-      "To ensure safety, accuracy, and prevent damage",
-      "To work faster",
-      "To save money"
+      'To impress clients',
+      'To ensure safety, accuracy, and prevent damage',
+      'To work faster',
+      'To save money',
     ],
     correctAnswer: 1,
-    explanation: "Using correct tools ensures safety, maintains quality standards, and prevents equipment damage or personal injury."
+    explanation:
+      'Using correct tools ensures safety, maintains quality standards, and prevents equipment damage or personal injury.',
   },
   {
     id: 2,
-    question: "Give one example of a specialist electrical tool.",
-    options: [
-      "Standard hammer",
-      "Torque screwdriver",
-      "Regular pliers",
-      "Basic screwdriver"
-    ],
+    question: 'Give one example of a specialist electrical tool.',
+    options: ['Standard hammer', 'Torque screwdriver', 'Regular pliers', 'Basic screwdriver'],
     correctAnswer: 1,
-    explanation: "Torque screwdrivers are specialist tools that ensure precise tightening to manufacturer specifications."
+    explanation:
+      'Torque screwdrivers are specialist tools that ensure precise tightening to manufacturer specifications.',
   },
   {
     id: 3,
-    question: "What type of tool is a multimeter?",
-    options: [
-      "Hand tool",
-      "Power tool",
-      "Measuring and testing tool",
-      "Cutting tool"
-    ],
+    question: 'What type of tool is a multimeter?',
+    options: ['Hand tool', 'Power tool', 'Measuring and testing tool', 'Cutting tool'],
     correctAnswer: 2,
-    explanation: "A multimeter is a measuring and testing tool used to verify electrical values and circuit integrity."
+    explanation:
+      'A multimeter is a measuring and testing tool used to verify electrical values and circuit integrity.',
   },
   {
     id: 4,
-    question: "True or False: Using makeshift alternatives is acceptable if the correct tool isn't available.",
-    options: [
-      "True - improvisation shows skill",
-      "False - safety and quality come first"
-    ],
+    question:
+      "True or False: Using makeshift alternatives is acceptable if the correct tool isn't available.",
+    options: ['True - improvisation shows skill', 'False - safety and quality come first'],
     correctAnswer: 1,
-    explanation: "Work should pause until proper tools are available. Makeshift alternatives compromise safety and quality."
+    explanation:
+      'Work should pause until proper tools are available. Makeshift alternatives compromise safety and quality.',
   },
   {
     id: 5,
-    question: "What system helps manage shared tools on-site?",
+    question: 'What system helps manage shared tools on-site?',
     options: [
-      "Honour system",
-      "Tool sign-in/out system",
-      "Random distribution",
-      "First come, first served"
+      'Honour system',
+      'Tool sign-in/out system',
+      'Random distribution',
+      'First come, first served',
     ],
     correctAnswer: 1,
-    explanation: "A formal sign-in/out system provides accountability and prevents loss of expensive shared tools."
+    explanation:
+      'A formal sign-in/out system provides accountability and prevents loss of expensive shared tools.',
   },
   {
     id: 6,
-    question: "Why should torque screwdrivers be calibrated?",
+    question: 'Why should torque screwdrivers be calibrated?',
     options: [
-      "To make them look professional",
-      "To ensure accurate tightening to required specifications",
-      "To increase their lifespan",
-      "To comply with insurance requirements"
+      'To make them look professional',
+      'To ensure accurate tightening to required specifications',
+      'To increase their lifespan',
+      'To comply with insurance requirements',
     ],
     correctAnswer: 1,
-    explanation: "Calibration ensures torque settings meet manufacturer specifications and BS 7671 requirements."
+    explanation:
+      'Calibration ensures torque settings meet manufacturer specifications and BS 7671 requirements.',
   },
   {
     id: 7,
-    question: "What is a risk of not having spare essential tools?",
+    question: 'What is a risk of not having spare essential tools?',
     options: [
-      "Higher insurance costs",
-      "Work delays if tools break or are lost",
-      "Client complaints",
-      "Reduced profit margins"
+      'Higher insurance costs',
+      'Work delays if tools break or are lost',
+      'Client complaints',
+      'Reduced profit margins',
     ],
     correctAnswer: 1,
-    explanation: "Tool failure without spares can halt work completely, causing costly project delays."
+    explanation:
+      'Tool failure without spares can halt work completely, causing costly project delays.',
   },
   {
     id: 8,
-    question: "Name one storage method that helps protect tools.",
+    question: 'Name one storage method that helps protect tools.',
     options: [
-      "Leaving them on benches",
-      "Tool cases, racks, or lockable boxes",
-      "Storing in damp areas",
-      "Keeping them in vehicles"
+      'Leaving them on benches',
+      'Tool cases, racks, or lockable boxes',
+      'Storing in damp areas',
+      'Keeping them in vehicles',
     ],
     correctAnswer: 1,
-    explanation: "Proper storage in cases, racks, or lockable boxes protects tools from damage, theft, and environmental factors."
+    explanation:
+      'Proper storage in cases, racks, or lockable boxes protects tools from damage, theft, and environmental factors.',
   },
   {
     id: 9,
     question: "What's a consequence of poor tool planning?",
     options: [
-      "Better team relationships",
-      "Delays, poor workmanship, or failed inspections",
-      "Increased client satisfaction",
-      "Lower material costs"
+      'Better team relationships',
+      'Delays, poor workmanship, or failed inspections',
+      'Increased client satisfaction',
+      'Lower material costs',
     ],
     correctAnswer: 1,
-    explanation: "Poor tool planning leads to work delays, quality issues, and potential inspection failures."
+    explanation:
+      'Poor tool planning leads to work delays, quality issues, and potential inspection failures.',
   },
   {
     id: 10,
-    question: "Who is responsible for checking tool condition before use?",
+    question: 'Who is responsible for checking tool condition before use?',
     options: [
-      "The site supervisor only",
-      "The client",
-      "The individual using the tool",
-      "The tool manufacturer"
+      'The site supervisor only',
+      'The client',
+      'The individual using the tool',
+      'The tool manufacturer',
     ],
     correctAnswer: 2,
-    explanation: "Each individual using a tool must check its condition to ensure safe operation and prevent accidents."
-  }
+    explanation:
+      'Each individual using a tool must check its condition to ensure safe operation and prevent accidents.',
+  },
 ];
 
 const practicalGuidance = [
-  "Step 1: Create comprehensive tool inventories for each project phase including hand tools, measuring equipment, power tools, and specialist items. Specify exact requirements for compliance with BS 7671 standards.",
-  "Step 2: Establish systematic tool inspection procedures including daily visual checks, weekly functional tests, and scheduled calibration for measuring instruments. Document all checks for compliance records.",
-  "Step 3: Implement robust tool availability systems with backup tools for critical items, shared tool tracking, and emergency procurement procedures for unexpected requirements.",
-  "Step 4: Develop comprehensive training programs ensuring all team members understand correct tool selection, proper usage techniques, and safety procedures for each tool category.",
-  "Step 5: Create secure storage systems with environmental protection, organised layouts, and security measures to prevent theft and damage whilst maintaining easy access for authorised personnel.",
-  "Step 6: Maintain detailed tool management records including purchase dates, calibration schedules, maintenance history, and replacement planning to ensure continuous availability.",
-  "Step 7: Establish supplier relationships for tool procurement, emergency replacement, calibration services, and technical support to minimise downtime and maintain compliance standards."
+  'Step 1: Create comprehensive tool inventories for each project phase including hand tools, measuring equipment, power tools, and specialist items. Specify exact requirements for compliance with BS 7671 standards.',
+  'Step 2: Establish systematic tool inspection procedures including daily visual checks, weekly functional tests, and scheduled calibration for measuring instruments. Document all checks for compliance records.',
+  'Step 3: Implement robust tool availability systems with backup tools for critical items, shared tool tracking, and emergency procurement procedures for unexpected requirements.',
+  'Step 4: Develop comprehensive training programs ensuring all team members understand correct tool selection, proper usage techniques, and safety procedures for each tool category.',
+  'Step 5: Create secure storage systems with environmental protection, organised layouts, and security measures to prevent theft and damage whilst maintaining easy access for authorised personnel.',
+  'Step 6: Maintain detailed tool management records including purchase dates, calibration schedules, maintenance history, and replacement planning to ensure continuous availability.',
+  'Step 7: Establish supplier relationships for tool procurement, emergency replacement, calibration services, and technical support to minimise downtime and maintain compliance standards.',
 ];
 
 const pocketGuideItems = [
-  "Always select the correct tool for each specific task - never compromise on safety.",
-  "Plan tool requirements in advance and coordinate with project schedules.",
-  "Inspect all tools before use - check condition, calibration, and functionality.",
-  "Implement formal sign-in/out systems for shared and expensive tools.",
-  "Keep adequate spares of essential items to prevent work stoppages.",
-  "Store tools properly in secure, dry, organised locations with appropriate protection.",
-  "Maintain calibration schedules for all measuring and testing equipment.",
-  "Train all team members on proper tool selection and safe usage procedures.",
-  "Document tool inspections, maintenance, and calibration for compliance records.",
-  "Build strong supplier relationships for procurement, service, and emergency support."
+  'Always select the correct tool for each specific task - never compromise on safety.',
+  'Plan tool requirements in advance and coordinate with project schedules.',
+  'Inspect all tools before use - check condition, calibration, and functionality.',
+  'Implement formal sign-in/out systems for shared and expensive tools.',
+  'Keep adequate spares of essential items to prevent work stoppages.',
+  'Store tools properly in secure, dry, organised locations with appropriate protection.',
+  'Maintain calibration schedules for all measuring and testing equipment.',
+  'Train all team members on proper tool selection and safe usage procedures.',
+  'Document tool inspections, maintenance, and calibration for compliance records.',
+  'Build strong supplier relationships for procurement, service, and emergency support.',
 ];
 
 const faqs = [
   {
-    question: "Should every electrician have their own full tool kit?",
-    answer: "Ideally yes for personal hand tools and basic equipment. However, expensive specialist tools (torque drivers, cable pullers, testing equipment) can be shared effectively using proper sign-in/out systems and regular calibration schedules."
+    question: 'Should every electrician have their own full tool kit?',
+    answer:
+      'Ideally yes for personal hand tools and basic equipment. However, expensive specialist tools (torque drivers, cable pullers, testing equipment) can be shared effectively using proper sign-in/out systems and regular calibration schedules.',
   },
   {
-    question: "How often should tools be inspected for safety and compliance?",
-    answer: "Daily visual inspections before use, weekly functional checks for power tools, and formal inspections according to manufacturer recommendations or company policy. Measuring instruments require calibration certificates maintained to current standards."
+    question: 'How often should tools be inspected for safety and compliance?',
+    answer:
+      'Daily visual inspections before use, weekly functional checks for power tools, and formal inspections according to manufacturer recommendations or company policy. Measuring instruments require calibration certificates maintained to current standards.',
   },
   {
     question: "What should I do if the correct tool isn't available on-site?",
-    answer: "Work should pause until the proper tool is sourced. Using inappropriate tools or makeshift alternatives creates safety risks and quality issues that can lead to failed inspections and liability problems."
+    answer:
+      'Work should pause until the proper tool is sourced. Using inappropriate tools or makeshift alternatives creates safety risks and quality issues that can lead to failed inspections and liability problems.',
   },
   {
-    question: "How do I handle tool calibration requirements for BS 7671 compliance?",
-    answer: "Maintain calibration certificates for all measuring instruments, schedule regular calibration services with accredited providers, and keep detailed records. Calibrated tools are essential for proving compliance with electrical standards."
+    question: 'How do I handle tool calibration requirements for BS 7671 compliance?',
+    answer:
+      'Maintain calibration certificates for all measuring instruments, schedule regular calibration services with accredited providers, and keep detailed records. Calibrated tools are essential for proving compliance with electrical standards.',
   },
   {
     question: "What's the best approach for managing tools across multiple projects?",
-    answer: "Use centralised tool tracking systems with barcode scanning, maintain separate tool allocations per project, and implement clear transfer procedures between sites. Digital systems help track location, condition, and calibration status."
+    answer:
+      'Use centralised tool tracking systems with barcode scanning, maintain separate tool allocations per project, and implement clear transfer procedures between sites. Digital systems help track location, condition, and calibration status.',
   },
   {
-    question: "How do I justify the cost of specialist electrical tools to management?",
-    answer: "Calculate the cost of delays, rework, and non-compliance against tool investment. Specialist tools often pay for themselves through improved efficiency, quality, and compliance with safety standards."
+    question: 'How do I justify the cost of specialist electrical tools to management?',
+    answer:
+      'Calculate the cost of delays, rework, and non-compliance against tool investment. Specialist tools often pay for themselves through improved efficiency, quality, and compliance with safety standards.',
   },
   {
-    question: "What storage conditions are required for sensitive measuring equipment?",
-    answer: "Protect from temperature extremes, humidity, vibration, and impact. Use dedicated cases with foam inserts, maintain stable environmental conditions, and avoid storage in vehicles or temporary structures where possible."
+    question: 'What storage conditions are required for sensitive measuring equipment?',
+    answer:
+      'Protect from temperature extremes, humidity, vibration, and impact. Use dedicated cases with foam inserts, maintain stable environmental conditions, and avoid storage in vehicles or temporary structures where possible.',
   },
   {
-    question: "How do I ensure tools meet current safety standards?",
-    answer: "Purchase tools from reputable suppliers with CE marking and relevant safety certifications. Maintain manufacturer documentation, follow maintenance schedules, and replace tools that no longer meet current safety standards."
-  }
+    question: 'How do I ensure tools meet current safety standards?',
+    answer:
+      'Purchase tools from reputable suppliers with CE marking and relevant safety certifications. Maintain manufacturer documentation, follow maintenance schedules, and replace tools that no longer meet current safety standards.',
+  },
 ];
 
 const Module5Section4_3 = () => {
@@ -261,7 +266,8 @@ const Module5Section4_3 = () => {
               Tool Selection and Availability
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master proper tool selection and management to ensure safe, efficient electrical installations to professional standards.
+              Master proper tool selection and management to ensure safe, efficient electrical
+              installations to professional standards.
             </p>
           </header>
 
@@ -283,7 +289,9 @@ const Module5Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">By the end of this subsection, you will be able to:</p>
+            <p className="text-white/80 mb-4">
+              By the end of this subsection, you will be able to:
+            </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="space-y-3">
@@ -333,7 +341,9 @@ const Module5Section4_3 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white/80">
-                <strong className="text-white">Competency Link:</strong> These outcomes support NVQ Level 2 competencies for tool selection, maintenance, and safe working practices in electrical installations.
+                <strong className="text-white">Competency Link:</strong> These outcomes support NVQ
+                Level 2 competencies for tool selection, maintenance, and safe working practices in
+                electrical installations.
               </p>
             </div>
           </section>
@@ -346,7 +356,9 @@ const Module5Section4_3 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Using the correct tool for each task is fundamental to safe and professional electrical work. Every tool is designed for specific purposes, and using the wrong tool can lead to poor results, damage, or injury.
+              Using the correct tool for each task is fundamental to safe and professional
+              electrical work. Every tool is designed for specific purposes, and using the wrong
+              tool can lead to poor results, damage, or injury.
             </p>
 
             <div className="mb-6">
@@ -354,19 +366,27 @@ const Module5Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="text-sm font-medium text-amber-400 mb-2">Safety</p>
-                  <p className="text-sm text-white/70">Wrong tools can slip, break, or cause electrical hazards</p>
+                  <p className="text-sm text-white/70">
+                    Wrong tools can slip, break, or cause electrical hazards
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="text-sm font-medium text-blue-400 mb-2">Quality</p>
-                  <p className="text-sm text-white/70">Correct tools ensure precise connections and professional finish</p>
+                  <p className="text-sm text-white/70">
+                    Correct tools ensure precise connections and professional finish
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="text-sm font-medium text-green-400 mb-2">Efficiency</p>
-                  <p className="text-sm text-white/70">Right tools complete tasks faster with better results</p>
+                  <p className="text-sm text-white/70">
+                    Right tools complete tasks faster with better results
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="text-sm font-medium text-purple-400 mb-2">Compliance</p>
-                  <p className="text-sm text-white/70">Specialist tools may be required for BS 7671 compliance</p>
+                  <p className="text-sm text-white/70">
+                    Specialist tools may be required for BS 7671 compliance
+                  </p>
                 </div>
               </div>
             </div>
@@ -401,7 +421,9 @@ const Module5Section4_3 = () => {
                 <div>
                   <p className="font-medium text-red-400 mb-2">Never Use Makeshift Alternatives</p>
                   <p className="text-sm text-white/70">
-                    Using the wrong tool or makeshift alternatives significantly increases injury risk and can result in poor workmanship that fails compliance standards. Wait for the correct tool to be available.
+                    Using the wrong tool or makeshift alternatives significantly increases injury
+                    risk and can result in poor workmanship that fails compliance standards. Wait
+                    for the correct tool to be available.
                   </p>
                 </div>
               </div>
@@ -428,7 +450,9 @@ const Module5Section4_3 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Electrical work often requires specialist tools that may not be needed for general construction tasks. These tools are designed to meet the specific demands of electrical installation and ensure compliance with safety standards.
+              Electrical work often requires specialist tools that may not be needed for general
+              construction tasks. These tools are designed to meet the specific demands of
+              electrical installation and ensure compliance with safety standards.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -438,7 +462,8 @@ const Module5Section4_3 = () => {
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Torque Screwdrivers</p>
                   <p className="text-sm text-white/70 mb-2">
-                    Required for terminations that must meet specific torque values (e.g., MCB connections, cable glands).
+                    Required for terminations that must meet specific torque values (e.g., MCB
+                    connections, cable glands).
                   </p>
                   <ul className="text-sm text-white/70 list-disc pl-4">
                     <li>Must be calibrated to ensure accuracy</li>
@@ -461,7 +486,9 @@ const Module5Section4_3 = () => {
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-medium text-white">When Specialist Tools Are Required</h3>
+                <h3 className="text-lg font-medium text-white">
+                  When Specialist Tools Are Required
+                </h3>
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Mandatory Use</p>
@@ -491,7 +518,9 @@ const Module5Section4_3 = () => {
                 <div>
                   <p className="font-medium text-yellow-400 mb-2">Calibration Requirements</p>
                   <p className="text-sm text-white/70">
-                    All measuring and testing equipment must be calibrated regularly and have valid calibration certificates. Uncalibrated equipment cannot be used for compliance testing.
+                    All measuring and testing equipment must be calibrated regularly and have valid
+                    calibration certificates. Uncalibrated equipment cannot be used for compliance
+                    testing.
                   </p>
                 </div>
               </div>
@@ -500,7 +529,9 @@ const Module5Section4_3 = () => {
 
           {/* Quick Check 2 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Specialist Tools</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Specialist Tools
+            </h3>
             <InlineCheck
               id="specialist-tools-check"
               question={quickCheckQuestions[1].question}
@@ -518,7 +549,9 @@ const Module5Section4_3 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Having the right tools available when needed is crucial for maintaining productivity and quality. Poor tool availability leads to delays, frustration, and often results in using inappropriate alternatives that compromise safety and workmanship.
+              Having the right tools available when needed is crucial for maintaining productivity
+              and quality. Poor tool availability leads to delays, frustration, and often results in
+              using inappropriate alternatives that compromise safety and workmanship.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -589,14 +622,19 @@ const Module5Section4_3 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="font-medium text-white mb-2">Best Practice Example</h4>
               <p className="text-sm text-white/70">
-                <strong className="text-white">Tool Coordination Meeting:</strong> Start each day with a brief team meeting to coordinate tool requirements, identify conflicts, and plan sharing of specialist equipment. This prevents delays and ensures critical tools are available when needed.
+                <strong className="text-white">Tool Coordination Meeting:</strong> Start each day
+                with a brief team meeting to coordinate tool requirements, identify conflicts, and
+                plan sharing of specialist equipment. This prevents delays and ensures critical
+                tools are available when needed.
               </p>
             </div>
           </section>
 
           {/* Quick Check 3 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Tool Availability</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Tool Availability
+            </h3>
             <InlineCheck
               id="tool-availability-check"
               question={quickCheckQuestions[2].question}
@@ -616,7 +654,9 @@ const Module5Section4_3 = () => {
             <div className="space-y-6">
               {/* Example 1 */}
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h3 className="text-lg font-semibold text-white mb-3">Example 1: Selecting Tools for MCB Installation</h3>
+                <h3 className="text-lg font-semibold text-white mb-3">
+                  Example 1: Selecting Tools for MCB Installation
+                </h3>
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-4">
                   <div className="space-y-3">
@@ -642,20 +682,26 @@ const Module5Section4_3 = () => {
 
                 <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 mb-3">
                   <p className="text-sm text-white/70">
-                    <strong className="text-amber-400">Critical Point:</strong> The torque screwdriver must be calibrated and certificated. Using an uncalibrated tool could result in over-tightening and terminal damage.
+                    <strong className="text-amber-400">Critical Point:</strong> The torque
+                    screwdriver must be calibrated and certificated. Using an uncalibrated tool
+                    could result in over-tightening and terminal damage.
                   </p>
                 </div>
 
                 <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="text-sm text-white/70">
-                    <strong className="text-green-400">Quality Outcome:</strong> Using correct tools ensures BS 7671 compliance, reduces installation time by 30%, and prevents common connection failures.
+                    <strong className="text-green-400">Quality Outcome:</strong> Using correct tools
+                    ensures BS 7671 compliance, reduces installation time by 30%, and prevents
+                    common connection failures.
                   </p>
                 </div>
               </div>
 
               {/* Example 2 */}
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h3 className="text-lg font-semibold text-white mb-3">Example 2: Tool Management System Implementation</h3>
+                <h3 className="text-lg font-semibold text-white mb-3">
+                  Example 2: Tool Management System Implementation
+                </h3>
 
                 <div className="grid sm:grid-cols-3 gap-3 mb-4">
                   <div>
@@ -691,7 +737,9 @@ const Module5Section4_3 = () => {
 
                 <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="text-sm text-white/70">
-                    <strong className="text-blue-400">Management Benefit:</strong> Systematic tool management reduces downtime by 40% and improves compliance with health and safety requirements.
+                    <strong className="text-blue-400">Management Benefit:</strong> Systematic tool
+                    management reduces downtime by 40% and improves compliance with health and
+                    safety requirements.
                   </p>
                 </div>
               </div>
@@ -706,7 +754,10 @@ const Module5Section4_3 = () => {
             </h2>
             <div className="space-y-3">
               {practicalGuidance.map((guidance, index) => (
-                <div key={index} className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="text-white/80 text-sm">{guidance}</p>
                 </div>
               ))}
@@ -770,7 +821,9 @@ const Module5Section4_3 = () => {
           <section className="mb-10">
             <div className="flex items-center gap-3 mb-4">
               <BookOpen className="w-5 h-5 text-elec-yellow" />
-              <h2 className="text-xl font-semibold text-white">Pocket Guide - Tool Selection & Availability</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Pocket Guide - Tool Selection & Availability
+              </h2>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {pocketGuideItems.map((item, index) => (

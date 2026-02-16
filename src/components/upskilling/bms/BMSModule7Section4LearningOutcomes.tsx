@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section4LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose of uploading software into BMS controllers",
-    "Describe the steps involved in setting up controllers for operation",
-    "Identify common controller communication methods (USB, Ethernet, RS-485)",
-    "Apply best practices for supporting software upload and controller commissioning"
+    'Explain the purpose of uploading software into BMS controllers',
+    'Describe the steps involved in setting up controllers for operation',
+    'Identify common controller communication methods (USB, Ethernet, RS-485)',
+    'Apply best practices for supporting software upload and controller commissioning',
   ];
 
   return (

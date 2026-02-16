@@ -10,109 +10,97 @@ export const SmartHomeModule4Section1Quiz = () => {
 
   const questions = [
     {
-      question: "What is a smart thermostat?",
+      question: 'What is a smart thermostat?',
       options: [
-        "A traditional wall thermostat",
-        "An electronic device that allows app/voice/web-based temperature control",
-        "A heating element for radiators",
-        "A temperature sensor only"
+        'A traditional wall thermostat',
+        'An electronic device that allows app/voice/web-based temperature control',
+        'A heating element for radiators',
+        'A temperature sensor only',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Give one example of a smart thermostat brand.",
-      options: [
-        "British Gas",
-        "Worcester Bosch",
-        "Nest",
-        "Vaillant"
-      ],
-      correct: 2
+      question: 'Give one example of a smart thermostat brand.',
+      options: ['British Gas', 'Worcester Bosch', 'Nest', 'Vaillant'],
+      correct: 2,
     },
     {
-      question: "How does a smart thermostat differ from a traditional thermostat?",
+      question: 'How does a smart thermostat differ from a traditional thermostat?',
       options: [
         "It's larger in size",
-        "It only works with gas boilers",
-        "It offers remote access and advanced features",
-        "It's more expensive to run"
+        'It only works with gas boilers',
+        'It offers remote access and advanced features',
+        "It's more expensive to run",
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "What is room zoning?",
+      question: 'What is room zoning?',
       options: [
-        "Dividing a property into independent heating zones",
-        "Installing multiple boilers",
-        "Using different fuel types",
-        "Setting the same temperature everywhere"
+        'Dividing a property into independent heating zones',
+        'Installing multiple boilers',
+        'Using different fuel types',
+        'Setting the same temperature everywhere',
       ],
-      correct: 0
+      correct: 0,
     },
     {
-      question: "Name one method of zoning using radiators.",
+      question: 'Name one method of zoning using radiators.',
       options: [
-        "Motorised dampers",
-        "Smart TRVs (Thermostatic Radiator Valves)",
-        "Central manifolds",
-        "Wireless sensors only"
+        'Motorised dampers',
+        'Smart TRVs (Thermostatic Radiator Valves)',
+        'Central manifolds',
+        'Wireless sensors only',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Name one method of zoning used in underfloor heating.",
-      options: [
-        "Smart TRVs",
-        "Radiator valves",
-        "Manifold zoning with actuators",
-        "Duct dampers"
-      ],
-      correct: 2
+      question: 'Name one method of zoning used in underfloor heating.',
+      options: ['Smart TRVs', 'Radiator valves', 'Manifold zoning with actuators', 'Duct dampers'],
+      correct: 2,
     },
     {
-      question: "What is geofencing in smart heating?",
+      question: 'What is geofencing in smart heating?',
       options: [
-        "Installing fences around heating equipment",
-        "Automatic control based on occupant location",
-        "Setting temperature boundaries",
-        "Wireless signal range limitation"
+        'Installing fences around heating equipment',
+        'Automatic control based on occupant location',
+        'Setting temperature boundaries',
+        'Wireless signal range limitation',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Give one limitation of zoning systems.",
+      question: 'Give one limitation of zoning systems.',
       options: [
-        "They always save money",
-        "Retrofit can be disruptive",
-        "They work with all heating systems",
-        "They never need maintenance"
+        'They always save money',
+        'Retrofit can be disruptive',
+        'They work with all heating systems',
+        'They never need maintenance',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "True or False: Smart thermostats cannot integrate with voice assistants.",
-      options: [
-        "True",
-        "False"
-      ],
-      correct: 1
+      question: 'True or False: Smart thermostats cannot integrate with voice assistants.',
+      options: ['True', 'False'],
+      correct: 1,
     },
     {
-      question: "A homeowner wants to reduce heating costs but still keep bedrooms warm at night. What zoning approach would you recommend?",
+      question:
+        'A homeowner wants to reduce heating costs but still keep bedrooms warm at night. What zoning approach would you recommend?',
       options: [
-        "Heat the whole house at night",
-        "Use smart TRVs to heat only bedrooms at night while reducing other zones",
-        "Turn off all heating at night",
-        "Install multiple boilers"
+        'Heat the whole house at night',
+        'Use smart TRVs to heat only bedrooms at night while reducing other zones',
+        'Turn off all heating at night',
+        'Install multiple boilers',
       ],
-      correct: 1
-    }
+      correct: 1,
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -135,7 +123,7 @@ export const SmartHomeModule4Section1Quiz = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = Math.round((score / questions.length) * 100);
-    
+
     return (
       <Card className="bg-elec-gray border-gray-700">
         <CardHeader>
@@ -148,16 +136,15 @@ export const SmartHomeModule4Section1Quiz = () => {
           <div className="text-4xl font-bold text-elec-yellow">
             {score}/{questions.length}
           </div>
-          <div className="text-xl text-foreground">
-            {percentage}% Correct
-          </div>
+          <div className="text-xl text-foreground">{percentage}% Correct</div>
           <div className="text-gray-300">
-            {percentage >= 80 ? "Excellent work!" : percentage >= 60 ? "Good effort!" : "Keep studying!"}
+            {percentage >= 80
+              ? 'Excellent work!'
+              : percentage >= 60
+                ? 'Good effort!'
+                : 'Keep studying!'}
           </div>
-          <Button 
-            onClick={resetQuiz}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
-          >
+          <Button onClick={resetQuiz} className="bg-elec-yellow text-elec-dark hover:bg-yellow-600">
             Retake Quiz
           </Button>
         </CardContent>
@@ -175,14 +162,19 @@ export const SmartHomeModule4Section1Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex gap-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}
@@ -193,7 +185,7 @@ export const SmartHomeModule4Section1Quiz = () => {
           <h3 className="text-lg font-semibold text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
@@ -222,7 +214,7 @@ export const SmartHomeModule4Section1Quiz = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           {currentQuestion === questions.length - 1 ? (
             <Button
               onClick={() => setShowResults(true)}

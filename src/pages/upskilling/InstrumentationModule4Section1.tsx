@@ -2,13 +2,14 @@ import { ArrowLeft, Zap, CheckCircle, HelpCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule4Section1 = () => {
   useSEO({
-    title: "Measuring Voltage, Current, and Resistance | Instrumentation Module 4",
-    description: "Foundation of all electrical measurement work - understanding how to accurately measure voltage, current, and resistance."
+    title: 'Measuring Voltage, Current, and Resistance | Instrumentation Module 4',
+    description:
+      'Foundation of all electrical measurement work - understanding how to accurately measure voltage, current, and resistance.',
   });
 
   return (
@@ -16,7 +17,10 @@ const InstrumentationModule4Section1 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-4" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             <span className="text-sm">Back to Module 4</span>
           </Link>
@@ -33,7 +37,8 @@ const InstrumentationModule4Section1 = () => {
             Measuring Voltage, Current, and Resistance
           </h1>
           <p className="text-white/70 max-w-2xl mx-auto">
-            Foundation of all electrical measurement work - understanding how to accurately measure the three fundamental electrical quantities.
+            Foundation of all electrical measurement work - understanding how to accurately measure
+            the three fundamental electrical quantities.
           </p>
         </div>
 
@@ -55,13 +60,16 @@ const InstrumentationModule4Section1 = () => {
         {/* Section 01: Voltage Measurement */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Voltage Measurement</h2>
           </div>
 
           <div className="space-y-4 text-white/80">
             <p>
-              Voltage is the electrical pressure or potential difference between two points in a circuit. It represents the energy available to push electrons through a conductor.
+              Voltage is the electrical pressure or potential difference between two points in a
+              circuit. It represents the energy available to push electrons through a conductor.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -124,13 +132,17 @@ const InstrumentationModule4Section1 = () => {
         {/* Section 02: Current Measurement */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Current Measurement</h2>
           </div>
 
           <div className="space-y-4 text-white/80">
             <p>
-              Current is the flow of electrons through a conductor, measured in amperes (A). Understanding current measurement is crucial for verifying circuit operation and diagnosing faults.
+              Current is the flow of electrons through a conductor, measured in amperes (A).
+              Understanding current measurement is crucial for verifying circuit operation and
+              diagnosing faults.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -192,13 +204,16 @@ const InstrumentationModule4Section1 = () => {
         {/* Section 03: Resistance Testing */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Resistance Testing</h2>
           </div>
 
           <div className="space-y-4 text-white/80">
             <p>
-              Resistance is the opposition to current flow, measured in ohms (Ω). Resistance testing is essential for verifying connections, checking insulation, and diagnosing faults.
+              Resistance is the opposition to current flow, measured in ohms (Ω). Resistance testing
+              is essential for verifying connections, checking insulation, and diagnosing faults.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -280,7 +295,9 @@ const InstrumentationModule4Section1 = () => {
         {/* Section 04: Common Instruments */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">Common Measurement Instruments</h2>
           </div>
 
@@ -311,14 +328,19 @@ const InstrumentationModule4Section1 = () => {
         {/* Section 05: Real-World Scenario */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
             <h2 className="text-xl font-semibold text-white">Real-World Application</h2>
           </div>
 
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
             <h3 className="text-white font-medium mb-2">Lighting Fault Diagnosis</h3>
             <p className="text-white/70">
-              A technician diagnosing a lighting fault in a panel measures 230V across the terminals, 0A current flow, and finds a break in continuity - pinpointing an open-circuit fault. This systematic approach using all three measurements quickly identifies the problem location and nature.
+              A technician diagnosing a lighting fault in a panel measures 230V across the
+              terminals, 0A current flow, and finds a break in continuity - pinpointing an
+              open-circuit fault. This systematic approach using all three measurements quickly
+              identifies the problem location and nature.
             </p>
           </div>
         </div>
@@ -332,21 +354,33 @@ const InstrumentationModule4Section1 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">Why can't I measure resistance on a live circuit?</h3>
+              <h3 className="text-white font-medium mb-2">
+                Why can't I measure resistance on a live circuit?
+              </h3>
               <p className="text-white/70 text-sm">
-                Resistance meters apply a small test voltage. If the circuit is already energised, the external voltage interferes with the measurement, gives false readings, and can damage the meter.
+                Resistance meters apply a small test voltage. If the circuit is already energised,
+                the external voltage interferes with the measurement, gives false readings, and can
+                damage the meter.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">What's the difference between AC and DC on a multimeter?</h3>
+              <h3 className="text-white font-medium mb-2">
+                What's the difference between AC and DC on a multimeter?
+              </h3>
               <p className="text-white/70 text-sm">
-                AC mode measures alternating current that changes direction (like mains power). DC mode measures direct current that flows in one direction (like batteries). Using the wrong mode gives incorrect readings.
+                AC mode measures alternating current that changes direction (like mains power). DC
+                mode measures direct current that flows in one direction (like batteries). Using the
+                wrong mode gives incorrect readings.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">When should I use a clamp meter vs a multimeter?</h3>
+              <h3 className="text-white font-medium mb-2">
+                When should I use a clamp meter vs a multimeter?
+              </h3>
               <p className="text-white/70 text-sm">
-                Use a clamp meter when you need to measure current without breaking the circuit, especially for high currents. Use a multimeter for voltage, resistance, and when you need higher accuracy for low current measurements.
+                Use a clamp meter when you need to measure current without breaking the circuit,
+                especially for high currents. Use a multimeter for voltage, resistance, and when you
+                need higher accuracy for low current measurements.
               </p>
             </div>
           </div>
@@ -356,7 +390,10 @@ const InstrumentationModule4Section1 = () => {
         <div className="bg-white/5 rounded-lg p-4 mb-8">
           <h2 className="text-white font-semibold mb-2">Summary</h2>
           <p className="text-white/70">
-            Mastering basic measurements builds confidence in diagnosing electrical issues and validating system performance. The combination of voltage, current, and resistance measurements provides a complete picture of circuit behaviour and helps identify problems quickly and safely.
+            Mastering basic measurements builds confidence in diagnosing electrical issues and
+            validating system performance. The combination of voltage, current, and resistance
+            measurements provides a complete picture of circuit behaviour and helps identify
+            problems quickly and safely.
           </p>
         </div>
 
@@ -366,10 +403,10 @@ const InstrumentationModule4Section1 = () => {
           sectionId="section-1"
           question="How do you safely measure current in a circuit using a standard multimeter?"
           options={[
-            "Connect meter in parallel with the circuit",
-            "Connect meter in series with the circuit after breaking it",
-            "Use highest range setting only",
-            "Measure with circuit fully energised without disconnection"
+            'Connect meter in parallel with the circuit',
+            'Connect meter in series with the circuit after breaking it',
+            'Use highest range setting only',
+            'Measure with circuit fully energised without disconnection',
           ]}
           correctAnswer={1}
           explanation="Current flows through components, so the meter must be placed in series with the circuit. This requires breaking the circuit (with power off), inserting the meter, then re-energising to measure."

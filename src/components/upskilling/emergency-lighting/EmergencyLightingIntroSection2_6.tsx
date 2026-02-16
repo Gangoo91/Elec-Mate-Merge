@@ -12,15 +12,15 @@ export const EmergencyLightingIntroSection2_6 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Emergency lighting is only effective if it is regularly tested, maintained, and correctly 
-          documented. Even a perfectly designed system becomes a liability if it fails during an 
+          Emergency lighting is only effective if it is regularly tested, maintained, and correctly
+          documented. Even a perfectly designed system becomes a liability if it fails during an
           emergency because batteries weren't checked, or faults weren't logged.
         </p>
-        
+
         <p>
-          Testing and record keeping are not optional — they are a legal requirement under BS 5266-1 
-          and form a core part of any compliance inspection. For electricians, understanding the 
-          testing schedule and the correct use of logbooks is just as important as installing the 
+          Testing and record keeping are not optional — they are a legal requirement under BS 5266-1
+          and form a core part of any compliance inspection. For electricians, understanding the
+          testing schedule and the correct use of logbooks is just as important as installing the
           system itself.
         </p>
       </CardContent>

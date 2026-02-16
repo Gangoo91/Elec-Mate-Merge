@@ -1,79 +1,79 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Network Topologies | Data Cabling Module 1.2";
-const DESCRIPTION = "Learn about network topologies including star, bus, ring, and mesh configurations for structured cabling systems.";
+const TITLE = 'Network Topologies | Data Cabling Module 1.2';
+const DESCRIPTION =
+  'Learn about network topologies including star, bus, ring, and mesh configurations for structured cabling systems.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m1s2-check1",
-    question: "In a star topology, what happens if the central hub fails?",
+    id: 'datacabling-m1s2-check1',
+    question: 'In a star topology, what happens if the central hub fails?',
     options: [
-      "Only one device is affected",
-      "The entire network fails",
-      "Traffic reroutes automatically",
-      "Performance reduces slightly"
+      'Only one device is affected',
+      'The entire network fails',
+      'Traffic reroutes automatically',
+      'Performance reduces slightly',
     ],
     correctIndex: 1,
-    explanation: "In star topology, all devices connect through a central hub or switch. If this central device fails, all connected devices lose network connectivity."
+    explanation:
+      'In star topology, all devices connect through a central hub or switch. If this central device fails, all connected devices lose network connectivity.',
   },
   {
-    id: "datacabling-m1s2-check2",
-    question: "Which topology provides the highest redundancy?",
-    options: ["Star", "Bus", "Ring", "Full mesh"],
+    id: 'datacabling-m1s2-check2',
+    question: 'Which topology provides the highest redundancy?',
+    options: ['Star', 'Bus', 'Ring', 'Full mesh'],
     correctIndex: 3,
-    explanation: "Full mesh topology provides the highest redundancy because every device is connected to every other device, offering multiple paths for data transmission."
+    explanation:
+      'Full mesh topology provides the highest redundancy because every device is connected to every other device, offering multiple paths for data transmission.',
   },
   {
-    id: "datacabling-m1s2-check3",
-    question: "What is the main advantage of star topology over bus topology?",
-    options: [
-      "Lower cost",
-      "Better fault isolation",
-      "Less cabling required",
-      "Simpler design"
-    ],
+    id: 'datacabling-m1s2-check3',
+    question: 'What is the main advantage of star topology over bus topology?',
+    options: ['Lower cost', 'Better fault isolation', 'Less cabling required', 'Simpler design'],
     correctIndex: 1,
-    explanation: "Star topology provides better fault isolation - if one cable fails, only that device is affected. In bus topology, a single cable break can disable the entire network."
-  }
+    explanation:
+      'Star topology provides better fault isolation - if one cable fails, only that device is affected. In bus topology, a single cable break can disable the entire network.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between physical and logical topology?",
-    answer: "Physical topology refers to the actual physical layout of cables and devices, whilst logical topology describes how data flows through the network. A network might be physically wired in a star but logically operate as a ring."
+    answer:
+      'Physical topology refers to the actual physical layout of cables and devices, whilst logical topology describes how data flows through the network. A network might be physically wired in a star but logically operate as a ring.',
   },
   {
-    question: "Can I mix different topologies in the same network?",
-    answer: "Yes, this is called a hybrid topology. Most modern networks combine different topologies to optimise performance, cost, and reliability - for example, star topology within buildings and mesh between buildings."
+    question: 'Can I mix different topologies in the same network?',
+    answer:
+      'Yes, this is called a hybrid topology. Most modern networks combine different topologies to optimise performance, cost, and reliability - for example, star topology within buildings and mesh between buildings.',
   },
   {
-    question: "Why is star topology preferred over bus topology?",
-    answer: "Star topology offers better fault isolation, easier troubleshooting, dedicated bandwidth per connection, and simpler maintenance. Bus topology is cheaper but has performance and reliability limitations."
+    question: 'Why is star topology preferred over bus topology?',
+    answer:
+      'Star topology offers better fault isolation, easier troubleshooting, dedicated bandwidth per connection, and simpler maintenance. Bus topology is cheaper but has performance and reliability limitations.',
   },
   {
-    question: "When would I choose mesh topology despite its high cost?",
-    answer: "Mesh topology is chosen for mission-critical applications where downtime is unacceptable, such as financial trading networks, emergency services, or data centre interconnections."
-  }
+    question: 'When would I choose mesh topology despite its high cost?',
+    answer:
+      'Mesh topology is chosen for mission-critical applications where downtime is unacceptable, such as financial trading networks, emergency services, or data centre interconnections.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A client requires maximum network reliability with no single point of failure. Which topology should you recommend?",
-  options: [
-    "Star topology",
-    "Bus topology",
-    "Ring topology",
-    "Full mesh topology"
-  ],
-  correctAnswer: 3,
-  explanation: "Full mesh topology provides maximum redundancy with no single point of failure. Every device connects to every other device, so if any link fails, traffic can be rerouted through alternative paths."
-  }
+    question:
+      'A client requires maximum network reliability with no single point of failure. Which topology should you recommend?',
+    options: ['Star topology', 'Bus topology', 'Ring topology', 'Full mesh topology'],
+    correctAnswer: 3,
+    explanation:
+      'Full mesh topology provides maximum redundancy with no single point of failure. Every device connects to every other device, so if any link fails, traffic can be rerouted through alternative paths.',
+  },
 ];
 
 const DataCablingModule1Section2 = () => {
@@ -108,9 +108,7 @@ const DataCablingModule1Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Topologies: Star, Bus, Ring, Mesh
           </h1>
-          <p className="text-white/80">
-            Network topology types and configurations
-          </p>
+          <p className="text-white/80">Network topology types and configurations</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -118,16 +116,26 @@ const DataCablingModule1Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Star:</strong> Central hub/switch connects all devices</li>
-              <li><strong>Mesh:</strong> Every device connected to every other</li>
-              <li><strong>Hybrid:</strong> Most common in real networks</li>
+              <li>
+                <strong>Star:</strong> Central hub/switch connects all devices
+              </li>
+              <li>
+                <strong>Mesh:</strong> Every device connected to every other
+              </li>
+              <li>
+                <strong>Hybrid:</strong> Most common in real networks
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Central switch rooms, patch panel layouts</li>
-              <li><strong>Use:</strong> Choose based on reliability vs cost needs</li>
+              <li>
+                <strong>Spot:</strong> Central switch rooms, patch panel layouts
+              </li>
+              <li>
+                <strong>Use:</strong> Choose based on reliability vs cost needs
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +145,12 @@ const DataCablingModule1Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify the four main topology types",
-              "Understand advantages and disadvantages",
-              "Select appropriate topology for requirements",
-              "Recognise hybrid topology approaches",
-              "Calculate redundancy requirements",
-              "Design resilient network layouts"
+              'Identify the four main topology types',
+              'Understand advantages and disadvantages',
+              'Select appropriate topology for requirements',
+              'Recognise hybrid topology approaches',
+              'Calculate redundancy requirements',
+              'Design resilient network layouts',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -162,8 +170,8 @@ const DataCablingModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Star topology is the most common design in modern networks. All devices connect
-              to a central hub or switch, which manages all network traffic.
+              Star topology is the most common design in modern networks. All devices connect to a
+              central hub or switch, which manages all network traffic.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -188,8 +196,8 @@ const DataCablingModule1Section2 = () => {
             </div>
 
             <p>
-              Star topology is ideal for office environments where ease of management and
-              fault isolation are priorities. Modern Ethernet networks are built on star topology.
+              Star topology is ideal for office environments where ease of management and fault
+              isolation are priorities. Modern Ethernet networks are built on star topology.
             </p>
           </div>
         </section>
@@ -204,8 +212,8 @@ const DataCablingModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Bus and ring topologies were common in earlier networks but are now less
-              frequently used due to reliability concerns.
+              Bus and ring topologies were common in earlier networks but are now less frequently
+              used due to reliability concerns.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -256,21 +264,29 @@ const DataCablingModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Mesh topology provides maximum redundancy by connecting every device to every
-              other device. Hybrid topologies combine different approaches.
+              Mesh topology provides maximum redundancy by connecting every device to every other
+              device. Hybrid topologies combine different approaches.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Mesh Topology Types:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Full mesh:</strong> Every device connected to every other device</li>
-                <li><strong>Partial mesh:</strong> Critical devices have multiple connections</li>
-                <li><strong>Wireless mesh:</strong> Common in Wi-Fi networks</li>
+                <li>
+                  <strong>Full mesh:</strong> Every device connected to every other device
+                </li>
+                <li>
+                  <strong>Partial mesh:</strong> Critical devices have multiple connections
+                </li>
+                <li>
+                  <strong>Wireless mesh:</strong> Common in Wi-Fi networks
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mesh Connection Formula:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Mesh Connection Formula:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Full mesh links = n(n-1)/2 where n = number of devices</li>
                 <li>10 devices = 45 connections required</li>
@@ -279,8 +295,8 @@ const DataCablingModule1Section2 = () => {
             </div>
 
             <p>
-              Most real networks use hybrid topologies - star topology within buildings with
-              mesh connections between buildings for redundancy.
+              Most real networks use hybrid topologies - star topology within buildings with mesh
+              connections between buildings for redundancy.
             </p>
           </div>
         </section>
@@ -292,7 +308,9 @@ const DataCablingModule1Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Topology Selection Criteria</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Topology Selection Criteria
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Assess reliability requirements and acceptable downtime</li>
                 <li>Calculate cabling and equipment costs</li>
@@ -304,10 +322,18 @@ const DataCablingModule1Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Over-engineering:</strong> — Full mesh where star suffices</li>
-                <li><strong>Under-engineering:</strong> — No redundancy for critical links</li>
-                <li><strong>Single point of failure:</strong> — Not identifying critical nodes</li>
-                <li><strong>Ignoring growth:</strong> — No capacity for expansion</li>
+                <li>
+                  <strong>Over-engineering:</strong> — Full mesh where star suffices
+                </li>
+                <li>
+                  <strong>Under-engineering:</strong> — No redundancy for critical links
+                </li>
+                <li>
+                  <strong>Single point of failure:</strong> — Not identifying critical nodes
+                </li>
+                <li>
+                  <strong>Ignoring growth:</strong> — No capacity for expansion
+                </li>
               </ul>
             </div>
           </div>
@@ -351,10 +377,7 @@ const DataCablingModule1Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

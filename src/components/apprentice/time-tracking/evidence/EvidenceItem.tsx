@@ -1,10 +1,9 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { FileText, Calendar, Trash2, Eye, FolderPlus, Loader2, CheckCircle } from "lucide-react";
-import { TrainingEvidenceItem } from "@/types/time-tracking";
-import { useEvidenceToPortfolio } from "@/hooks/useEvidenceToPortfolio";
-import { useState } from "react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { FileText, Calendar, Trash2, Eye, FolderPlus, Loader2, CheckCircle } from 'lucide-react';
+import { TrainingEvidenceItem } from '@/types/time-tracking';
+import { useEvidenceToPortfolio } from '@/hooks/useEvidenceToPortfolio';
+import { useState } from 'react';
 
 interface EvidenceItemProps {
   item: TrainingEvidenceItem;
@@ -63,16 +62,17 @@ const EvidenceItem = ({ item, onDelete }: EvidenceItemProps) => {
           </div>
         </div>
 
-        <p className="mt-3 text-sm line-clamp-2">
-          {item.description}
-        </p>
+        <p className="mt-3 text-sm line-clamp-2">{item.description}</p>
 
         {item.files.length > 0 && (
           <div className="mt-3">
             <p className="text-xs text-white mb-1">Attached files:</p>
             <div className="flex flex-wrap gap-2">
               {item.files.map((file: string) => (
-                <div key={file} className="bg-white/10 border border-elec-yellow/20 rounded px-2 py-1 text-xs flex items-center">
+                <div
+                  key={file}
+                  className="bg-white/10 border border-elec-yellow/20 rounded px-2 py-1 text-xs flex items-center"
+                >
                   <FileText className="h-3 w-3 mr-1.5" />
                   <span className="truncate max-w-[150px]">{file}</span>
                 </div>

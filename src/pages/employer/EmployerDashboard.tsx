@@ -635,7 +635,12 @@ const sectionMetadata: Record<Section, SectionMeta> = {
 };
 
 const EmployerDashboard = () => {
-  useSEO({ title: 'Employer Dashboard', description: 'Manage your electrical team, track apprentice progress, and view compliance analytics.', noindex: true });
+  useSEO({
+    title: 'Employer Dashboard',
+    description:
+      'Manage your electrical team, track apprentice progress, and view compliance analytics.',
+    noindex: true,
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();

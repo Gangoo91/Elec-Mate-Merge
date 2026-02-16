@@ -3,7 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Upload, Image, X, Building2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -24,9 +30,9 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
     // Validate file type
     if (!file.type.startsWith('image/')) {
       toast({
-        title: "Invalid file type",
-        description: "Please select an image file (PNG, JPG, etc.)",
-        variant: "destructive",
+        title: 'Invalid file type',
+        description: 'Please select an image file (PNG, JPG, etc.)',
+        variant: 'destructive',
       });
       return;
     }
@@ -34,9 +40,9 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
     // Validate file size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
       toast({
-        title: "File too large",
-        description: "Please select an image smaller than 5MB",
-        variant: "destructive",
+        title: 'File too large',
+        description: 'Please select an image smaller than 5MB',
+        variant: 'destructive',
       });
       return;
     }
@@ -50,25 +56,25 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
         const dataUrl = e.target?.result as string;
         onUpdate('companyLogo', dataUrl);
         toast({
-          title: "Logo uploaded successfully",
-          description: "Your company logo has been added to the report",
+          title: 'Logo uploaded successfully',
+          description: 'Your company logo has been added to the report',
         });
         setIsUploading(false);
       };
       reader.onerror = () => {
         toast({
-          title: "Upload failed",
-          description: "Failed to read the image file",
-          variant: "destructive",
+          title: 'Upload failed',
+          description: 'Failed to read the image file',
+          variant: 'destructive',
         });
         setIsUploading(false);
       };
       reader.readAsDataURL(file);
     } catch (error) {
       toast({
-        title: "Upload failed",
-        description: "An error occurred while uploading the logo",
-        variant: "destructive",
+        title: 'Upload failed',
+        description: 'An error occurred while uploading the logo',
+        variant: 'destructive',
       });
       setIsUploading(false);
     }
@@ -83,21 +89,21 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
 
   const handleQuickFillBranding = (template: string) => {
     const templates = {
-      'electrical_contractor': {
+      electrical_contractor: {
         brandingCompanyName: '[Your Company Name] Electrical Services',
         brandingTagline: 'Professional Electrical Testing & Inspection',
         brandingAccentColor: '#FCD34D', // elec-yellow
       },
-      'inspection_services': {
+      inspection_services: {
         brandingCompanyName: '[Your Company Name] Inspection Services',
         brandingTagline: 'Certified Electrical Safety Inspections',
         brandingAccentColor: '#3B82F6', // blue
       },
-      'maintenance_company': {
+      maintenance_company: {
         brandingCompanyName: '[Your Company Name] Maintenance',
         brandingTagline: 'Electrical Installation Testing & Certification',
         brandingAccentColor: '#10B981', // green
-      }
+      },
     };
 
     const template_data = templates[template as keyof typeof templates];
@@ -127,7 +133,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
             <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500"></div>
             Company Logo
           </Label>
-          
+
           <div className="space-y-3">
             <input
               ref={fileInputRef}
@@ -136,7 +142,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
               onChange={handleLogoUpload}
               className="hidden"
             />
-            
+
             {formData.companyLogo ? (
               <div className="flex justify-center">
                 <div className="relative inline-block group">
@@ -157,7 +163,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                 </div>
               </div>
             ) : (
-              <div 
+              <div
                 className="border-2 border-dashed border-yellow-400/40 rounded-lg p-4 text-center hover:border-yellow-400/60 transition-all duration-200 hover:bg-yellow-50/20 cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
               >
@@ -165,12 +171,14 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                   <div className="p-2 rounded-full bg-gradient-to-br from-yellow-400/20 to-yellow-500/20">
                     <Image className="h-5 w-5 text-yellow-600" />
                   </div>
-                  <p className="text-xs font-medium text-muted-foreground">Drag and drop or click to upload</p>
+                  <p className="text-xs font-medium text-muted-foreground">
+                    Drag and drop or click to upload
+                  </p>
                   <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 5MB</p>
                 </div>
               </div>
             )}
-            
+
             <div className="flex justify-center gap-2">
               <Button
                 type="button"
@@ -204,10 +212,12 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
             <div className="w-2 h-2 rounded-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
             Branding Details
           </h3>
-          
+
           <div className="space-y-3">
             <div className="space-y-2">
-              <Label htmlFor="brandingCompanyName" className="font-semibold text-sm">Company Name for Headers</Label>
+              <Label htmlFor="brandingCompanyName" className="font-semibold text-sm">
+                Company Name for Headers
+              </Label>
               <Input
                 id="brandingCompanyName"
                 value={formData.brandingCompanyName || ''}
@@ -216,9 +226,11 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                 className="border-gray-300/50 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="brandingTagline" className="font-semibold text-sm">Tagline/Subtitle (Optional)</Label>
+              <Label htmlFor="brandingTagline" className="font-semibold text-sm">
+                Tagline/Subtitle (Optional)
+              </Label>
               <Input
                 id="brandingTagline"
                 value={formData.brandingTagline || ''}
@@ -227,10 +239,12 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                 className="border-gray-300/50 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
               />
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label htmlFor="brandingAccentColor" className="font-semibold text-sm">Accent Colour</Label>
+                <Label htmlFor="brandingAccentColor" className="font-semibold text-sm">
+                  Accent Colour
+                </Label>
                 <div className="flex gap-2">
                   <Input
                     id="brandingAccentColor"
@@ -251,9 +265,11 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                   Used for headers and accent elements
                 </p>
               </div>
-              
+
               <div className="space-y-2">
-                <Label htmlFor="brandingWebsite" className="font-semibold text-sm">Website (Optional)</Label>
+                <Label htmlFor="brandingWebsite" className="font-semibold text-sm">
+                  Website (Optional)
+                </Label>
                 <Input
                   id="brandingWebsite"
                   type="url"

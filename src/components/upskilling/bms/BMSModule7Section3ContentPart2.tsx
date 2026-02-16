@@ -11,14 +11,13 @@ export const BMSModule7Section3ContentPart2 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
-        <p>
-          Mapping links real-world signals to their representation in the BMS software.
-        </p>
+        <p>Mapping links real-world signals to their representation in the BMS software.</p>
 
         <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-4">
           <h4 className="text-green-300 font-semibold mb-2">Example</h4>
           <p className="text-foreground">
-            A CO₂ sensor wired to Analog Input 3 on a controller must be mapped in software as "Room 101 CO₂ Sensor."
+            A CO₂ sensor wired to Analog Input 3 on a controller must be mapped in software as "Room
+            101 CO₂ Sensor."
           </p>
         </div>
 

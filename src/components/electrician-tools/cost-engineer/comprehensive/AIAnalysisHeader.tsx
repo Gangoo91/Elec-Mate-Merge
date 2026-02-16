@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Brain, TrendingUp, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Brain, TrendingUp, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 interface AIAnalysisHeaderProps {
   jobDescription?: string;
@@ -15,37 +15,42 @@ const AIAnalysisHeader = ({
   complexity,
   confidence,
   riskAssessment,
-  recommendedQuote
+  recommendedQuote,
 }: AIAnalysisHeaderProps) => {
   const getComplexityColor = (rating: number) => {
-    if (rating <= 4) return "bg-green-500/20 text-green-500 border-green-500/30";
-    if (rating <= 6) return "bg-yellow-500/20 text-yellow-500 border-yellow-500/30";
-    return "bg-red-500/20 text-red-500 border-red-500/30";
+    if (rating <= 4) return 'bg-green-500/20 text-green-500 border-green-500/30';
+    if (rating <= 6) return 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30';
+    return 'bg-red-500/20 text-red-500 border-red-500/30';
   };
 
   const getConfidenceColor = (level: number) => {
-    if (level >= 80) return "text-green-500";
-    if (level >= 60) return "text-yellow-500";
-    return "text-red-500";
+    if (level >= 80) return 'text-green-500';
+    if (level >= 60) return 'text-yellow-500';
+    return 'text-red-500';
   };
 
   const getRiskColor = (severity: string) => {
-    switch(severity) {
-      case 'critical': return '🔴';
-      case 'high': return '🔴';
-      case 'medium': return '🟡';
-      case 'low': return '🟢';
-      default: return '⚪';
+    switch (severity) {
+      case 'critical':
+        return '🔴';
+      case 'high':
+        return '🔴';
+      case 'medium':
+        return '🟡';
+      case 'low':
+        return '🟢';
+      default:
+        return '⚪';
     }
   };
 
-  const avgConfidence = confidence 
+  const avgConfidence = confidence
     ? Math.round((confidence.materials?.level + confidence.labour?.level) / 2)
     : 75;
 
-  const highRisks = riskAssessment?.risks?.filter((r: any) => 
-    r.severity === 'critical' || r.severity === 'high'
-  ).length || 0;
+  const highRisks =
+    riskAssessment?.risks?.filter((r: any) => r.severity === 'critical' || r.severity === 'high')
+      .length || 0;
 
   return (
     <Card className="border-0 sm:border border-elec-yellow/30 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
@@ -54,13 +59,15 @@ const AIAnalysisHeader = ({
           <div className="flex items-center gap-3">
             <Brain className="h-7 w-7 text-elec-yellow" />
             <div>
-              <CardTitle className="text-xl sm:text-2xl font-bold text-foreground">AI Cost Engineer Analysis</CardTitle>
+              <CardTitle className="text-xl sm:text-2xl font-bold text-foreground">
+                AI Cost Engineer Analysis
+              </CardTitle>
               <p className="text-base sm:text-sm text-foreground mt-1">
                 Comprehensive pricing and profitability assessment
               </p>
             </div>
           </div>
-          
+
           {recommendedQuote && (
             <Badge className="bg-elec-yellow text-elec-dark px-3 py-1 text-sm font-bold">
               {recommendedQuote.tier.toUpperCase()} TIER
@@ -68,7 +75,7 @@ const AIAnalysisHeader = ({
           )}
         </div>
       </CardHeader>
-      
+
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Job Description */}
         {jobDescription && (
@@ -87,10 +94,14 @@ const AIAnalysisHeader = ({
                 <span className="text-sm sm:text-xs text-foreground/90">Complexity</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`text-lg font-bold px-2 py-0.5 rounded border ${getComplexityColor(complexity.rating)}`}>
+                <span
+                  className={`text-lg font-bold px-2 py-0.5 rounded border ${getComplexityColor(complexity.rating)}`}
+                >
                   {complexity.rating}/10
                 </span>
-                <span className="text-base sm:text-sm font-medium text-foreground">{complexity.label}</span>
+                <span className="text-base sm:text-sm font-medium text-foreground">
+                  {complexity.label}
+                </span>
               </div>
             </div>
           )}
@@ -119,9 +130,7 @@ const AIAnalysisHeader = ({
                 <span className="text-sm sm:text-xs text-foreground/90">Risk Level</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold">
-                  {highRisks > 0 ? '🔴' : '🟢'}
-                </span>
+                <span className="text-lg font-bold">{highRisks > 0 ? '🔴' : '🟢'}</span>
                 <span className="text-base sm:text-sm font-medium text-foreground">
                   {highRisks > 0 ? `${highRisks} high risk${highRisks > 1 ? 's' : ''}` : 'Low risk'}
                 </span>

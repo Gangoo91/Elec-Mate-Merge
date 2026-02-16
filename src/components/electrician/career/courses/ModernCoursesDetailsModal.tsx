@@ -1,7 +1,7 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import type { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+import { motion, AnimatePresence } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import type { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 import {
   Star,
   Clock,
@@ -21,8 +21,8 @@ import {
   Flame,
   Monitor,
   AlertTriangle,
-  Info
-} from "lucide-react";
+  Info,
+} from 'lucide-react';
 
 interface ModernCoursesDetailsModalProps {
   course: EnhancedCareerCourse | null;
@@ -32,39 +32,71 @@ interface ModernCoursesDetailsModalProps {
 }
 
 const categoryColors: Record<string, { bg: string; text: string }> = {
-  "Essential Updates": { bg: "bg-red-500", text: "text-white" },
-  "Emerging Technologies": { bg: "bg-green-500", text: "text-white" },
-  "Safety & Compliance": { bg: "bg-blue-500", text: "text-white" },
-  "Specialised Systems": { bg: "bg-purple-500", text: "text-white" },
-  "Professional Development": { bg: "bg-orange-500", text: "text-white" },
-  "Business Skills": { bg: "bg-cyan-500", text: "text-white" },
+  'Essential Updates': { bg: 'bg-red-500', text: 'text-white' },
+  'Emerging Technologies': { bg: 'bg-green-500', text: 'text-white' },
+  'Safety & Compliance': { bg: 'bg-blue-500', text: 'text-white' },
+  'Specialised Systems': { bg: 'bg-purple-500', text: 'text-white' },
+  'Professional Development': { bg: 'bg-orange-500', text: 'text-white' },
+  'Business Skills': { bg: 'bg-cyan-500', text: 'text-white' },
 };
 
 const demandConfig: Record<string, { color: string; bg: string; border: string; label: string }> = {
-  "High": { color: "text-red-400", bg: "bg-red-500/10", border: "border-l-red-500", label: "High Demand" },
-  "Medium": { color: "text-amber-400", bg: "bg-amber-500/10", border: "border-l-amber-500", label: "Moderate Demand" },
-  "Low": { color: "text-green-400", bg: "bg-green-500/10", border: "border-l-green-500", label: "Available" },
+  High: {
+    color: 'text-red-400',
+    bg: 'bg-red-500/10',
+    border: 'border-l-red-500',
+    label: 'High Demand',
+  },
+  Medium: {
+    color: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+    border: 'border-l-amber-500',
+    label: 'Moderate Demand',
+  },
+  Low: {
+    color: 'text-green-400',
+    bg: 'bg-green-500/10',
+    border: 'border-l-green-500',
+    label: 'Available',
+  },
 };
 
 const getCourseImage = (course: EnhancedCareerCourse) => {
   if (course.image_url) return course.image_url;
 
   const categoryImages: Record<string, string> = {
-    "Essential Updates": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop",
-    "Emerging Technologies": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=400&fit=crop",
-    "Safety & Compliance": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=400&fit=crop",
-    "Specialised Systems": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop",
-    "Professional Development": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop",
-    "Business Skills": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&fit=crop",
+    'Essential Updates':
+      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop',
+    'Emerging Technologies':
+      'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=400&fit=crop',
+    'Safety & Compliance':
+      'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=400&fit=crop',
+    'Specialised Systems':
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop',
+    'Professional Development':
+      'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop',
+    'Business Skills':
+      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&fit=crop',
   };
 
-  return categoryImages[course.category] || "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop";
+  return (
+    categoryImages[course.category] ||
+    'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop'
+  );
 };
 
-const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: ModernCoursesDetailsModalProps) => {
+const ModernCoursesDetailsModal = ({
+  course,
+  open,
+  onOpenChange,
+  onEnquire,
+}: ModernCoursesDetailsModalProps) => {
   if (!course) return null;
 
-  const categoryStyle = categoryColors[course.category] || { bg: "bg-blue-500", text: "text-white" };
+  const categoryStyle = categoryColors[course.category] || {
+    bg: 'bg-blue-500',
+    text: 'text-white',
+  };
   const demandStyle = demandConfig[course.industryDemand] || demandConfig.Medium;
 
   const handleExternalLink = () => {
@@ -79,7 +111,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
         await navigator.share({
           title: course.title,
           text: `Check out this course: ${course.title} by ${course.provider}`,
-          url: course.external_url || window.location.href
+          url: course.external_url || window.location.href,
         });
       } catch {
         // User cancelled or error
@@ -102,10 +134,10 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
 
           {/* Modal - Full screen on mobile, centered on desktop */}
           <motion.div
-            initial={{ opacity: 0, y: "100%" }}
+            initial={{ opacity: 0, y: '100%' }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            exit={{ opacity: 0, y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="fixed inset-0 z-50 sm:inset-4 sm:m-auto sm:max-w-3xl sm:max-h-[90vh] bg-elec-gray sm:rounded-2xl overflow-hidden flex flex-col"
           >
             {/* Sticky Header */}
@@ -140,14 +172,17 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                   alt={course.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop";
+                    (e.target as HTMLImageElement).src =
+                      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop';
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-elec-gray via-elec-gray/50 to-transparent" />
 
                 {/* Category Badge on Image */}
                 <div className="absolute bottom-4 left-4">
-                  <Badge className={`${categoryStyle.bg} ${categoryStyle.text} border-0 text-xs font-semibold`}>
+                  <Badge
+                    className={`${categoryStyle.bg} ${categoryStyle.text} border-0 text-xs font-semibold`}
+                  >
                     {course.category}
                   </Badge>
                 </div>
@@ -189,7 +224,9 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
                     <Monitor className="h-4 w-4 text-green-400 mx-auto mb-1.5" />
                     <p className="text-[10px] text-white/50 uppercase tracking-wider">Format</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">{course.format || "In-Person"}</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">
+                      {course.format || 'In-Person'}
+                    </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
                     <PoundSterling className="h-4 w-4 text-elec-yellow mx-auto mb-1.5" />
@@ -199,17 +236,21 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                 </div>
 
                 {/* Industry Demand Card — full-width, coloured left border */}
-                <div className={`${demandStyle.bg} border-l-4 ${demandStyle.border} rounded-lg p-4`}>
+                <div
+                  className={`${demandStyle.bg} border-l-4 ${demandStyle.border} rounded-lg p-4`}
+                >
                   <div className="flex items-center gap-3">
                     <Flame className={`h-5 w-5 ${demandStyle.color} flex-shrink-0`} />
                     <div>
-                      <p className={`text-sm font-semibold ${demandStyle.color}`}>{demandStyle.label}</p>
+                      <p className={`text-sm font-semibold ${demandStyle.color}`}>
+                        {demandStyle.label}
+                      </p>
                       <p className="text-xs text-white/60 mt-0.5">
-                        {course.industryDemand === "High"
-                          ? "This qualification is in strong demand across the UK electrical industry"
-                          : course.industryDemand === "Medium"
-                          ? "Steady demand for this qualification across UK employers"
-                          : "Niche qualification with targeted opportunities"}
+                        {course.industryDemand === 'High'
+                          ? 'This qualification is in strong demand across the UK electrical industry'
+                          : course.industryDemand === 'Medium'
+                            ? 'Steady demand for this qualification across UK employers'
+                            : 'Niche qualification with targeted opportunities'}
                       </p>
                     </div>
                   </div>
@@ -237,7 +278,10 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {course.accreditation.map((accred, index) => (
-                        <div key={index} className="flex items-center gap-1.5 bg-blue-500/15 border border-blue-500/25 rounded-lg px-3 py-2">
+                        <div
+                          key={index}
+                          className="flex items-center gap-1.5 bg-blue-500/15 border border-blue-500/25 rounded-lg px-3 py-2"
+                        >
                           <Award className="h-3.5 w-3.5 text-blue-400 flex-shrink-0" />
                           <span className="text-sm text-blue-300 font-medium">{accred}</span>
                         </div>
@@ -264,7 +308,10 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     </h3>
                     <div className="space-y-2">
                       {course.courseOutline.map((item, index) => (
-                        <div key={index} className="flex items-start gap-3 bg-white/5 border border-white/8 rounded-lg p-3">
+                        <div
+                          key={index}
+                          className="flex items-start gap-3 bg-white/5 border border-white/8 rounded-lg p-3"
+                        >
                           <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center">
                             {index + 1}
                           </span>
@@ -320,7 +367,11 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {course.locations.map((location, index) => (
-                        <Badge key={index} variant="outline" className="border-white/20 text-white text-xs py-1.5 px-3">
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="border-white/20 text-white text-xs py-1.5 px-3"
+                        >
                           {location}
                         </Badge>
                       ))}

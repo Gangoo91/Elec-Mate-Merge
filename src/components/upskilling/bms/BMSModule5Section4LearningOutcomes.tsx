@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule5Section4LearningOutcomes = () => {
   const outcomes = [
-    "Explain what KNX is and why it is used in building automation",
-    "Describe KNX bus topology and how devices connect",
-    "Identify common KNX devices used in lighting, shading, and HVAC",
-    "Apply correct wiring and installation practices for KNX systems"
+    'Explain what KNX is and why it is used in building automation',
+    'Describe KNX bus topology and how devices connect',
+    'Identify common KNX devices used in lighting, shading, and HVAC',
+    'Apply correct wiring and installation practices for KNX systems',
   ];
 
   return (
@@ -18,9 +18,7 @@ export const BMSModule5Section4LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you should be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you should be able to:</p>
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">

@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Activity, Zap, TrendingUp, AlertTriangle } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Activity, Zap, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
 
 interface SystemSummaryProps {
   totalCircuits: number;
@@ -22,7 +22,7 @@ export const SystemSummary = ({
   mainSwitchRating,
   utilization,
   compliantCircuits,
-  warnings
+  warnings,
 }: SystemSummaryProps) => {
   return (
     <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
@@ -37,7 +37,10 @@ export const SystemSummary = ({
           <div className="space-y-1">
             <p className="text-xs text-muted-foreground">Total Circuits</p>
             <p className="text-2xl font-bold">{totalCircuits}</p>
-            <Badge variant={compliantCircuits === totalCircuits ? "default" : "destructive"} className="text-xs">
+            <Badge
+              variant={compliantCircuits === totalCircuits ? 'default' : 'destructive'}
+              className="text-xs"
+            >
               {compliantCircuits}/{totalCircuits} Compliant
             </Badge>
           </div>
@@ -69,9 +72,11 @@ export const SystemSummary = ({
             <span className="text-muted-foreground">Main Switch Utilization</span>
             <span className="font-medium">{utilization.toFixed(1)}%</span>
           </div>
-          <Progress 
-            value={utilization} 
-            className={utilization > 80 ? "bg-destructive/20" : utilization > 60 ? "bg-yellow-500/20" : ""}
+          <Progress
+            value={utilization}
+            className={
+              utilization > 80 ? 'bg-destructive/20' : utilization > 60 ? 'bg-yellow-500/20' : ''
+            }
           />
           {utilization > 80 && (
             <p className="text-xs text-destructive flex items-center gap-1">

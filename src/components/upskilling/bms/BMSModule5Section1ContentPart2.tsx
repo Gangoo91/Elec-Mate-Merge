@@ -49,7 +49,9 @@ export const BMSModule5Section1ContentPart2 = () => {
           <div className="grid md:grid-cols-2 gap-3 text-sm">
             <div>
               <h5 className="text-green-400 font-medium mb-1">Open Protocol (10 years):</h5>
-              <p className="text-foreground">Total: £4.2M - Multiple suppliers, competitive pricing</p>
+              <p className="text-foreground">
+                Total: £4.2M - Multiple suppliers, competitive pricing
+              </p>
             </div>
             <div>
               <h5 className="text-orange-400 font-medium mb-1">Proprietary (10 years):</h5>

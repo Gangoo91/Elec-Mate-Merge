@@ -3,11 +3,11 @@ import { Target } from 'lucide-react';
 
 export const EmergencyLightingModule5Section1LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose of initial inspection and verification",
-    "List the pre-commissioning checks required by BS 5266 and BS 7671",
-    "Carry out verification of wiring, cable types, and circuit protection",
-    "Confirm correct luminaire operation before functional testing",
-    "Document inspection results to support certification and handover"
+    'Explain the purpose of initial inspection and verification',
+    'List the pre-commissioning checks required by BS 5266 and BS 7671',
+    'Carry out verification of wiring, cable types, and circuit protection',
+    'Confirm correct luminaire operation before functional testing',
+    'Document inspection results to support certification and handover',
   ];
 
   return (

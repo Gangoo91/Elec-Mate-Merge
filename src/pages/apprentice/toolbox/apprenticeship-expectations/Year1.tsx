@@ -1,9 +1,8 @@
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import {
   BookOpen,
   Wrench,
@@ -25,11 +24,16 @@ import {
   HardHat,
   Zap,
   FileText,
-  Heart
-} from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+  Heart,
+} from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
 
 const Year1 = () => {
   const isMobile = useIsMobile();
@@ -38,231 +42,259 @@ const Year1 = () => {
 
   const monthlyBreakdown = [
     {
-      month: "Month 1-2",
-      title: "Induction & Orientation",
-      focus: "Workplace safety and basic introduction",
+      month: 'Month 1-2',
+      title: 'Induction & Orientation',
+      focus: 'Workplace safety and basic introduction',
       icon: HardHat,
-      color: "text-blue-400",
+      color: 'text-blue-400',
       activities: [
-        "Health & Safety induction - learning site rules and emergency procedures",
+        'Health & Safety induction - learning site rules and emergency procedures',
         "Company policies and procedures - understanding your employer's expectations",
-        "Basic tool introduction - identifying and handling common tools safely",
-        "College enrolment process - registering for your qualification"
+        'Basic tool introduction - identifying and handling common tools safely',
+        'College enrolment process - registering for your qualification',
       ],
-      dayInLife: "Your first weeks will feel overwhelming - but that's normal! You'll spend time shadowing experienced electricians, learning names, and getting familiar with how things work."
+      dayInLife:
+        "Your first weeks will feel overwhelming - but that's normal! You'll spend time shadowing experienced electricians, learning names, and getting familiar with how things work.",
     },
     {
-      month: "Month 3-4",
-      title: "Foundation Learning",
-      focus: "Basic electrical principles",
+      month: 'Month 3-4',
+      title: 'Foundation Learning',
+      focus: 'Basic electrical principles',
       icon: BookOpen,
-      color: "text-green-400",
+      color: 'text-green-400',
       activities: [
         "Ohm's Law fundamentals - V=IR and power calculations",
-        "Basic circuit theory - understanding current flow",
-        "Electrical symbols recognition - reading drawings",
-        "Simple calculations - using formulas in practice"
+        'Basic circuit theory - understanding current flow',
+        'Electrical symbols recognition - reading drawings',
+        'Simple calculations - using formulas in practice',
       ],
-      dayInLife: "You'll start connecting what you learn at college with what you see on site. Keep a notebook handy to write down questions!"
+      dayInLife:
+        "You'll start connecting what you learn at college with what you see on site. Keep a notebook handy to write down questions!",
     },
     {
-      month: "Month 5-6",
-      title: "Practical Introduction",
-      focus: "Hands-on experience begins",
+      month: 'Month 5-6',
+      title: 'Practical Introduction',
+      focus: 'Hands-on experience begins',
       icon: Wrench,
-      color: "text-yellow-400",
+      color: 'text-yellow-400',
       activities: [
-        "Cable stripping and termination - preparing cables properly",
-        "Basic wiring techniques - making safe connections",
-        "Tool usage practice - building muscle memory",
-        "Site observation - understanding how projects progress"
+        'Cable stripping and termination - preparing cables properly',
+        'Basic wiring techniques - making safe connections',
+        'Tool usage practice - building muscle memory',
+        'Site observation - understanding how projects progress',
       ],
-      dayInLife: "This is when things get exciting! You'll start using your hands more, making real connections, and seeing your work come to life."
+      dayInLife:
+        "This is when things get exciting! You'll start using your hands more, making real connections, and seeing your work come to life.",
     },
     {
-      month: "Month 7-8",
-      title: "Skills Development",
-      focus: "Building practical competencies",
+      month: 'Month 7-8',
+      title: 'Skills Development',
+      focus: 'Building practical competencies',
       icon: Target,
-      color: "text-purple-400",
+      color: 'text-purple-400',
       activities: [
-        "Conduit bending basics - creating neat cable routes",
-        "Socket and switch installation - your first complete jobs",
-        "Trunking systems - commercial wiring methods",
-        "Basic testing procedures - checking your work"
+        'Conduit bending basics - creating neat cable routes',
+        'Socket and switch installation - your first complete jobs',
+        'Trunking systems - commercial wiring methods',
+        'Basic testing procedures - checking your work',
       ],
-      dayInLife: "You might start being given small tasks to complete independently. This trust is earned - keep asking questions and double-check your work."
+      dayInLife:
+        'You might start being given small tasks to complete independently. This trust is earned - keep asking questions and double-check your work.',
     },
     {
-      month: "Month 9-10",
-      title: "Knowledge Expansion",
-      focus: "Broadening understanding",
+      month: 'Month 9-10',
+      title: 'Knowledge Expansion',
+      focus: 'Broadening understanding',
       icon: GraduationCap,
-      color: "text-cyan-400",
+      color: 'text-cyan-400',
       activities: [
-        "Three-phase systems introduction - industrial power basics",
-        "Motor connections - understanding rotating machines",
-        "Control circuits basics - switches and relays",
-        "First college assessments - proving your knowledge"
+        'Three-phase systems introduction - industrial power basics',
+        'Motor connections - understanding rotating machines',
+        'Control circuits basics - switches and relays',
+        'First college assessments - proving your knowledge',
       ],
-      dayInLife: "College work ramps up now. Balancing site work and study takes effort - use your commute time to review notes or listen to electrical podcasts."
+      dayInLife:
+        'College work ramps up now. Balancing site work and study takes effort - use your commute time to review notes or listen to electrical podcasts.',
     },
     {
-      month: "Month 11-12",
-      title: "Year 1 Consolidation",
-      focus: "Review and assessment preparation",
+      month: 'Month 11-12',
+      title: 'Year 1 Consolidation',
+      focus: 'Review and assessment preparation',
       icon: Star,
-      color: "text-orange-400",
+      color: 'text-orange-400',
       activities: [
-        "Portfolio development - documenting your achievements",
-        "Skills assessment preparation - practicing for tests",
-        "Theory revision - filling knowledge gaps",
-        "Year 2 preparation - looking ahead"
+        'Portfolio development - documenting your achievements',
+        'Skills assessment preparation - practicing for tests',
+        'Theory revision - filling knowledge gaps',
+        'Year 2 preparation - looking ahead',
       ],
-      dayInLife: "Reflect on how far you've come! This is a good time to update your portfolio and set goals for Year 2."
-    }
+      dayInLife:
+        "Reflect on how far you've come! This is a good time to update your portfolio and set goals for Year 2.",
+    },
   ];
 
   const keyLearningAreas = [
     {
-      title: "Health & Safety",
+      title: 'Health & Safety',
       icon: Shield,
       progress: 85,
-      color: "text-red-400",
-      bgColor: "bg-red-500/10",
-      borderColor: "border-red-500/30",
+      color: 'text-red-400',
+      bgColor: 'bg-red-500/10',
+      borderColor: 'border-red-500/30',
       topics: [
-        "Construction (Design and Management) Regulations",
-        "Personal Protective Equipment (PPE) requirements",
-        "Risk assessment principles and RAMS",
-        "Emergency procedures and first aid awareness",
-        "Safe working practices and isolation"
-      ]
+        'Construction (Design and Management) Regulations',
+        'Personal Protective Equipment (PPE) requirements',
+        'Risk assessment principles and RAMS',
+        'Emergency procedures and first aid awareness',
+        'Safe working practices and isolation',
+      ],
     },
     {
-      title: "Basic Electrical Theory",
+      title: 'Basic Electrical Theory',
       icon: BookOpen,
       progress: 70,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/30",
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
       topics: [
         "Ohm's Law and power calculations (P=IV)",
-        "Series and parallel circuits behaviour",
-        "AC and DC fundamentals and waveforms",
-        "Electrical symbols and circuit diagrams",
-        "Units, prefixes and measurements"
-      ]
+        'Series and parallel circuits behaviour',
+        'AC and DC fundamentals and waveforms',
+        'Electrical symbols and circuit diagrams',
+        'Units, prefixes and measurements',
+      ],
     },
     {
-      title: "Practical Skills",
+      title: 'Practical Skills',
       icon: Wrench,
       progress: 60,
-      color: "text-green-400",
-      bgColor: "bg-green-500/10",
-      borderColor: "border-green-500/30",
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/10',
+      borderColor: 'border-green-500/30',
       topics: [
-        "Cable preparation, stripping and termination",
-        "Basic wiring techniques and connections",
-        "Tool usage, care and maintenance",
-        "Socket, switch and light installation",
-        "Conduit bending and trunking systems"
-      ]
+        'Cable preparation, stripping and termination',
+        'Basic wiring techniques and connections',
+        'Tool usage, care and maintenance',
+        'Socket, switch and light installation',
+        'Conduit bending and trunking systems',
+      ],
     },
     {
-      title: "Professional Development",
+      title: 'Professional Development',
       icon: Users,
       progress: 75,
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/30",
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/10',
+      borderColor: 'border-purple-500/30',
       topics: [
-        "Communication with colleagues and customers",
-        "Teamwork and collaboration on projects",
-        "Time management and punctuality",
-        "Following instructions accurately",
-        "Professional workplace behaviour"
-      ]
-    }
+        'Communication with colleagues and customers',
+        'Teamwork and collaboration on projects',
+        'Time management and punctuality',
+        'Following instructions accurately',
+        'Professional workplace behaviour',
+      ],
+    },
   ];
 
   const commonChallenges = [
     {
-      challenge: "Information Overload",
+      challenge: 'Information Overload',
       icon: BookOpen,
-      description: "Feeling overwhelmed by the amount of new information coming at you from all directions",
+      description:
+        'Feeling overwhelmed by the amount of new information coming at you from all directions',
       solutions: [
-        "Take notes regularly - carry a small notebook on site",
-        "Ask questions when unclear - there are no stupid questions",
-        "Break learning into manageable chunks - focus on one topic at a time",
-        "Use visual aids, diagrams and YouTube videos to reinforce learning"
-      ]
+        'Take notes regularly - carry a small notebook on site',
+        'Ask questions when unclear - there are no stupid questions',
+        'Break learning into manageable chunks - focus on one topic at a time',
+        'Use visual aids, diagrams and YouTube videos to reinforce learning',
+      ],
     },
     {
-      challenge: "Practical vs Theory Gap",
+      challenge: 'Practical vs Theory Gap',
       icon: Lightbulb,
-      description: "Difficulty connecting what you learn at college with what you see on site",
+      description: 'Difficulty connecting what you learn at college with what you see on site',
       solutions: [
-        "Discuss college topics with your workplace mentor",
-        "Ask to see real examples of theoretical concepts on site",
-        "Keep a learning journal connecting theory to practice",
-        "Practice calculations using real job scenarios"
-      ]
+        'Discuss college topics with your workplace mentor',
+        'Ask to see real examples of theoretical concepts on site',
+        'Keep a learning journal connecting theory to practice',
+        'Practice calculations using real job scenarios',
+      ],
     },
     {
-      challenge: "Confidence Building",
+      challenge: 'Confidence Building',
       icon: Heart,
-      description: "Feeling nervous about making mistakes, asking questions, or not knowing enough",
+      description: 'Feeling nervous about making mistakes, asking questions, or not knowing enough',
       solutions: [
-        "Remember - everyone was a beginner once, including your mentor",
+        'Remember - everyone was a beginner once, including your mentor',
         "Asking questions shows you're engaged and want to learn",
-        "Learn from mistakes rather than fearing them",
-        "Celebrate small achievements - they all add up"
-      ]
+        'Learn from mistakes rather than fearing them',
+        'Celebrate small achievements - they all add up',
+      ],
     },
     {
-      challenge: "Physical Demands",
+      challenge: 'Physical Demands',
       icon: Zap,
-      description: "Adjusting to the physical nature of the work - standing, lifting, working in awkward positions",
+      description:
+        'Adjusting to the physical nature of the work - standing, lifting, working in awkward positions',
       solutions: [
-        "Build stamina gradually - it gets easier",
-        "Wear proper footwear with good support",
-        "Learn proper lifting techniques to protect your back",
-        "Stay hydrated and eat well to maintain energy"
-      ]
-    }
+        'Build stamina gradually - it gets easier',
+        'Wear proper footwear with good support',
+        'Learn proper lifting techniques to protect your back',
+        'Stay hydrated and eat well to maintain energy',
+      ],
+    },
   ];
 
   const firstDaySurvival = [
-    { item: "Arrive 15 minutes early", icon: Clock, tip: "Shows reliability and gives you time to settle" },
-    { item: "Bring a notebook and pen", icon: FileText, tip: "You'll need to write down instructions and notes" },
-    { item: "Wear appropriate clothing", icon: HardHat, tip: "Steel toe boots, work trousers, and layers" },
-    { item: "Bring your lunch and water", icon: Coffee, tip: "You might not be near shops on site" },
-    { item: "Have ID and documents ready", icon: Briefcase, tip: "CSCS card, driving licence, bank details" },
-    { item: "Charge your phone fully", icon: Zap, tip: "You may need to call or use maps" }
+    {
+      item: 'Arrive 15 minutes early',
+      icon: Clock,
+      tip: 'Shows reliability and gives you time to settle',
+    },
+    {
+      item: 'Bring a notebook and pen',
+      icon: FileText,
+      tip: "You'll need to write down instructions and notes",
+    },
+    {
+      item: 'Wear appropriate clothing',
+      icon: HardHat,
+      tip: 'Steel toe boots, work trousers, and layers',
+    },
+    {
+      item: 'Bring your lunch and water',
+      icon: Coffee,
+      tip: 'You might not be near shops on site',
+    },
+    {
+      item: 'Have ID and documents ready',
+      icon: Briefcase,
+      tip: 'CSCS card, driving licence, bank details',
+    },
+    { item: 'Charge your phone fully', icon: Zap, tip: 'You may need to call or use maps' },
   ];
 
   const basicToolkit = [
-    { tool: "Side cutters", purpose: "Cutting cables cleanly", priority: "Essential" },
-    { tool: "Pliers (combination)", purpose: "Gripping and twisting wires", priority: "Essential" },
-    { tool: "Wire strippers", purpose: "Removing cable insulation safely", priority: "Essential" },
-    { tool: "Flat screwdriver set", purpose: "Terminal connections", priority: "Essential" },
-    { tool: "Phillips screwdriver set", purpose: "Accessory fixings", priority: "Essential" },
-    { tool: "Voltage tester", purpose: "Checking circuits are dead", priority: "Essential" },
-    { tool: "Tape measure (5m)", purpose: "Measuring cable runs", priority: "Essential" },
-    { tool: "Stanley knife", purpose: "Cutting and stripping", priority: "Essential" },
-    { tool: "Electrical tape", purpose: "Insulation and marking", priority: "Essential" },
-    { tool: "Spirit level (small)", purpose: "Keeping things straight", priority: "Useful" },
-    { tool: "Torch/headlamp", purpose: "Working in dark spaces", priority: "Useful" },
-    { tool: "Tool belt/pouch", purpose: "Keeping tools accessible", priority: "Useful" }
+    { tool: 'Side cutters', purpose: 'Cutting cables cleanly', priority: 'Essential' },
+    { tool: 'Pliers (combination)', purpose: 'Gripping and twisting wires', priority: 'Essential' },
+    { tool: 'Wire strippers', purpose: 'Removing cable insulation safely', priority: 'Essential' },
+    { tool: 'Flat screwdriver set', purpose: 'Terminal connections', priority: 'Essential' },
+    { tool: 'Phillips screwdriver set', purpose: 'Accessory fixings', priority: 'Essential' },
+    { tool: 'Voltage tester', purpose: 'Checking circuits are dead', priority: 'Essential' },
+    { tool: 'Tape measure (5m)', purpose: 'Measuring cable runs', priority: 'Essential' },
+    { tool: 'Stanley knife', purpose: 'Cutting and stripping', priority: 'Essential' },
+    { tool: 'Electrical tape', purpose: 'Insulation and marking', priority: 'Essential' },
+    { tool: 'Spirit level (small)', purpose: 'Keeping things straight', priority: 'Useful' },
+    { tool: 'Torch/headlamp', purpose: 'Working in dark spaces', priority: 'Useful' },
+    { tool: 'Tool belt/pouch', purpose: 'Keeping tools accessible', priority: 'Useful' },
   ];
 
   const weeklyScheduleExample = {
-    monday: { location: "Site", activities: "Working with mentor on domestic rewire" },
-    tuesday: { location: "Site", activities: "Continuing rewire, first fix work" },
-    wednesday: { location: "College", activities: "Theory classes, practical workshop" },
-    thursday: { location: "Site", activities: "Second fix and testing observation" },
-    friday: { location: "Site", activities: "Finishing jobs, site cleanup, portfolio time" }
+    monday: { location: 'Site', activities: 'Working with mentor on domestic rewire' },
+    tuesday: { location: 'Site', activities: 'Continuing rewire, first fix work' },
+    wednesday: { location: 'College', activities: 'Theory classes, practical workshop' },
+    thursday: { location: 'Site', activities: 'Second fix and testing observation' },
+    friday: { location: 'Site', activities: 'Finishing jobs, site cleanup, portfolio time' },
   };
 
   const renderHeroSection = () => (
@@ -279,13 +311,16 @@ const Year1 = () => {
             <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 mb-2">
               Foundation Year
             </Badge>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">Year 1: Building Your Foundations</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              Year 1: Building Your Foundations
+            </h1>
           </div>
         </div>
 
         <p className="text-white text-lg mb-6 max-w-3xl">
-          Your first year is all about learning the basics - safety comes first, then building your knowledge
-          of electrical principles and developing practical skills that will serve you throughout your career.
+          Your first year is all about learning the basics - safety comes first, then building your
+          knowledge of electrical principles and developing practical skills that will serve you
+          throughout your career.
         </p>
 
         {/* Progress indicator */}
@@ -340,7 +375,10 @@ const Year1 = () => {
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {firstDaySurvival.map((item, index) => (
-            <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+            <div
+              key={index}
+              className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10"
+            >
               <div className="p-2 rounded-lg bg-green-500/20">
                 <item.icon className="h-4 w-4 text-green-400" />
               </div>
@@ -363,13 +401,17 @@ const Year1 = () => {
           Your Basic Toolkit
         </CardTitle>
         <p className="text-white text-sm">
-          Tools you'll need to acquire during Year 1. Many employers provide these, but it's good to have your own.
+          Tools you'll need to acquire during Year 1. Many employers provide these, but it's good to
+          have your own.
         </p>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           {basicToolkit.map((item, index) => (
-            <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
+            <div
+              key={index}
+              className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10"
+            >
               <div className="flex items-center gap-3">
                 <Wrench className="h-4 w-4 text-elec-yellow" />
                 <div>
@@ -379,9 +421,10 @@ const Year1 = () => {
               </div>
               <Badge
                 variant="outline"
-                className={item.priority === "Essential"
-                  ? "bg-red-500/20 text-red-400 border-red-500/30"
-                  : "bg-blue-500/20 text-blue-400 border-blue-500/30"
+                className={
+                  item.priority === 'Essential'
+                    ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                    : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
                 }
               >
                 {item.priority}
@@ -391,8 +434,8 @@ const Year1 = () => {
         </div>
         <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
           <p className="text-white text-sm">
-            <strong className="text-elec-yellow">Tip:</strong> Ask your employer what they provide before buying.
-            Quality tools last longer - buy the best you can afford.
+            <strong className="text-elec-yellow">Tip:</strong> Ask your employer what they provide
+            before buying. Quality tools last longer - buy the best you can afford.
           </p>
         </div>
       </CardContent>
@@ -475,11 +518,15 @@ const Year1 = () => {
         Key Learning Areas
       </h2>
       <p className="text-white">
-        These are the main areas you'll develop during Year 1. Progress bars show typical expectations by year end.
+        These are the main areas you'll develop during Year 1. Progress bars show typical
+        expectations by year end.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {keyLearningAreas.map((area, index) => (
-          <Card key={index} className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}>
+          <Card
+            key={index}
+            className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}
+          >
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className={`flex items-center gap-2 text-lg ${area.color}`}>
@@ -520,13 +567,17 @@ const Year1 = () => {
       <CardContent>
         <div className="space-y-2">
           {Object.entries(weeklyScheduleExample).map(([day, info], index) => (
-            <div key={index} className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10">
+            <div
+              key={index}
+              className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10"
+            >
               <div className="w-24 font-medium text-white capitalize">{day}</div>
               <Badge
                 variant="outline"
-                className={info.location === "College"
-                  ? "bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center"
-                  : "bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center"
+                className={
+                  info.location === 'College'
+                    ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center'
+                    : 'bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center'
                 }
               >
                 {info.location}
@@ -687,7 +738,9 @@ const Year1 = () => {
                   <period.icon className={`h-4 w-4 ${period.color}`} />
                   <span className="font-medium text-white">{period.title}</span>
                 </div>
-                <Badge variant="outline" className="mb-2 text-xs">{period.month}</Badge>
+                <Badge variant="outline" className="mb-2 text-xs">
+                  {period.month}
+                </Badge>
                 <p className="text-white text-xs mb-2">{period.focus}</p>
                 <div className="space-y-1">
                   {period.activities.slice(0, 2).map((activity, idx) => (
@@ -730,17 +783,25 @@ const Year1 = () => {
         </MobileAccordionTrigger>
         <MobileAccordionContent>
           <div className="space-y-2 pt-2">
-            {basicToolkit.filter(t => t.priority === "Essential").map((item, index) => (
-              <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5">
-                <div className="flex items-center gap-2">
-                  <Wrench className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-white text-sm">{item.tool}</span>
+            {basicToolkit
+              .filter((t) => t.priority === 'Essential')
+              .map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-2 rounded-lg bg-white/5"
+                >
+                  <div className="flex items-center gap-2">
+                    <Wrench className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-white text-sm">{item.tool}</span>
+                  </div>
+                  <Badge
+                    variant="outline"
+                    className="text-xs bg-red-500/20 text-red-400 border-red-500/30"
+                  >
+                    Essential
+                  </Badge>
                 </div>
-                <Badge variant="outline" className="text-xs bg-red-500/20 text-red-400 border-red-500/30">
-                  Essential
-                </Badge>
-              </div>
-            ))}
+              ))}
           </div>
         </MobileAccordionContent>
       </MobileAccordionItem>
@@ -753,7 +814,10 @@ const Year1 = () => {
         <MobileAccordionContent>
           <div className="space-y-3 pt-2">
             {keyLearningAreas.map((area, index) => (
-              <div key={index} className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}>
+              <div
+                key={index}
+                className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span className={`font-medium ${area.color}`}>{area.title}</span>
                   <span className={`text-sm ${area.color}`}>{area.progress}%</span>
@@ -773,7 +837,10 @@ const Year1 = () => {
         <MobileAccordionContent>
           <div className="space-y-3 pt-2">
             {commonChallenges.map((item, index) => (
-              <div key={index} className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+              <div
+                key={index}
+                className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
+              >
                 <div className="font-medium text-orange-400 text-sm mb-1">{item.challenge}</div>
                 <p className="text-white text-xs mb-2">{item.description}</p>
                 <div className="text-white text-xs">

@@ -8,64 +8,52 @@ import { QuizQuestion } from '@/types/quiz';
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the minimum bend radius for a 10mm² SWA cable during installation?",
+    question: 'What is the minimum bend radius for a 10mm² SWA cable during installation?',
     options: [
-      "3 times the cable diameter",
-      "6 times the cable diameter", 
-      "8 times the cable diameter",
-      "12 times the cable diameter"
+      '3 times the cable diameter',
+      '6 times the cable diameter',
+      '8 times the cable diameter',
+      '12 times the cable diameter',
     ],
     correctAnswer: 1,
-    explanation: "For SWA (Steel Wire Armoured) cables, the minimum bend radius during installation is 6 times the cable diameter. Once installed and fixed, this increases to 8 times the diameter to prevent damage to the armour and conductors."
+    explanation:
+      'For SWA (Steel Wire Armoured) cables, the minimum bend radius during installation is 6 times the cable diameter. Once installed and fixed, this increases to 8 times the diameter to prevent damage to the armour and conductors.',
   },
   {
     id: 2,
-    question: "According to BS 7671, what is the maximum spacing for supports when installing PVC insulated cables horizontally?",
-    options: [
-      "300mm",
-      "400mm",
-      "600mm", 
-      "750mm"
-    ],
+    question:
+      'According to BS 7671, what is the maximum spacing for supports when installing PVC insulated cables horizontally?',
+    options: ['300mm', '400mm', '600mm', '750mm'],
     correctAnswer: 1,
-    explanation: "BS 7671 requires PVC insulated cables to be supported at maximum 400mm intervals when installed horizontally, and 300mm when installed vertically. This ensures adequate support and prevents cable sag."
+    explanation:
+      'BS 7671 requires PVC insulated cables to be supported at maximum 400mm intervals when installed horizontally, and 300mm when installed vertically. This ensures adequate support and prevents cable sag.',
   },
   {
     id: 3,
-    question: "What minimum IP rating is required for containment systems in external installations?",
-    options: [
-      "IP44",
-      "IP54",
-      "IP65",
-      "IP68"
-    ],
+    question:
+      'What minimum IP rating is required for containment systems in external installations?',
+    options: ['IP44', 'IP54', 'IP65', 'IP68'],
     correctAnswer: 2,
-    explanation: "External installations require a minimum IP65 rating to provide protection against dust ingress (IP6X) and water jets from any direction (IPX5). This ensures adequate protection in outdoor environments."
+    explanation:
+      'External installations require a minimum IP65 rating to provide protection against dust ingress (IP6X) and water jets from any direction (IPX5). This ensures adequate protection in outdoor environments.',
   },
   {
     id: 4,
-    question: "What is the minimum depth for burying EV charging cables under a domestic driveway?",
-    options: [
-      "300mm",
-      "450mm", 
-      "600mm",
-      "750mm"
-    ],
+    question: 'What is the minimum depth for burying EV charging cables under a domestic driveway?',
+    options: ['300mm', '450mm', '600mm', '750mm'],
     correctAnswer: 2,
-    explanation: "Cables under roads and driveways must be buried at a minimum depth of 600mm to provide adequate protection from vehicle loading and potential excavation damage. Normal burial depth is 450mm for areas without vehicle access."
+    explanation:
+      'Cables under roads and driveways must be buried at a minimum depth of 600mm to provide adequate protection from vehicle loading and potential excavation damage. Normal burial depth is 450mm for areas without vehicle access.',
   },
   {
     id: 5,
-    question: "When installing cables in containment systems, what is the maximum fill factor to ensure proper heat dissipation?",
-    options: [
-      "30%",
-      "40%",
-      "50%",
-      "60%"
-    ],
+    question:
+      'When installing cables in containment systems, what is the maximum fill factor to ensure proper heat dissipation?',
+    options: ['30%', '40%', '50%', '60%'],
     correctAnswer: 1,
-    explanation: "The maximum fill factor for cable containment is 40% to ensure adequate heat dissipation and space for thermal expansion. This prevents overheating and allows for proper airflow around the cables."
-  }
+    explanation:
+      'The maximum fill factor for cable containment is 40% to ensure adequate heat dissipation and space for thermal expansion. This prevents overheating and allows for proper airflow around the cables.',
+  },
 ];
 
 export const EVChargingModule3Section4Quiz = () => {
@@ -76,7 +64,7 @@ export const EVChargingModule3Section4Quiz = () => {
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (quizCompleted) return;
-    
+
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestion] = answerIndex;
     setSelectedAnswers(newAnswers);
@@ -127,14 +115,14 @@ export const EVChargingModule3Section4Quiz = () => {
             <div className="text-3xl font-bold text-foreground">
               {score}/{quizQuestions.length}
             </div>
-            <div className="text-xl text-gray-300">
-              {percentage}% Score
-            </div>
-            <Badge 
-              variant={percentage >= 80 ? "default" : percentage >= 60 ? "secondary" : "destructive"}
+            <div className="text-xl text-gray-300">{percentage}% Score</div>
+            <Badge
+              variant={
+                percentage >= 80 ? 'default' : percentage >= 60 ? 'secondary' : 'destructive'
+              }
               className="text-lg px-4 py-2"
             >
-              {percentage >= 80 ? "Excellent!" : percentage >= 60 ? "Good" : "Needs Improvement"}
+              {percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good' : 'Needs Improvement'}
             </Badge>
           </div>
 
@@ -142,7 +130,7 @@ export const EVChargingModule3Section4Quiz = () => {
             {quizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <div key={question.id} className="border border-gray-600 rounded-lg p-4">
                   <div className="flex items-start gap-3 mb-3">
@@ -156,16 +144,16 @@ export const EVChargingModule3Section4Quiz = () => {
                         Question {index + 1}: {question.question}
                       </p>
                       <p className="text-sm text-gray-300 mb-2">
-                        <span className="font-medium">Your answer:</span> {question.options[userAnswer]}
+                        <span className="font-medium">Your answer:</span>{' '}
+                        {question.options[userAnswer]}
                       </p>
                       {!isCorrect && (
                         <p className="text-sm text-green-400 mb-2">
-                          <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
+                          <span className="font-medium">Correct answer:</span>{' '}
+                          {question.options[question.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-gray-400">
-                        {question.explanation}
-                      </p>
+                      <p className="text-sm text-gray-400">{question.explanation}</p>
                     </div>
                   </div>
                 </div>
@@ -173,7 +161,7 @@ export const EVChargingModule3Section4Quiz = () => {
             })}
           </div>
 
-          <Button 
+          <Button
             onClick={resetQuiz}
             className="w-full bg-elec-yellow text-black hover:bg-yellow-600"
           >
@@ -202,7 +190,7 @@ export const EVChargingModule3Section4Quiz = () => {
           <h3 className="text-lg font-semibold text-foreground">
             {quizQuestions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {quizQuestions[currentQuestion].options.map((option, index) => (
               <button
@@ -214,9 +202,7 @@ export const EVChargingModule3Section4Quiz = () => {
                     : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500 hover:bg-gray-800'
                 }`}
               >
-                <span className="font-medium mr-3">
-                  {String.fromCharCode(65 + index)}.
-                </span>
+                <span className="font-medium mr-3">{String.fromCharCode(65 + index)}.</span>
                 {option}
               </button>
             ))}
@@ -232,7 +218,7 @@ export const EVChargingModule3Section4Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

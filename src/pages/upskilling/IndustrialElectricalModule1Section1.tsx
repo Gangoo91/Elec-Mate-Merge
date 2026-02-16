@@ -5,181 +5,206 @@ import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Industrial vs Domestic Electrical Setup - Industrial Electrical Module 1.1";
-const DESCRIPTION = "Learn the key differences between industrial and domestic electrical systems: voltage levels (230V vs 400V three-phase), protection systems, installation methods, documentation requirements, and competency standards per BS 7671 and BS EN 61439.";
+const TITLE = 'Industrial vs Domestic Electrical Setup - Industrial Electrical Module 1.1';
+const DESCRIPTION =
+  'Learn the key differences between industrial and domestic electrical systems: voltage levels (230V vs 400V three-phase), protection systems, installation methods, documentation requirements, and competency standards per BS 7671 and BS EN 61439.';
 
 const quickCheckQuestions = [
   {
-    id: "voltage-levels",
-    question: "What is the standard three-phase voltage in UK industrial installations?",
+    id: 'voltage-levels',
+    question: 'What is the standard three-phase voltage in UK industrial installations?',
     options: [
-      "230V line-to-neutral",
-      "400V line-to-line (three-phase)",
-      "110V reduced voltage",
-      "415V DC supply"
+      '230V line-to-neutral',
+      '400V line-to-line (three-phase)',
+      '110V reduced voltage',
+      '415V DC supply',
     ],
     correctIndex: 1,
-    explanation: "UK industrial installations use 400V line-to-line for three-phase systems, derived from 230V line-to-neutral. The previous 415V nominal was harmonised to 400V under European standards, though the actual measured voltage may still vary within tolerance."
+    explanation:
+      'UK industrial installations use 400V line-to-line for three-phase systems, derived from 230V line-to-neutral. The previous 415V nominal was harmonised to 400V under European standards, though the actual measured voltage may still vary within tolerance.',
   },
   {
-    id: "earthing-systems",
-    question: "Which earthing system uses a combined neutral and protective conductor from the supply transformer?",
-    options: [
-      "TT system",
-      "TN-S system",
-      "TN-C-S (PME) system",
-      "IT system"
-    ],
+    id: 'earthing-systems',
+    question:
+      'Which earthing system uses a combined neutral and protective conductor from the supply transformer?',
+    options: ['TT system', 'TN-S system', 'TN-C-S (PME) system', 'IT system'],
     correctIndex: 2,
-    explanation: "TN-C-S (Protective Multiple Earthing) uses a combined PEN conductor from the transformer, which is split into separate neutral and earth at the service entrance. This is the most common supply arrangement in the UK."
+    explanation:
+      'TN-C-S (Protective Multiple Earthing) uses a combined PEN conductor from the transformer, which is split into separate neutral and earth at the service entrance. This is the most common supply arrangement in the UK.',
   },
   {
-    id: "discrimination",
-    question: "What is the purpose of discrimination (selectivity) in industrial protection systems?",
+    id: 'discrimination',
+    question:
+      'What is the purpose of discrimination (selectivity) in industrial protection systems?',
     options: [
-      "To reduce cable costs",
-      "To ensure only the device nearest the fault operates first",
-      "To increase the total available fault current",
-      "To eliminate the need for RCDs"
+      'To reduce cable costs',
+      'To ensure only the device nearest the fault operates first',
+      'To increase the total available fault current',
+      'To eliminate the need for RCDs',
     ],
     correctIndex: 1,
-    explanation: "Discrimination ensures that protective devices operate in the correct sequence - the device nearest to the fault should trip first, isolating only the affected circuit while maintaining supply to healthy circuits. This is critical for industrial continuity."
-  }
+    explanation:
+      'Discrimination ensures that protective devices operate in the correct sequence - the device nearest to the fault should trip first, isolating only the affected circuit while maintaining supply to healthy circuits. This is critical for industrial continuity.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the nominal phase-to-phase voltage in a UK three-phase industrial supply?",
-    options: ["230V", "400V", "415V", "440V"],
+    question: 'What is the nominal phase-to-phase voltage in a UK three-phase industrial supply?',
+    options: ['230V', '400V', '415V', '440V'],
     correctAnswer: 1,
-    explanation: "The harmonised European standard specifies 400V phase-to-phase for three-phase supplies, with 230V phase-to-neutral."
+    explanation:
+      'The harmonised European standard specifies 400V phase-to-phase for three-phase supplies, with 230V phase-to-neutral.',
   },
   {
     id: 2,
-    question: "Which British Standard covers requirements for electrical installations (the IET Wiring Regulations)?",
-    options: ["BS EN 61439", "BS 5839", "BS 7671", "BS EN 60947"],
+    question:
+      'Which British Standard covers requirements for electrical installations (the IET Wiring Regulations)?',
+    options: ['BS EN 61439', 'BS 5839', 'BS 7671', 'BS EN 60947'],
     correctAnswer: 2,
-    explanation: "BS 7671 is the UK standard for electrical installations, commonly known as the IET Wiring Regulations or the 18th Edition."
+    explanation:
+      'BS 7671 is the UK standard for electrical installations, commonly known as the IET Wiring Regulations or the 18th Edition.',
   },
   {
     id: 3,
-    question: "In a TN-S earthing system, how is the earth provided?",
+    question: 'In a TN-S earthing system, how is the earth provided?',
     options: [
-      "Via a local earth electrode only",
-      "Via a separate conductor from the supply transformer",
-      "Via a combined PEN conductor that splits at the origin",
-      "Via the building steelwork only"
+      'Via a local earth electrode only',
+      'Via a separate conductor from the supply transformer',
+      'Via a combined PEN conductor that splits at the origin',
+      'Via the building steelwork only',
     ],
     correctAnswer: 1,
-    explanation: "TN-S provides a separate earth conductor all the way back to the supply transformer, offering the most reliable earth path with no risk of neutral-earth faults."
+    explanation:
+      'TN-S provides a separate earth conductor all the way back to the supply transformer, offering the most reliable earth path with no risk of neutral-earth faults.',
   },
   {
     id: 4,
-    question: "What is the typical maximum demand for a domestic dwelling compared to a small industrial unit?",
+    question:
+      'What is the typical maximum demand for a domestic dwelling compared to a small industrial unit?',
     options: [
-      "Both typically under 10kVA",
-      "Domestic 10-15kVA vs Industrial 50-500kVA",
-      "Domestic 100kVA vs Industrial 50kVA",
-      "Both typically over 1MVA"
+      'Both typically under 10kVA',
+      'Domestic 10-15kVA vs Industrial 50-500kVA',
+      'Domestic 100kVA vs Industrial 50kVA',
+      'Both typically over 1MVA',
     ],
     correctAnswer: 1,
-    explanation: "Domestic properties typically have a maximum demand of 10-15kVA (single-phase 100A), while small industrial units commonly require 50-500kVA three-phase supplies."
+    explanation:
+      'Domestic properties typically have a maximum demand of 10-15kVA (single-phase 100A), while small industrial units commonly require 50-500kVA three-phase supplies.',
   },
   {
     id: 5,
-    question: "Which containment system is typically specified for industrial environments requiring fire performance?",
+    question:
+      'Which containment system is typically specified for industrial environments requiring fire performance?',
     options: [
-      "Plastic conduit",
-      "Steel trunking and cable tray with LSF/LSZH cables",
-      "PVC trunking",
-      "Surface-mounted clips"
+      'Plastic conduit',
+      'Steel trunking and cable tray with LSF/LSZH cables',
+      'PVC trunking',
+      'Surface-mounted clips',
     ],
     correctAnswer: 1,
-    explanation: "Industrial installations typically specify steel containment (trunking, tray, basket) with LSF/LSZH (Low Smoke Zero Halogen) cables to minimise toxic fume emission during fire."
+    explanation:
+      'Industrial installations typically specify steel containment (trunking, tray, basket) with LSF/LSZH (Low Smoke Zero Halogen) cables to minimise toxic fume emission during fire.',
   },
   {
     id: 6,
-    question: "BS EN 61439 covers which type of equipment?",
+    question: 'BS EN 61439 covers which type of equipment?',
     options: [
-      "Domestic consumer units",
-      "Low-voltage switchgear and controlgear assemblies",
-      "High-voltage transformers",
-      "Emergency lighting systems"
+      'Domestic consumer units',
+      'Low-voltage switchgear and controlgear assemblies',
+      'High-voltage transformers',
+      'Emergency lighting systems',
     ],
     correctAnswer: 1,
-    explanation: "BS EN 61439 is the harmonised European standard for low-voltage switchgear and controlgear assemblies, including distribution boards, motor control centres, and switchboards used in industrial installations."
+    explanation:
+      'BS EN 61439 is the harmonised European standard for low-voltage switchgear and controlgear assemblies, including distribution boards, motor control centres, and switchboards used in industrial installations.',
   },
   {
     id: 7,
-    question: "What additional qualification is typically required for industrial electrical work beyond domestic competency?",
+    question:
+      'What additional qualification is typically required for industrial electrical work beyond domestic competency?',
     options: [
-      "Part P competent person registration only",
-      "NVQ Level 2 in Electrical Installation",
-      "JIB ECS Gold Card or equivalent with industrial endorsement",
-      "No additional qualification required"
+      'Part P competent person registration only',
+      'NVQ Level 2 in Electrical Installation',
+      'JIB ECS Gold Card or equivalent with industrial endorsement',
+      'No additional qualification required',
     ],
     correctAnswer: 2,
-    explanation: "Industrial electrical work typically requires JIB ECS Gold Card or equivalent registration, often with specific endorsements for industrial installations, demonstrating competency in three-phase systems, HV awareness, and industrial protection."
+    explanation:
+      'Industrial electrical work typically requires JIB ECS Gold Card or equivalent registration, often with specific endorsements for industrial installations, demonstrating competency in three-phase systems, HV awareness, and industrial protection.',
   },
   {
     id: 8,
-    question: "What is the primary purpose of an EICR (Electrical Installation Condition Report)?",
+    question: 'What is the primary purpose of an EICR (Electrical Installation Condition Report)?',
     options: [
-      "To certify new installations only",
-      "To assess the condition of an existing installation against current standards",
-      "To replace the need for design documentation",
-      "To test individual appliances"
+      'To certify new installations only',
+      'To assess the condition of an existing installation against current standards',
+      'To replace the need for design documentation',
+      'To test individual appliances',
     ],
     correctAnswer: 1,
-    explanation: "An EICR assesses existing installations against the current edition of BS 7671, identifying defects, potential dangers, and non-compliances that require attention."
+    explanation:
+      'An EICR assesses existing installations against the current edition of BS 7671, identifying defects, potential dangers, and non-compliances that require attention.',
   },
   {
     id: 9,
-    question: "What minimum IP rating is typically required for industrial switchgear in a clean indoor environment?",
-    options: ["IP20", "IP44", "IP65", "IP68"],
+    question:
+      'What minimum IP rating is typically required for industrial switchgear in a clean indoor environment?',
+    options: ['IP20', 'IP44', 'IP65', 'IP68'],
     correctAnswer: 0,
-    explanation: "IP20 is the minimum for clean indoor industrial environments, providing finger protection. Higher ratings (IP44, IP54, IP65) are required for outdoor, dusty, or wet locations."
+    explanation:
+      'IP20 is the minimum for clean indoor industrial environments, providing finger protection. Higher ratings (IP44, IP54, IP65) are required for outdoor, dusty, or wet locations.',
   },
   {
     id: 10,
-    question: "Which document would specify discrimination study requirements for a new industrial installation?",
+    question:
+      'Which document would specify discrimination study requirements for a new industrial installation?',
     options: [
       "The client's purchase order",
-      "The electrical design specification and single-line diagram",
+      'The electrical design specification and single-line diagram',
       "The building's fire risk assessment only",
-      "The manufacturer's product catalogue"
+      "The manufacturer's product catalogue",
     ],
     correctAnswer: 1,
-    explanation: "The electrical design specification and single-line diagram define protection coordination requirements, device ratings, and discrimination margins that must be achieved during installation."
-  }
+    explanation:
+      'The electrical design specification and single-line diagram define protection coordination requirements, device ratings, and discrimination margins that must be achieved during installation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I work on three-phase industrial systems with only domestic installation experience?",
-    answer: "While the fundamental electrical principles are the same, industrial work requires additional competencies including three-phase system understanding, industrial protection coordination, safe isolation of high-energy circuits, and familiarity with BS EN 61439 switchgear. You should complete appropriate upskilling training and work under supervision until competent. Many employers require specific industrial endorsements on your ECS card."
+    question:
+      'Can I work on three-phase industrial systems with only domestic installation experience?',
+    answer:
+      'While the fundamental electrical principles are the same, industrial work requires additional competencies including three-phase system understanding, industrial protection coordination, safe isolation of high-energy circuits, and familiarity with BS EN 61439 switchgear. You should complete appropriate upskilling training and work under supervision until competent. Many employers require specific industrial endorsements on your ECS card.',
   },
   {
-    question: "What is the difference between TN-C-S (PME) and TN-S earthing, and why does it matter industrially?",
-    answer: "TN-S provides a dedicated earth conductor from the transformer, offering superior earth fault loop impedance and no risk of neutral-earth voltage rise. TN-C-S (PME) uses a combined PEN conductor that splits at the origin, which can carry neutral current and is unsuitable for certain applications (e.g., swimming pools, petrol stations). Industrial sites often request or require TN-S supplies for critical systems and sensitive electronic equipment."
+    question:
+      'What is the difference between TN-C-S (PME) and TN-S earthing, and why does it matter industrially?',
+    answer:
+      'TN-S provides a dedicated earth conductor from the transformer, offering superior earth fault loop impedance and no risk of neutral-earth voltage rise. TN-C-S (PME) uses a combined PEN conductor that splits at the origin, which can carry neutral current and is unsuitable for certain applications (e.g., swimming pools, petrol stations). Industrial sites often request or require TN-S supplies for critical systems and sensitive electronic equipment.',
   },
   {
-    question: "Why do industrial installations require discrimination studies?",
-    answer: "Discrimination studies ensure protective devices operate in the correct sequence during faults - the device nearest the fault trips first, maintaining supply to unaffected circuits. In industrial settings, unplanned shutdowns can cause significant production losses, safety hazards (e.g., process interruption), and equipment damage. Studies verify that time-current characteristics of upstream and downstream devices achieve proper coordination."
+    question: 'Why do industrial installations require discrimination studies?',
+    answer:
+      'Discrimination studies ensure protective devices operate in the correct sequence during faults - the device nearest the fault trips first, maintaining supply to unaffected circuits. In industrial settings, unplanned shutdowns can cause significant production losses, safety hazards (e.g., process interruption), and equipment damage. Studies verify that time-current characteristics of upstream and downstream devices achieve proper coordination.',
   },
   {
-    question: "What documentation is required for industrial electrical installations?",
-    answer: "Industrial installations require comprehensive documentation including: design specifications, single-line diagrams, cable schedules, protection coordination studies, BS 7671 electrical installation certificates, assembly declarations of conformity per BS EN 61439, test results, operation and maintenance manuals, and as-built drawings. This documentation supports safe operation, maintenance, and future modifications."
+    question: 'What documentation is required for industrial electrical installations?',
+    answer:
+      'Industrial installations require comprehensive documentation including: design specifications, single-line diagrams, cable schedules, protection coordination studies, BS 7671 electrical installation certificates, assembly declarations of conformity per BS EN 61439, test results, operation and maintenance manuals, and as-built drawings. This documentation supports safe operation, maintenance, and future modifications.',
   },
   {
-    question: "What are the key cable management differences between domestic and industrial?",
-    answer: "Industrial installations use robust containment systems including steel cable tray, ladder rack, trunking, and heavy-gauge conduit. Cables are typically multicore armoured (SWA) or installed in steel containment for mechanical protection. Segregation of power, control, and data cables is required to prevent EMI. Fire-rated routes must maintain integrity, and cable sizing must account for grouping, ambient temperature, and harmonics."
+    question: 'What are the key cable management differences between domestic and industrial?',
+    answer:
+      'Industrial installations use robust containment systems including steel cable tray, ladder rack, trunking, and heavy-gauge conduit. Cables are typically multicore armoured (SWA) or installed in steel containment for mechanical protection. Segregation of power, control, and data cables is required to prevent EMI. Fire-rated routes must maintain integrity, and cable sizing must account for grouping, ambient temperature, and harmonics.',
   },
   {
-    question: "How do I verify that industrial switchgear meets BS EN 61439 requirements?",
-    answer: "Request the manufacturer's Declaration of Conformity and test reports demonstrating compliance with BS EN 61439. Key verifications include: rated current (In), prospective fault current rating (Icw), temperature rise limits, IP rating for the environment, and verification of the assembly by design rules, testing, or derivation. The switchgear must be suitable for the specific installation conditions and fault levels."
-  }
+    question: 'How do I verify that industrial switchgear meets BS EN 61439 requirements?',
+    answer:
+      "Request the manufacturer's Declaration of Conformity and test reports demonstrating compliance with BS EN 61439. Key verifications include: rated current (In), prospective fault current rating (Icw), temperature rise limits, IP rating for the environment, and verification of the assembly by design rules, testing, or derivation. The switchgear must be suitable for the specific installation conditions and fault levels.",
+  },
 ];
 
 const IndustrialElectricalModule1Section1 = () => {
@@ -190,7 +215,12 @@ const IndustrialElectricalModule1Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -201,7 +231,6 @@ const IndustrialElectricalModule1Section1 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -212,7 +241,8 @@ const IndustrialElectricalModule1Section1 = () => {
             Industrial vs Domestic Electrical Setup
           </h1>
           <p className="text-white/80">
-            Key differences in voltage, protection, installation methods, and compliance requirements
+            Key differences in voltage, protection, installation methods, and compliance
+            requirements
           </p>
         </header>
 
@@ -221,19 +251,35 @@ const IndustrialElectricalModule1Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Voltage:</strong> Domestic 230V single-phase vs Industrial 400V three-phase</li>
-              <li><strong>Load:</strong> 10-15kVA domestic vs 50kVA-10MVA+ industrial</li>
-              <li><strong>Protection:</strong> Simple MCB/RCD vs coordinated discrimination</li>
-              <li><strong>Standards:</strong> BS 7671 plus BS EN 61439 for switchgear</li>
+              <li>
+                <strong>Voltage:</strong> Domestic 230V single-phase vs Industrial 400V three-phase
+              </li>
+              <li>
+                <strong>Load:</strong> 10-15kVA domestic vs 50kVA-10MVA+ industrial
+              </li>
+              <li>
+                <strong>Protection:</strong> Simple MCB/RCD vs coordinated discrimination
+              </li>
+              <li>
+                <strong>Standards:</strong> BS 7671 plus BS EN 61439 for switchgear
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Differences</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Earthing:</strong> TN-C-S common domestic; TN-S preferred industrial</li>
-              <li><strong>Containment:</strong> PVC domestic vs steel tray/trunking industrial</li>
-              <li><strong>Documentation:</strong> Basic certs vs full design packages</li>
-              <li><strong>Competency:</strong> Part P vs JIB ECS industrial endorsement</li>
+              <li>
+                <strong>Earthing:</strong> TN-C-S common domestic; TN-S preferred industrial
+              </li>
+              <li>
+                <strong>Containment:</strong> PVC domestic vs steel tray/trunking industrial
+              </li>
+              <li>
+                <strong>Documentation:</strong> Basic certs vs full design packages
+              </li>
+              <li>
+                <strong>Competency:</strong> Part P vs JIB ECS industrial endorsement
+              </li>
             </ul>
           </div>
         </div>
@@ -243,12 +289,12 @@ const IndustrialElectricalModule1Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Compare 230V single-phase and 400V three-phase systems",
-              "Understand industrial load characteristics and diversity",
-              "Explain protection discrimination and coordination",
-              "Identify industrial containment and cable management",
-              "Recognise documentation and compliance requirements",
-              "Understand competency and qualification differences"
+              'Compare 230V single-phase and 400V three-phase systems',
+              'Understand industrial load characteristics and diversity',
+              'Explain protection discrimination and coordination',
+              'Identify industrial containment and cable management',
+              'Recognise documentation and compliance requirements',
+              'Understand competency and qualification differences',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -269,28 +315,54 @@ const IndustrialElectricalModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The fundamental difference between domestic and industrial electrical systems begins with the supply voltage and configuration. Understanding this is essential for safe working and correct equipment specification.
+              The fundamental difference between domestic and industrial electrical systems begins
+              with the supply voltage and configuration. Understanding this is essential for safe
+              working and correct equipment specification.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Domestic Supply (Single-Phase)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Domestic Supply (Single-Phase)
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Voltage:</strong> 230V AC nominal (216V-253V tolerance)</li>
-                  <li><strong>Configuration:</strong> Single phase + neutral</li>
-                  <li><strong>Typical supply:</strong> 100A single-phase (23kVA max)</li>
-                  <li><strong>Frequency:</strong> 50Hz</li>
-                  <li><strong>Supply type:</strong> Usually TN-C-S (PME)</li>
+                  <li>
+                    <strong>Voltage:</strong> 230V AC nominal (216V-253V tolerance)
+                  </li>
+                  <li>
+                    <strong>Configuration:</strong> Single phase + neutral
+                  </li>
+                  <li>
+                    <strong>Typical supply:</strong> 100A single-phase (23kVA max)
+                  </li>
+                  <li>
+                    <strong>Frequency:</strong> 50Hz
+                  </li>
+                  <li>
+                    <strong>Supply type:</strong> Usually TN-C-S (PME)
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Supply (Three-Phase)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Industrial Supply (Three-Phase)
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Voltage:</strong> 400V phase-to-phase / 230V phase-to-neutral</li>
-                  <li><strong>Configuration:</strong> Three phases (L1, L2, L3) + neutral</li>
-                  <li><strong>Typical supply:</strong> 100A-3000A+ three-phase</li>
-                  <li><strong>Frequency:</strong> 50Hz</li>
-                  <li><strong>Supply type:</strong> TN-S preferred, TN-C-S common</li>
+                  <li>
+                    <strong>Voltage:</strong> 400V phase-to-phase / 230V phase-to-neutral
+                  </li>
+                  <li>
+                    <strong>Configuration:</strong> Three phases (L1, L2, L3) + neutral
+                  </li>
+                  <li>
+                    <strong>Typical supply:</strong> 100A-3000A+ three-phase
+                  </li>
+                  <li>
+                    <strong>Frequency:</strong> 50Hz
+                  </li>
+                  <li>
+                    <strong>Supply type:</strong> TN-S preferred, TN-C-S common
+                  </li>
                 </ul>
               </div>
             </div>
@@ -298,15 +370,30 @@ const IndustrialElectricalModule1Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why Three-Phase for Industrial?</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Higher power delivery:</strong> Three-phase delivers 1.73x more power than single-phase at the same current</li>
-                <li><strong>Balanced loading:</strong> Load can be distributed across three phases, reducing neutral current</li>
-                <li><strong>Motor efficiency:</strong> Three-phase motors are simpler, more efficient, and self-starting</li>
-                <li><strong>Reduced cable size:</strong> For the same power, three-phase requires smaller conductors</li>
+                <li>
+                  <strong>Higher power delivery:</strong> Three-phase delivers 1.73x more power than
+                  single-phase at the same current
+                </li>
+                <li>
+                  <strong>Balanced loading:</strong> Load can be distributed across three phases,
+                  reducing neutral current
+                </li>
+                <li>
+                  <strong>Motor efficiency:</strong> Three-phase motors are simpler, more efficient,
+                  and self-starting
+                </li>
+                <li>
+                  <strong>Reduced cable size:</strong> For the same power, three-phase requires
+                  smaller conductors
+                </li>
               </ul>
             </div>
 
             <p>
-              The historical UK voltage of 415V phase-to-phase was harmonised to 400V under European standards (CENELEC HD 472 S1). However, the supply tolerance means actual measured voltages typically remain around 400-415V. Always verify the actual supply voltage when specifying equipment.
+              The historical UK voltage of 415V phase-to-phase was harmonised to 400V under European
+              standards (CENELEC HD 472 S1). However, the supply tolerance means actual measured
+              voltages typically remain around 400-415V. Always verify the actual supply voltage
+              when specifying equipment.
             </p>
           </div>
         </section>
@@ -321,24 +408,48 @@ const IndustrialElectricalModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Industrial installations present fundamentally different load characteristics compared to domestic properties. Understanding these differences is crucial for proper design, cable sizing, and protection selection.
+              Industrial installations present fundamentally different load characteristics compared
+              to domestic properties. Understanding these differences is crucial for proper design,
+              cable sizing, and protection selection.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Comparison of Load Characteristics:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Comparison of Load Characteristics:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Maximum Demand:</strong> Domestic 10-15kVA typical vs Industrial 50kVA to 10MVA+</li>
-                <li><strong>Load Type:</strong> Domestic resistive/small motors vs Industrial large motors, drives, welders</li>
-                <li><strong>Starting Current:</strong> Domestic low (appliances) vs Industrial 6-8x FLC for DOL motors</li>
-                <li><strong>Power Factor:</strong> Domestic ~0.95 (mostly resistive) vs Industrial 0.7-0.9 (inductive loads)</li>
-                <li><strong>Harmonics:</strong> Domestic minimal vs Industrial significant (VFDs, rectifiers)</li>
-                <li><strong>Diversity:</strong> Domestic high (0.4-0.6) vs Industrial lower (0.7-0.9 for production)</li>
+                <li>
+                  <strong>Maximum Demand:</strong> Domestic 10-15kVA typical vs Industrial 50kVA to
+                  10MVA+
+                </li>
+                <li>
+                  <strong>Load Type:</strong> Domestic resistive/small motors vs Industrial large
+                  motors, drives, welders
+                </li>
+                <li>
+                  <strong>Starting Current:</strong> Domestic low (appliances) vs Industrial 6-8x
+                  FLC for DOL motors
+                </li>
+                <li>
+                  <strong>Power Factor:</strong> Domestic ~0.95 (mostly resistive) vs Industrial
+                  0.7-0.9 (inductive loads)
+                </li>
+                <li>
+                  <strong>Harmonics:</strong> Domestic minimal vs Industrial significant (VFDs,
+                  rectifiers)
+                </li>
+                <li>
+                  <strong>Diversity:</strong> Domestic high (0.4-0.6) vs Industrial lower (0.7-0.9
+                  for production)
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Load Considerations</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Industrial Load Considerations
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Motor starting currents require careful protection selection</li>
                   <li>Power factor correction may be required (capacitor banks)</li>
@@ -348,7 +459,9 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Impact on Installation Design</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Impact on Installation Design
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Larger cable cross-sections (up to 630mm sq and beyond)</li>
                   <li>Higher prospective fault currents (up to 50kA+)</li>
@@ -369,7 +482,9 @@ const IndustrialElectricalModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Industrial protection systems must handle higher fault currents, provide coordinated operation (discrimination), and maintain supply continuity to unaffected circuits. This requires careful selection and coordination of protective devices.
+              Industrial protection systems must handle higher fault currents, provide coordinated
+              operation (discrimination), and maintain supply continuity to unaffected circuits.
+              This requires careful selection and coordination of protective devices.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -384,7 +499,9 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Protection</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Industrial Protection
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>MCCBs and ACBs (up to 6300A)</li>
                   <li>HRC fuses for motor protection</li>
@@ -396,26 +513,56 @@ const IndustrialElectricalModule1Section1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Discrimination (Selectivity) Explained</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Discrimination (Selectivity) Explained
+              </p>
               <p className="text-sm text-white/90 mb-3">
-                Discrimination ensures that during a fault, only the protective device nearest to the fault operates, leaving upstream devices closed and maintaining supply to healthy circuits.
+                Discrimination ensures that during a fault, only the protective device nearest to
+                the fault operates, leaving upstream devices closed and maintaining supply to
+                healthy circuits.
               </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Time discrimination:</strong> Upstream device has longer time delay</li>
-                <li><strong>Current discrimination:</strong> Upstream device has higher setting</li>
-                <li><strong>Energy discrimination:</strong> Upstream device allows downstream to clear fault first (I2t)</li>
-                <li><strong>Zone discrimination:</strong> Communication between devices for intelligent tripping</li>
+                <li>
+                  <strong>Time discrimination:</strong> Upstream device has longer time delay
+                </li>
+                <li>
+                  <strong>Current discrimination:</strong> Upstream device has higher setting
+                </li>
+                <li>
+                  <strong>Energy discrimination:</strong> Upstream device allows downstream to clear
+                  fault first (I2t)
+                </li>
+                <li>
+                  <strong>Zone discrimination:</strong> Communication between devices for
+                  intelligent tripping
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Industrial Protection Devices</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Key Industrial Protection Devices
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>MCCB (Moulded Case Circuit Breaker):</strong> Adjustable thermal-magnetic protection, 16A-1600A</li>
-                <li><strong>ACB (Air Circuit Breaker):</strong> Withdrawable, fully adjustable protection, 630A-6300A</li>
-                <li><strong>Motor Protection Relay:</strong> Overload, phase loss, earth fault, stall protection</li>
-                <li><strong>HRC Fuse:</strong> High rupturing capacity for motor backup protection</li>
-                <li><strong>Surge Protection Device (SPD):</strong> Transient overvoltage protection for sensitive equipment</li>
+                <li>
+                  <strong>MCCB (Moulded Case Circuit Breaker):</strong> Adjustable thermal-magnetic
+                  protection, 16A-1600A
+                </li>
+                <li>
+                  <strong>ACB (Air Circuit Breaker):</strong> Withdrawable, fully adjustable
+                  protection, 630A-6300A
+                </li>
+                <li>
+                  <strong>Motor Protection Relay:</strong> Overload, phase loss, earth fault, stall
+                  protection
+                </li>
+                <li>
+                  <strong>HRC Fuse:</strong> High rupturing capacity for motor backup protection
+                </li>
+                <li>
+                  <strong>Surge Protection Device (SPD):</strong> Transient overvoltage protection
+                  for sensitive equipment
+                </li>
               </ul>
             </div>
           </div>
@@ -431,12 +578,17 @@ const IndustrialElectricalModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Industrial environments demand robust cable containment systems that provide mechanical protection, fire performance, and facilitate maintenance. The choice of containment and cable type is driven by environmental conditions, fire strategy, and operational requirements.
+              Industrial environments demand robust cable containment systems that provide
+              mechanical protection, fire performance, and facilitate maintenance. The choice of
+              containment and cable type is driven by environmental conditions, fire strategy, and
+              operational requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Domestic Installation Methods</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Domestic Installation Methods
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>PVC conduit and trunking</li>
                   <li>Surface-mounted or concealed in walls</li>
@@ -446,7 +598,9 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Installation Methods</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Industrial Installation Methods
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Steel cable tray, ladder, and basket</li>
                   <li>Steel trunking and heavy-gauge conduit</li>
@@ -460,24 +614,48 @@ const IndustrialElectricalModule1Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Cable Segregation Requirements</p>
               <p className="text-sm text-white/90 mb-3">
-                BS 7671 and EMC requirements mandate segregation of different cable types to prevent electromagnetic interference and maintain circuit integrity.
+                BS 7671 and EMC requirements mandate segregation of different cable types to prevent
+                electromagnetic interference and maintain circuit integrity.
               </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Band I:</strong> Extra-low voltage (ELV), fire alarm, data, telecoms</li>
-                <li><strong>Band II:</strong> Low voltage power and lighting circuits</li>
-                <li><strong>Separation distances:</strong> Per BS 7671 Table 52.2 for parallel runs in containment</li>
-                <li><strong>Separate compartments:</strong> Or physical barriers within shared containment</li>
+                <li>
+                  <strong>Band I:</strong> Extra-low voltage (ELV), fire alarm, data, telecoms
+                </li>
+                <li>
+                  <strong>Band II:</strong> Low voltage power and lighting circuits
+                </li>
+                <li>
+                  <strong>Separation distances:</strong> Per BS 7671 Table 52.2 for parallel runs in
+                  containment
+                </li>
+                <li>
+                  <strong>Separate compartments:</strong> Or physical barriers within shared
+                  containment
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Industrial Cable Types</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>SWA (Steel Wire Armoured):</strong> Mechanical protection, direct burial, tray installation</li>
-                <li><strong>LSF/LSZH:</strong> Low smoke and fume emission for occupied buildings</li>
-                <li><strong>MICC (Mineral Insulated):</strong> Fire survival, enhanced fire rating applications</li>
-                <li><strong>SY/CY Flex:</strong> Screened flexible cables for control and instrumentation</li>
-                <li><strong>Busbar trunking:</strong> High-current distribution, tap-off flexibility</li>
+                <li>
+                  <strong>SWA (Steel Wire Armoured):</strong> Mechanical protection, direct burial,
+                  tray installation
+                </li>
+                <li>
+                  <strong>LSF/LSZH:</strong> Low smoke and fume emission for occupied buildings
+                </li>
+                <li>
+                  <strong>MICC (Mineral Insulated):</strong> Fire survival, enhanced fire rating
+                  applications
+                </li>
+                <li>
+                  <strong>SY/CY Flex:</strong> Screened flexible cables for control and
+                  instrumentation
+                </li>
+                <li>
+                  <strong>Busbar trunking:</strong> High-current distribution, tap-off flexibility
+                </li>
               </ul>
             </div>
           </div>
@@ -491,12 +669,17 @@ const IndustrialElectricalModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Industrial electrical installations require comprehensive documentation beyond the basic certificates used for domestic work. This documentation supports safe operation, maintenance, modifications, and regulatory compliance throughout the installation's lifecycle.
+              Industrial electrical installations require comprehensive documentation beyond the
+              basic certificates used for domestic work. This documentation supports safe operation,
+              maintenance, modifications, and regulatory compliance throughout the installation's
+              lifecycle.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Domestic Documentation</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Domestic Documentation
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Electrical Installation Certificate (EIC)</li>
                   <li>Minor Electrical Installation Works Certificate</li>
@@ -506,7 +689,9 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Documentation</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Industrial Documentation
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>All domestic documents plus:</li>
                   <li>Design specification and calculations</li>
@@ -520,19 +705,39 @@ const IndustrialElectricalModule1Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key Industrial Documents:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Design Specification:</strong> Defines requirements and design basis (Project specific)</li>
-                <li><strong>Single-Line Diagram:</strong> Shows power distribution architecture (IEC 60617)</li>
-                <li><strong>Cable Schedule:</strong> Cable sizes, types, routes, lengths (BS 7671)</li>
-                <li><strong>Protection Study:</strong> Discrimination and coordination analysis (BS 7671 / IEC 60909)</li>
-                <li><strong>Switchgear DoC:</strong> Assembly compliance declaration (BS EN 61439)</li>
-                <li><strong>O&amp;M Manual:</strong> Operation and maintenance guidance (Project specific)</li>
+                <li>
+                  <strong>Design Specification:</strong> Defines requirements and design basis
+                  (Project specific)
+                </li>
+                <li>
+                  <strong>Single-Line Diagram:</strong> Shows power distribution architecture (IEC
+                  60617)
+                </li>
+                <li>
+                  <strong>Cable Schedule:</strong> Cable sizes, types, routes, lengths (BS 7671)
+                </li>
+                <li>
+                  <strong>Protection Study:</strong> Discrimination and coordination analysis (BS
+                  7671 / IEC 60909)
+                </li>
+                <li>
+                  <strong>Switchgear DoC:</strong> Assembly compliance declaration (BS EN 61439)
+                </li>
+                <li>
+                  <strong>O&amp;M Manual:</strong> Operation and maintenance guidance (Project
+                  specific)
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">BS EN 61439 Compliance</p>
               <p className="text-sm text-white/90">
-                Industrial switchgear and distribution boards must comply with BS EN 61439 (replacing the old BS EN 60439). This standard requires the original manufacturer or a competent assembler to verify design through one of three methods: verification by testing, verification by calculation, or verification by design rules. A Declaration of Conformity must be provided with every assembly.
+                Industrial switchgear and distribution boards must comply with BS EN 61439
+                (replacing the old BS EN 60439). This standard requires the original manufacturer or
+                a competent assembler to verify design through one of three methods: verification by
+                testing, verification by calculation, or verification by design rules. A Declaration
+                of Conformity must be provided with every assembly.
               </p>
             </div>
           </div>
@@ -548,7 +753,9 @@ const IndustrialElectricalModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Industrial electrical work demands higher levels of competency and often specific qualifications beyond those required for domestic installations. Understanding these requirements is essential for career development and legal compliance.
+              Industrial electrical work demands higher levels of competency and often specific
+              qualifications beyond those required for domestic installations. Understanding these
+              requirements is essential for career development and legal compliance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -563,7 +770,9 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Competency</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Industrial Competency
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>All domestic qualifications plus:</li>
                   <li>Three-phase systems understanding</li>
@@ -575,12 +784,26 @@ const IndustrialElectricalModule1Section1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">JIB ECS Card Categories for Industrial Work</p>
+              <p className="text-sm font-medium text-white mb-2">
+                JIB ECS Card Categories for Industrial Work
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Gold Card (Electrician):</strong> Basic qualification for electrical installation work</li>
-                <li><strong>Gold Card (Approved Electrician):</strong> Higher grade with supervisory capability</li>
-                <li><strong>Gold Card (Technician):</strong> Design, commissioning, and complex systems</li>
-                <li><strong>Specific endorsements:</strong> Industrial, commissioning, inspection and testing</li>
+                <li>
+                  <strong>Gold Card (Electrician):</strong> Basic qualification for electrical
+                  installation work
+                </li>
+                <li>
+                  <strong>Gold Card (Approved Electrician):</strong> Higher grade with supervisory
+                  capability
+                </li>
+                <li>
+                  <strong>Gold Card (Technician):</strong> Design, commissioning, and complex
+                  systems
+                </li>
+                <li>
+                  <strong>Specific endorsements:</strong> Industrial, commissioning, inspection and
+                  testing
+                </li>
               </ul>
             </div>
 
@@ -590,7 +813,10 @@ const IndustrialElectricalModule1Section1 = () => {
                 <div>
                   <p className="text-sm font-medium text-red-400 mb-1">Competency Warning</p>
                   <p className="text-sm text-white">
-                    Working on industrial electrical systems without appropriate competency is dangerous and potentially illegal. Always work within your competence level, seek supervision when learning new skills, and ensure you hold the required qualifications and site authorisations before undertaking work.
+                    Working on industrial electrical systems without appropriate competency is
+                    dangerous and potentially illegal. Always work within your competence level,
+                    seek supervision when learning new skills, and ensure you hold the required
+                    qualifications and site authorisations before undertaking work.
                   </p>
                 </div>
               </div>
@@ -598,7 +824,9 @@ const IndustrialElectricalModule1Section1 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Additional Industrial Training</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Additional Industrial Training
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>City &amp; Guilds 2391 (Inspection and Testing)</li>
                   <li>City &amp; Guilds 2396 (Design of Electrical Systems)</li>
@@ -608,7 +836,9 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Site-Specific Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Site-Specific Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Site induction and safety training</li>
                   <li>Permit-to-work systems</li>
@@ -630,7 +860,9 @@ const IndustrialElectricalModule1Section1 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Transitioning to Industrial Work</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Transitioning to Industrial Work
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always work under supervision until you are competent</li>
                 <li>Study three-phase theory and practice before working on live systems</li>
@@ -640,7 +872,9 @@ const IndustrialElectricalModule1Section1 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Working on Industrial Sites</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Working on Industrial Sites
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always follow permit-to-work procedures</li>
                 <li>Use appropriate PPE for the voltage and fault levels present</li>
@@ -652,10 +886,22 @@ const IndustrialElectricalModule1Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Underestimating fault levels</strong> - industrial systems can have very high prospective fault currents</li>
-                <li><strong>Ignoring phase rotation</strong> - motors can run backwards if phases are connected incorrectly</li>
-                <li><strong>Not verifying discrimination</strong> - changes to protection settings can affect coordination</li>
-                <li><strong>Poor cable segregation</strong> - mixing power and data cables causes EMI issues</li>
+                <li>
+                  <strong>Underestimating fault levels</strong> - industrial systems can have very
+                  high prospective fault currents
+                </li>
+                <li>
+                  <strong>Ignoring phase rotation</strong> - motors can run backwards if phases are
+                  connected incorrectly
+                </li>
+                <li>
+                  <strong>Not verifying discrimination</strong> - changes to protection settings can
+                  affect coordination
+                </li>
+                <li>
+                  <strong>Poor cable segregation</strong> - mixing power and data cables causes EMI
+                  issues
+                </li>
               </ul>
             </div>
           </div>
@@ -715,28 +961,33 @@ const IndustrialElectricalModule1Section1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

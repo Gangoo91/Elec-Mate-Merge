@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LucideIcon, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LucideIcon, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Activity {
   id: string;
@@ -22,16 +22,16 @@ interface ActivityFeedProps {
 }
 
 export function ActivityFeed({
-  title = "Recent Activity",
+  title = 'Recent Activity',
   activities,
   className,
   onViewAll,
-  maxItems = 5
+  maxItems = 5,
 }: ActivityFeedProps) {
   const displayActivities = activities.slice(0, maxItems);
 
   return (
-    <Card className={cn("border-elec-yellow/20 bg-elec-gray", className)}>
+    <Card className={cn('border-elec-yellow/20 bg-elec-gray', className)}>
       <CardHeader className="pb-2 px-4 pt-4">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base sm:text-lg font-semibold">{title}</CardTitle>
@@ -56,27 +56,25 @@ export function ActivityFeed({
                 onClick={activity.onClick}
                 disabled={!activity.onClick}
                 className={cn(
-                  "w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 text-left",
+                  'w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 text-left',
                   activity.onClick
-                    ? "hover:bg-muted/50 active:scale-[0.99] cursor-pointer"
-                    : "cursor-default"
+                    ? 'hover:bg-muted/50 active:scale-[0.99] cursor-pointer'
+                    : 'cursor-default'
                 )}
               >
-                <div className={cn(
-                  "p-2 rounded-xl shrink-0",
-                  activity.bgColor || "bg-elec-yellow/10"
-                )}>
-                  <Icon className={cn(
-                    "h-4 w-4",
-                    activity.iconColor || "text-elec-yellow"
-                  )} />
+                <div
+                  className={cn('p-2 rounded-xl shrink-0', activity.bgColor || 'bg-elec-yellow/10')}
+                >
+                  <Icon className={cn('h-4 w-4', activity.iconColor || 'text-elec-yellow')} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">{activity.title}</p>
                   <p className="text-xs text-muted-foreground truncate">{activity.description}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">{activity.time}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">
+                    {activity.time}
+                  </p>
                 </div>
               </button>
             );

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,10 +11,7 @@ const RcdPageHeader = () => {
     <>
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Button 
-          variant="accent-outline" 
-          onClick={() => navigate('/')}
-        >
+        <Button variant="accent-outline" onClick={() => navigate('/')}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
         </Button>
@@ -30,8 +26,8 @@ const RcdPageHeader = () => {
           <h1 className="text-4xl font-bold text-foreground">RCD Requirements Guide</h1>
         </div>
         <p className="text-xl text-gray-300 max-w-4xl mx-auto">
-          Comprehensive guide to RCD protection requirements, testing procedures, and installation guidelines 
-          for compliance with BS7671 regulations.
+          Comprehensive guide to RCD protection requirements, testing procedures, and installation
+          guidelines for compliance with BS7671 regulations.
         </p>
         <div className="flex items-center justify-center gap-2">
           <Badge className="bg-green-500 text-foreground font-bold">Essential Safety</Badge>

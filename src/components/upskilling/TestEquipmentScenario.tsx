@@ -15,7 +15,9 @@ export const TestEquipmentScenario = () => {
           <div className="bg-red-900/20 border border-red-500/30 p-4 rounded-md">
             <h4 className="text-red-400 font-semibold mb-2">⚠️ The Problem</h4>
             <p className="text-foreground text-sm sm:text-base leading-relaxed">
-              You use damaged test leads with exposed metal for a Zs test and receive a serious electric shock due to an exposed probe tip making contact with your finger. The shock causes you to fall from a ladder, resulting in serious injury.
+              You use damaged test leads with exposed metal for a Zs test and receive a serious
+              electric shock due to an exposed probe tip making contact with your finger. The shock
+              causes you to fall from a ladder, resulting in serious injury.
             </p>
           </div>
 
@@ -25,7 +27,9 @@ export const TestEquipmentScenario = () => {
               The Solution
             </h4>
             <p className="text-foreground text-sm sm:text-base leading-relaxed">
-              Always inspect leads and follow GS38 standards. Use only properly maintained test equipment with finger barriers and fused probes. Never compromise on safety equipment—your life depends on it.
+              Always inspect leads and follow GS38 standards. Use only properly maintained test
+              equipment with finger barriers and fused probes. Never compromise on safety
+              equipment—your life depends on it.
             </p>
           </div>
 

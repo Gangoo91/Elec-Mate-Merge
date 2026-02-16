@@ -1,12 +1,18 @@
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Sun, Battery, Zap, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown, Settings } from "lucide-react";
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+  Sun,
+  Battery,
+  Zap,
+  Info,
+  AlertTriangle,
+  CheckCircle2,
+  BookOpen,
+  ChevronDown,
+  Settings,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -17,9 +23,9 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import { OFFGRID_PRESETS, getPresetByName } from "@/lib/offgrid-presets";
-import { calculateOffGridSystem, OffGridResult } from "@/lib/offgrid-calculations";
+} from '@/components/calculators/shared';
+import { OFFGRID_PRESETS, getPresetByName } from '@/lib/offgrid-presets';
+import { calculateOffGridSystem, OffGridResult } from '@/lib/offgrid-calculations';
 
 export function OffGridSystemCalculator() {
   const config = CALCULATOR_CONFIG['renewable'];
@@ -41,7 +47,10 @@ export function OffGridSystemCalculator() {
   const [showCost, setShowCost] = useState(false);
   const [result, setResult] = useState<OffGridResult | null>(null);
 
-  const presetOptions = OFFGRID_PRESETS.map(preset => ({ value: preset.name, label: preset.name }));
+  const presetOptions = OFFGRID_PRESETS.map((preset) => ({
+    value: preset.name,
+    label: preset.name,
+  }));
 
   const handlePresetChange = (presetName: string) => {
     setSelectedPreset(presetName);
@@ -72,7 +81,17 @@ export function OffGridSystemCalculator() {
     const dod = parseFloat(depthOfDischarge);
     const efficiency = parseFloat(systemEfficiency);
 
-    if (consumption && sunHours && autonomy && voltage && panelWatt && battCap && battVolt && dod && efficiency) {
+    if (
+      consumption &&
+      sunHours &&
+      autonomy &&
+      voltage &&
+      panelWatt &&
+      battCap &&
+      battVolt &&
+      dod &&
+      efficiency
+    ) {
       const calculatedResult = calculateOffGridSystem({
         dailyConsumption: consumption,
         peakSunHours: sunHours,
@@ -83,7 +102,7 @@ export function OffGridSystemCalculator() {
         batteryVoltage: battVolt,
         depthOfDischarge: dod,
         systemEfficiency: efficiency,
-        batteryType: batteryType as 'lithium' | 'agm'
+        batteryType: batteryType as 'lithium' | 'agm',
       });
       setResult(calculatedResult);
     }
@@ -109,10 +128,14 @@ export function OffGridSystemCalculator() {
 
   const getRatingColor = (rating: string) => {
     switch (rating) {
-      case 'excellent': return 'text-green-400';
-      case 'good': return 'text-emerald-400';
-      case 'adequate': return 'text-amber-400';
-      default: return 'text-red-400';
+      case 'excellent':
+        return 'text-green-400';
+      case 'good':
+        return 'text-emerald-400';
+      case 'adequate':
+        return 'text-amber-400';
+      default:
+        return 'text-red-400';
     }
   };
 
@@ -253,22 +276,63 @@ export function OffGridSystemCalculator() {
               <div className="text-center p-3 rounded-lg bg-white/5">
                 <Sun className="h-5 w-5 mx-auto mb-1 text-amber-400" />
                 <p className="text-xs text-white/60">Solar Array</p>
-                <p className="text-xl font-bold text-green-400">{(result.numberOfPanels * parseFloat(panelWattage) / 1000).toFixed(1)}kW</p>
-                <p className="text-xs text-white/60">{result.numberOfPanels} × {panelWattage}W</p>
+                <p className="text-xl font-bold text-green-400">
+                  {((result.numberOfPanels * parseFloat(panelWattage)) / 1000).toFixed(1)}kW
+                </p>
+                <p className="text-xs text-white/60">
+                  {result.numberOfPanels} × {panelWattage}W
+                </p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5">
                 <Battery className="h-5 w-5 mx-auto mb-1 text-blue-400" />
                 <p className="text-xs text-white/60">Battery Bank</p>
-                <p className="text-xl font-bold text-green-400">{(result.numberOfBatteries * parseFloat(batteryCapacity) * parseFloat(depthOfDischarge) / 100).toFixed(0)}Ah</p>
-                <p className="text-xs text-white/60">{result.numberOfBatteries} × {batteryCapacity}Ah</p>
+                <p className="text-xl font-bold text-green-400">
+                  {(
+                    (result.numberOfBatteries *
+                      parseFloat(batteryCapacity) *
+                      parseFloat(depthOfDischarge)) /
+                    100
+                  ).toFixed(0)}
+                  Ah
+                </p>
+                <p className="text-xs text-white/60">
+                  {result.numberOfBatteries} × {batteryCapacity}Ah
+                </p>
               </div>
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="Daily Balance" value={result.dailyEnergyBalance >= 0 ? `+${result.dailyEnergyBalance.toFixed(1)}` : result.dailyEnergyBalance.toFixed(1)} unit="kWh" category="renewable" size="sm" />
-              <ResultValue label="System Cost" value={`£${result.systemCost.toFixed(0)}`} category="renewable" size="sm" />
-              <ResultValue label="Inverter" value={result.inverterSize.toFixed(1)} unit="kW" category="renewable" size="sm" />
-              <ResultValue label="Charge Controller" value={result.chargeControllerSize.toFixed(0)} unit="A MPPT" category="renewable" size="sm" />
+              <ResultValue
+                label="Daily Balance"
+                value={
+                  result.dailyEnergyBalance >= 0
+                    ? `+${result.dailyEnergyBalance.toFixed(1)}`
+                    : result.dailyEnergyBalance.toFixed(1)
+                }
+                unit="kWh"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="System Cost"
+                value={`£${result.systemCost.toFixed(0)}`}
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Inverter"
+                value={result.inverterSize.toFixed(1)}
+                unit="kW"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Charge Controller"
+                value={result.chargeControllerSize.toFixed(0)}
+                unit="A MPPT"
+                category="renewable"
+                size="sm"
+              />
             </ResultsGrid>
 
             {result.dailyEnergyBalance < 0 && (
@@ -276,7 +340,8 @@ export function OffGridSystemCalculator() {
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
                   <p className="text-sm text-red-200">
-                    Daily deficit of {Math.abs(result.dailyEnergyBalance).toFixed(1)}kWh - increase panels or reduce consumption.
+                    Daily deficit of {Math.abs(result.dailyEnergyBalance).toFixed(1)}kWh - increase
+                    panels or reduce consumption.
                   </p>
                 </div>
               </div>
@@ -291,7 +356,9 @@ export function OffGridSystemCalculator() {
               </div>
               <ul className="space-y-1 ml-6">
                 {result.warnings.map((warning, i) => (
-                  <li key={i} className="text-sm text-orange-200">{warning}</li>
+                  <li key={i} className="text-sm text-orange-200">
+                    {warning}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -305,7 +372,9 @@ export function OffGridSystemCalculator() {
               </div>
               <ul className="space-y-1 ml-6">
                 {result.recommendations.map((rec, i) => (
-                  <li key={i} className="text-sm text-green-200">{rec}</li>
+                  <li key={i} className="text-sm text-green-200">
+                    {rec}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -316,18 +385,29 @@ export function OffGridSystemCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Settings className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">Cost Breakdown</span>
+                  <span className="text-sm sm:text-base font-medium text-purple-300">
+                    Cost Breakdown
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showCost && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showCost && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm">
-                  {Object.entries(result.costBreakdown).filter(([key]) => key !== 'total').map(([key, value]) => (
-                    <div key={key} className="flex justify-between">
-                      <span className="text-white/60 capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
-                      <span className="text-white">£{(value as number).toFixed(0)}</span>
-                    </div>
-                  ))}
+                  {Object.entries(result.costBreakdown)
+                    .filter(([key]) => key !== 'total')
+                    .map(([key, value]) => (
+                      <div key={key} className="flex justify-between">
+                        <span className="text-white/60 capitalize">
+                          {key.replace(/([A-Z])/g, ' $1')}
+                        </span>
+                        <span className="text-white">£{(value as number).toFixed(0)}</span>
+                      </div>
+                    ))}
                   <div className="flex justify-between pt-2 border-t border-white/10 font-semibold">
                     <span className="text-white">Total (inc. VAT)</span>
                     <span className="text-green-400">£{result.costBreakdown.total.toFixed(0)}</span>
@@ -342,15 +422,30 @@ export function OffGridSystemCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">Installation Guidance</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    Installation Guidance
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2">
-                <p className="text-sm text-blue-200/80">Planning permission generally not needed for roof-mounted panels</p>
-                <p className="text-sm text-blue-200/80">Ground-mounted systems over 9m² may need planning consent</p>
-                <p className="text-sm text-blue-200/80">Battery storage must comply with fire safety regulations</p>
-                <p className="text-sm text-blue-200/80">Maintain 1.5m clearance from boundaries for fire access</p>
+                <p className="text-sm text-blue-200/80">
+                  Planning permission generally not needed for roof-mounted panels
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  Ground-mounted systems over 9m² may need planning consent
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  Battery storage must comply with fire safety regulations
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  Maintain 1.5m clearance from boundaries for fire access
+                </p>
               </CollapsibleContent>
             </div>
           </Collapsible>
@@ -360,16 +455,35 @@ export function OffGridSystemCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">Standards & Regulations</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    Standards & Regulations
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p><strong className="text-amber-300">BS 7671:</strong> Wiring regulations apply to all DC and AC circuits</p>
-                  <p><strong className="text-amber-300">Building Regs Part P:</strong> Notification required for electrical work</p>
-                  <p><strong className="text-amber-300">BS EN 62446:</strong> Testing and commissioning standards for PV</p>
-                  <p><strong className="text-amber-300">MCS:</strong> Recommended for quality assurance</p>
+                  <p>
+                    <strong className="text-amber-300">BS 7671:</strong> Wiring regulations apply to
+                    all DC and AC circuits
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Building Regs Part P:</strong> Notification
+                    required for electrical work
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">BS EN 62446:</strong> Testing and
+                    commissioning standards for PV
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">MCS:</strong> Recommended for quality
+                    assurance
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>
@@ -381,7 +495,8 @@ export function OffGridSystemCalculator() {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
           <p className="text-sm text-green-200">
-            <strong>Off-grid sizing:</strong> Allow 20-30% margin for UK weather variability. LiFePO4 batteries offer 80% DoD vs 50% for AGM.
+            <strong>Off-grid sizing:</strong> Allow 20-30% margin for UK weather variability.
+            LiFePO4 batteries offer 80% DoD vs 50% for AGM.
           </p>
         </div>
       </div>

@@ -12,11 +12,11 @@ export const HVACBMSIntegrationSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          BMS provides comprehensive monitoring and control of HVAC equipment, from individual room 
-          controls to large-scale plant equipment. This integration ensures optimal performance, 
+          BMS provides comprehensive monitoring and control of HVAC equipment, from individual room
+          controls to large-scale plant equipment. This integration ensures optimal performance,
           energy efficiency, and compliance reporting.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
@@ -30,7 +30,7 @@ export const HVACBMSIntegrationSection = () => {
               <li>• Heat pumps and fan coil units</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Gauge className="h-5 w-5 text-green-400" />
@@ -43,7 +43,7 @@ export const HVACBMSIntegrationSection = () => {
               <li>• Energy consumption meters</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Activity className="h-5 w-5 text-purple-400" />
@@ -56,7 +56,7 @@ export const HVACBMSIntegrationSection = () => {
               <li>• Equipment protection protocols</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <FileText className="h-5 w-5 text-orange-400" />
@@ -70,12 +70,13 @@ export const HVACBMSIntegrationSection = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-2">Key Benefits:</h4>
           <p className="text-sm">
-            BMS integration allows facilities managers to monitor entire HVAC systems from a single interface, 
-            optimise energy consumption across multiple zones, and maintain detailed records for regulatory compliance.
+            BMS integration allows facilities managers to monitor entire HVAC systems from a single
+            interface, optimise energy consumption across multiple zones, and maintain detailed
+            records for regulatory compliance.
           </p>
         </div>
       </CardContent>

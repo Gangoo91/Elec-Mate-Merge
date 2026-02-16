@@ -1,4 +1,3 @@
-
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { format } from 'date-fns';
@@ -16,52 +15,60 @@ export interface ExportOptions {
 }
 
 class CPDExportService {
-  
-  exportToPDF(entries: CPDEntry[], stats: CPDStats, goals: CPDGoal[], options: ExportOptions = { format: 'pdf' }): void {
+  exportToPDF(
+    entries: CPDEntry[],
+    stats: CPDStats,
+    goals: CPDGoal[],
+    options: ExportOptions = { format: 'pdf' }
+  ): void {
     const doc = new jsPDF();
-    
+
     // Header
     doc.setFontSize(20);
     doc.setTextColor(0, 102, 204);
     doc.text('CPD Training Report', 105, 15, { align: 'center' });
-    
+
     // Report metadata
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0);
     doc.text(`Generated: ${format(new Date(), 'dd MMM yyyy HH:mm')}`, 20, 30);
-    doc.text(`Report Period: ${options.dateRange ? `${options.dateRange.start} to ${options.dateRange.end}` : 'All Time'}`, 20, 40);
-    
+    doc.text(
+      `Report Period: ${options.dateRange ? `${options.dateRange.start} to ${options.dateRange.end}` : 'All Time'}`,
+      20,
+      40
+    );
+
     // Summary statistics
     doc.setFontSize(14);
     doc.setTextColor(0, 102, 204);
     doc.text('CPD Summary', 20, 60);
-    
+
     doc.setFontSize(10);
     doc.setTextColor(0, 0, 0);
     doc.text(`Total Hours This Year: ${stats.hoursThisYear}`, 20, 75);
     doc.text(`Target Hours: ${stats.targetHours}`, 20, 85);
     doc.text(`Completion: ${stats.completionPercentage}%`, 20, 95);
     doc.text(`Days Remaining: ${stats.daysRemaining}`, 20, 105);
-    
+
     // Filter entries if date range specified
     let filteredEntries = entries;
     if (options.dateRange) {
-      filteredEntries = entries.filter(entry => {
+      filteredEntries = entries.filter((entry) => {
         const entryDate = new Date(entry.date);
         const startDate = new Date(options.dateRange!.start);
         const endDate = new Date(options.dateRange!.end);
         return entryDate >= startDate && entryDate <= endDate;
       });
     }
-    
+
     if (options.categories && options.categories.length > 0) {
-      filteredEntries = filteredEntries.filter(entry => 
+      filteredEntries = filteredEntries.filter((entry) =>
         options.categories!.includes(entry.category)
       );
     }
-    
+
     // CPD Entries table
-    const tableData = filteredEntries.map(entry => [
+    const tableData = filteredEntries.map((entry) => [
       format(new Date(entry.date), 'dd/MM/yyyy'),
       entry.activity,
       entry.category,
@@ -69,7 +76,7 @@ class CPDExportService {
       entry.provider,
       entry.status,
     ]);
-    
+
     autoTable(doc, {
       startY: 120,
       head: [['Date', 'Activity', 'Category', 'Hours', 'Provider', 'Status']],
@@ -86,16 +93,16 @@ class CPDExportService {
         fontSize: 8,
       },
     });
-    
+
     // Goals section if requested
     if (options.includeGoals && goals.length > 0) {
       const finalY = (doc as any).lastAutoTable.finalY + 20;
-      
+
       doc.setFontSize(14);
       doc.setTextColor(0, 102, 204);
       doc.text('CPD Goals', 20, finalY);
-      
-      const goalsData = goals.map(goal => [
+
+      const goalsData = goals.map((goal) => [
         goal.title,
         goal.targetHours.toString(),
         goal.currentHours.toString(),
@@ -103,7 +110,7 @@ class CPDExportService {
         format(new Date(goal.deadline), 'dd/MM/yyyy'),
         goal.status,
       ]);
-      
+
       autoTable(doc, {
         startY: finalY + 10,
         head: [['Goal', 'Target Hours', 'Current Hours', 'Progress', 'Deadline', 'Status']],
@@ -118,7 +125,7 @@ class CPDExportService {
         },
       });
     }
-    
+
     // Footer
     const pageCount = doc.internal.pages.length - 1;
     for (let i = 1; i <= pageCount; i++) {
@@ -132,28 +139,28 @@ class CPDExportService {
         { align: 'center' }
       );
     }
-    
+
     doc.save(`cpd-report-${format(new Date(), 'yyyy-MM-dd')}.pdf`);
   }
-  
+
   exportToCSV(entries: CPDEntry[], options: ExportOptions = { format: 'csv' }): void {
     let filteredEntries = entries;
-    
+
     if (options.dateRange) {
-      filteredEntries = entries.filter(entry => {
+      filteredEntries = entries.filter((entry) => {
         const entryDate = new Date(entry.date);
         const startDate = new Date(options.dateRange!.start);
         const endDate = new Date(options.dateRange!.end);
         return entryDate >= startDate && entryDate <= endDate;
       });
     }
-    
+
     if (options.categories && options.categories.length > 0) {
-      filteredEntries = filteredEntries.filter(entry => 
+      filteredEntries = filteredEntries.filter((entry) =>
         options.categories!.includes(entry.category)
       );
     }
-    
+
     const headers = [
       'Date',
       'Activity',
@@ -167,8 +174,8 @@ class CPDExportService {
       'Status',
       'Auto Tracked',
     ];
-    
-    const csvData = filteredEntries.map(entry => [
+
+    const csvData = filteredEntries.map((entry) => [
       entry.date,
       entry.activity,
       entry.category,
@@ -181,14 +188,14 @@ class CPDExportService {
       entry.status,
       entry.isAutomatic ? 'Yes' : 'No',
     ]);
-    
+
     const csvContent = [headers, ...csvData]
-      .map(row => row.map(field => `"${field}"`).join(','))
+      .map((row) => row.map((field) => `"${field}"`).join(','))
       .join('\n');
-    
+
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
-    
+
     if (link.download !== undefined) {
       const url = URL.createObjectURL(blob);
       link.setAttribute('href', url);
@@ -199,10 +206,10 @@ class CPDExportService {
       document.body.removeChild(link);
     }
   }
-  
+
   generateSummaryReport(entries: CPDEntry[], stats: CPDStats, goals: CPDGoal[]): string {
     const currentYear = new Date().getFullYear();
-    
+
     return `
 CPD SUMMARY REPORT
 Generated: ${format(new Date(), 'PPP')}
@@ -217,28 +224,34 @@ Average Hours/Month: ${stats.averageHoursPerMonth.toFixed(1)}
 
 CATEGORY BREAKDOWN
 ==================
-${stats.categoryBreakdown.map(cat => 
-  `${cat.category}: ${cat.hours} hours (${cat.percentage}%)`
-).join('\n')}
+${stats.categoryBreakdown
+  .map((cat) => `${cat.category}: ${cat.hours} hours (${cat.percentage}%)`)
+  .join('\n')}
 
 RECENT ACTIVITIES
 =================
-${entries.slice(0, 5).map(entry => 
-  `${entry.date} - ${entry.activity} (${entry.hours}h)`
-).join('\n')}
+${entries
+  .slice(0, 5)
+  .map((entry) => `${entry.date} - ${entry.activity} (${entry.hours}h)`)
+  .join('\n')}
 
 GOALS PROGRESS
 ==============
-${goals.map(goal => 
-  `${goal.title}: ${goal.currentHours}/${goal.targetHours} hours (${Math.round((goal.currentHours / goal.targetHours) * 100)}%)`
-).join('\n')}
+${goals
+  .map(
+    (goal) =>
+      `${goal.title}: ${goal.currentHours}/${goal.targetHours} hours (${Math.round((goal.currentHours / goal.targetHours) * 100)}%)`
+  )
+  .join('\n')}
 
 COMPLIANCE STATUS
 =================
 Professional Body Requirements: ${stats.completionPercentage >= 80 ? 'ON TRACK' : 'ATTENTION NEEDED'}
-Recommended Actions: ${stats.completionPercentage < 80 ? 
-  'Increase learning activities to meet annual target' : 
-  'Continue current learning pace'}
+Recommended Actions: ${
+      stats.completionPercentage < 80
+        ? 'Increase learning activities to meet annual target'
+        : 'Continue current learning pace'
+    }
     `.trim();
   }
 }

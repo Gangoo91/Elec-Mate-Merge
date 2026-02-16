@@ -1,22 +1,15 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { SubsectionProps } from "./subsection1_1/types";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
-} from '@/components/ui/card';
-import { 
-  Table, 
-  TableBody, 
-  TableCaption, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import { SubsectionProps } from './subsection1_1/types';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table';
 import { AlertCircle, Shield, BookOpen, FileText, CheckSquare } from 'lucide-react';
 
@@ -24,7 +17,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-elec-yellow">Electricity at Work Regulations 1989</h1>
-      
+
       <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
         <div className="flex items-start gap-4">
           <div className="bg-elec-yellow/20 p-3 rounded-full">
@@ -33,56 +26,70 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div>
             <h2 className="text-xl font-semibold text-elec-yellow">Key Information</h2>
             <p className="text-white mt-1">
-              The Electricity at Work Regulations 1989 (EWR) came into force on 1 April 1990 and apply to all aspects of 
-              the use of electricity in the workplace. They are made under the Health and Safety at Work etc. Act 1974 
-              and enforce a high standard of electrical safety in all workplaces.
+              The Electricity at Work Regulations 1989 (EWR) came into force on 1 April 1990 and
+              apply to all aspects of the use of electricity in the workplace. They are made under
+              the Health and Safety at Work etc. Act 1974 and enforce a high standard of electrical
+              safety in all workplaces.
             </p>
           </div>
         </div>
       </div>
-      
+
       <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Core Principles</CardTitle>
-          <CardDescription>The fundamental requirements established by the regulations</CardDescription>
+          <CardDescription>
+            The fundamental requirements established by the regulations
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            The Electricity at Work Regulations 1989 establish legal requirements for employers, employees, and self-employed 
-            persons to ensure electrical safety in the workplace. They apply to all electrical equipment and systems, from 
-            power stations to the smallest portable appliance.
+            The Electricity at Work Regulations 1989 establish legal requirements for employers,
+            employees, and self-employed persons to ensure electrical safety in the workplace. They
+            apply to all electrical equipment and systems, from power stations to the smallest
+            portable appliance.
           </p>
-          
+
           <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Requirements:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>All electrical systems must be constructed and maintained to prevent danger</li>
               <li>All work activities involving electrical systems must be carried out safely</li>
-              <li>Only persons with appropriate technical knowledge or experience may work on electrical systems</li>
+              <li>
+                Only persons with appropriate technical knowledge or experience may work on
+                electrical systems
+              </li>
               <li>All conductors must be insulated, protected, or placed to prevent danger</li>
               <li>Precautions must be taken against adverse or hazardous environments</li>
               <li>Electrical equipment must be suitable for its environment and intended use</li>
               <li>Equipment must be properly isolated before work is carried out</li>
-              <li>Adequate working space, access, and lighting must be provided for electrical work</li>
+              <li>
+                Adequate working space, access, and lighting must be provided for electrical work
+              </li>
               <li>Persons working on electrical systems must be competent to prevent danger</li>
               <li>Testing and inspection must be carried out to prevent danger</li>
             </ul>
           </div>
         </CardContent>
       </Card>
-      
+
       <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">Regulation 4: Systems, Work Activities and Protective Equipment</CardTitle>
+          <CardTitle className="text-xl text-elec-yellow">
+            Regulation 4: Systems, Work Activities and Protective Equipment
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            This key regulation requires that all electrical systems be constructed and maintained to prevent danger. It establishes 
-            the fundamental safety requirements for all electrical installations and equipment.
+            This key regulation requires that all electrical systems be constructed and maintained
+            to prevent danger. It establishes the fundamental safety requirements for all electrical
+            installations and equipment.
           </p>
-          
+
           <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
-            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Requirements for Compliance:</h3>
+            <h3 className="text-lg font-semibold text-elec-yellow mb-2">
+              Requirements for Compliance:
+            </h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>All electrical systems must be of suitable construction</li>
               <li>Systems must be maintained in a safe condition</li>
@@ -92,28 +99,31 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <li>The system design must consider the environment it will operate in</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
             <p className="text-sm">
-              <span className="font-semibold text-elec-yellow">Important Note:</span> Regulation 4 is absolute in nature, 
-              meaning there is no qualification of "so far as is reasonably practicable." This makes compliance 
-              mandatory regardless of cost or difficulty.
+              <span className="font-semibold text-elec-yellow">Important Note:</span> Regulation 4
+              is absolute in nature, meaning there is no qualification of "so far as is reasonably
+              practicable." This makes compliance mandatory regardless of cost or difficulty.
             </p>
           </div>
         </CardContent>
       </Card>
-      
+
       <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">Regulation 14: Working on or Near Live Conductors</CardTitle>
+          <CardTitle className="text-xl text-elec-yellow">
+            Regulation 14: Working on or Near Live Conductors
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            This critical regulation establishes the requirements for any work on or near live electrical conductors. It is 
-            particularly relevant for electricians who may need to work with live systems.
+            This critical regulation establishes the requirements for any work on or near live
+            electrical conductors. It is particularly relevant for electricians who may need to work
+            with live systems.
           </p>
-          
+
           <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">The Three Conditions:</h3>
             <p className="mb-2">
@@ -121,11 +131,14 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             <ol className="list-decimal pl-5 space-y-2">
               <li>It is unreasonable in all circumstances for the conductor to be dead</li>
-              <li>It is reasonable in all circumstances for the person to work on or near the conductor while it is live</li>
+              <li>
+                It is reasonable in all circumstances for the person to work on or near the
+                conductor while it is live
+              </li>
               <li>Suitable precautions are taken to prevent injury</li>
             </ol>
           </div>
-          
+
           <Table>
             <TableCaption>Common examples of suitable precautions for live working</TableCaption>
             <TableHeader>
@@ -159,17 +172,20 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </Table>
         </CardContent>
       </Card>
-      
+
       <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">Competence Requirements (Regulation 16)</CardTitle>
+          <CardTitle className="text-xl text-elec-yellow">
+            Competence Requirements (Regulation 16)
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            Regulation 16 requires that no person shall engage in work that requires technical knowledge or experience
-            to prevent danger unless they have that knowledge or experience, or are under appropriate supervision.
+            Regulation 16 requires that no person shall engage in work that requires technical
+            knowledge or experience to prevent danger unless they have that knowledge or experience,
+            or are under appropriate supervision.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Technical Knowledge</h3>
@@ -181,7 +197,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>Understanding of test equipment and methods</li>
               </ul>
             </div>
-            
+
             <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Experience</h3>
               <ul className="list-disc pl-5 space-y-1">
@@ -193,9 +209,11 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
-            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Documentation of Competence:</h3>
+            <h3 className="text-lg font-semibold text-elec-yellow mb-2">
+              Documentation of Competence:
+            </h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Formal qualifications (City & Guilds, NVQs, etc.)</li>
               <li>Training certificates and records</li>
@@ -207,17 +225,20 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </CardContent>
       </Card>
-      
+
       <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">Legal Enforcement and Penalties</CardTitle>
+          <CardTitle className="text-xl text-elec-yellow">
+            Legal Enforcement and Penalties
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            The Health and Safety Executive (HSE) and local authorities enforce the Electricity at Work Regulations 1989.
-            Breaches can result in significant penalties, including fines and imprisonment.
+            The Health and Safety Executive (HSE) and local authorities enforce the Electricity at
+            Work Regulations 1989. Breaches can result in significant penalties, including fines and
+            imprisonment.
           </p>
-          
+
           <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Potential Penalties:</h3>
             <ul className="list-disc pl-5 space-y-1">
@@ -229,7 +250,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <li>Disqualification from directorship</li>
             </ul>
           </div>
-          
+
           <div className="flex items-start gap-4 mt-4">
             <div className="bg-elec-yellow/20 p-3 rounded-full">
               <FileText className="h-6 w-6 text-elec-yellow" />
@@ -237,15 +258,16 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <div>
               <h3 className="text-lg font-semibold text-elec-yellow">Case Law</h3>
               <p className="text-white mt-1">
-                Several landmark legal cases have established precedents in the application of the EWR, including 
-                R v HTM Ltd (2006), where a company was fined £175,000 after an employee was fatally electrocuted, 
-                and R v Balfour Beatty Rail Infrastructure Services Ltd (2006), resulting in a £10 million fine.
+                Several landmark legal cases have established precedents in the application of the
+                EWR, including R v HTM Ltd (2006), where a company was fined £175,000 after an
+                employee was fatally electrocuted, and R v Balfour Beatty Rail Infrastructure
+                Services Ltd (2006), resulting in a £10 million fine.
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
-      
+
       <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Guidance and Resources</CardTitle>
@@ -265,7 +287,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>HSE Electrical Safety at Work website</li>
               </ul>
             </div>
-            
+
             <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
               <div className="flex items-center gap-2 mb-2">
                 <CheckSquare className="h-5 w-5 text-elec-yellow" />
@@ -283,10 +305,10 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </CardContent>
       </Card>
-      
+
       {!isCompleted && (
         <div className="flex justify-center pt-6">
-          <Button 
+          <Button
             onClick={markAsComplete}
             className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
           >

@@ -1,12 +1,17 @@
-
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, X } from "lucide-react";
-import { DocumentTemplate } from "@/services/documentTemplateService";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, Filter, X } from 'lucide-react';
+import { DocumentTemplate } from '@/services/documentTemplateService';
+import { cn } from '@/lib/utils';
 
 interface TemplateSearchProps {
   onSearch: (query: string) => void;
@@ -22,13 +27,18 @@ export interface TemplateFilters {
   regulationCompliant: string;
 }
 
-const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }: TemplateSearchProps) => {
-  const [searchQuery, setSearchQuery] = useState("");
+const TemplateSearch = ({
+  onSearch,
+  onFilterChange,
+  totalCount,
+  filteredCount,
+}: TemplateSearchProps) => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<TemplateFilters>({
-    category: "all",
-    difficulty: "all",
+    category: 'all',
+    difficulty: 'all',
     ukSpecific: false,
-    regulationCompliant: "all"
+    regulationCompliant: 'all',
   });
   const [showFilters, setShowFilters] = useState(false);
 
@@ -45,19 +55,20 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
 
   const clearFilters = () => {
     const clearedFilters: TemplateFilters = {
-      category: "all",
-      difficulty: "all",
+      category: 'all',
+      difficulty: 'all',
       ukSpecific: false,
-      regulationCompliant: "all"
+      regulationCompliant: 'all',
     };
     setFilters(clearedFilters);
     onFilterChange(clearedFilters);
   };
 
-  const hasActiveFilters = filters.category !== "all" || 
-                          filters.difficulty !== "all" || 
-                          filters.ukSpecific || 
-                          filters.regulationCompliant !== "all";
+  const hasActiveFilters =
+    filters.category !== 'all' ||
+    filters.difficulty !== 'all' ||
+    filters.ukSpecific ||
+    filters.regulationCompliant !== 'all';
 
   return (
     <div className="space-y-4">
@@ -70,7 +81,7 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
           placeholder="Search templates by name, description, or category..."
           value={searchQuery}
           onChange={(e) => handleSearchChange(e.target.value)}
-          className={cn("pr-20", !searchQuery && "pl-10")}
+          className={cn('pr-20', !searchQuery && 'pl-10')}
         />
         <Button
           variant="outline"
@@ -82,7 +93,7 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
           Filters
           {hasActiveFilters && (
             <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
-              {Object.values(filters).filter(v => v && v !== "all").length}
+              {Object.values(filters).filter((v) => v && v !== 'all').length}
             </Badge>
           )}
         </Button>
@@ -91,12 +102,7 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
       {/* Clear filters button - only show when filters are active */}
       {hasActiveFilters && (
         <div className="flex justify-end">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearFilters}
-            className="text-xs"
-          >
+          <Button variant="ghost" size="sm" onClick={clearFilters} className="text-xs">
             <X className="h-3 w-3 mr-1" />
             Clear filters
           </Button>
@@ -109,7 +115,10 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
           {/* Category Filter */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Category</label>
-            <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+            <Select
+              value={filters.category}
+              onValueChange={(value) => handleFilterChange('category', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
@@ -128,7 +137,10 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
           {/* Difficulty Filter */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Difficulty</label>
-            <Select value={filters.difficulty} onValueChange={(value) => handleFilterChange("difficulty", value)}>
+            <Select
+              value={filters.difficulty}
+              onValueChange={(value) => handleFilterChange('difficulty', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="All Levels" />
               </SelectTrigger>
@@ -144,9 +156,9 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
           {/* UK Specific Filter */}
           <div className="space-y-2">
             <label className="text-sm font-medium">UK Specific</label>
-            <Select 
-              value={filters.ukSpecific ? "true" : "false"} 
-              onValueChange={(value) => handleFilterChange("ukSpecific", value === "true")}
+            <Select
+              value={filters.ukSpecific ? 'true' : 'false'}
+              onValueChange={(value) => handleFilterChange('ukSpecific', value === 'true')}
             >
               <SelectTrigger>
                 <SelectValue placeholder="All Templates" />
@@ -161,7 +173,10 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
           {/* Regulation Compliance Filter */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Regulations</label>
-            <Select value={filters.regulationCompliant} onValueChange={(value) => handleFilterChange("regulationCompliant", value)}>
+            <Select
+              value={filters.regulationCompliant}
+              onValueChange={(value) => handleFilterChange('regulationCompliant', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="All Regulations" />
               </SelectTrigger>

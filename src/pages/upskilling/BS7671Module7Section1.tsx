@@ -1,80 +1,79 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m7s1-check1",
-    question: "What is the minimum IP rating required for electrical equipment in bathroom Zone 1?",
-    options: [
-      "IP20",
-      "IPX2",
-      "IPX4",
-      "IP65"
-    ],
+    id: 'bs7671-m7s1-check1',
+    question: 'What is the minimum IP rating required for electrical equipment in bathroom Zone 1?',
+    options: ['IP20', 'IPX2', 'IPX4', 'IP65'],
     correctIndex: 2,
-    explanation: "Equipment in Zone 1 (above the bath/shower) must have a minimum rating of IPX4 to protect against water splashes from any direction. This is essential for safety where water spray is likely during normal use."
+    explanation:
+      'Equipment in Zone 1 (above the bath/shower) must have a minimum rating of IPX4 to protect against water splashes from any direction. This is essential for safety where water spray is likely during normal use.',
   },
   {
-    id: "bs7671-m7s1-check2",
-    question: "How far does Zone 2 extend horizontally from the edge of a bath or shower basin?",
-    options: [
-      "0.3 metres",
-      "0.6 metres",
-      "1.0 metre",
-      "2.0 metres"
-    ],
+    id: 'bs7671-m7s1-check2',
+    question: 'How far does Zone 2 extend horizontally from the edge of a bath or shower basin?',
+    options: ['0.3 metres', '0.6 metres', '1.0 metre', '2.0 metres'],
     correctIndex: 1,
-    explanation: "Zone 2 extends 0.6 metres horizontally from the outer edge of Zone 1 (the bath or shower basin). Equipment in this zone must be IPX4 rated or higher and protected by 30mA RCD."
+    explanation:
+      'Zone 2 extends 0.6 metres horizontally from the outer edge of Zone 1 (the bath or shower basin). Equipment in this zone must be IPX4 rated or higher and protected by 30mA RCD.',
   },
   {
-    id: "bs7671-m7s1-check3",
-    question: "What additional protection is required for all circuits in bathrooms under BS 7671?",
+    id: 'bs7671-m7s1-check3',
+    question: 'What additional protection is required for all circuits in bathrooms under BS 7671?',
     options: [
-      "Metal conduit installation",
-      "Double earthing connections",
-      "30mA RCD protection",
-      "Armoured cabling"
+      'Metal conduit installation',
+      'Double earthing connections',
+      '30mA RCD protection',
+      'Armoured cabling',
     ],
     correctIndex: 2,
-    explanation: "BS 7671 requires 30mA RCD protection for all circuits supplying equipment in bathrooms. This provides additional protection against electric shock in locations where wet conditions increase the risk of electrocution."
-  }
+    explanation:
+      'BS 7671 requires 30mA RCD protection for all circuits supplying equipment in bathrooms. This provides additional protection against electric shock in locations where wet conditions increase the risk of electrocution.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I install a standard socket outlet in a bathroom?",
-    answer: "Standard 13A socket outlets must be at least 3 metres from the edge of Zone 1 (the bath or shower). Within 3m, only shaver supply units complying with BS EN 61558-2-5 may be installed, and these must be outside Zones 0, 1, and 2."
+    question: 'Can I install a standard socket outlet in a bathroom?',
+    answer:
+      'Standard 13A socket outlets must be at least 3 metres from the edge of Zone 1 (the bath or shower). Within 3m, only shaver supply units complying with BS EN 61558-2-5 may be installed, and these must be outside Zones 0, 1, and 2.',
   },
   {
-    question: "Is supplementary bonding still required in bathrooms?",
-    answer: "Supplementary bonding may be omitted if all circuits supplying the bathroom are protected by 30mA RCDs AND the main protective bonding meets requirements. Otherwise, all extraneous and exposed conductive parts must be bonded together."
+    question: 'Is supplementary bonding still required in bathrooms?',
+    answer:
+      'Supplementary bonding may be omitted if all circuits supplying the bathroom are protected by 30mA RCDs AND the main protective bonding meets requirements. Otherwise, all extraneous and exposed conductive parts must be bonded together.',
   },
   {
-    question: "What equipment can be installed in Zone 0?",
-    answer: "Zone 0 is inside the bath or shower basin. Only equipment specifically designed for this zone may be used - typically IPX7 rated (immersion protection) and supplied at SELV not exceeding 12V AC or 30V DC."
-  }
+    question: 'What equipment can be installed in Zone 0?',
+    answer:
+      'Zone 0 is inside the bath or shower basin. Only equipment specifically designed for this zone may be used - typically IPX7 rated (immersion protection) and supplied at SELV not exceeding 12V AC or 30V DC.',
+  },
 ];
 
 const quizQuestion = {
-  question: "An electrician is installing a towel rail heater 0.5m from the edge of a shower. Which zone is this, and what IP rating is required?",
+  question:
+    'An electrician is installing a towel rail heater 0.5m from the edge of a shower. Which zone is this, and what IP rating is required?',
   options: [
-    "Zone 1, minimum IPX4",
-    "Zone 2, minimum IPX4",
-    "Zone 2, minimum IPX2",
-    "Outside zones, no specific IP rating"
+    'Zone 1, minimum IPX4',
+    'Zone 2, minimum IPX4',
+    'Zone 2, minimum IPX2',
+    'Outside zones, no specific IP rating',
   ],
   correctAnswer: 1,
-  explanation: "At 0.5m from the shower edge, this is within Zone 2 (which extends 0.6m from Zone 1). Zone 2 requires a minimum IP rating of IPX4. The towel rail must also be protected by 30mA RCD and must not have accessible live parts."
+  explanation:
+    'At 0.5m from the shower edge, this is within Zone 2 (which extends 0.6m from Zone 1). Zone 2 requires a minimum IP rating of IPX4. The towel rail must also be protected by 30mA RCD and must not have accessible live parts.',
 };
 
 const BS7671Module7Section1 = () => {
   useSEO({
-    title: "Special Locations - Bathrooms and Wet Areas | BS7671 Module 7.1",
-    description: "Learn about BS 7671 zone classification for bathrooms, swimming pools, and other wet locations including IP ratings and safety requirements."
+    title: 'Special Locations - Bathrooms and Wet Areas | BS7671 Module 7.1',
+    description:
+      'Learn about BS 7671 zone classification for bathrooms, swimming pools, and other wet locations including IP ratings and safety requirements.',
   });
 
   return (
@@ -116,16 +115,26 @@ const BS7671Module7Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Zone 0:</strong> Inside bath/shower - IPX7, SELV only</li>
-              <li><strong>Zone 1:</strong> Above bath/shower - IPX4 minimum</li>
-              <li><strong>Zone 2:</strong> 0.6m from Zone 1 - IPX4 minimum</li>
+              <li>
+                <strong>Zone 0:</strong> Inside bath/shower - IPX7, SELV only
+              </li>
+              <li>
+                <strong>Zone 1:</strong> Above bath/shower - IPX4 minimum
+              </li>
+              <li>
+                <strong>Zone 2:</strong> 0.6m from Zone 1 - IPX4 minimum
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Water presence, splash risks, immersion hazards</li>
-              <li><strong>Use:</strong> Measure zones carefully, check IP ratings on equipment</li>
+              <li>
+                <strong>Spot:</strong> Water presence, splash risks, immersion hazards
+              </li>
+              <li>
+                <strong>Use:</strong> Measure zones carefully, check IP ratings on equipment
+              </li>
             </ul>
           </div>
         </div>
@@ -135,10 +144,10 @@ const BS7671Module7Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand zone classification in bathrooms (0, 1, 2)",
-              "Identify correct IP ratings for each zone",
-              "Apply RCD protection requirements",
-              "Determine when supplementary bonding is required"
+              'Understand zone classification in bathrooms (0, 1, 2)',
+              'Identify correct IP ratings for each zone',
+              'Apply RCD protection requirements',
+              'Determine when supplementary bonding is required',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -158,31 +167,36 @@ const BS7671Module7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 Section 701 defines specific zones in bathrooms based on the risk of water contact.
-              Each zone has requirements for equipment IP ratings, protection measures, and permitted
-              equipment types.
+              BS 7671 Section 701 defines specific zones in bathrooms based on the risk of water
+              contact. Each zone has requirements for equipment IP ratings, protection measures, and
+              permitted equipment types.
             </p>
 
             <div className="space-y-3 my-6">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400/80 mb-2">Zone 0 - Highest Risk</p>
                 <p className="text-sm text-white">
-                  Interior of bath or shower basin. Only equipment rated IPX7 (protection against immersion)
-                  supplied at SELV not exceeding 12V AC or 30V DC. The safety source must be outside Zones 0-2.
+                  Interior of bath or shower basin. Only equipment rated IPX7 (protection against
+                  immersion) supplied at SELV not exceeding 12V AC or 30V DC. The safety source must
+                  be outside Zones 0-2.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <p className="text-sm font-medium text-orange-400/80 mb-2">Zone 1 - High Risk</p>
                 <p className="text-sm text-white">
-                  Area above the bath/shower extending to 2.25m above finished floor level. Equipment must
-                  be IPX4 rated minimum. Only fixed electrical equipment suitable for this zone may be installed.
+                  Area above the bath/shower extending to 2.25m above finished floor level.
+                  Equipment must be IPX4 rated minimum. Only fixed electrical equipment suitable for
+                  this zone may be installed.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Zone 2 - Moderate Risk</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Zone 2 - Moderate Risk
+                </p>
                 <p className="text-sm text-white">
-                  Extends 0.6m horizontally from Zone 1 and up to 2.25m height. Equipment must be IPX4 rated.
-                  Includes area around washbasins. More equipment types permitted but must be protected by RCD.
+                  Extends 0.6m horizontally from Zone 1 and up to 2.25m height. Equipment must be
+                  IPX4 rated. Includes area around washbasins. More equipment types permitted but
+                  must be protected by RCD.
                 </p>
               </div>
             </div>
@@ -201,27 +215,48 @@ const BS7671Module7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              IP (Ingress Protection) ratings indicate the level of protection against solid objects (first
-              digit) and water (second digit). In bathrooms, the second digit (water protection) is critical.
+              IP (Ingress Protection) ratings indicate the level of protection against solid objects
+              (first digit) and water (second digit). In bathrooms, the second digit (water
+              protection) is critical.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">IP Second Digit Meanings</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  IP Second Digit Meanings
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>IPX4:</strong> Protected against splashing from any direction</li>
-                  <li><strong>IPX5:</strong> Protected against water jets</li>
-                  <li><strong>IPX7:</strong> Protected against temporary immersion</li>
-                  <li><strong>IPX8:</strong> Protected against continuous immersion</li>
+                  <li>
+                    <strong>IPX4:</strong> Protected against splashing from any direction
+                  </li>
+                  <li>
+                    <strong>IPX5:</strong> Protected against water jets
+                  </li>
+                  <li>
+                    <strong>IPX7:</strong> Protected against temporary immersion
+                  </li>
+                  <li>
+                    <strong>IPX8:</strong> Protected against continuous immersion
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Zone Requirements Summary</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Zone Requirements Summary
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Zone 0:</strong> IPX7 minimum (usually IPX8)</li>
-                  <li><strong>Zone 1:</strong> IPX4 minimum (IPX5 if water jets used)</li>
-                  <li><strong>Zone 2:</strong> IPX4 minimum</li>
-                  <li><strong>Outside Zones:</strong> IPX4 where splashing likely</li>
+                  <li>
+                    <strong>Zone 0:</strong> IPX7 minimum (usually IPX8)
+                  </li>
+                  <li>
+                    <strong>Zone 1:</strong> IPX4 minimum (IPX5 if water jets used)
+                  </li>
+                  <li>
+                    <strong>Zone 2:</strong> IPX4 minimum
+                  </li>
+                  <li>
+                    <strong>Outside Zones:</strong> IPX4 where splashing likely
+                  </li>
                 </ul>
               </div>
             </div>
@@ -240,8 +275,8 @@ const BS7671Module7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Beyond IP ratings, BS 7671 requires additional protection measures for bathroom installations
-              to ensure safety in these high-risk locations.
+              Beyond IP ratings, BS 7671 requires additional protection measures for bathroom
+              installations to ensure safety in these high-risk locations.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -255,7 +290,9 @@ const BS7671Module7Section1 = () => {
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Supplementary Bonding</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Supplementary Bonding
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Required unless RCD protection on all circuits</li>
                   <li>Bonds all exposed and extraneous parts</li>
@@ -266,7 +303,9 @@ const BS7671Module7Section1 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 my-6">
-              <p className="text-sm font-medium text-green-400/80 mb-2">When Supplementary Bonding Can Be Omitted</p>
+              <p className="text-sm font-medium text-green-400/80 mb-2">
+                When Supplementary Bonding Can Be Omitted
+              </p>
               <ul className="text-sm text-white space-y-1">
                 <li>All circuits protected by 30mA RCD AND</li>
                 <li>Main protective bonding meets all requirements AND</li>
@@ -329,7 +368,9 @@ const BS7671Module7Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Best Practice</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Best Practice
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always measure zones from finished floor level and bath/shower rim</li>
                 <li>Consider the position of shower heads - water jets affect IP requirements</li>
@@ -340,10 +381,19 @@ const BS7671Module7Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Zone miscalculation:</strong> Not accounting for shower rails or adjustable heads</li>
-                <li><strong>IP confusion:</strong> Using IPX4 where IPX7 is required (Zone 0)</li>
-                <li><strong>Bonding omission:</strong> Assuming RCDs eliminate bonding requirements</li>
-                <li><strong>Socket placement:</strong> Installing sockets within 3m of Zone 1</li>
+                <li>
+                  <strong>Zone miscalculation:</strong> Not accounting for shower rails or
+                  adjustable heads
+                </li>
+                <li>
+                  <strong>IP confusion:</strong> Using IPX4 where IPX7 is required (Zone 0)
+                </li>
+                <li>
+                  <strong>Bonding omission:</strong> Assuming RCDs eliminate bonding requirements
+                </li>
+                <li>
+                  <strong>Socket placement:</strong> Installing sockets within 3m of Zone 1
+                </li>
               </ul>
             </div>
           </div>

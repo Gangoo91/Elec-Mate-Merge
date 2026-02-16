@@ -9,10 +9,10 @@ export const BoilerControlDifferenceQuickCheck = () => {
 
   const question = "What's the difference between on/off and modulating boiler control?";
   const options = [
-    "On/off is newer technology",
-    "Modulating adjusts flame output, on/off just switches the boiler",
-    "On/off is more efficient",
-    "Modulating only works with electric boilers"
+    'On/off is newer technology',
+    'Modulating adjusts flame output, on/off just switches the boiler',
+    'On/off is more efficient',
+    'Modulating only works with electric boilers',
   ];
   const correctAnswer = 1;
 
@@ -36,7 +36,7 @@ export const BoilerControlDifferenceQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <Button
@@ -49,11 +49,11 @@ export const BoilerControlDifferenceQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-600/20 border-green-500 text-green-200'
                     : selectedAnswer === index.toString()
-                    ? 'bg-red-600/20 border-red-500 text-red-200'
-                    : 'text-gray-400'
+                      ? 'bg-red-600/20 border-red-500 text-red-200'
+                      : 'text-gray-400'
                   : selectedAnswer === index.toString()
-                  ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
-                  : 'text-gray-300'
+                    ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                    : 'text-gray-300'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -72,7 +72,10 @@ export const BoilerControlDifferenceQuickCheck = () => {
         {showResult && (
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
             <p className="text-gray-300 text-sm">
-              <strong className="text-foreground">Explanation:</strong> Modulating control allows fine adjustment of boiler flame output to match heating demand precisely, whilst on/off control simply switches the boiler fully on or off, leading to temperature overshoot and reduced efficiency.
+              <strong className="text-foreground">Explanation:</strong> Modulating control allows
+              fine adjustment of boiler flame output to match heating demand precisely, whilst
+              on/off control simply switches the boiler fully on or off, leading to temperature
+              overshoot and reduced efficiency.
             </p>
             <Button
               onClick={resetQuestion}

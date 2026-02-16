@@ -1,19 +1,18 @@
-
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, DollarSign, Calculator, Percent, LineChart, CreditCard } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, DollarSign, Calculator, Percent, LineChart, CreditCard } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from '@/hooks/use-toast';
 
 const FinancialTools = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "profitCalculator";
+  const activeTab = searchParams.get('tab') || 'profitCalculator';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   const handleAction = (action: string) => {
     toast({
-      title: "Action Triggered",
+      title: 'Action Triggered',
       description: `${action} functionality will be available soon.`,
     });
   };
@@ -61,40 +60,31 @@ const FinancialTools = () => {
                 <CardDescription>Calculate profit margin for electrical jobs.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Calculate Profit")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Calculate Profit')}>
                   Open Calculator
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Material Cost Analysis</CardTitle>
                 <CardDescription>Analyse material costs and markup.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Material Cost Analysis")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Material Cost Analysis')}>
                   Analyse Costs
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Labour Pricing Tool</CardTitle>
                 <CardDescription>Calculate labour costs and rates.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Calculate Labour Rates")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Calculate Labour Rates')}>
                   Calculate Rates
                 </Button>
               </CardContent>
@@ -110,10 +100,7 @@ const FinancialTools = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Analyze Margins")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Analyze Margins')}>
                   Analyze Margins
                 </Button>
               </div>
@@ -129,10 +116,7 @@ const FinancialTools = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Track Cash Flow")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Track Cash Flow')}>
                   View Cash Flow
                 </Button>
               </div>
@@ -148,10 +132,7 @@ const FinancialTools = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Create Forecast")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Create Forecast')}>
                   Create Forecast
                 </Button>
               </div>
@@ -167,10 +148,7 @@ const FinancialTools = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Create Invoice")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Create Invoice')}>
                   Create Invoice
                 </Button>
               </div>

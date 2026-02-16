@@ -1,77 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m4s1-check1",
-    question: "Which earthing system requires an RCD for fault protection in EV charging?",
-    options: ["TN-S only", "TN-C-S only", "TT system", "All earthing systems"],
+    id: 'evcharging-m4s1-check1',
+    question: 'Which earthing system requires an RCD for fault protection in EV charging?',
+    options: ['TN-S only', 'TN-C-S only', 'TT system', 'All earthing systems'],
     correctIndex: 2,
-    explanation: "TT systems have high earth fault loop impedance, so RCDs are mandatory for fault protection. While RCDs are recommended for all EV charging, they're essential for TT where overcurrent devices alone cannot disconnect faults fast enough."
+    explanation:
+      "TT systems have high earth fault loop impedance, so RCDs are mandatory for fault protection. While RCDs are recommended for all EV charging, they're essential for TT where overcurrent devices alone cannot disconnect faults fast enough.",
   },
   {
-    id: "evcharging-m4s1-check2",
-    question: "What is the main concern with TN-C-S (PME) for outdoor EV charging?",
+    id: 'evcharging-m4s1-check2',
+    question: 'What is the main concern with TN-C-S (PME) for outdoor EV charging?',
     options: [
-      "High electricity costs",
-      "Dangerous voltages on exposed metalwork if PEN conductor fails",
-      "Slower charging speeds",
-      "More expensive equipment required"
+      'High electricity costs',
+      'Dangerous voltages on exposed metalwork if PEN conductor fails',
+      'Slower charging speeds',
+      'More expensive equipment required',
     ],
     correctIndex: 1,
-    explanation: "If the PEN conductor becomes open circuit, dangerous voltages up to 230V can appear on exposed metalwork. Regulation 722.411.4.1 restricts PME use for EV charging and requires additional protective measures."
+    explanation:
+      'If the PEN conductor becomes open circuit, dangerous voltages up to 230V can appear on exposed metalwork. Regulation 722.411.4.1 restricts PME use for EV charging and requires additional protective measures.',
   },
   {
-    id: "evcharging-m4s1-check3",
-    question: "What is the maximum earth electrode resistance for a 30mA RCD on a TT system?",
-    options: ["50Ω", "100Ω", "200Ω", "500Ω"],
+    id: 'evcharging-m4s1-check3',
+    question: 'What is the maximum earth electrode resistance for a 30mA RCD on a TT system?',
+    options: ['50Ω', '100Ω', '200Ω', '500Ω'],
     correctIndex: 2,
-    explanation: "For 30mA RCD protection, maximum earth resistance = 50V ÷ 0.03A = 1,667Ω theoretically. However, BS 7671 recommends maximum 200Ω (RA × IΔn ≤ 50V) to ensure reliable operation with safety margins."
-  }
+    explanation:
+      'For 30mA RCD protection, maximum earth resistance = 50V ÷ 0.03A = 1,667Ω theoretically. However, BS 7671 recommends maximum 200Ω (RA × IΔn ≤ 50V) to ensure reliable operation with safety margins.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I use my existing TN-C-S supply for outdoor EV charging?",
-    answer: "It depends on the specific installation. PME restrictions under Regulation 722.411.4.1 may require additional measures such as earth electrodes or equipotential bonding. A risk assessment is essential."
+    question: 'Can I use my existing TN-C-S supply for outdoor EV charging?',
+    answer:
+      'It depends on the specific installation. PME restrictions under Regulation 722.411.4.1 may require additional measures such as earth electrodes or equipotential bonding. A risk assessment is essential.',
   },
   {
-    question: "How do I determine if my supply is TN-S or TN-C-S?",
-    answer: "Check the supply arrangement at the meter position. TN-S has separate neutral and earth conductors from the DNO; TN-C-S has a combined PEN conductor that splits into separate N and PE at the service position."
+    question: 'How do I determine if my supply is TN-S or TN-C-S?',
+    answer:
+      'Check the supply arrangement at the meter position. TN-S has separate neutral and earth conductors from the DNO; TN-C-S has a combined PEN conductor that splits into separate N and PE at the service position.',
   },
   {
     question: "What's the benefit of converting to TT for public charging?",
-    answer: "TT systems eliminate PME restrictions and provide enhanced safety isolation from supply earth faults, making them ideal for publicly accessible charging points where the public may contact metalwork."
+    answer:
+      'TT systems eliminate PME restrictions and provide enhanced safety isolation from supply earth faults, making them ideal for publicly accessible charging points where the public may contact metalwork.',
   },
   {
     question: "Why can't Type AC RCDs be used for EV charging?",
-    answer: "Modern EV chargers can produce DC fault currents that Type AC RCDs cannot detect. BS 7671 requires minimum Type A RCD, with Type B preferred for comprehensive protection against all residual current types."
-  }
+    answer:
+      'Modern EV chargers can produce DC fault currents that Type AC RCDs cannot detect. BS 7671 requires minimum Type A RCD, with Type B preferred for comprehensive protection against all residual current types.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A public car park requires 10 EV charging points. The site has a TN-C-S supply. What earthing arrangement is most appropriate?",
-  options: [
-    "Use existing PME with standard bonding",
-    "Install a TT system with dedicated earth electrode",
-    "No earthing changes required",
-    "Use TN-S arrangement from DNO"
-  ],
-  correctAnswer: 1,
-  explanation: "For public charging accessible to the general public, TT is preferred as it eliminates PME restrictions, provides isolation from supply earth faults, and automatically complies with Regulation 722.411.4.1 requirements."
-  }
+    question:
+      'A public car park requires 10 EV charging points. The site has a TN-C-S supply. What earthing arrangement is most appropriate?',
+    options: [
+      'Use existing PME with standard bonding',
+      'Install a TT system with dedicated earth electrode',
+      'No earthing changes required',
+      'Use TN-S arrangement from DNO',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'For public charging accessible to the general public, TT is preferred as it eliminates PME restrictions, provides isolation from supply earth faults, and automatically complies with Regulation 722.411.4.1 requirements.',
+  },
 ];
 
 const EVChargingModule4Section1 = () => {
   useSEO({
-    title: "Earthing System Selection | EV Charging Module 4.1",
-    description: "Learn to select appropriate earthing systems (TT, TN-S, TN-C-S) for EV charging installations according to BS 7671 requirements."
+    title: 'Earthing System Selection | EV Charging Module 4.1',
+    description:
+      'Learn to select appropriate earthing systems (TT, TN-S, TN-C-S) for EV charging installations according to BS 7671 requirements.',
   });
 
   return (
@@ -103,9 +113,7 @@ const EVChargingModule4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Earthing System Selection
           </h1>
-          <p className="text-white/80">
-            TT, TN-S, and TN-C-S systems for EV charging
-          </p>
+          <p className="text-white/80">TT, TN-S, and TN-C-S systems for EV charging</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -113,16 +121,26 @@ const EVChargingModule4Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>TN-S:</strong> Best for EV, low impedance, reliable</li>
-              <li><strong>TN-C-S (PME):</strong> Common but has restrictions</li>
-              <li><strong>TT:</strong> Preferred for outdoor/public charging</li>
+              <li>
+                <strong>TN-S:</strong> Best for EV, low impedance, reliable
+              </li>
+              <li>
+                <strong>TN-C-S (PME):</strong> Common but has restrictions
+              </li>
+              <li>
+                <strong>TT:</strong> Preferred for outdoor/public charging
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Check supply type at meter position</li>
-              <li><strong>Use:</strong> Reg 722.411.4.1 for PME restrictions</li>
+              <li>
+                <strong>Spot:</strong> Check supply type at meter position
+              </li>
+              <li>
+                <strong>Use:</strong> Reg 722.411.4.1 for PME restrictions
+              </li>
             </ul>
           </div>
         </div>
@@ -132,12 +150,12 @@ const EVChargingModule4Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Classify different earthing system types",
-              "Evaluate suitability for EV charging applications",
-              "Apply BS 7671 earthing requirements",
-              "Design fault protection for each system",
-              "Calculate earth fault loop impedance",
-              "Specify protective devices correctly"
+              'Classify different earthing system types',
+              'Evaluate suitability for EV charging applications',
+              'Apply BS 7671 earthing requirements',
+              'Design fault protection for each system',
+              'Calculate earth fault loop impedance',
+              'Specify protective devices correctly',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -163,7 +181,9 @@ const EVChargingModule4Section1 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Characteristics</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  System Characteristics
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Separate N and PE throughout</li>
                   <li>• Single earthing point at transformer</li>
@@ -223,13 +243,15 @@ const EVChargingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              TN-C-S (Protective Multiple Earthing) combines neutral and earth functions
-              into a single PEN conductor in the supply network. Within the installation,
-              the PEN splits into separate N and PE conductors.
+              TN-C-S (Protective Multiple Earthing) combines neutral and earth functions into a
+              single PEN conductor in the supply network. Within the installation, the PEN splits
+              into separate N and PE conductors.
             </p>
 
             <div className="p-3 rounded bg-transparent border border-red-400/30">
-              <p className="text-sm font-medium text-red-400/80 mb-2">PME Restrictions - Regulation 722.411.4.1</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                PME Restrictions - Regulation 722.411.4.1
+              </p>
               <ul className="text-sm text-white space-y-1">
                 <li>• Open PEN conductor creates dangerous voltages on metalwork</li>
                 <li>• Outdoor charging points require special consideration</li>
@@ -305,14 +327,16 @@ const EVChargingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              TT systems use a local earth electrode completely independent of the supply
-              earthing. This isolation eliminates imported earth faults and voltage rises,
-              making TT ideal for EV charging in public or exposed locations.
+              TT systems use a local earth electrode completely independent of the supply earthing.
+              This isolation eliminates imported earth faults and voltage rises, making TT ideal for
+              EV charging in public or exposed locations.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Characteristics</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  System Characteristics
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Local earth electrode (isolated)</li>
                   <li>• High Zs requires RCD protection</li>
@@ -332,7 +356,9 @@ const EVChargingModule4Section1 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Earth Electrode Requirements</p>
+              <p className="text-sm font-medium text-elec-yellow mb-2">
+                Earth Electrode Requirements
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">Rod Electrodes</p>
@@ -399,7 +425,9 @@ const EVChargingModule4Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Selecting Earthing Systems</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Selecting Earthing Systems
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Verify existing supply type from DNO documentation</li>
                 <li>Assess installation location (indoor/outdoor/public)</li>
@@ -411,10 +439,18 @@ const EVChargingModule4Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Ignoring PME restrictions:</strong> — Creates serious shock hazards</li>
-                <li><strong>Using Type AC RCDs:</strong> — Non-compliant for EV charging</li>
-                <li><strong>No earth electrode test:</strong> — TT systems may fail to disconnect</li>
-                <li><strong>Inadequate bonding:</strong> — Touch voltages exceed safe limits</li>
+                <li>
+                  <strong>Ignoring PME restrictions:</strong> — Creates serious shock hazards
+                </li>
+                <li>
+                  <strong>Using Type AC RCDs:</strong> — Non-compliant for EV charging
+                </li>
+                <li>
+                  <strong>No earth electrode test:</strong> — TT systems may fail to disconnect
+                </li>
+                <li>
+                  <strong>Inadequate bonding:</strong> — Touch voltages exceed safe limits
+                </li>
               </ul>
             </div>
           </div>
@@ -458,10 +494,7 @@ const EVChargingModule4Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

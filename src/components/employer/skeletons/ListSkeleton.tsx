@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ListSkeletonProps {
   /** Number of list items to show */
@@ -20,14 +20,12 @@ export function ListSkeleton({
   itemCount = 5,
   showSearch = true,
   showFilters = true,
-  filterCount = 4
+  filterCount = 4,
 }: ListSkeletonProps) {
   return (
     <div className="space-y-4 pb-6 animate-pulse">
       {/* Search Bar */}
-      {showSearch && (
-        <Skeleton className="h-11 w-full rounded-lg" />
-      )}
+      {showSearch && <Skeleton className="h-11 w-full rounded-lg" />}
 
       {/* Filter Chips */}
       {showFilters && (

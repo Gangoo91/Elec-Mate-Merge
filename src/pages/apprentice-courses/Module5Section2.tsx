@@ -1,44 +1,44 @@
-import { ArrowLeft, Lightbulb, FileText, MapPin, Package, Users } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Lightbulb, FileText, MapPin, Package, Users } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
+    number: 'Subsection 1',
     title: "What Makes a 'Safe and Functional' Design",
-    description: "Understanding the principles of safe electrical design",
+    description: 'Understanding the principles of safe electrical design',
     icon: Lightbulb,
-    href: "2-1"
+    href: '2-1',
   },
   {
-    number: "Subsection 2",
-    title: "Load Estimation and Circuit Requirements (Basic Awareness)",
-    description: "Introduction to calculating electrical loads and circuit needs",
+    number: 'Subsection 2',
+    title: 'Load Estimation and Circuit Requirements (Basic Awareness)',
+    description: 'Introduction to calculating electrical loads and circuit needs',
     icon: FileText,
-    href: "2-2"
+    href: '2-2',
   },
   {
-    number: "Subsection 3",
-    title: "Selecting Suitable Protective Devices (MCBs, RCDs – Intro Only)",
-    description: "Basic introduction to choosing protection devices",
+    number: 'Subsection 3',
+    title: 'Selecting Suitable Protective Devices (MCBs, RCDs – Intro Only)',
+    description: 'Basic introduction to choosing protection devices',
     icon: MapPin,
-    href: "2-3"
+    href: '2-3',
   },
   {
-    number: "Subsection 4",
-    title: "Zoning, Environmental Considerations, and Cable Choice",
-    description: "Considering environment and location when selecting cables",
+    number: 'Subsection 4',
+    title: 'Zoning, Environmental Considerations, and Cable Choice',
+    description: 'Considering environment and location when selecting cables',
     icon: Package,
-    href: "2-4"
+    href: '2-4',
   },
   {
-    number: "Subsection 5",
-    title: "Designing for Expansion, Maintenance, and Accessibility",
-    description: "Planning electrical systems for future needs and maintenance",
+    number: 'Subsection 5',
+    title: 'Designing for Expansion, Maintenance, and Accessibility',
+    description: 'Planning electrical systems for future needs and maintenance',
     icon: Users,
-    href: "2-5"
-  }
+    href: '2-5',
+  },
 ];
 
 const Section2 = () => {

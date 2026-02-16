@@ -27,7 +27,7 @@ export const createNewVersion = async (
 
     // Calculate new version number
     const newVersion = (originalReport.version || 1) + 1;
-    
+
     // Generate new certificate number with version suffix
     const baseCertNumber = originalReport.certificate_number.split('-V')[0];
     const newCertNumber = `${baseCertNumber}-V${newVersion}`;
@@ -81,9 +81,7 @@ export const createNewVersion = async (
 /**
  * Get all versions of a report
  */
-export const getVersionHistory = async (
-  reportId: string
-): Promise<VersionInfo[]> => {
+export const getVersionHistory = async (reportId: string): Promise<VersionInfo[]> => {
   try {
     // Get the report to find parent
     const { data: report, error: reportError } = await supabase
@@ -114,9 +112,7 @@ export const getVersionHistory = async (
 /**
  * Get the latest version of a report
  */
-export const getLatestVersion = async (
-  reportId: string
-): Promise<string | null> => {
+export const getLatestVersion = async (reportId: string): Promise<string | null> => {
   try {
     const { data: report, error: reportError } = await supabase
       .from('reports')
@@ -127,7 +123,7 @@ export const getLatestVersion = async (
     if (reportError) throw reportError;
 
     const parentId = report.parent_report_id || report.id;
-    
+
     const { data: latestVersion, error: versionError } = await supabase
       .from('reports')
       .select('id')

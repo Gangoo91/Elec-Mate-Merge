@@ -1,5 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { HelpCircle } from 'lucide-react';
 
 const ControlStrategiesFAQ = () => {
@@ -18,7 +23,10 @@ const ControlStrategiesFAQ = () => {
               When should I choose manual switching over automatic transfer switching?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Manual switching is suitable for non-critical applications where brief interruptions are acceptable, budgets are tight, and users are always present. Choose automatic for critical loads, unmanned sites, or where switching speed is crucial. Manual systems cost 60-80% less but require user intervention.
+              Manual switching is suitable for non-critical applications where brief interruptions
+              are acceptable, budgets are tight, and users are always present. Choose automatic for
+              critical loads, unmanned sites, or where switching speed is crucial. Manual systems
+              cost 60-80% less but require user intervention.
             </AccordionContent>
           </AccordionItem>
 
@@ -27,7 +35,10 @@ const ControlStrategiesFAQ = () => {
               What's the difference between closed-transition and open-transition ATS?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Open-transition ATS briefly disconnects both sources during switching (50-100ms interruption), suitable for most loads. Closed-transition ATS momentarily parallels sources for seamless transfer, essential for sensitive equipment but requires synchronisation controls and costs 2-3x more.
+              Open-transition ATS briefly disconnects both sources during switching (50-100ms
+              interruption), suitable for most loads. Closed-transition ATS momentarily parallels
+              sources for seamless transfer, essential for sensitive equipment but requires
+              synchronisation controls and costs 2-3x more.
             </AccordionContent>
           </AccordionItem>
 
@@ -36,7 +47,10 @@ const ControlStrategiesFAQ = () => {
               How do I size an automatic transfer switch properly?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Size ATS for 125% of continuous load current. Consider motor starting currents (multiply by 6-8x for induction motors), future expansion (add 20-25%), and ambient temperature derating. A 100A continuous load typically needs a 125A ATS, but verify with starting surge calculations.
+              Size ATS for 125% of continuous load current. Consider motor starting currents
+              (multiply by 6-8x for induction motors), future expansion (add 20-25%), and ambient
+              temperature derating. A 100A continuous load typically needs a 125A ATS, but verify
+              with starting surge calculations.
             </AccordionContent>
           </AccordionItem>
 
@@ -45,7 +59,10 @@ const ControlStrategiesFAQ = () => {
               What monitoring and control features should I look for in an ATS?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Essential features: voltage/frequency monitoring on both sources, adjustable time delays, manual override, status indicators, and remote monitoring capability. Advanced features: load shedding, generator exercising, data logging, and network connectivity for remote management.
+              Essential features: voltage/frequency monitoring on both sources, adjustable time
+              delays, manual override, status indicators, and remote monitoring capability. Advanced
+              features: load shedding, generator exercising, data logging, and network connectivity
+              for remote management.
             </AccordionContent>
           </AccordionItem>
 
@@ -54,7 +71,10 @@ const ControlStrategiesFAQ = () => {
               How should I configure the switching time delays?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Typical settings: Transfer to backup: 3-10 seconds (allows for brief grid interruptions). Return to normal: 5-30 minutes (prevents rapid cycling). Generator start delay: 10-30 seconds. Adjust based on load criticality and generator warm-up requirements.
+              Typical settings: Transfer to backup: 3-10 seconds (allows for brief grid
+              interruptions). Return to normal: 5-30 minutes (prevents rapid cycling). Generator
+              start delay: 10-30 seconds. Adjust based on load criticality and generator warm-up
+              requirements.
             </AccordionContent>
           </AccordionItem>
 
@@ -63,7 +83,10 @@ const ControlStrategiesFAQ = () => {
               What safety considerations are critical for ATS installation?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Key safety features: mechanical and electrical interlocking to prevent paralleling incompatible sources, proper earthing of neutral conductors, isolation switches for maintenance, overcurrent protection, and clear labelling. Never bypass safety interlocks - this can cause equipment damage or injury.
+              Key safety features: mechanical and electrical interlocking to prevent paralleling
+              incompatible sources, proper earthing of neutral conductors, isolation switches for
+              maintenance, overcurrent protection, and clear labelling. Never bypass safety
+              interlocks - this can cause equipment damage or injury.
             </AccordionContent>
           </AccordionItem>
 
@@ -72,7 +95,10 @@ const ControlStrategiesFAQ = () => {
               How do I troubleshoot ATS switching problems?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Common issues: Incorrect voltage/frequency settings, faulty control power supply, mechanical binding, worn contacts, or control circuit faults. Check control voltage first (usually 24V or 120V), verify settings match actual supply parameters, and inspect for loose connections or corrosion.
+              Common issues: Incorrect voltage/frequency settings, faulty control power supply,
+              mechanical binding, worn contacts, or control circuit faults. Check control voltage
+              first (usually 24V or 120V), verify settings match actual supply parameters, and
+              inspect for loose connections or corrosion.
             </AccordionContent>
           </AccordionItem>
 
@@ -81,7 +107,10 @@ const ControlStrategiesFAQ = () => {
               Can I retrofit automatic switching to an existing manual system?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              Usually yes, but requires assessment of existing infrastructure. Check if current manual switch can accommodate ATS controller, verify adequate control power supply, and ensure proper cable sizing. May need panel modifications and additional control wiring. Typically 30-50% of new ATS cost.
+              Usually yes, but requires assessment of existing infrastructure. Check if current
+              manual switch can accommodate ATS controller, verify adequate control power supply,
+              and ensure proper cable sizing. May need panel modifications and additional control
+              wiring. Typically 30-50% of new ATS cost.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

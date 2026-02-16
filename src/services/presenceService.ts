@@ -56,11 +56,9 @@ export const updatePresence = async (
     updateData.session_started_at = now;
   }
 
-  const { error } = await supabase
-    .from('user_presence')
-    .upsert(updateData, {
-      onConflict: 'user_id',
-    });
+  const { error } = await supabase.from('user_presence').upsert(updateData, {
+    onConflict: 'user_id',
+  });
 
   if (error) {
     console.error('Error updating presence:', error);
@@ -78,7 +76,8 @@ export const getUserPresence = async (userId: string): Promise<UserPresence | nu
     .single();
 
   if (error) {
-    if (error.code !== 'PGRST116') { // Not found is ok
+    if (error.code !== 'PGRST116') {
+      // Not found is ok
       console.error('Error fetching presence:', error);
     }
     return null;
@@ -93,10 +92,7 @@ export const getUserPresence = async (userId: string): Promise<UserPresence | nu
 export const getMultipleUsersPresence = async (userIds: string[]): Promise<UserPresence[]> => {
   if (userIds.length === 0) return [];
 
-  const { data, error } = await supabase
-    .from('user_presence')
-    .select('*')
-    .in('user_id', userIds);
+  const { data, error } = await supabase.from('user_presence').select('*').in('user_id', userIds);
 
   if (error) {
     console.error('Error fetching presence:', error);
@@ -154,10 +150,14 @@ export const setOffline = async (userId: string): Promise<void> => {
  */
 export const getStatusColor = (status: 'online' | 'away' | 'offline'): string => {
   switch (status) {
-    case 'online': return 'bg-green-500';
-    case 'away': return 'bg-yellow-500';
-    case 'offline': return 'bg-gray-400';
-    default: return 'bg-gray-400';
+    case 'online':
+      return 'bg-green-500';
+    case 'away':
+      return 'bg-yellow-500';
+    case 'offline':
+      return 'bg-gray-400';
+    default:
+      return 'bg-gray-400';
   }
 };
 
@@ -181,16 +181,20 @@ export class PresenceManager {
     // Extract a clean page name from the URL
     const path = window.location.pathname;
     // Remove leading slash and format nicely
-    return path === '/' ? 'Dashboard' : path.substring(1).split('/').map(
-      s => s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, ' ')
-    ).join(' / ');
+    return path === '/'
+      ? 'Dashboard'
+      : path
+          .substring(1)
+          .split('/')
+          .map((s) => s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, ' '))
+          .join(' / ');
   }
 
   start(): void {
     // Initial presence update with session start
     updatePresence(this.userId, 'online', {
       currentPage: this.getCurrentPage(),
-      isNewSession: true
+      isNewSession: true,
     });
 
     // Track page unload to set offline immediately

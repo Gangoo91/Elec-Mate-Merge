@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Zap } from 'lucide-react';
@@ -12,12 +11,7 @@ interface LearningHubProps {
   onBack: () => void;
 }
 
-export type LearningSection =
-  | 'overview'
-  | 'fault-finding'
-  | 'regulations'
-  | 'testing'
-  | 'quiz';
+export type LearningSection = 'overview' | 'fault-finding' | 'regulations' | 'testing' | 'quiz';
 
 const LearningHub = ({ onBack }: LearningHubProps) => {
   const [currentSection, setCurrentSection] = useState<LearningSection>('overview');
@@ -63,21 +57,15 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
               <Zap className="h-5 w-5 lg:h-6 lg:w-6 text-black" />
             </div>
             <div className="flex-1 min-w-0">
-              <h1 className="text-base lg:text-xl font-semibold text-white truncate">
-                I&T Hub
-              </h1>
-              <p className="text-[11px] lg:text-sm text-white/50">
-                BS 7671:2018+A3:2024
-              </p>
+              <h1 className="text-base lg:text-xl font-semibold text-white truncate">I&T Hub</h1>
+              <p className="text-[11px] lg:text-sm text-white/50">BS 7671:2018+A3:2024</p>
             </div>
           </div>
         </header>
       )}
 
       {/* Content */}
-      <div className="p-4 max-w-2xl mx-auto lg:max-w-5xl">
-        {renderCurrentSection()}
-      </div>
+      <div className="p-4 max-w-2xl mx-auto lg:max-w-5xl">{renderCurrentSection()}</div>
     </div>
   );
 };

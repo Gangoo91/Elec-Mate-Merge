@@ -7,34 +7,34 @@ const PATTestingModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Cable and Plug Damage Checks",
+      title: 'Cable and Plug Damage Checks',
       icon: Cable,
-      description: "Visual inspection of cables and plugs for safety issues"
+      description: 'Visual inspection of cables and plugs for safety issues',
     },
     {
       id: 2,
-      title: "Rewiring and Correct Fuse Ratings",
+      title: 'Rewiring and Correct Fuse Ratings',
       icon: Eye,
-      description: "Assessment of wiring quality and fuse specifications"
+      description: 'Assessment of wiring quality and fuse specifications',
     },
     {
       id: 3,
-      title: "Signs of Overheating or Modification",
+      title: 'Signs of Overheating or Modification',
       icon: Thermometer,
-      description: "Identifying damage and unauthorised modifications"
+      description: 'Identifying damage and unauthorised modifications',
     },
     {
       id: 4,
-      title: "Environmental Considerations",
+      title: 'Environmental Considerations',
       icon: TriangleAlert,
-      description: "Risk assessment for different work environments"
+      description: 'Risk assessment for different work environments',
     },
     {
       id: 5,
-      title: "Risk-Based Approaches to Determine Test Intervals",
+      title: 'Risk-Based Approaches to Determine Test Intervals',
       icon: BarChart3,
-      description: "Using risk assessment to set testing frequencies"
-    }
+      description: 'Using risk assessment to set testing frequencies',
+    },
   ];
 
   return (

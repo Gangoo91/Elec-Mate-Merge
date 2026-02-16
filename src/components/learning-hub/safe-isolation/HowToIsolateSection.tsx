@@ -1,6 +1,15 @@
-
 import React from 'react';
-import { Shield, Zap, AlertTriangle, Clock, CheckCircle2, Settings, Activity, Eye, Lock } from 'lucide-react';
+import {
+  Shield,
+  Zap,
+  AlertTriangle,
+  Clock,
+  CheckCircle2,
+  Settings,
+  Activity,
+  Eye,
+  Lock,
+} from 'lucide-react';
 
 const HowToIsolateSection = () => (
   <div className="space-y-6">
@@ -12,7 +21,9 @@ const HowToIsolateSection = () => (
       <div className="space-y-4 text-sm text-white">
         <div className="bg-card rounded p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">1</div>
+            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">
+              1
+            </div>
             <h5 className="font-medium text-foreground">Switch Off at Origin</h5>
           </div>
           <div className="ml-11 space-y-2">
@@ -35,7 +46,9 @@ const HowToIsolateSection = () => (
 
         <div className="bg-card rounded p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">2</div>
+            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">
+              2
+            </div>
             <h5 className="font-medium text-foreground">Isolate Using Appropriate Device</h5>
           </div>
           <div className="ml-11 space-y-2">
@@ -71,7 +84,9 @@ const HowToIsolateSection = () => (
 
         <div className="bg-card rounded p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">3</div>
+            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">
+              3
+            </div>
             <h5 className="font-medium text-foreground">Secure the Isolation</h5>
           </div>
           <div className="ml-11 space-y-2">
@@ -108,7 +123,9 @@ const HowToIsolateSection = () => (
 
         <div className="bg-card rounded p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">4</div>
+            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">
+              4
+            </div>
             <h5 className="font-medium text-foreground">Test the Isolation Device</h5>
           </div>
           <div className="ml-11 space-y-2">
@@ -136,7 +153,9 @@ const HowToIsolateSection = () => (
 
         <div className="bg-card rounded p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">5</div>
+            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">
+              5
+            </div>
             <h5 className="font-medium text-foreground">Test the Installation Dead</h5>
           </div>
           <div className="ml-11 space-y-2">
@@ -144,11 +163,21 @@ const HowToIsolateSection = () => (
             <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3 ml-4">
               <p className="font-medium text-orange-400 mb-2">EARTH-FIRST TESTING METHOD:</p>
               <ol className="space-y-1 text-xs">
-                <li>1. <strong>Establish earth reference:</strong> Connect one probe to earth/CPC</li>
-                <li>2. <strong>Test each live conductor to earth:</strong> L1-E, L2-E, L3-E</li>
-                <li>3. <strong>Test neutral to earth:</strong> N-E (if neutral present)</li>
-                <li>4. <strong>Test between live conductors:</strong> L1-L2, L2-L3, L3-L1</li>
-                <li>5. <strong>Test live to neutral:</strong> L1-N, L2-N, L3-N</li>
+                <li>
+                  1. <strong>Establish earth reference:</strong> Connect one probe to earth/CPC
+                </li>
+                <li>
+                  2. <strong>Test each live conductor to earth:</strong> L1-E, L2-E, L3-E
+                </li>
+                <li>
+                  3. <strong>Test neutral to earth:</strong> N-E (if neutral present)
+                </li>
+                <li>
+                  4. <strong>Test between live conductors:</strong> L1-L2, L2-L3, L3-L1
+                </li>
+                <li>
+                  5. <strong>Test live to neutral:</strong> L1-N, L2-N, L3-N
+                </li>
               </ol>
             </div>
             <p className="font-medium text-red-400 mt-2">Acceptance Criteria:</p>
@@ -169,7 +198,9 @@ const HowToIsolateSection = () => (
 
         <div className="bg-card rounded p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">6</div>
+            <div className="bg-red-500 text-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold">
+              6
+            </div>
             <h5 className="font-medium text-foreground">Re-test the Voltage Indicator</h5>
           </div>
           <div className="ml-11 space-y-2">
@@ -183,8 +214,9 @@ const HowToIsolateSection = () => (
             <p className="font-medium text-red-400 mt-2">Critical Importance:</p>
             <div className="bg-red-500/10 border border-red-500/20 rounded p-3 ml-4">
               <p className="text-sm">
-                This step validates that your voltage indicator was working correctly during the dead testing phase. 
-                A faulty tester giving false "dead" readings could lead to a fatal accident. Never skip this final verification step.
+                This step validates that your voltage indicator was working correctly during the
+                dead testing phase. A faulty tester giving false "dead" readings could lead to a
+                fatal accident. Never skip this final verification step.
               </p>
             </div>
           </div>
@@ -273,8 +305,9 @@ const HowToIsolateSection = () => (
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
           <p className="font-medium text-yellow-400 mb-2">Don't Trust Your Eyes Alone:</p>
           <p className="text-sm text-white">
-            Visual indication is useful but never sufficient on its own. Always use proper test equipment to verify isolation. 
-            Some equipment may continue running on alternative supplies, and voltage can be present even when equipment appears off.
+            Visual indication is useful but never sufficient on its own. Always use proper test
+            equipment to verify isolation. Some equipment may continue running on alternative
+            supplies, and voltage can be present even when equipment appears off.
           </p>
         </div>
       </div>

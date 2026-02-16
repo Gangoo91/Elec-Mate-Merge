@@ -1,9 +1,14 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import TimeEntryForm from "../TimeEntryForm";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import TimeEntryForm from '../TimeEntryForm';
 
 interface LogbookEmptyStateProps {
   onAddEntry: (duration: number, activity: string, notes: string) => void;
@@ -15,7 +20,8 @@ const LogbookEmptyState = ({ onAddEntry }: LogbookEmptyStateProps) => {
       <CardContent className="flex flex-col items-center justify-center py-10">
         <h3 className="text-xl font-medium mb-2">No entries found</h3>
         <p className="text-white text-center max-w-md mb-4">
-          No training entries found for the selected period. Start by adding your first training activity.
+          No training entries found for the selected period. Start by adding your first training
+          activity.
         </p>
         <Dialog>
           <DialogTrigger asChild>

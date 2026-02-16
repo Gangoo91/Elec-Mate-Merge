@@ -1,17 +1,12 @@
-import { useState, useCallback } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { SignatureCapture } from "@/components/ui/signature-capture";
+import { useState, useCallback } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SignatureCapture } from '@/components/ui/signature-capture';
 import {
   PenTool,
   Users,
@@ -25,18 +20,18 @@ import {
   Loader2,
   MapPin,
   Smartphone,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useBriefingAttendees,
   useSignOffAttendee,
   useUploadSignature,
   useAddBriefingAttendee,
   type BriefingAttendee,
-} from "@/hooks/useBriefingSignatures";
-import { type Briefing } from "@/hooks/useBriefings";
-import { format } from "date-fns";
-import { useToast } from "@/hooks/use-toast";
+} from '@/hooks/useBriefingSignatures';
+import { type Briefing } from '@/hooks/useBriefings';
+import { format } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
 
 interface DigitalSignOffProps {
   open: boolean;
@@ -45,19 +40,14 @@ interface DigitalSignOffProps {
   onComplete?: () => void;
 }
 
-type ViewMode = "list" | "sign" | "add-guest";
+type ViewMode = 'list' | 'sign' | 'add-guest';
 
-export function DigitalSignOff({
-  open,
-  onOpenChange,
-  briefing,
-  onComplete,
-}: DigitalSignOffProps) {
+export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: DigitalSignOffProps) {
   const { toast } = useToast();
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [selectedAttendee, setSelectedAttendee] = useState<BriefingAttendee | null>(null);
-  const [guestName, setGuestName] = useState("");
-  const [guestCompany, setGuestCompany] = useState("");
+  const [guestName, setGuestName] = useState('');
+  const [guestCompany, setGuestCompany] = useState('');
   const [captureLocation, setCaptureLocation] = useState(true);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
 
@@ -77,7 +67,7 @@ export function DigitalSignOff({
   const requestLocation = useCallback(() => {
     if (!captureLocation) return;
 
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocation({
@@ -96,7 +86,7 @@ export function DigitalSignOff({
   // Handle selecting attendee to sign
   const handleSelectAttendee = (attendee: BriefingAttendee) => {
     setSelectedAttendee(attendee);
-    setViewMode("sign");
+    setViewMode('sign');
     requestLocation();
   };
 
@@ -106,7 +96,7 @@ export function DigitalSignOff({
 
     try {
       // Upload signature to storage
-      const signatureBlob = await fetch(signatureData).then(r => r.blob());
+      const signatureBlob = await fetch(signatureData).then((r) => r.blob());
       const signatureUrl = await uploadSignature.mutateAsync({
         briefingId: briefing.id,
         attendeeId: selectedAttendee.id,
@@ -117,7 +107,7 @@ export function DigitalSignOff({
       await signOff.mutateAsync({
         id: selectedAttendee.id,
         signature_url: signatureUrl,
-        signed_via: "manual",
+        signed_via: 'manual',
         device_info: getDeviceInfo(),
         location_lat: location?.lat,
         location_lng: location?.lng,
@@ -125,14 +115,14 @@ export function DigitalSignOff({
 
       // Reset and go back to list
       setSelectedAttendee(null);
-      setViewMode("list");
+      setViewMode('list');
 
       // Check if all attendees have signed
-      const remaining = attendees.filter(a => !a.acknowledged && a.id !== selectedAttendee.id);
+      const remaining = attendees.filter((a) => !a.acknowledged && a.id !== selectedAttendee.id);
       if (remaining.length === 0) {
         toast({
-          title: "All signed!",
-          description: "All attendees have signed off on this briefing.",
+          title: 'All signed!',
+          description: 'All attendees have signed off on this briefing.',
         });
         onComplete?.();
       }
@@ -153,10 +143,10 @@ export function DigitalSignOff({
       });
 
       // Immediately select for signing
-      setGuestName("");
-      setGuestCompany("");
+      setGuestName('');
+      setGuestCompany('');
       setSelectedAttendee(newAttendee);
-      setViewMode("sign");
+      setViewMode('sign');
       requestLocation();
     } catch {
       // Error handled by mutation
@@ -164,18 +154,17 @@ export function DigitalSignOff({
   };
 
   // Calculate stats
-  const signed = attendees.filter(a => a.acknowledged).length;
-  const pending = attendees.filter(a => !a.acknowledged).length;
-  const completionRate = attendees.length > 0
-    ? Math.round((signed / attendees.length) * 100)
-    : 0;
+  const signed = attendees.filter((a) => a.acknowledged).length;
+  const pending = attendees.filter((a) => !a.acknowledged).length;
+  const completionRate = attendees.length > 0 ? Math.round((signed / attendees.length) * 100) : 0;
 
   // Get risk level styling
-  const riskColour = briefing.risk_level === "high"
-    ? "text-red-400 border-red-500/50"
-    : briefing.risk_level === "medium"
-    ? "text-amber-400 border-amber-500/50"
-    : "text-green-400 border-green-500/50";
+  const riskColour =
+    briefing.risk_level === 'high'
+      ? 'text-red-400 border-red-500/50'
+      : briefing.risk_level === 'medium'
+        ? 'text-amber-400 border-amber-500/50'
+        : 'text-green-400 border-green-500/50';
 
   if (isLoading) {
     return (
@@ -205,9 +194,11 @@ export function DigitalSignOff({
                 </div>
                 <div>
                   <SheetTitle className="text-left">
-                    {viewMode === "sign" ? "Sign Attendance" :
-                     viewMode === "add-guest" ? "Add Guest" :
-                     "Attendance Sign-Off"}
+                    {viewMode === 'sign'
+                      ? 'Sign Attendance'
+                      : viewMode === 'add-guest'
+                        ? 'Add Guest'
+                        : 'Attendance Sign-Off'}
                   </SheetTitle>
                   <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
                     {briefing.title}
@@ -218,8 +209,8 @@ export function DigitalSignOff({
                 variant="ghost"
                 size="icon"
                 onClick={() => {
-                  if (viewMode !== "list") {
-                    setViewMode("list");
+                  if (viewMode !== 'list') {
+                    setViewMode('list');
                     setSelectedAttendee(null);
                   } else {
                     onOpenChange(false);
@@ -233,7 +224,7 @@ export function DigitalSignOff({
           </SheetHeader>
 
           {/* Content */}
-          {viewMode === "list" && (
+          {viewMode === 'list' && (
             <>
               {/* Stats Card */}
               <div className="p-4 border-b border-border">
@@ -253,17 +244,19 @@ export function DigitalSignOff({
                 {/* Briefing Info */}
                 <div className="flex items-center gap-2 mt-3 flex-wrap">
                   <Badge variant="outline" className="text-xs">
-                    {briefing.briefing_type || "Briefing"}
+                    {briefing.briefing_type || 'Briefing'}
                   </Badge>
                   {briefing.risk_level && (
-                    <Badge variant="outline" className={cn("text-xs", riskColour)}>
-                      {briefing.risk_level === "high" && <AlertTriangle className="h-3 w-3 mr-1" />}
-                      {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} Risk
+                    <Badge variant="outline" className={cn('text-xs', riskColour)}>
+                      {briefing.risk_level === 'high' && <AlertTriangle className="h-3 w-3 mr-1" />}
+                      {briefing.risk_level.charAt(0).toUpperCase() +
+                        briefing.risk_level.slice(1)}{' '}
+                      Risk
                     </Badge>
                   )}
                   {briefing.date && (
                     <Badge variant="outline" className="text-xs">
-                      {format(new Date(briefing.date), "dd MMM yyyy")}
+                      {format(new Date(briefing.date), 'dd MMM yyyy')}
                     </Badge>
                   )}
                 </div>
@@ -281,7 +274,7 @@ export function DigitalSignOff({
                       </p>
                       <div className="space-y-2">
                         {attendees
-                          .filter(a => !a.acknowledged)
+                          .filter((a) => !a.acknowledged)
                           .map((attendee) => (
                             <Button
                               key={attendee.id}
@@ -295,7 +288,7 @@ export function DigitalSignOff({
                                 </div>
                                 <div className="text-left">
                                   <p className="font-medium text-sm">
-                                    {attendee.employee?.name || attendee.guest_name || "Unknown"}
+                                    {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                                   </p>
                                   {attendee.guest_company && (
                                     <p className="text-xs text-muted-foreground">
@@ -320,7 +313,7 @@ export function DigitalSignOff({
                       </p>
                       <div className="space-y-2">
                         {attendees
-                          .filter(a => a.acknowledged)
+                          .filter((a) => a.acknowledged)
                           .map((attendee) => (
                             <div
                               key={attendee.id}
@@ -332,12 +325,13 @@ export function DigitalSignOff({
                                 </div>
                                 <div>
                                   <p className="font-medium text-sm text-foreground">
-                                    {attendee.employee?.name || attendee.guest_name || "Unknown"}
+                                    {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                                   </p>
                                   <p className="text-xs text-muted-foreground">
-                                    Signed {attendee.acknowledged_at
-                                      ? format(new Date(attendee.acknowledged_at), "HH:mm")
-                                      : ""}
+                                    Signed{' '}
+                                    {attendee.acknowledged_at
+                                      ? format(new Date(attendee.acknowledged_at), 'HH:mm')
+                                      : ''}
                                     {attendee.signed_via && ` via ${attendee.signed_via}`}
                                   </p>
                                 </div>
@@ -371,7 +365,7 @@ export function DigitalSignOff({
               {/* Footer */}
               <div className="p-4 border-t border-border shrink-0">
                 <Button
-                  onClick={() => setViewMode("add-guest")}
+                  onClick={() => setViewMode('add-guest')}
                   className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
                 >
                   <UserPlus className="h-4 w-4 mr-2" />
@@ -381,14 +375,14 @@ export function DigitalSignOff({
             </>
           )}
 
-          {viewMode === "sign" && selectedAttendee && (
+          {viewMode === 'sign' && selectedAttendee && (
             <>
               {/* Signing For */}
               <div className="p-4 border-b border-border">
                 <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
                   <p className="text-xs text-muted-foreground mb-1">Signing for</p>
                   <p className="text-lg font-semibold text-foreground">
-                    {selectedAttendee.employee?.name || selectedAttendee.guest_name || "Unknown"}
+                    {selectedAttendee.employee?.name || selectedAttendee.guest_name || 'Unknown'}
                   </p>
                   {selectedAttendee.guest_company && (
                     <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
@@ -418,7 +412,7 @@ export function DigitalSignOff({
                 <SignatureCapture
                   onCapture={handleSignatureCapture}
                   onCancel={() => {
-                    setViewMode("list");
+                    setViewMode('list');
                     setSelectedAttendee(null);
                   }}
                   height={200}
@@ -435,7 +429,7 @@ export function DigitalSignOff({
             </>
           )}
 
-          {viewMode === "add-guest" && (
+          {viewMode === 'add-guest' && (
             <>
               {/* Guest Form */}
               <div className="flex-1 p-4 space-y-4">
@@ -474,9 +468,9 @@ export function DigitalSignOff({
                   <Button
                     variant="outline"
                     onClick={() => {
-                      setViewMode("list");
-                      setGuestName("");
-                      setGuestCompany("");
+                      setViewMode('list');
+                      setGuestName('');
+                      setGuestCompany('');
                     }}
                     className="flex-1 h-12"
                   >

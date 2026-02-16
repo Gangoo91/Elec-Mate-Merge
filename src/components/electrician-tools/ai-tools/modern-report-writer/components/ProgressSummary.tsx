@@ -1,14 +1,8 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { 
-  CheckCircle2, 
-  Clock, 
-  AlertTriangle,
-  FileText,
-  TrendingUp
-} from "lucide-react";
+import React from 'react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { CheckCircle2, Clock, AlertTriangle, FileText, TrendingUp } from 'lucide-react';
 
 interface ProgressSummaryProps {
   currentStep: number;
@@ -24,14 +18,16 @@ const ProgressSummary: React.FC<ProgressSummaryProps> = ({
   totalSteps,
   completedFields,
   totalFields,
-  templateName = "Report",
-  estimatedTimeRemaining = "5-10 min"
+  templateName = 'Report',
+  estimatedTimeRemaining = '5-10 min',
 }) => {
-  const overallProgress = ((currentStep - 1) / totalSteps + (completedFields.length / totalFields.length) / totalSteps) * 100;
+  const overallProgress =
+    ((currentStep - 1) / totalSteps + completedFields.length / totalFields.length / totalSteps) *
+    100;
   const currentStepProgress = (completedFields.length / totalFields.length) * 100;
-  
-  const missingFields = totalFields.filter(field => !completedFields.includes(field));
-  
+
+  const missingFields = totalFields.filter((field) => !completedFields.includes(field));
+
   return (
     <Card className="bg-elec-card border-elec-yellow/30 p-6">
       <div className="space-y-6">
@@ -46,7 +42,7 @@ const ProgressSummary: React.FC<ProgressSummaryProps> = ({
               <p className="text-sm text-muted-foreground">Progress Summary</p>
             </div>
           </div>
-          
+
           <div className="text-right">
             <Badge variant="outline" className="text-elec-yellow border-elec-yellow/50">
               Step {currentStep} of {totalSteps}
@@ -77,29 +73,23 @@ const ProgressSummary: React.FC<ProgressSummaryProps> = ({
           <div className="text-center p-3 bg-elec-dark rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <CheckCircle2 className="h-4 w-4 text-green-400" />
-              <span className="text-sm text-green-400 font-medium">
-                {completedFields.length}
-              </span>
+              <span className="text-sm text-green-400 font-medium">{completedFields.length}</span>
             </div>
             <span className="text-xs text-muted-foreground">Completed</span>
           </div>
-          
+
           <div className="text-center p-3 bg-elec-dark rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <AlertTriangle className="h-4 w-4 text-yellow-400" />
-              <span className="text-sm text-yellow-400 font-medium">
-                {missingFields.length}
-              </span>
+              <span className="text-sm text-yellow-400 font-medium">{missingFields.length}</span>
             </div>
             <span className="text-xs text-muted-foreground">Remaining</span>
           </div>
-          
+
           <div className="text-center p-3 bg-elec-dark rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Clock className="h-4 w-4 text-blue-400" />
-              <span className="text-sm text-blue-400 font-medium">
-                {estimatedTimeRemaining}
-              </span>
+              <span className="text-sm text-blue-400 font-medium">{estimatedTimeRemaining}</span>
             </div>
             <span className="text-xs text-muted-foreground">Time Left</span>
           </div>

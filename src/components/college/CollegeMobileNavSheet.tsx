@@ -1,6 +1,6 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Home,
   Users,
@@ -23,9 +23,9 @@ import {
   Shield,
   Plug,
   Settings,
-  School
-} from "lucide-react";
-import type { CollegeSection } from "@/pages/college/CollegeDashboard";
+  School,
+} from 'lucide-react';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface CollegeMobileNavSheetProps {
   open: boolean;
@@ -43,51 +43,108 @@ interface NavItem {
 
 const navGroups: { title: string; items: NavItem[] }[] = [
   {
-    title: "Overview",
-    items: [
-      { id: "overview", label: "Dashboard", icon: <Home className="h-4 w-4" /> },
-    ]
+    title: 'Overview',
+    items: [{ id: 'overview', label: 'Dashboard', icon: <Home className="h-4 w-4" /> }],
   },
   {
-    title: "People Hub",
+    title: 'People Hub',
     items: [
-      { id: "peoplehub", label: "People Hub", icon: <Users className="h-4 w-4" /> },
-      { id: "tutors", label: "Tutors", icon: <UserCog className="h-4 w-4" />, indent: true },
-      { id: "students", label: "Students", icon: <GraduationCap className="h-4 w-4" />, indent: true },
-      { id: "cohorts", label: "Cohorts", icon: <UsersRound className="h-4 w-4" />, indent: true },
-      { id: "supportstaff", label: "Support Staff", icon: <Users className="h-4 w-4" />, indent: true },
-    ]
+      { id: 'peoplehub', label: 'People Hub', icon: <Users className="h-4 w-4" /> },
+      { id: 'tutors', label: 'Tutors', icon: <UserCog className="h-4 w-4" />, indent: true },
+      {
+        id: 'students',
+        label: 'Students',
+        icon: <GraduationCap className="h-4 w-4" />,
+        indent: true,
+      },
+      { id: 'cohorts', label: 'Cohorts', icon: <UsersRound className="h-4 w-4" />, indent: true },
+      {
+        id: 'supportstaff',
+        label: 'Support Staff',
+        icon: <Users className="h-4 w-4" />,
+        indent: true,
+      },
+    ],
   },
   {
-    title: "Curriculum Hub",
+    title: 'Curriculum Hub',
     items: [
-      { id: "curriculumhub", label: "Curriculum Hub", icon: <BookOpen className="h-4 w-4" /> },
-      { id: "courses", label: "Courses", icon: <BookMarked className="h-4 w-4" />, indent: true },
-      { id: "lessonplans", label: "Lesson Plans", icon: <Presentation className="h-4 w-4" />, indent: true },
-      { id: "teachingresources", label: "Resources", icon: <FileText className="h-4 w-4" />, indent: true },
-      { id: "schemesofwork", label: "Schemes of Work", icon: <Calendar className="h-4 w-4" />, indent: true },
-    ]
+      { id: 'curriculumhub', label: 'Curriculum Hub', icon: <BookOpen className="h-4 w-4" /> },
+      { id: 'courses', label: 'Courses', icon: <BookMarked className="h-4 w-4" />, indent: true },
+      {
+        id: 'lessonplans',
+        label: 'Lesson Plans',
+        icon: <Presentation className="h-4 w-4" />,
+        indent: true,
+      },
+      {
+        id: 'teachingresources',
+        label: 'Resources',
+        icon: <FileText className="h-4 w-4" />,
+        indent: true,
+      },
+      {
+        id: 'schemesofwork',
+        label: 'Schemes of Work',
+        icon: <Calendar className="h-4 w-4" />,
+        indent: true,
+      },
+    ],
   },
   {
-    title: "Assessment Hub",
+    title: 'Assessment Hub',
     items: [
-      { id: "assessmenthub", label: "Assessment Hub", icon: <ClipboardCheck className="h-4 w-4" /> },
-      { id: "grading", label: "Grading", icon: <CheckSquare className="h-4 w-4" />, indent: true },
-      { id: "attendance", label: "Attendance", icon: <Clock className="h-4 w-4" />, indent: true },
-      { id: "ilpmanagement", label: "ILP Management", icon: <Target className="h-4 w-4" />, indent: true },
-      { id: "epatracking", label: "EPA Tracking", icon: <Award className="h-4 w-4" />, indent: true },
-      { id: "progresstracking", label: "Progress", icon: <TrendingUp className="h-4 w-4" />, indent: true },
-    ]
+      {
+        id: 'assessmenthub',
+        label: 'Assessment Hub',
+        icon: <ClipboardCheck className="h-4 w-4" />,
+      },
+      { id: 'grading', label: 'Grading', icon: <CheckSquare className="h-4 w-4" />, indent: true },
+      { id: 'attendance', label: 'Attendance', icon: <Clock className="h-4 w-4" />, indent: true },
+      {
+        id: 'ilpmanagement',
+        label: 'ILP Management',
+        icon: <Target className="h-4 w-4" />,
+        indent: true,
+      },
+      {
+        id: 'epatracking',
+        label: 'EPA Tracking',
+        icon: <Award className="h-4 w-4" />,
+        indent: true,
+      },
+      {
+        id: 'progresstracking',
+        label: 'Progress',
+        icon: <TrendingUp className="h-4 w-4" />,
+        indent: true,
+      },
+    ],
   },
   {
-    title: "Resources Hub",
+    title: 'Resources Hub',
     items: [
-      { id: "resourceshub", label: "Resources Hub", icon: <FolderOpen className="h-4 w-4" /> },
-      { id: "documentlibrary", label: "Document Library", icon: <Library className="h-4 w-4" />, indent: true },
-      { id: "compliancedocs", label: "Compliance", icon: <Shield className="h-4 w-4" />, indent: true },
-      { id: "ltisettings", label: "LTI / VLE", icon: <Plug className="h-4 w-4" />, indent: true },
-      { id: "collegesettings", label: "Settings", icon: <Settings className="h-4 w-4" />, indent: true },
-    ]
+      { id: 'resourceshub', label: 'Resources Hub', icon: <FolderOpen className="h-4 w-4" /> },
+      {
+        id: 'documentlibrary',
+        label: 'Document Library',
+        icon: <Library className="h-4 w-4" />,
+        indent: true,
+      },
+      {
+        id: 'compliancedocs',
+        label: 'Compliance',
+        icon: <Shield className="h-4 w-4" />,
+        indent: true,
+      },
+      { id: 'ltisettings', label: 'LTI / VLE', icon: <Plug className="h-4 w-4" />, indent: true },
+      {
+        id: 'collegesettings',
+        label: 'Settings',
+        icon: <Settings className="h-4 w-4" />,
+        indent: true,
+      },
+    ],
   },
 ];
 
@@ -95,7 +152,7 @@ export function CollegeMobileNavSheet({
   open,
   onOpenChange,
   onNavigate,
-  currentSection
+  currentSection,
 }: CollegeMobileNavSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -119,7 +176,7 @@ export function CollegeMobileNavSheet({
                 {group.items.map((item) => (
                   <Button
                     key={item.id}
-                    variant={currentSection === item.id ? "secondary" : "ghost"}
+                    variant={currentSection === item.id ? 'secondary' : 'ghost'}
                     className={`w-full justify-start gap-3 h-10 ${item.indent ? 'pl-8' : ''}`}
                     onClick={() => onNavigate(item.id)}
                   >

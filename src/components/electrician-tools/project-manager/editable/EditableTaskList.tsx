@@ -75,7 +75,7 @@ export const EditableTaskList = ({
               onCheckedChange={() => onToggleTask(task.id)}
               className="mt-1"
             />
-            
+
             {editingTaskId === task.id ? (
               <div className="flex-1 flex gap-2">
                 <MobileInput
@@ -90,13 +90,20 @@ export const EditableTaskList = ({
                 <Button size="sm" onClick={handleSaveEdit} className="h-12 w-12 shrink-0">
                   <Check className="h-4 w-4" />
                 </Button>
-                <Button size="sm" variant="ghost" onClick={handleCancelEdit} className="h-12 w-12 shrink-0">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={handleCancelEdit}
+                  className="h-12 w-12 shrink-0"
+                >
                   <X className="h-4 w-4" />
                 </Button>
               </div>
             ) : (
               <div className="flex-1 flex items-start justify-between gap-2">
-                <span className={`text-sm ${task.completed ? 'line-through text-muted-foreground' : ''}`}>
+                <span
+                  className={`text-sm ${task.completed ? 'line-through text-muted-foreground' : ''}`}
+                >
                   {task.text}
                 </span>
                 <div className="flex gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">

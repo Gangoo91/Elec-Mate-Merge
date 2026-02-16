@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useQuizQuestions } from '@/hooks/useQuizQuestions';
 import { quizQuestions as fallbackQuestions } from '@/data/upskilling/inspectionTestingQuizData';
@@ -15,14 +14,18 @@ const InspectionTestingQuiz = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   // Fetch questions from Supabase with fallback to static data
-  const { data: dbQuestions, isLoading, error } = useQuizQuestions({
+  const {
+    data: dbQuestions,
+    isLoading,
+    error,
+  } = useQuizQuestions({
     course: 'inspection-testing',
     count: 30,
-    randomize: true
+    randomize: true,
   });
 
   // Use database questions if available, otherwise fall back to static
-  const quizQuestions = (dbQuestions && dbQuestions.length > 0) ? dbQuestions : fallbackQuestions;
+  const quizQuestions = dbQuestions && dbQuestions.length > 0 ? dbQuestions : fallbackQuestions;
 
   // Reset selected answers when questions change
   useEffect(() => {
@@ -91,10 +94,7 @@ const InspectionTestingQuiz = () => {
 
   return (
     <div className="space-y-6">
-      <QuizProgress 
-        currentQuestion={currentQuestion}
-        totalQuestions={quizQuestions.length}
-      />
+      <QuizProgress currentQuestion={currentQuestion} totalQuestions={quizQuestions.length} />
 
       <QuizQuestion
         question={question}

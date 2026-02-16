@@ -1,4 +1,16 @@
-import { ArrowLeft, Target, Shield, Zap, CheckCircle, AlertTriangle, Info, Settings, BookOpen, Eye, Activity } from 'lucide-react';
+import {
+  ArrowLeft,
+  Target,
+  Shield,
+  Zap,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  Settings,
+  BookOpen,
+  Eye,
+  Activity,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,75 +19,76 @@ import { Link } from 'react-router-dom';
 const PolarityTestingGuide = () => {
   const whyWeTest = [
     {
-      title: "Safety Critical",
-      description: "Ensures single-pole devices only switch the phase conductor, preventing dangerous situations",
-      icon: Shield
+      title: 'Safety Critical',
+      description:
+        'Ensures single-pole devices only switch the phase conductor, preventing dangerous situations',
+      icon: Shield,
     },
     {
-      title: "Legal Requirement", 
-      description: "BS 7671 requires polarity verification for all single-pole switching devices",
-      icon: CheckCircle
+      title: 'Legal Requirement',
+      description: 'BS 7671 requires polarity verification for all single-pole switching devices',
+      icon: CheckCircle,
     },
     {
-      title: "Functional Safety",
-      description: "Prevents equipment damage and ensures proper operation of devices",
-      icon: Zap
+      title: 'Functional Safety',
+      description: 'Prevents equipment damage and ensures proper operation of devices',
+      icon: Zap,
     },
     {
-      title: "Installation Integrity",
-      description: "Verifies correct identification and connection of conductors throughout",
-      icon: Target
-    }
+      title: 'Installation Integrity',
+      description: 'Verifies correct identification and connection of conductors throughout',
+      icon: Target,
+    },
   ];
 
   const whatToCheck = [
     {
-      item: "Single-pole switches",
-      requirement: "Must only switch phase conductor",
-      danger: "Switched neutral leaves phase live when off",
-      location: "All lighting switches, isolators"
+      item: 'Single-pole switches',
+      requirement: 'Must only switch phase conductor',
+      danger: 'Switched neutral leaves phase live when off',
+      location: 'All lighting switches, isolators',
     },
     {
-      item: "Socket outlets",
-      requirement: "Phase to phase terminal, neutral to neutral terminal",
-      danger: "Reversed polarity can cause equipment damage",
-      location: "All socket outlets, especially single sockets"
+      item: 'Socket outlets',
+      requirement: 'Phase to phase terminal, neutral to neutral terminal',
+      danger: 'Reversed polarity can cause equipment damage',
+      location: 'All socket outlets, especially single sockets',
     },
     {
-      item: "Fuses and MCBs",
-      requirement: "Must be in phase conductor only",
-      danger: "Protection in neutral conductor is ineffective",
-      location: "Consumer units, distribution boards"
+      item: 'Fuses and MCBs',
+      requirement: 'Must be in phase conductor only',
+      danger: 'Protection in neutral conductor is ineffective',
+      location: 'Consumer units, distribution boards',
     },
     {
-      item: "Edison screw lampholders",
-      requirement: "Phase to centre contact, neutral to screw thread",
-      danger: "Live screw thread presents shock risk",
-      location: "ES lamp fittings, pendant lights"
+      item: 'Edison screw lampholders',
+      requirement: 'Phase to centre contact, neutral to screw thread',
+      danger: 'Live screw thread presents shock risk',
+      location: 'ES lamp fittings, pendant lights',
     },
     {
-      item: "Fixed equipment",
-      requirement: "Correct phase/neutral identification maintained",
-      danger: "Equipment malfunction or damage",
-      location: "Boilers, immersion heaters, motors"
-    }
+      item: 'Fixed equipment',
+      requirement: 'Correct phase/neutral identification maintained',
+      danger: 'Equipment malfunction or damage',
+      location: 'Boilers, immersion heaters, motors',
+    },
   ];
 
   const testMethods = [
     {
-      method: "Continuity Method (Preferred)",
-      description: "Dead testing using low-resistance ohmmeter with temporary link",
-      when: "Initial verification, safest method",
-      equipment: "Low-resistance ohmmeter, test leads, temporary links",
-      safety: "Dead testing - no electrical hazards"
+      method: 'Continuity Method (Preferred)',
+      description: 'Dead testing using low-resistance ohmmeter with temporary link',
+      when: 'Initial verification, safest method',
+      equipment: 'Low-resistance ohmmeter, test leads, temporary links',
+      safety: 'Dead testing - no electrical hazards',
     },
     {
-      method: "Live Testing",
-      description: "Testing on energised circuits using voltage indicator",
-      when: "Periodic inspection, verification of live circuits",
-      equipment: "Approved voltage indicator, test lamp",
-      safety: "Live working - requires additional precautions"
-    }
+      method: 'Live Testing',
+      description: 'Testing on energised circuits using voltage indicator',
+      when: 'Periodic inspection, verification of live circuits',
+      equipment: 'Approved voltage indicator, test lamp',
+      safety: 'Live working - requires additional precautions',
+    },
   ];
 
   return (
@@ -91,12 +104,12 @@ const PolarityTestingGuide = () => {
             Back to Practical Tests
           </Button>
         </Link>
-        
+
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <Target className="h-8 w-8 text-elec-yellow" />
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="bg-orange-600/40 text-orange-300 hover:bg-orange-600/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Verification Testing
@@ -114,7 +127,6 @@ const PolarityTestingGuide = () => {
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-6xl mx-auto space-y-8">
-
           {/* Why We Test Section */}
           <Card className="bg-transparent border-transparent">
             <CardHeader>
@@ -138,15 +150,16 @@ const PolarityTestingGuide = () => {
                   );
                 })}
               </div>
-              
+
               <div className="bg-red-600/20 p-4 rounded-lg border border-red-600/30">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <h4 className="text-red-400 font-semibold">Deadly Danger</h4>
                 </div>
                 <p className="text-red-200 text-sm">
-                  Incorrect polarity can be fatal. A switch in the neutral conductor leaves the phase conductor 
-                  permanently live, creating a shock risk even when the switch is "off".
+                  Incorrect polarity can be fatal. A switch in the neutral conductor leaves the
+                  phase conductor permanently live, creating a shock risk even when the switch is
+                  "off".
                 </p>
               </div>
             </CardContent>
@@ -196,18 +209,18 @@ const PolarityTestingGuide = () => {
                 <div key={index} className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-3">{method.method}</h3>
                   <p className="text-white text-sm mb-4">{method.description}</p>
-                  
+
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <div>
                       <h4 className="text-elec-yellow font-medium mb-2">When to Use:</h4>
                       <p className="text-white text-sm">{method.when}</p>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-green-400 font-medium mb-2">Equipment Needed:</h4>
                       <p className="text-white text-sm">{method.equipment}</p>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-elec-yellow font-medium mb-2">Safety Level:</h4>
                       <p className="text-white text-sm">{method.safety}</p>
@@ -227,29 +240,35 @@ const PolarityTestingGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               {/* Method 1: Continuity Testing */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </span>
                   Continuity Method (Dead Testing) - PREFERRED
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
-                      <strong>Safest Method:</strong> Tests with circuit isolated - no electrical danger
+                      <strong>Safest Method:</strong> Tests with circuit isolated - no electrical
+                      danger
                     </p>
                   </div>
 
                   <div className="space-y-6">
                     {/* Testing Single-Pole Switches */}
                     <div>
-                      <h4 className="text-white font-semibold mb-3">Testing Single-Pole Switches:</h4>
+                      <h4 className="text-white font-semibold mb-3">
+                        Testing Single-Pole Switches:
+                      </h4>
                       <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
-                            <p className="text-elec-yellow font-medium text-sm">Step 1: Preparation</p>
+                            <p className="text-elec-yellow font-medium text-sm">
+                              Step 1: Preparation
+                            </p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Isolate circuit and prove dead</li>
                               <li>• At consumer unit, disconnect phase conductor from MCB</li>
@@ -257,7 +276,7 @@ const PolarityTestingGuide = () => {
                               <li>• Set up low-resistance ohmmeter</li>
                             </ul>
                           </div>
-                          
+
                           <div>
                             <p className="text-elec-yellow font-medium text-sm">Step 2: Testing</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
@@ -267,9 +286,11 @@ const PolarityTestingGuide = () => {
                               <li>• Should read OPEN CIRCUIT (∞Ω) - no continuity</li>
                             </ul>
                           </div>
-                          
+
                           <div>
-                            <p className="text-elec-yellow font-medium text-sm">Step 3: Verification</p>
+                            <p className="text-elec-yellow font-medium text-sm">
+                              Step 3: Verification
+                            </p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Set switch to ON position</li>
                               <li>• Test between switch live terminal and earth</li>
@@ -287,7 +308,9 @@ const PolarityTestingGuide = () => {
                       <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
-                            <p className="text-elec-yellow font-medium text-sm">Method: Cross-Connection Test</p>
+                            <p className="text-elec-yellow font-medium text-sm">
+                              Method: Cross-Connection Test
+                            </p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• With circuit isolated, link phase to earth at consumer unit</li>
                               <li>• Test phase terminal to earth terminal at socket</li>
@@ -296,18 +319,18 @@ const PolarityTestingGuide = () => {
                               <li>• Should show open circuit (∞Ω)</li>
                             </ul>
                           </div>
-                          
+
                           <div className="bg-green-600/20 p-3 rounded">
                             <p className="text-green-200 text-sm">
-                              <strong>Correct Result:</strong> Phase terminal shows continuity to earth, 
-                              neutral terminal shows open circuit to earth.
+                              <strong>Correct Result:</strong> Phase terminal shows continuity to
+                              earth, neutral terminal shows open circuit to earth.
                             </p>
                           </div>
-                          
+
                           <div className="bg-red-600/20 p-3 rounded">
                             <p className="text-red-200 text-sm">
-                              <strong>Wrong Polarity:</strong> If results are reversed, 
-                              phase and neutral connections are swapped at the socket.
+                              <strong>Wrong Polarity:</strong> If results are reversed, phase and
+                              neutral connections are swapped at the socket.
                             </p>
                           </div>
                         </div>
@@ -316,11 +339,15 @@ const PolarityTestingGuide = () => {
 
                     {/* Testing Edison Screw Lampholders */}
                     <div>
-                      <h4 className="text-white font-semibold mb-3">Testing Edison Screw (ES) Lampholders:</h4>
+                      <h4 className="text-white font-semibold mb-3">
+                        Testing Edison Screw (ES) Lampholders:
+                      </h4>
                       <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
-                            <p className="text-elec-yellow font-medium text-sm">Critical Safety Test:</p>
+                            <p className="text-elec-yellow font-medium text-sm">
+                              Critical Safety Test:
+                            </p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Remove lamp from ES fitting</li>
                               <li>• With phase linked to earth at CU</li>
@@ -328,11 +355,12 @@ const PolarityTestingGuide = () => {
                               <li>• Test screw thread to earth - should show open circuit</li>
                             </ul>
                           </div>
-                          
+
                           <div className="bg-orange-600/20 p-3 rounded">
                             <p className="text-orange-200 text-sm">
-                              <strong>Why Critical:</strong> If screw thread is live, anyone changing a bulb 
-                              risks electrocution by touching the metal screw thread.
+                              <strong>Why Critical:</strong> If screw thread is live, anyone
+                              changing a bulb risks electrocution by touching the metal screw
+                              thread.
                             </p>
                           </div>
                         </div>
@@ -345,20 +373,25 @@ const PolarityTestingGuide = () => {
               {/* Method 2: Live Testing */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                  <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </span>
                   Live Testing Method - CAUTION REQUIRED
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-red-600/20 p-4 rounded border-l-4 border-red-400">
                     <p className="text-red-200 text-sm">
-                      <strong>Safety Warning:</strong> Live testing requires additional safety measures and should only be done by competent persons
+                      <strong>Safety Warning:</strong> Live testing requires additional safety
+                      measures and should only be done by competent persons
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="text-white font-semibold mb-3">Using Approved Voltage Indicator:</h4>
+                      <h4 className="text-white font-semibold mb-3">
+                        Using Approved Voltage Indicator:
+                      </h4>
                       <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
@@ -370,7 +403,7 @@ const PolarityTestingGuide = () => {
                               <li>• If reads 230V, switch is in neutral (incorrect)</li>
                             </ul>
                           </div>
-                          
+
                           <div>
                             <p className="text-elec-yellow font-medium text-sm">Socket Testing:</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
@@ -386,8 +419,8 @@ const PolarityTestingGuide = () => {
 
                     <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                       <p className="text-yellow-200 text-sm">
-                        <strong>Safety Requirements for Live Testing:</strong> Use proper PPE, 
-                        GS38 compliant test equipment, and follow safe working procedures.
+                        <strong>Safety Requirements for Live Testing:</strong> Use proper PPE, GS38
+                        compliant test equipment, and follow safe working procedures.
                       </p>
                     </div>
                   </div>
@@ -405,9 +438,10 @@ const PolarityTestingGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-green-400 font-semibold mb-4">Scenario 1: Lighting Circuit Polarity Test (PASS)</h3>
+                <h3 className="text-green-400 font-semibold mb-4">
+                  Scenario 1: Lighting Circuit Polarity Test (PASS)
+                </h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-medium mb-2">Setup:</h4>
@@ -421,20 +455,29 @@ const PolarityTestingGuide = () => {
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
                     <div className="bg-transparent p-3 rounded space-y-1">
-                      <p className="text-green-400 font-mono text-sm">Switch OFF: ∞Ω (open circuit) ✓</p>
-                      <p className="text-green-400 font-mono text-sm">Switch ON: 0.15Ω (continuity) ✓</p>
+                      <p className="text-green-400 font-mono text-sm">
+                        Switch OFF: ∞Ω (open circuit) ✓
+                      </p>
+                      <p className="text-green-400 font-mono text-sm">
+                        Switch ON: 0.15Ω (continuity) ✓
+                      </p>
                       <p className="text-green-400 font-mono text-sm">All 8 switches tested ✓</p>
-                      <p className="text-green-400 font-mono text-sm">All show correct polarity ✓</p>
+                      <p className="text-green-400 font-mono text-sm">
+                        All show correct polarity ✓
+                      </p>
                     </div>
                   </div>
                 </div>
                 <p className="text-white text-sm mt-3">
-                  <strong>Result:</strong> PASS - All switches correctly wired in phase conductor. Safe to energise.
+                  <strong>Result:</strong> PASS - All switches correctly wired in phase conductor.
+                  Safe to energise.
                 </p>
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-red-400 font-semibold mb-4">Scenario 2: Socket Outlet Polarity Problem (FAIL)</h3>
+                <h3 className="text-red-400 font-semibold mb-4">
+                  Scenario 2: Socket Outlet Polarity Problem (FAIL)
+                </h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-medium mb-2">Setup:</h4>
@@ -448,21 +491,29 @@ const PolarityTestingGuide = () => {
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
                     <div className="bg-transparent p-3 rounded space-y-1">
-                      <p className="text-green-400 font-mono text-sm">Sockets 1-10: Correct polarity ✓</p>
-                      <p className="text-red-400 font-mono text-sm">Socket 11: Phase/neutral swapped ✗</p>
-                      <p className="text-red-400 font-mono text-sm">Socket 12: Phase/neutral swapped ✗</p>
+                      <p className="text-green-400 font-mono text-sm">
+                        Sockets 1-10: Correct polarity ✓
+                      </p>
+                      <p className="text-red-400 font-mono text-sm">
+                        Socket 11: Phase/neutral swapped ✗
+                      </p>
+                      <p className="text-red-400 font-mono text-sm">
+                        Socket 12: Phase/neutral swapped ✗
+                      </p>
                       <p className="text-white font-mono text-sm">Recently added extension...</p>
                     </div>
                   </div>
                 </div>
                 <p className="text-white text-sm mt-3">
-                  <strong>Action Required:</strong> Rectify incorrect connections at sockets 11 and 12 before re-energising. 
-                  Check installation of recent extension work.
+                  <strong>Action Required:</strong> Rectify incorrect connections at sockets 11 and
+                  12 before re-energising. Check installation of recent extension work.
                 </p>
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-elec-yellow font-semibold mb-4">Scenario 3: ES Lampholder Safety Issue (CRITICAL)</h3>
+                <h3 className="text-elec-yellow font-semibold mb-4">
+                  Scenario 3: ES Lampholder Safety Issue (CRITICAL)
+                </h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-medium mb-2">Setup:</h4>
@@ -476,16 +527,23 @@ const PolarityTestingGuide = () => {
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
                     <div className="bg-transparent p-3 rounded space-y-1">
-                      <p className="text-red-400 font-mono text-sm">Centre contact to earth: ∞Ω ✗</p>
-                      <p className="text-red-400 font-mono text-sm">Screw thread to earth: 0.12Ω ✗</p>
-                      <p className="text-red-400 font-mono text-sm">Polarity completely reversed!</p>
+                      <p className="text-red-400 font-mono text-sm">
+                        Centre contact to earth: ∞Ω ✗
+                      </p>
+                      <p className="text-red-400 font-mono text-sm">
+                        Screw thread to earth: 0.12Ω ✗
+                      </p>
+                      <p className="text-red-400 font-mono text-sm">
+                        Polarity completely reversed!
+                      </p>
                       <p className="text-red-400 font-mono text-sm">IMMEDIATE SAFETY RISK</p>
                     </div>
                   </div>
                 </div>
                 <p className="text-white text-sm mt-3">
-                  <strong>URGENT ACTION:</strong> Do not energise. Screw thread is live - potentially fatal shock risk. 
-                  Correct connections immediately before any further use.
+                  <strong>URGENT ACTION:</strong> Do not energise. Screw thread is live -
+                  potentially fatal shock risk. Correct connections immediately before any further
+                  use.
                 </p>
               </div>
             </CardContent>
@@ -502,7 +560,9 @@ const PolarityTestingGuide = () => {
             <CardContent className="space-y-4">
               <div className="space-y-4">
                 <div className="bg-transparent/80 p-4 rounded-lg">
-                  <h3 className="text-red-400 font-semibold mb-3">Problem: Switch Shows Continuity When OFF</h3>
+                  <h3 className="text-red-400 font-semibold mb-3">
+                    Problem: Switch Shows Continuity When OFF
+                  </h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                       <h4 className="text-white font-medium mb-2">What This Means:</h4>
@@ -526,7 +586,9 @@ const PolarityTestingGuide = () => {
                 </div>
 
                 <div className="bg-transparent/80 p-4 rounded-lg">
-                  <h3 className="text-red-400 font-semibold mb-3">Problem: Socket Polarity Reversed</h3>
+                  <h3 className="text-red-400 font-semibold mb-3">
+                    Problem: Socket Polarity Reversed
+                  </h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                       <h4 className="text-white font-medium mb-2">Causes:</h4>
@@ -613,7 +675,7 @@ const PolarityTestingGuide = () => {
                     </li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Common Assessment Errors</h3>
                   <ul className="text-white text-sm space-y-2">
@@ -640,19 +702,27 @@ const PolarityTestingGuide = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="bg-green-600/20 p-4 rounded-lg border border-green-600/30 mt-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Target className="h-5 w-5 text-green-400" />
                   <h4 className="text-green-400 font-semibold">Exam Success Strategy</h4>
                 </div>
                 <ul className="text-green-200 text-sm space-y-1">
-                  <li>• Always use the continuity method unless specifically asked to use live testing</li>
-                  <li>• Remember: switch OFF = ∞Ω, switch ON = low resistance (if correctly wired)</li>
+                  <li>
+                    • Always use the continuity method unless specifically asked to use live testing
+                  </li>
+                  <li>
+                    • Remember: switch OFF = ∞Ω, switch ON = low resistance (if correctly wired)
+                  </li>
                   <li>• Be able to explain the safety implications of incorrect polarity</li>
                   <li>• Practice identifying all items that require polarity testing</li>
-                  <li>• Understand why certain items (like ES lampholders) are critical for safety</li>
-                  <li>• Always state the action you would take if polarity is found to be incorrect</li>
+                  <li>
+                    • Understand why certain items (like ES lampholders) are critical for safety
+                  </li>
+                  <li>
+                    • Always state the action you would take if polarity is found to be incorrect
+                  </li>
                 </ul>
               </div>
             </CardContent>
@@ -667,18 +737,19 @@ const PolarityTestingGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-purple-400 font-semibold mb-4">Complex Circuit Testing</h3>
                 <div className="space-y-4">
-                  
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-elec-yellow font-medium mb-3">Two-Way and Intermediate Switching</h4>
+                    <h4 className="text-elec-yellow font-medium mb-3">
+                      Two-Way and Intermediate Switching
+                    </h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
-                        <strong>Challenge:</strong> Multiple switches controlling one light - which conductor is switched?
+                        <strong>Challenge:</strong> Multiple switches controlling one light - which
+                        conductor is switched?
                       </p>
-                      
+
                       <div>
                         <p className="text-elec-yellow font-medium text-sm">Testing Method:</p>
                         <ol className="text-white text-sm space-y-1 ml-4">
@@ -689,25 +760,30 @@ const PolarityTestingGuide = () => {
                           <li>5. Verify final switching device controls phase only</li>
                         </ol>
                       </div>
-                      
+
                       <div className="bg-orange-600/20 p-3 rounded">
                         <p className="text-orange-200 text-sm">
-                          <strong>Key Point:</strong> The actual switching point may be at any switch in the circuit. 
-                          Test all positions to confirm phase control.
+                          <strong>Key Point:</strong> The actual switching point may be at any
+                          switch in the circuit. Test all positions to confirm phase control.
                         </p>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-elec-yellow font-medium mb-3">Three-Phase Equipment Testing</h4>
+                    <h4 className="text-elec-yellow font-medium mb-3">
+                      Three-Phase Equipment Testing
+                    </h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
-                        <strong>Application:</strong> Motors, distribution boards, commercial equipment
+                        <strong>Application:</strong> Motors, distribution boards, commercial
+                        equipment
                       </p>
-                      
+
                       <div>
-                        <p className="text-elec-yellow font-medium text-sm">Extended Test Requirements:</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Extended Test Requirements:
+                        </p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Test each phase conductor to earth separately</li>
                           <li>• Verify correct phase rotation at equipment</li>
@@ -716,11 +792,11 @@ const PolarityTestingGuide = () => {
                           <li>• Document phase labelling (L1, L2, L3)</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-red-600/20 p-3 rounded">
                         <p className="text-red-200 text-sm">
-                          <strong>Critical Safety:</strong> Incorrect phase rotation can damage motors and 
-                          create dangerous mechanical rotation direction.
+                          <strong>Critical Safety:</strong> Incorrect phase rotation can damage
+                          motors and create dangerous mechanical rotation direction.
                         </p>
                       </div>
                     </div>
@@ -731,12 +807,13 @@ const PolarityTestingGuide = () => {
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-green-400 font-semibold mb-4">Specialist Applications</h3>
                 <div className="space-y-4">
-                  
                   <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-semibold mb-3">Emergency Lighting Circuits</h4>
                     <div className="space-y-3">
                       <div>
-                        <p className="text-elec-yellow font-medium text-sm">Special Considerations:</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Special Considerations:
+                        </p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Maintained vs non-maintained fittings</li>
                           <li>• Central battery system connections</li>
@@ -744,7 +821,7 @@ const PolarityTestingGuide = () => {
                           <li>• Control panel polarity requirements</li>
                         </ul>
                       </div>
-                      
+
                       <div>
                         <p className="text-green-400 font-medium text-sm">Testing Protocol:</p>
                         <ul className="text-white text-sm space-y-1">
@@ -758,7 +835,9 @@ const PolarityTestingGuide = () => {
                   </div>
 
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-white font-semibold mb-3">Fire Alarm and Security Systems</h4>
+                    <h4 className="text-white font-semibold mb-3">
+                      Fire Alarm and Security Systems
+                    </h4>
                     <div className="space-y-3">
                       <div>
                         <p className="text-red-400 font-medium text-sm">Critical Requirements:</p>
@@ -769,11 +848,11 @@ const PolarityTestingGuide = () => {
                           <li>• Power supply unit output polarity</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-elec-yellow/20 p-3 rounded">
                         <p className="text-yellow-200 text-sm">
-                          <strong>Important:</strong> Incorrect polarity in fire alarm circuits can prevent 
-                          proper operation during emergencies - life safety critical.
+                          <strong>Important:</strong> Incorrect polarity in fire alarm circuits can
+                          prevent proper operation during emergencies - life safety critical.
                         </p>
                       </div>
                     </div>
@@ -792,17 +871,21 @@ const PolarityTestingGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-elec-yellow font-semibold mb-4">Essential Test Equipment for Polarity Testing</h3>
+                <h3 className="text-elec-yellow font-semibold mb-4">
+                  Essential Test Equipment for Polarity Testing
+                </h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  
                   <div>
-                    <h4 className="text-white font-medium mb-3">Continuity Testing (Preferred Method)</h4>
+                    <h4 className="text-white font-medium mb-3">
+                      Continuity Testing (Preferred Method)
+                    </h4>
                     <div className="bg-transparent p-4 rounded">
                       <div className="space-y-3">
                         <div>
-                          <p className="text-green-400 font-medium text-sm">Low-Resistance Ohmmeter Features:</p>
+                          <p className="text-green-400 font-medium text-sm">
+                            Low-Resistance Ohmmeter Features:
+                          </p>
                           <ul className="text-white text-sm space-y-1">
                             <li>• Test current: 200mA minimum (BS 7671)</li>
                             <li>• Resolution: 0.01Ω minimum</li>
@@ -811,9 +894,11 @@ const PolarityTestingGuide = () => {
                             <li>• Battery condition indicator</li>
                           </ul>
                         </div>
-                        
+
                         <div>
-                          <p className="text-elec-yellow font-medium text-sm">Additional Requirements:</p>
+                          <p className="text-elec-yellow font-medium text-sm">
+                            Additional Requirements:
+                          </p>
                           <ul className="text-white text-sm space-y-1">
                             <li>• Flying leads for temporary connections</li>
                             <li>• Crocodile clips for secure connections</li>
@@ -830,7 +915,9 @@ const PolarityTestingGuide = () => {
                     <div className="bg-transparent p-4 rounded">
                       <div className="space-y-3">
                         <div>
-                          <p className="text-orange-400 font-medium text-sm">Voltage Indicator Requirements:</p>
+                          <p className="text-orange-400 font-medium text-sm">
+                            Voltage Indicator Requirements:
+                          </p>
                           <ul className="text-white text-sm space-y-1">
                             <li>• GS38 compliant test probes</li>
                             <li>• Proven before and after use</li>
@@ -839,7 +926,7 @@ const PolarityTestingGuide = () => {
                             <li>• Current calibration certificate</li>
                           </ul>
                         </div>
-                        
+
                         <div>
                           <p className="text-red-400 font-medium text-sm">Safety Equipment:</p>
                           <ul className="text-white text-sm space-y-1">
@@ -856,21 +943,25 @@ const PolarityTestingGuide = () => {
 
                 <div className="mt-4 bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                   <p className="text-blue-200 text-sm">
-                    <strong>Best Practice:</strong> Always use continuity testing for initial verification. 
-                    Reserve live testing for periodic inspection or where dead testing is impractical.
+                    <strong>Best Practice:</strong> Always use continuity testing for initial
+                    verification. Reserve live testing for periodic inspection or where dead testing
+                    is impractical.
                   </p>
                 </div>
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-orange-400 font-semibold mb-4">Test Documentation and Records</h3>
+                <h3 className="text-orange-400 font-semibold mb-4">
+                  Test Documentation and Records
+                </h3>
                 <div className="space-y-4">
-                  
                   <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-3">Essential Information to Record</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-elec-yellow font-medium text-sm mb-2">Circuit Details:</p>
+                        <p className="text-elec-yellow font-medium text-sm mb-2">
+                          Circuit Details:
+                        </p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Circuit designation/number</li>
                           <li>• Type of circuit (lighting, power, etc.)</li>
@@ -878,7 +969,7 @@ const PolarityTestingGuide = () => {
                           <li>• Cable type and installation method</li>
                         </ul>
                       </div>
-                      
+
                       <div>
                         <p className="text-green-400 font-medium text-sm mb-2">Test Results:</p>
                         <ul className="text-white text-sm space-y-1">
@@ -897,18 +988,18 @@ const PolarityTestingGuide = () => {
                       <p className="text-white text-sm">
                         For compliance with BS 7671, polarity test results must be recorded on:
                       </p>
-                      
+
                       <ul className="text-white text-sm space-y-1">
                         <li>• Electrical Installation Certificate (new work)</li>
                         <li>• Minor Electrical Installation Works Certificate (additions)</li>
                         <li>• Electrical Installation Condition Report (inspections)</li>
                         <li>• Periodic Inspection and Testing documentation</li>
                       </ul>
-                      
+
                       <div className="bg-green-600/20 p-3 rounded mt-3">
                         <p className="text-green-200 text-sm">
-                          <strong>Remember:</strong> All polarity tests must show "PASS" before the installation 
-                          can be certified as compliant with BS 7671.
+                          <strong>Remember:</strong> All polarity tests must show "PASS" before the
+                          installation can be certified as compliant with BS 7671.
                         </p>
                       </div>
                     </div>
@@ -927,18 +1018,19 @@ const PolarityTestingGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-purple-400 font-semibold mb-4">Complex Fault Scenarios</h3>
                 <div className="space-y-4">
-                  
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-elec-yellow font-medium mb-3">Scenario: "The Intermittent Polarity Fault"</h4>
+                    <h4 className="text-elec-yellow font-medium mb-3">
+                      Scenario: "The Intermittent Polarity Fault"
+                    </h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
-                        <strong>Problem:</strong> Socket outlet tests correctly when isolated, fails when circuit energised.
+                        <strong>Problem:</strong> Socket outlet tests correctly when isolated, fails
+                        when circuit energised.
                       </p>
-                      
+
                       <div>
                         <p className="text-elec-yellow font-medium text-sm">Investigation Steps:</p>
                         <ol className="text-white text-sm space-y-1 ml-4">
@@ -950,23 +1042,27 @@ const PolarityTestingGuide = () => {
                           <li>6. Test individual socket spurs separately</li>
                         </ol>
                       </div>
-                      
+
                       <div className="bg-red-600/20 p-3 rounded">
                         <p className="text-red-200 text-sm">
-                          <strong>Common Cause:</strong> Neutral and earth connected somewhere in the installation, 
-                          creating alternative current paths that affect polarity testing.
+                          <strong>Common Cause:</strong> Neutral and earth connected somewhere in
+                          the installation, creating alternative current paths that affect polarity
+                          testing.
                         </p>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-elec-yellow font-medium mb-3">Scenario: "The Reversed Consumer Unit"</h4>
+                    <h4 className="text-elec-yellow font-medium mb-3">
+                      Scenario: "The Reversed Consumer Unit"
+                    </h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
-                        <strong>Discovery:</strong> Multiple circuits showing incorrect polarity after consumer unit replacement.
+                        <strong>Discovery:</strong> Multiple circuits showing incorrect polarity
+                        after consumer unit replacement.
                       </p>
-                      
+
                       <div>
                         <p className="text-elec-yellow font-medium text-sm">Root Cause Analysis:</p>
                         <ul className="text-white text-sm space-y-1">
@@ -977,11 +1073,11 @@ const PolarityTestingGuide = () => {
                           <li>• Requires supply authority disconnection to rectify</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-orange-600/20 p-3 rounded">
                         <p className="text-orange-200 text-sm">
-                          <strong>Action Required:</strong> Do not attempt to energise. Contact DNO/supplier 
-                          for supply disconnection before correcting main connections.
+                          <strong>Action Required:</strong> Do not attempt to energise. Contact
+                          DNO/supplier for supply disconnection before correcting main connections.
                         </p>
                       </div>
                     </div>
@@ -992,12 +1088,13 @@ const PolarityTestingGuide = () => {
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-red-400 font-semibold mb-4">Assessment Success Strategies</h3>
                 <div className="space-y-4">
-                  
                   <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-3">What Assessors Look For</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-green-400 font-medium text-sm mb-2">Technical Competence:</p>
+                        <p className="text-green-400 font-medium text-sm mb-2">
+                          Technical Competence:
+                        </p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Correct test method selection</li>
                           <li>• Proper equipment setup and use</li>
@@ -1006,9 +1103,11 @@ const PolarityTestingGuide = () => {
                           <li>• Clear documentation of findings</li>
                         </ul>
                       </div>
-                      
+
                       <div>
-                        <p className="text-elec-yellow font-medium text-sm mb-2">Safety Awareness:</p>
+                        <p className="text-elec-yellow font-medium text-sm mb-2">
+                          Safety Awareness:
+                        </p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Risk assessment before testing</li>
                           <li>• Proper isolation procedures</li>
@@ -1051,7 +1150,6 @@ const PolarityTestingGuide = () => {
               </div>
             </CardContent>
           </Card>
-
         </div>
       </main>
     </div>

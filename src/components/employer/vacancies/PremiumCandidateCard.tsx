@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
   Briefcase,
   MapPin,
@@ -12,21 +12,21 @@ import {
   MessageSquare,
   ChevronRight,
   Check,
-} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
 
 type ApplicationStatus =
-  | "New"
-  | "Reviewing"
-  | "Shortlisted"
-  | "Interviewed"
-  | "Offered"
-  | "Hired"
-  | "Rejected";
+  | 'New'
+  | 'Reviewing'
+  | 'Shortlisted'
+  | 'Interviewed'
+  | 'Offered'
+  | 'Hired'
+  | 'Rejected';
 
 interface PremiumCandidateCardProps {
   id: string;
@@ -39,7 +39,7 @@ interface PremiumCandidateCardProps {
   vacancyTitle: string;
   experience?: string;
   location?: string;
-  elecIdTier?: "basic" | "verified" | "premium";
+  elecIdTier?: 'basic' | 'verified' | 'premium';
   ecsCardType?: string;
   rating?: number;
   // Selection mode props
@@ -61,66 +61,66 @@ const statusConfig: Record<
   { bg: string; text: string; border: string; label: string }
 > = {
   New: {
-    bg: "bg-blue-500/10",
-    text: "text-blue-400",
-    border: "border-blue-500/30",
-    label: "New",
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/30',
+    label: 'New',
   },
   Reviewing: {
-    bg: "bg-amber-500/10",
-    text: "text-amber-400",
-    border: "border-amber-500/30",
-    label: "Reviewing",
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/30',
+    label: 'Reviewing',
   },
   Shortlisted: {
-    bg: "bg-purple-500/10",
-    text: "text-purple-400",
-    border: "border-purple-500/30",
-    label: "Shortlisted",
+    bg: 'bg-purple-500/10',
+    text: 'text-purple-400',
+    border: 'border-purple-500/30',
+    label: 'Shortlisted',
   },
   Interviewed: {
-    bg: "bg-cyan-500/10",
-    text: "text-cyan-400",
-    border: "border-cyan-500/30",
-    label: "Interviewed",
+    bg: 'bg-cyan-500/10',
+    text: 'text-cyan-400',
+    border: 'border-cyan-500/30',
+    label: 'Interviewed',
   },
   Offered: {
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-400",
-    border: "border-emerald-500/30",
-    label: "Offered",
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/30',
+    label: 'Offered',
   },
   Hired: {
-    bg: "bg-green-500/10",
-    text: "text-green-400",
-    border: "border-green-500/30",
-    label: "Hired",
+    bg: 'bg-green-500/10',
+    text: 'text-green-400',
+    border: 'border-green-500/30',
+    label: 'Hired',
   },
   Rejected: {
-    bg: "bg-red-500/10",
-    text: "text-red-400",
-    border: "border-red-500/30",
-    label: "Rejected",
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/30',
+    label: 'Rejected',
   },
 };
 
 const tierConfig = {
   basic: {
-    bg: "bg-gray-500/10",
-    text: "text-gray-400",
-    border: "border-gray-500/30",
+    bg: 'bg-gray-500/10',
+    text: 'text-gray-400',
+    border: 'border-gray-500/30',
     icon: Shield,
   },
   verified: {
-    bg: "bg-blue-500/10",
-    text: "text-blue-400",
-    border: "border-blue-500/30",
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/30',
     icon: Shield,
   },
   premium: {
-    bg: "bg-elec-yellow/10",
-    text: "text-elec-yellow",
-    border: "border-elec-yellow/30",
+    bg: 'bg-elec-yellow/10',
+    text: 'text-elec-yellow',
+    border: 'border-elec-yellow/30',
     icon: Award,
   },
 };
@@ -132,8 +132,8 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={star}
           className={cn(
-            "h-3 w-3",
-            star <= rating ? "text-elec-yellow fill-elec-yellow" : "text-white/20"
+            'h-3 w-3',
+            star <= rating ? 'text-elec-yellow fill-elec-yellow' : 'text-white/20'
           )}
         />
       ))}
@@ -167,9 +167,9 @@ export function PremiumCandidateCard({
   onClick,
 }: PremiumCandidateCardProps) {
   const initials = name
-    .split(" ")
+    .split(' ')
     .map((n) => n[0])
-    .join("")
+    .join('')
     .toUpperCase()
     .slice(0, 2);
 
@@ -183,8 +183,8 @@ export function PremiumCandidateCard({
     const diffMs = now.getTime() - date.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays}d ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
     return `${Math.floor(diffDays / 30)}mo ago`;
@@ -193,7 +193,7 @@ export function PremiumCandidateCard({
   // Determine which action buttons to show based on status
   const renderActions = () => {
     switch (status) {
-      case "New":
+      case 'New':
         return (
           <>
             <Button
@@ -221,7 +221,7 @@ export function PremiumCandidateCard({
             </Button>
           </>
         );
-      case "Shortlisted":
+      case 'Shortlisted':
         return (
           <>
             <Button
@@ -249,7 +249,7 @@ export function PremiumCandidateCard({
             </Button>
           </>
         );
-      case "Interviewed":
+      case 'Interviewed':
         return (
           <>
             <Button
@@ -277,7 +277,7 @@ export function PremiumCandidateCard({
             </Button>
           </>
         );
-      case "Offered":
+      case 'Offered':
         return (
           <Button
             size="sm"
@@ -291,8 +291,8 @@ export function PremiumCandidateCard({
             Mark as Hired
           </Button>
         );
-      case "Hired":
-      case "Rejected":
+      case 'Hired':
+      case 'Rejected':
         return (
           <Button
             variant="outline"
@@ -326,13 +326,13 @@ export function PremiumCandidateCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       className={cn(
-        "relative overflow-hidden rounded-xl",
-        "bg-elec-gray/80 backdrop-blur-sm",
-        "border border-white/10",
-        "hover:border-white/20",
-        "transition-all duration-300",
-        "group cursor-pointer",
-        isSelected && "border-elec-yellow/50 bg-elec-yellow/5"
+        'relative overflow-hidden rounded-xl',
+        'bg-elec-gray/80 backdrop-blur-sm',
+        'border border-white/10',
+        'hover:border-white/20',
+        'transition-all duration-300',
+        'group cursor-pointer',
+        isSelected && 'border-elec-yellow/50 bg-elec-yellow/5'
       )}
       onClick={handleCardClick}
     >
@@ -349,10 +349,10 @@ export function PremiumCandidateCard({
             >
               <div
                 className={cn(
-                  "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                  'w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all',
                   isSelected
-                    ? "bg-elec-yellow border-elec-yellow"
-                    : "border-white/30 hover:border-white/50"
+                    ? 'bg-elec-yellow border-elec-yellow'
+                    : 'border-white/30 hover:border-white/50'
                 )}
               >
                 {isSelected && <Check className="h-4 w-4 text-black" />}
@@ -362,9 +362,7 @@ export function PremiumCandidateCard({
 
           {/* Avatar */}
           <Avatar className="w-14 h-14 shrink-0 border-2 border-white/10">
-            {avatarUrl ? (
-              <AvatarImage src={avatarUrl} alt={name} />
-            ) : null}
+            {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}
             <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-lg">
               {initials}
             </AvatarFallback>
@@ -386,14 +384,14 @@ export function PremiumCandidateCard({
                   {tier && (
                     <Badge
                       variant="outline"
-                      className={cn("text-xs", tier.bg, tier.text, tier.border)}
+                      className={cn('text-xs', tier.bg, tier.text, tier.border)}
                     >
                       <TierIcon className="h-3 w-3 mr-1" />
-                      {elecIdTier === "premium"
-                        ? "Premium"
-                        : elecIdTier === "verified"
-                        ? "Verified"
-                        : "Basic"}
+                      {elecIdTier === 'premium'
+                        ? 'Premium'
+                        : elecIdTier === 'verified'
+                          ? 'Verified'
+                          : 'Basic'}
                     </Badge>
                   )}
                   {ecsCardType && (
@@ -411,7 +409,12 @@ export function PremiumCandidateCard({
               {/* Status badge */}
               <Badge
                 variant="outline"
-                className={cn("text-xs font-medium shrink-0", config.bg, config.text, config.border)}
+                className={cn(
+                  'text-xs font-medium shrink-0',
+                  config.bg,
+                  config.text,
+                  config.border
+                )}
               >
                 {config.label}
               </Badge>

@@ -1,17 +1,23 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { ComplianceDashboard } from "@/components/employer/ComplianceDashboard";
-import { QualificationTracker } from "@/components/employer/QualificationTracker";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { ComplianceDashboard } from '@/components/employer/ComplianceDashboard';
+import { QualificationTracker } from '@/components/employer/QualificationTracker';
 import {
   useComplianceDocuments,
   useComplianceStats,
@@ -20,8 +26,8 @@ import {
   useDeleteComplianceDocument,
   type ComplianceDocument,
   type DocumentType,
-  type DocumentCategory
-} from "@/hooks/useComplianceDocuments";
+  type DocumentCategory,
+} from '@/hooks/useComplianceDocuments';
 import {
   Shield,
   FileCheck,
@@ -38,39 +44,54 @@ import {
   Award,
   Building2,
   Car,
-} from "lucide-react";
+} from 'lucide-react';
 
 const statusColors: Record<string, string> = {
-  "Current": "bg-green-500/20 text-green-400",
-  "Pending": "bg-yellow-500/20 text-yellow-400",
-  "Expiring": "bg-orange-500/20 text-orange-400",
-  "Expired": "bg-red-500/20 text-red-400",
-  "Draft": "bg-gray-500/20 text-gray-400",
+  Current: 'bg-green-500/20 text-green-400',
+  Pending: 'bg-yellow-500/20 text-yellow-400',
+  Expiring: 'bg-orange-500/20 text-orange-400',
+  Expired: 'bg-red-500/20 text-red-400',
+  Draft: 'bg-gray-500/20 text-gray-400',
 };
 
-const documentTypes: DocumentType[] = ["RAMS Sign-off", "Permit", "Induction", "Briefing", "Method Statement", "Certificate", "Policy"];
-const categories: DocumentCategory[] = ["Safety", "Permits", "Induction", "Training", "Legal", "Insurance"];
+const documentTypes: DocumentType[] = [
+  'RAMS Sign-off',
+  'Permit',
+  'Induction',
+  'Briefing',
+  'Method Statement',
+  'Certificate',
+  'Policy',
+];
+const categories: DocumentCategory[] = [
+  'Safety',
+  'Permits',
+  'Induction',
+  'Training',
+  'Legal',
+  'Insurance',
+];
 
 export function ComplianceSection() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [showNewDoc, setShowNewDoc] = useState(false);
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   // Form state
-  const [title, setTitle] = useState("");
-  const [documentType, setDocumentType] = useState<DocumentType>("RAMS Sign-off");
-  const [category, setCategory] = useState<DocumentCategory>("Safety");
-  const [signaturesRequired, setSignaturesRequired] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
+  const [title, setTitle] = useState('');
+  const [documentType, setDocumentType] = useState<DocumentType>('RAMS Sign-off');
+  const [category, setCategory] = useState<DocumentCategory>('Safety');
+  const [signaturesRequired, setSignaturesRequired] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
 
   // Handle category click from dashboard
   const handleCategoryClick = (category: string) => {
     setActiveCategory(category);
-    if (category === "qualifications") {
-      setActiveTab("qualifications");
+    if (category === 'qualifications') {
+      setActiveTab('qualifications');
     } else {
-      setActiveTab("documents");
+      setActiveTab('documents');
     }
   };
 
@@ -82,11 +103,13 @@ export function ComplianceSection() {
   const deleteDocument = useDeleteComplianceDocument();
 
   // Filter by search
-  const filteredDocuments = documents?.filter(doc =>
-    doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    doc.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    doc.document_type?.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredDocuments =
+    documents?.filter(
+      (doc) =>
+        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.document_type?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
   const handleCreateDocument = async () => {
     if (!title) return;
@@ -97,16 +120,16 @@ export function ComplianceSection() {
       category,
       signatures_required: parseInt(signaturesRequired) || 0,
       signatures_collected: 0,
-      status: "Pending",
+      status: 'Pending',
       expiry_date: expiryDate || undefined,
     });
 
     // Reset form
-    setTitle("");
-    setDocumentType("RAMS Sign-off");
-    setCategory("Safety");
-    setSignaturesRequired("");
-    setExpiryDate("");
+    setTitle('');
+    setDocumentType('RAMS Sign-off');
+    setCategory('Safety');
+    setSignaturesRequired('');
+    setExpiryDate('');
     setShowNewDoc(false);
   };
 
@@ -169,13 +192,18 @@ export function ComplianceSection() {
 
                 <div className="space-y-2">
                   <Label>Document Type</Label>
-                  <Select value={documentType} onValueChange={(v) => setDocumentType(v as DocumentType)}>
+                  <Select
+                    value={documentType}
+                    onValueChange={(v) => setDocumentType(v as DocumentType)}
+                  >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
-                      {documentTypes.map(type => (
-                        <SelectItem key={type} value={type}>{type}</SelectItem>
+                      {documentTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -183,13 +211,18 @@ export function ComplianceSection() {
 
                 <div className="space-y-2">
                   <Label>Category</Label>
-                  <Select value={category} onValueChange={(v) => setCategory(v as DocumentCategory)}>
+                  <Select
+                    value={category}
+                    onValueChange={(v) => setCategory(v as DocumentCategory)}
+                  >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
-                      {categories.map(cat => (
-                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat} value={cat}>
+                          {cat}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -235,7 +268,7 @@ export function ComplianceSection() {
                     {createDocument.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      "Add Document"
+                      'Add Document'
                     )}
                   </Button>
                 </div>
@@ -283,7 +316,7 @@ export function ComplianceSection() {
               placeholder="Search compliance documents..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn("h-11 touch-manipulation", !searchQuery && "pl-9")}
+              className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
             />
           </div>
 
@@ -317,7 +350,9 @@ export function ComplianceSection() {
                 <CardContent className="p-8 text-center">
                   <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-foreground mb-2">No Documents</h3>
-                  <p className="text-muted-foreground mb-4">Add your first compliance document to get started.</p>
+                  <p className="text-muted-foreground mb-4">
+                    Add your first compliance document to get started.
+                  </p>
                   <Button onClick={() => setShowNewDoc(true)} className="gap-2">
                     <Plus className="h-4 w-4" />
                     Add Document
@@ -327,49 +362,64 @@ export function ComplianceSection() {
             ) : (
               <div className="space-y-3">
                 {filteredDocuments.map((doc) => {
-                  const isComplete = doc.signatures_required > 0 && doc.signatures_collected >= doc.signatures_required;
-                  const progress = doc.signatures_required > 0
-                    ? (doc.signatures_collected / doc.signatures_required) * 100
-                    : 100;
+                  const isComplete =
+                    doc.signatures_required > 0 &&
+                    doc.signatures_collected >= doc.signatures_required;
+                  const progress =
+                    doc.signatures_required > 0
+                      ? (doc.signatures_collected / doc.signatures_required) * 100
+                      : 100;
 
                   return (
-                    <Card key={doc.id} className={`hover:bg-muted/50 transition-colors ${
-                      !isComplete && doc.signatures_required > 0 ? "border-l-4 border-l-warning" : ""
-                    }`}>
+                    <Card
+                      key={doc.id}
+                      className={`hover:bg-muted/50 transition-colors ${
+                        !isComplete && doc.signatures_required > 0
+                          ? 'border-l-4 border-l-warning'
+                          : ''
+                      }`}
+                    >
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex items-start gap-3 flex-1">
-                            <div className={`p-2 rounded-lg ${
-                              isComplete ? "bg-success/10" : "bg-warning/10"
-                            }`}>
-                              <FileCheck className={`h-4 w-4 ${
-                                isComplete ? "text-success" : "text-warning"
-                              }`} />
+                            <div
+                              className={`p-2 rounded-lg ${
+                                isComplete ? 'bg-success/10' : 'bg-warning/10'
+                              }`}
+                            >
+                              <FileCheck
+                                className={`h-4 w-4 ${
+                                  isComplete ? 'text-success' : 'text-warning'
+                                }`}
+                              />
                             </div>
                             <div className="flex-1">
-                              <p className="font-medium text-foreground text-sm md:text-base">{doc.title}</p>
+                              <p className="font-medium text-foreground text-sm md:text-base">
+                                {doc.title}
+                              </p>
                               <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
                                 {doc.category && (
                                   <Badge variant="outline" className="text-xs">
                                     {doc.category}
                                   </Badge>
                                 )}
-                                {doc.document_type && (
-                                  <span>{doc.document_type}</span>
-                                )}
+                                {doc.document_type && <span>{doc.document_type}</span>}
                               </div>
                               {doc.signatures_required > 0 && (
                                 <p className="text-xs text-muted-foreground mt-1">
-                                  {doc.signatures_collected}/{doc.signatures_required} signatures collected
+                                  {doc.signatures_collected}/{doc.signatures_required} signatures
+                                  collected
                                 </p>
                               )}
                             </div>
                           </div>
                           <div className="flex flex-col items-end gap-2">
-                            <Badge className={statusColors[doc.status] || statusColors["Pending"]}>
-                              {isComplete ? "Complete" : doc.signatures_required > 0
-                                ? `${doc.signatures_required - doc.signatures_collected} pending`
-                                : doc.status}
+                            <Badge className={statusColors[doc.status] || statusColors['Pending']}>
+                              {isComplete
+                                ? 'Complete'
+                                : doc.signatures_required > 0
+                                  ? `${doc.signatures_required - doc.signatures_collected} pending`
+                                  : doc.status}
                             </Badge>
                             <div className="flex items-center gap-1">
                               {!isComplete && doc.signatures_required > 0 && (
@@ -407,7 +457,7 @@ export function ComplianceSection() {
                         {doc.signatures_required > 0 && (
                           <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
                             <div
-                              className={`h-full rounded-full ${isComplete ? "bg-success" : "bg-warning"}`}
+                              className={`h-full rounded-full ${isComplete ? 'bg-success' : 'bg-warning'}`}
                               style={{ width: `${progress}%` }}
                             />
                           </div>
@@ -432,7 +482,9 @@ export function ComplianceSection() {
                   <Download className="h-5 w-5 text-info" />
                   <div>
                     <p className="font-medium text-foreground text-sm">Export All Evidence</p>
-                    <p className="text-xs text-muted-foreground">Download complete compliance pack</p>
+                    <p className="text-xs text-muted-foreground">
+                      Download complete compliance pack
+                    </p>
                   </div>
                 </CardContent>
               </Card>

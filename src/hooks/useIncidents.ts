@@ -1,27 +1,27 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 // Types based on database schema
 export type IncidentType =
-  | "near_miss"
-  | "unsafe_practice"
-  | "faulty_equipment"
-  | "injury"
-  | "property_damage"
-  | "environmental"
-  | "security"
-  | "other";
+  | 'near_miss'
+  | 'unsafe_practice'
+  | 'faulty_equipment'
+  | 'injury'
+  | 'property_damage'
+  | 'environmental'
+  | 'security'
+  | 'other';
 
-export type SeverityLevel = "low" | "medium" | "high" | "critical";
+export type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
 
 export type IncidentStatus =
-  | "draft"
-  | "submitted"
-  | "under_review"
-  | "investigating"
-  | "resolved"
-  | "closed";
+  | 'draft'
+  | 'submitted'
+  | 'under_review'
+  | 'investigating'
+  | 'resolved'
+  | 'closed';
 
 export interface Incident {
   id: string;
@@ -50,23 +50,25 @@ export interface Incident {
   resolved_at?: string;
 }
 
-export type CreateIncidentInput = Omit<Incident, "id" | "user_id" | "created_at" | "updated_at">;
+export type CreateIncidentInput = Omit<Incident, 'id' | 'user_id' | 'created_at' | 'updated_at'>;
 export type UpdateIncidentInput = Partial<CreateIncidentInput>;
 
 // Fetch all incidents for the current user
 export function useIncidents() {
   return useQuery({
-    queryKey: ["incidents"],
+    queryKey: ['incidents'],
     queryFn: async (): Promise<Incident[]> => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (!user) return [];
 
         const { data, error } = await supabase
-          .from("employer_incidents")
-          .select("*")
-          .eq("user_id", user.id)
-          .order("date_occurred", { ascending: false });
+          .from('employer_incidents')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('date_occurred', { ascending: false });
 
         // Table may not exist or user may not have access - return empty array
         if (error) return [];
@@ -82,14 +84,14 @@ export function useIncidents() {
 // Fetch a single incident by ID
 export function useIncident(id: string | undefined) {
   return useQuery({
-    queryKey: ["incidents", id],
+    queryKey: ['incidents', id],
     queryFn: async (): Promise<Incident | null> => {
       if (!id) return null;
 
       const { data, error } = await supabase
-        .from("employer_incidents")
-        .select("*")
-        .eq("id", id)
+        .from('employer_incidents')
+        .select('*')
+        .eq('id', id)
         .single();
 
       if (error) throw error;
@@ -102,17 +104,19 @@ export function useIncident(id: string | undefined) {
 // Fetch incidents filtered by status
 export function useIncidentsByStatus(status: IncidentStatus) {
   return useQuery({
-    queryKey: ["incidents", "status", status],
+    queryKey: ['incidents', 'status', status],
     queryFn: async (): Promise<Incident[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("employer_incidents")
-        .select("*")
-        .eq("user_id", user.id)
-        .eq("status", status)
-        .order("date_occurred", { ascending: false });
+        .from('employer_incidents')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('status', status)
+        .order('date_occurred', { ascending: false });
 
       if (error) throw error;
       return data as Incident[];
@@ -123,39 +127,61 @@ export function useIncidentsByStatus(status: IncidentStatus) {
 // Get incident statistics
 export function useIncidentStats() {
   return useQuery({
-    queryKey: ["incidents", "stats"],
+    queryKey: ['incidents', 'stats'],
     queryFn: async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return {
-          total: 0, open: 0, resolved: 0, closed: 0, nearMisses: 0, critical: 0, high: 0
-        };
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user)
+          return {
+            total: 0,
+            open: 0,
+            resolved: 0,
+            closed: 0,
+            nearMisses: 0,
+            critical: 0,
+            high: 0,
+          };
 
         const { data, error } = await supabase
-          .from("employer_incidents")
-          .select("status, severity")
-          .eq("user_id", user.id);
+          .from('employer_incidents')
+          .select('status, severity')
+          .eq('user_id', user.id);
 
         // Table may not exist or user may not have access - return empty stats
-        if (error || !data) return {
-          total: 0, open: 0, resolved: 0, closed: 0, nearMisses: 0, critical: 0, high: 0
-        };
+        if (error || !data)
+          return {
+            total: 0,
+            open: 0,
+            resolved: 0,
+            closed: 0,
+            nearMisses: 0,
+            critical: 0,
+            high: 0,
+          };
 
         const stats = {
           total: data.length,
-          open: data.filter(i => !["resolved", "closed"].includes(i.status)).length,
-          resolved: data.filter(i => i.status === "resolved").length,
-          closed: data.filter(i => i.status === "closed").length,
-          nearMisses: data.filter(i => i.status === "near_miss").length,
-          critical: data.filter(i => i.severity === "critical").length,
-          high: data.filter(i => i.severity === "high").length,
+          open: data.filter((i) => !['resolved', 'closed'].includes(i.status)).length,
+          resolved: data.filter((i) => i.status === 'resolved').length,
+          closed: data.filter((i) => i.status === 'closed').length,
+          nearMisses: data.filter((i) => i.status === 'near_miss').length,
+          critical: data.filter((i) => i.severity === 'critical').length,
+          high: data.filter((i) => i.severity === 'high').length,
         };
 
         return stats;
       } catch {
         // Graceful degradation for non-employer users
         return {
-          total: 0, open: 0, resolved: 0, closed: 0, nearMisses: 0, critical: 0, high: 0
+          total: 0,
+          open: 0,
+          resolved: 0,
+          closed: 0,
+          nearMisses: 0,
+          critical: 0,
+          high: 0,
         };
       }
     },
@@ -169,11 +195,13 @@ export function useCreateIncident() {
 
   return useMutation({
     mutationFn: async (input: CreateIncidentInput): Promise<Incident> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("employer_incidents")
+        .from('employer_incidents')
         .insert({ ...input, user_id: user.id })
         .select()
         .single();
@@ -182,17 +210,17 @@ export function useCreateIncident() {
       return data as Incident;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["incidents"] });
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
       toast({
-        title: "Incident reported",
-        description: "The incident has been logged successfully.",
+        title: 'Incident reported',
+        description: 'The incident has been logged successfully.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -204,11 +232,14 @@ export function useUpdateIncident() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, ...input }: UpdateIncidentInput & { id: string }): Promise<Incident> => {
+    mutationFn: async ({
+      id,
+      ...input
+    }: UpdateIncidentInput & { id: string }): Promise<Incident> => {
       const { data, error } = await supabase
-        .from("employer_incidents")
+        .from('employer_incidents')
         .update({ ...input, updated_at: new Date().toISOString() })
-        .eq("id", id)
+        .eq('id', id)
         .select()
         .single();
 
@@ -216,18 +247,18 @@ export function useUpdateIncident() {
       return data as Incident;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["incidents"] });
-      queryClient.invalidateQueries({ queryKey: ["incidents", data.id] });
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
+      queryClient.invalidateQueries({ queryKey: ['incidents', data.id] });
       toast({
-        title: "Incident updated",
-        description: "The incident has been updated successfully.",
+        title: 'Incident updated',
+        description: 'The incident has been updated successfully.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -239,23 +270,29 @@ export function useUpdateIncidentStatus() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: IncidentStatus }): Promise<Incident> => {
+    mutationFn: async ({
+      id,
+      status,
+    }: {
+      id: string;
+      status: IncidentStatus;
+    }): Promise<Incident> => {
       const updates: Partial<Incident> = {
         status,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
       // Set timestamps for specific status changes
-      if (status === "submitted") {
+      if (status === 'submitted') {
         updates.submitted_at = new Date().toISOString();
-      } else if (status === "resolved" || status === "closed") {
+      } else if (status === 'resolved' || status === 'closed') {
         updates.resolved_at = new Date().toISOString();
       }
 
       const { data, error } = await supabase
-        .from("employer_incidents")
+        .from('employer_incidents')
         .update(updates)
-        .eq("id", id)
+        .eq('id', id)
         .select()
         .single();
 
@@ -263,18 +300,18 @@ export function useUpdateIncidentStatus() {
       return data as Incident;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["incidents"] });
-      queryClient.invalidateQueries({ queryKey: ["incidents", data.id] });
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
+      queryClient.invalidateQueries({ queryKey: ['incidents', data.id] });
       toast({
-        title: "Status updated",
-        description: `Incident marked as ${data.status.replace("_", " ")}.`,
+        title: 'Status updated',
+        description: `Incident marked as ${data.status.replace('_', ' ')}.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -287,25 +324,22 @@ export function useDeleteIncident() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("employer_incidents")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('employer_incidents').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["incidents"] });
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
       toast({
-        title: "Incident deleted",
-        description: "The incident has been removed.",
+        title: 'Incident deleted',
+        description: 'The incident has been removed.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

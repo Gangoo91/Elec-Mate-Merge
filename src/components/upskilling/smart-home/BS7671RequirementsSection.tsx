@@ -13,8 +13,9 @@ const BS7671RequirementsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Smart devices connected to mains electricity must comply with UK Wiring Regulations (BS 7671). 
-          These requirements ensure safety, performance, and legal compliance for all installations.
+          Smart devices connected to mains electricity must comply with UK Wiring Regulations (BS
+          7671). These requirements ensure safety, performance, and legal compliance for all
+          installations.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -23,18 +24,20 @@ const BS7671RequirementsSection = () => {
               <Shield className="h-5 w-5 text-green-400" />
               Key BS 7671 Requirements
             </h4>
-            
+
             <div className="space-y-3">
               <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-green-500">
                 <h5 className="font-medium text-foreground mb-2">Part 7: Special Installations</h5>
-                <p className="text-gray-300 text-sm mb-2">Devices connected to mains must comply with special installation requirements</p>
+                <p className="text-gray-300 text-sm mb-2">
+                  Devices connected to mains must comply with special installation requirements
+                </p>
                 <ul className="text-gray-300 text-sm space-y-1">
                   <li>• Additional protection required in bathroom zones</li>
                   <li>• Specific requirements for outdoor installations</li>
                   <li>• Enhanced safety measures in commercial premises</li>
                 </ul>
               </div>
-              
+
               <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-blue-500">
                 <h5 className="font-medium text-foreground mb-2">RCD Protection (Section 411)</h5>
                 <p className="text-gray-300 text-sm mb-2">30mA RCD protection required for:</p>
@@ -44,7 +47,7 @@ const BS7671RequirementsSection = () => {
                   <li>• Most circuits in domestic installations</li>
                 </ul>
               </div>
-              
+
               <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-purple-500">
                 <h5 className="font-medium text-foreground mb-2">Cable and Circuit Protection</h5>
                 <p className="text-gray-300 text-sm mb-2">All circuits must have appropriate:</p>
@@ -62,12 +65,13 @@ const BS7671RequirementsSection = () => {
               <Zap className="h-5 w-5 text-yellow-400" />
               Low Voltage Separation
             </h4>
-            
+
             <div className="p-4 bg-amber-900/20 border border-amber-600/30 rounded-lg">
               <p className="text-amber-100 text-sm mb-3">
-                <strong>Critical Requirement:</strong> Low-voltage wiring must be kept separate from mains circuits unless using segregated containment.
+                <strong>Critical Requirement:</strong> Low-voltage wiring must be kept separate from
+                mains circuits unless using segregated containment.
               </p>
-              
+
               <div className="space-y-2">
                 <h6 className="font-medium text-amber-200">Acceptable Methods:</h6>
                 <ul className="text-amber-100 text-sm space-y-1">
@@ -81,7 +85,9 @@ const BS7671RequirementsSection = () => {
 
             <div className="p-4 bg-[#1a1a1a] rounded-lg">
               <h5 className="font-medium text-foreground mb-2">Testing Requirements</h5>
-              <p className="text-gray-300 text-sm mb-2">Before energising any smart device installation:</p>
+              <p className="text-gray-300 text-sm mb-2">
+                Before energising any smart device installation:
+              </p>
               <ul className="text-gray-300 text-sm space-y-1">
                 <li>• Continuity of protective conductors</li>
                 <li>• Insulation resistance testing</li>
@@ -100,11 +106,15 @@ const BS7671RequirementsSection = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
             <div className="p-2 bg-[#1a1a1a] rounded">
-              <span className="font-medium text-foreground">EIC (Electrical Installation Certificate):</span>
+              <span className="font-medium text-foreground">
+                EIC (Electrical Installation Certificate):
+              </span>
               <span className="text-gray-300 text-sm ml-2">For new circuits</span>
             </div>
             <div className="p-2 bg-[#1a1a1a] rounded">
-              <span className="font-medium text-foreground">MEIWC (Minor Electrical Installation Works Certificate):</span>
+              <span className="font-medium text-foreground">
+                MEIWC (Minor Electrical Installation Works Certificate):
+              </span>
               <span className="text-gray-300 text-sm ml-2">For additions to existing circuits</span>
             </div>
           </div>

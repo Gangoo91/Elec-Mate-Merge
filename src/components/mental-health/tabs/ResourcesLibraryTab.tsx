@@ -1,8 +1,7 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import {
   BookOpen,
   FileText,
@@ -13,144 +12,145 @@ import {
   Zap,
   Heart,
   Brain,
-  Briefcase
-} from "lucide-react";
-import { useState } from "react";
-import { useMentalHealth } from "@/contexts/MentalHealthContext";
-import { cn } from "@/lib/utils";
+  Briefcase,
+} from 'lucide-react';
+import { useState } from 'react';
+import { useMentalHealth } from '@/contexts/MentalHealthContext';
+import { cn } from '@/lib/utils';
 
 const ResourcesLibraryTab = () => {
   const { favoriteResources, toggleFavoriteResource } = useMentalHealth();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const resourceCategories = [
-    { id: "all", label: "All", icon: BookOpen, color: "text-blue-400" },
-    { id: "stress", label: "Stress", icon: Zap, color: "text-yellow-400" },
-    { id: "anxiety", label: "Anxiety", icon: Brain, color: "text-purple-400" },
-    { id: "workplace", label: "Work", icon: Briefcase, color: "text-green-400" },
-    { id: "self-care", label: "Self-Care", icon: Heart, color: "text-pink-400" }
+    { id: 'all', label: 'All', icon: BookOpen, color: 'text-blue-400' },
+    { id: 'stress', label: 'Stress', icon: Zap, color: 'text-yellow-400' },
+    { id: 'anxiety', label: 'Anxiety', icon: Brain, color: 'text-purple-400' },
+    { id: 'workplace', label: 'Work', icon: Briefcase, color: 'text-green-400' },
+    { id: 'self-care', label: 'Self-Care', icon: Heart, color: 'text-pink-400' },
   ];
 
   const resources = [
     {
-      id: "stress-guide",
-      title: "Stress Management Guide for Electricians",
-      description: "Proven techniques for managing workplace stress in electrical work",
-      type: "document",
-      category: "stress",
-      url: "https://www.hse.gov.uk/stress/",
-      source: "HSE"
+      id: 'stress-guide',
+      title: 'Stress Management Guide for Electricians',
+      description: 'Proven techniques for managing workplace stress in electrical work',
+      type: 'document',
+      category: 'stress',
+      url: 'https://www.hse.gov.uk/stress/',
+      source: 'HSE',
     },
     {
-      id: "anxiety-toolkit",
-      title: "Anxiety Toolkit for On-Site Relief",
-      description: "Quick anxiety management techniques for work breaks",
-      type: "document",
-      category: "anxiety",
-      url: "https://www.mind.org.uk/information-support/types-of-mental-health-problems/anxiety-and-panic-attacks/",
-      source: "Mind"
+      id: 'anxiety-toolkit',
+      title: 'Anxiety Toolkit for On-Site Relief',
+      description: 'Quick anxiety management techniques for work breaks',
+      type: 'document',
+      category: 'anxiety',
+      url: 'https://www.mind.org.uk/information-support/types-of-mental-health-problems/anxiety-and-panic-attacks/',
+      source: 'Mind',
     },
     {
-      id: "mindfulness-video",
-      title: "5-Minute Mindfulness for Tradespeople",
-      description: "Short guided exercises for busy professionals",
-      type: "video",
-      category: "self-care",
-      url: "https://www.headspace.com/work",
-      source: "Headspace"
+      id: 'mindfulness-video',
+      title: '5-Minute Mindfulness for Tradespeople',
+      description: 'Short guided exercises for busy professionals',
+      type: 'video',
+      category: 'self-care',
+      url: 'https://www.headspace.com/work',
+      source: 'Headspace',
     },
     {
-      id: "sleep-hygiene",
-      title: "Sleep Guide for Shift Workers",
-      description: "Healthy sleep patterns with irregular schedules",
-      type: "document",
-      category: "self-care",
-      url: "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/tips-to-improve-your-mental-wellbeing/",
-      source: "NHS"
+      id: 'sleep-hygiene',
+      title: 'Sleep Guide for Shift Workers',
+      description: 'Healthy sleep patterns with irregular schedules',
+      type: 'document',
+      category: 'self-care',
+      url: 'https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/tips-to-improve-your-mental-wellbeing/',
+      source: 'NHS',
     },
     {
-      id: "workplace-communication",
-      title: "Discussing Mental Health at Work",
-      description: "How to talk to supervisors and colleagues",
-      type: "document",
-      category: "workplace",
-      url: "https://www.mentalhealthatwork.org.uk/",
-      source: "MHAW"
+      id: 'workplace-communication',
+      title: 'Discussing Mental Health at Work',
+      description: 'How to talk to supervisors and colleagues',
+      type: 'document',
+      category: 'workplace',
+      url: 'https://www.mentalhealthatwork.org.uk/',
+      source: 'MHAW',
     },
     {
-      id: "breathing-exercises",
-      title: "Quick Breathing Exercises",
-      description: "Simple techniques anywhere, anytime",
-      type: "video",
-      category: "stress",
-      url: "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/",
-      source: "NHS"
+      id: 'breathing-exercises',
+      title: 'Quick Breathing Exercises',
+      description: 'Simple techniques anywhere, anytime',
+      type: 'video',
+      category: 'stress',
+      url: 'https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/',
+      source: 'NHS',
     },
     {
-      id: "construction-wellbeing",
-      title: "Construction Industry Wellbeing",
-      description: "Mental health resources for construction workers",
-      type: "document",
-      category: "workplace",
-      url: "https://www.matesinmind.org/",
-      source: "Mates in Mind"
+      id: 'construction-wellbeing',
+      title: 'Construction Industry Wellbeing',
+      description: 'Mental health resources for construction workers',
+      type: 'document',
+      category: 'workplace',
+      url: 'https://www.matesinmind.org/',
+      source: 'Mates in Mind',
     },
     {
-      id: "eic-support",
-      title: "Electrical Industry Support",
-      description: "Financial, practical and emotional support",
-      type: "document",
-      category: "workplace",
-      url: "https://www.electricalcharity.org/",
-      source: "EIC"
+      id: 'eic-support',
+      title: 'Electrical Industry Support',
+      description: 'Financial, practical and emotional support',
+      type: 'document',
+      category: 'workplace',
+      url: 'https://www.electricalcharity.org/',
+      source: 'EIC',
     },
     {
-      id: "calm-resources",
-      title: "CALM Resources for Men",
+      id: 'calm-resources',
+      title: 'CALM Resources for Men',
       description: "Support and resources for men's mental health",
-      type: "document",
-      category: "anxiety",
-      url: "https://www.thecalmzone.net/help/get-help/",
-      source: "CALM"
+      type: 'document',
+      category: 'anxiety',
+      url: 'https://www.thecalmzone.net/help/get-help/',
+      source: 'CALM',
     },
     {
-      id: "body-scan",
-      title: "Body Scan Meditation",
-      description: "Progressive relaxation technique",
-      type: "video",
-      category: "self-care",
-      url: "https://www.youtube.com/watch?v=body-scan",
-      source: "YouTube"
+      id: 'body-scan',
+      title: 'Body Scan Meditation',
+      description: 'Progressive relaxation technique',
+      type: 'video',
+      category: 'self-care',
+      url: 'https://www.youtube.com/watch?v=body-scan',
+      source: 'YouTube',
     },
     {
-      id: "burnout-prevention",
-      title: "Preventing Burnout at Work",
-      description: "Recognise signs and take action early",
-      type: "document",
-      category: "stress",
-      url: "https://www.mind.org.uk/information-support/tips-for-everyday-living/how-to-be-mentally-healthy-at-work/work-and-stress/",
-      source: "Mind"
+      id: 'burnout-prevention',
+      title: 'Preventing Burnout at Work',
+      description: 'Recognise signs and take action early',
+      type: 'document',
+      category: 'stress',
+      url: 'https://www.mind.org.uk/information-support/tips-for-everyday-living/how-to-be-mentally-healthy-at-work/work-and-stress/',
+      source: 'Mind',
     },
     {
-      id: "grounding-techniques",
-      title: "5-4-3-2-1 Grounding Technique",
-      description: "Quick anxiety relief using your senses",
-      type: "video",
-      category: "anxiety",
-      url: "https://www.youtube.com/watch?v=grounding",
-      source: "YouTube"
-    }
+      id: 'grounding-techniques',
+      title: '5-4-3-2-1 Grounding Technique',
+      description: 'Quick anxiety relief using your senses',
+      type: 'video',
+      category: 'anxiety',
+      url: 'https://www.youtube.com/watch?v=grounding',
+      source: 'YouTube',
+    },
   ];
 
-  const filteredResources = resources.filter(resource => {
-    const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         resource.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || resource.category === selectedCategory;
+  const filteredResources = resources.filter((resource) => {
+    const matchesSearch =
+      resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      resource.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || resource.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const favoritesList = resources.filter(r => favoriteResources.includes(r.id));
+  const favoritesList = resources.filter((r) => favoriteResources.includes(r.id));
 
   const getTypeStyles = (type: string) => {
     return type === 'video'
@@ -166,9 +166,7 @@ const ResourcesLibraryTab = () => {
           <BookOpen className="h-6 w-6 text-blue-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Resources Library</h2>
-        <p className="text-sm text-white">
-          Evidence-based guides and videos for your wellbeing
-        </p>
+        <p className="text-sm text-white">Evidence-based guides and videos for your wellbeing</p>
       </div>
 
       {/* Search */}
@@ -180,14 +178,14 @@ const ResourcesLibraryTab = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search resources..."
-          className={cn("h-11", !searchTerm && "pl-10")}
+          className={cn('h-11', !searchTerm && 'pl-10')}
         />
       </div>
 
       {/* Category Pills - Horizontal Scroll */}
       <div className="overflow-x-auto -mx-4 px-4 pb-2">
         <div className="flex gap-2 min-w-max">
-          {resourceCategories.map(category => {
+          {resourceCategories.map((category) => {
             const isSelected = selectedCategory === category.id;
             const Icon = category.icon;
             return (
@@ -196,10 +194,10 @@ const ResourcesLibraryTab = () => {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium
                   transition-all whitespace-nowrap ${
-                  isSelected
-                    ? 'bg-white text-black'
-                    : 'bg-white/10 text-foreground/70 hover:bg-white/20'
-                }`}
+                    isSelected
+                      ? 'bg-white text-black'
+                      : 'bg-white/10 text-foreground/70 hover:bg-white/20'
+                  }`}
               >
                 <Icon className={`h-4 w-4 ${isSelected ? 'text-black' : category.color}`} />
                 {category.label}
@@ -210,7 +208,7 @@ const ResourcesLibraryTab = () => {
       </div>
 
       {/* Favorites Section */}
-      {favoritesList.length > 0 && selectedCategory === "all" && !searchTerm && (
+      {favoritesList.length > 0 && selectedCategory === 'all' && !searchTerm && (
         <div className="space-y-2">
           <h3 className="text-sm font-medium text-yellow-400 flex items-center gap-2">
             <Star className="h-4 w-4 fill-yellow-400" />
@@ -218,7 +216,7 @@ const ResourcesLibraryTab = () => {
           </h3>
           <div className="overflow-x-auto -mx-4 px-4 pb-2">
             <div className="flex gap-3 min-w-max">
-              {favoritesList.map(resource => {
+              {favoritesList.map((resource) => {
                 const typeStyles = getTypeStyles(resource.type);
                 const TypeIcon = typeStyles.icon;
                 return (
@@ -231,12 +229,16 @@ const ResourcesLibraryTab = () => {
                       active:scale-[0.98] transition-all"
                   >
                     <div className="flex items-center gap-2 mb-2">
-                      <div className={`w-6 h-6 rounded ${typeStyles.bg} flex items-center justify-center`}>
+                      <div
+                        className={`w-6 h-6 rounded ${typeStyles.bg} flex items-center justify-center`}
+                      >
                         <TypeIcon className={`h-3 w-3 ${typeStyles.text}`} />
                       </div>
                       <span className="text-xs text-white">{resource.source}</span>
                     </div>
-                    <h4 className="text-sm font-medium text-foreground line-clamp-2">{resource.title}</h4>
+                    <h4 className="text-sm font-medium text-foreground line-clamp-2">
+                      {resource.title}
+                    </h4>
                   </a>
                 );
               })}
@@ -262,15 +264,21 @@ const ResourcesLibraryTab = () => {
             <Card key={resource.id} className="border-white/10 bg-white/5 overflow-hidden">
               <CardContent className="p-3">
                 <div className="flex items-start gap-3">
-                  <div className={`w-10 h-10 rounded-lg ${typeStyles.bg} flex items-center justify-center flex-shrink-0`}>
+                  <div
+                    className={`w-10 h-10 rounded-lg ${typeStyles.bg} flex items-center justify-center flex-shrink-0`}
+                  >
                     <TypeIcon className={`h-5 w-5 ${typeStyles.text}`} />
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h4 className="font-medium text-foreground text-sm leading-tight">{resource.title}</h4>
-                        <p className="text-xs text-white mt-0.5 line-clamp-1">{resource.description}</p>
+                        <h4 className="font-medium text-foreground text-sm leading-tight">
+                          {resource.title}
+                        </h4>
+                        <p className="text-xs text-white mt-0.5 line-clamp-1">
+                          {resource.description}
+                        </p>
                       </div>
                       <button
                         onClick={(e) => {
@@ -281,9 +289,7 @@ const ResourcesLibraryTab = () => {
                       >
                         <Star
                           className={`h-4 w-4 ${
-                            isFavorite
-                              ? 'fill-yellow-400 text-yellow-400'
-                              : 'text-foreground/30'
+                            isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-foreground/30'
                           }`}
                         />
                       </button>
@@ -291,7 +297,9 @@ const ResourcesLibraryTab = () => {
 
                     <div className="flex items-center justify-between mt-2">
                       <div className="flex items-center gap-2">
-                        <Badge className={`${typeStyles.bg} ${typeStyles.text} text-[10px] px-1.5 py-0`}>
+                        <Badge
+                          className={`${typeStyles.bg} ${typeStyles.text} text-[10px] px-1.5 py-0`}
+                        >
                           {resource.type}
                         </Badge>
                         <span className="text-[10px] text-white">{resource.source}</span>
@@ -317,13 +325,14 @@ const ResourcesLibraryTab = () => {
           <CardContent className="text-center py-8">
             <Search className="h-10 w-10 text-white mx-auto mb-3" />
             <h3 className="font-medium text-foreground mb-1">No resources found</h3>
-            <p className="text-sm text-white mb-4">
-              Try different search terms or categories
-            </p>
+            <p className="text-sm text-white mb-4">Try different search terms or categories</p>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => { setSearchTerm(""); setSelectedCategory("all"); }}
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+              }}
             >
               Clear Filters
             </Button>
@@ -335,8 +344,8 @@ const ResourcesLibraryTab = () => {
       <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-indigo-500/5">
         <CardContent className="p-4">
           <p className="text-sm text-blue-200">
-            <strong className="text-blue-400">Tip:</strong> Star resources to save them for quick access later.
-            All links open official, trusted sources.
+            <strong className="text-blue-400">Tip:</strong> Star resources to save them for quick
+            access later. All links open official, trusted sources.
           </p>
         </CardContent>
       </Card>

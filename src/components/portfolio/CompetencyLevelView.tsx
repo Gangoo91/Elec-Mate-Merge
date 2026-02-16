@@ -7,12 +7,14 @@ import { PortfolioEntry, PortfolioCategory } from '@/types/portfolio';
 
 interface CompetencyLevelViewProps {
   categories: PortfolioCategory[];
-  getEntriesByCompetencyLevel: (level: 'foundation' | 'intermediate' | 'advanced') => PortfolioEntry[];
+  getEntriesByCompetencyLevel: (
+    level: 'foundation' | 'intermediate' | 'advanced'
+  ) => PortfolioEntry[];
 }
 
 const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
   categories,
-  getEntriesByCompetencyLevel
+  getEntriesByCompetencyLevel,
 }) => {
   const competencyLevels = [
     {
@@ -21,7 +23,7 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
       description: 'Essential skills and basic competencies',
       icon: Target,
       color: 'green',
-      bgColor: 'bg-green-50'
+      bgColor: 'bg-green-50',
     },
     {
       level: 'intermediate' as const,
@@ -29,7 +31,7 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
       description: 'Advanced skills and specialised knowledge',
       icon: GraduationCap,
       color: 'blue',
-      bgColor: 'bg-blue-50'
+      bgColor: 'bg-blue-50',
     },
     {
       level: 'advanced' as const,
@@ -37,14 +39,14 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
       description: 'Expert-level competencies and leadership skills',
       icon: Trophy,
       color: 'purple',
-      bgColor: 'bg-purple-50'
-    }
+      bgColor: 'bg-purple-50',
+    },
   ];
 
   const getLevelStats = (level: 'foundation' | 'intermediate' | 'advanced') => {
-    const levelCategories = categories.filter(cat => cat.competencyLevel === level);
+    const levelCategories = categories.filter((cat) => cat.competencyLevel === level);
     const entries = getEntriesByCompetencyLevel(level);
-    const completedEntries = entries.filter(e => e.status === 'completed');
+    const completedEntries = entries.filter((e) => e.status === 'completed');
     const totalRequired = levelCategories.reduce((sum, cat) => sum + cat.requiredEntries, 0);
     const totalCompleted = completedEntries.length;
     const progress = totalRequired > 0 ? Math.round((totalCompleted / totalRequired) * 100) : 0;
@@ -55,7 +57,7 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
       completedEntries,
       totalRequired,
       totalCompleted,
-      progress
+      progress,
     };
   };
 
@@ -63,7 +65,9 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
     <div className="space-y-6">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">Competency Progression</h2>
-        <p className="text-muted-foreground">Track your development across different skill levels</p>
+        <p className="text-muted-foreground">
+          Track your development across different skill levels
+        </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
@@ -72,7 +76,10 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
           const IconComponent = level.icon;
 
           return (
-            <Card key={level.level} className="relative overflow-hidden border-elec-yellow/20 bg-elec-dark">
+            <Card
+              key={level.level}
+              className="relative overflow-hidden border-elec-yellow/20 bg-elec-dark"
+            >
               <div className={`absolute top-0 left-0 w-full h-1 bg-${level.color}-500`} />
               <CardHeader className="pb-4">
                 <div className="flex flex-col items-center text-center space-y-3">
@@ -80,7 +87,9 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
                     <IconComponent className={`h-8 w-8 text-${level.color}-600`} />
                   </div>
                   <div className="space-y-1">
-                    <CardTitle className="text-xl font-bold text-elec-light">{level.name}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-elec-light">
+                      {level.name}
+                    </CardTitle>
                     <CardDescription className="text-sm text-elec-light/70 max-w-xs mx-auto leading-relaxed">
                       {level.description}
                     </CardDescription>
@@ -113,15 +122,24 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-elec-light/70 text-center">Categories in this level:</p>
+                  <p className="text-sm font-medium text-elec-light/70 text-center">
+                    Categories in this level:
+                  </p>
                   <div className="flex flex-wrap gap-1 justify-center">
                     {stats.categories.slice(0, 2).map((category) => (
-                      <Badge key={category.id} variant="outline" className="text-xs border-elec-yellow/30 text-elec-light/80">
+                      <Badge
+                        key={category.id}
+                        variant="outline"
+                        className="text-xs border-elec-yellow/30 text-elec-light/80"
+                      >
                         {category.name}
                       </Badge>
                     ))}
                     {stats.categories.length > 2 && (
-                      <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-light/80">
+                      <Badge
+                        variant="outline"
+                        className="text-xs border-elec-yellow/30 text-elec-light/80"
+                      >
                         +{stats.categories.length - 2} more
                       </Badge>
                     )}

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Calculator, AlertTriangle, Eye } from 'lucide-react';
 
@@ -39,11 +38,15 @@ const ExpectedResultsSection = () => (
       <div className="space-y-3 text-sm text-white">
         <div>
           <p className="font-medium text-foreground">Problem: Low Readings (&lt;1MΩ)</p>
-          <p className="ml-4">→ Check for: Moisture ingress, damaged cables, connected equipment, parallel paths</p>
+          <p className="ml-4">
+            → Check for: Moisture ingress, damaged cables, connected equipment, parallel paths
+          </p>
         </div>
         <div>
           <p className="font-medium text-foreground">Problem: Inconsistent Phase Readings</p>
-          <p className="ml-4">→ Check for: Single-phase damage, unbalanced loads, neutral-earth faults</p>
+          <p className="ml-4">
+            → Check for: Single-phase damage, unbalanced loads, neutral-earth faults
+          </p>
         </div>
         <div>
           <p className="font-medium text-foreground">Problem: Readings Decline During Test</p>
@@ -51,7 +54,9 @@ const ExpectedResultsSection = () => (
         </div>
         <div>
           <p className="font-medium text-foreground">Problem: Cannot Apply Test Voltage</p>
-          <p className="ml-4">→ Check for: Connected equipment, SPDs, electronic devices still connected</p>
+          <p className="ml-4">
+            → Check for: Connected equipment, SPDs, electronic devices still connected
+          </p>
         </div>
       </div>
     </div>

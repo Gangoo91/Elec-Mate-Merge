@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle2, FileText, Clock, Zap, Activity, Timer } from "lucide-react";
-import confetti from "canvas-confetti";
-import type { CommissioningResponse } from "@/types/commissioning-response";
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle2, FileText, Clock, Zap, Activity, Timer } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import type { CommissioningResponse } from '@/types/commissioning-response';
 import {
   Dialog,
   DialogContent,
@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 interface CommissioningSuccessProps {
   results: CommissioningResponse;
@@ -20,7 +20,13 @@ interface CommissioningSuccessProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const CommissioningSuccess = ({ results, onViewResults, generationTime, open, onOpenChange }: CommissioningSuccessProps) => {
+const CommissioningSuccess = ({
+  results,
+  onViewResults,
+  generationTime,
+  open,
+  onOpenChange,
+}: CommissioningSuccessProps) => {
   useEffect(() => {
     // Confetti animation
     const duration = 3000;
@@ -44,9 +50,9 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
         spread: 360,
         origin: {
           x: randomInRange(0.1, 0.9),
-          y: Math.random() - 0.2
+          y: Math.random() - 0.2,
         },
-        colors: ['#a855f7', '#8b5cf6', '#7c3aed', '#6d28d9']
+        colors: ['#a855f7', '#8b5cf6', '#7c3aed', '#6d28d9'],
       });
     }, 250);
 
@@ -59,7 +65,7 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
   }, []);
 
   // Calculate stats
-  const totalTests = 
+  const totalTests =
     (results.structuredData?.testingProcedure?.visualInspection?.checkpoints.length || 0) +
     (results.structuredData?.testingProcedure?.deadTests?.length || 0) +
     (results.structuredData?.testingProcedure?.liveTests?.length || 0);
@@ -68,9 +74,10 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
 
   const certificateType = results.structuredData?.certification?.certificateType || 'EIC';
 
-  const maxZs = results.circuits?.length > 0 
-    ? Math.max(...results.circuits.map((c: any) => parseFloat(c.zsMax || '0'))).toFixed(2)
-    : 'N/A';
+  const maxZs =
+    results.circuits?.length > 0
+      ? Math.max(...results.circuits.map((c: any) => parseFloat(c.zsMax || '0'))).toFixed(2)
+      : 'N/A';
 
   const timeSaved = 120; // 2 hours vs manual BS 7671 lookup
 
@@ -83,7 +90,7 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
               <CheckCircle2 className="h-16 w-16 sm:h-12 sm:w-12 text-foreground" />
             </div>
           </div>
-          
+
           <DialogTitle className="text-3xl sm:text-3xl lg:text-4xl font-bold text-foreground">
             Test Procedure Complete!
           </DialogTitle>
@@ -104,7 +111,8 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
 
           <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
             <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">
-              {estimatedDuration.toFixed(1)}<span className="text-xl">h</span>
+              {estimatedDuration.toFixed(1)}
+              <span className="text-xl">h</span>
             </div>
             <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <Clock className="h-4 w-4" />
@@ -114,7 +122,8 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
 
           <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
             <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">
-              {maxZs}<span className="text-xl">Ω</span>
+              {maxZs}
+              <span className="text-xl">Ω</span>
             </div>
             <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <Activity className="h-4 w-4" />
@@ -124,7 +133,16 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
 
           <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
             <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1 truncate">
-              {certificateType.replace('BS 7671 Electrical Installation Certificate (EIC) and Schedule of Test Results', 'BS 7671 EIC').replace('BS 7671 Electrical Installation Condition Report (EICR)', 'BS 7671 EICR').replace('BS 7671 Minor Electrical Installation Works Certificate (MWC)', 'BS 7671 MWC')}
+              {certificateType
+                .replace(
+                  'BS 7671 Electrical Installation Certificate (EIC) and Schedule of Test Results',
+                  'BS 7671 EIC'
+                )
+                .replace('BS 7671 Electrical Installation Condition Report (EICR)', 'BS 7671 EICR')
+                .replace(
+                  'BS 7671 Minor Electrical Installation Works Certificate (MWC)',
+                  'BS 7671 MWC'
+                )}
             </div>
             <div className="text-base sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
               <FileText className="h-4 w-4" />
@@ -137,7 +155,9 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
         <div className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-lg p-4 border border-purple-500/30 mb-4">
           <div className="flex items-center justify-center gap-2 text-purple-400">
             <Timer className="h-5 w-5" />
-            <span className="text-base sm:text-sm font-semibold">Time Saved: ~{timeSaved} minutes</span>
+            <span className="text-base sm:text-sm font-semibold">
+              Time Saved: ~{timeSaved} minutes
+            </span>
           </div>
           <p className="text-sm sm:text-xs text-foreground/80 mt-1 text-center">
             Compared to manual BS 7671 lookup and procedure writing

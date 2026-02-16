@@ -11,28 +11,28 @@ export interface SolarPanel {
   id: string;
   make: string;
   model: string;
-  wattage: number;              // Wp
-  efficiency: number;           // %
-  voc: number;                  // Open circuit voltage (V)
-  isc: number;                  // Short circuit current (A)
-  vmp: number;                  // Voltage at max power (V)
-  imp: number;                  // Current at max power (A)
+  wattage: number; // Wp
+  efficiency: number; // %
+  voc: number; // Open circuit voltage (V)
+  isc: number; // Short circuit current (A)
+  vmp: number; // Voltage at max power (V)
+  imp: number; // Current at max power (A)
   dimensions: {
-    length: number;             // mm
-    width: number;              // mm
-    depth: number;              // mm
+    length: number; // mm
+    width: number; // mm
+    depth: number; // mm
   };
-  weight: number;               // kg
+  weight: number; // kg
   cellType: 'mono' | 'poly' | 'mono-perc' | 'hjt' | 'topcon' | 'bifacial';
-  cells: number;                // Number of cells (e.g., 60, 72, 108, 120, 144)
+  cells: number; // Number of cells (e.g., 60, 72, 108, 120, 144)
   warranty: {
-    product: number;            // Years
-    performance: number;        // Years
+    product: number; // Years
+    performance: number; // Years
   };
   mcsCertified: boolean;
-  tempCoeffVoc: number;         // %/°C (negative)
-  tempCoeffIsc: number;         // %/°C (positive)
-  tempCoeffPmax: number;        // %/°C (negative)
+  tempCoeffVoc: number; // %/°C (negative)
+  tempCoeffIsc: number; // %/°C (positive)
+  tempCoeffPmax: number; // %/°C (negative)
   yearIntroduced?: number;
   notes?: string;
 }
@@ -63,7 +63,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Popular UK residential panel. Half-cell technology.'
+    notes: 'Popular UK residential panel. Half-cell technology.',
   },
   {
     id: 'ja-solar-jam54s31-415gr',
@@ -83,9 +83,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.26,
     tempCoeffIsc: 0.045,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2024,
-    notes: 'N-type TOPCon technology. Higher efficiency.'
+    notes: 'N-type TOPCon technology. Higher efficiency.',
   },
   {
     id: 'ja-solar-jam72s30-545mr',
@@ -95,7 +95,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     efficiency: 21.2,
     voc: 49.62,
     isc: 13.98,
-    vmp: 41.40,
+    vmp: 41.4,
     imp: 13.16,
     dimensions: { length: 2278, width: 1134, depth: 35 },
     weight: 28.4,
@@ -107,7 +107,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Large format for commercial installations.'
+    notes: 'Large format for commercial installations.',
   },
 
   // ========== LONGI ==========
@@ -117,10 +117,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'LR5-54HPH-410M',
     wattage: 410,
     efficiency: 21.3,
-    voc: 37.60,
+    voc: 37.6,
     isc: 13.82,
-    vmp: 31.30,
-    imp: 13.10,
+    vmp: 31.3,
+    imp: 13.1,
     dimensions: { length: 1722, width: 1134, depth: 30 },
     weight: 21.0,
     cellType: 'mono-perc',
@@ -131,7 +131,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.34,
     yearIntroduced: 2023,
-    notes: 'Hi-MO 5 series. Market leading manufacturer.'
+    notes: 'Hi-MO 5 series. Market leading manufacturer.',
   },
   {
     id: 'longi-lr5-54htb-420m',
@@ -139,9 +139,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'LR5-54HTB-420M',
     wattage: 420,
     efficiency: 21.8,
-    voc: 38.20,
+    voc: 38.2,
     isc: 13.92,
-    vmp: 31.80,
+    vmp: 31.8,
     imp: 13.21,
     dimensions: { length: 1722, width: 1134, depth: 30 },
     weight: 21.5,
@@ -153,7 +153,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.045,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2024,
-    notes: 'Hi-MO 6 series. N-type TOPCon technology.'
+    notes: 'Hi-MO 6 series. N-type TOPCon technology.',
   },
   {
     id: 'longi-lr5-72hph-550m',
@@ -161,9 +161,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'LR5-72HPH-550M',
     wattage: 550,
     efficiency: 21.3,
-    voc: 50.10,
+    voc: 50.1,
     isc: 13.95,
-    vmp: 41.70,
+    vmp: 41.7,
     imp: 13.19,
     dimensions: { length: 2278, width: 1134, depth: 35 },
     weight: 28.0,
@@ -175,7 +175,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.34,
     yearIntroduced: 2023,
-    notes: 'Hi-MO 5 large format for commercial.'
+    notes: 'Hi-MO 5 large format for commercial.',
   },
 
   // ========== TRINA SOLAR ==========
@@ -185,9 +185,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Vertex S+ TSM-DE09R.08 420W',
     wattage: 420,
     efficiency: 21.8,
-    voc: 38.20,
+    voc: 38.2,
     isc: 13.98,
-    vmp: 31.80,
+    vmp: 31.8,
     imp: 13.21,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 21.8,
@@ -199,7 +199,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.045,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2024,
-    notes: 'N-type Vertex S+ series. Popular UK choice.'
+    notes: 'N-type Vertex S+ series. Popular UK choice.',
   },
   {
     id: 'trina-vertex-s-tsm-neg9r28-430',
@@ -207,9 +207,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Vertex S+ NEG9R.28 430W',
     wattage: 430,
     efficiency: 22.3,
-    voc: 38.80,
+    voc: 38.8,
     isc: 14.05,
-    vmp: 32.40,
+    vmp: 32.4,
     imp: 13.27,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 22.0,
@@ -221,7 +221,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.044,
     tempCoeffPmax: -0.28,
     yearIntroduced: 2025,
-    notes: 'Latest N-type TOPCon with 30 year warranty.'
+    notes: 'Latest N-type TOPCon with 30 year warranty.',
   },
   {
     id: 'trina-vertex-tsm-deg21c20-600',
@@ -229,9 +229,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Vertex TSM-DEG21C.20 600W',
     wattage: 600,
     efficiency: 21.8,
-    voc: 51.80,
-    isc: 14.70,
-    vmp: 43.30,
+    voc: 51.8,
+    isc: 14.7,
+    vmp: 43.3,
     imp: 13.86,
     dimensions: { length: 2384, width: 1134, depth: 35 },
     weight: 32.0,
@@ -243,7 +243,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Large format commercial panel. 210mm cells.'
+    notes: 'Large format commercial panel. 210mm cells.',
   },
 
   // ========== CANADIAN SOLAR ==========
@@ -253,9 +253,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'HiKu6 CS6R-415MS',
     wattage: 415,
     efficiency: 21.5,
-    voc: 37.90,
-    isc: 13.90,
-    vmp: 31.50,
+    voc: 37.9,
+    isc: 13.9,
+    vmp: 31.5,
     imp: 13.17,
     dimensions: { length: 1722, width: 1134, depth: 30 },
     weight: 21.3,
@@ -267,7 +267,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Popular residential panel. Excellent reliability.'
+    notes: 'Popular residential panel. Excellent reliability.',
   },
   {
     id: 'canadian-solar-hiku7-cs7n-680tb-ag',
@@ -275,9 +275,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'HiKu7 CS7N-680TB-AG',
     wattage: 680,
     efficiency: 22.5,
-    voc: 53.20,
+    voc: 53.2,
     isc: 16.25,
-    vmp: 44.60,
+    vmp: 44.6,
     imp: 15.25,
     dimensions: { length: 2384, width: 1303, depth: 35 },
     weight: 37.5,
@@ -289,7 +289,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.044,
     tempCoeffPmax: -0.28,
     yearIntroduced: 2024,
-    notes: 'N-type bifacial. +5-30% rear side gain.'
+    notes: 'N-type bifacial. +5-30% rear side gain.',
   },
 
   // ========== JINKO SOLAR ==========
@@ -311,20 +311,20 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.26,
     tempCoeffIsc: 0.045,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2023,
-    notes: 'N-type Tiger Neo. Very popular in UK market.'
+    notes: 'N-type Tiger Neo. Very popular in UK market.',
   },
   {
     id: 'jinko-tiger-neo-jkm430n-54hl4r-b',
     make: 'Jinko Solar',
     model: 'Tiger Neo JKM430N-54HL4R-B',
     wattage: 430,
-    efficiency: 22.30,
+    efficiency: 22.3,
     voc: 38.05,
     isc: 14.32,
     vmp: 31.85,
-    imp: 13.50,
+    imp: 13.5,
     dimensions: { length: 1722, width: 1134, depth: 30 },
     weight: 21.5,
     cellType: 'bifacial',
@@ -335,7 +335,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.044,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2024,
-    notes: 'Bifacial N-type. Up to 25% rear side gain.'
+    notes: 'Bifacial N-type. Up to 25% rear side gain.',
   },
   {
     id: 'jinko-tiger-pro-jkm555m-72hl4-v',
@@ -357,7 +357,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Large format. Good for ground mount arrays.'
+    notes: 'Large format. Good for ground mount arrays.',
   },
 
   // ========== SUNPOWER ==========
@@ -366,10 +366,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     make: 'SunPower',
     model: 'Maxeon 3 SPR-MAX3-400',
     wattage: 400,
-    efficiency: 22.60,
-    voc: 75.60,
+    efficiency: 22.6,
+    voc: 75.6,
     isc: 6.65,
-    vmp: 65.00,
+    vmp: 65.0,
     imp: 6.15,
     dimensions: { length: 1690, width: 1046, depth: 40 },
     weight: 19.0,
@@ -381,18 +381,18 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.032,
     tempCoeffPmax: -0.27,
     yearIntroduced: 2022,
-    notes: 'Premium IBC cells. Industry-leading warranty.'
+    notes: 'Premium IBC cells. Industry-leading warranty.',
   },
   {
     id: 'sunpower-maxeon-6-spr-max6-440',
     make: 'SunPower',
     model: 'Maxeon 6 SPR-MAX6-440',
     wattage: 440,
-    efficiency: 22.80,
-    voc: 64.50,
+    efficiency: 22.8,
+    voc: 64.5,
     isc: 8.65,
-    vmp: 55.00,
-    imp: 8.00,
+    vmp: 55.0,
+    imp: 8.0,
     dimensions: { length: 1812, width: 1046, depth: 40 },
     weight: 20.5,
     cellType: 'hjt',
@@ -400,10 +400,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     warranty: { product: 40, performance: 40 },
     mcsCertified: true,
     tempCoeffVoc: -0.23,
-    tempCoeffIsc: 0.030,
+    tempCoeffIsc: 0.03,
     tempCoeffPmax: -0.26,
     yearIntroduced: 2024,
-    notes: 'Latest Maxeon. 40 year warranty! Premium.'
+    notes: 'Latest Maxeon. 40 year warranty! Premium.',
   },
 
   // ========== Q CELLS ==========
@@ -424,10 +424,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     warranty: { product: 12, performance: 25 },
     mcsCertified: true,
     tempCoeffVoc: -0.27,
-    tempCoeffIsc: 0.050,
+    tempCoeffIsc: 0.05,
     tempCoeffPmax: -0.34,
     yearIntroduced: 2022,
-    notes: 'All-black aesthetic. Q.ANTUM technology.'
+    notes: 'All-black aesthetic. Q.ANTUM technology.',
   },
   {
     id: 'qcells-qpeak-duo-ml-g11s-425',
@@ -435,8 +435,8 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Q.PEAK DUO ML-G11S 425',
     wattage: 425,
     efficiency: 21.9,
-    voc: 38.00,
-    isc: 14.10,
+    voc: 38.0,
+    isc: 14.1,
     vmp: 31.65,
     imp: 13.43,
     dimensions: { length: 1722, width: 1134, depth: 32 },
@@ -449,7 +449,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.044,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2024,
-    notes: 'N-type TOPCon. German quality.'
+    notes: 'N-type TOPCon. German quality.',
   },
 
   // ========== HYUNDAI ==========
@@ -473,7 +473,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2022,
-    notes: 'Backed by Hyundai brand. Good value.'
+    notes: 'Backed by Hyundai brand. Good value.',
   },
   {
     id: 'hyundai-his-s420vi',
@@ -481,9 +481,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'HiS-S420VI',
     wattage: 420,
     efficiency: 21.7,
-    voc: 38.10,
+    voc: 38.1,
     isc: 13.95,
-    vmp: 31.70,
+    vmp: 31.7,
     imp: 13.25,
     dimensions: { length: 1722, width: 1134, depth: 30 },
     weight: 21.5,
@@ -493,9 +493,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.045,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2024,
-    notes: 'N-type upgrade. Better temperature coefficient.'
+    notes: 'N-type upgrade. Better temperature coefficient.',
   },
 
   // ========== REC ==========
@@ -505,9 +505,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Alpha Pure-R REC410AA',
     wattage: 410,
     efficiency: 21.6,
-    voc: 45.20,
+    voc: 45.2,
     isc: 11.55,
-    vmp: 38.00,
+    vmp: 38.0,
     imp: 10.79,
     dimensions: { length: 1730, width: 1099, depth: 30 },
     weight: 19.5,
@@ -519,7 +519,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.032,
     tempCoeffPmax: -0.26,
     yearIntroduced: 2023,
-    notes: 'HJT technology. Excellent low-light performance.'
+    notes: 'HJT technology. Excellent low-light performance.',
   },
   {
     id: 'rec-alpha-pure-rx-rec430aa-pure-rx',
@@ -527,8 +527,8 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Alpha Pure-RX REC430AA',
     wattage: 430,
     efficiency: 22.3,
-    voc: 46.00,
-    isc: 11.90,
+    voc: 46.0,
+    isc: 11.9,
     vmp: 38.65,
     imp: 11.13,
     dimensions: { length: 1730, width: 1099, depth: 30 },
@@ -538,10 +538,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     warranty: { product: 25, performance: 25 },
     mcsCertified: true,
     tempCoeffVoc: -0.23,
-    tempCoeffIsc: 0.030,
+    tempCoeffIsc: 0.03,
     tempCoeffPmax: -0.25,
     yearIntroduced: 2024,
-    notes: 'Latest Alpha. Lead-free, recyclable design.'
+    notes: 'Latest Alpha. Lead-free, recyclable design.',
   },
 
   // ========== SHARP ==========
@@ -551,10 +551,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'NU-JC415B',
     wattage: 415,
     efficiency: 21.2,
-    voc: 37.80,
+    voc: 37.8,
     isc: 13.92,
     vmp: 31.45,
-    imp: 13.20,
+    imp: 13.2,
     dimensions: { length: 1722, width: 1134, depth: 35 },
     weight: 21.5,
     cellType: 'mono-perc',
@@ -565,7 +565,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Japanese quality. Black frame aesthetic.'
+    notes: 'Japanese quality. Black frame aesthetic.',
   },
 
   // ========== PHONO SOLAR ==========
@@ -575,7 +575,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'PS410M6H-20/U',
     wattage: 410,
     efficiency: 21.2,
-    voc: 37.50,
+    voc: 37.5,
     isc: 13.85,
     vmp: 31.25,
     imp: 13.12,
@@ -589,7 +589,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Budget-friendly. Good value for money.'
+    notes: 'Budget-friendly. Good value for money.',
   },
 
   // ========== RISEN ==========
@@ -600,7 +600,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     wattage: 410,
     efficiency: 21.2,
     voc: 37.45,
-    isc: 13.90,
+    isc: 13.9,
     vmp: 31.15,
     imp: 13.16,
     dimensions: { length: 1722, width: 1134, depth: 30 },
@@ -613,7 +613,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.048,
     tempCoeffPmax: -0.35,
     yearIntroduced: 2023,
-    notes: 'Titan S series. Competitive pricing.'
+    notes: 'Titan S series. Competitive pricing.',
   },
 
   // ========== 2025 NEW MODELS ==========
@@ -626,7 +626,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     wattage: 455,
     efficiency: 22.8,
     voc: 38.92,
-    isc: 14.80,
+    isc: 14.8,
     vmp: 32.65,
     imp: 13.94,
     dimensions: { length: 1762, width: 1134, depth: 30 },
@@ -637,9 +637,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.044,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2025,
-    notes: 'DeepBlue 4.0 Pro with n-type TOPCon. 30-year performance warranty.'
+    notes: 'DeepBlue 4.0 Pro with n-type TOPCon. 30-year performance warranty.',
   },
 
   // LONGi Hi-MO X7 (2025)
@@ -649,8 +649,8 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'LR5-54HTH-460M',
     wattage: 460,
     efficiency: 23.0,
-    voc: 38.50,
-    isc: 15.10,
+    voc: 38.5,
+    isc: 15.1,
     vmp: 32.25,
     imp: 14.26,
     dimensions: { length: 1762, width: 1134, depth: 30 },
@@ -663,7 +663,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.043,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2025,
-    notes: 'Hi-MO X7 with HPBC technology. Industry-leading efficiency.'
+    notes: 'Hi-MO X7 with HPBC technology. Industry-leading efficiency.',
   },
 
   // Jinko Tiger Neo N-type 445W (2025)
@@ -673,9 +673,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'JKM445N-54HL4-B',
     wattage: 445,
     efficiency: 22.5,
-    voc: 38.40,
+    voc: 38.4,
     isc: 14.65,
-    vmp: 32.10,
+    vmp: 32.1,
     imp: 13.86,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 21.5,
@@ -685,9 +685,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.044,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2025,
-    notes: 'Tiger Neo with all-black aesthetic. Premium residential.'
+    notes: 'Tiger Neo with all-black aesthetic. Premium residential.',
   },
 
   // Canadian Solar TOPBiHiKu7 455W (2025)
@@ -709,9 +709,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.045,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2025,
-    notes: 'Bifacial TOPCon. Up to 25% rear gain. Premium tier.'
+    notes: 'Bifacial TOPCon. Up to 25% rear gain. Premium tier.',
   },
 
   // Q CELLS Q.TRON BLK-G11+ 420W (2025)
@@ -721,9 +721,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Q.TRON BLK-G11+ 420',
     wattage: 420,
     efficiency: 21.8,
-    voc: 38.20,
+    voc: 38.2,
     isc: 13.95,
-    vmp: 32.00,
+    vmp: 32.0,
     imp: 13.12,
     dimensions: { length: 1722, width: 1134, depth: 32 },
     weight: 21.5,
@@ -735,7 +735,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.045,
     tempCoeffPmax: -0.32,
     yearIntroduced: 2025,
-    notes: 'Q.TRON with TOPCon. German-engineered. All-black.'
+    notes: 'Q.TRON with TOPCon. German-engineered. All-black.',
   },
 
   // SunPower Maxeon 7 (2025)
@@ -745,9 +745,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Maxeon 7 440W',
     wattage: 440,
     efficiency: 24.1,
-    voc: 41.50,
+    voc: 41.5,
     isc: 13.45,
-    vmp: 34.80,
+    vmp: 34.8,
     imp: 12.64,
     dimensions: { length: 1690, width: 1046, depth: 40 },
     weight: 19.0,
@@ -759,7 +759,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.029,
     tempCoeffPmax: -0.26,
     yearIntroduced: 2025,
-    notes: 'Industry-leading efficiency. 40-year warranty. Premium residential.'
+    notes: 'Industry-leading efficiency. 40-year warranty. Premium residential.',
   },
 
   // REC Alpha Pure-RX 470W (2025)
@@ -769,9 +769,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Alpha Pure-RX 470',
     wattage: 470,
     efficiency: 22.8,
-    voc: 42.50,
+    voc: 42.5,
     isc: 14.02,
-    vmp: 35.80,
+    vmp: 35.8,
     imp: 13.13,
     dimensions: { length: 1821, width: 1130, depth: 30 },
     weight: 22.5,
@@ -783,7 +783,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.036,
     tempCoeffPmax: -0.26,
     yearIntroduced: 2025,
-    notes: 'Alpha Pure-RX with heterojunction. Lead-free soldering.'
+    notes: 'Alpha Pure-RX with heterojunction. Lead-free soldering.',
   },
 
   // Hyundai HiE-S500LG (2025)
@@ -793,9 +793,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'HiE-S500LG',
     wattage: 500,
     efficiency: 22.5,
-    voc: 45.20,
+    voc: 45.2,
     isc: 14.05,
-    vmp: 38.10,
+    vmp: 38.1,
     imp: 13.12,
     dimensions: { length: 2094, width: 1038, depth: 35 },
     weight: 26.0,
@@ -805,9 +805,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.045,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2025,
-    notes: 'Large format panel for commercial. Korean quality.'
+    notes: 'Large format panel for commercial. Korean quality.',
   },
 
   // Trina Vertex S+ NEG21C.20 (2025)
@@ -819,7 +819,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     efficiency: 22.5,
     voc: 38.65,
     isc: 14.58,
-    vmp: 32.40,
+    vmp: 32.4,
     imp: 13.73,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 21.8,
@@ -829,9 +829,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.044,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2025,
-    notes: 'Vertex S+ with latest TOPCon. 30-year output warranty.'
+    notes: 'Vertex S+ with latest TOPCon. 30-year output warranty.',
   },
 
   // Meyer Burger White 420W (2025) - European manufactured
@@ -841,10 +841,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'White 420W',
     wattage: 420,
     efficiency: 21.8,
-    voc: 42.80,
+    voc: 42.8,
     isc: 12.45,
-    vmp: 36.20,
-    imp: 11.60,
+    vmp: 36.2,
+    imp: 11.6,
     dimensions: { length: 1767, width: 1041, depth: 35 },
     weight: 20.0,
     cellType: 'n-type-hjt',
@@ -855,7 +855,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.035,
     tempCoeffPmax: -0.26,
     yearIntroduced: 2025,
-    notes: 'Made in Germany. Premium European quality. Heterojunction.'
+    notes: 'Made in Germany. Premium European quality. Heterojunction.',
   },
 
   // Aiko BlackHole A-60 (2025) - ABC technology
@@ -865,8 +865,8 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'A-60-ABH-460',
     wattage: 460,
     efficiency: 23.6,
-    voc: 39.10,
-    isc: 14.90,
+    voc: 39.1,
+    isc: 14.9,
     vmp: 32.85,
     imp: 14.01,
     dimensions: { length: 1722, width: 1134, depth: 30 },
@@ -879,7 +879,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.042,
     tempCoeffPmax: -0.27,
     yearIntroduced: 2025,
-    notes: 'All Back Contact technology. No front gridlines. Premium aesthetic.'
+    notes: 'All Back Contact technology. No front gridlines. Premium aesthetic.',
   },
 
   // DAS Solar N-type 445W (2025)
@@ -891,7 +891,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     efficiency: 22.4,
     voc: 38.45,
     isc: 14.65,
-    vmp: 32.20,
+    vmp: 32.2,
     imp: 13.82,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 21.5,
@@ -901,9 +901,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.045,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2025,
-    notes: 'N-type TOPCon. Full black aesthetic. Growing UK presence.'
+    notes: 'N-type TOPCon. Full black aesthetic. Growing UK presence.',
   },
 
   // ========== 2026 NEW MODELS ==========
@@ -916,9 +916,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     wattage: 480,
     efficiency: 23.8,
     voc: 39.45,
-    isc: 15.40,
-    vmp: 33.10,
-    imp: 14.50,
+    isc: 15.4,
+    vmp: 33.1,
+    imp: 14.5,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 21.5,
     cellType: 'n-type-topcon',
@@ -929,7 +929,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.043,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2026,
-    notes: 'DeepBlue 5.0 with enhanced TOPCon. Latest generation.'
+    notes: 'DeepBlue 5.0 with enhanced TOPCon. Latest generation.',
   },
 
   // LONGi Hi-MO 9 475W (2026)
@@ -939,9 +939,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'LR5-54HPH-475M',
     wattage: 475,
     efficiency: 24.0,
-    voc: 39.20,
+    voc: 39.2,
     isc: 15.35,
-    vmp: 32.90,
+    vmp: 32.9,
     imp: 14.44,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 21.0,
@@ -953,7 +953,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.042,
     tempCoeffPmax: -0.28,
     yearIntroduced: 2026,
-    notes: 'Hi-MO 9 with next-gen HPBC. Record-breaking efficiency.'
+    notes: 'Hi-MO 9 with next-gen HPBC. Record-breaking efficiency.',
   },
 
   // Trina Vertex N 460W (2026)
@@ -963,9 +963,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'TSM-NEG22C.20 460W',
     wattage: 460,
     efficiency: 23.2,
-    voc: 39.10,
-    isc: 14.90,
-    vmp: 32.80,
+    voc: 39.1,
+    isc: 14.9,
+    vmp: 32.8,
     imp: 14.02,
     dimensions: { length: 1762, width: 1134, depth: 30 },
     weight: 21.8,
@@ -977,7 +977,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.043,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2026,
-    notes: 'Vertex N latest generation. Enhanced low-light performance.'
+    notes: 'Vertex N latest generation. Enhanced low-light performance.',
   },
 
   // Jinko Tiger Neo 2.0 460W (2026)
@@ -1001,7 +1001,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.043,
     tempCoeffPmax: -0.29,
     yearIntroduced: 2026,
-    notes: 'Tiger Neo 2.0 with improved cell technology. All-black premium.'
+    notes: 'Tiger Neo 2.0 with improved cell technology. All-black premium.',
   },
 
   // Canadian Solar HiHero 470W (2026)
@@ -1011,8 +1011,8 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'CS7L-470MS-HH',
     wattage: 470,
     efficiency: 23.5,
-    voc: 39.40,
-    isc: 15.10,
+    voc: 39.4,
+    isc: 15.1,
     vmp: 33.05,
     imp: 14.22,
     dimensions: { length: 1762, width: 1134, depth: 30 },
@@ -1022,10 +1022,10 @@ export const SOLAR_PANELS: SolarPanel[] = [
     warranty: { product: 25, performance: 30 },
     mcsCertified: true,
     tempCoeffVoc: -0.23,
-    tempCoeffIsc: 0.040,
+    tempCoeffIsc: 0.04,
     tempCoeffPmax: -0.26,
     yearIntroduced: 2026,
-    notes: 'HiHero series with heterojunction. Premium efficiency tier.'
+    notes: 'HiHero series with heterojunction. Premium efficiency tier.',
   },
 
   // Q CELLS Q.TRON-G2 435W (2026)
@@ -1037,7 +1037,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     efficiency: 22.6,
     voc: 38.65,
     isc: 14.28,
-    vmp: 32.40,
+    vmp: 32.4,
     imp: 13.43,
     dimensions: { length: 1722, width: 1134, depth: 32 },
     weight: 21.5,
@@ -1047,9 +1047,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     mcsCertified: true,
     tempCoeffVoc: -0.25,
     tempCoeffIsc: 0.044,
-    tempCoeffPmax: -0.30,
+    tempCoeffPmax: -0.3,
     yearIntroduced: 2026,
-    notes: 'Q.TRON G2 with enhanced durability. German engineering.'
+    notes: 'Q.TRON G2 with enhanced durability. German engineering.',
   },
 
   // REC Alpha Pure-RX2 485W (2026)
@@ -1059,9 +1059,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Alpha Pure-RX2 485',
     wattage: 485,
     efficiency: 23.5,
-    voc: 43.10,
+    voc: 43.1,
     isc: 14.28,
-    vmp: 36.30,
+    vmp: 36.3,
     imp: 13.36,
     dimensions: { length: 1821, width: 1130, depth: 30 },
     weight: 22.5,
@@ -1073,7 +1073,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.035,
     tempCoeffPmax: -0.25,
     yearIntroduced: 2026,
-    notes: 'Alpha Pure-RX2 next generation. Industry-leading temperature coefficient.'
+    notes: 'Alpha Pure-RX2 next generation. Industry-leading temperature coefficient.',
   },
 
   // SunPower Maxeon 8 460W (2026)
@@ -1083,9 +1083,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Maxeon 8 460W',
     wattage: 460,
     efficiency: 24.8,
-    voc: 42.20,
+    voc: 42.2,
     isc: 13.85,
-    vmp: 35.50,
+    vmp: 35.5,
     imp: 12.96,
     dimensions: { length: 1690, width: 1046, depth: 40 },
     weight: 19.5,
@@ -1097,7 +1097,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.028,
     tempCoeffPmax: -0.25,
     yearIntroduced: 2026,
-    notes: 'World-leading 24.8% efficiency. 40-year complete warranty.'
+    notes: 'World-leading 24.8% efficiency. 40-year complete warranty.',
   },
 
   // Aiko Comet 2.0 480W (2026)
@@ -1121,7 +1121,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.041,
     tempCoeffPmax: -0.26,
     yearIntroduced: 2026,
-    notes: 'Comet 2.0 ABC technology. Zero busbar visible. Ultimate aesthetic.'
+    notes: 'Comet 2.0 ABC technology. Zero busbar visible. Ultimate aesthetic.',
   },
 
   // Meyer Burger Glass 435W (2026)
@@ -1131,9 +1131,9 @@ export const SOLAR_PANELS: SolarPanel[] = [
     model: 'Glass 435W',
     wattage: 435,
     efficiency: 22.5,
-    voc: 43.40,
+    voc: 43.4,
     isc: 12.72,
-    vmp: 36.70,
+    vmp: 36.7,
     imp: 11.85,
     dimensions: { length: 1767, width: 1041, depth: 35 },
     weight: 20.5,
@@ -1145,7 +1145,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
     tempCoeffIsc: 0.034,
     tempCoeffPmax: -0.25,
     yearIntroduced: 2026,
-    notes: 'Made in Germany. Glass-glass bifacial. 30-year warranty.'
+    notes: 'Made in Germany. Glass-glass bifacial. 30-year warranty.',
   },
 ];
 
@@ -1157,7 +1157,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
  * Get unique list of panel makes
  */
 export function getPanelMakes(): string[] {
-  const makes = new Set(SOLAR_PANELS.map(p => p.make));
+  const makes = new Set(SOLAR_PANELS.map((p) => p.make));
   return Array.from(makes).sort();
 }
 
@@ -1165,9 +1165,9 @@ export function getPanelMakes(): string[] {
  * Get models for a specific make
  */
 export function getPanelModels(make: string): string[] {
-  return SOLAR_PANELS
-    .filter(p => p.make.toLowerCase() === make.toLowerCase())
-    .map(p => p.model);
+  return SOLAR_PANELS.filter((p) => p.make.toLowerCase() === make.toLowerCase()).map(
+    (p) => p.model
+  );
 }
 
 /**
@@ -1175,8 +1175,8 @@ export function getPanelModels(make: string): string[] {
  */
 export function findPanel(make: string, model: string): SolarPanel | undefined {
   return SOLAR_PANELS.find(
-    p => p.make.toLowerCase() === make.toLowerCase() &&
-         p.model.toLowerCase() === model.toLowerCase()
+    (p) =>
+      p.make.toLowerCase() === make.toLowerCase() && p.model.toLowerCase() === model.toLowerCase()
   );
 }
 
@@ -1184,7 +1184,7 @@ export function findPanel(make: string, model: string): SolarPanel | undefined {
  * Find panel by ID
  */
 export function findPanelById(id: string): SolarPanel | undefined {
-  return SOLAR_PANELS.find(p => p.id === id);
+  return SOLAR_PANELS.find((p) => p.id === id);
 }
 
 /**
@@ -1194,11 +1194,12 @@ export function searchPanels(query: string): SolarPanel[] {
   const q = query.toLowerCase().trim();
   if (!q) return [];
 
-  return SOLAR_PANELS.filter(p =>
-    p.make.toLowerCase().includes(q) ||
-    p.model.toLowerCase().includes(q) ||
-    `${p.make} ${p.model}`.toLowerCase().includes(q) ||
-    p.wattage.toString().includes(q)
+  return SOLAR_PANELS.filter(
+    (p) =>
+      p.make.toLowerCase().includes(q) ||
+      p.model.toLowerCase().includes(q) ||
+      `${p.make} ${p.model}`.toLowerCase().includes(q) ||
+      p.wattage.toString().includes(q)
   ).slice(0, 15); // Limit to 15 results
 }
 
@@ -1217,9 +1218,11 @@ export function getPanelsGroupedByManufacturer(): Record<string, SolarPanel[]> {
 
   // Sort by manufacturer name
   const sortedGrouped: Record<string, SolarPanel[]> = {};
-  Object.keys(grouped).sort().forEach(key => {
-    sortedGrouped[key] = grouped[key];
-  });
+  Object.keys(grouped)
+    .sort()
+    .forEach((key) => {
+      sortedGrouped[key] = grouped[key];
+    });
 
   return sortedGrouped;
 }
@@ -1306,19 +1309,19 @@ export function estimateAnnualYield(
 
   // Orientation factors (relative to south)
   const orientationFactors: Record<string, number> = {
-    'South': 1.00,
+    South: 1.0,
     'South-East': 0.96,
     'South-West': 0.96,
-    'East': 0.85,
-    'West': 0.85,
+    East: 0.85,
+    West: 0.85,
     'North-East': 0.65,
     'North-West': 0.65,
-    'North': 0.55,
+    North: 0.55,
   };
 
   // Tilt angle factor (optimal is ~35° for UK)
   let tiltFactor = 1;
-  if (tiltAngle < 15) tiltFactor = 0.90;
+  if (tiltAngle < 15) tiltFactor = 0.9;
   else if (tiltAngle > 50) tiltFactor = 0.92;
   else if (tiltAngle < 25 || tiltAngle > 45) tiltFactor = 0.96;
 

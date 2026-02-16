@@ -8,7 +8,9 @@ export const InlineCheck1 = () => (
         <HelpCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
         <div>
           <h4 className="font-semibold text-blue-300 mb-2">Inline Check:</h4>
-          <p className="text-foreground">How can access control contribute to energy savings as well as security?</p>
+          <p className="text-foreground">
+            How can access control contribute to energy savings as well as security?
+          </p>
         </div>
       </div>
     </CardContent>
@@ -22,7 +24,9 @@ export const InlineCheck2 = () => (
         <HelpCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
         <div>
           <h4 className="font-semibold text-green-300 mb-2">Inline Check:</h4>
-          <p className="text-foreground">What is the difference between a fail-safe and a fail-secure lock?</p>
+          <p className="text-foreground">
+            What is the difference between a fail-safe and a fail-secure lock?
+          </p>
         </div>
       </div>
     </CardContent>
@@ -36,7 +40,9 @@ export const InlineCheck3 = () => (
         <HelpCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
         <div>
           <h4 className="font-semibold text-red-300 mb-2">Inline Check:</h4>
-          <p className="text-foreground">Why must access control always integrate with fire alarm systems?</p>
+          <p className="text-foreground">
+            Why must access control always integrate with fire alarm systems?
+          </p>
         </div>
       </div>
     </CardContent>

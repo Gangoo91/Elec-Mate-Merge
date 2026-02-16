@@ -28,24 +28,27 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   onBulkUpdate,
   onAddCircuit,
   onBulkFieldUpdate,
-  onScanBoard
+  onScanBoard,
 }) => {
   const [showRegulationStatus, setShowRegulationStatus] = useState(false);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
 
   // Create a bulk update handler that matches the mobile interface
-  const handleBulkUpdate = useCallback((id: string, updates: Partial<TestResult>) => {
-    if (onBulkUpdate) {
-      onBulkUpdate(id, updates);
-    } else {
-      // Fallback to individual updates if onBulkUpdate is not provided
-      Object.entries(updates).forEach(([field, value]) => {
-        if (value !== undefined && value !== null) {
-          onUpdate(id, field as keyof TestResult, String(value));
-        }
-      });
-    }
-  }, [onBulkUpdate, onUpdate]);
+  const handleBulkUpdate = useCallback(
+    (id: string, updates: Partial<TestResult>) => {
+      if (onBulkUpdate) {
+        onBulkUpdate(id, updates);
+      } else {
+        // Fallback to individual updates if onBulkUpdate is not provided
+        Object.entries(updates).forEach(([field, value]) => {
+          if (value !== undefined && value !== null) {
+            onUpdate(id, field as keyof TestResult, String(value));
+          }
+        });
+      }
+    },
+    [onBulkUpdate, onUpdate]
+  );
 
   const toggleGroupCollapse = (groupName: string) => {
     const newCollapsed = new Set(collapsedGroups);
@@ -61,7 +64,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdTestButton', '✓');
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdTestButton', '✓');
       });
     }
@@ -72,7 +75,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('afddTest', '✓');
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'afddTest', '✓');
       });
     }
@@ -83,7 +86,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdBsStandard', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdBsStandard', value);
       });
     }
@@ -94,7 +97,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdType', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdType', value);
       });
     }
@@ -105,7 +108,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdRating', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdRating', value);
       });
     }
@@ -116,7 +119,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdRatingA', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdRatingA', value);
       });
     }
@@ -126,24 +129,24 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   const handleFillAllMaxZs = () => {
     let successCount = 0;
     let skippedCount = 0;
-    
-    testResults.forEach(result => {
+
+    testResults.forEach((result) => {
       // Skip if Max Zs is already filled
       if (result.maxZs && result.maxZs.trim() !== '') {
         skippedCount++;
         return;
       }
-      
+
       const bsStandard = result.bsStandard;
       const curve = result.protectiveDeviceCurve;
       const rating = result.protectiveDeviceRating;
-      
+
       // Check if we have required data
       if (!bsStandard || !rating) {
         skippedCount++;
         return;
       }
-      
+
       // For MCB/RCBO, curve is required
       // Import the helper at the top of the file
       const bsStandardRequiresCurve = (bs: string): boolean => bs === 'MCB' || bs === 'RCBO';
@@ -152,7 +155,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
         skippedCount++;
         return;
       }
-      
+
       // Calculate Max Zs
       const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve || '', rating);
       if (maxZs !== null) {
@@ -162,13 +165,15 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
         skippedCount++;
       }
     });
-    
+
     // Show user feedback
     if (successCount > 0) {
       toast.success(`Max Zs auto-filled for ${successCount} circuit${successCount > 1 ? 's' : ''}`);
     }
     if (skippedCount > 0) {
-      toast.info(`${skippedCount} circuit${skippedCount > 1 ? 's' : ''} skipped (already filled or missing protective device details)`);
+      toast.info(
+        `${skippedCount} circuit${skippedCount > 1 ? 's' : ''} skipped (already filled or missing protective device details)`
+      );
     }
     if (successCount === 0 && skippedCount === 0) {
       toast.error('No circuits available to fill');
@@ -180,7 +185,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('insulationTestVoltage', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'insulationTestVoltage', value);
       });
     }
@@ -191,7 +196,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('insulationLiveNeutral', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'insulationLiveNeutral', value);
       });
     }
@@ -202,7 +207,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('insulationLiveEarth', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'insulationLiveEarth', value);
       });
     }
@@ -213,7 +218,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('polarity', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'polarity', value);
       });
     }
@@ -252,16 +257,19 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
             </p>
           </div>
         ) : (
-        <div className="bg-background rounded-lg shadow-md border border-border/80 overflow-hidden">
-          <div
-            className="w-full overflow-auto enhanced-table-scroll"
-            style={{
-              maxHeight: 'calc(100vh - 140px)',
-              overscrollBehavior: 'contain',
-            }}
-          >
-            <div className="min-w-max enhanced-table-scroll">
-              <Table useWrapper={false} className="text-sm border-separate border-spacing-0 w-full">
+          <div className="bg-background rounded-lg shadow-md border border-border/80 overflow-hidden">
+            <div
+              className="w-full overflow-auto enhanced-table-scroll"
+              style={{
+                maxHeight: 'calc(100vh - 140px)',
+                overscrollBehavior: 'contain',
+              }}
+            >
+              <div className="min-w-max enhanced-table-scroll">
+                <Table
+                  useWrapper={false}
+                  className="text-sm border-separate border-spacing-0 w-full"
+                >
                   <EnhancedTestResultDesktopTableHeader
                     showRegulationStatus={showRegulationStatus}
                     collapsedGroups={collapsedGroups}
@@ -279,7 +287,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllPolarity={handleFillAllPolarity}
                   />
                   <TableBody>
-                     {testResults.map((result, index) => (
+                    {testResults.map((result, index) => (
                       <EnhancedTestResultDesktopTableRow
                         key={result.id}
                         result={result}
@@ -291,10 +299,10 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         rowNumber={index + 1}
                       />
                     ))}
-              </TableBody>
-            </Table>
-          </div>
-          </div>
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -310,7 +318,8 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
         <div className="text-xs text-muted-foreground mt-2 text-center space-y-1">
           <div className="font-medium">BS 7671 Schedule of Test Results</div>
           <div>
-            ⌨️ <strong>Tab Navigation:</strong> Tab/Shift+Tab to navigate • Enter moves down • Arrow keys navigate cells
+            ⌨️ <strong>Tab Navigation:</strong> Tab/Shift+Tab to navigate • Enter moves down • Arrow
+            keys navigate cells
           </div>
           <div>
             📋 <strong>Copy/Paste:</strong> Right-click for copy/paste options

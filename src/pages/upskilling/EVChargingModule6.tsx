@@ -7,40 +7,40 @@ const EVChargingModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "Safe Installation: Isolation and Site Prep",
+      title: 'Safe Installation: Isolation and Site Prep',
       icon: Shield,
-      description: "Safety procedures and site preparation for installation"
+      description: 'Safety procedures and site preparation for installation',
     },
     {
       id: 2,
-      title: "Cable Termination and Routing",
+      title: 'Cable Termination and Routing',
       icon: Cable,
-      description: "Professional cable termination and routing practices"
+      description: 'Professional cable termination and routing practices',
     },
     {
       id: 3,
-      title: "BS 7671 Part 722 Testing Procedure",
+      title: 'BS 7671 Part 722 Testing Procedure',
       icon: CheckCircle,
-      description: "EV charging specific testing requirements and procedures"
+      description: 'EV charging specific testing requirements and procedures',
     },
     {
       id: 4,
-      title: "RCD and Functional Testing (Type A, B, EV-RCDs)",
+      title: 'RCD and Functional Testing (Type A, B, EV-RCDs)',
       icon: TestTube,
-      description: "Testing protective devices and EV-specific equipment"
+      description: 'Testing protective devices and EV-specific equipment',
     },
     {
       id: 5,
-      title: "Customer Walkthrough and Labelling",
+      title: 'Customer Walkthrough and Labelling',
       icon: Users,
-      description: "Customer handover procedures and system labelling"
+      description: 'Customer handover procedures and system labelling',
     },
     {
       id: 6,
-      title: "Certificate, Test Sheet, and Handover Pack",
+      title: 'Certificate, Test Sheet, and Handover Pack',
       icon: FileText,
-      description: "Completing documentation and customer handover"
-    }
+      description: 'Completing documentation and customer handover',
+    },
   ];
 
   return (

@@ -1,10 +1,9 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { FileText, Sparkles, Clock } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { FileText, Sparkles, Clock } from 'lucide-react';
 
 const CVBuilderBox = () => {
-
   return (
     <div className="w-full max-w-4xl mx-auto p-8 bg-elec-card border border-elec-yellow/20 rounded-lg relative">
       {/* Coming Soon Badge */}
@@ -23,42 +22,42 @@ const CVBuilderBox = () => {
       <h1 className="text-[1.35rem] font-bold text-foreground/70 text-center mb-[5px]">
         AI-Powered CV Builder
       </h1>
-      
+
       {/* Subtitle */}
       <p className="text-[1rem] text-muted-foreground text-center mb-8">
         Create professional electrical CVs with intelligent content generation
       </p>
-      
+
       {/* Description paragraph */}
       <p className="text-base text-foreground text-center mb-4 max-w-3xl mx-auto leading-relaxed">
-        Create a professional CV tailored to electrical job applications with our AI-powered tool. Get 
-        intelligent content suggestions, industry-specific templates, and automated content 
+        Create a professional CV tailored to electrical job applications with our AI-powered tool.
+        Get intelligent content suggestions, industry-specific templates, and automated content
         generation.
       </p>
-      
+
       {/* Features grid */}
       <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 max-w-lg mx-auto">
         <div className="flex items-center space-x-2">
           <Wand2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground text-center">Smart CV Wizard</span>
         </div>
-        
+
         <div className="flex items-center space-x-2">
           <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground text-center">AI Content Generation</span>
         </div>
-        
+
         <div className="flex items-center space-x-2">
           <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground text-center">Industry Templates</span>
         </div>
-        
+
         <div className="flex items-center space-x-2">
           <FileText className="h-4 w-4 text-elec-yellow flex-shrink-0" />
           <span className="text-xs text-muted-foreground text-center">PDF Export</span>
         </div>
       </div>
-      
+
       {/* Action buttons - Disabled until templates ready */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Button

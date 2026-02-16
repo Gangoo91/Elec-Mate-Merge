@@ -21,134 +21,164 @@ import {
   Zap,
   Target,
   FileBarChart,
-  Users
+  Users,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule3Section5: React.FC = () => {
   useSEO({
     title: 'Audit Reports & Cost/Carbon Breakdown | Energy Efficiency Module 3.5',
-    description: 'Master professional energy audit report writing including BS EN 16247 requirements, carbon calculations using UK grid factors, cost-benefit analysis, and effective presentation techniques.',
-    keywords: ['energy audit report', 'BS EN 16247', 'carbon footprint', 'UK grid factors', 'cost-benefit analysis', 'Sankey diagram', 'energy balance', 'ROI calculation'],
-    canonical: '/upskilling/energy-efficiency/module-3/section-5'
+    description:
+      'Master professional energy audit report writing including BS EN 16247 requirements, carbon calculations using UK grid factors, cost-benefit analysis, and effective presentation techniques.',
+    keywords: [
+      'energy audit report',
+      'BS EN 16247',
+      'carbon footprint',
+      'UK grid factors',
+      'cost-benefit analysis',
+      'Sankey diagram',
+      'energy balance',
+      'ROI calculation',
+    ],
+    canonical: '/upskilling/energy-efficiency/module-3/section-5',
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc1-audit-reports',
-      question: 'According to BS EN 16247, what must the executive summary of an energy audit report include?',
+      question:
+        'According to BS EN 16247, what must the executive summary of an energy audit report include?',
       options: [
         'Only the total cost of recommended measures',
         'Ranked energy saving opportunities with estimated savings and investment costs',
         'Detailed technical specifications of all equipment',
-        'A complete history of energy consumption'
+        'A complete history of energy consumption',
       ],
       correctIndex: 1,
-      explanation: 'BS EN 16247 requires the executive summary to include ranked energy saving opportunities with their estimated savings (in kWh and cost) and required investment costs, enabling decision-makers to quickly assess priorities.'
+      explanation:
+        'BS EN 16247 requires the executive summary to include ranked energy saving opportunities with their estimated savings (in kWh and cost) and required investment costs, enabling decision-makers to quickly assess priorities.',
     },
     {
       id: 'qc2-carbon-factors',
-      question: 'What is the approximate UK grid electricity carbon conversion factor (2023/24) published by DESNZ?',
-      options: [
-        '0.527 kgCO₂e/kWh',
-        '0.207 kgCO₂e/kWh',
-        '0.384 kgCO₂e/kWh',
-        '0.612 kgCO₂e/kWh'
-      ],
+      question:
+        'What is the approximate UK grid electricity carbon conversion factor (2023/24) published by DESNZ?',
+      options: ['0.527 kgCO₂e/kWh', '0.207 kgCO₂e/kWh', '0.384 kgCO₂e/kWh', '0.612 kgCO₂e/kWh'],
       correctIndex: 1,
-      explanation: 'The UK grid electricity factor has decreased significantly to approximately 0.207 kgCO₂e/kWh (location-based, 2023/24) due to increased renewable generation. This is published annually by DESNZ (Department for Energy Security and Net Zero) in the GHG Conversion Factors.'
+      explanation:
+        'The UK grid electricity factor has decreased significantly to approximately 0.207 kgCO₂e/kWh (location-based, 2023/24) due to increased renewable generation. This is published annually by DESNZ (Department for Energy Security and Net Zero) in the GHG Conversion Factors.',
     },
     {
       id: 'qc3-payback',
-      question: 'A lighting upgrade costs £12,000 and saves £3,000 per year in energy costs. What is the simple payback period?',
-      options: [
-        '2 years',
-        '3 years',
-        '4 years',
-        '5 years'
-      ],
+      question:
+        'A lighting upgrade costs £12,000 and saves £3,000 per year in energy costs. What is the simple payback period?',
+      options: ['2 years', '3 years', '4 years', '5 years'],
       correctIndex: 2,
-      explanation: 'Simple payback = Capital Cost ÷ Annual Savings = £12,000 ÷ £3,000 = 4 years. This basic calculation helps clients understand how quickly their investment will be recovered through energy savings.'
-    }
+      explanation:
+        'Simple payback = Capital Cost ÷ Annual Savings = £12,000 ÷ £3,000 = 4 years. This basic calculation helps clients understand how quickly their investment will be recovered through energy savings.',
+    },
   ];
 
   const quizQuestions = [
     {
       question: 'What standard defines the requirements for energy audit reports in the UK and EU?',
       options: ['ISO 50001', 'BS EN 16247', 'CIBSE TM54', 'ASHRAE Level II'],
-      correctAnswer: 'BS EN 16247'
+      correctAnswer: 'BS EN 16247',
     },
     {
-      question: 'In a Sankey diagram for energy auditing, what does the width of each flow represent?',
-      options: ['The cost of energy', 'The magnitude of energy flow', 'The carbon content', 'The efficiency rating'],
-      correctAnswer: 'The magnitude of energy flow'
+      question:
+        'In a Sankey diagram for energy auditing, what does the width of each flow represent?',
+      options: [
+        'The cost of energy',
+        'The magnitude of energy flow',
+        'The carbon content',
+        'The efficiency rating',
+      ],
+      correctAnswer: 'The magnitude of energy flow',
     },
     {
       question: 'Which scope of carbon emissions covers purchased electricity?',
       options: ['Scope 1', 'Scope 2', 'Scope 3', 'Scope 4'],
-      correctAnswer: 'Scope 2'
+      correctAnswer: 'Scope 2',
     },
     {
       question: 'What does NPV stand for in investment analysis?',
-      options: ['Net Present Value', 'Normal Payment Verification', 'New Project Valuation', 'Nominal Price Variable'],
-      correctAnswer: 'Net Present Value'
+      options: [
+        'Net Present Value',
+        'Normal Payment Verification',
+        'New Project Valuation',
+        'Nominal Price Variable',
+      ],
+      correctAnswer: 'Net Present Value',
     },
     {
-      question: 'For a project with £50,000 investment and £10,000 annual savings, what is the simple payback?',
+      question:
+        'For a project with £50,000 investment and £10,000 annual savings, what is the simple payback?',
       options: ['3 years', '4 years', '5 years', '6 years'],
-      correctAnswer: '5 years'
+      correctAnswer: '5 years',
     },
     {
       question: 'What unit is used for UK carbon conversion factors?',
       options: ['kgCO₂/kWh', 'kgCO₂e/kWh', 'tCO₂/MWh', 'gCO₂/Wh'],
-      correctAnswer: 'kgCO₂e/kWh'
+      correctAnswer: 'kgCO₂e/kWh',
     },
     {
       question: 'Which section of an energy audit report should contain the methodology used?',
       options: ['Executive summary', 'Introduction and scope', 'Analysis section', 'Appendices'],
-      correctAnswer: 'Introduction and scope'
+      correctAnswer: 'Introduction and scope',
     },
     {
-      question: 'What percentage of total energy consumption typically needs to be covered by sub-metering for a Type 2 audit?',
+      question:
+        'What percentage of total energy consumption typically needs to be covered by sub-metering for a Type 2 audit?',
       options: ['50%', '70%', '80%', '90%'],
-      correctAnswer: '90%'
+      correctAnswer: '90%',
     },
     {
       question: 'In energy balance calculations, what should input energy equal?',
-      options: ['Useful output only', 'Losses only', 'Useful output plus losses', 'Demand minus supply'],
-      correctAnswer: 'Useful output plus losses'
+      options: [
+        'Useful output only',
+        'Losses only',
+        'Useful output plus losses',
+        'Demand minus supply',
+      ],
+      correctAnswer: 'Useful output plus losses',
     },
     {
       question: 'What is the recommended maximum payback period for "quick win" energy measures?',
       options: ['1 year', '2 years', '3 years', '5 years'],
-      correctAnswer: '2 years'
-    }
+      correctAnswer: '2 years',
+    },
   ];
 
   const faqs = [
     {
       question: 'What is the difference between location-based and market-based carbon reporting?',
-      answer: 'Location-based reporting uses average grid emission factors for your region (e.g., UK grid average of 0.207 kgCO₂e/kWh). Market-based reporting reflects the specific electricity you have contracted, such as renewable energy tariffs (which can claim zero emissions) or Renewable Energy Guarantees of Origin (REGOs). For UK audits, you should report both methods. Location-based shows your physical impact on the grid, while market-based reflects your purchasing decisions. SECR (Streamlined Energy and Carbon Reporting) requires at least location-based reporting.'
+      answer:
+        'Location-based reporting uses average grid emission factors for your region (e.g., UK grid average of 0.207 kgCO₂e/kWh). Market-based reporting reflects the specific electricity you have contracted, such as renewable energy tariffs (which can claim zero emissions) or Renewable Energy Guarantees of Origin (REGOs). For UK audits, you should report both methods. Location-based shows your physical impact on the grid, while market-based reflects your purchasing decisions. SECR (Streamlined Energy and Carbon Reporting) requires at least location-based reporting.',
     },
     {
       question: 'How do I calculate the carbon savings from an energy efficiency measure?',
-      answer: 'Carbon savings = Energy savings (kWh) × Carbon conversion factor (kgCO₂e/kWh). For electricity, use the current DESNZ grid factor (approximately 0.207 kgCO₂e/kWh for 2023/24). For gas, use 0.183 kgCO₂e/kWh (gross CV). Remember to include transmission and distribution losses for electricity (add approximately 8% to consumption). For future projections, consider that grid carbon intensity is decreasing as renewables increase - DESNZ provides projected factors for business case calculations.'
+      answer:
+        'Carbon savings = Energy savings (kWh) × Carbon conversion factor (kgCO₂e/kWh). For electricity, use the current DESNZ grid factor (approximately 0.207 kgCO₂e/kWh for 2023/24). For gas, use 0.183 kgCO₂e/kWh (gross CV). Remember to include transmission and distribution losses for electricity (add approximately 8% to consumption). For future projections, consider that grid carbon intensity is decreasing as renewables increase - DESNZ provides projected factors for business case calculations.',
     },
     {
       question: 'What financial metrics should I include in an energy audit report?',
-      answer: 'Include multiple metrics to suit different decision-makers: Simple Payback Period (years to recover investment), Return on Investment (ROI as percentage), Net Present Value (NPV - accounting for time value of money), Internal Rate of Return (IRR - the discount rate at which NPV equals zero), and Lifecycle Cost Analysis. For public sector clients, also consider the HM Treasury Green Book discount rate (currently 3.5% for projects under 30 years). Present costs in current prices and state all assumptions about energy price inflation.'
+      answer:
+        'Include multiple metrics to suit different decision-makers: Simple Payback Period (years to recover investment), Return on Investment (ROI as percentage), Net Present Value (NPV - accounting for time value of money), Internal Rate of Return (IRR - the discount rate at which NPV equals zero), and Lifecycle Cost Analysis. For public sector clients, also consider the HM Treasury Green Book discount rate (currently 3.5% for projects under 30 years). Present costs in current prices and state all assumptions about energy price inflation.',
     },
     {
       question: 'How should recommendations be prioritised in an audit report?',
-      answer: 'Use a structured prioritisation matrix considering: 1) Energy/carbon savings potential (high/medium/low), 2) Capital cost and payback period, 3) Implementation complexity and disruption, 4) Co-benefits (comfort, maintenance, compliance), and 5) Risk factors. Group recommendations into: Quick Wins (low cost, <2 year payback), Medium-term measures (moderate cost, 2-5 year payback), and Strategic investments (higher cost, >5 year payback but significant long-term benefits). Always present a "do nothing" baseline scenario for comparison.'
+      answer:
+        'Use a structured prioritisation matrix considering: 1) Energy/carbon savings potential (high/medium/low), 2) Capital cost and payback period, 3) Implementation complexity and disruption, 4) Co-benefits (comfort, maintenance, compliance), and 5) Risk factors. Group recommendations into: Quick Wins (low cost, <2 year payback), Medium-term measures (moderate cost, 2-5 year payback), and Strategic investments (higher cost, >5 year payback but significant long-term benefits). Always present a "do nothing" baseline scenario for comparison.',
     },
     {
       question: 'What should be included in the appendices of an energy audit report?',
-      answer: 'Appendices should contain: detailed energy consumption data and analysis, equipment schedules and specifications, measurement and monitoring data logs, calculation methodologies and assumptions, photographs of key equipment and issues identified, relevant drawings and schematics, calibration certificates for monitoring equipment, staff interview summaries, benchmarking data sources, carbon conversion factors used (with source and date), and financial calculation spreadsheets. This supporting evidence validates your findings while keeping the main report accessible.'
+      answer:
+        'Appendices should contain: detailed energy consumption data and analysis, equipment schedules and specifications, measurement and monitoring data logs, calculation methodologies and assumptions, photographs of key equipment and issues identified, relevant drawings and schematics, calibration certificates for monitoring equipment, staff interview summaries, benchmarking data sources, carbon conversion factors used (with source and date), and financial calculation spreadsheets. This supporting evidence validates your findings while keeping the main report accessible.',
     },
     {
       question: 'How do I present audit findings to non-technical stakeholders?',
-      answer: 'Focus on business outcomes rather than technical details: lead with potential savings in pounds and tonnes CO₂, use visual aids like Sankey diagrams and comparison charts, relate findings to their business objectives (cost reduction, sustainability targets, compliance), provide clear next steps with timelines, and offer tiered options (minimum/recommended/optimal). Avoid jargon - explain terms like "payback" and "kWh" if needed. Use analogies (e.g., "equivalent to X homes\' annual electricity use"). Prepare a one-page summary with key numbers that can be shared with board members or finance teams.'
-    }
+      answer:
+        'Focus on business outcomes rather than technical details: lead with potential savings in pounds and tonnes CO₂, use visual aids like Sankey diagrams and comparison charts, relate findings to their business objectives (cost reduction, sustainability targets, compliance), provide clear next steps with timelines, and offer tiered options (minimum/recommended/optimal). Avoid jargon - explain terms like "payback" and "kWh" if needed. Use analogies (e.g., "equivalent to X homes\' annual electricity use"). Prepare a one-page summary with key numbers that can be shared with board members or finance teams.',
+    },
   ];
 
   return (
@@ -156,14 +186,21 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-3">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
             <p className="text-elec-yellow text-sm font-medium">Module 3 • Section 5</p>
-            <h1 className="text-white font-semibold truncate">Audit Reports and Cost/Carbon Breakdown</h1>
+            <h1 className="text-white font-semibold truncate">
+              Audit Reports and Cost/Carbon Breakdown
+            </h1>
           </div>
         </div>
       </div>
@@ -205,9 +242,9 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-white mb-2">Understanding the Standard</h3>
                 <p className="text-white leading-relaxed">
-                  BS EN 16247 is the European standard that defines requirements for energy audits. Part 1 covers
-                  general requirements, while parts 2-5 address specific sectors. All compliant audit reports
-                  must follow a defined structure.
+                  BS EN 16247 is the European standard that defines requirements for energy audits.
+                  Part 1 covers general requirements, while parts 2-5 address specific sectors. All
+                  compliant audit reports must follow a defined structure.
                 </p>
               </div>
             </div>
@@ -220,23 +257,34 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-4">
                   <p className="font-medium text-white">Executive Summary</p>
-                  <p className="text-white/70 text-sm">Ranked recommendations with savings estimates, investment costs, and key findings</p>
+                  <p className="text-white/70 text-sm">
+                    Ranked recommendations with savings estimates, investment costs, and key
+                    findings
+                  </p>
                 </div>
                 <div className="border-l-2 border-blue-400 pl-4">
                   <p className="font-medium text-white">Background and Scope</p>
-                  <p className="text-white/70 text-sm">Audit objectives, boundaries, methodology, data sources, and limitations</p>
+                  <p className="text-white/70 text-sm">
+                    Audit objectives, boundaries, methodology, data sources, and limitations
+                  </p>
                 </div>
                 <div className="border-l-2 border-green-400 pl-4">
                   <p className="font-medium text-white">Description of Audited Object</p>
-                  <p className="text-white/70 text-sm">Building/process characteristics, operating patterns, energy systems overview</p>
+                  <p className="text-white/70 text-sm">
+                    Building/process characteristics, operating patterns, energy systems overview
+                  </p>
                 </div>
                 <div className="border-l-2 border-purple-400 pl-4">
                   <p className="font-medium text-white">Energy Analysis</p>
-                  <p className="text-white/70 text-sm">Consumption breakdown, energy balance, benchmarking, significant energy uses</p>
+                  <p className="text-white/70 text-sm">
+                    Consumption breakdown, energy balance, benchmarking, significant energy uses
+                  </p>
                 </div>
                 <div className="border-l-2 border-orange-400 pl-4">
                   <p className="font-medium text-white">Improvement Opportunities</p>
-                  <p className="text-white/70 text-sm">Detailed recommendations with technical specifications, costs, and savings</p>
+                  <p className="text-white/70 text-sm">
+                    Detailed recommendations with technical specifications, costs, and savings
+                  </p>
                 </div>
               </div>
             </div>
@@ -247,9 +295,10 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-blue-400 mb-1">ESOS Compliance Note</h4>
                   <p className="text-white text-sm">
-                    For ESOS (Energy Savings Opportunity Scheme) compliance, audits must be conducted by
-                    a Lead Assessor registered with an approved register. Reports must cover at least 90%
-                    of the organisation's total energy consumption and be signed off by a board-level director.
+                    For ESOS (Energy Savings Opportunity Scheme) compliance, audits must be
+                    conducted by a Lead Assessor registered with an approved register. Reports must
+                    cover at least 90% of the organisation's total energy consumption and be signed
+                    off by a board-level director.
                   </p>
                 </div>
               </div>
@@ -300,9 +349,9 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-white mb-2">Writing for Your Audience</h3>
                 <p className="text-white leading-relaxed">
-                  The executive summary is often the only section read by senior decision-makers. It must
-                  communicate the business case clearly within 1-2 pages, enabling investment decisions
-                  without reading the full report.
+                  The executive summary is often the only section read by senior decision-makers. It
+                  must communicate the business case clearly within 1-2 pages, enabling investment
+                  decisions without reading the full report.
                 </p>
               </div>
             </div>
@@ -314,8 +363,8 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
                   <p className="font-medium text-white mb-2">1. Key Findings (2-3 sentences)</p>
                   <p className="text-white/70 text-sm italic">
                     "The audit identified annual energy costs of £245,000 with potential savings of
-                    £52,000 (21%). Implementation of all recommendations would reduce carbon emissions
-                    by 89 tonnes CO₂e annually."
+                    £52,000 (21%). Implementation of all recommendations would reduce carbon
+                    emissions by 89 tonnes CO₂e annually."
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
@@ -391,9 +440,9 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-white mb-2">Understanding Energy Balance</h3>
                 <p className="text-white leading-relaxed">
-                  An energy balance accounts for all energy entering and leaving a system. The fundamental
-                  principle: <strong>Energy In = Useful Output + Losses</strong>. Any discrepancy indicates
-                  measurement errors or unaccounted loads.
+                  An energy balance accounts for all energy entering and leaving a system. The
+                  fundamental principle: <strong>Energy In = Useful Output + Losses</strong>. Any
+                  discrepancy indicates measurement errors or unaccounted loads.
                 </p>
               </div>
             </div>
@@ -462,12 +511,22 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
             </div>
 
             <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
-              <h4 className="font-medium text-purple-400 mb-2">Tools for Creating Sankey Diagrams</h4>
+              <h4 className="font-medium text-purple-400 mb-2">
+                Tools for Creating Sankey Diagrams
+              </h4>
               <ul className="text-white text-sm space-y-1">
-                <li>• <strong>SankeyMATIC</strong> - Free online tool, simple interface</li>
-                <li>• <strong>e!Sankey</strong> - Professional software with templates</li>
-                <li>• <strong>Microsoft Visio</strong> - Using flow diagram shapes</li>
-                <li>• <strong>Excel/Google Sheets</strong> - With stacked bar chart workaround</li>
+                <li>
+                  • <strong>SankeyMATIC</strong> - Free online tool, simple interface
+                </li>
+                <li>
+                  • <strong>e!Sankey</strong> - Professional software with templates
+                </li>
+                <li>
+                  • <strong>Microsoft Visio</strong> - Using flow diagram shapes
+                </li>
+                <li>
+                  • <strong>Excel/Google Sheets</strong> - With stacked bar chart workaround
+                </li>
               </ul>
             </div>
           </div>
@@ -532,7 +591,8 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               </table>
             </div>
             <p className="text-white/60 text-xs">
-              * Always check for latest factors at gov.uk - these decrease annually as the grid decarbonises
+              * Always check for latest factors at gov.uk - these decrease annually as the grid
+              decarbonises
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -578,10 +638,21 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                 <div>
                   <h4 className="font-medium text-blue-400 mb-1">Scope 1, 2, and 3 Emissions</h4>
                   <div className="text-white text-sm space-y-1">
-                    <p><strong>Scope 1:</strong> Direct emissions from owned/controlled sources (on-site gas, vehicles)</p>
-                    <p><strong>Scope 2:</strong> Indirect emissions from purchased electricity, heat, steam</p>
-                    <p><strong>Scope 3:</strong> All other indirect emissions in the value chain</p>
-                    <p className="text-white/60 italic mt-2">Energy audits typically focus on Scope 1 and 2 emissions as these are directly controllable.</p>
+                    <p>
+                      <strong>Scope 1:</strong> Direct emissions from owned/controlled sources
+                      (on-site gas, vehicles)
+                    </p>
+                    <p>
+                      <strong>Scope 2:</strong> Indirect emissions from purchased electricity, heat,
+                      steam
+                    </p>
+                    <p>
+                      <strong>Scope 3:</strong> All other indirect emissions in the value chain
+                    </p>
+                    <p className="text-white/60 italic mt-2">
+                      Energy audits typically focus on Scope 1 and 2 emissions as these are directly
+                      controllable.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -611,9 +682,10 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div>
                 <h3 className="font-semibold text-white mb-2">Key Financial Metrics</h3>
                 <p className="text-white leading-relaxed">
-                  Financial analysis is crucial for securing investment in energy efficiency. Different
-                  stakeholders prefer different metrics - always present multiple financial indicators
-                  to suit finance directors, operations managers, and sustainability teams.
+                  Financial analysis is crucial for securing investment in energy efficiency.
+                  Different stakeholders prefer different metrics - always present multiple
+                  financial indicators to suit finance directors, operations managers, and
+                  sustainability teams.
                 </p>
               </div>
             </div>
@@ -622,17 +694,22 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Simple Payback Period</h4>
                 <div className="bg-white/10 rounded p-3 mb-2">
-                  <code className="text-elec-yellow">Payback (years) = Capital Cost (£) ÷ Annual Savings (£/year)</code>
+                  <code className="text-elec-yellow">
+                    Payback (years) = Capital Cost (£) ÷ Annual Savings (£/year)
+                  </code>
                 </div>
                 <p className="text-white/70 text-sm">
-                  Quick to calculate but ignores time value of money and savings beyond payback period
+                  Quick to calculate but ignores time value of money and savings beyond payback
+                  period
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Return on Investment (ROI)</h4>
                 <div className="bg-white/10 rounded p-3 mb-2">
-                  <code className="text-elec-yellow">ROI (%) = (Annual Savings ÷ Capital Cost) × 100</code>
+                  <code className="text-elec-yellow">
+                    ROI (%) = (Annual Savings ÷ Capital Cost) × 100
+                  </code>
                 </div>
                 <p className="text-white/70 text-sm">
                   Expressed as percentage - easy to compare with other investments
@@ -642,11 +719,14 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Net Present Value (NPV)</h4>
                 <div className="bg-white/10 rounded p-3 mb-2">
-                  <code className="text-elec-yellow text-sm">NPV = Σ [Cash Flow / (1 + r)^n] - Initial Investment</code>
+                  <code className="text-elec-yellow text-sm">
+                    NPV = Σ [Cash Flow / (1 + r)^n] - Initial Investment
+                  </code>
                 </div>
                 <p className="text-white/70 text-sm">
-                  Accounts for time value of money using discount rate (r). Positive NPV = good investment.
-                  HM Treasury Green Book recommends 3.5% for public sector projects under 30 years.
+                  Accounts for time value of money using discount rate (r). Positive NPV = good
+                  investment. HM Treasury Green Book recommends 3.5% for public sector projects
+                  under 30 years.
                 </p>
               </div>
 
@@ -695,9 +775,10 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                 <div>
                   <h4 className="font-medium text-orange-400 mb-1">Energy Price Assumptions</h4>
                   <p className="text-white text-sm">
-                    Always state your energy price assumptions clearly. Consider presenting scenarios:
-                    Conservative (prices held flat), Central (3-5% annual increase), High (7-10% increase).
-                    Higher future energy prices improve the business case for efficiency measures.
+                    Always state your energy price assumptions clearly. Consider presenting
+                    scenarios: Conservative (prices held flat), Central (3-5% annual increase), High
+                    (7-10% increase). Higher future energy prices improve the business case for
+                    efficiency measures.
                   </p>
                 </div>
               </div>
@@ -728,8 +809,8 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                 <h3 className="font-semibold text-white mb-2">Effective Presentation</h3>
                 <p className="text-white leading-relaxed">
                   The most thorough audit is worthless if recommendations aren't implemented.
-                  Professional presentation and delivery significantly increases the likelihood
-                  of action being taken.
+                  Professional presentation and delivery significantly increases the likelihood of
+                  action being taken.
                 </p>
               </div>
             </div>
@@ -738,10 +819,22 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div className="border-l-2 border-elec-yellow pl-4">
                 <h4 className="font-medium text-white">Tailor to Your Audience</h4>
                 <ul className="text-white/70 text-sm mt-2 space-y-1">
-                  <li>• <strong className="text-white">Board/Finance:</strong> Focus on ROI, payback, risk mitigation</li>
-                  <li>• <strong className="text-white">Operations:</strong> Focus on implementation practicalities, disruption</li>
-                  <li>• <strong className="text-white">Sustainability:</strong> Focus on carbon savings, compliance, targets</li>
-                  <li>• <strong className="text-white">Technical:</strong> Detailed specifications, performance data</li>
+                  <li>
+                    • <strong className="text-white">Board/Finance:</strong> Focus on ROI, payback,
+                    risk mitigation
+                  </li>
+                  <li>
+                    • <strong className="text-white">Operations:</strong> Focus on implementation
+                    practicalities, disruption
+                  </li>
+                  <li>
+                    • <strong className="text-white">Sustainability:</strong> Focus on carbon
+                    savings, compliance, targets
+                  </li>
+                  <li>
+                    • <strong className="text-white">Technical:</strong> Detailed specifications,
+                    performance data
+                  </li>
                 </ul>
               </div>
 
@@ -758,14 +851,32 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div className="border-l-2 border-green-400 pl-4">
                 <h4 className="font-medium text-white">Actionable Recommendations Format</h4>
                 <div className="bg-white/5 rounded p-3 mt-2 text-sm">
-                  <p className="font-medium text-elec-yellow">Recommendation 1: LED Lighting Upgrade</p>
+                  <p className="font-medium text-elec-yellow">
+                    Recommendation 1: LED Lighting Upgrade
+                  </p>
                   <div className="mt-2 space-y-1 text-white/70">
-                    <p><strong className="text-white">What:</strong> Replace T8 fluorescents with LED panels</p>
-                    <p><strong className="text-white">Why:</strong> High energy use, poor light quality</p>
-                    <p><strong className="text-white">Savings:</strong> £11,250/year + £1,500 maintenance</p>
-                    <p><strong className="text-white">Cost:</strong> £25,000 installed</p>
-                    <p><strong className="text-white">Payback:</strong> 2.0 years</p>
-                    <p><strong className="text-white">Next step:</strong> Obtain 3 quotes from approved contractors</p>
+                    <p>
+                      <strong className="text-white">What:</strong> Replace T8 fluorescents with LED
+                      panels
+                    </p>
+                    <p>
+                      <strong className="text-white">Why:</strong> High energy use, poor light
+                      quality
+                    </p>
+                    <p>
+                      <strong className="text-white">Savings:</strong> £11,250/year + £1,500
+                      maintenance
+                    </p>
+                    <p>
+                      <strong className="text-white">Cost:</strong> £25,000 installed
+                    </p>
+                    <p>
+                      <strong className="text-white">Payback:</strong> 2.0 years
+                    </p>
+                    <p>
+                      <strong className="text-white">Next step:</strong> Obtain 3 quotes from
+                      approved contractors
+                    </p>
                   </div>
                 </div>
               </div>
@@ -892,10 +1003,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
           </h2>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-lg overflow-hidden"
-              >
+              <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
                   <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
@@ -912,20 +1020,27 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
             <span className="font-medium text-green-400">Module 3 Complete!</span>
           </div>
           <p className="text-white text-sm">
-            Congratulations! You have completed Module 3: Energy Auditing Methodology.
-            Continue to Module 4 to learn about implementation and verification.
+            Congratulations! You have completed Module 3: Energy Auditing Methodology. Continue to
+            Module 4 to learn about implementation and verification.
           </p>
         </div>
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-6 border-t border-white/10">
-          <Button asChild variant="outline" className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white">
+          <Button
+            asChild
+            variant="outline"
+            className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
+          >
             <Link to="../section-4" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               <span>Previous: Tools and Software</span>
             </Link>
           </Button>
-          <Button asChild className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+          <Button
+            asChild
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
             <Link to="../../module-4" className="flex items-center gap-2">
               <span>Next: Module 4 - Implementation</span>
               <ArrowRight className="w-4 h-4" />

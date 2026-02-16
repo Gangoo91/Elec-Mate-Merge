@@ -12,11 +12,12 @@ export const AccessibilityPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Exercise 1 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 1</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 1
+            </Badge>
             <h3 className="text-foreground font-semibold">Accessibility Assessment Checklist</h3>
           </div>
           <div className="space-y-4">
@@ -81,7 +82,9 @@ export const AccessibilityPractical = () => {
         {/* Exercise 2 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 2</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 2
+            </Badge>
             <h3 className="text-foreground font-semibold">Label and Identification Audit</h3>
           </div>
           <div className="space-y-4">
@@ -105,7 +108,9 @@ export const AccessibilityPractical = () => {
                       </ul>
                     </div>
                     <div>
-                      <h5 className="text-foreground text-base font-medium mb-2">Quality Assessment:</h5>
+                      <h5 className="text-foreground text-base font-medium mb-2">
+                        Quality Assessment:
+                      </h5>
                       <ul className="text-foreground text-sm sm:text-base space-y-1">
                         <li>• Legibility of text</li>
                         <li>• Durability of labels</li>
@@ -124,7 +129,9 @@ export const AccessibilityPractical = () => {
         {/* Exercise 3 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 3</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 3
+            </Badge>
             <h3 className="text-foreground font-semibold">Accessibility Problem Scenarios</h3>
           </div>
           <div className="space-y-4">
@@ -133,30 +140,40 @@ export const AccessibilityPractical = () => {
             </p>
             <div className="space-y-4">
               <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                <h4 className="text-red-400 font-medium mb-2 text-base">Scenario A: Consumer Unit Behind Fixed Furniture</h4>
+                <h4 className="text-red-400 font-medium mb-2 text-base">
+                  Scenario A: Consumer Unit Behind Fixed Furniture
+                </h4>
                 <p className="text-foreground text-sm sm:text-base mb-2 leading-relaxed">
-                  A kitchen consumer unit is installed behind built-in cabinets with no access panel.
+                  A kitchen consumer unit is installed behind built-in cabinets with no access
+                  panel.
                 </p>
                 <p className="text-red-400 text-sm sm:text-base">
-                  <strong>Action Required:</strong> Code C2 - immediate remedial action required. Access must be provided.
+                  <strong>Action Required:</strong> Code C2 - immediate remedial action required.
+                  Access must be provided.
                 </p>
               </div>
               <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
-                <h4 className="text-yellow-400 font-medium mb-2 text-base">Scenario B: High-Mounted Distribution Board</h4>
+                <h4 className="text-yellow-400 font-medium mb-2 text-base">
+                  Scenario B: High-Mounted Distribution Board
+                </h4>
                 <p className="text-foreground text-sm sm:text-base mb-2 leading-relaxed">
                   Industrial DB mounted 3m high with no permanent access platform.
                 </p>
                 <p className="text-yellow-400 text-sm sm:text-base">
-                  <strong>Action Required:</strong> Code C3 - improvement recommended. Provide safe access method.
+                  <strong>Action Required:</strong> Code C3 - improvement recommended. Provide safe
+                  access method.
                 </p>
               </div>
               <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                <h4 className="text-orange-400 font-medium mb-2 text-base">Scenario C: Missing Circuit Labels</h4>
+                <h4 className="text-orange-400 font-medium mb-2 text-base">
+                  Scenario C: Missing Circuit Labels
+                </h4>
                 <p className="text-foreground text-sm sm:text-base mb-2 leading-relaxed">
                   All protective devices in commercial DB have no circuit identification labels.
                 </p>
                 <p className="text-orange-400 text-sm sm:text-base">
-                  <strong>Action Required:</strong> Code C2 - potentially dangerous. Labels must be provided.
+                  <strong>Action Required:</strong> Code C2 - potentially dangerous. Labels must be
+                  provided.
                 </p>
               </div>
             </div>
@@ -166,7 +183,9 @@ export const AccessibilityPractical = () => {
         {/* Exercise 4 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 4</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 4
+            </Badge>
             <h3 className="text-foreground font-semibold">Access Planning Workshop</h3>
           </div>
           <div className="space-y-4">
@@ -178,28 +197,32 @@ export const AccessibilityPractical = () => {
                 <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" />
                 <div>
                   <h4 className="text-yellow-400 font-medium mb-2">Planning Considerations:</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <h5 className="text-foreground text-base font-medium mb-2">Safety Assessment:</h5>
-                        <ul className="text-foreground text-sm sm:text-base space-y-1">
-                          <li>• Risk assessment required?</li>
-                          <li>• PPE and safety equipment needed</li>
-                          <li>• Working at height considerations</li>
-                          <li>• Confined space requirements</li>
-                          <li>• Live working implications</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-foreground text-base font-medium mb-2">Practical Arrangements:</h5>
-                        <ul className="text-foreground text-sm sm:text-base space-y-1">
-                          <li>• Access equipment required</li>
-                          <li>• Client coordination needed</li>
-                          <li>• Additional time allowances</li>
-                          <li>• Specialist assistance required</li>
-                          <li>• Alternative inspection methods</li>
-                        </ul>
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h5 className="text-foreground text-base font-medium mb-2">
+                        Safety Assessment:
+                      </h5>
+                      <ul className="text-foreground text-sm sm:text-base space-y-1">
+                        <li>• Risk assessment required?</li>
+                        <li>• PPE and safety equipment needed</li>
+                        <li>• Working at height considerations</li>
+                        <li>• Confined space requirements</li>
+                        <li>• Live working implications</li>
+                      </ul>
                     </div>
+                    <div>
+                      <h5 className="text-foreground text-base font-medium mb-2">
+                        Practical Arrangements:
+                      </h5>
+                      <ul className="text-foreground text-sm sm:text-base space-y-1">
+                        <li>• Access equipment required</li>
+                        <li>• Client coordination needed</li>
+                        <li>• Additional time allowances</li>
+                        <li>• Specialist assistance required</li>
+                        <li>• Alternative inspection methods</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

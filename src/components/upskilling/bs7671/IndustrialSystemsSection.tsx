@@ -10,12 +10,19 @@ export const IndustrialSystemsSection = () => {
           <Factory className="h-5 w-5 text-elec-yellow" />
           Industrial Power Systems & Continuity
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">High Availability</Badge>
+        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">
+          High Availability
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-2">Industrial Electrical Systems Overview</h5>
-          <p className="text-sm">High-availability power systems requiring selective coordination, load management, and comprehensive protection against production disruption</p>
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Industrial Electrical Systems Overview
+          </h5>
+          <p className="text-sm">
+            High-availability power systems requiring selective coordination, load management, and
+            comprehensive protection against production disruption
+          </p>
         </div>
 
         <div className="grid gap-6">
@@ -25,7 +32,7 @@ export const IndustrialSystemsSection = () => {
               <Zap className="h-4 w-4 text-blue-400" />
               <h5 className="text-blue-400 font-semibold">Selective Coordination Principles</h5>
             </div>
-            
+
             <div className="grid gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">Protection Hierarchy:</h6>
@@ -38,12 +45,22 @@ export const IndustrialSystemsSection = () => {
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm mb-1"><strong>Device Types:</strong> Air Circuit Breakers (ACB), Moulded Case Circuit Breakers (MCCB)</p>
-                        <p className="text-sm"><strong>Typical Ratings:</strong> 630A-6300A, 65kA-150kA breaking capacity</p>
+                        <p className="text-sm mb-1">
+                          <strong>Device Types:</strong> Air Circuit Breakers (ACB), Moulded Case
+                          Circuit Breakers (MCCB)
+                        </p>
+                        <p className="text-sm">
+                          <strong>Typical Ratings:</strong> 630A-6300A, 65kA-150kA breaking capacity
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm mb-1"><strong>Time Delay:</strong> Long time delay (0.4-1.2 seconds)</p>
-                        <p className="text-sm"><strong>Application:</strong> Main distribution, supply transformer protection</p>
+                        <p className="text-sm mb-1">
+                          <strong>Time Delay:</strong> Long time delay (0.4-1.2 seconds)
+                        </p>
+                        <p className="text-sm">
+                          <strong>Application:</strong> Main distribution, supply transformer
+                          protection
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -56,12 +73,22 @@ export const IndustrialSystemsSection = () => {
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm mb-1"><strong>Device Types:</strong> Moulded Case Circuit Breakers with electronic trip units</p>
-                        <p className="text-sm"><strong>Typical Ratings:</strong> 100A-1600A, 25kA-100kA breaking capacity</p>
+                        <p className="text-sm mb-1">
+                          <strong>Device Types:</strong> Moulded Case Circuit Breakers with
+                          electronic trip units
+                        </p>
+                        <p className="text-sm">
+                          <strong>Typical Ratings:</strong> 100A-1600A, 25kA-100kA breaking capacity
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm mb-1"><strong>Time Delay:</strong> Short time delay (0.1-0.4 seconds)</p>
-                        <p className="text-sm"><strong>Application:</strong> Sub-distribution boards, motor control centres</p>
+                        <p className="text-sm mb-1">
+                          <strong>Time Delay:</strong> Short time delay (0.1-0.4 seconds)
+                        </p>
+                        <p className="text-sm">
+                          <strong>Application:</strong> Sub-distribution boards, motor control
+                          centres
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -74,12 +101,22 @@ export const IndustrialSystemsSection = () => {
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm mb-1"><strong>Device Types:</strong> Miniature Circuit Breakers, Motor Protection Switches</p>
-                        <p className="text-sm"><strong>Typical Ratings:</strong> 6A-125A, 6kA-25kA breaking capacity</p>
+                        <p className="text-sm mb-1">
+                          <strong>Device Types:</strong> Miniature Circuit Breakers, Motor
+                          Protection Switches
+                        </p>
+                        <p className="text-sm">
+                          <strong>Typical Ratings:</strong> 6A-125A, 6kA-25kA breaking capacity
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm mb-1"><strong>Time Delay:</strong> Instantaneous operation (0.01-0.1 seconds)</p>
-                        <p className="text-sm"><strong>Application:</strong> Individual load protection, lighting circuits</p>
+                        <p className="text-sm mb-1">
+                          <strong>Time Delay:</strong> Instantaneous operation (0.01-0.1 seconds)
+                        </p>
+                        <p className="text-sm">
+                          <strong>Application:</strong> Individual load protection, lighting
+                          circuits
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -88,7 +125,9 @@ export const IndustrialSystemsSection = () => {
 
               <div className="p-3 bg-blue-800/30 border border-blue-600/50 rounded">
                 <p className="text-blue-200 text-sm">
-                  <strong>Coordination Requirement:</strong> Each protection level must operate only for faults in its zone, allowing continued operation of healthy circuits during fault conditions.
+                  <strong>Coordination Requirement:</strong> Each protection level must operate only
+                  for faults in its zone, allowing continued operation of healthy circuits during
+                  fault conditions.
                 </p>
               </div>
             </div>
@@ -96,11 +135,15 @@ export const IndustrialSystemsSection = () => {
 
           {/* Industrial Earthing Systems */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h5 className="text-elec-yellow font-semibold mb-3">Industrial Earthing & Protection Systems</h5>
-            
+            <h5 className="text-elec-yellow font-semibold mb-3">
+              Industrial Earthing & Protection Systems
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <h6 className="text-green-400 font-medium mb-2">TN-S Systems (Preferred for Industry):</h6>
+                <h6 className="text-green-400 font-medium mb-2">
+                  TN-S Systems (Preferred for Industry):
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• Separate neutral and protective earth conductors</li>
                   <li>• Lower earth loop impedance values</li>
@@ -111,20 +154,24 @@ export const IndustrialSystemsSection = () => {
                 </ul>
               </div>
               <div>
-                <h6 className="text-green-400 font-medium mb-2">TT Systems (Remote Industrial Sites):</h6>
+                <h6 className="text-green-400 font-medium mb-2">
+                  TT Systems (Remote Industrial Sites):
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• Independent earth electrode systems</li>
                   <li>• RCD protection mandatory for all circuits</li>
                   <li>• Higher earth resistance values acceptable</li>
                   <li>• Suitable for remote or mobile installations</li>
-                  <li>• Requires careful earth electrode design</li>  
+                  <li>• Requires careful earth electrode design</li>
                   <li>• Regular earth resistance testing essential</li>
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4">
-              <h6 className="text-blue-400 font-medium mb-2">Industrial Earth Electrode Systems:</h6>
+              <h6 className="text-blue-400 font-medium mb-2">
+                Industrial Earth Electrode Systems:
+              </h6>
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
                   <h6 className="text-foreground font-medium mb-1">Foundation Electrodes:</h6>
@@ -163,7 +210,7 @@ export const IndustrialSystemsSection = () => {
               <Settings className="h-4 w-4 text-purple-400" />
               <h5 className="text-purple-400 font-semibold">Industrial Motor Protection Systems</h5>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">Protection Requirements:</h6>
@@ -188,18 +235,22 @@ export const IndustrialSystemsSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-purple-900/20 border border-purple-600/50 rounded">
               <p className="text-purple-200 text-sm">
-                <strong>Motor Cable Sizing:</strong> Cables must be sized for 125% of motor full-load current, with additional considerations for starting current, voltage drop, and harmonic content from VFDs.
+                <strong>Motor Cable Sizing:</strong> Cables must be sized for 125% of motor
+                full-load current, with additional considerations for starting current, voltage
+                drop, and harmonic content from VFDs.
               </p>
             </div>
           </div>
 
           {/* Load Management */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h5 className="text-elec-yellow font-semibold mb-3">Industrial Load Management Systems</h5>
-            
+            <h5 className="text-elec-yellow font-semibold mb-3">
+              Industrial Load Management Systems
+            </h5>
+
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <h6 className="text-orange-400 font-medium mb-2">Demand Management:</h6>
@@ -236,8 +287,10 @@ export const IndustrialSystemsSection = () => {
 
           {/* Hazardous Area Considerations */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h5 className="text-elec-yellow font-semibold mb-3">Hazardous Area Electrical Systems</h5>
-            
+            <h5 className="text-elec-yellow font-semibold mb-3">
+              Hazardous Area Electrical Systems
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-red-400 font-medium mb-2">Zone Classification:</h6>
@@ -260,10 +313,12 @@ export const IndustrialSystemsSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-red-900/20 border border-red-600/50 rounded">
               <p className="text-red-200 text-sm">
-                <strong>Certification Requirement:</strong> All electrical equipment in hazardous areas must have appropriate ATEX or IECEx certification for the specific zone and gas/dust group.
+                <strong>Certification Requirement:</strong> All electrical equipment in hazardous
+                areas must have appropriate ATEX or IECEx certification for the specific zone and
+                gas/dust group.
               </p>
             </div>
           </div>

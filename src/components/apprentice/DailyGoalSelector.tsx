@@ -58,16 +58,20 @@ export function DailyGoalSelector({
                 >
                   <div className="text-left">
                     <div className="flex items-center gap-2">
-                      <span className={cn(
-                        'font-semibold text-base',
-                        isActive ? 'text-elec-yellow' : 'text-white'
-                      )}>
+                      <span
+                        className={cn(
+                          'font-semibold text-base',
+                          isActive ? 'text-elec-yellow' : 'text-white'
+                        )}
+                      >
                         {option.label}
                       </span>
-                      <span className={cn(
-                        'text-sm font-medium',
-                        isActive ? 'text-elec-yellow/80' : 'text-white/50'
-                      )}>
+                      <span
+                        className={cn(
+                          'text-sm font-medium',
+                          isActive ? 'text-elec-yellow/80' : 'text-white/50'
+                        )}
+                      >
                         {option.value} XP/day
                       </span>
                     </div>

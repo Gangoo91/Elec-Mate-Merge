@@ -14,10 +14,14 @@ interface ModernQuizCardProps {
 const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return 'from-bs7671-safe to-emerald-400';
-      case 'Intermediate': return 'from-bs7671-warning to-orange-400';
-      case 'Advanced': return 'from-bs7671-danger to-red-400';
-      default: return 'from-muted to-muted-foreground';
+      case 'Beginner':
+        return 'from-bs7671-safe to-emerald-400';
+      case 'Intermediate':
+        return 'from-bs7671-warning to-orange-400';
+      case 'Advanced':
+        return 'from-bs7671-danger to-red-400';
+      default:
+        return 'from-muted to-muted-foreground';
     }
   };
 
@@ -50,15 +54,17 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
   };
 
   return (
-    <Card 
+    <Card
       className={`group relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${getBorderColor(assessment.category)}`}
-      style={{ 
+      style={{
         background: `linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)`,
       }}
     >
       {/* Gradient overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${getCategoryGradient(assessment.category)} opacity-50 group-hover:opacity-70 transition-opacity duration-300`} />
-      
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${getCategoryGradient(assessment.category)} opacity-50 group-hover:opacity-70 transition-opacity duration-300`}
+      />
+
       {/* Glow effect on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-gradient-to-br from-elec-yellow/10 to-transparent" />
 
@@ -79,9 +85,7 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
           <h3 className="text-lg sm:text-xl font-bold text-foreground group-hover:text-elec-yellow transition-colors line-clamp-2">
             {assessment.title}
           </h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">
-            {assessment.description}
-          </p>
+          <p className="text-sm text-muted-foreground line-clamp-2">{assessment.description}</p>
         </div>
 
         {/* Regulation Reference */}
@@ -97,7 +101,9 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
         {/* Stats Grid */}
         <div className="grid grid-cols-3 gap-2 sm:gap-3">
           <div className="bg-background/50 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-border/50 text-center">
-            <div className="text-lg sm:text-xl font-bold text-elec-yellow">{assessment.questions}</div>
+            <div className="text-lg sm:text-xl font-bold text-elec-yellow">
+              {assessment.questions}
+            </div>
             <div className="text-xs text-muted-foreground">Questions</div>
           </div>
           <div className="bg-background/50 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-border/50 text-center">
@@ -127,10 +133,12 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
 
         {/* Difficulty & Action */}
         <div className="flex items-center justify-between gap-3">
-          <div className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r ${getDifficultyColor(assessment.difficulty)} text-foreground shadow-lg`}>
+          <div
+            className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r ${getDifficultyColor(assessment.difficulty)} text-foreground shadow-lg`}
+          >
             {assessment.difficulty}
           </div>
-          <Button 
+          <Button
             onClick={onStart}
             size="sm"
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold px-4 sm:px-6 min-h-[44px] sm:min-h-[40px] shadow-lg hover:shadow-xl transition-all duration-300"

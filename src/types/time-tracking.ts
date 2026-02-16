@@ -1,4 +1,3 @@
-
 export type TimeEntry = {
   id: string;
   date: string;
@@ -27,4 +26,4 @@ export type TrainingEvidenceItem = {
 };
 
 // Re-export the Certificate type for backward compatibility
-export type { Certificate } from "./certificates";
+export type { Certificate } from './certificates';

@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Phone, Clock, Heart } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Phone, Clock, Heart } from 'lucide-react';
 
 interface EmergencyContact {
   name: string;
@@ -19,21 +18,31 @@ interface CrisisHelplinesProps {
 const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'emergency': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'crisis': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'support': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'specialty': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      default: return 'bg-gray-500/20 text-white border-gray-500/30';
+      case 'emergency':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'crisis':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      case 'support':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'specialty':
+        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      default:
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'emergency': return '🚨';
-      case 'crisis': return '📞';
-      case 'support': return '💬';
-      case 'specialty': return '🏥';
-      default: return '📱';
+      case 'emergency':
+        return '🚨';
+      case 'crisis':
+        return '📞';
+      case 'support':
+        return '💬';
+      case 'specialty':
+        return '🏥';
+      default:
+        return '📱';
     }
   };
 
@@ -63,7 +72,7 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
                     <h4 className="font-semibold text-foreground">{contact.name}</h4>
                   </div>
                   <p className="text-sm text-white mb-2">{contact.description}</p>
-                  
+
                   <div className="flex items-center gap-3 text-sm">
                     <div className="flex items-center gap-1 text-elec-yellow">
                       <Phone className="h-3 w-3" />
@@ -75,11 +84,9 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex flex-col items-end gap-2">
-                  <Badge className={getTypeColor(contact.type)}>
-                    {contact.type}
-                  </Badge>
+                  <Badge className={getTypeColor(contact.type)}>{contact.type}</Badge>
                   <Button
                     size="lg"
                     className={`touch-manipulation min-h-[48px] min-w-[100px] active:scale-95 ${contact.type === 'emergency' ? 'bg-red-600 hover:bg-red-700 min-h-[56px]' : ''}`}
@@ -92,7 +99,7 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
                   </Button>
                 </div>
               </div>
-              
+
               {contact.type === 'emergency' && (
                 <div className="mt-3 p-2 bg-red-500/10 rounded border-l-4 border-red-500">
                   <p className="text-xs text-red-200 flex items-center gap-1">
@@ -104,7 +111,7 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
           <h4 className="font-medium text-blue-300 mb-2">Text Support Options</h4>
           <div className="space-y-2 text-sm">

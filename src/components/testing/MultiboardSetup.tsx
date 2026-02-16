@@ -8,7 +8,7 @@ import {
   createDefaultBoard,
   createMainBoard,
   generateBoardId,
-  getNextSubBoardName
+  getNextSubBoardName,
 } from '@/types/distributionBoard';
 import BoardSetupCard from './BoardSetupCard';
 
@@ -27,7 +27,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
   boards,
   onBoardsChange,
   className,
-  maxBoards = 10
+  maxBoards = 10,
 }) => {
   // Ensure we always have at least a main board
   const currentBoards = useMemo(() => {
@@ -48,8 +48,8 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
   const stats = useMemo(() => {
     const totalBoards = currentBoards.length;
     const totalWays = currentBoards.reduce((sum, b) => sum + (b.totalWays || 0), 0);
-    const configuredBoards = currentBoards.filter(b =>
-      b.location && b.make && b.totalWays
+    const configuredBoards = currentBoards.filter(
+      (b) => b.location && b.make && b.totalWays
     ).length;
     return { totalBoards, totalWays, configuredBoards };
   }, [currentBoards]);
@@ -71,7 +71,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
     if (boardId === MAIN_BOARD_ID) return; // Can't remove main board
 
     const updatedBoards = currentBoards
-      .filter(b => b.id !== boardId)
+      .filter((b) => b.id !== boardId)
       .map((b, index) => ({ ...b, order: index })); // Re-order
 
     onBoardsChange(updatedBoards);
@@ -79,14 +79,14 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
 
   // Handle updating a board field
   const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
-    const updatedBoards = currentBoards.map(b =>
+    const updatedBoards = currentBoards.map((b) =>
       b.id === boardId ? { ...b, [field]: value, updatedAt: new Date() } : b
     );
     onBoardsChange(updatedBoards);
   };
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -96,7 +96,9 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
 
         {/* Summary Stats */}
         <div className="flex items-center gap-3 text-xs text-white/60">
-          <span>{stats.totalBoards} {stats.totalBoards === 1 ? 'board' : 'boards'}</span>
+          <span>
+            {stats.totalBoards} {stats.totalBoards === 1 ? 'board' : 'boards'}
+          </span>
           {stats.totalWays > 0 && (
             <span className="text-elec-yellow">{stats.totalWays} ways total</span>
           )}
@@ -140,9 +142,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
 
       {/* Max boards message */}
       {currentBoards.length >= maxBoards && (
-        <p className="text-xs text-white/40 text-center">
-          Maximum of {maxBoards} boards reached
-        </p>
+        <p className="text-xs text-white/40 text-center">Maximum of {maxBoards} boards reached</p>
       )}
     </div>
   );

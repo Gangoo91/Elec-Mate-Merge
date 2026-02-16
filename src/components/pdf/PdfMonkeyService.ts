@@ -9,36 +9,36 @@ interface MinorWorksTemplateData {
   // Certificate details
   certificateNumber: string;
   workDate: string;
-  
+
   // Client information
   clientName: string;
   propertyAddress: string;
   postcode: string;
-  
+
   // Work description
   workDescription: string;
   workType: string;
-  
+
   // Supply & earthing
   supplyVoltage: string;
   earthingArrangement: string;
-  
+
   // Circuit details
   circuitDesignation: string;
   protectiveDeviceType: string;
   protectiveDeviceRating: string;
-  
+
   // Test results
   continuityR1R2: string;
   earthFaultLoopImpedance: string;
   maxPermittedZs: string;
   polarity: string;
-  
+
   // Declaration
   electricianName: string;
   position: string;
   signatureDate: string;
-  
+
   // Additional fields
   [key: string]: any;
 }
@@ -62,30 +62,30 @@ export class PdfMonkeyService {
 
     try {
       const templateData = this.mapFormDataToTemplate(formData);
-      
+
       const response = await axios.post(
         `${this.baseUrl}/documents`,
         {
           document: {
             document_template_id: this.config.templateId,
             payload: templateData,
-            status: 'pending'
-          }
+            status: 'pending',
+          },
         },
         {
           headers: {
-            'Authorization': `Bearer ${this.config.apiKey}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${this.config.apiKey}`,
+            'Content-Type': 'application/json',
+          },
         }
       );
 
       if (response.data && response.data.document) {
         const documentId = response.data.document.id;
-        
+
         // Poll for completion
         const pdfUrl = await this.waitForPdfGeneration(documentId);
-        
+
         if (pdfUrl) {
           return { success: true, pdfUrl };
         } else {
@@ -96,9 +96,9 @@ export class PdfMonkeyService {
       return { success: false, error: 'Invalid response from PDF Monkey' };
     } catch (error: any) {
       console.error('PDF Monkey error:', error);
-      return { 
-        success: false, 
-        error: error.response?.data?.message || 'PDF generation failed' 
+      return {
+        success: false,
+        error: error.response?.data?.message || 'PDF generation failed',
       };
     }
   }
@@ -108,17 +108,14 @@ export class PdfMonkeyService {
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
       try {
-        const response = await axios.get(
-          `${this.baseUrl}/documents/${documentId}`,
-          {
-            headers: {
-              'Authorization': `Bearer ${this.config.apiKey}`
-            }
-          }
-        );
+        const response = await axios.get(`${this.baseUrl}/documents/${documentId}`, {
+          headers: {
+            Authorization: `Bearer ${this.config.apiKey}`,
+          },
+        });
 
         const document = response.data.document;
-        
+
         if (document.status === 'success' && document.download_url) {
           return document.download_url;
         } else if (document.status === 'failure') {
@@ -127,7 +124,7 @@ export class PdfMonkeyService {
         }
 
         // Wait before next attempt
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (error) {
         console.error('Error polling PDF status:', error);
       }
@@ -159,9 +156,9 @@ export class PdfMonkeyService {
       electricianName: formData.electricianName || '',
       position: formData.position || '',
       signatureDate: formData.signatureDate || '',
-      
+
       // Map all other fields
-      ...formData
+      ...formData,
     };
   }
 
@@ -175,8 +172,8 @@ export class PdfMonkeyService {
         `${this.baseUrl}/document_templates/${this.config.templateId}`,
         {
           headers: {
-            'Authorization': `Bearer ${this.config.apiKey}`
-          }
+            Authorization: `Bearer ${this.config.apiKey}`,
+          },
         }
       );
 
@@ -186,9 +183,9 @@ export class PdfMonkeyService {
 
       return { success: false, error: 'Template not found' };
     } catch (error: any) {
-      return { 
-        success: false, 
-        error: error.response?.data?.message || 'Connection failed' 
+      return {
+        success: false,
+        error: error.response?.data?.message || 'Connection failed',
       };
     }
   }

@@ -1,87 +1,130 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section2_4 = () => {
   useSEO(
-    "Verifying Correct Terminations and Polarity - Level 2 Electrical Installation",
-    "Understanding BS 7671 requirements for correct terminations and polarity verification in electrical installations"
+    'Verifying Correct Terminations and Polarity - Level 2 Electrical Installation',
+    'Understanding BS 7671 requirements for correct terminations and polarity verification in electrical installations'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What risk is caused by a loose termination?",
-      options: ["Low voltage", "Overheating and potential fire", "Reduced efficiency", "Increased cost"],
+      question: 'What risk is caused by a loose termination?',
+      options: [
+        'Low voltage',
+        'Overheating and potential fire',
+        'Reduced efficiency',
+        'Increased cost',
+      ],
       correctAnswer: 1,
-      explanation: "Loose terminations cause resistance, leading to heat build-up and potential fire risks."
+      explanation:
+        'Loose terminations cause resistance, leading to heat build-up and potential fire risks.',
     },
     {
       id: 2,
-      question: "True or False: It is acceptable for a switch to break the neutral conductor.",
-      options: ["True", "False"],
+      question: 'True or False: It is acceptable for a switch to break the neutral conductor.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False — switches must break the live conductor to ensure safe isolation."
+      explanation: 'False — switches must break the live conductor to ensure safe isolation.',
     },
     {
       id: 3,
-      question: "What is reversed polarity?",
-      options: ["Voltage too high", "Current too low", "When live and neutral conductors are swapped", "When earth is missing"],
+      question: 'What is reversed polarity?',
+      options: [
+        'Voltage too high',
+        'Current too low',
+        'When live and neutral conductors are swapped',
+        'When earth is missing',
+      ],
       correctAnswer: 2,
-      explanation: "Reversed polarity occurs when live and neutral conductors are incorrectly connected, swapping their positions."
+      explanation:
+        'Reversed polarity occurs when live and neutral conductors are incorrectly connected, swapping their positions.',
     },
     {
       id: 4,
-      question: "Why must earth conductors be sleeved green/yellow?",
-      options: ["For aesthetic reasons", "To comply with identification standards", "To improve conductivity", "To reduce cost"],
+      question: 'Why must earth conductors be sleeved green/yellow?',
+      options: [
+        'For aesthetic reasons',
+        'To comply with identification standards',
+        'To improve conductivity',
+        'To reduce cost',
+      ],
       correctAnswer: 1,
-      explanation: "Green/yellow sleeving ensures compliance with BS 7671 conductor identification standards."
+      explanation:
+        'Green/yellow sleeving ensures compliance with BS 7671 conductor identification standards.',
     },
     {
       id: 5,
-      question: "Name one tool used to confirm polarity after installation.",
-      options: ["Screwdriver", "Multimeter or polarity tester", "Wire strippers", "Crimping tool"],
+      question: 'Name one tool used to confirm polarity after installation.',
+      options: ['Screwdriver', 'Multimeter or polarity tester', 'Wire strippers', 'Crimping tool'],
       correctAnswer: 1,
-      explanation: "Multimeters and polarity testers can confirm correct polarity after visual inspection."
+      explanation:
+        'Multimeters and polarity testers can confirm correct polarity after visual inspection.',
     },
     {
       id: 6,
-      question: "What can over-tightening a terminal screw cause?",
-      options: ["Better connection", "Damage to the conductor or threads", "Improved safety", "Reduced resistance"],
+      question: 'What can over-tightening a terminal screw cause?',
+      options: [
+        'Better connection',
+        'Damage to the conductor or threads',
+        'Improved safety',
+        'Reduced resistance',
+      ],
       correctAnswer: 1,
-      explanation: "Over-tightening can damage conductor strands or strip terminal threads, creating poor connections."
+      explanation:
+        'Over-tightening can damage conductor strands or strip terminal threads, creating poor connections.',
     },
     {
       id: 7,
-      question: "Why is incorrect polarity especially dangerous in lighting circuits?",
-      options: ["Higher voltage", "Because fittings can remain live even when switched off", "Reduced illumination", "Increased energy consumption"],
+      question: 'Why is incorrect polarity especially dangerous in lighting circuits?',
+      options: [
+        'Higher voltage',
+        'Because fittings can remain live even when switched off',
+        'Reduced illumination',
+        'Increased energy consumption',
+      ],
       correctAnswer: 1,
-      explanation: "With incorrect polarity, switches break the neutral instead of live, leaving fittings energised when 'off'."
+      explanation:
+        "With incorrect polarity, switches break the neutral instead of live, leaving fittings energised when 'off'.",
     },
     {
       id: 8,
-      question: "What standard sets requirements for polarity and terminations?",
-      options: ["BS 5839", "BS 6423", "BS 7671", "BS 1362"],
+      question: 'What standard sets requirements for polarity and terminations?',
+      options: ['BS 5839', 'BS 6423', 'BS 7671', 'BS 1362'],
       correctAnswer: 2,
-      explanation: "BS 7671 (IET Wiring Regulations) sets the requirements for polarity and terminations."
+      explanation:
+        'BS 7671 (IET Wiring Regulations) sets the requirements for polarity and terminations.',
     },
     {
       id: 9,
-      question: "What is one sign of poor terminations during inspection?",
-      options: ["Bright copper colour", "Discolouration or melting at terminals", "Clean connections", "Proper torque settings"],
+      question: 'What is one sign of poor terminations during inspection?',
+      options: [
+        'Bright copper colour',
+        'Discolouration or melting at terminals',
+        'Clean connections',
+        'Proper torque settings',
+      ],
       correctAnswer: 1,
-      explanation: "Discolouration or melting indicates overheating caused by poor terminations."
+      explanation: 'Discolouration or melting indicates overheating caused by poor terminations.',
     },
     {
       id: 10,
-      question: "Can multiple conductors be placed in one terminal?",
-      options: ["Never allowed", "Always acceptable", "Only if the terminal is designed to accommodate them safely", "Only with special tools"],
+      question: 'Can multiple conductors be placed in one terminal?',
+      options: [
+        'Never allowed',
+        'Always acceptable',
+        'Only if the terminal is designed to accommodate them safely',
+        'Only with special tools',
+      ],
       correctAnswer: 2,
-      explanation: "Multiple conductors can only be placed in terminals specifically designed and rated for multiple connections."
-    }
+      explanation:
+        'Multiple conductors can only be placed in terminals specifically designed and rated for multiple connections.',
+    },
   ];
 
   return (
@@ -115,7 +158,8 @@ const Module6Section2_4 = () => {
               Verifying Correct Terminations and Polarity
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Ensuring correct terminations and polarity for safe and compliant electrical installations
+              Ensuring correct terminations and polarity for safe and compliant electrical
+              installations
             </p>
           </header>
 
@@ -134,8 +178,12 @@ const Module6Section2_4 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Spot it / Use it</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Spot:</strong> Discolouration, loose screws, wrong colours</li>
-                  <li><strong>Use:</strong> Correct screwdrivers, torque settings, multimeter</li>
+                  <li>
+                    <strong>Spot:</strong> Discolouration, loose screws, wrong colours
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Correct screwdrivers, torque settings, multimeter
+                  </li>
                 </ul>
               </div>
             </div>
@@ -149,7 +197,9 @@ const Module6Section2_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Once cables are routed and installed, ensuring correct terminations and polarity is essential. Poor terminations lead to overheating, arcing, and failures, while incorrect polarity can make equipment unsafe or even lethal.
+                Once cables are routed and installed, ensuring correct terminations and polarity is
+                essential. Poor terminations lead to overheating, arcing, and failures, while
+                incorrect polarity can make equipment unsafe or even lethal.
               </p>
             </div>
           </section>
@@ -163,7 +213,10 @@ const Module6Section2_4 = () => {
             <ul className="list-disc pl-6 space-y-2 text-white/80">
               <li>Explain the importance of correct terminations in electrical safety</li>
               <li>Recognise common termination faults (loose, over-tightened, or damaged)</li>
-              <li>Understand the significance of polarity in socket outlets, lighting points, and switches</li>
+              <li>
+                Understand the significance of polarity in socket outlets, lighting points, and
+                switches
+              </li>
               <li>Verify polarity visually and through testing</li>
               <li>Apply BS 7671 requirements for safe and compliant terminations</li>
             </ul>
@@ -177,7 +230,8 @@ const Module6Section2_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Electrical terminations must be mechanically sound, electrically secure, and properly identified to ensure safe operation and prevent failures.
+                Electrical terminations must be mechanically sound, electrically secure, and
+                properly identified to ensure safe operation and prevent failures.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -193,9 +247,15 @@ const Module6Section2_4 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Conductor Identification:</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
-                  <li><strong>Brown:</strong> Live conductor (L1, L2, L3)</li>
-                  <li><strong>Blue:</strong> Neutral conductor (N)</li>
-                  <li><strong>Green/Yellow:</strong> Earth/protective conductor (PE)</li>
+                  <li>
+                    <strong>Brown:</strong> Live conductor (L1, L2, L3)
+                  </li>
+                  <li>
+                    <strong>Blue:</strong> Neutral conductor (N)
+                  </li>
+                  <li>
+                    <strong>Green/Yellow:</strong> Earth/protective conductor (PE)
+                  </li>
                   <li>Ensure correct sleeving where core colours change</li>
                 </ul>
               </div>
@@ -203,7 +263,9 @@ const Module6Section2_4 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Practical Tip</p>
                 <p className="text-sm">
-                  Use the correct screwdriver size to avoid slipping or under/over tightening. Many terminal failures result from incorrect tools or excessive force during installation.
+                  Use the correct screwdriver size to avoid slipping or under/over tightening. Many
+                  terminal failures result from incorrect tools or excessive force during
+                  installation.
                 </p>
               </div>
             </div>
@@ -212,7 +274,7 @@ const Module6Section2_4 = () => {
               <InlineCheck
                 id="terminations-check"
                 question="What colour should the earth conductor be sleeved?"
-                options={["Brown", "Blue", "Green/Yellow", "Black"]}
+                options={['Brown', 'Blue', 'Green/Yellow', 'Black']}
                 correctIndex={2}
                 explanation="Earth conductors must be sleeved green/yellow to comply with BS 7671 identification standards."
               />
@@ -227,7 +289,8 @@ const Module6Section2_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Correct polarity ensures that switches and protective devices operate on the live conductor, maintaining safety when circuits are supposedly isolated.
+                Correct polarity ensures that switches and protective devices operate on the live
+                conductor, maintaining safety when circuits are supposedly isolated.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -262,7 +325,8 @@ const Module6Section2_4 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-2">Safety Critical</p>
                 <p className="text-sm">
-                  Incorrect polarity can leave appliances and fittings live when switches are off, creating a serious shock risk during maintenance or lamp replacement.
+                  Incorrect polarity can leave appliances and fittings live when switches are off,
+                  creating a serious shock risk during maintenance or lamp replacement.
                 </p>
               </div>
             </div>
@@ -271,7 +335,7 @@ const Module6Section2_4 = () => {
               <InlineCheck
                 id="polarity-check"
                 question="Which conductor should a switch always break?"
-                options={["Neutral", "Earth", "Live", "Any conductor"]}
+                options={['Neutral', 'Earth', 'Live', 'Any conductor']}
                 correctIndex={2}
                 explanation="Switches must always break the live conductor to ensure safe isolation when switched off."
               />
@@ -317,7 +381,8 @@ const Module6Section2_4 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Critical Warning</p>
                 <p className="text-sm">
-                  Always confirm all conductors are correctly identified and sleeved before energising any circuit. Incorrect identification can cause serious safety hazards.
+                  Always confirm all conductors are correctly identified and sleeved before
+                  energising any circuit. Incorrect identification can cause serious safety hazards.
                 </p>
               </div>
             </div>
@@ -326,7 +391,12 @@ const Module6Section2_4 = () => {
               <InlineCheck
                 id="faults-check"
                 question="What could happen if a termination is loose?"
-                options={["Nothing serious", "Overheating and potential fire", "Better connections", "Lower energy bills"]}
+                options={[
+                  'Nothing serious',
+                  'Overheating and potential fire',
+                  'Better connections',
+                  'Lower energy bills',
+                ]}
                 correctIndex={1}
                 explanation="Loose terminations create high resistance, leading to heat build-up that can cause fires and component failures."
               />
@@ -363,7 +433,9 @@ const Module6Section2_4 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Quality Assurance</p>
                 <p className="text-sm">
-                  After visual inspection, always confirm polarity with test instruments. Visual checks help identify obvious issues, but proper testing confirms electrical compliance.
+                  After visual inspection, always confirm polarity with test instruments. Visual
+                  checks help identify obvious issues, but proper testing confirms electrical
+                  compliance.
                 </p>
               </div>
             </div>
@@ -372,7 +444,12 @@ const Module6Section2_4 = () => {
               <InlineCheck
                 id="inspection-check"
                 question="Why is it unsafe if polarity is reversed in a socket outlet?"
-                options={["It costs more electricity", "Appliances may remain live when switched off", "It looks unprofessional", "Nothing happens"]}
+                options={[
+                  'It costs more electricity',
+                  'Appliances may remain live when switched off',
+                  'It looks unprofessional',
+                  'Nothing happens',
+                ]}
                 correctIndex={1}
                 explanation="Reversed polarity means appliances with single-pole switches remain energised when switched off, creating shock risks."
               />
@@ -387,9 +464,21 @@ const Module6Section2_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-                <p><strong>Tool Selection:</strong> Always use the correct screwdriver size to avoid slipping or under/over tightening. Keep tools in good condition and use torque settings where specified.</p>
-                <p><strong>Conductor Preparation:</strong> Strip conductors to the correct length - no exposed copper beyond terminals, but sufficient length for secure connection within the terminal block.</p>
-                <p><strong>Quality Checks:</strong> After visual inspection, confirm polarity with a multimeter or polarity tester. Visual checks alone are insufficient for compliance verification.</p>
+                <p>
+                  <strong>Tool Selection:</strong> Always use the correct screwdriver size to avoid
+                  slipping or under/over tightening. Keep tools in good condition and use torque
+                  settings where specified.
+                </p>
+                <p>
+                  <strong>Conductor Preparation:</strong> Strip conductors to the correct length -
+                  no exposed copper beyond terminals, but sufficient length for secure connection
+                  within the terminal block.
+                </p>
+                <p>
+                  <strong>Quality Checks:</strong> After visual inspection, confirm polarity with a
+                  multimeter or polarity tester. Visual checks alone are insufficient for compliance
+                  verification.
+                </p>
               </div>
             </div>
           </section>
@@ -403,13 +492,16 @@ const Module6Section2_4 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="font-medium text-red-400 mb-3">Commercial Office Incident</p>
               <p className="text-sm text-white/80 mb-3">
-                In a commercial office fit-out, a lighting circuit was wired with reversed polarity. When an electrician replaced a lamp, the fitting remained live even though the switch was off, leading to an electric shock incident.
+                In a commercial office fit-out, a lighting circuit was wired with reversed polarity.
+                When an electrician replaced a lamp, the fitting remained live even though the
+                switch was off, leading to an electric shock incident.
               </p>
               <p className="text-sm text-white/80 mb-3">
                 Investigation found the live and neutral reversed at a junction box.
               </p>
               <p className="text-sm font-medium text-white">
-                Prevention: A proper polarity check during installation would have prevented this dangerous situation.
+                Prevention: A proper polarity check during installation would have prevented this
+                dangerous situation.
               </p>
             </div>
           </section>

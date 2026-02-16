@@ -1,7 +1,6 @@
-
-import React from "react";
-import UserLocationInput from "./UserLocationInput";
-import ViewModeSwitcher from "./ViewModeSwitcher";
+import React from 'react';
+import UserLocationInput from './UserLocationInput';
+import ViewModeSwitcher from './ViewModeSwitcher';
 
 interface LocationSearchBoxProps {
   userLocation: string | null;
@@ -10,8 +9,8 @@ interface LocationSearchBoxProps {
   setSearchRadius: (radius: number) => void;
   calculateJobDistances: () => void;
   showMap: boolean;
-  viewMode: "list" | "map";
-  setViewMode: (mode: "list" | "map") => void;
+  viewMode: 'list' | 'map';
+  setViewMode: (mode: 'list' | 'map') => void;
 }
 
 const LocationSearchBox: React.FC<LocationSearchBoxProps> = ({
@@ -22,12 +21,12 @@ const LocationSearchBox: React.FC<LocationSearchBoxProps> = ({
   calculateJobDistances,
   showMap,
   viewMode,
-  setViewMode
+  setViewMode,
 }) => {
   return (
     <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20">
       <h2 className="text-xl font-medium mb-3">Find Jobs Near You</h2>
-      <UserLocationInput 
+      <UserLocationInput
         userLocation={userLocation}
         setUserLocation={setUserLocation}
         searchRadius={searchRadius}

@@ -1,20 +1,32 @@
-
 import React from 'react';
-import { Lightbulb, Shield, CheckCircle2, BookOpen, Activity, Users, AlertTriangle } from 'lucide-react';
+import {
+  Lightbulb,
+  Shield,
+  CheckCircle2,
+  BookOpen,
+  Activity,
+  Users,
+  AlertTriangle,
+} from 'lucide-react';
 
 const WhyTestSection = () => (
   <div className="space-y-4">
     <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
       <div className="flex items-center gap-2 mb-3">
         <Lightbulb className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">Why Insulation Resistance Testing is Critical</h4>
+        <h4 className="font-medium text-purple-400">
+          Why Insulation Resistance Testing is Critical
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-gray-300">
         <div className="flex items-start gap-2">
           <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
           <div>
             <p className="font-medium text-foreground">Prevent Electric Shock</p>
-            <p>Ensures electrical conductors are properly insulated to prevent contact with live parts.</p>
+            <p>
+              Ensures electrical conductors are properly insulated to prevent contact with live
+              parts.
+            </p>
           </div>
         </div>
         <div className="flex items-start gap-2">
@@ -47,10 +59,22 @@ const WhyTestSection = () => (
         <h4 className="font-medium text-yellow-400">Real-World Failure Scenarios</h4>
       </div>
       <div className="space-y-2 text-sm text-gray-300">
-        <p><strong>Domestic Installation:</strong> Cable damaged by drilling - insulation breakdown leads to RCD tripping and potential electrocution</p>
-        <p><strong>Industrial Environment:</strong> Chemical contamination of cables - gradual insulation deterioration causing equipment failure</p>
-        <p><strong>Damp Conditions:</strong> Moisture ingress in junction boxes - low insulation resistance causing nuisance tripping</p>
-        <p><strong>Aged Installation:</strong> 30-year-old PVC cables - insulation becomes brittle and cracks, creating safety hazards</p>
+        <p>
+          <strong>Domestic Installation:</strong> Cable damaged by drilling - insulation breakdown
+          leads to RCD tripping and potential electrocution
+        </p>
+        <p>
+          <strong>Industrial Environment:</strong> Chemical contamination of cables - gradual
+          insulation deterioration causing equipment failure
+        </p>
+        <p>
+          <strong>Damp Conditions:</strong> Moisture ingress in junction boxes - low insulation
+          resistance causing nuisance tripping
+        </p>
+        <p>
+          <strong>Aged Installation:</strong> 30-year-old PVC cables - insulation becomes brittle
+          and cracks, creating safety hazards
+        </p>
       </div>
     </div>
 

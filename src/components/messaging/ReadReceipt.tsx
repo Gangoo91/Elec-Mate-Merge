@@ -132,15 +132,13 @@ export function ReadReceiptDetailed({
     sentAt && `Sent: ${formatDateTime(sentAt)}`,
     deliveredAt && `Delivered: ${formatDateTime(deliveredAt)}`,
     readAt && `Read: ${formatDateTime(readAt)}`,
-  ].filter(Boolean).join('\n');
+  ]
+    .filter(Boolean)
+    .join('\n');
 
   return (
     <span title={tooltip} className={cn('cursor-help', className)}>
-      <ReadReceipt
-        status={status}
-        readAt={readAt}
-        deliveredAt={deliveredAt}
-      />
+      <ReadReceipt status={status} readAt={readAt} deliveredAt={deliveredAt} />
     </span>
   );
 }

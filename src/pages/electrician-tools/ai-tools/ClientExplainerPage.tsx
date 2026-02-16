@@ -1,36 +1,56 @@
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
-  ArrowLeft, Loader2, Lightbulb, Zap, Megaphone, Brain,
-  ChevronDown, Settings2, Sparkles, Users, Shield, BookOpen
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import ClientTypeSelector, { ClientType } from "@/components/electrician-tools/ai-tools/client-explainer/ClientTypeSelector";
-import TemplateSelector, { Template } from "@/components/electrician-tools/ai-tools/client-explainer/TemplateSelector";
-import OutputPanel from "@/components/electrician-tools/ai-tools/client-explainer/OutputPanel";
-import { cn } from "@/lib/utils";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import {
+  ArrowLeft,
+  Loader2,
+  Lightbulb,
+  Zap,
+  Megaphone,
+  Brain,
+  ChevronDown,
+  Settings2,
+  Sparkles,
+  Users,
+  Shield,
+  BookOpen,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import ClientTypeSelector, {
+  ClientType,
+} from '@/components/electrician-tools/ai-tools/client-explainer/ClientTypeSelector';
+import TemplateSelector, {
+  Template,
+} from '@/components/electrician-tools/ai-tools/client-explainer/TemplateSelector';
+import OutputPanel from '@/components/electrician-tools/ai-tools/client-explainer/OutputPanel';
+import { cn } from '@/lib/utils';
 
 const ClientExplainerPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [technicalNotes, setTechnicalNotes] = useState("");
-  const [tone, setTone] = useState("professional");
-  const [readingLevel, setReadingLevel] = useState("standard");
-  const [clientType, setClientType] = useState<ClientType>("homeowner");
-  const [urgencyLevel, setUrgencyLevel] = useState("medium");
+  const [technicalNotes, setTechnicalNotes] = useState('');
+  const [tone, setTone] = useState('professional');
+  const [readingLevel, setReadingLevel] = useState('standard');
+  const [clientType, setClientType] = useState<ClientType>('homeowner');
+  const [urgencyLevel, setUrgencyLevel] = useState('medium');
   const [includeAnalogy, setIncludeAnalogy] = useState(true);
   const [includeCostInfo, setIncludeCostInfo] = useState(false);
   const [emphasizeSafety, setEmphasizeSafety] = useState(true);
   const [includeBS7671, setIncludeBS7671] = useState(false);
-  const [generatedExplanation, setGeneratedExplanation] = useState("");
+  const [generatedExplanation, setGeneratedExplanation] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -38,15 +58,15 @@ const ClientExplainerPage = () => {
   const handleSelectTemplate = (template: Template) => {
     setTechnicalNotes(template.sample);
     switch (template.urgency) {
-      case "high":
-        setTone("urgent");
+      case 'high':
+        setTone('urgent');
         setEmphasizeSafety(true);
         break;
-      case "medium":
-        setTone("professional");
+      case 'medium':
+        setTone('professional');
         break;
-      case "low":
-        setTone("friendly");
+      case 'low':
+        setTone('friendly');
         break;
     }
     setUrgencyLevel(template.urgency);
@@ -56,9 +76,9 @@ const ClientExplainerPage = () => {
   const handleGenerate = async () => {
     if (!technicalNotes.trim()) {
       toast({
-        title: "Error",
-        description: "Please enter technical notes to explain",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Please enter technical notes to explain',
+        variant: 'destructive',
       });
       return;
     }
@@ -77,25 +97,25 @@ const ClientExplainerPage = () => {
             includeAnalogy,
             includeCostInfo,
             emphasizeSafety,
-            includeBS7671
-          }
-        }
+            includeBS7671,
+          },
+        },
       });
 
       if (error) throw error;
 
       setGeneratedExplanation(data.report);
       toast({
-        title: "Success",
-        description: "Client explanation generated successfully",
-        variant: "success"
+        title: 'Success',
+        description: 'Client explanation generated successfully',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error generating explanation:', error);
       toast({
-        title: "Error",
-        description: "Failed to generate explanation. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to generate explanation. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -108,14 +128,42 @@ const ClientExplainerPage = () => {
     clientType,
     includeAnalogy,
     emphasizeSafety,
-    includeCostInfo
+    includeCostInfo,
   });
 
   const toggleOptions = [
-    { key: 'includeAnalogy', label: 'Include Analogies', desc: 'Use everyday comparisons', icon: Lightbulb, value: includeAnalogy, onChange: setIncludeAnalogy },
-    { key: 'emphasizeSafety', label: 'Safety Emphasis', desc: 'Highlight safety concerns', icon: Shield, value: emphasizeSafety, onChange: setEmphasizeSafety },
-    { key: 'includeCostInfo', label: 'Cost Information', desc: 'Include pricing context', icon: Zap, value: includeCostInfo, onChange: setIncludeCostInfo },
-    { key: 'includeBS7671', label: 'BS 7671 References', desc: 'Include regulation refs', icon: BookOpen, value: includeBS7671, onChange: setIncludeBS7671 },
+    {
+      key: 'includeAnalogy',
+      label: 'Include Analogies',
+      desc: 'Use everyday comparisons',
+      icon: Lightbulb,
+      value: includeAnalogy,
+      onChange: setIncludeAnalogy,
+    },
+    {
+      key: 'emphasizeSafety',
+      label: 'Safety Emphasis',
+      desc: 'Highlight safety concerns',
+      icon: Shield,
+      value: emphasizeSafety,
+      onChange: setEmphasizeSafety,
+    },
+    {
+      key: 'includeCostInfo',
+      label: 'Cost Information',
+      desc: 'Include pricing context',
+      icon: Zap,
+      value: includeCostInfo,
+      onChange: setIncludeCostInfo,
+    },
+    {
+      key: 'includeBS7671',
+      label: 'BS 7671 References',
+      desc: 'Include regulation refs',
+      icon: BookOpen,
+      value: includeBS7671,
+      onChange: setIncludeBS7671,
+    },
   ];
 
   return (
@@ -144,7 +192,9 @@ const ClientExplainerPage = () => {
             </div>
             <div className="flex-1">
               <h1 className="text-xl font-bold text-foreground">Client Explainer</h1>
-              <p className="text-sm text-muted-foreground mt-0.5">Convert technical findings to client-friendly explanations</p>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Convert technical findings to client-friendly explanations
+              </p>
             </div>
           </div>
         </div>
@@ -155,10 +205,7 @@ const ClientExplainerPage = () => {
             <Users className="h-5 w-5 text-elec-yellow" />
             <h2 className="font-semibold text-foreground">Who are you explaining to?</h2>
           </div>
-          <ClientTypeSelector
-            selected={clientType}
-            onSelect={setClientType}
-          />
+          <ClientTypeSelector selected={clientType} onSelect={setClientType} />
         </div>
 
         {/* Templates Section (Collapsible) */}
@@ -185,7 +232,7 @@ const ClientExplainerPage = () => {
             {showTemplates && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
+                animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 className="overflow-hidden"
               >
@@ -213,14 +260,17 @@ const ClientExplainerPage = () => {
           />
 
           <p className="text-xs text-muted-foreground">
-            Be specific about findings. Include BS 7671 regulation references, test readings, and safety classifications (C1/C2/C3) where applicable.
+            Be specific about findings. Include BS 7671 regulation references, test readings, and
+            safety classifications (C1/C2/C3) where applicable.
           </p>
         </div>
 
         {/* Tone & Settings Row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
-            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Style</Label>
+            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Style
+            </Label>
             <Select value={tone} onValueChange={setTone}>
               <SelectTrigger className="h-12 bg-background/50 border-border/30 text-foreground">
                 <SelectValue />
@@ -236,7 +286,9 @@ const ClientExplainerPage = () => {
           </div>
 
           <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
-            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Complexity</Label>
+            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Complexity
+            </Label>
             <Select value={readingLevel} onValueChange={setReadingLevel}>
               <SelectTrigger className="h-12 bg-background/50 border-border/30 text-foreground">
                 <SelectValue />
@@ -250,13 +302,17 @@ const ClientExplainerPage = () => {
           </div>
 
           <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
-            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Priority</Label>
+            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Priority
+            </Label>
             <Select value={urgencyLevel} onValueChange={setUrgencyLevel}>
-              <SelectTrigger className={cn(
-                "h-12 bg-background/50 border-border/30 text-foreground",
-                urgencyLevel === 'high' && "border-red-500/30",
-                urgencyLevel === 'immediate' && "border-red-500/50"
-              )}>
+              <SelectTrigger
+                className={cn(
+                  'h-12 bg-background/50 border-border/30 text-foreground',
+                  urgencyLevel === 'high' && 'border-red-500/30',
+                  urgencyLevel === 'immediate' && 'border-red-500/50'
+                )}
+              >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -287,7 +343,12 @@ const ClientExplainerPage = () => {
             <div className="flex items-center gap-2">
               {(includeAnalogy || emphasizeSafety || includeCostInfo || includeBS7671) && (
                 <Badge variant="secondary" className="text-xs">
-                  {[includeAnalogy, emphasizeSafety, includeCostInfo, includeBS7671].filter(Boolean).length} active
+                  {
+                    [includeAnalogy, emphasizeSafety, includeCostInfo, includeBS7671].filter(
+                      Boolean
+                    ).length
+                  }{' '}
+                  active
                 </Badge>
               )}
               <motion.div animate={{ rotate: showAdvanced ? 180 : 0 }}>
@@ -300,7 +361,7 @@ const ClientExplainerPage = () => {
             {showAdvanced && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
+                animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 className="overflow-hidden"
               >
@@ -310,15 +371,20 @@ const ClientExplainerPage = () => {
                       key={key}
                       onClick={() => onChange(!value)}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 rounded-xl",
-                        "min-h-[60px] touch-manipulation transition-all",
+                        'w-full flex items-center justify-between p-4 rounded-xl',
+                        'min-h-[60px] touch-manipulation transition-all',
                         value
-                          ? "bg-elec-yellow/10 border border-elec-yellow/30"
-                          : "bg-background/50 border border-border/30 hover:bg-accent/30"
+                          ? 'bg-elec-yellow/10 border border-elec-yellow/30'
+                          : 'bg-background/50 border border-border/30 hover:bg-accent/30'
                       )}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={cn("h-5 w-5", value ? "text-elec-yellow" : "text-muted-foreground")} />
+                        <Icon
+                          className={cn(
+                            'h-5 w-5',
+                            value ? 'text-elec-yellow' : 'text-muted-foreground'
+                          )}
+                        />
                         <div className="text-left">
                           <p className="font-medium text-foreground text-sm">{label}</p>
                           <p className="text-xs text-muted-foreground">{desc}</p>
@@ -342,12 +408,12 @@ const ClientExplainerPage = () => {
           onClick={handleGenerate}
           disabled={isGenerating || !technicalNotes.trim()}
           className={cn(
-            "w-full h-14 text-base font-semibold rounded-xl transition-all duration-300",
-            "bg-gradient-to-r from-elec-yellow to-elec-yellow/90",
-            "hover:from-elec-yellow/90 hover:to-elec-yellow/80",
-            "text-black shadow-lg shadow-elec-yellow/25",
-            "hover:scale-[1.02] active:scale-[0.98]",
-            "disabled:opacity-50 disabled:hover:scale-100"
+            'w-full h-14 text-base font-semibold rounded-xl transition-all duration-300',
+            'bg-gradient-to-r from-elec-yellow to-elec-yellow/90',
+            'hover:from-elec-yellow/90 hover:to-elec-yellow/80',
+            'text-black shadow-lg shadow-elec-yellow/25',
+            'hover:scale-[1.02] active:scale-[0.98]',
+            'disabled:opacity-50 disabled:hover:scale-100'
           )}
         >
           {isGenerating ? (
@@ -364,10 +430,7 @@ const ClientExplainerPage = () => {
         </Button>
 
         {/* Output Panel */}
-        <OutputPanel
-          content={generatedExplanation}
-          settings={getCurrentSettings()}
-        />
+        <OutputPanel content={generatedExplanation} settings={getCurrentSettings()} />
       </main>
     </div>
   );

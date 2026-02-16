@@ -12,10 +12,13 @@ export const BMSModule5Section6RealWorld = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-blue-600/20 border border-blue-600/40 rounded-lg p-6">
-          <h4 className="font-semibold text-blue-200 mb-4 text-xl">Large Shopping Centre Project</h4>
+          <h4 className="font-semibold text-blue-200 mb-4 text-xl">
+            Large Shopping Centre Project
+          </h4>
           <p className="text-blue-100 mb-4">
-            A major retail development with over 150 HVAC controllers experienced severe communication problems 
-            that threatened the project handover date and posed potential safety risks.
+            A major retail development with over 150 HVAC controllers experienced severe
+            communication problems that threatened the project handover date and posed potential
+            safety risks.
           </p>
         </div>
 
@@ -36,7 +39,7 @@ export const BMSModule5Section6RealWorld = () => {
                   <li>• Devices distributed across 3 floors and 4 buildings</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                 <p className="font-medium text-orange-200">Symptoms:</p>
                 <ul className="text-sm text-orange-100 mt-2 space-y-1">
@@ -46,7 +49,7 @@ export const BMSModule5Section6RealWorld = () => {
                   <li>• HVAC systems not responding to schedules</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
                 <p className="font-medium text-yellow-200">Impact:</p>
                 <ul className="text-sm text-yellow-100 mt-2 space-y-1">
@@ -75,7 +78,7 @@ export const BMSModule5Section6RealWorld = () => {
                   <li>• Proper 120Ω termination on each segment</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded">
                 <p className="font-medium text-blue-200">Installation Changes:</p>
                 <ul className="text-sm text-blue-100 mt-2 space-y-1">
@@ -85,7 +88,7 @@ export const BMSModule5Section6RealWorld = () => {
                   <li>• Proper cable separation from power circuits</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded">
                 <p className="font-medium text-purple-200">Results:</p>
                 <ul className="text-sm text-purple-100 mt-2 space-y-1">
@@ -142,13 +145,16 @@ export const BMSModule5Section6RealWorld = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-orange-600/20 border border-orange-600/40 rounded-lg p-4">
             <p className="text-orange-100 font-medium">
-              <strong>Key Lesson:</strong> Network planning must happen during the design phase. Retrofitting segmentation after installation cost 3x more than doing it right from the start.
+              <strong>Key Lesson:</strong> Network planning must happen during the design phase.
+              Retrofitting segmentation after installation cost 3x more than doing it right from the
+              start.
             </p>
           </div>
-          
+
           <div className="bg-green-600/20 border border-green-600/40 rounded-lg p-4">
             <p className="text-green-100 font-medium">
-              <strong>Success Factor:</strong> Close collaboration between electricians and IT engineers was essential for the successful network redesign and commissioning.
+              <strong>Success Factor:</strong> Close collaboration between electricians and IT
+              engineers was essential for the successful network redesign and commissioning.
             </p>
           </div>
         </div>

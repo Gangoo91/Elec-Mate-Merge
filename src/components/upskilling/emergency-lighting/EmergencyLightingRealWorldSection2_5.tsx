@@ -18,20 +18,22 @@ export const EmergencyLightingRealWorldSection2_5 = () => {
             The Incident
           </h3>
           <p className="text-foreground leading-relaxed mb-4">
-            During a nightclub evacuation in Glasgow, smoke made it difficult to see. Several signs were non-illuminated and some arrows pointed in the wrong direction. As a result, people were delayed finding the exit, leading to injuries.
+            During a nightclub evacuation in Glasgow, smoke made it difficult to see. Several signs
+            were non-illuminated and some arrows pointed in the wrong direction. As a result, people
+            were delayed finding the exit, leading to injuries.
           </p>
           <div className="bg-white/5 rounded-lg p-4">
             <p className="text-foreground">
-              <strong>Critical Finding:</strong> The combination of poor exit signage and incorrect directional arrows created confusion and delays during a critical emergency evacuation, resulting in preventable injuries.
+              <strong>Critical Finding:</strong> The combination of poor exit signage and incorrect
+              directional arrows created confusion and delays during a critical emergency
+              evacuation, resulting in preventable injuries.
             </p>
           </div>
         </div>
 
         {/* Problems Identified */}
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-orange-400 mb-4">
-            Problems Identified
-          </h3>
+          <h3 className="text-xl font-semibold text-orange-400 mb-4">Problems Identified</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -69,9 +71,11 @@ export const EmergencyLightingRealWorldSection2_5 = () => {
             Remedial Action Taken
           </h3>
           <p className="text-foreground mb-4">
-            After investigation, the venue was required to replace all signage with ISO 7010-compliant maintained exit signs, ensuring continuous illumination and clear direction even in smoke.
+            After investigation, the venue was required to replace all signage with ISO
+            7010-compliant maintained exit signs, ensuring continuous illumination and clear
+            direction even in smoke.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-foreground mb-3">Immediate Improvements</h4>
@@ -120,32 +124,40 @@ export const EmergencyLightingRealWorldSection2_5 = () => {
 
         {/* Lessons Learned */}
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-blue-400 mb-4">
-            Key Lessons for Electricians
-          </h3>
+          <h3 className="text-xl font-semibold text-blue-400 mb-4">Key Lessons for Electricians</h3>
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-foreground mb-2">1. Directional Accuracy is Critical</h4>
+              <h4 className="font-semibold text-foreground mb-2">
+                1. Directional Accuracy is Critical
+              </h4>
               <p className="text-foreground">
-                Always verify that exit sign arrows point towards the actual exit route. Walk through each path to confirm direction accuracy before finalising installation.
+                Always verify that exit sign arrows point towards the actual exit route. Walk
+                through each path to confirm direction accuracy before finalising installation.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-foreground mb-2">2. Illumination Must Be Reliable</h4>
+              <h4 className="font-semibold text-foreground mb-2">
+                2. Illumination Must Be Reliable
+              </h4>
               <p className="text-foreground">
-                Non-illuminated signs are worse than no signs at all as they can mislead occupants. Ensure all exit signs have reliable emergency power backup and regular testing.
+                Non-illuminated signs are worse than no signs at all as they can mislead occupants.
+                Ensure all exit signs have reliable emergency power backup and regular testing.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-foreground mb-2">3. Consistency Prevents Confusion</h4>
+              <h4 className="font-semibold text-foreground mb-2">
+                3. Consistency Prevents Confusion
+              </h4>
               <p className="text-foreground">
-                Mixed signage types and standards create confusion during emergencies. Implement a consistent signage system throughout the entire building.
+                Mixed signage types and standards create confusion during emergencies. Implement a
+                consistent signage system throughout the entire building.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-foreground mb-2">4. Consider Smoke Conditions</h4>
               <p className="text-foreground">
-                Position signs at heights that remain visible even when smoke fills upper areas of rooms and corridors.
+                Position signs at heights that remain visible even when smoke fills upper areas of
+                rooms and corridors.
               </p>
             </div>
           </div>

@@ -1,16 +1,15 @@
-
-import React from "react";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import JobGrid from "./JobGrid";
-import JobPagination from "./JobPagination";
-import MapViewContent from "./MapViewContent";
-import { JobListing } from "@/pages/electrician/JobVacancies";
+import React from 'react';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import JobGrid from './JobGrid';
+import JobPagination from './JobPagination';
+import MapViewContent from './MapViewContent';
+import { JobListing } from '@/pages/electrician/JobVacancies';
 
 interface JobListingContentProps {
   userLocation: string | null;
   showMap: boolean;
-  viewMode: "list" | "map";
-  setViewMode: (mode: "list" | "map") => void;
+  viewMode: 'list' | 'map';
+  setViewMode: (mode: 'list' | 'map') => void;
   currentJobs: JobListing[];
   selectedJob: string | null;
   handleApply: (jobId: string, url: string) => void;
@@ -41,14 +40,18 @@ const JobListingContent: React.FC<JobListingContentProps> = ({
   searchRadius,
   currentPage,
   totalPages,
-  paginate
+  paginate,
 }) => {
   if (userLocation && showMap) {
     return (
-      <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "list" | "map")} className="w-full">
+      <Tabs
+        value={viewMode}
+        onValueChange={(v) => setViewMode(v as 'list' | 'map')}
+        className="w-full"
+      >
         <TabsContent value="list" className="mt-0">
           {/* Job listings grid */}
-          <JobGrid 
+          <JobGrid
             jobs={currentJobs}
             selectedJob={selectedJob}
             handleApply={handleApply}
@@ -57,14 +60,10 @@ const JobListingContent: React.FC<JobListingContentProps> = ({
           />
 
           {/* Pagination */}
-          <JobPagination 
-            currentPage={currentPage}
-            totalPages={totalPages}
-            paginate={paginate}
-          />
+          <JobPagination currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
         </TabsContent>
         <TabsContent value="map" className="mt-0">
-          <MapViewContent 
+          <MapViewContent
             filteredJobs={filteredJobs}
             selectedJob={selectedJob}
             handleJobSelect={handleJobSelect}
@@ -82,7 +81,7 @@ const JobListingContent: React.FC<JobListingContentProps> = ({
   return (
     <>
       {/* Standard Job Listings Grid (when not using location search) */}
-      <JobGrid 
+      <JobGrid
         jobs={currentJobs}
         selectedJob={selectedJob}
         handleApply={handleApply}
@@ -91,11 +90,7 @@ const JobListingContent: React.FC<JobListingContentProps> = ({
       />
 
       {/* Pagination */}
-      <JobPagination 
-        currentPage={currentPage}
-        totalPages={totalPages}
-        paginate={paginate}
-      />
+      <JobPagination currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
     </>
   );
 };

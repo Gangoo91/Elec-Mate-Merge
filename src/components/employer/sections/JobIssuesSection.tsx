@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { useState, useCallback } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
   Search,
   AlertTriangle,
@@ -23,12 +23,12 @@ import {
   X,
   FileQuestion,
   Bug,
-  Timer
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { format } from "date-fns";
+  Timer,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { format } from 'date-fns';
 import {
   useJobIssues,
   useJobIssueStats,
@@ -39,16 +39,22 @@ import {
   type CreateJobIssueInput,
   type IssueType,
   type IssueSeverity,
-  type IssueStatus
-} from "@/hooks/useJobIssues";
-import { useJobs } from "@/hooks/useJobs";
-import { useEmployees } from "@/hooks/useEmployees";
+  type IssueStatus,
+} from '@/hooks/useJobIssues';
+import { useJobs } from '@/hooks/useJobs';
+import { useEmployees } from '@/hooks/useEmployees';
 
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { SwipeableRow } from "@/components/ui/swipeable-row";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { SwipeableRow } from '@/components/ui/swipeable-row';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -58,30 +64,30 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 const issueTypeIcons: Record<IssueType, React.ElementType> = {
-  "Snag": Bug,
-  "Variation": FileQuestion,
-  "RFI": FileQuestion,
-  "Defect": AlertTriangle,
-  "Delay": Timer,
-  "Other": AlertCircle,
+  Snag: Bug,
+  Variation: FileQuestion,
+  RFI: FileQuestion,
+  Defect: AlertTriangle,
+  Delay: Timer,
+  Other: AlertCircle,
 };
 
 const severityColors: Record<IssueSeverity, string> = {
-  "Critical": "bg-destructive text-destructive-foreground",
-  "High": "bg-destructive/80 text-destructive-foreground",
-  "Medium": "bg-warning text-warning-foreground",
-  "Low": "bg-muted text-muted-foreground",
+  Critical: 'bg-destructive text-destructive-foreground',
+  High: 'bg-destructive/80 text-destructive-foreground',
+  Medium: 'bg-warning text-warning-foreground',
+  Low: 'bg-muted text-muted-foreground',
 };
 
 const statusColors: Record<IssueStatus, string> = {
-  "Open": "bg-destructive/20 text-destructive",
-  "In Progress": "bg-warning/20 text-warning",
-  "Resolved": "bg-success/20 text-success",
-  "Closed": "bg-muted text-muted-foreground",
-  "Rejected": "bg-muted text-muted-foreground",
+  Open: 'bg-destructive/20 text-destructive',
+  'In Progress': 'bg-warning/20 text-warning',
+  Resolved: 'bg-success/20 text-success',
+  Closed: 'bg-muted text-muted-foreground',
+  Rejected: 'bg-muted text-muted-foreground',
 };
 
 function JobIssuesSkeleton() {
@@ -92,12 +98,12 @@ function JobIssuesSkeleton() {
         <Skeleton className="h-12 w-full" />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[1, 2, 3, 4].map(i => (
+        {[1, 2, 3, 4].map((i) => (
           <Skeleton key={i} className="h-24" />
         ))}
       </div>
       <div className="space-y-3">
-        {[1, 2, 3].map(i => (
+        {[1, 2, 3].map((i) => (
           <Skeleton key={i} className="h-32" />
         ))}
       </div>
@@ -107,24 +113,24 @@ function JobIssuesSkeleton() {
 
 export function JobIssuesSection() {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<IssueStatus | null>(null);
   const [selectedIssue, setSelectedIssue] = useState<JobIssue | null>(null);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showResolveSheet, setShowResolveSheet] = useState(false);
   const [resolveIssueId, setResolveIssueId] = useState<string | null>(null);
-  const [resolutionNotes, setResolutionNotes] = useState("");
+  const [resolutionNotes, setResolutionNotes] = useState('');
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState<Partial<CreateJobIssueInput>>({
-    job_id: "",
-    title: "",
-    description: "",
-    issue_type: "Snag",
-    severity: "Medium",
-    status: "Open",
-    location: "",
+    job_id: '',
+    title: '',
+    description: '',
+    issue_type: 'Snag',
+    severity: 'Medium',
+    status: 'Open',
+    location: '',
     photos: [],
   });
 
@@ -139,12 +145,12 @@ export function JobIssuesSection() {
 
   const handleRefresh = useCallback(async () => {
     await refetch();
-    toast({ title: "Issues refreshed" });
+    toast({ title: 'Issues refreshed' });
   }, [refetch]);
 
   const handleResolve = (issueId: string) => {
     setResolveIssueId(issueId);
-    setResolutionNotes("");
+    setResolutionNotes('');
     setShowResolveSheet(true);
   };
 
@@ -152,12 +158,12 @@ export function JobIssuesSection() {
     if (resolveIssueId) {
       await updateJobIssueStatus.mutateAsync({
         id: resolveIssueId,
-        status: "Resolved",
+        status: 'Resolved',
         resolution_notes: resolutionNotes,
       });
       setShowResolveSheet(false);
       setResolveIssueId(null);
-      setResolutionNotes("");
+      setResolutionNotes('');
     }
   };
 
@@ -167,7 +173,11 @@ export function JobIssuesSection() {
 
   const handleCreate = async () => {
     if (!formData.job_id || !formData.title) {
-      toast({ title: "Error", description: "Please fill in required fields", variant: "destructive" });
+      toast({
+        title: 'Error',
+        description: 'Please fill in required fields',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -189,18 +199,18 @@ export function JobIssuesSection() {
 
   const resetForm = () => {
     setFormData({
-      job_id: "",
-      title: "",
-      description: "",
-      issue_type: "Snag",
-      severity: "Medium",
-      status: "Open",
-      location: "",
+      job_id: '',
+      title: '',
+      description: '',
+      issue_type: 'Snag',
+      severity: 'Medium',
+      status: 'Open',
+      location: '',
       photos: [],
     });
   };
 
-  const filteredIssues = issues.filter(issue => {
+  const filteredIssues = issues.filter((issue) => {
     const matchesSearch =
       issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       issue.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -231,7 +241,9 @@ export function JobIssuesSection() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-foreground">Live Issues</h1>
-            <p className="text-sm text-muted-foreground">Track and resolve job blockers in real-time</p>
+            <p className="text-sm text-muted-foreground">
+              Track and resolve job blockers in real-time
+            </p>
           </div>
           <Button onClick={() => setShowCreateSheet(true)} className="touch-feedback">
             <Plus className="h-4 w-4 mr-2" />
@@ -247,7 +259,7 @@ export function JobIssuesSection() {
             placeholder="Search issues..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("w-full bg-elec-gray h-12", !searchQuery && "pl-9")}
+            className={cn('w-full bg-elec-gray h-12', !searchQuery && 'pl-9')}
           />
         </div>
       </div>
@@ -256,10 +268,10 @@ export function JobIssuesSection() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <Card
           className={cn(
-            "bg-elec-gray cursor-pointer transition-all touch-feedback",
-            statusFilter === "Open" && "ring-2 ring-destructive"
+            'bg-elec-gray cursor-pointer transition-all touch-feedback',
+            statusFilter === 'Open' && 'ring-2 ring-destructive'
           )}
-          onClick={() => setStatusFilter(statusFilter === "Open" ? null : "Open")}
+          onClick={() => setStatusFilter(statusFilter === 'Open' ? null : 'Open')}
         >
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
@@ -273,15 +285,17 @@ export function JobIssuesSection() {
         </Card>
         <Card
           className={cn(
-            "bg-elec-gray cursor-pointer transition-all touch-feedback",
-            statusFilter === "In Progress" && "ring-2 ring-warning"
+            'bg-elec-gray cursor-pointer transition-all touch-feedback',
+            statusFilter === 'In Progress' && 'ring-2 ring-warning'
           )}
-          onClick={() => setStatusFilter(statusFilter === "In Progress" ? null : "In Progress")}
+          onClick={() => setStatusFilter(statusFilter === 'In Progress' ? null : 'In Progress')}
         >
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xl md:text-2xl font-bold text-warning">{stats?.inProgress || 0}</p>
+                <p className="text-xl md:text-2xl font-bold text-warning">
+                  {stats?.inProgress || 0}
+                </p>
                 <p className="text-xs md:text-sm text-muted-foreground">In Progress</p>
               </div>
               <Clock className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
@@ -290,10 +304,10 @@ export function JobIssuesSection() {
         </Card>
         <Card
           className={cn(
-            "bg-elec-gray cursor-pointer transition-all touch-feedback",
-            statusFilter === "Resolved" && "ring-2 ring-success"
+            'bg-elec-gray cursor-pointer transition-all touch-feedback',
+            statusFilter === 'Resolved' && 'ring-2 ring-success'
           )}
-          onClick={() => setStatusFilter(statusFilter === "Resolved" ? null : "Resolved")}
+          onClick={() => setStatusFilter(statusFilter === 'Resolved' ? null : 'Resolved')}
         >
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
@@ -327,7 +341,9 @@ export function JobIssuesSection() {
             <CheckCircle className="h-10 w-10 md:h-12 md:w-12 text-success mx-auto mb-4" />
             <h3 className="text-base md:text-lg font-semibold text-foreground">No issues found</h3>
             <p className="text-sm text-muted-foreground mt-1 mb-4">
-              {statusFilter ? `No ${statusFilter.toLowerCase()} issues` : "All clear! No issues reported yet."}
+              {statusFilter
+                ? `No ${statusFilter.toLowerCase()} issues`
+                : 'All clear! No issues reported yet.'}
             </p>
             <Button onClick={() => setShowCreateSheet(true)}>
               <Plus className="h-4 w-4 mr-2" />
@@ -346,33 +362,38 @@ export function JobIssuesSection() {
             <Card
               key={issue.id}
               className={cn(
-                "bg-elec-gray overflow-hidden touch-feedback",
-                (issue.severity === "High" || issue.severity === "Critical") && "border-l-4 border-l-destructive"
+                'bg-elec-gray overflow-hidden touch-feedback',
+                (issue.severity === 'High' || issue.severity === 'Critical') &&
+                  'border-l-4 border-l-destructive'
               )}
             >
               <CardContent className="p-3 md:p-4">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-start gap-3">
-                    <div className={cn(
-                      "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
-                      issue.status === "Resolved" || issue.status === "Closed"
-                        ? "bg-success/20"
-                        : "bg-destructive/20"
-                    )}>
-                      <IssueIcon className={cn(
-                        "h-5 w-5",
-                        issue.status === "Resolved" || issue.status === "Closed"
-                          ? "text-success"
-                          : "text-destructive"
-                      )} />
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
+                        issue.status === 'Resolved' || issue.status === 'Closed'
+                          ? 'bg-success/20'
+                          : 'bg-destructive/20'
+                      )}
+                    >
+                      <IssueIcon
+                        className={cn(
+                          'h-5 w-5',
+                          issue.status === 'Resolved' || issue.status === 'Closed'
+                            ? 'text-success'
+                            : 'text-destructive'
+                        )}
+                      />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h4 className="font-semibold text-foreground text-sm">{issue.title}</h4>
-                        <Badge className={severityColors[issue.severity] + " text-[10px]"}>
+                        <Badge className={severityColors[issue.severity] + ' text-[10px]'}>
                           {issue.severity}
                         </Badge>
-                        <Badge className={statusColors[issue.status] + " text-[10px]"}>
+                        <Badge className={statusColors[issue.status] + ' text-[10px]'}>
                           {issue.status}
                         </Badge>
                       </div>
@@ -384,11 +405,11 @@ export function JobIssuesSection() {
                       <div className="flex items-center gap-3 mt-2 text-[10px] text-muted-foreground flex-wrap">
                         <span className="flex items-center gap-1">
                           <Wrench className="h-3 w-3" />
-                          {issue.job?.title || "No job"}
+                          {issue.job?.title || 'No job'}
                         </span>
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
-                          {format(new Date(issue.created_at), "dd MMM yyyy")}
+                          {format(new Date(issue.created_at), 'dd MMM yyyy')}
                         </span>
                         {issue.location && (
                           <span className="flex items-center gap-1">
@@ -399,7 +420,7 @@ export function JobIssuesSection() {
                         {issue.due_date && (
                           <span className="flex items-center gap-1 text-warning">
                             <Timer className="h-3 w-3" />
-                            Due: {format(new Date(issue.due_date), "dd MMM")}
+                            Due: {format(new Date(issue.due_date), 'dd MMM')}
                           </span>
                         )}
                       </div>
@@ -415,7 +436,7 @@ export function JobIssuesSection() {
                     </div>
                   )}
 
-                  {issue.status !== "Resolved" && issue.status !== "Closed" && (
+                  {issue.status !== 'Resolved' && issue.status !== 'Closed' && (
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
@@ -442,7 +463,7 @@ export function JobIssuesSection() {
                     </div>
                   )}
 
-                  {(issue.status === "Resolved" || issue.status === "Closed") && (
+                  {(issue.status === 'Resolved' || issue.status === 'Closed') && (
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
@@ -461,21 +482,21 @@ export function JobIssuesSection() {
           );
 
           // Wrap with swipeable on mobile for unresolved issues
-          if (isMobile && issue.status !== "Resolved" && issue.status !== "Closed") {
+          if (isMobile && issue.status !== 'Resolved' && issue.status !== 'Closed') {
             return (
               <SwipeableRow
                 key={issue.id}
                 rightAction={{
                   icon: <CheckCircle className="h-6 w-6" />,
-                  label: "Resolve",
+                  label: 'Resolve',
                   onClick: () => handleResolve(issue.id),
-                  variant: "success"
+                  variant: 'success',
                 }}
                 leftAction={{
                   icon: <Trash2 className="h-6 w-6" />,
-                  label: "Delete",
+                  label: 'Delete',
                   onClick: () => setDeleteConfirmId(issue.id),
-                  variant: "destructive"
+                  variant: 'destructive',
                 }}
               >
                 {issueCard}
@@ -504,13 +525,13 @@ export function JobIssuesSection() {
                 <Label>Job *</Label>
                 <Select
                   value={formData.job_id}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, job_id: v }))}
+                  onValueChange={(v) => setFormData((prev) => ({ ...prev, job_id: v }))}
                 >
                   <SelectTrigger className="h-12 bg-elec-gray">
                     <SelectValue placeholder="Select a job" />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-gray border-elec-gray">
-                    {jobs.map(job => (
+                    {jobs.map((job) => (
                       <SelectItem key={job.id} value={job.id}>
                         {job.title} - {job.client}
                       </SelectItem>
@@ -524,7 +545,7 @@ export function JobIssuesSection() {
                 <Label>Issue Title *</Label>
                 <Input
                   value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                   placeholder="Brief description of the issue"
                   className="h-12 bg-elec-gray"
                 />
@@ -536,7 +557,9 @@ export function JobIssuesSection() {
                   <Label>Issue Type</Label>
                   <Select
                     value={formData.issue_type}
-                    onValueChange={(v) => setFormData(prev => ({ ...prev, issue_type: v as IssueType }))}
+                    onValueChange={(v) =>
+                      setFormData((prev) => ({ ...prev, issue_type: v as IssueType }))
+                    }
                   >
                     <SelectTrigger className="h-12 bg-elec-gray">
                       <SelectValue />
@@ -555,7 +578,9 @@ export function JobIssuesSection() {
                   <Label>Severity</Label>
                   <Select
                     value={formData.severity}
-                    onValueChange={(v) => setFormData(prev => ({ ...prev, severity: v as IssueSeverity }))}
+                    onValueChange={(v) =>
+                      setFormData((prev) => ({ ...prev, severity: v as IssueSeverity }))
+                    }
                   >
                     <SelectTrigger className="h-12 bg-elec-gray">
                       <SelectValue />
@@ -574,8 +599,8 @@ export function JobIssuesSection() {
               <div className="space-y-2">
                 <Label>Location</Label>
                 <Input
-                  value={formData.location || ""}
-                  onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                  value={formData.location || ''}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
                   placeholder="Where on site is this issue?"
                   className="h-12 bg-elec-gray"
                 />
@@ -585,14 +610,16 @@ export function JobIssuesSection() {
               <div className="space-y-2">
                 <Label>Assign To</Label>
                 <Select
-                  value={formData.assigned_to || ""}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, assigned_to: v || undefined }))}
+                  value={formData.assigned_to || ''}
+                  onValueChange={(v) =>
+                    setFormData((prev) => ({ ...prev, assigned_to: v || undefined }))
+                  }
                 >
                   <SelectTrigger className="h-12 bg-elec-gray">
                     <SelectValue placeholder="Select team member" />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-gray border-elec-gray">
-                    {employees.map(emp => (
+                    {employees.map((emp) => (
                       <SelectItem key={emp.id} value={emp.id}>
                         {emp.name} - {emp.role}
                       </SelectItem>
@@ -606,8 +633,10 @@ export function JobIssuesSection() {
                 <Label>Due Date</Label>
                 <Input
                   type="date"
-                  value={formData.due_date || ""}
-                  onChange={(e) => setFormData(prev => ({ ...prev, due_date: e.target.value || undefined }))}
+                  value={formData.due_date || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, due_date: e.target.value || undefined }))
+                  }
                   className="h-12 bg-elec-gray"
                 />
               </div>
@@ -616,8 +645,10 @@ export function JobIssuesSection() {
               <div className="space-y-2">
                 <Label>Description</Label>
                 <Textarea
-                  value={formData.description || ""}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  value={formData.description || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, description: e.target.value }))
+                  }
                   placeholder="Detailed description of the issue..."
                   className="min-h-[100px] bg-elec-gray"
                 />
@@ -717,7 +748,9 @@ export function JobIssuesSection() {
                 {/* Job Info */}
                 <Card className="bg-elec-gray">
                   <CardContent className="p-4">
-                    <h4 className="font-semibold text-foreground mb-2">{selectedIssue.job?.title}</h4>
+                    <h4 className="font-semibold text-foreground mb-2">
+                      {selectedIssue.job?.title}
+                    </h4>
                     <p className="text-sm text-foreground/70">{selectedIssue.job?.client}</p>
                   </CardContent>
                 </Card>
@@ -727,7 +760,7 @@ export function JobIssuesSection() {
                   <div className="bg-elec-gray p-3 rounded-lg">
                     <p className="text-xs text-foreground/70 mb-1">Reported</p>
                     <p className="font-semibold text-foreground">
-                      {format(new Date(selectedIssue.created_at), "dd MMM yyyy")}
+                      {format(new Date(selectedIssue.created_at), 'dd MMM yyyy')}
                     </p>
                   </div>
                   {selectedIssue.location && (
@@ -740,14 +773,16 @@ export function JobIssuesSection() {
                     <div className="bg-elec-gray p-3 rounded-lg">
                       <p className="text-xs text-foreground/70 mb-1">Due Date</p>
                       <p className="font-semibold text-foreground">
-                        {format(new Date(selectedIssue.due_date), "dd MMM yyyy")}
+                        {format(new Date(selectedIssue.due_date), 'dd MMM yyyy')}
                       </p>
                     </div>
                   )}
                   {selectedIssue.assigned_employee && (
                     <div className="bg-elec-gray p-3 rounded-lg">
                       <p className="text-xs text-foreground/70 mb-1">Assigned To</p>
-                      <p className="font-semibold text-foreground">{selectedIssue.assigned_employee.name}</p>
+                      <p className="font-semibold text-foreground">
+                        {selectedIssue.assigned_employee.name}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -774,14 +809,15 @@ export function JobIssuesSection() {
                     </p>
                     {selectedIssue.resolved_at && (
                       <p className="text-xs text-foreground/50">
-                        Resolved on {format(new Date(selectedIssue.resolved_at), "dd MMM yyyy 'at' HH:mm")}
+                        Resolved on{' '}
+                        {format(new Date(selectedIssue.resolved_at), "dd MMM yyyy 'at' HH:mm")}
                       </p>
                     )}
                   </div>
                 )}
 
                 {/* Status Update */}
-                {selectedIssue.status !== "Resolved" && selectedIssue.status !== "Closed" && (
+                {selectedIssue.status !== 'Resolved' && selectedIssue.status !== 'Closed' && (
                   <div className="space-y-2">
                     <Label>Update Status</Label>
                     <Select
@@ -805,7 +841,7 @@ export function JobIssuesSection() {
 
               {/* Footer */}
               <div className="p-4 border-t border-border bg-background space-y-2">
-                {selectedIssue.status !== "Resolved" && selectedIssue.status !== "Closed" && (
+                {selectedIssue.status !== 'Resolved' && selectedIssue.status !== 'Closed' && (
                   <Button
                     onClick={() => {
                       setSelectedIssue(null);
@@ -849,9 +885,7 @@ export function JobIssuesSection() {
               onClick={handleDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {deleteJobIssue.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : null}
+              {deleteJobIssue.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -864,5 +898,7 @@ export function JobIssuesSection() {
     <PullToRefresh onRefresh={handleRefresh} className="h-full">
       {content}
     </PullToRefresh>
-  ) : content;
+  ) : (
+    content
+  );
 }

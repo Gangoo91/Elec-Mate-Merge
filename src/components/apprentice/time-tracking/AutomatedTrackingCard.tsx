@@ -1,31 +1,18 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  Bot, 
-  Clock, 
-  BookOpen, 
-  Trophy, 
-  Zap,
-  CheckCircle,
-  Settings
-} from "lucide-react";
-import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
-import { useAutoPortfolioIntegration } from "@/hooks/portfolio/useAutoPortfolioIntegration";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Bot, Clock, BookOpen, Trophy, Zap, CheckCircle, Settings } from 'lucide-react';
+import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import { useAutoPortfolioIntegration } from '@/hooks/portfolio/useAutoPortfolioIntegration';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 const AutomatedTrackingCard = () => {
   const { entries } = useTimeEntries();
-  const { 
-    autoSyncEnabled, 
-    setAutoSyncEnabled, 
-    lastSyncTimestamp 
-  } = useAutoPortfolioIntegration();
+  const { autoSyncEnabled, setAutoSyncEnabled, lastSyncTimestamp } = useAutoPortfolioIntegration();
 
   // Get automatic entries (quizzes, courses, etc.)
-  const automaticEntries = entries.filter(entry => entry.isAutomatic || entry.isQuiz);
+  const automaticEntries = entries.filter((entry) => entry.isAutomatic || entry.isQuiz);
   const totalAutomaticTime = automaticEntries.reduce((total, entry) => total + entry.duration, 0);
   const hours = Math.floor(totalAutomaticTime / 60);
   const minutes = totalAutomaticTime % 60;
@@ -41,7 +28,7 @@ const AutomatedTrackingCard = () => {
       day: '2-digit',
       month: 'short',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -65,19 +52,13 @@ const AutomatedTrackingCard = () => {
                 Automatically add activities to your portfolio with smart categorisation
               </p>
             </div>
-            <Switch
-              id="auto-sync"
-              checked={autoSyncEnabled}
-              onCheckedChange={setAutoSyncEnabled}
-            />
+            <Switch id="auto-sync" checked={autoSyncEnabled} onCheckedChange={setAutoSyncEnabled} />
           </div>
-          
+
           {lastSyncTimestamp && (
-            <div className="text-xs text-white">
-              Last sync: {formatDate(lastSyncTimestamp)}
-            </div>
+            <div className="text-xs text-white">Last sync: {formatDate(lastSyncTimestamp)}</div>
           )}
-          
+
           {autoSyncEnabled && (
             <div className="flex items-center gap-2 text-sm text-green-400">
               <CheckCircle className="h-4 w-4" />
@@ -104,9 +85,7 @@ const AutomatedTrackingCard = () => {
               <div className="text-sm text-white">Total Auto-Tracked</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow">
-                {automaticEntries.length}
-              </div>
+              <div className="text-2xl font-bold text-elec-yellow">{automaticEntries.length}</div>
               <div className="text-sm text-white">Activities Tracked</div>
             </div>
           </div>
@@ -116,7 +95,7 @@ const AutomatedTrackingCard = () => {
               <Clock className="h-4 w-4" />
               Recent Automatic Activities
             </h4>
-            
+
             {recentAutoEntries.length === 0 ? (
               <div className="text-center py-6 text-white">
                 <Bot className="h-8 w-8 mx-auto mb-2 opacity-50" />
@@ -138,14 +117,18 @@ const AutomatedTrackingCard = () => {
                       )}
                       <div>
                         <div className="font-medium text-sm">{entry.activity}</div>
-                        <div className="text-xs text-white">
-                          {formatDate(entry.date)}
-                        </div>
+                        <div className="text-xs text-white">{formatDate(entry.date)}</div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <Badge className={entry.isQuiz ? "bg-blue-500/20 text-blue-400" : "bg-elec-yellow/20 text-elec-yellow"}>
-                        {entry.isQuiz ? "Quiz" : "Study"}
+                      <Badge
+                        className={
+                          entry.isQuiz
+                            ? 'bg-blue-500/20 text-blue-400'
+                            : 'bg-elec-yellow/20 text-elec-yellow'
+                        }
+                      >
+                        {entry.isQuiz ? 'Quiz' : 'Study'}
                       </Badge>
                       <div className="text-xs text-white mt-1">
                         {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
@@ -190,7 +173,7 @@ const AutomatedTrackingCard = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <h5 className="font-medium text-sm">Smart Features</h5>
               <div className="space-y-1 text-xs">

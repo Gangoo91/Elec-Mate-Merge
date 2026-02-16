@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { type Briefing } from "@/hooks/useBriefings";
-import { generateBriefingQRData } from "@/hooks/useBriefingSignatures";
+import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { type Briefing } from '@/hooks/useBriefings';
+import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
 
 // Teams webhook card format
 interface TeamsAdaptiveCard {
@@ -39,68 +39,69 @@ function buildTeamsCard(briefing: Briefing): TeamsAdaptiveCard {
   const signOffUrl = generateBriefingQRData(briefing.id);
 
   return {
-    type: "message",
+    type: 'message',
     attachments: [
       {
-        contentType: "application/vnd.microsoft.card.adaptive",
+        contentType: 'application/vnd.microsoft.card.adaptive',
         content: {
-          $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
-          type: "AdaptiveCard",
-          version: "1.4",
+          $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+          type: 'AdaptiveCard',
+          version: '1.4',
           body: [
             {
-              type: "TextBlock",
-              text: "📋 Team Briefing",
-              weight: "Bolder",
-              size: "Large",
+              type: 'TextBlock',
+              text: '📋 Team Briefing',
+              weight: 'Bolder',
+              size: 'Large',
             },
             {
-              type: "TextBlock",
+              type: 'TextBlock',
               text: briefing.title,
-              weight: "Bolder",
-              size: "Medium",
+              weight: 'Bolder',
+              size: 'Medium',
               wrap: true,
             },
             {
-              type: "FactSet",
+              type: 'FactSet',
               facts: [
                 ...(briefing.date
                   ? [
                       {
-                        title: "Date",
-                        value: new Date(briefing.date).toLocaleDateString("en-GB", {
-                          weekday: "long",
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
+                        title: 'Date',
+                        value: new Date(briefing.date).toLocaleDateString('en-GB', {
+                          weekday: 'long',
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
                         }),
                       },
                     ]
                   : []),
-                ...(briefing.time ? [{ title: "Time", value: briefing.time }] : []),
-                ...(briefing.location ? [{ title: "Location", value: briefing.location }] : []),
-                ...(briefing.presenter ? [{ title: "Presenter", value: briefing.presenter }] : []),
+                ...(briefing.time ? [{ title: 'Time', value: briefing.time }] : []),
+                ...(briefing.location ? [{ title: 'Location', value: briefing.location }] : []),
+                ...(briefing.presenter ? [{ title: 'Presenter', value: briefing.presenter }] : []),
                 ...(briefing.risk_level
                   ? [
                       {
-                        title: "Risk Level",
+                        title: 'Risk Level',
                         value:
-                          briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1),
+                          briefing.risk_level.charAt(0).toUpperCase() +
+                          briefing.risk_level.slice(1),
                       },
                     ]
                   : []),
               ],
             },
             {
-              type: "TextBlock",
-              text: "Please scan the QR code or click the link below to sign off on this briefing.",
+              type: 'TextBlock',
+              text: 'Please scan the QR code or click the link below to sign off on this briefing.',
               wrap: true,
             },
           ],
           actions: [
             {
-              type: "Action.OpenUrl",
-              title: "Sign Off Now",
+              type: 'Action.OpenUrl',
+              title: 'Sign Off Now',
               url: signOffUrl,
             },
           ],
@@ -125,16 +126,16 @@ export function useSendToTeams() {
       webhookUrl: string;
     }): Promise<void> => {
       // Validate webhook URL
-      if (!webhookUrl || !webhookUrl.includes("webhook.office.com")) {
-        throw new Error("Invalid Microsoft Teams webhook URL");
+      if (!webhookUrl || !webhookUrl.includes('webhook.office.com')) {
+        throw new Error('Invalid Microsoft Teams webhook URL');
       }
 
       const card = buildTeamsCard(briefing);
 
       const response = await fetch(webhookUrl, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(card),
       });
@@ -145,15 +146,15 @@ export function useSendToTeams() {
     },
     onSuccess: () => {
       toast({
-        title: "Sent to Teams",
-        description: "Briefing notification sent to your Teams channel.",
+        title: 'Sent to Teams',
+        description: 'Briefing notification sent to your Teams channel.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Teams notification failed",
+        title: 'Teams notification failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -172,15 +173,15 @@ export function useCopyBriefingLink() {
       await navigator.clipboard.writeText(link);
       setCopied(true);
       toast({
-        title: "Link copied",
-        description: "Sign-off link copied to clipboard.",
+        title: 'Link copied',
+        description: 'Sign-off link copied to clipboard.',
       });
       setTimeout(() => setCopied(false), 2000);
     } catch {
       toast({
-        title: "Copy failed",
-        description: "Could not copy to clipboard.",
-        variant: "destructive",
+        title: 'Copy failed',
+        description: 'Could not copy to clipboard.',
+        variant: 'destructive',
       });
     }
   };
@@ -211,8 +212,8 @@ export function useShareBriefing() {
       // Fallback to clipboard
       await navigator.clipboard.writeText(signOffUrl);
       toast({
-        title: "Link copied",
-        description: "Share not available - link copied to clipboard instead.",
+        title: 'Link copied',
+        description: 'Share not available - link copied to clipboard instead.',
       });
     }
   };
@@ -232,25 +233,25 @@ export function useSaveTeamsWebhook() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      if (!user) throw new Error('Not authenticated');
 
       // Store in user metadata or a settings table
       // For now, we'll use the profile table if it has a webhooks field
       // Otherwise store in localStorage as a simple solution
-      localStorage.setItem("teams_webhook_url", webhookUrl);
+      localStorage.setItem('teams_webhook_url', webhookUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["teams-webhook"] });
+      queryClient.invalidateQueries({ queryKey: ['teams-webhook'] });
       toast({
-        title: "Webhook saved",
-        description: "Your Teams webhook URL has been saved.",
+        title: 'Webhook saved',
+        description: 'Your Teams webhook URL has been saved.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Save failed",
+        title: 'Save failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -261,9 +262,9 @@ export function useSaveTeamsWebhook() {
  */
 export function useTeamsWebhook() {
   return useQuery({
-    queryKey: ["teams-webhook"],
+    queryKey: ['teams-webhook'],
     queryFn: async (): Promise<string | null> => {
-      return localStorage.getItem("teams_webhook_url");
+      return localStorage.getItem('teams_webhook_url');
     },
   });
 }

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ClientDetailsSection from './ClientDetailsSection';
 import InspectionDetailsSection from './InspectionDetailsSection';

@@ -4,94 +4,130 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const RCDTroubleshootingPractical = () => {
   const diagnosticTools = [
     {
-      tool: "Digital Multimeter",
-      applications: ["Voltage measurement", "Resistance testing", "Continuity checks", "Current measurement"],
-      tips: ["Use auto-ranging for efficiency", "Check calibration dates", "Verify test lead condition"]
+      tool: 'Digital Multimeter',
+      applications: [
+        'Voltage measurement',
+        'Resistance testing',
+        'Continuity checks',
+        'Current measurement',
+      ],
+      tips: [
+        'Use auto-ranging for efficiency',
+        'Check calibration dates',
+        'Verify test lead condition',
+      ],
     },
     {
-      tool: "Insulation Resistance Tester",
-      applications: ["Earth fault location", "Cable integrity", "Equipment condition", "Moisture detection"],
-      tips: ["Allow temperature stabilisation", "Use appropriate test voltage", "Record environmental conditions"]
+      tool: 'Insulation Resistance Tester',
+      applications: [
+        'Earth fault location',
+        'Cable integrity',
+        'Equipment condition',
+        'Moisture detection',
+      ],
+      tips: [
+        'Allow temperature stabilisation',
+        'Use appropriate test voltage',
+        'Record environmental conditions',
+      ],
     },
     {
-      tool: "RCD Tester",
-      applications: ["Performance verification", "Trip time measurement", "Sensitivity testing", "Ramp testing"],
-      tips: ["Calibrate annually", "Use correct test angles", "Test from multiple locations"]
+      tool: 'RCD Tester',
+      applications: [
+        'Performance verification',
+        'Trip time measurement',
+        'Sensitivity testing',
+        'Ramp testing',
+      ],
+      tips: ['Calibrate annually', 'Use correct test angles', 'Test from multiple locations'],
     },
     {
-      tool: "Oscilloscope",
-      applications: ["Transient capture", "Waveform analysis", "Timing measurement", "Noise investigation"],
-      tips: ["Set appropriate trigger levels", "Use differential probes", "Capture pre-trigger data"]
-    }
+      tool: 'Oscilloscope',
+      applications: [
+        'Transient capture',
+        'Waveform analysis',
+        'Timing measurement',
+        'Noise investigation',
+      ],
+      tips: [
+        'Set appropriate trigger levels',
+        'Use differential probes',
+        'Capture pre-trigger data',
+      ],
+    },
   ];
 
   const troubleshootingFlowchart = [
     {
-      step: "Initial Assessment",
-      questions: ["What are the exact symptoms?", "When did the problem start?", "What changed recently?"],
-      actions: ["Document symptoms", "Check recent work", "Review maintenance logs"],
-      nextStep: "visual"
+      step: 'Initial Assessment',
+      questions: [
+        'What are the exact symptoms?',
+        'When did the problem start?',
+        'What changed recently?',
+      ],
+      actions: ['Document symptoms', 'Check recent work', 'Review maintenance logs'],
+      nextStep: 'visual',
     },
     {
-      step: "Visual Inspection",
-      questions: ["Any obvious damage?", "Correct connections?", "Environmental issues?"],
-      actions: ["Photograph findings", "Check terminals", "Assess conditions"],
-      nextStep: "electrical"
+      step: 'Visual Inspection',
+      questions: ['Any obvious damage?', 'Correct connections?', 'Environmental issues?'],
+      actions: ['Photograph findings', 'Check terminals', 'Assess conditions'],
+      nextStep: 'electrical',
     },
     {
-      step: "Electrical Testing",
-      questions: ["RCD function correct?", "Circuit integrity good?", "Load conditions normal?"],
-      actions: ["Test RCD operation", "Check insulation", "Measure loads"],
-      nextStep: "analysis"
-    }
+      step: 'Electrical Testing',
+      questions: ['RCD function correct?', 'Circuit integrity good?', 'Load conditions normal?'],
+      actions: ['Test RCD operation', 'Check insulation', 'Measure loads'],
+      nextStep: 'analysis',
+    },
   ];
 
   const commonScenarios = [
     {
-      scenario: "New Installation Trips Immediately",
+      scenario: 'New Installation Trips Immediately',
       investigation: [
-        "Check cable routing for damage",
-        "Verify neutral-earth separation",
-        "Test each circuit individually",
-        "Check for moisture ingress"
+        'Check cable routing for damage',
+        'Verify neutral-earth separation',
+        'Test each circuit individually',
+        'Check for moisture ingress',
       ],
       solutions: [
-        "Repair damaged cables",
-        "Correct neutral connections",
-        "Improve weatherproofing",
-        "Replace faulty components"
-      ]
+        'Repair damaged cables',
+        'Correct neutral connections',
+        'Improve weatherproofing',
+        'Replace faulty components',
+      ],
     },
     {
-      scenario: "Intermittent Tripping in Wet Weather",
+      scenario: 'Intermittent Tripping in Wet Weather',
       investigation: [
-        "Check outdoor connections",
-        "Test insulation when wet",
-        "Inspect cable entry points",
-        "Monitor during rain"
+        'Check outdoor connections',
+        'Test insulation when wet',
+        'Inspect cable entry points',
+        'Monitor during rain',
       ],
       solutions: [
-        "Improve IP ratings",
-        "Seal cable entries",
-        "Relocate vulnerable connections",
-        "Install drainage"
-      ]
+        'Improve IP ratings',
+        'Seal cable entries',
+        'Relocate vulnerable connections',
+        'Install drainage',
+      ],
     },
     {
-      scenario: "Tripping When Large Load Starts",
+      scenario: 'Tripping When Large Load Starts',
       investigation: [
-        "Measure starting currents",
-        "Check motor conditions",
-        "Analyse switching transients",
-        "Review load diversity"
+        'Measure starting currents',
+        'Check motor conditions',
+        'Analyse switching transients',
+        'Review load diversity',
       ],
       solutions: [
-        "Install soft starters",
-        "Use time-delayed RCDs",
-        "Improve earthing",
-        "Add surge suppressors"
-      ]
-    }
+        'Install soft starters',
+        'Use time-delayed RCDs',
+        'Improve earthing',
+        'Add surge suppressors',
+      ],
+    },
   ];
 
   return (
@@ -103,7 +139,6 @@ const RCDTroubleshootingPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-
         {/* Diagnostic Tools and Equipment */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Essential Diagnostic Tools</h3>
@@ -139,7 +174,9 @@ const RCDTroubleshootingPractical = () => {
 
         {/* Systematic Troubleshooting Process */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Systematic Troubleshooting Process</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Systematic Troubleshooting Process
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4 space-y-4">
             {troubleshootingFlowchart.map((phase, index) => (
               <div key={index} className="bg-blue-600/10 border border-blue-600/20 rounded p-4">
@@ -174,7 +211,9 @@ const RCDTroubleshootingPractical = () => {
 
         {/* Real-World Troubleshooting Scenarios */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Real-World Troubleshooting Scenarios</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Real-World Troubleshooting Scenarios
+          </h3>
           <div className="space-y-4">
             {commonScenarios.map((item, index) => (
               <div key={index} className="bg-[#323232] rounded-lg p-4">
@@ -269,8 +308,8 @@ const RCDTroubleshootingPractical = () => {
             </div>
             <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-3 mt-3">
               <p className="text-foreground text-sm sm:text-base">
-                <strong>Important:</strong> Good documentation protects against liability, supports warranty claims, 
-                and helps prevent similar problems in the future.
+                <strong>Important:</strong> Good documentation protects against liability, supports
+                warranty claims, and helps prevent similar problems in the future.
               </p>
             </div>
           </div>
@@ -310,7 +349,6 @@ const RCDTroubleshootingPractical = () => {
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

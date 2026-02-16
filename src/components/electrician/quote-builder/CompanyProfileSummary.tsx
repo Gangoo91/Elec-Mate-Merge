@@ -1,8 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Building, ChevronRight, Check, AlertCircle, Phone, Mail, MapPin, FileText } from "lucide-react";
-import { useCompanyProfile } from "@/hooks/useCompanyProfile";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Building,
+  ChevronRight,
+  Check,
+  AlertCircle,
+  Phone,
+  Mail,
+  MapPin,
+  FileText,
+} from 'lucide-react';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { cn } from '@/lib/utils';
 
 export const CompanyProfileSummary = () => {
   const navigate = useNavigate();
@@ -30,7 +39,7 @@ export const CompanyProfileSummary = () => {
     return (
       <button
         type="button"
-        onClick={() => navigate("/settings?tab=company")}
+        onClick={() => navigate('/settings?tab=company')}
         className="w-full rounded-2xl bg-amber-500/10 border border-amber-500/20 overflow-hidden touch-manipulation active:bg-amber-500/15 transition-colors"
       >
         <div className="flex items-center gap-3 p-3.5">
@@ -71,7 +80,9 @@ export const CompanyProfileSummary = () => {
         {/* Company Info */}
         <div className="flex-1 min-w-0 text-left">
           <div className="flex items-center gap-2">
-            <p className="text-[15px] font-medium text-white truncate">{companyProfile.company_name}</p>
+            <p className="text-[15px] font-medium text-white truncate">
+              {companyProfile.company_name}
+            </p>
             {isComplete && (
               <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
                 <Check className="h-3 w-3 text-white" />
@@ -79,15 +90,14 @@ export const CompanyProfileSummary = () => {
             )}
           </div>
           <p className="text-[13px] text-white/50 truncate">
-            {companyProfile.company_email || "Tap to expand"}
+            {companyProfile.company_email || 'Tap to expand'}
           </p>
         </div>
 
         {/* Chevron */}
-        <ChevronRight className={cn(
-          "h-4 w-4 text-white/20 transition-transform",
-          isExpanded && "rotate-90"
-        )} />
+        <ChevronRight
+          className={cn('h-4 w-4 text-white/20 transition-transform', isExpanded && 'rotate-90')}
+        />
       </button>
 
       {/* Expanded Details */}
@@ -141,7 +151,7 @@ export const CompanyProfileSummary = () => {
           {/* Edit Button */}
           <button
             type="button"
-            onClick={() => navigate("/settings?tab=company")}
+            onClick={() => navigate('/settings?tab=company')}
             className="w-full flex items-center justify-center gap-2 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors"
           >
             <span className="text-[15px] font-medium text-elec-yellow">Edit Company Profile</span>

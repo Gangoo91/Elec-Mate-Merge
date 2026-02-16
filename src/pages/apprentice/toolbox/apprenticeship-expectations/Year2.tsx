@@ -1,8 +1,7 @@
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
   Zap,
   FileText,
@@ -24,11 +23,16 @@ import {
   ClipboardCheck,
   Brain,
   Award,
-  Clock
-} from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+  Clock,
+} from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
 
 const Year2 = () => {
   const isMobile = useIsMobile();
@@ -37,312 +41,330 @@ const Year2 = () => {
 
   const monthlyBreakdown = [
     {
-      month: "Month 13-14",
-      title: "Regulations Introduction",
-      focus: "BS 7671 Wiring Regulations fundamentals",
+      month: 'Month 13-14',
+      title: 'Regulations Introduction',
+      focus: 'BS 7671 Wiring Regulations fundamentals',
       icon: BookOpen,
-      color: "text-blue-400",
+      color: 'text-blue-400',
       activities: [
-        "Introduction to BS 7671 - understanding its purpose and structure",
+        'Introduction to BS 7671 - understanding its purpose and structure',
         "Regulation structure - learning to navigate the 'Regs'",
-        "Design principles basics - understanding circuit design",
-        "Cable selection fundamentals - choosing the right cables"
+        'Design principles basics - understanding circuit design',
+        'Cable selection fundamentals - choosing the right cables',
       ],
-      dayInLife: "The 'Big Blue Book' becomes your new best friend. It seems daunting at first, but you'll soon learn how to find what you need quickly."
+      dayInLife:
+        "The 'Big Blue Book' becomes your new best friend. It seems daunting at first, but you'll soon learn how to find what you need quickly.",
     },
     {
-      month: "Month 15-16",
-      title: "Installation Methods",
-      focus: "Practical installation techniques",
+      month: 'Month 15-16',
+      title: 'Installation Methods',
+      focus: 'Practical installation techniques',
       icon: Wrench,
-      color: "text-green-400",
+      color: 'text-green-400',
       activities: [
-        "Different wiring systems - PVC, SWA, MICC, conduit",
-        "Cable routing and support - clipping distances and methods",
-        "Containment systems - trunking, tray, and ladder",
-        "Protection methods - MCBs, RCDs, and isolators"
+        'Different wiring systems - PVC, SWA, MICC, conduit',
+        'Cable routing and support - clipping distances and methods',
+        'Containment systems - trunking, tray, and ladder',
+        'Protection methods - MCBs, RCDs, and isolators',
       ],
-      dayInLife: "You'll start working more independently on installations. Your mentor will check your work but give you more responsibility."
+      dayInLife:
+        "You'll start working more independently on installations. Your mentor will check your work but give you more responsibility.",
     },
     {
-      month: "Month 17-18",
-      title: "Testing & Inspection Basics",
-      focus: "Introduction to electrical testing",
+      month: 'Month 17-18',
+      title: 'Testing & Inspection Basics',
+      focus: 'Introduction to electrical testing',
       icon: Gauge,
-      color: "text-yellow-400",
+      color: 'text-yellow-400',
       activities: [
-        "Test equipment introduction - multifunction testers and their uses",
-        "Continuity testing - ring final circuits and protective conductors",
-        "Insulation resistance testing - understanding acceptable values",
-        "Basic fault finding - systematic approaches to problem solving"
+        'Test equipment introduction - multifunction testers and their uses',
+        'Continuity testing - ring final circuits and protective conductors',
+        'Insulation resistance testing - understanding acceptable values',
+        'Basic fault finding - systematic approaches to problem solving',
       ],
-      dayInLife: "Learning to test properly is crucial. Your first tests will feel slow, but accuracy matters more than speed at this stage."
+      dayInLife:
+        'Learning to test properly is crucial. Your first tests will feel slow, but accuracy matters more than speed at this stage.',
     },
     {
-      month: "Month 19-20",
-      title: "Advanced Installations",
-      focus: "More complex installation work",
+      month: 'Month 19-20',
+      title: 'Advanced Installations',
+      focus: 'More complex installation work',
       icon: Zap,
-      color: "text-purple-400",
+      color: 'text-purple-400',
       activities: [
-        "Three-phase installations - commercial and industrial basics",
-        "Motor control circuits - DOL starters and contactors",
-        "Distribution board work - sub-main installations",
-        "Emergency lighting systems - maintained and non-maintained"
+        'Three-phase installations - commercial and industrial basics',
+        'Motor control circuits - DOL starters and contactors',
+        'Distribution board work - sub-main installations',
+        'Emergency lighting systems - maintained and non-maintained',
       ],
-      dayInLife: "Industrial work opens up new challenges. Three-phase can be intimidating but follows the same principles you already know."
+      dayInLife:
+        'Industrial work opens up new challenges. Three-phase can be intimidating but follows the same principles you already know.',
     },
     {
-      month: "Month 21-22",
-      title: "Portfolio Development",
-      focus: "Evidence collection and documentation",
+      month: 'Month 21-22',
+      title: 'Portfolio Development',
+      focus: 'Evidence collection and documentation',
       icon: FileText,
-      color: "text-cyan-400",
+      color: 'text-cyan-400',
       activities: [
-        "Work-based evidence gathering - photos, signatures, documents",
-        "Portfolio structuring - organising evidence properly",
-        "Photographic evidence - quality images of your work",
-        "Competency demonstration - proving what you can do"
+        'Work-based evidence gathering - photos, signatures, documents',
+        'Portfolio structuring - organising evidence properly',
+        'Photographic evidence - quality images of your work',
+        'Competency demonstration - proving what you can do',
       ],
-      dayInLife: "If you've been keeping up, this is just about organising. If not, it's time to catch up - don't leave it until Year 4!"
+      dayInLife:
+        "If you've been keeping up, this is just about organising. If not, it's time to catch up - don't leave it until Year 4!",
     },
     {
-      month: "Month 23-24",
-      title: "Year 2 Assessment",
-      focus: "Skills consolidation and assessment",
+      month: 'Month 23-24',
+      title: 'Year 2 Assessment',
+      focus: 'Skills consolidation and assessment',
       icon: Award,
-      color: "text-orange-400",
+      color: 'text-orange-400',
       activities: [
-        "Practical skills assessment - demonstrating competence",
-        "Theory examination preparation - revision and practice",
-        "Portfolio submission - end of year review",
-        "Year 3 preparation - looking ahead to advanced topics"
+        'Practical skills assessment - demonstrating competence',
+        'Theory examination preparation - revision and practice',
+        'Portfolio submission - end of year review',
+        'Year 3 preparation - looking ahead to advanced topics',
       ],
-      dayInLife: "Assessment time! Stay calm, trust your training, and remember - you've been doing this work all year. The exam just proves it."
-    }
+      dayInLife:
+        "Assessment time! Stay calm, trust your training, and remember - you've been doing this work all year. The exam just proves it.",
+    },
   ];
 
   const keyLearningAreas = [
     {
-      title: "BS 7671 Wiring Regulations",
+      title: 'BS 7671 Wiring Regulations',
       icon: BookOpen,
       progress: 75,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/30",
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
       topics: [
-        "Regulation structure and navigation",
-        "Design requirements and calculations",
-        "Cable selection and sizing",
-        "Protection and earthing arrangements",
-        "Special locations introduction"
-      ]
+        'Regulation structure and navigation',
+        'Design requirements and calculations',
+        'Cable selection and sizing',
+        'Protection and earthing arrangements',
+        'Special locations introduction',
+      ],
     },
     {
-      title: "Installation Techniques",
+      title: 'Installation Techniques',
       icon: Wrench,
       progress: 80,
-      color: "text-green-400",
-      bgColor: "bg-green-500/10",
-      borderColor: "border-green-500/30",
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/10',
+      borderColor: 'border-green-500/30',
       topics: [
-        "Different wiring systems and applications",
-        "Containment and support methods",
-        "Jointing and termination techniques",
-        "Distribution board installation",
-        "Circuit protection device selection"
-      ]
+        'Different wiring systems and applications',
+        'Containment and support methods',
+        'Jointing and termination techniques',
+        'Distribution board installation',
+        'Circuit protection device selection',
+      ],
     },
     {
-      title: "Testing & Inspection",
+      title: 'Testing & Inspection',
       icon: Gauge,
       progress: 65,
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/10",
-      borderColor: "border-yellow-500/30",
+      color: 'text-yellow-400',
+      bgColor: 'bg-yellow-500/10',
+      borderColor: 'border-yellow-500/30',
       topics: [
-        "Test equipment usage and calibration",
-        "Continuity testing procedures",
-        "Insulation resistance testing",
-        "Earth fault loop impedance",
-        "RCD testing basics"
-      ]
+        'Test equipment usage and calibration',
+        'Continuity testing procedures',
+        'Insulation resistance testing',
+        'Earth fault loop impedance',
+        'RCD testing basics',
+      ],
     },
     {
-      title: "Documentation Skills",
+      title: 'Documentation Skills',
       icon: FileText,
       progress: 70,
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/30",
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/10',
+      borderColor: 'border-purple-500/30',
       topics: [
-        "Electrical installation certificates",
-        "Test result recording and interpretation",
-        "Portfolio evidence collection",
-        "Work method statements",
-        "Risk assessment participation"
-      ]
-    }
+        'Electrical installation certificates',
+        'Test result recording and interpretation',
+        'Portfolio evidence collection',
+        'Work method statements',
+        'Risk assessment participation',
+      ],
+    },
   ];
 
   const testEquipmentGuide = [
     {
-      equipment: "Multifunction Tester",
-      purpose: "Performs multiple electrical tests in one unit",
-      tests: ["Continuity", "Insulation resistance", "Loop impedance", "RCD testing"],
-      tips: "Learn one test at a time - master continuity first"
+      equipment: 'Multifunction Tester',
+      purpose: 'Performs multiple electrical tests in one unit',
+      tests: ['Continuity', 'Insulation resistance', 'Loop impedance', 'RCD testing'],
+      tips: 'Learn one test at a time - master continuity first',
     },
     {
-      equipment: "Voltage Indicator",
-      purpose: "Confirms circuits are dead before working",
-      tests: ["Voltage presence", "Live/Neutral/Earth identification"],
-      tips: "Always prove - test - prove. Never assume a circuit is dead"
+      equipment: 'Voltage Indicator',
+      purpose: 'Confirms circuits are dead before working',
+      tests: ['Voltage presence', 'Live/Neutral/Earth identification'],
+      tips: 'Always prove - test - prove. Never assume a circuit is dead',
     },
     {
-      equipment: "Earth Loop Tester",
-      purpose: "Measures impedance of earth fault path",
-      tests: ["Ze (external)", "Zs (total loop)"],
-      tips: "Understand what the readings mean, not just how to get them"
+      equipment: 'Earth Loop Tester',
+      purpose: 'Measures impedance of earth fault path',
+      tests: ['Ze (external)', 'Zs (total loop)'],
+      tips: 'Understand what the readings mean, not just how to get them',
     },
     {
-      equipment: "RCD Tester",
-      purpose: "Tests Residual Current Device operation",
-      tests: ["Trip time", "Trip current"],
-      tips: "Know the different test modes (x1, x5, ramp)"
-    }
+      equipment: 'RCD Tester',
+      purpose: 'Tests Residual Current Device operation',
+      tests: ['Trip time', 'Trip current'],
+      tips: 'Know the different test modes (x1, x5, ramp)',
+    },
   ];
 
   const bs7671Survival = {
     parts: [
-      { number: 1, title: "Scope, object and fundamental principles", key: "Safety first - always" },
-      { number: 2, title: "Definitions", key: "Know the terminology" },
-      { number: 3, title: "Assessment of general characteristics", key: "Understanding the installation" },
-      { number: 4, title: "Protection for safety", key: "Most referenced section" },
-      { number: 5, title: "Selection and erection of equipment", key: "Practical applications" },
-      { number: 6, title: "Inspection and testing", key: "Your testing bible" },
-      { number: 7, title: "Special installations or locations", key: "Bathrooms, swimming pools, etc" }
+      {
+        number: 1,
+        title: 'Scope, object and fundamental principles',
+        key: 'Safety first - always',
+      },
+      { number: 2, title: 'Definitions', key: 'Know the terminology' },
+      {
+        number: 3,
+        title: 'Assessment of general characteristics',
+        key: 'Understanding the installation',
+      },
+      { number: 4, title: 'Protection for safety', key: 'Most referenced section' },
+      { number: 5, title: 'Selection and erection of equipment', key: 'Practical applications' },
+      { number: 6, title: 'Inspection and testing', key: 'Your testing bible' },
+      {
+        number: 7,
+        title: 'Special installations or locations',
+        key: 'Bathrooms, swimming pools, etc',
+      },
     ],
     topTips: [
       "Use the index - don't try to memorise everything",
-      "Highlight key regulations you use often",
+      'Highlight key regulations you use often',
       "Practice 'regulation finding' exercises",
       "Understand the 'why' not just the 'what'",
-      "Compare On-Site Guide with full regulations"
-    ]
+      'Compare On-Site Guide with full regulations',
+    ],
   };
 
   const commonChallenges = [
     {
-      challenge: "BS 7671 Overwhelm",
+      challenge: 'BS 7671 Overwhelm',
       icon: BookOpen,
-      description: "The regulations book can seem impossibly large and complex at first",
+      description: 'The regulations book can seem impossibly large and complex at first',
       solutions: [
-        "Start with Part 1 (scope) and Part 6 (testing) - most practical sections",
-        "Use the On-Site Guide alongside the full regulations",
-        "Practice finding regulations using the index",
-        "Join study groups with other apprentices",
-        "Don't try to memorise - learn to navigate"
-      ]
+        'Start with Part 1 (scope) and Part 6 (testing) - most practical sections',
+        'Use the On-Site Guide alongside the full regulations',
+        'Practice finding regulations using the index',
+        'Join study groups with other apprentices',
+        "Don't try to memorise - learn to navigate",
+      ],
     },
     {
-      challenge: "Testing Confidence",
+      challenge: 'Testing Confidence',
       icon: Gauge,
-      description: "Using expensive test equipment and interpreting results correctly",
+      description: 'Using expensive test equipment and interpreting results correctly',
       solutions: [
-        "Ask to observe testing before doing it yourself",
-        "Understand what each test is checking for",
-        "Learn acceptable values for common tests",
-        "Practice on known-good circuits first",
-        "Always follow the test sequence correctly"
-      ]
+        'Ask to observe testing before doing it yourself',
+        'Understand what each test is checking for',
+        'Learn acceptable values for common tests',
+        'Practice on known-good circuits first',
+        'Always follow the test sequence correctly',
+      ],
     },
     {
-      challenge: "Increased Expectations",
+      challenge: 'Increased Expectations',
       icon: TrendingUp,
-      description: "More responsibility and complex tasks expected compared to Year 1",
+      description: 'More responsibility and complex tasks expected compared to Year 1',
       solutions: [
-        "Communicate when you need guidance",
+        'Communicate when you need guidance',
         "Double-check your work before saying it's complete",
-        "Ask for feedback regularly",
-        "Take notes on corrections and learn from them",
-        "It's okay to say 'I haven't done this before'"
-      ]
+        'Ask for feedback regularly',
+        'Take notes on corrections and learn from them',
+        "It's okay to say 'I haven't done this before'",
+      ],
     },
     {
-      challenge: "Balancing Theory & Practice",
+      challenge: 'Balancing Theory & Practice',
       icon: Brain,
-      description: "College work gets harder while site work demands more attention",
+      description: 'College work gets harder while site work demands more attention',
       solutions: [
-        "Connect what you learn in college to real work",
-        "Use commute time for revision or podcasts",
-        "Set aside dedicated study time each week",
-        "Ask mentors to explain theory behind site work",
-        "Keep your portfolio updated weekly, not monthly"
-      ]
-    }
+        'Connect what you learn in college to real work',
+        'Use commute time for revision or podcasts',
+        'Set aside dedicated study time each week',
+        'Ask mentors to explain theory behind site work',
+        'Keep your portfolio updated weekly, not monthly',
+      ],
+    },
   ];
 
   const developmentMilestones = [
     {
-      milestone: "First BS 7671 Assessment",
+      milestone: 'First BS 7671 Assessment',
       icon: BookOpen,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20",
-      description: "Successfully pass your first wiring regulations examination",
-      importance: "Foundation for all future electrical work and certification",
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/20',
+      description: 'Successfully pass your first wiring regulations examination',
+      importance: 'Foundation for all future electrical work and certification',
       tips: [
-        "Use the regulations book regularly - get comfortable with it",
-        "Practice regulation finding exercises daily",
-        "Join study groups with other apprentices"
-      ]
+        'Use the regulations book regularly - get comfortable with it',
+        'Practice regulation finding exercises daily',
+        'Join study groups with other apprentices',
+      ],
     },
     {
-      milestone: "First Independent Test",
+      milestone: 'First Independent Test',
       icon: Gauge,
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/20",
-      description: "Complete your first full electrical test sequence independently",
-      importance: "Testing is a core skill for qualified electricians",
+      color: 'text-yellow-400',
+      bgColor: 'bg-yellow-500/20',
+      description: 'Complete your first full electrical test sequence independently',
+      importance: 'Testing is a core skill for qualified electricians',
       tips: [
-        "Understand each test purpose before performing it",
-        "Follow the correct test sequence every time",
-        "Learn to interpret results, not just record them"
-      ]
+        'Understand each test purpose before performing it',
+        'Follow the correct test sequence every time',
+        'Learn to interpret results, not just record them',
+      ],
     },
     {
-      milestone: "Distribution Board Install",
+      milestone: 'Distribution Board Install',
       icon: Zap,
-      color: "text-green-400",
-      bgColor: "bg-green-500/20",
-      description: "Complete a consumer unit or distribution board installation",
-      importance: "Shows you can handle complex, critical work",
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/20',
+      description: 'Complete a consumer unit or distribution board installation',
+      importance: 'Shows you can handle complex, critical work',
       tips: [
-        "Plan the layout before starting",
-        "Label everything clearly",
-        "Take photos for your portfolio"
-      ]
+        'Plan the layout before starting',
+        'Label everything clearly',
+        'Take photos for your portfolio',
+      ],
     },
     {
-      milestone: "Portfolio 50% Complete",
+      milestone: 'Portfolio 50% Complete',
       icon: FileText,
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/20",
-      description: "Reach the halfway point in your evidence collection",
-      importance: "Staying on track prevents Year 4 panic",
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/20',
+      description: 'Reach the halfway point in your evidence collection',
+      importance: 'Staying on track prevents Year 4 panic',
       tips: [
-        "Review portfolio requirements regularly",
-        "Collect evidence as you complete work",
-        "Get supervisor signatures while tasks are fresh"
-      ]
-    }
+        'Review portfolio requirements regularly',
+        'Collect evidence as you complete work',
+        'Get supervisor signatures while tasks are fresh',
+      ],
+    },
   ];
 
   const weeklyScheduleExample = {
-    monday: { location: "Site", activities: "Commercial installation - containment work" },
-    tuesday: { location: "Site", activities: "Distribution board installation" },
-    wednesday: { location: "College", activities: "BS 7671 theory, testing practical" },
-    thursday: { location: "Site", activities: "Final circuits and testing under supervision" },
-    friday: { location: "Site", activities: "Snagging, documentation, portfolio time" }
+    monday: { location: 'Site', activities: 'Commercial installation - containment work' },
+    tuesday: { location: 'Site', activities: 'Distribution board installation' },
+    wednesday: { location: 'College', activities: 'BS 7671 theory, testing practical' },
+    thursday: { location: 'Site', activities: 'Final circuits and testing under supervision' },
+    friday: { location: 'Site', activities: 'Snagging, documentation, portfolio time' },
   };
 
   const renderHeroSection = () => (
@@ -359,13 +381,16 @@ const Year2 = () => {
             <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 mb-2">
               Development Year
             </Badge>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">Year 2: Regulations & Testing</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              Year 2: Regulations & Testing
+            </h1>
           </div>
         </div>
 
         <p className="text-white text-lg mb-6 max-w-3xl">
-          Building on your foundations, Year 2 introduces the critical skills of understanding wiring regulations
-          and electrical testing. This knowledge underpins everything you'll do as a qualified electrician.
+          Building on your foundations, Year 2 introduces the critical skills of understanding
+          wiring regulations and electrical testing. This knowledge underpins everything you'll do
+          as a qualified electrician.
         </p>
 
         {/* Progress indicator */}
@@ -413,9 +438,7 @@ const Year2 = () => {
           <TrendingUp className="h-5 w-5" />
           Salary Progression
         </CardTitle>
-        <p className="text-white text-sm">
-          Your value increases as your skills develop
-        </p>
+        <p className="text-white text-sm">Your value increases as your skills develop</p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-3 gap-4 text-center">
@@ -434,8 +457,8 @@ const Year2 = () => {
         </div>
         <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
           <p className="text-white text-sm">
-            <strong className="text-green-400">Note:</strong> Salaries vary by employer, region, and overtime.
-            Your growing skills and productivity justify regular pay increases.
+            <strong className="text-green-400">Note:</strong> Salaries vary by employer, region, and
+            overtime. Your growing skills and productivity justify regular pay increases.
           </p>
         </div>
       </CardContent>
@@ -449,17 +472,21 @@ const Year2 = () => {
           <BookOpen className="h-5 w-5" />
           BS 7671 Survival Guide
         </CardTitle>
-        <p className="text-white text-sm">
-          The Wiring Regulations - your new best friend
-        </p>
+        <p className="text-white text-sm">The Wiring Regulations - your new best friend</p>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <h4 className="font-medium text-white">The 7 Parts:</h4>
           {bs7671Survival.parts.map((part, index) => (
-            <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10">
+            <div
+              key={index}
+              className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10"
+            >
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30 w-8 justify-center">
+                <Badge
+                  variant="outline"
+                  className="bg-blue-500/20 text-blue-400 border-blue-500/30 w-8 justify-center"
+                >
                   {part.number}
                 </Badge>
                 <span className="text-white text-sm">{part.title}</span>
@@ -490,9 +517,7 @@ const Year2 = () => {
           <Gauge className="h-5 w-5" />
           Test Equipment Guide
         </CardTitle>
-        <p className="text-white text-sm">
-          Understanding your testing tools
-        </p>
+        <p className="text-white text-sm">Understanding your testing tools</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -505,7 +530,11 @@ const Year2 = () => {
               <p className="text-white text-sm mb-2">{item.purpose}</p>
               <div className="flex flex-wrap gap-1 mb-2">
                 {item.tests.map((test, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs bg-yellow-500/10 text-yellow-400 border-yellow-500/30">
+                  <Badge
+                    key={idx}
+                    variant="outline"
+                    className="text-xs bg-yellow-500/10 text-yellow-400 border-yellow-500/30"
+                  >
                     {test}
                   </Badge>
                 ))}
@@ -525,9 +554,7 @@ const Year2 = () => {
           <Calendar className="h-5 w-5 text-elec-yellow" />
           Your Year 2 Journey
         </CardTitle>
-        <p className="text-white text-sm">
-          Click each period to see what to expect
-        </p>
+        <p className="text-white text-sm">Click each period to see what to expect</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -593,12 +620,13 @@ const Year2 = () => {
         <Target className="h-5 w-5 text-elec-yellow" />
         Key Learning Areas
       </h2>
-      <p className="text-white">
-        Progress bars show typical expectations by Year 2 end.
-      </p>
+      <p className="text-white">Progress bars show typical expectations by Year 2 end.</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {keyLearningAreas.map((area, index) => (
-          <Card key={index} className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}>
+          <Card
+            key={index}
+            className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}
+          >
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className={`flex items-center gap-2 text-lg ${area.color}`}>
@@ -632,9 +660,7 @@ const Year2 = () => {
           <Award className="h-5 w-5" />
           Key Development Milestones
         </CardTitle>
-        <p className="text-white text-sm">
-          Major achievements to target during Year 2
-        </p>
+        <p className="text-white text-sm">Major achievements to target during Year 2</p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -670,20 +696,22 @@ const Year2 = () => {
           <Clock className="h-5 w-5" />
           Typical Week Example
         </CardTitle>
-        <p className="text-white text-sm">
-          More complex work and increased responsibility
-        </p>
+        <p className="text-white text-sm">More complex work and increased responsibility</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           {Object.entries(weeklyScheduleExample).map(([day, info], index) => (
-            <div key={index} className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10">
+            <div
+              key={index}
+              className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10"
+            >
               <div className="w-24 font-medium text-white capitalize">{day}</div>
               <Badge
                 variant="outline"
-                className={info.location === "College"
-                  ? "bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center"
-                  : "bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center"
+                className={
+                  info.location === 'College'
+                    ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center'
+                    : 'bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center'
                 }
               >
                 {info.location}
@@ -703,9 +731,7 @@ const Year2 = () => {
           <AlertTriangle className="h-5 w-5" />
           Year 2 Challenges & Solutions
         </CardTitle>
-        <p className="text-white text-sm">
-          Common hurdles and how to overcome them
-        </p>
+        <p className="text-white text-sm">Common hurdles and how to overcome them</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -796,7 +822,9 @@ const Year2 = () => {
                   <period.icon className={`h-4 w-4 ${period.color}`} />
                   <span className="font-medium text-white">{period.title}</span>
                 </div>
-                <Badge variant="outline" className="mb-2 text-xs">{period.month}</Badge>
+                <Badge variant="outline" className="mb-2 text-xs">
+                  {period.month}
+                </Badge>
                 <p className="text-white text-xs">{period.focus}</p>
               </div>
             ))}
@@ -813,7 +841,10 @@ const Year2 = () => {
           <div className="space-y-2 pt-2">
             {bs7671Survival.parts.slice(0, 4).map((part, index) => (
               <div key={index} className="flex items-center gap-2 p-2 rounded-lg bg-white/5">
-                <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30 w-6 justify-center text-xs">
+                <Badge
+                  variant="outline"
+                  className="bg-blue-500/20 text-blue-400 border-blue-500/30 w-6 justify-center text-xs"
+                >
                   {part.number}
                 </Badge>
                 <span className="text-white text-xs">{part.title}</span>
@@ -849,7 +880,10 @@ const Year2 = () => {
         <MobileAccordionContent>
           <div className="space-y-3 pt-2">
             {keyLearningAreas.map((area, index) => (
-              <div key={index} className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}>
+              <div
+                key={index}
+                className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span className={`font-medium ${area.color}`}>{area.title}</span>
                   <span className={`text-sm ${area.color}`}>{area.progress}%</span>
@@ -889,7 +923,10 @@ const Year2 = () => {
         <MobileAccordionContent>
           <div className="space-y-3 pt-2">
             {commonChallenges.map((item, index) => (
-              <div key={index} className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+              <div
+                key={index}
+                className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
+              >
                 <div className="font-medium text-orange-400 text-sm mb-1">{item.challenge}</div>
                 <p className="text-white text-xs mb-2">{item.description}</p>
                 <div className="text-white text-xs">
@@ -928,9 +965,7 @@ const Year2 = () => {
 
           {renderMilestones()}
 
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-            {renderWeeklySchedule()}
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">{renderWeeklySchedule()}</div>
 
           {renderChallenges()}
         </div>

@@ -13,10 +13,14 @@ export const SmartHomeModule5Section3Installation = () => {
       <CardContent className="text-foreground space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Installation Best Practices</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Installation Best Practices
+            </h4>
             <div className="space-y-3">
               <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
-                <p className="text-green-400 font-semibold text-sm mb-1">Contact Sensor Alignment</p>
+                <p className="text-green-400 font-semibold text-sm mb-1">
+                  Contact Sensor Alignment
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Maximum 15mm gap when closed</li>
                   <li>• Secure mounting prevents tampering</li>
@@ -86,7 +90,9 @@ export const SmartHomeModule5Section3Installation = () => {
               <h4 className="text-foreground font-semibold mb-2">Critical Considerations</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-orange-400 font-semibold text-sm mb-1">False Alarm Management</p>
+                  <p className="text-orange-400 font-semibold text-sm mb-1">
+                    False Alarm Management
+                  </p>
                   <ul className="text-xs text-foreground space-y-1">
                     <li>• Proper sensor sensitivity settings</li>
                     <li>• Pet-immune configurations</li>
@@ -94,7 +100,9 @@ export const SmartHomeModule5Section3Installation = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-orange-400 font-semibold text-sm mb-1">Security Bypass Risks</p>
+                  <p className="text-orange-400 font-semibold text-sm mb-1">
+                    Security Bypass Risks
+                  </p>
                   <ul className="text-xs text-foreground space-y-1">
                     <li>• Alternative entry methods</li>
                     <li>• System jamming vulnerabilities</li>

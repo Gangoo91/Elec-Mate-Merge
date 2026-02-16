@@ -6,9 +6,7 @@ interface KeyboardNavigationProviderProps {
 }
 
 // Simplified pass-through component - keyboard shortcuts removed
-const KeyboardNavigationProvider: React.FC<KeyboardNavigationProviderProps> = ({ 
-  children
-}) => {
+const KeyboardNavigationProvider: React.FC<KeyboardNavigationProviderProps> = ({ children }) => {
   return <>{children}</>;
 };
 

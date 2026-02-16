@@ -1,72 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m3s4-check1",
-    question: "Which building type typically requires maintained emergency lighting?",
-    options: ["Offices during daytime", "Factories", "Cinemas and theatres", "Car parks"],
+    id: 'emergencylighting-m3s4-check1',
+    question: 'Which building type typically requires maintained emergency lighting?',
+    options: ['Offices during daytime', 'Factories', 'Cinemas and theatres', 'Car parks'],
     correctIndex: 2,
-    explanation: "Cinemas, theatres, and entertainment venues typically require maintained emergency lighting because normal lighting is often dimmed or off during performances. Maintained luminaires ensure continuous illumination."
+    explanation:
+      'Cinemas, theatres, and entertainment venues typically require maintained emergency lighting because normal lighting is often dimmed or off during performances. Maintained luminaires ensure continuous illumination.',
   },
   {
-    id: "emergencylighting-m3s4-check2",
-    question: "What factor should increase illumination levels beyond minimum requirements?",
-    options: ["Building age", "Vulnerable occupants", "Number of exits", "Time of day"],
+    id: 'emergencylighting-m3s4-check2',
+    question: 'What factor should increase illumination levels beyond minimum requirements?',
+    options: ['Building age', 'Vulnerable occupants', 'Number of exits', 'Time of day'],
     correctIndex: 1,
-    explanation: "Vulnerable occupants (elderly, disabled, unfamiliar visitors) may require enhanced illumination levels to compensate for reduced visual acuity or slower evacuation speeds. This is determined by risk assessment."
+    explanation:
+      'Vulnerable occupants (elderly, disabled, unfamiliar visitors) may require enhanced illumination levels to compensate for reduced visual acuity or slower evacuation speeds. This is determined by risk assessment.',
   },
   {
-    id: "emergencylighting-m3s4-check3",
-    question: "What determines whether 1-hour or 3-hour duration is appropriate?",
-    options: ["Building size", "Risk assessment", "Budget", "Luminaire type"],
+    id: 'emergencylighting-m3s4-check3',
+    question: 'What determines whether 1-hour or 3-hour duration is appropriate?',
+    options: ['Building size', 'Risk assessment', 'Budget', 'Luminaire type'],
     correctIndex: 1,
-    explanation: "Risk assessment determines duration requirements. 3 hours is standard; 1 hour is only appropriate where immediate evacuation with no reoccupation is documented in the fire risk assessment."
-  }
+    explanation:
+      'Risk assessment determines duration requirements. 3 hours is standard; 1 hour is only appropriate where immediate evacuation with no reoccupation is documented in the fire risk assessment.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I assess risk for emergency lighting design?",
-    answer: "Review the fire risk assessment, consider occupant characteristics (vulnerable, unfamiliar), building complexity, activities conducted, and sleeping risk. Consult with the responsible person and fire safety professionals."
+    question: 'How do I assess risk for emergency lighting design?',
+    answer:
+      'Review the fire risk assessment, consider occupant characteristics (vulnerable, unfamiliar), building complexity, activities conducted, and sleeping risk. Consult with the responsible person and fire safety professionals.',
   },
   {
-    question: "When should I exceed minimum illumination levels?",
-    answer: "When occupants have visual impairments, are unfamiliar with the building, include vulnerable groups (children, elderly), or when hazards are present along escape routes. Document justification in design documentation."
+    question: 'When should I exceed minimum illumination levels?',
+    answer:
+      'When occupants have visual impairments, are unfamiliar with the building, include vulnerable groups (children, elderly), or when hazards are present along escape routes. Document justification in design documentation.',
   },
   {
-    question: "How does building use affect emergency lighting design?",
-    answer: "Building use determines occupant familiarity, lighting conditions (dark venues need maintained), sleeping risk (care homes need enhanced), and evacuation complexity. Each factor may require design adjustments."
+    question: 'How does building use affect emergency lighting design?',
+    answer:
+      'Building use determines occupant familiarity, lighting conditions (dark venues need maintained), sleeping risk (care homes need enhanced), and evacuation complexity. Each factor may require design adjustments.',
   },
   {
-    question: "What special considerations apply to sleeping accommodation?",
-    answer: "Sleeping accommodation (hotels, care homes, hospitals) typically requires maintained emergency lighting, enhanced response times, and may need audio warnings linked to the fire alarm system."
-  }
+    question: 'What special considerations apply to sleeping accommodation?',
+    answer:
+      'Sleeping accommodation (hotels, care homes, hospitals) typically requires maintained emergency lighting, enhanced response times, and may need audio warnings linked to the fire alarm system.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A nightclub has minimal normal lighting during operation. What type of emergency lighting operation is required?",
-  options: [
-    "Non-maintained (only during power failure)",
-    "Maintained (continuously lit)",
-    "Sustained (lit but at reduced output)",
-    "Auto-test only"
-  ],
-  correctAnswer: 1,
-  explanation: "Maintained operation is required because normal lighting is minimal during normal operation. Emergency luminaires must be continuously lit so they don't suddenly appear during a failure, potentially causing confusion."
-  }
+    question:
+      'A nightclub has minimal normal lighting during operation. What type of emergency lighting operation is required?',
+    options: [
+      'Non-maintained (only during power failure)',
+      'Maintained (continuously lit)',
+      'Sustained (lit but at reduced output)',
+      'Auto-test only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Maintained operation is required because normal lighting is minimal during normal operation. Emergency luminaires must be continuously lit so they don't suddenly appear during a failure, potentially causing confusion.",
+  },
 ];
 
 const EmergencyLightingModule3Section4 = () => {
   useSEO({
-    title: "Risk-Based Design Adjustments | Emergency Lighting Module 3.4",
-    description: "Adapt emergency lighting design for specific risks, occupant types, building uses, and hazards using risk assessment principles."
+    title: 'Risk-Based Design Adjustments | Emergency Lighting Module 3.4',
+    description:
+      'Adapt emergency lighting design for specific risks, occupant types, building uses, and hazards using risk assessment principles.',
   });
 
   return (
@@ -108,17 +118,29 @@ const EmergencyLightingModule3Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Risk assessment:</strong> Drives design decisions</li>
-              <li><strong>Vulnerable:</strong> Enhanced illumination</li>
-              <li><strong>Dark venues:</strong> Maintained operation</li>
+              <li>
+                <strong>Risk assessment:</strong> Drives design decisions
+              </li>
+              <li>
+                <strong>Vulnerable:</strong> Enhanced illumination
+              </li>
+              <li>
+                <strong>Dark venues:</strong> Maintained operation
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Adjustments</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Lux levels:</strong> Above minimum where needed</li>
-              <li><strong>Duration:</strong> Based on evacuation time</li>
-              <li><strong>Mode:</strong> Maintained vs non-maintained</li>
+              <li>
+                <strong>Lux levels:</strong> Above minimum where needed
+              </li>
+              <li>
+                <strong>Duration:</strong> Based on evacuation time
+              </li>
+              <li>
+                <strong>Mode:</strong> Maintained vs non-maintained
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +150,12 @@ const EmergencyLightingModule3Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply risk assessment to design",
-              "Adjust for vulnerable occupants",
-              "Select appropriate operating modes",
-              "Modify duration requirements",
-              "Account for building use",
-              "Document design decisions"
+              'Apply risk assessment to design',
+              'Adjust for vulnerable occupants',
+              'Select appropriate operating modes',
+              'Modify duration requirements',
+              'Account for building use',
+              'Document design decisions',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,8 +175,8 @@ const EmergencyLightingModule3Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different building uses create different risks and requirements. Emergency
-              lighting design must account for how the building is used and who occupies it.
+              Different building uses create different risks and requirements. Emergency lighting
+              design must account for how the building is used and who occupies it.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -190,18 +212,28 @@ const EmergencyLightingModule3Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The people who use a building significantly affect emergency lighting
-              requirements. Vulnerable or unfamiliar occupants may need enhanced provision.
+              The people who use a building significantly affect emergency lighting requirements.
+              Vulnerable or unfamiliar occupants may need enhanced provision.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Occupant Factors:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Visual impairment:</strong> Higher lux levels may be needed</li>
-                <li><strong>Mobility impairment:</strong> Longer evacuation times, extended duration</li>
-                <li><strong>Unfamiliarity:</strong> Clearer signage, more frequent luminaires</li>
-                <li><strong>Children:</strong> Lower mounting heights for visibility</li>
-                <li><strong>Sleeping occupants:</strong> Maintained with audio warning</li>
+                <li>
+                  <strong>Visual impairment:</strong> Higher lux levels may be needed
+                </li>
+                <li>
+                  <strong>Mobility impairment:</strong> Longer evacuation times, extended duration
+                </li>
+                <li>
+                  <strong>Unfamiliarity:</strong> Clearer signage, more frequent luminaires
+                </li>
+                <li>
+                  <strong>Children:</strong> Lower mounting heights for visibility
+                </li>
+                <li>
+                  <strong>Sleeping occupants:</strong> Maintained with audio warning
+                </li>
               </ul>
             </div>
 
@@ -232,8 +264,8 @@ const EmergencyLightingModule3Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              While 3 hours is standard, the risk assessment may justify shorter or
-              longer durations based on specific circumstances.
+              While 3 hours is standard, the risk assessment may justify shorter or longer durations
+              based on specific circumstances.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -266,7 +298,9 @@ const EmergencyLightingModule3Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Risk Assessment Process</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Risk Assessment Process
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Review fire risk assessment for the premises</li>
                 <li>Identify occupant characteristics and vulnerabilities</li>
@@ -277,12 +311,22 @@ const EmergencyLightingModule3Section4 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Risk Assessment Errors</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Risk Assessment Errors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Generic design:</strong> — Each building needs specific assessment</li>
-                <li><strong>Ignoring occupants:</strong> — Vulnerable users need consideration</li>
-                <li><strong>Minimum only:</strong> — Standards are minimum, not optimum</li>
-                <li><strong>No documentation:</strong> — Decisions must be recorded</li>
+                <li>
+                  <strong>Generic design:</strong> — Each building needs specific assessment
+                </li>
+                <li>
+                  <strong>Ignoring occupants:</strong> — Vulnerable users need consideration
+                </li>
+                <li>
+                  <strong>Minimum only:</strong> — Standards are minimum, not optimum
+                </li>
+                <li>
+                  <strong>No documentation:</strong> — Decisions must be recorded
+                </li>
               </ul>
             </div>
           </div>
@@ -328,10 +372,7 @@ const EmergencyLightingModule3Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -1,4 +1,3 @@
-
 import { electricalTheorySections } from './electricalTheory';
 import type { SectionData } from './courseTypes';
 

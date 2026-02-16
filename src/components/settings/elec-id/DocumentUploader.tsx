@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-import { Textarea } from "@/components/ui/textarea";
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Progress } from '@/components/ui/progress';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Dialog,
   DialogContent,
@@ -13,12 +13,8 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert";
+} from '@/components/ui/dialog';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   IdCard,
   GraduationCap,
@@ -44,100 +40,100 @@ import {
   Lightbulb,
   Edit3,
   Send,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import DocumentCamera from "./DocumentCamera";
-import { OCRPreview, type ExtractedField } from "./OCRPreview";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import DocumentCamera from './DocumentCamera';
+import { OCRPreview, type ExtractedField } from './OCRPreview';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
 
 // Document type configuration
 const DOCUMENT_TYPES = [
   {
-    type: "ecs_card",
-    label: "ECS Card",
+    type: 'ecs_card',
+    label: 'ECS Card',
     icon: IdCard,
-    description: "JIB Electrotechnical Certification Scheme card",
+    description: 'JIB Electrotechnical Certification Scheme card',
     required: true,
-    color: "text-yellow-400",
-    bgColor: "bg-yellow-500/20",
+    color: 'text-yellow-400',
+    bgColor: 'bg-yellow-500/20',
     tips: [
-      "Place card on a dark, flat surface",
-      "Ensure all text and photo are visible",
-      "Avoid glare on holographic elements",
+      'Place card on a dark, flat surface',
+      'Ensure all text and photo are visible',
+      'Avoid glare on holographic elements',
     ],
   },
   {
-    type: "qualification",
-    label: "Qualification",
+    type: 'qualification',
+    label: 'Qualification',
     icon: GraduationCap,
-    description: "City & Guilds, NVQ, or other formal qualifications",
+    description: 'City & Guilds, NVQ, or other formal qualifications',
     required: false,
     multiple: true,
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20",
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/20',
     tips: [
-      "Capture entire certificate",
-      "Certificate number must be visible",
-      "Include issuing body logo if possible",
+      'Capture entire certificate',
+      'Certificate number must be visible',
+      'Include issuing body logo if possible',
     ],
   },
   {
-    type: "training",
-    label: "Training Certificate",
+    type: 'training',
+    label: 'Training Certificate',
     icon: Award,
-    description: "Course completion certificates",
+    description: 'Course completion certificates',
     required: false,
     multiple: true,
-    color: "text-green-400",
-    bgColor: "bg-green-500/20",
+    color: 'text-green-400',
+    bgColor: 'bg-green-500/20',
     tips: [
-      "Show completion date clearly",
-      "Include provider name",
-      "Capture any unique identifiers",
+      'Show completion date clearly',
+      'Include provider name',
+      'Capture any unique identifiers',
     ],
   },
   {
-    type: "cscs",
-    label: "CSCS Card",
+    type: 'cscs',
+    label: 'CSCS Card',
     icon: HardHat,
-    description: "Construction Skills Certification Scheme card",
+    description: 'Construction Skills Certification Scheme card',
     required: false,
-    color: "text-orange-400",
-    bgColor: "bg-orange-500/20",
+    color: 'text-orange-400',
+    bgColor: 'bg-orange-500/20',
     tips: [
-      "Place on contrasting background",
-      "Card number must be readable",
-      "Show expiry date clearly",
+      'Place on contrasting background',
+      'Card number must be readable',
+      'Show expiry date clearly',
     ],
   },
   {
-    type: "driving_licence",
-    label: "Driving Licence",
+    type: 'driving_licence',
+    label: 'Driving Licence',
     icon: Car,
-    description: "UK driving licence for verification",
+    description: 'UK driving licence for verification',
     required: false,
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/20",
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/20',
     tips: [
-      "Capture front of licence",
-      "Avoid covering any information",
-      "Holograms may cause glare",
+      'Capture front of licence',
+      'Avoid covering any information',
+      'Holograms may cause glare',
     ],
   },
   {
-    type: "insurance",
-    label: "Insurance",
+    type: 'insurance',
+    label: 'Insurance',
     icon: Shield,
-    description: "Public liability or professional indemnity insurance",
+    description: 'Public liability or professional indemnity insurance',
     required: false,
-    color: "text-cyan-400",
-    bgColor: "bg-cyan-500/20",
+    color: 'text-cyan-400',
+    bgColor: 'bg-cyan-500/20',
     tips: [
-      "Show policy number clearly",
-      "Coverage amount must be visible",
-      "Include expiry/renewal date",
+      'Show policy number clearly',
+      'Coverage amount must be visible',
+      'Include expiry/renewal date',
     ],
   },
 ];
@@ -145,45 +141,45 @@ const DOCUMENT_TYPES = [
 // Verification status configuration
 const VERIFICATION_STATUS = {
   pending: {
-    label: "Pending Review",
-    color: "text-yellow-400",
-    bgColor: "bg-yellow-500/20",
+    label: 'Pending Review',
+    color: 'text-yellow-400',
+    bgColor: 'bg-yellow-500/20',
     icon: Clock,
   },
   processing: {
-    label: "Processing",
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20",
+    label: 'Processing',
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/20',
     icon: Loader2,
   },
   verified: {
-    label: "Verified",
-    color: "text-green-400",
-    bgColor: "bg-green-500/20",
+    label: 'Verified',
+    color: 'text-green-400',
+    bgColor: 'bg-green-500/20',
     icon: CheckCircle2,
   },
   needs_review: {
-    label: "Under Review",
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/20",
+    label: 'Under Review',
+    color: 'text-amber-400',
+    bgColor: 'bg-amber-500/20',
     icon: Eye,
   },
   rejected: {
-    label: "Rejected",
-    color: "text-red-400",
-    bgColor: "bg-red-500/20",
+    label: 'Rejected',
+    color: 'text-red-400',
+    bgColor: 'bg-red-500/20',
     icon: AlertCircle,
   },
   expired: {
-    label: "Expired",
-    color: "text-orange-400",
-    bgColor: "bg-orange-500/20",
+    label: 'Expired',
+    color: 'text-orange-400',
+    bgColor: 'bg-orange-500/20',
     icon: AlertTriangle,
   },
   appealed: {
-    label: "Appeal Submitted",
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/20",
+    label: 'Appeal Submitted',
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/20',
     icon: MessageSquare,
   },
 };
@@ -198,7 +194,7 @@ interface Document {
   expiry_date?: string;
   file_url?: string;
   file_path?: string;
-  display_url?: string;  // Generated signed URL for display
+  display_url?: string; // Generated signed URL for display
   verification_status: keyof typeof VERIFICATION_STATUS;
   verification_confidence?: number;
   extracted_data?: Record<string, any>;
@@ -211,7 +207,7 @@ interface Document {
 }
 
 interface VerificationResult {
-  status: "verified" | "needs_review" | "rejected";
+  status: 'verified' | 'needs_review' | 'rejected';
   confidence: number;
   extractedData: Record<string, string | null>;
   extractionConfidence: Record<string, number>;
@@ -230,7 +226,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
-  const [selectedDocType, setSelectedDocType] = useState<string>("");
+  const [selectedDocType, setSelectedDocType] = useState<string>('');
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploadPreview, setUploadPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -239,16 +235,16 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
   const [verificationResult, setVerificationResult] = useState<VerificationResult | null>(null);
 
   // Form fields for manual entry/correction
-  const [documentName, setDocumentName] = useState("");
-  const [issuingBody, setIssuingBody] = useState("");
-  const [documentNumber, setDocumentNumber] = useState("");
-  const [issueDate, setIssueDate] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
+  const [documentName, setDocumentName] = useState('');
+  const [issuingBody, setIssuingBody] = useState('');
+  const [documentNumber, setDocumentNumber] = useState('');
+  const [issueDate, setIssueDate] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
 
   // Rejection handling
   const [isRejectionDialogOpen, setIsRejectionDialogOpen] = useState(false);
   const [rejectedDocument, setRejectedDocument] = useState<Document | null>(null);
-  const [appealNotes, setAppealNotes] = useState("");
+  const [appealNotes, setAppealNotes] = useState('');
   const [isSubmittingAppeal, setIsSubmittingAppeal] = useState(false);
 
   // Edit mode for corrections
@@ -289,7 +285,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
           // Remove from pending if verification completed
           const newDoc = payload.new as Document;
           if (newDoc.verification_status !== 'pending') {
-            setPendingVerifications(prev => {
+            setPendingVerifications((prev) => {
               const next = new Set(prev);
               next.delete(newDoc.id);
               return next;
@@ -314,18 +310,18 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       console.log('[Elec-ID] Polling for verification updates...');
       // Fetch fresh data from database
       const { data } = await supabase
-        .from("elec_id_documents")
-        .select("id, verification_status")
-        .in("id", Array.from(pendingVerifications));
+        .from('elec_id_documents')
+        .select('id, verification_status')
+        .in('id', Array.from(pendingVerifications));
 
       if (data) {
         // Remove any docs that are no longer pending
         const stillPending = new Set(
-          data.filter(d => d.verification_status === 'pending').map(d => d.id)
+          data.filter((d) => d.verification_status === 'pending').map((d) => d.id)
         );
-        setPendingVerifications(prev => {
+        setPendingVerifications((prev) => {
           const next = new Set<string>();
-          prev.forEach(id => {
+          prev.forEach((id) => {
             if (stillPending.has(id)) {
               next.add(id);
             }
@@ -357,10 +353,10 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
     try {
       const { data, error } = await supabase
-        .from("elec_id_documents")
-        .select("*")
-        .eq("profile_id", profile.id)
-        .order("created_at", { ascending: false });
+        .from('elec_id_documents')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
 
@@ -376,11 +372,11 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
             }
             // Generate signed URL for display (valid for 1 hour)
             const { data: urlData } = await supabase.storage
-              .from("elec-id-documents")
+              .from('elec-id-documents')
               .createSignedUrl(filePath, 3600);
             return {
               ...doc,
-              display_url: urlData?.signedUrl || null
+              display_url: urlData?.signedUrl || null,
             };
           }
           return doc;
@@ -389,26 +385,26 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
       setDocuments(docsWithUrls || []);
     } catch (err) {
-      console.error("Error fetching documents:", err);
+      console.error('Error fetching documents:', err);
     }
   };
 
   const handleFileSelect = useCallback((file: File) => {
     if (file) {
-      const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp", "application/pdf"];
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'application/pdf'];
       if (!validTypes.includes(file.type)) {
         toast({
-          title: "Invalid File Type",
-          description: "Please upload a PNG, JPG, or PDF file",
-          variant: "destructive",
+          title: 'Invalid File Type',
+          description: 'Please upload a PNG, JPG, or PDF file',
+          variant: 'destructive',
         });
         return;
       }
       if (file.size > 10 * 1024 * 1024) {
         toast({
-          title: "File Too Large",
-          description: "File must be less than 10MB",
-          variant: "destructive",
+          title: 'File Too Large',
+          description: 'File must be less than 10MB',
+          variant: 'destructive',
         });
         return;
       }
@@ -454,11 +450,11 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
     setSelectedDocType(docType);
     setUploadFile(null);
     setUploadPreview(null);
-    setDocumentName("");
-    setIssuingBody("");
-    setDocumentNumber("");
-    setIssueDate("");
-    setExpiryDate("");
+    setDocumentName('');
+    setIssuingBody('');
+    setDocumentNumber('');
+    setIssueDate('');
+    setExpiryDate('');
     setVerificationResult(null);
     setIsEditMode(false);
     setIsUploadDialogOpen(true);
@@ -483,11 +479,11 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       }, 200);
 
       // Upload file to Supabase Storage
-      const fileExt = uploadFile.name.split(".").pop();
+      const fileExt = uploadFile.name.split('.').pop();
       const fileName = `${profile.id}/${selectedDocType}_${Date.now()}.${fileExt}`;
 
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("elec-id-documents")
+        .from('elec-id-documents')
         .upload(fileName, uploadFile);
 
       if (uploadError) {
@@ -501,14 +497,14 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       // INSERT document record into database BEFORE verification
       // This is critical - the verify-document function needs a record to UPDATE
       const { data: docRecord, error: insertError } = await supabase
-        .from("elec_id_documents")
+        .from('elec_id_documents')
         .insert({
           profile_id: profile.id,
           document_type: selectedDocType,
           document_name: documentName || uploadFile.name,
-          file_path: fileName,  // Store permanent path, NOT signed URL
-          file_url: fileName,   // Store path - generate signed URL when displaying
-          verification_status: "pending",
+          file_path: fileName, // Store permanent path, NOT signed URL
+          file_url: fileName, // Store path - generate signed URL when displaying
+          verification_status: 'pending',
           issuing_body: issuingBody || null,
           document_number: documentNumber || null,
           issue_date: issueDate || null,
@@ -518,30 +514,29 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
         .single();
 
       if (insertError) {
-        console.error("Failed to create document record:", insertError);
-        throw new Error("Failed to save document record");
+        console.error('Failed to create document record:', insertError);
+        throw new Error('Failed to save document record');
       }
 
       // Add to pending verifications for UI feedback (shows processing spinner)
-      setPendingVerifications(prev => new Set(prev).add(docRecord.id));
+      setPendingVerifications((prev) => new Set(prev).add(docRecord.id));
 
       // Get signed URL for AI verification (1 hour expiry)
-      console.log("[Elec-ID] Getting signed URL for document...");
+      console.log('[Elec-ID] Getting signed URL for document...');
       const { data: urlData, error: urlError } = await supabase.storage
-        .from("elec-id-documents")
+        .from('elec-id-documents')
         .createSignedUrl(fileName, 3600);
 
       if (urlError || !urlData?.signedUrl) {
-        console.error("[Elec-ID] Failed to get signed URL:", urlError);
-        throw new Error("Failed to generate document URL for verification");
+        console.error('[Elec-ID] Failed to get signed URL:', urlError);
+        throw new Error('Failed to generate document URL for verification');
       }
-      console.log("[Elec-ID] Signed URL obtained, starting background verification...");
+      console.log('[Elec-ID] Signed URL obtained, starting background verification...');
 
       // Fire verification in background - don't wait for it
       // This prevents the spinner from hanging while Gemini processes the image
-      supabase.functions.invoke(
-        "verify-document",
-        {
+      supabase.functions
+        .invoke('verify-document', {
           body: {
             documentId: docRecord.id,
             fileUrl: urlData.signedUrl,
@@ -553,45 +548,47 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
             expiryDate,
             profileId: profile.id,
           },
-        }
-      ).then(({ data: verifyResult, error: verifyError }) => {
-        console.log("[Elec-ID] Background verification complete:", { verifyResult, verifyError });
-        if (verifyError) {
-          console.error("[Elec-ID] Background verification error:", verifyError);
+        })
+        .then(({ data: verifyResult, error: verifyError }) => {
+          console.log('[Elec-ID] Background verification complete:', { verifyResult, verifyError });
+          if (verifyError) {
+            console.error('[Elec-ID] Background verification error:', verifyError);
+            toast({
+              title: 'Verification Issue',
+              description:
+                'Automatic verification encountered a problem. Your document has been queued for manual review.',
+              variant: 'destructive',
+            });
+          }
+          // Refresh documents list to show updated status
+          fetchDocuments();
+        })
+        .catch((err) => {
+          console.error('[Elec-ID] Background verification failed:', err);
           toast({
-            title: "Verification Issue",
-            description: "Automatic verification encountered a problem. Your document has been queued for manual review.",
-            variant: "destructive",
+            title: 'Verification Issue',
+            description:
+              'Automatic verification encountered a problem. Your document has been queued for manual review.',
+            variant: 'destructive',
           });
-        }
-        // Refresh documents list to show updated status
-        fetchDocuments();
-      }).catch((err) => {
-        console.error("[Elec-ID] Background verification failed:", err);
-        toast({
-          title: "Verification Issue",
-          description: "Automatic verification encountered a problem. Your document has been queued for manual review.",
-          variant: "destructive",
+          fetchDocuments();
         });
-        fetchDocuments();
-      });
 
       // Show success immediately - verification happens in background
       toast({
-        title: "Document Uploaded",
-        description: "Your document is being verified. This may take a moment.",
+        title: 'Document Uploaded',
+        description: 'Your document is being verified. This may take a moment.',
       });
 
       // Refresh list and close dialog
       await fetchDocuments();
       setIsUploadDialogOpen(false);
-
     } catch (error: any) {
-      console.error("Upload error:", error);
+      console.error('Upload error:', error);
       toast({
-        title: "Upload Failed",
-        description: error.message || "Failed to upload document",
-        variant: "destructive",
+        title: 'Upload Failed',
+        description: error.message || 'Failed to upload document',
+        variant: 'destructive',
       });
     } finally {
       setIsUploading(false);
@@ -615,14 +612,14 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
     try {
       // Update the document with user corrections
       const { error } = await supabase
-        .from("elec_id_documents")
+        .from('elec_id_documents')
         .update({
           document_name: documentName,
           issuing_body: issuingBody,
           document_number: documentNumber,
           issue_date: issueDate || null,
           expiry_date: expiryDate || null,
-          verification_status: "needs_review",
+          verification_status: 'needs_review',
           user_corrections: {
             documentName,
             issuingBody,
@@ -632,25 +629,25 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
           },
           corrections_applied_at: new Date().toISOString(),
         })
-        .eq("profile_id", profile.id)
-        .order("created_at", { ascending: false })
+        .eq('profile_id', profile.id)
+        .order('created_at', { ascending: false })
         .limit(1);
 
       if (error) throw error;
 
       toast({
-        title: "Corrections Saved",
-        description: "Your corrections have been saved and the document is under review.",
+        title: 'Corrections Saved',
+        description: 'Your corrections have been saved and the document is under review.',
       });
 
       await fetchDocuments();
       setIsUploadDialogOpen(false);
     } catch (err: any) {
-      console.error("Error saving corrections:", err);
+      console.error('Error saving corrections:', err);
       toast({
-        title: "Error",
-        description: "Failed to save corrections",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to save corrections',
+        variant: 'destructive',
       });
     } finally {
       setIsVerifying(false);
@@ -659,31 +656,28 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
   const handleDeleteDocument = async (docId: string) => {
     try {
-      const { error } = await supabase
-        .from("elec_id_documents")
-        .delete()
-        .eq("id", docId);
+      const { error } = await supabase.from('elec_id_documents').delete().eq('id', docId);
 
       if (error) throw error;
 
       setDocuments((prev) => prev.filter((d) => d.id !== docId));
       toast({
-        title: "Document Removed",
-        description: "The document has been removed from your profile.",
+        title: 'Document Removed',
+        description: 'The document has been removed from your profile.',
       });
     } catch (err: any) {
-      console.error("Delete error:", err);
+      console.error('Delete error:', err);
       toast({
-        title: "Error",
-        description: "Failed to remove document",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to remove document',
+        variant: 'destructive',
       });
     }
   };
 
   const handleOpenAppeal = (doc: Document) => {
     setRejectedDocument(doc);
-    setAppealNotes("");
+    setAppealNotes('');
     setIsRejectionDialogOpen(true);
   };
 
@@ -694,29 +688,30 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
     try {
       const { error } = await supabase
-        .from("elec_id_documents")
+        .from('elec_id_documents')
         .update({
-          verification_status: "appealed",
+          verification_status: 'appealed',
           appeal_submitted_at: new Date().toISOString(),
           appeal_notes: appealNotes,
         })
-        .eq("id", rejectedDocument.id);
+        .eq('id', rejectedDocument.id);
 
       if (error) throw error;
 
       toast({
-        title: "Appeal Submitted",
-        description: "Your appeal has been submitted for manual review. We'll get back to you within 24-48 hours.",
+        title: 'Appeal Submitted',
+        description:
+          "Your appeal has been submitted for manual review. We'll get back to you within 24-48 hours.",
       });
 
       await fetchDocuments();
       setIsRejectionDialogOpen(false);
     } catch (err: any) {
-      console.error("Appeal error:", err);
+      console.error('Appeal error:', err);
       toast({
-        title: "Error",
-        description: "Failed to submit appeal",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to submit appeal',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmittingAppeal(false);
@@ -736,8 +731,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
     if (data.cardType) {
       fields.push({
-        key: "cardType",
-        label: "Card Type",
+        key: 'cardType',
+        label: 'Card Type',
         value: data.cardType,
         confidence: confidence.cardType || 0,
         validated: (confidence.cardType || 0) >= 0.8,
@@ -745,17 +740,22 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
     }
     if (data.cardNumber || data.certificateNumber || data.licenceNumber) {
       fields.push({
-        key: "cardNumber",
-        label: "Document Number",
+        key: 'cardNumber',
+        label: 'Document Number',
         value: data.cardNumber || data.certificateNumber || data.licenceNumber,
-        confidence: confidence.cardNumber || confidence.certificateNumber || confidence.licenceNumber || 0,
-        validated: (confidence.cardNumber || confidence.certificateNumber || confidence.licenceNumber || 0) >= 0.8,
+        confidence:
+          confidence.cardNumber || confidence.certificateNumber || confidence.licenceNumber || 0,
+        validated:
+          (confidence.cardNumber ||
+            confidence.certificateNumber ||
+            confidence.licenceNumber ||
+            0) >= 0.8,
       });
     }
     if (data.holderName) {
       fields.push({
-        key: "holderName",
-        label: "Holder Name",
+        key: 'holderName',
+        label: 'Holder Name',
         value: data.holderName,
         confidence: confidence.holderName || 0,
         validated: (confidence.holderName || 0) >= 0.8,
@@ -763,8 +763,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
     }
     if (data.expiryDate) {
       fields.push({
-        key: "expiryDate",
-        label: "Expiry Date",
+        key: 'expiryDate',
+        label: 'Expiry Date',
         value: data.expiryDate,
         confidence: confidence.expiryDate || 0,
         validated: (confidence.expiryDate || 0) >= 0.8,
@@ -772,8 +772,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
     }
     if (data.qualificationName) {
       fields.push({
-        key: "qualificationName",
-        label: "Qualification",
+        key: 'qualificationName',
+        label: 'Qualification',
         value: data.qualificationName,
         confidence: confidence.qualificationName || 0,
         validated: (confidence.qualificationName || 0) >= 0.8,
@@ -781,8 +781,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
     }
     if (data.issuingBody) {
       fields.push({
-        key: "issuer",
-        label: "Issuing Body",
+        key: 'issuer',
+        label: 'Issuing Body',
         value: data.issuingBody,
         confidence: confidence.issuingBody || 0,
         validated: (confidence.issuingBody || 0) >= 0.8,
@@ -795,7 +795,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
   const selectedDocConfig = DOCUMENT_TYPES.find((d) => d.type === selectedDocType);
 
   // Calculate verification stats
-  const verifiedCount = documents.filter((d) => d.verification_status === "verified").length;
+  const verifiedCount = documents.filter((d) => d.verification_status === 'verified').length;
   const totalDocs = documents.length;
   const verificationProgress = totalDocs > 0 ? (verifiedCount / Math.max(totalDocs, 3)) * 100 : 0;
 
@@ -836,10 +836,10 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
             <h3 className="text-lg font-semibold text-foreground">Document Verification</h3>
             <p className="text-sm text-foreground/60 mt-0.5">
               {verifiedCount === 0
-                ? "Upload documents to verify your identity"
+                ? 'Upload documents to verify your identity'
                 : verifiedCount === 1
-                ? "1 document verified"
-                : `${verifiedCount} documents verified`}
+                  ? '1 document verified'
+                  : `${verifiedCount} documents verified`}
             </p>
             {pendingVerifications.size > 0 && (
               <div className="flex items-center gap-2 mt-2">
@@ -861,13 +861,14 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
         {DOCUMENT_TYPES.map((docType) => {
           const Icon = docType.icon;
           const uploadedDocs = getDocumentsByType(docType.type);
-          const hasVerified = uploadedDocs.some((d) => d.verification_status === "verified");
-          const hasPending = uploadedDocs.some((d) =>
-            d.verification_status === "pending" ||
-            d.verification_status === "needs_review" ||
-            d.verification_status === "appealed"
+          const hasVerified = uploadedDocs.some((d) => d.verification_status === 'verified');
+          const hasPending = uploadedDocs.some(
+            (d) =>
+              d.verification_status === 'pending' ||
+              d.verification_status === 'needs_review' ||
+              d.verification_status === 'appealed'
           );
-          const hasRejected = uploadedDocs.some((d) => d.verification_status === "rejected");
+          const hasRejected = uploadedDocs.some((d) => d.verification_status === 'rejected');
           // Only show as "processing" if it's in the current session's pendingVerifications set
           const hasProcessing = uploadedDocs.some((d) => pendingVerifications.has(d.id));
 
@@ -875,13 +876,17 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
             <div
               key={docType.type}
               className={cn(
-                "relative rounded-xl border transition-all overflow-hidden",
-                "active:scale-[0.99] touch-manipulation",
-                hasVerified ? "bg-green-500/5 border-green-500/30" :
-                hasProcessing ? "bg-blue-500/5 border-blue-500/30" :
-                hasPending ? "bg-amber-500/5 border-amber-500/30" :
-                hasRejected ? "bg-red-500/5 border-red-500/30" :
-                "bg-white/[0.03] border-white/10"
+                'relative rounded-xl border transition-all overflow-hidden',
+                'active:scale-[0.99] touch-manipulation',
+                hasVerified
+                  ? 'bg-green-500/5 border-green-500/30'
+                  : hasProcessing
+                    ? 'bg-blue-500/5 border-blue-500/30'
+                    : hasPending
+                      ? 'bg-amber-500/5 border-amber-500/30'
+                      : hasRejected
+                        ? 'bg-red-500/5 border-red-500/30'
+                        : 'bg-white/[0.03] border-white/10'
               )}
             >
               {/* Main card content - tappable area */}
@@ -891,32 +896,49 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
               >
                 {/* Icon with status indicator */}
                 <div className="relative flex-shrink-0">
-                  <div className={cn(
-                    "w-12 h-12 rounded-xl flex items-center justify-center",
-                    hasVerified ? "bg-green-500/20" :
-                    hasProcessing ? "bg-blue-500/20" :
-                    hasPending ? "bg-amber-500/20" :
-                    hasRejected ? "bg-red-500/20" :
-                    docType.bgColor
-                  )}>
-                    <Icon className={cn(
-                      "h-6 w-6",
-                      hasVerified ? "text-green-400" :
-                      hasProcessing ? "text-blue-400" :
-                      hasPending ? "text-amber-400" :
-                      hasRejected ? "text-red-400" :
-                      docType.color
-                    )} />
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-xl flex items-center justify-center',
+                      hasVerified
+                        ? 'bg-green-500/20'
+                        : hasProcessing
+                          ? 'bg-blue-500/20'
+                          : hasPending
+                            ? 'bg-amber-500/20'
+                            : hasRejected
+                              ? 'bg-red-500/20'
+                              : docType.bgColor
+                    )}
+                  >
+                    <Icon
+                      className={cn(
+                        'h-6 w-6',
+                        hasVerified
+                          ? 'text-green-400'
+                          : hasProcessing
+                            ? 'text-blue-400'
+                            : hasPending
+                              ? 'text-amber-400'
+                              : hasRejected
+                                ? 'text-red-400'
+                                : docType.color
+                      )}
+                    />
                   </div>
                   {/* Status badge */}
                   {(hasVerified || hasProcessing || hasPending || hasRejected) && (
-                    <div className={cn(
-                      "absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center",
-                      hasVerified ? "bg-green-500" :
-                      hasProcessing ? "bg-blue-500" :
-                      hasPending ? "bg-amber-500" :
-                      "bg-red-500"
-                    )}>
+                    <div
+                      className={cn(
+                        'absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center',
+                        hasVerified
+                          ? 'bg-green-500'
+                          : hasProcessing
+                            ? 'bg-blue-500'
+                            : hasPending
+                              ? 'bg-amber-500'
+                              : 'bg-red-500'
+                      )}
+                    >
                       {hasVerified ? (
                         <CheckCircle2 className="h-3 w-3 text-white" />
                       ) : hasProcessing ? (
@@ -942,14 +964,14 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   </div>
                   <p className="text-xs text-foreground/50 mt-0.5 line-clamp-1">
                     {hasVerified
-                      ? `${uploadedDocs.filter(d => d.verification_status === 'verified').length} verified`
+                      ? `${uploadedDocs.filter((d) => d.verification_status === 'verified').length} verified`
                       : hasProcessing
-                      ? "Verifying..."
-                      : hasPending
-                      ? "Awaiting review"
-                      : hasRejected
-                      ? "Action required"
-                      : docType.description}
+                        ? 'Verifying...'
+                        : hasPending
+                          ? 'Awaiting review'
+                          : hasRejected
+                            ? 'Action required'
+                            : docType.description}
                   </p>
                 </div>
 
@@ -963,7 +985,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   {uploadedDocs.map((doc) => {
                     const status = VERIFICATION_STATUS[doc.verification_status];
                     const StatusIcon = status.icon;
-                    const isRejected = doc.verification_status === "rejected";
+                    const isRejected = doc.verification_status === 'rejected';
                     // Only show as "processing" if it's in the current session's pendingVerifications
                     const isProcessing = pendingVerifications.has(doc.id);
 
@@ -971,8 +993,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                       <div
                         key={doc.id}
                         className={cn(
-                          "flex items-center gap-2.5 p-2.5 rounded-lg mt-2",
-                          isProcessing ? "bg-blue-500/10" : "bg-white/[0.03]"
+                          'flex items-center gap-2.5 p-2.5 rounded-lg mt-2',
+                          isProcessing ? 'bg-blue-500/10' : 'bg-white/[0.03]'
                         )}
                       >
                         {isProcessing ? (
@@ -980,21 +1002,30 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                             <Loader2 className="h-4 w-4 text-blue-400 animate-spin" />
                           </div>
                         ) : (
-                          <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", status.bgColor)}>
-                            <StatusIcon className={cn("h-4 w-4", status.color)} />
+                          <div
+                            className={cn(
+                              'w-8 h-8 rounded-lg flex items-center justify-center',
+                              status.bgColor
+                            )}
+                          >
+                            <StatusIcon className={cn('h-4 w-4', status.color)} />
                           </div>
                         )}
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-foreground truncate">
-                            {isProcessing ? "Verifying document..." : doc.document_name}
+                            {isProcessing ? 'Verifying document...' : doc.document_name}
                           </p>
-                          <p className={cn("text-xs", isProcessing ? "text-blue-400" : status.color)}>
-                            {isProcessing ? "AI is analysing" : status.label}
-                            {!isProcessing && doc.verification_confidence && doc.verification_confidence > 0 && (
-                              <span className="text-foreground/40 ml-1">
-                                • {Math.round(doc.verification_confidence * 100)}% confident
-                              </span>
-                            )}
+                          <p
+                            className={cn('text-xs', isProcessing ? 'text-blue-400' : status.color)}
+                          >
+                            {isProcessing ? 'AI is analysing' : status.label}
+                            {!isProcessing &&
+                              doc.verification_confidence &&
+                              doc.verification_confidence > 0 && (
+                                <span className="text-foreground/40 ml-1">
+                                  • {Math.round(doc.verification_confidence * 100)}% confident
+                                </span>
+                              )}
                           </p>
                         </div>
                         <div className="flex items-center gap-1">
@@ -1030,7 +1061,9 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       </div>
 
       {/* Quick action button for primary document */}
-      {!documents.some(d => d.document_type === 'ecs_card' && d.verification_status === 'verified') && (
+      {!documents.some(
+        (d) => d.document_type === 'ecs_card' && d.verification_status === 'verified'
+      ) && (
         <div className="fixed bottom-20 left-4 right-4 sm:relative sm:bottom-auto sm:left-auto sm:right-auto">
           <Button
             onClick={() => handleOpenUpload('ecs_card')}
@@ -1050,7 +1083,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
               {selectedDocConfig && (
                 <>
                   {React.createElement(selectedDocConfig.icon, {
-                    className: cn("h-5 w-5", selectedDocConfig.color),
+                    className: cn('h-5 w-5', selectedDocConfig.color),
                   })}
                   Upload {selectedDocConfig.label}
                 </>
@@ -1089,10 +1122,10 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   className={cn(
-                    "border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all",
+                    'border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all',
                     isDragActive
-                      ? "border-elec-yellow bg-elec-yellow/10"
-                      : "border-white/20 hover:border-white/40"
+                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      : 'border-white/20 hover:border-white/40'
                   )}
                 >
                   <input
@@ -1106,11 +1139,9 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                     <Upload className="h-6 w-6 text-foreground/70" />
                   </div>
                   <p className="text-sm font-medium text-foreground">
-                    {isDragActive ? "Drop your file here" : "Upload file"}
+                    {isDragActive ? 'Drop your file here' : 'Upload file'}
                   </p>
-                  <p className="text-xs text-foreground/70 mt-1">
-                    PNG, JPG, PDF up to 10MB
-                  </p>
+                  <p className="text-xs text-foreground/70 mt-1">PNG, JPG, PDF up to 10MB</p>
                 </div>
 
                 {/* Camera Option */}
@@ -1121,12 +1152,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-3">
                     <Camera className="h-6 w-6 text-elec-yellow" />
                   </div>
-                  <p className="text-sm font-medium text-foreground">
-                    Take photo
-                  </p>
-                  <p className="text-xs text-foreground/70 mt-1">
-                    Use camera for best results
-                  </p>
+                  <p className="text-sm font-medium text-foreground">Take photo</p>
+                  <p className="text-xs text-foreground/70 mt-1">Use camera for best results</p>
                 </div>
               </div>
             ) : (
@@ -1160,43 +1187,44 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                 </div>
 
                 {/* Rejection Alert */}
-                {verificationResult?.status === "rejected" && (
+                {verificationResult?.status === 'rejected' && (
                   <Alert variant="destructive" className="bg-red-500/10 border-red-500/30">
                     <AlertCircle className="h-4 w-4" />
                     <AlertTitle>Verification Failed</AlertTitle>
                     <AlertDescription>
                       <p className="mb-2">{verificationResult.rejectionReason}</p>
-                      {verificationResult.suggestions && verificationResult.suggestions.length > 0 && (
-                        <div className="mt-2">
-                          <p className="font-medium mb-1">Suggestions:</p>
-                          <ul className="text-sm space-y-1">
-                            {verificationResult.suggestions.map((suggestion, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <ChevronRight className="h-3 w-3 mt-1 shrink-0" />
-                                <span>{suggestion}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                      {verificationResult.suggestions &&
+                        verificationResult.suggestions.length > 0 && (
+                          <div className="mt-2">
+                            <p className="font-medium mb-1">Suggestions:</p>
+                            <ul className="text-sm space-y-1">
+                              {verificationResult.suggestions.map((suggestion, i) => (
+                                <li key={i} className="flex items-start gap-2">
+                                  <ChevronRight className="h-3 w-3 mt-1 shrink-0" />
+                                  <span>{suggestion}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                     </AlertDescription>
                   </Alert>
                 )}
 
                 {/* Needs Review Alert */}
-                {verificationResult?.status === "needs_review" && (
+                {verificationResult?.status === 'needs_review' && (
                   <Alert className="bg-amber-500/10 border-amber-500/30">
                     <Eye className="h-4 w-4 text-amber-400" />
                     <AlertTitle className="text-amber-400">Manual Review Required</AlertTitle>
                     <AlertDescription className="text-amber-200/80">
-                      We couldn't fully verify this document automatically. It's been queued for manual review.
-                      You can add corrections below to help speed up the process.
+                      We couldn't fully verify this document automatically. It's been queued for
+                      manual review. You can add corrections below to help speed up the process.
                     </AlertDescription>
                   </Alert>
                 )}
 
                 {/* Manual entry/correction fields */}
-                {(isEditMode || verificationResult?.status === "needs_review") && (
+                {(isEditMode || verificationResult?.status === 'needs_review') && (
                   <div className="space-y-3 p-4 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex items-center gap-2 mb-2">
                       <Edit3 className="h-4 w-4 text-foreground/70" />
@@ -1264,7 +1292,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                     <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
                   )}
                   <span className="text-sm text-foreground">
-                    {isVerifying ? "AI is analysing your document..." : "Uploading..."}
+                    {isVerifying ? 'AI is analysing your document...' : 'Uploading...'}
                   </span>
                 </div>
                 <Progress value={isVerifying ? 100 : uploadProgress} className="h-2" />
@@ -1295,7 +1323,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   )}
                   Upload & Verify
                 </Button>
-              ) : verificationResult.status === "rejected" ? (
+              ) : verificationResult.status === 'rejected' ? (
                 <>
                   <Button
                     variant="outline"
@@ -1314,7 +1342,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                     Submit for Review
                   </Button>
                 </>
-              ) : verificationResult.status === "needs_review" ? (
+              ) : verificationResult.status === 'needs_review' ? (
                 <Button
                   className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
                   onClick={handleSaveCorrections}
@@ -1354,7 +1382,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
               Appeal Rejection
             </DialogTitle>
             <DialogDescription>
-              If you believe this document was incorrectly rejected, you can submit an appeal for manual review.
+              If you believe this document was incorrectly rejected, you can submit an appeal for
+              manual review.
             </DialogDescription>
           </DialogHeader>
 
@@ -1364,7 +1393,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-1">Rejection Reason:</p>
                 <p className="text-sm text-foreground/70">
-                  {rejectedDocument.rejection_reason || "Document could not be verified automatically."}
+                  {rejectedDocument.rejection_reason ||
+                    'Document could not be verified automatically.'}
                 </p>
               </div>
 

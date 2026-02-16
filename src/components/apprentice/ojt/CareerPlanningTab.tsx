@@ -1,66 +1,69 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Target, Users, TrendingUp, Award, BookOpen, Building } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Target, Users, TrendingUp, Award, BookOpen, Building } from 'lucide-react';
 
 const CareerPlanningTab = () => {
   const careerGoals = [
     {
       id: 1,
-      title: "Complete Level 3 Apprenticeship",
+      title: 'Complete Level 3 Apprenticeship',
       progress: 65,
-      status: "in-progress",
-      deadline: "2024-08-15"
+      status: 'in-progress',
+      deadline: '2024-08-15',
     },
     {
       id: 2,
-      title: "Achieve JIB Approved Electrician Status",
+      title: 'Achieve JIB Approved Electrician Status',
       progress: 30,
-      status: "planned",
-      deadline: "2024-12-01"
+      status: 'planned',
+      deadline: '2024-12-01',
     },
     {
       id: 3,
-      title: "18th Edition Certification",
+      title: '18th Edition Certification',
       progress: 85,
-      status: "near-completion",
-      deadline: "2024-03-30"
-    }
+      status: 'near-completion',
+      deadline: '2024-03-30',
+    },
   ];
 
   const careerPaths = [
     {
-      title: "Domestic Electrician",
-      description: "Specialise in residential electrical work",
-      requirements: ["Level 3 Qualification", "18th Edition", "Part P Notification"],
-      timeframe: "6-12 months"
+      title: 'Domestic Electrician',
+      description: 'Specialise in residential electrical work',
+      requirements: ['Level 3 Qualification', '18th Edition', 'Part P Notification'],
+      timeframe: '6-12 months',
     },
     {
-      title: "Commercial Electrician",
-      description: "Focus on commercial and industrial installations",
-      requirements: ["Advanced qualifications", "Experience with 3-phase systems", "Health & Safety training"],
-      timeframe: "12-18 months"
+      title: 'Commercial Electrician',
+      description: 'Focus on commercial and industrial installations',
+      requirements: [
+        'Advanced qualifications',
+        'Experience with 3-phase systems',
+        'Health & Safety training',
+      ],
+      timeframe: '12-18 months',
     },
     {
-      title: "Maintenance Electrician",
-      description: "Preventive and reactive maintenance work",
-      requirements: ["Fault finding skills", "PLC knowledge", "Planned maintenance experience"],
-      timeframe: "12-24 months"
-    }
+      title: 'Maintenance Electrician',
+      description: 'Preventive and reactive maintenance work',
+      requirements: ['Fault finding skills', 'PLC knowledge', 'Planned maintenance experience'],
+      timeframe: '12-24 months',
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "in-progress":
-        return "bg-blue-500/20 text-blue-700";
-      case "near-completion":
-        return "bg-green-500/20 text-green-700";
-      case "planned":
-        return "bg-orange-500/20 text-orange-700";
+      case 'in-progress':
+        return 'bg-blue-500/20 text-blue-700';
+      case 'near-completion':
+        return 'bg-green-500/20 text-green-700';
+      case 'planned':
+        return 'bg-orange-500/20 text-orange-700';
       default:
-        return "bg-white/10 text-white/80";
+        return 'bg-white/10 text-white/80';
     }
   };
 
@@ -74,9 +77,7 @@ const CareerPlanningTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-white">
-              Active goals
-            </p>
+            <p className="text-xs text-white">Active goals</p>
           </CardContent>
         </Card>
 
@@ -87,9 +88,7 @@ const CareerPlanningTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-white">
-              Professional connections
-            </p>
+            <p className="text-xs text-white">Professional connections</p>
           </CardContent>
         </Card>
 
@@ -100,9 +99,7 @@ const CareerPlanningTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">8/12</div>
-            <p className="text-xs text-white">
-              Core skills mastered
-            </p>
+            <p className="text-xs text-white">Core skills mastered</p>
           </CardContent>
         </Card>
       </div>
@@ -122,10 +119,10 @@ const CareerPlanningTab = () => {
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium">{goal.title}</h4>
                     <Badge className={getStatusColor(goal.status)}>
-                      {goal.status.replace("-", " ")}
+                      {goal.status.replace('-', ' ')}
                     </Badge>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Progress</span>
@@ -155,7 +152,7 @@ const CareerPlanningTab = () => {
                 <div key={index} className="border rounded-lg p-4">
                   <h4 className="font-medium mb-2">{path.title}</h4>
                   <p className="text-sm text-white mb-3">{path.description}</p>
-                  
+
                   <div className="space-y-2">
                     <div className="text-sm font-medium">Requirements:</div>
                     <ul className="text-sm text-white space-y-1">
@@ -167,7 +164,7 @@ const CareerPlanningTab = () => {
                       <span className="font-medium">Timeframe:</span> {path.timeframe}
                     </div>
                   </div>
-                  
+
                   <Button variant="outline" size="sm" className="mt-3 w-full">
                     Learn More
                   </Button>

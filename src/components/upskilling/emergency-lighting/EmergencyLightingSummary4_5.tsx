@@ -3,11 +3,11 @@ import { BookOpen } from 'lucide-react';
 
 export const EmergencyLightingSummary4_5 = () => {
   const keyPoints = [
-    "Remote testing systems automate monthly function and annual duration tests, reducing labour by 60-80%",
-    "Three main types: self-test luminaires, networked systems, and wireless monitoring — each suited to different applications",
-    "Digital logs provide time-stamped compliance records, instant fault alerts, and audit-ready documentation meeting BS 5266-8",
-    "Best suited for sites with 100+ luminaires, high occupancy risk, or limited maintenance resources (airports, hospitals, universities)",
-    "Visual inspections are still required — remote systems cannot detect physical damage, obstructions, or dirt accumulation"
+    'Remote testing systems automate monthly function and annual duration tests, reducing labour by 60-80%',
+    'Three main types: self-test luminaires, networked systems, and wireless monitoring — each suited to different applications',
+    'Digital logs provide time-stamped compliance records, instant fault alerts, and audit-ready documentation meeting BS 5266-8',
+    'Best suited for sites with 100+ luminaires, high occupancy risk, or limited maintenance resources (airports, hospitals, universities)',
+    'Visual inspections are still required — remote systems cannot detect physical damage, obstructions, or dirt accumulation',
   ];
 
   return (
@@ -20,9 +20,10 @@ export const EmergencyLightingSummary4_5 = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground">
-          This section covered the role of remote testing and monitoring systems in modern emergency lighting installations:
+          This section covered the role of remote testing and monitoring systems in modern emergency
+          lighting installations:
         </p>
-        
+
         <div className="space-y-3">
           {keyPoints.map((point, index) => (
             <div key={index} className="flex items-start gap-3">
@@ -37,39 +38,58 @@ export const EmergencyLightingSummary4_5 = () => {
           <div className="space-y-2 text-sm">
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Count total luminaires and assess building complexity</span>
+              <span className="text-foreground">
+                Count total luminaires and assess building complexity
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Evaluate occupancy risk level and regulatory scrutiny</span>
+              <span className="text-foreground">
+                Evaluate occupancy risk level and regulatory scrutiny
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Assess maintenance staff availability and current testing burden</span>
+              <span className="text-foreground">
+                Assess maintenance staff availability and current testing burden
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Calculate ROI: compare system cost vs labour savings over 10 years</span>
+              <span className="text-foreground">
+                Calculate ROI: compare system cost vs labour savings over 10 years
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Verify luminaire and battery compatibility with chosen system</span>
+              <span className="text-foreground">
+                Verify luminaire and battery compatibility with chosen system
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Consider wireless for refurbishments, networked for new builds with high luminaire counts</span>
+              <span className="text-foreground">
+                Consider wireless for refurbishments, networked for new builds with high luminaire
+                counts
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Check client preference for local server vs cloud-based monitoring</span>
+              <span className="text-foreground">
+                Check client preference for local server vs cloud-based monitoring
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Plan comprehensive training for building management team</span>
+              <span className="text-foreground">
+                Plan comprehensive training for building management team
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">☐</span>
-              <span className="text-foreground">Ensure visual inspection schedule remains in place after system commissioning</span>
+              <span className="text-foreground">
+                Ensure visual inspection schedule remains in place after system commissioning
+              </span>
             </div>
           </div>
         </div>
@@ -107,11 +127,12 @@ export const EmergencyLightingSummary4_5 = () => {
         <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-4">
           <h4 className="font-semibold text-blue-300 mb-2">Key Takeaway for Electricians</h4>
           <p className="text-foreground text-sm">
-            Remote testing systems represent the future of emergency lighting maintenance in medium to large installations. 
-            Understanding when to recommend these systems — and how to specify, install, and commission them correctly — 
-            positions you as a forward-thinking professional offering modern solutions that deliver genuine value to clients. 
-            Always remember that automation enhances compliance but does not eliminate the need for skilled electrical 
-            expertise and regular visual inspections.
+            Remote testing systems represent the future of emergency lighting maintenance in medium
+            to large installations. Understanding when to recommend these systems — and how to
+            specify, install, and commission them correctly — positions you as a forward-thinking
+            professional offering modern solutions that deliver genuine value to clients. Always
+            remember that automation enhances compliance but does not eliminate the need for skilled
+            electrical expertise and regular visual inspections.
           </p>
         </div>
       </CardContent>

@@ -1,44 +1,44 @@
-import { ArrowLeft, Clock, Search, Brain, Heart, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Clock, Search, Brain, Heart, Zap } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "3.1",
-    title: "Time Management Strategies",
-    description: "Effective strategies for managing your time during exams and revision",
+    number: '3.1',
+    title: 'Time Management Strategies',
+    description: 'Effective strategies for managing your time during exams and revision',
     icon: Clock,
-    href: "../level3-module8-section3-1",
+    href: '../level3-module8-section3-1',
   },
   {
-    number: "3.2",
-    title: "Question Analysis Techniques",
-    description: "How to read, understand and approach different types of exam questions",
+    number: '3.2',
+    title: 'Question Analysis Techniques',
+    description: 'How to read, understand and approach different types of exam questions',
     icon: Search,
-    href: "../level3-module8-section3-2",
+    href: '../level3-module8-section3-2',
   },
   {
-    number: "3.3",
-    title: "Memory Techniques",
-    description: "Proven memory techniques and mnemonics for retaining key information",
+    number: '3.3',
+    title: 'Memory Techniques',
+    description: 'Proven memory techniques and mnemonics for retaining key information',
     icon: Brain,
-    href: "../level3-module8-section3-3",
+    href: '../level3-module8-section3-3',
   },
   {
-    number: "3.4",
-    title: "Stress Management",
-    description: "Techniques for managing exam stress and maintaining peak performance",
+    number: '3.4',
+    title: 'Stress Management',
+    description: 'Techniques for managing exam stress and maintaining peak performance',
     icon: Heart,
-    href: "../level3-module8-section3-4",
+    href: '../level3-module8-section3-4',
   },
 ];
 
 const Level3Module8Section3 = () => {
   useSEO(
-    "Section 3: Exam Tips - Level 3 Module 8",
-    "Expert tips and techniques to maximise your exam performance"
+    'Section 3: Exam Tips - Level 3 Module 8',
+    'Expert tips and techniques to maximise your exam performance'
   );
 
   return (
@@ -63,26 +63,22 @@ const Level3Module8Section3 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

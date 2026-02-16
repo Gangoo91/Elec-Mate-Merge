@@ -1,65 +1,83 @@
-import { ArrowLeft, DoorOpen, BookOpen, Scale, Shield, HardHat, Siren, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  DoorOpen,
+  BookOpen,
+  Scale,
+  Shield,
+  HardHat,
+  Siren,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Understanding Confined Spaces",
-    description: "Legal definition, common examples, why confined spaces kill, and the statistics behind the risk",
+    title: 'Understanding Confined Spaces',
+    description:
+      'Legal definition, common examples, why confined spaces kill, and the statistics behind the risk',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../confined-spaces-module-1",
+    duration: '30 mins',
+    link: '../confined-spaces-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Legislation & Risk Assessment",
-    description: "Confined Spaces Regulations 1997, risk assessment, safe systems of work, and permit-to-work",
+    title: 'Legislation & Risk Assessment',
+    description:
+      'Confined Spaces Regulations 1997, risk assessment, safe systems of work, and permit-to-work',
     icon: Scale,
-    duration: "30 mins",
-    link: "../confined-spaces-module-2",
+    duration: '30 mins',
+    link: '../confined-spaces-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Hazards & Atmospheric Monitoring",
-    description: "Toxic gases, oxygen depletion, flammable atmospheres, gas detection, and monitoring techniques",
+    title: 'Hazards & Atmospheric Monitoring',
+    description:
+      'Toxic gases, oxygen depletion, flammable atmospheres, gas detection, and monitoring techniques',
     icon: Shield,
-    duration: "30 mins",
-    link: "../confined-spaces-module-3",
+    duration: '30 mins',
+    link: '../confined-spaces-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Safe Entry & Working Procedures",
-    description: "Entry procedures, ventilation, PPE, communication systems, and working safely inside confined spaces",
+    title: 'Safe Entry & Working Procedures',
+    description:
+      'Entry procedures, ventilation, PPE, communication systems, and working safely inside confined spaces',
     icon: HardHat,
-    duration: "30 mins",
-    link: "../confined-spaces-module-4",
+    duration: '30 mins',
+    link: '../confined-spaces-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Emergency & Rescue Procedures",
-    description: "Emergency planning, rescue equipment, casualty retrieval, first aid, and incident reporting",
+    title: 'Emergency & Rescue Procedures',
+    description:
+      'Emergency planning, rescue equipment, casualty retrieval, first aid, and incident reporting',
     icon: Siren,
-    duration: "30 mins",
-    link: "../confined-spaces-module-5",
+    duration: '30 mins',
+    link: '../confined-spaces-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../confined-spaces-module-6",
+    duration: '30 mins',
+    link: '../confined-spaces-module-6',
     isExam: true,
   },
 ];
 
 export default function ConfinedSpacesCourse() {
   useSEO({
-    title: "Confined Spaces Awareness | General Upskilling",
-    description: "Complete confined spaces awareness training covering hazard identification, safe entry procedures, atmospheric monitoring, and emergency rescue.",
+    title: 'Confined Spaces Awareness | General Upskilling',
+    description:
+      'Complete confined spaces awareness training covering hazard identification, safe entry procedures, atmospheric monitoring, and emergency rescue.',
   });
 
   return (
@@ -96,7 +114,8 @@ export default function ConfinedSpacesCourse() {
                 Confined Spaces Awareness
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 max-w-2xl">
-                Hazard identification, safe entry procedures, and emergency rescue for work in confined spaces
+                Hazard identification, safe entry procedures, and emergency rescue for work in
+                confined spaces
               </p>
             </div>
           </div>

@@ -293,7 +293,14 @@ export const PPE_DATABASE: PPEDefinition[] = [
     purpose: 'Full body protection against arc flash',
     mandatory: true,
     applicableFor: ['arc-flash', 'hv-switching', 'live-working'],
-    variants: ['Class 1 (4 kA)', 'Class 2 (7 kA)', '8 cal/cm²', '12 cal/cm²', '25 cal/cm²', '40 cal/cm²'],
+    variants: [
+      'Class 1 (4 kA)',
+      'Class 2 (7 kA)',
+      '8 cal/cm²',
+      '12 cal/cm²',
+      '25 cal/cm²',
+      '40 cal/cm²',
+    ],
   },
   {
     id: 'arc-flash-jacket-trousers',
@@ -508,13 +515,13 @@ export const PPE_DATABASE: PPEDefinition[] = [
 
 // Helper function to get PPE by category
 export const getPPEByCategory = (categoryId: string): PPEDefinition[] => {
-  return PPE_DATABASE.filter(ppe => ppe.category === categoryId);
+  return PPE_DATABASE.filter((ppe) => ppe.category === categoryId);
 };
 
 // Helper function to get recommended PPE for work type
 export const getRecommendedPPE = (workTypes: string[]): PPEDefinition[] => {
-  return PPE_DATABASE.filter(ppe =>
-    ppe.applicableFor.some(applicable => workTypes.includes(applicable))
+  return PPE_DATABASE.filter((ppe) =>
+    ppe.applicableFor.some((applicable) => workTypes.includes(applicable))
   );
 };
 

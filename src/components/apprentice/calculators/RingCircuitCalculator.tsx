@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Calculator, BookOpen } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useRingCircuitCalculator } from "./ring-circuit/useRingCircuitCalculator";
-import RingCircuitForm from "./ring-circuit/RingCircuitForm";
-import RingCircuitResult from "./ring-circuit/RingCircuitResult";
-import RingCircuitGuidance from "./ring-circuit/RingCircuitGuidance";
-import { CALCULATOR_CONFIG } from "@/components/calculators/shared";
+import React, { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DropdownTabs } from '@/components/ui/dropdown-tabs';
+import { Calculator, BookOpen } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useRingCircuitCalculator } from './ring-circuit/useRingCircuitCalculator';
+import RingCircuitForm from './ring-circuit/RingCircuitForm';
+import RingCircuitResult from './ring-circuit/RingCircuitResult';
+import RingCircuitGuidance from './ring-circuit/RingCircuitGuidance';
+import { CALCULATOR_CONFIG } from '@/components/calculators/shared';
 
 const RingCircuitCalculator = () => {
   const config = CALCULATOR_CONFIG['testing'];
@@ -24,16 +24,16 @@ const RingCircuitCalculator = () => {
     setTemperature,
     handleInputChange,
     calculateValues,
-    resetCalculator
+    resetCalculator,
   } = useRingCircuitCalculator();
 
-  const [activeTab, setActiveTab] = useState("calculator");
+  const [activeTab, setActiveTab] = useState('calculator');
   const isMobile = useIsMobile();
 
   const tabs = [
     {
-      value: "calculator",
-      label: "Calculator",
+      value: 'calculator',
+      label: 'Calculator',
       icon: Calculator,
       content: (
         <div className="space-y-6">
@@ -57,14 +57,14 @@ const RingCircuitCalculator = () => {
             </div>
           )}
         </div>
-      )
+      ),
     },
     {
-      value: "guidance",
-      label: "Guidance",
+      value: 'guidance',
+      label: 'Guidance',
       icon: BookOpen,
-      content: <RingCircuitGuidance />
-    }
+      content: <RingCircuitGuidance />,
+    },
   ];
 
   const handleTabChange = (value: string) => {
@@ -78,19 +78,18 @@ const RingCircuitCalculator = () => {
         className="rounded-2xl border p-4 sm:p-6"
         style={{
           borderColor: `${config.gradientFrom}20`,
-          background: `linear-gradient(135deg, ${config.gradientFrom}08, ${config.gradientTo}05)`
+          background: `linear-gradient(135deg, ${config.gradientFrom}08, ${config.gradientTo}05)`,
         }}
       >
         <div className="flex items-center gap-3 mb-2">
-          <div
-            className="p-2 rounded-xl"
-            style={{ backgroundColor: `${config.gradientFrom}15` }}
-          >
+          <div className="p-2 rounded-xl" style={{ backgroundColor: `${config.gradientFrom}15` }}>
             <Calculator className="h-5 w-5" style={{ color: config.gradientFrom }} />
           </div>
           <div>
             <h2 className="text-lg font-semibold text-white">Ring Circuit Calculator</h2>
-            <p className="text-sm text-white/60">Test and verify ring final circuit continuity per BS 7671</p>
+            <p className="text-sm text-white/60">
+              Test and verify ring final circuit continuity per BS 7671
+            </p>
           </div>
         </div>
       </div>

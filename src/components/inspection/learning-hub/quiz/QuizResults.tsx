@@ -47,11 +47,15 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center ${
-              result.percentage >= 80 ? 'bg-green-500/20 text-green-400' :
-              result.percentage >= 60 ? 'bg-yellow-500/20 text-yellow-400' :
-              'bg-red-500/20 text-red-400'
-            }`}>
+            <div
+              className={`w-20 h-20 rounded-full flex items-center justify-center ${
+                result.percentage >= 80
+                  ? 'bg-green-500/20 text-green-400'
+                  : result.percentage >= 60
+                    ? 'bg-yellow-500/20 text-yellow-400'
+                    : 'bg-red-500/20 text-red-400'
+              }`}
+            >
               <Trophy className="h-10 w-10" />
             </div>
           </div>
@@ -78,9 +82,7 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
               <CardTitle className="text-sm text-gray-400">Correct Answers</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-400">
-                {result.correctAnswers}
-              </div>
+              <div className="text-3xl font-bold text-green-400">{result.correctAnswers}</div>
               <div className="text-sm text-gray-400">of {result.totalQuestions}</div>
             </CardContent>
           </Card>
@@ -90,9 +92,7 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
               <CardTitle className="text-sm text-gray-400">Time Taken</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-400">
-                {formatTime(result.timeSpent)}
-              </div>
+              <div className="text-3xl font-bold text-blue-400">{formatTime(result.timeSpent)}</div>
             </CardContent>
           </Card>
 
@@ -148,14 +148,16 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
                 <h4 className="font-semibold text-foreground">Strengths</h4>
                 <div className="space-y-2">
                   {Object.entries(result.categoryBreakdown)
-                    .filter(([, data]) => (data.correct / data.total) >= 0.8)
+                    .filter(([, data]) => data.correct / data.total >= 0.8)
                     .map(([category]) => (
                       <div key={category} className="flex items-center gap-2 text-green-400">
                         <CheckCircle className="h-4 w-4" />
                         <span>{category}</span>
                       </div>
                     ))}
-                  {Object.entries(result.categoryBreakdown).filter(([, data]) => (data.correct / data.total) >= 0.8).length === 0 && (
+                  {Object.entries(result.categoryBreakdown).filter(
+                    ([, data]) => data.correct / data.total >= 0.8
+                  ).length === 0 && (
                     <p className="text-gray-400 text-sm">Focus on improving across all areas</p>
                   )}
                 </div>
@@ -165,14 +167,16 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
                 <h4 className="font-semibold text-foreground">Areas for Improvement</h4>
                 <div className="space-y-2">
                   {Object.entries(result.categoryBreakdown)
-                    .filter(([, data]) => (data.correct / data.total) < 0.7)
+                    .filter(([, data]) => data.correct / data.total < 0.7)
                     .map(([category]) => (
                       <div key={category} className="flex items-center gap-2 text-red-400">
                         <XCircle className="h-4 w-4" />
                         <span>{category}</span>
                       </div>
                     ))}
-                  {Object.entries(result.categoryBreakdown).filter(([, data]) => (data.correct / data.total) < 0.7).length === 0 && (
+                  {Object.entries(result.categoryBreakdown).filter(
+                    ([, data]) => data.correct / data.total < 0.7
+                  ).length === 0 && (
                     <p className="text-gray-400 text-sm">Good performance across all categories!</p>
                   )}
                 </div>
@@ -183,14 +187,11 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            onClick={onRetake}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          >
+          <Button onClick={onRetake} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
             <RotateCcw className="h-4 w-4 mr-2" />
             Retake Quiz
           </Button>
-          
+
           <Button
             variant="outline"
             onClick={onBackToHub}
@@ -213,7 +214,7 @@ const QuizResults = ({ result, assessment, onRetake, onBackToHub }: QuizResultsP
                   <p>• Review fundamental BS 7671 principles and definitions</p>
                 )}
                 {Object.entries(result.categoryBreakdown)
-                  .filter(([, data]) => (data.correct / data.total) < 0.7)
+                  .filter(([, data]) => data.correct / data.total < 0.7)
                   .map(([category]) => (
                     <p key={category}>• Focus on {category} topics and practical applications</p>
                   ))}

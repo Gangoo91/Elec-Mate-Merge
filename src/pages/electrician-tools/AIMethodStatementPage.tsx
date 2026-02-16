@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Clipboard } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { AIMethodStatementGenerator } from "@/components/electrician-tools/method-statement/AIMethodStatementGenerator";
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Clipboard } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { AIMethodStatementGenerator } from '@/components/electrician-tools/method-statement/AIMethodStatementGenerator';
 
 const AIMethodStatementPage = () => {
   const location = useLocation();
@@ -12,9 +12,10 @@ const AIMethodStatementPage = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 sm:py-6">
         <div className="space-y-4 sm:space-y-6 animate-fade-in">
           {/* Back Button */}
-          <Link to={fromAgentSelector ? "/electrician/agent-selector" : "/electrician"}>
+          <Link to={fromAgentSelector ? '/electrician/agent-selector' : '/electrician'}>
             <Button variant="outline" className="gap-2 touch-manipulation h-11 active:scale-[0.98]">
-              <ArrowLeft className="h-5 w-5" /> {fromAgentSelector ? "Back to Agent Selector" : "Back to Dashboard"}
+              <ArrowLeft className="h-5 w-5" />{' '}
+              {fromAgentSelector ? 'Back to Agent Selector' : 'Back to Dashboard'}
             </Button>
           </Link>
 

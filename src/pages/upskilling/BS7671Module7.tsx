@@ -7,40 +7,42 @@ const BS7671Module7 = () => {
   const sections = [
     {
       id: 1,
-      title: "Locations Requiring Additional Precautions (Bathrooms, Pools)",
+      title: 'Locations Requiring Additional Precautions (Bathrooms, Pools)',
       icon: MapPin,
-      description: "Special safety requirements for wet and hazardous locations"
+      description: 'Special safety requirements for wet and hazardous locations',
     },
     {
       id: 2,
-      title: "Electric Vehicle Charging Installations (Part 722)",
+      title: 'Electric Vehicle Charging Installations (Part 722)',
       icon: Car,
-      description: "Requirements for EV charging point installations and associated electrical systems"
+      description:
+        'Requirements for EV charging point installations and associated electrical systems',
     },
     {
       id: 3,
-      title: "Outdoor and Agricultural Installations",
+      title: 'Outdoor and Agricultural Installations',
       icon: TreePine,
-      description: "Electrical installations in agricultural and horticultural premises"
+      description: 'Electrical installations in agricultural and horticultural premises',
     },
     {
       id: 4,
-      title: "Medical, Commercial, and Industrial Locations",
+      title: 'Medical, Commercial, and Industrial Locations',
       icon: Building,
-      description: "Specific requirements for healthcare facilities, commercial, and industrial premises"
+      description:
+        'Specific requirements for healthcare facilities, commercial, and industrial premises',
     },
     {
       id: 5,
-      title: "Introduction to Prosumer Electrical Installations (Part 8)",
+      title: 'Introduction to Prosumer Electrical Installations (Part 8)',
       icon: Factory,
-      description: "New requirements for prosumer electrical installations and energy storage"
+      description: 'New requirements for prosumer electrical installations and energy storage',
     },
     {
       id: 6,
-      title: "Amendment 2 Highlights",
+      title: 'Amendment 2 Highlights',
       icon: Lightbulb,
-      description: "Key changes and updates introduced in the latest amendment"
-    }
+      description: 'Key changes and updates introduced in the latest amendment',
+    },
   ];
 
   return (

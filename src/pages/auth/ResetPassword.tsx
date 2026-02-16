@@ -4,7 +4,17 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Zap, Lock, Eye, EyeOff, CheckCircle2, AlertTriangle, Shield, ChevronLeft } from 'lucide-react';
+import {
+  Loader2,
+  Zap,
+  Lock,
+  Eye,
+  EyeOff,
+  CheckCircle2,
+  AlertTriangle,
+  Shield,
+  ChevronLeft,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type TokenState = 'verifying' | 'valid' | 'invalid';
@@ -38,7 +48,9 @@ const ResetPassword = () => {
   useEffect(() => {
     const verifyToken = async () => {
       if (!tokenHash || type !== 'recovery') {
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
         if (session) {
           setTokenState('valid');
           return;
@@ -56,9 +68,11 @@ const ResetPassword = () => {
 
         if (error) {
           setTokenState('invalid');
-          setTokenError(error.message.includes('expired')
-            ? 'This reset link has expired. Please request a new one.'
-            : 'Invalid reset link. Please request a new one.');
+          setTokenError(
+            error.message.includes('expired')
+              ? 'This reset link has expired. Please request a new one.'
+              : 'Invalid reset link. Please request a new one.'
+          );
           return;
         }
         setTokenState('valid');
@@ -71,7 +85,7 @@ const ResetPassword = () => {
     verifyToken();
   }, [tokenHash, type]);
 
-  const allRequirementsMet = PASSWORD_REQUIREMENTS.every(req => req.test(password));
+  const allRequirementsMet = PASSWORD_REQUIREMENTS.every((req) => req.test(password));
   const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -102,7 +116,7 @@ const ResetPassword = () => {
       <div className="fixed inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.12, 0.08] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-elec-yellow/20 blur-[150px]"
         />
       </div>
@@ -114,7 +128,10 @@ const ResetPassword = () => {
         className="relative w-full px-4 pt-4 pb-2 z-10"
       >
         <div className="flex items-center justify-between max-w-md mx-auto">
-          <Link to="/auth/signin" className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl touch-manipulation">
+          <Link
+            to="/auth/signin"
+            className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl touch-manipulation"
+          >
             <ChevronLeft className="h-5 w-5" />
             <span className="text-[15px] font-medium">Back</span>
           </Link>
@@ -201,7 +218,7 @@ const ResetPassword = () => {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: "spring", duration: 0.6 }}
+                  transition={{ type: 'spring', duration: 0.6 }}
                   className="w-24 h-24 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6"
                 >
                   <CheckCircle2 className="h-12 w-12 text-green-500" />
@@ -231,7 +248,9 @@ const ResetPassword = () => {
                   <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
                     Set new password
                   </h1>
-                  <p className="text-[15px] text-white/50">Create a strong password to secure your account</p>
+                  <p className="text-[15px] text-white/50">
+                    Create a strong password to secure your account
+                  </p>
                 </div>
 
                 {/* Error */}
@@ -254,16 +273,20 @@ const ResetPassword = () => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* New Password */}
                   <div className="space-y-2">
-                    <label className="block text-[13px] font-medium text-white/70 ml-1">New password</label>
+                    <label className="block text-[13px] font-medium text-white/70 ml-1">
+                      New password
+                    </label>
                     <div className="relative">
-                      <div className={cn(
-                        "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
-                        focusedField === 'password' ? "text-elec-yellow" : "text-white/40"
-                      )}>
+                      <div
+                        className={cn(
+                          'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+                          focusedField === 'password' ? 'text-elec-yellow' : 'text-white/40'
+                        )}
+                      >
                         <Lock className="h-5 w-5" />
                       </div>
                       <input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         onFocus={() => setFocusedField('password')}
@@ -271,12 +294,12 @@ const ResetPassword = () => {
                         placeholder="Enter new password"
                         autoComplete="new-password"
                         className={cn(
-                          "w-full h-14 pl-14 pr-14 rounded-2xl",
-                          "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
-                          "text-[16px] outline-none transition-all duration-200",
+                          'w-full h-14 pl-14 pr-14 rounded-2xl',
+                          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+                          'text-[16px] outline-none transition-all duration-200',
                           focusedField === 'password'
-                            ? "border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-                            : "border-white/10 hover:border-white/20"
+                            ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                            : 'border-white/10 hover:border-white/20'
                         )}
                       />
                       <button
@@ -284,7 +307,11 @@ const ResetPassword = () => {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
                       >
-                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        {showPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
                       </button>
                     </div>
 
@@ -296,12 +323,15 @@ const ResetPassword = () => {
                         className="flex gap-1.5 mt-3"
                       >
                         {PASSWORD_REQUIREMENTS.map((req) => (
-                          <div key={req.id} className={cn(
-                            "flex-1 py-2 rounded-xl text-center text-[12px] font-semibold transition-all",
-                            req.test(password)
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-white/5 text-white/40"
-                          )}>
+                          <div
+                            key={req.id}
+                            className={cn(
+                              'flex-1 py-2 rounded-xl text-center text-[12px] font-semibold transition-all',
+                              req.test(password)
+                                ? 'bg-green-500/20 text-green-400'
+                                : 'bg-white/5 text-white/40'
+                            )}
+                          >
                             {req.label}
                           </div>
                         ))}
@@ -311,16 +341,20 @@ const ResetPassword = () => {
 
                   {/* Confirm Password */}
                   <div className="space-y-2">
-                    <label className="block text-[13px] font-medium text-white/70 ml-1">Confirm password</label>
+                    <label className="block text-[13px] font-medium text-white/70 ml-1">
+                      Confirm password
+                    </label>
                     <div className="relative">
-                      <div className={cn(
-                        "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
-                        focusedField === 'confirm' ? "text-elec-yellow" : "text-white/40"
-                      )}>
+                      <div
+                        className={cn(
+                          'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+                          focusedField === 'confirm' ? 'text-elec-yellow' : 'text-white/40'
+                        )}
+                      >
                         <Lock className="h-5 w-5" />
                       </div>
                       <input
-                        type={showConfirmPassword ? "text" : "password"}
+                        type={showConfirmPassword ? 'text' : 'password'}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         onFocus={() => setFocusedField('confirm')}
@@ -328,14 +362,14 @@ const ResetPassword = () => {
                         placeholder="Confirm new password"
                         autoComplete="new-password"
                         className={cn(
-                          "w-full h-14 pl-14 pr-14 rounded-2xl",
-                          "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
-                          "text-[16px] outline-none transition-all duration-200",
+                          'w-full h-14 pl-14 pr-14 rounded-2xl',
+                          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+                          'text-[16px] outline-none transition-all duration-200',
                           focusedField === 'confirm'
-                            ? "border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
+                            ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                             : confirmPassword && !passwordsMatch
-                              ? "border-red-500/50 bg-white/[0.06]"
-                              : "border-white/10 hover:border-white/20"
+                              ? 'border-red-500/50 bg-white/[0.06]'
+                              : 'border-white/10 hover:border-white/20'
                         )}
                       />
                       <button
@@ -343,7 +377,11 @@ const ResetPassword = () => {
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
                       >
-                        {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        {showConfirmPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
                       </button>
 
                       {/* Match indicator */}
@@ -375,10 +413,10 @@ const ResetPassword = () => {
                     type="submit"
                     disabled={isSubmitting || !allRequirementsMet || !passwordsMatch}
                     className={cn(
-                      "w-full h-14 rounded-2xl text-[16px] font-semibold mt-2",
-                      "bg-elec-yellow hover:bg-elec-yellow/90 text-black",
-                      "shadow-lg shadow-elec-yellow/25 transition-all duration-200",
-                      "disabled:opacity-50 disabled:shadow-none"
+                      'w-full h-14 rounded-2xl text-[16px] font-semibold mt-2',
+                      'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
+                      'shadow-lg shadow-elec-yellow/25 transition-all duration-200',
+                      'disabled:opacity-50 disabled:shadow-none'
                     )}
                   >
                     {isSubmitting ? (

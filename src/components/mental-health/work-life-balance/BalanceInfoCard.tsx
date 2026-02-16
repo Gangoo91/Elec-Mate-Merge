@@ -1,6 +1,6 @@
-import InfoBox from "@/components/common/InfoBox";
-import { CheckCircle } from "lucide-react";
-import { ReactNode } from "react";
+import InfoBox from '@/components/common/InfoBox';
+import { CheckCircle } from 'lucide-react';
+import { ReactNode } from 'react';
 
 interface BalanceInfoCardProps {
   title: string;

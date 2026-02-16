@@ -14,13 +14,14 @@ export const CompatibilityDefinitionSection = () => {
         <div className="bg-blue-900/10 border border-blue-600/20 rounded-lg p-4">
           <h4 className="text-blue-200 font-semibold mb-2">Definition</h4>
           <p className="text-blue-100">
-            <strong>Compatibility</strong> is the ability of devices to work together within an ecosystem, sharing data and responding to commands from the same control interface.
+            <strong>Compatibility</strong> is the ability of devices to work together within an
+            ecosystem, sharing data and responding to commands from the same control interface.
           </p>
         </div>
 
         <div className="space-y-4">
           <h4 className="text-foreground font-semibold">Compatibility is Controlled by:</h4>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-gray-800/50 border border-gray-600/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
@@ -35,7 +36,7 @@ export const CompatibilityDefinitionSection = () => {
                 <li>• Bluetooth</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800/50 border border-gray-600/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Home className="h-4 w-4 text-green-400" />
@@ -58,7 +59,9 @@ export const CompatibilityDefinitionSection = () => {
             <div>
               <h4 className="text-amber-200 font-semibold mb-2">Example Compatibility Issue</h4>
               <p className="text-amber-100 text-sm">
-                A Zigbee motion sensor may not work directly with Amazon Alexa because Alexa doesn't have a built-in Zigbee radio. A compatible hub or bridge is needed to translate between the protocols.
+                A Zigbee motion sensor may not work directly with Amazon Alexa because Alexa doesn't
+                have a built-in Zigbee radio. A compatible hub or bridge is needed to translate
+                between the protocols.
               </p>
             </div>
           </div>

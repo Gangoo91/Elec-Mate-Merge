@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Activity,
   Calculator,
@@ -13,13 +13,9 @@ import {
   CheckCircle,
   XCircle,
   Info,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -28,31 +24,31 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 import {
   calculatePowerQuality,
   type PowerQualityInputs,
   type PowerQualityResults,
-} from "@/lib/powerquality";
+} from '@/lib/powerquality';
 
 const PowerQualityCalculator = () => {
-  const config = CALCULATOR_CONFIG["power"];
+  const config = CALCULATOR_CONFIG['power'];
 
-  const [fundamentalCurrent, setFundamentalCurrent] = useState<string>("");
-  const [fundamentalVoltage, setFundamentalVoltage] = useState<string>("230");
-  const [systemType, setSystemType] = useState<"single-phase" | "three-phase">("single-phase");
-  const [loadType, setLoadType] = useState<"linear" | "non-linear" | "mixed">("non-linear");
-  const [frequency, setFrequency] = useState<string>("50");
+  const [fundamentalCurrent, setFundamentalCurrent] = useState<string>('');
+  const [fundamentalVoltage, setFundamentalVoltage] = useState<string>('230');
+  const [systemType, setSystemType] = useState<'single-phase' | 'three-phase'>('single-phase');
+  const [loadType, setLoadType] = useState<'linear' | 'non-linear' | 'mixed'>('non-linear');
+  const [frequency, setFrequency] = useState<string>('50');
 
   // Individual harmonic inputs
-  const [harmonic3, setHarmonic3] = useState<string>("");
-  const [harmonic5, setHarmonic5] = useState<string>("");
-  const [harmonic7, setHarmonic7] = useState<string>("");
-  const [harmonic9, setHarmonic9] = useState<string>("");
-  const [harmonic11, setHarmonic11] = useState<string>("");
-  const [harmonic13, setHarmonic13] = useState<string>("");
-  const [harmonic15, setHarmonic15] = useState<string>("");
-  const [harmonic17, setHarmonic17] = useState<string>("");
+  const [harmonic3, setHarmonic3] = useState<string>('');
+  const [harmonic5, setHarmonic5] = useState<string>('');
+  const [harmonic7, setHarmonic7] = useState<string>('');
+  const [harmonic9, setHarmonic9] = useState<string>('');
+  const [harmonic11, setHarmonic11] = useState<string>('');
+  const [harmonic13, setHarmonic13] = useState<string>('');
+  const [harmonic15, setHarmonic15] = useState<string>('');
+  const [harmonic17, setHarmonic17] = useState<string>('');
 
   const [result, setResult] = useState<PowerQualityResults | null>(null);
   const [showHarmonics, setShowHarmonics] = useState(false);
@@ -60,14 +56,14 @@ const PowerQualityCalculator = () => {
   const [showReference, setShowReference] = useState(false);
 
   const systemTypeOptions = [
-    { value: "single-phase", label: "Single Phase" },
-    { value: "three-phase", label: "Three Phase" },
+    { value: 'single-phase', label: 'Single Phase' },
+    { value: 'three-phase', label: 'Three Phase' },
   ];
 
   const loadTypeOptions = [
-    { value: "linear", label: "Linear Loads" },
-    { value: "non-linear", label: "Non-Linear Loads" },
-    { value: "mixed", label: "Mixed Loads" },
+    { value: 'linear', label: 'Linear Loads' },
+    { value: 'non-linear', label: 'Non-Linear Loads' },
+    { value: 'mixed', label: 'Mixed Loads' },
   ];
 
   const calculatePQ = () => {
@@ -103,19 +99,19 @@ const PowerQualityCalculator = () => {
   };
 
   const reset = () => {
-    setFundamentalCurrent("");
-    setFundamentalVoltage("230");
-    setSystemType("single-phase");
-    setLoadType("non-linear");
-    setFrequency("50");
-    setHarmonic3("");
-    setHarmonic5("");
-    setHarmonic7("");
-    setHarmonic9("");
-    setHarmonic11("");
-    setHarmonic13("");
-    setHarmonic15("");
-    setHarmonic17("");
+    setFundamentalCurrent('');
+    setFundamentalVoltage('230');
+    setSystemType('single-phase');
+    setLoadType('non-linear');
+    setFrequency('50');
+    setHarmonic3('');
+    setHarmonic5('');
+    setHarmonic7('');
+    setHarmonic9('');
+    setHarmonic11('');
+    setHarmonic13('');
+    setHarmonic15('');
+    setHarmonic17('');
     setResult(null);
   };
 
@@ -123,25 +119,25 @@ const PowerQualityCalculator = () => {
 
   const getRatingColor = (rating: string) => {
     switch (rating) {
-      case "excellent":
-        return "text-green-400 border-green-500/30 bg-green-500/10";
-      case "good":
-        return "text-blue-400 border-blue-500/30 bg-blue-500/10";
-      case "fair":
-        return "text-yellow-400 border-yellow-500/30 bg-yellow-500/10";
-      case "poor":
-        return "text-orange-400 border-orange-500/30 bg-orange-500/10";
-      case "critical":
-        return "text-red-400 border-red-500/30 bg-red-500/10";
+      case 'excellent':
+        return 'text-green-400 border-green-500/30 bg-green-500/10';
+      case 'good':
+        return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
+      case 'fair':
+        return 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10';
+      case 'poor':
+        return 'text-orange-400 border-orange-500/30 bg-orange-500/10';
+      case 'critical':
+        return 'text-red-400 border-red-500/30 bg-red-500/10';
       default:
-        return "text-white/60 border-white/10 bg-white/5";
+        return 'text-white/60 border-white/10 bg-white/5';
     }
   };
 
   const getOrdinal = (num: number) => {
-    if (num === 1) return "1st";
-    if (num === 2) return "2nd";
-    if (num === 3) return "3rd";
+    if (num === 1) return '1st';
+    if (num === 2) return '2nd';
+    if (num === 3) return '3rd';
     return `${num}th`;
   };
 
@@ -163,14 +159,14 @@ const PowerQualityCalculator = () => {
           <CalculatorSelect
             label="System Type"
             value={systemType}
-            onChange={(v) => setSystemType(v as "single-phase" | "three-phase")}
+            onChange={(v) => setSystemType(v as 'single-phase' | 'three-phase')}
             options={systemTypeOptions}
           />
 
           <CalculatorSelect
             label="Load Type"
             value={loadType}
-            onChange={(v) => setLoadType(v as "linear" | "non-linear" | "mixed")}
+            onChange={(v) => setLoadType(v as 'linear' | 'non-linear' | 'mixed')}
             options={loadTypeOptions}
           />
         </div>
@@ -300,8 +296,8 @@ const PowerQualityCalculator = () => {
             onClick={calculatePQ}
             disabled={!isValid}
             className={cn(
-              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-              isValid ? "text-black" : "bg-white/10 text-white/30 cursor-not-allowed"
+              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+              isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
             )}
             style={
               isValid
@@ -331,7 +327,7 @@ const PowerQualityCalculator = () => {
             <div className="flex flex-wrap items-center justify-center gap-2 pb-4 border-b border-white/10">
               <div
                 className={cn(
-                  "px-3 py-1 rounded-full border font-medium text-sm",
+                  'px-3 py-1 rounded-full border font-medium text-sm',
                   getRatingColor(result.powerQualityRating)
                 )}
               >
@@ -339,26 +335,26 @@ const PowerQualityCalculator = () => {
               </div>
               <div
                 className={cn(
-                  "px-3 py-1 rounded-full border font-medium text-sm",
-                  result.riskLevel === "low"
-                    ? "text-green-400 border-green-500/30 bg-green-500/10"
-                    : result.riskLevel === "medium"
-                    ? "text-yellow-400 border-yellow-500/30 bg-yellow-500/10"
-                    : result.riskLevel === "high"
-                    ? "text-orange-400 border-orange-500/30 bg-orange-500/10"
-                    : "text-red-400 border-red-500/30 bg-red-500/10"
+                  'px-3 py-1 rounded-full border font-medium text-sm',
+                  result.riskLevel === 'low'
+                    ? 'text-green-400 border-green-500/30 bg-green-500/10'
+                    : result.riskLevel === 'medium'
+                      ? 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10'
+                      : result.riskLevel === 'high'
+                        ? 'text-orange-400 border-orange-500/30 bg-orange-500/10'
+                        : 'text-red-400 border-red-500/30 bg-red-500/10'
                 )}
               >
                 {result.riskLevel.toUpperCase()} RISK
               </div>
               <div
                 className={cn(
-                  "px-3 py-1 rounded-full border font-medium text-sm",
-                  result.complianceStatus === "compliant"
-                    ? "text-green-400 border-green-500/30 bg-green-500/10"
-                    : result.complianceStatus === "borderline"
-                    ? "text-yellow-400 border-yellow-500/30 bg-yellow-500/10"
-                    : "text-red-400 border-red-500/30 bg-red-500/10"
+                  'px-3 py-1 rounded-full border font-medium text-sm',
+                  result.complianceStatus === 'compliant'
+                    ? 'text-green-400 border-green-500/30 bg-green-500/10'
+                    : result.complianceStatus === 'borderline'
+                      ? 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10'
+                      : 'text-red-400 border-red-500/30 bg-red-500/10'
                 )}
               >
                 {result.complianceStatus.toUpperCase()}
@@ -371,14 +367,14 @@ const PowerQualityCalculator = () => {
                 <p className="text-xs text-white/80 mb-1">THDi Current</p>
                 <div
                   className={cn(
-                    "text-2xl font-bold",
+                    'text-2xl font-bold',
                     result.thdiCurrent > 15
-                      ? "text-red-400"
+                      ? 'text-red-400'
                       : result.thdiCurrent > 10
-                      ? "text-orange-400"
-                      : result.thdiCurrent > 5
-                      ? "text-yellow-400"
-                      : "text-green-400"
+                        ? 'text-orange-400'
+                        : result.thdiCurrent > 5
+                          ? 'text-yellow-400'
+                          : 'text-green-400'
                   )}
                 >
                   {result.thdiCurrent.toFixed(2)}%
@@ -403,12 +399,12 @@ const PowerQualityCalculator = () => {
                 <p className="text-xs text-white/80 mb-1">Crest Factor</p>
                 <div
                   className={cn(
-                    "text-2xl font-bold",
+                    'text-2xl font-bold',
                     result.crestFactorCurrent > 2.5
-                      ? "text-orange-400"
+                      ? 'text-orange-400'
                       : result.crestFactorCurrent > 2.0
-                      ? "text-yellow-400"
-                      : "text-green-400"
+                        ? 'text-yellow-400'
+                        : 'text-green-400'
                   )}
                 >
                   {result.crestFactorCurrent.toFixed(2)}
@@ -420,14 +416,14 @@ const PowerQualityCalculator = () => {
                 <p className="text-xs text-white/80 mb-1">K-Factor</p>
                 <div
                   className={cn(
-                    "text-2xl font-bold",
+                    'text-2xl font-bold',
                     result.kFactor > 13
-                      ? "text-red-400"
+                      ? 'text-red-400'
                       : result.kFactor > 9
-                      ? "text-orange-400"
-                      : result.kFactor > 4
-                      ? "text-yellow-400"
-                      : "text-green-400"
+                        ? 'text-orange-400'
+                        : result.kFactor > 4
+                          ? 'text-yellow-400'
+                          : 'text-green-400'
                   )}
                 >
                   {result.kFactor.toFixed(1)}
@@ -437,15 +433,17 @@ const PowerQualityCalculator = () => {
             </div>
 
             {/* Critical Violations */}
-            {result.harmonicSpectrum.filter((h) => h.compliance === "fail").length > 0 && (
+            {result.harmonicSpectrum.filter((h) => h.compliance === 'fail').length > 0 && (
               <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 mb-4">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertCircle className="h-4 w-4 text-red-400" />
-                  <span className="font-medium text-red-300 text-sm">Critical Harmonic Violations</span>
+                  <span className="font-medium text-red-300 text-sm">
+                    Critical Harmonic Violations
+                  </span>
                 </div>
                 <div className="space-y-1">
                   {result.harmonicSpectrum
-                    .filter((h) => h.compliance === "fail")
+                    .filter((h) => h.compliance === 'fail')
                     .sort((a, b) => b.currentPercentage / b.limit - a.currentPercentage / a.limit)
                     .slice(0, 3)
                     .map((harmonic) => {
@@ -456,7 +454,8 @@ const PowerQualityCalculator = () => {
                             {getOrdinal(harmonic.order)} harmonic:
                           </span>
                           <span className="text-red-300 ml-2">
-                            {harmonic.currentPercentage.toFixed(2)}% ({violation.toFixed(0)}% over limit)
+                            {harmonic.currentPercentage.toFixed(2)}% ({violation.toFixed(0)}% over
+                            limit)
                           </span>
                         </div>
                       );
@@ -466,14 +465,17 @@ const PowerQualityCalculator = () => {
             )}
 
             {/* Neutral Current Warning */}
-            {systemType === "three-phase" && result.neutralCurrent > 0 && (
+            {systemType === 'three-phase' && result.neutralCurrent > 0 && (
               <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 mb-4">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertCircle className="h-4 w-4 text-orange-400" />
-                  <span className="font-medium text-orange-300 text-sm">Neutral Current Analysis</span>
+                  <span className="font-medium text-orange-300 text-sm">
+                    Neutral Current Analysis
+                  </span>
                 </div>
                 <div className="text-sm text-orange-200/80">
-                  Neutral Current: <span className="font-mono">{result.neutralCurrent.toFixed(2)}A</span>
+                  Neutral Current:{' '}
+                  <span className="font-mono">{result.neutralCurrent.toFixed(2)}A</span>
                   {result.neutralCurrent > parseFloat(fundamentalCurrent) && (
                     <span className="text-orange-400 ml-2">Exceeds line current</span>
                   )}
@@ -485,41 +487,56 @@ const PowerQualityCalculator = () => {
             <div className="grid grid-cols-3 gap-2 mb-4">
               <div
                 className={cn(
-                  "p-2 rounded-lg border text-center",
+                  'p-2 rounded-lg border text-center',
                   result.bs7671Compliance
-                    ? "border-green-500/30 bg-green-500/10"
-                    : "border-red-500/30 bg-red-500/10"
+                    ? 'border-green-500/30 bg-green-500/10'
+                    : 'border-red-500/30 bg-red-500/10'
                 )}
               >
                 <p className="font-medium text-xs text-white/80">BS 7671</p>
-                <p className={cn("text-xs", result.bs7671Compliance ? "text-green-400" : "text-red-400")}>
-                  {result.bs7671Compliance ? "Compliant" : "Non-compliant"}
+                <p
+                  className={cn(
+                    'text-xs',
+                    result.bs7671Compliance ? 'text-green-400' : 'text-red-400'
+                  )}
+                >
+                  {result.bs7671Compliance ? 'Compliant' : 'Non-compliant'}
                 </p>
               </div>
               <div
                 className={cn(
-                  "p-2 rounded-lg border text-center",
+                  'p-2 rounded-lg border text-center',
                   result.ieeeCompliance
-                    ? "border-green-500/30 bg-green-500/10"
-                    : "border-red-500/30 bg-red-500/10"
+                    ? 'border-green-500/30 bg-green-500/10'
+                    : 'border-red-500/30 bg-red-500/10'
                 )}
               >
                 <p className="font-medium text-xs text-white/80">IEEE 519</p>
-                <p className={cn("text-xs", result.ieeeCompliance ? "text-green-400" : "text-red-400")}>
-                  {result.ieeeCompliance ? "Compliant" : "Non-compliant"}
+                <p
+                  className={cn(
+                    'text-xs',
+                    result.ieeeCompliance ? 'text-green-400' : 'text-red-400'
+                  )}
+                >
+                  {result.ieeeCompliance ? 'Compliant' : 'Non-compliant'}
                 </p>
               </div>
               <div
                 className={cn(
-                  "p-2 rounded-lg border text-center",
+                  'p-2 rounded-lg border text-center',
                   result.gCode5Compliance
-                    ? "border-green-500/30 bg-green-500/10"
-                    : "border-red-500/30 bg-red-500/10"
+                    ? 'border-green-500/30 bg-green-500/10'
+                    : 'border-red-500/30 bg-red-500/10'
                 )}
               >
                 <p className="font-medium text-xs text-white/80">G5/5 Code</p>
-                <p className={cn("text-xs", result.gCode5Compliance ? "text-green-400" : "text-red-400")}>
-                  {result.gCode5Compliance ? "Compliant" : "Non-compliant"}
+                <p
+                  className={cn(
+                    'text-xs',
+                    result.gCode5Compliance ? 'text-green-400' : 'text-red-400'
+                  )}
+                >
+                  {result.gCode5Compliance ? 'Compliant' : 'Non-compliant'}
                 </p>
               </div>
             </div>
@@ -536,8 +553,8 @@ const PowerQualityCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/70 transition-transform duration-200",
-                      showHarmonics && "rotate-180"
+                      'h-4 w-4 text-white/70 transition-transform duration-200',
+                      showHarmonics && 'rotate-180'
                     )}
                   />
                 </CollapsibleTrigger>
@@ -549,15 +566,17 @@ const PowerQualityCalculator = () => {
                         className="flex items-center justify-between p-2 rounded-lg bg-white/5"
                       >
                         <div className="flex items-center gap-3">
-                          <span className="font-medium text-white/80">{getOrdinal(harmonic.order)}</span>
+                          <span className="font-medium text-white/80">
+                            {getOrdinal(harmonic.order)}
+                          </span>
                           <div
                             className={cn(
-                              "w-2.5 h-2.5 rounded-full",
-                              harmonic.compliance === "pass"
-                                ? "bg-green-500"
-                                : harmonic.compliance === "warning"
-                                ? "bg-yellow-500"
-                                : "bg-red-500"
+                              'w-2.5 h-2.5 rounded-full',
+                              harmonic.compliance === 'pass'
+                                ? 'bg-green-500'
+                                : harmonic.compliance === 'warning'
+                                  ? 'bg-yellow-500'
+                                  : 'bg-red-500'
                             )}
                           />
                         </div>
@@ -586,8 +605,8 @@ const PowerQualityCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/70 transition-transform duration-200",
-                      showRecommendations && "rotate-180"
+                      'h-4 w-4 text-white/70 transition-transform duration-200',
+                      showRecommendations && 'rotate-180'
                     )}
                   />
                 </CollapsibleTrigger>
@@ -615,48 +634,62 @@ const PowerQualityCalculator = () => {
                   <p className="text-white/80 text-xs mb-1">Transformers</p>
                   <p
                     className={cn(
-                      "text-xs",
+                      'text-xs',
                       result.kFactor > 13
-                        ? "text-red-400"
+                        ? 'text-red-400'
                         : result.kFactor > 9
-                        ? "text-orange-400"
-                        : "text-green-400"
+                          ? 'text-orange-400'
+                          : 'text-green-400'
                     )}
                   >
                     {result.kFactor > 13
-                      ? "Critical overheating risk"
+                      ? 'Critical overheating risk'
                       : result.kFactor > 9
-                      ? "Elevated temperature"
-                      : "Normal operation"}
+                        ? 'Elevated temperature'
+                        : 'Normal operation'}
                   </p>
                 </div>
                 <div>
                   <p className="text-white/80 text-xs mb-1">Neutral Conductor</p>
                   <p
                     className={cn(
-                      "text-xs",
-                      systemType === "three-phase" && result.neutralCurrent > parseFloat(fundamentalCurrent)
-                        ? "text-orange-400"
-                        : "text-green-400"
+                      'text-xs',
+                      systemType === 'three-phase' &&
+                        result.neutralCurrent > parseFloat(fundamentalCurrent)
+                        ? 'text-orange-400'
+                        : 'text-green-400'
                     )}
                   >
-                    {systemType === "three-phase" && result.neutralCurrent > parseFloat(fundamentalCurrent)
-                      ? "Oversizing required"
-                      : "Standard sizing adequate"}
+                    {systemType === 'three-phase' &&
+                    result.neutralCurrent > parseFloat(fundamentalCurrent)
+                      ? 'Oversizing required'
+                      : 'Standard sizing adequate'}
                   </p>
                 </div>
                 <div>
                   <p className="text-white/80 text-xs mb-1">Protection Devices</p>
                   <p
-                    className={cn("text-xs", result.crestFactorCurrent > 2.5 ? "text-orange-400" : "text-green-400")}
+                    className={cn(
+                      'text-xs',
+                      result.crestFactorCurrent > 2.5 ? 'text-orange-400' : 'text-green-400'
+                    )}
                   >
-                    {result.crestFactorCurrent > 2.5 ? "RMS-sensing recommended" : "Standard devices suitable"}
+                    {result.crestFactorCurrent > 2.5
+                      ? 'RMS-sensing recommended'
+                      : 'Standard devices suitable'}
                   </p>
                 </div>
                 <div>
                   <p className="text-white/80 text-xs mb-1">PFC Capacitors</p>
-                  <p className={cn("text-xs", result.thdiCurrent > 8 ? "text-orange-400" : "text-green-400")}>
-                    {result.thdiCurrent > 8 ? "Detuned capacitors required" : "Standard capacitors OK"}
+                  <p
+                    className={cn(
+                      'text-xs',
+                      result.thdiCurrent > 8 ? 'text-orange-400' : 'text-green-400'
+                    )}
+                  >
+                    {result.thdiCurrent > 8
+                      ? 'Detuned capacitors required'
+                      : 'Standard capacitors OK'}
                   </p>
                 </div>
               </div>
@@ -665,7 +698,7 @@ const PowerQualityCalculator = () => {
 
           {/* Why This Matters */}
           <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-amber-400" />
@@ -675,8 +708,8 @@ const PowerQualityCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showReference && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showReference && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -713,11 +746,13 @@ const PowerQualityCalculator = () => {
       {/* Quick Reference */}
       {!result && (
         <Collapsible>
-          <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+          <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
             <CollapsibleTrigger className="agent-collapsible-trigger w-full">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-amber-300">Quick Reference</span>
+                <span className="text-sm sm:text-base font-medium text-amber-300">
+                  Quick Reference
+                </span>
               </div>
               <ChevronDown className="h-4 w-4 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </CollapsibleTrigger>

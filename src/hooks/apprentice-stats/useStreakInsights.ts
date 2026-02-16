@@ -47,8 +47,16 @@ const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frid
 export function useStreakInsights() {
   const { streak, loading: streakLoading, getStreakDisplay } = useStudyStreak();
   const { lastLocation, loading: locationLoading, getLastStudiedDisplay } = useLastStudyLocation();
-  const { progress: flashcardProgress, getDueCards, loading: flashcardLoading } = useFlashcardProgress();
-  const { results: quizResults, getPerformanceByCategory, isLoading: quizLoading } = useQuizResults();
+  const {
+    progress: flashcardProgress,
+    getDueCards,
+    loading: flashcardLoading,
+  } = useFlashcardProgress();
+  const {
+    results: quizResults,
+    getPerformanceByCategory,
+    isLoading: quizLoading,
+  } = useQuizResults();
 
   const loading = streakLoading || locationLoading || flashcardLoading || quizLoading;
 
@@ -65,12 +73,12 @@ export function useStreakInsights() {
     };
 
     // Quiz completions
-    quizResults.forEach(r => {
+    quizResults.forEach((r) => {
       if (r.completed_at) addActivity(r.completed_at);
     });
 
     // Flashcard reviews
-    flashcardProgress.forEach(p => {
+    flashcardProgress.forEach((p) => {
       if (p.last_reviewed_at) addActivity(p.last_reviewed_at);
     });
 
@@ -120,7 +128,7 @@ export function useStreakInsights() {
   // Streak milestones
   const milestones = useMemo((): StreakMilestone[] => {
     const best = Math.max(streak.currentStreak, streak.longestStreak);
-    return STREAK_MILESTONES.map(m => ({
+    return STREAK_MILESTONES.map((m) => ({
       ...m,
       unlocked: best >= m.days,
     }));
@@ -128,7 +136,7 @@ export function useStreakInsights() {
 
   // Next milestone
   const nextMilestone = useMemo(() => {
-    return milestones.find(m => !m.unlocked) || null;
+    return milestones.find((m) => !m.unlocked) || null;
   }, [milestones]);
 
   // Personalised insight sentence
@@ -141,13 +149,17 @@ export function useStreakInsights() {
     if (daysStudiedLast7 >= 5) {
       insights.push(`Brilliant consistency -- you studied ${daysStudiedLast7} of the last 7 days.`);
     } else if (daysStudiedLast7 >= 3) {
-      insights.push(`You studied ${daysStudiedLast7} of the last 7 days. Aim for 5+ to build momentum.`);
+      insights.push(
+        `You studied ${daysStudiedLast7} of the last 7 days. Aim for 5+ to build momentum.`
+      );
     }
     if (streak.currentStreak >= 7 && streak.currentStreak === streak.longestStreak) {
       insights.push('This is your longest streak ever -- keep going!');
     }
     if (display.totalCardsReviewed > 50) {
-      insights.push(`You've reviewed ${display.totalCardsReviewed} flashcards. That knowledge compounds.`);
+      insights.push(
+        `You've reviewed ${display.totalCardsReviewed} flashcards. That knowledge compounds.`
+      );
     }
 
     return insights[0] || null;
@@ -163,9 +175,10 @@ export function useStreakInsights() {
       recs.push({
         id: 'study-today',
         title: 'Keep your streak alive!',
-        description: streak.currentStreak > 0
-          ? `You're on a ${streak.currentStreak}-day streak. Don't let it break!`
-          : 'Start a study session to build your streak.',
+        description:
+          streak.currentStreak > 0
+            ? `You're on a ${streak.currentStreak}-day streak. Don't let it break!`
+            : 'Start a study session to build your streak.',
         actionLabel: 'Study now',
         actionPath: path,
         priority: 1,
@@ -187,7 +200,7 @@ export function useStreakInsights() {
 
     // 3. Weakest quiz category
     const categories = getPerformanceByCategory();
-    const attempted = categories.filter(c => c.score > 0);
+    const attempted = categories.filter((c) => c.score > 0);
     if (attempted.length > 0) {
       const weakest = [...attempted].sort((a, b) => a.score - b.score)[0];
       if (weakest.score < 70) {
@@ -230,7 +243,15 @@ export function useStreakInsights() {
     }
 
     return recs.sort((a, b) => a.priority - b.priority);
-  }, [display, streak, lastLocation, lastStudiedText, getDueCards, getPerformanceByCategory, nextMilestone]);
+  }, [
+    display,
+    streak,
+    lastLocation,
+    lastStudiedText,
+    getDueCards,
+    getPerformanceByCategory,
+    nextMilestone,
+  ]);
 
   return {
     loading,

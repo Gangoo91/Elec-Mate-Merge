@@ -122,34 +122,20 @@ export const SyncStatusBar: React.FC<SyncStatusBarProps> = ({
       >
         <Icon className={cn('h-4 w-4 flex-shrink-0', config.iconColor)} />
 
-        <span className={cn('flex-1 text-sm font-medium', config.textColor)}>
-          {config.message}
-        </span>
+        <span className={cn('flex-1 text-sm font-medium', config.textColor)}>{config.message}</span>
 
         {status === 'offline' && lastSynced && (
-          <span className="text-xs text-muted-foreground">
-            Will sync when online
-          </span>
+          <span className="text-xs text-muted-foreground">Will sync when online</span>
         )}
 
         {status === 'error' && onRetry && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onRetry}
-            className="h-7 px-2 text-xs"
-          >
+          <Button variant="ghost" size="sm" onClick={onRetry} className="h-7 px-2 text-xs">
             Retry
           </Button>
         )}
 
         {config.showDismiss && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleDismiss}
-            className="h-6 w-6 -mr-1"
-          >
+          <Button variant="ghost" size="icon" onClick={handleDismiss} className="h-6 w-6 -mr-1">
             <X className="h-3 w-3" />
             <span className="sr-only">Dismiss</span>
           </Button>

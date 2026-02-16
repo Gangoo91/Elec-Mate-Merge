@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -12,17 +11,17 @@ interface QualificationsSectionProps {
 
 const qualificationOptions = [
   'C&G 2391-50 (Inspection & Testing)',
-  'C&G 2391-52 (Inspection & Testing)', 
+  'C&G 2391-52 (Inspection & Testing)',
   '18th Edition BS7671',
   'C&G 2394/2395 (Design & Verification)',
   'AM2 (Achievement Measurement)',
   'EAL Level 3 Inspection & Testing',
-  'EAL Level 4 Inspection & Testing'
+  'EAL Level 4 Inspection & Testing',
 ];
 
-const QualificationsSection = ({ 
-  selectedQualifications, 
-  onToggleQualification 
+const QualificationsSection = ({
+  selectedQualifications,
+  onToggleQualification,
 }: QualificationsSectionProps) => {
   return (
     <div className="space-y-3">

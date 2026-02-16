@@ -1,65 +1,83 @@
-import { ArrowLeft, Leaf, BookOpen, Recycle, Zap, CloudRain, TreePine, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Leaf,
+  BookOpen,
+  Recycle,
+  Zap,
+  CloudRain,
+  TreePine,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Environmental Awareness",
-    description: "Environmental management principles, key legislation, impact assessments, and sustainability fundamentals",
+    title: 'Environmental Awareness',
+    description:
+      'Environmental management principles, key legislation, impact assessments, and sustainability fundamentals',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../environmental-sustainability-module-1",
+    duration: '30 mins',
+    link: '../environmental-sustainability-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Waste Management",
-    description: "Waste hierarchy, duty of care, hazardous waste classification, and site waste management plans",
+    title: 'Waste Management',
+    description:
+      'Waste hierarchy, duty of care, hazardous waste classification, and site waste management plans',
     icon: Recycle,
-    duration: "30 mins",
-    link: "../environmental-sustainability-module-2",
+    duration: '30 mins',
+    link: '../environmental-sustainability-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Energy & Resource Efficiency",
-    description: "Energy use on construction sites, carbon reduction, water conservation, and sustainable materials",
+    title: 'Energy & Resource Efficiency',
+    description:
+      'Energy use on construction sites, carbon reduction, water conservation, and sustainable materials',
     icon: Zap,
-    duration: "30 mins",
-    link: "../environmental-sustainability-module-3",
+    duration: '30 mins',
+    link: '../environmental-sustainability-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Pollution Prevention",
-    description: "Air quality, water pollution, noise and vibration control, and land contamination management",
+    title: 'Pollution Prevention',
+    description:
+      'Air quality, water pollution, noise and vibration control, and land contamination management',
     icon: CloudRain,
-    duration: "30 mins",
-    link: "../environmental-sustainability-module-4",
+    duration: '30 mins',
+    link: '../environmental-sustainability-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Biodiversity & Best Practice",
-    description: "Protected species, ecological surveys, BREEAM standards, and environmental management systems",
+    title: 'Biodiversity & Best Practice',
+    description:
+      'Protected species, ecological surveys, BREEAM standards, and environmental management systems',
     icon: TreePine,
-    duration: "30 mins",
-    link: "../environmental-sustainability-module-5",
+    duration: '30 mins',
+    link: '../environmental-sustainability-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../environmental-sustainability-module-6",
+    duration: '30 mins',
+    link: '../environmental-sustainability-module-6',
     isExam: true,
   },
 ];
 
 export default function EnvironmentalSustainabilityCourse() {
   useSEO({
-    title: "Environmental & Sustainability | General Upskilling",
-    description: "Complete environmental awareness and sustainability training covering waste management, energy efficiency, pollution prevention, and mock exam preparation.",
+    title: 'Environmental & Sustainability | General Upskilling',
+    description:
+      'Complete environmental awareness and sustainability training covering waste management, energy efficiency, pollution prevention, and mock exam preparation.',
   });
 
   return (
@@ -96,7 +114,8 @@ export default function EnvironmentalSustainabilityCourse() {
                 Environmental &amp; Sustainability
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 max-w-2xl">
-                Waste management, energy efficiency, and sustainable working practices for tradespeople on site
+                Waste management, energy efficiency, and sustainable working practices for
+                tradespeople on site
               </p>
             </div>
           </div>

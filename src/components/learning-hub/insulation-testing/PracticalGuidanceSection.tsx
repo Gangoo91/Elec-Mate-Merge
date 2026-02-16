@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Wrench, AlertTriangle, CheckCircle2, Lightbulb } from 'lucide-react';
 import ScienceSection from './ScienceSection';
@@ -6,11 +5,13 @@ import ScienceSection from './ScienceSection';
 const PracticalGuidanceSection = () => (
   <div className="space-y-4 sm:space-y-6">
     <ScienceSection />
-    
+
     <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">Practical Testing Techniques</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-green-400">
+          Practical Testing Techniques
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -41,35 +42,61 @@ const PracticalGuidanceSection = () => (
     <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-blue-400">Common Testing Scenarios</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-blue-400">
+          Common Testing Scenarios
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">New Installation</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Expected:</strong> {'>'} 999MΩ all tests</p>
-              <p><strong>Test voltage:</strong> 500V DC</p>
-              <p><strong>Duration:</strong> 1 minute minimum</p>
-              <p><strong>Action:</strong> If {'<'} 1MΩ, investigate</p>
+              <p>
+                <strong>Expected:</strong> {'>'} 999MΩ all tests
+              </p>
+              <p>
+                <strong>Test voltage:</strong> 500V DC
+              </p>
+              <p>
+                <strong>Duration:</strong> 1 minute minimum
+              </p>
+              <p>
+                <strong>Action:</strong> If {'<'} 1MΩ, investigate
+              </p>
             </div>
           </div>
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">Periodic Inspection</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Expected:</strong> {'>'} 1MΩ (new) / 0.5MΩ (existing)</p>
-              <p><strong>Test voltage:</strong> 500V DC typical</p>
-              <p><strong>Compare:</strong> Previous test results</p>
-              <p><strong>Action:</strong> Investigate declining trends</p>
+              <p>
+                <strong>Expected:</strong> {'>'} 1MΩ (new) / 0.5MΩ (existing)
+              </p>
+              <p>
+                <strong>Test voltage:</strong> 500V DC typical
+              </p>
+              <p>
+                <strong>Compare:</strong> Previous test results
+              </p>
+              <p>
+                <strong>Action:</strong> Investigate declining trends
+              </p>
             </div>
           </div>
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">Fault Investigation</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Symptoms:</strong> RCD tripping, earth leakage</p>
-              <p><strong>Method:</strong> Test individual circuits</p>
-              <p><strong>Look for:</strong> Low or declining readings</p>
-              <p><strong>Action:</strong> Isolate and repair faulty circuits</p>
+              <p>
+                <strong>Symptoms:</strong> RCD tripping, earth leakage
+              </p>
+              <p>
+                <strong>Method:</strong> Test individual circuits
+              </p>
+              <p>
+                <strong>Look for:</strong> Low or declining readings
+              </p>
+              <p>
+                <strong>Action:</strong> Isolate and repair faulty circuits
+              </p>
             </div>
           </div>
         </div>
@@ -79,7 +106,9 @@ const PracticalGuidanceSection = () => (
     <div className="bg-yellow-500/10 border border-yellow-500/20 border-l-4 border-l-yellow-500 rounded-lg p-4 sm:p-5 md:p-6">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-yellow-400">Troubleshooting Guide</h4>
+        <h4 className="text-base sm:text-lg font-semibold text-yellow-400">
+          Troubleshooting Guide
+        </h4>
       </div>
       <div className="space-y-3 text-sm text-white">
         <div className="grid grid-cols-1 gap-4">
@@ -89,12 +118,16 @@ const PracticalGuidanceSection = () => (
               <div>
                 <p className="font-medium text-foreground mb-2">Problem: Reading Too Low</p>
                 <div className="space-y-1">
-                  <p><strong>Possible Causes:</strong></p>
+                  <p>
+                    <strong>Possible Causes:</strong>
+                  </p>
                   <p>• Moisture ingress in cables/connections</p>
                   <p>• Damaged cable insulation</p>
                   <p>• Contaminated terminations</p>
                   <p>• Equipment not disconnected</p>
-                  <p><strong>Solutions:</strong></p>
+                  <p>
+                    <strong>Solutions:</strong>
+                  </p>
                   <p>• Allow time for moisture to evaporate</p>
                   <p>• Clean all terminations thoroughly</p>
                   <p>• Check all equipment is disconnected</p>
@@ -104,12 +137,16 @@ const PracticalGuidanceSection = () => (
               <div>
                 <p className="font-medium text-foreground mb-2">Problem: Inconsistent Readings</p>
                 <div className="space-y-1">
-                  <p><strong>Possible Causes:</strong></p>
+                  <p>
+                    <strong>Possible Causes:</strong>
+                  </p>
                   <p>• Poor test lead connections</p>
                   <p>• Intermittent faults</p>
                   <p>• Temperature variations</p>
                   <p>• Parallel paths</p>
-                  <p><strong>Solutions:</strong></p>
+                  <p>
+                    <strong>Solutions:</strong>
+                  </p>
                   <p>• Ensure good contact at test points</p>
                   <p>• Repeat tests to confirm readings</p>
                   <p>• Check for parallel paths</p>

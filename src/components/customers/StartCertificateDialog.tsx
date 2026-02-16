@@ -12,7 +12,19 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { useCustomerProperties } from '@/hooks/inspection/useCustomerProperties';
-import { FileText, ClipboardCheck, Wrench, MapPin, ArrowRight, PoundSterling, Receipt, Flame, Lightbulb, Zap, Sun } from 'lucide-react';
+import {
+  FileText,
+  ClipboardCheck,
+  Wrench,
+  MapPin,
+  ArrowRight,
+  PoundSterling,
+  Receipt,
+  Flame,
+  Lightbulb,
+  Zap,
+  Sun,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface StartCertificateDialogProps {
@@ -21,12 +33,33 @@ interface StartCertificateDialogProps {
   customer: Customer;
 }
 
-type ActionType = 'eicr' | 'eic' | 'minor-works' | 'fire-alarm' | 'emergency-lighting' | 'ev-charging' | 'solar-pv' | 'quote' | 'invoice';
+type ActionType =
+  | 'eicr'
+  | 'eic'
+  | 'minor-works'
+  | 'fire-alarm'
+  | 'emergency-lighting'
+  | 'ev-charging'
+  | 'solar-pv'
+  | 'quote'
+  | 'invoice';
 
 // Certificate types that use the new standalone routes (/inspection-testing/<type>/new)
-const STANDALONE_CERT_TYPES: ActionType[] = ['fire-alarm', 'emergency-lighting', 'ev-charging', 'solar-pv'];
+const STANDALONE_CERT_TYPES: ActionType[] = [
+  'fire-alarm',
+  'emergency-lighting',
+  'ev-charging',
+  'solar-pv',
+];
 
-const actionTypes: { value: ActionType; label: string; description: string; icon: React.ElementType; color: string; group: 'certificate' | 'business' }[] = [
+const actionTypes: {
+  value: ActionType;
+  label: string;
+  description: string;
+  icon: React.ElementType;
+  color: string;
+  group: 'certificate' | 'business';
+}[] = [
   {
     value: 'quote',
     label: 'New Quote',
@@ -101,7 +134,11 @@ const actionTypes: { value: ActionType; label: string; description: string; icon
   },
 ];
 
-export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCertificateDialogProps) => {
+export const StartCertificateDialog = ({
+  open,
+  onOpenChange,
+  customer,
+}: StartCertificateDialogProps) => {
   const navigate = useNavigate();
   const { properties } = useCustomerProperties(customer.id);
   const [selectedType, setSelectedType] = useState<ActionType>('quote');
@@ -112,26 +149,30 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
 
   const handleStart = () => {
     const address = selectedPropertyId
-      ? properties.find(p => p.id === selectedPropertyId)?.address || customer.address
+      ? properties.find((p) => p.id === selectedPropertyId)?.address || customer.address
       : customer.address;
 
     if (selectedType === 'quote' || selectedType === 'invoice') {
       // Use sessionStorage pattern for pre-filling customer data
       const sessionId = `customer-${selectedType}-${Date.now()}`;
-      sessionStorage.setItem(sessionId, JSON.stringify({
-        certificateData: {
-          client: {
-            name: customer.name,
-            email: customer.email || '',
-            phone: customer.phone || '',
-            address: address || '',
+      sessionStorage.setItem(
+        sessionId,
+        JSON.stringify({
+          certificateData: {
+            client: {
+              name: customer.name,
+              email: customer.email || '',
+              phone: customer.phone || '',
+              address: address || '',
+            },
           },
-        },
-      }));
+        })
+      );
 
-      const builderPath = selectedType === 'quote'
-        ? '/electrician/quote-builder/create'
-        : '/electrician/invoice-builder/create';
+      const builderPath =
+        selectedType === 'quote'
+          ? '/electrician/quote-builder/create'
+          : '/electrician/invoice-builder/create';
 
       navigate(`${builderPath}?certificateSessionId=${sessionId}`);
     } else if (isStandalone) {
@@ -159,10 +200,10 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
     onOpenChange(false);
   };
 
-  const defaultProperty = properties.find(p => p.isPrimary) || properties[0];
+  const defaultProperty = properties.find((p) => p.isPrimary) || properties[0];
 
-  const businessActions = actionTypes.filter(a => a.group === 'business');
-  const certificateActions = actionTypes.filter(a => a.group === 'certificate');
+  const businessActions = actionTypes.filter((a) => a.group === 'business');
+  const certificateActions = actionTypes.filter((a) => a.group === 'certificate');
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -179,7 +220,9 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
         <div className="space-y-4 mt-3">
           {/* Business Actions */}
           <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground uppercase tracking-wider">Business</Label>
+            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
+              Business
+            </Label>
             <div className="grid grid-cols-2 gap-2">
               {businessActions.map((type) => (
                 <button
@@ -193,10 +236,12 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
                       : 'bg-background border-border hover:border-border/80'
                   )}
                 >
-                  <div className={cn(
-                    'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
-                    selectedType === type.value ? 'bg-white/10' : 'bg-muted'
-                  )}>
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
+                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
+                    )}
+                  >
                     <type.icon className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -209,7 +254,9 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
 
           {/* Certificate Actions */}
           <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground uppercase tracking-wider">Certificates</Label>
+            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
+              Certificates
+            </Label>
             <div className="space-y-1.5">
               {certificateActions.map((type) => (
                 <button
@@ -223,10 +270,12 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
                       : 'bg-background border-border hover:border-border/80'
                   )}
                 >
-                  <div className={cn(
-                    'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
-                    selectedType === type.value ? 'bg-white/10' : 'bg-muted'
-                  )}>
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
+                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
+                    )}
+                  >
                     <type.icon className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -289,7 +338,11 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
               onClick={handleStart}
               className="w-full sm:w-auto h-11 touch-manipulation"
             >
-              {selectedType === 'quote' ? 'Create Quote' : selectedType === 'invoice' ? 'Create Invoice' : 'Start Certificate'}
+              {selectedType === 'quote'
+                ? 'Create Quote'
+                : selectedType === 'invoice'
+                  ? 'Create Invoice'
+                  : 'Start Certificate'}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </div>

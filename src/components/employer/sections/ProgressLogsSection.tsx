@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { useState, useCallback } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
   Search,
   Calendar,
@@ -28,11 +28,11 @@ import {
   AlertCircle,
   Users,
   X,
-  Trash2
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { format } from "date-fns";
+  Trash2,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { format } from 'date-fns';
 import {
   useProgressLogs,
   useProgressLogStats,
@@ -41,17 +41,23 @@ import {
   useDeleteProgressLog,
   type ProgressLog,
   type CreateProgressLogInput,
-  type WeatherCondition
-} from "@/hooks/useProgressLogs";
-import { useJobs } from "@/hooks/useJobs";
+  type WeatherCondition,
+} from '@/hooks/useProgressLogs';
+import { useJobs } from '@/hooks/useJobs';
 
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { SwipeableRow } from "@/components/ui/swipeable-row";
-import { MobileBottomSheet } from "@/components/mobile/MobileBottomSheet";
-import { toast } from "@/hooks/use-toast";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { SwipeableRow } from '@/components/ui/swipeable-row';
+import { MobileBottomSheet } from '@/components/mobile/MobileBottomSheet';
+import { toast } from '@/hooks/use-toast';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -61,16 +67,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 const weatherIcons: Record<WeatherCondition, React.ReactNode> = {
-  "Clear": <Sun className="h-4 w-4 text-yellow-400" />,
-  "Cloudy": <Cloud className="h-4 w-4 text-gray-400" />,
-  "Partly Cloudy": <CloudSun className="h-4 w-4 text-blue-300" />,
-  "Rain": <CloudRain className="h-4 w-4 text-blue-400" />,
-  "Heavy Rain": <CloudRain className="h-4 w-4 text-blue-600" />,
-  "Snow": <Cloud className="h-4 w-4 text-white" />,
-  "Wind": <Cloud className="h-4 w-4 text-gray-500" />,
+  Clear: <Sun className="h-4 w-4 text-yellow-400" />,
+  Cloudy: <Cloud className="h-4 w-4 text-gray-400" />,
+  'Partly Cloudy': <CloudSun className="h-4 w-4 text-blue-300" />,
+  Rain: <CloudRain className="h-4 w-4 text-blue-400" />,
+  'Heavy Rain': <CloudRain className="h-4 w-4 text-blue-600" />,
+  Snow: <Cloud className="h-4 w-4 text-white" />,
+  Wind: <Cloud className="h-4 w-4 text-gray-500" />,
 };
 
 function ProgressLogsSkeleton() {
@@ -81,12 +87,12 @@ function ProgressLogsSkeleton() {
         <Skeleton className="h-12 w-full" />
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {[1, 2, 3, 4].map(i => (
+        {[1, 2, 3, 4].map((i) => (
           <Skeleton key={i} className="h-24" />
         ))}
       </div>
       <div className="space-y-3">
-        {[1, 2, 3].map(i => (
+        {[1, 2, 3].map((i) => (
           <Skeleton key={i} className="h-32" />
         ))}
       </div>
@@ -96,7 +102,7 @@ function ProgressLogsSkeleton() {
 
 export function ProgressLogsSection() {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [expandedLog, setExpandedLog] = useState<string | null>(null);
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [selectedLog, setSelectedLog] = useState<ProgressLog | null>(null);
@@ -105,18 +111,18 @@ export function ProgressLogsSection() {
 
   // Form state
   const [formData, setFormData] = useState<Partial<CreateProgressLogInput>>({
-    job_id: "",
-    date: format(new Date(), "yyyy-MM-dd"),
-    weather: "Clear",
+    job_id: '',
+    date: format(new Date(), 'yyyy-MM-dd'),
+    weather: 'Clear',
     workers_on_site: 1,
-    work_description: "",
+    work_description: '',
     work_items: [],
     materials_used: [],
     hours_worked: 8,
     photos: [],
   });
-  const [newWorkItem, setNewWorkItem] = useState("");
-  const [newMaterial, setNewMaterial] = useState({ item: "", quantity: "", cost: 0 });
+  const [newWorkItem, setNewWorkItem] = useState('');
+  const [newMaterial, setNewMaterial] = useState({ item: '', quantity: '', cost: 0 });
 
   // Data fetching
   const { data: progressLogs = [], isLoading, error, refetch } = useProgressLogs();
@@ -128,7 +134,7 @@ export function ProgressLogsSection() {
 
   const handleRefresh = useCallback(async () => {
     await refetch();
-    toast({ title: "Logs refreshed" });
+    toast({ title: 'Logs refreshed' });
   }, [refetch]);
 
   const handleSignOff = (logId: string) => {
@@ -136,7 +142,7 @@ export function ProgressLogsSection() {
   };
 
   const handleCall = (employeeId: string) => {
-    toast({ title: "Opening phone..." });
+    toast({ title: 'Opening phone...' });
   };
 
   const handleViewFullLog = (log: ProgressLog) => {
@@ -144,46 +150,50 @@ export function ProgressLogsSection() {
   };
 
   const handleMessageWorker = () => {
-    toast({ title: "Opening messaging..." });
+    toast({ title: 'Opening messaging...' });
   };
 
   const handleAddWorkItem = () => {
     if (newWorkItem.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        work_items: [...(prev.work_items || []), newWorkItem.trim()]
+        work_items: [...(prev.work_items || []), newWorkItem.trim()],
       }));
-      setNewWorkItem("");
+      setNewWorkItem('');
     }
   };
 
   const handleRemoveWorkItem = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      work_items: prev.work_items?.filter((_, i) => i !== index) || []
+      work_items: prev.work_items?.filter((_, i) => i !== index) || [],
     }));
   };
 
   const handleAddMaterial = () => {
     if (newMaterial.item.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        materials_used: [...(prev.materials_used || []), { ...newMaterial }]
+        materials_used: [...(prev.materials_used || []), { ...newMaterial }],
       }));
-      setNewMaterial({ item: "", quantity: "", cost: 0 });
+      setNewMaterial({ item: '', quantity: '', cost: 0 });
     }
   };
 
   const handleRemoveMaterial = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      materials_used: prev.materials_used?.filter((_, i) => i !== index) || []
+      materials_used: prev.materials_used?.filter((_, i) => i !== index) || [],
     }));
   };
 
   const handleCreate = async () => {
     if (!formData.job_id || !formData.work_description) {
-      toast({ title: "Error", description: "Please fill in required fields", variant: "destructive" });
+      toast({
+        title: 'Error',
+        description: 'Please fill in required fields',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -205,21 +215,21 @@ export function ProgressLogsSection() {
 
   const resetForm = () => {
     setFormData({
-      job_id: "",
-      date: format(new Date(), "yyyy-MM-dd"),
-      weather: "Clear",
+      job_id: '',
+      date: format(new Date(), 'yyyy-MM-dd'),
+      weather: 'Clear',
       workers_on_site: 1,
-      work_description: "",
+      work_description: '',
       work_items: [],
       materials_used: [],
       hours_worked: 8,
       photos: [],
     });
-    setNewWorkItem("");
-    setNewMaterial({ item: "", quantity: "", cost: 0 });
+    setNewWorkItem('');
+    setNewMaterial({ item: '', quantity: '', cost: 0 });
   };
 
-  const filteredLogs = progressLogs.filter(log => {
+  const filteredLogs = progressLogs.filter((log) => {
     const matchesSearch =
       log.work_description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       log.job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -228,14 +238,14 @@ export function ProgressLogsSection() {
     return matchesSearch && matchesJob;
   });
 
-  const uniqueJobs = [...new Set(progressLogs.map(l => l.job_id))].map(id =>
-    jobs.find(j => j.id === id)
-  ).filter(Boolean);
+  const uniqueJobs = [...new Set(progressLogs.map((l) => l.job_id))]
+    .map((id) => jobs.find((j) => j.id === id))
+    .filter(Boolean);
 
-  const jobOptions = uniqueJobs.map(job => ({
+  const jobOptions = uniqueJobs.map((job) => ({
     value: job!.id,
     label: job!.title,
-    count: progressLogs.filter(l => l.job_id === job!.id).length
+    count: progressLogs.filter((l) => l.job_id === job!.id).length,
   }));
 
   if (isLoading) {
@@ -260,12 +270,11 @@ export function ProgressLogsSection() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-foreground">Daily Progress Logs</h1>
-            <p className="text-sm text-foreground/70">Track work completed, materials used, and issues</p>
+            <p className="text-sm text-foreground/70">
+              Track work completed, materials used, and issues
+            </p>
           </div>
-          <Button
-            onClick={() => setShowCreateSheet(true)}
-            className="touch-feedback"
-          >
+          <Button onClick={() => setShowCreateSheet(true)} className="touch-feedback">
             <Plus className="h-4 w-4 mr-2" />
             New Log
           </Button>
@@ -280,7 +289,7 @@ export function ProgressLogsSection() {
               placeholder="Search logs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn("w-full bg-elec-gray h-12 text-foreground", !searchQuery && "pl-9")}
+              className={cn('w-full bg-elec-gray h-12 text-foreground', !searchQuery && 'pl-9')}
             />
           </div>
 
@@ -339,7 +348,9 @@ export function ProgressLogsSection() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold text-foreground">£{stats?.totalMaterialsCost || 0}</p>
+                <p className="text-2xl font-bold text-foreground">
+                  £{stats?.totalMaterialsCost || 0}
+                </p>
                 <p className="text-xs text-foreground/70">Materials</p>
               </div>
               <Package className="h-8 w-8 text-warning opacity-70" />
@@ -350,9 +361,7 @@ export function ProgressLogsSection() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold text-success">
-                  {stats?.signedOff || 0}
-                </p>
+                <p className="text-2xl font-bold text-success">{stats?.signedOff || 0}</p>
                 <p className="text-xs text-foreground/70">Signed Off</p>
               </div>
               <CheckCircle className="h-8 w-8 text-success opacity-70" />
@@ -365,24 +374,29 @@ export function ProgressLogsSection() {
       {!isMobile && uniqueJobs.length > 0 && (
         <div className="flex flex-wrap gap-2">
           <Badge
-            variant={selectedJobs.length === 0 ? "default" : "outline"}
+            variant={selectedJobs.length === 0 ? 'default' : 'outline'}
             className="cursor-pointer touch-feedback"
             onClick={() => setSelectedJobs([])}
           >
             All Jobs
           </Badge>
-          {uniqueJobs.map((job) => job && (
-            <Badge
-              key={job.id}
-              variant={selectedJobs.includes(job.id) ? "default" : "outline"}
-              className="cursor-pointer touch-feedback"
-              onClick={() => setSelectedJobs(prev =>
-                prev.includes(job.id) ? prev.filter(j => j !== job.id) : [...prev, job.id]
-              )}
-            >
-              {job.title}
-            </Badge>
-          ))}
+          {uniqueJobs.map(
+            (job) =>
+              job && (
+                <Badge
+                  key={job.id}
+                  variant={selectedJobs.includes(job.id) ? 'default' : 'outline'}
+                  className="cursor-pointer touch-feedback"
+                  onClick={() =>
+                    setSelectedJobs((prev) =>
+                      prev.includes(job.id) ? prev.filter((j) => j !== job.id) : [...prev, job.id]
+                    )
+                  }
+                >
+                  {job.title}
+                </Badge>
+              )
+          )}
         </div>
       )}
 
@@ -390,24 +404,29 @@ export function ProgressLogsSection() {
       {isMobile && uniqueJobs.length > 0 && (
         <div className="flex overflow-x-auto hide-scrollbar gap-2 -mx-4 px-4 py-1">
           <Badge
-            variant={selectedJobs.length === 0 ? "default" : "outline"}
+            variant={selectedJobs.length === 0 ? 'default' : 'outline'}
             className="cursor-pointer touch-feedback flex-shrink-0 h-9 px-4 text-sm"
             onClick={() => setSelectedJobs([])}
           >
             All
           </Badge>
-          {uniqueJobs.map((job) => job && (
-            <Badge
-              key={job.id}
-              variant={selectedJobs.includes(job.id) ? "default" : "outline"}
-              className="cursor-pointer touch-feedback flex-shrink-0 h-9 px-4 text-sm"
-              onClick={() => setSelectedJobs(prev =>
-                prev.includes(job.id) ? prev.filter(j => j !== job.id) : [...prev, job.id]
-              )}
-            >
-              {job.title}
-            </Badge>
-          ))}
+          {uniqueJobs.map(
+            (job) =>
+              job && (
+                <Badge
+                  key={job.id}
+                  variant={selectedJobs.includes(job.id) ? 'default' : 'outline'}
+                  className="cursor-pointer touch-feedback flex-shrink-0 h-9 px-4 text-sm"
+                  onClick={() =>
+                    setSelectedJobs((prev) =>
+                      prev.includes(job.id) ? prev.filter((j) => j !== job.id) : [...prev, job.id]
+                    )
+                  }
+                >
+                  {job.title}
+                </Badge>
+              )
+          )}
         </div>
       )}
 
@@ -448,7 +467,7 @@ export function ProgressLogsSection() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <h4 className="font-semibold text-foreground text-base">
-                          {log.job?.title || "Unknown Job"}
+                          {log.job?.title || 'Unknown Job'}
                         </h4>
                         {log.signed_off ? (
                           <Badge className="bg-success/20 text-success text-xs px-2">
@@ -456,7 +475,12 @@ export function ProgressLogsSection() {
                             Done
                           </Badge>
                         ) : (
-                          <Badge variant="secondary" className="text-xs px-2 bg-warning/20 text-warning">Pending</Badge>
+                          <Badge
+                            variant="secondary"
+                            className="text-xs px-2 bg-warning/20 text-warning"
+                          >
+                            Pending
+                          </Badge>
                         )}
                       </div>
 
@@ -469,7 +493,7 @@ export function ProgressLogsSection() {
                       <div className="flex items-center gap-4 mt-3 text-xs text-foreground/70 flex-wrap">
                         <span className="flex items-center gap-1.5">
                           <Calendar className="h-3.5 w-3.5" />
-                          {format(new Date(log.date), "dd MMM yyyy")}
+                          {format(new Date(log.date), 'dd MMM yyyy')}
                         </span>
                         <span className="flex items-center gap-1.5">
                           <Clock className="h-3.5 w-3.5" />
@@ -538,10 +562,15 @@ export function ProgressLogsSection() {
                         <div className="bg-elec-gray rounded-lg overflow-hidden border border-border/50">
                           <div className="divide-y divide-border/50">
                             {log.materials_used.map((material, i) => (
-                              <div key={i} className="flex items-center justify-between p-3 text-sm">
+                              <div
+                                key={i}
+                                className="flex items-center justify-between p-3 text-sm"
+                              >
                                 <span className="text-foreground font-medium">{material.item}</span>
                                 <span className="text-foreground/70">{material.quantity}</span>
-                                <span className="font-semibold text-foreground">£{material.cost}</span>
+                                <span className="font-semibold text-foreground">
+                                  £{material.cost}
+                                </span>
                               </div>
                             ))}
                             <div className="flex items-center justify-between p-3 text-sm bg-elec-yellow/5">
@@ -620,14 +649,14 @@ export function ProgressLogsSection() {
                 key={log.id}
                 rightAction={{
                   icon: <CheckCircle className="h-6 w-6" />,
-                  label: "Sign Off",
+                  label: 'Sign Off',
                   onClick: () => handleSignOff(log.id),
-                  variant: "success"
+                  variant: 'success',
                 }}
                 leftAction={{
                   icon: <Phone className="h-6 w-6" />,
-                  label: "Call",
-                  onClick: () => handleCall("")
+                  label: 'Call',
+                  onClick: () => handleCall(''),
                 }}
               >
                 {logCard}
@@ -656,13 +685,13 @@ export function ProgressLogsSection() {
                 <Label>Job *</Label>
                 <Select
                   value={formData.job_id}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, job_id: v }))}
+                  onValueChange={(v) => setFormData((prev) => ({ ...prev, job_id: v }))}
                 >
                   <SelectTrigger className="h-12 bg-elec-gray">
                     <SelectValue placeholder="Select a job" />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-gray border-elec-gray">
-                    {jobs.map(job => (
+                    {jobs.map((job) => (
                       <SelectItem key={job.id} value={job.id}>
                         {job.title} - {job.client}
                       </SelectItem>
@@ -677,7 +706,7 @@ export function ProgressLogsSection() {
                 <Input
                   type="date"
                   value={formData.date}
-                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
                   className="h-12 bg-elec-gray"
                 />
               </div>
@@ -688,14 +717,18 @@ export function ProgressLogsSection() {
                   <Label>Weather</Label>
                   <Select
                     value={formData.weather}
-                    onValueChange={(v) => setFormData(prev => ({ ...prev, weather: v as WeatherCondition }))}
+                    onValueChange={(v) =>
+                      setFormData((prev) => ({ ...prev, weather: v as WeatherCondition }))
+                    }
                   >
                     <SelectTrigger className="h-12 bg-elec-gray">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-elec-gray">
-                      {Object.keys(weatherIcons).map(w => (
-                        <SelectItem key={w} value={w}>{w}</SelectItem>
+                      {Object.keys(weatherIcons).map((w) => (
+                        <SelectItem key={w} value={w}>
+                          {w}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -706,7 +739,12 @@ export function ProgressLogsSection() {
                     type="number"
                     min={1}
                     value={formData.workers_on_site}
-                    onChange={(e) => setFormData(prev => ({ ...prev, workers_on_site: parseInt(e.target.value) || 1 }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        workers_on_site: parseInt(e.target.value) || 1,
+                      }))
+                    }
                     className="h-12 bg-elec-gray"
                   />
                 </div>
@@ -720,7 +758,12 @@ export function ProgressLogsSection() {
                   min={0}
                   step={0.5}
                   value={formData.hours_worked}
-                  onChange={(e) => setFormData(prev => ({ ...prev, hours_worked: parseFloat(e.target.value) || 0 }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      hours_worked: parseFloat(e.target.value) || 0,
+                    }))
+                  }
                   className="h-12 bg-elec-gray"
                 />
               </div>
@@ -730,7 +773,9 @@ export function ProgressLogsSection() {
                 <Label>Work Description *</Label>
                 <Textarea
                   value={formData.work_description}
-                  onChange={(e) => setFormData(prev => ({ ...prev, work_description: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, work_description: e.target.value }))
+                  }
                   placeholder="Describe the work completed today..."
                   className="min-h-[100px] bg-elec-gray"
                 />
@@ -745,7 +790,9 @@ export function ProgressLogsSection() {
                     onChange={(e) => setNewWorkItem(e.target.value)}
                     placeholder="Add work item..."
                     className="h-12 bg-elec-gray flex-1"
-                    onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddWorkItem())}
+                    onKeyDown={(e) =>
+                      e.key === 'Enter' && (e.preventDefault(), handleAddWorkItem())
+                    }
                   />
                   <Button onClick={handleAddWorkItem} className="h-12 px-4">
                     <Plus className="h-4 w-4" />
@@ -754,7 +801,10 @@ export function ProgressLogsSection() {
                 {formData.work_items && formData.work_items.length > 0 && (
                   <div className="space-y-2 mt-2">
                     {formData.work_items.map((item, i) => (
-                      <div key={i} className="flex items-center justify-between bg-elec-gray p-3 rounded-lg">
+                      <div
+                        key={i}
+                        className="flex items-center justify-between bg-elec-gray p-3 rounded-lg"
+                      >
                         <span className="text-sm text-foreground">{item}</span>
                         <Button variant="ghost" size="icon" onClick={() => handleRemoveWorkItem(i)}>
                           <X className="h-4 w-4" />
@@ -771,21 +821,28 @@ export function ProgressLogsSection() {
                 <div className="grid grid-cols-3 gap-2">
                   <Input
                     value={newMaterial.item}
-                    onChange={(e) => setNewMaterial(prev => ({ ...prev, item: e.target.value }))}
+                    onChange={(e) => setNewMaterial((prev) => ({ ...prev, item: e.target.value }))}
                     placeholder="Item"
                     className="h-12 bg-elec-gray"
                   />
                   <Input
                     value={newMaterial.quantity}
-                    onChange={(e) => setNewMaterial(prev => ({ ...prev, quantity: e.target.value }))}
+                    onChange={(e) =>
+                      setNewMaterial((prev) => ({ ...prev, quantity: e.target.value }))
+                    }
                     placeholder="Qty"
                     className="h-12 bg-elec-gray"
                   />
                   <div className="flex gap-1">
                     <Input
                       type="number"
-                      value={newMaterial.cost || ""}
-                      onChange={(e) => setNewMaterial(prev => ({ ...prev, cost: parseFloat(e.target.value) || 0 }))}
+                      value={newMaterial.cost || ''}
+                      onChange={(e) =>
+                        setNewMaterial((prev) => ({
+                          ...prev,
+                          cost: parseFloat(e.target.value) || 0,
+                        }))
+                      }
                       placeholder="£"
                       className="h-12 bg-elec-gray flex-1"
                     />
@@ -797,7 +854,10 @@ export function ProgressLogsSection() {
                 {formData.materials_used && formData.materials_used.length > 0 && (
                   <div className="space-y-2 mt-2">
                     {formData.materials_used.map((mat, i) => (
-                      <div key={i} className="flex items-center justify-between bg-elec-gray p-3 rounded-lg">
+                      <div
+                        key={i}
+                        className="flex items-center justify-between bg-elec-gray p-3 rounded-lg"
+                      >
                         <span className="text-sm text-foreground">{mat.item}</span>
                         <span className="text-sm text-foreground/70">{mat.quantity}</span>
                         <span className="text-sm font-semibold">£{mat.cost}</span>
@@ -814,8 +874,8 @@ export function ProgressLogsSection() {
               <div className="space-y-2">
                 <Label>Additional Notes</Label>
                 <Textarea
-                  value={formData.notes || ""}
-                  onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+                  value={formData.notes || ''}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
                   placeholder="Any additional notes..."
                   className="min-h-[80px] bg-elec-gray"
                 />
@@ -855,7 +915,9 @@ export function ProgressLogsSection() {
                   {selectedLog.signed_off ? (
                     <Badge className="bg-success/20 text-success">Signed Off</Badge>
                   ) : (
-                    <Badge variant="secondary" className="bg-warning/20 text-warning">Pending</Badge>
+                    <Badge variant="secondary" className="bg-warning/20 text-warning">
+                      Pending
+                    </Badge>
                   )}
                 </div>
               </SheetHeader>
@@ -874,7 +936,7 @@ export function ProgressLogsSection() {
                   <div className="bg-elec-gray p-3 rounded-lg">
                     <p className="text-xs text-foreground/70 mb-1">Date</p>
                     <p className="font-semibold text-foreground">
-                      {format(new Date(selectedLog.date), "dd MMM yyyy")}
+                      {format(new Date(selectedLog.date), 'dd MMM yyyy')}
                     </p>
                   </div>
                   <div className="bg-elec-gray p-3 rounded-lg">
@@ -915,7 +977,10 @@ export function ProgressLogsSection() {
                     <h4 className="font-semibold text-foreground">Work Items</h4>
                     <ul className="space-y-2">
                       {selectedLog.work_items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm text-foreground bg-elec-gray p-3 rounded-lg">
+                        <li
+                          key={i}
+                          className="flex items-start gap-3 text-sm text-foreground bg-elec-gray p-3 rounded-lg"
+                        >
                           <CheckCircle className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
                           <span>{item}</span>
                         </li>
@@ -1018,5 +1083,7 @@ export function ProgressLogsSection() {
     <PullToRefresh onRefresh={handleRefresh} className="h-full">
       {content}
     </PullToRefresh>
-  ) : content;
+  ) : (
+    content
+  );
 }

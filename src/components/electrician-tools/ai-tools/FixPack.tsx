@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { 
-  Wrench, 
-  Clock, 
-  PoundSterling, 
-  CheckCircle, 
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import {
+  Wrench,
+  Clock,
+  PoundSterling,
+  CheckCircle,
   AlertTriangle,
   Zap,
   ShieldCheck,
@@ -15,13 +15,9 @@ import {
   Users,
   ChevronRight,
   ChevronDown,
-  ExternalLink
-} from "lucide-react";
-import { 
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+  ExternalLink,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface FixStep {
   id: string;
@@ -66,49 +62,60 @@ const FixPack: React.FC<FixPackProps> = ({
   userRole = 'electrician',
   onStartWork,
   onCompleteStep,
-  completedSteps = []
+  completedSteps = [],
 }) => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['steps']);
   const [currentStep, setCurrentStep] = useState(0);
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => 
-      prev.includes(section) 
-        ? prev.filter(s => s !== section)
-        : [...prev, section]
+    setExpandedSections((prev) =>
+      prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]
     );
   };
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'bg-red-500 text-foreground';
-      case 'C2': return 'bg-amber-500 text-foreground';
-      case 'C3': return 'bg-blue-500 text-foreground';
-      case 'FI': return 'bg-slate-500 text-foreground';
-      default: return 'bg-muted text-muted-foreground';
+      case 'C1':
+        return 'bg-red-500 text-foreground';
+      case 'C2':
+        return 'bg-amber-500 text-foreground';
+      case 'C3':
+        return 'bg-blue-500 text-foreground';
+      case 'FI':
+        return 'bg-slate-500 text-foreground';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
-      case 'immediate': return 'text-red-400 bg-red-500/10 border-red-500/20';
-      case 'urgent': return 'text-amber-400 bg-amber-500/10 border-amber-500/20';
-      case 'recommended': return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
-      default: return 'text-muted-foreground';
+      case 'immediate':
+        return 'text-red-400 bg-red-500/10 border-red-500/20';
+      case 'urgent':
+        return 'text-amber-400 bg-amber-500/10 border-amber-500/20';
+      case 'recommended':
+        return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
+      default:
+        return 'text-muted-foreground';
     }
   };
 
   const getDifficultyIcon = (difficulty: string) => {
     switch (difficulty) {
-      case 'apprentice': return <Users className="h-4 w-4 text-green-400" />;
-      case 'electrician': return <Zap className="h-4 w-4 text-blue-400" />;
-      case 'specialist': return <ShieldCheck className="h-4 w-4 text-purple-400" />;
-      default: return <Wrench className="h-4 w-4" />;
+      case 'apprentice':
+        return <Users className="h-4 w-4 text-green-400" />;
+      case 'electrician':
+        return <Zap className="h-4 w-4 text-blue-400" />;
+      case 'specialist':
+        return <ShieldCheck className="h-4 w-4 text-purple-400" />;
+      default:
+        return <Wrench className="h-4 w-4" />;
     }
   };
 
-  const completionPercentage = fixPack.steps?.length 
-    ? (completedSteps.length / fixPack.steps.length) * 100 
+  const completionPercentage = fixPack.steps?.length
+    ? (completedSteps.length / fixPack.steps.length) * 100
     : 0;
 
   return (
@@ -117,9 +124,7 @@ const FixPack: React.FC<FixPackProps> = ({
         <div className="flex items-start justify-between">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <Badge className={getEicrCodeColor(fixPack.eicr_code)}>
-                {fixPack.eicr_code}
-              </Badge>
+              <Badge className={getEicrCodeColor(fixPack.eicr_code)}>{fixPack.eicr_code}</Badge>
               <Badge variant="outline" className={getUrgencyColor(fixPack.urgency)}>
                 {fixPack.urgency.charAt(0).toUpperCase() + fixPack.urgency.slice(1)}
               </Badge>
@@ -132,7 +137,7 @@ const FixPack: React.FC<FixPackProps> = ({
             </div>
             <CardTitle className="text-lg">{fixPack.finding}</CardTitle>
           </div>
-          
+
           {onStartWork && (
             <Button onClick={onStartWork} className="bg-primary hover:bg-primary/90">
               <Wrench className="h-4 w-4 mr-2" />
@@ -140,7 +145,7 @@ const FixPack: React.FC<FixPackProps> = ({
             </Button>
           )}
         </div>
-        
+
         {/* Quick stats */}
         <div className="grid grid-cols-3 gap-4 pt-4">
           <div className="text-center">
@@ -181,10 +186,14 @@ const FixPack: React.FC<FixPackProps> = ({
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
-                <h4 className="font-medium text-red-400 mb-1">DANGER - Immediate Action Required</h4>
+                <h4 className="font-medium text-red-400 mb-1">
+                  DANGER - Immediate Action Required
+                </h4>
                 <p className="text-sm text-red-300/80">
-                  This is a C1 code indicating immediate danger. Ensure safe isolation before proceeding. 
-                  {userRole === 'apprentice' && ' Consider getting supervision from a qualified electrician.'}
+                  This is a C1 code indicating immediate danger. Ensure safe isolation before
+                  proceeding.
+                  {userRole === 'apprentice' &&
+                    ' Consider getting supervision from a qualified electrician.'}
                 </p>
               </div>
             </div>
@@ -192,7 +201,7 @@ const FixPack: React.FC<FixPackProps> = ({
         )}
 
         {/* Work steps */}
-        <Collapsible 
+        <Collapsible
           open={expandedSections.includes('steps')}
           onOpenChange={() => toggleSection('steps')}
         >
@@ -213,13 +222,18 @@ const FixPack: React.FC<FixPackProps> = ({
             {fixPack.steps?.map((step, index) => {
               const isCompleted = completedSteps.includes(step.id);
               const isCurrent = index === currentStep && !isCompleted;
-              
+
               return (
-                <Card key={step.id} className={`border ${
-                  isCompleted ? 'border-green-500/30 bg-green-500/5' :
-                  isCurrent ? 'border-primary/30 bg-primary/5' :
-                  'border-border'
-                }`}>
+                <Card
+                  key={step.id}
+                  className={`border ${
+                    isCompleted
+                      ? 'border-green-500/30 bg-green-500/5'
+                      : isCurrent
+                        ? 'border-primary/30 bg-primary/5'
+                        : 'border-border'
+                  }`}
+                >
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1">
@@ -231,20 +245,24 @@ const FixPack: React.FC<FixPackProps> = ({
                           ) : (
                             <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/50" />
                           )}
-                          <span className="font-medium">Step {index + 1}: {step.title}</span>
+                          <span className="font-medium">
+                            Step {index + 1}: {step.title}
+                          </span>
                           <Badge variant="outline" className="text-xs">
                             {step.duration}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
-                        
+
                         {/* Safety notes */}
                         {step.safety_notes.length > 0 && (
                           <div className="bg-amber-500/10 border border-amber-500/20 rounded p-2 mb-3">
                             <div className="flex items-start gap-2">
                               <ShieldCheck className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                               <div>
-                                <p className="text-sm font-medium text-amber-400 mb-1">Safety Requirements</p>
+                                <p className="text-sm font-medium text-amber-400 mb-1">
+                                  Safety Requirements
+                                </p>
                                 <ul className="text-xs text-amber-300/80 space-y-0.5">
                                   {step.safety_notes.map((note, idx) => (
                                     <li key={idx}>• {note}</li>
@@ -254,7 +272,7 @@ const FixPack: React.FC<FixPackProps> = ({
                             </div>
                           </div>
                         )}
-                        
+
                         {/* Tools and materials */}
                         {(step.tools_required.length > 0 || step.materials_needed.length > 0) && (
                           <div className="grid gap-2 sm:grid-cols-2">
@@ -280,7 +298,7 @@ const FixPack: React.FC<FixPackProps> = ({
                             )}
                           </div>
                         )}
-                        
+
                         {step.regulation_reference && (
                           <p className="text-xs text-muted-foreground mt-2">
                             <FileText className="h-3 w-3 inline mr-1" />
@@ -288,13 +306,9 @@ const FixPack: React.FC<FixPackProps> = ({
                           </p>
                         )}
                       </div>
-                      
+
                       {onCompleteStep && !isCompleted && (
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => onCompleteStep(step.id)}
-                        >
+                        <Button size="sm" variant="outline" onClick={() => onCompleteStep(step.id)}>
                           Complete
                         </Button>
                       )}
@@ -307,7 +321,7 @@ const FixPack: React.FC<FixPackProps> = ({
         </Collapsible>
 
         {/* Materials list */}
-        <Collapsible 
+        <Collapsible
           open={expandedSections.includes('materials')}
           onOpenChange={() => toggleSection('materials')}
         >
@@ -327,7 +341,10 @@ const FixPack: React.FC<FixPackProps> = ({
           <CollapsibleContent className="mt-3">
             <div className="space-y-2">
               {fixPack.materials_list.map((material, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-3 bg-muted/30 rounded"
+                >
                   <div className="flex-1">
                     <p className="font-medium text-sm">{material.item}</p>
                     <p className="text-xs text-muted-foreground">Qty: {material.quantity}</p>
@@ -349,7 +366,7 @@ const FixPack: React.FC<FixPackProps> = ({
 
         {/* Compliance notes */}
         {fixPack.compliance_notes.length > 0 && (
-          <Collapsible 
+          <Collapsible
             open={expandedSections.includes('compliance')}
             onOpenChange={() => toggleSection('compliance')}
           >
@@ -378,12 +395,15 @@ const FixPack: React.FC<FixPackProps> = ({
                   ))}
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="font-medium mb-2">Compliance Notes</h4>
                 <ul className="space-y-1">
                   {fixPack.compliance_notes.map((note, index) => (
-                    <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li
+                      key={index}
+                      className="text-sm text-muted-foreground flex items-start gap-2"
+                    >
                       <FileText className="h-3 w-3 mt-0.5 flex-shrink-0" />
                       {note}
                     </li>

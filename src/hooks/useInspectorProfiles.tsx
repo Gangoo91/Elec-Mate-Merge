@@ -43,7 +43,7 @@ export const useInspectorProfiles = () => {
 
   useEffect(() => {
     loadProfiles();
-    
+
     // Set up real-time subscription
     const channel = supabase
       .channel('inspector_profiles_changes')
@@ -52,7 +52,7 @@ export const useInspectorProfiles = () => {
         {
           event: '*',
           schema: 'public',
-          table: 'inspector_profiles'
+          table: 'inspector_profiles',
         },
         () => {
           loadProfiles();
@@ -71,8 +71,10 @@ export const useInspectorProfiles = () => {
       await migrateLocalStorageData();
 
       // Then load from Supabase
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) {
         // Fall back to IndexedDB when not authenticated
         const localProfiles = await offlineStorage.getInspectorProfiles();
@@ -89,7 +91,7 @@ export const useInspectorProfiles = () => {
 
       if (error) throw error;
 
-      const mappedProfiles: InspectorProfile[] = (data || []).map(profile => ({
+      const mappedProfiles: InspectorProfile[] = (data || []).map((profile) => ({
         id: profile.id,
         name: profile.name,
         photoUrl: profile.photo_url || undefined,
@@ -132,7 +134,9 @@ export const useInspectorProfiles = () => {
       const localProfiles = await offlineStorage.getInspectorProfiles();
       if (localProfiles.length === 0) return;
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       // Check if user already has profiles in Supabase
@@ -186,8 +190,10 @@ export const useInspectorProfiles = () => {
 
   const addProfile = async (profile: Omit<InspectorProfile, 'id' | 'createdAt'>) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) {
         // Save to IndexedDB when not authenticated
         const newProfile: InspectorProfile = {
@@ -199,12 +205,12 @@ export const useInspectorProfiles = () => {
         await offlineStorage.saveInspectorProfile(newProfile);
         const updatedProfiles = await offlineStorage.getInspectorProfiles();
         setProfiles(updatedProfiles);
-        
+
         toast({
           title: 'Success',
           description: 'Profile created successfully (saved locally)',
         });
-        
+
         return newProfile;
       }
 
@@ -259,18 +265,20 @@ export const useInspectorProfiles = () => {
 
   const updateProfile = async (id: string, updates: Partial<InspectorProfile>) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       if (!user) {
         // Update in IndexedDB when not authenticated
         const existingProfiles = await offlineStorage.getInspectorProfiles();
-        const profileToUpdate = existingProfiles.find(p => p.id === id);
+        const profileToUpdate = existingProfiles.find((p) => p.id === id);
         if (profileToUpdate) {
           const updatedProfile = { ...profileToUpdate, ...updates };
           await offlineStorage.saveInspectorProfile(updatedProfile);
           const updatedProfiles = await offlineStorage.getInspectorProfiles();
           setProfiles(updatedProfiles);
-          
+
           toast({
             title: 'Success',
             description: 'Profile updated successfully (saved locally)',
@@ -325,14 +333,16 @@ export const useInspectorProfiles = () => {
 
   const deleteProfile = async (id: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       if (!user) {
         // Delete from IndexedDB when not authenticated
         await offlineStorage.deleteInspectorProfile(id);
         const updatedProfiles = await offlineStorage.getInspectorProfiles();
         setProfiles(updatedProfiles);
-        
+
         toast({
           title: 'Success',
           description: 'Profile deleted successfully (saved locally)',
@@ -340,10 +350,7 @@ export const useInspectorProfiles = () => {
         return;
       }
 
-      const { error } = await supabase
-        .from('inspector_profiles')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('inspector_profiles').delete().eq('id', id);
 
       if (error) throw error;
 
@@ -362,13 +369,15 @@ export const useInspectorProfiles = () => {
   };
 
   const getDefaultProfile = (): InspectorProfile | null => {
-    return profiles.find(profile => profile.isDefault) || null;
+    return profiles.find((profile) => profile.isDefault) || null;
   };
 
   const setDefaultProfile = async (id: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) {
         // Update in IndexedDB when not authenticated
         const existingProfiles = await offlineStorage.getInspectorProfiles();
@@ -381,7 +390,7 @@ export const useInspectorProfiles = () => {
         }
         const updatedProfiles = await offlineStorage.getInspectorProfiles();
         setProfiles(updatedProfiles);
-        
+
         toast({
           title: 'Success',
           description: 'Default profile updated (saved locally)',

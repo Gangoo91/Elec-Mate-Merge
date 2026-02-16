@@ -1,23 +1,18 @@
-import { useState } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { MessageSquare, Send, Loader2, Building2, MapPin, Info, Briefcase } from "lucide-react";
-import { useStartConversation } from "@/hooks/useConversations";
-import { useSendMessage } from "@/hooks/useMessages";
-import { useAuth } from "@/contexts/AuthContext";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
-import { toast } from "@/hooks/use-toast";
-import type { InternalVacancy } from "./InternalVacancyCard";
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { MessageSquare, Send, Loader2, Building2, MapPin, Info, Briefcase } from 'lucide-react';
+import { useStartConversation } from '@/hooks/useConversations';
+import { useSendMessage } from '@/hooks/useMessages';
+import { useAuth } from '@/contexts/AuthContext';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
+import { toast } from '@/hooks/use-toast';
+import type { InternalVacancy } from './InternalVacancyCard';
 
 interface MessageEmployerDialogProps {
   open: boolean;
@@ -34,7 +29,7 @@ export function MessageEmployerDialog({
 }: MessageEmployerDialogProps) {
   const { user } = useAuth();
   const { profile: elecIdProfile } = useElecIdProfile();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
 
   const startConversation = useStartConversation();
@@ -44,15 +39,15 @@ export function MessageEmployerDialog({
     if (!vacancy || !message.trim() || !user || !elecIdProfile) {
       if (!elecIdProfile) {
         toast({
-          title: "Profile Required",
-          description: "Please complete your Elec-ID profile first to message employers.",
-          variant: "destructive",
+          title: 'Profile Required',
+          description: 'Please complete your Elec-ID profile first to message employers.',
+          variant: 'destructive',
         });
       } else {
         toast({
-          title: "Message Required",
-          description: "Please enter a message to send.",
-          variant: "destructive",
+          title: 'Message Required',
+          description: 'Please enter a message to send.',
+          variant: 'destructive',
         });
       }
       return;
@@ -79,19 +74,19 @@ export function MessageEmployerDialog({
       });
 
       toast({
-        title: "Message Sent",
+        title: 'Message Sent',
         description: `Your message has been sent to ${vacancy.employer?.company_name || 'the employer'}.`,
       });
 
-      setMessage("");
+      setMessage('');
       onOpenChange(false);
       onSuccess?.(conversation.id);
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error('Error sending message:', error);
       toast({
-        title: "Failed to Send",
-        description: "There was an error sending your message. Please try again.",
-        variant: "destructive",
+        title: 'Failed to Send',
+        description: 'There was an error sending your message. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSending(false);
@@ -100,12 +95,13 @@ export function MessageEmployerDialog({
 
   if (!vacancy) return null;
 
-  const companyInitials = vacancy.employer?.company_name
-    ?.split(' ')
-    .map(n => n[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2) || 'EM';
+  const companyInitials =
+    vacancy.employer?.company_name
+      ?.split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2) || 'EM';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -172,15 +168,17 @@ export function MessageEmployerDialog({
             <div>
               <p className="font-medium text-foreground">Tip for better responses</p>
               <p className="text-muted-foreground mt-1">
-                Introduce yourself briefly and explain why you're interested in this role.
-                Employers respond better to personalised messages.
+                Introduce yourself briefly and explain why you're interested in this role. Employers
+                respond better to personalised messages.
               </p>
             </div>
           </div>
 
           {/* Message Input */}
           <div className="space-y-3">
-            <Label htmlFor="message" className="text-sm font-medium">Your Message</Label>
+            <Label htmlFor="message" className="text-sm font-medium">
+              Your Message
+            </Label>
             <Textarea
               id="message"
               value={message}

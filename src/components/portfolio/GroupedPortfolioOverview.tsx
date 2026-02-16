@@ -16,7 +16,7 @@ interface GroupedPortfolioOverviewProps {
 const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
   groups,
   onGroupSelect,
-  getEntriesByGroup
+  getEntriesByGroup,
 }) => {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
@@ -67,16 +67,17 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
     <div className="space-y-4">
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {groups.map((group) => (
-          <Card key={group.id} className="w-full h-full flex flex-col hover:shadow-md transition-shadow">
+          <Card
+            key={group.id}
+            className="w-full h-full flex flex-col hover:shadow-md transition-shadow"
+          >
             <CardHeader className="pb-3">
               <div className="flex flex-col items-center gap-3">
                 <Badge variant={getCompetencyBadgeVariant(group.competencyLevel)}>
                   {group.competencyLevel}
                 </Badge>
                 <div className="flex flex-col items-center gap-2 text-center">
-                  <div className="text-elec-yellow">
-                    {getIcon(group.icon)}
-                  </div>
+                  <div className="text-elec-yellow">{getIcon(group.icon)}</div>
                   <CardTitle className="text-lg leading-tight">{group.name}</CardTitle>
                 </div>
               </div>
@@ -101,7 +102,7 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
               </div>
 
               <div className="mt-4 space-y-2">
-                <Collapsible 
+                <Collapsible
                   open={expandedGroups.has(group.id)}
                   onOpenChange={() => toggleGroup(group.id)}
                 >
@@ -118,15 +119,18 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                   <CollapsibleContent className="space-y-2 mt-2">
                     {group.categories.map((category) => {
                       const categoryEntries = getEntriesByGroup(group.id).filter(
-                        entry => entry.category.id === category.id
+                        (entry) => entry.category.id === category.id
                       );
-                      const completed = categoryEntries.filter(e => e.status === 'completed').length;
-                      const progress = category.requiredEntries > 0 
-                        ? Math.round((completed / category.requiredEntries) * 100) 
-                        : 0;
+                      const completed = categoryEntries.filter(
+                        (e) => e.status === 'completed'
+                      ).length;
+                      const progress =
+                        category.requiredEntries > 0
+                          ? Math.round((completed / category.requiredEntries) * 100)
+                          : 0;
 
                       return (
-                        <div 
+                        <div
                           key={category.id}
                           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-muted rounded text-sm"
                         >
@@ -150,9 +154,9 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                 </Collapsible>
 
                 {onGroupSelect && (
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="w-full"
                     onClick={() => onGroupSelect(group.id)}
                   >

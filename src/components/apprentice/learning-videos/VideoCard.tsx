@@ -21,18 +21,26 @@ interface VideoCardProps {
   compact?: boolean;
 }
 
-export function VideoCard({ video, isBookmarked, onTap, onBookmarkToggle, compact }: VideoCardProps) {
-  const levelColour = video.level === 'beginner'
-    ? 'text-green-400'
-    : video.level === 'intermediate'
-      ? 'text-amber-400'
-      : 'text-red-400';
+export function VideoCard({
+  video,
+  isBookmarked,
+  onTap,
+  onBookmarkToggle,
+  compact,
+}: VideoCardProps) {
+  const levelColour =
+    video.level === 'beginner'
+      ? 'text-green-400'
+      : video.level === 'intermediate'
+        ? 'text-amber-400'
+        : 'text-red-400';
 
-  const levelDot = video.level === 'beginner'
-    ? 'bg-green-400'
-    : video.level === 'intermediate'
-      ? 'bg-amber-400'
-      : 'bg-red-400';
+  const levelDot =
+    video.level === 'beginner'
+      ? 'bg-green-400'
+      : video.level === 'intermediate'
+        ? 'bg-amber-400'
+        : 'bg-red-400';
 
   return (
     <div
@@ -80,19 +88,16 @@ export function VideoCard({ video, isBookmarked, onTap, onBookmarkToggle, compac
       >
         <Bookmark
           className={`h-4 w-4 ${
-            isBookmarked
-              ? 'text-elec-yellow fill-elec-yellow'
-              : 'text-white/70'
+            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white/70'
           }`}
         />
       </button>
 
       {/* Info section */}
-      <button
-        onClick={onTap}
-        className="text-left touch-manipulation w-full p-3"
-      >
-        <h4 className={`font-medium text-white leading-snug line-clamp-2 ${compact ? 'text-[13px]' : 'text-sm'}`}>
+      <button onClick={onTap} className="text-left touch-manipulation w-full p-3">
+        <h4
+          className={`font-medium text-white leading-snug line-clamp-2 ${compact ? 'text-[13px]' : 'text-sm'}`}
+        >
           {video.title}
         </h4>
         <div className="flex items-center gap-2 mt-1.5">

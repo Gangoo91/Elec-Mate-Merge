@@ -3,7 +3,7 @@ import { bmsModule5Section4QuizData } from '@/data/upskilling/bmsModule5Section4
 
 export const BMSModule5Section4Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={bmsModule5Section4QuizData}
       title="Section 4 Quiz: KNX Topology and Bus Devices"
     />

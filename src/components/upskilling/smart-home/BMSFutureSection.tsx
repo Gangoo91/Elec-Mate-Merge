@@ -12,10 +12,10 @@ export const BMSFutureSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          The future of Building Management Systems is being shaped by cloud computing, artificial 
+          The future of Building Management Systems is being shaped by cloud computing, artificial
           intelligence, and deeper integration with renewable energy systems and smart grids.
         </p>
-        
+
         <div className="grid md:grid-cols-3 gap-4">
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
@@ -30,7 +30,7 @@ export const BMSFutureSection = () => {
               <li>• Enhanced data analytics</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Brain className="h-5 w-5 text-purple-400" />
@@ -44,7 +44,7 @@ export const BMSFutureSection = () => {
               <li>• Fault detection and diagnosis</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="h-5 w-5 text-green-400" />
@@ -59,22 +59,22 @@ export const BMSFutureSection = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
             <h4 className="font-semibold text-foreground mb-2">AI Learning Example:</h4>
             <p className="text-sm">
-              Future BMS will learn that Conference Room A is always booked but rarely used on Friday 
-              afternoons, automatically adjusting HVAC and lighting schedules to save energy while 
-              maintaining quick response if actual occupancy is detected.
+              Future BMS will learn that Conference Room A is always booked but rarely used on
+              Friday afternoons, automatically adjusting HVAC and lighting schedules to save energy
+              while maintaining quick response if actual occupancy is detected.
             </p>
           </div>
-          
+
           <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
             <h4 className="font-semibold text-foreground mb-2">Grid Integration Benefits:</h4>
             <p className="text-sm">
-              Buildings will participate in demand response programs, reducing consumption during 
-              peak periods and storing energy in thermal mass or batteries when renewables generate 
+              Buildings will participate in demand response programs, reducing consumption during
+              peak periods and storing energy in thermal mass or batteries when renewables generate
               excess power, creating revenue streams for building owners.
             </p>
           </div>

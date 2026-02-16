@@ -1,81 +1,83 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Bell, Plus, Trash2, TrendingDown, TrendingUp, AlertCircle, Check } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Bell, Plus, Trash2, TrendingDown, TrendingUp, AlertCircle, Check } from 'lucide-react';
 
 const PriceAlertsTab = () => {
   const [alerts, setAlerts] = useState([
     {
       id: 1,
-      toolName: "Fluke 1663 Multifunction Tester",
+      toolName: 'Fluke 1663 Multifunction Tester',
       currentPrice: 649.99,
-      targetPrice: 550.00,
-      supplier: "RS Components",
-      status: "active",
-      created: "2024-01-15",
-      triggered: false
+      targetPrice: 550.0,
+      supplier: 'RS Components',
+      status: 'active',
+      created: '2024-01-15',
+      triggered: false,
     },
     {
       id: 2,
-      toolName: "DeWalt 18V Combi Drill Kit",
+      toolName: 'DeWalt 18V Combi Drill Kit',
       currentPrice: 149.99,
-      targetPrice: 120.00,
-      supplier: "Screwfix",
-      status: "active",
-      created: "2024-01-18",
-      triggered: false
+      targetPrice: 120.0,
+      supplier: 'Screwfix',
+      status: 'active',
+      created: '2024-01-18',
+      triggered: false,
     },
     {
       id: 3,
-      toolName: "Kewtech KT65DL MFT",
+      toolName: 'Kewtech KT65DL MFT',
       currentPrice: 299.99,
-      targetPrice: 250.00,
-      supplier: "City Electrical Factors",
-      status: "triggered",
-      created: "2024-01-10",
-      triggered: true
-    }
+      targetPrice: 250.0,
+      supplier: 'City Electrical Factors',
+      status: 'triggered',
+      created: '2024-01-10',
+      triggered: true,
+    },
   ]);
 
   const [newAlert, setNewAlert] = useState({
-    toolName: "",
-    targetPrice: "",
-    supplier: "Any Supplier"
+    toolName: '',
+    targetPrice: '',
+    supplier: 'Any Supplier',
   });
 
   const priceHistory = [
     {
-      tool: "Fluke 1663 MFT",
+      tool: 'Fluke 1663 MFT',
       changes: [
-        { date: "2024-01-20", price: 649.99, change: 0 },
-        { date: "2024-01-19", price: 675.00, change: -3.7 },
-        { date: "2024-01-18", price: 699.99, change: -7.1 },
-        { date: "2024-01-17", price: 750.00, change: -13.3 }
-      ]
-    }
+        { date: '2024-01-20', price: 649.99, change: 0 },
+        { date: '2024-01-19', price: 675.0, change: -3.7 },
+        { date: '2024-01-18', price: 699.99, change: -7.1 },
+        { date: '2024-01-17', price: 750.0, change: -13.3 },
+      ],
+    },
   ];
 
   const addAlert = () => {
     if (newAlert.toolName && newAlert.targetPrice) {
-      setAlerts([...alerts, {
-        id: alerts.length + 1,
-        toolName: newAlert.toolName,
-        currentPrice: 0,
-        targetPrice: parseFloat(newAlert.targetPrice),
-        supplier: newAlert.supplier,
-        status: "active",
-        created: new Date().toISOString().split('T')[0],
-        triggered: false
-      }]);
-      setNewAlert({ toolName: "", targetPrice: "", supplier: "Any Supplier" });
+      setAlerts([
+        ...alerts,
+        {
+          id: alerts.length + 1,
+          toolName: newAlert.toolName,
+          currentPrice: 0,
+          targetPrice: parseFloat(newAlert.targetPrice),
+          supplier: newAlert.supplier,
+          status: 'active',
+          created: new Date().toISOString().split('T')[0],
+          triggered: false,
+        },
+      ]);
+      setNewAlert({ toolName: '', targetPrice: '', supplier: 'Any Supplier' });
     }
   };
 
   const removeAlert = (id: number) => {
-    setAlerts(alerts.filter(alert => alert.id !== id));
+    setAlerts(alerts.filter((alert) => alert.id !== id));
   };
 
   return (
@@ -86,7 +88,8 @@ const PriceAlertsTab = () => {
           Price Alerts & Monitoring
         </h2>
         <p className="text-muted-foreground">
-          Never miss a deal! Set up price alerts for your favourite tools and get notified when prices drop.
+          Never miss a deal! Set up price alerts for your favourite tools and get notified when
+          prices drop.
         </p>
       </div>
 
@@ -105,25 +108,27 @@ const PriceAlertsTab = () => {
               <Input
                 placeholder="e.g. Fluke 1663 Multifunction Tester"
                 value={newAlert.toolName}
-                onChange={(e) => setNewAlert({...newAlert, toolName: e.target.value})}
+                onChange={(e) => setNewAlert({ ...newAlert, toolName: e.target.value })}
                 className="bg-elec-dark border-elec-yellow/30"
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">Target Price (£)</label>
+              <label className="text-sm font-medium text-foreground mb-2 block">
+                Target Price (£)
+              </label>
               <Input
                 type="number"
                 placeholder="550.00"
                 value={newAlert.targetPrice}
-                onChange={(e) => setNewAlert({...newAlert, targetPrice: e.target.value})}
+                onChange={(e) => setNewAlert({ ...newAlert, targetPrice: e.target.value })}
                 className="bg-elec-dark border-elec-yellow/30"
               />
             </div>
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">Supplier</label>
-              <select 
+              <select
                 value={newAlert.supplier}
-                onChange={(e) => setNewAlert({...newAlert, supplier: e.target.value})}
+                onChange={(e) => setNewAlert({ ...newAlert, supplier: e.target.value })}
                 className="w-full p-2 bg-elec-dark border border-elec-yellow/30 rounded text-foreground"
               >
                 <option>Any Supplier</option>
@@ -150,14 +155,21 @@ const PriceAlertsTab = () => {
         <CardContent>
           <div className="space-y-4">
             {alerts.map((alert) => (
-              <div key={alert.id} className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-dark/30">
+              <div
+                key={alert.id}
+                className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-dark/30"
+              >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="font-medium text-foreground">{alert.toolName}</h3>
-                      <Badge className={`${
-                        alert.status === 'triggered' ? 'bg-green-500/20 text-green-400' : 'bg-blue-500/20 text-blue-400'
-                      }`}>
+                      <Badge
+                        className={`${
+                          alert.status === 'triggered'
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-blue-500/20 text-blue-400'
+                        }`}
+                      >
                         {alert.status === 'triggered' ? (
                           <>
                             <Check className="h-3 w-3 mr-1" />
@@ -171,16 +183,20 @@ const PriceAlertsTab = () => {
                         )}
                       </Badge>
                     </div>
-                    
+
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
                         <span className="text-muted-foreground">Target Price:</span>
-                        <div className="text-elec-yellow font-medium">£{alert.targetPrice.toFixed(2)}</div>
+                        <div className="text-elec-yellow font-medium">
+                          £{alert.targetPrice.toFixed(2)}
+                        </div>
                       </div>
                       {alert.currentPrice > 0 && (
                         <div>
                           <span className="text-muted-foreground">Current Price:</span>
-                          <div className="text-foreground font-medium">£{alert.currentPrice.toFixed(2)}</div>
+                          <div className="text-foreground font-medium">
+                            £{alert.currentPrice.toFixed(2)}
+                          </div>
                         </div>
                       )}
                       <div>
@@ -193,7 +209,7 @@ const PriceAlertsTab = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <Button
                     variant="outline"
                     size="sm"
@@ -220,14 +236,21 @@ const PriceAlertsTab = () => {
               <h3 className="font-medium text-foreground">{item.tool}</h3>
               <div className="space-y-2">
                 {item.changes.map((change, changeIndex) => (
-                  <div key={changeIndex} className="flex items-center justify-between p-2 bg-elec-dark/30 rounded">
+                  <div
+                    key={changeIndex}
+                    className="flex items-center justify-between p-2 bg-elec-dark/30 rounded"
+                  >
                     <span className="text-sm text-muted-foreground">{change.date}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-foreground font-medium">£{change.price.toFixed(2)}</span>
+                      <span className="text-foreground font-medium">
+                        £{change.price.toFixed(2)}
+                      </span>
                       {change.change !== 0 && (
-                        <div className={`flex items-center gap-1 text-xs ${
-                          change.change < 0 ? 'text-green-400' : 'text-red-400'
-                        }`}>
+                        <div
+                          className={`flex items-center gap-1 text-xs ${
+                            change.change < 0 ? 'text-green-400' : 'text-red-400'
+                          }`}
+                        >
                           {change.change < 0 ? (
                             <TrendingDown className="h-3 w-3" />
                           ) : (

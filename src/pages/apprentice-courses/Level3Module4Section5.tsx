@@ -1,51 +1,52 @@
-import { ArrowLeft, Wrench, CheckCircle, FileText, TestTube, Shield, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Wrench, CheckCircle, FileText, TestTube, Shield, Zap } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "5.1",
-    title: "Selecting Correct Repair Methods",
-    description: "Choosing appropriate repair techniques: replacement, re-termination, re-insulation",
+    number: '5.1',
+    title: 'Selecting Correct Repair Methods',
+    description:
+      'Choosing appropriate repair techniques: replacement, re-termination, re-insulation',
     icon: Wrench,
-    href: "../level3-module4-section5-1",
+    href: '../level3-module4-section5-1',
   },
   {
-    number: "5.2",
-    title: "Ensuring Compliance with BS7671 After Repair",
-    description: "Maintaining regulatory compliance during and after rectification work",
+    number: '5.2',
+    title: 'Ensuring Compliance with BS7671 After Repair',
+    description: 'Maintaining regulatory compliance during and after rectification work',
     icon: CheckCircle,
-    href: "../level3-module4-section5-2",
+    href: '../level3-module4-section5-2',
   },
   {
-    number: "5.3",
-    title: "Recording Remedial Works",
-    description: "Proper documentation and recording of all remedial work undertaken",
+    number: '5.3',
+    title: 'Recording Remedial Works',
+    description: 'Proper documentation and recording of all remedial work undertaken',
     icon: FileText,
-    href: "../level3-module4-section5-3",
+    href: '../level3-module4-section5-3',
   },
   {
-    number: "5.4",
-    title: "Re-testing and Certification",
-    description: "Post-repair testing procedures and certification requirements",
+    number: '5.4',
+    title: 'Re-testing and Certification',
+    description: 'Post-repair testing procedures and certification requirements',
     icon: TestTube,
-    href: "../level3-module4-section5-4",
+    href: '../level3-module4-section5-4',
   },
   {
-    number: "5.5",
-    title: "Preventative Maintenance Strategies",
-    description: "Implementing maintenance strategies to prevent future faults",
+    number: '5.5',
+    title: 'Preventative Maintenance Strategies',
+    description: 'Implementing maintenance strategies to prevent future faults',
     icon: Shield,
-    href: "../level3-module4-section5-5",
+    href: '../level3-module4-section5-5',
   },
 ];
 
 const Level3Module4Section5 = () => {
   useSEO(
-    "Section 5: Rectification and Verification - Level 3 Module 4",
-    "Repair methods, BS7671 compliance, recording works and preventative maintenance"
+    'Section 5: Rectification and Verification - Level 3 Module 4',
+    'Repair methods, BS7671 compliance, recording works and preventative maintenance'
   );
 
   return (
@@ -70,26 +71,22 @@ const Level3Module4Section5 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

@@ -90,21 +90,21 @@ function stringsMatch(a: string, b: string): boolean {
  * Convert Elec-ID skills to CV skill strings
  */
 function elecIdSkillsToCVSkills(skills: ElecIdSkill[]): string[] {
-  return skills.map(s => s.skill_name).filter(Boolean);
+  return skills.map((s) => s.skill_name).filter(Boolean);
 }
 
 /**
  * Convert Elec-ID qualifications to CV certification strings
  */
 function elecIdQualificationsToCVCertifications(qualifications: ElecIdQualification[]): string[] {
-  return qualifications.map(q => q.qualification_name).filter(Boolean);
+  return qualifications.map((q) => q.qualification_name).filter(Boolean);
 }
 
 /**
  * Convert Elec-ID work history to CV work experience
  */
 function elecIdWorkHistoryToCVExperience(workHistory: ElecIdWorkHistory[]): WorkExperience[] {
-  return workHistory.map(wh => ({
+  return workHistory.map((wh) => ({
     id: wh.id,
     jobTitle: wh.job_title,
     company: wh.employer_name,
@@ -120,7 +120,7 @@ function elecIdWorkHistoryToCVExperience(workHistory: ElecIdWorkHistory[]): Work
  * Convert Elec-ID training to CV education
  */
 function elecIdTrainingToCVEducation(training: ElecIdTraining[]): Education[] {
-  return training.map(t => ({
+  return training.map((t) => ({
     id: t.id,
     qualification: t.training_name,
     institution: t.provider || '',
@@ -152,10 +152,7 @@ function mergeAndDedupe(existing: string[], newItems: string[]): string[] {
 /**
  * Calculate sync preview between Elec-ID and CV data
  */
-function calculateSyncPreview(
-  cvData: CVData,
-  elecIdProfile: ElecIdProfile | null
-): SyncPreview {
+function calculateSyncPreview(cvData: CVData, elecIdProfile: ElecIdProfile | null): SyncPreview {
   if (!elecIdProfile) {
     return {
       skills: { toAdd: [], toRemove: [], unchanged: cvData.skills },
@@ -170,16 +167,16 @@ function calculateSyncPreview(
   const cvSkillsNorm = new Set(cvData.skills.map(normalise));
   const elecIdSkillsNorm = new Set(elecIdSkills.map(normalise));
 
-  const skillsToAdd = elecIdSkills.filter(s => !cvSkillsNorm.has(normalise(s)));
-  const skillsUnchanged = cvData.skills.filter(s => elecIdSkillsNorm.has(normalise(s)));
+  const skillsToAdd = elecIdSkills.filter((s) => !cvSkillsNorm.has(normalise(s)));
+  const skillsUnchanged = cvData.skills.filter((s) => elecIdSkillsNorm.has(normalise(s)));
   const skillsToRemove: string[] = []; // We don't remove, only add
 
   // Calculate certification changes
   const cvCertsNorm = new Set(cvData.certifications.map(normalise));
   const elecIdCertsNorm = new Set(elecIdCerts.map(normalise));
 
-  const certsToAdd = elecIdCerts.filter(c => !cvCertsNorm.has(normalise(c)));
-  const certsUnchanged = cvData.certifications.filter(c => elecIdCertsNorm.has(normalise(c)));
+  const certsToAdd = elecIdCerts.filter((c) => !cvCertsNorm.has(normalise(c)));
+  const certsUnchanged = cvData.certifications.filter((c) => elecIdCertsNorm.has(normalise(c)));
   const certsToRemove: string[] = []; // We don't remove, only add
 
   return {
@@ -214,21 +211,23 @@ function calculateImportPreview(
   const elecIdEducation = elecIdTrainingToCVEducation(elecIdProfile.training || []);
 
   // Find which work history entries are already in CV
-  const cvJobTitles = new Set(cvData.experience.map(e => normalise(`${e.jobTitle}-${e.company}`)));
+  const cvJobTitles = new Set(
+    cvData.experience.map((e) => normalise(`${e.jobTitle}-${e.company}`))
+  );
   const alreadyImportedExp = elecIdExperience
-    .filter(e => cvJobTitles.has(normalise(`${e.jobTitle}-${e.company}`)))
-    .map(e => e.id);
+    .filter((e) => cvJobTitles.has(normalise(`${e.jobTitle}-${e.company}`)))
+    .map((e) => e.id);
   const availableExp = elecIdExperience.filter(
-    e => !cvJobTitles.has(normalise(`${e.jobTitle}-${e.company}`))
+    (e) => !cvJobTitles.has(normalise(`${e.jobTitle}-${e.company}`))
   );
 
   // Find which training entries are already in CV
-  const cvQualifications = new Set(cvData.education.map(e => normalise(e.qualification)));
+  const cvQualifications = new Set(cvData.education.map((e) => normalise(e.qualification)));
   const alreadyImportedEdu = elecIdEducation
-    .filter(e => cvQualifications.has(normalise(e.qualification)))
-    .map(e => e.id);
+    .filter((e) => cvQualifications.has(normalise(e.qualification)))
+    .map((e) => e.id);
   const availableEdu = elecIdEducation.filter(
-    e => !cvQualifications.has(normalise(e.qualification))
+    (e) => !cvQualifications.has(normalise(e.qualification))
   );
 
   return {
@@ -276,8 +275,7 @@ export function useCVSync(cvId: string, cvData: CVData) {
   // Determine sync status
   const syncStatus: SyncStatus = {
     isInSync:
-      syncPreview.skills.toAdd.length === 0 &&
-      syncPreview.certifications.toAdd.length === 0,
+      syncPreview.skills.toAdd.length === 0 && syncPreview.certifications.toAdd.length === 0,
     pendingSkills: syncPreview.skills.toAdd,
     pendingCertifications: syncPreview.certifications.toAdd,
     hasElecIdProfile: !!elecIdProfile,
@@ -292,7 +290,9 @@ export function useCVSync(cvId: string, cvData: CVData) {
       }
 
       const elecIdSkills = elecIdSkillsToCVSkills(elecIdProfile.skills || []);
-      const elecIdCerts = elecIdQualificationsToCVCertifications(elecIdProfile.qualifications || []);
+      const elecIdCerts = elecIdQualificationsToCVCertifications(
+        elecIdProfile.qualifications || []
+      );
 
       const newSkills = mergeAndDedupe(cvData.skills, elecIdSkills);
       const newCertifications = mergeAndDedupe(cvData.certifications, elecIdCerts);
@@ -322,15 +322,15 @@ export function useCVSync(cvId: string, cvData: CVData) {
 
       // Filter by selected IDs if provided
       if (selectedIds && selectedIds.length > 0) {
-        experienceToImport = experienceToImport.filter(e => selectedIds.includes(e.id));
+        experienceToImport = experienceToImport.filter((e) => selectedIds.includes(e.id));
       }
 
       // Merge with existing, avoiding duplicates
       const existingJobKeys = new Set(
-        cvData.experience.map(e => normalise(`${e.jobTitle}-${e.company}`))
+        cvData.experience.map((e) => normalise(`${e.jobTitle}-${e.company}`))
       );
       const newExperience = experienceToImport.filter(
-        e => !existingJobKeys.has(normalise(`${e.jobTitle}-${e.company}`))
+        (e) => !existingJobKeys.has(normalise(`${e.jobTitle}-${e.company}`))
       );
 
       const updatedCVData: CVData = {
@@ -357,13 +357,15 @@ export function useCVSync(cvId: string, cvData: CVData) {
 
       // Filter by selected IDs if provided
       if (selectedIds && selectedIds.length > 0) {
-        educationToImport = educationToImport.filter(e => selectedIds.includes(e.id));
+        educationToImport = educationToImport.filter((e) => selectedIds.includes(e.id));
       }
 
       // Merge with existing, avoiding duplicates
-      const existingQualifications = new Set(cvData.education.map(e => normalise(e.qualification)));
+      const existingQualifications = new Set(
+        cvData.education.map((e) => normalise(e.qualification))
+      );
       const newEducation = educationToImport.filter(
-        e => !existingQualifications.has(normalise(e.qualification))
+        (e) => !existingQualifications.has(normalise(e.qualification))
       );
 
       const updatedCVData: CVData = {
@@ -399,9 +401,11 @@ export function useCVSync(cvId: string, cvData: CVData) {
           ? [
               ...cvData.experience,
               ...elecIdWorkHistoryToCVExperience(profile.work_history || []).filter(
-                newExp =>
+                (newExp) =>
                   !cvData.experience.some(
-                    e => normalise(`${e.jobTitle}-${e.company}`) === normalise(`${newExp.jobTitle}-${newExp.company}`)
+                    (e) =>
+                      normalise(`${e.jobTitle}-${e.company}`) ===
+                      normalise(`${newExp.jobTitle}-${newExp.company}`)
                   )
               ),
             ]
@@ -410,8 +414,10 @@ export function useCVSync(cvId: string, cvData: CVData) {
           ? [
               ...cvData.education,
               ...elecIdTrainingToCVEducation(profile.training || []).filter(
-                newEdu =>
-                  !cvData.education.some(e => normalise(e.qualification) === normalise(newEdu.qualification))
+                (newEdu) =>
+                  !cvData.education.some(
+                    (e) => normalise(e.qualification) === normalise(newEdu.qualification)
+                  )
               ),
             ]
           : cvData.education,
@@ -419,7 +425,10 @@ export function useCVSync(cvId: string, cvData: CVData) {
           ? mergeAndDedupe(cvData.skills, elecIdSkillsToCVSkills(profile.skills || []))
           : cvData.skills,
         certifications: profile
-          ? mergeAndDedupe(cvData.certifications, elecIdQualificationsToCVCertifications(profile.qualifications || []))
+          ? mergeAndDedupe(
+              cvData.certifications,
+              elecIdQualificationsToCVCertifications(profile.qualifications || [])
+            )
           : cvData.certifications,
       };
 

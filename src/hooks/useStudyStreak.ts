@@ -19,7 +19,7 @@ export function useStudyStreak() {
     longestStreak: 0,
     lastStudyDate: null,
     totalSessions: 0,
-    totalCardsReviewed: 0
+    totalCardsReviewed: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -31,7 +31,7 @@ export function useStudyStreak() {
         longestStreak: 0,
         lastStudyDate: null,
         totalSessions: 0,
-        totalCardsReviewed: 0
+        totalCardsReviewed: 0,
       });
       setLoading(false);
       return;
@@ -58,9 +58,11 @@ export function useStudyStreak() {
         const yesterday = yesterdayDate.toLocaleDateString('en-CA');
 
         let currentStreak = data.current_streak;
-        if (data.last_study_date &&
-            data.last_study_date !== today &&
-            data.last_study_date !== yesterday) {
+        if (
+          data.last_study_date &&
+          data.last_study_date !== today &&
+          data.last_study_date !== yesterday
+        ) {
           // Streak broken - reset it
           currentStreak = 0;
           await supabase
@@ -74,7 +76,7 @@ export function useStudyStreak() {
           longestStreak: data.longest_streak,
           lastStudyDate: data.last_study_date,
           totalSessions: data.total_sessions,
-          totalCardsReviewed: data.total_cards_reviewed
+          totalCardsReviewed: data.total_cards_reviewed,
         });
       }
     } catch (error) {
@@ -89,77 +91,78 @@ export function useStudyStreak() {
   }, [fetchStreak]);
 
   // Record a study session
-  const recordSession = useCallback(async (cardsReviewed: number) => {
-    if (!user) return;
+  const recordSession = useCallback(
+    async (cardsReviewed: number) => {
+      if (!user) return;
 
-    // Use local timezone to avoid UTC conversion issues
-    const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
-    const yesterdayDate = new Date();
-    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-    const yesterday = yesterdayDate.toLocaleDateString('en-CA');
+      // Use local timezone to avoid UTC conversion issues
+      const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
+      const yesterdayDate = new Date();
+      yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+      const yesterday = yesterdayDate.toLocaleDateString('en-CA');
 
-    try {
-      // Check if record exists
-      const { data: existing } = await supabase
-        .from('user_study_streaks')
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      try {
+        // Check if record exists
+        const { data: existing } = await supabase
+          .from('user_study_streaks')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
 
-      if (existing) {
-        // Calculate new streak
-        let newStreak = existing.current_streak;
-        if (existing.last_study_date === today) {
-          // Already studied today, just update cards count
-          newStreak = existing.current_streak;
-        } else if (existing.last_study_date === yesterday) {
-          // Continued streak
-          newStreak = existing.current_streak + 1;
+        if (existing) {
+          // Calculate new streak
+          let newStreak = existing.current_streak;
+          if (existing.last_study_date === today) {
+            // Already studied today, just update cards count
+            newStreak = existing.current_streak;
+          } else if (existing.last_study_date === yesterday) {
+            // Continued streak
+            newStreak = existing.current_streak + 1;
+          } else {
+            // Streak broken or first day
+            newStreak = 1;
+          }
+
+          const newLongestStreak = Math.max(newStreak, existing.longest_streak);
+
+          await supabase
+            .from('user_study_streaks')
+            .update({
+              current_streak: newStreak,
+              longest_streak: newLongestStreak,
+              last_study_date: today,
+              total_sessions: existing.total_sessions + 1,
+              total_cards_reviewed: existing.total_cards_reviewed + cardsReviewed,
+            })
+            .eq('user_id', user.id);
         } else {
-          // Streak broken or first day
-          newStreak = 1;
-        }
-
-        const newLongestStreak = Math.max(newStreak, existing.longest_streak);
-
-        await supabase
-          .from('user_study_streaks')
-          .update({
-            current_streak: newStreak,
-            longest_streak: newLongestStreak,
-            last_study_date: today,
-            total_sessions: existing.total_sessions + 1,
-            total_cards_reviewed: existing.total_cards_reviewed + cardsReviewed
-          })
-          .eq('user_id', user.id);
-      } else {
-        // Create new record
-        await supabase
-          .from('user_study_streaks')
-          .insert({
+          // Create new record
+          await supabase.from('user_study_streaks').insert({
             user_id: user.id,
             current_streak: 1,
             longest_streak: 1,
             last_study_date: today,
             total_sessions: 1,
-            total_cards_reviewed: cardsReviewed
+            total_cards_reviewed: cardsReviewed,
           });
+        }
+
+        // Refresh streak data
+        fetchStreak();
+
+        // Log XP for this flashcard session
+        logActivity({
+          activityType: 'flashcard_session',
+          sourceTitle: 'Flashcard Study Session',
+          cardsReviewed: cardsReviewed,
+          metadata: { cardsReviewed },
+        });
+      } catch {
+        // Table may not exist - fail silently
       }
-
-      // Refresh streak data
-      fetchStreak();
-
-      // Log XP for this flashcard session
-      logActivity({
-        activityType: 'flashcard_session',
-        sourceTitle: 'Flashcard Study Session',
-        cardsReviewed: cardsReviewed,
-        metadata: { cardsReviewed },
-      });
-    } catch {
-      // Table may not exist - fail silently
-    }
-  }, [user, fetchStreak, logActivity]);
+    },
+    [user, fetchStreak, logActivity]
+  );
 
   // Get formatted streak info
   const getStreakDisplay = useCallback(() => {
@@ -174,7 +177,7 @@ export function useStudyStreak() {
       totalCardsReviewed: streak.totalCardsReviewed,
       lastStudiedFormatted: streak.lastStudyDate
         ? formatRelativeDate(streak.lastStudyDate)
-        : 'Never'
+        : 'Never',
     };
   }, [streak]);
 
@@ -183,7 +186,7 @@ export function useStudyStreak() {
     loading,
     recordSession,
     getStreakDisplay,
-    refetch: fetchStreak
+    refetch: fetchStreak,
   };
 }
 

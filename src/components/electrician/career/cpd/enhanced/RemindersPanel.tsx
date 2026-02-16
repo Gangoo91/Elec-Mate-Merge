@@ -3,16 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Bell, 
-  Calendar, 
-  AlertTriangle, 
-  Clock, 
-  CheckCircle, 
+import {
+  Bell,
+  Calendar,
+  AlertTriangle,
+  Clock,
+  CheckCircle,
   Target,
   Award,
   RefreshCw,
-  X
+  X,
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 import { CPDReminder } from '@/types/cpd-enhanced';
@@ -80,8 +80,8 @@ const RemindersPanel = () => {
     }
   };
 
-  const highPriorityReminders = reminders.filter(r => r.priority === 'high');
-  const otherReminders = reminders.filter(r => r.priority !== 'high');
+  const highPriorityReminders = reminders.filter((r) => r.priority === 'high');
+  const otherReminders = reminders.filter((r) => r.priority !== 'high');
 
   if (reminders.length === 0) {
     return (
@@ -160,21 +160,17 @@ const RemindersPanel = () => {
                     <div className={`p-2 rounded ${getTypeColor(reminder.type)}`}>
                       {getRemindersIcon(reminder.type)}
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-medium text-foreground text-sm">
-                          {reminder.title}
-                        </h4>
+                        <h4 className="font-medium text-foreground text-sm">{reminder.title}</h4>
                         <Badge variant="outline" className="text-xs">
                           {reminder.type.replace('-', ' ')}
                         </Badge>
                       </div>
-                      
-                      <p className="text-sm text-muted-foreground mb-2">
-                        {reminder.message}
-                      </p>
-                      
+
+                      <p className="text-sm text-muted-foreground mb-2">{reminder.message}</p>
+
                       <div className="flex items-center gap-2 text-xs">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
@@ -182,19 +178,17 @@ const RemindersPanel = () => {
                             {formatDaysUntil(reminder.dueDate)}
                           </span>
                         </div>
-                        
+
                         {reminder.actionRequired && (
                           <>
                             <span className="text-muted-foreground">•</span>
-                            <span className="text-foreground">
-                              {reminder.actionRequired}
-                            </span>
+                            <span className="text-foreground">{reminder.actionRequired}</span>
                           </>
                         )}
                       </div>
                     </div>
                   </div>
-                  
+
                   <Button
                     variant="ghost"
                     size="sm"
@@ -221,17 +215,17 @@ const RemindersPanel = () => {
               <Calendar className="h-4 w-4 mr-2" />
               Set Reminder
             </Button>
-            
+
             <Button variant="outline" size="sm" className="justify-start">
               <Target className="h-4 w-4 mr-2" />
               Create Goal
             </Button>
-            
+
             <Button variant="outline" size="sm" className="justify-start">
               <Award className="h-4 w-4 mr-2" />
               Schedule Assessment
             </Button>
-            
+
             <Button variant="outline" size="sm" className="justify-start">
               <RefreshCw className="h-4 w-4 mr-2" />
               Renewal Tracker
@@ -245,20 +239,18 @@ const RemindersPanel = () => {
         <CardContent className="p-4">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-lg font-bold text-red-400">
-                {highPriorityReminders.length}
-              </div>
+              <div className="text-lg font-bold text-red-400">{highPriorityReminders.length}</div>
               <p className="text-xs text-muted-foreground">High Priority</p>
             </div>
             <div>
               <div className="text-lg font-bold text-yellow-400">
-                {reminders.filter(r => r.priority === 'medium').length}
+                {reminders.filter((r) => r.priority === 'medium').length}
               </div>
               <p className="text-xs text-muted-foreground">Medium Priority</p>
             </div>
             <div>
               <div className="text-lg font-bold text-blue-400">
-                {reminders.filter(r => r.priority === 'low').length}
+                {reminders.filter((r) => r.priority === 'low').length}
               </div>
               <p className="text-xs text-muted-foreground">Low Priority</p>
             </div>

@@ -11,10 +11,8 @@ export const HandsOnLightingConfigurationSection = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
-        <p>
-          Step-by-step setup procedures for common smart lighting installations:
-        </p>
-        
+        <p>Step-by-step setup procedures for common smart lighting installations:</p>
+
         <div className="space-y-4">
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <h4 className="font-semibold text-blue-200 mb-2">Smart Bulb Setup Process</h4>
@@ -32,7 +30,9 @@ export const HandsOnLightingConfigurationSection = () => {
           <div className="p-3 bg-green-600/10 border border-green-600/20 rounded-lg">
             <h4 className="font-semibold text-green-200 mb-2">Smart Switch Installation</h4>
             <ol className="text-sm text-green-100 space-y-1 list-decimal list-inside">
-              <li><strong>Safety first:</strong> Isolate circuit at consumer unit</li>
+              <li>
+                <strong>Safety first:</strong> Isolate circuit at consumer unit
+              </li>
               <li>Remove existing switch and check wiring</li>
               <li>Identify live, neutral (if present), and switch wires</li>
               <li>Connect smart switch according to manufacturer diagram</li>
@@ -45,10 +45,18 @@ export const HandsOnLightingConfigurationSection = () => {
           <div className="p-3 bg-purple-600/10 border border-purple-600/20 rounded-lg">
             <h4 className="font-semibold text-purple-200 mb-2">Basic Scene Configuration</h4>
             <ul className="text-sm text-purple-100 space-y-1">
-              <li>• <strong>Morning scene:</strong> Gradual brightness increase, warm white</li>
-              <li>• <strong>Evening scene:</strong> Dimmed lighting, warmer temperature</li>
-              <li>• <strong>Movie scene:</strong> Reduced brightness, bias lighting only</li>
-              <li>• <strong>Away scene:</strong> Random activation patterns for security</li>
+              <li>
+                • <strong>Morning scene:</strong> Gradual brightness increase, warm white
+              </li>
+              <li>
+                • <strong>Evening scene:</strong> Dimmed lighting, warmer temperature
+              </li>
+              <li>
+                • <strong>Movie scene:</strong> Reduced brightness, bias lighting only
+              </li>
+              <li>
+                • <strong>Away scene:</strong> Random activation patterns for security
+              </li>
             </ul>
           </div>
 

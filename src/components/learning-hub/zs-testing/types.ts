@@ -1,4 +1,3 @@
-
 export interface ZsTestResult {
   circuitRef: string;
   testMethod: 'dead' | 'live';
@@ -48,10 +47,10 @@ export const protectiveDevices = [
   { value: 'fuse-16', label: 'BS 88-3 16A Fuse', maxZs: '2.45' },
   { value: 'fuse-20', label: 'BS 88-3 20A Fuse', maxZs: '1.77' },
   { value: 'fuse-25', label: 'BS 88-3 25A Fuse', maxZs: '1.35' },
-  { value: 'fuse-32', label: 'BS 88-3 32A Fuse', maxZs: '1.00' }
+  { value: 'fuse-32', label: 'BS 88-3 32A Fuse', maxZs: '1.00' },
 ];
 
 export const testMethods = [
   { value: 'live', label: 'Live Testing (Standard Method)' },
-  { value: 'dead', label: 'Dead Testing (Alternative)' }
+  { value: 'dead', label: 'Dead Testing (Alternative)' },
 ];

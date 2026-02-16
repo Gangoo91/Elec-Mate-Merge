@@ -60,19 +60,19 @@ export const useCustomerImport = () => {
   // Validate customer data
   const validateCustomer = (customer: ImportCustomer): { valid: boolean; errors: string[] } => {
     const errors: string[] = [];
-    
+
     if (!customer.name || customer.name.trim() === '') {
       errors.push('Name is required');
     }
-    
+
     if (customer.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
       errors.push('Invalid email format');
     }
-    
+
     if (customer.phone && customer.phone.length > 20) {
       errors.push('Phone number too long');
     }
-    
+
     return { valid: errors.length === 0, errors };
   };
 
@@ -82,7 +82,9 @@ export const useCustomerImport = () => {
     setImportProgress(0);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // Parse file based on type
@@ -125,17 +127,14 @@ export const useCustomerImport = () => {
 
       setImportProgress(100);
 
-      const dbErrors = Array.isArray(data[0].errors) 
+      const dbErrors = Array.isArray(data[0].errors)
         ? (data[0].errors as unknown as Array<{ row: ImportCustomer; error: string }>)
         : [];
 
       const result: ImportResult = {
         successCount: data[0].success_count,
         errorCount: data[0].error_count + errors.length,
-        errors: [
-          ...errors,
-          ...dbErrors,
-        ],
+        errors: [...errors, ...dbErrors],
       };
 
       toast({

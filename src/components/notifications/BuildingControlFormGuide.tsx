@@ -19,8 +19,9 @@ export const BuildingControlFormGuide = () => {
         <Alert className="border-green-500/20 bg-green-500/10">
           <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
           <AlertDescription className="text-green-400 text-sm">
-            <strong>Competent Person Scheme Members:</strong> If you're registered with NICEIC or NAPIT,
-            they handle Building Control notifications automatically when you submit certificates through their portals.
+            <strong>Competent Person Scheme Members:</strong> If you're registered with NICEIC or
+            NAPIT, they handle Building Control notifications automatically when you submit
+            certificates through their portals.
           </AlertDescription>
         </Alert>
 
@@ -30,44 +31,52 @@ export const BuildingControlFormGuide = () => {
             <AlertCircle className="w-4 h-4 text-amber-400" />
             Direct Building Control Submission (Non-Scheme Members)
           </h4>
-          
+
           <div className="space-y-2 text-sm text-muted-foreground">
             <p>If submitting directly to your local authority, you'll typically need:</p>
-            
+
             <div className="space-y-2 pl-4">
               <div className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <div>
-                  <strong className="text-foreground">Building Notice Application</strong> - Submit before work begins
-                  (or at completion if emergency work)
+                  <strong className="text-foreground">Building Notice Application</strong> - Submit
+                  before work begins (or at completion if emergency work)
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <div>
-                  <strong className="text-foreground">Electrical Installation Certificate (EIC)</strong> - For new circuits or consumer unit changes
+                  <strong className="text-foreground">
+                    Electrical Installation Certificate (EIC)
+                  </strong>{' '}
+                  - For new circuits or consumer unit changes
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <div>
-                  <strong className="text-foreground">Minor Electrical Installation Works Certificate (MEIWC)</strong> - For additions/alterations to existing circuits
+                  <strong className="text-foreground">
+                    Minor Electrical Installation Works Certificate (MEIWC)
+                  </strong>{' '}
+                  - For additions/alterations to existing circuits
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <div>
-                  <strong className="text-foreground">Supplementary Electrical Form</strong> - Additional details (required by some local authorities)
+                  <strong className="text-foreground">Supplementary Electrical Form</strong> -
+                  Additional details (required by some local authorities)
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <div>
-                  <strong className="text-foreground">Building Control Fee</strong> - Varies by local authority and work scope
+                  <strong className="text-foreground">Building Control Fee</strong> - Varies by
+                  local authority and work scope
                 </div>
               </div>
             </div>
@@ -78,8 +87,9 @@ export const BuildingControlFormGuide = () => {
         <Alert className="border-amber-500/20 bg-amber-500/10">
           <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0" />
           <AlertDescription className="text-amber-400 text-xs">
-            <strong>Important:</strong> Requirements vary by local authority. Contact your Building Control office
-            for their specific forms and fee structure. The Building Control Finder above can help you locate their contact details.
+            <strong>Important:</strong> Requirements vary by local authority. Contact your Building
+            Control office for their specific forms and fee structure. The Building Control Finder
+            above can help you locate their contact details.
           </AlertDescription>
         </Alert>
 

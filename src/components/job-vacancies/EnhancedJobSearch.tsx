@@ -1,27 +1,17 @@
-
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Search,
-  MapPin,
-  Filter,
-  Brain,
-  Sliders,
-  X,
-  Sparkles,
-  Zap
-} from "lucide-react";
+import React, { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Search, MapPin, Filter, Brain, Sliders, X, Sparkles, Zap } from 'lucide-react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
 interface SearchFilters {
   keywords: string;
@@ -41,31 +31,43 @@ interface EnhancedJobSearchProps {
   totalResults?: number;
 }
 
-const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({ 
-  onSearch, 
+const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
+  onSearch,
   isLoading,
   suggestedSkills = [],
-  totalResults = 0
+  totalResults = 0,
 }) => {
   const [filters, setFilters] = useState<SearchFilters>({
-    keywords: "electrician,electrical engineer,electrical technician",
-    location: "United Kingdom",
-    jobType: "",
-    experienceLevel: "",
-    salaryMin: "",
-    salaryMax: "",
+    keywords: 'electrician,electrical engineer,electrical technician',
+    location: 'United Kingdom',
+    jobType: '',
+    experienceLevel: '',
+    salaryMin: '',
+    salaryMax: '',
     skills: [],
-    aiEnhanced: true
+    aiEnhanced: true,
   });
-  
+
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [skillInput, setSkillInput] = useState("");
+  const [skillInput, setSkillInput] = useState('');
 
   // UK-specific location suggestions
   const ukLocations = [
-    "London", "Manchester", "Birmingham", "Leeds", "Glasgow",
-    "Liverpool", "Bristol", "Sheffield", "Edinburgh", "Newcastle",
-    "Nottingham", "Cardiff", "Leicester", "Coventry", "Bradford"
+    'London',
+    'Manchester',
+    'Birmingham',
+    'Leeds',
+    'Glasgow',
+    'Liverpool',
+    'Bristol',
+    'Sheffield',
+    'Edinburgh',
+    'Newcastle',
+    'Nottingham',
+    'Cardiff',
+    'Leicester',
+    'Coventry',
+    'Bradford',
   ];
 
   const handleSearch = (e: React.FormEvent) => {
@@ -75,18 +77,18 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
 
   const addSkill = (skill: string) => {
     if (skill && !filters.skills.includes(skill)) {
-      setFilters(prev => ({
+      setFilters((prev) => ({
         ...prev,
-        skills: [...prev.skills, skill]
+        skills: [...prev.skills, skill],
       }));
-      setSkillInput("");
+      setSkillInput('');
     }
   };
 
   const removeSkill = (skillToRemove: string) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
-      skills: prev.skills.filter(skill => skill !== skillToRemove)
+      skills: prev.skills.filter((skill) => skill !== skillToRemove),
     }));
   };
 
@@ -99,19 +101,19 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
 
   const clearFilters = () => {
     setFilters({
-      keywords: "electrician,electrical engineer,electrical technician",
-      location: "United Kingdom",
-      jobType: "",
-      experienceLevel: "",
-      salaryMin: "",
-      salaryMax: "",
+      keywords: 'electrician,electrical engineer,electrical technician',
+      location: 'United Kingdom',
+      jobType: '',
+      experienceLevel: '',
+      salaryMin: '',
+      salaryMax: '',
       skills: [],
-      aiEnhanced: true
+      aiEnhanced: true,
     });
   };
 
   const quickLocationSearch = (location: string) => {
-    setFilters(prev => ({ ...prev, location }));
+    setFilters((prev) => ({ ...prev, location }));
     onSearch({ ...filters, location });
   };
 
@@ -129,8 +131,8 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                 type="text"
                 placeholder="Job keywords (e.g., Electrician, Engineer, Technician)"
                 value={filters.keywords}
-                onChange={(e) => setFilters(prev => ({ ...prev, keywords: e.target.value }))}
-                className={cn(!filters.keywords && "pl-10")}
+                onChange={(e) => setFilters((prev) => ({ ...prev, keywords: e.target.value }))}
+                className={cn(!filters.keywords && 'pl-10')}
                 aria-label="Search keywords"
               />
             </div>
@@ -143,21 +145,21 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                 type="text"
                 placeholder="Location (e.g., London, Manchester, Birmingham)"
                 value={filters.location}
-                onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
-                className={cn(!filters.location && "pl-10")}
+                onChange={(e) => setFilters((prev) => ({ ...prev, location: e.target.value }))}
+                className={cn(!filters.location && 'pl-10')}
                 aria-label="Search location"
               />
             </div>
-            
+
             <div className="flex gap-2">
-              <Button 
-                type="submit" 
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90" 
+              <Button
+                type="submit"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 disabled={isLoading}
               >
-                {isLoading ? "Searching..." : "Search Jobs"}
+                {isLoading ? 'Searching...' : 'Search Jobs'}
               </Button>
-              
+
               <Button
                 type="button"
                 variant="outline"
@@ -173,9 +175,9 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
           <div className="flex flex-wrap gap-2">
             <span className="text-sm font-medium text-muted-foreground">Quick locations:</span>
             {ukLocations.slice(0, 6).map((location) => (
-              <Badge 
+              <Badge
                 key={location}
-                variant="outline" 
+                variant="outline"
                 className="cursor-pointer hover:bg-elec-yellow/10 text-xs"
                 onClick={() => quickLocationSearch(location)}
               >
@@ -191,7 +193,9 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                 <input
                   type="checkbox"
                   checked={filters.aiEnhanced}
-                  onChange={(e) => setFilters(prev => ({ ...prev, aiEnhanced: e.target.checked }))}
+                  onChange={(e) =>
+                    setFilters((prev) => ({ ...prev, aiEnhanced: e.target.checked }))
+                  }
                   className="rounded border-gray-300 text-elec-yellow focus:ring-elec-yellow"
                 />
                 <span className="text-sm font-medium flex items-center gap-1">
@@ -204,7 +208,7 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                 Rapid
               </Badge>
             </div>
-            
+
             {totalResults > 0 && (
               <p className="text-sm text-muted-foreground">
                 {totalResults.toLocaleString()} jobs found
@@ -216,7 +220,10 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
           {showAdvanced && (
             <div className="space-y-4 pt-4 border-t border-elec-yellow/20">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <Select value={filters.jobType} onValueChange={(value) => setFilters(prev => ({ ...prev, jobType: value }))}>
+                <Select
+                  value={filters.jobType}
+                  onValueChange={(value) => setFilters((prev) => ({ ...prev, jobType: value }))}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Job Type" />
                   </SelectTrigger>
@@ -227,8 +234,13 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                     <SelectItem value="apprenticeship">Apprenticeship</SelectItem>
                   </SelectContent>
                 </Select>
-                
-                <Select value={filters.experienceLevel} onValueChange={(value) => setFilters(prev => ({ ...prev, experienceLevel: value }))}>
+
+                <Select
+                  value={filters.experienceLevel}
+                  onValueChange={(value) =>
+                    setFilters((prev) => ({ ...prev, experienceLevel: value }))
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Experience Level" />
                   </SelectTrigger>
@@ -239,20 +251,20 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                     <SelectItem value="lead">Lead/Management</SelectItem>
                   </SelectContent>
                 </Select>
-                
+
                 <div className="flex gap-2">
                   <Input
                     type="number"
                     placeholder="Min Salary (£)"
                     value={filters.salaryMin}
-                    onChange={(e) => setFilters(prev => ({ ...prev, salaryMin: e.target.value }))}
+                    onChange={(e) => setFilters((prev) => ({ ...prev, salaryMin: e.target.value }))}
                     className="text-sm"
                   />
                   <Input
                     type="number"
                     placeholder="Max Salary (£)"
                     value={filters.salaryMax}
-                    onChange={(e) => setFilters(prev => ({ ...prev, salaryMax: e.target.value }))}
+                    onChange={(e) => setFilters((prev) => ({ ...prev, salaryMax: e.target.value }))}
                     className="text-sm"
                   />
                 </div>
@@ -279,37 +291,40 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                     Add
                   </Button>
                 </div>
-                
+
                 {/* Current Skills */}
                 {filters.skills.length > 0 && (
                   <div className="flex flex-wrap gap-1 mb-2">
                     {filters.skills.map((skill, index) => (
                       <Badge key={index} variant="secondary" className="flex items-center gap-1">
                         {skill}
-                        <X 
-                          className="h-3 w-3 cursor-pointer hover:text-red-500" 
+                        <X
+                          className="h-3 w-3 cursor-pointer hover:text-red-500"
                           onClick={() => removeSkill(skill)}
                         />
                       </Badge>
                     ))}
                   </div>
                 )}
-                
+
                 {/* Suggested Skills */}
                 {suggestedSkills.length > 0 && (
                   <div>
                     <p className="text-xs text-muted-foreground mb-1">Suggested skills:</p>
                     <div className="flex flex-wrap gap-1">
-                      {suggestedSkills.filter(skill => !filters.skills.includes(skill)).slice(0, 5).map((skill, index) => (
-                        <Badge 
-                          key={index} 
-                          variant="outline" 
-                          className="cursor-pointer hover:bg-elec-yellow/10 text-xs"
-                          onClick={() => addSkill(skill)}
-                        >
-                          + {skill}
-                        </Badge>
-                      ))}
+                      {suggestedSkills
+                        .filter((skill) => !filters.skills.includes(skill))
+                        .slice(0, 5)
+                        .map((skill, index) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="cursor-pointer hover:bg-elec-yellow/10 text-xs"
+                            onClick={() => addSkill(skill)}
+                          >
+                            + {skill}
+                          </Badge>
+                        ))}
                     </div>
                   </div>
                 )}
@@ -317,12 +332,7 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
 
               {/* Clear Filters */}
               <div className="flex justify-end">
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={clearFilters}
-                  className="text-xs"
-                >
+                <Button type="button" variant="outline" onClick={clearFilters} className="text-xs">
                   Clear All Filters
                 </Button>
               </div>

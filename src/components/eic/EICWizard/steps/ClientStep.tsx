@@ -61,10 +61,7 @@ export const ClientStep: React.FC<ClientStepProps> = ({ data, onChange, isMobile
               value={data.clientAddress || ''}
               onChange={(e) => handleChange('clientAddress', e.target.value)}
               placeholder="Enter client address (if different from installation)"
-              className={cn(
-                'min-h-[80px] text-base resize-none',
-                isMobile && 'text-[16px]'
-              )}
+              className={cn('min-h-[80px] text-base resize-none', isMobile && 'text-[16px]')}
             />
           </div>
 
@@ -122,10 +119,7 @@ export const ClientStep: React.FC<ClientStepProps> = ({ data, onChange, isMobile
               value={data.installationAddress || ''}
               onChange={(e) => handleChange('installationAddress', e.target.value)}
               placeholder="Full installation address"
-              className={cn(
-                'min-h-[100px] text-base resize-none',
-                isMobile && 'text-[16px]'
-              )}
+              className={cn('min-h-[100px] text-base resize-none', isMobile && 'text-[16px]')}
             />
           </div>
 
@@ -179,10 +173,7 @@ export const ClientStep: React.FC<ClientStepProps> = ({ data, onChange, isMobile
               value={data.description || ''}
               onChange={(e) => handleChange('description', e.target.value)}
               placeholder="e.g. New domestic installation, commercial fit-out, etc."
-              className={cn(
-                'min-h-[100px] text-base resize-none',
-                isMobile && 'text-[16px]'
-              )}
+              className={cn('min-h-[100px] text-base resize-none', isMobile && 'text-[16px]')}
             />
           </div>
 

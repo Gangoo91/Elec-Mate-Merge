@@ -11,7 +11,6 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-8">
-        
         {/* Section 1: Why Circuit Segregation Matters */}
         <div className="space-y-4">
           <div className="flex items-start gap-4">
@@ -28,28 +27,34 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p>
-              Emergency lighting circuits must operate independently of other systems to ensure reliable operation during emergencies. Proper segregation provides three critical protections:
+              Emergency lighting circuits must operate independently of other systems to ensure
+              reliable operation during emergencies. Proper segregation provides three critical
+              protections:
             </p>
 
             <div className="grid gap-4">
               <div className="bg-blue-600/10 border-l-4 border-blue-600 p-4 rounded-r">
                 <h4 className="font-semibold text-blue-300 mb-2">Fault Isolation</h4>
                 <p className="text-foreground">
-                  Prevents faults in normal lighting or power circuits from disabling emergency lights. A short circuit in general distribution must not affect emergency lighting operation.
+                  Prevents faults in normal lighting or power circuits from disabling emergency
+                  lights. A short circuit in general distribution must not affect emergency lighting
+                  operation.
                 </p>
               </div>
 
               <div className="bg-blue-600/10 border-l-4 border-blue-600 p-4 rounded-r">
                 <h4 className="font-semibold text-blue-300 mb-2">Fire Integrity</h4>
                 <p className="text-foreground">
-                  Ensures integrity in the event of fire damage to other circuits. If normal lighting cables are destroyed by fire, emergency circuits must continue operating.
+                  Ensures integrity in the event of fire damage to other circuits. If normal
+                  lighting cables are destroyed by fire, emergency circuits must continue operating.
                 </p>
               </div>
 
               <div className="bg-blue-600/10 border-l-4 border-blue-600 p-4 rounded-r">
                 <h4 className="font-semibold text-blue-300 mb-2">Maintenance Safety</h4>
                 <p className="text-foreground">
-                  Avoids confusion during inspection and maintenance. Clearly segregated circuits allow safe testing and fault-finding without risk to life-safety systems.
+                  Avoids confusion during inspection and maintenance. Clearly segregated circuits
+                  allow safe testing and fault-finding without risk to life-safety systems.
                 </p>
               </div>
             </div>
@@ -60,9 +65,13 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
                 Why must emergency circuits be segregated from normal power circuits?
               </p>
               <details className="mt-2">
-                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">View Answer</summary>
+                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">
+                  View Answer
+                </summary>
                 <p className="mt-2 text-foreground">
-                  To prevent faults in normal circuits from disabling emergency lighting, ensure fire integrity if other systems fail, and maintain clear identification for safe maintenance and testing.
+                  To prevent faults in normal circuits from disabling emergency lighting, ensure
+                  fire integrity if other systems fail, and maintain clear identification for safe
+                  maintenance and testing.
                 </p>
               </details>
             </div>
@@ -85,17 +94,23 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p>
-              BS 5266-1 and BS 7671 require emergency lighting circuits to remain intact during a fire. This demands enhanced cable specifications and installation methods beyond standard practice:
+              BS 5266-1 and BS 7671 require emergency lighting circuits to remain intact during a
+              fire. This demands enhanced cable specifications and installation methods beyond
+              standard practice:
             </p>
 
             <div className="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
               <div className="bg-red-600/20 px-4 py-3 border-b border-gray-700">
-                <h4 className="font-semibold text-red-300">Enhanced Fire-Resistant Cables (Category F1)</h4>
+                <h4 className="font-semibold text-red-300">
+                  Enhanced Fire-Resistant Cables (Category F1)
+                </h4>
               </div>
               <div className="p-4 space-y-3">
                 <div className="flex justify-between items-start">
                   <span className="text-foreground">Survival Time:</span>
-                  <span className="text-foreground font-semibold">Up to 120 minutes under test conditions</span>
+                  <span className="text-foreground font-semibold">
+                    Up to 120 minutes under test conditions
+                  </span>
                 </div>
                 <div className="flex justify-between items-start">
                   <span className="text-foreground">Test Temperature:</span>
@@ -103,11 +118,15 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
                 </div>
                 <div className="flex justify-between items-start">
                   <span className="text-foreground">Mechanical Shock:</span>
-                  <span className="text-foreground font-semibold">Must withstand impact during fire</span>
+                  <span className="text-foreground font-semibold">
+                    Must withstand impact during fire
+                  </span>
                 </div>
                 <div className="flex justify-between items-start">
                   <span className="text-foreground">Water Spray:</span>
-                  <span className="text-foreground font-semibold">Must resist firefighting operations</span>
+                  <span className="text-foreground font-semibold">
+                    Must resist firefighting operations
+                  </span>
                 </div>
               </div>
             </div>
@@ -142,9 +161,13 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
                 What regulation in BS 7671 requires non-combustible fixings for cables?
               </p>
               <details className="mt-2">
-                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">View Answer</summary>
+                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">
+                  View Answer
+                </summary>
                 <p className="mt-2 text-foreground">
-                  Regulation 521.10.202 requires escape route circuits to be protected against premature collapse, which includes using non-combustible fixings and enhanced fire-resistant cables.
+                  Regulation 521.10.202 requires escape route circuits to be protected against
+                  premature collapse, which includes using non-combustible fixings and enhanced
+                  fire-resistant cables.
                 </p>
               </details>
             </div>
@@ -203,47 +226,64 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p>
-              Four practical methods ensure proper segregation of emergency lighting circuits from general electrical services:
+              Four practical methods ensure proper segregation of emergency lighting circuits from
+              general electrical services:
             </p>
 
             <div className="grid gap-4">
               <div className="bg-green-600/10 border-l-4 border-green-600 p-4 rounded-r">
                 <h4 className="font-semibold text-green-300 mb-2">1. Dedicated Containment</h4>
                 <p className="text-foreground mb-2">
-                  Use separate conduits, trunking, or trays exclusively for emergency circuits. This is the preferred method for new installations.
+                  Use separate conduits, trunking, or trays exclusively for emergency circuits. This
+                  is the preferred method for new installations.
                 </p>
                 <div className="bg-gray-800 p-3 rounded mt-2">
-                  <p className="text-sm text-foreground">Example: Steel conduit marked "EMERGENCY LIGHTING ONLY" in red</p>
+                  <p className="text-sm text-foreground">
+                    Example: Steel conduit marked "EMERGENCY LIGHTING ONLY" in red
+                  </p>
                 </div>
               </div>
 
               <div className="bg-green-600/10 border-l-4 border-green-600 p-4 rounded-r">
                 <h4 className="font-semibold text-green-300 mb-2">2. Physical Separation</h4>
                 <p className="text-foreground mb-2">
-                  Maintain adequate spacing where containment is shared. Minimum separation distances apply based on cable type and fire risk.
+                  Maintain adequate spacing where containment is shared. Minimum separation
+                  distances apply based on cable type and fire risk.
                 </p>
                 <div className="bg-gray-800 p-3 rounded mt-2">
-                  <p className="text-sm text-foreground">Minimum spacing: 300mm between emergency and general circuits in shared cable trays</p>
+                  <p className="text-sm text-foreground">
+                    Minimum spacing: 300mm between emergency and general circuits in shared cable
+                    trays
+                  </p>
                 </div>
               </div>
 
               <div className="bg-green-600/10 border-l-4 border-green-600 p-4 rounded-r">
                 <h4 className="font-semibold text-green-300 mb-2">3. Clear Identification</h4>
                 <p className="text-foreground mb-2">
-                  Label emergency circuits for testing and maintenance using permanent identification at regular intervals.
+                  Label emergency circuits for testing and maintenance using permanent
+                  identification at regular intervals.
                 </p>
                 <div className="bg-gray-800 p-3 rounded mt-2">
-                  <p className="text-sm text-foreground">Label every 3 metres and at all access points: "EMERGENCY LIGHTING CIRCUIT"</p>
+                  <p className="text-sm text-foreground">
+                    Label every 3 metres and at all access points: "EMERGENCY LIGHTING CIRCUIT"
+                  </p>
                 </div>
               </div>
 
               <div className="bg-green-600/10 border-l-4 border-green-600 p-4 rounded-r">
-                <h4 className="font-semibold text-green-300 mb-2">4. Dedicated Distribution Boards</h4>
+                <h4 className="font-semibold text-green-300 mb-2">
+                  4. Dedicated Distribution Boards
+                </h4>
                 <p className="text-foreground mb-2">
-                  Provide dedicated boards or sections for emergency lighting circuits, clearly marked and with appropriate overcurrent protection.
+                  Provide dedicated boards or sections for emergency lighting circuits, clearly
+                  marked and with appropriate overcurrent protection.
                 </p>
                 <div className="bg-gray-800 p-3 rounded mt-2">
-                  <p className="text-sm text-foreground">Best practice: Separate emergency lighting distribution board with independent RCD protection</p>
+                  <p className="text-sm text-foreground">
+                    Best practice: Separate emergency lighting distribution board with independent
+                    RCD protection
+                  </p>
                 </div>
               </div>
             </div>
@@ -254,9 +294,13 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
                 Give one method of segregating emergency lighting circuits from normal circuits.
               </p>
               <details className="mt-2">
-                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">View Answer</summary>
+                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">
+                  View Answer
+                </summary>
                 <p className="mt-2 text-foreground">
-                  Any of the following: dedicated containment (separate conduits/trunking), physical separation with adequate spacing, clear identification and labelling, or dedicated distribution boards.
+                  Any of the following: dedicated containment (separate conduits/trunking), physical
+                  separation with adequate spacing, clear identification and labelling, or dedicated
+                  distribution boards.
                 </p>
               </details>
             </div>
@@ -279,13 +323,15 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
 
           <div className="ml-0 sm:ml-11 space-y-4">
             <p>
-              Emergency lighting installations must not contribute to the spread of fire or produce hazardous smoke and toxic gases that impede evacuation:
+              Emergency lighting installations must not contribute to the spread of fire or produce
+              hazardous smoke and toxic gases that impede evacuation:
             </p>
 
             <div className="bg-purple-600/10 border border-purple-600/40 rounded-lg p-4">
               <h4 className="font-semibold text-purple-300 mb-3">LSZH Cable Benefits</h4>
               <p className="text-foreground mb-3">
-                Low Smoke Zero Halogen (LSZH) cables are essential for emergency lighting installations because they:
+                Low Smoke Zero Halogen (LSZH) cables are essential for emergency lighting
+                installations because they:
               </p>
               <ul className="space-y-2 text-foreground">
                 <li className="flex items-start gap-2">
@@ -294,7 +340,9 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-purple-400 mt-1">•</span>
-                  <span>Eliminate toxic halogen gases (chlorine, fluorine) that cause respiratory damage</span>
+                  <span>
+                    Eliminate toxic halogen gases (chlorine, fluorine) that cause respiratory damage
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-purple-400 mt-1">•</span>
@@ -302,7 +350,9 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-purple-400 mt-1">•</span>
-                  <span>Comply with building regulations for public and high-occupancy buildings</span>
+                  <span>
+                    Comply with building regulations for public and high-occupancy buildings
+                  </span>
                 </li>
               </ul>
             </div>
@@ -364,7 +414,9 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
               </div>
 
               <div className="bg-green-600/10 border border-green-600/40 p-4 rounded-lg">
-                <h4 className="font-semibold text-green-300 mb-2">Enhanced Protection Where Required</h4>
+                <h4 className="font-semibold text-green-300 mb-2">
+                  Enhanced Protection Where Required
+                </h4>
                 <ul className="space-y-1 text-foreground">
                   <li>• Use MICC cable in high-risk routes</li>
                   <li>• Install steel conduit protection</li>
@@ -381,15 +433,18 @@ export const EmergencyLightingTechnicalSection4_4 = () => {
                 Why are LSZH cables preferred in emergency lighting installations?
               </p>
               <details className="mt-2">
-                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">View Answer</summary>
+                <summary className="cursor-pointer text-orange-300 hover:text-orange-200">
+                  View Answer
+                </summary>
                 <p className="mt-2 text-foreground">
-                  LSZH cables reduce smoke production and eliminate toxic halogen gases, improving visibility and air quality during evacuation. This is critical for life safety in emergency conditions.
+                  LSZH cables reduce smoke production and eliminate toxic halogen gases, improving
+                  visibility and air quality during evacuation. This is critical for life safety in
+                  emergency conditions.
                 </p>
               </details>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

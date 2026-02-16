@@ -1,72 +1,91 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m2s4-check1",
-    question: "What is the main difference between Type 1 and Type 2 AC connectors?",
-    options: ["Type 1 is faster", "Type 2 supports three-phase charging", "Type 1 is used in Europe", "Type 2 is only for DC charging"],
+    id: 'evcharging-m2s4-check1',
+    question: 'What is the main difference between Type 1 and Type 2 AC connectors?',
+    options: [
+      'Type 1 is faster',
+      'Type 2 supports three-phase charging',
+      'Type 1 is used in Europe',
+      'Type 2 is only for DC charging',
+    ],
     correctIndex: 1,
-    explanation: "Type 2 (Mennekes) connectors have 7 pins supporting three-phase AC charging up to 43kW, while Type 1 (SAE J1772) has 5 pins and only supports single-phase AC up to 19.2kW."
+    explanation:
+      'Type 2 (Mennekes) connectors have 7 pins supporting three-phase AC charging up to 43kW, while Type 1 (SAE J1772) has 5 pins and only supports single-phase AC up to 19.2kW.',
   },
   {
-    id: "evcharging-m2s4-check2",
-    question: "What does CCS stand for and what makes it unique?",
-    options: ["Combined Charging System - combines AC and DC in one connector", "Continuous Charging Standard - maintains constant power", "Commercial Charging Solution - for business use only", "Controlled Charging Sequence - manages charging stages"],
+    id: 'evcharging-m2s4-check2',
+    question: 'What does CCS stand for and what makes it unique?',
+    options: [
+      'Combined Charging System - combines AC and DC in one connector',
+      'Continuous Charging Standard - maintains constant power',
+      'Commercial Charging Solution - for business use only',
+      'Controlled Charging Sequence - manages charging stages',
+    ],
     correctIndex: 0,
-    explanation: "Combined Charging System (CCS) adds DC charging pins to the existing Type 1 or Type 2 AC connector, allowing a single vehicle inlet to support both AC and DC charging without separate ports."
+    explanation:
+      'Combined Charging System (CCS) adds DC charging pins to the existing Type 1 or Type 2 AC connector, allowing a single vehicle inlet to support both AC and DC charging without separate ports.',
   },
   {
-    id: "evcharging-m2s4-check3",
-    question: "What PWM duty cycle on the Control Pilot signal indicates 32A available current?",
-    options: ["10%", "25%", "50%", "90%"],
+    id: 'evcharging-m2s4-check3',
+    question: 'What PWM duty cycle on the Control Pilot signal indicates 32A available current?',
+    options: ['10%', '25%', '50%', '90%'],
     correctIndex: 2,
-    explanation: "The Control Pilot PWM duty cycle directly correlates to available current: 10% = 6A, 25% ≈ 15A, 50% = 32A, and 90% = 57A (or digital communication enabled above 85%)."
-  }
+    explanation:
+      'The Control Pilot PWM duty cycle directly correlates to available current: 10% = 6A, 25% ≈ 15A, 50% = 32A, and 90% = 57A (or digital communication enabled above 85%).',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why does Europe use a different connector than North America?",
-    answer: "Europe standardised on Type 2 (Mennekes) because of the prevalence of three-phase electrical supplies, which Type 2 supports natively. North America primarily uses single-phase 240V, so Type 1 was sufficient for domestic needs."
+    question: 'Why does Europe use a different connector than North America?',
+    answer:
+      'Europe standardised on Type 2 (Mennekes) because of the prevalence of three-phase electrical supplies, which Type 2 supports natively. North America primarily uses single-phase 240V, so Type 1 was sufficient for domestic needs.',
   },
   {
-    question: "Is CHAdeMO becoming obsolete?",
-    answer: "CHAdeMO is declining in new vehicles as CCS becomes the global standard. However, it remains important for V2G/V2H applications due to its mature bidirectional capabilities, and many existing vehicles still use it."
+    question: 'Is CHAdeMO becoming obsolete?',
+    answer:
+      'CHAdeMO is declining in new vehicles as CCS becomes the global standard. However, it remains important for V2G/V2H applications due to its mature bidirectional capabilities, and many existing vehicles still use it.',
   },
   {
-    question: "What is Plug & Charge and how does it work?",
-    answer: "Plug & Charge (ISO 15118) enables automatic authentication when you plug in - no app, card, or PIN needed. The vehicle and charger exchange encrypted certificates to verify identity and billing information automatically."
+    question: 'What is Plug & Charge and how does it work?',
+    answer:
+      'Plug & Charge (ISO 15118) enables automatic authentication when you plug in - no app, card, or PIN needed. The vehicle and charger exchange encrypted certificates to verify identity and billing information automatically.',
   },
   {
-    question: "Will there be a single global EV charging standard?",
-    answer: "CCS is emerging as the dominant global standard, with Tesla adopting CCS in Europe and opening Superchargers to other brands. However, regional variations (CCS1 vs CCS2) and legacy systems mean multiple standards will coexist for years."
-  }
+    question: 'Will there be a single global EV charging standard?',
+    answer:
+      'CCS is emerging as the dominant global standard, with Tesla adopting CCS in Europe and opening Superchargers to other brands. However, regional variations (CCS1 vs CCS2) and legacy systems mean multiple standards will coexist for years.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A customer's new EV has a CCS2 inlet. Which charging options are compatible?",
-  options: [
-    "CCS2 DC rapid charging only",
-    "Type 2 AC and CCS2 DC charging",
-    "CHAdeMO DC with an adapter",
-    "Any European charger"
-  ],
-  correctAnswer: 1,
-  explanation: "CCS2 is a Combined Charging System that incorporates the Type 2 AC connector with additional DC pins. Vehicles with CCS2 inlets can charge from both Type 2 AC chargers (using the upper portion) and CCS2 DC rapid chargers (using the full connector)."
-  }
+    question: "A customer's new EV has a CCS2 inlet. Which charging options are compatible?",
+    options: [
+      'CCS2 DC rapid charging only',
+      'Type 2 AC and CCS2 DC charging',
+      'CHAdeMO DC with an adapter',
+      'Any European charger',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CCS2 is a Combined Charging System that incorporates the Type 2 AC connector with additional DC pins. Vehicles with CCS2 inlets can charge from both Type 2 AC chargers (using the upper portion) and CCS2 DC rapid chargers (using the full connector).',
+  },
 ];
 
 const EVChargingModule2Section4 = () => {
   useSEO({
-    title: "IEC 61851, 62196 Connectors | EV Charging Module 2.4",
-    description: "Understand international EV charging standards including IEC 61851, IEC 62196 connector types, CCS, CHAdeMO, and communication protocols."
+    title: 'IEC 61851, 62196 Connectors | EV Charging Module 2.4',
+    description:
+      'Understand international EV charging standards including IEC 61851, IEC 62196 connector types, CCS, CHAdeMO, and communication protocols.',
   });
 
   return (
@@ -98,9 +117,7 @@ const EVChargingModule2Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             IEC 61851, 62196 Connectors
           </h1>
-          <p className="text-white/80">
-            International charging standards and connector types
-          </p>
+          <p className="text-white/80">International charging standards and connector types</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +125,26 @@ const EVChargingModule2Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>IEC 61851:</strong> Defines charging modes and safety</li>
-              <li><strong>IEC 62196:</strong> Specifies connector types (Type 1/2)</li>
-              <li><strong>CCS:</strong> Combined AC + DC in one connector</li>
+              <li>
+                <strong>IEC 61851:</strong> Defines charging modes and safety
+              </li>
+              <li>
+                <strong>IEC 62196:</strong> Specifies connector types (Type 1/2)
+              </li>
+              <li>
+                <strong>CCS:</strong> Combined AC + DC in one connector
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Type 2 = 7 pins, CCS = extra DC pins below</li>
-              <li><strong>Use:</strong> UK/EU = Type 2 AC, CCS2 DC</li>
+              <li>
+                <strong>Spot:</strong> Type 2 = 7 pins, CCS = extra DC pins below
+              </li>
+              <li>
+                <strong>Use:</strong> UK/EU = Type 2 AC, CCS2 DC
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +154,12 @@ const EVChargingModule2Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand IEC 61851 standard structure",
-              "Identify Type 1, Type 2, CCS, and CHAdeMO connectors",
-              "Explain Control Pilot signalling",
-              "Match connectors to vehicle requirements",
-              "Verify connector installation and testing",
-              "Plan for future charging standards"
+              'Understand IEC 61851 standard structure',
+              'Identify Type 1, Type 2, CCS, and CHAdeMO connectors',
+              'Explain Control Pilot signalling',
+              'Match connectors to vehicle requirements',
+              'Verify connector installation and testing',
+              'Plan for future charging standards',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -159,11 +186,21 @@ const EVChargingModule2Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standard Structure</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>IEC 61851-1:</strong> General requirements and safety specifications</li>
-                <li><strong>IEC 61851-21:</strong> AC charging station requirements</li>
-                <li><strong>IEC 61851-22:</strong> AC connector specifications</li>
-                <li><strong>IEC 61851-23:</strong> DC charging station specifications</li>
-                <li><strong>IEC 61851-24:</strong> Digital communication (DC charging)</li>
+                <li>
+                  <strong>IEC 61851-1:</strong> General requirements and safety specifications
+                </li>
+                <li>
+                  <strong>IEC 61851-21:</strong> AC charging station requirements
+                </li>
+                <li>
+                  <strong>IEC 61851-22:</strong> AC connector specifications
+                </li>
+                <li>
+                  <strong>IEC 61851-23:</strong> DC charging station specifications
+                </li>
+                <li>
+                  <strong>IEC 61851-24:</strong> Digital communication (DC charging)
+                </li>
               </ul>
             </div>
 
@@ -200,29 +237,49 @@ const EVChargingModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              IEC 62196 defines plugs, socket-outlets, and couplers for EV charging. The two
-              main AC connector types serve different regional markets and power requirements.
+              IEC 62196 defines plugs, socket-outlets, and couplers for EV charging. The two main AC
+              connector types serve different regional markets and power requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Type 1 (SAE J1772)</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Pins:</strong> 5 (L1, N, PE, CP, PP)</li>
-                  <li><strong>Power:</strong> Single-phase up to 19.2kW</li>
-                  <li><strong>Voltage:</strong> Up to 240V AC</li>
-                  <li><strong>Region:</strong> North America, Japan</li>
-                  <li><strong>Vehicles:</strong> Nissan Leaf (US), Chevrolet</li>
+                  <li>
+                    <strong>Pins:</strong> 5 (L1, N, PE, CP, PP)
+                  </li>
+                  <li>
+                    <strong>Power:</strong> Single-phase up to 19.2kW
+                  </li>
+                  <li>
+                    <strong>Voltage:</strong> Up to 240V AC
+                  </li>
+                  <li>
+                    <strong>Region:</strong> North America, Japan
+                  </li>
+                  <li>
+                    <strong>Vehicles:</strong> Nissan Leaf (US), Chevrolet
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Type 2 (Mennekes)</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Pins:</strong> 7 (L1, L2, L3, N, PE, CP, PP)</li>
-                  <li><strong>Power:</strong> Three-phase up to 43kW</li>
-                  <li><strong>Voltage:</strong> Up to 500V AC</li>
-                  <li><strong>Region:</strong> Europe (mandated), UK</li>
-                  <li><strong>Vehicles:</strong> BMW, Mercedes, Tesla (EU)</li>
+                  <li>
+                    <strong>Pins:</strong> 7 (L1, L2, L3, N, PE, CP, PP)
+                  </li>
+                  <li>
+                    <strong>Power:</strong> Three-phase up to 43kW
+                  </li>
+                  <li>
+                    <strong>Voltage:</strong> Up to 500V AC
+                  </li>
+                  <li>
+                    <strong>Region:</strong> Europe (mandated), UK
+                  </li>
+                  <li>
+                    <strong>Vehicles:</strong> BMW, Mercedes, Tesla (EU)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -230,8 +287,12 @@ const EVChargingModule2Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Control Pilot Pin Functions:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>CP (Control Pilot):</strong> PWM signal indicating available current</li>
-                <li><strong>PP (Proximity Pilot):</strong> Cable capacity detection, plug insertion</li>
+                <li>
+                  <strong>CP (Control Pilot):</strong> PWM signal indicating available current
+                </li>
+                <li>
+                  <strong>PP (Proximity Pilot):</strong> Cable capacity detection, plug insertion
+                </li>
               </ul>
             </div>
           </div>
@@ -285,7 +346,9 @@ const EVChargingModule2Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Pilot PWM Duty Cycles</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Control Pilot PWM Duty Cycles
+              </p>
               <div className="grid grid-cols-4 gap-2 text-center text-xs">
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-medium">10%</p>
@@ -327,10 +390,18 @@ const EVChargingModule2Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong connector:</strong> — Verify vehicle inlet type before ordering</li>
-                <li><strong>Ignoring regional standards:</strong> — UK uses Type 2/CCS2, not Type 1</li>
-                <li><strong>No CP testing:</strong> — Always verify control pilot signal</li>
-                <li><strong>Incorrect cable sizing:</strong> — Match to connector current rating</li>
+                <li>
+                  <strong>Wrong connector:</strong> — Verify vehicle inlet type before ordering
+                </li>
+                <li>
+                  <strong>Ignoring regional standards:</strong> — UK uses Type 2/CCS2, not Type 1
+                </li>
+                <li>
+                  <strong>No CP testing:</strong> — Always verify control pilot signal
+                </li>
+                <li>
+                  <strong>Incorrect cable sizing:</strong> — Match to connector current rating
+                </li>
               </ul>
             </div>
           </div>
@@ -373,10 +444,7 @@ const EVChargingModule2Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

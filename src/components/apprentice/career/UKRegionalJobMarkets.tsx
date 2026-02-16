@@ -1,26 +1,34 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, TrendingUp, Building, Users, PoundSterling, Home, Briefcase } from "lucide-react";
-import { regionalJobMarkets } from "./ukCareerProgressionData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { MapPin, TrendingUp, Building, Users, PoundSterling, Home, Briefcase } from 'lucide-react';
+import { regionalJobMarkets } from './ukCareerProgressionData';
 
 const UKRegionalJobMarkets = () => {
   const getAvailabilityColor = (level: string) => {
     switch (level) {
-      case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Good": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "Moderate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      default: return "bg-white/10 text-white border-white/30";
+      case 'High':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Good':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'Moderate':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 
   const getCostColor = (level: string) => {
     switch (level) {
-      case "Very High": return "text-red-400";
-      case "High": return "text-orange-400";
-      case "Medium": return "text-yellow-400";
-      case "Low-Medium": return "text-green-400";
-      default: return "text-white";
+      case 'Very High':
+        return 'text-red-400';
+      case 'High':
+        return 'text-orange-400';
+      case 'Medium':
+        return 'text-yellow-400';
+      case 'Low-Medium':
+        return 'text-green-400';
+      default:
+        return 'text-white';
     }
   };
 
@@ -36,17 +44,25 @@ const UKRegionalJobMarkets = () => {
             UK Regional Job Markets for Electricians
           </CardTitle>
           <p className="text-sm sm:text-base text-white/80">
-            Comprehensive 2025 regional analysis of job opportunities, pay rates, and growth sectors across the UK
+            Comprehensive 2025 regional analysis of job opportunities, pay rates, and growth sectors
+            across the UK
           </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
             {regionalJobMarkets.map((region) => (
-              <Card key={region.region} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
+              <Card
+                key={region.region}
+                className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all"
+              >
                 <CardHeader className="pb-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                    <CardTitle className="text-lg text-white text-center sm:text-left">{region.region}</CardTitle>
-                    <Badge className={`${getAvailabilityColor(region.job_availability)} mx-auto sm:mx-0`}>
+                    <CardTitle className="text-lg text-white text-center sm:text-left">
+                      {region.region}
+                    </CardTitle>
+                    <Badge
+                      className={`${getAvailabilityColor(region.job_availability)} mx-auto sm:mx-0`}
+                    >
                       {region.job_availability} Demand
                     </Badge>
                   </div>
@@ -59,14 +75,18 @@ const UKRegionalJobMarkets = () => {
                         <PoundSterling className="h-3 w-3 text-green-400" />
                         <div className="text-xs text-white">Daily Rates</div>
                       </div>
-                      <div className="text-sm font-semibold text-green-400">{region.average_rates}</div>
+                      <div className="text-sm font-semibold text-green-400">
+                        {region.average_rates}
+                      </div>
                     </div>
                     <div className="text-center sm:text-left space-y-1">
                       <div className="flex items-center justify-center sm:justify-start gap-1">
                         <Home className="h-3 w-3" />
                         <div className="text-xs text-white">Cost of Living</div>
                       </div>
-                      <div className={`text-sm font-semibold ${getCostColor(region.cost_of_living)}`}>
+                      <div
+                        className={`text-sm font-semibold ${getCostColor(region.cost_of_living)}`}
+                      >
                         {region.cost_of_living}
                       </div>
                     </div>
@@ -75,7 +95,9 @@ const UKRegionalJobMarkets = () => {
                         <Briefcase className="h-3 w-3 text-blue-400" />
                         <div className="text-xs text-white">Job Market</div>
                       </div>
-                      <div className="text-sm font-semibold text-blue-400">{region.job_availability}</div>
+                      <div className="text-sm font-semibold text-blue-400">
+                        {region.job_availability}
+                      </div>
                     </div>
                   </div>
 
@@ -87,7 +109,11 @@ const UKRegionalJobMarkets = () => {
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {region.key_sectors.map((sector, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/30">
+                        <Badge
+                          key={idx}
+                          variant="outline"
+                          className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/30"
+                        >
                           {sector}
                         </Badge>
                       ))}
@@ -141,17 +167,21 @@ const UKRegionalJobMarkets = () => {
                       <div className="text-xs">
                         <span className="text-elec-yellow font-medium">Best For:</span>
                         <span className="text-white ml-1">
-                          {region.job_availability === "High" ? "High job security, diverse opportunities" :
-                           region.job_availability === "Good" ? "Steady work, good prospects" :
-                           "Specialised roles, competitive market"}
+                          {region.job_availability === 'High'
+                            ? 'High job security, diverse opportunities'
+                            : region.job_availability === 'Good'
+                              ? 'Steady work, good prospects'
+                              : 'Specialised roles, competitive market'}
                         </span>
                       </div>
                       <div className="text-xs">
                         <span className="text-elec-yellow font-medium">Career Tip:</span>
                         <span className="text-white ml-1">
-                          {region.cost_of_living === "Very High" ? "Consider contractor rates to offset living costs" :
-                           region.cost_of_living === "High" ? "Good balance of rates and opportunities" :
-                           "Lower costs can mean higher disposable income"}
+                          {region.cost_of_living === 'Very High'
+                            ? 'Consider contractor rates to offset living costs'
+                            : region.cost_of_living === 'High'
+                              ? 'Good balance of rates and opportunities'
+                              : 'Lower costs can mean higher disposable income'}
                         </span>
                       </div>
                     </CardContent>
@@ -160,7 +190,7 @@ const UKRegionalJobMarkets = () => {
               </Card>
             ))}
           </div>
-          
+
           {/* Additional market insights */}
           <Card className="mt-6 border-elec-yellow/10 bg-white/10">
             <CardContent className="p-6">

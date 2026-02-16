@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { 
-  PoundSterling, 
-  TrendingUp, 
-  Users, 
-  ChevronDown, 
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  PoundSterling,
+  TrendingUp,
+  Users,
+  ChevronDown,
   ChevronUp,
   Lightbulb,
-  Target
-} from "lucide-react";
-import { LiveEducationAnalytics } from "@/hooks/useLiveEducationData";
+  Target,
+} from 'lucide-react';
+import { LiveEducationAnalytics } from '@/hooks/useLiveEducationData';
 
 interface InsightsAccordionProps {
   analytics: LiveEducationAnalytics | null;
@@ -20,15 +20,15 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const defaultAnalytics = {
-    averageStartingSalary: "£28,000 - £35,000",
+    averageStartingSalary: '£28,000 - £35,000',
     fundingOptionsAvailable: 12,
     topCategories: [
-      { name: "Electrical Engineering", count: 156 },
-      { name: "Renewable Energy", count: 89 },
-      { name: "Building Services", count: 67 }
+      { name: 'Electrical Engineering', count: 156 },
+      { name: 'Renewable Energy', count: 89 },
+      { name: 'Building Services', count: 67 },
     ],
-    popularStudyModes: ["Part-time", "Online", "Evening"],
-    averageCourseDuration: "18 months"
+    popularStudyModes: ['Part-time', 'Online', 'Evening'],
+    averageCourseDuration: '18 months',
   };
 
   const data = analytics || defaultAnalytics;
@@ -47,15 +47,11 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
             onClick={() => setIsExpanded(!isExpanded)}
             className="touch-target p-2 hover:bg-accent/10"
           >
-            {isExpanded ? (
-              <ChevronUp className="h-4 w-4" />
-            ) : (
-              <ChevronDown className="h-4 w-4" />
-            )}
+            {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
         </div>
       </CardHeader>
-      
+
       {isExpanded && (
         <CardContent className="p-3 sm:p-4 md:p-5 lg:p-6 pt-0 space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
@@ -65,7 +61,9 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
                 <div className="p-2 rounded-full bg-elec-yellow/10">
                   <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 </div>
-                <span className="font-semibold mobile-text text-foreground">Salary Expectations</span>
+                <span className="font-semibold mobile-text text-foreground">
+                  Salary Expectations
+                </span>
               </div>
               <div className="mobile-small-text text-text-subtle space-y-2 leading-relaxed">
                 <div className="flex justify-between items-center">
@@ -89,7 +87,9 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
                 <div className="p-2 rounded-full bg-elec-yellow/10">
                   <Target className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 </div>
-                <span className="font-semibold mobile-text text-foreground">Popular Categories</span>
+                <span className="font-semibold mobile-text text-foreground">
+                  Popular Categories
+                </span>
               </div>
               <div className="mobile-small-text text-text-subtle space-y-2">
                 {data.topCategories?.map((category, index) => (
@@ -115,10 +115,12 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
               </div>
               <div className="mobile-small-text text-text-subtle space-y-2 leading-relaxed">
                 <div>
-                  <span className="text-foreground font-medium">Most popular:</span> {(data as any).popularStudyModes?.join(", ") || "Part-time, Online, Evening"}
+                  <span className="text-foreground font-medium">Most popular:</span>{' '}
+                  {(data as any).popularStudyModes?.join(', ') || 'Part-time, Online, Evening'}
                 </div>
                 <div>
-                  <span className="text-foreground font-medium">Average duration:</span> {(data as any).averageCourseDuration || "18 months"}
+                  <span className="text-foreground font-medium">Average duration:</span>{' '}
+                  {(data as any).averageCourseDuration || '18 months'}
                 </div>
                 <div className="text-elec-yellow font-medium">
                   82% complete within planned timeframe
@@ -136,12 +138,13 @@ const InsightsAccordion = ({ analytics }: InsightsAccordionProps) => {
               </div>
               <div className="mobile-small-text text-text-subtle space-y-2 leading-relaxed">
                 <div>
-                  <span className="text-elec-yellow font-bold">{data.fundingOptionsAvailable}+</span> funding options available
+                  <span className="text-elec-yellow font-bold">
+                    {data.fundingOptionsAvailable}+
+                  </span>{' '}
+                  funding options available
                 </div>
                 <div>Advanced Learner Loans for Level 3-6</div>
-                <div className="text-elec-yellow font-medium">
-                  Government grants up to £12,167
-                </div>
+                <div className="text-elec-yellow font-medium">Government grants up to £12,167</div>
               </div>
             </div>
           </div>

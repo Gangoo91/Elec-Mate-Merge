@@ -68,7 +68,9 @@ const statsConfig: StatConfig[] = [
     getSubtitle: (data) =>
       data.certificates.expiringSoon > 0
         ? `${data.certificates.expiringSoon} in progress`
-        : data.certificates.total > 0 ? 'All complete' : undefined,
+        : data.certificates.total > 0
+          ? 'All complete'
+          : undefined,
     path: '/electrician/inspection-testing?section=reports',
     roles: ['electrician', 'employer', 'admin'],
   },
@@ -76,7 +78,7 @@ const statsConfig: StatConfig[] = [
     id: 'overdue',
     label: 'Overdue',
     getValue: (data) => data.business.overdueInvoices,
-    icon: data => data.business.overdueInvoices === 0 ? CheckCircle : AlertCircle,
+    icon: (data) => (data.business.overdueInvoices === 0 ? CheckCircle : AlertCircle),
     variant: 'red',
     getSubtitle: (data) =>
       data.business.overdueInvoices > 0
@@ -92,8 +94,7 @@ const statsConfig: StatConfig[] = [
     icon: Flame,
     variant: 'orange',
     suffix: ' days',
-    getSubtitle: (data) =>
-      data.learning.studiedToday ? 'Studied today' : 'Study to continue!',
+    getSubtitle: (data) => (data.learning.studiedToday ? 'Studied today' : 'Study to continue!'),
     path: '/study-centre/apprentice',
     roles: ['apprentice', 'admin'],
   },
@@ -130,7 +131,7 @@ export function LiveStatsBar() {
 
   // Filter stats based on user role
   const userRole = profile?.role || 'visitor';
-  const filteredStats = statsConfig.filter(stat => stat.roles.includes(userRole));
+  const filteredStats = statsConfig.filter((stat) => stat.roles.includes(userRole));
 
   // Dynamic icon for overdue stat
   const getIcon = (config: StatConfig) => {
@@ -152,10 +153,7 @@ export function LiveStatsBar() {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         {[...Array(filteredStats.length || 3)].map((_, i) => (
-          <div
-            key={i}
-            className="h-20 sm:h-24 rounded-xl bg-white/5 animate-pulse"
-          />
+          <div key={i} className="h-20 sm:h-24 rounded-xl bg-white/5 animate-pulse" />
         ))}
       </div>
     );

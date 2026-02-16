@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { FileText, Zap, Cable, TrendingUp, Shield, CheckCircle2, AlertCircle } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { FileText, Zap, Cable, TrendingUp, Shield, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface ExecutiveSummaryData {
   cableType?: string;
@@ -32,14 +32,18 @@ export const ExecutiveSummaryCard = ({ executiveSummary }: ExecutiveSummaryCardP
     protectiveDevice,
     voltageDrop,
     zsRequirement,
-    purpose
+    purpose,
   } = executiveSummary;
 
   // Determine voltage drop status
   const getVoltageDropStatus = (vdString?: string) => {
     if (!vdString) return null;
     const lowerVd = vdString.toLowerCase();
-    if (lowerVd.includes('pass') || lowerVd.includes('compliant') || lowerVd.includes('acceptable')) {
+    if (
+      lowerVd.includes('pass') ||
+      lowerVd.includes('compliant') ||
+      lowerVd.includes('acceptable')
+    ) {
       return 'pass';
     }
     if (lowerVd.includes('fail') || lowerVd.includes('exceeds') || lowerVd.includes('high')) {
@@ -59,7 +63,9 @@ export const ExecutiveSummaryCard = ({ executiveSummary }: ExecutiveSummaryCardP
             <FileText className="h-6 w-6 lg:h-7 lg:w-7 text-blue-400" />
           </div>
           <div className="flex-1">
-            <h3 className="font-bold text-xl lg:text-2xl text-foreground mb-1">Executive Summary</h3>
+            <h3 className="font-bold text-xl lg:text-2xl text-foreground mb-1">
+              Executive Summary
+            </h3>
             <p className="text-sm text-muted-foreground">
               Installation at-a-glance with key specifications and compliance
             </p>
@@ -69,9 +75,7 @@ export const ExecutiveSummaryCard = ({ executiveSummary }: ExecutiveSummaryCardP
         {/* Purpose Statement */}
         {purpose && (
           <div className="mb-5 p-4 rounded-lg bg-primary/5 border border-primary/20">
-            <p className="text-sm font-medium text-foreground leading-relaxed">
-              {purpose}
-            </p>
+            <p className="text-sm font-medium text-foreground leading-relaxed">{purpose}</p>
           </div>
         )}
 
@@ -148,21 +152,27 @@ export const ExecutiveSummaryCard = ({ executiveSummary }: ExecutiveSummaryCardP
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Voltage Drop */}
             {voltageDrop && (
-              <div className={`p-4 rounded-xl border ${
-                vdStatus === 'pass' 
-                  ? 'bg-success/5 border-success/30' 
-                  : vdStatus === 'fail' 
-                  ? 'bg-destructive/5 border-destructive/30' 
-                  : 'bg-card border-border/50'
-              }`}>
+              <div
+                className={`p-4 rounded-xl border ${
+                  vdStatus === 'pass'
+                    ? 'bg-success/5 border-success/30'
+                    : vdStatus === 'fail'
+                      ? 'bg-destructive/5 border-destructive/30'
+                      : 'bg-card border-border/50'
+                }`}
+              >
                 <div className="flex items-center gap-2 mb-2">
-                  <TrendingUp className={`h-4 w-4 ${
-                    vdStatus === 'pass' ? 'text-success' : vdStatus === 'fail' ? 'text-destructive' : 'text-blue-400'
-                  }`} />
+                  <TrendingUp
+                    className={`h-4 w-4 ${
+                      vdStatus === 'pass'
+                        ? 'text-success'
+                        : vdStatus === 'fail'
+                          ? 'text-destructive'
+                          : 'text-blue-400'
+                    }`}
+                  />
                   <h4 className="font-semibold text-sm text-foreground">Voltage Drop</h4>
-                  {vdStatus === 'pass' && (
-                    <CheckCircle2 className="h-4 w-4 text-success ml-auto" />
-                  )}
+                  {vdStatus === 'pass' && <CheckCircle2 className="h-4 w-4 text-success ml-auto" />}
                   {vdStatus === 'fail' && (
                     <AlertCircle className="h-4 w-4 text-destructive ml-auto" />
                   )}

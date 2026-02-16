@@ -47,8 +47,7 @@ export const InspectionShowcase = () => {
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Complete Certification &{' '}
-              <span className="text-green-400">Testing Platform</span>
+              Complete Certification & <span className="text-green-400">Testing Platform</span>
             </h2>
 
             <p className="text-white/70 text-lg mb-8 leading-relaxed">
@@ -103,7 +102,9 @@ export const InspectionShowcase = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">EICR Certificate</h4>
-                    <p className="text-xs text-white/60">Electrical Installation Condition Report</p>
+                    <p className="text-xs text-white/60">
+                      Electrical Installation Condition Report
+                    </p>
                   </div>
                 </div>
 

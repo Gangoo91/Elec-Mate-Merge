@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, Info, BookOpen } from "lucide-react";
+import { useState } from 'react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown, Info, BookOpen } from 'lucide-react';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -9,10 +9,10 @@ import {
   CalculatorResult,
   ResultValue,
   ResultsGrid,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
-type ConversionMode = "star-to-delta" | "delta-to-star";
-type ImpedanceType = "equal" | "unequal";
+type ConversionMode = 'star-to-delta' | 'delta-to-star';
+type ImpedanceType = 'equal' | 'unequal';
 
 interface ConversionResult {
   mode: ConversionMode;
@@ -37,17 +37,17 @@ interface ConversionResult {
 }
 
 const StarDeltaCalculator = () => {
-  const [mode, setMode] = useState<ConversionMode>("star-to-delta");
-  const [impedanceType, setImpedanceType] = useState<ImpedanceType>("equal");
-  const [voltage, setVoltage] = useState("400");
+  const [mode, setMode] = useState<ConversionMode>('star-to-delta');
+  const [impedanceType, setImpedanceType] = useState<ImpedanceType>('equal');
+  const [voltage, setVoltage] = useState('400');
 
   // Equal impedance inputs
-  const [impedance, setImpedance] = useState("");
+  const [impedance, setImpedance] = useState('');
 
   // Unequal impedance inputs
-  const [za, setZa] = useState("");
-  const [zb, setZb] = useState("");
-  const [zc, setZc] = useState("");
+  const [za, setZa] = useState('');
+  const [zb, setZb] = useState('');
+  const [zc, setZc] = useState('');
 
   const [result, setResult] = useState<ConversionResult | null>(null);
   const [showGuidance, setShowGuidance] = useState(false);
@@ -56,11 +56,11 @@ const StarDeltaCalculator = () => {
   const calculate = () => {
     const V_line = parseFloat(voltage) || 400;
 
-    if (impedanceType === "equal") {
+    if (impedanceType === 'equal') {
       const Z = parseFloat(impedance);
       if (!Z || Z <= 0) return;
 
-      if (mode === "star-to-delta") {
+      if (mode === 'star-to-delta') {
         // Star to Delta: Z_delta = 3 × Z_star
         const Z_delta = 3 * Z;
         const V_phase_star = V_line / Math.sqrt(3);
@@ -70,7 +70,7 @@ const StarDeltaCalculator = () => {
         const I_phase_delta = V_phase_delta / Z_delta;
 
         setResult({
-          mode: "star-to-delta",
+          mode: 'star-to-delta',
           inputZ: Z,
           outputZ: Z_delta,
           lineVoltage: V_line,
@@ -80,12 +80,12 @@ const StarDeltaCalculator = () => {
           phaseCurrentIn: I_phase_star,
           phaseCurrentOut: I_phase_delta,
           notes: [
-            "Delta impedance = 3 × Star impedance",
+            'Delta impedance = 3 × Star impedance',
             `Star phase voltage = Line voltage / √3 = ${V_phase_star.toFixed(1)}V`,
             `Delta phase voltage = Line voltage = ${V_line}V`,
-            "In star: Line current = Phase current",
-            "In delta: Line current = √3 × Phase current",
-            "Total power remains the same after conversion",
+            'In star: Line current = Phase current',
+            'In delta: Line current = √3 × Phase current',
+            'Total power remains the same after conversion',
           ],
         });
       } else {
@@ -98,7 +98,7 @@ const StarDeltaCalculator = () => {
         const I_phase_star = I_line; // In star, phase current = line current
 
         setResult({
-          mode: "delta-to-star",
+          mode: 'delta-to-star',
           inputZ: Z,
           outputZ: Z_star,
           lineVoltage: V_line,
@@ -108,12 +108,12 @@ const StarDeltaCalculator = () => {
           phaseCurrentIn: I_phase_delta,
           phaseCurrentOut: I_phase_star,
           notes: [
-            "Star impedance = Delta impedance / 3",
+            'Star impedance = Delta impedance / 3',
             `Delta phase voltage = Line voltage = ${V_line}V`,
             `Star phase voltage = Line voltage / √3 = ${V_phase_star.toFixed(1)}V`,
-            "In delta: Line current = √3 × Phase current",
-            "In star: Line current = Phase current",
-            "Total power remains the same after conversion",
+            'In delta: Line current = √3 × Phase current',
+            'In star: Line current = Phase current',
+            'Total power remains the same after conversion',
           ],
         });
       }
@@ -125,7 +125,7 @@ const StarDeltaCalculator = () => {
 
       if (!Za || !Zb || !Zc || Za <= 0 || Zb <= 0 || Zc <= 0) return;
 
-      if (mode === "star-to-delta") {
+      if (mode === 'star-to-delta') {
         // Star to Delta conversion for unequal impedances
         // Zab = (Za×Zb + Zb×Zc + Zc×Za) / Zc
         // Zbc = (Za×Zb + Zb×Zc + Zc×Za) / Za
@@ -136,7 +136,7 @@ const StarDeltaCalculator = () => {
         const Zca = sum / Zb;
 
         setResult({
-          mode: "star-to-delta",
+          mode: 'star-to-delta',
           inputZa: Za,
           inputZb: Zb,
           inputZc: Zc,
@@ -145,10 +145,10 @@ const StarDeltaCalculator = () => {
           outputZca: Zca,
           lineVoltage: V_line,
           notes: [
-            "Formula: Zxy = (Za×Zb + Zb×Zc + Zc×Za) / Zz",
+            'Formula: Zxy = (Za×Zb + Zb×Zc + Zc×Za) / Zz',
             `Sum product = ${sum.toFixed(2)}`,
-            "Each delta impedance is the sum product divided by the opposite star impedance",
-            "The neutral point in star is eliminated in delta",
+            'Each delta impedance is the sum product divided by the opposite star impedance',
+            'The neutral point in star is eliminated in delta',
           ],
         });
       } else {
@@ -166,7 +166,7 @@ const StarDeltaCalculator = () => {
         const newZc = (Zbc * Zca) / sum;
 
         setResult({
-          mode: "delta-to-star",
+          mode: 'delta-to-star',
           inputZa: Zab,
           inputZb: Zbc,
           inputZc: Zca,
@@ -175,10 +175,10 @@ const StarDeltaCalculator = () => {
           outputZca: newZc,
           lineVoltage: V_line,
           notes: [
-            "Formula: Za = (Zab × Zca) / (Zab + Zbc + Zca)",
+            'Formula: Za = (Zab × Zca) / (Zab + Zbc + Zca)',
             `Sum of delta impedances = ${sum.toFixed(2)}Ω`,
-            "Each star impedance is the product of adjacent delta impedances divided by the total",
-            "Creates a neutral point in the star configuration",
+            'Each star impedance is the product of adjacent delta impedances divided by the total',
+            'Creates a neutral point in the star configuration',
           ],
         });
       }
@@ -186,36 +186,36 @@ const StarDeltaCalculator = () => {
   };
 
   const reset = () => {
-    setMode("star-to-delta");
-    setImpedanceType("equal");
-    setVoltage("400");
-    setImpedance("");
-    setZa("");
-    setZb("");
-    setZc("");
+    setMode('star-to-delta');
+    setImpedanceType('equal');
+    setVoltage('400');
+    setImpedance('');
+    setZa('');
+    setZb('');
+    setZc('');
     setResult(null);
   };
 
   const modeOptions = [
-    { value: "star-to-delta", label: "Star (Y) → Delta (Δ)" },
-    { value: "delta-to-star", label: "Delta (Δ) → Star (Y)" },
+    { value: 'star-to-delta', label: 'Star (Y) → Delta (Δ)' },
+    { value: 'delta-to-star', label: 'Delta (Δ) → Star (Y)' },
   ];
 
   const impedanceTypeOptions = [
-    { value: "equal", label: "Equal Impedances (Balanced)" },
-    { value: "unequal", label: "Unequal Impedances (Unbalanced)" },
+    { value: 'equal', label: 'Equal Impedances (Balanced)' },
+    { value: 'unequal', label: 'Unequal Impedances (Unbalanced)' },
   ];
 
   // Get labels based on mode
   const getInputLabels = () => {
-    if (mode === "star-to-delta") {
-      return impedanceType === "equal"
-        ? { single: "Star Impedance (Z_star)" }
-        : { a: "Za (Star)", b: "Zb (Star)", c: "Zc (Star)" };
+    if (mode === 'star-to-delta') {
+      return impedanceType === 'equal'
+        ? { single: 'Star Impedance (Z_star)' }
+        : { a: 'Za (Star)', b: 'Zb (Star)', c: 'Zc (Star)' };
     } else {
-      return impedanceType === "equal"
-        ? { single: "Delta Impedance (Z_delta)" }
-        : { a: "Zab (Delta)", b: "Zbc (Delta)", c: "Zca (Delta)" };
+      return impedanceType === 'equal'
+        ? { single: 'Delta Impedance (Z_delta)' }
+        : { a: 'Zab (Delta)', b: 'Zbc (Delta)', c: 'Zca (Delta)' };
     }
   };
 
@@ -263,7 +263,7 @@ const StarDeltaCalculator = () => {
         />
 
         {/* Impedance Inputs */}
-        {impedanceType === "equal" ? (
+        {impedanceType === 'equal' ? (
           <CalculatorInput
             label={labels.single}
             value={impedance}
@@ -304,26 +304,29 @@ const StarDeltaCalculator = () => {
           onCalculate={calculate}
           onReset={reset}
           isDisabled={
-            impedanceType === "equal"
+            impedanceType === 'equal'
               ? !impedance || parseFloat(impedance) <= 0
-              : !za || !zb || !zc || parseFloat(za) <= 0 || parseFloat(zb) <= 0 || parseFloat(zc) <= 0
+              : !za ||
+                !zb ||
+                !zc ||
+                parseFloat(za) <= 0 ||
+                parseFloat(zb) <= 0 ||
+                parseFloat(zc) <= 0
           }
         />
 
         {/* Results */}
         {result && (
-          <CalculatorResult
-            category="power"
-          >
-            {impedanceType === "equal" ? (
+          <CalculatorResult category="power">
+            {impedanceType === 'equal' ? (
               <ResultsGrid columns={2}>
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Input (Star)" : "Input (Delta)"}
+                  label={result.mode === 'star-to-delta' ? 'Input (Star)' : 'Input (Delta)'}
                   value={`${result.inputZ?.toFixed(2)} Ω`}
                   category="power"
                 />
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Output (Delta)" : "Output (Star)"}
+                  label={result.mode === 'star-to-delta' ? 'Output (Delta)' : 'Output (Star)'}
                   value={`${result.outputZ?.toFixed(2)} Ω`}
                   category="power"
                 />
@@ -351,32 +354,32 @@ const StarDeltaCalculator = () => {
             ) : (
               <ResultsGrid columns={2}>
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Za (Star)" : "Zab (Delta)"}
+                  label={result.mode === 'star-to-delta' ? 'Za (Star)' : 'Zab (Delta)'}
                   value={`${result.inputZa?.toFixed(2)} Ω`}
                   category="power"
                 />
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Zab (Delta)" : "Za (Star)"}
+                  label={result.mode === 'star-to-delta' ? 'Zab (Delta)' : 'Za (Star)'}
                   value={`${result.outputZab?.toFixed(2)} Ω`}
                   category="power"
                 />
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Zb (Star)" : "Zbc (Delta)"}
+                  label={result.mode === 'star-to-delta' ? 'Zb (Star)' : 'Zbc (Delta)'}
                   value={`${result.inputZb?.toFixed(2)} Ω`}
                   category="power"
                 />
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Zbc (Delta)" : "Zb (Star)"}
+                  label={result.mode === 'star-to-delta' ? 'Zbc (Delta)' : 'Zb (Star)'}
                   value={`${result.outputZbc?.toFixed(2)} Ω`}
                   category="power"
                 />
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Zc (Star)" : "Zca (Delta)"}
+                  label={result.mode === 'star-to-delta' ? 'Zc (Star)' : 'Zca (Delta)'}
                   value={`${result.inputZc?.toFixed(2)} Ω`}
                   category="power"
                 />
                 <ResultValue
-                  label={result.mode === "star-to-delta" ? "Zca (Delta)" : "Zc (Star)"}
+                  label={result.mode === 'star-to-delta' ? 'Zca (Delta)' : 'Zc (Star)'}
                   value={`${result.outputZca?.toFixed(2)} Ω`}
                   category="power"
                 />
@@ -397,10 +400,18 @@ const StarDeltaCalculator = () => {
                     <line x1="50" y1="40" x2="20" y2="65" stroke="#facc15" strokeWidth="2" />
                     <line x1="50" y1="40" x2="80" y2="65" stroke="#facc15" strokeWidth="2" />
                     {/* Terminal labels */}
-                    <text x="50" y="8" textAnchor="middle" fill="#fff" fontSize="8">A</text>
-                    <text x="15" y="72" textAnchor="middle" fill="#fff" fontSize="8">B</text>
-                    <text x="85" y="72" textAnchor="middle" fill="#fff" fontSize="8">C</text>
-                    <text x="58" y="42" fill="#888" fontSize="7">N</text>
+                    <text x="50" y="8" textAnchor="middle" fill="#fff" fontSize="8">
+                      A
+                    </text>
+                    <text x="15" y="72" textAnchor="middle" fill="#fff" fontSize="8">
+                      B
+                    </text>
+                    <text x="85" y="72" textAnchor="middle" fill="#fff" fontSize="8">
+                      C
+                    </text>
+                    <text x="58" y="42" fill="#888" fontSize="7">
+                      N
+                    </text>
                   </svg>
                 </div>
               </div>
@@ -419,9 +430,15 @@ const StarDeltaCalculator = () => {
                     <circle cx="20" cy="65" r="3" fill="#3b82f6" />
                     <circle cx="80" cy="65" r="3" fill="#3b82f6" />
                     {/* Terminal labels */}
-                    <text x="50" y="6" textAnchor="middle" fill="#fff" fontSize="8">A</text>
-                    <text x="12" y="68" textAnchor="middle" fill="#fff" fontSize="8">B</text>
-                    <text x="88" y="68" textAnchor="middle" fill="#fff" fontSize="8">C</text>
+                    <text x="50" y="6" textAnchor="middle" fill="#fff" fontSize="8">
+                      A
+                    </text>
+                    <text x="12" y="68" textAnchor="middle" fill="#fff" fontSize="8">
+                      B
+                    </text>
+                    <text x="88" y="68" textAnchor="middle" fill="#fff" fontSize="8">
+                      C
+                    </text>
                   </svg>
                 </div>
               </div>
@@ -451,7 +468,9 @@ const StarDeltaCalculator = () => {
               <Info className="w-4 h-4 text-blue-400" />
               <span className="text-sm font-medium text-white/90">Theory & Applications</span>
             </div>
-            <ChevronDown className={`w-4 h-4 text-white/60 transition-transform ${showGuidance ? 'rotate-180' : ''}`} />
+            <ChevronDown
+              className={`w-4 h-4 text-white/60 transition-transform ${showGuidance ? 'rotate-180' : ''}`}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
             <div className="space-y-4 text-sm text-white/70">
@@ -459,10 +478,22 @@ const StarDeltaCalculator = () => {
               <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
                 <h4 className="font-medium text-green-400 mb-2">Why This Conversion Matters</h4>
                 <ul className="text-xs space-y-1">
-                  <li>• <strong>Motor starting:</strong> Star-delta starters use this conversion to reduce inrush current by ~67%</li>
-                  <li>• <strong>Circuit analysis:</strong> Converting complex networks simplifies calculations for fault currents</li>
-                  <li>• <strong>Transformer windings:</strong> Understanding both configurations helps with transformer connections</li>
-                  <li>• <strong>Load balancing:</strong> Delta allows operation with one phase lost (open delta)</li>
+                  <li>
+                    • <strong>Motor starting:</strong> Star-delta starters use this conversion to
+                    reduce inrush current by ~67%
+                  </li>
+                  <li>
+                    • <strong>Circuit analysis:</strong> Converting complex networks simplifies
+                    calculations for fault currents
+                  </li>
+                  <li>
+                    • <strong>Transformer windings:</strong> Understanding both configurations helps
+                    with transformer connections
+                  </li>
+                  <li>
+                    • <strong>Load balancing:</strong> Delta allows operation with one phase lost
+                    (open delta)
+                  </li>
                 </ul>
               </div>
 
@@ -493,12 +524,18 @@ const StarDeltaCalculator = () => {
               <div>
                 <h4 className="font-medium text-white/90 mb-2">Key Formulas</h4>
                 <div className="space-y-2 text-xs font-mono bg-white/5 p-3 rounded-lg">
-                  <p><span className="text-yellow-400">Balanced:</span></p>
+                  <p>
+                    <span className="text-yellow-400">Balanced:</span>
+                  </p>
                   <p className="pl-3">Z_delta = 3 × Z_star</p>
                   <p className="pl-3">Z_star = Z_delta / 3</p>
-                  <p className="mt-2"><span className="text-yellow-400">Unbalanced (Star → Delta):</span></p>
+                  <p className="mt-2">
+                    <span className="text-yellow-400">Unbalanced (Star → Delta):</span>
+                  </p>
                   <p className="pl-3">Zab = (Za×Zb + Zb×Zc + Zc×Za) / Zc</p>
-                  <p className="mt-2"><span className="text-yellow-400">Unbalanced (Delta → Star):</span></p>
+                  <p className="mt-2">
+                    <span className="text-yellow-400">Unbalanced (Delta → Star):</span>
+                  </p>
                   <p className="pl-3">Za = (Zab × Zca) / (Zab + Zbc + Zca)</p>
                 </div>
               </div>
@@ -506,13 +543,14 @@ const StarDeltaCalculator = () => {
               <div>
                 <h4 className="font-medium text-white/90 mb-2">Star-Delta Motor Starting</h4>
                 <p className="text-xs">
-                  Star-delta starters are commonly used to reduce starting current in motors above 7.5kW.
-                  The motor starts in star (lower voltage, ~⅓ starting current) then switches to delta
-                  (full voltage, full power) once up to speed.
+                  Star-delta starters are commonly used to reduce starting current in motors above
+                  7.5kW. The motor starts in star (lower voltage, ~⅓ starting current) then switches
+                  to delta (full voltage, full power) once up to speed.
                 </p>
                 <div className="mt-2 p-2 bg-green-500/10 border border-green-500/20 rounded">
                   <p className="text-xs text-green-300">
-                    <strong>Starting current in star</strong> = Full load current / √3 ≈ 58% of delta starting current
+                    <strong>Starting current in star</strong> = Full load current / √3 ≈ 58% of
+                    delta starting current
                   </p>
                 </div>
               </div>
@@ -537,8 +575,8 @@ const StarDeltaCalculator = () => {
                 <h4 className="font-medium text-amber-400 mb-1">Exam Tip</h4>
                 <p className="text-xs">
                   Remember: The ratio 3:1 applies to balanced impedances. For UK 400V three-phase:
-                  Star phase voltage = 400/√3 = 230V, Delta phase voltage = 400V.
-                  This is why we have both 230V and 400V available from a three-phase supply.
+                  Star phase voltage = 400/√3 = 230V, Delta phase voltage = 400V. This is why we
+                  have both 230V and 400V available from a three-phase supply.
                 </p>
               </div>
             </div>
@@ -552,17 +590,22 @@ const StarDeltaCalculator = () => {
               <BookOpen className="w-4 h-4 text-amber-400" />
               <span className="text-sm font-medium text-white/90">BS 7671 Reference</span>
             </div>
-            <ChevronDown className={`w-4 h-4 text-white/60 transition-transform ${showBS7671 ? 'rotate-180' : ''}`} />
+            <ChevronDown
+              className={`w-4 h-4 text-white/60 transition-transform ${showBS7671 ? 'rotate-180' : ''}`}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
             <div className="space-y-4 text-sm text-white/70">
               <div>
                 <h4 className="font-medium text-amber-400 mb-2">Section 430 - Motor Circuits</h4>
                 <p className="text-xs mb-2">
-                  Star-delta starting is covered under motor starting methods. Key considerations include:
+                  Star-delta starting is covered under motor starting methods. Key considerations
+                  include:
                 </p>
                 <ul className="text-xs space-y-1">
-                  <li>• Starting current must not cause excessive voltage drop (&lt;4% recommended)</li>
+                  <li>
+                    • Starting current must not cause excessive voltage drop (&lt;4% recommended)
+                  </li>
                   <li>• Motor must be suitable for star-delta starting (6 terminals required)</li>
                   <li>• Transition time from star to delta should be minimised</li>
                 </ul>
@@ -571,14 +614,16 @@ const StarDeltaCalculator = () => {
               <div>
                 <h4 className="font-medium text-amber-400 mb-2">Regulation 430.3 - Starting</h4>
                 <p className="text-xs">
-                  Motor starting arrangements shall be designed to limit voltage disturbances
-                  to other equipment. Star-delta starting reduces starting current to approximately
-                  ⅓ of direct-on-line (DOL) starting current.
+                  Motor starting arrangements shall be designed to limit voltage disturbances to
+                  other equipment. Star-delta starting reduces starting current to approximately ⅓
+                  of direct-on-line (DOL) starting current.
                 </p>
               </div>
 
               <div>
-                <h4 className="font-medium text-amber-400 mb-2">Distribution System Configurations</h4>
+                <h4 className="font-medium text-amber-400 mb-2">
+                  Distribution System Configurations
+                </h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="p-2 bg-amber-500/10 rounded">
                     <span className="text-amber-300">TN-S/TN-C-S:</span> Star with neutral
@@ -592,18 +637,25 @@ const StarDeltaCalculator = () => {
               <div>
                 <h4 className="font-medium text-amber-400 mb-2">Transformer Connections</h4>
                 <ul className="text-xs space-y-1">
-                  <li>• <strong>Dyn11:</strong> Delta primary, Star secondary (most common UK distribution)</li>
-                  <li>• <strong>Yy0:</strong> Star-Star (used for high voltage transmission)</li>
-                  <li>• <strong>Dd0:</strong> Delta-Delta (industrial applications)</li>
+                  <li>
+                    • <strong>Dyn11:</strong> Delta primary, Star secondary (most common UK
+                    distribution)
+                  </li>
+                  <li>
+                    • <strong>Yy0:</strong> Star-Star (used for high voltage transmission)
+                  </li>
+                  <li>
+                    • <strong>Dd0:</strong> Delta-Delta (industrial applications)
+                  </li>
                 </ul>
               </div>
 
               <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                 <h4 className="font-medium text-amber-400 mb-1">Key Point</h4>
                 <p className="text-xs">
-                  Understanding star-delta relationships is essential for:
-                  Fault level calculations, motor protection settings, transformer vector groups,
-                  and three-phase load balancing. The 3:1 impedance ratio is fundamental.
+                  Understanding star-delta relationships is essential for: Fault level calculations,
+                  motor protection settings, transformer vector groups, and three-phase load
+                  balancing. The 3:1 impedance ratio is fundamental.
                 </p>
               </div>
             </div>

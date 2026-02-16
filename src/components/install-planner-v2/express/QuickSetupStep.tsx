@@ -1,9 +1,15 @@
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
-import { InstallPlanDataV2 } from "../types";
-import { SmartInput } from "../SmartInput";
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { InstallPlanDataV2 } from '../types';
+import { SmartInput } from '../SmartInput';
 
 interface QuickSetupStepProps {
   planData: InstallPlanDataV2;
@@ -13,17 +19,94 @@ interface QuickSetupStepProps {
 type LocationType = 'inside' | 'outside' | 'underground' | 'loft' | 'plant-room' | 'data-center';
 
 const commonCircuits = [
-  { value: 'ring-main', label: 'Ring Main (32A)', load: 7360, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType },
-  { value: 'lighting', label: 'Lighting Circuit', load: 1000, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType },
-  { value: 'cooker', label: 'Electric Cooker', load: 9200, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType },
-  { value: 'shower', label: 'Electric Shower', load: 8500, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType },
-  { value: 'ev-charger', label: 'EV Charger (7kW)', load: 7000, voltage: 230, phases: 'single' as const, location: 'outside' as LocationType },
-  { value: 'heat-pump', label: 'Air Source Heat Pump', load: 5000, voltage: 230, phases: 'single' as const, location: 'outside' as LocationType },
-  { value: 'immersion', label: 'Immersion Heater', load: 3000, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType },
-  { value: 'fire-alarm', label: 'Fire Alarm Circuit', load: 500, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType },
-  { value: 'emergency-light', label: 'Emergency Lighting', load: 800, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType },
-  { value: 'outdoor-socket', label: 'Outdoor Socket', load: 3000, voltage: 230, phases: 'single' as const, location: 'outside' as LocationType },
-  { value: 'custom', label: 'Custom Load', load: 0, voltage: 230, phases: 'single' as const, location: 'inside' as LocationType }
+  {
+    value: 'ring-main',
+    label: 'Ring Main (32A)',
+    load: 7360,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
+  {
+    value: 'lighting',
+    label: 'Lighting Circuit',
+    load: 1000,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
+  {
+    value: 'cooker',
+    label: 'Electric Cooker',
+    load: 9200,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
+  {
+    value: 'shower',
+    label: 'Electric Shower',
+    load: 8500,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
+  {
+    value: 'ev-charger',
+    label: 'EV Charger (7kW)',
+    load: 7000,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'outside' as LocationType,
+  },
+  {
+    value: 'heat-pump',
+    label: 'Air Source Heat Pump',
+    load: 5000,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'outside' as LocationType,
+  },
+  {
+    value: 'immersion',
+    label: 'Immersion Heater',
+    load: 3000,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
+  {
+    value: 'fire-alarm',
+    label: 'Fire Alarm Circuit',
+    load: 500,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
+  {
+    value: 'emergency-light',
+    label: 'Emergency Lighting',
+    load: 800,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
+  {
+    value: 'outdoor-socket',
+    label: 'Outdoor Socket',
+    load: 3000,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'outside' as LocationType,
+  },
+  {
+    value: 'custom',
+    label: 'Custom Load',
+    load: 0,
+    voltage: 230,
+    phases: 'single' as const,
+    location: 'inside' as LocationType,
+  },
 ];
 
 const installationLocations = [
@@ -31,7 +114,7 @@ const installationLocations = [
   { value: 'outside', label: 'Outside building (weatherproof)' },
   { value: 'underground', label: 'Underground (buried)' },
   { value: 'loft', label: 'Loft/ceiling void' },
-  { value: 'plant-room', label: 'Plant room/switch room' }
+  { value: 'plant-room', label: 'Plant room/switch room' },
 ];
 
 const cableRunMethods = [
@@ -43,12 +126,12 @@ const cableRunMethods = [
   { value: 'cable-tray', label: 'On cable tray' },
   { value: 'buried-direct', label: 'Direct burial' },
   { value: 'loft-free', label: 'In loft (clear of insulation)' },
-  { value: 'loft-insulation-contact', label: 'In loft (touching insulation)' }
+  { value: 'loft-insulation-contact', label: 'In loft (touching insulation)' },
 ];
 
 export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps) => {
   const handleCircuitTypeChange = (value: string) => {
-    const circuit = commonCircuits.find(c => c.value === value);
+    const circuit = commonCircuits.find((c) => c.value === value);
     if (circuit) {
       // Set fire protection based on circuit type
       let fireProtection: 'none' | 'fire-alarm' | 'escape-route' | 'fire-compartment' = 'none';
@@ -66,7 +149,7 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
         mechanicalProtection: circuit.location === 'outside' || circuit.location === 'underground',
         fireProtection,
         installationMethod: 'clipped-direct',
-        cableType: 'pvc-twin-earth' // Will be auto-selected by engine
+        cableType: 'pvc-twin-earth', // Will be auto-selected by engine
       });
     }
   };
@@ -75,7 +158,7 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
     <div className="space-y-6">
       {/* Smart Natural Language Input */}
       <SmartInput onParsed={(parsed) => updatePlanData({ ...planData, ...parsed })} />
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Circuit Type */}
         <div className="space-y-2 md:col-span-2">
@@ -85,7 +168,7 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
               <SelectValue placeholder="Select circuit type" />
             </SelectTrigger>
             <SelectContent>
-              {commonCircuits.map(circuit => (
+              {commonCircuits.map((circuit) => (
                 <SelectItem key={circuit.value} value={circuit.value}>
                   {circuit.label}
                 </SelectItem>
@@ -101,10 +184,12 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
             <Input
               type="number"
               value={planData.totalLoad || ''}
-              onChange={(e) => updatePlanData({
-                ...planData,
-                totalLoad: parseFloat(e.target.value) || 0
-              })}
+              onChange={(e) =>
+                updatePlanData({
+                  ...planData,
+                  totalLoad: parseFloat(e.target.value) || 0,
+                })
+              }
               placeholder="Enter load in watts"
             />
           </div>
@@ -114,19 +199,21 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
         {planData.loadType && (
           <div className="space-y-2">
             <Label>Where is the cable going?</Label>
-            <Select 
-              value={planData.location || 'inside'} 
-              onValueChange={(value: any) => updatePlanData({
-                ...planData,
-                location: value,
-                mechanicalProtection: value === 'outside' || value === 'underground'
-              })}
+            <Select
+              value={planData.location || 'inside'}
+              onValueChange={(value: any) =>
+                updatePlanData({
+                  ...planData,
+                  location: value,
+                  mechanicalProtection: value === 'outside' || value === 'underground',
+                })
+              }
             >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {installationLocations.map(loc => (
+                {installationLocations.map((loc) => (
                   <SelectItem key={loc.value} value={loc.value}>
                     {loc.label}
                   </SelectItem>
@@ -140,19 +227,21 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
         {planData.loadType && (
           <div className="space-y-2">
             <Label>How will the cable be run?</Label>
-            <Select 
-              value={planData.cableRun || 'clipped-direct'} 
-              onValueChange={(value: any) => updatePlanData({
-                ...planData,
-                cableRun: value,
-                installationMethod: value
-              })}
+            <Select
+              value={planData.cableRun || 'clipped-direct'}
+              onValueChange={(value: any) =>
+                updatePlanData({
+                  ...planData,
+                  cableRun: value,
+                  installationMethod: value,
+                })
+              }
             >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {cableRunMethods.map(method => (
+                {cableRunMethods.map((method) => (
                   <SelectItem key={method.value} value={method.value}>
                     {method.label}
                   </SelectItem>
@@ -174,7 +263,7 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
                 const clampedValue = Math.min(Math.max(value, 1), 200);
                 updatePlanData({
                   ...planData,
-                  cableLength: clampedValue
+                  cableLength: clampedValue,
                 });
               }}
               min={1}

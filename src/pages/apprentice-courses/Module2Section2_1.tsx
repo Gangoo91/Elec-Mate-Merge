@@ -1,73 +1,177 @@
-import useSEO from "@/hooks/useSEO";
-import { ArrowLeft, Calculator, AlertTriangle, Zap, Activity, Gauge, CheckCircle, BookOpen, HelpCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
+import useSEO from '@/hooks/useSEO';
+import {
+  ArrowLeft,
+  Calculator,
+  AlertTriangle,
+  Zap,
+  Activity,
+  Gauge,
+  CheckCircle,
+  BookOpen,
+  HelpCircle,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
 
 const TITLE = "Ohm's Law made simple (V = I×R) – Level 2 (2.1)";
-const DESCRIPTION = "Plain‑English guide to voltage, current and resistance for Level 2 learners with easy examples and checks, aligned to UK practice.";
+const DESCRIPTION =
+  'Plain‑English guide to voltage, current and resistance for Level 2 learners with easy examples and checks, aligned to UK practice.';
 
 const Module2Section2_1: React.FC = () => {
   useSEO(TITLE, DESCRIPTION);
 
   const quickCheckQuestions = [
     {
-      id: "q1",
-      question: "Convert 150 mA to amps before using V = I×R.",
-      options: ["0.015 A", "0.15 A", "1.5 A", "150 A"],
+      id: 'q1',
+      question: 'Convert 150 mA to amps before using V = I×R.',
+      options: ['0.015 A', '0.15 A', '1.5 A', '150 A'],
       correctIndex: 1,
-      explanation: "150 mA = 0.15 A (divide by 1000)."
+      explanation: '150 mA = 0.15 A (divide by 1000).',
     },
     {
-      id: "q2",
-      question: "You know V and R. Which formula finds I?",
-      options: ["I = V/R", "I = R/V", "I = V×R", "I = 1/(V×R)"],
+      id: 'q2',
+      question: 'You know V and R. Which formula finds I?',
+      options: ['I = V/R', 'I = R/V', 'I = V×R', 'I = 1/(V×R)'],
       correctIndex: 0,
-      explanation: "Rearranged from V = I×R gives I = V/R."
-    }
+      explanation: 'Rearranged from V = I×R gives I = V/R.',
+    },
   ];
 
   const faqs = [
-    { q: "Is resistance always constant?", a: "Not always. Many components change resistance with temperature. Treat V = I×R as a snapshot unless stated otherwise." },
-    { q: "Why do cables get warm?", a: "Current causes I²R heating in conductors and terminations. Loose connections make hot spots. Torque to manufacturer values." },
-    { q: "Is low voltage always safer?", a: "Lower voltage reduces shock risk, but current and environment still matter. Always follow safe isolation and BS 7671." },
-    { q: "Can I mix mA and A in the same calc?", a: "Yes, but convert first. 250 mA = 0.25 A. Prefix mistakes are the most common reason for 1000× errors." },
-    { q: "Quick way to sanity‑check?", a: "Use approximate numbers and units: does the result feel right for the kit? If not, check prefixes and rearrangement." },
-    { q: "Do I need to memorise the triangle?", a: "It helps, but you can also rearrange V = I×R algebraically. Convert units first either way." },
-    { q: "Which BS 7671 areas link to this?", a: "Selection/erection of equipment and protective coordination rely on correct volts, amps and resistance values; see Appendix 4 for factors." },
-    { q: "How accurate are theoretical calculations?", a: "Real components vary with temperature and age. Use calculations as a starting point, but always verify with measurements." }
+    {
+      q: 'Is resistance always constant?',
+      a: 'Not always. Many components change resistance with temperature. Treat V = I×R as a snapshot unless stated otherwise.',
+    },
+    {
+      q: 'Why do cables get warm?',
+      a: 'Current causes I²R heating in conductors and terminations. Loose connections make hot spots. Torque to manufacturer values.',
+    },
+    {
+      q: 'Is low voltage always safer?',
+      a: 'Lower voltage reduces shock risk, but current and environment still matter. Always follow safe isolation and BS 7671.',
+    },
+    {
+      q: 'Can I mix mA and A in the same calc?',
+      a: 'Yes, but convert first. 250 mA = 0.25 A. Prefix mistakes are the most common reason for 1000× errors.',
+    },
+    {
+      q: 'Quick way to sanity‑check?',
+      a: 'Use approximate numbers and units: does the result feel right for the kit? If not, check prefixes and rearrangement.',
+    },
+    {
+      q: 'Do I need to memorise the triangle?',
+      a: 'It helps, but you can also rearrange V = I×R algebraically. Convert units first either way.',
+    },
+    {
+      q: 'Which BS 7671 areas link to this?',
+      a: 'Selection/erection of equipment and protective coordination rely on correct volts, amps and resistance values; see Appendix 4 for factors.',
+    },
+    {
+      q: 'How accurate are theoretical calculations?',
+      a: 'Real components vary with temperature and age. Use calculations as a starting point, but always verify with measurements.',
+    },
   ];
 
   const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
+    '@context': 'https://schema.org',
+    '@type': 'Article',
     headline: "Ohm's Law made simple (V = I×R) – Level 2 (2.1)",
     description:
-      "Plain‑English guide to voltage, current and resistance for Level 2 learners with easy examples and checks, aligned to UK practice.",
-    inLanguage: "en-GB",
+      'Plain‑English guide to voltage, current and resistance for Level 2 learners with easy examples and checks, aligned to UK practice.',
+    inLanguage: 'en-GB',
     isAccessibleForFree: true,
   } as const;
 
   const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   } as const;
 
   const quizQuestions = [
-    { id: 1, question: "You know V and R. What do you calculate to find I?", options: ["I = V × R", "I = V / R", "I = R / V", "I = 1 / (V×R)"], correctAnswer: 1, explanation: "Rearrange V = I×R to I = V/R." },
-    { id: 2, question: "A sensor draws 250 mA at 24 V. In amps that is…", options: ["0.025 A", "0.25 A", "2.5 A", "25 A"], correctAnswer: 1, explanation: "250 mA = 0.25 A." },
-    { id: 3, question: "At 230 V a device takes 0.5 A. Approximate resistance?", options: ["115 Ω", "460 Ω", "0.5 Ω", "230 Ω"], correctAnswer: 1, explanation: "R = V/I = 230/0.5 = 460 Ω." },
-    { id: 4, question: "Which unit pairs correctly with V = I×R?", options: ["V, A, Ω", "V, A, W", "W, A, Ω", "V, kW, Ω"], correctAnswer: 0, explanation: "Volts, Amps and Ohms belong to Ohm's Law." },
-    { id: 5, question: "Which is most likely if a plug top feels hot?", options: ["No issue", "Loose connection or high current causing I²R heating", "Low voltage only", "Bad colour of plastic"], correctAnswer: 1, explanation: "Heat suggests poor contact or high current – investigate safely." },
-    { id: 6, question: "Which combination lets you find the missing value using Ohm's Law?", options: ["Only one value known", "Any two of V, I, R", "Any one of V, I, P", "Only V and P"], correctAnswer: 1, explanation: "Knowing any two of V, I and R lets you find the third." },
-    { id: 7, question: "For V = 24 V and I = 0.2 A, R is…", options: ["12 Ω", "120 Ω", "240 Ω", "2.4 Ω"], correctAnswer: 1, explanation: "R = V/I = 24/0.2 = 120 Ω." },
-    { id: 8, question: "Which conversion is correct?", options: ["4.7 kΩ = 470 Ω", "3.3 kΩ = 3300 Ω", "250 mA = 2.5 A", "1.2 A = 120 mA"], correctAnswer: 1, explanation: "kΩ→Ω multiply by 1000; 250 mA = 0.25 A; 1.2 A = 1200 mA." },
-    { id: 9, question: "What happens to current if resistance doubles (voltage constant)?", options: ["Current doubles", "Current halves", "Current stays same", "Current becomes zero"], correctAnswer: 1, explanation: "If R doubles and V is constant, then I = V/R means current halves." },
-    { id: 10, question: "A 12V circuit has 240Ω resistance. What's the current?", options: ["0.05 A", "0.5 A", "20 A", "2880 A"], correctAnswer: 0, explanation: "I = V/R = 12/240 = 0.05 A (50 mA)." }
+    {
+      id: 1,
+      question: 'You know V and R. What do you calculate to find I?',
+      options: ['I = V × R', 'I = V / R', 'I = R / V', 'I = 1 / (V×R)'],
+      correctAnswer: 1,
+      explanation: 'Rearrange V = I×R to I = V/R.',
+    },
+    {
+      id: 2,
+      question: 'A sensor draws 250 mA at 24 V. In amps that is…',
+      options: ['0.025 A', '0.25 A', '2.5 A', '25 A'],
+      correctAnswer: 1,
+      explanation: '250 mA = 0.25 A.',
+    },
+    {
+      id: 3,
+      question: 'At 230 V a device takes 0.5 A. Approximate resistance?',
+      options: ['115 Ω', '460 Ω', '0.5 Ω', '230 Ω'],
+      correctAnswer: 1,
+      explanation: 'R = V/I = 230/0.5 = 460 Ω.',
+    },
+    {
+      id: 4,
+      question: 'Which unit pairs correctly with V = I×R?',
+      options: ['V, A, Ω', 'V, A, W', 'W, A, Ω', 'V, kW, Ω'],
+      correctAnswer: 0,
+      explanation: "Volts, Amps and Ohms belong to Ohm's Law.",
+    },
+    {
+      id: 5,
+      question: 'Which is most likely if a plug top feels hot?',
+      options: [
+        'No issue',
+        'Loose connection or high current causing I²R heating',
+        'Low voltage only',
+        'Bad colour of plastic',
+      ],
+      correctAnswer: 1,
+      explanation: 'Heat suggests poor contact or high current – investigate safely.',
+    },
+    {
+      id: 6,
+      question: "Which combination lets you find the missing value using Ohm's Law?",
+      options: ['Only one value known', 'Any two of V, I, R', 'Any one of V, I, P', 'Only V and P'],
+      correctAnswer: 1,
+      explanation: 'Knowing any two of V, I and R lets you find the third.',
+    },
+    {
+      id: 7,
+      question: 'For V = 24 V and I = 0.2 A, R is…',
+      options: ['12 Ω', '120 Ω', '240 Ω', '2.4 Ω'],
+      correctAnswer: 1,
+      explanation: 'R = V/I = 24/0.2 = 120 Ω.',
+    },
+    {
+      id: 8,
+      question: 'Which conversion is correct?',
+      options: ['4.7 kΩ = 470 Ω', '3.3 kΩ = 3300 Ω', '250 mA = 2.5 A', '1.2 A = 120 mA'],
+      correctAnswer: 1,
+      explanation: 'kΩ→Ω multiply by 1000; 250 mA = 0.25 A; 1.2 A = 1200 mA.',
+    },
+    {
+      id: 9,
+      question: 'What happens to current if resistance doubles (voltage constant)?',
+      options: ['Current doubles', 'Current halves', 'Current stays same', 'Current becomes zero'],
+      correctAnswer: 1,
+      explanation: 'If R doubles and V is constant, then I = V/R means current halves.',
+    },
+    {
+      id: 10,
+      question: "A 12V circuit has 240Ω resistance. What's the current?",
+      options: ['0.05 A', '0.5 A', '20 A', '2880 A'],
+      correctAnswer: 0,
+      explanation: 'I = V/R = 12/240 = 0.05 A (50 mA).',
+    },
   ] as const;
 
   return (
@@ -75,7 +179,11 @@ const Module2Section2_1: React.FC = () => {
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -109,20 +217,42 @@ const Module2Section2_1: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Ohm's Law:</strong> V = I×R shows voltage, current, resistance relationship.</li>
-                <li><strong>Triangle Method:</strong> Cover what you want to find, read the formula.</li>
-                <li><strong>Unit Conversions:</strong> Always convert mA→A, kΩ→Ω before calculating.</li>
-                <li><strong>Three Formulas:</strong> V=I×R, I=V/R, R=V/I.</li>
-                <li><strong>Sanity Check:</strong> Does your answer make electrical sense?</li>
-                <li><strong>Foundation:</strong> Basis for power calculations and circuit analysis.</li>
+                <li>
+                  <strong>Ohm's Law:</strong> V = I×R shows voltage, current, resistance
+                  relationship.
+                </li>
+                <li>
+                  <strong>Triangle Method:</strong> Cover what you want to find, read the formula.
+                </li>
+                <li>
+                  <strong>Unit Conversions:</strong> Always convert mA→A, kΩ→Ω before calculating.
+                </li>
+                <li>
+                  <strong>Three Formulas:</strong> V=I×R, I=V/R, R=V/I.
+                </li>
+                <li>
+                  <strong>Sanity Check:</strong> Does your answer make electrical sense?
+                </li>
+                <li>
+                  <strong>Foundation:</strong> Basis for power calculations and circuit analysis.
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Every circuit calculation, fault finding, cable sizing needs this.</li>
-                <li><strong>Use:</strong> Calculating current for MCB sizing, voltage drop checks, component selection.</li>
-                <li><strong>Apply:</strong> Circuit design, fault diagnosis, compliance calculations per BS 7671.</li>
+                <li>
+                  <strong>Spot:</strong> Every circuit calculation, fault finding, cable sizing
+                  needs this.
+                </li>
+                <li>
+                  <strong>Use:</strong> Calculating current for MCB sizing, voltage drop checks,
+                  component selection.
+                </li>
+                <li>
+                  <strong>Apply:</strong> Circuit design, fault diagnosis, compliance calculations
+                  per BS 7671.
+                </li>
               </ul>
             </div>
           </div>
@@ -176,21 +306,30 @@ const Module2Section2_1: React.FC = () => {
                   <Zap className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-semibold">Voltage (V)</h3>
                 </div>
-                <p className="text-sm">Electrical pressure or "push". UK mains is nominally 230V. Think of it like water pressure in pipes.</p>
+                <p className="text-sm">
+                  Electrical pressure or "push". UK mains is nominally 230V. Think of it like water
+                  pressure in pipes.
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <div className="flex items-center gap-2 mb-2">
                   <Activity className="w-5 h-5 text-green-600" />
                   <h3 className="font-semibold">Current (I)</h3>
                 </div>
-                <p className="text-sm">Flow of electrical charge. Measured in amperes (A). Too much causes dangerous heating.</p>
+                <p className="text-sm">
+                  Flow of electrical charge. Measured in amperes (A). Too much causes dangerous
+                  heating.
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <div className="flex items-center gap-2 mb-2">
                   <Gauge className="w-5 h-5 text-red-600" />
                   <h3 className="font-semibold">Resistance (R)</h3>
                 </div>
-                <p className="text-sm">Opposition to current flow. Measured in ohms (Ω). Like a narrow pipe restricting water flow.</p>
+                <p className="text-sm">
+                  Opposition to current flow. Measured in ohms (Ω). Like a narrow pipe restricting
+                  water flow.
+                </p>
               </div>
             </div>
           </div>
@@ -237,7 +376,10 @@ const Module2Section2_1: React.FC = () => {
               </div>
             </div>
             <div className="bg-slate-700/50 border border-slate-600 p-4 rounded-lg">
-              <p className="text-sm text-white"><strong className="text-white">Memory tip:</strong> Cover what you need to find, and read the remaining formula from the triangle.</p>
+              <p className="text-sm text-white">
+                <strong className="text-white">Memory tip:</strong> Cover what you need to find, and
+                read the remaining formula from the triangle.
+              </p>
             </div>
           </div>
         </section>
@@ -281,7 +423,10 @@ const Module2Section2_1: React.FC = () => {
               </div>
             </div>
             <div className="bg-yellow-950/30 p-4 rounded-lg border border-yellow-800">
-              <p className="text-sm"><strong>Critical Rule:</strong> Always convert to base units (V, A, Ω) before calculating. Prefix mistakes cause 1000× errors!</p>
+              <p className="text-sm">
+                <strong>Critical Rule:</strong> Always convert to base units (V, A, Ω) before
+                calculating. Prefix mistakes cause 1000× errors!
+              </p>
             </div>
           </div>
 
@@ -307,21 +452,39 @@ const Module2Section2_1: React.FC = () => {
             <div className="grid gap-4">
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-teal-400 mb-2">Example 1: Finding Current</h3>
-                <p className="text-sm mb-2"><strong>Given:</strong> V = 230V, R = 920Ω. Find I.</p>
-                <p className="text-sm mb-2"><strong>Solution:</strong> I = V ÷ R = 230 ÷ 920 = 0.25 A (250 mA)</p>
-                <p className="text-sm text-white"><strong>Check:</strong> V = I × R = 0.25 × 920 = 230V ✓</p>
+                <p className="text-sm mb-2">
+                  <strong>Given:</strong> V = 230V, R = 920Ω. Find I.
+                </p>
+                <p className="text-sm mb-2">
+                  <strong>Solution:</strong> I = V ÷ R = 230 ÷ 920 = 0.25 A (250 mA)
+                </p>
+                <p className="text-sm text-white">
+                  <strong>Check:</strong> V = I × R = 0.25 × 920 = 230V ✓
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-teal-400 mb-2">Example 2: Finding Voltage</h3>
-                <p className="text-sm mb-2"><strong>Given:</strong> I = 0.2A, R = 3.3kΩ. Find V.</p>
-                <p className="text-sm mb-2"><strong>Convert:</strong> 3.3kΩ = 3300Ω</p>
-                <p className="text-sm mb-2"><strong>Solution:</strong> V = I × R = 0.2 × 3300 = 660V</p>
+                <p className="text-sm mb-2">
+                  <strong>Given:</strong> I = 0.2A, R = 3.3kΩ. Find V.
+                </p>
+                <p className="text-sm mb-2">
+                  <strong>Convert:</strong> 3.3kΩ = 3300Ω
+                </p>
+                <p className="text-sm mb-2">
+                  <strong>Solution:</strong> V = I × R = 0.2 × 3300 = 660V
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-teal-400 mb-2">Example 3: Finding Resistance</h3>
-                <p className="text-sm mb-2"><strong>Given:</strong> V = 24V, I = 0.12A. Find R.</p>
-                <p className="text-sm mb-2"><strong>Solution:</strong> R = V ÷ I = 24 ÷ 0.12 = 200Ω</p>
-                <p className="text-sm text-white"><strong>Check:</strong> V = I × R = 0.12 × 200 = 24V ✓</p>
+                <p className="text-sm mb-2">
+                  <strong>Given:</strong> V = 24V, I = 0.12A. Find R.
+                </p>
+                <p className="text-sm mb-2">
+                  <strong>Solution:</strong> R = V ÷ I = 24 ÷ 0.12 = 200Ω
+                </p>
+                <p className="text-sm text-white">
+                  <strong>Check:</strong> V = I × R = 0.12 × 200 = 24V ✓
+                </p>
               </div>
             </div>
           </div>
@@ -339,21 +502,28 @@ const Module2Section2_1: React.FC = () => {
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-sm">Forgetting Unit Conversions</p>
-                  <p className="text-sm text-white">Using mA with Ω without converting to A first. This gives answers 1000× wrong!</p>
+                  <p className="text-sm text-white">
+                    Using mA with Ω without converting to A first. This gives answers 1000× wrong!
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-3 bg-red-950/30 rounded border border-red-800">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-sm">Wrong Formula Rearrangement</p>
-                  <p className="text-sm text-white">Using I = R ÷ V instead of I = V ÷ R. Always double-check your rearrangement.</p>
+                  <p className="text-sm text-white">
+                    Using I = R ÷ V instead of I = V ÷ R. Always double-check your rearrangement.
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-3 bg-red-950/30 rounded border border-red-800">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-sm">No Sanity Check</p>
-                  <p className="text-sm text-white">Getting 2000A for a light bulb and not questioning it. Always check if the answer makes sense.</p>
+                  <p className="text-sm text-white">
+                    Getting 2000A for a light bulb and not questioning it. Always check if the
+                    answer makes sense.
+                  </p>
                 </div>
               </div>
             </div>
@@ -369,20 +539,34 @@ const Module2Section2_1: React.FC = () => {
           <div className="space-y-4 text-white">
             <div className="grid gap-4">
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
-                <h3 className="font-semibold text-orange-400 mb-2">Checking Appliance Current Draw</h3>
-                <p className="text-sm">A 230V heater rated at 2.3kW should draw I = P÷V = 2300÷230 = 10A. If you measure significantly different, check connections and appliance condition.</p>
+                <h3 className="font-semibold text-orange-400 mb-2">
+                  Checking Appliance Current Draw
+                </h3>
+                <p className="text-sm">
+                  A 230V heater rated at 2.3kW should draw I = P÷V = 2300÷230 = 10A. If you measure
+                  significantly different, check connections and appliance condition.
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-orange-400 mb-2">LED Circuit Design</h3>
-                <p className="text-sm">For a 12V LED requiring 20mA, you need R = V÷I = 12÷0.02 = 600Ω limiting resistor (nearest standard value).</p>
+                <p className="text-sm">
+                  For a 12V LED requiring 20mA, you need R = V÷I = 12÷0.02 = 600Ω limiting resistor
+                  (nearest standard value).
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-orange-400 mb-2">Cable Voltage Drop Check</h3>
-                <p className="text-sm">With 20A through 50m of 2.5mm² cable (resistance ≈ 0.36Ω), voltage drop = 20 × 0.36 = 7.2V. Check against BS 7671 limits.</p>
+                <p className="text-sm">
+                  With 20A through 50m of 2.5mm² cable (resistance ≈ 0.36Ω), voltage drop = 20 ×
+                  0.36 = 7.2V. Check against BS 7671 limits.
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-orange-400 mb-2">Testing Component Values</h3>
-                <p className="text-sm">Apply known voltage, measure current, calculate resistance: R = V÷I. Compare with manufacturer's rating to check component condition.</p>
+                <p className="text-sm">
+                  Apply known voltage, measure current, calculate resistance: R = V÷I. Compare with
+                  manufacturer's rating to check component condition.
+                </p>
               </div>
             </div>
           </div>
@@ -398,19 +582,31 @@ const Module2Section2_1: React.FC = () => {
             <div className="grid gap-3">
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-indigo-400 mb-2">Order of Magnitude Check</h3>
-                <p className="text-sm">Estimate using easy numbers: 24V ÷ 120Ω ≈ 0.2A. If your calculation gives 20A or 0.002A, check for errors.</p>
+                <p className="text-sm">
+                  Estimate using easy numbers: 24V ÷ 120Ω ≈ 0.2A. If your calculation gives 20A or
+                  0.002A, check for errors.
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-indigo-400 mb-2">Reverse Calculation</h3>
-                <p className="text-sm">If you found I = 0.25A, check: V = I × R should give back your original voltage. No match? Check your working.</p>
+                <p className="text-sm">
+                  If you found I = 0.25A, check: V = I × R should give back your original voltage.
+                  No match? Check your working.
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-indigo-400 mb-2">Compare with Reality</h3>
-                <p className="text-sm">Check against nameplates, datasheets, and typical values. A domestic light bulb won't draw 50A!</p>
+                <p className="text-sm">
+                  Check against nameplates, datasheets, and typical values. A domestic light bulb
+                  won't draw 50A!
+                </p>
               </div>
               <div className="bg-card/50 p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-indigo-400 mb-2">Temperature Effects</h3>
-                <p className="text-sm">Remember that resistance changes with temperature. Filament bulbs have 10× higher resistance when hot than cold.</p>
+                <p className="text-sm">
+                  Remember that resistance changes with temperature. Filament bulbs have 10× higher
+                  resistance when hot than cold.
+                </p>
               </div>
             </div>
           </div>
@@ -433,7 +629,10 @@ const Module2Section2_1: React.FC = () => {
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-2 border-blue-800 bg-elec-yellow/10 p-4 rounded-r-lg">
+              <div
+                key={index}
+                className="border-l-2 border-blue-800 bg-elec-yellow/10 p-4 rounded-r-lg"
+              >
                 <p className="font-medium text-white mb-2">{faq.q}</p>
                 <p className="text-sm text-white">{faq.a}</p>
               </div>
@@ -482,7 +681,8 @@ const Module2Section2_1: React.FC = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <p className="text-xs sm:text-sm text-white">
-                  <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
+                  <strong>Safety Reminder:</strong> Always isolate and prove dead before work.
+                  Follow BS 7671 and manufacturer instructions.
                 </p>
               </div>
             </div>
@@ -500,13 +700,22 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/apprentice/level2/module2/section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Section Overview
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/apprentice/level2/module2/section2/2-2">
               Next: Triangle Method
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
@@ -518,13 +727,13 @@ const Module2Section2_1: React.FC = () => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(articleJsonLd)
+            __html: JSON.stringify(articleJsonLd),
           }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqJsonLd)
+            __html: JSON.stringify(faqJsonLd),
           }}
         />
       </div>

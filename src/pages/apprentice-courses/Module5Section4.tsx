@@ -1,44 +1,44 @@
-import { ArrowLeft, Package, FileText, Lightbulb, MapPin, Users } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Package, FileText, Lightbulb, MapPin, Users } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Estimating Materials from Drawings or Site Walkthroughs",
-    description: "Calculating material requirements from plans and site visits",
+    number: 'Subsection 1',
+    title: 'Estimating Materials from Drawings or Site Walkthroughs',
+    description: 'Calculating material requirements from plans and site visits',
     icon: Package,
-    href: "4-1"
+    href: '4-1',
   },
   {
-    number: "Subsection 2",
-    title: "Ordering Materials and Managing Deliveries",
-    description: "Procurement and delivery coordination for electrical materials",
+    number: 'Subsection 2',
+    title: 'Ordering Materials and Managing Deliveries',
+    description: 'Procurement and delivery coordination for electrical materials',
     icon: FileText,
-    href: "4-2"
+    href: '4-2',
   },
   {
-    number: "Subsection 3",
-    title: "Tool Selection and Availability",
-    description: "Choosing and ensuring availability of required tools",
+    number: 'Subsection 3',
+    title: 'Tool Selection and Availability',
+    description: 'Choosing and ensuring availability of required tools',
     icon: Lightbulb,
-    href: "4-3"
+    href: '4-3',
   },
   {
-    number: "Subsection 4",
-    title: "Managing Wastage and Shortages",
-    description: "Controlling material waste and dealing with shortages",
+    number: 'Subsection 4',
+    title: 'Managing Wastage and Shortages',
+    description: 'Controlling material waste and dealing with shortages',
     icon: MapPin,
-    href: "4-4"
+    href: '4-4',
   },
   {
-    number: "Subsection 5",
-    title: "Coordinating Equipment with Team Requirements",
-    description: "Managing equipment needs across the installation team",
+    number: 'Subsection 5',
+    title: 'Coordinating Equipment with Team Requirements',
+    description: 'Managing equipment needs across the installation team',
     icon: Users,
-    href: "4-5"
-  }
+    href: '4-5',
+  },
 ];
 
 const Section4 = () => {

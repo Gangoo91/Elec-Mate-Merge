@@ -1,17 +1,24 @@
-
 import React from 'react';
-import { Calculator, TrendingUp, AlertTriangle, CheckCircle2, Target, Zap, Shield, Clock, Thermometer } from 'lucide-react';
+import {
+  Calculator,
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle2,
+  Target,
+  Zap,
+  Shield,
+  Clock,
+  Thermometer,
+} from 'lucide-react';
 import { ModernTableCard, DataGrid } from '@/components/ui/responsive-table';
 
 const PfcTablesSection = () => (
   <div className="space-y-6">
-    <ModernTableCard
-      title="MCB Minimum PFC Requirements"
-      icon={<Calculator />}
-      variant="warning"
-    >
+    <ModernTableCard title="MCB Minimum PFC Requirements" icon={<Calculator />} variant="warning">
       <div className="space-y-4">
-        <h5 className="font-medium text-foreground">Type B MCBs - Minimum PFC for Magnetic Operation:</h5>
+        <h5 className="font-medium text-foreground">
+          Type B MCBs - Minimum PFC for Magnetic Operation:
+        </h5>
         <DataGrid
           headers={['Rating', 'Min PFC', 'Safety Margin']}
           rows={[
@@ -23,16 +30,19 @@ const PfcTablesSection = () => (
             ['32A', '160A', '5 × In'],
             ['40A', '200A', '5 × In'],
             ['50A', '250A', '5 × In'],
-            ['63A', '315A', '5 × In']
+            ['63A', '315A', '5 × In'],
           ]}
         />
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
           <p className="text-blue-400 font-medium text-sm">
-            <strong>Type B Characteristics:</strong> Magnetic operation at 3-5 × In. Values shown are lower limits for reliable instantaneous operation.
+            <strong>Type B Characteristics:</strong> Magnetic operation at 3-5 × In. Values shown
+            are lower limits for reliable instantaneous operation.
           </p>
         </div>
-        
-        <h5 className="font-medium text-foreground">Type C MCBs - Minimum PFC for Magnetic Operation:</h5>
+
+        <h5 className="font-medium text-foreground">
+          Type C MCBs - Minimum PFC for Magnetic Operation:
+        </h5>
         <DataGrid
           headers={['Rating', 'Min PFC', 'Safety Margin']}
           rows={[
@@ -44,12 +54,13 @@ const PfcTablesSection = () => (
             ['32A', '320A', '10 × In'],
             ['40A', '400A', '10 × In'],
             ['50A', '500A', '10 × In'],
-            ['63A', '630A', '10 × In']
+            ['63A', '630A', '10 × In'],
           ]}
         />
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
           <p className="text-blue-400 font-medium text-sm">
-            <strong>Type C Characteristics:</strong> Magnetic operation at 5-10 × In. Higher PFC required due to motor starting applications.
+            <strong>Type C Characteristics:</strong> Magnetic operation at 5-10 × In. Higher PFC
+            required due to motor starting applications.
           </p>
         </div>
       </div>
@@ -63,59 +74,129 @@ const PfcTablesSection = () => (
       <div className="space-y-4 text-sm text-gray-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card rounded p-4">
-            <p className="font-medium text-blue-400 mb-3">BS 88 Fuses - 0.4 Second Disconnection:</p>
+            <p className="font-medium text-blue-400 mb-3">
+              BS 88 Fuses - 0.4 Second Disconnection:
+            </p>
             <div className="space-y-2">
               <div className="grid grid-cols-3 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Min PFC</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Multiplier</div>
-                <div>6A</div><div>43A</div><div>7.2 × In</div>
-                <div>10A</div><div>72A</div><div>7.2 × In</div>
-                <div>16A</div><div>115A</div><div>7.2 × In</div>
-                <div>20A</div><div>144A</div><div>7.2 × In</div>
-                <div>25A</div><div>180A</div><div>7.2 × In</div>
-                <div>32A</div><div>230A</div><div>7.2 × In</div>
-                <div>40A</div><div>288A</div><div>7.2 × In</div>
-                <div>50A</div><div>360A</div><div>7.2 × In</div>
-                <div>63A</div><div>454A</div><div>7.2 × In</div>
-                <div>80A</div><div>576A</div><div>7.2 × In</div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Rating
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Min PFC
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Multiplier
+                </div>
+                <div>6A</div>
+                <div>43A</div>
+                <div>7.2 × In</div>
+                <div>10A</div>
+                <div>72A</div>
+                <div>7.2 × In</div>
+                <div>16A</div>
+                <div>115A</div>
+                <div>7.2 × In</div>
+                <div>20A</div>
+                <div>144A</div>
+                <div>7.2 × In</div>
+                <div>25A</div>
+                <div>180A</div>
+                <div>7.2 × In</div>
+                <div>32A</div>
+                <div>230A</div>
+                <div>7.2 × In</div>
+                <div>40A</div>
+                <div>288A</div>
+                <div>7.2 × In</div>
+                <div>50A</div>
+                <div>360A</div>
+                <div>7.2 × In</div>
+                <div>63A</div>
+                <div>454A</div>
+                <div>7.2 × In</div>
+                <div>80A</div>
+                <div>576A</div>
+                <div>7.2 × In</div>
               </div>
             </div>
           </div>
 
           <div className="bg-card rounded p-4">
-            <p className="font-medium text-blue-400 mb-3">BS 1361 Fuses - 0.4 Second Disconnection:</p>
+            <p className="font-medium text-blue-400 mb-3">
+              BS 1361 Fuses - 0.4 Second Disconnection:
+            </p>
             <div className="space-y-2">
               <div className="grid grid-cols-3 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Min PFC</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Multiplier</div>
-                <div>5A</div><div>23A</div><div>4.6 × In</div>
-                <div>15A</div><div>69A</div><div>4.6 × In</div>
-                <div>20A</div><div>92A</div><div>4.6 × In</div>
-                <div>30A</div><div>138A</div><div>4.6 × In</div>
-                <div>45A</div><div>207A</div><div>4.6 × In</div>
-                <div>60A</div><div>276A</div><div>4.6 × In</div>
-                <div>80A</div><div>368A</div><div>4.6 × In</div>
-                <div>100A</div><div>460A</div><div>4.6 × In</div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Rating
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Min PFC
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Multiplier
+                </div>
+                <div>5A</div>
+                <div>23A</div>
+                <div>4.6 × In</div>
+                <div>15A</div>
+                <div>69A</div>
+                <div>4.6 × In</div>
+                <div>20A</div>
+                <div>92A</div>
+                <div>4.6 × In</div>
+                <div>30A</div>
+                <div>138A</div>
+                <div>4.6 × In</div>
+                <div>45A</div>
+                <div>207A</div>
+                <div>4.6 × In</div>
+                <div>60A</div>
+                <div>276A</div>
+                <div>4.6 × In</div>
+                <div>80A</div>
+                <div>368A</div>
+                <div>4.6 × In</div>
+                <div>100A</div>
+                <div>460A</div>
+                <div>4.6 × In</div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="bg-card rounded p-4">
-          <p className="font-medium text-blue-400 mb-3">BS 3036 Semi-Enclosed Fuses - 0.4 Second Disconnection:</p>
+          <p className="font-medium text-blue-400 mb-3">
+            BS 3036 Semi-Enclosed Fuses - 0.4 Second Disconnection:
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <div className="grid grid-cols-3 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Min PFC</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Multiplier</div>
-                <div>5A</div><div>35A</div><div>7.0 × In</div>
-                <div>15A</div><div>105A</div><div>7.0 × In</div>
-                <div>20A</div><div>140A</div><div>7.0 × In</div>
-                <div>30A</div><div>210A</div><div>7.0 × In</div>
-                <div>45A</div><div>315A</div><div>7.0 × In</div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Rating
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Min PFC
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Multiplier
+                </div>
+                <div>5A</div>
+                <div>35A</div>
+                <div>7.0 × In</div>
+                <div>15A</div>
+                <div>105A</div>
+                <div>7.0 × In</div>
+                <div>20A</div>
+                <div>140A</div>
+                <div>7.0 × In</div>
+                <div>30A</div>
+                <div>210A</div>
+                <div>7.0 × In</div>
+                <div>45A</div>
+                <div>315A</div>
+                <div>7.0 × In</div>
               </div>
             </div>
             <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
@@ -143,19 +224,50 @@ const PfcTablesSection = () => (
           <div className="bg-card rounded p-4">
             <p className="font-medium text-green-400 mb-3">RCBO Minimum PFC Requirements:</p>
             <div className="space-y-2">
-              <p className="text-xs text-gray-400 mb-2">RCBOs combine MCB and RCD functions - must meet both requirements:</p>
+              <p className="text-xs text-gray-400 mb-2">
+                RCBOs combine MCB and RCD functions - must meet both requirements:
+              </p>
               <div className="grid grid-cols-4 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Type B</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Type C</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">RCD Test</div>
-                <div>6A</div><div>30A</div><div>60A</div><div>150A</div>
-                <div>10A</div><div>50A</div><div>100A</div><div>150A</div>
-                <div>16A</div><div>80A</div><div>160A</div><div>150A</div>
-                <div>20A</div><div>100A</div><div>200A</div><div>150A</div>
-                <div>25A</div><div>125A</div><div>250A</div><div>150A</div>
-                <div>32A</div><div>160A</div><div>320A</div><div>150A</div>
-                <div>40A</div><div>200A</div><div>400A</div><div>150A</div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Rating
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Type B
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  Type C
+                </div>
+                <div className="font-medium text-foreground border-b border-gray-600 pb-1">
+                  RCD Test
+                </div>
+                <div>6A</div>
+                <div>30A</div>
+                <div>60A</div>
+                <div>150A</div>
+                <div>10A</div>
+                <div>50A</div>
+                <div>100A</div>
+                <div>150A</div>
+                <div>16A</div>
+                <div>80A</div>
+                <div>160A</div>
+                <div>150A</div>
+                <div>20A</div>
+                <div>100A</div>
+                <div>200A</div>
+                <div>150A</div>
+                <div>25A</div>
+                <div>125A</div>
+                <div>250A</div>
+                <div>150A</div>
+                <div>32A</div>
+                <div>160A</div>
+                <div>320A</div>
+                <div>150A</div>
+                <div>40A</div>
+                <div>200A</div>
+                <div>400A</div>
+                <div>150A</div>
               </div>
             </div>
           </div>
@@ -193,7 +305,9 @@ const PfcTablesSection = () => (
     <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
       <div className="flex items-center gap-2 mb-3">
         <Clock className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">Time/Current Characteristics and PFC Relationships</h4>
+        <h4 className="font-medium text-purple-400">
+          Time/Current Characteristics and PFC Relationships
+        </h4>
       </div>
       <div className="space-y-4 text-sm text-gray-300">
         <div className="bg-card rounded p-4">
@@ -273,7 +387,9 @@ const PfcTablesSection = () => (
               <p className="font-medium text-green-400">Excellent Performance</p>
             </div>
             <div className="space-y-2 text-xs">
-              <p><strong>PFC ≥ 10 × Minimum Required:</strong></p>
+              <p>
+                <strong>PFC ≥ 10 × Minimum Required:</strong>
+              </p>
               <div className="space-y-1">
                 <p>• Instantaneous magnetic operation guaranteed</p>
                 <p>• Excellent discrimination margins</p>
@@ -282,7 +398,9 @@ const PfcTablesSection = () => (
                 <p>• No further action required</p>
               </div>
               <div className="bg-green-500/10 border border-green-500/20 rounded p-2 mt-2">
-                <p className="text-green-400 font-medium text-xs">Example: 32A Type B MCB with 1600A PFC (10× margin)</p>
+                <p className="text-green-400 font-medium text-xs">
+                  Example: 32A Type B MCB with 1600A PFC (10× margin)
+                </p>
               </div>
             </div>
           </div>
@@ -293,7 +411,9 @@ const PfcTablesSection = () => (
               <p className="font-medium text-yellow-400">Acceptable Performance</p>
             </div>
             <div className="space-y-2 text-xs">
-              <p><strong>PFC = 2-10 × Minimum Required:</strong></p>
+              <p>
+                <strong>PFC = 2-10 × Minimum Required:</strong>
+              </p>
               <div className="space-y-1">
                 <p>• Meets BS 7671 requirements</p>
                 <p>• Good safety performance assured</p>
@@ -302,7 +422,9 @@ const PfcTablesSection = () => (
                 <p>• Consider improvements if practical</p>
               </div>
               <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-2 mt-2">
-                <p className="text-yellow-400 font-medium text-xs">Example: 32A Type B MCB with 320A PFC (2× margin)</p>
+                <p className="text-yellow-400 font-medium text-xs">
+                  Example: 32A Type B MCB with 320A PFC (2× margin)
+                </p>
               </div>
             </div>
           </div>
@@ -313,7 +435,9 @@ const PfcTablesSection = () => (
               <p className="font-medium text-red-400">Marginal/Unacceptable</p>
             </div>
             <div className="space-y-2 text-xs">
-              <p><strong>PFC &lt; 2 × Minimum Required:</strong></p>
+              <p>
+                <strong>PFC &lt; 2 × Minimum Required:</strong>
+              </p>
               <div className="space-y-1">
                 <p>• May not comply with BS 7671</p>
                 <p>• Investigate and improve immediately</p>
@@ -322,7 +446,9 @@ const PfcTablesSection = () => (
                 <p>• Document limitations and actions</p>
               </div>
               <div className="bg-red-500/10 border border-red-500/20 rounded p-2 mt-2">
-                <p className="text-red-400 font-medium text-xs">Example: 32A Type B MCB with 200A PFC (1.25× margin)</p>
+                <p className="text-red-400 font-medium text-xs">
+                  Example: 32A Type B MCB with 200A PFC (1.25× margin)
+                </p>
               </div>
             </div>
           </div>
@@ -353,17 +479,23 @@ const PfcTablesSection = () => (
               <div className="grid grid-cols-2 gap-2 font-mono">
                 <div className="font-medium text-foreground">Temperature</div>
                 <div className="font-medium text-foreground">Factor</div>
-                <div>20°C</div><div>1.00</div>
-                <div>30°C</div><div>1.04</div>
-                <div>50°C</div><div>1.12</div>
-                <div>70°C</div><div>1.20</div>
-                <div>90°C</div><div>1.28</div>
+                <div>20°C</div>
+                <div>1.00</div>
+                <div>30°C</div>
+                <div>1.04</div>
+                <div>50°C</div>
+                <div>1.12</div>
+                <div>70°C</div>
+                <div>1.20</div>
+                <div>90°C</div>
+                <div>1.28</div>
               </div>
             </div>
           </div>
           <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3 mt-3">
             <p className="text-orange-400 font-medium text-xs">
-              <strong>Practical Impact:</strong> 70°C operation increases resistance by 20%, reducing PFC by ~17%. Always consider operating temperature in critical installations.
+              <strong>Practical Impact:</strong> 70°C operation increases resistance by 20%,
+              reducing PFC by ~17%. Always consider operating temperature in critical installations.
             </p>
           </div>
         </div>
@@ -397,9 +529,13 @@ const PfcTablesSection = () => (
                 <p>• Circuit R1+R2 = 0.92 × 0.25 = 0.23Ω</p>
                 <p>• Earth fault loop impedance Zs = Ze + R1+R2</p>
                 <p>• Zs = 0.35 + 0.23 = 0.58Ω</p>
-                <p>• PFC = 230V ÷ 0.58Ω = <strong>397A</strong></p>
+                <p>
+                  • PFC = 230V ÷ 0.58Ω = <strong>397A</strong>
+                </p>
                 <p>• Assessment: 397A &gt; 160A minimum ✓</p>
-                <p>• Safety margin: 397÷160 = <strong>2.5×</strong></p>
+                <p>
+                  • Safety margin: 397÷160 = <strong>2.5×</strong>
+                </p>
               </div>
             </div>
           </div>
@@ -426,9 +562,13 @@ const PfcTablesSection = () => (
                 <p>• Temperature correction (70°C): 1.09 × 1.2 = 1.31Ω</p>
                 <p>• Earth fault loop impedance Zs = Ze + R1+R2</p>
                 <p>• Zs = 0.8 + 1.31 = 2.11Ω</p>
-                <p>• PFC = 230V ÷ 2.11Ω = <strong>109A</strong></p>
+                <p>
+                  • PFC = 230V ÷ 2.11Ω = <strong>109A</strong>
+                </p>
                 <p>• Assessment: 109A &gt; 50A minimum ✓</p>
-                <p>• Safety margin: 109÷50 = <strong>2.2×</strong></p>
+                <p>
+                  • Safety margin: 109÷50 = <strong>2.2×</strong>
+                </p>
               </div>
             </div>
           </div>
@@ -454,9 +594,13 @@ const PfcTablesSection = () => (
                 <p>• Circuit R1+R2 = 15.2 × 0.025km = 0.38Ω</p>
                 <p>• Earth fault loop impedance Zs = Ze + R1+R2</p>
                 <p>• Zs = 15 + 0.38 = 15.38Ω</p>
-                <p>• PFC = 230V ÷ 15.38Ω = <strong>15A</strong></p>
+                <p>
+                  • PFC = 230V ÷ 15.38Ω = <strong>15A</strong>
+                </p>
                 <p>• Assessment: 15A &lt; 100A minimum ✗</p>
-                <p>• <strong>RCD protection essential</strong></p>
+                <p>
+                  • <strong>RCD protection essential</strong>
+                </p>
                 <p>• 30mA RCD provides adequate protection</p>
               </div>
             </div>

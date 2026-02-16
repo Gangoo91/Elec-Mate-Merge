@@ -11,13 +11,11 @@ const RealWorldScenario = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-3">
-        <p className="font-semibold text-elec-yellow">
-          UV Degradation Safety Risk
-        </p>
+        <p className="font-semibold text-elec-yellow">UV Degradation Safety Risk</p>
         <p>
-          A shed housing livestock had plastic conduit that degraded from UV exposure. 
-          Exposed cables created a major safety risk for both animals and workers, 
-          requiring emergency replacement with UV-stable materials.
+          A shed housing livestock had plastic conduit that degraded from UV exposure. Exposed
+          cables created a major safety risk for both animals and workers, requiring emergency
+          replacement with UV-stable materials.
         </p>
       </CardContent>
     </Card>

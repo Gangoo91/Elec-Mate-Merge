@@ -14,14 +14,14 @@ export const SmartHomeModule5Section5LightingScenes = () => {
         <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
           <h4 className="text-foreground font-semibold mb-3">Scene Definition and Functionality</h4>
           <p className="text-sm mb-3">
-            A scene is a pre-programmed setting that controls multiple lights at once. Instead of 
-            manually adjusting each light individually, scenes allow instant activation of specific 
+            A scene is a pre-programmed setting that controls multiple lights at once. Instead of
+            manually adjusting each light individually, scenes allow instant activation of specific
             lighting configurations tailored to different activities, times of day, or situations.
           </p>
           <p className="text-sm">
-            Examples: "Night Mode" dims all lights to 20%, "Away Mode" turns on random lights for 
-            security simulation, "Reading Mode" brightens task lighting while dimming ambient lights. 
-            Scenes can be triggered manually (via app/voice) or automatically by sensors.
+            Examples: "Night Mode" dims all lights to 20%, "Away Mode" turns on random lights for
+            security simulation, "Reading Mode" brightens task lighting while dimming ambient
+            lights. Scenes can be triggered manually (via app/voice) or automatically by sensors.
           </p>
         </div>
 

@@ -1,44 +1,44 @@
-import { ArrowLeft, PenTool, List, FileText, Monitor, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, PenTool, List, FileText, Monitor, Zap } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "5.1",
-    title: "Preparing Design Drawings and Schematics",
-    description: "Creating clear and accurate design drawings and electrical schematics",
+    number: '5.1',
+    title: 'Preparing Design Drawings and Schematics',
+    description: 'Creating clear and accurate design drawings and electrical schematics',
     icon: PenTool,
-    href: "../level3-module6-section5-1",
+    href: '../level3-module6-section5-1',
   },
   {
-    number: "5.2",
-    title: "Preparing Cable Schedules and Load Assessments",
-    description: "Developing comprehensive cable schedules and electrical load assessments",
+    number: '5.2',
+    title: 'Preparing Cable Schedules and Load Assessments',
+    description: 'Developing comprehensive cable schedules and electrical load assessments',
     icon: List,
-    href: "../level3-module6-section5-2",
+    href: '../level3-module6-section5-2',
   },
   {
-    number: "5.3",
-    title: "Writing Design Specifications for Clients/Contractors",
-    description: "Preparing detailed design specifications and requirements documents",
+    number: '5.3',
+    title: 'Writing Design Specifications for Clients/Contractors',
+    description: 'Preparing detailed design specifications and requirements documents',
     icon: FileText,
-    href: "../level3-module6-section5-3",
+    href: '../level3-module6-section5-3',
   },
   {
-    number: "5.4",
-    title: "Using Software Tools (CAD, electrical design software)",
-    description: "Utilising CAD and electrical design software for professional documentation",
+    number: '5.4',
+    title: 'Using Software Tools (CAD, electrical design software)',
+    description: 'Utilising CAD and electrical design software for professional documentation',
     icon: Monitor,
-    href: "../level3-module6-section5-4",
+    href: '../level3-module6-section5-4',
   },
 ];
 
 const Level3Module6Section5 = () => {
   useSEO(
-    "Section 5: System Documentation and Drawings - Level 3 Module 6",
-    "Creating comprehensive design documentation, drawings and specifications"
+    'Section 5: System Documentation and Drawings - Level 3 Module 6',
+    'Creating comprehensive design documentation, drawings and specifications'
   );
 
   return (
@@ -63,26 +63,22 @@ const Level3Module6Section5 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

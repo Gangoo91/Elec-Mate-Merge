@@ -1,7 +1,12 @@
-import { FileText, CheckSquare, Info } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import type { CertificationRequirements as CertificationRequirementsType } from "@/types/commissioning-response";
+import { FileText, CheckSquare, Info } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import type { CertificationRequirements as CertificationRequirementsType } from '@/types/commissioning-response';
 
 interface CertificationRequirementsProps {
   certification: CertificationRequirementsType;
@@ -47,7 +52,9 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
       {/* Required Data Fields */}
       {certification.requiredData && certification.requiredData.length > 0 && (
         <div className="space-y-3 sm:space-y-2">
-          <div className="text-base sm:text-sm font-semibold sm:font-medium text-foreground text-center sm:text-left">Required Data Fields</div>
+          <div className="text-base sm:text-sm font-semibold sm:font-medium text-foreground text-center sm:text-left">
+            Required Data Fields
+          </div>
           <Accordion type="single" collapsible className="space-y-3 sm:space-y-2">
             {certification.requiredData.map((data, index) => (
               <AccordionItem
@@ -57,8 +64,13 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
               >
                 <AccordionTrigger className="px-4 sm:px-4 py-4 sm:py-3 hover:no-underline hover:bg-elec-yellow/5 text-base sm:text-sm">
                   <div className="flex flex-col sm:flex-row items-center sm:items-center gap-2 text-center sm:text-left w-full">
-                    <span className="font-semibold sm:font-medium text-foreground">{data.field}</span>
-                    <Badge variant="outline" className="text-sm sm:text-xs shrink-0 px-3 py-1 sm:px-2 sm:py-0.5">
+                    <span className="font-semibold sm:font-medium text-foreground">
+                      {data.field}
+                    </span>
+                    <Badge
+                      variant="outline"
+                      className="text-sm sm:text-xs shrink-0 px-3 py-1 sm:px-2 sm:py-0.5"
+                    >
                       {data.regulation}
                     </Badge>
                   </div>
@@ -86,7 +98,9 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
       {/* Additional Notes */}
       {certification.additionalNotes && (
         <div className="bg-amber-500/10 border-2 sm:border border-amber-500/20 rounded-lg p-4 sm:p-3 text-center sm:text-left">
-          <div className="text-base sm:text-sm font-semibold sm:font-medium text-amber-300 mb-2">Additional Notes</div>
+          <div className="text-base sm:text-sm font-semibold sm:font-medium text-amber-300 mb-2">
+            Additional Notes
+          </div>
           {Array.isArray(certification.additionalNotes) ? (
             <ul className="space-y-2 sm:space-y-1 text-sm sm:text-xs text-foreground">
               {certification.additionalNotes.map((note, index) => (

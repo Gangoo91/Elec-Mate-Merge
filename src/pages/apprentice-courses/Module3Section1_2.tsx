@@ -1,150 +1,221 @@
-import useSEO from "@/hooks/useSEO";
-import { ArrowLeft, Cable, Zap, Wrench, AlertTriangle, CheckCircle2, Home, Scissors, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import useSEO from '@/hooks/useSEO';
+import {
+  ArrowLeft,
+  Cable,
+  Zap,
+  Wrench,
+  AlertTriangle,
+  CheckCircle2,
+  Home,
+  Scissors,
+  Settings,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What colour is the neutral conductor in modern T&E cable?",
-    options: ["Black", "Blue", "Brown", "Green/Yellow"],
+    question: 'What colour is the neutral conductor in modern T&E cable?',
+    options: ['Black', 'Blue', 'Brown', 'Green/Yellow'],
     correctAnswer: 1,
-    explanation: "The neutral conductor in modern T&E cable is blue (changed from black in 2004 harmonisation)."
+    explanation:
+      'The neutral conductor in modern T&E cable is blue (changed from black in 2004 harmonisation).',
   },
   {
     id: 2,
-    question: "Name one limitation of T&E cable in outdoor installations.",
-    options: ["Too expensive", "Cannot carry enough current", "Not suitable for direct burial", "Wrong colour coding"],
+    question: 'Name one limitation of T&E cable in outdoor installations.',
+    options: [
+      'Too expensive',
+      'Cannot carry enough current',
+      'Not suitable for direct burial',
+      'Wrong colour coding',
+    ],
     correctAnswer: 2,
-    explanation: "T&E cable is not suitable for direct burial outdoors without additional protection due to limited mechanical protection."
+    explanation:
+      'T&E cable is not suitable for direct burial outdoors without additional protection due to limited mechanical protection.',
   },
   {
     id: 3,
-    question: "What is the purpose of sleeving the bare earth conductor?",
-    options: ["To increase current capacity", "For identification and safety", "To reduce voltage drop", "To improve flexibility"],
+    question: 'What is the purpose of sleeving the bare earth conductor?',
+    options: [
+      'To increase current capacity',
+      'For identification and safety',
+      'To reduce voltage drop',
+      'To improve flexibility',
+    ],
     correctAnswer: 1,
-    explanation: "The bare CPC must be sleeved green/yellow at terminations for proper identification and to prevent accidental contact."
-  }
+    explanation:
+      'The bare CPC must be sleeved green/yellow at terminations for proper identification and to prevent accidental contact.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What colour is the live conductor in modern T&E cable?",
-    options: ["Brown", "Red", "Blue", "Black"],
+    question: 'What colour is the live conductor in modern T&E cable?',
+    options: ['Brown', 'Red', 'Blue', 'Black'],
     correctAnswer: 0,
-    explanation: "The live conductor in modern T&E cable is brown (changed from red in 2004 harmonisation)."
+    explanation:
+      'The live conductor in modern T&E cable is brown (changed from red in 2004 harmonisation).',
   },
   {
     id: 2,
-    question: "Which size of T&E is most commonly used for a domestic socket ring circuit?",
-    options: ["1.0 mm²", "1.5 mm²", "2.5 mm²", "4.0 mm²"],
+    question: 'Which size of T&E is most commonly used for a domestic socket ring circuit?',
+    options: ['1.0 mm²', '1.5 mm²', '2.5 mm²', '4.0 mm²'],
     correctAnswer: 2,
-    explanation: "2.5 mm² T&E is the standard size for domestic socket ring circuits, providing adequate current capacity for typical loads."
+    explanation:
+      '2.5 mm² T&E is the standard size for domestic socket ring circuits, providing adequate current capacity for typical loads.',
   },
   {
     id: 3,
-    question: "True or False: T&E cable is suitable for direct burial outdoors without protection.",
-    options: ["True", "False"],
+    question: 'True or False: T&E cable is suitable for direct burial outdoors without protection.',
+    options: ['True', 'False'],
     correctAnswer: 1,
-    explanation: "False. T&E cable requires additional protection such as conduit or ducting for outdoor burial due to limited mechanical protection."
+    explanation:
+      'False. T&E cable requires additional protection such as conduit or ducting for outdoor burial due to limited mechanical protection.',
   },
   {
     id: 4,
-    question: "What must be done to the CPC before connecting it to a terminal?",
-    options: ["Trim it shorter than other conductors", "Sleeve it green/yellow", "Twist it with neutral conductor", "Leave it bare"],
+    question: 'What must be done to the CPC before connecting it to a terminal?',
+    options: [
+      'Trim it shorter than other conductors',
+      'Sleeve it green/yellow',
+      'Twist it with neutral conductor',
+      'Leave it bare',
+    ],
     correctAnswer: 1,
-    explanation: "The bare CPC must be sleeved with green/yellow identification sleeve at all terminations."
+    explanation:
+      'The bare CPC must be sleeved with green/yellow identification sleeve at all terminations.',
   },
   {
     id: 5,
-    question: "Which part of the T&E cable provides basic mechanical protection?",
-    options: ["CPC", "Outer PVC sheath", "Neutral conductor", "Insulation tape"],
+    question: 'Which part of the T&E cable provides basic mechanical protection?',
+    options: ['CPC', 'Outer PVC sheath', 'Neutral conductor', 'Insulation tape'],
     correctAnswer: 1,
-    explanation: "The outer PVC sheath provides basic mechanical protection for the internal conductors."
+    explanation:
+      'The outer PVC sheath provides basic mechanical protection for the internal conductors.',
   },
   {
     id: 6,
-    question: "Why must sharp bends be avoided when installing T&E?",
-    options: ["To prevent voltage drop", "To avoid damaging the insulation", "To improve aesthetics only", "To make clipping easier"],
+    question: 'Why must sharp bends be avoided when installing T&E?',
+    options: [
+      'To prevent voltage drop',
+      'To avoid damaging the insulation',
+      'To improve aesthetics only',
+      'To make clipping easier',
+    ],
     correctAnswer: 1,
-    explanation: "Sharp bends can damage the conductor insulation, potentially causing short circuits or earth faults."
+    explanation:
+      'Sharp bends can damage the conductor insulation, potentially causing short circuits or earth faults.',
   },
   {
     id: 7,
-    question: "What is the maximum clip spacing for T&E cable on horizontal runs?",
-    options: ["200mm", "300mm", "400mm", "500mm"],
+    question: 'What is the maximum clip spacing for T&E cable on horizontal runs?',
+    options: ['200mm', '300mm', '400mm', '500mm'],
     correctAnswer: 1,
-    explanation: "BS 7671 requires cable clips at maximum 300mm spacing for horizontal runs of T&E cable."
+    explanation:
+      'BS 7671 requires cable clips at maximum 300mm spacing for horizontal runs of T&E cable.',
   },
   {
     id: 8,
-    question: "Where must T&E cable be installed inside conduit or trunking?",
-    options: ["All domestic installations", "Only in bathrooms", "Where risk of mechanical damage exists", "Only for high current circuits"],
+    question: 'Where must T&E cable be installed inside conduit or trunking?',
+    options: [
+      'All domestic installations',
+      'Only in bathrooms',
+      'Where risk of mechanical damage exists',
+      'Only for high current circuits',
+    ],
     correctAnswer: 2,
-    explanation: "T&E must be protected with conduit or trunking where there is risk of mechanical damage, such as exposed runs in workshops."
+    explanation:
+      'T&E must be protected with conduit or trunking where there is risk of mechanical damage, such as exposed runs in workshops.',
   },
   {
     id: 9,
-    question: "What size clips should be used for 2.5 mm² T&E cable?",
-    options: ["6mm clips", "8mm clips", "10mm clips", "12mm clips"],
+    question: 'What size clips should be used for 2.5 mm² T&E cable?',
+    options: ['6mm clips', '8mm clips', '10mm clips', '12mm clips'],
     correctAnswer: 1,
-    explanation: "2.5 mm² T&E cable requires 8mm clips with 4.0mm screws for proper support and installation."
+    explanation:
+      '2.5 mm² T&E cable requires 8mm clips with 4.0mm screws for proper support and installation.',
   },
   {
     id: 10,
-    question: "When stripping T&E cable, what is the typical conductor strip length required?",
-    options: ["5-8mm", "10-12mm", "15-20mm", "25-30mm"],
+    question: 'When stripping T&E cable, what is the typical conductor strip length required?',
+    options: ['5-8mm', '10-12mm', '15-20mm', '25-30mm'],
     correctAnswer: 1,
-    explanation: "Individual conductor insulation should typically be stripped 10-12mm for most terminations."
+    explanation:
+      'Individual conductor insulation should typically be stripped 10-12mm for most terminations.',
   },
   {
     id: 11,
-    question: "How close to terminations and accessories must T&E cable be clipped?",
-    options: ["Within 100mm", "Within 150mm", "Within 200mm", "Within 300mm"],
+    question: 'How close to terminations and accessories must T&E cable be clipped?',
+    options: ['Within 100mm', 'Within 150mm', 'Within 200mm', 'Within 300mm'],
     correctAnswer: 1,
-    explanation: "T&E cable must be clipped within 150mm of terminations and accessories to provide adequate support."
+    explanation:
+      'T&E cable must be clipped within 150mm of terminations and accessories to provide adequate support.',
   },
   {
     id: 12,
-    question: "What is the first step when terminating T&E cable at a socket outlet?",
-    options: ["Connect the live conductor", "Strip cable sheath 25-30mm", "Test the circuit", "Install the faceplate"],
+    question: 'What is the first step when terminating T&E cable at a socket outlet?',
+    options: [
+      'Connect the live conductor',
+      'Strip cable sheath 25-30mm',
+      'Test the circuit',
+      'Install the faceplate',
+    ],
     correctAnswer: 1,
-    explanation: "The first step is to strip the cable sheath 25-30mm and individual conductors 12mm to prepare for termination."
-  }
+    explanation:
+      'The first step is to strip the cable sheath 25-30mm and individual conductors 12mm to prepare for termination.',
+  },
 ];
 
 const Module3Section1_2: React.FC = () => {
   useSEO(
-    "Twin and Earth Cable (T&E) – Module 3 (3.1.2)",
-    "Complete guide to Twin and Earth cable construction, applications, installation and BS 7671 compliance for UK electrical installations."
+    'Twin and Earth Cable (T&E) – Module 3 (3.1.2)',
+    'Complete guide to Twin and Earth cable construction, applications, installation and BS 7671 compliance for UK electrical installations.'
   );
 
   const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Twin and Earth Cable (T&E) – Module 3 (3.1.2)",
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Twin and Earth Cable (T&E) – Module 3 (3.1.2)',
     description:
-      "Complete guide to Twin and Earth cable construction, applications, installation and BS 7671 compliance for UK electrical installations.",
-    articleSection: "Electrical Installation",
-    inLanguage: "en-GB",
+      'Complete guide to Twin and Earth cable construction, applications, installation and BS 7671 compliance for UK electrical installations.',
+    articleSection: 'Electrical Installation',
+    inLanguage: 'en-GB',
     isAccessibleForFree: true,
   } as const;
 
   const faqs = [
-    { q: "Can I run T&E cable under floorboards without conduit?", a: "Yes, if there's no risk of damage and the cable is fixed securely, but mechanical protection is advised in areas where it may be disturbed." },
-    { q: "Can T&E be used for outdoor lighting?", a: "Only if enclosed in suitable conduit or SWA for mechanical protection and weatherproofing." },
-    { q: "Why is the earth wire in T&E not insulated?", a: "The bare CPC saves manufacturing cost and space but must be sleeved at terminations for identification." },
-    { q: "What's the difference between 6242Y and 6243Y cable?", a: "6242Y is standard T&E, while 6243Y includes an additional conductor (often used for two-way switching circuits)." }
+    {
+      q: 'Can I run T&E cable under floorboards without conduit?',
+      a: "Yes, if there's no risk of damage and the cable is fixed securely, but mechanical protection is advised in areas where it may be disturbed.",
+    },
+    {
+      q: 'Can T&E be used for outdoor lighting?',
+      a: 'Only if enclosed in suitable conduit or SWA for mechanical protection and weatherproofing.',
+    },
+    {
+      q: 'Why is the earth wire in T&E not insulated?',
+      a: 'The bare CPC saves manufacturing cost and space but must be sleeved at terminations for identification.',
+    },
+    {
+      q: "What's the difference between 6242Y and 6243Y cable?",
+      a: '6242Y is standard T&E, while 6243Y includes an additional conductor (often used for two-way switching circuits).',
+    },
   ];
 
   const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   } as const;
 
   return (
@@ -180,7 +251,8 @@ const Module3Section1_2: React.FC = () => {
               Twin and Earth Cable (T&E)
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding flat PVC sheathed cable construction, applications and installation requirements for UK electrical work.
+              Understanding flat PVC sheathed cable construction, applications and installation
+              requirements for UK electrical work.
             </p>
           </header>
 
@@ -194,17 +266,35 @@ const Module3Section1_2: React.FC = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li>T&E cable contains live (brown), neutral (blue), and bare earth conductors in flat PVC sheath.</li>
-                  <li>Most common cable for UK domestic installations - cost-effective and easy to install.</li>
-                  <li>Common sizes: 1.0mm² (lighting), 1.5mm² (lighting), 2.5mm² (sockets), 4-6mm² (high loads).</li>
+                  <li>
+                    T&E cable contains live (brown), neutral (blue), and bare earth conductors in
+                    flat PVC sheath.
+                  </li>
+                  <li>
+                    Most common cable for UK domestic installations - cost-effective and easy to
+                    install.
+                  </li>
+                  <li>
+                    Common sizes: 1.0mm² (lighting), 1.5mm² (lighting), 2.5mm² (sockets), 4-6mm²
+                    (high loads).
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li><strong>Spot:</strong> Flat grey cable with three conductors visible at cut ends.</li>
-                  <li><strong>Use:</strong> Domestic circuits, light commercial where mechanical protection isn't critical.</li>
-                  <li><strong>Check:</strong> CPC sleeved green/yellow, proper clip spacing, protected where at risk.</li>
+                  <li>
+                    <strong>Spot:</strong> Flat grey cable with three conductors visible at cut
+                    ends.
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Domestic circuits, light commercial where mechanical
+                    protection isn't critical.
+                  </li>
+                  <li>
+                    <strong>Check:</strong> CPC sleeved green/yellow, proper clip spacing, protected
+                    where at risk.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -221,7 +311,9 @@ const Module3Section1_2: React.FC = () => {
               <li>Explain the common sizes and their typical applications in UK installations.</li>
               <li>Recognise the benefits and limitations of T&E compared to other wiring types.</li>
               <li>Select appropriate uses for T&E in line with BS 7671 regulations.</li>
-              <li>Describe installation considerations for protecting and terminating T&E cable.</li>
+              <li>
+                Describe installation considerations for protecting and terminating T&E cable.
+              </li>
               <li>Apply proper termination techniques including CPC sleeving requirements.</li>
             </ul>
           </section>
@@ -234,23 +326,40 @@ const Module3Section1_2: React.FC = () => {
               Construction of T&E Cable
             </h2>
             <div className="space-y-4 text-sm text-white/80">
-              <p><strong>Description:</strong> Twin and Earth cable consists of two insulated conductors plus a bare earth wire, all contained within a flat PVC sheath.</p>
+              <p>
+                <strong>Description:</strong> Twin and Earth cable consists of two insulated
+                conductors plus a bare earth wire, all contained within a flat PVC sheath.
+              </p>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                   <p className="font-medium text-white mb-2">Conductor Components</p>
                   <ul className="space-y-2">
-                    <li><strong>Live conductor:</strong> Brown PVC insulated (was red pre-2004)</li>
-                    <li><strong>Neutral conductor:</strong> Blue PVC insulated (was black pre-2004)</li>
-                    <li><strong>CPC (earth):</strong> Bare copper wire, requires green/yellow sleeving at terminations</li>
+                    <li>
+                      <strong>Live conductor:</strong> Brown PVC insulated (was red pre-2004)
+                    </li>
+                    <li>
+                      <strong>Neutral conductor:</strong> Blue PVC insulated (was black pre-2004)
+                    </li>
+                    <li>
+                      <strong>CPC (earth):</strong> Bare copper wire, requires green/yellow sleeving
+                      at terminations
+                    </li>
                   </ul>
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
                   <p className="font-medium text-white mb-2">Protection & Design</p>
                   <ul className="space-y-2">
-                    <li><strong>Sheath:</strong> Flat grey PVC for mechanical protection</li>
-                    <li><strong>Profile:</strong> Flat design for easy surface mounting and under-floor installation</li>
-                    <li><strong>Standards:</strong> Manufactured to BS 6004 specifications</li>
+                    <li>
+                      <strong>Sheath:</strong> Flat grey PVC for mechanical protection
+                    </li>
+                    <li>
+                      <strong>Profile:</strong> Flat design for easy surface mounting and
+                      under-floor installation
+                    </li>
+                    <li>
+                      <strong>Standards:</strong> Manufactured to BS 6004 specifications
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -258,8 +367,12 @@ const Module3Section1_2: React.FC = () => {
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-400/30">
                 <p className="font-medium text-white mb-2">Important Design Features:</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li>Flat profile allows neat installation against surfaces and through floor joists</li>
-                  <li>Bare earth conductor reduces cable size and cost while maintaining functionality</li>
+                  <li>
+                    Flat profile allows neat installation against surfaces and through floor joists
+                  </li>
+                  <li>
+                    Bare earth conductor reduces cable size and cost while maintaining functionality
+                  </li>
                   <li>PVC sheath provides basic mechanical protection and moisture resistance</li>
                   <li>Colour coding complies with current BS 7671 requirements</li>
                 </ul>
@@ -270,7 +383,7 @@ const Module3Section1_2: React.FC = () => {
               <InlineCheck
                 id="ic-te-construction"
                 question="What colour is the live conductor in modern T&E cable?"
-                options={["Red", "Brown", "Blue", "Black"]}
+                options={['Red', 'Brown', 'Blue', 'Black']}
                 correctIndex={1}
                 explanation="The live conductor in modern T&E cable is brown, changed from red during the 2004 harmonisation."
               />
@@ -285,7 +398,10 @@ const Module3Section1_2: React.FC = () => {
               Common Sizes and Applications
             </h2>
             <div className="space-y-4 text-sm text-white/80">
-              <p><strong>Description:</strong> T&E cable is available in various conductor sizes to suit different circuit requirements and current ratings.</p>
+              <p>
+                <strong>Description:</strong> T&E cable is available in various conductor sizes to
+                suit different circuit requirements and current ratings.
+              </p>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
@@ -344,7 +460,9 @@ const Module3Section1_2: React.FC = () => {
                   <li>Current ratings are for reference installation (Method C) at 30°C ambient</li>
                   <li>Apply derating factors for different installation methods and grouping</li>
                   <li>Check voltage drop calculations, especially for longer cable runs</li>
-                  <li>Consider earth fault loop impedance requirements for protective device operation</li>
+                  <li>
+                    Consider earth fault loop impedance requirements for protective device operation
+                  </li>
                 </ul>
               </div>
             </div>
@@ -353,7 +471,7 @@ const Module3Section1_2: React.FC = () => {
               <InlineCheck
                 id="ic-te-sizing"
                 question="Which size T&E cable is typically used for a domestic socket ring circuit?"
-                options={["1.5 mm²", "2.5 mm²", "4.0 mm²", "6.0 mm²"]}
+                options={['1.5 mm²', '2.5 mm²', '4.0 mm²', '6.0 mm²']}
                 correctIndex={1}
                 explanation="2.5 mm² T&E is the standard size for domestic socket ring circuits, providing adequate current capacity when protected by a 32A device."
               />
@@ -433,7 +551,9 @@ const Module3Section1_2: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-400/30">
-                <p className="font-medium text-white mb-2">Where Additional Protection is Required:</p>
+                <p className="font-medium text-white mb-2">
+                  Where Additional Protection is Required:
+                </p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Workshops and industrial areas with machinery</li>
                   <li>Areas accessible to the public where damage could occur</li>
@@ -448,7 +568,12 @@ const Module3Section1_2: React.FC = () => {
               <InlineCheck
                 id="ic-te-limitations"
                 question="What must be done when T&E cable is at risk of mechanical damage?"
-                options={["Use larger cable size", "Install in conduit or trunking", "Increase circuit protection", "Use different colours"]}
+                options={[
+                  'Use larger cable size',
+                  'Install in conduit or trunking',
+                  'Increase circuit protection',
+                  'Use different colours',
+                ]}
                 correctIndex={1}
                 explanation="T&E cable must be protected with conduit or trunking when there's risk of mechanical damage, as the PVC sheath offers limited protection."
               />
@@ -500,11 +625,24 @@ const Module3Section1_2: React.FC = () => {
               <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-400/30">
                 <p className="font-medium text-white mb-2">Special Installation Considerations:</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Under floors:</strong> Run through joist centres or use protection plates</li>
-                  <li><strong>In walls:</strong> Use safe zones as defined in BS 7671</li>
-                  <li><strong>Bathroom zones:</strong> Follow IP rating requirements and RCD protection</li>
-                  <li><strong>Concealed work:</strong> Ensure adequate protection against nail penetration</li>
-                  <li><strong>Joint boxes:</strong> Use only where accessible for inspection</li>
+                  <li>
+                    <strong>Under floors:</strong> Run through joist centres or use protection
+                    plates
+                  </li>
+                  <li>
+                    <strong>In walls:</strong> Use safe zones as defined in BS 7671
+                  </li>
+                  <li>
+                    <strong>Bathroom zones:</strong> Follow IP rating requirements and RCD
+                    protection
+                  </li>
+                  <li>
+                    <strong>Concealed work:</strong> Ensure adequate protection against nail
+                    penetration
+                  </li>
+                  <li>
+                    <strong>Joint boxes:</strong> Use only where accessible for inspection
+                  </li>
                 </ul>
               </div>
             </div>
@@ -518,7 +656,6 @@ const Module3Section1_2: React.FC = () => {
               Practical Installation Guide
             </h2>
             <div className="space-y-6 text-sm text-white/80">
-
               {/* Cable Clips and Fixings */}
               <div className="space-y-4">
                 <h3 className="font-medium text-white">Cable Clips and Fixings</h3>
@@ -526,11 +663,22 @@ const Module3Section1_2: React.FC = () => {
                   <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                     <p className="font-medium text-white mb-2">Clip Types and Sizes</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Flat T&E clips:</strong> White or grey plastic, sized for cable width</li>
-                      <li><strong>1.0-1.5mm²:</strong> 6mm clips with 3.5-4.0mm screws</li>
-                      <li><strong>2.5mm²:</strong> 8mm clips with 4.0mm screws</li>
-                      <li><strong>4.0-6.0mm²:</strong> 10mm clips with 4.5-5.0mm screws</li>
-                      <li><strong>Heavy-duty clips:</strong> Metal clips for industrial applications</li>
+                      <li>
+                        <strong>Flat T&E clips:</strong> White or grey plastic, sized for cable
+                        width
+                      </li>
+                      <li>
+                        <strong>1.0-1.5mm²:</strong> 6mm clips with 3.5-4.0mm screws
+                      </li>
+                      <li>
+                        <strong>2.5mm²:</strong> 8mm clips with 4.0mm screws
+                      </li>
+                      <li>
+                        <strong>4.0-6.0mm²:</strong> 10mm clips with 4.5-5.0mm screws
+                      </li>
+                      <li>
+                        <strong>Heavy-duty clips:</strong> Metal clips for industrial applications
+                      </li>
                     </ul>
                   </div>
                   <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
@@ -548,11 +696,21 @@ const Module3Section1_2: React.FC = () => {
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-400/30">
                   <p className="font-medium text-white mb-2">Clip Spacing Guidelines:</p>
                   <ul className="list-disc pl-4 space-y-1">
-                    <li><strong>Horizontal runs:</strong> 300mm maximum, 250mm preferred</li>
-                    <li><strong>Vertical runs:</strong> 400mm maximum, 350mm preferred</li>
-                    <li><strong>Near terminations:</strong> Within 150mm of accessories</li>
-                    <li><strong>Change of direction:</strong> Clip both sides of bends</li>
-                    <li><strong>Through floors:</strong> Support at joist entry/exit points</li>
+                    <li>
+                      <strong>Horizontal runs:</strong> 300mm maximum, 250mm preferred
+                    </li>
+                    <li>
+                      <strong>Vertical runs:</strong> 400mm maximum, 350mm preferred
+                    </li>
+                    <li>
+                      <strong>Near terminations:</strong> Within 150mm of accessories
+                    </li>
+                    <li>
+                      <strong>Change of direction:</strong> Clip both sides of bends
+                    </li>
+                    <li>
+                      <strong>Through floors:</strong> Support at joist entry/exit points
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -567,11 +725,21 @@ const Module3Section1_2: React.FC = () => {
                   <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                     <p className="font-medium text-white mb-2">Tools Required</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Cable knife:</strong> Sharp, retractable blade</li>
-                      <li><strong>Wire strippers:</strong> Adjustable for conductor sizes</li>
-                      <li><strong>Side cutters:</strong> For trimming and cutting</li>
-                      <li><strong>Cable sheath stripper:</strong> Dedicated T&E tool</li>
-                      <li><strong>Green/yellow sleeving:</strong> Various sizes</li>
+                      <li>
+                        <strong>Cable knife:</strong> Sharp, retractable blade
+                      </li>
+                      <li>
+                        <strong>Wire strippers:</strong> Adjustable for conductor sizes
+                      </li>
+                      <li>
+                        <strong>Side cutters:</strong> For trimming and cutting
+                      </li>
+                      <li>
+                        <strong>Cable sheath stripper:</strong> Dedicated T&E tool
+                      </li>
+                      <li>
+                        <strong>Green/yellow sleeving:</strong> Various sizes
+                      </li>
                     </ul>
                   </div>
                   <div className="p-4 rounded-lg bg-card/50 border border-white/10">
@@ -595,7 +763,9 @@ const Module3Section1_2: React.FC = () => {
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Never nick conductor insulation when stripping outer sheath</li>
                     <li>Check for damaged strands that could cause poor connections</li>
-                    <li>Ensure adequate conductor length but avoid excess that could cause shorts</li>
+                    <li>
+                      Ensure adequate conductor length but avoid excess that could cause shorts
+                    </li>
                     <li>Always work with cable de-energised and isolated</li>
                   </ul>
                 </div>
@@ -608,22 +778,44 @@ const Module3Section1_2: React.FC = () => {
                   <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
                     <p className="font-medium text-white mb-2">When Sleeving is Required</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>All CPC terminations:</strong> Must be sleeved green/yellow</li>
-                      <li><strong>Consumer units:</strong> CPC sleeving throughout</li>
-                      <li><strong>Junction boxes:</strong> CPC identification required</li>
-                      <li><strong>Switch plates:</strong> Earth terminals need sleeving</li>
-                      <li><strong>Socket outlets:</strong> Earth connection sleeving</li>
+                      <li>
+                        <strong>All CPC terminations:</strong> Must be sleeved green/yellow
+                      </li>
+                      <li>
+                        <strong>Consumer units:</strong> CPC sleeving throughout
+                      </li>
+                      <li>
+                        <strong>Junction boxes:</strong> CPC identification required
+                      </li>
+                      <li>
+                        <strong>Switch plates:</strong> Earth terminals need sleeving
+                      </li>
+                      <li>
+                        <strong>Socket outlets:</strong> Earth connection sleeving
+                      </li>
                     </ul>
                   </div>
 
                   <div className="p-4 rounded-lg bg-card/50 border border-white/10">
-                    <p className="font-medium text-white mb-2">Sleeving Selection and Application</p>
+                    <p className="font-medium text-white mb-2">
+                      Sleeving Selection and Application
+                    </p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Size selection:</strong> Snug fit over conductor, not too tight</li>
-                      <li><strong>Length:</strong> Cover all exposed copper plus 5-10mm extra</li>
-                      <li><strong>Quality:</strong> Use proper electrical sleeving, not heat shrink</li>
-                      <li><strong>Application:</strong> Push on firmly, ensure no copper visible</li>
-                      <li><strong>Multiple cores:</strong> Sleeve each CPC individually</li>
+                      <li>
+                        <strong>Size selection:</strong> Snug fit over conductor, not too tight
+                      </li>
+                      <li>
+                        <strong>Length:</strong> Cover all exposed copper plus 5-10mm extra
+                      </li>
+                      <li>
+                        <strong>Quality:</strong> Use proper electrical sleeving, not heat shrink
+                      </li>
+                      <li>
+                        <strong>Application:</strong> Push on firmly, ensure no copper visible
+                      </li>
+                      <li>
+                        <strong>Multiple cores:</strong> Sleeve each CPC individually
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -639,7 +831,9 @@ const Module3Section1_2: React.FC = () => {
                       <li>Strip cable sheath 25-30mm, individual conductors 12mm</li>
                       <li>Sleeve CPC with green/yellow sleeving</li>
                       <li>Form conductors into neat loops for terminals</li>
-                      <li>Connect: Live (L) = brown, Neutral (N) = blue, Earth (E) = sleeved CPC</li>
+                      <li>
+                        Connect: Live (L) = brown, Neutral (N) = blue, Earth (E) = sleeved CPC
+                      </li>
                       <li>Tighten terminal screws securely (but don&apos;t overtighten)</li>
                       <li>Perform tug test on each conductor</li>
                     </ol>
@@ -717,7 +911,10 @@ const Module3Section1_2: React.FC = () => {
             <div className="space-y-4 text-sm text-white/80">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">The Project</p>
-                <p>A domestic property kitchen rewire required complete electrical installation to serve:</p>
+                <p>
+                  A domestic property kitchen rewire required complete electrical installation to
+                  serve:
+                </p>
                 <ul className="list-disc pl-6 mt-2 space-y-1">
                   <li>Socket ring circuit for general appliances</li>
                   <li>LED downlight circuit for task lighting</li>
@@ -728,24 +925,42 @@ const Module3Section1_2: React.FC = () => {
               </div>
 
               <div className="space-y-3">
-                <p className="font-medium text-white">T&E Cable Selection and Installation Strategy:</p>
+                <p className="font-medium text-white">
+                  T&E Cable Selection and Installation Strategy:
+                </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
                     <p className="font-medium text-white mb-2">Cable Selection</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>2.5mm² T&E:</strong> Socket ring circuit (32A protection)</li>
-                      <li><strong>1.5mm² T&E:</strong> LED lighting circuits (10A protection)</li>
-                      <li><strong>6.0mm² T&E:</strong> Electric cooker circuit (32A protection)</li>
-                      <li><strong>1.0mm² T&E:</strong> Extractor fan (6A protection)</li>
+                      <li>
+                        <strong>2.5mm² T&E:</strong> Socket ring circuit (32A protection)
+                      </li>
+                      <li>
+                        <strong>1.5mm² T&E:</strong> LED lighting circuits (10A protection)
+                      </li>
+                      <li>
+                        <strong>6.0mm² T&E:</strong> Electric cooker circuit (32A protection)
+                      </li>
+                      <li>
+                        <strong>1.0mm² T&E:</strong> Extractor fan (6A protection)
+                      </li>
                     </ul>
                   </div>
                   <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                     <p className="font-medium text-white mb-2">Protection Strategy</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Behind units:</strong> Mini-trunking for mechanical protection</li>
-                      <li><strong>Under floors:</strong> Through joist centres with protection plates</li>
-                      <li><strong>In walls:</strong> Safe zones with RCD protection</li>
-                      <li><strong>At terminations:</strong> All CPCs sleeved green/yellow</li>
+                      <li>
+                        <strong>Behind units:</strong> Mini-trunking for mechanical protection
+                      </li>
+                      <li>
+                        <strong>Under floors:</strong> Through joist centres with protection plates
+                      </li>
+                      <li>
+                        <strong>In walls:</strong> Safe zones with RCD protection
+                      </li>
+                      <li>
+                        <strong>At terminations:</strong> All CPCs sleeved green/yellow
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -758,7 +973,9 @@ const Module3Section1_2: React.FC = () => {
                   <li>Mechanical protection where cables could be damaged by fitted units</li>
                   <li>Compliance with kitchen IP rating requirements near water sources</li>
                   <li>All installation within BS 7671 safe zones for concealed cables</li>
-                  <li>Comprehensive testing including insulation resistance and earth loop impedance</li>
+                  <li>
+                    Comprehensive testing including insulation resistance and earth loop impedance
+                  </li>
                 </ul>
               </div>
             </div>
@@ -772,27 +989,50 @@ const Module3Section1_2: React.FC = () => {
             </h2>
             <div className="space-y-4 text-sm text-white/80">
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
-                <p className="font-medium text-white mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Termination Errors</p>
+                <p className="font-medium text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4" /> Termination Errors
+                </p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Wrong:</strong> Leaving CPC bare at terminations</li>
-                  <li><strong>Right:</strong> Always sleeve CPC with green/yellow identification</li>
-                  <li><strong>Wrong:</strong> Nicking conductor insulation when stripping outer sheath</li>
-                  <li><strong>Right:</strong> Use proper cable stripping tools and techniques</li>
+                  <li>
+                    <strong>Wrong:</strong> Leaving CPC bare at terminations
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Always sleeve CPC with green/yellow identification
+                  </li>
+                  <li>
+                    <strong>Wrong:</strong> Nicking conductor insulation when stripping outer sheath
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Use proper cable stripping tools and techniques
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
-                <p className="font-medium text-white mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Mistakes</p>
+                <p className="font-medium text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4" /> Installation Mistakes
+                </p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Wrong:</strong> Excessive clip spacing causing cable sag</li>
-                  <li><strong>Right:</strong> Follow BS 7671 maximum spacing requirements (300mm horizontal)</li>
-                  <li><strong>Wrong:</strong> Sharp bends damaging cable insulation</li>
-                  <li><strong>Right:</strong> Maintain minimum bending radius throughout installation</li>
+                  <li>
+                    <strong>Wrong:</strong> Excessive clip spacing causing cable sag
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Follow BS 7671 maximum spacing requirements (300mm
+                    horizontal)
+                  </li>
+                  <li>
+                    <strong>Wrong:</strong> Sharp bends damaging cable insulation
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Maintain minimum bending radius throughout installation
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="font-medium text-white mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
+                <p className="font-medium text-white mb-2 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" /> Best Practice Tips
+                </p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Always calculate voltage drop for longer cable runs</li>
                   <li>Provide mechanical protection where cables may be disturbed</li>
@@ -841,10 +1081,16 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50" role="alert">
+              <div
+                className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50"
+                role="alert"
+              >
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5" />
-                  <p className="text-white/80">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all T&E installations.</p>
+                  <p className="text-white/80">
+                    Isolate, lock-off and prove dead before work. Follow manufacturer instructions
+                    and BS 7671 requirements for all T&E installations.
+                  </p>
                 </div>
               </div>
             </div>
@@ -919,8 +1165,14 @@ const Module3Section1_2: React.FC = () => {
           </nav>
 
           {/* Structured data */}
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
         </div>
       </article>
     </div>

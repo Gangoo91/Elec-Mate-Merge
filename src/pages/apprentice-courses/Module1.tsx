@@ -1,50 +1,51 @@
-import { ArrowLeft, Scale, AlertTriangle, FileCheck, Shield, Power, Phone } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Scale, AlertTriangle, FileCheck, Shield, Power, Phone } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "UK Health & Safety Legislation",
-    description: "Overview of key health and safety laws and regulations governing electrical work",
+    number: 'Section 1',
+    title: 'UK Health & Safety Legislation',
+    description: 'Overview of key health and safety laws and regulations governing electrical work',
     icon: Scale,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
-    title: "Common Electrical Hazards",
-    description: "Identification and understanding of typical electrical risks and dangers in the workplace",
+    number: 'Section 2',
+    title: 'Common Electrical Hazards',
+    description:
+      'Identification and understanding of typical electrical risks and dangers in the workplace',
     icon: AlertTriangle,
-    href: "section2"
+    href: 'section2',
   },
   {
-    number: "Section 3",
-    title: "Risk Assessment and Method Statements (RAMS)",
-    description: "Planning and documenting safe working procedures for electrical installations",
+    number: 'Section 3',
+    title: 'Risk Assessment and Method Statements (RAMS)',
+    description: 'Planning and documenting safe working procedures for electrical installations',
     icon: FileCheck,
-    href: "section3"
+    href: 'section3',
   },
   {
-    number: "Section 4",
-    title: "Personal Protective Equipment (PPE) and Safe Working Practices",
-    description: "Selection, use and maintenance of protective equipment and safe working methods",
+    number: 'Section 4',
+    title: 'Personal Protective Equipment (PPE) and Safe Working Practices',
+    description: 'Selection, use and maintenance of protective equipment and safe working methods',
     icon: Shield,
-    href: "section4"
+    href: 'section4',
   },
   {
-    number: "Section 5",
-    title: "Safe Isolation Procedures",
-    description: "Step-by-step procedures for safely isolating electrical circuits before work",
+    number: 'Section 5',
+    title: 'Safe Isolation Procedures',
+    description: 'Step-by-step procedures for safely isolating electrical circuits before work',
     icon: Power,
-    href: "section5"
+    href: 'section5',
   },
   {
-    number: "Section 6",
-    title: "Accidents, Reporting and Emergency Response",
-    description: "Procedures for dealing with electrical accidents and emergency situations",
+    number: 'Section 6',
+    title: 'Accidents, Reporting and Emergency Response',
+    description: 'Procedures for dealing with electrical accidents and emergency situations',
     icon: Phone,
-    href: "section6"
+    href: 'section6',
   },
 ];
 

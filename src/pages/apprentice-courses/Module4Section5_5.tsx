@@ -1,134 +1,148 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Dressing Cables Neatly Within Boxes and Enclosures - Module 4.5.5 | Level 2 Electrical Course";
-const DESCRIPTION = "Master professional cable dressing techniques for boxes, enclosures, and distribution boards. Learn layout planning, securing methods, and BS 7671 compliance for safe, accessible installations.";
+const TITLE =
+  'Dressing Cables Neatly Within Boxes and Enclosures - Module 4.5.5 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Master professional cable dressing techniques for boxes, enclosures, and distribution boards. Learn layout planning, securing methods, and BS 7671 compliance for safe, accessible installations.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Name one reason why neat cable dressing is important beyond appearance.",
-    options: ["It looks professional", "Improves airflow and reduces heat build-up", "It saves money", "It reduces material costs"],
+    question: 'Name one reason why neat cable dressing is important beyond appearance.',
+    options: [
+      'It looks professional',
+      'Improves airflow and reduces heat build-up',
+      'It saves money',
+      'It reduces material costs',
+    ],
     correctIndex: 1,
-    explanation: "Neat cable dressing improves airflow, reduces heat build-up, prevents strain on terminations, and makes maintenance easier - all critical safety and operational benefits."
+    explanation:
+      'Neat cable dressing improves airflow, reduces heat build-up, prevents strain on terminations, and makes maintenance easier - all critical safety and operational benefits.',
   },
   {
     id: 2,
-    question: "What must be avoided when using cable ties?",
-    options: ["Using too many ties", "Over-tightening that crushes insulation", "Using different colours", "Cutting them too short"],
+    question: 'What must be avoided when using cable ties?',
+    options: [
+      'Using too many ties',
+      'Over-tightening that crushes insulation',
+      'Using different colours',
+      'Cutting them too short',
+    ],
     correctIndex: 1,
-    explanation: "Over-tightening cable ties can crush cable insulation, potentially causing short circuits and reducing the cable's current-carrying capacity."
+    explanation:
+      "Over-tightening cable ties can crush cable insulation, potentially causing short circuits and reducing the cable's current-carrying capacity.",
   },
   {
     id: 3,
-    question: "Why should ELV and mains cables be separated?",
-    options: ["For colour coding", "To reduce electromagnetic interference and safety", "To save space", "For easier identification"],
+    question: 'Why should ELV and mains cables be separated?',
+    options: [
+      'For colour coding',
+      'To reduce electromagnetic interference and safety',
+      'To save space',
+      'For easier identification',
+    ],
     correctIndex: 1,
-    explanation: "ELV and mains cables must be separated to prevent electromagnetic interference and ensure safety by avoiding voltage transfer between systems."
-  }
+    explanation:
+      'ELV and mains cables must be separated to prevent electromagnetic interference and ensure safety by avoiding voltage transfer between systems.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which is NOT a benefit of neat cable dressing?",
+    question: 'Which is NOT a benefit of neat cable dressing?',
     options: [
-      "Reduced heat build-up",
-      "Improved fault finding",
-      "Increased voltage drop",
-      "Enhanced accessibility"
+      'Reduced heat build-up',
+      'Improved fault finding',
+      'Increased voltage drop',
+      'Enhanced accessibility',
     ],
     correctAnswer: 2,
-    explanation: "Neat cable dressing reduces voltage drop by avoiding sharp bends and overcrowding, rather than increasing it."
+    explanation:
+      'Neat cable dressing reduces voltage drop by avoiding sharp bends and overcrowding, rather than increasing it.',
   },
   {
     id: 2,
-    question: "True or False: Over-tightening cable ties is acceptable if it holds cables securely.",
-    options: [
-      "True",
-      "False",
-      "Only for small cables",
-      "Only in dry locations"
-    ],
+    question:
+      'True or False: Over-tightening cable ties is acceptable if it holds cables securely.',
+    options: ['True', 'False', 'Only for small cables', 'Only in dry locations'],
     correctAnswer: 1,
-    explanation: "False - Over-tightening cable ties can crush insulation, damage conductors, and create safety hazards."
+    explanation:
+      'False - Over-tightening cable ties can crush insulation, damage conductors, and create safety hazards.',
   },
   {
     id: 3,
-    question: "Name one tool or accessory used to secure cables inside enclosures.",
-    options: [
-      "Cable ties",
-      "Cable clamps",
-      "Adhesive clips",
-      "All of the above"
-    ],
+    question: 'Name one tool or accessory used to secure cables inside enclosures.',
+    options: ['Cable ties', 'Cable clamps', 'Adhesive clips', 'All of the above'],
     correctAnswer: 3,
-    explanation: "Cable ties, clamps, and adhesive clips are all suitable for securing cables inside enclosures when properly rated."
+    explanation:
+      'Cable ties, clamps, and adhesive clips are all suitable for securing cables inside enclosures when properly rated.',
   },
   {
     id: 4,
-    question: "Why should cables be grouped by function?",
+    question: 'Why should cables be grouped by function?',
     options: [
-      "For logical routing and easier maintenance",
-      "To save money",
-      "To reduce cable length",
-      "For colour coordination"
+      'For logical routing and easier maintenance',
+      'To save money',
+      'To reduce cable length',
+      'For colour coordination',
     ],
     correctAnswer: 0,
-    explanation: "Grouping by function enables logical routing, easier fault finding, and simplified maintenance procedures."
+    explanation:
+      'Grouping by function enables logical routing, easier fault finding, and simplified maintenance procedures.',
   },
   {
     id: 5,
-    question: "What should be avoided to prevent blocking access to other terminals?",
+    question: 'What should be avoided to prevent blocking access to other terminals?',
     options: [
-      "Using cable ties",
-      "Crossing over terminals",
-      "Colour coding cables",
-      "Securing cables"
+      'Using cable ties',
+      'Crossing over terminals',
+      'Colour coding cables',
+      'Securing cables',
     ],
     correctAnswer: 1,
-    explanation: "Crossing over terminals blocks access to other connections, making maintenance and testing difficult or impossible."
+    explanation:
+      'Crossing over terminals blocks access to other connections, making maintenance and testing difficult or impossible.',
   },
   {
     id: 6,
-    question: "Which regulation covers the requirement for avoiding undue stress on terminations?",
-    options: [
-      "BS 5839",
-      "BS 7671",
-      "BS EN 50172",
-      "BS 6701"
-    ],
+    question: 'Which regulation covers the requirement for avoiding undue stress on terminations?',
+    options: ['BS 5839', 'BS 7671', 'BS EN 50172', 'BS 6701'],
     correctAnswer: 1,
-    explanation: "BS 7671 requires that wiring in enclosures is arranged to avoid undue stress on terminations and conductors."
+    explanation:
+      'BS 7671 requires that wiring in enclosures is arranged to avoid undue stress on terminations and conductors.',
   },
   {
     id: 7,
-    question: "Why is a final visual inspection before closing the enclosure important?",
+    question: 'Why is a final visual inspection before closing the enclosure important?',
     options: [
-      "To ensure neatness, compliance, and accessibility",
-      "To count the cables",
-      "To check cable colours",
-      "To measure cable length"
+      'To ensure neatness, compliance, and accessibility',
+      'To count the cables',
+      'To check cable colours',
+      'To measure cable length',
     ],
     correctAnswer: 0,
-    explanation: "Final inspection ensures neatness, BS 7671 compliance, accessibility for future work, and professional standards."
+    explanation:
+      'Final inspection ensures neatness, BS 7671 compliance, accessibility for future work, and professional standards.',
   },
   {
     id: 8,
-    question: "Give one method for identifying cables inside an enclosure.",
+    question: 'Give one method for identifying cables inside an enclosure.',
     options: [
-      "Numbered cable markers",
-      "Colour-coded sleeving",
-      "Cable labelling",
-      "All of the above"
+      'Numbered cable markers',
+      'Colour-coded sleeving',
+      'Cable labelling',
+      'All of the above',
     ],
     correctAnswer: 3,
-    explanation: "Numbered markers, colour coding, and labelling are all effective methods for cable identification in enclosures."
-  }
+    explanation:
+      'Numbered markers, colour coding, and labelling are all effective methods for cable identification in enclosures.',
+  },
 ];
 
 const Module4Section5_5 = () => {
@@ -166,7 +180,8 @@ const Module4Section5_5 = () => {
               Dressing Cables Neatly Within Boxes and Enclosures
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master professional cable dressing techniques for safe, accessible, and compliant installations in all types of electrical enclosures.
+              Master professional cable dressing techniques for safe, accessible, and compliant
+              installations in all types of electrical enclosures.
             </p>
           </header>
 
@@ -178,15 +193,24 @@ const Module4Section5_5 = () => {
                 <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
                   <li>Cable dressing arranges conductors neatly and logically inside enclosures</li>
                   <li>Good dressing improves safety, accessibility, and compliance with BS 7671</li>
-                  <li>Poor dressing leads to overcrowding, heat build-up, and unsafe connections</li>
+                  <li>
+                    Poor dressing leads to overcrowding, heat build-up, and unsafe connections
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">Spot it / Use it</p>
                 <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
-                  <li><strong>Spot:</strong> Cable entry points, circuit groupings, space constraints</li>
-                  <li><strong>Use:</strong> Logical routing, proper securing, adequate support systems</li>
-                  <li><strong>Check:</strong> No stress on terminations, clear access, professional appearance</li>
+                  <li>
+                    <strong>Spot:</strong> Cable entry points, circuit groupings, space constraints
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Logical routing, proper securing, adequate support systems
+                  </li>
+                  <li>
+                    <strong>Check:</strong> No stress on terminations, clear access, professional
+                    appearance
+                  </li>
                 </ul>
               </div>
             </div>
@@ -199,11 +223,26 @@ const Module4Section5_5 = () => {
               Learning Outcomes
             </h2>
             <ul className="text-white/80 space-y-2 leading-relaxed list-disc pl-6">
-              <li>Explain why neat cable dressing is essential for safety, efficiency, and professional standards</li>
-              <li>Arrange conductors in a logical and accessible manner inside boxes and enclosures of all types</li>
-              <li>Use appropriate fixing and securing methods for different cable types and installation environments</li>
-              <li>Avoid common cable dressing mistakes that compromise safety, accessibility, or compliance</li>
-              <li>Apply BS 7671 and manufacturer recommendations for cable management inside enclosures</li>
+              <li>
+                Explain why neat cable dressing is essential for safety, efficiency, and
+                professional standards
+              </li>
+              <li>
+                Arrange conductors in a logical and accessible manner inside boxes and enclosures of
+                all types
+              </li>
+              <li>
+                Use appropriate fixing and securing methods for different cable types and
+                installation environments
+              </li>
+              <li>
+                Avoid common cable dressing mistakes that compromise safety, accessibility, or
+                compliance
+              </li>
+              <li>
+                Apply BS 7671 and manufacturer recommendations for cable management inside
+                enclosures
+              </li>
             </ul>
           </section>
 
@@ -214,11 +253,16 @@ const Module4Section5_5 = () => {
               Purpose and Benefits of Professional Cable Dressing
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Professional cable dressing provides multiple safety, operational, and maintenance benefits:</p>
+              <p>
+                Professional cable dressing provides multiple safety, operational, and maintenance
+                benefits:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Heat Management</p>
-                <p className="text-sm mb-2">Improves airflow and reduces heat build-up in enclosures.</p>
+                <p className="text-sm mb-2">
+                  Improves airflow and reduces heat build-up in enclosures.
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>Prevents hotspots that can cause insulation degradation</li>
                   <li>Maintains current-carrying capacity by avoiding thermal de-rating</li>
@@ -229,7 +273,9 @@ const Module4Section5_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Mechanical Protection</p>
-                <p className="text-sm mb-2">Prevents strain on terminations and conductor damage.</p>
+                <p className="text-sm mb-2">
+                  Prevents strain on terminations and conductor damage.
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>Eliminates stress on terminal connections from cable weight</li>
                   <li>Prevents conductor fatigue from vibration and movement</li>
@@ -268,7 +314,9 @@ const Module4Section5_5 = () => {
               Planning and Layout Strategy
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Systematic planning ensures efficient use of space and logical cable arrangements:</p>
+              <p>
+                Systematic planning ensures efficient use of space and logical cable arrangements:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Pre-installation Planning</p>
@@ -301,7 +349,10 @@ const Module4Section5_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong>Planning tip:</strong> Sketch the layout before installation to identify potential issues early.</p>
+                <p className="text-sm">
+                  <strong>Planning tip:</strong> Sketch the layout before installation to identify
+                  potential issues early.
+                </p>
               </div>
             </div>
           </section>
@@ -323,7 +374,9 @@ const Module4Section5_5 = () => {
               Securing Methods and Cable Separation
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Proper securing and separation ensure safety, compliance, and optimal performance:</p>
+              <p>
+                Proper securing and separation ensure safety, compliance, and optimal performance:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Cable Tie Selection and Application</p>
@@ -356,7 +409,10 @@ const Module4Section5_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong>Critical rule:</strong> Support cables independently - never rely on terminations for mechanical support.</p>
+                <p className="text-sm">
+                  <strong>Critical rule:</strong> Support cables independently - never rely on
+                  terminations for mechanical support.
+                </p>
               </div>
             </div>
           </section>
@@ -391,7 +447,9 @@ const Module4Section5_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <p className="font-medium text-green-400 mb-2">BS 7671 and Manufacturer Compliance</p>
+                <p className="font-medium text-green-400 mb-2">
+                  BS 7671 and Manufacturer Compliance
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>Wiring must be arranged to avoid undue stress on terminations</li>
                   <li>Conductors must be protected against mechanical damage</li>
@@ -410,7 +468,9 @@ const Module4Section5_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Consumer Units and Distribution Boards</p>
+                <p className="font-medium text-white mb-2">
+                  Consumer Units and Distribution Boards
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>Use manufacturer-specified cable routes and entry points</li>
                   <li>Group circuits by type: lighting, sockets, dedicated loads</li>
@@ -433,7 +493,9 @@ const Module4Section5_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Control Panels and Industrial Enclosures</p>
+                <p className="font-medium text-white mb-2">
+                  Control Panels and Industrial Enclosures
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>Use designated cable trunking and routing channels</li>
                   <li>Segregate power, control, and instrumentation cables</li>
@@ -476,7 +538,10 @@ const Module4Section5_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong>Documentation:</strong> Photograph completed installations for quality records and future reference.</p>
+                <p className="text-sm">
+                  <strong>Documentation:</strong> Photograph completed installations for quality
+                  records and future reference.
+                </p>
               </div>
             </div>
           </section>
@@ -486,7 +551,11 @@ const Module4Section5_5 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="text-lg font-semibold text-white mb-2">Summary</h2>
               <p className="text-white/80 leading-relaxed">
-                Neat cable dressing is about safety, compliance, and professional efficiency. Logical routing, proper securing, and adherence to BS 7671 standards make installations easier to inspect, maintain, and troubleshoot — while leaving a lasting impression of quality workmanship. Professional cable dressing reflects technical competence and commitment to electrical safety standards.
+                Neat cable dressing is about safety, compliance, and professional efficiency.
+                Logical routing, proper securing, and adherence to BS 7671 standards make
+                installations easier to inspect, maintain, and troubleshoot — while leaving a
+                lasting impression of quality workmanship. Professional cable dressing reflects
+                technical competence and commitment to electrical safety standards.
               </p>
             </div>
           </section>
@@ -494,7 +563,9 @@ const Module4Section5_5 = () => {
           {/* Quiz */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
-            <p className="text-white/70 mb-6">Test your understanding of cable dressing techniques and requirements.</p>
+            <p className="text-white/70 mb-6">
+              Test your understanding of cable dressing techniques and requirements.
+            </p>
             <Quiz questions={quizQuestions} />
           </section>
 

@@ -1,58 +1,71 @@
-import { ArrowLeft, FileText, Scale, Briefcase, Calculator, Star, PoundSterling, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  FileText,
+  Scale,
+  Briefcase,
+  Calculator,
+  Star,
+  PoundSterling,
+  Zap,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "5.1",
-    title: "Writing CVs and Preparing for Interviews",
-    description: "Creating effective CVs and developing interview skills for electrical industry roles",
+    number: '5.1',
+    title: 'Writing CVs and Preparing for Interviews',
+    description:
+      'Creating effective CVs and developing interview skills for electrical industry roles',
     icon: FileText,
-    href: "../level3-module7-section5-1",
+    href: '../level3-module7-section5-1',
   },
   {
-    number: "5.2",
+    number: '5.2',
     title: "Understanding Employment Law and Workers' Rights",
-    description: "Knowledge of employment legislation and understanding workers' rights and protections",
+    description:
+      "Knowledge of employment legislation and understanding workers' rights and protections",
     icon: Scale,
-    href: "../level3-module7-section5-2",
+    href: '../level3-module7-section5-2',
   },
   {
-    number: "5.3",
-    title: "Setting up as a Self-employed Electrician (insurance, UTR, HMRC)",
-    description: "Requirements and procedures for establishing a self-employed electrical business",
+    number: '5.3',
+    title: 'Setting up as a Self-employed Electrician (insurance, UTR, HMRC)',
+    description: 'Requirements and procedures for establishing a self-employed electrical business',
     icon: Briefcase,
-    href: "../level3-module7-section5-3",
+    href: '../level3-module7-section5-3',
   },
   {
-    number: "5.4",
-    title: "Quoting, Tendering, and Estimating Jobs",
-    description: "Skills for accurate job estimation, competitive quoting and tender preparation",
+    number: '5.4',
+    title: 'Quoting, Tendering, and Estimating Jobs',
+    description: 'Skills for accurate job estimation, competitive quoting and tender preparation',
     icon: Calculator,
-    href: "../level3-module7-section5-4",
+    href: '../level3-module7-section5-4',
   },
   {
-    number: "5.5",
-    title: "Customer Service and Building Reputation",
-    description: "Developing excellent customer service skills and building professional reputation",
+    number: '5.5',
+    title: 'Customer Service and Building Reputation',
+    description:
+      'Developing excellent customer service skills and building professional reputation',
     icon: Star,
-    href: "../level3-module7-section5-5",
+    href: '../level3-module7-section5-5',
   },
   {
-    number: "5.6",
-    title: "Financial Awareness (tax, bookkeeping, pricing strategies)",
-    description: "Understanding business finances, tax obligations and effective pricing strategies",
+    number: '5.6',
+    title: 'Financial Awareness (tax, bookkeeping, pricing strategies)',
+    description:
+      'Understanding business finances, tax obligations and effective pricing strategies',
     icon: PoundSterling,
-    href: "../level3-module7-section5-6",
+    href: '../level3-module7-section5-6',
   },
 ];
 
 const Level3Module7Section5 = () => {
   useSEO(
-    "Section 5: Employment and Business Awareness - Level 3 Module 7",
-    "Employment skills, self-employment options and business development"
+    'Section 5: Employment and Business Awareness - Level 3 Module 7',
+    'Employment skills, self-employment options and business development'
   );
 
   return (
@@ -77,26 +90,22 @@ const Level3Module7Section5 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

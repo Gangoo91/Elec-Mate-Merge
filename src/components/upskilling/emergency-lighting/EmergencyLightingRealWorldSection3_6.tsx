@@ -11,12 +11,16 @@ export const EmergencyLightingRealWorldSection3_6 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Case Study */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-foreground">Case Study: Birmingham Factory Design</h3>
+          <h3 className="text-lg font-semibold text-foreground">
+            Case Study: Birmingham Factory Design
+          </h3>
           <p className="text-foreground leading-relaxed">
-            An engineering firm in Birmingham designed a new factory using DIALux. The software showed that the escape routes achieved 1 lux minimum throughout the building. The design looked professional, with detailed lux contour maps and comprehensive reports showing full compliance with BS 5266-1.
+            An engineering firm in Birmingham designed a new factory using DIALux. The software
+            showed that the escape routes achieved 1 lux minimum throughout the building. The design
+            looked professional, with detailed lux contour maps and comprehensive reports showing
+            full compliance with BS 5266-1.
           </p>
         </div>
 
@@ -27,7 +31,9 @@ export const EmergencyLightingRealWorldSection3_6 = () => {
             <div>
               <h4 className="text-red-300 font-semibold mb-2">The Problem Discovered</h4>
               <p className="text-foreground text-sm leading-relaxed">
-                However, during commissioning, on-site lux testing found shadows caused by tall racking that the software model did not include. The escape route lighting dropped to 0.3 lux in several critical areas, well below the 1 lux minimum requirement.
+                However, during commissioning, on-site lux testing found shadows caused by tall
+                racking that the software model did not include. The escape route lighting dropped
+                to 0.3 lux in several critical areas, well below the 1 lux minimum requirement.
               </p>
             </div>
           </div>
@@ -86,7 +92,10 @@ export const EmergencyLightingRealWorldSection3_6 = () => {
             <div>
               <h4 className="text-green-300 font-semibold mb-2">Key Learning Points</h4>
               <p className="text-foreground text-sm leading-relaxed">
-                This case reinforced the need to combine software modelling with real-world verification. Software is an excellent design tool, but it cannot replace the engineer's understanding of how buildings will be used and how obstructions will affect lighting performance.
+                This case reinforced the need to combine software modelling with real-world
+                verification. Software is an excellent design tool, but it cannot replace the
+                engineer's understanding of how buildings will be used and how obstructions will
+                affect lighting performance.
               </p>
             </div>
           </div>
@@ -114,7 +123,6 @@ export const EmergencyLightingRealWorldSection3_6 = () => {
             </li>
           </ul>
         </div>
-
       </CardContent>
     </Card>
   );

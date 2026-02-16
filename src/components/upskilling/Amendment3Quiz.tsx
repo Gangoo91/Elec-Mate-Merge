@@ -10,69 +10,64 @@ import { useToast } from '@/hooks/use-toast';
 const quizQuestions = [
   {
     id: 1,
-    question: "When did Amendment 3 to BS 7671 become mandatory for new electrical installations?",
-    options: [
-      "1st January 2024",
-      "31st July 2024",
-      "1st September 2024",
-      "31st December 2024"
-    ],
+    question: 'When did Amendment 3 to BS 7671 become mandatory for new electrical installations?',
+    options: ['1st January 2024', '31st July 2024', '1st September 2024', '31st December 2024'],
     correctAnswer: 1,
-    explanation: "Amendment 3 to BS 7671 became mandatory on 31st July 2024. All new installations from this date must comply with the Amendment 3 requirements."
+    explanation:
+      'Amendment 3 to BS 7671 became mandatory on 31st July 2024. All new installations from this date must comply with the Amendment 3 requirements.',
   },
   {
     id: 2,
-    question: "Which scenario REQUIRES bidirectional protection devices according to Amendment 3?",
+    question: 'Which scenario REQUIRES bidirectional protection devices according to Amendment 3?',
     options: [
-      "Standard domestic lighting circuits",
-      "Solar PV system with battery storage",
-      "Electric shower installation",
-      "Garage socket outlets"
+      'Standard domestic lighting circuits',
+      'Solar PV system with battery storage',
+      'Electric shower installation',
+      'Garage socket outlets',
     ],
     correctAnswer: 1,
-    explanation: "Solar PV systems with battery storage require bidirectional protection because energy can flow in both directions - from the grid to charge batteries and from batteries back to the grid during discharge."
+    explanation:
+      'Solar PV systems with battery storage require bidirectional protection because energy can flow in both directions - from the grid to charge batteries and from batteries back to the grid during discharge.',
   },
   {
     id: 3,
-    question: "What is the maximum time allowed for anti-islanding protection to disconnect a system after grid loss detection?",
-    options: [
-      "1 second",
-      "3 seconds", 
-      "5 seconds",
-      "10 seconds"
-    ],
+    question:
+      'What is the maximum time allowed for anti-islanding protection to disconnect a system after grid loss detection?',
+    options: ['1 second', '3 seconds', '5 seconds', '10 seconds'],
     correctAnswer: 2,
-    explanation: "Anti-islanding protection must disconnect the system within 5 seconds of detecting grid loss to prevent dangerous islanding conditions where the local generation continues to energise the local grid."
+    explanation:
+      'Anti-islanding protection must disconnect the system within 5 seconds of detecting grid loss to prevent dangerous islanding conditions where the local generation continues to energise the local grid.',
   },
   {
     id: 4,
-    question: "Which consumer unit component must remain effective under reverse current conditions according to Amendment 3?",
-    options: [
-      "Main switch only",
-      "MCBs only",
-      "RCD protection",
-      "Meter tails"
-    ],
+    question:
+      'Which consumer unit component must remain effective under reverse current conditions according to Amendment 3?',
+    options: ['Main switch only', 'MCBs only', 'RCD protection', 'Meter tails'],
     correctAnswer: 2,
-    explanation: "RCD protection must remain effective under reverse current conditions. Standard RCDs may not operate correctly when current flows in the reverse direction, requiring bidirectional RCD protection in renewable energy installations."
+    explanation:
+      'RCD protection must remain effective under reverse current conditions. Standard RCDs may not operate correctly when current flows in the reverse direction, requiring bidirectional RCD protection in renewable energy installations.',
   },
   {
     id: 5,
-    question: "What must be included when testing bidirectional protection devices during commissioning?",
+    question:
+      'What must be included when testing bidirectional protection devices during commissioning?',
     options: [
-      "Testing in the forward direction only",
-      "Visual inspection only",
-      "Testing operation in both current directions",
-      "Insulation resistance testing only"
+      'Testing in the forward direction only',
+      'Visual inspection only',
+      'Testing operation in both current directions',
+      'Insulation resistance testing only',
     ],
     correctAnswer: 2,
-    explanation: "Bidirectional protection devices must be tested for operation in both current directions to ensure they provide adequate protection whether current flows from the grid to the installation or from the installation back to the grid."
-  }
+    explanation:
+      'Bidirectional protection devices must be tested for operation in both current directions to ensure they provide adequate protection whether current flows from the grid to the installation or from the installation back to the grid.',
+  },
 ];
 
 export const Amendment3Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<(number | undefined)[]>(new Array(quizQuestions.length).fill(undefined));
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | undefined)[]>(
+    new Array(quizQuestions.length).fill(undefined)
+  );
   const [showResults, setShowResults] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const { toast } = useToast();
@@ -89,15 +84,15 @@ export const Amendment3Quiz = () => {
     } else {
       setQuizCompleted(true);
       setShowResults(true);
-      
+
       const score = selectedAnswers.reduce((acc, answer, index) => {
         return acc + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
       }, 0);
-      
+
       const percentage = Math.round((score / quizQuestions.length) * 100);
-      
+
       toast({
-        title: "Quiz Completed!",
+        title: 'Quiz Completed!',
         description: `You scored ${score}/${quizQuestions.length} (${percentage}%)`,
       });
     }
@@ -137,13 +132,21 @@ export const Amendment3Quiz = () => {
             <div className="text-xl text-gray-300">
               You scored {score} out of {quizQuestions.length} questions correctly
             </div>
-            
-            <div className={`text-lg font-semibold ${
-              percentage >= 80 ? 'text-green-400' : 
-              percentage >= 60 ? 'text-yellow-400' : 'text-red-400'
-            }`}>
-              {percentage >= 80 ? 'Excellent understanding!' : 
-               percentage >= 60 ? 'Good knowledge, review key areas' : 'Requires further study'}
+
+            <div
+              className={`text-lg font-semibold ${
+                percentage >= 80
+                  ? 'text-green-400'
+                  : percentage >= 60
+                    ? 'text-yellow-400'
+                    : 'text-red-400'
+              }`}
+            >
+              {percentage >= 80
+                ? 'Excellent understanding!'
+                : percentage >= 60
+                  ? 'Good knowledge, review key areas'
+                  : 'Requires further study'}
             </div>
           </div>
 
@@ -173,10 +176,7 @@ export const Amendment3Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
-              onClick={resetQuiz}
-              className="bg-elec-yellow text-black hover:bg-yellow-400"
-            >
+            <Button onClick={resetQuiz} className="bg-elec-yellow text-black hover:bg-yellow-400">
               <RotateCcw className="mr-2 h-4 w-4" />
               Retake Quiz
             </Button>
@@ -195,17 +195,14 @@ export const Amendment3Quiz = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <QuizProgress 
-          currentQuestion={currentQuestion} 
-          totalQuestions={quizQuestions.length} 
-        />
-        
+        <QuizProgress currentQuestion={currentQuestion} totalQuestions={quizQuestions.length} />
+
         <QuizQuestion
           question={quizQuestions[currentQuestion]}
           selectedAnswer={selectedAnswers[currentQuestion]}
           onAnswerSelect={handleAnswerSelect}
         />
-        
+
         <QuizNavigation
           currentQuestion={currentQuestion}
           totalQuestions={quizQuestions.length}

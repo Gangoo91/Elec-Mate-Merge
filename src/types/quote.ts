@@ -137,7 +137,12 @@ export interface Quote {
   external_invoice_synced_at?: Date;
 }
 
-export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed' | 'work_done';
+export type QuoteTag =
+  | 'awaiting_payment'
+  | 'job_not_complete'
+  | 'on_hold'
+  | 'disputed'
+  | 'work_done';
 
 export interface JobTemplate {
   id: string;

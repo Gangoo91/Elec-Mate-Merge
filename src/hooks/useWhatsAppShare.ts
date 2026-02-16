@@ -8,7 +8,17 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
-export type ShareableDocumentType = 'quote' | 'invoice' | 'eicr' | 'eic' | 'minor-works' | 'fire-alarm' | 'emergency-lighting' | 'solar-pv' | 'pat-testing' | 'ev-charging';
+export type ShareableDocumentType =
+  | 'quote'
+  | 'invoice'
+  | 'eicr'
+  | 'eic'
+  | 'minor-works'
+  | 'fire-alarm'
+  | 'emergency-lighting'
+  | 'solar-pv'
+  | 'pat-testing'
+  | 'ev-charging';
 
 interface WhatsAppShareOptions {
   type: ShareableDocumentType;
@@ -81,7 +91,9 @@ export function useWhatsAppShare() {
         duration: 5000,
       });
 
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
       const { data: linkData, error: linkError } = await supabase.functions.invoke(
@@ -99,7 +111,8 @@ export function useWhatsAppShare() {
         throw new Error('Failed to generate shareable link');
       }
 
-      const message = options.customMessage ||
+      const message =
+        options.customMessage ||
         (MESSAGE_TEMPLATES[options.type]?.(options, linkData.publicUrl) ??
           MESSAGE_TEMPLATES.eicr(options, linkData.publicUrl));
 

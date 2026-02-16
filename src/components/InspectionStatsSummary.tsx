@@ -8,7 +8,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -19,15 +27,16 @@ interface InspectionStatsSummaryProps {
 const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const c1Count = inspectionItems.filter(item => item.outcome === 'C1').length;
-  const c2Count = inspectionItems.filter(item => item.outcome === 'C2').length;
-  const c3Count = inspectionItems.filter(item => item.outcome === 'C3').length;
-  const satisfactory = inspectionItems.filter(item => item.outcome === 'satisfactory').length;
-  const notApplicable = inspectionItems.filter(item => item.outcome === 'not-applicable').length;
-  const notVerified = inspectionItems.filter(item => item.outcome === 'not-verified').length;
-  const limitation = inspectionItems.filter(item => item.outcome === 'limitation').length;
+  const c1Count = inspectionItems.filter((item) => item.outcome === 'C1').length;
+  const c2Count = inspectionItems.filter((item) => item.outcome === 'C2').length;
+  const c3Count = inspectionItems.filter((item) => item.outcome === 'C3').length;
+  const satisfactory = inspectionItems.filter((item) => item.outcome === 'satisfactory').length;
+  const notApplicable = inspectionItems.filter((item) => item.outcome === 'not-applicable').length;
+  const notVerified = inspectionItems.filter((item) => item.outcome === 'not-verified').length;
+  const limitation = inspectionItems.filter((item) => item.outcome === 'limitation').length;
 
-  const completed = satisfactory + c1Count + c2Count + c3Count + notApplicable + notVerified + limitation;
+  const completed =
+    satisfactory + c1Count + c2Count + c3Count + notApplicable + notVerified + limitation;
   const total = inspectionItems.length;
   const progressPercent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
@@ -53,7 +62,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
             </div>
 
             {/* Critical (C1/C2) */}
-            {(c1Count + c2Count) > 0 && (
+            {c1Count + c2Count > 0 && (
               <div className="flex items-center gap-1">
                 <XCircle className="h-3.5 w-3.5 text-red-400" />
                 <span className="text-sm font-semibold text-red-400">{c1Count + c2Count}</span>
@@ -74,24 +83,30 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
 
           <div className="flex items-center gap-1.5">
             <span className="text-xs text-white/50">{progressPercent}%</span>
-            <ChevronUp className={cn(
-              "h-4 w-4 text-white/50 transition-transform",
-              isExpanded && "rotate-180"
-            )} />
+            <ChevronUp
+              className={cn(
+                'h-4 w-4 text-white/50 transition-transform',
+                isExpanded && 'rotate-180'
+              )}
+            />
           </div>
         </button>
 
         {/* Expanded Panel */}
         {isExpanded && (
-          <div className="fixed bottom-32 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-sm
+          <div
+            className="fixed bottom-32 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-sm
                           bg-black/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4
-                          shadow-2xl animate-in slide-in-from-bottom-2 duration-200">
+                          shadow-2xl animate-in slide-in-from-bottom-2 duration-200"
+          >
             <h4 className="text-sm font-semibold text-white mb-3">Inspection Progress</h4>
 
             {/* Progress Bar */}
             <div className="mb-4">
               <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-white/50">{completed} of {total} items</span>
+                <span className="text-white/50">
+                  {completed} of {total} items
+                </span>
                 <span className="text-elec-yellow font-semibold">{progressPercent}%</span>
               </div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
@@ -142,10 +157,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
 
         {/* Overlay when expanded */}
         {isExpanded && (
-          <div
-            className="fixed inset-0 z-30 bg-black/30"
-            onClick={() => setIsExpanded(false)}
-          />
+          <div className="fixed inset-0 z-30 bg-black/30" onClick={() => setIsExpanded(false)} />
         )}
       </div>
 
@@ -153,7 +165,9 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
       <div className="hidden lg:block eicr-section-card p-4">
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-semibold text-white">Inspection Summary</h4>
-          <span className="text-sm text-elec-yellow font-semibold">{progressPercent}% Complete</span>
+          <span className="text-sm text-elec-yellow font-semibold">
+            {progressPercent}% Complete
+          </span>
         </div>
 
         {/* Progress Bar */}

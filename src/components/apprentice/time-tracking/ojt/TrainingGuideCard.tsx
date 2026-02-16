@@ -1,11 +1,10 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileText } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const TrainingGuideCard = () => {
   const isMobile = useIsMobile();
-  
+
   return (
     <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
@@ -17,12 +16,15 @@ const TrainingGuideCard = () => {
       <CardContent>
         <div className="space-y-4">
           <p className="text-sm sm:text-base">
-            Off-the-job training is a key requirement for all apprenticeships. It refers to the learning that takes place outside of day-to-day work duties, 
-            but within your paid working hours. This should represent at least 20% of your total working time.
+            Off-the-job training is a key requirement for all apprenticeships. It refers to the
+            learning that takes place outside of day-to-day work duties, but within your paid
+            working hours. This should represent at least 20% of your total working time.
           </p>
           <div className={`grid grid-cols-1 ${isMobile ? 'gap-4' : 'md:grid-cols-2 gap-4'} mt-4`}>
             <div className="bg-white/10 p-4 rounded-md">
-              <h3 className="text-elec-yellow font-medium mb-2">What counts as off-the-job training:</h3>
+              <h3 className="text-elec-yellow font-medium mb-2">
+                What counts as off-the-job training:
+              </h3>
               <ul className="list-disc list-inside space-y-1 text-sm">
                 <li>Theory lessons and lectures</li>
                 <li>Practical training (shadowing, mentoring)</li>

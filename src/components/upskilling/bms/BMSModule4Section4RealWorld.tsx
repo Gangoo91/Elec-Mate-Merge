@@ -12,8 +12,10 @@ export const BMSModule4Section4RealWorld = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-gradient-to-r from-elec-gray to-gray-800/50 border border-gray-600/40 rounded-lg p-6">
-          <h3 className="text-xl font-semibold mb-4 text-foreground">London Office Tower: Integrated Façade Automation</h3>
-          
+          <h3 className="text-xl font-semibold mb-4 text-foreground">
+            London Office Tower: Integrated Façade Automation
+          </h3>
+
           <div className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
@@ -22,11 +24,13 @@ export const BMSModule4Section4RealWorld = () => {
                   <div>
                     <h4 className="font-semibold mb-2 text-blue-400">The Challenge</h4>
                     <p className="text-sm text-gray-300">
-                      A 20-storey London office tower faced excessive cooling costs and occupant complaints about glare and heat gain, particularly on the west-facing façade during afternoon hours.
+                      A 20-storey London office tower faced excessive cooling costs and occupant
+                      complaints about glare and heat gain, particularly on the west-facing façade
+                      during afternoon hours.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-800/60 rounded-lg p-4">
                   <h4 className="font-semibold mb-3 text-foreground">Original Problems:</h4>
                   <ul className="space-y-2 text-sm text-foreground">
@@ -38,18 +42,19 @@ export const BMSModule4Section4RealWorld = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start gap-3 p-4 bg-green-900/40 rounded-lg border border-green-500/40">
                   <CheckCircle className="h-6 w-6 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold mb-2 text-green-400">The Solution</h4>
                     <p className="text-sm text-gray-300">
-                      Installation of intelligent motorised blinds integrated with solar sensors, BMS coordination for daylight harvesting, and automatic HVAC integration.
+                      Installation of intelligent motorised blinds integrated with solar sensors,
+                      BMS coordination for daylight harvesting, and automatic HVAC integration.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-800/60 rounded-lg p-4">
                   <h4 className="font-semibold mb-3 text-foreground">Implementation Details:</h4>
                   <ul className="space-y-2 text-sm text-foreground">
@@ -62,10 +67,12 @@ export const BMSModule4Section4RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Technical Implementation */}
             <div className="bg-gray-800/40 rounded-lg p-5">
-              <h4 className="font-semibold mb-4 text-foreground text-lg">Technical Implementation</h4>
+              <h4 className="font-semibold mb-4 text-foreground text-lg">
+                Technical Implementation
+              </h4>
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="space-y-3">
                   <h5 className="font-semibold text-blue-300">Solar Control Strategy</h5>
@@ -76,7 +83,7 @@ export const BMSModule4Section4RealWorld = () => {
                     <p>• Weather station integration for cloud/storm response</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
                   <h5 className="font-semibold text-green-300">HVAC Integration</h5>
                   <div className="text-sm text-foreground space-y-1">
@@ -86,7 +93,7 @@ export const BMSModule4Section4RealWorld = () => {
                     <p>• Peak demand reduction during high-cost periods</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
                   <h5 className="font-semibold text-yellow-300">Lighting Coordination</h5>
                   <div className="text-sm text-foreground space-y-1">
@@ -98,7 +105,7 @@ export const BMSModule4Section4RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Results and Benefits */}
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-green-900/30 border border-green-600/40 rounded-lg p-4">
@@ -129,7 +136,7 @@ export const BMSModule4Section4RealWorld = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-blue-900/30 border border-blue-600/40 rounded-lg p-4">
                 <h4 className="font-semibold mb-3 text-blue-400">Occupant Benefits</h4>
                 <div className="space-y-2 text-sm text-foreground">
@@ -142,7 +149,7 @@ export const BMSModule4Section4RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-yellow-900/30 border border-yellow-600/40 rounded-lg p-4">
               <h4 className="font-semibold mb-2 text-yellow-400">Key Success Factors</h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm">

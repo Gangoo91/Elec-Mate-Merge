@@ -1,4 +1,16 @@
-import { ArrowLeft, FileText, CheckCircle, AlertTriangle, Users, Calendar, MapPin, Zap, Shield, Eye, Clipboard } from 'lucide-react';
+import {
+  ArrowLeft,
+  FileText,
+  CheckCircle,
+  AlertTriangle,
+  Users,
+  Calendar,
+  MapPin,
+  Zap,
+  Shield,
+  Eye,
+  Clipboard,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -26,11 +38,19 @@ const DocumentationGuide = () => {
           {/* Header */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-white">Documentation Guide</h1>
-            <p className="text-xl text-white">Complete guide to filling out test certificates and schedules for practical exams</p>
+            <p className="text-xl text-white">
+              Complete guide to filling out test certificates and schedules for practical exams
+            </p>
             <div className="flex justify-center gap-3">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">BS 7671:2018+A3:2024</Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">IET Guidance Note 3</Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">City & Guilds</Badge>
+              <Badge variant="secondary" className="bg-yellow-400 text-black">
+                BS 7671:2018+A3:2024
+              </Badge>
+              <Badge variant="outline" className="border-gray-600 text-white">
+                IET Guidance Note 3
+              </Badge>
+              <Badge variant="outline" className="border-gray-600 text-white">
+                City & Guilds
+              </Badge>
             </div>
           </div>
 
@@ -95,10 +115,18 @@ const DocumentationGuide = () => {
                     <div>
                       <h4 className="text-white font-semibold mb-2">What to Include:</h4>
                       <ul className="space-y-1">
-                        <li><strong>Client Name:</strong> Full name or company name</li>
-                        <li><strong>Address:</strong> Complete postal address</li>
-                        <li><strong>Postcode:</strong> Always include</li>
-                        <li><strong>Purpose:</strong> Domestic, commercial, industrial</li>
+                        <li>
+                          <strong>Client Name:</strong> Full name or company name
+                        </li>
+                        <li>
+                          <strong>Address:</strong> Complete postal address
+                        </li>
+                        <li>
+                          <strong>Postcode:</strong> Always include
+                        </li>
+                        <li>
+                          <strong>Purpose:</strong> Domestic, commercial, industrial
+                        </li>
                       </ul>
                     </div>
                     <div>
@@ -125,19 +153,35 @@ const DocumentationGuide = () => {
                     <div>
                       <h4 className="text-white font-semibold mb-2">Key Information Required:</h4>
                       <ul className="space-y-1">
-                        <li><strong>Extent of installation:</strong> Complete/partial</li>
-                        <li><strong>Date of completion:</strong> Work completion date</li>
-                        <li><strong>Date of inspection:</strong> When tests performed</li>
-                        <li><strong>Next inspection:</strong> Calculate from BS 7671</li>
+                        <li>
+                          <strong>Extent of installation:</strong> Complete/partial
+                        </li>
+                        <li>
+                          <strong>Date of completion:</strong> Work completion date
+                        </li>
+                        <li>
+                          <strong>Date of inspection:</strong> When tests performed
+                        </li>
+                        <li>
+                          <strong>Next inspection:</strong> Calculate from BS 7671
+                        </li>
                       </ul>
                     </div>
                     <div>
                       <h4 className="text-white font-semibold mb-2">Inspection Intervals:</h4>
                       <ul className="space-y-1">
-                        <li>• <strong>Domestic:</strong> 10 years (rented: 5 years)</li>
-                        <li>• <strong>Commercial:</strong> 5 years</li>
-                        <li>• <strong>Industrial:</strong> 3 years</li>
-                        <li>• <strong>Special locations:</strong> 1-3 years</li>
+                        <li>
+                          • <strong>Domestic:</strong> 10 years (rented: 5 years)
+                        </li>
+                        <li>
+                          • <strong>Commercial:</strong> 5 years
+                        </li>
+                        <li>
+                          • <strong>Industrial:</strong> 3 years
+                        </li>
+                        <li>
+                          • <strong>Special locations:</strong> 1-3 years
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -156,29 +200,55 @@ const DocumentationGuide = () => {
                       <div>
                         <h4 className="text-white font-semibold mb-2">Supply Details:</h4>
                         <ul className="space-y-1">
-                          <li><strong>Nature of supply:</strong> AC (tick box)</li>
-                          <li><strong>Number of phases:</strong> 1 or 3</li>
-                          <li><strong>Frequency:</strong> 50Hz</li>
-                          <li><strong>Nominal voltage:</strong> 230V/400V</li>
-                          <li><strong>Prospective fault current:</strong> Measured value</li>
+                          <li>
+                            <strong>Nature of supply:</strong> AC (tick box)
+                          </li>
+                          <li>
+                            <strong>Number of phases:</strong> 1 or 3
+                          </li>
+                          <li>
+                            <strong>Frequency:</strong> 50Hz
+                          </li>
+                          <li>
+                            <strong>Nominal voltage:</strong> 230V/400V
+                          </li>
+                          <li>
+                            <strong>Prospective fault current:</strong> Measured value
+                          </li>
                         </ul>
                       </div>
                       <div>
                         <h4 className="text-white font-semibold mb-2">Earthing Arrangements:</h4>
                         <ul className="space-y-1">
-                          <li><strong>Type:</strong> TN-S, TN-C-S, or TT</li>
-                          <li><strong>Ze:</strong> External earth loop impedance</li>
-                          <li><strong>Main bonding:</strong> Size and material</li>
-                          <li><strong>Electrode (TT only):</strong> Type and resistance</li>
+                          <li>
+                            <strong>Type:</strong> TN-S, TN-C-S, or TT
+                          </li>
+                          <li>
+                            <strong>Ze:</strong> External earth loop impedance
+                          </li>
+                          <li>
+                            <strong>Main bonding:</strong> Size and material
+                          </li>
+                          <li>
+                            <strong>Electrode (TT only):</strong> Type and resistance
+                          </li>
                         </ul>
                       </div>
                     </div>
                     <div className="bg-yellow-950/20 border border-yellow-400/30 p-3 rounded">
                       <h5 className="text-blue-300 font-semibold mb-2">Common System Types:</h5>
                       <ul className="text-sm space-y-1 text-blue-200">
-                        <li>• <strong>TN-S:</strong> Separate neutral and earth (older cable systems)</li>
-                        <li>• <strong>TN-C-S (PME):</strong> Combined neutral-earth from supplier (most common)</li>
-                        <li>• <strong>TT:</strong> Local earth electrode (rural areas, temporary supplies)</li>
+                        <li>
+                          • <strong>TN-S:</strong> Separate neutral and earth (older cable systems)
+                        </li>
+                        <li>
+                          • <strong>TN-C-S (PME):</strong> Combined neutral-earth from supplier
+                          (most common)
+                        </li>
+                        <li>
+                          • <strong>TT:</strong> Local earth electrode (rural areas, temporary
+                          supplies)
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -215,11 +285,19 @@ const DocumentationGuide = () => {
                       </div>
                     </div>
                     <div className="bg-yellow-950/30 border border-yellow-400/30 p-3 rounded">
-                      <h5 className="text-yellow-300 font-semibold mb-2">Bonding Conductor Sizes (Table 54.8):</h5>
+                      <h5 className="text-yellow-300 font-semibold mb-2">
+                        Bonding Conductor Sizes (Table 54.8):
+                      </h5>
                       <ul className="text-sm space-y-1 text-yellow-200">
-                        <li>• <strong>25mm² main earth:</strong> 10mm² main bonding minimum</li>
-                        <li>• <strong>35mm² main earth:</strong> 16mm² main bonding minimum</li>
-                        <li>• <strong>50mm² main earth:</strong> 25mm² main bonding minimum</li>
+                        <li>
+                          • <strong>25mm² main earth:</strong> 10mm² main bonding minimum
+                        </li>
+                        <li>
+                          • <strong>35mm² main earth:</strong> 16mm² main bonding minimum
+                        </li>
+                        <li>
+                          • <strong>50mm² main earth:</strong> 25mm² main bonding minimum
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -244,53 +322,95 @@ const DocumentationGuide = () => {
                     <div>
                       <p className="text-yellow-400 font-medium mb-2">Circuit Details:</p>
                       <ul className="space-y-1">
-                        <li><strong>Circuit number:</strong> From consumer unit</li>
-                        <li><strong>Circuit description:</strong> Kitchen sockets, upstairs lights</li>
-                        <li><strong>Type:</strong> Radial, ring, lighting, etc.</li>
-                        <li><strong>Reference method:</strong> Installation method</li>
-                        <li><strong>Cable type/size:</strong> T&E 2.5mm², SWA 4mm²</li>
+                        <li>
+                          <strong>Circuit number:</strong> From consumer unit
+                        </li>
+                        <li>
+                          <strong>Circuit description:</strong> Kitchen sockets, upstairs lights
+                        </li>
+                        <li>
+                          <strong>Type:</strong> Radial, ring, lighting, etc.
+                        </li>
+                        <li>
+                          <strong>Reference method:</strong> Installation method
+                        </li>
+                        <li>
+                          <strong>Cable type/size:</strong> T&E 2.5mm², SWA 4mm²
+                        </li>
                       </ul>
                     </div>
                     <div>
                       <p className="text-yellow-400 font-medium mb-2">Protection:</p>
                       <ul className="space-y-1">
-                        <li><strong>Overcurrent rating:</strong> MCB/fuse rating</li>
-                        <li><strong>RCD rating:</strong> 30mA, 100mA, etc.</li>
-                        <li><strong>Max Zs:</strong> From BS 7671 tables</li>
-                        <li><strong>Circuit length:</strong> Measured/calculated</li>
+                        <li>
+                          <strong>Overcurrent rating:</strong> MCB/fuse rating
+                        </li>
+                        <li>
+                          <strong>RCD rating:</strong> 30mA, 100mA, etc.
+                        </li>
+                        <li>
+                          <strong>Max Zs:</strong> From BS 7671 tables
+                        </li>
+                        <li>
+                          <strong>Circuit length:</strong> Measured/calculated
+                        </li>
                       </ul>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="bg-card p-4 rounded border border-gray-600">
                   <h4 className="text-white font-semibold mb-3">Test Results Columns:</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div>
                       <p className="text-yellow-400 font-medium mb-2">Continuity Tests:</p>
                       <ul className="space-y-1">
-                        <li><strong>R1+R2:</strong> Live+CPC resistance</li>
-                        <li><strong>Ring final:</strong> r1, r2, rn values</li>
-                        <li><strong>Units:</strong> Always in Ohms (Ω)</li>
-                        <li><strong>Polarity:</strong> Satisfactory ✓</li>
+                        <li>
+                          <strong>R1+R2:</strong> Live+CPC resistance
+                        </li>
+                        <li>
+                          <strong>Ring final:</strong> r1, r2, rn values
+                        </li>
+                        <li>
+                          <strong>Units:</strong> Always in Ohms (Ω)
+                        </li>
+                        <li>
+                          <strong>Polarity:</strong> Satisfactory ✓
+                        </li>
                       </ul>
                     </div>
                     <div>
                       <p className="text-yellow-400 font-medium mb-2">Insulation Tests:</p>
                       <ul className="space-y-1">
-                        <li><strong>L-N:</strong> Phase to neutral</li>
-                        <li><strong>L-E:</strong> Phase to earth</li>
-                        <li><strong>N-E:</strong> Neutral to earth</li>
-                        <li><strong>Units:</strong> MΩ (megohms)</li>
+                        <li>
+                          <strong>L-N:</strong> Phase to neutral
+                        </li>
+                        <li>
+                          <strong>L-E:</strong> Phase to earth
+                        </li>
+                        <li>
+                          <strong>N-E:</strong> Neutral to earth
+                        </li>
+                        <li>
+                          <strong>Units:</strong> MΩ (megohms)
+                        </li>
                       </ul>
                     </div>
                     <div>
                       <p className="text-yellow-400 font-medium mb-2">Final Tests:</p>
                       <ul className="space-y-1">
-                        <li><strong>Zs:</strong> Earth fault loop impedance</li>
-                        <li><strong>RCD test:</strong> Trip time at I∆n and 5×I∆n</li>
-                        <li><strong>Units:</strong> Ω for Zs, ms for RCD</li>
-                        <li><strong>Functional:</strong> Satisfactory ✓</li>
+                        <li>
+                          <strong>Zs:</strong> Earth fault loop impedance
+                        </li>
+                        <li>
+                          <strong>RCD test:</strong> Trip time at I∆n and 5×I∆n
+                        </li>
+                        <li>
+                          <strong>Units:</strong> Ω for Zs, ms for RCD
+                        </li>
+                        <li>
+                          <strong>Functional:</strong> Satisfactory ✓
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -331,9 +451,11 @@ const DocumentationGuide = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="bg-yellow-950/20 border border-yellow-400/30 p-4 rounded">
-                <h4 className="text-blue-300 font-semibold mb-2">Description of Minor Works - Be Specific:</h4>
+                <h4 className="text-blue-300 font-semibold mb-2">
+                  Description of Minor Works - Be Specific:
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-blue-200 font-medium mb-1">Good Examples:</p>
@@ -369,14 +491,23 @@ const DocumentationGuide = () => {
               <div className="bg-orange-950/30 border border-orange-500/50 p-4 rounded">
                 <h4 className="text-orange-300 font-semibold mb-2">EICR Purpose & Scope:</h4>
                 <p className="text-sm text-orange-200 mb-2">
-                  The EICR assesses the condition of an existing electrical installation against current standards.
-                  It identifies deterioration, defects, non-compliances, and recommends remedial action.
+                  The EICR assesses the condition of an existing electrical installation against
+                  current standards. It identifies deterioration, defects, non-compliances, and
+                  recommends remedial action.
                 </p>
                 <ul className="text-sm text-orange-200 space-y-1">
-                  <li>• <strong>Not a certificate of compliance</strong> - it's a condition report</li>
-                  <li>• <strong>Sampling basis</strong> - reasonable examination without damage</li>
-                  <li>• <strong>Competent person</strong> - must be carried out by qualified inspector</li>
-                  <li>• <strong>Current edition</strong> - assessed against BS 7671:2018+A3:2024</li>
+                  <li>
+                    • <strong>Not a certificate of compliance</strong> - it's a condition report
+                  </li>
+                  <li>
+                    • <strong>Sampling basis</strong> - reasonable examination without damage
+                  </li>
+                  <li>
+                    • <strong>Competent person</strong> - must be carried out by qualified inspector
+                  </li>
+                  <li>
+                    • <strong>Current edition</strong> - assessed against BS 7671:2018+A3:2024
+                  </li>
                 </ul>
               </div>
 
@@ -391,10 +522,18 @@ const DocumentationGuide = () => {
                     <div>
                       <h4 className="text-white font-semibold mb-2">Client Information:</h4>
                       <ul className="space-y-1">
-                        <li><strong>Name:</strong> Full name or company</li>
-                        <li><strong>Address:</strong> Complete postal address</li>
-                        <li><strong>Installation type:</strong> Domestic/Commercial/Industrial</li>
-                        <li><strong>Installation description:</strong> House, office, factory</li>
+                        <li>
+                          <strong>Name:</strong> Full name or company
+                        </li>
+                        <li>
+                          <strong>Address:</strong> Complete postal address
+                        </li>
+                        <li>
+                          <strong>Installation type:</strong> Domestic/Commercial/Industrial
+                        </li>
+                        <li>
+                          <strong>Installation description:</strong> House, office, factory
+                        </li>
                       </ul>
                     </div>
                     <div>
@@ -419,7 +558,9 @@ const DocumentationGuide = () => {
                 <div className="bg-card p-4 rounded border border-gray-600">
                   <div className="space-y-4">
                     <div>
-                      <h4 className="text-white font-semibold mb-2">Extent of Installation Covered:</h4>
+                      <h4 className="text-white font-semibold mb-2">
+                        Extent of Installation Covered:
+                      </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
                           <p className="text-yellow-400 font-medium mb-1">Tick all applicable:</p>
@@ -441,9 +582,11 @@ const DocumentationGuide = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="bg-red-950/30 border border-red-500/50 p-3 rounded">
-                      <h5 className="text-red-300 font-semibold mb-2">Common Limitations (must be recorded):</h5>
+                      <h5 className="text-red-300 font-semibold mb-2">
+                        Common Limitations (must be recorded):
+                      </h5>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <ul className="text-sm space-y-1 text-red-200">
                           <li>• Fixed equipment not accessible</li>
@@ -476,11 +619,15 @@ const DocumentationGuide = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                         <div className="bg-green-950/30 border border-green-500/50 p-3 rounded">
                           <h5 className="text-green-300 font-semibold mb-1">Satisfactory</h5>
-                          <p className="text-green-200 text-xs">Installation in satisfactory condition</p>
+                          <p className="text-green-200 text-xs">
+                            Installation in satisfactory condition
+                          </p>
                         </div>
                         <div className="bg-yellow-950/30 border border-yellow-400/30 p-3 rounded">
                           <h5 className="text-yellow-300 font-semibold mb-1">Unsatisfactory</h5>
-                          <p className="text-yellow-200 text-xs">Requires improvement but can remain in service</p>
+                          <p className="text-yellow-200 text-xs">
+                            Requires improvement but can remain in service
+                          </p>
                         </div>
                         <div className="bg-red-950/30 border border-red-500/50 p-3 rounded">
                           <h5 className="text-red-300 font-semibold mb-1">Dangerous</h5>
@@ -488,21 +635,33 @@ const DocumentationGuide = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div>
-                      <h4 className="text-white font-semibold mb-2">Recommendation for Next Inspection:</h4>
+                      <h4 className="text-white font-semibold mb-2">
+                        Recommendation for Next Inspection:
+                      </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
                           <p className="text-yellow-400 font-medium mb-1">Standard Intervals:</p>
                           <ul className="space-y-1">
-                            <li>• <strong>Domestic:</strong> 10 years (5 if rented)</li>
-                            <li>• <strong>Commercial:</strong> 5 years</li>
-                            <li>• <strong>Industrial:</strong> 3 years</li>
-                            <li>• <strong>Special locations:</strong> 1 year</li>
+                            <li>
+                              • <strong>Domestic:</strong> 10 years (5 if rented)
+                            </li>
+                            <li>
+                              • <strong>Commercial:</strong> 5 years
+                            </li>
+                            <li>
+                              • <strong>Industrial:</strong> 3 years
+                            </li>
+                            <li>
+                              • <strong>Special locations:</strong> 1 year
+                            </li>
                           </ul>
                         </div>
                         <div>
-                          <p className="text-yellow-400 font-medium mb-1">Factors affecting interval:</p>
+                          <p className="text-yellow-400 font-medium mb-1">
+                            Factors affecting interval:
+                          </p>
                           <ul className="space-y-1">
                             <li>• Environmental conditions</li>
                             <li>• Type and intensity of use</li>
@@ -524,13 +683,17 @@ const DocumentationGuide = () => {
                 </h3>
                 <div className="bg-card p-4 rounded border border-gray-600">
                   <div className="space-y-4">
-                    <h4 className="text-white font-semibold mb-2">Observation Classification Codes:</h4>
-                    
+                    <h4 className="text-white font-semibold mb-2">
+                      Observation Classification Codes:
+                    </h4>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-3">
                         <div className="bg-red-950/30 border border-red-500/50 p-3 rounded">
                           <h5 className="text-red-300 font-semibold mb-1">C1 - Danger Present</h5>
-                          <p className="text-red-200 text-sm mb-2">Risk of injury - immediate remedial action required</p>
+                          <p className="text-red-200 text-sm mb-2">
+                            Risk of injury - immediate remedial action required
+                          </p>
                           <ul className="text-xs text-red-200 space-y-1">
                             <li>• Exposed live parts</li>
                             <li>• Missing circuit protection</li>
@@ -538,10 +701,14 @@ const DocumentationGuide = () => {
                             <li>• No main earthing conductor</li>
                           </ul>
                         </div>
-                        
+
                         <div className="bg-orange-950/30 border border-orange-500/50 p-3 rounded">
-                          <h5 className="text-orange-300 font-semibold mb-1">C2 - Potentially Dangerous</h5>
-                          <p className="text-orange-200 text-sm mb-2">Urgent remedial action required</p>
+                          <h5 className="text-orange-300 font-semibold mb-1">
+                            C2 - Potentially Dangerous
+                          </h5>
+                          <p className="text-orange-200 text-sm mb-2">
+                            Urgent remedial action required
+                          </p>
                           <ul className="text-xs text-orange-200 space-y-1">
                             <li>• Lack of RCD protection</li>
                             <li>• Inadequate bonding</li>
@@ -550,11 +717,15 @@ const DocumentationGuide = () => {
                           </ul>
                         </div>
                       </div>
-                      
+
                       <div className="space-y-3">
                         <div className="bg-yellow-950/30 border border-yellow-400/30 p-3 rounded">
-                          <h5 className="text-yellow-300 font-semibold mb-1">C3 - Improvement Recommended</h5>
-                          <p className="text-yellow-200 text-sm mb-2">Does not comply with current standards</p>
+                          <h5 className="text-yellow-300 font-semibold mb-1">
+                            C3 - Improvement Recommended
+                          </h5>
+                          <p className="text-yellow-200 text-sm mb-2">
+                            Does not comply with current standards
+                          </p>
                           <ul className="text-xs text-yellow-200 space-y-1">
                             <li>• Old wiring systems</li>
                             <li>• Missing labels</li>
@@ -562,9 +733,11 @@ const DocumentationGuide = () => {
                             <li>• Absence of RCD (not required when installed)</li>
                           </ul>
                         </div>
-                        
+
                         <div className="bg-yellow-950/20 border border-yellow-400/30 p-3 rounded">
-                          <h5 className="text-blue-300 font-semibold mb-1">FI - Further Investigation</h5>
+                          <h5 className="text-blue-300 font-semibold mb-1">
+                            FI - Further Investigation
+                          </h5>
                           <p className="text-blue-200 text-sm mb-2">Unable to fully inspect/test</p>
                           <ul className="text-xs text-blue-200 space-y-1">
                             <li>• Inaccessible equipment</li>
@@ -597,7 +770,7 @@ const DocumentationGuide = () => {
                         <li>• Check you have all required test instruments</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-yellow-950/20 border border-yellow-400/30 p-3 rounded">
                       <h5 className="text-blue-300 font-semibold mb-2">During Inspection:</h5>
                       <ul className="text-sm space-y-1 text-blue-200">
@@ -608,7 +781,7 @@ const DocumentationGuide = () => {
                         <li>• Question anything that looks unusual</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-purple-950/30 border border-purple-500/50 p-3 rounded">
                       <h5 className="text-purple-300 font-semibold mb-2">Common Exam Scenarios:</h5>
                       <ul className="text-sm space-y-1 text-purple-200">
@@ -619,7 +792,7 @@ const DocumentationGuide = () => {
                         <li>• Missing circuit protection</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-orange-950/30 border border-orange-500/50 p-3 rounded">
                       <h5 className="text-orange-300 font-semibold mb-2">Documentation Quality:</h5>
                       <ul className="text-sm space-y-1 text-orange-200">
@@ -719,12 +892,27 @@ const DocumentationGuide = () => {
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <ul className="space-y-2">
-                <li><strong>Time Management:</strong> Allocate 10-15 minutes for documentation completion</li>
-                <li><strong>Work Order:</strong> Complete testing first, then fill certificates with accurate results</li>
-                <li><strong>Double Check:</strong> Verify all calculations and units before submitting</li>
-                <li><strong>Completeness:</strong> Ensure every required section is filled in correctly</li>
-                <li><strong>Legibility:</strong> Poor handwriting can lose marks - write clearly</li>
-                <li><strong>Professional Presentation:</strong> Certificates represent your competence</li>
+                <li>
+                  <strong>Time Management:</strong> Allocate 10-15 minutes for documentation
+                  completion
+                </li>
+                <li>
+                  <strong>Work Order:</strong> Complete testing first, then fill certificates with
+                  accurate results
+                </li>
+                <li>
+                  <strong>Double Check:</strong> Verify all calculations and units before submitting
+                </li>
+                <li>
+                  <strong>Completeness:</strong> Ensure every required section is filled in
+                  correctly
+                </li>
+                <li>
+                  <strong>Legibility:</strong> Poor handwriting can lose marks - write clearly
+                </li>
+                <li>
+                  <strong>Professional Presentation:</strong> Certificates represent your competence
+                </li>
               </ul>
             </CardContent>
           </Card>

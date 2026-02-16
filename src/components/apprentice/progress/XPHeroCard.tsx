@@ -13,7 +13,16 @@ import { useLearningXP } from '@/hooks/useLearningXP';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 
 export function XPHeroCard() {
-  const { totalXP, level, levelTitle, xpToday, dailyGoal, xpProgress, xpToNextLevel, setDailyGoal } = useLearningXP();
+  const {
+    totalXP,
+    level,
+    levelTitle,
+    xpToday,
+    dailyGoal,
+    xpProgress,
+    xpToNextLevel,
+    setDailyGoal,
+  } = useLearningXP();
   const { streak } = useStudyStreak();
   const [showGoalSelector, setShowGoalSelector] = useState(false);
 
@@ -41,14 +50,12 @@ export function XPHeroCard() {
               {/* Title + level */}
               <div>
                 <h3 className="text-lg font-bold text-white">{levelTitle}</h3>
-                <p className="text-sm text-white/90">
-                  {totalXP.toLocaleString()} XP total
-                </p>
+                <p className="text-sm text-white">{totalXP.toLocaleString()} XP total</p>
               </div>
 
               {/* Level progress bar */}
               <div>
-                <div className="flex justify-between text-xs text-white/90 mb-1">
+                <div className="flex justify-between text-xs text-white mb-1">
                   <span>Level {level}</span>
                   <span>{xpToNextLevel > 0 ? `${xpToNextLevel} XP to next` : 'Max level'}</span>
                 </div>
@@ -65,16 +72,14 @@ export function XPHeroCard() {
                 {/* Streak */}
                 <div className="flex items-center gap-1.5">
                   <Flame className="h-4 w-4 text-orange-400" />
-                  <span className="text-sm font-semibold text-white">
-                    {streak.currentStreak}
-                  </span>
-                  <span className="text-xs text-white/90">day streak</span>
+                  <span className="text-sm font-semibold text-white">{streak.currentStreak}</span>
+                  <span className="text-xs text-white">day streak</span>
                 </div>
 
                 {/* Daily goal button */}
                 <button
                   onClick={() => setShowGoalSelector(true)}
-                  className="flex items-center gap-1 text-xs text-white/90 hover:text-white h-11 px-2 rounded-lg active:bg-white/[0.05] touch-manipulation"
+                  className="flex items-center gap-1 text-xs text-white hover:text-white h-11 px-2 rounded-lg active:bg-white/[0.05] touch-manipulation"
                 >
                   <Settings2 className="h-3 w-3" />
                   <span>{dailyGoal} XP/day</span>

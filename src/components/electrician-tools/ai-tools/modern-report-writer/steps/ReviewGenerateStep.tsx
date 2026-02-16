@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
-import { 
-  ChevronLeft, 
-  Eye, 
-  Download, 
+import React, { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Separator } from '@/components/ui/separator';
+import {
+  ChevronLeft,
+  Eye,
+  Download,
   RefreshCw,
   Sparkles,
   FileText,
@@ -18,36 +18,36 @@ import {
   Calendar,
   AlertTriangle,
   Loader2,
-  Send
-} from "lucide-react";
-import { ReviewGenerateStepProps } from "../types";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import GeneratedReportDisplay from "../../GeneratedReportDisplay";
+  Send,
+} from 'lucide-react';
+import { ReviewGenerateStepProps } from '../types';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import GeneratedReportDisplay from '../../GeneratedReportDisplay';
 
 const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
   wizardData,
   onDataChange,
   onBack,
-  onReset
+  onReset,
 }) => {
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedReport, setGeneratedReport] = useState<string>("");
+  const [generatedReport, setGeneratedReport] = useState<string>('');
   const [showPreview, setShowPreview] = useState(false);
 
   const handleGenerateReport = async () => {
     if (!wizardData.template) {
       toast({
-        title: "Error",
-        description: "No template selected",
-        variant: "destructive"
+        title: 'Error',
+        description: 'No template selected',
+        variant: 'destructive',
       });
       return;
     }
 
     setIsGenerating(true);
-    
+
     try {
       console.log('Generating report with wizard data:', wizardData);
 
@@ -56,10 +56,10 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
           template: wizardData.template.id,
           formData: {
             ...wizardData.clientDetails,
-            ...wizardData.inspectionDetails
+            ...wizardData.inspectionDetails,
           },
-          additionalNotes: wizardData.additionalNotes
-        }
+          additionalNotes: wizardData.additionalNotes,
+        },
       });
 
       if (error) {
@@ -70,18 +70,18 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
       console.log('Report generation successful');
       setGeneratedReport(data.report);
       setShowPreview(true);
-      
+
       toast({
-        title: "Report Generated Successfully",
-        description: "Your professional electrical report has been generated.",
-        variant: "success"
+        title: 'Report Generated Successfully',
+        description: 'Your professional electrical report has been generated.',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error generating report:', error);
       toast({
-        title: "Generation Failed",
-        description: error.message || "Failed to generate report. Please try again.",
-        variant: "destructive"
+        title: 'Generation Failed',
+        description: error.message || 'Failed to generate report. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -95,24 +95,24 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
   const getSummaryData = () => {
     const clientData = wizardData.clientDetails;
     const inspectionData = wizardData.inspectionDetails;
-    
+
     return {
       client: {
         name: clientData.clientName || 'Not specified',
         address: clientData.clientAddress || 'Not specified',
-        phone: clientData.clientPhone || 'Not specified'
+        phone: clientData.clientPhone || 'Not specified',
       },
       installation: {
         address: clientData.installationAddress || 'Not specified',
         description: clientData.installationDescription || 'Not specified',
-        age: clientData.estimatedAge || 'Not specified'
+        age: clientData.estimatedAge || 'Not specified',
       },
       inspection: {
         extent: inspectionData.extentOfInspection || 'Not specified',
         assessment: inspectionData.overallAssessment || 'Not specified',
         faultCount: inspectionData.faults?.length || 0,
-        inspector: inspectionData.inspectorName || 'Not specified'
-      }
+        inspector: inspectionData.inspectorName || 'Not specified',
+      },
     };
   };
 
@@ -130,7 +130,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
                 Your {wizardData.template?.name} has been generated successfully
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-2 w-full">
               <Button
                 variant="outline"
@@ -153,10 +153,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         </Card>
 
         {/* Generated Report Display */}
-        <GeneratedReportDisplay
-          report={generatedReport}
-          template={wizardData.template!.id}
-        />
+        <GeneratedReportDisplay report={generatedReport} template={wizardData.template!.id} />
       </div>
     );
   }
@@ -171,7 +168,8 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <h2 className="text-2xl font-bold text-foreground">Review & Generate Report</h2>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Review your information below and add any additional notes before generating your professional electrical report.
+            Review your information below and add any additional notes before generating your
+            professional electrical report.
           </p>
         </div>
       </Card>
@@ -187,7 +185,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             <p className="text-sm text-muted-foreground">Selected template and settings</p>
           </div>
         </div>
-        
+
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground">Template:</span>
@@ -203,7 +201,9 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground">Category:</span>
-            <span className="text-sm text-foreground capitalize">{wizardData.template?.category}</span>
+            <span className="text-sm text-foreground capitalize">
+              {wizardData.template?.category}
+            </span>
           </div>
         </div>
       </Card>
@@ -220,7 +220,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <h3 className="text-sm font-medium text-foreground">Client Info</h3>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <div className="space-y-1">
               <div>
@@ -232,7 +232,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
                 <p className="text-xs text-foreground">{summary.client.phone}</p>
               </div>
             </div>
-            
+
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
                 <span className="text-xs text-muted-foreground">Address:</span>
@@ -252,19 +252,21 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <h3 className="text-sm font-medium text-foreground">Installation</h3>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <div className="space-y-1">
               <div>
                 <span className="text-xs text-muted-foreground">Location:</span>
-                <p className="text-xs text-foreground font-medium">{summary.installation.address}</p>
+                <p className="text-xs text-foreground font-medium">
+                  {summary.installation.address}
+                </p>
               </div>
               <div>
                 <span className="text-xs text-muted-foreground">Type:</span>
                 <p className="text-xs text-foreground">{summary.installation.description}</p>
               </div>
             </div>
-            
+
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
                 <span className="text-xs text-muted-foreground">Age:</span>
@@ -284,15 +286,16 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               <h3 className="text-sm font-medium text-foreground">Inspection</h3>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <div className="space-y-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-muted-foreground">Assessment:</span>
-                <Badge 
-                  className={`text-xs ${summary.inspection.assessment === 'satisfactory' 
-                    ? 'bg-green-500/20 text-green-400 border-green-500/50' 
-                    : 'bg-red-500/20 text-red-400 border-red-500/50'
+                <Badge
+                  className={`text-xs ${
+                    summary.inspection.assessment === 'satisfactory'
+                      ? 'bg-green-500/20 text-green-400 border-green-500/50'
+                      : 'bg-red-500/20 text-red-400 border-red-500/50'
                   }`}
                 >
                   {summary.inspection.assessment}
@@ -305,7 +308,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
                 </span>
               </div>
             </div>
-            
+
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
                 <span className="text-xs text-muted-foreground">Inspector:</span>
@@ -322,7 +325,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
           <Sparkles className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-lg font-medium text-foreground">Additional Notes</h3>
         </div>
-        
+
         <div className="space-y-3">
           <Textarea
             placeholder="Add any additional notes, special requirements, or instructions for the AI report generator..."
@@ -391,9 +394,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             </Button>
 
             <div className="text-center">
-              <p className="text-sm text-muted-foreground">
-                Step 4 of 4 • Review & Generate
-              </p>
+              <p className="text-sm text-muted-foreground">Step 4 of 4 • Review & Generate</p>
             </div>
 
             <Button

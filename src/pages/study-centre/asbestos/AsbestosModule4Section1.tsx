@@ -1,54 +1,52 @@
-import { ArrowLeft, Layers, CheckCircle, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Layers, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 /* ───────────────────────── Quick-check questions ───────────────────────── */
 
 const quickCheckQuestions = [
   {
-    id: "three-categories",
-    question:
-      "How many categories of asbestos work does CAR 2012 define?",
+    id: 'three-categories',
+    question: 'How many categories of asbestos work does CAR 2012 define?',
     options: [
-      "Three: licensed, notifiable non-licensed (NNLW), and non-licensed",
-      "Two: licensed and non-licensed only",
-      "Four: prohibited, licensed, notifiable, and exempt",
-      "One: all asbestos work requires the same controls",
+      'Three: licensed, notifiable non-licensed (NNLW), and non-licensed',
+      'Two: licensed and non-licensed only',
+      'Four: prohibited, licensed, notifiable, and exempt',
+      'One: all asbestos work requires the same controls',
     ],
     correctIndex: 0,
     explanation:
-      "CAR 2012 divides asbestos work into three categories based on risk. Licensed work is the highest risk and requires an HSE licence. Notifiable non-licensed work (NNLW) is the middle category and requires an ASB5 notification but no licence. Non-licensed work is the lowest risk category but still requires appropriate controls and awareness training.",
+      'CAR 2012 divides asbestos work into three categories based on risk. Licensed work is the highest risk and requires an HSE licence. Notifiable non-licensed work (NNLW) is the middle category and requires an ASB5 notification but no licence. Non-licensed work is the lowest risk category but still requires appropriate controls and awareness training.',
   },
   {
-    id: "nnlw-notification",
-    question:
-      "What notification is required before starting notifiable non-licensed work (NNLW)?",
+    id: 'nnlw-notification',
+    question: 'What notification is required before starting notifiable non-licensed work (NNLW)?',
     options: [
-      "An ASB5 form submitted online to the HSE before work begins",
-      "A 14-day written notification to the local council",
-      "No notification is required for non-licensed work",
-      "A verbal notification to the building owner is sufficient",
+      'An ASB5 form submitted online to the HSE before work begins',
+      'A 14-day written notification to the local council',
+      'No notification is required for non-licensed work',
+      'A verbal notification to the building owner is sufficient',
     ],
     correctIndex: 0,
     explanation:
-      "Notifiable non-licensed work requires an ASB5 online notification to the HSE before work begins. This is different from licensed work, which requires a 14-day written notification. Non-licensed work (the lowest category) does not require any notification. The ASB5 form captures details of the work, the contractor, the location, and the type of ACM involved.",
+      'Notifiable non-licensed work requires an ASB5 online notification to the HSE before work begins. This is different from licensed work, which requires a 14-day written notification. Non-licensed work (the lowest category) does not require any notification. The ASB5 form captures details of the work, the contractor, the location, and the type of ACM involved.',
   },
   {
-    id: "textured-coatings-category",
+    id: 'textured-coatings-category',
     question:
-      "A contractor plans to remove asbestos-containing textured coatings using power tools. Which work category does this fall into?",
+      'A contractor plans to remove asbestos-containing textured coatings using power tools. Which work category does this fall into?',
     options: [
-      "Notifiable non-licensed work (NNLW)",
-      "Non-licensed work",
-      "Licensed work",
-      "It depends on the age of the building",
+      'Notifiable non-licensed work (NNLW)',
+      'Non-licensed work',
+      'Licensed work',
+      'It depends on the age of the building',
     ],
     correctIndex: 0,
     explanation:
-      "Removing textured coatings containing asbestos using power tools is classified as notifiable non-licensed work (NNLW). This is because power tools generate more dust and fibre release than hand methods. If the same textured coating were removed by hand using wet methods (steam/wet scraping), it would typically fall into the lower non-licensed category. The method of work is a key factor in determining the category.",
+      'Removing textured coatings containing asbestos using power tools is classified as notifiable non-licensed work (NNLW). This is because power tools generate more dust and fibre release than hand methods. If the same textured coating were removed by hand using wet methods (steam/wet scraping), it would typically fall into the lower non-licensed category. The method of work is a key factor in determining the category.',
   },
 ];
 
@@ -56,28 +54,24 @@ const quickCheckQuestions = [
 
 const faqs = [
   {
-    question:
-      "Can a non-licensed contractor carry out licensed asbestos work?",
+    question: 'Can a non-licensed contractor carry out licensed asbestos work?',
     answer:
-      "No. Only contractors holding a current HSE asbestos licence can carry out licensed work. Carrying out licensed work without a licence is a criminal offence that can result in prosecution, unlimited fines, and imprisonment for up to 2 years. However, a licensed contractor can carry out all categories of work — licensed, NNLW, and non-licensed. If there is any doubt about whether work is licensed or non-licensed, the safer approach is to engage a licensed contractor.",
+      'No. Only contractors holding a current HSE asbestos licence can carry out licensed work. Carrying out licensed work without a licence is a criminal offence that can result in prosecution, unlimited fines, and imprisonment for up to 2 years. However, a licensed contractor can carry out all categories of work — licensed, NNLW, and non-licensed. If there is any doubt about whether work is licensed or non-licensed, the safer approach is to engage a licensed contractor.',
   },
   {
-    question:
-      "What happens if I get the work category wrong?",
+    question: 'What happens if I get the work category wrong?',
     answer:
-      "Getting the category wrong can have serious consequences. If licensed work is treated as non-licensed, this is a criminal offence and workers will be exposed to uncontrolled asbestos fibres. If NNLW is carried out without notification, the contractor is in breach of CAR 2012 and health records will not be properly maintained. Even treating non-licensed work as requiring no controls is dangerous. The HSE expects duty holders and contractors to exercise due diligence in determining the correct category. When in doubt, always err on the side of the higher-risk category.",
+      'Getting the category wrong can have serious consequences. If licensed work is treated as non-licensed, this is a criminal offence and workers will be exposed to uncontrolled asbestos fibres. If NNLW is carried out without notification, the contractor is in breach of CAR 2012 and health records will not be properly maintained. Even treating non-licensed work as requiring no controls is dangerous. The HSE expects duty holders and contractors to exercise due diligence in determining the correct category. When in doubt, always err on the side of the higher-risk category.',
   },
   {
-    question:
-      "How long must health records be kept for NNLW?",
+    question: 'How long must health records be kept for NNLW?',
     answer:
-      "Health records for workers carrying out notifiable non-licensed work must be kept for at least 40 years from the date of the last entry. This extremely long retention period reflects the fact that asbestos-related diseases can take 15 to 60 years to develop after exposure. Even if the employer ceases trading, the records must be offered to the HSE for safekeeping. Workers also have the right to access their own health records at any time.",
+      'Health records for workers carrying out notifiable non-licensed work must be kept for at least 40 years from the date of the last entry. This extremely long retention period reflects the fact that asbestos-related diseases can take 15 to 60 years to develop after exposure. Even if the employer ceases trading, the records must be offered to the HSE for safekeeping. Workers also have the right to access their own health records at any time.',
   },
   {
-    question:
-      "Is removing asbestos cement sheets always non-licensed work?",
+    question: 'Is removing asbestos cement sheets always non-licensed work?',
     answer:
-      "Not necessarily. Removing intact asbestos cement sheets by hand (careful dismantling without breaking) is generally classified as non-licensed work. However, if the work involves cutting, drilling, or using power tools on asbestos cement, it becomes NNLW because these methods release significantly more fibres. If the asbestos cement is in very poor condition, badly damaged, or if the work cannot be done without significant breakage, it may even require licensed removal. The condition of the material and the method of work both determine the category.",
+      'Not necessarily. Removing intact asbestos cement sheets by hand (careful dismantling without breaking) is generally classified as non-licensed work. However, if the work involves cutting, drilling, or using power tools on asbestos cement, it becomes NNLW because these methods release significantly more fibres. If the asbestos cement is in very poor condition, badly damaged, or if the work cannot be done without significant breakage, it may even require licensed removal. The condition of the material and the method of work both determine the category.',
   },
 ];
 
@@ -86,28 +80,22 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "Which of the following types of work ALWAYS requires an HSE asbestos licence?",
+    question: 'Which of the following types of work ALWAYS requires an HSE asbestos licence?',
     options: [
-      "Removing intact asbestos cement sheets by hand",
-      "Work with sprayed asbestos coatings (limpet asbestos)",
-      "Removing asbestos-containing floor tiles by hand",
-      "Removing textured coatings using wet scraping methods",
+      'Removing intact asbestos cement sheets by hand',
+      'Work with sprayed asbestos coatings (limpet asbestos)',
+      'Removing asbestos-containing floor tiles by hand',
+      'Removing textured coatings using wet scraping methods',
     ],
     correctAnswer: 1,
     explanation:
-      "Work with sprayed asbestos coatings (limpet asbestos) always requires an HSE licence because it is one of the highest-risk ACMs. Sprayed coatings have a very high asbestos content and are extremely friable, releasing large quantities of fibres when disturbed. The other options describe work that can typically be carried out as non-licensed or NNLW.",
+      'Work with sprayed asbestos coatings (limpet asbestos) always requires an HSE licence because it is one of the highest-risk ACMs. Sprayed coatings have a very high asbestos content and are extremely friable, releasing large quantities of fibres when disturbed. The other options describe work that can typically be carried out as non-licensed or NNLW.',
   },
   {
     id: 2,
     question:
       "How many days' written notification to the HSE is required before starting licensed asbestos work?",
-    options: [
-      "7 days",
-      "14 days",
-      "28 days",
-      "No notification is required for licensed work",
-    ],
+    options: ['7 days', '14 days', '28 days', 'No notification is required for licensed work'],
     correctAnswer: 1,
     explanation:
       "Licensed work requires 14 days' written notification to the HSE before work begins. This gives the HSE time to review the plan of work and potentially inspect the site. In genuine emergency situations, the 14-day period can be reduced, but this must be agreed with the HSE in advance.",
@@ -115,54 +103,52 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      "Which of the following is a criterion for work to be classified as notifiable non-licensed work (NNLW)?",
+      'Which of the following is a criterion for work to be classified as notifiable non-licensed work (NNLW)?',
     options: [
-      "The work involves sprayed asbestos coatings",
-      "The work is sporadic and low intensity with short duration tasks",
-      "The work requires a full enclosure to be constructed",
-      "Worker exposure is expected to exceed the control limit",
+      'The work involves sprayed asbestos coatings',
+      'The work is sporadic and low intensity with short duration tasks',
+      'The work requires a full enclosure to be constructed',
+      'Worker exposure is expected to exceed the control limit',
     ],
     correctAnswer: 1,
     explanation:
-      "For work to qualify as NNLW, it must be sporadic and low intensity, involve short-duration tasks, and worker exposure must not exceed the control limit. If any of these criteria are not met — for example, if exposure is expected to exceed the control limit or if the work involves sprayed coatings — the work must be treated as licensed work.",
+      'For work to qualify as NNLW, it must be sporadic and low intensity, involve short-duration tasks, and worker exposure must not exceed the control limit. If any of these criteria are not met — for example, if exposure is expected to exceed the control limit or if the work involves sprayed coatings — the work must be treated as licensed work.',
   },
   {
     id: 4,
-    question:
-      "What is the minimum level of RPE recommended for non-licensed asbestos work?",
+    question: 'What is the minimum level of RPE recommended for non-licensed asbestos work?',
     options: [
-      "A standard dust mask",
-      "FFP3 disposable respirator",
-      "Full-face powered air respirator",
-      "No RPE is required for non-licensed work",
+      'A standard dust mask',
+      'FFP3 disposable respirator',
+      'Full-face powered air respirator',
+      'No RPE is required for non-licensed work',
     ],
     correctAnswer: 1,
     explanation:
-      "An FFP3 disposable respirator is the recommended minimum for non-licensed asbestos work. Standard dust masks do not provide adequate protection against asbestos fibres. While full-face powered air respirators provide higher protection, they are typically required for licensed work. Even for the lowest-risk category, FFP3 protection is recommended as good practice.",
+      'An FFP3 disposable respirator is the recommended minimum for non-licensed asbestos work. Standard dust masks do not provide adequate protection against asbestos fibres. While full-face powered air respirators provide higher protection, they are typically required for licensed work. Even for the lowest-risk category, FFP3 protection is recommended as good practice.',
   },
   {
     id: 5,
     question:
-      "A contractor removes textured coating by hand using wet/steam methods. What category of work is this?",
+      'A contractor removes textured coating by hand using wet/steam methods. What category of work is this?',
     options: [
-      "Licensed work",
-      "Notifiable non-licensed work (NNLW)",
-      "Non-licensed work",
-      "Prohibited work",
+      'Licensed work',
+      'Notifiable non-licensed work (NNLW)',
+      'Non-licensed work',
+      'Prohibited work',
     ],
     correctAnswer: 2,
     explanation:
-      "Removing textured coatings by hand using wet methods (steam or wet scraping) is classified as non-licensed work because fibre release is kept to a minimum. However, if power tools were used instead, the work would be reclassified as NNLW because power tools generate significantly more dust and airborne fibres. The method of work is the determining factor.",
+      'Removing textured coatings by hand using wet methods (steam or wet scraping) is classified as non-licensed work because fibre release is kept to a minimum. However, if power tools were used instead, the work would be reclassified as NNLW because power tools generate significantly more dust and airborne fibres. The method of work is the determining factor.',
   },
   {
     id: 6,
-    question:
-      "Which HSE publication provides task sheets for common non-licensed asbestos tasks?",
+    question: 'Which HSE publication provides task sheets for common non-licensed asbestos tasks?',
     options: [
-      "L143 — Managing and working with asbestos",
-      "HSG210 — Asbestos Essentials",
-      "HSG264 — Asbestos: The survey guide",
-      "INDG223 — A short guide to managing asbestos",
+      'L143 — Managing and working with asbestos',
+      'HSG210 — Asbestos Essentials',
+      'HSG264 — Asbestos: The survey guide',
+      'INDG223 — A short guide to managing asbestos',
     ],
     correctAnswer: 1,
     explanation:
@@ -170,13 +156,12 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question:
-      "What is one of the most common mistakes when categorising asbestos work?",
+    question: 'What is one of the most common mistakes when categorising asbestos work?',
     options: [
-      "Assuming all asbestos work requires a licence",
-      "Treating licensed work as non-licensed work",
-      "Notifying the HSE too early before starting work",
-      "Providing too much training for non-licensed work",
+      'Assuming all asbestos work requires a licence',
+      'Treating licensed work as non-licensed work',
+      'Notifying the HSE too early before starting work',
+      'Providing too much training for non-licensed work',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,16 +170,11 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      "How often must medical surveillance be carried out for workers performing licensed asbestos work?",
-    options: [
-      "Every year",
-      "Every 2 years",
-      "Every 3 years",
-      "Every 5 years",
-    ],
+      'How often must medical surveillance be carried out for workers performing licensed asbestos work?',
+    options: ['Every year', 'Every 2 years', 'Every 3 years', 'Every 5 years'],
     correctAnswer: 1,
     explanation:
-      "Medical surveillance for workers carrying out licensed asbestos work must be carried out every 2 years. This includes a medical examination by an HSE-appointed doctor (EMAS). Records of medical surveillance must be kept for 40 years. For NNLW, health records must also be kept for 40 years, though the medical surveillance requirements are slightly different.",
+      'Medical surveillance for workers carrying out licensed asbestos work must be carried out every 2 years. This includes a medical examination by an HSE-appointed doctor (EMAS). Records of medical surveillance must be kept for 40 years. For NNLW, health records must also be kept for 40 years, though the medical surveillance requirements are slightly different.',
   },
 ];
 
@@ -202,10 +182,9 @@ const quizQuestions = [
 
 const AsbestosModule4Section1 = () => {
   useSEO({
-    title:
-      "Categories of Asbestos Work | Asbestos Awareness Module 4 Section 1",
+    title: 'Categories of Asbestos Work | Asbestos Awareness Module 4 Section 1',
     description:
-      "Learn about the three categories of asbestos work under CAR 2012: licensed work, notifiable non-licensed work (NNLW), and non-licensed work. Understand how to determine the correct category.",
+      'Learn about the three categories of asbestos work under CAR 2012: licensed work, notifiable non-licensed work (NNLW), and non-licensed work. Understand how to determine the correct category.',
   });
 
   return (
@@ -252,10 +231,10 @@ const AsbestosModule4Section1 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              The Control of Asbestos Regulations 2012 divides all asbestos work into{" "}
-              <strong>three categories</strong> based on risk. The category determines the level
-              of control, notification, training, and supervision required for the work to be
-              carried out lawfully and safely.
+              The Control of Asbestos Regulations 2012 divides all asbestos work into{' '}
+              <strong>three categories</strong> based on risk. The category determines the level of
+              control, notification, training, and supervision required for the work to be carried
+              out lawfully and safely.
             </p>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-3 sm:p-4 bg-orange-500/10 border-l-2 border-l-orange-500/50 border border-orange-500/30">
@@ -303,7 +282,8 @@ const AsbestosModule4Section1 = () => {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
                     <span>
-                      <strong>Non-licensed work</strong> &mdash; lowest risk, still requires controls
+                      <strong>Non-licensed work</strong> &mdash; lowest risk, still requires
+                      controls
                     </span>
                   </li>
                 </ul>
@@ -335,10 +315,10 @@ const AsbestosModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Licensed work covers the most dangerous types of asbestos work. The contractor
-                must hold a <strong>current HSE asbestos licence</strong> before starting any
-                licensed work. The licence is granted by the HSE and is subject to regular review
-                and renewal.
+                Licensed work covers the most dangerous types of asbestos work. The contractor must
+                hold a <strong>current HSE asbestos licence</strong> before starting any licensed
+                work. The licence is granted by the HSE and is subject to regular review and
+                renewal.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -370,7 +350,9 @@ const AsbestosModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Any work where exposure cannot be reduced below the control limit</strong>{" "}
+                      <strong>
+                        Any work where exposure cannot be reduced below the control limit
+                      </strong>{' '}
                       &mdash; regardless of the ACM type
                     </div>
                   </div>
@@ -452,8 +434,8 @@ const AsbestosModule4Section1 = () => {
             3-Tier Work Categories at a Glance
           </h2>
           <p className="text-white/80 mb-6 text-sm">
-            The diagram below compares the three categories of asbestos work side by side.
-            Use it as a quick reference when determining the category for a particular task.
+            The diagram below compares the three categories of asbestos work side by side. Use it as
+            a quick reference when determining the category for a particular task.
           </p>
 
           <div className="grid md:grid-cols-3 gap-4 sm:gap-5">
@@ -470,9 +452,7 @@ const AsbestosModule4Section1 = () => {
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Examples
                   </p>
-                  <p className="text-white/80">
-                    Sprayed coatings, pipe lagging, AIB (general)
-                  </p>
+                  <p className="text-white/80">Sprayed coatings, pipe lagging, AIB (general)</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
@@ -727,14 +707,14 @@ const AsbestosModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      Drilling, cutting, or working with <strong>asbestos cement using power
-                      tools</strong>
+                      Drilling, cutting, or working with{' '}
+                      <strong>asbestos cement using power tools</strong>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      Short-duration work with <strong>asbestos insulating board (AIB)</strong>{" "}
+                      Short-duration work with <strong>asbestos insulating board (AIB)</strong>{' '}
                       where strict controls are in place
                     </div>
                   </div>
@@ -804,10 +784,10 @@ const AsbestosModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Non-licensed work is the lowest-risk category. It does not require an HSE licence
-                or notification. However, it <strong>still requires appropriate controls and
-                awareness training</strong> &mdash; there is no category of asbestos work where no
-                precautions are needed.
+                Non-licensed work is the lowest-risk category. It does not require an HSE licence or
+                notification. However, it{' '}
+                <strong>still requires appropriate controls and awareness training</strong> &mdash;
+                there is no category of asbestos work where no precautions are needed.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -888,12 +868,12 @@ const AsbestosModule4Section1 = () => {
                   </h3>
                 </div>
                 <p className="text-white/80 text-sm">
-                  The &ldquo;lowest risk&rdquo; category still involves working with a material
-                  that causes fatal diseases. There is <strong className="text-white">no safe
-                  level</strong> of asbestos exposure. Even non-licensed work requires a risk
-                  assessment, a plan of work, appropriate training, and suitable control measures.
-                  Complacency in the lowest-risk category has led to avoidable exposures and HSE
-                  enforcement action.
+                  The &ldquo;lowest risk&rdquo; category still involves working with a material that
+                  causes fatal diseases. There is{' '}
+                  <strong className="text-white">no safe level</strong> of asbestos exposure. Even
+                  non-licensed work requires a risk assessment, a plan of work, appropriate
+                  training, and suitable control measures. Complacency in the lowest-risk category
+                  has led to avoidable exposures and HSE enforcement action.
                 </p>
               </div>
             </div>
@@ -909,8 +889,8 @@ const AsbestosModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Determining the correct category requires you to consider several factors about
-                the work to be carried out. The following questions will help guide the decision:
+                Determining the correct category requires you to consider several factors about the
+                work to be carried out. The following questions will help guide the decision:
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -919,9 +899,9 @@ const AsbestosModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>The type of ACM:</strong> Is it sprayed coating, lagging, AIB, asbestos
-                      cement, textured coating, or another material? Higher-risk ACMs (sprayed
-                      coatings, lagging) always require licensed work.
+                      <strong>The type of ACM:</strong> Is it sprayed coating, lagging, AIB,
+                      asbestos cement, textured coating, or another material? Higher-risk ACMs
+                      (sprayed coatings, lagging) always require licensed work.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -942,9 +922,9 @@ const AsbestosModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>The expected fibre release:</strong> How much fibre is likely to become
-                      airborne? Materials in poor condition or those that are highly friable release
-                      more fibres.
+                      <strong>The expected fibre release:</strong> How much fibre is likely to
+                      become airborne? Materials in poor condition or those that are highly friable
+                      release more fibres.
                     </div>
                   </div>
                 </div>
@@ -978,7 +958,7 @@ const AsbestosModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      A <strong>non-licensed contractor cannot carry out licensed work</strong>{" "}
+                      A <strong>non-licensed contractor cannot carry out licensed work</strong>{' '}
                       &mdash; doing so is a criminal offence.
                     </div>
                   </div>
@@ -1019,8 +999,8 @@ const AsbestosModule4Section1 = () => {
                         Treating Licensed Work as Non-Licensed
                       </h3>
                       <p className="text-white/80 text-sm">
-                        This is the <strong className="text-white">most serious mistake</strong>{" "}
-                        and constitutes a criminal offence. Workers are exposed to high-risk ACMs
+                        This is the <strong className="text-white">most serious mistake</strong> and
+                        constitutes a criminal offence. Workers are exposed to high-risk ACMs
                         without adequate controls, medical surveillance, or training. This can
                         result in prosecution, unlimited fines, and imprisonment for up to 2 years.
                       </p>
@@ -1052,11 +1032,12 @@ const AsbestosModule4Section1 = () => {
                         Assuming Textured Coatings Are Always Non-Licensed
                       </h3>
                       <p className="text-white/80 text-sm">
-                        The category depends on the <strong className="text-white">method of
-                        removal</strong>. Removing textured coatings by hand using wet methods is
-                        typically non-licensed work. However, using power tools pushes it into the
-                        NNLW category because of the increased fibre release. Always check the
-                        planned method before determining the category.
+                        The category depends on the{' '}
+                        <strong className="text-white">method of removal</strong>. Removing textured
+                        coatings by hand using wet methods is typically non-licensed work. However,
+                        using power tools pushes it into the NNLW category because of the increased
+                        fibre release. Always check the planned method before determining the
+                        category.
                       </p>
                     </div>
                   </div>
@@ -1070,11 +1051,11 @@ const AsbestosModule4Section1 = () => {
                         Not Keeping Health Records for NNLW
                       </h3>
                       <p className="text-white/80 text-sm">
-                        Health records for NNLW must be kept for <strong className="text-white">40
-                        years</strong>. This is a legal requirement, not optional. Many contractors
-                        fail to establish and maintain these records, leaving workers without
-                        evidence of exposure that may be critical decades later when
-                        asbestos-related diseases develop.
+                        Health records for NNLW must be kept for{' '}
+                        <strong className="text-white">40 years</strong>. This is a legal
+                        requirement, not optional. Many contractors fail to establish and maintain
+                        these records, leaving workers without evidence of exposure that may be
+                        critical decades later when asbestos-related diseases develop.
                       </p>
                     </div>
                   </div>
@@ -1088,10 +1069,10 @@ const AsbestosModule4Section1 = () => {
                         Not Providing Adequate Training for Non-Licensed Work
                       </h3>
                       <p className="text-white/80 text-sm">
-                        Even the lowest-risk category requires asbestos awareness training.
-                        Workers who have not been trained cannot recognise ACMs, understand the
-                        risks, or apply the correct control measures. Untrained workers are far
-                        more likely to disturb asbestos unknowingly.
+                        Even the lowest-risk category requires asbestos awareness training. Workers
+                        who have not been trained cannot recognise ACMs, understand the risks, or
+                        apply the correct control measures. Untrained workers are far more likely to
+                        disturb asbestos unknowingly.
                       </p>
                     </div>
                   </div>
@@ -1162,7 +1143,7 @@ const AsbestosModule4Section1 = () => {
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-orange-500 mt-0.5 flex-shrink-0" />
                     <span>
-                      The <strong>method of work</strong> (hand vs power tools) and the{" "}
+                      The <strong>method of work</strong> (hand vs power tools) and the{' '}
                       <strong>type of ACM</strong> are key factors in determining the category.
                     </span>
                   </li>
@@ -1187,10 +1168,7 @@ const AsbestosModule4Section1 = () => {
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0"
-              >
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
               </div>
@@ -1200,10 +1178,7 @@ const AsbestosModule4Section1 = () => {
 
         {/* ─── Quiz ─── */}
         <div className="mt-12">
-          <Quiz
-            title="Categories of Asbestos Work Quiz"
-            questions={quizQuestions}
-          />
+          <Quiz title="Categories of Asbestos Work Quiz" questions={quizQuestions} />
         </div>
 
         {/* ─── Bottom Navigation ─── */}

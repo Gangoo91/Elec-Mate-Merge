@@ -12,8 +12,8 @@ export const HandsOnLoadMatchingSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Apply practical load matching techniques with this step-by-step guide for 
-          common installation scenarios.
+          Apply practical load matching techniques with this step-by-step guide for common
+          installation scenarios.
         </p>
 
         <div className="grid gap-4">
@@ -132,7 +132,7 @@ export const HandsOnLoadMatchingSection = () => {
             <h4 className="text-red-300 font-semibold text-sm">Critical Safety Note</h4>
           </div>
           <p className="text-red-200 text-sm">
-            Always isolate circuits before installing or testing controls. Verify compatibility 
+            Always isolate circuits before installing or testing controls. Verify compatibility
             ratings and never exceed manufacturer specifications.
           </p>
         </div>

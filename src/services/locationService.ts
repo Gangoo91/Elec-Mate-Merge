@@ -26,36 +26,40 @@ export interface WorkerLocationWithEmployee extends WorkerLocation {
 export const getWorkerLocations = async (): Promise<WorkerLocationWithEmployee[]> => {
   const { data, error } = await supabase
     .from('employer_worker_locations')
-    .select(`
+    .select(
+      `
       *,
       employer_employees (*),
       employer_jobs (*)
-    `)
+    `
+    )
     .order('last_updated', { ascending: false });
-  
+
   if (error) {
     console.error('Error fetching worker locations:', error);
     throw error;
   }
-  
+
   return data || [];
 };
 
 export const getLatestWorkerLocations = async (): Promise<WorkerLocationWithEmployee[]> => {
   const { data, error } = await supabase
     .from('employer_worker_locations')
-    .select(`
+    .select(
+      `
       *,
       employer_employees (*),
       employer_jobs (*)
-    `)
+    `
+    )
     .order('last_updated', { ascending: false });
-  
+
   if (error) {
     console.error('Error fetching latest worker locations:', error);
     throw error;
   }
-  
+
   // Dedupe by employee_id to get only the latest location per worker
   const latestByEmployee = new Map<string, WorkerLocationWithEmployee>();
   for (const location of data || []) {
@@ -63,7 +67,7 @@ export const getLatestWorkerLocations = async (): Promise<WorkerLocationWithEmpl
       latestByEmployee.set(location.employee_id, location);
     }
   }
-  
+
   return Array.from(latestByEmployee.values());
 };
 
@@ -89,12 +93,12 @@ export const updateWorkerLocation = async (
     })
     .select()
     .single();
-  
+
   if (error) {
     console.error('Error updating worker location:', error);
     throw error;
   }
-  
+
   return data;
 };
 
@@ -107,9 +111,7 @@ export const checkInWorker = async (
   return updateWorkerLocation(employeeId, lat, lng, 'On Site', jobId);
 };
 
-export const checkOutWorker = async (
-  locationId: string
-): Promise<boolean> => {
+export const checkOutWorker = async (locationId: string): Promise<boolean> => {
   const { error } = await supabase
     .from('employer_worker_locations')
     .update({
@@ -118,12 +120,12 @@ export const checkOutWorker = async (
       last_updated: new Date().toISOString(),
     })
     .eq('id', locationId);
-  
+
   if (error) {
     console.error('Error checking out worker:', error);
     return false;
   }
-  
+
   return true;
 };
 
@@ -132,20 +134,22 @@ export const getWorkerLocationsByJob = async (
 ): Promise<WorkerLocationWithEmployee[]> => {
   const { data, error } = await supabase
     .from('employer_worker_locations')
-    .select(`
+    .select(
+      `
       *,
       employer_employees (*),
       employer_jobs (*)
-    `)
+    `
+    )
     .eq('job_id', jobId)
     .eq('status', 'On Site')
     .order('last_updated', { ascending: false });
-  
+
   if (error) {
     console.error('Error fetching worker locations by job:', error);
     throw error;
   }
-  
+
   return data || [];
 };
 
@@ -188,8 +192,7 @@ export const calculateDistance = (
   const dLng = toRad(lng2 - lng1);
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 };
@@ -204,7 +207,9 @@ export const estimateTravelTime = (distanceKm: number): number => {
 
 // Get current user's employee record (for self-service)
 export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return null;
 
   const { data, error } = await supabase

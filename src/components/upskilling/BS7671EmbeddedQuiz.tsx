@@ -21,12 +21,12 @@ interface BS7671EmbeddedQuizProps {
 
 const BS7671EmbeddedQuiz = ({ questions, title, description }: BS7671EmbeddedQuizProps) => {
   // Transform BS7671 format to QuizQuestion format for components
-  const transformedQuestions: QuizQuestionType[] = questions.map(q => ({
+  const transformedQuestions: QuizQuestionType[] = questions.map((q) => ({
     id: q.id,
     question: q.question,
     options: q.options,
     correctAnswer: q.correct,
-    explanation: q.explanation
+    explanation: q.explanation,
   }));
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -61,7 +61,7 @@ const BS7671EmbeddedQuiz = ({ questions, title, description }: BS7671EmbeddedQui
 
   if (showResults) {
     return (
-      <QuizResults 
+      <QuizResults
         questions={transformedQuestions}
         selectedAnswers={selectedAnswers}
         onRestart={handleRestart}
@@ -74,24 +74,22 @@ const BS7671EmbeddedQuiz = ({ questions, title, description }: BS7671EmbeddedQui
       {title && (
         <div className="text-center">
           <h3 className="text-xl font-semibold text-foreground mb-2">{title}</h3>
-          {description && (
-            <p className="text-foreground">{description}</p>
-          )}
+          {description && <p className="text-foreground">{description}</p>}
         </div>
       )}
-      
-      <QuizProgress 
+
+      <QuizProgress
         currentQuestion={currentQuestion}
         totalQuestions={transformedQuestions.length}
       />
-      
-      <QuizQuestion 
+
+      <QuizQuestion
         question={transformedQuestions[currentQuestion]}
         selectedAnswer={selectedAnswers[currentQuestion]}
         onAnswerSelect={handleAnswerSelect}
       />
-      
-      <QuizNavigation 
+
+      <QuizNavigation
         currentQuestion={currentQuestion}
         totalQuestions={transformedQuestions.length}
         selectedAnswer={selectedAnswers[currentQuestion]}

@@ -103,7 +103,9 @@ export const CookieConsent = () => {
                   <Cookie className="h-5 w-5 sm:h-5.5 sm:w-5.5 text-yellow-400" />
                 </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-white">Cookie Preferences</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-white">
+                    Cookie Preferences
+                  </h3>
                   <p className="text-xs text-white/50">Manage your privacy settings</p>
                 </div>
               </div>
@@ -111,7 +113,10 @@ export const CookieConsent = () => {
               {/* Description */}
               <p className="text-sm text-white/70 leading-relaxed mb-4">
                 We use cookies to enhance your experience and analyse platform usage.{' '}
-                <Link to="/cookies" className="text-yellow-400 hover:text-yellow-300 underline underline-offset-2">
+                <Link
+                  to="/cookies"
+                  className="text-yellow-400 hover:text-yellow-300 underline underline-offset-2"
+                >
                   Cookie Policy
                 </Link>
               </p>
@@ -139,7 +144,11 @@ export const CookieConsent = () => {
                 className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-white/60 hover:text-white/90 transition-colors touch-manipulation rounded-lg hover:bg-white/5 active:bg-white/10"
               >
                 Customise
-                {showDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                {showDetails ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
               </button>
             </div>
 
@@ -180,7 +189,7 @@ export const CookieConsent = () => {
                     {/* Analytics Cookies */}
                     <div
                       className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08] transition-colors"
-                      onClick={() => setPreferences(p => ({ ...p, analytics: !p.analytics }))}
+                      onClick={() => setPreferences((p) => ({ ...p, analytics: !p.analytics }))}
                     >
                       <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
                         <BarChart3 className="h-4 w-4 text-blue-400" />
@@ -193,7 +202,9 @@ export const CookieConsent = () => {
                       </div>
                       <Switch
                         checked={preferences.analytics}
-                        onCheckedChange={(checked) => setPreferences(p => ({ ...p, analytics: checked }))}
+                        onCheckedChange={(checked) =>
+                          setPreferences((p) => ({ ...p, analytics: checked }))
+                        }
                         className="data-[state=checked]:bg-yellow-400"
                       />
                     </div>
@@ -201,7 +212,7 @@ export const CookieConsent = () => {
                     {/* Marketing Cookies */}
                     <div
                       className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08] transition-colors"
-                      onClick={() => setPreferences(p => ({ ...p, marketing: !p.marketing }))}
+                      onClick={() => setPreferences((p) => ({ ...p, marketing: !p.marketing }))}
                     >
                       <div className="w-9 h-9 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
                         <Megaphone className="h-4 w-4 text-purple-400" />
@@ -214,7 +225,9 @@ export const CookieConsent = () => {
                       </div>
                       <Switch
                         checked={preferences.marketing}
-                        onCheckedChange={(checked) => setPreferences(p => ({ ...p, marketing: checked }))}
+                        onCheckedChange={(checked) =>
+                          setPreferences((p) => ({ ...p, marketing: checked }))
+                        }
                         className="data-[state=checked]:bg-yellow-400"
                       />
                     </div>

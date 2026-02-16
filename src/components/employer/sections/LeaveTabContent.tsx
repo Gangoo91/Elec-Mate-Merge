@@ -1,19 +1,36 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Switch } from "@/components/ui/switch";
-import { Progress } from "@/components/ui/progress";
-import { toast } from "@/hooks/use-toast";
-import { useEmployer } from "@/contexts/EmployerContext";
-import { format, parseISO, eachDayOfInterval, isWeekend, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval as getDays, addMonths, subMonths } from "date-fns";
-import { 
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Switch } from '@/components/ui/switch';
+import { Progress } from '@/components/ui/progress';
+import { toast } from '@/hooks/use-toast';
+import { useEmployer } from '@/contexts/EmployerContext';
+import {
+  format,
+  parseISO,
+  eachDayOfInterval,
+  isWeekend,
+  isSameDay,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval as getDays,
+  addMonths,
+  subMonths,
+} from 'date-fns';
+import {
   Palmtree,
   Calendar as CalendarIcon,
   Plus,
@@ -24,10 +41,10 @@ import {
   ChevronRight,
   AlertCircle,
   User,
-  Briefcase
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { LeaveType, LeaveStatus } from "@/hooks/useEmployeeLeave";
+  Briefcase,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { LeaveType, LeaveStatus } from '@/hooks/useEmployeeLeave';
 
 const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
   { value: 'annual', label: 'Annual Leave', colour: 'bg-elec-yellow/20 text-elec-yellow' },
@@ -38,37 +55,43 @@ const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
   { value: 'bank_holiday', label: 'Bank Holiday', colour: 'bg-success/20 text-success' },
 ];
 
-const getLeaveTypeInfo = (type: LeaveType) => LEAVE_TYPES.find(t => t.value === type) || LEAVE_TYPES[0];
+const getLeaveTypeInfo = (type: LeaveType) =>
+  LEAVE_TYPES.find((t) => t.value === type) || LEAVE_TYPES[0];
 
 const getStatusColour = (status: LeaveStatus): string => {
   switch (status) {
-    case 'approved': return 'bg-success/20 text-success border-success/30';
-    case 'pending': return 'bg-warning/20 text-warning border-warning/30';
-    case 'rejected': return 'bg-destructive/20 text-destructive border-destructive/30';
-    case 'cancelled': return 'bg-muted text-muted-foreground border-muted';
-    default: return 'bg-muted text-muted-foreground';
+    case 'approved':
+      return 'bg-success/20 text-success border-success/30';
+    case 'pending':
+      return 'bg-warning/20 text-warning border-warning/30';
+    case 'rejected':
+      return 'bg-destructive/20 text-destructive border-destructive/30';
+    case 'cancelled':
+      return 'bg-muted text-muted-foreground border-muted';
+    default:
+      return 'bg-muted text-muted-foreground';
   }
 };
 
 export function LeaveTabContent() {
-  const { 
-    employees, 
-    holidayAllowances, 
+  const {
+    employees,
+    holidayAllowances,
     leaveRequests,
     addLeaveRequest,
     approveLeaveRequest,
     rejectLeaveRequest,
-    getEmployeeAllowance
+    getEmployeeAllowance,
   } = useEmployer();
-  
+
   const [showRequestForm, setShowRequestForm] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<string>("");
-  const [leaveType, setLeaveType] = useState<LeaveType>("annual");
+  const [selectedEmployee, setSelectedEmployee] = useState<string>('');
+  const [leaveType, setLeaveType] = useState<LeaveType>('annual');
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [isHalfDay, setIsHalfDay] = useState(false);
   const [halfDayPeriod, setHalfDayPeriod] = useState<'am' | 'pm'>('am');
-  const [reason, setReason] = useState("");
+  const [reason, setReason] = useState('');
   const [calendarMonth, setCalendarMonth] = useState(new Date());
 
   // Calculate business days for the request
@@ -76,24 +99,24 @@ export function LeaveTabContent() {
     if (isHalfDay) return 0.5;
     if (!startDate || !endDate) return 0;
     const days = eachDayOfInterval({ start: startDate, end: endDate });
-    return days.filter(day => !isWeekend(day)).length;
+    return days.filter((day) => !isWeekend(day)).length;
   };
 
   const handleSubmitRequest = () => {
     if (!selectedEmployee || !startDate || !endDate) {
       toast({
-        title: "Missing Information",
-        description: "Please select an employee and dates.",
-        variant: "destructive",
+        title: 'Missing Information',
+        description: 'Please select an employee and dates.',
+        variant: 'destructive',
       });
       return;
     }
 
-    const employee = employees.find(e => e.id === selectedEmployee);
+    const employee = employees.find((e) => e.id === selectedEmployee);
     if (!employee) return;
 
     const totalDays = calculateDays();
-    
+
     addLeaveRequest({
       employeeId: selectedEmployee,
       employeeName: employee.name,
@@ -107,33 +130,33 @@ export function LeaveTabContent() {
     });
 
     toast({
-      title: "Request Submitted",
+      title: 'Request Submitted',
       description: `Leave request for ${employee.name} has been submitted.`,
     });
 
     // Reset form
     setShowRequestForm(false);
-    setSelectedEmployee("");
+    setSelectedEmployee('');
     setStartDate(undefined);
     setEndDate(undefined);
-    setReason("");
+    setReason('');
     setIsHalfDay(false);
   };
 
   const handleApprove = (id: string) => {
-    approveLeaveRequest(id, "Manager");
+    approveLeaveRequest(id, 'Manager');
     toast({
-      title: "Leave Approved",
-      description: "The leave request has been approved.",
+      title: 'Leave Approved',
+      description: 'The leave request has been approved.',
     });
   };
 
   const handleReject = (id: string) => {
-    rejectLeaveRequest(id, "Declined by manager");
+    rejectLeaveRequest(id, 'Declined by manager');
     toast({
-      title: "Leave Rejected",
-      description: "The leave request has been rejected.",
-      variant: "destructive",
+      title: 'Leave Rejected',
+      description: 'The leave request has been rejected.',
+      variant: 'destructive',
     });
   };
 
@@ -143,7 +166,7 @@ export function LeaveTabContent() {
   const monthDays = getDays({ start: monthStart, end: monthEnd });
 
   const getEmployeesOffOnDate = (date: Date) => {
-    return leaveRequests.filter(lr => {
+    return leaveRequests.filter((lr) => {
       if (lr.status !== 'approved' && lr.status !== 'pending') return false;
       const start = parseISO(lr.startDate);
       const end = parseISO(lr.endDate);
@@ -151,18 +174,14 @@ export function LeaveTabContent() {
     });
   };
 
-  const pendingRequests = leaveRequests.filter(lr => lr.status === 'pending');
+  const pendingRequests = leaveRequests.filter((lr) => lr.status === 'pending');
 
   return (
     <div className="space-y-4">
       {/* Header Row */}
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-foreground">Leave & Holidays</h3>
-        <Button 
-          size="sm" 
-          onClick={() => setShowRequestForm(!showRequestForm)}
-          className="gap-1.5"
-        >
+        <Button size="sm" onClick={() => setShowRequestForm(!showRequestForm)} className="gap-1.5">
           <Plus className="h-4 w-4" />
           Request Leave
         </Button>
@@ -173,7 +192,7 @@ export function LeaveTabContent() {
         <Card className="bg-surface border-elec-yellow/30">
           <CardContent className="p-4 space-y-4">
             <h4 className="font-medium text-foreground">New Leave Request</h4>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Employee</Label>
@@ -182,13 +201,17 @@ export function LeaveTabContent() {
                     <SelectValue placeholder="Select employee" />
                   </SelectTrigger>
                   <SelectContent>
-                    {employees.filter(e => e.status !== 'Archived').map(emp => (
-                      <SelectItem key={emp.id} value={emp.id}>{emp.name}</SelectItem>
-                    ))}
+                    {employees
+                      .filter((e) => e.status !== 'Archived')
+                      .map((emp) => (
+                        <SelectItem key={emp.id} value={emp.id}>
+                          {emp.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
-              
+
               <div className="space-y-2">
                 <Label>Leave Type</Label>
                 <Select value={leaveType} onValueChange={(v) => setLeaveType(v as LeaveType)}>
@@ -196,8 +219,10 @@ export function LeaveTabContent() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {LEAVE_TYPES.map(type => (
-                      <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                    {LEAVE_TYPES.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -209,9 +234,12 @@ export function LeaveTabContent() {
                 <Label>Start Date</Label>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-start text-left font-normal bg-elec-gray">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal bg-elec-gray"
+                    >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {startDate ? format(startDate, "PPP") : "Pick a date"}
+                      {startDate ? format(startDate, 'PPP') : 'Pick a date'}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -225,14 +253,17 @@ export function LeaveTabContent() {
                   </PopoverContent>
                 </Popover>
               </div>
-              
+
               <div className="space-y-2">
                 <Label>End Date</Label>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-start text-left font-normal bg-elec-gray">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal bg-elec-gray"
+                    >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {endDate ? format(endDate, "PPP") : "Pick a date"}
+                      {endDate ? format(endDate, 'PPP') : 'Pick a date'}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -240,7 +271,7 @@ export function LeaveTabContent() {
                       mode="single"
                       selected={endDate}
                       onSelect={setEndDate}
-                      disabled={(date) => startDate ? date < startDate : false}
+                      disabled={(date) => (startDate ? date < startDate : false)}
                       initialFocus
                       className="p-3 pointer-events-auto"
                     />
@@ -255,7 +286,10 @@ export function LeaveTabContent() {
                 <Label>Half Day</Label>
               </div>
               {isHalfDay && (
-                <Select value={halfDayPeriod} onValueChange={(v) => setHalfDayPeriod(v as 'am' | 'pm')}>
+                <Select
+                  value={halfDayPeriod}
+                  onValueChange={(v) => setHalfDayPeriod(v as 'am' | 'pm')}
+                >
                   <SelectTrigger className="w-24 bg-elec-gray">
                     <SelectValue />
                   </SelectTrigger>
@@ -273,7 +307,7 @@ export function LeaveTabContent() {
 
             <div className="space-y-2">
               <Label>Reason (Optional)</Label>
-              <Textarea 
+              <Textarea
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Add a note about this leave request..."
@@ -283,7 +317,11 @@ export function LeaveTabContent() {
             </div>
 
             <div className="flex gap-2 pt-2">
-              <Button variant="outline" onClick={() => setShowRequestForm(false)} className="flex-1">
+              <Button
+                variant="outline"
+                onClick={() => setShowRequestForm(false)}
+                className="flex-1"
+              >
                 Cancel
               </Button>
               <Button onClick={handleSubmitRequest} className="flex-1 gap-1.5">
@@ -300,12 +338,13 @@ export function LeaveTabContent() {
         <h4 className="text-sm font-medium text-muted-foreground">Holiday Allowances</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {holidayAllowances.slice(0, 4).map((ha) => {
-            const employee = employees.find(e => e.id === ha.employeeId);
+            const employee = employees.find((e) => e.id === ha.employeeId);
             if (!employee) return null;
-            
+
             const remaining = ha.totalDays + ha.carriedOver - ha.usedDays - ha.pendingDays;
-            const usedPercent = ((ha.usedDays + ha.pendingDays) / (ha.totalDays + ha.carriedOver)) * 100;
-            
+            const usedPercent =
+              ((ha.usedDays + ha.pendingDays) / (ha.totalDays + ha.carriedOver)) * 100;
+
             return (
               <Card key={ha.id} className="bg-elec-gray border-border">
                 <CardContent className="p-4">
@@ -318,7 +357,7 @@ export function LeaveTabContent() {
                       <p className="text-xs text-muted-foreground">{employee.role}</p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Used</span>
@@ -355,7 +394,7 @@ export function LeaveTabContent() {
               {pendingRequests.length}
             </Badge>
           </div>
-          
+
           {pendingRequests.map((lr) => {
             const typeInfo = getLeaveTypeInfo(lr.type);
             return (
@@ -368,12 +407,11 @@ export function LeaveTabContent() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <p className="font-medium text-foreground">{lr.employeeName}</p>
-                        <Badge className={cn("text-xs", typeInfo.colour)}>
-                          {typeInfo.label}
-                        </Badge>
+                        <Badge className={cn('text-xs', typeInfo.colour)}>{typeInfo.label}</Badge>
                       </div>
                       <p className="text-sm text-muted-foreground mb-2">
-                        {format(parseISO(lr.startDate), 'd MMM')} - {format(parseISO(lr.endDate), 'd MMM yyyy')}
+                        {format(parseISO(lr.startDate), 'd MMM')} -{' '}
+                        {format(parseISO(lr.endDate), 'd MMM yyyy')}
                         <span className="mx-2">•</span>
                         {lr.totalDays} {lr.totalDays === 1 ? 'day' : 'days'}
                       </p>
@@ -381,17 +419,17 @@ export function LeaveTabContent() {
                         <p className="text-sm text-muted-foreground italic mb-3">"{lr.reason}"</p>
                       )}
                       <div className="flex gap-2">
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
+                        <Button
+                          size="sm"
+                          variant="outline"
                           onClick={() => handleReject(lr.id)}
                           className="gap-1 h-9 flex-1"
                         >
                           <X className="h-4 w-4" />
                           Reject
                         </Button>
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           onClick={() => handleApprove(lr.id)}
                           className="gap-1 h-9 flex-1"
                         >
@@ -422,34 +460,42 @@ export function LeaveTabContent() {
             </CardContent>
           </Card>
         ) : (
-          leaveRequests.filter(lr => lr.status !== 'pending').slice(0, 5).map((lr) => {
-            const typeInfo = getLeaveTypeInfo(lr.type);
-            return (
-              <Card key={lr.id} className="bg-elec-gray border-border">
-                <CardContent className="p-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-medium text-elec-yellow">
-                      {lr.employeeName.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-foreground text-sm truncate">{lr.employeeName}</p>
-                        <Badge className={cn("text-xs", typeInfo.colour)}>
-                          {typeInfo.label}
-                        </Badge>
+          leaveRequests
+            .filter((lr) => lr.status !== 'pending')
+            .slice(0, 5)
+            .map((lr) => {
+              const typeInfo = getLeaveTypeInfo(lr.type);
+              return (
+                <Card key={lr.id} className="bg-elec-gray border-border">
+                  <CardContent className="p-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-medium text-elec-yellow">
+                        {lr.employeeName
+                          .split(' ')
+                          .map((n) => n[0])
+                          .join('')
+                          .slice(0, 2)}
                       </div>
-                      <p className="text-xs text-muted-foreground">
-                        {format(parseISO(lr.startDate), 'd MMM')} - {format(parseISO(lr.endDate), 'd MMM')} • {lr.totalDays}d
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-foreground text-sm truncate">
+                            {lr.employeeName}
+                          </p>
+                          <Badge className={cn('text-xs', typeInfo.colour)}>{typeInfo.label}</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {format(parseISO(lr.startDate), 'd MMM')} -{' '}
+                          {format(parseISO(lr.endDate), 'd MMM')} • {lr.totalDays}d
+                        </p>
+                      </div>
+                      <Badge className={cn('text-xs capitalize', getStatusColour(lr.status))}>
+                        {lr.status}
+                      </Badge>
                     </div>
-                    <Badge className={cn("text-xs capitalize", getStatusColour(lr.status))}>
-                      {lr.status}
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })
+                  </CardContent>
+                </Card>
+              );
+            })
         )}
       </div>
 
@@ -458,9 +504,9 @@ export function LeaveTabContent() {
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-medium text-muted-foreground">Team Calendar</h4>
           <div className="flex items-center gap-1">
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               className="h-8 w-8"
               onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}
             >
@@ -469,9 +515,9 @@ export function LeaveTabContent() {
             <span className="text-sm font-medium text-foreground min-w-[100px] text-center">
               {format(calendarMonth, 'MMMM yyyy')}
             </span>
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               className="h-8 w-8"
               onClick={() => setCalendarMonth(addMonths(calendarMonth, 1))}
             >
@@ -479,7 +525,7 @@ export function LeaveTabContent() {
             </Button>
           </div>
         </div>
-        
+
         <Card className="bg-elec-gray border-border overflow-hidden">
           <CardContent className="p-2">
             {/* Day headers */}
@@ -490,48 +536,47 @@ export function LeaveTabContent() {
                 </div>
               ))}
             </div>
-            
+
             {/* Calendar grid */}
             <div className="grid grid-cols-7 gap-1">
               {/* Padding for first week */}
               {Array.from({ length: (monthStart.getDay() + 6) % 7 }).map((_, i) => (
                 <div key={`pad-${i}`} className="aspect-square" />
               ))}
-              
+
               {monthDays.map((day) => {
                 const employeesOff = getEmployeesOffOnDate(day);
                 const isWeekendDay = isWeekend(day);
                 const isToday = isSameDay(day, new Date());
-                
+
                 return (
-                  <div 
+                  <div
                     key={day.toISOString()}
                     className={cn(
-                      "aspect-square rounded-md flex flex-col items-center justify-center relative text-xs",
-                      isWeekendDay && "bg-muted/30 text-muted-foreground",
-                      isToday && "ring-2 ring-elec-yellow",
-                      employeesOff.length > 0 && !isWeekendDay && "bg-warning/10"
+                      'aspect-square rounded-md flex flex-col items-center justify-center relative text-xs',
+                      isWeekendDay && 'bg-muted/30 text-muted-foreground',
+                      isToday && 'ring-2 ring-elec-yellow',
+                      employeesOff.length > 0 && !isWeekendDay && 'bg-warning/10'
                     )}
                   >
-                    <span className={cn(
-                      "font-medium",
-                      isToday && "text-elec-yellow"
-                    )}>
+                    <span className={cn('font-medium', isToday && 'text-elec-yellow')}>
                       {format(day, 'd')}
                     </span>
                     {employeesOff.length > 0 && (
                       <div className="absolute bottom-0.5 flex gap-0.5">
                         {employeesOff.slice(0, 3).map((lr, i) => (
-                          <div 
+                          <div
                             key={i}
                             className={cn(
-                              "w-1.5 h-1.5 rounded-full",
-                              lr.status === 'approved' ? "bg-success" : "bg-warning"
+                              'w-1.5 h-1.5 rounded-full',
+                              lr.status === 'approved' ? 'bg-success' : 'bg-warning'
                             )}
                           />
                         ))}
                         {employeesOff.length > 3 && (
-                          <span className="text-[8px] text-muted-foreground">+{employeesOff.length - 3}</span>
+                          <span className="text-[8px] text-muted-foreground">
+                            +{employeesOff.length - 3}
+                          </span>
                         )}
                       </div>
                     )}
@@ -539,7 +584,7 @@ export function LeaveTabContent() {
                 );
               })}
             </div>
-            
+
             {/* Legend */}
             <div className="flex justify-center gap-4 mt-3 pt-2 border-t border-border">
               <div className="flex items-center gap-1.5">

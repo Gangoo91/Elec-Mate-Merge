@@ -4,7 +4,12 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { FileDown, Upload, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { EICScheduleOfTests, EICCircuitData } from '@/types/eic-integration';
 import { generateTestingGuidance, TestingGuidanceStep } from '@/lib/eic/testingGuidance';
@@ -16,29 +21,26 @@ interface TestingDocumentationProps {
   onGenerateEIC?: () => void;
 }
 
-export const TestingDocumentation = ({
-  eicSchedule,
-  onGenerateEIC
-}: TestingDocumentationProps) => {
+export const TestingDocumentation = ({ eicSchedule, onGenerateEIC }: TestingDocumentationProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownloadPDF = async () => {
     if (!eicSchedule) return;
-    
+
     setIsDownloading(true);
     toast.info('Generating EIC PDF...', {
-      description: 'Creating schedule of test results'
+      description: 'Creating schedule of test results',
     });
 
     try {
       await downloadEICPDF(eicSchedule);
       toast.success('EIC Downloaded!', {
-        description: 'Electrical Installation Certificate ready for testing'
+        description: 'Electrical Installation Certificate ready for testing',
       });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast.error('Download Failed', {
-        description: error instanceof Error ? error.message : 'Unknown error'
+        description: error instanceof Error ? error.message : 'Unknown error',
       });
     } finally {
       setIsDownloading(false);
@@ -54,8 +56,8 @@ export const TestingDocumentation = ({
         <CardContent>
           <div className="text-center py-8">
             <p className="text-muted-foreground mb-4">
-              Create an Electrical Installation Certificate (EIC) Schedule of Test Results
-              with pre-calculated expected values for all circuits.
+              Create an Electrical Installation Certificate (EIC) Schedule of Test Results with
+              pre-calculated expected values for all circuits.
             </p>
             <Button onClick={onGenerateEIC} size="lg">
               Generate EIC Schedule
@@ -142,7 +144,8 @@ export const TestingDocumentation = ({
                         {circuit.liveSize}mm² / {circuit.cpcSize}mm²
                       </td>
                       <td className="border border-border p-2 text-center font-mono">
-                        {circuit.protectiveDeviceCurve}{circuit.protectiveDeviceRating}
+                        {circuit.protectiveDeviceCurve}
+                        {circuit.protectiveDeviceRating}
                       </td>
                       <td className="border border-border p-2 text-center font-mono text-sm">
                         {circuit.r1r2}
@@ -234,9 +237,7 @@ const TestGuidanceStep = ({ step, stepNumber }: TestGuidanceStepProps) => {
 
       <div className="space-y-2">
         <p className="text-sm font-medium">Procedure:</p>
-        <div className="bg-muted p-3 rounded whitespace-pre-line text-sm">
-          {step.procedure}
-        </div>
+        <div className="bg-muted p-3 rounded whitespace-pre-line text-sm">{step.procedure}</div>
       </div>
 
       <div className="space-y-2">

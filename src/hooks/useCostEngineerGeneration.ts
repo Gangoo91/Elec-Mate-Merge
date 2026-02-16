@@ -20,10 +20,10 @@ interface UseCostEngineerGenerationProps {
   onError?: (error: string) => void;
 }
 
-export function useCostEngineerGeneration({ 
-  jobId, 
-  onComplete, 
-  onError 
+export function useCostEngineerGeneration({
+  jobId,
+  onComplete,
+  onError,
 }: UseCostEngineerGenerationProps) {
   const [job, setJob] = useState<CostEngineerJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
@@ -68,29 +68,28 @@ export function useCostEngineerGeneration({
         clearPolling();
         onComplete?.(data.output_data);
         toast({
-          title: "Cost Analysis Complete",
-          description: "Your cost estimate has been generated successfully.",
+          title: 'Cost Analysis Complete',
+          description: 'Your cost estimate has been generated successfully.',
         });
       } else if (data.status === 'failed') {
         clearPolling();
         onError?.(data.error_message || 'Job failed');
         toast({
-          title: "Generation Failed",
+          title: 'Generation Failed',
           description: data.error_message || 'An error occurred during generation',
-          variant: "destructive",
+          variant: 'destructive',
         });
       } else if (data.status === 'cancelled') {
         clearPolling();
         toast({
-          title: "Generation Cancelled",
-          description: "Cost analysis was cancelled.",
-          variant: "destructive",
+          title: 'Generation Cancelled',
+          description: 'Cost analysis was cancelled.',
+          variant: 'destructive',
         });
       }
 
       // Update last progress for stuck detection
       lastProgressRef.current = data.progress;
-
     } catch (error: any) {
       console.error('Error in fetchJob:', error);
       clearPolling();
@@ -134,17 +133,20 @@ export function useCostEngineerGeneration({
     pollingIntervalRef.current = setInterval(poll, pollInterval);
 
     // Check for stuck jobs (no progress for 6 minutes)
-    stuckCheckRef.current = setTimeout(() => {
-      if (lastProgressRef.current === job?.progress) {
-        clearPolling();
-        onError?.('Job appears to be stuck. Please try again.');
-        toast({
-          title: "Generation Timeout",
-          description: "The cost analysis is taking longer than expected. Please try again.",
-          variant: "destructive",
-        });
-      }
-    }, 6 * 60 * 1000); // 6 minutes
+    stuckCheckRef.current = setTimeout(
+      () => {
+        if (lastProgressRef.current === job?.progress) {
+          clearPolling();
+          onError?.('Job appears to be stuck. Please try again.');
+          toast({
+            title: 'Generation Timeout',
+            description: 'The cost analysis is taking longer than expected. Please try again.',
+            variant: 'destructive',
+          });
+        }
+      },
+      6 * 60 * 1000
+    ); // 6 minutes
   };
 
   const cancelJob = async () => {
@@ -152,22 +154,22 @@ export function useCostEngineerGeneration({
 
     try {
       const { error } = await supabase.functions.invoke('cancel-cost-engineer-job', {
-        body: { jobId }
+        body: { jobId },
       });
 
       if (error) throw error;
 
       clearPolling();
       toast({
-        title: "Generation Cancelled",
-        description: "Cost analysis has been cancelled.",
+        title: 'Generation Cancelled',
+        description: 'Cost analysis has been cancelled.',
       });
     } catch (error: any) {
       console.error('Error cancelling job:', error);
       toast({
-        title: "Cancellation Failed",
+        title: 'Cancellation Failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };

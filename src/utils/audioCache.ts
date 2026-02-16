@@ -125,20 +125,20 @@ const cleanupCache = async (db: IDBDatabase): Promise<void> => {
       let currentSize = totalSize;
       for (const entry of sorted) {
         if (currentSize <= MAX_CACHE_SIZE * 0.8) break; // 80% of max
-        
+
         await new Promise<void>((resolve, reject) => {
           const request = store.delete(entry.id);
           request.onsuccess = () => resolve();
           request.onerror = () => reject(request.error);
         });
-        
+
         currentSize -= entry.size;
         console.log('Deleted cached audio:', entry.text.substring(0, 50));
       }
     }
 
     // Delete old entries
-    const cutoffDate = Date.now() - (MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
+    const cutoffDate = Date.now() - MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
     for (const entry of allEntries) {
       if (entry.createdAt < cutoffDate) {
         await new Promise<void>((resolve, reject) => {
@@ -170,9 +170,8 @@ export const getCacheStats = async (): Promise<{
     });
 
     const totalSize = allEntries.reduce((sum, entry) => sum + entry.size, 0);
-    const oldestEntry = allEntries.length > 0
-      ? Math.min(...allEntries.map(e => e.createdAt))
-      : null;
+    const oldestEntry =
+      allEntries.length > 0 ? Math.min(...allEntries.map((e) => e.createdAt)) : null;
 
     return {
       totalSize,

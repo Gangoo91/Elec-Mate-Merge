@@ -1,10 +1,9 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { CVData } from "../types";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { CVData } from '../types';
 
 interface PersonalInfoFormProps {
   cvData: CVData;
@@ -17,8 +16,8 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
       ...cvData,
       personalInfo: {
         ...cvData.personalInfo,
-        [field]: value
-      }
+        [field]: value,
+      },
     });
   };
 
@@ -30,7 +29,9 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="fullName" className="text-foreground">Full Name *</Label>
+            <Label htmlFor="fullName" className="text-foreground">
+              Full Name *
+            </Label>
             <Input
               id="fullName"
               value={cvData.personalInfo.fullName}
@@ -39,9 +40,11 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
               placeholder="John Smith"
             />
           </div>
-          
+
           <div>
-            <Label htmlFor="email" className="text-foreground">Email Address *</Label>
+            <Label htmlFor="email" className="text-foreground">
+              Email Address *
+            </Label>
             <Input
               id="email"
               type="email"
@@ -53,7 +56,9 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
           </div>
 
           <div>
-            <Label htmlFor="phone" className="text-foreground">Phone Number *</Label>
+            <Label htmlFor="phone" className="text-foreground">
+              Phone Number *
+            </Label>
             <Input
               id="phone"
               value={cvData.personalInfo.phone}
@@ -64,7 +69,9 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
           </div>
 
           <div>
-            <Label htmlFor="postcode" className="text-foreground">Postcode</Label>
+            <Label htmlFor="postcode" className="text-foreground">
+              Postcode
+            </Label>
             <Input
               id="postcode"
               value={cvData.personalInfo.postcode}
@@ -76,7 +83,9 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
         </div>
 
         <div>
-          <Label htmlFor="address" className="text-foreground">Address</Label>
+          <Label htmlFor="address" className="text-foreground">
+            Address
+          </Label>
           <Input
             id="address"
             value={cvData.personalInfo.address}
@@ -87,7 +96,9 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ cvData, onCh
         </div>
 
         <div>
-          <Label htmlFor="summary" className="text-foreground">Professional Summary</Label>
+          <Label htmlFor="summary" className="text-foreground">
+            Professional Summary
+          </Label>
           <Textarea
             id="summary"
             value={cvData.personalInfo.professionalSummary}

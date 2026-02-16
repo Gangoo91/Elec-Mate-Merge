@@ -2,17 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
-import {
-  File,
-  FileText,
-  Image,
-  Table,
-  Download,
-  X,
-  Loader2,
-  Paperclip,
-  Eye,
-} from 'lucide-react';
+import { File, FileText, Image, Table, Download, X, Loader2, Paperclip, Eye } from 'lucide-react';
 import { formatFileSize, isImageFile, getFileIcon } from '@/services/fileUploadService';
 import type { MessageAttachment } from '@/services/fileUploadService';
 
@@ -32,10 +22,14 @@ export function FileAttachment({ attachment, className }: FileAttachmentProps) {
   const IconComponent = () => {
     const iconType = getFileIcon(attachment.file_type);
     switch (iconType) {
-      case 'image': return <Image className="h-5 w-5" />;
-      case 'file-text': return <FileText className="h-5 w-5" />;
-      case 'table': return <Table className="h-5 w-5" />;
-      default: return <File className="h-5 w-5" />;
+      case 'image':
+        return <Image className="h-5 w-5" />;
+      case 'file-text':
+        return <FileText className="h-5 w-5" />;
+      case 'table':
+        return <Table className="h-5 w-5" />;
+      default:
+        return <File className="h-5 w-5" />;
     }
   };
 
@@ -89,9 +83,7 @@ export function FileAttachment({ attachment, className }: FileAttachmentProps) {
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium truncate">{attachment.file_name}</p>
-        <p className="text-xs text-muted-foreground">
-          {formatFileSize(attachment.file_size)}
-        </p>
+        <p className="text-xs text-muted-foreground">{formatFileSize(attachment.file_size)}</p>
       </div>
       <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
         <Download className="h-4 w-4" />
@@ -132,10 +124,7 @@ export function FilePreview({ file, progress, onRemove, className }: FilePreview
           <img
             src={preview}
             alt={file.name}
-            className={cn(
-              'w-20 h-20 rounded-lg object-cover',
-              uploading && 'opacity-50'
-            )}
+            className={cn('w-20 h-20 rounded-lg object-cover', uploading && 'opacity-50')}
           />
           {uploading && (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -144,10 +133,12 @@ export function FilePreview({ file, progress, onRemove, className }: FilePreview
           )}
         </div>
       ) : (
-        <div className={cn(
-          'w-20 h-20 rounded-lg bg-muted/50 border border-border flex flex-col items-center justify-center p-2',
-          uploading && 'opacity-50'
-        )}>
+        <div
+          className={cn(
+            'w-20 h-20 rounded-lg bg-muted/50 border border-border flex flex-col items-center justify-center p-2',
+            uploading && 'opacity-50'
+          )}
+        >
           <File className="h-6 w-6 text-muted-foreground mb-1" />
           <span className="text-[10px] text-muted-foreground truncate w-full text-center">
             {file.name.split('.').pop()?.toUpperCase()}
@@ -156,9 +147,7 @@ export function FilePreview({ file, progress, onRemove, className }: FilePreview
       )}
 
       {/* Progress bar */}
-      {uploading && (
-        <Progress value={progress} className="absolute bottom-1 left-1 right-1 h-1" />
-      )}
+      {uploading && <Progress value={progress} className="absolute bottom-1 left-1 right-1 h-1" />}
 
       {/* Remove button */}
       {!uploading && (
@@ -230,11 +219,13 @@ export function DropZone({ isDragging, className }: DropZoneProps) {
   if (!isDragging) return null;
 
   return (
-    <div className={cn(
-      'absolute inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center',
-      'border-2 border-dashed border-elec-yellow rounded-lg',
-      className
-    )}>
+    <div
+      className={cn(
+        'absolute inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center',
+        'border-2 border-dashed border-elec-yellow rounded-lg',
+        className
+      )}
+    >
       <div className="text-center">
         <Paperclip className="h-12 w-12 text-elec-yellow mx-auto mb-2" />
         <p className="text-lg font-medium">Drop files here</p>

@@ -1,13 +1,20 @@
-
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { User, MessageSquare, Send, TrendingUp, Briefcase, GraduationCap, Award } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import ChatMessageRenderer from "./ChatMessageRenderer";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import {
+  User,
+  MessageSquare,
+  Send,
+  TrendingUp,
+  Briefcase,
+  GraduationCap,
+  Award,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import ChatMessageRenderer from './ChatMessageRenderer';
 
 interface ChatMessage {
   id: string;
@@ -23,38 +30,38 @@ const CareerGuidanceTab = () => {
 
   const careerPaths = [
     {
-      title: "Specialisations",
+      title: 'Specialisations',
       areas: [
-        "Domestic installations",
-        "Commercial & industrial",
-        "Control systems",
-        "Renewable energy"
+        'Domestic installations',
+        'Commercial & industrial',
+        'Control systems',
+        'Renewable energy',
       ],
       icon: Briefcase,
-      color: "blue"
+      color: 'blue',
     },
     {
-      title: "Further Qualifications",
+      title: 'Further Qualifications',
       areas: [
-        "18th Edition updates",
-        "Testing & inspection",
-        "Design & verification",
-        "PAT testing"
+        '18th Edition updates',
+        'Testing & inspection',
+        'Design & verification',
+        'PAT testing',
       ],
       icon: GraduationCap,
-      color: "green"
+      color: 'green',
     },
     {
-      title: "Career Progression",
+      title: 'Career Progression',
       areas: [
-        "Team leader roles",
-        "Electrical supervisor",
-        "Contracting business",
-        "Training & assessment"
+        'Team leader roles',
+        'Electrical supervisor',
+        'Contracting business',
+        'Training & assessment',
       ],
       icon: TrendingUp,
-      color: "purple"
-    }
+      color: 'purple',
+    },
   ];
 
   const handleSendMessage = async () => {
@@ -64,10 +71,10 @@ const CareerGuidanceTab = () => {
       id: Date.now().toString(),
       content: currentMessage.trim(),
       isUser: true,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setChatMessages(prev => [...prev, userMessage]);
+    setChatMessages((prev) => [...prev, userMessage]);
     setCurrentMessage('');
     setIsLoading(true);
 
@@ -75,8 +82,8 @@ const CareerGuidanceTab = () => {
       const { data, error } = await supabase.functions.invoke('chat-assistant', {
         body: {
           message: currentMessage.trim(),
-          context: 'electrical career guidance, professional development, and industry pathways'
-        }
+          context: 'electrical career guidance, professional development, and industry pathways',
+        },
       });
 
       if (error) throw error;
@@ -85,22 +92,23 @@ const CareerGuidanceTab = () => {
         id: (Date.now() + 1).toString(),
         content: data.response || "I'm here to help with your career guidance!",
         isUser: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setChatMessages(prev => [...prev, aiMessage]);
+      setChatMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
       toast.error('Sorry, I encountered an issue. Please try again.');
-      
+
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        content: "I apologise, but I'm having trouble responding right now. Please try your question again in a moment.",
+        content:
+          "I apologise, but I'm having trouble responding right now. Please try your question again in a moment.",
         isUser: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      
-      setChatMessages(prev => [...prev, errorMessage]);
+
+      setChatMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -114,17 +122,20 @@ const CareerGuidanceTab = () => {
   };
 
   const quickQuestions = [
-    "What career paths are available after my apprenticeship?",
-    "How do I specialise in renewable energy systems?",
-    "What qualifications should I pursue next?",
-    "How can I start my own electrical business?"
+    'What career paths are available after my apprenticeship?',
+    'How do I specialise in renewable energy systems?',
+    'What qualifications should I pursue next?',
+    'How can I start my own electrical business?',
   ];
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {careerPaths.map((path, index) => (
-          <Card key={index} className={`border-${path.color}-500/30 bg-gradient-to-br from-${path.color}-500/10 to-${path.color}-600/10`}>
+          <Card
+            key={index}
+            className={`border-${path.color}-500/30 bg-gradient-to-br from-${path.color}-500/10 to-${path.color}-600/10`}
+          >
             <CardHeader>
               <CardTitle className={`text-${path.color}-400 flex items-center gap-2 text-lg`}>
                 <path.icon className="h-5 w-5" />
@@ -152,7 +163,8 @@ const CareerGuidanceTab = () => {
             Career Guidance Assistant
           </CardTitle>
           <p className="text-sm text-white">
-            Get personalised advice on career progression, specialisations, and professional development
+            Get personalised advice on career progression, specialisations, and professional
+            development
           </p>
         </CardHeader>
         <CardContent>
@@ -162,7 +174,8 @@ const CareerGuidanceTab = () => {
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <MessageSquare className="h-12 w-12 text-white mb-4" />
                   <p className="text-white mb-4">
-                    Ask me about career paths, specialisations, qualifications, or professional development!
+                    Ask me about career paths, specialisations, qualifications, or professional
+                    development!
                   </p>
                   <div className="space-y-2">
                     <p className="text-sm text-white">Try asking:</p>

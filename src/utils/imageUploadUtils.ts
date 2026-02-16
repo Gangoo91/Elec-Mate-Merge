@@ -33,7 +33,7 @@ export function validateImageSize(file: File): { valid: boolean; error?: string 
   if (file.size > MAX_ORIGINAL_SIZE) {
     return {
       valid: false,
-      error: `Image must be under ${MAX_ORIGINAL_SIZE / 1024 / 1024}MB`
+      error: `Image must be under ${MAX_ORIGINAL_SIZE / 1024 / 1024}MB`,
     };
   }
   return { valid: true };
@@ -50,8 +50,8 @@ export async function compressImageForUpload(
   targetSizeKB: number = TARGET_SIZE_KB
 ): Promise<File> {
   // If already small enough, return as-is (unless HEIC which needs conversion)
-  const isHeic = file.name.toLowerCase().endsWith('.heic') ||
-                 file.name.toLowerCase().endsWith('.heif');
+  const isHeic =
+    file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
 
   if (file.size <= targetSizeKB * 1024 && !isHeic) {
     return file;
@@ -123,9 +123,10 @@ export async function compressImageForUpload(
 
                 // Create new filename (convert HEIC to .jpg)
                 const baseName = file.name.replace(/\.(heic|heif)$/i, '');
-                const newName = baseName.endsWith('.jpg') || baseName.endsWith('.jpeg')
-                  ? baseName
-                  : `${baseName}.jpg`;
+                const newName =
+                  baseName.endsWith('.jpg') || baseName.endsWith('.jpeg')
+                    ? baseName
+                    : `${baseName}.jpg`;
 
                 const compressedFile = new File([blob], newName, {
                   type: mimeType,
@@ -176,6 +177,6 @@ export async function compressImageWithStats(
     file: compressed,
     originalSize,
     compressedSize: compressed.size,
-    wasCompressed: compressed !== file
+    wasCompressed: compressed !== file,
   };
 }

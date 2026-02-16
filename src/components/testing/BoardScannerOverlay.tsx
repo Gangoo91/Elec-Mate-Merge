@@ -14,7 +14,13 @@ import { BoardPhotoCapture } from './BoardPhotoCapture';
 import { AnalysisProgress } from './AnalysisProgress';
 import { CircuitReviewSheet } from './CircuitReviewSheet';
 
-export type AnalysisStage = 'idle' | 'uploading' | 'detecting' | 'reading' | 'verifying' | 'complete';
+export type AnalysisStage =
+  | 'idle'
+  | 'uploading'
+  | 'detecting'
+  | 'reading'
+  | 'verifying'
+  | 'complete';
 
 interface BoardScannerOverlayProps {
   onAnalysisComplete: (data: {
@@ -44,16 +50,19 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
   const [capturedPhotoUrl, setCapturedPhotoUrl] = useState<string | null>(null);
 
   // Handle progress updates from BoardPhotoCapture
-  const handleProgressUpdate = useCallback((newStage: AnalysisStage, newProgress: number, circuits?: number, photoUrl?: string) => {
-    setStage(newStage);
-    setProgress(newProgress);
-    if (circuits !== undefined) {
-      setCircuitsFound(circuits);
-    }
-    if (photoUrl) {
-      setCapturedPhotoUrl(photoUrl);
-    }
-  }, []);
+  const handleProgressUpdate = useCallback(
+    (newStage: AnalysisStage, newProgress: number, circuits?: number, photoUrl?: string) => {
+      setStage(newStage);
+      setProgress(newProgress);
+      if (circuits !== undefined) {
+        setCircuitsFound(circuits);
+      }
+      if (photoUrl) {
+        setCapturedPhotoUrl(photoUrl);
+      }
+    },
+    []
+  );
 
   // Handle analysis complete from BoardPhotoCapture
   const handleAnalysisComplete = useCallback((data: any) => {
@@ -67,15 +76,18 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
   }, []);
 
   // Handle user confirming circuits from review sheet
-  const handleConfirmCircuits = useCallback((circuits: any[]) => {
-    if (analysisResult) {
-      onAnalysisComplete({
-        ...analysisResult,
-        circuits,
-      });
-    }
-    setShowReview(false);
-  }, [analysisResult, onAnalysisComplete]);
+  const handleConfirmCircuits = useCallback(
+    (circuits: any[]) => {
+      if (analysisResult) {
+        onAnalysisComplete({
+          ...analysisResult,
+          circuits,
+        });
+      }
+      setShowReview(false);
+    },
+    [analysisResult, onAnalysisComplete]
+  );
 
   // Handle rescan request from review sheet
   const handleRescan = useCallback(() => {

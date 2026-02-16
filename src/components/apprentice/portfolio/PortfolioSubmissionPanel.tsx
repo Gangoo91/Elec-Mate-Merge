@@ -111,9 +111,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
           </Badge>
         );
       case 'submitted':
-        return (
-          <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20">Submitted</Badge>
-        );
+        return <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20">Submitted</Badge>;
       case 'under_review':
         return (
           <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">
@@ -138,9 +136,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
         );
       case 'resubmitted':
         return (
-          <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20">
-            Resubmitted
-          </Badge>
+          <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20">Resubmitted</Badge>
         );
       default:
         return <Badge variant="outline">{status}</Badge>;
@@ -237,7 +233,9 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
       <Card className="bg-white/5 border-elec-gray/40">
         <CardHeader>
           <CardTitle className="text-base">Units & Categories</CardTitle>
-          <CardDescription>Click on a category to see details and submit for review</CardDescription>
+          <CardDescription>
+            Click on a category to see details and submit for review
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible className="space-y-2">
@@ -273,16 +271,11 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
                       {/* Entry Progress */}
                       <div className="flex items-center gap-3">
                         <Progress
-                          value={
-                            (completedEntries / (category.requiredEntries || 1)) * 100
-                          }
+                          value={(completedEntries / (category.requiredEntries || 1)) * 100}
                           className="h-2 flex-1"
                         />
                         <span className="text-sm text-muted-foreground">
-                          {Math.round(
-                            (completedEntries / (category.requiredEntries || 1)) * 100
-                          )}
-                          %
+                          {Math.round((completedEntries / (category.requiredEntries || 1)) * 100)}%
                         </span>
                       </div>
 
@@ -325,8 +318,8 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
                             <div className="p-3 rounded-lg bg-white/5 border border-border/50">
                               <p className="text-xs text-muted-foreground font-medium mb-1 flex items-center gap-1.5">
                                 <Clock className="h-3 w-3" />
-                                Previous Feedback (Attempt #
-                                {(submission.submission_count || 1) - 1})
+                                Previous Feedback (Attempt #{(submission.submission_count || 1) - 1}
+                                )
                               </p>
                               <p className="text-sm text-foreground">
                                 {submission.previous_feedback}
@@ -344,9 +337,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
                       {/* Entry List */}
                       {categoryEntries.length > 0 && (
                         <div className="space-y-2">
-                          <p className="text-xs text-muted-foreground font-medium">
-                            Your Evidence
-                          </p>
+                          <p className="text-xs text-muted-foreground font-medium">Your Evidence</p>
                           {categoryEntries.map((entry) => (
                             <div
                               key={entry.id}

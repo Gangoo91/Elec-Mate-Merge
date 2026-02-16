@@ -7,34 +7,34 @@ const SmartHomeModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "What is a Smart Home?",
+      title: 'What is a Smart Home?',
       icon: Home,
-      description: "Understanding the fundamentals of smart home technology"
+      description: 'Understanding the fundamentals of smart home technology',
     },
     {
       id: 2,
-      title: "Benefits and Applications (Lighting, HVAC, Security, Accessibility)",
+      title: 'Benefits and Applications (Lighting, HVAC, Security, Accessibility)',
       icon: Lightbulb,
-      description: "Exploring smart home applications across different systems"
+      description: 'Exploring smart home applications across different systems',
     },
     {
       id: 3,
-      title: "Core Components (Sensors, Actuators, Controllers)",
+      title: 'Core Components (Sensors, Actuators, Controllers)',
       icon: Cpu,
-      description: "Understanding the essential hardware components"
+      description: 'Understanding the essential hardware components',
     },
     {
       id: 4,
-      title: "Smart Home Architectures: Local, Cloud, Hybrid",
+      title: 'Smart Home Architectures: Local, Cloud, Hybrid',
       icon: Cloud,
-      description: "Different architectural approaches and their benefits"
+      description: 'Different architectural approaches and their benefits',
     },
     {
       id: 5,
-      title: "System Types: Retrofit vs New Build",
+      title: 'System Types: Retrofit vs New Build',
       icon: Building,
-      description: "Comparing installation approaches for different property types"
-    }
+      description: 'Comparing installation approaches for different property types',
+    },
   ];
 
   return (

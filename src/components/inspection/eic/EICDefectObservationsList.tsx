@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
@@ -20,7 +19,7 @@ const EICDefectObservationsList: React.FC<EICDefectObservationsListProps> = ({
   onAddObservation,
   onUpdateObservation,
   onRemoveObservation,
-  onSyncToInspectionItem
+  onSyncToInspectionItem,
 }) => {
   if (observations.length === 0) {
     return (

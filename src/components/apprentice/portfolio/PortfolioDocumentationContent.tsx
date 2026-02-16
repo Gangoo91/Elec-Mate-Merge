@@ -1,88 +1,100 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { BookOpen, FileText, Video, Download, ExternalLink, Target, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  BookOpen,
+  FileText,
+  Video,
+  Download,
+  ExternalLink,
+  Target,
+  CheckCircle,
+} from 'lucide-react';
 
 const PortfolioDocumentationContent = () => {
-const cityGuildsResources = [
+  const cityGuildsResources = [
     {
-      title: "EPA Document Library",
-      description: "Access official End Point Assessment documents, portfolio requirements, and assessment criteria for electrical apprenticeships",
-      type: "guide",
+      title: 'EPA Document Library',
+      description:
+        'Access official End Point Assessment documents, portfolio requirements, and assessment criteria for electrical apprenticeships',
+      type: 'guide',
       icon: BookOpen,
-      url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/apprenticeships/end-point-assessment/epa-document-library"
+      url: 'https://www.cityandguilds.com/qualifications-and-apprenticeships/apprenticeships/end-point-assessment/epa-document-library',
     },
     {
-      title: "Apprenticeship Support Hub",
-      description: "Comprehensive support materials, templates, and guidance for apprentices and employers on portfolio building",
-      type: "template",
+      title: 'Apprenticeship Support Hub',
+      description:
+        'Comprehensive support materials, templates, and guidance for apprentices and employers on portfolio building',
+      type: 'template',
       icon: FileText,
-      url: "https://www.cityandguilds.com/apprenticeships/apprenticeship-support-hub"
+      url: 'https://www.cityandguilds.com/apprenticeships/apprenticeship-support-hub',
     },
     {
-      title: "Electrotech Apprenticeship Qualification",
-      description: "Specific qualification requirements, assessment standards, and portfolio guidelines for electrical installation apprenticeships",
-      type: "guide",
+      title: 'Electrotech Apprenticeship Qualification',
+      description:
+        'Specific qualification requirements, assessment standards, and portfolio guidelines for electrical installation apprenticeships',
+      type: 'guide',
       icon: BookOpen,
-      url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/electrical/electrical-installation/electrical-installation-apprenticeship"
-    }
+      url: 'https://www.cityandguilds.com/qualifications-and-apprenticeships/electrical/electrical-installation/electrical-installation-apprenticeship',
+    },
   ];
 
   const ealResources = [
     {
-      title: "Level 3 Electrotechnical Qualification",
-      description: "Comprehensive qualification handbook with assessment criteria, portfolio requirements, and evidence specifications for electrical installation",
-      type: "guide",
+      title: 'Level 3 Electrotechnical Qualification',
+      description:
+        'Comprehensive qualification handbook with assessment criteria, portfolio requirements, and evidence specifications for electrical installation',
+      type: 'guide',
       icon: BookOpen,
-      url: "https://www.eal.org.uk/qualifications/electrical-installation/level-3-electrotechnical"
+      url: 'https://www.eal.org.uk/qualifications/electrical-installation/level-3-electrotechnical',
     },
     {
-      title: "Level 3 Electrotechnical Experienced Worker",
-      description: "Portfolio guidance and assessment standards for experienced workers transitioning to formal qualifications",
-      type: "guide",
+      title: 'Level 3 Electrotechnical Experienced Worker',
+      description:
+        'Portfolio guidance and assessment standards for experienced workers transitioning to formal qualifications',
+      type: 'guide',
       icon: FileText,
-      url: "https://www.eal.org.uk/qualifications/electrical-installation/level-3-electrotechnical-experienced-worker"
-    }
+      url: 'https://www.eal.org.uk/qualifications/electrical-installation/level-3-electrotechnical-experienced-worker',
+    },
   ];
 
   const assessorRequirements = [
     {
-      category: "Evidence Quality",
+      category: 'Evidence Quality',
       icon: Target,
       requirements: [
-        "Clear photographs showing work in progress and completion",
-        "Detailed technical drawings and circuit diagrams",
-        "Test results and certification documents",
-        "Risk assessments and method statements"
-      ]
+        'Clear photographs showing work in progress and completion',
+        'Detailed technical drawings and circuit diagrams',
+        'Test results and certification documents',
+        'Risk assessments and method statements',
+      ],
     },
     {
-      category: "Competency Demonstration",
+      category: 'Competency Demonstration',
       icon: CheckCircle,
       requirements: [
-        "Progression from basic to complex tasks",
-        "Independent problem-solving examples",
-        "Application of relevant standards (BS 7671)",
-        "Health and safety compliance throughout"
-      ]
+        'Progression from basic to complex tasks',
+        'Independent problem-solving examples',
+        'Application of relevant standards (BS 7671)',
+        'Health and safety compliance throughout',
+      ],
     },
     {
-      category: "Reflection & Learning",
+      category: 'Reflection & Learning',
       icon: BookOpen,
       requirements: [
-        "Critical analysis of work completed",
-        "Identification of skills developed",
-        "Learning from mistakes and improvements made",
-        "Professional development planning"
-      ]
-    }
+        'Critical analysis of work completed',
+        'Identification of skills developed',
+        'Learning from mistakes and improvements made',
+        'Professional development planning',
+      ],
+    },
   ];
 
   const learningObjectives = [
-    "Understand the purpose and structure of an apprenticeship portfolio",
-    "Learn how to collect and organise evidence effectively",
-    "Discover best practices for documenting your learning journey",
-    "Prepare for portfolio-based assessments and reviews"
+    'Understand the purpose and structure of an apprenticeship portfolio',
+    'Learn how to collect and organise evidence effectively',
+    'Discover best practices for documenting your learning journey',
+    'Prepare for portfolio-based assessments and reviews',
   ];
 
   return (
@@ -98,9 +110,10 @@ const cityGuildsResources = [
         <CardContent className="pt-0">
           <div className="space-y-3">
             <p className="text-white text-xs sm:text-sm">
-              Your portfolio demonstrates your learning, skills development, and competency progression throughout your training.
+              Your portfolio demonstrates your learning, skills development, and competency
+              progression throughout your training.
             </p>
-            
+
             <div className="bg-black/20 rounded-lg p-3 border border-blue-500/20">
               <h4 className="font-medium text-white mb-2 text-sm">Learning Objectives</h4>
               <ul className="space-y-1">
@@ -129,7 +142,10 @@ const cityGuildsResources = [
             {cityGuildsResources.map((resource, index) => {
               const IconComponent = resource.icon;
               return (
-                <Card key={index} className="border-elec-yellow/20 bg-black/10 hover:border-elec-yellow/40 transition-colors">
+                <Card
+                  key={index}
+                  className="border-elec-yellow/20 bg-black/10 hover:border-elec-yellow/40 transition-colors"
+                >
                   <CardHeader className="pb-3">
                     <CardTitle className="text-sm sm:text-base flex items-center gap-2">
                       <IconComponent className="h-4 w-4 text-elec-yellow" />
@@ -137,23 +153,21 @@ const cityGuildsResources = [
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-white text-xs sm:text-sm mb-3">
-                      {resource.description}
-                    </p>
+                    <p className="text-white text-xs sm:text-sm mb-3">{resource.description}</p>
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         className="border-elec-yellow/30 text-xs"
                         onClick={() => window.open(resource.url, '_blank')}
                       >
                         <ExternalLink className="h-3 w-3 mr-1" />
                         View Resource
                       </Button>
-                      {resource.type === "template" && (
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
+                      {resource.type === 'template' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
                           className="border-elec-yellow/30 text-xs"
                           onClick={() => window.open(resource.url, '_blank')}
                         >
@@ -183,7 +197,10 @@ const cityGuildsResources = [
             {ealResources.map((resource, index) => {
               const IconComponent = resource.icon;
               return (
-                <Card key={index} className="border-elec-yellow/20 bg-black/10 hover:border-elec-yellow/40 transition-colors">
+                <Card
+                  key={index}
+                  className="border-elec-yellow/20 bg-black/10 hover:border-elec-yellow/40 transition-colors"
+                >
                   <CardHeader className="pb-3">
                     <CardTitle className="text-sm sm:text-base flex items-center gap-2">
                       <IconComponent className="h-4 w-4 text-elec-yellow" />
@@ -191,23 +208,21 @@ const cityGuildsResources = [
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-white text-xs sm:text-sm mb-3">
-                      {resource.description}
-                    </p>
+                    <p className="text-white text-xs sm:text-sm mb-3">{resource.description}</p>
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         className="border-elec-yellow/30 text-xs"
                         onClick={() => window.open(resource.url, '_blank')}
                       >
                         <ExternalLink className="h-3 w-3 mr-1" />
                         View Resource
                       </Button>
-                      {resource.type === "template" && (
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
+                      {resource.type === 'template' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
                           className="border-elec-yellow/30 text-xs"
                           onClick={() => window.open(resource.url, '_blank')}
                         >
@@ -234,7 +249,8 @@ const cityGuildsResources = [
         </CardHeader>
         <CardContent className="pt-0">
           <p className="text-white text-xs sm:text-sm mb-4">
-            Understanding assessment criteria and evidence requirements is crucial for portfolio success. Here's what assessors specifically evaluate:
+            Understanding assessment criteria and evidence requirements is crucial for portfolio
+            success. Here's what assessors specifically evaluate:
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {assessorRequirements.map((section, index) => {
@@ -263,7 +279,9 @@ const cityGuildsResources = [
       {/* Best Practices Card */}
       <Card className="border-green-500/30 bg-white/5">
         <CardHeader className="pb-3">
-          <CardTitle className="text-green-400 text-base sm:text-lg">Portfolio Best Practices</CardTitle>
+          <CardTitle className="text-green-400 text-base sm:text-lg">
+            Portfolio Best Practices
+          </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

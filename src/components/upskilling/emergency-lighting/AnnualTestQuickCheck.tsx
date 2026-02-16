@@ -12,7 +12,12 @@ export const AnnualTestQuickCheck = () => {
               Quick Check: What does the annual duration test prove that the monthly test does not?
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              The annual test proves that batteries can sustain illumination for the full 3-hour rated period under realistic load conditions. Monthly tests only confirm switching and basic operation but don't verify whether batteries have sufficient capacity to maintain illumination throughout an extended power outage. The annual test also identifies weak batteries that may pass short tests but fail under prolonged operation.
+              The annual test proves that batteries can sustain illumination for the full 3-hour
+              rated period under realistic load conditions. Monthly tests only confirm switching and
+              basic operation but don't verify whether batteries have sufficient capacity to
+              maintain illumination throughout an extended power outage. The annual test also
+              identifies weak batteries that may pass short tests but fail under prolonged
+              operation.
             </p>
           </div>
         </div>

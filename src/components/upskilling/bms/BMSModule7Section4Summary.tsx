@@ -3,10 +3,10 @@ import { BookOpen, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section4Summary = () => {
   const keyPoints = [
-    "Software upload loads control logic, mappings, and setpoints into controllers",
-    "Controller setup includes addressing, network configuration, clock sync, and parameter checks", 
-    "Electricians ensure controllers are powered, wired, labelled, and accessible for upload",
-    "Proper preparation avoids delays and communication errors during commissioning"
+    'Software upload loads control logic, mappings, and setpoints into controllers',
+    'Controller setup includes addressing, network configuration, clock sync, and parameter checks',
+    'Electricians ensure controllers are powered, wired, labelled, and accessible for upload',
+    'Proper preparation avoids delays and communication errors during commissioning',
   ];
 
   return (

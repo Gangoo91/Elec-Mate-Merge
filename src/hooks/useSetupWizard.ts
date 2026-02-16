@@ -22,7 +22,9 @@ export function useSetupWizard() {
 
   const saveData = useMutation({
     mutationFn: async (data: SetupWizardData) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Upload logo if provided
@@ -39,34 +41,38 @@ export function useSetupWizard() {
           });
 
         if (!uploadError) {
-          const { data: { publicUrl } } = supabase.storage
-            .from('company-logos')
-            .getPublicUrl(fileName);
+          const {
+            data: { publicUrl },
+          } = supabase.storage.from('company-logos').getPublicUrl(fileName);
           logoUrl = publicUrl;
         }
       }
 
       // Upsert company profile
-      const { error } = await supabase
-        .from('company_profiles')
-        .upsert({
+      const { error } = await supabase.from('company_profiles').upsert(
+        {
           user_id: user.id,
           company_name: data.companyName || null,
           company_email: data.email || null,
           company_phone: data.phone || null,
           company_address: data.address || null,
-          bank_details: (data.bankName || data.accountNumber) ? {
-            bankName: data.bankName,
-            accountName: data.accountName,
-            accountNumber: data.accountNumber,
-            sortCode: data.sortCode,
-          } : null,
+          bank_details:
+            data.bankName || data.accountNumber
+              ? {
+                  bankName: data.bankName,
+                  accountName: data.accountName,
+                  accountNumber: data.accountNumber,
+                  sortCode: data.sortCode,
+                }
+              : null,
           payment_terms: data.paymentTerms,
           logo_url: logoUrl,
           primary_color: data.primaryColor,
           secondary_color: data.accentColor,
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' });
+        },
+        { onConflict: 'user_id' }
+      );
 
       if (error) throw error;
     },
@@ -84,7 +90,9 @@ export function useSetupWizard() {
 
   const completeOnboarding = useMutation({
     mutationFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase

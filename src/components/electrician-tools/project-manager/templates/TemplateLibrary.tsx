@@ -12,7 +12,11 @@ interface TemplateLibraryProps {
 }
 
 export const TemplateLibrary = ({ projectType, onSelectTemplate }: TemplateLibraryProps) => {
-  const { data: templates, isLoading, error } = useQuery({
+  const {
+    data: templates,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['project-templates', projectType],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -21,21 +25,25 @@ export const TemplateLibrary = ({ projectType, onSelectTemplate }: TemplateLibra
         .order('usage_count', { ascending: false });
 
       if (error) throw error;
-      
+
       // Filter templates by project type
-      return data?.filter(template => {
-        const type = template.template_type || '';
-        if (projectType === 'domestic') return type.startsWith('domestic_');
-        if (projectType === 'commercial') return type.startsWith('commercial_');
-        if (projectType === 'industrial') return type === 'industrial';
-        return false;
-      }) || [];
+      return (
+        data?.filter((template) => {
+          const type = template.template_type || '';
+          if (projectType === 'domestic') return type.startsWith('domestic_');
+          if (projectType === 'commercial') return type.startsWith('commercial_');
+          if (projectType === 'industrial') return type === 'industrial';
+          return false;
+        }) || []
+      );
     },
   });
 
   const handleUseTemplate = (template: any) => {
     // Parse phases and add unique IDs
-    const parsedPhases = (Array.isArray(template.phases) ? template.phases : JSON.parse(template.phases || '[]')).map((phase: any) => ({
+    const parsedPhases = (
+      Array.isArray(template.phases) ? template.phases : JSON.parse(template.phases || '[]')
+    ).map((phase: any) => ({
       ...phase,
       id: uuidv4(),
       tasks: (phase.tasks || []).map((task: any) => ({
@@ -112,9 +120,7 @@ export const TemplateLibrary = ({ projectType, onSelectTemplate }: TemplateLibra
   if (!templates || templates.length === 0) {
     return (
       <div className="p-4 sm:p-6 border border-border/40 rounded-lg text-center">
-        <p className="text-sm text-muted-foreground">
-          No {projectType} templates available yet.
-        </p>
+        <p className="text-sm text-muted-foreground">No {projectType} templates available yet.</p>
       </div>
     );
   }

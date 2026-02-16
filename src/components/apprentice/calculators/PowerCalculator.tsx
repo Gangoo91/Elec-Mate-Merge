@@ -8,7 +8,7 @@ import {
   CalculatorActions,
   CalculatorResult,
   ResultValue,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 interface PowerCalculatorProps {
   className?: string;
@@ -33,7 +33,12 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
       } else if (I > 0 && R > 0) {
         return { value: (I * I * R).toFixed(2), unit: 'W', formula: 'P = I² × R', label: 'Power' };
       } else if (V > 0 && R > 0) {
-        return { value: ((V * V) / R).toFixed(2), unit: 'W', formula: 'P = V² ÷ R', label: 'Power' };
+        return {
+          value: ((V * V) / R).toFixed(2),
+          unit: 'W',
+          formula: 'P = V² ÷ R',
+          label: 'Power',
+        };
       }
     } else if (calcType === 'voltage') {
       if (P > 0 && I > 0) {
@@ -41,7 +46,12 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
       } else if (I > 0 && R > 0) {
         return { value: (I * R).toFixed(2), unit: 'V', formula: 'V = I × R', label: 'Voltage' };
       } else if (P > 0 && R > 0) {
-        return { value: Math.sqrt(P * R).toFixed(2), unit: 'V', formula: 'V = √(P × R)', label: 'Voltage' };
+        return {
+          value: Math.sqrt(P * R).toFixed(2),
+          unit: 'V',
+          formula: 'V = √(P × R)',
+          label: 'Voltage',
+        };
       }
     } else if (calcType === 'current') {
       if (P > 0 && V > 0) {
@@ -49,15 +59,30 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
       } else if (V > 0 && R > 0) {
         return { value: (V / R).toFixed(2), unit: 'A', formula: 'I = V ÷ R', label: 'Current' };
       } else if (P > 0 && R > 0) {
-        return { value: Math.sqrt(P / R).toFixed(2), unit: 'A', formula: 'I = √(P ÷ R)', label: 'Current' };
+        return {
+          value: Math.sqrt(P / R).toFixed(2),
+          unit: 'A',
+          formula: 'I = √(P ÷ R)',
+          label: 'Current',
+        };
       }
     } else if (calcType === 'resistance') {
       if (V > 0 && I > 0) {
         return { value: (V / I).toFixed(2), unit: 'Ω', formula: 'R = V ÷ I', label: 'Resistance' };
       } else if (P > 0 && I > 0) {
-        return { value: (P / (I * I)).toFixed(2), unit: 'Ω', formula: 'R = P ÷ I²', label: 'Resistance' };
+        return {
+          value: (P / (I * I)).toFixed(2),
+          unit: 'Ω',
+          formula: 'R = P ÷ I²',
+          label: 'Resistance',
+        };
       } else if (V > 0 && P > 0) {
-        return { value: ((V * V) / P).toFixed(2), unit: 'Ω', formula: 'R = V² ÷ P', label: 'Resistance' };
+        return {
+          value: ((V * V) / P).toFixed(2),
+          unit: 'Ω',
+          formula: 'R = V² ÷ P',
+          label: 'Resistance',
+        };
       }
     }
 
@@ -78,7 +103,7 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
     const R = parseFloat(resistance) || 0;
     const P = parseFloat(power) || 0;
 
-    const values = [V, I, R, P].filter(v => v > 0);
+    const values = [V, I, R, P].filter((v) => v > 0);
     return values.length >= 2;
   };
 
@@ -95,10 +120,10 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
           value={calcType}
           onChange={(value) => setCalcType(value as 'power' | 'voltage' | 'current' | 'resistance')}
           options={[
-            { value: "power", label: "Power (P)" },
-            { value: "voltage", label: "Voltage (V)" },
-            { value: "current", label: "Current (I)" },
-            { value: "resistance", label: "Resistance (R)" },
+            { value: 'power', label: 'Power (P)' },
+            { value: 'voltage', label: 'Voltage (V)' },
+            { value: 'current', label: 'Current (I)' },
+            { value: 'resistance', label: 'Resistance (R)' },
           ]}
         />
 
@@ -189,7 +214,9 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
           <div className="text-sm text-blue-200 space-y-1">
-            <p><strong>Tip:</strong> Enter any two known values to calculate the third.</p>
+            <p>
+              <strong>Tip:</strong> Enter any two known values to calculate the third.
+            </p>
             <p>Common UK voltages: 230V (single-phase), 400V (three-phase)</p>
             <p className="text-blue-200/70">Note: These calculations apply to resistive loads</p>
           </div>

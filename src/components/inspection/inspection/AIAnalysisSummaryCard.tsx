@@ -2,7 +2,17 @@ import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, AlertTriangle, HelpCircle, ChevronDown, ChevronUp, ExternalLink, FileText, Target, Sparkles } from 'lucide-react';
+import {
+  CheckCircle,
+  AlertTriangle,
+  HelpCircle,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  FileText,
+  Target,
+  Sparkles,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AIAnalysisSummaryCardProps {
@@ -29,7 +39,7 @@ const AIAnalysisSummaryCard: React.FC<AIAnalysisSummaryCardProps> = ({
   onViewFullAnalysis,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  
+
   const { agreesWithInspector, feedback, suggestedClassification } = aiAnalysis.qualityAssurance;
   const { aiClassification, confidence, regulations } = aiAnalysis;
 
@@ -64,11 +74,12 @@ const AIAnalysisSummaryCard: React.FC<AIAnalysisSummaryCardProps> = ({
 
   const statusInfo = getStatusInfo();
   const StatusIcon = statusInfo.icon;
-  
+
   // Truncate feedback to ~100 characters at last complete word
-  const briefFeedback = feedback.length > 100 
-    ? feedback.slice(0, 100).split(' ').slice(0, -1).join(' ') + '...' 
-    : feedback;
+  const briefFeedback =
+    feedback.length > 100
+      ? feedback.slice(0, 100).split(' ').slice(0, -1).join(' ') + '...'
+      : feedback;
   const keyRegulation = regulations[0] || null;
 
   // Get confidence color
@@ -117,9 +128,7 @@ const AIAnalysisSummaryCard: React.FC<AIAnalysisSummaryCardProps> = ({
         </div>
 
         {/* Brief Reasoning */}
-        <p className="text-xs text-foreground/80 leading-relaxed">
-          {briefFeedback}
-        </p>
+        <p className="text-xs text-foreground/80 leading-relaxed">{briefFeedback}</p>
 
         {/* Key Regulation & Confidence */}
         <div className="flex items-center justify-between gap-3 pt-1">
@@ -133,12 +142,10 @@ const AIAnalysisSummaryCard: React.FC<AIAnalysisSummaryCardProps> = ({
               </>
             )}
             {regulations.length > 1 && (
-              <span className="text-xs text-muted-foreground">
-                +{regulations.length - 1} more
-              </span>
+              <span className="text-xs text-muted-foreground">+{regulations.length - 1} more</span>
             )}
           </div>
-          
+
           <div className="flex items-center gap-1.5">
             <Target className="h-3.5 w-3.5 text-muted-foreground" />
             <span className={cn('text-sm font-bold', getConfidenceColor())}>
@@ -149,7 +156,7 @@ const AIAnalysisSummaryCard: React.FC<AIAnalysisSummaryCardProps> = ({
 
         {/* View Full Analysis Button */}
         <Button
-          variant={agreesWithInspector ? "outline" : "default"}
+          variant={agreesWithInspector ? 'outline' : 'default'}
           size="sm"
           onClick={onViewFullAnalysis}
           className="w-full h-8 text-xs gap-1.5 mt-1"

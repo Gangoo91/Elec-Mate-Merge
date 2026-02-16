@@ -12,10 +12,11 @@ export const BMSModule5Section2ContentPart4 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          BACnet/IP uses standard Ethernet infrastructure, making it scalable and fast. However, it requires 
-          coordination with IT departments and careful network planning to avoid conflicts with corporate systems.
+          BACnet/IP uses standard Ethernet infrastructure, making it scalable and fast. However, it
+          requires coordination with IT departments and careful network planning to avoid conflicts
+          with corporate systems.
         </p>
-        
+
         <div className="space-y-3">
           <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2 mb-2">
@@ -26,7 +27,9 @@ export const BMSModule5Section2ContentPart4 = () => {
               <p className="text-foreground">• Use Cat5e or higher Ethernet cable</p>
               <p className="text-foreground">• Follow standard Ethernet installation practices</p>
               <p className="text-foreground">• Ensure adequate switch ports and PoE if required</p>
-              <p className="text-foreground">• Plan cable routes to avoid electromagnetic interference</p>
+              <p className="text-foreground">
+                • Plan cable routes to avoid electromagnetic interference
+              </p>
             </div>
           </div>
 
@@ -36,7 +39,9 @@ export const BMSModule5Section2ContentPart4 = () => {
               Network Segregation
             </h4>
             <div className="space-y-1 text-sm">
-              <p className="text-foreground">• Keep BMS traffic separate from corporate IT traffic</p>
+              <p className="text-foreground">
+                • Keep BMS traffic separate from corporate IT traffic
+              </p>
               <p className="text-foreground">• Use VLANs to isolate BMS network segments</p>
               <p className="text-foreground">• Implement appropriate firewall rules</p>
               <p className="text-foreground">• Consider dedicated BMS network infrastructure</p>
@@ -60,10 +65,16 @@ export const BMSModule5Section2ContentPart4 = () => {
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Installation Tips</h4>
           <div className="space-y-1 text-sm">
-            <p className="text-foreground">• Label Ethernet drops clearly as "BMS" to avoid confusion</p>
-            <p className="text-foreground">• Verify IP addresses, ping devices during commissioning</p>
+            <p className="text-foreground">
+              • Label Ethernet drops clearly as "BMS" to avoid confusion
+            </p>
+            <p className="text-foreground">
+              • Verify IP addresses, ping devices during commissioning
+            </p>
             <p className="text-foreground">• Document network topology and addressing scheme</p>
-            <p className="text-foreground">• Test bandwidth and latency for critical control loops</p>
+            <p className="text-foreground">
+              • Test bandwidth and latency for critical control loops
+            </p>
           </div>
         </div>
       </CardContent>

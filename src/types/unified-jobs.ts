@@ -5,12 +5,12 @@
 
 // Job source identifiers
 export type JobSourceType =
-  | 'employer'    // Direct employer posting
-  | 'reed'        // Reed.co.uk
-  | 'indeed'      // Indeed
-  | 'totaljobs'   // TotalJobs
-  | 'cvlibrary'   // CV Library
-  | 'jobscouk';   // Jobs.co.uk
+  | 'employer' // Direct employer posting
+  | 'reed' // Reed.co.uk
+  | 'indeed' // Indeed
+  | 'totaljobs' // TotalJobs
+  | 'cvlibrary' // CV Library
+  | 'jobscouk'; // Jobs.co.uk
 
 // Unified job listing that works for both employer and external jobs
 export interface UnifiedJobListing {
@@ -19,12 +19,12 @@ export interface UnifiedJobListing {
   company: string;
   location: string;
   salary: string | null;
-  type: string;                     // Full-time, Part-time, Contract
+  type: string; // Full-time, Part-time, Contract
   description: string;
-  url: string | null;               // External URL (null for employer jobs)
+  url: string | null; // External URL (null for employer jobs)
   posted_date: string;
   source: JobSourceType;
-  is_internal: boolean;             // true = employer job, false = external
+  is_internal: boolean; // true = employer job, false = external
 
   // Employer job specific fields
   employer_id?: string;
@@ -41,7 +41,7 @@ export interface UnifiedJobListing {
   has_applied?: boolean;
 
   // External job specific
-  is_fresh?: boolean;               // Recently posted
+  is_fresh?: boolean; // Recently posted
   image_url?: string;
 }
 
@@ -95,19 +95,22 @@ export function employerVacancyToUnified(vacancy: EmployerVacancy): UnifiedJobLi
     const period = vacancy.salary_period === 'annual' ? '/yr' : '/hr';
 
     if (vacancy.salary_min && vacancy.salary_max) {
-      const min = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
-        : `£${vacancy.salary_min}`;
-      const max = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_max / 1000).toFixed(0)}k`
-        : `£${vacancy.salary_max}`;
+      const min =
+        vacancy.salary_period === 'annual'
+          ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
+          : `£${vacancy.salary_min}`;
+      const max =
+        vacancy.salary_period === 'annual'
+          ? `£${(vacancy.salary_max / 1000).toFixed(0)}k`
+          : `£${vacancy.salary_max}`;
       return `${min} - ${max}${period}`;
     }
 
     if (vacancy.salary_min) {
-      const val = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
-        : `£${vacancy.salary_min}`;
+      const val =
+        vacancy.salary_period === 'annual'
+          ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
+          : `£${vacancy.salary_min}`;
       return `From ${val}${period}`;
     }
 
@@ -144,9 +147,9 @@ export function externalJobToUnified(job: ExternalJob): UnifiedJobListing {
   // Map source string to JobSourceType
   const mapSource = (source: string): JobSourceType => {
     const sourceMap: Record<string, JobSourceType> = {
-      'Reed': 'reed',
-      'Indeed': 'indeed',
-      'TotalJobs': 'totaljobs',
+      Reed: 'reed',
+      Indeed: 'indeed',
+      TotalJobs: 'totaljobs',
       'CV Library': 'cvlibrary',
       'Jobs.co.uk': 'jobscouk',
     };

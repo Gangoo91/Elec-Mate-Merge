@@ -1,111 +1,130 @@
-import { ArrowLeft, ArrowRight, Wifi, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Wifi, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Wi-Fi and RF Signal Verification";
-const DESCRIPTION = "Master the techniques for testing and optimising wireless connectivity in smart home installations for reliable system performance.";
+const TITLE = 'Wi-Fi and RF Signal Verification';
+const DESCRIPTION =
+  'Master the techniques for testing and optimising wireless connectivity in smart home installations for reliable system performance.';
 
 const quickCheckQuestions = [
   {
-    question: "What is the typical acceptable Wi-Fi signal strength for smart home devices?",
-    options: ["-80 dBm or weaker", "-70 dBm or stronger", "-90 dBm", "Signal strength does not matter"],
+    question: 'What is the typical acceptable Wi-Fi signal strength for smart home devices?',
+    options: [
+      '-80 dBm or weaker',
+      '-70 dBm or stronger',
+      '-90 dBm',
+      'Signal strength does not matter',
+    ],
     correctIndex: 1,
-    explanation: "A signal strength of -70 dBm or stronger (closer to 0) provides reliable connectivity. Signals weaker than -80 dBm often cause intermittent issues."
+    explanation:
+      'A signal strength of -70 dBm or stronger (closer to 0) provides reliable connectivity. Signals weaker than -80 dBm often cause intermittent issues.',
   },
   {
-    question: "Which Wi-Fi frequency band offers better range but lower bandwidth?",
-    options: ["5 GHz", "2.4 GHz", "6 GHz", "Both have equal range"],
+    question: 'Which Wi-Fi frequency band offers better range but lower bandwidth?',
+    options: ['5 GHz', '2.4 GHz', '6 GHz', 'Both have equal range'],
     correctIndex: 1,
-    explanation: "2.4 GHz offers better range and penetration through walls but has lower bandwidth and is more susceptible to interference. Most smart home devices use 2.4 GHz."
+    explanation:
+      '2.4 GHz offers better range and penetration through walls but has lower bandwidth and is more susceptible to interference. Most smart home devices use 2.4 GHz.',
   },
   {
-    question: "What tool is commonly used for professional Wi-Fi site surveys?",
-    options: ["Multimeter", "Wi-Fi analyser app or dedicated survey tool", "Oscilloscope", "Cable tester"],
+    question: 'What tool is commonly used for professional Wi-Fi site surveys?',
+    options: [
+      'Multimeter',
+      'Wi-Fi analyser app or dedicated survey tool',
+      'Oscilloscope',
+      'Cable tester',
+    ],
     correctIndex: 1,
-    explanation: "Wi-Fi analyser apps or dedicated survey tools like Ekahau or NetSpot measure signal strength, identify interference, and map coverage areas."
-  }
+    explanation:
+      'Wi-Fi analyser apps or dedicated survey tools like Ekahau or NetSpot measure signal strength, identify interference, and map coverage areas.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "Why is channel selection important for 2.4 GHz Wi-Fi networks?",
+    question: 'Why is channel selection important for 2.4 GHz Wi-Fi networks?',
     options: [
-      "It affects the colour of the LED on the router",
-      "To avoid interference from overlapping channels used by neighbours",
-      "It determines the maximum number of devices",
-      "It has no significant impact on performance"
+      'It affects the colour of the LED on the router',
+      'To avoid interference from overlapping channels used by neighbours',
+      'It determines the maximum number of devices',
+      'It has no significant impact on performance',
     ],
     correctIndex: 1,
-    explanation: "In the 2.4 GHz band, only channels 1, 6, and 11 are non-overlapping. Using these channels prevents interference from neighbouring networks on overlapping channels."
+    explanation:
+      'In the 2.4 GHz band, only channels 1, 6, and 11 are non-overlapping. Using these channels prevents interference from neighbouring networks on overlapping channels.',
   },
   {
-    question: "What is the primary purpose of a mesh Wi-Fi system in a smart home installation?",
+    question: 'What is the primary purpose of a mesh Wi-Fi system in a smart home installation?',
     options: [
-      "To reduce internet costs",
-      "To provide consistent coverage throughout the property",
-      "To increase internet speed",
-      "To connect wired devices only"
+      'To reduce internet costs',
+      'To provide consistent coverage throughout the property',
+      'To increase internet speed',
+      'To connect wired devices only',
     ],
     correctIndex: 1,
-    explanation: "Mesh systems use multiple access points that work together to provide seamless, consistent Wi-Fi coverage throughout larger properties, eliminating dead zones."
+    explanation:
+      'Mesh systems use multiple access points that work together to provide seamless, consistent Wi-Fi coverage throughout larger properties, eliminating dead zones.',
   },
   {
-    question: "When testing Z-Wave or Zigbee signal strength, what indicates a healthy mesh network?",
+    question:
+      'When testing Z-Wave or Zigbee signal strength, what indicates a healthy mesh network?',
     options: [
-      "All devices connecting directly to the hub",
-      "Devices routing through multiple hops with acceptable latency",
-      "Only battery-powered devices present",
-      "Maximum number of devices connected"
+      'All devices connecting directly to the hub',
+      'Devices routing through multiple hops with acceptable latency',
+      'Only battery-powered devices present',
+      'Maximum number of devices connected',
     ],
     correctIndex: 1,
-    explanation: "A healthy mesh network has devices routing through intermediate nodes (hops) where direct hub connection is not possible, while maintaining acceptable response times."
+    explanation:
+      'A healthy mesh network has devices routing through intermediate nodes (hops) where direct hub connection is not possible, while maintaining acceptable response times.',
   },
   {
-    question: "What common household item can cause interference with 2.4 GHz Wi-Fi and Zigbee signals?",
-    options: [
-      "LED light bulbs",
-      "Microwave ovens",
-      "Refrigerators",
-      "Television sets"
-    ],
+    question:
+      'What common household item can cause interference with 2.4 GHz Wi-Fi and Zigbee signals?',
+    options: ['LED light bulbs', 'Microwave ovens', 'Refrigerators', 'Television sets'],
     correctIndex: 1,
-    explanation: "Microwave ovens operate at approximately 2.45 GHz, which can cause significant interference with 2.4 GHz Wi-Fi and Zigbee networks when in use."
+    explanation:
+      'Microwave ovens operate at approximately 2.45 GHz, which can cause significant interference with 2.4 GHz Wi-Fi and Zigbee networks when in use.',
   },
   {
-    question: "What is the recommended minimum signal level for Z-Wave devices from the hub?",
+    question: 'What is the recommended minimum signal level for Z-Wave devices from the hub?',
     options: [
-      "Any signal level is acceptable",
-      "-100 dBm or stronger",
-      "-90 dBm or stronger with good hop count",
-      "Exactly -50 dBm"
+      'Any signal level is acceptable',
+      '-100 dBm or stronger',
+      '-90 dBm or stronger with good hop count',
+      'Exactly -50 dBm',
     ],
     correctIndex: 2,
-    explanation: "Z-Wave devices should have signals of -90 dBm or stronger, with reasonable hop counts (typically 4 or fewer). Weaker signals may cause unreliable operation."
-  }
+    explanation:
+      'Z-Wave devices should have signals of -90 dBm or stronger, with reasonable hop counts (typically 4 or fewer). Weaker signals may cause unreliable operation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Should I recommend mesh Wi-Fi for every smart home installation?",
-    answer: "Not always. Mesh systems are beneficial for larger properties (typically over 150 square metres) or those with challenging construction (thick walls, multiple floors). Smaller properties with good router placement often perform well with a single quality router. Assess coverage during site survey before recommending expensive upgrades."
+    question: 'Should I recommend mesh Wi-Fi for every smart home installation?',
+    answer:
+      'Not always. Mesh systems are beneficial for larger properties (typically over 150 square metres) or those with challenging construction (thick walls, multiple floors). Smaller properties with good router placement often perform well with a single quality router. Assess coverage during site survey before recommending expensive upgrades.',
   },
   {
-    question: "How do I test Zigbee signal strength without expensive equipment?",
-    answer: "Many Zigbee hubs and coordinators provide signal quality indicators in their software (often shown as LQI - Link Quality Indicator). Home Assistant with a Zigbee integration shows network maps and signal quality. For basic testing, observe response times and reliability during commissioning tests."
+    question: 'How do I test Zigbee signal strength without expensive equipment?',
+    answer:
+      'Many Zigbee hubs and coordinators provide signal quality indicators in their software (often shown as LQI - Link Quality Indicator). Home Assistant with a Zigbee integration shows network maps and signal quality. For basic testing, observe response times and reliability during commissioning tests.',
   },
   {
-    question: "What should I do if a customer has many Wi-Fi networks visible from neighbours?",
-    answer: "Use a Wi-Fi analyser to identify the least congested channel, particularly 1, 6, or 11 for 2.4 GHz. Consider using 5 GHz for devices that support it. If severe congestion exists, Z-Wave operates on different frequencies and may be a better choice for critical devices."
-  }
+    question: 'What should I do if a customer has many Wi-Fi networks visible from neighbours?',
+    answer:
+      'Use a Wi-Fi analyser to identify the least congested channel, particularly 1, 6, or 11 for 2.4 GHz. Consider using 5 GHz for devices that support it. If severe congestion exists, Z-Wave operates on different frequencies and may be a better choice for critical devices.',
+  },
 ];
 
 const SmartHomeModule7Section3 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 7`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -134,23 +153,23 @@ const SmartHomeModule7Section3 = () => {
           <div className="flex justify-center mb-4">
             <Wifi className="h-10 w-10 text-elec-yellow" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            {TITLE}
-          </h1>
-          <p className="text-white text-lg max-w-2xl mx-auto">
-            {DESCRIPTION}
-          </p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
+          <p className="text-white text-lg max-w-2xl mx-auto">{DESCRIPTION}</p>
         </header>
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h3 className="font-semibold text-white mb-1">Critical Factor</h3>
-            <p className="text-white text-sm">Wireless reliability directly impacts customer satisfaction</p>
+            <p className="text-white text-sm">
+              Wireless reliability directly impacts customer satisfaction
+            </p>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h3 className="font-semibold text-white mb-1">Professional Approach</h3>
-            <p className="text-white text-sm">Document signal surveys to demonstrate system capability</p>
+            <p className="text-white text-sm">
+              Document signal surveys to demonstrate system capability
+            </p>
           </div>
         </div>
 
@@ -162,10 +181,10 @@ const SmartHomeModule7Section3 = () => {
           </h2>
           <ul className="space-y-3">
             {[
-              "Conduct professional Wi-Fi site surveys for smart home installations",
-              "Understand RF signal characteristics for different protocols (Wi-Fi, Z-Wave, Zigbee)",
-              "Identify and resolve common wireless interference issues",
-              "Optimise network coverage for reliable device communication"
+              'Conduct professional Wi-Fi site surveys for smart home installations',
+              'Understand RF signal characteristics for different protocols (Wi-Fi, Z-Wave, Zigbee)',
+              'Identify and resolve common wireless interference issues',
+              'Optimise network coverage for reliable device communication',
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -230,22 +249,24 @@ const SmartHomeModule7Section3 = () => {
           <div className="space-y-4 text-white">
             <p>
               A proper Wi-Fi survey identifies coverage gaps and interference sources before
-              installation, preventing issues that are harder to resolve after devices are commissioned.
+              installation, preventing issues that are harder to resolve after devices are
+              commissioned.
             </p>
             <h4 className="font-semibold text-white">Survey Tools</h4>
             <div className="grid gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h5 className="font-medium text-elec-yellow mb-2">Smartphone Apps (Basic)</h5>
                 <p className="text-white text-sm">
-                  Free apps like Wi-Fi Analyzer (Android) or Airport Utility (iOS) provide
-                  signal strength readings and channel analysis. Suitable for smaller installations.
+                  Free apps like Wi-Fi Analyzer (Android) or Airport Utility (iOS) provide signal
+                  strength readings and channel analysis. Suitable for smaller installations.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h5 className="font-medium text-elec-yellow mb-2">Professional Survey Tools</h5>
                 <p className="text-white text-sm">
                   Tools like Ekahau, NetSpot, or AirMagnet provide detailed heat maps, interference
-                  analysis, and predictive modelling. Essential for commercial or complex residential work.
+                  analysis, and predictive modelling. Essential for commercial or complex
+                  residential work.
                 </p>
               </div>
             </div>
@@ -271,8 +292,8 @@ const SmartHomeModule7Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Different smart home protocols operate on different frequencies, each with
-              distinct characteristics affecting range, interference, and bandwidth.
+              Different smart home protocols operate on different frequencies, each with distinct
+              characteristics affecting range, interference, and bandwidth.
             </p>
             <div className="grid gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -364,9 +385,9 @@ const SmartHomeModule7Section3 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 mt-4">
               <h5 className="font-medium text-elec-yellow mb-2">Mesh Network Considerations</h5>
               <p className="text-white text-sm">
-                For Z-Wave and Zigbee mesh networks, commission mains-powered devices first as
-                these act as signal repeaters. Ensure at least 2-3 mains-powered devices between
-                the hub and any battery-powered sensors at the network edge.
+                For Z-Wave and Zigbee mesh networks, commission mains-powered devices first as these
+                act as signal repeaters. Ensure at least 2-3 mains-powered devices between the hub
+                and any battery-powered sensors at the network edge.
               </p>
             </div>
             <h4 className="font-semibold text-white">When to Recommend Network Upgrades</h4>

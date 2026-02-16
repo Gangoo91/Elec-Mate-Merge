@@ -1,7 +1,7 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { Clock, AlertTriangle } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Checkbox } from '@/components/ui/checkbox';
+import { Clock, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ProcedureStepCardProps {
   step: string;
@@ -11,12 +11,12 @@ interface ProcedureStepCardProps {
   isExpanded?: boolean;
 }
 
-export const ProcedureStepCard = ({ 
-  step, 
-  stepNumber, 
+export const ProcedureStepCard = ({
+  step,
+  stepNumber,
   duration,
   safetyNote,
-  isExpanded = false 
+  isExpanded = false,
 }: ProcedureStepCardProps) => {
   const [checked, setChecked] = useState(false);
   const [expanded, setExpanded] = useState(isExpanded);
@@ -26,18 +26,15 @@ export const ProcedureStepCard = ({
   const showSafetyIndicator = hasSafetyKeywords || safetyNote;
 
   return (
-    <div 
+    <div
       className={cn(
-        "border-2 rounded-lg transition-all duration-200",
-        checked 
-          ? "border-green-500/40 bg-green-500/5" 
-          : "border-border bg-elec-card hover:border-elec-yellow/40"
+        'border-2 rounded-lg transition-all duration-200',
+        checked
+          ? 'border-green-500/40 bg-green-500/5'
+          : 'border-border bg-elec-card hover:border-elec-yellow/40'
       )}
     >
-      <div 
-        className="p-4 cursor-pointer"
-        onClick={() => setExpanded(!expanded)}
-      >
+      <div className="p-4 cursor-pointer" onClick={() => setExpanded(!expanded)}>
         <div className="flex items-start gap-3">
           {/* Step Number Badge */}
           <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/30">
@@ -47,13 +44,15 @@ export const ProcedureStepCard = ({
           {/* Step Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 mb-2">
-              <p className={cn(
-                "text-sm sm:text-base text-foreground leading-relaxed",
-                checked && "line-through opacity-60"
-              )}>
+              <p
+                className={cn(
+                  'text-sm sm:text-base text-foreground leading-relaxed',
+                  checked && 'line-through opacity-60'
+                )}
+              >
                 {step}
               </p>
-              
+
               {/* Checkbox */}
               <Checkbox
                 checked={checked}

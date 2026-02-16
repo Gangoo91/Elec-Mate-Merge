@@ -1,19 +1,17 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { 
-  MessageSquare, 
-  Send, 
-  GitBranch, 
-  UserPlus, 
-  TrendingUp,
-  Trash2
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
-import { useJobComments, useAddComment, useDeleteComment, JobComment } from "@/hooks/useJobComments";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { MessageSquare, Send, GitBranch, UserPlus, TrendingUp, Trash2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { formatDistanceToNow } from 'date-fns';
+import {
+  useJobComments,
+  useAddComment,
+  useDeleteComment,
+  JobComment,
+} from '@/hooks/useJobComments';
 
 interface JobActivityFeedProps {
   jobId: string;
@@ -35,18 +33,18 @@ const getCommentIcon = (type: JobComment['comment_type']) => {
 const getCommentStyles = (type: JobComment['comment_type']) => {
   switch (type) {
     case 'status_change':
-      return "bg-info/10 text-info";
+      return 'bg-info/10 text-info';
     case 'assignment':
-      return "bg-success/10 text-success";
+      return 'bg-success/10 text-success';
     case 'progress':
-      return "bg-warning/10 text-warning";
+      return 'bg-warning/10 text-warning';
     default:
-      return "bg-elec-yellow/10 text-elec-yellow";
+      return 'bg-elec-yellow/10 text-elec-yellow';
   }
 };
 
 export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
 
   const { data: comments = [], isLoading } = useJobComments(jobId);
   const addComment = useAddComment();
@@ -54,14 +52,14 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
 
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
-    
+
     await addComment.mutateAsync({
       jobId,
       content: newComment.trim(),
-      authorName: "You", // In real app, get from auth
+      authorName: 'You', // In real app, get from auth
       commentType: 'comment',
     });
-    setNewComment("");
+    setNewComment('');
   };
 
   if (isLoading) {
@@ -106,15 +104,13 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
               onChange={(e) => setNewComment(e.target.value)}
               className="min-h-[60px] text-sm resize-none"
               onKeyDown={(e) => {
-                if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
                   handleAddComment();
                 }
               }}
             />
             <div className="flex justify-between items-center">
-              <span className="text-[10px] text-muted-foreground">
-                Cmd+Enter to send
-              </span>
+              <span className="text-[10px] text-muted-foreground">Cmd+Enter to send</span>
               <Button
                 size="sm"
                 className="h-7 gap-1.5"
@@ -133,10 +129,12 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
           <div className="space-y-3 pt-2 border-t border-border">
             {comments.map((comment) => (
               <div key={comment.id} className="flex gap-3 group">
-                <div className={cn(
-                  "h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0",
-                  getCommentStyles(comment.comment_type)
-                )}>
+                <div
+                  className={cn(
+                    'h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0',
+                    getCommentStyles(comment.comment_type)
+                  )}
+                >
                   {getCommentIcon(comment.comment_type)}
                 </div>
                 <div className="flex-1 min-w-0">

@@ -1,6 +1,5 @@
-
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   GraduationCap,
   ArrowLeft,
@@ -15,23 +14,27 @@ import {
   Info,
   Rocket,
   Target,
-  CheckCircle
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import SimpleCareerCard from "@/components/apprentice/career/SimpleCareerCard";
-import CareerPathways from "@/components/apprentice/career/CareerPathways";
-import CareerCourses from "@/components/apprentice/career/CareerCourses";
-import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
-import ProfessionalAccreditation from "@/components/apprentice/career/ProfessionalAccreditation";
-import CPDTracker from "@/components/apprentice/career/cpd/CPDTracker";
-import BusinessBuilder from "@/components/electrician/business/BusinessBuilder";
-import { careerSections, quickFacts, industryStats } from "@/components/apprentice/career/SectionData";
+  CheckCircle,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import SimpleCareerCard from '@/components/apprentice/career/SimpleCareerCard';
+import CareerPathways from '@/components/apprentice/career/CareerPathways';
+import CareerCourses from '@/components/apprentice/career/CareerCourses';
+import EnhancedFurtherEducation from '@/components/apprentice/career/EnhancedFurtherEducation';
+import ProfessionalAccreditation from '@/components/apprentice/career/ProfessionalAccreditation';
+import CPDTracker from '@/components/apprentice/career/cpd/CPDTracker';
+import BusinessBuilder from '@/components/electrician/business/BusinessBuilder';
+import {
+  careerSections,
+  quickFacts,
+  industryStats,
+} from '@/components/apprentice/career/SectionData';
 
 const CareerProgression = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const sectionParam = searchParams.get("section");
+  const sectionParam = searchParams.get('section');
   const [activeSection, setActiveSection] = useState<string | null>(sectionParam);
 
   // Sync section changes to URL
@@ -39,7 +42,7 @@ const CareerProgression = () => {
     if (activeSection) {
       setSearchParams({ section: activeSection }, { replace: false });
     } else {
-      searchParams.delete("section");
+      searchParams.delete('section');
       setSearchParams(searchParams, { replace: false });
     }
   }, [activeSection]);
@@ -50,17 +53,17 @@ const CareerProgression = () => {
 
   const renderSectionContent = () => {
     switch (activeSection) {
-      case "pathways":
+      case 'pathways':
         return <CareerPathways />;
-      case "courses":
+      case 'courses':
         return <CareerCourses />;
-      case "education":
+      case 'education':
         return <EnhancedFurtherEducation />;
-      case "accreditation":
+      case 'accreditation':
         return <ProfessionalAccreditation />;
-      case "cpd":
+      case 'cpd':
         return <CPDTracker />;
-      case "business":
+      case 'business':
         return <BusinessBuilder />;
       default:
         return null;
@@ -68,19 +71,19 @@ const CareerProgression = () => {
   };
 
   const salaryData = [
-    { role: "Apprentice (Year 1)", salary: "£16,000 - £20,000", color: "yellow" },
-    { role: "Qualified Electrician", salary: "£32,000 - £42,000", color: "blue" },
-    { role: "Approved Electrician", salary: "£38,000 - £52,000", color: "purple" },
-    { role: "Supervisor / Manager", salary: "£48,000 - £68,000", color: "green" },
-    { role: "Contractor (Self-employed)", salary: "£50,000 - £95,000+", color: "emerald" }
+    { role: 'Apprentice (Year 1)', salary: '£16,000 - £20,000', color: 'yellow' },
+    { role: 'Qualified Electrician', salary: '£32,000 - £42,000', color: 'blue' },
+    { role: 'Approved Electrician', salary: '£38,000 - £52,000', color: 'purple' },
+    { role: 'Supervisor / Manager', salary: '£48,000 - £68,000', color: 'green' },
+    { role: 'Contractor (Self-employed)', salary: '£50,000 - £95,000+', color: 'emerald' },
   ];
 
   const growthSectors = [
-    { sector: "Electric Vehicle Charging", growth: "+45%", demand: "Very High", color: "green" },
-    { sector: "Battery Storage (BESS)", growth: "+42%", demand: "Very High", color: "blue" },
-    { sector: "Heat Pump Installation", growth: "+38%", demand: "High", color: "purple" },
-    { sector: "Solar PV Systems", growth: "+35%", demand: "High", color: "yellow" },
-    { sector: "Smart Building Systems", growth: "+28%", demand: "Growing", color: "cyan" }
+    { sector: 'Electric Vehicle Charging', growth: '+45%', demand: 'Very High', color: 'green' },
+    { sector: 'Battery Storage (BESS)', growth: '+42%', demand: 'Very High', color: 'blue' },
+    { sector: 'Heat Pump Installation', growth: '+38%', demand: 'High', color: 'purple' },
+    { sector: 'Solar PV Systems', growth: '+35%', demand: 'High', color: 'yellow' },
+    { sector: 'Smart Building Systems', growth: '+28%', demand: 'Growing', color: 'cyan' },
   ];
 
   return (
@@ -122,10 +125,30 @@ const CareerProgression = () => {
           <div className="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-3">
             {quickFacts.map((fact, index) => {
               const colors = [
-                { bg: "bg-gradient-to-br from-elec-gray to-yellow-950/20", border: "border-elec-yellow/20", icon: "text-elec-yellow", glow: "bg-elec-yellow/10" },
-                { bg: "bg-gradient-to-br from-elec-gray to-green-950/20", border: "border-green-500/20", icon: "text-green-400", glow: "bg-green-500/10" },
-                { bg: "bg-gradient-to-br from-elec-gray to-blue-950/20", border: "border-blue-500/20", icon: "text-blue-400", glow: "bg-blue-500/10" },
-                { bg: "bg-gradient-to-br from-elec-gray to-purple-950/20", border: "border-purple-500/20", icon: "text-purple-400", glow: "bg-purple-500/10" }
+                {
+                  bg: 'bg-gradient-to-br from-elec-gray to-yellow-950/20',
+                  border: 'border-elec-yellow/20',
+                  icon: 'text-elec-yellow',
+                  glow: 'bg-elec-yellow/10',
+                },
+                {
+                  bg: 'bg-gradient-to-br from-elec-gray to-green-950/20',
+                  border: 'border-green-500/20',
+                  icon: 'text-green-400',
+                  glow: 'bg-green-500/10',
+                },
+                {
+                  bg: 'bg-gradient-to-br from-elec-gray to-blue-950/20',
+                  border: 'border-blue-500/20',
+                  icon: 'text-blue-400',
+                  glow: 'bg-blue-500/10',
+                },
+                {
+                  bg: 'bg-gradient-to-br from-elec-gray to-purple-950/20',
+                  border: 'border-purple-500/20',
+                  icon: 'text-purple-400',
+                  glow: 'bg-purple-500/10',
+                },
               ][index];
 
               return (
@@ -133,13 +156,15 @@ const CareerProgression = () => {
                   key={index}
                   className={`${colors.bg} ${colors.border} overflow-hidden relative`}
                 >
-                  <div className={`absolute top-0 right-0 w-20 h-20 ${colors.glow} rounded-full blur-2xl -translate-y-1/2 translate-x-1/2`} />
+                  <div
+                    className={`absolute top-0 right-0 w-20 h-20 ${colors.glow} rounded-full blur-2xl -translate-y-1/2 translate-x-1/2`}
+                  />
                   <CardContent className="p-3 sm:p-4 relative">
                     <div className="flex items-start gap-2 sm:gap-3">
-                      <div className={`p-1.5 sm:p-2 rounded-lg ${colors.bg} border ${colors.border} flex-shrink-0`}>
-                        <div className={colors.icon}>
-                          {fact.icon}
-                        </div>
+                      <div
+                        className={`p-1.5 sm:p-2 rounded-lg ${colors.bg} border ${colors.border} flex-shrink-0`}
+                      >
+                        <div className={colors.icon}>{fact.icon}</div>
                       </div>
                       <div className="min-w-0">
                         <div className={`text-lg sm:text-xl font-bold ${colors.icon} truncate`}>
@@ -174,28 +199,43 @@ const CareerProgression = () => {
                     Your Career Development Hub
                   </h2>
                   <p className="text-sm text-white leading-relaxed">
-                    The UK electrical industry is booming with a <span className="text-elec-yellow font-medium">skills shortage of 18,000 electricians</span>.
-                    Average salaries have risen to <span className="text-elec-yellow font-medium">£38,500</span> with contractors earning
-                    <span className="text-elec-yellow font-medium"> £220+/day</span>. Green technologies like EV charging and solar
-                    are driving <span className="text-green-400 font-medium">40%+ growth</span> in specialist roles.
+                    The UK electrical industry is booming with a{' '}
+                    <span className="text-elec-yellow font-medium">
+                      skills shortage of 18,000 electricians
+                    </span>
+                    . Average salaries have risen to{' '}
+                    <span className="text-elec-yellow font-medium">£38,500</span> with contractors
+                    earning
+                    <span className="text-elec-yellow font-medium"> £220+/day</span>. Green
+                    technologies like EV charging and solar are driving{' '}
+                    <span className="text-green-400 font-medium">40%+ growth</span> in specialist
+                    roles.
                   </p>
                 </div>
                 <div className="hidden lg:block">
                   <div className="grid grid-cols-2 gap-2 text-center">
                     <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                      <div className="text-2xl font-bold text-elec-yellow">{industryStats.averageSalary}</div>
+                      <div className="text-2xl font-bold text-elec-yellow">
+                        {industryStats.averageSalary}
+                      </div>
                       <div className="text-[10px] text-white">Avg Salary</div>
                     </div>
                     <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-                      <div className="text-2xl font-bold text-green-400">{industryStats.jobGrowth}</div>
+                      <div className="text-2xl font-bold text-green-400">
+                        {industryStats.jobGrowth}
+                      </div>
                       <div className="text-[10px] text-white">Job Growth</div>
                     </div>
                     <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                      <div className="text-2xl font-bold text-blue-400">{industryStats.activeElectricians}</div>
+                      <div className="text-2xl font-bold text-blue-400">
+                        {industryStats.activeElectricians}
+                      </div>
                       <div className="text-[10px] text-white">UK Electricians</div>
                     </div>
                     <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                      <div className="text-2xl font-bold text-purple-400">{industryStats.evGrowth}</div>
+                      <div className="text-2xl font-bold text-purple-400">
+                        {industryStats.evGrowth}
+                      </div>
                       <div className="text-[10px] text-white">EV Growth</div>
                     </div>
                   </div>
@@ -212,7 +252,10 @@ const CareerProgression = () => {
               </div>
               Career Development Areas
             </h3>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs bg-elec-yellow/10">
+            <Badge
+              variant="outline"
+              className="border-elec-yellow/30 text-elec-yellow text-xs bg-elec-yellow/10"
+            >
               6 Sections
             </Badge>
           </div>
@@ -226,7 +269,7 @@ const CareerProgression = () => {
                 description={section.description}
                 icon={section.icon}
                 onClick={() => setActiveSection(section.id)}
-                showComingSoon={section.id === "cpd"}
+                showComingSoon={section.id === 'cpd'}
                 stats={section.stats}
                 badge={section.badge}
                 accentColor={section.accentColor}
@@ -250,7 +293,10 @@ const CareerProgression = () => {
               <CardContent className="space-y-3 relative">
                 <div className="space-y-2">
                   {salaryData.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center text-sm py-2 px-3 rounded-lg bg-white/5 border border-white/10">
+                    <div
+                      key={index}
+                      className="flex justify-between items-center text-sm py-2 px-3 rounded-lg bg-white/5 border border-white/10"
+                    >
                       <span className="text-white">{item.role}</span>
                       <span className="text-green-400 font-medium">{item.salary}</span>
                     </div>
@@ -279,17 +325,27 @@ const CareerProgression = () => {
               <CardContent className="space-y-3 relative">
                 <div className="space-y-2">
                   {growthSectors.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center text-sm py-2 px-3 rounded-lg bg-white/5 border border-white/10">
+                    <div
+                      key={index}
+                      className="flex justify-between items-center text-sm py-2 px-3 rounded-lg bg-white/5 border border-white/10"
+                    >
                       <span className="text-white">{item.sector}</span>
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline" className={`text-[10px] ${
-                          item.demand === "Very High" ? "bg-green-500/10 border-green-500/30 text-green-400" :
-                          item.demand === "High" ? "bg-blue-500/10 border-blue-500/30 text-blue-400" :
-                          "bg-yellow-500/10 border-yellow-500/30 text-yellow-400"
-                        }`}>
+                        <Badge
+                          variant="outline"
+                          className={`text-[10px] ${
+                            item.demand === 'Very High'
+                              ? 'bg-green-500/10 border-green-500/30 text-green-400'
+                              : item.demand === 'High'
+                                ? 'bg-blue-500/10 border-blue-500/30 text-blue-400'
+                                : 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400'
+                          }`}
+                        >
                           {item.demand}
                         </Badge>
-                        <span className="text-green-400 font-medium w-12 text-right">{item.growth}</span>
+                        <span className="text-green-400 font-medium w-12 text-right">
+                          {item.growth}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -315,7 +371,9 @@ const CareerProgression = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-white">Ready to advance your career?</h4>
-                    <p className="text-xs text-white">Explore pathways, find courses, or track your professional development</p>
+                    <p className="text-xs text-white">
+                      Explore pathways, find courses, or track your professional development
+                    </p>
                   </div>
                 </div>
                 <div className="flex gap-2 w-full sm:w-auto">
@@ -323,7 +381,7 @@ const CareerProgression = () => {
                     variant="outline"
                     size="sm"
                     className="flex-1 sm:flex-initial h-10 border-elec-yellow/30 hover:border-elec-yellow/50 touch-manipulation active:scale-95 transition-all"
-                    onClick={() => setActiveSection("pathways")}
+                    onClick={() => setActiveSection('pathways')}
                   >
                     Career Paths
                     <ChevronRight className="h-4 w-4 ml-1" />
@@ -332,7 +390,7 @@ const CareerProgression = () => {
                     size="sm"
                     variant="accent"
                     className="flex-1 sm:flex-initial h-10 touch-manipulation active:scale-95 transition-all"
-                    onClick={() => setActiveSection("courses")}
+                    onClick={() => setActiveSection('courses')}
                   >
                     Find Courses
                     <ChevronRight className="h-4 w-4 ml-1" />
@@ -343,9 +401,7 @@ const CareerProgression = () => {
           </Card>
         </>
       ) : (
-        <div className="space-y-4">
-          {renderSectionContent()}
-        </div>
+        <div className="space-y-4">{renderSectionContent()}</div>
       )}
     </div>
   );

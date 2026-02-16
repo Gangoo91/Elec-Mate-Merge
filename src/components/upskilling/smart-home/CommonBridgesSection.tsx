@@ -8,29 +8,29 @@ export const CommonBridgesSection = () => {
       icon: Lightbulb,
       protocol: 'Zigbee → Wi-Fi/Cloud',
       description: 'Connects Zigbee bulbs to Wi-Fi networks and voice assistants',
-      features: ['Cloud connectivity', 'Voice control', 'Scheduling', 'Third-party integration']
+      features: ['Cloud connectivity', 'Voice control', 'Scheduling', 'Third-party integration'],
     },
     {
       name: 'Sonos Bridge',
       icon: Speaker,
       protocol: 'Proprietary → Wi-Fi',
       description: 'Legacy product for connecting older Sonos speakers wirelessly',
-      features: ['Wireless audio', 'Multi-room sync', 'Legacy support', 'Network extension']
+      features: ['Wireless audio', 'Multi-room sync', 'Legacy support', 'Network extension'],
     },
     {
       name: 'Home Assistant',
       icon: Home,
       protocol: 'Multi-protocol',
       description: 'Software platform bridging multiple protocols and ecosystems',
-      features: ['Open source', 'Local control', 'Extensive integrations', 'Custom automation']
+      features: ['Open source', 'Local control', 'Extensive integrations', 'Custom automation'],
     },
     {
       name: 'Apple HomeKit Bridges',
       icon: Smartphone,
       protocol: 'Various → HomeKit',
       description: 'Required for non-HomeKit accessories to integrate with Apple ecosystem',
-      features: ['Siri control', 'iOS integration', 'Secure communication', 'Remote access']
-    }
+      features: ['Siri control', 'iOS integration', 'Secure communication', 'Remote access'],
+    },
   ];
 
   return (
@@ -52,9 +52,9 @@ export const CommonBridgesSection = () => {
                   <p className="text-xs text-gray-400">{bridge.protocol}</p>
                 </div>
               </div>
-              
+
               <p className="text-gray-300 text-sm mb-3">{bridge.description}</p>
-              
+
               <div className="space-y-1">
                 {bridge.features.map((feature, featureIndex) => (
                   <div key={featureIndex} className="flex items-center gap-2">
@@ -70,7 +70,8 @@ export const CommonBridgesSection = () => {
         <div className="bg-blue-900/10 border border-blue-600/20 rounded-lg p-4">
           <h4 className="text-blue-200 font-semibold mb-3">Hubitat Elevation</h4>
           <p className="text-blue-100 text-sm mb-2">
-            Local processing hub that bridges Zigbee, Z-Wave, and cloud services without requiring internet connectivity for basic operations.
+            Local processing hub that bridges Zigbee, Z-Wave, and cloud services without requiring
+            internet connectivity for basic operations.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
             <span className="text-blue-200">• Local control</span>
@@ -83,7 +84,8 @@ export const CommonBridgesSection = () => {
         <div className="bg-purple-900/10 border border-purple-600/20 rounded-lg p-4">
           <h4 className="text-purple-200 font-semibold mb-3">SmartThings Hub</h4>
           <p className="text-purple-100 text-sm mb-2">
-            Samsung's hub that includes Zigbee and Z-Wave radios, acting as a bridge to Samsung's cloud ecosystem and voice assistants.
+            Samsung's hub that includes Zigbee and Z-Wave radios, acting as a bridge to Samsung's
+            cloud ecosystem and voice assistants.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
             <span className="text-purple-200">• Cloud-based</span>

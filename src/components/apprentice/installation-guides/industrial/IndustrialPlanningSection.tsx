@@ -1,7 +1,6 @@
-
-import IndustrialPlanningPhases from "./IndustrialPlanningPhases";
-import IndustrialDesignConsiderations from "./IndustrialDesignConsiderations";
-import IndustrialComplianceRequirements from "./IndustrialComplianceRequirements";
+import IndustrialPlanningPhases from './IndustrialPlanningPhases';
+import IndustrialDesignConsiderations from './IndustrialDesignConsiderations';
+import IndustrialComplianceRequirements from './IndustrialComplianceRequirements';
 
 const IndustrialPlanningSection = () => {
   return (

@@ -12,28 +12,31 @@ import { InstallationProjectDetails as ProjectDetailsType } from '@/types/instal
 import { toast } from '@/hooks/use-toast';
 
 interface InstallationInputFormProps {
-  onGenerate: (projectDetails: ProjectDetailsType, description: string, generateFullMethodStatement: boolean) => void;
+  onGenerate: (
+    projectDetails: ProjectDetailsType,
+    description: string,
+    generateFullMethodStatement: boolean
+  ) => void;
   isProcessing: boolean;
 }
 
-export const InstallationInputForm = ({
-  onGenerate,
-  isProcessing
-}: InstallationInputFormProps) => {
-  const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
+export const InstallationInputForm = ({ onGenerate, isProcessing }: InstallationInputFormProps) => {
+  const [installationType, setInstallationType] = useState<
+    'domestic' | 'commercial' | 'industrial'
+  >('domestic');
   const [description, setDescription] = useState('');
   const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(false);
   const [projectDetails, setProjectDetails] = useState<ProjectDetailsType>({
     projectName: '',
     location: '',
-    installationType: 'domestic'
+    installationType: 'domestic',
   });
 
   // Update project details when installation type changes
   useEffect(() => {
-    setProjectDetails(prev => ({
+    setProjectDetails((prev) => ({
       ...prev,
-      installationType
+      installationType,
     }));
   }, [installationType]);
 
@@ -44,21 +47,21 @@ export const InstallationInputForm = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!projectDetails.projectName.trim()) {
       toast({
-        title: "Project Name Required",
-        description: "Please enter a project name to continue.",
-        variant: "destructive",
+        title: 'Project Name Required',
+        description: 'Please enter a project name to continue.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (!description.trim()) {
       toast({
-        title: "Description Required",
-        description: "Please describe the installation work or select a template.",
-        variant: "destructive",
+        title: 'Description Required',
+        description: 'Please describe the installation work or select a template.',
+        variant: 'destructive',
       });
       return;
     }
@@ -104,15 +107,12 @@ export const InstallationInputForm = ({
       />
 
       {/* Project Details */}
-      <InstallationProjectDetails
-        projectDetails={projectDetails}
-        onChange={setProjectDetails}
-      />
+      <InstallationProjectDetails projectDetails={projectDetails} onChange={setProjectDetails} />
 
       {/* Method Statement Mode Toggle */}
       <Card className="p-4 border-blue-500/20">
         <div className="flex items-start gap-3">
-          <Switch 
+          <Switch
             id="method-statement-mode"
             checked={generateFullMethodStatement}
             onCheckedChange={setGenerateFullMethodStatement}
@@ -124,11 +124,14 @@ export const InstallationInputForm = ({
             <p className="text-sm text-muted-foreground mt-1">
               {generateFullMethodStatement ? (
                 <>
-                  <span className="text-blue-400 font-medium">Comprehensive mode:</span> Includes installation steps, testing procedures, risk assessment, and site logistics (~15 seconds)
+                  <span className="text-blue-400 font-medium">Comprehensive mode:</span> Includes
+                  installation steps, testing procedures, risk assessment, and site logistics (~15
+                  seconds)
                 </>
               ) : (
                 <>
-                  <span className="text-green-400 font-medium">Quick mode:</span> Installation guide only (~5 seconds)
+                  <span className="text-green-400 font-medium">Quick mode:</span> Installation guide
+                  only (~5 seconds)
                 </>
               )}
             </p>
@@ -157,7 +160,7 @@ export const InstallationInputForm = ({
 
       {!canGenerate && (
         <p className="text-sm text-center text-muted-foreground">
-          {!projectDetails.projectName.trim() 
+          {!projectDetails.projectName.trim()
             ? 'Enter project name and description to continue'
             : 'Enter installation description to continue'}
         </p>

@@ -17,9 +17,11 @@ export const EmergencyLightingRealWorldSection3_3 = () => {
             The Problem: Distribution Centre in Leeds
           </h4>
           <p className="text-foreground mb-3">
-            A distribution centre in Leeds installed emergency luminaires at a 10-metre ceiling height without properly consulting manufacturer spacing tables or considering the beam spread characteristics of the selected fittings.
+            A distribution centre in Leeds installed emergency luminaires at a 10-metre ceiling
+            height without properly consulting manufacturer spacing tables or considering the beam
+            spread characteristics of the selected fittings.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-3 bg-red-700/20 rounded border border-red-500/40">
               <h5 className="text-red-200 font-medium mb-2">Installation Issues:</h5>
@@ -30,7 +32,7 @@ export const EmergencyLightingRealWorldSection3_3 = () => {
                 <li>• Emergency mode output not verified</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-red-700/20 rounded border border-red-500/40">
               <h5 className="text-red-200 font-medium mb-2">Discovered Problems:</h5>
               <ul className="text-foreground text-sm space-y-1">
@@ -49,9 +51,10 @@ export const EmergencyLightingRealWorldSection3_3 = () => {
             The Solution: Proper Photometric Design
           </h4>
           <p className="text-foreground mb-3">
-            The system had to be completely redesigned using appropriate high-output wide-beam fittings specifically designed for tall ceiling applications.
+            The system had to be completely redesigned using appropriate high-output wide-beam
+            fittings specifically designed for tall ceiling applications.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-3 bg-green-700/20 rounded border border-green-500/40">
               <h5 className="text-green-200 font-medium mb-2">Design Changes:</h5>
@@ -62,7 +65,7 @@ export const EmergencyLightingRealWorldSection3_3 = () => {
                 <li>• Point-by-point lux calculations performed</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-green-700/20 rounded border border-green-500/40">
               <h5 className="text-green-200 font-medium mb-2">Results Achieved:</h5>
               <ul className="text-foreground text-sm space-y-1">
@@ -108,7 +111,10 @@ export const EmergencyLightingRealWorldSection3_3 = () => {
             <span className="text-amber-300 font-semibold">Industry Impact</span>
           </div>
           <p className="text-foreground text-sm">
-            This example highlights the importance of matching luminaire type and mounting height during the design phase. The additional cost of remedial work was significantly higher than the cost difference between standard and high-bay fittings, demonstrating that proper photometric design saves money and ensures compliance.
+            This example highlights the importance of matching luminaire type and mounting height
+            during the design phase. The additional cost of remedial work was significantly higher
+            than the cost difference between standard and high-bay fittings, demonstrating that
+            proper photometric design saves money and ensures compliance.
           </p>
         </div>
       </CardContent>

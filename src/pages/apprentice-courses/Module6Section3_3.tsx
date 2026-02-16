@@ -1,138 +1,191 @@
-import { ArrowLeft, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section3_3 = () => {
   useSEO(
-    "Setting Up and Zeroing Instruments - Level 2 Electrical Testing & Inspection",
-    "Proper preparation and calibration of test equipment"
+    'Setting Up and Zeroing Instruments - Level 2 Electrical Testing & Inspection',
+    'Proper preparation and calibration of test equipment'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "Why must instruments be zeroed before testing?",
-      options: ["To save time", "To correct for internal resistance", "To extend battery life", "To look professional"],
+      question: 'Why must instruments be zeroed before testing?',
+      options: [
+        'To save time',
+        'To correct for internal resistance',
+        'To extend battery life',
+        'To look professional',
+      ],
       correctAnswer: 1,
-      explanation: "Zeroing corrects for internal resistance and ensures accurate readings by establishing a known reference point."
+      explanation:
+        'Zeroing corrects for internal resistance and ensures accurate readings by establishing a known reference point.',
     },
     {
       id: 2,
-      question: "What should a continuity tester read when leads are shorted?",
-      options: ["5 Ω", "0 Ω", "Infinity", "1 Ω"],
+      question: 'What should a continuity tester read when leads are shorted?',
+      options: ['5 Ω', '0 Ω', 'Infinity', '1 Ω'],
       correctAnswer: 1,
-      explanation: "When test leads are shorted together, a properly zeroed continuity tester should read 0 Ω (zero ohms)."
+      explanation:
+        'When test leads are shorted together, a properly zeroed continuity tester should read 0 Ω (zero ohms).',
     },
     {
       id: 3,
-      question: "What should an insulation resistance tester read with open leads?",
-      options: ["0 Ω", "Infinity (∞)", "1 Ω", "100 MΩ"],
+      question: 'What should an insulation resistance tester read with open leads?',
+      options: ['0 Ω', 'Infinity (∞)', '1 Ω', '100 MΩ'],
       correctAnswer: 1,
-      explanation: "With leads separated (open circuit), an insulation resistance tester should show infinity (∞) before applying test voltage."
+      explanation:
+        'With leads separated (open circuit), an insulation resistance tester should show infinity (∞) before applying test voltage.',
     },
     {
       id: 4,
-      question: "Which of the following is a pre-use check?",
-      options: ["Checking batteries and fuses", "Shaking the tester", "Switching ranges repeatedly", "Testing on random circuits"],
+      question: 'Which of the following is a pre-use check?',
+      options: [
+        'Checking batteries and fuses',
+        'Shaking the tester',
+        'Switching ranges repeatedly',
+        'Testing on random circuits',
+      ],
       correctAnswer: 0,
-      explanation: "Pre-use checks include verifying batteries, fuses, physical condition, and GS38 compliance of test equipment."
+      explanation:
+        'Pre-use checks include verifying batteries, fuses, physical condition, and GS38 compliance of test equipment.',
     },
     {
       id: 5,
-      question: "True or False: Digital meters never need checking or zeroing.",
-      options: ["True", "False"],
+      question: 'True or False: Digital meters never need checking or zeroing.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Even digital meters with auto-zero features require lead checks and verification before use."
+      explanation:
+        'False. Even digital meters with auto-zero features require lead checks and verification before use.',
     },
     {
       id: 6,
       question: "What problem might occur if a meter isn't zeroed?",
-      options: ["Inaccurate readings", "Faster testing", "Longer battery life", "Better accuracy"],
+      options: ['Inaccurate readings', 'Faster testing', 'Longer battery life', 'Better accuracy'],
       correctAnswer: 0,
-      explanation: "Failure to zero instruments can lead to inaccurate readings, false fault diagnoses, and unsafe conditions."
+      explanation:
+        'Failure to zero instruments can lead to inaccurate readings, false fault diagnoses, and unsafe conditions.',
     },
     {
       id: 7,
-      question: "Why should instruments be recalibrated regularly?",
-      options: ["To comply with regulations", "To reset the clock", "To change fuses", "To update software"],
+      question: 'Why should instruments be recalibrated regularly?',
+      options: [
+        'To comply with regulations',
+        'To reset the clock',
+        'To change fuses',
+        'To update software',
+      ],
       correctAnswer: 0,
-      explanation: "Regular calibration ensures continued accuracy and compliance with industry standards and regulations."
+      explanation:
+        'Regular calibration ensures continued accuracy and compliance with industry standards and regulations.',
     },
     {
       id: 8,
-      question: "What should you do if an instrument cannot be zeroed?",
-      options: ["Continue anyway", "Remove it from service", "Hit it gently", "Use different leads"],
+      question: 'What should you do if an instrument cannot be zeroed?',
+      options: [
+        'Continue anyway',
+        'Remove it from service',
+        'Hit it gently',
+        'Use different leads',
+      ],
       correctAnswer: 1,
-      explanation: "If an instrument cannot be zeroed properly, it must be removed from service and inspected or recalibrated."
+      explanation:
+        'If an instrument cannot be zeroed properly, it must be removed from service and inspected or recalibrated.',
     },
     {
       id: 9,
-      question: "When should you re-check zeroing?",
-      options: ["After lunch", "After moving or dropping the instrument", "After testing the first circuit only", "Once per week"],
+      question: 'When should you re-check zeroing?',
+      options: [
+        'After lunch',
+        'After moving or dropping the instrument',
+        'After testing the first circuit only',
+        'Once per week',
+      ],
       correctAnswer: 1,
-      explanation: "Instruments should be re-zeroed after being moved, dropped, or exposed to temperature changes that could affect calibration."
+      explanation:
+        'Instruments should be re-zeroed after being moved, dropped, or exposed to temperature changes that could affect calibration.',
     },
     {
       id: 10,
-      question: "What is the correct action if a continuity test shows resistance due to un-zeroed leads?",
-      options: ["Assume a fault", "Re-zero the instrument", "Replace the circuit immediately", "Continue testing"],
+      question:
+        'What is the correct action if a continuity test shows resistance due to un-zeroed leads?',
+      options: [
+        'Assume a fault',
+        'Re-zero the instrument',
+        'Replace the circuit immediately',
+        'Continue testing',
+      ],
       correctAnswer: 1,
-      explanation: "If unexpected resistance readings appear, first re-zero the instrument to eliminate lead resistance before diagnosing faults."
-    }
+      explanation:
+        'If unexpected resistance readings appear, first re-zero the instrument to eliminate lead resistance before diagnosing faults.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Do digital meters need zeroing?",
-      answer: "Most auto-zero, but still require a lead check before use to ensure accuracy and proper operation. Even auto-zeroing instruments should be verified with leads shorted."
+      question: 'Do digital meters need zeroing?',
+      answer:
+        'Most auto-zero, but still require a lead check before use to ensure accuracy and proper operation. Even auto-zeroing instruments should be verified with leads shorted.',
     },
     {
-      question: "How often should calibration be carried out?",
-      answer: "Annually or as specified by the manufacturer/site requirements. Some high-precision work may require more frequent calibration. Critical applications may need 6-monthly checks."
+      question: 'How often should calibration be carried out?',
+      answer:
+        'Annually or as specified by the manufacturer/site requirements. Some high-precision work may require more frequent calibration. Critical applications may need 6-monthly checks.',
     },
     {
-      question: "What if my instrument cannot be zeroed?",
-      answer: "Remove it from service immediately and have it inspected or recalibrated by a qualified technician. Never attempt to use an instrument that cannot be properly zeroed."
+      question: 'What if my instrument cannot be zeroed?',
+      answer:
+        'Remove it from service immediately and have it inspected or recalibrated by a qualified technician. Never attempt to use an instrument that cannot be properly zeroed.',
     },
     {
-      question: "Why do lead resistances vary between different test leads?",
-      answer: "Different lead lengths, wire gauges, and connection quality affect resistance. This is why zeroing with the actual leads to be used is essential for accurate measurements."
+      question: 'Why do lead resistances vary between different test leads?',
+      answer:
+        'Different lead lengths, wire gauges, and connection quality affect resistance. This is why zeroing with the actual leads to be used is essential for accurate measurements.',
     },
     {
-      question: "Can temperature affect instrument accuracy?",
-      answer: "Yes, extreme temperatures can affect calibration. Allow instruments to acclimatise for 15-30 minutes and re-check zeroing when moving between different temperature environments."
+      question: 'Can temperature affect instrument accuracy?',
+      answer:
+        'Yes, extreme temperatures can affect calibration. Allow instruments to acclimatise for 15-30 minutes and re-check zeroing when moving between different temperature environments.',
     },
     {
       question: "What's the difference between auto-zero and manual zeroing?",
-      answer: "Auto-zero automatically compensates for internal offsets, while manual zeroing requires the user to adjust the instrument. Both methods require verification before use."
+      answer:
+        'Auto-zero automatically compensates for internal offsets, while manual zeroing requires the user to adjust the instrument. Both methods require verification before use.',
     },
     {
-      question: "How do I know if my zeroing is accurate enough?",
-      answer: "The zero reading should be stable within ±0.01 Ω for most applications. If readings fluctuate significantly, investigate environmental factors or instrument condition."
+      question: 'How do I know if my zeroing is accurate enough?',
+      answer:
+        'The zero reading should be stable within ±0.01 Ω for most applications. If readings fluctuate significantly, investigate environmental factors or instrument condition.',
     },
     {
-      question: "Should I zero the instrument every time I change test leads?",
-      answer: "Yes, different test leads have different resistance values. Always zero with the specific leads you will use for testing to ensure accuracy."
+      question: 'Should I zero the instrument every time I change test leads?',
+      answer:
+        'Yes, different test leads have different resistance values. Always zero with the specific leads you will use for testing to ensure accuracy.',
     },
     {
-      question: "What environmental factors affect instrument zeroing?",
-      answer: "Temperature, humidity, electromagnetic interference, and vibration can all affect readings. Test in stable conditions where possible and re-zero if conditions change significantly."
+      question: 'What environmental factors affect instrument zeroing?',
+      answer:
+        'Temperature, humidity, electromagnetic interference, and vibration can all affect readings. Test in stable conditions where possible and re-zero if conditions change significantly.',
     },
     {
-      question: "Is it necessary to zero before every individual test?",
-      answer: "Not necessarily, but check zero periodically during extended testing sessions. Always re-zero after instrument has been moved, dropped, or exposed to temperature changes."
+      question: 'Is it necessary to zero before every individual test?',
+      answer:
+        'Not necessarily, but check zero periodically during extended testing sessions. Always re-zero after instrument has been moved, dropped, or exposed to temperature changes.',
     },
     {
-      question: "Can I use an instrument that zeros to 0.1 Ω instead of 0.0 Ω?",
-      answer: "This may indicate the instrument needs calibration. While 0.1 Ω might be acceptable for some tests, it could affect accuracy for precise measurements like R1+R2 values."
+      question: 'Can I use an instrument that zeros to 0.1 Ω instead of 0.0 Ω?',
+      answer:
+        'This may indicate the instrument needs calibration. While 0.1 Ω might be acceptable for some tests, it could affect accuracy for precise measurements like R1+R2 values.',
     },
     {
-      question: "What should I do if zeroing changes when I move the test leads?",
-      answer: "This suggests damaged or deteriorating leads. Check for internal breaks, loose connections, or contamination. Replace leads immediately if this occurs."
-    }
+      question: 'What should I do if zeroing changes when I move the test leads?',
+      answer:
+        'This suggests damaged or deteriorating leads. Check for internal breaks, loose connections, or contamination. Replace leads immediately if this occurs.',
+    },
   ];
 
   return (
@@ -202,10 +255,14 @@ const Module6Section3_3 = () => {
           <section className="mb-10">
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Before any electrical testing can be carried out, instruments must be properly prepared and checked. Zeroing ensures that the instrument reads accurately and that environmental or internal resistance factors are accounted for.
+                Before any electrical testing can be carried out, instruments must be properly
+                prepared and checked. Zeroing ensures that the instrument reads accurately and that
+                environmental or internal resistance factors are accounted for.
               </p>
               <p>
-                Incorrect setup or failure to zero instruments can lead to false readings, misdiagnosis of faults, or unsafe conditions. This process is fundamental to reliable electrical testing and safety compliance.
+                Incorrect setup or failure to zero instruments can lead to false readings,
+                misdiagnosis of faults, or unsafe conditions. This process is fundamental to
+                reliable electrical testing and safety compliance.
               </p>
             </div>
           </section>
@@ -217,7 +274,9 @@ const Module6Section3_3 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-white/80 mb-3">By the end of this subsection, you will be able to:</p>
+              <p className="text-white/80 mb-3">
+                By the end of this subsection, you will be able to:
+              </p>
               <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
@@ -253,23 +312,45 @@ const Module6Section3_3 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Internal Resistance Factors:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• All instruments have internal resistance that affects readings (typically 0.1-2.0 Ω)</li>
-                  <li>• Test leads add resistance that varies with length and condition (0.02-0.5 Ω per metre)</li>
-                  <li>• Connection resistance at probe tips can introduce errors (0.01-0.1 Ω per connection)</li>
-                  <li>• Temperature changes affect resistance values in components and connections</li>
+                  <li>
+                    • All instruments have internal resistance that affects readings (typically
+                    0.1-2.0 Ω)
+                  </li>
+                  <li>
+                    • Test leads add resistance that varies with length and condition (0.02-0.5 Ω
+                    per metre)
+                  </li>
+                  <li>
+                    • Connection resistance at probe tips can introduce errors (0.01-0.1 Ω per
+                    connection)
+                  </li>
+                  <li>
+                    • Temperature changes affect resistance values in components and connections
+                  </li>
                   <li>• Aging components and wear can cause resistance drift over time</li>
                   <li>• Contamination on contacts and probes increases resistance unpredictably</li>
                 </ul>
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Calibration and Accuracy Requirements:</p>
+                <p className="font-medium text-white mb-2">
+                  Calibration and Accuracy Requirements:
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Zeroing corrects the instrument to a known reference point (0 Ω baseline)</li>
-                  <li>• Ensures accurate continuity and insulation resistance readings within ±5% tolerance</li>
-                  <li>• Eliminates offset errors that can mask or create false faults in circuits</li>
+                  <li>
+                    • Zeroing corrects the instrument to a known reference point (0 Ω baseline)
+                  </li>
+                  <li>
+                    • Ensures accurate continuity and insulation resistance readings within ±5%
+                    tolerance
+                  </li>
+                  <li>
+                    • Eliminates offset errors that can mask or create false faults in circuits
+                  </li>
                   <li>• Maintains measurement integrity throughout extended testing procedures</li>
-                  <li>• Provides traceability to national measurement standards for certification</li>
+                  <li>
+                    • Provides traceability to national measurement standards for certification
+                  </li>
                   <li>• Compensates for environmental factors like humidity and temperature</li>
                 </ul>
               </div>
@@ -278,8 +359,13 @@ const Module6Section3_3 = () => {
                 <p className="font-medium text-white mb-2">BS 7671 Compliance:</p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Section 643 requires test equipment to be verified before use</li>
-                  <li>• Accurate measurements essential for protective device coordination calculations</li>
-                  <li>• Incorrect readings can lead to non-compliant certification and legal issues</li>
+                  <li>
+                    • Accurate measurements essential for protective device coordination
+                    calculations
+                  </li>
+                  <li>
+                    • Incorrect readings can lead to non-compliant certification and legal issues
+                  </li>
                   <li>• Professional duty of care requires using properly calibrated equipment</li>
                 </ul>
               </div>
@@ -290,7 +376,12 @@ const Module6Section3_3 = () => {
             <InlineCheck
               id="zeroing-purpose"
               question="What does zeroing correct for in an instrument?"
-              options={["Battery voltage", "Internal/lead resistance", "Temperature only", "Display brightness"]}
+              options={[
+                'Battery voltage',
+                'Internal/lead resistance',
+                'Temperature only',
+                'Display brightness',
+              ]}
               correctIndex={1}
               explanation="Zeroing corrects for internal instrument resistance and lead resistance, establishing an accurate reference point for measurements."
             />
@@ -306,8 +397,12 @@ const Module6Section3_3 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Physical Inspection Checklist:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Inspect for physical damage: cracked casing, worn leads, damaged insulation</li>
-                  <li>• Check test leads for cuts, nicks, or exposed conductors that could cause shock</li>
+                  <li>
+                    • Inspect for physical damage: cracked casing, worn leads, damaged insulation
+                  </li>
+                  <li>
+                    • Check test leads for cuts, nicks, or exposed conductors that could cause shock
+                  </li>
                   <li>• Verify probe tips are not damaged, bent, or excessively worn</li>
                   <li>• Ensure case integrity, display clarity, and button/dial operation</li>
                   <li>• Check for loose connections in lead terminations and probe assemblies</li>
@@ -319,10 +414,19 @@ const Module6Section3_3 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Functional Verification Steps:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Verify batteries are charged and fuses are intact (check indicator lights)</li>
-                  <li>• Confirm GS38 compliance: shrouded tips (≤4mm exposed), fused leads, proper CAT rating</li>
-                  <li>• Test range selection and display operation across all measurement functions</li>
-                  <li>• Check calibration date and validity (typically 12 months from last service)</li>
+                  <li>
+                    • Verify batteries are charged and fuses are intact (check indicator lights)
+                  </li>
+                  <li>
+                    • Confirm GS38 compliance: shrouded tips (≤4mm exposed), fused leads, proper CAT
+                    rating
+                  </li>
+                  <li>
+                    • Test range selection and display operation across all measurement functions
+                  </li>
+                  <li>
+                    • Check calibration date and validity (typically 12 months from last service)
+                  </li>
                   <li>• Verify auto-ranging and manual range selection functions correctly</li>
                   <li>• Test battery condition indicator and low battery warning systems</li>
                   <li>• Confirm continuity and insulation test functions operate properly</li>
@@ -345,7 +449,7 @@ const Module6Section3_3 = () => {
             <InlineCheck
               id="continuity-short"
               question="What should a continuity tester read when leads are shorted?"
-              options={["5 Ω", "0 Ω", "1 Ω", "Infinity"]}
+              options={['5 Ω', '0 Ω', '1 Ω', 'Infinity']}
               correctIndex={1}
               explanation="When test leads are shorted together, a properly zeroed continuity tester should read 0 Ω (zero ohms)."
             />
@@ -361,12 +465,27 @@ const Module6Section3_3 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Step-by-Step Zeroing Procedure:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• <strong>Step 1:</strong> Select resistance/continuity function on instrument</li>
-                  <li>• <strong>Step 2:</strong> Choose appropriate measurement range (auto or manual)</li>
-                  <li>• <strong>Step 3:</strong> Short the test leads together firmly at the probe tips</li>
-                  <li>• <strong>Step 4:</strong> Adjust zero dial (manual) or wait for auto-zero (digital)</li>
-                  <li>• <strong>Step 5:</strong> Confirm reading shows exactly 0.00 Ω when properly zeroed</li>
-                  <li>• <strong>Step 6:</strong> Note the ambient temperature for reference</li>
+                  <li>
+                    • <strong>Step 1:</strong> Select resistance/continuity function on instrument
+                  </li>
+                  <li>
+                    • <strong>Step 2:</strong> Choose appropriate measurement range (auto or manual)
+                  </li>
+                  <li>
+                    • <strong>Step 3:</strong> Short the test leads together firmly at the probe
+                    tips
+                  </li>
+                  <li>
+                    • <strong>Step 4:</strong> Adjust zero dial (manual) or wait for auto-zero
+                    (digital)
+                  </li>
+                  <li>
+                    • <strong>Step 5:</strong> Confirm reading shows exactly 0.00 Ω when properly
+                    zeroed
+                  </li>
+                  <li>
+                    • <strong>Step 6:</strong> Note the ambient temperature for reference
+                  </li>
                 </ul>
               </div>
 
@@ -374,9 +493,13 @@ const Module6Section3_3 = () => {
                 <p className="font-medium text-white mb-2">Verification and Testing:</p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Confirm zero reading is stable and consistent over 10-15 seconds</li>
-                  <li>• Separate leads to verify open circuit shows OL (overload) or high resistance</li>
+                  <li>
+                    • Separate leads to verify open circuit shows OL (overload) or high resistance
+                  </li>
                   <li>• Re-short leads to confirm zero reading returns immediately</li>
-                  <li>• Test on known good continuity path (e.g., short piece of cable) if available</li>
+                  <li>
+                    • Test on known good continuity path (e.g., short piece of cable) if available
+                  </li>
                   <li>• Check that readings are repeatable within instrument tolerance</li>
                   <li>• Verify the instrument responds correctly to different resistance values</li>
                 </ul>
@@ -387,8 +510,13 @@ const Module6Section3_3 = () => {
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Instrument won't zero: check battery level and lead connections</li>
                   <li>• Unstable zero reading: clean probe tips and check for loose connections</li>
-                  <li>• Cannot achieve exact zero: may indicate calibration drift - service required</li>
-                  <li>• Zero drifts after initial setting: allow longer warm-up time or check temperature</li>
+                  <li>
+                    • Cannot achieve exact zero: may indicate calibration drift - service required
+                  </li>
+                  <li>
+                    • Zero drifts after initial setting: allow longer warm-up time or check
+                    temperature
+                  </li>
                 </ul>
               </div>
             </div>
@@ -405,7 +533,10 @@ const Module6Section3_3 = () => {
                 <p className="font-medium text-white mb-2">IR Tester Setup:</p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Ensure leads are separated (no load connected to avoid damage)</li>
-                  <li>• Select appropriate test voltage (250V for SELV, 500V for 230V circuits, 1000V for 400V+)</li>
+                  <li>
+                    • Select appropriate test voltage (250V for SELV, 500V for 230V circuits, 1000V
+                    for 400V+)
+                  </li>
                   <li>• Confirm that meter reads infinity (∞) before applying test voltage</li>
                   <li>• Verify test voltage matches circuit voltage rating and insulation class</li>
                   <li>• Check ambient conditions don't affect readings (humidity, temperature)</li>
@@ -441,7 +572,12 @@ const Module6Section3_3 = () => {
             <InlineCheck
               id="temperature-effect"
               question="Why must you re-check zeroing after temperature change?"
-              options={["Battery drains faster", "Display becomes dim", "Accuracy may be affected", "Leads become stiff"]}
+              options={[
+                'Battery drains faster',
+                'Display becomes dim',
+                'Accuracy may be affected',
+                'Leads become stiff',
+              ]}
               correctIndex={2}
               explanation="Temperature changes can affect the accuracy of instruments and resistance values, requiring re-zeroing to maintain precision."
             />
@@ -457,7 +593,9 @@ const Module6Section3_3 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Common Zeroing Problems:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• False "open-circuit" readings on continuity tests due to lead resistance</li>
+                  <li>
+                    • False "open-circuit" readings on continuity tests due to lead resistance
+                  </li>
                   <li>• Misinterpretation of insulation values caused by instrument drift</li>
                   <li>• Safety hazards from incorrect fault diagnosis and wrong remedial action</li>
                   <li>• Wasted time investigating non-existent faults or missing real problems</li>
@@ -469,7 +607,9 @@ const Module6Section3_3 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Impact on Safety and Testing:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Inaccurate readings leading to wrong conclusions about circuit integrity</li>
+                  <li>
+                    • Inaccurate readings leading to wrong conclusions about circuit integrity
+                  </li>
                   <li>• Potential danger from undetected high resistance connections</li>
                   <li>• Non-compliance with BS 7671 testing requirements and certification</li>
                   <li>• Loss of confidence in test results and professional credibility</li>
@@ -502,19 +642,30 @@ const Module6Section3_3 = () => {
                 <ul className="space-y-3 text-white/80">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Always prove dead</strong> using appropriate voltage indicator before connecting test instruments</span>
+                    <span>
+                      <strong>Always prove dead</strong> using appropriate voltage indicator before
+                      connecting test instruments
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Verify instrument functionality</strong> with proving unit before and after voltage testing</span>
+                    <span>
+                      <strong>Verify instrument functionality</strong> with proving unit before and
+                      after voltage testing
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Check test lead integrity</strong> and GS38 compliance before each use</span>
+                    <span>
+                      <strong>Check test lead integrity</strong> and GS38 compliance before each use
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Ensure appropriate CAT rating</strong> for the electrical environment being tested</span>
+                    <span>
+                      <strong>Ensure appropriate CAT rating</strong> for the electrical environment
+                      being tested
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -524,19 +675,30 @@ const Module6Section3_3 = () => {
                 <ul className="space-y-3 text-white/80">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Zero instruments at the test location</strong>, not in the van or office</span>
+                    <span>
+                      <strong>Zero instruments at the test location</strong>, not in the van or
+                      office
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Use the actual test leads</strong> that will be used for testing</span>
+                    <span>
+                      <strong>Use the actual test leads</strong> that will be used for testing
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Re-zero if instrument is dropped</strong>, jolted, or exposed to significant temperature change</span>
+                    <span>
+                      <strong>Re-zero if instrument is dropped</strong>, jolted, or exposed to
+                      significant temperature change
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Allow instruments to acclimatise</strong> when moving between different temperature environments</span>
+                    <span>
+                      <strong>Allow instruments to acclimatise</strong> when moving between
+                      different temperature environments
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -546,19 +708,30 @@ const Module6Section3_3 = () => {
                 <ul className="space-y-3 text-white/80">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Store instruments properly</strong> in protective cases to prevent calibration drift and physical damage</span>
+                    <span>
+                      <strong>Store instruments properly</strong> in protective cases to prevent
+                      calibration drift and physical damage
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Send meters for periodic calibration</strong> as required by industry standards (typically annually)</span>
+                    <span>
+                      <strong>Send meters for periodic calibration</strong> as required by industry
+                      standards (typically annually)
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Maintain calibration records</strong> and certificates for traceability</span>
+                    <span>
+                      <strong>Maintain calibration records</strong> and certificates for
+                      traceability
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Train all staff</strong> on proper zeroing and checking procedures</span>
+                    <span>
+                      <strong>Train all staff</strong> on proper zeroing and checking procedures
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -573,16 +746,22 @@ const Module6Section3_3 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 mb-4">
               <p className="text-white/90 mb-4">
-                <strong>Scenario:</strong> During fault-finding, an electrician skipped zeroing a continuity tester. The meter showed a resistance reading of 1.5 Ω on a new circuit, suggesting a potential loose connection. The circuit was unnecessarily stripped and re-terminated, wasting time.
+                <strong>Scenario:</strong> During fault-finding, an electrician skipped zeroing a
+                continuity tester. The meter showed a resistance reading of 1.5 Ω on a new circuit,
+                suggesting a potential loose connection. The circuit was unnecessarily stripped and
+                re-terminated, wasting time.
               </p>
               <p className="text-white/90">
-                The issue was later found to be the tester itself, which had not been zeroed properly. The 1.5 Ω was simply the resistance of the test leads.
+                The issue was later found to be the tester itself, which had not been zeroed
+                properly. The 1.5 Ω was simply the resistance of the test leads.
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-white/90">
-                <strong>Professional Insight:</strong> Always zero before use to avoid misdiagnosis and wasted work. A simple 30-second zeroing procedure can save hours of unnecessary troubleshooting.
+                <strong>Professional Insight:</strong> Always zero before use to avoid misdiagnosis
+                and wasted work. A simple 30-second zeroing procedure can save hours of unnecessary
+                troubleshooting.
               </p>
             </div>
           </section>
@@ -606,7 +785,9 @@ const Module6Section3_3 = () => {
           {/* Pocket Guide */}
           <section className="mb-10">
             <div className="p-5 rounded-lg bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border border-elec-yellow/30">
-              <h2 className="text-lg font-semibold text-white mb-4">Pocket Guide: Zeroing Essentials</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">
+                Pocket Guide: Zeroing Essentials
+              </h2>
               <div className="space-y-2 text-white/80">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -641,7 +822,9 @@ const Module6Section3_3 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm font-medium text-white mb-1">Accuracy</p>
-                <p className="text-xs text-white/60">Zeroing ensures accurate, reliable measurements</p>
+                <p className="text-xs text-white/60">
+                  Zeroing ensures accurate, reliable measurements
+                </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm font-medium text-white mb-1">Continuity 0 Ω</p>

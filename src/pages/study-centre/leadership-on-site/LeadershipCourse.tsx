@@ -1,65 +1,83 @@
-import { ArrowLeft, Compass, Users, MessageCircle, Lightbulb, HardHat, GraduationCap, BookOpen, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Compass,
+  Users,
+  MessageCircle,
+  Lightbulb,
+  HardHat,
+  GraduationCap,
+  BookOpen,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "What Makes a Leader?",
-    description: "Leadership vs management, leadership styles, self-awareness, and the mate-to-manager transition",
+    title: 'What Makes a Leader?',
+    description:
+      'Leadership vs management, leadership styles, self-awareness, and the mate-to-manager transition',
     icon: Compass,
-    duration: "35 mins",
-    link: "../leadership-module-1",
+    duration: '35 mins',
+    link: '../leadership-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Leading Your Team",
-    description: "Building trust, delegating effectively, motivating people, and giving feedback that sticks",
+    title: 'Leading Your Team',
+    description:
+      'Building trust, delegating effectively, motivating people, and giving feedback that sticks',
     icon: Users,
-    duration: "35 mins",
-    link: "../leadership-module-2",
+    duration: '35 mins',
+    link: '../leadership-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Communication for Leaders",
-    description: "Toolbox talks, active listening, difficult conversations, and professional written communication",
+    title: 'Communication for Leaders',
+    description:
+      'Toolbox talks, active listening, difficult conversations, and professional written communication',
     icon: MessageCircle,
-    duration: "35 mins",
-    link: "../leadership-module-3",
+    duration: '35 mins',
+    link: '../leadership-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Decision-Making & Problem-Solving",
-    description: "Making decisions under pressure, problem-solving frameworks, managing conflict, and accountability",
+    title: 'Decision-Making & Problem-Solving',
+    description:
+      'Making decisions under pressure, problem-solving frameworks, managing conflict, and accountability',
     icon: Lightbulb,
-    duration: "35 mins",
-    link: "../leadership-module-4",
+    duration: '35 mins',
+    link: '../leadership-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Leading on Site",
-    description: "Planning work, managing subcontractors, safety leadership, and supporting apprentices",
+    title: 'Leading on Site',
+    description:
+      'Planning work, managing subcontractors, safety leadership, and supporting apprentices',
     icon: HardHat,
-    duration: "35 mins",
-    link: "../leadership-module-5",
+    duration: '35 mins',
+    link: '../leadership-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../leadership-module-6",
+    duration: '30 mins',
+    link: '../leadership-module-6',
     isExam: true,
   },
 ];
 
 export default function LeadershipCourse() {
   useSEO({
-    title: "Leadership on Site | Personal Development",
-    description: "Complete leadership course for electricians and tradespeople. Based on ILM Level 2 team leading, CITB SSSTS, and proven leadership frameworks.",
+    title: 'Leadership on Site | Personal Development',
+    description:
+      'Complete leadership course for electricians and tradespeople. Based on ILM Level 2 team leading, CITB SSSTS, and proven leadership frameworks.',
   });
 
   return (
@@ -96,7 +114,8 @@ export default function LeadershipCourse() {
                 Leadership on Site
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-white mt-1 max-w-2xl">
-                Delegating, decision-making, earning respect, and leading teams — based on ILM Level 2 team leading frameworks and CITB SSSTS principles
+                Delegating, decision-making, earning respect, and leading teams — based on ILM Level
+                2 team leading frameworks and CITB SSSTS principles
               </p>
             </div>
           </div>

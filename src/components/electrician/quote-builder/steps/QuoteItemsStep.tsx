@@ -1,15 +1,28 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Trash2, Wrench, Package, Zap, FileText, Search } from "lucide-react";
-import { QuoteItem, JobTemplate } from "@/types/quote";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { JobTemplates } from "../JobTemplates";
-import { LiveMaterialPricing } from "./LiveMaterialPricing";
-import { useQuoteMaterialIntegration } from "@/hooks/useQuoteMaterialIntegration";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Plus, Trash2, Wrench, Package, Zap, FileText, Search } from 'lucide-react';
+import { QuoteItem, JobTemplate } from '@/types/quote';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { JobTemplates } from '../JobTemplates';
+import { LiveMaterialPricing } from './LiveMaterialPricing';
+import { useQuoteMaterialIntegration } from '@/hooks/useQuoteMaterialIntegration';
 
 interface QuoteItemsStepProps {
   items: QuoteItem[];
@@ -20,39 +33,43 @@ interface QuoteItemsStepProps {
 
 export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsStepProps) => {
   const { addMaterialToQuote, addMultipleMaterialsToQuote } = useQuoteMaterialIntegration(onAdd);
-  
+
   const handleTemplateSelect = (template: JobTemplate) => {
-    template.items.forEach(item => {
+    template.items.forEach((item) => {
       onAdd(item);
     });
   };
   const [newItem, setNewItem] = useState({
-    description: "",
+    description: '',
     quantity: 1,
-    unit: "each",
+    unit: 'each',
     unitPrice: 0,
-    category: "labour" as const,
+    category: 'labour' as const,
   });
 
   const handleAddItem = () => {
     if (newItem.description && newItem.unitPrice > 0) {
       onAdd(newItem);
       setNewItem({
-        description: "",
+        description: '',
         quantity: 1,
-        unit: "each",
+        unit: 'each',
         unitPrice: 0,
-        category: "labour" as const,
+        category: 'labour' as const,
       });
     }
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'labour': return <Wrench className="h-4 w-4" />;
-      case 'materials': return <Package className="h-4 w-4" />;
-      case 'equipment': return <Zap className="h-4 w-4" />;
-      default: return <Package className="h-4 w-4" />;
+      case 'labour':
+        return <Wrench className="h-4 w-4" />;
+      case 'materials':
+        return <Package className="h-4 w-4" />;
+      case 'equipment':
+        return <Zap className="h-4 w-4" />;
+      default:
+        return <Package className="h-4 w-4" />;
     }
   };
 
@@ -76,7 +93,7 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
       </TabsList>
 
       <TabsContent value="live-pricing">
-        <LiveMaterialPricing 
+        <LiveMaterialPricing
           onAddToQuote={addMaterialToQuote}
           onAddMultipleToQuote={addMultipleMaterialsToQuote}
         />
@@ -87,191 +104,196 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
       </TabsContent>
 
       <TabsContent value="manual" className="space-y-6">
-      {/* Add New Item */}
-      <Card className="bg-elec-gray/50 border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Plus className="h-5 w-5" />
-            Add Quote Item
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-            <div className="md:col-span-2">
-              <Input
-                placeholder="Description"
-                value={newItem.description}
-                onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
-              />
-            </div>
-            
-            <div>
-              <Select value={newItem.category} onValueChange={(value: any) => setNewItem(prev => ({ ...prev, category: value }))}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="labour">Labour</SelectItem>
-                  <SelectItem value="materials">Materials</SelectItem>
-                  <SelectItem value="equipment">Equipment</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div>
-              <Input
-                type="number"
-                placeholder="Qty"
-                value={newItem.quantity === 0 ? '' : newItem.quantity}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value === '') {
-                    setNewItem(prev => ({ ...prev, quantity: 0 }));
-                  } else {
-                    const parsed = parseInt(value);
-                    if (!isNaN(parsed) && parsed >= 0) {
-                      setNewItem(prev => ({ ...prev, quantity: parsed }));
-                    }
-                  }
-                }}
-                onBlur={(e) => {
-                  const value = parseInt(e.target.value);
-                  if (isNaN(value) || value <= 0) {
-                    setNewItem(prev => ({ ...prev, quantity: 1 }));
-                  }
-                }}
-              />
-            </div>
-
-            <div>
-              <Input
-                placeholder="£ Price"
-                type="number"
-                step="0.01"
-                value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  const unitPrice = val === '' ? 0 : parseFloat(val);
-                  if (!isNaN(unitPrice)) {
-                    setNewItem(prev => ({ ...prev, unitPrice }));
-                  }
-                }}
-              />
-            </div>
-            
-            <div>
-              <Button 
-                onClick={handleAddItem}
-                className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                disabled={!newItem.description || newItem.unitPrice <= 0}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Items List */}
-      {items.length > 0 ? (
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        {/* Add New Item */}
+        <Card className="bg-elec-gray/50 border-elec-yellow/20">
           <CardHeader>
-            <CardTitle>Quote Items ({items.length})</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Plus className="h-5 w-5" />
+              Add Quote Item
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Qty</TableHead>
-                  <TableHead>Unit Price</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {items.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-medium">{item.description}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        {getCategoryIcon(item.category)}
-                        <span className="capitalize">{item.category}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        value={item.quantity === 0 ? '' : item.quantity}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '') {
-                            onUpdate(item.id, { quantity: 0 });
-                          } else {
-                            const parsed = parseInt(value);
-                            if (!isNaN(parsed) && parsed >= 0) {
-                              onUpdate(item.id, { quantity: parsed });
-                            }
-                          }
-                        }}
-                        onBlur={(e) => {
-                          const value = parseInt(e.target.value);
-                          if (isNaN(value) || value <= 0) {
-                            onUpdate(item.id, { quantity: 1 });
-                          }
-                        }}
-                        className="w-16"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        step="0.01"
-                        value={item.unitPrice === 0 ? '' : item.unitPrice}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const unitPrice = val === '' ? 0 : parseFloat(val);
-                          if (!isNaN(unitPrice)) {
-                            onUpdate(item.id, { unitPrice });
-                          }
-                        }}
-                        className="w-24"
-                      />
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      £{item.totalPrice.toFixed(2)}
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onRemove(item.id)}
-                        className="text-red-500 hover:text-red-700"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
+            <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+              <div className="md:col-span-2">
+                <Input
+                  placeholder="Description"
+                  value={newItem.description}
+                  onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
+                />
+              </div>
+
+              <div>
+                <Select
+                  value={newItem.category}
+                  onValueChange={(value: any) =>
+                    setNewItem((prev) => ({ ...prev, category: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="labour">Labour</SelectItem>
+                    <SelectItem value="materials">Materials</SelectItem>
+                    <SelectItem value="equipment">Equipment</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Input
+                  type="number"
+                  placeholder="Qty"
+                  value={newItem.quantity === 0 ? '' : newItem.quantity}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                      setNewItem((prev) => ({ ...prev, quantity: 0 }));
+                    } else {
+                      const parsed = parseInt(value);
+                      if (!isNaN(parsed) && parsed >= 0) {
+                        setNewItem((prev) => ({ ...prev, quantity: parsed }));
+                      }
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (isNaN(value) || value <= 0) {
+                      setNewItem((prev) => ({ ...prev, quantity: 1 }));
+                    }
+                  }}
+                />
+              </div>
+
+              <div>
+                <Input
+                  placeholder="£ Price"
+                  type="number"
+                  step="0.01"
+                  value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const unitPrice = val === '' ? 0 : parseFloat(val);
+                    if (!isNaN(unitPrice)) {
+                      setNewItem((prev) => ({ ...prev, unitPrice }));
+                    }
+                  }}
+                />
+              </div>
+
+              <div>
+                <Button
+                  onClick={handleAddItem}
+                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                  disabled={!newItem.description || newItem.unitPrice <= 0}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Items List */}
+        {items.length > 0 ? (
+          <Card className="bg-elec-gray border-elec-yellow/20">
+            <CardHeader>
+              <CardTitle>Quote Items ({items.length})</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead>Qty</TableHead>
+                    <TableHead>Unit Price</TableHead>
+                    <TableHead>Total</TableHead>
+                    <TableHead></TableHead>
                   </TableRow>
-                ))}
-                <TableRow className="border-t-2 font-semibold">
-                  <TableCell colSpan={4}>Subtotal</TableCell>
-                  <TableCell>£{total.toFixed(2)}</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card className="bg-elec-gray border-elec-yellow/20">
-          <CardContent className="p-8 text-center">
-            <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">No items added yet. Add your first quote item above.</p>
-          </CardContent>
-        </Card>
-      )}
+                </TableHeader>
+                <TableBody>
+                  {items.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">{item.description}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {getCategoryIcon(item.category)}
+                          <span className="capitalize">{item.category}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Input
+                          type="number"
+                          value={item.quantity === 0 ? '' : item.quantity}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value === '') {
+                              onUpdate(item.id, { quantity: 0 });
+                            } else {
+                              const parsed = parseInt(value);
+                              if (!isNaN(parsed) && parsed >= 0) {
+                                onUpdate(item.id, { quantity: parsed });
+                              }
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = parseInt(e.target.value);
+                            if (isNaN(value) || value <= 0) {
+                              onUpdate(item.id, { quantity: 1 });
+                            }
+                          }}
+                          className="w-16"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Input
+                          type="number"
+                          step="0.01"
+                          value={item.unitPrice === 0 ? '' : item.unitPrice}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            const unitPrice = val === '' ? 0 : parseFloat(val);
+                            if (!isNaN(unitPrice)) {
+                              onUpdate(item.id, { unitPrice });
+                            }
+                          }}
+                          className="w-24"
+                        />
+                      </TableCell>
+                      <TableCell className="font-medium">£{item.totalPrice.toFixed(2)}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => onRemove(item.id)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  <TableRow className="border-t-2 font-semibold">
+                    <TableCell colSpan={4}>Subtotal</TableCell>
+                    <TableCell>£{total.toFixed(2)}</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="bg-elec-gray border-elec-yellow/20">
+            <CardContent className="p-8 text-center">
+              <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">
+                No items added yet. Add your first quote item above.
+              </p>
+            </CardContent>
+          </Card>
+        )}
       </TabsContent>
     </Tabs>
   );

@@ -5,7 +5,7 @@
  * This provides a verified record of work completed for QA and portfolio purposes.
  */
 
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 // Helper to send push notification (fire and forget)
 const sendPushNotification = async (

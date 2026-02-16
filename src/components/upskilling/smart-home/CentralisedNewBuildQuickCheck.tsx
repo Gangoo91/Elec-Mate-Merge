@@ -8,10 +8,10 @@ export const CentralisedNewBuildQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "They look more modern", correct: false },
-    { text: "They require structured cabling during construction", correct: true },
-    { text: "They work better with iPhones", correct: false },
-    { text: "They use less electricity", correct: false }
+    { text: 'They look more modern', correct: false },
+    { text: 'They require structured cabling during construction', correct: true },
+    { text: 'They work better with iPhones', correct: false },
+    { text: 'They use less electricity', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +32,10 @@ export const CentralisedNewBuildQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q3: Why are centralised systems more suited to new builds?</p>
-        
+        <p className="text-foreground font-medium">
+          Q3: Why are centralised systems more suited to new builds?
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +60,9 @@ export const CentralisedNewBuildQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +72,9 @@ export const CentralisedNewBuildQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Centralised systems need dedicated bus cables (like KNX) run to a central panel, which is much easier to install during construction than retrofitting.
+              <strong>Correct:</strong> Centralised systems need dedicated bus cables (like KNX) run
+              to a central panel, which is much easier to install during construction than
+              retrofitting.
             </p>
           </div>
         )}

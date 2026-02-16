@@ -1,45 +1,45 @@
-import { ArrowLeft, Scale, FileText, ShieldCheck, BookOpen } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, FileText, ShieldCheck, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Work at Height Regulations 2005",
+    title: 'Work at Height Regulations 2005',
     icon: Scale,
     description:
-      "Legal framework for scaffolding, hierarchy of controls, duty holders, and inspection requirements",
+      'Legal framework for scaffolding, hierarchy of controls, duty holders, and inspection requirements',
   },
   {
     id: 2,
-    title: "NASC Guidance & TG20",
+    title: 'NASC Guidance & TG20',
     icon: FileText,
     description:
-      "National Access and Scaffolding Confederation, TG20 compliance system, design configurations, and when a scaffold design is needed",
+      'National Access and Scaffolding Confederation, TG20 compliance system, design configurations, and when a scaffold design is needed',
   },
   {
     id: 3,
-    title: "BS EN 12811 & Other Standards",
+    title: 'BS EN 12811 & Other Standards',
     icon: ShieldCheck,
     description:
-      "British and European scaffold standards, load classes, performance requirements, and width categories",
+      'British and European scaffold standards, load classes, performance requirements, and width categories',
   },
   {
     id: 4,
-    title: "CDM 2015 & Scaffold Design",
+    title: 'CDM 2015 & Scaffold Design',
     icon: BookOpen,
     description:
-      "Construction Design and Management duties, temporary works coordination, design review, and handover",
+      'Construction Design and Management duties, temporary works coordination, design review, and handover',
   },
 ];
 
 export default function ScaffoldingAwarenessModule2() {
   useSEO({
-    title: "Module 2: Scaffold Regulations & Standards | Scaffolding Awareness",
+    title: 'Module 2: Scaffold Regulations & Standards | Scaffolding Awareness',
     description:
-      "Learn about the Work at Height Regulations 2005, NASC guidance, TG20, BS EN 12811, and CDM 2015 scaffold design requirements.",
+      'Learn about the Work at Height Regulations 2005, NASC guidance, TG20, BS EN 12811, and CDM 2015 scaffold design requirements.',
   });
 
   return (

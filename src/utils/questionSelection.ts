@@ -8,7 +8,7 @@
 import {
   StandardMockQuestion,
   DifficultyDistribution,
-  DEFAULT_DIFFICULTY_DISTRIBUTION
+  DEFAULT_DIFFICULTY_DISTRIBUTION,
 } from '@/types/standardMockExam';
 
 /**
@@ -30,7 +30,7 @@ function getQuestionsByDifficulty(
   questions: StandardMockQuestion[],
   difficulty: 'basic' | 'intermediate' | 'advanced'
 ): StandardMockQuestion[] {
-  return questions.filter(q => q.difficulty === difficulty);
+  return questions.filter((q) => q.difficulty === difficulty);
 }
 
 /**
@@ -40,7 +40,7 @@ function getQuestionsByCategory(
   questions: StandardMockQuestion[],
   category: string
 ): StandardMockQuestion[] {
-  return questions.filter(q => q.category === category);
+  return questions.filter((q) => q.category === category);
 }
 
 /**
@@ -78,8 +78,8 @@ export function getRandomQuestionsByDifficulty(
 
   // If we don't have enough questions, fill from remaining
   if (combined.length < count) {
-    const selectedIds = new Set(combined.map(q => q.id));
-    const remaining = shuffleArray(questions.filter(q => !selectedIds.has(q.id)));
+    const selectedIds = new Set(combined.map((q) => q.id));
+    const remaining = shuffleArray(questions.filter((q) => !selectedIds.has(q.id)));
     combined = [...combined, ...remaining.slice(0, count - combined.length)];
   }
 
@@ -123,20 +123,22 @@ export function getRandomQuestionsBalanced(
     const advancedCount = Math.max(0, targetCount - basicCount - intermediateCount);
 
     const basicPool = shuffleArray(getQuestionsByDifficulty(categoryQuestions, 'basic'));
-    const intermediatePool = shuffleArray(getQuestionsByDifficulty(categoryQuestions, 'intermediate'));
+    const intermediatePool = shuffleArray(
+      getQuestionsByDifficulty(categoryQuestions, 'intermediate')
+    );
     const advancedPool = shuffleArray(getQuestionsByDifficulty(categoryQuestions, 'advanced'));
 
     // Select from each difficulty pool
     const selected = [
       ...basicPool.slice(0, basicCount),
       ...intermediatePool.slice(0, intermediateCount),
-      ...advancedPool.slice(0, advancedCount)
+      ...advancedPool.slice(0, advancedCount),
     ];
 
     // If we couldn't fill the target, grab any remaining questions from the category
     if (selected.length < targetCount) {
-      const selectedIds = new Set(selected.map(q => q.id));
-      const remaining = shuffleArray(categoryQuestions.filter(q => !selectedIds.has(q.id)));
+      const selectedIds = new Set(selected.map((q) => q.id));
+      const remaining = shuffleArray(categoryQuestions.filter((q) => !selectedIds.has(q.id)));
       selected.push(...remaining.slice(0, targetCount - selected.length));
     }
 
@@ -145,8 +147,8 @@ export function getRandomQuestionsBalanced(
 
   // If we still don't have enough, fill from any remaining
   if (selectedQuestions.length < count) {
-    const selectedIds = new Set(selectedQuestions.map(q => q.id));
-    const remaining = shuffleArray(questions.filter(q => !selectedIds.has(q.id)));
+    const selectedIds = new Set(selectedQuestions.map((q) => q.id));
+    const remaining = shuffleArray(questions.filter((q) => !selectedIds.has(q.id)));
     selectedQuestions.push(...remaining.slice(0, count - selectedQuestions.length));
   }
 
@@ -162,10 +164,7 @@ export function getRandomQuestionsBalanced(
  * @param count - Number of questions to select
  * @returns Array of randomly selected questions
  */
-export function getRandomQuestions<T extends { id: number }>(
-  questions: T[],
-  count: number
-): T[] {
+export function getRandomQuestions<T extends { id: number }>(questions: T[], count: number): T[] {
   const shuffled = shuffleArray(questions);
   return shuffled.slice(0, Math.min(count, questions.length));
 }
@@ -174,7 +173,7 @@ export function getRandomQuestions<T extends { id: number }>(
  * Gets unique categories from a question bank
  */
 export function getCategories(questions: StandardMockQuestion[]): string[] {
-  return [...new Set(questions.map(q => q.category))];
+  return [...new Set(questions.map((q) => q.category))];
 }
 
 /**
@@ -187,9 +186,9 @@ export function getDifficultyStats(questions: StandardMockQuestion[]): {
   total: number;
 } {
   return {
-    basic: questions.filter(q => q.difficulty === 'basic').length,
-    intermediate: questions.filter(q => q.difficulty === 'intermediate').length,
-    advanced: questions.filter(q => q.difficulty === 'advanced').length,
-    total: questions.length
+    basic: questions.filter((q) => q.difficulty === 'basic').length,
+    intermediate: questions.filter((q) => q.difficulty === 'intermediate').length,
+    advanced: questions.filter((q) => q.difficulty === 'advanced').length,
+    total: questions.length,
   };
 }

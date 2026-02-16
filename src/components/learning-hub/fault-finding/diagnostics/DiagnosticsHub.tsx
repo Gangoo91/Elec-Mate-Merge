@@ -13,12 +13,12 @@ import {
   Target,
   Clock,
   ThermometerSun,
-  AlertTriangle
+  AlertTriangle,
 } from 'lucide-react';
 import {
   diagnosticScenarios,
   searchDiagnostics,
-  getDiagnosticCategories
+  getDiagnosticCategories,
 } from '../data/faultFindingData';
 import { cn } from '@/lib/utils';
 
@@ -30,8 +30,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const itemVariants = {
@@ -39,31 +39,34 @@ const itemVariants = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 500, damping: 30 },
+  },
 };
 
 const getCategoryConfig = (category: string) => {
   const configs: Record<string, { icon: React.ElementType; iconBg: string }> = {
-    'continuity': { icon: Activity, iconBg: 'bg-green-500' },
-    'voltage': { icon: Zap, iconBg: 'bg-amber-500' },
-    'rcd': { icon: Shield, iconBg: 'bg-purple-500' },
-    'protection': { icon: Shield, iconBg: 'bg-purple-500' },
-    'insulation': { icon: Shield, iconBg: 'bg-blue-500' },
-    'earthing': { icon: Activity, iconBg: 'bg-green-500' },
+    continuity: { icon: Activity, iconBg: 'bg-green-500' },
+    voltage: { icon: Zap, iconBg: 'bg-amber-500' },
+    rcd: { icon: Shield, iconBg: 'bg-purple-500' },
+    protection: { icon: Shield, iconBg: 'bg-purple-500' },
+    insulation: { icon: Shield, iconBg: 'bg-blue-500' },
+    earthing: { icon: Activity, iconBg: 'bg-green-500' },
     'power-quality': { icon: Eye, iconBg: 'bg-cyan-500' },
-    'load': { icon: Target, iconBg: 'bg-orange-500' },
-    'thermal': { icon: ThermometerSun, iconBg: 'bg-red-500' },
-    'transient': { icon: Clock, iconBg: 'bg-purple-500' }
+    load: { icon: Target, iconBg: 'bg-orange-500' },
+    thermal: { icon: ThermometerSun, iconBg: 'bg-red-500' },
+    transient: { icon: Clock, iconBg: 'bg-purple-500' },
   };
   return configs[category] || { icon: Search, iconBg: 'bg-slate-500' };
 };
 
 const getSeverityBg = (severity: string) => {
   switch (severity) {
-    case 'critical': return 'bg-red-500';
-    case 'high': return 'bg-orange-500';
-    default: return 'bg-amber-500';
+    case 'critical':
+      return 'bg-red-500';
+    case 'high':
+      return 'bg-orange-500';
+    default:
+      return 'bg-amber-500';
   }
 };
 
@@ -80,13 +83,13 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
     }
 
     if (selectedCategory) {
-      const scenario = diagnosticScenarios.find(s => s.id === selectedCategory);
+      const scenario = diagnosticScenarios.find((s) => s.id === selectedCategory);
       if (scenario) {
         return scenario.diagnostics.map((d, i) => ({
           ...d,
           categoryId: scenario.id,
           categoryTitle: scenario.title,
-          originalIndex: i
+          originalIndex: i,
         }));
       }
     }
@@ -96,26 +99,21 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
         ...d,
         categoryId: scenario.id,
         categoryTitle: scenario.title,
-        originalIndex: diagIndex
+        originalIndex: diagIndex,
       }))
     );
   }, [searchQuery, selectedCategory]);
 
   const handleDiagnosticClick = (diagnostic: any) => {
-    const scenario = diagnosticScenarios.find(s => s.id === diagnostic.categoryId);
+    const scenario = diagnosticScenarios.find((s) => s.id === diagnostic.categoryId);
     if (scenario) {
-      const index = scenario.diagnostics.findIndex(d => d.symptom === diagnostic.symptom);
+      const index = scenario.diagnostics.findIndex((d) => d.symptom === diagnostic.symptom);
       onSelectDiagnostic(diagnostic.categoryId, index >= 0 ? index : 0);
     }
   };
 
   return (
-    <motion.div
-      className="space-y-4"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
+    <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="show">
       {/* Search */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
@@ -142,10 +140,8 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
         <button
           onClick={() => setSelectedCategory(null)}
           className={cn(
-            "px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors",
-            selectedCategory === null
-              ? "bg-white/10 text-white"
-              : "bg-white/[0.03] text-white/50"
+            'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors',
+            selectedCategory === null ? 'bg-white/10 text-white' : 'bg-white/[0.03] text-white/50'
           )}
         >
           All
@@ -155,10 +151,10 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
             key={cat.id}
             onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
             className={cn(
-              "px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors",
+              'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors',
               selectedCategory === cat.id
-                ? "bg-white/10 text-white"
-                : "bg-white/[0.03] text-white/50"
+                ? 'bg-white/10 text-white'
+                : 'bg-white/[0.03] text-white/50'
             )}
           >
             {cat.title.replace(' Analysis', '').replace(' & Current Measurement', '')}
@@ -173,7 +169,9 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
           {filteredDiagnostics.slice(0, 15).map((diagnostic, index) => {
-            const catId = diagnostic.categoryId.replace('-analysis', '').replace('-diagnostics', '');
+            const catId = diagnostic.categoryId
+              .replace('-analysis', '')
+              .replace('-diagnostics', '');
             const config = getCategoryConfig(catId);
             const Icon = config.icon;
 
@@ -184,10 +182,12 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
                 onClick={() => handleDiagnosticClick(diagnostic)}
                 className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
               >
-                <div className={cn(
-                  "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
-                  config.iconBg
-                )}>
+                <div
+                  className={cn(
+                    'w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0',
+                    config.iconBg
+                  )}
+                >
                   <Icon className="h-5 w-5 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -199,7 +199,7 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <div className={cn("w-2 h-2 rounded-full", getSeverityBg(diagnostic.severity))} />
+                  <div className={cn('w-2 h-2 rounded-full', getSeverityBg(diagnostic.severity))} />
                   <ChevronRight className="h-4 w-4 text-white/20" />
                 </div>
               </motion.div>

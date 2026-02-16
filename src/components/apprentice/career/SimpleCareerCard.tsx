@@ -1,6 +1,6 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ChevronRight, Sparkles } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ChevronRight, Sparkles } from 'lucide-react';
 
 interface SimpleCareerCardProps {
   title: string;
@@ -13,7 +13,7 @@ interface SimpleCareerCardProps {
     value: string;
   }[];
   badge?: string;
-  accentColor?: "yellow" | "green" | "blue" | "purple" | "orange";
+  accentColor?: 'yellow' | 'green' | 'blue' | 'purple' | 'orange';
 }
 
 const SimpleCareerCard = ({
@@ -24,44 +24,44 @@ const SimpleCareerCard = ({
   showComingSoon,
   stats,
   badge,
-  accentColor = "yellow"
+  accentColor = 'yellow',
 }: SimpleCareerCardProps) => {
   const colorMap = {
     yellow: {
-      border: "border-elec-yellow/30 hover:border-elec-yellow/60",
-      bg: "bg-gradient-to-br from-elec-gray to-elec-dark/50",
-      badge: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
-      icon: "text-elec-yellow",
-      glow: "group-hover:shadow-elec-yellow/20"
+      border: 'border-elec-yellow/30 hover:border-elec-yellow/60',
+      bg: 'bg-gradient-to-br from-elec-gray to-elec-dark/50',
+      badge: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+      icon: 'text-elec-yellow',
+      glow: 'group-hover:shadow-elec-yellow/20',
     },
     green: {
-      border: "border-green-500/30 hover:border-green-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-green-950/20",
-      badge: "bg-green-500/20 text-green-400 border-green-500/30",
-      icon: "text-green-400",
-      glow: "group-hover:shadow-green-500/20"
+      border: 'border-green-500/30 hover:border-green-500/60',
+      bg: 'bg-gradient-to-br from-elec-gray to-green-950/20',
+      badge: 'bg-green-500/20 text-green-400 border-green-500/30',
+      icon: 'text-green-400',
+      glow: 'group-hover:shadow-green-500/20',
     },
     blue: {
-      border: "border-blue-500/30 hover:border-blue-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-blue-950/20",
-      badge: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      icon: "text-blue-400",
-      glow: "group-hover:shadow-blue-500/20"
+      border: 'border-blue-500/30 hover:border-blue-500/60',
+      bg: 'bg-gradient-to-br from-elec-gray to-blue-950/20',
+      badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      icon: 'text-blue-400',
+      glow: 'group-hover:shadow-blue-500/20',
     },
     purple: {
-      border: "border-purple-500/30 hover:border-purple-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-purple-950/20",
-      badge: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-      icon: "text-purple-400",
-      glow: "group-hover:shadow-purple-500/20"
+      border: 'border-purple-500/30 hover:border-purple-500/60',
+      bg: 'bg-gradient-to-br from-elec-gray to-purple-950/20',
+      badge: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+      icon: 'text-purple-400',
+      glow: 'group-hover:shadow-purple-500/20',
     },
     orange: {
-      border: "border-orange-500/30 hover:border-orange-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-orange-950/20",
-      badge: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-      icon: "text-orange-400",
-      glow: "group-hover:shadow-orange-500/20"
-    }
+      border: 'border-orange-500/30 hover:border-orange-500/60',
+      bg: 'bg-gradient-to-br from-elec-gray to-orange-950/20',
+      badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+      icon: 'text-orange-400',
+      glow: 'group-hover:shadow-orange-500/20',
+    },
   };
 
   const colors = colorMap[accentColor];
@@ -92,12 +92,14 @@ const SimpleCareerCard = ({
 
       <CardHeader className="flex flex-col items-center justify-center text-center pt-6 pb-3">
         {/* Icon Container */}
-        <div className={`relative mb-4 p-4 rounded-2xl bg-white/10 border border-white/5 group-hover:scale-110 transition-transform duration-300`}>
-          <div className={colors.icon}>
-            {icon}
-          </div>
+        <div
+          className={`relative mb-4 p-4 rounded-2xl bg-white/10 border border-white/5 group-hover:scale-110 transition-transform duration-300`}
+        >
+          <div className={colors.icon}>{icon}</div>
           {/* Subtle glow effect */}
-          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+          <div
+            className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+          />
         </div>
 
         <CardTitle className="text-base sm:text-lg font-semibold leading-tight text-white group-hover:text-elec-yellow transition-colors duration-300">
@@ -114,7 +116,9 @@ const SimpleCareerCard = ({
           )}
 
           {stats && stats.length > 0 && (
-            <div className={`grid ${stats.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} gap-2 mt-3`}>
+            <div
+              className={`grid ${stats.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} gap-2 mt-3`}
+            >
               {stats.map((stat, index) => (
                 <div key={index} className="bg-white/10 rounded-lg p-2 text-center">
                   <div className={`text-sm font-bold ${colors.icon}`}>{stat.value}</div>
@@ -135,7 +139,9 @@ const SimpleCareerCard = ({
       </div>
 
       {/* Bottom accent line */}
-      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent ${colors.icon} opacity-0 group-hover:opacity-50 transition-opacity duration-300`} />
+      <div
+        className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent ${colors.icon} opacity-0 group-hover:opacity-50 transition-opacity duration-300`}
+      />
     </Card>
   );
 };

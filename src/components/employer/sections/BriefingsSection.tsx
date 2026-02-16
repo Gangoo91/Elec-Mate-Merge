@@ -1,22 +1,28 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FeatureTile } from "@/components/employer/FeatureTile";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { QuickStats } from "@/components/employer/QuickStats";
-import { ToolboxTalkLibrary } from "@/components/employer/ToolboxTalkLibrary";
-import { BriefingEditor } from "@/components/employer/BriefingEditor";
-import { DigitalSignOff } from "@/components/employer/DigitalSignOff";
-import { BriefingViewer } from "@/components/employer/BriefingViewer";
-import { downloadBriefingPDF } from "@/utils/briefing-pdf";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Textarea } from '@/components/ui/textarea';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { FeatureTile } from '@/components/employer/FeatureTile';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { QuickStats } from '@/components/employer/QuickStats';
+import { ToolboxTalkLibrary } from '@/components/employer/ToolboxTalkLibrary';
+import { BriefingEditor } from '@/components/employer/BriefingEditor';
+import { DigitalSignOff } from '@/components/employer/DigitalSignOff';
+import { BriefingViewer } from '@/components/employer/BriefingViewer';
+import { downloadBriefingPDF } from '@/utils/briefing-pdf';
 import {
   useBriefings,
   useBriefingStats,
@@ -26,12 +32,12 @@ import {
   useDeleteBriefing,
   type Briefing,
   type BriefingType,
-} from "@/hooks/useBriefings";
-import { useBriefingAttendees } from "@/hooks/useBriefingSignatures";
-import { type ToolboxTalkTemplate } from "@/hooks/useToolboxTalkTemplates";
-import { useEmployees } from "@/hooks/useEmployees";
-import { useCompanyProfile } from "@/hooks/useCompanyProfile";
-import { useToast } from "@/hooks/use-toast";
+} from '@/hooks/useBriefings';
+import { useBriefingAttendees } from '@/hooks/useBriefingSignatures';
+import { type ToolboxTalkTemplate } from '@/hooks/useToolboxTalkTemplates';
+import { useEmployees } from '@/hooks/useEmployees';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { useToast } from '@/hooks/use-toast';
 import {
   Users,
   Plus,
@@ -53,26 +59,26 @@ import {
   Eye,
   Download,
   Edit3,
-} from "lucide-react";
+} from 'lucide-react';
 
 const statusColors: Record<string, string> = {
-  "Scheduled": "bg-yellow-500/20 text-yellow-400",
-  "Completed": "bg-green-500/20 text-green-400",
-  "Cancelled": "bg-red-500/20 text-red-400",
+  Scheduled: 'bg-yellow-500/20 text-yellow-400',
+  Completed: 'bg-green-500/20 text-green-400',
+  Cancelled: 'bg-red-500/20 text-red-400',
 };
 
 const briefingTypes: BriefingType[] = [
-  "Toolbox Talk",
-  "Site Induction",
-  "Safety Briefing",
-  "Method Statement",
-  "Emergency Procedures",
-  "PPE Reminder"
+  'Toolbox Talk',
+  'Site Induction',
+  'Safety Briefing',
+  'Method Statement',
+  'Emergency Procedures',
+  'PPE Reminder',
 ];
 
 export function BriefingsSection() {
   const { toast } = useToast();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [showNewBriefing, setShowNewBriefing] = useState(false);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
   const [selectedBriefingId, setSelectedBriefingId] = useState<string | null>(null);
@@ -82,13 +88,13 @@ export function BriefingsSection() {
   const [selectedBriefing, setSelectedBriefing] = useState<Briefing | null>(null);
 
   // Form state
-  const [title, setTitle] = useState("");
-  const [briefingType, setBriefingType] = useState<BriefingType>("Toolbox Talk");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-  const [presenter, setPresenter] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState('');
+  const [briefingType, setBriefingType] = useState<BriefingType>('Toolbox Talk');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [location, setLocation] = useState('');
+  const [presenter, setPresenter] = useState('');
+  const [content, setContent] = useState('');
 
   // Hooks
   const { data: briefings, isLoading, error, refetch } = useBriefings();
@@ -102,14 +108,16 @@ export function BriefingsSection() {
   const { data: attendees } = useBriefingAttendees(selectedBriefingId || undefined);
 
   // Filter by search
-  const filteredBriefings = briefings?.filter(b =>
-    b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    b.briefing_type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    b.location?.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredBriefings =
+    briefings?.filter(
+      (b) =>
+        b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        b.briefing_type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        b.location?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
-  const scheduledBriefings = filteredBriefings.filter(b => b.status === "Scheduled");
-  const completedBriefings = filteredBriefings.filter(b => b.status === "Completed");
+  const scheduledBriefings = filteredBriefings.filter((b) => b.status === 'Scheduled');
+  const completedBriefings = filteredBriefings.filter((b) => b.status === 'Completed');
 
   const handleCreateBriefing = async () => {
     if (!title || !date) return;
@@ -122,17 +130,17 @@ export function BriefingsSection() {
       location: location || undefined,
       presenter: presenter || undefined,
       content: content || undefined,
-      status: "Scheduled",
+      status: 'Scheduled',
     });
 
     // Reset form
-    setTitle("");
-    setBriefingType("Toolbox Talk");
-    setDate("");
-    setTime("");
-    setLocation("");
-    setPresenter("");
-    setContent("");
+    setTitle('');
+    setBriefingType('Toolbox Talk');
+    setDate('');
+    setTime('');
+    setLocation('');
+    setPresenter('');
+    setContent('');
     setShowNewBriefing(false);
   };
 
@@ -147,7 +155,7 @@ export function BriefingsSection() {
   // Handle selecting a template from the library
   const handleSelectTemplate = async (template: ToolboxTalkTemplate) => {
     // Set today's date as default
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split('T')[0];
 
     await createFromTemplate.mutateAsync({
       templateId: template.id,
@@ -184,17 +192,17 @@ export function BriefingsSection() {
       await downloadBriefingPDF({
         briefing,
         attendees: attendees || [],
-        companyName: companyProfile?.company_name || "Your Company"
+        companyName: companyProfile?.company_name || 'Your Company',
       });
       toast({
-        title: "PDF exported",
-        description: "Briefing document has been downloaded.",
+        title: 'PDF exported',
+        description: 'Briefing document has been downloaded.',
       });
     } catch {
       toast({
-        title: "Export failed",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
+        title: 'Export failed',
+        description: 'Failed to generate PDF. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -245,13 +253,18 @@ export function BriefingsSection() {
 
                 <div className="space-y-2">
                   <Label>Briefing Type</Label>
-                  <Select value={briefingType} onValueChange={(v) => setBriefingType(v as BriefingType)}>
+                  <Select
+                    value={briefingType}
+                    onValueChange={(v) => setBriefingType(v as BriefingType)}
+                  >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
-                      {briefingTypes.map(type => (
-                        <SelectItem key={type} value={type} className="h-11 touch-manipulation">{type}</SelectItem>
+                      {briefingTypes.map((type) => (
+                        <SelectItem key={type} value={type} className="h-11 touch-manipulation">
+                          {type}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -295,8 +308,14 @@ export function BriefingsSection() {
                       <SelectValue placeholder="Select presenter..." />
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
-                      {employees?.map(emp => (
-                        <SelectItem key={emp.id} value={emp.name} className="h-11 touch-manipulation">{emp.name}</SelectItem>
+                      {employees?.map((emp) => (
+                        <SelectItem
+                          key={emp.id}
+                          value={emp.name}
+                          className="h-11 touch-manipulation"
+                        >
+                          {emp.name}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -330,7 +349,7 @@ export function BriefingsSection() {
                     {createBriefing.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      "Schedule"
+                      'Schedule'
                     )}
                   </Button>
                 </div>
@@ -349,7 +368,7 @@ export function BriefingsSection() {
           placeholder="Search briefings..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn("h-11 touch-manipulation", !searchQuery && "pl-9")}
+          className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
         />
       </div>
 
@@ -358,23 +377,23 @@ export function BriefingsSection() {
         stats={[
           {
             icon: CheckCircle2,
-            value: isLoading ? "-" : (stats?.completed || 0),
-            label: "Completed",
-            color: "green",
+            value: isLoading ? '-' : stats?.completed || 0,
+            label: 'Completed',
+            color: 'green',
           },
           {
             icon: Calendar,
-            value: isLoading ? "-" : (stats?.scheduled || 0),
-            label: "Scheduled",
-            color: "yellow",
+            value: isLoading ? '-' : stats?.scheduled || 0,
+            label: 'Scheduled',
+            color: 'yellow',
             pulse: (stats?.scheduled || 0) > 0,
           },
           {
             icon: UserCheck,
-            value: isLoading ? "-" : (stats?.avgAttendance || 100),
-            label: "Attendance",
-            color: "blue",
-            suffix: "%",
+            value: isLoading ? '-' : stats?.avgAttendance || 100,
+            label: 'Attendance',
+            color: 'blue',
+            suffix: '%',
           },
         ]}
       />
@@ -409,8 +428,8 @@ export function BriefingsSection() {
                 handleSignOff(scheduledBriefings[0]);
               } else {
                 toast({
-                  title: "No scheduled briefings",
-                  description: "Schedule a briefing first to use sign-off.",
+                  title: 'No scheduled briefings',
+                  description: 'Schedule a briefing first to use sign-off.',
                 });
               }
             }}
@@ -426,8 +445,8 @@ export function BriefingsSection() {
                 handleExportPdf(completedBriefings[0]);
               } else {
                 toast({
-                  title: "No completed briefings",
-                  description: "Complete a briefing first to export.",
+                  title: 'No completed briefings',
+                  description: 'Complete a briefing first to export.',
                 });
               }
             }}
@@ -472,7 +491,10 @@ export function BriefingsSection() {
         ) : (
           <div className="space-y-2">
             {scheduledBriefings.map((briefing) => (
-              <Card key={briefing.id} className="hover:bg-muted/50 transition-colors border-l-4 border-l-warning">
+              <Card
+                key={briefing.id}
+                className="hover:bg-muted/50 transition-colors border-l-4 border-l-warning"
+              >
                 <CardContent className="p-3 md:p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3 flex-1">
@@ -480,14 +502,18 @@ export function BriefingsSection() {
                         <Calendar className="h-4 w-4 text-warning" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-foreground text-sm md:text-base truncate">{briefing.title}</p>
+                        <p className="font-medium text-foreground text-sm md:text-base truncate">
+                          {briefing.title}
+                        </p>
                         <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
                           {briefing.briefing_type && (
-                            <Badge variant="outline" className="text-xs">{briefing.briefing_type}</Badge>
+                            <Badge variant="outline" className="text-xs">
+                              {briefing.briefing_type}
+                            </Badge>
                           )}
                           <span className="flex items-center gap-1 whitespace-nowrap shrink-0">
                             <Clock className="h-3 w-3" />
-                            {new Date(briefing.date).toLocaleDateString("en-GB")}
+                            {new Date(briefing.date).toLocaleDateString('en-GB')}
                             {briefing.time && ` at ${briefing.time.slice(0, 5)}`}
                           </span>
                         </div>
@@ -505,12 +531,10 @@ export function BriefingsSection() {
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                      <Badge className={statusColors["Scheduled"]}>
-                        Scheduled
-                      </Badge>
+                      <Badge className={statusColors['Scheduled']}>Scheduled</Badge>
                       <div className="flex flex-wrap items-center gap-1">
                         <Button
-                                                    variant="ghost"
+                          variant="ghost"
                           onClick={() => handleViewBriefing(briefing)}
                           className="h-11 w-11 p-0 touch-manipulation"
                           title="View"
@@ -518,7 +542,7 @@ export function BriefingsSection() {
                           <Eye className="h-3.5 w-3.5" />
                         </Button>
                         <Button
-                                                    variant="ghost"
+                          variant="ghost"
                           onClick={() => handleEditBriefing(briefing)}
                           className="h-11 w-11 p-0 touch-manipulation"
                           title="Edit"
@@ -526,7 +550,7 @@ export function BriefingsSection() {
                           <Edit3 className="h-3.5 w-3.5" />
                         </Button>
                         <Button
-                                                    variant="outline"
+                          variant="outline"
                           onClick={() => handleSignOff(briefing)}
                           className="h-11 text-xs touch-manipulation bg-blue-500/10 border-blue-500/30 text-blue-400"
                         >
@@ -534,7 +558,7 @@ export function BriefingsSection() {
                           Sign-off
                         </Button>
                         <Button
-                                                    variant="outline"
+                          variant="outline"
                           onClick={() => handleComplete(briefing)}
                           disabled={completeBriefing.isPending}
                           className="h-11 text-xs touch-manipulation"
@@ -549,7 +573,7 @@ export function BriefingsSection() {
                           )}
                         </Button>
                         <Button
-                                                    variant="ghost"
+                          variant="ghost"
                           onClick={() => handleDelete(briefing.id)}
                           disabled={deleteBriefing.isPending}
                           className="h-11 w-11 p-0 text-destructive hover:text-destructive touch-manipulation"
@@ -594,9 +618,10 @@ export function BriefingsSection() {
         ) : (
           <div className="space-y-2">
             {completedBriefings.slice(0, 10).map((briefing) => {
-              const attendancePercent = briefing.attendee_count && briefing.attendee_count > 0
-                ? Math.round((briefing.acknowledged_count || 0) / briefing.attendee_count * 100)
-                : 100;
+              const attendancePercent =
+                briefing.attendee_count && briefing.attendee_count > 0
+                  ? Math.round(((briefing.acknowledged_count || 0) / briefing.attendee_count) * 100)
+                  : 100;
 
               return (
                 <Card key={briefing.id} className="hover:bg-muted/50 transition-colors">
@@ -607,12 +632,16 @@ export function BriefingsSection() {
                           <Users className="h-4 w-4 text-success" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-foreground text-sm md:text-base truncate">{briefing.title}</p>
+                          <p className="font-medium text-foreground text-sm md:text-base truncate">
+                            {briefing.title}
+                          </p>
                           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
                             {briefing.briefing_type && (
-                              <Badge variant="outline" className="text-xs">{briefing.briefing_type}</Badge>
+                              <Badge variant="outline" className="text-xs">
+                                {briefing.briefing_type}
+                              </Badge>
                             )}
-                            <span>{new Date(briefing.date).toLocaleDateString("en-GB")}</span>
+                            <span>{new Date(briefing.date).toLocaleDateString('en-GB')}</span>
                           </div>
                           {briefing.attendee_count !== undefined && briefing.attendee_count > 0 && (
                             <p className="text-xs text-muted-foreground mt-1">
@@ -622,14 +651,14 @@ export function BriefingsSection() {
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-2">
-                        <Badge className={statusColors["Completed"]}>
+                        <Badge className={statusColors['Completed']}>
                           {briefing.attendee_count && briefing.attendee_count > 0
                             ? `${attendancePercent}%`
-                            : "Complete"}
+                            : 'Complete'}
                         </Badge>
                         <div className="flex flex-wrap items-center gap-1">
                           <Button
-                                                        variant="ghost"
+                            variant="ghost"
                             onClick={() => handleViewBriefing(briefing)}
                             className="h-11 w-11 p-0 touch-manipulation"
                             title="View"
@@ -637,7 +666,7 @@ export function BriefingsSection() {
                             <Eye className="h-3.5 w-3.5" />
                           </Button>
                           <Button
-                                                        variant="ghost"
+                            variant="ghost"
                             onClick={() => {
                               setSelectedBriefingId(briefing.id);
                               handleExportPdf(briefing);
@@ -648,7 +677,7 @@ export function BriefingsSection() {
                             <Download className="h-3.5 w-3.5" />
                           </Button>
                           <Button
-                                                        variant="ghost"
+                            variant="ghost"
                             onClick={() => handleDelete(briefing.id)}
                             disabled={deleteBriefing.isPending}
                             className="h-11 w-11 p-0 text-destructive hover:text-destructive touch-manipulation"
@@ -677,9 +706,7 @@ export function BriefingsSection() {
               </SheetTitle>
             </SheetHeader>
             <div className="flex-1 overflow-y-auto p-4">
-              <ToolboxTalkLibrary
-                onSelectTemplate={handleSelectTemplate}
-              />
+              <ToolboxTalkLibrary onSelectTemplate={handleSelectTemplate} />
             </div>
           </div>
         </SheetContent>

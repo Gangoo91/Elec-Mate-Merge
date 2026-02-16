@@ -3,9 +3,25 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
-  Zap, Lightbulb, Plug, ChefHat, Droplets, Car, Flame, Home,
-  Building2, Server, Wind, Cpu, Factory, Wrench, DoorOpen, Shield,
-  X, Check, Sparkles
+  Zap,
+  Lightbulb,
+  Plug,
+  ChefHat,
+  Droplets,
+  Car,
+  Flame,
+  Home,
+  Building2,
+  Server,
+  Wind,
+  Cpu,
+  Factory,
+  Wrench,
+  DoorOpen,
+  Shield,
+  X,
+  Check,
+  Sparkles,
 } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 
@@ -20,51 +36,493 @@ interface SmartAutoFillPromptDialogProps {
 // Circuit types with auto-fill suggestions (BS 7671 Table 41.3 compliant)
 const circuitTypes = [
   // Lighting circuits
-  { type: 'Downstairs Lights', icon: Lightbulb, category: 'Lighting', suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '6', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '7.28', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Upstairs Lights', icon: Lightbulb, category: 'Lighting', suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '6', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '7.28', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Kitchen Lights', icon: Lightbulb, category: 'Lighting', suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '10', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '4.37', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Outdoor Lights', icon: Lightbulb, category: 'Lighting', suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'B', protectiveDeviceRating: '6', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '6', maxZs: '7.28', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
+  {
+    type: 'Downstairs Lights',
+    icon: Lightbulb,
+    category: 'Lighting',
+    suggestions: {
+      liveSize: '1.5mm',
+      cpcSize: '1.0mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '6',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '7.28',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Upstairs Lights',
+    icon: Lightbulb,
+    category: 'Lighting',
+    suggestions: {
+      liveSize: '1.5mm',
+      cpcSize: '1.0mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '6',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '7.28',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Kitchen Lights',
+    icon: Lightbulb,
+    category: 'Lighting',
+    suggestions: {
+      liveSize: '1.5mm',
+      cpcSize: '1.0mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '10',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '4.37',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Outdoor Lights',
+    icon: Lightbulb,
+    category: 'Lighting',
+    suggestions: {
+      liveSize: '1.5mm',
+      cpcSize: '1.0mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '6',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      maxZs: '7.28',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
 
   // Socket circuits
-  { type: 'Downstairs Ring', icon: Plug, category: 'Sockets', suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'B', protectiveDeviceRating: '32', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '6', maxZs: '1.37', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Upstairs Ring', icon: Plug, category: 'Sockets', suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'B', protectiveDeviceRating: '32', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '6', maxZs: '1.37', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Kitchen Ring', icon: Plug, category: 'Sockets', suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'B', protectiveDeviceRating: '32', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '6', maxZs: '1.37', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Utility Radial', icon: Zap, category: 'Sockets', suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'B', protectiveDeviceRating: '20', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '6', maxZs: '2.19', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
+  {
+    type: 'Downstairs Ring',
+    icon: Plug,
+    category: 'Sockets',
+    suggestions: {
+      liveSize: '2.5mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      maxZs: '1.37',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Upstairs Ring',
+    icon: Plug,
+    category: 'Sockets',
+    suggestions: {
+      liveSize: '2.5mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      maxZs: '1.37',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Kitchen Ring',
+    icon: Plug,
+    category: 'Sockets',
+    suggestions: {
+      liveSize: '2.5mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      maxZs: '1.37',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Utility Radial',
+    icon: Zap,
+    category: 'Sockets',
+    suggestions: {
+      liveSize: '2.5mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '20',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      maxZs: '2.19',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
 
   // Fixed appliances
-  { type: 'Cooker', icon: ChefHat, category: 'Appliances', suggestions: { liveSize: '6.0mm', cpcSize: '2.5mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '32', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '1.37', pointsServed: '1', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Shower', icon: Droplets, category: 'Appliances', suggestions: { liveSize: '10mm', cpcSize: '4.0mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '40', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '1.09', pointsServed: '1', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Immersion', icon: Droplets, category: 'Appliances', suggestions: { liveSize: '2.5mm', cpcSize: '1.5mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '16', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '2.73', pointsServed: '1', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
+  {
+    type: 'Cooker',
+    icon: ChefHat,
+    category: 'Appliances',
+    suggestions: {
+      liveSize: '6.0mm',
+      cpcSize: '2.5mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '1.37',
+      pointsServed: '1',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Shower',
+    icon: Droplets,
+    category: 'Appliances',
+    suggestions: {
+      liveSize: '10mm',
+      cpcSize: '4.0mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '40',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '1.09',
+      pointsServed: '1',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Immersion',
+    icon: Droplets,
+    category: 'Appliances',
+    suggestions: {
+      liveSize: '2.5mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '16',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '2.73',
+      pointsServed: '1',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
 
   // Modern circuits
-  { type: 'EV Charger', icon: Car, category: 'Modern', suggestions: { liveSize: '6.0mm', cpcSize: '2.5mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'C', protectiveDeviceRating: '32', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '6', maxZs: '0.68', pointsServed: '1', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Heat Pump', icon: Home, category: 'Modern', suggestions: { liveSize: '4.0mm', cpcSize: '1.5mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '25', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '1.75', pointsServed: '1', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Solar PV', icon: Building2, category: 'Modern', suggestions: { liveSize: '4.0mm', cpcSize: '1.5mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '16', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '2.73', pointsServed: '1', referenceMethod: 'C', typeOfWiring: 'Twin & Earth Cable' } },
-  { type: 'Heating', icon: Flame, category: 'Modern', suggestions: { liveSize: '1.5mm', cpcSize: '1.0mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '6', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '6', maxZs: '7.28', pointsServed: '1', referenceMethod: 'A', typeOfWiring: 'Twin & Earth Cable' } },
+  {
+    type: 'EV Charger',
+    icon: Car,
+    category: 'Modern',
+    suggestions: {
+      liveSize: '6.0mm',
+      cpcSize: '2.5mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'C',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      maxZs: '0.68',
+      pointsServed: '1',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Heat Pump',
+    icon: Home,
+    category: 'Modern',
+    suggestions: {
+      liveSize: '4.0mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '25',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '1.75',
+      pointsServed: '1',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Solar PV',
+    icon: Building2,
+    category: 'Modern',
+    suggestions: {
+      liveSize: '4.0mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '16',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '2.73',
+      pointsServed: '1',
+      referenceMethod: 'C',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
+  {
+    type: 'Heating',
+    icon: Flame,
+    category: 'Modern',
+    suggestions: {
+      liveSize: '1.5mm',
+      cpcSize: '1.0mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '6',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      maxZs: '7.28',
+      pointsServed: '1',
+      referenceMethod: 'A',
+      typeOfWiring: 'Twin & Earth Cable',
+    },
+  },
 
   // Commercial
-  { type: 'Office Lights', icon: Lightbulb, category: 'Commercial', suggestions: { liveSize: '2.5mm', cpcSize: '2.5mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '16', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '10', maxZs: '2.73', referenceMethod: 'C', typeOfWiring: 'SWA Cable' } },
-  { type: 'Office Sockets', icon: Plug, category: 'Commercial', suggestions: { liveSize: '4.0mm', cpcSize: '4.0mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'B', protectiveDeviceRating: '32', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '10', maxZs: '1.37', referenceMethod: 'C', typeOfWiring: 'SWA Cable' } },
-  { type: 'Server Room', icon: Server, category: 'Commercial', suggestions: { liveSize: '4.0mm', cpcSize: '4.0mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'C', protectiveDeviceRating: '20', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '10', maxZs: '1.09', referenceMethod: 'C', typeOfWiring: 'SWA Cable' } },
-  { type: 'A/C Unit', icon: Wind, category: 'Commercial', suggestions: { liveSize: '4.0mm', cpcSize: '4.0mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'C', protectiveDeviceRating: '20', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '10', maxZs: '1.09', pointsServed: '1', referenceMethod: 'C', typeOfWiring: 'SWA Cable' } },
-  { type: 'Emergency Lights', icon: Shield, category: 'Commercial', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '6', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '10', maxZs: '7.28', referenceMethod: 'C', typeOfWiring: 'SWA Cable' } },
-  { type: 'Fire Alarm', icon: Flame, category: 'Commercial', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'B', protectiveDeviceRating: '6', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '10', maxZs: '7.28', pointsServed: '1', referenceMethod: 'C', typeOfWiring: 'Fire Resistant Cable' } },
+  {
+    type: 'Office Lights',
+    icon: Lightbulb,
+    category: 'Commercial',
+    suggestions: {
+      liveSize: '2.5mm',
+      cpcSize: '2.5mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '16',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '10',
+      maxZs: '2.73',
+      referenceMethod: 'C',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'Office Sockets',
+    icon: Plug,
+    category: 'Commercial',
+    suggestions: {
+      liveSize: '4.0mm',
+      cpcSize: '4.0mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '10',
+      maxZs: '1.37',
+      referenceMethod: 'C',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'Server Room',
+    icon: Server,
+    category: 'Commercial',
+    suggestions: {
+      liveSize: '4.0mm',
+      cpcSize: '4.0mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'C',
+      protectiveDeviceRating: '20',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '10',
+      maxZs: '1.09',
+      referenceMethod: 'C',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'A/C Unit',
+    icon: Wind,
+    category: 'Commercial',
+    suggestions: {
+      liveSize: '4.0mm',
+      cpcSize: '4.0mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'C',
+      protectiveDeviceRating: '20',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '10',
+      maxZs: '1.09',
+      pointsServed: '1',
+      referenceMethod: 'C',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'Emergency Lights',
+    icon: Shield,
+    category: 'Commercial',
+    suggestions: {
+      liveSize: '1.5mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '6',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '10',
+      maxZs: '7.28',
+      referenceMethod: 'C',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'Fire Alarm',
+    icon: Flame,
+    category: 'Commercial',
+    suggestions: {
+      liveSize: '1.5mm',
+      cpcSize: '1.5mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'B',
+      protectiveDeviceRating: '6',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '10',
+      maxZs: '7.28',
+      pointsServed: '1',
+      referenceMethod: 'C',
+      typeOfWiring: 'Fire Resistant Cable',
+    },
+  },
 
   // Industrial
-  { type: '3-Phase Motor', icon: Factory, category: 'Industrial', suggestions: { liveSize: '4.0mm', cpcSize: '4.0mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'D', protectiveDeviceRating: '16', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '10', maxZs: '0.68', pointsServed: '1', referenceMethod: 'E', typeOfWiring: 'SWA Cable' } },
-  { type: 'Machinery', icon: Wrench, category: 'Industrial', suggestions: { liveSize: '10mm', cpcSize: '10mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'D', protectiveDeviceRating: '40', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '10', maxZs: '0.27', pointsServed: '1', referenceMethod: 'E', typeOfWiring: 'SWA Cable' } },
-  { type: 'Workshop Sockets', icon: Plug, category: 'Industrial', suggestions: { liveSize: '6.0mm', cpcSize: '6.0mm', protectiveDeviceType: 'RCBO', protectiveDeviceCurve: 'C', protectiveDeviceRating: '32', bsStandard: 'BS EN 61009', protectiveDeviceKaRating: '10', maxZs: '0.68', referenceMethod: 'C', typeOfWiring: 'SWA Cable' } },
-  { type: 'Compressor', icon: Wind, category: 'Industrial', suggestions: { liveSize: '10mm', cpcSize: '10mm', protectiveDeviceType: 'MCB', protectiveDeviceCurve: 'D', protectiveDeviceRating: '32', bsStandard: 'BS EN 60898', protectiveDeviceKaRating: '10', maxZs: '0.34', pointsServed: '1', referenceMethod: 'E', typeOfWiring: 'SWA Cable' } },
+  {
+    type: '3-Phase Motor',
+    icon: Factory,
+    category: 'Industrial',
+    suggestions: {
+      liveSize: '4.0mm',
+      cpcSize: '4.0mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'D',
+      protectiveDeviceRating: '16',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '10',
+      maxZs: '0.68',
+      pointsServed: '1',
+      referenceMethod: 'E',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'Machinery',
+    icon: Wrench,
+    category: 'Industrial',
+    suggestions: {
+      liveSize: '10mm',
+      cpcSize: '10mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'D',
+      protectiveDeviceRating: '40',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '10',
+      maxZs: '0.27',
+      pointsServed: '1',
+      referenceMethod: 'E',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'Workshop Sockets',
+    icon: Plug,
+    category: 'Industrial',
+    suggestions: {
+      liveSize: '6.0mm',
+      cpcSize: '6.0mm',
+      protectiveDeviceType: 'RCBO',
+      protectiveDeviceCurve: 'C',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 61009',
+      protectiveDeviceKaRating: '10',
+      maxZs: '0.68',
+      referenceMethod: 'C',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
+  {
+    type: 'Compressor',
+    icon: Wind,
+    category: 'Industrial',
+    suggestions: {
+      liveSize: '10mm',
+      cpcSize: '10mm',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: 'D',
+      protectiveDeviceRating: '32',
+      bsStandard: 'BS EN 60898',
+      protectiveDeviceKaRating: '10',
+      maxZs: '0.34',
+      pointsServed: '1',
+      referenceMethod: 'E',
+      typeOfWiring: 'SWA Cable',
+    },
+  },
 ];
 
 // Category definitions with icons and colours
 const categories = [
-  { name: 'Lighting', icon: Lightbulb, color: 'text-yellow-400', bg: 'bg-yellow-500/10 hover:bg-yellow-500/20 border-yellow-500/30' },
-  { name: 'Sockets', icon: Plug, color: 'text-blue-400', bg: 'bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/30' },
-  { name: 'Appliances', icon: ChefHat, color: 'text-orange-400', bg: 'bg-orange-500/10 hover:bg-orange-500/20 border-orange-500/30' },
-  { name: 'Modern', icon: Car, color: 'text-green-400', bg: 'bg-green-500/10 hover:bg-green-500/20 border-green-500/30' },
-  { name: 'Commercial', icon: Building2, color: 'text-purple-400', bg: 'bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/30' },
-  { name: 'Industrial', icon: Factory, color: 'text-red-400', bg: 'bg-red-500/10 hover:bg-red-500/20 border-red-500/30' },
+  {
+    name: 'Lighting',
+    icon: Lightbulb,
+    color: 'text-yellow-400',
+    bg: 'bg-yellow-500/10 hover:bg-yellow-500/20 border-yellow-500/30',
+  },
+  {
+    name: 'Sockets',
+    icon: Plug,
+    color: 'text-blue-400',
+    bg: 'bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/30',
+  },
+  {
+    name: 'Appliances',
+    icon: ChefHat,
+    color: 'text-orange-400',
+    bg: 'bg-orange-500/10 hover:bg-orange-500/20 border-orange-500/30',
+  },
+  {
+    name: 'Modern',
+    icon: Car,
+    color: 'text-green-400',
+    bg: 'bg-green-500/10 hover:bg-green-500/20 border-green-500/30',
+  },
+  {
+    name: 'Commercial',
+    icon: Building2,
+    color: 'text-purple-400',
+    bg: 'bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/30',
+  },
+  {
+    name: 'Industrial',
+    icon: Factory,
+    color: 'text-red-400',
+    bg: 'bg-red-500/10 hover:bg-red-500/20 border-red-500/30',
+  },
 ];
 
 const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
@@ -72,7 +530,7 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
   onOpenChange,
   onUseAutoFill,
   onSkip,
-  circuitNumber
+  circuitNumber,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedCircuitType, setSelectedCircuitType] = useState<string>('');
@@ -87,11 +545,11 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
 
   const filteredCircuits = useMemo(() => {
     if (!selectedCategory) return [];
-    return circuitTypes.filter(ct => ct.category === selectedCategory);
+    return circuitTypes.filter((ct) => ct.category === selectedCategory);
   }, [selectedCategory]);
 
-  const selectedConfig = circuitTypes.find(ct => ct.type === selectedCircuitType);
-  const selectedCategoryData = categories.find(c => c.name === selectedCategory);
+  const selectedConfig = circuitTypes.find((ct) => ct.type === selectedCircuitType);
+  const selectedCategoryData = categories.find((c) => c.name === selectedCategory);
 
   const handleSelectCircuit = (type: string) => {
     setSelectedCircuitType(type);
@@ -154,7 +612,9 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
                     }`}
                   >
                     <Icon className={`h-5 w-5 ${isSelected ? cat.color : 'text-white/70'}`} />
-                    <span className={`text-xs font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}>
+                    <span
+                      className={`text-xs font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}
+                    >
                       {cat.name}
                     </span>
                   </button>
@@ -183,8 +643,12 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
                           : 'bg-card border-border/50 hover:bg-muted/50'
                       }`}
                     >
-                      <Icon className={`h-4 w-4 flex-shrink-0 ${isSelected ? selectedCategoryData?.color : 'text-white/70'}`} />
-                      <span className={`text-sm font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}>
+                      <Icon
+                        className={`h-4 w-4 flex-shrink-0 ${isSelected ? selectedCategoryData?.color : 'text-white/70'}`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}
+                      >
                         {circuit.type}
                       </span>
                       {isSelected && (
@@ -207,15 +671,23 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
                 <div className="flex justify-between">
                   <span className="text-white/60">Cable:</span>
-                  <span className="text-white font-medium">{selectedConfig.suggestions.liveSize}/{selectedConfig.suggestions.cpcSize}</span>
+                  <span className="text-white font-medium">
+                    {selectedConfig.suggestions.liveSize}/{selectedConfig.suggestions.cpcSize}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/60">Protection:</span>
-                  <span className="text-white font-medium">{selectedConfig.suggestions.protectiveDeviceType} {selectedConfig.suggestions.protectiveDeviceCurve}{selectedConfig.suggestions.protectiveDeviceRating}</span>
+                  <span className="text-white font-medium">
+                    {selectedConfig.suggestions.protectiveDeviceType}{' '}
+                    {selectedConfig.suggestions.protectiveDeviceCurve}
+                    {selectedConfig.suggestions.protectiveDeviceRating}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/60">Breaking:</span>
-                  <span className="text-white font-medium">{selectedConfig.suggestions.protectiveDeviceKaRating}kA</span>
+                  <span className="text-white font-medium">
+                    {selectedConfig.suggestions.protectiveDeviceKaRating}kA
+                  </span>
                 </div>
               </div>
             </div>

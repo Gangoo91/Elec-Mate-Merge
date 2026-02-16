@@ -8,7 +8,13 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Shield, Plug, Cable } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -137,7 +143,9 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({ data, onChan
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Number of Phases <span className="text-destructive">*</span></Label>
+            <Label className="text-sm font-medium">
+              Number of Phases <span className="text-destructive">*</span>
+            </Label>
             <SegmentedControl
               value={data.phases || ''}
               onChange={(v) => handleChange('phases', v)}
@@ -243,7 +251,9 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({ data, onChan
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Earthing System <span className="text-destructive">*</span></Label>
+            <Label className="text-sm font-medium">
+              Earthing System <span className="text-destructive">*</span>
+            </Label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {earthingOptions.map((option) => (
                 <button
@@ -400,7 +410,9 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({ data, onChan
         <CardContent className="pt-6">
           <MultiboardSetup
             boards={data.distributionBoards || []}
-            onBoardsChange={(boards: DistributionBoard[]) => onChange({ distributionBoards: boards })}
+            onBoardsChange={(boards: DistributionBoard[]) =>
+              onChange({ distributionBoards: boards })
+            }
           />
         </CardContent>
       </Card>

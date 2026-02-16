@@ -27,13 +27,9 @@ export const useJobs = () => {
   useEffect(() => {
     const channel = supabase
       .channel('employer-jobs-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'employer_jobs' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: JOBS_KEY });
-        }
-      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_jobs' }, () => {
+        queryClient.invalidateQueries({ queryKey: JOBS_KEY });
+      })
       .subscribe();
 
     return () => {
@@ -77,8 +73,7 @@ export const useCreateJob = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (job: Omit<Job, 'id' | 'created_at' | 'updated_at' | 'user_id'>) =>
-      createJob(job),
+    mutationFn: (job: Omit<Job, 'id' | 'created_at' | 'updated_at' | 'user_id'>) => createJob(job),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: JOBS_KEY });
     },
@@ -89,8 +84,7 @@ export const useUpdateJob = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<Job> }) =>
-      updateJob(id, updates),
+    mutationFn: ({ id, updates }: { id: string; updates: Partial<Job> }) => updateJob(id, updates),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: JOBS_KEY });
       queryClient.invalidateQueries({ queryKey: [...JOBS_KEY, variables.id] });
@@ -102,8 +96,7 @@ export const useUpdateJobStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, status }: { id: string; status: JobStatus }) =>
-      updateJobStatus(id, status),
+    mutationFn: ({ id, status }: { id: string; status: JobStatus }) => updateJobStatus(id, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: JOBS_KEY });
     },

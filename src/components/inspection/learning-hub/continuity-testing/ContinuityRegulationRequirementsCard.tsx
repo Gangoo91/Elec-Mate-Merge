@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BookOpen, Shield, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,7 +18,9 @@ const ContinuityRegulationRequirementsCard = () => (
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-            <h4 className="font-medium text-blue-400 text-sm sm:text-base">Regulation 612.2 - Continuity of Protective Conductors</h4>
+            <h4 className="font-medium text-blue-400 text-sm sm:text-base">
+              Regulation 612.2 - Continuity of Protective Conductors
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-gray-300">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -50,12 +51,16 @@ const ContinuityRegulationRequirementsCard = () => (
         <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-            <h4 className="font-medium text-green-400 text-sm sm:text-base">Regulation 543.1 - Protective Conductor Cross-sectional Areas</h4>
+            <h4 className="font-medium text-green-400 text-sm sm:text-base">
+              Regulation 543.1 - Protective Conductor Cross-sectional Areas
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-gray-300">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="font-medium text-foreground mb-2">543.1.3 - Minimum Cross-sectional Areas:</p>
+                <p className="font-medium text-foreground mb-2">
+                  543.1.3 - Minimum Cross-sectional Areas:
+                </p>
                 <div className="space-y-1 text-xs">
                   <p>• Where phase conductor ≤ 16mm²: CPC = phase conductor size</p>
                   <p>• Where phase conductor {'>'}16mm² but ≤ 35mm²: CPC = 16mm²</p>
@@ -81,12 +86,16 @@ const ContinuityRegulationRequirementsCard = () => (
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
-            <h4 className="font-medium text-orange-400 text-sm sm:text-base">Regulation 411.3.2 - Automatic Disconnection Requirements</h4>
+            <h4 className="font-medium text-orange-400 text-sm sm:text-base">
+              Regulation 411.3.2 - Automatic Disconnection Requirements
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-gray-300">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="font-medium text-foreground mb-2">411.3.2.2 - Maximum Disconnection Times:</p>
+                <p className="font-medium text-foreground mb-2">
+                  411.3.2.2 - Maximum Disconnection Times:
+                </p>
                 <div className="space-y-1 text-xs">
                   <p>• Final circuits not exceeding 32A: 0.4 seconds</p>
                   <p>• Distribution circuits and final circuits exceeding 32A: 5 seconds</p>
@@ -112,7 +121,9 @@ const ContinuityRegulationRequirementsCard = () => (
         <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-            <h4 className="font-medium text-red-400 text-sm sm:text-base">Critical Compliance Points</h4>
+            <h4 className="font-medium text-red-400 text-sm sm:text-base">
+              Critical Compliance Points
+            </h4>
           </div>
           <div className="space-y-3 text-sm text-gray-300">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

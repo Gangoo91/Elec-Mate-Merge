@@ -41,9 +41,24 @@ interface EPAProfessionalDiscussionProps {
 }
 
 const GRADE_COLOURS: Record<string, { bg: string; text: string; border: string; ring: string }> = {
-  distinction: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', ring: 'stroke-emerald-500' },
-  pass: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30', ring: 'stroke-amber-500' },
-  fail: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30', ring: 'stroke-red-500' },
+  distinction: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/30',
+    ring: 'stroke-emerald-500',
+  },
+  pass: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/30',
+    ring: 'stroke-amber-500',
+  },
+  fail: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/30',
+    ring: 'stroke-red-500',
+  },
 };
 
 const GRADE_LABELS: Record<string, string> = {
@@ -96,9 +111,7 @@ function RadialRing({
           strokeDashoffset={offset}
         />
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        {children}
-      </div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">{children}</div>
     </div>
   );
 }
@@ -163,11 +176,7 @@ export function EPAProfessionalDiscussion({
   const handleSubmit = async () => {
     if (!currentQuestion || !responseText.trim()) return;
     setCurrentScore(null);
-    const score = await submitResponse(
-      currentQuestion.id,
-      responseText.trim(),
-      qualificationCode
-    );
+    const score = await submitResponse(currentQuestion.id, responseText.trim(), qualificationCode);
     if (score) {
       setCurrentScore(score);
     }
@@ -207,8 +216,14 @@ export function EPAProfessionalDiscussion({
   // --- SETUP STATE ---
   if (!isSessionActive && !sessionResult) {
     const STEPS = [
-      { title: 'Portfolio Scan', desc: 'AI reads your portfolio evidence to personalise the session' },
-      { title: 'Question Generation', desc: 'Creates 5-8 EPA-style discussion questions tailored to your work' },
+      {
+        title: 'Portfolio Scan',
+        desc: 'AI reads your portfolio evidence to personalise the session',
+      },
+      {
+        title: 'Question Generation',
+        desc: 'Creates 5-8 EPA-style discussion questions tailored to your work',
+      },
       { title: 'Your Response', desc: 'Type or speak your answer to each question' },
       { title: 'AI Scoring', desc: 'Scores your response against real grade descriptors' },
       { title: 'Results', desc: 'Get a predicted grade with targeted improvement tips' },
@@ -223,18 +238,13 @@ export function EPAProfessionalDiscussion({
               <MessageSquare className="h-6 w-6 text-purple-400" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">
-                Mock Professional Discussion
-              </h2>
-              <p className="text-xs text-white mt-0.5">
-                AI-powered EPA preparation
-              </p>
+              <h2 className="text-xl font-bold text-white">Mock Professional Discussion</h2>
+              <p className="text-xs text-white mt-0.5">AI-powered EPA preparation</p>
             </div>
           </div>
           <p className="text-sm text-white leading-relaxed">
-            Practise answering EPA-style questions based on your actual
-            portfolio evidence. Get instant feedback and scoring against
-            real grade descriptors.
+            Practise answering EPA-style questions based on your actual portfolio evidence. Get
+            instant feedback and scoring against real grade descriptors.
           </p>
         </div>
 
@@ -244,7 +254,13 @@ export function EPAProfessionalDiscussion({
             Skills Assessed
           </p>
           <div className="flex flex-wrap gap-2">
-            {['Technical Knowledge', 'Practical Application', 'Communication', 'Reflection', 'Problem Solving'].map((skill) => (
+            {[
+              'Technical Knowledge',
+              'Practical Application',
+              'Communication',
+              'Reflection',
+              'Problem Solving',
+            ].map((skill) => (
               <span
                 key={skill}
                 className="px-3 py-1.5 rounded-lg bg-elec-gray border border-white/10 text-xs text-white font-medium"
@@ -274,12 +290,8 @@ export function EPAProfessionalDiscussion({
                 </div>
                 {/* Content */}
                 <div className={cn('pb-4', i === STEPS.length - 1 && 'pb-0')}>
-                  <p className="text-sm font-medium text-white leading-7">
-                    {step.title}
-                  </p>
-                  <p className="text-xs text-white">
-                    {step.desc}
-                  </p>
+                  <p className="text-sm font-medium text-white leading-7">{step.title}</p>
+                  <p className="text-xs text-white">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -338,8 +350,7 @@ export function EPAProfessionalDiscussion({
 
   // --- RESULTS STATE ---
   if (sessionResult) {
-    const gradeColour =
-      GRADE_COLOURS[sessionResult.predictedGrade] || GRADE_COLOURS.fail;
+    const gradeColour = GRADE_COLOURS[sessionResult.predictedGrade] || GRADE_COLOURS.fail;
 
     return (
       <div className="space-y-5 px-4 py-5">
@@ -360,12 +371,7 @@ export function EPAProfessionalDiscussion({
 
             <div className="flex-1 space-y-2">
               <Badge
-                className={cn(
-                  'text-xs',
-                  gradeColour.bg,
-                  gradeColour.text,
-                  gradeColour.border
-                )}
+                className={cn('text-xs', gradeColour.bg, gradeColour.text, gradeColour.border)}
               >
                 {GRADE_LABELS[sessionResult.predictedGrade]}
               </Badge>
@@ -388,11 +394,27 @@ export function EPAProfessionalDiscussion({
             Component Scores
           </h3>
           {[
-            { label: 'Technical Knowledge', score: sessionResult.componentScores.technicalKnowledge, icon: Target },
-            { label: 'Practical Application', score: sessionResult.componentScores.practicalApplication, icon: Award },
-            { label: 'Communication', score: sessionResult.componentScores.communication, icon: MessageSquare },
+            {
+              label: 'Technical Knowledge',
+              score: sessionResult.componentScores.technicalKnowledge,
+              icon: Target,
+            },
+            {
+              label: 'Practical Application',
+              score: sessionResult.componentScores.practicalApplication,
+              icon: Award,
+            },
+            {
+              label: 'Communication',
+              score: sessionResult.componentScores.communication,
+              icon: MessageSquare,
+            },
             { label: 'Reflection', score: sessionResult.componentScores.reflection, icon: Star },
-            { label: 'Problem Solving', score: sessionResult.componentScores.problemSolving, icon: Brain },
+            {
+              label: 'Problem Solving',
+              score: sessionResult.componentScores.problemSolving,
+              icon: Brain,
+            },
           ].map((comp) => {
             const barColour =
               comp.score >= 70
@@ -401,10 +423,7 @@ export function EPAProfessionalDiscussion({
                   ? 'bg-amber-500'
                   : 'bg-red-500';
             return (
-              <div
-                key={comp.label}
-                className="p-3 rounded-xl bg-elec-gray border border-white/10"
-              >
+              <div key={comp.label} className="p-3 rounded-xl bg-elec-gray border border-white/10">
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
                     <comp.icon className="h-4 w-4 text-white shrink-0" />
@@ -466,9 +485,7 @@ export function EPAProfessionalDiscussion({
             Per-Question Results
           </h3>
           {sessionResult.questions.map((q, i) => {
-            const resp = sessionResult.responses.find(
-              (r) => r.questionId === q.id
-            );
+            const resp = sessionResult.responses.find((r) => r.questionId === q.id);
             const score = resp?.score;
             const qGrade = score
               ? GRADE_COLOURS[score.grade] || GRADE_COLOURS.fail
@@ -483,23 +500,14 @@ export function EPAProfessionalDiscussion({
                     </p>
                     {score && (
                       <Badge
-                        className={cn(
-                          'text-xs shrink-0',
-                          qGrade.bg,
-                          qGrade.text,
-                          qGrade.border
-                        )}
+                        className={cn('text-xs shrink-0', qGrade.bg, qGrade.text, qGrade.border)}
                       >
                         {score.score}/100
                       </Badge>
                     )}
                   </div>
-                  {score && (
-                    <p className="text-xs text-white">{score.feedback}</p>
-                  )}
-                  {!score && (
-                    <p className="text-xs text-white italic">Not answered</p>
-                  )}
+                  {score && <p className="text-xs text-white">{score.feedback}</p>}
+                  {!score && <p className="text-xs text-white italic">Not answered</p>}
                 </CardContent>
               </Card>
             );
@@ -547,27 +555,17 @@ export function EPAProfessionalDiscussion({
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-center gap-2">
                   <MessageSquare className="h-4 w-4 text-purple-400" />
-                  <span className="text-xs text-purple-400 font-semibold">
-                    Assessor Question
-                  </span>
+                  <span className="text-xs text-purple-400 font-semibold">Assessor Question</span>
                 </div>
-                <p className="text-lg text-white leading-relaxed">
-                  {currentQuestion.question}
-                </p>
+                <p className="text-lg text-white leading-relaxed">{currentQuestion.question}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {currentQuestion.targetLO && (
-                    <Badge
-                      variant="outline"
-                      className="text-xs text-white"
-                    >
+                    <Badge variant="outline" className="text-xs text-white">
                       LO: {currentQuestion.targetLO}
                     </Badge>
                   )}
                   {currentQuestion.portfolioContext && (
-                    <Badge
-                      variant="outline"
-                      className="text-xs text-white"
-                    >
+                    <Badge variant="outline" className="text-xs text-white">
                       {currentQuestion.portfolioContext}
                     </Badge>
                   )}
@@ -622,9 +620,7 @@ export function EPAProfessionalDiscussion({
               <div className="space-y-3">
                 <div className="p-3 rounded-xl bg-elec-gray border border-white/10">
                   <p className="text-xs text-white mb-1">Your response:</p>
-                  <p className="text-sm text-white">
-                    {existingResponse.responseText}
-                  </p>
+                  <p className="text-sm text-white">{existingResponse.responseText}</p>
                 </div>
 
                 <ScoreFeedback score={existingResponse.score} />
@@ -644,9 +640,7 @@ export function EPAProfessionalDiscussion({
                 {/* Interim speech preview */}
                 {interimTranscript && (
                   <div className="p-2 rounded-lg bg-purple-500/5 border border-purple-500/10">
-                    <p className="text-xs text-purple-300 italic">
-                      {interimTranscript}...
-                    </p>
+                    <p className="text-xs text-purple-300 italic">{interimTranscript}...</p>
                   </div>
                 )}
 
@@ -665,11 +659,7 @@ export function EPAProfessionalDiscussion({
                       )}
                       aria-label={isListening ? 'Stop recording' : 'Start voice input'}
                     >
-                      {isListening ? (
-                        <MicOff className="h-5 w-5" />
-                      ) : (
-                        <Mic className="h-5 w-5" />
-                      )}
+                      {isListening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
                     </button>
                     <span className="text-sm text-white">
                       {isListening ? (
@@ -685,9 +675,7 @@ export function EPAProfessionalDiscussion({
                 )}
 
                 {/* Character count */}
-                <p className="text-xs text-white">
-                  {responseText.length} characters
-                </p>
+                <p className="text-xs text-white">{responseText.length} characters</p>
 
                 {/* Submit button — full width */}
                 <button
@@ -763,32 +751,17 @@ export function EPAProfessionalDiscussion({
 
 // Score Feedback sub-component — redesigned with radial ring + horizontal bars
 function ScoreFeedback({ score }: { score: ResponseScore }) {
-  const gradeColour =
-    GRADE_COLOURS[score.grade] || GRADE_COLOURS.fail;
+  const gradeColour = GRADE_COLOURS[score.grade] || GRADE_COLOURS.fail;
 
   return (
     <div className="space-y-4">
       {/* Score + Grade — Radial ring */}
       <div className="flex items-center gap-4">
-        <RadialRing
-          score={score.score}
-          size={90}
-          strokeWidth={8}
-          ringClass={gradeColour.ring}
-        >
-          <span className={cn('text-2xl font-bold', gradeColour.text)}>
-            {score.score}
-          </span>
+        <RadialRing score={score.score} size={90} strokeWidth={8} ringClass={gradeColour.ring}>
+          <span className={cn('text-2xl font-bold', gradeColour.text)}>{score.score}</span>
         </RadialRing>
         <div className="flex-1">
-          <Badge
-            className={cn(
-              'text-xs',
-              gradeColour.bg,
-              gradeColour.text,
-              gradeColour.border
-            )}
-          >
+          <Badge className={cn('text-xs', gradeColour.bg, gradeColour.text, gradeColour.border)}>
             {GRADE_LABELS[score.grade]}
           </Badge>
           <p className="text-sm text-white mt-1">{score.feedback}</p>
@@ -805,11 +778,7 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
           { label: 'Problem Solving', value: score.subscores.problemSolving },
         ].map((sub) => {
           const barColour =
-            sub.value >= 70
-              ? 'bg-emerald-500'
-              : sub.value >= 40
-                ? 'bg-amber-500'
-                : 'bg-red-500';
+            sub.value >= 70 ? 'bg-emerald-500' : sub.value >= 40 ? 'bg-amber-500' : 'bg-red-500';
           return (
             <div key={sub.label}>
               <div className="flex items-center justify-between mb-1">

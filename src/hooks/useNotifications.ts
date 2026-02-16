@@ -40,7 +40,9 @@ export const useNotifications = () => {
   const { data: notifications, isLoading } = useQuery({
     queryKey: QUERY_KEYS.NOTIFICATIONS,
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Get notifications
@@ -53,24 +55,24 @@ export const useNotifications = () => {
       if (notificationsError) throw notificationsError;
 
       // Get related reports for all notifications
-      const reportIds = notificationsData?.map(n => n.report_id).filter(Boolean) || [];
-      
+      const reportIds = notificationsData?.map((n) => n.report_id).filter(Boolean) || [];
+
       let reportsMap: Record<string, any> = {};
       if (reportIds.length > 0) {
         const { data: reportsData } = await supabase
           .from('reports')
-          .select('id, report_id, certificate_number, client_name, installation_address, report_type, status, data')
+          .select(
+            'id, report_id, certificate_number, client_name, installation_address, report_type, status, data'
+          )
           .in('report_id', reportIds);
-        
+
         if (reportsData) {
-          reportsMap = Object.fromEntries(
-            reportsData.map(r => [r.report_id, r])
-          );
+          reportsMap = Object.fromEntries(reportsData.map((r) => [r.report_id, r]));
         }
       }
 
       // Combine notifications with their reports
-      return (notificationsData || []).map(notification => ({
+      return (notificationsData || []).map((notification) => ({
         ...notification,
         reports: reportsMap[notification.report_id] || undefined,
       })) as Notification[];
@@ -87,7 +89,7 @@ export const useNotifications = () => {
         .single();
 
       if (error) throw error;
-      
+
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       toast({
         title: 'Updated',
@@ -106,13 +108,10 @@ export const useNotifications = () => {
 
   const deleteNotification = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('part_p_notifications')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('part_p_notifications').delete().eq('id', id);
 
       if (error) throw error;
-      
+
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       toast({
         title: 'Deleted',

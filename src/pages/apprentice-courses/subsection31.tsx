@@ -1,50 +1,51 @@
-import { ArrowLeft, Calculator, Triangle, Zap, Power, Battery, AlertTriangle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Calculator, Triangle, Zap, Power, Battery, AlertTriangle } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "2.1",
+    number: '2.1',
     title: "Introduction to Ohm's Law (V = IR)",
-    description: "Understanding the fundamental relationship between voltage, current, and resistance",
+    description:
+      'Understanding the fundamental relationship between voltage, current, and resistance',
     icon: Calculator,
-    href: "2-1"
+    href: '2-1',
   },
   {
-    number: "2.2", 
-    title: "Using Triangle Methods to Rearrange Formulas",
-    description: "Visual methods for rearranging electrical formulas and calculations",
+    number: '2.2',
+    title: 'Using Triangle Methods to Rearrange Formulas',
+    description: 'Visual methods for rearranging electrical formulas and calculations',
     icon: Triangle,
-    href: "2-2"
+    href: '2-2',
   },
   {
-    number: "2.3",
-    title: "Calculating Voltage, Current, or Resistance",
+    number: '2.3',
+    title: 'Calculating Voltage, Current, or Resistance',
     description: "Practical application of Ohm's Law in electrical calculations",
     icon: Zap,
-    href: "2-3"
+    href: '2-3',
   },
   {
-    number: "2.4",
-    title: "Power Calculations (P = VI, P = I²R, P = V²/R)",
-    description: "Understanding and calculating electrical power using different formulas",
+    number: '2.4',
+    title: 'Power Calculations (P = VI, P = I²R, P = V²/R)',
+    description: 'Understanding and calculating electrical power using different formulas',
     icon: Power,
-    href: "2-4"
+    href: '2-4',
   },
   {
-    number: "2.5",
-    title: "Energy Calculations (E = Pt, kilowatt-hours)",
-    description: "Calculating energy consumption and understanding kilowatt-hours",
+    number: '2.5',
+    title: 'Energy Calculations (E = Pt, kilowatt-hours)',
+    description: 'Calculating energy consumption and understanding kilowatt-hours',
     icon: Battery,
-    href: "2-5"
+    href: '2-5',
   },
   {
-    number: "2.6",
-    title: "Common Mistakes and How to Avoid Them",
-    description: "Identifying and preventing typical errors in electrical calculations",
+    number: '2.6',
+    title: 'Common Mistakes and How to Avoid Them',
+    description: 'Identifying and preventing typical errors in electrical calculations',
     icon: AlertTriangle,
-    href: "2-6"
+    href: '2-6',
   },
 ];
 
@@ -54,7 +55,11 @@ const Module2Section2_2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2

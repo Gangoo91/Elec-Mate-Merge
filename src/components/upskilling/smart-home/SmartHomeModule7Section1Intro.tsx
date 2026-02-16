@@ -10,13 +10,14 @@ const SmartHomeModule7Section1Intro = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
           <p>
-            Behind every smart home device is an electrical installation that must be safe, reliable, and compliant. 
-            From ensuring correct wiring to selecting suitable power supplies and containment methods, electricians 
-            play a critical role in making smart systems work long-term.
+            Behind every smart home device is an electrical installation that must be safe,
+            reliable, and compliant. From ensuring correct wiring to selecting suitable power
+            supplies and containment methods, electricians play a critical role in making smart
+            systems work long-term.
           </p>
           <p>
-            Poor wiring practices can lead to faults, fire risks, or premature device failure — so this section 
-            focuses on best practice installation methods aligned with BS 7671.
+            Poor wiring practices can lead to faults, fire risks, or premature device failure — so
+            this section focuses on best practice installation methods aligned with BS 7671.
           </p>
         </CardContent>
       </Card>
@@ -29,7 +30,8 @@ const SmartHomeModule7Section1Intro = () => {
             </div>
             <h3 className="text-lg font-semibold text-foreground">Correct Wiring</h3>
             <p className="text-gray-400 text-sm">
-              Understanding device requirements and ensuring proper connections for reliable operation
+              Understanding device requirements and ensuring proper connections for reliable
+              operation
             </p>
           </CardContent>
         </Card>

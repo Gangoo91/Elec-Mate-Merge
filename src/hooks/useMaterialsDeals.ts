@@ -27,20 +27,23 @@ export const useMaterialsDeals = (materials: any[]): DealsData => {
       return {
         dealOfTheDay: null,
         topDiscounts: [],
-        saleItems: []
+        saleItems: [],
       };
     }
 
     console.log('🔍 Processing materials for deals detection:', materials.length);
-    console.log('🔍 Sample materials:', materials.slice(0, 3).map(m => ({ 
-      name: m.name, 
-      isOnSale: m.isOnSale, 
-      salePrice: m.salePrice,
-      price: m.price 
-    })));
-    
+    console.log(
+      '🔍 Sample materials:',
+      materials.slice(0, 3).map((m) => ({
+        name: m.name,
+        isOnSale: m.isOnSale,
+        salePrice: m.salePrice,
+        price: m.price,
+      }))
+    );
+
     // Enhanced deals detection - check for explicit sales and price variations
-    const materialsWithDeals = materials.map(material => {
+    const materialsWithDeals = materials.map((material) => {
       let isOnSale = false;
       let salePrice = material.salePrice;
       let discount = 0;
@@ -53,10 +56,13 @@ export const useMaterialsDeals = (materials: any[]): DealsData => {
       else if (material.price) {
         const priceStr = material.price.toString();
         // Check for crossed-out prices or "was/now" patterns in description
-        if (material.name?.toLowerCase().includes('sale') || 
-            material.name?.toLowerCase().includes('clearance') ||
-            material.highlights?.some((h: string) => h.toLowerCase().includes('sale')) ||
-            priceStr.includes('was') || priceStr.includes('now')) {
+        if (
+          material.name?.toLowerCase().includes('sale') ||
+          material.name?.toLowerCase().includes('clearance') ||
+          material.highlights?.some((h: string) => h.toLowerCase().includes('sale')) ||
+          priceStr.includes('was') ||
+          priceStr.includes('now')
+        ) {
           // Extract sale price from name or highlights if available
           const priceMatch = material.name?.match(/£(\d+\.?\d*)/g);
           if (priceMatch && priceMatch.length > 1) {
@@ -83,16 +89,20 @@ export const useMaterialsDeals = (materials: any[]): DealsData => {
         ...material,
         isOnSale,
         salePrice,
-        discount
+        discount,
       };
     });
 
     // Filter items with actual discounts and sales
     const saleItems = materialsWithDeals
-      .filter(material => material.isOnSale && material.discount > 0)
+      .filter((material) => material.isOnSale && material.discount > 0)
       .sort((a, b) => b.discount - a.discount);
 
-    console.log('📊 Found sale items:', saleItems.length, saleItems.slice(0, 3).map(s => ({ name: s.name, discount: s.discount })));
+    console.log(
+      '📊 Found sale items:',
+      saleItems.length,
+      saleItems.slice(0, 3).map((s) => ({ name: s.name, discount: s.discount }))
+    );
 
     // Find deal of the day (highest discount)
     const dealOfTheDay = saleItems.length > 0 ? saleItems[0] : null;
@@ -100,13 +110,20 @@ export const useMaterialsDeals = (materials: any[]): DealsData => {
     // Get top 5 discounts (excluding deal of the day)
     const topDiscounts = saleItems.slice(1, 6);
 
-    console.log('🎯 Deal of the day:', dealOfTheDay ? { name: dealOfTheDay.name, discount: dealOfTheDay.discount } : 'None');
-    console.log('🏆 Top discounts:', topDiscounts.length, topDiscounts.map(d => ({ name: d.name, discount: d.discount })));
+    console.log(
+      '🎯 Deal of the day:',
+      dealOfTheDay ? { name: dealOfTheDay.name, discount: dealOfTheDay.discount } : 'None'
+    );
+    console.log(
+      '🏆 Top discounts:',
+      topDiscounts.length,
+      topDiscounts.map((d) => ({ name: d.name, discount: d.discount }))
+    );
 
     return {
       dealOfTheDay,
       topDiscounts,
-      saleItems
+      saleItems,
     };
   }, [materials]);
 };

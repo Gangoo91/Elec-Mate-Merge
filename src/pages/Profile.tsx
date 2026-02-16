@@ -112,9 +112,24 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { user, profile } = useAuth();
-  const { companyProfile, loading: companyLoading, saveCompanyProfile, uploadLogo, refetch: refetchCompany } = useCompanyProfile();
-  const { profiles: inspectorProfiles, isLoading: inspectorLoading, updateProfile: updateInspectorProfile } = useInspectorProfiles();
-  const { profile: elecIdProfile, isLoading: elecIdLoading, isActivated: hasElecId, refetch: refetchElecId } = useElecIdProfile();
+  const {
+    companyProfile,
+    loading: companyLoading,
+    saveCompanyProfile,
+    uploadLogo,
+    refetch: refetchCompany,
+  } = useCompanyProfile();
+  const {
+    profiles: inspectorProfiles,
+    isLoading: inspectorLoading,
+    updateProfile: updateInspectorProfile,
+  } = useInspectorProfiles();
+  const {
+    profile: elecIdProfile,
+    isLoading: elecIdLoading,
+    isActivated: hasElecId,
+    refetch: refetchElecId,
+  } = useElecIdProfile();
 
   // Pull-to-refresh state (mobile only)
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -124,7 +139,8 @@ const ProfilePage = () => {
   const isPulling = useRef(false);
 
   // Get the default inspector profile (or first one)
-  const defaultInspectorProfile = inspectorProfiles.find(p => p.isDefault) || inspectorProfiles[0] || null;
+  const defaultInspectorProfile =
+    inspectorProfiles.find((p) => p.isDefault) || inspectorProfiles[0] || null;
 
   const isLoading = companyLoading || inspectorLoading || elecIdLoading;
 
@@ -136,7 +152,8 @@ const ProfilePage = () => {
     if (profile?.phone || companyProfile?.company_email) completed++;
     if (companyProfile?.company_name && companyProfile?.company_address) completed++;
     if (defaultInspectorProfile?.registrationScheme || elecIdProfile?.ecs_card_type) completed++;
-    if (companyProfile?.stripe_account_id || companyProfile?.bank_details?.accountNumber) completed++;
+    if (companyProfile?.stripe_account_id || companyProfile?.bank_details?.accountNumber)
+      completed++;
     if (companyProfile?.logo_url || defaultInspectorProfile?.signatureData) completed++;
     if (hasElecId) completed++;
 
@@ -218,9 +235,15 @@ const ProfilePage = () => {
             >
               <motion.div
                 animate={{ rotate: isRefreshing ? 360 : pullDistance * 3 }}
-                transition={{ duration: isRefreshing ? 0.8 : 0, repeat: isRefreshing ? Infinity : 0, ease: 'linear' }}
+                transition={{
+                  duration: isRefreshing ? 0.8 : 0,
+                  repeat: isRefreshing ? Infinity : 0,
+                  ease: 'linear',
+                }}
               >
-                <RefreshCw className={`h-5 w-5 ${isRefreshing ? 'text-elec-yellow' : 'text-white/50'}`} />
+                <RefreshCw
+                  className={`h-5 w-5 ${isRefreshing ? 'text-elec-yellow' : 'text-white/50'}`}
+                />
               </motion.div>
             </motion.div>
           )}
@@ -253,7 +276,13 @@ const ProfilePage = () => {
           ) : (
             <>
               {/* Profile Header - Full Width */}
-              <motion.div custom={0} variants={cardVariants} initial="hidden" animate="visible" className="mb-4">
+              <motion.div
+                custom={0}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                className="mb-4"
+              >
                 <ProfileHeader
                   user={user}
                   profile={profile}
@@ -343,7 +372,12 @@ const ProfilePage = () => {
                     <AccountingConnectorsCard />
                   </motion.div>
 
-                  <motion.div custom={10} variants={cardVariants} initial="hidden" animate="visible">
+                  <motion.div
+                    custom={10}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
                     <BrandingCard
                       companyProfile={companyProfile}
                       inspectorProfile={defaultInspectorProfile}
@@ -357,10 +391,16 @@ const ProfilePage = () => {
               </div>
 
               {/* Footer - Full Width */}
-              <motion.div custom={10} variants={cardVariants} initial="hidden" animate="visible" className="mt-4">
+              <motion.div
+                custom={10}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                className="mt-4"
+              >
                 <ProfileFooter
-                  hasCompanyProfile={!!(companyProfile?.company_name)}
-                  hasInspectorProfile={!!(defaultInspectorProfile?.name)}
+                  hasCompanyProfile={!!companyProfile?.company_name}
+                  hasInspectorProfile={!!defaultInspectorProfile?.name}
                   hasElecId={hasElecId}
                 />
               </motion.div>

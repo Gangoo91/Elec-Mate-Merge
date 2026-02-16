@@ -1,7 +1,18 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { X, SlidersHorizontal, Clock, Shield, Award, Zap, Briefcase, IdCard, GraduationCap, PoundSterling } from "lucide-react";
-import type { ExperienceLevel } from "@/hooks/useTalentPool";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  X,
+  SlidersHorizontal,
+  Clock,
+  Shield,
+  Award,
+  Zap,
+  Briefcase,
+  IdCard,
+  GraduationCap,
+  PoundSterling,
+} from 'lucide-react';
+import type { ExperienceLevel } from '@/hooks/useTalentPool';
 
 interface TalentFilterChipsProps {
   availabilityFilter: 'all' | 'now' | 'week';
@@ -45,8 +56,15 @@ export function TalentFilterChips({
   totalResults,
 }: TalentFilterChipsProps) {
   const hasRateFilter = rateRange[0] > 150 || rateRange[1] < 500;
-  const hasFilters = availabilityFilter !== 'all' || tierFilter !== 'all' || selectedSpecialisms.length > 0 || labourBankOnly ||
-    experienceFilter !== 'all' || selectedEcsCards.length > 0 || selectedQualifications.length > 0 || hasRateFilter;
+  const hasFilters =
+    availabilityFilter !== 'all' ||
+    tierFilter !== 'all' ||
+    selectedSpecialisms.length > 0 ||
+    labourBankOnly ||
+    experienceFilter !== 'all' ||
+    selectedEcsCards.length > 0 ||
+    selectedQualifications.length > 0 ||
+    hasRateFilter;
 
   if (!hasFilters) return null;
 
@@ -89,7 +107,10 @@ export function TalentFilterChips({
   if (tierFilter !== 'all') {
     if (visibleChips.length < 3) {
       const TierIcon = tierFilter === 'premium' ? Award : Shield;
-      const tierColor = tierFilter === 'premium' ? 'text-amber-400 bg-amber-500/10 border-amber-500/30' : 'text-blue-400 bg-blue-500/10 border-blue-500/30';
+      const tierColor =
+        tierFilter === 'premium'
+          ? 'text-amber-400 bg-amber-500/10 border-amber-500/30'
+          : 'text-blue-400 bg-blue-500/10 border-blue-500/30';
       visibleChips.push(
         <Badge
           key="tier"
@@ -148,8 +169,12 @@ export function TalentFilterChips({
 
   // Experience chip
   if (experienceFilter !== 'all' && onRemoveExperience) {
-    const expLabel = experienceFilter === 'entry' ? 'Entry (0-2yr)' :
-                     experienceFilter === 'mid' ? 'Mid (3-7yr)' : 'Senior (8+yr)';
+    const expLabel =
+      experienceFilter === 'entry'
+        ? 'Entry (0-2yr)'
+        : experienceFilter === 'mid'
+          ? 'Mid (3-7yr)'
+          : 'Senior (8+yr)';
     if (visibleChips.length < 3) {
       visibleChips.push(
         <Badge
@@ -171,10 +196,14 @@ export function TalentFilterChips({
   // ECS Card chips
   selectedEcsCards.forEach((card) => {
     if (visibleChips.length < 3 && onRemoveEcsCard) {
-      const cardColor = card === 'Gold' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
-                        card === 'Blue' ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' :
-                        card === 'Green' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' :
-                        'bg-purple-500/10 text-purple-400 border-purple-500/30';
+      const cardColor =
+        card === 'Gold'
+          ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+          : card === 'Blue'
+            ? 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+            : card === 'Green'
+              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+              : 'bg-purple-500/10 text-purple-400 border-purple-500/30';
       visibleChips.push(
         <Badge
           key={`ecs-${card}`}
@@ -222,8 +251,8 @@ export function TalentFilterChips({
           className="h-8 px-3 gap-1.5 bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20 cursor-pointer touch-manipulation"
           onClick={onResetRateRange}
         >
-          <PoundSterling className="h-3 w-3" />
-          £{rateRange[0]}-£{rateRange[1]}{rateRange[1] >= 500 ? '+' : ''}
+          <PoundSterling className="h-3 w-3" />£{rateRange[0]}-£{rateRange[1]}
+          {rateRange[1] >= 500 ? '+' : ''}
           <X className="h-3 w-3 ml-1" />
         </Badge>
       );
@@ -243,8 +272,7 @@ export function TalentFilterChips({
           className="h-8 px-3 gap-1.5 shrink-0 touch-manipulation"
           onClick={onOpenFilters}
         >
-          <SlidersHorizontal className="h-3 w-3" />
-          +{hiddenCount} more
+          <SlidersHorizontal className="h-3 w-3" />+{hiddenCount} more
         </Button>
       )}
 

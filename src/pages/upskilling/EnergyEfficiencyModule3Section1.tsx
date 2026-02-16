@@ -27,7 +27,8 @@ import {
 const EnergyEfficiencyModule3Section1: React.FC = () => {
   useSEO({
     title: 'Walkthrough and Inventory Surveys | Energy Efficiency Module 3 Section 1 | Elec-Mate',
-    description: 'Learn professional energy audit survey techniques including systematic walkthrough methodology, equipment inventory creation, and documentation best practices compliant with BS EN 16247.',
+    description:
+      'Learn professional energy audit survey techniques including systematic walkthrough methodology, equipment inventory creation, and documentation best practices compliant with BS EN 16247.',
     keywords: [
       'energy audit',
       'walkthrough survey',
@@ -43,31 +44,31 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
   const quickCheckQuestions = [
     {
       id: 'qc1-m3s1',
-      question: 'Before conducting a walkthrough survey, what document should you review to understand the building\'s electrical infrastructure?',
+      question:
+        "Before conducting a walkthrough survey, what document should you review to understand the building's electrical infrastructure?",
       options: [
-        'The building\'s social media presence',
+        "The building's social media presence",
         'Single-line diagrams and distribution board schedules',
         'Staff holiday rosters',
         'Local council meeting minutes',
       ],
       correctIndex: 1,
-      explanation: 'Single-line diagrams and distribution board schedules provide essential information about the electrical infrastructure, circuit allocation, and load distribution. This preparation ensures you can efficiently navigate the site and identify key areas for investigation during the walkthrough.',
+      explanation:
+        'Single-line diagrams and distribution board schedules provide essential information about the electrical infrastructure, circuit allocation, and load distribution. This preparation ensures you can efficiently navigate the site and identify key areas for investigation during the walkthrough.',
     },
     {
       id: 'qc2-m3s1',
-      question: 'According to BS EN 16247, what percentage of a building\'s energy consumption should typically be accounted for in your equipment inventory?',
-      options: [
-        'At least 50%',
-        'At least 70%',
-        'At least 90%',
-        '100% always',
-      ],
+      question:
+        "According to BS EN 16247, what percentage of a building's energy consumption should typically be accounted for in your equipment inventory?",
+      options: ['At least 50%', 'At least 70%', 'At least 90%', '100% always'],
       correctIndex: 2,
-      explanation: 'BS EN 16247 recommends that the inventory should account for at least 90% of the building\'s total energy consumption. This ensures comprehensive coverage while acknowledging that capturing every minor load may not be cost-effective. The remaining 10% typically comprises miscellaneous small loads.',
+      explanation:
+        "BS EN 16247 recommends that the inventory should account for at least 90% of the building's total energy consumption. This ensures comprehensive coverage while acknowledging that capturing every minor load may not be cost-effective. The remaining 10% typically comprises miscellaneous small loads.",
     },
     {
       id: 'qc3-m3s1',
-      question: 'When documenting electrical equipment during an audit, which photograph angle provides the most useful information for future reference?',
+      question:
+        'When documenting electrical equipment during an audit, which photograph angle provides the most useful information for future reference?',
       options: [
         'Artistic wide-angle shots of the entire room',
         'Close-ups showing nameplate data and installation context',
@@ -75,7 +76,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
         'Photos taken from maximum distance',
       ],
       correctIndex: 1,
-      explanation: 'Close-up photographs capturing nameplate data (manufacturer, model, ratings, serial number) alongside the installation context provide the most valuable documentation. This combination allows for accurate equipment identification, specification verification, and understanding of how equipment is integrated into the system.',
+      explanation:
+        'Close-up photographs capturing nameplate data (manufacturer, model, ratings, serial number) alongside the installation context provide the most valuable documentation. This combination allows for accurate equipment identification, specification verification, and understanding of how equipment is integrated into the system.',
     },
   ];
 
@@ -92,16 +94,12 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
     },
     {
       question: 'Which BS EN standard specifically covers energy audit requirements?',
-      options: [
-        'BS EN 7671',
-        'BS EN 16247',
-        'BS EN 62305',
-        'BS EN 50160',
-      ],
+      options: ['BS EN 7671', 'BS EN 16247', 'BS EN 62305', 'BS EN 50160'],
       correctAnswer: 'BS EN 16247',
     },
     {
-      question: 'What tool is essential for measuring real-time electrical consumption during a survey?',
+      question:
+        'What tool is essential for measuring real-time electrical consumption during a survey?',
       options: [
         'Spirit level',
         'Clamp meter or power analyser',
@@ -131,13 +129,9 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
       correctAnswer: 'Always, capturing labelling, condition, and thermal patterns if using IR',
     },
     {
-      question: 'What percentage of lighting energy can typically be saved by upgrading from T8 fluorescent to LED?',
-      options: [
-        '10-20%',
-        '20-30%',
-        '40-60%',
-        '90-100%',
-      ],
+      question:
+        'What percentage of lighting energy can typically be saved by upgrading from T8 fluorescent to LED?',
+      options: ['10-20%', '20-30%', '40-60%', '90-100%'],
       correctAnswer: '40-60%',
     },
     {
@@ -148,7 +142,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
         'Just the equipment colour and size',
         'Only equipment that is currently running',
       ],
-      correctAnswer: 'Location, nameplate data, operating hours, condition, and estimated consumption',
+      correctAnswer:
+        'Location, nameplate data, operating hours, condition, and estimated consumption',
     },
     {
       question: 'Why is it important to conduct surveys during normal occupied hours?',
@@ -171,7 +166,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
       correctAnswer: 'Site-specific risk assessment and method statement (RAMS)',
     },
     {
-      question: 'Which area is commonly overlooked during energy audits but often contains significant saving opportunities?',
+      question:
+        'Which area is commonly overlooked during energy audits but often contains significant saving opportunities?',
       options: [
         'The main reception area',
         'Plant rooms, risers, and roof-mounted equipment',
@@ -185,27 +181,33 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
   const faqs = [
     {
       question: 'How long should a typical walkthrough survey take for a commercial building?',
-      answer: 'The duration depends on building size and complexity. As a guide: small offices (under 500m²) typically require 2-4 hours; medium commercial buildings (500-5000m²) need 1-2 days; large industrial sites may require 3-5 days or more. Always allow extra time for unexpected findings, staff interviews, and detailed documentation. It\'s better to schedule adequate time than to rush and miss important details.',
+      answer:
+        "The duration depends on building size and complexity. As a guide: small offices (under 500m²) typically require 2-4 hours; medium commercial buildings (500-5000m²) need 1-2 days; large industrial sites may require 3-5 days or more. Always allow extra time for unexpected findings, staff interviews, and detailed documentation. It's better to schedule adequate time than to rush and miss important details.",
     },
     {
       question: 'What equipment should I bring to a walkthrough survey?',
-      answer: 'Essential equipment includes: clamp meter/power analyser, thermal imaging camera (if qualified), digital camera/smartphone, torch, PPE (hard hat, safety boots, hi-vis, safety glasses), clipboard and survey forms, tablet or laptop for digital recording, measuring tape, non-contact voltage tester, and access tools (screwdrivers for panel covers with permission). Also bring business cards, site contact details, and any pre-survey documentation you\'ve gathered.',
+      answer:
+        "Essential equipment includes: clamp meter/power analyser, thermal imaging camera (if qualified), digital camera/smartphone, torch, PPE (hard hat, safety boots, hi-vis, safety glasses), clipboard and survey forms, tablet or laptop for digital recording, measuring tape, non-contact voltage tester, and access tools (screwdrivers for panel covers with permission). Also bring business cards, site contact details, and any pre-survey documentation you've gathered.",
     },
     {
       question: 'How do I handle areas I cannot access during the survey?',
-      answer: 'Document all inaccessible areas clearly in your report, noting the reason (locked, safety concerns, tenant restrictions, etc.). Request access arrangements for a follow-up visit if these areas are significant energy users. Make reasonable estimates based on similar accessible areas and clearly state assumptions. For BS EN 16247 compliance, you must identify what proportion of consumption these areas represent and acknowledge any limitations in your findings.',
+      answer:
+        'Document all inaccessible areas clearly in your report, noting the reason (locked, safety concerns, tenant restrictions, etc.). Request access arrangements for a follow-up visit if these areas are significant energy users. Make reasonable estimates based on similar accessible areas and clearly state assumptions. For BS EN 16247 compliance, you must identify what proportion of consumption these areas represent and acknowledge any limitations in your findings.',
     },
     {
       question: 'Should I conduct surveys during occupied or unoccupied periods?',
-      answer: 'Ideally, conduct surveys during both periods. Occupied periods reveal typical operational patterns, occupancy-driven loads, and user behaviours. Unoccupied periods expose baseload consumption, equipment left running unnecessarily, and after-hours waste. A comprehensive audit should include observations from normal working hours, early morning/late evening, and if possible, weekend periods to understand the full consumption profile.',
+      answer:
+        'Ideally, conduct surveys during both periods. Occupied periods reveal typical operational patterns, occupancy-driven loads, and user behaviours. Unoccupied periods expose baseload consumption, equipment left running unnecessarily, and after-hours waste. A comprehensive audit should include observations from normal working hours, early morning/late evening, and if possible, weekend periods to understand the full consumption profile.',
     },
     {
       question: 'What are the most common quick wins found during walkthrough surveys?',
-      answer: 'Common quick wins include: lighting upgrades to LED (especially T8/T12 fluorescent replacements), installing occupancy sensors in intermittently used spaces, adjusting HVAC setpoints and schedules, eliminating equipment left on unnecessarily (monitors, printers, vending machines), repairing compressed air leaks, improving power factor (if penalties apply), and implementing basic controls like timers and photocells. These typically offer paybacks under 2 years.',
+      answer:
+        'Common quick wins include: lighting upgrades to LED (especially T8/T12 fluorescent replacements), installing occupancy sensors in intermittently used spaces, adjusting HVAC setpoints and schedules, eliminating equipment left on unnecessarily (monitors, printers, vending machines), repairing compressed air leaks, improving power factor (if penalties apply), and implementing basic controls like timers and photocells. These typically offer paybacks under 2 years.',
     },
     {
       question: 'How detailed should my equipment inventory be?',
-      answer: 'The inventory should capture all significant energy-using equipment (typically covering 90%+ of consumption). For each item record: unique identifier/location code, equipment type and description, manufacturer and model, rated power/capacity, estimated operating hours, observed condition, control method, approximate age, and any relevant notes. Use consistent naming conventions and consider using asset management software for larger sites. The level of detail should match the audit scope and client requirements.',
+      answer:
+        'The inventory should capture all significant energy-using equipment (typically covering 90%+ of consumption). For each item record: unique identifier/location code, equipment type and description, manufacturer and model, rated power/capacity, estimated operating hours, observed condition, control method, approximate age, and any relevant notes. Use consistent naming conventions and consider using asset management software for larger sites. The level of detail should match the audit scope and client requirements.',
     },
   ];
 
@@ -214,7 +216,12 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-3">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -265,8 +272,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
             <div>
               <h2 className="text-xl font-semibold mb-2 text-white">Learning Objectives</h2>
               <p className="text-white/80 mb-4">
-                The walkthrough survey is the foundation of any energy audit. This section equips you
-                with systematic methodologies for conducting professional site surveys, creating
+                The walkthrough survey is the foundation of any energy audit. This section equips
+                you with systematic methodologies for conducting professional site surveys, creating
                 comprehensive equipment inventories, and identifying energy-saving opportunities
                 that deliver real value to clients.
               </p>
@@ -301,10 +308,10 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Thorough preparation is essential for an efficient and effective energy audit. Arriving
-              on site without proper planning wastes time, frustrates clients, and undermines your
-              professional credibility. BS EN 16247 emphasises the importance of the preliminary
-              contact phase before any site work begins.
+              Thorough preparation is essential for an efficient and effective energy audit.
+              Arriving on site without proper planning wastes time, frustrates clients, and
+              undermines your professional credibility. BS EN 16247 emphasises the importance of the
+              preliminary contact phase before any site work begins.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -347,8 +354,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
               </h3>
               <p className="text-white">
                 Identify key personnel before your visit. Arrange meetings with facilities managers,
-                maintenance staff, and building users who understand daily operations. Their insights
-                often reveal issues that technical data alone cannot show.
+                maintenance staff, and building users who understand daily operations. Their
+                insights often reveal issues that technical data alone cannot show.
               </p>
             </div>
 
@@ -358,10 +365,10 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                 Pro Tip: Pre-Survey Checklist
               </h4>
               <p className="text-white text-sm">
-                Create a standardised pre-survey checklist covering access arrangements, PPE requirements,
-                contact details, site induction needs, permit requirements, and any known hazards.
-                Send this to the client at least one week before your visit to ensure everything is
-                ready when you arrive.
+                Create a standardised pre-survey checklist covering access arrangements, PPE
+                requirements, contact details, site induction needs, permit requirements, and any
+                known hazards. Send this to the client at least one week before your visit to ensure
+                everything is ready when you arrive.
               </p>
             </div>
           </div>
@@ -392,7 +399,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                   <p className="text-sm text-white">
                     Start with a brief building tour with your site contact. Understand the overall
                     layout, identify main plant rooms, electrical intake positions, and significant
-                    energy-using areas. Note the building's orientation for daylighting considerations.
+                    energy-using areas. Note the building's orientation for daylighting
+                    considerations.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
@@ -416,7 +424,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                   <p className="text-sm text-white">
                     Don't forget risers, ceiling voids, roof areas, basements, and external plant.
                     These often contain equipment running 24/7 that building users never see.
-                    Request access to all areas - savings opportunities often hide in overlooked spaces.
+                    Request access to all areas - savings opportunities often hide in overlooked
+                    spaces.
                   </p>
                 </div>
               </div>
@@ -481,8 +490,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              The equipment inventory forms the quantitative foundation of your energy audit.
-              A comprehensive inventory enables accurate consumption calculations, identifies
+              The equipment inventory forms the quantitative foundation of your energy audit. A
+              comprehensive inventory enables accurate consumption calculations, identifies
               replacement opportunities, and supports investment-grade recommendations.
             </p>
 
@@ -492,9 +501,12 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                 BS EN 16247 Inventory Requirements
               </h3>
               <p className="text-white mb-3">
-                The standard requires inventories to account for at least <span className="text-elec-yellow font-semibold">90%
-                of total energy consumption</span>. This means prioritising significant loads while
-                acknowledging that capturing every small appliance may not be practical.
+                The standard requires inventories to account for at least{' '}
+                <span className="text-elec-yellow font-semibold">
+                  90% of total energy consumption
+                </span>
+                . This means prioritising significant loads while acknowledging that capturing every
+                small appliance may not be practical.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -531,36 +543,38 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                 <div className="border-l-4 border-yellow-500 pl-4 bg-white/5 rounded-r-lg p-3">
                   <h4 className="font-semibold text-white">Lighting Systems</h4>
                   <p className="text-white text-sm">
-                    Record lamp types (LED, fluorescent, HID), fitting counts, wattages, control types
-                    (manual, PIR, daylight, DALI), and operating hours. Note emergency lighting separately.
+                    Record lamp types (LED, fluorescent, HID), fitting counts, wattages, control
+                    types (manual, PIR, daylight, DALI), and operating hours. Note emergency
+                    lighting separately.
                   </p>
                 </div>
                 <div className="border-l-4 border-blue-500 pl-4 bg-white/5 rounded-r-lg p-3">
                   <h4 className="font-semibold text-white">HVAC Equipment</h4>
                   <p className="text-white text-sm">
-                    Chillers, boilers, AHUs, FCUs, split systems, VRF/VRV units. Record capacities (kW thermal),
-                    efficiency ratings (COP, SEER), refrigerant types, and BMS integration status.
+                    Chillers, boilers, AHUs, FCUs, split systems, VRF/VRV units. Record capacities
+                    (kW thermal), efficiency ratings (COP, SEER), refrigerant types, and BMS
+                    integration status.
                   </p>
                 </div>
                 <div className="border-l-4 border-green-500 pl-4 bg-white/5 rounded-r-lg p-3">
                   <h4 className="font-semibold text-white">Motors and Drives</h4>
                   <p className="text-white text-sm">
-                    Pumps, fans, compressors, conveyors. Record motor ratings, efficiency class (IE1-IE5),
-                    drive type (DOL, soft starter, VSD), and typical load percentage.
+                    Pumps, fans, compressors, conveyors. Record motor ratings, efficiency class
+                    (IE1-IE5), drive type (DOL, soft starter, VSD), and typical load percentage.
                   </p>
                 </div>
                 <div className="border-l-4 border-purple-500 pl-4 bg-white/5 rounded-r-lg p-3">
                   <h4 className="font-semibold text-white">IT and Office Equipment</h4>
                   <p className="text-white text-sm">
-                    Servers, network equipment, workstations, printers, displays. Note Energy Star ratings,
-                    power management settings, and 24/7 vs business hours operation.
+                    Servers, network equipment, workstations, printers, displays. Note Energy Star
+                    ratings, power management settings, and 24/7 vs business hours operation.
                   </p>
                 </div>
                 <div className="border-l-4 border-orange-500 pl-4 bg-white/5 rounded-r-lg p-3">
                   <h4 className="font-semibold text-white">Process Equipment</h4>
                   <p className="text-white text-sm">
-                    Production machinery, ovens, furnaces, compressed air systems. Record nameplate data,
-                    production schedules, and any metered consumption data available.
+                    Production machinery, ovens, furnaces, compressed air systems. Record nameplate
+                    data, production schedules, and any metered consumption data available.
                   </p>
                 </div>
               </div>
@@ -573,9 +587,9 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
               </h4>
               <p className="text-white text-sm">
                 Consider using tablet-based survey apps or spreadsheet templates that auto-calculate
-                estimated consumption. Features like barcode scanning for equipment identification and
-                GPS/zone tagging improve accuracy and efficiency. Export capabilities should support
-                your reporting software.
+                estimated consumption. Features like barcode scanning for equipment identification
+                and GPS/zone tagging improve accuracy and efficiency. Export capabilities should
+                support your reporting software.
               </p>
             </div>
           </div>
@@ -599,9 +613,9 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Quick wins are low-cost, fast-payback measures that can often be implemented immediately
-              or with minimal investment. Identifying these during your walkthrough adds immediate
-              value to clients and builds confidence in your recommendations.
+              Quick wins are low-cost, fast-payback measures that can often be implemented
+              immediately or with minimal investment. Identifying these during your walkthrough adds
+              immediate value to clients and builds confidence in your recommendations.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -724,8 +738,8 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
           <div className="space-y-4 text-white">
             <p>
               Professional documentation distinguishes quality audits from superficial assessments.
-              Your photographs and notes must support accurate reporting, client presentations,
-              and potentially, funding applications that require evidence of baseline conditions.
+              Your photographs and notes must support accurate reporting, client presentations, and
+              potentially, funding applications that require evidence of baseline conditions.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -849,10 +863,20 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                 Critical Safety Requirements
               </h4>
               <ul className="space-y-2 text-white text-sm">
-                <li>• <strong>Never work alone</strong> in hazardous areas (plant rooms, roof access, confined spaces)</li>
-                <li>• <strong>Never bypass safety systems</strong> or remove guards without proper isolation</li>
-                <li>• <strong>Always assume equipment is live</strong> until proven otherwise</li>
-                <li>• <strong>Stop immediately</strong> if you encounter unexpected hazards</li>
+                <li>
+                  • <strong>Never work alone</strong> in hazardous areas (plant rooms, roof access,
+                  confined spaces)
+                </li>
+                <li>
+                  • <strong>Never bypass safety systems</strong> or remove guards without proper
+                  isolation
+                </li>
+                <li>
+                  • <strong>Always assume equipment is live</strong> until proven otherwise
+                </li>
+                <li>
+                  • <strong>Stop immediately</strong> if you encounter unexpected hazards
+                </li>
               </ul>
             </div>
 
@@ -895,9 +919,9 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                   <div>
                     <h4 className="font-semibold text-white">Electrical</h4>
                     <p className="text-white text-sm">
-                      Live equipment, exposed conductors, arc flash risk. Use appropriate test equipment,
-                      maintain safe distances, and never open live panels without proper authorisation
-                      and PPE.
+                      Live equipment, exposed conductors, arc flash risk. Use appropriate test
+                      equipment, maintain safe distances, and never open live panels without proper
+                      authorisation and PPE.
                     </p>
                   </div>
                 </div>
@@ -1021,11 +1045,21 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
 
               <h3 className="font-semibold text-elec-yellow mb-3 mt-4">BS EN 16247 Parts</h3>
               <div className="text-sm text-white bg-white/10 rounded p-3">
-                <p><strong>Part 1:</strong> General requirements</p>
-                <p><strong>Part 2:</strong> Buildings</p>
-                <p><strong>Part 3:</strong> Processes</p>
-                <p><strong>Part 4:</strong> Transport</p>
-                <p><strong>Part 5:</strong> Competence of auditors</p>
+                <p>
+                  <strong>Part 1:</strong> General requirements
+                </p>
+                <p>
+                  <strong>Part 2:</strong> Buildings
+                </p>
+                <p>
+                  <strong>Part 3:</strong> Processes
+                </p>
+                <p>
+                  <strong>Part 4:</strong> Transport
+                </p>
+                <p>
+                  <strong>Part 5:</strong> Competence of auditors
+                </p>
               </div>
             </div>
           </div>
@@ -1036,10 +1070,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
           <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-2">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border border-white/10 rounded-lg overflow-hidden"
-              >
+              <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
                   <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
@@ -1068,7 +1099,10 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
             variant="outline"
             className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
           >
-            <Link to="/electrician/upskilling/energy-efficiency-module-3" className="flex items-center gap-2">
+            <Link
+              to="/electrician/upskilling/energy-efficiency-module-3"
+              className="flex items-center gap-2"
+            >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Module 3</span>
             </Link>

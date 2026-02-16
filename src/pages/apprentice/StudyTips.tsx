@@ -1,95 +1,97 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Clock, Target, Brain } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { BookOpen, Clock, Target, Brain } from 'lucide-react';
 
 const StudyTips = () => {
   const studyStrategies = [
     {
-      category: "18th Edition Exam",
+      category: '18th Edition Exam',
       tips: [
         "Focus on Part 4 (Protection for Safety) - it's heavily tested",
-        "Practice cable calculation questions daily",
-        "Use the On-Site Guide alongside BS 7671",
-        "Time yourself on practice papers - speed matters",
-        "Learn the appendix tables by heart"
-      ]
+        'Practice cable calculation questions daily',
+        'Use the On-Site Guide alongside BS 7671',
+        'Time yourself on practice papers - speed matters',
+        'Learn the appendix tables by heart',
+      ],
     },
     {
-      category: "Level 3 Theory",
+      category: 'Level 3 Theory',
       tips: [
         "Understand concepts, don't just memorise formulas",
-        "Draw circuit diagrams to visualise problems",
-        "Practice three-phase calculations regularly",
+        'Draw circuit diagrams to visualise problems',
+        'Practice three-phase calculations regularly',
         "Connect theory to practical work you've done",
-        "Form study groups with other apprentices"
-      ]
+        'Form study groups with other apprentices',
+      ],
     },
     {
-      category: "Practical Assessments",
+      category: 'Practical Assessments',
       tips: [
         "Practice the same task repeatedly until it's automatic",
-        "Time yourself doing installations",
-        "Get familiar with different cable types",
-        "Practice fault-finding on mock circuits",
-        "Keep your tools sharp and organised"
-      ]
-    }
+        'Time yourself doing installations',
+        'Get familiar with different cable types',
+        'Practice fault-finding on mock circuits',
+        'Keep your tools sharp and organised',
+      ],
+    },
   ];
 
   const freeResources = [
     {
-      resource: "IET Wiring Matters Magazine",
-      description: "Free technical articles and regulation updates",
-      access: "Available online at theiet.org"
+      resource: 'IET Wiring Matters Magazine',
+      description: 'Free technical articles and regulation updates',
+      access: 'Available online at theiet.org',
     },
     {
-      resource: "City & Guilds SmartScreen",
-      description: "Practice questions and mock exams",
-      access: "Through your training provider"
+      resource: 'City & Guilds SmartScreen',
+      description: 'Practice questions and mock exams',
+      access: 'Through your training provider',
     },
     {
-      resource: "YouTube Channels",
-      description: "Joe Robinson, Electrical2go, and ElectricalBible",
-      access: "Free video tutorials and explanations"
+      resource: 'YouTube Channels',
+      description: 'Joe Robinson, Electrical2go, and ElectricalBible',
+      access: 'Free video tutorials and explanations',
     },
     {
-      resource: "NICEIC Technical Helpline",
-      description: "Free advice on technical questions",
-      access: "0333 015 6626 for registered electricians"
-    }
+      resource: 'NICEIC Technical Helpline',
+      description: 'Free advice on technical questions',
+      access: '0333 015 6626 for registered electricians',
+    },
   ];
 
   const revisionTechniques = [
     {
-      technique: "Active Recall",
-      description: "Test yourself without looking at notes",
-      example: "Cover formulas and try to write them from memory"
+      technique: 'Active Recall',
+      description: 'Test yourself without looking at notes',
+      example: 'Cover formulas and try to write them from memory',
     },
     {
-      technique: "Spaced Repetition", 
-      description: "Review material at increasing intervals",
-      example: "Study today, review in 3 days, then 1 week, then 2 weeks"
+      technique: 'Spaced Repetition',
+      description: 'Review material at increasing intervals',
+      example: 'Study today, review in 3 days, then 1 week, then 2 weeks',
     },
     {
-      technique: "Practice Testing",
-      description: "Take mock exams in real conditions",
-      example: "Time yourself, use only allowed references, no phone"
+      technique: 'Practice Testing',
+      description: 'Take mock exams in real conditions',
+      example: 'Time yourself, use only allowed references, no phone',
     },
     {
-      technique: "Teaching Others",
-      description: "Explain concepts to fellow apprentices",
-      example: "Run through cable calculations with your study group"
-    }
+      technique: 'Teaching Others',
+      description: 'Explain concepts to fellow apprentices',
+      example: 'Run through cable calculations with your study group',
+    },
   ];
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4 text-center">Study Tips for Electrical Apprentices</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4 text-center">
+          Study Tips for Electrical Apprentices
+        </h1>
         <p className="text-sm sm:text-base text-white text-center max-w-2xl mb-3 sm:mb-4">
-          Proven revision strategies for 18th Edition and Level 3 exams, plus free resources to help you succeed
+          Proven revision strategies for 18th Edition and Level 3 exams, plus free resources to help
+          you succeed
         </p>
         <SmartBackButton />
       </div>
@@ -208,10 +210,9 @@ const StudyTips = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Remember: consistent daily study beats cramming every time. 30 minutes every day 
-            for 3 months is better than 8-hour sessions the week before your exam. 
-            The electrical trade rewards methodical, steady progress - apply that same 
-            approach to your studies.
+            Remember: consistent daily study beats cramming every time. 30 minutes every day for 3
+            months is better than 8-hour sessions the week before your exam. The electrical trade
+            rewards methodical, steady progress - apply that same approach to your studies.
           </p>
         </CardContent>
       </Card>

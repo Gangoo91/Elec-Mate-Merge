@@ -1,7 +1,6 @@
-
-import { Link, LinkProps } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { ReactNode } from "react";
+import { Link, LinkProps } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { ReactNode } from 'react';
 
 interface SafeLinkProps extends Omit<LinkProps, 'to'> {
   to: string;

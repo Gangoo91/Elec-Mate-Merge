@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection2_6 = () => {
   const outcomes = [
-    "Describe the required test schedules for emergency lighting systems",
-    "Carry out functional and duration tests in line with BS 5266",
-    "Recognise the importance of fault reporting and remedial action",
-    "Maintain an accurate and compliant emergency lighting logbook",
-    "Support building managers in meeting legal and insurance obligations"
+    'Describe the required test schedules for emergency lighting systems',
+    'Carry out functional and duration tests in line with BS 5266',
+    'Recognise the importance of fault reporting and remedial action',
+    'Maintain an accurate and compliant emergency lighting logbook',
+    'Support building managers in meeting legal and insurance obligations',
   ];
 
   return (
@@ -20,7 +20,7 @@ export const EmergencyLightingLearningOutcomesSection2_6 = () => {
       </CardHeader>
       <CardContent className="text-foreground">
         <p className="mb-4">By completing this section, you will be able to:</p>
-        
+
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3">

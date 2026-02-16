@@ -9,7 +9,7 @@ export const wiringTypeOptions = [
   { value: 'F', label: 'F - Embedded direct in masonry' },
   { value: 'G', label: 'G - Enclosed in conduit in a timber-framed wall' },
   { value: 'H', label: 'H - Suspended from or incorporating a support wire' },
-  { value: 'O', label: 'O - Other (specify in remarks)' }
+  { value: 'O', label: 'O - Other (specify in remarks)' },
 ];
 
 export const rcdTypeOptions = [

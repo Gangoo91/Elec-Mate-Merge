@@ -35,7 +35,10 @@ export function AutoBreadcrumb({ className, showHome = true }: AutoBreadcrumbPro
           <>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/dashboard" className="flex items-center gap-1 hover:text-elec-yellow transition-colors">
+                <Link
+                  to="/dashboard"
+                  className="flex items-center gap-1 hover:text-elec-yellow transition-colors"
+                >
                   <Home className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only">Home</span>
                 </Link>
@@ -55,10 +58,7 @@ export function AutoBreadcrumb({ className, showHome = true }: AutoBreadcrumbPro
               </BreadcrumbPage>
             ) : (
               <BreadcrumbLink asChild>
-                <Link
-                  to={crumb.href}
-                  className="hover:text-elec-yellow transition-colors"
-                >
+                <Link to={crumb.href} className="hover:text-elec-yellow transition-colors">
                   {crumb.label}
                 </Link>
               </BreadcrumbLink>

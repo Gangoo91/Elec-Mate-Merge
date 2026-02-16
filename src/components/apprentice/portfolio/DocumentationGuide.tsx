@@ -1,64 +1,63 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Camera, FileText, Video, Mic, Shield, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Camera, FileText, Video, Mic, Shield, CheckCircle } from 'lucide-react';
 
 const DocumentationGuide = () => {
   const photographyTips = [
     {
-      tip: "Use good lighting",
-      description: "Natural light or LED work lights provide the best illumination for your work"
+      tip: 'Use good lighting',
+      description: 'Natural light or LED work lights provide the best illumination for your work',
     },
     {
-      tip: "Show before and after",
-      description: "Document the initial state, work in progress, and final result"
+      tip: 'Show before and after',
+      description: 'Document the initial state, work in progress, and final result',
     },
     {
-      tip: "Include context",
-      description: "Show the work area, tools used, and safety measures in place"
+      tip: 'Include context',
+      description: 'Show the work area, tools used, and safety measures in place',
     },
     {
-      tip: "Capture details",
-      description: "Close-up shots of connections, labels, and quality workmanship"
-    }
+      tip: 'Capture details',
+      description: 'Close-up shots of connections, labels, and quality workmanship',
+    },
   ];
 
   const writtenEvidenceTips = [
     {
-      tip: "Start with context",
-      description: "Explain the project, your role, and the learning objectives"
+      tip: 'Start with context',
+      description: 'Explain the project, your role, and the learning objectives',
     },
     {
-      tip: "Detail the process",
-      description: "Step-by-step account of what you did and why"
+      tip: 'Detail the process',
+      description: 'Step-by-step account of what you did and why',
     },
     {
-      tip: "Reflect on learning",
-      description: "What did you learn? What would you do differently?"
+      tip: 'Reflect on learning',
+      description: 'What did you learn? What would you do differently?',
     },
     {
-      tip: "Link to standards",
-      description: "Reference relevant regulations, standards, and best practices"
-    }
+      tip: 'Link to standards',
+      description: 'Reference relevant regulations, standards, and best practices',
+    },
   ];
 
   const videoTips = [
     {
-      tip: "Plan your content",
-      description: "Outline what you want to show before recording"
+      tip: 'Plan your content',
+      description: 'Outline what you want to show before recording',
     },
     {
-      tip: "Explain as you go",
-      description: "Narrate your actions and thought process"
+      tip: 'Explain as you go',
+      description: 'Narrate your actions and thought process',
     },
     {
-      tip: "Keep it focused",
-      description: "Short, focused videos are more effective than long ones"
+      tip: 'Keep it focused',
+      description: 'Short, focused videos are more effective than long ones',
     },
     {
-      tip: "Ensure quality",
-      description: "Good audio is more important than perfect video quality"
-    }
+      tip: 'Ensure quality',
+      description: 'Good audio is more important than perfect video quality',
+    },
   ];
 
   return (
@@ -72,19 +71,31 @@ const DocumentationGuide = () => {
       <CardContent>
         <Tabs defaultValue="photography">
           <TabsList className="grid w-full grid-cols-4 h-auto">
-            <TabsTrigger value="photography" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
+            <TabsTrigger
+              value="photography"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm"
+            >
               <Camera className="h-4 w-4" />
               <span>Photos</span>
             </TabsTrigger>
-            <TabsTrigger value="written" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
+            <TabsTrigger
+              value="written"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm"
+            >
               <FileText className="h-4 w-4" />
               <span>Written</span>
             </TabsTrigger>
-            <TabsTrigger value="video" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
+            <TabsTrigger
+              value="video"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm"
+            >
               <Video className="h-4 w-4" />
               <span>Video</span>
             </TabsTrigger>
-            <TabsTrigger value="audio" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
+            <TabsTrigger
+              value="audio"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm"
+            >
               <Mic className="h-4 w-4" />
               <span>Audio</span>
             </TabsTrigger>
@@ -156,7 +167,7 @@ const DocumentationGuide = () => {
                   <div>
                     <h5 className="font-medium text-white">Important Safety Note</h5>
                     <p className="text-sm text-white mt-1">
-                      Never record audio whilst working on live electrical systems. Only record 
+                      Never record audio whilst working on live electrical systems. Only record
                       reflections during safe periods or after work completion.
                     </p>
                   </div>

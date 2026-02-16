@@ -38,27 +38,15 @@ interface UseSpeechToTextReturn {
   resetTranscript: () => void;
 }
 
-type SpeechRecognitionType = typeof window extends { SpeechRecognition: infer T }
-  ? T
-  : any;
+type SpeechRecognitionType = typeof window extends { SpeechRecognition: infer T } ? T : any;
 
 function getSpeechRecognition(): SpeechRecognitionType | null {
   if (typeof window === 'undefined') return null;
-  return (
-    (window as any).SpeechRecognition ||
-    (window as any).webkitSpeechRecognition ||
-    null
-  );
+  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || null;
 }
 
-export function useSpeechToText(
-  options: UseSpeechToTextOptions = {}
-): UseSpeechToTextReturn {
-  const {
-    continuous = true,
-    interimResults = true,
-    lang = 'en-GB',
-  } = options;
+export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeechToTextReturn {
+  const { continuous = true, interimResults = true, lang = 'en-GB' } = options;
 
   const SpeechRecognition = getSpeechRecognition();
   const isSupported = SpeechRecognition !== null;

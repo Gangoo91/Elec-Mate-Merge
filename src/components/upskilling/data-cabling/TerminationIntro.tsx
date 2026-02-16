@@ -12,10 +12,14 @@ export const TerminationIntro = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Professional copper cable termination is the foundation of reliable network infrastructure. The quality of your terminations directly impacts network performance, signal integrity, and long-term reliability.
+          Professional copper cable termination is the foundation of reliable network
+          infrastructure. The quality of your terminations directly impacts network performance,
+          signal integrity, and long-term reliability.
         </p>
         <p>
-          This section covers the essential tools, techniques, and quality control measures that distinguish professional installations from amateur work—understanding these fundamentals is crucial for any data cabling technician.
+          This section covers the essential tools, techniques, and quality control measures that
+          distinguish professional installations from amateur work—understanding these fundamentals
+          is crucial for any data cabling technician.
         </p>
       </CardContent>
     </Card>

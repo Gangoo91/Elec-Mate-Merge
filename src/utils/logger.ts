@@ -4,7 +4,7 @@ enum LogLevel {
   DEBUG = 0,
   INFO = 1,
   WARN = 2,
-  ERROR = 3
+  ERROR = 3,
 }
 
 // Set the current log level - can be controlled by environment variable
@@ -98,7 +98,7 @@ export const logger = {
           endpoint,
           requestId,
           originalError: error,
-          ...context
+          ...context,
         });
       }
     },
@@ -113,5 +113,5 @@ export const logger = {
       return () => console.timeEnd(`[PERF] ${label}`);
     }
     return () => {};
-  }
+  },
 };

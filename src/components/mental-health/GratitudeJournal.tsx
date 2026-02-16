@@ -1,9 +1,8 @@
-
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { ArrowLeft, Sparkles, Plus, Check, Calendar, Heart } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { ArrowLeft, Sparkles, Plus, Check, Calendar, Heart } from 'lucide-react';
 
 interface GratitudeEntry {
   date: string;
@@ -21,9 +20,9 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
   const [todayEntry, setTodayEntry] = useState<GratitudeEntry | null>(null);
 
   const prompts = [
-    "Something that made you smile today...",
+    'Something that made you smile today...',
     "A person you're thankful for...",
-    "A small win or achievement..."
+    'A small win or achievement...',
   ];
 
   useEffect(() => {
@@ -50,16 +49,16 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
   };
 
   const handleSave = () => {
-    const filledItems = currentItems.filter(item => item.trim() !== '');
+    const filledItems = currentItems.filter((item) => item.trim() !== '');
     if (filledItems.length === 0) return;
 
     const today = new Date().toISOString().split('T')[0];
     const newEntry: GratitudeEntry = {
       date: today,
-      items: filledItems
+      items: filledItems,
     };
 
-    const updatedEntries = [newEntry, ...entries.filter(e => e.date !== today)].slice(0, 30);
+    const updatedEntries = [newEntry, ...entries.filter((e) => e.date !== today)].slice(0, 30);
     setEntries(updatedEntries);
     localStorage.setItem('elec-mate-gratitude', JSON.stringify(updatedEntries));
 
@@ -85,7 +84,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
     return streak;
   };
 
-  const filledCount = currentItems.filter(item => item.trim() !== '').length;
+  const filledCount = currentItems.filter((item) => item.trim() !== '').length;
 
   return (
     <div className="min-h-[70vh] flex flex-col">
@@ -107,7 +106,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
               </div>
               <h2 className="text-2xl font-bold text-foreground mb-2">Gratitude Journal</h2>
               <p className="text-white text-sm">
-                {todayEntry ? "Edit your gratitude list" : "What are you grateful for today?"}
+                {todayEntry ? 'Edit your gratitude list' : 'What are you grateful for today?'}
               </p>
             </div>
 
@@ -115,9 +114,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
             <div className="space-y-4">
               {currentItems.map((item, index) => (
                 <div key={index} className="space-y-1">
-                  <label className="text-xs text-white">
-                    {prompts[index]}
-                  </label>
+                  <label className="text-xs text-white">{prompts[index]}</label>
                   <div className="relative">
                     <Input
                       value={item}
@@ -125,8 +122,10 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
                       placeholder={`Gratitude ${index + 1}`}
                       className="pl-10 h-12"
                     />
-                    <div className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold
-                      ${item.trim() ? 'bg-amber-500 text-foreground' : 'bg-white/10 text-foreground/40'}`}>
+                    <div
+                      className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold
+                      ${item.trim() ? 'bg-amber-500 text-foreground' : 'bg-white/10 text-foreground/40'}`}
+                    >
                       {item.trim() ? <Check className="h-3 w-3" /> : index + 1}
                     </div>
                   </div>
@@ -186,9 +185,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
 
             <div className="text-center">
               <h2 className="text-2xl font-bold text-foreground mb-2">Gratitude Saved!</h2>
-              <p className="text-white">
-                Practicing gratitude rewires your brain for positivity.
-              </p>
+              <p className="text-white">Practicing gratitude rewires your brain for positivity.</p>
             </div>
 
             {/* Stats */}

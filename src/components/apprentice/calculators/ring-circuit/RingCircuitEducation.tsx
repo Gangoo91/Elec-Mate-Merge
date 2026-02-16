@@ -1,8 +1,12 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, AlertTriangle, CheckCircle, Zap, Shield, Calculator } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { BookOpen, AlertTriangle, CheckCircle, Zap, Shield, Calculator } from 'lucide-react';
 
 const RingCircuitEducation = () => {
   return (
@@ -16,22 +20,37 @@ const RingCircuitEducation = () => {
       <CardContent>
         <Tabs defaultValue="theory" className="w-full">
           <TabsList className="grid w-full grid-cols-4 lg:grid-cols-6 bg-white/10">
-            <TabsTrigger value="theory" className="text-xs">Theory</TabsTrigger>
-            <TabsTrigger value="procedure" className="text-xs">Procedure</TabsTrigger>
-            <TabsTrigger value="results" className="text-xs">Results</TabsTrigger>
-            <TabsTrigger value="issues" className="text-xs">Issues</TabsTrigger>
-            <TabsTrigger value="regulations" className="text-xs lg:block hidden">Regulations</TabsTrigger>
-            <TabsTrigger value="practice" className="text-xs lg:block hidden">Practice</TabsTrigger>
+            <TabsTrigger value="theory" className="text-xs">
+              Theory
+            </TabsTrigger>
+            <TabsTrigger value="procedure" className="text-xs">
+              Procedure
+            </TabsTrigger>
+            <TabsTrigger value="results" className="text-xs">
+              Results
+            </TabsTrigger>
+            <TabsTrigger value="issues" className="text-xs">
+              Issues
+            </TabsTrigger>
+            <TabsTrigger value="regulations" className="text-xs lg:block hidden">
+              Regulations
+            </TabsTrigger>
+            <TabsTrigger value="practice" className="text-xs lg:block hidden">
+              Practice
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="theory" className="mt-4">
             <div className="space-y-4">
               <div className="bg-white/10 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">What is a Ring Final Circuit?</h3>
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  What is a Ring Final Circuit?
+                </h3>
                 <p className="text-elec-light/80 mb-3">
-                  A ring final circuit is a wiring configuration where the live and neutral conductors form a continuous loop, 
-                  starting and ending at the same protective device in the consumer unit. This design provides two parallel paths 
-                  for current flow, reducing voltage drop and allowing smaller cable sizes for the same load.
+                  A ring final circuit is a wiring configuration where the live and neutral
+                  conductors form a continuous loop, starting and ending at the same protective
+                  device in the consumer unit. This design provides two parallel paths for current
+                  flow, reducing voltage drop and allowing smaller cable sizes for the same load.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <div>
@@ -62,21 +81,27 @@ const RingCircuitEducation = () => {
                 </h3>
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="r1-r2" className="border-blue-500/20">
-                    <AccordionTrigger className="text-blue-300">R1 + R2 Calculation</AccordionTrigger>
+                    <AccordionTrigger className="text-blue-300">
+                      R1 + R2 Calculation
+                    </AccordionTrigger>
                     <AccordionContent className="text-elec-light/80">
                       <p className="mb-2">
-                        R1 + R2 represents the resistance of the live and earth conductors combined. For a ring circuit:
+                        R1 + R2 represents the resistance of the live and earth conductors combined.
+                        For a ring circuit:
                       </p>
                       <div className="bg-white/10 rounded p-3 font-mono text-sm">
                         R1 + R2 (at midpoint) = (R1 + R2) ÷ 4
                       </div>
                       <p className="mt-2 text-xs">
-                        This is because at the midpoint of the ring, you have two parallel paths, each with half the total resistance.
+                        This is because at the midpoint of the ring, you have two parallel paths,
+                        each with half the total resistance.
                       </p>
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="end-to-end" className="border-blue-500/20">
-                    <AccordionTrigger className="text-blue-300">End-to-End Resistance</AccordionTrigger>
+                    <AccordionTrigger className="text-blue-300">
+                      End-to-End Resistance
+                    </AccordionTrigger>
                     <AccordionContent className="text-elec-light/80">
                       <p className="mb-2">
                         End-to-end resistance is measured across the entire loop:
@@ -85,7 +110,8 @@ const RingCircuitEducation = () => {
                         End-to-End = (R1 + R2) ÷ 2
                       </div>
                       <p className="mt-2 text-xs">
-                        This confirms the ring is continuous and helps identify any high resistance joints.
+                        This confirms the ring is continuous and helps identify any high resistance
+                        joints.
                       </p>
                     </AccordionContent>
                   </AccordionItem>
@@ -97,8 +123,10 @@ const RingCircuitEducation = () => {
           <TabsContent value="procedure" className="mt-4">
             <div className="space-y-4">
               <div className="bg-white/10 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">Step-by-Step Test Procedure</h3>
-                
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Step-by-Step Test Procedure
+                </h3>
+
                 <div className="space-y-4">
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold text-white mb-2">Step 1: Preparation</h4>
@@ -138,8 +166,10 @@ const RingCircuitEducation = () => {
           <TabsContent value="results" className="mt-4">
             <div className="space-y-4">
               <div className="bg-white/10 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">Interpreting Test Results</h3>
-                
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Interpreting Test Results
+                </h3>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                     <h4 className="font-semibold text-green-300 mb-2 flex items-center gap-2">
@@ -188,11 +218,15 @@ const RingCircuitEducation = () => {
           <TabsContent value="issues" className="mt-4">
             <div className="space-y-4">
               <div className="bg-white/10 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">Common Issues & Solutions</h3>
-                
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Common Issues & Solutions
+                </h3>
+
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="high-resistance" className="border-elec-yellow/20">
-                    <AccordionTrigger className="text-white">High Resistance Readings</AccordionTrigger>
+                    <AccordionTrigger className="text-white">
+                      High Resistance Readings
+                    </AccordionTrigger>
                     <AccordionContent>
                       <div className="space-y-3">
                         <div>
@@ -218,7 +252,9 @@ const RingCircuitEducation = () => {
                   </AccordionItem>
 
                   <AccordionItem value="open-circuit" className="border-elec-yellow/20">
-                    <AccordionTrigger className="text-white">Open Circuit (Infinite Reading)</AccordionTrigger>
+                    <AccordionTrigger className="text-white">
+                      Open Circuit (Infinite Reading)
+                    </AccordionTrigger>
                     <AccordionContent>
                       <div className="space-y-3">
                         <div>
@@ -244,12 +280,14 @@ const RingCircuitEducation = () => {
                   </AccordionItem>
 
                   <AccordionItem value="interconnection" className="border-elec-yellow/20">
-                    <AccordionTrigger className="text-white">Cross-Connected Rings</AccordionTrigger>
+                    <AccordionTrigger className="text-white">
+                      Cross-Connected Rings
+                    </AccordionTrigger>
                     <AccordionContent>
                       <div className="space-y-3">
                         <p className="text-sm text-elec-light/80">
-                          When rings are accidentally interconnected, test results may appear normal but the circuits 
-                          won't function correctly under fault conditions.
+                          When rings are accidentally interconnected, test results may appear normal
+                          but the circuits won't function correctly under fault conditions.
                         </p>
                         <div>
                           <h5 className="font-medium text-elec-yellow mb-1">Detection Methods:</h5>
@@ -275,13 +313,17 @@ const RingCircuitEducation = () => {
                   <Shield className="h-5 w-5" />
                   BS 7671 Requirements
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-blue-300 mb-2">Ring Final Circuit Standards</h4>
+                    <h4 className="font-semibold text-blue-300 mb-2">
+                      Ring Final Circuit Standards
+                    </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                       <div>
-                        <h5 className="font-medium text-white mb-1">Circuit Design (Regulation 433.1.204):</h5>
+                        <h5 className="font-medium text-white mb-1">
+                          Circuit Design (Regulation 433.1.204):
+                        </h5>
                         <ul className="text-elec-light/80 space-y-1">
                           <li>• Maximum floor area: 100m²</li>
                           <li>• Minimum cable size: 2.5mm²</li>
@@ -290,7 +332,9 @@ const RingCircuitEducation = () => {
                         </ul>
                       </div>
                       <div>
-                        <h5 className="font-medium text-white mb-1">Testing Requirements (Chapter 64):</h5>
+                        <h5 className="font-medium text-white mb-1">
+                          Testing Requirements (Chapter 64):
+                        </h5>
                         <ul className="text-elec-light/80 space-y-1">
                           <li>• Continuity of ring final conductors</li>
                           <li>• Continuity of protective conductors</li>
@@ -302,7 +346,9 @@ const RingCircuitEducation = () => {
                   </div>
 
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-amber-300 mb-2">Documentation Requirements</h4>
+                    <h4 className="font-semibold text-amber-300 mb-2">
+                      Documentation Requirements
+                    </h4>
                     <ul className="text-sm text-elec-light/80 space-y-1">
                       <li>• Electrical Installation Certificate (new work)</li>
                       <li>• Schedule of Test Results</li>
@@ -340,8 +386,10 @@ const RingCircuitEducation = () => {
           <TabsContent value="practice" className="mt-4">
             <div className="space-y-4">
               <div className="bg-white/10 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">Practical Tips & Best Practices</h3>
-                
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Practical Tips & Best Practices
+                </h3>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-4">
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">

@@ -12,11 +12,11 @@ export const LightingBMSIntegrationSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          Lighting control through BMS enables centralised management of all lighting circuits, 
-          occupancy sensing, and daylight harvesting systems. Integration uses specialised protocols 
+          Lighting control through BMS enables centralised management of all lighting circuits,
+          occupancy sensing, and daylight harvesting systems. Integration uses specialised protocols
           to communicate between lighting and other building systems.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
@@ -30,7 +30,7 @@ export const LightingBMSIntegrationSection = () => {
               <li>• Emergency lighting integration</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Sun className="h-5 w-5 text-orange-400" />
@@ -43,7 +43,7 @@ export const LightingBMSIntegrationSection = () => {
               <li>• Energy savings optimisation</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Clock className="h-5 w-5 text-blue-400" />
@@ -56,27 +56,35 @@ export const LightingBMSIntegrationSection = () => {
               <li>• After-hours override functions</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Wifi className="h-5 w-5 text-green-400" />
               <h4 className="font-semibold text-foreground">Communication Protocols</h4>
             </div>
             <ul className="text-sm space-y-1">
-              <li>• <strong>DALI:</strong> Digital Addressable Lighting Interface</li>
-              <li>• <strong>KNX:</strong> Building automation standard</li>
-              <li>• <strong>BACnet:</strong> Building automation protocol</li>
-              <li>• <strong>Modbus:</strong> Industrial communication protocol</li>
+              <li>
+                • <strong>DALI:</strong> Digital Addressable Lighting Interface
+              </li>
+              <li>
+                • <strong>KNX:</strong> Building automation standard
+              </li>
+              <li>
+                • <strong>BACnet:</strong> Building automation protocol
+              </li>
+              <li>
+                • <strong>Modbus:</strong> Industrial communication protocol
+              </li>
             </ul>
           </div>
         </div>
-        
+
         <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-2">Integration Example:</h4>
           <p className="text-sm">
-            When daylight sensors detect sufficient natural light, the BMS automatically dims artificial 
-            lighting while simultaneously reducing HVAC cooling load, creating coordinated energy savings 
-            across multiple building systems.
+            When daylight sensors detect sufficient natural light, the BMS automatically dims
+            artificial lighting while simultaneously reducing HVAC cooling load, creating
+            coordinated energy savings across multiple building systems.
           </p>
         </div>
       </CardContent>

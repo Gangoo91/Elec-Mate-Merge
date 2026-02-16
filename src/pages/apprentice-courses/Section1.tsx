@@ -1,37 +1,38 @@
-import { ArrowLeft, FileText, Gavel, Shield, AlertTriangle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, FileText, Gavel, Shield, AlertTriangle } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "The Health and Safety at Work Act 1974",
-    description: "Foundation legislation establishing the general duties of employers and employees",
+    number: 'Subsection 1',
+    title: 'The Health and Safety at Work Act 1974',
+    description:
+      'Foundation legislation establishing the general duties of employers and employees',
     icon: FileText,
-    href: "1-1"
+    href: '1-1',
   },
   {
-    number: "Subsection 2", 
-    title: "The Electricity at Work Regulations 1989",
-    description: "Specific regulations governing electrical work and safety requirements",
+    number: 'Subsection 2',
+    title: 'The Electricity at Work Regulations 1989',
+    description: 'Specific regulations governing electrical work and safety requirements',
     icon: Shield,
-    href: "1-2"
+    href: '1-2',
   },
   {
-    number: "Subsection 3",
-    title: "Other Key Regulations (RIDDOR, PUWER, COSHH)",
-    description: "Additional regulations affecting electrical work environments",
+    number: 'Subsection 3',
+    title: 'Other Key Regulations (RIDDOR, PUWER, COSHH)',
+    description: 'Additional regulations affecting electrical work environments',
     icon: Gavel,
-    href: "1-3"
+    href: '1-3',
   },
   {
-    number: "Subsection 4",
-    title: "The Role of Regulatory Bodies",
-    description: "Understanding HSE, enforcement and compliance responsibilities",
+    number: 'Subsection 4',
+    title: 'The Role of Regulatory Bodies',
+    description: 'Understanding HSE, enforcement and compliance responsibilities',
     icon: AlertTriangle,
-    href: "1-4"
-  }
+    href: '1-4',
+  },
 ];
 
 const Section1 = () => {
@@ -40,7 +41,11 @@ const Section1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 1

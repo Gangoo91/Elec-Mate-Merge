@@ -125,12 +125,17 @@ export const SyncStatusDot: React.FC<{ status: SyncStatus; isOnline: boolean }> 
     <div
       className={`w-2 h-2 rounded-full ${colorClass} ${animate ? 'animate-pulse' : ''}`}
       title={
-        !isOnline ? 'Offline' :
-        status.cloud === 'synced' ? 'Saved' :
-        status.cloud === 'syncing' ? 'Saving...' :
-        status.cloud === 'queued' ? `${status.queuedChanges} changes queued` :
-        status.cloud === 'error' ? 'Sync error' :
-        'Unsaved'
+        !isOnline
+          ? 'Offline'
+          : status.cloud === 'synced'
+            ? 'Saved'
+            : status.cloud === 'syncing'
+              ? 'Saving...'
+              : status.cloud === 'queued'
+                ? `${status.queuedChanges} changes queued`
+                : status.cloud === 'error'
+                  ? 'Sync error'
+                  : 'Unsaved'
       }
     />
   );

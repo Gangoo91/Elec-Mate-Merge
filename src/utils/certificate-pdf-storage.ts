@@ -45,9 +45,9 @@ export async function saveCertificatePdf(
   }
 
   // Get permanent public URL
-  const { data: { publicUrl } } = supabase.storage
-    .from('certificates')
-    .getPublicUrl(storagePath);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from('certificates').getPublicUrl(storagePath);
 
   console.log('[certificate-pdf-storage] PDF saved permanently:', { storagePath, publicUrl });
 
@@ -61,9 +61,9 @@ export async function saveCertificatePdf(
  * @returns The public URL for the PDF
  */
 export function getCertificatePdfUrl(storagePath: string): string {
-  const { data: { publicUrl } } = supabase.storage
-    .from('certificates')
-    .getPublicUrl(storagePath);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from('certificates').getPublicUrl(storagePath);
 
   return publicUrl;
 }
@@ -82,11 +82,9 @@ export async function certificatePdfExists(
   const sanitisedCertNumber = certificateNumber.replace(/[^a-zA-Z0-9-_]/g, '_');
   const storagePath = `${userId}/${sanitisedCertNumber}.pdf`;
 
-  const { data, error } = await supabase.storage
-    .from('certificates')
-    .list(userId, {
-      search: `${sanitisedCertNumber}.pdf`,
-    });
+  const { data, error } = await supabase.storage.from('certificates').list(userId, {
+    search: `${sanitisedCertNumber}.pdf`,
+  });
 
   if (error) {
     console.error('[certificate-pdf-storage] Error checking PDF existence:', error);
@@ -103,9 +101,7 @@ export async function certificatePdfExists(
  * @returns Whether deletion was successful
  */
 export async function deleteCertificatePdf(storagePath: string): Promise<boolean> {
-  const { error } = await supabase.storage
-    .from('certificates')
-    .remove([storagePath]);
+  const { error } = await supabase.storage.from('certificates').remove([storagePath]);
 
   if (error) {
     console.error('[certificate-pdf-storage] Error deleting PDF:', error);

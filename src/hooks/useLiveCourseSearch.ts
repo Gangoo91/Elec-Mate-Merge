@@ -31,212 +31,260 @@ interface LiveCourseData {
 export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
   const { keywords = '', location = 'United Kingdom', enableLiveData = true } = params;
   const { toast } = useToast();
-  
+
   const [data, setData] = useState<LiveCourseData>({
     courses: [],
     total: 0,
     isLiveData: false,
     loading: false,
-    error: null
+    error: null,
   });
 
   const [lastSearchParams, setLastSearchParams] = useState<string>('');
 
-  const fetchLiveCourses = useCallback(async (searchKeywords: string, searchLocation: string) => {
-    if (!enableLiveData) {
-      return;
-    }
-
-    const searchParamsKey = `${searchKeywords}-${searchLocation}`;
-    if (searchParamsKey === lastSearchParams && data.isLiveData) {
-      return; // Avoid duplicate requests
-    }
-
-    setData(prev => ({ ...prev, loading: true, error: null }));
-    
-    try {
-      console.log('Fetching live course data:', { keywords: searchKeywords, location: searchLocation });
-      
-      const { data: liveData, error } = await supabase.functions.invoke('live-course-aggregator', {
-        body: { keywords: searchKeywords, location: searchLocation }
-      });
-
-      if (error) {
-        throw new Error(error.message || 'Failed to fetch live course data');
+  const fetchLiveCourses = useCallback(
+    async (searchKeywords: string, searchLocation: string) => {
+      if (!enableLiveData) {
+        return;
       }
 
-      if (liveData && liveData.courses && liveData.courses.length > 0) {
-        // Enhanced mapping of live data with intelligent property inference
-        const liveCourses = liveData.courses.map((course: any) => ({
-          ...course,
-          isLive: true,
-          // Ensure all required properties exist with intelligent defaults
-          id: course.id || `live-${Math.random().toString(36).substr(2, 9)}`,
-          title: course.title || 'Course Title Not Available',
-          provider: course.provider || course.organization || 'External Provider',
-          description: course.description || course.summary || 'Course description not available',
-          duration: course.duration || course.length || 'Duration varies',
-          level: course.level || inferLevelFromTitle(course.title) || 'Intermediate',
-          price: course.price || course.cost || 'Contact for pricing',
-          format: course.format || course.delivery_method || 'Mixed delivery',
-          nextDates: course.nextDates || course.start_dates || [getNextCourseDate()],
-          rating: course.rating || generateIntelligentRating(course),
-          locations: course.locations || [course.location] || ['Various UK locations'],
-          category: inferCategoryFromCourse(course),
-          industryDemand: inferIndustryDemand(course),
-          futureProofing: inferFutureProofing(course),
-          salaryImpact: inferSalaryImpact(course),
-          careerOutcomes: course.careerOutcomes || generateCareerOutcomes(course),
-          accreditation: course.accreditation || [],
-          employerSupport: course.employerSupport || true,
-          prerequisites: course.prerequisites || ['Basic electrical knowledge'],
-          courseOutline: course.courseOutline || [],
-          assessmentMethod: course.assessmentMethod || 'Assessment varies',
-          continuousAssessment: course.continuousAssessment || false,
-          external_url: course.external_url || course.url,
-          source: course.source || 'Live API'
-        }));
-        
-        
-        // Apply deduplication to live courses
-        const deduplicatedCourses = removeDuplicatesByTitle(liveCourses);
-        const duplicatesRemoved = liveCourses.length - deduplicatedCourses.length;
-        
-        if (duplicatesRemoved > 0) {
-          console.log(`📊 Removed ${duplicatesRemoved} duplicate courses`);
-        }
-        
-        setData({
-          courses: deduplicatedCourses,
-          total: deduplicatedCourses.length,
-          summary: liveData.summary,
-          isLiveData: true,
-          loading: false,
-          error: null
+      const searchParamsKey = `${searchKeywords}-${searchLocation}`;
+      if (searchParamsKey === lastSearchParams && data.isLiveData) {
+        return; // Avoid duplicate requests
+      }
+
+      setData((prev) => ({ ...prev, loading: true, error: null }));
+
+      try {
+        console.log('Fetching live course data:', {
+          keywords: searchKeywords,
+          location: searchLocation,
         });
 
-        setLastSearchParams(searchParamsKey);
-        
-        if (liveData.summary && liveData.summary.liveCourses > 0) {
+        const { data: liveData, error } = await supabase.functions.invoke(
+          'live-course-aggregator',
+          {
+            body: { keywords: searchKeywords, location: searchLocation },
+          }
+        );
+
+        if (error) {
+          throw new Error(error.message || 'Failed to fetch live course data');
+        }
+
+        if (liveData && liveData.courses && liveData.courses.length > 0) {
+          // Enhanced mapping of live data with intelligent property inference
+          const liveCourses = liveData.courses.map((course: any) => ({
+            ...course,
+            isLive: true,
+            // Ensure all required properties exist with intelligent defaults
+            id: course.id || `live-${Math.random().toString(36).substr(2, 9)}`,
+            title: course.title || 'Course Title Not Available',
+            provider: course.provider || course.organization || 'External Provider',
+            description: course.description || course.summary || 'Course description not available',
+            duration: course.duration || course.length || 'Duration varies',
+            level: course.level || inferLevelFromTitle(course.title) || 'Intermediate',
+            price: course.price || course.cost || 'Contact for pricing',
+            format: course.format || course.delivery_method || 'Mixed delivery',
+            nextDates: course.nextDates || course.start_dates || [getNextCourseDate()],
+            rating: course.rating || generateIntelligentRating(course),
+            locations: course.locations || [course.location] || ['Various UK locations'],
+            category: inferCategoryFromCourse(course),
+            industryDemand: inferIndustryDemand(course),
+            futureProofing: inferFutureProofing(course),
+            salaryImpact: inferSalaryImpact(course),
+            careerOutcomes: course.careerOutcomes || generateCareerOutcomes(course),
+            accreditation: course.accreditation || [],
+            employerSupport: course.employerSupport || true,
+            prerequisites: course.prerequisites || ['Basic electrical knowledge'],
+            courseOutline: course.courseOutline || [],
+            assessmentMethod: course.assessmentMethod || 'Assessment varies',
+            continuousAssessment: course.continuousAssessment || false,
+            external_url: course.external_url || course.url,
+            source: course.source || 'Live API',
+          }));
+
+          // Apply deduplication to live courses
+          const deduplicatedCourses = removeDuplicatesByTitle(liveCourses);
+          const duplicatesRemoved = liveCourses.length - deduplicatedCourses.length;
+
+          if (duplicatesRemoved > 0) {
+            console.log(`📊 Removed ${duplicatesRemoved} duplicate courses`);
+          }
+
+          setData({
+            courses: deduplicatedCourses,
+            total: deduplicatedCourses.length,
+            summary: liveData.summary,
+            isLiveData: true,
+            loading: false,
+            error: null,
+          });
+
+          setLastSearchParams(searchParamsKey);
+
+          if (liveData.summary && liveData.summary.liveCourses > 0) {
+            toast({
+              title: 'Live course data loaded',
+              description: `Found ${deduplicatedCourses.length} unique courses${duplicatesRemoved > 0 ? ` (${duplicatesRemoved} duplicates removed)` : ''}`,
+              variant: 'success',
+            });
+          }
+        } else {
+          // No live courses found - show empty state
+          setData({
+            courses: [],
+            total: 0,
+            isLiveData: true,
+            loading: false,
+            error: null,
+          });
+
           toast({
-            title: "Live course data loaded",
-            description: `Found ${deduplicatedCourses.length} unique courses${duplicatesRemoved > 0 ? ` (${duplicatesRemoved} duplicates removed)` : ''}`,
-            variant: "success"
+            title: 'No courses found',
+            description:
+              'No live courses found matching your search criteria. Try different keywords.',
+            variant: 'default',
           });
         }
-      } else {
-        // No live courses found - show empty state
+      } catch (error) {
+        console.error('Error fetching live course data:', error);
+
+        // Show error state instead of fallback to static data
         setData({
           courses: [],
           total: 0,
           isLiveData: true,
           loading: false,
-          error: null
+          error: error instanceof Error ? error.message : 'Failed to fetch live data',
         });
-        
+
         toast({
-          title: "No courses found",
-          description: "No live courses found matching your search criteria. Try different keywords.",
-          variant: "default"
+          title: 'Course search failed',
+          description: 'Unable to fetch live course data. Please try again later.',
+          variant: 'destructive',
         });
       }
-    } catch (error) {
-      console.error('Error fetching live course data:', error);
-      
-      // Show error state instead of fallback to static data
-      setData({
-        courses: [],
-        total: 0,
-        isLiveData: true,
-        loading: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch live data'
-      });
-
-      toast({
-        title: "Course search failed",
-        description: "Unable to fetch live course data. Please try again later.",
-        variant: "destructive"
-      });
-    }
-  }, [enableLiveData, lastSearchParams, data.isLiveData, toast]);
+    },
+    [enableLiveData, lastSearchParams, data.isLiveData, toast]
+  );
 
   const refreshCourses = useCallback(async () => {
     console.log('🔄 Refreshing course data...');
-    setData(prev => ({ ...prev, loading: true, error: null }));
-    
+    setData((prev) => ({ ...prev, loading: true, error: null }));
+
     try {
       // Clear cache by resetting search params
       setLastSearchParams('');
-      
+
       // Show progressive loading with immediate feedback
       toast({
-        title: "Searching for courses",
-        description: "Finding the latest course data...",
-        variant: "default"
+        title: 'Searching for courses',
+        description: 'Finding the latest course data...',
+        variant: 'default',
       });
-      
+
       // Set a timeout for the entire refresh operation (reduced to 2 minutes)
       const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Search taking longer than expected - please try with more specific keywords')), 120000); // 2 minutes
+        setTimeout(
+          () =>
+            reject(
+              new Error(
+                'Search taking longer than expected - please try with more specific keywords'
+              )
+            ),
+          120000
+        ); // 2 minutes
       });
-      
+
       const refreshPromise = async () => {
         // Make the API call with retry logic
         let retryCount = 0;
         const maxRetries = 1; // Reduced retries to prevent long waits
-        
+
         while (retryCount <= maxRetries) {
           try {
             console.log(`📡 Making refresh API call (attempt ${retryCount + 1}/${maxRetries + 1})`);
-            
+
             // Progressive feedback during long operations
             if (retryCount > 0) {
               toast({
-                title: "Retrying search",
+                title: 'Retrying search',
                 description: "Previous attempt didn't complete, trying again...",
-                variant: "default"
+                variant: 'default',
               });
             }
-            
-            const { data: liveData, error } = await supabase.functions.invoke('live-course-aggregator', {
-              body: {
-                keywords: keywords || 'electrical course',
-                location: location || 'United Kingdom'
+
+            const { data: liveData, error } = await supabase.functions.invoke(
+              'live-course-aggregator',
+              {
+                body: {
+                  keywords: keywords || 'electrical course',
+                  location: location || 'United Kingdom',
+                },
               }
-            });
-            
+            );
+
             if (error) {
               console.error('Refresh API error:', error);
-              
+
               // Check for specific error types and provide helpful messages
               if (error.message?.includes('Failed to fetch') || error.message?.includes('fetch')) {
-                throw new Error('Network connection issue - please check your internet connection and try again.');
-              } else if (error.message?.includes('timeout') || error.message?.includes('timed out')) {
-                throw new Error('Search is taking too long - try using more specific keywords like "18th Edition" or "EV charging".');
-              } else if (error.message?.includes('500') || error.message?.includes('502') || error.message?.includes('503')) {
-                throw new Error('Course search service is temporarily busy - please try again in a moment.');
+                throw new Error(
+                  'Network connection issue - please check your internet connection and try again.'
+                );
+              } else if (
+                error.message?.includes('timeout') ||
+                error.message?.includes('timed out')
+              ) {
+                throw new Error(
+                  'Search is taking too long - try using more specific keywords like "18th Edition" or "EV charging".'
+                );
+              } else if (
+                error.message?.includes('500') ||
+                error.message?.includes('502') ||
+                error.message?.includes('503')
+              ) {
+                throw new Error(
+                  'Course search service is temporarily busy - please try again in a moment.'
+                );
               }
-              
+
               throw new Error(error.message || 'Unable to search for courses right now');
             }
-            
+
             // Handle service-level errors with better messages
             if (liveData?.error) {
               console.error('Service error:', liveData.error, liveData.technical_error);
-              
-              if (liveData.technical_error?.includes('timeout') || liveData.technical_error?.includes('timed out')) {
-                throw new Error('Course search is taking longer than expected. Try searching for specific terms like "electrical training" or "Level 2".');
-              } else if (liveData.technical_error?.includes('API key') || liveData.technical_error?.includes('configuration')) {
-                throw new Error('Course data service is temporarily unavailable. Please try again in a few minutes.');
-              } else if (liveData.technical_error?.includes('rate limit') || liveData.technical_error?.includes('quota')) {
+
+              if (
+                liveData.technical_error?.includes('timeout') ||
+                liveData.technical_error?.includes('timed out')
+              ) {
+                throw new Error(
+                  'Course search is taking longer than expected. Try searching for specific terms like "electrical training" or "Level 2".'
+                );
+              } else if (
+                liveData.technical_error?.includes('API key') ||
+                liveData.technical_error?.includes('configuration')
+              ) {
+                throw new Error(
+                  'Course data service is temporarily unavailable. Please try again in a few minutes.'
+                );
+              } else if (
+                liveData.technical_error?.includes('rate limit') ||
+                liveData.technical_error?.includes('quota')
+              ) {
                 throw new Error('Too many searches right now. Please wait a moment and try again.');
               }
-              
-              throw new Error('Unable to fetch course data at the moment. Please try again shortly.');
+
+              throw new Error(
+                'Unable to fetch course data at the moment. Please try again shortly.'
+              );
             }
-            
+
             console.log('✅ Data refreshed successfully:', liveData);
-            
+
             if (liveData && liveData.courses && liveData.courses.length > 0) {
               // Enhanced mapping of live data with intelligent property inference
               const liveCourses = liveData.courses.map((course: any) => ({
@@ -246,7 +294,8 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
                 id: course.id || `live-${Math.random().toString(36).substr(2, 9)}`,
                 title: course.title || 'Course Title Not Available',
                 provider: course.provider || course.organization || 'External Provider',
-                description: course.description || course.summary || 'Course description not available',
+                description:
+                  course.description || course.summary || 'Course description not available',
                 duration: course.duration || course.length || 'Duration varies',
                 level: course.level || inferLevelFromTitle(course.title) || 'Intermediate',
                 price: course.price || course.cost || 'Contact for pricing',
@@ -266,30 +315,30 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
                 assessmentMethod: course.assessmentMethod || 'Assessment varies',
                 continuousAssessment: course.continuousAssessment || false,
                 external_url: course.external_url || course.url,
-                source: course.source || 'Live API'
+                source: course.source || 'Live API',
               }));
-              
+
               // Apply deduplication to refreshed courses
               const deduplicatedCourses = removeDuplicatesByTitle(liveCourses);
               const duplicatesRemoved = liveCourses.length - deduplicatedCourses.length;
-              
+
               if (duplicatesRemoved > 0) {
                 console.log(`🔄 Removed ${duplicatesRemoved} duplicate courses during refresh`);
               }
-              
+
               setData({
                 courses: deduplicatedCourses,
                 total: deduplicatedCourses.length,
                 summary: liveData.summary,
                 isLiveData: true,
                 loading: false,
-                error: null
+                error: null,
               });
-              
+
               toast({
-                title: "Courses found",
+                title: 'Courses found',
                 description: `Successfully loaded ${deduplicatedCourses.length} unique course${deduplicatedCourses.length === 1 ? '' : 's'}${duplicatesRemoved > 0 ? ` (${duplicatesRemoved} duplicates removed)` : ''}`,
-                variant: "success"
+                variant: 'success',
               });
             } else {
               setData({
@@ -297,47 +346,46 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
                 total: 0,
                 isLiveData: true,
                 loading: false,
-                error: null
+                error: null,
               });
-              
+
               toast({
-                title: "No courses found",
-                description: "No live courses found matching your search criteria. Try different keywords.",
+                title: 'No courses found',
+                description:
+                  'No live courses found matching your search criteria. Try different keywords.',
               });
             }
-            
+
             return; // Success, exit retry loop
-            
           } catch (error) {
             retryCount++;
             if (retryCount <= maxRetries) {
               console.log(`⏳ Retrying refresh in 3 seconds... (${retryCount}/${maxRetries + 1})`);
-              await new Promise(resolve => setTimeout(resolve, 3000));
+              await new Promise((resolve) => setTimeout(resolve, 3000));
             } else {
               throw error; // Final retry failed
             }
           }
         }
       };
-      
+
       // Race the refresh against the timeout
       await Promise.race([refreshPromise(), timeoutPromise]);
-      
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to refresh data";
+      const errorMessage = error instanceof Error ? error.message : 'Failed to refresh data';
       console.error('❌ Refresh failed:', errorMessage);
-      
-      setData(prev => ({
+
+      setData((prev) => ({
         ...prev,
         loading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
-      
+
       // Show user-friendly error messages
       toast({
-        title: "Search failed",
+        title: 'Search failed',
         description: errorMessage,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   }, [keywords, location, toast]);
@@ -348,89 +396,146 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
   return {
     ...data,
     refreshCourses,
-    isSearching: data.loading
+    isSearching: data.loading,
   };
 };
 
 // Helper functions for intelligent data mapping
 function inferLevelFromTitle(title: string): string {
   const titleLower = title.toLowerCase();
-  if (titleLower.includes('level 1') || titleLower.includes('basic') || titleLower.includes('foundation')) return 'Beginner';
+  if (
+    titleLower.includes('level 1') ||
+    titleLower.includes('basic') ||
+    titleLower.includes('foundation')
+  )
+    return 'Beginner';
   if (titleLower.includes('level 2') || titleLower.includes('intermediate')) return 'Intermediate';
-  if (titleLower.includes('level 3') || titleLower.includes('level 4') || titleLower.includes('advanced') || titleLower.includes('diploma')) return 'Advanced';
+  if (
+    titleLower.includes('level 3') ||
+    titleLower.includes('level 4') ||
+    titleLower.includes('advanced') ||
+    titleLower.includes('diploma')
+  )
+    return 'Advanced';
   return 'Intermediate';
 }
 
 function inferCategoryFromCourse(course: any): string {
   const text = `${course.title} ${course.description}`.toLowerCase();
-  
-  if (text.includes('18th edition') || text.includes('wiring reg') || text.includes('bs 7671')) return 'Essential Qualifications';
-  if (text.includes('ev') || text.includes('electric vehicle') || text.includes('solar') || text.includes('smart') || text.includes('automation')) return 'Emerging Technologies';
-  if (text.includes('safety') || text.includes('health') || text.includes('compliance') || text.includes('regulation')) return 'Safety & Compliance';
-  if (text.includes('fire') || text.includes('security') || text.includes('maintenance') || text.includes('testing')) return 'Specialised Skills';
-  if (text.includes('management') || text.includes('business') || text.includes('leadership')) return 'Business & Management';
-  
+
+  if (text.includes('18th edition') || text.includes('wiring reg') || text.includes('bs 7671'))
+    return 'Essential Qualifications';
+  if (
+    text.includes('ev') ||
+    text.includes('electric vehicle') ||
+    text.includes('solar') ||
+    text.includes('smart') ||
+    text.includes('automation')
+  )
+    return 'Emerging Technologies';
+  if (
+    text.includes('safety') ||
+    text.includes('health') ||
+    text.includes('compliance') ||
+    text.includes('regulation')
+  )
+    return 'Safety & Compliance';
+  if (
+    text.includes('fire') ||
+    text.includes('security') ||
+    text.includes('maintenance') ||
+    text.includes('testing')
+  )
+    return 'Specialised Skills';
+  if (text.includes('management') || text.includes('business') || text.includes('leadership'))
+    return 'Business & Management';
+
   return 'Essential Qualifications';
 }
 
-function inferIndustryDemand(course: any): "High" | "Medium" | "Low" {
+function inferIndustryDemand(course: any): 'High' | 'Medium' | 'Low' {
   const text = `${course.title} ${course.description}`.toLowerCase();
-  
+
   // High demand keywords
-  if (text.includes('ev') || text.includes('solar') || text.includes('smart') || 
-      text.includes('18th edition') || text.includes('testing') || text.includes('inspection')) {
+  if (
+    text.includes('ev') ||
+    text.includes('solar') ||
+    text.includes('smart') ||
+    text.includes('18th edition') ||
+    text.includes('testing') ||
+    text.includes('inspection')
+  ) {
     return 'High';
   }
-  
+
   // Medium demand by default for electrical courses
   return 'Medium';
 }
 
 function inferFutureProofing(course: any): number {
   const text = `${course.title} ${course.description}`.toLowerCase();
-  
-  if (text.includes('ev') || text.includes('solar') || text.includes('smart') || text.includes('automation')) return 5;
-  if (text.includes('18th edition') || text.includes('regulation') || text.includes('compliance')) return 5;
-  if (text.includes('testing') || text.includes('inspection') || text.includes('maintenance')) return 4;
-  
+
+  if (
+    text.includes('ev') ||
+    text.includes('solar') ||
+    text.includes('smart') ||
+    text.includes('automation')
+  )
+    return 5;
+  if (text.includes('18th edition') || text.includes('regulation') || text.includes('compliance'))
+    return 5;
+  if (text.includes('testing') || text.includes('inspection') || text.includes('maintenance'))
+    return 4;
+
   return 3;
 }
 
 function inferSalaryImpact(course: any): string {
   const text = `${course.title} ${course.description}`.toLowerCase();
-  
-  if (text.includes('ev') || text.includes('smart') || text.includes('automation')) return '£4,000 - £8,000 annual increase';
-  if (text.includes('18th edition') || text.includes('testing') || text.includes('inspection')) return '£2,000 - £5,000 annual increase';
-  if (text.includes('solar') || text.includes('renewable')) return '£3,000 - £6,000 annual increase';
-  
+
+  if (text.includes('ev') || text.includes('smart') || text.includes('automation'))
+    return '£4,000 - £8,000 annual increase';
+  if (text.includes('18th edition') || text.includes('testing') || text.includes('inspection'))
+    return '£2,000 - £5,000 annual increase';
+  if (text.includes('solar') || text.includes('renewable'))
+    return '£3,000 - £6,000 annual increase';
+
   return '£1,500 - £3,500 annual increase';
 }
 
 function generateIntelligentRating(course: any): number {
   // Generate rating based on course characteristics
   let rating = 4.0;
-  
+
   const text = `${course.title} ${course.description}`.toLowerCase();
-  
+
   // Boost rating for in-demand courses
   if (text.includes('18th edition') || text.includes('ev') || text.includes('solar')) rating += 0.5;
   if (text.includes('practical') || text.includes('hands-on')) rating += 0.2;
   if (course.provider && course.provider.includes('NICEIC')) rating += 0.3;
-  
+
   return Math.min(Math.round(rating * 10) / 10, 5.0);
 }
 
 function generateCareerOutcomes(course: any): string[] {
   const text = `${course.title} ${course.description}`.toLowerCase();
-  
+
   if (text.includes('18th edition')) {
-    return ['Meet legal requirements for electrical work', 'Enhanced professional credibility', 'Access to higher-paid roles'];
+    return [
+      'Meet legal requirements for electrical work',
+      'Enhanced professional credibility',
+      'Access to higher-paid roles',
+    ];
   }
-  
+
   if (text.includes('ev')) {
-    return ['EV charging specialist certification', 'Access to growing EV market', 'Future-proof career specialisation'];
+    return [
+      'EV charging specialist certification',
+      'Access to growing EV market',
+      'Future-proof career specialisation',
+    ];
   }
-  
+
   return ['Enhanced technical skills', 'Improved career prospects', 'Professional certification'];
 }
 
@@ -442,12 +547,12 @@ function getNextCourseDate(): string {
 
 function removeDuplicatesByTitle(courses: EnhancedCareerCourse[]): EnhancedCareerCourse[] {
   const seen = new Map();
-  return courses.filter(course => {
+  return courses.filter((course) => {
     // Create a unique key using title + provider for better deduplication
     const normalizedTitle = course.title.toLowerCase().trim().replace(/\s+/g, ' ');
     const normalizedProvider = course.provider.toLowerCase().trim().replace(/\s+/g, ' ');
     const key = `${normalizedTitle}-${normalizedProvider}`;
-    
+
     if (seen.has(key)) {
       // Keep the live version if available, or the one with more details
       const existing = seen.get(key);

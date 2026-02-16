@@ -60,7 +60,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'tariff-sync'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Best for Octopus/Agile tariffs. Top-rated smart charging.'
+    notes: 'Best for Octopus/Agile tariffs. Top-rated smart charging.',
   },
   {
     id: 'ohme-epod',
@@ -77,7 +77,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'tariff-sync'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Socketed version of Home Pro. Universal socket.'
+    notes: 'Socketed version of Home Pro. Universal socket.',
   },
 
   // ========== MYENERGI ==========
@@ -96,7 +96,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['ct-clamp', 'solar-integration', 'eco-mode'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'UK bestseller. Best for solar PV. Made in UK. Eco+ mode for solar surplus.'
+    notes: 'UK bestseller. Best for solar PV. Made in UK. Eco+ mode for solar surplus.',
   },
 
   // ========== EASEE ==========
@@ -115,7 +115,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Nordic design. Excellent for multi-unit installations.'
+    notes: 'Nordic design. Excellent for multi-unit installations.',
   },
   {
     id: 'easee-home',
@@ -132,7 +132,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Tethered cable version. Phase switching capability.'
+    notes: 'Tethered cable version. Phase switching capability.',
   },
 
   // ========== WALLBOX ==========
@@ -151,7 +151,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['power-boost', 'dynamic'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Compact design. Voice control compatible. Power Boost feature.'
+    notes: 'Compact design. Voice control compatible. Power Boost feature.',
   },
   {
     id: 'wallbox-pulsar-plus',
@@ -168,7 +168,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Popular compact charger. Alexa/Google compatible.'
+    notes: 'Popular compact charger. Alexa/Google compatible.',
   },
   {
     id: 'wallbox-commander-2',
@@ -185,7 +185,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['power-boost', 'dynamic', 'scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Premium model with touchscreen display.'
+    notes: 'Premium model with touchscreen display.',
   },
 
   // ========== ANDERSEN ==========
@@ -204,7 +204,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['solar-integration', 'scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Premium Danish design. Customisable wood/metal finishes.'
+    notes: 'Premium Danish design. Customisable wood/metal finishes.',
   },
   {
     id: 'andersen-a3',
@@ -221,7 +221,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['solar-integration', 'scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Premium model with larger capacity cable management.'
+    notes: 'Premium model with larger capacity cable management.',
   },
 
   // ========== POD POINT ==========
@@ -240,7 +240,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Simple and reliable. Available tethered or socketed.'
+    notes: 'Simple and reliable. Available tethered or socketed.',
   },
 
   // ========== TESLA ==========
@@ -259,7 +259,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Best for Tesla vehicles. Wi-Fi enabled. May require separate RCD.'
+    notes: 'Best for Tesla vehicles. Wi-Fi enabled. May require separate RCD.',
   },
 
   // ========== EVBOX ==========
@@ -278,7 +278,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Commercial grade. Robust for high-use environments.'
+    notes: 'Commercial grade. Robust for high-use environments.',
   },
 
   // ========== ZAPTEC ==========
@@ -297,7 +297,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Norwegian design. Very future-proof with OTA updates.'
+    notes: 'Norwegian design. Very future-proof with OTA updates.',
   },
   {
     id: 'zaptec-pro',
@@ -314,7 +314,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Commercial model. Great for workplaces and flats.'
+    notes: 'Commercial model. Great for workplaces and flats.',
   },
 
   // ========== SYNC EV ==========
@@ -333,7 +333,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Budget-friendly option. Reliable basic charger.'
+    notes: 'Budget-friendly option. Reliable basic charger.',
   },
 
   // ========== ROLEC ==========
@@ -352,7 +352,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: [],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Commercial focused. Simple and robust.'
+    notes: 'Commercial focused. Simple and robust.',
   },
   {
     id: 'rolec-zura',
@@ -369,7 +369,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Smart residential charger from Rolec.'
+    notes: 'Smart residential charger from Rolec.',
   },
 
   // ========== SIMPSON & PARTNERS ==========
@@ -388,7 +388,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'UK designed and made. Premium finish.'
+    notes: 'UK designed and made. Premium finish.',
   },
 
   // ========== EO ==========
@@ -407,7 +407,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Compact design. Good value smart charger.'
+    notes: 'Compact design. Good value smart charger.',
   },
   {
     id: 'eo-hub',
@@ -424,7 +424,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Multi-point solution for workplaces.'
+    notes: 'Multi-point solution for workplaces.',
   },
 
   // ========== INDRA ==========
@@ -443,7 +443,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['solar-integration', 'v2g'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'V2G capable. Future-proof for vehicle-to-grid.'
+    notes: 'V2G capable. Future-proof for vehicle-to-grid.',
   },
 
   // ========== HYPERVOLT ==========
@@ -462,7 +462,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'solar-integration', 'scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'App-focused with excellent software. Open API.'
+    notes: 'App-focused with excellent software. Open API.',
   },
 
   // ========== PROJECT EV ==========
@@ -481,7 +481,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Affordable smart charger. Good installer margins.'
+    notes: 'Affordable smart charger. Good installer margins.',
   },
 
   // ========== BG SYNCBOX ==========
@@ -500,7 +500,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'From British General. Wholesaler favourite.'
+    notes: 'From British General. Wholesaler favourite.',
   },
 
   // ========== SEVADIS ==========
@@ -519,7 +519,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Commercial grade. OCPP compliant.'
+    notes: 'Commercial grade. OCPP compliant.',
   },
 
   // ========== EVA ==========
@@ -538,7 +538,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Scottish manufacturer. Local support.'
+    notes: 'Scottish manufacturer. Local support.',
   },
 
   // ========== ALFA POWER ==========
@@ -557,7 +557,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Budget option. Basic smart features.'
+    notes: 'Budget option. Basic smart features.',
   },
 
   // ========== CHARGEPOINT ==========
@@ -576,7 +576,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'US brand in UK market. Large network ecosystem.'
+    notes: 'US brand in UK market. Large network ecosystem.',
   },
 
   // ========== ABB ==========
@@ -595,7 +595,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic', 'load-balancing'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'Premium commercial grade. Very reliable.'
+    notes: 'Premium commercial grade. Very reliable.',
   },
 
   // ========== SCHNEIDER ==========
@@ -614,7 +614,7 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['scheduled'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'From trusted electrical brand. Good warranty.'
+    notes: 'From trusted electrical brand. Good warranty.',
   },
 
   // ========== HAGER ==========
@@ -633,15 +633,15 @@ export const EV_CHARGERS: EVCharger[] = [
     loadManagement: ['dynamic'],
     ozevApproved: true,
     recommendedCable: 6,
-    notes: 'From Hager electrical. Compact design.'
-  }
+    notes: 'From Hager electrical. Compact design.',
+  },
 ];
 
 /**
  * Get unique list of charger makes
  */
 export function getChargerMakes(): string[] {
-  const makes = new Set(EV_CHARGERS.map(c => c.make));
+  const makes = new Set(EV_CHARGERS.map((c) => c.make));
   return Array.from(makes).sort();
 }
 
@@ -649,9 +649,7 @@ export function getChargerMakes(): string[] {
  * Get models for a specific make
  */
 export function getChargerModels(make: string): string[] {
-  return EV_CHARGERS
-    .filter(c => c.make.toLowerCase() === make.toLowerCase())
-    .map(c => c.model);
+  return EV_CHARGERS.filter((c) => c.make.toLowerCase() === make.toLowerCase()).map((c) => c.model);
 }
 
 /**
@@ -659,8 +657,8 @@ export function getChargerModels(make: string): string[] {
  */
 export function findCharger(make: string, model: string): EVCharger | undefined {
   return EV_CHARGERS.find(
-    c => c.make.toLowerCase() === make.toLowerCase() &&
-         c.model.toLowerCase() === model.toLowerCase()
+    (c) =>
+      c.make.toLowerCase() === make.toLowerCase() && c.model.toLowerCase() === model.toLowerCase()
   );
 }
 
@@ -671,10 +669,11 @@ export function searchChargers(query: string): EVCharger[] {
   const q = query.toLowerCase().trim();
   if (!q) return [];
 
-  return EV_CHARGERS.filter(c =>
-    c.make.toLowerCase().includes(q) ||
-    c.model.toLowerCase().includes(q) ||
-    `${c.make} ${c.model}`.toLowerCase().includes(q)
+  return EV_CHARGERS.filter(
+    (c) =>
+      c.make.toLowerCase().includes(q) ||
+      c.model.toLowerCase().includes(q) ||
+      `${c.make} ${c.model}`.toLowerCase().includes(q)
   ).slice(0, 10); // Limit to 10 results
 }
 
@@ -692,7 +691,7 @@ export function getPowerOptionsLabel(charger: EVCharger): string {
   if (charger.powerOptions.length === 1) {
     return `${charger.powerOptions[0]}kW`;
   }
-  return charger.powerOptions.map(p => `${p}kW`).join(' / ');
+  return charger.powerOptions.map((p) => `${p}kW`).join(' / ');
 }
 
 /**
@@ -702,9 +701,9 @@ export function getPowerOptionsLabel(charger: EVCharger): string {
  */
 export function calculateCurrentFromPower(powerKW: number, phases: number): number {
   if (phases === 1) {
-    return Math.round(powerKW * 1000 / 230);
+    return Math.round((powerKW * 1000) / 230);
   } else {
-    return Math.round(powerKW * 1000 / (Math.sqrt(3) * 400));
+    return Math.round((powerKW * 1000) / (Math.sqrt(3) * 400));
   }
 }
 
@@ -715,8 +714,8 @@ export function calculateCurrentFromPower(powerKW: number, phases: number): numb
  */
 export function calculatePowerFromCurrent(currentA: number, phases: number): number {
   if (phases === 1) {
-    return Math.round(currentA * 230 / 100) / 10; // Round to 1 decimal
+    return Math.round((currentA * 230) / 100) / 10; // Round to 1 decimal
   } else {
-    return Math.round(currentA * Math.sqrt(3) * 400 / 100) / 10;
+    return Math.round((currentA * Math.sqrt(3) * 400) / 100) / 10;
   }
 }

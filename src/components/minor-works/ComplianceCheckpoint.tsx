@@ -1,18 +1,11 @@
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  CheckCircle2, 
-  AlertTriangle, 
-  XCircle, 
-  Shield,
-  ChevronDown,
-  ChevronUp
-} from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Card } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { CheckCircle2, AlertTriangle, XCircle, Shield, ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ComplianceItem {
   label: string;
@@ -29,18 +22,18 @@ interface ComplianceCheckpointProps {
   formData?: any;
 }
 
-export function ComplianceCheckpoint({ 
-  items, 
+export function ComplianceCheckpoint({
+  items,
   overallScore,
   onItemClick,
-  formData 
+  formData,
 }: ComplianceCheckpointProps) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const [showJsonPreview, setShowJsonPreview] = useState(false);
 
-  const passCount = items.filter(item => item.status === 'pass').length;
-  const failCount = items.filter(item => item.status === 'fail').length;
-  const pendingCount = items.filter(item => item.status === 'pending').length;
+  const passCount = items.filter((item) => item.status === 'pass').length;
+  const failCount = items.filter((item) => item.status === 'fail').length;
+  const pendingCount = items.filter((item) => item.status === 'pending').length;
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -56,56 +49,56 @@ export function ComplianceCheckpoint({
   };
 
   const getScoreColor = () => {
-    if (overallScore >= 80) return "text-green-400";
-    if (overallScore >= 50) return "text-amber-400";
-    return "text-red-400";
+    if (overallScore >= 80) return 'text-green-400';
+    if (overallScore >= 50) return 'text-amber-400';
+    return 'text-red-400';
   };
 
   const getProgressColor = () => {
-    if (overallScore >= 80) return "bg-gradient-to-r from-green-500/80 to-emerald-500/80";
-    if (overallScore >= 50) return "bg-gradient-to-r from-amber-500/80 to-yellow-500/80";
-    return "bg-gradient-to-r from-red-500/80 to-rose-500/80";
+    if (overallScore >= 80) return 'bg-gradient-to-r from-green-500/80 to-emerald-500/80';
+    if (overallScore >= 50) return 'bg-gradient-to-r from-amber-500/80 to-yellow-500/80';
+    return 'bg-gradient-to-r from-red-500/80 to-rose-500/80';
   };
 
   const canGenerate = overallScore >= 80 && failCount === 0;
 
   const generatePdfMonkeyPayload = () => {
     if (!formData) return null;
-    
+
     return {
       certificate: {
-        certificate_number: formData.certificateNumber || "",
+        certificate_number: formData.certificateNumber || '',
         generated_date: new Date().toISOString(),
       },
       client_installation: {
-        property_address: formData.propertyAddress || "",
-        postcode: formData.postcode || "",
-        client_name: formData.clientName || "",
-        person_ordering_work: formData.personOrderingWork || "",
-        work_date: formData.workDate || "",
-        date_completed: formData.dateOfCompletion || "",
-        next_inspection_due: formData.nextInspectionDue || "",
-        contractor_name: formData.contractorName || "",
-        contractor_address: formData.contractorAddress || "",
+        property_address: formData.propertyAddress || '',
+        postcode: formData.postcode || '',
+        client_name: formData.clientName || '',
+        person_ordering_work: formData.personOrderingWork || '',
+        work_date: formData.workDate || '',
+        date_completed: formData.dateOfCompletion || '',
+        next_inspection_due: formData.nextInspectionDue || '',
+        contractor_name: formData.contractorName || '',
+        contractor_address: formData.contractorAddress || '',
       },
       work_description: {
-        work_type: formData.workType || "",
-        work_location: formData.workLocation || "",
-        work_description: formData.workDescription || "",
-        departures_from_bs7671: formData.departuresFromBS7671 || "",
+        work_type: formData.workType || '',
+        work_location: formData.workLocation || '',
+        work_description: formData.workDescription || '',
+        departures_from_bs7671: formData.departuresFromBS7671 || '',
       },
       supply_earthing: {
-        supply_voltage: formData.supplyVoltage || "230V",
-        frequency: formData.frequency || "50Hz",
-        supply_phases: formData.supplyPhases || "1",
-        earthing_arrangement: formData.earthingArrangement || "",
+        supply_voltage: formData.supplyVoltage || '230V',
+        frequency: formData.frequency || '50Hz',
+        supply_phases: formData.supplyPhases || '1',
+        earthing_arrangement: formData.earthingArrangement || '',
         main_earthing_conductor: {
-          size: formData.mainEarthingConductorSize || "",
-          custom_size: formData.mainEarthingConductorSizeCustom || "",
+          size: formData.mainEarthingConductorSize || '',
+          custom_size: formData.mainEarthingConductorSizeCustom || '',
         },
         main_bonding_conductor: {
-          size: formData.mainBondingConductorSize || "",
-          custom_size: formData.mainBondingConductorSizeCustom || "",
+          size: formData.mainBondingConductorSize || '',
+          custom_size: formData.mainBondingConductorSizeCustom || '',
         },
         bonding_connections: {
           water: Boolean(formData.bondingWater),
@@ -116,13 +109,13 @@ export function ComplianceCheckpoint({
         },
       },
       circuit_details: {
-        distribution_board: formData.distributionBoard || "",
-        circuit_designation: formData.circuitDesignation || "",
-        circuit_description: formData.circuitDescription || "",
+        distribution_board: formData.distributionBoard || '',
+        circuit_designation: formData.circuitDesignation || '',
+        circuit_description: formData.circuitDescription || '',
         protective_device: {
-          type: formData.protectiveDeviceType || "",
-          rating: formData.protectiveDeviceRating || "",
-          ka_rating: formData.protectiveDeviceKaRating || "",
+          type: formData.protectiveDeviceType || '',
+          rating: formData.protectiveDeviceRating || '',
+          ka_rating: formData.protectiveDeviceKaRating || '',
         },
         protection_devices: {
           rcd: Boolean(formData.protectionRcd),
@@ -131,88 +124,88 @@ export function ComplianceCheckpoint({
           spd: Boolean(formData.protectionSpd),
         },
         cable: {
-          live_size: formData.liveConductorSize || "",
-          cpc_size: formData.cpcSize || "",
-          type: formData.cableType || "",
-          installation_method: formData.installationMethod || "",
-          reference_method: formData.referenceMethod || "",
+          live_size: formData.liveConductorSize || '',
+          cpc_size: formData.cpcSize || '',
+          type: formData.cableType || '',
+          installation_method: formData.installationMethod || '',
+          reference_method: formData.referenceMethod || '',
         },
       },
       test_results: {
         dead_tests: {
-          continuity_r1_r2: formData.continuityR1R2 || "",
+          continuity_r1_r2: formData.continuityR1R2 || '',
           ring_circuit: {
-            r1_end_to_end: formData.ringR1EndToEnd || "",
-            rn_end_to_end: formData.ringRnEndToEnd || "",
-            r2_end_to_end: formData.ringR2EndToEnd || "",
-            r1_cross: formData.ringR1Cross || "",
-            rn_cross: formData.ringRnCross || "",
-            r2_cross: formData.ringR2Cross || "",
-            ring_final_continuity: formData.ringFinalContinuity || "",
+            r1_end_to_end: formData.ringR1EndToEnd || '',
+            rn_end_to_end: formData.ringRnEndToEnd || '',
+            r2_end_to_end: formData.ringR2EndToEnd || '',
+            r1_cross: formData.ringR1Cross || '',
+            rn_cross: formData.ringRnCross || '',
+            r2_cross: formData.ringR2Cross || '',
+            ring_final_continuity: formData.ringFinalContinuity || '',
           },
-          earth_electrode_resistance: formData.earthElectrodeResistance || "",
-          polarity: formData.polarity || "",
+          earth_electrode_resistance: formData.earthElectrodeResistance || '',
+          polarity: formData.polarity || '',
         },
         insulation_resistance: {
-          test_voltage: formData.insulationTestVoltage || "500V",
-          live_neutral: formData.insulationLiveNeutral || "",
-          live_earth: formData.insulationLiveEarth || "",
-          neutral_earth: formData.insulationNeutralEarth || "",
+          test_voltage: formData.insulationTestVoltage || '500V',
+          live_neutral: formData.insulationLiveNeutral || '',
+          live_earth: formData.insulationLiveEarth || '',
+          neutral_earth: formData.insulationNeutralEarth || '',
         },
         live_tests: {
-          earth_fault_loop_impedance: formData.earthFaultLoopImpedance || "",
-          max_permitted_zs: formData.maxPermittedZs || "",
-          prospective_fault_current: formData.prospectiveFaultCurrent || "",
-          phase_rotation: formData.phaseRotation || "",
-          functional_testing: formData.functionalTesting || "",
+          earth_fault_loop_impedance: formData.earthFaultLoopImpedance || '',
+          max_permitted_zs: formData.maxPermittedZs || '',
+          prospective_fault_current: formData.prospectiveFaultCurrent || '',
+          phase_rotation: formData.phaseRotation || '',
+          functional_testing: formData.functionalTesting || '',
         },
         rcd_tests: {
-          rating: formData.rcdRating || "",
-          trip_time_1x: formData.rcdOneX || "",
-          rcbo_overcurrent_trip: formData.rcboTripTime || "",
+          rating: formData.rcdRating || '',
+          trip_time_1x: formData.rcdOneX || '',
+          rcbo_overcurrent_trip: formData.rcboTripTime || '',
         },
         afdd_tests: {
-          test_button: formData.afddTestButton || "",
-          trip_time: formData.afddTripTime || "",
+          test_button: formData.afddTestButton || '',
+          trip_time: formData.afddTripTime || '',
         },
         spd_tests: {
-          indicator_status: formData.spdIndicatorStatus || "",
-          test_button: formData.spdTestButton || "",
-          visual_inspection: formData.spdVisualInspection || "",
+          indicator_status: formData.spdIndicatorStatus || '',
+          test_button: formData.spdTestButton || '',
+          visual_inspection: formData.spdVisualInspection || '',
         },
       },
       test_equipment: {
         primary_tester: {
-          model: formData.testEquipmentModel || "",
-          serial: formData.testEquipmentSerial || "",
-          calibration_date: formData.testEquipmentCalDate || "",
+          model: formData.testEquipmentModel || '',
+          serial: formData.testEquipmentSerial || '',
+          calibration_date: formData.testEquipmentCalDate || '',
         },
-        test_temperature: formData.testTemperature || "20°C",
+        test_temperature: formData.testTemperature || '20°C',
         legacy_individual_testers: {
           continuity: {
-            make: formData.continuityTesterMake || "",
-            serial: formData.continuityTesterSerial || "",
-            calibration: formData.continuityTesterCalDate || "",
+            make: formData.continuityTesterMake || '',
+            serial: formData.continuityTesterSerial || '',
+            calibration: formData.continuityTesterCalDate || '',
           },
           insulation: {
-            make: formData.insulationTesterMake || "",
-            serial: formData.insulationTesterSerial || "",
-            calibration: formData.insulationTesterCalDate || "",
+            make: formData.insulationTesterMake || '',
+            serial: formData.insulationTesterSerial || '',
+            calibration: formData.insulationTesterCalDate || '',
           },
           loop: {
-            make: formData.loopTesterMake || "",
-            serial: formData.loopTesterSerial || "",
-            calibration: formData.loopTesterCalDate || "",
+            make: formData.loopTesterMake || '',
+            serial: formData.loopTesterSerial || '',
+            calibration: formData.loopTesterCalDate || '',
           },
         },
       },
       declaration: {
         competent_person: {
-          name: formData.electricianName || "",
-          position: formData.position || "",
-          qualification_level: formData.qualificationLevel || "",
-          scheme_provider: formData.schemeProvider || "",
-          registration_number: formData.registrationNumber || "",
+          name: formData.electricianName || '',
+          position: formData.position || '',
+          qualification_level: formData.qualificationLevel || '',
+          scheme_provider: formData.schemeProvider || '',
+          registration_number: formData.registrationNumber || '',
         },
         declarations: {
           bs7671_compliance: Boolean(formData.bs7671Compliance),
@@ -221,20 +214,21 @@ export function ComplianceCheckpoint({
           part_p_notification: Boolean(formData.partPNotification),
         },
         signature: {
-          date: formData.signatureDate || "",
-          signature_data: formData.signature || "",
-          additional_notes: formData.additionalNotes || "",
+          date: formData.signatureDate || '',
+          signature_data: formData.signature || '',
+          additional_notes: formData.additionalNotes || '',
         },
       },
-      observations: formData.observations?.map((obs: any) => ({
-        code: obs.defectCode?.toUpperCase() || 'C3',
-        description: obs.description || obs.item || "",
-        photo_evidence: obs.photoEvidence || [],
-        photo_count: obs.photoEvidence?.length || 0,
-      })) || [],
+      observations:
+        formData.observations?.map((obs: any) => ({
+          code: obs.defectCode?.toUpperCase() || 'C3',
+          description: obs.description || obs.item || '',
+          photo_evidence: obs.photoEvidence || [],
+          photo_count: obs.photoEvidence?.length || 0,
+        })) || [],
       metadata: {
         generated_at: new Date().toLocaleString('en-GB'),
-        form_version: "1.0",
+        form_version: '1.0',
       },
     };
   };
@@ -258,18 +252,14 @@ export function ComplianceCheckpoint({
         {/* Score Section */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-muted-foreground">
-              Compliance Score
-            </span>
-            <span className={cn("text-3xl font-bold", getScoreColor())}>
-              {overallScore}%
-            </span>
+            <span className="text-sm font-medium text-muted-foreground">Compliance Score</span>
+            <span className={cn('text-3xl font-bold', getScoreColor())}>{overallScore}%</span>
           </div>
-          
+
           <div className="relative">
             <Progress value={overallScore} className="h-3" />
-            <div 
-              className={cn("absolute inset-0 h-3 rounded-full transition-all", getProgressColor())}
+            <div
+              className={cn('absolute inset-0 h-3 rounded-full transition-all', getProgressColor())}
               style={{ width: `${overallScore}%` }}
             />
           </div>
@@ -302,12 +292,12 @@ export function ComplianceCheckpoint({
                   }
                 }}
                 className={cn(
-                  "w-full p-3 rounded-lg border-2 transition-all hover:shadow-md",
-                  "flex items-center justify-between gap-2 text-left",
-                  item.status === 'pass' && "border-green-500/30 bg-green-500/10",
-                  item.status === 'fail' && "border-red-500/30 bg-red-500/10",
-                  item.status === 'pending' && "border-amber-500/30 bg-amber-500/10",
-                  item.status === 'warning' && "border-amber-500/30 bg-amber-500/10"
+                  'w-full p-3 rounded-lg border-2 transition-all hover:shadow-md',
+                  'flex items-center justify-between gap-2 text-left',
+                  item.status === 'pass' && 'border-green-500/30 bg-green-500/10',
+                  item.status === 'fail' && 'border-red-500/30 bg-red-500/10',
+                  item.status === 'pending' && 'border-amber-500/30 bg-amber-500/10',
+                  item.status === 'warning' && 'border-amber-500/30 bg-amber-500/10'
                 )}
               >
                 <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -319,17 +309,16 @@ export function ComplianceCheckpoint({
                     </Badge>
                   </div>
                 </div>
-                {item.details && (
-                  expandedItem === item.label ? 
-                    <ChevronUp className="h-4 w-4 shrink-0" /> : 
+                {item.details &&
+                  (expandedItem === item.label ? (
+                    <ChevronUp className="h-4 w-4 shrink-0" />
+                  ) : (
                     <ChevronDown className="h-4 w-4 shrink-0" />
-                )}
+                  ))}
               </button>
-              
+
               {expandedItem === item.label && item.details && (
-                <div className="mt-2 p-3 bg-muted rounded-lg text-sm">
-                  {item.details}
-                </div>
+                <div className="mt-2 p-3 bg-muted rounded-lg text-sm">{item.details}</div>
               )}
             </div>
           ))}
@@ -347,7 +336,8 @@ export function ComplianceCheckpoint({
           <Alert className="border-red-500/50 bg-red-500/10">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-red-300">
-              Please resolve compliance issues before generating certificate. Complete the required fields and ensure all tests meet BS 7671 standards.
+              Please resolve compliance issues before generating certificate. Complete the required
+              fields and ensure all tests meet BS 7671 standards.
             </AlertDescription>
           </Alert>
         )}
@@ -359,11 +349,17 @@ export function ComplianceCheckpoint({
               onClick={() => setShowJsonPreview(!showJsonPreview)}
               className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              {showJsonPreview ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              {showJsonPreview ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
               <span>PDF Monkey JSON Payload</span>
-              <Badge variant="outline" className="text-xs">Debug</Badge>
+              <Badge variant="outline" className="text-xs">
+                Debug
+              </Badge>
             </button>
-            
+
             {showJsonPreview && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">

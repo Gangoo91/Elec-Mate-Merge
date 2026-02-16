@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TestingProcedure } from './TestingProcedureData';
@@ -12,7 +11,7 @@ import {
   FileText,
   ClipboardList,
   ChevronRight,
-  AlertTriangle
+  AlertTriangle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,8 +37,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const itemVariants = {
@@ -47,8 +46,8 @@ const itemVariants = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 500, damping: 30 },
+  },
 };
 
 interface ProcedureItemProps {
@@ -61,30 +60,34 @@ interface ProcedureItemProps {
   isLive?: boolean;
 }
 
-const ProcedureItem = ({ icon: Icon, iconBg, title, subtitle, duration, onClick, isLive }: ProcedureItemProps) => (
+const ProcedureItem = ({
+  icon: Icon,
+  iconBg,
+  title,
+  subtitle,
+  duration,
+  onClick,
+  isLive,
+}: ProcedureItemProps) => (
   <motion.div
     variants={itemVariants}
     onClick={onClick}
     className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
   >
-    <div className={cn(
-      "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
-      iconBg
-    )}>
+    <div
+      className={cn(
+        'w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0',
+        iconBg
+      )}
+    >
       <Icon className="h-5 w-5 text-white" />
     </div>
     <div className="flex-1 min-w-0">
-      <h3 className="text-[15px] font-medium text-white leading-tight">
-        {title}
-      </h3>
-      <p className="text-[13px] text-white/50 leading-tight mt-0.5">
-        {subtitle}
-      </p>
+      <h3 className="text-[15px] font-medium text-white leading-tight">{title}</h3>
+      <p className="text-[13px] text-white/50 leading-tight mt-0.5">{subtitle}</p>
     </div>
     <div className="flex items-center gap-2 flex-shrink-0">
-      {isLive && (
-        <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />
-      )}
+      {isLive && <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />}
       <span className="text-[13px] text-white/30">{duration}</span>
       <ChevronRight className="h-4 w-4 text-white/20" />
     </div>
@@ -106,15 +109,10 @@ const TestingProceduresGrid = ({
   onStartCertificateGuide,
   onStartScheduleGuide,
   onPreviewProcedure,
-  onClearFilters
+  onClearFilters,
 }: TestingProceduresGridProps) => {
   return (
-    <motion.div
-      className="space-y-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
+    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Safety Procedure - Critical */}
       <div>
         <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">

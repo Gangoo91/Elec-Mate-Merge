@@ -8,23 +8,23 @@ export const MeshNetworkingBasicsSection = () => {
 
   const meshFeatures = [
     {
-      feature: "Device Repeating",
+      feature: 'Device Repeating',
       icon: Repeat,
-      description: "Each device can act as a repeater, passing signals along to extend coverage",
-      benefit: "Extended range without additional infrastructure"
+      description: 'Each device can act as a repeater, passing signals along to extend coverage',
+      benefit: 'Extended range without additional infrastructure',
     },
     {
-      feature: "Self-Healing",
+      feature: 'Self-Healing',
       icon: Shield,
-      description: "If one node fails, the signal automatically reroutes through other devices",
-      benefit: "Improved reliability and redundancy"
+      description: 'If one node fails, the signal automatically reroutes through other devices',
+      benefit: 'Improved reliability and redundancy',
     },
     {
-      feature: "Scalability",
+      feature: 'Scalability',
       icon: Home,
-      description: "Ideal for large homes or buildings with thick walls and multiple floors",
-      benefit: "Coverage grows with each added device"
-    }
+      description: 'Ideal for large homes or buildings with thick walls and multiple floors',
+      benefit: 'Coverage grows with each added device',
+    },
   ];
 
   return (
@@ -39,9 +39,10 @@ export const MeshNetworkingBasicsSection = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
           <p className="text-lg font-medium text-foreground mb-4">
-            Mesh networking allows smart devices to create a self-extending, self-healing network where each device can relay signals to others.
+            Mesh networking allows smart devices to create a self-extending, self-healing network
+            where each device can relay signals to others.
           </p>
-          
+
           {/* Mesh Features */}
           <div className="grid grid-cols-1 gap-4">
             {meshFeatures.map((feature, index) => (
@@ -88,7 +89,9 @@ export const MeshNetworkingBasicsSection = () => {
 
           {/* Practical Benefits */}
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-            <h4 className="font-semibold text-foreground mb-4">Practical Benefits in Smart Homes</h4>
+            <h4 className="font-semibold text-foreground mb-4">
+              Practical Benefits in Smart Homes
+            </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="font-medium text-blue-200 mb-3">Coverage Challenges Solved</h5>
@@ -115,16 +118,21 @@ export const MeshNetworkingBasicsSection = () => {
           <div className="p-4 bg-gradient-to-r from-green-900/20 to-blue-900/20 border border-green-600 rounded-lg">
             <h4 className="font-semibold text-foreground mb-3">How Mesh Works in Practice</h4>
             <p className="text-gray-300 text-sm mb-3">
-              Imagine a smart sensor in your garden shed trying to communicate with a hub in your living room:
+              Imagine a smart sensor in your garden shed trying to communicate with a hub in your
+              living room:
             </p>
             <div className="space-y-2 text-sm">
               <div className="p-2 bg-[#1a1a1a] border border-gray-700 rounded">
                 <span className="text-yellow-300 font-medium">Without Mesh:</span>
-                <span className="text-gray-300 ml-2">Signal blocked by walls → Communication fails</span>
+                <span className="text-gray-300 ml-2">
+                  Signal blocked by walls → Communication fails
+                </span>
               </div>
               <div className="p-2 bg-[#1a1a1a] border border-gray-700 rounded">
                 <span className="text-green-300 font-medium">With Mesh:</span>
-                <span className="text-gray-300 ml-2">Signal routes through kitchen light → garage sensor → hub</span>
+                <span className="text-gray-300 ml-2">
+                  Signal routes through kitchen light → garage sensor → hub
+                </span>
               </div>
             </div>
           </div>
@@ -144,22 +152,30 @@ export const MeshNetworkingBasicsSection = () => {
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
               <p className="font-medium text-foreground">Q1: What is mesh networking?</p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q2: How does self-healing work in mesh networks?</p>
+              <p className="font-medium text-foreground">
+                Q2: How does self-healing work in mesh networks?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q3: What's the main difference between mesh and star network topologies?</p>
+              <p className="font-medium text-foreground">
+                Q3: What's the main difference between mesh and star network topologies?
+              </p>
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={() => setShowAnswers(!showAnswers)}
-            variant="outline" 
+            variant="outline"
             className="w-full border-gray-600 text-gray-300 hover:bg-[#323232] hover:text-foreground"
           >
-            {showAnswers ? <ChevronUp className="mr-2 h-4 w-4" /> : <ChevronDown className="mr-2 h-4 w-4" />}
+            {showAnswers ? (
+              <ChevronUp className="mr-2 h-4 w-4" />
+            ) : (
+              <ChevronDown className="mr-2 h-4 w-4" />
+            )}
             {showAnswers ? 'Hide Answers' : 'Show Answers'}
           </Button>
 
@@ -167,17 +183,29 @@ export const MeshNetworkingBasicsSection = () => {
             <div className="space-y-3 pt-4 border-t border-gray-600">
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A1:</p>
-                <p className="text-foreground">A network topology where devices can communicate through multiple paths, with each device acting as a potential repeater to extend coverage and create redundant communication routes.</p>
+                <p className="text-foreground">
+                  A network topology where devices can communicate through multiple paths, with each
+                  device acting as a potential repeater to extend coverage and create redundant
+                  communication routes.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A2:</p>
-                <p className="text-foreground">When a device in the mesh network fails or is removed, the network automatically finds alternative routes through other devices, ensuring communication continues without manual intervention.</p>
+                <p className="text-foreground">
+                  When a device in the mesh network fails or is removed, the network automatically
+                  finds alternative routes through other devices, ensuring communication continues
+                  without manual intervention.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A3:</p>
-                <p className="text-foreground">Mesh networks have multiple interconnected paths between devices, while star networks have all devices connecting to a single central point (like a router), making them more vulnerable to single points of failure.</p>
+                <p className="text-foreground">
+                  Mesh networks have multiple interconnected paths between devices, while star
+                  networks have all devices connecting to a single central point (like a router),
+                  making them more vulnerable to single points of failure.
+                </p>
               </div>
             </div>
           )}

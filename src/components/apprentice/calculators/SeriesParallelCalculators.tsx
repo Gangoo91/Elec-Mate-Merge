@@ -1,25 +1,21 @@
-import { useMemo, useState } from "react";
-import { Plus, X, Info, BookOpen, ChevronDown, RotateCcw } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+import { useMemo, useState } from 'react';
+import { Plus, X, Info, BookOpen, ChevronDown, RotateCcw } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorResult,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
-type Unit = "Ω" | "kΩ" | "MΩ";
+type Unit = 'Ω' | 'kΩ' | 'MΩ';
 
 const unitFactor: Record<Unit, number> = {
-  "Ω": 1,
-  "kΩ": 1_000,
-  "MΩ": 1_000_000,
+  Ω: 1,
+  kΩ: 1_000,
+  MΩ: 1_000_000,
 };
 
 function toOhms(value: number, unit: Unit) {
@@ -27,8 +23,8 @@ function toOhms(value: number, unit: Unit) {
 }
 
 function formatAllUnits(ohms: number, dp = 3) {
-  if (!isFinite(ohms) || ohms <= 0) return { ohm: "—", kohm: "—", Mohm: "—" };
-  const round = (v: number) => Number.isFinite(v) ? Number(v.toFixed(dp)) : "—";
+  if (!isFinite(ohms) || ohms <= 0) return { ohm: '—', kohm: '—', Mohm: '—' };
+  const round = (v: number) => (Number.isFinite(v) ? Number(v.toFixed(dp)) : '—');
   return {
     ohm: `${round(ohms)} Ω`,
     kohm: `${round(ohms / 1_000)} kΩ`,
@@ -43,7 +39,7 @@ interface Row {
 
 function useRows(initial: Row[]) {
   const [rows, setRows] = useState<Row[]>(initial);
-  const addRow = () => setRows((r) => [...r, { value: "", unit: "Ω" }]);
+  const addRow = () => setRows((r) => [...r, { value: '', unit: 'Ω' }]);
   const reset = () => setRows(initial);
   const removeRow = (idx: number) => setRows((r) => r.filter((_, i) => i !== idx));
   const setValue = (idx: number, value: string) =>
@@ -60,7 +56,7 @@ const ResistorRow = ({
   unit,
   onValueChange,
   onUnitChange,
-  onRemove
+  onRemove,
 }: {
   index: number;
   value: string;
@@ -109,8 +105,8 @@ export default function SeriesParallelCalculators() {
   const [showReference, setShowReference] = useState(false);
 
   const init: Row[] = [
-    { value: "", unit: "Ω" },
-    { value: "", unit: "Ω" },
+    { value: '', unit: 'Ω' },
+    { value: '', unit: 'Ω' },
   ];
 
   // Series
@@ -124,7 +120,7 @@ export default function SeriesParallelCalculators() {
     return vals.reduce((a, b) => a + b, 0);
   }, [series.rows]);
   const seriesFmt = formatAllUnits(seriesTotalOhms);
-  const seriesValidCount = series.rows.filter(r => parseFloat(r.value) > 0).length;
+  const seriesValidCount = series.rows.filter((r) => parseFloat(r.value) > 0).length;
 
   // Parallel
   const parallel = useRows(init);
@@ -139,7 +135,7 @@ export default function SeriesParallelCalculators() {
     return 1 / sumRecip;
   }, [parallel.rows]);
   const parallelFmt = formatAllUnits(parallelTotalOhms);
-  const parallelValidCount = parallel.rows.filter(r => parseFloat(r.value) > 0).length;
+  const parallelValidCount = parallel.rows.filter((r) => parseFloat(r.value) > 0).length;
 
   return (
     <div className="space-y-6">
@@ -151,7 +147,8 @@ export default function SeriesParallelCalculators() {
         badge="Rt = ΣR"
       >
         <p className="text-sm text-white/60 -mt-2">
-          Add resistor values connected in series. Total resistance equals the sum of all resistances.
+          Add resistor values connected in series. Total resistance equals the sum of all
+          resistances.
         </p>
 
         {/* Resistor Rows */}
@@ -193,7 +190,9 @@ export default function SeriesParallelCalculators() {
               <p className="text-xs text-white/80 mb-1">Total Resistance</p>
               <div
                 className="text-3xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {seriesFmt.ohm}
               </div>
@@ -217,15 +216,22 @@ export default function SeriesParallelCalculators() {
                 <Info className="h-4 w-4 text-blue-400" />
                 <span className="text-sm font-medium text-blue-300">How Series Works</span>
               </div>
-              <ChevronDown className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showSeriesGuidance && "rotate-180"
-              )} />
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white/70 transition-transform duration-200',
+                  showSeriesGuidance && 'rotate-180'
+                )}
+              />
             </CollapsibleTrigger>
             <CollapsibleContent className="p-4 pt-0">
               <div className="space-y-2 text-sm text-blue-200/80">
-                <p><strong className="text-blue-300">Formula:</strong> Rt = R1 + R2 + R3 + ...</p>
-                <p>In series, current flows through each resistor one after another. The total resistance increases.</p>
+                <p>
+                  <strong className="text-blue-300">Formula:</strong> Rt = R1 + R2 + R3 + ...
+                </p>
+                <p>
+                  In series, current flows through each resistor one after another. The total
+                  resistance increases.
+                </p>
                 <p className="text-xs text-white/80 mt-2">Example: 100Ω + 200Ω + 300Ω = 600Ω</p>
               </div>
             </CollapsibleContent>
@@ -241,7 +247,8 @@ export default function SeriesParallelCalculators() {
         badge="1/Rt = Σ(1/R)"
       >
         <p className="text-sm text-white/60 -mt-2">
-          Add resistor values connected in parallel. Total resistance is less than the smallest resistor.
+          Add resistor values connected in parallel. Total resistance is less than the smallest
+          resistor.
         </p>
 
         {/* Resistor Rows */}
@@ -283,7 +290,9 @@ export default function SeriesParallelCalculators() {
               <p className="text-xs text-white/80 mb-1">Total Resistance</p>
               <div
                 className="text-3xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {parallelFmt.ohm}
               </div>
@@ -307,15 +316,23 @@ export default function SeriesParallelCalculators() {
                 <Info className="h-4 w-4 text-blue-400" />
                 <span className="text-sm font-medium text-blue-300">How Parallel Works</span>
               </div>
-              <ChevronDown className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showParallelGuidance && "rotate-180"
-              )} />
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white/70 transition-transform duration-200',
+                  showParallelGuidance && 'rotate-180'
+                )}
+              />
             </CollapsibleTrigger>
             <CollapsibleContent className="p-4 pt-0">
               <div className="space-y-2 text-sm text-blue-200/80">
-                <p><strong className="text-blue-300">Formula:</strong> 1/Rt = 1/R1 + 1/R2 + 1/R3 + ...</p>
-                <p>In parallel, current has multiple paths. The total resistance decreases below the smallest resistor.</p>
+                <p>
+                  <strong className="text-blue-300">Formula:</strong> 1/Rt = 1/R1 + 1/R2 + 1/R3 +
+                  ...
+                </p>
+                <p>
+                  In parallel, current has multiple paths. The total resistance decreases below the
+                  smallest resistor.
+                </p>
                 <p className="text-xs text-white/80 mt-2">Example: Two 100Ω in parallel = 50Ω</p>
               </div>
             </CollapsibleContent>
@@ -329,23 +346,30 @@ export default function SeriesParallelCalculators() {
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Reference</span>
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                BS 7671 Reference
+              </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showReference && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4 pt-0">
             <div className="space-y-3 text-sm text-amber-200/80">
               <p>
-                <strong className="text-amber-300">Series circuits:</strong> Used for voltage division, daisy-chained loads, and measuring resistance in cables.
+                <strong className="text-amber-300">Series circuits:</strong> Used for voltage
+                division, daisy-chained loads, and measuring resistance in cables.
               </p>
               <p>
-                <strong className="text-amber-300">Parallel circuits:</strong> Used in ring finals (BS 7671), diversity calculations, and earth electrode arrays.
+                <strong className="text-amber-300">Parallel circuits:</strong> Used in ring finals
+                (BS 7671), diversity calculations, and earth electrode arrays.
               </p>
               <p className="text-xs text-white/80 pt-2 border-t border-white/10">
-                Ring final circuits combine both series and parallel principles for balanced load distribution.
+                Ring final circuits combine both series and parallel principles for balanced load
+                distribution.
               </p>
             </div>
           </CollapsibleContent>

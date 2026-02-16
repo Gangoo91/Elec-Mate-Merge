@@ -67,13 +67,13 @@ export interface ScannedInvoiceItem {
  * State of the invoice scanning process
  */
 export type ScannerState =
-  | 'idle'           // Initial state
-  | 'capturing'      // Camera is active
-  | 'uploading'      // Image is being uploaded/converted
-  | 'processing'     // AI is extracting items
-  | 'matching'       // Finding material matches
-  | 'review'         // User reviewing results
-  | 'error';         // Error occurred
+  | 'idle' // Initial state
+  | 'capturing' // Camera is active
+  | 'uploading' // Image is being uploaded/converted
+  | 'processing' // AI is extracting items
+  | 'matching' // Finding material matches
+  | 'review' // User reviewing results
+  | 'error'; // Error occurred
 
 /**
  * Invoice scanner result after processing

@@ -1,42 +1,62 @@
-import { ArrowLeft, Activity, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Activity, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Power Quality - HNC Module 4 Section 5.5";
-const DESCRIPTION = "Master power quality for building services: voltage regulation, transient protection with SPDs, earthing arrangements and EMC considerations in commercial installations.";
+const TITLE = 'Power Quality - HNC Module 4 Section 5.5';
+const DESCRIPTION =
+  'Master power quality for building services: voltage regulation, transient protection with SPDs, earthing arrangements and EMC considerations in commercial installations.';
 
 const quickCheckQuestions = [
   {
-    id: "voltage-range",
-    question: "What is the permissible voltage range for a 230V UK supply under BS EN 50160?",
-    options: ["220V-240V (±4.3%)", "207V-253V (±10%)", "218V-242V (±5%)", "225V-235V (±2%)"],
+    id: 'voltage-range',
+    question: 'What is the permissible voltage range for a 230V UK supply under BS EN 50160?',
+    options: ['220V-240V (±4.3%)', '207V-253V (±10%)', '218V-242V (±5%)', '225V-235V (±2%)'],
     correctIndex: 1,
-    explanation: "BS EN 50160 specifies 230V +10%/-10% for LV supplies, giving a range of 207V to 253V. This harmonised European standard replaced the previous UK 240V ±6% tolerance."
+    explanation:
+      'BS EN 50160 specifies 230V +10%/-10% for LV supplies, giving a range of 207V to 253V. This harmonised European standard replaced the previous UK 240V ±6% tolerance.',
   },
   {
-    id: "spd-type",
-    question: "Where should a Type 1 SPD be installed?",
-    options: ["At socket outlets", "At the main distribution board near the origin", "On IT equipment only", "External to the building"],
+    id: 'spd-type',
+    question: 'Where should a Type 1 SPD be installed?',
+    options: [
+      'At socket outlets',
+      'At the main distribution board near the origin',
+      'On IT equipment only',
+      'External to the building',
+    ],
     correctIndex: 1,
-    explanation: "Type 1 (T1) SPDs are installed at or near the origin of the installation to protect against direct lightning strikes and major transients. They handle high energy surges."
+    explanation:
+      'Type 1 (T1) SPDs are installed at or near the origin of the installation to protect against direct lightning strikes and major transients. They handle high energy surges.',
   },
   {
-    id: "earthing-tncs",
-    question: "What is the key characteristic of a TN-C-S (PME) earthing system?",
-    options: ["Separate earth electrode required", "Combined neutral and earth (PEN) from DNO", "No earth connection", "Earth via water pipes"],
+    id: 'earthing-tncs',
+    question: 'What is the key characteristic of a TN-C-S (PME) earthing system?',
+    options: [
+      'Separate earth electrode required',
+      'Combined neutral and earth (PEN) from DNO',
+      'No earth connection',
+      'Earth via water pipes',
+    ],
     correctIndex: 1,
-    explanation: "TN-C-S (Protective Multiple Earthing) has combined neutral and earth (PEN conductor) in the supply, which is split at the origin to provide separate N and PE for the installation."
+    explanation:
+      'TN-C-S (Protective Multiple Earthing) has combined neutral and earth (PEN conductor) in the supply, which is split at the origin to provide separate N and PE for the installation.',
   },
   {
-    id: "harmonic",
-    question: "What is the main cause of harmonic distortion in modern buildings?",
-    options: ["Incandescent lighting", "Resistive heating", "Electronic loads (computers, LED drivers, VFDs)", "Induction motors"],
+    id: 'harmonic',
+    question: 'What is the main cause of harmonic distortion in modern buildings?',
+    options: [
+      'Incandescent lighting',
+      'Resistive heating',
+      'Electronic loads (computers, LED drivers, VFDs)',
+      'Induction motors',
+    ],
     correctIndex: 2,
-    explanation: "Non-linear loads like switch-mode power supplies, LED drivers and variable frequency drives draw non-sinusoidal current, creating harmonics. These are increasingly common in modern buildings."
-  }
+    explanation:
+      'Non-linear loads like switch-mode power supplies, LED drivers and variable frequency drives draw non-sinusoidal current, creating harmonics. These are increasingly common in modern buildings.',
+  },
 ];
 
 const quizQuestions = [
@@ -44,145 +64,160 @@ const quizQuestions = [
     id: 1,
     question: "What is 'voltage dip' (sag)?",
     options: [
-      "Complete loss of voltage",
-      "Temporary reduction in RMS voltage below 90%",
-      "Voltage increase above normal",
-      "Harmonic distortion"
+      'Complete loss of voltage',
+      'Temporary reduction in RMS voltage below 90%',
+      'Voltage increase above normal',
+      'Harmonic distortion',
     ],
     correctAnswer: 1,
-    explanation: "A voltage dip (or sag) is a temporary reduction in RMS voltage typically to 10-90% of nominal for 0.5 cycles to 1 minute. Common causes include motor starting, fault clearance and large load switching."
+    explanation:
+      'A voltage dip (or sag) is a temporary reduction in RMS voltage typically to 10-90% of nominal for 0.5 cycles to 1 minute. Common causes include motor starting, fault clearance and large load switching.',
   },
   {
     id: 2,
-    question: "What does THD (Total Harmonic Distortion) measure?",
+    question: 'What does THD (Total Harmonic Distortion) measure?',
     options: [
-      "Voltage level only",
-      "The ratio of harmonic content to fundamental frequency",
-      "Power factor",
-      "Frequency variation"
+      'Voltage level only',
+      'The ratio of harmonic content to fundamental frequency',
+      'Power factor',
+      'Frequency variation',
     ],
     correctAnswer: 1,
-    explanation: "THD quantifies harmonic distortion as a percentage - the ratio of all harmonic components to the fundamental frequency. THD below 5% is typically acceptable for most equipment."
+    explanation:
+      'THD quantifies harmonic distortion as a percentage - the ratio of all harmonic components to the fundamental frequency. THD below 5% is typically acceptable for most equipment.',
   },
   {
     id: 3,
-    question: "What is the function of an SPD (Surge Protective Device)?",
+    question: 'What is the function of an SPD (Surge Protective Device)?',
     options: [
-      "To generate backup power",
-      "To divert transient overvoltages to earth",
-      "To regulate voltage level",
-      "To correct power factor"
+      'To generate backup power',
+      'To divert transient overvoltages to earth',
+      'To regulate voltage level',
+      'To correct power factor',
     ],
     correctAnswer: 1,
-    explanation: "SPDs protect equipment by providing a low-impedance path to earth for transient overvoltages (surges). They clamp voltage to safe levels and divert surge energy away from sensitive equipment."
+    explanation:
+      'SPDs protect equipment by providing a low-impedance path to earth for transient overvoltages (surges). They clamp voltage to safe levels and divert surge energy away from sensitive equipment.',
   },
   {
     id: 4,
-    question: "What causes flicker in electrical systems?",
+    question: 'What causes flicker in electrical systems?',
     options: [
-      "Steady-state operation",
-      "Rapid voltage fluctuations causing visible light variation",
-      "High power factor",
-      "Good quality earthing"
+      'Steady-state operation',
+      'Rapid voltage fluctuations causing visible light variation',
+      'High power factor',
+      'Good quality earthing',
     ],
     correctAnswer: 1,
-    explanation: "Flicker is caused by rapid voltage fluctuations (typically 0.5-25Hz) that produce visible variation in light output. Common causes include arc furnaces, welding equipment and large motor starting."
+    explanation:
+      'Flicker is caused by rapid voltage fluctuations (typically 0.5-25Hz) that produce visible variation in light output. Common causes include arc furnaces, welding equipment and large motor starting.',
   },
   {
     id: 5,
-    question: "In a TN-S earthing system, how is the earth provided?",
+    question: 'In a TN-S earthing system, how is the earth provided?',
     options: [
-      "Combined with neutral (PEN)",
-      "Separate earth conductor from DNO transformer",
-      "Local earth electrode only",
-      "Through the building structure"
+      'Combined with neutral (PEN)',
+      'Separate earth conductor from DNO transformer',
+      'Local earth electrode only',
+      'Through the building structure',
     ],
     correctAnswer: 1,
-    explanation: "TN-S has a separate earth conductor from the supply transformer (usually the cable sheath) providing a dedicated PE throughout. This is common in older installations with lead-sheathed cables."
+    explanation:
+      'TN-S has a separate earth conductor from the supply transformer (usually the cable sheath) providing a dedicated PE throughout. This is common in older installations with lead-sheathed cables.',
   },
   {
     id: 6,
-    question: "What is the purpose of EMC (Electromagnetic Compatibility) measures?",
+    question: 'What is the purpose of EMC (Electromagnetic Compatibility) measures?',
     options: [
-      "To increase power consumption",
-      "To ensure equipment neither emits nor is affected by electromagnetic interference",
-      "To improve aesthetics",
-      "To reduce installation costs"
+      'To increase power consumption',
+      'To ensure equipment neither emits nor is affected by electromagnetic interference',
+      'To improve aesthetics',
+      'To reduce installation costs',
     ],
     correctAnswer: 1,
-    explanation: "EMC ensures electrical equipment operates without causing interference to other equipment (emission) and can function in its electromagnetic environment (immunity). It's a legal requirement under EMC Directive."
+    explanation:
+      "EMC ensures electrical equipment operates without causing interference to other equipment (emission) and can function in its electromagnetic environment (immunity). It's a legal requirement under EMC Directive.",
   },
   {
     id: 7,
-    question: "What is the third harmonic (3rd) particularly problematic for?",
+    question: 'What is the third harmonic (3rd) particularly problematic for?',
     options: [
-      "Single-phase loads only",
-      "Neutral conductors in three-phase systems - they add rather than cancel",
-      "Earth conductors",
-      "Circuit breakers"
+      'Single-phase loads only',
+      'Neutral conductors in three-phase systems - they add rather than cancel',
+      'Earth conductors',
+      'Circuit breakers',
     ],
     correctAnswer: 1,
-    explanation: "Third harmonics (and their multiples) from balanced three-phase loads add in the neutral rather than cancelling. This can cause neutral current to exceed phase current, requiring oversized neutrals."
+    explanation:
+      'Third harmonics (and their multiples) from balanced three-phase loads add in the neutral rather than cancelling. This can cause neutral current to exceed phase current, requiring oversized neutrals.',
   },
   {
     id: 8,
-    question: "What voltage regulation problem can occur with long cable runs?",
+    question: 'What voltage regulation problem can occur with long cable runs?',
     options: [
-      "Voltage increase",
-      "Excessive voltage drop causing equipment malfunction",
-      "Harmonic generation",
-      "Improved power quality"
+      'Voltage increase',
+      'Excessive voltage drop causing equipment malfunction',
+      'Harmonic generation',
+      'Improved power quality',
     ],
     correctAnswer: 1,
-    explanation: "Long cables have higher resistance, causing voltage drop (I×R losses). If the voltage at the load drops below the equipment tolerance (typically -10%), malfunction or damage can occur."
+    explanation:
+      'Long cables have higher resistance, causing voltage drop (I×R losses). If the voltage at the load drops below the equipment tolerance (typically -10%), malfunction or damage can occur.',
   },
   {
     id: 9,
-    question: "What is a Type 2 SPD designed to protect against?",
+    question: 'What is a Type 2 SPD designed to protect against?',
     options: [
-      "Direct lightning strikes only",
-      "Switching transients and indirect lightning effects",
-      "Harmonic distortion",
-      "Voltage sags"
+      'Direct lightning strikes only',
+      'Switching transients and indirect lightning effects',
+      'Harmonic distortion',
+      'Voltage sags',
     ],
     correctAnswer: 1,
-    explanation: "Type 2 SPDs protect against switching transients and the residual effects of lightning after Type 1 protection. They're installed at distribution boards to protect final circuits and equipment."
+    explanation:
+      "Type 2 SPDs protect against switching transients and the residual effects of lightning after Type 1 protection. They're installed at distribution boards to protect final circuits and equipment.",
   },
   {
     id: 10,
-    question: "What is power factor correction used for?",
+    question: 'What is power factor correction used for?',
     options: [
-      "Increasing voltage",
-      "Reducing reactive power demand and improving efficiency",
-      "Generating harmonics",
-      "Providing backup power"
+      'Increasing voltage',
+      'Reducing reactive power demand and improving efficiency',
+      'Generating harmonics',
+      'Providing backup power',
     ],
     correctAnswer: 1,
-    explanation: "Power factor correction capacitors supply reactive power locally, reducing the reactive current drawn from the supply. This improves efficiency, reduces losses and can lower electricity bills."
-  }
+    explanation:
+      'Power factor correction capacitors supply reactive power locally, reducing the reactive current drawn from the supply. This improves efficiency, reduces losses and can lower electricity bills.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What causes voltage dips and how can they be mitigated?",
-    answer: "Voltage dips are caused by large motor starting, transformer energisation, faults on the supply network, or large load switching. Mitigation includes soft starters/VFDs for motors, electronic voltage regulators, UPS for sensitive equipment, or increased supply capacity with lower source impedance."
+    question: 'What causes voltage dips and how can they be mitigated?',
+    answer:
+      'Voltage dips are caused by large motor starting, transformer energisation, faults on the supply network, or large load switching. Mitigation includes soft starters/VFDs for motors, electronic voltage regulators, UPS for sensitive equipment, or increased supply capacity with lower source impedance.',
   },
   {
-    question: "When are Type 1 SPDs required?",
-    answer: "Type 1 SPDs are required where lightning protection systems (LPS) are installed, as per BS EN 62305. They're also recommended for buildings at high risk of direct lightning strikes, or where the supply enters via overhead lines. They must be coordinated with Type 2 devices downstream."
+    question: 'When are Type 1 SPDs required?',
+    answer:
+      "Type 1 SPDs are required where lightning protection systems (LPS) are installed, as per BS EN 62305. They're also recommended for buildings at high risk of direct lightning strikes, or where the supply enters via overhead lines. They must be coordinated with Type 2 devices downstream.",
   },
   {
-    question: "How do I select the right earthing arrangement for a building?",
-    answer: "The earthing system is usually determined by the DNO supply type. TN-C-S (PME) is most common for new supplies. TN-S is used where available (older areas). TT with local electrode is used in rural areas or where PME is unsuitable (swimming pools, caravans). The designer must work with the DNO and consider special locations."
+    question: 'How do I select the right earthing arrangement for a building?',
+    answer:
+      'The earthing system is usually determined by the DNO supply type. TN-C-S (PME) is most common for new supplies. TN-S is used where available (older areas). TT with local electrode is used in rural areas or where PME is unsuitable (swimming pools, caravans). The designer must work with the DNO and consider special locations.',
   },
   {
-    question: "What causes neutral conductor overheating?",
-    answer: "In three-phase systems with non-linear loads, third-harmonic currents add in the neutral instead of cancelling. If the neutral is sized the same as phases (as per traditional practice), it can overheat. Modern designs may specify 200% neutral sizing or separate neutrals for non-linear loads."
+    question: 'What causes neutral conductor overheating?',
+    answer:
+      'In three-phase systems with non-linear loads, third-harmonic currents add in the neutral instead of cancelling. If the neutral is sized the same as phases (as per traditional practice), it can overheat. Modern designs may specify 200% neutral sizing or separate neutrals for non-linear loads.',
   },
   {
-    question: "What is the difference between EMC filtering and shielding?",
-    answer: "Filtering attenuates conducted interference on power and signal cables using inductors and capacitors. Shielding prevents radiated interference using conductive enclosures or screens around cables/equipment. Both may be needed depending on the frequency and type of interference."
-  }
+    question: 'What is the difference between EMC filtering and shielding?',
+    answer:
+      'Filtering attenuates conducted interference on power and signal cables using inductors and capacitors. Shielding prevents radiated interference using conductive enclosures or screens around cables/equipment. Both may be needed depending on the frequency and type of interference.',
+  },
 ];
 
 const HNCModule4Section5_5 = () => {
@@ -193,7 +228,12 @@ const HNCModule4Section5_5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module4-section5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -204,7 +244,6 @@ const HNCModule4Section5_5 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -224,19 +263,37 @@ const HNCModule4Section5_5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>Voltage regulation:</strong> UK supply 230V ±10%</li>
-              <li className="pl-1"><strong>SPDs:</strong> Protect against transient surges</li>
-              <li className="pl-1"><strong>Earthing:</strong> TN-C-S (PME) most common</li>
-              <li className="pl-1"><strong>EMC:</strong> Prevent electromagnetic interference</li>
+              <li className="pl-1">
+                <strong>Voltage regulation:</strong> UK supply 230V ±10%
+              </li>
+              <li className="pl-1">
+                <strong>SPDs:</strong> Protect against transient surges
+              </li>
+              <li className="pl-1">
+                <strong>Earthing:</strong> TN-C-S (PME) most common
+              </li>
+              <li className="pl-1">
+                <strong>EMC:</strong> Prevent electromagnetic interference
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Building Services Context</p>
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
+              Building Services Context
+            </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>IT equipment:</strong> Sensitive to voltage variations</li>
-              <li className="pl-1"><strong>LED lighting:</strong> Source of harmonics</li>
-              <li className="pl-1"><strong>VFDs:</strong> Require EMC filtering</li>
-              <li className="pl-1"><strong>Medical:</strong> Stringent power quality needs</li>
+              <li className="pl-1">
+                <strong>IT equipment:</strong> Sensitive to voltage variations
+              </li>
+              <li className="pl-1">
+                <strong>LED lighting:</strong> Source of harmonics
+              </li>
+              <li className="pl-1">
+                <strong>VFDs:</strong> Require EMC filtering
+              </li>
+              <li className="pl-1">
+                <strong>Medical:</strong> Stringent power quality needs
+              </li>
             </ul>
           </div>
         </div>
@@ -246,12 +303,12 @@ const HNCModule4Section5_5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand voltage quality parameters and tolerances",
-              "Specify and coordinate surge protection devices",
-              "Select appropriate earthing arrangements",
-              "Recognise and mitigate harmonic distortion",
-              "Apply EMC principles to building services design",
-              "Diagnose common power quality problems"
+              'Understand voltage quality parameters and tolerances',
+              'Specify and coordinate surge protection devices',
+              'Select appropriate earthing arrangements',
+              'Recognise and mitigate harmonic distortion',
+              'Apply EMC principles to building services design',
+              'Diagnose common power quality problems',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -272,13 +329,15 @@ const HNCModule4Section5_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Voltage quality directly affects equipment performance and lifespan. UK supplies
-              must comply with BS EN 50160, which defines acceptable voltage characteristics
-              at the point of supply.
+              Voltage quality directly affects equipment performance and lifespan. UK supplies must
+              comply with BS EN 50160, which defines acceptable voltage characteristics at the point
+              of supply.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BS EN 50160 Voltage Quality Parameters</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                BS EN 50160 Voltage Quality Parameters
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -292,27 +351,37 @@ const HNCModule4Section5_5 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Supply voltage</td>
                       <td className="border border-white/10 px-3 py-2">230V ±10%</td>
-                      <td className="border border-white/10 px-3 py-2">207V-253V for 95% of week</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        207V-253V for 95% of week
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Frequency</td>
                       <td className="border border-white/10 px-3 py-2">50Hz ±1%</td>
-                      <td className="border border-white/10 px-3 py-2">49.5-50.5Hz for 95% of year</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        49.5-50.5Hz for 95% of year
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Voltage dips</td>
                       <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">Typically 10-1000 per year</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Typically 10-1000 per year
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">THD voltage</td>
                       <td className="border border-white/10 px-3 py-2">≤8%</td>
-                      <td className="border border-white/10 px-3 py-2">Total harmonic distortion</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Total harmonic distortion
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Unbalance</td>
                       <td className="border border-white/10 px-3 py-2">≤2%</td>
-                      <td className="border border-white/10 px-3 py-2">Three-phase voltage unbalance</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Three-phase voltage unbalance
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -322,15 +391,25 @@ const HNCModule4Section5_5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Voltage problems and effects:</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Under-voltage:</strong> Motor overheating, equipment malfunction</li>
-                <li className="pl-1"><strong>Over-voltage:</strong> Shortened lamp life, equipment damage</li>
-                <li className="pl-1"><strong>Voltage dips:</strong> IT resets, process interruption</li>
-                <li className="pl-1"><strong>Flicker:</strong> Visible light variation, annoyance</li>
+                <li className="pl-1">
+                  <strong>Under-voltage:</strong> Motor overheating, equipment malfunction
+                </li>
+                <li className="pl-1">
+                  <strong>Over-voltage:</strong> Shortened lamp life, equipment damage
+                </li>
+                <li className="pl-1">
+                  <strong>Voltage dips:</strong> IT resets, process interruption
+                </li>
+                <li className="pl-1">
+                  <strong>Flicker:</strong> Visible light variation, annoyance
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Total voltage drop (supply + installation) must keep equipment voltage within tolerance. BS 7671 limits installation voltage drop to 3-5%.
+              <strong>Design consideration:</strong> Total voltage drop (supply + installation) must
+              keep equipment voltage within tolerance. BS 7671 limits installation voltage drop to
+              3-5%.
             </p>
           </div>
         </section>
@@ -345,13 +424,15 @@ const HNCModule4Section5_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Surge Protective Devices (SPDs) protect against transient overvoltages from
-              lightning, switching operations and network disturbances. Properly coordinated
-              SPDs are essential for protecting sensitive electronic equipment.
+              Surge Protective Devices (SPDs) protect against transient overvoltages from lightning,
+              switching operations and network disturbances. Properly coordinated SPDs are essential
+              for protecting sensitive electronic equipment.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">SPD Types and Applications</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                SPD Types and Applications
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -367,25 +448,33 @@ const HNCModule4Section5_5 = () => {
                       <td className="border border-white/10 px-3 py-2">Type 1 (T1)</td>
                       <td className="border border-white/10 px-3 py-2">10/350µs (Iimp)</td>
                       <td className="border border-white/10 px-3 py-2">Main DB/origin</td>
-                      <td className="border border-white/10 px-3 py-2">Direct lightning, LPS buildings</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Direct lightning, LPS buildings
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Type 2 (T2)</td>
                       <td className="border border-white/10 px-3 py-2">8/20µs (In/Imax)</td>
                       <td className="border border-white/10 px-3 py-2">Sub-distribution</td>
-                      <td className="border border-white/10 px-3 py-2">Switching, indirect lightning</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Switching, indirect lightning
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Type 3 (T3)</td>
                       <td className="border border-white/10 px-3 py-2">1.2/50µs + 8/20µs</td>
                       <td className="border border-white/10 px-3 py-2">Point of use</td>
-                      <td className="border border-white/10 px-3 py-2">Fine protection for equipment</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Fine protection for equipment
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Type 1+2</td>
                       <td className="border border-white/10 px-3 py-2">Combined</td>
                       <td className="border border-white/10 px-3 py-2">Main DB</td>
-                      <td className="border border-white/10 px-3 py-2">Simplified two-stage protection</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Simplified two-stage protection
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -393,18 +482,31 @@ const HNCModule4Section5_5 = () => {
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">SPD Selection Parameters</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                SPD Selection Parameters
+              </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Uc:</strong> Maximum continuous operating voltage (&gt;253V for UK)</li>
-                <li className="pl-1"><strong>Up:</strong> Voltage protection level (lower is better, &lt;1.5kV typical)</li>
-                <li className="pl-1"><strong>In:</strong> Nominal discharge current (typically 5-20kA for T2)</li>
-                <li className="pl-1"><strong>Imax:</strong> Maximum discharge current</li>
-                <li className="pl-1"><strong>Mode:</strong> L-N, L-PE, N-PE (common mode/differential mode)</li>
+                <li className="pl-1">
+                  <strong>Uc:</strong> Maximum continuous operating voltage (&gt;253V for UK)
+                </li>
+                <li className="pl-1">
+                  <strong>Up:</strong> Voltage protection level (lower is better, &lt;1.5kV typical)
+                </li>
+                <li className="pl-1">
+                  <strong>In:</strong> Nominal discharge current (typically 5-20kA for T2)
+                </li>
+                <li className="pl-1">
+                  <strong>Imax:</strong> Maximum discharge current
+                </li>
+                <li className="pl-1">
+                  <strong>Mode:</strong> L-N, L-PE, N-PE (common mode/differential mode)
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Coordination:</strong> T1 and T2 SPDs must be coordinated - typically 10m cable minimum between them, or use manufacturer-specified coordination components.
+              <strong>Coordination:</strong> T1 and T2 SPDs must be coordinated - typically 10m
+              cable minimum between them, or use manufacturer-specified coordination components.
             </p>
           </div>
         </section>
@@ -432,19 +534,27 @@ const HNCModule4Section5_5 = () => {
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">System</th>
                       <th className="border border-white/10 px-3 py-2 text-left">Earth Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristics</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Characteristics
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">TN-S</td>
-                      <td className="border border-white/10 px-3 py-2">Separate DNO earth conductor</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Separate DNO earth conductor
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Low Zs, reliable earth</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">TN-C-S (PME)</td>
-                      <td className="border border-white/10 px-3 py-2">Combined PEN split at origin</td>
-                      <td className="border border-white/10 px-3 py-2">Most common, some restrictions</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Combined PEN split at origin
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Most common, some restrictions
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">TT</td>
@@ -453,8 +563,12 @@ const HNCModule4Section5_5 = () => {
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">IT</td>
-                      <td className="border border-white/10 px-3 py-2">Isolated or high-impedance earth</td>
-                      <td className="border border-white/10 px-3 py-2">Medical, continuous process</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Isolated or high-impedance earth
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Medical, continuous process
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -472,7 +586,9 @@ const HNCModule4Section5_5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Main Bonding Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Main Bonding Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                   <li className="pl-1">Water, gas and oil service pipes</li>
                   <li className="pl-1">Structural steelwork</li>
@@ -483,7 +599,8 @@ const HNCModule4Section5_5 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Design note:</strong> Always verify earthing type with the DNO before design. PME availability and restrictions affect the entire installation design.
+              <strong>Design note:</strong> Always verify earthing type with the DNO before design.
+              PME availability and restrictions affect the entire installation design.
             </p>
           </div>
         </section>
@@ -504,21 +621,31 @@ const HNCModule4Section5_5 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sources of EMI in Buildings</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Sources of EMI in Buildings
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Interference Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Affected Equipment</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Interference Type
+                      </th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Affected Equipment
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">VFDs/Inverters</td>
-                      <td className="border border-white/10 px-3 py-2">Conducted and radiated HF</td>
-                      <td className="border border-white/10 px-3 py-2">IT, audio systems, sensors</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Conducted and radiated HF
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        IT, audio systems, sensors
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">LED drivers</td>
@@ -538,7 +665,9 @@ const HNCModule4Section5_5 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Welding equipment</td>
                       <td className="border border-white/10 px-3 py-2">High current transients</td>
-                      <td className="border border-white/10 px-3 py-2">Most electronic equipment</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Most electronic equipment
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -548,17 +677,31 @@ const HNCModule4Section5_5 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">EMC Design Measures</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Cable segregation:</strong> Separate power, control and data cables</li>
-                <li className="pl-1"><strong>Shielded cables:</strong> For sensitive signals, earthed at one/both ends</li>
-                <li className="pl-1"><strong>EMC filters:</strong> On VFD inputs, switched-mode power supplies</li>
-                <li className="pl-1"><strong>Ferrite cores:</strong> On data cables near interference sources</li>
-                <li className="pl-1"><strong>Star earthing:</strong> Single point earth for sensitive systems</li>
-                <li className="pl-1"><strong>Twisted pairs:</strong> Reduce magnetic field pickup</li>
+                <li className="pl-1">
+                  <strong>Cable segregation:</strong> Separate power, control and data cables
+                </li>
+                <li className="pl-1">
+                  <strong>Shielded cables:</strong> For sensitive signals, earthed at one/both ends
+                </li>
+                <li className="pl-1">
+                  <strong>EMC filters:</strong> On VFD inputs, switched-mode power supplies
+                </li>
+                <li className="pl-1">
+                  <strong>Ferrite cores:</strong> On data cables near interference sources
+                </li>
+                <li className="pl-1">
+                  <strong>Star earthing:</strong> Single point earth for sensitive systems
+                </li>
+                <li className="pl-1">
+                  <strong>Twisted pairs:</strong> Reduce magnetic field pickup
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Harmonics:</strong> Third harmonics (150Hz) from electronic loads add in three-phase neutrals. Consider oversized neutrals or separate neutrals for non-linear load circuits.
+              <strong>Harmonics:</strong> Third harmonics (150Hz) from electronic loads add in
+              three-phase neutrals. Consider oversized neutrals or separate neutrals for non-linear
+              load circuits.
             </p>
           </div>
         </section>
@@ -574,9 +717,12 @@ const HNCModule4Section5_5 = () => {
 
           <div className="space-y-6">
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 1: SPD Specification</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 1: SPD Specification
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify SPDs for an office building with lightning protection system.
+                <strong>Scenario:</strong> Specify SPDs for an office building with lightning
+                protection system.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p>Building has external LPS → Type 1 SPD required</p>
@@ -594,9 +740,12 @@ const HNCModule4Section5_5 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 2: Harmonic Neutral Sizing</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 2: Harmonic Neutral Sizing
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate neutral current for 3-phase IT load with 60% third harmonic current.
+                <strong>Scenario:</strong> Calculate neutral current for 3-phase IT load with 60%
+                third harmonic current.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p>Phase current per phase: 50A (balanced)</p>
@@ -606,16 +755,21 @@ const HNCModule4Section5_5 = () => {
                 <p className="mt-2">Total neutral current (RMS):</p>
                 <p>In = √(fundamental² + 3rd²)</p>
                 <p>Fundamental cancels → approximately 0A</p>
-                <p>In ≈ <strong>90A</strong> (from 3rd harmonic alone)</p>
+                <p>
+                  In ≈ <strong>90A</strong> (from 3rd harmonic alone)
+                </p>
                 <p className="text-red-400 mt-2">Neutral exceeds phase current!</p>
                 <p>Specify 200% rated neutral or separate neutrals</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 3: Voltage Drop Check</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 3: Voltage Drop Check
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify voltage at end of 80m sub-main when supply is at lower tolerance.
+                <strong>Scenario:</strong> Verify voltage at end of 80m sub-main when supply is at
+                lower tolerance.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p>Supply voltage: 207V (lower limit -10%)</p>
@@ -639,7 +793,9 @@ const HNCModule4Section5_5 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Segregation Rules</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cable Segregation Rules
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Power and data cables: 300mm minimum separation</li>
                 <li className="pl-1">VFD outputs: Shielded cable, separate containment</li>
@@ -649,7 +805,9 @@ const HNCModule4Section5_5 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Power Quality Monitoring</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Power Quality Monitoring
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Install power quality meters at main intake</li>
                 <li className="pl-1">Monitor voltage, current, harmonics, power factor</li>
@@ -659,12 +817,22 @@ const HNCModule4Section5_5 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Power Quality Problems</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Power Quality Problems
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Nuisance RCD trips</strong> - Often harmonic or EMI related</li>
-                <li className="pl-1"><strong>IT resets during storms</strong> - Inadequate surge protection</li>
-                <li className="pl-1"><strong>Overheating neutrals</strong> - Third harmonic currents</li>
-                <li className="pl-1"><strong>Motor hunting</strong> - Voltage unbalance</li>
+                <li className="pl-1">
+                  <strong>Nuisance RCD trips</strong> - Often harmonic or EMI related
+                </li>
+                <li className="pl-1">
+                  <strong>IT resets during storms</strong> - Inadequate surge protection
+                </li>
+                <li className="pl-1">
+                  <strong>Overheating neutrals</strong> - Third harmonic currents
+                </li>
+                <li className="pl-1">
+                  <strong>Motor hunting</strong> - Voltage unbalance
+                </li>
               </ul>
             </div>
           </div>
@@ -715,28 +883,33 @@ const HNCModule4Section5_5 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module4-section5-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: UPS and Standby Power
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module4-section5-6">
               Next: Metering and Monitoring
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

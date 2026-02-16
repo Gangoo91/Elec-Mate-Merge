@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface RadialGaugeProps {
   value: number;
@@ -56,13 +56,9 @@ export function RadialGauge({
   const finalColor = colorConfig[color === 'yellow' ? autoColor : color];
 
   return (
-    <div className={cn("flex flex-col items-center", className)}>
-      <div className={cn("relative", `shadow-lg ${finalColor.glow}`, "rounded-full")}>
-        <svg
-          width={config.width}
-          height={config.width}
-          className="transform -rotate-90"
-        >
+    <div className={cn('flex flex-col items-center', className)}>
+      <div className={cn('relative', `shadow-lg ${finalColor.glow}`, 'rounded-full')}>
+        <svg width={config.width} height={config.width} className="transform -rotate-90">
           {/* Background circle */}
           <circle
             cx={config.width / 2}
@@ -92,23 +88,24 @@ export function RadialGauge({
         {/* Center content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           {showPercentage && (
-            <span className={cn(config.fontSize, "font-bold text-foreground")}>
+            <span className={cn(config.fontSize, 'font-bold text-foreground')}>
               {Math.round(percentage)}%
             </span>
           )}
           {label && (
-            <span className={cn(config.labelSize, "font-semibold text-muted-foreground uppercase tracking-wide")}>
+            <span
+              className={cn(
+                config.labelSize,
+                'font-semibold text-muted-foreground uppercase tracking-wide'
+              )}
+            >
               {label}
             </span>
           )}
         </div>
       </div>
 
-      {sublabel && (
-        <p className="mt-3 text-sm text-muted-foreground text-center">
-          {sublabel}
-        </p>
-      )}
+      {sublabel && <p className="mt-3 text-sm text-muted-foreground text-center">{sublabel}</p>}
     </div>
   );
 }

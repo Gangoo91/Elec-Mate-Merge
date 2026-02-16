@@ -6,8 +6,10 @@ import { cn } from '@/lib/utils';
 type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline' | 'destructive';
 
-interface TouchButtonProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'> {
+interface TouchButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'
+> {
   size?: ButtonSize;
   variant?: ButtonVariant;
   loading?: boolean;
@@ -39,15 +41,8 @@ const variantClasses: Record<ButtonVariant, string> = {
     'hover:bg-elec-yellow/90',
     'shadow-lg shadow-elec-yellow/25'
   ),
-  secondary: cn(
-    'bg-white/10 text-foreground',
-    'hover:bg-white/15',
-    'border border-white/10'
-  ),
-  ghost: cn(
-    'bg-transparent text-foreground',
-    'hover:bg-white/5'
-  ),
+  secondary: cn('bg-white/10 text-foreground', 'hover:bg-white/15', 'border border-white/10'),
+  ghost: cn('bg-transparent text-foreground', 'hover:bg-white/5'),
   outline: cn(
     'bg-transparent text-foreground',
     'border-2 border-white/20',
@@ -125,8 +120,10 @@ export const TouchButton = forwardRef<HTMLButtonElement, TouchButtonProps>(
 TouchButton.displayName = 'TouchButton';
 
 // Icon-only button variant
-interface TouchIconButtonProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'> {
+interface TouchIconButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'
+> {
   size?: ButtonSize;
   variant?: ButtonVariant;
   loading?: boolean;
@@ -136,16 +133,7 @@ interface TouchIconButtonProps
 
 export const TouchIconButton = forwardRef<HTMLButtonElement, TouchIconButtonProps>(
   (
-    {
-      size = 'md',
-      variant = 'ghost',
-      loading = false,
-      icon,
-      label,
-      disabled,
-      className,
-      ...props
-    },
+    { size = 'md', variant = 'ghost', loading = false, icon, label, disabled, className, ...props },
     ref
   ) => {
     const isDisabled = disabled || loading;

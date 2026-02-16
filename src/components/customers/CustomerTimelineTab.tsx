@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { useCustomerActivity, ActivityType, activityTypeConfig } from '@/hooks/inspection/useCustomerActivity';
+import {
+  useCustomerActivity,
+  ActivityType,
+  activityTypeConfig,
+} from '@/hooks/inspection/useCustomerActivity';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -40,10 +44,9 @@ const activityIcons: Record<ActivityType, React.ReactNode> = {
 export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) => {
   const [filterType, setFilterType] = useState<ActivityType | 'all'>('all');
 
-  const { activities, isLoading, deleteActivity, isDeleting } = useCustomerActivity(
-    customerId,
-    { activityType: filterType }
-  );
+  const { activities, isLoading, deleteActivity, isDeleting } = useCustomerActivity(customerId, {
+    activityType: filterType,
+  });
 
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);

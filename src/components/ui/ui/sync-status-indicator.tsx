@@ -22,7 +22,7 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
     if (!isOnline) {
       return <WifiOff className="h-4 w-4" />;
     }
-    
+
     if (!isAuthenticated) {
       return <CloudOff className="h-4 w-4" />;
     }
@@ -93,9 +93,7 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
   return (
     <div className={cn('flex items-center gap-2', className)}>
       {getStatusIcon()}
-      <span className={cn('text-sm font-medium', getStatusColor())}>
-        {getStatusText()}
-      </span>
+      <span className={cn('text-sm font-medium', getStatusColor())}>{getStatusText()}</span>
     </div>
   );
 };

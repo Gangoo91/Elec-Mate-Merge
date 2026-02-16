@@ -1,6 +1,14 @@
 import { CircuitDesign } from '@/types/installation-design';
 import { Drawer } from 'vaul';
-import { X, FileText, Cable, Shield, AlertTriangle, ClipboardCheck, CheckCircle2 } from 'lucide-react';
+import {
+  X,
+  FileText,
+  Cable,
+  Shield,
+  AlertTriangle,
+  ClipboardCheck,
+  CheckCircle2,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface CircuitJustificationSheetProps {
@@ -9,7 +17,11 @@ interface CircuitJustificationSheetProps {
   onClose: () => void;
 }
 
-export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJustificationSheetProps) => {
+export const CircuitJustificationSheet = ({
+  circuit,
+  isOpen,
+  onClose,
+}: CircuitJustificationSheetProps) => {
   if (!circuit) return null;
 
   const justifications = circuit.justifications;
@@ -21,7 +33,7 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
         <Drawer.Content className="bg-card fixed bottom-0 left-0 right-0 max-h-[90vh] rounded-t-2xl z-50 border-t-4 border-elec-yellow flex flex-col">
           {/* Handle */}
           <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-elec-light/30 mt-4" />
-          
+
           {/* Header */}
           <div className="p-6 pb-4 border-b border-elec-yellow/20 flex-shrink-0">
             <div className="flex items-center justify-between">
@@ -46,7 +58,6 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
 
           {/* Content - Scrollable */}
           <div className="overflow-y-auto flex-1 p-6 space-y-8">
-            
             {/* Cable Size Justification */}
             <div className="space-y-4 border-l-4 border-elec-yellow/30 pl-4">
               <div className="flex items-center gap-2 mb-3">
@@ -60,8 +71,9 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                   </Badge>
                 </div>
                 <p className="text-sm text-foreground leading-loose whitespace-pre-line">
-                  {justifications?.cableSize && justifications.cableSize !== 'No specific justification provided.' 
-                    ? justifications.cableSize 
+                  {justifications?.cableSize &&
+                  justifications.cableSize !== 'No specific justification provided.'
+                    ? justifications.cableSize
                     : `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² cable selected to safely carry ${circuit.calculations?.Ib?.toFixed(1)}A design current with adequate voltage drop performance (${circuit.calculations?.voltageDrop?.percent?.toFixed(2)}% actual vs ${circuit.calculations?.voltageDrop?.limit}% limit).`}
                 </p>
               </div>
@@ -71,17 +83,21 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
             <div className="space-y-4 border-l-4 border-elec-yellow/30 pl-4">
               <div className="flex items-center gap-2 mb-3">
                 <Shield className="h-4 w-4 text-elec-yellow" />
-                <h3 className="text-sm font-semibold text-foreground">Protection Device Selection</h3>
+                <h3 className="text-sm font-semibold text-foreground">
+                  Protection Device Selection
+                </h3>
               </div>
               <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20">
                 <div className="mb-3">
                   <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
-                    {circuit.protectionDevice.rating}A Type {circuit.protectionDevice.curve} {circuit.protectionDevice.type}
+                    {circuit.protectionDevice.rating}A Type {circuit.protectionDevice.curve}{' '}
+                    {circuit.protectionDevice.type}
                   </Badge>
                 </div>
                 <p className="text-sm text-foreground leading-loose whitespace-pre-line">
-                  {justifications?.protection && justifications.protection !== 'No specific justification provided.'
-                    ? justifications.protection 
+                  {justifications?.protection &&
+                  justifications.protection !== 'No specific justification provided.'
+                    ? justifications.protection
                     : `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type} provides adequate protection and discrimination for this ${circuit.loadType} circuit, with earth fault loop impedance (${circuit.calculations?.zs?.toFixed(2)}Ω) below maximum permitted (${circuit.calculations?.maxZs?.toFixed(2)}Ω).`}
                 </p>
               </div>
@@ -108,24 +124,26 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
             )}
 
             {/* Diversity Justification */}
-            {circuit.diversityFactor && circuit.diversityFactor < 1.0 && circuit.diversityJustification && (
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-orange-400" />
-                  <h3 className="text-sm font-semibold text-elec-light">Diversity Applied</h3>
-                </div>
-                <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/30">
-                  <div className="mb-3">
-                    <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
-                      {(circuit.diversityFactor * 100).toFixed(0)}% Diversity Factor
-                    </Badge>
+            {circuit.diversityFactor &&
+              circuit.diversityFactor < 1.0 &&
+              circuit.diversityJustification && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-orange-400" />
+                    <h3 className="text-sm font-semibold text-elec-light">Diversity Applied</h3>
                   </div>
-                  <p className="text-sm text-orange-100/90 leading-relaxed whitespace-pre-wrap">
-                    {circuit.diversityJustification}
-                  </p>
+                  <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/30">
+                    <div className="mb-3">
+                      <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
+                        {(circuit.diversityFactor * 100).toFixed(0)}% Diversity Factor
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-orange-100/90 leading-relaxed whitespace-pre-wrap">
+                      {circuit.diversityJustification}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Fault Current Analysis */}
             {circuit.faultCurrentAnalysis && (
@@ -136,39 +154,42 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                 </div>
                 <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20 space-y-3">
                   <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <p className="text-xs text-foreground/80 mb-1">PSCC at Circuit</p>
-                    <p className="text-sm font-semibold text-foreground">
-                      {circuit.faultCurrentAnalysis.psccAtCircuit}kA
+                    <div>
+                      <p className="text-xs text-foreground/80 mb-1">PSCC at Circuit</p>
+                      <p className="text-sm font-semibold text-foreground">
+                        {circuit.faultCurrentAnalysis.psccAtCircuit}kA
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-foreground/80 mb-1">Device Capacity</p>
+                      <p className="text-sm font-semibold text-foreground">
+                        {circuit.faultCurrentAnalysis.deviceBreakingCapacity}kA
+                      </p>
+                    </div>
+                  </div>
+                  <div className="pt-2 border-t border-elec-yellow/10">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs text-foreground/80">Status</span>
+                      {circuit.faultCurrentAnalysis.compliant ? (
+                        <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                          ✓ Compliant
+                        </Badge>
+                      ) : (
+                        <Badge variant="destructive" className="text-xs">
+                          ✗ Non-Compliant
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-xs text-foreground/90 leading-loose">
+                      {circuit.faultCurrentAnalysis.marginOfSafety}
                     </p>
+                    <Badge
+                      variant="outline"
+                      className="text-xs border-elec-yellow/30 text-foreground/90 mt-2"
+                    >
+                      {circuit.faultCurrentAnalysis.regulation}
+                    </Badge>
                   </div>
-                  <div>
-                    <p className="text-xs text-foreground/80 mb-1">Device Capacity</p>
-                    <p className="text-sm font-semibold text-foreground">
-                      {circuit.faultCurrentAnalysis.deviceBreakingCapacity}kA
-                    </p>
-                  </div>
-                  </div>
-                <div className="pt-2 border-t border-elec-yellow/10">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-foreground/80">Status</span>
-                    {circuit.faultCurrentAnalysis.compliant ? (
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                        ✓ Compliant
-                      </Badge>
-                    ) : (
-                      <Badge variant="destructive" className="text-xs">
-                        ✗ Non-Compliant
-                      </Badge>
-                    )}
-                  </div>
-                  <p className="text-xs text-foreground/90 leading-loose">
-                    {circuit.faultCurrentAnalysis.marginOfSafety}
-                  </p>
-                  <Badge variant="outline" className="text-xs border-elec-yellow/30 text-foreground/90 mt-2">
-                    {circuit.faultCurrentAnalysis.regulation}
-                  </Badge>
-                </div>
                 </div>
               </div>
             )}
@@ -191,7 +212,9 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                     <div>
                       <p className="text-xs text-green-100/60 mb-1">Supp. Bonding</p>
                       <p className="text-sm font-semibold text-green-100">
-                        {circuit.earthingRequirements.supplementaryBonding ? 'Required' : 'Not Required'}
+                        {circuit.earthingRequirements.supplementaryBonding
+                          ? 'Required'
+                          : 'Not Required'}
                       </p>
                     </div>
                   </div>
@@ -207,7 +230,10 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                     <p className="text-xs text-green-100/90 leading-relaxed">
                       {circuit.earthingRequirements.justification}
                     </p>
-                    <Badge variant="outline" className="text-xs border-green-500/30 text-green-100/70 mt-2">
+                    <Badge
+                      variant="outline"
+                      className="text-xs border-green-500/30 text-green-100/70 mt-2"
+                    >
                       {circuit.earthingRequirements.regulation}
                     </Badge>
                   </div>
@@ -230,34 +256,44 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                   ) : circuit.installationGuidance ? (
                     <div className="space-y-3 text-sm text-foreground/90">
                       {/* Display structured installation guidance */}
-                      {(circuit.installationGuidance as any)?.safetyConsiderations && 
-                       Array.isArray((circuit.installationGuidance as any).safetyConsiderations) && 
-                       (circuit.installationGuidance as any).safetyConsiderations.length > 0 && (
-                        <div>
-                          <p className="font-semibold text-orange-400 mb-2">Safety Considerations:</p>
-                          <ul className="list-disc list-inside space-y-1">
-                            {(circuit.installationGuidance as any).safetyConsiderations.map((item: any, idx: number) => (
-                              <li key={idx}>
-                                {typeof item === 'string' ? item : (item.consideration || JSON.stringify(item))}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {(circuit.installationGuidance as any)?.cableRouting && 
-                       Array.isArray((circuit.installationGuidance as any).cableRouting) && 
-                       (circuit.installationGuidance as any).cableRouting.length > 0 && (
-                        <div>
-                          <p className="font-semibold text-blue-400 mb-2">Cable Routing:</p>
-                          <ul className="list-disc list-inside space-y-1">
-                            {(circuit.installationGuidance as any).cableRouting.map((item: any, idx: number) => (
-                              <li key={idx}>
-                                {typeof item === 'string' ? item : (item.step || item.description || JSON.stringify(item))}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                      {(circuit.installationGuidance as any)?.safetyConsiderations &&
+                        Array.isArray((circuit.installationGuidance as any).safetyConsiderations) &&
+                        (circuit.installationGuidance as any).safetyConsiderations.length > 0 && (
+                          <div>
+                            <p className="font-semibold text-orange-400 mb-2">
+                              Safety Considerations:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1">
+                              {(circuit.installationGuidance as any).safetyConsiderations.map(
+                                (item: any, idx: number) => (
+                                  <li key={idx}>
+                                    {typeof item === 'string'
+                                      ? item
+                                      : item.consideration || JSON.stringify(item)}
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        )}
+                      {(circuit.installationGuidance as any)?.cableRouting &&
+                        Array.isArray((circuit.installationGuidance as any).cableRouting) &&
+                        (circuit.installationGuidance as any).cableRouting.length > 0 && (
+                          <div>
+                            <p className="font-semibold text-blue-400 mb-2">Cable Routing:</p>
+                            <ul className="list-disc list-inside space-y-1">
+                              {(circuit.installationGuidance as any).cableRouting.map(
+                                (item: any, idx: number) => (
+                                  <li key={idx}>
+                                    {typeof item === 'string'
+                                      ? item
+                                      : item.step || item.description || JSON.stringify(item)}
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        )}
                     </div>
                   ) : (
                     <p className="text-sm text-foreground leading-loose">
@@ -267,7 +303,7 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                 </div>
               </div>
             )}
-            
+
             {/* Expected Test Results */}
             {circuit.expectedTestResults && (
               <div className="space-y-4 border-l-4 border-elec-yellow/30 pl-4">
@@ -290,35 +326,49 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                     <div className="grid grid-cols-2 gap-2">
                       <div className="bg-blue-500/5 p-2 rounded">
                         <p className="text-xs text-blue-300">At 20°C</p>
-                        <p className="text-sm font-bold text-foreground">{circuit.expectedTestResults.r1r2.at20C}Ω</p>
+                        <p className="text-sm font-bold text-foreground">
+                          {circuit.expectedTestResults.r1r2.at20C}Ω
+                        </p>
                       </div>
                       <div className="bg-blue-500/5 p-2 rounded">
                         <p className="text-xs text-blue-300">At 70°C</p>
-                        <p className="text-sm font-bold text-foreground">{circuit.expectedTestResults.r1r2.at70C}Ω</p>
+                        <p className="text-sm font-bold text-foreground">
+                          {circuit.expectedTestResults.r1r2.at70C}Ω
+                        </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Zs */}
-                  <div className={`bg-gradient-to-br p-3 rounded-lg border ${
-                    circuit.expectedTestResults.zs.compliant 
-                      ? 'from-green-500/10 to-green-600/5 border-green-500/20' 
-                      : 'from-red-500/10 to-red-600/5 border-red-500/20'
-                  }`}>
+                  <div
+                    className={`bg-gradient-to-br p-3 rounded-lg border ${
+                      circuit.expectedTestResults.zs.compliant
+                        ? 'from-green-500/10 to-green-600/5 border-green-500/20'
+                        : 'from-red-500/10 to-red-600/5 border-red-500/20'
+                    }`}
+                  >
                     <div className="flex items-center gap-2 mb-2">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                        circuit.expectedTestResults.zs.compliant 
-                          ? 'bg-green-500/20' 
-                          : 'bg-red-500/20'
-                      }`}>
-                        <span className={`font-bold text-xs ${
-                          circuit.expectedTestResults.zs.compliant 
-                            ? 'text-green-400' 
-                            : 'text-red-400'
-                        }`}>Zs</span>
+                      <div
+                        className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                          circuit.expectedTestResults.zs.compliant
+                            ? 'bg-green-500/20'
+                            : 'bg-red-500/20'
+                        }`}
+                      >
+                        <span
+                          className={`font-bold text-xs ${
+                            circuit.expectedTestResults.zs.compliant
+                              ? 'text-green-400'
+                              : 'text-red-400'
+                          }`}
+                        >
+                          Zs
+                        </span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs font-semibold text-foreground">Earth Fault Loop Impedance</p>
+                        <p className="text-xs font-semibold text-foreground">
+                          Earth Fault Loop Impedance
+                        </p>
                         <p className="text-xs text-foreground/80">BS 7671 Reg 411.4.4</p>
                       </div>
                       {circuit.expectedTestResults.zs.compliant ? (
@@ -328,29 +378,45 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                       )}
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                      <div className={`p-2 rounded ${
-                        circuit.expectedTestResults.zs.compliant 
-                          ? 'bg-green-500/5' 
-                          : 'bg-red-500/5'
-                      }`}>
-                        <p className={`text-xs ${
-                          circuit.expectedTestResults.zs.compliant 
-                            ? 'text-green-300/80' 
-                            : 'text-red-300/80'
-                        }`}>Calculated</p>
-                        <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.zs.calculated}</p>
+                      <div
+                        className={`p-2 rounded ${
+                          circuit.expectedTestResults.zs.compliant
+                            ? 'bg-green-500/5'
+                            : 'bg-red-500/5'
+                        }`}
+                      >
+                        <p
+                          className={`text-xs ${
+                            circuit.expectedTestResults.zs.compliant
+                              ? 'text-green-300/80'
+                              : 'text-red-300/80'
+                          }`}
+                        >
+                          Calculated
+                        </p>
+                        <p className="text-sm font-bold text-elec-light">
+                          {circuit.expectedTestResults.zs.calculated}
+                        </p>
                       </div>
-                      <div className={`p-2 rounded ${
-                        circuit.expectedTestResults.zs.compliant 
-                          ? 'bg-green-500/5' 
-                          : 'bg-red-500/5'
-                      }`}>
-                        <p className={`text-xs ${
-                          circuit.expectedTestResults.zs.compliant 
-                            ? 'text-green-300/80' 
-                            : 'text-red-300/80'
-                        }`}>Max Permitted</p>
-                        <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.zs.maxPermitted}</p>
+                      <div
+                        className={`p-2 rounded ${
+                          circuit.expectedTestResults.zs.compliant
+                            ? 'bg-green-500/5'
+                            : 'bg-red-500/5'
+                        }`}
+                      >
+                        <p
+                          className={`text-xs ${
+                            circuit.expectedTestResults.zs.compliant
+                              ? 'text-green-300/80'
+                              : 'text-red-300/80'
+                          }`}
+                        >
+                          Max Permitted
+                        </p>
+                        <p className="text-sm font-bold text-elec-light">
+                          {circuit.expectedTestResults.zs.maxPermitted}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -362,11 +428,16 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                         <span className="text-purple-400 font-bold text-xs">IR</span>
                       </div>
                       <div>
-                        <p className="text-xs font-semibold text-elec-light">Insulation Resistance</p>
+                        <p className="text-xs font-semibold text-elec-light">
+                          Insulation Resistance
+                        </p>
                         <p className="text-xs text-elec-light/60">BS 7671 Reg 643.3.1</p>
                       </div>
                     </div>
-                    <p className="text-sm text-elec-light">{circuit.expectedTestResults.insulationResistance.minResistance} @ {circuit.expectedTestResults.insulationResistance.testVoltage}</p>
+                    <p className="text-sm text-elec-light">
+                      {circuit.expectedTestResults.insulationResistance.minResistance} @{' '}
+                      {circuit.expectedTestResults.insulationResistance.testVoltage}
+                    </p>
                   </div>
 
                   {circuit.rcdProtected && circuit.expectedTestResults.rcdTest && (
@@ -382,11 +453,15 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                       <div className="grid grid-cols-2 gap-2">
                         <div className="bg-cyan-500/5 p-2 rounded">
                           <p className="text-xs text-cyan-300/80">At 1× IΔn</p>
-                          <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.rcdTest.at1x}</p>
+                          <p className="text-sm font-bold text-elec-light">
+                            {circuit.expectedTestResults.rcdTest.at1x}
+                          </p>
                         </div>
                         <div className="bg-cyan-500/5 p-2 rounded">
                           <p className="text-xs text-cyan-300/80">At 5× IΔn</p>
-                          <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.rcdTest.at5x}</p>
+                          <p className="text-sm font-bold text-elec-light">
+                            {circuit.expectedTestResults.rcdTest.at5x}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -424,7 +499,10 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                       ))}
                     </ul>
                   </div>
-                  <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-100/70 mt-2">
+                  <Badge
+                    variant="outline"
+                    className="text-xs border-orange-500/30 text-orange-100/70 mt-2"
+                  >
                     {circuit.specialLocationCompliance.regulation}
                   </Badge>
                 </div>

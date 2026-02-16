@@ -32,13 +32,13 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   let yPosition = 20;
   const pageWidth = doc.internal.pageSize.width;
   const margin = 20;
-  const contentWidth = pageWidth - (margin * 2);
+  const contentWidth = pageWidth - margin * 2;
 
   // Helper function to add text with word wrap
   const addText = (text: string, x: number, y: number, maxWidth?: number): number => {
     const lines = maxWidth ? doc.splitTextToSize(text, maxWidth) : [text];
     doc.text(lines, x, y);
-    return y + (lines.length * 6);
+    return y + lines.length * 6;
   };
 
   // Helper function to add a section
@@ -47,11 +47,11 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
       doc.addPage();
       yPosition = 20;
     }
-    
+
     doc.setFont('helvetica', 'bold');
     yPosition = addText(title, margin, yPosition);
     yPosition += 2;
-    
+
     doc.setFont('helvetica', 'normal');
     const displayValue = value || content || 'Not specified';
     yPosition = addText(displayValue, margin, yPosition, contentWidth) + 5;
@@ -60,28 +60,49 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   // Header
   doc.setFontSize(16);
   doc.setFont('helvetica', 'bold');
-  yPosition = addText('MINOR ELECTRICAL INSTALLATION WORKS CERTIFICATE', margin, yPosition, contentWidth);
-  
+  yPosition = addText(
+    'MINOR ELECTRICAL INSTALLATION WORKS CERTIFICATE',
+    margin,
+    yPosition,
+    contentWidth
+  );
+
   doc.setFontSize(12);
-  yPosition = addText('BS 7671:2018+A3:2024 - Requirements for Electrical Installations', margin, yPosition, contentWidth) + 10;
+  yPosition =
+    addText(
+      'BS 7671:2018+A3:2024 - Requirements for Electrical Installations',
+      margin,
+      yPosition,
+      contentWidth
+    ) + 10;
 
   // Certificate Reference
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
-  yPosition = addText(`Certificate Reference: ${formData.certificateNumber}`, margin, yPosition, contentWidth) + 10;
+  yPosition =
+    addText(
+      `Certificate Reference: ${formData.certificateNumber}`,
+      margin,
+      yPosition,
+      contentWidth
+    ) + 10;
 
   doc.setFontSize(10);
 
   // Part 1: Client & Installation Details
   doc.setFont('helvetica', 'bold');
   yPosition = addText('PART 1: CLIENT & INSTALLATION DETAILS', margin, yPosition) + 5;
-  
+
   addSection('Client Name:', '', formData.clientName);
   addSection('Installation Address:', '', formData.propertyAddress);
   if (formData.postcode) {
     addSection('Postcode:', '', formData.postcode);
   }
-  addSection('Date of Work:', '', formData.workDate ? new Date(formData.workDate).toLocaleDateString('en-GB') : '');
+  addSection(
+    'Date of Work:',
+    '',
+    formData.workDate ? new Date(formData.workDate).toLocaleDateString('en-GB') : ''
+  );
 
   // Part 2: Description of Work
   yPosition += 5;
@@ -93,7 +114,11 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
 
   // IET Required Fields
   if (formData.departuresFromBs7671) {
-    addSection('Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5):', '', formData.departuresFromBs7671);
+    addSection(
+      'Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5):',
+      '',
+      formData.departuresFromBs7671
+    );
   }
   if (formData.permittedExceptions) {
     addSection('Permitted Exceptions (Reg 411.3.3):', '', formData.permittedExceptions);
@@ -102,13 +127,18 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
     addSection('Risk Assessment:', '', 'Attached');
   }
   if (formData.commentsOnExistingInstallation) {
-    addSection('Comments on Existing Installation (Reg 644.1.2):', '', formData.commentsOnExistingInstallation);
+    addSection(
+      'Comments on Existing Installation (Reg 644.1.2):',
+      '',
+      formData.commentsOnExistingInstallation
+    );
   }
 
   // Part 3: Supply & Earthing (Reg 132.16)
   yPosition += 5;
   doc.setFont('helvetica', 'bold');
-  yPosition = addText('PART 3: SUPPLY CHARACTERISTICS & EARTHING (Reg 132.16)', margin, yPosition) + 5;
+  yPosition =
+    addText('PART 3: SUPPLY CHARACTERISTICS & EARTHING (Reg 132.16)', margin, yPosition) + 5;
 
   addSection('Supply Voltage:', '', formData.supplyVoltage);
   addSection('Earthing Arrangement:', '', formData.earthingArrangement);
@@ -116,8 +146,16 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
     addSection('Zdb (Earth fault loop impedance at DB):', '', `${formData.zdb} Ω`);
   }
   addSection('Earthing Conductor Present:', '', formData.earthingConductorPresent ? 'Yes' : 'No');
-  addSection('Main Earthing Conductor:', '', formData.mainEarthingConductorSize ? `${formData.mainEarthingConductorSize}mm²` : '');
-  addSection('Main Bonding Conductor:', '', formData.mainBondingConductorSize ? `${formData.mainBondingConductorSize}mm²` : '');
+  addSection(
+    'Main Earthing Conductor:',
+    '',
+    formData.mainEarthingConductorSize ? `${formData.mainEarthingConductorSize}mm²` : ''
+  );
+  addSection(
+    'Main Bonding Conductor:',
+    '',
+    formData.mainBondingConductorSize ? `${formData.mainBondingConductorSize}mm²` : ''
+  );
 
   // Bonding Conductors to:
   const bondingTo: string[] = [];
@@ -142,8 +180,10 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   const protectiveDeviceInfo = [
     formData.overcurrentDeviceBsEn,
     formData.protectiveDeviceType,
-    formData.protectiveDeviceRating ? `${formData.protectiveDeviceRating}A` : ''
-  ].filter(Boolean).join(' - ');
+    formData.protectiveDeviceRating ? `${formData.protectiveDeviceRating}A` : '',
+  ]
+    .filter(Boolean)
+    .join(' - ');
   addSection('Overcurrent Protective Device:', '', protectiveDeviceInfo);
 
   // RCD Details with IET required fields
@@ -152,30 +192,34 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
       formData.rcdBsEn,
       formData.rcdType ? `Type ${formData.rcdType}` : '',
       formData.rcdRatingAmps ? `${formData.rcdRatingAmps}A` : '',
-      formData.rcdIdn ? `IΔn ${formData.rcdIdn}mA` : ''
-    ].filter(Boolean).join(' - ');
+      formData.rcdIdn ? `IΔn ${formData.rcdIdn}mA` : '',
+    ]
+      .filter(Boolean)
+      .join(' - ');
     addSection('RCD:', '', rcdInfo || 'Yes');
   }
 
   // AFDD Details
   if (formData.protectionAfdd) {
-    const afddInfo = [
-      formData.afddBsEn,
-      formData.afddRating ? `${formData.afddRating}A` : ''
-    ].filter(Boolean).join(' - ');
+    const afddInfo = [formData.afddBsEn, formData.afddRating ? `${formData.afddRating}A` : '']
+      .filter(Boolean)
+      .join(' - ');
     addSection('AFDD:', '', afddInfo || 'Yes');
   }
 
   // SPD Details
   if (formData.protectionSpd) {
-    const spdInfo = [
-      formData.spdBsEn,
-      formData.spdType ? `Type ${formData.spdType}` : ''
-    ].filter(Boolean).join(' - ');
+    const spdInfo = [formData.spdBsEn, formData.spdType ? `Type ${formData.spdType}` : '']
+      .filter(Boolean)
+      .join(' - ');
     addSection('SPD:', '', spdInfo || 'Yes');
   }
 
-  addSection('Live Conductor Size:', '', formData.liveConductorSize ? `${formData.liveConductorSize}mm²` : '');
+  addSection(
+    'Live Conductor Size:',
+    '',
+    formData.liveConductorSize ? `${formData.liveConductorSize}mm²` : ''
+  );
   addSection('CPC Size:', '', formData.cpcSize ? `${formData.cpcSize}mm²` : '');
 
   // Check if we need a new page
@@ -191,14 +235,22 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
 
   // Continuity - R1+R2 or R2 (IET allows either)
   if (formData.r1r2Continuity || formData.continuityR1R2) {
-    addSection('Continuity (R1+R2):', '', `${formData.r1r2Continuity || formData.continuityR1R2} Ω`);
+    addSection(
+      'Continuity (R1+R2):',
+      '',
+      `${formData.r1r2Continuity || formData.continuityR1R2} Ω`
+    );
   }
   if (formData.r2Continuity) {
     addSection('Continuity (R2 only):', '', `${formData.r2Continuity} Ω`);
   }
 
   // Insulation Resistance
-  addSection('Insulation Resistance:', '', `Test Voltage: ${formData.insulationTestVoltage || '500'}V DC`);
+  addSection(
+    'Insulation Resistance:',
+    '',
+    `Test Voltage: ${formData.insulationTestVoltage || '500'}V DC`
+  );
   if (formData.insulationLiveLive) {
     addSection('  Live-Live:', '', `${formData.insulationLiveLive} MΩ`);
   }
@@ -213,9 +265,25 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   }
 
   addSection('Polarity:', '', formData.polarity || formData.polarityResult || '');
-  addSection('Earth Fault Loop Impedance (Zs):', '', formData.earthFaultLoopImpedance || formData.earthFaultLoopResult ? `${formData.earthFaultLoopImpedance || formData.earthFaultLoopResult} Ω` : '');
-  addSection('Maximum Permitted Zs:', '', formData.maxPermittedZs ? `${formData.maxPermittedZs} Ω` : '');
-  addSection('Prospective Fault Current:', '', formData.prospectiveFaultCurrent || formData.prospectiveFault ? `${formData.prospectiveFaultCurrent || formData.prospectiveFault}kA` : '');
+  addSection(
+    'Earth Fault Loop Impedance (Zs):',
+    '',
+    formData.earthFaultLoopImpedance || formData.earthFaultLoopResult
+      ? `${formData.earthFaultLoopImpedance || formData.earthFaultLoopResult} Ω`
+      : ''
+  );
+  addSection(
+    'Maximum Permitted Zs:',
+    '',
+    formData.maxPermittedZs ? `${formData.maxPermittedZs} Ω` : ''
+  );
+  addSection(
+    'Prospective Fault Current:',
+    '',
+    formData.prospectiveFaultCurrent || formData.prospectiveFault
+      ? `${formData.prospectiveFaultCurrent || formData.prospectiveFault}kA`
+      : ''
+  );
 
   // RCD Testing (if applicable)
   if (formData.protectiveDeviceType === 'rcbo' && formData.rcdRating) {
@@ -224,7 +292,11 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
     yPosition = addText('RCD Testing:', margin, yPosition) + 2;
     doc.setFont('helvetica', 'normal');
     addSection('RCD Rating:', '', `${formData.rcdRating}mA`);
-    addSection('Operating Time:', '', formData.rcdOperatingTime ? `${formData.rcdOperatingTime}ms` : '');
+    addSection(
+      'Operating Time:',
+      '',
+      formData.rcdOperatingTime ? `${formData.rcdOperatingTime}ms` : ''
+    );
   }
 
   // Test Equipment
@@ -236,17 +308,24 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   yPosition += 5;
   doc.setFont('helvetica', 'bold');
   yPosition = addText('TEST EQUIPMENT USED', margin, yPosition) + 5;
-  
+
   if (formData.continuityTesterMake) {
-    addSection('Continuity Tester:', '', `${formData.continuityTesterMake} (${formData.continuityTesterSerial})`);
+    addSection(
+      'Continuity Tester:',
+      '',
+      `${formData.continuityTesterMake} (${formData.continuityTesterSerial})`
+    );
   }
   if (formData.insulationTesterMake) {
-    addSection('Insulation Tester:', '', `${formData.insulationTesterMake} (${formData.insulationTesterSerial})`);
+    addSection(
+      'Insulation Tester:',
+      '',
+      `${formData.insulationTesterMake} (${formData.insulationTesterSerial})`
+    );
   }
   if (formData.loopTesterMake) {
     addSection('Loop Tester:', '', `${formData.loopTesterMake} (${formData.loopTesterSerial})`);
   }
-
 
   // Declaration
   if (yPosition > 180) {
@@ -257,26 +336,26 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   yPosition += 10;
   doc.setFont('helvetica', 'bold');
   yPosition = addText('DECLARATION', margin, yPosition) + 5;
-  
+
   doc.setFont('helvetica', 'normal');
   yPosition = addText('I/We certify that:', margin, yPosition) + 3;
 
   const certifications = [
-    { 
-      text: 'The work described has been designed, constructed, inspected and tested in accordance with BS 7671:2018+A3:2024', 
-      checked: formData.bs7671Compliance
+    {
+      text: 'The work described has been designed, constructed, inspected and tested in accordance with BS 7671:2018+A3:2024',
+      checked: formData.bs7671Compliance,
     },
-    { 
-      text: 'The test results recorded are accurate and relate to the work described', 
-      checked: formData.testResultsAccurate 
+    {
+      text: 'The test results recorded are accurate and relate to the work described',
+      checked: formData.testResultsAccurate,
     },
-    { 
-      text: 'The work is safe to energise and use', 
-      checked: formData.workSafety 
-    }
+    {
+      text: 'The work is safe to energise and use',
+      checked: formData.workSafety,
+    },
   ];
 
-  certifications.forEach(cert => {
+  certifications.forEach((cert) => {
     const checkbox = cert.checked ? '☑' : '☐';
     yPosition = addText(`${checkbox} ${cert.text}`, margin, yPosition, contentWidth) + 3;
   });
@@ -287,7 +366,11 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
     addSection('For and on behalf of:', '', formData.forAndOnBehalfOf);
   }
   addSection('Position:', '', formData.position || formData.electricianPosition);
-  addSection('Signature Date:', '', formData.signatureDate ? new Date(formData.signatureDate).toLocaleDateString('en-GB') : '');
+  addSection(
+    'Signature Date:',
+    '',
+    formData.signatureDate ? new Date(formData.signatureDate).toLocaleDateString('en-GB') : ''
+  );
 
   if (formData.schemeProvider) {
     addSection('Competent Person Scheme:', '', formData.schemeProvider);
@@ -300,8 +383,18 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   yPosition += 15;
   doc.setFontSize(8);
   doc.setFont('helvetica', 'italic');
-  yPosition = addText('This certificate is issued in accordance with BS 7671:2018+A3:2024', margin, yPosition, contentWidth);
-  yPosition = addText(`Generated: ${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString('en-GB')}`, margin, yPosition, contentWidth);
+  yPosition = addText(
+    'This certificate is issued in accordance with BS 7671:2018+A3:2024',
+    margin,
+    yPosition,
+    contentWidth
+  );
+  yPosition = addText(
+    `Generated: ${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString('en-GB')}`,
+    margin,
+    yPosition,
+    contentWidth
+  );
 
   // Save the PDF with professional filename
   const fileName = generatePdfFilename(

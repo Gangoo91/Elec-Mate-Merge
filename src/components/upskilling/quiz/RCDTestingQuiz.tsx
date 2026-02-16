@@ -12,7 +12,7 @@ export const RCDTestingQuiz = () => {
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (showResult) return;
-    
+
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestion] = answerIndex;
     setSelectedAnswers(newAnswers);
@@ -47,7 +47,7 @@ export const RCDTestingQuiz = () => {
   if (quizCompleted) {
     const score = calculateScore();
     const percentage = Math.round((score / rcdTestingQuizData.length) * 100);
-    
+
     return (
       <Card className="bg-elec-gray border-transparent">
         <CardHeader>
@@ -58,49 +58,67 @@ export const RCDTestingQuiz = () => {
         </CardHeader>
         <CardContent className="text-center space-y-6">
           <div className="space-y-2">
-            <div className={`text-4xl font-bold ${
-              percentage >= 80 ? 'text-green-400' : 
-              percentage >= 60 ? 'text-yellow-400' : 'text-red-400'
-            }`}>
+            <div
+              className={`text-4xl font-bold ${
+                percentage >= 80
+                  ? 'text-green-400'
+                  : percentage >= 60
+                    ? 'text-yellow-400'
+                    : 'text-red-400'
+              }`}
+            >
               {score}/{rcdTestingQuizData.length}
             </div>
-            <div className="text-foreground">Score: <span className={
-              percentage >= 80 ? 'text-green-400' : 
-              percentage >= 60 ? 'text-yellow-400' : 'text-red-400'
-            }>{percentage}%</span></div>
+            <div className="text-foreground">
+              Score:{' '}
+              <span
+                className={
+                  percentage >= 80
+                    ? 'text-green-400'
+                    : percentage >= 60
+                      ? 'text-yellow-400'
+                      : 'text-red-400'
+                }
+              >
+                {percentage}%
+              </span>
+            </div>
           </div>
-          
+
           <div className="space-y-4">
             {percentage >= 80 && (
               <div className="bg-green-600/20 border border-green-600/30 rounded-lg p-4">
                 <p className="text-green-200 font-medium">Excellent! 🎉</p>
                 <p className="text-sm sm:text-base text-foreground">
-                  You have a strong understanding of RCD testing procedures and BS 7671 requirements.
+                  You have a strong understanding of RCD testing procedures and BS 7671
+                  requirements.
                 </p>
               </div>
             )}
-            
+
             {percentage >= 60 && percentage < 80 && (
               <div className="bg-yellow-600/20 border border-yellow-600/30 rounded-lg p-4">
                 <p className="text-yellow-200 font-medium">Good work! 👍</p>
                 <p className="text-sm sm:text-base text-foreground">
-                  You understand the key concepts. Review the test procedures and equipment requirements.
+                  You understand the key concepts. Review the test procedures and equipment
+                  requirements.
                 </p>
               </div>
             )}
-            
+
             {percentage < 60 && (
               <div className="bg-red-600/20 border border-red-600/30 rounded-lg p-4">
                 <p className="text-red-200 font-medium">Keep studying 📚</p>
                 <p className="text-sm sm:text-base text-foreground">
-                  Review the section content focusing on test currents, procedures, and safety requirements.
+                  Review the section content focusing on test currents, procedures, and safety
+                  requirements.
                 </p>
               </div>
             )}
           </div>
 
-          <Button 
-            onClick={restartQuiz} 
+          <Button
+            onClick={restartQuiz}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
           >
             <RotateCcw className="mr-2 h-4 w-4" />
@@ -131,34 +149,34 @@ export const RCDTestingQuiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="w-full bg-[#323232] rounded-full h-2">
-          <div 
-            className="bg-elec-yellow h-2 rounded-full transition-all duration-300" 
-            style={{ width: `${((currentQuestion + 1) / rcdTestingQuizData.length) * 100}%` }} 
+          <div
+            className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
+            style={{ width: `${((currentQuestion + 1) / rcdTestingQuizData.length) * 100}%` }}
           />
         </div>
-        
+
         <div className="space-y-4">
           <h3 className="text-lg font-medium text-foreground leading-relaxed">
             {question.question}
           </h3>
-          
+
           <div className="space-y-3">
             {question.options.map((option, index) => (
-              <Button 
-                key={index} 
-                variant="outline" 
+              <Button
+                key={index}
+                variant="outline"
                 className={`w-full justify-start text-left h-auto p-4 ${
                   showResult
                     ? index === question.correctAnswer
-                      ? "bg-green-600/20 text-green-200 border-green-600/30"
+                      ? 'bg-green-600/20 text-green-200 border-green-600/30'
                       : index === userAnswer && userAnswer !== question.correctAnswer
-                      ? "bg-red-600/20 text-red-200 border-red-600/30"
-                      : "bg-[#323232] text-foreground border-transparent"
+                        ? 'bg-red-600/20 text-red-200 border-red-600/30'
+                        : 'bg-[#323232] text-foreground border-transparent'
                     : userAnswer === index
-                    ? "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
-                    : "bg-[#323232] text-foreground hover:bg-[#404040] border-transparent"
-                }`} 
-                onClick={() => handleAnswerSelect(index)} 
+                      ? 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'
+                      : 'bg-[#323232] text-foreground hover:bg-[#404040] border-transparent'
+                }`}
+                onClick={() => handleAnswerSelect(index)}
                 disabled={showResult}
               >
                 <div className="flex items-center gap-3">
@@ -179,11 +197,13 @@ export const RCDTestingQuiz = () => {
         </div>
 
         {showResult && (
-          <div className={`rounded-lg p-4 ${
-            isCorrect 
-              ? 'bg-green-600/10 border border-green-600/20' 
-              : 'bg-red-600/10 border border-red-600/20'
-          }`}>
+          <div
+            className={`rounded-lg p-4 ${
+              isCorrect
+                ? 'bg-green-600/10 border border-green-600/20'
+                : 'bg-red-600/10 border border-red-600/20'
+            }`}
+          >
             <div className="flex items-start gap-3">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -194,9 +214,7 @@ export const RCDTestingQuiz = () => {
                 <p className={`font-medium ${isCorrect ? 'text-green-200' : 'text-red-200'}`}>
                   {isCorrect ? 'Correct!' : 'Incorrect'}
                 </p>
-                <p className="text-foreground text-sm sm:text-base mt-1">
-                  {question.explanation}
-                </p>
+                <p className="text-foreground text-sm sm:text-base mt-1">{question.explanation}</p>
               </div>
             </div>
           </div>
@@ -208,19 +226,21 @@ export const RCDTestingQuiz = () => {
           </div>
           <div className="space-x-2">
             {!showResult && isAnswered && (
-              <Button 
-                onClick={handleSubmitAnswer} 
+              <Button
+                onClick={handleSubmitAnswer}
                 className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
               >
                 Submit Answer
               </Button>
             )}
             {showResult && (
-              <Button 
-                onClick={handleNextQuestion} 
+              <Button
+                onClick={handleNextQuestion}
                 className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
               >
-                {currentQuestion < rcdTestingQuizData.length - 1 ? 'Next Question' : 'Complete Quiz'}
+                {currentQuestion < rcdTestingQuizData.length - 1
+                  ? 'Next Question'
+                  : 'Complete Quiz'}
               </Button>
             )}
           </div>
@@ -229,4 +249,3 @@ export const RCDTestingQuiz = () => {
     </Card>
   );
 };
-

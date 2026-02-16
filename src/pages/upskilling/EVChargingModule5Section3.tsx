@@ -1,72 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m5s3-check1",
-    question: "What accuracy class is recommended for Dynamic Load Management applications?",
-    options: ["Class 3 (±3%)", "Class 1 (±1%)", "Class 0.1 (±0.1%)", "Class 5 (±5%)"],
+    id: 'evcharging-m5s3-check1',
+    question: 'What accuracy class is recommended for Dynamic Load Management applications?',
+    options: ['Class 3 (±3%)', 'Class 1 (±1%)', 'Class 0.1 (±0.1%)', 'Class 5 (±5%)'],
     correctIndex: 1,
-    explanation: "Class 1 (±1%) accuracy is the minimum recommendation for DLM applications. Class 0.5 (±0.5%) is preferred for revenue-grade monitoring and billing applications."
+    explanation:
+      'Class 1 (±1%) accuracy is the minimum recommendation for DLM applications. Class 0.5 (±0.5%) is preferred for revenue-grade monitoring and billing applications.',
   },
   {
-    id: "evcharging-m5s3-check2",
-    question: "What is the primary advantage of split-core CT clamps?",
-    options: ["Higher accuracy", "Lower cost", "Retrofit installation without disconnection", "Smaller physical size"],
+    id: 'evcharging-m5s3-check2',
+    question: 'What is the primary advantage of split-core CT clamps?',
+    options: [
+      'Higher accuracy',
+      'Lower cost',
+      'Retrofit installation without disconnection',
+      'Smaller physical size',
+    ],
     correctIndex: 2,
-    explanation: "Split-core CTs allow retrofit installation on existing electrical installations without disconnecting or breaking primary circuit connections, making them ideal for upgrading monitoring systems."
+    explanation:
+      'Split-core CTs allow retrofit installation on existing electrical installations without disconnecting or breaking primary circuit connections, making them ideal for upgrading monitoring systems.',
   },
   {
-    id: "evcharging-m5s3-check3",
-    question: "Why should CT secondary connections never be open-circuited under load?",
-    options: ["It damages the CT permanently", "It causes dangerous high voltages", "It affects accuracy", "It trips the circuit breaker"],
+    id: 'evcharging-m5s3-check3',
+    question: 'Why should CT secondary connections never be open-circuited under load?',
+    options: [
+      'It damages the CT permanently',
+      'It causes dangerous high voltages',
+      'It affects accuracy',
+      'It trips the circuit breaker',
+    ],
     correctIndex: 1,
-    explanation: "Open-circuiting CT secondary connections under load creates dangerous high voltages due to the transformer action. The secondary must always have a burden connected when primary current is flowing."
-  }
+    explanation:
+      'Open-circuiting CT secondary connections under load creates dangerous high voltages due to the transformer action. The secondary must always have a burden connected when primary current is flowing.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I select the correct CT clamp ratio for my application?",
-    answer: "Select CT ratio based on maximum expected current: 100:5A for circuits up to 100A, 200:5A up to 200A, etc. Choose the next larger ratio above your maximum current for optimal accuracy and headroom."
+    question: 'How do I select the correct CT clamp ratio for my application?',
+    answer:
+      'Select CT ratio based on maximum expected current: 100:5A for circuits up to 100A, 200:5A up to 200A, etc. Choose the next larger ratio above your maximum current for optimal accuracy and headroom.',
   },
   {
-    question: "What causes inaccurate CT readings and how can they be corrected?",
-    answer: "Common causes include incorrect CT ratio configuration, poor conductor positioning, electromagnetic interference, and burden mismatch. Corrections involve proper installation, calibration, and shielding of secondary connections."
+    question: 'What causes inaccurate CT readings and how can they be corrected?',
+    answer:
+      'Common causes include incorrect CT ratio configuration, poor conductor positioning, electromagnetic interference, and burden mismatch. Corrections involve proper installation, calibration, and shielding of secondary connections.',
   },
   {
-    question: "How often should CT clamps be calibrated?",
-    answer: "Annual calibration is recommended for revenue-grade applications, with 2-3 yearly calibration acceptable for monitoring-only applications. High-accuracy installations may require 6-monthly verification."
+    question: 'How often should CT clamps be calibrated?',
+    answer:
+      'Annual calibration is recommended for revenue-grade applications, with 2-3 yearly calibration acceptable for monitoring-only applications. High-accuracy installations may require 6-monthly verification.',
   },
   {
-    question: "How can control logic handle communication failures?",
-    answer: "Implement fail-safe modes with predetermined power limits, use watchdog timers for communication monitoring, provide local data buffering, and include manual override capabilities for emergency operation."
-  }
+    question: 'How can control logic handle communication failures?',
+    answer:
+      'Implement fail-safe modes with predetermined power limits, use watchdog timers for communication monitoring, provide local data buffering, and include manual override capabilities for emergency operation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A 500kVA industrial facility requires EV charging monitoring for 25 charge points. What CT installation approach is most appropriate?",
-  options: [
-    "Single CT on main incomer only",
-    "Split-core Class 1 CTs on main panels with Modbus communication",
-    "Rogowski coils on each individual charger",
-    "Hall effect sensors on the neutral conductor"
-  ],
-  correctAnswer: 1,
-  explanation: "Split-core Class 1 CTs installed on main distribution panels with Modbus communication provides non-intrusive installation, appropriate accuracy for DLM, and standard industrial communication protocols for integration."
-  }
+    question:
+      'A 500kVA industrial facility requires EV charging monitoring for 25 charge points. What CT installation approach is most appropriate?',
+    options: [
+      'Single CT on main incomer only',
+      'Split-core Class 1 CTs on main panels with Modbus communication',
+      'Rogowski coils on each individual charger',
+      'Hall effect sensors on the neutral conductor',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Split-core Class 1 CTs installed on main distribution panels with Modbus communication provides non-intrusive installation, appropriate accuracy for DLM, and standard industrial communication protocols for integration.',
+  },
 ];
 
 const EVChargingModule5Section3 = () => {
   useSEO({
-    title: "CT Clamps, Load-Sensing, and Control Logic | EV Charging Module 5.3",
-    description: "Master current transformer clamps, load-sensing technologies, and control logic for EV charging systems."
+    title: 'CT Clamps, Load-Sensing, and Control Logic | EV Charging Module 5.3',
+    description:
+      'Master current transformer clamps, load-sensing technologies, and control logic for EV charging systems.',
   });
 
   return (
@@ -108,16 +128,26 @@ const EVChargingModule5Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>CT Clamps:</strong> Non-intrusive current measurement</li>
-              <li><strong>Accuracy:</strong> Class 1 (±1%) minimum for DLM</li>
-              <li><strong>Control:</strong> Real-time load balancing algorithms</li>
+              <li>
+                <strong>CT Clamps:</strong> Non-intrusive current measurement
+              </li>
+              <li>
+                <strong>Accuracy:</strong> Class 1 (±1%) minimum for DLM
+              </li>
+              <li>
+                <strong>Control:</strong> Real-time load balancing algorithms
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Clamp-on devices around cables, digital displays</li>
-              <li><strong>Use:</strong> Monitor loads, implement dynamic allocation</li>
+              <li>
+                <strong>Spot:</strong> Clamp-on devices around cables, digital displays
+              </li>
+              <li>
+                <strong>Use:</strong> Monitor loads, implement dynamic allocation
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +157,12 @@ const EVChargingModule5Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Select and install appropriate CT clamps",
-              "Design load-sensing systems for DLM",
-              "Implement intelligent control logic",
-              "Calibrate monitoring equipment",
-              "Troubleshoot CT and sensing issues",
-              "Integrate monitoring with control systems"
+              'Select and install appropriate CT clamps',
+              'Design load-sensing systems for DLM',
+              'Implement intelligent control logic',
+              'Calibrate monitoring equipment',
+              'Troubleshoot CT and sensing issues',
+              'Integrate monitoring with control systems',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -160,19 +190,35 @@ const EVChargingModule5Section3 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Principles</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Induction:</strong> Magnetic field creates secondary current</li>
-                  <li><strong>Ratio:</strong> Fixed transformation (100:5A, 200:5A)</li>
-                  <li><strong>Non-intrusive:</strong> No circuit disconnection needed</li>
-                  <li><strong>Isolation:</strong> Safe monitoring of high currents</li>
+                  <li>
+                    <strong>Induction:</strong> Magnetic field creates secondary current
+                  </li>
+                  <li>
+                    <strong>Ratio:</strong> Fixed transformation (100:5A, 200:5A)
+                  </li>
+                  <li>
+                    <strong>Non-intrusive:</strong> No circuit disconnection needed
+                  </li>
+                  <li>
+                    <strong>Isolation:</strong> Safe monitoring of high currents
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">CT Types</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Split-core:</strong> Retrofit without disconnection</li>
-                  <li><strong>Solid-core:</strong> Higher accuracy, new installations</li>
-                  <li><strong>Rogowski coils:</strong> Flexible, large conductors</li>
-                  <li><strong>Hall effect:</strong> DC and AC measurement</li>
+                  <li>
+                    <strong>Split-core:</strong> Retrofit without disconnection
+                  </li>
+                  <li>
+                    <strong>Solid-core:</strong> Higher accuracy, new installations
+                  </li>
+                  <li>
+                    <strong>Rogowski coils:</strong> Flexible, large conductors
+                  </li>
+                  <li>
+                    <strong>Hall effect:</strong> DC and AC measurement
+                  </li>
                 </ul>
               </div>
             </div>
@@ -180,10 +226,18 @@ const EVChargingModule5Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Accuracy Specifications:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Class 1:</strong> ±1% accuracy - minimum for DLM applications</li>
-                <li><strong>Class 0.5:</strong> ±0.5% - revenue-grade monitoring</li>
-                <li><strong>Burden rating:</strong> Match secondary circuit impedance</li>
-                <li><strong>Dynamic range:</strong> 1% to 120% of rated current</li>
+                <li>
+                  <strong>Class 1:</strong> ±1% accuracy - minimum for DLM applications
+                </li>
+                <li>
+                  <strong>Class 0.5:</strong> ±0.5% - revenue-grade monitoring
+                </li>
+                <li>
+                  <strong>Burden rating:</strong> Match secondary circuit impedance
+                </li>
+                <li>
+                  <strong>Dynamic range:</strong> 1% to 120% of rated current
+                </li>
               </ul>
             </div>
           </div>
@@ -214,7 +268,9 @@ const EVChargingModule5Section3 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Multi-Point Monitoring</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Multi-Point Monitoring
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Main incomer total load</li>
                   <li>Sub-circuit disaggregation</li>
@@ -227,10 +283,18 @@ const EVChargingModule5Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Communication Protocols:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Modbus RTU/TCP:</strong> Industrial standard meter communication</li>
-                <li><strong>M-Bus:</strong> European utility meter standard</li>
-                <li><strong>DNP3:</strong> SCADA and utility applications</li>
-                <li><strong>IEC 61850:</strong> Substation automation standard</li>
+                <li>
+                  <strong>Modbus RTU/TCP:</strong> Industrial standard meter communication
+                </li>
+                <li>
+                  <strong>M-Bus:</strong> European utility meter standard
+                </li>
+                <li>
+                  <strong>DNP3:</strong> SCADA and utility applications
+                </li>
+                <li>
+                  <strong>IEC 61850:</strong> Substation automation standard
+                </li>
               </ul>
             </div>
 
@@ -269,19 +333,35 @@ const EVChargingModule5Section3 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Load Monitoring</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Baseline:</strong> Non-EV load calculation</li>
-                  <li><strong>Forecasting:</strong> Predictive demand algorithms</li>
-                  <li><strong>Pattern recognition:</strong> ML load identification</li>
-                  <li><strong>Anomaly detection:</strong> Unusual consumption alerts</li>
+                  <li>
+                    <strong>Baseline:</strong> Non-EV load calculation
+                  </li>
+                  <li>
+                    <strong>Forecasting:</strong> Predictive demand algorithms
+                  </li>
+                  <li>
+                    <strong>Pattern recognition:</strong> ML load identification
+                  </li>
+                  <li>
+                    <strong>Anomaly detection:</strong> Unusual consumption alerts
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dynamic Response</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Real-time:</strong> Sub-second response to changes</li>
-                  <li><strong>Hysteresis:</strong> Prevents oscillation</li>
-                  <li><strong>Rate limiting:</strong> Controlled power ramping</li>
-                  <li><strong>Priority:</strong> Hierarchical load shedding</li>
+                  <li>
+                    <strong>Real-time:</strong> Sub-second response to changes
+                  </li>
+                  <li>
+                    <strong>Hysteresis:</strong> Prevents oscillation
+                  </li>
+                  <li>
+                    <strong>Rate limiting:</strong> Controlled power ramping
+                  </li>
+                  <li>
+                    <strong>Priority:</strong> Hierarchical load shedding
+                  </li>
                 </ul>
               </div>
             </div>
@@ -289,10 +369,18 @@ const EVChargingModule5Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Optimisation Strategies:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Linear programming:</strong> Mathematical resource allocation</li>
-                <li><strong>Genetic algorithms:</strong> Evolutionary computing for complex problems</li>
-                <li><strong>Fuzzy logic:</strong> Handling uncertainty and imprecise requirements</li>
-                <li><strong>Model predictive:</strong> Future state prediction for proactive control</li>
+                <li>
+                  <strong>Linear programming:</strong> Mathematical resource allocation
+                </li>
+                <li>
+                  <strong>Genetic algorithms:</strong> Evolutionary computing for complex problems
+                </li>
+                <li>
+                  <strong>Fuzzy logic:</strong> Handling uncertainty and imprecise requirements
+                </li>
+                <li>
+                  <strong>Model predictive:</strong> Future state prediction for proactive control
+                </li>
               </ul>
             </div>
           </div>
@@ -305,7 +393,9 @@ const EVChargingModule5Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">CT Installation Best Practices</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                CT Installation Best Practices
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Install CTs on all three phases for three-phase monitoring</li>
                 <li>Ensure proper conductor centralisation within CT aperture</li>
@@ -315,12 +405,22 @@ const EVChargingModule5Section3 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Safety Critical - Never Do</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Safety Critical - Never Do
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Open-circuit secondary:</strong> — creates dangerous high voltages</li>
-                <li><strong>Wrong ratio setting:</strong> — causes incorrect load management</li>
-                <li><strong>Poor conductor position:</strong> — reduces measurement accuracy</li>
-                <li><strong>Missing earth bond:</strong> — safety hazard on CT secondary</li>
+                <li>
+                  <strong>Open-circuit secondary:</strong> — creates dangerous high voltages
+                </li>
+                <li>
+                  <strong>Wrong ratio setting:</strong> — causes incorrect load management
+                </li>
+                <li>
+                  <strong>Poor conductor position:</strong> — reduces measurement accuracy
+                </li>
+                <li>
+                  <strong>Missing earth bond:</strong> — safety hazard on CT secondary
+                </li>
               </ul>
             </div>
           </div>
@@ -364,10 +464,7 @@ const EVChargingModule5Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -1,30 +1,41 @@
-
-import { useState } from "react";
-import { Calculator, Thermometer, Zap, PoundSterling, Home, AlertTriangle, CheckCircle, Info, Lightbulb, BookOpen, Settings } from "lucide-react";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { ResultCard } from "@/components/ui/result-card";
-import InfoBox from "@/components/common/InfoBox";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { 
-  INSULATION_LEVELS, 
-  AIR_TIGHTNESS_LEVELS, 
-  UK_REGIONS, 
-  HEAT_PUMP_TYPES, 
-  EMITTER_TYPES, 
-  DHW_OPTIONS 
-} from "@/lib/heat-pump-constants";
-import { 
-  calculateHeatPumpLoad, 
-  getRecommendations, 
+import { useState } from 'react';
+import {
+  Calculator,
+  Thermometer,
+  Zap,
+  PoundSterling,
+  Home,
+  AlertTriangle,
+  CheckCircle,
+  Info,
+  Lightbulb,
+  BookOpen,
+  Settings,
+} from 'lucide-react';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { ResultCard } from '@/components/ui/result-card';
+import InfoBox from '@/components/common/InfoBox';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
+import {
+  INSULATION_LEVELS,
+  AIR_TIGHTNESS_LEVELS,
+  UK_REGIONS,
+  HEAT_PUMP_TYPES,
+  EMITTER_TYPES,
+  DHW_OPTIONS,
+} from '@/lib/heat-pump-constants';
+import {
+  calculateHeatPumpLoad,
+  getRecommendations,
   getRegulatoryGuidance,
   type HeatPumpInputs,
   type HeatPumpResults,
-  type ReviewFinding 
-} from "@/lib/heat-pump-calculations";
-import { formatCurrency } from "@/lib/format";
-import { cn } from "@/lib/utils";
+  type ReviewFinding,
+} from '@/lib/heat-pump-calculations';
+import { formatCurrency } from '@/lib/format';
+import { cn } from '@/lib/utils';
 
 interface FormInputs {
   floorArea: string;
@@ -41,16 +52,16 @@ interface FormInputs {
 
 const HeatPumpCalculator = () => {
   const [inputs, setInputs] = useState<FormInputs>({
-    floorArea: "",
-    insulationLevel: "average",
-    airTightness: "average",
-    region: "midlands",
-    designTemp: "",
-    indoorTemp: "21",
-    heatPumpType: "air-source",
-    emitterType: "radiators",
-    dhwOption: "cylinder",
-    electricityRate: "0.30"
+    floorArea: '',
+    insulationLevel: 'average',
+    airTightness: 'average',
+    region: 'midlands',
+    designTemp: '',
+    indoorTemp: '21',
+    heatPumpType: 'air-source',
+    emitterType: 'radiators',
+    dhwOption: 'cylinder',
+    electricityRate: '0.30',
   });
 
   const [results, setResults] = useState<HeatPumpResults | null>(null);
@@ -59,21 +70,25 @@ const HeatPumpCalculator = () => {
 
   const validateInputs = (): boolean => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!inputs.floorArea || parseFloat(inputs.floorArea as string) <= 0) {
-      newErrors.floorArea = "Floor area must be greater than 0";
+      newErrors.floorArea = 'Floor area must be greater than 0';
     }
-    
+
     if (!inputs.designTemp) {
-      newErrors.designTemp = "Design temperature is required";
+      newErrors.designTemp = 'Design temperature is required';
     }
-    
-    if (!inputs.indoorTemp || parseFloat(inputs.indoorTemp as string) < 18 || parseFloat(inputs.indoorTemp as string) > 25) {
-      newErrors.indoorTemp = "Indoor temperature should be between 18°C and 25°C";
+
+    if (
+      !inputs.indoorTemp ||
+      parseFloat(inputs.indoorTemp as string) < 18 ||
+      parseFloat(inputs.indoorTemp as string) > 25
+    ) {
+      newErrors.indoorTemp = 'Indoor temperature should be between 18°C and 25°C';
     }
-    
+
     if (!inputs.electricityRate || parseFloat(inputs.electricityRate as string) <= 0) {
-      newErrors.electricityRate = "Electricity rate must be greater than 0";
+      newErrors.electricityRate = 'Electricity rate must be greater than 0';
     }
 
     setErrors(newErrors);
@@ -92,7 +107,7 @@ const HeatPumpCalculator = () => {
       heatPumpType: inputs.heatPumpType as keyof typeof HEAT_PUMP_TYPES,
       emitterType: inputs.emitterType as keyof typeof EMITTER_TYPES,
       dhwOption: inputs.dhwOption as keyof typeof DHW_OPTIONS,
-      electricityRate: parseFloat(inputs.electricityRate as string)
+      electricityRate: parseFloat(inputs.electricityRate as string),
     };
 
     const calculationResults = calculateHeatPumpLoad(calculationInputs);
@@ -101,16 +116,16 @@ const HeatPumpCalculator = () => {
 
   const resetCalculator = () => {
     setInputs({
-      floorArea: "",
-      insulationLevel: "average",
-      airTightness: "average",
-      region: "midlands",
-      designTemp: "",
-      indoorTemp: "21",
-      heatPumpType: "air-source",
-      emitterType: "radiators",
-      dhwOption: "cylinder",
-      electricityRate: "0.30"
+      floorArea: '',
+      insulationLevel: 'average',
+      airTightness: 'average',
+      region: 'midlands',
+      designTemp: '',
+      indoorTemp: '21',
+      heatPumpType: 'air-source',
+      emitterType: 'radiators',
+      dhwOption: 'cylinder',
+      electricityRate: '0.30',
     });
     setResults(null);
     setErrors({});
@@ -118,10 +133,10 @@ const HeatPumpCalculator = () => {
 
   const handleRegionChange = (region: string) => {
     const regionData = UK_REGIONS[region as keyof typeof UK_REGIONS];
-    setInputs(prev => ({
+    setInputs((prev) => ({
       ...prev,
       region: region as keyof typeof UK_REGIONS,
-      designTemp: regionData.designTemp.toString()
+      designTemp: regionData.designTemp.toString(),
     }));
   };
 
@@ -129,37 +144,37 @@ const HeatPumpCalculator = () => {
   const insulationOptions = Object.entries(INSULATION_LEVELS).map(([key, value]) => ({
     value: key,
     label: value.label,
-    description: value.description
+    description: value.description,
   }));
 
   const airTightnessOptions = Object.entries(AIR_TIGHTNESS_LEVELS).map(([key, value]) => ({
     value: key,
     label: value.label,
-    description: value.description
+    description: value.description,
   }));
 
   const regionOptions = Object.entries(UK_REGIONS).map(([key, value]) => ({
     value: key,
     label: value.label,
-    description: value.description
+    description: value.description,
   }));
 
   const heatPumpOptions = Object.entries(HEAT_PUMP_TYPES).map(([key, value]) => ({
     value: key,
     label: value.label,
-    description: value.description
+    description: value.description,
   }));
 
   const emitterOptions = Object.entries(EMITTER_TYPES).map(([key, value]) => ({
     value: key,
     label: value.label,
-    description: value.description
+    description: value.description,
   }));
 
   const dhwOptions = Object.entries(DHW_OPTIONS).map(([key, value]) => ({
     value: key,
     label: value.label,
-    description: value.description
+    description: value.description,
   }));
 
   return (
@@ -171,7 +186,8 @@ const HeatPumpCalculator = () => {
           <h1 className="text-xl font-bold text-elec-light">Heat Pump Load Calculator</h1>
         </div>
         <p className="text-sm text-elec-light/80 max-w-md mx-auto">
-          Calculate heat pump sizing, performance, and costs with detailed analysis and recommendations
+          Calculate heat pump sizing, performance, and costs with detailed analysis and
+          recommendations
         </p>
       </div>
 
@@ -183,13 +199,13 @@ const HeatPumpCalculator = () => {
             <Home className="h-4 w-4 text-elec-yellow" />
             Building Details
           </h3>
-          
+
           <div className="space-y-4">
             <MobileInputWrapper
               label="Floor Area"
               placeholder="Enter total floor area"
-              value={inputs.floorArea ?? ""}
-              onChange={(value) => setInputs(prev => ({ ...prev, floorArea: value }))}
+              value={inputs.floorArea ?? ''}
+              onChange={(value) => setInputs((prev) => ({ ...prev, floorArea: value }))}
               type="text"
               inputMode="decimal"
               unit="m²"
@@ -201,7 +217,12 @@ const HeatPumpCalculator = () => {
             <MobileSelectWrapper
               label="Insulation Level"
               value={inputs.insulationLevel}
-              onValueChange={(value) => setInputs(prev => ({ ...prev, insulationLevel: value as keyof typeof INSULATION_LEVELS }))}
+              onValueChange={(value) =>
+                setInputs((prev) => ({
+                  ...prev,
+                  insulationLevel: value as keyof typeof INSULATION_LEVELS,
+                }))
+              }
               options={insulationOptions}
               hint="Building age and insulation standard"
             />
@@ -209,7 +230,12 @@ const HeatPumpCalculator = () => {
             <MobileSelectWrapper
               label="Air Tightness"
               value={inputs.airTightness}
-              onValueChange={(value) => setInputs(prev => ({ ...prev, airTightness: value as keyof typeof AIR_TIGHTNESS_LEVELS }))}
+              onValueChange={(value) =>
+                setInputs((prev) => ({
+                  ...prev,
+                  airTightness: value as keyof typeof AIR_TIGHTNESS_LEVELS,
+                }))
+              }
               options={airTightnessOptions}
               hint="How well sealed the building is"
             />
@@ -222,7 +248,7 @@ const HeatPumpCalculator = () => {
             <Settings className="h-4 w-4 text-elec-yellow" />
             Location & Climate
           </h3>
-          
+
           <div className="space-y-4">
             <MobileSelectWrapper
               label="UK Region"
@@ -236,7 +262,7 @@ const HeatPumpCalculator = () => {
               label="Design Temperature"
               placeholder="Coldest expected temperature"
               value={inputs.designTemp}
-              onChange={(value) => setInputs(prev => ({ ...prev, designTemp: value }))}
+              onChange={(value) => setInputs((prev) => ({ ...prev, designTemp: value }))}
               type="text"
               inputMode="decimal"
               unit="°C"
@@ -249,7 +275,7 @@ const HeatPumpCalculator = () => {
               label="Indoor Target Temperature"
               placeholder="Desired indoor temperature"
               value={inputs.indoorTemp}
-              onChange={(value) => setInputs(prev => ({ ...prev, indoorTemp: value }))}
+              onChange={(value) => setInputs((prev) => ({ ...prev, indoorTemp: value }))}
               type="text"
               inputMode="decimal"
               unit="°C"
@@ -266,12 +292,17 @@ const HeatPumpCalculator = () => {
             <Zap className="h-4 w-4 text-elec-yellow" />
             System Configuration
           </h3>
-          
+
           <div className="space-y-4">
             <MobileSelectWrapper
               label="Heat Pump Type"
               value={inputs.heatPumpType}
-              onValueChange={(value) => setInputs(prev => ({ ...prev, heatPumpType: value as keyof typeof HEAT_PUMP_TYPES }))}
+              onValueChange={(value) =>
+                setInputs((prev) => ({
+                  ...prev,
+                  heatPumpType: value as keyof typeof HEAT_PUMP_TYPES,
+                }))
+              }
               options={heatPumpOptions}
               hint="Type of heat pump system"
             />
@@ -279,7 +310,9 @@ const HeatPumpCalculator = () => {
             <MobileSelectWrapper
               label="Heat Emitter Type"
               value={inputs.emitterType}
-              onValueChange={(value) => setInputs(prev => ({ ...prev, emitterType: value as keyof typeof EMITTER_TYPES }))}
+              onValueChange={(value) =>
+                setInputs((prev) => ({ ...prev, emitterType: value as keyof typeof EMITTER_TYPES }))
+              }
               options={emitterOptions}
               hint="How heat is distributed in the building"
             />
@@ -287,7 +320,9 @@ const HeatPumpCalculator = () => {
             <MobileSelectWrapper
               label="Hot Water Option"
               value={inputs.dhwOption}
-              onValueChange={(value) => setInputs(prev => ({ ...prev, dhwOption: value as keyof typeof DHW_OPTIONS }))}
+              onValueChange={(value) =>
+                setInputs((prev) => ({ ...prev, dhwOption: value as keyof typeof DHW_OPTIONS }))
+              }
               options={dhwOptions}
               hint="Domestic hot water provision"
             />
@@ -296,7 +331,7 @@ const HeatPumpCalculator = () => {
               label="Electricity Rate"
               placeholder="Cost per kWh"
               value={inputs.electricityRate}
-              onChange={(value) => setInputs(prev => ({ ...prev, electricityRate: value }))}
+              onChange={(value) => setInputs((prev) => ({ ...prev, electricityRate: value }))}
               type="text"
               inputMode="decimal"
               step="0.01"
@@ -339,14 +374,14 @@ const HeatPumpCalculator = () => {
               <Calculator className="h-5 w-5 text-elec-yellow" />
               Calculation Results
             </h3>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <ResultCard
                 title="Total Heat Load"
                 value={results.totalHeatLoad}
                 unit="kW"
                 subtitle={`Space: ${results.spaceHeatingLoad.toFixed(1)}kW + DHW: ${results.dhwLoad.toFixed(1)}kW`}
-                status={results.totalHeatLoad > 15 ? "warning" : "success"}
+                status={results.totalHeatLoad > 15 ? 'warning' : 'success'}
                 icon={<Thermometer className="h-4 w-4" />}
               />
 
@@ -355,7 +390,7 @@ const HeatPumpCalculator = () => {
                 value={results.cop}
                 unit=""
                 subtitle={`Seasonal COP: ${results.performance.seasonalCOP.toFixed(1)}`}
-                status={results.cop > 3.5 ? "success" : results.cop > 2.5 ? "warning" : "error"}
+                status={results.cop > 3.5 ? 'success' : results.cop > 2.5 ? 'warning' : 'error'}
                 icon={<Zap className="h-4 w-4" />}
                 onBadgeClick={() => setShowReviewSummary(true)}
               />
@@ -365,7 +400,7 @@ const HeatPumpCalculator = () => {
                 value={results.electricalPower}
                 unit="kW"
                 subtitle={`Flow temp: ${results.flowTemperature}°C`}
-                status={results.sizing.withinMCS ? "success" : "warning"}
+                status={results.sizing.withinMCS ? 'success' : 'warning'}
                 icon={<Zap className="h-4 w-4" />}
                 onBadgeClick={() => setShowReviewSummary(true)}
               />
@@ -391,7 +426,8 @@ const HeatPumpCalculator = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <p className="text-sm text-elec-light/80">
-                    {results.reviewFindings.length} finding{results.reviewFindings.length !== 1 ? 's' : ''} require attention
+                    {results.reviewFindings.length} finding
+                    {results.reviewFindings.length !== 1 ? 's' : ''} require attention
                   </p>
                   <MobileButton
                     onClick={() => setShowReviewSummary(false)}
@@ -401,16 +437,24 @@ const HeatPumpCalculator = () => {
                     Close
                   </MobileButton>
                 </div>
-                
+
                 <div className="space-y-3">
                   {results.reviewFindings.map((finding) => (
-                    <div key={finding.id} className="border-l-2 border-elec-yellow/30 pl-3 space-y-1">
+                    <div
+                      key={finding.id}
+                      className="border-l-2 border-elec-yellow/30 pl-3 space-y-1"
+                    >
                       <div className="flex items-center gap-2">
-                        <span className={cn(
-                          "w-2 h-2 rounded-full",
-                          finding.type === 'critical' ? "bg-red-500" :
-                          finding.type === 'warning' ? "bg-yellow-500" : "bg-blue-500"
-                        )} />
+                        <span
+                          className={cn(
+                            'w-2 h-2 rounded-full',
+                            finding.type === 'critical'
+                              ? 'bg-red-500'
+                              : finding.type === 'warning'
+                                ? 'bg-yellow-500'
+                                : 'bg-blue-500'
+                          )}
+                        />
                         <h4 className="font-medium text-elec-light text-sm">{finding.title}</h4>
                       </div>
                       <p className="text-xs text-elec-light/70">{finding.description}</p>
@@ -447,12 +491,16 @@ const HeatPumpCalculator = () => {
                 </div>
                 <div>
                   <span className="font-medium text-elec-light">Carbon Savings:</span>
-                  <p className="text-elec-light/80">{results.carbonSavings.toFixed(0)} kg CO₂/year vs gas</p>
+                  <p className="text-elec-light/80">
+                    {results.carbonSavings.toFixed(0)} kg CO₂/year vs gas
+                  </p>
                 </div>
                 <div>
                   <span className="font-medium text-elec-light">MCS Compliance:</span>
                   <p className="text-elec-light/80">
-                    {results.sizing.withinMCS ? "✓ Within guidelines" : "⚠ Outside recommended range"}
+                    {results.sizing.withinMCS
+                      ? '✓ Within guidelines'
+                      : '⚠ Outside recommended range'}
                   </p>
                 </div>
               </div>
@@ -470,10 +518,10 @@ const HeatPumpCalculator = () => {
               heatPumpType: inputs.heatPumpType,
               emitterType: inputs.emitterType,
               dhwOption: inputs.dhwOption,
-              electricityRate: parseFloat(inputs.electricityRate)
+              electricityRate: parseFloat(inputs.electricityRate),
             };
             const recommendations = getRecommendations(calculationInputs, results);
-            
+
             return recommendations.length > 0 ? (
               <InfoBox
                 title="Recommendations"
@@ -500,12 +548,12 @@ const HeatPumpCalculator = () => {
           >
             <div className="space-y-3 text-sm">
               {[
-                "Oversized heat pumps cycle frequently, reducing efficiency and increasing wear",
-                "Undersized systems cannot maintain comfort during cold weather", 
-                "Proper sizing ensures optimal COP and lowest running costs",
-                "MCS requirements must be met for warranty and RHI eligibility",
-                "Flow temperatures affect efficiency - lower is better for heat pumps",
-                "Building fabric improvements often more cost-effective than larger heat pumps"
+                'Oversized heat pumps cycle frequently, reducing efficiency and increasing wear',
+                'Undersized systems cannot maintain comfort during cold weather',
+                'Proper sizing ensures optimal COP and lowest running costs',
+                'MCS requirements must be met for warranty and RHI eligibility',
+                'Flow temperatures affect efficiency - lower is better for heat pumps',
+                'Building fabric improvements often more cost-effective than larger heat pumps',
               ].map((point, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
@@ -542,10 +590,10 @@ const HeatPumpCalculator = () => {
                 <h4 className="font-semibold text-elec-light mb-3">Electrical Requirements:</h4>
                 <div className="space-y-2">
                   {[
-                    "Single phase suitable up to 12kW electrical input",
-                    "Three-phase required for larger systems", 
-                    "Dedicated circuit with appropriate protective devices",
-                    "Emergency controls and isolation switches required"
+                    'Single phase suitable up to 12kW electrical input',
+                    'Three-phase required for larger systems',
+                    'Dedicated circuit with appropriate protective devices',
+                    'Emergency controls and isolation switches required',
                   ].map((req, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2.5 flex-shrink-0" />
@@ -554,15 +602,15 @@ const HeatPumpCalculator = () => {
                   ))}
                 </div>
               </div>
-              
+
               <div>
                 <h4 className="font-semibold text-elec-light mb-3">System Design:</h4>
                 <div className="space-y-2">
                   {[
-                    "Weather compensation controls improve efficiency",
-                    "Buffer tanks may be required for short cycling",
-                    "Defrost provision essential for air source systems", 
-                    "Backup heating consideration for extreme weather"
+                    'Weather compensation controls improve efficiency',
+                    'Buffer tanks may be required for short cycling',
+                    'Defrost provision essential for air source systems',
+                    'Backup heating consideration for extreme weather',
                   ].map((design, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2.5 flex-shrink-0" />

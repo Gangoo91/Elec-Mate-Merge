@@ -28,19 +28,22 @@ export const processCVMarkdown = (text: string): React.ReactNode => {
   const processInlineMarkdown = (text: string): React.ReactNode => {
     // Process bold text **text**
     text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    
+
     // Process italic text *text*
     text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    
+
     // Process links [text](url)
-    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>');
+    text = text.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" class="text-blue-600 hover:underline">$1</a>'
+    );
 
     return <span dangerouslySetInnerHTML={{ __html: text }} />;
   };
 
   lines.forEach((line, index) => {
     line = line.trim();
-    
+
     if (!line) {
       flushList();
       if (elements.length > 0) {

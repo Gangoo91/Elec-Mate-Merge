@@ -1,45 +1,44 @@
-import { ArrowLeft, PackageOpen, Scale, Search, HeartPulse } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, PackageOpen, Scale, Search, HeartPulse } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Is Manual Handling?",
+    title: 'What Is Manual Handling?',
     icon: PackageOpen,
     description:
-      "MHOR 1992 definition, injury statistics, common manual handling activities, and why it matters for electricians",
+      'MHOR 1992 definition, injury statistics, common manual handling activities, and why it matters for electricians',
   },
   {
     id: 2,
-    title: "The Legal Framework",
+    title: 'The Legal Framework',
     icon: Scale,
-    description:
-      "MHOR 1992, HASAWA 1974, Management Regs 1999, and employer/employee duties",
+    description: 'MHOR 1992, HASAWA 1974, Management Regs 1999, and employer/employee duties',
   },
   {
     id: 3,
-    title: "Manual Handling Risk Assessment",
+    title: 'Manual Handling Risk Assessment',
     icon: Search,
     description:
-      "The TILE framework — Task, Individual, Load, Environment — and the five-step assessment process",
+      'The TILE framework — Task, Individual, Load, Environment — and the five-step assessment process',
   },
   {
     id: 4,
-    title: "Anatomy & Injury Mechanisms",
+    title: 'Anatomy & Injury Mechanisms',
     icon: HeartPulse,
     description:
-      "Spinal structure, intervertebral discs, herniation, and how manual handling injuries occur",
+      'Spinal structure, intervertebral discs, herniation, and how manual handling injuries occur',
   },
 ];
 
 export default function ManualHandlingModule1() {
   useSEO({
-    title: "Module 1: Understanding Manual Handling | Manual Handling",
+    title: 'Module 1: Understanding Manual Handling | Manual Handling',
     description:
-      "MHOR 1992 definition, the legal framework, TILE risk assessment process, and anatomy of manual handling injuries.",
+      'MHOR 1992 definition, the legal framework, TILE risk assessment process, and anatomy of manual handling injuries.',
   });
 
   return (
@@ -66,9 +65,7 @@ export default function ManualHandlingModule1() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3">
-              <span className="text-emerald-400 text-xs font-semibold">
-                MODULE 1
-              </span>
+              <span className="text-emerald-400 text-xs font-semibold">MODULE 1</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +75,8 @@ export default function ManualHandlingModule1() {
               Understanding Manual Handling
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The regulations, legal duties, TILE risk assessment process, and
-              anatomy of manual handling injuries
+              The regulations, legal duties, TILE risk assessment process, and anatomy of manual
+              handling injuries
             </p>
           </div>
 

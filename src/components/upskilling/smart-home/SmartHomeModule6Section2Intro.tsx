@@ -9,11 +9,14 @@ export const SmartHomeModule6Section2Intro = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground leading-relaxed">
-          Voice assistants like Amazon Alexa, Google Home, and Apple Siri have become central to smart home control. Instead of relying on apps or switches, homeowners can issue simple voice commands to control lighting, heating, security, and appliances.
+          Voice assistants like Amazon Alexa, Google Home, and Apple Siri have become central to
+          smart home control. Instead of relying on apps or switches, homeowners can issue simple
+          voice commands to control lighting, heating, security, and appliances.
         </p>
-        
+
         <p className="text-foreground leading-relaxed">
-          For electricians, understanding how these systems integrate with hubs and devices is essential — because many clients expect "hands-free" operation as standard.
+          For electricians, understanding how these systems integrate with hubs and devices is
+          essential — because many clients expect "hands-free" operation as standard.
         </p>
 
         {/* Key Benefits Grid */}
@@ -27,7 +30,7 @@ export const SmartHomeModule6Section2Intro = () => {
               Hands-free operation using natural language commands for all smart home functions
             </p>
           </div>
-          
+
           <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
             <div className="flex items-center gap-3 mb-3">
               <Smartphone className="h-6 w-6 text-green-400" />
@@ -37,7 +40,7 @@ export const SmartHomeModule6Section2Intro = () => {
               Single voice interface to control devices from multiple brands and protocols
             </p>
           </div>
-          
+
           <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
             <div className="flex items-center gap-3 mb-3">
               <Volume2 className="h-6 w-6 text-purple-400" />

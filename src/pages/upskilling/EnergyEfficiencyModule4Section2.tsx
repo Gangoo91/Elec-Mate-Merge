@@ -20,13 +20,15 @@ import {
   Shield,
   Activity,
   HelpCircle,
-  Cpu
+  Cpu,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule4Section2: React.FC = () => {
   useSEO({
-    title: 'Motor Efficiency and VSD Retrofitting | Energy Efficiency Module 4 Section 2 | Elec-Mate',
-    description: 'Learn about motor efficiency classes IE1-IE5, Variable Speed Drive retrofitting, affinity laws, and energy savings calculations for UK electrical installations.',
+    title:
+      'Motor Efficiency and VSD Retrofitting | Energy Efficiency Module 4 Section 2 | Elec-Mate',
+    description:
+      'Learn about motor efficiency classes IE1-IE5, Variable Speed Drive retrofitting, affinity laws, and energy savings calculations for UK electrical installations.',
     keywords: [
       'motor efficiency',
       'VSD',
@@ -39,112 +41,188 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
       'EMC',
       'harmonics',
       'UK regulations',
-      'Ecodesign'
-    ]
+      'Ecodesign',
+    ],
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc-motor-efficiency',
-      question: 'Under current UK/EU Ecodesign regulations, what is the minimum efficiency class required for new three-phase motors between 0.75kW and 1000kW?',
-      options: ['IE1 Standard Efficiency', 'IE2 High Efficiency', 'IE3 Premium Efficiency', 'IE4 Super Premium Efficiency'],
+      question:
+        'Under current UK/EU Ecodesign regulations, what is the minimum efficiency class required for new three-phase motors between 0.75kW and 1000kW?',
+      options: [
+        'IE1 Standard Efficiency',
+        'IE2 High Efficiency',
+        'IE3 Premium Efficiency',
+        'IE4 Super Premium Efficiency',
+      ],
       correctIndex: 2,
-      explanation: 'Since July 2021, all new three-phase motors from 0.75kW to 1000kW must meet IE3 (Premium Efficiency) requirements under EU Ecodesign Regulation 2019/1781. Motors below 0.12kW and certain specialist applications are exempt.'
+      explanation:
+        'Since July 2021, all new three-phase motors from 0.75kW to 1000kW must meet IE3 (Premium Efficiency) requirements under EU Ecodesign Regulation 2019/1781. Motors below 0.12kW and certain specialist applications are exempt.',
     },
     {
       id: 'qc-affinity-laws',
-      question: 'According to the affinity laws, if a pump motor speed is reduced from 100% to 80%, what is the approximate power consumption?',
-      options: ['80% of original power', '64% of original power', '51% of original power', '20% of original power'],
+      question:
+        'According to the affinity laws, if a pump motor speed is reduced from 100% to 80%, what is the approximate power consumption?',
+      options: [
+        '80% of original power',
+        '64% of original power',
+        '51% of original power',
+        '20% of original power',
+      ],
       correctIndex: 2,
-      explanation: 'The affinity laws state that power varies with the cube of speed. At 80% speed: 0.8³ = 0.512 or approximately 51% of original power. This demonstrates the significant energy savings possible with VSDs on variable torque loads like pumps and fans.'
+      explanation:
+        'The affinity laws state that power varies with the cube of speed. At 80% speed: 0.8³ = 0.512 or approximately 51% of original power. This demonstrates the significant energy savings possible with VSDs on variable torque loads like pumps and fans.',
     },
     {
       id: 'qc-vsd-filters',
-      question: 'What is the primary purpose of installing a line reactor or dV/dt filter with a VSD?',
-      options: ['To increase motor torque', 'To reduce harmonic distortion and protect motor insulation', 'To bypass the VSD during faults', 'To provide power factor correction only'],
+      question:
+        'What is the primary purpose of installing a line reactor or dV/dt filter with a VSD?',
+      options: [
+        'To increase motor torque',
+        'To reduce harmonic distortion and protect motor insulation',
+        'To bypass the VSD during faults',
+        'To provide power factor correction only',
+      ],
       correctIndex: 1,
-      explanation: 'Line reactors and dV/dt filters reduce harmonic distortion fed back to the supply and protect motor winding insulation from the steep voltage rise times (high dV/dt) produced by PWM inverters. This is especially important for older motors or long cable runs.'
-    }
+      explanation:
+        'Line reactors and dV/dt filters reduce harmonic distortion fed back to the supply and protect motor winding insulation from the steep voltage rise times (high dV/dt) produced by PWM inverters. This is especially important for older motors or long cable runs.',
+    },
   ];
 
   const quizQuestions = [
     {
       question: 'What does the IE classification system measure for electric motors?',
-      options: ['Insulation class rating', 'International Efficiency level', 'Installation Environment rating', 'Ingress Protection level'],
-      correctAnswer: 'International Efficiency level'
+      options: [
+        'Insulation class rating',
+        'International Efficiency level',
+        'Installation Environment rating',
+        'Ingress Protection level',
+      ],
+      correctAnswer: 'International Efficiency level',
     },
     {
-      question: 'A motor operates 6000 hours per year. At what point does replacing an IE2 motor with an IE3 become cost-effective?',
-      options: ['When total energy savings exceed motor replacement cost', 'Only when the motor fails completely', 'Never - IE2 motors should always be repaired', 'Only for motors above 100kW'],
-      correctAnswer: 'When total energy savings exceed motor replacement cost'
+      question:
+        'A motor operates 6000 hours per year. At what point does replacing an IE2 motor with an IE3 become cost-effective?',
+      options: [
+        'When total energy savings exceed motor replacement cost',
+        'Only when the motor fails completely',
+        'Never - IE2 motors should always be repaired',
+        'Only for motors above 100kW',
+      ],
+      correctAnswer: 'When total energy savings exceed motor replacement cost',
     },
     {
       question: 'Which type of load benefits MOST from VSD installation for energy savings?',
-      options: ['Constant torque loads like conveyors', 'Variable torque loads like centrifugal pumps', 'Constant power loads like winders', 'Intermittent loads like hoists'],
-      correctAnswer: 'Variable torque loads like centrifugal pumps'
+      options: [
+        'Constant torque loads like conveyors',
+        'Variable torque loads like centrifugal pumps',
+        'Constant power loads like winders',
+        'Intermittent loads like hoists',
+      ],
+      correctAnswer: 'Variable torque loads like centrifugal pumps',
     },
     {
       question: 'What is the typical harmonic spectrum produced by a 6-pulse VSD?',
-      options: ['2nd, 4th, 6th harmonics', '5th, 7th, 11th, 13th harmonics', '3rd, 9th, 15th harmonics', 'No harmonics are produced'],
-      correctAnswer: '5th, 7th, 11th, 13th harmonics'
+      options: [
+        '2nd, 4th, 6th harmonics',
+        '5th, 7th, 11th, 13th harmonics',
+        '3rd, 9th, 15th harmonics',
+        'No harmonics are produced',
+      ],
+      correctAnswer: '5th, 7th, 11th, 13th harmonics',
     },
     {
-      question: 'According to BS 7671, what additional protection consideration applies to circuits supplying VSDs?',
-      options: ['RCD protection is never required', 'Type A RCDs are always suitable', 'Type B RCDs may be required due to DC fault currents', 'MCBs must be Type D only'],
-      correctAnswer: 'Type B RCDs may be required due to DC fault currents'
+      question:
+        'According to BS 7671, what additional protection consideration applies to circuits supplying VSDs?',
+      options: [
+        'RCD protection is never required',
+        'Type A RCDs are always suitable',
+        'Type B RCDs may be required due to DC fault currents',
+        'MCBs must be Type D only',
+      ],
+      correctAnswer: 'Type B RCDs may be required due to DC fault currents',
     },
     {
       question: 'What is motor slip in an induction motor?',
-      options: ['Physical movement of the shaft', 'Difference between synchronous and rotor speed', 'Bearing wear measurement', 'Insulation breakdown'],
-      correctAnswer: 'Difference between synchronous and rotor speed'
+      options: [
+        'Physical movement of the shaft',
+        'Difference between synchronous and rotor speed',
+        'Bearing wear measurement',
+        'Insulation breakdown',
+      ],
+      correctAnswer: 'Difference between synchronous and rotor speed',
     },
     {
-      question: 'When retrofitting a VSD to an existing motor, what critical parameter must be verified about the motor?',
-      options: ['Paint colour specification', 'Insulation class and inverter duty rating', 'Manufacturer country of origin', 'Original purchase date'],
-      correctAnswer: 'Insulation class and inverter duty rating'
+      question:
+        'When retrofitting a VSD to an existing motor, what critical parameter must be verified about the motor?',
+      options: [
+        'Paint colour specification',
+        'Insulation class and inverter duty rating',
+        'Manufacturer country of origin',
+        'Original purchase date',
+      ],
+      correctAnswer: 'Insulation class and inverter duty rating',
     },
     {
       question: 'What is the purpose of the DC bus capacitors in a VSD?',
-      options: ['To provide power factor correction', 'To smooth rectified DC voltage', 'To generate output frequency', 'To limit starting current'],
-      correctAnswer: 'To smooth rectified DC voltage'
+      options: [
+        'To provide power factor correction',
+        'To smooth rectified DC voltage',
+        'To generate output frequency',
+        'To limit starting current',
+      ],
+      correctAnswer: 'To smooth rectified DC voltage',
     },
     {
-      question: 'For a pump running at 50% flow using a VSD, what percentage of full load power is approximately consumed?',
+      question:
+        'For a pump running at 50% flow using a VSD, what percentage of full load power is approximately consumed?',
       options: ['50%', '25%', '12.5%', '75%'],
-      correctAnswer: '12.5%'
+      correctAnswer: '12.5%',
     },
     {
       question: 'What EMC requirement typically applies to VSD installations in the UK?',
-      options: ['No EMC requirements exist', 'C1 category for residential environments', 'C3 category for industrial environments', 'Both B and C depending on installation location'],
-      correctAnswer: 'Both B and C depending on installation location'
-    }
+      options: [
+        'No EMC requirements exist',
+        'C1 category for residential environments',
+        'C3 category for industrial environments',
+        'Both B and C depending on installation location',
+      ],
+      correctAnswer: 'Both B and C depending on installation location',
+    },
   ];
 
   const faqs = [
     {
       question: 'When should I recommend replacing a working motor with a higher efficiency model?',
-      answer: 'Consider proactive replacement when: the motor runs more than 4,000 hours/year, efficiency improvement exceeds 3-4%, electricity costs are high, the motor is over 15 years old, or there are known reliability concerns. Calculate simple payback: if under 2-3 years, replacement is usually justified. For critical applications, keep the old motor as a spare rather than scrapping it. Also consider replacement during planned shutdowns to avoid production losses.'
+      answer:
+        'Consider proactive replacement when: the motor runs more than 4,000 hours/year, efficiency improvement exceeds 3-4%, electricity costs are high, the motor is over 15 years old, or there are known reliability concerns. Calculate simple payback: if under 2-3 years, replacement is usually justified. For critical applications, keep the old motor as a spare rather than scrapping it. Also consider replacement during planned shutdowns to avoid production losses.',
     },
     {
       question: 'Can any motor be retrofitted with a VSD?',
-      answer: 'Not without assessment. Check: insulation class (Class F minimum recommended for inverter duty), winding insulation condition, bearing type (standard bearings may need shaft grounding or ceramic bearings to prevent EDM damage), motor age and condition, cooling method (motors at reduced speeds may need forced ventilation), and whether the motor has inverter-duty rating. Older motors with Class B insulation may experience shortened life due to voltage stress from PWM waveforms.'
+      answer:
+        'Not without assessment. Check: insulation class (Class F minimum recommended for inverter duty), winding insulation condition, bearing type (standard bearings may need shaft grounding or ceramic bearings to prevent EDM damage), motor age and condition, cooling method (motors at reduced speeds may need forced ventilation), and whether the motor has inverter-duty rating. Older motors with Class B insulation may experience shortened life due to voltage stress from PWM waveforms.',
     },
     {
       question: 'How do I size a VSD for an existing motor application?',
-      answer: 'Size based on motor full load current (FLC), not kW rating. Allow margin for: starting torque requirements (some applications need 150% rated current), continuous operation at low speeds (derate for reduced cooling), altitude and temperature derating, and future expansion. Check VSD output frequency range matches application needs. For heavy-duty cycling or high starting loads, oversize by one frame size.'
+      answer:
+        'Size based on motor full load current (FLC), not kW rating. Allow margin for: starting torque requirements (some applications need 150% rated current), continuous operation at low speeds (derate for reduced cooling), altitude and temperature derating, and future expansion. Check VSD output frequency range matches application needs. For heavy-duty cycling or high starting loads, oversize by one frame size.',
     },
     {
       question: 'What causes VSD nuisance tripping and how do I prevent it?',
-      answer: 'Common causes: supply voltage dips (adjust DC bus undervoltage trip), earth fault currents (check cable shielding and EMC filters), overcurrent on acceleration (extend ramp time or enable current limit), motor overtemperature (verify cooling at reduced speeds). Solutions include proper EMC installation, correctly rated input fuses/breakers, appropriate parameter settings for the load, and avoiding long motor cables without output filters.'
+      answer:
+        'Common causes: supply voltage dips (adjust DC bus undervoltage trip), earth fault currents (check cable shielding and EMC filters), overcurrent on acceleration (extend ramp time or enable current limit), motor overtemperature (verify cooling at reduced speeds). Solutions include proper EMC installation, correctly rated input fuses/breakers, appropriate parameter settings for the load, and avoiding long motor cables without output filters.',
     },
     {
       question: 'What documentation should I provide after a VSD installation?',
-      answer: 'Provide: completed Electrical Installation Certificate, VSD parameter backup (electronic or printed), motor nameplate data and VSD-motor compatibility confirmation, EMC compliance declaration, commissioning records including test results, O&M manual with fault code reference, wiring diagrams showing all connections, and training records for operators. Keep backup of all programmed parameters.'
+      answer:
+        'Provide: completed Electrical Installation Certificate, VSD parameter backup (electronic or printed), motor nameplate data and VSD-motor compatibility confirmation, EMC compliance declaration, commissioning records including test results, O&M manual with fault code reference, wiring diagrams showing all connections, and training records for operators. Keep backup of all programmed parameters.',
     },
     {
       question: 'How do harmonics from VSDs affect other equipment?',
-      answer: 'Harmonics can cause: overheating in transformers and cables, interference with sensitive equipment, capacitor damage, nuisance tripping of electronic equipment, and metering errors. Mitigation includes: line reactors (3-5% impedance reduces harmonics significantly), active harmonic filters for critical installations, 12-pulse or 18-pulse rectifiers for large drives, proper cable separation and shielding, and consulting with DNO for large installations.'
-    }
+      answer:
+        'Harmonics can cause: overheating in transformers and cables, interference with sensitive equipment, capacitor damage, nuisance tripping of electronic equipment, and metering errors. Mitigation includes: line reactors (3-5% impedance reduces harmonics significantly), active harmonic filters for critical installations, 12-pulse or 18-pulse rectifiers for large drives, proper cable separation and shielding, and consulting with DNO for large installations.',
+    },
   ];
 
   return (
@@ -152,7 +230,12 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-4">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -162,7 +245,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <Cpu className="w-5 h-5 text-elec-yellow" />
               <span className="text-elec-yellow text-sm font-medium">Module 4 - Section 2</span>
             </div>
-            <h1 className="text-lg font-semibold text-white">Motor Efficiency and VSD Retrofitting</h1>
+            <h1 className="text-lg font-semibold text-white">
+              Motor Efficiency and VSD Retrofitting
+            </h1>
           </div>
         </div>
       </div>
@@ -171,9 +256,13 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <p className="text-white/90 leading-relaxed">
-            Electric motors account for <span className="text-elec-yellow font-semibold">approximately 70% of industrial electricity consumption</span> in the UK.
-            Understanding motor efficiency classifications and Variable Speed Drive (VSD) technology enables you to deliver significant
-            energy savings for clients whilst ensuring compliance with Ecodesign regulations and BS 7671 requirements.
+            Electric motors account for{' '}
+            <span className="text-elec-yellow font-semibold">
+              approximately 70% of industrial electricity consumption
+            </span>{' '}
+            in the UK. Understanding motor efficiency classifications and Variable Speed Drive (VSD)
+            technology enables you to deliver significant energy savings for clients whilst ensuring
+            compliance with Ecodesign regulations and BS 7671 requirements.
           </p>
         </div>
 
@@ -186,9 +275,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              The International Efficiency (IE) classification system, defined in IEC 60034-30-1, provides a standardised
-              method for comparing motor efficiency. Understanding these classes is essential for specifying compliant
-              and cost-effective motor replacements.
+              The International Efficiency (IE) classification system, defined in IEC 60034-30-1,
+              provides a standardised method for comparing motor efficiency. Understanding these
+              classes is essential for specifying compliant and cost-effective motor replacements.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -253,11 +342,17 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <ul className="text-white/80 text-sm space-y-1">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Motors 0.75kW to 1000kW: <strong className="text-white">IE3 minimum</strong> (or IE2 with VSD)</span>
+                  <span>
+                    Motors 0.75kW to 1000kW: <strong className="text-white">IE3 minimum</strong> (or
+                    IE2 with VSD)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>From July 2023: Motors 75kW to 200kW: <strong className="text-white">IE4 minimum</strong></span>
+                  <span>
+                    From July 2023: Motors 75kW to 200kW:{' '}
+                    <strong className="text-white">IE4 minimum</strong>
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
@@ -314,9 +409,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              The affinity laws describe the relationship between speed, flow, pressure, and power for
-              centrifugal pumps and fans. These relationships demonstrate why VSDs deliver dramatic
-              energy savings on variable torque loads.
+              The affinity laws describe the relationship between speed, flow, pressure, and power
+              for centrifugal pumps and fans. These relationships demonstrate why VSDs deliver
+              dramatic energy savings on variable torque loads.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -326,17 +421,23 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               </h3>
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="bg-white/5 rounded p-4 text-center">
-                  <p className="text-elec-yellow font-bold text-2xl mb-2">Flow proportional to Speed</p>
+                  <p className="text-elec-yellow font-bold text-2xl mb-2">
+                    Flow proportional to Speed
+                  </p>
                   <p className="text-white font-mono text-lg">Q₂/Q₁ = N₂/N₁</p>
                   <p className="text-white/60 text-sm mt-2">80% speed = 80% flow</p>
                 </div>
                 <div className="bg-white/5 rounded p-4 text-center">
-                  <p className="text-elec-yellow font-bold text-2xl mb-2">Pressure proportional to Speed²</p>
+                  <p className="text-elec-yellow font-bold text-2xl mb-2">
+                    Pressure proportional to Speed²
+                  </p>
                   <p className="text-white font-mono text-lg">H₂/H₁ = (N₂/N₁)²</p>
                   <p className="text-white/60 text-sm mt-2">80% speed = 64% pressure</p>
                 </div>
                 <div className="bg-white/5 rounded p-4 text-center">
-                  <p className="text-elec-yellow font-bold text-2xl mb-2">Power proportional to Speed³</p>
+                  <p className="text-elec-yellow font-bold text-2xl mb-2">
+                    Power proportional to Speed³
+                  </p>
                   <p className="text-white font-mono text-lg">P₂/P₁ = (N₂/N₁)³</p>
                   <p className="text-white/60 text-sm mt-2 text-green-400">80% speed = 51% power</p>
                 </div>
@@ -399,7 +500,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-yellow-400 font-medium">Constant Torque (Limited VSD benefit)</p>
+                  <p className="text-yellow-400 font-medium">
+                    Constant Torque (Limited VSD benefit)
+                  </p>
                   <ul className="text-white/70 mt-1 space-y-1">
                     <li>- Conveyors</li>
                     <li>- Positive displacement pumps</li>
@@ -430,9 +533,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              Variable Speed Drives (also called Variable Frequency Drives, Inverters, or AC Drives) control motor
-              speed by varying the frequency and voltage supplied to the motor. Understanding their operation
-              is essential for correct specification and installation.
+              Variable Speed Drives (also called Variable Frequency Drives, Inverters, or AC Drives)
+              control motor speed by varying the frequency and voltage supplied to the motor.
+              Understanding their operation is essential for correct specification and installation.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -462,10 +565,11 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">V/f Control (Constant Flux)</p>
                   <p className="text-white/70 text-sm">
-                    Motor speed is proportional to frequency. To maintain constant torque capability, voltage
-                    must vary proportionally with frequency (V/f = constant). At 25Hz, voltage is reduced to
-                    approximately half of the 50Hz value. Below ~5Hz, additional voltage boost is applied to
-                    overcome stator resistance and maintain flux.
+                    Motor speed is proportional to frequency. To maintain constant torque
+                    capability, voltage must vary proportionally with frequency (V/f = constant). At
+                    25Hz, voltage is reduced to approximately half of the 50Hz value. Below ~5Hz,
+                    additional voltage boost is applied to overcome stator resistance and maintain
+                    flux.
                   </p>
                 </div>
               </div>
@@ -480,29 +584,47 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <ul className="text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Soft starting:</strong> Reduced mechanical stress, no starting current spike</span>
+                    <span>
+                      <strong className="text-white">Soft starting:</strong> Reduced mechanical
+                      stress, no starting current spike
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Process control:</strong> Precise speed regulation for quality</span>
+                    <span>
+                      <strong className="text-white">Process control:</strong> Precise speed
+                      regulation for quality
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Extended motor life:</strong> Controlled acceleration/deceleration</span>
+                    <span>
+                      <strong className="text-white">Extended motor life:</strong> Controlled
+                      acceleration/deceleration
+                    </span>
                   </li>
                 </ul>
                 <ul className="text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Power factor:</strong> Near unity at the supply terminals</span>
+                    <span>
+                      <strong className="text-white">Power factor:</strong> Near unity at the supply
+                      terminals
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Protection:</strong> Built-in motor protection features</span>
+                    <span>
+                      <strong className="text-white">Protection:</strong> Built-in motor protection
+                      features
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong className="text-white">Diagnostics:</strong> Monitoring and fault logging</span>
+                    <span>
+                      <strong className="text-white">Diagnostics:</strong> Monitoring and fault
+                      logging
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -519,8 +641,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              Correct installation of VSDs is critical for reliable operation and compliance with EMC regulations.
-              Poor installation can cause interference, nuisance tripping, and premature motor failure.
+              Correct installation of VSDs is critical for reliable operation and compliance with
+              EMC regulations. Poor installation can cause interference, nuisance tripping, and
+              premature motor failure.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -530,7 +653,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="bg-white/5 rounded p-3">
-                  <p className="text-green-400 font-semibold mb-2">C1 (First Environment - Residential)</p>
+                  <p className="text-green-400 font-semibold mb-2">
+                    C1 (First Environment - Residential)
+                  </p>
                   <ul className="text-white/70 space-y-1">
                     <li>- Lowest emission limits</li>
                     <li>- Requires integral EMC filter</li>
@@ -538,7 +663,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                   </ul>
                 </div>
                 <div className="bg-white/5 rounded p-3">
-                  <p className="text-yellow-400 font-semibold mb-2">C3 (Second Environment - Industrial)</p>
+                  <p className="text-yellow-400 font-semibold mb-2">
+                    C3 (Second Environment - Industrial)
+                  </p>
                   <ul className="text-white/70 space-y-1">
                     <li>- Higher emission limits permitted</li>
                     <li>- Basic filtering may be acceptable</li>
@@ -556,23 +683,38 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <ul className="text-white/80 space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Cable shielding:</strong> Use screened/armoured cable for motor connections, earth screen at both ends</span>
+                  <span>
+                    <strong className="text-white">Cable shielding:</strong> Use screened/armoured
+                    cable for motor connections, earth screen at both ends
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Cable separation:</strong> Maintain 300mm from control cables, cross at 90° only</span>
+                  <span>
+                    <strong className="text-white">Cable separation:</strong> Maintain 300mm from
+                    control cables, cross at 90° only
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Motor cable length:</strong> Check manufacturer limits; may need output filter for long runs</span>
+                  <span>
+                    <strong className="text-white">Motor cable length:</strong> Check manufacturer
+                    limits; may need output filter for long runs
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Earthing:</strong> Low impedance earth connections essential for EMC filter operation</span>
+                  <span>
+                    <strong className="text-white">Earthing:</strong> Low impedance earth
+                    connections essential for EMC filter operation
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Ventilation:</strong> Allow adequate clearance for cooling; derate for high ambient temperatures</span>
+                  <span>
+                    <strong className="text-white">Ventilation:</strong> Allow adequate clearance
+                    for cooling; derate for high ambient temperatures
+                  </span>
                 </li>
               </ul>
             </div>
@@ -583,10 +725,22 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 BS 7671 Considerations for VSD Circuits
               </h4>
               <ul className="text-white/80 text-sm space-y-1">
-                <li>- <strong className="text-white">RCD selection:</strong> Type B or Type B+ RCDs may be required due to DC fault currents from rectifier</li>
-                <li>- <strong className="text-white">Harmonic currents:</strong> May require cable derating and neutral sizing (harmonics add in neutral)</li>
-                <li>- <strong className="text-white">Protective device coordination:</strong> Account for drive's current limiting during overloads</li>
-                <li>- <strong className="text-white">EMC filter earth leakage:</strong> Consider cumulative leakage when multiple drives on one RCD</li>
+                <li>
+                  - <strong className="text-white">RCD selection:</strong> Type B or Type B+ RCDs
+                  may be required due to DC fault currents from rectifier
+                </li>
+                <li>
+                  - <strong className="text-white">Harmonic currents:</strong> May require cable
+                  derating and neutral sizing (harmonics add in neutral)
+                </li>
+                <li>
+                  - <strong className="text-white">Protective device coordination:</strong> Account
+                  for drive's current limiting during overloads
+                </li>
+                <li>
+                  - <strong className="text-white">EMC filter earth leakage:</strong> Consider
+                  cumulative leakage when multiple drives on one RCD
+                </li>
               </ul>
             </div>
           </div>
@@ -610,8 +764,8 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
             <p className="text-white/80">
-              Not all motors are suitable for VSD operation. Retrofitting a VSD to an unsuitable motor
-              can result in overheating, insulation breakdown, and bearing damage.
+              Not all motors are suitable for VSD operation. Retrofitting a VSD to an unsuitable
+              motor can result in overheating, insulation breakdown, and bearing damage.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -653,7 +807,9 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
             </div>
 
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="text-elec-yellow font-semibold mb-2">Motor Nameplate Information Required</h4>
+              <h4 className="text-elec-yellow font-semibold mb-2">
+                Motor Nameplate Information Required
+              </h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
                 <ul className="space-y-1">
                   <li>- Rated power (kW)</li>
@@ -710,17 +866,31 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">Calculation</p>
                   <div className="text-sm text-white/70 space-y-2">
-                    <p><strong className="text-white">Current consumption:</strong> 22kW / 0.91 x 6,000h = 145,055 kWh/year (£36,264)</p>
-                    <p><strong className="text-white">With VSD at 70% speed:</strong> Power = 22kW x 0.7³ / 0.91 x 6,000h = 49,719 kWh/year (£12,430)</p>
-                    <p><strong className="text-green-400">Annual saving:</strong> 95,336 kWh = £23,834</p>
-                    <p><strong className="text-elec-yellow">Simple payback:</strong> £3,500 / £23,834 = 1.8 months</p>
+                    <p>
+                      <strong className="text-white">Current consumption:</strong> 22kW / 0.91 x
+                      6,000h = 145,055 kWh/year (£36,264)
+                    </p>
+                    <p>
+                      <strong className="text-white">With VSD at 70% speed:</strong> Power = 22kW x
+                      0.7³ / 0.91 x 6,000h = 49,719 kWh/year (£12,430)
+                    </p>
+                    <p>
+                      <strong className="text-green-400">Annual saving:</strong> 95,336 kWh =
+                      £23,834
+                    </p>
+                    <p>
+                      <strong className="text-elec-yellow">Simple payback:</strong> £3,500 / £23,834
+                      = 1.8 months
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-elec-yellow font-semibold mb-3">Factors Affecting Real-World Savings</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Factors Affecting Real-World Savings
+              </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-2">Positive Factors</p>
@@ -880,10 +1050,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-lg overflow-hidden"
-              >
+              <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
                   <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
@@ -900,7 +1067,8 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
             Section Knowledge Check
           </h2>
           <p className="text-white/80 mb-6">
-            Test your understanding of motor efficiency and VSD technology with this 10-question quiz.
+            Test your understanding of motor efficiency and VSD technology with this 10-question
+            quiz.
           </p>
           <Quiz
             questions={quizQuestions}

@@ -14,7 +14,8 @@ const DevicePairingSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Devices connect to hubs or apps via different wireless protocols. Each device type has a specific pairing method that must be followed precisely.
+            Devices connect to hubs or apps via different wireless protocols. Each device type has a
+            specific pairing method that must be followed precisely.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -59,7 +60,9 @@ const DevicePairingSection = () => {
 
             <div className="p-4 bg-[#1a1a1a] rounded-lg">
               <div className="flex items-center gap-2 mb-3">
-                <span className="h-5 w-5 bg-orange-400 rounded text-black text-xs flex items-center justify-center font-bold">QR</span>
+                <span className="h-5 w-5 bg-orange-400 rounded text-black text-xs flex items-center justify-center font-bold">
+                  QR
+                </span>
                 <span className="font-medium text-foreground">QR Code Pairing</span>
               </div>
               <ul className="space-y-1 text-gray-300 text-sm">

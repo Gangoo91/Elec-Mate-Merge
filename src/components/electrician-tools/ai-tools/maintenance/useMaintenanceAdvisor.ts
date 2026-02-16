@@ -134,7 +134,7 @@ export const useMaintenanceAdvisor = () => {
   const [startTime, setStartTime] = useState<number | null>(null);
 
   const updateInput = (updates: Partial<MaintenanceInput>) => {
-    setInput(prev => ({ ...prev, ...updates }));
+    setInput((prev) => ({ ...prev, ...updates }));
   };
 
   const resetForm = () => {
@@ -164,7 +164,7 @@ export const useMaintenanceAdvisor = () => {
     try {
       // Always use full detail
       const isQuick = false;
-      
+
       // Start backend call immediately
       const invokePromise = supabase.functions.invoke('maintenance-v3', {
         body: {
@@ -184,7 +184,7 @@ export const useMaintenanceAdvisor = () => {
           assessorName: input.assessorName,
           companyName: input.companyName,
           detailLevel: 'full',
-        }
+        },
       });
 
       // Run progress ticker in parallel
@@ -210,7 +210,7 @@ export const useMaintenanceAdvisor = () => {
       const progressTicker = async () => {
         for (let i = 0; i < progressSteps.length && !cancelled; i++) {
           setProgress(progressSteps[i].msg);
-          await new Promise(resolve => setTimeout(resolve, progressSteps[i].duration));
+          await new Promise((resolve) => setTimeout(resolve, progressSteps[i].duration));
         }
       };
 
@@ -224,7 +224,7 @@ export const useMaintenanceAdvisor = () => {
       if (error) {
         console.error('Invoke error:', error);
         toast.error('Failed to generate schedule', {
-          description: 'Network error. Please try again.'
+          description: 'Network error. Please try again.',
         });
         setState('input');
         return;
@@ -234,7 +234,7 @@ export const useMaintenanceAdvisor = () => {
       if (data && data.success === false) {
         console.error('Backend error:', data.error, data.code);
         toast.error(data.error || 'Failed to generate schedule', {
-          description: data.code ? `Error: ${data.code}` : 'Please try again.'
+          description: data.code ? `Error: ${data.code}` : 'Please try again.',
         });
         setState('input');
         return;
@@ -244,7 +244,7 @@ export const useMaintenanceAdvisor = () => {
       if (!data || typeof data !== 'object') {
         console.error('Invalid response structure:', data);
         toast.error('Invalid response from server', {
-          description: 'Please try again or contact support.'
+          description: 'Please try again or contact support.',
         });
         setState('input');
         return;
@@ -254,7 +254,7 @@ export const useMaintenanceAdvisor = () => {
       if (!data.schedule || typeof data.schedule !== 'object') {
         console.error('Missing schedule in response:', data);
         toast.error('Incomplete response received', {
-          description: 'The server returned an incomplete maintenance plan.'
+          description: 'The server returned an incomplete maintenance plan.',
         });
         setState('input');
         return;
@@ -264,7 +264,8 @@ export const useMaintenanceAdvisor = () => {
       if (!data.schedule.schedule || data.schedule.schedule.length === 0) {
         console.warn('Empty schedule received:', data.schedule);
         toast.warning('No maintenance tasks generated', {
-          description: 'The AI could not identify specific maintenance tasks. Try providing more equipment details.'
+          description:
+            'The AI could not identify specific maintenance tasks. Try providing more equipment details.',
         });
         setState('input');
         return;
@@ -273,26 +274,25 @@ export const useMaintenanceAdvisor = () => {
       // Store original input with results for display
       const resultsWithInput = {
         ...data.schedule,
-        originalInput: input
+        originalInput: input,
       };
       setResults(resultsWithInput);
       setState('results');
-      
+
       // ✅ PHASE 3: Safe property access with optional chaining
       if (data.schedule?.partial) {
         toast.warning('Partial plan generated', {
-          description: `Missing: ${data.schedule.missingSections?.join(', ') || 'unknown sections'}`
+          description: `Missing: ${data.schedule.missingSections?.join(', ') || 'unknown sections'}`,
         });
       } else {
         toast.success(`Maintenance schedule generated (${data.schedule.schedule.length} tasks)`, {
-          description: 'Plan created successfully'
+          description: 'Plan created successfully',
         });
       }
-
     } catch (err) {
       console.error('Maintenance generation error:', err);
       toast.error('Failed to generate schedule', {
-        description: err instanceof Error ? err.message : 'Unknown error'
+        description: err instanceof Error ? err.message : 'Unknown error',
       });
       setState('input');
     } finally {

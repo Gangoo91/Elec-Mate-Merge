@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
-import { Button } from "@/components/ui/button";
-import { Calculator, RotateCcw, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { CALCULATOR_CONFIG, CalculatorCategory } from "./CalculatorConfig";
+import { ReactNode } from 'react';
+import { Button } from '@/components/ui/button';
+import { Calculator, RotateCcw, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
 
 interface CalculatorActionsProps {
   category: CalculatorCategory;
@@ -23,16 +23,16 @@ export const CalculatorActions = ({
   onReset,
   isCalculating = false,
   isDisabled = false,
-  calculateLabel = "Calculate",
-  resetLabel = "Reset",
+  calculateLabel = 'Calculate',
+  resetLabel = 'Reset',
   showReset = true,
   sticky = false,
-  className
+  className,
 }: CalculatorActionsProps) => {
   const config = CALCULATOR_CONFIG[category];
 
   const content = (
-    <div className={cn("flex gap-3", className)}>
+    <div className={cn('flex gap-3', className)}>
       {showReset && onReset && (
         <Button
           type="button"
@@ -40,9 +40,9 @@ export const CalculatorActions = ({
           onClick={onReset}
           disabled={isCalculating}
           className={cn(
-            "h-12 sm:h-14 flex-1 rounded-xl border-white/10",
-            "text-white/70 hover:text-white hover:bg-white/5",
-            "touch-manipulation active:scale-[0.98] transition-all"
+            'h-12 sm:h-14 flex-1 rounded-xl border-white/10',
+            'text-white/70 hover:text-white hover:bg-white/5',
+            'touch-manipulation active:scale-[0.98] transition-all'
           )}
         >
           <RotateCcw className="h-4 w-4 mr-2" />
@@ -54,14 +54,15 @@ export const CalculatorActions = ({
         onClick={onCalculate}
         disabled={isDisabled || isCalculating}
         className={cn(
-          "h-12 sm:h-14 flex-[2] rounded-xl font-semibold",
-          "touch-manipulation active:scale-[0.98] transition-all",
-          "disabled:opacity-50 disabled:cursor-not-allowed"
+          'h-12 sm:h-14 flex-[2] rounded-xl font-semibold',
+          'touch-manipulation active:scale-[0.98] transition-all',
+          'disabled:opacity-50 disabled:cursor-not-allowed'
         )}
         style={{
-          background: isDisabled || isCalculating
-            ? 'rgba(255,255,255,0.1)'
-            : `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+          background:
+            isDisabled || isCalculating
+              ? 'rgba(255,255,255,0.1)'
+              : `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
           color: isDisabled || isCalculating ? 'rgba(255,255,255,0.5)' : '#000',
         }}
       >
@@ -90,9 +91,7 @@ export const CalculatorActions = ({
           {content}
         </div>
         {/* Normal layout for desktop */}
-        <div className="hidden sm:block pt-2">
-          {content}
-        </div>
+        <div className="hidden sm:block pt-2">{content}</div>
       </>
     );
   }
@@ -115,8 +114,8 @@ export const CalculateButton = ({
   onClick,
   isLoading = false,
   isDisabled = false,
-  label = "Calculate",
-  className
+  label = 'Calculate',
+  className,
 }: CalculateButtonProps) => {
   const config = CALCULATOR_CONFIG[category];
 
@@ -126,15 +125,16 @@ export const CalculateButton = ({
       onClick={onClick}
       disabled={isDisabled || isLoading}
       className={cn(
-        "w-full h-12 sm:h-14 rounded-xl font-semibold",
-        "touch-manipulation active:scale-[0.98] transition-all",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
+        'w-full h-12 sm:h-14 rounded-xl font-semibold',
+        'touch-manipulation active:scale-[0.98] transition-all',
+        'disabled:opacity-50 disabled:cursor-not-allowed',
         className
       )}
       style={{
-        background: isDisabled || isLoading
-          ? 'rgba(255,255,255,0.1)'
-          : `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+        background:
+          isDisabled || isLoading
+            ? 'rgba(255,255,255,0.1)'
+            : `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
         color: isDisabled || isLoading ? 'rgba(255,255,255,0.5)' : '#000',
       }}
     >
@@ -165,7 +165,7 @@ export const SecondaryButton = ({
   onClick,
   isDisabled = false,
   children,
-  className
+  className,
 }: SecondaryButtonProps) => {
   return (
     <Button
@@ -174,9 +174,9 @@ export const SecondaryButton = ({
       onClick={onClick}
       disabled={isDisabled}
       className={cn(
-        "h-12 rounded-xl border-white/10",
-        "text-white/70 hover:text-white hover:bg-white/5",
-        "touch-manipulation active:scale-[0.98] transition-all",
+        'h-12 rounded-xl border-white/10',
+        'text-white/70 hover:text-white hover:bg-white/5',
+        'touch-manipulation active:scale-[0.98] transition-all',
         className
       )}
     >

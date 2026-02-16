@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { useToast } from "@/hooks/use-toast";
-import { RefreshCw, Play, CheckCircle2, AlertCircle, Clock, TestTube2 } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { useToast } from '@/hooks/use-toast';
+import { RefreshCw, Play, CheckCircle2, AlertCircle, Clock, TestTube2 } from 'lucide-react';
 
 interface BatchJob {
   id: string;
@@ -30,16 +30,16 @@ export default function EnrichmentMonitor() {
     setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'status' }
+        body: { action: 'status' },
       });
 
       if (error) throw error;
       setJobs(data.jobs || []);
     } catch (error: any) {
       toast({
-        title: "Error fetching jobs",
+        title: 'Error fetching jobs',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -50,22 +50,22 @@ export default function EnrichmentMonitor() {
     setStarting(true);
     try {
       const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'start', phase }
+        body: { action: 'start', phase },
       });
 
       if (error) throw error;
 
       toast({
-        title: "Enrichment Started",
+        title: 'Enrichment Started',
         description: `Started ${data.tasks.length} enrichment tasks`,
       });
 
       fetchJobs();
     } catch (error: any) {
       toast({
-        title: "Error starting enrichment",
+        title: 'Error starting enrichment',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setStarting(false);
@@ -75,22 +75,22 @@ export default function EnrichmentMonitor() {
   const continueEnrichment = async () => {
     try {
       const { error } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'continue' }
+        body: { action: 'continue' },
       });
 
       if (error) throw error;
 
       toast({
-        title: "Enrichment Continued",
-        description: "Processing remaining batches",
+        title: 'Enrichment Continued',
+        description: 'Processing remaining batches',
       });
 
       fetchJobs();
     } catch (error: any) {
       toast({
-        title: "Error continuing enrichment",
+        title: 'Error continuing enrichment',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -99,22 +99,22 @@ export default function EnrichmentMonitor() {
     setStarting(true);
     try {
       const { error } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'test' }
+        body: { action: 'test' },
       });
 
       if (error) throw error;
 
       toast({
-        title: "🧪 Test Mode Started",
-        description: "Processing 100 documents across all enrichment tasks",
+        title: '🧪 Test Mode Started',
+        description: 'Processing 100 documents across all enrichment tasks',
       });
 
       fetchJobs();
     } catch (error: any) {
       toast({
-        title: "Error starting test",
+        title: 'Error starting test',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setStarting(false);
@@ -166,49 +166,25 @@ export default function EnrichmentMonitor() {
         <Card className="p-6">
           <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
-            <Button
-              onClick={() => startEnrichment()}
-              disabled={starting}
-              size="lg"
-            >
+            <Button onClick={() => startEnrichment()} disabled={starting} size="lg">
               <Play className="mr-2 h-4 w-4" />
               Start All Enrichment
             </Button>
-            <Button
-              onClick={startTest}
-              disabled={starting}
-              variant="secondary"
-              size="lg"
-            >
+            <Button onClick={startTest} disabled={starting} variant="secondary" size="lg">
               <TestTube2 className="mr-2 h-4 w-4" />
               🧪 Run 100-Doc Test
             </Button>
-            <Button
-              onClick={() => startEnrichment(1)}
-              disabled={starting}
-              variant="outline"
-            >
+            <Button onClick={() => startEnrichment(1)} disabled={starting} variant="outline">
               Phase 1: Core (BS 7671, H&S, Install, Design)
             </Button>
-            <Button
-              onClick={() => startEnrichment(2)}
-              disabled={starting}
-              variant="outline"
-            >
+            <Button onClick={() => startEnrichment(2)} disabled={starting} variant="outline">
               Phase 2: Specialised (Test, Maint, PM)
             </Button>
-            <Button
-              onClick={continueEnrichment}
-              variant="secondary"
-            >
+            <Button onClick={continueEnrichment} variant="secondary">
               <RefreshCw className="mr-2 h-4 w-4" />
               Continue Pending
             </Button>
-            <Button
-              onClick={fetchJobs}
-              variant="ghost"
-              disabled={loading}
-            >
+            <Button onClick={fetchJobs} variant="ghost" disabled={loading}>
               <RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
               Refresh
             </Button>
@@ -260,9 +236,7 @@ export default function EnrichmentMonitor() {
                   {job.failed_batches > 0 && (
                     <div>
                       <span className="text-muted-foreground">Failed:</span>
-                      <span className="ml-2 font-medium text-red-600">
-                        {job.failed_batches}
-                      </span>
+                      <span className="ml-2 font-medium text-red-600">{job.failed_batches}</span>
                     </div>
                   )}
                   <div>
@@ -294,19 +268,19 @@ export default function EnrichmentMonitor() {
           <div>
             <div className="text-muted-foreground">Completed</div>
             <div className="text-2xl font-bold text-green-600">
-              {jobs.filter(j => j.status === 'completed').length}
+              {jobs.filter((j) => j.status === 'completed').length}
             </div>
           </div>
           <div>
             <div className="text-muted-foreground">Processing</div>
             <div className="text-2xl font-bold text-blue-600">
-              {jobs.filter(j => j.status === 'processing').length}
+              {jobs.filter((j) => j.status === 'processing').length}
             </div>
           </div>
           <div>
             <div className="text-muted-foreground">Failed</div>
             <div className="text-2xl font-bold text-red-600">
-              {jobs.filter(j => j.status === 'failed').length}
+              {jobs.filter((j) => j.status === 'failed').length}
             </div>
           </div>
         </div>

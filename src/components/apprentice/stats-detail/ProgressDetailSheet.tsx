@@ -14,12 +14,7 @@
  * - Empty state CTA
  */
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   Target,
   ChevronDown,
@@ -94,15 +89,24 @@ function getSmartIcon(rec: SmartRecommendation): LucideIcon {
 }
 
 /** Map smart recommendation type to card variant colour */
-function getSmartVariant(rec: SmartRecommendation): 'green' | 'orange' | 'purple' | 'yellow' | 'blue' {
+function getSmartVariant(
+  rec: SmartRecommendation
+): 'green' | 'orange' | 'purple' | 'yellow' | 'blue' {
   switch (rec.type) {
-    case 'spaced-rep': return 'orange';
-    case 'flashcard': return 'yellow';
-    case 'quiz': return 'green';
-    case 'diary': return 'purple';
-    case 'ojt': return 'blue';
-    case 'portfolio': return 'yellow';
-    default: return 'green';
+    case 'spaced-rep':
+      return 'orange';
+    case 'flashcard':
+      return 'yellow';
+    case 'quiz':
+      return 'green';
+    case 'diary':
+      return 'purple';
+    case 'ojt':
+      return 'blue';
+    case 'portfolio':
+      return 'yellow';
+    default:
+      return 'green';
   }
 }
 
@@ -134,10 +138,10 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
   const { recommendations: smartRecs } = useSmartRecommendations(4);
 
   const quizBarColours: Record<string, string> = {
-    'Regulations': 'bg-green-500',
-    'Safety': 'bg-blue-500',
-    'Testing': 'bg-orange-500',
-    'Design': 'bg-purple-500',
+    Regulations: 'bg-green-500',
+    Safety: 'bg-blue-500',
+    Testing: 'bg-orange-500',
+    Design: 'bg-purple-500',
   };
 
   const TrendIcon = trendIcons[quizTrend];
@@ -188,7 +192,9 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                   <span className="text-xs text-green-400/70">overall</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.08]">
-                  <span className="text-xs text-white/50">{xp.xpToday}/{xp.dailyGoal} XP today</span>
+                  <span className="text-xs text-white/50">
+                    {xp.xpToday}/{xp.dailyGoal} XP today
+                  </span>
                 </div>
               </motion.div>
               <motion.p
@@ -220,9 +226,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             >
               <div className="flex items-center gap-2 mb-3">
                 <Target className="h-4 w-4 text-white/50" />
-                <span className="text-sm font-semibold text-white">
-                  Quiz Performance
-                </span>
+                <span className="text-sm font-semibold text-white">Quiz Performance</span>
                 <div className="flex items-center gap-1.5 ml-auto">
                   {quizTrend !== 'no-data' && (
                     <>
@@ -251,10 +255,14 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                           {cat.subject}
                         </button>
                         {strongestCategory?.subject === cat.subject && cat.score > 0 && (
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 font-semibold">Best</span>
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 font-semibold">
+                            Best
+                          </span>
                         )}
                         {weakestCategory?.subject === cat.subject && cat.score > 0 && (
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 font-semibold">Focus</span>
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 font-semibold">
+                            Focus
+                          </span>
                         )}
                       </div>
                       <span className="text-sm font-bold text-white">{cat.score}%</span>
@@ -264,7 +272,10 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                         initial={{ width: 0 }}
                         animate={{ width: `${cat.score}%` }}
                         transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 + catIndex * 0.1 }}
-                        className={cn('h-full rounded-full', quizBarColours[cat.subject] || 'bg-white/30')}
+                        className={cn(
+                          'h-full rounded-full',
+                          quizBarColours[cat.subject] || 'bg-white/30'
+                        )}
                       />
                     </div>
                   </div>
@@ -288,9 +299,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             >
               <div className="flex items-center gap-2 mb-3">
                 <BookOpen className="h-4 w-4 text-white/50" />
-                <span className="text-sm font-semibold text-white">
-                  Flashcard Mastery
-                </span>
+                <span className="text-sm font-semibold text-white">Flashcard Mastery</span>
                 <span className="text-xs text-white/50 ml-auto">
                   {totalMasteredCards} / {totalFlashcards} mastered
                 </span>
@@ -306,14 +315,24 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${set.progressPercent}%` }}
-                          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 + setIndex * 0.08 }}
+                          transition={{
+                            duration: 0.8,
+                            ease: 'easeOut',
+                            delay: 0.4 + setIndex * 0.08,
+                          }}
                           className={cn(
                             'h-full rounded-full',
-                            set.progressPercent >= 80 ? 'bg-green-400' : set.progressPercent >= 40 ? 'bg-amber-400' : 'bg-white/25'
+                            set.progressPercent >= 80
+                              ? 'bg-green-400'
+                              : set.progressPercent >= 40
+                                ? 'bg-amber-400'
+                                : 'bg-white/25'
                           )}
                         />
                       </div>
-                      <span className="text-xs font-bold text-white w-9 text-right">{set.progressPercent}%</span>
+                      <span className="text-xs font-bold text-white w-9 text-right">
+                        {set.progressPercent}%
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -328,18 +347,23 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             >
               <div className="flex items-center gap-2 mb-3">
                 <Clock className="h-4 w-4 text-white/50" />
-                <span className="text-sm font-semibold text-white">
-                  On-the-Job Hours
-                </span>
+                <span className="text-sm font-semibold text-white">On-the-Job Hours</span>
               </div>
               <div className="relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-4">
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500/0 via-green-400/40 to-green-500/0" />
                 <div className="flex items-baseline justify-between mb-2.5">
                   <div className="flex items-baseline gap-1.5">
-                    <AnimatedCounter value={ojtHours.logged} className="text-2xl font-bold text-white" />
-                    <span className="text-sm text-white/50">/ {ojtHours.target.toLocaleString('en-GB')} hrs</span>
+                    <AnimatedCounter
+                      value={ojtHours.logged}
+                      className="text-2xl font-bold text-white"
+                    />
+                    <span className="text-sm text-white/50">
+                      / {ojtHours.target.toLocaleString('en-GB')} hrs
+                    </span>
                   </div>
-                  <span className="text-sm font-bold text-green-400">{ojtHours.percentComplete}%</span>
+                  <span className="text-sm font-bold text-green-400">
+                    {ojtHours.percentComplete}%
+                  </span>
                 </div>
                 <div className="h-3.5 rounded-full bg-white/[0.08] overflow-hidden">
                   <motion.div
@@ -383,7 +407,8 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 </div>
                 <h3 className="text-base font-semibold text-white mb-1">Start learning</h3>
                 <p className="text-sm text-white/50 max-w-[260px] mb-5">
-                  Take a quiz, review flashcards, or log your on-the-job hours to track your progress
+                  Take a quiz, review flashcards, or log your on-the-job hours to track your
+                  progress
                 </p>
                 <button
                   onClick={goToStudyCentre}
@@ -404,7 +429,9 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">What to do next</span>
+                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                    What to do next
+                  </span>
                   <div className="flex-1 border-t border-white/[0.06]" />
                 </div>
 

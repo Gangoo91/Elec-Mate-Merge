@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import { BookOpen } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { BookOpen } from 'lucide-react';
 
 interface EnhancedStepContentProps {
   content: string;
@@ -8,7 +8,7 @@ interface EnhancedStepContentProps {
 export const EnhancedStepContent = ({ content }: EnhancedStepContentProps) => {
   // Parse content into sections (for backwards compatibility with flat content)
   const sections = parseStepContent(content);
-  
+
   return (
     <div className="space-y-4">
       {/* Overview */}
@@ -17,7 +17,7 @@ export const EnhancedStepContent = ({ content }: EnhancedStepContentProps) => {
           {highlightMeasurements(sections.overview)}
         </p>
       )}
-      
+
       {/* Detailed Sub-Steps (flat format) */}
       {sections.subSteps.length > 0 && (
         <div className="space-y-3 pl-2 border-l-2 border-primary/30">
@@ -41,7 +41,7 @@ export const EnhancedStepContent = ({ content }: EnhancedStepContentProps) => {
           ))}
         </div>
       )}
-      
+
       {/* BS 7671 References */}
       {sections.regulations.length > 0 && (
         <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
@@ -69,26 +69,28 @@ function parseStepContent(content: string) {
   if (!content || typeof content !== 'string') {
     return { overview: '', subSteps: [], regulations: [] };
   }
-  const lines = content.split('\n').filter(l => l.trim());
-  
+  const lines = content.split('\n').filter((l) => l.trim());
+
   let overview = '';
   const subSteps: Array<{ title: string; items: string[] }> = [];
   const regulations: string[] = [];
   let currentSubStep: { title: string; items: string[] } | null = null;
-  
+
   for (const line of lines) {
     // BS 7671 references
     if (line.match(/BS 7671|Reg \d+|Section \d+|Table \d+|Appendix \d+/i)) {
-      const regMatch = line.match(/(BS 7671[^.]+|Reg \d+\.\d+\.\d+|Section \d+|Table \d+[A-Z]*\d*)/i);
+      const regMatch = line.match(
+        /(BS 7671[^.]+|Reg \d+\.\d+\.\d+|Section \d+|Table \d+[A-Z]*\d*)/i
+      );
       if (regMatch) regulations.push(regMatch[0]);
     }
-    
+
     // Numbered sub-step title (e.g., "1. Mark Fixing Positions")
     if (line.match(/^\d+\.\s+[A-Z]/)) {
       if (currentSubStep) subSteps.push(currentSubStep);
       currentSubStep = {
         title: line.replace(/^\d+\.\s+/, ''),
-        items: []
+        items: [],
       };
     }
     // Bullet point item
@@ -100,9 +102,9 @@ function parseStepContent(content: string) {
       overview += (overview ? ' ' : '') + line.trim();
     }
   }
-  
+
   if (currentSubStep) subSteps.push(currentSubStep);
-  
+
   return { overview, subSteps, regulations: [...new Set(regulations)] };
 }
 

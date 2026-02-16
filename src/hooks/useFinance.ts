@@ -1,7 +1,14 @@
-import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
-import * as financeService from "@/services/financeService";
-import type { Quote, Invoice, ExpenseClaim, Supplier, MaterialOrder, PriceBookItem } from "@/services/financeService";
+import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import * as financeService from '@/services/financeService';
+import type {
+  Quote,
+  Invoice,
+  ExpenseClaim,
+  Supplier,
+  MaterialOrder,
+  PriceBookItem,
+} from '@/services/financeService';
 
 // Quotes
 export function useQuotes() {
@@ -14,11 +21,11 @@ export function useQuotes() {
 export function useCreateQuote() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (quote: Omit<Quote, 'id' | 'created_at' | 'updated_at'>) => 
+    mutationFn: (quote: Omit<Quote, 'id' | 'created_at' | 'updated_at'>) =>
       financeService.createQuote(quote),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quotes'] });
-      toast.success("Quote created successfully");
+      toast.success('Quote created successfully');
     },
     onError: (error: Error) => {
       toast.error(`Failed to create quote: ${error.message}`);
@@ -29,11 +36,11 @@ export function useCreateQuote() {
 export function useUpdateQuote() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<Quote> }) => 
+    mutationFn: ({ id, updates }: { id: string; updates: Partial<Quote> }) =>
       financeService.updateQuote(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quotes'] });
-      toast.success("Quote updated successfully");
+      toast.success('Quote updated successfully');
     },
     onError: (error: Error) => {
       toast.error(`Failed to update quote: ${error.message}`);
@@ -47,7 +54,7 @@ export function useSendQuote() {
     mutationFn: (id: string) => financeService.sendQuote(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quotes'] });
-      toast.success("Quote sent successfully");
+      toast.success('Quote sent successfully');
     },
     onError: (error: Error) => {
       toast.error(`Failed to send quote: ${error.message}`);
@@ -67,7 +74,7 @@ export function useDeleteQuote() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quotes'] });
-      toast.success("Quote deleted");
+      toast.success('Quote deleted');
     },
     onError: (error: Error) => {
       toast.error(`Failed to delete quote: ${error.message}`);
@@ -93,11 +100,11 @@ export function useOverdueInvoices() {
 export function useCreateInvoice() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (invoice: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>) => 
+    mutationFn: (invoice: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>) =>
       financeService.createInvoice(invoice),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
-      toast.success("Invoice created successfully");
+      toast.success('Invoice created successfully');
     },
     onError: (error: Error) => {
       toast.error(`Failed to create invoice: ${error.message}`);
@@ -108,11 +115,11 @@ export function useCreateInvoice() {
 export function useUpdateInvoice() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<Invoice> }) => 
+    mutationFn: ({ id, updates }: { id: string; updates: Partial<Invoice> }) =>
       financeService.updateInvoice(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
-      toast.success("Invoice updated successfully");
+      toast.success('Invoice updated successfully');
     },
     onError: (error: Error) => {
       toast.error(`Failed to update invoice: ${error.message}`);
@@ -126,7 +133,7 @@ export function useMarkInvoicePaid() {
     mutationFn: (id: string) => financeService.markInvoicePaid(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
-      toast.success("Invoice marked as paid");
+      toast.success('Invoice marked as paid');
     },
     onError: (error: Error) => {
       toast.error(`Failed to mark invoice as paid: ${error.message}`);
@@ -140,7 +147,7 @@ export function useSendInvoice() {
     mutationFn: (id: string) => financeService.sendInvoice(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
-      toast.success("Invoice sent successfully");
+      toast.success('Invoice sent successfully');
     },
     onError: (error: Error) => {
       toast.error(`Failed to send invoice: ${error.message}`);
@@ -176,11 +183,11 @@ export function useExpenseClaims() {
 export function useCreateExpenseClaim() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>) => 
+    mutationFn: (claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>) =>
       financeService.createExpenseClaim(claim),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
-      toast.success("Expense claim submitted");
+      toast.success('Expense claim submitted');
     },
     onError: (error: Error) => {
       toast.error(`Failed to submit expense: ${error.message}`);
@@ -191,11 +198,11 @@ export function useCreateExpenseClaim() {
 export function useApproveExpense() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, approvedBy }: { id: string; approvedBy: string }) => 
+    mutationFn: ({ id, approvedBy }: { id: string; approvedBy: string }) =>
       financeService.approveExpense(id, approvedBy),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
-      toast.success("Expense approved");
+      toast.success('Expense approved');
     },
     onError: (error: Error) => {
       toast.error(`Failed to approve expense: ${error.message}`);
@@ -206,11 +213,11 @@ export function useApproveExpense() {
 export function useRejectExpense() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, approvedBy, reason }: { id: string; approvedBy: string; reason: string }) => 
+    mutationFn: ({ id, approvedBy, reason }: { id: string; approvedBy: string; reason: string }) =>
       financeService.rejectExpense(id, approvedBy, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
-      toast.success("Expense rejected");
+      toast.success('Expense rejected');
     },
     onError: (error: Error) => {
       toast.error(`Failed to reject expense: ${error.message}`);
@@ -224,7 +231,7 @@ export function useMarkExpensePaid() {
     mutationFn: (id: string) => financeService.markExpensePaid(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
-      toast.success("Expense marked as paid");
+      toast.success('Expense marked as paid');
     },
     onError: (error: Error) => {
       toast.error(`Failed to mark expense as paid: ${error.message}`);
@@ -243,11 +250,11 @@ export function useSuppliers() {
 export function useCreateSupplier() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (supplier: Omit<Supplier, 'id' | 'created_at' | 'updated_at'>) => 
+    mutationFn: (supplier: Omit<Supplier, 'id' | 'created_at' | 'updated_at'>) =>
       financeService.createSupplier(supplier),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['suppliers'] });
-      toast.success("Supplier added");
+      toast.success('Supplier added');
     },
     onError: (error: Error) => {
       toast.error(`Failed to add supplier: ${error.message}`);
@@ -258,11 +265,11 @@ export function useCreateSupplier() {
 export function useUpdateSupplier() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<Supplier> }) => 
+    mutationFn: ({ id, updates }: { id: string; updates: Partial<Supplier> }) =>
       financeService.updateSupplier(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['suppliers'] });
-      toast.success("Supplier updated");
+      toast.success('Supplier updated');
     },
     onError: (error: Error) => {
       toast.error(`Failed to update supplier: ${error.message}`);
@@ -281,11 +288,11 @@ export function useMaterialOrders() {
 export function useCreateMaterialOrder() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (order: Omit<MaterialOrder, 'id' | 'created_at' | 'updated_at' | 'suppliers'>) => 
+    mutationFn: (order: Omit<MaterialOrder, 'id' | 'created_at' | 'updated_at' | 'suppliers'>) =>
       financeService.createMaterialOrder(order),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['material_orders'] });
-      toast.success("Order created");
+      toast.success('Order created');
     },
     onError: (error: Error) => {
       toast.error(`Failed to create order: ${error.message}`);
@@ -296,11 +303,18 @@ export function useCreateMaterialOrder() {
 export function useUpdateOrderStatus() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, status, deliveryDate }: { id: string; status: string; deliveryDate?: string }) => 
-      financeService.updateOrderStatus(id, status, deliveryDate),
+    mutationFn: ({
+      id,
+      status,
+      deliveryDate,
+    }: {
+      id: string;
+      status: string;
+      deliveryDate?: string;
+    }) => financeService.updateOrderStatus(id, status, deliveryDate),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['material_orders'] });
-      toast.success("Order status updated");
+      toast.success('Order status updated');
     },
     onError: (error: Error) => {
       toast.error(`Failed to update order: ${error.message}`);
@@ -327,9 +341,8 @@ export function useLowStockItems() {
 export function useSearchPriceBook(query: string, category?: string) {
   return useInfiniteQuery({
     queryKey: ['price_book', 'search', query, category],
-    queryFn: ({ pageParam = 0 }) => 
-      financeService.searchPriceBook(query, category, pageParam),
-    getNextPageParam: (lastPage, allPages) => 
+    queryFn: ({ pageParam = 0 }) => financeService.searchPriceBook(query, category, pageParam),
+    getNextPageParam: (lastPage, allPages) =>
       allPages.length * 20 < lastPage.total ? allPages.length : undefined,
     initialPageParam: 0,
     enabled: query.length >= 2,
@@ -347,11 +360,12 @@ export function usePriceBookStats() {
 export function useCreatePriceBookItem() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (item: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>) => 
-      financeService.createPriceBookItem(item),
+    mutationFn: (
+      item: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>
+    ) => financeService.createPriceBookItem(item),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['price_book'] });
-      toast.success("Material added to price book");
+      toast.success('Material added to price book');
     },
     onError: (error: Error) => {
       toast.error(`Failed to add material: ${error.message}`);
@@ -366,7 +380,7 @@ export function useUpdatePriceBookItem() {
       financeService.updatePriceBookItem(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['price_book'] });
-      toast.success("Material updated");
+      toast.success('Material updated');
     },
     onError: (error: Error) => {
       toast.error(`Failed to update material: ${error.message}`);
@@ -380,7 +394,7 @@ export function useDeletePriceBookItem() {
     mutationFn: (id: string) => financeService.deletePriceBookItem(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['price_book'] });
-      toast.success("Material deleted");
+      toast.success('Material deleted');
     },
     onError: (error: Error) => {
       toast.error(`Failed to delete material: ${error.message}`);
@@ -391,8 +405,9 @@ export function useDeletePriceBookItem() {
 export function useBulkImportPriceBook() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (items: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>[]) => 
-      financeService.bulkCreatePriceBookItems(items),
+    mutationFn: (
+      items: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>[]
+    ) => financeService.bulkCreatePriceBookItems(items),
     onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: ['price_book'] });
       if (result.errors > 0) {

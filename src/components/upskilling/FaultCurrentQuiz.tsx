@@ -13,64 +13,69 @@ export const FaultCurrentQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: "What does PEFC measure?",
+      question: 'What does PEFC measure?',
       options: [
-        "Power factor correction",
-        "The fault current in a line-to-earth fault",
-        "Protective equipment fault current",
-        "Peak electrical fault current"
+        'Power factor correction',
+        'The fault current in a line-to-earth fault',
+        'Protective equipment fault current',
+        'Peak electrical fault current',
       ],
       correctAnswer: 1,
-      explanation: "PEFC (Prospective Earth Fault Current) measures the maximum current that would flow in a line-to-earth fault condition."
+      explanation:
+        'PEFC (Prospective Earth Fault Current) measures the maximum current that would flow in a line-to-earth fault condition.',
     },
     {
       id: 2,
-      question: "What must PFC not exceed?",
+      question: 'What must PFC not exceed?',
       options: [
-        "The supply voltage",
-        "Protective device breaking capacity",
-        "Circuit design current",
-        "Installation power rating"
+        'The supply voltage',
+        'Protective device breaking capacity',
+        'Circuit design current',
+        'Installation power rating',
       ],
       correctAnswer: 1,
-      explanation: "Prospective fault current must not exceed the breaking capacity of the protective device, or the device may fail catastrophically."
+      explanation:
+        'Prospective fault current must not exceed the breaking capacity of the protective device, or the device may fail catastrophically.',
     },
     {
       id: 3,
-      question: "When would you expect the highest PEFC values?",
+      question: 'When would you expect the highest PEFC values?',
       options: [
-        "At the end of long circuits",
-        "Close to the supply transformer",
-        "In lighting circuits only",
-        "During low demand periods"
+        'At the end of long circuits',
+        'Close to the supply transformer',
+        'In lighting circuits only',
+        'During low demand periods',
       ],
       correctAnswer: 1,
-      explanation: "PEFC is highest close to the supply source where impedance is lowest, allowing maximum fault current to flow."
+      explanation:
+        'PEFC is highest close to the supply source where impedance is lowest, allowing maximum fault current to flow.',
     },
     {
       id: 4,
-      question: "What happens if a protective device cannot handle the prospective fault current?",
+      question: 'What happens if a protective device cannot handle the prospective fault current?',
       options: [
-        "It will operate more slowly",
-        "It may fail to clear the fault safely",
-        "It will just make a louder noise",
-        "Nothing - all devices can handle any current"
+        'It will operate more slowly',
+        'It may fail to clear the fault safely',
+        'It will just make a louder noise',
+        'Nothing - all devices can handle any current',
       ],
       correctAnswer: 1,
-      explanation: "If PFC exceeds the device's breaking capacity, it may fail catastrophically, potentially causing fire or explosion."
+      explanation:
+        "If PFC exceeds the device's breaking capacity, it may fail catastrophically, potentially causing fire or explosion.",
     },
     {
       id: 5,
-      question: "Why must both PFC and PEFC be measured?",
+      question: 'Why must both PFC and PEFC be measured?',
       options: [
-        "They are the same measurement",
-        "One verifies the other",
-        "They cover different fault scenarios (line-to-line vs line-to-earth)",
-        "Only for redundancy"
+        'They are the same measurement',
+        'One verifies the other',
+        'They cover different fault scenarios (line-to-line vs line-to-earth)',
+        'Only for redundancy',
       ],
       correctAnswer: 2,
-      explanation: "PFC measures line-to-line faults while PEFC measures line-to-earth faults - both scenarios must be considered for safety."
-    }
+      explanation:
+        'PFC measures line-to-line faults while PEFC measures line-to-earth faults - both scenarios must be considered for safety.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
@@ -123,9 +128,7 @@ export const FaultCurrentQuiz = () => {
               <h3 className="text-2xl font-bold text-elec-yellow mb-2">
                 {score} out of {questions.length}
               </h3>
-              <p className="text-foreground">
-                You scored {percentage.toFixed(0)}%
-              </p>
+              <p className="text-foreground">You scored {percentage.toFixed(0)}%</p>
             </div>
 
             <div className="space-y-4">
@@ -159,7 +162,7 @@ export const FaultCurrentQuiz = () => {
               })}
             </div>
 
-            <Button 
+            <Button
               onClick={resetQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
             >
@@ -184,22 +187,27 @@ export const FaultCurrentQuiz = () => {
       <CardContent>
         <div className="space-y-4 sm:space-y-6">
           <div className="bg-elec-dark p-3 sm:p-4 rounded-md">
-            <h3 className="text-foreground font-medium mb-3 sm:mb-4 text-base sm:text-lg">{currentQ.question}</h3>
-            
+            <h3 className="text-foreground font-medium mb-3 sm:mb-4 text-base sm:text-lg">
+              {currentQ.question}
+            </h3>
+
             <RadioGroup
-              value={selectedAnswers[currentQuestion] || ""}
+              value={selectedAnswers[currentQuestion] || ''}
               onValueChange={handleAnswerSelect}
               className="space-y-2 sm:space-y-3"
             >
               {currentQ.options.map((option, index) => (
-                <div key={index} className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700/50 transition-colors">
-                  <RadioGroupItem 
-                    value={index.toString()} 
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700/50 transition-colors"
+                >
+                  <RadioGroupItem
+                    value={index.toString()}
                     id={`option-${index}`}
                     className="border-gray-400 text-elec-yellow min-w-[16px] min-h-[16px]"
                   />
-                  <Label 
-                    htmlFor={`option-${index}`} 
+                  <Label
+                    htmlFor={`option-${index}`}
                     className="text-foreground cursor-pointer flex-1 py-2 px-1 text-sm sm:text-base leading-relaxed"
                   >
                     {option}

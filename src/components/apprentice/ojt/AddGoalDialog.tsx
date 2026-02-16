@@ -1,13 +1,19 @@
-import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, Lightbulb, Target, Clock, Flag } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileInput } from '@/components/ui/mobile-input';
+import {
+  MobileSelect,
+  MobileSelectContent,
+  MobileSelectItem,
+  MobileSelectTrigger,
+  MobileSelectValue,
+} from '@/components/ui/mobile-select';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon, Lightbulb, Target, Clock, Flag } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface AddGoalDialogProps {
   open: boolean;
@@ -21,40 +27,56 @@ const getSmartSuggestions = (category: string) => {
     training: {
       units: ['hours', 'sessions', 'modules'],
       targets: [20, 40, 80, 120],
-      examples: ['Complete Health & Safety Training', 'Electrical Regulations Workshop', 'First Aid Certification']
+      examples: [
+        'Complete Health & Safety Training',
+        'Electrical Regulations Workshop',
+        'First Aid Certification',
+      ],
     },
     portfolio: {
       units: ['items', 'pages', 'evidence'],
       targets: [5, 10, 15, 20],
-      examples: ['Document Site Work Experience', 'Create Technical Drawings Portfolio', 'Compile Assessment Evidence']
+      examples: [
+        'Document Site Work Experience',
+        'Create Technical Drawings Portfolio',
+        'Compile Assessment Evidence',
+      ],
     },
     assessment: {
       units: ['assessments', 'units', 'exams'],
       targets: [1, 3, 5, 8],
-      examples: ['Pass Unit 1 Assessment', 'Complete Practical Evaluation', 'End Point Assessment']
+      examples: ['Pass Unit 1 Assessment', 'Complete Practical Evaluation', 'End Point Assessment'],
     },
     skill: {
       units: ['hours', 'projects', 'techniques'],
       targets: [30, 60, 100, 150],
-      examples: ['Master Cable Installation', 'Develop Fault Finding Skills', 'Learn Motor Control Systems']
+      examples: [
+        'Master Cable Installation',
+        'Develop Fault Finding Skills',
+        'Learn Motor Control Systems',
+      ],
     },
     certification: {
       units: ['certificates', 'qualifications', 'awards'],
       targets: [1, 2, 3, 5],
-      examples: ['Achieve 18th Edition Certificate', 'Complete City & Guilds Level 3', 'ECS Gold Card Application']
-    }
+      examples: [
+        'Achieve 18th Edition Certificate',
+        'Complete City & Guilds Level 3',
+        'ECS Gold Card Application',
+      ],
+    },
   };
-  
+
   return suggestions[category as keyof typeof suggestions] || suggestions.training;
 };
 
 const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [targetValue, setTargetValue] = useState("");
-  const [unit, setUnit] = useState("");
-  const [priority, setPriority] = useState("");
-  const [category, setCategory] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [targetValue, setTargetValue] = useState('');
+  const [unit, setUnit] = useState('');
+  const [priority, setPriority] = useState('');
+  const [category, setCategory] = useState('');
   const [deadline, setDeadline] = useState<Date>();
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -72,7 +94,8 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !description || !targetValue || !unit || !priority || !category || !deadline) return;
+    if (!title || !description || !targetValue || !unit || !priority || !category || !deadline)
+      return;
 
     onAddGoal({
       title,
@@ -81,16 +104,16 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
       unit,
       priority,
       category,
-      deadline: deadline.toISOString().split('T')[0]
+      deadline: deadline.toISOString().split('T')[0],
     });
 
     // Reset form
-    setTitle("");
-    setDescription("");
-    setTargetValue("");
-    setUnit("");
-    setPriority("");
-    setCategory("");
+    setTitle('');
+    setDescription('');
+    setTargetValue('');
+    setUnit('');
+    setPriority('');
+    setCategory('');
     setDeadline(undefined);
     setShowSuggestions(false);
   };
@@ -161,7 +184,7 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
                 <Lightbulb className="h-4 w-4" />
                 Smart Suggestions
               </div>
-              
+
               {/* Title suggestions */}
               <div className="space-y-2">
                 <p className="text-xs text-elec-light/70 flex items-center gap-1">
@@ -311,12 +334,12 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
                 <button
                   type="button"
                   className={cn(
-                    "w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium px-4 flex items-center gap-3 justify-start",
-                    !deadline && "text-elec-light/60"
+                    'w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium px-4 flex items-center gap-3 justify-start',
+                    !deadline && 'text-elec-light/60'
                   )}
                 >
                   <CalendarIcon className="h-4 w-4" />
-                  {deadline ? format(deadline, "PPP") : "Pick a deadline"}
+                  {deadline ? format(deadline, 'PPP') : 'Pick a deadline'}
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 bg-elec-card border-elec-gray/50">
@@ -337,15 +360,15 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
           {/* Action Buttons */}
           <div className="flex flex-col gap-3 pt-4 border-t border-elec-gray/20">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/80 font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
             >
               <Target className="h-4 w-4" />
               Create Goal
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => onOpenChange(false)}
               className="w-full text-elec-light/70 hover:text-elec-light hover:bg-white/5 font-medium py-3 rounded-xl transition-all duration-200"
             >

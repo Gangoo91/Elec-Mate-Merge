@@ -1,18 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { X, Info, AlertTriangle, CheckCircle, Megaphone } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState, useEffect, useCallback } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { X, Info, AlertTriangle, CheckCircle, Megaphone } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const DISMISSED_STORAGE_KEY = "elec-dismissed-announcements";
+const DISMISSED_STORAGE_KEY = 'elec-dismissed-announcements';
 
 interface Announcement {
   id: string;
   title: string;
   message: string;
-  type: "info" | "warning" | "success" | "error";
+  type: 'info' | 'warning' | 'success' | 'error';
   target_roles: string[];
   is_dismissible: boolean;
   starts_at: string;
@@ -21,24 +21,24 @@ interface Announcement {
 
 const typeStyles = {
   info: {
-    bg: "bg-blue-500/10 border-blue-500/30",
+    bg: 'bg-blue-500/10 border-blue-500/30',
     icon: Info,
-    iconColor: "text-blue-400",
+    iconColor: 'text-blue-400',
   },
   warning: {
-    bg: "bg-amber-500/10 border-amber-500/30",
+    bg: 'bg-amber-500/10 border-amber-500/30',
     icon: AlertTriangle,
-    iconColor: "text-amber-400",
+    iconColor: 'text-amber-400',
   },
   success: {
-    bg: "bg-green-500/10 border-green-500/30",
+    bg: 'bg-green-500/10 border-green-500/30',
     icon: CheckCircle,
-    iconColor: "text-green-400",
+    iconColor: 'text-green-400',
   },
   error: {
-    bg: "bg-red-500/10 border-red-500/30",
+    bg: 'bg-red-500/10 border-red-500/30',
     icon: Megaphone,
-    iconColor: "text-red-400",
+    iconColor: 'text-red-400',
   },
 };
 
@@ -71,27 +71,27 @@ export default function AnnouncementBanner() {
 
   // Fetch active announcements
   const { data: announcements } = useQuery({
-    queryKey: ["active-announcements", profile?.role],
+    queryKey: ['active-announcements', profile?.role],
     queryFn: async () => {
       const now = new Date().toISOString();
 
       const { data, error } = await supabase
-        .from("admin_announcements")
-        .select("*")
-        .eq("is_active", true)
-        .lte("starts_at", now)
+        .from('admin_announcements')
+        .select('*')
+        .eq('is_active', true)
+        .lte('starts_at', now)
         .or(`ends_at.is.null,ends_at.gt.${now}`)
-        .order("created_at", { ascending: false });
+        .order('created_at', { ascending: false });
 
       if (error) {
-        console.error("Error fetching announcements:", error);
+        console.error('Error fetching announcements:', error);
         return [];
       }
 
       // Filter by user's role
-      const userRole = profile?.role || "visitor";
-      return (data || []).filter((a: Announcement) =>
-        a.target_roles.includes(userRole) || a.target_roles.includes("all")
+      const userRole = profile?.role || 'visitor';
+      return (data || []).filter(
+        (a: Announcement) => a.target_roles.includes(userRole) || a.target_roles.includes('all')
       );
     },
     enabled: !!user,
@@ -100,17 +100,17 @@ export default function AnnouncementBanner() {
 
   // Fetch user's dismissed announcements
   const { data: dismissedAnnouncements } = useQuery({
-    queryKey: ["dismissed-announcements", user?.id],
+    queryKey: ['dismissed-announcements', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
 
       const { data, error } = await supabase
-        .from("admin_announcement_dismissals")
-        .select("announcement_id")
-        .eq("user_id", user.id);
+        .from('admin_announcement_dismissals')
+        .select('announcement_id')
+        .eq('user_id', user.id);
 
       if (error) {
-        console.error("Error fetching dismissals:", error);
+        console.error('Error fetching dismissals:', error);
         return [];
       }
 
@@ -142,14 +142,12 @@ export default function AnnouncementBanner() {
       // If logged in, also save to database
       if (!user?.id) return;
 
-      const { error } = await supabase
-        .from("admin_announcement_dismissals")
-        .insert({
-          announcement_id: announcementId,
-          user_id: user.id,
-        });
+      const { error } = await supabase.from('admin_announcement_dismissals').insert({
+        announcement_id: announcementId,
+        user_id: user.id,
+      });
 
-      if (error && !error.message.includes("duplicate")) {
+      if (error && !error.message.includes('duplicate')) {
         throw error;
       }
     },
@@ -171,9 +169,8 @@ export default function AnnouncementBanner() {
   });
 
   // Filter out dismissed announcements
-  const visibleAnnouncements = announcements?.filter(
-    (a: Announcement) => !dismissedIds.has(a.id)
-  ) || [];
+  const visibleAnnouncements =
+    announcements?.filter((a: Announcement) => !dismissedIds.has(a.id)) || [];
 
   if (visibleAnnouncements.length === 0) {
     return null;
@@ -190,25 +187,18 @@ export default function AnnouncementBanner() {
             <motion.div
               key={announcement.id}
               initial={{ opacity: 0, height: 0, y: -20 }}
-              animate={{ opacity: 1, height: "auto", y: 0 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
               exit={{ opacity: 0, height: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className={cn(
-                "rounded-xl border p-4 touch-manipulation",
-                style.bg
-              )}
+              className={cn('rounded-xl border p-4 touch-manipulation', style.bg)}
             >
               <div className="flex items-start gap-3">
-                <div className={cn("mt-0.5 shrink-0", style.iconColor)}>
+                <div className={cn('mt-0.5 shrink-0', style.iconColor)}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-foreground">
-                    {announcement.title}
-                  </h4>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {announcement.message}
-                  </p>
+                  <h4 className="font-semibold text-sm text-foreground">{announcement.title}</h4>
+                  <p className="text-sm text-muted-foreground mt-1">{announcement.message}</p>
                 </div>
                 {announcement.is_dismissible && (
                   <button

@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
   Phone,
   Mail,
@@ -15,12 +15,12 @@ import {
   Send,
   CheckCircle2,
   Building2,
-  Calendar
-} from "lucide-react";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { cn } from "@/lib/utils";
-import type { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+  Calendar,
+} from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
+import type { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 
 interface CourseEnquirySheetProps {
   course: EnhancedCareerCourse | null;
@@ -32,10 +32,10 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +44,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
     if (!course) return;
 
     if (!formData.name || !formData.email) {
-      toast.error("Please fill in your name and email");
+      toast.error('Please fill in your name and email');
       return;
     }
 
@@ -52,33 +52,35 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
 
     try {
       // Get current user if logged in
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       // Save enquiry to database
-      const { error } = await supabase.from("course_enquiries").insert({
+      const { error } = await supabase.from('course_enquiries').insert({
         course_id: course.id,
         user_id: user?.id || null,
         name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
         message: formData.message || null,
-        status: "pending",
+        status: 'pending',
       });
 
       if (error) throw error;
 
       setIsSubmitted(true);
-      toast.success("Enquiry sent successfully!");
+      toast.success('Enquiry sent successfully!');
 
       // Reset form after delay
       setTimeout(() => {
-        setFormData({ name: "", email: "", phone: "", message: "" });
+        setFormData({ name: '', email: '', phone: '', message: '' });
         setIsSubmitted(false);
         onOpenChange(false);
       }, 2000);
     } catch (err) {
-      console.error("Failed to submit enquiry:", err);
-      toast.error("Failed to send enquiry. Please try again.");
+      console.error('Failed to submit enquiry:', err);
+      toast.error('Failed to send enquiry. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -153,7 +155,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
               {nextDates && nextDates.length > 0 && (
                 <div className="flex items-center gap-1.5 mt-2 text-sm text-white/70">
                   <Calendar className="h-3.5 w-3.5 text-cyan-400" />
-                  <span>Next: {nextDates.slice(0, 2).join(", ")}</span>
+                  <span>Next: {nextDates.slice(0, 2).join(', ')}</span>
                 </div>
               )}
             </div>
@@ -182,7 +184,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       type="text"
                       placeholder="John Smith"
                       value={formData.name}
-                      onChange={(e) => handleInputChange("name", e.target.value)}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
                       required
                       className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation"
                     />
@@ -197,7 +199,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       type="email"
                       placeholder="john@example.com"
                       value={formData.email}
-                      onChange={(e) => handleInputChange("email", e.target.value)}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
                       required
                       className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation"
                     />
@@ -212,7 +214,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       type="tel"
                       placeholder="07XXX XXXXXX"
                       value={formData.phone}
-                      onChange={(e) => handleInputChange("phone", e.target.value)}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
                       className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation"
                     />
                   </div>
@@ -225,7 +227,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       id="message"
                       placeholder="I'm interested in this course and would like more information about..."
                       value={formData.message}
-                      onChange={(e) => handleInputChange("message", e.target.value)}
+                      onChange={(e) => handleInputChange('message', e.target.value)}
                       rows={4}
                       className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation text-base resize-none"
                     />
@@ -284,8 +286,8 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       variant="outline"
                       asChild
                       className={cn(
-                        "h-11 bg-white/5 border-white/10 text-white hover:text-white hover:bg-white/10 gap-2",
-                        !contactPhone && !contactEmail ? "flex-1" : "flex-1"
+                        'h-11 bg-white/5 border-white/10 text-white hover:text-white hover:bg-white/10 gap-2',
+                        !contactPhone && !contactEmail ? 'flex-1' : 'flex-1'
                       )}
                     >
                       <a

@@ -1,17 +1,7 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Save, 
-  Download, 
-  Share2, 
-  Eye, 
-  Copy,
-  RotateCcw,
-  Zap,
-  FileText,
-  Clock
-} from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Save, Download, Share2, Eye, Copy, RotateCcw, Zap, FileText, Clock } from 'lucide-react';
 
 interface QuickActionToolbarProps {
   onSave?: () => void;
@@ -36,7 +26,7 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
   showProgress = false,
   progressValue = 0,
   lastSaved,
-  className = ""
+  className = '',
 }) => {
   return (
     <div className={`sticky top-4 z-10 ${className}`}>
@@ -55,7 +45,7 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
                 Save Draft
               </Button>
             )}
-            
+
             {onPreview && (
               <Button
                 variant="outline"
@@ -67,7 +57,7 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
                 Preview
               </Button>
             )}
-            
+
             {onExport && (
               <Button
                 size="sm"
@@ -93,7 +83,7 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
                 Share
               </Button>
             )}
-            
+
             {onCopyToClipboard && (
               <Button
                 variant="outline"
@@ -105,7 +95,7 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
                 Copy Link
               </Button>
             )}
-            
+
             {onReset && (
               <Button
                 variant="outline"
@@ -131,13 +121,11 @@ const QuickActionToolbar: React.FC<QuickActionToolbarProps> = ({
                 </>
               )}
             </div>
-            
+
             {lastSaved && (
               <div className="flex items-center gap-1 text-muted-foreground">
                 <Clock className="h-3 w-3" />
-                <span className="text-xs">
-                  Saved: {new Date(lastSaved).toLocaleTimeString()}
-                </span>
+                <span className="text-xs">Saved: {new Date(lastSaved).toLocaleTimeString()}</span>
               </div>
             )}
           </div>

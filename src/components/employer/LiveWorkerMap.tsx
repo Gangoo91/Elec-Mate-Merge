@@ -3,12 +3,7 @@ import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Navigation,
-  Users,
-  RefreshCw,
-  Building2
-} from 'lucide-react';
+import { Navigation, Users, RefreshCw, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
 import { GoogleMapsApiKeyInput } from './GoogleMapsApiKeyInput';
@@ -28,7 +23,7 @@ interface LiveWorkerMapProps {
 const STATUS_COLOURS: Record<string, string> = {
   'On Site': '#22c55e',
   'En Route': '#f97316',
-  'Office': '#a855f7',   // Purple for workers at office
+  Office: '#a855f7', // Purple for workers at office
   'On Leave': '#6b7280',
   'Off Duty': '#9ca3af',
 };
@@ -57,7 +52,7 @@ export function LiveWorkerMap({
   officeLocation,
   onRefresh,
   isLoading,
-  className
+  className,
 }: LiveWorkerMapProps) {
   const { isLoaded, loadError, apiKey, clearApiKey } = useGoogleMaps();
   const [selectedWorker, setSelectedWorker] = useState<WorkerLocationWithEmployee | null>(null);
@@ -65,42 +60,45 @@ export function LiveWorkerMap({
   const [selectedOffice, setSelectedOffice] = useState(false);
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
-  const onLoad = useCallback((mapInstance: google.maps.Map) => {
-    setMap(mapInstance);
+  const onLoad = useCallback(
+    (mapInstance: google.maps.Map) => {
+      setMap(mapInstance);
 
-    // Fit bounds to show all markers
-    const bounds = new google.maps.LatLngBounds();
-    let hasMarkers = false;
+      // Fit bounds to show all markers
+      const bounds = new google.maps.LatLngBounds();
+      let hasMarkers = false;
 
-    // Include office location in bounds
-    if (officeLocation?.lat && officeLocation?.lng) {
-      bounds.extend({ lat: officeLocation.lat, lng: officeLocation.lng });
-      hasMarkers = true;
-    }
-
-    workerLocations.forEach(loc => {
-      if (loc.lat && loc.lng) {
-        bounds.extend({ lat: loc.lat, lng: loc.lng });
+      // Include office location in bounds
+      if (officeLocation?.lat && officeLocation?.lng) {
+        bounds.extend({ lat: officeLocation.lat, lng: officeLocation.lng });
         hasMarkers = true;
       }
-    });
-    jobs.forEach(job => {
-      if (job.lat && job.lng) {
-        bounds.extend({ lat: job.lat, lng: job.lng });
-        hasMarkers = true;
-      }
-    });
 
-    if (hasMarkers && !bounds.isEmpty()) {
-      mapInstance.fitBounds(bounds, 60);
-    }
-  }, [workerLocations, jobs, officeLocation]);
+      workerLocations.forEach((loc) => {
+        if (loc.lat && loc.lng) {
+          bounds.extend({ lat: loc.lat, lng: loc.lng });
+          hasMarkers = true;
+        }
+      });
+      jobs.forEach((job) => {
+        if (job.lat && job.lng) {
+          bounds.extend({ lat: job.lat, lng: job.lng });
+          hasMarkers = true;
+        }
+      });
+
+      if (hasMarkers && !bounds.isEmpty()) {
+        mapInstance.fitBounds(bounds, 60);
+      }
+    },
+    [workerLocations, jobs, officeLocation]
+  );
 
   // API key input view
   if (!apiKey) {
     return (
       <div className={className}>
-        <GoogleMapsApiKeyInput 
+        <GoogleMapsApiKeyInput
           title="Live Worker Map"
           description="Enter your Google Maps API key to enable the live worker tracking map."
         />
@@ -110,14 +108,10 @@ export function LiveWorkerMap({
 
   if (loadError) {
     return (
-      <Card className={cn("bg-elec-gray overflow-hidden", className)}>
+      <Card className={cn('bg-elec-gray overflow-hidden', className)}>
         <CardContent className="p-6 text-center">
           <p className="text-destructive">Error loading Google Maps. Please check your API key.</p>
-          <Button 
-            variant="outline" 
-            className="mt-4"
-            onClick={clearApiKey}
-          >
+          <Button variant="outline" className="mt-4" onClick={clearApiKey}>
             Reset API Key
           </Button>
         </CardContent>
@@ -127,7 +121,7 @@ export function LiveWorkerMap({
 
   if (!isLoaded) {
     return (
-      <Card className={cn("bg-elec-gray overflow-hidden", className)}>
+      <Card className={cn('bg-elec-gray overflow-hidden', className)}>
         <CardContent className="p-6 text-center">
           <p className="text-muted-foreground">Loading map...</p>
         </CardContent>
@@ -136,7 +130,7 @@ export function LiveWorkerMap({
   }
 
   return (
-    <Card className={cn("bg-elec-gray overflow-hidden", className)}>
+    <Card className={cn('bg-elec-gray overflow-hidden', className)}>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg flex items-center gap-2">
@@ -149,13 +143,8 @@ export function LiveWorkerMap({
               {workerLocations.length} tracked
             </Badge>
             {onRefresh && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={onRefresh}
-                disabled={isLoading}
-              >
-                <RefreshCw className={cn("h-4 w-4", isLoading && "animate-spin")} />
+              <Button variant="ghost" size="sm" onClick={onRefresh} disabled={isLoading}>
+                <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
               </Button>
             )}
           </div>
@@ -268,7 +257,7 @@ export function LiveWorkerMap({
                   className="inline-block px-2 py-0.5 rounded text-xs font-medium mt-1"
                   style={{
                     backgroundColor: `${STATUS_COLOURS[selectedWorker.status]}20`,
-                    color: STATUS_COLOURS[selectedWorker.status]
+                    color: STATUS_COLOURS[selectedWorker.status],
                   }}
                 >
                   {selectedWorker.status}
@@ -298,7 +287,7 @@ export function LiveWorkerMap({
             </InfoWindow>
           )}
         </GoogleMap>
-        
+
         {/* Legend overlay */}
         <div className="absolute bottom-4 left-4 bg-elec-gray/95 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-border">
           <div className="text-xs font-medium text-foreground mb-2">Legend</div>
@@ -322,15 +311,17 @@ export function LiveWorkerMap({
               <span className="text-muted-foreground">Job Site</span>
             </div>
             {/* Worker status colours */}
-            {Object.entries(STATUS_COLOURS).slice(0, 4).map(([status, colour]) => (
-              <div key={status} className="flex items-center gap-2 text-xs">
-                <div
-                  className="w-3 h-3 rounded-full border border-white/50"
-                  style={{ background: colour }}
-                />
-                <span className="text-muted-foreground">{status}</span>
-              </div>
-            ))}
+            {Object.entries(STATUS_COLOURS)
+              .slice(0, 4)
+              .map(([status, colour]) => (
+                <div key={status} className="flex items-center gap-2 text-xs">
+                  <div
+                    className="w-3 h-3 rounded-full border border-white/50"
+                    style={{ background: colour }}
+                  />
+                  <span className="text-muted-foreground">{status}</span>
+                </div>
+              ))}
           </div>
         </div>
       </CardContent>

@@ -1,7 +1,6 @@
-
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export interface CareerBookmark {
   id: string;
@@ -17,7 +16,9 @@ export const useCareerBookmarks = () => {
 
   const fetchBookmarks = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -31,9 +32,9 @@ export const useCareerBookmarks = () => {
     } catch (error) {
       console.error('Error fetching bookmarks:', error);
       toast({
-        title: "Error",
-        description: "Failed to load bookmarks",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load bookmarks',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -42,24 +43,23 @@ export const useCareerBookmarks = () => {
 
   const toggleBookmark = async (careerPathId: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
-      const existing = bookmarks.find(b => b.career_path_id === careerPathId);
+      const existing = bookmarks.find((b) => b.career_path_id === careerPathId);
 
       if (existing) {
         // Remove bookmark
-        const { error } = await supabase
-          .from('career_bookmarks')
-          .delete()
-          .eq('id', existing.id);
+        const { error } = await supabase.from('career_bookmarks').delete().eq('id', existing.id);
 
         if (error) throw error;
 
-        setBookmarks(prev => prev.filter(b => b.id !== existing.id));
+        setBookmarks((prev) => prev.filter((b) => b.id !== existing.id));
         toast({
-          title: "Bookmark Removed",
-          description: "Career path removed from favorites",
+          title: 'Bookmark Removed',
+          description: 'Career path removed from favorites',
         });
       } else {
         // Add bookmark
@@ -74,24 +74,24 @@ export const useCareerBookmarks = () => {
 
         if (error) throw error;
 
-        setBookmarks(prev => [data, ...prev]);
+        setBookmarks((prev) => [data, ...prev]);
         toast({
-          title: "Bookmark Added",
-          description: "Career path added to favorites",
+          title: 'Bookmark Added',
+          description: 'Career path added to favorites',
         });
       }
     } catch (error) {
       console.error('Error toggling bookmark:', error);
       toast({
-        title: "Error",
-        description: "Failed to update bookmark",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update bookmark',
+        variant: 'destructive',
       });
     }
   };
 
   const isBookmarked = (careerPathId: string) => {
-    return bookmarks.some(b => b.career_path_id === careerPathId);
+    return bookmarks.some((b) => b.career_path_id === careerPathId);
   };
 
   useEffect(() => {

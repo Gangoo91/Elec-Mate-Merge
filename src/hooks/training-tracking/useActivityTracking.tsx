@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 
 interface ActivityTrackingOptions {
@@ -11,11 +10,11 @@ interface ActivityTrackingOptions {
  */
 export const useActivityTracking = ({
   onInactive,
-  inactivityThreshold = 60000 // Default: 1 minute
+  inactivityThreshold = 60000, // Default: 1 minute
 }: ActivityTrackingOptions = {}) => {
   const [isActive, setIsActive] = useState(true);
   const lastActivityRef = useRef<number>(Date.now());
-  
+
   // Track user activity
   useEffect(() => {
     const handleActivity = () => {
@@ -23,22 +22,16 @@ export const useActivityTracking = ({
       lastActivityRef.current = Date.now();
     };
 
-    const events = [
-      'mousemove', 
-      'keypress', 
-      'click', 
-      'scroll',
-      'touchstart'
-    ];
-    
+    const events = ['mousemove', 'keypress', 'click', 'scroll', 'touchstart'];
+
     // Add event listeners for user activity
-    events.forEach(event => {
+    events.forEach((event) => {
       window.addEventListener(event, handleActivity);
     });
-    
+
     return () => {
       // Remove event listeners on cleanup
-      events.forEach(event => {
+      events.forEach((event) => {
         window.removeEventListener(event, handleActivity);
       });
     };
@@ -49,7 +42,7 @@ export const useActivityTracking = ({
     const checkActivity = () => {
       const now = Date.now();
       const inactiveTime = now - lastActivityRef.current;
-      
+
       if (inactiveTime > inactivityThreshold) {
         setIsActive(false);
         if (onInactive) {
@@ -57,7 +50,7 @@ export const useActivityTracking = ({
         }
       }
     };
-    
+
     // Check every 30 seconds (adjust as needed for your use case)
     const activityInterval = setInterval(checkActivity, 30000);
     return () => clearInterval(activityInterval);
@@ -68,9 +61,9 @@ export const useActivityTracking = ({
     lastActivityRef.current = Date.now();
   };
 
-  return { 
-    isActive, 
+  return {
+    isActive,
     resetActivity,
-    lastActivity: lastActivityRef.current 
+    lastActivity: lastActivityRef.current,
   };
 };

@@ -22,7 +22,7 @@ const EquipmentChecklistCard = () => {
       description: 'GS38 compliant voltage detector with proving unit',
       required: true,
       category: 'testing',
-      calibrationRequired: true
+      calibrationRequired: true,
     },
     {
       id: 'test-probes',
@@ -30,7 +30,7 @@ const EquipmentChecklistCard = () => {
       description: 'Shrouded probes with finger guards (4mm max exposure)',
       required: true,
       category: 'testing',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'proving-unit',
@@ -38,7 +38,7 @@ const EquipmentChecklistCard = () => {
       description: 'Known voltage source for tester verification',
       required: true,
       category: 'testing',
-      calibrationRequired: true
+      calibrationRequired: true,
     },
     {
       id: 'isolation-lock',
@@ -46,7 +46,7 @@ const EquipmentChecklistCard = () => {
       description: 'Unique padlock for securing isolation points',
       required: true,
       category: 'isolation',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'warning-labels',
@@ -54,7 +54,7 @@ const EquipmentChecklistCard = () => {
       description: 'Caution labels for work in progress identification',
       required: true,
       category: 'isolation',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'ppe',
@@ -62,7 +62,7 @@ const EquipmentChecklistCard = () => {
       description: 'Safety glasses, insulated gloves, appropriate clothing',
       required: true,
       category: 'safety',
-      calibrationRequired: false
+      calibrationRequired: false,
     },
     {
       id: 'multimeter',
@@ -70,7 +70,7 @@ const EquipmentChecklistCard = () => {
       description: 'Calibrated meter for accurate voltage measurements or test lamps',
       required: false,
       category: 'testing',
-      calibrationRequired: true
+      calibrationRequired: true,
     },
     {
       id: 'test-leads',
@@ -78,39 +78,47 @@ const EquipmentChecklistCard = () => {
       description: 'Double-insulated leads rated for working voltage',
       required: true,
       category: 'testing',
-      calibrationRequired: false
-    }
+      calibrationRequired: false,
+    },
   ];
 
   const handleItemCheck = (itemId: string) => {
-    setCheckedItems(prev => 
-      prev.includes(itemId)
-        ? prev.filter(id => id !== itemId)
-        : [...prev, itemId]
+    setCheckedItems((prev) =>
+      prev.includes(itemId) ? prev.filter((id) => id !== itemId) : [...prev, itemId]
     );
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'testing': return <Wrench className="h-4 w-4 text-blue-400" />;
-      case 'safety': return <Shield className="h-4 w-4 text-green-400" />;
-      case 'isolation': return <CheckCircle2 className="h-4 w-4 text-orange-400" />;
-      default: return <Wrench className="h-4 w-4 text-gray-400" />;
+      case 'testing':
+        return <Wrench className="h-4 w-4 text-blue-400" />;
+      case 'safety':
+        return <Shield className="h-4 w-4 text-green-400" />;
+      case 'isolation':
+        return <CheckCircle2 className="h-4 w-4 text-orange-400" />;
+      default:
+        return <Wrench className="h-4 w-4 text-gray-400" />;
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'testing': return 'border-blue-500/20 bg-blue-500/5';
-      case 'safety': return 'border-green-500/20 bg-green-500/5';
-      case 'isolation': return 'border-orange-500/20 bg-orange-500/5';
-      default: return 'border-gray-500/20 bg-gray-500/5';
+      case 'testing':
+        return 'border-blue-500/20 bg-blue-500/5';
+      case 'safety':
+        return 'border-green-500/20 bg-green-500/5';
+      case 'isolation':
+        return 'border-orange-500/20 bg-orange-500/5';
+      default:
+        return 'border-gray-500/20 bg-gray-500/5';
     }
   };
 
-  const requiredItems = equipment.filter(item => item.required);
-  const checkedRequiredItems = requiredItems.filter(item => checkedItems.includes(item.id));
-  const completionPercentage = Math.round((checkedRequiredItems.length / requiredItems.length) * 100);
+  const requiredItems = equipment.filter((item) => item.required);
+  const checkedRequiredItems = requiredItems.filter((item) => checkedItems.includes(item.id));
+  const completionPercentage = Math.round(
+    (checkedRequiredItems.length / requiredItems.length) * 100
+  );
 
   return (
     <Card className="bg-card border-border">
@@ -125,14 +133,18 @@ const EquipmentChecklistCard = () => {
         <div className="mt-2 text-sm">
           <span className="text-foreground">Progress: </span>
           <span className="text-elec-yellow font-medium">
-            {checkedRequiredItems.length}/{requiredItems.length} required items ({completionPercentage}%)
+            {checkedRequiredItems.length}/{requiredItems.length} required items (
+            {completionPercentage}%)
           </span>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {equipment.map((item) => (
-            <div key={item.id} className={`p-3 border rounded-lg ${getCategoryColor(item.category)}`}>
+            <div
+              key={item.id}
+              className={`p-3 border rounded-lg ${getCategoryColor(item.category)}`}
+            >
               <div className="flex items-start gap-3">
                 <Checkbox
                   checked={checkedItems.includes(item.id)}

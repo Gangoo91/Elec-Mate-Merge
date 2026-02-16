@@ -1,44 +1,44 @@
-import { ArrowLeft, Zap, TestTube, Eye, Wrench, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Zap, TestTube, Eye, Wrench, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Continuity of Protective Conductors (CPCs)",
-    description: "Testing earth continuity in protective conductor circuits",
+    number: 'Subsection 1',
+    title: 'Continuity of Protective Conductors (CPCs)',
+    description: 'Testing earth continuity in protective conductor circuits',
     icon: Zap,
-    href: "4-1"
+    href: '4-1',
   },
   {
-    number: "Subsection 2",
-    title: "Continuity of Ring Circuits (Awareness Level)",
-    description: "Basic understanding of ring circuit continuity testing",
+    number: 'Subsection 2',
+    title: 'Continuity of Ring Circuits (Awareness Level)',
+    description: 'Basic understanding of ring circuit continuity testing',
     icon: TestTube,
-    href: "4-2"
+    href: '4-2',
   },
   {
-    number: "Subsection 3",
-    title: "Confirming Polarity of Switches and Accessories",
-    description: "Verifying correct polarity in electrical installations",
+    number: 'Subsection 3',
+    title: 'Confirming Polarity of Switches and Accessories',
+    description: 'Verifying correct polarity in electrical installations',
     icon: Eye,
-    href: "4-3"
+    href: '4-3',
   },
   {
-    number: "Subsection 4",
-    title: "Common Faults Found During Continuity/Polarity Tests",
-    description: "Identifying typical problems during continuity testing",
+    number: 'Subsection 4',
+    title: 'Common Faults Found During Continuity/Polarity Tests',
+    description: 'Identifying typical problems during continuity testing',
     icon: Wrench,
-    href: "4-4"
+    href: '4-4',
   },
   {
-    number: "Subsection 5",
-    title: "Recording Results and Actions Required",
-    description: "Documenting test results and follow-up actions",
+    number: 'Subsection 5',
+    title: 'Recording Results and Actions Required',
+    description: 'Documenting test results and follow-up actions',
     icon: Shield,
-    href: "4-5"
-  }
+    href: '4-5',
+  },
 ];
 
 const Section4 = () => {

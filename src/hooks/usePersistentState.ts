@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 // A tiny localStorage-backed state hook
 export function usePersistentState<T>(key: string, initial: T) {

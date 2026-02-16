@@ -1,18 +1,8 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  BookOpen, 
-  GraduationCap, 
-  Zap, 
-  Shield, 
-  ArrowRight,
-  Star,
-  Clock,
-  Users
-} from 'lucide-react';
+import { BookOpen, GraduationCap, Zap, Shield, ArrowRight, Star, Clock, Users } from 'lucide-react';
 import { LearningSection } from '../LearningHub';
 
 interface LearningHubOverviewProps {
@@ -21,7 +11,7 @@ interface LearningHubOverviewProps {
 
 const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) => {
   const navigate = useNavigate();
-  
+
   const learningModules = [
     {
       id: 'testing' as LearningSection,
@@ -31,7 +21,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       color: 'bg-orange-500/10 border-orange-500/20',
       iconColor: 'text-orange-400',
       stats: { items: 18, duration: '35 min' },
-      features: ['Video tutorials', 'Interactive simulations', 'Test equipment guides']
+      features: ['Video tutorials', 'Interactive simulations', 'Test equipment guides'],
     },
     {
       id: 'fault-finding' as LearningSection,
@@ -41,7 +31,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       color: 'bg-red-500/10 border-red-500/20',
       iconColor: 'text-red-400',
       stats: { items: 20, duration: '40 min' },
-      features: ['Diagnostic techniques', 'Test equipment usage', 'Troubleshooting guides']
+      features: ['Diagnostic techniques', 'Test equipment usage', 'Troubleshooting guides'],
     },
     {
       id: 'regulations' as LearningSection,
@@ -51,7 +41,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       color: 'bg-blue-500/10 border-blue-500/20',
       iconColor: 'text-blue-400',
       stats: { items: 24, duration: '45 min' },
-      features: ['Quick search', 'Interactive guides', 'Regulation updates']
+      features: ['Quick search', 'Interactive guides', 'Regulation updates'],
     },
     {
       id: 'quiz' as LearningSection,
@@ -61,8 +51,8 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       color: 'bg-yellow-500/10 border-yellow-500/20',
       iconColor: 'text-yellow-400',
       stats: { items: 12, duration: '60 min' },
-      features: ['Progress tracking', 'Certificates', 'Difficulty levels']
-    }
+      features: ['Progress tracking', 'Certificates', 'Difficulty levels'],
+    },
   ];
 
   return (
@@ -78,7 +68,8 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           </h1>
         </div>
         <p className="text-sm sm:text-base md:text-base text-gray-300 max-w-3xl mx-auto px-2 sm:px-4">
-          BS7671 guidance, testing procedures and comprehensive safety resources for electrical professionals
+          BS7671 guidance, testing procedures and comprehensive safety resources for electrical
+          professionals
         </p>
       </div>
 
@@ -93,9 +84,9 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
               onNavigateToSection(module.id);
             }
           };
-          
+
           return (
-            <Card 
+            <Card
               key={module.id}
               className="bg-elec-gray border border-elec-yellow/30 rounded-lg sm:rounded-xl md:rounded-2xl hover:scale-[1.02] sm:hover:scale-105 hover:border-elec-yellow/50 transition-all duration-300 group cursor-pointer touch-manipulation min-h-[44px]"
               onClick={handleClick}
@@ -107,12 +98,12 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                     <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
                   </div>
                 </div>
-                
+
                 {/* Title */}
                 <CardTitle className="text-foreground text-base sm:text-lg md:text-xl font-bold group-hover:text-elec-yellow transition-colors">
                   {module.title}
                 </CardTitle>
-                
+
                 {/* Description */}
                 <CardDescription className="text-gray-300 text-sm sm:text-base leading-relaxed px-1 sm:px-2">
                   {module.description}
@@ -122,7 +113,6 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           );
         })}
       </div>
-
     </div>
   );
 };

@@ -1,7 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Users, Award, Clock } from "lucide-react";
-import { LiveEducationAnalytics } from "@/hooks/useLiveEducationData";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { TrendingUp, Users, Award, Clock } from 'lucide-react';
+import { LiveEducationAnalytics } from '@/hooks/useLiveEducationData';
 
 interface KpiStripProps {
   analytics: LiveEducationAnalytics | null;
@@ -14,7 +14,7 @@ const KpiStrip = ({ analytics, isFromCache, lastUpdated }: KpiStripProps) => {
     averageEmploymentRate: 94,
     totalProviders: 85,
     averageRating: 4.7,
-    highDemandPrograms: 45
+    highDemandPrograms: 45,
   };
 
   const data = analytics || defaultAnalytics;
@@ -34,7 +34,7 @@ const KpiStrip = ({ analytics, isFromCache, lastUpdated }: KpiStripProps) => {
               </div>
               <div className="mobile-small-text text-text-subtle">Employment Rate</div>
             </div>
-            
+
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center gap-2">
                 <Users className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -44,7 +44,7 @@ const KpiStrip = ({ analytics, isFromCache, lastUpdated }: KpiStripProps) => {
               </div>
               <div className="mobile-small-text text-text-subtle">Providers</div>
             </div>
-            
+
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center gap-2">
                 <Award className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -54,7 +54,7 @@ const KpiStrip = ({ analytics, isFromCache, lastUpdated }: KpiStripProps) => {
               </div>
               <div className="mobile-small-text text-text-subtle">Avg Rating</div>
             </div>
-            
+
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center gap-2">
                 <TrendingUp className="h-4 w-4 text-elec-yellow flex-shrink-0" />

@@ -9,7 +9,9 @@ import { emergencyAntiPanicQuizData } from '@/data/upskilling/emergencyAntiPanic
 
 export const EmergencyAntiPanicLightingQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(emergencyAntiPanicQuizData.length).fill(-1));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    new Array(emergencyAntiPanicQuizData.length).fill(-1)
+  );
   const [showResults, setShowResults] = useState(false);
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -38,7 +40,7 @@ export const EmergencyAntiPanicLightingQuiz = () => {
 
   if (showResults) {
     return (
-      <QuizResults 
+      <QuizResults
         questions={emergencyAntiPanicQuizData}
         selectedAnswers={selectedAnswers}
         onRestart={handleRestart}
@@ -58,21 +60,25 @@ export const EmergencyAntiPanicLightingQuiz = () => {
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
-        <QuizProgress 
+        <QuizProgress
           currentQuestion={currentQuestion}
           totalQuestions={emergencyAntiPanicQuizData.length}
         />
-        
+
         <QuizQuestion
           question={emergencyAntiPanicQuizData[currentQuestion]}
-          selectedAnswer={selectedAnswers[currentQuestion] === -1 ? undefined : selectedAnswers[currentQuestion]}
+          selectedAnswer={
+            selectedAnswers[currentQuestion] === -1 ? undefined : selectedAnswers[currentQuestion]
+          }
           onAnswerSelect={handleAnswerSelect}
         />
-        
+
         <QuizNavigation
           currentQuestion={currentQuestion}
           totalQuestions={emergencyAntiPanicQuizData.length}
-          selectedAnswer={selectedAnswers[currentQuestion] === -1 ? undefined : selectedAnswers[currentQuestion]}
+          selectedAnswer={
+            selectedAnswers[currentQuestion] === -1 ? undefined : selectedAnswers[currentQuestion]
+          }
           onPrevious={handlePrevious}
           onNext={handleNext}
           isLastQuestion={currentQuestion === emergencyAntiPanicQuizData.length - 1}

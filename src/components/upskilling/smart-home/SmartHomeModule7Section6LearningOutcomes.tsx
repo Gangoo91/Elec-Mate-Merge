@@ -3,14 +3,14 @@ import { Target, CheckCircle } from 'lucide-react';
 
 const SmartHomeModule7Section6LearningOutcomes = () => {
   const outcomes = [
-    "Explain the importance of proper documentation in smart home projects",
-    "List the types of records that must be provided to clients",
-    "Outline warranty conditions and responsibilities for installers and manufacturers",
-    "Advise clients on aftercare, maintenance, and support options",
-    "Create comprehensive handover documentation packages",
-    "Understand BS 7671 documentation requirements for electrical installations",
-    "Establish professional aftercare and support service structures",
-    "Protect against liability through proper record keeping and compliance"
+    'Explain the importance of proper documentation in smart home projects',
+    'List the types of records that must be provided to clients',
+    'Outline warranty conditions and responsibilities for installers and manufacturers',
+    'Advise clients on aftercare, maintenance, and support options',
+    'Create comprehensive handover documentation packages',
+    'Understand BS 7671 documentation requirements for electrical installations',
+    'Establish professional aftercare and support service structures',
+    'Protect against liability through proper record keeping and compliance',
   ];
 
   return (

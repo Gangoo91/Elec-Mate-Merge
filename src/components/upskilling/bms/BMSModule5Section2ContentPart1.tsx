@@ -12,10 +12,10 @@ export const BMSModule5Section2ContentPart1 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          BACnet defines devices by their role within the network. Understanding these device types helps 
-          electricians plan cable runs and ensure proper power supply to each device category.
+          BACnet defines devices by their role within the network. Understanding these device types
+          helps electricians plan cable runs and ensure proper power supply to each device category.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-3">
@@ -24,8 +24,8 @@ export const BMSModule5Section2ContentPart1 = () => {
                 Controllers
               </h4>
               <p className="text-foreground text-sm">
-                Local devices that directly control equipment (e.g., AHU controllers, VAV controllers). 
-                These are the "brains" of local systems.
+                Local devices that directly control equipment (e.g., AHU controllers, VAV
+                controllers). These are the "brains" of local systems.
               </p>
             </div>
 
@@ -35,7 +35,7 @@ export const BMSModule5Section2ContentPart1 = () => {
                 Sensors & Actuators
               </h4>
               <p className="text-foreground text-sm">
-                Input/output devices like temperature sensors, CO₂ detectors, and damper motors. 
+                Input/output devices like temperature sensors, CO₂ detectors, and damper motors.
                 Often powered by 24V DC.
               </p>
             </div>
@@ -48,7 +48,7 @@ export const BMSModule5Section2ContentPart1 = () => {
                 Operator Workstations (OWS)
               </h4>
               <p className="text-foreground text-sm">
-                Software interfaces that let facility managers monitor and control the system. 
+                Software interfaces that let facility managers monitor and control the system.
                 Usually connected via BACnet/IP.
               </p>
             </div>
@@ -59,8 +59,8 @@ export const BMSModule5Section2ContentPart1 = () => {
                 Routers & Gateways
               </h4>
               <p className="text-foreground text-sm">
-                Link different BACnet networks together or connect BACnet to other protocols 
-                (e.g., Modbus). Critical for system integration.
+                Link different BACnet networks together or connect BACnet to other protocols (e.g.,
+                Modbus). Critical for system integration.
               </p>
             </div>
           </div>
@@ -69,8 +69,9 @@ export const BMSModule5Section2ContentPart1 = () => {
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Example</h4>
           <p className="text-foreground text-sm">
-            A VAV box may have a BACnet controller that talks to the central BMS workstation, 
-            adjusting damper position based on occupancy and temperature readings from connected sensors.
+            A VAV box may have a BACnet controller that talks to the central BMS workstation,
+            adjusting damper position based on occupancy and temperature readings from connected
+            sensors.
           </p>
         </div>
       </CardContent>

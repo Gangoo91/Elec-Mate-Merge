@@ -1,72 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m4s1-check1",
-    question: "What cable type provides fire resistance for emergency lighting circuits?",
-    options: ["Standard PVC/PVC", "MICC or FP cables", "Armoured SWA", "XLPE only"],
+    id: 'emergencylighting-m4s1-check1',
+    question: 'What cable type provides fire resistance for emergency lighting circuits?',
+    options: ['Standard PVC/PVC', 'MICC or FP cables', 'Armoured SWA', 'XLPE only'],
     correctIndex: 1,
-    explanation: "Mineral Insulated Copper Clad (MICC) and Fire Performance (FP) cables like FP200 Gold maintain circuit integrity during fire conditions. Standard PVC cables fail at elevated temperatures."
+    explanation:
+      'Mineral Insulated Copper Clad (MICC) and Fire Performance (FP) cables like FP200 Gold maintain circuit integrity during fire conditions. Standard PVC cables fail at elevated temperatures.',
   },
   {
-    id: "emergencylighting-m4s1-check2",
-    question: "What installation method protects cables in fire conditions?",
-    options: ["Surface clipping only", "In plastic conduit", "Fire-resistant routes or enclosures", "Any containment system"],
+    id: 'emergencylighting-m4s1-check2',
+    question: 'What installation method protects cables in fire conditions?',
+    options: [
+      'Surface clipping only',
+      'In plastic conduit',
+      'Fire-resistant routes or enclosures',
+      'Any containment system',
+    ],
     correctIndex: 2,
-    explanation: "Fire-resistant routes using dedicated containment, intumescent coatings, or fire-rated enclosures protect cables during fires. Standard plastic conduit provides no fire protection."
+    explanation:
+      'Fire-resistant routes using dedicated containment, intumescent coatings, or fire-rated enclosures protect cables during fires. Standard plastic conduit provides no fire protection.',
   },
   {
-    id: "emergencylighting-m4s1-check3",
-    question: "What BS standard governs cable installation for emergency lighting?",
-    options: ["BS 7671 only", "BS 5266-1 and BS 7671", "BS EN 1838 only", "Building Regulations only"],
+    id: 'emergencylighting-m4s1-check3',
+    question: 'What BS standard governs cable installation for emergency lighting?',
+    options: [
+      'BS 7671 only',
+      'BS 5266-1 and BS 7671',
+      'BS EN 1838 only',
+      'Building Regulations only',
+    ],
     correctIndex: 1,
-    explanation: "BS 5266-1 specifies emergency lighting cable requirements while BS 7671 provides general wiring regulations. Both must be satisfied for compliant installations."
-  }
+    explanation:
+      'BS 5266-1 specifies emergency lighting cable requirements while BS 7671 provides general wiring regulations. Both must be satisfied for compliant installations.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When is MICC cable required versus FP cable?",
-    answer: "MICC provides superior fire resistance and is preferred for critical escape routes or where BS 8519 enhanced standards apply. FP200 Gold is acceptable for most BS 5266-1 applications but has lower fire survival ratings than MICC."
+    question: 'When is MICC cable required versus FP cable?',
+    answer:
+      'MICC provides superior fire resistance and is preferred for critical escape routes or where BS 8519 enhanced standards apply. FP200 Gold is acceptable for most BS 5266-1 applications but has lower fire survival ratings than MICC.',
   },
   {
-    question: "Can standard cables be used if protected by fire barriers?",
-    answer: "Yes, standard cables can be used within fire-rated enclosures or protected routes that maintain integrity for the required duration. The protection system must be certified and correctly installed."
+    question: 'Can standard cables be used if protected by fire barriers?',
+    answer:
+      'Yes, standard cables can be used within fire-rated enclosures or protected routes that maintain integrity for the required duration. The protection system must be certified and correctly installed.',
   },
   {
-    question: "What fixings are suitable for fire-resistant cables?",
-    answer: "Metal clips or cleats rated for fire conditions must be used. Plastic cable ties or clips fail under heat and allow cables to fall, potentially breaking the circuit. Spacing as per manufacturer data."
+    question: 'What fixings are suitable for fire-resistant cables?',
+    answer:
+      'Metal clips or cleats rated for fire conditions must be used. Plastic cable ties or clips fail under heat and allow cables to fall, potentially breaking the circuit. Spacing as per manufacturer data.',
   },
   {
-    question: "How do cable routes affect emergency lighting design?",
-    answer: "Cable routes should be planned to minimise exposure to fire risk and avoid areas with high fire load. Routes through fire compartments require fire stopping at penetrations."
-  }
+    question: 'How do cable routes affect emergency lighting design?',
+    answer:
+      'Cable routes should be planned to minimise exposure to fire risk and avoid areas with high fire load. Routes through fire compartments require fire stopping at penetrations.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An emergency lighting circuit must pass through a plant room with significant fire load. What cable solution is most appropriate?",
-  options: [
-    "Standard cables in plastic trunking",
-    "MICC or FP cable with metal fixings",
-    "Any cable with intumescent paint",
-    "Armoured cable without additional protection"
-  ],
-  correctAnswer: 1,
-  explanation: "MICC or FP cables with appropriate metal fixings maintain circuit integrity in high fire-load areas. The fire-resistant cable construction protects against flame and heat without relying on external protection."
-  }
+    question:
+      'An emergency lighting circuit must pass through a plant room with significant fire load. What cable solution is most appropriate?',
+    options: [
+      'Standard cables in plastic trunking',
+      'MICC or FP cable with metal fixings',
+      'Any cable with intumescent paint',
+      'Armoured cable without additional protection',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MICC or FP cables with appropriate metal fixings maintain circuit integrity in high fire-load areas. The fire-resistant cable construction protects against flame and heat without relying on external protection.',
+  },
 ];
 
 const EmergencyLightingModule4Section1 = () => {
   useSEO({
-    title: "Cable Types and Installation | Emergency Lighting Module 4.1",
-    description: "Fire-resistant cable selection, MICC and FP cables, installation methods and BS 5266-1/BS 7671 compliance for emergency lighting systems."
+    title: 'Cable Types and Installation | Emergency Lighting Module 4.1',
+    description:
+      'Fire-resistant cable selection, MICC and FP cables, installation methods and BS 5266-1/BS 7671 compliance for emergency lighting systems.',
   });
 
   return (
@@ -98,9 +118,7 @@ const EmergencyLightingModule4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Types and Installation Requirements
           </h1>
-          <p className="text-white/80">
-            Fire-resistant cabling for emergency lighting circuits
-          </p>
+          <p className="text-white/80">Fire-resistant cabling for emergency lighting circuits</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +126,29 @@ const EmergencyLightingModule4Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>MICC:</strong> Mineral insulated, highest rating</li>
-              <li><strong>FP cables:</strong> Fire performance rated</li>
-              <li><strong>Fixings:</strong> Metal clips, fire-rated</li>
+              <li>
+                <strong>MICC:</strong> Mineral insulated, highest rating
+              </li>
+              <li>
+                <strong>FP cables:</strong> Fire performance rated
+              </li>
+              <li>
+                <strong>Fixings:</strong> Metal clips, fire-rated
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>BS 5266-1:</strong> Emergency lighting</li>
-              <li><strong>BS 7671:</strong> Wiring regulations</li>
-              <li><strong>BS 8519:</strong> Enhanced systems</li>
+              <li>
+                <strong>BS 5266-1:</strong> Emergency lighting
+              </li>
+              <li>
+                <strong>BS 7671:</strong> Wiring regulations
+              </li>
+              <li>
+                <strong>BS 8519:</strong> Enhanced systems
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +158,12 @@ const EmergencyLightingModule4Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Select appropriate fire-resistant cables",
-              "Understand MICC vs FP cable applications",
-              "Specify correct cable fixings",
-              "Plan fire-resistant routes",
-              "Apply BS 5266-1 requirements",
-              "Integrate with BS 7671"
+              'Select appropriate fire-resistant cables',
+              'Understand MICC vs FP cable applications',
+              'Specify correct cable fixings',
+              'Plan fire-resistant routes',
+              'Apply BS 5266-1 requirements',
+              'Integrate with BS 7671',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,27 +183,43 @@ const EmergencyLightingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Emergency lighting cables must maintain circuit integrity during fire conditions
-              to ensure luminaires continue operating during evacuation.
+              Emergency lighting cables must maintain circuit integrity during fire conditions to
+              ensure luminaires continue operating during evacuation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">MICC Cable</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Construction:</strong> Mineral insulated</li>
-                  <li><strong>Rating:</strong> 3 hours+ fire survival</li>
-                  <li><strong>Application:</strong> Critical escape routes</li>
-                  <li><strong>Termination:</strong> Specialist seals required</li>
+                  <li>
+                    <strong>Construction:</strong> Mineral insulated
+                  </li>
+                  <li>
+                    <strong>Rating:</strong> 3 hours+ fire survival
+                  </li>
+                  <li>
+                    <strong>Application:</strong> Critical escape routes
+                  </li>
+                  <li>
+                    <strong>Termination:</strong> Specialist seals required
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">FP Cables</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Type:</strong> FP200 Gold, equivalent</li>
-                  <li><strong>Rating:</strong> BS EN 50200 compliant</li>
-                  <li><strong>Application:</strong> Standard installations</li>
-                  <li><strong>Termination:</strong> Standard methods</li>
+                  <li>
+                    <strong>Type:</strong> FP200 Gold, equivalent
+                  </li>
+                  <li>
+                    <strong>Rating:</strong> BS EN 50200 compliant
+                  </li>
+                  <li>
+                    <strong>Application:</strong> Standard installations
+                  </li>
+                  <li>
+                    <strong>Termination:</strong> Standard methods
+                  </li>
                 </ul>
               </div>
             </div>
@@ -205,25 +251,35 @@ const EmergencyLightingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Correct installation is essential to maintain fire resistance. Cable routes,
-              fixings, and penetrations must all be addressed.
+              Correct installation is essential to maintain fire resistance. Cable routes, fixings,
+              and penetrations must all be addressed.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key Installation Requirements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Fixings:</strong> Metal clips rated for fire conditions</li>
-                <li><strong>Spacing:</strong> Per manufacturer's fire test data</li>
-                <li><strong>Penetrations:</strong> Fire stopped at compartment boundaries</li>
-                <li><strong>Segregation:</strong> Separate from other services where required</li>
-                <li><strong>Routing:</strong> Avoid high fire-load areas where possible</li>
+                <li>
+                  <strong>Fixings:</strong> Metal clips rated for fire conditions
+                </li>
+                <li>
+                  <strong>Spacing:</strong> Per manufacturer's fire test data
+                </li>
+                <li>
+                  <strong>Penetrations:</strong> Fire stopped at compartment boundaries
+                </li>
+                <li>
+                  <strong>Segregation:</strong> Separate from other services where required
+                </li>
+                <li>
+                  <strong>Routing:</strong> Avoid high fire-load areas where possible
+                </li>
               </ul>
             </div>
 
             <p>
-              Standard plastic cable ties fail at temperatures well below those encountered
-              in fires. All fixings must maintain cable support during the required fire
-              resistance period.
+              Standard plastic cable ties fail at temperatures well below those encountered in
+              fires. All fixings must maintain cable support during the required fire resistance
+              period.
             </p>
           </div>
         </section>
@@ -238,8 +294,8 @@ const EmergencyLightingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Emergency lighting cable installations must satisfy multiple standards
-              covering both the emergency lighting function and general wiring requirements.
+              Emergency lighting cable installations must satisfy multiple standards covering both
+              the emergency lighting function and general wiring requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -272,7 +328,9 @@ const EmergencyLightingModule4Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Selection Process</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cable Selection Process
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Identify fire risk along proposed routes</li>
                 <li>Determine required fire resistance duration</li>
@@ -283,12 +341,22 @@ const EmergencyLightingModule4Section1 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Installation Errors</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Installation Errors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Plastic cable ties:</strong> — Fail in fire conditions</li>
-                <li><strong>Missing fire stopping:</strong> — Penetrations breach compartments</li>
-                <li><strong>Wrong clip spacing:</strong> — Cable sags and breaks in fire</li>
-                <li><strong>Mixed cable types:</strong> — Weakest section limits system</li>
+                <li>
+                  <strong>Plastic cable ties:</strong> — Fail in fire conditions
+                </li>
+                <li>
+                  <strong>Missing fire stopping:</strong> — Penetrations breach compartments
+                </li>
+                <li>
+                  <strong>Wrong clip spacing:</strong> — Cable sags and breaks in fire
+                </li>
+                <li>
+                  <strong>Mixed cable types:</strong> — Weakest section limits system
+                </li>
               </ul>
             </div>
           </div>
@@ -334,10 +402,7 @@ const EmergencyLightingModule4Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

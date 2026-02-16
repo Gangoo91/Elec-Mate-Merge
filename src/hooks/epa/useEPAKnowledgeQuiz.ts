@@ -43,17 +43,14 @@ export function useEPAKnowledgeQuiz() {
           throw new Error('Not authenticated');
         }
 
-        const response = await supabase.functions.invoke(
-          'epa-knowledge-quiz',
-          {
-            body: {
-              qualification_code: options.qualificationCode,
-              target_unit_codes: options.targetUnitCodes,
-              difficulty: options.difficulty || 'mixed',
-              question_count: options.questionCount || 20,
-            },
-          }
-        );
+        const response = await supabase.functions.invoke('epa-knowledge-quiz', {
+          body: {
+            qualification_code: options.qualificationCode,
+            target_unit_codes: options.targetUnitCodes,
+            difficulty: options.difficulty || 'mixed',
+            question_count: options.questionCount || 20,
+          },
+        });
 
         if (response.error) throw response.error;
 
@@ -64,15 +61,18 @@ export function useEPAKnowledgeQuiz() {
 
         // Map to QuizQuestion type for compatibility with useQuizSession
         const mapped: QuizQuestion[] = data.questions.map(
-          (q: {
-            question: string;
-            options: string[];
-            correctAnswer: number;
-            explanation: string;
-            category: string;
-            difficulty: string;
-            acRef?: string;
-          }, i: number) => ({
+          (
+            q: {
+              question: string;
+              options: string[];
+              correctAnswer: number;
+              explanation: string;
+              category: string;
+              difficulty: string;
+              acRef?: string;
+            },
+            i: number
+          ) => ({
             id: `epa-kq-${Date.now()}-${i}`,
             question: q.question,
             options: q.options,
@@ -88,8 +88,7 @@ export function useEPAKnowledgeQuiz() {
         toast.success(`${mapped.length} questions generated`);
         return mapped;
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : 'Failed to generate quiz';
+        const message = err instanceof Error ? err.message : 'Failed to generate quiz';
         console.error('EPA knowledge quiz error:', err);
         setError(message);
         toast.error(message);

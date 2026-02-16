@@ -24,7 +24,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
   // If a selectedCustomerId is provided, load the customer
   useEffect(() => {
     if (selectedCustomerId && customers.length > 0) {
-      const customer = customers.find(c => c.id === selectedCustomerId);
+      const customer = customers.find((c) => c.id === selectedCustomerId);
       if (customer) {
         setSelectedCustomer(customer);
       }
@@ -116,7 +116,9 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
                     {searchTerm ? 'No clients found matching your search' : 'No clients found'}
                   </p>
                   <p className="text-sm text-muted-foreground/70 mt-1">
-                    {searchTerm ? 'Try a different search term' : 'Add clients from the CRM section'}
+                    {searchTerm
+                      ? 'Try a different search term'
+                      : 'Add clients from the CRM section'}
                   </p>
                 </div>
               ) : (

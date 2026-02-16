@@ -1,8 +1,8 @@
-import { AlertTriangle, CheckCircle2, AlertCircle, XCircle, ShieldAlert } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
+import { AlertTriangle, CheckCircle2, AlertCircle, XCircle, ShieldAlert } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Separator } from '@/components/ui/separator';
 
 interface ValidationIssue {
   circuitIndex: number;
@@ -25,15 +25,15 @@ interface CircuitValidationDisplayProps {
 export const CircuitValidationDisplay = ({
   validationPassed,
   validationIssues = [],
-  autoFixSuggestions = []
+  autoFixSuggestions = [],
 }: CircuitValidationDisplayProps) => {
   // If validation passed or no issues, don't show anything
   if (validationPassed === undefined || (validationPassed && validationIssues.length === 0)) {
     return null;
   }
 
-  const errors = validationIssues.filter(i => i.severity === 'error');
-  const warnings = validationIssues.filter(i => i.severity === 'warning');
+  const errors = validationIssues.filter((i) => i.severity === 'error');
+  const warnings = validationIssues.filter((i) => i.severity === 'warning');
 
   const totalIssues = validationIssues.length;
 
@@ -56,13 +56,19 @@ export const CircuitValidationDisplay = ({
           </div>
           <div className="flex flex-wrap gap-2">
             {errors.length > 0 && (
-              <Badge variant="destructive" className="gap-1.5 px-3 py-1 text-xs font-semibold shadow-sm">
+              <Badge
+                variant="destructive"
+                className="gap-1.5 px-3 py-1 text-xs font-semibold shadow-sm"
+              >
                 <XCircle className="h-3.5 w-3.5" />
                 {errors.length} Error{errors.length !== 1 ? 's' : ''}
               </Badge>
             )}
             {warnings.length > 0 && (
-              <Badge variant="secondary" className="gap-1.5 px-3 py-1 text-xs font-semibold shadow-sm bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20">
+              <Badge
+                variant="secondary"
+                className="gap-1.5 px-3 py-1 text-xs font-semibold shadow-sm bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20"
+              >
                 <AlertTriangle className="h-3.5 w-3.5" />
                 {warnings.length} Warning{warnings.length !== 1 ? 's' : ''}
               </Badge>
@@ -70,19 +76,21 @@ export const CircuitValidationDisplay = ({
           </div>
         </div>
       </CardHeader>
-      
-      <Separator className="opacity-50" />
-      
-      <CardContent className="pt-6 space-y-4">
 
+      <Separator className="opacity-50" />
+
+      <CardContent className="pt-6 space-y-4">
         {/* Grouped Issues by Circuit */}
         <div className="space-y-4">
           {Object.entries(
-            validationIssues.reduce((acc, issue) => {
-              if (!acc[issue.circuitName]) acc[issue.circuitName] = [];
-              acc[issue.circuitName].push(issue);
-              return acc;
-            }, {} as Record<string, ValidationIssue[]>)
+            validationIssues.reduce(
+              (acc, issue) => {
+                if (!acc[issue.circuitName]) acc[issue.circuitName] = [];
+                acc[issue.circuitName].push(issue);
+                return acc;
+              },
+              {} as Record<string, ValidationIssue[]>
+            )
           ).map(([circuitName, issues]) => (
             <Card key={circuitName} className="border-destructive/20 bg-background/50 shadow-sm">
               <CardHeader className="pb-3">

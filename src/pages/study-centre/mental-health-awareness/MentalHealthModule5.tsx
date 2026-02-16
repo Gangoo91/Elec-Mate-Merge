@@ -1,45 +1,45 @@
-import { ArrowLeft, Users, Scale, Building2, Target } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Users, Scale, Building2, Target } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Leadership and Mental Health Culture",
+    title: 'Leadership and Mental Health Culture',
     icon: Users,
     description:
-      "The role of supervisors, psychological safety, and creating a culture where people talk",
+      'The role of supervisors, psychological safety, and creating a culture where people talk',
   },
   {
     id: 2,
-    title: "Legal Framework and Workplace Policies",
+    title: 'Legal Framework and Workplace Policies',
     icon: Scale,
     description:
-      "Equality Act 2010, Health and Safety at Work Act, HSE stress management standards, and employer duties",
+      'Equality Act 2010, Health and Safety at Work Act, HSE stress management standards, and employer duties',
   },
   {
     id: 3,
-    title: "Industry Initiatives — Mates in Mind and Beyond",
+    title: 'Industry Initiatives — Mates in Mind and Beyond',
     icon: Building2,
     description:
-      "Mates in Mind, Lighthouse Club, Building Mental Health, and how to get your site involved",
+      'Mates in Mind, Lighthouse Club, Building Mental Health, and how to get your site involved',
   },
   {
     id: 4,
-    title: "Your Personal Wellbeing Action Plan",
+    title: 'Your Personal Wellbeing Action Plan',
     icon: Target,
     description:
-      "Building your own plan, resilience strategies, daily habits, and committing to ongoing learning",
+      'Building your own plan, resilience strategies, daily habits, and committing to ongoing learning',
   },
 ];
 
 export default function MentalHealthModule5() {
   useSEO({
-    title: "Module 5: Creating a Mentally Healthy Workplace | Mental Health Awareness",
+    title: 'Module 5: Creating a Mentally Healthy Workplace | Mental Health Awareness',
     description:
-      "Leadership and culture, legal framework, industry initiatives, and your personal wellbeing plan.",
+      'Leadership and culture, legal framework, industry initiatives, and your personal wellbeing plan.',
   });
 
   return (
@@ -76,8 +76,8 @@ export default function MentalHealthModule5() {
               Creating a Mentally Healthy Workplace
             </h1>
             <p className="text-white text-sm sm:text-base">
-              How leaders shape mental health culture, what the law says, industry
-              initiatives making a difference, and building your own wellbeing plan
+              How leaders shape mental health culture, what the law says, industry initiatives
+              making a difference, and building your own wellbeing plan
             </p>
           </div>
 

@@ -3,67 +3,355 @@ import { Route } from 'react-router-dom';
 import { withTimeout, trackImport } from '@/lib/lazy';
 
 // Course landing page
-const FireAlarmCourse = lazy(() => withTimeout(() => trackImport('FireAlarmCourse', () => import('@/pages/upskilling/FireAlarmCourse'))));
+const FireAlarmCourse = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmCourse', () => import('@/pages/upskilling/FireAlarmCourse'))
+  )
+);
 
 // Module 1: Categories of Fire Alarm Systems (4 sections)
-const FireAlarmModule1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule1', () => import('@/pages/upskilling/FireAlarmModule1'))));
-const FireAlarmModule1Section1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule1Section1', () => import('@/pages/upskilling/FireAlarmModule1Section1'))));
-const FireAlarmModule1Section2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule1Section2', () => import('@/pages/upskilling/FireAlarmModule1Section2'))));
-const FireAlarmModule1Section3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule1Section3', () => import('@/pages/upskilling/FireAlarmModule1Section3'))));
-const FireAlarmModule1Section4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule1Section4', () => import('@/pages/upskilling/FireAlarmModule1Section4'))));
+const FireAlarmModule1 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmModule1', () => import('@/pages/upskilling/FireAlarmModule1'))
+  )
+);
+const FireAlarmModule1Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule1Section1',
+      () => import('@/pages/upskilling/FireAlarmModule1Section1')
+    )
+  )
+);
+const FireAlarmModule1Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule1Section2',
+      () => import('@/pages/upskilling/FireAlarmModule1Section2')
+    )
+  )
+);
+const FireAlarmModule1Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule1Section3',
+      () => import('@/pages/upskilling/FireAlarmModule1Section3')
+    )
+  )
+);
+const FireAlarmModule1Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule1Section4',
+      () => import('@/pages/upskilling/FireAlarmModule1Section4')
+    )
+  )
+);
 
 // Module 2: Detectors, Call Points & Devices (5 sections)
-const FireAlarmModule2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule2', () => import('@/pages/upskilling/FireAlarmModule2'))));
-const FireAlarmModule2Section1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule2Section1', () => import('@/pages/upskilling/FireAlarmModule2Section1'))));
-const FireAlarmModule2Section2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule2Section2', () => import('@/pages/upskilling/FireAlarmModule2Section2'))));
-const FireAlarmModule2Section3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule2Section3', () => import('@/pages/upskilling/FireAlarmModule2Section3'))));
-const FireAlarmModule2Section4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule2Section4', () => import('@/pages/upskilling/FireAlarmModule2Section4'))));
-const FireAlarmModule2Section5 = lazy(() => withTimeout(() => trackImport('FireAlarmModule2Section5', () => import('@/pages/upskilling/FireAlarmModule2Section5'))));
+const FireAlarmModule2 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmModule2', () => import('@/pages/upskilling/FireAlarmModule2'))
+  )
+);
+const FireAlarmModule2Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule2Section1',
+      () => import('@/pages/upskilling/FireAlarmModule2Section1')
+    )
+  )
+);
+const FireAlarmModule2Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule2Section2',
+      () => import('@/pages/upskilling/FireAlarmModule2Section2')
+    )
+  )
+);
+const FireAlarmModule2Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule2Section3',
+      () => import('@/pages/upskilling/FireAlarmModule2Section3')
+    )
+  )
+);
+const FireAlarmModule2Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule2Section4',
+      () => import('@/pages/upskilling/FireAlarmModule2Section4')
+    )
+  )
+);
+const FireAlarmModule2Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule2Section5',
+      () => import('@/pages/upskilling/FireAlarmModule2Section5')
+    )
+  )
+);
 
 // Module 3: System Design & Zone Planning (6 sections)
-const FireAlarmModule3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule3', () => import('@/pages/upskilling/FireAlarmModule3'))));
-const FireAlarmModule3Section1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule3Section1', () => import('@/pages/upskilling/FireAlarmModule3Section1'))));
-const FireAlarmModule3Section2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule3Section2', () => import('@/pages/upskilling/FireAlarmModule3Section2'))));
-const FireAlarmModule3Section3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule3Section3', () => import('@/pages/upskilling/FireAlarmModule3Section3'))));
-const FireAlarmModule3Section4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule3Section4', () => import('@/pages/upskilling/FireAlarmModule3Section4'))));
-const FireAlarmModule3Section5 = lazy(() => withTimeout(() => trackImport('FireAlarmModule3Section5', () => import('@/pages/upskilling/FireAlarmModule3Section5'))));
-const FireAlarmModule3Section6 = lazy(() => withTimeout(() => trackImport('FireAlarmModule3Section6', () => import('@/pages/upskilling/FireAlarmModule3Section6'))));
+const FireAlarmModule3 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmModule3', () => import('@/pages/upskilling/FireAlarmModule3'))
+  )
+);
+const FireAlarmModule3Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule3Section1',
+      () => import('@/pages/upskilling/FireAlarmModule3Section1')
+    )
+  )
+);
+const FireAlarmModule3Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule3Section2',
+      () => import('@/pages/upskilling/FireAlarmModule3Section2')
+    )
+  )
+);
+const FireAlarmModule3Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule3Section3',
+      () => import('@/pages/upskilling/FireAlarmModule3Section3')
+    )
+  )
+);
+const FireAlarmModule3Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule3Section4',
+      () => import('@/pages/upskilling/FireAlarmModule3Section4')
+    )
+  )
+);
+const FireAlarmModule3Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule3Section5',
+      () => import('@/pages/upskilling/FireAlarmModule3Section5')
+    )
+  )
+);
+const FireAlarmModule3Section6 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule3Section6',
+      () => import('@/pages/upskilling/FireAlarmModule3Section6')
+    )
+  )
+);
 
 // Module 4: Power Supply, Backup & Cabling (5 sections)
-const FireAlarmModule4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule4', () => import('@/pages/upskilling/FireAlarmModule4'))));
-const FireAlarmModule4Section1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule4Section1', () => import('@/pages/upskilling/FireAlarmModule4Section1'))));
-const FireAlarmModule4Section2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule4Section2', () => import('@/pages/upskilling/FireAlarmModule4Section2'))));
-const FireAlarmModule4Section3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule4Section3', () => import('@/pages/upskilling/FireAlarmModule4Section3'))));
-const FireAlarmModule4Section4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule4Section4', () => import('@/pages/upskilling/FireAlarmModule4Section4'))));
-const FireAlarmModule4Section5 = lazy(() => withTimeout(() => trackImport('FireAlarmModule4Section5', () => import('@/pages/upskilling/FireAlarmModule4Section5'))));
+const FireAlarmModule4 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmModule4', () => import('@/pages/upskilling/FireAlarmModule4'))
+  )
+);
+const FireAlarmModule4Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule4Section1',
+      () => import('@/pages/upskilling/FireAlarmModule4Section1')
+    )
+  )
+);
+const FireAlarmModule4Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule4Section2',
+      () => import('@/pages/upskilling/FireAlarmModule4Section2')
+    )
+  )
+);
+const FireAlarmModule4Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule4Section3',
+      () => import('@/pages/upskilling/FireAlarmModule4Section3')
+    )
+  )
+);
+const FireAlarmModule4Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule4Section4',
+      () => import('@/pages/upskilling/FireAlarmModule4Section4')
+    )
+  )
+);
+const FireAlarmModule4Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule4Section5',
+      () => import('@/pages/upskilling/FireAlarmModule4Section5')
+    )
+  )
+);
 
 // Module 5: Installation & Commissioning (6 sections)
-const FireAlarmModule5 = lazy(() => withTimeout(() => trackImport('FireAlarmModule5', () => import('@/pages/upskilling/FireAlarmModule5'))));
-const FireAlarmModule5Section1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule5Section1', () => import('@/pages/upskilling/FireAlarmModule5Section1'))));
-const FireAlarmModule5Section2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule5Section2', () => import('@/pages/upskilling/FireAlarmModule5Section2'))));
-const FireAlarmModule5Section3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule5Section3', () => import('@/pages/upskilling/FireAlarmModule5Section3'))));
-const FireAlarmModule5Section4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule5Section4', () => import('@/pages/upskilling/FireAlarmModule5Section4'))));
-const FireAlarmModule5Section5 = lazy(() => withTimeout(() => trackImport('FireAlarmModule5Section5', () => import('@/pages/upskilling/FireAlarmModule5Section5'))));
-const FireAlarmModule5Section6 = lazy(() => withTimeout(() => trackImport('FireAlarmModule5Section6', () => import('@/pages/upskilling/FireAlarmModule5Section6'))));
+const FireAlarmModule5 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmModule5', () => import('@/pages/upskilling/FireAlarmModule5'))
+  )
+);
+const FireAlarmModule5Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule5Section1',
+      () => import('@/pages/upskilling/FireAlarmModule5Section1')
+    )
+  )
+);
+const FireAlarmModule5Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule5Section2',
+      () => import('@/pages/upskilling/FireAlarmModule5Section2')
+    )
+  )
+);
+const FireAlarmModule5Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule5Section3',
+      () => import('@/pages/upskilling/FireAlarmModule5Section3')
+    )
+  )
+);
+const FireAlarmModule5Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule5Section4',
+      () => import('@/pages/upskilling/FireAlarmModule5Section4')
+    )
+  )
+);
+const FireAlarmModule5Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule5Section5',
+      () => import('@/pages/upskilling/FireAlarmModule5Section5')
+    )
+  )
+);
+const FireAlarmModule5Section6 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule5Section6',
+      () => import('@/pages/upskilling/FireAlarmModule5Section6')
+    )
+  )
+);
 
 // Module 6: Testing, Servicing & Certification (6 sections)
-const FireAlarmModule6 = lazy(() => withTimeout(() => trackImport('FireAlarmModule6', () => import('@/pages/upskilling/FireAlarmModule6'))));
-const FireAlarmModule6Section1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule6Section1', () => import('@/pages/upskilling/FireAlarmModule6Section1'))));
-const FireAlarmModule6Section2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule6Section2', () => import('@/pages/upskilling/FireAlarmModule6Section2'))));
-const FireAlarmModule6Section3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule6Section3', () => import('@/pages/upskilling/FireAlarmModule6Section3'))));
-const FireAlarmModule6Section4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule6Section4', () => import('@/pages/upskilling/FireAlarmModule6Section4'))));
-const FireAlarmModule6Section5 = lazy(() => withTimeout(() => trackImport('FireAlarmModule6Section5', () => import('@/pages/upskilling/FireAlarmModule6Section5'))));
-const FireAlarmModule6Section6 = lazy(() => withTimeout(() => trackImport('FireAlarmModule6Section6', () => import('@/pages/upskilling/FireAlarmModule6Section6'))));
+const FireAlarmModule6 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmModule6', () => import('@/pages/upskilling/FireAlarmModule6'))
+  )
+);
+const FireAlarmModule6Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule6Section1',
+      () => import('@/pages/upskilling/FireAlarmModule6Section1')
+    )
+  )
+);
+const FireAlarmModule6Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule6Section2',
+      () => import('@/pages/upskilling/FireAlarmModule6Section2')
+    )
+  )
+);
+const FireAlarmModule6Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule6Section3',
+      () => import('@/pages/upskilling/FireAlarmModule6Section3')
+    )
+  )
+);
+const FireAlarmModule6Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule6Section4',
+      () => import('@/pages/upskilling/FireAlarmModule6Section4')
+    )
+  )
+);
+const FireAlarmModule6Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule6Section5',
+      () => import('@/pages/upskilling/FireAlarmModule6Section5')
+    )
+  )
+);
+const FireAlarmModule6Section6 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule6Section6',
+      () => import('@/pages/upskilling/FireAlarmModule6Section6')
+    )
+  )
+);
 
 // Module 7: Regulatory Compliance & BS 5839 (4 sections)
-const FireAlarmModule7 = lazy(() => withTimeout(() => trackImport('FireAlarmModule7', () => import('@/pages/upskilling/FireAlarmModule7'))));
-const FireAlarmModule7Section1 = lazy(() => withTimeout(() => trackImport('FireAlarmModule7Section1', () => import('@/pages/upskilling/FireAlarmModule7Section1'))));
-const FireAlarmModule7Section2 = lazy(() => withTimeout(() => trackImport('FireAlarmModule7Section2', () => import('@/pages/upskilling/FireAlarmModule7Section2'))));
-const FireAlarmModule7Section3 = lazy(() => withTimeout(() => trackImport('FireAlarmModule7Section3', () => import('@/pages/upskilling/FireAlarmModule7Section3'))));
-const FireAlarmModule7Section4 = lazy(() => withTimeout(() => trackImport('FireAlarmModule7Section4', () => import('@/pages/upskilling/FireAlarmModule7Section4'))));
+const FireAlarmModule7 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmModule7', () => import('@/pages/upskilling/FireAlarmModule7'))
+  )
+);
+const FireAlarmModule7Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule7Section1',
+      () => import('@/pages/upskilling/FireAlarmModule7Section1')
+    )
+  )
+);
+const FireAlarmModule7Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule7Section2',
+      () => import('@/pages/upskilling/FireAlarmModule7Section2')
+    )
+  )
+);
+const FireAlarmModule7Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule7Section3',
+      () => import('@/pages/upskilling/FireAlarmModule7Section3')
+    )
+  )
+);
+const FireAlarmModule7Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'FireAlarmModule7Section4',
+      () => import('@/pages/upskilling/FireAlarmModule7Section4')
+    )
+  )
+);
 
 // Mock Exam
-const FireAlarmMockExam = lazy(() => withTimeout(() => trackImport('FireAlarmMockExam', () => import('@/pages/upskilling/FireAlarmMockExam'))));
+const FireAlarmMockExam = lazy(() =>
+  withTimeout(() =>
+    trackImport('FireAlarmMockExam', () => import('@/pages/upskilling/FireAlarmMockExam'))
+  )
+);
 
 export const fireAlarmRoutes = (
   <>

@@ -12,14 +12,14 @@ interface MaintenanceEquipmentDetailsFormProps {
 
 export const MaintenanceEquipmentDetailsForm = ({
   equipmentDetails,
-  onChange
+  onChange,
 }: MaintenanceEquipmentDetailsFormProps) => {
   const { isMobile } = useMobileEnhanced();
 
   const handleChange = (field: keyof MaintenanceEquipmentDetails, value: string | number) => {
     onChange({
       ...equipmentDetails,
-      [field]: value
+      [field]: value,
     });
   };
 
@@ -60,8 +60,8 @@ export const MaintenanceEquipmentDetailsForm = ({
           onChange={(e) => handleChange('knownIssues', e.target.value)}
           placeholder="Describe any known defects, wear, or concerns..."
           className={cn(
-            "resize-none text-foreground placeholder:text-muted-foreground",
-            isMobile ? "min-h-[100px] text-base" : "min-h-[80px] text-sm"
+            'resize-none text-foreground placeholder:text-muted-foreground',
+            isMobile ? 'min-h-[100px] text-base' : 'min-h-[80px] text-sm'
           )}
           rows={isMobile ? 4 : 3}
         />
@@ -74,8 +74,8 @@ export const MaintenanceEquipmentDetailsForm = ({
           onChange={(e) => handleChange('additionalNotes', e.target.value)}
           placeholder="Any specific maintenance requirements or site constraints..."
           className={cn(
-            "resize-none text-foreground placeholder:text-muted-foreground",
-            isMobile ? "min-h-[100px] text-base" : "min-h-[80px] text-sm"
+            'resize-none text-foreground placeholder:text-muted-foreground',
+            isMobile ? 'min-h-[100px] text-base' : 'min-h-[80px] text-sm'
           )}
           rows={isMobile ? 4 : 3}
         />

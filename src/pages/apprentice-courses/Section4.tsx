@@ -1,37 +1,37 @@
-import { ArrowLeft, HardHat, Settings, Home, Wrench } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, HardHat, Settings, Home, Wrench } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Types of PPE for Electrical Work",
-    description: "Essential protective equipment for electrical installations",
+    number: 'Subsection 1',
+    title: 'Types of PPE for Electrical Work',
+    description: 'Essential protective equipment for electrical installations',
     icon: HardHat,
-    href: "4-1"
+    href: '4-1',
   },
   {
-    number: "Subsection 2", 
-    title: "Selecting and Maintaining PPE",
-    description: "Choosing appropriate equipment and ensuring it remains effective",
+    number: 'Subsection 2',
+    title: 'Selecting and Maintaining PPE',
+    description: 'Choosing appropriate equipment and ensuring it remains effective',
     icon: Settings,
-    href: "4-2"
+    href: '4-2',
   },
   {
-    number: "Subsection 3",
-    title: "Site Housekeeping and Safety Signage",
-    description: "Maintaining clean, organised and well-signposted work areas",
+    number: 'Subsection 3',
+    title: 'Site Housekeeping and Safety Signage',
+    description: 'Maintaining clean, organised and well-signposted work areas',
     icon: Home,
-    href: "4-3"
+    href: '4-3',
   },
   {
-    number: "Subsection 4",
-    title: "Manual Handling and Tool Safety",
-    description: "Safe techniques for lifting and using electrical tools",
+    number: 'Subsection 4',
+    title: 'Manual Handling and Tool Safety',
+    description: 'Safe techniques for lifting and using electrical tools',
     icon: Wrench,
-    href: "4-4"
-  }
+    href: '4-4',
+  },
 ];
 
 const Section4 = () => {
@@ -40,7 +40,11 @@ const Section4 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 1

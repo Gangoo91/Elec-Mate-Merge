@@ -13,15 +13,16 @@ export const TerminationContent = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
-          
           <div className="bg-[#323232] p-4 rounded-lg">
             <h4 className="font-semibold text-elec-yellow mb-2">Ratcheting Crimping Tools</h4>
             <p className="text-sm text-gray-300 mb-3">
-              High-quality ratcheting tools provide consistent pressure application and reliable terminations.
+              High-quality ratcheting tools provide consistent pressure application and reliable
+              terminations.
             </p>
             <div className="bg-green-900/20 p-3 rounded border border-green-800/30">
               <p className="text-sm text-green-300">
-                <strong>Professional Standard:</strong> Always use tools with calibrated ratcheting mechanisms for consistent results.
+                <strong>Professional Standard:</strong> Always use tools with calibrated ratcheting
+                mechanisms for consistent results.
               </p>
             </div>
           </div>
@@ -66,11 +67,12 @@ export const TerminationContent = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-[#323232] p-4 rounded-lg">
               <h4 className="font-semibold text-elec-yellow mb-2">High-Force Applications</h4>
-              <p className="text-sm text-gray-300 mb-2">For Cat 6A and high-performance installations</p>
+              <p className="text-sm text-gray-300 mb-2">
+                For Cat 6A and high-performance installations
+              </p>
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Force capability up to 1500N</li>
                 <li>• Creates hermetic, gas-tight seals</li>

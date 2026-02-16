@@ -1,40 +1,44 @@
-import { ArrowLeft, AlertTriangle, ClipboardCheck, LifeBuoy, HeartPulse } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, AlertTriangle, ClipboardCheck, LifeBuoy, HeartPulse } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Common Hazards",
+    title: 'Common Hazards',
     icon: AlertTriangle,
-    description: "Falls from height, tower collapse, electrocution, falling objects, manual handling",
+    description:
+      'Falls from height, tower collapse, electrocution, falling objects, manual handling',
   },
   {
     id: 2,
-    title: "Risk Assessment",
+    title: 'Risk Assessment',
     icon: ClipboardCheck,
-    description: "HSE 5-step process, tower-specific hazards, likelihood x severity, control measures",
+    description:
+      'HSE 5-step process, tower-specific hazards, likelihood x severity, control measures',
   },
   {
     id: 3,
-    title: "Rescue Procedures",
+    title: 'Rescue Procedures',
     icon: LifeBuoy,
-    description: "PASMA rescue hierarchy, written rescue plan, suspension trauma, first aid at height",
+    description:
+      'PASMA rescue hierarchy, written rescue plan, suspension trauma, first aid at height',
   },
   {
     id: 4,
-    title: "Physical Fitness & Safe Working",
+    title: 'Physical Fitness & Safe Working',
     icon: HeartPulse,
-    description: "PASMA fitness requirements, 3-point contact, manual handling, adverse weather",
+    description: 'PASMA fitness requirements, 3-point contact, manual handling, adverse weather',
   },
 ];
 
 export default function PasmaModule6() {
   useSEO({
-    title: "Module 6: Safety, Hazards & Rescue | PASMA Towers for Users",
-    description: "Common hazards, risk assessment, rescue procedures, and physical fitness requirements for safe mobile tower work.",
+    title: 'Module 6: Safety, Hazards & Rescue | PASMA Towers for Users',
+    description:
+      'Common hazards, risk assessment, rescue procedures, and physical fitness requirements for safe mobile tower work.',
   });
 
   return (
@@ -73,7 +77,8 @@ export default function PasmaModule6() {
               Safety, Hazards & Rescue
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Identifying hazards, carrying out risk assessments, rescue planning, and maintaining physical fitness for safe tower work
+              Identifying hazards, carrying out risk assessments, rescue planning, and maintaining
+              physical fitness for safe tower work
             </p>
           </div>
 

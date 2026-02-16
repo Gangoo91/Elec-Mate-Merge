@@ -4,93 +4,98 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export const ModernProtocolUseCasesSection = () => {
   const useCases = [
     {
-      protocol: "Wi-Fi",
+      protocol: 'Wi-Fi',
       icon: <Camera className="h-5 w-5" />,
-      color: "blue",
-      bestFor: "High-bandwidth devices",
+      color: 'blue',
+      bestFor: 'High-bandwidth devices',
       examples: [
-        "Security cameras and video doorbells",
-        "Smart TVs and streaming devices",
-        "Voice assistants and smart speakers",
-        "Smart appliances with displays",
-        "High-resolution control panels"
+        'Security cameras and video doorbells',
+        'Smart TVs and streaming devices',
+        'Voice assistants and smart speakers',
+        'Smart appliances with displays',
+        'High-resolution control panels',
       ],
-      avoid: "Battery-powered sensors, low-data devices in dense deployments"
+      avoid: 'Battery-powered sensors, low-data devices in dense deployments',
     },
     {
-      protocol: "Bluetooth/BLE",
+      protocol: 'Bluetooth/BLE',
       icon: <Lock className="h-5 w-5" />,
-      color: "green",
-      bestFor: "Personal area networks",
+      color: 'green',
+      bestFor: 'Personal area networks',
       examples: [
-        "Smart door locks and access control",
-        "Fitness trackers and wearables",
-        "Asset tracking and beacons",
-        "Device setup and configuration",
-        "Proximity-based automation"
+        'Smart door locks and access control',
+        'Fitness trackers and wearables',
+        'Asset tracking and beacons',
+        'Device setup and configuration',
+        'Proximity-based automation',
       ],
-      avoid: "Whole-home automation, devices requiring long range"
+      avoid: 'Whole-home automation, devices requiring long range',
     },
     {
-      protocol: "Thread",
+      protocol: 'Thread',
       icon: <Lightbulb className="h-5 w-5" />,
-      color: "purple",
-      bestFor: "Future-proof IoT networks",
+      color: 'purple',
+      bestFor: 'Future-proof IoT networks',
       examples: [
-        "Smart lighting systems",
-        "Environmental sensors",
-        "Smart switches and dimmers",
-        "Window and blind controls",
-        "HVAC integration devices"
+        'Smart lighting systems',
+        'Environmental sensors',
+        'Smart switches and dimmers',
+        'Window and blind controls',
+        'HVAC integration devices',
       ],
-      avoid: "High-bandwidth applications, legacy device integration"
+      avoid: 'High-bandwidth applications, legacy device integration',
     },
     {
-      protocol: "Matter",
+      protocol: 'Matter',
       icon: <Shield className="h-5 w-5" />,
-      color: "gold",
-      bestFor: "Cross-platform compatibility",
+      color: 'gold',
+      bestFor: 'Cross-platform compatibility',
       examples: [
-        "New smart home installations",
-        "Mixed-brand ecosystems",
-        "Future-proof device selection",
-        "Simplified user experiences",
-        "Professional installations"
+        'New smart home installations',
+        'Mixed-brand ecosystems',
+        'Future-proof device selection',
+        'Simplified user experiences',
+        'Professional installations',
       ],
-      avoid: "Single-ecosystem deployments (may be unnecessary overhead)"
-    }
+      avoid: 'Single-ecosystem deployments (may be unnecessary overhead)',
+    },
   ];
 
   const scenarios = [
     {
-      title: "Small Apartment",
-      recommendation: "Wi-Fi + Bluetooth",
-      reasoning: "Simple setup, fewer devices, existing infrastructure sufficient"
+      title: 'Small Apartment',
+      recommendation: 'Wi-Fi + Bluetooth',
+      reasoning: 'Simple setup, fewer devices, existing infrastructure sufficient',
     },
     {
-      title: "Large Family Home",
-      recommendation: "Thread + Matter + Wi-Fi",
-      reasoning: "Scalable mesh, future-proof, handles diverse device requirements"
+      title: 'Large Family Home',
+      recommendation: 'Thread + Matter + Wi-Fi',
+      reasoning: 'Scalable mesh, future-proof, handles diverse device requirements',
     },
     {
-      title: "Office Building",
-      recommendation: "Wi-Fi + Thread + Matter",
-      reasoning: "Professional infrastructure, interoperability, easy management"
+      title: 'Office Building',
+      recommendation: 'Wi-Fi + Thread + Matter',
+      reasoning: 'Professional infrastructure, interoperability, easy management',
     },
     {
-      title: "Rental Property",
-      recommendation: "Wi-Fi + Bluetooth",
-      reasoning: "Portable devices, no permanent installation, tenant-friendly"
-    }
+      title: 'Rental Property',
+      recommendation: 'Wi-Fi + Bluetooth',
+      reasoning: 'Portable devices, no permanent installation, tenant-friendly',
+    },
   ];
 
   const getColorClasses = (color: string) => {
     switch (color) {
-      case 'blue': return 'bg-blue-600/10 border-blue-600/20 text-blue-400';
-      case 'green': return 'bg-green-600/10 border-green-600/20 text-green-400';
-      case 'purple': return 'bg-purple-600/10 border-purple-600/20 text-purple-400';
-      case 'gold': return 'bg-yellow-600/10 border-yellow-600/20 text-yellow-400';
-      default: return 'bg-gray-600/10 border-gray-600/20 text-gray-400';
+      case 'blue':
+        return 'bg-blue-600/10 border-blue-600/20 text-blue-400';
+      case 'green':
+        return 'bg-green-600/10 border-green-600/20 text-green-400';
+      case 'purple':
+        return 'bg-purple-600/10 border-purple-600/20 text-purple-400';
+      case 'gold':
+        return 'bg-yellow-600/10 border-yellow-600/20 text-yellow-400';
+      default:
+        return 'bg-gray-600/10 border-gray-600/20 text-gray-400';
     }
   };
 
@@ -104,21 +109,28 @@ export const ModernProtocolUseCasesSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p>
-          Selecting the right protocol depends on the specific requirements of your installation. Consider factors like power consumption, range, data requirements, and future compatibility when making protocol decisions.
+          Selecting the right protocol depends on the specific requirements of your installation.
+          Consider factors like power consumption, range, data requirements, and future
+          compatibility when making protocol decisions.
         </p>
 
         <div className="space-y-4">
           <h4 className="text-foreground font-semibold">Protocol Recommendations by Use Case</h4>
           <div className="grid lg:grid-cols-2 gap-4">
             {useCases.map((useCase, index) => (
-              <div key={index} className={`border rounded-lg p-4 ${getColorClasses(useCase.color)}`}>
+              <div
+                key={index}
+                className={`border rounded-lg p-4 ${getColorClasses(useCase.color)}`}
+              >
                 <div className="flex items-center gap-3 mb-3">
                   {useCase.icon}
                   <h5 className="font-semibold">{useCase.protocol}</h5>
                 </div>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm font-medium text-foreground mb-1">Best for: {useCase.bestFor}</p>
+                    <p className="text-sm font-medium text-foreground mb-1">
+                      Best for: {useCase.bestFor}
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-foreground mb-2">Examples:</p>
@@ -132,7 +144,9 @@ export const ModernProtocolUseCasesSection = () => {
                     </ul>
                   </div>
                   <div className="pt-2 border-t border-current/20">
-                    <p className="text-sm"><strong>Avoid for:</strong> {useCase.avoid}</p>
+                    <p className="text-sm">
+                      <strong>Avoid for:</strong> {useCase.avoid}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -174,7 +188,10 @@ export const ModernProtocolUseCasesSection = () => {
 
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Quick Check:</h4>
-          <p className="text-sm text-foreground">A client wants to install smart lighting in a 4-bedroom house with potential for expansion. Which two protocols would you recommend and why?</p>
+          <p className="text-sm text-foreground">
+            A client wants to install smart lighting in a 4-bedroom house with potential for
+            expansion. Which two protocols would you recommend and why?
+          </p>
         </div>
       </CardContent>
     </Card>

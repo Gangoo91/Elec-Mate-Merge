@@ -1,106 +1,118 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Target, Brain, TrendingUp, BarChart3, Users, Eye, Clock, Award, Briefcase, MapPin } from "lucide-react";
-import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
-import { careerPaths } from "../careerPathsData";
-import CareerPathCard from "../CareerPathCard";
-import EnhancedCareerOverview from "./EnhancedCareerOverview";
-import ProgressTracker from "@/components/career/ProgressTracker";
-import UKCareerProgressionTimeline from "../UKCareerProgressionTimeline";
-import UKRegionalJobMarkets from "../UKRegionalJobMarkets";
-import UKWorkSectors from "../UKWorkSectors";
-import JIBGradingScheme from "../JIBGradingScheme";
-import SkillsDevelopmentMatrix from "./SkillsDevelopmentMatrix";
-import ProfessionalDevelopmentStrategy from "./ProfessionalDevelopmentStrategy";
-import IndustryInsightsAnalysis from "./IndustryInsightsAnalysis";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  ArrowLeft,
+  Target,
+  Brain,
+  TrendingUp,
+  BarChart3,
+  Users,
+  Eye,
+  Clock,
+  Award,
+  Briefcase,
+  MapPin,
+} from 'lucide-react';
+import { DropdownTabs, DropdownTab } from '@/components/ui/dropdown-tabs';
+import { careerPaths } from '../careerPathsData';
+import CareerPathCard from '../CareerPathCard';
+import EnhancedCareerOverview from './EnhancedCareerOverview';
+import ProgressTracker from '@/components/career/ProgressTracker';
+import UKCareerProgressionTimeline from '../UKCareerProgressionTimeline';
+import UKRegionalJobMarkets from '../UKRegionalJobMarkets';
+import UKWorkSectors from '../UKWorkSectors';
+import JIBGradingScheme from '../JIBGradingScheme';
+import SkillsDevelopmentMatrix from './SkillsDevelopmentMatrix';
+import ProfessionalDevelopmentStrategy from './ProfessionalDevelopmentStrategy';
+import IndustryInsightsAnalysis from './IndustryInsightsAnalysis';
 
 const EnhancedCareerPathways = () => {
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
 
   if (selectedPath) {
-    const path = careerPaths.find(p => p.id.toString() === selectedPath);
+    const path = careerPaths.find((p) => p.id.toString() === selectedPath);
     if (!path) return null;
 
     // Define milestones for each career path
     const getMilestones = (pathId: string) => {
       const milestoneMap: Record<string, string[]> = {
-        "1": [
-          "Gain 2+ years post-qualification experience",
-          "Complete Inspection & Testing (2391) qualification",
-          "Register with NICEIC or NAPIT scheme",
-          "Obtain professional indemnity insurance",
-          "Complete first self-certification project"
+        '1': [
+          'Gain 2+ years post-qualification experience',
+          'Complete Inspection & Testing (2391) qualification',
+          'Register with NICEIC or NAPIT scheme',
+          'Obtain professional indemnity insurance',
+          'Complete first self-certification project',
         ],
-        "2": [
-          "Complete Level 3 Electrical Installation NVQ",
-          "Pass AM2 practical assessment", 
-          "Achieve 18th Edition BS 7671 certification",
-          "Complete required on-the-job hours",
-          "Register with JIB grading scheme"
+        '2': [
+          'Complete Level 3 Electrical Installation NVQ',
+          'Pass AM2 practical assessment',
+          'Achieve 18th Edition BS 7671 certification',
+          'Complete required on-the-job hours',
+          'Register with JIB grading scheme',
         ],
-        "3": [
-          "Achieve approved electrician status",
-          "Develop business management skills",
-          "Create business plan and financial projections",
-          "Register company and obtain insurances",
-          "Secure first commercial contract"
+        '3': [
+          'Achieve approved electrician status',
+          'Develop business management skills',
+          'Create business plan and financial projections',
+          'Register company and obtain insurances',
+          'Secure first commercial contract',
         ],
-        "4": [
-          "Obtain relevant higher education qualification",
-          "Develop design software proficiency",
-          "Work towards Chartered Engineer status",
-          "Complete complex engineering project",
-          "Join professional engineering body"
+        '4': [
+          'Obtain relevant higher education qualification',
+          'Develop design software proficiency',
+          'Work towards Chartered Engineer status',
+          'Complete complex engineering project',
+          'Join professional engineering body',
         ],
-        "5": [
-          "Complete specialist maintenance training",
-          "Gain PLC systems experience",
-          "Master fault diagnosis techniques",
-          "Develop preventative maintenance skills",
-          "Obtain relevant industry certifications"
+        '5': [
+          'Complete specialist maintenance training',
+          'Gain PLC systems experience',
+          'Master fault diagnosis techniques',
+          'Develop preventative maintenance skills',
+          'Obtain relevant industry certifications',
         ],
-        "6": [
-          "Achieve advanced certification",
-          "Gain extensive field experience",
-          "Develop regulatory expertise",
-          "Build documentation skills",
-          "Establish professional network"
+        '6': [
+          'Achieve advanced certification',
+          'Gain extensive field experience',
+          'Develop regulatory expertise',
+          'Build documentation skills',
+          'Establish professional network',
         ],
-        "7": [
-          "Gain extensive electrical experience",
-          "Complete management qualifications",
-          "Develop leadership skills",
-          "Build stakeholder management abilities",
-          "Master budgeting and scheduling"
+        '7': [
+          'Gain extensive electrical experience',
+          'Complete management qualifications',
+          'Develop leadership skills',
+          'Build stakeholder management abilities',
+          'Master budgeting and scheduling',
         ],
-        "8": [
-          "Complete standard electrical qualification",
-          "Choose specialisation area",
-          "Complete specialist training courses",
-          "Gain manufacturer certifications",
-          "Build portfolio of specialist projects"
+        '8': [
+          'Complete standard electrical qualification',
+          'Choose specialisation area',
+          'Complete specialist training courses',
+          'Gain manufacturer certifications',
+          'Build portfolio of specialist projects',
         ],
-        "10": [
-          "Complete HNC/HND in Electrical Engineering",
-          "Master CAD software proficiency",
-          "Learn design standards and regulations",
-          "Develop load calculation skills",
-          "Build technical drawing expertise"
+        '10': [
+          'Complete HNC/HND in Electrical Engineering',
+          'Master CAD software proficiency',
+          'Learn design standards and regulations',
+          'Develop load calculation skills',
+          'Build technical drawing expertise',
         ],
-        "11": [
-          "Achieve advanced electrical qualification",
-          "Complete specialised commissioning training",
-          "Develop system testing skills",
-          "Master troubleshooting techniques",
-          "Build documentation expertise"
+        '11': [
+          'Achieve advanced electrical qualification',
+          'Complete specialised commissioning training',
+          'Develop system testing skills',
+          'Master troubleshooting techniques',
+          'Build documentation expertise',
         ],
-        "12": [
-          "Complete Degree in Electrical Engineering",
-          "Gain commissioning experience",
-          "Develop project management skills",
-          "Master control systems knowledge",
-          "Build client management abilities"
-        ]
+        '12': [
+          'Complete Degree in Electrical Engineering',
+          'Gain commissioning experience',
+          'Develop project management skills',
+          'Master control systems knowledge',
+          'Build client management abilities',
+        ],
       };
       return milestoneMap[pathId] || [];
     };
@@ -140,62 +152,66 @@ const EnhancedCareerPathways = () => {
 
   const careerPathwaysTabs: DropdownTab[] = [
     {
-      value: "overview",
-      label: "Overview",
+      value: 'overview',
+      label: 'Overview',
       icon: Eye,
-      content: <EnhancedCareerOverview />
+      content: <EnhancedCareerOverview />,
     },
     {
-      value: "skills-matrix",
-      label: "Skills Development",
+      value: 'skills-matrix',
+      label: 'Skills Development',
       icon: Brain,
-      content: <SkillsDevelopmentMatrix />
+      content: <SkillsDevelopmentMatrix />,
     },
     {
-      value: "professional-development",
-      label: "Professional Development",
+      value: 'professional-development',
+      label: 'Professional Development',
       icon: Target,
-      content: <ProfessionalDevelopmentStrategy />
+      content: <ProfessionalDevelopmentStrategy />,
     },
     {
-      value: "industry-insights",
-      label: "Industry Analysis",
+      value: 'industry-insights',
+      label: 'Industry Analysis',
       icon: BarChart3,
-      content: <IndustryInsightsAnalysis />
+      content: <IndustryInsightsAnalysis />,
     },
     {
-      value: "timeline",
-      label: "Timeline",
+      value: 'timeline',
+      label: 'Timeline',
       icon: Clock,
-      content: <UKCareerProgressionTimeline />
+      content: <UKCareerProgressionTimeline />,
     },
     {
-      value: "jib",
-      label: "JIB Grades",
+      value: 'jib',
+      label: 'JIB Grades',
       icon: Award,
-      content: <JIBGradingScheme />
+      content: <JIBGradingScheme />,
     },
     {
-      value: "sectors",
-      label: "Work Sectors",
+      value: 'sectors',
+      label: 'Work Sectors',
       icon: Briefcase,
-      content: <UKWorkSectors />
+      content: <UKWorkSectors />,
     },
     {
-      value: "regions",
-      label: "Regional Markets",
+      value: 'regions',
+      label: 'Regional Markets',
       icon: MapPin,
-      content: <UKRegionalJobMarkets />
+      content: <UKRegionalJobMarkets />,
     },
     {
-      value: "paths",
-      label: "Career Paths",
+      value: 'paths',
+      label: 'Career Paths',
       icon: TrendingUp,
       content: (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {careerPaths.map((path) => (
-            <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
-              <CareerPathCard 
+            <div
+              key={path.id}
+              onClick={() => setSelectedPath(path.id.toString())}
+              className="cursor-pointer"
+            >
+              <CareerPathCard
                 title={path.title}
                 requirements={path.requirements}
                 description={path.description}
@@ -207,8 +223,8 @@ const EnhancedCareerPathways = () => {
             </div>
           ))}
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -219,12 +235,13 @@ const EnhancedCareerPathways = () => {
           UK Electrical Career Pathways
         </h1>
         <p className="text-white text-center max-w-3xl mb-4">
-          Comprehensive career development framework including skills matrices, professional development strategies, 
-          industry insights, and progression pathways for electrical professionals in the UK
+          Comprehensive career development framework including skills matrices, professional
+          development strategies, industry insights, and progression pathways for electrical
+          professionals in the UK
         </p>
       </div>
 
-      <DropdownTabs 
+      <DropdownTabs
         tabs={careerPathwaysTabs}
         defaultValue="overview"
         placeholder="Select career section"

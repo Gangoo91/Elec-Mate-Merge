@@ -1,8 +1,25 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Download, Eye, Receipt, ArrowRight, User, MoreVertical, Mail, MessageCircle, Trash2 } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  Download,
+  Eye,
+  Receipt,
+  ArrowRight,
+  User,
+  MoreVertical,
+  Mail,
+  MessageCircle,
+  Trash2,
+} from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
@@ -76,12 +93,15 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                       #{quote.quoteNumber}
                     </Badge>
                     {hasInvoiceRaised(quote) && onViewInvoice && (
-                      <button 
+                      <button
                         onClick={() => onViewInvoice(quote)}
                         className="flex items-center gap-1 hover:opacity-80 transition-opacity"
                       >
                         <ArrowRight className="h-3 w-3 text-blue-400" />
-                        <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30 hover:bg-blue-600/30 cursor-pointer">
+                        <Badge
+                          variant="default"
+                          className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30 hover:bg-blue-600/30 cursor-pointer"
+                        >
                           <Receipt className="h-3 w-3 mr-1" />
                           Invoice #{quote.invoice_number}
                         </Badge>
@@ -99,13 +119,11 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                 </TableCell>
 
                 {/* Status */}
-                <TableCell>
-                  {getAcceptanceStatusBadge(quote)}
-                </TableCell>
+                <TableCell>{getAcceptanceStatusBadge(quote)}</TableCell>
 
                 {/* Date */}
                 <TableCell className="text-sm text-muted-foreground">
-                  {format(new Date(quote.createdAt), "dd MMM yyyy")}
+                  {format(new Date(quote.createdAt), 'dd MMM yyyy')}
                 </TableCell>
 
                 {/* Items Count */}
@@ -127,28 +145,33 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
-                      <DropdownMenuItem onClick={() => onNavigate(`/electrician/quotes/view/${quote.id}`)}>
+                      <DropdownMenuItem
+                        onClick={() => onNavigate(`/electrician/quotes/view/${quote.id}`)}
+                      >
                         <Eye className="h-4 w-4 mr-2" />
                         View Quote
                       </DropdownMenuItem>
-                      
-                      <DropdownMenuItem onClick={() => handleRegeneratePDF(quote)} disabled={loadingAction === `pdf-${quote.id}`}>
+
+                      <DropdownMenuItem
+                        onClick={() => handleRegeneratePDF(quote)}
+                        disabled={loadingAction === `pdf-${quote.id}`}
+                      >
                         <Download className="h-4 w-4 mr-2" />
                         Download PDF
                       </DropdownMenuItem>
-                      
+
                       <DropdownMenuSeparator />
-                      
+
                       <DropdownMenuItem onClick={() => onShareWhatsApp(quote)}>
                         <MessageCircle className="h-4 w-4 mr-2" />
                         Send via WhatsApp
                       </DropdownMenuItem>
-                      
+
                       <DropdownMenuItem onClick={() => onShareEmail(quote)}>
                         <Mail className="h-4 w-4 mr-2" />
                         Send via Email
                       </DropdownMenuItem>
-                      
+
                       {hasInvoiceRaised(quote) && onViewInvoice && (
                         <>
                           <DropdownMenuSeparator />
@@ -158,12 +181,12 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                           </DropdownMenuItem>
                         </>
                       )}
-                      
+
                       {canRaiseInvoice(quote) && (
                         <>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem 
-                            onClick={() => onInvoiceAction(quote)} 
+                          <DropdownMenuItem
+                            onClick={() => onInvoiceAction(quote)}
                             disabled={loadingAction === `invoice-${quote.id}`}
                           >
                             <Receipt className="h-4 w-4 mr-2" />
@@ -171,9 +194,9 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                           </DropdownMenuItem>
                         </>
                       )}
-                      
+
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem 
+                      <DropdownMenuItem
                         onClick={() => onDeleteQuote(quote)}
                         className="text-destructive focus:text-destructive focus:bg-destructive/10"
                       >

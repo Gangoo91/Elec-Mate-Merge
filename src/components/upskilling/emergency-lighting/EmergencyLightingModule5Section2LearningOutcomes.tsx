@@ -3,11 +3,11 @@ import { Target } from 'lucide-react';
 
 export const EmergencyLightingModule5Section2LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose of functional testing in emergency lighting systems",
-    "Carry out both short functional tests and full 3-hour duration tests in accordance with BS 5266-1 and BS EN 50172",
-    "Recognise how test frequency differs between commissioning, monthly checks, and annual testing",
-    "Identify common faults that occur during testing and how to rectify them",
-    "Document and record test results correctly in the emergency lighting logbook"
+    'Explain the purpose of functional testing in emergency lighting systems',
+    'Carry out both short functional tests and full 3-hour duration tests in accordance with BS 5266-1 and BS EN 50172',
+    'Recognise how test frequency differs between commissioning, monthly checks, and annual testing',
+    'Identify common faults that occur during testing and how to rectify them',
+    'Document and record test results correctly in the emergency lighting logbook',
   ];
 
   return (

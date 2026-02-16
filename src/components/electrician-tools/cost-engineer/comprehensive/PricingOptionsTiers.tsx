@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp } from "lucide-react";
-import { motion } from "framer-motion";
+import { Badge } from '@/components/ui/badge';
+import { TrendingUp } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface PricingOptionsTiersProps {
   profitability?: any;
@@ -19,44 +19,52 @@ const PricingOptionsTiers = ({
   breakEven,
   totalLabourHours,
   projectType,
-  jobDescription
+  jobDescription,
 }: PricingOptionsTiersProps) => {
-  
-  const standardPrice = profitability?.quoteTiers?.standard?.price || breakEven * 1.20;
+  const standardPrice = profitability?.quoteTiers?.standard?.price || breakEven * 1.2;
   const busyPrice = profitability?.quoteTiers?.busy?.price || breakEven * 1.35;
 
   const calculateTierMetrics = (price: number) => {
     const profit = price - breakEven;
-    const margin = price > 0 ? ((profit / price) * 100) : 0;
+    const margin = price > 0 ? (profit / price) * 100 : 0;
     const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
-    
-    return { 
+
+    return {
       margin: Math.max(0, margin),
       profit: Math.max(0, profit),
-      profitPerHour: Math.max(0, profitPerHour)
+      profitPerHour: Math.max(0, profitPerHour),
     };
   };
 
   // Intelligent benchmark detection
   const getBenchmark = (projectType?: string, jobDescription?: string, targetPrice?: number) => {
     const desc = jobDescription?.toLowerCase() || '';
-    
+
     // Domestic benchmarks
-    if (projectType === 'domestic' || desc.includes('house') || desc.includes('flat') || desc.includes('home')) {
+    if (
+      projectType === 'domestic' ||
+      desc.includes('house') ||
+      desc.includes('flat') ||
+      desc.includes('home')
+    ) {
       if (desc.includes('rewire') || desc.includes('full rewire')) {
         return {
           name: '3-bed house full rewire',
           range: '£4,000-6,500',
           min: 4000,
-          max: 6500
+          max: 6500,
         };
       }
-      if (desc.includes('consumer unit') || desc.includes('fuse board') || desc.includes('cu replacement')) {
+      if (
+        desc.includes('consumer unit') ||
+        desc.includes('fuse board') ||
+        desc.includes('cu replacement')
+      ) {
         return {
           name: 'Consumer unit replacement',
           range: '£500-1,200',
           min: 500,
-          max: 1200
+          max: 1200,
         };
       }
       if (desc.includes('socket') || desc.includes('extension')) {
@@ -64,7 +72,7 @@ const PricingOptionsTiers = ({
           name: 'Socket circuits & extensions',
           range: '£200-800',
           min: 200,
-          max: 800
+          max: 800,
         };
       }
       // Default domestic
@@ -72,18 +80,25 @@ const PricingOptionsTiers = ({
         name: 'Typical domestic work',
         range: '£500-3,000',
         min: 500,
-        max: 3000
+        max: 3000,
       };
     }
-    
+
     // Commercial benchmarks
-    if (projectType === 'commercial' || desc.includes('shop') || desc.includes('office') || desc.includes('restaurant') || desc.includes('kitchen') || desc.includes('commercial')) {
+    if (
+      projectType === 'commercial' ||
+      desc.includes('shop') ||
+      desc.includes('office') ||
+      desc.includes('restaurant') ||
+      desc.includes('kitchen') ||
+      desc.includes('commercial')
+    ) {
       if (desc.includes('restaurant') || desc.includes('kitchen') || desc.includes('catering')) {
         return {
           name: 'Commercial kitchen/restaurant',
           range: '£8,000-20,000',
           min: 8000,
-          max: 20000
+          max: 20000,
         };
       }
       if (desc.includes('shop') || desc.includes('retail')) {
@@ -91,7 +106,7 @@ const PricingOptionsTiers = ({
           name: 'Small shop fit-out',
           range: '£3,000-8,000',
           min: 3000,
-          max: 8000
+          max: 8000,
         };
       }
       if (desc.includes('office')) {
@@ -99,7 +114,7 @@ const PricingOptionsTiers = ({
           name: 'Office electrical refit',
           range: '£5,000-15,000',
           min: 5000,
-          max: 15000
+          max: 15000,
         };
       }
       // Default commercial
@@ -107,35 +122,41 @@ const PricingOptionsTiers = ({
         name: 'Commercial installation',
         range: '£5,000-15,000',
         min: 5000,
-        max: 15000
+        max: 15000,
       };
     }
-    
+
     // Industrial benchmarks
-    if (projectType === 'industrial' || desc.includes('factory') || desc.includes('warehouse') || desc.includes('3-phase') || desc.includes('industrial')) {
+    if (
+      projectType === 'industrial' ||
+      desc.includes('factory') ||
+      desc.includes('warehouse') ||
+      desc.includes('3-phase') ||
+      desc.includes('industrial')
+    ) {
       return {
         name: 'Industrial installation',
         range: '£10,000-50,000',
         min: 10000,
-        max: 50000
+        max: 50000,
       };
     }
-    
+
     // Default fallback based on price
     if (targetPrice && targetPrice < 2000) {
       return {
         name: 'Small electrical job',
         range: '£200-2,000',
         min: 200,
-        max: 2000
+        max: 2000,
       };
     }
-    
+
     return {
       name: 'General electrical work',
       range: '£1,000-10,000',
       min: 1000,
-      max: 10000
+      max: 10000,
     };
   };
 
@@ -154,16 +175,22 @@ const PricingOptionsTiers = ({
         </div>
         <div className="space-y-3">
           <div>
-            <span className="text-xs sm:text-sm text-white/50">{benchmark.name} typical range:</span>
+            <span className="text-xs sm:text-sm text-white/50">
+              {benchmark.name} typical range:
+            </span>
             <div className="text-sm sm:text-base font-medium text-white">{benchmark.range}</div>
           </div>
           <div>
             <span className="text-xs sm:text-sm text-white/50">This quote (Standard tier):</span>
-            <div className={`text-sm sm:text-base font-bold ${
-              standardPrice < benchmark.min ? 'text-red-400' :
-              standardPrice > benchmark.max ? 'text-red-400' :
-              'text-emerald-400'
-            }`}>
+            <div
+              className={`text-sm sm:text-base font-bold ${
+                standardPrice < benchmark.min
+                  ? 'text-red-400'
+                  : standardPrice > benchmark.max
+                    ? 'text-red-400'
+                    : 'text-emerald-400'
+              }`}
+            >
               £{standardPrice.toFixed(0)}
               {standardPrice < benchmark.min && ' — Below market'}
               {standardPrice > benchmark.max && ' — Above market'}
@@ -181,9 +208,7 @@ const PricingOptionsTiers = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className={`p-4 rounded-xl touch-manipulation ${
-            selectedTier === 'standard'
-              ? 'bg-elec-yellow/15'
-              : 'bg-white/5'
+            selectedTier === 'standard' ? 'bg-elec-yellow/15' : 'bg-white/5'
           }`}
         >
           <div className="text-left mb-3">
@@ -216,9 +241,7 @@ const PricingOptionsTiers = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           className={`p-4 rounded-xl touch-manipulation ${
-            selectedTier === 'busy'
-              ? 'bg-emerald-500/15'
-              : 'bg-white/5'
+            selectedTier === 'busy' ? 'bg-emerald-500/15' : 'bg-white/5'
           }`}
         >
           <div className="text-left mb-3">

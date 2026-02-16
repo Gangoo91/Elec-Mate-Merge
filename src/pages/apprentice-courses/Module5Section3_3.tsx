@@ -1,35 +1,54 @@
-import { ArrowLeft, ArrowRight, Hammer, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Hammer, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Planning Access and Working Platforms - Module 5.3.3 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn to plan safe access routes and select appropriate working platforms for electrical installations while maintaining health and safety compliance.";
+const TITLE = 'Planning Access and Working Platforms - Module 5.3.3 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn to plan safe access routes and select appropriate working platforms for electrical installations while maintaining health and safety compliance.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Name two types of working platforms used in electrical installations.",
-    options: ["Ladders and boxes", "Step ladders and podium steps", "Chairs and tables", "Ropes and planks"],
+    question: 'Name two types of working platforms used in electrical installations.',
+    options: [
+      'Ladders and boxes',
+      'Step ladders and podium steps',
+      'Chairs and tables',
+      'Ropes and planks',
+    ],
     correctIndex: 1,
-    explanation: "Step ladders and podium steps are proper working platforms. Podium steps provide greater stability for longer-duration tasks."
+    explanation:
+      'Step ladders and podium steps are proper working platforms. Podium steps provide greater stability for longer-duration tasks.',
   },
   {
     id: 2,
-    question: "What regulation covers working at height?",
-    options: ["Health and Safety at Work Act", "Work at Height Regulations 2005", "Electricity at Work Regulations", "COSHH Regulations"],
+    question: 'What regulation covers working at height?',
+    options: [
+      'Health and Safety at Work Act',
+      'Work at Height Regulations 2005',
+      'Electricity at Work Regulations',
+      'COSHH Regulations',
+    ],
     correctIndex: 1,
-    explanation: "The Work at Height Regulations 2005 specifically governs safe work at height and requires the use of appropriate access equipment."
+    explanation:
+      'The Work at Height Regulations 2005 specifically governs safe work at height and requires the use of appropriate access equipment.',
   },
   {
     id: 3,
-    question: "Why should access routes be kept clear?",
-    options: ["To prevent trips and accidents", "To look tidy", "To save space", "To impress clients"],
+    question: 'Why should access routes be kept clear?',
+    options: [
+      'To prevent trips and accidents',
+      'To look tidy',
+      'To save space',
+      'To impress clients',
+    ],
     correctIndex: 0,
-    explanation: "Clear access routes prevent trips and accidents, ensuring safe movement around the work area for all personnel."
-  }
+    explanation:
+      'Clear access routes prevent trips and accidents, ensuring safe movement around the work area for all personnel.',
+  },
 ];
 
 const Module5Section3_3 = () => {
@@ -38,89 +57,132 @@ const Module5Section3_3 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the main purpose of planning access routes?",
-      options: ["To save time", "To ensure work is completed safely and efficiently", "To impress supervisors", "To use fewer materials"],
+      question: 'What is the main purpose of planning access routes?',
+      options: [
+        'To save time',
+        'To ensure work is completed safely and efficiently',
+        'To impress supervisors',
+        'To use fewer materials',
+      ],
       correctAnswer: 1,
-      explanation: "Planning access routes ensures work is completed safely and efficiently while preventing accidents and delays."
+      explanation:
+        'Planning access routes ensures work is completed safely and efficiently while preventing accidents and delays.',
     },
     {
       id: 2,
-      question: "True or False: Ladders are suitable for long-duration high-level tasks.",
-      options: ["False", "True"],
+      question: 'True or False: Ladders are suitable for long-duration high-level tasks.',
+      options: ['False', 'True'],
       correctAnswer: 0,
-      explanation: "False. Ladders should only be used for short-duration, low-risk work. Longer tasks require more stable platforms."
+      explanation:
+        'False. Ladders should only be used for short-duration, low-risk work. Longer tasks require more stable platforms.',
     },
     {
       id: 3,
-      question: "Which regulation governs safe work at height?",
-      options: ["Health and Safety at Work Act", "Work at Height Regulations 2005", "Electricity at Work Regulations", "COSHH Regulations"],
+      question: 'Which regulation governs safe work at height?',
+      options: [
+        'Health and Safety at Work Act',
+        'Work at Height Regulations 2005',
+        'Electricity at Work Regulations',
+        'COSHH Regulations',
+      ],
       correctAnswer: 1,
-      explanation: "The Work at Height Regulations 2005 specifically covers requirements for safe work at height."
+      explanation:
+        'The Work at Height Regulations 2005 specifically covers requirements for safe work at height.',
     },
     {
       id: 4,
-      question: "Name one type of working platform that provides greater stability than ladders.",
-      options: ["Boxes", "Podium steps", "Chairs", "Loose boards"],
+      question: 'Name one type of working platform that provides greater stability than ladders.',
+      options: ['Boxes', 'Podium steps', 'Chairs', 'Loose boards'],
       correctAnswer: 1,
-      explanation: "Podium steps provide greater stability than ladders and are suitable for repetitive or longer-duration tasks."
+      explanation:
+        'Podium steps provide greater stability than ladders and are suitable for repetitive or longer-duration tasks.',
     },
     {
       id: 5,
-      question: "Who is responsible for inspecting scaffolds?",
-      options: ["Anyone on site", "A competent person", "The client", "Only electricians"],
+      question: 'Who is responsible for inspecting scaffolds?',
+      options: ['Anyone on site', 'A competent person', 'The client', 'Only electricians'],
       correctAnswer: 1,
-      explanation: "A competent person must inspect scaffolds regularly and after any changes to ensure safety."
+      explanation:
+        'A competent person must inspect scaffolds regularly and after any changes to ensure safety.',
     },
     {
       id: 6,
-      question: "Why should walkways be kept clear of trailing cables?",
-      options: ["To prevent trips and accidents", "To save space", "To look professional", "To use fewer cables"],
+      question: 'Why should walkways be kept clear of trailing cables?',
+      options: [
+        'To prevent trips and accidents',
+        'To save space',
+        'To look professional',
+        'To use fewer cables',
+      ],
       correctAnswer: 0,
-      explanation: "Clear walkways prevent trips and accidents from trailing cables and other obstacles."
+      explanation:
+        'Clear walkways prevent trips and accidents from trailing cables and other obstacles.',
     },
     {
       id: 7,
-      question: "Give one example of a Mobile Elevating Work Platform (MEWP).",
-      options: ["Step ladder", "Scissor lift", "Podium steps", "Scaffold tower"],
+      question: 'Give one example of a Mobile Elevating Work Platform (MEWP).',
+      options: ['Step ladder', 'Scissor lift', 'Podium steps', 'Scaffold tower'],
       correctAnswer: 1,
-      explanation: "Scissor lifts and cherry pickers are examples of MEWPs used for high-level or difficult-to-reach areas."
+      explanation:
+        'Scissor lifts and cherry pickers are examples of MEWPs used for high-level or difficult-to-reach areas.',
     },
     {
       id: 8,
-      question: "What should you do if access equipment is damaged?",
-      options: ["Use it carefully", "Report it and do not use until repaired/replaced", "Fix it yourself", "Ignore the damage"],
+      question: 'What should you do if access equipment is damaged?',
+      options: [
+        'Use it carefully',
+        'Report it and do not use until repaired/replaced',
+        'Fix it yourself',
+        'Ignore the damage',
+      ],
       correctAnswer: 1,
-      explanation: "Damaged equipment must be reported immediately and not used until properly repaired or replaced."
+      explanation:
+        'Damaged equipment must be reported immediately and not used until properly repaired or replaced.',
     },
     {
       id: 9,
-      question: "Why is coordination with other trades important when planning access?",
-      options: ["To make friends", "To avoid conflicts and ensure smooth site operations", "To share equipment", "To work faster"],
+      question: 'Why is coordination with other trades important when planning access?',
+      options: [
+        'To make friends',
+        'To avoid conflicts and ensure smooth site operations',
+        'To share equipment',
+        'To work faster',
+      ],
       correctAnswer: 1,
-      explanation: "Coordination prevents conflicts, ensures efficient use of access routes, and maintains smooth site operations."
+      explanation:
+        'Coordination prevents conflicts, ensures efficient use of access routes, and maintains smooth site operations.',
     },
     {
       id: 10,
-      question: "What is the safest principle when considering working at height?",
-      options: ["Use the highest platform available", "Avoid it where possible — complete work from ground level if feasible", "Always use a harness", "Work quickly to minimize time at height"],
+      question: 'What is the safest principle when considering working at height?',
+      options: [
+        'Use the highest platform available',
+        'Avoid it where possible — complete work from ground level if feasible',
+        'Always use a harness',
+        'Work quickly to minimize time at height',
+      ],
       correctAnswer: 1,
-      explanation: "The safest approach is to avoid working at height where possible and complete work from ground level when feasible."
-    }
+      explanation:
+        'The safest approach is to avoid working at height where possible and complete work from ground level when feasible.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Can I use a ladder for any job at height?",
-      answer: "No. Ladders should only be used for short-duration, low-risk work. For extended or repetitive tasks, use more stable platforms like podium steps or scaffolds."
+      question: 'Can I use a ladder for any job at height?',
+      answer:
+        'No. Ladders should only be used for short-duration, low-risk work. For extended or repetitive tasks, use more stable platforms like podium steps or scaffolds.',
     },
     {
-      question: "Who checks scaffolding before use?",
-      answer: "A competent person must inspect scaffolds regularly and after any changes. This ensures the scaffold is safe and properly erected."
+      question: 'Who checks scaffolding before use?',
+      answer:
+        'A competent person must inspect scaffolds regularly and after any changes. This ensures the scaffold is safe and properly erected.',
     },
     {
-      question: "What if access equipment is damaged?",
-      answer: "Report it immediately and do not use until repaired or replaced. Using damaged equipment puts you and others at serious risk."
-    }
+      question: 'What if access equipment is damaged?',
+      answer:
+        'Report it immediately and do not use until repaired or replaced. Using damaged equipment puts you and others at serious risk.',
+    },
   ];
 
   return (
@@ -154,7 +216,8 @@ const Module5Section3_3 = () => {
               Planning Access and Working Platforms
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Learn to plan safe access routes and select appropriate working platforms for electrical installations while maintaining compliance.
+              Learn to plan safe access routes and select appropriate working platforms for
+              electrical installations while maintaining compliance.
             </p>
           </header>
 
@@ -181,7 +244,11 @@ const Module5Section3_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Safe and efficient access to work areas is critical in electrical installation. Poor planning of access can cause delays, create unsafe working conditions, and lead to accidents. By organising access and selecting the right working platforms, electricians can complete tasks more effectively while maintaining compliance with health and safety regulations.
+                Safe and efficient access to work areas is critical in electrical installation. Poor
+                planning of access can cause delays, create unsafe working conditions, and lead to
+                accidents. By organising access and selecting the right working platforms,
+                electricians can complete tasks more effectively while maintaining compliance with
+                health and safety regulations.
               </p>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <div className="flex items-start gap-3">
@@ -189,16 +256,21 @@ const Module5Section3_3 = () => {
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
                     <p className="text-white/70 text-sm">
-                      Poor access planning is responsible for approximately 25% of construction site accidents, making proper planning essential for safe electrical installations.
+                      Poor access planning is responsible for approximately 25% of construction site
+                      accidents, making proper planning essential for safe electrical installations.
                     </p>
                   </div>
                 </div>
               </div>
               <p>
-                <strong className="text-white">Real Impact:</strong> Well-planned access routes and platforms can reduce installation time by 15% and significantly decrease the risk of accidents and injuries.
+                <strong className="text-white">Real Impact:</strong> Well-planned access routes and
+                platforms can reduce installation time by 15% and significantly decrease the risk of
+                accidents and injuries.
               </p>
               <p className="text-sm p-3 rounded bg-white/5 border border-white/10">
-                <strong className="text-white">Industry Standard:</strong> The Work at Height Regulations 2005 require that access planning prioritises the lowest-risk methods available for each task.
+                <strong className="text-white">Industry Standard:</strong> The Work at Height
+                Regulations 2005 require that access planning prioritises the lowest-risk methods
+                available for each task.
               </p>
             </div>
           </section>
@@ -228,7 +300,10 @@ const Module5Section3_3 = () => {
               Why Access Planning Matters
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Proper access planning is fundamental to safe and efficient electrical installations:</p>
+              <p>
+                Proper access planning is fundamental to safe and efficient electrical
+                installations:
+              </p>
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-elec-yellow mb-3">Critical Safety Benefits</p>
@@ -257,7 +332,8 @@ const Module5Section3_3 = () => {
                 <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-1">Industry Impact</p>
                   <p className="text-sm text-white/70">
-                    Sites with comprehensive access planning show 60% fewer accidents and 25% faster completion times compared to those with poor planning.
+                    Sites with comprehensive access planning show 60% fewer accidents and 25% faster
+                    completion times compared to those with poor planning.
                   </p>
                 </div>
               </div>
@@ -271,7 +347,10 @@ const Module5Section3_3 = () => {
               Types of Working Platforms
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Selecting the appropriate platform depends on task duration, height, stability requirements, and site conditions:</p>
+              <p>
+                Selecting the appropriate platform depends on task duration, height, stability
+                requirements, and site conditions:
+              </p>
 
               <div className="space-y-4">
                 {/* Step Ladders */}
@@ -352,15 +431,25 @@ const Module5Section3_3 = () => {
 
                 {/* MEWPs */}
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
-                  <p className="font-medium text-orange-400 mb-3">D. Mobile Elevating Work Platforms (MEWPs)</p>
+                  <p className="font-medium text-orange-400 mb-3">
+                    D. Mobile Elevating Work Platforms (MEWPs)
+                  </p>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
                       <p className="text-white font-medium mb-1">Types and Applications:</p>
                       <ul className="list-disc pl-6 space-y-1">
-                        <li><strong>Scissor Lifts:</strong> Large platforms, up to 18m height</li>
-                        <li><strong>Boom Lifts:</strong> Reach over obstacles, up to 40m+</li>
-                        <li><strong>Cherry Pickers:</strong> Precise positioning, compact access</li>
-                        <li><strong>Spider Lifts:</strong> Narrow access, outdoor/indoor use</li>
+                        <li>
+                          <strong>Scissor Lifts:</strong> Large platforms, up to 18m height
+                        </li>
+                        <li>
+                          <strong>Boom Lifts:</strong> Reach over obstacles, up to 40m+
+                        </li>
+                        <li>
+                          <strong>Cherry Pickers:</strong> Precise positioning, compact access
+                        </li>
+                        <li>
+                          <strong>Spider Lifts:</strong> Narrow access, outdoor/indoor use
+                        </li>
                       </ul>
                     </div>
                     <div>
@@ -393,7 +482,10 @@ const Module5Section3_3 = () => {
               Planning Safe Access Routes
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Effective access route planning requires systematic consideration of multiple factors:</p>
+              <p>
+                Effective access route planning requires systematic consideration of multiple
+                factors:
+              </p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-amber-400 mb-3">Route Planning Methodology</p>
                 <div className="space-y-3 text-sm">
@@ -444,26 +536,39 @@ const Module5Section3_3 = () => {
               Working at Height Requirements
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>The Work at Height Regulations 2005 establish a comprehensive legal framework for safe working at height:</p>
+              <p>
+                The Work at Height Regulations 2005 establish a comprehensive legal framework for
+                safe working at height:
+              </p>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-3">Hierarchy of Controls</p>
                 <div className="space-y-3 text-sm">
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                      1
+                    </div>
                     <div>
                       <p className="font-medium text-red-400">Avoid Work at Height</p>
-                      <p className="text-white/70">Where reasonably practicable, complete work from ground level</p>
+                      <p className="text-white/70">
+                        Where reasonably practicable, complete work from ground level
+                      </p>
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                      2
+                    </div>
                     <div>
                       <p className="font-medium text-red-400">Prevent Falls</p>
-                      <p className="text-white/70">Use guardrails, barriers, and working platforms</p>
+                      <p className="text-white/70">
+                        Use guardrails, barriers, and working platforms
+                      </p>
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
+                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                      3
+                    </div>
                     <div>
                       <p className="font-medium text-red-400">Mitigate Fall Distance</p>
                       <p className="text-white/70">Fall arrest systems, safety nets, air bags</p>
@@ -522,7 +627,10 @@ const Module5Section3_3 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <p className="text-amber-300 mb-3">
-                On a warehouse project, electricians used step ladders for extended cable installation at high level. The ladders were unstable, and one worker fell, injuring his arm. After review, podium steps and a scaffold tower were introduced, improving safety and efficiency.
+                On a warehouse project, electricians used step ladders for extended cable
+                installation at high level. The ladders were unstable, and one worker fell, injuring
+                his arm. After review, podium steps and a scaffold tower were introduced, improving
+                safety and efficiency.
               </p>
               <div className="p-3 rounded bg-amber-500/20 border border-amber-500/30">
                 <p className="font-medium text-amber-300 mb-1">Lessons Learned:</p>
@@ -544,7 +652,10 @@ const Module5Section3_3 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
                   <p className="text-white/70 text-sm">A: {faq.answer}</p>
                 </div>
@@ -577,7 +688,10 @@ const Module5Section3_3 = () => {
             </h2>
             <div className="text-white/80 leading-relaxed">
               <p>
-                In this subsection, you learned how to plan safe access and working platforms. You now know the types of platforms available, the importance of clear access routes, and the legal requirements for working at height. Proper planning ensures tasks are completed safely, efficiently, and without unnecessary risk.
+                In this subsection, you learned how to plan safe access and working platforms. You
+                now know the types of platforms available, the importance of clear access routes,
+                and the legal requirements for working at height. Proper planning ensures tasks are
+                completed safely, efficiently, and without unnecessary risk.
               </p>
             </div>
           </section>

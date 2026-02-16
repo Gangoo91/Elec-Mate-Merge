@@ -10,7 +10,10 @@ export const InitialInspectionQuickCheck = () => {
             ✅ Quick Check
           </h4>
           <p className="text-foreground text-sm sm:text-base leading-relaxed">
-            <span className="font-semibold">Before starting functional tests:</span> Have you verified all luminaires are correctly positioned per design drawings, confirmed fire-resistant cabling is used throughout, checked circuit protection devices are correctly rated, and documented any installation defects for remedial action?
+            <span className="font-semibold">Before starting functional tests:</span> Have you
+            verified all luminaires are correctly positioned per design drawings, confirmed
+            fire-resistant cabling is used throughout, checked circuit protection devices are
+            correctly rated, and documented any installation defects for remedial action?
           </p>
         </div>
       </div>

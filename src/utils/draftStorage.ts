@@ -68,7 +68,7 @@ export const draftStorage = {
       if (keys.length > MAX_DRAFTS_PER_TYPE) {
         // Sort by last modified, oldest first
         const sorted = keys
-          .map(k => {
+          .map((k) => {
             try {
               const d = JSON.parse(localStorage.getItem(k) || '{}');
               return { key: k, lastModified: d.lastModified || 0 };
@@ -91,7 +91,10 @@ export const draftStorage = {
    * Load draft for recovery
    * Returns the most recent draft for this report type/id
    */
-  loadDraft: (reportType: string, reportId?: string | null): { data: any; lastModified: Date } | null => {
+  loadDraft: (
+    reportType: string,
+    reportId?: string | null
+  ): { data: any; lastModified: Date } | null => {
     try {
       const key = getDraftKey(reportType, reportId);
       const stored = localStorage.getItem(key);
@@ -202,7 +205,7 @@ export const draftStorage = {
   clearAllDrafts: (reportType: string): void => {
     try {
       const keys = getDraftKeys(reportType);
-      keys.forEach(key => localStorage.removeItem(key));
+      keys.forEach((key) => localStorage.removeItem(key));
     } catch (error) {
       console.error('[DraftStorage] Failed to clear all drafts:', error);
     }

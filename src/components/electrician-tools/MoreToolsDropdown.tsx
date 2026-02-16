@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { MoreHorizontal, Scale, Calculator, TrendingUp, Brain, ChevronDown } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { MoreHorizontal, Scale, Calculator, TrendingUp, Brain, ChevronDown } from 'lucide-react';
 
 interface MoreToolsDropdownProps {
   onTabChange: (tab: string) => void;
@@ -15,30 +15,30 @@ const MoreToolsDropdown = ({ onTabChange, selectedItemsCount }: MoreToolsDropdow
 
   const tools = [
     {
-      id: "compare",
-      title: "Compare Tools",
-      description: "Side-by-side comparison",
+      id: 'compare',
+      title: 'Compare Tools',
+      description: 'Side-by-side comparison',
       icon: Scale,
-      badge: selectedItemsCount > 0 ? selectedItemsCount.toString() : undefined
+      badge: selectedItemsCount > 0 ? selectedItemsCount.toString() : undefined,
     },
     {
-      id: "bulk",
-      title: "Bulk Pricing",
-      description: "Calculate bulk discounts",
-      icon: Calculator
+      id: 'bulk',
+      title: 'Bulk Pricing',
+      description: 'Calculate bulk discounts',
+      icon: Calculator,
     },
     {
-      id: "alerts",
-      title: "Price Alerts",
-      description: "Track price changes",
-      icon: TrendingUp
+      id: 'alerts',
+      title: 'Price Alerts',
+      description: 'Track price changes',
+      icon: TrendingUp,
     },
     {
-      id: "ai",
-      title: "AI Insights",
-      description: "Smart recommendations",
-      icon: Brain
-    }
+      id: 'ai',
+      title: 'AI Insights',
+      description: 'Smart recommendations',
+      icon: Brain,
+    },
   ];
 
   const handleToolClick = (toolId: string) => {
@@ -56,10 +56,12 @@ const MoreToolsDropdown = ({ onTabChange, selectedItemsCount }: MoreToolsDropdow
         >
           <MoreHorizontal className="h-4 w-4 mr-2" />
           More Tools
-          <ChevronDown className={`h-4 w-4 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown
+            className={`h-4 w-4 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          />
           {selectedItemsCount > 0 && (
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="absolute -top-2 -right-2 h-5 w-5 p-0 text-xs bg-elec-yellow text-elec-dark border-elec-dark/20"
             >
               {selectedItemsCount}
@@ -85,7 +87,10 @@ const MoreToolsDropdown = ({ onTabChange, selectedItemsCount }: MoreToolsDropdow
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-sm truncate">{tool.title}</span>
                         {tool.badge && (
-                          <Badge variant="secondary" className="bg-elec-yellow text-elec-dark text-xs">
+                          <Badge
+                            variant="secondary"
+                            className="bg-elec-yellow text-elec-dark text-xs"
+                          >
                             {tool.badge}
                           </Badge>
                         )}

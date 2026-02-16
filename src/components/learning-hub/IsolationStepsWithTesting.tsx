@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,26 +31,32 @@ interface IsolationStepsWithTestingProps {
   isolationSteps: IsolationStep[];
   testReadings: TestReading[];
   onStepToggle: (stepId: number) => void;
-  onTestReadingChange: (phaseIndex: number, field: keyof Omit<TestReading, 'phase' | 'valid'>, value: string) => void;
+  onTestReadingChange: (
+    phaseIndex: number,
+    field: keyof Omit<TestReading, 'phase' | 'valid'>,
+    value: string
+  ) => void;
   onProceed: () => void;
 }
 
-const IsolationStepsWithTesting = ({ 
-  isolationSteps, 
-  testReadings, 
-  onStepToggle, 
-  onTestReadingChange, 
-  onProceed 
+const IsolationStepsWithTesting = ({
+  isolationSteps,
+  testReadings,
+  onStepToggle,
+  onTestReadingChange,
+  onProceed,
 }: IsolationStepsWithTestingProps) => {
-  const completedSteps = isolationSteps.filter(step => step.completed).length;
+  const completedSteps = isolationSteps.filter((step) => step.completed).length;
   const totalSteps = isolationSteps.length;
   const progressPercentage = (completedSteps / totalSteps) * 100;
-  
-  const criticalStepsCompleted = isolationSteps.filter(step => step.critical && step.completed).length;
-  const totalCriticalSteps = isolationSteps.filter(step => step.critical).length;
-  const allTestsValid = testReadings.every(reading => reading.valid);
-  
-  const testingStep = isolationSteps.find(step => step.testingRequired);
+
+  const criticalStepsCompleted = isolationSteps.filter(
+    (step) => step.critical && step.completed
+  ).length;
+  const totalCriticalSteps = isolationSteps.filter((step) => step.critical).length;
+  const allTestsValid = testReadings.every((reading) => reading.valid);
+
+  const testingStep = isolationSteps.find((step) => step.testingRequired);
   const showTesting = testingStep?.completed || false;
   const canProceed = criticalStepsCompleted === totalCriticalSteps && allTestsValid;
 
@@ -64,25 +69,24 @@ const IsolationStepsWithTesting = ({
             Safe Isolation Procedure with Integrated Testing
           </CardTitle>
           <CardDescription className="text-white">
-            Follow the step-by-step procedure with practical guidance and complete testing when required
+            Follow the step-by-step procedure with practical guidance and complete testing when
+            required
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-foreground">Progress: {completedSteps}/{totalSteps} steps</span>
+              <span className="text-foreground">
+                Progress: {completedSteps}/{totalSteps} steps
+              </span>
               <span className="text-elec-yellow">{Math.round(progressPercentage)}%</span>
             </div>
             <Progress value={progressPercentage} className="w-full" />
           </div>
-          
+
           <div className="space-y-4">
             {isolationSteps.map((step) => (
-              <PracticalIsolationStepCard
-                key={step.id}
-                step={step}
-                onToggle={onStepToggle}
-              />
+              <PracticalIsolationStepCard key={step.id} step={step} onToggle={onStepToggle} />
             ))}
           </div>
 
@@ -120,7 +124,7 @@ const IsolationStepsWithTesting = ({
             </p>
           </div>
 
-          <Button 
+          <Button
             onClick={onProceed}
             className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 mt-4"
             disabled={!canProceed}

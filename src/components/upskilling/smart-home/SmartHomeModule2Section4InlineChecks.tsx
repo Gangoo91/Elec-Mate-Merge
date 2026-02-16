@@ -13,9 +13,15 @@ export const SmartHomeModule2Section4InlineChecks = () => {
       <CardContent className="text-foreground space-y-3">
         <div className="space-y-3">
           <p className="font-semibold text-foreground">Q1: What is wireless interference?</p>
-          <p className="font-semibold text-foreground">Q2: Which frequency band is most crowded in homes?</p>
-          <p className="font-semibold text-foreground">Q3: Why is Zigbee prone to interference with Wi-Fi?</p>
-          <p className="font-semibold text-foreground">Q4: Name one way to reduce wireless interference.</p>
+          <p className="font-semibold text-foreground">
+            Q2: Which frequency band is most crowded in homes?
+          </p>
+          <p className="font-semibold text-foreground">
+            Q3: Why is Zigbee prone to interference with Wi-Fi?
+          </p>
+          <p className="font-semibold text-foreground">
+            Q4: Name one way to reduce wireless interference.
+          </p>
         </div>
       </CardContent>
     </Card>

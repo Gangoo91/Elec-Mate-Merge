@@ -41,7 +41,6 @@ import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { PortfolioDetailSheet } from './PortfolioDetailSheet';
-import { CourseRequirementsPanel } from './CourseRequirementsPanel';
 import PortfolioEntryForm from '@/components/apprentice/portfolio/PortfolioEntryForm';
 
 interface PortfolioGridProps {
@@ -69,9 +68,16 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   // Build dynamic categories from qualification units
   const dynamicCategories = useMemo(() => {
     if (tree.units.length === 0) {
-      return ['All', 'Practical Skills', 'Health & Safety', 'Testing & Inspection', 'Technical Knowledge', 'Workplace Practice'];
+      return [
+        'All',
+        'Practical Skills',
+        'Health & Safety',
+        'Testing & Inspection',
+        'Technical Knowledge',
+        'Workplace Practice',
+      ];
     }
-    return ['All', ...tree.units.map(u => `Unit ${u.unitCode}: ${u.unitTitle}`)];
+    return ['All', ...tree.units.map((u) => `Unit ${u.unitCode}: ${u.unitTitle}`)];
   }, [tree.units]);
 
   // View and filter state
@@ -158,9 +164,6 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
 
   return (
     <div className="px-4 py-6 space-y-4 lg:px-6 lg:max-w-4xl lg:mx-auto">
-      {/* Course Requirements (collapsible) */}
-      <CourseRequirementsPanel />
-
       {/* Search and Controls */}
       <div className="space-y-3">
         {/* Search Bar */}
@@ -172,7 +175,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             placeholder="Search evidence..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("bg-card border-border", !searchQuery && "pl-10")}
+            className={cn('bg-card border-border', !searchQuery && 'pl-10')}
           />
           {searchQuery && (
             <button
@@ -284,7 +287,10 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             </p>
           </div>
           {!hasActiveFilters && (
-            <Button onClick={onCapture} className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 touch-manipulation active:scale-95">
+            <Button
+              onClick={onCapture}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 touch-manipulation active:scale-95"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add First Evidence
             </Button>
@@ -351,8 +357,8 @@ function GridCard({
   onClick: () => void;
   commentCount: number;
 }) {
-  const hasImage = entry.evidenceFiles?.some((f: any) =>
-    f.type?.startsWith('image/') || f.url?.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+  const hasImage = entry.evidenceFiles?.some(
+    (f: any) => f.type?.startsWith('image/') || f.url?.match(/\.(jpg|jpeg|png|gif|webp)$/i)
   );
 
   const getFileIcon = () => {
@@ -416,7 +422,8 @@ function GridCard({
       )}
 
       {/* Diary source badge */}
-      {(entry.category?.id === 'site-diary-evidence' || entry.category === 'site-diary-evidence') && (
+      {(entry.category?.id === 'site-diary-evidence' ||
+        entry.category === 'site-diary-evidence') && (
         <div className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-cyan-500/80 text-white text-[10px] font-medium">
           <NotebookPen className="h-3 w-3" />
           Diary
@@ -459,11 +466,7 @@ function ListItem({
       {/* Thumbnail */}
       <div className="h-14 w-14 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden">
         {entry.evidenceFiles?.[0]?.url ? (
-          <img
-            src={entry.evidenceFiles[0].url}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <img src={entry.evidenceFiles[0].url} alt="" className="w-full h-full object-cover" />
         ) : (
           <FileText className="h-6 w-6 text-white/80/50" />
         )}
@@ -472,7 +475,9 @@ function ListItem({
       {/* Content */}
       <div className="flex-1 min-w-0">
         <h3 className="text-sm font-medium text-foreground truncate">{entry.title}</h3>
-        <p className="text-xs text-white/80 truncate">{typeof entry.category === 'object' ? entry.category?.name : entry.category || 'N/A'}</p>
+        <p className="text-xs text-white/80 truncate">
+          {typeof entry.category === 'object' ? entry.category?.name : entry.category || 'N/A'}
+        </p>
         <div className="flex items-center gap-1.5 mt-1">
           <Badge className={cn('text-[10px]', statusColors[entry.status] || statusColors.draft)}>
             {entry.status || 'draft'}
@@ -499,7 +504,8 @@ function ListItem({
             <span className="text-[10px]">{commentCount}</span>
           </div>
         )}
-        {(entry.category?.id === 'site-diary-evidence' || entry.category === 'site-diary-evidence') && (
+        {(entry.category?.id === 'site-diary-evidence' ||
+          entry.category === 'site-diary-evidence') && (
           <div className="flex items-center gap-0.5 text-cyan-400">
             <NotebookPen className="h-3 w-3" />
             <span className="text-[10px] font-medium">Diary</span>

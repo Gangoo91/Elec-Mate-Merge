@@ -91,7 +91,8 @@ const DEFECT_REMEDIAL_MAP: Array<{
 
   // ─── Consumer Unit ───
   {
-    pattern: /consumer\s*unit|distribution\s*board|fuse\s*board|fuse\s*box|cu\s*replacement|non[\s-]*compliant\s*cu|plastic\s*consumer/i,
+    pattern:
+      /consumer\s*unit|distribution\s*board|fuse\s*board|fuse\s*box|cu\s*replacement|non[\s-]*compliant\s*cu|plastic\s*consumer/i,
     mapping: {
       materials: [
         {
@@ -117,7 +118,8 @@ const DEFECT_REMEDIAL_MAP: Array<{
 
   // ─── Earthing & Bonding ───
   {
-    pattern: /earth\s*bonding|main\s*bonding|protective\s*bonding|bonding\s*conductor|supplementary\s*bonding|lack\s*of\s*bonding/i,
+    pattern:
+      /earth\s*bonding|main\s*bonding|protective\s*bonding|bonding\s*conductor|supplementary\s*bonding|lack\s*of\s*bonding/i,
     mapping: {
       materials: [
         {
@@ -141,7 +143,8 @@ const DEFECT_REMEDIAL_MAP: Array<{
     },
   },
   {
-    pattern: /earth\s*electrode|earth\s*rod|earthing\s*arrangement|earthing\s*conductor|main\s*earth/i,
+    pattern:
+      /earth\s*electrode|earth\s*rod|earthing\s*arrangement|earthing\s*conductor|main\s*earth/i,
     mapping: {
       materials: [
         {
@@ -167,7 +170,8 @@ const DEFECT_REMEDIAL_MAP: Array<{
 
   // ─── Socket Outlets ───
   {
-    pattern: /socket\s*outlet|damaged\s*socket|broken\s*socket|cracked\s*socket|loose\s*socket|socket\s*replace/i,
+    pattern:
+      /socket\s*outlet|damaged\s*socket|broken\s*socket|cracked\s*socket|loose\s*socket|socket\s*replace/i,
     mapping: {
       materials: [
         {
@@ -212,7 +216,8 @@ const DEFECT_REMEDIAL_MAP: Array<{
 
   // ─── Wiring / Cable ───
   {
-    pattern: /damaged\s*cable|cable\s*damage|cable\s*not\s*suitable|undersized\s*cable|inadequate\s*cable|rewire|cable\s*insulation/i,
+    pattern:
+      /damaged\s*cable|cable\s*damage|cable\s*not\s*suitable|undersized\s*cable|inadequate\s*cable|rewire|cable\s*insulation/i,
     mapping: {
       materials: [
         {
@@ -257,7 +262,8 @@ const DEFECT_REMEDIAL_MAP: Array<{
 
   // ─── MCB / Overcurrent Protection ───
   {
-    pattern: /mcb|overcurrent|overload\s*protection|circuit\s*breaker|incorrect\s*rating|fuse\s*rating/i,
+    pattern:
+      /mcb|overcurrent|overload\s*protection|circuit\s*breaker|incorrect\s*rating|fuse\s*rating/i,
     mapping: {
       materials: [
         {
@@ -359,7 +365,8 @@ const DEFECT_REMEDIAL_MAP: Array<{
 
   // ─── Labelling / Identification ───
   {
-    pattern: /label|circuit\s*identification|circuit\s*chart|schedule\s*of\s*circuits|not\s*labelled|inadequate\s*labelling/i,
+    pattern:
+      /label|circuit\s*identification|circuit\s*chart|schedule\s*of\s*circuits|not\s*labelled|inadequate\s*labelling/i,
     mapping: {
       materials: [],
       labourHours: 1,
@@ -469,7 +476,10 @@ export function mapDefectsToQuoteItems(defects: DefectObservation[]): RemedialQu
 }
 
 function generateCode(subcategory: string): string {
-  const prefix = (subcategory || 'GEN').replace(/[^A-Z]/gi, '').substring(0, 3).toUpperCase();
+  const prefix = (subcategory || 'GEN')
+    .replace(/[^A-Z]/gi, '')
+    .substring(0, 3)
+    .toUpperCase();
   const random = Math.random().toString(36).substring(2, 6).toUpperCase();
   return `${prefix}-${random}`;
 }

@@ -1,7 +1,13 @@
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Calendar } from "lucide-react";
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Calendar } from 'lucide-react';
 
 interface RegistrationSchemeSelectProps {
   scheme: string;
@@ -13,14 +19,14 @@ interface RegistrationSchemeSelectProps {
 }
 
 const UK_REGISTRATION_SCHEMES = [
-  { value: "none", label: "None" },
-  { value: "niceic", label: "NICEIC" },
-  { value: "napit", label: "NAPIT" },
-  { value: "elecsa", label: "ELECSA" },
-  { value: "stroma", label: "STROMA" },
-  { value: "oftec", label: "OFTEC" },
-  { value: "besca", label: "BESCA" },
-  { value: "other", label: "Other" },
+  { value: 'none', label: 'None' },
+  { value: 'niceic', label: 'NICEIC' },
+  { value: 'napit', label: 'NAPIT' },
+  { value: 'elecsa', label: 'ELECSA' },
+  { value: 'stroma', label: 'STROMA' },
+  { value: 'oftec', label: 'OFTEC' },
+  { value: 'besca', label: 'BESCA' },
+  { value: 'other', label: 'Other' },
 ];
 
 export function RegistrationSchemeSelect({
@@ -31,7 +37,7 @@ export function RegistrationSchemeSelect({
   onNumberChange,
   onExpiryChange,
 }: RegistrationSchemeSelectProps) {
-  const showFields = scheme && scheme !== "none";
+  const showFields = scheme && scheme !== 'none';
 
   return (
     <div className="space-y-4">
@@ -40,7 +46,10 @@ export function RegistrationSchemeSelect({
           Registration Scheme
         </Label>
         <Select value={scheme} onValueChange={onSchemeChange}>
-          <SelectTrigger id="registrationScheme" className="mt-1.5 h-12 min-h-[48px] bg-background border-elec-gray-light">
+          <SelectTrigger
+            id="registrationScheme"
+            className="mt-1.5 h-12 min-h-[48px] bg-background border-elec-gray-light"
+          >
             <SelectValue placeholder="Select a scheme" />
           </SelectTrigger>
           <SelectContent className="bg-elec-gray border-elec-gray-light">
@@ -69,7 +78,10 @@ export function RegistrationSchemeSelect({
           </div>
 
           <div>
-            <Label htmlFor="registrationExpiry" className="text-foreground font-semibold flex items-center gap-2">
+            <Label
+              htmlFor="registrationExpiry"
+              className="text-foreground font-semibold flex items-center gap-2"
+            >
               <Calendar className="h-4 w-4 text-elec-yellow" />
               Expiry Date
             </Label>

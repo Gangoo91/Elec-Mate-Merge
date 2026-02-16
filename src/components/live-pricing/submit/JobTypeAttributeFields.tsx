@@ -7,18 +7,18 @@
  * - text: Free-form text input
  */
 
-import React from "react";
-import { JobTypeConfig, JobAttribute } from "@/hooks/useJobTypes";
-import { Input } from "@/components/ui/input";
+import React from 'react';
+import { JobTypeConfig, JobAttribute } from '@/hooks/useJobTypes';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { Settings2 } from "lucide-react";
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import { Settings2 } from 'lucide-react';
 
 interface JobTypeAttributeFieldsProps {
   config: JobTypeConfig;
@@ -42,20 +42,17 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
   };
 
   const renderField = (attr: JobAttribute) => {
-    const fieldValue = values[attr.key] ?? "";
+    const fieldValue = values[attr.key] ?? '';
 
     switch (attr.type) {
-      case "select":
+      case 'select':
         return (
-          <Select
-            value={String(fieldValue)}
-            onValueChange={(v) => handleFieldChange(attr.key, v)}
-          >
+          <Select value={String(fieldValue)} onValueChange={(v) => handleFieldChange(attr.key, v)}>
             <SelectTrigger
               className={cn(
-                "h-12 bg-neutral-800 border-2 border-white/10 rounded-xl",
-                "text-white focus:border-yellow-400/50 focus:ring-0",
-                "data-[state=open]:border-yellow-400/50"
+                'h-12 bg-neutral-800 border-2 border-white/10 rounded-xl',
+                'text-white focus:border-yellow-400/50 focus:ring-0',
+                'data-[state=open]:border-yellow-400/50'
               )}
             >
               <SelectValue placeholder={`Select ${attr.label.toLowerCase()}...`} />
@@ -74,7 +71,7 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
           </Select>
         );
 
-      case "number":
+      case 'number':
         return (
           <div className="relative">
             <Input
@@ -85,10 +82,10 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
               min={attr.min}
               max={attr.max}
               className={cn(
-                "h-12 bg-neutral-800 border-2 border-white/10 rounded-xl",
-                "text-white text-base placeholder:text-white/30",
-                "focus:border-yellow-400/50 focus:ring-0",
-                attr.unit && "pr-16"
+                'h-12 bg-neutral-800 border-2 border-white/10 rounded-xl',
+                'text-white text-base placeholder:text-white/30',
+                'focus:border-yellow-400/50 focus:ring-0',
+                attr.unit && 'pr-16'
               )}
             />
             {attr.unit && (
@@ -99,7 +96,7 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
           </div>
         );
 
-      case "text":
+      case 'text':
       default:
         return (
           <Input
@@ -108,9 +105,9 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
             onChange={(e) => handleFieldChange(attr.key, e.target.value)}
             placeholder={`Enter ${attr.label.toLowerCase()}`}
             className={cn(
-              "h-12 bg-neutral-800 border-2 border-white/10 rounded-xl",
-              "text-white text-base placeholder:text-white/30",
-              "focus:border-yellow-400/50 focus:ring-0"
+              'h-12 bg-neutral-800 border-2 border-white/10 rounded-xl',
+              'text-white text-base placeholder:text-white/30',
+              'focus:border-yellow-400/50 focus:ring-0'
             )}
           />
         );
@@ -118,7 +115,7 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
   };
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {/* Header */}
       <div className="flex items-center gap-2 text-sm text-white/70">
         <Settings2 className="h-4 w-4 text-yellow-400" />
@@ -135,13 +132,13 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
               {attr.required && <span className="text-yellow-400 ml-1">*</span>}
             </label>
             {renderField(attr)}
-            {attr.type === "number" && (attr.min !== undefined || attr.max !== undefined) && (
+            {attr.type === 'number' && (attr.min !== undefined || attr.max !== undefined) && (
               <p className="text-xs text-white/40 mt-1">
                 {attr.min !== undefined && attr.max !== undefined
                   ? `Between ${attr.min} and ${attr.max}`
                   : attr.min !== undefined
-                  ? `Minimum: ${attr.min}`
-                  : `Maximum: ${attr.max}`}
+                    ? `Minimum: ${attr.min}`
+                    : `Maximum: ${attr.max}`}
                 {attr.unit && ` ${attr.unit}`}
               </p>
             )}

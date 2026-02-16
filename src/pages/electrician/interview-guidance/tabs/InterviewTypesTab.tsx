@@ -1,143 +1,148 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { AccordionItem } from "@/components/ui/accordion";
-import { 
-  Users, 
-  Video, 
-  Phone, 
-  Wrench, 
-  Building, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { AccordionItem } from '@/components/ui/accordion';
+import {
+  Users,
+  Video,
+  Phone,
+  Wrench,
+  Building,
   Clock,
   AlertCircle,
   CheckCircle,
   Target,
-  Camera
-} from "lucide-react";
+  Camera,
+} from 'lucide-react';
 
 export default function InterviewTypesTab() {
   const interviewTypes = [
     {
-      id: "phone-screening",
-      title: "Phone/Video Screening",
+      id: 'phone-screening',
+      title: 'Phone/Video Screening',
       icon: <Phone className="h-5 w-5" />,
-      duration: "20-30 minutes",
-      description: "Initial screening to assess basic qualifications and interest",
+      duration: '20-30 minutes',
+      description: 'Initial screening to assess basic qualifications and interest',
       preparation: [
-        "Test technology beforehand (video calls)",
-        "Prepare elevator pitch about your experience",
-        "Have CV and job description handy",
-        "Choose quiet location with good connection",
-        "Prepare 2-3 key questions about the role"
+        'Test technology beforehand (video calls)',
+        'Prepare elevator pitch about your experience',
+        'Have CV and job description handy',
+        'Choose quiet location with good connection',
+        'Prepare 2-3 key questions about the role',
       ],
       whatToExpect: [
-        "Basic qualification verification",
-        "Availability and location preferences",
-        "Salary expectations discussion",
-        "Overview of role and company",
-        "Next steps explanation"
-      ]
+        'Basic qualification verification',
+        'Availability and location preferences',
+        'Salary expectations discussion',
+        'Overview of role and company',
+        'Next steps explanation',
+      ],
     },
     {
-      id: "face-to-face",
-      title: "Face-to-Face Interview",
+      id: 'face-to-face',
+      title: 'Face-to-Face Interview',
       icon: <Users className="h-5 w-5" />,
-      duration: "45-90 minutes",
-      description: "Traditional in-person interview focusing on technical and behavioural assessment",
+      duration: '45-90 minutes',
+      description:
+        'Traditional in-person interview focusing on technical and behavioural assessment',
       preparation: [
-        "Plan route and arrive 10-15 minutes early",
-        "Dress professionally but appropriately for site visit",
-        "Bring physical portfolio and certificates",
-        "Prepare detailed project examples",
-        "Research company culture and values"
+        'Plan route and arrive 10-15 minutes early',
+        'Dress professionally but appropriately for site visit',
+        'Bring physical portfolio and certificates',
+        'Prepare detailed project examples',
+        'Research company culture and values',
       ],
       whatToExpected: [
-        "Detailed technical questioning",
-        "Behavioural interview questions",
-        "Company and role deep-dive",
-        "Meet potential colleagues/managers",
-        "Office or site tour possibility"
-      ]
+        'Detailed technical questioning',
+        'Behavioural interview questions',
+        'Company and role deep-dive',
+        'Meet potential colleagues/managers',
+        'Office or site tour possibility',
+      ],
     },
     {
-      id: "practical-assessment",
-      title: "Practical Assessment",
+      id: 'practical-assessment',
+      title: 'Practical Assessment',
       icon: <Wrench className="h-5 w-5" />,
-      duration: "1-3 hours",
-      description: "Hands-on technical evaluation of electrical skills and safety practices",
+      duration: '1-3 hours',
+      description: 'Hands-on technical evaluation of electrical skills and safety practices',
       preparation: [
-        "Bring own basic tools if specified",
-        "Wear appropriate PPE and work clothing",
-        "Review basic electrical principles",
-        "Practice explaining work processes",
-        "Ensure safety-first mindset"
+        'Bring own basic tools if specified',
+        'Wear appropriate PPE and work clothing',
+        'Review basic electrical principles',
+        'Practice explaining work processes',
+        'Ensure safety-first mindset',
       ],
       whatToExpect: [
-        "Safe isolation procedures demonstration",
-        "Basic electrical installation tasks",
-        "Fault finding exercises",
-        "Use of test equipment",
-        "Safety procedure adherence assessment"
-      ]
+        'Safe isolation procedures demonstration',
+        'Basic electrical installation tasks',
+        'Fault finding exercises',
+        'Use of test equipment',
+        'Safety procedure adherence assessment',
+      ],
     },
     {
-      id: "panel-interview",
-      title: "Panel Interview",
+      id: 'panel-interview',
+      title: 'Panel Interview',
       icon: <Building className="h-5 w-5" />,
-      duration: "60-90 minutes",
-      description: "Interview with multiple stakeholders from different departments",
+      duration: '60-90 minutes',
+      description: 'Interview with multiple stakeholders from different departments',
       preparation: [
-        "Research all panel members if names provided",
-        "Prepare answers for different perspectives",
-        "Practice maintaining eye contact with all members",
-        "Prepare questions for different roles",
-        "Plan to address technical and soft skills"
+        'Research all panel members if names provided',
+        'Prepare answers for different perspectives',
+        'Practice maintaining eye contact with all members',
+        'Prepare questions for different roles',
+        'Plan to address technical and soft skills',
       ],
       whatToExpect: [
-        "Questions from various departments",
-        "Multiple perspectives on same topics",
-        "Assessment of team fit",
-        "Cross-functional collaboration discussion",
-        "Varied questioning styles"
-      ]
-    }
+        'Questions from various departments',
+        'Multiple perspectives on same topics',
+        'Assessment of team fit',
+        'Cross-functional collaboration discussion',
+        'Varied questioning styles',
+      ],
+    },
   ];
 
   const formatTips = [
     {
-      format: "Virtual Interviews",
+      format: 'Virtual Interviews',
       icon: <Video className="h-4 w-4" />,
       tips: [
-        "Test technology 30 minutes before",
-        "Ensure good lighting on your face",
-        "Professional background or blur",
-        "Have water nearby but out of shot",
-        "Maintain eye contact with camera"
-      ]
+        'Test technology 30 minutes before',
+        'Ensure good lighting on your face',
+        'Professional background or blur',
+        'Have water nearby but out of shot',
+        'Maintain eye contact with camera',
+      ],
     },
     {
-      format: "Site Visits",
+      format: 'Site Visits',
       icon: <Building className="h-4 w-4" />,
       tips: [
-        "Wear safety boots and appropriate clothing",
-        "Bring hard hat if you have one",
-        "Ask about site-specific safety requirements",
-        "Show interest in ongoing projects",
-        "Demonstrate safety awareness throughout"
-      ]
+        'Wear safety boots and appropriate clothing',
+        'Bring hard hat if you have one',
+        'Ask about site-specific safety requirements',
+        'Show interest in ongoing projects',
+        'Demonstrate safety awareness throughout',
+      ],
     },
     {
-      format: "Group Assessments",
+      format: 'Group Assessments',
       icon: <Users className="h-4 w-4" />,
       tips: [
-        "Collaborate rather than compete",
-        "Listen actively to other candidates",
-        "Share knowledge and experience",
-        "Take leadership when appropriate",
-        "Show respect for others' ideas"
-      ]
-    }
+        'Collaborate rather than compete',
+        'Listen actively to other candidates',
+        'Share knowledge and experience',
+        'Take leadership when appropriate',
+        "Show respect for others' ideas",
+      ],
+    },
   ];
 
   return (
@@ -171,8 +176,8 @@ export default function InterviewTypesTab() {
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
-          <strong>Industry Insight:</strong> 65% of UK electrical employers now use practical assessments. 
-          Always be prepared to demonstrate both technical skills and safety knowledge.
+          <strong>Industry Insight:</strong> 65% of UK electrical employers now use practical
+          assessments. Always be prepared to demonstrate both technical skills and safety knowledge.
         </AlertDescription>
       </Alert>
 
@@ -197,7 +202,7 @@ export default function InterviewTypesTab() {
                 <MobileAccordionContent>
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">{type.description}</p>
-                    
+
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <h4 className="font-medium text-sm">Preparation Steps</h4>
@@ -210,7 +215,7 @@ export default function InterviewTypesTab() {
                           ))}
                         </ul>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <h4 className="font-medium text-sm">What to Expect</h4>
                         <ul className="space-y-1">
@@ -274,33 +279,57 @@ export default function InterviewTypesTab() {
             <div className="space-y-2">
               <h4 className="font-medium">Technical Skills</h4>
               <div className="space-y-1">
-                <Badge variant="outline" className="text-xs">Electrical Knowledge</Badge>
-                <Badge variant="outline" className="text-xs">Safety Practices</Badge>
-                <Badge variant="outline" className="text-xs">Problem Solving</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Electrical Knowledge
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Safety Practices
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Problem Solving
+                </Badge>
               </div>
             </div>
             <div className="space-y-2">
               <h4 className="font-medium">Soft Skills</h4>
               <div className="space-y-1">
-                <Badge variant="outline" className="text-xs">Communication</Badge>
-                <Badge variant="outline" className="text-xs">Teamwork</Badge>
-                <Badge variant="outline" className="text-xs">Adaptability</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Communication
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Teamwork
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Adaptability
+                </Badge>
               </div>
             </div>
             <div className="space-y-2">
               <h4 className="font-medium">Experience</h4>
               <div className="space-y-1">
-                <Badge variant="outline" className="text-xs">Relevant Projects</Badge>
-                <Badge variant="outline" className="text-xs">Industry Knowledge</Badge>
-                <Badge variant="outline" className="text-xs">Continuous Learning</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Relevant Projects
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Industry Knowledge
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Continuous Learning
+                </Badge>
               </div>
             </div>
             <div className="space-y-2">
               <h4 className="font-medium">Cultural Fit</h4>
               <div className="space-y-1">
-                <Badge variant="outline" className="text-xs">Company Values</Badge>
-                <Badge variant="outline" className="text-xs">Work Ethic</Badge>
-                <Badge variant="outline" className="text-xs">Professional Attitude</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Company Values
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Work Ethic
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  Professional Attitude
+                </Badge>
               </div>
             </div>
           </div>

@@ -28,7 +28,7 @@ export const MobileSectionIndicator: React.FC<MobileSectionIndicatorProps> = ({
     return () => container.removeEventListener('scroll', handleScroll);
   }, [scrollContainerRef]);
 
-  const currentGroup = columnGroups.find(g => g.id === currentSection);
+  const currentGroup = columnGroups.find((g) => g.id === currentSection);
   if (!currentGroup) return null;
 
   const getSectionColor = (id: ColumnGroup) => {
@@ -64,7 +64,7 @@ export const MobileSectionIndicator: React.FC<MobileSectionIndicatorProps> = ({
           <span className="text-lg">{currentGroup.icon}</span>
           <span className="flex-1">{currentGroup.label}</span>
           <span className="text-xs opacity-90">
-            {columnGroups.findIndex(g => g.id === currentSection) + 1}/{columnGroups.length}
+            {columnGroups.findIndex((g) => g.id === currentSection) + 1}/{columnGroups.length}
           </span>
         </div>
       </div>

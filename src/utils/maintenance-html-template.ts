@@ -50,17 +50,23 @@ export interface MaintenanceTemplateData {
 export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string => {
   const getRiskBadgeClass = (level?: string) => {
     switch (level) {
-      case 'high': return 'risk-high';
-      case 'medium': return 'risk-medium';
-      default: return 'risk-low';
+      case 'high':
+        return 'risk-high';
+      case 'medium':
+        return 'risk-medium';
+      default:
+        return 'risk-low';
     }
   };
 
   const getRiskBadgeText = (level?: string) => {
     switch (level) {
-      case 'high': return 'HIGH RISK';
-      case 'medium': return 'MEDIUM RISK';
-      default: return 'LOW RISK';
+      case 'high':
+        return 'HIGH RISK';
+      case 'medium':
+        return 'MEDIUM RISK';
+      default:
+        return 'LOW RISK';
     }
   };
 
@@ -322,7 +328,15 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
     <div class="info-grid">
         <div class="info-item">
             <div class="info-label">Job Reference</div>
-            <div class="info-value">${data.jobReference || 'MI-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0')}</div>
+            <div class="info-value">${
+              data.jobReference ||
+              'MI-' +
+                new Date().getFullYear() +
+                '-' +
+                Math.floor(Math.random() * 1000)
+                  .toString()
+                  .padStart(3, '0')
+            }</div>
         </div>
         <div class="info-item">
             <div class="info-label">Date Issued</div>
@@ -346,22 +360,30 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
         </div>
     </div>
 
-    ${data.preWorkChecklist?.length ? `
+    ${
+      data.preWorkChecklist?.length
+        ? `
     <div class="section">
         <div class="section-header">
             <div class="section-number">1</div>
             <div class="section-title">Pre-Work Requirements</div>
         </div>
         <div class="checklist">
-            ${data.preWorkChecklist.map(item => `
+            ${data.preWorkChecklist
+              .map(
+                (item) => `
                 <div class="checklist-item">
                     <div class="checkbox"></div>
                     <div class="checklist-text">${item}</div>
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
     </div>
-    ` : ''}
+    `
+        : ''
+    }
 
     <div class="section">
         <div class="section-header">
@@ -369,7 +391,9 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
             <div class="section-title">Work Steps & Procedures</div>
         </div>
 
-        ${data.steps.map(step => `
+        ${data.steps
+          .map(
+            (step) => `
             <div class="step">
                 <div class="step-header">
                     <div class="step-left">
@@ -379,21 +403,33 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
                     </div>
                 </div>
                 <div class="step-description">${step.description}</div>
-                ${step.compliance ? `
+                ${
+                  step.compliance
+                    ? `
                     <div class="step-compliance">
                         <strong>BS 7671:</strong> ${step.compliance}
                     </div>
-                ` : ''}
-                ${step.timeEstimate ? `
+                `
+                    : ''
+                }
+                ${
+                  step.timeEstimate
+                    ? `
                     <div style="margin-top: 10px; font-size: 12px; color: #6c757d;">
                         ⏱ Time: ${step.timeEstimate}
                     </div>
-                ` : ''}
+                `
+                    : ''
+                }
             </div>
-        `).join('')}
+        `
+          )
+          .join('')}
     </div>
 
-    ${data.testingTable?.length ? `
+    ${
+      data.testingTable?.length
+        ? `
     <div class="section">
         <div class="section-header">
             <div class="section-number">3</div>
@@ -410,7 +446,9 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
                 </tr>
             </thead>
             <tbody>
-                ${data.testingTable.map(test => `
+                ${data.testingTable
+                  .map(
+                    (test) => `
                     <tr>
                         <td>${test.testName}</td>
                         <td>${test.expectedValue}</td>
@@ -418,19 +456,27 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
                         <td>_____________</td>
                         <td>_____________</td>
                     </tr>
-                `).join('')}
+                `
+                  )
+                  .join('')}
             </tbody>
         </table>
     </div>
-    ` : ''}
+    `
+        : ''
+    }
 
-    ${data.commonFaults?.length ? `
+    ${
+      data.commonFaults?.length
+        ? `
     <div class="section">
         <div class="section-header">
             <div class="section-number">4</div>
             <div class="section-title">Common Faults & Troubleshooting</div>
         </div>
-        ${data.commonFaults.map((fault, idx) => `
+        ${data.commonFaults
+          .map(
+            (fault, idx) => `
             <div class="fault-diagnosis">
                 <div class="fault-header">Fault Scenario ${idx + 1}: ${fault.symptom}</div>
                 <div class="fault-body">
@@ -449,11 +495,17 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
                     </div>
                 </div>
             </div>
-        `).join('')}
+        `
+          )
+          .join('')}
     </div>
-    ` : ''}
+    `
+        : ''
+    }
 
-    ${data.signatures ? `
+    ${
+      data.signatures
+        ? `
     <div class="section">
         <div class="section-header">
             <div class="section-number">5</div>
@@ -463,9 +515,10 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
             <div class="sign-box">
                 <div class="sign-label">Work Completed By (Technician)</div>
                 <div class="sign-signature">
-                    ${data.signatures.technician.signatureDataUrl ? 
-                        `<img src="${data.signatures.technician.signatureDataUrl}" alt="Technician Signature" />` :
-                        '<span style="color: #6c757d;">No signature</span>'
+                    ${
+                      data.signatures.technician.signatureDataUrl
+                        ? `<img src="${data.signatures.technician.signatureDataUrl}" alt="Technician Signature" />`
+                        : '<span style="color: #6c757d;">No signature</span>'
                     }
                 </div>
                 <div class="sign-field"><strong>Name:</strong> ${data.signatures.technician.name || '_________________________'}</div>
@@ -477,9 +530,10 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
             <div class="sign-box">
                 <div class="sign-label">Verified & Approved By (Supervisor/AP)</div>
                 <div class="sign-signature">
-                    ${data.signatures.supervisor.signatureDataUrl ? 
-                        `<img src="${data.signatures.supervisor.signatureDataUrl}" alt="Supervisor Signature" />` :
-                        '<span style="color: #6c757d;">No signature</span>'
+                    ${
+                      data.signatures.supervisor.signatureDataUrl
+                        ? `<img src="${data.signatures.supervisor.signatureDataUrl}" alt="Supervisor Signature" />`
+                        : '<span style="color: #6c757d;">No signature</span>'
                     }
                 </div>
                 <div class="sign-field"><strong>Name:</strong> ${data.signatures.supervisor.name || '_________________________'}</div>
@@ -490,7 +544,9 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
             </div>
         </div>
     </div>
-    ` : ''}
+    `
+        : ''
+    }
 
     <div class="footer">
         <p>This maintenance instruction was generated in accordance with BS 7671:2018+A3:2024</p>

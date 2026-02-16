@@ -4,99 +4,104 @@ import { Settings, Lightbulb, Camera, Lock, Smartphone } from 'lucide-react';
 export const ChoosingProtocolSection = () => {
   const protocolChoices = [
     {
-      protocol: "Zigbee/Z-Wave",
+      protocol: 'Zigbee/Z-Wave',
       icon: Lightbulb,
-      bestFor: "Low-power sensors and lighting",
+      bestFor: 'Low-power sensors and lighting',
       reasons: [
-        "Exceptional battery life (1-2 years)",
-        "Mesh networking extends coverage",
-        "Reliable, self-healing networks",
-        "Perfect for sensors and switches"
+        'Exceptional battery life (1-2 years)',
+        'Mesh networking extends coverage',
+        'Reliable, self-healing networks',
+        'Perfect for sensors and switches',
       ],
-      examples: "Motion sensors, door contacts, smart bulbs, dimmer switches",
-      color: "blue"
+      examples: 'Motion sensors, door contacts, smart bulbs, dimmer switches',
+      color: 'blue',
     },
     {
-      protocol: "Wi-Fi",
+      protocol: 'Wi-Fi',
       icon: Camera,
-      bestFor: "High-data devices",
+      bestFor: 'High-data devices',
       reasons: [
-        "High bandwidth for video/audio",
-        "Direct internet connectivity",
-        "No additional hub required",
-        "Good for streaming applications"
+        'High bandwidth for video/audio',
+        'Direct internet connectivity',
+        'No additional hub required',
+        'Good for streaming applications',
       ],
-      examples: "Security cameras, voice assistants, smart TVs, video doorbells",
-      color: "purple"
+      examples: 'Security cameras, voice assistants, smart TVs, video doorbells',
+      color: 'purple',
     },
     {
-      protocol: "Bluetooth",
+      protocol: 'Bluetooth',
       icon: Lock,
-      bestFor: "Mobile-controlled devices",
+      bestFor: 'Mobile-controlled devices',
       reasons: [
-        "Direct smartphone integration",
-        "Ultra-low power consumption",
-        "Fast, simple pairing process",
-        "Good for personal devices"
+        'Direct smartphone integration',
+        'Ultra-low power consumption',
+        'Fast, simple pairing process',
+        'Good for personal devices',
       ],
-      examples: "Smart locks, fitness trackers, beacons, proximity sensors",
-      color: "cyan"
+      examples: 'Smart locks, fitness trackers, beacons, proximity sensors',
+      color: 'cyan',
     },
     {
-      protocol: "Thread/Matter",
+      protocol: 'Thread/Matter',
       icon: Smartphone,
-      bestFor: "Future-proof installations",
+      bestFor: 'Future-proof installations',
       reasons: [
-        "Cross-platform compatibility",
-        "Industry-standard approach",
-        "IPv6 native networking",
-        "Vendor-agnostic solutions"
+        'Cross-platform compatibility',
+        'Industry-standard approach',
+        'IPv6 native networking',
+        'Vendor-agnostic solutions',
       ],
-      examples: "New smart home installations, mixed-brand systems",
-      color: "orange"
-    }
+      examples: 'New smart home installations, mixed-brand systems',
+      color: 'orange',
+    },
   ];
 
   const decisionMatrix = [
     {
-      scenario: "Battery-powered sensor",
-      recommendation: "Zigbee or Z-Wave",
-      reasoning: "Ultra-low power consumption extends battery life significantly"
+      scenario: 'Battery-powered sensor',
+      recommendation: 'Zigbee or Z-Wave',
+      reasoning: 'Ultra-low power consumption extends battery life significantly',
     },
     {
-      scenario: "Security camera system",
-      recommendation: "Wi-Fi",
-      reasoning: "High bandwidth needed for video streaming and cloud storage"
+      scenario: 'Security camera system',
+      recommendation: 'Wi-Fi',
+      reasoning: 'High bandwidth needed for video streaming and cloud storage',
     },
     {
-      scenario: "Smart door lock",
-      recommendation: "Bluetooth or Z-Wave",
-      reasoning: "Bluetooth for smartphone integration, Z-Wave for hub control"
+      scenario: 'Smart door lock',
+      recommendation: 'Bluetooth or Z-Wave',
+      reasoning: 'Bluetooth for smartphone integration, Z-Wave for hub control',
     },
     {
-      scenario: "Whole-home lighting",
-      recommendation: "Zigbee or Z-Wave",
-      reasoning: "Mesh networking provides reliable coverage throughout large homes"
+      scenario: 'Whole-home lighting',
+      recommendation: 'Zigbee or Z-Wave',
+      reasoning: 'Mesh networking provides reliable coverage throughout large homes',
     },
     {
-      scenario: "Voice assistant",
-      recommendation: "Wi-Fi",
-      reasoning: "Requires internet connectivity and handles audio streaming"
+      scenario: 'Voice assistant',
+      recommendation: 'Wi-Fi',
+      reasoning: 'Requires internet connectivity and handles audio streaming',
     },
     {
-      scenario: "Mixed-brand ecosystem",
-      recommendation: "Matter-compatible devices",
-      reasoning: "Ensures interoperability across different manufacturers"
-    }
+      scenario: 'Mixed-brand ecosystem',
+      recommendation: 'Matter-compatible devices',
+      reasoning: 'Ensures interoperability across different manufacturers',
+    },
   ];
 
   const getColorClasses = (color: string) => {
     switch (color) {
-      case 'blue': return 'border-blue-600 bg-blue-900/20';
-      case 'purple': return 'border-purple-600 bg-purple-900/20';
-      case 'cyan': return 'border-cyan-600 bg-cyan-900/20';
-      case 'orange': return 'border-orange-600 bg-orange-900/20';
-      default: return 'border-gray-600 bg-gray-900/20';
+      case 'blue':
+        return 'border-blue-600 bg-blue-900/20';
+      case 'purple':
+        return 'border-purple-600 bg-purple-900/20';
+      case 'cyan':
+        return 'border-cyan-600 bg-cyan-900/20';
+      case 'orange':
+        return 'border-orange-600 bg-orange-900/20';
+      default:
+        return 'border-gray-600 bg-gray-900/20';
     }
   };
 
@@ -112,7 +117,7 @@ export const ChoosingProtocolSection = () => {
         <p className="text-lg font-medium text-foreground mb-6">
           Select protocols based on device requirements, application needs, and system architecture.
         </p>
-        
+
         {/* Protocol Recommendations */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {protocolChoices.map((choice, index) => (
@@ -122,10 +127,12 @@ export const ChoosingProtocolSection = () => {
                 <div className="flex-1">
                   <h4 className="font-semibold text-foreground mb-1">{choice.protocol}</h4>
                   <p className="text-sm font-medium text-gray-300 mb-3">{choice.bestFor}</p>
-                  
+
                   <div className="space-y-2">
                     <div>
-                      <h5 className="text-xs font-medium text-gray-400 mb-1">Why choose this protocol:</h5>
+                      <h5 className="text-xs font-medium text-gray-400 mb-1">
+                        Why choose this protocol:
+                      </h5>
                       <ul className="space-y-1">
                         {choice.reasons.map((reason, reasonIndex) => (
                           <li key={reasonIndex} className="flex items-center gap-2">
@@ -135,7 +142,7 @@ export const ChoosingProtocolSection = () => {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="text-xs font-medium text-gray-400 mb-1">Common examples:</h5>
                       <p className="text-xs text-gray-300">{choice.examples}</p>
@@ -156,7 +163,9 @@ export const ChoosingProtocolSection = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex-1">
                     <span className="font-medium text-foreground">{decision.scenario}</span>
-                    <span className="text-gray-400 text-sm block sm:inline sm:ml-2">→ {decision.recommendation}</span>
+                    <span className="text-gray-400 text-sm block sm:inline sm:ml-2">
+                      → {decision.recommendation}
+                    </span>
                   </div>
                 </div>
                 <p className="text-xs text-gray-400 mt-1">{decision.reasoning}</p>

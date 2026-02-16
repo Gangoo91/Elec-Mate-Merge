@@ -1,87 +1,137 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section7_3 = () => {
   useSEO(
-    "Minor Works Certificates (Awareness Level) - Level 2 Module 6 Section 7.3",
-    "Understanding Minor Works Certificates for small electrical alterations and additions"
+    'Minor Works Certificates (Awareness Level) - Level 2 Module 6 Section 7.3',
+    'Understanding Minor Works Certificates for small electrical alterations and additions'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What does MWC stand for?",
-      options: ["Electrical Inspection Certificate", "Minor Works Certificate", "Major Works Certificate", "Monthly Works Certificate"],
+      question: 'What does MWC stand for?',
+      options: [
+        'Electrical Inspection Certificate',
+        'Minor Works Certificate',
+        'Major Works Certificate',
+        'Monthly Works Certificate',
+      ],
       correctAnswer: 1,
-      explanation: "MWC stands for Minor Works Certificate, used for small electrical alterations and additions."
+      explanation:
+        'MWC stands for Minor Works Certificate, used for small electrical alterations and additions.',
     },
     {
       id: 2,
-      question: "What is the purpose of a Minor Works Certificate?",
-      options: ["To increase costs", "To provide evidence that small electrical work complies with BS 7671", "To delay projects", "To satisfy insurance only"],
+      question: 'What is the purpose of a Minor Works Certificate?',
+      options: [
+        'To increase costs',
+        'To provide evidence that small electrical work complies with BS 7671',
+        'To delay projects',
+        'To satisfy insurance only',
+      ],
       correctAnswer: 1,
-      explanation: "A Minor Works Certificate provides evidence that even small electrical work has been inspected, tested, and complies with BS 7671."
+      explanation:
+        'A Minor Works Certificate provides evidence that even small electrical work has been inspected, tested, and complies with BS 7671.',
     },
     {
       id: 3,
-      question: "Give two examples of jobs that require an MWC.",
-      options: ["New consumer unit and rewiring", "Adding a socket outlet and adding a lighting point", "Testing only and inspection only", "Design work and planning"],
+      question: 'Give two examples of jobs that require an MWC.',
+      options: [
+        'New consumer unit and rewiring',
+        'Adding a socket outlet and adding a lighting point',
+        'Testing only and inspection only',
+        'Design work and planning',
+      ],
       correctAnswer: 1,
-      explanation: "Adding a socket outlet to an existing circuit and adding a lighting point are typical examples of minor works requiring an MWC."
+      explanation:
+        'Adding a socket outlet to an existing circuit and adding a lighting point are typical examples of minor works requiring an MWC.',
     },
     {
       id: 4,
-      question: "What type of work requires an EIC instead of an MWC?",
-      options: ["Adding a single socket", "Installing a new circuit", "Adding a lighting point", "Minor repairs"],
+      question: 'What type of work requires an EIC instead of an MWC?',
+      options: [
+        'Adding a single socket',
+        'Installing a new circuit',
+        'Adding a lighting point',
+        'Minor repairs',
+      ],
       correctAnswer: 1,
-      explanation: "Installing a new circuit or major alterations require a full Electrical Installation Certificate (EIC) rather than a Minor Works Certificate."
+      explanation:
+        'Installing a new circuit or major alterations require a full Electrical Installation Certificate (EIC) rather than a Minor Works Certificate.',
     },
     {
       id: 5,
-      question: "What test results are typically recorded on an MWC?",
-      options: ["None required", "Continuity, insulation resistance, polarity, and Zs values", "Only visual inspection", "Cost information only"],
+      question: 'What test results are typically recorded on an MWC?',
+      options: [
+        'None required',
+        'Continuity, insulation resistance, polarity, and Zs values',
+        'Only visual inspection',
+        'Cost information only',
+      ],
       correctAnswer: 1,
-      explanation: "MWCs must record relevant test results including continuity, insulation resistance, polarity, and earth fault loop impedance (Zs) values."
+      explanation:
+        'MWCs must record relevant test results including continuity, insulation resistance, polarity, and earth fault loop impedance (Zs) values.',
     },
     {
       id: 6,
-      question: "True or False: Small alterations do not require certification.",
-      options: ["True", "False"],
+      question: 'True or False: Small alterations do not require certification.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. All electrical alterations, however small, require appropriate certification - either an MWC for minor works or EIC for major works."
+      explanation:
+        'False. All electrical alterations, however small, require appropriate certification - either an MWC for minor works or EIC for major works.',
     },
     {
       id: 7,
-      question: "Who is responsible for signing a Minor Works Certificate?",
-      options: ["Any electrician", "The client", "A competent person who carried out or supervised the work", "Building control"],
+      question: 'Who is responsible for signing a Minor Works Certificate?',
+      options: [
+        'Any electrician',
+        'The client',
+        'A competent person who carried out or supervised the work',
+        'Building control',
+      ],
       correctAnswer: 2,
-      explanation: "Only a competent person who carried out or supervised the work can legally sign a Minor Works Certificate."
+      explanation:
+        'Only a competent person who carried out or supervised the work can legally sign a Minor Works Certificate.',
     },
     {
       id: 8,
-      question: "Why is it important to provide the client with a copy of the MWC?",
-      options: ["Legal requirement and proof of compliance", "For payment purposes", "To increase costs", "No real importance"],
+      question: 'Why is it important to provide the client with a copy of the MWC?',
+      options: [
+        'Legal requirement and proof of compliance',
+        'For payment purposes',
+        'To increase costs',
+        'No real importance',
+      ],
       correctAnswer: 0,
-      explanation: "Providing the client with a copy is a legal requirement and gives them proof that the work complies with BS 7671."
+      explanation:
+        'Providing the client with a copy is a legal requirement and gives them proof that the work complies with BS 7671.',
     },
     {
       id: 9,
-      question: "What legal standard does the MWC confirm compliance with?",
-      options: ["BS 7909", "BS 7671", "BS 7430", "BS 6701"],
+      question: 'What legal standard does the MWC confirm compliance with?',
+      options: ['BS 7909', 'BS 7671', 'BS 7430', 'BS 6701'],
       correctAnswer: 1,
-      explanation: "The Minor Works Certificate confirms compliance with BS 7671 (The IET Wiring Regulations)."
+      explanation:
+        'The Minor Works Certificate confirms compliance with BS 7671 (The IET Wiring Regulations).',
     },
     {
       id: 10,
-      question: "In the real-world example, what problem occurred because no MWC was issued?",
-      options: ["Work was delayed", "The sale was delayed and additional costs occurred", "Nothing happened", "Insurance was cancelled"],
+      question: 'In the real-world example, what problem occurred because no MWC was issued?',
+      options: [
+        'Work was delayed',
+        'The sale was delayed and additional costs occurred',
+        'Nothing happened',
+        'Insurance was cancelled',
+      ],
       correctAnswer: 1,
-      explanation: "The house sale was delayed and the seller had to pay for an EICR because no MWC was available to prove the work was compliant."
-    }
+      explanation:
+        'The house sale was delayed and the seller had to pay for an EICR because no MWC was available to prove the work was compliant.',
+    },
   ];
 
   return (
@@ -151,7 +201,11 @@ const Module6Section7_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Not every electrical job is large enough to require a full Electrical Installation Certificate (EIC). For smaller tasks, such as adding a socket to an existing circuit, a Minor Electrical Installation Works Certificate (MWC) is used instead. The MWC is a shorter document, but it is still a legal requirement and provides evidence that the work complies with BS 7671.
+                Not every electrical job is large enough to require a full Electrical Installation
+                Certificate (EIC). For smaller tasks, such as adding a socket to an existing
+                circuit, a Minor Electrical Installation Works Certificate (MWC) is used instead.
+                The MWC is a shorter document, but it is still a legal requirement and provides
+                evidence that the work complies with BS 7671.
               </p>
             </div>
           </section>
@@ -164,7 +218,11 @@ const Module6Section7_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                A Minor Works Certificate (MWC) is a simplified version of the Electrical Installation Certificate. It is designed for small alterations and additions that do not significantly change the characteristics of the installation. While shorter, it still confirms that inspection, testing, and verification have been carried out, and that the work is safe and compliant with BS 7671.
+                A Minor Works Certificate (MWC) is a simplified version of the Electrical
+                Installation Certificate. It is designed for small alterations and additions that do
+                not significantly change the characteristics of the installation. While shorter, it
+                still confirms that inspection, testing, and verification have been carried out, and
+                that the work is safe and compliant with BS 7671.
               </p>
 
               <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-400/50">
@@ -192,7 +250,9 @@ const Module6Section7_3 = () => {
               </div>
 
               <p>
-                The MWC differs from a full EIC in scope and complexity. While an EIC covers entire installations or major alterations involving multiple circuits, the MWC focuses on specific, limited additions or modifications.
+                The MWC differs from a full EIC in scope and complexity. While an EIC covers entire
+                installations or major alterations involving multiple circuits, the MWC focuses on
+                specific, limited additions or modifications.
               </p>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
@@ -210,7 +270,12 @@ const Module6Section7_3 = () => {
           <InlineCheck
             id="mwc-purpose-check"
             question="What is the purpose of a Minor Works Certificate?"
-            options={["To increase project costs", "To provide evidence that small electrical work complies with BS 7671", "To delay projects", "To satisfy insurance only"]}
+            options={[
+              'To increase project costs',
+              'To provide evidence that small electrical work complies with BS 7671',
+              'To delay projects',
+              'To satisfy insurance only',
+            ]}
             correctIndex={1}
             explanation="A Minor Works Certificate provides evidence that even small electrical work has been inspected, tested, and complies with BS 7671."
           />
@@ -255,7 +320,10 @@ const Module6Section7_3 = () => {
               </div>
 
               <p>
-                If a new circuit is installed, or a major alteration is made (e.g., replacing a consumer unit), a full EIC must be issued instead. The key determining factor is whether the work significantly changes the electrical characteristics of the installation.
+                If a new circuit is installed, or a major alteration is made (e.g., replacing a
+                consumer unit), a full EIC must be issued instead. The key determining factor is
+                whether the work significantly changes the electrical characteristics of the
+                installation.
               </p>
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
@@ -277,7 +345,12 @@ const Module6Section7_3 = () => {
           <InlineCheck
             id="mwc-vs-eic-check"
             question="Would adding a brand-new circuit require a Minor Works Certificate or an EIC?"
-            options={["Minor Works Certificate", "Electrical Installation Certificate (EIC)", "No certificate needed", "Either certificate can be used"]}
+            options={[
+              'Minor Works Certificate',
+              'Electrical Installation Certificate (EIC)',
+              'No certificate needed',
+              'Either certificate can be used',
+            ]}
             correctIndex={1}
             explanation="Adding a brand-new circuit requires a full Electrical Installation Certificate (EIC) as it significantly changes the installation characteristics."
           />
@@ -293,9 +366,15 @@ const Module6Section7_3 = () => {
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>The client and installation details</li>
                 <li>A description of the work carried out</li>
-                <li>The relevant test results (e.g., continuity, insulation resistance, polarity, Zs values)</li>
+                <li>
+                  The relevant test results (e.g., continuity, insulation resistance, polarity, Zs
+                  values)
+                </li>
                 <li>Confirmation that the work complies with BS 7671</li>
-                <li>The name, signature, and details of the competent person who carried out or supervised the work</li>
+                <li>
+                  The name, signature, and details of the competent person who carried out or
+                  supervised the work
+                </li>
               </ul>
 
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-400/50">
@@ -332,7 +411,9 @@ const Module6Section7_3 = () => {
               </div>
 
               <p>
-                Although simpler than an EIC, the MWC is still an official legal document. Every section must be completed accurately, and any defects or limitations must be clearly noted.
+                Although simpler than an EIC, the MWC is still an official legal document. Every
+                section must be completed accurately, and any defects or limitations must be clearly
+                noted.
               </p>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
@@ -351,7 +432,12 @@ const Module6Section7_3 = () => {
           <InlineCheck
             id="mwc-details-check"
             question="What details must always be included on a Minor Works Certificate?"
-            options={["Only the cost of work", "Client details, work description, test results, and competent person signature", "Just the date completed", "Only visual inspection notes"]}
+            options={[
+              'Only the cost of work',
+              'Client details, work description, test results, and competent person signature',
+              'Just the date completed',
+              'Only visual inspection notes',
+            ]}
             correctIndex={1}
             explanation="An MWC must include client and installation details, work description, relevant test results, BS 7671 compliance confirmation, and the competent person's signature."
           />
@@ -364,7 +450,10 @@ const Module6Section7_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                It can be tempting to treat small jobs informally, but every piece of electrical work must be documented. An MWC proves that even minor alterations were carried out safely and correctly. Without it, the electrician has no legal protection if something goes wrong, and the client cannot prove that the system is compliant.
+                It can be tempting to treat small jobs informally, but every piece of electrical
+                work must be documented. An MWC proves that even minor alterations were carried out
+                safely and correctly. Without it, the electrician has no legal protection if
+                something goes wrong, and the client cannot prove that the system is compliant.
               </p>
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
@@ -392,16 +481,30 @@ const Module6Section7_3 = () => {
               </div>
 
               <p>
-                Beyond legal requirements, MWCs serve practical purposes. They create an audit trail of electrical modifications, help with fault-finding, and assist in planning future work.
+                Beyond legal requirements, MWCs serve practical purposes. They create an audit trail
+                of electrical modifications, help with fault-finding, and assist in planning future
+                work.
               </p>
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
-                <h4 className="font-medium text-green-300 mb-2">Professional Benefits of Proper Certification:</h4>
+                <h4 className="font-medium text-green-300 mb-2">
+                  Professional Benefits of Proper Certification:
+                </h4>
                 <ul className="text-sm text-white/70 space-y-1">
-                  <li><strong>Trust Building:</strong> Demonstrates professionalism and attention to detail</li>
-                  <li><strong>Quality Assurance:</strong> Shows work meets industry standards</li>
-                  <li><strong>Legal Protection:</strong> Provides defence against liability claims</li>
-                  <li><strong>Industry Reputation:</strong> Maintains high standards across the electrical trade</li>
+                  <li>
+                    <strong>Trust Building:</strong> Demonstrates professionalism and attention to
+                    detail
+                  </li>
+                  <li>
+                    <strong>Quality Assurance:</strong> Shows work meets industry standards
+                  </li>
+                  <li>
+                    <strong>Legal Protection:</strong> Provides defence against liability claims
+                  </li>
+                  <li>
+                    <strong>Industry Reputation:</strong> Maintains high standards across the
+                    electrical trade
+                  </li>
                 </ul>
               </div>
             </div>
@@ -410,7 +513,12 @@ const Module6Section7_3 = () => {
           <InlineCheck
             id="mwc-risks-check"
             question="What are the risks of carrying out minor works without issuing a certificate?"
-            options={["No risks involved", "Legal liability, no proof of compliance, and potential insurance issues", "Only cost implications", "Minor paperwork concerns only"]}
+            options={[
+              'No risks involved',
+              'Legal liability, no proof of compliance, and potential insurance issues',
+              'Only cost implications',
+              'Minor paperwork concerns only',
+            ]}
             correctIndex={1}
             explanation="Without an MWC, there's no legal protection for the electrician, no proof of compliance for the client, and potential insurance and liability issues if problems occur."
           />
@@ -423,16 +531,24 @@ const Module6Section7_3 = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">Always issue an MWC for any minor works, no matter how small</p>
+                <p className="text-sm text-white/70">
+                  Always issue an MWC for any minor works, no matter how small
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">Fill out every section clearly and accurately</p>
+                <p className="text-sm text-white/70">
+                  Fill out every section clearly and accurately
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">Provide the client with a copy and retain one for your own records</p>
+                <p className="text-sm text-white/70">
+                  Provide the client with a copy and retain one for your own records
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">Treat the MWC with the same professionalism as a full EIC</p>
+                <p className="text-sm text-white/70">
+                  Treat the MWC with the same professionalism as a full EIC
+                </p>
               </div>
             </div>
           </section>
@@ -445,16 +561,23 @@ const Module6Section7_3 = () => {
             </h2>
             <div className="space-y-4">
               <p className="text-white/80">
-                An electrician was asked to add an extra socket to a kitchen ring final circuit. The work was completed and tested, but no Minor Works Certificate was issued. Months later, when the house was being sold, the buyer's surveyor asked for certification of all electrical alterations. Because no certificate could be produced, the seller had to pay for an Electrical Installation Condition Report (EICR) before the sale could proceed.
+                An electrician was asked to add an extra socket to a kitchen ring final circuit. The
+                work was completed and tested, but no Minor Works Certificate was issued. Months
+                later, when the house was being sold, the buyer's surveyor asked for certification
+                of all electrical alterations. Because no certificate could be produced, the seller
+                had to pay for an Electrical Installation Condition Report (EICR) before the sale
+                could proceed.
               </p>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
                 <p className="text-sm text-white/70">
-                  <strong className="text-red-300">Issue:</strong> No Minor Works Certificate issued for socket addition, causing sale delays and additional costs for EICR.
+                  <strong className="text-red-300">Issue:</strong> No Minor Works Certificate issued
+                  for socket addition, causing sale delays and additional costs for EICR.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
                 <p className="text-sm text-white/70">
-                  <strong className="text-green-300">Lesson:</strong> Minor Works Certificates save time, money, and disputes by proving compliance for small jobs.
+                  <strong className="text-green-300">Lesson:</strong> Minor Works Certificates save
+                  time, money, and disputes by proving compliance for small jobs.
                 </p>
               </div>
             </div>
@@ -468,16 +591,29 @@ const Module6Section7_3 = () => {
             </h2>
             <div className="space-y-4">
               <div className="border-b border-white/10 pb-4">
-                <h3 className="font-medium text-white mb-2">Q: Is an MWC optional for very small jobs?</h3>
-                <p className="text-sm text-white/70">A: No. All alterations, however small, require certification.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Is an MWC optional for very small jobs?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: No. All alterations, however small, require certification.
+                </p>
               </div>
               <div className="border-b border-white/10 pb-4">
-                <h3 className="font-medium text-white mb-2">Q: Who can sign a Minor Works Certificate?</h3>
-                <p className="text-sm text-white/70">A: A competent person who carried out or supervised the work.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Who can sign a Minor Works Certificate?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: A competent person who carried out or supervised the work.
+                </p>
               </div>
               <div>
-                <h3 className="font-medium text-white mb-2">Q: Does a Minor Works Certificate replace an EIC?</h3>
-                <p className="text-sm text-white/70">A: No. It only applies to small additions or alterations; new circuits and major works require an EIC.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Does a Minor Works Certificate replace an EIC?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: No. It only applies to small additions or alterations; new circuits and major
+                  works require an EIC.
+                </p>
               </div>
             </div>
           </section>
@@ -487,16 +623,17 @@ const Module6Section7_3 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Recap</h2>
               <p className="text-sm text-white/80">
-                A Minor Works Certificate (MWC) is used for small alterations and additions, such as adding a socket or lighting point. It records the work done, test results, and the signature of the competent person. It is legally required under BS 7671 and provides evidence of compliance, even for small jobs. Skipping certification for minor works creates legal, financial, and professional risks.
+                A Minor Works Certificate (MWC) is used for small alterations and additions, such as
+                adding a socket or lighting point. It records the work done, test results, and the
+                signature of the competent person. It is legally required under BS 7671 and provides
+                evidence of compliance, even for small jobs. Skipping certification for minor works
+                creates legal, financial, and professional risks.
               </p>
             </div>
           </section>
 
           {/* Quiz */}
-          <Quiz
-            title="Minor Works Certificates Quiz"
-            questions={quizQuestions}
-          />
+          <Quiz title="Minor Works Certificates Quiz" questions={quizQuestions} />
 
           {/* Navigation Footer */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">

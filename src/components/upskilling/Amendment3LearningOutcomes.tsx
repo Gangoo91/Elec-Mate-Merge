@@ -3,12 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const Amendment3LearningOutcomes = () => {
   const outcomes = [
-    "Identify when bidirectional protection devices are required in electrical installations",
-    "Understand enhanced consumer unit requirements for renewable energy systems", 
-    "Apply grid interaction safety measures and anti-islanding protection",
-    "Specify appropriate testing and commissioning procedures for bidirectional systems",
-    "Assess compliance requirements and implementation timelines for Amendment 3",
-    "Evaluate cost implications and safety benefits of proper Amendment 3 compliance"
+    'Identify when bidirectional protection devices are required in electrical installations',
+    'Understand enhanced consumer unit requirements for renewable energy systems',
+    'Apply grid interaction safety measures and anti-islanding protection',
+    'Specify appropriate testing and commissioning procedures for bidirectional systems',
+    'Assess compliance requirements and implementation timelines for Amendment 3',
+    'Evaluate cost implications and safety benefits of proper Amendment 3 compliance',
   ];
 
   return (
@@ -20,9 +20,7 @@ export const Amendment3LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-gray-300 mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-gray-300 mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-gray-300">

@@ -21,25 +21,47 @@ export default function AnimatedBackground() {
       />
 
       {/* Circuit pattern overlay */}
-      <svg
-        className="absolute inset-0 w-full h-full opacity-5"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <pattern
-            id="circuit"
-            x="0"
-            y="0"
-            width="100"
-            height="100"
-            patternUnits="userSpaceOnUse"
-          >
+          <pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
             <circle cx="10" cy="10" r="2" fill="currentColor" className="text-elec-yellow" />
             <circle cx="90" cy="90" r="2" fill="currentColor" className="text-elec-yellow" />
-            <line x1="10" y1="10" x2="90" y2="10" stroke="currentColor" strokeWidth="0.5" className="text-elec-yellow/50" />
-            <line x1="10" y1="10" x2="10" y2="90" stroke="currentColor" strokeWidth="0.5" className="text-elec-yellow/50" />
-            <line x1="90" y1="10" x2="90" y2="90" stroke="currentColor" strokeWidth="0.5" className="text-elec-yellow/50" />
-            <line x1="10" y1="90" x2="90" y2="90" stroke="currentColor" strokeWidth="0.5" className="text-elec-yellow/50" />
+            <line
+              x1="10"
+              y1="10"
+              x2="90"
+              y2="10"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              className="text-elec-yellow/50"
+            />
+            <line
+              x1="10"
+              y1="10"
+              x2="10"
+              y2="90"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              className="text-elec-yellow/50"
+            />
+            <line
+              x1="90"
+              y1="10"
+              x2="90"
+              y2="90"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              className="text-elec-yellow/50"
+            />
+            <line
+              x1="10"
+              y1="90"
+              x2="90"
+              y2="90"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              className="text-elec-yellow/50"
+            />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#circuit)" />

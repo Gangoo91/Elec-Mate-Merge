@@ -18,7 +18,7 @@ export const ZsTestingSummary = () => {
             <Target className="h-5 w-5 text-blue-400" />
             Strategic Testing Knowledge Gained
           </h3>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-blue-500">
               <h4 className="text-foreground font-medium mb-2">Test Point Selection</h4>
@@ -30,7 +30,7 @@ export const ZsTestingSummary = () => {
                 <li>• Special locations and challenging environments</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-green-500">
               <h4 className="text-foreground font-medium mb-2">Circuit-Specific Strategies</h4>
               <ul className="text-sm space-y-1">
@@ -50,7 +50,7 @@ export const ZsTestingSummary = () => {
             <TrendingUp className="h-5 w-5 text-orange-400" />
             Result Interpretation Mastery
           </h3>
-          
+
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-green-900/20 border border-green-600 p-4 rounded-lg">
               <h4 className="text-green-400 font-medium mb-2">Normal Patterns</h4>
@@ -61,7 +61,7 @@ export const ZsTestingSummary = () => {
                 <li>• All readings within BS 7671 limits</li>
               </ul>
             </div>
-            
+
             <div className="bg-yellow-900/20 border border-yellow-600 p-4 rounded-lg">
               <h4 className="text-yellow-400 font-medium mb-2">Investigation Triggers</h4>
               <ul className="text-sm space-y-1">
@@ -71,7 +71,7 @@ export const ZsTestingSummary = () => {
                 <li>• Higher than calculated values</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-900/20 border border-red-600 p-4 rounded-lg">
               <h4 className="text-red-400 font-medium mb-2">Immediate Action</h4>
               <ul className="text-sm space-y-1">
@@ -90,7 +90,7 @@ export const ZsTestingSummary = () => {
             <CheckCircle className="h-5 w-5 text-green-400" />
             Practical Competencies Developed
           </h3>
-          
+
           <div className="space-y-3">
             <div className="bg-elec-dark p-4 rounded-lg">
               <h4 className="text-foreground font-medium mb-2 flex items-center gap-2">
@@ -98,33 +98,33 @@ export const ZsTestingSummary = () => {
                 Testing Efficiency
               </h4>
               <p className="text-sm text-gray-300">
-                Learned to plan test sequences strategically, minimising disruption while ensuring 
-                comprehensive verification. Developed skills in managing access challenges and 
+                Learned to plan test sequences strategically, minimising disruption while ensuring
+                comprehensive verification. Developed skills in managing access challenges and
                 working around sensitive equipment.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg">
               <h4 className="text-foreground font-medium mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
                 Problem Solving
               </h4>
               <p className="text-sm text-gray-300">
-                Gained expertise in troubleshooting high Zs readings, identifying root causes, 
-                and implementing effective solutions. Understand how to handle parallel earth 
-                paths and electronic equipment challenges.
+                Gained expertise in troubleshooting high Zs readings, identifying root causes, and
+                implementing effective solutions. Understand how to handle parallel earth paths and
+                electronic equipment challenges.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg">
               <h4 className="text-foreground font-medium mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                 Documentation Standards
               </h4>
               <p className="text-sm text-gray-300">
-                Developed professional documentation practices including detailed location 
-                descriptions, environmental conditions, and compliance assessments. Learned 
-                to create clear, actionable reports.
+                Developed professional documentation practices including detailed location
+                descriptions, environmental conditions, and compliance assessments. Learned to
+                create clear, actionable reports.
               </p>
             </div>
           </div>
@@ -132,7 +132,9 @@ export const ZsTestingSummary = () => {
 
         {/* Common Challenges Addressed */}
         <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
-          <h4 className="text-blue-400 font-semibold mb-3">Common Challenges Successfully Addressed</h4>
+          <h4 className="text-blue-400 font-semibold mb-3">
+            Common Challenges Successfully Addressed
+          </h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div>
               <p className="font-medium text-blue-300 mb-2">Access and Practical Issues:</p>
@@ -157,10 +159,12 @@ export const ZsTestingSummary = () => {
 
         {/* Professional Development */}
         <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
-          <h4 className="text-foreground font-semibold mb-3">Professional Competence Achievement</h4>
+          <h4 className="text-foreground font-semibold mb-3">
+            Professional Competence Achievement
+          </h4>
           <p className="text-sm mb-3 text-gray-300">
-            This section has equipped you with the practical skills and knowledge to conduct 
-            comprehensive Zs testing across various installation types, interpret results 
+            This section has equipped you with the practical skills and knowledge to conduct
+            comprehensive Zs testing across various installation types, interpret results
             professionally, and solve complex measurement challenges.
           </p>
           <div className="flex flex-wrap gap-2">
@@ -186,9 +190,9 @@ export const ZsTestingSummary = () => {
         <div className="bg-purple-900/20 border border-purple-600 p-4 rounded-lg">
           <h4 className="text-purple-400 font-semibold mb-2">Ready for Advanced Topics</h4>
           <p className="text-sm text-gray-300">
-            With comprehensive Zs testing skills mastered, you're prepared to tackle more 
-            advanced testing scenarios including fault current calculations, prospective 
-            short circuit current testing, and complex installation verification procedures.
+            With comprehensive Zs testing skills mastered, you're prepared to tackle more advanced
+            testing scenarios including fault current calculations, prospective short circuit
+            current testing, and complex installation verification procedures.
           </p>
         </div>
       </CardContent>

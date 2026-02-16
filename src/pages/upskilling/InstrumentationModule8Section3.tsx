@@ -1,116 +1,127 @@
-import { ArrowLeft, ArrowRight, Settings2, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Settings2, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Using Loop Calibrators and Simulators for Diagnostics - Instrumentation Course";
-const DESCRIPTION = "Learn to use loop calibrators and signal simulators to diagnose 4-20mA faults, inject known signals, and isolate problems between sensors and controllers.";
+const TITLE = 'Using Loop Calibrators and Simulators for Diagnostics - Instrumentation Course';
+const DESCRIPTION =
+  'Learn to use loop calibrators and signal simulators to diagnose 4-20mA faults, inject known signals, and isolate problems between sensors and controllers.';
 
 const quickCheckQuestions = [
   {
     question: "What's the purpose of using a loop calibrator during diagnostics?",
     options: [
-      "To replace multimeters",
-      "To inject known signals and isolate faults between sensor and controller sides",
-      "To generate random test values",
-      "To permanently modify loop settings"
+      'To replace multimeters',
+      'To inject known signals and isolate faults between sensor and controller sides',
+      'To generate random test values',
+      'To permanently modify loop settings',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
-    question: "If you inject 12mA with a calibrator and the controller shows exactly 50%, what does this confirm?",
+    question:
+      'If you inject 12mA with a calibrator and the controller shows exactly 50%, what does this confirm?',
     options: [
-      "The transmitter is faulty",
-      "The loop wiring and controller are functioning correctly",
-      "The calibrator is broken",
-      "The power supply is unstable"
+      'The transmitter is faulty',
+      'The loop wiring and controller are functioning correctly',
+      'The calibrator is broken',
+      'The power supply is unstable',
     ],
-    correctAnswer: 1
-  }
+    correctAnswer: 1,
+  },
 ];
 
 const quizQuestions = [
   {
-    id: "im8s3-q1",
-    question: "What tool would you use to simulate a 12mA signal?",
+    id: 'im8s3-q1',
+    question: 'What tool would you use to simulate a 12mA signal?',
     options: [
-      "A multimeter",
-      "A loop calibrator or process calibrator",
-      "An oscilloscope",
-      "A power supply"
+      'A multimeter',
+      'A loop calibrator or process calibrator',
+      'An oscilloscope',
+      'A power supply',
     ],
     correctAnswer: 1,
-    explanation: "A loop calibrator or process calibrator can generate precise current signals like 12mA to simulate transmitter outputs for testing purposes."
+    explanation:
+      'A loop calibrator or process calibrator can generate precise current signals like 12mA to simulate transmitter outputs for testing purposes.',
   },
   {
-    id: "im8s3-q2",
-    question: "Why is simulation useful during loop testing?",
+    id: 'im8s3-q2',
+    question: 'Why is simulation useful during loop testing?',
     options: [
       "It's cheaper than using real sensors",
-      "It provides known, controllable signals to isolate faults between sensor and controller sides",
+      'It provides known, controllable signals to isolate faults between sensor and controller sides',
       "It's faster than other methods",
-      "It doesn't require any tools"
+      "It doesn't require any tools",
     ],
     correctAnswer: 1,
-    explanation: "Simulation provides known, controllable signals that help isolate whether faults are on the sensor side or controller side, eliminating guesswork in diagnostics."
+    explanation:
+      'Simulation provides known, controllable signals that help isolate whether faults are on the sensor side or controller side, eliminating guesswork in diagnostics.',
   },
   {
-    id: "im8s3-q3",
+    id: 'im8s3-q3',
     question: "What does it mean if a simulated signal works but the real signal doesn't?",
     options: [
-      "The controller is faulty",
-      "The wiring is damaged",
-      "The sensor/transmitter is likely faulty since the loop and controller respond correctly to known signals",
-      "The power supply is wrong"
+      'The controller is faulty',
+      'The wiring is damaged',
+      'The sensor/transmitter is likely faulty since the loop and controller respond correctly to known signals',
+      'The power supply is wrong',
     ],
     correctAnswer: 2,
-    explanation: "If the simulated signal works correctly, it proves the loop wiring and controller are functioning properly, indicating the fault lies in the sensor or transmitter."
+    explanation:
+      'If the simulated signal works correctly, it proves the loop wiring and controller are functioning properly, indicating the fault lies in the sensor or transmitter.',
   },
   {
-    id: "im8s3-q4",
-    question: "When would you use a multimeter vs a calibrator?",
+    id: 'im8s3-q4',
+    question: 'When would you use a multimeter vs a calibrator?',
     options: [
-      "Always use a multimeter first",
-      "Multimeter to measure existing signals; calibrator to generate known test signals",
-      "They do the same thing",
-      "Calibrators are only for digital signals"
+      'Always use a multimeter first',
+      'Multimeter to measure existing signals; calibrator to generate known test signals',
+      'They do the same thing',
+      'Calibrators are only for digital signals',
     ],
     correctAnswer: 1,
-    explanation: "Use a multimeter to measure existing signals and verify readings; use a calibrator to generate known test signals for systematic troubleshooting and isolation testing."
+    explanation:
+      'Use a multimeter to measure existing signals and verify readings; use a calibrator to generate known test signals for systematic troubleshooting and isolation testing.',
   },
   {
-    id: "im8s3-q5",
+    id: 'im8s3-q5',
     question: "What's the benefit of using loop-back testing?",
     options: [
-      "It tests only the sensor",
-      "It verifies the complete signal path from output back to input, testing end-to-end loop integrity",
+      'It tests only the sensor',
+      'It verifies the complete signal path from output back to input, testing end-to-end loop integrity',
       "It's the cheapest method",
-      "It only works with digital signals"
+      'It only works with digital signals',
     ],
     correctAnswer: 1,
-    explanation: "Loop-back testing connects the calibrator output to the system input, verifying the complete signal path and end-to-end loop integrity including cables and controller."
-  }
+    explanation:
+      'Loop-back testing connects the calibrator output to the system input, verifying the complete signal path and end-to-end loop integrity including cables and controller.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between a loop calibrator and a process calibrator?",
-    answer: "A loop calibrator is typically a simpler device focused on 4-20mA current loops, whilst a process calibrator is more versatile and can handle multiple signal types including voltage, RTDs, thermocouples, frequency, and pressure. Process calibrators often include HART communication capabilities."
+    answer:
+      'A loop calibrator is typically a simpler device focused on 4-20mA current loops, whilst a process calibrator is more versatile and can handle multiple signal types including voltage, RTDs, thermocouples, frequency, and pressure. Process calibrators often include HART communication capabilities.',
   },
   {
-    question: "Can I damage equipment by using a calibrator incorrectly?",
-    answer: "Yes, incorrect polarity connections can damage sensitive electronics. Always verify positive and negative terminals before connecting. Also ensure the calibrator is set to the correct mode (source vs simulate) before connecting to live systems."
+    question: 'Can I damage equipment by using a calibrator incorrectly?',
+    answer:
+      'Yes, incorrect polarity connections can damage sensitive electronics. Always verify positive and negative terminals before connecting. Also ensure the calibrator is set to the correct mode (source vs simulate) before connecting to live systems.',
   },
   {
     question: "What's a 5-point calibration check?",
-    answer: "A 5-point check tests the loop response at 0%, 25%, 50%, 75%, and 100% of the signal range (4mA, 8mA, 12mA, 16mA, and 20mA). This verifies linearity across the full measurement range and identifies any non-linear responses or drift at specific points."
+    answer:
+      'A 5-point check tests the loop response at 0%, 25%, 50%, 75%, and 100% of the signal range (4mA, 8mA, 12mA, 16mA, and 20mA). This verifies linearity across the full measurement range and identifies any non-linear responses or drift at specific points.',
   },
   {
-    question: "How do I know which side of the loop has the fault?",
-    answer: "Connect your calibrator in place of the transmitter and inject known signals. If the controller responds correctly, the fault is likely in the transmitter or sensor. If the controller doesn't respond, check the wiring, input card, or power supply on the controller side."
-  }
+    question: 'How do I know which side of the loop has the fault?',
+    answer:
+      "Connect your calibrator in place of the transmitter and inject known signals. If the controller responds correctly, the fault is likely in the transmitter or sensor. If the controller doesn't respond, check the wiring, input card, or power supply on the controller side.",
+  },
 ];
 
 const InstrumentationModule8Section3 = () => {
@@ -122,7 +133,11 @@ const InstrumentationModule8Section3 = () => {
       <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-3">
           <Link to="/electrician/upskilling/instrumentation-module-8">
-            <Button variant="ghost" size="sm" className="text-white hover:text-elec-yellow touch-manipulation active:scale-[0.98]">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:text-elec-yellow touch-manipulation active:scale-[0.98]"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Module 8
             </Button>
@@ -135,7 +150,9 @@ const InstrumentationModule8Section3 = () => {
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/20 mb-4">
           <Settings2 className="h-6 w-6 text-elec-yellow" />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Using Loop Calibrators and Simulators for Diagnostics</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          Using Loop Calibrators and Simulators for Diagnostics
+        </h1>
         <p className="text-gray-400 text-sm">Section 8.3 - 20 minutes</p>
       </div>
 
@@ -174,19 +191,25 @@ const InstrumentationModule8Section3 = () => {
               <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-elec-yellow text-xs font-bold">1</span>
               </div>
-              <p className="text-gray-300 text-sm">Learn how to simulate sensor signals using a calibrator</p>
+              <p className="text-gray-300 text-sm">
+                Learn how to simulate sensor signals using a calibrator
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-elec-yellow text-xs font-bold">2</span>
               </div>
-              <p className="text-gray-300 text-sm">Verify whether the issue lies in the sensor or controller</p>
+              <p className="text-gray-300 text-sm">
+                Verify whether the issue lies in the sensor or controller
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-elec-yellow text-xs font-bold">3</span>
               </div>
-              <p className="text-gray-300 text-sm">Use signal injection to isolate sections of the loop</p>
+              <p className="text-gray-300 text-sm">
+                Use signal injection to isolate sections of the loop
+              </p>
             </div>
           </div>
         </div>
@@ -208,24 +231,46 @@ const InstrumentationModule8Section3 = () => {
               <h4 className="text-white font-medium mb-3">Step-by-Step Diagnostic Process</h4>
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow/30 pl-3">
-                  <p className="text-sm font-medium text-white">Step 1: Connect Calibrator in Place of Transmitter</p>
-                  <p className="text-sm text-gray-400">Safely disconnect the field transmitter and wire the calibrator to simulate the output. Verify polarity and confirm 24V loop power.</p>
+                  <p className="text-sm font-medium text-white">
+                    Step 1: Connect Calibrator in Place of Transmitter
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Safely disconnect the field transmitter and wire the calibrator to simulate the
+                    output. Verify polarity and confirm 24V loop power.
+                  </p>
                 </div>
                 <div className="border-l-2 border-elec-yellow/30 pl-3">
-                  <p className="text-sm font-medium text-white">Step 2: Inject Known Signal (e.g., 12mA = 50%)</p>
-                  <p className="text-sm text-gray-400">Test at 4mA (0%), 12mA (50%), and 20mA (100%) minimum. Record actual vs expected readings.</p>
+                  <p className="text-sm font-medium text-white">
+                    Step 2: Inject Known Signal (e.g., 12mA = 50%)
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Test at 4mA (0%), 12mA (50%), and 20mA (100%) minimum. Record actual vs expected
+                    readings.
+                  </p>
                 </div>
                 <div className="border-l-2 border-elec-yellow/30 pl-3">
-                  <p className="text-sm font-medium text-white">Step 3: Observe Control System Response</p>
-                  <p className="text-sm text-gray-400">Check controller displays match calibrator output. Verify alarm functions and data logging.</p>
+                  <p className="text-sm font-medium text-white">
+                    Step 3: Observe Control System Response
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Check controller displays match calibrator output. Verify alarm functions and
+                    data logging.
+                  </p>
                 </div>
                 <div className="border-l-2 border-elec-yellow/30 pl-3">
                   <p className="text-sm font-medium text-white">Step 4: Interpret Results</p>
-                  <p className="text-sm text-gray-400">If controller responds correctly, fault is likely in transmitter. If not, check wiring and input card.</p>
+                  <p className="text-sm text-gray-400">
+                    If controller responds correctly, fault is likely in transmitter. If not, check
+                    wiring and input card.
+                  </p>
                 </div>
                 <div className="border-l-2 border-elec-yellow/30 pl-3">
-                  <p className="text-sm font-medium text-white">Step 5: Compare Real Signal to Simulated Values</p>
-                  <p className="text-sm text-gray-400">Reconnect transmitter and compare field reading to calibrator test results.</p>
+                  <p className="text-sm font-medium text-white">
+                    Step 5: Compare Real Signal to Simulated Values
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Reconnect transmitter and compare field reading to calibrator test results.
+                  </p>
                 </div>
               </div>
             </div>
@@ -249,8 +294,8 @@ const InstrumentationModule8Section3 = () => {
           </div>
           <div className="space-y-4 text-gray-300">
             <p>
-              Using standardised test points ensures consistent diagnostics and makes it easier
-              to identify non-linear responses or specific fault conditions.
+              Using standardised test points ensures consistent diagnostics and makes it easier to
+              identify non-linear responses or specific fault conditions.
             </p>
             <div className="bg-card/30 rounded-lg p-4">
               <h4 className="text-white font-medium mb-3">4-20mA Signal Reference</h4>
@@ -279,7 +324,9 @@ const InstrumentationModule8Section3 = () => {
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                <h5 className="text-green-400 font-medium mb-2">If Controller Responds Correctly</h5>
+                <h5 className="text-green-400 font-medium mb-2">
+                  If Controller Responds Correctly
+                </h5>
                 <ul className="text-sm space-y-1">
                   <li>- Loop wiring is intact</li>
                   <li>- Controller input card functioning</li>
@@ -308,8 +355,8 @@ const InstrumentationModule8Section3 = () => {
           </div>
           <div className="space-y-4 text-gray-300">
             <p>
-              Beyond basic signal injection, calibrators can be used for more sophisticated
-              testing methods that provide deeper insight into loop performance.
+              Beyond basic signal injection, calibrators can be used for more sophisticated testing
+              methods that provide deeper insight into loop performance.
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-card/30 rounded-lg p-4">
@@ -371,13 +418,15 @@ const InstrumentationModule8Section3 = () => {
             <h4 className="text-blue-400 font-medium mb-3">Faulty pH Transmitter Investigation</h4>
             <p className="text-gray-300 text-sm mb-4">
               A technician suspects a faulty pH transmitter after receiving reports of erratic
-              readings that don't correlate with process conditions. Using a loop calibrator,
-              he systematically isolates the problem.
+              readings that don't correlate with process conditions. Using a loop calibrator, he
+              systematically isolates the problem.
             </p>
             <div className="space-y-2 mb-4">
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">1</span>
-                <p className="text-sm text-gray-300">Disconnected pH transmitter and connected calibrator</p>
+                <p className="text-sm text-gray-300">
+                  Disconnected pH transmitter and connected calibrator
+                </p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">2</span>
@@ -389,19 +438,23 @@ const InstrumentationModule8Section3 = () => {
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">4</span>
-                <p className="text-sm text-gray-300">Tested full range from 4-20mA with perfect response</p>
+                <p className="text-sm text-gray-300">
+                  Tested full range from 4-20mA with perfect response
+                </p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">5</span>
-                <p className="text-sm text-gray-300">Reconnected transmitter - erratic readings returned</p>
+                <p className="text-sm text-gray-300">
+                  Reconnected transmitter - erratic readings returned
+                </p>
               </div>
             </div>
             <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
               <p className="text-green-400 font-medium text-sm mb-1">Result</p>
               <p className="text-gray-300 text-sm">
-                The calibrator test confirmed the transmitter failure. When the simulator
-                produced accurate system responses, it proved the loop wiring and controller
-                were functioning correctly, eliminating hours of unnecessary troubleshooting.
+                The calibrator test confirmed the transmitter failure. When the simulator produced
+                accurate system responses, it proved the loop wiring and controller were functioning
+                correctly, eliminating hours of unnecessary troubleshooting.
               </p>
             </div>
           </div>
@@ -413,19 +466,31 @@ const InstrumentationModule8Section3 = () => {
           <div className="bg-card/30 rounded-lg p-4 space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">Always verify calibrator battery level before starting diagnostics to avoid inaccurate readings mid-test.</p>
+              <p className="text-gray-300 text-sm">
+                Always verify calibrator battery level before starting diagnostics to avoid
+                inaccurate readings mid-test.
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">Document all test readings in a structured format for future reference and trend analysis.</p>
+              <p className="text-gray-300 text-sm">
+                Document all test readings in a structured format for future reference and trend
+                analysis.
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">When testing multiple loops, work systematically and label all connections to avoid confusion.</p>
+              <p className="text-gray-300 text-sm">
+                When testing multiple loops, work systematically and label all connections to avoid
+                confusion.
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">Keep calibrators in their protective cases when not in use to maintain accuracy and prevent damage.</p>
+              <p className="text-gray-300 text-sm">
+                Keep calibrators in their protective cases when not in use to maintain accuracy and
+                prevent damage.
+              </p>
             </div>
           </div>
         </div>
@@ -445,16 +510,16 @@ const InstrumentationModule8Section3 = () => {
 
         {/* Quiz Section */}
         <div className="mb-12">
-          <Quiz
-            title="Section 8.3 Knowledge Check"
-            questions={quizQuestions}
-          />
+          <Quiz title="Section 8.3 Knowledge Check" questions={quizQuestions} />
         </div>
 
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Link to="/electrician/upskilling/instrumentation-module-8-section-2">
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
+            <Button
+              variant="outline"
+              className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]"
+            >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Previous
             </Button>

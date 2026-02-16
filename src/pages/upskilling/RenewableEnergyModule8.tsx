@@ -7,34 +7,34 @@ const RenewableEnergyModule8 = () => {
   const sections = [
     {
       id: 1,
-      title: "MCS Requirements and Certification Pathways",
+      title: 'MCS Requirements and Certification Pathways',
       icon: Award,
-      description: "Microgeneration Certification Scheme requirements and certification process"
+      description: 'Microgeneration Certification Scheme requirements and certification process',
     },
     {
       id: 2,
-      title: "Building Regulations (Part L, Part P, Structural)",
+      title: 'Building Regulations (Part L, Part P, Structural)',
       icon: Building,
-      description: "Compliance with building regulations for renewable energy installations"
+      description: 'Compliance with building regulations for renewable energy installations',
     },
     {
       id: 3,
-      title: "DNO Application Processes (G98, G99)",
+      title: 'DNO Application Processes (G98, G99)',
       icon: FileText,
-      description: "Distribution Network Operator application procedures and requirements"
+      description: 'Distribution Network Operator application procedures and requirements',
     },
     {
       id: 4,
-      title: "Fire Safety, AC/DC Isolation & Labelling Standards",
+      title: 'Fire Safety, AC/DC Isolation & Labelling Standards',
       icon: AlertTriangle,
-      description: "Fire safety requirements and isolation/labelling standards"
+      description: 'Fire safety requirements and isolation/labelling standards',
     },
     {
       id: 5,
-      title: "Handover Documentation & Operation Manuals",
+      title: 'Handover Documentation & Operation Manuals',
       icon: BookOpen,
-      description: "Required documentation and operational guidance for system handover"
-    }
+      description: 'Required documentation and operational guidance for system handover',
+    },
   ];
 
   return (

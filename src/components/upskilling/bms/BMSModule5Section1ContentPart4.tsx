@@ -14,9 +14,9 @@ export const BMSModule5Section1ContentPart4 = () => {
         <div className="bg-gradient-to-r from-elec-yellow/10 to-orange-500/10 border border-elec-yellow/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Critical Understanding</h4>
           <p className="text-foreground">
-            While BMS engineers handle protocol configuration, electricians are responsible for the physical 
-            infrastructure that makes communication possible. Poor electrical installation can render even 
-            the most sophisticated protocols completely ineffective.
+            While BMS engineers handle protocol configuration, electricians are responsible for the
+            physical infrastructure that makes communication possible. Poor electrical installation
+            can render even the most sophisticated protocols completely ineffective.
           </p>
         </div>
 
@@ -76,15 +76,21 @@ export const BMSModule5Section1ContentPart4 = () => {
         <div className="grid md:grid-cols-3 gap-3">
           <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
             <h5 className="text-blue-400 font-medium text-sm mb-1">BACnet MSTP</h5>
-            <p className="text-foreground text-xs">RS-485 twisted pair, 120Ω termination, daisy-chain only</p>
+            <p className="text-foreground text-xs">
+              RS-485 twisted pair, 120Ω termination, daisy-chain only
+            </p>
           </div>
           <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
             <h5 className="text-green-400 font-medium text-sm mb-1">Modbus RTU</h5>
-            <p className="text-foreground text-xs">Max 32 devices, daisy-chain wiring, 120Ω terminators</p>
+            <p className="text-foreground text-xs">
+              Max 32 devices, daisy-chain wiring, 120Ω terminators
+            </p>
           </div>
           <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
             <h5 className="text-purple-400 font-medium text-sm mb-1">KNX TP</h5>
-            <p className="text-foreground text-xs">Certified bus cable, tree topology, no terminators needed</p>
+            <p className="text-foreground text-xs">
+              Certified bus cable, tree topology, no terminators needed
+            </p>
           </div>
         </div>
       </CardContent>

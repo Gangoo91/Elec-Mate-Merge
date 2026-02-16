@@ -7,12 +7,12 @@ export const ProprietaryHubQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is one drawback of using a proprietary smart home hub?";
+  const question = 'What is one drawback of using a proprietary smart home hub?';
   const options = [
-    "They are too difficult to set up",
-    "They have limited device compatibility outside their brand ecosystem",
+    'They are too difficult to set up',
+    'They have limited device compatibility outside their brand ecosystem',
     "They don't work with any voice assistants",
-    "They are always more expensive than open-source options"
+    'They are always more expensive than open-source options',
   ];
   const correctAnswer = 1;
 
@@ -35,7 +35,7 @@ export const ProprietaryHubQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -47,8 +47,8 @@ export const ProprietaryHubQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-900/30 border-green-500 text-green-300'
                     : index === selectedAnswer
-                    ? 'bg-red-900/30 border-red-500 text-red-300'
-                    : 'bg-gray-800/30 border-gray-600 text-gray-400'
+                      ? 'bg-red-900/30 border-red-500 text-red-300'
+                      : 'bg-gray-800/30 border-gray-600 text-gray-400'
                   : 'bg-elec-gray border-gray-600 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
               }`}
             >
@@ -67,16 +67,17 @@ export const ProprietaryHubQuickCheck = () => {
 
         {showResult && (
           <div className="space-y-3">
-            <div className={`p-4 rounded-lg border ${
-              selectedAnswer === correctAnswer
-                ? 'bg-green-900/20 border-green-500/30'
-                : 'bg-red-900/20 border-red-500/30'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'bg-green-900/20 border-green-500/30'
+                  : 'bg-red-900/20 border-red-500/30'
+              }`}
+            >
               <p className="text-foreground text-sm">
                 {selectedAnswer === correctAnswer
-                  ? "Correct! The main drawback of proprietary hubs is their limited compatibility outside their brand ecosystem, often requiring multiple hubs for different device types and creating vendor lock-in."
-                  : "Not quite. The primary disadvantage of proprietary hubs is their limited device compatibility outside their specific brand ecosystem, which can lead to multiple hubs being needed for different systems."
-                }
+                  ? 'Correct! The main drawback of proprietary hubs is their limited compatibility outside their brand ecosystem, often requiring multiple hubs for different device types and creating vendor lock-in.'
+                  : 'Not quite. The primary disadvantage of proprietary hubs is their limited device compatibility outside their specific brand ecosystem, which can lead to multiple hubs being needed for different systems.'}
               </p>
             </div>
 

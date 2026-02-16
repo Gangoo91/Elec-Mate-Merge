@@ -130,7 +130,7 @@ export function useEmergencyLightingSmartForm() {
       testerCompany: company,
       testerQualifications: qualifications,
       testerSignature: signature,
-      testerDate: today
+      testerDate: today,
     };
   }, [companyProfile, getDefaultProfile]);
 
@@ -152,7 +152,7 @@ export function useEmergencyLightingSmartForm() {
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
       registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
-      registrationScheme: companyProfile.registration_scheme || ''
+      registrationScheme: companyProfile.registration_scheme || '',
     };
   }, [companyProfile]);
 
@@ -165,7 +165,11 @@ export function useEmergencyLightingSmartForm() {
   }, [companyProfile, getDefaultProfile]);
 
   const hasSavedCompanyBranding = useMemo(() => {
-    return !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+    return !!(
+      companyProfile?.company_name ||
+      companyProfile?.logo_url ||
+      companyProfile?.logo_data_url
+    );
   }, [companyProfile]);
 
   // ---------------------------------------------------------------------------
@@ -183,7 +187,7 @@ export function useEmergencyLightingSmartForm() {
       maintained: luminaire.maintained,
       selfTest: luminaire.selfTest,
       ipRating: luminaire.ipRating,
-      lightOutput: luminaire.lightOutput
+      lightOutput: luminaire.lightOutput,
     };
   }, []);
 
@@ -213,10 +217,7 @@ export function useEmergencyLightingSmartForm() {
   // ---------------------------------------------------------------------------
   // BS EN 1838 Lux Validation
   // ---------------------------------------------------------------------------
-  const validateLux = useCallback((
-    lux: number,
-    category: ZoneCategory
-  ): ValidationResult => {
+  const validateLux = useCallback((lux: number, category: ZoneCategory): ValidationResult => {
     return validateLuxReading(lux, category);
   }, []);
 
@@ -227,140 +228,143 @@ export function useEmergencyLightingSmartForm() {
   // ---------------------------------------------------------------------------
   // Validate Test Results
   // ---------------------------------------------------------------------------
-  const validateTestResults = useCallback((testResults: {
-    allLuminairesOperational?: boolean;
-    chargingIndicatorsNormal?: boolean;
-    batteryCondition?: string;
-    durationAchieved?: number;
-    ratedDuration?: number;
-    luxReadings?: Array<{ lux: number; category: ZoneCategory }>;
-  }): TestResultValidation[] => {
-    const validations: TestResultValidation[] = [];
+  const validateTestResults = useCallback(
+    (testResults: {
+      allLuminairesOperational?: boolean;
+      chargingIndicatorsNormal?: boolean;
+      batteryCondition?: string;
+      durationAchieved?: number;
+      ratedDuration?: number;
+      luxReadings?: Array<{ lux: number; category: ZoneCategory }>;
+    }): TestResultValidation[] => {
+      const validations: TestResultValidation[] = [];
 
-    // Functional test - all luminaires operational
-    if (testResults.allLuminairesOperational !== undefined) {
-      validations.push({
-        field: 'allLuminairesOperational',
-        value: testResults.allLuminairesOperational,
-        isValid: testResults.allLuminairesOperational === true,
-        status: testResults.allLuminairesOperational ? 'pass' : 'fail',
-        message: testResults.allLuminairesOperational
-          ? 'PASS: All luminaires operational'
-          : 'FAIL: One or more luminaires not operational'
-      });
-    }
-
-    // Charging indicators
-    if (testResults.chargingIndicatorsNormal !== undefined) {
-      validations.push({
-        field: 'chargingIndicatorsNormal',
-        value: testResults.chargingIndicatorsNormal,
-        isValid: testResults.chargingIndicatorsNormal === true,
-        status: testResults.chargingIndicatorsNormal ? 'pass' : 'fail',
-        message: testResults.chargingIndicatorsNormal
-          ? 'PASS: Charging indicators normal'
-          : 'FAIL: Charging indicator fault detected'
-      });
-    }
-
-    // Battery condition
-    if (testResults.batteryCondition) {
-      const batteryValidation = validateBatteryCondition(testResults.batteryCondition);
-      validations.push({
-        field: 'batteryCondition',
-        value: testResults.batteryCondition,
-        isValid: batteryValidation.valid,
-        status: batteryValidation.status,
-        message: batteryValidation.message
-      });
-    }
-
-    // Duration test
-    if (testResults.durationAchieved !== undefined && testResults.ratedDuration !== undefined) {
-      const durationValid = testResults.durationAchieved >= testResults.ratedDuration;
-      validations.push({
-        field: 'durationAchieved',
-        value: testResults.durationAchieved,
-        isValid: durationValid,
-        status: durationValid ? 'pass' : 'fail',
-        message: durationValid
-          ? `PASS: Duration ${testResults.durationAchieved} min meets ${testResults.ratedDuration} min rating`
-          : `FAIL: Duration ${testResults.durationAchieved} min below ${testResults.ratedDuration} min rating`
-      });
-    }
-
-    // Lux readings
-    if (testResults.luxReadings && testResults.luxReadings.length > 0) {
-      testResults.luxReadings.forEach((reading, index) => {
-        const luxValidation = validateLuxReading(reading.lux, reading.category);
+      // Functional test - all luminaires operational
+      if (testResults.allLuminairesOperational !== undefined) {
         validations.push({
-          field: `luxReading_${index}`,
-          value: reading.lux,
-          isValid: luxValidation.valid,
-          status: luxValidation.status,
-          message: luxValidation.message,
-          reference: luxValidation.reference
+          field: 'allLuminairesOperational',
+          value: testResults.allLuminairesOperational,
+          isValid: testResults.allLuminairesOperational === true,
+          status: testResults.allLuminairesOperational ? 'pass' : 'fail',
+          message: testResults.allLuminairesOperational
+            ? 'PASS: All luminaires operational'
+            : 'FAIL: One or more luminaires not operational',
         });
-      });
-    }
+      }
 
-    return validations;
-  }, []);
+      // Charging indicators
+      if (testResults.chargingIndicatorsNormal !== undefined) {
+        validations.push({
+          field: 'chargingIndicatorsNormal',
+          value: testResults.chargingIndicatorsNormal,
+          isValid: testResults.chargingIndicatorsNormal === true,
+          status: testResults.chargingIndicatorsNormal ? 'pass' : 'fail',
+          message: testResults.chargingIndicatorsNormal
+            ? 'PASS: Charging indicators normal'
+            : 'FAIL: Charging indicator fault detected',
+        });
+      }
+
+      // Battery condition
+      if (testResults.batteryCondition) {
+        const batteryValidation = validateBatteryCondition(testResults.batteryCondition);
+        validations.push({
+          field: 'batteryCondition',
+          value: testResults.batteryCondition,
+          isValid: batteryValidation.valid,
+          status: batteryValidation.status,
+          message: batteryValidation.message,
+        });
+      }
+
+      // Duration test
+      if (testResults.durationAchieved !== undefined && testResults.ratedDuration !== undefined) {
+        const durationValid = testResults.durationAchieved >= testResults.ratedDuration;
+        validations.push({
+          field: 'durationAchieved',
+          value: testResults.durationAchieved,
+          isValid: durationValid,
+          status: durationValid ? 'pass' : 'fail',
+          message: durationValid
+            ? `PASS: Duration ${testResults.durationAchieved} min meets ${testResults.ratedDuration} min rating`
+            : `FAIL: Duration ${testResults.durationAchieved} min below ${testResults.ratedDuration} min rating`,
+        });
+      }
+
+      // Lux readings
+      if (testResults.luxReadings && testResults.luxReadings.length > 0) {
+        testResults.luxReadings.forEach((reading, index) => {
+          const luxValidation = validateLuxReading(reading.lux, reading.category);
+          validations.push({
+            field: `luxReading_${index}`,
+            value: reading.lux,
+            isValid: luxValidation.valid,
+            status: luxValidation.status,
+            message: luxValidation.message,
+            reference: luxValidation.reference,
+          });
+        });
+      }
+
+      return validations;
+    },
+    []
+  );
 
   // ---------------------------------------------------------------------------
   // Calculate Next Test Dates
   // ---------------------------------------------------------------------------
-  const calculateTestDates = useCallback((
-    lastMonthlyTest: Date | string | null,
-    lastAnnualTest: Date | string | null
-  ): TestDates => {
-    const now = new Date();
+  const calculateTestDates = useCallback(
+    (lastMonthlyTest: Date | string | null, lastAnnualTest: Date | string | null): TestDates => {
+      const now = new Date();
 
-    // Monthly test dates
-    let nextMonthlyTest: Date;
-    let monthlyOverdue = false;
-    let daysUntilMonthly = 0;
+      // Monthly test dates
+      let nextMonthlyTest: Date;
+      let monthlyOverdue = false;
+      let daysUntilMonthly = 0;
 
-    if (lastMonthlyTest) {
-      nextMonthlyTest = calculateNextTestDate(lastMonthlyTest, 'monthly');
-      const monthlyStatus = isTestOverdue(lastMonthlyTest, 'monthly');
-      monthlyOverdue = monthlyStatus.overdue;
-      daysUntilMonthly = monthlyOverdue
-        ? -monthlyStatus.daysOverdue
-        : Math.ceil((nextMonthlyTest.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    } else {
-      nextMonthlyTest = now;
-      monthlyOverdue = true;
-      daysUntilMonthly = 0;
-    }
+      if (lastMonthlyTest) {
+        nextMonthlyTest = calculateNextTestDate(lastMonthlyTest, 'monthly');
+        const monthlyStatus = isTestOverdue(lastMonthlyTest, 'monthly');
+        monthlyOverdue = monthlyStatus.overdue;
+        daysUntilMonthly = monthlyOverdue
+          ? -monthlyStatus.daysOverdue
+          : Math.ceil((nextMonthlyTest.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      } else {
+        nextMonthlyTest = now;
+        monthlyOverdue = true;
+        daysUntilMonthly = 0;
+      }
 
-    // Annual test dates
-    let nextAnnualTest: Date;
-    let annualOverdue = false;
-    let daysUntilAnnual = 0;
+      // Annual test dates
+      let nextAnnualTest: Date;
+      let annualOverdue = false;
+      let daysUntilAnnual = 0;
 
-    if (lastAnnualTest) {
-      nextAnnualTest = calculateNextTestDate(lastAnnualTest, 'annual');
-      const annualStatus = isTestOverdue(lastAnnualTest, 'annual');
-      annualOverdue = annualStatus.overdue;
-      daysUntilAnnual = annualOverdue
-        ? -annualStatus.daysOverdue
-        : Math.ceil((nextAnnualTest.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    } else {
-      nextAnnualTest = now;
-      annualOverdue = true;
-      daysUntilAnnual = 0;
-    }
+      if (lastAnnualTest) {
+        nextAnnualTest = calculateNextTestDate(lastAnnualTest, 'annual');
+        const annualStatus = isTestOverdue(lastAnnualTest, 'annual');
+        annualOverdue = annualStatus.overdue;
+        daysUntilAnnual = annualOverdue
+          ? -annualStatus.daysOverdue
+          : Math.ceil((nextAnnualTest.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      } else {
+        nextAnnualTest = now;
+        annualOverdue = true;
+        daysUntilAnnual = 0;
+      }
 
-    return {
-      nextMonthlyTest,
-      nextAnnualTest,
-      monthlyOverdue,
-      annualOverdue,
-      daysUntilMonthly,
-      daysUntilAnnual
-    };
-  }, []);
+      return {
+        nextMonthlyTest,
+        nextAnnualTest,
+        monthlyOverdue,
+        annualOverdue,
+        daysUntilMonthly,
+        daysUntilAnnual,
+      };
+    },
+    []
+  );
 
   // ---------------------------------------------------------------------------
   // Get Duration Requirement for Premises Type
@@ -372,25 +376,25 @@ export function useEmergencyLightingSmartForm() {
   // ---------------------------------------------------------------------------
   // Suggest Defect Priority
   // ---------------------------------------------------------------------------
-  const suggestDefectPriorityFromDescription = useCallback((
-    defectDescription: string
-  ): DefectSuggestion => {
-    return suggestDefectPriority(defectDescription);
-  }, []);
+  const suggestDefectPriorityFromDescription = useCallback(
+    (defectDescription: string): DefectSuggestion => {
+      return suggestDefectPriority(defectDescription);
+    },
+    []
+  );
 
   // ---------------------------------------------------------------------------
   // Validate Duration Against Premises Type
   // ---------------------------------------------------------------------------
-  const validateDurationForPremises = useCallback((
-    durationMinutes: number,
-    premisesType: string
-  ): ValidationResult => {
-    const requirement = getDurationRequirement(premisesType);
-    const occupancyType: OccupancyType = requirement.duration === 180
-      ? 'sleeping-risk'
-      : 'normal-occupancy';
-    return validateDuration(durationMinutes, occupancyType);
-  }, []);
+  const validateDurationForPremises = useCallback(
+    (durationMinutes: number, premisesType: string): ValidationResult => {
+      const requirement = getDurationRequirement(premisesType);
+      const occupancyType: OccupancyType =
+        requirement.duration === 180 ? 'sleeping-risk' : 'normal-occupancy';
+      return validateDuration(durationMinutes, occupancyType);
+    },
+    []
+  );
 
   // ---------------------------------------------------------------------------
   // Format Date for Display
@@ -400,7 +404,7 @@ export function useEmergencyLightingSmartForm() {
     return d.toLocaleDateString('en-GB', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
+      year: 'numeric',
     });
   }, []);
 

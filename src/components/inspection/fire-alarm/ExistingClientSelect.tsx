@@ -20,11 +20,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -78,7 +74,9 @@ export function ExistingClientSelect({
   const fetchPreviousClients = React.useCallback(async () => {
     setLoading(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session?.user?.id) {
         setClients([]);
         return;
@@ -87,7 +85,9 @@ export function ExistingClientSelect({
       // Query fire alarm reports
       const { data, error } = await supabase
         .from('reports')
-        .select('id, report_id, client_name, installation_address, inspection_date, updated_at, data')
+        .select(
+          'id, report_id, client_name, installation_address, inspection_date, updated_at, data'
+        )
         .eq('user_id', session.user.id)
         .eq('report_type', 'fire-alarm')
         .is('deleted_at', null)
@@ -99,7 +99,7 @@ export function ExistingClientSelect({
       // Map to client objects, deduplicating by client name
       const clientMap = new Map<string, PreviousClient>();
 
-      (data || []).forEach(report => {
+      (data || []).forEach((report) => {
         const clientName = report.client_name || report.data?.clientName;
         if (!clientName) return;
 
@@ -147,38 +147,42 @@ export function ExistingClientSelect({
     if (!search.trim()) return clients;
 
     const searchLower = search.toLowerCase();
-    return clients.filter(client =>
-      client.clientName.toLowerCase().includes(searchLower) ||
-      (client.premisesAddress && client.premisesAddress.toLowerCase().includes(searchLower)) ||
-      (client.premisesName && client.premisesName.toLowerCase().includes(searchLower))
+    return clients.filter(
+      (client) =>
+        client.clientName.toLowerCase().includes(searchLower) ||
+        (client.premisesAddress && client.premisesAddress.toLowerCase().includes(searchLower)) ||
+        (client.premisesName && client.premisesName.toLowerCase().includes(searchLower))
     );
   }, [clients, search]);
 
   // Handle client selection
-  const handleSelect = React.useCallback((clientId: string) => {
-    const client = clients.find(c => c.id === clientId);
-    if (!client) return;
+  const handleSelect = React.useCallback(
+    (clientId: string) => {
+      const client = clients.find((c) => c.id === clientId);
+      if (!client) return;
 
-    setSelectedClientId(clientId);
-    onClientSelect({
-      clientName: client.clientName,
-      clientAddress: client.clientAddress || '',
-      clientTelephone: client.clientTelephone || '',
-      clientEmail: client.clientEmail || '',
-      premisesName: client.premisesName || '',
-      premisesAddress: client.premisesAddress || '',
-      premisesType: client.premisesType || '',
-      floorsCount: client.floorsCount || 1,
-    });
+      setSelectedClientId(clientId);
+      onClientSelect({
+        clientName: client.clientName,
+        clientAddress: client.clientAddress || '',
+        clientTelephone: client.clientTelephone || '',
+        clientEmail: client.clientEmail || '',
+        premisesName: client.premisesName || '',
+        premisesAddress: client.premisesAddress || '',
+        premisesType: client.premisesType || '',
+        floorsCount: client.floorsCount || 1,
+      });
 
-    setOpen(false);
-    setSearch('');
+      setOpen(false);
+      setSearch('');
 
-    toast({
-      title: 'Client loaded',
-      description: `Loaded details for ${client.clientName}`,
-    });
-  }, [clients, onClientSelect, toast]);
+      toast({
+        title: 'Client loaded',
+        description: `Loaded details for ${client.clientName}`,
+      });
+    },
+    [clients, onClientSelect, toast]
+  );
 
   // Format date for display
   const formatDate = (dateStr?: string): string => {
@@ -194,7 +198,7 @@ export function ExistingClientSelect({
   // Get selected client name
   const selectedClient = React.useMemo(() => {
     if (!selectedClientId) return null;
-    return clients.find(c => c.id === selectedClientId);
+    return clients.find((c) => c.id === selectedClientId);
   }, [selectedClientId, clients]);
 
   return (
@@ -215,10 +219,12 @@ export function ExistingClientSelect({
             className
           )}
         >
-          <span className={cn(
-            'truncate flex items-center gap-2',
-            !selectedClient && 'text-muted-foreground'
-          )}>
+          <span
+            className={cn(
+              'truncate flex items-center gap-2',
+              !selectedClient && 'text-muted-foreground'
+            )}
+          >
             <User className="h-4 w-4 shrink-0 opacity-60" />
             {selectedClient ? selectedClient.clientName : placeholder}
           </span>
@@ -263,7 +269,9 @@ export function ExistingClientSelect({
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4 shrink-0',
-                            selectedClientId === client.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+                            selectedClientId === client.id
+                              ? 'opacity-100 text-elec-yellow'
+                              : 'opacity-0'
                           )}
                         />
                         <div className="flex flex-col flex-1 min-w-0 gap-0.5">

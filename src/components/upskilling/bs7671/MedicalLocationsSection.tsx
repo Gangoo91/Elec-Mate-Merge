@@ -10,19 +10,27 @@ export const MedicalLocationsSection = () => {
           <Heart className="h-5 w-5 text-elec-yellow" />
           Medical Locations Requirements
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-red-600 text-foreground">BS 7671 Section 710</Badge>
+        <Badge variant="secondary" className="w-fit bg-red-600 text-foreground">
+          BS 7671 Section 710
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-2">Code Reference: BS 7671:2018+A2:2022 Section 710</h5>
-          <p className="text-sm">Medical locations - Requirements for electrical installations in healthcare facilities</p>
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Code Reference: BS 7671:2018+A2:2022 Section 710
+          </h5>
+          <p className="text-sm">
+            Medical locations - Requirements for electrical installations in healthcare facilities
+          </p>
         </div>
 
         <div className="grid gap-6">
           {/* Medical Groups Classification */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h5 className="text-elec-yellow font-semibold mb-3">Medical Location Classification System</h5>
-            
+            <h5 className="text-elec-yellow font-semibold mb-3">
+              Medical Location Classification System
+            </h5>
+
             {/* Group 0 */}
             <div className="mb-6 p-4 bg-green-900/20 border border-green-600/50 rounded-lg">
               <div className="flex items-center justify-between mb-3">
@@ -51,7 +59,8 @@ export const MedicalLocationsSection = () => {
               </div>
               <div className="mt-3 p-3 bg-green-800/30 border border-green-600/50 rounded">
                 <p className="text-green-200 text-sm">
-                  <strong>Electrical Requirements:</strong> Standard TN-S or TT earthing systems with normal RCD protection (30mA for socket outlets).
+                  <strong>Electrical Requirements:</strong> Standard TN-S or TT earthing systems
+                  with normal RCD protection (30mA for socket outlets).
                 </p>
               </div>
             </div>
@@ -84,7 +93,9 @@ export const MedicalLocationsSection = () => {
               </div>
               <div className="mt-3 p-3 bg-yellow-800/30 border border-yellow-600/50 rounded">
                 <p className="text-yellow-200 text-sm">
-                  <strong>Electrical Requirements:</strong> Enhanced RCD protection, additional equipotential bonding, and increased insulation requirements for medical equipment.
+                  <strong>Electrical Requirements:</strong> Enhanced RCD protection, additional
+                  equipotential bonding, and increased insulation requirements for medical
+                  equipment.
                 </p>
               </div>
             </div>
@@ -117,7 +128,8 @@ export const MedicalLocationsSection = () => {
               </div>
               <div className="mt-3 p-3 bg-red-800/30 border border-red-600/50 rounded">
                 <p className="text-red-200 text-sm">
-                  <strong>Electrical Requirements:</strong> Medical IT systems with isolating transformers, insulation monitoring devices, and comprehensive alarm systems.
+                  <strong>Electrical Requirements:</strong> Medical IT systems with isolating
+                  transformers, insulation monitoring devices, and comprehensive alarm systems.
                 </p>
               </div>
             </div>
@@ -127,9 +139,11 @@ export const MedicalLocationsSection = () => {
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
             <div className="flex items-center gap-2 mb-3">
               <Shield className="h-4 w-4 text-blue-400" />
-              <h5 className="text-blue-400 font-semibold">Medical IT System Requirements (Group 2)</h5>
+              <h5 className="text-blue-400 font-semibold">
+                Medical IT System Requirements (Group 2)
+              </h5>
             </div>
-            
+
             <div className="grid gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">System Components:</h6>
@@ -152,7 +166,7 @@ export const MedicalLocationsSection = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">Performance Parameters:</h6>
                 <div className="grid md:grid-cols-3 gap-4">
@@ -190,8 +204,10 @@ export const MedicalLocationsSection = () => {
 
           {/* Socket Outlet Requirements */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h5 className="text-elec-yellow font-semibold mb-3">Medical Socket Outlet Specifications</h5>
-            
+            <h5 className="text-elec-yellow font-semibold mb-3">
+              Medical Socket Outlet Specifications
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-purple-400 font-medium mb-2">Construction Requirements:</h6>
@@ -224,7 +240,7 @@ export const MedicalLocationsSection = () => {
               <AlertTriangle className="h-4 w-4 text-orange-400" />
               <h5 className="text-orange-400 font-semibold">Emergency Power Supply Systems</h5>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">UPS Systems:</h6>

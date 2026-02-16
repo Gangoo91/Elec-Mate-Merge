@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { CheckCircle2, Circle, BookOpen, FileText } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { CheckCircle2, Circle, BookOpen, FileText } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 interface ChecklistItemProps {
   item: string;
@@ -13,13 +13,13 @@ interface ChecklistItemProps {
   initialNotes?: string;
 }
 
-export const ChecklistItem = ({ 
-  item, 
-  requirement, 
+export const ChecklistItem = ({
+  item,
+  requirement,
   reference,
   onToggle,
   initialChecked = false,
-  initialNotes = ""
+  initialNotes = '',
 }: ChecklistItemProps) => {
   const [checked, setChecked] = useState(initialChecked);
   const [showNotes, setShowNotes] = useState(false);
@@ -40,38 +40,35 @@ export const ChecklistItem = ({
     <button
       onClick={handleClick}
       className={cn(
-        "w-full text-left p-4 rounded-lg border transition-all touch-manipulation",
-        "hover:border-elec-yellow/40 active:scale-[0.99]",
-        checked 
-          ? "bg-elec-yellow/10 border-elec-yellow/40" 
-          : "bg-elec-dark/40 border-elec-yellow/20"
+        'w-full text-left p-4 rounded-lg border transition-all touch-manipulation',
+        'hover:border-elec-yellow/40 active:scale-[0.99]',
+        checked
+          ? 'bg-elec-yellow/10 border-elec-yellow/40'
+          : 'bg-elec-dark/40 border-elec-yellow/20'
       )}
     >
       <div className="flex items-start gap-4">
         {/* Checkbox Circle */}
-        <div className={cn(
-          "shrink-0 mt-0.5",
-          checked ? "text-elec-yellow" : "text-foreground/40"
-        )}>
-          {checked ? (
-            <CheckCircle2 className="h-6 w-6" />
-          ) : (
-            <Circle className="h-6 w-6" />
-          )}
+        <div className={cn('shrink-0 mt-0.5', checked ? 'text-elec-yellow' : 'text-foreground/40')}>
+          {checked ? <CheckCircle2 className="h-6 w-6" /> : <Circle className="h-6 w-6" />}
         </div>
 
         {/* Content */}
         <div className="flex-1 space-y-1.5">
-          <div className={cn(
-            "text-base font-semibold",
-            checked ? "text-foreground/70 line-through" : "text-foreground"
-          )}>
+          <div
+            className={cn(
+              'text-base font-semibold',
+              checked ? 'text-foreground/70 line-through' : 'text-foreground'
+            )}
+          >
             {item}
           </div>
-          <div className={cn(
-            "text-sm leading-relaxed",
-            checked ? "text-foreground/50 line-through" : "text-foreground/90"
-          )}>
+          <div
+            className={cn(
+              'text-sm leading-relaxed',
+              checked ? 'text-foreground/50 line-through' : 'text-foreground/90'
+            )}
+          >
             {requirement}
           </div>
           {reference && (
@@ -96,19 +93,19 @@ export const ChecklistItem = ({
             }}
             variant="ghost"
             size="sm"
-            className={cn(
-              "h-8 px-2",
-              showNotes ? "text-elec-yellow" : "text-foreground/50"
-            )}
+            className={cn('h-8 px-2', showNotes ? 'text-elec-yellow' : 'text-foreground/50')}
           >
             <FileText className="h-4 w-4" />
           </Button>
         </div>
       </div>
-      
+
       {/* Notes Section */}
       {showNotes && (
-        <div className="pt-3 mt-3 border-t border-elec-yellow/20" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="pt-3 mt-3 border-t border-elec-yellow/20"
+          onClick={(e) => e.stopPropagation()}
+        >
           <label className="text-xs text-foreground/70 mb-2 block">Notes</label>
           <Textarea
             value={notes}

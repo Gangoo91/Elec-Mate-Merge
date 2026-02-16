@@ -1,8 +1,16 @@
-
-import React from "react";
-import { BookOpen, CheckCircle, Lightbulb, Info, Cable, Construction, CircleDashed, ShieldAlert } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import {
+  BookOpen,
+  CheckCircle,
+  Lightbulb,
+  Info,
+  Cable,
+  Construction,
+  CircleDashed,
+  ShieldAlert,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface SectionBoxProps {
   sectionNumber: string;
@@ -22,32 +30,40 @@ export const SectionBox = ({
   onClick,
   content,
   isCompleted = false,
-  unitCode = "",
-  courseSlug = ""
+  unitCode = '',
+  courseSlug = '',
 }: SectionBoxProps) => {
   const navigate = useNavigate();
-  
+
   const handleSectionClick = () => {
     // Navigate based on the section and unit type
     if (courseSlug && unitCode) {
       // Use sectionNumber to create the slug
-      const sectionSlug = sectionNumber.toLowerCase().replace(/\//g, "-");
-      
+      const sectionSlug = sectionNumber.toLowerCase().replace(/\//g, '-');
+
       // If section is quiz, navigate to quiz page
-      if (sectionNumber === "Q") {
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/quiz`);
-      } 
+      if (sectionNumber === 'Q') {
+        navigate(
+          `/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/quiz`
+        );
+      }
       // If it's installation methods unit (ELEC2/05A), navigate to installation method content
       else if (unitCode.toLowerCase().includes('05a')) {
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/installation-method/${sectionNumber}`);
+        navigate(
+          `/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/installation-method/${sectionNumber}`
+        );
       }
       // If it's electrical theory unit (ELEC2/04), handle differently based on section number
       else if (unitCode.toLowerCase().includes('04')) {
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionNumber}`);
+        navigate(
+          `/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionNumber}`
+        );
       }
       // Regular section page
       else {
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`);
+        navigate(
+          `/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`
+        );
       }
     }
   };
@@ -56,26 +72,37 @@ export const SectionBox = ({
   const renderSectionIcon = () => {
     // If it's the electrical theory unit and we have a subsection
     if (unitCode.toLowerCase().includes('04')) {
-      switch(sectionNumber) {
-        case "1": return <Info className="h-4 w-4" />; // Legislation and Regulations
-        case "2": return <Info className="h-4 w-4" />; // Technical Information
-        case "3": return <Cable className="h-4 w-4" />; // Wiring Systems
-        case "4": return <Construction className="h-4 w-4" />; // Service Position Equipment
-        case "5": return <Lightbulb className="h-4 w-4" />; // Lighting Circuits
-        case "6": return <Cable className="h-4 w-4" />; // Ring and Radial Circuits
-        case "7": return <Cable className="h-4 w-4" />; // Circuit Requirements
-        case "8": return <ShieldAlert className="h-4 w-4" />; // Earthing and Bonding
-        case "9": return <ShieldAlert className="h-4 w-4" />; // Overcurrent Protection
-        case "10": return <Cable className="h-4 w-4" />; // Circuit Design
-        default: return <BookOpen className="h-4 w-4" />;
+      switch (sectionNumber) {
+        case '1':
+          return <Info className="h-4 w-4" />; // Legislation and Regulations
+        case '2':
+          return <Info className="h-4 w-4" />; // Technical Information
+        case '3':
+          return <Cable className="h-4 w-4" />; // Wiring Systems
+        case '4':
+          return <Construction className="h-4 w-4" />; // Service Position Equipment
+        case '5':
+          return <Lightbulb className="h-4 w-4" />; // Lighting Circuits
+        case '6':
+          return <Cable className="h-4 w-4" />; // Ring and Radial Circuits
+        case '7':
+          return <Cable className="h-4 w-4" />; // Circuit Requirements
+        case '8':
+          return <ShieldAlert className="h-4 w-4" />; // Earthing and Bonding
+        case '9':
+          return <ShieldAlert className="h-4 w-4" />; // Overcurrent Protection
+        case '10':
+          return <Cable className="h-4 w-4" />; // Circuit Design
+        default:
+          return <BookOpen className="h-4 w-4" />;
       }
     }
-    
+
     return <BookOpen className="h-4 w-4" />;
   };
 
   return (
-    <div 
+    <div
       className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-[#1a1a1a] relative cursor-pointer hover:bg-elec-yellow/5 transition-all"
       onClick={handleSectionClick}
     >
@@ -87,11 +114,11 @@ export const SectionBox = ({
             </span>
             <h3 className="text-lg font-semibold">{title}</h3>
           </div>
-          
+
           <div className="flex items-center gap-2">
-            <Button 
-              variant="study" 
-              size="studyIcon" 
+            <Button
+              variant="study"
+              size="studyIcon"
               className="border-elec-yellow/40 bg-[#1a1a1a] hover:bg-elec-yellow hover:text-elec-dark"
               onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering the parent div's onClick
@@ -103,7 +130,7 @@ export const SectionBox = ({
             </Button>
           </div>
         </div>
-        
+
         {isCompleted && (
           <div className="absolute right-2 top-2">
             <CheckCircle className="h-5 w-5 text-green-500" />

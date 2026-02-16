@@ -1,82 +1,98 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m3s2-check1",
-    question: "What is the maximum voltage drop allowed for EV charging circuits according to BS 7671?",
-    options: ["3% of nominal voltage", "5% of nominal voltage", "10% of nominal voltage", "7% of nominal voltage"],
-    correctIndex: 1,
-    explanation: "BS 7671 permits 5% voltage drop for power circuits including EV charging. For a 230V supply, this equates to 11.5V maximum voltage drop."
-  },
-  {
-    id: "evcharging-m3s2-check2",
-    question: "Why might a cable need to be larger than required for current capacity alone?",
+    id: 'evcharging-m3s2-check1',
+    question:
+      'What is the maximum voltage drop allowed for EV charging circuits according to BS 7671?',
     options: [
-      "To improve cable aesthetics",
-      "To limit voltage drop within regulatory limits",
-      "To reduce cable weight",
-      "To make installation easier"
+      '3% of nominal voltage',
+      '5% of nominal voltage',
+      '10% of nominal voltage',
+      '7% of nominal voltage',
     ],
     correctIndex: 1,
-    explanation: "For longer cable runs, voltage drop becomes the limiting factor. A cable may have adequate current capacity but still cause excessive voltage drop, requiring upsizing."
+    explanation:
+      'BS 7671 permits 5% voltage drop for power circuits including EV charging. For a 230V supply, this equates to 11.5V maximum voltage drop.',
   },
   {
-    id: "evcharging-m3s2-check3",
-    question: "What factors affect cable current-carrying capacity?",
+    id: 'evcharging-m3s2-check2',
+    question: 'Why might a cable need to be larger than required for current capacity alone?',
     options: [
-      "Cable colour only",
-      "Ambient temperature, installation method, and grouping",
-      "Manufacturer brand only",
-      "The connected load type"
+      'To improve cable aesthetics',
+      'To limit voltage drop within regulatory limits',
+      'To reduce cable weight',
+      'To make installation easier',
     ],
     correctIndex: 1,
-    explanation: "Cable current-carrying capacity is affected by ambient temperature (derating factors), installation method (clipped, in conduit, etc.), and grouping with other cables."
-  }
+    explanation:
+      'For longer cable runs, voltage drop becomes the limiting factor. A cable may have adequate current capacity but still cause excessive voltage drop, requiring upsizing.',
+  },
+  {
+    id: 'evcharging-m3s2-check3',
+    question: 'What factors affect cable current-carrying capacity?',
+    options: [
+      'Cable colour only',
+      'Ambient temperature, installation method, and grouping',
+      'Manufacturer brand only',
+      'The connected load type',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Cable current-carrying capacity is affected by ambient temperature (derating factors), installation method (clipped, in conduit, etc.), and grouping with other cables.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I calculate voltage drop for a single-phase circuit?",
-    answer: "Use the formula: Vd = I × R × L, where I is current in amps, R is resistance per metre (from cable tables), and L is cable length in metres. The result must be less than 5% of 230V (11.5V) for power circuits."
+    question: 'How do I calculate voltage drop for a single-phase circuit?',
+    answer:
+      'Use the formula: Vd = I × R × L, where I is current in amps, R is resistance per metre (from cable tables), and L is cable length in metres. The result must be less than 5% of 230V (11.5V) for power circuits.',
   },
   {
     question: "What's the difference between SWA and XLPE cables?",
-    answer: "SWA (Steel Wire Armoured) provides mechanical protection and is suitable for direct burial. XLPE (Cross-linked Polyethylene) has a 90°C operating temperature allowing higher current capacity but typically needs additional mechanical protection."
+    answer:
+      'SWA (Steel Wire Armoured) provides mechanical protection and is suitable for direct burial. XLPE (Cross-linked Polyethylene) has a 90°C operating temperature allowing higher current capacity but typically needs additional mechanical protection.',
   },
   {
-    question: "When should I use LSF cables?",
-    answer: "LSF (Low Smoke & Fume) cables are required in enclosed spaces and buildings with high occupancy like car parks, commercial buildings, and public areas where toxic smoke could hinder evacuation."
+    question: 'When should I use LSF cables?',
+    answer:
+      'LSF (Low Smoke & Fume) cables are required in enclosed spaces and buildings with high occupancy like car parks, commercial buildings, and public areas where toxic smoke could hinder evacuation.',
   },
   {
-    question: "How does the continuous load of EV charging affect cable sizing?",
-    answer: "EV charging is a continuous load operating at near-maximum current for extended periods. This causes thermal effects that must be considered in cable sizing and may require cables larger than the simple current calculation suggests."
-  }
+    question: 'How does the continuous load of EV charging affect cable sizing?',
+    answer:
+      'EV charging is a continuous load operating at near-maximum current for extended periods. This causes thermal effects that must be considered in cable sizing and may require cables larger than the simple current calculation suggests.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A 7kW domestic EV charger has an 80m cable run. The 4mm² cable has 28V voltage drop (12.2%). What cable size should be used?",
-  options: [
-    "4mm² - it's fine for the current",
-    "6mm² - slightly better",
-    "10mm² - to meet voltage drop limits",
-    "16mm² - for maximum safety"
-  ],
-  correctAnswer: 2,
-  explanation: "While 4mm² has adequate current capacity for 32A, the 12.2% voltage drop exceeds the 5% limit. 10mm² reduces voltage drop to approximately 4.7%, meeting BS 7671 requirements."
-  }
+    question:
+      'A 7kW domestic EV charger has an 80m cable run. The 4mm² cable has 28V voltage drop (12.2%). What cable size should be used?',
+    options: [
+      "4mm² - it's fine for the current",
+      '6mm² - slightly better',
+      '10mm² - to meet voltage drop limits',
+      '16mm² - for maximum safety',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'While 4mm² has adequate current capacity for 32A, the 12.2% voltage drop exceeds the 5% limit. 10mm² reduces voltage drop to approximately 4.7%, meeting BS 7671 requirements.',
+  },
 ];
 
 const EVChargingModule3Section2 = () => {
   useSEO({
-    title: "Voltage Drop and Cable Sizing | EV Charging Module 3.2",
-    description: "Calculate voltage drop and select appropriate cable sizes for EV charging installations according to BS 7671 requirements."
+    title: 'Voltage Drop and Cable Sizing | EV Charging Module 3.2',
+    description:
+      'Calculate voltage drop and select appropriate cable sizes for EV charging installations according to BS 7671 requirements.',
   });
 
   return (
@@ -108,9 +124,7 @@ const EVChargingModule3Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Voltage Drop and Cable Sizing
           </h1>
-          <p className="text-white/80">
-            Selecting cables for EV charging installations
-          </p>
+          <p className="text-white/80">Selecting cables for EV charging installations</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -118,16 +132,26 @@ const EVChargingModule3Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>BS 7671 Limit:</strong> 5% voltage drop for power circuits</li>
-              <li><strong>230V:</strong> Maximum 11.5V drop allowed</li>
-              <li><strong>Formula:</strong> Vd = I × R × L (single-phase)</li>
+              <li>
+                <strong>BS 7671 Limit:</strong> 5% voltage drop for power circuits
+              </li>
+              <li>
+                <strong>230V:</strong> Maximum 11.5V drop allowed
+              </li>
+              <li>
+                <strong>Formula:</strong> Vd = I × R × L (single-phase)
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Long cable runs to remote charge points</li>
-              <li><strong>Use:</strong> Check Vd before finalising cable size</li>
+              <li>
+                <strong>Spot:</strong> Long cable runs to remote charge points
+              </li>
+              <li>
+                <strong>Use:</strong> Check Vd before finalising cable size
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +161,12 @@ const EVChargingModule3Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Calculate voltage drop per BS 7671",
-              "Select cables based on current and Vd",
-              "Apply correction factors for installation",
-              "Understand cable/current/resistance relationships",
-              "Identify when voltage drop compensation needed",
-              "Size cables for continuous EV loads"
+              'Calculate voltage drop per BS 7671',
+              'Select cables based on current and Vd',
+              'Apply correction factors for installation',
+              'Understand cable/current/resistance relationships',
+              'Identify when voltage drop compensation needed',
+              'Size cables for continuous EV loads',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -170,13 +194,21 @@ const EVChargingModule3Section2 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Circuit Limits</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Lighting:</strong> 3% (6.9V for 230V)</li>
-                  <li><strong>Power/EV:</strong> 5% (11.5V for 230V)</li>
-                  <li><strong>Combined:</strong> 4% maximum total</li>
+                  <li>
+                    <strong>Lighting:</strong> 3% (6.9V for 230V)
+                  </li>
+                  <li>
+                    <strong>Power/EV:</strong> 5% (11.5V for 230V)
+                  </li>
+                  <li>
+                    <strong>Combined:</strong> 4% maximum total
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">What Causes Voltage Drop?</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  What Causes Voltage Drop?
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Conductor resistance</li>
                   <li>Cable length</li>
@@ -190,7 +222,9 @@ const EVChargingModule3Section2 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">Voltage Drop Formulas</p>
               <p className="font-mono text-white text-sm mb-1">Single-phase: Vd = I × R × L</p>
               <p className="font-mono text-white text-sm">Three-phase: Vd = √3 × I × R × L</p>
-              <p className="text-xs text-white/70 mt-2">Where I = current, R = resistance/metre, L = length</p>
+              <p className="text-xs text-white/70 mt-2">
+                Where I = current, R = resistance/metre, L = length
+              </p>
             </div>
           </div>
         </section>
@@ -205,19 +239,31 @@ const EVChargingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Cable selection involves two checks: current-carrying capacity and voltage drop.
-              The final cable size must satisfy both requirements.
+              Cable selection involves two checks: current-carrying capacity and voltage drop. The
+              final cable size must satisfy both requirements.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Step-by-Step Cable Selection:</p>
               <ol className="text-sm text-white space-y-2 ml-4 list-decimal list-inside">
-                <li><strong>Calculate design current (Ib):</strong> Based on load and diversity</li>
-                <li><strong>Select protective device (In):</strong> Ensure In ≥ Ib</li>
-                <li><strong>Apply correction factors:</strong> Temperature, grouping, installation</li>
-                <li><strong>Find minimum cable for current:</strong> Using BS 7671 tables</li>
-                <li><strong>Check voltage drop:</strong> Calculate and verify against limits</li>
-                <li><strong>Select final size:</strong> Larger of current or Vd requirement</li>
+                <li>
+                  <strong>Calculate design current (Ib):</strong> Based on load and diversity
+                </li>
+                <li>
+                  <strong>Select protective device (In):</strong> Ensure In ≥ Ib
+                </li>
+                <li>
+                  <strong>Apply correction factors:</strong> Temperature, grouping, installation
+                </li>
+                <li>
+                  <strong>Find minimum cable for current:</strong> Using BS 7671 tables
+                </li>
+                <li>
+                  <strong>Check voltage drop:</strong> Calculate and verify against limits
+                </li>
+                <li>
+                  <strong>Select final size:</strong> Larger of current or Vd requirement
+                </li>
               </ol>
             </div>
 
@@ -238,7 +284,10 @@ const EVChargingModule3Section2 = () => {
 
             <div className="p-3 rounded bg-transparent border border-red-400/30">
               <p className="text-sm font-medium text-red-400/80 mb-1">Continuous Loading</p>
-              <p className="text-sm text-white">EV charging operates at high current for extended periods. This sustained thermal load affects both cable sizing and protective device selection.</p>
+              <p className="text-sm text-white">
+                EV charging operates at high current for extended periods. This sustained thermal
+                load affects both cable sizing and protective device selection.
+              </p>
             </div>
           </div>
         </section>
@@ -280,18 +329,30 @@ const EVChargingModule3Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Size Quick Reference:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cable Size Quick Reference:
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="text-sm text-white">
-                  <p><strong>3.5kW Single-phase:</strong> 2.5-4mm²</p>
-                  <p><strong>7kW Single-phase:</strong> 4-6mm²</p>
+                  <p>
+                    <strong>3.5kW Single-phase:</strong> 2.5-4mm²
+                  </p>
+                  <p>
+                    <strong>7kW Single-phase:</strong> 4-6mm²
+                  </p>
                 </div>
                 <div className="text-sm text-white">
-                  <p><strong>11kW Three-phase:</strong> 2.5-4mm²</p>
-                  <p><strong>22kW Three-phase:</strong> 4-10mm²</p>
+                  <p>
+                    <strong>11kW Three-phase:</strong> 2.5-4mm²
+                  </p>
+                  <p>
+                    <strong>22kW Three-phase:</strong> 4-10mm²
+                  </p>
                 </div>
               </div>
-              <p className="text-xs text-white/70 mt-2">Sizes depend on cable run length and installation method</p>
+              <p className="text-xs text-white/70 mt-2">
+                Sizes depend on cable run length and installation method
+              </p>
             </div>
           </div>
         </section>
@@ -334,7 +395,9 @@ const EVChargingModule3Section2 = () => {
                 <li>Scenario: 7kW charger, 80m cable run</li>
                 <li>4mm² Vd: 28V (12.2%) — too high!</li>
                 <li>10mm² Vd: 10.7V (4.7%) — acceptable</li>
-                <li className="text-elec-yellow font-medium">Result: 10mm² required for voltage drop</li>
+                <li className="text-elec-yellow font-medium">
+                  Result: 10mm² required for voltage drop
+                </li>
               </ul>
             </div>
           </div>
@@ -357,10 +420,18 @@ const EVChargingModule3Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Ignoring voltage drop:</strong> — Leads to reduced charging performance</li>
-                <li><strong>Wrong cable type:</strong> — LSF required in car parks</li>
-                <li><strong>No correction factors:</strong> — Undersized cables overheat</li>
-                <li><strong>Undersized for long runs:</strong> — Vd exceeds limits</li>
+                <li>
+                  <strong>Ignoring voltage drop:</strong> — Leads to reduced charging performance
+                </li>
+                <li>
+                  <strong>Wrong cable type:</strong> — LSF required in car parks
+                </li>
+                <li>
+                  <strong>No correction factors:</strong> — Undersized cables overheat
+                </li>
+                <li>
+                  <strong>Undersized for long runs:</strong> — Vd exceeds limits
+                </li>
               </ul>
             </div>
           </div>
@@ -404,10 +475,7 @@ const EVChargingModule3Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

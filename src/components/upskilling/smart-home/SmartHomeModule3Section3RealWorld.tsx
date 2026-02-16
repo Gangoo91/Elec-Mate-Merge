@@ -14,15 +14,16 @@ export const SmartHomeModule3Section3RealWorld = () => {
       <CardContent className="space-y-4">
         <div className="p-4 bg-amber-900/20 rounded-lg border border-amber-600/30">
           <p className="text-gray-300 leading-relaxed">
-            A client complains their new smart LED bulbs flicker when dimmed. On inspection, 
-            the installer finds the homeowner used old-style resistive dimmer switches.
+            A client complains their new smart LED bulbs flicker when dimmed. On inspection, the
+            installer finds the homeowner used old-style resistive dimmer switches.
           </p>
         </div>
-        
+
         <Alert className="border-amber-600/30 bg-amber-900/20">
           <AlertTriangle className="h-4 w-4 text-amber-400" />
           <AlertDescription className="text-gray-300">
-            <strong className="text-amber-300">Challenge:</strong> What solution should the installer recommend?
+            <strong className="text-amber-300">Challenge:</strong> What solution should the
+            installer recommend?
           </AlertDescription>
         </Alert>
 

@@ -37,53 +37,59 @@ export class SimpleValidator {
     const temperatureDerating = this.calculateTemperatureDerating(ambientTemp);
     const groupingFactor = this.calculateGroupingFactor(cableGrouping);
     const diversityFactor = 1.0; // Default
-    
+
     // Basic safety margin calculation
     const safetyMargin = temperatureDerating * groupingFactor;
 
     // Basic validations
     if (current <= 0) {
-      errors.push("Current must be greater than 0A");
+      errors.push('Current must be greater than 0A');
     }
 
     if (current > 1000) {
-      criticalAlerts.push("Very high current detected. Verify calculations and consider specialist consultation.");
+      criticalAlerts.push(
+        'Very high current detected. Verify calculations and consider specialist consultation.'
+      );
     }
 
     if (ambientTemp > 40) {
-      warnings.push("High ambient temperature requires additional derating considerations");
+      warnings.push('High ambient temperature requires additional derating considerations');
     }
 
     if (ambientTemp > 60) {
-      criticalAlerts.push("Extremely high ambient temperature. Special high-temperature cables required.");
+      criticalAlerts.push(
+        'Extremely high ambient temperature. Special high-temperature cables required.'
+      );
     }
 
     if (cableGrouping > 12) {
-      warnings.push("Large cable groupings require careful thermal management");
+      warnings.push('Large cable groupings require careful thermal management');
     }
 
     if (length > 100) {
-      warnings.push("Long cable runs may require voltage drop verification");
+      warnings.push('Long cable runs may require voltage drop verification');
     }
 
     // Cable size validation
     const cableSizeNum = parseFloat(cableSize.replace(/[^\d.]/g, ''));
-    
+
     if (current > 100 && cableSizeNum < 16) {
-      warnings.push("High current with small cable size - verify current capacity");
+      warnings.push('High current with small cable size - verify current capacity');
     }
 
     if (safetyMargin < 0.8) {
-      warnings.push("Low safety margin due to environmental factors");
+      warnings.push('Low safety margin due to environmental factors');
     }
 
     if (safetyMargin < 0.6) {
-      criticalAlerts.push("Safety margin too low - increase cable size or improve installation conditions");
+      criticalAlerts.push(
+        'Safety margin too low - increase cable size or improve installation conditions'
+      );
     }
 
     // Compliance checks (simplified)
     const bs7671Compliant = errors.length === 0 && criticalAlerts.length === 0;
-    
+
     return {
       isValid: errors.length === 0 && criticalAlerts.length === 0,
       errors,
@@ -93,14 +99,14 @@ export class SimpleValidator {
         temperatureDerating,
         groupingFactor,
         diversityFactor,
-        safetyMargin
+        safetyMargin,
       },
       complianceChecks: {
         bs7671: bs7671Compliant,
         iet: bs7671Compliant,
         buildingRegs: bs7671Compliant,
-        cdm: bs7671Compliant && criticalAlerts.length === 0
-      }
+        cdm: bs7671Compliant && criticalAlerts.length === 0,
+      },
     };
   }
 
@@ -111,7 +117,7 @@ export class SimpleValidator {
     if (ambientTemp <= 45) return 0.79;
     if (ambientTemp <= 50) return 0.71;
     if (ambientTemp <= 55) return 0.61;
-    if (ambientTemp <= 60) return 0.50;
+    if (ambientTemp <= 60) return 0.5;
     return 0.35; // Above 60°C
   }
 

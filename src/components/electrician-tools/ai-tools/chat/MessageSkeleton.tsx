@@ -51,10 +51,10 @@ export const MessageSkeleton = memo(function MessageSkeleton({
         {/* Message bubble skeleton */}
         <div
           className={cn(
-            "rounded-2xl rounded-tl-sm px-4 py-4",
-            "bg-card/50 backdrop-blur-sm",
-            "border border-border/30",
-            "space-y-2.5"
+            'rounded-2xl rounded-tl-sm px-4 py-4',
+            'bg-card/50 backdrop-blur-sm',
+            'border border-border/30',
+            'space-y-2.5'
           )}
         >
           {Array.from({ length: lines }).map((_, i) => (
@@ -94,9 +94,24 @@ interface SearchingSkeletonProps {
 export const SearchingSkeleton = memo(function SearchingSkeleton({
   className,
   sources = [
-    { name: 'BS 7671 Regulations', color: 'bg-blue-500/20 text-blue-400', searching: true, complete: false },
-    { name: 'Practical Guides', color: 'bg-green-500/20 text-green-400', searching: true, complete: false },
-    { name: 'Design Knowledge', color: 'bg-purple-500/20 text-purple-400', searching: true, complete: false },
+    {
+      name: 'BS 7671 Regulations',
+      color: 'bg-blue-500/20 text-blue-400',
+      searching: true,
+      complete: false,
+    },
+    {
+      name: 'Practical Guides',
+      color: 'bg-green-500/20 text-green-400',
+      searching: true,
+      complete: false,
+    },
+    {
+      name: 'Design Knowledge',
+      color: 'bg-purple-500/20 text-purple-400',
+      searching: true,
+      complete: false,
+    },
   ],
 }: SearchingSkeletonProps) {
   return (
@@ -104,10 +119,7 @@ export const SearchingSkeleton = memo(function SearchingSkeleton({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className={cn(
-        'flex items-start gap-3',
-        className
-      )}
+      className={cn('flex items-start gap-3', className)}
     >
       {/* Avatar */}
       <div className="shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-elec-yellow to-elec-yellow/80 flex items-center justify-center shadow-sm">
@@ -116,17 +128,15 @@ export const SearchingSkeleton = memo(function SearchingSkeleton({
 
       <div className="flex-1">
         {/* Name */}
-        <div className="text-xs text-muted-foreground mb-2 font-medium">
-          BS 7671 Assistant
-        </div>
+        <div className="text-xs text-muted-foreground mb-2 font-medium">BS 7671 Assistant</div>
 
         {/* Search card */}
         <div
           className={cn(
-            "rounded-2xl rounded-tl-sm px-4 py-3",
-            "bg-card/80 backdrop-blur-sm",
-            "border border-border/50",
-            "shadow-sm"
+            'rounded-2xl rounded-tl-sm px-4 py-3',
+            'bg-card/80 backdrop-blur-sm',
+            'border border-border/50',
+            'shadow-sm'
           )}
         >
           <div className="flex items-center gap-2 mb-3">
@@ -148,8 +158,8 @@ export const SearchingSkeleton = memo(function SearchingSkeleton({
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: idx * 0.1 }}
                 className={cn(
-                  "px-2.5 py-1 rounded-md text-xs font-medium",
-                  "flex items-center gap-1.5",
+                  'px-2.5 py-1 rounded-md text-xs font-medium',
+                  'flex items-center gap-1.5',
                   source.color
                 )}
               >

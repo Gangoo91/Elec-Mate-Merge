@@ -1,58 +1,58 @@
-import { ArrowLeft, Zap, Cable, Target, Shield, Calculator, Thermometer } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, Cable, Target, Shield, Calculator, Thermometer } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "2.1",
-    title: "Determining Design Current (Ib, In, Iz)",
-    description: "Calculating design current, nominal current and current-carrying capacity",
+    number: '2.1',
+    title: 'Determining Design Current (Ib, In, Iz)',
+    description: 'Calculating design current, nominal current and current-carrying capacity',
     icon: Zap,
-    href: "../level3-module6-section2-1",
+    href: '../level3-module6-section2-1',
   },
   {
-    number: "2.2",
-    title: "Cable Sizing and Voltage Drop Calculations",
-    description: "Selecting appropriate cable sizes and calculating voltage drop in circuits",
+    number: '2.2',
+    title: 'Cable Sizing and Voltage Drop Calculations',
+    description: 'Selecting appropriate cable sizes and calculating voltage drop in circuits',
     icon: Cable,
-    href: "../level3-module6-section2-2",
+    href: '../level3-module6-section2-2',
   },
   {
-    number: "2.3",
-    title: "Earth Fault Loop Impedance and Disconnection Times",
-    description: "Calculating earth fault loop impedance and verifying disconnection times",
+    number: '2.3',
+    title: 'Earth Fault Loop Impedance and Disconnection Times',
+    description: 'Calculating earth fault loop impedance and verifying disconnection times',
     icon: Target,
-    href: "../level3-module6-section2-3",
+    href: '../level3-module6-section2-3',
   },
   {
-    number: "2.4",
-    title: "RCD and RCBO Requirements in Design",
-    description: "Determining RCD and RCBO requirements and incorporating them into designs",
+    number: '2.4',
+    title: 'RCD and RCBO Requirements in Design',
+    description: 'Determining RCD and RCBO requirements and incorporating them into designs',
     icon: Shield,
-    href: "../level3-module6-section2-4",
+    href: '../level3-module6-section2-4',
   },
   {
-    number: "2.5",
-    title: "Diversity and Demand Calculations",
-    description: "Applying diversity factors and calculating electrical demand for installations",
+    number: '2.5',
+    title: 'Diversity and Demand Calculations',
+    description: 'Applying diversity factors and calculating electrical demand for installations',
     icon: Calculator,
-    href: "../level3-module6-section2-5",
+    href: '../level3-module6-section2-5',
   },
   {
-    number: "2.6",
-    title: "Thermal Effects and Grouping Factors",
-    description: "Understanding thermal effects and applying appropriate grouping factors",
+    number: '2.6',
+    title: 'Thermal Effects and Grouping Factors',
+    description: 'Understanding thermal effects and applying appropriate grouping factors',
     icon: Thermometer,
-    href: "../level3-module6-section2-6",
+    href: '../level3-module6-section2-6',
   },
 ];
 
 const Level3Module6Section2 = () => {
   useSEO(
-    "Section 2: Circuit Design Calculations - Level 3 Module 6",
-    "Essential calculations for circuit design including current ratings, cable sizing and protection"
+    'Section 2: Circuit Design Calculations - Level 3 Module 6',
+    'Essential calculations for circuit design including current ratings, cable sizing and protection'
   );
 
   return (
@@ -77,26 +77,22 @@ const Level3Module6Section2 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

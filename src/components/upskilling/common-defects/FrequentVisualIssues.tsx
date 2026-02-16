@@ -1,62 +1,61 @@
-
 import { Eye } from 'lucide-react';
 
 export const FrequentVisualIssues = () => {
   const frequentIssues = [
     {
-      category: "Environmental Protection",
+      category: 'Environmental Protection',
       items: [
-        "No IP-rated seals where needed (outdoors, wet areas)",
-        "Incorrect IP rating for the environment",
-        "Missing weatherproof enclosures for external installations",
-        "Inadequate protection against UV degradation"
-      ]
+        'No IP-rated seals where needed (outdoors, wet areas)',
+        'Incorrect IP rating for the environment',
+        'Missing weatherproof enclosures for external installations',
+        'Inadequate protection against UV degradation',
+      ],
     },
     {
-      category: "Circuit Protection & Control",
+      category: 'Circuit Protection & Control',
       items: [
-        "No RCD protection where required by BS 7671",
-        "Missing or incorrect RCD test notices",
-        "Inadequate fault protection for special locations",
-        "No additional protection for socket outlets"
-      ]
+        'No RCD protection where required by BS 7671',
+        'Missing or incorrect RCD test notices',
+        'Inadequate fault protection for special locations',
+        'No additional protection for socket outlets',
+      ],
     },
     {
-      category: "Installation Methods",
+      category: 'Installation Methods',
       items: [
-        "Mixing of neutral and CPC conductors in terminals",
-        "Unused knockout holes left open in enclosures",
-        "Inadequate cable support and fixing intervals",
-        "Poor cable routing through sharp edges"
-      ]
+        'Mixing of neutral and CPC conductors in terminals',
+        'Unused knockout holes left open in enclosures',
+        'Inadequate cable support and fixing intervals',
+        'Poor cable routing through sharp edges',
+      ],
     },
     {
-      category: "Accessibility & Maintenance",
+      category: 'Accessibility & Maintenance',
       items: [
-        "Obstructed access to isolators or distribution boards",
-        "No permanent means of access to equipment",
-        "Insufficient working space around electrical equipment",
-        "Emergency isolation not clearly identifiable"
-      ]
+        'Obstructed access to isolators or distribution boards',
+        'No permanent means of access to equipment',
+        'Insufficient working space around electrical equipment',
+        'Emergency isolation not clearly identifiable',
+      ],
     },
     {
-      category: "Earthing & Bonding",
+      category: 'Earthing & Bonding',
       items: [
-        "Missing bonding or supplementary earthing connections",
-        "Inadequate cross-sectional area of bonding conductors",
-        "No earth electrode connection labels",
-        "Missing equipotential bonding in special locations"
-      ]
+        'Missing bonding or supplementary earthing connections',
+        'Inadequate cross-sectional area of bonding conductors',
+        'No earth electrode connection labels',
+        'Missing equipotential bonding in special locations',
+      ],
     },
     {
-      category: "Documentation & Compliance",
+      category: 'Documentation & Compliance',
       items: [
-        "No circuit charts or schedules provided",
-        "Missing warning labels and safety notices",
-        "Inadequate marking of conductor functions",
-        "No emergency contact information displayed"
-      ]
-    }
+        'No circuit charts or schedules provided',
+        'Missing warning labels and safety notices',
+        'Inadequate marking of conductor functions',
+        'No emergency contact information displayed',
+      ],
+    },
   ];
 
   return (
@@ -66,7 +65,8 @@ export const FrequentVisualIssues = () => {
         Other Frequent Visual Issues by Category
       </h3>
       <p className="text-gray-300 mb-4">
-        These common defects may seem minor but can compromise safety, compliance, and long-term reliability:
+        These common defects may seem minor but can compromise safety, compliance, and long-term
+        reliability:
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {frequentIssues.map((category, index) => (
@@ -87,7 +87,9 @@ export const FrequentVisualIssues = () => {
       </div>
       <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4 mt-6">
         <p className="text-orange-200 font-medium">
-          <strong>Professional Tip:</strong> Many of these issues are easily rectified during installation but can be costly and time-consuming to fix later. A systematic visual inspection helps identify these problems before they become major compliance issues.
+          <strong>Professional Tip:</strong> Many of these issues are easily rectified during
+          installation but can be costly and time-consuming to fix later. A systematic visual
+          inspection helps identify these problems before they become major compliance issues.
         </p>
       </div>
     </div>

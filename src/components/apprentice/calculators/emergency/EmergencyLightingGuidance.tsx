@@ -1,30 +1,26 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ResultCard } from "@/components/ui/result-card";
-import InfoBox from "@/components/common/InfoBox";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { 
-  Lightbulb, 
-  Battery, 
-  AlertTriangle, 
-  CheckCircle, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ResultCard } from '@/components/ui/result-card';
+import InfoBox from '@/components/common/InfoBox';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
+import {
+  Lightbulb,
+  Battery,
+  AlertTriangle,
+  CheckCircle,
   Zap,
   Clock,
   Shield,
   Wrench,
   Calculator,
   Info,
-  FileText
-} from "lucide-react";
-import { EmergencyLightingResult } from "@/lib/emergency-lighting";
-import { 
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
+  FileText,
+} from 'lucide-react';
+import { EmergencyLightingResult } from '@/lib/emergency-lighting';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
 
 interface EmergencyLightingGuidanceProps {
   result: EmergencyLightingResult;
@@ -36,22 +32,33 @@ interface EmergencyLightingGuidanceProps {
   };
 }
 
-const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({ result, inputs }) => {
+const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({
+  result,
+  inputs,
+}) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'compliant': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'warning': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'non-compliant': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-white/5 text-elec-light border-white/5';
+      case 'compliant':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'warning':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'non-compliant':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default:
+        return 'bg-white/5 text-elec-light border-white/5';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'compliant': return <CheckCircle className="h-4 w-4" />;
-      case 'warning': return <AlertTriangle className="h-4 w-4" />;
-      case 'non-compliant': return <AlertTriangle className="h-4 w-4" />;
-      default: return <Info className="h-4 w-4" />;
+      case 'compliant':
+        return <CheckCircle className="h-4 w-4" />;
+      case 'warning':
+        return <AlertTriangle className="h-4 w-4" />;
+      case 'non-compliant':
+        return <AlertTriangle className="h-4 w-4" />;
+      default:
+        return <Info className="h-4 w-4" />;
     }
   };
 
@@ -77,7 +84,7 @@ const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({ r
               title="Total Luminaires"
               value={result.totalLuminaires}
               icon={<Lightbulb className="h-4 w-4 text-elec-yellow" />}
-              status={result.totalLuminaires > 0 ? "success" : "error"}
+              status={result.totalLuminaires > 0 ? 'success' : 'error'}
             />
             <ResultCard
               title="System Power"
@@ -145,13 +152,13 @@ const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({ r
                 value={result.illuminanceAchieved.toFixed(1)}
                 unit="lux"
                 subtitle="achieved"
-                status={result.illuminanceAchieved >= 1 ? "success" : "error"}
+                status={result.illuminanceAchieved >= 1 ? 'success' : 'error'}
               />
               <ResultCard
                 title="Uniformity Ratio"
                 value={`${result.uniformityRatio.toFixed(1)}:1`}
                 subtitle="max 40:1"
-                status={result.uniformityRatio <= 40 ? "success" : "warning"}
+                status={result.uniformityRatio <= 40 ? 'success' : 'warning'}
               />
               <ResultCard
                 title="Cable Size"
@@ -194,11 +201,11 @@ const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({ r
       {/* Why This Matters */}
       <WhyThisMatters
         points={[
-          "Emergency lighting provides essential illumination during power failures, ensuring safe evacuation",
-          "BS 5266-1 compliance is legally required for most commercial and public buildings",
-          "Proper design prevents panic and ensures clear visibility of escape routes and exits",
-          "Adequate battery capacity ensures system operation throughout required duration",
-          "Regular testing and maintenance prevents system failure when needed most"
+          'Emergency lighting provides essential illumination during power failures, ensuring safe evacuation',
+          'BS 5266-1 compliance is legally required for most commercial and public buildings',
+          'Proper design prevents panic and ensures clear visibility of escape routes and exits',
+          'Adequate battery capacity ensures system operation throughout required duration',
+          'Regular testing and maintenance prevents system failure when needed most',
         ]}
       />
 
@@ -239,8 +246,8 @@ const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({ r
             £{result.estimatedCost.toLocaleString()}
           </div>
           <p className="text-sm text-elec-light/70">
-            Estimated material and installation cost. Final costs may vary based on specific requirements,
-            site conditions, and local rates.
+            Estimated material and installation cost. Final costs may vary based on specific
+            requirements, site conditions, and local rates.
           </p>
         </CardContent>
       </Card>
@@ -250,9 +257,10 @@ const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({ r
         <Info className="h-4 w-4 text-orange-500" />
         <AlertDescription className="text-orange-200">
           <div className="font-medium mb-1">Professional Design Required</div>
-          This calculation provides initial sizing guidance. Professional emergency lighting design should 
-          consider detailed escape route layouts, photometric calculations, risk assessments, and specific 
-          local authority requirements. Always consult a qualified emergency lighting designer for final specifications.
+          This calculation provides initial sizing guidance. Professional emergency lighting design
+          should consider detailed escape route layouts, photometric calculations, risk assessments,
+          and specific local authority requirements. Always consult a qualified emergency lighting
+          designer for final specifications.
         </AlertDescription>
       </Alert>
     </div>

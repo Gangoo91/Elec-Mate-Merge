@@ -12,9 +12,10 @@ export const SmartRadiatorValvesSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Smart TRVs replace traditional manual thermostatic radiator valves with motorised actuators that can be controlled remotely, providing precise room-level heating control.
+          Smart TRVs replace traditional manual thermostatic radiator valves with motorised
+          actuators that can be controlled remotely, providing precise room-level heating control.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">How They Work</h4>
           <ul className="space-y-2 text-sm">
@@ -47,7 +48,7 @@ export const SmartRadiatorValvesSection = () => {
               <li>• Drayton Wiser TRVs</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-green-600 rounded-lg p-4">
             <h4 className="font-semibold text-green-200 mb-3">Key Benefits</h4>
             <ul className="space-y-2 text-sm text-green-100">
@@ -62,7 +63,9 @@ export const SmartRadiatorValvesSection = () => {
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Installation Considerations</h4>
           <p className="text-sm mb-2">
-            Smart TRVs typically fit standard radiator valve connections but require battery power and wireless signal coverage. Consider valve orientation and accessibility for battery replacement.
+            Smart TRVs typically fit standard radiator valve connections but require battery power
+            and wireless signal coverage. Consider valve orientation and accessibility for battery
+            replacement.
           </p>
         </div>
       </CardContent>

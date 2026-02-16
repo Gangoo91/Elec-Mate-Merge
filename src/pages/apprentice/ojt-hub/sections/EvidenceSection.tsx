@@ -4,12 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -134,10 +129,8 @@ export function EvidenceSection() {
   // Filter evidence
   const filteredEvidence = evidence.filter((item) => {
     const matchesSearch =
-      searchTerm === '' ||
-      item.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      !selectedCategory || item.category === selectedCategory;
+      searchTerm === '' || item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = !selectedCategory || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -232,9 +225,7 @@ export function EvidenceSection() {
           </Badge>
         );
       default:
-        return (
-          <Badge variant="secondary">Draft</Badge>
-        );
+        return <Badge variant="secondary">Draft</Badge>;
     }
   };
 
@@ -290,12 +281,7 @@ export function EvidenceSection() {
         </div>
 
         {/* Hidden file input */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          className="hidden"
-          onChange={handleFileSelect}
-        />
+        <input ref={fileInputRef} type="file" className="hidden" onChange={handleFileSelect} />
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -334,7 +320,7 @@ export function EvidenceSection() {
             placeholder="Search evidence..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={cn("bg-card border-border", !searchTerm && "pl-9")}
+            className={cn('bg-card border-border', !searchTerm && 'pl-9')}
           />
         </div>
 
@@ -344,9 +330,7 @@ export function EvidenceSection() {
             onClick={() => setSelectedCategory(null)}
             className={cn(
               'px-4 h-9 rounded-full text-xs font-medium whitespace-nowrap transition-all active:scale-95 touch-manipulation',
-              !selectedCategory
-                ? 'bg-elec-yellow text-black'
-                : 'bg-muted text-muted-foreground'
+              !selectedCategory ? 'bg-elec-yellow text-black' : 'bg-muted text-muted-foreground'
             )}
           >
             All
@@ -405,9 +389,7 @@ export function EvidenceSection() {
                         <p className="font-medium text-foreground text-sm line-clamp-1">
                           {item.title}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-0.5">
-                          {item.category}
-                        </p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{item.category}</p>
                         <div className="flex items-center gap-2 mt-2">
                           {getStatusBadge(item.status)}
                           <span className="text-[10px] text-muted-foreground">
@@ -420,7 +402,11 @@ export function EvidenceSection() {
                       </div>
 
                       {/* Actions */}
-                      <Button variant="ghost" size="icon" className="h-10 w-10 shrink-0 touch-manipulation">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-10 w-10 shrink-0 touch-manipulation"
+                      >
                         <MoreVertical className="h-4 w-4" />
                       </Button>
                     </div>
@@ -474,9 +460,7 @@ export function EvidenceSection() {
                 <Input
                   placeholder="https://..."
                   value={newEvidence.linkUrl}
-                  onChange={(e) =>
-                    setNewEvidence({ ...newEvidence, linkUrl: e.target.value })
-                  }
+                  onChange={(e) => setNewEvidence({ ...newEvidence, linkUrl: e.target.value })}
                 />
               </div>
             )}
@@ -487,9 +471,7 @@ export function EvidenceSection() {
               <Input
                 placeholder="e.g., Consumer unit installation"
                 value={newEvidence.title}
-                onChange={(e) =>
-                  setNewEvidence({ ...newEvidence, title: e.target.value })
-                }
+                onChange={(e) => setNewEvidence({ ...newEvidence, title: e.target.value })}
               />
             </div>
 
@@ -498,9 +480,7 @@ export function EvidenceSection() {
               <label className="text-sm font-medium">Category</label>
               <Select
                 value={newEvidence.category}
-                onValueChange={(value) =>
-                  setNewEvidence({ ...newEvidence, category: value })
-                }
+                onValueChange={(value) => setNewEvidence({ ...newEvidence, category: value })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
@@ -521,9 +501,7 @@ export function EvidenceSection() {
               <Textarea
                 placeholder="Add details about this evidence..."
                 value={newEvidence.description}
-                onChange={(e) =>
-                  setNewEvidence({ ...newEvidence, description: e.target.value })
-                }
+                onChange={(e) => setNewEvidence({ ...newEvidence, description: e.target.value })}
                 rows={3}
               />
             </div>
@@ -536,7 +514,8 @@ export function EvidenceSection() {
                   <div>
                     <p className="text-xs font-medium text-foreground">AI Suggestion</p>
                     <p className="text-xs text-muted-foreground mt-0.5">
-                      This looks like practical training evidence. Consider tagging it with relevant KSBs.
+                      This looks like practical training evidence. Consider tagging it with relevant
+                      KSBs.
                     </p>
                   </div>
                 </div>

@@ -12,7 +12,8 @@ export const BMSModule5Section6Summary = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p className="text-lg text-gray-300">
-          Effective network planning, segmentation, and latency management are critical for reliable BMS operation.
+          Effective network planning, segmentation, and latency management are critical for reliable
+          BMS operation.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -25,15 +26,22 @@ export const BMSModule5Section6Summary = () => {
               <ul className="text-sm text-gray-300 space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400 mt-1">•</span>
-                  <span>Ensures reliable communication by respecting device counts, cable lengths, and topology rules</span>
+                  <span>
+                    Ensures reliable communication by respecting device counts, cable lengths, and
+                    topology rules
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400 mt-1">•</span>
-                  <span>Prevents data clashes and communication failures through proper system design</span>
+                  <span>
+                    Prevents data clashes and communication failures through proper system design
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400 mt-1">•</span>
-                  <span>Must be done during initial design phase for cost-effective implementation</span>
+                  <span>
+                    Must be done during initial design phase for cost-effective implementation
+                  </span>
                 </li>
               </ul>
             </div>
@@ -46,7 +54,9 @@ export const BMSModule5Section6Summary = () => {
               <ul className="text-sm text-gray-300 space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-1">•</span>
-                  <span>Reduces congestion by distributing devices across multiple network sections</span>
+                  <span>
+                    Reduces congestion by distributing devices across multiple network sections
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-1">•</span>
@@ -73,11 +83,15 @@ export const BMSModule5Section6Summary = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-yellow-400 mt-1">•</span>
-                  <span>Must be kept low for safe operation, especially in life safety systems</span>
+                  <span>
+                    Must be kept low for safe operation, especially in life safety systems
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-yellow-400 mt-1">•</span>
-                  <span>Target: under 1 second for general BMS, under 100ms for safety systems</span>
+                  <span>
+                    Target: under 1 second for general BMS, under 100ms for safety systems
+                  </span>
                 </li>
               </ul>
             </div>
@@ -90,7 +104,9 @@ export const BMSModule5Section6Summary = () => {
               <ul className="text-sm text-gray-300 space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-purple-400 mt-1">•</span>
-                  <span>Ensure physical layer integrity through proper cabling and termination</span>
+                  <span>
+                    Ensure physical layer integrity through proper cabling and termination
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-purple-400 mt-1">•</span>
@@ -129,7 +145,8 @@ export const BMSModule5Section6Summary = () => {
 
         <div className="bg-green-600/20 border border-green-600/40 rounded-lg p-4">
           <p className="text-green-100 font-medium">
-            <strong>Remember:</strong> A well-planned network is the foundation of a reliable BMS. Invest time in proper design and installation to avoid costly problems later.
+            <strong>Remember:</strong> A well-planned network is the foundation of a reliable BMS.
+            Invest time in proper design and installation to avoid costly problems later.
           </p>
         </div>
       </CardContent>

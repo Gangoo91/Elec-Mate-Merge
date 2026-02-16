@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all six content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all six content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by PASMA training assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by PASMA training assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Review All Six Modules",
+    title: 'Review All Six Modules',
     description:
-      "Questions are drawn from Legislation, Tower Types, Assembly, Dismantling, Inspection, and Hazards. Make sure you have covered every module before attempting the exam.",
+      'Questions are drawn from Legislation, Tower Types, Assembly, Dismantling, Inspection, and Hazards. Make sure you have covered every module before attempting the exam.',
   },
   {
-    title: "Know Your Regulations",
+    title: 'Know Your Regulations',
     description:
-      "The Work at Height Regulations 2005, HSWA 1974, EN 1004:2020, and CDM 2015 are heavily tested. Understand the hierarchy of control and duty holder responsibilities.",
+      'The Work at Height Regulations 2005, HSWA 1974, EN 1004:2020, and CDM 2015 are heavily tested. Understand the hierarchy of control and duty holder responsibilities.',
   },
   {
-    title: "Understand Assembly & Dismantling",
+    title: 'Understand Assembly & Dismantling',
     description:
-      "Be clear on the differences between 3T (Through The Trap) and AGR (Advance Guard Rail) methods for both assembly and dismantling, including when each is appropriate.",
+      'Be clear on the differences between 3T (Through The Trap) and AGR (Advance Guard Rail) methods for both assembly and dismantling, including when each is appropriate.',
   },
   {
-    title: "Remember Key Dimensions",
+    title: 'Remember Key Dimensions',
     description:
-      "Guardrail height (950 mm), mid-rail (470 mm), toeboard (150 mm), platform safe working load, and height-to-base ratios appear frequently in questions.",
+      'Guardrail height (950 mm), mid-rail (470 mm), toeboard (150 mm), platform safe working load, and height-to-base ratios appear frequently in questions.',
   },
   {
-    title: "Inspection & Compliance",
+    title: 'Inspection & Compliance',
     description:
-      "Know when inspections are required: before first use, every 7 days, after any event that could affect stability, and after any modification or relocation.",
+      'Know when inspections are required: before first use, every 7 days, after any event that could affect stability, and after any modification or relocation.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function PasmaModule7() {
   useSEO({
-    title: "PASMA Mock Exam | Module 7",
+    title: 'PASMA Mock Exam | Module 7',
     description:
-      "Test your PASMA Towers for Users knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your PASMA Towers for Users knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -100,9 +110,7 @@ export default function PasmaModule7() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Put your PASMA Towers for Users knowledge to the test under timed exam conditions.
               Questions are drawn from a 200-question bank covering all six content modules.
@@ -118,7 +126,9 @@ export default function PasmaModule7() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real PASMA assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real PASMA assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -133,9 +143,7 @@ export default function PasmaModule7() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -152,13 +160,13 @@ export default function PasmaModule7() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Legislation", count: 34 },
-                  { module: "Module 2", name: "Tower Types", count: 28 },
-                  { module: "Module 3", name: "Assembly", count: 28 },
-                  { module: "Module 4", name: "Dismantling", count: 28 },
-                  { module: "Module 5", name: "Inspection", count: 28 },
-                  { module: "Module 6", name: "Hazards", count: 28 },
-                  { module: "Module 6", name: "Safety", count: 26 },
+                  { module: 'Module 1', name: 'Legislation', count: 34 },
+                  { module: 'Module 2', name: 'Tower Types', count: 28 },
+                  { module: 'Module 3', name: 'Assembly', count: 28 },
+                  { module: 'Module 4', name: 'Dismantling', count: 28 },
+                  { module: 'Module 5', name: 'Inspection', count: 28 },
+                  { module: 'Module 6', name: 'Hazards', count: 28 },
+                  { module: 'Module 6', name: 'Safety', count: 26 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -212,9 +220,7 @@ export default function PasmaModule7() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

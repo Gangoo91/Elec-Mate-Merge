@@ -1,10 +1,22 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { MobileTabs, MobileTabsContent, MobileTabsList, MobileTabsTrigger } from '@/components/ui/mobile-tabs';
-import { FileText, Lightbulb, AlertTriangle, CheckCircle, Calculator, Wrench, BookOpen } from 'lucide-react';
+import {
+  MobileTabs,
+  MobileTabsContent,
+  MobileTabsList,
+  MobileTabsTrigger,
+} from '@/components/ui/mobile-tabs';
+import {
+  FileText,
+  Lightbulb,
+  AlertTriangle,
+  CheckCircle,
+  Calculator,
+  Wrench,
+  BookOpen,
+} from 'lucide-react';
 
 const PracticalGuidance = () => {
   const [selectedScenario, setSelectedScenario] = useState('domestic-cu');
@@ -19,36 +31,53 @@ const PracticalGuidance = () => {
       steps: [
         {
           step: 'Planning & Assessment',
-          details: 'Survey existing installation, calculate load requirements, plan circuit distribution',
+          details:
+            'Survey existing installation, calculate load requirements, plan circuit distribution',
           regulations: ['314.1 - Circuit division', '311.1 - Load assessment'],
-          tips: ['Document existing circuits', 'Check if tails need upgrading', 'Consider future expansion']
+          tips: [
+            'Document existing circuits',
+            'Check if tails need upgrading',
+            'Consider future expansion',
+          ],
         },
         {
           step: 'Isolation & Safety',
           details: 'Arrange supply isolation with DNO, implement safety measures',
           regulations: ['537.2 - Isolation requirements'],
-          tips: ['Book DNO appointment', 'Prepare alternative supply if needed', 'Safety barriers and signage']
+          tips: [
+            'Book DNO appointment',
+            'Prepare alternative supply if needed',
+            'Safety barriers and signage',
+          ],
         },
         {
           step: 'Installation',
           details: 'Install new consumer unit, connect circuits with appropriate protection',
           regulations: ['526.3 - Connections', '411.3.3 - RCD protection'],
-          tips: ['Label circuits clearly', 'Use appropriate cable markers', 'Maintain cable segregation']
+          tips: [
+            'Label circuits clearly',
+            'Use appropriate cable markers',
+            'Maintain cable segregation',
+          ],
         },
         {
           step: 'Testing & Certification',
           details: 'Complete full testing schedule, issue EIC',
           regulations: ['610 - Initial verification', '612 - Testing'],
-          tips: ['Test in correct sequence', 'Check RCD operation', 'Verify Ze before final connection']
-        }
+          tips: [
+            'Test in correct sequence',
+            'Check RCD operation',
+            'Verify Ze before final connection',
+          ],
+        },
       ],
       commonIssues: [
         'Existing circuits not suitable for RCD protection',
         'Inadequate earthing system',
         'Mixed cable types requiring special consideration',
-        'Limited space for new consumer unit'
+        'Limited space for new consumer unit',
       ],
-      tools: ['Multimeter', 'RCD tester', 'Loop impedance tester', 'Non-contact voltage tester']
+      tools: ['Multimeter', 'RCD tester', 'Loop impedance tester', 'Non-contact voltage tester'],
     },
     'socket-circuit': {
       title: 'Adding Socket Circuit',
@@ -61,34 +90,42 @@ const PracticalGuidance = () => {
           step: 'Circuit Design',
           details: 'Calculate load, select cable size and protection',
           regulations: ['433.1 - Overcurrent protection', '523.1 - Cable selection'],
-          tips: ['Consider diversity factors', 'Check volt drop calculations', 'Plan cable route']
+          tips: ['Consider diversity factors', 'Check volt drop calculations', 'Plan cable route'],
         },
         {
           step: 'Cable Installation',
           details: 'Install cable using appropriate methods',
           regulations: ['522 - Cable installation', '522.6.202 - Buried cables'],
-          tips: ['Maintain 50mm depth or use RCD', 'Avoid cable damage', 'Use appropriate clips/supports']
+          tips: [
+            'Maintain 50mm depth or use RCD',
+            'Avoid cable damage',
+            'Use appropriate clips/supports',
+          ],
         },
         {
           step: 'Connection & Protection',
           details: 'Connect at consumer unit with 30mA RCD protection',
           regulations: ['411.3.3 - Additional protection'],
-          tips: ['Use RCBO for best protection', 'Label circuit clearly', 'Check connections are secure']
+          tips: [
+            'Use RCBO for best protection',
+            'Label circuit clearly',
+            'Check connections are secure',
+          ],
         },
         {
           step: 'Testing',
           details: 'Complete testing and documentation',
           regulations: ['612 - Testing requirements'],
-          tips: ['Test continuity first', 'Check insulation resistance', 'Verify RCD operation']
-        }
+          tips: ['Test continuity first', 'Check insulation resistance', 'Verify RCD operation'],
+        },
       ],
       commonIssues: [
         'Cable route conflicts with other services',
         'Difficulty accessing consumer unit',
         'Existing circuits already at capacity',
-        'RCD sensitivity issues with other circuits'
+        'RCD sensitivity issues with other circuits',
       ],
-      tools: ['Cable detector', 'SDS drill', 'Cable pulling system', 'Testing equipment']
+      tools: ['Cable detector', 'SDS drill', 'Cable pulling system', 'Testing equipment'],
     },
     'lighting-upgrade': {
       title: 'LED Lighting Upgrade',
@@ -101,34 +138,42 @@ const PracticalGuidance = () => {
           step: 'Compatibility Check',
           details: 'Verify existing dimmer and switch compatibility',
           regulations: ['559.4.1 - Control compatibility'],
-          tips: ['Check dimmer type', 'Verify minimum load requirements', 'Consider inrush current']
+          tips: [
+            'Check dimmer type',
+            'Verify minimum load requirements',
+            'Consider inrush current',
+          ],
         },
         {
           step: 'Circuit Assessment',
           details: 'Check circuit capacity and protection',
           regulations: ['433.1 - Protection coordination'],
-          tips: ['Calculate new load', 'Check if MCB rating suitable', 'Consider cable capacity']
+          tips: ['Calculate new load', 'Check if MCB rating suitable', 'Consider cable capacity'],
         },
         {
           step: 'Installation',
           details: 'Install LED luminaires and drivers',
           regulations: ['559.5 - Installation requirements'],
-          tips: ['Maintain IP ratings', 'Ensure adequate cooling', 'Use compatible drivers']
+          tips: ['Maintain IP ratings', 'Ensure adequate cooling', 'Use compatible drivers'],
         },
         {
           step: 'Testing & Commissioning',
           details: 'Test installation and verify operation',
           regulations: ['612 - Testing'],
-          tips: ['Check all switching operates correctly', 'Verify dimming operation', 'Test emergency circuits separately']
-        }
+          tips: [
+            'Check all switching operates correctly',
+            'Verify dimming operation',
+            'Test emergency circuits separately',
+          ],
+        },
       ],
       commonIssues: [
         'Dimmer incompatibility causing flicker',
         'Minimum load not met on dimmer circuits',
         'EMI interference with other equipment',
-        'Heat build-up in enclosed luminaires'
+        'Heat build-up in enclosed luminaires',
       ],
-      tools: ['LED tester', 'Light meter', 'Digital multimeter', 'Thermal camera (optional)']
+      tools: ['LED tester', 'Light meter', 'Digital multimeter', 'Thermal camera (optional)'],
     },
     'ev-charging': {
       title: 'EV Charging Point Installation',
@@ -141,45 +186,66 @@ const PracticalGuidance = () => {
           step: 'Site Survey & Design',
           details: 'Assess supply capacity, earthing system and installation requirements',
           regulations: ['722.311 - Assessment', '722.411.4.1 - Earthing'],
-          tips: ['Check DNO approval requirements', 'Assess existing load', 'Plan cable route to charging point']
+          tips: [
+            'Check DNO approval requirements',
+            'Assess existing load',
+            'Plan cable route to charging point',
+          ],
         },
         {
           step: 'Supply Modifications',
           details: 'Install dedicated circuit with appropriate protection',
           regulations: ['722.531.2.101 - RCD protection', '722.534 - Surge protection'],
-          tips: ['Type A or B RCD required', 'SPD at origin recommended', 'Consider load balancing']
+          tips: [
+            'Type A or B RCD required',
+            'SPD at origin recommended',
+            'Consider load balancing',
+          ],
         },
         {
           step: 'Installation & Connection',
           details: 'Install charging unit and make final connections',
           regulations: ['722.52 - Wiring systems'],
-          tips: ['Secure mounting essential', 'IP rating for location', 'Cable glands and sealing']
+          tips: ['Secure mounting essential', 'IP rating for location', 'Cable glands and sealing'],
         },
         {
           step: 'Testing & Commissioning',
           details: 'Complete testing including DC fault detection',
           regulations: ['722.6 - Verification'],
-          tips: ['Test Type A/B RCD operation', 'Verify earth continuity', 'Check charging point operation']
-        }
+          tips: [
+            'Test Type A/B RCD operation',
+            'Verify earth continuity',
+            'Check charging point operation',
+          ],
+        },
       ],
       commonIssues: [
         'Inadequate supply capacity requiring upgrade',
         'PME earthing complications',
         'Planning permission requirements',
-        'DNO notification and approval delays'
+        'DNO notification and approval delays',
       ],
-      tools: ['Type A/B RCD tester', 'Clamp meter', 'Power quality analyser', 'Charging point tester']
-    }
+      tools: [
+        'Type A/B RCD tester',
+        'Clamp meter',
+        'Power quality analyser',
+        'Charging point tester',
+      ],
+    },
   };
 
   const currentScenario = practicalScenarios[selectedScenario as keyof typeof practicalScenarios];
 
   const getComplexityColor = (complexity: string) => {
     switch (complexity) {
-      case 'basic': return 'bg-green-500/20 text-green-400';
-      case 'intermediate': return 'bg-yellow-500/20 text-yellow-400';
-      case 'advanced': return 'bg-red-500/20 text-red-400';
-      default: return 'bg-gray-500/20 text-gray-400';
+      case 'basic':
+        return 'bg-green-500/20 text-green-400';
+      case 'intermediate':
+        return 'bg-yellow-500/20 text-yellow-400';
+      case 'advanced':
+        return 'bg-red-500/20 text-red-400';
+      default:
+        return 'bg-gray-500/20 text-gray-400';
     }
   };
 
@@ -187,17 +253,19 @@ const PracticalGuidance = () => {
     <div className="space-y-6">
       <div className="text-center px-2 sm:px-4">
         <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Practical Guidance</h2>
-        <p className="text-sm sm:text-base text-gray-300">Step-by-step guides for common electrical work scenarios</p>
+        <p className="text-sm sm:text-base text-gray-300">
+          Step-by-step guides for common electrical work scenarios
+        </p>
       </div>
 
       {/* Scenario Selection */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {Object.entries(practicalScenarios).map(([key, scenario]) => (
-          <Card 
+          <Card
             key={key}
             className={`cursor-pointer transition-all hover:scale-105 ${
-              selectedScenario === key 
-                ? 'bg-elec-yellow/10 border-elec-yellow' 
+              selectedScenario === key
+                ? 'bg-elec-yellow/10 border-elec-yellow'
                 : 'bg-card border-border hover:border-elec-yellow/50'
             }`}
             onClick={() => setSelectedScenario(key)}
@@ -220,7 +288,9 @@ const PracticalGuidance = () => {
         <CardHeader>
           <div className="flex justify-between items-start">
             <div>
-              <CardTitle className="text-elec-yellow text-xl mb-2">{currentScenario.title}</CardTitle>
+              <CardTitle className="text-elec-yellow text-xl mb-2">
+                {currentScenario.title}
+              </CardTitle>
               <p className="text-gray-300">{currentScenario.overview}</p>
             </div>
             <div className="text-right">
@@ -260,7 +330,7 @@ const PracticalGuidance = () => {
                     </CardHeader>
                     <CardContent>
                       <p className="text-gray-300 mb-4">{step.details}</p>
-                      
+
                       <div className="space-y-3">
                         <div>
                           <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
@@ -269,11 +339,13 @@ const PracticalGuidance = () => {
                           </h4>
                           <div className="space-y-1">
                             {step.regulations.map((reg, idx) => (
-                              <p key={idx} className="text-sm text-gray-400">{reg}</p>
+                              <p key={idx} className="text-sm text-gray-400">
+                                {reg}
+                              </p>
                             ))}
                           </div>
                         </div>
-                        
+
                         <div>
                           <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                             <Lightbulb className="h-4 w-4 text-elec-yellow" />
@@ -342,13 +414,22 @@ const PracticalGuidance = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full justify-start border-border text-foreground hover:bg-muted">
+            <Button
+              variant="outline"
+              className="w-full justify-start border-border text-foreground hover:bg-muted"
+            >
               Load Calculation Worksheet
             </Button>
-            <Button variant="outline" className="w-full justify-start border-border text-foreground hover:bg-muted">
+            <Button
+              variant="outline"
+              className="w-full justify-start border-border text-foreground hover:bg-muted"
+            >
               Cable Sizing Calculator
             </Button>
-            <Button variant="outline" className="w-full justify-start border-border text-foreground hover:bg-muted">
+            <Button
+              variant="outline"
+              className="w-full justify-start border-border text-foreground hover:bg-muted"
+            >
               Voltage Drop Calculator
             </Button>
           </CardContent>
@@ -362,13 +443,22 @@ const PracticalGuidance = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full justify-start border-border text-foreground hover:bg-muted">
+            <Button
+              variant="outline"
+              className="w-full justify-start border-border text-foreground hover:bg-muted"
+            >
               Installation Checklist
             </Button>
-            <Button variant="outline" className="w-full justify-start border-border text-foreground hover:bg-muted">
+            <Button
+              variant="outline"
+              className="w-full justify-start border-border text-foreground hover:bg-muted"
+            >
               Risk Assessment Template
             </Button>
-            <Button variant="outline" className="w-full justify-start border-border text-foreground hover:bg-muted">
+            <Button
+              variant="outline"
+              className="w-full justify-start border-border text-foreground hover:bg-muted"
+            >
               Method Statement Template
             </Button>
           </CardContent>

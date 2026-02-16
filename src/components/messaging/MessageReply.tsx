@@ -31,17 +31,10 @@ export function ReplyPreview({ replyTo, onClear, className }: ReplyPreviewProps)
         <p className="text-xs font-medium text-elec-yellow truncate">
           Replying to {replyTo.senderName}
         </p>
-        <p className="text-xs text-muted-foreground truncate">
-          {replyTo.content}
-        </p>
+        <p className="text-xs text-muted-foreground truncate">{replyTo.content}</p>
       </div>
       {onClear && (
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-6 w-6 shrink-0"
-          onClick={onClear}
-        >
+        <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={onClear}>
           <X className="h-3 w-3" />
         </Button>
       )}
@@ -59,12 +52,7 @@ interface ReplyQuoteProps {
   className?: string;
 }
 
-export function ReplyQuote({
-  replyTo,
-  isOwnMessage = false,
-  onClick,
-  className,
-}: ReplyQuoteProps) {
+export function ReplyQuote({ replyTo, isOwnMessage = false, onClick, className }: ReplyQuoteProps) {
   return (
     <div
       className={cn(
@@ -142,9 +130,7 @@ export function ThreadIndicator({
       <span>
         {replyCount} {replyCount === 1 ? 'reply' : 'replies'}
         {lastReplyAt && (
-          <span className="text-muted-foreground ml-1">
-            · {formatTime(lastReplyAt)}
-          </span>
+          <span className="text-muted-foreground ml-1">· {formatTime(lastReplyAt)}</span>
         )}
       </span>
     </button>
@@ -161,12 +147,7 @@ interface ReplyButtonProps {
 
 export function ReplyButton({ onClick, className }: ReplyButtonProps) {
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className={cn('h-8 px-2 gap-1', className)}
-      onClick={onClick}
-    >
+    <Button variant="ghost" size="sm" className={cn('h-8 px-2 gap-1', className)} onClick={onClick}>
       <Reply className="h-3.5 w-3.5" />
       <span className="text-xs">Reply</span>
     </Button>

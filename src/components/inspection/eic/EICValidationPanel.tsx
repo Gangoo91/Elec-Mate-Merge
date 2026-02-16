@@ -1,17 +1,9 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  AlertTriangle, 
-  AlertCircle, 
-  Info, 
-  CheckCircle, 
-  Shield,
-  FileText
-} from 'lucide-react';
+import { AlertTriangle, AlertCircle, Info, CheckCircle, Shield, FileText } from 'lucide-react';
 import { useEICValidation, ValidationRule } from '@/hooks/useEICValidation';
 
 interface EICValidationPanelProps {
@@ -111,9 +103,7 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
                   <div className="space-y-1">
                     <p className="font-medium">{error.message}</p>
                     {error.regulation && (
-                      <p className="text-xs text-muted-foreground">
-                        Reference: {error.regulation}
-                      </p>
+                      <p className="text-xs text-muted-foreground">Reference: {error.regulation}</p>
                     )}
                   </div>
                 </AlertDescription>
@@ -151,8 +141,8 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
           <Alert className="border-green-200 bg-green-50">
             <CheckCircle className="h-4 w-4 text-green-600" />
             <AlertDescription className="text-green-800">
-              <strong>EIC Ready for Generation!</strong> All required fields are complete and validation checks have passed. 
-              You can now generate the official certificate.
+              <strong>EIC Ready for Generation!</strong> All required fields are complete and
+              validation checks have passed. You can now generate the official certificate.
             </AlertDescription>
           </Alert>
         )}
@@ -164,9 +154,8 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
             <div>
               <p className="font-medium mb-1">Legal Requirements:</p>
               <p>
-                This EIC must comply with BS 7671:2018 and Building Regulations. 
-                All declarations require competent person signatures. 
-                Keep records for minimum 6 years.
+                This EIC must comply with BS 7671:2018 and Building Regulations. All declarations
+                require competent person signatures. Keep records for minimum 6 years.
               </p>
             </div>
           </div>

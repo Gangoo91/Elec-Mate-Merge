@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import {
   PoundSterling,
   RefreshCw,
@@ -16,20 +16,20 @@ import {
   Bell,
   CheckCircle,
   Clock,
-  AlertTriangle
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Link, useSearchParams } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
-import { useToast } from "@/hooks/use-toast";
+  AlertTriangle,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Link, useSearchParams } from 'react-router-dom';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useLiveMetalPrices } from '@/hooks/useLiveMetalPrices';
+import { useToast } from '@/hooks/use-toast';
 
 // Import existing components
-import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRegionalPricing";
-import ModernSubmitPage from "@/components/electrician-pricing/ModernSubmitPage";
-import CompactPricingGrid from "@/components/electrician-pricing/CompactPricingGrid";
-import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
+import EnhancedRegionalPricing from '@/components/electrician-pricing/EnhancedRegionalPricing';
+import ModernSubmitPage from '@/components/electrician-pricing/ModernSubmitPage';
+import CompactPricingGrid from '@/components/electrician-pricing/CompactPricingGrid';
+import ScrapMerchantFinder from '@/components/electrician-pricing/ScrapMerchantFinder';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
 
 // Loading skeleton component
 const PricingSkeleton = () => (
@@ -43,16 +43,22 @@ const PricingSkeleton = () => (
 );
 
 // Price trend indicator component
-const PriceTrendIndicator = ({ trend, change }: { trend: 'up' | 'down' | 'stable', change: string }) => {
+const PriceTrendIndicator = ({
+  trend,
+  change,
+}: {
+  trend: 'up' | 'down' | 'stable';
+  change: string;
+}) => {
   const trendConfig = {
     up: { icon: TrendingUp, color: 'text-red-400', bgColor: 'bg-red-500/10' },
     down: { icon: TrendingUp, color: 'text-green-400', bgColor: 'bg-green-500/10' },
-    stable: { icon: TrendingUp, color: 'text-gray-400', bgColor: 'bg-gray-500/10' }
+    stable: { icon: TrendingUp, color: 'text-gray-400', bgColor: 'bg-gray-500/10' },
   };
-  
+
   const config = trendConfig[trend];
   const Icon = config.icon;
-  
+
   return (
     <div className={`flex items-center gap-1 px-2 py-1 rounded-md ${config.bgColor}`}>
       <Icon className={`h-3 w-3 ${config.color} ${trend === 'down' ? 'rotate-180' : ''}`} />
@@ -62,12 +68,12 @@ const PriceTrendIndicator = ({ trend, change }: { trend: 'up' | 'down' | 'stable
 };
 
 // Enhanced search component with autocomplete
-const EnhancedSearchBox = ({ 
-  value, 
-  onChange, 
-  onSearch, 
-  placeholder = "Search materials, regions, or job types...",
-  suggestions = [] 
+const EnhancedSearchBox = ({
+  value,
+  onChange,
+  onSearch,
+  placeholder = 'Search materials, regions, or job types...',
+  suggestions = [],
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -76,7 +82,7 @@ const EnhancedSearchBox = ({
   suggestions?: string[];
 }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
-  
+
   return (
     <div className="relative">
       <div className="relative">
@@ -90,9 +96,12 @@ const EnhancedSearchBox = ({
           onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
           onKeyPress={(e) => e.key === 'Enter' && onSearch()}
           placeholder={placeholder}
-          className={cn("bg-elec-gray border-elec-yellow/30 text-white placeholder:text-elec-yellow/60 focus:border-elec-yellow h-12 text-base", !value && "pl-10")}
+          className={cn(
+            'bg-elec-gray border-elec-yellow/30 text-white placeholder:text-elec-yellow/60 focus:border-elec-yellow h-12 text-base',
+            !value && 'pl-10'
+          )}
         />
-        <Button 
+        <Button
           onClick={onSearch}
           className="absolute right-2 top-2 h-8 px-3 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           size="sm"
@@ -100,7 +109,7 @@ const EnhancedSearchBox = ({
           Search
         </Button>
       </div>
-      
+
       {showSuggestions && suggestions.length > 0 && (
         <div className="absolute top-full left-0 right-0 z-10 mt-1 bg-elec-gray border border-elec-yellow/30 rounded-lg shadow-lg">
           {suggestions.slice(0, 5).map((suggestion, index) => (
@@ -125,51 +134,65 @@ const LivePricingRedesigned = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
   const { toast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "regional";
+  const activeTab = searchParams.get('tab') || 'regional';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
-  const [searchQuery, setSearchQuery] = useState("");
-  
+  const [searchQuery, setSearchQuery] = useState('');
+
   // Mock data for enhanced features
   const searchSuggestions = [
-    "SWA Cable 6mm 100m",
-    "Consumer Units",
-    "LED Downlights",
-    "London Installation",
-    "Manchester Testing",
-    "RCD Protection"
+    'SWA Cable 6mm 100m',
+    'Consumer Units',
+    'LED Downlights',
+    'London Installation',
+    'Manchester Testing',
+    'RCD Protection',
   ];
 
   const marketInsights = {
     trending: [
-      { name: "SWA Cable", change: "+12%", trend: "up" as const },
-      { name: "LED Lighting", change: "-8%", trend: "down" as const },
-      { name: "Smart Switches", change: "+5%", trend: "up" as const }
+      { name: 'SWA Cable', change: '+12%', trend: 'up' as const },
+      { name: 'LED Lighting', change: '-8%', trend: 'down' as const },
+      { name: 'Smart Switches', change: '+5%', trend: 'up' as const },
     ],
     alerts: [
-      { type: "price_increase", message: "Copper prices expected to rise 5% next week", urgent: true },
-      { type: "supply_shortage", message: "High demand for consumer units in London area", urgent: false }
-    ]
+      {
+        type: 'price_increase',
+        message: 'Copper prices expected to rise 5% next week',
+        urgent: true,
+      },
+      {
+        type: 'supply_shortage',
+        message: 'High demand for consumer units in London area',
+        urgent: false,
+      },
+    ],
   };
 
   const handleSearch = () => {
     if (!searchQuery.trim()) {
       toast({
-        title: "Search Required",
-        description: "Please enter a search term to find pricing information.",
-        variant: "destructive"
+        title: 'Search Required',
+        description: 'Please enter a search term to find pricing information.',
+        variant: 'destructive',
       });
       return;
     }
     // Search functionality would be implemented here
-    console.log("Searching for:", searchQuery);
+    console.log('Searching for:', searchQuery);
   };
 
   return (
     <div className="bg-elec-dark text-white  ">
       <Helmet>
         <title>Live Pricing Hub - Elec-Mate</title>
-        <meta name="description" content="Real-time material pricing, regional job rates, and market insights for UK electricians. Compare prices, track trends, and stay competitive." />
-        <meta name="keywords" content="live electrical pricing, UK material costs, regional job rates, price comparison" />
+        <meta
+          name="description"
+          content="Real-time material pricing, regional job rates, and market insights for UK electricians. Compare prices, track trends, and stay competitive."
+        />
+        <meta
+          name="keywords"
+          content="live electrical pricing, UK material costs, regional job rates, price comparison"
+        />
       </Helmet>
 
       <div className="bg-elec-dark border-b border-elec-yellow/20">
@@ -178,18 +201,18 @@ const LivePricingRedesigned = () => {
             <PoundSterling className="h-6 w-6 text-elec-yellow" />
             <h1 className="text-xl sm:text-2xl font-bold">Live Pricing Hub</h1>
           </div>
-          
+
           <div className="flex gap-2">
             <SmartBackButton className="hidden sm:flex" />
 
             <Button
-              variant="outline" 
+              variant="outline"
               size="sm"
               onClick={() => refreshPrices(true)}
               disabled={isLoading}
               className="flex items-center gap-1"
             >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </Button>
           </div>
@@ -197,34 +220,32 @@ const LivePricingRedesigned = () => {
       </div>
 
       <div className="p-4 space-y-6">
-
-
         {/* Tabbed Interface */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-elec-gray border border-elec-yellow/20 h-auto p-1 gap-1">
-            <TabsTrigger 
-              value="regional" 
+            <TabsTrigger
+              value="regional"
               className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
             >
               <MapPin className="h-4 w-4" />
               <span>Regional</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="submit" 
+            <TabsTrigger
+              value="submit"
               className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
             >
               <Users className="h-4 w-4" />
               <span>Submit</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="market" 
+            <TabsTrigger
+              value="market"
               className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
             >
               <TrendingUp className="h-4 w-4" />
               <span>Insights</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="scrap" 
+            <TabsTrigger
+              value="scrap"
               className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
             >
               <Recycle className="h-4 w-4" />
@@ -251,7 +272,7 @@ const LivePricingRedesigned = () => {
           <TabsContent value="market" className="space-y-6 animate-fade-in">
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">Market Intelligence</h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <Card className="border-elec-yellow/20 bg-elec-gray">
                   <CardHeader className="pb-3">
@@ -299,7 +320,7 @@ const LivePricingRedesigned = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground mb-4">
-                    We're building advanced market intelligence features including price prediction, 
+                    We're building advanced market intelligence features including price prediction,
                     seasonal trends, and competitive analysis.
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
@@ -329,7 +350,7 @@ const LivePricingRedesigned = () => {
             <div className="space-y-6">
               {/* Postcode Finder for Local Scrap Merchants */}
               <ScrapMerchantFinder />
-              
+
               {/* Scrap Metal Prices Section */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -339,7 +360,7 @@ const LivePricingRedesigned = () => {
                     Recycling Rates
                   </Badge>
                 </div>
-                
+
                 {isLoading ? (
                   <PricingSkeleton />
                 ) : data ? (
@@ -367,16 +388,16 @@ const LivePricingRedesigned = () => {
               <WhyThisMatters
                 title="UK Scrap Metal Recycling Guide"
                 points={[
-                  "Electrical cables (copper, aluminium) - Strip insulation for better rates. Clean copper fetches premium prices.",
-                  "Transformers and motors contain valuable copper windings - Must be drained of oil before scrapping per environmental regulations.",
-                  "Cable offcuts and wire - Sort by type (singles, twin & earth, SWA) as prices vary significantly.",
-                  "Consumer units and metalwork - Separate ferrous and non-ferrous metals for maximum value.",
-                  "Legal requirement: All scrap dealers must verify your identity under the Scrap Metal Dealers Act 2013 - Bring photo ID and proof of address.",
-                  "Payment regulations: Cash payments over £500 are illegal. Expect bank transfer or cheque payments for larger amounts.",
-                  "VAT and invoices: Keep records of all scrap sales - HMRC may require documentation for tax purposes.",
-                  "Environmental benefit: Recycling one tonne of copper saves 100 tonnes of CO₂ compared to mining new copper.",
-                  "BS7671 compliance: Ensure any equipment being scrapped has been properly isolated and made safe before removal.",
-                  "Top tip: Build relationships with local merchants for better rates on regular scrapping - Consistent quality helps negotiate better prices."
+                  'Electrical cables (copper, aluminium) - Strip insulation for better rates. Clean copper fetches premium prices.',
+                  'Transformers and motors contain valuable copper windings - Must be drained of oil before scrapping per environmental regulations.',
+                  'Cable offcuts and wire - Sort by type (singles, twin & earth, SWA) as prices vary significantly.',
+                  'Consumer units and metalwork - Separate ferrous and non-ferrous metals for maximum value.',
+                  'Legal requirement: All scrap dealers must verify your identity under the Scrap Metal Dealers Act 2013 - Bring photo ID and proof of address.',
+                  'Payment regulations: Cash payments over £500 are illegal. Expect bank transfer or cheque payments for larger amounts.',
+                  'VAT and invoices: Keep records of all scrap sales - HMRC may require documentation for tax purposes.',
+                  'Environmental benefit: Recycling one tonne of copper saves 100 tonnes of CO₂ compared to mining new copper.',
+                  'BS7671 compliance: Ensure any equipment being scrapped has been properly isolated and made safe before removal.',
+                  'Top tip: Build relationships with local merchants for better rates on regular scrapping - Consistent quality helps negotiate better prices.',
                 ]}
               />
             </div>
@@ -392,7 +413,8 @@ const LivePricingRedesigned = () => {
                 <span className="text-sm font-medium">Data Quality: High</span>
               </div>
               <div className="text-xs text-muted-foreground">
-                Last updated: {data?.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : 'N/A'}
+                Last updated:{' '}
+                {data?.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : 'N/A'}
               </div>
             </div>
             <div className="mt-2">

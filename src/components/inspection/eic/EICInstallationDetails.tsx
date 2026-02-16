@@ -13,10 +13,10 @@ interface EICInstallationDetailsProps {
   onQuickSave?: () => void;
 }
 
-const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({ 
-  formData, 
-  onUpdate, 
-  onQuickSave 
+const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
+  formData,
+  onUpdate,
+  onQuickSave,
 }) => {
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     client: true,
@@ -37,40 +37,40 @@ const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
         <SmartFieldDependencies formData={formData} onUpdate={onUpdate} />
 
         {/* Client & Installation Information */}
-        <EICClientDetailsSection 
-          formData={formData} 
+        <EICClientDetailsSection
+          formData={formData}
           onUpdate={onUpdate}
           isOpen={openSections.client}
           onToggle={() => toggleSection('client')}
         />
 
         {/* Supply Characteristics */}
-        <EICSupplyCharacteristicsSection 
-          formData={formData} 
+        <EICSupplyCharacteristicsSection
+          formData={formData}
           onUpdate={onUpdate}
           isOpen={openSections.supply}
           onToggle={() => toggleSection('supply')}
         />
 
         {/* Electrical Installation Details */}
-        <EICElectricalInstallationSection 
-          formData={formData} 
+        <EICElectricalInstallationSection
+          formData={formData}
           onUpdate={onUpdate}
           isOpen={openSections.electrical}
           onToggle={() => toggleSection('electrical')}
         />
 
         {/* Earthing and Bonding */}
-        <EarthingAndBondingSection 
-          formData={formData} 
+        <EarthingAndBondingSection
+          formData={formData}
           onUpdate={onUpdate}
           isOpen={openSections.earthing}
           onToggle={() => toggleSection('earthing')}
         />
 
         {/* Standards and Compliance */}
-        <StandardsComplianceSection 
-          formData={formData} 
+        <StandardsComplianceSection
+          formData={formData}
           onUpdate={onUpdate}
           isOpen={openSections.standards}
           onToggle={() => toggleSection('standards')}

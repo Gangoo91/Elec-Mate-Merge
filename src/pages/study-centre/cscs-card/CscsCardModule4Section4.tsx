@@ -157,12 +157,7 @@ const quizQuestions = [
     id: 6,
     question:
       'Which of the following species is protected by law in the UK and could affect construction work?',
-    options: [
-      'Foxes',
-      'Grey squirrels',
-      'Great crested newts',
-      'Pigeons',
-    ],
+    options: ['Foxes', 'Grey squirrels', 'Great crested newts', 'Pigeons'],
     correctAnswer: 2,
     explanation:
       'Great crested newts are a European Protected Species under the Conservation of Habitats and Species Regulations 2017 and are also protected under the Wildlife and Countryside Act 1981. It is an offence to capture, kill, disturb, or injure great crested newts, or to damage or destroy their habitats (including ponds, terrestrial habitat, and hibernation sites). Construction work near potential great crested newt habitat requires ecological surveys and may need a Natural England licence before work can proceed. Other protected species that commonly affect construction include bats, nesting birds, dormice, and badgers.',
@@ -183,8 +178,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question:
-      'What does BREEAM assess in relation to construction projects?',
+    question: 'What does BREEAM assess in relation to construction projects?',
     options: [
       'The structural strength and load-bearing capacity of a building',
       'The environmental and sustainability performance of a building across categories including energy, water, materials, and ecology',
@@ -193,7 +187,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'BREEAM (Building Research Establishment Environmental Assessment Method) is the world\'s leading sustainability assessment method for buildings and infrastructure. It assesses performance across categories including energy efficiency, water use, health and wellbeing, pollution, transport, materials, waste, land use and ecology, and management. Buildings are rated as Pass, Good, Very Good, Excellent, or Outstanding. Many public sector and large commercial projects require a minimum BREEAM rating. Awareness of BREEAM helps construction workers understand why certain sustainable practices and materials are specified.',
+      "BREEAM (Building Research Establishment Environmental Assessment Method) is the world's leading sustainability assessment method for buildings and infrastructure. It assesses performance across categories including energy efficiency, water use, health and wellbeing, pollution, transport, materials, waste, land use and ecology, and management. Buildings are rated as Pass, Good, Very Good, Excellent, or Outstanding. Many public sector and large commercial projects require a minimum BREEAM rating. Awareness of BREEAM helps construction workers understand why certain sustainable practices and materials are specified.",
   },
 ];
 
@@ -270,7 +264,9 @@ const CscsCardModule4Section4 = () => {
             <Leaf className="h-7 w-7 text-green-400" />
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 mb-3 mx-auto">
-            <span className="text-green-400 text-xs font-semibold">MODULE 4 &middot; SECTION 4</span>
+            <span className="text-green-400 text-xs font-semibold">
+              MODULE 4 &middot; SECTION 4
+            </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental Protection
@@ -307,7 +303,8 @@ const CscsCardModule4Section4 = () => {
             </div>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>Waste:</strong> Duty of care &mdash; prevent, reuse, recycle, recover, dispose
+                <strong>Waste:</strong> Duty of care &mdash; prevent, reuse, recycle, recover,
+                dispose
               </li>
               <li>
                 <strong>Wildlife:</strong> Protected species &mdash; bats, newts, nesting birds
@@ -363,7 +360,9 @@ const CscsCardModule4Section4 = () => {
               </p>
 
               <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
-                <h3 className={`${headingColours[0]} font-medium mb-3`}>Key Environmental Legislation</h3>
+                <h3 className={`${headingColours[0]} font-medium mb-3`}>
+                  Key Environmental Legislation
+                </h3>
                 <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -379,33 +378,34 @@ const CscsCardModule4Section4 = () => {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong>Environmental Permitting Regulations 2016</strong> &mdash; requires
-                      permits for activities that could pollute the environment, including discharges
-                      to water, waste operations, and certain industrial processes. Construction sites
-                      must not discharge polluting matter into controlled waters without a permit
+                      permits for activities that could pollute the environment, including
+                      discharges to water, waste operations, and certain industrial processes.
+                      Construction sites must not discharge polluting matter into controlled waters
+                      without a permit
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong>Control of Pollution Act 1974</strong> &mdash; provides local
-                      authorities with powers to control noise from construction sites through Section
-                      60 and Section 61 notices
+                      authorities with powers to control noise from construction sites through
+                      Section 60 and Section 61 notices
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>Wildlife and Countryside Act 1981</strong> &mdash; protects wild birds,
-                      animals, and plants, and their habitats. Places legal obligations on anyone
-                      carrying out construction work to avoid harming protected species
+                      <strong>Wildlife and Countryside Act 1981</strong> &mdash; protects wild
+                      birds, animals, and plants, and their habitats. Places legal obligations on
+                      anyone carrying out construction work to avoid harming protected species
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong>Clean Air Act 1993</strong> &mdash; controls emissions from premises
-                      including construction sites. Burning certain materials on site may be an offence
-                      in smoke control areas
+                      including construction sites. Burning certain materials on site may be an
+                      offence in smoke control areas
                     </span>
                   </li>
                 </ul>
@@ -437,8 +437,10 @@ const CscsCardModule4Section4 = () => {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Up to 12 months imprisonment and/or unlimited
-                      fines</strong> for fly-tipping offences
+                      <strong className="text-white">
+                        Up to 12 months imprisonment and/or unlimited fines
+                      </strong>{' '}
+                      for fly-tipping offences
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -472,11 +474,10 @@ const CscsCardModule4Section4 = () => {
           <div className={`border-l-2 ${borderColours[1]} pl-4 sm:pl-6`}>
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Construction, demolition, and excavation waste accounts for approximately 62% of
-                all waste produced in the UK. Every person who produces, stores, transports, or
-                disposes of waste has a legal duty of care to manage it responsibly. The waste
-                hierarchy must be applied to all waste decisions, prioritising prevention over
-                disposal.
+                Construction, demolition, and excavation waste accounts for approximately 62% of all
+                waste produced in the UK. Every person who produces, stores, transports, or disposes
+                of waste has a legal duty of care to manage it responsibly. The waste hierarchy must
+                be applied to all waste decisions, prioritising prevention over disposal.
               </p>
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
@@ -491,15 +492,24 @@ const CscsCardModule4Section4 = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
-                    <span>Store waste safely and securely — prevent it escaping, blowing away, or leaking</span>
+                    <span>
+                      Store waste safely and securely — prevent it escaping, blowing away, or
+                      leaking
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
-                    <span>Only transfer waste to an authorised person — check they hold a valid waste carrier licence</span>
+                    <span>
+                      Only transfer waste to an authorised person — check they hold a valid waste
+                      carrier licence
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
-                    <span>Complete a waste transfer note for every load of non-hazardous waste leaving site</span>
+                    <span>
+                      Complete a waste transfer note for every load of non-hazardous waste leaving
+                      site
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
@@ -507,7 +517,10 @@ const CscsCardModule4Section4 = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
-                    <span>Keep waste transfer notes for a minimum of 2 years (consignment notes for 3 years)</span>
+                    <span>
+                      Keep waste transfer notes for a minimum of 2 years (consignment notes for 3
+                      years)
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -529,19 +542,25 @@ const CscsCardModule4Section4 = () => {
                   {/* Tier 2 — Reuse */}
                   <div className="w-full max-w-[260px] bg-teal-500/20 border border-teal-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-teal-300 font-bold text-sm block">REUSE</span>
-                    <span className="text-white/60 text-xs">Use again for same or different purpose</span>
+                    <span className="text-white/60 text-xs">
+                      Use again for same or different purpose
+                    </span>
                   </div>
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-teal-400/50" />
                   {/* Tier 3 — Recycle */}
                   <div className="w-full max-w-[320px] bg-blue-500/20 border border-blue-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-blue-300 font-bold text-sm block">RECYCLE</span>
-                    <span className="text-white/60 text-xs">Process into new materials or products</span>
+                    <span className="text-white/60 text-xs">
+                      Process into new materials or products
+                    </span>
                   </div>
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-blue-400/50" />
                   {/* Tier 4 — Recover */}
                   <div className="w-full max-w-[380px] bg-amber-500/20 border border-amber-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-amber-300 font-bold text-sm block">RECOVER</span>
-                    <span className="text-white/60 text-xs">Extract energy (e.g. incineration with energy recovery)</span>
+                    <span className="text-white/60 text-xs">
+                      Extract energy (e.g. incineration with energy recovery)
+                    </span>
                   </div>
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-amber-400/50" />
                   {/* Tier 5 — Dispose */}
@@ -580,12 +599,13 @@ const CscsCardModule4Section4 = () => {
               <div className="bg-white/5 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Site Waste Management Plans</h3>
                 <p className="text-white/80 text-sm">
-                  Although no longer a legal requirement in England since 2013, site waste management
-                  plans (SWMPs) remain best practice and are often required by clients and principal
-                  contractors. A SWMP identifies the types and quantities of waste expected, sets
-                  targets for waste reduction and recycling, and allocates responsibilities for waste
-                  management on site. They help demonstrate compliance with the duty of care and
-                  the waste hierarchy, and can significantly reduce waste disposal costs.
+                  Although no longer a legal requirement in England since 2013, site waste
+                  management plans (SWMPs) remain best practice and are often required by clients
+                  and principal contractors. A SWMP identifies the types and quantities of waste
+                  expected, sets targets for waste reduction and recycling, and allocates
+                  responsibilities for waste management on site. They help demonstrate compliance
+                  with the duty of care and the waste hierarchy, and can significantly reduce waste
+                  disposal costs.
                 </p>
               </div>
             </div>
@@ -610,26 +630,30 @@ const CscsCardModule4Section4 = () => {
                 offences prosecuted by the Environment Agency. Construction activities can pollute
                 watercourses through silt runoff, cement washings, chemical spills, and fuel leaks.
                 Under the Environmental Permitting Regulations 2016, it is an offence to cause or
-                knowingly permit a water discharge activity or groundwater activity without a permit.
+                knowingly permit a water discharge activity or groundwater activity without a
+                permit.
               </p>
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
-                <h3 className={`${headingColours[2]} font-medium mb-3`}>Common Construction Pollutants</h3>
+                <h3 className={`${headingColours[2]} font-medium mb-3`}>
+                  Common Construction Pollutants
+                </h3>
                 <ul className="text-white/80 space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Silt and sediment</strong> &mdash; from earthworks,
-                      excavation, stockpiles, and vehicle movements. Silt smothers fish spawning gravels
-                      and blocks light, killing aquatic plants
+                      <strong className="text-white">Silt and sediment</strong> &mdash; from
+                      earthworks, excavation, stockpiles, and vehicle movements. Silt smothers fish
+                      spawning gravels and blocks light, killing aquatic plants
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Cement and concrete</strong> &mdash; highly alkaline
-                      (pH 11&ndash;13), extremely toxic to aquatic life. Even small quantities can kill
-                      fish over long distances and strip all life from a watercourse
+                      <strong className="text-white">Cement and concrete</strong> &mdash; highly
+                      alkaline (pH 11&ndash;13), extremely toxic to aquatic life. Even small
+                      quantities can kill fish over long distances and strip all life from a
+                      watercourse
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -644,8 +668,8 @@ const CscsCardModule4Section4 = () => {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
                       <strong className="text-white">Chemicals</strong> &mdash; paints, solvents,
-                      cleaning agents, mould oils, curing compounds. Many are toxic to aquatic organisms
-                      even in very low concentrations
+                      cleaning agents, mould oils, curing compounds. Many are toxic to aquatic
+                      organisms even in very low concentrations
                     </span>
                   </li>
                 </ul>
@@ -657,48 +681,50 @@ const CscsCardModule4Section4 = () => {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Settlement tanks and ponds</strong> &mdash; allow
-                      silt to settle out of water before discharge. Must be properly sized and regularly
-                      maintained
+                      <strong className="text-white">Settlement tanks and ponds</strong> &mdash;
+                      allow silt to settle out of water before discharge. Must be properly sized and
+                      regularly maintained
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Silt fencing</strong> &mdash; geotextile barriers
-                      placed along the perimeter of excavations and stockpiles to prevent silt-laden
-                      runoff reaching watercourses
+                      <strong className="text-white">Silt fencing</strong> &mdash; geotextile
+                      barriers placed along the perimeter of excavations and stockpiles to prevent
+                      silt-laden runoff reaching watercourses
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Bunded fuel storage</strong> &mdash; all fuel and
-                      oil storage must be within a bund capable of containing 110% of the largest
-                      container&rsquo;s capacity. Bunds must be impermeable and checked regularly
+                      <strong className="text-white">Bunded fuel storage</strong> &mdash; all fuel
+                      and oil storage must be within a bund capable of containing 110% of the
+                      largest container&rsquo;s capacity. Bunds must be impermeable and checked
+                      regularly
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Spill kits</strong> &mdash; placed near all fuel
-                      storage, refuelling points, and chemical storage areas. All workers should know
-                      their location and how to use them
+                      <strong className="text-white">Spill kits</strong> &mdash; placed near all
+                      fuel storage, refuelling points, and chemical storage areas. All workers
+                      should know their location and how to use them
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Designated washout areas</strong> &mdash; concrete
-                      washout must take place in contained areas, never near drains or watercourses
+                      <strong className="text-white">Designated washout areas</strong> &mdash;
+                      concrete washout must take place in contained areas, never near drains or
+                      watercourses
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
-                      <strong className="text-white">Drain protection</strong> &mdash; cover or block
-                      surface water drains near work areas. Use drain mats or neoprene covers to prevent
-                      pollutants entering the drainage system
+                      <strong className="text-white">Drain protection</strong> &mdash; cover or
+                      block surface water drains near work areas. Use drain mats or neoprene covers
+                      to prevent pollutants entering the drainage system
                     </span>
                   </li>
                 </ul>
@@ -734,34 +760,42 @@ const CscsCardModule4Section4 = () => {
               <p>
                 Construction dust is a major source of air pollution and can cause both health
                 problems for workers and nuisance to neighbours. Dust must be controlled at source
-                to protect workers&rsquo; health (occupational exposure) and to prevent environmental
-                nuisance. The Clean Air Act 1993 and the Environmental Protection Act 1990 both
-                apply to dust emissions from construction sites.
+                to protect workers&rsquo; health (occupational exposure) and to prevent
+                environmental nuisance. The Clean Air Act 1993 and the Environmental Protection Act
+                1990 both apply to dust emissions from construction sites.
               </p>
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
-                <h3 className={`${headingColours[3]} font-medium mb-3`}>Types of Construction Dust</h3>
+                <h3 className={`${headingColours[3]} font-medium mb-3`}>
+                  Types of Construction Dust
+                </h3>
                 <div className="space-y-3">
                   <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-                    <h4 className="text-red-300 font-semibold text-sm mb-1">Silica Dust — Most Dangerous</h4>
+                    <h4 className="text-red-300 font-semibold text-sm mb-1">
+                      Silica Dust — Most Dangerous
+                    </h4>
                     <p className="text-white/80 text-sm">
                       Generated from cutting, drilling, or grinding concrete, sandstone, mortar, and
-                      brick. Respirable crystalline silica (RCS) can cause silicosis, lung cancer, and
-                      COPD. The workplace exposure limit is extremely low (0.1 mg/m&sup3;). Requires the
-                      strictest controls including water suppression, LEV, and RPE.
+                      brick. Respirable crystalline silica (RCS) can cause silicosis, lung cancer,
+                      and COPD. The workplace exposure limit is extremely low (0.1 mg/m&sup3;).
+                      Requires the strictest controls including water suppression, LEV, and RPE.
                     </p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                    <h4 className="text-amber-300 font-semibold text-sm mb-1">Wood Dust — Hardwood Especially</h4>
+                    <h4 className="text-amber-300 font-semibold text-sm mb-1">
+                      Wood Dust — Hardwood Especially
+                    </h4>
                     <p className="text-white/80 text-sm">
-                      Generated from sawing, sanding, and routing timber. Hardwood dust is classified
-                      as a carcinogen (can cause nasal cancer). Softwood dust can cause asthma and
-                      respiratory irritation. The WEL for hardwood dust is 3 mg/m&sup3; and for
-                      softwood dust is 5 mg/m&sup3;. On-tool extraction (LEV) is required.
+                      Generated from sawing, sanding, and routing timber. Hardwood dust is
+                      classified as a carcinogen (can cause nasal cancer). Softwood dust can cause
+                      asthma and respiratory irritation. The WEL for hardwood dust is 3 mg/m&sup3;
+                      and for softwood dust is 5 mg/m&sup3;. On-tool extraction (LEV) is required.
                     </p>
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-                    <h4 className="text-blue-300 font-semibold text-sm mb-1">General Construction Dust</h4>
+                    <h4 className="text-blue-300 font-semibold text-sm mb-1">
+                      General Construction Dust
+                    </h4>
                     <p className="text-white/80 text-sm">
                       Generated from demolition, earthworks, sweeping, and vehicle movements. While
                       lower health risk than silica or hardwood dust, it can cause respiratory
@@ -778,24 +812,25 @@ const CscsCardModule4Section4 = () => {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-purple-400" />
                     <span>
-                      <strong className="text-white">Water suppression</strong> &mdash; applying water
-                      to the cutting point, haul roads, stockpiles, and demolition work to prevent dust
-                      becoming airborne. The most common and effective primary control
+                      <strong className="text-white">Water suppression</strong> &mdash; applying
+                      water to the cutting point, haul roads, stockpiles, and demolition work to
+                      prevent dust becoming airborne. The most common and effective primary control
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-purple-400" />
                     <span>
-                      <strong className="text-white">Local exhaust ventilation (LEV)</strong> &mdash;
-                      on-tool extraction that captures dust at the point of generation before it becomes
-                      airborne. Required for cutting, drilling, and grinding operations
+                      <strong className="text-white">Local exhaust ventilation (LEV)</strong>{' '}
+                      &mdash; on-tool extraction that captures dust at the point of generation
+                      before it becomes airborne. Required for cutting, drilling, and grinding
+                      operations
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-purple-400" />
                     <span>
-                      <strong className="text-white">Damping down</strong> &mdash; regular watering of
-                      haul roads, stockpiles, and demolition areas to suppress dust. Particularly
+                      <strong className="text-white">Damping down</strong> &mdash; regular watering
+                      of haul roads, stockpiles, and demolition areas to suppress dust. Particularly
                       important in dry, windy conditions
                     </span>
                   </li>
@@ -819,9 +854,9 @@ const CscsCardModule4Section4 = () => {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-purple-400" />
                     <span>
                       <strong className="text-white">Air quality monitoring</strong> &mdash; dust
-                      monitors can be placed at site boundaries to measure dust levels and demonstrate
-                      compliance. Particularly important on sites near residential areas, schools, or
-                      hospitals
+                      monitors can be placed at site boundaries to measure dust levels and
+                      demonstrate compliance. Particularly important on sites near residential
+                      areas, schools, or hospitals
                     </span>
                   </li>
                 </ul>
@@ -834,9 +869,9 @@ const CscsCardModule4Section4 = () => {
                   of a building or from industrial or trade premises. On construction sites, this
                   means burning waste on site is generally prohibited &mdash; particularly in smoke
                   control areas where it is an offence to emit smoke from a chimney unless using
-                  authorised fuel or an exempt appliance. Burning construction waste can produce toxic
-                  fumes (especially plastics, treated timber, and painted materials) and constitutes
-                  both a health hazard and an environmental offence.
+                  authorised fuel or an exempt appliance. Burning construction waste can produce
+                  toxic fumes (especially plastics, treated timber, and painted materials) and
+                  constitutes both a health hazard and an environmental offence.
                 </p>
               </div>
             </div>
@@ -860,34 +895,45 @@ const CscsCardModule4Section4 = () => {
                 Environmental noise from construction is different from occupational noise exposure.
                 While occupational noise concerns the health of workers on site (covered by the
                 Control of Noise at Work Regulations 2005), environmental noise concerns the impact
-                on neighbours and the surrounding community. Both must be managed, but the legislation
-                and controls are different.
+                on neighbours and the surrounding community. Both must be managed, but the
+                legislation and controls are different.
               </p>
 
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
-                <h3 className={`${headingColours[4]} font-medium mb-3`}>Control of Pollution Act 1974</h3>
+                <h3 className={`${headingColours[4]} font-medium mb-3`}>
+                  Control of Pollution Act 1974
+                </h3>
                 <div className="space-y-3">
                   <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                    <h4 className="text-amber-300 font-semibold text-sm mb-1">Section 60 — Noise Abatement Notice</h4>
+                    <h4 className="text-amber-300 font-semibold text-sm mb-1">
+                      Section 60 — Noise Abatement Notice
+                    </h4>
                     <p className="text-white/80 text-sm">
-                      A Section 60 notice is served <strong className="text-white">by the local
-                      authority on the contractor</strong> to control noise from construction works.
-                      It can be served without prior warning and can specify: the hours during which
-                      work may be carried out, the types of plant or machinery that may or may not be
-                      used, the maximum noise levels permitted at the site boundary, and the steps
-                      required to minimise noise. Non-compliance is a criminal offence.
+                      A Section 60 notice is served{' '}
+                      <strong className="text-white">
+                        by the local authority on the contractor
+                      </strong>{' '}
+                      to control noise from construction works. It can be served without prior
+                      warning and can specify: the hours during which work may be carried out, the
+                      types of plant or machinery that may or may not be used, the maximum noise
+                      levels permitted at the site boundary, and the steps required to minimise
+                      noise. Non-compliance is a criminal offence.
                     </p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-                    <h4 className="text-green-300 font-semibold text-sm mb-1">Section 61 — Prior Consent</h4>
+                    <h4 className="text-green-300 font-semibold text-sm mb-1">
+                      Section 61 — Prior Consent
+                    </h4>
                     <p className="text-white/80 text-sm">
-                      A Section 61 agreement is a <strong className="text-white">voluntary
-                      application by the contractor to the local authority</strong> for prior consent
-                      before work begins. The contractor outlines the proposed works, methods, hours,
-                      and noise mitigation measures. If the local authority grants consent, the
-                      contractor is protected from a Section 60 notice provided they comply with the
-                      agreed conditions. This is considered best practice for large or long-duration
-                      projects, particularly in residential areas.
+                      A Section 61 agreement is a{' '}
+                      <strong className="text-white">
+                        voluntary application by the contractor to the local authority
+                      </strong>{' '}
+                      for prior consent before work begins. The contractor outlines the proposed
+                      works, methods, hours, and noise mitigation measures. If the local authority
+                      grants consent, the contractor is protected from a Section 60 notice provided
+                      they comply with the agreed conditions. This is considered best practice for
+                      large or long-duration projects, particularly in residential areas.
                     </p>
                   </div>
                 </div>
@@ -902,45 +948,61 @@ const CscsCardModule4Section4 = () => {
                 <ul className="text-white/80 space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
-                    <span>Using modern, well-maintained plant and equipment with effective silencers and noise enclosures</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
-                    <span>Selecting the quietest available plant for the task — e.g. electric plant instead of diesel where possible</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
-                    <span>Positioning noisy equipment as far as possible from noise-sensitive receptors (homes, schools, hospitals)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
-                    <span>Using acoustic barriers, hoarding, or screening to attenuate noise at the site boundary</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
-                    <span>Turning off plant and equipment when not in use — no unnecessary idling</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 border border-amber-500/30 p-4 rounded-lg">
-                <h3 className="text-amber-300 font-medium mb-3">Working Hours &amp; Neighbour Relations</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>
-                      <strong className="text-white">Typical permitted hours:</strong> Monday to Friday
-                      08:00&ndash;18:00, Saturday 08:00&ndash;13:00. No noisy work on Sundays or bank
-                      holidays. Exact hours vary by local authority
+                      Using modern, well-maintained plant and equipment with effective silencers and
+                      noise enclosures
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>
-                      <strong className="text-white">Neighbour notification:</strong> neighbours should
-                      be informed before particularly noisy or disruptive phases of work (piling,
-                      demolition, ground works). This is both good practice and often a condition of
-                      planning consent
+                      Selecting the quietest available plant for the task — e.g. electric plant
+                      instead of diesel where possible
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
+                    <span>
+                      Positioning noisy equipment as far as possible from noise-sensitive receptors
+                      (homes, schools, hospitals)
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
+                    <span>
+                      Using acoustic barriers, hoarding, or screening to attenuate noise at the site
+                      boundary
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
+                    <span>
+                      Turning off plant and equipment when not in use — no unnecessary idling
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white/5 border border-amber-500/30 p-4 rounded-lg">
+                <h3 className="text-amber-300 font-medium mb-3">
+                  Working Hours &amp; Neighbour Relations
+                </h3>
+                <ul className="text-white/80 space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
+                    <span>
+                      <strong className="text-white">Typical permitted hours:</strong> Monday to
+                      Friday 08:00&ndash;18:00, Saturday 08:00&ndash;13:00. No noisy work on Sundays
+                      or bank holidays. Exact hours vary by local authority
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
+                    <span>
+                      <strong className="text-white">Neighbour notification:</strong> neighbours
+                      should be informed before particularly noisy or disruptive phases of work
+                      (piling, demolition, ground works). This is both good practice and often a
+                      condition of planning consent
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -976,47 +1038,57 @@ const CscsCardModule4Section4 = () => {
               </p>
 
               <div className="bg-white/5 border border-rose-400/30 p-4 rounded-lg">
-                <h3 className={`${headingColours[5]} font-medium mb-3`}>Commonly Encountered Protected Species</h3>
+                <h3 className={`${headingColours[5]} font-medium mb-3`}>
+                  Commonly Encountered Protected Species
+                </h3>
                 <div className="space-y-3">
                   <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-                    <h4 className="text-purple-300 font-semibold text-sm mb-1">Bats (All Species)</h4>
+                    <h4 className="text-purple-300 font-semibold text-sm mb-1">
+                      Bats (All Species)
+                    </h4>
                     <p className="text-white/80 text-sm">
-                      All 18 species of bat in the UK are protected. It is an offence to deliberately
-                      kill, injure, or capture a bat, to deliberately disturb a bat, or to damage or
-                      destroy a bat roost &mdash; even if no bats are present at the time. Bats
-                      commonly roost in buildings (particularly roofs, behind fascia boards, under
-                      tiles), trees (especially those with cavities, crevices, or loose bark), and
-                      bridges. Bat surveys are required before demolition or renovation of buildings
-                      likely to support bats.
+                      All 18 species of bat in the UK are protected. It is an offence to
+                      deliberately kill, injure, or capture a bat, to deliberately disturb a bat, or
+                      to damage or destroy a bat roost &mdash; even if no bats are present at the
+                      time. Bats commonly roost in buildings (particularly roofs, behind fascia
+                      boards, under tiles), trees (especially those with cavities, crevices, or
+                      loose bark), and bridges. Bat surveys are required before demolition or
+                      renovation of buildings likely to support bats.
                     </p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-                    <h4 className="text-green-300 font-semibold text-sm mb-1">Great Crested Newts</h4>
+                    <h4 className="text-green-300 font-semibold text-sm mb-1">
+                      Great Crested Newts
+                    </h4>
                     <p className="text-white/80 text-sm">
                       A European Protected Species. It is an offence to capture, kill, disturb, or
                       injure great crested newts, or to damage or destroy their habitats. They breed
                       in ponds but spend most of the year on land, up to 500 metres from their
                       breeding pond. Construction work near ponds or on land within 500 metres of
-                      known great crested newt populations requires ecological surveys and potentially
-                      a Natural England licence.
+                      known great crested newt populations requires ecological surveys and
+                      potentially a Natural England licence.
                     </p>
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-                    <h4 className="text-blue-300 font-semibold text-sm mb-1">Nesting Birds (All Wild Birds)</h4>
+                    <h4 className="text-blue-300 font-semibold text-sm mb-1">
+                      Nesting Birds (All Wild Birds)
+                    </h4>
                     <p className="text-white/80 text-sm">
                       It is an offence to intentionally kill, injure, or take any wild bird, or to
-                      intentionally take, damage, or destroy the nest of any wild bird while in use or
-                      being built. The main nesting season is March to August, but some species nest
-                      outside this period. Vegetation clearance and demolition should be timed to avoid
-                      the nesting season. If nesting birds are found during work, that area must stop
-                      until the birds have fledged.
+                      intentionally take, damage, or destroy the nest of any wild bird while in use
+                      or being built. The main nesting season is March to August, but some species
+                      nest outside this period. Vegetation clearance and demolition should be timed
+                      to avoid the nesting season. If nesting birds are found during work, that area
+                      must stop until the birds have fledged.
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-rose-300 font-medium mb-3">What To Do If You Find a Protected Species</h3>
+                <h3 className="text-rose-300 font-medium mb-3">
+                  What To Do If You Find a Protected Species
+                </h3>
                 <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <span className="text-rose-400 font-mono text-xs mt-0.5 flex-shrink-0 w-4 text-right">
@@ -1073,11 +1145,11 @@ const CscsCardModule4Section4 = () => {
                   Since February 2024, most developments in England must deliver a minimum 10%
                   biodiversity net gain (BNG) under the Environment Act 2021. This means the
                   development must leave the natural environment in a measurably better state than
-                  before. BNG is measured using the statutory biodiversity metric and can be achieved
-                  through on-site habitat creation, off-site habitat creation, or purchasing
-                  biodiversity credits. Construction workers should be aware that ecological features
-                  on site (hedgerows, trees, ponds, grassland) may need to be retained or replaced
-                  as part of the BNG requirement.
+                  before. BNG is measured using the statutory biodiversity metric and can be
+                  achieved through on-site habitat creation, off-site habitat creation, or
+                  purchasing biodiversity credits. Construction workers should be aware that
+                  ecological features on site (hedgerows, trees, ponds, grassland) may need to be
+                  retained or replaced as part of the BNG requirement.
                 </p>
               </div>
             </div>
@@ -1105,14 +1177,16 @@ const CscsCardModule4Section4 = () => {
               </p>
 
               <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
-                <h3 className={`${headingColours[6]} font-medium mb-3`}>Reducing Energy Use on Site</h3>
+                <h3 className={`${headingColours[6]} font-medium mb-3`}>
+                  Reducing Energy Use on Site
+                </h3>
                 <ul className="text-white/80 space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
                       <strong className="text-white">Efficient plant and equipment</strong> &mdash;
-                      use modern, fuel-efficient plant. Switch off engines when not in use rather than
-                      leaving them idling. Use electric plant where possible instead of diesel
+                      use modern, fuel-efficient plant. Switch off engines when not in use rather
+                      than leaving them idling. Use electric plant where possible instead of diesel
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1127,24 +1201,24 @@ const CscsCardModule4Section4 = () => {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
                       <strong className="text-white">Timer switches and sensors</strong> &mdash; use
-                      timers on lighting and heating in welfare facilities. PIR sensors ensure lights
-                      are only on when areas are occupied
+                      timers on lighting and heating in welfare facilities. PIR sensors ensure
+                      lights are only on when areas are occupied
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
-                      <strong className="text-white">Generator management</strong> &mdash; right-size
-                      generators for the load required. Over-sized generators running at low load waste
-                      fuel. Consider hybrid or solar generators where appropriate
+                      <strong className="text-white">Generator management</strong> &mdash;
+                      right-size generators for the load required. Over-sized generators running at
+                      low load waste fuel. Consider hybrid or solar generators where appropriate
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
-                      <strong className="text-white">Welfare cabin insulation</strong> &mdash; ensure
-                      doors and windows are closed when heating is on. Report draughts and broken seals
-                      to prevent heat loss
+                      <strong className="text-white">Welfare cabin insulation</strong> &mdash;
+                      ensure doors and windows are closed when heating is on. Report draughts and
+                      broken seals to prevent heat loss
                     </span>
                   </li>
                 </ul>
@@ -1155,7 +1229,10 @@ const CscsCardModule4Section4 = () => {
                 <ul className="text-white/80 space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
-                    <span>Consolidate deliveries to reduce the number of vehicle movements to and from site</span>
+                    <span>
+                      Consolidate deliveries to reduce the number of vehicle movements to and from
+                      site
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
@@ -1163,50 +1240,59 @@ const CscsCardModule4Section4 = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
-                    <span>Plan deliveries to avoid peak traffic periods, reducing time spent idling in congestion</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
-                    <span>Consider car-sharing, public transport, or cycling for workforce travel to site</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 border border-teal-500/30 p-4 rounded-lg">
-                <h3 className="text-teal-300 font-medium mb-3">Sustainable Materials &amp; Carbon Awareness</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
-                      <strong className="text-white">Carbon footprint</strong> &mdash; every material
-                      used in construction has an embodied carbon cost (the energy used to extract,
-                      manufacture, transport, and install it). Awareness of this helps inform better
-                      material choices
+                      Plan deliveries to avoid peak traffic periods, reducing time spent idling in
+                      congestion
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
-                      <strong className="text-white">Sustainable sourcing</strong> &mdash; use timber
-                      from certified sustainable sources (FSC or PEFC). Specify recycled aggregate where
-                      technical requirements allow
+                      Consider car-sharing, public transport, or cycling for workforce travel to
+                      site
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white/5 border border-teal-500/30 p-4 rounded-lg">
+                <h3 className="text-teal-300 font-medium mb-3">
+                  Sustainable Materials &amp; Carbon Awareness
+                </h3>
+                <ul className="text-white/80 space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
+                    <span>
+                      <strong className="text-white">Carbon footprint</strong> &mdash; every
+                      material used in construction has an embodied carbon cost (the energy used to
+                      extract, manufacture, transport, and install it). Awareness of this helps
+                      inform better material choices
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
+                    <span>
+                      <strong className="text-white">Sustainable sourcing</strong> &mdash; use
+                      timber from certified sustainable sources (FSC or PEFC). Specify recycled
+                      aggregate where technical requirements allow
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
                       <strong className="text-white">BREEAM</strong> &mdash; the Building Research
-                      Establishment Environmental Assessment Method assesses buildings across categories
-                      including energy, water, materials, waste, and ecology. Ratings range from Pass
-                      to Outstanding. Many public and commercial projects require a minimum BREEAM rating
+                      Establishment Environmental Assessment Method assesses buildings across
+                      categories including energy, water, materials, waste, and ecology. Ratings
+                      range from Pass to Outstanding. Many public and commercial projects require a
+                      minimum BREEAM rating
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
                       <strong className="text-white">Reducing material waste</strong> &mdash; order
-                      accurate quantities, use standard sizes to reduce offcuts, protect materials from
-                      weather damage, and return unused materials to suppliers where possible
+                      accurate quantities, use standard sizes to reduce offcuts, protect materials
+                      from weather damage, and return unused materials to suppliers where possible
                     </span>
                   </li>
                 </ul>
@@ -1266,7 +1352,9 @@ const CscsCardModule4Section4 = () => {
                 <div className="flex flex-col items-center gap-2">
                   {/* Step 1 */}
                   <div className="w-full max-w-md bg-red-500/20 border border-red-500/40 rounded-lg px-4 py-3 text-center">
-                    <span className="text-red-300 font-bold text-sm block">1. STOP &amp; ASSESS</span>
+                    <span className="text-red-300 font-bold text-sm block">
+                      1. STOP &amp; ASSESS
+                    </span>
                     <span className="text-white/60 text-xs">
                       Identify the substance, assess the size, check for hazards (fire, fumes)
                     </span>
@@ -1274,7 +1362,9 @@ const CscsCardModule4Section4 = () => {
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-red-400/50" />
                   {/* Step 2 */}
                   <div className="w-full max-w-md bg-amber-500/20 border border-amber-500/40 rounded-lg px-4 py-3 text-center">
-                    <span className="text-amber-300 font-bold text-sm block">2. PROTECT YOURSELF</span>
+                    <span className="text-amber-300 font-bold text-sm block">
+                      2. PROTECT YOURSELF
+                    </span>
                     <span className="text-white/60 text-xs">
                       Don PPE from spill kit (gloves, goggles). Avoid breathing fumes
                     </span>
@@ -1282,7 +1372,9 @@ const CscsCardModule4Section4 = () => {
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-amber-400/50" />
                   {/* Step 3 */}
                   <div className="w-full max-w-md bg-blue-500/20 border border-blue-500/40 rounded-lg px-4 py-3 text-center">
-                    <span className="text-blue-300 font-bold text-sm block">3. CONTAIN THE SPILL</span>
+                    <span className="text-blue-300 font-bold text-sm block">
+                      3. CONTAIN THE SPILL
+                    </span>
                     <span className="text-white/60 text-xs">
                       Use booms/socks to surround spill. Block drains with covers. Stop the source
                     </span>
@@ -1290,7 +1382,9 @@ const CscsCardModule4Section4 = () => {
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-blue-400/50" />
                   {/* Step 4 */}
                   <div className="w-full max-w-md bg-purple-500/20 border border-purple-500/40 rounded-lg px-4 py-3 text-center">
-                    <span className="text-purple-300 font-bold text-sm block">4. ABSORB &amp; CLEAN UP</span>
+                    <span className="text-purple-300 font-bold text-sm block">
+                      4. ABSORB &amp; CLEAN UP
+                    </span>
                     <span className="text-white/60 text-xs">
                       Apply absorbent granules/pads. Collect all contaminated material in waste bags
                     </span>
@@ -1300,13 +1394,16 @@ const CscsCardModule4Section4 = () => {
                   <div className="w-full max-w-md bg-cyan-500/20 border border-cyan-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-cyan-300 font-bold text-sm block">5. REPORT</span>
                     <span className="text-white/60 text-xs">
-                      Inform supervisor immediately. If watercourse affected: call Environment Agency (0800 80 70 60)
+                      Inform supervisor immediately. If watercourse affected: call Environment
+                      Agency (0800 80 70 60)
                     </span>
                   </div>
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-cyan-400/50" />
                   {/* Step 6 */}
                   <div className="w-full max-w-md bg-green-500/20 border border-green-500/40 rounded-lg px-4 py-3 text-center">
-                    <span className="text-green-300 font-bold text-sm block">6. RECORD &amp; INVESTIGATE</span>
+                    <span className="text-green-300 font-bold text-sm block">
+                      6. RECORD &amp; INVESTIGATE
+                    </span>
                     <span className="text-white/60 text-xs">
                       Document the incident. Investigate root cause. Implement prevention measures
                     </span>
@@ -1320,32 +1417,33 @@ const CscsCardModule4Section4 = () => {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Stop the source</strong> &mdash; if safe to do so,
-                      stop the leak at its source (close a valve, turn off a pump, right a knocked-over
-                      container)
+                      <strong className="text-white">Stop the source</strong> &mdash; if safe to do
+                      so, stop the leak at its source (close a valve, turn off a pump, right a
+                      knocked-over container)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Surround the spill</strong> &mdash; use absorbent
-                      booms or socks to create a barrier around the spill, preventing it from spreading
+                      <strong className="text-white">Surround the spill</strong> &mdash; use
+                      absorbent booms or socks to create a barrier around the spill, preventing it
+                      from spreading
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Block drains</strong> &mdash; cover or block any
-                      surface water drains in the vicinity with drain covers or absorbent booms. This
-                      is the priority if the spill is near drainage
+                      <strong className="text-white">Block drains</strong> &mdash; cover or block
+                      any surface water drains in the vicinity with drain covers or absorbent booms.
+                      This is the priority if the spill is near drainage
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Do NOT wash away with water</strong> &mdash; this
-                      spreads the contamination and makes it more likely to reach watercourses. It also
-                      increases the volume of contaminated liquid to clean up
+                      <strong className="text-white">Do NOT wash away with water</strong> &mdash;
+                      this spreads the contamination and makes it more likely to reach watercourses.
+                      It also increases the volume of contaminated liquid to clean up
                     </span>
                   </li>
                 </ul>
@@ -1360,7 +1458,9 @@ const CscsCardModule4Section4 = () => {
                 </p>
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-center mb-3">
                   <span className="text-red-300 font-bold text-lg">0800 80 70 60</span>
-                  <span className="text-white/60 text-xs block">Environment Agency Incident Hotline — 24 hours</span>
+                  <span className="text-white/60 text-xs block">
+                    Environment Agency Incident Hotline — 24 hours
+                  </span>
                 </div>
                 <p className="text-white/80 text-sm">
                   When reporting, you will need to provide: your name and contact details, the
@@ -1376,47 +1476,47 @@ const CscsCardModule4Section4 = () => {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Bunded storage</strong> &mdash; store all fuels and
-                      oils within impermeable bunds with 110% capacity of the largest container
+                      <strong className="text-white">Bunded storage</strong> &mdash; store all fuels
+                      and oils within impermeable bunds with 110% capacity of the largest container
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Drip trays</strong> &mdash; place drip trays under
-                      plant, machinery, and equipment during refuelling and maintenance
+                      <strong className="text-white">Drip trays</strong> &mdash; place drip trays
+                      under plant, machinery, and equipment during refuelling and maintenance
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Refuelling procedures</strong> &mdash; refuel on
-                      hard standing away from drains and watercourses. Never leave refuelling unattended.
-                      Use nozzle shut-off devices to prevent overfilling
+                      <strong className="text-white">Refuelling procedures</strong> &mdash; refuel
+                      on hard standing away from drains and watercourses. Never leave refuelling
+                      unattended. Use nozzle shut-off devices to prevent overfilling
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Regular inspections</strong> &mdash; check fuel and
-                      chemical storage daily for leaks, damage, and deterioration. Check bunds for
-                      rainwater accumulation (must be emptied regularly)
+                      <strong className="text-white">Regular inspections</strong> &mdash; check fuel
+                      and chemical storage daily for leaks, damage, and deterioration. Check bunds
+                      for rainwater accumulation (must be emptied regularly)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Spill kit maintenance</strong> &mdash; check spill
-                      kits regularly to ensure contents are complete and in usable condition. Replace
-                      used items immediately after an incident
+                      <strong className="text-white">Spill kit maintenance</strong> &mdash; check
+                      spill kits regularly to ensure contents are complete and in usable condition.
+                      Replace used items immediately after an incident
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">Training</strong> &mdash; all workers should know
-                      where spill kits are located, how to use them, and the reporting procedure. Include
-                      spill response in site inductions
+                      <strong className="text-white">Training</strong> &mdash; all workers should
+                      know where spill kits are located, how to use them, and the reporting
+                      procedure. Include spill response in site inductions
                     </span>
                   </li>
                 </ul>
@@ -1429,12 +1529,12 @@ const CscsCardModule4Section4 = () => {
                 </div>
                 <p className="text-white/80 text-sm">
                   Every spill, no matter how small, should be recorded and investigated. The record
-                  should include: the date, time, and location of the spill; the type and quantity of
-                  substance spilled; how the spill occurred (root cause); the containment and clean-up
-                  actions taken; whether any pollution of watercourses or land occurred; and the
-                  corrective actions implemented to prevent recurrence. This information is essential
-                  for demonstrating due diligence and for continuous improvement of environmental
-                  management on site.
+                  should include: the date, time, and location of the spill; the type and quantity
+                  of substance spilled; how the spill occurred (root cause); the containment and
+                  clean-up actions taken; whether any pollution of watercourses or land occurred;
+                  and the corrective actions implemented to prevent recurrence. This information is
+                  essential for demonstrating due diligence and for continuous improvement of
+                  environmental management on site.
                 </p>
               </div>
             </div>

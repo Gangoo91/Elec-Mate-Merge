@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   ClipboardList,
   Home,
@@ -14,315 +13,373 @@ import {
   CheckCircle,
   Info,
   Building,
-  Route
-} from "lucide-react";
+  Route,
+} from 'lucide-react';
 
 const DomesticPlanningSection = () => {
   const planningSteps = [
     {
-      title: "Initial Site Survey",
-      description: "Conduct thorough assessment of existing installation",
+      title: 'Initial Site Survey',
+      description: 'Conduct thorough assessment of existing installation',
       checklist: [
-        "Check condition of existing consumer unit and earthing",
-        "Assess cable routes and accessibility for new installations",
-        "Identify any asbestos or hazardous materials present",
-        "Photograph existing installation for records",
-        "Test existing circuits for safety and compliance",
-        "Check for adequate space for new consumer unit if required"
-      ]
+        'Check condition of existing consumer unit and earthing',
+        'Assess cable routes and accessibility for new installations',
+        'Identify any asbestos or hazardous materials present',
+        'Photograph existing installation for records',
+        'Test existing circuits for safety and compliance',
+        'Check for adequate space for new consumer unit if required',
+      ],
     },
     {
-      title: "Load Assessment & Future Planning",
-      description: "Calculate electrical loads and anticipate future requirements",
+      title: 'Load Assessment & Future Planning',
+      description: 'Calculate electrical loads and anticipate future requirements',
       checklist: [
-        "List all electrical appliances with current ratings",
-        "Calculate diversity factors for different circuit types",
-        "Plan for electric vehicle charging infrastructure",
-        "Consider heat pump installation requirements",
-        "Assess need for solar PV integration",
-        "Plan for smart home technology expansion"
-      ]
+        'List all electrical appliances with current ratings',
+        'Calculate diversity factors for different circuit types',
+        'Plan for electric vehicle charging infrastructure',
+        'Consider heat pump installation requirements',
+        'Assess need for solar PV integration',
+        'Plan for smart home technology expansion',
+      ],
     },
     {
-      title: "Design & Circuit Planning",
-      description: "Plan circuit layout and protection requirements",
+      title: 'Design & Circuit Planning',
+      description: 'Plan circuit layout and protection requirements',
       checklist: [
-        "Design ring final and radial socket circuits",
-        "Plan lighting circuit arrangements and switching",
-        "Specify appropriate RCD and RCBO protection",
-        "Consider surge protection device requirements",
-        "Plan cable routes and containment systems",
-        "Design earthing and bonding arrangements"
-      ]
+        'Design ring final and radial socket circuits',
+        'Plan lighting circuit arrangements and switching',
+        'Specify appropriate RCD and RCBO protection',
+        'Consider surge protection device requirements',
+        'Plan cable routes and containment systems',
+        'Design earthing and bonding arrangements',
+      ],
     },
     {
-      title: "Regulatory Compliance",
-      description: "Ensure all regulatory requirements are met",
+      title: 'Regulatory Compliance',
+      description: 'Ensure all regulatory requirements are met',
       checklist: [
-        "Determine Part P Building Regulations requirements",
-        "Check if Building Control notification needed",
-        "Verify competent person scheme registration",
-        "Plan inspection and testing procedures",
-        "Prepare certification documentation",
-        "Consider CDM regulations for larger projects"
-      ]
-    }
+        'Determine Part P Building Regulations requirements',
+        'Check if Building Control notification needed',
+        'Verify competent person scheme registration',
+        'Plan inspection and testing procedures',
+        'Prepare certification documentation',
+        'Consider CDM regulations for larger projects',
+      ],
+    },
   ];
 
   const siteSurveyChecklist = {
-    title: "Comprehensive Site Survey Checklist",
+    title: 'Comprehensive Site Survey Checklist',
     icon: ClipboardList,
     sections: [
       {
-        category: "Existing Installation Assessment",
+        category: 'Existing Installation Assessment',
         items: [
-          { check: "Consumer unit type, age, and condition", importance: "Critical" },
-          { check: "Earthing arrangement (TN-C-S, TN-S, TT)", importance: "Critical" },
-          { check: "Main protective bonding conductors present and adequate", importance: "Critical" },
-          { check: "Supplementary bonding requirements", importance: "Important" },
-          { check: "Existing circuit protection devices and ratings", importance: "Important" },
-          { check: "Cable types and conditions visible", importance: "Important" },
-          { check: "Previous test results (if available)", importance: "Useful" }
-        ]
+          { check: 'Consumer unit type, age, and condition', importance: 'Critical' },
+          { check: 'Earthing arrangement (TN-C-S, TN-S, TT)', importance: 'Critical' },
+          {
+            check: 'Main protective bonding conductors present and adequate',
+            importance: 'Critical',
+          },
+          { check: 'Supplementary bonding requirements', importance: 'Important' },
+          { check: 'Existing circuit protection devices and ratings', importance: 'Important' },
+          { check: 'Cable types and conditions visible', importance: 'Important' },
+          { check: 'Previous test results (if available)', importance: 'Useful' },
+        ],
       },
       {
-        category: "Property Assessment",
+        category: 'Property Assessment',
         items: [
-          { check: "Property type and construction (solid wall, cavity, timber frame)", importance: "Critical" },
-          { check: "Number of floors and accessibility", importance: "Important" },
-          { check: "Loft access and condition", importance: "Important" },
-          { check: "Basement or cellar presence", importance: "Important" },
-          { check: "Floor construction (suspended timber, concrete)", importance: "Important" },
-          { check: "Presence of asbestos materials", importance: "Critical" },
-          { check: "Listed building or conservation area restrictions", importance: "Legal" }
-        ]
+          {
+            check: 'Property type and construction (solid wall, cavity, timber frame)',
+            importance: 'Critical',
+          },
+          { check: 'Number of floors and accessibility', importance: 'Important' },
+          { check: 'Loft access and condition', importance: 'Important' },
+          { check: 'Basement or cellar presence', importance: 'Important' },
+          { check: 'Floor construction (suspended timber, concrete)', importance: 'Important' },
+          { check: 'Presence of asbestos materials', importance: 'Critical' },
+          { check: 'Listed building or conservation area restrictions', importance: 'Legal' },
+        ],
       },
       {
-        category: "Services and Utilities",
+        category: 'Services and Utilities',
         items: [
-          { check: "Location of incoming supply and meter", importance: "Critical" },
-          { check: "Supply type (single phase/three phase)", importance: "Critical" },
-          { check: "Main fuse rating (60A, 80A, 100A)", importance: "Critical" },
-          { check: "Gas meter and pipework locations", importance: "Safety" },
-          { check: "Water services and stopcock location", importance: "Safety" },
-          { check: "Telephone/data cable routes", importance: "Useful" },
-          { check: "Oil tank location (if applicable)", importance: "Safety" }
-        ]
+          { check: 'Location of incoming supply and meter', importance: 'Critical' },
+          { check: 'Supply type (single phase/three phase)', importance: 'Critical' },
+          { check: 'Main fuse rating (60A, 80A, 100A)', importance: 'Critical' },
+          { check: 'Gas meter and pipework locations', importance: 'Safety' },
+          { check: 'Water services and stopcock location', importance: 'Safety' },
+          { check: 'Telephone/data cable routes', importance: 'Useful' },
+          { check: 'Oil tank location (if applicable)', importance: 'Safety' },
+        ],
       },
       {
-        category: "Client Requirements",
+        category: 'Client Requirements',
         items: [
-          { check: "Specific requirements and preferences", importance: "Important" },
-          { check: "Budget constraints and priorities", importance: "Important" },
-          { check: "Timeline expectations", importance: "Important" },
-          { check: "Future plans (extensions, EV charging, solar)", importance: "Useful" },
-          { check: "Access arrangements and working hours", importance: "Important" },
-          { check: "Vulnerable occupants or special requirements", importance: "Safety" }
-        ]
-      }
-    ]
+          { check: 'Specific requirements and preferences', importance: 'Important' },
+          { check: 'Budget constraints and priorities', importance: 'Important' },
+          { check: 'Timeline expectations', importance: 'Important' },
+          { check: 'Future plans (extensions, EV charging, solar)', importance: 'Useful' },
+          { check: 'Access arrangements and working hours', importance: 'Important' },
+          { check: 'Vulnerable occupants or special requirements', importance: 'Safety' },
+        ],
+      },
+    ],
   };
 
   const loadCalculationGuidance = {
-    title: "Load Calculation Guidance",
+    title: 'Load Calculation Guidance',
     icon: Calculator,
-    basicFormula: "Total Connected Load x Diversity Factor = Maximum Demand",
+    basicFormula: 'Total Connected Load x Diversity Factor = Maximum Demand',
     diversityFactors: [
-      { circuit: "Lighting", diversity: "66%", notes: "Assume 66% of total lighting load in use" },
-      { circuit: "Socket Outlets (Ring)", diversity: "See table", notes: "First 10A + 30% of remainder + 5A per socket over 10" },
-      { circuit: "Cooker", diversity: "10A + 30% of remainder", notes: "e.g., 12kW cooker = 10A + 30% of (52A-10A) = 22.6A" },
-      { circuit: "Immersion Heater", diversity: "100%", notes: "Full load always assumed" },
-      { circuit: "Shower", diversity: "100%", notes: "Full load always assumed" },
-      { circuit: "Electric Heating", diversity: "100%", notes: "Full load for heating circuits" },
-      { circuit: "EV Charger", diversity: "100%", notes: "Dedicated circuit, full load assumed" }
+      { circuit: 'Lighting', diversity: '66%', notes: 'Assume 66% of total lighting load in use' },
+      {
+        circuit: 'Socket Outlets (Ring)',
+        diversity: 'See table',
+        notes: 'First 10A + 30% of remainder + 5A per socket over 10',
+      },
+      {
+        circuit: 'Cooker',
+        diversity: '10A + 30% of remainder',
+        notes: 'e.g., 12kW cooker = 10A + 30% of (52A-10A) = 22.6A',
+      },
+      { circuit: 'Immersion Heater', diversity: '100%', notes: 'Full load always assumed' },
+      { circuit: 'Shower', diversity: '100%', notes: 'Full load always assumed' },
+      { circuit: 'Electric Heating', diversity: '100%', notes: 'Full load for heating circuits' },
+      { circuit: 'EV Charger', diversity: '100%', notes: 'Dedicated circuit, full load assumed' },
     ],
     exampleCalculation: [
-      { item: "Lighting (10 x 100W)", connected: "1000W", diversity: "66%", demand: "660W (2.9A)" },
-      { item: "Ring Circuit 1 (kitchen)", connected: "7200W (32A)", diversity: "First 10A + 30%", demand: "16.6A" },
-      { item: "Ring Circuit 2 (ground)", connected: "7200W (32A)", diversity: "First 10A + 30%", demand: "16.6A" },
-      { item: "Ring Circuit 3 (first)", connected: "7200W (32A)", diversity: "First 10A + 30%", demand: "16.6A" },
-      { item: "Cooker (12kW)", connected: "52A", diversity: "10A + 30%", demand: "22.6A" },
-      { item: "Shower (9.5kW)", connected: "41A", diversity: "100%", demand: "41A" },
-      { item: "Immersion (3kW)", connected: "13A", diversity: "100%", demand: "13A" }
+      { item: 'Lighting (10 x 100W)', connected: '1000W', diversity: '66%', demand: '660W (2.9A)' },
+      {
+        item: 'Ring Circuit 1 (kitchen)',
+        connected: '7200W (32A)',
+        diversity: 'First 10A + 30%',
+        demand: '16.6A',
+      },
+      {
+        item: 'Ring Circuit 2 (ground)',
+        connected: '7200W (32A)',
+        diversity: 'First 10A + 30%',
+        demand: '16.6A',
+      },
+      {
+        item: 'Ring Circuit 3 (first)',
+        connected: '7200W (32A)',
+        diversity: 'First 10A + 30%',
+        demand: '16.6A',
+      },
+      { item: 'Cooker (12kW)', connected: '52A', diversity: '10A + 30%', demand: '22.6A' },
+      { item: 'Shower (9.5kW)', connected: '41A', diversity: '100%', demand: '41A' },
+      { item: 'Immersion (3kW)', connected: '13A', diversity: '100%', demand: '13A' },
     ],
-    totalDemand: "Approximately 130A - requires 100A supply with careful load management",
+    totalDemand: 'Approximately 130A - requires 100A supply with careful load management',
     considerations: [
-      "Always verify supply capacity with DNO if close to limits",
-      "Consider smart load management for EV charging",
-      "Future-proof design by allowing headroom for additions",
-      "Document all calculations for certification"
-    ]
+      'Always verify supply capacity with DNO if close to limits',
+      'Consider smart load management for EV charging',
+      'Future-proof design by allowing headroom for additions',
+      'Document all calculations for certification',
+    ],
   };
 
   const cableRoutePlanning = {
-    title: "Cable Route Planning",
+    title: 'Cable Route Planning',
     icon: Route,
     principles: [
       {
-        principle: "Safe Zones",
-        description: "Cables in walls must be run in safe zones or protected by RCD",
+        principle: 'Safe Zones',
+        description: 'Cables in walls must be run in safe zones or protected by RCD',
         details: [
-          "Horizontal runs: 150mm from ceiling or floor",
-          "Vertical runs: 150mm from corners or door/window frames",
-          "Directly above/below accessories (switches, sockets)",
-          "If outside safe zones: mechanical protection or 30mA RCD required"
-        ]
+          'Horizontal runs: 150mm from ceiling or floor',
+          'Vertical runs: 150mm from corners or door/window frames',
+          'Directly above/below accessories (switches, sockets)',
+          'If outside safe zones: mechanical protection or 30mA RCD required',
+        ],
       },
       {
-        principle: "Avoiding Damage",
-        description: "Protect cables from physical damage",
+        principle: 'Avoiding Damage',
+        description: 'Protect cables from physical damage',
         details: [
-          "Use appropriate depth for chase or conduit",
-          "Avoid routes through areas of future work",
-          "Consider furniture placement and fixings",
-          "Document cable routes for future reference"
-        ]
+          'Use appropriate depth for chase or conduit',
+          'Avoid routes through areas of future work',
+          'Consider furniture placement and fixings',
+          'Document cable routes for future reference',
+        ],
       },
       {
-        principle: "Thermal Considerations",
-        description: "Account for heat effects on current capacity",
+        principle: 'Thermal Considerations',
+        description: 'Account for heat effects on current capacity',
         details: [
-          "Avoid routing near heat sources (boilers, hot pipes)",
-          "Consider derating for thermal insulation contact",
-          "Group derating for multiple cables in containment",
-          "Maintain ventilation around cables where possible"
-        ]
+          'Avoid routing near heat sources (boilers, hot pipes)',
+          'Consider derating for thermal insulation contact',
+          'Group derating for multiple cables in containment',
+          'Maintain ventilation around cables where possible',
+        ],
       },
       {
-        principle: "Accessibility",
-        description: "Plan for future access and maintenance",
+        principle: 'Accessibility',
+        description: 'Plan for future access and maintenance',
         details: [
-          "Use accessible junction boxes where practical",
-          "Consider modular wiring for complex installations",
-          "Label all cables at consumer unit and accessories",
-          "Document routes with photos and diagrams"
-        ]
-      }
+          'Use accessible junction boxes where practical',
+          'Consider modular wiring for complex installations',
+          'Label all cables at consumer unit and accessories',
+          'Document routes with photos and diagrams',
+        ],
+      },
     ],
     routeOptions: [
-      { method: "Loft Space", advantages: "Easy access, minimal decoration damage", considerations: "Thermal insulation contact, rodent protection" },
-      { method: "Under Floorboards", advantages: "Hidden installation, good access", considerations: "May need lifting throughout, joist notching limits" },
-      { method: "Surface Trunking", advantages: "No building work, easy modification", considerations: "Visible, may not suit all properties" },
-      { method: "Chased into Walls", advantages: "Completely hidden, neat finish", considerations: "Messy, time-consuming, must be in safe zones" },
-      { method: "Cavity Drop", advantages: "No surface damage in rooms", considerations: "Limited to cavity walls, fire stopping required" }
-    ]
+      {
+        method: 'Loft Space',
+        advantages: 'Easy access, minimal decoration damage',
+        considerations: 'Thermal insulation contact, rodent protection',
+      },
+      {
+        method: 'Under Floorboards',
+        advantages: 'Hidden installation, good access',
+        considerations: 'May need lifting throughout, joist notching limits',
+      },
+      {
+        method: 'Surface Trunking',
+        advantages: 'No building work, easy modification',
+        considerations: 'Visible, may not suit all properties',
+      },
+      {
+        method: 'Chased into Walls',
+        advantages: 'Completely hidden, neat finish',
+        considerations: 'Messy, time-consuming, must be in safe zones',
+      },
+      {
+        method: 'Cavity Drop',
+        advantages: 'No surface damage in rooms',
+        considerations: 'Limited to cavity walls, fire stopping required',
+      },
+    ],
   };
 
   const partPRequirements = {
-    title: "Part P Building Regulations",
+    title: 'Part P Building Regulations',
     icon: Building,
-    overview: "Part P of the Building Regulations (England and Wales) requires that electrical installation work in dwellings is designed, installed, inspected, and tested to ensure safety.",
+    overview:
+      'Part P of the Building Regulations (England and Wales) requires that electrical installation work in dwellings is designed, installed, inspected, and tested to ensure safety.',
     notifiableWork: [
-      "Installation of a new circuit",
-      "Consumer unit replacement or relocation",
-      "Work in bathrooms (other than replacing accessories)",
-      "Work in kitchens (if it involves a new circuit)",
-      "Work in special installations or locations",
-      "Installation of outdoor circuits",
-      "Solar PV and generator connections"
+      'Installation of a new circuit',
+      'Consumer unit replacement or relocation',
+      'Work in bathrooms (other than replacing accessories)',
+      'Work in kitchens (if it involves a new circuit)',
+      'Work in special installations or locations',
+      'Installation of outdoor circuits',
+      'Solar PV and generator connections',
     ],
     nonNotifiableWork: [
-      "Replacing socket outlets, switches, and ceiling roses",
-      "Replacing a consumer unit like-for-like (same location)",
-      "Adding a fused spur to an existing circuit (not kitchen/bathroom)",
-      "Replacing damaged cables for a single circuit",
-      "Work not in a special location that doesn't add a new circuit"
+      'Replacing socket outlets, switches, and ceiling roses',
+      'Replacing a consumer unit like-for-like (same location)',
+      'Adding a fused spur to an existing circuit (not kitchen/bathroom)',
+      'Replacing damaged cables for a single circuit',
+      "Work not in a special location that doesn't add a new circuit",
     ],
     complianceRoutes: [
       {
-        route: "Registered Competent Person",
-        description: "Self-certify through scheme membership (NICEIC, NAPIT, ELECSA, etc.)",
-        advantages: ["No Building Control fees", "Can certify own work", "Professional recognition"],
-        requirements: ["Scheme membership", "Regular assessment", "Insurance requirements"]
+        route: 'Registered Competent Person',
+        description: 'Self-certify through scheme membership (NICEIC, NAPIT, ELECSA, etc.)',
+        advantages: [
+          'No Building Control fees',
+          'Can certify own work',
+          'Professional recognition',
+        ],
+        requirements: ['Scheme membership', 'Regular assessment', 'Insurance requirements'],
       },
       {
-        route: "Building Control Notification",
-        description: "Notify local authority before work begins",
-        advantages: ["Available to all installers", "Independent verification"],
-        requirements: ["Notification fee (typically £150-£300)", "Inspection by Building Control", "May delay start of work"]
-      }
+        route: 'Building Control Notification',
+        description: 'Notify local authority before work begins',
+        advantages: ['Available to all installers', 'Independent verification'],
+        requirements: [
+          'Notification fee (typically £150-£300)',
+          'Inspection by Building Control',
+          'May delay start of work',
+        ],
+      },
     ],
     certificationRequired: [
-      "Electrical Installation Certificate (EIC) for new installations",
-      "Minor Electrical Installation Works Certificate for small jobs",
-      "Building Regulations Compliance Certificate (from scheme or LA)",
-      "Test results schedule attached to certificate"
+      'Electrical Installation Certificate (EIC) for new installations',
+      'Minor Electrical Installation Works Certificate for small jobs',
+      'Building Regulations Compliance Certificate (from scheme or LA)',
+      'Test results schedule attached to certificate',
     ],
     penalties: [
-      "Local authority can require removal of non-compliant work",
-      "Impact on property sale (solicitors check for certificates)",
-      "Insurance implications if work not certified",
-      "Potential prosecution for serious non-compliance"
-    ]
+      'Local authority can require removal of non-compliant work',
+      'Impact on property sale (solicitors check for certificates)',
+      'Insurance implications if work not certified',
+      'Potential prosecution for serious non-compliance',
+    ],
   };
 
   const designConsiderations = [
     {
-      category: "Circuit Protection",
+      category: 'Circuit Protection',
       details: [
-        "RCD protection: 30mA for all socket outlets and circuits in bathrooms",
-        "RCBO vs RCD: Consider individual circuit protection",
-        "MCB ratings: Ensure proper coordination with cable ratings",
-        "Surge protection: Required for new installations in exposed areas"
-      ]
+        'RCD protection: 30mA for all socket outlets and circuits in bathrooms',
+        'RCBO vs RCD: Consider individual circuit protection',
+        'MCB ratings: Ensure proper coordination with cable ratings',
+        'Surge protection: Required for new installations in exposed areas',
+      ],
     },
     {
-      category: "Cable Sizing",
+      category: 'Cable Sizing',
       details: [
-        "Voltage drop: Maximum 3% for lighting, 5% for power",
-        "Current carrying capacity: Consider grouping factors",
-        "Installation method: Affects cable current rating",
-        "Future expansion: Size for anticipated load growth"
-      ]
+        'Voltage drop: Maximum 3% for lighting, 5% for power',
+        'Current carrying capacity: Consider grouping factors',
+        'Installation method: Affects cable current rating',
+        'Future expansion: Size for anticipated load growth',
+      ],
     },
     {
-      category: "Special Locations",
+      category: 'Special Locations',
       details: [
-        "Bathrooms: Zone classifications and appropriate equipment",
-        "Kitchens: RCD protection and appliance circuits",
-        "Gardens: Outdoor equipment and cable burial depths",
-        "Garages: Additional earthing and RCD requirements"
-      ]
-    }
+        'Bathrooms: Zone classifications and appropriate equipment',
+        'Kitchens: RCD protection and appliance circuits',
+        'Gardens: Outdoor equipment and cable burial depths',
+        'Garages: Additional earthing and RCD requirements',
+      ],
+    },
   ];
 
   const clientCommunication = [
     {
-      stage: "Initial Consultation",
+      stage: 'Initial Consultation',
       keyPoints: [
-        "Explain the scope of work clearly and in plain English",
-        "Discuss any potential disruption to daily routines",
-        "Outline health and safety requirements and responsibilities",
-        "Provide realistic timescales and cost estimates"
-      ]
+        'Explain the scope of work clearly and in plain English',
+        'Discuss any potential disruption to daily routines',
+        'Outline health and safety requirements and responsibilities',
+        'Provide realistic timescales and cost estimates',
+      ],
     },
     {
-      stage: "During Installation",
+      stage: 'During Installation',
       keyPoints: [
-        "Keep client informed of daily progress",
-        "Explain any unexpected issues immediately",
-        "Maintain clean and safe working areas",
-        "Respect client's property and privacy"
-      ]
+        'Keep client informed of daily progress',
+        'Explain any unexpected issues immediately',
+        'Maintain clean and safe working areas',
+        "Respect client's property and privacy",
+      ],
     },
     {
-      stage: "Project Completion",
+      stage: 'Project Completion',
       keyPoints: [
-        "Demonstrate new systems and safety features",
-        "Provide all certification and warranties",
-        "Explain maintenance requirements",
-        "Offer future support and contact details"
-      ]
-    }
+        'Demonstrate new systems and safety features',
+        'Provide all certification and warranties',
+        'Explain maintenance requirements',
+        'Offer future support and contact details',
+      ],
+    },
   ];
 
   const riskAssessment = [
-    "Working at height (ladders, loft access)",
-    "Electrical hazards from existing installations",
-    "Structural modifications and building integrity",
-    "Asbestos exposure in older properties",
-    "Manual handling of heavy equipment",
-    "Noise and dust impact on occupants"
+    'Working at height (ladders, loft access)',
+    'Electrical hazards from existing installations',
+    'Structural modifications and building integrity',
+    'Asbestos exposure in older properties',
+    'Manual handling of heavy equipment',
+    'Noise and dust impact on occupants',
   ];
 
   return (
@@ -370,7 +427,8 @@ const DomesticPlanningSection = () => {
           <Alert className="border-teal-500/50 bg-teal-500/10">
             <Info className="h-4 w-4 text-teal-400" />
             <AlertDescription className="text-teal-200 text-sm">
-              A thorough site survey is essential for accurate quoting, safe working, and compliance. Never skip this step.
+              A thorough site survey is essential for accurate quoting, safe working, and
+              compliance. Never skip this step.
             </AlertDescription>
           </Alert>
 
@@ -387,11 +445,15 @@ const DomesticPlanningSection = () => {
                     <Badge
                       variant="outline"
                       className={`text-xs flex-shrink-0 ${
-                        item.importance === 'Critical' ? 'border-red-400 text-red-300' :
-                        item.importance === 'Safety' ? 'border-orange-400 text-orange-300' :
-                        item.importance === 'Legal' ? 'border-purple-400 text-purple-300' :
-                        item.importance === 'Important' ? 'border-yellow-400 text-yellow-300' :
-                        'border-white/40 text-white'
+                        item.importance === 'Critical'
+                          ? 'border-red-400 text-red-300'
+                          : item.importance === 'Safety'
+                            ? 'border-orange-400 text-orange-300'
+                            : item.importance === 'Legal'
+                              ? 'border-purple-400 text-purple-300'
+                              : item.importance === 'Important'
+                                ? 'border-yellow-400 text-yellow-300'
+                                : 'border-white/40 text-white'
                       }`}
                     >
                       {item.importance}
@@ -445,7 +507,9 @@ const DomesticPlanningSection = () => {
           </div>
 
           <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
-            <h4 className="font-medium text-white mb-3">Example: 3-Bedroom House Load Calculation</h4>
+            <h4 className="font-medium text-white mb-3">
+              Example: 3-Bedroom House Load Calculation
+            </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -468,7 +532,9 @@ const DomesticPlanningSection = () => {
                 </tbody>
               </table>
             </div>
-            <p className="text-sm text-amber-100 mt-3"><strong>Total:</strong> {loadCalculationGuidance.totalDemand}</p>
+            <p className="text-sm text-amber-100 mt-3">
+              <strong>Total:</strong> {loadCalculationGuidance.totalDemand}
+            </p>
           </div>
 
           <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
@@ -497,13 +563,17 @@ const DomesticPlanningSection = () => {
           <Alert className="border-indigo-500/50 bg-indigo-500/10">
             <AlertTriangle className="h-4 w-4 text-indigo-400" />
             <AlertDescription className="text-indigo-200 text-sm">
-              <strong>Regulation 522.6:</strong> Cables in walls must be protected from damage or installed in prescribed safe zones.
+              <strong>Regulation 522.6:</strong> Cables in walls must be protected from damage or
+              installed in prescribed safe zones.
             </AlertDescription>
           </Alert>
 
           <div className="space-y-4">
             {cableRoutePlanning.principles.map((principle, idx) => (
-              <div key={idx} className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
+              <div
+                key={idx}
+                className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20"
+              >
                 <h4 className="font-medium text-white mb-2">{principle.principle}</h4>
                 <p className="text-sm text-indigo-200 mb-3">{principle.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -594,7 +664,9 @@ const DomesticPlanningSection = () => {
                     <span className="text-green-400 font-medium">Advantages:</span>
                     <ul className="mt-1 space-y-1">
                       {route.advantages.map((adv, advIdx) => (
-                        <li key={advIdx} className="text-white">- {adv}</li>
+                        <li key={advIdx} className="text-white">
+                          - {adv}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -602,7 +674,9 @@ const DomesticPlanningSection = () => {
                     <span className="text-orange-400 font-medium">Requirements:</span>
                     <ul className="mt-1 space-y-1">
                       {route.requirements.map((req, reqIdx) => (
-                        <li key={reqIdx} className="text-white">- {req}</li>
+                        <li key={reqIdx} className="text-white">
+                          - {req}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -649,7 +723,10 @@ const DomesticPlanningSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           {designConsiderations.map((consideration, index) => (
-            <div key={index} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+            <div
+              key={index}
+              className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20"
+            >
               <h4 className="font-medium text-white mb-3">{consideration.category}</h4>
               <div className="space-y-2">
                 {consideration.details.map((detail, idx) => (
@@ -669,7 +746,9 @@ const DomesticPlanningSection = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Users className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">Client Communication & Project Management</CardTitle>
+            <CardTitle className="text-green-300">
+              Client Communication & Project Management
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -701,7 +780,9 @@ const DomesticPlanningSection = () => {
           <Alert className="border-orange-500/50 bg-orange-500/10">
             <AlertTriangle className="h-4 w-4 text-orange-400" />
             <AlertDescription className="text-orange-200 text-sm">
-              <strong>Essential:</strong> Complete risk assessment before starting any domestic electrical work. Consider all potential hazards and implement appropriate control measures.
+              <strong>Essential:</strong> Complete risk assessment before starting any domestic
+              electrical work. Consider all potential hazards and implement appropriate control
+              measures.
             </AlertDescription>
           </Alert>
 
@@ -745,8 +826,12 @@ const DomesticPlanningSection = () => {
                 <ul className="space-y-1">
                   <li className="text-yellow-100 text-xs">- Electrical Installation Certificate</li>
                   <li className="text-yellow-100 text-xs">- Test result schedules</li>
-                  <li className="text-yellow-100 text-xs">- Building Control notification (if required)</li>
-                  <li className="text-yellow-100 text-xs">- Warranty and maintenance information</li>
+                  <li className="text-yellow-100 text-xs">
+                    - Building Control notification (if required)
+                  </li>
+                  <li className="text-yellow-100 text-xs">
+                    - Warranty and maintenance information
+                  </li>
                 </ul>
               </div>
             </div>

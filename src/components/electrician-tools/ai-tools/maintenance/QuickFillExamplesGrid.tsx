@@ -15,35 +15,33 @@ const EXAMPLES: QuickFillExample[] = [
   {
     type: 'domestic',
     title: 'Domestic Example',
-    description: 'Consumer unit in residential property'
+    description: 'Consumer unit in residential property',
   },
   {
     type: 'commercial',
     title: 'Commercial Example',
-    description: '3-phase distribution board in office'
+    description: '3-phase distribution board in office',
   },
   {
     type: 'industrial',
     title: 'Industrial Example',
-    description: 'Industrial distribution with motor protection'
-  }
+    description: 'Industrial distribution with motor protection',
+  },
 ];
 
 const ICONS = {
   domestic: Home,
   commercial: Building2,
-  industrial: Factory
+  industrial: Factory,
 };
 
-export const QuickFillExamplesGrid = ({
-  onSelect
-}: QuickFillExamplesGridProps) => {
+export const QuickFillExamplesGrid = ({ onSelect }: QuickFillExamplesGridProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
       {EXAMPLES.map((example) => {
         const IconComponent = ICONS[example.type];
         return (
-          <Card 
+          <Card
             key={example.type}
             className="p-3 sm:p-4 cursor-pointer hover:border-yellow-400/40 transition-all hover:scale-[1.02] touch-manipulation"
             onClick={() => onSelect(example.type)}
@@ -52,9 +50,7 @@ export const QuickFillExamplesGrid = ({
               <IconComponent className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
               <h5 className="font-semibold text-sm leading-tight">{example.title}</h5>
             </div>
-            <p className="text-xs text-muted-foreground line-clamp-2">
-              {example.description}
-            </p>
+            <p className="text-xs text-muted-foreground line-clamp-2">{example.description}</p>
           </Card>
         );
       })}

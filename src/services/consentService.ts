@@ -17,10 +17,14 @@ export interface ConsentRecord {
  * Store consent record in the database
  * This is called after successful signup to persist GDPR consent
  */
-export const storeConsent = async (consent: ConsentRecord): Promise<{ success: boolean; error?: string }> => {
+export const storeConsent = async (
+  consent: ConsentRecord
+): Promise<{ success: boolean; error?: string }> => {
   try {
     // Get current user if available
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     const consentData = {
       user_id: user?.id || null,
@@ -33,14 +37,12 @@ export const storeConsent = async (consent: ConsentRecord): Promise<{ success: b
       consent_timestamp: consent.consent_timestamp,
       ip_address: consent.ip_address || null,
       user_agent: consent.user_agent || navigator.userAgent,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     };
 
     // Try to insert into user_consents table
     // If table doesn't exist, it will fail gracefully
-    const { error } = await supabase
-      .from('user_consents')
-      .insert(consentData);
+    const { error } = await supabase.from('user_consents').insert(consentData);
 
     if (error) {
       console.warn('Consent storage to DB failed, keeping local storage only:', error.message);
@@ -79,7 +81,7 @@ export const getConsent = async (userId: string): Promise<ConsentRecord | null> 
       privacy_accepted: data.privacy_accepted,
       data_processing_accepted: data.data_processing_accepted,
       marketing_opt_in: data.marketing_opt_in,
-      consent_timestamp: data.consent_timestamp
+      consent_timestamp: data.consent_timestamp,
     };
   } catch {
     return null;
@@ -95,7 +97,7 @@ export const updateMarketingConsent = async (userId: string, optIn: boolean): Pr
       .from('user_consents')
       .update({
         marketing_opt_in: optIn,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('user_id', userId);
 
@@ -108,14 +110,17 @@ export const updateMarketingConsent = async (userId: string, optIn: boolean): Pr
 /**
  * Record consent withdrawal (for GDPR compliance)
  */
-export const recordConsentWithdrawal = async (userId: string, reason?: string): Promise<boolean> => {
+export const recordConsentWithdrawal = async (
+  userId: string,
+  reason?: string
+): Promise<boolean> => {
   try {
     const { error } = await supabase
       .from('user_consents')
       .update({
         consent_withdrawn: true,
         consent_withdrawn_at: new Date().toISOString(),
-        withdrawal_reason: reason || null
+        withdrawal_reason: reason || null,
       })
       .eq('user_id', userId);
 

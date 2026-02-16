@@ -12,8 +12,9 @@ export const EmergencyLightingSummary3_1 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p className="text-lg text-foreground leading-relaxed">
-          This section has covered the fundamental requirements for emergency lighting performance, 
-          focusing on the critical safety parameters that ensure effective evacuation and emergency response.
+          This section has covered the fundamental requirements for emergency lighting performance,
+          focusing on the critical safety parameters that ensure effective evacuation and emergency
+          response.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -26,19 +27,27 @@ export const EmergencyLightingSummary3_1 = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>Escape Routes:</strong> 1 lux minimum (centre line)</span>
+                  <span>
+                    <strong>Escape Routes:</strong> 1 lux minimum (centre line)
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>Open Areas:</strong> 0.5 lux minimum (anti-panic)</span>
+                  <span>
+                    <strong>Open Areas:</strong> 0.5 lux minimum (anti-panic)
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>High-Risk Tasks:</strong> 15 lux or 10% normal lighting</span>
+                  <span>
+                    <strong>High-Risk Tasks:</strong> 15 lux or 10% normal lighting
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>Uniformity:</strong> Maximum 40:1 ratio typically</span>
+                  <span>
+                    <strong>Uniformity:</strong> Maximum 40:1 ratio typically
+                  </span>
                 </li>
               </ul>
             </div>
@@ -51,19 +60,27 @@ export const EmergencyLightingSummary3_1 = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>General Buildings:</strong> 1 hour minimum</span>
+                  <span>
+                    <strong>General Buildings:</strong> 1 hour minimum
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>Public/Workplace:</strong> 3 hours minimum</span>
+                  <span>
+                    <strong>Public/Workplace:</strong> 3 hours minimum
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>Battery Types:</strong> NiCd, NiMH, Li-ion considerations</span>
+                  <span>
+                    <strong>Battery Types:</strong> NiCd, NiMH, Li-ion considerations
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span><strong>Ageing Factor:</strong> Design for end-of-life performance</span>
+                  <span>
+                    <strong>Ageing Factor:</strong> Design for end-of-life performance
+                  </span>
                 </li>
               </ul>
             </div>
@@ -100,10 +117,11 @@ export const EmergencyLightingSummary3_1 = () => {
             <div>
               <h4 className="font-semibold text-red-400 mb-2">Professional Responsibility</h4>
               <p className="text-foreground text-sm">
-                Emergency lighting failures can contribute to injuries and fatalities during building evacuation. 
-                The Birmingham college case study demonstrates the importance of considering real evacuation scenarios, 
-                not just minimum compliance. Always err on the side of caution when specifying performance levels, 
-                and maintain detailed documentation to prove compliance with BS 5266-1 requirements.
+                Emergency lighting failures can contribute to injuries and fatalities during
+                building evacuation. The Birmingham college case study demonstrates the importance
+                of considering real evacuation scenarios, not just minimum compliance. Always err on
+                the side of caution when specifying performance levels, and maintain detailed
+                documentation to prove compliance with BS 5266-1 requirements.
               </p>
             </div>
           </div>
@@ -112,9 +130,10 @@ export const EmergencyLightingSummary3_1 = () => {
         <div className="bg-elec-dark/60 p-4 rounded-lg border border-gray-600">
           <h4 className="text-elec-yellow font-semibold mb-3">Next Steps</h4>
           <p className="text-foreground text-sm">
-            With a solid understanding of minimum illumination levels and durations, you're ready to progress to 
-            more advanced topics in emergency lighting design. The next section will build on these fundamentals 
-            to explore system types, installation methods, and advanced compliance considerations.
+            With a solid understanding of minimum illumination levels and durations, you're ready to
+            progress to more advanced topics in emergency lighting design. The next section will
+            build on these fundamentals to explore system types, installation methods, and advanced
+            compliance considerations.
           </p>
         </div>
       </CardContent>

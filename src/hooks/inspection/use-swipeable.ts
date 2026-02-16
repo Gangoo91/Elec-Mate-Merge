@@ -25,7 +25,7 @@ export const useSwipeable = ({ onSwipeLeft, onSwipeRight, threshold = 50 }: Swip
 
     const handleTouchEnd = () => {
       const diff = touchStartX.current - touchEndX.current;
-      
+
       if (Math.abs(diff) > threshold) {
         if (diff > 0 && onSwipeLeft) {
           onSwipeLeft();

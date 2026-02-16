@@ -21,10 +21,7 @@ export interface AM2SessionRecord {
   startedAt?: string;
 }
 
-export async function saveAM2Session(
-  userId: string,
-  session: AM2SessionRecord
-): Promise<boolean> {
+export async function saveAM2Session(userId: string, session: AM2SessionRecord): Promise<boolean> {
   try {
     const { error } = await db.from('am2_mock_sessions').insert({
       user_id: userId,

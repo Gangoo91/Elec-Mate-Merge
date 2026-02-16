@@ -1,74 +1,73 @@
-
 import { AlertTriangle } from 'lucide-react';
 
 export const HighRiskDefects = () => {
   const highRiskDefects = [
     {
-      title: "Exposed Live Parts",
-      description: "Open terminals, broken covers, missing grommets, or damaged enclosures",
-      risk: "Could result in shock, electrocution, or arc flash if touched or disturbed",
+      title: 'Exposed Live Parts',
+      description: 'Open terminals, broken covers, missing grommets, or damaged enclosures',
+      risk: 'Could result in shock, electrocution, or arc flash if touched or disturbed',
       examples: [
-        "Broken MCB covers in distribution boards",
-        "Missing terminal blocks covers",
-        "Damaged socket fronts exposing live parts",
-        "Open junction boxes without proper covers"
-      ]
+        'Broken MCB covers in distribution boards',
+        'Missing terminal blocks covers',
+        'Damaged socket fronts exposing live parts',
+        'Open junction boxes without proper covers',
+      ],
     },
     {
-      title: "Incorrect Cable Sizing or Overload Protection",
-      description: "Oversized MCBs, underrated cables, or mismatched protective devices",
-      risk: "Risk of overheating, cable damage, or fire under load conditions",
+      title: 'Incorrect Cable Sizing or Overload Protection',
+      description: 'Oversized MCBs, underrated cables, or mismatched protective devices',
+      risk: 'Risk of overheating, cable damage, or fire under load conditions',
       examples: [
-        "32A MCB protecting 2.5mm² cable (should be 20A max)",
-        "1.5mm² cable on 20A lighting circuit",
-        "No diversity calculations considered",
-        "Mixing different cable types inappropriately"
-      ]
+        '32A MCB protecting 2.5mm² cable (should be 20A max)',
+        '1.5mm² cable on 20A lighting circuit',
+        'No diversity calculations considered',
+        'Mixing different cable types inappropriately',
+      ],
     },
     {
-      title: "Improper Cable Terminations",
-      description: "Loose connections, poor crimping, untwisted conductors, or inadequate torque",
-      risk: "High resistance joints leading to overheating, arcing, or complete disconnection",
+      title: 'Improper Cable Terminations',
+      description: 'Loose connections, poor crimping, untwisted conductors, or inadequate torque',
+      risk: 'High resistance joints leading to overheating, arcing, or complete disconnection',
       examples: [
-        "Loose terminals in socket outlets",
-        "Uncrimped cable lugs in distribution boards",
-        "Multi-strand conductors not properly twisted",
-        "Insufficient tightening torque on gland plates"
-      ]
+        'Loose terminals in socket outlets',
+        'Uncrimped cable lugs in distribution boards',
+        'Multi-strand conductors not properly twisted',
+        'Insufficient tightening torque on gland plates',
+      ],
     },
     {
-      title: "Signs of Heat Damage or Burning",
-      description: "Discolouration, melting, burning smells, or thermal damage evidence",
-      risk: "Indicates existing poor connections, overloads, or fault conditions",
+      title: 'Signs of Heat Damage or Burning',
+      description: 'Discolouration, melting, burning smells, or thermal damage evidence',
+      risk: 'Indicates existing poor connections, overloads, or fault conditions',
       examples: [
-        "Brown discolouration around MCB terminals",
-        "Melted cable insulation near connections",
-        "Burnt smell from distribution boards",
-        "Heat damage on socket outlet faceplates"
-      ]
+        'Brown discolouration around MCB terminals',
+        'Melted cable insulation near connections',
+        'Burnt smell from distribution boards',
+        'Heat damage on socket outlet faceplates',
+      ],
     },
     {
-      title: "Missing Protective Earthing",
-      description: "Disconnected CPCs, missing earth continuity, or inadequate bonding",
-      risk: "Loss of automatic disconnection and increased shock risk during faults",
+      title: 'Missing Protective Earthing',
+      description: 'Disconnected CPCs, missing earth continuity, or inadequate bonding',
+      risk: 'Loss of automatic disconnection and increased shock risk during faults',
       examples: [
-        "CPC not connected in socket outlets",
-        "Missing supplementary bonding in bathrooms",
-        "Broken earth continuity in lighting circuits",
-        "No main equipotential bonding to services"
-      ]
+        'CPC not connected in socket outlets',
+        'Missing supplementary bonding in bathrooms',
+        'Broken earth continuity in lighting circuits',
+        'No main equipotential bonding to services',
+      ],
     },
     {
-      title: "Lack of Proper Labelling",
-      description: "No circuit identification, missing warning notices, or inadequate marking",
-      risk: "Makes future work dangerous and breaches BS 7671 requirements",
+      title: 'Lack of Proper Labelling',
+      description: 'No circuit identification, missing warning notices, or inadequate marking',
+      risk: 'Makes future work dangerous and breaches BS 7671 requirements',
       examples: [
-        "No circuit schedules in distribution boards",
-        "Missing RCD test notices",
-        "No voltage identification labels",
-        "Unlabelled isolation points"
-      ]
-    }
+        'No circuit schedules in distribution boards',
+        'Missing RCD test notices',
+        'No voltage identification labels',
+        'Unlabelled isolation points',
+      ],
+    },
   ];
 
   return (
@@ -78,7 +77,8 @@ export const HighRiskDefects = () => {
         High-Risk Visual Defects That Demand Immediate Action
       </h3>
       <p className="text-gray-300 mb-4">
-        These defects pose immediate safety risks and must be rectified before the installation can be energised:
+        These defects pose immediate safety risks and must be rectified before the installation can
+        be energised:
       </p>
       <div className="space-y-6">
         {highRiskDefects.map((defect, index) => (

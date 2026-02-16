@@ -1,132 +1,137 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section1_4 = () => {
   useSEO(
-    "Difference Between Inspection and Testing | Level 2 Electrical",
-    "Understanding the distinct roles of visual inspection and instrumental testing in electrical verification under BS7671"
+    'Difference Between Inspection and Testing | Level 2 Electrical',
+    'Understanding the distinct roles of visual inspection and instrumental testing in electrical verification under BS7671'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is inspection in electrical work?",
+      question: 'What is inspection in electrical work?',
       options: [
-        "Measuring electrical characteristics",
-        "A visual check to confirm compliance and workmanship",
-        "Testing with instruments",
-        "Energising the circuit"
+        'Measuring electrical characteristics',
+        'A visual check to confirm compliance and workmanship',
+        'Testing with instruments',
+        'Energising the circuit',
       ],
       correctAnswer: 1,
-      explanation: "Inspection is a careful visual check of the installation to ensure compliance with design and BS 7671 standards."
+      explanation:
+        'Inspection is a careful visual check of the installation to ensure compliance with design and BS 7671 standards.',
     },
     {
       id: 2,
-      question: "Name one example of an inspection task.",
+      question: 'Name one example of an inspection task.',
       options: [
-        "Measuring insulation resistance",
-        "Testing RCD operation",
-        "Checking cable routes are in safe zones",
-        "Earth fault loop impedance testing"
+        'Measuring insulation resistance',
+        'Testing RCD operation',
+        'Checking cable routes are in safe zones',
+        'Earth fault loop impedance testing',
       ],
       correctAnswer: 2,
-      explanation: "Checking that cable routes comply with safe zones is a visual inspection task that doesn't require instruments."
+      explanation:
+        "Checking that cable routes comply with safe zones is a visual inspection task that doesn't require instruments.",
     },
     {
       id: 3,
-      question: "What is testing in electrical work?",
+      question: 'What is testing in electrical work?',
       options: [
-        "Visual checking of cables",
-        "Measuring electrical characteristics using instruments",
-        "Looking at protective devices",
-        "Checking cable containment"
+        'Visual checking of cables',
+        'Measuring electrical characteristics using instruments',
+        'Looking at protective devices',
+        'Checking cable containment',
       ],
       correctAnswer: 1,
-      explanation: "Testing involves measuring electrical characteristics using instruments to confirm the installation is electrically safe."
+      explanation:
+        'Testing involves measuring electrical characteristics using instruments to confirm the installation is electrically safe.',
     },
     {
       id: 4,
-      question: "Name one example of a test.",
+      question: 'Name one example of a test.',
       options: [
-        "Checking cable damage",
-        "Insulation resistance testing",
-        "Verifying cable routes",
-        "Checking labels"
+        'Checking cable damage',
+        'Insulation resistance testing',
+        'Verifying cable routes',
+        'Checking labels',
       ],
       correctAnswer: 1,
-      explanation: "Insulation resistance testing is an instrumental test that measures the electrical integrity between conductors."
+      explanation:
+        'Insulation resistance testing is an instrumental test that measures the electrical integrity between conductors.',
     },
     {
       id: 5,
-      question: "True or False: Testing can replace the need for inspection.",
-      options: ["True", "False"],
+      question: 'True or False: Testing can replace the need for inspection.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Testing cannot reveal poor workmanship or construction issues that are visible - both inspection and testing are essential."
+      explanation:
+        'False. Testing cannot reveal poor workmanship or construction issues that are visible - both inspection and testing are essential.',
     },
     {
       id: 6,
-      question: "Why can inspection alone not ensure safety?",
+      question: 'Why can inspection alone not ensure safety?',
       options: [
-        "It takes too long",
-        "It cannot detect hidden faults like loose connections or insulation breakdown",
-        "It requires expensive equipment",
-        "It's not required by regulations"
+        'It takes too long',
+        'It cannot detect hidden faults like loose connections or insulation breakdown',
+        'It requires expensive equipment',
+        "It's not required by regulations",
       ],
       correctAnswer: 1,
-      explanation: "Inspection alone cannot detect hidden electrical faults such as loose terminations inside accessories or insulation breakdown."
+      explanation:
+        'Inspection alone cannot detect hidden electrical faults such as loose terminations inside accessories or insulation breakdown.',
     },
     {
       id: 7,
-      question: "Which BS 7671 document includes inspection checklists?",
-      options: [
-        "Appendix 3",
-        "Appendix 6",
-        "Appendix 1",
-        "Appendix 9"
-      ],
+      question: 'Which BS 7671 document includes inspection checklists?',
+      options: ['Appendix 3', 'Appendix 6', 'Appendix 1', 'Appendix 9'],
       correctAnswer: 1,
-      explanation: "BS 7671 Appendix 6 provides detailed inspection checklists for various types of electrical installations."
+      explanation:
+        'BS 7671 Appendix 6 provides detailed inspection checklists for various types of electrical installations.',
     },
     {
       id: 8,
-      question: "What certificate records inspection and testing results?",
+      question: 'What certificate records inspection and testing results?',
       options: [
-        "Health and Safety Certificate",
-        "Electrical Installation Certificate (EIC) or Minor Works Certificate",
-        "Building Regulations Certificate",
-        "Insurance Certificate"
+        'Health and Safety Certificate',
+        'Electrical Installation Certificate (EIC) or Minor Works Certificate',
+        'Building Regulations Certificate',
+        'Insurance Certificate',
       ],
       correctAnswer: 1,
-      explanation: "Both inspection and testing results are recorded on either an Electrical Installation Certificate (EIC) or Minor Works Certificate."
+      explanation:
+        'Both inspection and testing results are recorded on either an Electrical Installation Certificate (EIC) or Minor Works Certificate.',
     },
     {
       id: 9,
-      question: "What tool is typically used for continuity testing?",
+      question: 'What tool is typically used for continuity testing?',
       options: [
-        "Torch and mirror",
-        "A multifunction tester or continuity tester",
-        "Visual inspection only",
-        "Screwdriver"
+        'Torch and mirror',
+        'A multifunction tester or continuity tester',
+        'Visual inspection only',
+        'Screwdriver',
       ],
       correctAnswer: 1,
-      explanation: "Continuity testing requires electrical instruments such as a multifunction tester or dedicated continuity tester."
+      explanation:
+        'Continuity testing requires electrical instruments such as a multifunction tester or dedicated continuity tester.',
     },
     {
       id: 10,
-      question: "Why must both inspection and testing be completed before energising?",
+      question: 'Why must both inspection and testing be completed before energising?',
       options: [
-        "To save time",
-        "To ensure both visible construction and hidden electrical integrity are safe and compliant",
-        "To reduce costs",
-        "It's optional"
+        'To save time',
+        'To ensure both visible construction and hidden electrical integrity are safe and compliant',
+        'To reduce costs',
+        "It's optional",
       ],
       correctAnswer: 1,
-      explanation: "Both processes are essential to verify that the installation is properly constructed (inspection) and electrically safe (testing)."
-    }
+      explanation:
+        'Both processes are essential to verify that the installation is properly constructed (inspection) and electrically safe (testing).',
+    },
   ];
 
   return (
@@ -161,7 +166,8 @@ const Module6Section1_4 = () => {
               Difference Between Inspection and Testing
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding the distinct roles of visual inspection and instrumental testing in electrical verification
+              Understanding the distinct roles of visual inspection and instrumental testing in
+              electrical verification
             </p>
           </header>
 
@@ -169,9 +175,17 @@ const Module6Section1_4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
             <ul className="text-white/80 text-sm space-y-1 list-disc pl-5">
-              <li>Inspection = Visual checks of construction, routing, labelling - what you can SEE.</li>
-              <li>Testing = Instrumental measurements of electrical characteristics - what you can MEASURE.</li>
-              <li>Both essential for compliance - inspection finds visible faults, testing finds hidden ones.</li>
+              <li>
+                Inspection = Visual checks of construction, routing, labelling - what you can SEE.
+              </li>
+              <li>
+                Testing = Instrumental measurements of electrical characteristics - what you can
+                MEASURE.
+              </li>
+              <li>
+                Both essential for compliance - inspection finds visible faults, testing finds
+                hidden ones.
+              </li>
               <li>Never energise based on inspection alone - hidden faults can be deadly.</li>
             </ul>
           </div>
@@ -202,15 +216,28 @@ const Module6Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Inspection is a systematic visual examination of an electrical installation to verify that it has been constructed according to the design and complies with BS 7671 requirements. It focuses on aspects that can be observed without the use of electrical test instruments.
+                Inspection is a systematic visual examination of an electrical installation to
+                verify that it has been constructed according to the design and complies with BS
+                7671 requirements. It focuses on aspects that can be observed without the use of
+                electrical test instruments.
               </p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Definition and Purpose:</p>
                 <ul className="list-disc pl-6 space-y-2 text-sm">
-                  <li><strong>Definition:</strong> A careful visual check of the installation without energising</li>
-                  <li><strong>Purpose:</strong> To ensure compliance with design and BS 7671 standards</li>
-                  <li><strong>Timing:</strong> Must be completed before any testing or energising takes place</li>
-                  <li><strong>Scope:</strong> Covers all accessible parts of the installation</li>
+                  <li>
+                    <strong>Definition:</strong> A careful visual check of the installation without
+                    energising
+                  </li>
+                  <li>
+                    <strong>Purpose:</strong> To ensure compliance with design and BS 7671 standards
+                  </li>
+                  <li>
+                    <strong>Timing:</strong> Must be completed before any testing or energising
+                    takes place
+                  </li>
+                  <li>
+                    <strong>Scope:</strong> Covers all accessible parts of the installation
+                  </li>
                 </ul>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
@@ -238,16 +265,28 @@ const Module6Section1_4 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Inspection Tools and Equipment:</p>
                 <ul className="list-disc pl-6 space-y-2 text-sm">
-                  <li><strong>Basic tools:</strong> Torch, mirror, measuring tape, magnifying glass</li>
-                  <li><strong>Documentation:</strong> BS 7671 Appendix 6 checklists, installation drawings</li>
-                  <li><strong>Safety equipment:</strong> Hard hat, safety glasses, appropriate PPE</li>
-                  <li><strong>No electrical instruments</strong> - inspection relies purely on visual observation</li>
+                  <li>
+                    <strong>Basic tools:</strong> Torch, mirror, measuring tape, magnifying glass
+                  </li>
+                  <li>
+                    <strong>Documentation:</strong> BS 7671 Appendix 6 checklists, installation
+                    drawings
+                  </li>
+                  <li>
+                    <strong>Safety equipment:</strong> Hard hat, safety glasses, appropriate PPE
+                  </li>
+                  <li>
+                    <strong>No electrical instruments</strong> - inspection relies purely on visual
+                    observation
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
                 <p className="font-medium text-orange-400 mb-2">Key Limitation of Inspection</p>
                 <p className="text-sm">
-                  Visual inspection cannot detect hidden faults such as loose connections inside accessories, degraded insulation, or incorrect internal wiring. This is why testing with instruments is essential to complete the verification process.
+                  Visual inspection cannot detect hidden faults such as loose connections inside
+                  accessories, degraded insulation, or incorrect internal wiring. This is why
+                  testing with instruments is essential to complete the verification process.
                 </p>
               </div>
             </div>
@@ -256,7 +295,12 @@ const Module6Section1_4 = () => {
           <InlineCheck
             id="inspection-purpose-check"
             question="What is the main purpose of electrical inspection?"
-            options={["To measure electrical characteristics", "To test protective devices", "To ensure visual compliance with design and BS 7671", "To energise the installation"]}
+            options={[
+              'To measure electrical characteristics',
+              'To test protective devices',
+              'To ensure visual compliance with design and BS 7671',
+              'To energise the installation',
+            ]}
             correctIndex={2}
             explanation="Inspection is a visual process to ensure the installation complies with the design and BS 7671 standards before any testing or energising takes place."
           />
@@ -269,15 +313,30 @@ const Module6Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Testing involves the measurement of electrical characteristics using calibrated instruments to verify that the installation meets the electrical safety requirements specified in BS 7671. Testing reveals hidden electrical faults that cannot be detected by visual inspection alone.
+                Testing involves the measurement of electrical characteristics using calibrated
+                instruments to verify that the installation meets the electrical safety requirements
+                specified in BS 7671. Testing reveals hidden electrical faults that cannot be
+                detected by visual inspection alone.
               </p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Definition and Purpose:</p>
                 <ul className="list-disc pl-6 space-y-2 text-sm">
-                  <li><strong>Definition:</strong> Measurement of electrical characteristics using calibrated instruments</li>
-                  <li><strong>Purpose:</strong> To confirm that the installation is electrically safe and meets BS 7671 requirements</li>
-                  <li><strong>Timing:</strong> Follows inspection and must be completed before energising</li>
-                  <li><strong>Verification:</strong> Proves the electrical integrity of circuits and protective systems</li>
+                  <li>
+                    <strong>Definition:</strong> Measurement of electrical characteristics using
+                    calibrated instruments
+                  </li>
+                  <li>
+                    <strong>Purpose:</strong> To confirm that the installation is electrically safe
+                    and meets BS 7671 requirements
+                  </li>
+                  <li>
+                    <strong>Timing:</strong> Follows inspection and must be completed before
+                    energising
+                  </li>
+                  <li>
+                    <strong>Verification:</strong> Proves the electrical integrity of circuits and
+                    protective systems
+                  </li>
                 </ul>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
@@ -307,19 +366,39 @@ const Module6Section1_4 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Test Instruments and Equipment:</p>
                 <div className="grid md:grid-cols-2 gap-2">
-                  <p className="text-sm p-2 rounded bg-green-500/10"><strong>Multifunction Tester:</strong> Primary instrument for most tests</p>
-                  <p className="text-sm p-2 rounded bg-blue-500/10"><strong>RCD Tester:</strong> Dedicated testing at various currents</p>
-                  <p className="text-sm p-2 rounded bg-purple-500/10"><strong>Phase Rotation Indicator:</strong> For three-phase systems</p>
-                  <p className="text-sm p-2 rounded bg-orange-500/10"><strong>Calibration:</strong> All instruments must be within calibration date</p>
+                  <p className="text-sm p-2 rounded bg-green-500/10">
+                    <strong>Multifunction Tester:</strong> Primary instrument for most tests
+                  </p>
+                  <p className="text-sm p-2 rounded bg-blue-500/10">
+                    <strong>RCD Tester:</strong> Dedicated testing at various currents
+                  </p>
+                  <p className="text-sm p-2 rounded bg-purple-500/10">
+                    <strong>Phase Rotation Indicator:</strong> For three-phase systems
+                  </p>
+                  <p className="text-sm p-2 rounded bg-orange-500/10">
+                    <strong>Calibration:</strong> All instruments must be within calibration date
+                  </p>
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Typical Acceptance Criteria:</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
-                  <li><strong>Continuity:</strong> Protective conductors &lt; 0.05Ω, ring circuits within 0.05Ω variation</li>
-                  <li><strong>Insulation resistance:</strong> ≥ 1MΩ between live conductors and earth at 500V DC</li>
-                  <li><strong>Earth fault loop impedance:</strong> Must not exceed values in BS 7671 tables for protective device operation</li>
-                  <li><strong>RCD operation:</strong> Trip within specified time at test currents (½x, 1x, 5x rated)</li>
+                  <li>
+                    <strong>Continuity:</strong> Protective conductors &lt; 0.05Ω, ring circuits
+                    within 0.05Ω variation
+                  </li>
+                  <li>
+                    <strong>Insulation resistance:</strong> ≥ 1MΩ between live conductors and earth
+                    at 500V DC
+                  </li>
+                  <li>
+                    <strong>Earth fault loop impedance:</strong> Must not exceed values in BS 7671
+                    tables for protective device operation
+                  </li>
+                  <li>
+                    <strong>RCD operation:</strong> Trip within specified time at test currents (½x,
+                    1x, 5x rated)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -328,7 +407,12 @@ const Module6Section1_4 = () => {
           <InlineCheck
             id="testing-sequence-check"
             question="When should electrical testing be carried out in relation to inspection?"
-            options={["Before inspection", "At the same time as inspection", "After inspection is completed", "Testing is optional"]}
+            options={[
+              'Before inspection',
+              'At the same time as inspection',
+              'After inspection is completed',
+              'Testing is optional',
+            ]}
             correctIndex={2}
             explanation="Testing must follow inspection. BS 7671 requires that inspection shall precede testing to ensure the installation is properly constructed before electrical verification begins."
           />
@@ -341,7 +425,9 @@ const Module6Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Neither inspection nor testing alone provides complete verification of an electrical installation. Each process has specific capabilities and limitations, and both are essential for ensuring comprehensive safety and compliance.
+                Neither inspection nor testing alone provides complete verification of an electrical
+                installation. Each process has specific capabilities and limitations, and both are
+                essential for ensuring comprehensive safety and compliance.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -390,9 +476,18 @@ const Module6Section1_4 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Real-World Integration Examples:</p>
                 <div className="space-y-2 text-sm">
-                  <p className="p-2 rounded bg-green-500/10"><strong>Socket Outlet Circuit:</strong> Inspection verifies correct mounting and cable routing. Testing confirms ring continuity and correct polarity.</p>
-                  <p className="p-2 rounded bg-blue-500/10"><strong>Consumer Unit:</strong> Inspection checks appropriate MCB ratings and labelling. Testing verifies earth fault loop impedance for each circuit.</p>
-                  <p className="p-2 rounded bg-purple-500/10"><strong>Lighting Circuit:</strong> Inspection confirms switch drop routing. Testing verifies continuity and correct switching arrangements.</p>
+                  <p className="p-2 rounded bg-green-500/10">
+                    <strong>Socket Outlet Circuit:</strong> Inspection verifies correct mounting and
+                    cable routing. Testing confirms ring continuity and correct polarity.
+                  </p>
+                  <p className="p-2 rounded bg-blue-500/10">
+                    <strong>Consumer Unit:</strong> Inspection checks appropriate MCB ratings and
+                    labelling. Testing verifies earth fault loop impedance for each circuit.
+                  </p>
+                  <p className="p-2 rounded bg-purple-500/10">
+                    <strong>Lighting Circuit:</strong> Inspection confirms switch drop routing.
+                    Testing verifies continuity and correct switching arrangements.
+                  </p>
                 </div>
               </div>
             </div>
@@ -401,7 +496,12 @@ const Module6Section1_4 = () => {
           <InlineCheck
             id="both-needed-check"
             question="Why cannot testing alone ensure electrical safety?"
-            options={["Testing takes too long", "Testing cannot reveal poor workmanship or construction issues", "Testing is too expensive", "Testing requires special qualifications"]}
+            options={[
+              'Testing takes too long',
+              'Testing cannot reveal poor workmanship or construction issues',
+              'Testing is too expensive',
+              'Testing requires special qualifications',
+            ]}
             correctIndex={1}
             explanation="Testing alone cannot reveal poor workmanship, incorrect installation methods, or construction issues that are visible to inspection but don't affect electrical measurements."
           />
@@ -415,25 +515,42 @@ const Module6Section1_4 = () => {
             <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
               <div className="text-white/80 text-sm space-y-3">
                 <p>
-                  <strong>Background:</strong> A commercial kitchen installation passed all electrical tests with flying colours - continuity, insulation resistance, and earth fault loop impedance were all within acceptable limits.
+                  <strong>Background:</strong> A commercial kitchen installation passed all
+                  electrical tests with flying colours - continuity, insulation resistance, and
+                  earth fault loop impedance were all within acceptable limits.
                 </p>
                 <p>
-                  <strong>The Problem:</strong> During inspection, it was discovered that standard PVC cables had been used in areas where temperatures regularly exceeded 60°C, and IP20 rated accessories were installed in areas subject to steam and water spray.
+                  <strong>The Problem:</strong> During inspection, it was discovered that standard
+                  PVC cables had been used in areas where temperatures regularly exceeded 60°C, and
+                  IP20 rated accessories were installed in areas subject to steam and water spray.
                 </p>
                 <p>
-                  <strong>The Discovery:</strong> While the installation was electrically sound, the environmental conditions would cause rapid deterioration of cable insulation and ingress protection failures within months.
+                  <strong>The Discovery:</strong> While the installation was electrically sound, the
+                  environmental conditions would cause rapid deterioration of cable insulation and
+                  ingress protection failures within months.
                 </p>
                 <p>
-                  <strong>The Solution:</strong> Inspection identified the need for high-temperature rated cables and IP65 rated accessories - problems that testing alone could never have revealed.
+                  <strong>The Solution:</strong> Inspection identified the need for high-temperature
+                  rated cables and IP65 rated accessories - problems that testing alone could never
+                  have revealed.
                 </p>
               </div>
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50 mt-4">
               <p className="font-medium text-white mb-2">Key Learning Points</p>
               <ul className="text-sm space-y-1 text-white/80">
-                <li>• Electrical testing confirmed circuit integrity but couldn't assess environmental suitability</li>
-                <li>• Visual inspection identified inappropriate component selection for the application</li>
-                <li>• Both processes were essential for identifying different types of compliance issues</li>
+                <li>
+                  • Electrical testing confirmed circuit integrity but couldn't assess environmental
+                  suitability
+                </li>
+                <li>
+                  • Visual inspection identified inappropriate component selection for the
+                  application
+                </li>
+                <li>
+                  • Both processes were essential for identifying different types of compliance
+                  issues
+                </li>
               </ul>
             </div>
           </section>
@@ -448,10 +565,18 @@ const Module6Section1_4 = () => {
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Quick Reference:</p>
                 <ul className="text-sm space-y-1 text-white/80">
-                  <li><strong>Inspection</strong> = Visual (What you see)</li>
-                  <li><strong>Testing</strong> = Instrumental (What you measure)</li>
-                  <li><strong>Both</strong> must be completed for compliance</li>
-                  <li><strong>Certification</strong> requires results of both</li>
+                  <li>
+                    <strong>Inspection</strong> = Visual (What you see)
+                  </li>
+                  <li>
+                    <strong>Testing</strong> = Instrumental (What you measure)
+                  </li>
+                  <li>
+                    <strong>Both</strong> must be completed for compliance
+                  </li>
+                  <li>
+                    <strong>Certification</strong> requires results of both
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
@@ -474,10 +599,14 @@ const Module6Section1_4 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Inspection confirms correct construction and visible compliance through careful visual examination. Testing verifies the hidden electrical integrity through instrumental measurement. Together, they provide confidence that the system is safe, functional, and compliant with BS 7671.
+                Inspection confirms correct construction and visible compliance through careful
+                visual examination. Testing verifies the hidden electrical integrity through
+                instrumental measurement. Together, they provide confidence that the system is safe,
+                functional, and compliant with BS 7671.
               </p>
               <p className="text-sm text-elec-yellow/80">
-                Neither process is complete without the other - inspection reveals what testing cannot see, while testing detects what inspection cannot measure.
+                Neither process is complete without the other - inspection reveals what testing
+                cannot see, while testing detects what inspection cannot measure.
               </p>
             </div>
           </section>

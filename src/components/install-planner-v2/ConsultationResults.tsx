@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ArrowLeft, Download, ChevronDown, ChevronUp, Play } from "lucide-react";
-import { generateProjectPDFs } from "@/utils/project-pdf-generator";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ArrowLeft, Download, ChevronDown, ChevronUp, Play } from 'lucide-react';
+import { generateProjectPDFs } from '@/utils/project-pdf-generator';
 
 interface ConsultationResult {
   id: string;
@@ -16,27 +16,47 @@ interface ConsultationResult {
 }
 
 const AGENT_INFO: Record<string, { name: string; emoji: string; color: string }> = {
-  'designer': { name: 'Circuit Designer', emoji: '📐', color: 'bg-blue-500/10 border-blue-500/30' },
-  'cost-engineer': { name: 'Cost Engineer', emoji: '💷', color: 'bg-green-500/10 border-green-500/30' },
-  'installer': { name: 'Installation Specialist', emoji: '🔧', color: 'bg-orange-500/10 border-orange-500/30' },
-  'health-safety': { name: 'Health & Safety', emoji: '⚠️', color: 'bg-red-500/10 border-red-500/30' },
-  'commissioning': { name: 'Testing & Commissioning', emoji: '✅', color: 'bg-purple-500/10 border-purple-500/30' },
-  'project-manager': { name: 'Project Manager', emoji: '📋', color: 'bg-cyan-500/10 border-cyan-500/30' }
+  designer: { name: 'Circuit Designer', emoji: '📐', color: 'bg-blue-500/10 border-blue-500/30' },
+  'cost-engineer': {
+    name: 'Cost Engineer',
+    emoji: '💷',
+    color: 'bg-green-500/10 border-green-500/30',
+  },
+  installer: {
+    name: 'Installation Specialist',
+    emoji: '🔧',
+    color: 'bg-orange-500/10 border-orange-500/30',
+  },
+  'health-safety': {
+    name: 'Health & Safety',
+    emoji: '⚠️',
+    color: 'bg-red-500/10 border-red-500/30',
+  },
+  commissioning: {
+    name: 'Testing & Commissioning',
+    emoji: '✅',
+    color: 'bg-purple-500/10 border-purple-500/30',
+  },
+  'project-manager': {
+    name: 'Project Manager',
+    emoji: '📋',
+    color: 'bg-cyan-500/10 border-cyan-500/30',
+  },
 };
 
 export const ConsultationResults = () => {
   const { conversationId } = useParams<{ conversationId: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
+
   // PHASE 5: Resume conversation with agent
   const resumeWithAgent = (agentType: string, messages: any[], planData: any) => {
     navigate('/electrician/install-planner?mode=ai', {
       state: {
         resumeMessages: messages,
         resumePlanData: planData,
-        targetAgent: agentType
-      }
+        targetAgent: agentType,
+      },
     });
   };
   const [results, setResults] = useState<ConsultationResult[]>([]);
@@ -50,9 +70,11 @@ export const ConsultationResults = () => {
 
   const fetchResults = async () => {
     if (!conversationId) return;
-    
+
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
         navigate('/auth');
         return;
@@ -66,17 +88,17 @@ export const ConsultationResults = () => {
 
       if (error) throw error;
       setResults(data || []);
-      
+
       // Expand all agents by default
       if (data) {
-        setExpandedAgents(new Set(data.map(r => r.agent_type)));
+        setExpandedAgents(new Set(data.map((r) => r.agent_type)));
       }
     } catch (error) {
       console.error('Error fetching results:', error);
       toast({
-        title: "Error",
-        description: "Failed to load consultation results",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to load consultation results',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -86,12 +108,14 @@ export const ConsultationResults = () => {
   const handleExport = async () => {
     setExporting(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
       // Build agent outputs
       const agentOutputs: any = {};
-      results.forEach(result => {
+      results.forEach((result) => {
         if (result.agent_type === 'designer') agentOutputs.installer = result.output_data;
         if (result.agent_type === 'cost-engineer') agentOutputs.costEngineer = result.output_data;
         if (result.agent_type === 'health-safety') agentOutputs.healthSafety = result.output_data;
@@ -99,7 +123,7 @@ export const ConsultationResults = () => {
 
       const projectDetails = {
         conversationId,
-        generatedAt: new Date().toISOString()
+        generatedAt: new Date().toISOString(),
       };
 
       const projectExport: any = { generatedPDFs: [] };
@@ -107,15 +131,15 @@ export const ConsultationResults = () => {
       await generateProjectPDFs(session.user.id, agentOutputs, projectDetails, projectExport);
 
       toast({
-        title: "PDFs Generated",
-        description: `${projectExport.generatedPDFs.length} documents created successfully`
+        title: 'PDFs Generated',
+        description: `${projectExport.generatedPDFs.length} documents created successfully`,
       });
     } catch (error) {
       console.error('Export error:', error);
       toast({
-        title: "Export Failed",
-        description: error instanceof Error ? error.message : "Failed to generate PDFs",
-        variant: "destructive"
+        title: 'Export Failed',
+        description: error instanceof Error ? error.message : 'Failed to generate PDFs',
+        variant: 'destructive',
       });
     } finally {
       setExporting(false);
@@ -123,7 +147,7 @@ export const ConsultationResults = () => {
   };
 
   const toggleAgent = (agentType: string) => {
-    setExpandedAgents(prev => {
+    setExpandedAgents((prev) => {
       const next = new Set(prev);
       if (next.has(agentType)) {
         next.delete(agentType);
@@ -148,11 +172,7 @@ export const ConsultationResults = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate(-1)}
-            >
+            <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
@@ -187,10 +207,16 @@ export const ConsultationResults = () => {
             {results.map((result) => {
               const agentInfo = AGENT_INFO[result.agent_type];
               const isExpanded = expandedAgents.has(result.agent_type);
-              
+
               return (
-                <Card key={result.id} className={`bg-elec-card border ${agentInfo?.color || 'border-elec-border'}`}>
-                  <Collapsible open={isExpanded} onOpenChange={() => toggleAgent(result.agent_type)}>
+                <Card
+                  key={result.id}
+                  className={`bg-elec-card border ${agentInfo?.color || 'border-elec-border'}`}
+                >
+                  <Collapsible
+                    open={isExpanded}
+                    onOpenChange={() => toggleAgent(result.agent_type)}
+                  >
                     <CollapsibleTrigger asChild>
                       <CardHeader className="cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation">
                         <div className="flex items-center justify-between">
@@ -204,7 +230,11 @@ export const ConsultationResults = () => {
                             </div>
                           </CardTitle>
                           <Button variant="ghost" size="sm">
-                            {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                            {isExpanded ? (
+                              <ChevronUp className="h-4 w-4" />
+                            ) : (
+                              <ChevronDown className="h-4 w-4" />
+                            )}
                           </Button>
                         </div>
                       </CardHeader>
@@ -214,13 +244,13 @@ export const ConsultationResults = () => {
                         {/* Render agent output with better formatting */}
                         {result.output_data?.response ? (
                           <div className="prose prose-invert prose-sm max-w-none">
-                            <div 
+                            <div
                               className="text-sm leading-relaxed whitespace-pre-wrap"
-                              dangerouslySetInnerHTML={{ 
+                              dangerouslySetInnerHTML={{
                                 __html: result.output_data.response
                                   .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                                   .replace(/\n\n/g, '</p><p class="mt-3">')
-                                  .replace(/^(.+)$/, '<p>$1</p>')
+                                  .replace(/^(.+)$/, '<p>$1</p>'),
                               }}
                             />
                           </div>
@@ -231,7 +261,7 @@ export const ConsultationResults = () => {
                             </pre>
                           </div>
                         )}
-                        
+
                         {/* PHASE 5: Resume with Agent Button */}
                         <Button
                           onClick={() => resumeWithAgent(result.agent_type, [], result.output_data)}

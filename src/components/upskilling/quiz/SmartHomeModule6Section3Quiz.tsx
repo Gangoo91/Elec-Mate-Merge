@@ -12,7 +12,7 @@ const SmartHomeModule6Section3Quiz = () => {
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (quizCompleted) return;
-    
+
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestion] = answerIndex;
     setSelectedAnswers(newAnswers);
@@ -55,7 +55,7 @@ const SmartHomeModule6Section3Quiz = () => {
       <Card className="bg-elec-gray border-transparent">
         <CardContent className="p-6">
           <h2 className="text-2xl font-bold text-foreground mb-6">Quiz Results</h2>
-          
+
           <div className="text-center mb-6">
             <div className="text-4xl font-bold text-elec-yellow mb-2">
               {score}/{totalQuestions}
@@ -90,9 +90,7 @@ const SmartHomeModule6Section3Quiz = () => {
                           Your answer: {question.options[selectedAnswers[index]]}
                         </p>
                       )}
-                      <p className="text-sm text-foreground">
-                        {question.explanation}
-                      </p>
+                      <p className="text-sm text-foreground">{question.explanation}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -100,7 +98,10 @@ const SmartHomeModule6Section3Quiz = () => {
             ))}
           </div>
 
-          <Button onClick={handleRestart} className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-500">
+          <Button
+            onClick={handleRestart}
+            className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-500"
+          >
             <RotateCcw className="mr-2 h-4 w-4" />
             Retake Quiz
           </Button>
@@ -121,7 +122,7 @@ const SmartHomeModule6Section3Quiz = () => {
 
         <div className="mb-6">
           <div className="bg-elec-dark rounded-full h-2 mb-4">
-            <div 
+            <div
               className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
               style={{ width: `${((currentQuestion + 1) / totalQuestions) * 100}%` }}
             />
@@ -130,9 +131,7 @@ const SmartHomeModule6Section3Quiz = () => {
 
         <Card className="bg-elec-dark/50 border-gray-600 mb-6">
           <CardContent className="p-6">
-            <h3 className="text-xl font-semibold text-foreground mb-6">
-              {currentQ.question}
-            </h3>
+            <h3 className="text-xl font-semibold text-foreground mb-6">{currentQ.question}</h3>
 
             <div className="space-y-3">
               {currentQ.options.map((option, index) => (
@@ -166,7 +165,7 @@ const SmartHomeModule6Section3Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

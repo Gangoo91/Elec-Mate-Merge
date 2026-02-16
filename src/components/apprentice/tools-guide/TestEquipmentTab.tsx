@@ -1,82 +1,81 @@
-
-import ToolCard from "./ToolCard";
-import { CircuitBoard, Shield, AlertTriangle } from "lucide-react";
+import ToolCard from './ToolCard';
+import { CircuitBoard, Shield, AlertTriangle } from 'lucide-react';
 
 const TestEquipmentTab = () => {
   const basicTestTools = [
     {
-      name: "Voltage indicator (2-pole type)",
-      description: "Proving dead before work - essential safety tool",
-      priceRange: "£15-30",
-      priority: "essential" as const,
-      ukStandard: "GS38 compliant"
+      name: 'Voltage indicator (2-pole type)',
+      description: 'Proving dead before work - essential safety tool',
+      priceRange: '£15-30',
+      priority: 'essential' as const,
+      ukStandard: 'GS38 compliant',
     },
     {
-      name: "Proving unit for voltage indicator",
-      description: "Test your tester before every use",
-      priceRange: "£20-40",
-      priority: "essential" as const,
-      ukStandard: "Must match indicator"
+      name: 'Proving unit for voltage indicator',
+      description: 'Test your tester before every use',
+      priceRange: '£20-40',
+      priority: 'essential' as const,
+      ukStandard: 'Must match indicator',
     },
     {
-      name: "Continuity tester (buzzer type)",
-      description: "Basic continuity checks during installation",
-      priceRange: "£10-25",
-      priority: "essential" as const,
-      ukStandard: "Low voltage output"
+      name: 'Continuity tester (buzzer type)',
+      description: 'Basic continuity checks during installation',
+      priceRange: '£10-25',
+      priority: 'essential' as const,
+      ukStandard: 'Low voltage output',
     },
     {
-      name: "Socket tester (13A plug-in type)",
-      description: "Quick checks of domestic socket wiring",
-      priceRange: "£8-20",
-      priority: "recommended" as const,
-      ukStandard: "BS 1363 compliant"
+      name: 'Socket tester (13A plug-in type)',
+      description: 'Quick checks of domestic socket wiring',
+      priceRange: '£8-20',
+      priority: 'recommended' as const,
+      ukStandard: 'BS 1363 compliant',
     },
     {
-      name: "Test leads with fused probes",
-      description: "Safe connection to electrical systems",
-      priceRange: "£15-35",
-      priority: "essential" as const,
-      ukStandard: "GS38 specification"
-    }
+      name: 'Test leads with fused probes',
+      description: 'Safe connection to electrical systems',
+      priceRange: '£15-35',
+      priority: 'essential' as const,
+      ukStandard: 'GS38 specification',
+    },
   ];
 
   const advancedTestTools = [
     {
-      name: "Multifunction installation tester",
-      description: "Professional testing for certification work",
-      priceRange: "£400-1200",
-      priority: "essential" as const,
-      ukStandard: "18th Edition compliant"
+      name: 'Multifunction installation tester',
+      description: 'Professional testing for certification work',
+      priceRange: '£400-1200',
+      priority: 'essential' as const,
+      ukStandard: '18th Edition compliant',
     },
     {
-      name: "Earth loop impedance tester",
-      description: "Ze and Zs measurements for safety verification",
-      priceRange: "£300-800",
-      priority: "essential" as const,
-      ukStandard: "BS 7671 compliant"
+      name: 'Earth loop impedance tester',
+      description: 'Ze and Zs measurements for safety verification',
+      priceRange: '£300-800',
+      priority: 'essential' as const,
+      ukStandard: 'BS 7671 compliant',
     },
     {
-      name: "RCD tester (all types)",
-      description: "Test 30mA, 100mA, and 300mA RCDs",
-      priceRange: "£200-500",
-      priority: "essential" as const,
-      ukStandard: "Type A, AC, F testing"
+      name: 'RCD tester (all types)',
+      description: 'Test 30mA, 100mA, and 300mA RCDs',
+      priceRange: '£200-500',
+      priority: 'essential' as const,
+      ukStandard: 'Type A, AC, F testing',
     },
     {
-      name: "Insulation resistance tester",
-      description: "500V and 1000V insulation testing",
-      priceRange: "£150-400",
-      priority: "essential" as const,
-      ukStandard: "BS 7671 Part 6"
+      name: 'Insulation resistance tester',
+      description: '500V and 1000V insulation testing',
+      priceRange: '£150-400',
+      priority: 'essential' as const,
+      ukStandard: 'BS 7671 Part 6',
     },
     {
-      name: "Professional test lead set",
-      description: "Various probes and adaptors for all tests",
-      priceRange: "£80-150",
-      priority: "recommended" as const,
-      ukStandard: "CAT III rated"
-    }
+      name: 'Professional test lead set',
+      description: 'Various probes and adaptors for all tests',
+      priceRange: '£80-150',
+      priority: 'recommended' as const,
+      ukStandard: 'CAT III rated',
+    },
   ];
 
   return (
@@ -84,8 +83,8 @@ const TestEquipmentTab = () => {
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">Test Equipment</h2>
         <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
-          As you progress through your apprenticeship, you'll need appropriate test equipment that meets UK regulations.
-          Quality test equipment is essential for safety and compliance.
+          As you progress through your apprenticeship, you'll need appropriate test equipment that
+          meets UK regulations. Quality test equipment is essential for safety and compliance.
         </p>
       </div>
 
@@ -116,20 +115,24 @@ const TestEquipmentTab = () => {
         </h3>
         <div className="space-y-3 text-sm text-white/80 leading-relaxed">
           <p>
-            <strong className="text-blue-300">Year 1-2:</strong> Focus on basic safety equipment. Learn to use voltage indicators,
-            proving units, and simple continuity testers. Understand the principles before using complex equipment.
+            <strong className="text-blue-300">Year 1-2:</strong> Focus on basic safety equipment.
+            Learn to use voltage indicators, proving units, and simple continuity testers.
+            Understand the principles before using complex equipment.
           </p>
           <p>
-            <strong className="text-blue-300">Year 3-4:</strong> Begin using multifunction testers under supervision. Learn all test
-            sequences and understand what the readings mean. Practice on training installations first.
+            <strong className="text-blue-300">Year 3-4:</strong> Begin using multifunction testers
+            under supervision. Learn all test sequences and understand what the readings mean.
+            Practice on training installations first.
           </p>
           <p>
-            <strong className="text-blue-300">Calibration:</strong> All test equipment must be calibrated annually with valid certificates.
-            Uncalibrated equipment can give false readings, compromising safety and invalidating test results.
+            <strong className="text-blue-300">Calibration:</strong> All test equipment must be
+            calibrated annually with valid certificates. Uncalibrated equipment can give false
+            readings, compromising safety and invalidating test results.
           </p>
           <p>
-            <strong className="text-blue-300">Investment Strategy:</strong> Basic equipment: £100-150. Advanced equipment: £1000-2000.
-            Consider finance options or employer schemes for expensive items.
+            <strong className="text-blue-300">Investment Strategy:</strong> Basic equipment:
+            £100-150. Advanced equipment: £1000-2000. Consider finance options or employer schemes
+            for expensive items.
           </p>
         </div>
       </div>

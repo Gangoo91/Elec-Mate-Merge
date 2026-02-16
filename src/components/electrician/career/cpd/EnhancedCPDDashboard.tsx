@@ -4,19 +4,22 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Award, 
-  BookOpen, 
-  Clock, 
-  Download, 
-  FileText, 
-  Plus, 
+import {
+  Award,
+  BookOpen,
+  Clock,
+  Download,
+  FileText,
+  Plus,
   Target,
   CheckCircle,
   AlertCircle,
-  Calendar
+  Calendar,
 } from 'lucide-react';
-import { professionalBodyService, UserProfessionalMembership } from '@/services/professionalBodyService';
+import {
+  professionalBodyService,
+  UserProfessionalMembership,
+} from '@/services/professionalBodyService';
 import { enhancedCPDService, CPDComplianceStats } from '@/services/enhancedCPDService';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -28,13 +31,15 @@ interface EnhancedCPDDashboardProps {
   onManageGoals?: () => void;
 }
 
-const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({ 
-  onAddEntry, 
-  onViewHistory, 
-  onManageGoals 
+const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
+  onAddEntry,
+  onViewHistory,
+  onManageGoals,
 }) => {
   const [memberships, setMemberships] = useState<UserProfessionalMembership[]>([]);
-  const [selectedMembership, setSelectedMembership] = useState<UserProfessionalMembership | null>(null);
+  const [selectedMembership, setSelectedMembership] = useState<UserProfessionalMembership | null>(
+    null
+  );
   const [complianceStats, setComplianceStats] = useState<CPDComplianceStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSelector, setShowSelector] = useState(false);
@@ -52,7 +57,9 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
 
   const loadUserMemberships = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         setShowSelector(true);
         setLoading(false);
@@ -61,7 +68,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
 
       const userMemberships = await professionalBodyService.getUserMemberships(user.id);
       setMemberships(userMemberships);
-      
+
       if (userMemberships.length === 0) {
         setShowSelector(true);
       } else {
@@ -70,9 +77,9 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
     } catch (error) {
       console.error('Error loading memberships:', error);
       toast({
-        title: "Error loading memberships",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error loading memberships',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -81,7 +88,9 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
 
   const loadComplianceStats = async (professionalBodyId: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const stats = await enhancedCPDService.getComplianceStats(user.id, professionalBodyId);
@@ -89,9 +98,9 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
     } catch (error) {
       console.error('Error loading compliance stats:', error);
       toast({
-        title: "Error loading compliance data",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error loading compliance data',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     }
   };
@@ -106,22 +115,28 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
     if (!selectedMembership) return;
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const title = `${selectedMembership.professional_body?.name} CPD Portfolio ${new Date().getFullYear()}`;
-      await enhancedCPDService.generatePortfolio(user.id, selectedMembership.professional_body_id, title);
-      
+      await enhancedCPDService.generatePortfolio(
+        user.id,
+        selectedMembership.professional_body_id,
+        title
+      );
+
       toast({
-        title: "Portfolio generated",
-        description: "Your CPD portfolio has been created and is ready for export.",
+        title: 'Portfolio generated',
+        description: 'Your CPD portfolio has been created and is ready for export.',
       });
     } catch (error) {
       console.error('Error generating portfolio:', error);
       toast({
-        title: "Error generating portfolio",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error generating portfolio',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     }
   };
@@ -167,15 +182,19 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
         <div>
           <h2 className="text-2xl font-bold">CPD Tracker</h2>
           <p className="text-muted-foreground">
-            Track your professional development against {selectedMembership.professional_body?.name} requirements
+            Track your professional development against {selectedMembership.professional_body?.name}{' '}
+            requirements
           </p>
         </div>
-        
+
         {memberships.length > 1 && (
-          <Tabs value={selectedMembership.id} onValueChange={(value) => {
-            const membership = memberships.find(m => m.id === value);
-            if (membership) setSelectedMembership(membership);
-          }}>
+          <Tabs
+            value={selectedMembership.id}
+            onValueChange={(value) => {
+              const membership = memberships.find((m) => m.id === value);
+              if (membership) setSelectedMembership(membership);
+            }}
+          >
             <TabsList>
               {memberships.map((membership) => (
                 <TabsTrigger key={membership.id} value={membership.id}>
@@ -200,8 +219,8 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
                 {complianceStats.total_hours} of {complianceStats.required_hours} hours completed
               </CardDescription>
             </div>
-            <Badge 
-              variant={complianceStats.compliance_percentage >= 100 ? "default" : "secondary"}
+            <Badge
+              variant={complianceStats.compliance_percentage >= 100 ? 'default' : 'secondary'}
               className="text-lg px-3 py-1"
             >
               {complianceStats.compliance_percentage}%
@@ -209,10 +228,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
           </div>
         </CardHeader>
         <CardContent>
-          <Progress 
-            value={complianceStats.compliance_percentage} 
-            className="w-full h-3"
-          />
+          <Progress value={complianceStats.compliance_percentage} className="w-full h-3" />
           <div className="flex justify-between mt-2 text-sm text-muted-foreground">
             <span>0 hours</span>
             <span className={getComplianceColor(complianceStats.compliance_percentage)}>
@@ -236,17 +252,12 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
             <div key={category.id} className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-medium">{category.name}</span>
-                <Badge variant={category.percentage >= 100 ? "default" : "secondary"}>
+                <Badge variant={category.percentage >= 100 ? 'default' : 'secondary'}>
                   {category.completed_hours}h / {category.required_hours}h
                 </Badge>
               </div>
-              <Progress 
-                value={Math.min(category.percentage, 100)} 
-                className="w-full h-2"
-              />
-              <div className="text-sm text-muted-foreground">
-                {category.percentage}% complete
-              </div>
+              <Progress value={Math.min(category.percentage, 100)} className="w-full h-2" />
+              <div className="text-sm text-muted-foreground">{category.percentage}% complete</div>
             </div>
           ))}
         </CardContent>
@@ -261,9 +272,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{complianceStats.entries_count}</div>
-            <p className="text-xs text-muted-foreground">
-              CPD activities recorded
-            </p>
+            <p className="text-xs text-muted-foreground">CPD activities recorded</p>
           </CardContent>
         </Card>
 
@@ -273,10 +282,10 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">{complianceStats.verified_entries}</div>
-            <p className="text-xs text-muted-foreground">
-              Evidence verified
-            </p>
+            <div className="text-2xl font-bold text-green-600">
+              {complianceStats.verified_entries}
+            </div>
+            <p className="text-xs text-muted-foreground">Evidence verified</p>
           </CardContent>
         </Card>
 
@@ -286,10 +295,10 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-yellow-600">{complianceStats.pending_verification}</div>
-            <p className="text-xs text-muted-foreground">
-              Awaiting verification
-            </p>
+            <div className="text-2xl font-bold text-yellow-600">
+              {complianceStats.pending_verification}
+            </div>
+            <p className="text-xs text-muted-foreground">Awaiting verification</p>
           </CardContent>
         </Card>
       </div>
@@ -300,17 +309,21 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
           <Plus className="h-4 w-4 mr-2" />
           Add CPD Entry
         </Button>
-        
+
         <Button variant="outline" onClick={onViewHistory} className="flex-1 min-w-[200px]">
           <BookOpen className="h-4 w-4 mr-2" />
           View History
         </Button>
-        
-        <Button variant="outline" onClick={handleGeneratePortfolio} className="flex-1 min-w-[200px]">
+
+        <Button
+          variant="outline"
+          onClick={handleGeneratePortfolio}
+          className="flex-1 min-w-[200px]"
+        >
           <Download className="h-4 w-4 mr-2" />
           Export Portfolio
         </Button>
-        
+
         <Button variant="outline" onClick={onManageGoals} className="flex-1 min-w-[200px]">
           <Target className="h-4 w-4 mr-2" />
           Manage Goals
@@ -332,7 +345,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
               {new Date(selectedMembership.renewal_date).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'long',
-                year: 'numeric'
+                year: 'numeric',
               })}
             </p>
           </CardContent>

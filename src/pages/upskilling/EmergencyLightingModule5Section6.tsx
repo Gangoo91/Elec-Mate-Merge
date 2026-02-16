@@ -1,72 +1,97 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m5s6-check1",
-    question: "Why is documented handover important for installers?",
-    options: ["Just a formality", "Protects installer from liability for post-handover maintenance failures", "Only required for large installations", "Only for insurance purposes"],
+    id: 'emergencylighting-m5s6-check1',
+    question: 'Why is documented handover important for installers?',
+    options: [
+      'Just a formality',
+      'Protects installer from liability for post-handover maintenance failures',
+      'Only required for large installations',
+      'Only for insurance purposes',
+    ],
     correctIndex: 1,
-    explanation: "Without documented handover, installers remain liable for maintenance failures that occur after project completion. A signed handover form clearly establishes when responsibility transferred to the client, protecting the installer from expensive re-visits and legal disputes."
+    explanation:
+      'Without documented handover, installers remain liable for maintenance failures that occur after project completion. A signed handover form clearly establishes when responsibility transferred to the client, protecting the installer from expensive re-visits and legal disputes.',
   },
   {
-    id: "emergencylighting-m5s6-check2",
-    question: "What must be included in the handover documentation package?",
-    options: ["Just the completion certificate", "Certificates, as-built drawings, logbook, maintenance instructions, and training notes", "Only the electrical installation certificate", "Just the test results"],
+    id: 'emergencylighting-m5s6-check2',
+    question: 'What must be included in the handover documentation package?',
+    options: [
+      'Just the completion certificate',
+      'Certificates, as-built drawings, logbook, maintenance instructions, and training notes',
+      'Only the electrical installation certificate',
+      'Just the test results',
+    ],
     correctIndex: 1,
-    explanation: "The complete handover package must include commissioning certificates (BS 5266-1), EIC (BS 7671), as-built layout drawings, emergency lighting logbook, maintenance instructions, user training notes, and contact details for technical support."
+    explanation:
+      'The complete handover package must include commissioning certificates (BS 5266-1), EIC (BS 7671), as-built layout drawings, emergency lighting logbook, maintenance instructions, user training notes, and contact details for technical support.',
   },
   {
-    id: "emergencylighting-m5s6-check3",
-    question: "What must the installer demonstrate during client training?",
-    options: ["Nothing - just hand over documents", "Monthly and annual test procedures, fault indicators, and logbook recording", "Only how to change bulbs", "Just the location of luminaires"],
+    id: 'emergencylighting-m5s6-check3',
+    question: 'What must the installer demonstrate during client training?',
+    options: [
+      'Nothing - just hand over documents',
+      'Monthly and annual test procedures, fault indicators, and logbook recording',
+      'Only how to change bulbs',
+      'Just the location of luminaires',
+    ],
     correctIndex: 1,
-    explanation: "Before leaving site, the installer must demonstrate monthly and annual test procedures, show how to operate test key switches, explain fault indicators, confirm who is responsible for recording tests, and advise on battery replacement intervals."
-  }
+    explanation:
+      'Before leaving site, the installer must demonstrate monthly and annual test procedures, show how to operate test key switches, explain fault indicators, confirm who is responsible for recording tests, and advise on battery replacement intervals.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Who is responsible for emergency lighting after handover?",
-    answer: "The building's Responsible Person, as defined under the Regulatory Reform (Fire Safety) Order 2005. This is typically the building owner, landlord, employer, or designated facilities manager. They are legally responsible for ensuring monthly and annual tests are carried out, results are recorded, and any faults are rectified promptly."
+    question: 'Who is responsible for emergency lighting after handover?',
+    answer:
+      "The building's Responsible Person, as defined under the Regulatory Reform (Fire Safety) Order 2005. This is typically the building owner, landlord, employer, or designated facilities manager. They are legally responsible for ensuring monthly and annual tests are carried out, results are recorded, and any faults are rectified promptly.",
   },
   {
     question: "What should be included in the client's emergency lighting logbook?",
-    answer: "The logbook must include: test schedules (monthly and annual), test results with pass/fail status, date and time of each test, name and signature of person carrying out the test, details of any defects found, remedial action taken, and maintenance records including battery replacements."
+    answer:
+      'The logbook must include: test schedules (monthly and annual), test results with pass/fail status, date and time of each test, name and signature of person carrying out the test, details of any defects found, remedial action taken, and maintenance records including battery replacements.',
   },
   {
-    question: "How long must handover documentation be kept?",
-    answer: "For the life of the installation - handover documentation becomes part of the building's permanent fire safety record. Contractors should retain their own copies for a minimum of six years for professional liability protection. Clients must keep their copies indefinitely."
+    question: 'How long must handover documentation be kept?',
+    answer:
+      "For the life of the installation - handover documentation becomes part of the building's permanent fire safety record. Contractors should retain their own copies for a minimum of six years for professional liability protection. Clients must keep their copies indefinitely.",
   },
   {
-    question: "Can I provide digital documentation only?",
-    answer: "Digital documentation is acceptable and increasingly common. However, best practice is to provide both digital and printed copies. Digital records can be backed up and accessed remotely, while printed copies ensure immediate availability during inspections or emergencies."
-  }
+    question: 'Can I provide digital documentation only?',
+    answer:
+      'Digital documentation is acceptable and increasingly common. However, best practice is to provide both digital and printed copies. Digital records can be backed up and accessed remotely, while printed copies ensure immediate availability during inspections or emergencies.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "A client claims the emergency lighting system failed 6 months after installation. The contractor has no signed handover record. What is the likely outcome?",
+    question:
+      'A client claims the emergency lighting system failed 6 months after installation. The contractor has no signed handover record. What is the likely outcome?',
     options: [
-      "Contractor protected by warranty period",
-      "Contractor may be liable for maintenance failures due to no documented handover",
-      "Client automatically responsible after installation date",
-      "No liability applies to either party"
+      'Contractor protected by warranty period',
+      'Contractor may be liable for maintenance failures due to no documented handover',
+      'Client automatically responsible after installation date',
+      'No liability applies to either party',
     ],
     correctAnswer: 1,
-    explanation: "Without a signed handover form, installers can be held liable for maintenance failures and compliance breaches that occur after project completion. The handover signature marks the exact moment when legal responsibility transfers to the client."
-  }
+    explanation:
+      'Without a signed handover form, installers can be held liable for maintenance failures and compliance breaches that occur after project completion. The handover signature marks the exact moment when legal responsibility transfers to the client.',
+  },
 ];
 
 const EmergencyLightingModule5Section6 = () => {
   useSEO({
-    title: "Client Handover Procedure | Emergency Lighting Module 5.6",
-    description: "Emergency lighting client handover procedures, documentation requirements, training demonstrations, and responsibility transfer under Fire Safety Order 2005."
+    title: 'Client Handover Procedure | Emergency Lighting Module 5.6',
+    description:
+      'Emergency lighting client handover procedures, documentation requirements, training demonstrations, and responsibility transfer under Fire Safety Order 2005.',
   });
 
   return (
@@ -108,17 +133,29 @@ const EmergencyLightingModule5Section6 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Handover:</strong> Formal transfer of responsibility</li>
-              <li><strong>Documentation:</strong> Certificates, drawings, logbook</li>
-              <li><strong>Protection:</strong> Signed form protects installer</li>
+              <li>
+                <strong>Handover:</strong> Formal transfer of responsibility
+              </li>
+              <li>
+                <strong>Documentation:</strong> Certificates, drawings, logbook
+              </li>
+              <li>
+                <strong>Protection:</strong> Signed form protects installer
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Handover Package</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Certificates:</strong> BS 5266-1, BS 7671</li>
-              <li><strong>Drawings:</strong> As-built layouts</li>
-              <li><strong>Logbook:</strong> With initial test results</li>
+              <li>
+                <strong>Certificates:</strong> BS 5266-1, BS 7671
+              </li>
+              <li>
+                <strong>Drawings:</strong> As-built layouts
+              </li>
+              <li>
+                <strong>Logbook:</strong> With initial test results
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +165,12 @@ const EmergencyLightingModule5Section6 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand the purpose of formal handover",
-              "Prepare complete documentation packages",
-              "Conduct effective client training",
-              "Transfer responsibility correctly",
-              "Protect against future liability",
-              "Ensure ongoing compliance"
+              'Understand the purpose of formal handover',
+              'Prepare complete documentation packages',
+              'Conduct effective client training',
+              'Transfer responsibility correctly',
+              'Protect against future liability',
+              'Ensure ongoing compliance',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,10 +190,10 @@ const EmergencyLightingModule5Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Once an emergency lighting system has been designed, installed, inspected, tested,
-              and certified, it must be formally handed over to the client. The handover process
-              ensures the building's Responsible Person understands the system, its maintenance
-              schedule, and their legal duties under the Regulatory Reform (Fire Safety) Order 2005.
+              Once an emergency lighting system has been designed, installed, inspected, tested, and
+              certified, it must be formally handed over to the client. The handover process ensures
+              the building's Responsible Person understands the system, its maintenance schedule,
+              and their legal duties under the Regulatory Reform (Fire Safety) Order 2005.
             </p>
 
             <div className="my-6">
@@ -196,26 +233,38 @@ const EmergencyLightingModule5Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              All certification, drawings, instructions, and records must be compiled and handed
-              to the client in both digital and printed formats. The following must be included
-              in the handover package:
+              All certification, drawings, instructions, and records must be compiled and handed to
+              the client in both digital and printed formats. The following must be included in the
+              handover package:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Certificates</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Commissioning:</strong> BS 5266-1 Annex G</li>
-                  <li><strong>EIC:</strong> BS 7671 wiring compliance</li>
-                  <li><strong>Design Declaration:</strong> If applicable</li>
+                  <li>
+                    <strong>Commissioning:</strong> BS 5266-1 Annex G
+                  </li>
+                  <li>
+                    <strong>EIC:</strong> BS 7671 wiring compliance
+                  </li>
+                  <li>
+                    <strong>Design Declaration:</strong> If applicable
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Supporting Documents</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>As-built drawings:</strong> Luminaire positions</li>
-                  <li><strong>Logbook:</strong> Initial test results</li>
-                  <li><strong>Maintenance guide:</strong> Procedures</li>
+                  <li>
+                    <strong>As-built drawings:</strong> Luminaire positions
+                  </li>
+                  <li>
+                    <strong>Logbook:</strong> Initial test results
+                  </li>
+                  <li>
+                    <strong>Maintenance guide:</strong> Procedures
+                  </li>
                 </ul>
               </div>
             </div>
@@ -223,20 +272,41 @@ const EmergencyLightingModule5Section6 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Complete Handover Package:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Commissioning certificates:</strong> BS 5266-1 Annex G completion certificate</li>
-                <li><strong>Electrical Installation Certificate:</strong> BS 7671 covering wiring and circuit integrity</li>
-                <li><strong>As-built layout drawings:</strong> Luminaire positions, circuit routes, emergency zones</li>
-                <li><strong>Emergency lighting logbook:</strong> Recorded commissioning tests and blank future entries</li>
-                <li><strong>Maintenance instructions:</strong> Battery replacement intervals, cleaning procedures</li>
-                <li><strong>User training notes:</strong> Testing procedures, fault indicators, system operation</li>
-                <li><strong>Contact details:</strong> Technical support, warranty claims, emergency call-outs</li>
+                <li>
+                  <strong>Commissioning certificates:</strong> BS 5266-1 Annex G completion
+                  certificate
+                </li>
+                <li>
+                  <strong>Electrical Installation Certificate:</strong> BS 7671 covering wiring and
+                  circuit integrity
+                </li>
+                <li>
+                  <strong>As-built layout drawings:</strong> Luminaire positions, circuit routes,
+                  emergency zones
+                </li>
+                <li>
+                  <strong>Emergency lighting logbook:</strong> Recorded commissioning tests and
+                  blank future entries
+                </li>
+                <li>
+                  <strong>Maintenance instructions:</strong> Battery replacement intervals, cleaning
+                  procedures
+                </li>
+                <li>
+                  <strong>User training notes:</strong> Testing procedures, fault indicators, system
+                  operation
+                </li>
+                <li>
+                  <strong>Contact details:</strong> Technical support, warranty claims, emergency
+                  call-outs
+                </li>
               </ul>
             </div>
 
             <p>
-              Provide the client with a clearly labelled folder or binder containing all documentation.
-              Include a checklist on the front page listing each document with tick boxes. This
-              demonstrates professionalism and ensures nothing is missed.
+              Provide the client with a clearly labelled folder or binder containing all
+              documentation. Include a checklist on the front page listing each document with tick
+              boxes. This demonstrates professionalism and ensures nothing is missed.
             </p>
           </div>
         </section>
@@ -252,8 +322,8 @@ const EmergencyLightingModule5Section6 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Before leaving site, the installer or commissioning engineer must conduct a practical
-              demonstration and training session with the client. This ensures the Responsible Person
-              can maintain the system correctly and comply with their legal obligations.
+              demonstration and training session with the client. This ensures the Responsible
+              Person can maintain the system correctly and comply with their legal obligations.
             </p>
 
             <div className="my-6">
@@ -298,16 +368,27 @@ const EmergencyLightingModule5Section6 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               The handover form signature marks the exact moment when legal responsibility for
-              maintenance and testing transfers from the installer to the client's Responsible Person.
+              maintenance and testing transfers from the installer to the client's Responsible
+              Person.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">At the Point of Handover:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Installer provides:</strong> Complete documentation package</li>
-                <li><strong>Client acknowledges:</strong> Signs form confirming receipt and understanding</li>
-                <li><strong>Responsibility transfers:</strong> Legal obligation moves to client under Fire Safety Order</li>
-                <li><strong>Installer retains:</strong> Signed copy for minimum six years</li>
+                <li>
+                  <strong>Installer provides:</strong> Complete documentation package
+                </li>
+                <li>
+                  <strong>Client acknowledges:</strong> Signs form confirming receipt and
+                  understanding
+                </li>
+                <li>
+                  <strong>Responsibility transfers:</strong> Legal obligation moves to client under
+                  Fire Safety Order
+                </li>
+                <li>
+                  <strong>Installer retains:</strong> Signed copy for minimum six years
+                </li>
               </ul>
             </div>
 
@@ -336,7 +417,9 @@ const EmergencyLightingModule5Section6 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Handover Best Practice</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Handover Best Practice
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Schedule dedicated handover meeting (do not rush)</li>
                 <li>Provide documentation in both digital and printed formats</li>
@@ -349,10 +432,18 @@ const EmergencyLightingModule5Section6 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Handover Failures</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>No signed form:</strong> Installer remains liable for future failures</li>
-                <li><strong>Incomplete package:</strong> Missing certificates or drawings</li>
-                <li><strong>No training:</strong> Client cannot maintain system correctly</li>
-                <li><strong>No record retention:</strong> Cannot prove handover occurred</li>
+                <li>
+                  <strong>No signed form:</strong> Installer remains liable for future failures
+                </li>
+                <li>
+                  <strong>Incomplete package:</strong> Missing certificates or drawings
+                </li>
+                <li>
+                  <strong>No training:</strong> Client cannot maintain system correctly
+                </li>
+                <li>
+                  <strong>No record retention:</strong> Cannot prove handover occurred
+                </li>
               </ul>
             </div>
           </div>
@@ -398,10 +489,7 @@ const EmergencyLightingModule5Section6 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

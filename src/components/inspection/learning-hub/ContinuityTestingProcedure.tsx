@@ -1,9 +1,17 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SmartTabs } from '@/components/ui/smart-tabs';
-import { ArrowLeft, Shield, Zap, AlertTriangle, CheckCircle2, Calculator, BookOpen, TestTube2 } from 'lucide-react';
+import {
+  ArrowLeft,
+  Shield,
+  Zap,
+  AlertTriangle,
+  CheckCircle2,
+  Calculator,
+  BookOpen,
+  TestTube2,
+} from 'lucide-react';
 import ContinuityTestProcedureCard from './continuity-testing/ContinuityTestProcedureCard';
 import ContinuityWhyTestSection from './continuity-testing/ContinuityWhyTestSection';
 import ContinuityHowToTestSection from './continuity-testing/ContinuityHowToTestSection';
@@ -16,13 +24,13 @@ interface ContinuityTestingProcedureProps {
   onBack: () => void;
 }
 
-const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps) => {  
+const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps) => {
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 mb-6 sm:mb-8">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={onBack}
           className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] touch-manipulation"
         >
@@ -35,43 +43,46 @@ const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps)
       <div className="text-center space-y-3 mb-8">
         <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3">
           <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">Continuity of Protective Conductors Testing</h1>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
+            Continuity of Protective Conductors Testing
+          </h1>
         </div>
         <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-3xl mx-auto">
-          Comprehensive BS 7671 compliant testing procedure for protective conductor continuity with practical guidance, real-world scenarios, and professional development focus.
+          Comprehensive BS 7671 compliant testing procedure for protective conductor continuity with
+          practical guidance, real-world scenarios, and professional development focus.
         </p>
       </div>
 
       {/* Test diagram */}
       <ContinuityTestDiagram />
-      
+
       {/* Tabbed content sections */}
-      <SmartTabs 
+      <SmartTabs
         tabs={[
           {
-            value: "why-test",
-            label: "Why Test?",
+            value: 'why-test',
+            label: 'Why Test?',
             icon: <Shield className="h-4 w-4" />,
-            content: <ContinuityWhyTestSection />
+            content: <ContinuityWhyTestSection />,
           },
           {
-            value: "how-test",
-            label: "How to Test",
+            value: 'how-test',
+            label: 'How to Test',
             icon: <TestTube2 className="h-4 w-4" />,
-            content: <ContinuityHowToTestSection />
+            content: <ContinuityHowToTestSection />,
           },
           {
-            value: "tables",
-            label: "Values & Tables",
+            value: 'tables',
+            label: 'Values & Tables',
             icon: <Calculator className="h-4 w-4" />,
-            content: <ContinuityTablesSection />
+            content: <ContinuityTablesSection />,
           },
           {
-            value: "guidance",
-            label: "Practical Guide",
+            value: 'guidance',
+            label: 'Practical Guide',
             icon: <BookOpen className="h-4 w-4" />,
-            content: <ContinuityPracticalGuidanceSection />
-          }
+            content: <ContinuityPracticalGuidanceSection />,
+          },
         ]}
         defaultValue="why-test"
         className="w-full"

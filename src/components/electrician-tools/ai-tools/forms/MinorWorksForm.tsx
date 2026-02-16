@@ -1,20 +1,20 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Textarea } from "@/components/ui/textarea";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Textarea } from '@/components/ui/textarea';
 
 const minorWorksFormSchema = z.object({
-  clientName: z.string().min(1, "Client name is required"),
-  installationAddress: z.string().min(1, "Installation address is required"),
-  workDescription: z.string().min(1, "Work description is required"),
-  circuitDetails: z.string().min(1, "Circuit details are required"),
-  testResults: z.string().min(1, "Test results are required"),
-  workCompliant: z.enum(["yes", "no"]),
-  installerName: z.string().min(1, "Installer name is required"),
-  completionDate: z.string().min(1, "Completion date is required"),
+  clientName: z.string().min(1, 'Client name is required'),
+  installationAddress: z.string().min(1, 'Installation address is required'),
+  workDescription: z.string().min(1, 'Work description is required'),
+  circuitDetails: z.string().min(1, 'Circuit details are required'),
+  testResults: z.string().min(1, 'Test results are required'),
+  workCompliant: z.enum(['yes', 'no']),
+  installerName: z.string().min(1, 'Installer name is required'),
+  completionDate: z.string().min(1, 'Completion date is required'),
 });
 
 export type MinorWorksFormData = z.infer<typeof minorWorksFormSchema>;
@@ -24,9 +24,13 @@ interface MinorWorksFormProps {
 }
 
 export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
-  const { watch, setValue, formState: { errors } } = useForm<MinorWorksFormData>({
+  const {
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<MinorWorksFormData>({
     resolver: zodResolver(minorWorksFormSchema),
-    mode: "onChange"
+    mode: 'onChange',
   });
 
   const watchedValues = watch();
@@ -39,21 +43,21 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
   }, [watch, onFormChange]);
 
   const complianceOptions = [
-    { value: "yes", label: "Yes - Work complies with BS 7671" },
-    { value: "no", label: "No - Work does not comply" }
+    { value: 'yes', label: 'Yes - Work complies with BS 7671' },
+    { value: 'no', label: 'No - Work does not comply' },
   ];
 
   const circuitTypeOptions = [
-    { value: "ring-final", label: "Ring Final Circuit" },
-    { value: "radial-socket", label: "Radial Socket Circuit" },
-    { value: "lighting", label: "Lighting Circuit" },
-    { value: "cooker", label: "Cooker Circuit" },
-    { value: "shower", label: "Electric Shower Circuit" },
-    { value: "immersion", label: "Immersion Heater Circuit" },
-    { value: "heating", label: "Electric Heating Circuit" },
-    { value: "smoke-alarm", label: "Smoke Alarm Circuit" },
-    { value: "ev-charger", label: "EV Charger Circuit" },
-    { value: "other", label: "Other Circuit Type" }
+    { value: 'ring-final', label: 'Ring Final Circuit' },
+    { value: 'radial-socket', label: 'Radial Socket Circuit' },
+    { value: 'lighting', label: 'Lighting Circuit' },
+    { value: 'cooker', label: 'Cooker Circuit' },
+    { value: 'shower', label: 'Electric Shower Circuit' },
+    { value: 'immersion', label: 'Immersion Heater Circuit' },
+    { value: 'heating', label: 'Electric Heating Circuit' },
+    { value: 'smoke-alarm', label: 'Smoke Alarm Circuit' },
+    { value: 'ev-charger', label: 'EV Charger Circuit' },
+    { value: 'other', label: 'Other Circuit Type' },
   ];
 
   return (
@@ -65,15 +69,15 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
         <MobileInputWrapper
           label="Client Name"
           placeholder="Enter client name"
-          value={watchedValues.clientName || ""}
-          onChange={(value) => setValue("clientName", value)}
+          value={watchedValues.clientName || ''}
+          onChange={(value) => setValue('clientName', value)}
           error={errors.clientName?.message}
         />
         <MobileInputWrapper
           label="Installation Address"
           placeholder="Enter installation address"
-          value={watchedValues.installationAddress || ""}
-          onChange={(value) => setValue("installationAddress", value)}
+          value={watchedValues.installationAddress || ''}
+          onChange={(value) => setValue('installationAddress', value)}
           error={errors.installationAddress?.message}
         />
       </div>
@@ -87,8 +91,8 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
           <Textarea
             placeholder="Describe the minor electrical work completed"
             className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
-            value={watchedValues.workDescription || ""}
-            onChange={(e) => setValue("workDescription", e.target.value)}
+            value={watchedValues.workDescription || ''}
+            onChange={(e) => setValue('workDescription', e.target.value)}
           />
           {errors.workDescription && (
             <p className="text-sm text-red-400">{errors.workDescription.message}</p>
@@ -97,8 +101,8 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
         <MobileSelectWrapper
           label="Circuit Type"
           placeholder="Select circuit type"
-          value={watchedValues.circuitDetails || ""}
-          onValueChange={(value) => setValue("circuitDetails", value)}
+          value={watchedValues.circuitDetails || ''}
+          onValueChange={(value) => setValue('circuitDetails', value)}
           options={circuitTypeOptions}
           error={errors.circuitDetails?.message}
         />
@@ -107,8 +111,8 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
           <Textarea
             placeholder="Enter test results (continuity, insulation resistance, etc.)"
             className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
-            value={watchedValues.testResults || ""}
-            onChange={(e) => setValue("testResults", e.target.value)}
+            value={watchedValues.testResults || ''}
+            onChange={(e) => setValue('testResults', e.target.value)}
           />
           {errors.testResults && (
             <p className="text-sm text-red-400">{errors.testResults.message}</p>
@@ -117,8 +121,8 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
         <MobileSelectWrapper
           label="Work Compliance"
           placeholder="Select compliance status"
-          value={watchedValues.workCompliant || ""}
-          onValueChange={(value) => setValue("workCompliant", value as "yes" | "no")}
+          value={watchedValues.workCompliant || ''}
+          onValueChange={(value) => setValue('workCompliant', value as 'yes' | 'no')}
           options={complianceOptions}
           error={errors.workCompliant?.message}
         />
@@ -131,16 +135,16 @@ export const MinorWorksForm = ({ onFormChange }: MinorWorksFormProps) => {
         <MobileInputWrapper
           label="Installer Name"
           placeholder="Enter installer name"
-          value={watchedValues.installerName || ""}
-          onChange={(value) => setValue("installerName", value)}
+          value={watchedValues.installerName || ''}
+          onChange={(value) => setValue('installerName', value)}
           error={errors.installerName?.message}
         />
         <MobileInputWrapper
           label="Completion Date"
           type="date"
           placeholder="Select completion date"
-          value={watchedValues.completionDate || ""}
-          onChange={(value) => setValue("completionDate", value)}
+          value={watchedValues.completionDate || ''}
+          onChange={(value) => setValue('completionDate', value)}
           error={errors.completionDate?.message}
         />
       </div>

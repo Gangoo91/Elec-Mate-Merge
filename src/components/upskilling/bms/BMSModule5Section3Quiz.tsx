@@ -7,12 +7,12 @@ const convertedQuizData = bmsModule5Section3QuizData.map((question, index) => ({
   question: question.question,
   options: question.options,
   correctAnswer: question.options.indexOf(question.correctAnswer),
-  explanation: `The correct answer is "${question.correctAnswer}". Understanding Modbus RTU and TCP/IP implementation is crucial for reliable building automation systems.`
+  explanation: `The correct answer is "${question.correctAnswer}". Understanding Modbus RTU and TCP/IP implementation is crucial for reliable building automation systems.`,
 }));
 
 export const BMSModule5Section3Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={convertedQuizData}
       title="Section 3 Quiz: Modbus RTU and TCP/IP Use Cases"
     />

@@ -11,14 +11,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from '@/components/ui/sheet';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import {
   Plus,
   Zap,
@@ -88,8 +88,18 @@ const CircuitCard: React.FC<{
   };
 
   const statusConfig = {
-    complete: { color: 'text-green-500', bg: 'bg-green-500/10', icon: CheckCircle, label: 'Complete' },
-    partial: { color: 'text-amber-500', bg: 'bg-amber-500/10', icon: AlertCircle, label: 'Partial' },
+    complete: {
+      color: 'text-green-500',
+      bg: 'bg-green-500/10',
+      icon: CheckCircle,
+      label: 'Complete',
+    },
+    partial: {
+      color: 'text-amber-500',
+      bg: 'bg-amber-500/10',
+      icon: AlertCircle,
+      label: 'Partial',
+    },
     pending: { color: 'text-muted-foreground', bg: 'bg-muted/50', icon: Zap, label: 'Pending' },
   }[status];
 
@@ -126,10 +136,14 @@ const CircuitCard: React.FC<{
           {/* Test Results Summary */}
           <div className="text-right text-xs space-y-1 hidden sm:block">
             {circuit.r1r2 && (
-              <div>R1+R2: <span className="font-mono">{circuit.r1r2}Ω</span></div>
+              <div>
+                R1+R2: <span className="font-mono">{circuit.r1r2}Ω</span>
+              </div>
             )}
             {circuit.zs && (
-              <div>Zs: <span className="font-mono">{circuit.zs}Ω</span></div>
+              <div>
+                Zs: <span className="font-mono">{circuit.zs}Ω</span>
+              </div>
             )}
           </div>
 
@@ -247,7 +261,9 @@ const CircuitEditSheet: React.FC<{
                 </SelectTrigger>
                 <SelectContent>
                   {['6', '10', '16', '20', '32', '40', '50', '63'].map((r) => (
-                    <SelectItem key={r} value={r}>{r}A</SelectItem>
+                    <SelectItem key={r} value={r}>
+                      {r}A
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -268,7 +284,9 @@ const CircuitEditSheet: React.FC<{
           <div className="pt-4 border-t">
             <h4 className="font-semibold mb-3 flex items-center gap-2">
               Test Results
-              <Badge variant="outline" className="text-xs">BS7671</Badge>
+              <Badge variant="outline" className="text-xs">
+                BS7671
+              </Badge>
             </h4>
 
             <div className="grid grid-cols-2 gap-3">
@@ -370,7 +388,10 @@ const CircuitEditSheet: React.FC<{
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+          <Button
+            onClick={handleSave}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
             Save Circuit
           </Button>
         </SheetFooter>
@@ -399,43 +420,50 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
   // Group circuits by board
   const circuitsByBoard = useMemo(() => {
     const grouped: Record<string, Circuit[]> = {};
-    boards.forEach(board => {
-      grouped[board.id] = circuits.filter(c => (c.boardId || MAIN_BOARD_ID) === board.id);
+    boards.forEach((board) => {
+      grouped[board.id] = circuits.filter((c) => (c.boardId || MAIN_BOARD_ID) === board.id);
     });
     return grouped;
   }, [circuits, boards]);
 
-  const handleAddCircuit = useCallback((boardId?: string) => {
-    haptic.medium();
-    const targetBoardId = boardId || activeBoard;
-    const boardCircuits = circuits.filter(c => (c.boardId || MAIN_BOARD_ID) === targetBoardId);
-    const newCircuit: Circuit = {
-      id: `circuit-${Date.now()}`,
-      boardId: targetBoardId,
-      circuitDesignation: `C${boardCircuits.length + 1}`,
-      circuitNumber: `${boardCircuits.length + 1}`,
-      circuitDescription: '',
-    };
-    onChange({ circuits: [...circuits, newCircuit] });
-  }, [circuits, onChange, haptic, activeBoard]);
+  const handleAddCircuit = useCallback(
+    (boardId?: string) => {
+      haptic.medium();
+      const targetBoardId = boardId || activeBoard;
+      const boardCircuits = circuits.filter((c) => (c.boardId || MAIN_BOARD_ID) === targetBoardId);
+      const newCircuit: Circuit = {
+        id: `circuit-${Date.now()}`,
+        boardId: targetBoardId,
+        circuitDesignation: `C${boardCircuits.length + 1}`,
+        circuitNumber: `${boardCircuits.length + 1}`,
+        circuitDescription: '',
+      };
+      onChange({ circuits: [...circuits, newCircuit] });
+    },
+    [circuits, onChange, haptic, activeBoard]
+  );
 
   const handleEditCircuit = useCallback((circuit: Circuit) => {
     setEditingCircuit(circuit);
     setShowEditSheet(true);
   }, []);
 
-  const handleSaveCircuit = useCallback((updated: Circuit) => {
-    const updatedCircuits = circuits.map((c) =>
-      c.id === updated.id ? updated : c
-    );
-    onChange({ circuits: updatedCircuits });
-  }, [circuits, onChange]);
+  const handleSaveCircuit = useCallback(
+    (updated: Circuit) => {
+      const updatedCircuits = circuits.map((c) => (c.id === updated.id ? updated : c));
+      onChange({ circuits: updatedCircuits });
+    },
+    [circuits, onChange]
+  );
 
-  const handleDeleteCircuit = useCallback((circuit: Circuit) => {
-    haptic.warning();
-    const updatedCircuits = circuits.filter((c) => c.id !== circuit.id);
-    onChange({ circuits: updatedCircuits });
-  }, [circuits, onChange, haptic]);
+  const handleDeleteCircuit = useCallback(
+    (circuit: Circuit) => {
+      haptic.warning();
+      const updatedCircuits = circuits.filter((c) => c.id !== circuit.id);
+      onChange({ circuits: updatedCircuits });
+    },
+    [circuits, onChange, haptic]
+  );
 
   // Stats
   const completeCount = circuits.filter((c) => getCircuitStatus(c) === 'complete').length;
@@ -494,9 +522,8 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
 
       {/* Circuit List - filtered by active board */}
       {(() => {
-        const currentBoardCircuits = boards.length > 1
-          ? (circuitsByBoard[activeBoard] || [])
-          : circuits;
+        const currentBoardCircuits =
+          boards.length > 1 ? circuitsByBoard[activeBoard] || [] : circuits;
 
         return currentBoardCircuits.length > 0 ? (
           <div className="space-y-3">
@@ -517,7 +544,7 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
               <h3 className="font-semibold mb-2">No Circuits Added</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 {boards.length > 1
-                  ? `Add circuits to ${boards.find(b => b.id === activeBoard)?.name || 'this board'}`
+                  ? `Add circuits to ${boards.find((b) => b.id === activeBoard)?.name || 'this board'}`
                   : 'Add circuits to record test results'}
               </p>
               <Button onClick={() => handleAddCircuit(activeBoard)} className="gap-2">
@@ -530,14 +557,14 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
       })()}
 
       {/* Add Circuit Button */}
-      {((boards.length > 1 ? (circuitsByBoard[activeBoard] || []) : circuits).length > 0) && (
+      {(boards.length > 1 ? circuitsByBoard[activeBoard] || [] : circuits).length > 0 && (
         <Button
           onClick={() => handleAddCircuit(activeBoard)}
           variant="outline"
           className="w-full h-12 gap-2 border-dashed"
         >
           <Plus className="h-4 w-4" />
-          Add Circuit {boards.length > 1 && `to ${boards.find(b => b.id === activeBoard)?.name}`}
+          Add Circuit {boards.length > 1 && `to ${boards.find((b) => b.id === activeBoard)?.name}`}
         </Button>
       )}
 

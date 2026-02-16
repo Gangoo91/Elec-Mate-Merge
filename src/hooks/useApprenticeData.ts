@@ -73,7 +73,7 @@ export function useApprenticeData(): ApprenticeData {
 
     // OJT hours - would come from real data in production
     const ojtLogged = profile?.ojt_hours_logged || 0;
-    const ojtTarget = profile?.ojt_hours_target || 3000;
+    const ojtTarget = profile?.ojt_hours_target || 400;
 
     return {
       ojtHours: {

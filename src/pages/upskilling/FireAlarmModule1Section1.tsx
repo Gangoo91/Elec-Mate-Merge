@@ -1,200 +1,210 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "L Category Systems (Life Safety) - Fire Alarm Module 1 Section 1";
-const DESCRIPTION = "Understand BS 5839-1 fire alarm L categories: L1-L5 with examples, coverage, and compliance requirements for life safety detection.";
+const TITLE = 'L Category Systems (Life Safety) - Fire Alarm Module 1 Section 1';
+const DESCRIPTION =
+  'Understand BS 5839-1 fire alarm L categories: L1-L5 with examples, coverage, and compliance requirements for life safety detection.';
 
 const quickCheckQuestions = [
   {
-    id: "l-category-purpose",
-    question: "What is the primary purpose of L category systems under BS 5839-1?",
+    id: 'l-category-purpose',
+    question: 'What is the primary purpose of L category systems under BS 5839-1?',
     options: [
-      "Property protection and business continuity",
-      "Life safety through early warning for evacuation",
-      "Manual activation only via call points",
-      "Automatic fire suppression"
+      'Property protection and business continuity',
+      'Life safety through early warning for evacuation',
+      'Manual activation only via call points',
+      'Automatic fire suppression',
     ],
     correctIndex: 1,
-    explanation: "L category systems are designed for life safety, providing early detection and warning to enable safe evacuation of building occupants."
+    explanation:
+      'L category systems are designed for life safety, providing early detection and warning to enable safe evacuation of building occupants.',
   },
   {
-    id: "l1-coverage",
-    question: "Which of the following best describes an L1 system?",
+    id: 'l1-coverage',
+    question: 'Which of the following best describes an L1 system?',
     options: [
-      "Coverage limited to escape routes only",
-      "Automatic detection throughout all areas where a fire could start",
-      "Manual call points only",
-      "Detection in high-risk areas only"
+      'Coverage limited to escape routes only',
+      'Automatic detection throughout all areas where a fire could start',
+      'Manual call points only',
+      'Detection in high-risk areas only',
     ],
     correctIndex: 1,
-    explanation: "L1 provides automatic detection throughout all areas of the building to maximise life safety protection."
+    explanation:
+      'L1 provides automatic detection throughout all areas of the building to maximise life safety protection.',
   },
   {
-    id: "sleeping-risk",
-    question: "For sleeping risk premises, which is the minimum recommended L category?",
-    options: [
-      "L4",
-      "L5",
-      "L1 or L2 depending on layout",
-      "L3"
-    ],
+    id: 'sleeping-risk',
+    question: 'For sleeping risk premises, which is the minimum recommended L category?',
+    options: ['L4', 'L5', 'L1 or L2 depending on layout', 'L3'],
     correctIndex: 2,
-    explanation: "Sleeping risk premises typically require L1 for full coverage or L2 where justified by the fire strategy, due to the vulnerability of sleeping occupants."
-  }
+    explanation:
+      'Sleeping risk premises typically require L1 for full coverage or L2 where justified by the fire strategy, due to the vulnerability of sleeping occupants.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the primary purpose of L category systems under BS 5839-1?",
+    question: 'What is the primary purpose of L category systems under BS 5839-1?',
     options: [
-      "Property protection and business continuity",
-      "Life safety through early warning for evacuation",
-      "Manual activation only via call points",
-      "Automatic fire suppression"
+      'Property protection and business continuity',
+      'Life safety through early warning for evacuation',
+      'Manual activation only via call points',
+      'Automatic fire suppression',
     ],
     correctAnswer: 1,
-    explanation: "L category systems are designed for life safety, providing early detection and warning to enable safe evacuation."
+    explanation:
+      'L category systems are designed for life safety, providing early detection and warning to enable safe evacuation.',
   },
   {
     id: 2,
-    question: "Which of the following best describes an L1 system?",
+    question: 'Which of the following best describes an L1 system?',
     options: [
-      "Coverage limited to escape routes only",
-      "Automatic detection throughout all areas where a fire could start",
-      "Manual call points only",
-      "Detection in high-risk areas only"
+      'Coverage limited to escape routes only',
+      'Automatic detection throughout all areas where a fire could start',
+      'Manual call points only',
+      'Detection in high-risk areas only',
     ],
     correctAnswer: 1,
-    explanation: "L1 provides automatic detection throughout all areas of the building to maximise life safety."
+    explanation:
+      'L1 provides automatic detection throughout all areas of the building to maximise life safety.',
   },
   {
     id: 3,
-    question: "An L2 system provides detection in which areas?",
+    question: 'An L2 system provides detection in which areas?',
     options: [
-      "Escape routes only",
-      "Escape routes plus defined high-risk rooms",
-      "All areas of the building",
-      "Only plant rooms and stores"
+      'Escape routes only',
+      'Escape routes plus defined high-risk rooms',
+      'All areas of the building',
+      'Only plant rooms and stores',
     ],
     correctAnswer: 1,
-    explanation: "L2 provides detection in escape routes and specified high-risk rooms that open onto them."
+    explanation:
+      'L2 provides detection in escape routes and specified high-risk rooms that open onto them.',
   },
   {
     id: 4,
-    question: "What is the key characteristic of an L5 system?",
+    question: 'What is the key characteristic of an L5 system?',
     options: [
-      "Detection throughout the entire building",
-      "Manual call points only",
-      "Localised detection in specific areas to satisfy a particular objective",
-      "Detection in escape routes and all adjoining rooms"
+      'Detection throughout the entire building',
+      'Manual call points only',
+      'Localised detection in specific areas to satisfy a particular objective',
+      'Detection in escape routes and all adjoining rooms',
     ],
     correctAnswer: 2,
-    explanation: "L5 is a bespoke category providing localised protection engineered to meet a specific need or objective."
+    explanation:
+      'L5 is a bespoke category providing localised protection engineered to meet a specific need or objective.',
   },
   {
     id: 5,
-    question: "Which building type would most likely require an L1 system?",
+    question: 'Which building type would most likely require an L1 system?',
     options: [
-      "Small single-storey office",
-      "Care home with sleeping accommodation",
-      "Retail unit with constant supervision",
-      "Industrial warehouse"
+      'Small single-storey office',
+      'Care home with sleeping accommodation',
+      'Retail unit with constant supervision',
+      'Industrial warehouse',
     ],
     correctAnswer: 1,
-    explanation: "Care homes and premises with sleeping risk typically require L1 for maximum early warning and life safety."
+    explanation:
+      'Care homes and premises with sleeping risk typically require L1 for maximum early warning and life safety.',
   },
   {
     id: 6,
-    question: "An L4 system provides detection in which areas?",
+    question: 'An L4 system provides detection in which areas?',
     options: [
-      "Throughout all areas of the building",
-      "Escape routes only",
-      "High-risk rooms only",
-      "Property protection areas only"
+      'Throughout all areas of the building',
+      'Escape routes only',
+      'High-risk rooms only',
+      'Property protection areas only',
     ],
     correctAnswer: 1,
-    explanation: "L4 systems provide automatic detection on escape routes only, offering basic life safety coverage."
+    explanation:
+      'L4 systems provide automatic detection on escape routes only, offering basic life safety coverage.',
   },
   {
     id: 7,
-    question: "Which statement about L3 systems is correct?",
+    question: 'Which statement about L3 systems is correct?',
     options: [
-      "L3 includes detection in all high-risk rooms",
-      "L3 provides detection on escape routes and rooms opening directly onto them",
-      "L3 is suitable for property protection only",
-      "L3 requires manual call points to be omitted"
+      'L3 includes detection in all high-risk rooms',
+      'L3 provides detection on escape routes and rooms opening directly onto them',
+      'L3 is suitable for property protection only',
+      'L3 requires manual call points to be omitted',
     ],
     correctAnswer: 1,
-    explanation: "L3 systems provide automatic detection on escape routes plus rooms that open directly onto those escape routes."
+    explanation:
+      'L3 systems provide automatic detection on escape routes plus rooms that open directly onto those escape routes.',
   },
   {
     id: 8,
-    question: "For sleeping risk premises, which is the minimum recommended L category?",
-    options: [
-      "L4",
-      "L5",
-      "L1 or L2 depending on layout",
-      "L3"
-    ],
+    question: 'For sleeping risk premises, which is the minimum recommended L category?',
+    options: ['L4', 'L5', 'L1 or L2 depending on layout', 'L3'],
     correctAnswer: 2,
-    explanation: "Sleeping risk premises typically require L1 for full coverage or L2 where justified by the fire strategy."
+    explanation:
+      'Sleeping risk premises typically require L1 for full coverage or L2 where justified by the fire strategy.',
   },
   {
     id: 9,
-    question: "What determines the specific coverage requirements for L5?",
+    question: 'What determines the specific coverage requirements for L5?',
     options: [
-      "BS 5839-1 prescribes exact areas",
-      "The fire strategy and specific risk to be addressed",
-      "Insurance company requirements only",
-      "Building age"
+      'BS 5839-1 prescribes exact areas',
+      'The fire strategy and specific risk to be addressed',
+      'Insurance company requirements only',
+      'Building age',
     ],
     correctAnswer: 1,
-    explanation: "L5 coverage is determined by the fire strategy to address specific risks identified in the fire risk assessment."
+    explanation:
+      'L5 coverage is determined by the fire strategy to address specific risks identified in the fire risk assessment.',
   },
   {
     id: 10,
-    question: "Which factor does NOT typically influence the choice between L1 and L2?",
+    question: 'Which factor does NOT typically influence the choice between L1 and L2?',
     options: [
-      "Presence of sleeping accommodation",
-      "Building complexity and layout",
-      "Cost of detector equipment",
-      "Fire strategy requirements"
+      'Presence of sleeping accommodation',
+      'Building complexity and layout',
+      'Cost of detector equipment',
+      'Fire strategy requirements',
     ],
     correctAnswer: 2,
-    explanation: "Category selection should be based on risk assessment and fire strategy, not primarily on cost considerations."
-  }
+    explanation:
+      'Category selection should be based on risk assessment and fire strategy, not primarily on cost considerations.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I combine L and P categories in the same building?",
-    answer: "Yes - it is common to specify L3 for life safety on escape routes plus P2 for property protection in high-value areas like server rooms."
+    question: 'Can I combine L and P categories in the same building?',
+    answer:
+      'Yes - it is common to specify L3 for life safety on escape routes plus P2 for property protection in high-value areas like server rooms.',
   },
   {
-    question: "Does L1 always require detection in roof voids?",
-    answer: "Not always - BS 5839-1 provides guidance on when void detection is required based on void construction and fire risk."
+    question: 'Does L1 always require detection in roof voids?',
+    answer:
+      'Not always - BS 5839-1 provides guidance on when void detection is required based on void construction and fire risk.',
   },
   {
-    question: "Is L5 a cheaper option than L4?",
-    answer: "No - L5 is a bespoke category for specific needs, not a reduced coverage option. Coverage is determined by the fire strategy objective."
+    question: 'Is L5 a cheaper option than L4?',
+    answer:
+      'No - L5 is a bespoke category for specific needs, not a reduced coverage option. Coverage is determined by the fire strategy objective.',
   },
   {
-    question: "Who decides which L category is required?",
-    answer: "The fire risk assessment and fire strategy determine requirements. The designer specifies the category to meet those requirements."
+    question: 'Who decides which L category is required?',
+    answer:
+      'The fire risk assessment and fire strategy determine requirements. The designer specifies the category to meet those requirements.',
   },
   {
-    question: "Can the category be changed after installation?",
-    answer: "Yes, but this requires a formal variation and update to certificates. Changes should be justified by updated risk assessment."
+    question: 'Can the category be changed after installation?',
+    answer:
+      'Yes, but this requires a formal variation and update to certificates. Changes should be justified by updated risk assessment.',
   },
   {
-    question: "What is the difference between L2 and L3?",
-    answer: "L2 targets specific high-risk rooms plus escape routes. L3 covers ALL rooms opening onto escape routes, regardless of individual risk level."
-  }
+    question: 'What is the difference between L2 and L3?',
+    answer:
+      'L2 targets specific high-risk rooms plus escape routes. L3 covers ALL rooms opening onto escape routes, regardless of individual risk level.',
+  },
 ];
 
 const FireAlarmModule1Section1 = () => {
@@ -205,7 +215,12 @@ const FireAlarmModule1Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/fire-alarm-course/module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -216,7 +231,6 @@ const FireAlarmModule1Section1 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centred Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -236,18 +250,32 @@ const FireAlarmModule1Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>L categories:</strong> Designed for life safety and evacuation</li>
-              <li><strong>L1:</strong> Full coverage throughout all areas</li>
-              <li><strong>L2-L4:</strong> Varying levels of escape route protection</li>
-              <li><strong>L5:</strong> Bespoke coverage for specific objectives</li>
+              <li>
+                <strong>L categories:</strong> Designed for life safety and evacuation
+              </li>
+              <li>
+                <strong>L1:</strong> Full coverage throughout all areas
+              </li>
+              <li>
+                <strong>L2-L4:</strong> Varying levels of escape route protection
+              </li>
+              <li>
+                <strong>L5:</strong> Bespoke coverage for specific objectives
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Sleeping risk = L1 or L2 minimum</li>
-              <li><strong>Use:</strong> Fire strategy drives category selection</li>
-              <li><strong>Apply:</strong> Risk assessment determines coverage</li>
+              <li>
+                <strong>Spot:</strong> Sleeping risk = L1 or L2 minimum
+              </li>
+              <li>
+                <strong>Use:</strong> Fire strategy drives category selection
+              </li>
+              <li>
+                <strong>Apply:</strong> Risk assessment determines coverage
+              </li>
             </ul>
           </div>
         </div>
@@ -257,12 +285,12 @@ const FireAlarmModule1Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Define the purpose of L category fire alarm systems",
-              "Differentiate between L1, L2, L3, L4 and L5 coverage",
-              "Identify typical building applications for each L category",
-              "Explain the relationship between sleeping risk and L category selection",
-              "Reference BS 5839-1 requirements for life safety detection",
-              "Apply L category selection principles to scenarios"
+              'Define the purpose of L category fire alarm systems',
+              'Differentiate between L1, L2, L3, L4 and L5 coverage',
+              'Identify typical building applications for each L category',
+              'Explain the relationship between sleeping risk and L category selection',
+              'Reference BS 5839-1 requirements for life safety detection',
+              'Apply L category selection principles to scenarios',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -283,10 +311,13 @@ const FireAlarmModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              L categories under BS 5839-1 are specifically designed to protect life safety. The primary objective is to provide early warning of fire to enable safe evacuation of occupants before escape routes become impassable.
+              L categories under BS 5839-1 are specifically designed to protect life safety. The
+              primary objective is to provide early warning of fire to enable safe evacuation of
+              occupants before escape routes become impassable.
             </p>
             <p>
-              The "L" stands for "Life" protection. These systems prioritise detection speed and coverage to maximise warning time for building occupants.
+              The "L" stands for "Life" protection. These systems prioritise detection speed and
+              coverage to maximise warning time for building occupants.
             </p>
 
             <div className="my-6">
@@ -311,7 +342,8 @@ const FireAlarmModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              L1 provides automatic fire detection throughout all areas of the building where a fire might start. This is the highest level of life safety protection available.
+              L1 provides automatic fire detection throughout all areas of the building where a fire
+              might start. This is the highest level of life safety protection available.
             </p>
 
             <div className="my-6">
@@ -325,7 +357,8 @@ const FireAlarmModule1Section1 = () => {
             </div>
 
             <p>
-              Typical applications include care homes, hotels, hospitals, HMOs with sleeping risk, and complex public buildings where maximum early warning is essential.
+              Typical applications include care homes, hotels, hospitals, HMOs with sleeping risk,
+              and complex public buildings where maximum early warning is essential.
             </p>
           </div>
         </section>
@@ -338,11 +371,14 @@ const FireAlarmModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              L2 provides detection in all escape routes, plus defined high-risk rooms that could present a hazard or open onto escape routes.
+              L2 provides detection in all escape routes, plus defined high-risk rooms that could
+              present a hazard or open onto escape routes.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">L2 High-Risk Rooms Typically Include:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                L2 High-Risk Rooms Typically Include:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Electrical intake rooms and switch rooms</li>
                 <li>Plant rooms and boiler rooms</li>
@@ -352,7 +388,8 @@ const FireAlarmModule1Section1 = () => {
             </div>
 
             <p>
-              Typical applications include offices, schools, and retail premises with back-of-house risks.
+              Typical applications include offices, schools, and retail premises with back-of-house
+              risks.
             </p>
           </div>
         </section>
@@ -368,7 +405,9 @@ const FireAlarmModule1Section1 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">L3 - Routes + Adjoining Rooms</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  L3 - Routes + Adjoining Rooms
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Detection on escape routes</li>
                   <li>All rooms opening onto escape routes</li>
@@ -377,7 +416,9 @@ const FireAlarmModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">L4 - Escape Routes Only</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  L4 - Escape Routes Only
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Minimum life safety coverage</li>
                   <li>Corridors, lobbies, stairways only</li>
@@ -389,7 +430,8 @@ const FireAlarmModule1Section1 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>Warning:</strong> L4 may be insufficient where rooms pose significant fire risk or where sleeping accommodation exists.
+                <strong>Warning:</strong> L4 may be insufficient where rooms pose significant fire
+                risk or where sleeping accommodation exists.
               </p>
             </div>
           </div>
@@ -403,10 +445,12 @@ const FireAlarmModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              L5 is a bespoke category where detection is provided in specific areas to satisfy a particular fire safety objective identified in the fire risk assessment.
+              L5 is a bespoke category where detection is provided in specific areas to satisfy a
+              particular fire safety objective identified in the fire risk assessment.
             </p>
             <p>
-              L5 is not a "lesser" category than L4 - it is a flexible option where coverage is engineered to meet a specific need that does not fit L1-L4 patterns.
+              L5 is not a "lesser" category than L4 - it is a flexible option where coverage is
+              engineered to meet a specific need that does not fit L1-L4 patterns.
             </p>
 
             <div className="my-6">
@@ -431,10 +475,18 @@ const FireAlarmModule1Section1 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Designing Systems</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Designing Systems
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Always start with the fire risk assessment - let risk drive category selection, not cost</li>
-                <li>For sleeping risk, default to L1 unless the fire strategy specifically justifies L2</li>
+                <li>
+                  Always start with the fire risk assessment - let risk drive category selection,
+                  not cost
+                </li>
+                <li>
+                  For sleeping risk, default to L1 unless the fire strategy specifically justifies
+                  L2
+                </li>
                 <li>Document the rationale for category selection in design documentation</li>
               </ul>
             </div>
@@ -451,9 +503,17 @@ const FireAlarmModule1Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Selecting a lower category to reduce cost</strong> - without proper risk justification</li>
-                <li><strong>Using L4 where sleeping risk exists</strong> - this is rarely appropriate</li>
-                <li><strong>Confusing L categories with P categories</strong> - L is life safety, P is property protection</li>
+                <li>
+                  <strong>Selecting a lower category to reduce cost</strong> - without proper risk
+                  justification
+                </li>
+                <li>
+                  <strong>Using L4 where sleeping risk exists</strong> - this is rarely appropriate
+                </li>
+                <li>
+                  <strong>Confusing L categories with P categories</strong> - L is life safety, P is
+                  property protection
+                </li>
               </ul>
             </div>
           </div>
@@ -504,28 +564,33 @@ const FireAlarmModule1Section1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/fire-alarm-course/module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

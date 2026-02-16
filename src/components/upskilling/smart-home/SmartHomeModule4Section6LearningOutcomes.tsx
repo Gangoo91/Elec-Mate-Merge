@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule4Section6LearningOutcomes = () => {
   const outcomes = [
-    "Define what a BMS is and its purpose",
-    "Explain how HVAC integrates with BMS in larger sites",
-    "Describe how lighting control links to HVAC through BMS",
-    "Recognise protocols used in BMS integration (BACnet, Modbus, KNX, DALI)",
-    "Identify benefits and challenges of BMS integration for installers and clients"
+    'Define what a BMS is and its purpose',
+    'Explain how HVAC integrates with BMS in larger sites',
+    'Describe how lighting control links to HVAC through BMS',
+    'Recognise protocols used in BMS integration (BACnet, Modbus, KNX, DALI)',
+    'Identify benefits and challenges of BMS integration for installers and clients',
   ];
 
   return (

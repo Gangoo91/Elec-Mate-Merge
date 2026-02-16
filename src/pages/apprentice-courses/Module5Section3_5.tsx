@@ -1,35 +1,55 @@
-import { ArrowLeft, ArrowRight, Settings, BookOpen, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Settings, BookOpen, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Dealing with Variations and Unforeseen Issues - Module 5.3.5 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn to manage project variations and unexpected issues effectively while maintaining safety, quality, and compliance standards.";
+const TITLE =
+  'Dealing with Variations and Unforeseen Issues - Module 5.3.5 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn to manage project variations and unexpected issues effectively while maintaining safety, quality, and compliance standards.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What is a variation in electrical work?",
-    options: ["A mistake in installation", "A change to the agreed design, scope, or programme", "A safety issue", "A tool malfunction"],
+    question: 'What is a variation in electrical work?',
+    options: [
+      'A mistake in installation',
+      'A change to the agreed design, scope, or programme',
+      'A safety issue',
+      'A tool malfunction',
+    ],
     correctIndex: 1,
-    explanation: "A variation is any change to the agreed design, scope, or programme, such as adding sockets or moving lighting positions."
+    explanation:
+      'A variation is any change to the agreed design, scope, or programme, such as adding sockets or moving lighting positions.',
   },
   {
     id: 2,
-    question: "Give one example of an unforeseen issue.",
-    options: ["Client satisfaction", "Hidden beams blocking cable routes", "Good weather", "Early material delivery"],
+    question: 'Give one example of an unforeseen issue.',
+    options: [
+      'Client satisfaction',
+      'Hidden beams blocking cable routes',
+      'Good weather',
+      'Early material delivery',
+    ],
     correctIndex: 1,
-    explanation: "Unforeseen issues include hidden site conditions like structural beams blocking planned cable routes."
+    explanation:
+      'Unforeseen issues include hidden site conditions like structural beams blocking planned cable routes.',
   },
   {
     id: 3,
-    question: "Why must all changes be recorded formally?",
-    options: ["To create more work", "To avoid disputes and ensure compliance", "To slow down progress", "To charge more money"],
+    question: 'Why must all changes be recorded formally?',
+    options: [
+      'To create more work',
+      'To avoid disputes and ensure compliance',
+      'To slow down progress',
+      'To charge more money',
+    ],
     correctIndex: 1,
-    explanation: "Formal recording prevents disputes, ensures regulatory compliance, and maintains clear project documentation."
-  }
+    explanation:
+      'Formal recording prevents disputes, ensures regulatory compliance, and maintains clear project documentation.',
+  },
 ];
 
 const Module5Section3_5 = () => {
@@ -38,89 +58,127 @@ const Module5Section3_5 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What is a variation in project work?",
-      options: ["A safety issue", "A change to the agreed design, scope, or programme", "A tool inspection", "A material delivery"],
+      question: 'What is a variation in project work?',
+      options: [
+        'A safety issue',
+        'A change to the agreed design, scope, or programme',
+        'A tool inspection',
+        'A material delivery',
+      ],
       correctAnswer: 1,
-      explanation: "A variation is any change to the agreed design, scope, or programme that differs from the original plan."
+      explanation:
+        'A variation is any change to the agreed design, scope, or programme that differs from the original plan.',
     },
     {
       id: 2,
-      question: "Give one example of a variation.",
-      options: ["Weather delays", "Adding sockets", "Equipment failure", "Staff training"],
+      question: 'Give one example of a variation.',
+      options: ['Weather delays', 'Adding sockets', 'Equipment failure', 'Staff training'],
       correctAnswer: 1,
-      explanation: "Examples of variations include adding sockets, moving light fittings, or upgrading cable sizes."
+      explanation:
+        'Examples of variations include adding sockets, moving light fittings, or upgrading cable sizes.',
     },
     {
       id: 3,
-      question: "What is one example of an unforeseen issue?",
-      options: ["Planned maintenance", "Hidden beams", "Scheduled meetings", "Regular inspections"],
+      question: 'What is one example of an unforeseen issue?',
+      options: ['Planned maintenance', 'Hidden beams', 'Scheduled meetings', 'Regular inspections'],
       correctAnswer: 1,
-      explanation: "Unforeseen issues include hidden beams, material shortages, weather delays, or other trades' delays."
+      explanation:
+        "Unforeseen issues include hidden beams, material shortages, weather delays, or other trades' delays.",
     },
     {
       id: 4,
-      question: "True or False: Small changes that save time can be made without approval.",
-      options: ["False", "True"],
+      question: 'True or False: Small changes that save time can be made without approval.',
+      options: ['False', 'True'],
       correctAnswer: 0,
-      explanation: "False. All changes, regardless of size, must be authorised to ensure compliance and avoid disputes."
+      explanation:
+        'False. All changes, regardless of size, must be authorised to ensure compliance and avoid disputes.',
     },
     {
       id: 5,
-      question: "Why must all variations be recorded in writing?",
-      options: ["To slow down work", "To avoid disputes and ensure compliance", "To create paperwork", "To confuse workers"],
+      question: 'Why must all variations be recorded in writing?',
+      options: [
+        'To slow down work',
+        'To avoid disputes and ensure compliance',
+        'To create paperwork',
+        'To confuse workers',
+      ],
       correctAnswer: 1,
-      explanation: "Written records prevent disputes, ensure compliance, and provide clear documentation for all changes."
+      explanation:
+        'Written records prevent disputes, ensure compliance, and provide clear documentation for all changes.',
     },
     {
       id: 6,
-      question: "Who should approve variations before work proceeds?",
-      options: ["Any electrician", "Supervisor or project manager", "The client directly", "Material suppliers"],
+      question: 'Who should approve variations before work proceeds?',
+      options: [
+        'Any electrician',
+        'Supervisor or project manager',
+        'The client directly',
+        'Material suppliers',
+      ],
       correctAnswer: 1,
-      explanation: "Variations must be approved by the supervisor or project manager before any work proceeds."
+      explanation:
+        'Variations must be approved by the supervisor or project manager before any work proceeds.',
     },
     {
       id: 7,
-      question: "What is the safest response if an unforeseen issue creates a hazard?",
-      options: ["Continue working carefully", "Stop work and report immediately", "Work around the problem", "Speed up to finish quickly"],
+      question: 'What is the safest response if an unforeseen issue creates a hazard?',
+      options: [
+        'Continue working carefully',
+        'Stop work and report immediately',
+        'Work around the problem',
+        'Speed up to finish quickly',
+      ],
       correctAnswer: 1,
-      explanation: "If safety is affected, work must stop immediately and the issue reported to supervisors."
+      explanation:
+        'If safety is affected, work must stop immediately and the issue reported to supervisors.',
     },
     {
       id: 8,
-      question: "Name one risk of poorly managing variations.",
-      options: ["Better quality work", "Safety compromise", "Lower costs", "Faster completion"],
+      question: 'Name one risk of poorly managing variations.',
+      options: ['Better quality work', 'Safety compromise', 'Lower costs', 'Faster completion'],
       correctAnswer: 1,
-      explanation: "Poor variation management can lead to safety compromises, disputes, delays, and non-compliance."
+      explanation:
+        'Poor variation management can lead to safety compromises, disputes, delays, and non-compliance.',
     },
     {
       id: 9,
-      question: "What document is used to formally record changes?",
-      options: ["Timesheet", "Variation order or site instruction", "Delivery note", "Tool list"],
+      question: 'What document is used to formally record changes?',
+      options: ['Timesheet', 'Variation order or site instruction', 'Delivery note', 'Tool list'],
       correctAnswer: 1,
-      explanation: "Variation orders or site instructions formally document all approved changes to the project."
+      explanation:
+        'Variation orders or site instructions formally document all approved changes to the project.',
     },
     {
       id: 10,
-      question: "What is one way to reduce disruption while waiting for an issue to be resolved?",
-      options: ["Stop all work", "Switch to another planned task", "Go home early", "Change the design yourself"],
+      question: 'What is one way to reduce disruption while waiting for an issue to be resolved?',
+      options: [
+        'Stop all work',
+        'Switch to another planned task',
+        'Go home early',
+        'Change the design yourself',
+      ],
       correctAnswer: 1,
-      explanation: "Switching to alternative planned tasks maintains productivity while issues are being resolved."
-    }
+      explanation:
+        'Switching to alternative planned tasks maintains productivity while issues are being resolved.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Can I make small changes without approval if they save time?",
-      answer: "No — all changes must be authorised to ensure compliance and avoid disputes. Even small changes can have significant implications for safety, cost, and compliance."
+      question: 'Can I make small changes without approval if they save time?',
+      answer:
+        'No — all changes must be authorised to ensure compliance and avoid disputes. Even small changes can have significant implications for safety, cost, and compliance.',
     },
     {
-      question: "What if the client requests extra work directly to me?",
-      answer: "Refer it to the supervisor/project manager. Never accept instructions without approval. All client communications should go through proper channels to maintain clear accountability."
+      question: 'What if the client requests extra work directly to me?',
+      answer:
+        'Refer it to the supervisor/project manager. Never accept instructions without approval. All client communications should go through proper channels to maintain clear accountability.',
     },
     {
-      question: "How do I minimise disruption when issues arise?",
-      answer: "Switch to alternative tasks until the problem is resolved. Maintain productivity by having flexible work sequences that allow continued progress in other areas."
-    }
+      question: 'How do I minimise disruption when issues arise?',
+      answer:
+        'Switch to alternative tasks until the problem is resolved. Maintain productivity by having flexible work sequences that allow continued progress in other areas.',
+    },
   ];
 
   return (
@@ -154,7 +212,8 @@ const Module5Section3_5 = () => {
               Dealing with Variations and Unforeseen Issues
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed">
-              Learn to manage project changes and unexpected challenges effectively while maintaining safety, quality, and compliance standards.
+              Learn to manage project changes and unexpected challenges effectively while
+              maintaining safety, quality, and compliance standards.
             </p>
           </header>
 
@@ -190,7 +249,11 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                No matter how well a project is planned, variations and unforeseen issues will always arise. These may include design changes, unexpected site conditions, or delays caused by other trades. The key is not to avoid them — which is impossible — but to manage them effectively so that safety, quality, and deadlines are not compromised.
+                No matter how well a project is planned, variations and unforeseen issues will
+                always arise. These may include design changes, unexpected site conditions, or
+                delays caused by other trades. The key is not to avoid them — which is impossible —
+                but to manage them effectively so that safety, quality, and deadlines are not
+                compromised.
               </p>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <div className="flex items-start gap-3">
@@ -198,13 +261,17 @@ const Module5Section3_5 = () => {
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
                     <p className="text-sm text-white/80">
-                      Studies show that 75% of construction projects experience significant variations, with poorly managed changes causing 40% of project delays and 35% of cost overruns.
+                      Studies show that 75% of construction projects experience significant
+                      variations, with poorly managed changes causing 40% of project delays and 35%
+                      of cost overruns.
                     </p>
                   </div>
                 </div>
               </div>
               <p className="text-sm text-white/70">
-                <strong className="text-white">Industry Standard:</strong> JCT contracts and NEC frameworks require systematic variation management to maintain legal compliance and project governance.
+                <strong className="text-white">Industry Standard:</strong> JCT contracts and NEC
+                frameworks require systematic variation management to maintain legal compliance and
+                project governance.
               </p>
             </div>
           </section>
@@ -222,7 +289,9 @@ const Module5Section3_5 = () => {
                 <li>Apply methods to manage and record changes.</li>
                 <li>Communicate effectively when issues arise.</li>
                 <li>Understand how variations affect timescales and costs.</li>
-                <li>Work flexibly while maintaining compliance with BS 7671 and safety standards.</li>
+                <li>
+                  Work flexibly while maintaining compliance with BS 7671 and safety standards.
+                </li>
               </ul>
             </div>
           </section>
@@ -235,12 +304,16 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Variations are fundamental changes that deviate from the original project scope and require systematic management.
+                Variations are fundamental changes that deviate from the original project scope and
+                require systematic management.
               </p>
 
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                 <p className="font-medium text-white mb-3">Core Definition:</p>
-                <p className="text-sm text-white/80 mb-4">Any change to the agreed design, scope, or programme that differs from the original contract or specification.</p>
+                <p className="text-sm text-white/80 mb-4">
+                  Any change to the agreed design, scope, or programme that differs from the
+                  original contract or specification.
+                </p>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
@@ -269,7 +342,8 @@ const Module5Section3_5 = () => {
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 mb-2">Financial Impact</p>
                 <p className="text-sm text-white/80">
-                  Well-managed variations can actually improve project profitability, while poorly managed ones can result in losses of 10-20% of contract value.
+                  Well-managed variations can actually improve project profitability, while poorly
+                  managed ones can result in losses of 10-20% of contract value.
                 </p>
               </div>
             </div>
@@ -283,7 +357,8 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Understanding variation categories helps determine appropriate response and management strategies:
+                Understanding variation categories helps determine appropriate response and
+                management strategies:
               </p>
 
               <div className="grid sm:grid-cols-3 gap-3">
@@ -339,7 +414,8 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Unforeseen issues are circumstances that could not have been reasonably anticipated during planning:
+                Unforeseen issues are circumstances that could not have been reasonably anticipated
+                during planning:
               </p>
 
               <div className="space-y-4">
@@ -368,7 +444,9 @@ const Module5Section3_5 = () => {
                 </div>
 
                 <div className="p-4 rounded-lg bg-card/50 border border-white/10">
-                  <p className="font-medium text-elec-yellow mb-3">Supply Chain and Material Issues</p>
+                  <p className="font-medium text-elec-yellow mb-3">
+                    Supply Chain and Material Issues
+                  </p>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Material Challenges:</p>
@@ -392,7 +470,9 @@ const Module5Section3_5 = () => {
                 </div>
 
                 <div className="p-4 rounded-lg bg-card/50 border border-white/10">
-                  <p className="font-medium text-purple-400 mb-3">External Dependencies and Delays</p>
+                  <p className="font-medium text-purple-400 mb-3">
+                    External Dependencies and Delays
+                  </p>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Weather-Related Delays:</p>
@@ -404,7 +484,9 @@ const Module5Section3_5 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white mb-2">Third Party Dependencies:</p>
+                      <p className="text-sm font-medium text-white mb-2">
+                        Third Party Dependencies:
+                      </p>
                       <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
                         <li>Other trades not completing work on time</li>
                         <li>Utility company connection delays</li>
@@ -434,27 +516,47 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Understanding the full impact of poor variation management emphasises the importance of systematic approaches:
+                Understanding the full impact of poor variation management emphasises the importance
+                of systematic approaches:
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                   <h3 className="font-medium text-red-400 mb-3">Safety and Compliance Risks</h3>
                   <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
-                    <li><strong>Safety Compromises:</strong> Rushed changes bypassing risk assessments</li>
-                    <li><strong>Regulation Breaches:</strong> Non-compliance with BS 7671 or building regulations</li>
-                    <li><strong>Certification Issues:</strong> Invalid test certificates for modified installations</li>
-                    <li><strong>Insurance Implications:</strong> Coverage invalidated by unauthorised changes</li>
+                    <li>
+                      <strong>Safety Compromises:</strong> Rushed changes bypassing risk assessments
+                    </li>
+                    <li>
+                      <strong>Regulation Breaches:</strong> Non-compliance with BS 7671 or building
+                      regulations
+                    </li>
+                    <li>
+                      <strong>Certification Issues:</strong> Invalid test certificates for modified
+                      installations
+                    </li>
+                    <li>
+                      <strong>Insurance Implications:</strong> Coverage invalidated by unauthorised
+                      changes
+                    </li>
                   </ul>
                 </div>
 
                 <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
                   <h3 className="font-medium text-orange-400 mb-3">Commercial and Legal Risks</h3>
                   <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
-                    <li><strong>Cost Disputes:</strong> Disagreements over variation pricing</li>
-                    <li><strong>Legal Claims:</strong> Breach of contract allegations</li>
-                    <li><strong>Payment Delays:</strong> Disputes holding up progress payments</li>
-                    <li><strong>Reputation Damage:</strong> Poor relationships affecting future work</li>
+                    <li>
+                      <strong>Cost Disputes:</strong> Disagreements over variation pricing
+                    </li>
+                    <li>
+                      <strong>Legal Claims:</strong> Breach of contract allegations
+                    </li>
+                    <li>
+                      <strong>Payment Delays:</strong> Disputes holding up progress payments
+                    </li>
+                    <li>
+                      <strong>Reputation Damage:</strong> Poor relationships affecting future work
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -499,17 +601,22 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Effective variation management requires structured processes and clear accountability:
+                Effective variation management requires structured processes and clear
+                accountability:
               </p>
 
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
-                <p className="font-medium text-amber-400 mb-3">Formal Recording and Approval Process</p>
+                <p className="font-medium text-amber-400 mb-3">
+                  Formal Recording and Approval Process
+                </p>
 
                 <div className="space-y-4">
                   <div>
                     <p className="font-medium text-white mb-2">Documentation Requirements:</p>
                     <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
-                      <li>Record all changes formally using variation orders or site instructions</li>
+                      <li>
+                        Record all changes formally using variation orders or site instructions
+                      </li>
                       <li>Include detailed descriptions of work affected</li>
                       <li>Specify time and cost implications</li>
                       <li>Attach supporting drawings and specifications</li>
@@ -521,17 +628,31 @@ const Module5Section3_5 = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Approval Hierarchy:</p>
                     <ol className="text-sm text-white/70 list-decimal pl-5 space-y-1">
-                      <li><strong>Site Level:</strong> Supervisor approval for minor variations (under £500)</li>
-                      <li><strong>Project Level:</strong> Project manager approval for moderate variations (£500-£5000)</li>
-                      <li><strong>Commercial Level:</strong> Commercial manager approval for major variations (over £5000)</li>
-                      <li><strong>Client Level:</strong> Client approval required for significant scope changes</li>
+                      <li>
+                        <strong>Site Level:</strong> Supervisor approval for minor variations (under
+                        £500)
+                      </li>
+                      <li>
+                        <strong>Project Level:</strong> Project manager approval for moderate
+                        variations (£500-£5000)
+                      </li>
+                      <li>
+                        <strong>Commercial Level:</strong> Commercial manager approval for major
+                        variations (over £5000)
+                      </li>
+                      <li>
+                        <strong>Client Level:</strong> Client approval required for significant
+                        scope changes
+                      </li>
                     </ol>
                   </div>
 
                   <div className="p-3 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
                     <p className="font-medium text-orange-400 mb-1">Digital Management Systems</p>
                     <p className="text-sm text-white/80">
-                      Modern project management software can automate variation tracking, approval workflows, and document distribution, reducing errors and improving efficiency.
+                      Modern project management software can automate variation tracking, approval
+                      workflows, and document distribution, reducing errors and improving
+                      efficiency.
                     </p>
                   </div>
                 </div>
@@ -554,9 +675,7 @@ const Module5Section3_5 = () => {
               Communication and Stakeholder Management
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                Effective communication is critical for successful variation management:
-              </p>
+              <p>Effective communication is critical for successful variation management:</p>
 
               <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-500/30">
                 <h3 className="font-medium text-cyan-400 mb-3">Communication Framework</h3>
@@ -585,13 +704,30 @@ const Module5Section3_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-indigo-500/10 border border-indigo-500/30">
-                <h3 className="font-medium text-indigo-400 mb-3">Dispute Prevention and Resolution</h3>
+                <h3 className="font-medium text-indigo-400 mb-3">
+                  Dispute Prevention and Resolution
+                </h3>
                 <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
-                  <li><strong>Clear Documentation:</strong> Document discussions in writing to avoid disputes</li>
-                  <li><strong>Prompt Notification:</strong> Notify potential variations as soon as identified</li>
-                  <li><strong>Cost Transparency:</strong> Provide detailed cost breakdowns for variations</li>
-                  <li><strong>Alternative Solutions:</strong> Suggest safe, cost-effective alternatives where possible</li>
-                  <li><strong>Mediation Readiness:</strong> Be prepared to use formal dispute resolution procedures</li>
+                  <li>
+                    <strong>Clear Documentation:</strong> Document discussions in writing to avoid
+                    disputes
+                  </li>
+                  <li>
+                    <strong>Prompt Notification:</strong> Notify potential variations as soon as
+                    identified
+                  </li>
+                  <li>
+                    <strong>Cost Transparency:</strong> Provide detailed cost breakdowns for
+                    variations
+                  </li>
+                  <li>
+                    <strong>Alternative Solutions:</strong> Suggest safe, cost-effective
+                    alternatives where possible
+                  </li>
+                  <li>
+                    <strong>Mediation Readiness:</strong> Be prepared to use formal dispute
+                    resolution procedures
+                  </li>
                 </ul>
               </div>
             </div>
@@ -610,7 +746,9 @@ const Module5Section3_5 = () => {
                   <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
                     <li>Always carry a variation log and update it daily</li>
                     <li>Never make design changes without written approval</li>
-                    <li>Keep flexible with sequencing — switch tasks while waiting on issue resolution</li>
+                    <li>
+                      Keep flexible with sequencing — switch tasks while waiting on issue resolution
+                    </li>
                     <li>Proactively flag potential problems (e.g., long lead-time items)</li>
                     <li>Photograph and document site conditions before and after changes</li>
                     <li>Maintain clear communication logs with timestamps</li>
@@ -635,15 +773,24 @@ const Module5Section3_5 = () => {
                 <div className="space-y-3 text-sm text-white/80">
                   <div>
                     <p className="font-medium text-elec-yellow">Mobile Documentation:</p>
-                    <p>Use smartphones and tablets for real-time variation recording, photo documentation, and instant communication with project teams.</p>
+                    <p>
+                      Use smartphones and tablets for real-time variation recording, photo
+                      documentation, and instant communication with project teams.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-elec-yellow">Cloud-Based Systems:</p>
-                    <p>Implement cloud-based project management systems for real-time variation tracking, approval workflows, and document sharing.</p>
+                    <p>
+                      Implement cloud-based project management systems for real-time variation
+                      tracking, approval workflows, and document sharing.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-elec-yellow">BIM Integration:</p>
-                    <p>Use Building Information Modeling (BIM) to visualise variation impacts and coordinate changes with other building systems.</p>
+                    <p>
+                      Use Building Information Modeling (BIM) to visualise variation impacts and
+                      coordinate changes with other building systems.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -658,9 +805,14 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="font-medium text-red-400 mb-2">Case Study 1: Unauthorised Structural Modification</h3>
+                <h3 className="font-medium text-red-400 mb-2">
+                  Case Study 1: Unauthorised Structural Modification
+                </h3>
                 <p className="text-sm text-white/80 mb-3">
-                  On a commercial project, electricians discovered steel beams obstructing the planned cable route. Instead of stopping and reporting, they improvised by drilling through the beam, creating a serious safety risk. The work had to be removed and redone, and the contractor faced penalties.
+                  On a commercial project, electricians discovered steel beams obstructing the
+                  planned cable route. Instead of stopping and reporting, they improvised by
+                  drilling through the beam, creating a serious safety risk. The work had to be
+                  removed and redone, and the contractor faced penalties.
                 </p>
                 <div className="p-3 rounded bg-red-500/20">
                   <p className="font-medium text-red-400 mb-1">Lessons Learned:</p>
@@ -673,9 +825,14 @@ const Module5Section3_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <h3 className="font-medium text-green-400 mb-2">Case Study 2: Proactive Material Shortage Management</h3>
+                <h3 className="font-medium text-green-400 mb-2">
+                  Case Study 2: Proactive Material Shortage Management
+                </h3>
                 <p className="text-sm text-white/80 mb-3">
-                  During a hospital project, the electrical contractor identified potential delays in specialist fire-rated cable delivery. They immediately raised a variation to use alternative approved products, maintaining the project schedule while ensuring full compliance.
+                  During a hospital project, the electrical contractor identified potential delays
+                  in specialist fire-rated cable delivery. They immediately raised a variation to
+                  use alternative approved products, maintaining the project schedule while ensuring
+                  full compliance.
                 </p>
                 <div className="p-3 rounded bg-green-500/20">
                   <p className="font-medium text-green-400 mb-1">Success Factors:</p>
@@ -688,9 +845,14 @@ const Module5Section3_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                <h3 className="font-medium text-blue-400 mb-2">Case Study 3: Client-Driven Variation Management</h3>
+                <h3 className="font-medium text-blue-400 mb-2">
+                  Case Study 3: Client-Driven Variation Management
+                </h3>
                 <p className="text-sm text-white/80 mb-3">
-                  A retail fit-out project experienced multiple client-requested changes to lighting layouts. The electrical contractor implemented a systematic variation management process, with regular client meetings and clear cost implications for each change. The project completed successfully with full client satisfaction.
+                  A retail fit-out project experienced multiple client-requested changes to lighting
+                  layouts. The electrical contractor implemented a systematic variation management
+                  process, with regular client meetings and clear cost implications for each change.
+                  The project completed successfully with full client satisfaction.
                 </p>
                 <div className="p-3 rounded bg-blue-500/20">
                   <p className="font-medium text-blue-400 mb-1">Key Strategies:</p>
@@ -712,7 +874,10 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="p-4 rounded-lg bg-card/50 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-card/50 border-l-2 border-elec-yellow/50"
+                >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
                   <p className="text-sm text-white/80">A: {faq.answer}</p>
                 </div>
@@ -728,11 +893,26 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
               <div className="space-y-2 text-white">
-                <p className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-elec-yellow" /> Record all changes in writing.</p>
-                <p className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-elec-yellow" /> Never proceed with design changes without approval.</p>
-                <p className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-elec-yellow" /> Report unforeseen issues immediately.</p>
-                <p className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-elec-yellow" /> Suggest safe, practical solutions.</p>
-                <p className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-elec-yellow" /> Stay flexible with sequencing.</p>
+                <p className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-elec-yellow" /> Record all changes in
+                  writing.
+                </p>
+                <p className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-elec-yellow" /> Never proceed with design
+                  changes without approval.
+                </p>
+                <p className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-elec-yellow" /> Report unforeseen issues
+                  immediately.
+                </p>
+                <p className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-elec-yellow" /> Suggest safe, practical
+                  solutions.
+                </p>
+                <p className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-elec-yellow" /> Stay flexible with
+                  sequencing.
+                </p>
               </div>
             </div>
           </section>
@@ -745,7 +925,11 @@ const Module5Section3_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-white/90">
-                In this subsection, you learned how to deal with variations and unforeseen issues by recording them properly, getting approval, and maintaining clear communication. You saw how ignoring or mishandling changes can lead to disputes, delays, and safety risks. A professional approach ensures problems are solved efficiently while keeping projects safe, compliant, and on track.
+                In this subsection, you learned how to deal with variations and unforeseen issues by
+                recording them properly, getting approval, and maintaining clear communication. You
+                saw how ignoring or mishandling changes can lead to disputes, delays, and safety
+                risks. A professional approach ensures problems are solved efficiently while keeping
+                projects safe, compliant, and on track.
               </p>
             </div>
           </section>

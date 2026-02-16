@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Wrench,
@@ -16,190 +16,176 @@ import {
   Power,
   Activity,
   Search,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
-    id: "insulated-tools",
-    question: "Why should insulated tools be inspected before each use?",
+    id: 'insulated-tools',
+    question: 'Why should insulated tools be inspected before each use?',
     options: [
-      "To check for nicks or cuts in insulation",
-      "To see if they need cleaning",
-      "To verify the manufacturer details",
+      'To check for nicks or cuts in insulation',
+      'To see if they need cleaning',
+      'To verify the manufacturer details',
     ],
     correctIndex: 0,
     explanation:
-      "Damaged insulation on electrical tools can expose users to electric shock, making visual inspection for nicks, cuts, or wear essential before each use.",
+      'Damaged insulation on electrical tools can expose users to electric shock, making visual inspection for nicks, cuts, or wear essential before each use.',
   },
   {
-    id: "unsafe-power-tool",
-    question: "Name one sign that a power tool is unsafe to use.",
+    id: 'unsafe-power-tool',
+    question: 'Name one sign that a power tool is unsafe to use.',
+    options: ['Clean exterior surface', 'Cracked casing or frayed cable', 'Recent purchase date'],
+    correctIndex: 1,
+    explanation:
+      'Cracked casings can expose internal wiring, while frayed cables present electric shock risks. Either condition makes the tool unsafe for use.',
+  },
+  {
+    id: 'calibration-importance',
+    question: 'Why is calibration important for test equipment?',
     options: [
-      "Clean exterior surface",
-      "Cracked casing or frayed cable",
-      "Recent purchase date",
+      'To make it look professional',
+      'To maintain accuracy and compliance',
+      'To increase battery life',
     ],
     correctIndex: 1,
     explanation:
-      "Cracked casings can expose internal wiring, while frayed cables present electric shock risks. Either condition makes the tool unsafe for use.",
+      'Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable, trustworthy results.',
   },
   {
-    id: "calibration-importance",
-    question: "Why is calibration important for test equipment?",
+    id: 'storage-conditions',
+    question: 'Why should tools be stored in dry conditions?',
     options: [
-      "To make it look professional",
-      "To maintain accuracy and compliance",
-      "To increase battery life",
+      'To improve appearance',
+      'To prevent corrosion and electrical damage',
+      'To reduce storage space',
     ],
     correctIndex: 1,
     explanation:
-      "Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable, trustworthy results.",
-  },
-  {
-    id: "storage-conditions",
-    question: "Why should tools be stored in dry conditions?",
-    options: [
-      "To improve appearance",
-      "To prevent corrosion and electrical damage",
-      "To reduce storage space",
-    ],
-    correctIndex: 1,
-    explanation:
-      "Moisture causes corrosion on metal parts and can damage electrical components, significantly reducing tool life and safety.",
+      'Moisture causes corrosion on metal parts and can damage electrical components, significantly reducing tool life and safety.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What regulation covers the safe use and maintenance of tools in the workplace?",
-    options: [
-      "BS 7671",
-      "PUWER",
-      "COSHH",
-      "LOLER",
-    ],
+    question: 'What regulation covers the safe use and maintenance of tools in the workplace?',
+    options: ['BS 7671', 'PUWER', 'COSHH', 'LOLER'],
     correctAnswer: 1,
     explanation:
-      "PUWER (Provision and Use of Work Equipment Regulations) specifically covers the safe use and maintenance of work equipment including tools.",
+      'PUWER (Provision and Use of Work Equipment Regulations) specifically covers the safe use and maintenance of work equipment including tools.',
   },
   {
     id: 2,
-    question: "Which of the following is a sign that a cutting tool needs maintenance?",
-    options: [
-      "Sharp edges",
-      "Blunt or chipped edges",
-      "Clean, polished surface",
-      "New packaging",
-    ],
+    question: 'Which of the following is a sign that a cutting tool needs maintenance?',
+    options: ['Sharp edges', 'Blunt or chipped edges', 'Clean, polished surface', 'New packaging'],
     correctAnswer: 1,
     explanation:
-      "Blunt or chipped cutting edges indicate wear and reduce tool effectiveness, potentially causing poor cuts and increased effort.",
+      'Blunt or chipped cutting edges indicate wear and reduce tool effectiveness, potentially causing poor cuts and increased effort.',
   },
   {
     id: 3,
-    question: "True or False: Insulated tools do not need regular inspection.",
-    options: ["True", "False"],
+    question: 'True or False: Insulated tools do not need regular inspection.',
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False. Insulated tools require regular inspection to check for damage to the insulation that could compromise electrical safety.",
+      'False. Insulated tools require regular inspection to check for damage to the insulation that could compromise electrical safety.',
   },
   {
     id: 4,
-    question: "Give one example of basic power tool maintenance.",
+    question: 'Give one example of basic power tool maintenance.',
     options: [
-      "Changing the colour",
-      "Cleaning vents and checking cables",
-      "Adding stickers",
-      "Increasing power output",
+      'Changing the colour',
+      'Cleaning vents and checking cables',
+      'Adding stickers',
+      'Increasing power output',
     ],
     correctAnswer: 1,
     explanation:
-      "Cleaning vents prevents overheating, while checking cables ensures electrical safety - both are essential maintenance tasks.",
+      'Cleaning vents prevents overheating, while checking cables ensures electrical safety - both are essential maintenance tasks.',
   },
   {
     id: 5,
-    question: "Why should tools be stored in a dry environment?",
+    question: 'Why should tools be stored in a dry environment?',
     options: [
-      "To improve aesthetics",
-      "To prevent corrosion and electrical damage",
-      "To reduce weight",
-      "To comply with recycling laws",
+      'To improve aesthetics',
+      'To prevent corrosion and electrical damage',
+      'To reduce weight',
+      'To comply with recycling laws',
     ],
     correctAnswer: 1,
     explanation:
-      "Dry storage prevents corrosion of metal parts and protects electrical components from moisture damage.",
+      'Dry storage prevents corrosion of metal parts and protects electrical components from moisture damage.',
   },
   {
     id: 6,
-    question: "What should be done with damaged tools?",
+    question: 'What should be done with damaged tools?',
     options: [
-      "Continue using them until they fail completely",
-      "Repair immediately or remove from service",
-      "Lend them to another worker",
-      "Use them only on low-voltage systems",
+      'Continue using them until they fail completely',
+      'Repair immediately or remove from service',
+      'Lend them to another worker',
+      'Use them only on low-voltage systems',
     ],
     correctAnswer: 1,
     explanation:
-      "Damaged tools should be immediately repaired by qualified personnel or removed from service to prevent injury and poor workmanship.",
+      'Damaged tools should be immediately repaired by qualified personnel or removed from service to prevent injury and poor workmanship.',
   },
   {
     id: 7,
-    question: "Why is record-keeping important for tool maintenance?",
+    question: 'Why is record-keeping important for tool maintenance?',
     options: [
-      "To increase tool value",
-      "To track inspections and comply with safety policies",
-      "To impress clients",
-      "To reduce insurance costs",
+      'To increase tool value',
+      'To track inspections and comply with safety policies',
+      'To impress clients',
+      'To reduce insurance costs',
     ],
     correctAnswer: 1,
     explanation:
-      "Records help track inspections, identify recurring issues, demonstrate compliance with safety regulations, and plan preventive maintenance.",
+      'Records help track inspections, identify recurring issues, demonstrate compliance with safety regulations, and plan preventive maintenance.',
   },
   {
     id: 8,
-    question: "Give one method of protecting tools during transport.",
+    question: 'Give one method of protecting tools during transport.',
     options: [
-      "Wrap in newspaper",
-      "Use a toolbox with protective inserts",
-      "Carry them loose",
-      "Tie them together",
+      'Wrap in newspaper',
+      'Use a toolbox with protective inserts',
+      'Carry them loose',
+      'Tie them together',
     ],
     correctAnswer: 1,
     explanation:
-      "Toolboxes with protective foam inserts prevent tools from moving and damaging each other during transport.",
+      'Toolboxes with protective foam inserts prevent tools from moving and damaging each other during transport.',
   },
 ];
 
 const Module3Section3_4: React.FC = () => {
-  console.log("Module3Section3_4 component loaded");
+  console.log('Module3Section3_4 component loaded');
 
   useSEO(
-    "Tool Inspection and Maintenance – Module 3 (3.3.4)",
-    "Essential guide to tool inspection and maintenance. Safety checks, maintenance practices, storage and PUWER compliance."
+    'Tool Inspection and Maintenance – Module 3 (3.3.4)',
+    'Essential guide to tool inspection and maintenance. Safety checks, maintenance practices, storage and PUWER compliance.'
   );
 
   const faqs = [
     {
-      q: "How often should tools be inspected?",
-      a: "Before each use for obvious defects, with more formal inspections at set intervals depending on the tool and work environment.",
+      q: 'How often should tools be inspected?',
+      a: 'Before each use for obvious defects, with more formal inspections at set intervals depending on the tool and work environment.',
     },
     {
-      q: "Do cordless tools need maintenance?",
-      a: "Yes — batteries, chargers, and the tool itself all need regular checks and maintenance according to manufacturer guidelines.",
+      q: 'Do cordless tools need maintenance?',
+      a: 'Yes — batteries, chargers, and the tool itself all need regular checks and maintenance according to manufacturer guidelines.',
     },
     {
-      q: "Should I repair tools myself?",
-      a: "Only if you are trained and authorised; otherwise, send them to an approved repair centre to maintain safety and warranty.",
+      q: 'Should I repair tools myself?',
+      a: 'Only if you are trained and authorised; otherwise, send them to an approved repair centre to maintain safety and warranty.',
     },
     {
-      q: "What should I do if I find a damaged tool on site?",
-      a: "Remove it from service immediately, tag it as defective, and report it to the supervisor. Do not use damaged tools.",
+      q: 'What should I do if I find a damaged tool on site?',
+      a: 'Remove it from service immediately, tag it as defective, and report it to the supervisor. Do not use damaged tools.',
     },
   ];
 
@@ -236,7 +222,8 @@ const Module3Section3_4: React.FC = () => {
             Tool Inspection and Maintenance
           </h1>
           <p className="text-white/70">
-            Essential practices for safe, reliable tools and compliance with workplace safety regulations.
+            Essential practices for safe, reliable tools and compliance with workplace safety
+            regulations.
           </p>
         </header>
 
@@ -260,7 +247,8 @@ const Module3Section3_4: React.FC = () => {
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  <strong>Spot:</strong> Cracked handles, frayed cables, blunt edges, corrosion signs.
+                  <strong>Spot:</strong> Cracked handles, frayed cables, blunt edges, corrosion
+                  signs.
                 </li>
                 <li>
                   <strong>Use:</strong> Remove damaged tools immediately - never compromise safety.
@@ -280,7 +268,9 @@ const Module3Section3_4: React.FC = () => {
             Learning outcomes
           </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Explain why tool inspection and maintenance are critical for safety and performance.</li>
+            <li>
+              Explain why tool inspection and maintenance are critical for safety and performance.
+            </li>
             <li>Identify common signs of tool damage or wear.</li>
             <li>Carry out basic maintenance for hand tools and power tools.</li>
             <li>Apply correct storage and handling practices to prolong tool life.</li>
@@ -531,19 +521,40 @@ const Module3Section3_4: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Using damaged insulated tools</strong> - Electric shock risk from compromised insulation</li>
-                <li><strong>Continuing with cracked casings</strong> - Exposes internal wiring, creates shock hazard</li>
-                <li><strong>Ignoring frayed cables</strong> - Risk of electrocution and tool failure</li>
-                <li><strong>Skipping calibration</strong> - Inaccurate test results, compliance failures</li>
+                <li>
+                  <strong>Using damaged insulated tools</strong> - Electric shock risk from
+                  compromised insulation
+                </li>
+                <li>
+                  <strong>Continuing with cracked casings</strong> - Exposes internal wiring,
+                  creates shock hazard
+                </li>
+                <li>
+                  <strong>Ignoring frayed cables</strong> - Risk of electrocution and tool failure
+                </li>
+                <li>
+                  <strong>Skipping calibration</strong> - Inaccurate test results, compliance
+                  failures
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Performance Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Poor storage conditions</strong> - Accelerated corrosion, premature failure</li>
-                <li><strong>Inadequate cleaning</strong> - Dust buildup causes overheating and wear</li>
-                <li><strong>Using blunt tools</strong> - Poor results, increased effort, safety risks</li>
-                <li><strong>No maintenance records</strong> - Cannot demonstrate compliance or track issues</li>
+                <li>
+                  <strong>Poor storage conditions</strong> - Accelerated corrosion, premature
+                  failure
+                </li>
+                <li>
+                  <strong>Inadequate cleaning</strong> - Dust buildup causes overheating and wear
+                </li>
+                <li>
+                  <strong>Using blunt tools</strong> - Poor results, increased effort, safety risks
+                </li>
+                <li>
+                  <strong>No maintenance records</strong> - Cannot demonstrate compliance or track
+                  issues
+                </li>
               </ul>
             </div>
           </div>
@@ -559,10 +570,18 @@ const Module3Section3_4: React.FC = () => {
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">PUWER Requirements</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Regulation 5:</strong> Work equipment must be suitable and maintained</li>
-                <li><strong>Regulation 6:</strong> Regular inspection and testing required</li>
-                <li><strong>Regulation 22:</strong> Inspection records must be kept</li>
-                <li><strong>Regulation 23:</strong> Defects must be remedied before continued use</li>
+                <li>
+                  <strong>Regulation 5:</strong> Work equipment must be suitable and maintained
+                </li>
+                <li>
+                  <strong>Regulation 6:</strong> Regular inspection and testing required
+                </li>
+                <li>
+                  <strong>Regulation 22:</strong> Inspection records must be kept
+                </li>
+                <li>
+                  <strong>Regulation 23:</strong> Defects must be remedied before continued use
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
@@ -588,9 +607,10 @@ const Module3Section3_4: React.FC = () => {
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Cracked SDS Drill Causes Site Shutdown</p>
             <p className="text-sm mb-4">
-              An electrician on a commercial site used a damaged SDS drill with a cracked casing. The crack exposed internal wiring,
-              which caused a short circuit when the tool contacted metal conduit. The incident led to a site safety shutdown.
-              Routine inspection would have identified the defect before use.
+              An electrician on a commercial site used a damaged SDS drill with a cracked casing.
+              The crack exposed internal wiring, which caused a short circuit when the tool
+              contacted metal conduit. The incident led to a site safety shutdown. Routine
+              inspection would have identified the defect before use.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
@@ -640,9 +660,9 @@ const Module3Section3_4: React.FC = () => {
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
-              Regular inspection and maintenance of tools are essential for safety, compliance, and long service life.
-              By cleaning, storing, and repairing tools correctly, electricians can work more efficiently and avoid
-              unnecessary downtime or hazards.
+              Regular inspection and maintenance of tools are essential for safety, compliance, and
+              long service life. By cleaning, storing, and repairing tools correctly, electricians
+              can work more efficiently and avoid unnecessary downtime or hazards.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
@@ -714,23 +734,47 @@ const Module3Section3_4: React.FC = () => {
               <div>
                 <p className="font-medium mb-2">Daily Inspection Checklist</p>
                 <ul className="space-y-1">
-                  <li>• <strong>Handles:</strong> No cracks or splits</li>
-                  <li>• <strong>Insulation:</strong> No nicks or cuts</li>
-                  <li>• <strong>Cables:</strong> No fraying or damage</li>
-                  <li>• <strong>Casings:</strong> No cracks or loose parts</li>
-                  <li>• <strong>Edges:</strong> Sharp and chip-free</li>
-                  <li>• <strong>Operation:</strong> All functions work</li>
+                  <li>
+                    • <strong>Handles:</strong> No cracks or splits
+                  </li>
+                  <li>
+                    • <strong>Insulation:</strong> No nicks or cuts
+                  </li>
+                  <li>
+                    • <strong>Cables:</strong> No fraying or damage
+                  </li>
+                  <li>
+                    • <strong>Casings:</strong> No cracks or loose parts
+                  </li>
+                  <li>
+                    • <strong>Edges:</strong> Sharp and chip-free
+                  </li>
+                  <li>
+                    • <strong>Operation:</strong> All functions work
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="font-medium mb-2">Maintenance Schedule</p>
                 <ul className="space-y-1">
-                  <li>• <strong>Daily:</strong> Clean and visual check</li>
-                  <li>• <strong>Weekly:</strong> Deep clean and lubricate</li>
-                  <li>• <strong>Monthly:</strong> Formal inspection</li>
-                  <li>• <strong>Annually:</strong> Calibration check</li>
-                  <li>• <strong>As needed:</strong> Sharpen, repair</li>
-                  <li>• <strong>Immediately:</strong> Remove if damaged</li>
+                  <li>
+                    • <strong>Daily:</strong> Clean and visual check
+                  </li>
+                  <li>
+                    • <strong>Weekly:</strong> Deep clean and lubricate
+                  </li>
+                  <li>
+                    • <strong>Monthly:</strong> Formal inspection
+                  </li>
+                  <li>
+                    • <strong>Annually:</strong> Calibration check
+                  </li>
+                  <li>
+                    • <strong>As needed:</strong> Sharpen, repair
+                  </li>
+                  <li>
+                    • <strong>Immediately:</strong> Remove if damaged
+                  </li>
                 </ul>
               </div>
             </div>
@@ -744,10 +788,18 @@ const Module3Section3_4: React.FC = () => {
             Key References
           </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
-            <p><strong>PUWER 1998:</strong> Provision and Use of Work Equipment Regulations</p>
-            <p><strong>HSE INDG291:</strong> Safe use of work equipment</p>
-            <p><strong>BS EN 60900:</strong> Live working - Hand tools for use up to 1000V AC</p>
-            <p><strong>GS38:</strong> Electrical test equipment for use by electricians</p>
+            <p>
+              <strong>PUWER 1998:</strong> Provision and Use of Work Equipment Regulations
+            </p>
+            <p>
+              <strong>HSE INDG291:</strong> Safe use of work equipment
+            </p>
+            <p>
+              <strong>BS EN 60900:</strong> Live working - Hand tools for use up to 1000V AC
+            </p>
+            <p>
+              <strong>GS38:</strong> Electrical test equipment for use by electricians
+            </p>
           </div>
         </section>
 
@@ -762,7 +814,11 @@ const Module3Section3_4: React.FC = () => {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../3-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Test Equipment

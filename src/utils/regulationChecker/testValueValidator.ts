@@ -1,4 +1,3 @@
-
 import { TestResult } from '@/types/testResult';
 import { RegulationWarning } from './types';
 import { isRingCircuit } from './ringCircuitDetector';
@@ -12,16 +11,24 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
   if (result.insulationLiveNeutral) {
     const irString = result.insulationLiveNeutral.replace('>', '').trim();
     const ir = parseFloat(irString);
-    
+
     if (!isNaN(ir)) {
       const description = result.circuitDescription?.toLowerCase() || '';
-      const isSELV = description.includes('selv') || description.includes('pelv') || description.includes('12v') || description.includes('24v');
-      const hasElectronics = description.includes('control') || description.includes('data') || description.includes('electronic') || description.includes('smart');
-      
+      const isSELV =
+        description.includes('selv') ||
+        description.includes('pelv') ||
+        description.includes('12v') ||
+        description.includes('24v');
+      const hasElectronics =
+        description.includes('control') ||
+        description.includes('data') ||
+        description.includes('electronic') ||
+        description.includes('smart');
+
       // BS 7671 Table 61 minimum values
       let minRequired = 1.0; // Default for circuits ≤500V
       let regulationNote = '1.0MΩ minimum for circuits up to 500V AC/DC';
-      
+
       if (isSELV) {
         minRequired = 0.25;
         regulationNote = '0.25MΩ minimum for SELV/PELV circuits (tested at 250V)';
@@ -32,7 +39,8 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           title: 'Insulation Resistance for Electronic Equipment',
           description: `${result.insulationLiveNeutral}MΩ meets minimum for circuits with electronic equipment (0.5MΩ) but is below standard 1.0MΩ requirement.`,
           regulation: 'BS 7671 Regulation 612.3.2 & Table 61',
-          suggestion: 'Verify sensitive electronic equipment was isolated during test. If not isolated, retest with equipment disconnected or accept lower value if manufacturer permits.'
+          suggestion:
+            'Verify sensitive electronic equipment was isolated during test. If not isolated, retest with equipment disconnected or accept lower value if manufacturer permits.',
         });
         // Don't add critical warning, just the info
       } else if (ir < minRequired) {
@@ -41,7 +49,8 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           title: 'Insulation Resistance Below Minimum',
           description: `${result.insulationLiveNeutral}MΩ is below BS 7671 Table 61 minimum of ${minRequired}MΩ (${regulationNote}).`,
           regulation: 'BS 7671 Regulation 612.3.2 & Table 61',
-          suggestion: 'Investigate cause: moisture ingress, damaged insulation, or incorrect test voltage. Rectify before energising circuit.'
+          suggestion:
+            'Investigate cause: moisture ingress, damaged insulation, or incorrect test voltage. Rectify before energising circuit.',
         });
       } else if (ir < 2.0 && !isSELV && !hasElectronics) {
         // Warning for borderline values (not critical but worth investigating)
@@ -50,7 +59,8 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           title: 'Low Insulation Resistance',
           description: `${result.insulationLiveNeutral}MΩ meets minimum but is relatively low. Good practice is ≥2MΩ for most circuits.`,
           regulation: 'BS 7671 Regulation 612.3.2',
-          suggestion: 'Monitor insulation resistance over time. Values typically improve after initial energisation as moisture dissipates.'
+          suggestion:
+            'Monitor insulation resistance over time. Values typically improve after initial energisation as moisture dissipates.',
         });
       }
     }
@@ -63,7 +73,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
       title: 'Incorrect Polarity Detected',
       description: 'Incorrect polarity is a serious safety hazard.',
       regulation: 'BS 7671 Regulation 612.6',
-      suggestion: 'Correct polarity before energising circuit. Check all connections.'
+      suggestion: 'Correct polarity before energising circuit. Check all connections.',
     });
   }
 
@@ -78,7 +88,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           title: 'High R1+R2 for Ring Circuit',
           description: `R1+R2 of ${result.r1r2}Ω is high for a ring final circuit.`,
           regulation: 'BS 7671 Appendix 15',
-          suggestion: 'Check ring continuity and verify all connections are secure.'
+          suggestion: 'Check ring continuity and verify all connections are secure.',
         });
       }
     }

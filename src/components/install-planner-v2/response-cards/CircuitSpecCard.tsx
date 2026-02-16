@@ -1,15 +1,23 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { CheckCircle2, ChevronDown, AlertCircle, Zap, RefreshCw, HelpCircle, BookOpen } from "lucide-react";
-import { useState } from "react";
-import { EditableField } from "../EditableField";
-import { generateSingleLineDiagram } from "@/lib/diagramGenerator/layoutEngine";
-import { SVGDiagramRenderer } from "@/components/circuit-diagrams/SVGDiagramRenderer";
-import { useToast } from "@/hooks/use-toast";
-import { CitationBadge } from "../CitationBadge";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  CheckCircle2,
+  ChevronDown,
+  AlertCircle,
+  Zap,
+  RefreshCw,
+  HelpCircle,
+  BookOpen,
+} from 'lucide-react';
+import { useState } from 'react';
+import { EditableField } from '../EditableField';
+import { generateSingleLineDiagram } from '@/lib/diagramGenerator/layoutEngine';
+import { SVGDiagramRenderer } from '@/components/circuit-diagrams/SVGDiagramRenderer';
+import { useToast } from '@/hooks/use-toast';
+import { CitationBadge } from '../CitationBadge';
 
 interface CircuitSpecData {
   cableSize?: number;
@@ -45,7 +53,12 @@ interface CircuitSpecCardProps {
   citations?: any[];
 }
 
-export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: CircuitSpecCardProps) => {
+export const CircuitSpecCard = ({
+  data,
+  planData,
+  onSpecChange,
+  citations,
+}: CircuitSpecCardProps) => {
   const [showCalculations, setShowCalculations] = useState(false);
   const [showDiagram, setShowDiagram] = useState(false);
   const [diagram, setDiagram] = useState<any>(null);
@@ -67,8 +80,11 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
           loadType: planData.loadType || 'General Load',
           loadPower: planData.totalLoad,
           protectionDevice: {
-            type: localData.protectionDevice?.includes('Type B') ? 'B' : 
-                  localData.protectionDevice?.includes('Type C') ? 'C' : 'B',
+            type: localData.protectionDevice?.includes('Type B')
+              ? 'B'
+              : localData.protectionDevice?.includes('Type C')
+                ? 'C'
+                : 'B',
             rating: parseInt(localData.protectionDevice?.match(/(\d+)A/)?.[1] || '16'),
             poles: planData.phases === 'three' ? 3 : 1,
             kaRating: 6,
@@ -87,7 +103,7 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
 
   const handleFieldUpdate = (field: string, newValue: any, validation: any) => {
     const updatedData = { ...localData, [field]: newValue };
-    
+
     // Update with new calculations if provided
     if (validation?.newCalculations) {
       if (validation.newCalculations.capacity) {
@@ -111,21 +127,21 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
   const handleRecalculate = () => {
     setIsRecalculating(true);
     toast({
-      title: "Recalculating design...",
-      description: "Running full BS 7671 compliance checks",
+      title: 'Recalculating design...',
+      description: 'Running full BS 7671 compliance checks',
     });
-    
+
     // Trigger recalculation by resetting local data to original
     setTimeout(() => {
       setLocalData(data);
       setIsRecalculating(false);
       toast({
-        title: "Design recalculated",
-        description: "All calculations verified for current parameters",
+        title: 'Design recalculated',
+        description: 'All calculations verified for current parameters',
       });
     }, 800);
   };
-  
+
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-blue-500/5 to-transparent hover:border-elec-yellow/30 transition-all w-full">
       <CardContent className="p-2 sm:p-3 md:p-4 space-y-2 sm:space-y-3 md:space-y-4">
@@ -166,9 +182,9 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs" side="top">
                         <p className="text-xs">
-                          Selected based on design current ({localData.designCurrent?.toFixed(1)}A), 
-                          correction factors ({localData.correctionFactors?.overall || 'N/A'}), 
-                          and corrected capacity ({localData.correctedCapacity?.toFixed(1)}A)
+                          Selected based on design current ({localData.designCurrent?.toFixed(1)}A),
+                          correction factors ({localData.correctionFactors?.overall || 'N/A'}), and
+                          corrected capacity ({localData.correctedCapacity?.toFixed(1)}A)
                         </p>
                       </TooltipContent>
                     </Tooltip>
@@ -180,10 +196,14 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
                     value={localData.cableSize || 0}
                     fieldType="cable"
                     context={{ planData, currentSpec: localData }}
-                    onValidated={(newValue, validation) => handleFieldUpdate('cableSize', newValue, validation)}
+                    onValidated={(newValue, validation) =>
+                      handleFieldUpdate('cableSize', newValue, validation)
+                    }
                   />
                 ) : (
-                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">{localData.cableSize}mm²</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                    {localData.cableSize}mm²
+                  </p>
                 )}
               </div>
             </div>
@@ -197,19 +217,23 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
               ) : (
                 <AlertCircle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
               )}
-              <span className="text-xs sm:text-sm text-foreground">
-                BS 7671:2018 Compliant
-              </span>
+              <span className="text-xs sm:text-sm text-foreground">BS 7671:2018 Compliant</span>
             </div>
             <div className="flex items-center gap-1 flex-wrap">
               {localData.voltageDrop?.compliant && (
-                <Badge variant="outline" className="text-[10px] sm:text-[10px] bg-green-500/10 border-green-500/30 text-green-400">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] sm:text-[10px] bg-green-500/10 border-green-500/30 text-green-400"
+                >
                   <BookOpen className="h-2 w-2 sm:h-2.5 sm:w-2.5 mr-0.5 sm:mr-1" />
                   525.1 ✓
                 </Badge>
               )}
               {localData.earthFault?.maxZs && (
-                <Badge variant="outline" className="text-[10px] sm:text-[10px] bg-blue-500/10 border-blue-500/30 text-blue-400">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] sm:text-[10px] bg-blue-500/10 border-blue-500/30 text-blue-400"
+                >
                   <BookOpen className="h-2 w-2 sm:h-2.5 sm:w-2.5 mr-0.5 sm:mr-1" />
                   411.4 ✓
                 </Badge>
@@ -223,9 +247,7 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
               <p className="text-[10px] sm:text-xs text-muted-foreground">Voltage Drop</p>
               <p className="text-sm sm:text-base font-semibold text-foreground">
                 {localData.voltageDrop?.percent?.toFixed(1)}%
-                {localData.voltageDrop?.compliant && (
-                  <span className="text-green-400 ml-1">✓</span>
-                )}
+                {localData.voltageDrop?.compliant && <span className="text-green-400 ml-1">✓</span>}
               </p>
             </div>
             <div className="bg-muted/30 rounded p-2">
@@ -242,19 +264,21 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
           <div className="space-y-2">
             <Collapsible open={showDiagram} onOpenChange={setShowDiagram}>
               <CollapsibleTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="w-full justify-between text-xs h-8 border-elec-yellow/30"
                 >
                   <span className="flex items-center gap-2">
                     <Zap className="h-3 w-3" />
                     Circuit Diagram
                   </span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${showDiagram ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${showDiagram ? 'rotate-180' : ''}`}
+                  />
                 </Button>
               </CollapsibleTrigger>
-              
+
               <CollapsibleContent className="pt-3">
                 <div className="border border-border/50 rounded-lg overflow-hidden bg-background">
                   <SVGDiagramRenderer layout={diagram} />
@@ -267,16 +291,18 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
         {/* Expandable Working Out */}
         <Collapsible open={showCalculations} onOpenChange={setShowCalculations} className="w-full">
           <CollapsibleTrigger asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="w-full justify-between text-[10px] sm:text-xs h-8 sm:h-9 border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               <span className="font-medium">View Working Out</span>
-              <ChevronDown className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${showCalculations ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${showCalculations ? 'rotate-180' : ''}`}
+              />
             </Button>
           </CollapsibleTrigger>
-          
+
           <CollapsibleContent className="space-y-3 pt-3">
             {/* Design Current Section */}
             <div className="space-y-2 border-l-2 border-blue-500/30 pl-3">
@@ -315,8 +341,8 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
                     <p>Max Permitted: {data.voltageDrop.limit}%</p>
                   )}
                   {data.voltageDrop.compliant !== undefined && (
-                    <p className={data.voltageDrop.compliant ? "text-green-400" : "text-red-400"}>
-                      {data.voltageDrop.compliant ? "✓ Within limits" : "✗ Exceeds limits"}
+                    <p className={data.voltageDrop.compliant ? 'text-green-400' : 'text-red-400'}>
+                      {data.voltageDrop.compliant ? '✓ Within limits' : '✗ Exceeds limits'}
                     </p>
                   )}
                 </div>
@@ -332,9 +358,7 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
                   {data.earthFault.actualZs !== undefined && (
                     <p>Actual Zs: {data.earthFault.actualZs}Ω</p>
                   )}
-                  {data.earthFault.r1r2 !== undefined && (
-                    <p>R1+R2: {data.earthFault.r1r2}Ω</p>
-                  )}
+                  {data.earthFault.r1r2 !== undefined && <p>R1+R2: {data.earthFault.r1r2}Ω</p>}
                 </div>
               </div>
             )}
@@ -343,7 +367,8 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
             {data.installationMethod && (
               <div className="pt-2 border-t border-border/50">
                 <p className="text-xs text-muted-foreground">
-                  Installation Method: <span className="text-foreground">{data.installationMethod}</span>
+                  Installation Method:{' '}
+                  <span className="text-foreground">{data.installationMethod}</span>
                 </p>
               </div>
             )}

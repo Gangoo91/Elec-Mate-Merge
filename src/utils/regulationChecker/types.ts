@@ -1,4 +1,3 @@
-
 export interface RegulationWarning {
   severity: 'info' | 'warning' | 'critical';
   title: string;

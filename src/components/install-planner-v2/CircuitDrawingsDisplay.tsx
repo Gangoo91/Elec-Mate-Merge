@@ -1,16 +1,20 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Maximize2, Sparkles, Loader2, FileDown } from "lucide-react";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Download, FileText, Maximize2, Sparkles, Loader2, FileDown } from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 import jsPDF from 'jspdf';
-import { generateSingleLineDiagram, generateConsumerUnitDiagram, CircuitData } from "@/lib/diagramGenerator/layoutEngine";
-import { SVGDiagramRenderer } from "@/components/circuit-diagrams/SVGDiagramRenderer";
-import { exportDiagramsAsPDF, exportDiagramAsPNG } from "@/lib/diagramGenerator/exportDiagram";
-import { FloorPlanDisplay } from "./FloorPlanDisplay";
-import { SVGDiagramRenderer as LocalSVGRenderer } from "./SVGDiagramRenderer";
+import {
+  generateSingleLineDiagram,
+  generateConsumerUnitDiagram,
+  CircuitData,
+} from '@/lib/diagramGenerator/layoutEngine';
+import { SVGDiagramRenderer } from '@/components/circuit-diagrams/SVGDiagramRenderer';
+import { exportDiagramsAsPDF, exportDiagramAsPNG } from '@/lib/diagramGenerator/exportDiagram';
+import { FloorPlanDisplay } from './FloorPlanDisplay';
+import { SVGDiagramRenderer as LocalSVGRenderer } from './SVGDiagramRenderer';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -32,30 +36,38 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
   // PHASE 6: Enhanced circuit parsing with multiple fallback strategies
   const parsedCircuits = useMemo(() => {
     setIsLoadingStructuredData(true);
-    const designerMessages = messages.filter(m => m.agentName === 'designer');
+    const designerMessages = messages.filter((m) => m.agentName === 'designer');
     if (designerMessages.length === 0) {
       setIsLoadingStructuredData(false);
       return [];
     }
-    
+
     const lastDesignerMsg = designerMessages[designerMessages.length - 1];
-    
+
     // STRATEGY 1: Check if message object has structuredData property directly
     try {
       if ((lastDesignerMsg as any).structuredData?.circuits) {
-        console.log('✅ Using structuredData from message object:', (lastDesignerMsg as any).structuredData.circuits.length, 'circuits');
+        console.log(
+          '✅ Using structuredData from message object:',
+          (lastDesignerMsg as any).structuredData.circuits.length,
+          'circuits'
+        );
         setIsLoadingStructuredData(false);
         return (lastDesignerMsg as any).structuredData.circuits;
       }
     } catch (e) {
       console.warn('⚠️ Strategy 1 failed:', e);
     }
-    
+
     // STRATEGY 2: Try parsing content as JSON
     try {
       const parsed = JSON.parse(lastDesignerMsg.content);
       if (parsed.structuredData?.circuits) {
-        console.log('✅ Using structuredData from JSON content:', parsed.structuredData.circuits.length, 'circuits');
+        console.log(
+          '✅ Using structuredData from JSON content:',
+          parsed.structuredData.circuits.length,
+          'circuits'
+        );
         setIsLoadingStructuredData(false);
         return parsed.structuredData.circuits;
       }
@@ -67,17 +79,19 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
     } catch (e) {
       console.warn('⚠️ Strategy 2 failed (not JSON or no circuits):', e);
     }
-    
+
     // STRATEGY 3: Fallback to text parsing (legacy support)
     console.log('⚠️ No structured data found, falling back to text parsing');
-    const combinedContent = designerMessages.map(m => m.content).join('\n\n');
+    const combinedContent = designerMessages.map((m) => m.content).join('\n\n');
     const parsed = parseCircuitsFromDesigner(combinedContent);
-    
+
     if (parsed.length === 0) {
-      console.warn('❌ No circuits parsed from any strategy - designer output may be in unexpected format');
+      console.warn(
+        '❌ No circuits parsed from any strategy - designer output may be in unexpected format'
+      );
       console.log('Designer message sample:', lastDesignerMsg.content.substring(0, 200));
     }
-    
+
     setIsLoadingStructuredData(false);
     return parsed;
   }, [messages]);
@@ -85,53 +99,51 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
   // Generate SVG diagrams
   const diagrams = useMemo(() => {
     if (parsedCircuits.length === 0) return [];
-    
-    const layouts = parsedCircuits.map((circuit, idx) => 
-      generateSingleLineDiagram(circuit)
-    );
-    
+
+    const layouts = parsedCircuits.map((circuit, idx) => generateSingleLineDiagram(circuit));
+
     // Add consumer unit diagram if multiple circuits
     if (parsedCircuits.length >= 2) {
       const cuLayout = generateConsumerUnitDiagram(parsedCircuits, 100);
       layouts.push(cuLayout);
     }
-    
+
     return layouts;
   }, [parsedCircuits]);
 
   const handleGenerateAIDiagram = async (index: number) => {
     const circuit = parsedCircuits[index];
     if (!circuit) return;
-    
+
     setGeneratingAI(index);
-    toast.info("Generating AI diagram...", {
-      description: "This will use Lovable AI credits"
+    toast.info('Generating AI diagram...', {
+      description: 'This will use Lovable AI credits',
     });
-    
+
     try {
       // Pass structured circuit data directly to edge function
       const { data, error } = await supabase.functions.invoke('generate-circuit-diagrams', {
         body: {
           structuredCircuit: circuit, // NEW: Pass structured data
-          projectName: `${projectName} - Circuit ${circuit.circuitNumber}`
-        }
+          projectName: `${projectName} - Circuit ${circuit.circuitNumber}`,
+        },
       });
-      
+
       if (error) {
         console.error('Edge function error:', error);
         throw new Error(error.message || 'Unknown error from edge function');
       }
-      
+
       if (!data || !data.diagrams) {
         throw new Error('No diagrams returned from edge function');
       }
-      
-      setAiDiagrams(prev => new Map(prev).set(index, data.diagrams));
-      toast.success("AI diagrams generated! 🎨");
+
+      setAiDiagrams((prev) => new Map(prev).set(index, data.diagrams));
+      toast.success('AI diagrams generated! 🎨');
     } catch (error: any) {
       console.error('AI generation error:', error);
-      toast.error("AI generation failed", {
-        description: error.message || "Check console for details"
+      toast.error('AI generation failed', {
+        description: error.message || 'Check console for details',
       });
     } finally {
       setGeneratingAI(null);
@@ -142,54 +154,54 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
     const diagram = diagrams[index];
     const svgElement = document.getElementById(`diagram-${index}`)?.querySelector('svg');
     if (!svgElement) return;
-    
+
     const serializer = new XMLSerializer();
     const svgString = serializer.serializeToString(svgElement);
     const blob = new Blob([svgString], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
-    
+
     const link = document.createElement('a');
     link.href = url;
     link.download = `${projectName}_${diagram.title.replace(/\s/g, '_')}.svg`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("Diagram downloaded");
+    toast.success('Diagram downloaded');
   };
 
   const handleExportAllPDF = async () => {
-    const svgElements = diagrams.map((_, idx) => 
-      document.getElementById(`diagram-${idx}`)?.querySelector('svg')
-    ).filter(Boolean) as SVGSVGElement[];
-    
+    const svgElements = diagrams
+      .map((_, idx) => document.getElementById(`diagram-${idx}`)?.querySelector('svg'))
+      .filter(Boolean) as SVGSVGElement[];
+
     if (svgElements.length === 0) {
-      toast.error("No diagrams to export");
+      toast.error('No diagrams to export');
       return;
     }
-    
+
     toast.info(`Exporting ${svgElements.length} diagrams to PDF...`);
-    
+
     try {
       await exportDiagramsAsPDF(svgElements, projectName);
-      toast.success("PDF downloaded! 📄");
+      toast.success('PDF downloaded! 📄');
     } catch (error) {
-      toast.error("PDF export failed");
+      toast.error('PDF export failed');
     }
   };
 
   const handleExportStandalonePDF = async () => {
-    toast.info("Generating professional circuit diagrams PDF...");
-    
+    toast.info('Generating professional circuit diagrams PDF...');
+
     try {
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
-        format: 'a4'
+        format: 'a4',
       });
 
       const projectNameClean = projectName.replace(/\s+/g, '_') || 'Circuit_Design';
       const pageWidth = 297;
       const pageHeight = 210;
-      
+
       // Add header to first page
       pdf.setFillColor(59, 130, 246);
       pdf.rect(0, 0, pageWidth, 30, 'F');
@@ -198,14 +210,16 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
       pdf.setFont('helvetica', 'bold');
       pdf.text('Circuit Diagrams & Installation Plans', pageWidth / 2, 15, { align: 'center' });
       pdf.setFontSize(10);
-      pdf.text(`Project: ${projectName || 'Electrical Installation'}`, pageWidth / 2, 22, { align: 'center' });
+      pdf.text(`Project: ${projectName || 'Electrical Installation'}`, pageWidth / 2, 22, {
+        align: 'center',
+      });
 
       let yPos = 40;
 
       // Add each diagram
       for (let i = 0; i < diagrams.length; i++) {
         const diagram = diagrams[i];
-        
+
         if (i > 0) {
           pdf.addPage();
           yPos = 20;
@@ -222,24 +236,31 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
         try {
           const svgElement = document.getElementById(`diagram-${i}`)?.querySelector('svg');
           if (!svgElement) continue;
-          
+
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
           const svgData = new XMLSerializer().serializeToString(svgElement);
           const img = new Image();
-          
+
           await new Promise((resolve, reject) => {
             img.onload = () => {
               const svgEl = svgElement as SVGSVGElement;
               canvas.width = svgEl.viewBox.baseVal.width || 800;
               canvas.height = svgEl.viewBox.baseVal.height || 600;
               ctx?.drawImage(img, 0, 0);
-              
+
               const imgData = canvas.toDataURL('image/png');
               const imgWidth = pageWidth - 30;
               const imgHeight = (canvas.height * imgWidth) / canvas.width;
-              
-              pdf.addImage(imgData, 'PNG', 15, yPos, imgWidth, Math.min(imgHeight, pageHeight - yPos - 20));
+
+              pdf.addImage(
+                imgData,
+                'PNG',
+                15,
+                yPos,
+                imgWidth,
+                Math.min(imgHeight, pageHeight - yPos - 20)
+              );
               resolve(null);
             };
             img.onerror = reject;
@@ -261,28 +282,25 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
           15,
           pageHeight - 10
         );
-        pdf.text(
-          `Page ${i} of ${totalPages}`,
-          pageWidth - 15,
-          pageHeight - 10,
-          { align: 'right' }
-        );
+        pdf.text(`Page ${i} of ${totalPages}`, pageWidth - 15, pageHeight - 10, { align: 'right' });
       }
 
-      pdf.save(`${projectNameClean}_Circuit_Diagrams_${new Date().toISOString().split('T')[0]}.pdf`);
-      
-      toast.success("Circuit diagrams exported as professional PDF package");
+      pdf.save(
+        `${projectNameClean}_Circuit_Diagrams_${new Date().toISOString().split('T')[0]}.pdf`
+      );
+
+      toast.success('Circuit diagrams exported as professional PDF package');
     } catch (error) {
       console.error('Error exporting standalone PDF:', error);
-      toast.error("Failed to export circuit diagrams PDF");
+      toast.error('Failed to export circuit diagrams PDF');
     }
   };
 
   const hasDesignerData = parsedCircuits.length > 0;
 
   if (!hasDesignerData) {
-    const designerMessageCount = messages.filter(m => m.agentName === 'designer').length;
-    
+    const designerMessageCount = messages.filter((m) => m.agentName === 'designer').length;
+
     return (
       <Card>
         <CardHeader>
@@ -294,18 +312,24 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
         </CardHeader>
         <CardContent>
           <div className="text-center py-6 md:py-8">
-            <p className="text-foreground/70 text-sm md:text-base mb-4">No circuit design data available.</p>
-            
+            <p className="text-foreground/70 text-sm md:text-base mb-4">
+              No circuit design data available.
+            </p>
+
             {designerMessageCount > 0 ? (
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-sm text-left max-w-md mx-auto">
-                <p className="font-semibold mb-2 text-yellow-500">⚠️ Designer responded but data couldn't be parsed.</p>
+                <p className="font-semibold mb-2 text-yellow-500">
+                  ⚠️ Designer responded but data couldn't be parsed.
+                </p>
                 <p className="text-xs text-foreground/60">
-                  Found {designerMessageCount} designer message(s). 
-                  The circuit parser may need updating to match the designer's output format.
+                  Found {designerMessageCount} designer message(s). The circuit parser may need
+                  updating to match the designer's output format.
                 </p>
               </div>
             ) : (
-              <p className="text-xs md:text-sm text-foreground/60">The Circuit Designer agent must be consulted first.</p>
+              <p className="text-xs md:text-sm text-foreground/60">
+                The Circuit Designer agent must be consulted first.
+              </p>
             )}
           </div>
         </CardContent>
@@ -323,7 +347,7 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
               <span className="md:hidden">Drawings</span>
               <span className="hidden md:inline">BS 7671 Circuit Drawings</span>
             </CardTitle>
-            
+
             {diagrams.length > 0 && (
               <div className="flex gap-2 w-full md:w-auto">
                 <Button
@@ -362,16 +386,14 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
       </Card>
 
       {/* Floor Plan (if multiple circuits) */}
-      {parsedCircuits.length >= 2 && (
-        <FloorPlanDisplay circuits={parsedCircuits} />
-      )}
+      {parsedCircuits.length >= 2 && <FloorPlanDisplay circuits={parsedCircuits} />}
 
       {diagrams.length > 0 && (
         <div className="space-y-3 md:space-y-4">
           {diagrams.map((diagram, index) => {
             const aiDiagram = aiDiagrams.get(index);
             const isGenerating = generatingAI === index;
-            
+
             return (
               <Card key={index}>
                 <CardHeader className="pb-3">
@@ -393,17 +415,19 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
                       <TabsTrigger value="svg">SVG Diagram</TabsTrigger>
                       <TabsTrigger value="ai">AI Preview</TabsTrigger>
                     </TabsList>
-                    
+
                     <TabsContent value="svg" className="space-y-3">
-                      <div 
+                      <div
                         id={`diagram-${index}`}
                         className={`relative rounded-lg border border-border overflow-auto ${
-                          viewingDiagram === index ? 'max-h-[600px]' : 'max-h-[300px] md:max-h-[400px]'
+                          viewingDiagram === index
+                            ? 'max-h-[600px]'
+                            : 'max-h-[300px] md:max-h-[400px]'
                         }`}
                       >
                         <SVGDiagramRenderer layout={diagram} />
                       </div>
-                      <Button 
+                      <Button
                         onClick={() => downloadSVG(index)}
                         variant="outline"
                         size="sm"
@@ -413,7 +437,7 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
                         Download SVG
                       </Button>
                     </TabsContent>
-                    
+
                     <TabsContent value="ai" className="space-y-3">
                       {!aiDiagram && !isGenerating && (
                         <div className="bg-muted/30 p-6 md:p-8 rounded-lg border border-dashed border-border text-center">
@@ -432,20 +456,20 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
                           </Button>
                         </div>
                       )}
-                      
+
                       {isGenerating && (
                         <div className="bg-muted/30 p-8 rounded-lg border border-border text-center">
                           <Loader2 className="w-12 h-12 mx-auto mb-3 text-primary animate-spin" />
                           <p className="text-sm text-muted-foreground">Generating AI diagrams...</p>
                         </div>
                       )}
-                      
+
                       {aiDiagram && !isGenerating && (
                         <div className="space-y-3">
                           {aiDiagram.map((img: string, aiIdx: number) => (
                             <div key={aiIdx} className="space-y-2">
-                              <img 
-                                src={img} 
+                              <img
+                                src={img}
                                 alt={`AI Diagram ${aiIdx + 1}`}
                                 className="w-full rounded-lg border border-border"
                               />
@@ -482,32 +506,32 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
 // Helper function to parse circuits from designer response
 function parseCircuitsFromDesigner(designerResponse: string): CircuitData[] {
   const circuits: CircuitData[] = [];
-  
+
   // NEW: Try to parse structured CIRCUIT SPECIFICATION format first
-  const sections = designerResponse.split(/CIRCUIT SPECIFICATION/i).filter(s => s.trim());
-  
+  const sections = designerResponse.split(/CIRCUIT SPECIFICATION/i).filter((s) => s.trim());
+
   sections.forEach((section, idx) => {
     // Extract data from structured format
     const loadMatch = section.match(/Load:\s*(\d+)W/i);
     const distanceMatch = section.match(/Distance from board:\s*(\d+)m/i);
     const voltageMatch = section.match(/Supply:\s*(\d+)V\s*(\w+)-phase/i);
     const circuitTypeMatch = section.match(/Circuit type:\s*(.+)/i);
-    
+
     // Extract from CALCULATIONS section
     const ibMatch = section.match(/Design current \(Ib\):\s*([\d.]+)A/i);
     const protectionMatch = section.match(/Protection device:\s*(\d+)A\s*MCB\s*Type\s*([ABC])/i);
     const cableMatch = section.match(/Cable specification:\s*([\d.]+)mm²/i);
     const cpcMatch = section.match(/CPC:\s*([\d.]+)mm²/i);
-    
+
     if (!loadMatch || !cableMatch) return; // Skip invalid sections
-    
+
     const circuitNum = idx + 1;
     const power = parseInt(loadMatch[1]);
     const cableSize = parseFloat(cableMatch[1]);
-    const cpcSize = cpcMatch ? parseFloat(cpcMatch[1]) : (cableSize >= 2.5 ? 1.5 : 1.0);
+    const cpcSize = cpcMatch ? parseFloat(cpcMatch[1]) : cableSize >= 2.5 ? 1.5 : 1.0;
     const mcbRating = protectionMatch ? parseInt(protectionMatch[1]) : 16;
     const mcbType = protectionMatch ? protectionMatch[2] : 'B';
-    
+
     // Determine circuit name from type
     const circuitType = circuitTypeMatch ? circuitTypeMatch[1].trim() : 'General';
     let name = `Circuit ${circuitNum}`;
@@ -516,7 +540,7 @@ function parseCircuitsFromDesigner(designerResponse: string): CircuitData[] {
     if (/cooker|oven/i.test(circuitType)) name = `Cooker Circuit ${circuitNum}`;
     if (/shower/i.test(circuitType)) name = `Shower Circuit ${circuitNum}`;
     if (/ev|charger/i.test(circuitType)) name = `EV Charger Circuit ${circuitNum}`;
-    
+
     circuits.push({
       circuitNumber: circuitNum,
       name,
@@ -530,20 +554,20 @@ function parseCircuitsFromDesigner(designerResponse: string): CircuitData[] {
         type: 'MCB',
         rating: mcbRating,
         curve: mcbType,
-        kaRating: 6
+        kaRating: 6,
       },
       rcdProtected: /rcd|rcbo/i.test(section),
       rcdRating: 30,
-      ze: 0.35
+      ze: 0.35,
     });
   });
-  
+
   // Fallback: If no "CIRCUIT SPECIFICATION" headers found, try old regex pattern
   if (circuits.length === 0) {
     const singleCircuit = parseSingleCircuitFormat(designerResponse);
     if (singleCircuit) circuits.push(singleCircuit);
   }
-  
+
   return circuits;
 }
 
@@ -552,13 +576,13 @@ function parseSingleCircuitFormat(text: string): CircuitData | null {
   const cableMatch = text.match(/Cable specification:\s*([\d.]+)mm²/i);
   const protectionMatch = text.match(/Protection device:\s*(\d+)A\s*MCB\s*Type\s*([ABC])/i);
   const lengthMatch = text.match(/Distance from board:\s*(\d+)m/i);
-  
+
   if (!loadMatch || !cableMatch) {
     // Last resort: try very basic pattern matching
     const basicCircuit = text.match(/Circuit (\d+)[:\-\s]+([^\n]+)/i);
     const basicCable = text.match(/([\d.]+)\s*mm[²2]/i);
     const basicMCB = text.match(/(\d+)A/i);
-    
+
     if (basicCircuit && basicCable) {
       return {
         circuitNumber: 1,
@@ -573,16 +597,16 @@ function parseSingleCircuitFormat(text: string): CircuitData | null {
           type: 'MCB',
           rating: basicMCB ? parseInt(basicMCB[1]) : 16,
           curve: 'B',
-          kaRating: 6
+          kaRating: 6,
         },
         rcdProtected: false,
         rcdRating: 30,
-        ze: 0.35
+        ze: 0.35,
       };
     }
     return null;
   }
-  
+
   return {
     circuitNumber: 1,
     name: 'Circuit 1',
@@ -596,11 +620,11 @@ function parseSingleCircuitFormat(text: string): CircuitData | null {
       type: 'MCB',
       rating: protectionMatch ? parseInt(protectionMatch[1]) : 16,
       curve: protectionMatch ? protectionMatch[2] : 'B',
-      kaRating: 6
+      kaRating: 6,
     },
     rcdProtected: false,
     rcdRating: 30,
-    ze: 0.35
+    ze: 0.35,
   };
 }
 

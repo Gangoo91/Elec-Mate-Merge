@@ -26,11 +26,7 @@ interface UseAIAnalysisOptions {
  * Custom hook for AI analysis features
  * Handles board scanning, test results OCR, and circuit detection
  */
-export function useAIAnalysis({
-  testResults,
-  setTestResults,
-  onSave,
-}: UseAIAnalysisOptions) {
+export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnalysisOptions) {
   const [state, setState] = useState<AIAnalysisState>({
     showBoardCapture: false,
     showTestResultsScan: false,
@@ -163,108 +159,173 @@ export function useAIAnalysis({
   }, []);
 
   // Handler: Accept extracted test results
-  const handleAcceptTestResults = useCallback((selectedCircuits: any[]) => {
-    const transformedResults = selectedCircuits.map((circuit, index) => {
-      const nextId = (testResults.length + index + 1).toString();
-      const circuitRef = circuit.circuit_reference || `C${testResults.length + index + 1}`;
+  const handleAcceptTestResults = useCallback(
+    (selectedCircuits: any[]) => {
+      const transformedResults = selectedCircuits.map((circuit, index) => {
+        const nextId = (testResults.length + index + 1).toString();
+        const circuitRef = circuit.circuit_reference || `C${testResults.length + index + 1}`;
 
-      const incomingType: string = circuit.protective_device?.type || '';
-      const upper = incomingType.toUpperCase();
-      const baseType = upper.includes('RCBO')
-        ? 'RCBO'
-        : upper.includes('RCD')
-        ? 'RCD'
-        : upper.includes('MCB')
-        ? 'MCB'
-        : upper.includes('FUSE')
-        ? 'Fuse'
-        : incomingType;
-      const incomingBs: string = circuit.protective_device?.bs_standard || '';
-      const bsFromType = getDefaultBsStandard(baseType || 'MCB');
-      const finalBs = incomingBs && incomingBs.includes('(') ? incomingBs : bsFromType || incomingBs;
+        const incomingType: string = circuit.protective_device?.type || '';
+        const upper = incomingType.toUpperCase();
+        const baseType = upper.includes('RCBO')
+          ? 'RCBO'
+          : upper.includes('RCD')
+            ? 'RCD'
+            : upper.includes('MCB')
+              ? 'MCB'
+              : upper.includes('FUSE')
+                ? 'Fuse'
+                : incomingType;
+        const incomingBs: string = circuit.protective_device?.bs_standard || '';
+        const bsFromType = getDefaultBsStandard(baseType || 'MCB');
+        const finalBs =
+          incomingBs && incomingBs.includes('(') ? incomingBs : bsFromType || incomingBs;
 
-      return {
-        id: nextId,
-        circuitNumber: circuitRef,
-        circuitDesignation: circuitRef,
-        circuitDescription: circuit.circuit_description || '',
-        circuitType: circuit.circuit_type || '',
-        type: circuit.circuit_type || '',
-        referenceMethod: '',
-        liveSize: circuit.conductor_sizes?.live || '',
-        cpcSize: circuit.conductor_sizes?.cpc || '',
-        protectiveDeviceType: circuit.protective_device?.type || '',
-        protectiveDeviceRating: circuit.protective_device?.rating || '',
-        protectiveDeviceCurve: circuit.protective_device?.curve || '',
-        protectiveDeviceKaRating: circuit.protective_device?.ka_rating || '',
-        protectiveDeviceLocation: circuit.protective_device?.location || '',
-        bsStandard: finalBs,
-        rcdBsStandard: circuit.protective_device?.rcd_details?.bs_standard || '',
-        rcdType: circuit.protective_device?.rcd_details?.rcd_type || '',
-        rcdRatingA: circuit.protective_device?.rcd_details?.rating_a || '',
-        cableSize: circuit.conductor_sizes?.live || '',
-        protectiveDevice: circuit.protective_device?.rating || '',
-        r1r2: circuit.tests?.r1_r2?.value || '',
-        r2: '',
-        ringContinuityLive: circuit.tests?.ring_continuity_live?.value || '',
-        ringContinuityNeutral: circuit.tests?.ring_continuity_neutral?.value || '',
-        ringR1: circuit.tests?.ring_r1_live?.value || '',
-        ringRn: circuit.tests?.ring_rn_neutral?.value || '',
-        ringR2: circuit.tests?.ring_r2_cpc?.value || '',
-        insulationTestVoltage: circuit.tests?.insulation_resistance?.test_voltage || '500',
-        insulationResistance: circuit.tests?.insulation_resistance?.value || '',
-        insulationLiveNeutral: circuit.tests?.insulation_live_neutral?.value || '',
-        insulationLiveEarth: circuit.tests?.insulation_live_earth?.value || '',
-        insulationNeutralEarth: circuit.tests?.insulation_neutral_earth?.value || '',
-        polarity: circuit.tests?.polarity?.result || '',
-        zs: circuit.tests?.zs?.value || '',
-        maxZs: circuit.tests?.zs?.max_zs || '',
-        pointsServed: circuit.points_served || '',
-        rcdRating: circuit.tests?.rcd_rating || '',
-        rcdOneX: circuit.tests?.rcd_trip_time?.value || '',
-        rcdTestButton: circuit.tests?.rcd_test_button || '',
-        afddTest: circuit.tests?.afdd_test || '',
-        pfc: circuit.tests?.pfc?.value || '',
-        pfcLiveNeutral: circuit.tests?.pfc_live_neutral?.value || '',
-        pfcLiveEarth: circuit.tests?.pfc_live_earth?.value || '',
-        functionalTesting: circuit.tests?.functional_testing || '',
-        notes: circuit.notes || '',
-        autoFilled: true,
-        typeOfWiring: '',
-      } as TestResult;
-    });
+        return {
+          id: nextId,
+          circuitNumber: circuitRef,
+          circuitDesignation: circuitRef,
+          circuitDescription: circuit.circuit_description || '',
+          circuitType: circuit.circuit_type || '',
+          type: circuit.circuit_type || '',
+          referenceMethod: '',
+          liveSize: circuit.conductor_sizes?.live || '',
+          cpcSize: circuit.conductor_sizes?.cpc || '',
+          protectiveDeviceType: circuit.protective_device?.type || '',
+          protectiveDeviceRating: circuit.protective_device?.rating || '',
+          protectiveDeviceCurve: circuit.protective_device?.curve || '',
+          protectiveDeviceKaRating: circuit.protective_device?.ka_rating || '',
+          protectiveDeviceLocation: circuit.protective_device?.location || '',
+          bsStandard: finalBs,
+          rcdBsStandard: circuit.protective_device?.rcd_details?.bs_standard || '',
+          rcdType: circuit.protective_device?.rcd_details?.rcd_type || '',
+          rcdRatingA: circuit.protective_device?.rcd_details?.rating_a || '',
+          cableSize: circuit.conductor_sizes?.live || '',
+          protectiveDevice: circuit.protective_device?.rating || '',
+          r1r2: circuit.tests?.r1_r2?.value || '',
+          r2: '',
+          ringContinuityLive: circuit.tests?.ring_continuity_live?.value || '',
+          ringContinuityNeutral: circuit.tests?.ring_continuity_neutral?.value || '',
+          ringR1: circuit.tests?.ring_r1_live?.value || '',
+          ringRn: circuit.tests?.ring_rn_neutral?.value || '',
+          ringR2: circuit.tests?.ring_r2_cpc?.value || '',
+          insulationTestVoltage: circuit.tests?.insulation_resistance?.test_voltage || '500',
+          insulationResistance: circuit.tests?.insulation_resistance?.value || '',
+          insulationLiveNeutral: circuit.tests?.insulation_live_neutral?.value || '',
+          insulationLiveEarth: circuit.tests?.insulation_live_earth?.value || '',
+          insulationNeutralEarth: circuit.tests?.insulation_neutral_earth?.value || '',
+          polarity: circuit.tests?.polarity?.result || '',
+          zs: circuit.tests?.zs?.value || '',
+          maxZs: circuit.tests?.zs?.max_zs || '',
+          pointsServed: circuit.points_served || '',
+          rcdRating: circuit.tests?.rcd_rating || '',
+          rcdOneX: circuit.tests?.rcd_trip_time?.value || '',
+          rcdTestButton: circuit.tests?.rcd_test_button || '',
+          afddTest: circuit.tests?.afdd_test || '',
+          pfc: circuit.tests?.pfc?.value || '',
+          pfcLiveNeutral: circuit.tests?.pfc_live_neutral?.value || '',
+          pfcLiveEarth: circuit.tests?.pfc_live_earth?.value || '',
+          functionalTesting: circuit.tests?.functional_testing || '',
+          notes: circuit.notes || '',
+          autoFilled: true,
+          typeOfWiring: '',
+        } as TestResult;
+      });
 
-    const updatedResults = [...testResults, ...transformedResults];
-    setTestResults(updatedResults);
-    onSave(updatedResults);
-    setState((s) => ({
-      ...s,
-      showTestResultsReview: false,
-      extractedTestResults: null,
-    }));
-  }, [testResults, setTestResults, onSave]);
+      const updatedResults = [...testResults, ...transformedResults];
+      setTestResults(updatedResults);
+      onSave(updatedResults);
+      setState((s) => ({
+        ...s,
+        showTestResultsReview: false,
+        extractedTestResults: null,
+      }));
+    },
+    [testResults, setTestResults, onSave]
+  );
 
   // Handler: Apply AI detected circuits from board scan
-  const handleApplyAICircuits = useCallback((selectedCircuits: any[]) => {
-    const blankIndices: number[] = [];
-    testResults.forEach((result, idx) => {
-      if (isBlankRow(result)) {
-        blankIndices.push(idx);
-      }
-    });
+  const handleApplyAICircuits = useCallback(
+    (selectedCircuits: any[]) => {
+      const blankIndices: number[] = [];
+      testResults.forEach((result, idx) => {
+        if (isBlankRow(result)) {
+          blankIndices.push(idx);
+        }
+      });
 
-    const updatedResults = [...testResults];
-    const remainingCircuits: any[] = [];
+      const updatedResults = [...testResults];
+      const remainingCircuits: any[] = [];
 
-    selectedCircuits.forEach((circuit) => {
-      const normalisedCircuit = normaliseAICircuit(circuit);
+      selectedCircuits.forEach((circuit) => {
+        const normalisedCircuit = normaliseAICircuit(circuit);
 
-      if (blankIndices.length > 0) {
-        const blankIdx = blankIndices.shift()!;
-        const existingResult = updatedResults[blankIdx];
-        const liveSize = normalisedCircuit.liveSize;
-        const circuitType = normalisedCircuit.circuitType || '';
-        const circuitDesc = normalisedCircuit.circuitDescription || '';
+        if (blankIndices.length > 0) {
+          const blankIdx = blankIndices.shift()!;
+          const existingResult = updatedResults[blankIdx];
+          const liveSize = normalisedCircuit.liveSize;
+          const circuitType = normalisedCircuit.circuitType || '';
+          const circuitDesc = normalisedCircuit.circuitDescription || '';
+
+          const isRingCircuit = circuitType.toLowerCase().includes('ring');
+          const isSocketCircuit = circuitType.toLowerCase().includes('socket');
+          const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
+          const isOutdoorCircuit =
+            circuitDesc.toLowerCase().includes('outdoor') ||
+            circuitDesc.toLowerCase().includes('garden');
+          const isRCBOOrRCD =
+            normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
+            normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
+          const requiresRCD =
+            isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
+
+          updatedResults[blankIdx] = {
+            ...existingResult,
+            circuitDescription: circuitDesc,
+            circuitType: circuitType,
+            type: circuitType,
+            referenceMethod: normalisedCircuit.referenceMethod,
+            liveSize: liveSize,
+            cpcSize: normalisedCircuit.cpcSize,
+            protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
+            protectiveDeviceCurve: normalisedCircuit.protectiveDeviceCurve || '',
+            protectiveDeviceRating: normalisedCircuit.protectiveDeviceRating,
+            protectiveDeviceKaRating: normalisedCircuit.protectiveDeviceKaRating,
+            protectiveDeviceLocation: 'Consumer Unit',
+            bsStandard: normalisedCircuit.bsStandard,
+            cableSize: liveSize,
+            protectiveDevice:
+              `${normalisedCircuit.protectiveDeviceType} ${normalisedCircuit.protectiveDeviceRating}`.trim(),
+            maxZs: calculateMaxZsForCircuit(
+              normalisedCircuit.bsStandard,
+              normalisedCircuit.protectiveDeviceCurve,
+              normalisedCircuit.protectiveDeviceRating
+            ),
+            ringContinuityLive: isRingCircuit ? '' : 'N/A',
+            ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
+            insulationTestVoltage: '500V',
+            polarity: 'Satisfactory',
+            pointsServed: calculatePointsServed(
+              circuitDesc,
+              circuitType,
+              normalisedCircuit.protectiveDeviceType
+            ),
+            rcdRating: requiresRCD ? '30mA' : '',
+            functionalTesting: 'Satisfactory',
+            notes: '',
+            autoFilled: true,
+          };
+        } else {
+          remainingCircuits.push(normalisedCircuit);
+        }
+      });
+
+      // Append remaining circuits
+      remainingCircuits.forEach((circuit) => {
+        const circuitNumber = (updatedResults.length + 1).toString();
+        const liveSize = circuit.liveSize;
+        const circuitType = circuit.circuitType || '';
+        const circuitDesc = circuit.circuitDescription || '';
 
         const isRingCircuit = circuitType.toLowerCase().includes('ring');
         const isSocketCircuit = circuitType.toLowerCase().includes('socket');
@@ -273,130 +334,83 @@ export function useAIAnalysis({
           circuitDesc.toLowerCase().includes('outdoor') ||
           circuitDesc.toLowerCase().includes('garden');
         const isRCBOOrRCD =
-          normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
-          normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
+          circuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
+          circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
         const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
 
-        updatedResults[blankIdx] = {
-          ...existingResult,
+        const newResult: TestResult = {
+          id: crypto.randomUUID(),
+          circuitNumber: circuitNumber,
+          circuitDesignation: `C${circuitNumber}`,
           circuitDescription: circuitDesc,
           circuitType: circuitType,
           type: circuitType,
-          referenceMethod: normalisedCircuit.referenceMethod,
+          referenceMethod: circuit.referenceMethod,
           liveSize: liveSize,
-          cpcSize: normalisedCircuit.cpcSize,
-          protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
-          protectiveDeviceCurve: normalisedCircuit.protectiveDeviceCurve || '',
-          protectiveDeviceRating: normalisedCircuit.protectiveDeviceRating,
-          protectiveDeviceKaRating: normalisedCircuit.protectiveDeviceKaRating,
+          cpcSize: circuit.cpcSize,
+          protectiveDeviceType: circuit.protectiveDeviceType,
+          protectiveDeviceCurve: circuit.protectiveDeviceCurve || '',
+          protectiveDeviceRating: circuit.protectiveDeviceRating,
+          protectiveDeviceKaRating: circuit.protectiveDeviceKaRating,
           protectiveDeviceLocation: 'Consumer Unit',
-          bsStandard: normalisedCircuit.bsStandard,
+          bsStandard: circuit.bsStandard,
           cableSize: liveSize,
-          protectiveDevice: `${normalisedCircuit.protectiveDeviceType} ${normalisedCircuit.protectiveDeviceRating}`.trim(),
-          maxZs: calculateMaxZsForCircuit(
-            normalisedCircuit.bsStandard,
-            normalisedCircuit.protectiveDeviceCurve,
-            normalisedCircuit.protectiveDeviceRating
-          ),
+          protectiveDevice:
+            `${circuit.protectiveDeviceType} ${circuit.protectiveDeviceRating}`.trim(),
+          r1r2: '',
+          r2: '',
           ringContinuityLive: isRingCircuit ? '' : 'N/A',
           ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
+          ringR1: isRingCircuit ? '' : 'N/A',
+          ringRn: isRingCircuit ? '' : 'N/A',
+          ringR2: isRingCircuit ? '' : 'N/A',
           insulationTestVoltage: '500V',
+          insulationResistance: '',
+          insulationLiveNeutral: '',
+          insulationLiveEarth: '',
+          insulationNeutralEarth: '',
           polarity: 'Satisfactory',
-          pointsServed: calculatePointsServed(circuitDesc, circuitType, normalisedCircuit.protectiveDeviceType),
+          zs: '',
+          maxZs: calculateMaxZsForCircuit(
+            circuit.bsStandard,
+            circuit.protectiveDeviceCurve,
+            circuit.protectiveDeviceRating
+          ),
+          pointsServed: calculatePointsServed(
+            circuitDesc,
+            circuitType,
+            circuit.protectiveDeviceType
+          ),
           rcdRating: requiresRCD ? '30mA' : '',
+          rcdOneX: '',
+          rcdTestButton: '',
+          afddTest: '',
+          pfc: '',
+          pfcLiveNeutral: '',
+          pfcLiveEarth: '',
           functionalTesting: 'Satisfactory',
           notes: '',
           autoFilled: true,
+          typeOfWiring: '',
+          rcdBsStandard: '',
+          rcdType: '',
+          rcdRatingA: '',
         };
-      } else {
-        remainingCircuits.push(normalisedCircuit);
-      }
-    });
+        updatedResults.push(newResult);
+      });
 
-    // Append remaining circuits
-    remainingCircuits.forEach((circuit) => {
-      const circuitNumber = (updatedResults.length + 1).toString();
-      const liveSize = circuit.liveSize;
-      const circuitType = circuit.circuitType || '';
-      const circuitDesc = circuit.circuitDescription || '';
+      setTestResults(updatedResults);
+      onSave(updatedResults);
+      setState((s) => ({
+        ...s,
+        showAIReview: false,
+        detectedCircuits: null,
+      }));
 
-      const isRingCircuit = circuitType.toLowerCase().includes('ring');
-      const isSocketCircuit = circuitType.toLowerCase().includes('socket');
-      const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-      const isOutdoorCircuit =
-        circuitDesc.toLowerCase().includes('outdoor') ||
-        circuitDesc.toLowerCase().includes('garden');
-      const isRCBOOrRCD =
-        circuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
-        circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
-      const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
-
-      const newResult: TestResult = {
-        id: crypto.randomUUID(),
-        circuitNumber: circuitNumber,
-        circuitDesignation: `C${circuitNumber}`,
-        circuitDescription: circuitDesc,
-        circuitType: circuitType,
-        type: circuitType,
-        referenceMethod: circuit.referenceMethod,
-        liveSize: liveSize,
-        cpcSize: circuit.cpcSize,
-        protectiveDeviceType: circuit.protectiveDeviceType,
-        protectiveDeviceCurve: circuit.protectiveDeviceCurve || '',
-        protectiveDeviceRating: circuit.protectiveDeviceRating,
-        protectiveDeviceKaRating: circuit.protectiveDeviceKaRating,
-        protectiveDeviceLocation: 'Consumer Unit',
-        bsStandard: circuit.bsStandard,
-        cableSize: liveSize,
-        protectiveDevice: `${circuit.protectiveDeviceType} ${circuit.protectiveDeviceRating}`.trim(),
-        r1r2: '',
-        r2: '',
-        ringContinuityLive: isRingCircuit ? '' : 'N/A',
-        ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
-        ringR1: isRingCircuit ? '' : 'N/A',
-        ringRn: isRingCircuit ? '' : 'N/A',
-        ringR2: isRingCircuit ? '' : 'N/A',
-        insulationTestVoltage: '500V',
-        insulationResistance: '',
-        insulationLiveNeutral: '',
-        insulationLiveEarth: '',
-        insulationNeutralEarth: '',
-        polarity: 'Satisfactory',
-        zs: '',
-        maxZs: calculateMaxZsForCircuit(
-          circuit.bsStandard,
-          circuit.protectiveDeviceCurve,
-          circuit.protectiveDeviceRating
-        ),
-        pointsServed: calculatePointsServed(circuitDesc, circuitType, circuit.protectiveDeviceType),
-        rcdRating: requiresRCD ? '30mA' : '',
-        rcdOneX: '',
-        rcdTestButton: '',
-        afddTest: '',
-        pfc: '',
-        pfcLiveNeutral: '',
-        pfcLiveEarth: '',
-        functionalTesting: 'Satisfactory',
-        notes: '',
-        autoFilled: true,
-        typeOfWiring: '',
-        rcdBsStandard: '',
-        rcdType: '',
-        rcdRatingA: '',
-      };
-      updatedResults.push(newResult);
-    });
-
-    setTestResults(updatedResults);
-    onSave(updatedResults);
-    setState((s) => ({
-      ...s,
-      showAIReview: false,
-      detectedCircuits: null,
-    }));
-
-    toast.success(`Added ${selectedCircuits.length} circuits from AI scan`);
-  }, [testResults, setTestResults, onSave]);
+      toast.success(`Added ${selectedCircuits.length} circuits from AI scan`);
+    },
+    [testResults, setTestResults, onSave]
+  );
 
   // Close AI review
   const closeAIReview = useCallback(() => {
@@ -417,16 +431,19 @@ export function useAIAnalysis({
   }, []);
 
   // Handle scribble to circuits
-  const handleScribbleCircuits = useCallback((newCircuits: TestResult[]) => {
-    const updatedResults = [...testResults, ...newCircuits];
-    setTestResults(updatedResults);
-    onSave(updatedResults);
-    setState((s) => ({ ...s, showScribbleDialog: false }));
-    toast.success('Circuits Added', {
-      description: `Successfully added ${newCircuits.length} circuit(s) from text`,
-      duration: 2000,
-    });
-  }, [testResults, setTestResults, onSave]);
+  const handleScribbleCircuits = useCallback(
+    (newCircuits: TestResult[]) => {
+      const updatedResults = [...testResults, ...newCircuits];
+      setTestResults(updatedResults);
+      onSave(updatedResults);
+      setState((s) => ({ ...s, showScribbleDialog: false }));
+      toast.success('Circuits Added', {
+        description: `Successfully added ${newCircuits.length} circuit(s) from text`,
+        duration: 2000,
+      });
+    },
+    [testResults, setTestResults, onSave]
+  );
 
   return {
     // State

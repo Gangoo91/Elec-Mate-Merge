@@ -1,8 +1,7 @@
-
-import { useLogbookEntries } from "@/hooks/time-tracking/useLogbookEntries";
-import LogbookHeader from "./logbook/LogbookHeader";
-import LogbookEmptyState from "./logbook/LogbookEmptyState";
-import LogbookDayEntries from "./logbook/LogbookDayEntries";
+import { useLogbookEntries } from '@/hooks/time-tracking/useLogbookEntries';
+import LogbookHeader from './logbook/LogbookHeader';
+import LogbookEmptyState from './logbook/LogbookEmptyState';
+import LogbookDayEntries from './logbook/LogbookDayEntries';
 
 const DigitalLogbook = () => {
   const {
@@ -14,7 +13,7 @@ const DigitalLogbook = () => {
     handleSaveEntry,
     handleDeleteEntry,
     handleClearAllEntries,
-    hasEntries
+    hasEntries,
   } = useLogbookEntries();
 
   return (

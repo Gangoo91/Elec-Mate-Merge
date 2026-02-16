@@ -20,7 +20,12 @@ import {
   Archive,
   Trash2,
 } from 'lucide-react';
-import { useDesignedCircuits, useDeleteDesignedCircuit, useArchiveDesign, DesignedCircuit } from '@/hooks/useDesignedCircuits';
+import {
+  useDesignedCircuits,
+  useDeleteDesignedCircuit,
+  useArchiveDesign,
+  DesignedCircuit,
+} from '@/hooks/useDesignedCircuits';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import {
@@ -51,18 +56,22 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
   const { pendingDesigns, completedDesigns, archivedDesigns } = useMemo(() => {
     const all = designedCircuits || [];
     return {
-      pendingDesigns: all.filter(d => d.status === 'pending' || d.status === 'in-progress'),
-      completedDesigns: all.filter(d => d.status === 'completed'),
-      archivedDesigns: all.filter(d => d.status === 'archived'),
+      pendingDesigns: all.filter((d) => d.status === 'pending' || d.status === 'in-progress'),
+      completedDesigns: all.filter((d) => d.status === 'completed'),
+      archivedDesigns: all.filter((d) => d.status === 'archived'),
     };
   }, [designedCircuits]);
 
   const currentDesigns = useMemo(() => {
     switch (activeTab) {
-      case 'pending': return pendingDesigns;
-      case 'completed': return completedDesigns;
-      case 'archived': return archivedDesigns;
-      default: return pendingDesigns;
+      case 'pending':
+        return pendingDesigns;
+      case 'completed':
+        return completedDesigns;
+      case 'archived':
+        return archivedDesigns;
+      default:
+        return pendingDesigns;
     }
   }, [activeTab, pendingDesigns, completedDesigns, archivedDesigns]);
 
@@ -162,16 +171,21 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
           {/* Tabs */}
           <div className="flex bg-black/30 rounded-xl p-1">
             {(['pending', 'completed', 'archived'] as StatusTab[]).map((tab) => {
-              const count = tab === 'pending' ? pendingDesigns.length : tab === 'completed' ? completedDesigns.length : archivedDesigns.length;
+              const count =
+                tab === 'pending'
+                  ? pendingDesigns.length
+                  : tab === 'completed'
+                    ? completedDesigns.length
+                    : archivedDesigns.length;
               return (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={cn(
-                    "flex-1 py-2 px-2 text-xs font-medium rounded-lg transition-all touch-manipulation capitalize",
+                    'flex-1 py-2 px-2 text-xs font-medium rounded-lg transition-all touch-manipulation capitalize',
                     activeTab === tab
-                      ? "bg-elec-yellow/20 text-elec-yellow"
-                      : "text-white/40 hover:text-white/60"
+                      ? 'bg-elec-yellow/20 text-elec-yellow'
+                      : 'text-white/40 hover:text-white/60'
                   )}
                 >
                   {tab === 'completed' ? 'Done' : tab} {count > 0 && `(${count})`}
@@ -193,7 +207,8 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
           <AnimatePresence mode="popLayout">
             {currentDesigns.slice(0, 3).map((design, index) => {
               const circuitCount = design.schedule_data?.circuits?.length || 0;
-              const projectName = design.schedule_data?.projectInfo?.projectName || design.installation_address;
+              const projectName =
+                design.schedule_data?.projectInfo?.projectName || design.installation_address;
               const isClickable = design.status === 'pending' || design.status === 'in-progress';
 
               return (
@@ -204,16 +219,19 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
                   exit={{ opacity: 0 }}
                   transition={{ delay: index * 0.03 }}
                   className={cn(
-                    "flex items-center gap-3 p-3 rounded-xl",
-                    "bg-black/40",
-                    isClickable && "hover:bg-black/50 cursor-pointer active:scale-[0.98] transition-all touch-manipulation"
+                    'flex items-center gap-3 p-3 rounded-xl',
+                    'bg-black/40',
+                    isClickable &&
+                      'hover:bg-black/50 cursor-pointer active:scale-[0.98] transition-all touch-manipulation'
                   )}
                   onClick={() => isClickable && handleUseDesign(design)}
                 >
-                  <div className={cn(
-                    "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
-                    design.status === 'completed' ? 'bg-green-500/15' : 'bg-elec-yellow/15'
-                  )}>
+                  <div
+                    className={cn(
+                      'flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center',
+                      design.status === 'completed' ? 'bg-green-500/15' : 'bg-elec-yellow/15'
+                    )}
+                  >
                     {design.status === 'completed' ? (
                       <FileCheck className="h-4 w-4 text-green-400" />
                     ) : design.status === 'archived' ? (
@@ -234,7 +252,10 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
                   <div className="flex items-center gap-1">
                     <button
-                      onClick={(e) => { e.stopPropagation(); setDeleteId(design.id); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDeleteId(design.id);
+                      }}
                       className="w-8 h-8 rounded-lg flex items-center justify-center text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -270,8 +291,15 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-white/5 border-white/10 text-white hover:bg-white/10">Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30">Delete</AlertDialogAction>
+            <AlertDialogCancel className="bg-white/5 border-white/10 text-white hover:bg-white/10">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30"
+            >
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

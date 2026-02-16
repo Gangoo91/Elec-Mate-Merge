@@ -30,7 +30,9 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
   // Check company profile for scheme membership
   useEffect(() => {
     const checkSchemeMembership = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         setIsRegistered(false);
         return;
@@ -59,8 +61,8 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
   const handleViewCertificate = (reportId: string, reportType: string) => {
     // Map report_type to section names
     const sectionMap: Record<string, string> = {
-      'eicr': 'eicr',
-      'eic': 'eic',
+      eicr: 'eicr',
+      eic: 'eic',
       'minor-works': 'minor-works',
     };
 
@@ -80,9 +82,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
     <>
       {/* User-specific guidance based on scheme membership */}
       {isRegistered === false && (
-        <NonRegisteredUserGuide
-          onFindBuildingControl={() => setShowBuildingControlFinder(true)}
-        />
+        <NonRegisteredUserGuide onFindBuildingControl={() => setShowBuildingControlFinder(true)} />
       )}
 
       {isRegistered === true && (
@@ -90,11 +90,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
       )}
 
       {/* Building Control Form Guide - Collapsible (supplementary details) */}
-      <Collapsible
-        open={isFormGuideOpen}
-        onOpenChange={setIsFormGuideOpen}
-        className="mb-6"
-      >
+      <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen} className="mb-6">
         <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-card/80 hover:bg-card rounded-2xl transition-all border border-border/50 hover:border-primary/30 group">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">

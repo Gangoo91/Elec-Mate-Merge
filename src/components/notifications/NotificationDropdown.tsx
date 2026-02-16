@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,12 +16,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
-const NotificationItem = ({ notification, onRead }: { notification: Notification; onRead: () => void }) => {
+const NotificationItem = ({
+  notification,
+  onRead,
+}: {
+  notification: Notification;
+  onRead: () => void;
+}) => {
   return (
-    <DropdownMenuItem 
+    <DropdownMenuItem
       className={cn(
-        "flex flex-col items-start p-3 cursor-pointer",
-        !notification.read && "bg-elec-yellow/5"
+        'flex flex-col items-start p-3 cursor-pointer',
+        !notification.read && 'bg-elec-yellow/5'
       )}
       onClick={onRead}
     >
@@ -48,7 +53,7 @@ const NotificationDropdown = () => {
   let unreadCount = 0;
   let markAsRead = (id: string) => {};
   let markAllAsRead = () => {};
-  
+
   try {
     const notificationContext = useNotifications();
     notifications = notificationContext.notifications;
@@ -58,20 +63,20 @@ const NotificationDropdown = () => {
   } catch (e) {
     console.warn('NotificationProvider not available');
   }
-  
+
   const navigate = useNavigate();
-  
+
   const handleViewAll = () => {
     navigate('/notifications');
   };
-  
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <Badge 
+            <Badge
               className="absolute -top-1 -right-1 bg-elec-yellow text-elec-dark text-xs"
               variant="outline"
             >
@@ -84,9 +89,9 @@ const NotificationDropdown = () => {
         <DropdownMenuLabel className="flex items-center justify-between">
           <span>Notifications</span>
           {unreadCount > 0 && (
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="text-xs text-muted-foreground hover:text-foreground"
               onClick={markAllAsRead}
             >
@@ -101,11 +106,11 @@ const NotificationDropdown = () => {
               No notifications yet
             </div>
           ) : (
-            notifications.map(notification => (
+            notifications.map((notification) => (
               <div key={notification.id}>
-                <NotificationItem 
-                  notification={notification} 
-                  onRead={() => markAsRead(notification.id)} 
+                <NotificationItem
+                  notification={notification}
+                  onRead={() => markAsRead(notification.id)}
                 />
                 <DropdownMenuSeparator />
               </div>

@@ -18,18 +18,19 @@ export const EmergencyLightingRealWorldSection2_2 = () => {
           </div>
           <div className="space-y-3 text-foreground">
             <p>
-              In a London call centre, a power outage occurred during evening operations. The anti-panic 
-              lighting was incorrectly installed, with fittings only around the perimeter. The centre of 
-              the office was left in near-darkness, causing staff to trip over furniture.
+              In a London call centre, a power outage occurred during evening operations. The
+              anti-panic lighting was incorrectly installed, with fittings only around the
+              perimeter. The centre of the office was left in near-darkness, causing staff to trip
+              over furniture.
             </p>
             <p>
-              Following an audit, the system was reconfigured with correct spacing to achieve the 0.5 lux 
-              requirement. This highlights how poor design can compromise safety, even when a system is 
-              technically installed.
+              Following an audit, the system was reconfigured with correct spacing to achieve the
+              0.5 lux requirement. This highlights how poor design can compromise safety, even when
+              a system is technically installed.
             </p>
           </div>
         </div>
-        
+
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <h4 className="text-elec-yellow font-semibold mb-2">Key Learning Points:</h4>
           <ul className="space-y-2 text-foreground text-sm">

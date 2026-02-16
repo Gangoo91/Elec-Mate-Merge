@@ -12,7 +12,8 @@ export const TypesOfLoadsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Understanding the electrical characteristics of different lighting loads is fundamental to proper control selection.
+          Understanding the electrical characteristics of different lighting loads is fundamental to
+          proper control selection.
         </p>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -71,8 +72,9 @@ export const TypesOfLoadsSection = () => {
 
         <div className="bg-amber-900/20 border border-amber-600/50 p-4 rounded-lg">
           <p className="text-amber-200 text-sm">
-            <strong>Key Point:</strong> Each load type has different electrical characteristics that affect 
-            how they respond to dimming and control methods. Mismatching can cause poor performance or damage.
+            <strong>Key Point:</strong> Each load type has different electrical characteristics that
+            affect how they respond to dimming and control methods. Mismatching can cause poor
+            performance or damage.
           </p>
         </div>
       </CardContent>

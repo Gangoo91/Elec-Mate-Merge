@@ -20,7 +20,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'consumer-unit-eicr',
     name: 'Consumer Unit EICR Inspection',
     description: 'Periodic inspection and testing of domestic consumer unit (BS 7671 Chapter 64)',
-    query: 'Domestic consumer unit requiring periodic inspection and testing in accordance with BS 7671. Check RCD operation, MCB integrity, torque settings, and IR testing of all circuits.',
+    query:
+      'Domestic consumer unit requiring periodic inspection and testing in accordance with BS 7671. Check RCD operation, MCB integrity, torque settings, and IR testing of all circuits.',
     equipmentType: 'Consumer Unit (Split-load)',
     location: 'Main entrance hallway',
     installationType: 'domestic',
@@ -32,7 +33,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'electric-shower-maintenance',
     name: 'Electric Shower Maintenance',
     description: 'Annual maintenance and testing of electric shower installation',
-    query: 'Electric shower unit requiring annual maintenance check. Verify isolator operation, earth bonding, water inlet connections, and thermal cutout function.',
+    query:
+      'Electric shower unit requiring annual maintenance check. Verify isolator operation, earth bonding, water inlet connections, and thermal cutout function.',
     equipmentType: 'Electric Shower (9.5kW)',
     location: 'First floor bathroom',
     installationType: 'domestic',
@@ -44,7 +46,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'ev-charger-service',
     name: 'EV Charger Annual Service',
     description: 'Annual service and testing of home EV charging point',
-    query: 'Home EV charger requiring annual service. Test RCD Type A operation, earth fault loop impedance, visual inspection of cable and connector, firmware update check.',
+    query:
+      'Home EV charger requiring annual service. Test RCD Type A operation, earth fault loop impedance, visual inspection of cable and connector, firmware update check.',
     equipmentType: 'EV Charger (7kW Type 2)',
     location: 'External wall - driveway',
     installationType: 'domestic',
@@ -56,7 +59,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'smoke-detector-testing',
     name: 'Smoke/CO Detector Testing',
     description: 'Mains-powered smoke and CO alarm system testing',
-    query: 'Mains-powered smoke and carbon monoxide detector system requiring testing and maintenance. Verify interconnection, battery backup, alarm sounders, and compliance with BS 5839-6.',
+    query:
+      'Mains-powered smoke and carbon monoxide detector system requiring testing and maintenance. Verify interconnection, battery backup, alarm sounders, and compliance with BS 5839-6.',
     equipmentType: 'Mains Smoke/CO Alarm System',
     location: 'All floors',
     installationType: 'domestic',
@@ -67,7 +71,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'rewire-assessment',
     name: 'Rewire Assessment',
     description: 'Assessment of old wiring system for potential rewire',
-    query: 'Aged electrical installation requiring assessment for potential rewire. Check insulation resistance, earth continuity, condition of cables, and compliance with current BS 7671 standards.',
+    query:
+      'Aged electrical installation requiring assessment for potential rewire. Check insulation resistance, earth continuity, condition of cables, and compliance with current BS 7671 standards.',
     equipmentType: 'Existing Installation (30+ years)',
     location: 'Entire property',
     installationType: 'domestic',
@@ -79,7 +84,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'socket-circuit-testing',
     name: 'Socket Circuit Testing',
     description: 'Periodic testing of socket outlet circuits',
-    query: 'Socket outlet circuits requiring periodic testing. Verify polarity, earth fault loop impedance, RCD trip times, and socket condition throughout property.',
+    query:
+      'Socket outlet circuits requiring periodic testing. Verify polarity, earth fault loop impedance, RCD trip times, and socket condition throughout property.',
     equipmentType: 'Socket Outlet Circuits',
     location: 'All rooms',
     installationType: 'domestic',
@@ -90,7 +96,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'lighting-circuit-inspection',
     name: 'Lighting Circuit Inspection',
     description: 'Inspection and testing of lighting circuits and switches',
-    query: 'Lighting circuits requiring inspection and testing. Check switch operation, lamp holder condition, insulation resistance, and earth continuity of all lighting points.',
+    query:
+      'Lighting circuits requiring inspection and testing. Check switch operation, lamp holder condition, insulation resistance, and earth continuity of all lighting points.',
     equipmentType: 'Lighting Circuits',
     location: 'All rooms',
     installationType: 'domestic',
@@ -101,7 +108,8 @@ export const DOMESTIC_TEMPLATES: MaintenanceTemplate[] = [
     id: 'external-installation',
     name: 'External Installation Inspection',
     description: 'Maintenance of external sockets, lights, and garage supply',
-    query: 'External electrical installations requiring maintenance. Inspect outdoor sockets, security lighting, garage supply, and garden equipment connections for weatherproofing and RCD protection.',
+    query:
+      'External electrical installations requiring maintenance. Inspect outdoor sockets, security lighting, garage supply, and garden equipment connections for weatherproofing and RCD protection.',
     equipmentType: 'External Installations',
     location: 'Garden and garage',
     installationType: 'domestic',
@@ -116,7 +124,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'distribution-board-inspection',
     name: 'Distribution Board Inspection',
     description: 'Comprehensive inspection of commercial distribution boards',
-    query: 'Commercial distribution board requiring comprehensive inspection. Check MCCB/RCD operation, busbar torque, thermal imaging, load balancing, and labeling compliance.',
+    query:
+      'Commercial distribution board requiring comprehensive inspection. Check MCCB/RCD operation, busbar torque, thermal imaging, load balancing, and labeling compliance.',
     equipmentType: 'Distribution Board (TP&N 400A)',
     location: 'Main switch room',
     installationType: 'commercial',
@@ -128,7 +137,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'emergency-lighting-testing',
     name: 'Emergency Lighting Testing (BS 5266)',
     description: 'Monthly and annual emergency lighting system testing',
-    query: 'Emergency lighting system requiring testing in accordance with BS 5266-1. Conduct function tests, duration tests, visual inspection, and maintain logbook records.',
+    query:
+      'Emergency lighting system requiring testing in accordance with BS 5266-1. Conduct function tests, duration tests, visual inspection, and maintain logbook records.',
     equipmentType: 'Emergency Lighting System',
     location: 'Entire building',
     installationType: 'commercial',
@@ -140,7 +150,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'fire-alarm-maintenance',
     name: 'Fire Alarm System Maintenance',
     description: 'Quarterly maintenance of fire detection and alarm system',
-    query: 'Fire alarm system requiring quarterly maintenance in accordance with BS 5839-1. Test detectors, call points, sounders, control panel, and battery backup.',
+    query:
+      'Fire alarm system requiring quarterly maintenance in accordance with BS 5839-1. Test detectors, call points, sounders, control panel, and battery backup.',
     equipmentType: 'Addressable Fire Alarm System',
     location: 'Entire building',
     installationType: 'commercial',
@@ -152,7 +163,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'three-phase-supply-check',
     name: 'Three-Phase Supply Check',
     description: 'Inspection and testing of three-phase supply installations',
-    query: 'Three-phase supply installation requiring inspection. Check voltage balance, phase rotation, neutral current, earth fault loop impedance, and load distribution.',
+    query:
+      'Three-phase supply installation requiring inspection. Check voltage balance, phase rotation, neutral current, earth fault loop impedance, and load distribution.',
     equipmentType: 'Three-Phase Supply (400V)',
     location: 'Main switchgear room',
     installationType: 'commercial',
@@ -163,7 +175,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'server-room-equipment',
     name: 'Server Room Equipment',
     description: 'Critical power and UPS system maintenance',
-    query: 'Server room electrical equipment requiring maintenance. Inspect UPS system, PDUs, cable management, emergency power off, and dedicated earth arrangements.',
+    query:
+      'Server room electrical equipment requiring maintenance. Inspect UPS system, PDUs, cable management, emergency power off, and dedicated earth arrangements.',
     equipmentType: 'Server Room Electrical Infrastructure',
     location: 'IT server room',
     installationType: 'commercial',
@@ -174,7 +187,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'hvac-controls-maintenance',
     name: 'HVAC Controls Maintenance',
     description: 'Heating, ventilation, and air conditioning electrical controls',
-    query: 'HVAC control systems requiring electrical maintenance. Check motor contactors, overload protection, control wiring, sensors, and BMS integration.',
+    query:
+      'HVAC control systems requiring electrical maintenance. Check motor contactors, overload protection, control wiring, sensors, and BMS integration.',
     equipmentType: 'HVAC Control Panel',
     location: 'Plant room',
     installationType: 'commercial',
@@ -185,7 +199,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'commercial-kitchen',
     name: 'Commercial Kitchen Equipment',
     description: 'Electrical maintenance of commercial kitchen installations',
-    query: 'Commercial kitchen electrical equipment requiring maintenance. Inspect three-phase ovens, extraction systems, refrigeration circuits, and emergency isolation arrangements.',
+    query:
+      'Commercial kitchen electrical equipment requiring maintenance. Inspect three-phase ovens, extraction systems, refrigeration circuits, and emergency isolation arrangements.',
     equipmentType: 'Commercial Kitchen Electrical',
     location: 'Commercial kitchen',
     installationType: 'commercial',
@@ -196,7 +211,8 @@ export const COMMERCIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'external-signage',
     name: 'External Signage Circuits',
     description: 'Maintenance of external illuminated signage and lighting',
-    query: 'External illuminated signage and lighting requiring maintenance. Check weatherproofing, LED driver condition, earth arrangements, and RCD protection.',
+    query:
+      'External illuminated signage and lighting requiring maintenance. Check weatherproofing, LED driver condition, earth arrangements, and RCD protection.',
     equipmentType: 'External Signage and Lighting',
     location: 'External building facade',
     installationType: 'commercial',
@@ -211,7 +227,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'motor-control-centre',
     name: 'Motor Control Centre Maintenance',
     description: 'Comprehensive MCC inspection and testing',
-    query: 'Motor control centre requiring comprehensive maintenance. Inspect contactors, overloads, variable speed drives, control wiring, thermal imaging, and vibration analysis.',
+    query:
+      'Motor control centre requiring comprehensive maintenance. Inspect contactors, overloads, variable speed drives, control wiring, thermal imaging, and vibration analysis.',
     equipmentType: 'Motor Control Centre (MCC)',
     location: 'Production floor - Zone 2',
     installationType: 'industrial',
@@ -223,7 +240,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'busbar-inspection',
     name: 'Busbar Inspection',
     description: 'High-current busbar system inspection and testing',
-    query: 'High-current busbar system requiring inspection. Conduct thermal imaging, torque checking, contact resistance measurement, and visual inspection of all joints and connections.',
+    query:
+      'High-current busbar system requiring inspection. Conduct thermal imaging, torque checking, contact resistance measurement, and visual inspection of all joints and connections.',
     equipmentType: 'Busbar System (2000A)',
     location: 'Main LV switchroom',
     installationType: 'industrial',
@@ -235,7 +253,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'high-current-testing',
     name: 'High Current Installation Testing',
     description: 'Testing of high-current industrial installations',
-    query: 'High-current industrial installation requiring testing. Perform earth fault loop impedance tests, insulation resistance, RCD trip times, and load current measurements.',
+    query:
+      'High-current industrial installation requiring testing. Perform earth fault loop impedance tests, insulation resistance, RCD trip times, and load current measurements.',
     equipmentType: 'High Current Installation (630A+)',
     location: 'Production switchgear',
     installationType: 'industrial',
@@ -246,7 +265,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'plc-control-panel',
     name: 'PLC/Control Panel Checks',
     description: 'Maintenance of PLC and automated control systems',
-    query: 'PLC control panel and automation systems requiring maintenance. Check power supplies, I/O modules, wiring integrity, earth arrangements, and backup battery systems.',
+    query:
+      'PLC control panel and automation systems requiring maintenance. Check power supplies, I/O modules, wiring integrity, earth arrangements, and backup battery systems.',
     equipmentType: 'PLC Control Panel',
     location: 'Process control room',
     installationType: 'industrial',
@@ -258,7 +278,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'crane-electrical',
     name: 'Crane Electrical Inspection',
     description: 'Overhead crane electrical system maintenance',
-    query: 'Overhead crane electrical systems requiring inspection. Check hoist motor, limit switches, emergency stop circuits, conductor rails, and safety interlocks.',
+    query:
+      'Overhead crane electrical systems requiring inspection. Check hoist motor, limit switches, emergency stop circuits, conductor rails, and safety interlocks.',
     equipmentType: 'Overhead Crane (10 tonne)',
     location: 'Main production hall',
     installationType: 'industrial',
@@ -269,7 +290,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'conveyor-system',
     name: 'Conveyor System Maintenance',
     description: 'Automated conveyor electrical system maintenance',
-    query: 'Automated conveyor system electrical maintenance. Inspect motor drives, sensors, safety circuits, emergency stops, and control wiring throughout the line.',
+    query:
+      'Automated conveyor system electrical maintenance. Inspect motor drives, sensors, safety circuits, emergency stops, and control wiring throughout the line.',
     equipmentType: 'Conveyor System Control',
     location: 'Production line 3',
     installationType: 'industrial',
@@ -280,7 +302,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'air-compressor',
     name: 'Air Compressor Electrical',
     description: 'Industrial air compressor electrical maintenance',
-    query: 'Industrial air compressor electrical systems requiring maintenance. Check motor starter, overload protection, pressure switches, control circuits, and safety interlocks.',
+    query:
+      'Industrial air compressor electrical systems requiring maintenance. Check motor starter, overload protection, pressure switches, control circuits, and safety interlocks.',
     equipmentType: 'Air Compressor (75kW)',
     location: 'Compressor house',
     installationType: 'industrial',
@@ -291,7 +314,8 @@ export const INDUSTRIAL_TEMPLATES: MaintenanceTemplate[] = [
     id: 'welding-bay',
     name: 'Welding Bay Equipment',
     description: 'Maintenance of welding bay electrical installations',
-    query: 'Welding bay electrical equipment requiring maintenance. Inspect welding machine supplies, earth bonding, extraction systems, and power outlets for compliance with BS 7671 Section 706.',
+    query:
+      'Welding bay electrical equipment requiring maintenance. Inspect welding machine supplies, earth bonding, extraction systems, and power outlets for compliance with BS 7671 Section 706.',
     equipmentType: 'Welding Bay Electrical',
     location: 'Fabrication workshop',
     installationType: 'industrial',

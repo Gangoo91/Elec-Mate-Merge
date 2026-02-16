@@ -11,23 +11,22 @@ export const EmergencyLightingRealWorldSection2 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
-        
         <div className="p-4 bg-blue-600/10 border border-blue-600/30 rounded-lg">
           <h4 className="text-blue-400 font-semibold mb-3 flex items-center gap-2">
             <Info className="h-4 w-4" />
             Project Brief
           </h4>
           <p className="text-sm mb-3">
-            A 5-storey office complex with basement car park requires emergency lighting design. 
-            The building includes open-plan offices, meeting rooms, reception areas, plant rooms, and multiple escape routes.
+            A 5-storey office complex with basement car park requires emergency lighting design. The
+            building includes open-plan offices, meeting rooms, reception areas, plant rooms, and
+            multiple escape routes.
           </p>
         </div>
 
         <div className="space-y-4">
           <h4 className="text-foreground font-semibold">Location Assessment:</h4>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
-            
             <div className="p-3 bg-green-600/10 border border-green-600/30 rounded">
               <h5 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
@@ -57,13 +56,14 @@ export const EmergencyLightingRealWorldSection2 = () => {
                 <li>• Direction change points</li>
               </ul>
             </div>
-
           </div>
 
           <div className="p-4 bg-purple-600/10 border border-purple-600/30 rounded-lg">
             <h5 className="font-semibold text-purple-400 mb-2">Compliance Challenges Resolved</h5>
             <ul className="text-sm space-y-1">
-              <li>• Complex escape route geometry required detailed luminaire spacing calculations</li>
+              <li>
+                • Complex escape route geometry required detailed luminaire spacing calculations
+              </li>
               <li>• Basement car park needed enhanced illumination due to vehicle obstruction</li>
               <li>• Plant rooms required explosion-proof fittings due to fuel storage</li>
               <li>• Open-plan areas needed strategic placement to avoid desk shadows</li>
@@ -74,11 +74,11 @@ export const EmergencyLightingRealWorldSection2 = () => {
           <div className="p-3 bg-slate-600/10 border border-slate-600/30 rounded">
             <h5 className="font-semibold text-slate-400 mb-2">Key Learning Point</h5>
             <p className="text-sm">
-              Thorough building assessment using BS5266 location requirements ensures compliance. 
-              Each building type and area has specific needs that must be identified during the design phase.
+              Thorough building assessment using BS5266 location requirements ensures compliance.
+              Each building type and area has specific needs that must be identified during the
+              design phase.
             </p>
           </div>
-
         </div>
       </CardContent>
     </Card>

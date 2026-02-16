@@ -1,15 +1,35 @@
-import { ArrowLeft, Calendar, CheckCircle, HelpCircle, Clock, FileText, Shield, Target, Settings, AlertTriangle, TrendingUp } from 'lucide-react';
+import {
+  ArrowLeft,
+  Calendar,
+  CheckCircle,
+  HelpCircle,
+  Clock,
+  FileText,
+  Shield,
+  Target,
+  Settings,
+  AlertTriangle,
+  TrendingUp,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule6Section5 = () => {
   useSEO({
-    title: "Calibration Intervals, Certificates, and UKAS Traceability | Instrumentation Module 6",
-    description: "Learn about calibration scheduling approaches, certificate interpretation, UKAS traceability requirements, and building effective calibration programmes.",
-    keywords: ["calibration intervals", "UKAS traceability", "calibration certificates", "calibration scheduling", "NPL", "calibration programme"]
+    title: 'Calibration Intervals, Certificates, and UKAS Traceability | Instrumentation Module 6',
+    description:
+      'Learn about calibration scheduling approaches, certificate interpretation, UKAS traceability requirements, and building effective calibration programmes.',
+    keywords: [
+      'calibration intervals',
+      'UKAS traceability',
+      'calibration certificates',
+      'calibration scheduling',
+      'NPL',
+      'calibration programme',
+    ],
   });
 
   return (
@@ -17,7 +37,10 @@ const InstrumentationModule6Section5 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-6" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Module 6</span>
           </Link>
@@ -33,9 +56,7 @@ const InstrumentationModule6Section5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Calibration Intervals, Certificates, and UKAS Traceability
           </h1>
-          <p className="text-white">
-            Module 6 · Section 5 · 18 min read
-          </p>
+          <p className="text-white">Module 6 · Section 5 · 18 min read</p>
         </div>
 
         {/* Quick Summary Box */}
@@ -67,13 +88,17 @@ const InstrumentationModule6Section5 = () => {
         {/* Section 01 - Calibration Intervals */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Calibration Interval Approaches</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Calibration intervals determine how often instruments are recalibrated. There is no single "correct" interval - the right approach depends on the instrument, its application, environmental conditions, and regulatory requirements.
+              Calibration intervals determine how often instruments are recalibrated. There is no
+              single "correct" interval - the right approach depends on the instrument, its
+              application, environmental conditions, and regulatory requirements.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-3">
@@ -155,10 +180,14 @@ const InstrumentationModule6Section5 = () => {
 
             {/* Factors Affecting Frequency */}
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-3">Factors Affecting Calibration Frequency</h3>
+              <h3 className="font-semibold text-white mb-3">
+                Factors Affecting Calibration Frequency
+              </h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">Environmental Factors</h4>
+                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">
+                    Environmental Factors
+                  </h4>
                   <ul className="space-y-1 text-white text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
@@ -220,13 +249,19 @@ const InstrumentationModule6Section5 = () => {
         {/* Section 02 - Calibration Certificate Interpretation */}
         <section className="mb-10 mt-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
-            <h2 className="text-xl font-semibold text-white">Calibration Certificate Interpretation</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Calibration Certificate Interpretation
+            </h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Understanding how to read and interpret calibration certificates is essential for verifying that calibration was performed correctly and meets your requirements. A certificate is only useful if you know what to look for.
+              Understanding how to read and interpret calibration certificates is essential for
+              verifying that calibration was performed correctly and meets your requirements. A
+              certificate is only useful if you know what to look for.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -324,13 +359,19 @@ const InstrumentationModule6Section5 = () => {
         {/* Section 03 - UKAS Traceability */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
-            <h2 className="text-xl font-semibold text-white">UKAS Traceability and National Standards</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              UKAS Traceability and National Standards
+            </h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              UKAS (United Kingdom Accreditation Service) is the UK's national accreditation body. UKAS accreditation demonstrates that a laboratory is competent to perform specific calibrations and that results are traceable to national standards.
+              UKAS (United Kingdom Accreditation Service) is the UK's national accreditation body.
+              UKAS accreditation demonstrates that a laboratory is competent to perform specific
+              calibrations and that results are traceable to national standards.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
@@ -340,30 +381,38 @@ const InstrumentationModule6Section5 = () => {
               </h3>
               <div className="space-y-3">
                 <div className="bg-elec-yellow/20 border border-elec-yellow/40 rounded-lg p-3">
-                  <h4 className="font-semibold text-elec-yellow text-sm">National Physical Laboratory (NPL)</h4>
+                  <h4 className="font-semibold text-elec-yellow text-sm">
+                    National Physical Laboratory (NPL)
+                  </h4>
                   <p className="text-white text-sm mt-1">
-                    UK's national measurement institute. Maintains primary standards directly linked to SI units (International System of Units).
+                    UK's national measurement institute. Maintains primary standards directly linked
+                    to SI units (International System of Units).
                   </p>
                 </div>
 
                 <div className="bg-purple-500/20 border border-purple-500/40 rounded-lg p-3 ml-4">
-                  <h4 className="font-semibold text-purple-400 text-sm">UKAS-Accredited Laboratories</h4>
+                  <h4 className="font-semibold text-purple-400 text-sm">
+                    UKAS-Accredited Laboratories
+                  </h4>
                   <p className="text-white text-sm mt-1">
-                    Secondary standards calibrated by NPL. Provide accredited calibration services with documented uncertainty and traceability.
+                    Secondary standards calibrated by NPL. Provide accredited calibration services
+                    with documented uncertainty and traceability.
                   </p>
                 </div>
 
                 <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg p-3 ml-8">
                   <h4 className="font-semibold text-blue-400 text-sm">Working Standards</h4>
                   <p className="text-white text-sm mt-1">
-                    Used by industry for day-to-day calibration. Calibrated against secondary standards from UKAS laboratories.
+                    Used by industry for day-to-day calibration. Calibrated against secondary
+                    standards from UKAS laboratories.
                   </p>
                 </div>
 
                 <div className="bg-green-500/20 border border-green-500/40 rounded-lg p-3 ml-12">
                   <h4 className="font-semibold text-green-400 text-sm">Your Instruments</h4>
                   <p className="text-white text-sm mt-1">
-                    Field instruments calibrated against working standards. Complete the traceability chain back to SI units.
+                    Field instruments calibrated against working standards. Complete the
+                    traceability chain back to SI units.
                   </p>
                 </div>
               </div>
@@ -434,13 +483,16 @@ const InstrumentationModule6Section5 = () => {
         {/* Section 04 - When to Recalibrate */}
         <section className="mb-10 mt-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">When Recalibration is Required</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Beyond scheduled intervals, certain events should trigger immediate recalibration. Recognising these triggers prevents the use of potentially inaccurate instruments.
+              Beyond scheduled intervals, certain events should trigger immediate recalibration.
+              Recognising these triggers prevents the use of potentially inaccurate instruments.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -516,18 +568,26 @@ const InstrumentationModule6Section5 = () => {
         {/* Section 05 - Building a Calibration Programme */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
-            <h2 className="text-xl font-semibold text-white">Building a Site-Wide Calibration Programme</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Building a Site-Wide Calibration Programme
+            </h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              An effective calibration programme ensures all measuring equipment is properly managed, calibrated at appropriate intervals, and maintains traceability. Here are the key steps to develop one.
+              An effective calibration programme ensures all measuring equipment is properly
+              managed, calibrated at appropriate intervals, and maintains traceability. Here are the
+              key steps to develop one.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">1. Instrument Inventory</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
+                  1. Instrument Inventory
+                </h3>
                 <ul className="space-y-1 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -571,7 +631,9 @@ const InstrumentationModule6Section5 = () => {
               </div>
 
               <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">3. Interval Determination</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
+                  3. Interval Determination
+                </h3>
                 <ul className="space-y-1 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -593,7 +655,9 @@ const InstrumentationModule6Section5 = () => {
               </div>
 
               <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">4. Supplier Selection</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
+                  4. Supplier Selection
+                </h3>
                 <ul className="space-y-1 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -615,7 +679,9 @@ const InstrumentationModule6Section5 = () => {
               </div>
 
               <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">5. Documentation System</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
+                  5. Documentation System
+                </h3>
                 <ul className="space-y-1 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -637,7 +703,9 @@ const InstrumentationModule6Section5 = () => {
               </div>
 
               <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">6. Continuous Improvement</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
+                  6. Continuous Improvement
+                </h3>
                 <ul className="space-y-1 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -673,7 +741,9 @@ const InstrumentationModule6Section5 = () => {
             Real World Scenario: High-Vibration Manufacturing Environment
           </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            A precision component manufacturer operates CNC machines 24/7 in a high-vibration environment. Quality control instruments were showing significant drift at standard 12-month intervals, leading to customer complaints about tolerance variations.
+            A precision component manufacturer operates CNC machines 24/7 in a high-vibration
+            environment. Quality control instruments were showing significant drift at standard
+            12-month intervals, leading to customer complaints about tolerance variations.
           </p>
           <div className="bg-card/50 rounded-lg p-3 border border-border mb-3">
             <h4 className="font-medium text-elec-yellow text-sm mb-2">Solution Implemented:</h4>
@@ -701,7 +771,8 @@ const InstrumentationModule6Section5 = () => {
             </ul>
           </div>
           <p className="text-green-400 text-sm italic">
-            Result: 90% reduction in quality-related customer complaints and improved process capability indices across all critical dimensions.
+            Result: 90% reduction in quality-related customer complaints and improved process
+            capability indices across all critical dimensions.
           </p>
         </div>
 
@@ -714,30 +785,50 @@ const InstrumentationModule6Section5 = () => {
 
           <div className="space-y-4">
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">Can I extend calibration intervals to save money?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Can I extend calibration intervals to save money?
+              </h3>
               <p className="text-white text-sm">
-                Yes, but only with justification. You need historical data showing the instrument remains stable over the current interval. Track as-found readings over several calibration cycles - if consistently within tolerance, you may justify extending intervals. Document your rationale and get management approval.
+                Yes, but only with justification. You need historical data showing the instrument
+                remains stable over the current interval. Track as-found readings over several
+                calibration cycles - if consistently within tolerance, you may justify extending
+                intervals. Document your rationale and get management approval.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">Is UKAS calibration always required?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Is UKAS calibration always required?
+              </h3>
               <p className="text-white text-sm">
-                Not always. UKAS calibration is required when regulations mandate it, customers specify it, or for safety-critical applications. For non-critical measurements, calibration by a competent person using traceable standards may be acceptable. Check your specific regulatory and customer requirements.
+                Not always. UKAS calibration is required when regulations mandate it, customers
+                specify it, or for safety-critical applications. For non-critical measurements,
+                calibration by a competent person using traceable standards may be acceptable. Check
+                your specific regulatory and customer requirements.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">What if my instrument is out of calibration when due?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                What if my instrument is out of calibration when due?
+              </h3>
               <p className="text-white text-sm">
-                An overdue instrument should not be used for measurements until recalibrated. Quarantine it with a clear label. Review any measurements made since it was due - you may need to assess the impact on product quality and potentially recall or re-test products measured during the overdue period.
+                An overdue instrument should not be used for measurements until recalibrated.
+                Quarantine it with a clear label. Review any measurements made since it was due -
+                you may need to assess the impact on product quality and potentially recall or
+                re-test products measured during the overdue period.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">How do I verify my calibration supplier is competent?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                How do I verify my calibration supplier is competent?
+              </h3>
               <p className="text-white text-sm">
-                Check their UKAS accreditation schedule online at the UKAS website. Verify the specific measurements you need are within their scope of accreditation. Ask for sample certificates and check they include all required information. Consider performing a supplier audit if calibration is critical to your quality system.
+                Check their UKAS accreditation schedule online at the UKAS website. Verify the
+                specific measurements you need are within their scope of accreditation. Ask for
+                sample certificates and check they include all required information. Consider
+                performing a supplier audit if calibration is critical to your quality system.
               </p>
             </div>
           </div>
@@ -748,10 +839,10 @@ const InstrumentationModule6Section5 = () => {
           <SingleQuestionQuiz
             question="Which approach to calibration scheduling is most appropriate for a rarely-used but safety-critical instrument?"
             options={[
-              "Usage-based - calibrate after every 1000 uses",
-              "Time-based - standard 12-month interval",
-              "Risk-based - more frequent calibration despite low usage due to safety criticality",
-              "No calibration needed if rarely used"
+              'Usage-based - calibrate after every 1000 uses',
+              'Time-based - standard 12-month interval',
+              'Risk-based - more frequent calibration despite low usage due to safety criticality',
+              'No calibration needed if rarely used',
             ]}
             correctAnswer={2}
             explanation="Risk-based scheduling is most appropriate. Even though usage is low, the safety-critical nature means the consequence of measurement error is high. Risk-based scheduling considers the impact of failure, not just usage, ensuring adequate calibration frequency to maintain safety regardless of how often the instrument is used."
@@ -760,13 +851,22 @@ const InstrumentationModule6Section5 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border">
-          <Link to="/electrician/upskilling/instrumentation-module-6-section-4" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full h-11 touch-manipulation border-border hover:bg-card">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6-section-4"
+            className="w-full sm:w-auto"
+          >
+            <Button
+              variant="outline"
+              className="w-full h-11 touch-manipulation border-border hover:bg-card"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
           </Link>
-          <Link to="/electrician/upskilling/instrumentation-module-6-section-6" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6-section-6"
+            className="w-full sm:w-auto"
+          >
             <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

@@ -1,7 +1,22 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp, ArrowLeft, ArrowRight, CheckCircle2, XCircle, Zap, Recycle, Leaf, Factory, Truck, Package, TreePine, Scale } from "lucide-react";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { useState } from 'react';
+import {
+  ChevronDown,
+  ChevronUp,
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  Zap,
+  Recycle,
+  Leaf,
+  Factory,
+  Truck,
+  Package,
+  TreePine,
+  Scale,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 interface QuizQuestion {
   question: string;
@@ -51,15 +66,17 @@ const InlineCheck = ({ question, correctAnswer, explanation }: InlineCheckProps)
           </button>
         </div>
       ) : (
-        <div className={`p-3 rounded-lg ${isCorrect ? "bg-green-600/20 border border-green-500/30" : "bg-red-600/20 border border-red-500/30"}`}>
+        <div
+          className={`p-3 rounded-lg ${isCorrect ? 'bg-green-600/20 border border-green-500/30' : 'bg-red-600/20 border border-red-500/30'}`}
+        >
           <div className="flex items-center gap-2 mb-2">
             {isCorrect ? (
               <CheckCircle2 className="w-5 h-5 text-green-400" />
             ) : (
               <XCircle className="w-5 h-5 text-red-400" />
             )}
-            <span className={isCorrect ? "text-green-400" : "text-red-400"}>
-              {isCorrect ? "Correct!" : "Not quite right"}
+            <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
+              {isCorrect ? 'Correct!' : 'Not quite right'}
             </span>
           </div>
           {showExplanation && <p className="text-[#a1a1a1] text-sm">{explanation}</p>}
@@ -71,8 +88,8 @@ const InlineCheck = ({ question, correctAnswer, explanation }: InlineCheckProps)
 
 const Level3Module2Section6_3 = () => {
   useSEO(
-    "6.3 Life-Cycle Thinking in Material Selection - Level 3 Environmental Technologies",
-    "Understanding life-cycle assessment principles and sustainable material selection for electrical installations"
+    '6.3 Life-Cycle Thinking in Material Selection - Level 3 Environmental Technologies',
+    'Understanding life-cycle assessment principles and sustainable material selection for electrical installations'
   );
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -84,160 +101,174 @@ const Level3Module2Section6_3 = () => {
 
   const quizQuestions: QuizQuestion[] = [
     {
-      question: "What does LCA stand for in sustainable material selection?",
+      question: 'What does LCA stand for in sustainable material selection?',
       options: [
-        "Low Carbon Assessment",
-        "Life-Cycle Assessment",
-        "Long-term Cost Analysis",
-        "Limited Cable Application"
+        'Low Carbon Assessment',
+        'Life-Cycle Assessment',
+        'Long-term Cost Analysis',
+        'Limited Cable Application',
       ],
       correctAnswer: 1,
-      explanation: "LCA stands for Life-Cycle Assessment, a methodology that evaluates environmental impacts throughout a product's entire life - from raw material extraction through manufacturing, use, and disposal."
+      explanation:
+        "LCA stands for Life-Cycle Assessment, a methodology that evaluates environmental impacts throughout a product's entire life - from raw material extraction through manufacturing, use, and disposal.",
     },
     {
       question: "Which phase of a cable's life cycle typically has the highest energy consumption?",
       options: [
-        "Transportation to site",
-        "Installation",
-        "Operational use over lifetime",
-        "End-of-life recycling"
+        'Transportation to site',
+        'Installation',
+        'Operational use over lifetime',
+        'End-of-life recycling',
       ],
       correctAnswer: 2,
-      explanation: "The operational phase typically accounts for the highest energy consumption. Even small efficiency differences in cable resistance compound over 20-40 years of use, making operational losses far exceed manufacturing energy."
+      explanation:
+        'The operational phase typically accounts for the highest energy consumption. Even small efficiency differences in cable resistance compound over 20-40 years of use, making operational losses far exceed manufacturing energy.',
     },
     {
       question: "What is 'embodied carbon' in electrical materials?",
       options: [
-        "Carbon content of insulation materials",
-        "CO2 emissions during operation",
-        "Total greenhouse gases from extraction, manufacturing, and transport",
-        "Carbon footprint of the installation team"
+        'Carbon content of insulation materials',
+        'CO2 emissions during operation',
+        'Total greenhouse gases from extraction, manufacturing, and transport',
+        'Carbon footprint of the installation team',
       ],
       correctAnswer: 2,
-      explanation: "Embodied carbon represents the total greenhouse gas emissions associated with extracting raw materials, manufacturing the product, and transporting it to site - before the product is even used."
+      explanation:
+        'Embodied carbon represents the total greenhouse gas emissions associated with extracting raw materials, manufacturing the product, and transporting it to site - before the product is even used.',
     },
     {
-      question: "Why might aluminium cables sometimes be more sustainable than copper for larger installations?",
+      question:
+        'Why might aluminium cables sometimes be more sustainable than copper for larger installations?',
       options: [
-        "Aluminium is always cheaper",
-        "Aluminium requires less energy to produce per kg and is more abundant",
-        "Copper cannot be recycled",
-        "Aluminium has better conductivity"
+        'Aluminium is always cheaper',
+        'Aluminium requires less energy to produce per kg and is more abundant',
+        'Copper cannot be recycled',
+        'Aluminium has better conductivity',
       ],
       correctAnswer: 1,
-      explanation: "Aluminium requires approximately 65% less energy to produce per kg than copper, and aluminium ore (bauxite) is far more abundant. For larger cross-sections where the conductivity difference is less critical, aluminium can be more sustainable."
+      explanation:
+        'Aluminium requires approximately 65% less energy to produce per kg than copper, and aluminium ore (bauxite) is far more abundant. For larger cross-sections where the conductivity difference is less critical, aluminium can be more sustainable.',
     },
     {
-      question: "What is the typical copper recycling rate for electrical cables in the UK?",
-      options: [
-        "Around 40%",
-        "Around 60%",
-        "Around 85-90%",
-        "100%"
-      ],
+      question: 'What is the typical copper recycling rate for electrical cables in the UK?',
+      options: ['Around 40%', 'Around 60%', 'Around 85-90%', '100%'],
       correctAnswer: 2,
-      explanation: "Copper has excellent recyclability with rates of 85-90% in the UK electrical industry. Recycled copper requires only 10-15% of the energy needed for primary production, making end-of-life recovery highly valuable."
+      explanation:
+        'Copper has excellent recyclability with rates of 85-90% in the UK electrical industry. Recycled copper requires only 10-15% of the energy needed for primary production, making end-of-life recovery highly valuable.',
     },
     {
       question: "What does 'cradle-to-grave' mean in life-cycle assessment?",
       options: [
-        "Assessment from raw material extraction to final disposal",
-        "Assessment during manufacturing only",
-        "Assessment during installation phase",
-        "Assessment of burial cable installations"
+        'Assessment from raw material extraction to final disposal',
+        'Assessment during manufacturing only',
+        'Assessment during installation phase',
+        'Assessment of burial cable installations',
       ],
       correctAnswer: 0,
-      explanation: "Cradle-to-grave assessment covers the entire product lifecycle: from raw material extraction (cradle) through manufacturing, distribution, use, and final disposal or recycling (grave). It provides the most complete environmental picture."
+      explanation:
+        'Cradle-to-grave assessment covers the entire product lifecycle: from raw material extraction (cradle) through manufacturing, distribution, use, and final disposal or recycling (grave). It provides the most complete environmental picture.',
     },
     {
-      question: "Which factor should NOT be considered when selecting sustainable trunking systems?",
+      question:
+        'Which factor should NOT be considered when selecting sustainable trunking systems?',
       options: [
-        "Percentage of recycled content",
-        "Expected service life",
-        "The colour matching your van livery",
-        "End-of-life recyclability"
+        'Percentage of recycled content',
+        'Expected service life',
+        'The colour matching your van livery',
+        'End-of-life recyclability',
       ],
       correctAnswer: 2,
-      explanation: "Sustainable selection should focus on recycled content, durability/service life, recyclability, and environmental certifications - not aesthetic preferences that have no environmental impact."
+      explanation:
+        'Sustainable selection should focus on recycled content, durability/service life, recyclability, and environmental certifications - not aesthetic preferences that have no environmental impact.',
     },
     {
-      question: "What is an Environmental Product Declaration (EPD)?",
+      question: 'What is an Environmental Product Declaration (EPD)?',
       options: [
-        "A government fine for pollution",
+        'A government fine for pollution',
         "A standardised document detailing a product's environmental impacts",
         "A manufacturer's marketing brochure",
-        "A waste disposal certificate"
+        'A waste disposal certificate',
       ],
       correctAnswer: 1,
-      explanation: "An EPD is a verified, standardised document (typically following ISO 14025) that provides transparent information about a product's environmental impacts across its life cycle. They enable objective comparison between products."
+      explanation:
+        "An EPD is a verified, standardised document (typically following ISO 14025) that provides transparent information about a product's environmental impacts across its life cycle. They enable objective comparison between products.",
     },
     {
-      question: "Why is cable sizing important from a life-cycle perspective?",
+      question: 'Why is cable sizing important from a life-cycle perspective?',
       options: [
-        "Larger cables look more professional",
+        'Larger cables look more professional',
         "Correct sizing minimises operational losses over the cable's lifetime",
-        "Smaller cables are always more sustainable",
-        "Cable size only affects initial cost"
+        'Smaller cables are always more sustainable',
+        'Cable size only affects initial cost',
       ],
       correctAnswer: 1,
-      explanation: "Correct cable sizing balances embodied carbon (more material = more embodied carbon) against operational losses (undersized cables waste energy as heat). Over 20-40 years, operational losses often outweigh the embodied carbon of slightly larger conductors."
+      explanation:
+        'Correct cable sizing balances embodied carbon (more material = more embodied carbon) against operational losses (undersized cables waste energy as heat). Over 20-40 years, operational losses often outweigh the embodied carbon of slightly larger conductors.',
     },
     {
       question: "What is 'circular economy' thinking in electrical installation?",
       options: [
-        "Using only round cables",
-        "Working in circular buildings",
-        "Designing for reuse, repair, and recycling to eliminate waste",
-        "Installing circular light fittings"
+        'Using only round cables',
+        'Working in circular buildings',
+        'Designing for reuse, repair, and recycling to eliminate waste',
+        'Installing circular light fittings',
       ],
       correctAnswer: 2,
-      explanation: "Circular economy principles aim to eliminate waste by keeping materials in use for as long as possible. In electrical work, this means selecting durable products, designing for disassembly, and ensuring materials can be recovered and recycled."
+      explanation:
+        'Circular economy principles aim to eliminate waste by keeping materials in use for as long as possible. In electrical work, this means selecting durable products, designing for disassembly, and ensuring materials can be recovered and recycled.',
     },
     {
-      question: "Which PVC alternative is often preferred for sustainable cable insulation?",
+      question: 'Which PVC alternative is often preferred for sustainable cable insulation?',
       options: [
-        "Asbestos coating",
-        "Lead sheathing",
-        "LSZH (Low Smoke Zero Halogen) compounds",
-        "Oil-based rubber"
+        'Asbestos coating',
+        'Lead sheathing',
+        'LSZH (Low Smoke Zero Halogen) compounds',
+        'Oil-based rubber',
       ],
       correctAnswer: 2,
-      explanation: "LSZH compounds are increasingly preferred as they produce less toxic smoke when burned and don't release halogen gases. They're also often easier to recycle than PVC, making them more suitable for circular economy approaches."
+      explanation:
+        "LSZH compounds are increasingly preferred as they produce less toxic smoke when burned and don't release halogen gases. They're also often easier to recycle than PVC, making them more suitable for circular economy approaches.",
     },
     {
       question: "What is 'material efficiency' in electrical installation?",
       options: [
-        "Using the cheapest materials available",
-        "Minimising waste while achieving the required performance",
-        "Installing materials as quickly as possible",
-        "Using materials from the nearest supplier"
+        'Using the cheapest materials available',
+        'Minimising waste while achieving the required performance',
+        'Installing materials as quickly as possible',
+        'Using materials from the nearest supplier',
       ],
       correctAnswer: 1,
-      explanation: "Material efficiency means achieving the required function with minimum material use and waste. This includes accurate ordering, minimising off-cuts, using appropriate cable sizes, and returning unused materials for reuse."
-    }
+      explanation:
+        'Material efficiency means achieving the required function with minimum material use and waste. This includes accurate ordering, minimising off-cuts, using appropriate cable sizes, and returning unused materials for reuse.',
+    },
   ];
 
   const faqs: FAQ[] = [
     {
-      question: "How do I find life-cycle information for electrical products?",
-      answer: "Look for Environmental Product Declarations (EPDs) on manufacturer websites or databases like the International EPD System. Many major manufacturers now publish EPDs for their products. Additionally, certifications like BREEAM, ISO 14001, and Cradle to Cradle provide lifecycle information. If EPDs aren't available, contact manufacturers directly - growing demand encourages them to develop this data."
+      question: 'How do I find life-cycle information for electrical products?',
+      answer:
+        "Look for Environmental Product Declarations (EPDs) on manufacturer websites or databases like the International EPD System. Many major manufacturers now publish EPDs for their products. Additionally, certifications like BREEAM, ISO 14001, and Cradle to Cradle provide lifecycle information. If EPDs aren't available, contact manufacturers directly - growing demand encourages them to develop this data.",
     },
     {
-      question: "Does sustainable material selection always cost more?",
-      answer: "Not necessarily. While some sustainable alternatives have higher upfront costs, life-cycle thinking often reveals lower total costs. More efficient cables reduce energy bills over 20-40 years. Durable products need less frequent replacement. Recyclable materials retain value at end-of-life. The Construction Leadership Council reports that sustainable buildings often have lower lifetime costs despite slightly higher initial investment."
+      question: 'Does sustainable material selection always cost more?',
+      answer:
+        'Not necessarily. While some sustainable alternatives have higher upfront costs, life-cycle thinking often reveals lower total costs. More efficient cables reduce energy bills over 20-40 years. Durable products need less frequent replacement. Recyclable materials retain value at end-of-life. The Construction Leadership Council reports that sustainable buildings often have lower lifetime costs despite slightly higher initial investment.',
     },
     {
-      question: "How should I balance sustainability against compliance with BS 7671?",
-      answer: "Compliance with BS 7671 is non-negotiable - safety and regulation always come first. However, within compliant options, you can make sustainable choices. For example, when BS 7671 permits multiple cable sizes, choose based on lifecycle efficiency. When selecting equivalent-performing products, choose those with better environmental credentials. Sustainability should guide selection between compliant alternatives, not override safety requirements."
+      question: 'How should I balance sustainability against compliance with BS 7671?',
+      answer:
+        'Compliance with BS 7671 is non-negotiable - safety and regulation always come first. However, within compliant options, you can make sustainable choices. For example, when BS 7671 permits multiple cable sizes, choose based on lifecycle efficiency. When selecting equivalent-performing products, choose those with better environmental credentials. Sustainability should guide selection between compliant alternatives, not override safety requirements.',
     },
     {
       question: "What's the difference between 'recycled content' and 'recyclability'?",
-      answer: "Recycled content refers to the percentage of a product made from recycled materials (pre-consumer or post-consumer waste). Recyclability refers to whether the product can be recycled at end-of-life. Ideally, choose products with high recycled content that are also highly recyclable. Some products score well on one metric but poorly on the other - composite materials might contain recycled content but be difficult to recycle."
+      answer:
+        'Recycled content refers to the percentage of a product made from recycled materials (pre-consumer or post-consumer waste). Recyclability refers to whether the product can be recycled at end-of-life. Ideally, choose products with high recycled content that are also highly recyclable. Some products score well on one metric but poorly on the other - composite materials might contain recycled content but be difficult to recycle.',
     },
     {
-      question: "How do I explain life-cycle benefits to clients who focus only on initial cost?",
-      answer: "Use concrete examples with figures. Show that a cable costing 15% more might save 20% in energy costs over its lifetime. Explain that durable products avoid replacement costs and disruption. Reference case studies from organisations like the Carbon Trust. For commercial clients, mention that sustainability credentials increasingly affect property values and tenant attraction. Frame it as investment rather than cost."
-    }
+      question: 'How do I explain life-cycle benefits to clients who focus only on initial cost?',
+      answer:
+        'Use concrete examples with figures. Show that a cable costing 15% more might save 20% in energy costs over its lifetime. Explain that durable products avoid replacement costs and disruption. Reference case studies from organisations like the Carbon Trust. For commercial clients, mention that sustainability credentials increasingly affect property values and tenant attraction. Frame it as investment rather than cost.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -272,7 +303,10 @@ const Level3Module2Section6_3 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-[#333333]">
         <div className="flex items-center gap-2 p-3 md:p-4 text-xs md:text-sm text-[#a1a1a1]">
-          <Link to="/apprentice-courses/level-3/module-2/section-6" className="hover:text-[#FFD93D] transition-colors">
+          <Link
+            to="/apprentice-courses/level-3/module-2/section-6"
+            className="hover:text-[#FFD93D] transition-colors"
+          >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <span>/</span>
@@ -301,7 +335,8 @@ const Level3Module2Section6_3 = () => {
               Life-Cycle Thinking in Material Selection
             </h1>
             <p className="text-[#a1a1a1]">
-              Understanding how to evaluate and select electrical materials based on their complete environmental impact - from raw material extraction to end-of-life disposal.
+              Understanding how to evaluate and select electrical materials based on their complete
+              environmental impact - from raw material extraction to end-of-life disposal.
             </p>
           </div>
         </div>
@@ -314,7 +349,10 @@ const Level3Module2Section6_3 = () => {
               <h3 className="font-semibold text-[#f5f5f5]">In 30 Seconds</h3>
             </div>
             <p className="text-sm text-[#a1a1a1]">
-              Life-cycle assessment (LCA) evaluates environmental impacts from raw material extraction through manufacturing, use, and disposal. Selecting materials based on total lifecycle impact - not just purchase price - reduces environmental footprint and often lowers lifetime costs through better efficiency and durability.
+              Life-cycle assessment (LCA) evaluates environmental impacts from raw material
+              extraction through manufacturing, use, and disposal. Selecting materials based on
+              total lifecycle impact - not just purchase price - reduces environmental footprint and
+              often lowers lifetime costs through better efficiency and durability.
             </p>
           </div>
           <div className="p-4 rounded-xl bg-gradient-to-br from-[#252525] to-[#1a1a1a] border border-[#333333]">
@@ -323,7 +361,10 @@ const Level3Module2Section6_3 = () => {
               <h3 className="font-semibold text-[#f5f5f5]">Spot it / Use it</h3>
             </div>
             <p className="text-sm text-[#a1a1a1]">
-              Look for EPDs (Environmental Product Declarations) when specifying materials. Consider embodied carbon, operational efficiency, durability, and recyclability. A cable that costs 10% more but reduces losses by 15% over 30 years is often the more sustainable - and economical - choice.
+              Look for EPDs (Environmental Product Declarations) when specifying materials. Consider
+              embodied carbon, operational efficiency, durability, and recyclability. A cable that
+              costs 10% more but reduces losses by 15% over 30 years is often the more sustainable -
+              and economical - choice.
             </p>
           </div>
         </div>
@@ -338,10 +379,17 @@ const Level3Module2Section6_3 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Traditional purchasing decisions often focus solely on initial cost and immediate performance. Life-cycle thinking expands this view to consider environmental and economic impacts across a product's entire existence - from the moment raw materials are extracted from the earth until final disposal or recycling.
+                Traditional purchasing decisions often focus solely on initial cost and immediate
+                performance. Life-cycle thinking expands this view to consider environmental and
+                economic impacts across a product's entire existence - from the moment raw materials
+                are extracted from the earth until final disposal or recycling.
               </p>
               <p>
-                For electrical installations, this approach reveals that decisions made during specification and purchasing have consequences for decades. A cable installed today might remain in service for 40+ years. The energy lost through resistance over that period often far exceeds the energy used to manufacture the cable in the first place.
+                For electrical installations, this approach reveals that decisions made during
+                specification and purchasing have consequences for decades. A cable installed today
+                might remain in service for 40+ years. The energy lost through resistance over that
+                period often far exceeds the energy used to manufacture the cable in the first
+                place.
               </p>
 
               <div className="mt-4 p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
@@ -351,7 +399,10 @@ const Level3Module2Section6_3 = () => {
                     <Factory className="w-4 h-4 text-[#FFD93D] mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-[#f5f5f5] font-medium">Production:</span>
-                      <span className="text-[#a1a1a1]"> Raw material extraction, processing, manufacturing, packaging</span>
+                      <span className="text-[#a1a1a1]">
+                        {' '}
+                        Raw material extraction, processing, manufacturing, packaging
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
@@ -365,14 +416,20 @@ const Level3Module2Section6_3 = () => {
                     <Zap className="w-4 h-4 text-[#FFD93D] mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-[#f5f5f5] font-medium">Use Phase:</span>
-                      <span className="text-[#a1a1a1]"> Energy consumption, maintenance, repairs over service life</span>
+                      <span className="text-[#a1a1a1]">
+                        {' '}
+                        Energy consumption, maintenance, repairs over service life
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <Recycle className="w-4 h-4 text-[#FFD93D] mt-1 flex-shrink-0" />
                     <div>
                       <span className="text-[#f5f5f5] font-medium">End-of-Life:</span>
-                      <span className="text-[#a1a1a1]"> Disposal, recycling, material recovery</span>
+                      <span className="text-[#a1a1a1]">
+                        {' '}
+                        Disposal, recycling, material recovery
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -394,11 +451,16 @@ const Level3Module2Section6_3 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Embodied carbon represents the total greenhouse gas emissions associated with producing a material or product, including raw material extraction, manufacturing, and transportation to site. It's measured in kgCO2e (kilograms of carbon dioxide equivalent).
+                Embodied carbon represents the total greenhouse gas emissions associated with
+                producing a material or product, including raw material extraction, manufacturing,
+                and transportation to site. It's measured in kgCO2e (kilograms of carbon dioxide
+                equivalent).
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
-                <h4 className="font-semibold text-[#f5f5f5] mb-3">Embodied Carbon in Common Materials</h4>
+                <h4 className="font-semibold text-[#f5f5f5] mb-3">
+                  Embodied Carbon in Common Materials
+                </h4>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between items-center p-2 bg-[#252525] rounded">
                     <span>Copper (primary production)</span>
@@ -426,12 +488,17 @@ const Level3Module2Section6_3 = () => {
                   </div>
                 </div>
                 <p className="mt-3 text-xs text-[#888888]">
-                  Note: Values are approximate and vary by source, manufacturing location, and energy mix.
+                  Note: Values are approximate and vary by source, manufacturing location, and
+                  energy mix.
                 </p>
               </div>
 
               <p>
-                <strong className="text-[#f5f5f5]">Key insight:</strong> Recycled metals have dramatically lower embodied carbon than primary production. Specifying materials with high recycled content significantly reduces embodied carbon. Copper and aluminium can be recycled indefinitely without quality loss, making them excellent choices when recycled feedstock is used.
+                <strong className="text-[#f5f5f5]">Key insight:</strong> Recycled metals have
+                dramatically lower embodied carbon than primary production. Specifying materials
+                with high recycled content significantly reduces embodied carbon. Copper and
+                aluminium can be recycled indefinitely without quality loss, making them excellent
+                choices when recycled feedstock is used.
               </p>
             </div>
           </section>
@@ -444,7 +511,10 @@ const Level3Module2Section6_3 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                The choice between copper and aluminium conductors illustrates life-cycle thinking in action. Neither is universally "better" - the optimal choice depends on application, installation conditions, and how you weight different environmental factors.
+                The choice between copper and aluminium conductors illustrates life-cycle thinking
+                in action. Neither is universally "better" - the optimal choice depends on
+                application, installation conditions, and how you weight different environmental
+                factors.
               </p>
 
               <div className="grid md:grid-cols-2 gap-4 mt-4">
@@ -503,7 +573,12 @@ const Level3Module2Section6_3 = () => {
 
               <div className="mt-4 p-4 bg-[#FFD93D]/10 rounded-lg border border-[#FFD93D]/30">
                 <p className="text-sm text-[#f5f5f5]">
-                  <strong>Practical guidance:</strong> For smaller installations and final circuits, copper's efficiency advantage typically outweighs aluminium's lower embodied carbon. For large cross-section cables (70mm+ and above), especially in submains and distribution, aluminium often makes environmental sense - the conductivity difference matters less at larger sizes, and the weight/material savings become significant.
+                  <strong>Practical guidance:</strong> For smaller installations and final circuits,
+                  copper's efficiency advantage typically outweighs aluminium's lower embodied
+                  carbon. For large cross-section cables (70mm+ and above), especially in submains
+                  and distribution, aluminium often makes environmental sense - the conductivity
+                  difference matters less at larger sizes, and the weight/material savings become
+                  significant.
                 </p>
               </div>
             </div>
@@ -523,7 +598,9 @@ const Level3Module2Section6_3 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                BS 7671 sets minimum cable sizes based on current-carrying capacity, voltage drop limits, and fault protection. However, meeting minimum requirements isn't always optimal from a life-cycle perspective.
+                BS 7671 sets minimum cable sizes based on current-carrying capacity, voltage drop
+                limits, and fault protection. However, meeting minimum requirements isn't always
+                optimal from a life-cycle perspective.
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
@@ -554,16 +631,22 @@ const Level3Module2Section6_3 = () => {
                   </div>
                 </div>
                 <p className="mt-3 text-xs text-[#888888]">
-                  Values are illustrative - actual figures vary with utilisation pattern and electricity carbon intensity.
+                  Values are illustrative - actual figures vary with utilisation pattern and
+                  electricity carbon intensity.
                 </p>
               </div>
 
               <p>
-                The 35mm cable has nearly double the embodied carbon of the 16mm cable, but reduces energy losses by over 50%. At typical UK grid carbon intensity (~200g CO2/kWh), the operational carbon savings over 25 years far exceed the additional embodied carbon.
+                The 35mm cable has nearly double the embodied carbon of the 16mm cable, but reduces
+                energy losses by over 50%. At typical UK grid carbon intensity (~200g CO2/kWh), the
+                operational carbon savings over 25 years far exceed the additional embodied carbon.
               </p>
 
               <p>
-                <strong className="text-[#f5f5f5]">Key principle:</strong> For heavily loaded circuits with long service lives, upsizing cables beyond minimum requirements often reduces total lifecycle carbon. The "sweet spot" depends on loading, operating hours, and expected service life.
+                <strong className="text-[#f5f5f5]">Key principle:</strong> For heavily loaded
+                circuits with long service lives, upsizing cables beyond minimum requirements often
+                reduces total lifecycle carbon. The "sweet spot" depends on loading, operating
+                hours, and expected service life.
               </p>
             </div>
           </section>
@@ -576,7 +659,9 @@ const Level3Module2Section6_3 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Environmental Product Declarations are standardised documents that provide verified environmental data about products. They follow international standards (typically ISO 14025 and EN 15804) and enable objective comparison between similar products.
+                Environmental Product Declarations are standardised documents that provide verified
+                environmental data about products. They follow international standards (typically
+                ISO 14025 and EN 15804) and enable objective comparison between similar products.
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
@@ -588,7 +673,9 @@ const Level3Module2Section6_3 = () => {
                   </div>
                   <div className="p-2 bg-[#252525] rounded">
                     <span className="text-[#FFD93D]">Energy Use:</span>
-                    <p className="text-[#a1a1a1]">Total primary energy demand (renewable and non-renewable)</p>
+                    <p className="text-[#a1a1a1]">
+                      Total primary energy demand (renewable and non-renewable)
+                    </p>
                   </div>
                   <div className="p-2 bg-[#252525] rounded">
                     <span className="text-[#FFD93D]">Water Use:</span>
@@ -610,11 +697,16 @@ const Level3Module2Section6_3 = () => {
               </div>
 
               <p>
-                <strong className="text-[#f5f5f5]">Where to find EPDs:</strong> Check manufacturer websites, the International EPD System database (environdec.com), or specific industry databases. Major electrical manufacturers including Legrand, Schneider Electric, ABB, and Siemens publish EPDs for many product lines.
+                <strong className="text-[#f5f5f5]">Where to find EPDs:</strong> Check manufacturer
+                websites, the International EPD System database (environdec.com), or specific
+                industry databases. Major electrical manufacturers including Legrand, Schneider
+                Electric, ABB, and Siemens publish EPDs for many product lines.
               </p>
 
               <p>
-                When EPDs aren't available, look for other environmental credentials: ISO 14001 certification (environmental management), Cradle to Cradle certification, or manufacturer statements about recycled content and manufacturing practices.
+                When EPDs aren't available, look for other environmental credentials: ISO 14001
+                certification (environmental management), Cradle to Cradle certification, or
+                manufacturer statements about recycled content and manufacturing practices.
               </p>
             </div>
           </section>
@@ -633,7 +725,10 @@ const Level3Module2Section6_3 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                The circular economy model aims to eliminate waste by keeping materials in use for as long as possible. Instead of the traditional "take-make-dispose" linear model, circular thinking focuses on designing out waste, keeping products and materials in use, and regenerating natural systems.
+                The circular economy model aims to eliminate waste by keeping materials in use for
+                as long as possible. Instead of the traditional "take-make-dispose" linear model,
+                circular thinking focuses on designing out waste, keeping products and materials in
+                use, and regenerating natural systems.
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
@@ -641,29 +736,51 @@ const Level3Module2Section6_3 = () => {
                 <div className="space-y-3 text-sm">
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">Design for Longevity:</span>
-                    <p className="mt-1">Select durable products that will last the full intended service life. A distribution board rated for 40 years beats a cheaper unit needing replacement in 15 years.</p>
+                    <p className="mt-1">
+                      Select durable products that will last the full intended service life. A
+                      distribution board rated for 40 years beats a cheaper unit needing replacement
+                      in 15 years.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">Design for Disassembly:</span>
-                    <p className="mt-1">Choose products and installation methods that allow easy future modification or removal. Screw-fixed containment is more easily reused than adhesive-fixed.</p>
+                    <p className="mt-1">
+                      Choose products and installation methods that allow easy future modification
+                      or removal. Screw-fixed containment is more easily reused than adhesive-fixed.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
-                    <span className="text-[#FFD93D] font-medium">Specify Recyclable Materials:</span>
-                    <p className="mt-1">Prefer materials that can be recovered and recycled. Metals score highly; complex composites and mixed materials are harder to recycle.</p>
+                    <span className="text-[#FFD93D] font-medium">
+                      Specify Recyclable Materials:
+                    </span>
+                    <p className="mt-1">
+                      Prefer materials that can be recovered and recycled. Metals score highly;
+                      complex composites and mixed materials are harder to recycle.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">Use Recycled Content:</span>
-                    <p className="mt-1">Specify products with high recycled content to create market demand for recycled materials, closing the loop.</p>
+                    <p className="mt-1">
+                      Specify products with high recycled content to create market demand for
+                      recycled materials, closing the loop.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">Minimise Waste:</span>
-                    <p className="mt-1">Accurate ordering, careful cutting to minimise off-cuts, and returning unused materials to suppliers for reuse.</p>
+                    <p className="mt-1">
+                      Accurate ordering, careful cutting to minimise off-cuts, and returning unused
+                      materials to suppliers for reuse.
+                    </p>
                   </div>
                 </div>
               </div>
 
               <p>
-                <strong className="text-[#f5f5f5]">Real example:</strong> When selecting cable containment, consider: Steel trunking has high recycled content (typically 25-40%), is highly recyclable at end of life, and if properly installed can be reused when the building is refurbished. PVC trunking may cost less initially but has lower recycled content and can be harder to recycle.
+                <strong className="text-[#f5f5f5]">Real example:</strong> When selecting cable
+                containment, consider: Steel trunking has high recycled content (typically 25-40%),
+                is highly recyclable at end of life, and if properly installed can be reused when
+                the building is refurbished. PVC trunking may cost less initially but has lower
+                recycled content and can be harder to recycle.
               </p>
             </div>
           </section>
@@ -676,7 +793,8 @@ const Level3Module2Section6_3 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Life-cycle thinking doesn't require complex calculations for every purchase. By understanding key principles, you can make better choices quickly:
+                Life-cycle thinking doesn't require complex calculations for every purchase. By
+                understanding key principles, you can make better choices quickly:
               </p>
 
               <div className="space-y-3">
@@ -685,7 +803,9 @@ const Level3Module2Section6_3 = () => {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-[#FFD93D]">1.</span>
-                      <span>What's the expected service life, and is this product durable enough?</span>
+                      <span>
+                        What's the expected service life, and is this product durable enough?
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-[#FFD93D]">2.</span>
@@ -713,7 +833,11 @@ const Level3Module2Section6_3 = () => {
                 <div className="p-4 bg-[#FFD93D]/10 rounded-lg border border-[#FFD93D]/30">
                   <h4 className="font-semibold text-[#f5f5f5] mb-2">Specification Hierarchy</h4>
                   <p className="text-sm">
-                    When specifying materials, consider (in order): <strong>1)</strong> Can we avoid using material at all? <strong>2)</strong> Can we reduce the quantity needed? <strong>3)</strong> Can we reuse existing materials? <strong>4)</strong> Can we specify recycled content? <strong>5)</strong> Can we ensure recyclability at end of life?
+                    When specifying materials, consider (in order): <strong>1)</strong> Can we avoid
+                    using material at all? <strong>2)</strong> Can we reduce the quantity needed?{' '}
+                    <strong>3)</strong> Can we reuse existing materials? <strong>4)</strong> Can we
+                    specify recycled content? <strong>5)</strong> Can we ensure recyclability at end
+                    of life?
                   </p>
                 </div>
               </div>
@@ -758,13 +882,13 @@ const Level3Module2Section6_3 = () => {
                         className={`w-full min-h-[44px] text-left p-4 rounded-lg transition-all duration-200 touch-manipulation active:scale-[0.98] ${
                           showResult
                             ? index === quizQuestions[currentQuestion].correctAnswer
-                              ? "bg-green-600/20 border-green-500 border"
+                              ? 'bg-green-600/20 border-green-500 border'
                               : index === selectedAnswer
-                              ? "bg-red-600/20 border-red-500 border"
-                              : "bg-[#1a1a1a] border border-[#333333]"
+                                ? 'bg-red-600/20 border-red-500 border'
+                                : 'bg-[#1a1a1a] border border-[#333333]'
                             : selectedAnswer === index
-                            ? "bg-[#FFD93D]/20 border-[#FFD93D] border"
-                            : "bg-[#1a1a1a] border border-[#333333] hover:border-[#FFD93D]/50"
+                              ? 'bg-[#FFD93D]/20 border-[#FFD93D] border'
+                              : 'bg-[#1a1a1a] border border-[#333333] hover:border-[#FFD93D]/50'
                         }`}
                       >
                         <span className="text-[#f5f5f5]">{option}</span>
@@ -786,7 +910,7 @@ const Level3Module2Section6_3 = () => {
                     onClick={handleNextQuestion}
                     className="w-full min-h-[44px] bg-[#FFD93D] text-[#1a1a1a] py-3 px-6 rounded-lg font-semibold hover:bg-[#FFD93D]/90 transition-all duration-200 touch-manipulation active:scale-[0.98]"
                   >
-                    {currentQuestion < quizQuestions.length - 1 ? "Next Question" : "See Results"}
+                    {currentQuestion < quizQuestions.length - 1 ? 'Next Question' : 'See Results'}
                   </button>
                 )}
               </div>
@@ -803,13 +927,22 @@ const Level3Module2Section6_3 = () => {
 
                 <div className="mb-6 p-4 rounded-lg bg-[#1a1a1a] border border-[#333333]">
                   {score === quizQuestions.length ? (
-                    <p className="text-green-400">Perfect score! Excellent understanding of life-cycle thinking.</p>
+                    <p className="text-green-400">
+                      Perfect score! Excellent understanding of life-cycle thinking.
+                    </p>
                   ) : score >= quizQuestions.length * 0.8 ? (
-                    <p className="text-green-400">Great work! You have a strong grasp of sustainable material selection.</p>
+                    <p className="text-green-400">
+                      Great work! You have a strong grasp of sustainable material selection.
+                    </p>
                   ) : score >= quizQuestions.length * 0.6 ? (
-                    <p className="text-[#FFD93D]">Good effort! Review the sections on embodied carbon and EPDs.</p>
+                    <p className="text-[#FFD93D]">
+                      Good effort! Review the sections on embodied carbon and EPDs.
+                    </p>
                   ) : (
-                    <p className="text-orange-400">Keep learning! Focus on understanding life-cycle stages and material selection criteria.</p>
+                    <p className="text-orange-400">
+                      Keep learning! Focus on understanding life-cycle stages and material selection
+                      criteria.
+                    </p>
                   )}
                 </div>
 
@@ -832,10 +965,7 @@ const Level3Module2Section6_3 = () => {
 
             <div className="space-y-3">
               {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="border border-[#333333] rounded-lg overflow-hidden"
-                >
+                <div key={index} className="border border-[#333333] rounded-lg overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                     className="w-full min-h-[44px] flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#252525] transition-colors touch-manipulation"

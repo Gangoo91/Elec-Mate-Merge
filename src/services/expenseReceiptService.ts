@@ -92,10 +92,7 @@ export async function compressImage(file: File, maxSizeKB: number = 1024): Promi
 /**
  * Upload an expense receipt to Supabase storage
  */
-export async function uploadReceipt(
-  file: File,
-  expenseId: string
-): Promise<UploadResult> {
+export async function uploadReceipt(file: File, expenseId: string): Promise<UploadResult> {
   try {
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
@@ -106,7 +103,14 @@ export async function uploadReceipt(
     }
 
     // Validate file type - include HEIC/HEIF for iOS devices
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/heic',
+      'image/heif',
+      'application/pdf',
+    ];
     // Also check file extension for HEIC as some browsers report empty type
     const fileExt = file.name.split('.').pop()?.toLowerCase();
     const isHeic = fileExt === 'heic' || fileExt === 'heif';
@@ -146,9 +150,9 @@ export async function uploadReceipt(
     }
 
     // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from(BUCKET_NAME)
-      .getPublicUrl(fileName);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from(BUCKET_NAME).getPublicUrl(fileName);
 
     return { url: publicUrl, error: null };
   } catch (error) {
@@ -175,9 +179,7 @@ export async function deleteReceipt(receiptUrl: string): Promise<boolean> {
       return false;
     }
 
-    const { error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .remove([fileName]);
+    const { error } = await supabase.storage.from(BUCKET_NAME).remove([fileName]);
 
     if (error) {
       console.error('Error deleting receipt:', error);

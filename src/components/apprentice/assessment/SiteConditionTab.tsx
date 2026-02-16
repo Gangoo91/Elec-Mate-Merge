@@ -1,131 +1,167 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
-  HardHat, CheckCircle, MapPin, Thermometer, Wind, Sun, Droplets,
-  Eye, Building, CloudRain, AlertTriangle, CheckSquare
-} from "lucide-react";
-import { useState } from "react";
+  HardHat,
+  CheckCircle,
+  MapPin,
+  Thermometer,
+  Wind,
+  Sun,
+  Droplets,
+  Eye,
+  Building,
+  CloudRain,
+  AlertTriangle,
+  CheckSquare,
+} from 'lucide-react';
+import { useState } from 'react';
 
 const SiteConditionTab = () => {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
-  const [environmentalNotes, setEnvironmentalNotes] = useState("");
+  const [environmentalNotes, setEnvironmentalNotes] = useState('');
 
   const conditionChecklist = [
     {
-      category: "Access & Working Space",
+      category: 'Access & Working Space',
       icon: MapPin,
-      color: "blue",
+      color: 'blue',
       items: [
-        "Adequate working space around electrical equipment (minimum 600mm)",
-        "Clear access routes to and from work area",
-        "Stable working platform or surface",
-        "No obstructions in emergency escape routes",
-        "Vehicle access available if required",
-        "Suitable parking arrangements for work vehicles",
-        "Pedestrian walkways clearly marked and safe"
-      ]
+        'Adequate working space around electrical equipment (minimum 600mm)',
+        'Clear access routes to and from work area',
+        'Stable working platform or surface',
+        'No obstructions in emergency escape routes',
+        'Vehicle access available if required',
+        'Suitable parking arrangements for work vehicles',
+        'Pedestrian walkways clearly marked and safe',
+      ],
     },
     {
-      category: "Environmental Conditions",
+      category: 'Environmental Conditions',
       icon: Thermometer,
-      color: "orange",
+      color: 'orange',
       items: [
-        "Dry conditions - no risk of water ingress",
-        "Adequate ventilation in enclosed spaces",
-        "Temperature suitable for equipment and materials",
-        "Wind conditions safe for overhead work",
-        "No flammable vapours or gases present",
-        "Humidity levels within acceptable ranges",
-        "Air quality suitable for respiratory health"
-      ]
+        'Dry conditions - no risk of water ingress',
+        'Adequate ventilation in enclosed spaces',
+        'Temperature suitable for equipment and materials',
+        'Wind conditions safe for overhead work',
+        'No flammable vapours or gases present',
+        'Humidity levels within acceptable ranges',
+        'Air quality suitable for respiratory health',
+      ],
     },
     {
-      category: "Lighting & Visibility",
+      category: 'Lighting & Visibility',
       icon: Sun,
-      color: "yellow",
+      color: 'yellow',
       items: [
-        "Adequate natural or artificial lighting",
-        "Emergency lighting available if required",
-        "All warning signs and labels clearly visible",
-        "Colour identification possible in lighting conditions",
-        "Additional portable lighting available if needed",
-        "No glare or shadow issues affecting work",
-        "Backup lighting arrangements in place"
-      ]
+        'Adequate natural or artificial lighting',
+        'Emergency lighting available if required',
+        'All warning signs and labels clearly visible',
+        'Colour identification possible in lighting conditions',
+        'Additional portable lighting available if needed',
+        'No glare or shadow issues affecting work',
+        'Backup lighting arrangements in place',
+      ],
     },
     {
-      category: "Structural Considerations",
+      category: 'Structural Considerations',
       icon: Building,
-      color: "purple",
+      color: 'purple',
       items: [
-        "Building structure suitable for proposed work",
-        "No signs of structural damage or instability",
-        "Cable routes and fixing points accessible",
-        "Load-bearing capacity adequate for equipment",
-        "Fire stopping and compartmentation maintained",
-        "Building materials compatible with electrical work",
-        "Structural modifications approved if required"
-      ]
+        'Building structure suitable for proposed work',
+        'No signs of structural damage or instability',
+        'Cable routes and fixing points accessible',
+        'Load-bearing capacity adequate for equipment',
+        'Fire stopping and compartmentation maintained',
+        'Building materials compatible with electrical work',
+        'Structural modifications approved if required',
+      ],
     },
     {
-      category: "Weather & Seasonal Factors",
+      category: 'Weather & Seasonal Factors',
       icon: Wind,
-      color: "green",
+      color: 'green',
       items: [
-        "Current weather conditions suitable for work",
-        "Weather forecast checked for duration of work",
-        "Seasonal considerations (frost, ice, heat)",
-        "Protection from rain and moisture available",
-        "Wind speed within safe working limits",
-        "Temperature effects on materials considered",
-        "Contingency plans for weather changes"
-      ]
-    }
+        'Current weather conditions suitable for work',
+        'Weather forecast checked for duration of work',
+        'Seasonal considerations (frost, ice, heat)',
+        'Protection from rain and moisture available',
+        'Wind speed within safe working limits',
+        'Temperature effects on materials considered',
+        'Contingency plans for weather changes',
+      ],
+    },
   ];
 
   const environmentalFactors = [
     {
-      factor: "Temperature",
+      factor: 'Temperature',
       icon: Thermometer,
-      color: "orange",
-      considerations: ["Cable installation temperature ratings", "Thermal expansion effects", "Worker comfort and safety"],
-      optimalRange: "5°C to 30°C for most electrical work"
+      color: 'orange',
+      considerations: [
+        'Cable installation temperature ratings',
+        'Thermal expansion effects',
+        'Worker comfort and safety',
+      ],
+      optimalRange: '5°C to 30°C for most electrical work',
     },
     {
-      factor: "Humidity",
+      factor: 'Humidity',
       icon: Droplets,
-      color: "blue",
-      considerations: ["Condensation risk", "Insulation resistance", "Equipment protection"],
-      optimalRange: "30% to 70% relative humidity"
+      color: 'blue',
+      considerations: ['Condensation risk', 'Insulation resistance', 'Equipment protection'],
+      optimalRange: '30% to 70% relative humidity',
     },
     {
-      factor: "Air Quality",
+      factor: 'Air Quality',
       icon: Wind,
-      color: "green",
-      considerations: ["Dust levels", "Chemical vapours", "Respiratory protection needs"],
-      optimalRange: "Clean, well-ventilated air"
-    }
+      color: 'green',
+      considerations: ['Dust levels', 'Chemical vapours', 'Respiratory protection needs'],
+      optimalRange: 'Clean, well-ventilated air',
+    },
   ];
 
   const getColorConfig = (color: string) => {
     const configs: Record<string, { bg: string; text: string; iconBg: string; border: string }> = {
-      blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', iconBg: 'from-blue-500/20 to-blue-500/5', border: 'border-blue-500/30' },
-      green: { bg: 'bg-green-500/10', text: 'text-green-400', iconBg: 'from-green-500/20 to-green-500/5', border: 'border-green-500/30' },
-      yellow: { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', iconBg: 'from-elec-yellow/20 to-elec-yellow/5', border: 'border-elec-yellow/30' },
-      purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', iconBg: 'from-purple-500/20 to-purple-500/5', border: 'border-purple-500/30' },
-      orange: { bg: 'bg-orange-500/10', text: 'text-orange-400', iconBg: 'from-orange-500/20 to-orange-500/5', border: 'border-orange-500/30' }
+      blue: {
+        bg: 'bg-blue-500/10',
+        text: 'text-blue-400',
+        iconBg: 'from-blue-500/20 to-blue-500/5',
+        border: 'border-blue-500/30',
+      },
+      green: {
+        bg: 'bg-green-500/10',
+        text: 'text-green-400',
+        iconBg: 'from-green-500/20 to-green-500/5',
+        border: 'border-green-500/30',
+      },
+      yellow: {
+        bg: 'bg-elec-yellow/10',
+        text: 'text-elec-yellow',
+        iconBg: 'from-elec-yellow/20 to-elec-yellow/5',
+        border: 'border-elec-yellow/30',
+      },
+      purple: {
+        bg: 'bg-purple-500/10',
+        text: 'text-purple-400',
+        iconBg: 'from-purple-500/20 to-purple-500/5',
+        border: 'border-purple-500/30',
+      },
+      orange: {
+        bg: 'bg-orange-500/10',
+        text: 'text-orange-400',
+        iconBg: 'from-orange-500/20 to-orange-500/5',
+        border: 'border-orange-500/30',
+      },
     };
     return configs[color] || configs.blue;
   };
 
   const toggleItem = (item: string) => {
-    setCheckedItems(prev =>
-      prev.includes(item)
-        ? prev.filter(i => i !== item)
-        : [...prev, item]
+    setCheckedItems((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
   };
 
@@ -152,25 +188,30 @@ const SiteConditionTab = () => {
                 </p>
               </div>
             </div>
-            <Badge className={`
+            <Badge
+              className={`
               ${completionRate === 100 ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-blue-500/20 text-blue-400 border-blue-500/30'}
               text-sm px-3 py-1
-            `}>
+            `}
+            >
               {Math.round(completionRate)}% Complete
             </Badge>
           </div>
         </CardHeader>
         <CardContent className="relative">
           <p className="text-white/70 mb-4">
-            Assess environmental and working conditions to ensure safe and effective electrical installation work.
-            This evaluation helps identify potential hazards and ensures optimal working conditions.
+            Assess environmental and working conditions to ensure safe and effective electrical
+            installation work. This evaluation helps identify potential hazards and ensures optimal
+            working conditions.
           </p>
 
           {/* Progress Bar */}
           <div className="space-y-2">
             <div className="flex justify-between text-xs text-white/60">
               <span>Progress</span>
-              <span>{checkedItems.length} of {totalItems} items checked</span>
+              <span>
+                {checkedItems.length} of {totalItems} items checked
+              </span>
             </div>
             <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
               <div
@@ -190,14 +231,19 @@ const SiteConditionTab = () => {
       {conditionChecklist.map((category, index) => {
         const colorConfig = getColorConfig(category.color);
         const CategoryIcon = category.icon;
-        const categoryChecked = category.items.filter(item => checkedItems.includes(item)).length;
+        const categoryChecked = category.items.filter((item) => checkedItems.includes(item)).length;
 
         return (
-          <Card key={index} className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-white/20 transition-colors">
+          <Card
+            key={index}
+            className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-white/20 transition-colors"
+          >
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-white flex items-center gap-3">
-                  <div className={`p-2.5 rounded-xl bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`}>
+                  <div
+                    className={`p-2.5 rounded-xl bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`}
+                  >
                     <CategoryIcon className={`h-5 w-5 ${colorConfig.text}`} />
                   </div>
                   <span className="text-base sm:text-lg">{category.category}</span>
@@ -219,22 +265,28 @@ const SiteConditionTab = () => {
                         w-full flex items-start gap-3 p-3 sm:p-4 rounded-xl
                         border transition-all duration-200
                         touch-manipulation active:scale-[0.99]
-                        ${isChecked
-                          ? 'bg-green-500/10 border-green-500/30'
-                          : 'bg-white/10 border-white/10 hover:border-white/20'
+                        ${
+                          isChecked
+                            ? 'bg-green-500/10 border-green-500/30'
+                            : 'bg-white/10 border-white/10 hover:border-white/20'
                         }
                       `}
                     >
-                      <div className={`
+                      <div
+                        className={`
                         flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-all
-                        ${isChecked
-                          ? 'bg-green-500 border-green-500'
-                          : 'border-2 border-white/30 hover:border-blue-400'
+                        ${
+                          isChecked
+                            ? 'bg-green-500 border-green-500'
+                            : 'border-2 border-white/30 hover:border-blue-400'
                         }
-                      `}>
+                      `}
+                      >
                         {isChecked && <CheckCircle className="h-4 w-4 text-white" />}
                       </div>
-                      <span className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white/70'}`}>
+                      <span
+                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white/70'}`}
+                      >
                         {item}
                       </span>
                     </button>
@@ -262,7 +314,10 @@ const SiteConditionTab = () => {
               const factorConfig = getColorConfig(factor.color);
               const FactorIcon = factor.icon;
               return (
-                <div key={index} className={`p-4 rounded-xl ${factorConfig.bg} border ${factorConfig.border}`}>
+                <div
+                  key={index}
+                  className={`p-4 rounded-xl ${factorConfig.bg} border ${factorConfig.border}`}
+                >
                   <div className="flex items-center gap-2 mb-3">
                     <div className={`p-2 rounded-lg bg-gradient-to-br ${factorConfig.iconBg}`}>
                       <FactorIcon className={`h-4 w-4 ${factorConfig.text}`} />
@@ -276,7 +331,9 @@ const SiteConditionTab = () => {
                   <ul className="space-y-1.5">
                     {factor.considerations.map((consideration, idx) => (
                       <li key={idx} className="text-xs text-white/70 flex items-start gap-2">
-                        <span className={`w-1 h-1 ${factorConfig.bg.replace('/10', '')} rounded-full mt-1.5 flex-shrink-0`} />
+                        <span
+                          className={`w-1 h-1 ${factorConfig.bg.replace('/10', '')} rounded-full mt-1.5 flex-shrink-0`}
+                        />
                         {consideration}
                       </li>
                     ))}

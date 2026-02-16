@@ -11,7 +11,7 @@ export const OfflineIndicator = () => {
 
   useEffect(() => {
     const updateOnlineStatus = () => setIsOnline(navigator.onLine);
-    
+
     const updateQueueCount = async () => {
       const count = await offlineQueue.getQueueCount();
       setQueuedChanges(count);
@@ -19,7 +19,7 @@ export const OfflineIndicator = () => {
 
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
-    
+
     // Update queue count every 2 seconds
     const interval = setInterval(updateQueueCount, 2000);
     updateQueueCount(); // Initial check
@@ -37,11 +37,9 @@ export const OfflineIndicator = () => {
     <div
       onClick={() => queuedChanges > 0 && navigate('/sync-status')}
       className={cn(
-        "fixed bottom-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium transition-all",
-        queuedChanges > 0 && "cursor-pointer hover:scale-105",
-        !isOnline 
-          ? "bg-red-500 text-foreground" 
-          : "bg-amber-500 text-foreground"
+        'fixed bottom-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium transition-all',
+        queuedChanges > 0 && 'cursor-pointer hover:scale-105',
+        !isOnline ? 'bg-red-500 text-foreground' : 'bg-amber-500 text-foreground'
       )}
     >
       {!isOnline ? (
@@ -49,9 +47,7 @@ export const OfflineIndicator = () => {
           <WifiOff className="h-4 w-4" />
           <span>Offline Mode</span>
           {queuedChanges > 0 && (
-            <span className="ml-2 px-2 py-0.5 bg-white/20 rounded">
-              {queuedChanges} queued
-            </span>
+            <span className="ml-2 px-2 py-0.5 bg-white/20 rounded">{queuedChanges} queued</span>
           )}
         </>
       ) : (

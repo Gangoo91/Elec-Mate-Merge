@@ -21,12 +21,14 @@ interface EICInspectionStatsSummaryProps {
   inspectionItems: EICInspectionItem[];
 }
 
-const EICInspectionStatsSummary: React.FC<EICInspectionStatsSummaryProps> = ({ inspectionItems }) => {
+const EICInspectionStatsSummary: React.FC<EICInspectionStatsSummaryProps> = ({
+  inspectionItems,
+}) => {
   const totalItems = inspectionItems.length;
-  const completed = inspectionItems.filter(item => item.outcome !== '').length;
-  const satisfactory = inspectionItems.filter(item => item.outcome === 'satisfactory').length;
-  const notApplicable = inspectionItems.filter(item => item.outcome === 'not-applicable').length;
-  const limitation = inspectionItems.filter(item => item.outcome === 'limitation').length;
+  const completed = inspectionItems.filter((item) => item.outcome !== '').length;
+  const satisfactory = inspectionItems.filter((item) => item.outcome === 'satisfactory').length;
+  const notApplicable = inspectionItems.filter((item) => item.outcome === 'not-applicable').length;
+  const limitation = inspectionItems.filter((item) => item.outcome === 'limitation').length;
   const progressPercent = totalItems > 0 ? (completed / totalItems) * 100 : 0;
 
   return (

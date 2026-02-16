@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Shield, CheckCircle2, AlertTriangle, FileCheck, Zap } from 'lucide-react';
@@ -9,7 +8,9 @@ const WhyTestSection = () => {
       <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
         <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
           <Target className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-          <h4 className="text-base sm:text-lg font-semibold text-green-400">Why Functional Testing is Essential</h4>
+          <h4 className="text-base sm:text-lg font-semibold text-green-400">
+            Why Functional Testing is Essential
+          </h4>
         </div>
         <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -76,10 +77,11 @@ const WhyTestSection = () => {
               Real-World Impact
             </h4>
             <p className="text-sm text-white">
-              Functional testing has prevented countless accidents by identifying faulty emergency stops, 
-              malfunctioning RCDs, and defective control systems. A properly functioning emergency stop 
-              can be the difference between a minor incident and a serious injury. Regular functional 
-              testing ensures that when safety systems are needed most, they operate correctly.
+              Functional testing has prevented countless accidents by identifying faulty emergency
+              stops, malfunctioning RCDs, and defective control systems. A properly functioning
+              emergency stop can be the difference between a minor incident and a serious injury.
+              Regular functional testing ensures that when safety systems are needed most, they
+              operate correctly.
             </p>
           </div>
 

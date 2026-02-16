@@ -14,35 +14,47 @@ export const SmartHomeModule5Section3PIRSensors = () => {
         <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
           <h4 className="text-foreground font-semibold mb-3">PIR Technology & Operation</h4>
           <p className="text-sm mb-3">
-            Passive Infrared (PIR) sensors detect changes in infrared radiation caused by moving 
-            warm objects, such as people or animals. They use fresnel lenses to focus infrared 
-            energy onto pyroelectric sensors that generate electrical signals when heat patterns change.
+            Passive Infrared (PIR) sensors detect changes in infrared radiation caused by moving
+            warm objects, such as people or animals. They use fresnel lenses to focus infrared
+            energy onto pyroelectric sensors that generate electrical signals when heat patterns
+            change.
           </p>
           <p className="text-sm">
-            PIR sensors provide interior motion detection, creating a secondary layer of security 
-            that activates when intruders move through protected spaces after bypassing perimeter defences.
+            PIR sensors provide interior motion detection, creating a secondary layer of security
+            that activates when intruders move through protected spaces after bypassing perimeter
+            defences.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Strategic Placement Principles</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Strategic Placement Principles
+            </h4>
             <div className="space-y-3">
               <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                 <p className="text-blue-400 font-semibold text-sm mb-1">High-Traffic Areas</p>
-                <p className="text-xs text-foreground">Hallways, staircases, main corridors, living rooms</p>
+                <p className="text-xs text-foreground">
+                  Hallways, staircases, main corridors, living rooms
+                </p>
               </div>
               <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
                 <p className="text-purple-400 font-semibold text-sm mb-1">Corner Mounting</p>
-                <p className="text-xs text-foreground">Room corners for maximum coverage and discrete positioning</p>
+                <p className="text-xs text-foreground">
+                  Room corners for maximum coverage and discrete positioning
+                </p>
               </div>
               <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                 <p className="text-green-400 font-semibold text-sm mb-1">Entry Monitoring</p>
-                <p className="text-xs text-foreground">Monitor movement from doorways and access points</p>
+                <p className="text-xs text-foreground">
+                  Monitor movement from doorways and access points
+                </p>
               </div>
               <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
                 <p className="text-orange-400 font-semibold text-sm mb-1">Height Considerations</p>
-                <p className="text-xs text-foreground">2.4-3m mounting height for optimal detection coverage</p>
+                <p className="text-xs text-foreground">
+                  2.4-3m mounting height for optimal detection coverage
+                </p>
               </div>
             </div>
           </div>

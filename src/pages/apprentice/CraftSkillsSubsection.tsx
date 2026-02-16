@@ -1,44 +1,43 @@
-
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { CheckCircle } from "lucide-react";
-import { craftSkillsContent } from "@/data/craftSkills/index";
-import type { Subsection } from "@/data/healthAndSafety/types";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { CheckCircle } from 'lucide-react';
+import { craftSkillsContent } from '@/data/craftSkills/index';
+import type { Subsection } from '@/data/healthAndSafety/types';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const CraftSkillsSubsection = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
   const [subsectionData, setSubsectionData] = useState<Subsection | null>(null);
-  const [sectionTitle, setSectionTitle] = useState("");
+  const [sectionTitle, setSectionTitle] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
-  
+
   useEffect(() => {
     if (sectionId && subsectionId) {
       // Find the section
-      const section = craftSkillsContent.find(
-        section => section.sectionNumber === sectionId
-      );
-      
+      const section = craftSkillsContent.find((section) => section.sectionNumber === sectionId);
+
       if (section) {
         setSectionTitle(section.title);
-        
+
         // Safely access subsections with type checking
-        const subsections = section.content && 
-          typeof section.content === 'object' && 
-          'subsections' in section.content ? 
-          section.content.subsections : 
-          section.subsections || [];
-        
+        const subsections =
+          section.content && typeof section.content === 'object' && 'subsections' in section.content
+            ? section.content.subsections
+            : section.subsections || [];
+
         // Find the subsection
-        const subsection = subsections.find(
-          sub => sub.id === subsectionId
-        );
-        
+        const subsection = subsections.find((sub) => sub.id === subsectionId);
+
         if (subsection) {
           setSubsectionData(subsection);
-          
+
           // Check local storage for completion status
           const storageKey = `completion_craft_${sectionId}_${subsectionId}`;
           const storedCompletion = localStorage.getItem(storageKey);
@@ -47,7 +46,7 @@ const CraftSkillsSubsection = () => {
       }
     }
   }, [sectionId, subsectionId]);
-  
+
   const markAsComplete = () => {
     if (sectionId && subsectionId) {
       const storageKey = `completion_craft_${sectionId}_${subsectionId}`;
@@ -69,7 +68,7 @@ const CraftSkillsSubsection = () => {
       <div className="mb-6">
         <SmartBackButton />
       </div>
-      
+
       <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6">
         <div className="flex flex-col mb-8">
           <div className="flex items-center gap-3 mb-1">
@@ -77,26 +76,30 @@ const CraftSkillsSubsection = () => {
             <h1 className="text-2xl font-bold">{subsectionData.title}</h1>
             {isCompleted && <CheckCircle className="h-5 w-5 text-green-500 ml-2" />}
           </div>
-          <div className="text-sm text-elec-yellow/80">
-            {sectionTitle}
-          </div>
+          <div className="text-sm text-elec-yellow/80">{sectionTitle}</div>
         </div>
-        
+
         <div className="space-y-6">
           <div className="text-elec-light/90 leading-relaxed prose prose-invert max-w-none">
-            <p className="mb-4">{typeof subsectionData.content === 'string' ? subsectionData.content : 'Content placeholder for this subsection.'}</p>
-            
+            <p className="mb-4">
+              {typeof subsectionData.content === 'string'
+                ? subsectionData.content
+                : 'Content placeholder for this subsection.'}
+            </p>
+
             {/* Image or illustration placeholder */}
             <div className="my-6 bg-white/5 rounded-lg p-4 flex flex-col items-center text-center">
               <div className="w-full h-64 bg-white/5 rounded-lg mb-4 flex items-center justify-center border border-elec-yellow/20">
-                <p className="text-elec-yellow/70">Practical demonstration image for {subsectionData.title}</p>
+                <p className="text-elec-yellow/70">
+                  Practical demonstration image for {subsectionData.title}
+                </p>
               </div>
               <p className="text-sm text-white">
                 Visual reference for the techniques described in this section
               </p>
             </div>
           </div>
-          
+
           {subsectionData.keyPoints && subsectionData.keyPoints.length > 0 && (
             <Accordion type="single" collapsible className="border-t border-elec-yellow/20 pt-4">
               <AccordionItem value="key-points" className="border-b-0">
@@ -113,10 +116,10 @@ const CraftSkillsSubsection = () => {
               </AccordionItem>
             </Accordion>
           )}
-          
+
           {/* Mark as Complete button */}
           <div className="flex justify-end pt-4 border-t border-elec-yellow/20">
-            <Button 
+            <Button
               variant="study"
               className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
               onClick={markAsComplete}

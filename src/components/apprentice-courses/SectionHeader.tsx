@@ -1,6 +1,6 @@
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface SectionHeaderProps {
   backHref?: string;
@@ -11,10 +11,7 @@ interface SectionHeaderProps {
  * Mobile-optimized sticky header for course section pages.
  * Provides touch-friendly back button with 48px+ target.
  */
-export function SectionHeader({
-  backHref = "..",
-  backLabel = "Back",
-}: SectionHeaderProps) {
+export function SectionHeader({ backHref = '..', backLabel = 'Back' }: SectionHeaderProps) {
   return (
     <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
       <div className="px-4 sm:px-6 py-2">

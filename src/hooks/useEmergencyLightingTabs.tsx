@@ -14,39 +14,39 @@ const tabConfigs: TabConfig[] = [
     id: 'installation',
     label: 'Installation Details',
     shortLabel: 'Details',
-    requiredFields: ['clientName', 'premisesAddress', 'systemType']
+    requiredFields: ['clientName', 'premisesAddress', 'systemType'],
   },
   {
     id: 'luminaires',
     label: 'Luminaire Schedule',
     shortLabel: 'Luminaires',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'testing',
     label: 'Test Results',
     shortLabel: 'Testing',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'declarations',
     label: 'Declarations',
     shortLabel: 'Declarations',
-    requiredFields: ['testerName']
-  }
+    requiredFields: ['testerName'],
+  },
 ];
 
 export const useEmergencyLightingTabs = (formData: any) => {
   const [currentTab, setCurrentTab] = useState<EmergencyLightingTabValue>('installation');
 
-  const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
+  const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
   const totalTabs = tabConfigs.length;
 
   const hasRequiredFields = (tabId: EmergencyLightingTabValue): boolean => {
-    const tab = tabConfigs.find(t => t.id === tabId);
+    const tab = tabConfigs.find((t) => t.id === tabId);
     if (!tab) return false;
 
-    return tab.requiredFields.every(field => {
+    return tab.requiredFields.every((field) => {
       const value = formData[field];
       return value && value.toString().trim() !== '';
     });
@@ -61,26 +61,33 @@ export const useEmergencyLightingTabs = (formData: any) => {
 
     switch (tabId) {
       case 'installation':
-        return completedSections[tabId] ||
-          (formData.clientName && formData.premisesAddress && formData.systemType);
+        return (
+          completedSections[tabId] ||
+          (formData.clientName && formData.premisesAddress && formData.systemType)
+        );
       case 'luminaires':
-        return completedSections[tabId] || (formData.luminaires?.length > 0);
+        return completedSections[tabId] || formData.luminaires?.length > 0;
       case 'testing':
-        return completedSections[tabId] ||
-          (formData.monthlyFunctionalTest?.date || formData.annualDurationTest?.date);
+        return (
+          completedSections[tabId] ||
+          formData.monthlyFunctionalTest?.date ||
+          formData.annualDurationTest?.date
+        );
       case 'declarations':
-        return completedSections[tabId] ||
-          (formData.testerName && formData.testerSignature);
+        return completedSections[tabId] || (formData.testerName && formData.testerSignature);
       default:
         return completedSections[tabId] === true;
     }
   };
 
-  const toggleTabComplete = (tabId: EmergencyLightingTabValue, onUpdate: (field: string, value: any) => void): void => {
+  const toggleTabComplete = (
+    tabId: EmergencyLightingTabValue,
+    onUpdate: (field: string, value: any) => void
+  ): void => {
     const completedSections = formData.completedSections || {};
     const newCompletedSections = {
       ...completedSections,
-      [tabId]: !completedSections[tabId]
+      [tabId]: !completedSections[tabId],
     };
     onUpdate('completedSections', newCompletedSections);
   };
@@ -108,12 +115,12 @@ export const useEmergencyLightingTabs = (formData: any) => {
   };
 
   const getProgressPercentage = (): number => {
-    const completedCount = tabConfigs.filter(tab => isTabComplete(tab.id)).length;
+    const completedCount = tabConfigs.filter((tab) => isTabComplete(tab.id)).length;
     return Math.round((completedCount / totalTabs) * 100);
   };
 
   const getCurrentTabLabel = (): string => {
-    const tab = tabConfigs.find(t => t.id === currentTab);
+    const tab = tabConfigs.find((t) => t.id === currentTab);
     return tab?.label || '';
   };
 
@@ -136,6 +143,6 @@ export const useEmergencyLightingTabs = (formData: any) => {
     navigateNext,
     navigatePrevious,
     getProgressPercentage,
-    getCurrentTabLabel
+    getCurrentTabLabel,
   };
 };

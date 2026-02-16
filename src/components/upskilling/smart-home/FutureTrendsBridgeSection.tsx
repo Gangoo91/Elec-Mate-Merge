@@ -17,7 +17,8 @@ export const FutureTrendsBridgeSection = () => {
             Matter Protocol Revolution
           </h4>
           <p className="text-purple-100 text-sm mb-3">
-            Matter (formerly Project CHIP) is designed to significantly reduce the need for bridges by creating native compatibility across ecosystems.
+            Matter (formerly Project CHIP) is designed to significantly reduce the need for bridges
+            by creating native compatibility across ecosystems.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div className="flex items-center gap-2">
@@ -40,8 +41,10 @@ export const FutureTrendsBridgeSection = () => {
         </div>
 
         <div className="space-y-4">
-          <h4 className="text-foreground font-semibold">Industry Movement Towards Native Compatibility</h4>
-          
+          <h4 className="text-foreground font-semibold">
+            Industry Movement Towards Native Compatibility
+          </h4>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-green-900/10 border border-green-600/20 rounded-lg p-4">
               <h5 className="text-green-400 font-medium mb-2">Current State</h5>
@@ -52,7 +55,7 @@ export const FutureTrendsBridgeSection = () => {
                 <li>• Complex setup procedures</li>
               </ul>
             </div>
-            
+
             <div className="bg-blue-900/10 border border-blue-600/20 rounded-lg p-4">
               <h5 className="text-blue-400 font-medium mb-2">Future Vision</h5>
               <ul className="text-sm space-y-1 text-blue-200">
@@ -94,12 +97,16 @@ export const FutureTrendsBridgeSection = () => {
               <span className="text-gray-300 text-sm">Early Matter device adoption</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="text-xs bg-purple-600 text-foreground px-2 py-1 rounded">2026-2028</div>
+              <div className="text-xs bg-purple-600 text-foreground px-2 py-1 rounded">
+                2026-2028
+              </div>
               <span className="text-gray-300 text-sm">Mainstream Matter ecosystem integration</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="text-xs bg-green-600 text-foreground px-2 py-1 rounded">2029+</div>
-              <span className="text-gray-300 text-sm">Reduced bridge dependency for new installations</span>
+              <span className="text-gray-300 text-sm">
+                Reduced bridge dependency for new installations
+              </span>
             </div>
           </div>
         </div>

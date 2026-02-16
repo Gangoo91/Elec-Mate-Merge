@@ -3,9 +3,9 @@
  * Simplified design inspired by LatestJobsWidget
  */
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   Briefcase,
   MapPin,
@@ -17,8 +17,8 @@ import {
   BadgeCheck,
   Clock,
   PoundSterling,
-} from "lucide-react";
-import type { UnifiedJobListing, JobSourceType } from "@/types/unified-jobs";
+} from 'lucide-react';
+import type { UnifiedJobListing, JobSourceType } from '@/types/unified-jobs';
 
 interface UnifiedJobCardProps {
   job: UnifiedJobListing;
@@ -35,7 +35,9 @@ const formatSalary = (salary: string | null): string | null => {
   if (!salary) return null;
 
   // Handle ranges like "£35,000 - £45,000"
-  const rangeMatch = salary.match(/(\d+(?:,\d{3})*(?:\.\d{2})?)\s*-\s*(\d+(?:,\d{3})*(?:\.\d{2})?)/);
+  const rangeMatch = salary.match(
+    /(\d+(?:,\d{3})*(?:\.\d{2})?)\s*-\s*(\d+(?:,\d{3})*(?:\.\d{2})?)/
+  );
   if (rangeMatch) {
     const low = Math.round(parseFloat(rangeMatch[1].replace(/,/g, '')) / 1000);
     const high = Math.round(parseFloat(rangeMatch[2].replace(/,/g, '')) / 1000);
@@ -57,9 +59,9 @@ const formatSalary = (salary: string | null): string | null => {
 
 // Clean up company name
 const formatCompany = (company: string): string => {
-  return company
-    .replace(/\s*(Recruitment|Ltd|Limited|PLC|Inc|Group|Agency)\.?$/gi, '')
-    .trim() || company;
+  return (
+    company.replace(/\s*(Recruitment|Ltd|Limited|PLC|Inc|Group|Agency)\.?$/gi, '').trim() || company
+  );
 };
 
 // Clean up location
@@ -75,11 +77,11 @@ const formatPostedDate = (date: string): string => {
   const diffMs = now.getTime() - posted.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays}d ago`;
   if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
-  return posted.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  return posted.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 };
 
 // Check if job is fresh (posted today)
@@ -91,21 +93,21 @@ const isJobFresh = (postedDate: string): boolean => {
 
 // Source badge colors
 const sourceColors: Record<JobSourceType, { bg: string; text: string }> = {
-  employer: { bg: "bg-emerald-500/15", text: "text-emerald-400" },
-  reed: { bg: "bg-blue-500/15", text: "text-blue-400" },
-  indeed: { bg: "bg-purple-500/15", text: "text-purple-400" },
-  totaljobs: { bg: "bg-green-500/15", text: "text-green-400" },
-  cvlibrary: { bg: "bg-teal-500/15", text: "text-teal-400" },
-  jobscouk: { bg: "bg-cyan-500/15", text: "text-cyan-400" },
+  employer: { bg: 'bg-emerald-500/15', text: 'text-emerald-400' },
+  reed: { bg: 'bg-blue-500/15', text: 'text-blue-400' },
+  indeed: { bg: 'bg-purple-500/15', text: 'text-purple-400' },
+  totaljobs: { bg: 'bg-green-500/15', text: 'text-green-400' },
+  cvlibrary: { bg: 'bg-teal-500/15', text: 'text-teal-400' },
+  jobscouk: { bg: 'bg-cyan-500/15', text: 'text-cyan-400' },
 };
 
 const sourceLabels: Record<JobSourceType, string> = {
-  employer: "Direct",
-  reed: "Reed",
-  indeed: "Indeed",
-  totaljobs: "TotalJobs",
-  cvlibrary: "CV Library",
-  jobscouk: "Jobs.co.uk",
+  employer: 'Direct',
+  reed: 'Reed',
+  indeed: 'Indeed',
+  totaljobs: 'TotalJobs',
+  cvlibrary: 'CV Library',
+  jobscouk: 'Jobs.co.uk',
 };
 
 const UnifiedJobCard = ({
@@ -128,12 +130,12 @@ const UnifiedJobCard = ({
     <div
       onClick={() => onSelect(job)}
       className={cn(
-        "relative bg-card/80 backdrop-blur-sm rounded-2xl border overflow-hidden cursor-pointer",
-        "transition-all duration-200 touch-manipulation",
-        "active:scale-[0.98]",
+        'relative bg-card/80 backdrop-blur-sm rounded-2xl border overflow-hidden cursor-pointer',
+        'transition-all duration-200 touch-manipulation',
+        'active:scale-[0.98]',
         isEmployer
-          ? "border-emerald-500/30 hover:border-emerald-500/50"
-          : "border-white/10 hover:border-white/20",
+          ? 'border-emerald-500/30 hover:border-emerald-500/50'
+          : 'border-white/10 hover:border-white/20',
         className
       )}
     >
@@ -146,10 +148,12 @@ const UnifiedJobCard = ({
         {/* Top row: Job icon + Title + Badges */}
         <div className="flex items-start gap-3">
           {/* Job icon */}
-          <div className={cn(
-            "w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0",
-            isEmployer ? "bg-emerald-500/15" : "bg-elec-yellow/10"
-          )}>
+          <div
+            className={cn(
+              'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
+              isEmployer ? 'bg-emerald-500/15' : 'bg-elec-yellow/10'
+            )}
+          >
             {isEmployer ? (
               <Shield className="h-5 w-5 text-emerald-400" />
             ) : (
@@ -164,15 +168,15 @@ const UnifiedJobCard = ({
             </h3>
             <div className="flex items-center gap-1.5 mt-1">
               <Building2 className="h-3.5 w-3.5 text-white/50 flex-shrink-0" />
-              <span className={cn(
-                "text-sm font-medium truncate",
-                isEmployer ? "text-emerald-400" : "text-white/70"
-              )}>
+              <span
+                className={cn(
+                  'text-sm font-medium truncate',
+                  isEmployer ? 'text-emerald-400' : 'text-white/70'
+                )}
+              >
                 {company}
               </span>
-              {isEmployer && (
-                <BadgeCheck className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-              )}
+              {isEmployer && <BadgeCheck className="h-4 w-4 text-emerald-400 flex-shrink-0" />}
             </div>
           </div>
 
@@ -184,13 +188,13 @@ const UnifiedJobCard = ({
                 New
               </Badge>
             )}
-            <Badge className={cn(
-              "text-[10px] font-medium px-2 py-0.5",
-              isEmployer
-                ? "bg-emerald-500/15 text-emerald-400"
-                : `${colors.bg} ${colors.text}`
-            )}>
-              {isEmployer ? "Direct" : sourceLabels[job.source] || job.source}
+            <Badge
+              className={cn(
+                'text-[10px] font-medium px-2 py-0.5',
+                isEmployer ? 'bg-emerald-500/15 text-emerald-400' : `${colors.bg} ${colors.text}`
+              )}
+            >
+              {isEmployer ? 'Direct' : sourceLabels[job.source] || job.source}
             </Badge>
           </div>
         </div>
@@ -234,14 +238,18 @@ const UnifiedJobCard = ({
 
             {/* Saved indicator */}
             {isSaved && (
-              <div className={cn(
-                "w-7 h-7 rounded-full flex items-center justify-center",
-                isEmployer ? "bg-emerald-500/20" : "bg-blue-500/20"
-              )}>
-                <Bookmark className={cn(
-                  "h-4 w-4 fill-current",
-                  isEmployer ? "text-emerald-400" : "text-blue-400"
-                )} />
+              <div
+                className={cn(
+                  'w-7 h-7 rounded-full flex items-center justify-center',
+                  isEmployer ? 'bg-emerald-500/20' : 'bg-blue-500/20'
+                )}
+              >
+                <Bookmark
+                  className={cn(
+                    'h-4 w-4 fill-current',
+                    isEmployer ? 'text-emerald-400' : 'text-blue-400'
+                  )}
+                />
               </div>
             )}
           </div>
@@ -250,12 +258,12 @@ const UnifiedJobCard = ({
           <Button
             size="sm"
             className={cn(
-              "h-9 px-4 font-medium transition-all touch-manipulation",
+              'h-9 px-4 font-medium transition-all touch-manipulation',
               isEmployer
                 ? job.has_applied
-                  ? "bg-slate-600 hover:bg-slate-500 text-white"
-                  : "bg-emerald-500 hover:bg-emerald-400 text-white"
-                : "bg-blue-500 hover:bg-blue-400 text-white"
+                  ? 'bg-slate-600 hover:bg-slate-500 text-white'
+                  : 'bg-emerald-500 hover:bg-emerald-400 text-white'
+                : 'bg-blue-500 hover:bg-blue-400 text-white'
             )}
             onClick={(e) => {
               e.stopPropagation();
@@ -266,11 +274,7 @@ const UnifiedJobCard = ({
               }
             }}
           >
-            {isEmployer && !job.has_applied ? (
-              <>Apply</>
-            ) : (
-              <>View</>
-            )}
+            {isEmployer && !job.has_applied ? <>Apply</> : <>View</>}
             <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </div>

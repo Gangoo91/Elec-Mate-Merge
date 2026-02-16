@@ -12,28 +12,36 @@ const tabConfigs: TabConfig[] = [
   {
     id: 'details',
     label: 'Details',
-    requiredFields: ['clientName', 'installationAddress', 'inspectionDate', 'phases', 'supplyVoltage', 'earthingArrangement', 'mainProtectiveDevice']
+    requiredFields: [
+      'clientName',
+      'installationAddress',
+      'inspectionDate',
+      'phases',
+      'supplyVoltage',
+      'earthingArrangement',
+      'mainProtectiveDevice',
+    ],
   },
   {
     id: 'inspection',
     label: 'Inspection',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'testing',
     label: 'Testing',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'inspector',
     label: 'Inspector',
-    requiredFields: ['inspectorName', 'inspectorQualifications']
+    requiredFields: ['inspectorName', 'inspectorQualifications'],
   },
   {
     id: 'certificate',
     label: 'Certificate',
-    requiredFields: ['overallAssessment', 'satisfactoryForContinuedUse']
-  }
+    requiredFields: ['overallAssessment', 'satisfactoryForContinuedUse'],
+  },
 ];
 
 interface UseEICRTabsOptions {
@@ -42,11 +50,15 @@ interface UseEICRTabsOptions {
   onTabChange?: (tab: string) => void;
 }
 
-export const useEICRTabs = (formData: any, initialTabOrOptions?: EICRTabValue | UseEICRTabsOptions) => {
+export const useEICRTabs = (
+  formData: any,
+  initialTabOrOptions?: EICRTabValue | UseEICRTabsOptions
+) => {
   // Handle both old signature (initialTab) and new signature (options object)
-  const options: UseEICRTabsOptions = typeof initialTabOrOptions === 'object'
-    ? initialTabOrOptions
-    : { initialTab: initialTabOrOptions };
+  const options: UseEICRTabsOptions =
+    typeof initialTabOrOptions === 'object'
+      ? initialTabOrOptions
+      : { initialTab: initialTabOrOptions };
 
   const { initialTab, controlledTab, onTabChange } = options;
 
@@ -71,15 +83,15 @@ export const useEICRTabs = (formData: any, initialTabOrOptions?: EICRTabValue | 
     }
   };
 
-  const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
+  const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
   const totalTabs = tabConfigs.length;
 
   // Check if required fields are filled for a tab
   const hasRequiredFields = (tabId: EICRTabValue): boolean => {
-    const tab = tabConfigs.find(t => t.id === tabId);
+    const tab = tabConfigs.find((t) => t.id === tabId);
     if (!tab) return false;
 
-    return tab.requiredFields.every(field => {
+    return tab.requiredFields.every((field) => {
       const value = formData[field];
       return value && value.toString().trim() !== '';
     });
@@ -102,11 +114,14 @@ export const useEICRTabs = (formData: any, initialTabOrOptions?: EICRTabValue | 
   };
 
   // Mark a tab as complete or incomplete
-  const toggleTabComplete = (tabId: EICRTabValue, onUpdate: (field: string, value: any) => void): void => {
+  const toggleTabComplete = (
+    tabId: EICRTabValue,
+    onUpdate: (field: string, value: any) => void
+  ): void => {
     const completedSections = formData.completedSections || {};
     const newCompletedSections = {
       ...completedSections,
-      [tabId]: !completedSections[tabId]
+      [tabId]: !completedSections[tabId],
     };
     onUpdate('completedSections', newCompletedSections);
   };
@@ -135,7 +150,7 @@ export const useEICRTabs = (formData: any, initialTabOrOptions?: EICRTabValue | 
 
   // Calculate overall progress based on completed tabs
   const getProgressPercentage = (): number => {
-    const completedCount = tabConfigs.filter(tab => isTabComplete(tab.id)).length;
+    const completedCount = tabConfigs.filter((tab) => isTabComplete(tab.id)).length;
     return Math.round((completedCount / totalTabs) * 100);
   };
 
@@ -170,6 +185,6 @@ export const useEICRTabs = (formData: any, initialTabOrOptions?: EICRTabValue | 
     getProgressPercentage,
     getCurrentTabProgress,
     isCurrentTabComplete,
-    currentTabHasRequiredFields
+    currentTabHasRequiredFields,
   };
 };

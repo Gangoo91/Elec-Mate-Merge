@@ -3,11 +3,11 @@ import { FileText, CheckCircle2 } from 'lucide-react';
 
 export const SmartHomeModule6Section1Summary = () => {
   const keyPoints = [
-    "Smart home hubs connect devices and manage automation across different protocols",
-    "Home Assistant = powerful and flexible but requires technical skills",
-    "SmartThings = user-friendly, wide compatibility, cloud-reliant",
-    "Proprietary hubs = stable within brand but limited across ecosystems",
-    "Choosing the right hub depends on the customer's technical ability, system complexity, and long-term plans"
+    'Smart home hubs connect devices and manage automation across different protocols',
+    'Home Assistant = powerful and flexible but requires technical skills',
+    'SmartThings = user-friendly, wide compatibility, cloud-reliant',
+    'Proprietary hubs = stable within brand but limited across ecosystems',
+    "Choosing the right hub depends on the customer's technical ability, system complexity, and long-term plans",
   ];
 
   return (
@@ -20,14 +20,18 @@ export const SmartHomeModule6Section1Summary = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground leading-relaxed">
-          Understanding smart home hub types is crucial for making informed recommendations that match client needs and technical capabilities.
+          Understanding smart home hub types is crucial for making informed recommendations that
+          match client needs and technical capabilities.
         </p>
 
         {/* Key Points */}
         <div className="space-y-3">
           <h4 className="font-semibold text-elec-yellow">Key Points Covered:</h4>
           {keyPoints.map((point, index) => (
-            <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/50 rounded-lg border border-gray-600/30">
+            <div
+              key={index}
+              className="flex items-start gap-3 p-3 bg-elec-dark/50 rounded-lg border border-gray-600/30"
+            >
               <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
               <span className="text-foreground text-sm">{point}</span>
             </div>
@@ -44,7 +48,9 @@ export const SmartHomeModule6Section1Summary = () => {
             </div>
             <div className="flex justify-between items-center p-2 bg-green-900/20 rounded">
               <span className="text-foreground font-medium">SmartThings</span>
-              <span className="text-green-300 text-sm">Beginners to intermediate, balanced approach</span>
+              <span className="text-green-300 text-sm">
+                Beginners to intermediate, balanced approach
+              </span>
             </div>
             <div className="flex justify-between items-center p-2 bg-purple-900/20 rounded">
               <span className="text-foreground font-medium">Proprietary</span>
@@ -69,7 +75,9 @@ export const SmartHomeModule6Section1Summary = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <h4 className="font-semibold text-elec-yellow mb-2">Coming Up Next:</h4>
           <p className="text-foreground text-sm">
-            In the next section, we'll explore how voice assistants like Alexa, Google Home, and Siri integrate with these hub systems to provide hands-free control and enhanced user experience.
+            In the next section, we'll explore how voice assistants like Alexa, Google Home, and
+            Siri integrate with these hub systems to provide hands-free control and enhanced user
+            experience.
           </p>
         </div>
       </CardContent>

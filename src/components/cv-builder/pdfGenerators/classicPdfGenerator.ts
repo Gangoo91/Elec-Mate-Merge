@@ -65,7 +65,10 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(26);
   setColor(pdf, colors.primary);
-  const nameLines = pdf.splitTextToSize(cvData.personalInfo.fullName || 'Your Name', headerContentWidth);
+  const nameLines = pdf.splitTextToSize(
+    cvData.personalInfo.fullName || 'Your Name',
+    headerContentWidth
+  );
   pdf.text(nameLines, margin, y);
   y += nameLines.length * 8;
 
@@ -124,13 +127,20 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
   // KEY QUALIFICATIONS & ECS CARD
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const { essential: essentialCerts, additional: additionalCerts } =
-    categoriseCertifications(cvData.certifications);
+  const { essential: essentialCerts, additional: additionalCerts } = categoriseCertifications(
+    cvData.certifications
+  );
 
   // ECS Card badge (if present)
   if (cvData.professionalCards.ecsCardType) {
     const badgeY = y;
-    y = addECSBadge(pdf, cvData.professionalCards.ecsCardType, cvData.professionalCards.ecsExpiry, margin, y);
+    y = addECSBadge(
+      pdf,
+      cvData.professionalCards.ecsCardType,
+      cvData.professionalCards.ecsExpiry,
+      margin,
+      y
+    );
 
     // Key qualifications box next to ECS badge
     if (essentialCerts.length > 0) {
@@ -313,7 +323,9 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
       pdf.setFont('helvetica', 'normal');
       pdf.setFontSize(10);
       setColor(pdf, colors.secondary);
-      const institutionLine = edu.location ? `${edu.institution}, ${edu.location}` : edu.institution;
+      const institutionLine = edu.location
+        ? `${edu.institution}, ${edu.location}`
+        : edu.institution;
       pdf.text(institutionLine, margin, y);
       y += 4;
 
@@ -359,7 +371,7 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
     let col = 0;
 
     cvData.skills.forEach((skill, i) => {
-      const xPos = margin + (col * (halfWidth + 10));
+      const xPos = margin + col * (halfWidth + 10);
 
       // Bullet point
       pdf.text('•', xPos, y);

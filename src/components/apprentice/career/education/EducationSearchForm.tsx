@@ -1,13 +1,18 @@
-
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Search, MapPin, Filter, X } from "lucide-react";
-import { educationCategories, studyModes } from "./enhancedEducationData";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Search, MapPin, Filter, X } from 'lucide-react';
+import { educationCategories, studyModes } from './enhancedEducationData';
+import { cn } from '@/lib/utils';
 
 interface EducationSearchFormProps {
   onSearch: (filters: SearchFilters) => void;
@@ -26,13 +31,13 @@ export interface SearchFilters {
 
 const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) => {
   const [filters, setFilters] = useState<SearchFilters>({
-    searchTerm: "",
-    category: "",
-    studyMode: "",
-    location: "",
-    level: "",
-    fundingType: "",
-    maxCost: ""
+    searchTerm: '',
+    category: '',
+    studyMode: '',
+    location: '',
+    level: '',
+    fundingType: '',
+    maxCost: '',
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -45,19 +50,19 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
 
   const handleReset = () => {
     const resetFilters: SearchFilters = {
-      searchTerm: "",
-      category: "",
-      studyMode: "",
-      location: "",
-      level: "",
-      fundingType: "",
-      maxCost: ""
+      searchTerm: '',
+      category: '',
+      studyMode: '',
+      location: '',
+      level: '',
+      fundingType: '',
+      maxCost: '',
     };
     setFilters(resetFilters);
     onReset();
   };
 
-  const activeFilterCount = Object.values(filters).filter(value => value !== "").length;
+  const activeFilterCount = Object.values(filters).filter((value) => value !== '').length;
 
   return (
     <Card className="border-elec-yellow/20 bg-white/5">
@@ -71,31 +76,41 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
             <Input
               placeholder="Search courses, institutions, or qualifications..."
               value={filters.searchTerm}
-              onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
-              className={cn(!filters.searchTerm && "pl-10")}
+              onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
+              className={cn(!filters.searchTerm && 'pl-10')}
             />
           </div>
 
           {/* Quick Filters */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+            <Select
+              value={filters.category}
+              onValueChange={(value) => handleFilterChange('category', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
                 {educationCategories.map((category) => (
-                  <SelectItem key={category} value={category}>{category}</SelectItem>
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
 
-            <Select value={filters.studyMode} onValueChange={(value) => handleFilterChange("studyMode", value)}>
+            <Select
+              value={filters.studyMode}
+              onValueChange={(value) => handleFilterChange('studyMode', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Study mode" />
               </SelectTrigger>
               <SelectContent>
                 {studyModes.map((mode) => (
-                  <SelectItem key={mode} value={mode}>{mode}</SelectItem>
+                  <SelectItem key={mode} value={mode}>
+                    {mode}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -105,7 +120,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
               <Input
                 placeholder="Location or region"
                 value={filters.location}
-                onChange={(e) => handleFilterChange("location", e.target.value)}
+                onChange={(e) => handleFilterChange('location', e.target.value)}
                 className="pl-10"
               />
             </div>
@@ -120,7 +135,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
               className="text-elec-yellow hover:text-amber-400"
             >
               <Filter className="mr-2 h-4 w-4" />
-              Advanced Filters {showAdvanced ? "▲" : "▼"}
+              Advanced Filters {showAdvanced ? '▲' : '▼'}
             </Button>
 
             {activeFilterCount > 0 && (
@@ -139,7 +154,10 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
           {/* Advanced Filters */}
           {showAdvanced && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-elec-yellow/20">
-              <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
+              <Select
+                value={filters.level}
+                onValueChange={(value) => handleFilterChange('level', value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Education level" />
                 </SelectTrigger>
@@ -151,7 +169,10 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
                 </SelectContent>
               </Select>
 
-              <Select value={filters.fundingType} onValueChange={(value) => handleFilterChange("fundingType", value)}>
+              <Select
+                value={filters.fundingType}
+                onValueChange={(value) => handleFilterChange('fundingType', value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Funding type" />
                 </SelectTrigger>
@@ -163,7 +184,10 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
                 </SelectContent>
               </Select>
 
-              <Select value={filters.maxCost} onValueChange={(value) => handleFilterChange("maxCost", value)}>
+              <Select
+                value={filters.maxCost}
+                onValueChange={(value) => handleFilterChange('maxCost', value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Maximum cost" />
                 </SelectTrigger>

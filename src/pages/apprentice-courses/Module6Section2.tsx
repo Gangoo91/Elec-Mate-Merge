@@ -1,51 +1,51 @@
-import { ArrowLeft, Eye, TestTube, Wrench, Zap, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Eye, TestTube, Wrench, Zap, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "What to Look for During Visual Checks",
-    description: "Key elements to examine during visual inspection",
+    number: 'Subsection 1',
+    title: 'What to Look for During Visual Checks',
+    description: 'Key elements to examine during visual inspection',
     icon: Eye,
-    href: "2-1"
+    href: '2-1',
   },
   {
-    number: "Subsection 2",
-    title: "Signs of Damage, Wear, or Incorrect Installation",
-    description: "Identifying physical defects and installation errors",
+    number: 'Subsection 2',
+    title: 'Signs of Damage, Wear, or Incorrect Installation',
+    description: 'Identifying physical defects and installation errors',
     icon: TestTube,
-    href: "2-2"
+    href: '2-2',
   },
   {
-    number: "Subsection 3",
-    title: "Checking Cable Routes, Depths, and Zones",
-    description: "Verifying cable installation meets zone requirements",
+    number: 'Subsection 3',
+    title: 'Checking Cable Routes, Depths, and Zones',
+    description: 'Verifying cable installation meets zone requirements',
     icon: Wrench,
-    href: "2-3"
+    href: '2-3',
   },
   {
-    number: "Subsection 4",
-    title: "Verifying Correct Terminations and Polarity",
-    description: "Ensuring proper electrical connections and polarity",
+    number: 'Subsection 4',
+    title: 'Verifying Correct Terminations and Polarity',
+    description: 'Ensuring proper electrical connections and polarity',
     icon: Zap,
-    href: "2-4"
+    href: '2-4',
   },
   {
-    number: "Subsection 5",
-    title: "Confirming Circuit Labelling and Identification",
-    description: "Checking circuit identification and labelling systems",
+    number: 'Subsection 5',
+    title: 'Confirming Circuit Labelling and Identification',
+    description: 'Checking circuit identification and labelling systems',
     icon: Shield,
-    href: "2-5"
+    href: '2-5',
   },
   {
-    number: "Subsection 6",
-    title: "Visual Inspection Checklist and Record-Keeping",
-    description: "Systematic approach to visual inspection documentation",
+    number: 'Subsection 6',
+    title: 'Visual Inspection Checklist and Record-Keeping',
+    description: 'Systematic approach to visual inspection documentation',
     icon: TestTube,
-    href: "2-6"
-  }
+    href: '2-6',
+  },
 ];
 
 const Section2 = () => {

@@ -7,28 +7,28 @@ const FiberOpticsModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "What is Fibre Optic Cabling",
+      title: 'What is Fibre Optic Cabling',
       icon: BookOpen,
-      description: "Fundamentals of fiber optic technology"
+      description: 'Fundamentals of fiber optic technology',
     },
     {
       id: 2,
-      title: "Advantages vs Copper Systems",
+      title: 'Advantages vs Copper Systems',
       icon: TrendingUp,
-      description: "Comparing fiber and copper performance"
+      description: 'Comparing fiber and copper performance',
     },
     {
       id: 3,
-      title: "Fibre Use in Commercial and Industrial Settings",
+      title: 'Fibre Use in Commercial and Industrial Settings',
       icon: Building,
-      description: "Applications and deployment scenarios"
+      description: 'Applications and deployment scenarios',
     },
     {
       id: 4,
-      title: "Health & Safety in Fibre Work",
+      title: 'Health & Safety in Fibre Work',
       icon: ShieldCheck,
-      description: "Safety protocols and protective measures"
-    }
+      description: 'Safety protocols and protective measures',
+    },
   ];
 
   return (

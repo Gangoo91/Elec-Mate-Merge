@@ -47,7 +47,15 @@ export interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'limitation' | 'not-verified' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'limitation'
+    | 'not-verified'
+    | '';
   notes?: string;
   photos?: InspectionPhoto[];
 }

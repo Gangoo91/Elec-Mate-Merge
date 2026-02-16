@@ -15,16 +15,12 @@ import {
   TestTube,
   PenLine,
   AlertCircle,
-  ChevronDown
+  ChevronDown,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 export interface CompletionStep {
   id: string;
@@ -44,7 +40,13 @@ export interface CertificateCompletionProgressProps {
 
 const defaultSteps: CompletionStep[] = [
   { id: 'details', label: 'Client Details', shortLabel: 'Details', isComplete: false, icon: User },
-  { id: 'inspection', label: 'Inspection', shortLabel: 'Inspect', isComplete: false, icon: ClipboardCheck },
+  {
+    id: 'inspection',
+    label: 'Inspection',
+    shortLabel: 'Inspect',
+    isComplete: false,
+    icon: ClipboardCheck,
+  },
   { id: 'testing', label: 'Testing', shortLabel: 'Testing', isComplete: false, icon: TestTube },
   { id: 'signatures', label: 'Signatures', shortLabel: 'Sign', isComplete: false, icon: PenLine },
 ];
@@ -93,7 +95,7 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
     onStepClick?.(step.id);
   };
 
-  const completedCount = steps.filter(s => s.isComplete).length;
+  const completedCount = steps.filter((s) => s.isComplete).length;
   const totalSteps = steps.length;
 
   // Mobile: Vertical layout
@@ -107,9 +109,7 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
       >
         {/* Progress summary */}
         <div className="flex items-center justify-between px-1 mb-3">
-          <span className="text-sm font-medium text-muted-foreground">
-            Progress
-          </span>
+          <span className="text-sm font-medium text-muted-foreground">Progress</span>
           <span className="text-sm font-semibold text-foreground">
             {completedCount}/{totalSteps} Complete
           </span>
@@ -133,50 +133,57 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
                       step.isComplete
                         ? 'bg-green-500/10 border-green-500/30'
                         : hasMissing
-                        ? 'bg-amber-500/5 border-amber-500/20 hover:border-amber-500/40'
-                        : 'bg-card/50 border-border/50 hover:border-border'
+                          ? 'bg-amber-500/5 border-amber-500/20 hover:border-amber-500/40'
+                          : 'bg-card/50 border-border/50 hover:border-border'
                     )}
                   >
                     {/* Status icon */}
-                    <div className={cn(
-                      'w-10 h-10 rounded-lg flex items-center justify-center shrink-0',
-                      step.isComplete
-                        ? 'bg-green-500/20'
-                        : 'bg-muted/30'
-                    )}>
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-lg flex items-center justify-center shrink-0',
+                        step.isComplete ? 'bg-green-500/20' : 'bg-muted/30'
+                      )}
+                    >
                       {step.isComplete ? (
                         <motion.div variants={checkVariants}>
                           <CheckCircle2 className="h-5 w-5 text-green-400" />
                         </motion.div>
                       ) : (
-                        <Icon className={cn(
-                          'h-5 w-5',
-                          hasMissing ? 'text-amber-400' : 'text-muted-foreground'
-                        )} />
+                        <Icon
+                          className={cn(
+                            'h-5 w-5',
+                            hasMissing ? 'text-amber-400' : 'text-muted-foreground'
+                          )}
+                        />
                       )}
                     </div>
 
                     {/* Label */}
                     <div className="flex-1 text-left">
-                      <span className={cn(
-                        'font-medium',
-                        step.isComplete ? 'text-green-400' : 'text-foreground'
-                      )}>
+                      <span
+                        className={cn(
+                          'font-medium',
+                          step.isComplete ? 'text-green-400' : 'text-foreground'
+                        )}
+                      >
                         {step.label}
                       </span>
                       {hasMissing && !step.isComplete && (
                         <p className="text-xs text-amber-400 mt-0.5">
-                          {step.missingItems!.length} item{step.missingItems!.length > 1 ? 's' : ''} remaining
+                          {step.missingItems!.length} item{step.missingItems!.length > 1 ? 's' : ''}{' '}
+                          remaining
                         </p>
                       )}
                     </div>
 
                     {/* Expand indicator */}
                     {hasMissing && !step.isComplete && (
-                      <ChevronDown className={cn(
-                        'h-4 w-4 text-muted-foreground transition-transform',
-                        expandedStep === step.id && 'transform rotate-180'
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-muted-foreground transition-transform',
+                          expandedStep === step.id && 'transform rotate-180'
+                        )}
+                      />
                     )}
                   </button>
                 </CollapsibleTrigger>
@@ -194,7 +201,10 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
                       </p>
                       <ul className="space-y-1">
                         {step.missingItems!.map((item, i) => (
-                          <li key={i} className="text-xs text-muted-foreground flex items-center gap-2">
+                          <li
+                            key={i}
+                            className="text-xs text-muted-foreground flex items-center gap-2"
+                          >
                             <div className="w-1 h-1 rounded-full bg-amber-400" />
                             {item}
                           </li>
@@ -236,35 +246,43 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
                 )}
               >
                 {/* Step circle */}
-                <div className={cn(
-                  'w-12 h-12 rounded-xl flex items-center justify-center border-2 transition-all',
-                  step.isComplete
-                    ? 'bg-green-500/20 border-green-500/50 shadow-lg shadow-green-500/20'
-                    : hasMissing
-                    ? 'bg-amber-500/10 border-amber-500/30 group-hover:border-amber-500/50'
-                    : 'bg-card border-border group-hover:border-border/80'
-                )}>
+                <div
+                  className={cn(
+                    'w-12 h-12 rounded-xl flex items-center justify-center border-2 transition-all',
+                    step.isComplete
+                      ? 'bg-green-500/20 border-green-500/50 shadow-lg shadow-green-500/20'
+                      : hasMissing
+                        ? 'bg-amber-500/10 border-amber-500/30 group-hover:border-amber-500/50'
+                        : 'bg-card border-border group-hover:border-border/80'
+                  )}
+                >
                   {step.isComplete ? (
                     <motion.div variants={checkVariants}>
                       <CheckCircle2 className="h-6 w-6 text-green-400" />
                     </motion.div>
                   ) : (
-                    <Icon className={cn(
-                      'h-5 w-5 transition-colors',
-                      hasMissing ? 'text-amber-400' : 'text-muted-foreground group-hover:text-foreground'
-                    )} />
+                    <Icon
+                      className={cn(
+                        'h-5 w-5 transition-colors',
+                        hasMissing
+                          ? 'text-amber-400'
+                          : 'text-muted-foreground group-hover:text-foreground'
+                      )}
+                    />
                   )}
                 </div>
 
                 {/* Label */}
-                <span className={cn(
-                  'text-xs font-medium transition-colors',
-                  step.isComplete
-                    ? 'text-green-400'
-                    : hasMissing
-                    ? 'text-amber-400'
-                    : 'text-muted-foreground group-hover:text-foreground'
-                )}>
+                <span
+                  className={cn(
+                    'text-xs font-medium transition-colors',
+                    step.isComplete
+                      ? 'text-green-400'
+                      : hasMissing
+                        ? 'text-amber-400'
+                        : 'text-muted-foreground group-hover:text-foreground'
+                  )}
+                >
                   {step.shortLabel || step.label}
                 </span>
 
@@ -278,7 +296,10 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
                       </p>
                       <ul className="space-y-1">
                         {step.missingItems!.slice(0, 3).map((item, i) => (
-                          <li key={i} className="text-xs text-muted-foreground flex items-center gap-1.5">
+                          <li
+                            key={i}
+                            className="text-xs text-muted-foreground flex items-center gap-1.5"
+                          >
                             <div className="w-1 h-1 rounded-full bg-amber-400 shrink-0" />
                             {item}
                           </li>
@@ -302,10 +323,12 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
                   animate={{ scaleX: 1 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
                 >
-                  <div className={cn(
-                    'h-full rounded-full transition-colors',
-                    step.isComplete ? 'bg-green-500/50' : 'bg-border'
-                  )} />
+                  <div
+                    className={cn(
+                      'h-full rounded-full transition-colors',
+                      step.isComplete ? 'bg-green-500/50' : 'bg-border'
+                    )}
+                  />
                 </motion.div>
               )}
             </React.Fragment>

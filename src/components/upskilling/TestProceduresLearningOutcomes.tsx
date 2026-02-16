@@ -1,14 +1,13 @@
-
 import { Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const TestProceduresLearningOutcomes = () => {
   const outcomes = [
-    "Follow correct test procedures for continuity",
-    "Record and interpret readings accurately",
-    "Know what values are acceptable under BS7671",
-    "Set up testing equipment properly including lead nulling",
-    "Troubleshoot unexpected readings and identify potential faults"
+    'Follow correct test procedures for continuity',
+    'Record and interpret readings accurately',
+    'Know what values are acceptable under BS7671',
+    'Set up testing equipment properly including lead nulling',
+    'Troubleshoot unexpected readings and identify potential faults',
   ];
 
   return (
@@ -20,9 +19,7 @@ export const TestProceduresLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-foreground">

@@ -1,7 +1,13 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 interface JobListing {
   id: string;
@@ -44,21 +50,21 @@ const JobTableView: React.FC<JobTableViewProps> = ({ jobs, selectedJob, handleAp
             </TableRow>
           </TableHeader>
           <TableBody>
-            {jobs.map(job => (
+            {jobs.map((job) => (
               <TableRow key={job.id}>
                 <TableCell className="font-medium">{job.title}</TableCell>
                 <TableCell>{job.company}</TableCell>
                 <TableCell>{job.location}</TableCell>
                 <TableCell>{job.type}</TableCell>
-                <TableCell>{job.salary || "Not specified"}</TableCell>
+                <TableCell>{job.salary || 'Not specified'}</TableCell>
                 <TableCell>{new Date(job.posted_date).toLocaleDateString()}</TableCell>
                 <TableCell className="text-right">
-                  <Button 
-                    size="sm" 
-                    className={`${selectedJob === job.id ? "bg-green-700 hover:bg-green-600" : ""}`}
+                  <Button
+                    size="sm"
+                    className={`${selectedJob === job.id ? 'bg-green-700 hover:bg-green-600' : ''}`}
                     onClick={() => handleApply(job.id, job.external_url)}
                   >
-                    {selectedJob === job.id ? "Started" : "Apply"}
+                    {selectedJob === job.id ? 'Started' : 'Apply'}
                   </Button>
                 </TableCell>
               </TableRow>

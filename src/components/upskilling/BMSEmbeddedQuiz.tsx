@@ -22,12 +22,12 @@ const BMSEmbeddedQuiz = () => {
       setQuizCompleted(true);
       setShowResults(true);
     } else {
-      setCurrentQuestion(prev => prev + 1);
+      setCurrentQuestion((prev) => prev + 1);
     }
   };
 
   const handlePrevious = () => {
-    setCurrentQuestion(prev => prev - 1);
+    setCurrentQuestion((prev) => prev - 1);
   };
 
   const handleRestart = () => {
@@ -49,17 +49,17 @@ const BMSEmbeddedQuiz = () => {
 
   return (
     <div className="space-y-6">
-      <QuizProgress 
-        currentQuestion={currentQuestion} 
-        totalQuestions={bmsModule1Section1QuizData.length} 
+      <QuizProgress
+        currentQuestion={currentQuestion}
+        totalQuestions={bmsModule1Section1QuizData.length}
       />
-      
+
       <QuizQuestion
         question={bmsModule1Section1QuizData[currentQuestion]}
         selectedAnswer={selectedAnswers[currentQuestion]}
         onAnswerSelect={handleAnswerSelect}
       />
-      
+
       <QuizNavigation
         currentQuestion={currentQuestion}
         totalQuestions={bmsModule1Section1QuizData.length}

@@ -10,12 +10,12 @@ export const calculateExpiryDate = (
   propertyType: 'domestic' | 'commercial' = 'domestic'
 ): Date => {
   const date = new Date(inspectionDate);
-  
+
   if (reportType === 'eicr') {
     const years = propertyType === 'commercial' ? 3 : 5;
     date.setFullYear(date.getFullYear() + years);
   }
-  
+
   return date;
 };
 
@@ -31,12 +31,12 @@ export const getDaysUntilExpiry = (expiryDate: string | Date): number => {
  */
 export const formatExpiryStatus = (expiryDate: string | Date): string => {
   const daysRemaining = getDaysUntilExpiry(expiryDate);
-  
+
   if (daysRemaining < 0) {
     const daysOverdue = Math.abs(daysRemaining);
     return `Expired ${daysOverdue} day${daysOverdue === 1 ? '' : 's'} ago`;
   }
-  
+
   if (daysRemaining === 0) return 'Expires today';
   if (daysRemaining === 1) return 'Expires tomorrow';
   if (daysRemaining <= 30) return `Expires in ${daysRemaining} days`;
@@ -44,7 +44,7 @@ export const formatExpiryStatus = (expiryDate: string | Date): string => {
     const weeks = Math.floor(daysRemaining / 7);
     return `Expires in ${weeks} week${weeks === 1 ? '' : 's'}`;
   }
-  
+
   const months = Math.floor(daysRemaining / 30);
   return `Expires in ${months} month${months === 1 ? '' : 's'}`;
 };
@@ -56,7 +56,7 @@ export const getExpiryUrgency = (
   expiryDate: string | Date
 ): 'expired' | 'urgent' | 'warning' | 'safe' => {
   const days = getDaysUntilExpiry(expiryDate);
-  
+
   if (days < 0) return 'expired';
   if (days <= 30) return 'urgent';
   if (days <= 60) return 'warning';
@@ -201,9 +201,7 @@ export const exportRemindersToCSV = (
 
   const csvContent = [
     headers.join(','),
-    ...rows.map((row) =>
-      row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(',')
-    ),
+    ...rows.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(',')),
   ].join('\n');
 
   return csvContent;
@@ -212,9 +210,7 @@ export const exportRemindersToCSV = (
 /**
  * Filter reminders by time range
  */
-export const filterByTimeRange = <
-  T extends { expiry_date: string | Date }
->(
+export const filterByTimeRange = <T extends { expiry_date: string | Date }>(
   reminders: T[],
   range: 'overdue' | '30' | '60' | '90' | 'all'
 ): T[] => {
@@ -254,27 +250,28 @@ export const groupRemindersByClient = (reminders: ExpiryReminder[]): ClientGroup
     groups.get(clientName)!.push(reminder);
   });
 
-  return Array.from(groups.entries()).map(([clientName, clientReminders]) => {
-    const sortedByExpiry = [...clientReminders].sort((a, b) => 
-      new Date(a.expiry_date).getTime() - new Date(b.expiry_date).getTime()
-    );
-    
-    const earliestExpiry = sortedByExpiry[0].expiry_date;
-    const urgency = getExpiryUrgency(earliestExpiry);
-    const totalRevenue = clientReminders.length * avgInspectionFee;
+  return Array.from(groups.entries())
+    .map(([clientName, clientReminders]) => {
+      const sortedByExpiry = [...clientReminders].sort(
+        (a, b) => new Date(a.expiry_date).getTime() - new Date(b.expiry_date).getTime()
+      );
 
-    return {
-      clientName,
-      reminders: sortedByExpiry,
-      totalRevenue,
-      propertyCount: clientReminders.length,
-      urgency,
-      earliestExpiry,
-    };
-  }).sort((a, b) => {
-    // Sort by urgency (most urgent first)
-    const urgencyOrder = { expired: 0, urgent: 1, warning: 2, safe: 3 };
-    return urgencyOrder[a.urgency] - urgencyOrder[b.urgency];
-  });
+      const earliestExpiry = sortedByExpiry[0].expiry_date;
+      const urgency = getExpiryUrgency(earliestExpiry);
+      const totalRevenue = clientReminders.length * avgInspectionFee;
+
+      return {
+        clientName,
+        reminders: sortedByExpiry,
+        totalRevenue,
+        propertyCount: clientReminders.length,
+        urgency,
+        earliestExpiry,
+      };
+    })
+    .sort((a, b) => {
+      // Sort by urgency (most urgent first)
+      const urgencyOrder = { expired: 0, urgent: 1, warning: 2, safe: 3 };
+      return urgencyOrder[a.urgency] - urgencyOrder[b.urgency];
+    });
 };
-

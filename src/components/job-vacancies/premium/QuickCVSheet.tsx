@@ -8,15 +8,15 @@
  * - Link to full Elec-ID profile
  */
 
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import {
   FileText,
   Download,
@@ -33,11 +33,11 @@ import {
   Briefcase,
   GraduationCap,
   Wrench,
-} from "lucide-react";
-import { usePrimaryCV, useCVs, calculateCVCompleteness } from "@/hooks/useCV";
-import { useCVSyncStatus, useElecIdForCV } from "@/hooks/useCVSync";
-import { generateCVPDFByTemplate } from "@/components/cv-builder/pdfGenerators";
-import { toast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { usePrimaryCV, useCVs, calculateCVCompleteness } from '@/hooks/useCV';
+import { useCVSyncStatus, useElecIdForCV } from '@/hooks/useCVSync';
+import { generateCVPDFByTemplate } from '@/components/cv-builder/pdfGenerators';
+import { toast } from '@/hooks/use-toast';
 
 interface QuickCVSheetProps {
   isOpen: boolean;
@@ -46,10 +46,18 @@ interface QuickCVSheetProps {
 
 // Template color configurations
 const TEMPLATE_STYLES: Record<string, { label: string; color: string; gradient: string }> = {
-  classic: { label: "Classic", color: "text-blue-400", gradient: "from-blue-500 to-blue-700" },
-  modern: { label: "Modern", color: "text-amber-400", gradient: "from-amber-500 to-orange-600" },
-  creative: { label: "Creative", color: "text-purple-400", gradient: "from-purple-500 to-pink-500" },
-  technical: { label: "Technical", color: "text-emerald-400", gradient: "from-emerald-500 to-teal-600" },
+  classic: { label: 'Classic', color: 'text-blue-400', gradient: 'from-blue-500 to-blue-700' },
+  modern: { label: 'Modern', color: 'text-amber-400', gradient: 'from-amber-500 to-orange-600' },
+  creative: {
+    label: 'Creative',
+    color: 'text-purple-400',
+    gradient: 'from-purple-500 to-pink-500',
+  },
+  technical: {
+    label: 'Technical',
+    color: 'text-emerald-400',
+    gradient: 'from-emerald-500 to-teal-600',
+  },
 };
 
 const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
@@ -78,14 +86,14 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
     try {
       await generateCVPDFByTemplate(cv.cv_data, cv.template_id);
       toast({
-        title: "CV Downloaded",
-        description: "Your CV has been downloaded as a PDF.",
+        title: 'CV Downloaded',
+        description: 'Your CV has been downloaded as a PDF.',
       });
     } catch (error) {
       toast({
-        title: "Download Failed",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
+        title: 'Download Failed',
+        description: 'Failed to generate PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsDownloading(false);
@@ -94,26 +102,26 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
 
   const handleEditCV = () => {
     if (cv) {
-      localStorage.setItem("elecmate-cv-draft", JSON.stringify(cv.cv_data));
-      localStorage.setItem("elecmate-cv-template", cv.template_id);
-      localStorage.setItem("elecmate-cv-editing-id", cv.id);
+      localStorage.setItem('elecmate-cv-draft', JSON.stringify(cv.cv_data));
+      localStorage.setItem('elecmate-cv-template', cv.template_id);
+      localStorage.setItem('elecmate-cv-editing-id', cv.id);
     }
-    navigate("/electrician/cv-builder");
+    navigate('/electrician/cv-builder');
     onClose();
   };
 
   const handleCreateCV = () => {
-    navigate("/electrician/cv-builder");
+    navigate('/electrician/cv-builder');
     onClose();
   };
 
   const handleViewElecId = () => {
-    navigate("/settings?tab=elec-id");
+    navigate('/settings?tab=elec-id');
     onClose();
   };
 
   const handleManageCVs = () => {
-    navigate("/settings?tab=elec-id&subtab=cv");
+    navigate('/settings?tab=elec-id&subtab=cv');
     onClose();
   };
 
@@ -153,27 +161,33 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
             ) : cv ? (
               <>
                 {/* CV Preview Card */}
-                <Card className={cn(
-                  "border-white/10 bg-white/[0.03] overflow-hidden",
-                  cv.is_primary && "border-elec-yellow/30 ring-1 ring-elec-yellow/20"
-                )}>
-                  <div className={cn(
-                    "h-1 bg-gradient-to-r",
-                    templateStyle?.gradient || "from-gray-500 to-gray-600"
-                  )} />
+                <Card
+                  className={cn(
+                    'border-white/10 bg-white/[0.03] overflow-hidden',
+                    cv.is_primary && 'border-elec-yellow/30 ring-1 ring-elec-yellow/20'
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'h-1 bg-gradient-to-r',
+                      templateStyle?.gradient || 'from-gray-500 to-gray-600'
+                    )}
+                  />
                   <CardContent className="p-4">
                     <div className="flex items-start gap-4">
-                      <div className={cn(
-                        "w-14 h-14 rounded-xl flex items-center justify-center shrink-0",
-                        "bg-gradient-to-br",
-                        templateStyle?.gradient || "from-gray-500 to-gray-600"
-                      )}>
+                      <div
+                        className={cn(
+                          'w-14 h-14 rounded-xl flex items-center justify-center shrink-0',
+                          'bg-gradient-to-br',
+                          templateStyle?.gradient || 'from-gray-500 to-gray-600'
+                        )}
+                      >
                         <FileText className="h-7 w-7 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <h3 className="font-semibold text-foreground truncate">
-                            {cv.title || "My CV"}
+                            {cv.title || 'My CV'}
                           </h3>
                           {cv.is_primary && (
                             <Badge
@@ -186,17 +200,22 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
                           )}
                         </div>
                         <p className="text-xs text-muted-foreground mt-0.5">
-                          {templateStyle?.label || "Classic"} template
+                          {templateStyle?.label || 'Classic'} template
                         </p>
 
                         {/* Quick stats */}
                         <div className="flex items-center gap-3 mt-3">
                           <div className="flex items-center gap-1.5">
-                            <div className={cn(
-                              "h-2 w-2 rounded-full",
-                              completeness >= 80 ? "bg-green-500" :
-                              completeness >= 50 ? "bg-amber-500" : "bg-red-500"
-                            )} />
+                            <div
+                              className={cn(
+                                'h-2 w-2 rounded-full',
+                                completeness >= 80
+                                  ? 'bg-green-500'
+                                  : completeness >= 50
+                                    ? 'bg-amber-500'
+                                    : 'bg-red-500'
+                              )}
+                            />
                             <span className="text-xs text-muted-foreground">
                               {completeness}% complete
                             </span>
@@ -206,9 +225,7 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
                               {cvSyncStatus.needsSync ? (
                                 <>
                                   <AlertCircle className="h-3 w-3 text-amber-500" />
-                                  <span className="text-xs text-amber-500">
-                                    Updates available
-                                  </span>
+                                  <span className="text-xs text-amber-500">Updates available</span>
                                 </>
                               ) : (
                                 <>
@@ -228,7 +245,7 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
                         <PreviewStat
                           icon={User}
                           label="Personal Info"
-                          value={cv.cv_data.personalInfo.fullName || "Not set"}
+                          value={cv.cv_data.personalInfo.fullName || 'Not set'}
                           complete={!!cv.cv_data.personalInfo.fullName}
                         />
                         <PreviewStat
@@ -332,11 +349,13 @@ const PreviewStat = ({
   complete: boolean;
 }) => (
   <div className="flex items-center gap-2">
-    <div className={cn(
-      "w-7 h-7 rounded-lg flex items-center justify-center",
-      complete ? "bg-green-500/20" : "bg-white/5"
-    )}>
-      <Icon className={cn("h-3.5 w-3.5", complete ? "text-green-400" : "text-muted-foreground")} />
+    <div
+      className={cn(
+        'w-7 h-7 rounded-lg flex items-center justify-center',
+        complete ? 'bg-green-500/20' : 'bg-white/5'
+      )}
+    >
+      <Icon className={cn('h-3.5 w-3.5', complete ? 'text-green-400' : 'text-muted-foreground')} />
     </div>
     <div className="min-w-0">
       <p className="text-xs text-muted-foreground">{label}</p>

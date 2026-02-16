@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Container,
@@ -8,185 +8,178 @@ import {
   Target,
   Settings,
   CheckCircle,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
-const TITLE = "Cable Tray, Basket and Ladder Systems - Module 3.2.4 | Level 2 Electrical Course";
-const DESCRIPTION = "Complete guide to cable containment systems. Trays, baskets, and ladder systems for electrical installations and BS 7671 compliance.";
+const TITLE = 'Cable Tray, Basket and Ladder Systems - Module 3.2.4 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Complete guide to cable containment systems. Trays, baskets, and ladder systems for electrical installations and BS 7671 compliance.';
 
 const quickCheckQuestions = [
   {
-    id: "tray-advantage",
-    question: "Name one advantage of cable trays over baskets.",
-    options: [
-      "Better ventilation",
-      "Lower weight",
-      "Weather protection and support",
-    ],
+    id: 'tray-advantage',
+    question: 'Name one advantage of cable trays over baskets.',
+    options: ['Better ventilation', 'Lower weight', 'Weather protection and support'],
     correctIndex: 2,
     explanation:
-      "Cable trays provide better weather protection with solid or perforated bases and offer superior support for heavier cable loads.",
+      'Cable trays provide better weather protection with solid or perforated bases and offer superior support for heavier cable loads.',
   },
   {
-    id: "basket-application",
-    question: "Why are cable baskets popular for data installations?",
+    id: 'basket-application',
+    question: 'Why are cable baskets popular for data installations?',
     options: [
-      "Highest load capacity",
-      "Lightweight and easy to cut on site",
-      "Best weather protection",
+      'Highest load capacity',
+      'Lightweight and easy to cut on site',
+      'Best weather protection',
     ],
     correctIndex: 1,
     explanation:
-      "Cable baskets are lightweight, quick to install, and can be easily cut to length on site, making them ideal for data cabling projects.",
+      'Cable baskets are lightweight, quick to install, and can be easily cut to length on site, making them ideal for data cabling projects.',
   },
   {
-    id: "ladder-system",
-    question: "Which containment system offers the highest load capacity?",
-    options: [
-      "Cable basket",
-      "Cable tray",
-      "Ladder system",
-    ],
+    id: 'ladder-system',
+    question: 'Which containment system offers the highest load capacity?',
+    options: ['Cable basket', 'Cable tray', 'Ladder system'],
     correctIndex: 2,
     explanation:
-      "Ladder systems provide the highest load capacity and can span longer distances, making them ideal for heavy power cables.",
+      'Ladder systems provide the highest load capacity and can span longer distances, making them ideal for heavy power cables.',
   },
   {
-    id: "earthing-requirement",
-    question: "What earthing requirement applies to metallic cable management systems?",
+    id: 'earthing-requirement',
+    question: 'What earthing requirement applies to metallic cable management systems?',
     options: [
-      "Earthing is optional",
-      "All metallic sections must be earthed",
-      "Only outdoor systems need earthing",
+      'Earthing is optional',
+      'All metallic sections must be earthed',
+      'Only outdoor systems need earthing',
     ],
     correctIndex: 1,
     explanation:
-      "All metallic sections of cable management systems must be properly earthed to maintain electrical safety and continuity.",
+      'All metallic sections of cable management systems must be properly earthed to maintain electrical safety and continuity.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which open containment method offers the highest load capacity?",
-    options: [
-      "Cable basket",
-      "Cable tray",
-      "Ladder system",
-      "PVC trunking",
-    ],
+    question: 'Which open containment method offers the highest load capacity?',
+    options: ['Cable basket', 'Cable tray', 'Ladder system', 'PVC trunking'],
     correctAnswer: 2,
     explanation:
-      "Ladder systems provide extremely high load capacity for long spans and heavy power cables, typically 150-500 kg/m.",
+      'Ladder systems provide extremely high load capacity for long spans and heavy power cables, typically 150-500 kg/m.',
   },
   {
     id: 2,
-    question: "Why are cable baskets popular for data installations?",
+    question: 'Why are cable baskets popular for data installations?',
     options: [
-      "Low cost and easy to cut",
-      "Highest load capacity",
-      "Can be buried underground",
-      "Provide better EMC shielding",
+      'Low cost and easy to cut',
+      'Highest load capacity',
+      'Can be buried underground',
+      'Provide better EMC shielding',
     ],
     correctAnswer: 0,
     explanation:
-      "Cable baskets are lightweight, quick to install, and easy to cut to length on site, making them ideal for data cabling.",
+      'Cable baskets are lightweight, quick to install, and easy to cut to length on site, making them ideal for data cabling.',
   },
   {
     id: 3,
-    question: "True or False: Ladder systems are ideal for small, lightweight cable runs.",
-    options: ["True", "False"],
+    question: 'True or False: Ladder systems are ideal for small, lightweight cable runs.',
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False. Ladder systems are designed for heavy-duty applications and are not cost-effective for small, lightweight cables.",
+      'False. Ladder systems are designed for heavy-duty applications and are not cost-effective for small, lightweight cables.',
   },
   {
     id: 4,
-    question: "Name one advantage of perforated cable trays over solid trays.",
+    question: 'Name one advantage of perforated cable trays over solid trays.',
     options: [
-      "Lower cost",
-      "Improved airflow and easier fixing options",
-      "Better weather protection",
-      "Higher load capacity",
+      'Lower cost',
+      'Improved airflow and easier fixing options',
+      'Better weather protection',
+      'Higher load capacity',
     ],
     correctAnswer: 1,
     explanation:
-      "Perforated designs allow better airflow for cooling and make fixing cables easier with multiple fixing points.",
+      'Perforated designs allow better airflow for cooling and make fixing cables easier with multiple fixing points.',
   },
   {
     id: 5,
-    question: "What must be done at sharp edges where cables exit metal containment?",
+    question: 'What must be done at sharp edges where cables exit metal containment?',
     options: [
-      "Paint edges",
-      "File smooth or fit protective grommets",
-      "Wrap cables in tape",
-      "Avoid using that exit",
+      'Paint edges',
+      'File smooth or fit protective grommets',
+      'Wrap cables in tape',
+      'Avoid using that exit',
     ],
     correctAnswer: 1,
     explanation:
-      "Sharp edges must be filed smooth or fitted with protective grommets to prevent damage to cable insulation.",
+      'Sharp edges must be filed smooth or fitted with protective grommets to prevent damage to cable insulation.',
   },
   {
     id: 6,
-    question: "What is the typical support spacing for heavy-duty cable ladders?",
+    question: 'What is the typical support spacing for heavy-duty cable ladders?',
     options: [
-      "Every 500mm",
-      "Every 1.5-3 metres depending on load",
-      "Every 5 metres",
-      "Support spacing is not critical",
+      'Every 500mm',
+      'Every 1.5-3 metres depending on load',
+      'Every 5 metres',
+      'Support spacing is not critical',
     ],
     correctAnswer: 1,
     explanation:
-      "Support spacing for cable ladders typically ranges from 1.5-3 metres depending on the load and cable ladder specification.",
+      'Support spacing for cable ladders typically ranges from 1.5-3 metres depending on the load and cable ladder specification.',
   },
   {
     id: 7,
-    question: "According to BS EN 61537, what is required for cable management systems in fire escape routes?",
+    question:
+      'According to BS EN 61537, what is required for cable management systems in fire escape routes?',
     options: [
-      "Any material is acceptable",
-      "Enhanced fire performance requirements",
-      "Only PVC systems allowed",
-      "No specific requirements",
+      'Any material is acceptable',
+      'Enhanced fire performance requirements',
+      'Only PVC systems allowed',
+      'No specific requirements',
     ],
     correctAnswer: 1,
     explanation:
-      "BS EN 61537 requires enhanced fire performance for cable management systems in escape routes to maintain safety during evacuation.",
+      'BS EN 61537 requires enhanced fire performance for cable management systems in escape routes to maintain safety during evacuation.',
   },
   {
     id: 8,
-    question: "What earthing requirement applies to metallic cable management systems?",
+    question: 'What earthing requirement applies to metallic cable management systems?',
     options: [
-      "Earthing is optional",
-      "Only the first section needs earthing",
-      "All metallic sections must be earthed to maintain continuity",
-      "Earthing is only required outdoors",
+      'Earthing is optional',
+      'Only the first section needs earthing',
+      'All metallic sections must be earthed to maintain continuity',
+      'Earthing is only required outdoors',
     ],
     correctAnswer: 2,
     explanation:
-      "All metallic sections of cable management systems must be properly earthed to maintain electrical safety and continuity.",
+      'All metallic sections of cable management systems must be properly earthed to maintain electrical safety and continuity.',
   },
 ];
 
 const faqs = [
   {
     question: "What's the difference between perforated and solid cable trays?",
-    answer: "Perforated trays offer better ventilation and easier cable fixing, while solid trays provide better weather protection and support for smaller cables.",
+    answer:
+      'Perforated trays offer better ventilation and easier cable fixing, while solid trays provide better weather protection and support for smaller cables.',
   },
   {
-    question: "Can cable baskets be used for power cables?",
-    answer: "Yes, but check load capacity. Baskets are typically rated 50-150 kg/m, suitable for lighter power cables but may require closer support spacing.",
+    question: 'Can cable baskets be used for power cables?',
+    answer:
+      'Yes, but check load capacity. Baskets are typically rated 50-150 kg/m, suitable for lighter power cables but may require closer support spacing.',
   },
   {
     question: "What's the maximum span for ladder systems?",
-    answer: "Typically 3-6 metres depending on load, but always check manufacturer's load tables and deflection limits for specific applications.",
+    answer:
+      "Typically 3-6 metres depending on load, but always check manufacturer's load tables and deflection limits for specific applications.",
   },
   {
-    question: "Do cable management systems need earthing in non-metallic buildings?",
-    answer: "Yes - metallic cable management systems must be earthed regardless of building type to ensure electrical safety.",
+    question: 'Do cable management systems need earthing in non-metallic buildings?',
+    answer:
+      'Yes - metallic cable management systems must be earthed regardless of building type to ensure electrical safety.',
   },
 ];
 
@@ -198,7 +191,12 @@ const Module3Section2_4: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -209,7 +207,6 @@ const Module3Section2_4: React.FC = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -220,7 +217,8 @@ const Module3Section2_4: React.FC = () => {
             Cable Tray, Basket and Ladder Systems
           </h1>
           <p className="text-white/80">
-            Understanding open cable containment systems, their applications and installation requirements for electrical installations
+            Understanding open cable containment systems, their applications and installation
+            requirements for electrical installations
           </p>
         </header>
 
@@ -238,9 +236,18 @@ const Module3Section2_4: React.FC = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Metal mesh (baskets), solid perforated sheets (trays), side rails with rungs (ladders)</li>
-              <li><strong>Use:</strong> Baskets for data/light cables; trays for general purpose; ladders for heavy power</li>
-              <li><strong>Check:</strong> Load capacity, support spacing, earthing continuity, edge protection</li>
+              <li>
+                <strong>Spot:</strong> Metal mesh (baskets), solid perforated sheets (trays), side
+                rails with rungs (ladders)
+              </li>
+              <li>
+                <strong>Use:</strong> Baskets for data/light cables; trays for general purpose;
+                ladders for heavy power
+              </li>
+              <li>
+                <strong>Check:</strong> Load capacity, support spacing, earthing continuity, edge
+                protection
+              </li>
             </ul>
           </div>
         </div>
@@ -250,11 +257,11 @@ const Module3Section2_4: React.FC = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify the characteristics and applications of cable trays, baskets and ladder systems",
-              "Select the appropriate containment system based on load, environment and cable type",
-              "Calculate support spacing and loads for different cable containment systems",
-              "Understand installation requirements including earthing and fire safety compliance",
-              "Apply BS EN 61537 and BS 7671 requirements for cable management systems"
+              'Identify the characteristics and applications of cable trays, baskets and ladder systems',
+              'Select the appropriate containment system based on load, environment and cable type',
+              'Calculate support spacing and loads for different cable containment systems',
+              'Understand installation requirements including earthing and fire safety compliance',
+              'Apply BS EN 61537 and BS 7671 requirements for cable management systems',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -419,18 +426,28 @@ const Module3Section2_4: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded bg-elec-yellow/10 border border-elec-yellow/20">
-              <p className="font-medium text-elec-yellow text-sm mb-2">Support Spacing Requirements</p>
+              <p className="font-medium text-elec-yellow text-sm mb-2">
+                Support Spacing Requirements
+              </p>
               <ul className="text-xs text-elec-yellow/80 space-y-1">
-                <li><strong>Cable trays:</strong> 1.2-2.0m depending on width and load</li>
-                <li><strong>Cable baskets:</strong> 1.0-1.5m for typical data cable loads</li>
-                <li><strong>Ladder systems:</strong> 1.5-3.0m for heavy power cables</li>
+                <li>
+                  <strong>Cable trays:</strong> 1.2-2.0m depending on width and load
+                </li>
+                <li>
+                  <strong>Cable baskets:</strong> 1.0-1.5m for typical data cable loads
+                </li>
+                <li>
+                  <strong>Ladder systems:</strong> 1.5-3.0m for heavy power cables
+                </li>
                 <li>Additional support required near bends, junctions and equipment</li>
                 <li>Maximum deflection: L/200 under full load</li>
               </ul>
             </div>
 
             <div className="p-4 rounded bg-violet-500/10 border border-violet-400/20">
-              <p className="font-medium text-violet-200 text-sm mb-2">Earthing and Electrical Safety</p>
+              <p className="font-medium text-violet-200 text-sm mb-2">
+                Earthing and Electrical Safety
+              </p>
               <ul className="text-xs text-violet-200/80 space-y-1">
                 <li>All metallic sections must be electrically continuous</li>
                 <li>Earth continuity conductor minimum 4mm sq for cable management systems</li>
@@ -441,7 +458,9 @@ const Module3Section2_4: React.FC = () => {
             </div>
 
             <div className="p-4 rounded bg-indigo-500/10 border border-indigo-400/20">
-              <p className="font-medium text-indigo-200 text-sm mb-2">Installation Best Practices</p>
+              <p className="font-medium text-indigo-200 text-sm mb-2">
+                Installation Best Practices
+              </p>
               <ul className="text-xs text-indigo-200/80 space-y-1">
                 <li>Plan cable routes to minimise bends and maintain minimum bend radius</li>
                 <li>Install systems level and square with adequate clearances</li>
@@ -466,21 +485,48 @@ const Module3Section2_4: React.FC = () => {
             <div className="p-3 rounded bg-white/5">
               <p className="font-medium text-white text-sm mb-2">Installation Errors</p>
               <ul className="text-xs text-white/80 space-y-1">
-                <li><strong>Inadequate support spacing:</strong> Causing excessive deflection and cable stress</li>
-                <li><strong>Poor earthing connections:</strong> Creating potential safety hazards and non-compliance</li>
-                <li><strong>Incorrect load calculations:</strong> Leading to system overload and structural failure</li>
-                <li><strong>Insufficient clearances:</strong> Preventing proper cable installation and maintenance</li>
-                <li><strong>Mixing components:</strong> Using incompatible manufacturers' parts without checking compatibility</li>
+                <li>
+                  <strong>Inadequate support spacing:</strong> Causing excessive deflection and
+                  cable stress
+                </li>
+                <li>
+                  <strong>Poor earthing connections:</strong> Creating potential safety hazards and
+                  non-compliance
+                </li>
+                <li>
+                  <strong>Incorrect load calculations:</strong> Leading to system overload and
+                  structural failure
+                </li>
+                <li>
+                  <strong>Insufficient clearances:</strong> Preventing proper cable installation and
+                  maintenance
+                </li>
+                <li>
+                  <strong>Mixing components:</strong> Using incompatible manufacturers' parts
+                  without checking compatibility
+                </li>
               </ul>
             </div>
 
             <div className="p-3 rounded bg-amber-500/10 border border-amber-400/20">
               <p className="font-medium text-white text-sm mb-2">Planning Oversights</p>
               <ul className="text-xs text-white/80 space-y-1">
-                <li><strong>Ignoring thermal expansion:</strong> Not providing expansion joints in long runs</li>
-                <li><strong>Inadequate access provision:</strong> Making future maintenance difficult or impossible</li>
-                <li><strong>Wrong system selection:</strong> Using baskets for heavy loads or ladders for light cables</li>
-                <li><strong>Poor cable segregation:</strong> Mixing power and data cables without proper separation</li>
+                <li>
+                  <strong>Ignoring thermal expansion:</strong> Not providing expansion joints in
+                  long runs
+                </li>
+                <li>
+                  <strong>Inadequate access provision:</strong> Making future maintenance difficult
+                  or impossible
+                </li>
+                <li>
+                  <strong>Wrong system selection:</strong> Using baskets for heavy loads or ladders
+                  for light cables
+                </li>
+                <li>
+                  <strong>Poor cable segregation:</strong> Mixing power and data cables without
+                  proper separation
+                </li>
               </ul>
             </div>
           </div>
@@ -498,11 +544,22 @@ const Module3Section2_4: React.FC = () => {
             <div className="p-4 rounded bg-white/5">
               <p className="font-medium text-white text-sm mb-2">Key Standards and Regulations</p>
               <ul className="text-xs text-white/80 space-y-1">
-                <li><strong>BS EN 61537:</strong> Cable management systems for electrical installations</li>
-                <li><strong>BS 7671 Chapter 52:</strong> Selection and erection of wiring systems</li>
-                <li><strong>521.10.1:</strong> Cable support systems and spacing requirements</li>
-                <li><strong>543.2:</strong> Earthing requirements for metallic cable management</li>
-                <li><strong>527.1:</strong> Cable segregation requirements for different circuits</li>
+                <li>
+                  <strong>BS EN 61537:</strong> Cable management systems for electrical
+                  installations
+                </li>
+                <li>
+                  <strong>BS 7671 Chapter 52:</strong> Selection and erection of wiring systems
+                </li>
+                <li>
+                  <strong>521.10.1:</strong> Cable support systems and spacing requirements
+                </li>
+                <li>
+                  <strong>543.2:</strong> Earthing requirements for metallic cable management
+                </li>
+                <li>
+                  <strong>527.1:</strong> Cable segregation requirements for different circuits
+                </li>
               </ul>
             </div>
 
@@ -542,8 +599,9 @@ const Module3Section2_4: React.FC = () => {
               <div>
                 <p className="font-medium text-white mb-2">The Project</p>
                 <p className="text-sm text-white/90 leading-relaxed">
-                  A manufacturing facility requires cable containment for the main electrical distribution.
-                  The installation includes 400A three-phase power cables, control circuits, and data networks.
+                  A manufacturing facility requires cable containment for the main electrical
+                  distribution. The installation includes 400A three-phase power cables, control
+                  circuits, and data networks.
                 </p>
               </div>
             </div>
@@ -590,18 +648,35 @@ const Module3Section2_4: React.FC = () => {
             <h2 className="text-lg font-semibold text-elec-yellow mb-2">Summary</h2>
             <div className="text-sm text-white space-y-2">
               <p>
-                <strong>Cable containment systems</strong> are essential for organised, safe cable installations.
+                <strong>Cable containment systems</strong> are essential for organised, safe cable
+                installations.
               </p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Cable trays</strong> provide weather protection and good support for mixed loads</li>
-                <li><strong>Cable baskets</strong> offer excellent ventilation and are ideal for data installations</li>
-                <li><strong>Ladder systems</strong> provide maximum load capacity for heavy power cables</li>
-                <li><strong>All systems</strong> require proper earthing, support spacing and BS 7671 compliance</li>
-                <li><strong>Selection depends</strong> on load, environment, span requirements and cost factors</li>
+                <li>
+                  <strong>Cable trays</strong> provide weather protection and good support for mixed
+                  loads
+                </li>
+                <li>
+                  <strong>Cable baskets</strong> offer excellent ventilation and are ideal for data
+                  installations
+                </li>
+                <li>
+                  <strong>Ladder systems</strong> provide maximum load capacity for heavy power
+                  cables
+                </li>
+                <li>
+                  <strong>All systems</strong> require proper earthing, support spacing and BS 7671
+                  compliance
+                </li>
+                <li>
+                  <strong>Selection depends</strong> on load, environment, span requirements and
+                  cost factors
+                </li>
               </ul>
               <p>
-                Proper installation with correct support spacing, earthing and edge protection ensures safe,
-                compliant installations that meet BS EN 61537 and BS 7671 requirements.
+                Proper installation with correct support spacing, earthing and edge protection
+                ensures safe, compliant installations that meet BS EN 61537 and BS 7671
+                requirements.
               </p>
             </div>
           </div>
@@ -686,7 +761,9 @@ const Module3Section2_4: React.FC = () => {
           <div className="space-y-2 text-xs">
             <div className="flex justify-between items-center p-2 rounded bg-white/5">
               <span className="text-white">BS EN 61537:2006</span>
-              <span className="text-white/70">Cable management systems for electrical installations</span>
+              <span className="text-white/70">
+                Cable management systems for electrical installations
+              </span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-white/5">
               <span className="text-white">BS 7671:2018+A2:2022</span>
@@ -708,28 +785,33 @@ const Module3Section2_4: React.FC = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../2-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../2-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

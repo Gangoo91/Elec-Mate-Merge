@@ -12,14 +12,16 @@ export const HybridLightingSystemsSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Mix of wired backbones for reliability with wireless devices for flexibility - increasingly common in modern smart-ready homes.
+          Mix of wired backbones for reliability with wireless devices for flexibility -
+          increasingly common in modern smart-ready homes.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <h5 className="font-semibold text-blue-200 mb-2">Typical Configuration</h5>
             <p className="text-sm text-blue-100 mb-2">
-              <strong>Example:</strong> Wired KNX dimmers for main lighting circuits, but Zigbee wireless sensors for occupancy and daylight sensing.
+              <strong>Example:</strong> Wired KNX dimmers for main lighting circuits, but Zigbee
+              wireless sensors for occupancy and daylight sensing.
             </p>
             <ul className="text-sm text-blue-100 space-y-1">
               <li>• Wired infrastructure for critical lighting control</li>
@@ -52,7 +54,8 @@ export const HybridLightingSystemsSection = () => {
           <div className="p-3 bg-yellow-600/10 border border-yellow-600/20 rounded-lg">
             <h5 className="font-semibold text-yellow-200 mb-2">Modern Applications</h5>
             <p className="text-sm text-yellow-100">
-              New builds where structured cabling is planned but wireless expansion is anticipated, or high-end retrofits where some disruption is acceptable for the wired backbone.
+              New builds where structured cabling is planned but wireless expansion is anticipated,
+              or high-end retrofits where some disruption is acceptable for the wired backbone.
             </p>
           </div>
         </div>

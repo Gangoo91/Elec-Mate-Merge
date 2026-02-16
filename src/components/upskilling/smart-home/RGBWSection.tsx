@@ -12,27 +12,44 @@ export const RGBWSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          RGBW technology combines RGB colour mixing with dedicated white LEDs to create both vibrant colours and accurate natural white light.
+          RGBW technology combines RGB colour mixing with dedicated white LEDs to create both
+          vibrant colours and accurate natural white light.
         </p>
-        
+
         <div className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-3 bg-purple-600/10 border border-purple-600/20 rounded-lg">
               <h5 className="font-semibold text-purple-200 mb-2">RGB Colour Mixing</h5>
               <ul className="text-sm text-purple-100 space-y-1">
-                <li>• <strong>Red, Green, Blue channels:</strong> Primary colour LEDs</li>
-                <li>• <strong>Millions of colours:</strong> 16.7 million possible combinations</li>
-                <li>• <strong>Additive colour mixing:</strong> Combine channels for desired hues</li>
-                <li>• <strong>Digital control:</strong> Precise adjustment of each channel</li>
+                <li>
+                  • <strong>Red, Green, Blue channels:</strong> Primary colour LEDs
+                </li>
+                <li>
+                  • <strong>Millions of colours:</strong> 16.7 million possible combinations
+                </li>
+                <li>
+                  • <strong>Additive colour mixing:</strong> Combine channels for desired hues
+                </li>
+                <li>
+                  • <strong>Digital control:</strong> Precise adjustment of each channel
+                </li>
               </ul>
             </div>
             <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
               <h5 className="font-semibold text-blue-200 mb-2">Adding White (RGBW)</h5>
               <ul className="text-sm text-blue-100 space-y-1">
-                <li>• <strong>Dedicated white LED:</strong> True white, not mixed RGB</li>
-                <li>• <strong>Improved brightness:</strong> Higher lumen output</li>
-                <li>• <strong>Better colour accuracy:</strong> Natural whites and pastels</li>
-                <li>• <strong>Energy efficiency:</strong> White LED more efficient than RGB mix</li>
+                <li>
+                  • <strong>Dedicated white LED:</strong> True white, not mixed RGB
+                </li>
+                <li>
+                  • <strong>Improved brightness:</strong> Higher lumen output
+                </li>
+                <li>
+                  • <strong>Better colour accuracy:</strong> Natural whites and pastels
+                </li>
+                <li>
+                  • <strong>Energy efficiency:</strong> White LED more efficient than RGB mix
+                </li>
               </ul>
             </div>
           </div>
@@ -64,23 +81,43 @@ export const RGBWSection = () => {
           <div className="p-3 bg-orange-600/10 border border-orange-600/20 rounded-lg">
             <h5 className="font-semibold text-orange-200 mb-2">Example: Philips Hue RGBW Usage</h5>
             <p className="text-sm text-orange-100 mb-2">
-              <strong>Scenario:</strong> Living room with Hue RGBW bulbs for both entertainment and daily use
+              <strong>Scenario:</strong> Living room with Hue RGBW bulbs for both entertainment and
+              daily use
             </p>
             <ul className="text-sm text-orange-100 space-y-1">
-              <li>• <strong>Party mode:</strong> Set lounge to vibrant purple and green colours</li>
-              <li>• <strong>Daily use:</strong> Revert to warm white (2700K) for comfortable evening lighting</li>
-              <li>• <strong>Morning routine:</strong> Cool white (4000K) for energising start to day</li>
-              <li>• <strong>Movie night:</strong> Dim red ambient behind TV, white off</li>
+              <li>
+                • <strong>Party mode:</strong> Set lounge to vibrant purple and green colours
+              </li>
+              <li>
+                • <strong>Daily use:</strong> Revert to warm white (2700K) for comfortable evening
+                lighting
+              </li>
+              <li>
+                • <strong>Morning routine:</strong> Cool white (4000K) for energising start to day
+              </li>
+              <li>
+                • <strong>Movie night:</strong> Dim red ambient behind TV, white off
+              </li>
             </ul>
           </div>
 
           <div className="p-3 bg-red-600/10 border border-red-600/20 rounded-lg">
             <h5 className="font-semibold text-red-200 mb-2">RGB-Only Limitations</h5>
             <ul className="text-sm text-red-100 space-y-1">
-              <li>• <strong>Poor white reproduction:</strong> Mixed RGB creates weak, tinted whites</li>
-              <li>• <strong>Lower brightness:</strong> RGB combinations less efficient than dedicated white</li>
-              <li>• <strong>Colour accuracy issues:</strong> Pastels and skin tones appear unnatural</li>
-              <li>• <strong>Higher energy consumption:</strong> Three LEDs working to create white light</li>
+              <li>
+                • <strong>Poor white reproduction:</strong> Mixed RGB creates weak, tinted whites
+              </li>
+              <li>
+                • <strong>Lower brightness:</strong> RGB combinations less efficient than dedicated
+                white
+              </li>
+              <li>
+                • <strong>Colour accuracy issues:</strong> Pastels and skin tones appear unnatural
+              </li>
+              <li>
+                • <strong>Higher energy consumption:</strong> Three LEDs working to create white
+                light
+              </li>
             </ul>
           </div>
 

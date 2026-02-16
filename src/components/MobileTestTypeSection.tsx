@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,14 +21,14 @@ interface MobileTestTypeSectionProps {
   completedTests: Set<string>;
 }
 
-const MobileTestTypeSection = ({ 
-  testType, 
-  circuits, 
-  formData, 
-  onUpdate, 
-  onBack, 
+const MobileTestTypeSection = ({
+  testType,
+  circuits,
+  formData,
+  onUpdate,
+  onBack,
   onTestComplete,
-  completedTests 
+  completedTests,
 }: MobileTestTypeSectionProps) => {
   const { toast } = useToast();
   const { speak } = useTextToSpeech();
@@ -40,18 +39,18 @@ const MobileTestTypeSection = ({
 
   const currentCircuit = circuits[currentCircuitIndex];
   const isTestComplete = completedTests.has(`${testType.id}-${currentCircuit?.id}`);
-  const completedCount = circuits.filter(circuit => 
+  const completedCount = circuits.filter((circuit) =>
     completedTests.has(`${testType.id}-${circuit.id}`)
   ).length;
 
   const handleSaveTest = () => {
     if (!testValue.trim()) {
       toast({
-        title: "Enter test value",
-        description: "Please enter a test reading before saving",
-        variant: "destructive"
+        title: 'Enter test value',
+        description: 'Please enter a test reading before saving',
+        variant: 'destructive',
       });
-      speak("Please enter a test value", { priority: 'high', interrupt: true });
+      speak('Please enter a test value', { priority: 'high', interrupt: true });
       return;
     }
 
@@ -61,32 +60,37 @@ const MobileTestTypeSection = ({
       testResults[currentCircuit.id] = {};
     }
     testResults[currentCircuit.id][testType.id] = testValue;
-    
+
     onUpdate('testResults', testResults);
     onTestComplete(testType.id, currentCircuit.id);
 
     // Voice confirmation
     const spokenValue = formatForSpeech(testValue);
-    speak(`${testType.name}: ${spokenValue}. Reading recorded for circuit ${currentCircuit.circuitNumber}`, { 
-      priority: 'normal' 
-    });
+    speak(
+      `${testType.name}: ${spokenValue}. Reading recorded for circuit ${currentCircuit.circuitNumber}`,
+      {
+        priority: 'normal',
+      }
+    );
 
     // Auto-advance to next circuit if enabled
     if (autoAdvance && currentCircuitIndex < circuits.length - 1) {
-      setCurrentCircuitIndex(prev => prev + 1);
+      setCurrentCircuitIndex((prev) => prev + 1);
       setTestValue('');
       setTimeout(() => {
-        speak(`Moving to circuit ${circuits[currentCircuitIndex + 1].circuitNumber}`, { priority: 'low' });
+        speak(`Moving to circuit ${circuits[currentCircuitIndex + 1].circuitNumber}`, {
+          priority: 'low',
+        });
       }, 1500);
     } else {
       setTestValue('');
       if (currentCircuitIndex === circuits.length - 1) {
-        speak("All circuits complete", { priority: 'normal' });
+        speak('All circuits complete', { priority: 'normal' });
       }
     }
 
     toast({
-      title: "Test saved",
+      title: 'Test saved',
       description: `${testType.name} result saved for Circuit ${currentCircuit.circuitNumber}`,
     });
   };
@@ -94,44 +98,44 @@ const MobileTestTypeSection = ({
   const handleApplyToAll = () => {
     if (!testValue.trim()) {
       toast({
-        title: "Enter test value",
-        description: "Please enter a value to apply to all circuits",
-        variant: "destructive"
+        title: 'Enter test value',
+        description: 'Please enter a value to apply to all circuits',
+        variant: 'destructive',
       });
-      speak("Please enter a test value", { priority: 'high', interrupt: true });
+      speak('Please enter a test value', { priority: 'high', interrupt: true });
       return;
     }
 
     const testResults = formData.testResults || {};
-    circuits.forEach(circuit => {
+    circuits.forEach((circuit) => {
       if (!testResults[circuit.id]) {
         testResults[circuit.id] = {};
       }
       testResults[circuit.id][testType.id] = testValue;
       onTestComplete(testType.id, circuit.id);
     });
-    
+
     onUpdate('testResults', testResults);
-    
+
     const spokenValue = formatForSpeech(testValue);
-    speak(`${testType.name}: ${spokenValue}. Applied to all ${circuits.length} circuits`, { 
+    speak(`${testType.name}: ${spokenValue}. Applied to all ${circuits.length} circuits`, {
       priority: 'normal',
-      interrupt: true
+      interrupt: true,
     });
-    
+
     toast({
-      title: "Applied to all circuits",
+      title: 'Applied to all circuits',
       description: `${testType.name} value applied to all ${circuits.length} circuits`,
     });
   };
 
   const navigateCircuit = (direction: 'prev' | 'next') => {
     if (direction === 'prev' && currentCircuitIndex > 0) {
-      setCurrentCircuitIndex(prev => prev - 1);
+      setCurrentCircuitIndex((prev) => prev - 1);
     } else if (direction === 'next' && currentCircuitIndex < circuits.length - 1) {
-      setCurrentCircuitIndex(prev => prev + 1);
+      setCurrentCircuitIndex((prev) => prev + 1);
     }
-    
+
     // Load existing test value if available
     const existingValue = formData.testResults?.[circuits[currentCircuitIndex]?.id]?.[testType.id];
     setTestValue(existingValue || '');
@@ -156,7 +160,6 @@ const MobileTestTypeSection = ({
 
   return (
     <div className="space-y-4 pb-20 relative">
-      
       {/* Header */}
       <Card>
         <CardHeader className="pb-4">
@@ -174,11 +177,13 @@ const MobileTestTypeSection = ({
               </p>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>Progress</span>
-              <span>{completedCount}/{circuits.length}</span>
+              <span>
+                {completedCount}/{circuits.length}
+              </span>
             </div>
             <Progress value={(completedCount / circuits.length) * 100} className="h-2" />
           </div>
@@ -201,17 +206,13 @@ const MobileTestTypeSection = ({
                 </Badge>
               </div>
             </div>
-            {isTestComplete && (
-              <CheckCircle className="h-6 w-6 text-green-500" />
-            )}
+            {isTestComplete && <CheckCircle className="h-6 w-6 text-green-500" />}
           </div>
 
           {/* Test Input */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">
-                Test Reading ({testType.unit})
-              </label>
+              <label className="text-sm font-medium">Test Reading ({testType.unit})</label>
               <div className="flex gap-2">
                 <Button
                   variant="outline"
@@ -223,7 +224,7 @@ const MobileTestTypeSection = ({
                 </Button>
               </div>
             </div>
-            
+
             <Input
               value={testValue}
               onChange={(e) => setTestValue(e.target.value)}

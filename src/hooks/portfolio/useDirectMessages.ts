@@ -58,7 +58,8 @@ export function useDirectMessages() {
     try {
       const { data, error } = await supabase
         .from('mentor_connections')
-        .select(`
+        .select(
+          `
           *,
           mentor:profiles!mentor_connections_mentor_id_fkey(
             id,
@@ -66,7 +67,8 @@ export function useDirectMessages() {
             avatar_url,
             role
           )
-        `)
+        `
+        )
         .eq('apprentice_id', user.id)
         .eq('status', 'active')
         .order('updated_at', { ascending: false });
@@ -79,22 +81,25 @@ export function useDirectMessages() {
   }, [user]);
 
   // Fetch messages for a specific connection
-  const fetchMessages = useCallback(async (connectionId: string) => {
-    if (!user) return;
+  const fetchMessages = useCallback(
+    async (connectionId: string) => {
+      if (!user) return;
 
-    try {
-      const { data, error } = await supabase
-        .from('mentor_messages')
-        .select('*')
-        .eq('connection_id', connectionId)
-        .order('created_at', { ascending: true });
+      try {
+        const { data, error } = await supabase
+          .from('mentor_messages')
+          .select('*')
+          .eq('connection_id', connectionId)
+          .order('created_at', { ascending: true });
 
-      if (error) throw error;
-      setMessages((data as DirectMessage[]) || []);
-    } catch (err) {
-      console.error('Error fetching messages:', err);
-    }
-  }, [user]);
+        if (error) throw error;
+        setMessages((data as DirectMessage[]) || []);
+      } catch (err) {
+        console.error('Error fetching messages:', err);
+      }
+    },
+    [user]
+  );
 
   // Fetch total unread count
   const fetchUnreadCount = useCallback(async () => {
@@ -205,9 +210,7 @@ export function useDirectMessages() {
       const connection = connections.find((c) => c.id === connectionId);
       if (!connection) return null;
 
-      const connectionMessages = messages.filter(
-        (m) => m.connection_id === connectionId
-      );
+      const connectionMessages = messages.filter((m) => m.connection_id === connectionId);
       const unread = connectionMessages.filter(
         (m) => m.sender_type === 'mentor' && !m.is_read
       ).length;
@@ -273,12 +276,8 @@ export function useDirectMessages() {
               }
             } else if (newMessage.sender_type === 'mentor') {
               // Show notification for messages from other conversations
-              const connection = connections.find(
-                (c) => c.id === newMessage.connection_id
-              );
-              toast.info(
-                `New message from ${connection?.mentor?.full_name || 'your tutor'}`
-              );
+              const connection = connections.find((c) => c.id === newMessage.connection_id);
+              toast.info(`New message from ${connection?.mentor?.full_name || 'your tutor'}`);
               await fetchUnreadCount();
             }
           }

@@ -36,7 +36,7 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   onOpenBoardScan,
   initialTab,
   currentTab,
-  onTabChange
+  onTabChange,
 }) => {
   return (
     <div>

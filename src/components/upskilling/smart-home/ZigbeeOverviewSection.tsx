@@ -4,55 +4,79 @@ import { Radio, Lightbulb, Eye, AlertTriangle } from 'lucide-react';
 export const ZigbeeOverviewSection = () => {
   const zigbeeFeatures = [
     {
-      aspect: "Operating Frequency",
-      value: "2.4 GHz",
-      description: "Global ISM band, same as Wi-Fi and Bluetooth",
-      icon: Radio
+      aspect: 'Operating Frequency',
+      value: '2.4 GHz',
+      description: 'Global ISM band, same as Wi-Fi and Bluetooth',
+      icon: Radio,
     },
     {
-      aspect: "Typical Range",
-      value: "10-20m indoors",
-      description: "Per hop, extends through mesh networking",
-      icon: Eye
+      aspect: 'Typical Range',
+      value: '10-20m indoors',
+      description: 'Per hop, extends through mesh networking',
+      icon: Eye,
     },
     {
-      aspect: "Network Capacity",
-      value: "65,000+ devices",
-      description: "Theoretical maximum in a single network",
-      icon: Lightbulb
+      aspect: 'Network Capacity',
+      value: '65,000+ devices',
+      description: 'Theoretical maximum in a single network',
+      icon: Lightbulb,
     },
     {
-      aspect: "Interference Risk",
-      value: "Moderate to High",
-      description: "2.4GHz band shared with Wi-Fi, Bluetooth, microwaves",
-      icon: AlertTriangle
-    }
+      aspect: 'Interference Risk',
+      value: 'Moderate to High',
+      description: '2.4GHz band shared with Wi-Fi, Bluetooth, microwaves',
+      icon: AlertTriangle,
+    },
   ];
 
   const popularBrands = [
-    { name: "Philips Hue", category: "Smart Lighting", description: "Market-leading smart bulbs and light strips" },
-    { name: "IKEA TRÅDFRI", category: "Affordable Lighting", description: "Budget-friendly smart home lighting solutions" },
-    { name: "Samsung SmartThings", category: "Hub Platform", description: "Central hub supporting multiple Zigbee devices" },
-    { name: "Aqara", category: "Sensors & Switches", description: "Comprehensive range of smart sensors and controls" },
-    { name: "Sengled", category: "Smart Bulbs", description: "Energy-efficient LED smart lighting" },
-    { name: "Xiaomi Mi", category: "Ecosystem", description: "Affordable smart home devices and sensors" }
+    {
+      name: 'Philips Hue',
+      category: 'Smart Lighting',
+      description: 'Market-leading smart bulbs and light strips',
+    },
+    {
+      name: 'IKEA TRÅDFRI',
+      category: 'Affordable Lighting',
+      description: 'Budget-friendly smart home lighting solutions',
+    },
+    {
+      name: 'Samsung SmartThings',
+      category: 'Hub Platform',
+      description: 'Central hub supporting multiple Zigbee devices',
+    },
+    {
+      name: 'Aqara',
+      category: 'Sensors & Switches',
+      description: 'Comprehensive range of smart sensors and controls',
+    },
+    {
+      name: 'Sengled',
+      category: 'Smart Bulbs',
+      description: 'Energy-efficient LED smart lighting',
+    },
+    {
+      name: 'Xiaomi Mi',
+      category: 'Ecosystem',
+      description: 'Affordable smart home devices and sensors',
+    },
   ];
 
   const advantages = [
-    "Wide manufacturer adoption and device variety",
-    "Open standard with multiple chip vendors",
-    "Excellent for dense device deployments",
-    "Lower device costs due to competition",
-    "Strong mesh networking capabilities",
-    "Zigbee 3.0 improved interoperability"
+    'Wide manufacturer adoption and device variety',
+    'Open standard with multiple chip vendors',
+    'Excellent for dense device deployments',
+    'Lower device costs due to competition',
+    'Strong mesh networking capabilities',
+    'Zigbee 3.0 improved interoperability',
   ];
 
   const limitations = [
-    "2.4GHz interference from Wi-Fi networks",
-    "Shorter range compared to Z-Wave",
-    "Compatibility issues between profiles/versions",
-    "Performance degrades in crowded RF environments",
-    "May require channel planning in dense areas"
+    '2.4GHz interference from Wi-Fi networks',
+    'Shorter range compared to Z-Wave',
+    'Compatibility issues between profiles/versions',
+    'Performance degrades in crowded RF environments',
+    'May require channel planning in dense areas',
   ];
 
   return (
@@ -65,9 +89,10 @@ export const ZigbeeOverviewSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg font-medium text-foreground mb-4">
-          Zigbee is an open standard for low-power mesh networking, widely adopted across the smart home industry.
+          Zigbee is an open standard for low-power mesh networking, widely adopted across the smart
+          home industry.
         </p>
-        
+
         {/* Key Specifications */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {zigbeeFeatures.map((feature, index) => (
@@ -111,7 +136,7 @@ export const ZigbeeOverviewSection = () => {
               ))}
             </ul>
           </div>
-          
+
           <div className="p-4 bg-red-900/20 border border-red-600 rounded-lg">
             <h4 className="font-semibold text-red-200 mb-3">Limitations</h4>
             <ul className="space-y-2 text-sm">
@@ -157,9 +182,10 @@ export const ZigbeeOverviewSection = () => {
             Key Consideration: Interference
           </h4>
           <p className="text-orange-100 text-sm">
-            <strong>2.4 GHz band crowding:</strong> Zigbee shares frequency space with Wi-Fi, Bluetooth, and even microwave ovens. 
-            In environments with many Wi-Fi networks or heavy 2.4GHz usage, Zigbee performance may be affected. 
-            Proper channel planning and mesh density can mitigate these issues.
+            <strong>2.4 GHz band crowding:</strong> Zigbee shares frequency space with Wi-Fi,
+            Bluetooth, and even microwave ovens. In environments with many Wi-Fi networks or heavy
+            2.4GHz usage, Zigbee performance may be affected. Proper channel planning and mesh
+            density can mitigate these issues.
           </p>
         </div>
       </CardContent>

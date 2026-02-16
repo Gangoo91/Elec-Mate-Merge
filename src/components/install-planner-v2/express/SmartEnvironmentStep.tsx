@@ -1,9 +1,15 @@
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Thermometer, Shield, Layers } from "lucide-react";
-import { InstallPlanDataV2 } from "../types";
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Thermometer, Shield, Layers } from 'lucide-react';
+import { InstallPlanDataV2 } from '../types';
 
 interface SmartEnvironmentStepProps {
   planData: InstallPlanDataV2;
@@ -14,19 +20,19 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
   const updateEnvironment = (field: string, value: any) => {
     const finalApplied = {
       ...planData.environmentalProfile.finalApplied,
-      [field]: value
+      [field]: value,
     };
-    
+
     updatePlanData({
       ...planData,
       environmentalProfile: {
         ...planData.environmentalProfile,
         userOverrides: {
           ...planData.environmentalProfile.userOverrides,
-          [field]: value
+          [field]: value,
         },
-        finalApplied
-      }
+        finalApplied,
+      },
     });
   };
 
@@ -36,7 +42,9 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
       <div className="p-3 md:p-4 rounded-lg bg-green-500/10 border border-green-500/30">
         <div className="flex items-center gap-2 mb-2 md:mb-3">
           <Badge className="bg-green-500 text-foreground text-xs">Auto-Detected</Badge>
-          <span className="text-xs md:text-sm text-foreground/80">Based on your installation type</span>
+          <span className="text-xs md:text-sm text-foreground/80">
+            Based on your installation type
+          </span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 text-xs md:text-sm">
           <div className="flex flex-col">
@@ -78,7 +86,7 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
             <Shield className="h-4 w-4 text-primary" />
             Earthing System
           </Label>
-          <Select 
+          <Select
             value={planData.environmentalProfile.finalApplied.earthing}
             onValueChange={(value) => updateEnvironment('earthing', value)}
           >
@@ -101,7 +109,9 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
             value={planData.environmentalProfile.finalApplied.ze}
             onChange={(e) => updateEnvironment('ze', parseFloat(e.target.value) || 0.35)}
           />
-          <p className="text-xs text-muted-foreground">TN-S typical: 0.35Ω, TN-C-S typical: 0.35Ω</p>
+          <p className="text-xs text-muted-foreground">
+            TN-S typical: 0.35Ω, TN-C-S typical: 0.35Ω
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -109,7 +119,7 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
             <Layers className="h-4 w-4 text-primary" />
             Cable Grouping
           </Label>
-          <Select 
+          <Select
             value={planData.environmentalProfile.finalApplied.grouping.toString()}
             onValueChange={(value) => updateEnvironment('grouping', parseInt(value))}
           >
@@ -130,7 +140,7 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
       {/* Conditions summary */}
       <div className="space-y-2">
         <Label>Installation Conditions</Label>
-        <Select 
+        <Select
           value={planData.environmentalProfile.finalApplied.conditions}
           onValueChange={(value) => updateEnvironment('conditions', value)}
         >
@@ -139,7 +149,9 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="Indoor dry locations">Indoor dry locations</SelectItem>
-            <SelectItem value="Indoor damp locations">Indoor damp locations (kitchens, bathrooms)</SelectItem>
+            <SelectItem value="Indoor damp locations">
+              Indoor damp locations (kitchens, bathrooms)
+            </SelectItem>
             <SelectItem value="Outdoor">Outdoor (weatherproof)</SelectItem>
             <SelectItem value="Underground">Underground</SelectItem>
             <SelectItem value="High temperature">High temperature areas</SelectItem>

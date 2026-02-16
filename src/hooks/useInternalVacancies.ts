@@ -25,13 +25,9 @@ export function useInternalVacancies(filters?: VacancyFilters) {
   useEffect(() => {
     const channel = supabase
       .channel('internal-vacancies-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'employer_vacancies' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: INTERNAL_VACANCIES_KEY });
-        }
-      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_vacancies' }, () => {
+        queryClient.invalidateQueries({ queryKey: INTERNAL_VACANCIES_KEY });
+      })
       .subscribe();
 
     return () => {
@@ -44,11 +40,14 @@ export function useInternalVacancies(filters?: VacancyFilters) {
     placeholderData: keepPreviousData, // Show previous data while refetching
     queryFn: async (): Promise<InternalVacancy[]> => {
       // Get current user's elec_id_profile to check applications
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       let query = supabase
         .from('employer_vacancies')
-        .select(`
+        .select(
+          `
           id,
           title,
           location,
@@ -63,7 +62,8 @@ export function useInternalVacancies(filters?: VacancyFilters) {
           closing_date,
           views,
           created_at
-        `)
+        `
+        )
         .eq('status', 'Open')
         .order('created_at', { ascending: false });
 
@@ -81,7 +81,9 @@ export function useInternalVacancies(filters?: VacancyFilters) {
         query = query.lte('salary_max', filters.maxSalary);
       }
       if (filters?.searchQuery) {
-        query = query.or(`title.ilike.%${filters.searchQuery}%,description.ilike.%${filters.searchQuery}%`);
+        query = query.or(
+          `title.ilike.%${filters.searchQuery}%,description.ilike.%${filters.searchQuery}%`
+        );
       }
 
       const { data: vacancies, error } = await query;
@@ -108,7 +110,7 @@ export function useInternalVacancies(filters?: VacancyFilters) {
             .select('vacancy_id')
             .eq('applicant_profile_id', profile.id);
 
-          applicationVacancyIds = new Set((applications || []).map(a => a.vacancy_id));
+          applicationVacancyIds = new Set((applications || []).map((a) => a.vacancy_id));
         }
       }
 
@@ -144,11 +146,14 @@ export function useInternalVacancy(id: string | undefined) {
     queryFn: async (): Promise<InternalVacancy | null> => {
       if (!id) return null;
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       const { data: vacancy, error } = await supabase
         .from('employer_vacancies')
-        .select(`
+        .select(
+          `
           id,
           title,
           location,
@@ -163,7 +168,8 @@ export function useInternalVacancy(id: string | undefined) {
           closing_date,
           views,
           created_at
-        `)
+        `
+        )
         .eq('id', id)
         .single();
 
@@ -241,7 +247,9 @@ export function useApplyToVacancy() {
       coverLetter?: string;
       cvUrl?: string;
     }) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Get elec_id_profile
@@ -299,7 +307,9 @@ export function useMyApplications() {
     queryKey: MY_APPLICATIONS_KEY,
     placeholderData: keepPreviousData, // Show previous data while refetching
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       // Get elec_id_profile
@@ -313,7 +323,8 @@ export function useMyApplications() {
 
       const { data: applications, error } = await supabase
         .from('employer_vacancy_applications')
-        .select(`
+        .select(
+          `
           id,
           vacancy_id,
           cover_letter,
@@ -330,7 +341,8 @@ export function useMyApplications() {
               logo_url
             )
           )
-        `)
+        `
+        )
         .eq('applicant_profile_id', profile.id)
         .order('applied_at', { ascending: false });
 
@@ -368,7 +380,9 @@ export function useMyInvitations() {
     queryKey: ['my-invitations'],
     placeholderData: keepPreviousData, // Show previous data while refetching
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       // Get elec_id_profile
@@ -382,7 +396,8 @@ export function useMyInvitations() {
 
       const { data: invitations, error } = await supabase
         .from('employer_vacancy_invitations')
-        .select(`
+        .select(
+          `
           id,
           vacancy_id,
           message,
@@ -399,7 +414,8 @@ export function useMyInvitations() {
               logo_url
             )
           )
-        `)
+        `
+        )
         .eq('electrician_profile_id', profile.id)
         .in('status', ['pending', 'viewed'])
         .order('sent_at', { ascending: false });

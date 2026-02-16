@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ClipboardCheck, Check } from "lucide-react";
-import { useState, useMemo } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ClipboardCheck, Check } from 'lucide-react';
+import { useState, useMemo } from 'react';
 
 interface SiteArrivalChecklistProps {
   checklist: any;
@@ -36,7 +36,9 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
         {/* Progress Indicator */}
         <div className="flex items-center justify-between p-3 sm:p-2.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
           <span className="text-foreground font-medium text-base sm:text-sm">Progress</span>
-          <span className="text-elec-yellow font-bold text-base sm:text-sm">{checkedItems.size} of {totalItems} complete</span>
+          <span className="text-elec-yellow font-bold text-base sm:text-sm">
+            {checkedItems.size} of {totalItems} complete
+          </span>
         </div>
 
         {/* Critical Checks */}
@@ -47,8 +49,8 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
             </div>
             <div className="space-y-2">
               {checklist.critical.map((item: string, idx: number) => (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   onClick={() => toggleItem(`critical-${idx}`)}
                   className={`flex items-start gap-3 p-4 sm:p-3 rounded-lg border cursor-pointer transition-all ${
                     checkedItems.has(`critical-${idx}`)
@@ -87,7 +89,7 @@ const SiteArrivalChecklist = ({ checklist }: SiteArrivalChecklistProps) => {
             </div>
             <div className="space-y-2">
               {checklist.important.map((item: string, idx: number) => (
-                <div 
+                <div
                   key={idx}
                   onClick={() => toggleItem(`important-${idx}`)}
                   className={`flex items-start gap-3 p-4 sm:p-3 rounded-lg border cursor-pointer transition-all ${

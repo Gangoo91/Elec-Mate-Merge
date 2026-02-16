@@ -1,11 +1,23 @@
-import { Button } from "@/components/ui/button";
-import { Download, Loader2, Package, Wrench, Zap, FileText, User, Briefcase, Clock, PoundSterling, ChevronRight } from "lucide-react";
-import { useState } from "react";
-import { Quote } from "@/types/quote";
-import { useToast } from "@/hooks/use-toast";
-import { useCompanyProfile } from "@/hooks/useCompanyProfile";
-import { supabase } from "@/integrations/supabase/client";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import {
+  Download,
+  Loader2,
+  Package,
+  Wrench,
+  Zap,
+  FileText,
+  User,
+  Briefcase,
+  Clock,
+  PoundSterling,
+  ChevronRight,
+} from 'lucide-react';
+import { useState } from 'react';
+import { Quote } from '@/types/quote';
+import { useToast } from '@/hooks/use-toast';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
@@ -20,18 +32,18 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
     setIsDownloading(true);
     try {
       const effectiveCompanyProfile = companyProfile || {
-        id: "default",
-        user_id: "default",
-        company_name: "Your Electrical Company",
-        company_email: "contact@yourcompany.com",
-        company_phone: "0123 456 7890",
-        company_address: "123 Business Street, London",
-        primary_color: "#1e40af",
-        secondary_color: "#3b82f6",
-        currency: "GBP",
-        locale: "en-GB",
-        vat_number: "GB123456789",
-        payment_terms: "Payment due within 30 days",
+        id: 'default',
+        user_id: 'default',
+        company_name: 'Your Electrical Company',
+        company_email: 'contact@yourcompany.com',
+        company_phone: '0123 456 7890',
+        company_address: '123 Business Street, London',
+        primary_color: '#1e40af',
+        secondary_color: '#3b82f6',
+        currency: 'GBP',
+        locale: 'en-GB',
+        vat_number: 'GB123456789',
+        payment_terms: 'Payment due within 30 days',
         created_at: new Date(),
         updated_at: new Date(),
       };
@@ -41,20 +53,20 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         quoteNumber: quote.quoteNumber || `Q${Date.now()}`,
         createdAt: quote.createdAt || new Date(),
         expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        status: quote.status || "draft",
+        status: quote.status || 'draft',
         subtotal: quote.subtotal || 0,
         total: quote.total || 0,
         vatAmount: quote.vatAmount || 0,
         client: quote.client || {
-          name: "Client Name",
-          email: "client@example.com",
-          phone: "0123 456 7890",
-          address: "Client Address",
-          postcode: "AB1 2CD",
+          name: 'Client Name',
+          email: 'client@example.com',
+          phone: '0123 456 7890',
+          address: 'Client Address',
+          postcode: 'AB1 2CD',
         },
       };
 
-      const { data, error } = await supabase.functions.invoke("generate-pdf-monkey", {
+      const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { quote: effectiveQuote, companyProfile: effectiveCompanyProfile },
       });
 
@@ -67,8 +79,8 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         const maxAttempts = 18;
         for (let i = 0; i < maxAttempts; i++) {
           await new Promise((resolve) => setTimeout(resolve, 5000));
-          const { data: statusData } = await supabase.functions.invoke("generate-pdf-monkey", {
-            body: { mode: "status", documentId },
+          const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+            body: { mode: 'status', documentId },
           });
           if (statusData?.downloadUrl) {
             downloadUrl = statusData.downloadUrl;
@@ -79,28 +91,28 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
       if (downloadUrl && quote.id) {
         await supabase
-          .from("quotes")
+          .from('quotes')
           .update({
             pdf_document_id: documentId,
             pdf_url: downloadUrl,
             pdf_generated_at: new Date().toISOString(),
             pdf_version: (quote.pdf_version || 0) + 1,
           })
-          .eq("id", quote.id);
+          .eq('id', quote.id);
 
-        window.open(downloadUrl, "_blank");
-        toast({ title: "PDF ready", variant: "success" });
+        window.open(downloadUrl, '_blank');
+        toast({ title: 'PDF ready', variant: 'success' });
       } else if (documentId) {
-        toast({ title: "PDF in progress", description: "Check back in a moment" });
+        toast({ title: 'PDF in progress', description: 'Check back in a moment' });
       } else {
-        throw new Error(data.error || "Failed to generate PDF");
+        throw new Error(data.error || 'Failed to generate PDF');
       }
     } catch (error: any) {
-      console.error("PDF generation error:", error);
+      console.error('PDF generation error:', error);
       toast({
-        title: "PDF generation failed",
-        description: error.message || "Please try again",
-        variant: "destructive",
+        title: 'PDF generation failed',
+        description: error.message || 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsDownloading(false);
@@ -109,18 +121,18 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
   const getCategoryConfig = (category: string) => {
     switch (category) {
-      case "labour":
-        return { icon: Wrench, color: "bg-elec-yellow" };
-      case "materials":
-        return { icon: Package, color: "bg-elec-yellow" };
-      case "equipment":
-        return { icon: Zap, color: "bg-elec-yellow" };
+      case 'labour':
+        return { icon: Wrench, color: 'bg-elec-yellow' };
+      case 'materials':
+        return { icon: Package, color: 'bg-elec-yellow' };
+      case 'equipment':
+        return { icon: Zap, color: 'bg-elec-yellow' };
       default:
-        return { icon: FileText, color: "bg-elec-yellow" };
+        return { icon: FileText, color: 'bg-elec-yellow' };
     }
   };
 
-  const categories = ["labour", "materials", "equipment", "manual"];
+  const categories = ['labour', 'materials', 'equipment', 'manual'];
 
   return (
     <div className="space-y-4">
@@ -185,7 +197,9 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[15px] font-medium text-white">{quote.jobDetails.title}</p>
-                  <p className="text-[13px] text-white/70 line-clamp-2 mt-0.5">{quote.jobDetails.description}</p>
+                  <p className="text-[13px] text-white/70 line-clamp-2 mt-0.5">
+                    {quote.jobDetails.description}
+                  </p>
                 </div>
               </div>
             </div>
@@ -196,7 +210,9 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[12px] text-white/40">Duration</p>
-                  <p className="text-[15px] font-medium text-white">{quote.jobDetails.estimatedDuration}</p>
+                  <p className="text-[15px] font-medium text-white">
+                    {quote.jobDetails.estimatedDuration}
+                  </p>
                 </div>
               </div>
             )}
@@ -222,21 +238,34 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
               <div key={category} className="p-3.5">
                 {/* Category Header */}
                 <div className="flex items-center gap-3 mb-3">
-                  <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", color)}>
+                  <div
+                    className={cn(
+                      'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
+                      color
+                    )}
+                  >
                     <Icon className="h-5 w-5 text-black" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[15px] font-medium text-white capitalize">{category}</p>
-                    <p className="text-[12px] text-white/70">{categoryItems.length} item{categoryItems.length !== 1 && 's'}</p>
+                    <p className="text-[12px] text-white/70">
+                      {categoryItems.length} item{categoryItems.length !== 1 && 's'}
+                    </p>
                   </div>
-                  <p className="text-[15px] font-bold text-elec-yellow">£{categoryTotal.toFixed(2)}</p>
+                  <p className="text-[15px] font-bold text-elec-yellow">
+                    £{categoryTotal.toFixed(2)}
+                  </p>
                 </div>
                 {/* Category Items */}
                 <div className="ml-[52px] space-y-2">
                   {categoryItems.map((item) => (
                     <div key={item.id} className="flex justify-between items-center">
-                      <span className="text-[13px] text-white/70 truncate flex-1 mr-3">{item.description}</span>
-                      <span className="text-[13px] text-white/90 shrink-0">£{item.totalPrice.toFixed(2)}</span>
+                      <span className="text-[13px] text-white/70 truncate flex-1 mr-3">
+                        {item.description}
+                      </span>
+                      <span className="text-[13px] text-white/90 shrink-0">
+                        £{item.totalPrice.toFixed(2)}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -245,7 +274,6 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           })}
         </div>
       </div>
-
     </div>
   );
 };

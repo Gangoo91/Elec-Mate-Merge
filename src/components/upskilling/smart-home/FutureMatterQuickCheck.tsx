@@ -7,12 +7,12 @@ export const FutureMatterQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What future standard aims to reduce the need for bridges?";
+  const question = 'What future standard aims to reduce the need for bridges?';
   const options = [
     { id: 'a', text: 'Zigbee 4.0', correct: false },
     { id: 'b', text: 'Matter protocol', correct: true },
     { id: 'c', text: 'Wi-Fi 7', correct: false },
-    { id: 'd', text: 'Bluetooth 6.0', correct: false }
+    { id: 'd', text: 'Bluetooth 6.0', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -34,7 +34,7 @@ export const FutureMatterQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
             <div
@@ -52,13 +52,13 @@ export const FutureMatterQuickCheck = () => {
             >
               <div className="flex items-center justify-between">
                 <span className="text-gray-300">{option.text}</span>
-                {showResult && selectedAnswer === option.id && (
-                  option.correct ? (
+                {showResult &&
+                  selectedAnswer === option.id &&
+                  (option.correct ? (
                     <CheckCircle className="h-5 w-5 text-green-400" />
                   ) : (
                     <XCircle className="h-5 w-5 text-red-400" />
-                  )
-                )}
+                  ))}
               </div>
             </div>
           ))}
@@ -67,7 +67,9 @@ export const FutureMatterQuickCheck = () => {
         {showResult && (
           <div className="mt-4 p-4 bg-purple-900/10 border border-purple-600/20 rounded-lg">
             <p className="text-purple-200 text-sm">
-              <strong>Explanation:</strong> Matter (formerly Project CHIP) is the emerging standard designed to create universal compatibility across smart home ecosystems, reducing the need for bridges by enabling direct device-to-platform communication.
+              <strong>Explanation:</strong> Matter (formerly Project CHIP) is the emerging standard
+              designed to create universal compatibility across smart home ecosystems, reducing the
+              need for bridges by enabling direct device-to-platform communication.
             </p>
           </div>
         )}

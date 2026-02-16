@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AlertCircle, TrendingUp, Target, Award } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { AlertCircle, TrendingUp, Target, Award } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface ProfitabilityDashboardProps {
   profitabilityAnalysis: {
@@ -60,7 +60,7 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
       style: 'currency',
       currency: 'GBP',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(amount);
   };
 
@@ -77,13 +77,15 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
           Your break-even point, profit margins, and recommended quote pricing
         </CardDescription>
       </CardHeader>
-      
+
       <CardContent className="space-y-6">
         {/* Break-Even Warning */}
         <Alert className="border-red-500/50 bg-red-500/10">
           <AlertCircle className="h-5 w-5 text-red-400" />
           <AlertDescription className="text-sm sm:text-base">
-            <span className="font-semibold text-foreground">Break-Even Point: {formatCurrency(breakEven.total)}</span>
+            <span className="font-semibold text-foreground">
+              Break-Even Point: {formatCurrency(breakEven.total)}
+            </span>
             <br />
             <span className="text-foreground">{breakEven.explanation}</span>
           </AlertDescription>
@@ -91,8 +93,10 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
 
         {/* Quote Tiers */}
         <div className="space-y-3">
-          <h4 className="font-semibold text-foreground text-sm uppercase tracking-wide">Recommended Quote Tiers</h4>
-          
+          <h4 className="font-semibold text-foreground text-sm uppercase tracking-wide">
+            Recommended Quote Tiers
+          </h4>
+
           {/* Minimum Quote */}
           <div className="p-4 rounded-lg border-2 border-yellow-500/30 bg-yellow-500/5 hover:border-yellow-500/50 transition-colors">
             <div className="flex items-start justify-between gap-4">
@@ -108,7 +112,12 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                   {quotingGuidance.minimum.explanation}
                 </p>
                 <div className="flex items-center gap-2 text-xs text-foreground">
-                  <span>Profit: <span className="font-semibold text-yellow-500">{formatCurrency(quotingGuidance.minimum.profit)}</span></span>
+                  <span>
+                    Profit:{' '}
+                    <span className="font-semibold text-yellow-500">
+                      {formatCurrency(quotingGuidance.minimum.profit)}
+                    </span>
+                  </span>
                 </div>
               </div>
               <div className="text-right shrink-0">
@@ -141,7 +150,12 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                   {quotingGuidance.target.explanation}
                 </p>
                 <div className="flex items-center gap-2 text-xs text-foreground">
-                  <span>Profit: <span className="font-semibold text-green-500">{formatCurrency(quotingGuidance.target.profit)}</span></span>
+                  <span>
+                    Profit:{' '}
+                    <span className="font-semibold text-green-500">
+                      {formatCurrency(quotingGuidance.target.profit)}
+                    </span>
+                  </span>
                 </div>
               </div>
               <div className="text-right shrink-0">
@@ -168,7 +182,12 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                   {quotingGuidance.premium.explanation}
                 </p>
                 <div className="flex items-center gap-2 text-xs text-foreground">
-                  <span>Profit: <span className="font-semibold text-purple-500">{formatCurrency(quotingGuidance.premium.profit)}</span></span>
+                  <span>
+                    Profit:{' '}
+                    <span className="font-semibold text-purple-500">
+                      {formatCurrency(quotingGuidance.premium.profit)}
+                    </span>
+                  </span>
                 </div>
               </div>
               <div className="text-right shrink-0">
@@ -190,7 +209,7 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
             </h4>
             <div className="space-y-2">
               {recommendations.map((rec, idx) => (
-                <div 
+                <div
                   key={idx}
                   className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/40 border border-elec-yellow/10"
                 >

@@ -7,40 +7,40 @@ const FiberOpticsModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Fibre Cable Types: Indoor, Outdoor, Armoured",
+      title: 'Fibre Cable Types: Indoor, Outdoor, Armoured',
       icon: Cable,
-      description: "Cable construction types and environmental considerations"
+      description: 'Cable construction types and environmental considerations',
     },
     {
       id: 2,
-      title: "Bend Radius and Handling Precautions",
+      title: 'Bend Radius and Handling Precautions',
       icon: RotateCcw,
-      description: "Proper handling techniques and bend radius limits"
+      description: 'Proper handling techniques and bend radius limits',
     },
     {
       id: 3,
-      title: "Routing and Containment (Tray, Conduit, Basket)",
+      title: 'Routing and Containment (Tray, Conduit, Basket)',
       icon: Route,
-      description: "Cable routing methods and containment systems"
+      description: 'Cable routing methods and containment systems',
     },
     {
       id: 4,
-      title: "Splice Enclosure Mounting",
+      title: 'Splice Enclosure Mounting',
       icon: Package,
-      description: "Splice closure installation and mounting techniques"
+      description: 'Splice closure installation and mounting techniques',
     },
     {
       id: 5,
-      title: "Firestop and Penetration Rules",
+      title: 'Firestop and Penetration Rules',
       icon: Flame,
-      description: "Fire safety requirements and building penetrations"
+      description: 'Fire safety requirements and building penetrations',
     },
     {
       id: 6,
-      title: "Earthing and Segregation",
+      title: 'Earthing and Segregation',
       icon: Zap,
-      description: "Grounding requirements and cable segregation"
-    }
+      description: 'Grounding requirements and cable segregation',
+    },
   ];
 
   return (

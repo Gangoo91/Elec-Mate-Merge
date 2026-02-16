@@ -7,14 +7,14 @@ interface FormData {
 export const useSectionCompletion = (formData: FormData) => {
   const getSectionCompletion = useMemo(() => {
     const calculateCompletion = (fields: string[]) => {
-      const filledFields = fields.filter(field => {
+      const filledFields = fields.filter((field) => {
         const value = formData[field];
         if (typeof value === 'boolean') {
           return value === true;
         }
         return value?.toString().trim();
       }).length;
-      
+
       return fields.length > 0 ? Math.round((filledFields / fields.length) * 100) : 0;
     };
 
@@ -24,17 +24,13 @@ export const useSectionCompletion = (formData: FormData) => {
         'postcode',
         'clientName',
         'workDate',
-        'contractorName'
+        'contractorName',
       ]),
-      work: calculateCompletion([
-        'workDescription',
-        'workType',
-        'workLocation'
-      ]),
+      work: calculateCompletion(['workDescription', 'workType', 'workLocation']),
       supply: calculateCompletion([
         'earthingArrangement',
         'mainEarthingConductorSize',
-        'mainBondingConductorSize'
+        'mainBondingConductorSize',
       ]),
       circuit: calculateCompletion([
         'distributionBoard',
@@ -43,7 +39,7 @@ export const useSectionCompletion = (formData: FormData) => {
         'protectiveDeviceRating',
         'liveConductorSize',
         'cpcSize',
-        'cableType'
+        'cableType',
       ]),
       tests: (() => {
         const baseTests = [
@@ -55,36 +51,36 @@ export const useSectionCompletion = (formData: FormData) => {
           'polarity',
           'earthFaultLoopImpedance',
           'prospectiveFaultCurrent',
-          'functionalTesting'
+          'functionalTesting',
         ];
-        
+
         // Add conditional tests based on selected protection devices
         const conditionalTests = [];
-        
+
         // RCD/RCBO testing
         if (formData.protectionRcd || formData.protectionRcbo) {
           conditionalTests.push('rcdRating', 'rcdOneX');
         }
-        
+
         // AFDD testing
         if (formData.protectionAfdd) {
           conditionalTests.push('afddTestButton');
         }
-        
+
         // SPD testing
         if (formData.protectionSpd) {
           conditionalTests.push('spdIndicatorStatus', 'spdVisualInspection');
         }
-        
+
         // Always include Earth Electrode and Phase Rotation (can be N/A)
         conditionalTests.push('earthElectrodeResistance', 'phaseRotation');
-        
+
         return calculateCompletion([...baseTests, ...conditionalTests]);
       })(),
       equipment: calculateCompletion([
         'testEquipmentModel',
         'testEquipmentSerial',
-        'testEquipmentCalDate'
+        'testEquipmentCalDate',
       ]),
       declaration: calculateCompletion([
         'electricianName',
@@ -93,8 +89,8 @@ export const useSectionCompletion = (formData: FormData) => {
         'signatureDate',
         'bs7671Compliance',
         'testResultsAccurate',
-        'workSafety'
-      ])
+        'workSafety',
+      ]),
     };
   }, [formData]);
 

@@ -1,7 +1,24 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp, ArrowLeft, ArrowRight, CheckCircle2, XCircle, Zap, Car, Leaf, Lightbulb, Fuel, Package, TreePine, Factory, Truck, Wrench } from "lucide-react";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { useState } from 'react';
+import {
+  ChevronDown,
+  ChevronUp,
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  Zap,
+  Car,
+  Leaf,
+  Lightbulb,
+  Fuel,
+  Package,
+  TreePine,
+  Factory,
+  Truck,
+  Wrench,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 interface QuizQuestion {
   question: string;
@@ -51,15 +68,17 @@ const InlineCheck = ({ question, correctAnswer, explanation }: InlineCheckProps)
           </button>
         </div>
       ) : (
-        <div className={`p-3 rounded-lg ${isCorrect ? "bg-green-600/20 border border-green-500/30" : "bg-red-600/20 border border-red-500/30"}`}>
+        <div
+          className={`p-3 rounded-lg ${isCorrect ? 'bg-green-600/20 border border-green-500/30' : 'bg-red-600/20 border border-red-500/30'}`}
+        >
           <div className="flex items-center gap-2 mb-2">
             {isCorrect ? (
               <CheckCircle2 className="w-5 h-5 text-green-400" />
             ) : (
               <XCircle className="w-5 h-5 text-red-400" />
             )}
-            <span className={isCorrect ? "text-green-400" : "text-red-400"}>
-              {isCorrect ? "Correct!" : "Not quite right"}
+            <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
+              {isCorrect ? 'Correct!' : 'Not quite right'}
             </span>
           </div>
           {showExplanation && <p className="text-[#a1a1a1] text-sm">{explanation}</p>}
@@ -71,8 +90,8 @@ const InlineCheck = ({ question, correctAnswer, explanation }: InlineCheckProps)
 
 const Level3Module2Section6_4 = () => {
   useSEO(
-    "6.4 Reducing Carbon Footprint on Site - Level 3 Environmental Technologies",
-    "Understanding practical strategies for reducing carbon footprint during electrical installation work"
+    '6.4 Reducing Carbon Footprint on Site - Level 3 Environmental Technologies',
+    'Understanding practical strategies for reducing carbon footprint during electrical installation work'
   );
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -84,160 +103,180 @@ const Level3Module2Section6_4 = () => {
 
   const quizQuestions: QuizQuestion[] = [
     {
-      question: "What is typically the largest contributor to an electrical contractor's carbon footprint?",
+      question:
+        "What is typically the largest contributor to an electrical contractor's carbon footprint?",
       options: [
-        "Office electricity use",
-        "Vehicle fuel consumption",
-        "Waste disposal",
-        "Tool charging"
+        'Office electricity use',
+        'Vehicle fuel consumption',
+        'Waste disposal',
+        'Tool charging',
       ],
       correctAnswer: 1,
-      explanation: "Vehicle fuel consumption typically accounts for 60-80% of an electrical contractor's operational carbon footprint. Travel between sites, material collection, and daily commuting all contribute. This is why fleet management and route optimisation have such a significant impact."
+      explanation:
+        "Vehicle fuel consumption typically accounts for 60-80% of an electrical contractor's operational carbon footprint. Travel between sites, material collection, and daily commuting all contribute. This is why fleet management and route optimisation have such a significant impact.",
     },
     {
       question: "What does 'Scope 3 emissions' include for an electrical contractor?",
       options: [
-        "Direct fuel use in company vehicles",
-        "Electricity used in the office",
-        "Emissions from materials purchased, waste disposal, and subcontractors",
-        "Generator fuel on site"
+        'Direct fuel use in company vehicles',
+        'Electricity used in the office',
+        'Emissions from materials purchased, waste disposal, and subcontractors',
+        'Generator fuel on site',
       ],
       correctAnswer: 2,
-      explanation: "Scope 3 covers indirect emissions in the value chain - materials purchased, waste disposal, subcontractor activities, employee commuting, and end-of-life of products installed. These often exceed direct (Scope 1 & 2) emissions but are harder to measure and control."
+      explanation:
+        'Scope 3 covers indirect emissions in the value chain - materials purchased, waste disposal, subcontractor activities, employee commuting, and end-of-life of products installed. These often exceed direct (Scope 1 & 2) emissions but are harder to measure and control.',
     },
     {
-      question: "Which strategy would most effectively reduce transport-related carbon emissions?",
+      question: 'Which strategy would most effectively reduce transport-related carbon emissions?',
       options: [
-        "Buying a bigger van",
-        "Planning routes to combine site visits and material collection",
-        "Driving faster between sites",
-        "Using premium fuel"
+        'Buying a bigger van',
+        'Planning routes to combine site visits and material collection',
+        'Driving faster between sites',
+        'Using premium fuel',
       ],
       correctAnswer: 1,
-      explanation: "Route optimisation - combining multiple stops and minimising unnecessary journeys - is one of the most effective strategies. Studies show contractors can reduce travel emissions by 15-25% through better planning, without any capital investment."
+      explanation:
+        'Route optimisation - combining multiple stops and minimising unnecessary journeys - is one of the most effective strategies. Studies show contractors can reduce travel emissions by 15-25% through better planning, without any capital investment.',
     },
     {
-      question: "How does reducing material waste help lower carbon footprint?",
+      question: 'How does reducing material waste help lower carbon footprint?',
       options: [
         "It doesn't - waste is a separate issue",
-        "Less waste means fewer disposal trips",
+        'Less waste means fewer disposal trips',
         "Every kg of waste represents embodied carbon that's been lost, plus transport and processing emissions",
-        "Waste recycling is carbon negative"
+        'Waste recycling is carbon negative',
       ],
       correctAnswer: 2,
-      explanation: "Material waste represents wasted embodied carbon - all the emissions from extraction, manufacturing, and transport are lost when material goes to waste. Additionally, waste requires transport to disposal/recycling facilities, adding more emissions. Reducing waste addresses both impacts."
+      explanation:
+        'Material waste represents wasted embodied carbon - all the emissions from extraction, manufacturing, and transport are lost when material goes to waste. Additionally, waste requires transport to disposal/recycling facilities, adding more emissions. Reducing waste addresses both impacts.',
     },
     {
       question: "What is 'Eco-driving' in the context of reducing site carbon footprint?",
       options: [
-        "Only driving electric vehicles",
-        "Driving techniques that reduce fuel consumption such as smooth acceleration and maintaining tyre pressure",
-        "Driving only on eco-friendly roads",
-        "Using biofuel exclusively"
+        'Only driving electric vehicles',
+        'Driving techniques that reduce fuel consumption such as smooth acceleration and maintaining tyre pressure',
+        'Driving only on eco-friendly roads',
+        'Using biofuel exclusively',
       ],
       correctAnswer: 1,
-      explanation: "Eco-driving refers to driving techniques that reduce fuel consumption: smooth acceleration and braking, maintaining proper tyre pressure, removing unnecessary weight, avoiding idling, and using cruise control where appropriate. These can reduce fuel use by 10-15%."
+      explanation:
+        'Eco-driving refers to driving techniques that reduce fuel consumption: smooth acceleration and braking, maintaining proper tyre pressure, removing unnecessary weight, avoiding idling, and using cruise control where appropriate. These can reduce fuel use by 10-15%.',
     },
     {
-      question: "Why should temporary site lighting preferably use LED fixtures?",
+      question: 'Why should temporary site lighting preferably use LED fixtures?',
       options: [
-        "They look more professional",
-        "Building regulations require it",
-        "LEDs use 75-80% less energy than halogen, reducing generator fuel consumption",
-        "Halogen lights are illegal"
+        'They look more professional',
+        'Building regulations require it',
+        'LEDs use 75-80% less energy than halogen, reducing generator fuel consumption',
+        'Halogen lights are illegal',
       ],
       correctAnswer: 2,
-      explanation: "LED temporary lighting uses significantly less energy - typically 75-80% less than halogen. On sites using generators, this directly reduces diesel consumption. For grid-connected sites, it reduces electricity demand. The rapid payback makes LEDs the clear choice."
+      explanation:
+        'LED temporary lighting uses significantly less energy - typically 75-80% less than halogen. On sites using generators, this directly reduces diesel consumption. For grid-connected sites, it reduces electricity demand. The rapid payback makes LEDs the clear choice.',
     },
     {
       question: "What is 'first-time fix' and why does it matter for carbon footprint?",
       options: [
-        "Installing the cheapest available materials",
-        "Completing work correctly on the first visit, avoiding return trips",
-        "Using quick-setting compounds",
-        "Starting work at first light"
+        'Installing the cheapest available materials',
+        'Completing work correctly on the first visit, avoiding return trips',
+        'Using quick-setting compounds',
+        'Starting work at first light',
       ],
       correctAnswer: 1,
-      explanation: "First-time fix means completing work correctly on the initial visit, avoiding callbacks and return trips. Each return visit doubles the transport emissions for that job. Proper planning, carrying appropriate stock, and skilled workmanship all contribute to first-time fix rates."
+      explanation:
+        'First-time fix means completing work correctly on the initial visit, avoiding callbacks and return trips. Each return visit doubles the transport emissions for that job. Proper planning, carrying appropriate stock, and skilled workmanship all contribute to first-time fix rates.',
     },
     {
-      question: "How can site waste segregation reduce carbon footprint?",
+      question: 'How can site waste segregation reduce carbon footprint?',
       options: [
         "It doesn't affect carbon",
-        "Segregated waste can be recycled more efficiently, avoiding virgin material production",
-        "It makes the site look tidier",
-        "It reduces skip collection frequency"
+        'Segregated waste can be recycled more efficiently, avoiding virgin material production',
+        'It makes the site look tidier',
+        'It reduces skip collection frequency',
       ],
       correctAnswer: 1,
-      explanation: "Proper segregation enables effective recycling. Recycling metals, for example, uses only 5-10% of the energy needed for virgin production. Mixed waste often ends up in landfill or energy-from-waste, losing the opportunity for material recovery and its associated carbon savings."
+      explanation:
+        'Proper segregation enables effective recycling. Recycling metals, for example, uses only 5-10% of the energy needed for virgin production. Mixed waste often ends up in landfill or energy-from-waste, losing the opportunity for material recovery and its associated carbon savings.',
     },
     {
-      question: "What is the carbon benefit of using battery-powered tools over petrol generators for charging?",
+      question:
+        'What is the carbon benefit of using battery-powered tools over petrol generators for charging?',
       options: [
-        "There is no benefit",
-        "Batteries charge faster",
-        "Grid electricity is typically lower carbon than diesel generation, and batteries avoid continuous generator running",
-        "Battery tools are always more powerful"
+        'There is no benefit',
+        'Batteries charge faster',
+        'Grid electricity is typically lower carbon than diesel generation, and batteries avoid continuous generator running',
+        'Battery tools are always more powerful',
       ],
       correctAnswer: 2,
-      explanation: "UK grid electricity is increasingly low-carbon (under 200g CO2/kWh) compared to diesel generation (~800-1000g CO2/kWh). Modern battery tools also avoid the waste from generators running at low load between tool uses. Where grid power is available, it's the lower-carbon choice."
+      explanation:
+        "UK grid electricity is increasingly low-carbon (under 200g CO2/kWh) compared to diesel generation (~800-1000g CO2/kWh). Modern battery tools also avoid the waste from generators running at low load between tool uses. Where grid power is available, it's the lower-carbon choice.",
     },
     {
-      question: "Why is prefabrication considered beneficial for reducing site carbon footprint?",
+      question: 'Why is prefabrication considered beneficial for reducing site carbon footprint?',
       options: [
         "It's always cheaper",
-        "Reduces on-site waste, transport trips, and generator running time",
-        "It requires less skill",
-        "Prefabricated items are always higher quality"
+        'Reduces on-site waste, transport trips, and generator running time',
+        'It requires less skill',
+        'Prefabricated items are always higher quality',
       ],
       correctAnswer: 1,
-      explanation: "Prefabrication in controlled workshop conditions reduces on-site waste (better material utilisation), reduces the number of delivery trips (assembled units vs components), and reduces time on site (less generator running). It can reduce overall carbon footprint by 20-30% for suitable work."
+      explanation:
+        'Prefabrication in controlled workshop conditions reduces on-site waste (better material utilisation), reduces the number of delivery trips (assembled units vs components), and reduces time on site (less generator running). It can reduce overall carbon footprint by 20-30% for suitable work.',
     },
     {
-      question: "What is 'carbon intensity' of electricity and why does it matter for site energy use?",
+      question:
+        "What is 'carbon intensity' of electricity and why does it matter for site energy use?",
       options: [
-        "How much the electricity costs",
-        "The grams of CO2 emitted per kWh, which varies by time of day and season",
-        "The voltage level",
-        "The colour of the electricity meter"
+        'How much the electricity costs',
+        'The grams of CO2 emitted per kWh, which varies by time of day and season',
+        'The voltage level',
+        'The colour of the electricity meter',
       ],
       correctAnswer: 1,
-      explanation: "Carbon intensity measures CO2 emissions per unit of electricity (g/kWh). It varies significantly - UK grid can be under 100g/kWh when wind is strong, or over 300g/kWh during evening peaks. Timing high-energy tasks during low-carbon periods can reduce emissions, though this is more relevant for sustained activities."
+      explanation:
+        'Carbon intensity measures CO2 emissions per unit of electricity (g/kWh). It varies significantly - UK grid can be under 100g/kWh when wind is strong, or over 300g/kWh during evening peaks. Timing high-energy tasks during low-carbon periods can reduce emissions, though this is more relevant for sustained activities.',
     },
     {
-      question: "How does maintaining vehicles properly contribute to reducing carbon footprint?",
+      question: 'How does maintaining vehicles properly contribute to reducing carbon footprint?',
       options: [
         "It doesn't affect carbon emissions",
-        "Well-maintained vehicles use less fuel - correct tyre pressure alone can improve efficiency by 3%",
-        "It only affects vehicle reliability",
-        "Maintenance is purely a cost issue"
+        'Well-maintained vehicles use less fuel - correct tyre pressure alone can improve efficiency by 3%',
+        'It only affects vehicle reliability',
+        'Maintenance is purely a cost issue',
       ],
       correctAnswer: 1,
-      explanation: "Vehicle maintenance directly affects fuel efficiency. Under-inflated tyres increase rolling resistance (3% fuel penalty per 10psi under-inflation). Dirty air filters reduce efficiency. Engine tuning affects combustion efficiency. A well-maintained van can use 5-10% less fuel than a neglected one."
-    }
+      explanation:
+        'Vehicle maintenance directly affects fuel efficiency. Under-inflated tyres increase rolling resistance (3% fuel penalty per 10psi under-inflation). Dirty air filters reduce efficiency. Engine tuning affects combustion efficiency. A well-maintained van can use 5-10% less fuel than a neglected one.',
+    },
   ];
 
   const faqs: FAQ[] = [
     {
       question: "How do I calculate my site's carbon footprint?",
-      answer: "Start with the main sources: fuel use (litres x emission factor ~2.68 kg CO2/litre diesel), electricity (kWh x grid intensity ~0.2 kg/kWh), and estimate waste. Many contractors use simple spreadsheets tracking fuel receipts and electricity meter readings. More comprehensive approaches include material embodied carbon and subcontractor emissions. The Carbon Trust offers free resources for SME carbon accounting."
+      answer:
+        'Start with the main sources: fuel use (litres x emission factor ~2.68 kg CO2/litre diesel), electricity (kWh x grid intensity ~0.2 kg/kWh), and estimate waste. Many contractors use simple spreadsheets tracking fuel receipts and electricity meter readings. More comprehensive approaches include material embodied carbon and subcontractor emissions. The Carbon Trust offers free resources for SME carbon accounting.',
     },
     {
-      question: "Is switching to electric vans practical for electrical contractors?",
-      answer: "Increasingly yes, but it depends on your work patterns. Electric vans now offer 150-200 mile ranges - sufficient for most urban/suburban work. Key considerations: home or depot charging capability, typical daily mileage, and payload requirements (batteries add weight). Many contractors find EVs work well for local work, keeping a diesel van for longer journeys during the transition. Government grants can offset higher purchase costs."
+      question: 'Is switching to electric vans practical for electrical contractors?',
+      answer:
+        'Increasingly yes, but it depends on your work patterns. Electric vans now offer 150-200 mile ranges - sufficient for most urban/suburban work. Key considerations: home or depot charging capability, typical daily mileage, and payload requirements (batteries add weight). Many contractors find EVs work well for local work, keeping a diesel van for longer journeys during the transition. Government grants can offset higher purchase costs.',
     },
     {
-      question: "Does reducing carbon footprint actually save money?",
-      answer: "Usually yes - carbon and cost often correlate. Fuel savings from eco-driving and route optimisation directly reduce costs. Material waste reduction saves purchasing costs. Energy-efficient site lighting reduces generator fuel bills. Some investments (like LED task lighting or van insulation) have payback periods under 2 years. The main exception is low-carbon materials which may have price premiums, though life-cycle costs often favour them."
+      question: 'Does reducing carbon footprint actually save money?',
+      answer:
+        'Usually yes - carbon and cost often correlate. Fuel savings from eco-driving and route optimisation directly reduce costs. Material waste reduction saves purchasing costs. Energy-efficient site lighting reduces generator fuel bills. Some investments (like LED task lighting or van insulation) have payback periods under 2 years. The main exception is low-carbon materials which may have price premiums, though life-cycle costs often favour them.',
     },
     {
-      question: "How do I demonstrate carbon reduction to clients?",
-      answer: "Keep records of your improvement journey - baseline measurements and progress over time are more convincing than absolute claims. Document specific actions taken (fleet efficiency, waste reduction programmes, material selection). Some contractors obtain ISO 14001 certification or join industry schemes like Constructionline. For larger contracts, clients may require carbon reporting as part of tender submissions - being prepared gives competitive advantage."
+      question: 'How do I demonstrate carbon reduction to clients?',
+      answer:
+        'Keep records of your improvement journey - baseline measurements and progress over time are more convincing than absolute claims. Document specific actions taken (fleet efficiency, waste reduction programmes, material selection). Some contractors obtain ISO 14001 certification or join industry schemes like Constructionline. For larger contracts, clients may require carbon reporting as part of tender submissions - being prepared gives competitive advantage.',
     },
     {
       question: "What's the quickest win for reducing carbon footprint?",
-      answer: "For most electrical contractors, fuel efficiency improvements offer the quickest wins: route optimisation (free, immediate impact), eco-driving training (low cost, 10-15% fuel savings), and vehicle maintenance (tyres, filters). On the materials side, reducing waste through accurate ordering and returning unused stock provides immediate benefits. These require minimal investment but consistent attention to sustain improvements."
-    }
+      answer:
+        'For most electrical contractors, fuel efficiency improvements offer the quickest wins: route optimisation (free, immediate impact), eco-driving training (low cost, 10-15% fuel savings), and vehicle maintenance (tyres, filters). On the materials side, reducing waste through accurate ordering and returning unused stock provides immediate benefits. These require minimal investment but consistent attention to sustain improvements.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -272,7 +311,10 @@ const Level3Module2Section6_4 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-[#333333]">
         <div className="flex items-center gap-2 p-3 md:p-4 text-xs md:text-sm text-[#a1a1a1]">
-          <Link to="/apprentice-courses/level-3/module-2/section-6" className="hover:text-[#FFD93D] transition-colors">
+          <Link
+            to="/apprentice-courses/level-3/module-2/section-6"
+            className="hover:text-[#FFD93D] transition-colors"
+          >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <span>/</span>
@@ -301,7 +343,9 @@ const Level3Module2Section6_4 = () => {
               Reducing Carbon Footprint on Site
             </h1>
             <p className="text-[#a1a1a1]">
-              Understanding practical strategies for minimising greenhouse gas emissions during electrical installation work - from transport and energy use to material efficiency and waste reduction.
+              Understanding practical strategies for minimising greenhouse gas emissions during
+              electrical installation work - from transport and energy use to material efficiency
+              and waste reduction.
             </p>
           </div>
         </div>
@@ -314,7 +358,10 @@ const Level3Module2Section6_4 = () => {
               <h3 className="font-semibold text-[#f5f5f5]">In 30 Seconds</h3>
             </div>
             <p className="text-sm text-[#a1a1a1]">
-              Site carbon footprint comes mainly from transport (60-80%), energy use, and material waste. Key reduction strategies: optimise routes, improve fuel efficiency through eco-driving and maintenance, reduce waste through accurate ordering, and choose efficient equipment. Small consistent changes add up to significant reductions.
+              Site carbon footprint comes mainly from transport (60-80%), energy use, and material
+              waste. Key reduction strategies: optimise routes, improve fuel efficiency through
+              eco-driving and maintenance, reduce waste through accurate ordering, and choose
+              efficient equipment. Small consistent changes add up to significant reductions.
             </p>
           </div>
           <div className="p-4 rounded-xl bg-gradient-to-br from-[#252525] to-[#1a1a1a] border border-[#333333]">
@@ -323,7 +370,10 @@ const Level3Module2Section6_4 = () => {
               <h3 className="font-semibold text-[#f5f5f5]">Spot it / Use it</h3>
             </div>
             <p className="text-sm text-[#a1a1a1]">
-              Track fuel use weekly - just awareness often improves behaviour. Plan site visits to minimise trips. Carry sufficient stock to avoid return visits. Turn off generators when not actively needed. Segregate waste for recycling. These habits cost nothing but reduce both carbon and costs.
+              Track fuel use weekly - just awareness often improves behaviour. Plan site visits to
+              minimise trips. Carry sufficient stock to avoid return visits. Turn off generators
+              when not actively needed. Segregate waste for recycling. These habits cost nothing but
+              reduce both carbon and costs.
             </p>
           </div>
         </div>
@@ -338,7 +388,10 @@ const Level3Module2Section6_4 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Every electrical installation project generates greenhouse gas emissions - from the fuel burned travelling to site, to the energy used by tools, to the embodied carbon in materials. Understanding where emissions come from is the first step to reducing them.
+                Every electrical installation project generates greenhouse gas emissions - from the
+                fuel burned travelling to site, to the energy used by tools, to the embodied carbon
+                in materials. Understanding where emissions come from is the first step to reducing
+                them.
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
@@ -349,28 +402,39 @@ const Level3Module2Section6_4 = () => {
                       <div className="w-3 h-3 rounded-full bg-red-400" />
                       <span className="text-[#f5f5f5] font-medium">Scope 1 - Direct Emissions</span>
                     </div>
-                    <p>Fuel burned in company vehicles, generators, heating. You have direct control.</p>
+                    <p>
+                      Fuel burned in company vehicles, generators, heating. You have direct control.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-3 h-3 rounded-full bg-elec-yellow" />
                       <span className="text-[#f5f5f5] font-medium">Scope 2 - Indirect Energy</span>
                     </div>
-                    <p>Electricity purchased (office, workshop, site). Grid emissions from power generation.</p>
+                    <p>
+                      Electricity purchased (office, workshop, site). Grid emissions from power
+                      generation.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-3 h-3 rounded-full bg-blue-400" />
                       <span className="text-[#f5f5f5] font-medium">Scope 3 - Value Chain</span>
                     </div>
-                    <p>Materials purchased, waste disposal, subcontractors, employee commuting. Hardest to control but often largest.</p>
+                    <p>
+                      Materials purchased, waste disposal, subcontractors, employee commuting.
+                      Hardest to control but often largest.
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-4 p-4 bg-[#FFD93D]/10 rounded-lg border border-[#FFD93D]/30">
                 <p className="text-sm text-[#f5f5f5]">
-                  <strong>Typical breakdown for an electrical contractor:</strong> Transport (65%), materials embodied carbon (20%), site energy (10%), waste and other (5%). Your specific mix depends on work type - domestic installers have proportionally more transport; industrial installers may have more material impact.
+                  <strong>Typical breakdown for an electrical contractor:</strong> Transport (65%),
+                  materials embodied carbon (20%), site energy (10%), waste and other (5%). Your
+                  specific mix depends on work type - domestic installers have proportionally more
+                  transport; industrial installers may have more material impact.
                 </p>
               </div>
             </div>
@@ -390,7 +454,10 @@ const Level3Module2Section6_4 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                For most electrical contractors, vehicle fuel consumption is the single largest source of carbon emissions. A typical diesel van produces approximately 2.68 kg of CO2 per litre of fuel burned. A contractor using 60 litres per week generates around 8 tonnes of CO2 annually from fuel alone.
+                For most electrical contractors, vehicle fuel consumption is the single largest
+                source of carbon emissions. A typical diesel van produces approximately 2.68 kg of
+                CO2 per litre of fuel burned. A contractor using 60 litres per week generates around
+                8 tonnes of CO2 annually from fuel alone.
               </p>
 
               <div className="grid md:grid-cols-2 gap-4 mt-4">
@@ -471,7 +538,10 @@ const Level3Module2Section6_4 = () => {
               </div>
 
               <p>
-                <strong className="text-[#f5f5f5]">First-time fix:</strong> One of the most impactful strategies is completing work correctly on the first visit. Every callback doubles the transport emissions for that job. Proper planning, adequate stock, and careful workmanship all contribute to first-time fix rates.
+                <strong className="text-[#f5f5f5]">First-time fix:</strong> One of the most
+                impactful strategies is completing work correctly on the first visit. Every callback
+                doubles the transport emissions for that job. Proper planning, adequate stock, and
+                careful workmanship all contribute to first-time fix rates.
               </p>
             </div>
           </section>
@@ -484,7 +554,10 @@ const Level3Module2Section6_4 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Energy use on site comes from lighting, power tools, heating, and site facilities. The carbon intensity depends on whether you're using grid electricity or diesel generators - generators typically produce 4-5 times more CO2 per kWh than grid electricity.
+                Energy use on site comes from lighting, power tools, heating, and site facilities.
+                The carbon intensity depends on whether you're using grid electricity or diesel
+                generators - generators typically produce 4-5 times more CO2 per kWh than grid
+                electricity.
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
@@ -492,26 +565,45 @@ const Level3Module2Section6_4 = () => {
                 <div className="space-y-3 text-sm">
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">LED Task Lighting:</span>
-                    <p className="mt-1">Use LED work lights instead of halogen - 75-80% less energy for same light output. Modern LED tower lights can replace traditional generators for area lighting.</p>
+                    <p className="mt-1">
+                      Use LED work lights instead of halogen - 75-80% less energy for same light
+                      output. Modern LED tower lights can replace traditional generators for area
+                      lighting.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">Battery Tools:</span>
-                    <p className="mt-1">Modern cordless tools charged from grid power are more efficient than petrol generators running for intermittent use. Avoid running generators just to charge tools.</p>
+                    <p className="mt-1">
+                      Modern cordless tools charged from grid power are more efficient than petrol
+                      generators running for intermittent use. Avoid running generators just to
+                      charge tools.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">Generator Management:</span>
-                    <p className="mt-1">Size generators appropriately - oversized generators running at low load are inefficient. Turn off when not needed rather than leaving idling. Consider solar-battery systems for small power needs.</p>
+                    <p className="mt-1">
+                      Size generators appropriately - oversized generators running at low load are
+                      inefficient. Turn off when not needed rather than leaving idling. Consider
+                      solar-battery systems for small power needs.
+                    </p>
                   </div>
                   <div className="p-3 bg-[#252525] rounded">
                     <span className="text-[#FFD93D] font-medium">Heating:</span>
-                    <p className="mt-1">Where temporary heating is needed, electric heaters from grid power are lower carbon than diesel or propane. Focus heating on work areas rather than entire spaces.</p>
+                    <p className="mt-1">
+                      Where temporary heating is needed, electric heaters from grid power are lower
+                      carbon than diesel or propane. Focus heating on work areas rather than entire
+                      spaces.
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-4 p-4 bg-[#FFD93D]/10 rounded-lg border border-[#FFD93D]/30">
                 <p className="text-sm text-[#f5f5f5]">
-                  <strong>Grid vs Generator:</strong> UK grid electricity emits approximately 200g CO2/kWh (and falling). Diesel generators emit approximately 800-1000g CO2/kWh. Where grid connection is available, always prefer it over generators for both carbon and cost reasons.
+                  <strong>Grid vs Generator:</strong> UK grid electricity emits approximately 200g
+                  CO2/kWh (and falling). Diesel generators emit approximately 800-1000g CO2/kWh.
+                  Where grid connection is available, always prefer it over generators for both
+                  carbon and cost reasons.
                 </p>
               </div>
             </div>
@@ -531,7 +623,10 @@ const Level3Module2Section6_4 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Every piece of waste represents embodied carbon that's been lost - all the emissions from extraction, manufacturing, and transport are wasted when material goes to skip. Waste also generates additional emissions through transport to disposal facilities and processing.
+                Every piece of waste represents embodied carbon that's been lost - all the emissions
+                from extraction, manufacturing, and transport are wasted when material goes to skip.
+                Waste also generates additional emissions through transport to disposal facilities
+                and processing.
               </p>
 
               <div className="grid md:grid-cols-2 gap-4 mt-4">
@@ -589,7 +684,11 @@ const Level3Module2Section6_4 = () => {
               </div>
 
               <p>
-                <strong className="text-[#f5f5f5]">The carbon impact:</strong> Recycling copper uses only 10-15% of the energy needed for primary production. Recycling steel saves ~75% of primary production energy. Recycling aluminium saves ~95%. Every tonne recycled rather than landfilled saves significant carbon - but only if materials are properly segregated.
+                <strong className="text-[#f5f5f5]">The carbon impact:</strong> Recycling copper uses
+                only 10-15% of the energy needed for primary production. Recycling steel saves ~75%
+                of primary production energy. Recycling aluminium saves ~95%. Every tonne recycled
+                rather than landfilled saves significant carbon - but only if materials are properly
+                segregated.
               </p>
             </div>
           </section>
@@ -602,11 +701,14 @@ const Level3Module2Section6_4 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                Prefabricating assemblies in controlled workshop conditions offers multiple carbon benefits compared to traditional on-site construction.
+                Prefabricating assemblies in controlled workshop conditions offers multiple carbon
+                benefits compared to traditional on-site construction.
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
-                <h4 className="font-semibold text-[#f5f5f5] mb-3">Prefabrication Carbon Benefits</h4>
+                <h4 className="font-semibold text-[#f5f5f5] mb-3">
+                  Prefabrication Carbon Benefits
+                </h4>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3 p-3 bg-[#252525] rounded">
                     <div className="w-8 h-8 rounded-full bg-green-600/20 flex items-center justify-center flex-shrink-0">
@@ -614,7 +716,10 @@ const Level3Module2Section6_4 = () => {
                     </div>
                     <div>
                       <span className="text-[#f5f5f5] font-medium">Reduced Waste:</span>
-                      <p className="text-[#a1a1a1]">Workshop conditions allow better material utilisation - typical waste reductions of 20-30% compared to site work.</p>
+                      <p className="text-[#a1a1a1]">
+                        Workshop conditions allow better material utilisation - typical waste
+                        reductions of 20-30% compared to site work.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-[#252525] rounded">
@@ -623,7 +728,10 @@ const Level3Module2Section6_4 = () => {
                     </div>
                     <div>
                       <span className="text-[#f5f5f5] font-medium">Fewer Deliveries:</span>
-                      <p className="text-[#a1a1a1]">Complete assemblies require fewer delivery trips than multiple component deliveries.</p>
+                      <p className="text-[#a1a1a1]">
+                        Complete assemblies require fewer delivery trips than multiple component
+                        deliveries.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-[#252525] rounded">
@@ -632,7 +740,10 @@ const Level3Module2Section6_4 = () => {
                     </div>
                     <div>
                       <span className="text-[#f5f5f5] font-medium">Reduced Site Time:</span>
-                      <p className="text-[#a1a1a1]">Less time on site means less generator running, less temporary heating/lighting, and reduced travel for extended works.</p>
+                      <p className="text-[#a1a1a1]">
+                        Less time on site means less generator running, less temporary
+                        heating/lighting, and reduced travel for extended works.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-[#252525] rounded">
@@ -641,14 +752,21 @@ const Level3Module2Section6_4 = () => {
                     </div>
                     <div>
                       <span className="text-[#f5f5f5] font-medium">Better Quality:</span>
-                      <p className="text-[#a1a1a1]">Controlled conditions often mean higher quality work, reducing defects and callbacks.</p>
+                      <p className="text-[#a1a1a1]">
+                        Controlled conditions often mean higher quality work, reducing defects and
+                        callbacks.
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <p>
-                <strong className="text-[#f5f5f5]">Suitable applications:</strong> Pre-wired distribution boards, cable tray/basket assemblies, modular wiring systems, pre-formed containment runs, and pre-assembled lighting arrays all benefit from prefabrication. The approach works best for repetitive elements and projects with firm specifications.
+                <strong className="text-[#f5f5f5]">Suitable applications:</strong> Pre-wired
+                distribution boards, cable tray/basket assemblies, modular wiring systems,
+                pre-formed containment runs, and pre-assembled lighting arrays all benefit from
+                prefabrication. The approach works best for repetitive elements and projects with
+                firm specifications.
               </p>
             </div>
           </section>
@@ -667,7 +785,8 @@ const Level3Module2Section6_4 = () => {
             </h2>
             <div className="space-y-4 text-[#a1a1a1]">
               <p>
-                "You can't manage what you don't measure" - tracking key metrics helps identify opportunities and demonstrate improvement over time.
+                "You can't manage what you don't measure" - tracking key metrics helps identify
+                opportunities and demonstrate improvement over time.
               </p>
 
               <div className="p-4 bg-[#1a1a1a] rounded-lg border border-[#333333]">
@@ -708,12 +827,16 @@ const Level3Module2Section6_4 = () => {
                   <p>Generator diesel litres x 2.68 = kg CO2 (site power)</p>
                 </div>
                 <p className="mt-3 text-xs text-[#888888]">
-                  UK grid electricity factor is approximately 0.20 kg/kWh and decreasing. Check current figures at carbonintensity.org.uk for accuracy.
+                  UK grid electricity factor is approximately 0.20 kg/kWh and decreasing. Check
+                  current figures at carbonintensity.org.uk for accuracy.
                 </p>
               </div>
 
               <p>
-                <strong className="text-[#f5f5f5]">Setting targets:</strong> Start with achievable goals - a 5% fuel reduction in year one, 10% waste reduction. As you identify opportunities and implement changes, targets can become more ambitious. Document actions taken so you can demonstrate what's driving improvement.
+                <strong className="text-[#f5f5f5]">Setting targets:</strong> Start with achievable
+                goals - a 5% fuel reduction in year one, 10% waste reduction. As you identify
+                opportunities and implement changes, targets can become more ambitious. Document
+                actions taken so you can demonstrate what's driving improvement.
               </p>
             </div>
           </section>
@@ -756,13 +879,13 @@ const Level3Module2Section6_4 = () => {
                         className={`w-full min-h-[44px] text-left p-4 rounded-lg transition-all duration-200 touch-manipulation active:scale-[0.98] ${
                           showResult
                             ? index === quizQuestions[currentQuestion].correctAnswer
-                              ? "bg-green-600/20 border-green-500 border"
+                              ? 'bg-green-600/20 border-green-500 border'
                               : index === selectedAnswer
-                              ? "bg-red-600/20 border-red-500 border"
-                              : "bg-[#1a1a1a] border border-[#333333]"
+                                ? 'bg-red-600/20 border-red-500 border'
+                                : 'bg-[#1a1a1a] border border-[#333333]'
                             : selectedAnswer === index
-                            ? "bg-[#FFD93D]/20 border-[#FFD93D] border"
-                            : "bg-[#1a1a1a] border border-[#333333] hover:border-[#FFD93D]/50"
+                              ? 'bg-[#FFD93D]/20 border-[#FFD93D] border'
+                              : 'bg-[#1a1a1a] border border-[#333333] hover:border-[#FFD93D]/50'
                         }`}
                       >
                         <span className="text-[#f5f5f5]">{option}</span>
@@ -784,7 +907,7 @@ const Level3Module2Section6_4 = () => {
                     onClick={handleNextQuestion}
                     className="w-full min-h-[44px] bg-[#FFD93D] text-[#1a1a1a] py-3 px-6 rounded-lg font-semibold hover:bg-[#FFD93D]/90 transition-all duration-200 touch-manipulation active:scale-[0.98]"
                   >
-                    {currentQuestion < quizQuestions.length - 1 ? "Next Question" : "See Results"}
+                    {currentQuestion < quizQuestions.length - 1 ? 'Next Question' : 'See Results'}
                   </button>
                 )}
               </div>
@@ -801,13 +924,21 @@ const Level3Module2Section6_4 = () => {
 
                 <div className="mb-6 p-4 rounded-lg bg-[#1a1a1a] border border-[#333333]">
                   {score === quizQuestions.length ? (
-                    <p className="text-green-400">Perfect score! Excellent understanding of carbon reduction strategies.</p>
+                    <p className="text-green-400">
+                      Perfect score! Excellent understanding of carbon reduction strategies.
+                    </p>
                   ) : score >= quizQuestions.length * 0.8 ? (
-                    <p className="text-green-400">Great work! You have a strong grasp of site carbon footprint reduction.</p>
+                    <p className="text-green-400">
+                      Great work! You have a strong grasp of site carbon footprint reduction.
+                    </p>
                   ) : score >= quizQuestions.length * 0.6 ? (
-                    <p className="text-[#FFD93D]">Good effort! Review the sections on transport and waste management.</p>
+                    <p className="text-[#FFD93D]">
+                      Good effort! Review the sections on transport and waste management.
+                    </p>
                   ) : (
-                    <p className="text-orange-400">Keep learning! Focus on understanding the main sources of site emissions.</p>
+                    <p className="text-orange-400">
+                      Keep learning! Focus on understanding the main sources of site emissions.
+                    </p>
                   )}
                 </div>
 
@@ -830,10 +961,7 @@ const Level3Module2Section6_4 = () => {
 
             <div className="space-y-3">
               {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="border border-[#333333] rounded-lg overflow-hidden"
-                >
+                <div key={index} className="border border-[#333333] rounded-lg overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                     className="w-full min-h-[44px] flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#252525] transition-colors touch-manipulation"

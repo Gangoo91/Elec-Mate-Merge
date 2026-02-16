@@ -1,19 +1,37 @@
-import { useState } from "react";
-import { Zap, Loader, Copy, Eye, EyeOff, ChevronDown, ChevronUp, Home, Building2, Download, Share2, Clock, CheckCircle2, Sparkles, FileText, Calculator, Lightbulb } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import ReactMarkdown from "react-markdown";
-import { Badge } from "@/components/ui/badge";
-import { EnhancedAgentResponse } from "@/components/agent-response/EnhancedAgentResponse";
+import { useState } from 'react';
+import {
+  Zap,
+  Loader,
+  Copy,
+  Eye,
+  EyeOff,
+  ChevronDown,
+  ChevronUp,
+  Home,
+  Building2,
+  Download,
+  Share2,
+  Clock,
+  CheckCircle2,
+  Sparkles,
+  FileText,
+  Calculator,
+  Lightbulb,
+} from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import ReactMarkdown from 'react-markdown';
+import { Badge } from '@/components/ui/badge';
+import { EnhancedAgentResponse } from '@/components/agent-response/EnhancedAgentResponse';
 
 const CircuitDesigner = () => {
-  const [prompt, setPrompt] = useState("");
-  const [analysisResult, setAnalysisResult] = useState("");
+  const [prompt, setPrompt] = useState('');
+  const [analysisResult, setAnalysisResult] = useState('');
   const [agentResponse, setAgentResponse] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
@@ -21,33 +39,33 @@ const CircuitDesigner = () => {
   const [estimatedTime, setEstimatedTime] = useState(30);
   const [expandedSections, setExpandedSections] = useState({
     examples: false,
-    guidance: false
+    guidance: false,
   });
 
   const handleCircuitAnalysis = async () => {
-    if (prompt.trim() === "") {
+    if (prompt.trim() === '') {
       toast({
-        title: "Empty Description",
-        description: "Please enter a circuit description first.",
-        variant: "destructive",
+        title: 'Empty Description',
+        description: 'Please enter a circuit description first.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     setIsLoading(true);
-    setAnalysisResult("");
+    setAnalysisResult('');
     setProgress(0);
     setEstimatedTime(30);
-    
+
     // Simulate progress updates
     const progressInterval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 90) return prev;
         return prev + Math.random() * 15;
       });
-      setEstimatedTime(prev => Math.max(0, prev - 2));
+      setEstimatedTime((prev) => Math.max(0, prev - 2));
     }, 1000);
-    
+
     try {
       const enhancedPrompt = `Circuit Design Request: ${prompt}
 
@@ -105,40 +123,41 @@ Please provide exhaustive detail for materials - include everything from the sma
 
       // Call designer-agent for proper multi-circuit support
       const { data, error } = await supabase.functions.invoke('designer-agent', {
-        body: { 
+        body: {
           query: prompt,
-          messages: []
+          messages: [],
         },
       });
-      
+
       if (error) {
         throw new Error(error.message || 'Error connecting to the circuit analyser');
       }
-      
+
       if (data.error) {
         throw new Error(data.error);
       }
-      
+
       // Handle both single circuit and multi-circuit responses
-      const responseText = data.response || data.naturalLanguageResponse || "No analysis result received";
+      const responseText =
+        data.response || data.naturalLanguageResponse || 'No analysis result received';
       setAnalysisResult(responseText);
       setAgentResponse(data); // Store full agent response for enhanced UI (includes structuredData with circuits array)
       setProgress(100);
-      
+
       clearInterval(progressInterval);
-      
+
       toast({
-        title: "Analysis Complete",
-        description: "Circuit analysis has been generated successfully.",
-        variant: "success",
+        title: 'Analysis Complete',
+        description: 'Circuit analysis has been generated successfully.',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Circuit Analysis Error:', error);
       clearInterval(progressInterval);
       toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to analyse circuit",
-        variant: "destructive",
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to analyse circuit',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -150,69 +169,74 @@ Please provide exhaustive detail for materials - include everything from the sma
     try {
       await navigator.clipboard.writeText(analysisResult);
       toast({
-        title: "Copied!",
-        description: "Report copied to clipboard successfully.",
-        variant: "success",
+        title: 'Copied!',
+        description: 'Report copied to clipboard successfully.',
+        variant: 'success',
       });
     } catch (error) {
       toast({
-        title: "Copy Failed",
-        description: "Could not copy to clipboard. Please select and copy manually.",
-        variant: "destructive",
+        title: 'Copy Failed',
+        description: 'Could not copy to clipboard. Please select and copy manually.',
+        variant: 'destructive',
       });
     }
   };
 
   const exampleScenarios = [
     {
-      title: "Garden Shed Supply",
-      description: "Workshop with sockets, lighting & machinery",
+      title: 'Garden Shed Supply',
+      description: 'Workshop with sockets, lighting & machinery',
       icon: Building2,
-      prompt: "Garden shed workshop requiring sockets, LED lighting, and 16A single-phase machinery supply. Shed is 25m from house."
+      prompt:
+        'Garden shed workshop requiring sockets, LED lighting, and 16A single-phase machinery supply. Shed is 25m from house.',
     },
     {
-      title: "Kitchen Ring Circuit", 
-      description: "Induction hob, oven & appliances",
+      title: 'Kitchen Ring Circuit',
+      description: 'Induction hob, oven & appliances',
       icon: Home,
-      prompt: "Kitchen ring circuit for induction hob, built-in oven, dishwasher, and general sockets. New build property."
+      prompt:
+        'Kitchen ring circuit for induction hob, built-in oven, dishwasher, and general sockets. New build property.',
     },
     {
-      title: "Electric Shower",
-      description: "9.5kW shower installation",
+      title: 'Electric Shower',
+      description: '9.5kW shower installation',
       icon: Zap,
-      prompt: "9.5kW electric shower installation in first-floor bathroom. Cable run 18m through loft space."
+      prompt:
+        '9.5kW electric shower installation in first-floor bathroom. Cable run 18m through loft space.',
     },
     {
-      title: "EV Charging Point",
-      description: "7kW home charging station",
+      title: 'EV Charging Point',
+      description: '7kW home charging station',
       icon: Zap,
-      prompt: "7kW EV charging point in garage. Requires dedicated circuit from main consumer unit, 12m cable run."
+      prompt:
+        '7kW EV charging point in garage. Requires dedicated circuit from main consumer unit, 12m cable run.',
     },
     {
-      title: "Home Office",
-      description: "UPS, servers & high-load IT equipment",
+      title: 'Home Office',
+      description: 'UPS, servers & high-load IT equipment',
       icon: Building2,
-      prompt: "Home office conversion requiring UPS system, server rack, and multiple high-spec workstations."
+      prompt:
+        'Home office conversion requiring UPS system, server rack, and multiple high-spec workstations.',
     },
     {
-      title: "Garage Workshop",
-      description: "Three-phase machinery & welding",
+      title: 'Garage Workshop',
+      description: 'Three-phase machinery & welding',
       icon: Building2,
-      prompt: "Garage workshop conversion with three-phase supply for machinery, welding equipment, and general power."
-    }
+      prompt:
+        'Garage workshop conversion with three-phase supply for machinery, welding equipment, and general power.',
+    },
   ];
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
   return (
     <div className="min-h-screen bg-elec-dark text-foreground">
       <div className="max-w-7xl mx-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6 lg:space-y-8">
-
         {/* Enhanced Hero Section */}
         <div className="text-center space-y-4 sm:space-y-6 py-6 sm:py-8 lg:py-12">
           <div className="relative">
@@ -221,18 +245,22 @@ Please provide exhaustive detail for materials - include everything from the sma
               <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow animate-pulse" />
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-elec-yellow break-words text-center">
               Circuit Design AI
             </h1>
             <p className="text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2 text-center break-words">
-              Professional circuit design with comprehensive materials lists, BS 7671 compliance, and practical installation guidance
+              Professional circuit design with comprehensive materials lists, BS 7671 compliance,
+              and practical installation guidance
             </p>
           </div>
-          
+
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-4 sm:mt-6 px-2">
-            <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+            <Badge
+              variant="secondary"
+              className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
+            >
               <Calculator className="w-3 h-3 mr-1" />
               Precise Calculations
             </Badge>
@@ -240,7 +268,10 @@ Please provide exhaustive detail for materials - include everything from the sma
               <FileText className="w-3 h-3 mr-1" />
               Materials Lists
             </Badge>
-            <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
+            <Badge
+              variant="secondary"
+              className="bg-green-500/20 text-green-400 border-green-500/30"
+            >
               <CheckCircle2 className="w-3 h-3 mr-1" />
               BS 7671 Compliant
             </Badge>
@@ -256,14 +287,16 @@ Please provide exhaustive detail for materials - include everything from the sma
                   <Zap className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-foreground font-semibold break-words">Design Your Circuit</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-foreground font-semibold break-words">
+                    Design Your Circuit
+                  </CardTitle>
                   <CardDescription className="text-gray-400 mt-1 break-words">
                     Describe your electrical requirements and get comprehensive design documentation
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
-            
+
             <CardContent className="p-4 sm:p-6 lg:p-8 pt-0 space-y-4 sm:space-y-6">
               {/* Enhanced Input Area */}
               <div className="space-y-4">
@@ -278,16 +311,16 @@ Please provide exhaustive detail for materials - include everything from the sma
                     {prompt.length}/500
                   </div>
                 </div>
-                
+
                 <div className="flex flex-col gap-3">
-                  <Button 
-                    className="w-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 hover:from-elec-yellow/90 hover:to-elec-yellow/70 text-elec-dark font-semibold py-3 h-12 sm:h-14 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-elec-yellow/30 touch-manipulation" 
-                    onClick={handleCircuitAnalysis} 
+                  <Button
+                    className="w-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 hover:from-elec-yellow/90 hover:to-elec-yellow/70 text-elec-dark font-semibold py-3 h-12 sm:h-14 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-elec-yellow/30 touch-manipulation"
+                    onClick={handleCircuitAnalysis}
                     disabled={isLoading || !prompt.trim()}
                   >
                     {isLoading ? (
                       <>
-                        <Loader className="h-5 w-5 mr-2 animate-spin" /> 
+                        <Loader className="h-5 w-5 mr-2 animate-spin" />
                         <span className="text-sm sm:text-base">Designing Circuit...</span>
                       </>
                     ) : (
@@ -297,11 +330,11 @@ Please provide exhaustive detail for materials - include everything from the sma
                       </>
                     )}
                   </Button>
-                  
+
                   {analysisResult && (
                     <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-3">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 h-12 sm:h-14 rounded-xl touch-manipulation min-h-[44px]"
                         onClick={() => setShowResults(!showResults)}
                       >
@@ -317,16 +350,16 @@ Please provide exhaustive detail for materials - include everything from the sma
                           </>
                         )}
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="border-green-500/30 text-green-400 hover:bg-green-500/20 h-12 sm:h-14 rounded-xl touch-manipulation min-h-[44px]"
                         onClick={copyToClipboard}
                       >
                         <Copy className="h-4 w-4 sm:mr-2" />
                         <span className="hidden sm:inline">Copy</span>
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 h-12 sm:h-14 rounded-xl touch-manipulation min-h-[44px]"
                       >
                         <Download className="h-4 w-4 sm:mr-2" />
@@ -345,18 +378,22 @@ Please provide exhaustive detail for materials - include everything from the sma
                       <Sparkles className="h-6 w-6 text-elec-yellow animate-pulse" />
                     </div>
                     <div>
-                      <span className="text-foreground font-semibold text-lg">Generating Circuit Design</span>
-                      <p className="text-gray-400 text-sm">Calculating requirements and compliance checks...</p>
+                      <span className="text-foreground font-semibold text-lg">
+                        Generating Circuit Design
+                      </span>
+                      <p className="text-gray-400 text-sm">
+                        Calculating requirements and compliance checks...
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-400">Progress</span>
                       <span className="text-sm text-elec-yellow">{Math.round(progress)}%</span>
                     </div>
                     <div className="w-full bg-elec-grey rounded-full h-2 overflow-hidden">
-                      <div 
+                      <div
                         className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 transition-all duration-1000 ease-out rounded-full"
                         style={{ width: `${progress}%` }}
                       />
@@ -366,7 +403,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                       Estimated time: {estimatedTime}s
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3 mt-6">
                     <Skeleton className="h-4 w-full bg-elec-grey/50" />
                     <Skeleton className="h-4 w-3/4 bg-elec-grey/50" />
@@ -376,20 +413,26 @@ Please provide exhaustive detail for materials - include everything from the sma
               )}
 
               {/* Enhanced Quick Scenarios */}
-              <Collapsible open={expandedSections.examples} onOpenChange={() => toggleSection('examples')}>
+              <Collapsible
+                open={expandedSections.examples}
+                onOpenChange={() => toggleSection('examples')}
+              >
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="w-full justify-between p-4 h-auto text-left hover:bg-elec-yellow/10 rounded-xl transition-all duration-200"
                   >
                     <div className="flex items-center gap-3">
                       <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                      <h4 className="font-medium text-foreground break-words">Quick Start Examples</h4>
+                      <h4 className="font-medium text-foreground break-words">
+                        Quick Start Examples
+                      </h4>
                     </div>
-                    {expandedSections.examples ? 
-                      <ChevronUp className="h-4 w-4 text-gray-400" /> : 
+                    {expandedSections.examples ? (
+                      <ChevronUp className="h-4 w-4 text-gray-400" />
+                    ) : (
                       <ChevronDown className="h-4 w-4 text-gray-400" />
-                    }
+                    )}
                   </Button>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="space-y-3 mt-4">
@@ -406,8 +449,12 @@ Please provide exhaustive detail for materials - include everything from the sma
                             <scenario.icon className="h-5 w-5 text-elec-yellow" />
                           </div>
                           <div className="flex-1 min-w-0 overflow-hidden">
-                            <h5 className="font-medium text-foreground text-sm mb-1 group-hover:text-elec-yellow transition-colors break-words">{scenario.title}</h5>
-                            <p className="text-gray-400 text-xs leading-relaxed break-words">{scenario.description}</p>
+                            <h5 className="font-medium text-foreground text-sm mb-1 group-hover:text-elec-yellow transition-colors break-words">
+                              {scenario.title}
+                            </h5>
+                            <p className="text-gray-400 text-xs leading-relaxed break-words">
+                              {scenario.description}
+                            </p>
                           </div>
                         </div>
                       </Button>
@@ -432,14 +479,19 @@ Please provide exhaustive detail for materials - include everything from the sma
                     <div>
                       <CardTitle className="text-lg sm:text-xl text-foreground flex items-center gap-2 break-words">
                         Circuit Design Report
-                        <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
+                        <Badge
+                          variant="secondary"
+                          className="bg-green-500/20 text-green-400 border-green-500/30"
+                        >
                           Complete
                         </Badge>
                       </CardTitle>
-                      <p className="text-gray-400 text-sm mt-1">Professional electrical design documentation</p>
+                      <p className="text-gray-400 text-sm mt-1">
+                        Professional electrical design documentation
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-2">
                     <Button
                       variant="outline"
@@ -469,11 +521,11 @@ Please provide exhaustive detail for materials - include everything from the sma
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent className="p-4 sm:p-6 pt-0">
                 {agentResponse?.enrichment ? (
                   // NEW: Enhanced structured response
-                  <EnhancedAgentResponse 
+                  <EnhancedAgentResponse
                     response={agentResponse.response}
                     enrichment={agentResponse.enrichment}
                     citations={agentResponse.citations}
@@ -482,9 +534,9 @@ Please provide exhaustive detail for materials - include everything from the sma
                 ) : (
                   // FALLBACK: Legacy markdown for backward compatibility
                   <div className="prose prose-invert prose-lg max-w-none text-gray-300">
-                    <ReactMarkdown 
+                    <ReactMarkdown
                       components={{
-                        h1: ({children}) => (
+                        h1: ({ children }) => (
                           <h1 className="text-elec-yellow font-bold text-2xl mb-4 mt-6 first:mt-0 flex items-center gap-3">
                             <div className="w-8 h-8 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
                               <FileText className="h-4 w-4 text-elec-yellow" />
@@ -492,19 +544,37 @@ Please provide exhaustive detail for materials - include everything from the sma
                             {children}
                           </h1>
                         ),
-                        h2: ({children}) => (
+                        h2: ({ children }) => (
                           <h2 className="text-elec-yellow font-bold text-xl mb-3 mt-5 first:mt-0 border-b border-elec-yellow/20 pb-2">
                             {children}
                           </h2>
                         ),
-                        h3: ({children}) => <h3 className="text-elec-yellow/90 font-semibold text-lg mb-2 mt-4">{children}</h3>,
-                        p: ({children}) => <p className="text-muted-foreground mb-3 leading-relaxed text-base">{children}</p>,
-                        ul: ({children}) => <ul className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ul>,
-                        ol: ({children}) => <ol className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ol>,
-                        li: ({children}) => <li className="leading-relaxed">{children}</li>,
-                        strong: ({children}) => <strong className="text-foreground font-semibold">{children}</strong>,
-                        em: ({children}) => <em className="text-elec-yellow/80">{children}</em>,
-                        code: ({children}) => <code className="bg-elec-dark/80 px-2 py-1 rounded-md text-elec-yellow text-sm border border-elec-yellow/20">{children}</code>,
+                        h3: ({ children }) => (
+                          <h3 className="text-elec-yellow/90 font-semibold text-lg mb-2 mt-4">
+                            {children}
+                          </h3>
+                        ),
+                        p: ({ children }) => (
+                          <p className="text-muted-foreground mb-3 leading-relaxed text-base">
+                            {children}
+                          </p>
+                        ),
+                        ul: ({ children }) => (
+                          <ul className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ul>
+                        ),
+                        ol: ({ children }) => (
+                          <ol className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ol>
+                        ),
+                        li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                        strong: ({ children }) => (
+                          <strong className="text-foreground font-semibold">{children}</strong>
+                        ),
+                        em: ({ children }) => <em className="text-elec-yellow/80">{children}</em>,
+                        code: ({ children }) => (
+                          <code className="bg-elec-dark/80 px-2 py-1 rounded-md text-elec-yellow text-sm border border-elec-yellow/20">
+                            {children}
+                          </code>
+                        ),
                       }}
                     >
                       {analysisResult}
@@ -518,28 +588,34 @@ Please provide exhaustive detail for materials - include everything from the sma
 
         {/* Enhanced Features Overview */}
         <div className="max-w-5xl mx-auto px-2 sm:px-0">
-          <Collapsible open={expandedSections.guidance} onOpenChange={() => toggleSection('guidance')}>
+          <Collapsible
+            open={expandedSections.guidance}
+            onOpenChange={() => toggleSection('guidance')}
+          >
             <Card className="bg-gradient-to-br from-elec-grey/70 to-elec-grey/50 border border-elec-yellow/20 backdrop-blur-sm">
               <CardHeader className="p-4 sm:p-6">
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="w-full justify-between p-4 h-auto text-left hover:bg-elec-yellow/10 rounded-xl transition-all duration-200"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/20 rounded-xl flex items-center justify-center border border-elec-yellow/40">
                         <FileText className="h-5 w-5 text-elec-yellow" />
                       </div>
-                      <CardTitle className="text-lg sm:text-xl text-foreground break-words">What You'll Receive</CardTitle>
+                      <CardTitle className="text-lg sm:text-xl text-foreground break-words">
+                        What You'll Receive
+                      </CardTitle>
                     </div>
-                    {expandedSections.guidance ? 
-                      <ChevronUp className="h-5 w-5 text-gray-400" /> : 
+                    {expandedSections.guidance ? (
+                      <ChevronUp className="h-5 w-5 text-gray-400" />
+                    ) : (
                       <ChevronDown className="h-5 w-5 text-gray-400" />
-                    }
+                    )}
                   </Button>
                 </CollapsibleTrigger>
               </CardHeader>
-              
+
               <CollapsibleContent>
                 <CardContent className="p-4 sm:p-6 pt-0">
                   <div className="grid grid-cols-1 gap-4 sm:gap-6">
@@ -549,70 +625,88 @@ Please provide exhaustive detail for materials - include everything from the sma
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/20 rounded-xl flex items-center justify-center border border-elec-yellow/40 flex-shrink-0">
                             <Calculator className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                           </div>
-                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">Precise Calculations</h3>
+                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">
+                            Precise Calculations
+                          </h3>
                         </div>
                         <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
-                          Cable sizing, voltage drop, protection ratings, earth fault loop impedance, and derating factors
+                          Cable sizing, voltage drop, protection ratings, earth fault loop
+                          impedance, and derating factors
                         </p>
                       </div>
-                      
+
                       <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-blue-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-xl flex items-center justify-center border border-blue-500/40 flex-shrink-0">
                             <Building2 className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
                           </div>
-                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">Comprehensive Materials</h3>
+                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">
+                            Comprehensive Materials
+                          </h3>
                         </div>
                         <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
-                          Complete materials checklist with quantities, specifications, and part numbers for cables, protection, and hardware
+                          Complete materials checklist with quantities, specifications, and part
+                          numbers for cables, protection, and hardware
                         </p>
                       </div>
-                    
+
                       <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-green-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center border border-green-500/40 flex-shrink-0">
                             <Home className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
                           </div>
-                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">Installation Guidance</h3>
+                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">
+                            Installation Guidance
+                          </h3>
                         </div>
                         <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
-                          Step-by-step installation procedures, safety considerations, testing requirements, and commissioning
+                          Step-by-step installation procedures, safety considerations, testing
+                          requirements, and commissioning
                         </p>
                       </div>
-                      
+
                       <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-purple-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500/30 to-purple-600/20 rounded-xl flex items-center justify-center border border-purple-500/40 flex-shrink-0">
                             <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
                           </div>
-                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">BS 7671 Compliance</h3>
+                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">
+                            BS 7671 Compliance
+                          </h3>
                         </div>
                         <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
-                          Regulation references, special location requirements, and complete documentation for certification
+                          Regulation references, special location requirements, and complete
+                          documentation for certification
                         </p>
                       </div>
-                    
+
                       <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-elec-yellow/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-elec-yellow/30 to-amber-500/20 rounded-xl flex items-center justify-center border border-elec-yellow/40 flex-shrink-0">
                             <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                           </div>
-                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">Expert Recommendations</h3>
+                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">
+                            Expert Recommendations
+                          </h3>
                         </div>
                         <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
-                          Professional insights, alternative solutions, cost optimisation tips, and industry best practices
+                          Professional insights, alternative solutions, cost optimisation tips, and
+                          industry best practices
                         </p>
                       </div>
-                      
+
                       <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-cyan-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 rounded-xl flex items-center justify-center border border-cyan-500/40 flex-shrink-0">
                             <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
                           </div>
-                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">Documentation Ready</h3>
+                          <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">
+                            Documentation Ready
+                          </h3>
                         </div>
                         <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
-                          Export-ready formats for quotes, client reports, and certification documentation with professional formatting
+                          Export-ready formats for quotes, client reports, and certification
+                          documentation with professional formatting
                         </p>
                       </div>
                     </div>

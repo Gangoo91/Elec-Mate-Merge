@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Star, Calendar, MapPin, Users, BookOpen, PoundSterling } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Clock, Star, Calendar, MapPin, Users, BookOpen, PoundSterling } from 'lucide-react';
 
 interface CourseCardProps {
   course: {
@@ -57,8 +56,8 @@ const CourseCard = ({ course, onViewDetails }: CourseCardProps) => {
           <div className="flex items-center gap-2 text-xs text-white/60">
             <MapPin className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
             <span className="line-clamp-1">
-              {course.locations.slice(0, 3).join(", ")}
-              {course.locations.length > 3 ? `, +${course.locations.length - 3}` : ""}
+              {course.locations.slice(0, 3).join(', ')}
+              {course.locations.length > 3 ? `, +${course.locations.length - 3}` : ''}
             </span>
           </div>
 

@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, ClipboardList, Calculator, Brain } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, ClipboardList, Calculator, Brain } from 'lucide-react';
 
 interface Subsection10_1Props {
   subsectionId: string;
@@ -13,13 +12,14 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-elec-yellow">Design Principles</h2>
-      
+
       <div className="space-y-4">
         <p>
-          Electrical installation design requires a systematic approach to ensure safety, functionality, 
-          and compliance with regulations. The design process follows established principles and methodologies.
+          Electrical installation design requires a systematic approach to ensure safety,
+          functionality, and compliance with regulations. The design process follows established
+          principles and methodologies.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
@@ -35,7 +35,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>Confirmation of supply characteristics (voltage, frequency, earthing)</li>
                 <li>Consideration of external influences (environment, usage)</li>
               </ul>
-              
+
               <h4 className="font-semibold mt-4">Design Development</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Assessment of maximum demand and diversity</li>
@@ -44,7 +44,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>Selection of equipment and protective devices</li>
                 <li>Cable sizing calculations and voltage drop assessment</li>
               </ul>
-              
+
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">Design Documentation:</h4>
                 <ul className="list-disc pl-5 space-y-1">
@@ -57,7 +57,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Calculator className="h-5 w-5 mr-2" />
@@ -72,7 +72,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>Load growth allowance for future expansion</li>
                 <li>Assessment of starting currents for motors</li>
               </ul>
-              
+
               <h4 className="font-semibold mt-4">Protection Calculations</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Fault current calculations (prospective short-circuit current)</li>
@@ -81,7 +81,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>Verification of disconnection times</li>
                 <li>Assessment of thermal effects under fault conditions</li>
               </ul>
-              
+
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">Cable Sizing Factors:</h4>
                 <ul className="list-disc pl-5 space-y-1">
@@ -95,23 +95,25 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
             </div>
           </div>
         </div>
-        
+
         <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <Brain className="h-5 w-5 mr-2" />
             Design Considerations
           </h3>
-          
+
           <div className="space-y-4">
             <p>Effective electrical design considers multiple interrelated factors:</p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <h4 className="font-semibold text-white">Technical Factors</h4>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>
                     <span className="font-medium">Safety requirements</span>
-                    <p className="text-sm mt-1">Protection against electric shock, fire, thermal effects</p>
+                    <p className="text-sm mt-1">
+                      Protection against electric shock, fire, thermal effects
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">Power quality issues</span>
@@ -119,7 +121,9 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                   </li>
                   <li>
                     <span className="font-medium">Electromagnetic compatibility</span>
-                    <p className="text-sm mt-1">Interference with electronic equipment, separation distances</p>
+                    <p className="text-sm mt-1">
+                      Interference with electronic equipment, separation distances
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">Reliability requirements</span>
@@ -127,7 +131,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                   </li>
                 </ul>
               </div>
-              
+
               <div className="space-y-3">
                 <h4 className="font-semibold text-white">Practical Factors</h4>
                 <ul className="list-disc pl-5 space-y-2">
@@ -137,11 +141,15 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                   </li>
                   <li>
                     <span className="font-medium">Maintainability</span>
-                    <p className="text-sm mt-1">Access for inspection and maintenance, modular design</p>
+                    <p className="text-sm mt-1">
+                      Access for inspection and maintenance, modular design
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">Flexibility for change</span>
-                    <p className="text-sm mt-1">Adaptation to future requirements, expansion capability</p>
+                    <p className="text-sm mt-1">
+                      Adaptation to future requirements, expansion capability
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">Budget constraints</span>
@@ -150,15 +158,21 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
-              <p>BS 7671 requires that every installation be divided into circuits as necessary for safety, maintenance, and functional requirements. Regulation 311.1 states that the design shall be carried out by a competent person with appropriate skills and knowledge. Design calculations and decisions must be documented to demonstrate compliance with regulations.</p>
+              <p>
+                BS 7671 requires that every installation be divided into circuits as necessary for
+                safety, maintenance, and functional requirements. Regulation 311.1 states that the
+                design shall be carried out by a competent person with appropriate skills and
+                knowledge. Design calculations and decisions must be documented to demonstrate
+                compliance with regulations.
+              </p>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
         <Button
           variant="study"

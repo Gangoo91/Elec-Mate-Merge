@@ -8,84 +8,90 @@ export const ScalabilityFlexibilitySection = () => {
 
   const scalabilityFactors = [
     {
-      aspect: "System Expansion",
+      aspect: 'System Expansion',
       retrofit: {
-        rating: "Limited",
-        description: "Signal range constraints, device compatibility issues",
-        practical_limit: "15-25 devices per hub",
-        upgrade_path: "Replace hubs, mesh extenders"
+        rating: 'Limited',
+        description: 'Signal range constraints, device compatibility issues',
+        practical_limit: '15-25 devices per hub',
+        upgrade_path: 'Replace hubs, mesh extenders',
       },
       newbuild: {
-        rating: "Excellent",
-        description: "Structured cabling supports unlimited expansion",
-        practical_limit: "100+ devices per system",
-        upgrade_path: "Modular component upgrades"
-      }
+        rating: 'Excellent',
+        description: 'Structured cabling supports unlimited expansion',
+        practical_limit: '100+ devices per system',
+        upgrade_path: 'Modular component upgrades',
+      },
     },
     {
-      aspect: "Future Technology",
+      aspect: 'Future Technology',
       retrofit: {
-        rating: "Moderate",
-        description: "Limited by existing infrastructure",
-        practical_limit: "Wireless protocol dependent",
-        upgrade_path: "Bridge devices, protocol converters"
+        rating: 'Moderate',
+        description: 'Limited by existing infrastructure',
+        practical_limit: 'Wireless protocol dependent',
+        upgrade_path: 'Bridge devices, protocol converters',
       },
       newbuild: {
-        rating: "Excellent",
-        description: "Infrastructure ready for new technologies",
-        practical_limit: "Future-proof wiring in place",
-        upgrade_path: "Simple component swaps"
-      }
+        rating: 'Excellent',
+        description: 'Infrastructure ready for new technologies',
+        practical_limit: 'Future-proof wiring in place',
+        upgrade_path: 'Simple component swaps',
+      },
     },
     {
-      aspect: "Integration Complexity",
+      aspect: 'Integration Complexity',
       retrofit: {
-        rating: "Complex",
-        description: "Multiple apps, protocol conflicts",
-        practical_limit: "3-5 different ecosystems",
-        upgrade_path: "Universal controllers, hubs"
+        rating: 'Complex',
+        description: 'Multiple apps, protocol conflicts',
+        practical_limit: '3-5 different ecosystems',
+        upgrade_path: 'Universal controllers, hubs',
       },
       newbuild: {
-        rating: "Simple",
-        description: "Centralised control from design stage",
-        practical_limit: "Single unified system",
-        upgrade_path: "Incremental software updates"
-      }
-    }
+        rating: 'Simple',
+        description: 'Centralised control from design stage',
+        practical_limit: 'Single unified system',
+        upgrade_path: 'Incremental software updates',
+      },
+    },
   ];
 
   const hybridApproaches = [
     {
-      name: "Wired Backbone + Wireless Devices",
-      description: "Ethernet infrastructure with wireless sensors and switches",
-      best_for: "New builds wanting flexibility",
-      cost_range: "£8,000-20,000",
-      examples: "Cat 6 to rooms, wireless light switches, Wi-Fi sensors"
+      name: 'Wired Backbone + Wireless Devices',
+      description: 'Ethernet infrastructure with wireless sensors and switches',
+      best_for: 'New builds wanting flexibility',
+      cost_range: '£8,000-20,000',
+      examples: 'Cat 6 to rooms, wireless light switches, Wi-Fi sensors',
     },
     {
-      name: "Smart Panel + Retrofit Devices",
-      description: "Professional electrical panel with smart breakers, add wireless devices",
-      best_for: "Existing homes with electrical upgrades",
-      cost_range: "£3,000-8,000",
-      examples: "Smart breakers, wireless thermostats, mesh network"
+      name: 'Smart Panel + Retrofit Devices',
+      description: 'Professional electrical panel with smart breakers, add wireless devices',
+      best_for: 'Existing homes with electrical upgrades',
+      cost_range: '£3,000-8,000',
+      examples: 'Smart breakers, wireless thermostats, mesh network',
     },
     {
-      name: "Gradual Integration Strategy",
-      description: "Start retrofit, plan for wired upgrades during renovations",
-      best_for: "Long-term homeowners with renovation plans",
-      cost_range: "£2,000-15,000 over time",
-      examples: "Begin wireless, add wiring during kitchen/bathroom upgrades"
-    }
+      name: 'Gradual Integration Strategy',
+      description: 'Start retrofit, plan for wired upgrades during renovations',
+      best_for: 'Long-term homeowners with renovation plans',
+      cost_range: '£2,000-15,000 over time',
+      examples: 'Begin wireless, add wiring during kitchen/bathroom upgrades',
+    },
   ];
 
   const getRatingColor = (rating: string) => {
     switch (rating.toLowerCase()) {
-      case 'excellent': return 'text-green-400';
-      case 'moderate': return 'text-yellow-400';
-      case 'limited': return 'text-red-400';
-      case 'complex': return 'text-red-400';
-      case 'simple': return 'text-green-400';
-      default: return 'text-gray-400';
+      case 'excellent':
+        return 'text-green-400';
+      case 'moderate':
+        return 'text-yellow-400';
+      case 'limited':
+        return 'text-red-400';
+      case 'complex':
+        return 'text-red-400';
+      case 'simple':
+        return 'text-green-400';
+      default:
+        return 'text-gray-400';
     }
   };
 
@@ -103,7 +109,7 @@ export const ScalabilityFlexibilitySection = () => {
           <p className="text-lg font-medium text-foreground mb-4">
             Evaluating how each approach handles growth and adaptation over time.
           </p>
-          
+
           {/* Scalability Comparison */}
           <div>
             <h4 className="font-semibold text-foreground mb-4">Scalability Comparison</h4>
@@ -146,7 +152,9 @@ export const ScalabilityFlexibilitySection = () => {
 
           {/* Hybrid Approaches */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4 text-lg">Hybrid Approaches for Best of Both</h4>
+            <h4 className="font-semibold text-foreground mb-4 text-lg">
+              Hybrid Approaches for Best of Both
+            </h4>
             <div className="grid grid-cols-1 gap-4">
               {hybridApproaches.map((approach, index) => (
                 <div key={index} className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
@@ -253,7 +261,7 @@ export const ScalabilityFlexibilitySection = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="p-4 bg-elec-gray border border-gray-600 rounded-lg">
               <h4 className="font-semibold text-foreground mb-3">New Build Expansion Path</h4>
               <div className="space-y-2 text-sm">
@@ -290,24 +298,34 @@ export const ScalabilityFlexibilitySection = () => {
         <CardContent className="space-y-4">
           <div className="space-y-3">
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q1: Which approach is more scalable long-term and why?</p>
+              <p className="font-medium text-foreground">
+                Q1: Which approach is more scalable long-term and why?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q2: What is a hybrid approach and when might it be used?</p>
+              <p className="font-medium text-foreground">
+                Q2: What is a hybrid approach and when might it be used?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q3: What infrastructure consideration is important for 10-year planning?</p>
+              <p className="font-medium text-foreground">
+                Q3: What infrastructure consideration is important for 10-year planning?
+              </p>
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={() => setShowAnswers(!showAnswers)}
-            variant="outline" 
+            variant="outline"
             className="w-full border-gray-600 text-gray-300 hover:bg-[#323232] hover:text-foreground"
           >
-            {showAnswers ? <ChevronUp className="mr-2 h-4 w-4" /> : <ChevronDown className="mr-2 h-4 w-4" />}
+            {showAnswers ? (
+              <ChevronUp className="mr-2 h-4 w-4" />
+            ) : (
+              <ChevronDown className="mr-2 h-4 w-4" />
+            )}
             {showAnswers ? 'Hide Answers' : 'Show Answers'}
           </Button>
 
@@ -315,17 +333,27 @@ export const ScalabilityFlexibilitySection = () => {
             <div className="space-y-3 pt-4 border-t border-gray-600">
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A1:</p>
-                <p className="text-gray-300">New build is more scalable because structured cabling supports unlimited device expansion and future technologies without infrastructure constraints.</p>
+                <p className="text-gray-300">
+                  New build is more scalable because structured cabling supports unlimited device
+                  expansion and future technologies without infrastructure constraints.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A2:</p>
-                <p className="text-gray-300">A hybrid approach combines wired infrastructure with wireless devices, offering reliability and flexibility. Used when wanting professional backbone with retrofit convenience.</p>
+                <p className="text-gray-300">
+                  A hybrid approach combines wired infrastructure with wireless devices, offering
+                  reliability and flexibility. Used when wanting professional backbone with retrofit
+                  convenience.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A3:</p>
-                <p className="text-gray-300">Gigabit networking speeds and higher electrical capacity to support emerging technologies like AI processing, energy storage, and advanced automation systems.</p>
+                <p className="text-gray-300">
+                  Gigabit networking speeds and higher electrical capacity to support emerging
+                  technologies like AI processing, energy storage, and advanced automation systems.
+                </p>
               </div>
             </div>
           )}

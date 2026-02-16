@@ -7,34 +7,34 @@ const SmartHomeModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Types of Smart Lighting Systems",
+      title: 'Types of Smart Lighting Systems',
       icon: Lightbulb,
-      description: "Overview of different smart lighting technologies and controls"
+      description: 'Overview of different smart lighting technologies and controls',
     },
     {
       id: 2,
-      title: "Scene-Based Control and Schedules",
+      title: 'Scene-Based Control and Schedules',
       icon: Clock,
-      description: "Programming lighting scenes and automated schedules"
+      description: 'Programming lighting scenes and automated schedules',
     },
     {
       id: 3,
-      title: "Dimming, RGBW, and Colour Temperature",
+      title: 'Dimming, RGBW, and Colour Temperature',
       icon: Palette,
-      description: "Understanding colour control and dimming capabilities"
+      description: 'Understanding colour control and dimming capabilities',
     },
     {
       id: 4,
-      title: "Load Compatibility and Control Types",
+      title: 'Load Compatibility and Control Types',
       icon: Zap,
-      description: "Matching controls to different lighting load types"
+      description: 'Matching controls to different lighting load types',
     },
     {
       id: 5,
-      title: "Grouping, Linking, and Motion Logic",
+      title: 'Grouping, Linking, and Motion Logic',
       icon: Link2,
-      description: "Creating intelligent lighting groups and motion-based control"
-    }
+      description: 'Creating intelligent lighting groups and motion-based control',
+    },
   ];
 
   return (

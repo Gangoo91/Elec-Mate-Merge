@@ -3,12 +3,12 @@
  * Includes sort options and empty state
  */
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { SwipeableCard } from "@/components/ui/SwipeableCard";
-import { cn } from "@/lib/utils";
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { SwipeableCard } from '@/components/ui/SwipeableCard';
+import { cn } from '@/lib/utils';
 import {
   Bookmark,
   Trash2,
@@ -22,9 +22,9 @@ import {
   Building2,
   ChevronRight,
   Sparkles,
-} from "lucide-react";
-import { listContainerVariants, listItemVariants, fadeUpVariants } from "./animations/variants";
-import type { UnifiedJob } from "@/hooks/job-vacancies/useUnifiedJobSearch";
+} from 'lucide-react';
+import { listContainerVariants, listItemVariants, fadeUpVariants } from './animations/variants';
+import type { UnifiedJob } from '@/hooks/job-vacancies/useUnifiedJobSearch';
 
 interface SavedJobEntry {
   job: UnifiedJob;
@@ -40,22 +40,22 @@ interface SavedJobsTabProps {
   className?: string;
 }
 
-type SortOption = "recent" | "salary" | "match";
+type SortOption = 'recent' | 'salary' | 'match';
 
 // Sort options configuration
 const SORT_OPTIONS: { id: SortOption; label: string; icon: typeof Clock }[] = [
-  { id: "recent", label: "Recently Saved", icon: Clock },
-  { id: "salary", label: "Highest Salary", icon: Banknote },
-  { id: "match", label: "Best Match", icon: Star },
+  { id: 'recent', label: 'Recently Saved', icon: Clock },
+  { id: 'salary', label: 'Highest Salary', icon: Banknote },
+  { id: 'match', label: 'Best Match', icon: Star },
 ];
 
 // Company initials fallback
 const CompanyInitials = ({ company }: { company: string }) => {
   const initials = company
-    .split(" ")
+    .split(' ')
     .slice(0, 2)
     .map((word) => word[0])
-    .join("")
+    .join('')
     .toUpperCase();
 
   return (
@@ -81,11 +81,11 @@ const formatSavedTime = (savedAt: string) => {
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffMins < 1) return "Just now";
+  if (diffMins < 1) return 'Just now';
   if (diffMins < 60) return `${diffMins}m ago`;
   if (diffHours < 24) return `${diffHours}h ago`;
   if (diffDays < 7) return `${diffDays}d ago`;
-  return saved.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  return saved.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 };
 
 // Empty state component
@@ -139,8 +139,8 @@ const SavedJobCard = ({
     <SwipeableCard
       rightAction={{
         icon: <Trash2 className="h-5 w-5" />,
-        bgColor: "bg-red-500",
-        label: "Remove",
+        bgColor: 'bg-red-500',
+        label: 'Remove',
         onAction: onRemove,
       }}
     >
@@ -148,10 +148,10 @@ const SavedJobCard = ({
         variants={listItemVariants}
         onClick={() => onSelect(job)}
         className={cn(
-          "group relative bg-card/80 backdrop-blur-sm",
-          "rounded-2xl border border-white/10 overflow-hidden cursor-pointer",
-          "hover:border-amber-500/40 transition-all duration-300",
-          "hover:shadow-xl hover:shadow-amber-500/10"
+          'group relative bg-card/80 backdrop-blur-sm',
+          'rounded-2xl border border-white/10 overflow-hidden cursor-pointer',
+          'hover:border-amber-500/40 transition-all duration-300',
+          'hover:shadow-xl hover:shadow-amber-500/10'
         )}
       >
         <div className="relative p-4">
@@ -165,8 +165,8 @@ const SavedJobCard = ({
                   alt={job.company}
                   className="w-12 h-12 rounded-xl object-cover border border-white/10"
                   onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    e.currentTarget.nextElementSibling?.classList.remove("hidden");
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
                   }}
                 />
                 <div className="hidden">
@@ -215,7 +215,7 @@ const SavedJobCard = ({
           {/* Footer */}
           <div className="flex items-center justify-between pt-3 border-t border-white/5">
             <div>
-              {job.salary && job.salary !== "Not specified" ? (
+              {job.salary && job.salary !== 'Not specified' ? (
                 <>
                   <span className="text-xs text-white/40 block">Salary</span>
                   <span className="text-sm font-bold text-white">{job.salary}</span>
@@ -251,21 +251,17 @@ const SavedJobsTab = ({
   onBrowseJobs,
   className,
 }: SavedJobsTabProps) => {
-  const [sortBy, setSortBy] = useState<SortOption>("recent");
+  const [sortBy, setSortBy] = useState<SortOption>('recent');
 
   // Sort jobs based on selected option
   const sortedJobs = useMemo(() => {
     const jobs = [...savedJobs];
     switch (sortBy) {
-      case "recent":
-        return jobs.sort(
-          (a, b) => new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime()
-        );
-      case "salary":
-        return jobs.sort(
-          (a, b) => parseSalaryValue(b.job.salary) - parseSalaryValue(a.job.salary)
-        );
-      case "match":
+      case 'recent':
+        return jobs.sort((a, b) => new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime());
+      case 'salary':
+        return jobs.sort((a, b) => parseSalaryValue(b.job.salary) - parseSalaryValue(a.job.salary));
+      case 'match':
         // For now, sort by random match score - in real implementation, use actual match data
         return jobs;
       default:
@@ -278,7 +274,7 @@ const SavedJobsTab = ({
   }
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {/* Header */}
       <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
@@ -312,11 +308,11 @@ const SavedJobsTab = ({
               key={option.id}
               onClick={() => setSortBy(option.id)}
               className={cn(
-                "flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium",
-                "border transition-all duration-200",
+                'flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium',
+                'border transition-all duration-200',
                 isActive
-                  ? "bg-amber-500/30 border-amber-500/50 text-amber-300"
-                  : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"
+                  ? 'bg-amber-500/30 border-amber-500/50 text-amber-300'
+                  : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
               )}
             >
               <Icon className="h-3.5 w-3.5" />

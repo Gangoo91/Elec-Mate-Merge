@@ -1,45 +1,54 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
-import { Clock, Target, TrendingUp, Award, ClipboardList, History, Settings, Construction } from "lucide-react";
-import ComplianceDashboard from "./enhanced/ComplianceDashboard";
-import ActivityTemplates from "./enhanced/ActivityTemplates";
-import AnalyticsDashboard from "./enhanced/AnalyticsDashboard";
-import MobileEnhancedCPD from "./enhanced/MobileEnhancedCPD";
-import EnhancedCPDEntryForm from "./enhanced/EnhancedCPDEntryForm";
-import CPDHistory from "../../../apprentice/career/cpd/CPDHistory";
-import CPDGoals from "../../../apprentice/career/cpd/CPDGoals";
-import CPDDashboard from "../../../apprentice/career/cpd/enhanced/CPDDashboard";
-import EnhancedCPDDashboard from "./EnhancedCPDDashboard";
-import { useCPDAutoTracking } from "@/hooks/cpd/useCPDAutoTracking";
-import { useUnifiedCPD } from "@/hooks/cpd/useUnifiedCPD";
-import ProfessionalBodyManager from "./ProfessionalBodyManager";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DropdownTabs, DropdownTab } from '@/components/ui/dropdown-tabs';
+import {
+  Clock,
+  Target,
+  TrendingUp,
+  Award,
+  ClipboardList,
+  History,
+  Settings,
+  Construction,
+} from 'lucide-react';
+import ComplianceDashboard from './enhanced/ComplianceDashboard';
+import ActivityTemplates from './enhanced/ActivityTemplates';
+import AnalyticsDashboard from './enhanced/AnalyticsDashboard';
+import MobileEnhancedCPD from './enhanced/MobileEnhancedCPD';
+import EnhancedCPDEntryForm from './enhanced/EnhancedCPDEntryForm';
+import CPDHistory from '../../../apprentice/career/cpd/CPDHistory';
+import CPDGoals from '../../../apprentice/career/cpd/CPDGoals';
+import CPDDashboard from '../../../apprentice/career/cpd/enhanced/CPDDashboard';
+import EnhancedCPDDashboard from './EnhancedCPDDashboard';
+import { useCPDAutoTracking } from '@/hooks/cpd/useCPDAutoTracking';
+import { useUnifiedCPD } from '@/hooks/cpd/useUnifiedCPD';
+import ProfessionalBodyManager from './ProfessionalBodyManager';
 
 const ElectricianCPDTracker = () => {
-  const [activeTab, setActiveTab] = useState("compliance");
+  const [activeTab, setActiveTab] = useState('compliance');
   const [isMobile, setIsMobile] = useState(false);
   const [showProfessionalBodyManager, setShowProfessionalBodyManager] = useState(false);
   const [showComingSoonBanner, setShowComingSoonBanner] = useState(true);
   const { generatePortfolio, loading } = useUnifiedCPD();
-  
+
   // Initialize auto-tracking for the CPD tracker
   const { startTracking, stopTracking } = useCPDAutoTracking({
     enabled: true,
     minimumMinutes: 15,
-    sources: ['CPD Management', 'Professional Development']
+    sources: ['CPD Management', 'Professional Development'],
   });
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     // Start auto-tracking when component mounts
     startTracking('CPD Management', 'Electrician CPD Tracker');
-    
+
     return () => {
       window.removeEventListener('resize', checkMobile);
       stopTracking();
@@ -47,20 +56,20 @@ const ElectricianCPDTracker = () => {
   }, [startTracking, stopTracking]);
 
   const handleAddEntry = () => {
-    setActiveTab("log-activity");
+    setActiveTab('log-activity');
   };
 
   const handleViewHistory = () => {
-    setActiveTab("history");
+    setActiveTab('history');
   };
 
   const handleManageGoals = () => {
-    setActiveTab("goals");
+    setActiveTab('goals');
   };
 
   const handleViewEntry = (id: string) => {
     // Navigate to specific entry in history
-    setActiveTab("history");
+    setActiveTab('history');
   };
 
   const handleExportPortfolio = async () => {
@@ -85,7 +94,7 @@ const ElectricianCPDTracker = () => {
               </div>
             </div>
             <button
-              onClick={() => setActiveTab("settings")}
+              onClick={() => setActiveTab('settings')}
               className="text-elec-yellow hover:text-amber-400"
             >
               <Settings className="h-5 w-5" />
@@ -106,11 +115,10 @@ const ElectricianCPDTracker = () => {
             <div className="flex items-start gap-3 pr-6">
               <Construction className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-lg font-bold text-foreground mb-1">
-                  Coming Soon
-                </h3>
+                <h3 className="text-lg font-bold text-foreground mb-1">Coming Soon</h3>
                 <p className="text-sm text-muted-foreground">
-                  Advanced compliance tracking and professional body integration features are being enhanced. Current features remain fully operational.
+                  Advanced compliance tracking and professional body integration features are being
+                  enhanced. Current features remain fully operational.
                 </p>
               </div>
             </div>
@@ -119,33 +127,33 @@ const ElectricianCPDTracker = () => {
 
         {/* Mobile Content */}
         <div className="p-4">
-          {activeTab === "compliance" && (
-            <EnhancedCPDDashboard 
+          {activeTab === 'compliance' && (
+            <EnhancedCPDDashboard
               onAddEntry={handleAddEntry}
               onViewHistory={handleViewHistory}
               onManageGoals={handleManageGoals}
             />
           )}
-          {activeTab === "log-activity" && (
+          {activeTab === 'log-activity' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-foreground">Add CPD Entry</h2>
-                <button 
-                  onClick={() => setActiveTab("compliance")}
+                <button
+                  onClick={() => setActiveTab('compliance')}
                   className="text-elec-yellow text-sm"
                 >
                   Back
                 </button>
               </div>
-              <EnhancedCPDEntryForm onSuccess={() => setActiveTab("compliance")} />
+              <EnhancedCPDEntryForm onSuccess={() => setActiveTab('compliance')} />
             </div>
           )}
-          {activeTab === "history" && (
+          {activeTab === 'history' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-foreground">CPD History</h2>
-                <button 
-                  onClick={() => setActiveTab("compliance")}
+                <button
+                  onClick={() => setActiveTab('compliance')}
                   className="text-elec-yellow text-sm"
                 >
                   Back
@@ -154,12 +162,12 @@ const ElectricianCPDTracker = () => {
               <CPDHistory />
             </div>
           )}
-          {activeTab === "goals" && (
+          {activeTab === 'goals' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-foreground">CPD Goals</h2>
-                <button 
-                  onClick={() => setActiveTab("compliance")}
+                <button
+                  onClick={() => setActiveTab('compliance')}
                   className="text-elec-yellow text-sm"
                 >
                   Back
@@ -168,12 +176,14 @@ const ElectricianCPDTracker = () => {
               <CPDGoals />
             </div>
           )}
-          {activeTab === "settings" && (
+          {activeTab === 'settings' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-foreground">Professional Body Settings</h2>
-                <button 
-                  onClick={() => setActiveTab("compliance")}
+                <h2 className="text-lg font-semibold text-foreground">
+                  Professional Body Settings
+                </h2>
+                <button
+                  onClick={() => setActiveTab('compliance')}
                   className="text-elec-yellow text-sm"
                 >
                   Back
@@ -182,12 +192,14 @@ const ElectricianCPDTracker = () => {
               <ProfessionalBodyManager />
             </div>
           )}
-          {activeTab === "settings" && (
+          {activeTab === 'settings' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-foreground">Professional Body Settings</h2>
-                <button 
-                  onClick={() => setActiveTab("compliance")}
+                <h2 className="text-lg font-semibold text-foreground">
+                  Professional Body Settings
+                </h2>
+                <button
+                  onClick={() => setActiveTab('compliance')}
                   className="text-elec-yellow text-sm"
                 >
                   Back
@@ -225,53 +237,53 @@ const ElectricianCPDTracker = () => {
 
   const cpdTabs: DropdownTab[] = [
     {
-      value: "compliance",
-      label: "Compliance",
+      value: 'compliance',
+      label: 'Compliance',
       icon: TrendingUp,
       content: (
-        <EnhancedCPDDashboard 
+        <EnhancedCPDDashboard
           onAddEntry={handleAddEntry}
           onViewHistory={handleViewHistory}
           onManageGoals={handleManageGoals}
         />
-      )
+      ),
     },
     {
-      value: "log-activity",
-      label: "Log Activity", 
+      value: 'log-activity',
+      label: 'Log Activity',
       icon: ClipboardList,
-      content: <EnhancedCPDEntryForm onSuccess={() => setActiveTab("compliance")} />
+      content: <EnhancedCPDEntryForm onSuccess={() => setActiveTab('compliance')} />,
     },
     {
-      value: "history",
-      label: "History",
+      value: 'history',
+      label: 'History',
       icon: History,
-      content: <CPDHistory />
+      content: <CPDHistory />,
     },
     {
-      value: "goals",
-      label: "Goals",
+      value: 'goals',
+      label: 'Goals',
       icon: Target,
-      content: <CPDGoals />
+      content: <CPDGoals />,
     },
     {
-      value: "templates", 
-      label: "Templates",
+      value: 'templates',
+      label: 'Templates',
       icon: Clock,
-      content: <ActivityTemplates />
+      content: <ActivityTemplates />,
     },
     {
-      value: "analytics",
-      label: "Analytics",
+      value: 'analytics',
+      label: 'Analytics',
       icon: Award,
-      content: <AnalyticsDashboard />
+      content: <AnalyticsDashboard />,
     },
     {
-      value: "settings",
-      label: "Settings",
+      value: 'settings',
+      label: 'Settings',
       icon: Settings,
-      content: <ProfessionalBodyManager />
-    }
+      content: <ProfessionalBodyManager />,
+    },
   ];
 
   // Desktop layout
@@ -284,8 +296,8 @@ const ElectricianCPDTracker = () => {
           <h1 className="text-3xl font-bold text-foreground">Enhanced CPD Tracker</h1>
         </div>
         <p className="text-muted-foreground max-w-3xl mx-auto">
-          Professional-grade CPD tracking with compliance monitoring, evidence management,
-          and industry-specific templates for UK electricians.
+          Professional-grade CPD tracking with compliance monitoring, evidence management, and
+          industry-specific templates for UK electricians.
         </p>
         <div className="flex justify-center">
           <button
@@ -311,11 +323,10 @@ const ElectricianCPDTracker = () => {
           <div className="flex items-start gap-4 pr-6">
             <Construction className="h-8 w-8 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-xl font-bold text-foreground mb-1">
-                Coming Soon
-              </h3>
+              <h3 className="text-xl font-bold text-foreground mb-1">Coming Soon</h3>
               <p className="text-base text-muted-foreground">
-                Advanced compliance tracking and professional body integration features are being enhanced. Current features remain fully operational.
+                Advanced compliance tracking and professional body integration features are being
+                enhanced. Current features remain fully operational.
               </p>
             </div>
           </div>

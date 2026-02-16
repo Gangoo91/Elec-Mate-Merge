@@ -3,10 +3,10 @@ import { BookOpen, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section5Summary = () => {
   const keyPoints = [
-    "Pre-functional commissioning verifies power, wiring, I/O signals, and safety interlocks",
-    "Functional commissioning tests full sequences, alarms, and integrated system behaviour",
-    "Electricians play a key role in supporting engineers, correcting wiring, and verifying signals",
-    "Proper commissioning ensures safe, efficient building operation and avoids long-term issues"
+    'Pre-functional commissioning verifies power, wiring, I/O signals, and safety interlocks',
+    'Functional commissioning tests full sequences, alarms, and integrated system behaviour',
+    'Electricians play a key role in supporting engineers, correcting wiring, and verifying signals',
+    'Proper commissioning ensures safe, efficient building operation and avoids long-term issues',
   ];
 
   return (

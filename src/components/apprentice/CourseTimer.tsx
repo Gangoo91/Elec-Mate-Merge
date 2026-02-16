@@ -1,11 +1,10 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import LearningTimer from "@/components/apprentice/LearningTimer";
-import TimerHeader from "./timer/TimerHeader";
-import InactivityHandler from "./timer/InactivityHandler";
-import { useEffect } from "react";
-import { useAutomatedTraining } from "@/hooks/useAutomatedTraining";
-import { useToast } from "@/components/ui/use-toast";
+import { Card, CardContent } from '@/components/ui/card';
+import LearningTimer from '@/components/apprentice/LearningTimer';
+import TimerHeader from './timer/TimerHeader';
+import InactivityHandler from './timer/InactivityHandler';
+import { useEffect } from 'react';
+import { useAutomatedTraining } from '@/hooks/useAutomatedTraining';
+import { useToast } from '@/components/ui/use-toast';
 
 interface CourseTimerProps {
   courseSlug: string | undefined;
@@ -24,19 +23,14 @@ const CourseTimer = ({
   todayTotal,
   currentResourceType,
   onStartStudy,
-  onStopStudy
+  onStopStudy,
 }: CourseTimerProps) => {
   const isVideoContent = currentResourceType === 'video';
   const { toast } = useToast();
-  
+
   // Connect with the automated tracking system
-  const { 
-    isTracking, 
-    startTracking, 
-    stopTracking, 
-    isAuthenticated 
-  } = useAutomatedTraining();
-  
+  const { isTracking, startTracking, stopTracking, isAuthenticated } = useAutomatedTraining();
+
   // When manual study is started or stopped, sync with auto tracking
   useEffect(() => {
     if (isStudying && !isTracking && isAuthenticated) {
@@ -48,13 +42,13 @@ const CourseTimer = ({
   const handleStartStudy = () => {
     if (!isAuthenticated) {
       toast({
-        title: "Sign in required",
-        description: "Please sign in to track your study time",
-        variant: "default"
+        title: 'Sign in required',
+        description: 'Please sign in to track your study time',
+        variant: 'default',
       });
       return;
     }
-    
+
     onStartStudy();
   };
 
@@ -68,15 +62,12 @@ const CourseTimer = ({
         >
           {(isInactive) => (
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <TimerHeader 
-                isInactive={isInactive} 
-                isVideoContent={isVideoContent} 
-              />
-              
+              <TimerHeader isInactive={isInactive} isVideoContent={isVideoContent} />
+
               <div className="w-full md:w-auto">
-                <LearningTimer 
+                <LearningTimer
                   isRunning={isStudying}
-                  elapsedTime={elapsedTime} 
+                  elapsedTime={elapsedTime}
                   todayTotal={todayTotal}
                   onStart={handleStartStudy}
                   onStop={onStopStudy}

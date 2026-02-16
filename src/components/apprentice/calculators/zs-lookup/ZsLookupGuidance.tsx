@@ -1,7 +1,7 @@
-import InfoBox from "@/components/common/InfoBox";
-import { BookOpen, AlertTriangle, Lightbulb, CheckCircle, XCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import InfoBox from '@/components/common/InfoBox';
+import { BookOpen, AlertTriangle, Lightbulb, CheckCircle, XCircle } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const ZsLookupGuidance = () => {
   return (
@@ -30,7 +30,7 @@ const ZsLookupGuidance = () => {
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-blue-500/10 border-blue-500/30">
               <CardHeader className="pb-2">
                 <CardTitle className="text-blue-300 text-sm flex items-center gap-2">
@@ -48,11 +48,12 @@ const ZsLookupGuidance = () => {
               </CardContent>
             </Card>
           </div>
-          
+
           <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3">
             <p className="text-yellow-200 text-xs">
-              <strong>Why the 80% factor?</strong> Under fault conditions, conductor temperature rises significantly. 
-              The 80% factor accounts for increased resistance due to this temperature rise, ensuring protection operates correctly.
+              <strong>Why the 80% factor?</strong> Under fault conditions, conductor temperature
+              rises significantly. The 80% factor accounts for increased resistance due to this
+              temperature rise, ensuring protection operates correctly.
             </p>
           </div>
         </div>
@@ -67,7 +68,9 @@ const ZsLookupGuidance = () => {
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <h4 className="text-elec-yellow font-medium mb-2">TN Systems (Most UK Installations)</h4>
+              <h4 className="text-elec-yellow font-medium mb-2">
+                TN Systems (Most UK Installations)
+              </h4>
               <ul className="text-xs space-y-1 text-elec-light">
                 <li>• Exposed metalwork connected to supply neutral</li>
                 <li>• Low impedance fault path</li>
@@ -75,7 +78,7 @@ const ZsLookupGuidance = () => {
                 <li>• Use standard Zs tables from BS7671</li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="text-elec-yellow font-medium mb-2">TT Systems (Some Rural Areas)</h4>
               <ul className="text-xs space-y-1 text-elec-light">
@@ -86,11 +89,11 @@ const ZsLookupGuidance = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
             <p className="text-blue-200 text-xs">
-              <strong>For TT systems:</strong> RCD operation verification is critical. 
-              Check that RA × IΔn ≤ 50V where RA is earth electrode resistance and IΔn is RCD rated current.
+              <strong>For TT systems:</strong> RCD operation verification is critical. Check that RA
+              × IΔn ≤ 50V where RA is earth electrode resistance and IΔn is RCD rated current.
             </p>
           </div>
         </div>
@@ -107,32 +110,45 @@ const ZsLookupGuidance = () => {
             <div className="flex items-start gap-3">
               <Badge className="bg-blue-500/20 text-blue-300 mt-0.5">Type B</Badge>
               <div className="flex-1">
-                <p className="text-xs"><strong>3-5 × In trip current</strong></p>
-                <p className="text-xs text-white">Resistive loads, lighting, heating, general domestic circuits</p>
+                <p className="text-xs">
+                  <strong>3-5 × In trip current</strong>
+                </p>
+                <p className="text-xs text-white">
+                  Resistive loads, lighting, heating, general domestic circuits
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3">
               <Badge className="bg-green-500/20 text-green-300 mt-0.5">Type C</Badge>
               <div className="flex-1">
-                <p className="text-xs"><strong>5-10 × In trip current</strong></p>
-                <p className="text-xs text-white">Inductive loads, fluorescent lighting, small motors, transformers</p>
+                <p className="text-xs">
+                  <strong>5-10 × In trip current</strong>
+                </p>
+                <p className="text-xs text-white">
+                  Inductive loads, fluorescent lighting, small motors, transformers
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3">
               <Badge className="bg-orange-500/20 text-orange-300 mt-0.5">Type D</Badge>
               <div className="flex-1">
-                <p className="text-xs"><strong>10-20 × In trip current</strong></p>
-                <p className="text-xs text-white">High inrush current loads, large motors, welding equipment</p>
+                <p className="text-xs">
+                  <strong>10-20 × In trip current</strong>
+                </p>
+                <p className="text-xs text-white">
+                  High inrush current loads, large motors, welding equipment
+                </p>
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white/10 rounded p-3">
             <p className="text-xs text-elec-light">
-              <strong>Curve selection affects Zs:</strong> Higher curves (C, D) allow more fault current before tripping, 
-              requiring lower Zs values to ensure 0.4s disconnection time compliance.
+              <strong>Curve selection affects Zs:</strong> Higher curves (C, D) allow more fault
+              current before tripping, requiring lower Zs values to ensure 0.4s disconnection time
+              compliance.
             </p>
           </div>
         </div>
@@ -146,7 +162,9 @@ const ZsLookupGuidance = () => {
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
           <div className="bg-white/10 rounded p-4">
-            <h4 className="text-elec-yellow font-medium mb-2">Example 1: Testing a Socket Circuit</h4>
+            <h4 className="text-elec-yellow font-medium mb-2">
+              Example 1: Testing a Socket Circuit
+            </h4>
             <div className="text-xs space-y-1">
               <p>• Protection: 32A Type B MCB</p>
               <p>• Maximum Zs (100%): 1.44Ω</p>
@@ -155,7 +173,7 @@ const ZsLookupGuidance = () => {
               <p className="text-green-400">• Result: ✓ Pass (good margin)</p>
             </div>
           </div>
-          
+
           <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-2">Example 2: Circuit Design Check</h4>
             <div className="text-xs space-y-1">
@@ -185,7 +203,7 @@ const ZsLookupGuidance = () => {
               <li>• Forgetting to include all circuit components in Zs</li>
             </ul>
           </div>
-          
+
           <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
             <h5 className="text-green-300 font-medium text-xs mb-1">✓ Best Practices:</h5>
             <ul className="text-xs space-y-0.5">
@@ -206,17 +224,27 @@ const ZsLookupGuidance = () => {
       >
         <div className="space-y-3 text-elec-light text-sm sm:text-[0.95rem]">
           <ol className="text-xs space-y-2 list-decimal list-inside">
-            <li><strong>Safety first:</strong> Isolate circuit and prove dead</li>
-            <li><strong>Test method:</strong> Use loop impedance tester or Ze + (R1+R2) method</li>
-            <li><strong>Test points:</strong> Test at the furthest point and at each outlet</li>
-            <li><strong>Record results:</strong> Compare against 80% test values</li>
-            <li><strong>Documentation:</strong> Record on appropriate test certificate</li>
+            <li>
+              <strong>Safety first:</strong> Isolate circuit and prove dead
+            </li>
+            <li>
+              <strong>Test method:</strong> Use loop impedance tester or Ze + (R1+R2) method
+            </li>
+            <li>
+              <strong>Test points:</strong> Test at the furthest point and at each outlet
+            </li>
+            <li>
+              <strong>Record results:</strong> Compare against 80% test values
+            </li>
+            <li>
+              <strong>Documentation:</strong> Record on appropriate test certificate
+            </li>
           </ol>
-          
+
           <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
             <p className="text-blue-200 text-xs">
-              <strong>Testing tip:</strong> If testing shows marginal results, consider measurement uncertainty 
-              and conductor temperature at time of test vs operating temperature.
+              <strong>Testing tip:</strong> If testing shows marginal results, consider measurement
+              uncertainty and conductor temperature at time of test vs operating temperature.
             </p>
           </div>
         </div>

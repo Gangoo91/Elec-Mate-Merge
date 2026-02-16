@@ -1,9 +1,8 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { AlertTriangle, CheckCircle, XCircle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 
 interface Question {
   id: number;
@@ -14,48 +13,48 @@ interface Question {
 const questions: Question[] = [
   {
     id: 1,
-    text: "How often do you feel overwhelmed by your workload?",
+    text: 'How often do you feel overwhelmed by your workload?',
     options: [
-      { value: 1, label: "Never" },
-      { value: 2, label: "Rarely" },
-      { value: 3, label: "Sometimes" },
-      { value: 4, label: "Often" },
-      { value: 5, label: "Always" }
-    ]
+      { value: 1, label: 'Never' },
+      { value: 2, label: 'Rarely' },
+      { value: 3, label: 'Sometimes' },
+      { value: 4, label: 'Often' },
+      { value: 5, label: 'Always' },
+    ],
   },
   {
     id: 2,
-    text: "How well do you sleep after a challenging day on site?",
+    text: 'How well do you sleep after a challenging day on site?',
     options: [
-      { value: 1, label: "Very well" },
-      { value: 2, label: "Well" },
-      { value: 3, label: "Moderately" },
-      { value: 4, label: "Poorly" },
-      { value: 5, label: "Very poorly" }
-    ]
+      { value: 1, label: 'Very well' },
+      { value: 2, label: 'Well' },
+      { value: 3, label: 'Moderately' },
+      { value: 4, label: 'Poorly' },
+      { value: 5, label: 'Very poorly' },
+    ],
   },
   {
     id: 3,
-    text: "How often do you experience physical tension or headaches?",
+    text: 'How often do you experience physical tension or headaches?',
     options: [
-      { value: 1, label: "Never" },
-      { value: 2, label: "Rarely" },
-      { value: 3, label: "Sometimes" },
-      { value: 4, label: "Often" },
-      { value: 5, label: "Daily" }
-    ]
+      { value: 1, label: 'Never' },
+      { value: 2, label: 'Rarely' },
+      { value: 3, label: 'Sometimes' },
+      { value: 4, label: 'Often' },
+      { value: 5, label: 'Daily' },
+    ],
   },
   {
     id: 4,
-    text: "How confident do you feel about handling work challenges?",
+    text: 'How confident do you feel about handling work challenges?',
     options: [
-      { value: 1, label: "Very confident" },
-      { value: 2, label: "Confident" },
-      { value: 3, label: "Moderately confident" },
-      { value: 4, label: "Not very confident" },
-      { value: 5, label: "Not confident at all" }
-    ]
-  }
+      { value: 1, label: 'Very confident' },
+      { value: 2, label: 'Confident' },
+      { value: 3, label: 'Moderately confident' },
+      { value: 4, label: 'Not very confident' },
+      { value: 5, label: 'Not confident at all' },
+    ],
+  },
 ];
 
 const InteractiveStressAssessment = () => {
@@ -78,35 +77,35 @@ const InteractiveStressAssessment = () => {
   const calculateStressLevel = () => {
     const total = answers.reduce((sum, answer) => sum + answer, 0);
     const average = total / answers.length;
-    
-    if (average <= 2) return { level: "Low", color: "text-green-400", icon: CheckCircle };
-    if (average <= 3.5) return { level: "Moderate", color: "text-yellow-400", icon: AlertTriangle };
-    return { level: "High", color: "text-red-400", icon: XCircle };
+
+    if (average <= 2) return { level: 'Low', color: 'text-green-400', icon: CheckCircle };
+    if (average <= 3.5) return { level: 'Moderate', color: 'text-yellow-400', icon: AlertTriangle };
+    return { level: 'High', color: 'text-red-400', icon: XCircle };
   };
 
   const getRecommendations = () => {
     const stress = calculateStressLevel();
-    
-    if (stress.level === "Low") {
+
+    if (stress.level === 'Low') {
       return [
-        "Continue your current stress management practices",
-        "Consider sharing your techniques with colleagues",
-        "Maintain regular exercise and healthy sleep habits"
+        'Continue your current stress management practices',
+        'Consider sharing your techniques with colleagues',
+        'Maintain regular exercise and healthy sleep habits',
       ];
-    } else if (stress.level === "Moderate") {
+    } else if (stress.level === 'Moderate') {
       return [
-        "Try the breathing exercises in our Quick Tips section",
-        "Consider speaking with your supervisor about workload",
-        "Implement regular breaks during your workday",
-        "Practice one stress reduction technique daily"
+        'Try the breathing exercises in our Quick Tips section',
+        'Consider speaking with your supervisor about workload',
+        'Implement regular breaks during your workday',
+        'Practice one stress reduction technique daily',
       ];
     } else {
       return [
-        "Consider speaking with a mental health professional",
-        "Contact your training provider about support options",
-        "Try multiple stress reduction techniques daily",
-        "Speak with your supervisor about managing workload",
-        "Consider calling Samaritans (116 123) if you need immediate support"
+        'Consider speaking with a mental health professional',
+        'Contact your training provider about support options',
+        'Try multiple stress reduction techniques daily',
+        'Speak with your supervisor about managing workload',
+        'Consider calling Samaritans (116 123) if you need immediate support',
       ];
     }
   };
@@ -120,7 +119,7 @@ const InteractiveStressAssessment = () => {
   if (isComplete) {
     const stress = calculateStressLevel();
     const Icon = stress.icon;
-    
+
     return (
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
@@ -141,9 +140,9 @@ const InteractiveStressAssessment = () => {
               ))}
             </ul>
           </div>
-          
+
           <div className="flex gap-2 pt-4">
-            <Button 
+            <Button
               onClick={resetAssessment}
               variant="outline"
               size="sm"
@@ -170,10 +169,8 @@ const InteractiveStressAssessment = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <h3 className="text-lg font-medium text-foreground">
-            {questions[currentQuestion].text}
-          </h3>
-          
+          <h3 className="text-lg font-medium text-foreground">{questions[currentQuestion].text}</h3>
+
           <div className="space-y-2">
             {questions[currentQuestion].options.map((option) => (
               <Button

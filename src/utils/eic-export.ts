@@ -1,6 +1,6 @@
-import { supabase } from "@/integrations/supabase/client";
-import { EICScheduleOfTests } from "@/types/eic-integration";
-import { toast } from "@/hooks/use-toast";
+import { supabase } from '@/integrations/supabase/client';
+import { EICScheduleOfTests } from '@/types/eic-integration';
+import { toast } from '@/hooks/use-toast';
 
 /**
  * Export EIC Schedule to Supabase for Inspection & Testing app integration
@@ -11,12 +11,12 @@ export async function exportEICScheduleToInspectionApp(
   try {
     const { data: user } = await supabase.auth.getUser();
     if (!user.user) {
-      throw new Error("User not authenticated");
+      throw new Error('User not authenticated');
     }
-    
+
     // Insert into eic_schedules table (type will auto-update after migration)
     const { data, error } = await supabase
-      .from("eic_schedules" as any)
+      .from('eic_schedules' as any)
       .insert({
         user_id: user.user.id,
         installation_id: schedule.installationId,
@@ -28,30 +28,30 @@ export async function exportEICScheduleToInspectionApp(
       })
       .select()
       .single();
-    
+
     if (error) {
-      console.error("❌ Error exporting EIC schedule:", error);
+      console.error('❌ Error exporting EIC schedule:', error);
       throw error;
     }
 
-    const scheduleId = (data as any)?.id || "unknown";
-    
+    const scheduleId = (data as any)?.id || 'unknown';
+
     toast({
-      title: "EIC Schedule Exported",
+      title: 'EIC Schedule Exported',
       description: `${schedule.circuits.length} circuits ready for testing. Schedule ID: ${scheduleId.slice(0, 8)}`,
     });
-    
+
     return { success: true, scheduleId };
   } catch (error) {
-    console.error("❌ Export error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Failed to export EIC schedule";
-    
+    console.error('❌ Export error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to export EIC schedule';
+
     toast({
-      title: "Export Failed",
+      title: 'Export Failed',
       description: errorMessage,
-      variant: "destructive",
+      variant: 'destructive',
     });
-    
+
     return { success: false, error: errorMessage };
   }
 }
@@ -62,17 +62,17 @@ export async function exportEICScheduleToInspectionApp(
 export async function getUserEICSchedules() {
   const { data: user } = await supabase.auth.getUser();
   if (!user.user) return [];
-  
+
   const { data, error } = await supabase
-    .from("eic_schedules" as any)
-    .select("*")
-    .eq("user_id", user.user.id)
-    .order("created_at", { ascending: false });
-  
+    .from('eic_schedules' as any)
+    .select('*')
+    .eq('user_id', user.user.id)
+    .order('created_at', { ascending: false });
+
   if (error) {
-    console.error("Error fetching EIC schedules:", error);
+    console.error('Error fetching EIC schedules:', error);
     return [];
   }
-  
+
   return data || [];
 }

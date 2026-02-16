@@ -52,19 +52,19 @@ export const PaymentReminderButton = ({
         return {
           subject: `Friendly Reminder: Invoice ${invoice.invoice_number} Payment Due`,
           body: `Dear ${clientName},\n\nI hope this email finds you well. I wanted to kindly remind you that payment for Invoice ${invoice.invoice_number} is ${daysOverdue > 0 ? `now ${daysOverdue} days overdue` : `due on ${dueDate}`}.\n\nOutstanding Amount: ${formatCurrency(remainingBalance)}\n\nIf you have already made the payment, please disregard this message. Otherwise, I would appreciate it if you could arrange payment at your earliest convenience.\n\nPlease don't hesitate to contact me if you have any questions or need to discuss payment arrangements.\n\nThank you for your business.`,
-          tone: 'Friendly'
+          tone: 'Friendly',
         };
       case 'firm':
         return {
           subject: `Second Notice: Invoice ${invoice.invoice_number} - Payment Required`,
           body: `Dear ${clientName},\n\nThis is a follow-up regarding Invoice ${invoice.invoice_number}, which is now ${daysOverdue} days overdue.\n\nOutstanding Amount: ${formatCurrency(remainingBalance)}\nOriginal Due Date: ${dueDate}\n\nI understand that oversights happen, but I must request immediate attention to this matter. Please arrange payment within the next 7 days.\n\nIf there are any issues preventing payment, please contact me immediately so we can discuss a solution.\n\nThank you for your prompt attention.`,
-          tone: 'Firm'
+          tone: 'Firm',
         };
       case 'final':
         return {
           subject: `URGENT: Final Notice - Invoice ${invoice.invoice_number}`,
           body: `Dear ${clientName},\n\nDespite previous reminders, Invoice ${invoice.invoice_number} remains unpaid and is now significantly overdue (${daysOverdue} days).\n\nOutstanding Amount: ${formatCurrency(remainingBalance)}\n\nThis is a final notice before I am required to consider further action, which may include:\n• Late payment interest charges\n• Referral to a debt collection agency\n• Legal proceedings\n\nTo avoid these measures, please ensure payment is made within 48 hours.\n\nIf you are experiencing financial difficulties, please contact me immediately to discuss payment arrangements.\n\nThis matter requires your urgent attention.`,
-          tone: 'Final Warning'
+          tone: 'Final Warning',
         };
     }
   };
@@ -74,13 +74,19 @@ export const PaymentReminderButton = ({
     setSending(true);
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
       const clientEmail = invoice.client?.email;
 
       if (!clientEmail) {
-        toast({ title: 'No email address', description: 'Client email address is required to send reminders', variant: 'destructive' });
+        toast({
+          title: 'No email address',
+          description: 'Client email address is required to send reminders',
+          variant: 'destructive',
+        });
         setSending(false);
         setSelectedType(null);
         return;
@@ -93,7 +99,7 @@ export const PaymentReminderButton = ({
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`,
+            Authorization: `Bearer ${session.access_token}`,
           },
           body: JSON.stringify({
             invoiceId: invoice.id,
@@ -111,7 +117,7 @@ export const PaymentReminderButton = ({
       const typeLabels = {
         gentle: 'Friendly',
         firm: 'Firm',
-        final: 'Final notice'
+        final: 'Final notice',
       };
 
       toast({
@@ -126,7 +132,7 @@ export const PaymentReminderButton = ({
       toast({
         title: 'Error sending reminder',
         description: error.message || 'Failed to send reminder. Please try again.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setSending(false);
@@ -143,7 +149,7 @@ export const PaymentReminderButton = ({
         <Button
           variant="outline"
           disabled={sending}
-          className={cn("gap-2 border-amber-500/30 hover:bg-amber-500/10", className)}
+          className={cn('gap-2 border-amber-500/30 hover:bg-amber-500/10', className)}
         >
           {sending ? (
             <Loader2 className="h-4 w-4 animate-spin" />

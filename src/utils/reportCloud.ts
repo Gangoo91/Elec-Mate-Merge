@@ -110,7 +110,13 @@ export const reportCloud = {
    * Create a new report
    * @param isAutoSync - If true, creates with 'auto-draft' status (won't show in Recent Certs until manually saved)
    */
-  createReport: async (userId: string, reportType: ReportType, data: any, customerId?: string, isAutoSync: boolean = false): Promise<{ success: boolean; reportId?: string; error?: any }> => {
+  createReport: async (
+    userId: string,
+    reportType: ReportType,
+    data: any,
+    customerId?: string,
+    isAutoSync: boolean = false
+  ): Promise<{ success: boolean; reportId?: string; error?: any }> => {
     try {
       // Calculate status based on form data - handles all report types
       const calculateStatus = (): 'auto-draft' | 'draft' | 'in-progress' | 'completed' => {
@@ -125,22 +131,27 @@ export const reportCloud = {
         // Minor Works specific: check for signature and work completion
         if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
         // EV Charging specific: check for installer signature
-        if (reportType === 'ev-charging' && data.installerSignature && data.installationDate) return 'completed';
+        if (reportType === 'ev-charging' && data.installerSignature && data.installationDate)
+          return 'completed';
         // Fire Alarm specific
-        if (reportType === 'fire-alarm' && data.engineerSignature && data.testDate) return 'completed';
+        if (reportType === 'fire-alarm' && data.engineerSignature && data.testDate)
+          return 'completed';
         // Emergency Lighting specific
-        if (reportType === 'emergency-lighting' && data.engineerSignature && data.testDate) return 'completed';
+        if (reportType === 'emergency-lighting' && data.engineerSignature && data.testDate)
+          return 'completed';
         // PAT Testing specific
-        if (reportType === 'pat-testing' && data.testerSignature && data.testDate) return 'completed';
+        if (reportType === 'pat-testing' && data.testerSignature && data.testDate)
+          return 'completed';
         // Check for any meaningful data entry (works for all report types)
-        const hasContent = data.clientName ||
-                          data.inspectionDate ||
-                          data.workDate ||  // Minor Works date field
-                          data.dateOfInspection ||  // EICR date field
-                          data.installationDate ||  // EV Charging date field
-                          data.testDate ||  // Fire/Emergency/PAT date field
-                          data.installationAddress ||
-                          data.propertyAddress;
+        const hasContent =
+          data.clientName ||
+          data.inspectionDate ||
+          data.workDate || // Minor Works date field
+          data.dateOfInspection || // EICR date field
+          data.installationDate || // EV Charging date field
+          data.testDate || // Fire/Emergency/PAT date field
+          data.installationAddress ||
+          data.propertyAddress;
         return hasContent ? 'in-progress' : 'draft';
       };
 
@@ -180,10 +191,10 @@ export const reportCloud = {
         if (error.code === '23505' && error.message.includes('uniq_reports_user_cert_active')) {
           // Find existing report by certificate number
           const existingReport = await reportCloud.findReportByCertificateNumber(
-            userId, 
+            userId,
             reportData.certificate_number
           );
-          
+
           if (existingReport) {
             // Update the existing report
             const updateResult = await reportCloud.updateReport(
@@ -192,13 +203,13 @@ export const reportCloud = {
               data,
               customerId
             );
-            
+
             if (updateResult.success) {
               return { success: true, reportId: existingReport.report_id };
             }
           }
         }
-        
+
         throw error;
       }
 
@@ -213,11 +224,20 @@ export const reportCloud = {
    * Update an existing report
    * @param isAutoSync - If true, keeps 'auto-draft' status; if false (manual save), promotes to proper status
    */
-  updateReport: async (reportId: string, userId: string, data: any, customerId?: string, isAutoSync: boolean = false): Promise<{ success: boolean; error?: any }> => {
+  updateReport: async (
+    reportId: string,
+    userId: string,
+    data: any,
+    customerId?: string,
+    isAutoSync: boolean = false
+  ): Promise<{ success: boolean; error?: any }> => {
     try {
       // Determine report type from reportId prefix
-      const reportType = reportId.toLowerCase().startsWith('minor-works') ? 'minor-works' :
-                        reportId.toLowerCase().startsWith('eic-') ? 'eic' : 'eicr';
+      const reportType = reportId.toLowerCase().startsWith('minor-works')
+        ? 'minor-works'
+        : reportId.toLowerCase().startsWith('eic-')
+          ? 'eic'
+          : 'eicr';
 
       // Get current status to check if it's an auto-draft
       const { data: currentReport } = await supabase
@@ -238,12 +258,13 @@ export const reportCloud = {
         if (data.certificateGenerated) return 'completed';
         if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
         if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
-        const hasContent = data.clientName ||
-                          data.inspectionDate ||
-                          data.workDate ||
-                          data.dateOfInspection ||
-                          data.installationAddress ||
-                          data.propertyAddress;
+        const hasContent =
+          data.clientName ||
+          data.inspectionDate ||
+          data.workDate ||
+          data.dateOfInspection ||
+          data.installationAddress ||
+          data.propertyAddress;
         return hasContent ? 'in-progress' : 'draft';
       };
 
@@ -312,7 +333,15 @@ export const reportCloud = {
    * Get report data along with the database UUID
    * Returns both the form data and the database ID needed for related queries
    */
-  getReportDataWithId: async (reportId: string, userId: string): Promise<{ data: any; databaseId: string; updatedAt?: string; lastSyncedAt?: string } | null> => {
+  getReportDataWithId: async (
+    reportId: string,
+    userId: string
+  ): Promise<{
+    data: any;
+    databaseId: string;
+    updatedAt?: string;
+    lastSyncedAt?: string;
+  } | null> => {
     try {
       const { data: report, error } = await supabase
         .from('reports')
@@ -340,47 +369,54 @@ export const reportCloud = {
   /**
    * Soft delete a report using secure RPC function
    */
-  softDeleteReport: async (reportId: string, userId: string): Promise<{ success: boolean; error?: any }> => {
+  softDeleteReport: async (
+    reportId: string,
+    userId: string
+  ): Promise<{ success: boolean; error?: any }> => {
     try {
       // Call the secure RPC function that bypasses RLS "returning" issues
-      const { data, error } = await supabase
-        .rpc('soft_delete_report', {
-          p_user_id: userId,
-          p_report_id: reportId
-        });
-      
+      const { data, error } = await supabase.rpc('soft_delete_report', {
+        p_user_id: userId,
+        p_report_id: reportId,
+      });
+
       if (error) {
         console.error('[reportCloud] RPC error:', {
           code: error.code,
           message: error.message,
           details: error.details,
-          hint: error.hint
+          hint: error.hint,
         });
-        return { 
-          success: false, 
+        return {
+          success: false,
           error: {
             code: error.code,
             message: error.message,
             details: error.details,
-            hint: error.hint
-          }
+            hint: error.hint,
+          },
         };
       }
-      
+
       // Parse the JSONB response from the RPC function
-      const result = data as { success: boolean; error?: string; message: string; already_deleted?: boolean };
-      
+      const result = data as {
+        success: boolean;
+        error?: string;
+        message: string;
+        already_deleted?: boolean;
+      };
+
       if (!result.success) {
         console.error('[reportCloud] RPC returned error:', result);
-        return { 
-          success: false, 
+        return {
+          success: false,
           error: {
             message: result.message,
-            code: result.error
-          }
+            code: result.error,
+          },
         };
       }
-      
+
       return { success: true };
     } catch (error) {
       console.error('[reportCloud] Failed to soft delete report:', error);
@@ -391,7 +427,10 @@ export const reportCloud = {
   /**
    * Find report by certificate number
    */
-  findReportByCertificateNumber: async (userId: string, certificateNumber: string): Promise<CloudReport | null> => {
+  findReportByCertificateNumber: async (
+    userId: string,
+    certificateNumber: string
+  ): Promise<CloudReport | null> => {
     try {
       const { data, error } = await supabase
         .from('reports')
@@ -400,7 +439,7 @@ export const reportCloud = {
         .eq('certificate_number', certificateNumber)
         .is('deleted_at', null)
         .maybeSingle();
-      
+
       if (error) throw error;
       return data as CloudReport | null;
     } catch (error) {
@@ -433,7 +472,10 @@ export const reportCloud = {
   /**
    * Get current edit version of a report
    */
-  getEditVersion: async (reportId: string, userId: string): Promise<{ version: number; updatedAt: string } | null> => {
+  getEditVersion: async (
+    reportId: string,
+    userId: string
+  ): Promise<{ version: number; updatedAt: string } | null> => {
     try {
       const { data, error } = await supabase
         .from('reports')
@@ -446,7 +488,7 @@ export const reportCloud = {
       if (error) throw error;
       return {
         version: data?.edit_version || 1,
-        updatedAt: data?.updated_at
+        updatedAt: data?.updated_at,
       };
     } catch (error) {
       console.error('[reportCloud] Failed to get edit version:', error);
@@ -530,7 +572,7 @@ export const reportCloud = {
         if (data.status === 'completed') return 'completed';
         if (data.certificateGenerated) return 'completed';
         if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
-        return (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft';
+        return data.clientName || data.inspectionDate || data.workDate ? 'in-progress' : 'draft';
       };
 
       // No conflict, proceed with update

@@ -14,7 +14,8 @@ const SignalImportanceSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Smart devices rely on constant connectivity for control and automation. Poor wireless signals are the root cause of many smart home reliability issues.
+            Smart devices rely on constant connectivity for control and automation. Poor wireless
+            signals are the root cause of many smart home reliability issues.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -46,7 +47,7 @@ const SignalImportanceSection = () => {
               <AlertCircle className="h-4 w-4 text-elec-yellow" />
               Common Interference Sources
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-3 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-2">Physical Barriers</h5>
@@ -83,7 +84,8 @@ const SignalImportanceSection = () => {
           <div className="bg-blue-600/10 border border-blue-600/30 rounded-lg p-4">
             <h4 className="font-semibold text-blue-400 mb-2">RF Mesh Networks</h4>
             <p className="text-gray-300 text-sm mb-2">
-              Zigbee and Z-Wave create self-healing mesh networks where devices relay signals to each other:
+              Zigbee and Z-Wave create self-healing mesh networks where devices relay signals to
+              each other:
             </p>
             <ul className="space-y-1 text-gray-300 text-sm">
               <li>• Each powered device acts as a signal repeater</li>

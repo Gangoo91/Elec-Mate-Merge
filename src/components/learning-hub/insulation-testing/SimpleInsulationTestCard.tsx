@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SmartTabs } from '@/components/ui/smart-tabs';
 import InsulationTestProcedureCard from './InsulationTestProcedureCard';
@@ -13,29 +12,29 @@ import { HelpCircle, Settings, Table, BookOpen } from 'lucide-react';
 const SimpleInsulationTestCard = () => {
   const smartTabs = [
     {
-      value: "why-test",
-      label: "Why Test?",
+      value: 'why-test',
+      label: 'Why Test?',
       icon: <HelpCircle className="h-4 w-4" />,
-      content: <WhyTestSection />
+      content: <WhyTestSection />,
     },
     {
-      value: "how-test", 
-      label: "How to Test",
+      value: 'how-test',
+      label: 'How to Test',
       icon: <Settings className="h-4 w-4" />,
-      content: <HowToTestSection />
+      content: <HowToTestSection />,
     },
     {
-      value: "tables",
-      label: "IR Tables",
+      value: 'tables',
+      label: 'IR Tables',
       icon: <Table className="h-4 w-4" />,
-      content: <InsulationTablesSection />
+      content: <InsulationTablesSection />,
     },
     {
-      value: "guidance",
-      label: "Practical Guide",
+      value: 'guidance',
+      label: 'Practical Guide',
       icon: <BookOpen className="h-4 w-4" />,
-      content: <PracticalGuidanceSection />
-    }
+      content: <PracticalGuidanceSection />,
+    },
   ];
 
   return (
@@ -43,13 +42,8 @@ const SimpleInsulationTestCard = () => {
       <TestConnectionDiagram />
       <TemperatureEffectsDiagram />
       <InsulationTestProcedureCard />
-      
-      <SmartTabs 
-        tabs={smartTabs}
-        defaultValue="why-test"
-        className="w-full"
-        breakpoint={4}
-      />
+
+      <SmartTabs tabs={smartTabs} defaultValue="why-test" className="w-full" breakpoint={4} />
     </div>
   );
 };

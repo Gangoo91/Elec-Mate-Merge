@@ -1,16 +1,25 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Mail, CheckCircle2, XCircle, Loader2, AlertCircle, Info, ExternalLink, Send } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  Mail,
+  CheckCircle2,
+  XCircle,
+  Loader2,
+  AlertCircle,
+  Info,
+  ExternalLink,
+  Send,
+} from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 }
-  }
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
+  },
 };
 
 const itemVariants = {
@@ -18,8 +27,8 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' }
-  }
+    transition: { duration: 0.2, ease: 'easeOut' },
+  },
 };
 
 interface EmailConfig {
@@ -42,16 +51,16 @@ export const EmailSettingsTab = () => {
   const fetchConfigs = async () => {
     try {
       const { data, error } = await supabase.functions.invoke('get-email-config');
-      
+
       if (error) throw error;
-      
+
       setConfigs(data?.configs || []);
     } catch (error: any) {
       console.error('Error fetching email configs:', error);
       toast({
-        title: "Error",
-        description: error.message || "Failed to fetch email configurations",
-        variant: "destructive",
+        title: 'Error',
+        description: error.message || 'Failed to fetch email configurations',
+        variant: 'destructive',
       });
     } finally {
       setFetchingConfigs(false);
@@ -63,26 +72,26 @@ export const EmailSettingsTab = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
     const error = urlParams.get('error');
-    
+
     if (success === 'true') {
       toast({
-        title: "Email Connected",
-        description: "Your email account has been connected successfully",
+        title: 'Email Connected',
+        description: 'Your email account has been connected successfully',
       });
       // Clean up URL
       window.history.replaceState({}, '', '/settings?tab=email');
     }
-    
+
     if (error) {
       toast({
-        title: "Connection Failed",
+        title: 'Connection Failed',
         description: decodeURIComponent(error),
-        variant: "destructive",
+        variant: 'destructive',
       });
       // Clean up URL
       window.history.replaceState({}, '', '/settings?tab=email');
     }
-    
+
     fetchConfigs();
   }, []);
 
@@ -111,9 +120,9 @@ export const EmailSettingsTab = () => {
     } catch (error: any) {
       console.error('Error initiating OAuth:', error);
       toast({
-        title: "Connection Failed",
+        title: 'Connection Failed',
         description: error.message || `Failed to connect ${provider}`,
-        variant: "destructive",
+        variant: 'destructive',
       });
       setLoading(false);
     }
@@ -128,7 +137,7 @@ export const EmailSettingsTab = () => {
       if (error) throw error;
 
       toast({
-        title: "Disconnected",
+        title: 'Disconnected',
         description: `${provider === 'gmail' ? 'Gmail' : 'Outlook'} account disconnected successfully`,
       });
 
@@ -136,15 +145,15 @@ export const EmailSettingsTab = () => {
     } catch (error: any) {
       console.error('Error disconnecting:', error);
       toast({
-        title: "Error",
-        description: error.message || "Failed to disconnect account",
-        variant: "destructive",
+        title: 'Error',
+        description: error.message || 'Failed to disconnect account',
+        variant: 'destructive',
       });
     }
   };
 
-  const gmailConfig = configs.find(c => c.email_provider === 'gmail');
-  const outlookConfig = configs.find(c => c.email_provider === 'outlook');
+  const gmailConfig = configs.find((c) => c.email_provider === 'gmail');
+  const outlookConfig = configs.find((c) => c.email_provider === 'outlook');
 
   const DAILY_LIMIT = 100;
 
@@ -166,7 +175,10 @@ export const EmailSettingsTab = () => {
       className="space-y-6"
     >
       {/* Header */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="p-4 md:p-6">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
@@ -184,7 +196,10 @@ export const EmailSettingsTab = () => {
 
       {/* Rate Limit Info */}
       {configs.length > 0 && (
-        <motion.div variants={itemVariants} className="rounded-xl bg-amber-500/10 border border-amber-500/20 overflow-hidden">
+        <motion.div
+          variants={itemVariants}
+          className="rounded-xl bg-amber-500/10 border border-amber-500/20 overflow-hidden"
+        >
           <div className="p-4 md:p-6">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
@@ -193,7 +208,8 @@ export const EmailSettingsTab = () => {
               <div>
                 <p className="text-sm font-medium text-foreground">Daily Sending Limit</p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  You can send up to {DAILY_LIMIT} emails per day. Your limit resets at midnight UTC.
+                  You can send up to {DAILY_LIMIT} emails per day. Your limit resets at midnight
+                  UTC.
                 </p>
               </div>
             </div>
@@ -202,7 +218,10 @@ export const EmailSettingsTab = () => {
       )}
 
       {/* Gmail Card */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -233,15 +252,21 @@ export const EmailSettingsTab = () => {
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="text-sm font-medium text-foreground truncate">{gmailConfig.email_address}</p>
+                  <p className="text-sm font-medium text-foreground truncate">
+                    {gmailConfig.email_address}
+                  </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-xs text-muted-foreground">Sent Today</p>
-                  <p className="text-sm font-medium text-foreground">{gmailConfig.daily_sent_count || 0}/{DAILY_LIMIT}</p>
+                  <p className="text-sm font-medium text-foreground">
+                    {gmailConfig.daily_sent_count || 0}/{DAILY_LIMIT}
+                  </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-xs text-muted-foreground">Total Sent</p>
-                  <p className="text-sm font-medium text-foreground">{gmailConfig.total_sent_count || 0}</p>
+                  <p className="text-sm font-medium text-foreground">
+                    {gmailConfig.total_sent_count || 0}
+                  </p>
                 </div>
                 {gmailConfig.last_sent_at && (
                   <div className="p-3 rounded-lg bg-white/5 border border-white/10">
@@ -264,7 +289,8 @@ export const EmailSettingsTab = () => {
           ) : (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                Connect your Gmail account to send invoices and certificates directly from your email address.
+                Connect your Gmail account to send invoices and certificates directly from your
+                email address.
               </p>
               <Button
                 onClick={() => handleConnect('gmail')}
@@ -289,7 +315,10 @@ export const EmailSettingsTab = () => {
       </motion.div>
 
       {/* Outlook Card */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -320,15 +349,21 @@ export const EmailSettingsTab = () => {
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="text-sm font-medium text-foreground truncate">{outlookConfig.email_address}</p>
+                  <p className="text-sm font-medium text-foreground truncate">
+                    {outlookConfig.email_address}
+                  </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-xs text-muted-foreground">Sent Today</p>
-                  <p className="text-sm font-medium text-foreground">{outlookConfig.daily_sent_count || 0}/{DAILY_LIMIT}</p>
+                  <p className="text-sm font-medium text-foreground">
+                    {outlookConfig.daily_sent_count || 0}/{DAILY_LIMIT}
+                  </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-xs text-muted-foreground">Total Sent</p>
-                  <p className="text-sm font-medium text-foreground">{outlookConfig.total_sent_count || 0}</p>
+                  <p className="text-sm font-medium text-foreground">
+                    {outlookConfig.total_sent_count || 0}
+                  </p>
                 </div>
                 {outlookConfig.last_sent_at && (
                   <div className="p-3 rounded-lg bg-white/5 border border-white/10">
@@ -351,7 +386,8 @@ export const EmailSettingsTab = () => {
           ) : (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                Connect your Outlook account to send invoices and certificates directly from your email address.
+                Connect your Outlook account to send invoices and certificates directly from your
+                email address.
               </p>
               <Button
                 onClick={() => handleConnect('outlook')}
@@ -376,15 +412,19 @@ export const EmailSettingsTab = () => {
       </motion.div>
 
       {/* Info Notice */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-white/5 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-white/5 border border-white/10 overflow-hidden"
+      >
         <div className="p-4 md:p-6">
           <div className="flex items-start gap-3">
             <Info className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium text-foreground mb-1">How it works</p>
               <p className="text-sm text-muted-foreground">
-                When you connect your email account, invoices and certificates will be sent directly from your email address,
-                making them more personal and improving deliverability. Your credentials are securely stored and never shared.
+                When you connect your email account, invoices and certificates will be sent directly
+                from your email address, making them more personal and improving deliverability.
+                Your credentials are securely stored and never shared.
               </p>
             </div>
           </div>

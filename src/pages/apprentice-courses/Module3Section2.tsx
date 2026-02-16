@@ -1,58 +1,58 @@
-import { ArrowLeft, Package, Wrench, Shield, Layers, Cog } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Package, Wrench, Shield, Layers, Cog } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Purpose of Containment in Electrical Installations",
-    description: "Understanding why containment systems are essential",
+    number: 'Subsection 1',
+    title: 'Purpose of Containment in Electrical Installations',
+    description: 'Understanding why containment systems are essential',
     icon: Package,
-    href: "2-1"
+    href: '2-1',
   },
   {
-    number: "Subsection 2",
-    title: "PVC and Metal Conduit (Surface/Recessed)",
-    description: "Types of conduit systems and installation methods",
+    number: 'Subsection 2',
+    title: 'PVC and Metal Conduit (Surface/Recessed)',
+    description: 'Types of conduit systems and installation methods',
     icon: Wrench,
-    href: "2-2"
+    href: '2-2',
   },
   {
-    number: "Subsection 3",
-    title: "Plastic and Steel Trunking Systems",
-    description: "Trunking systems for cable containment and protection",
+    number: 'Subsection 3',
+    title: 'Plastic and Steel Trunking Systems',
+    description: 'Trunking systems for cable containment and protection',
     icon: Shield,
-    href: "2-3"
+    href: '2-3',
   },
   {
-    number: "Subsection 4",
-    title: "Cable Tray, Basket, and Ladder Systems",
-    description: "Open containment systems for larger installations",
+    number: 'Subsection 4',
+    title: 'Cable Tray, Basket, and Ladder Systems',
+    description: 'Open containment systems for larger installations',
     icon: Layers,
-    href: "2-4"
+    href: '2-4',
   },
   {
-    number: "Subsection 5",
-    title: "Underfloor Trunking and Dado Trunking",
-    description: "Specialised trunking systems for concealed installations",
+    number: 'Subsection 5',
+    title: 'Underfloor Trunking and Dado Trunking',
+    description: 'Specialised trunking systems for concealed installations',
     icon: Cog,
-    href: "2-5"
+    href: '2-5',
   },
   {
-    number: "Subsection 6",
-    title: "Fixings, Clips, and Cable Ties",
-    description: "Hardware for securing containment and cables",
+    number: 'Subsection 6',
+    title: 'Fixings, Clips, and Cable Ties',
+    description: 'Hardware for securing containment and cables',
     icon: Package,
-    href: "2-6"
+    href: '2-6',
   },
   {
-    number: "Subsection 7",
-    title: "Good Practice for Installing Containment",
-    description: "Best practices and techniques for containment installation",
+    number: 'Subsection 7',
+    title: 'Good Practice for Installing Containment',
+    description: 'Best practices and techniques for containment installation',
     icon: Wrench,
-    href: "2-7"
-  }
+    href: '2-7',
+  },
 ];
 
 const Section2 = () => {

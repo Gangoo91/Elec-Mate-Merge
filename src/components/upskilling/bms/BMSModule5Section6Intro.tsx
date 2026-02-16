@@ -12,16 +12,22 @@ export const BMSModule5Section6Intro = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          A Building Management System (BMS) is only as strong as the network that supports it. Even if BACnet, Modbus, or KNX devices are installed correctly, poor network planning can cause bottlenecks, communication failures, or excessive delays (latency).
+          A Building Management System (BMS) is only as strong as the network that supports it. Even
+          if BACnet, Modbus, or KNX devices are installed correctly, poor network planning can cause
+          bottlenecks, communication failures, or excessive delays (latency).
         </p>
-        
+
         <p>
-          For electricians, this means more than just pulling cable. It requires understanding how network segmentation, device counts, and cable layouts affect performance. While IT engineers design the higher-level networks, electricians are responsible for the physical layer — cabling, terminations, shielding, and correct panel wiring.
+          For electricians, this means more than just pulling cable. It requires understanding how
+          network segmentation, device counts, and cable layouts affect performance. While IT
+          engineers design the higher-level networks, electricians are responsible for the physical
+          layer — cabling, terminations, shielding, and correct panel wiring.
         </p>
-        
+
         <div className="bg-red-600/20 border border-red-600/40 rounded-lg p-4">
           <p className="text-red-100 font-medium">
-            <strong>Critical Point:</strong> Poor network planning can result in data clashes, long delays, or complete loss of control — making even the best BMS installations unreliable.
+            <strong>Critical Point:</strong> Poor network planning can result in data clashes, long
+            delays, or complete loss of control — making even the best BMS installations unreliable.
           </p>
         </div>
       </CardContent>

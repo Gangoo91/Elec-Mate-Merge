@@ -1,19 +1,19 @@
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import InfoBox from "@/components/common/InfoBox";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { SelectivityResult } from "@/lib/selectivity";
-import { 
-  Shield, 
-  AlertTriangle, 
-  CheckCircle, 
-  BookOpen, 
+import WhyThisMatters from '@/components/common/WhyThisMatters';
+import InfoBox from '@/components/common/InfoBox';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { SelectivityResult } from '@/lib/selectivity';
+import {
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  BookOpen,
   Zap,
   Target,
   Clock,
-  TrendingUp
-} from "lucide-react";
+  TrendingUp,
+} from 'lucide-react';
 
 interface SelectivityGuidanceProps {
   result: SelectivityResult;
@@ -22,20 +22,29 @@ interface SelectivityGuidanceProps {
 const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => {
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case 'low': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'medium': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'high': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-white/5';
+      case 'low':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'medium':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'high':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      case 'critical':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default:
+        return 'bg-white/5';
     }
   };
 
   const getComplianceColor = (status: string) => {
     switch (status) {
-      case 'compliant': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'requires-verification': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'non-compliant': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-white/5';
+      case 'compliant':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'requires-verification':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'non-compliant':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default:
+        return 'bg-white/5';
     }
   };
 
@@ -53,11 +62,8 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="text-center">
               <div className="text-sm text-elec-light/80 mb-1">Overall Status</div>
-              <Badge 
-                variant={result.isSelective ? "default" : "destructive"}
-                className="text-sm"
-              >
-                {result.isSelective ? "✓ Selective" : "✗ Not Selective"}
+              <Badge variant={result.isSelective ? 'default' : 'destructive'} className="text-sm">
+                {result.isSelective ? '✓ Selective' : '✗ Not Selective'}
               </Badge>
             </div>
             <div className="text-center">
@@ -82,20 +88,29 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs">Overload Protection:</span>
-                  <Badge variant={result.overloadSelectivity ? "default" : "destructive"} className="text-xs">
-                    {result.overloadSelectivity ? "✓" : "✗"}
+                  <Badge
+                    variant={result.overloadSelectivity ? 'default' : 'destructive'}
+                    className="text-xs"
+                  >
+                    {result.overloadSelectivity ? '✓' : '✗'}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs">Short-Circuit Protection:</span>
-                  <Badge variant={result.shortCircuitSelectivity ? "default" : "destructive"} className="text-xs">
-                    {result.shortCircuitSelectivity ? "✓" : "✗"}
+                  <Badge
+                    variant={result.shortCircuitSelectivity ? 'default' : 'destructive'}
+                    className="text-xs"
+                  >
+                    {result.shortCircuitSelectivity ? '✓' : '✗'}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs">Breaking Capacity:</span>
-                  <Badge variant={result.breakingCapacityCheck ? "default" : "destructive"} className="text-xs">
-                    {result.breakingCapacityCheck ? "✓" : "✗"}
+                  <Badge
+                    variant={result.breakingCapacityCheck ? 'default' : 'destructive'}
+                    className="text-xs"
+                  >
+                    {result.breakingCapacityCheck ? '✓' : '✗'}
                   </Badge>
                 </div>
               </div>
@@ -106,16 +121,24 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-xs text-elec-light/70">Selectivity Ratio:</span>
-                  <span className="text-elec-yellow font-mono">{result.selectivityRatio.toFixed(2)}:1</span>
+                  <span className="text-elec-yellow font-mono">
+                    {result.selectivityRatio.toFixed(2)}:1
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-xs text-elec-light/70">Selectivity Limit:</span>
-                  <span className="text-elec-yellow font-mono">{result.selectivityLimit.toFixed(0)}A</span>
+                  <span className="text-elec-yellow font-mono">
+                    {result.selectivityLimit.toFixed(0)}A
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-xs text-elec-light/70">Time Margin:</span>
                   <span className="text-elec-yellow font-mono">
-                    {((result.operatingTimes.upstream - result.operatingTimes.downstream) * 1000).toFixed(0)}ms
+                    {(
+                      (result.operatingTimes.upstream - result.operatingTimes.downstream) *
+                      1000
+                    ).toFixed(0)}
+                    ms
                   </span>
                 </div>
               </div>
@@ -302,11 +325,18 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
                 </div>
                 <div className="flex justify-between">
                   <span className="text-elec-light/70">Time Discrimination:</span>
-                  <span className={`font-mono ${
-                    (result.operatingTimes.upstream - result.operatingTimes.downstream) >= 0.1 
-                      ? 'text-green-400' : 'text-red-400'
-                  }`}>
-                    {((result.operatingTimes.upstream - result.operatingTimes.downstream) * 1000).toFixed(0)}ms
+                  <span
+                    className={`font-mono ${
+                      result.operatingTimes.upstream - result.operatingTimes.downstream >= 0.1
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  >
+                    {(
+                      (result.operatingTimes.upstream - result.operatingTimes.downstream) *
+                      1000
+                    ).toFixed(0)}
+                    ms
                   </span>
                 </div>
               </div>
@@ -332,10 +362,13 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
                 </div>
                 <div className="flex justify-between">
                   <span className="text-elec-light/70">Magnetic Ratio:</span>
-                  <span className={`font-mono ${
-                    (result.magneticTrips.upstream / result.magneticTrips.downstream) >= 1.6 
-                      ? 'text-green-400' : 'text-red-400'
-                  }`}>
+                  <span
+                    className={`font-mono ${
+                      result.magneticTrips.upstream / result.magneticTrips.downstream >= 1.6
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  >
                     {(result.magneticTrips.upstream / result.magneticTrips.downstream).toFixed(2)}:1
                   </span>
                 </div>
@@ -349,12 +382,12 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
       <WhyThisMatters
         title="Why Selectivity Matters"
         points={[
-          "Prevents unnecessary outages by isolating only the faulted circuit",
-          "Reduces downtime and improves system availability for critical loads",
-          "Ensures compliance with BS 7671 coordination requirements",
-          "Minimises risk of cascading failures and equipment damage",
-          "Essential for maintaining electrical safety in complex installations",
-          "Required for insurance compliance and professional liability",
+          'Prevents unnecessary outages by isolating only the faulted circuit',
+          'Reduces downtime and improves system availability for critical loads',
+          'Ensures compliance with BS 7671 coordination requirements',
+          'Minimises risk of cascading failures and equipment damage',
+          'Essential for maintaining electrical safety in complex installations',
+          'Required for insurance compliance and professional liability',
         ]}
       />
     </div>

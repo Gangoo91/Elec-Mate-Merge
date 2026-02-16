@@ -1,11 +1,10 @@
-
-import { useSearchParams } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
+import { useSearchParams } from 'react-router-dom';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Progress } from '@/components/ui/progress';
 import {
   Clock,
   FileText,
@@ -30,154 +29,232 @@ import {
   Bell,
   HelpCircle,
   BarChart3,
-  Star
-} from "lucide-react";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
+  Star,
+} from 'lucide-react';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const OffJobTrainingGuide = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "what-counts";
+  const activeTab = searchParams.get('tab') || 'what-counts';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const isMobile = useIsMobile();
 
   const validActivities = [
-    { activity: "College/Training Provider Sessions", description: "All classroom time including theory and practical", hours: "All hours", icon: BookOpen },
-    { activity: "Online Learning Modules", description: "Structured e-learning courses and assessments", hours: "Active learning time", icon: Smartphone },
-    { activity: "Self-Study with Course Materials", description: "Revision using textbooks, handouts, past papers", hours: "Documented study time", icon: FileText },
-    { activity: "Practice Exams & Mock Tests", description: "Exam preparation and timed practice papers", hours: "Time spent testing", icon: ClipboardCheck },
-    { activity: "Webinars & Video Tutorials", description: "Educational content from recognised providers", hours: "Duration of content", icon: Camera },
-    { activity: "Reading Regulations/Standards", description: "BS 7671, IET Guidance Notes, On-Site Guide", hours: "Study time with notes", icon: BookOpen },
-    { activity: "Industry Conferences/Events", description: "Trade shows, manufacturer training, CPD events", hours: "Event duration", icon: Star },
-    { activity: "Mentor-led Training Sessions", description: "Structured learning with your workplace mentor", hours: "Planned sessions only", icon: Target }
+    {
+      activity: 'College/Training Provider Sessions',
+      description: 'All classroom time including theory and practical',
+      hours: 'All hours',
+      icon: BookOpen,
+    },
+    {
+      activity: 'Online Learning Modules',
+      description: 'Structured e-learning courses and assessments',
+      hours: 'Active learning time',
+      icon: Smartphone,
+    },
+    {
+      activity: 'Self-Study with Course Materials',
+      description: 'Revision using textbooks, handouts, past papers',
+      hours: 'Documented study time',
+      icon: FileText,
+    },
+    {
+      activity: 'Practice Exams & Mock Tests',
+      description: 'Exam preparation and timed practice papers',
+      hours: 'Time spent testing',
+      icon: ClipboardCheck,
+    },
+    {
+      activity: 'Webinars & Video Tutorials',
+      description: 'Educational content from recognised providers',
+      hours: 'Duration of content',
+      icon: Camera,
+    },
+    {
+      activity: 'Reading Regulations/Standards',
+      description: 'BS 7671, IET Guidance Notes, On-Site Guide',
+      hours: 'Study time with notes',
+      icon: BookOpen,
+    },
+    {
+      activity: 'Industry Conferences/Events',
+      description: 'Trade shows, manufacturer training, CPD events',
+      hours: 'Event duration',
+      icon: Star,
+    },
+    {
+      activity: 'Mentor-led Training Sessions',
+      description: 'Structured learning with your workplace mentor',
+      hours: 'Planned sessions only',
+      icon: Target,
+    },
   ];
 
   const invalidActivities = [
-    { activity: "Watching Random YouTube Videos", reason: "Not structured or recognised learning", icon: XCircle },
-    { activity: "General Site Work", reason: "This is on-the-job training (the 80%)", icon: XCircle },
-    { activity: "Travel Time to College", reason: "Transport doesn't count as learning", icon: XCircle },
-    { activity: "Lunch Breaks at College", reason: "Break time isn't learning time", icon: XCircle },
-    { activity: "Shadowing Without Structure", reason: "Must have clear learning objectives", icon: XCircle },
-    { activity: "Work Experience Placements", reason: "Already counts as on-the-job", icon: XCircle }
+    {
+      activity: 'Watching Random YouTube Videos',
+      reason: 'Not structured or recognised learning',
+      icon: XCircle,
+    },
+    {
+      activity: 'General Site Work',
+      reason: 'This is on-the-job training (the 80%)',
+      icon: XCircle,
+    },
+    {
+      activity: 'Travel Time to College',
+      reason: "Transport doesn't count as learning",
+      icon: XCircle,
+    },
+    {
+      activity: 'Lunch Breaks at College',
+      reason: "Break time isn't learning time",
+      icon: XCircle,
+    },
+    {
+      activity: 'Shadowing Without Structure',
+      reason: 'Must have clear learning objectives',
+      icon: XCircle,
+    },
+    {
+      activity: 'Work Experience Placements',
+      reason: 'Already counts as on-the-job',
+      icon: XCircle,
+    },
   ];
 
   const sampleLogEntries = [
     {
-      date: "15/03/2024",
-      activity: "Level 3 Electrical Installation - Unit 305",
-      provider: "City College",
-      hours: "6.5",
-      description: "AC Theory module covering: RCD operating principles, earth fault loop impedance, and practical circuit installation workshop. Completed Unit 305 assignment.",
-      evidence: "College attendance register, Module completion certificate, Assignment submission screenshot",
-      category: "College"
+      date: '15/03/2024',
+      activity: 'Level 3 Electrical Installation - Unit 305',
+      provider: 'City College',
+      hours: '6.5',
+      description:
+        'AC Theory module covering: RCD operating principles, earth fault loop impedance, and practical circuit installation workshop. Completed Unit 305 assignment.',
+      evidence:
+        'College attendance register, Module completion certificate, Assignment submission screenshot',
+      category: 'College',
     },
     {
-      date: "18/03/2024",
-      activity: "BS 7671 18th Edition Revision",
-      provider: "Self-Study",
-      hours: "2.0",
-      description: "Studied Part 4: Protection for Safety, focusing on Chapter 41 (Protection against electric shock). Completed 20 practice questions on automatic disconnection times.",
-      evidence: "Annotated On-Site Guide pages (photo), Practice test results (screenshot), Study notes",
-      category: "Self-Study"
+      date: '18/03/2024',
+      activity: 'BS 7671 18th Edition Revision',
+      provider: 'Self-Study',
+      hours: '2.0',
+      description:
+        'Studied Part 4: Protection for Safety, focusing on Chapter 41 (Protection against electric shock). Completed 20 practice questions on automatic disconnection times.',
+      evidence:
+        'Annotated On-Site Guide pages (photo), Practice test results (screenshot), Study notes',
+      category: 'Self-Study',
     },
     {
-      date: "20/03/2024",
-      activity: "Cable Sizing & Voltage Drop Webinar",
-      provider: "Electrical Training Ltd",
-      hours: "1.5",
-      description: "Live CPD webinar covering cable selection methods, voltage drop calculations using mV/A/m method, and correction factors for grouping and thermal insulation.",
-      evidence: "Webinar completion certificate (PDF), Completed worksheet, Notes from Q&A session",
-      category: "Webinar"
+      date: '20/03/2024',
+      activity: 'Cable Sizing & Voltage Drop Webinar',
+      provider: 'Electrical Training Ltd',
+      hours: '1.5',
+      description:
+        'Live CPD webinar covering cable selection methods, voltage drop calculations using mV/A/m method, and correction factors for grouping and thermal insulation.',
+      evidence: 'Webinar completion certificate (PDF), Completed worksheet, Notes from Q&A session',
+      category: 'Webinar',
     },
     {
-      date: "22/03/2024",
-      activity: "EV Charging Installation Training",
-      provider: "Manufacturer Training",
-      hours: "4.0",
-      description: "Product training on Mode 3 EV charger installation, covering: electrical requirements, load management, and compliance with IET Code of Practice.",
-      evidence: "Training certificate, Product knowledge assessment score, Installation checklist",
-      category: "Training"
-    }
+      date: '22/03/2024',
+      activity: 'EV Charging Installation Training',
+      provider: 'Manufacturer Training',
+      hours: '4.0',
+      description:
+        'Product training on Mode 3 EV charger installation, covering: electrical requirements, load management, and compliance with IET Code of Practice.',
+      evidence: 'Training certificate, Product knowledge assessment score, Installation checklist',
+      category: 'Training',
+    },
   ];
 
   const evidenceTypes = [
     {
-      type: "Screenshots & Photos",
+      type: 'Screenshots & Photos',
       examples: [
-        "Completed online module screens",
-        "Quiz/test results",
-        "Annotated textbook pages",
-        "Whiteboard notes from training"
+        'Completed online module screens',
+        'Quiz/test results',
+        'Annotated textbook pages',
+        'Whiteboard notes from training',
       ],
-      tips: "Include date/time stamp where possible",
-      icon: Image
+      tips: 'Include date/time stamp where possible',
+      icon: Image,
     },
     {
-      type: "Certificates & Documents",
+      type: 'Certificates & Documents',
       examples: [
-        "Course completion certificates",
-        "CPD certificates",
-        "Attendance records",
-        "Manufacturer training certificates"
+        'Course completion certificates',
+        'CPD certificates',
+        'Attendance records',
+        'Manufacturer training certificates',
       ],
-      tips: "Save as PDF with clear file names",
-      icon: Award
+      tips: 'Save as PDF with clear file names',
+      icon: Award,
     },
     {
-      type: "Written Records",
+      type: 'Written Records',
       examples: [
-        "Study notes (handwritten or typed)",
-        "Learning journals/reflections",
-        "Assignment submissions",
-        "Project documentation"
+        'Study notes (handwritten or typed)',
+        'Learning journals/reflections',
+        'Assignment submissions',
+        'Project documentation',
       ],
-      tips: "Date all written records clearly",
-      icon: PenLine
+      tips: 'Date all written records clearly',
+      icon: PenLine,
     },
     {
-      type: "Progress Tracking",
+      type: 'Progress Tracking',
       examples: [
-        "E-learning platform progress",
-        "App activity logs",
-        "Assessment tracker updates",
-        "Portfolio sign-off sheets"
+        'E-learning platform progress',
+        'App activity logs',
+        'Assessment tracker updates',
+        'Portfolio sign-off sheets',
       ],
-      tips: "Regular updates show consistency",
-      icon: BarChart3
-    }
+      tips: 'Regular updates show consistency',
+      icon: BarChart3,
+    },
   ];
 
   const loggingTips = [
     {
-      tip: "Log hours weekly, not monthly",
+      tip: 'Log hours weekly, not monthly',
       detail: "It's much easier to remember details when they're fresh. Set a weekly reminder.",
-      priority: "high"
+      priority: 'high',
     },
     {
-      tip: "Be specific about what you learned",
-      detail: "Instead of 'studied wiring regs', write 'Chapter 52 cable selection, focusing on grouping factors'",
-      priority: "high"
+      tip: 'Be specific about what you learned',
+      detail:
+        "Instead of 'studied wiring regs', write 'Chapter 52 cable selection, focusing on grouping factors'",
+      priority: 'high',
     },
     {
-      tip: "Keep evidence for everything",
-      detail: "Screenshot completed modules, photograph notes, save certificates. Better to have too much than too little.",
-      priority: "high"
+      tip: 'Keep evidence for everything',
+      detail:
+        'Screenshot completed modules, photograph notes, save certificates. Better to have too much than too little.',
+      priority: 'high',
     },
     {
-      tip: "Use consistent formatting",
-      detail: "Same date format, similar description style. Makes your log look professional and is easier to review.",
-      priority: "medium"
+      tip: 'Use consistent formatting',
+      detail:
+        'Same date format, similar description style. Makes your log look professional and is easier to review.',
+      priority: 'medium',
     },
     {
-      tip: "Round to nearest 30 minutes",
-      detail: "1.5 hours, 2.0 hours, etc. More accurate than exact minutes and easier to total.",
-      priority: "medium"
+      tip: 'Round to nearest 30 minutes',
+      detail: '1.5 hours, 2.0 hours, etc. More accurate than exact minutes and easier to total.',
+      priority: 'medium',
     },
     {
-      tip: "Link learning to workplace",
-      detail: "Note how college learning connects to site work. Shows application of knowledge.",
-      priority: "medium"
-    }
+      tip: 'Link learning to workplace',
+      detail: 'Note how college learning connects to site work. Shows application of knowledge.',
+      priority: 'medium',
+    },
   ];
 
   const hoursCalculation = {
@@ -186,13 +263,13 @@ const OffJobTrainingGuide = () => {
     weeklyOJT: 7.5,
     monthlyOJT: 32.5,
     yearlyOJT: 390,
-    totalApprenticeship: 1560
+    totalApprenticeship: 1560,
   };
 
   const weeklyTemplate = [
-    { day: "College Day", hours: 6.5, type: "formal" },
-    { day: "Self-Study", hours: 1.0, type: "informal" },
-    { day: "Total", hours: 7.5, type: "total" }
+    { day: 'College Day', hours: 6.5, type: 'formal' },
+    { day: 'Self-Study', hours: 1.0, type: 'informal' },
+    { day: 'Total', hours: 7.5, type: 'total' },
   ];
 
   const renderWhatCountsTab = () => (
@@ -207,20 +284,40 @@ const OffJobTrainingGuide = () => {
             <div className="flex-1">
               <h3 className="text-xl font-bold text-white mb-2">The 20% Off-the-Job Rule</h3>
               <p className="text-white text-sm leading-relaxed mb-4">
-                As an apprentice, at least <span className="text-elec-yellow font-semibold">20% of your working hours</span> must
-                be spent on off-the-job training. This is learning that happens away from your normal work duties,
-                even if it takes place at your workplace.
+                As an apprentice, at least{' '}
+                <span className="text-elec-yellow font-semibold">20% of your working hours</span>{' '}
+                must be spent on off-the-job training. This is learning that happens away from your
+                normal work duties, even if it takes place at your workplace.
               </p>
 
               {/* Hours Calculator */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { label: "Per Week", value: `${hoursCalculation.weeklyOJT} hrs`, sublabel: "~1 college day" },
-                  { label: "Per Month", value: `${hoursCalculation.monthlyOJT} hrs`, sublabel: "Average" },
-                  { label: "Per Year", value: `${hoursCalculation.yearlyOJT} hrs`, sublabel: "Minimum" },
-                  { label: "Total (4yr)", value: `${hoursCalculation.totalApprenticeship} hrs`, sublabel: "Required" }
+                  {
+                    label: 'Per Week',
+                    value: `${hoursCalculation.weeklyOJT} hrs`,
+                    sublabel: '~1 college day',
+                  },
+                  {
+                    label: 'Per Month',
+                    value: `${hoursCalculation.monthlyOJT} hrs`,
+                    sublabel: 'Average',
+                  },
+                  {
+                    label: 'Per Year',
+                    value: `${hoursCalculation.yearlyOJT} hrs`,
+                    sublabel: 'Minimum',
+                  },
+                  {
+                    label: 'Total (4yr)',
+                    value: `${hoursCalculation.totalApprenticeship} hrs`,
+                    sublabel: 'Required',
+                  },
                 ].map((item, idx) => (
-                  <div key={idx} className="text-center p-3 bg-white/5 border border-white/10 rounded-lg">
+                  <div
+                    key={idx}
+                    className="text-center p-3 bg-white/5 border border-white/10 rounded-lg"
+                  >
                     <div className="text-xl font-bold text-white">{item.value}</div>
                     <div className="text-elec-yellow text-xs">{item.label}</div>
                     <div className="text-white text-xs">{item.sublabel}</div>
@@ -244,14 +341,20 @@ const OffJobTrainingGuide = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {validActivities.map((item, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-green-500/5 border border-green-500/20 rounded-lg hover:bg-green-500/10 transition-colors">
+              <div
+                key={index}
+                className="flex items-start gap-3 p-3 bg-green-500/5 border border-green-500/20 rounded-lg hover:bg-green-500/10 transition-colors"
+              >
                 <div className="p-2 bg-green-500/20 rounded-lg flex-shrink-0">
                   <item.icon className="h-4 w-4 text-green-400" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <h4 className="font-medium text-white text-sm">{item.activity}</h4>
-                    <Badge variant="outline" className="text-green-400 border-green-400/30 text-xs flex-shrink-0">
+                    <Badge
+                      variant="outline"
+                      className="text-green-400 border-green-400/30 text-xs flex-shrink-0"
+                    >
                       Valid
                     </Badge>
                   </div>
@@ -276,7 +379,10 @@ const OffJobTrainingGuide = () => {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {invalidActivities.map((item, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+              <div
+                key={index}
+                className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg"
+              >
                 <item.icon className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-medium text-white text-sm">{item.activity}</h4>
@@ -299,15 +405,21 @@ const OffJobTrainingGuide = () => {
         <CardContent>
           <div className="space-y-3">
             <p className="text-white text-sm">
-              Ask yourself: <span className="text-blue-400 font-medium">"Am I learning something new that relates to my apprenticeship?"</span>
+              Ask yourself:{' '}
+              <span className="text-blue-400 font-medium">
+                "Am I learning something new that relates to my apprenticeship?"
+              </span>
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { q: "Is it structured learning?", icon: Target },
-                { q: "Can I provide evidence?", icon: FileText },
-                { q: "Does it relate to my qualification?", icon: Award }
+                { q: 'Is it structured learning?', icon: Target },
+                { q: 'Can I provide evidence?', icon: FileText },
+                { q: 'Does it relate to my qualification?', icon: Award },
               ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
+                <div
+                  key={idx}
+                  className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg"
+                >
                   <item.icon className="h-4 w-4 text-blue-400 flex-shrink-0" />
                   <span className="text-white text-sm">{item.q}</span>
                 </div>
@@ -329,9 +441,7 @@ const OffJobTrainingGuide = () => {
             <FileText className="h-5 w-5 text-elec-yellow" />
             Sample Log Entries
           </CardTitle>
-          <p className="text-white text-sm">
-            Copy this format for professional, complete entries
-          </p>
+          <p className="text-white text-sm">Copy this format for professional, complete entries</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -344,9 +454,7 @@ const OffJobTrainingGuide = () => {
                     </Badge>
                     <span className="text-white font-medium text-sm">{entry.date}</span>
                   </div>
-                  <Badge className="bg-green-500/20 text-green-400">
-                    {entry.hours} hrs
-                  </Badge>
+                  <Badge className="bg-green-500/20 text-green-400">{entry.hours} hrs</Badge>
                 </div>
 
                 <div className="p-4 space-y-3">
@@ -389,16 +497,28 @@ const OffJobTrainingGuide = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-3 gap-3">
               {weeklyTemplate.map((item, idx) => (
-                <div key={idx} className={`text-center p-4 rounded-lg ${
-                  item.type === 'total' ? 'bg-elec-yellow/20 border border-elec-yellow/30' :
-                  item.type === 'formal' ? 'bg-blue-500/10 border border-blue-500/20' :
-                  'bg-purple-500/10 border border-purple-500/20'
-                }`}>
+                <div
+                  key={idx}
+                  className={`text-center p-4 rounded-lg ${
+                    item.type === 'total'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/30'
+                      : item.type === 'formal'
+                        ? 'bg-blue-500/10 border border-blue-500/20'
+                        : 'bg-purple-500/10 border border-purple-500/20'
+                  }`}
+                >
                   <div className="text-2xl font-bold text-white">{item.hours} hrs</div>
-                  <div className={`text-xs ${
-                    item.type === 'total' ? 'text-elec-yellow' :
-                    item.type === 'formal' ? 'text-blue-400' : 'text-purple-400'
-                  }`}>{item.day}</div>
+                  <div
+                    className={`text-xs ${
+                      item.type === 'total'
+                        ? 'text-elec-yellow'
+                        : item.type === 'formal'
+                          ? 'text-blue-400'
+                          : 'text-purple-400'
+                    }`}
+                  >
+                    {item.day}
+                  </div>
                 </div>
               ))}
             </div>
@@ -408,15 +528,24 @@ const OffJobTrainingGuide = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2 text-white">
                   <CheckCircle className="h-3 w-3 text-blue-400" />
-                  <span><strong className="text-blue-400">College day:</strong> 6.5 hours (full day minus lunch)</span>
+                  <span>
+                    <strong className="text-blue-400">College day:</strong> 6.5 hours (full day
+                    minus lunch)
+                  </span>
                 </li>
                 <li className="flex items-center gap-2 text-white">
                   <CheckCircle className="h-3 w-3 text-purple-400" />
-                  <span><strong className="text-purple-400">Self-study:</strong> 1 hour (evening/weekend revision)</span>
+                  <span>
+                    <strong className="text-purple-400">Self-study:</strong> 1 hour (evening/weekend
+                    revision)
+                  </span>
                 </li>
                 <li className="flex items-center gap-2 text-white">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  <span><strong className="text-elec-yellow">Total:</strong> 7.5 hours = 20% of 37.5 hour week</span>
+                  <span>
+                    <strong className="text-elec-yellow">Total:</strong> 7.5 hours = 20% of 37.5
+                    hour week
+                  </span>
                 </li>
               </ul>
             </div>
@@ -436,23 +565,23 @@ const OffJobTrainingGuide = () => {
           <div className="space-y-4">
             {[
               {
-                field: "Activity Title",
-                bad: "Studied wiring",
-                good: "BS 7671 18th Edition - Part 4 Protection for Safety",
-                tip: "Be specific about what you studied"
+                field: 'Activity Title',
+                bad: 'Studied wiring',
+                good: 'BS 7671 18th Edition - Part 4 Protection for Safety',
+                tip: 'Be specific about what you studied',
               },
               {
-                field: "Description",
-                bad: "Read some regulations",
-                good: "Covered Chapter 41, focusing on ADS for TN systems. Completed 15 calculation questions on Zs values.",
-                tip: "Include topics, chapters, exercises completed"
+                field: 'Description',
+                bad: 'Read some regulations',
+                good: 'Covered Chapter 41, focusing on ADS for TN systems. Completed 15 calculation questions on Zs values.',
+                tip: 'Include topics, chapters, exercises completed',
               },
               {
-                field: "Evidence",
-                bad: "Notes",
-                good: "Photo of annotated On-Site Guide p.83-87, Screenshot of test score (85%)",
-                tip: "Be specific about what evidence you have"
-              }
+                field: 'Evidence',
+                bad: 'Notes',
+                good: 'Photo of annotated On-Site Guide p.83-87, Screenshot of test score (85%)',
+                tip: 'Be specific about what evidence you have',
+              },
             ].map((item, idx) => (
               <div key={idx} className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-semibold text-white mb-3">{item.field}</h4>
@@ -480,7 +609,10 @@ const OffJobTrainingGuide = () => {
       {/* Evidence Types Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {evidenceTypes.map((type, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/40 transition-all">
+          <Card
+            key={index}
+            className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/40 transition-all"
+          >
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-lg">
                 <div className="p-2 bg-elec-yellow/20 rounded-lg">
@@ -517,14 +649,17 @@ const OffJobTrainingGuide = () => {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              "Is the date clearly visible or recorded?",
-              "Does it show your name or login?",
-              "Is it readable and clear quality?",
-              "Does it match your log entry description?",
-              "Is it saved in an accessible format?",
-              "Have you backed it up?"
+              'Is the date clearly visible or recorded?',
+              'Does it show your name or login?',
+              'Is it readable and clear quality?',
+              'Does it match your log entry description?',
+              'Is it saved in an accessible format?',
+              'Have you backed it up?',
             ].map((check, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
+              <div
+                key={idx}
+                className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg"
+              >
                 <div className="w-5 h-5 border-2 border-green-400 rounded flex items-center justify-center">
                   <CheckCircle className="h-3 w-3 text-green-400" />
                 </div>
@@ -559,9 +694,9 @@ const OffJobTrainingGuide = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { tip: "Use date prefixes", detail: "DD-MM-YY format sorts chronologically" },
-                { tip: "Short descriptive names", detail: "Topic_Activity format is clear" },
-                { tip: "Cloud backup", detail: "Use Google Drive, OneDrive, or iCloud" }
+                { tip: 'Use date prefixes', detail: 'DD-MM-YY format sorts chronologically' },
+                { tip: 'Short descriptive names', detail: 'Topic_Activity format is clear' },
+                { tip: 'Cloud backup', detail: 'Use Google Drive, OneDrive, or iCloud' },
               ].map((item, idx) => (
                 <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-lg">
                   <h5 className="font-semibold text-purple-400 text-sm">{item.tip}</h5>
@@ -588,21 +723,34 @@ const OffJobTrainingGuide = () => {
         <CardContent>
           <div className="space-y-3">
             {loggingTips.map((item, index) => (
-              <div key={index} className={`p-4 rounded-lg border ${
-                item.priority === 'high' ? 'bg-elec-yellow/5 border-elec-yellow/20' : 'bg-white/5 border-white/10'
-              }`}>
+              <div
+                key={index}
+                className={`p-4 rounded-lg border ${
+                  item.priority === 'high'
+                    ? 'bg-elec-yellow/5 border-elec-yellow/20'
+                    : 'bg-white/5 border-white/10'
+                }`}
+              >
                 <div className="flex items-start gap-3">
-                  <div className={`p-2 rounded-lg flex-shrink-0 ${
-                    item.priority === 'high' ? 'bg-elec-yellow/20' : 'bg-white/10'
-                  }`}>
-                    <CheckCircle className={`h-4 w-4 ${
-                      item.priority === 'high' ? 'text-elec-yellow' : 'text-white'
-                    }`} />
+                  <div
+                    className={`p-2 rounded-lg flex-shrink-0 ${
+                      item.priority === 'high' ? 'bg-elec-yellow/20' : 'bg-white/10'
+                    }`}
+                  >
+                    <CheckCircle
+                      className={`h-4 w-4 ${
+                        item.priority === 'high' ? 'text-elec-yellow' : 'text-white'
+                      }`}
+                    />
                   </div>
                   <div>
-                    <h4 className={`font-semibold text-sm ${
-                      item.priority === 'high' ? 'text-elec-yellow' : 'text-white'
-                    }`}>{item.tip}</h4>
+                    <h4
+                      className={`font-semibold text-sm ${
+                        item.priority === 'high' ? 'text-elec-yellow' : 'text-white'
+                      }`}
+                    >
+                      {item.tip}
+                    </h4>
                     <p className="text-white text-sm mt-1">{item.detail}</p>
                   </div>
                   {item.priority === 'high' && (
@@ -627,7 +775,8 @@ const OffJobTrainingGuide = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-white text-sm">
-            Time spent learning in this app <span className="text-green-400 font-semibold">counts as off-the-job training!</span>
+            Time spent learning in this app{' '}
+            <span className="text-green-400 font-semibold">counts as off-the-job training!</span>
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -659,11 +808,12 @@ const OffJobTrainingGuide = () => {
           <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
             <h4 className="font-semibold text-white mb-2">How to Log App Usage:</h4>
             <p className="text-white text-sm italic">
-              "Self-directed learning using Elec-Mate apprenticeship platform - studied [specific topic],
-              completed practice questions on [subject]"
+              "Self-directed learning using Elec-Mate apprenticeship platform - studied [specific
+              topic], completed practice questions on [subject]"
             </p>
             <p className="text-green-400 text-xs mt-2">
-              Evidence: Screenshots of completed modules, progress tracking, or notes taken during session
+              Evidence: Screenshots of completed modules, progress tracking, or notes taken during
+              session
             </p>
           </div>
         </CardContent>
@@ -680,12 +830,12 @@ const OffJobTrainingGuide = () => {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              { mistake: "Leaving logging until end of month", fix: "Log weekly, set a reminder" },
-              { mistake: "Vague descriptions", fix: "Be specific about topics covered" },
-              { mistake: "No evidence saved", fix: "Screenshot/photograph everything" },
-              { mistake: "Forgetting self-study time", fix: "Include revision and homework" },
-              { mistake: "Rounding up hours too much", fix: "Be honest, round to nearest 30 mins" },
-              { mistake: "Not backing up evidence", fix: "Use cloud storage" }
+              { mistake: 'Leaving logging until end of month', fix: 'Log weekly, set a reminder' },
+              { mistake: 'Vague descriptions', fix: 'Be specific about topics covered' },
+              { mistake: 'No evidence saved', fix: 'Screenshot/photograph everything' },
+              { mistake: 'Forgetting self-study time', fix: 'Include revision and homework' },
+              { mistake: 'Rounding up hours too much', fix: 'Be honest, round to nearest 30 mins' },
+              { mistake: 'Not backing up evidence', fix: 'Use cloud storage' },
             ].map((item, idx) => (
               <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
@@ -716,11 +866,14 @@ const OffJobTrainingGuide = () => {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
-              { when: "Friday PM", action: "Log this week's OJT hours" },
-              { when: "After college", action: "Save evidence immediately" },
-              { when: "Monthly", action: "Check hours running total" }
+              { when: 'Friday PM', action: "Log this week's OJT hours" },
+              { when: 'After college', action: 'Save evidence immediately' },
+              { when: 'Monthly', action: 'Check hours running total' },
             ].map((item, idx) => (
-              <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-lg text-center">
+              <div
+                key={idx}
+                className="p-3 bg-white/5 border border-white/10 rounded-lg text-center"
+              >
                 <div className="text-blue-400 font-semibold text-sm">{item.when}</div>
                 <p className="text-white text-xs mt-1">{item.action}</p>
               </div>
@@ -741,9 +894,7 @@ const OffJobTrainingGuide = () => {
             What Counts
           </div>
         </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderWhatCountsTab()}
-        </MobileAccordionContent>
+        <MobileAccordionContent>{renderWhatCountsTab()}</MobileAccordionContent>
       </MobileAccordionItem>
 
       <MobileAccordionItem value="how-to-log">
@@ -753,9 +904,7 @@ const OffJobTrainingGuide = () => {
             How to Log
           </div>
         </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderHowToLogTab()}
-        </MobileAccordionContent>
+        <MobileAccordionContent>{renderHowToLogTab()}</MobileAccordionContent>
       </MobileAccordionItem>
 
       <MobileAccordionItem value="evidence">
@@ -765,9 +914,7 @@ const OffJobTrainingGuide = () => {
             Evidence Types
           </div>
         </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderEvidenceTab()}
-        </MobileAccordionContent>
+        <MobileAccordionContent>{renderEvidenceTab()}</MobileAccordionContent>
       </MobileAccordionItem>
 
       <MobileAccordionItem value="tips">
@@ -777,9 +924,7 @@ const OffJobTrainingGuide = () => {
             Tips & Tools
           </div>
         </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderTipsTab()}
-        </MobileAccordionContent>
+        <MobileAccordionContent>{renderTipsTab()}</MobileAccordionContent>
       </MobileAccordionItem>
     </MobileAccordion>
   );
@@ -835,19 +980,31 @@ const OffJobTrainingGuide = () => {
       ) : (
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-white/5 border border-white/10">
-            <TabsTrigger value="what-counts" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+            <TabsTrigger
+              value="what-counts"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2"
+            >
               <CheckCircle className="h-4 w-4" />
               <span className="hidden sm:inline">What Counts</span>
             </TabsTrigger>
-            <TabsTrigger value="how-to-log" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+            <TabsTrigger
+              value="how-to-log"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2"
+            >
               <PenLine className="h-4 w-4" />
               <span className="hidden sm:inline">How to Log</span>
             </TabsTrigger>
-            <TabsTrigger value="evidence" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+            <TabsTrigger
+              value="evidence"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2"
+            >
               <FolderOpen className="h-4 w-4" />
               <span className="hidden sm:inline">Evidence</span>
             </TabsTrigger>
-            <TabsTrigger value="tips" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+            <TabsTrigger
+              value="tips"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2"
+            >
               <Lightbulb className="h-4 w-4" />
               <span className="hidden sm:inline">Tips</span>
             </TabsTrigger>

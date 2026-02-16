@@ -9,9 +9,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Video, Bookmark, Clock } from 'lucide-react';
-import {
-  curatedVideos,
-} from '@/data/apprentice/curatedVideos';
+import { curatedVideos } from '@/data/apprentice/curatedVideos';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
 import { useAuth } from '@/contexts/AuthContext';
@@ -36,12 +34,15 @@ export function LearningVideosSection() {
     if (level === 'level2') {
       // Level 2 apprentices: show electrical theory fundamentals first
       const theoryVideos = curatedVideos.filter(
-        v => v.channel === 'The Engineering Mindset' && v.category === 'electrical-theory' && v.level === 'beginner'
+        (v) =>
+          v.channel === 'The Engineering Mindset' &&
+          v.category === 'electrical-theory' &&
+          v.level === 'beginner'
       );
       return theoryVideos.slice(0, 3);
     }
     // Level 3 / AM2 / no level: show Craig's practical NVQ content
-    const craigVideos = curatedVideos.filter(v => v.channel === 'Craig Wiltshire');
+    const craigVideos = curatedVideos.filter((v) => v.channel === 'Craig Wiltshire');
     return craigVideos.slice(0, 3);
   })();
 
@@ -74,7 +75,7 @@ export function LearningVideosSection() {
     <motion.div variants={itemVariants} className="space-y-3">
       {/* 3 preview video cards */}
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide sm:grid sm:grid-cols-3 sm:overflow-x-visible">
-        {previewVideos.map(video => (
+        {previewVideos.map((video) => (
           <HubVideoCard
             key={video.id}
             video={video}
@@ -111,11 +112,12 @@ function HubVideoCard({
   onTap: () => void;
   onBookmarkToggle: () => void;
 }) {
-  const levelDot = video.level === 'beginner'
-    ? 'bg-green-400'
-    : video.level === 'intermediate'
-      ? 'bg-amber-400'
-      : 'bg-red-400';
+  const levelDot =
+    video.level === 'beginner'
+      ? 'bg-green-400'
+      : video.level === 'intermediate'
+        ? 'bg-amber-400'
+        : 'bg-red-400';
 
   return (
     <div className="flex-shrink-0 w-[220px] sm:w-auto group relative rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.05] active:bg-white/[0.06] transition-colors">
@@ -155,9 +157,7 @@ function HubVideoCard({
         className="absolute top-1.5 right-1.5 h-7 w-7 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm touch-manipulation active:bg-black/60 z-10"
       >
         <Bookmark
-          className={`h-3 w-3 ${
-            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
-          }`}
+          className={`h-3 w-3 ${isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'}`}
         />
       </button>
 

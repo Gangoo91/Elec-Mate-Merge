@@ -109,12 +109,8 @@ const ActionCard = forwardRef<HTMLDivElement, { action: DashboardActionItem }>(
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-white truncate">
-            {action.title}
-          </p>
-          <p className="text-xs text-white/50 truncate">
-            {action.description}
-          </p>
+          <p className="text-sm font-semibold text-white truncate">{action.title}</p>
+          <p className="text-xs text-white/50 truncate">{action.description}</p>
         </div>
 
         {/* Chevron */}
@@ -150,7 +146,7 @@ export function SmartActions() {
   const userRole = profile?.role || 'visitor';
 
   // Filter actions based on user role
-  const filteredActions = actions.filter(action => {
+  const filteredActions = actions.filter((action) => {
     // Extract action type from ID (e.g., 'invoice-123' → 'invoice')
     const actionType = action.id.split('-')[0];
     const allowedRoles = actionRoleFilters[actionType];
@@ -161,10 +157,7 @@ export function SmartActions() {
     return (
       <div className="space-y-3">
         {[...Array(2)].map((_, i) => (
-          <div
-            key={i}
-            className="h-20 rounded-xl glass-premium animate-pulse"
-          />
+          <div key={i} className="h-20 rounded-xl glass-premium animate-pulse" />
         ))}
       </div>
     );
@@ -214,7 +207,7 @@ export function SmartActionsCompact() {
   const userRole = profile?.role || 'visitor';
 
   // Filter actions based on user role
-  const filteredActions = actions.filter(action => {
+  const filteredActions = actions.filter((action) => {
     const actionType = action.id.split('-')[0];
     const allowedRoles = actionRoleFilters[actionType];
     return allowedRoles ? allowedRoles.includes(userRole) : true;

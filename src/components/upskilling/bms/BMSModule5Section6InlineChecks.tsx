@@ -7,7 +7,9 @@ interface BMSModule5Section6InlineChecksProps {
   checkNumber: number;
 }
 
-export const BMSModule5Section6InlineChecks = ({ checkNumber }: BMSModule5Section6InlineChecksProps) => {
+export const BMSModule5Section6InlineChecks = ({
+  checkNumber,
+}: BMSModule5Section6InlineChecksProps) => {
   const [answer, setAnswer] = useState<number | null>(null);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
@@ -15,14 +17,10 @@ export const BMSModule5Section6InlineChecks = ({ checkNumber }: BMSModule5Sectio
     {
       id: 'q1',
       question: 'What is the maximum recommended cable length for an RS-485 Modbus RTU segment?',
-      options: [
-        '500m',
-        '1200m',
-        '2000m',
-        '100m'
-      ],
+      options: ['500m', '1200m', '2000m', '100m'],
       correct: 1,
-      explanation: 'RS-485 has a maximum recommended cable length of approximately 1200m per segment before signal loss occurs. Beyond this distance, signal quality degrades and communication becomes unreliable.'
+      explanation:
+        'RS-485 has a maximum recommended cable length of approximately 1200m per segment before signal loss occurs. Beyond this distance, signal quality degrades and communication becomes unreliable.',
     },
     {
       id: 'q2',
@@ -31,10 +29,11 @@ export const BMSModule5Section6InlineChecks = ({ checkNumber }: BMSModule5Sectio
         'It reduces cable costs',
         'It reduces traffic congestion and improves reliability',
         'It eliminates the need for termination resistors',
-        'It allows unlimited device connections'
+        'It allows unlimited device connections',
       ],
       correct: 1,
-      explanation: 'Segmentation breaks large networks into smaller sections, reducing data traffic on each segment and isolating faults. This improves communication speed and system reliability.'
+      explanation:
+        'Segmentation breaks large networks into smaller sections, reducing data traffic on each segment and isolating faults. This improves communication speed and system reliability.',
     },
     {
       id: 'q3',
@@ -43,11 +42,12 @@ export const BMSModule5Section6InlineChecks = ({ checkNumber }: BMSModule5Sectio
         'Using shielded cables',
         'Proper cable termination',
         'Too many devices on a single bus segment',
-        'Regular network maintenance'
+        'Regular network maintenance',
       ],
       correct: 2,
-      explanation: 'Having too many devices on a single bus segment creates data bottlenecks, where devices must wait their turn to communicate. This increases response times and overall system latency.'
-    }
+      explanation:
+        'Having too many devices on a single bus segment creates data bottlenecks, where devices must wait their turn to communicate. This increases response times and overall system latency.',
+    },
   ];
 
   const handleAnswer = (optionIndex: number) => {
@@ -74,7 +74,7 @@ export const BMSModule5Section6InlineChecks = ({ checkNumber }: BMSModule5Sectio
       <CardContent className="text-foreground">
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600">
           <h4 className="font-semibold text-lg mb-4">{currentQuestion.question}</h4>
-          
+
           <div className="space-y-3 mb-4">
             {currentQuestion.options.map((option, index) => (
               <button
@@ -109,21 +109,23 @@ export const BMSModule5Section6InlineChecks = ({ checkNumber }: BMSModule5Sectio
 
           {showFeedback && (
             <div className="space-y-4">
-              <div className={`p-4 rounded-lg border ${
-                answer === currentQuestion.correct
-                  ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-red-500/10 border-red-500/30'
-              }`}>
-                <p className={`font-medium ${
+              <div
+                className={`p-4 rounded-lg border ${
                   answer === currentQuestion.correct
-                    ? 'text-green-200'
-                    : 'text-red-200'
-                }`}>
+                    ? 'bg-green-500/10 border-green-500/30'
+                    : 'bg-red-500/10 border-red-500/30'
+                }`}
+              >
+                <p
+                  className={`font-medium ${
+                    answer === currentQuestion.correct ? 'text-green-200' : 'text-red-200'
+                  }`}
+                >
                   {answer === currentQuestion.correct ? 'Correct!' : 'Incorrect'}
                 </p>
                 <p className="text-sm text-gray-300 mt-2">{currentQuestion.explanation}</p>
               </div>
-              
+
               <Button
                 onClick={resetQuestion}
                 variant="outline"

@@ -10,8 +10,8 @@ export const SmartBulbLimitationQuickCheck = () => {
   const options = [
     { text: "They don't support colour changing", correct: false },
     { text: "They're expensive per bulb and need constant power", correct: true },
-    { text: "They only work with Samsung phones", correct: false },
-    { text: "They can't be dimmed", correct: false }
+    { text: 'They only work with Samsung phones', correct: false },
+    { text: "They can't be dimmed", correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +32,10 @@ export const SmartBulbLimitationQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q2: What is a major limitation of smart bulbs?</p>
-        
+        <p className="text-foreground font-medium">
+          Q2: What is a major limitation of smart bulbs?
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +60,9 @@ export const SmartBulbLimitationQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +72,8 @@ export const SmartBulbLimitationQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Smart bulbs are expensive (£15-£50+ each) and must have constant power - turning off the wall switch disconnects them from the network.
+              <strong>Correct:</strong> Smart bulbs are expensive (£15-£50+ each) and must have
+              constant power - turning off the wall switch disconnects them from the network.
             </p>
           </div>
         )}

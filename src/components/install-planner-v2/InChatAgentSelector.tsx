@@ -1,13 +1,26 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Lightbulb, Calculator, Wrench, Shield, CheckCircle, ClipboardList,
-  ChevronLeft, ChevronRight, ArrowRight
+import {
+  Lightbulb,
+  Calculator,
+  Wrench,
+  Shield,
+  CheckCircle,
+  ClipboardList,
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export type AgentType = 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning' | 'project-manager';
+export type AgentType =
+  | 'designer'
+  | 'cost-engineer'
+  | 'installer'
+  | 'health-safety'
+  | 'commissioning'
+  | 'project-manager';
 
 interface Agent {
   id: AgentType;
@@ -18,12 +31,48 @@ interface Agent {
 }
 
 const AGENTS: Agent[] = [
-  { id: 'designer', name: 'Designer', icon: Lightbulb, color: 'text-blue-400', description: 'Circuit design & cable sizing' },
-  { id: 'cost-engineer', name: 'Costing', icon: Calculator, color: 'text-green-400', description: 'Materials & labour pricing' },
-  { id: 'installer', name: 'Installer', icon: Wrench, color: 'text-orange-400', description: 'Practical installation advice' },
-  { id: 'health-safety', name: 'H&S', icon: Shield, color: 'text-red-400', description: 'Safety requirements' },
-  { id: 'commissioning', name: 'Testing', icon: CheckCircle, color: 'text-purple-400', description: 'Inspection & testing' },
-  { id: 'project-manager', name: 'Manager', icon: ClipboardList, color: 'text-yellow-400', description: 'Project coordination' }
+  {
+    id: 'designer',
+    name: 'Designer',
+    icon: Lightbulb,
+    color: 'text-blue-400',
+    description: 'Circuit design & cable sizing',
+  },
+  {
+    id: 'cost-engineer',
+    name: 'Costing',
+    icon: Calculator,
+    color: 'text-green-400',
+    description: 'Materials & labour pricing',
+  },
+  {
+    id: 'installer',
+    name: 'Installer',
+    icon: Wrench,
+    color: 'text-orange-400',
+    description: 'Practical installation advice',
+  },
+  {
+    id: 'health-safety',
+    name: 'H&S',
+    icon: Shield,
+    color: 'text-red-400',
+    description: 'Safety requirements',
+  },
+  {
+    id: 'commissioning',
+    name: 'Testing',
+    icon: CheckCircle,
+    color: 'text-purple-400',
+    description: 'Inspection & testing',
+  },
+  {
+    id: 'project-manager',
+    name: 'Manager',
+    icon: ClipboardList,
+    color: 'text-yellow-400',
+    description: 'Project coordination',
+  },
 ];
 
 interface InChatAgentSelectorProps {
@@ -35,51 +84,73 @@ interface InChatAgentSelectorProps {
 }
 
 export const InChatAgentSelector = ({
-  selectedAgent, onAgentSelect, activeAgents = [], className, photoUploadSlot
+  selectedAgent,
+  onAgentSelect,
+  activeAgents = [],
+  className,
+  photoUploadSlot,
 }: InChatAgentSelectorProps) => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const visibleCount = 3;
-  
+
   // Agent dependency chain
-  const agentOrder: AgentType[] = ['designer', 'cost-engineer', 'installer', 'health-safety', 'commissioning', 'project-manager'];
+  const agentOrder: AgentType[] = [
+    'designer',
+    'cost-engineer',
+    'installer',
+    'health-safety',
+    'commissioning',
+    'project-manager',
+  ];
 
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn('relative', className)}>
       {/* Agent Dependency Flow (Mobile & Desktop) */}
       {activeAgents.length > 0 && (
         <div className="flex items-center gap-1 mb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-white/10 pb-1">
           {agentOrder.map((agentId, idx) => {
-            const agent = AGENTS.find(a => a.id === agentId);
+            const agent = AGENTS.find((a) => a.id === agentId);
             if (!agent) return null;
             const Icon = agent.icon;
             const isActive = activeAgents.includes(agentId);
             const isComplete = isActive;
-            
+
             return (
               <div key={agentId} className="flex items-center flex-shrink-0">
-                <div className={cn(
-                  "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] sm:text-xs transition-all",
-                  isComplete ? "bg-green-500/10 text-green-400" : "bg-white/5 text-foreground/30"
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] sm:text-xs transition-all',
+                    isComplete ? 'bg-green-500/10 text-green-400' : 'bg-white/5 text-foreground/30'
+                  )}
+                >
                   <Icon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                   <span className="hidden sm:inline">{agent.name}</span>
                 </div>
                 {idx < agentOrder.length - 1 && (
-                  <ArrowRight className={cn(
-                    "h-2.5 w-2.5 mx-0.5 flex-shrink-0",
-                    isComplete ? "text-green-400/40" : "text-foreground/20"
-                  )} />
+                  <ArrowRight
+                    className={cn(
+                      'h-2.5 w-2.5 mx-0.5 flex-shrink-0',
+                      isComplete ? 'text-green-400/40' : 'text-foreground/20'
+                    )}
+                  />
                 )}
               </div>
             );
           })}
         </div>
       )}
-      
+
       {/* Desktop */}
       <div className="hidden md:flex items-center gap-1.5 flex-wrap">
-        <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
-          className={cn("h-7 text-xs px-2.5", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => onAgentSelect(null)}
+          className={cn(
+            'h-7 text-xs px-2.5',
+            selectedAgent === null && 'bg-elec-yellow/20 text-elec-yellow'
+          )}
+        >
           Auto
         </Button>
         {AGENTS.map((agent) => {
@@ -87,16 +158,28 @@ export const InChatAgentSelector = ({
           const isSelected = selectedAgent === agent.id;
           const isComplete = activeAgents.includes(agent.id) && !isSelected;
           return (
-            <Button key={agent.id} variant="ghost" size="sm"
+            <Button
+              key={agent.id}
+              variant="ghost"
+              size="sm"
               onClick={() => onAgentSelect(isSelected ? null : agent.id)}
-              className={cn("h-7 gap-1.5 text-xs px-2.5 relative",
-                isSelected && "bg-elec-yellow/20 text-elec-yellow",
-                isComplete && "bg-green-500/10 text-green-400")}>
-              <Icon className={cn("h-3 w-3", agent.color)} />
+              className={cn(
+                'h-7 gap-1.5 text-xs px-2.5 relative',
+                isSelected && 'bg-elec-yellow/20 text-elec-yellow',
+                isComplete && 'bg-green-500/10 text-green-400'
+              )}
+            >
+              <Icon className={cn('h-3 w-3', agent.color)} />
               <span>{agent.name}</span>
-              {isComplete && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-1 -right-1">
-                <CheckCircle className="h-3 w-3 text-green-400 fill-current" />
-              </motion.div>}
+              {isComplete && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1 -right-1"
+                >
+                  <CheckCircle className="h-3 w-3 text-green-400 fill-current" />
+                </motion.div>
+              )}
             </Button>
           );
         })}
@@ -112,9 +195,16 @@ export const InChatAgentSelector = ({
       <div className="md:hidden overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         <div className="flex gap-0.5 snap-x snap-mandatory pb-0.5">
           <div className="sticky left-0 z-10 bg-elec-dark pr-0.5">
-            <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
-              className={cn("h-6 text-[10px] flex-shrink-0 snap-center px-1.5", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}
-              aria-label="Auto select agent">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onAgentSelect(null)}
+              className={cn(
+                'h-6 text-[10px] flex-shrink-0 snap-center px-1.5',
+                selectedAgent === null && 'bg-elec-yellow/20 text-elec-yellow'
+              )}
+              aria-label="Auto select agent"
+            >
               Auto
             </Button>
           </div>
@@ -123,14 +213,20 @@ export const InChatAgentSelector = ({
             const isSelected = selectedAgent === agent.id;
             const isComplete = activeAgents.includes(agent.id) && !isSelected;
             return (
-              <Button key={agent.id} variant="ghost" size="sm"
+              <Button
+                key={agent.id}
+                variant="ghost"
+                size="sm"
                 onClick={() => onAgentSelect(isSelected ? null : agent.id)}
-                className={cn("h-6 gap-0.5 text-[10px] flex-shrink-0 relative snap-center px-1.5",
-                  isSelected && "bg-elec-yellow/20 text-elec-yellow",
-                  isComplete && "bg-green-500/10 text-green-400")}
+                className={cn(
+                  'h-6 gap-0.5 text-[10px] flex-shrink-0 relative snap-center px-1.5',
+                  isSelected && 'bg-elec-yellow/20 text-elec-yellow',
+                  isComplete && 'bg-green-500/10 text-green-400'
+                )}
                 aria-label={`Select ${agent.name} agent`}
-                title={agent.description}>
-                <Icon className={cn("h-2.5 w-2.5", agent.color)} />
+                title={agent.description}
+              >
+                <Icon className={cn('h-2.5 w-2.5', agent.color)} />
                 <span className="hidden sm:inline text-[10px]">{agent.name}</span>
               </Button>
             );
@@ -143,7 +239,6 @@ export const InChatAgentSelector = ({
           )}
         </div>
       </div>
-
     </div>
   );
 };

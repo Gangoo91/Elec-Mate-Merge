@@ -1,27 +1,39 @@
-import { Shield, CheckCircle, AlertTriangle, Target, Settings, BookOpen, Lightbulb, Zap, Eye, Wrench, FileText } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
-import useSEO from "@/hooks/useSEO";
+import {
+  Shield,
+  CheckCircle,
+  AlertTriangle,
+  Target,
+  Settings,
+  BookOpen,
+  Lightbulb,
+  Zap,
+  Eye,
+  Wrench,
+  FileText,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module4Section2 = () => {
   useSEO(
-    "Safe Use of Test Instruments (GS38 Compliance) | AM2 Module 4 Section 2",
-    "Master safe use of test instruments according to HSE GS38 requirements for AM2 electrical assessment"
+    'Safe Use of Test Instruments (GS38 Compliance) | AM2 Module 4 Section 2',
+    'Master safe use of test instruments according to HSE GS38 requirements for AM2 electrical assessment'
   );
 
   const learningOutcomes = [
-    "State the GS38 requirements for test instruments and leads",
-    "Prove test equipment before and after use correctly",
-    "Use voltage indicators safely for live/dead testing",
-    "Avoid unsafe practices that lead to instant fails",
-    "Understand exactly what assessors are looking for when you use test equipment",
-    "Handle multifunction testers safely and competently"
+    'State the GS38 requirements for test instruments and leads',
+    'Prove test equipment before and after use correctly',
+    'Use voltage indicators safely for live/dead testing',
+    'Avoid unsafe practices that lead to instant fails',
+    'Understand exactly what assessors are looking for when you use test equipment',
+    'Handle multifunction testers safely and competently',
   ];
 
   const quickCheckQuestions: Array<{
@@ -32,155 +44,173 @@ const AM2Module4Section2 = () => {
     explanation: string;
   }> = [
     {
-      id: "probe-exposure",
-      question: "How much of the probe tip should be exposed under GS38?",
-      options: [
-        "1-2 mm maximum",
-        "2-4 mm maximum",
-        "5-10 mm maximum",
-        "Any length is acceptable"
-      ],
+      id: 'probe-exposure',
+      question: 'How much of the probe tip should be exposed under GS38?',
+      options: ['1-2 mm maximum', '2-4 mm maximum', '5-10 mm maximum', 'Any length is acceptable'],
       correctIndex: 1,
-      explanation: "GS38 requires probe tips to have only 2-4 mm of metal exposed to minimise risk of accidental contact."
+      explanation:
+        'GS38 requires probe tips to have only 2-4 mm of metal exposed to minimise risk of accidental contact.',
     },
     {
-      id: "lead-zeroing",
-      question: "Why must leads be zeroed before a continuity test?",
+      id: 'lead-zeroing',
+      question: 'Why must leads be zeroed before a continuity test?',
       options: [
-        "To check battery level",
-        "To remove resistance of the leads from the measurement",
-        "To calibrate the display",
-        "It's not necessary"
+        'To check battery level',
+        'To remove resistance of the leads from the measurement',
+        'To calibrate the display',
+        "It's not necessary",
       ],
       correctIndex: 1,
-      explanation: "Lead resistance must be removed from measurements to ensure accurate continuity readings."
+      explanation:
+        'Lead resistance must be removed from measurements to ensure accurate continuity readings.',
     },
     {
-      id: "proving-sequence",
-      question: "What is the correct proving sequence for safe isolation?",
+      id: 'proving-sequence',
+      question: 'What is the correct proving sequence for safe isolation?',
       options: [
-        "Test circuit only",
-        "Prove tester -> Test circuit -> Re-prove tester",
-        "Re-prove tester -> Test circuit -> Prove tester",
-        "Test circuit -> Prove tester"
+        'Test circuit only',
+        'Prove tester -> Test circuit -> Re-prove tester',
+        'Re-prove tester -> Test circuit -> Prove tester',
+        'Test circuit -> Prove tester',
       ],
       correctIndex: 1,
-      explanation: "The safe sequence is: prove tester on known live source, test the circuit, then re-prove on known live source."
-    }
+      explanation:
+        'The safe sequence is: prove tester on known live source, test the circuit, then re-prove on known live source.',
+    },
   ];
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is GS38 and why is it important?",
+      question: 'What is GS38 and why is it important?',
       options: [
-        "A British Standard for electrical testing",
-        "HSE guidance for electrical test equipment safety",
-        "A type of test instrument",
-        "An electrical regulation"
+        'A British Standard for electrical testing',
+        'HSE guidance for electrical test equipment safety',
+        'A type of test instrument',
+        'An electrical regulation',
       ],
       correctAnswer: 1,
-      explanation: "GS38 is HSE (Health and Safety Executive) guidance that specifies safety requirements for electrical test equipment to prevent accidents and injuries."
+      explanation:
+        'GS38 is HSE (Health and Safety Executive) guidance that specifies safety requirements for electrical test equipment to prevent accidents and injuries.',
     },
     {
       id: 2,
-      question: "How much probe tip exposure is allowed under GS38?",
-      options: ["1 mm maximum", "2-4 mm maximum", "5-8 mm maximum", "10 mm maximum"],
+      question: 'How much probe tip exposure is allowed under GS38?',
+      options: ['1 mm maximum', '2-4 mm maximum', '5-8 mm maximum', '10 mm maximum'],
       correctAnswer: 1,
-      explanation: "GS38 specifies that probe tips should have only 2-4 mm of metal exposed to minimise the risk of accidental short circuits."
+      explanation:
+        'GS38 specifies that probe tips should have only 2-4 mm of metal exposed to minimise the risk of accidental short circuits.',
     },
     {
       id: 3,
-      question: "Why must test leads be fused?",
+      question: 'Why must test leads be fused?',
       options: [
-        "To protect the instrument display",
-        "To protect against overcurrent and short circuit faults",
-        "To improve accuracy",
-        "To meet CAT ratings"
+        'To protect the instrument display',
+        'To protect against overcurrent and short circuit faults',
+        'To improve accuracy',
+        'To meet CAT ratings',
       ],
       correctAnswer: 1,
-      explanation: "Fused leads protect both the user and equipment from dangerous overcurrents that could occur during fault conditions."
+      explanation:
+        'Fused leads protect both the user and equipment from dangerous overcurrents that could occur during fault conditions.',
     },
     {
       id: 4,
-      question: "What is the purpose of finger barriers on test probes?",
+      question: 'What is the purpose of finger barriers on test probes?',
       options: [
-        "To improve grip",
-        "To prevent fingers slipping onto live conductors",
-        "To make probes look professional",
-        "To protect the probe tips"
+        'To improve grip',
+        'To prevent fingers slipping onto live conductors',
+        'To make probes look professional',
+        'To protect the probe tips',
       ],
       correctAnswer: 1,
-      explanation: "Finger barriers prevent accidental contact with live parts if hands slip down the probe during testing."
+      explanation:
+        'Finger barriers prevent accidental contact with live parts if hands slip down the probe during testing.',
     },
     {
       id: 5,
-      question: "What is the correct sequence for proving a voltage tester?",
+      question: 'What is the correct sequence for proving a voltage tester?',
       options: [
-        "Test circuit then prove on known live source",
-        "Prove on known live -> Test circuit -> Re-prove on known live",
-        "Test circuit only",
-        "Prove once at start of day"
+        'Test circuit then prove on known live source',
+        'Prove on known live -> Test circuit -> Re-prove on known live',
+        'Test circuit only',
+        'Prove once at start of day',
       ],
       correctAnswer: 1,
-      explanation: "The safe proving sequence ensures the tester is working before and after testing to confirm reliable dead indication."
+      explanation:
+        'The safe proving sequence ensures the tester is working before and after testing to confirm reliable dead indication.',
     },
     {
       id: 6,
-      question: "Why must tester leads be zeroed before continuity testing?",
+      question: 'Why must tester leads be zeroed before continuity testing?',
       options: [
-        "To check the battery",
-        "To remove the resistance of the test leads from readings",
-        "To set the display to zero",
-        "To calibrate the instrument"
+        'To check the battery',
+        'To remove the resistance of the test leads from readings',
+        'To set the display to zero',
+        'To calibrate the instrument',
       ],
       correctAnswer: 1,
-      explanation: "Zeroing removes the inherent resistance of the test leads to ensure accurate low-resistance measurements."
+      explanation:
+        'Zeroing removes the inherent resistance of the test leads to ensure accurate low-resistance measurements.',
     },
     {
       id: 7,
-      question: "True or false: You can tape over damaged leads to continue using them in AM2.",
-      options: ["True - tape repairs are acceptable", "False - damaged leads must not be used", "True - if tape is electrical grade", "False - only in emergencies"],
+      question: 'True or false: You can tape over damaged leads to continue using them in AM2.',
+      options: [
+        'True - tape repairs are acceptable',
+        'False - damaged leads must not be used',
+        'True - if tape is electrical grade',
+        'False - only in emergencies',
+      ],
       correctAnswer: 1,
-      explanation: "Damaged leads must never be used in AM2 or real work - tape repairs are not acceptable and will result in immediate failure."
+      explanation:
+        'Damaged leads must never be used in AM2 or real work - tape repairs are not acceptable and will result in immediate failure.',
     },
     {
       id: 8,
-      question: "What CAT rating category should test instruments meet?",
-      options: ["CAT I only", "CAT II for most electrical work", "CAT III or higher depending on application", "Any CAT rating is fine"],
+      question: 'What CAT rating category should test instruments meet?',
+      options: [
+        'CAT I only',
+        'CAT II for most electrical work',
+        'CAT III or higher depending on application',
+        'Any CAT rating is fine',
+      ],
       correctAnswer: 2,
-      explanation: "CAT III or appropriate category rating ensures instruments can safely handle the electrical environment they're used in."
+      explanation:
+        "CAT III or appropriate category rating ensures instruments can safely handle the electrical environment they're used in.",
     },
     {
       id: 9,
-      question: "What is the assessor looking for when you handle test equipment?",
+      question: 'What is the assessor looking for when you handle test equipment?',
       options: [
-        "Speed of testing",
-        "GS38 compliance and safe handling procedures",
-        "Expensive equipment",
-        "Perfect numerical results"
+        'Speed of testing',
+        'GS38 compliance and safe handling procedures',
+        'Expensive equipment',
+        'Perfect numerical results',
       ],
       correctAnswer: 1,
-      explanation: "Assessors primarily evaluate GS38 compliance, safe handling, and proper procedures rather than speed or specific results."
+      explanation:
+        'Assessors primarily evaluate GS38 compliance, safe handling, and proper procedures rather than speed or specific results.',
     },
     {
       id: 10,
-      question: "What is the consequence of failing to re-prove a voltage tester?",
+      question: 'What is the consequence of failing to re-prove a voltage tester?',
       options: [
-        "Minor mark deduction",
-        "Warning from assessor",
-        "Automatic failure of AM2 assessment",
-        "No consequence"
+        'Minor mark deduction',
+        'Warning from assessor',
+        'Automatic failure of AM2 assessment',
+        'No consequence',
       ],
       correctAnswer: 2,
-      explanation: "Failing to re-prove the tester after testing is considered unsafe practice and results in automatic AM2 failure."
-    }
+      explanation:
+        'Failing to re-prove the tester after testing is considered unsafe practice and results in automatic AM2 failure.',
+    },
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module4"
-      breadcrumbs={["AM2", "Module 4", "Section 2"]}
+      breadcrumbs={['AM2', 'Module 4', 'Section 2']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -193,10 +223,13 @@ const AM2Module4Section2 = () => {
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: GS38 Compliance is Non-Negotiable">
         <p className="text-ios-callout text-white/80 mb-2">
-          Using non-compliant leads, damaged equipment, or skipping proving steps will result in automatic AM2 failure. HSE GS38 requirements protect lives and must be followed exactly.
+          Using non-compliant leads, damaged equipment, or skipping proving steps will result in
+          automatic AM2 failure. HSE GS38 requirements protect lives and must be followed exactly.
         </p>
         <p className="text-ios-callout text-white/90 font-medium">
-          Unsafe practices with test equipment have caused serious injuries and deaths in the electrical industry. Assessors will stop the test immediately if unsafe practices are observed.
+          Unsafe practices with test equipment have caused serious injuries and deaths in the
+          electrical industry. Assessors will stop the test immediately if unsafe practices are
+          observed.
         </p>
       </AM2CriticalWarning>
 
@@ -263,19 +296,25 @@ const AM2Module4Section2 = () => {
             CRITICAL: Complete 6-Step Safe Isolation Procedure
           </h4>
           <p className="text-ios-callout text-elec-yellow">
-            This is the complete safe isolation procedure as per HSE GS38 and BS 7671. Every step must be completed in order.
-            Skipping any step or changing the sequence = instant AM2 failure.
+            This is the complete safe isolation procedure as per HSE GS38 and BS 7671. Every step
+            must be completed in order. Skipping any step or changing the sequence = instant AM2
+            failure.
           </p>
         </div>
 
         <div className="space-y-6">
           {/* Step 1: Identify */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+            <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+              1
+            </div>
             <div className="flex-1">
-              <h5 className="font-medium text-white mb-2">IDENTIFY the Circuit/Supply to be Isolated</h5>
+              <h5 className="font-medium text-white mb-2">
+                IDENTIFY the Circuit/Supply to be Isolated
+              </h5>
               <p className="text-ios-callout text-white/80 mb-3">
-                Clearly identify which circuit or supply needs to be made safe for work. Use circuit charts, labels, and visual inspection.
+                Clearly identify which circuit or supply needs to be made safe for work. Use circuit
+                charts, labels, and visual inspection.
               </p>
               <div className="bg-blue-950/20 border border-blue-800/30 rounded p-3 text-ios-callout">
                 <strong className="text-blue-200">AM2 Actions:</strong>
@@ -291,11 +330,14 @@ const AM2Module4Section2 = () => {
 
           {/* Step 2: Isolate */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+            <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+              2
+            </div>
             <div className="flex-1">
               <h5 className="font-medium text-white mb-2">ISOLATE the Circuit/Supply</h5>
               <p className="text-ios-callout text-white/80 mb-3">
-                Switch off the circuit using appropriate isolation devices. Turn off MCBs, remove fuses, or operate isolator switches.
+                Switch off the circuit using appropriate isolation devices. Turn off MCBs, remove
+                fuses, or operate isolator switches.
               </p>
               <div className="bg-blue-950/20 border border-blue-800/30 rounded p-3 text-ios-callout">
                 <strong className="text-blue-200">AM2 Actions:</strong>
@@ -311,11 +353,14 @@ const AM2Module4Section2 = () => {
 
           {/* Step 3: Secure */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+            <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+              3
+            </div>
             <div className="flex-1">
               <h5 className="font-medium text-white mb-2">SECURE the Isolation</h5>
               <p className="text-ios-callout text-white/80 mb-3">
-                Prevent accidental re-energisation by locking off the isolation device and/or removing fuses completely.
+                Prevent accidental re-energisation by locking off the isolation device and/or
+                removing fuses completely.
               </p>
               <div className="bg-blue-950/20 border border-blue-800/30 rounded p-3 text-ios-callout">
                 <strong className="text-blue-200">AM2 Actions:</strong>
@@ -331,11 +376,16 @@ const AM2Module4Section2 = () => {
 
           {/* Step 4: Prove Tester */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
+            <div className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+              4
+            </div>
             <div className="flex-1">
-              <h5 className="font-medium text-white mb-2">PROVE the Voltage Tester on Known Live Source</h5>
+              <h5 className="font-medium text-white mb-2">
+                PROVE the Voltage Tester on Known Live Source
+              </h5>
               <p className="text-ios-callout text-white/80 mb-3">
-                Test your voltage indicator on a proving unit or known live source to confirm it's working correctly.
+                Test your voltage indicator on a proving unit or known live source to confirm it's
+                working correctly.
               </p>
               <div className="bg-red-950/20 border border-red-800/30 rounded p-3 text-ios-callout">
                 <strong className="text-red-200">AM2 Critical Requirements:</strong>
@@ -351,11 +401,14 @@ const AM2Module4Section2 = () => {
 
           {/* Step 5: Test Dead */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</div>
+            <div className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+              5
+            </div>
             <div className="flex-1">
               <h5 className="font-medium text-white mb-2">TEST for Dead at the Point of Work</h5>
               <p className="text-ios-callout text-white/80 mb-3">
-                Test between all conductors at the exact point where work will be carried out to confirm no voltage is present.
+                Test between all conductors at the exact point where work will be carried out to
+                confirm no voltage is present.
               </p>
               <div className="bg-red-950/20 border border-red-800/30 rounded p-3 text-ios-callout">
                 <strong className="text-red-200">AM2 Test Points (All Must Show Dead):</strong>
@@ -371,11 +424,16 @@ const AM2Module4Section2 = () => {
 
           {/* Step 6: Re-prove */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">6</div>
+            <div className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+              6
+            </div>
             <div className="flex-1">
-              <h5 className="font-medium text-white mb-2">RE-PROVE the Voltage Tester on Known Live Source</h5>
+              <h5 className="font-medium text-white mb-2">
+                RE-PROVE the Voltage Tester on Known Live Source
+              </h5>
               <p className="text-ios-callout text-white/80 mb-3">
-                Return to the known live source and re-test to confirm your voltage indicator is still working correctly.
+                Return to the known live source and re-test to confirm your voltage indicator is
+                still working correctly.
               </p>
               <div className="bg-red-950/20 border border-red-800/30 rounded p-3 text-ios-callout">
                 <strong className="text-red-200">AM2 Critical - This Confirms:</strong>
@@ -383,7 +441,9 @@ const AM2Module4Section2 = () => {
                   <li>Voltage tester has not failed during testing</li>
                   <li>"Dead" readings were genuine, not due to faulty tester</li>
                   <li>Safe to proceed with work</li>
-                  <li><strong>Forgetting this step = automatic failure</strong></li>
+                  <li>
+                    <strong>Forgetting this step = automatic failure</strong>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -397,11 +457,13 @@ const AM2Module4Section2 = () => {
             Safe Isolation Complete - Now Safe to Work
           </h4>
           <p className="text-ios-callout text-white/80 mb-2">
-            Only after completing ALL 6 steps in sequence is it safe to begin work on the isolated circuit.
+            Only after completing ALL 6 steps in sequence is it safe to begin work on the isolated
+            circuit.
           </p>
           <div className="text-ios-footnote text-green-300 bg-green-900/30 rounded p-2">
-            <strong>Remember:</strong> The circuit is now proven dead and isolated. Maintain the isolation throughout your work,
-            and follow the same proving sequence before re-energising.
+            <strong>Remember:</strong> The circuit is now proven dead and isolated. Maintain the
+            isolation throughout your work, and follow the same proving sequence before
+            re-energising.
           </div>
         </div>
       </AM2ContentCard>
@@ -426,7 +488,10 @@ const AM2Module4Section2 = () => {
             <div className="space-y-3">
               <h4 className="font-medium text-white">Pre-Test Procedures:</h4>
               <ul className="text-ios-callout text-white/80 space-y-1">
-                <li>Select the correct test range (e.g., insulation resistance 500V DC, continuity low resistance)</li>
+                <li>
+                  Select the correct test range (e.g., insulation resistance 500V DC, continuity low
+                  resistance)
+                </li>
                 <li>Confirm leads are in the correct sockets before testing</li>
                 <li>Check lead condition and probe compliance</li>
                 <li>Zero leads before continuity resistance tests</li>
@@ -561,7 +626,8 @@ const AM2Module4Section2 = () => {
                   NET AM2 Critical: Missing any step = Automatic Failure
                 </p>
                 <p className="text-ios-footnote text-elec-yellow mt-1">
-                  Assessors will specifically watch for the complete sequence. Shortcuts or assumptions about equipment functionality are not acceptable.
+                  Assessors will specifically watch for the complete sequence. Shortcuts or
+                  assumptions about equipment functionality are not acceptable.
                 </p>
               </div>
             </div>
@@ -628,7 +694,8 @@ const AM2Module4Section2 = () => {
 
         <div className="mt-4 bg-red-900/30 rounded p-3">
           <p className="text-ios-callout text-red-200 font-medium">
-            Remember: Any unsafe practice with test equipment will result in immediate assessment termination and failure.
+            Remember: Any unsafe practice with test equipment will result in immediate assessment
+            termination and failure.
           </p>
         </div>
       </AM2CriticalWarning>
@@ -762,7 +829,8 @@ const AM2Module4Section2 = () => {
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 1: Non-GS38 Leads</h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate used non-GS38 leads with 20 mm exposed metal. Assessor stopped the test immediately. <strong className="text-red-400">Automatic Fail</strong>
+              Candidate used non-GS38 leads with 20 mm exposed metal. Assessor stopped the test
+              immediately. <strong className="text-red-400">Automatic Fail</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
               Lesson: Always check probe tip exposure before starting. Only 2-4mm is acceptable.
@@ -772,30 +840,36 @@ const AM2Module4Section2 = () => {
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 2: Forgot Re-proving</h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate forgot to re-prove tester after safe isolation sequence. <strong className="text-red-400">Automatic Fail</strong>
+              Candidate forgot to re-prove tester after safe isolation sequence.{' '}
+              <strong className="text-red-400">Automatic Fail</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
-              Lesson: The proving sequence is Prove - Test - Re-prove. All three steps are mandatory.
+              Lesson: The proving sequence is Prove - Test - Re-prove. All three steps are
+              mandatory.
             </p>
           </div>
 
           <div className="border-l-4 border-green-500 bg-green-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 3: Proper Procedure</h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate zeroed continuity leads before testing and explained procedure to assessor. <strong className="text-emerald-400">Full Marks</strong>
+              Candidate zeroed continuity leads before testing and explained procedure to assessor.{' '}
+              <strong className="text-emerald-400">Full Marks</strong>
             </p>
             <p className="text-ios-footnote text-emerald-400">
-              Lesson: Demonstrating knowledge through proper procedure and clear communication earns top marks.
+              Lesson: Demonstrating knowledge through proper procedure and clear communication earns
+              top marks.
             </p>
           </div>
 
           <div className="border-l-4 border-elec-yellow bg-amber-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 4: Real-Life Consequence</h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              In real life, an electrician used a damaged probe, which arced and caused serious burns. Same unsafe practice in AM2 = fail.
+              In real life, an electrician used a damaged probe, which arced and caused serious
+              burns. Same unsafe practice in AM2 = fail.
             </p>
             <p className="text-ios-footnote text-elec-yellow">
-              Lesson: GS38 requirements exist to prevent real injuries. Assessors treat safety breaches very seriously.
+              Lesson: GS38 requirements exist to prevent real injuries. Assessors treat safety
+              breaches very seriously.
             </p>
           </div>
         </div>
@@ -813,15 +887,22 @@ const AM2Module4Section2 = () => {
           <ul className="text-ios-callout text-white/80 space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-              <span>Safe use of test instruments is non-negotiable in AM2 - GS38 compliance protects lives</span>
+              <span>
+                Safe use of test instruments is non-negotiable in AM2 - GS38 compliance protects
+                lives
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-              <span>Probes must have shrouded tips (2-4 mm exposed), fused leads, and no damage</span>
+              <span>
+                Probes must have shrouded tips (2-4 mm exposed), fused leads, and no damage
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-              <span>Proving sequence is mandatory: Prove - Test - Re-prove (skipping any step = fail)</span>
+              <span>
+                Proving sequence is mandatory: Prove - Test - Re-prove (skipping any step = fail)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -829,7 +910,9 @@ const AM2Module4Section2 = () => {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-              <span>Any unsafe practice with test equipment results in instant assessment failure</span>
+              <span>
+                Any unsafe practice with test equipment results in instant assessment failure
+              </span>
             </li>
           </ul>
         </div>
@@ -837,8 +920,8 @@ const AM2Module4Section2 = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="font-medium text-elec-yellow mb-2">Next Steps:</h4>
           <p className="text-ios-callout text-white/80">
-            You're now ready to move on to Module 4 Section 3, where we'll cover the specific testing procedures
-            and measurement techniques required for AM2 assessment success.
+            You're now ready to move on to Module 4 Section 3, where we'll cover the specific
+            testing procedures and measurement techniques required for AM2 assessment success.
           </p>
         </div>
       </AM2ContentCard>

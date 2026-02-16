@@ -10,31 +10,34 @@ export const EmergencyLightingQuickCheckSection2_2 = () => {
   const questions = [
     {
       id: 1,
-      question: "When is anti-panic lighting required?",
-      options: ["Areas > 30m²", "Areas > 60m²", "Areas > 100m²", "All areas"],
-      correct: "Areas > 60m²",
-      explanation: "Anti-panic lighting is required for open areas exceeding 60m² to reduce panic and provide safe movement."
+      question: 'When is anti-panic lighting required?',
+      options: ['Areas > 30m²', 'Areas > 60m²', 'Areas > 100m²', 'All areas'],
+      correct: 'Areas > 60m²',
+      explanation:
+        'Anti-panic lighting is required for open areas exceeding 60m² to reduce panic and provide safe movement.',
     },
     {
       id: 2,
-      question: "What is the minimum illuminance for anti-panic lighting?",
-      options: ["0.2 lux", "0.5 lux", "1 lux", "2 lux"],
-      correct: "0.5 lux",
-      explanation: "BS 5266 requires a minimum of 0.5 lux at floor level for open area (anti-panic) lighting."
+      question: 'What is the minimum illuminance for anti-panic lighting?',
+      options: ['0.2 lux', '0.5 lux', '1 lux', '2 lux'],
+      correct: '0.5 lux',
+      explanation:
+        'BS 5266 requires a minimum of 0.5 lux at floor level for open area (anti-panic) lighting.',
     },
     {
       id: 3,
-      question: "What is the maximum spacing for anti-panic luminaires?",
-      options: ["2 x height", "3 x height", "4 x height", "5 x height"],
-      correct: "4 x height",
-      explanation: "Anti-panic luminaires should be spaced at maximum intervals of 4 times their mounting height."
-    }
+      question: 'What is the maximum spacing for anti-panic luminaires?',
+      options: ['2 x height', '3 x height', '4 x height', '5 x height'],
+      correct: '4 x height',
+      explanation:
+        'Anti-panic luminaires should be spaced at maximum intervals of 4 times their mounting height.',
+    },
   ];
 
   const handleAnswerSelect = (questionId: number, answer: string) => {
-    setSelectedAnswers(prev => ({
+    setSelectedAnswers((prev) => ({
       ...prev,
-      [questionId]: answer
+      [questionId]: answer,
     }));
   };
 
@@ -70,18 +73,28 @@ export const EmergencyLightingQuickCheckSection2_2 = () => {
               ))}
             </div>
             {showResults && selectedAnswers[question.id] && (
-              <div className={`p-3 rounded-lg ${
-                selectedAnswers[question.id] === question.correct 
-                  ? 'bg-green-500/20 border-green-500/50' 
-                  : 'bg-red-500/20 border-red-500/50'
-              } border`}>
+              <div
+                className={`p-3 rounded-lg ${
+                  selectedAnswers[question.id] === question.correct
+                    ? 'bg-green-500/20 border-green-500/50'
+                    : 'bg-red-500/20 border-red-500/50'
+                } border`}
+              >
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className={`h-4 w-4 ${
-                    selectedAnswers[question.id] === question.correct ? 'text-green-400' : 'text-red-400'
-                  }`} />
-                  <span className={`font-medium ${
-                    selectedAnswers[question.id] === question.correct ? 'text-green-400' : 'text-red-400'
-                  }`}>
+                  <CheckCircle2
+                    className={`h-4 w-4 ${
+                      selectedAnswers[question.id] === question.correct
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  />
+                  <span
+                    className={`font-medium ${
+                      selectedAnswers[question.id] === question.correct
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  >
                     {selectedAnswers[question.id] === question.correct ? 'Correct!' : 'Incorrect'}
                   </span>
                 </div>
@@ -90,7 +103,7 @@ export const EmergencyLightingQuickCheckSection2_2 = () => {
             )}
           </div>
         ))}
-        
+
         {!showResults && Object.keys(selectedAnswers).length === questions.length && (
           <button
             onClick={handleShowResults}
@@ -99,11 +112,12 @@ export const EmergencyLightingQuickCheckSection2_2 = () => {
             Show Results
           </button>
         )}
-        
+
         {showResults && (
           <div className="text-center">
             <Badge className="bg-elec-yellow/20 text-elec-yellow">
-              Score: {questions.filter(q => selectedAnswers[q.id] === q.correct).length}/{questions.length}
+              Score: {questions.filter((q) => selectedAnswers[q.id] === q.correct).length}/
+              {questions.length}
             </Badge>
           </div>
         )}

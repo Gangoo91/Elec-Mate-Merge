@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   TrendingDown,
   RotateCcw,
@@ -12,13 +12,9 @@ import {
   Cable,
   Zap,
   ChevronDown,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -27,49 +23,176 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 // BS 7671 Appendix 4 mV/A/m values - accurate tabulated data
 const mvamData: Record<string, Record<string, Record<number, number>>> = {
-  "Copper T&E (6242Y)": {
-    "Clipped direct (C)": { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
-    "In conduit/trunking (B)": { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
-    "Enclosed in insulation": { 1: 46, 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0 },
+  'Copper T&E (6242Y)': {
+    'Clipped direct (C)': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+    'In conduit/trunking (B)': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+    'Enclosed in insulation': { 1: 46, 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0 },
   },
-  "Copper SWA (BS 5467)": {
-    "Clipped direct (C)": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93, 70: 0.63, 95: 0.46, 120: 0.36 },
-    "In tray/ladder (E)": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93, 70: 0.63, 95: 0.46, 120: 0.36 },
-    "Buried direct (D1)": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93, 70: 0.63, 95: 0.46, 120: 0.36 },
-    "Underground duct (D2)": { 1.5: 31, 2.5: 19, 4: 12, 6: 7.8, 10: 4.7, 16: 3.0, 25: 1.9, 35: 1.4, 50: 0.98, 70: 0.67, 95: 0.49, 120: 0.39 },
+  'Copper SWA (BS 5467)': {
+    'Clipped direct (C)': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+      70: 0.63,
+      95: 0.46,
+      120: 0.36,
+    },
+    'In tray/ladder (E)': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+      70: 0.63,
+      95: 0.46,
+      120: 0.36,
+    },
+    'Buried direct (D1)': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+      70: 0.63,
+      95: 0.46,
+      120: 0.36,
+    },
+    'Underground duct (D2)': {
+      1.5: 31,
+      2.5: 19,
+      4: 12,
+      6: 7.8,
+      10: 4.7,
+      16: 3.0,
+      25: 1.9,
+      35: 1.4,
+      50: 0.98,
+      70: 0.67,
+      95: 0.49,
+      120: 0.39,
+    },
   },
-  "Copper XLPE": {
-    "Clipped direct (C)": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93, 70: 0.63, 95: 0.46, 120: 0.36 },
-    "In tray/ladder (E)": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93, 70: 0.63, 95: 0.46, 120: 0.36 },
-    "Buried direct (D1)": { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.8, 35: 1.3, 50: 0.93, 70: 0.63, 95: 0.46, 120: 0.36 },
+  'Copper XLPE': {
+    'Clipped direct (C)': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+      70: 0.63,
+      95: 0.46,
+      120: 0.36,
+    },
+    'In tray/ladder (E)': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+      70: 0.63,
+      95: 0.46,
+      120: 0.36,
+    },
+    'Buried direct (D1)': {
+      1.5: 29,
+      2.5: 18,
+      4: 11,
+      6: 7.3,
+      10: 4.4,
+      16: 2.8,
+      25: 1.8,
+      35: 1.3,
+      50: 0.93,
+      70: 0.63,
+      95: 0.46,
+      120: 0.36,
+    },
   },
-  "Aluminium SWA": {
-    "Clipped direct (C)": { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.80, 120: 0.63, 150: 0.52, 185: 0.41, 240: 0.32, 300: 0.26 },
-    "In tray/ladder (E)": { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.80, 120: 0.63, 150: 0.52, 185: 0.41, 240: 0.32, 300: 0.26 },
-    "Buried direct (D1)": { 16: 4.6, 25: 2.9, 35: 2.1, 50: 1.5, 70: 1.1, 95: 0.80, 120: 0.63, 150: 0.52, 185: 0.41, 240: 0.32, 300: 0.26 },
+  'Aluminium SWA': {
+    'Clipped direct (C)': {
+      16: 4.6,
+      25: 2.9,
+      35: 2.1,
+      50: 1.5,
+      70: 1.1,
+      95: 0.8,
+      120: 0.63,
+      150: 0.52,
+      185: 0.41,
+      240: 0.32,
+      300: 0.26,
+    },
+    'In tray/ladder (E)': {
+      16: 4.6,
+      25: 2.9,
+      35: 2.1,
+      50: 1.5,
+      70: 1.1,
+      95: 0.8,
+      120: 0.63,
+      150: 0.52,
+      185: 0.41,
+      240: 0.32,
+      300: 0.26,
+    },
+    'Buried direct (D1)': {
+      16: 4.6,
+      25: 2.9,
+      35: 2.1,
+      50: 1.5,
+      70: 1.1,
+      95: 0.8,
+      120: 0.63,
+      150: 0.52,
+      185: 0.41,
+      240: 0.32,
+      300: 0.26,
+    },
   },
 };
 
 const circuitTypeOptions = [
-  { value: "lighting", label: "Lighting (3% limit)" },
-  { value: "other", label: "Power/Other (5% limit)" },
+  { value: 'lighting', label: 'Lighting (3% limit)' },
+  { value: 'other', label: 'Power/Other (5% limit)' },
 ];
 
 const VoltageDropCalculator = () => {
-  const config = CALCULATOR_CONFIG["cable"];
+  const config = CALCULATOR_CONFIG['cable'];
 
-  const [activeTab, setActiveTab] = useState<"calculator" | "guidance" | "standards">("calculator");
-  const [circuit, setCircuit] = useState<string>("other");
-  const [family, setFamily] = useState<string>("Copper T&E (6242Y)");
-  const [method, setMethod] = useState<string>("Clipped direct (C)");
-  const [cableSize, setCableSize] = useState<string>("");
-  const [length, setLength] = useState<string>("");
-  const [current, setCurrent] = useState<string>("");
-  const [supplyVoltage, setSupplyVoltage] = useState<string>("230");
+  const [activeTab, setActiveTab] = useState<'calculator' | 'guidance' | 'standards'>('calculator');
+  const [circuit, setCircuit] = useState<string>('other');
+  const [family, setFamily] = useState<string>('Copper T&E (6242Y)');
+  const [method, setMethod] = useState<string>('Clipped direct (C)');
+  const [cableSize, setCableSize] = useState<string>('');
+  const [length, setLength] = useState<string>('');
+  const [current, setCurrent] = useState<string>('');
+  const [supplyVoltage, setSupplyVoltage] = useState<string>('230');
   const [showFormula, setShowFormula] = useState(false);
   const [showReference, setShowReference] = useState(false);
   const [result, setResult] = useState<{
@@ -84,7 +207,9 @@ const VoltageDropCalculator = () => {
   } | null>(null);
 
   const dataForMethod = mvamData[family]?.[method] || {};
-  const sizes = Object.keys(dataForMethod).map(Number).sort((a, b) => a - b);
+  const sizes = Object.keys(dataForMethod)
+    .map(Number)
+    .sort((a, b) => a - b);
   const selectedMvam = cableSize ? dataForMethod[Number(cableSize)] : null;
 
   const familyOptions = Object.keys(mvamData).map((k) => ({ value: k, label: k }));
@@ -94,8 +219,8 @@ const VoltageDropCalculator = () => {
     label: `${size}mm² (${dataForMethod[size]} mV/A/m)`,
   }));
   const voltageOptions = [
-    { value: "230", label: "230V (Single Phase)" },
-    { value: "400", label: "400V (Three Phase)" },
+    { value: '230', label: '230V (Single Phase)' },
+    { value: '400', label: '400V (Three Phase)' },
   ];
 
   const calculate = () => {
@@ -113,7 +238,7 @@ const VoltageDropCalculator = () => {
     const voltageDrop = (mvam * I * L) / 1000;
     const percentage = (voltageDrop / V) * 100;
     const voltageAtLoad = V - voltageDrop;
-    const limit = circuit === "lighting" ? 3 : 5;
+    const limit = circuit === 'lighting' ? 3 : 5;
     const compliant = percentage <= limit;
 
     // Maximum length calculation
@@ -143,22 +268,22 @@ const VoltageDropCalculator = () => {
   };
 
   const reset = () => {
-    setCircuit("other");
-    setFamily("Copper T&E (6242Y)");
-    setMethod("Clipped direct (C)");
-    setCableSize("");
-    setLength("");
-    setCurrent("");
-    setSupplyVoltage("230");
+    setCircuit('other');
+    setFamily('Copper T&E (6242Y)');
+    setMethod('Clipped direct (C)');
+    setCableSize('');
+    setLength('');
+    setCurrent('');
+    setSupplyVoltage('230');
     setResult(null);
   };
 
   const isValid = selectedMvam && current && length;
 
   const tabs = [
-    { key: "calculator" as const, label: "Calculator" },
-    { key: "guidance" as const, label: "Guidance" },
-    { key: "standards" as const, label: "Standards" },
+    { key: 'calculator' as const, label: 'Calculator' },
+    { key: 'guidance' as const, label: 'Guidance' },
+    { key: 'standards' as const, label: 'Standards' },
   ];
 
   return (
@@ -176,10 +301,10 @@ const VoltageDropCalculator = () => {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={cn(
-                "flex-1 h-10 rounded-lg text-sm font-medium transition-all touch-manipulation",
+                'flex-1 h-10 rounded-lg text-sm font-medium transition-all touch-manipulation',
                 activeTab === tab.key
-                  ? "text-black"
-                  : "text-white/70 hover:text-white hover:bg-white/5"
+                  ? 'text-black'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
               )}
               style={
                 activeTab === tab.key
@@ -195,7 +320,7 @@ const VoltageDropCalculator = () => {
         </div>
 
         {/* Calculator Tab */}
-        {activeTab === "calculator" && (
+        {activeTab === 'calculator' && (
           <div className="space-y-4">
             {/* Cable Selection Header */}
             <div className="flex items-center gap-2">
@@ -224,8 +349,8 @@ const VoltageDropCalculator = () => {
               value={family}
               onChange={(v) => {
                 setFamily(v);
-                setMethod(Object.keys(mvamData[v] || {})[0] || "");
-                setCableSize("");
+                setMethod(Object.keys(mvamData[v] || {})[0] || '');
+                setCableSize('');
               }}
               options={familyOptions}
             />
@@ -235,7 +360,7 @@ const VoltageDropCalculator = () => {
               value={method}
               onChange={(v) => {
                 setMethod(v);
-                setCableSize("");
+                setCableSize('');
               }}
               options={methodOptions}
             />
@@ -291,10 +416,8 @@ const VoltageDropCalculator = () => {
                 onClick={calculate}
                 disabled={!isValid}
                 className={cn(
-                  "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-                  isValid
-                    ? "text-black"
-                    : "bg-white/10 text-white/30 cursor-not-allowed"
+                  'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+                  isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
                 )}
                 style={
                   isValid
@@ -318,7 +441,7 @@ const VoltageDropCalculator = () => {
         )}
 
         {/* Guidance Tab */}
-        {activeTab === "guidance" && (
+        {activeTab === 'guidance' && (
           <div className="space-y-4">
             {/* When to Check */}
             <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
@@ -440,7 +563,7 @@ const VoltageDropCalculator = () => {
         )}
 
         {/* Standards Tab */}
-        {activeTab === "standards" && (
+        {activeTab === 'standards' && (
           <div className="space-y-4">
             {/* Regulation 525 */}
             <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
@@ -449,11 +572,13 @@ const VoltageDropCalculator = () => {
                 <span className="font-medium text-blue-300">Regulation 525 - Voltage Drop</span>
               </div>
               <p className="text-sm text-blue-200/80 mb-3">
-                "The voltage drop between the origin of an installation and any load point shall
-                not exceed the values in Table 52."
+                "The voltage drop between the origin of an installation and any load point shall not
+                exceed the values in Table 52."
               </p>
               <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <p className="font-medium text-blue-200 mb-2 text-sm">Table 52 - Maximum Voltage Drop</p>
+                <p className="font-medium text-blue-200 mb-2 text-sm">
+                  Table 52 - Maximum Voltage Drop
+                </p>
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-blue-500/30">
@@ -547,16 +672,16 @@ const VoltageDropCalculator = () => {
       </CalculatorCard>
 
       {/* Results Section */}
-      {result && activeTab === "calculator" && (
+      {result && activeTab === 'calculator' && (
         <div className="space-y-4 animate-fade-in">
           {/* Main Result */}
           <CalculatorResult category="cable">
             <div
               className={cn(
-                "p-4 rounded-xl border-2 mb-4",
+                'p-4 rounded-xl border-2 mb-4',
                 result.compliant
-                  ? "border-green-500/50 bg-green-500/10"
-                  : "border-red-500/50 bg-red-500/10"
+                  ? 'border-green-500/50 bg-green-500/10'
+                  : 'border-red-500/50 bg-red-500/10'
               )}
             >
               <div className="flex items-center gap-2 mb-4">
@@ -567,11 +692,11 @@ const VoltageDropCalculator = () => {
                 )}
                 <span
                   className={cn(
-                    "text-lg font-bold",
-                    result.compliant ? "text-green-300" : "text-red-300"
+                    'text-lg font-bold',
+                    result.compliant ? 'text-green-300' : 'text-red-300'
                   )}
                 >
-                  {result.compliant ? "COMPLIANT" : "NON-COMPLIANT"}
+                  {result.compliant ? 'COMPLIANT' : 'NON-COMPLIANT'}
                 </span>
               </div>
 
@@ -614,8 +739,8 @@ const VoltageDropCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showFormula && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showFormula && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -629,22 +754,23 @@ const VoltageDropCalculator = () => {
                     Appendix 4)
                   </p>
                   <p className="text-purple-200">
-                    <span className="text-purple-400">Step 2:</span> Vd = ({result.mvam} × {current}{" "}
+                    <span className="text-purple-400">Step 2:</span> Vd = ({result.mvam} × {current}{' '}
                     × {length}) ÷ 1000
                   </p>
                   <p className="text-purple-200">
-                    <span className="text-purple-400">Step 3:</span> Vd ={" "}
-                    {(result.mvam * Number(current) * Number(length)).toFixed(1)} ÷ 1000 ={" "}
+                    <span className="text-purple-400">Step 3:</span> Vd ={' '}
+                    {(result.mvam * Number(current) * Number(length)).toFixed(1)} ÷ 1000 ={' '}
                     <strong>{result.voltageDrop.toFixed(2)} V</strong>
                   </p>
                   <p className="text-purple-200">
-                    <span className="text-purple-400">Step 4:</span> % = ({result.voltageDrop.toFixed(2)}{" "}
-                    ÷ {supplyVoltage}) × 100 = <strong>{result.percentage.toFixed(2)}%</strong>
+                    <span className="text-purple-400">Step 4:</span> % = (
+                    {result.voltageDrop.toFixed(2)} ÷ {supplyVoltage}) × 100 ={' '}
+                    <strong>{result.percentage.toFixed(2)}%</strong>
                   </p>
-                  <p className={cn(result.compliant ? "text-green-300" : "text-red-300")}>
-                    <span className="text-purple-400">Check:</span> {result.percentage.toFixed(2)}%{" "}
-                    {result.compliant ? "≤" : ">"} {result.limit}% limit →{" "}
-                    {result.compliant ? "PASS ✓" : "FAIL ✗"}
+                  <p className={cn(result.compliant ? 'text-green-300' : 'text-red-300')}>
+                    <span className="text-purple-400">Check:</span> {result.percentage.toFixed(2)}%{' '}
+                    {result.compliant ? '≤' : '>'} {result.limit}% limit →{' '}
+                    {result.compliant ? 'PASS ✓' : 'FAIL ✗'}
                   </p>
                 </div>
               </CollapsibleContent>
@@ -659,10 +785,10 @@ const VoltageDropCalculator = () => {
                     <div
                       key={alt.size}
                       className={cn(
-                        "flex items-center justify-between p-2 rounded-lg",
+                        'flex items-center justify-between p-2 rounded-lg',
                         alt.size === Number(cableSize)
-                          ? "bg-emerald-400/20 border border-emerald-400/40"
-                          : "bg-blue-500/10"
+                          ? 'bg-emerald-400/20 border border-emerald-400/40'
+                          : 'bg-blue-500/10'
                       )}
                     >
                       <span className="text-white font-medium">
@@ -682,10 +808,11 @@ const VoltageDropCalculator = () => {
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
                   <div className="text-sm text-red-200">
-                    <strong>Action Required:</strong> Use a larger cable size or reduce cable length.
+                    <strong>Action Required:</strong> Use a larger cable size or reduce cable
+                    length.
                     {result.alternatives.length > 0 && (
                       <span>
-                        {" "}
+                        {' '}
                         Recommended: {result.alternatives[0].size}mm² (
                         {result.alternatives[0].pct.toFixed(2)}%)
                       </span>
@@ -698,7 +825,7 @@ const VoltageDropCalculator = () => {
 
           {/* Why This Matters */}
           <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-amber-400" />
@@ -708,8 +835,8 @@ const VoltageDropCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showReference && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showReference && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>

@@ -16,21 +16,21 @@ interface EducationCacheManagerProps {
   onRefreshComplete?: () => void;
 }
 
-const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({ 
-  cacheInfo, 
-  onRefreshComplete 
+const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
+  cacheInfo,
+  onRefreshComplete,
 }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { toast } = useToast();
 
   const handleManualRefresh = async () => {
     setIsRefreshing(true);
-    
+
     try {
       console.log('🔄 Starting manual education cache refresh...');
-      
+
       const { data, error } = await supabase.functions.invoke('weekly-education-cache-refresh', {
-        body: { manual: true, category: 'electrical' }
+        body: { manual: true, category: 'electrical' },
       });
 
       if (error) {
@@ -39,10 +39,10 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
 
       if (data.success) {
         toast({
-          title: "Cache Refreshed Successfully",
+          title: 'Cache Refreshed Successfully',
           description: `Updated ${data.summary?.total_courses || 0} courses from ${data.summary?.categories_processed || 0} categories.`,
         });
-        
+
         onRefreshComplete?.();
       } else {
         throw new Error(data.error || 'Unknown error during refresh');
@@ -50,9 +50,9 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
     } catch (error) {
       console.error('❌ Error refreshing cache:', error);
       toast({
-        title: "Cache Refresh Failed",
-        description: error instanceof Error ? error.message : "Unknown error occurred",
-        variant: "destructive",
+        title: 'Cache Refresh Failed',
+        description: error instanceof Error ? error.message : 'Unknown error occurred',
+        variant: 'destructive',
       });
     } finally {
       setIsRefreshing(false);
@@ -61,7 +61,7 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
 
   const getStatusIcon = () => {
     if (!cacheInfo) return <Database className="h-4 w-4" />;
-    
+
     switch (cacheInfo.refreshStatus) {
       case 'completed':
         return <CheckCircle className="h-4 w-4 text-green-500" />;
@@ -78,7 +78,7 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
 
   const getStatusColor = () => {
     if (!cacheInfo) return 'secondary';
-    
+
     switch (cacheInfo.refreshStatus) {
       case 'completed':
         return 'default';
@@ -95,14 +95,14 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
 
   const formatNextRefresh = () => {
     if (!cacheInfo?.nextRefresh) return 'Not scheduled';
-    
+
     const nextRefresh = new Date(cacheInfo.nextRefresh);
     const now = new Date();
-    
+
     if (nextRefresh <= now) {
       return 'Overdue';
     }
-    
+
     if (cacheInfo.daysUntilRefresh === 0) {
       return 'Today';
     } else if (cacheInfo.daysUntilRefresh === 1) {
@@ -120,31 +120,28 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
           Education Cache Management
         </CardTitle>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Cache Status */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">Status</p>
-            <Badge 
-              variant={getStatusColor()} 
-              className="flex items-center gap-1 w-fit"
-            >
+            <Badge variant={getStatusColor()} className="flex items-center gap-1 w-fit">
               {getStatusIcon()}
               {cacheInfo?.refreshStatus || 'Unknown'}
             </Badge>
           </div>
-          
+
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">Version</p>
             <p className="font-medium">v{cacheInfo?.cacheVersion || 1}</p>
           </div>
-          
+
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">Next Refresh</p>
             <p className="font-medium">{formatNextRefresh()}</p>
           </div>
-          
+
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">Schedule</p>
             <p className="font-medium">Sunday 2 AM</p>
@@ -175,9 +172,10 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
             <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
             {isRefreshing ? 'Refreshing...' : 'Refresh Cache Now'}
           </Button>
-          
+
           <p className="text-xs text-muted-foreground">
-            Manually refresh the cache to fetch the latest course data. This process may take a few minutes.
+            Manually refresh the cache to fetch the latest course data. This process may take a few
+            minutes.
           </p>
         </div>
 
@@ -187,9 +185,9 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
             About Weekly Caching
           </h4>
           <p className="text-xs text-blue-800 dark:text-blue-200">
-            The course cache is automatically refreshed every Sunday at 2 AM UTC. 
-            This ensures fresh data while minimizing API usage and improving performance. 
-            Cache data is typically valid for up to 7 days.
+            The course cache is automatically refreshed every Sunday at 2 AM UTC. This ensures fresh
+            data while minimizing API usage and improving performance. Cache data is typically valid
+            for up to 7 days.
           </p>
         </div>
       </CardContent>

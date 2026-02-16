@@ -7,40 +7,40 @@ const BMSModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "HVAC Systems in BMS (AHU, FCU, Chillers, Boilers)",
+      title: 'HVAC Systems in BMS (AHU, FCU, Chillers, Boilers)',
       icon: Wind,
-      description: "HVAC equipment integration and control"
+      description: 'HVAC equipment integration and control',
     },
     {
       id: 2,
-      title: "Control Strategies: Temperature, Pressure, Flow",
+      title: 'Control Strategies: Temperature, Pressure, Flow',
       icon: Gauge,
-      description: "Process control methods and strategies"
+      description: 'Process control methods and strategies',
     },
     {
       id: 3,
-      title: "Time Scheduling and Occupancy Programming",
+      title: 'Time Scheduling and Occupancy Programming',
       icon: Clock,
-      description: "Automated scheduling and occupancy control"
+      description: 'Automated scheduling and occupancy control',
     },
     {
       id: 4,
-      title: "Demand-Based Control and Load Shedding",
+      title: 'Demand-Based Control and Load Shedding',
       icon: Battery,
-      description: "Energy optimization and load management"
+      description: 'Energy optimization and load management',
     },
     {
       id: 5,
-      title: "Override Functions and Seasonal Settings",
+      title: 'Override Functions and Seasonal Settings',
       icon: Power,
-      description: "Manual overrides and seasonal adjustments"
+      description: 'Manual overrides and seasonal adjustments',
     },
     {
       id: 6,
-      title: "Alarm Responses and Safety Shutdowns",
+      title: 'Alarm Responses and Safety Shutdowns',
       icon: AlertTriangle,
-      description: "Emergency procedures and safety systems"
-    }
+      description: 'Emergency procedures and safety systems',
+    },
   ];
 
   return (

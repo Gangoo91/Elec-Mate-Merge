@@ -4,9 +4,9 @@ import { Badge } from '@/components/ui/badge';
 
 export const ZsTestingLearningOutcomes = () => {
   const outcomes = [
-    "Test Zs at sockets, lighting points, and fixed appliances",
-    "Use the correct tester settings and safety precautions",
-    "Understand typical results and acceptable values"
+    'Test Zs at sockets, lighting points, and fixed appliances',
+    'Use the correct tester settings and safety precautions',
+    'Understand typical results and acceptable values',
   ];
 
   return (
@@ -24,13 +24,15 @@ export const ZsTestingLearningOutcomes = () => {
         <div className="space-y-2 sm:space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge 
-                variant="secondary" 
+              <Badge
+                variant="secondary"
                 className="bg-elec-yellow/20 text-elec-yellow mt-0.5 text-xs"
               >
                 {index + 1}
               </Badge>
-              <p className="text-foreground flex-1 text-sm sm:text-base leading-relaxed">{outcome}</p>
+              <p className="text-foreground flex-1 text-sm sm:text-base leading-relaxed">
+                {outcome}
+              </p>
             </div>
           ))}
         </div>

@@ -15,9 +15,9 @@ export const PolarityMethodsContent = () => {
           <div>
             <h3 className="text-xl font-semibold text-foreground mb-3">Testing Method Overview</h3>
             <p className="text-foreground leading-relaxed mb-4">
-              Polarity tests are done before energising, using a continuity setting on your multifunction 
-              tester (MFT) or dedicated continuity tester. The installation must be safely isolated and 
-              proven dead.
+              Polarity tests are done before energising, using a continuity setting on your
+              multifunction tester (MFT) or dedicated continuity tester. The installation must be
+              safely isolated and proven dead.
             </p>
           </div>
 
@@ -87,7 +87,9 @@ export const PolarityMethodsContent = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">Reference Points and Procedure</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-3">
+              Reference Points and Procedure
+            </h3>
             <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
                 <Zap className="h-5 w-5 text-green-400" />

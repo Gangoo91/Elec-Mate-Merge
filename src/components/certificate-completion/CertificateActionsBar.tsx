@@ -17,21 +17,12 @@ import {
   Code,
   Copy,
   ChevronUp,
-  Sparkles
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
@@ -309,10 +300,12 @@ export const CertificateActionsBar: React.FC<CertificateActionsBarProps> = ({
                     <Code className="h-4 w-4" />
                     Developer Tools
                   </div>
-                  <ChevronUp className={cn(
-                    'h-4 w-4 text-muted-foreground transition-transform',
-                    !isDevToolsOpen && 'rotate-180'
-                  )} />
+                  <ChevronUp
+                    className={cn(
+                      'h-4 w-4 text-muted-foreground transition-transform',
+                      !isDevToolsOpen && 'rotate-180'
+                    )}
+                  />
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent>

@@ -8,39 +8,45 @@ const sections = [
   {
     id: 1,
     title: 'Purpose and Legal Requirements',
-    description: 'Understanding why inspection and testing is essential, legal obligations under the Electricity at Work Regulations, and duty of care responsibilities.',
+    description:
+      'Understanding why inspection and testing is essential, legal obligations under the Electricity at Work Regulations, and duty of care responsibilities.',
     icon: Scale,
   },
   {
     id: 2,
     title: 'BS 7671 Testing Requirements Overview',
-    description: 'Comprehensive overview of the testing requirements specified in BS 7671, including initial verification and periodic inspection.',
+    description:
+      'Comprehensive overview of the testing requirements specified in BS 7671, including initial verification and periodic inspection.',
     icon: FileText,
   },
   {
     id: 3,
     title: 'Test Equipment and Calibration',
-    description: 'Essential test instruments, their specifications, calibration requirements, and how to verify equipment accuracy.',
+    description:
+      'Essential test instruments, their specifications, calibration requirements, and how to verify equipment accuracy.',
     icon: Wrench,
   },
   {
     id: 4,
     title: 'Safety During Testing',
-    description: 'Safe isolation procedures, personal protective equipment, risk assessment, and safe working practices during electrical testing.',
+    description:
+      'Safe isolation procedures, personal protective equipment, risk assessment, and safe working practices during electrical testing.',
     icon: Shield,
   },
   {
     id: 5,
     title: 'Test Sequence and Documentation',
-    description: 'The correct sequence for carrying out tests and how to properly document results on electrical installation certificates.',
+    description:
+      'The correct sequence for carrying out tests and how to properly document results on electrical installation certificates.',
     icon: ClipboardList,
-  }
+  },
 ];
 
 export default function InspectionTestingModule1() {
   useSEO({
     title: 'Module 1: Introduction to Inspection & Testing | Elec-Mate',
-    description: 'Learn the fundamentals of electrical inspection and testing including legal requirements, BS 7671 standards, test equipment, safety procedures, and documentation.'
+    description:
+      'Learn the fundamentals of electrical inspection and testing including legal requirements, BS 7671 standards, test equipment, safety procedures, and documentation.',
   });
 
   return (

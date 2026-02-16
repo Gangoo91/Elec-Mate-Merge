@@ -1,111 +1,139 @@
-import { ArrowLeft, FileText, CheckCircle, Award } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, FileText, CheckCircle, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Documentation, Warranty, and Aftercare";
-const DESCRIPTION = "Establish professional standards for record keeping, warranty management, and ongoing client support to build reputation and referrals.";
+const TITLE = 'Documentation, Warranty, and Aftercare';
+const DESCRIPTION =
+  'Establish professional standards for record keeping, warranty management, and ongoing client support to build reputation and referrals.';
 
 const quickCheckQuestions = [
   {
-    question: "Why is comprehensive installation documentation important?",
-    options: ["Only for legal compliance", "For future maintenance, troubleshooting, and warranty claims", "To increase job price", "Documentation is not important for smart home work"],
+    question: 'Why is comprehensive installation documentation important?',
+    options: [
+      'Only for legal compliance',
+      'For future maintenance, troubleshooting, and warranty claims',
+      'To increase job price',
+      'Documentation is not important for smart home work',
+    ],
     correctIndex: 1,
-    explanation: "Documentation serves multiple purposes: enabling future maintenance, supporting warranty claims, assisting troubleshooting, and demonstrating professional standards."
+    explanation:
+      'Documentation serves multiple purposes: enabling future maintenance, supporting warranty claims, assisting troubleshooting, and demonstrating professional standards.',
   },
   {
-    question: "What should be included in a commissioning record?",
-    options: ["Just the customer signature", "Device list, configuration settings, test results, and customer sign-off", "Only photographs", "The invoice only"],
+    question: 'What should be included in a commissioning record?',
+    options: [
+      'Just the customer signature',
+      'Device list, configuration settings, test results, and customer sign-off',
+      'Only photographs',
+      'The invoice only',
+    ],
     correctIndex: 1,
-    explanation: "A comprehensive commissioning record documents everything needed to verify, maintain, or troubleshoot the installation in the future."
+    explanation:
+      'A comprehensive commissioning record documents everything needed to verify, maintain, or troubleshoot the installation in the future.',
   },
   {
-    question: "How should you advise customers about manufacturer warranties?",
-    options: ["Tell them warranties are not your responsibility", "Explain warranty terms, registration requirements, and support contacts", "Avoid discussing warranties", "Promise to handle all warranty issues personally"],
+    question: 'How should you advise customers about manufacturer warranties?',
+    options: [
+      'Tell them warranties are not your responsibility',
+      'Explain warranty terms, registration requirements, and support contacts',
+      'Avoid discussing warranties',
+      'Promise to handle all warranty issues personally',
+    ],
     correctIndex: 1,
-    explanation: "Customers need clear guidance on warranty registration, coverage periods, and how to claim. This empowers them to use warranty support appropriately."
-  }
+    explanation:
+      'Customers need clear guidance on warranty registration, coverage periods, and how to claim. This empowers them to use warranty support appropriately.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What information should an as-built drawing include for a smart home installation?",
+    question: 'What information should an as-built drawing include for a smart home installation?',
     options: [
-      "Only the location of the consumer unit",
-      "Device locations, cable routes, hub position, and network infrastructure",
-      "Just a floor plan with no annotations",
-      "Manufacturer logos only"
+      'Only the location of the consumer unit',
+      'Device locations, cable routes, hub position, and network infrastructure',
+      'Just a floor plan with no annotations',
+      'Manufacturer logos only',
     ],
     correctIndex: 1,
-    explanation: "As-built drawings should show all installed components, cable routes, and infrastructure to enable future maintenance and modifications."
+    explanation:
+      'As-built drawings should show all installed components, cable routes, and infrastructure to enable future maintenance and modifications.',
   },
   {
-    question: "Why is device registration important for warranty purposes?",
+    question: 'Why is device registration important for warranty purposes?',
     options: [
-      "It is not important",
-      "It activates warranty coverage and provides proof of purchase date",
-      "Only for marketing emails",
-      "To void the warranty"
+      'It is not important',
+      'It activates warranty coverage and provides proof of purchase date',
+      'Only for marketing emails',
+      'To void the warranty',
     ],
     correctIndex: 1,
-    explanation: "Many manufacturers require product registration to activate warranties. Registration also creates a record of the purchase date for warranty claims."
+    explanation:
+      'Many manufacturers require product registration to activate warranties. Registration also creates a record of the purchase date for warranty claims.',
   },
   {
-    question: "What should be included in a maintenance schedule recommendation?",
+    question: 'What should be included in a maintenance schedule recommendation?',
     options: [
-      "Nothing - smart devices do not need maintenance",
-      "Battery replacement intervals, firmware updates, and periodic system checks",
-      "Only cleaning instructions",
-      "Daily reboot requirements"
+      'Nothing - smart devices do not need maintenance',
+      'Battery replacement intervals, firmware updates, and periodic system checks',
+      'Only cleaning instructions',
+      'Daily reboot requirements',
     ],
     correctIndex: 1,
-    explanation: "A maintenance schedule helps customers keep their system running reliably, including battery changes, software updates, and periodic checks."
+    explanation:
+      'A maintenance schedule helps customers keep their system running reliably, including battery changes, software updates, and periodic checks.',
   },
   {
-    question: "How should you store customer installation records?",
+    question: 'How should you store customer installation records?',
     options: [
-      "Discard after job completion",
-      "Securely with GDPR compliance, accessible for future reference",
-      "Share publicly for marketing",
-      "Only keep paper copies"
+      'Discard after job completion',
+      'Securely with GDPR compliance, accessible for future reference',
+      'Share publicly for marketing',
+      'Only keep paper copies',
     ],
     correctIndex: 1,
-    explanation: "Records must be stored securely following data protection requirements, while remaining accessible for future support, warranty claims, or regulatory inspections."
+    explanation:
+      'Records must be stored securely following data protection requirements, while remaining accessible for future support, warranty claims, or regulatory inspections.',
   },
   {
-    question: "What is the benefit of offering a maintenance agreement for smart home installations?",
+    question:
+      'What is the benefit of offering a maintenance agreement for smart home installations?',
     options: [
-      "No benefit - customers prefer one-time purchases",
-      "Recurring revenue and proactive customer relationship management",
-      "It complicates the business model",
-      "Maintenance agreements are illegal"
+      'No benefit - customers prefer one-time purchases',
+      'Recurring revenue and proactive customer relationship management',
+      'It complicates the business model',
+      'Maintenance agreements are illegal',
     ],
     correctIndex: 1,
-    explanation: "Maintenance agreements provide predictable revenue, encourage ongoing customer relationships, and help identify issues before they become major problems."
-  }
+    explanation:
+      'Maintenance agreements provide predictable revenue, encourage ongoing customer relationships, and help identify issues before they become major problems.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How long should I retain customer installation records?",
-    answer: "Retain records for at least the warranty period of installed devices (typically 2-5 years) and preferably longer for liability protection. Electrical certificates should be kept indefinitely or until the property changes ownership. Ensure compliance with GDPR for personal data."
+    question: 'How long should I retain customer installation records?',
+    answer:
+      'Retain records for at least the warranty period of installed devices (typically 2-5 years) and preferably longer for liability protection. Electrical certificates should be kept indefinitely or until the property changes ownership. Ensure compliance with GDPR for personal data.',
   },
   {
-    question: "Should I offer extended warranty or maintenance packages?",
-    answer: "Maintenance packages can be valuable for customers and provide recurring revenue. Consider offering annual check-ups, priority support, and discounted call-outs. Be clear about what is and is not covered to manage expectations."
+    question: 'Should I offer extended warranty or maintenance packages?',
+    answer:
+      'Maintenance packages can be valuable for customers and provide recurring revenue. Consider offering annual check-ups, priority support, and discounted call-outs. Be clear about what is and is not covered to manage expectations.',
   },
   {
-    question: "What should I do if a customer reports a problem months after installation?",
-    answer: "Review your installation records to understand the original configuration. Assess whether the issue is installation-related, device failure (warranty), or user error. Provide appropriate support or refer to manufacturer warranty as needed. Good records make this process much smoother."
-  }
+    question: 'What should I do if a customer reports a problem months after installation?',
+    answer:
+      'Review your installation records to understand the original configuration. Assess whether the issue is installation-related, device failure (warranty), or user error. Provide appropriate support or refer to manufacturer warranty as needed. Good records make this process much smoother.',
+  },
 ];
 
 const SmartHomeModule7Section6 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 7`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -134,23 +162,23 @@ const SmartHomeModule7Section6 = () => {
           <div className="flex justify-center mb-4">
             <FileText className="h-10 w-10 text-elec-yellow" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            {TITLE}
-          </h1>
-          <p className="text-white text-lg max-w-2xl mx-auto">
-            {DESCRIPTION}
-          </p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
+          <p className="text-white text-lg max-w-2xl mx-auto">{DESCRIPTION}</p>
         </header>
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h3 className="font-semibold text-white mb-1">Professional Standard</h3>
-            <p className="text-white text-sm">Quality documentation reflects installation quality</p>
+            <p className="text-white text-sm">
+              Quality documentation reflects installation quality
+            </p>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h3 className="font-semibold text-white mb-1">Business Growth</h3>
-            <p className="text-white text-sm">Aftercare relationships generate referrals and repeat business</p>
+            <p className="text-white text-sm">
+              Aftercare relationships generate referrals and repeat business
+            </p>
           </div>
         </div>
 
@@ -162,10 +190,10 @@ const SmartHomeModule7Section6 = () => {
           </h2>
           <ul className="space-y-3">
             {[
-              "Create comprehensive installation documentation packages",
-              "Manage warranty information and registration for customers",
-              "Develop effective aftercare and maintenance programmes",
-              "Build long-term customer relationships through professional service"
+              'Create comprehensive installation documentation packages',
+              'Manage warranty information and registration for customers',
+              'Develop effective aftercare and maintenance programmes',
+              'Build long-term customer relationships through professional service',
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -274,11 +302,15 @@ const SmartHomeModule7Section6 = () => {
               </div>
               <div className="flex gap-3 items-start">
                 <span className="font-medium text-elec-yellow min-w-[140px]">Installer:</span>
-                <span className="text-white">Your workmanship guarantee, scope defined by your terms</span>
+                <span className="text-white">
+                  Your workmanship guarantee, scope defined by your terms
+                </span>
               </div>
               <div className="flex gap-3 items-start">
                 <span className="font-medium text-elec-yellow min-w-[140px]">Extended:</span>
-                <span className="text-white">Optional additional coverage, often available at purchase</span>
+                <span className="text-white">
+                  Optional additional coverage, often available at purchase
+                </span>
               </div>
             </div>
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg">
@@ -406,18 +438,16 @@ const SmartHomeModule7Section6 = () => {
           </div>
           <p className="text-white mb-4">
             Congratulations on completing Module 7! You have covered the essential skills for
-            professional smart home installation, from wiring and commissioning to customer
-            handover and ongoing aftercare. These practices will help you deliver reliable
-            installations and build lasting customer relationships.
+            professional smart home installation, from wiring and commissioning to customer handover
+            and ongoing aftercare. These practices will help you deliver reliable installations and
+            build lasting customer relationships.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
               asChild
             >
-              <Link to="/electrician/upskilling/smart-home-course">
-                Return to Course Overview
-              </Link>
+              <Link to="/electrician/upskilling/smart-home-course">Return to Course Overview</Link>
             </Button>
           </div>
         </section>
@@ -434,10 +464,10 @@ const SmartHomeModule7Section6 = () => {
             </div>
           </div>
           <p className="text-white mb-4">
-            You have completed the entire Smart Home Installation course. You now have
-            comprehensive knowledge covering protocols, lighting, climate control, security,
-            voice integration, and professional installation practices. Apply these skills
-            to deliver exceptional smart home solutions for your customers.
+            You have completed the entire Smart Home Installation course. You now have comprehensive
+            knowledge covering protocols, lighting, climate control, security, voice integration,
+            and professional installation practices. Apply these skills to deliver exceptional smart
+            home solutions for your customers.
           </p>
           <div className="grid sm:grid-cols-2 gap-4 mt-4">
             <div className="p-3 rounded-lg bg-white/5">
@@ -479,9 +509,7 @@ const SmartHomeModule7Section6 = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             asChild
           >
-            <Link to="/electrician/upskilling/smart-home-course">
-              Back to Course
-            </Link>
+            <Link to="/electrician/upskilling/smart-home-course">Back to Course</Link>
           </Button>
         </nav>
       </article>

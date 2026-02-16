@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 import {
   Lightbulb,
   Calculator,
@@ -9,13 +9,9 @@ import {
   ChevronDown,
   BookOpen,
   Info,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -24,33 +20,33 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 import {
   calculateEmergencyLighting,
   occupancyProfiles,
   fixtureProfiles,
   EmergencyLightingInputs,
-} from "@/lib/emergency-lighting";
-import EmergencyLightingGuidance from "./emergency/EmergencyLightingGuidance";
+} from '@/lib/emergency-lighting';
+import EmergencyLightingGuidance from './emergency/EmergencyLightingGuidance';
 
 const EmergencyLightingCalculator = () => {
-  const config = CALCULATOR_CONFIG["lighting"];
+  const config = CALCULATOR_CONFIG['lighting'];
 
   // Core inputs
-  const [floorArea, setFloorArea] = useState<string>("");
-  const [ceilingHeight, setCeilingHeight] = useState<string>("3");
-  const [occupancyType, setOccupancyType] = useState<string>("office");
-  const [exitRoutes, setExitRoutes] = useState<string>("2");
-  const [emergencyDuration, setEmergencyDuration] = useState<string>("3");
-  const [fixtureType, setFixtureType] = useState<string>("led-standard");
+  const [floorArea, setFloorArea] = useState<string>('');
+  const [ceilingHeight, setCeilingHeight] = useState<string>('3');
+  const [occupancyType, setOccupancyType] = useState<string>('office');
+  const [exitRoutes, setExitRoutes] = useState<string>('2');
+  const [emergencyDuration, setEmergencyDuration] = useState<string>('3');
+  const [fixtureType, setFixtureType] = useState<string>('led-standard');
 
   // Advanced inputs
-  const [corridorLength, setCorridorLength] = useState<string>("");
-  const [corridorWidth, setCorridorWidth] = useState<string>("");
-  const [staircaseFlights, setStaircaseFlights] = useState<string>("");
+  const [corridorLength, setCorridorLength] = useState<string>('');
+  const [corridorWidth, setCorridorWidth] = useState<string>('');
+  const [staircaseFlights, setStaircaseFlights] = useState<string>('');
   const [hasHighRiskTasks, setHasHighRiskTasks] = useState<boolean>(false);
   const [hasDisabledAccess, setHasDisabledAccess] = useState<boolean>(false);
-  const [buildingHeight, setBuildingHeight] = useState<string>("");
+  const [buildingHeight, setBuildingHeight] = useState<string>('');
   const [complexLayout, setComplexLayout] = useState<boolean>(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showReference, setShowReference] = useState(false);
@@ -83,18 +79,18 @@ const EmergencyLightingCalculator = () => {
   };
 
   const reset = () => {
-    setFloorArea("");
-    setCeilingHeight("3");
-    setOccupancyType("office");
-    setExitRoutes("2");
-    setEmergencyDuration("3");
-    setFixtureType("led-standard");
-    setCorridorLength("");
-    setCorridorWidth("");
-    setStaircaseFlights("");
+    setFloorArea('');
+    setCeilingHeight('3');
+    setOccupancyType('office');
+    setExitRoutes('2');
+    setEmergencyDuration('3');
+    setFixtureType('led-standard');
+    setCorridorLength('');
+    setCorridorWidth('');
+    setStaircaseFlights('');
     setHasHighRiskTasks(false);
     setHasDisabledAccess(false);
-    setBuildingHeight("");
+    setBuildingHeight('');
     setComplexLayout(false);
     setResult(null);
   };
@@ -112,9 +108,9 @@ const EmergencyLightingCalculator = () => {
   }));
 
   const durationOptions = [
-    { value: "1", label: "1 Hour (Occupied premises)" },
-    { value: "3", label: "3 Hours (Unoccupied premises)" },
-    { value: "24", label: "24 Hours (High risk areas)" },
+    { value: '1', label: '1 Hour (Occupied premises)' },
+    { value: '3', label: '3 Hours (Unoccupied premises)' },
+    { value: '24', label: '24 Hours (High risk areas)' },
   ];
 
   return (
@@ -199,8 +195,8 @@ const EmergencyLightingCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showAdvanced && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showAdvanced && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
@@ -289,10 +285,8 @@ const EmergencyLightingCalculator = () => {
             onClick={handleCalculate}
             disabled={!isValid}
             className={cn(
-              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-              isValid
-                ? "text-black"
-                : "bg-white/10 text-white/30 cursor-not-allowed"
+              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+              isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
             )}
             style={
               isValid
@@ -329,7 +323,7 @@ const EmergencyLightingCalculator = () => {
 
       {/* Quick Reference */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
@@ -339,8 +333,8 @@ const EmergencyLightingCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showReference && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>

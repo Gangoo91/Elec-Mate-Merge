@@ -1,4 +1,3 @@
-
 export const testSequence = [
   {
     step: 0,
@@ -10,19 +9,20 @@ export const testSequence = [
     safety: 'CRITICAL: This step must be completed before any other testing',
     icon: '🔒',
     priority: 'CRITICAL',
-    testType: 'isolation'
+    testType: 'isolation',
   },
   {
     step: 1,
     title: 'Continuity of Protective Conductors',
     regulation: '612.2.1',
-    description: 'Test continuity of circuit protective conductors (cpc) and main earthing conductors',
+    description:
+      'Test continuity of circuit protective conductors (cpc) and main earthing conductors',
     method: 'Low reading ohmmeter (typically 200mA test current)',
     acceptance: 'Should be low resistance path, typically <1Ω for most circuits',
     safety: 'Ensure supply is isolated and proved dead',
     icon: '🔗',
     priority: 'HIGH',
-    testType: 'dead'
+    testType: 'dead',
   },
   {
     step: 2,
@@ -34,7 +34,7 @@ export const testSequence = [
     safety: 'Circuit must be isolated and all accessories disconnected',
     icon: '⭕',
     priority: 'HIGH',
-    testType: 'dead'
+    testType: 'dead',
   },
   {
     step: 3,
@@ -46,7 +46,7 @@ export const testSequence = [
     safety: 'Remove sensitive equipment, ensure personnel safety',
     icon: '⚡',
     priority: 'HIGH',
-    testType: 'dead'
+    testType: 'dead',
   },
   {
     step: 4,
@@ -58,7 +58,7 @@ export const testSequence = [
     safety: 'Supply must be isolated during testing',
     icon: '🔄',
     priority: 'MEDIUM',
-    testType: 'dead'
+    testType: 'dead',
   },
   {
     step: 5,
@@ -70,19 +70,21 @@ export const testSequence = [
     safety: 'Use appropriate earth electrode test equipment',
     icon: '🌍',
     priority: 'MEDIUM',
-    testType: 'dead'
+    testType: 'dead',
   },
   {
     step: 6,
     title: 'Earth Fault Loop Impedance (Ze then Zs)',
     regulation: '612.9',
-    description: 'Measure external earth fault loop impedance (Ze), then earth fault loop impedance (Zs) at relevant points',
+    description:
+      'Measure external earth fault loop impedance (Ze), then earth fault loop impedance (Zs) at relevant points',
     method: 'Loop impedance tester with supply energised (line-to-earth method standard)',
     acceptance: 'Must not exceed values in BS7671 tables',
-    safety: 'Live testing - ensure test equipment is suitable and calibrated. Follow manufacturer guidance for test lead connections',
+    safety:
+      'Live testing - ensure test equipment is suitable and calibrated. Follow manufacturer guidance for test lead connections',
     icon: '🔋',
     priority: 'HIGH',
-    testType: 'live'
+    testType: 'live',
   },
   {
     step: 7,
@@ -94,7 +96,7 @@ export const testSequence = [
     safety: 'Follow RCD tester operating instructions',
     icon: '🛡️',
     priority: 'HIGH',
-    testType: 'live'
+    testType: 'live',
   },
   {
     step: 8,
@@ -106,8 +108,8 @@ export const testSequence = [
     safety: 'High current measurement - use appropriate equipment',
     icon: '⚡',
     priority: 'MEDIUM',
-    testType: 'live'
-  }
+    testType: 'live',
+  },
 ];
 
 export const quickRefValues = [
@@ -115,7 +117,7 @@ export const quickRefValues = [
   { label: 'RCD Trip Time (1×In)', value: '≤300ms', regulation: '612.13.2' },
   { label: 'Ring Circuit Tolerance', value: '±0.05Ω', regulation: '612.2.2' },
   { label: 'Test Voltage (LV)', value: '500V DC', regulation: '612.3.2' },
-  { label: 'Continuity Test Current', value: '4-24mA', regulation: '612.2.1' }
+  { label: 'Continuity Test Current', value: '4-24mA', regulation: '612.2.1' },
 ];
 
 export const testingChecklist = [
@@ -128,5 +130,5 @@ export const testingChecklist = [
   'RCDs isolated during loop impedance testing',
   'Sensitive equipment disconnected where required',
   'Test results recorded immediately',
-  'Any deviations documented with justification'
+  'Any deviations documented with justification',
 ];

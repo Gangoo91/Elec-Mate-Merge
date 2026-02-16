@@ -22,7 +22,9 @@ export const SaveCustomerPrompt = ({
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       // Check if customer already exists by email
@@ -37,10 +39,7 @@ export const SaveCustomerPrompt = ({
 
         if (existing) {
           // Auto-link existing customer
-          await supabase
-            .from('quotes')
-            .update({ customer_id: existing.id })
-            .eq('id', quoteId);
+          await supabase.from('quotes').update({ customer_id: existing.id }).eq('id', quoteId);
 
           onSaved(existing.id);
           toast({
@@ -67,10 +66,7 @@ export const SaveCustomerPrompt = ({
       if (error) throw error;
 
       // Link customer to quote
-      await supabase
-        .from('quotes')
-        .update({ customer_id: newCustomer.id })
-        .eq('id', quoteId);
+      await supabase.from('quotes').update({ customer_id: newCustomer.id }).eq('id', quoteId);
 
       onSaved(newCustomer.id);
       toast({
@@ -104,11 +100,7 @@ export const SaveCustomerPrompt = ({
       >
         {isSaving ? 'Saving...' : 'Save'}
       </button>
-      <button
-        type="button"
-        onClick={onDismiss}
-        className="p-1 touch-manipulation"
-      >
+      <button type="button" onClick={onDismiss} className="p-1 touch-manipulation">
         <X className="h-4 w-4 text-white/40" />
       </button>
     </div>

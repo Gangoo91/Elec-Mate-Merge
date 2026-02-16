@@ -41,7 +41,6 @@ const InstallationBestPracticesPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Installation Checklist */}
         <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
           <h4 className="text-green-400 font-semibold mb-3 flex items-center gap-2">
@@ -103,7 +102,9 @@ const InstallationBestPracticesPractical = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Cable Run Length (m)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Cable Run Length (m)
+                </label>
                 <input
                   type="number"
                   value={cableLength}
@@ -113,7 +114,9 @@ const InstallationBestPracticesPractical = () => {
                 />
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Support Spacing (m)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Support Spacing (m)
+                </label>
                 <select
                   value={supportSpacing}
                   onChange={(e) => setSupportSpacing(e.target.value)}
@@ -152,7 +155,9 @@ const InstallationBestPracticesPractical = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">Cable Current (A)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  Cable Current (A)
+                </label>
                 <input
                   type="number"
                   value={cableCurrent}
@@ -162,7 +167,9 @@ const InstallationBestPracticesPractical = () => {
                 />
               </div>
               <div>
-                <label className="block text-foreground text-sm font-medium mb-1">System Voltage (V)</label>
+                <label className="block text-foreground text-sm font-medium mb-1">
+                  System Voltage (V)
+                </label>
                 <input
                   type="number"
                   value={voltageRating}
@@ -177,16 +184,28 @@ const InstallationBestPracticesPractical = () => {
                 <p className="text-foreground font-medium">Voltage Drop:</p>
                 <p className="text-elec-yellow text-xl font-bold">{getVoltageDrop()}V</p>
                 <p className="text-gray-400 text-xs">
-                  Percentage: {voltageRating ? ((parseFloat(getVoltageDrop()) / parseFloat(voltageRating)) * 100).toFixed(2) : '0.00'}%
+                  Percentage:{' '}
+                  {voltageRating
+                    ? ((parseFloat(getVoltageDrop()) / parseFloat(voltageRating)) * 100).toFixed(2)
+                    : '0.00'}
+                  %
                 </p>
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-foreground font-medium text-xs">Compliance Check:</p>
-                <Badge 
-                  variant={voltageRating && ((parseFloat(getVoltageDrop()) / parseFloat(voltageRating)) * 100) <= 3 ? "default" : "destructive"}
+                <Badge
+                  variant={
+                    voltageRating &&
+                    (parseFloat(getVoltageDrop()) / parseFloat(voltageRating)) * 100 <= 3
+                      ? 'default'
+                      : 'destructive'
+                  }
                   className="text-xs"
                 >
-                  {voltageRating && ((parseFloat(getVoltageDrop()) / parseFloat(voltageRating)) * 100) <= 3 ? "Within 3% limit" : "Exceeds 3% limit"}
+                  {voltageRating &&
+                  (parseFloat(getVoltageDrop()) / parseFloat(voltageRating)) * 100 <= 3
+                    ? 'Within 3% limit'
+                    : 'Exceeds 3% limit'}
                 </Badge>
               </div>
             </div>
@@ -263,7 +282,6 @@ const InstallationBestPracticesPractical = () => {
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

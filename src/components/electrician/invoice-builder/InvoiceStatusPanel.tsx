@@ -43,11 +43,14 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
       const { data } = await supabase
         .from('invoice_reminders')
         .select('*')
-        .in('quote_id', invoices.map(i => i.id))
+        .in(
+          'quote_id',
+          invoices.map((i) => i.id)
+        )
         .order('sent_at', { ascending: false });
 
       const historyMap = new Map();
-      data?.forEach(reminder => {
+      data?.forEach((reminder) => {
         if (!historyMap.has(reminder.quote_id)) {
           historyMap.set(reminder.quote_id, []);
         }
@@ -96,8 +99,12 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
         {/* Header: Invoice number + Status */}
         <div className="flex items-start justify-between gap-3 pb-2 sm:pb-3 border-b border-primary/10">
           <div className="space-y-2 flex-1 min-w-0">
-            <h4 className="font-semibold text-sm sm:text-base truncate">{invoice.invoice_number}</h4>
-            <p className="text-xs sm:text-sm text-muted-foreground truncate">{invoice.client?.name}</p>
+            <h4 className="font-semibold text-sm sm:text-base truncate">
+              {invoice.invoice_number}
+            </h4>
+            <p className="text-xs sm:text-sm text-muted-foreground truncate">
+              {invoice.client?.name}
+            </p>
           </div>
           <div className="flex flex-col gap-1 items-end shrink-0">
             {daysOverdue > 0 && showActions !== 'paid' && (
@@ -126,13 +133,21 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           {invoice.invoice_date && (
             <div className="space-y-0">
               <div className="text-muted-foreground font-medium">Invoice Date</div>
-              <div className="text-foreground">{new Date(invoice.invoice_date).toLocaleDateString('en-GB')}</div>
+              <div className="text-foreground">
+                {new Date(invoice.invoice_date).toLocaleDateString('en-GB')}
+              </div>
             </div>
           )}
           {invoice.invoice_due_date && (
             <div className="space-y-0">
               <div className="text-muted-foreground font-medium">Due Date</div>
-              <div className={daysOverdue > 0 && showActions !== 'paid' ? 'text-destructive font-semibold' : 'text-foreground'}>
+              <div
+                className={
+                  daysOverdue > 0 && showActions !== 'paid'
+                    ? 'text-destructive font-semibold'
+                    : 'text-foreground'
+                }
+              >
                 {new Date(invoice.invoice_due_date).toLocaleDateString('en-GB')}
               </div>
             </div>
@@ -148,7 +163,9 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           {invoice.invoice_paid_at && (
             <div className="space-y-0">
               <div className="text-muted-foreground font-medium">Paid</div>
-              <div className="text-foreground">{new Date(invoice.invoice_paid_at).toLocaleDateString('en-GB')}</div>
+              <div className="text-foreground">
+                {new Date(invoice.invoice_paid_at).toLocaleDateString('en-GB')}
+              </div>
             </div>
           )}
         </div>
@@ -157,8 +174,11 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
         {reminderHistory.has(invoice.id) && reminderHistory.get(invoice.id)!.length > 0 && (
           <Badge variant="outline" className="text-[10px] sm:text-xs w-full justify-center py-1">
             <Mail className="h-3 w-3 mr-1" />
-            Last reminder: {formatDistanceToNow(new Date(reminderHistory.get(invoice.id)![0].sent_at), { addSuffix: true })}
-            {' '}({reminderHistory.get(invoice.id)![0].reminder_type})
+            Last reminder:{' '}
+            {formatDistanceToNow(new Date(reminderHistory.get(invoice.id)![0].sent_at), {
+              addSuffix: true,
+            })}{' '}
+            ({reminderHistory.get(invoice.id)![0].reminder_type})
           </Badge>
         )}
 
@@ -184,7 +204,11 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           </Button>
 
           {showActions === 'send' && (
-            <InvoiceSendDropdown invoice={invoice} onSuccess={onRefresh} className="sm:ml-auto w-full sm:w-auto" />
+            <InvoiceSendDropdown
+              invoice={invoice}
+              onSuccess={onRefresh}
+              className="sm:ml-auto w-full sm:w-auto"
+            />
           )}
 
           {showActions === 'paid' && (

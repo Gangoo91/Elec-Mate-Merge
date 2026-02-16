@@ -61,9 +61,9 @@ export function ExpenseStatsBar({
   return (
     <div
       className={cn(
-        "flex gap-3 overflow-x-auto hide-scrollbar pb-1",
-        "-mx-4 px-4 md:mx-0 md:px-0",
-        "md:grid md:grid-cols-4",
+        'flex gap-3 overflow-x-auto hide-scrollbar pb-1',
+        '-mx-4 px-4 md:mx-0 md:px-0',
+        'md:grid md:grid-cols-4',
         className
       )}
     >
@@ -76,12 +76,12 @@ export function ExpenseStatsBar({
           <Card
             key={key}
             className={cn(
-              "shrink-0 w-36 md:w-auto",
-              "bg-gradient-to-br border",
+              'shrink-0 w-36 md:w-auto',
+              'bg-gradient-to-br border',
               gradient,
-              "transition-all duration-200",
-              isClickable && "cursor-pointer hover:scale-[1.02] active:scale-[0.98]",
-              isActive ? "ring-2 ring-elec-yellow border-elec-yellow/50" : "border-border/50"
+              'transition-all duration-200',
+              isClickable && 'cursor-pointer hover:scale-[1.02] active:scale-[0.98]',
+              isActive ? 'ring-2 ring-elec-yellow border-elec-yellow/50' : 'border-border/50'
             )}
             onClick={() => {
               if (onStatusClick) {
@@ -91,12 +91,10 @@ export function ExpenseStatsBar({
           >
             <div className="p-3 md:p-4">
               <div className="flex items-center gap-2 mb-2">
-                <div className={cn("p-1.5 rounded-lg", iconBg)}>
+                <div className={cn('p-1.5 rounded-lg', iconBg)}>
                   <Icon className="h-4 w-4" />
                 </div>
-                <span className="text-xs font-medium text-muted-foreground">
-                  {label}
-                </span>
+                <span className="text-xs font-medium text-muted-foreground">{label}</span>
               </div>
               <div className="space-y-0.5">
                 <p className="text-xl md:text-2xl font-bold text-foreground">
@@ -149,9 +147,9 @@ export function MyExpenseStatsBar({
   return (
     <div
       className={cn(
-        "flex gap-3 overflow-x-auto hide-scrollbar pb-1",
-        "-mx-4 px-4 md:mx-0 md:px-0",
-        "md:grid md:grid-cols-3",
+        'flex gap-3 overflow-x-auto hide-scrollbar pb-1',
+        '-mx-4 px-4 md:mx-0 md:px-0',
+        'md:grid md:grid-cols-3',
         className
       )}
     >
@@ -162,19 +160,17 @@ export function MyExpenseStatsBar({
           <Card
             key={key}
             className={cn(
-              "shrink-0 w-32 md:w-auto",
-              "bg-gradient-to-br border border-border/50",
+              'shrink-0 w-32 md:w-auto',
+              'bg-gradient-to-br border border-border/50',
               gradient
             )}
           >
             <div className="p-3 md:p-4">
               <div className="flex items-center gap-2 mb-2">
-                <div className={cn("p-1.5 rounded-lg", iconBg)}>
+                <div className={cn('p-1.5 rounded-lg', iconBg)}>
                   <Icon className="h-4 w-4" />
                 </div>
-                <span className="text-xs font-medium text-muted-foreground">
-                  {label}
-                </span>
+                <span className="text-xs font-medium text-muted-foreground">{label}</span>
               </div>
               <div className="space-y-0.5">
                 <p className="text-xl md:text-2xl font-bold text-foreground">

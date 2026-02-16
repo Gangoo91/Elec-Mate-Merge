@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,7 +19,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
         <RotateCcw className="h-4 w-4" />
         Polarity Test Results
       </h4>
-      
+
       <div className="space-y-3">
         {testResults.map((test, index) => (
           <Card key={index} className="bg-card border-border">
@@ -31,9 +30,13 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                   <div className="text-sm text-white/80">
                     ({test.testMethod === 'dead' ? 'Dead Test' : 'Live Test'})
                   </div>
-                  <Badge 
+                  <Badge
                     variant={test.result === 'pass' ? 'default' : 'destructive'}
-                    className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
+                    className={
+                      test.result === 'pass'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-red-500/20 text-red-400'
+                    }
                   >
                     {test.result.toUpperCase()}
                   </Badge>
@@ -47,53 +50,73 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                   Remove
                 </Button>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                 {test.socketOutlets !== 'pending' && (
                   <div>
                     <span className="text-white/80">Sockets:</span>
-                    <span className={`ml-1 ${
-                      test.socketOutlets === 'pass' ? 'text-green-400' : 
-                      test.socketOutlets === 'fail' ? 'text-red-400' : 'text-white/80'
-                    }`}>
-                      {test.socketOutlets === 'pass' ? 'Pass' : 
-                       test.socketOutlets === 'fail' ? 'Fail' : 'N/A'}
+                    <span
+                      className={`ml-1 ${
+                        test.socketOutlets === 'pass'
+                          ? 'text-green-400'
+                          : test.socketOutlets === 'fail'
+                            ? 'text-red-400'
+                            : 'text-white/80'
+                      }`}
+                    >
+                      {test.socketOutlets === 'pass'
+                        ? 'Pass'
+                        : test.socketOutlets === 'fail'
+                          ? 'Fail'
+                          : 'N/A'}
                     </span>
                   </div>
                 )}
-                
+
                 {test.lightingPoints !== 'pending' && (
                   <div>
                     <span className="text-white/80">Lighting:</span>
-                    <span className={`ml-1 ${
-                      test.lightingPoints === 'pass' ? 'text-green-400' : 
-                      test.lightingPoints === 'fail' ? 'text-red-400' : 'text-white/80'
-                    }`}>
-                      {test.lightingPoints === 'pass' ? 'Pass' : 
-                       test.lightingPoints === 'fail' ? 'Fail' : 'N/A'}
+                    <span
+                      className={`ml-1 ${
+                        test.lightingPoints === 'pass'
+                          ? 'text-green-400'
+                          : test.lightingPoints === 'fail'
+                            ? 'text-red-400'
+                            : 'text-white/80'
+                      }`}
+                    >
+                      {test.lightingPoints === 'pass'
+                        ? 'Pass'
+                        : test.lightingPoints === 'fail'
+                          ? 'Fail'
+                          : 'N/A'}
                     </span>
                   </div>
                 )}
-                
+
                 {test.isolatorSwitches !== 'pending' && (
                   <div>
                     <span className="text-white/80">Isolators:</span>
-                    <span className={`ml-1 ${
-                      test.isolatorSwitches === 'pass' ? 'text-green-400' : 
-                      test.isolatorSwitches === 'fail' ? 'text-red-400' : 'text-white/80'
-                    }`}>
-                      {test.isolatorSwitches === 'pass' ? 'Pass' : 
-                       test.isolatorSwitches === 'fail' ? 'Fail' : 'N/A'}
+                    <span
+                      className={`ml-1 ${
+                        test.isolatorSwitches === 'pass'
+                          ? 'text-green-400'
+                          : test.isolatorSwitches === 'fail'
+                            ? 'text-red-400'
+                            : 'text-white/80'
+                      }`}
+                    >
+                      {test.isolatorSwitches === 'pass'
+                        ? 'Pass'
+                        : test.isolatorSwitches === 'fail'
+                          ? 'Fail'
+                          : 'N/A'}
                     </span>
                   </div>
                 )}
               </div>
-              
-              {test.notes && (
-                <div className="mt-2 text-sm text-white/80">
-                  Notes: {test.notes}
-                </div>
-              )}
+
+              {test.notes && <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>}
             </CardContent>
           </Card>
         ))}

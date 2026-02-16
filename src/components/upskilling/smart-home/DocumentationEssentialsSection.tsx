@@ -12,8 +12,9 @@ const DocumentationEssentialsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Comprehensive documentation is essential for future reference, compliance, and liability protection. 
-          Proper records demonstrate competence and provide foundation for ongoing client relationships.
+          Comprehensive documentation is essential for future reference, compliance, and liability
+          protection. Proper records demonstrate competence and provide foundation for ongoing
+          client relationships.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -31,7 +32,7 @@ const DocumentationEssentialsSection = () => {
                 <li>• Cable routes and containment details</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-green-500">
               <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
                 <Database className="h-4 w-4 text-green-400" />
@@ -58,7 +59,7 @@ const DocumentationEssentialsSection = () => {
                 <li>• User account details (if agreed with client)</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-amber-900/20 border border-amber-600/30 rounded-lg">
               <h4 className="font-medium text-amber-200 mb-2">Storage and Access</h4>
               <p className="text-amber-100 text-sm mb-2">Maintain accessible records:</p>

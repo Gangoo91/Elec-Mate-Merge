@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   ArrowLeft,
   Compass,
@@ -13,13 +13,13 @@ import {
   Target,
   GraduationCap,
   BookOpen,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { CourseCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { CourseCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
-type CourseLevel = "Foundation" | "Intermediate";
+type CourseLevel = 'Foundation' | 'Intermediate';
 
 interface Course {
   id: number;
@@ -35,110 +35,108 @@ interface Course {
 const courses: Course[] = [
   {
     id: 1,
-    title: "Leadership on Site",
+    title: 'Leadership on Site',
     description:
-      "Delegating, decision-making, earning respect, and leading teams — based on ILM Level 2 team leading frameworks",
+      'Delegating, decision-making, earning respect, and leading teams — based on ILM Level 2 team leading frameworks',
     icon: Compass,
-    level: "Intermediate",
-    duration: "6 hours",
-    link: "leadership-on-site",
+    level: 'Intermediate',
+    duration: '6 hours',
+    link: 'leadership-on-site',
   },
   {
     id: 2,
-    title: "Mental Health Awareness",
+    title: 'Mental Health Awareness',
     description:
-      "Recognising signs, starting conversations, supporting others — based on MHFA England and Mates in Mind",
+      'Recognising signs, starting conversations, supporting others — based on MHFA England and Mates in Mind',
     icon: Brain,
-    level: "Foundation",
-    duration: "4 hours",
-    link: "mental-health-awareness",
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'mental-health-awareness',
   },
   {
     id: 3,
-    title: "Emotional Intelligence",
+    title: 'Emotional Intelligence',
     description:
       "Self-awareness, managing reactions, reading people — based on Daniel Goleman's EI framework",
     icon: Smile,
-    level: "Foundation",
-    duration: "5 hours",
-    link: "emotional-intelligence",
+    level: 'Foundation',
+    duration: '5 hours',
+    link: 'emotional-intelligence',
     comingSoon: true,
   },
   {
     id: 4,
-    title: "Communication & Confidence",
+    title: 'Communication & Confidence',
     description:
-      "Toolbox talks, client conversations, professional writing — based on Toastmasters Pathways",
+      'Toolbox talks, client conversations, professional writing — based on Toastmasters Pathways',
     icon: MessageCircle,
-    level: "Foundation",
-    duration: "5 hours",
-    link: "communication-confidence",
+    level: 'Foundation',
+    duration: '5 hours',
+    link: 'communication-confidence',
     comingSoon: true,
   },
   {
     id: 5,
-    title: "Mentoring & Developing Others",
+    title: 'Mentoring & Developing Others',
     description:
-      "How people learn, giving feedback, supporting apprentices — based on ILM coaching and JIB apprenticeship standards",
+      'How people learn, giving feedback, supporting apprentices — based on ILM coaching and JIB apprenticeship standards',
     icon: Users,
-    level: "Intermediate",
-    duration: "5 hours",
-    link: "mentoring-developing-others",
+    level: 'Intermediate',
+    duration: '5 hours',
+    link: 'mentoring-developing-others',
     comingSoon: true,
   },
   {
     id: 6,
-    title: "Resilience & Stress Management",
-    description:
-      "Managing pressure, bouncing back, switching off — based on MBSR principles",
+    title: 'Resilience & Stress Management',
+    description: 'Managing pressure, bouncing back, switching off — based on MBSR principles',
     icon: Shield,
-    level: "Foundation",
-    duration: "4 hours",
-    link: "resilience-stress-management",
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'resilience-stress-management',
     comingSoon: true,
   },
   {
     id: 7,
-    title: "Time Management & Organisation",
-    description:
-      "Planning, managing multiple jobs, admin — based on GTD and Eisenhower frameworks",
+    title: 'Time Management & Organisation',
+    description: 'Planning, managing multiple jobs, admin — based on GTD and Eisenhower frameworks',
     icon: Clock,
-    level: "Foundation",
-    duration: "4 hours",
-    link: "time-management-organisation",
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'time-management-organisation',
     comingSoon: true,
   },
   {
     id: 8,
-    title: "Conflict Resolution & Difficult Conversations",
+    title: 'Conflict Resolution & Difficult Conversations',
     description:
-      "Non-paying clients, site disputes, awkward conversations — based on ACAS conflict resolution frameworks",
+      'Non-paying clients, site disputes, awkward conversations — based on ACAS conflict resolution frameworks',
     icon: Swords,
-    level: "Intermediate",
-    duration: "4 hours",
-    link: "conflict-resolution",
+    level: 'Intermediate',
+    duration: '4 hours',
+    link: 'conflict-resolution',
     comingSoon: true,
   },
   {
     id: 9,
-    title: "Personal Finance & Financial Wellbeing",
+    title: 'Personal Finance & Financial Wellbeing',
     description:
-      "Budgeting, debt, pensions, planning ahead — based on Open University Managing My Money programme",
+      'Budgeting, debt, pensions, planning ahead — based on Open University Managing My Money programme',
     icon: Wallet,
-    level: "Foundation",
-    duration: "5 hours",
-    link: "personal-finance",
+    level: 'Foundation',
+    duration: '5 hours',
+    link: 'personal-finance',
     comingSoon: true,
   },
   {
     id: 10,
-    title: "Goal Setting & Continuous Growth",
+    title: 'Goal Setting & Continuous Growth',
     description:
-      "Setting goals, building habits, tracking progress — based on FranklinCovey 7 Habits and growth mindset research",
+      'Setting goals, building habits, tracking progress — based on FranklinCovey 7 Habits and growth mindset research',
     icon: Target,
-    level: "Foundation",
-    duration: "4 hours",
-    link: "goal-setting-growth",
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'goal-setting-growth',
     comingSoon: true,
   },
 ];
@@ -148,9 +146,8 @@ const comingSoonCourses = courses.filter((c) => c.comingSoon);
 
 export default function PersonalDevelopmentIndex() {
   useSEO({
-    title: "Personal Development | Study Centre",
-    description:
-      "Communication, leadership, and professional growth courses for tradespeople.",
+    title: 'Personal Development | Study Centre',
+    description: 'Communication, leadership, and professional growth courses for tradespeople.',
   });
 
   return (
@@ -184,8 +181,8 @@ export default function PersonalDevelopmentIndex() {
                   Personal Development
                 </h1>
                 <p className="text-base sm:text-lg text-white leading-relaxed">
-                  Communication, leadership, and professional growth courses for
-                  tradespeople. Build confidence and advance your career.
+                  Communication, leadership, and professional growth courses for tradespeople. Build
+                  confidence and advance your career.
                 </p>
               </div>
 
@@ -193,17 +190,13 @@ export default function PersonalDevelopmentIndex() {
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
                   <BookOpen className="h-4 w-4 text-rose-400" />
                   <span className="text-sm text-white">
-                    <span className="font-semibold text-white">
-                      {activeCourses.length}
-                    </span>{" "}
+                    <span className="font-semibold text-white">{activeCourses.length}</span>{' '}
                     available
                   </span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
                   <span className="text-sm text-white">
-                    <span className="font-semibold text-white">
-                      {comingSoonCourses.length}
-                    </span>{" "}
+                    <span className="font-semibold text-white">{comingSoonCourses.length}</span>{' '}
                     coming soon
                   </span>
                 </div>
@@ -214,9 +207,7 @@ export default function PersonalDevelopmentIndex() {
           <section className="mb-12">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-2 h-2 rounded-full bg-green-400" />
-              <h2 className="text-lg sm:text-xl font-semibold text-white">
-                Available Now
-              </h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Available Now</h2>
               <div className="h-px flex-1 bg-white/[0.06]" />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -238,9 +229,7 @@ export default function PersonalDevelopmentIndex() {
           <section>
             <div className="flex items-center gap-3 mb-5">
               <div className="w-2 h-2 rounded-full bg-white/20" />
-              <h2 className="text-lg sm:text-xl font-semibold text-white">
-                Coming Soon
-              </h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Coming Soon</h2>
               <div className="h-px flex-1 bg-white/[0.04]" />
               <span className="text-xs text-white uppercase tracking-wider font-medium hidden sm:block">
                 {comingSoonCourses.length} courses

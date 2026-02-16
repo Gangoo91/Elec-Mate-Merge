@@ -1,4 +1,12 @@
-import { ArrowLeft, RotateCcw, Settings, TrendingUp, AlertTriangle, Gauge, PlayCircle } from 'lucide-react';
+import {
+  ArrowLeft,
+  RotateCcw,
+  Settings,
+  TrendingUp,
+  AlertTriangle,
+  Gauge,
+  PlayCircle,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,40 +15,40 @@ const InstrumentationModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Open Loop vs Closed Loop Systems",
+      title: 'Open Loop vs Closed Loop Systems',
       icon: RotateCcw,
-      description: "Understanding the difference between open and closed loop control systems"
+      description: 'Understanding the difference between open and closed loop control systems',
     },
     {
       id: 2,
-      title: "Components of a Control Loop: PV, Setpoint, Output",
+      title: 'Components of a Control Loop: PV, Setpoint, Output',
       icon: Settings,
-      description: "Key components and their roles in control loop operation"
+      description: 'Key components and their roles in control loop operation',
     },
     {
       id: 3,
-      title: "PID Control Basics (Proportional, Integral, Derivative)",
+      title: 'PID Control Basics (Proportional, Integral, Derivative)',
       icon: TrendingUp,
-      description: "Understanding PID control principles and tuning"
+      description: 'Understanding PID control principles and tuning',
     },
     {
       id: 4,
-      title: "Common Loop Faults: Hunting, Overshoot, Lag",
+      title: 'Common Loop Faults: Hunting, Overshoot, Lag',
       icon: AlertTriangle,
-      description: "Identifying and troubleshooting common control loop problems"
+      description: 'Identifying and troubleshooting common control loop problems',
     },
     {
       id: 5,
-      title: "Loop Tuning and Stability Considerations",
+      title: 'Loop Tuning and Stability Considerations',
       icon: Gauge,
-      description: "Techniques for optimizing control loop performance"
+      description: 'Techniques for optimizing control loop performance',
     },
     {
       id: 6,
-      title: "Examples: HVAC, Pressure Systems, and Motor Speed Control",
+      title: 'Examples: HVAC, Pressure Systems, and Motor Speed Control',
       icon: PlayCircle,
-      description: "Real-world applications of control loops in different systems"
-    }
+      description: 'Real-world applications of control loops in different systems',
+    },
   ];
 
   return (

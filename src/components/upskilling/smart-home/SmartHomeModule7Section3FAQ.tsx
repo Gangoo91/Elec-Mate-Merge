@@ -4,25 +4,33 @@ import { HelpCircle } from 'lucide-react';
 const SmartHomeModule7Section3FAQ = () => {
   const faqs = [
     {
-      question: "What's the difference between Wi-Fi signal strength readings on different devices?",
-      answer: "Different devices and apps may show slight variations in dBm readings due to antenna differences and calibration. Focus on relative strength patterns rather than absolute values."
+      question:
+        "What's the difference between Wi-Fi signal strength readings on different devices?",
+      answer:
+        'Different devices and apps may show slight variations in dBm readings due to antenna differences and calibration. Focus on relative strength patterns rather than absolute values.',
     },
     {
-      question: "How do I convince clients to invest in mesh networking when they have budget constraints?",
-      answer: "Explain that poor connectivity leads to unreliable systems and support calls. A mesh network is less expensive than multiple call-backs and ensures system reliability from day one."
+      question:
+        'How do I convince clients to invest in mesh networking when they have budget constraints?',
+      answer:
+        'Explain that poor connectivity leads to unreliable systems and support calls. A mesh network is less expensive than multiple call-backs and ensures system reliability from day one.',
     },
     {
-      question: "Can I use powerline adapters instead of mesh networks for smart home installations?",
-      answer: "Powerline adapters work well for stable backbone connections but don't extend Wi-Fi coverage. They're good for wired connections to hubs, but mesh networks better serve wireless device coverage."
+      question:
+        'Can I use powerline adapters instead of mesh networks for smart home installations?',
+      answer:
+        "Powerline adapters work well for stable backbone connections but don't extend Wi-Fi coverage. They're good for wired connections to hubs, but mesh networks better serve wireless device coverage.",
     },
     {
-      question: "How often should I check for firmware updates during installation?",
-      answer: "Always check for firmware updates on hubs and devices before starting commissioning. Many updates improve wireless performance, stability, and compatibility."
+      question: 'How often should I check for firmware updates during installation?',
+      answer:
+        'Always check for firmware updates on hubs and devices before starting commissioning. Many updates improve wireless performance, stability, and compatibility.',
     },
     {
-      question: "What do I do if the property has thick walls that block signals everywhere?",
-      answer: "Consider multiple mesh nodes, strategic hub placement, external antennas where possible, or wired backbone solutions. Some challenging properties may need professional network design consultation."
-    }
+      question: 'What do I do if the property has thick walls that block signals everywhere?',
+      answer:
+        'Consider multiple mesh nodes, strategic hub placement, external antennas where possible, or wired backbone solutions. Some challenging properties may need professional network design consultation.',
+    },
   ];
 
   return (

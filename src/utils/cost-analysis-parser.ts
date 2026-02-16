@@ -70,58 +70,67 @@ export function parseCostAnalysis(aiResponse: string): ParsedCostAnalysis {
   let subtotal = 0;
 
   // Extract materials section
-  const materialsSectionMatch = aiResponse.match(/MATERIALS BREAKDOWN([\s\S]*?)(?:Subtotal Materials:|LABOUR ESTIMATE|$)/i);
+  const materialsSectionMatch = aiResponse.match(
+    /MATERIALS BREAKDOWN([\s\S]*?)(?:Subtotal Materials:|LABOUR ESTIMATE|$)/i
+  );
   if (materialsSectionMatch) {
     const materialsText = materialsSectionMatch[1];
-    
+
     // Match various material formats:
     // • Item (qty) - £price from Supplier
     // - Item (qty) - £price
     // * Item x qty - £price
-    const materialRegex = /[•\-\*]\s*(.+?)\s*(?:\(([^)]+)\)|x\s*(\d+))\s*-\s*£([\d.,]+)(?:\s+from\s+(.+?))?(?:\s+[✓⚠].*)?$/gm;
+    const materialRegex =
+      /[•\-\*]\s*(.+?)\s*(?:\(([^)]+)\)|x\s*(\d+))\s*-\s*£([\d.,]+)(?:\s+from\s+(.+?))?(?:\s+[✓⚠].*)?$/gm;
     let match;
-    
+
     while ((match = materialRegex.exec(materialsText)) !== null) {
       const [, itemName, qtyInParens, qtyAfterX, price, supplier] = match;
       const quantity = parseQuantity(qtyInParens || qtyAfterX || '1');
       const unitPrice = parseFloat(price.replace(/,/g, ''));
-      
+
       materials.push({
         item: itemName.trim(),
         quantity,
         unit: determineUnit(qtyInParens || qtyAfterX || ''),
         unitPrice,
         total: unitPrice,
-        supplier: supplier?.trim()
+        supplier: supplier?.trim(),
       });
-      
+
       materialsTotal += unitPrice;
     }
   }
 
   // Extract materials subtotal if explicitly stated
-  const materialsSubtotalMatch = aiResponse.match(/(?:Subtotal Materials?|Materials Total):\s*£([\d.,]+)/i);
+  const materialsSubtotalMatch = aiResponse.match(
+    /(?:Subtotal Materials?|Materials Total):\s*£([\d.,]+)/i
+  );
   if (materialsSubtotalMatch) {
     materialsTotal = parseFloat(materialsSubtotalMatch[1].replace(/,/g, ''));
   }
 
   // Extract labour section
-  const labourSectionMatch = aiResponse.match(/LABOUR ESTIMATE([\s\S]*?)(?:Subtotal Labour:|PROJECT TOTAL|FINAL|$)/i);
+  const labourSectionMatch = aiResponse.match(
+    /LABOUR ESTIMATE([\s\S]*?)(?:Subtotal Labour:|PROJECT TOTAL|FINAL|$)/i
+  );
   if (labourSectionMatch) {
     const labourText = labourSectionMatch[1];
-    
+
     // Extract installation time
-    const timeMatch = labourText.match(/(?:Installation time|Duration|Time required):\s*([\d.]+)\s*hours?/i);
+    const timeMatch = labourText.match(
+      /(?:Installation time|Duration|Time required):\s*([\d.]+)\s*hours?/i
+    );
     if (timeMatch) {
       labourHours = parseFloat(timeMatch[1]);
     }
-    
+
     // Extract rate
     const rateMatch = labourText.match(/Rate:\s*£([\d.,]+)(?:\/day|\/hour|per day|per hour)?/i);
     if (rateMatch) {
       labourRate = parseFloat(rateMatch[1].replace(/,/g, ''));
     }
-    
+
     // Extract labour cost
     const costMatch = labourText.match(/(?:Labour cost|Labour Total):\s*£([\d.,]+)/i);
     if (costMatch) {
@@ -145,11 +154,11 @@ export function parseCostAnalysis(aiResponse: string): ParsedCostAnalysis {
   // FORCE CALCULATION: Always calculate subtotal from components
   // Do NOT trust extracted "Net Total" from AI as it may include hidden margins
   const calculatedSubtotal = materialsTotal + labourTotal;
-  
+
   // Extract subtotal from text for validation only
   const subtotalMatch = aiResponse.match(/(?:Subtotal|Net Total):\s*£([\d.,]+)/i);
   const extractedSubtotal = subtotalMatch ? parseFloat(subtotalMatch[1].replace(/,/g, '')) : 0;
-  
+
   // Detect and log discrepancies
   if (extractedSubtotal > 0 && Math.abs(extractedSubtotal - calculatedSubtotal) > 0.01) {
     const difference = extractedSubtotal - calculatedSubtotal;
@@ -159,10 +168,10 @@ export function parseCostAnalysis(aiResponse: string): ParsedCostAnalysis {
       difference: difference,
       differencePercent: ((difference / calculatedSubtotal) * 100).toFixed(2) + '%',
       materials: materialsTotal,
-      labour: labourTotal
+      labour: labourTotal,
     });
   }
-  
+
   // Always use calculated value
   subtotal = calculatedSubtotal;
 
@@ -172,7 +181,9 @@ export function parseCostAnalysis(aiResponse: string): ParsedCostAnalysis {
   }
 
   // Extract final total
-  const finalTotalMatch = aiResponse.match(/(?:FINAL QUOTE|TOTAL COST|Grand Total|Final Total):\s*£([\d.,]+)/i);
+  const finalTotalMatch = aiResponse.match(
+    /(?:FINAL QUOTE|TOTAL COST|Grand Total|Final Total):\s*£([\d.,]+)/i
+  );
   if (finalTotalMatch) {
     totalCost = parseFloat(finalTotalMatch[1].replace(/,/g, ''));
   } else {
@@ -188,13 +199,14 @@ export function parseCostAnalysis(aiResponse: string): ParsedCostAnalysis {
       hours: labourHours,
       rate: labourRate,
       total: labourTotal,
-      description: labourHours > 0 ? `Installation Labour (${labourHours} hours)` : 'Installation Labour'
+      description:
+        labourHours > 0 ? `Installation Labour (${labourHours} hours)` : 'Installation Labour',
     },
     additionalCosts: [],
     vatAmount,
     vatRate,
     subtotal,
-    rawText: aiResponse
+    rawText: aiResponse,
   };
 }
 
@@ -207,13 +219,13 @@ function parseQuantity(quantityStr: string): number {
 function determineUnit(quantityStr: string): string {
   if (!quantityStr) return 'each';
   const lower = quantityStr.toLowerCase();
-  
+
   if (lower.includes('metre') || (lower.includes('m') && !lower.includes('mm'))) return 'm';
   if (lower.includes('meter')) return 'm';
   if (lower.includes('roll')) return 'roll';
   if (lower.includes('box')) return 'box';
   if (lower.includes('pack')) return 'pack';
   if (lower.includes('length')) return 'length';
-  
+
   return 'each';
 }

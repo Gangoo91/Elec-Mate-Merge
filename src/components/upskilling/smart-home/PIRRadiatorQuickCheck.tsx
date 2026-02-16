@@ -7,14 +7,15 @@ export const PIRRadiatorQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why should PIRs not face radiators?";
+  const question = 'Why should PIRs not face radiators?';
   const options = [
-    "Heat changes from radiators cause false triggers",
-    "They block Wi-Fi signals from the sensor", 
-    "They drain sensor batteries faster"
+    'Heat changes from radiators cause false triggers',
+    'They block Wi-Fi signals from the sensor',
+    'They drain sensor batteries faster',
   ];
   const correctAnswer = 0;
-  const explanation = "PIR sensors detect infrared radiation changes. Radiators and heating vents create temperature fluctuations that can trigger false alarms by mimicking heat signatures.";
+  const explanation =
+    'PIR sensors detect infrared radiation changes. Radiators and heating vents create temperature fluctuations that can trigger false alarms by mimicking heat signatures.';
 
   const handleAnswerSelect = (answerIndex: string) => {
     setSelectedAnswer(answerIndex);
@@ -41,8 +42,10 @@ export const PIRRadiatorQuickCheck = () => {
           </h3>
 
           <div className="space-y-4">
-            <p className="text-foreground font-medium text-sm sm:text-base break-words">{question}</p>
-            
+            <p className="text-foreground font-medium text-sm sm:text-base break-words">
+              {question}
+            </p>
+
             {!showResult ? (
               <div className="space-y-3">
                 {options.map((option, index) => (
@@ -50,19 +53,23 @@ export const PIRRadiatorQuickCheck = () => {
                     key={index}
                     variant="outline"
                     className={`w-full justify-start text-left p-3 sm:p-4 h-auto min-h-[60px] border transition-all ${
-                      selectedAnswer === index.toString() 
-                        ? 'border-elec-yellow bg-elec-dark text-foreground' 
+                      selectedAnswer === index.toString()
+                        ? 'border-elec-yellow bg-elec-dark text-foreground'
                         : 'border-gray-600 bg-elec-dark text-foreground hover:border-gray-500'
                     }`}
                     onClick={() => handleAnswerSelect(index.toString())}
                   >
                     <div className="flex items-start gap-2 sm:gap-3 w-full">
-                      <span className="font-medium flex-shrink-0 text-sm sm:text-base mt-1">{String.fromCharCode(65 + index)}.</span>
-                      <span className="text-left break-words hyphens-auto text-sm sm:text-base leading-relaxed flex-1">{option}</span>
+                      <span className="font-medium flex-shrink-0 text-sm sm:text-base mt-1">
+                        {String.fromCharCode(65 + index)}.
+                      </span>
+                      <span className="text-left break-words hyphens-auto text-sm sm:text-base leading-relaxed flex-1">
+                        {option}
+                      </span>
                     </div>
                   </Button>
                 ))}
-                
+
                 <div className="flex justify-center sm:justify-end">
                   <Button
                     onClick={handleSubmit}
@@ -75,7 +82,9 @@ export const PIRRadiatorQuickCheck = () => {
               </div>
             ) : (
               <div className="space-y-4">
-                <div className={`p-3 sm:p-4 rounded-lg border ${isCorrect ? 'border-green-600 bg-green-900/20' : 'border-red-600 bg-red-900/20'}`}>
+                <div
+                  className={`p-3 sm:p-4 rounded-lg border ${isCorrect ? 'border-green-600 bg-green-900/20' : 'border-red-600 bg-red-900/20'}`}
+                >
                   <div className="flex items-start gap-2 sm:gap-3">
                     {isCorrect ? (
                       <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -83,7 +92,9 @@ export const PIRRadiatorQuickCheck = () => {
                       <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     )}
                     <div className="flex-1 min-w-0">
-                      <p className={`font-medium mb-2 text-sm sm:text-base ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
+                      <p
+                        className={`font-medium mb-2 text-sm sm:text-base ${isCorrect ? 'text-green-300' : 'text-red-300'}`}
+                      >
                         {isCorrect ? 'Correct!' : 'Incorrect'}
                       </p>
                       <p className="text-xs sm:text-sm text-foreground mb-2 break-words hyphens-auto">
@@ -95,7 +106,7 @@ export const PIRRadiatorQuickCheck = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-center sm:justify-end">
                   <Button
                     onClick={handleReset}

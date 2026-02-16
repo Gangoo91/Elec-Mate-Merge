@@ -47,7 +47,12 @@ export function DealsBanner({ className }: DealsBannerProps) {
 
   if (isLoading) {
     return (
-      <div className={cn('bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-xl p-4 animate-pulse', className)}>
+      <div
+        className={cn(
+          'bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-xl p-4 animate-pulse',
+          className
+        )}
+      >
         <div className="h-24 bg-muted rounded-lg" />
       </div>
     );
@@ -60,7 +65,12 @@ export function DealsBanner({ className }: DealsBannerProps) {
   const currentDeal = deals[currentIndex];
 
   return (
-    <div className={cn('relative bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-xl overflow-hidden', className)}>
+    <div
+      className={cn(
+        'relative bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-xl overflow-hidden',
+        className
+      )}
+    >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-orange-500/20 to-red-500/20">
         <div className="flex items-center gap-2">
@@ -151,21 +161,14 @@ function DealCard({ deal }: { deal: MarketplaceDeal }) {
       <div className="flex-1 text-center sm:text-left">
         <h3 className="font-medium line-clamp-2">{deal.product_name}</h3>
         <div className="flex items-center justify-center sm:justify-start gap-2 mt-1">
-          <SupplierBadge
-            name={deal.supplier_name}
-            slug={deal.supplier_slug}
-          />
-          <span className="text-sm font-bold text-green-500">
-            {deal.discount_percentage}% OFF
-          </span>
+          <SupplierBadge name={deal.supplier_name} slug={deal.supplier_slug} />
+          <span className="text-sm font-bold text-green-500">{deal.discount_percentage}% OFF</span>
         </div>
       </div>
 
       {/* Price & CTA */}
       <div className="text-center sm:text-right">
-        <p className="text-2xl font-bold text-elec-yellow">
-          £{formatPrice(deal.deal_price)}
-        </p>
+        <p className="text-2xl font-bold text-elec-yellow">£{formatPrice(deal.deal_price)}</p>
         {deal.original_price && (
           <p className="text-sm text-muted-foreground line-through">
             £{formatPrice(deal.original_price)}

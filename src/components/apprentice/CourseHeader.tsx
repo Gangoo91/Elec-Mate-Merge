@@ -1,7 +1,6 @@
-
-import { Link } from "react-router-dom";
-import { ArrowLeft, Book } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Book } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface CourseHeaderProps {
   courseTitle: string | undefined;
@@ -14,13 +13,11 @@ const CourseHeader = ({ courseTitle }: CourseHeaderProps) => {
         <h1 className="text-3xl font-bold tracking-tight mb-1">
           <span className="gradient-text">{courseTitle}</span>
         </h1>
-        <p className="text-white">
-          EAL Level 2 course materials and learning resources
-        </p>
+        <p className="text-white">EAL Level 2 course materials and learning resources</p>
       </div>
       <Link to="/apprentice/study/eal" className="flex-shrink-0 w-full sm:w-auto">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />

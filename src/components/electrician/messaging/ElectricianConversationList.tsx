@@ -1,8 +1,8 @@
-import { ElectricianConversationListItem } from "./ElectricianConversationListItem";
-import { Skeleton } from "@/components/ui/skeleton";
-import { MessageSquare, Inbox, Briefcase } from "lucide-react";
-import type { ElectricianConversation } from "@/services/conversationService";
-import { Button } from "@/components/ui/button";
+import { ElectricianConversationListItem } from './ElectricianConversationListItem';
+import { Skeleton } from '@/components/ui/skeleton';
+import { MessageSquare, Inbox, Briefcase } from 'lucide-react';
+import type { ElectricianConversation } from '@/services/conversationService';
+import { Button } from '@/components/ui/button';
 
 interface ElectricianConversationListProps {
   conversations: ElectricianConversation[];
@@ -19,7 +19,7 @@ export function ElectricianConversationList({
   onSelect,
   onDelete,
   onBrowseJobs,
-  emptyMessage = "No messages yet",
+  emptyMessage = 'No messages yet',
 }: ElectricianConversationListProps) {
   if (isLoading) {
     return (
@@ -45,9 +45,7 @@ export function ElectricianConversationList({
           <Inbox className="h-10 w-10 text-muted-foreground" />
         </div>
         <h3 className="font-semibold text-foreground mb-2">No Messages Yet</h3>
-        <p className="text-sm text-muted-foreground mb-4 max-w-xs">
-          {emptyMessage}
-        </p>
+        <p className="text-sm text-muted-foreground mb-4 max-w-xs">{emptyMessage}</p>
         {onBrowseJobs && (
           <Button onClick={onBrowseJobs} className="gap-2">
             <Briefcase className="h-4 w-4" />

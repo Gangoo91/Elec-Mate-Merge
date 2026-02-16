@@ -8,7 +8,9 @@ export const SmartHomeModule6Section1HomeAssistant = () => {
       <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">2</span>
+            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">
+              2
+            </span>
             Home Assistant (Open-Source Hub)
           </CardTitle>
         </CardHeader>
@@ -18,7 +20,8 @@ export const SmartHomeModule6Section1HomeAssistant = () => {
             <div>
               <h4 className="font-semibold text-foreground mb-2">Open-Source Platform</h4>
               <p className="text-foreground text-sm">
-                Home Assistant is an open-source hub platform that runs on hardware like Raspberry Pi.
+                Home Assistant is an open-source hub platform that runs on hardware like Raspberry
+                Pi.
               </p>
             </div>
           </div>
@@ -30,11 +33,21 @@ export const SmartHomeModule6Section1HomeAssistant = () => {
               <h4 className="font-semibold text-foreground">Advantages</h4>
             </div>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Very flexible</strong> - highly customisable for complex setups</li>
-              <li>• <strong>Thousands of integrations</strong> - supports virtually any smart device</li>
-              <li>• <strong>Strong community support</strong> - active development and help</li>
-              <li>• <strong>Local control</strong> - works without internet connection</li>
-              <li>• <strong>No subscription fees</strong> - completely free to use</li>
+              <li>
+                • <strong>Very flexible</strong> - highly customisable for complex setups
+              </li>
+              <li>
+                • <strong>Thousands of integrations</strong> - supports virtually any smart device
+              </li>
+              <li>
+                • <strong>Strong community support</strong> - active development and help
+              </li>
+              <li>
+                • <strong>Local control</strong> - works without internet connection
+              </li>
+              <li>
+                • <strong>No subscription fees</strong> - completely free to use
+              </li>
             </ul>
           </div>
 
@@ -45,10 +58,18 @@ export const SmartHomeModule6Section1HomeAssistant = () => {
               <h4 className="font-semibold text-foreground">Disadvantages</h4>
             </div>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Technical knowledge required</strong> - complex setup and configuration</li>
-              <li>• <strong>Time-intensive</strong> - requires regular maintenance and updates</li>
-              <li>• <strong>Learning curve</strong> - YAML configuration can be challenging</li>
-              <li>• <strong>No official support</strong> - relies on community assistance</li>
+              <li>
+                • <strong>Technical knowledge required</strong> - complex setup and configuration
+              </li>
+              <li>
+                • <strong>Time-intensive</strong> - requires regular maintenance and updates
+              </li>
+              <li>
+                • <strong>Learning curve</strong> - YAML configuration can be challenging
+              </li>
+              <li>
+                • <strong>No official support</strong> - relies on community assistance
+              </li>
             </ul>
           </div>
 

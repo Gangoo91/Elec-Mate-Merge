@@ -31,7 +31,7 @@ const TEST_TILES: TestTile[] = [
       if (num <= 1.0) return 'pass';
       if (num <= 1.5) return 'warning';
       return 'fail';
-    }
+    },
   },
   {
     field: 'zs',
@@ -46,7 +46,7 @@ const TEST_TILES: TestTile[] = [
       if (zs <= maxZs * 0.8) return 'pass';
       if (zs <= maxZs) return 'warning';
       return 'fail';
-    }
+    },
   },
   {
     field: 'insulationLiveEarth',
@@ -58,7 +58,7 @@ const TEST_TILES: TestTile[] = [
       if (value.includes('>') || parseFloat(value) >= 2) return 'pass';
       if (parseFloat(value) >= 1) return 'warning';
       return 'fail';
-    }
+    },
   },
   {
     field: 'polarity',
@@ -70,8 +70,8 @@ const TEST_TILES: TestTile[] = [
       const v = value.toLowerCase();
       if (v === '✓' || v === 'correct' || v === 'ok' || v === 'c') return 'pass';
       return 'fail';
-    }
-  }
+    },
+  },
 ];
 
 const EXTRA_TILES: TestTile[] = [
@@ -86,15 +86,15 @@ const EXTRA_TILES: TestTile[] = [
       if (num <= 200) return 'pass';
       if (num <= 300) return 'warning';
       return 'fail';
-    }
+    },
   },
   {
     field: 'pfc',
     label: 'Ipf',
     unit: 'kA',
     placeholder: '0.0',
-    validate: () => null // No automatic validation
-  }
+    validate: () => null, // No automatic validation
+  },
 ];
 
 /**
@@ -119,7 +119,8 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
   };
 
   // Check if circuit has RCD (show extra tile)
-  const hasRcd = circuit.protectiveDeviceType === 'RCBO' ||
+  const hasRcd =
+    circuit.protectiveDeviceType === 'RCBO' ||
     circuit.protectiveDeviceType === 'RCD' ||
     circuit.bsStandard?.includes('RCBO') ||
     circuit.bsStandard?.includes('RCD');
@@ -128,19 +129,27 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
 
   const getValidationColor = (status: 'pass' | 'fail' | 'warning' | null) => {
     switch (status) {
-      case 'pass': return 'border-green-500/50 bg-green-500/10';
-      case 'warning': return 'border-amber-500/50 bg-amber-500/10';
-      case 'fail': return 'border-red-500/50 bg-red-500/10';
-      default: return 'border-white/10 bg-white/5';
+      case 'pass':
+        return 'border-green-500/50 bg-green-500/10';
+      case 'warning':
+        return 'border-amber-500/50 bg-amber-500/10';
+      case 'fail':
+        return 'border-red-500/50 bg-red-500/10';
+      default:
+        return 'border-white/10 bg-white/5';
     }
   };
 
   const getValidationIcon = (status: 'pass' | 'fail' | 'warning' | null) => {
     switch (status) {
-      case 'pass': return <Check className="h-3 w-3 text-green-400" />;
-      case 'warning': return <AlertTriangle className="h-3 w-3 text-amber-400" />;
-      case 'fail': return <AlertTriangle className="h-3 w-3 text-red-400" />;
-      default: return null;
+      case 'pass':
+        return <Check className="h-3 w-3 text-green-400" />;
+      case 'warning':
+        return <AlertTriangle className="h-3 w-3 text-amber-400" />;
+      case 'fail':
+        return <AlertTriangle className="h-3 w-3 text-red-400" />;
+      default:
+        return null;
     }
   };
 
@@ -153,7 +162,7 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
       {/* 2x2 Grid of tappable tiles */}
       <div className="grid grid-cols-2 gap-3">
         {tilesToShow.map((tile) => {
-          const value = circuit[tile.field] as string || '';
+          const value = (circuit[tile.field] as string) || '';
           const validationStatus = tile.validate?.(value, circuit) || null;
           const isEditing = editingField === tile.field;
 
@@ -173,9 +182,9 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
                 <button
                   onClick={() => handleTileClick(tile.field)}
                   className={cn(
-                    "w-full p-4 rounded-xl border-2 transition-transform duration-200",
-                    "touch-manipulation active:scale-95",
-                    "flex flex-col items-center justify-center min-h-[90px]",
+                    'w-full p-4 rounded-xl border-2 transition-transform duration-200',
+                    'touch-manipulation active:scale-95',
+                    'flex flex-col items-center justify-center min-h-[90px]',
                     getValidationColor(validationStatus)
                   )}
                 >
@@ -184,10 +193,9 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
 
                   {/* Value */}
                   <div className="flex items-center gap-1">
-                    <span className={cn(
-                      "text-2xl font-bold",
-                      value ? "text-white" : "text-white/30"
-                    )}>
+                    <span
+                      className={cn('text-2xl font-bold', value ? 'text-white' : 'text-white/30')}
+                    >
                       {value || tile.placeholder}
                     </span>
                     {tile.unit && value && (
@@ -237,9 +245,9 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
       </div>
 
       {/* Quick value input modal for other fields */}
-      {editingField && !tilesToShow.find(t => t.field === editingField) && (
+      {editingField && !tilesToShow.find((t) => t.field === editingField) && (
         <QuickValueInput
-          value={circuit[editingField] as string || ''}
+          value={(circuit[editingField] as string) || ''}
           onChange={(v) => handleValueChange(editingField, v)}
           onClose={handleInputClose}
           label={editingField}

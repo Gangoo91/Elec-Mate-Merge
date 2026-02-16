@@ -31,7 +31,9 @@ export const generateEICSchedulePDF = (data: EICScheduleData): jsPDF => {
   // Title
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
-  doc.text('Electrical Installation Certificate - Test Results Schedule', pageWidth / 2, yPos, { align: 'center' });
+  doc.text('Electrical Installation Certificate - Test Results Schedule', pageWidth / 2, yPos, {
+    align: 'center',
+  });
   yPos += 12;
 
   // Project Details
@@ -47,7 +49,7 @@ export const generateEICSchedulePDF = (data: EICScheduleData): jsPDF => {
   yPos += 10;
 
   // Test Results Table
-  const testRows = data.circuits.map(c => [
+  const testRows = data.circuits.map((c) => [
     c.circuitNumber.toString(),
     c.circuitDescription,
     c.type,
@@ -56,22 +58,24 @@ export const generateEICSchedulePDF = (data: EICScheduleData): jsPDF => {
     c.testResults.continuity,
     c.testResults.rcd,
     c.testResults.zs,
-    c.result
+    c.result,
   ]);
 
   autoTable(doc, {
     startY: yPos,
-    head: [[
-      'Cct',
-      'Description',
-      'Type',
-      'Rating',
-      'Insulation (MΩ)',
-      'Continuity (Ω)',
-      'RCD (ms)',
-      'Zs (Ω)',
-      'Result'
-    ]],
+    head: [
+      [
+        'Cct',
+        'Description',
+        'Type',
+        'Rating',
+        'Insulation (MΩ)',
+        'Continuity (Ω)',
+        'RCD (ms)',
+        'Zs (Ω)',
+        'Result',
+      ],
+    ],
     body: testRows,
     theme: 'grid',
     headStyles: { fillColor: [147, 51, 234], textColor: [255, 255, 255], fontSize: 9 },
@@ -85,7 +89,7 @@ export const generateEICSchedulePDF = (data: EICScheduleData): jsPDF => {
       5: { cellWidth: 30 },
       6: { cellWidth: 25 },
       7: { cellWidth: 25 },
-      8: { cellWidth: 20, fontStyle: 'bold' }
+      8: { cellWidth: 20, fontStyle: 'bold' },
     },
     didParseCell: (data) => {
       if (data.column.index === 8 && data.cell.text[0] === 'Pass') {
@@ -93,7 +97,7 @@ export const generateEICSchedulePDF = (data: EICScheduleData): jsPDF => {
       } else if (data.column.index === 8 && data.cell.text[0] === 'Fail') {
         data.cell.styles.textColor = [255, 0, 0];
       }
-    }
+    },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 12;

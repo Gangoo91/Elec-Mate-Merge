@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertCircle, Info } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, AlertCircle, Info } from 'lucide-react';
 
 interface WiringScenario {
   scenario_id: string;
@@ -24,14 +24,18 @@ export const WiringScenarioSelector = ({
   scenarios,
   selectedScenario,
   onSelectScenario,
-  comparison
+  comparison,
 }: WiringScenarioSelectorProps) => {
   const getComplexityColor = (complexity: string) => {
     switch (complexity) {
-      case 'simple': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'intermediate': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'advanced': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-muted text-foreground border-border';
+      case 'simple':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'intermediate':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'advanced':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default:
+        return 'bg-muted text-foreground border-border';
     }
   };
 
@@ -47,7 +51,7 @@ export const WiringScenarioSelector = ({
               Multiple wiring options available - Choose your scenario:
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {scenarios.map((scenario) => (
               <button
@@ -64,9 +68,7 @@ export const WiringScenarioSelector = ({
                     {scenario.scenario_name}
                   </h4>
                   <div className="flex gap-1.5 flex-shrink-0">
-                    {scenario.recommended && (
-                      <CheckCircle2 className="h-5 w-5 text-green-500" />
-                    )}
+                    {scenario.recommended && <CheckCircle2 className="h-5 w-5 text-green-500" />}
                     {selectedScenario === scenario.scenario_id && (
                       <div className="h-5 w-5 rounded-full bg-elec-yellow flex items-center justify-center">
                         <div className="h-2 w-2 rounded-full bg-background" />
@@ -74,13 +76,13 @@ export const WiringScenarioSelector = ({
                     )}
                   </div>
                 </div>
-                
+
                 <p className="text-xs text-foreground/70 mb-3 leading-relaxed">
                   {scenario.use_case}
                 </p>
-                
-                <Badge 
-                  variant="outline" 
+
+                <Badge
+                  variant="outline"
                   className={`text-xs ${getComplexityColor(scenario.complexity)}`}
                 >
                   {scenario.complexity.charAt(0).toUpperCase() + scenario.complexity.slice(1)}
@@ -106,12 +108,10 @@ export const WiringScenarioSelector = ({
                 </li>
               ))}
             </ul>
-            
+
             {comparison.decision_factors && comparison.decision_factors.length > 0 && (
               <>
-                <h4 className="text-sm font-semibold text-blue-400 mt-4 mb-2">
-                  Consider:
-                </h4>
+                <h4 className="text-sm font-semibold text-blue-400 mt-4 mb-2">Consider:</h4>
                 <ul className="space-y-1.5">
                   {comparison.decision_factors.map((factor, idx) => (
                     <li key={idx} className="text-xs text-foreground/70 flex items-start gap-2">

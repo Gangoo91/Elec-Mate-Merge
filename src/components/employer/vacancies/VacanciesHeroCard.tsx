@@ -1,21 +1,14 @@
-import { useState, useEffect } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
-import {
-  Briefcase,
-  Users,
-  Clock,
-  TrendingUp,
-  Plus,
-  Sparkles,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { Briefcase, Users, Clock, TrendingUp, Plus, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface StatItem {
   label: string;
   value: number;
   icon: typeof Briefcase;
-  color: "yellow" | "green" | "blue" | "purple";
+  color: 'yellow' | 'green' | 'blue' | 'purple';
   suffix?: string;
 }
 
@@ -27,39 +20,38 @@ interface VacanciesHeroCardProps {
   onPostVacancy: () => void;
 }
 
-function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
+function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
   const spring = useSpring(0, { stiffness: 100, damping: 30 });
-  const display = useTransform(spring, (current) =>
-    Math.round(current).toLocaleString()
-  );
-  const [displayValue, setDisplayValue] = useState("0");
+  const display = useTransform(spring, (current) => Math.round(current).toLocaleString());
+  const [displayValue, setDisplayValue] = useState('0');
 
   useEffect(() => {
     spring.set(value);
-    const unsubscribe = display.on("change", (v) => setDisplayValue(v));
+    const unsubscribe = display.on('change', (v) => setDisplayValue(v));
     return () => unsubscribe();
   }, [value, spring, display]);
 
   return (
     <span className="tabular-nums">
-      {displayValue}{suffix}
+      {displayValue}
+      {suffix}
     </span>
   );
 }
 
 function StatCard({ stat, index }: { stat: StatItem; index: number }) {
   const colorMap = {
-    yellow: "from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow",
-    green: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500",
-    blue: "from-blue-500/20 to-blue-500/5 border-blue-500/30 text-blue-500",
-    purple: "from-purple-500/20 to-purple-500/5 border-purple-500/30 text-purple-500",
+    yellow: 'from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow',
+    green: 'from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500',
+    blue: 'from-blue-500/20 to-blue-500/5 border-blue-500/30 text-blue-500',
+    purple: 'from-purple-500/20 to-purple-500/5 border-purple-500/30 text-purple-500',
   };
 
   const iconBgMap = {
-    yellow: "bg-elec-yellow/20 text-elec-yellow",
-    green: "bg-emerald-500/20 text-emerald-500",
-    blue: "bg-blue-500/20 text-blue-500",
-    purple: "bg-purple-500/20 text-purple-500",
+    yellow: 'bg-elec-yellow/20 text-elec-yellow',
+    green: 'bg-emerald-500/20 text-emerald-500',
+    blue: 'bg-blue-500/20 text-blue-500',
+    purple: 'bg-purple-500/20 text-purple-500',
   };
 
   const Icon = stat.icon;
@@ -68,16 +60,16 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+      transition={{ delay: index * 0.1, type: 'spring', stiffness: 200 }}
       className={cn(
-        "relative overflow-hidden rounded-xl p-4",
-        "bg-gradient-to-br border",
-        "backdrop-blur-sm",
+        'relative overflow-hidden rounded-xl p-4',
+        'bg-gradient-to-br border',
+        'backdrop-blur-sm',
         colorMap[stat.color]
       )}
     >
       <div className="flex items-center gap-3">
-        <div className={cn("p-2 rounded-lg", iconBgMap[stat.color])}>
+        <div className={cn('p-2 rounded-lg', iconBgMap[stat.color])}>
           <Icon className="h-4 w-4" />
         </div>
         <div className="flex-1 min-w-0">
@@ -100,29 +92,29 @@ export function VacanciesHeroCard({
 }: VacanciesHeroCardProps) {
   const stats: StatItem[] = [
     {
-      label: "Open Roles",
+      label: 'Open Roles',
       value: openVacancies,
       icon: Briefcase,
-      color: "yellow",
+      color: 'yellow',
     },
     {
-      label: "Applicants",
+      label: 'Applicants',
       value: totalApplicants,
       icon: Users,
-      color: "green",
+      color: 'green',
     },
     {
-      label: "New Today",
+      label: 'New Today',
       value: newApplicants,
       icon: Clock,
-      color: "blue",
+      color: 'blue',
     },
     {
-      label: "Fill Rate",
+      label: 'Fill Rate',
       value: fillRate,
       icon: TrendingUp,
-      color: "purple",
-      suffix: "%",
+      color: 'purple',
+      suffix: '%',
     },
   ];
 
@@ -131,10 +123,10 @@ export function VacanciesHeroCard({
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "relative overflow-hidden rounded-2xl",
-        "bg-gradient-to-br from-elec-gray/90 via-elec-gray to-elec-dark",
-        "border border-white/10",
-        "p-6 md:p-8"
+        'relative overflow-hidden rounded-2xl',
+        'bg-gradient-to-br from-elec-gray/90 via-elec-gray to-elec-dark',
+        'border border-white/10',
+        'p-6 md:p-8'
       )}
     >
       {/* Background decoration */}
@@ -152,7 +144,7 @@ export function VacanciesHeroCard({
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+              transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
               className="p-3 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30"
             >
               <Briefcase className="h-8 w-8 text-elec-yellow" />
@@ -206,12 +198,12 @@ export function VacanciesHeroCard({
             size="lg"
             onClick={onPostVacancy}
             className={cn(
-              "w-full h-14 text-base font-semibold",
-              "bg-elec-yellow text-black hover:bg-elec-yellow/90",
-              "shadow-lg shadow-elec-yellow/20",
-              "transition-all duration-300",
-              "hover:shadow-xl hover:shadow-elec-yellow/30",
-              "active:scale-[0.98]"
+              'w-full h-14 text-base font-semibold',
+              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+              'shadow-lg shadow-elec-yellow/20',
+              'transition-all duration-300',
+              'hover:shadow-xl hover:shadow-elec-yellow/30',
+              'active:scale-[0.98]'
             )}
           >
             <Plus className="h-5 w-5 mr-2" />

@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection3_2 = () => {
   const outcomes = [
-    "Explain the importance of escape route coverage in emergency lighting design",
-    "Identify all areas along an escape route that require dedicated illumination",
-    "Apply placement rules for luminaires in accordance with BS 5266-1",
-    "Recognise the link between escape route lighting and exit signage",
-    "Design systems that provide continuous, safe guidance to final exits"
+    'Explain the importance of escape route coverage in emergency lighting design',
+    'Identify all areas along an escape route that require dedicated illumination',
+    'Apply placement rules for luminaires in accordance with BS 5266-1',
+    'Recognise the link between escape route lighting and exit signage',
+    'Design systems that provide continuous, safe guidance to final exits',
   ];
 
   return (

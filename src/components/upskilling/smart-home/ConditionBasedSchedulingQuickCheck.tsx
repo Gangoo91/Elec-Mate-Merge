@@ -8,10 +8,10 @@ export const ConditionBasedSchedulingQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "Time-based is simpler to set up", correct: false },
-    { text: "Condition-based responds to actual circumstances, not just time", correct: true },
-    { text: "Time-based uses less battery power", correct: false },
-    { text: "Condition-based only works with expensive systems", correct: false }
+    { text: 'Time-based is simpler to set up', correct: false },
+    { text: 'Condition-based responds to actual circumstances, not just time', correct: true },
+    { text: 'Time-based uses less battery power', correct: false },
+    { text: 'Condition-based only works with expensive systems', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +32,10 @@ export const ConditionBasedSchedulingQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q3: Why might condition-based scheduling be more effective than time-based?</p>
-        
+        <p className="text-foreground font-medium">
+          Q3: Why might condition-based scheduling be more effective than time-based?
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +60,9 @@ export const ConditionBasedSchedulingQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +72,9 @@ export const ConditionBasedSchedulingQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Condition-based scheduling responds to actual circumstances (darkness + motion) rather than just time, making it more intelligent and energy-efficient. Lights only come on when actually needed.
+              <strong>Correct:</strong> Condition-based scheduling responds to actual circumstances
+              (darkness + motion) rather than just time, making it more intelligent and
+              energy-efficient. Lights only come on when actually needed.
             </p>
           </div>
         )}

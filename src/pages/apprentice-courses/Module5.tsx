@@ -1,57 +1,66 @@
-import { ArrowLeft, FileText, Lightbulb, MapPin, Package, Users, MessageSquare, Clipboard } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  FileText,
+  Lightbulb,
+  MapPin,
+  Package,
+  Users,
+  MessageSquare,
+  Clipboard,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Understanding Installation Specifications and Drawings",
-    description: "Reading and interpreting technical drawings and specifications",
+    number: 'Section 1',
+    title: 'Understanding Installation Specifications and Drawings',
+    description: 'Reading and interpreting technical drawings and specifications',
     icon: FileText,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
-    title: "Basic Electrical Design Principles",
-    description: "Fundamental principles of electrical system design",
+    number: 'Section 2',
+    title: 'Basic Electrical Design Principles',
+    description: 'Fundamental principles of electrical system design',
     icon: Lightbulb,
-    href: "section2"
+    href: 'section2',
   },
   {
-    number: "Section 3",
-    title: "Planning Installation Work on Site",
-    description: "Planning and organising electrical installation projects",
+    number: 'Section 3',
+    title: 'Planning Installation Work on Site',
+    description: 'Planning and organising electrical installation projects',
     icon: MapPin,
-    href: "section3"
+    href: 'section3',
   },
   {
-    number: "Section 4",
-    title: "Materials, Tools, and Resource Planning",
-    description: "Planning and managing resources for electrical installations",
+    number: 'Section 4',
+    title: 'Materials, Tools, and Resource Planning',
+    description: 'Planning and managing resources for electrical installations',
     icon: Package,
-    href: "section4"
+    href: 'section4',
   },
   {
-    number: "Section 5",
-    title: "Working with Other Trades and Site Personnel",
-    description: "Collaboration and coordination with other construction trades",
+    number: 'Section 5',
+    title: 'Working with Other Trades and Site Personnel',
+    description: 'Collaboration and coordination with other construction trades',
     icon: Users,
-    href: "section5"
+    href: 'section5',
   },
   {
-    number: "Section 6",
-    title: "Communicating Information Effectively",
-    description: "Professional communication skills for electrical work",
+    number: 'Section 6',
+    title: 'Communicating Information Effectively',
+    description: 'Professional communication skills for electrical work',
     icon: MessageSquare,
-    href: "section6"
+    href: 'section6',
   },
   {
-    number: "Section 7",
-    title: "Documentation, Labelling, and Record Keeping",
-    description: "Maintaining accurate records and documentation",
+    number: 'Section 7',
+    title: 'Documentation, Labelling, and Record Keeping',
+    description: 'Maintaining accurate records and documentation',
     icon: Clipboard,
-    href: "section7"
+    href: 'section7',
   },
 ];
 

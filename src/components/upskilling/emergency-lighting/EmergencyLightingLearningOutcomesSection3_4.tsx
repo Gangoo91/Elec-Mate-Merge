@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const EmergencyLightingLearningOutcomesSection3_4 = () => {
   const outcomes = [
-    "Explain why risk assessment is essential in emergency lighting design",
-    "Identify building-specific risks that influence lighting requirements",
-    "Adjust lux levels, durations, or luminaire placement based on assessed risks",
-    "Recognise when higher safety margins are needed beyond the minimum standards",
-    "Apply BS 5266 principles in a risk-based design context"
+    'Explain why risk assessment is essential in emergency lighting design',
+    'Identify building-specific risks that influence lighting requirements',
+    'Adjust lux levels, durations, or luminaire placement based on assessed risks',
+    'Recognise when higher safety margins are needed beyond the minimum standards',
+    'Apply BS 5266 principles in a risk-based design context',
   ];
 
   return (

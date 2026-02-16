@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { ChatHeader } from "./ChatHeader";
-import { MessageList } from "./MessageList";
-import { MessageInput } from "./MessageInput";
-import { Card, CardContent } from "@/components/ui/card";
-import { Clock } from "lucide-react";
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { ChatHeader } from './ChatHeader';
+import { MessageList } from './MessageList';
+import { MessageInput } from './MessageInput';
+import { Card, CardContent } from '@/components/ui/card';
+import { Clock } from 'lucide-react';
 import {
   useMessages,
   useSendMessage,
@@ -14,14 +14,14 @@ import {
   useDeleteMessage,
   useAddReaction,
   useRemoveReaction,
-} from "@/hooks/useMessages";
-import { useFileUpload, useSaveAttachment, useMessageAttachments } from "@/hooks/useFileUpload";
-import { useArchiveConversation } from "@/hooks/useConversations";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
-import type { Conversation, Message, MessageReaction } from "@/services/conversationService";
-import type { ReplyToMessage } from "@/components/messaging/MessageReply";
-import type { MentionUser } from "@/components/messaging/Mentions";
+} from '@/hooks/useMessages';
+import { useFileUpload, useSaveAttachment, useMessageAttachments } from '@/hooks/useFileUpload';
+import { useArchiveConversation } from '@/hooks/useConversations';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
+import type { Conversation, Message, MessageReaction } from '@/services/conversationService';
+import type { ReplyToMessage } from '@/components/messaging/MessageReply';
+import type { MentionUser } from '@/components/messaging/Mentions';
 
 interface ChatViewProps {
   conversation: Conversation | null;
@@ -38,9 +38,7 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
   const messageListRef = useRef<{ scrollToMessage: (id: string) => void } | null>(null);
 
   // Fetch messages
-  const { data: messages = [], isLoading: messagesLoading } = useMessages(
-    conversation?.id || ''
-  );
+  const { data: messages = [], isLoading: messagesLoading } = useMessages(conversation?.id || '');
 
   // Mutations
   const sendMessage = useSendMessage();
@@ -64,11 +62,13 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
 
   // Build mention users list from conversation participants
   const mentionUsers: MentionUser[] = conversation?.electrician_profile?.employee
-    ? [{
-        id: conversation.electrician_profile.employee.id,
-        name: conversation.electrician_profile.employee.name || 'Unknown',
-        avatar: conversation.electrician_profile.employee.avatar_url || undefined,
-      }]
+    ? [
+        {
+          id: conversation.electrician_profile.employee.id,
+          name: conversation.electrician_profile.employee.name || 'Unknown',
+          avatar: conversation.electrician_profile.employee.avatar_url || undefined,
+        },
+      ]
     : [];
 
   // Mark messages as read when conversation opens
@@ -110,9 +110,9 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
           } catch (uploadError) {
             console.error('Error uploading file:', uploadError);
             toast({
-              title: "File Upload Failed",
+              title: 'File Upload Failed',
               description: `Failed to upload ${file.name}`,
-              variant: "destructive",
+              variant: 'destructive',
             });
           }
         }
@@ -123,9 +123,9 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
-        title: "Failed to Send",
+        title: 'Failed to Send',
         description: "Your message couldn't be sent. Please try again.",
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setIsSending(false);
@@ -133,43 +133,60 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
   };
 
   // Handle reply to message
-  const handleReply = useCallback((message: Message) => {
-    setReplyTo({
-      id: message.id,
-      content: message.content,
-      senderName: message.sender_type === 'employer' ? 'You' :
-        conversation?.electrician_profile?.employee?.name || 'Unknown',
-    });
-  }, [conversation]);
+  const handleReply = useCallback(
+    (message: Message) => {
+      setReplyTo({
+        id: message.id,
+        content: message.content,
+        senderName:
+          message.sender_type === 'employer'
+            ? 'You'
+            : conversation?.electrician_profile?.employee?.name || 'Unknown',
+      });
+    },
+    [conversation]
+  );
 
   // Handle edit message
-  const handleEdit = useCallback((message: Message) => {
-    setEditingMessage(message);
-    // For now, we'll just open a simple prompt - could be enhanced with inline editing
-    const newContent = window.prompt('Edit message:', message.content);
-    if (newContent && newContent !== message.content) {
-      editMessage.mutate({ messageId: message.id, content: newContent });
-    }
-    setEditingMessage(null);
-  }, [editMessage]);
+  const handleEdit = useCallback(
+    (message: Message) => {
+      setEditingMessage(message);
+      // For now, we'll just open a simple prompt - could be enhanced with inline editing
+      const newContent = window.prompt('Edit message:', message.content);
+      if (newContent && newContent !== message.content) {
+        editMessage.mutate({ messageId: message.id, content: newContent });
+      }
+      setEditingMessage(null);
+    },
+    [editMessage]
+  );
 
   // Handle delete message
-  const handleDelete = useCallback((messageId: string) => {
-    if (window.confirm('Are you sure you want to delete this message?')) {
-      deleteMessage.mutate(messageId);
-    }
-  }, [deleteMessage]);
+  const handleDelete = useCallback(
+    (messageId: string) => {
+      if (window.confirm('Are you sure you want to delete this message?')) {
+        deleteMessage.mutate(messageId);
+      }
+    },
+    [deleteMessage]
+  );
 
   // Handle add reaction
-  const handleAddReaction = useCallback((messageId: string, emoji: string) => {
-    if (!user) return;
-    addReaction.mutate({ messageId, userId: user.id, emoji });
-  }, [user, addReaction]);
+  const handleAddReaction = useCallback(
+    (messageId: string, emoji: string) => {
+      if (!user) return;
+      addReaction.mutate({ messageId, userId: user.id, emoji });
+    },
+    [user, addReaction]
+  );
 
   // Handle remove reaction
-  const handleRemoveReaction = useCallback((reactionId: string) => {
-    removeReaction.mutate(reactionId);
-  }, [removeReaction]);
+  const handleRemoveReaction = useCallback(
+    (reactionId: string) => {
+      removeReaction.mutate(reactionId);
+    },
+    [removeReaction]
+  );
 
   // Handle scroll to message (for reply navigation)
   const handleScrollToMessage = useCallback((messageId: string) => {
@@ -182,16 +199,16 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
     try {
       await archiveConversation.mutateAsync(conversation.id);
       toast({
-        title: "Conversation Archived",
-        description: "The conversation has been archived.",
+        title: 'Conversation Archived',
+        description: 'The conversation has been archived.',
       });
       onOpenChange(false);
       onArchived?.();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to archive conversation.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to archive conversation.',
+        variant: 'destructive',
       });
     }
   };
@@ -202,10 +219,7 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[95vh] rounded-t-2xl p-0 flex flex-col"
-      >
+      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col">
         {/* Header */}
         <ChatHeader
           conversation={conversation}
@@ -224,7 +238,8 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
                     Awaiting Application
                   </p>
                   <p className="text-muted-foreground text-xs mt-0.5">
-                    {conversation.electrician_profile?.employee?.name || 'This person'} can reply once they apply to one of your vacancies.
+                    {conversation.electrician_profile?.employee?.name || 'This person'} can reply
+                    once they apply to one of your vacancies.
                   </p>
                 </div>
               </CardContent>
@@ -253,9 +268,7 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
           onTyping={setTyping}
           isSending={isSending || isUploading}
           placeholder={
-            canReply
-              ? "Type a message..."
-              : "Send a message (they can reply after applying)"
+            canReply ? 'Type a message...' : 'Send a message (they can reply after applying)'
           }
           replyTo={replyTo}
           onCancelReply={() => setReplyTo(null)}

@@ -1,82 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m7s5-check1",
+    id: 'bs7671-m7s5-check1',
     question: "What is a 'prosumer' electrical installation?",
     options: [
-      "A professional consumer installation",
-      "An installation that both consumes and generates energy",
-      "A high-power industrial installation",
-      "A temporary event installation"
+      'A professional consumer installation',
+      'An installation that both consumes and generates energy',
+      'A high-power industrial installation',
+      'A temporary event installation',
     ],
     correctIndex: 1,
-    explanation: "Prosumer installations both consume energy from the grid and generate/store energy locally (solar PV, batteries, wind). BS 7671 Part 8 addresses these systems."
+    explanation:
+      'Prosumer installations both consume energy from the grid and generate/store energy locally (solar PV, batteries, wind). BS 7671 Part 8 addresses these systems.',
   },
   {
-    id: "bs7671-m7s5-check2",
-    question: "What protection is required at the interface between PV system and supply?",
+    id: 'bs7671-m7s5-check2',
+    question: 'What protection is required at the interface between PV system and supply?',
     options: [
-      "MCB only",
-      "RCD only",
-      "Disconnection device and anti-islanding protection",
-      "Surge protection only"
+      'MCB only',
+      'RCD only',
+      'Disconnection device and anti-islanding protection',
+      'Surge protection only',
     ],
     correctIndex: 2,
-    explanation: "Grid-connected generation requires a disconnection device for isolation and anti-islanding protection to prevent energising the grid during outages (G98/G99 requirements)."
+    explanation:
+      'Grid-connected generation requires a disconnection device for isolation and anti-islanding protection to prevent energising the grid during outages (G98/G99 requirements).',
   },
   {
-    id: "bs7671-m7s5-check3",
-    question: "What type of RCD is required for circuits with DC fault currents from inverters?",
-    options: ["Type AC", "Type A", "Type B or Type A with DC detection", "Type S"],
+    id: 'bs7671-m7s5-check3',
+    question: 'What type of RCD is required for circuits with DC fault currents from inverters?',
+    options: ['Type AC', 'Type A', 'Type B or Type A with DC detection', 'Type S'],
     correctIndex: 2,
-    explanation: "Inverters can produce DC fault currents that won't trip Type A RCDs. Type B or Type A with built-in DC fault detection is required for the AC side of inverter circuits."
-  }
+    explanation:
+      "Inverters can produce DC fault currents that won't trip Type A RCDs. Type B or Type A with built-in DC fault detection is required for the AC side of inverter circuits.",
+  },
 ];
 
 const faqs = [
   {
-    question: "Can battery storage systems be installed in domestic properties?",
-    answer: "Yes, but location and ventilation requirements must be met. Batteries should not be in escape routes, require adequate ventilation for any gases produced, and need appropriate fire detection. Manufacturer guidance is essential."
+    question: 'Can battery storage systems be installed in domestic properties?',
+    answer:
+      'Yes, but location and ventilation requirements must be met. Batteries should not be in escape routes, require adequate ventilation for any gases produced, and need appropriate fire detection. Manufacturer guidance is essential.',
   },
   {
-    question: "What are the G98/G99 requirements?",
-    answer: "G98 applies to systems up to 16A per phase (typically <3.68kW single phase), G99 for larger systems. Both require DNO notification, appropriate protection settings, and anti-islanding capability."
+    question: 'What are the G98/G99 requirements?',
+    answer:
+      'G98 applies to systems up to 16A per phase (typically <3.68kW single phase), G99 for larger systems. Both require DNO notification, appropriate protection settings, and anti-islanding capability.',
   },
   {
-    question: "Do I need to isolate PV before working on consumer unit?",
-    answer: "Yes, absolutely. PV systems remain energised in daylight regardless of grid connection. AC and DC isolation is required before safe work can commence. Treat all conductors as live until proven dead."
+    question: 'Do I need to isolate PV before working on consumer unit?',
+    answer:
+      'Yes, absolutely. PV systems remain energised in daylight regardless of grid connection. AC and DC isolation is required before safe work can commence. Treat all conductors as live until proven dead.',
   },
   {
-    question: "What labelling is required for prosumer installations?",
-    answer: "Warning labels at meter position, consumer unit, and all isolation points indicating presence of dual supplies. Labels must warn that the installation has more than one source of supply."
-  }
+    question: 'What labelling is required for prosumer installations?',
+    answer:
+      'Warning labels at meter position, consumer unit, and all isolation points indicating presence of dual supplies. Labels must warn that the installation has more than one source of supply.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A solar PV system is being installed on a domestic property. Where must warning labels be positioned?",
-  options: [
-    "On the inverter only",
-    "At meter position, consumer unit, and all points of isolation",
-    "On the roof only",
-    "At the front door"
-  ],
-  correctAnswer: 1,
-  explanation: "Warning labels indicating dual supply sources must be placed at the meter position, consumer unit, and all isolation points to alert anyone working on the installation to the presence of generation equipment."
-  }
+    question:
+      'A solar PV system is being installed on a domestic property. Where must warning labels be positioned?',
+    options: [
+      'On the inverter only',
+      'At meter position, consumer unit, and all points of isolation',
+      'On the roof only',
+      'At the front door',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Warning labels indicating dual supply sources must be placed at the meter position, consumer unit, and all isolation points to alert anyone working on the installation to the presence of generation equipment.',
+  },
 ];
 
 const BS7671Module7Section5 = () => {
   useSEO({
-    title: "Prosumer Electrical Installations | BS7671 Module 7.5",
-    description: "Learn BS 7671 Part 8 requirements for prosumer installations including solar PV, battery storage, and grid integration."
+    title: 'Prosumer Electrical Installations | BS7671 Module 7.5',
+    description:
+      'Learn BS 7671 Part 8 requirements for prosumer installations including solar PV, battery storage, and grid integration.',
   });
 
   return (
@@ -118,16 +128,26 @@ const BS7671Module7Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Part 8:</strong> New section for prosumer installations</li>
-              <li><strong>Prosumer:</strong> Consume + generate energy</li>
-              <li><strong>Key:</strong> Anti-islanding, labelling, isolation</li>
+              <li>
+                <strong>Part 8:</strong> New section for prosumer installations
+              </li>
+              <li>
+                <strong>Prosumer:</strong> Consume + generate energy
+              </li>
+              <li>
+                <strong>Key:</strong> Anti-islanding, labelling, isolation
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Solar PV, battery storage, wind turbines, EVs with V2G</li>
-              <li><strong>Use:</strong> Type B RCDs, G98/G99 compliance, dual-source labels</li>
+              <li>
+                <strong>Spot:</strong> Solar PV, battery storage, wind turbines, EVs with V2G
+              </li>
+              <li>
+                <strong>Use:</strong> Type B RCDs, G98/G99 compliance, dual-source labels
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +157,12 @@ const BS7671Module7Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Prosumer installation fundamentals",
-              "Solar PV system requirements",
-              "Battery energy storage systems (BESS)",
-              "Grid connection requirements (G98/G99)",
-              "Protection coordination for generation",
-              "Labelling and safe isolation procedures"
+              'Prosumer installation fundamentals',
+              'Solar PV system requirements',
+              'Battery energy storage systems (BESS)',
+              'Grid connection requirements (G98/G99)',
+              'Protection coordination for generation',
+              'Labelling and safe isolation procedures',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -162,27 +182,43 @@ const BS7671Module7Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The term "prosumer" combines producer and consumer. These installations can both
-              draw power from the grid and export locally generated energy back to it.
+              The term "prosumer" combines producer and consumer. These installations can both draw
+              power from the grid and export locally generated energy back to it.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Generation Sources</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Solar PV:</strong> Photovoltaic panels</li>
-                  <li><strong>Wind:</strong> Small-scale turbines</li>
-                  <li><strong>Micro-hydro:</strong> Water turbines</li>
-                  <li><strong>CHP:</strong> Combined heat and power</li>
+                  <li>
+                    <strong>Solar PV:</strong> Photovoltaic panels
+                  </li>
+                  <li>
+                    <strong>Wind:</strong> Small-scale turbines
+                  </li>
+                  <li>
+                    <strong>Micro-hydro:</strong> Water turbines
+                  </li>
+                  <li>
+                    <strong>CHP:</strong> Combined heat and power
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Storage Systems</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Lithium-ion:</strong> Most common domestic</li>
-                  <li><strong>Lead-acid:</strong> Traditional, lower cost</li>
-                  <li><strong>Flow batteries:</strong> Large scale</li>
-                  <li><strong>V2G:</strong> Vehicle-to-grid (future)</li>
+                  <li>
+                    <strong>Lithium-ion:</strong> Most common domestic
+                  </li>
+                  <li>
+                    <strong>Lead-acid:</strong> Traditional, lower cost
+                  </li>
+                  <li>
+                    <strong>Flow batteries:</strong> Large scale
+                  </li>
+                  <li>
+                    <strong>V2G:</strong> Vehicle-to-grid (future)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -229,22 +265,42 @@ const BS7671Module7Section5 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">G98 Requirements (≤16A/phase):</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                G98 Requirements (≤16A/phase):
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Notification:</strong> Inform DNO within 28 days</li>
-                <li><strong>Protection:</strong> Type-tested inverter with G98 certificate</li>
-                <li><strong>Metering:</strong> Export meter may be required</li>
-                <li><strong>No DNO approval:</strong> Just notification for compliant systems</li>
+                <li>
+                  <strong>Notification:</strong> Inform DNO within 28 days
+                </li>
+                <li>
+                  <strong>Protection:</strong> Type-tested inverter with G98 certificate
+                </li>
+                <li>
+                  <strong>Metering:</strong> Export meter may be required
+                </li>
+                <li>
+                  <strong>No DNO approval:</strong> Just notification for compliant systems
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">G99 Requirements (&gt;16A/phase):</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                G99 Requirements (&gt;16A/phase):
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Application:</strong> Apply to DNO before installation</li>
-                <li><strong>Studies:</strong> Network impact assessment may be required</li>
-                <li><strong>Commissioning:</strong> Witnessed testing may be required</li>
-                <li><strong>Protection settings:</strong> DNO-specified parameters</li>
+                <li>
+                  <strong>Application:</strong> Apply to DNO before installation
+                </li>
+                <li>
+                  <strong>Studies:</strong> Network impact assessment may be required
+                </li>
+                <li>
+                  <strong>Commissioning:</strong> Witnessed testing may be required
+                </li>
+                <li>
+                  <strong>Protection settings:</strong> DNO-specified parameters
+                </li>
               </ul>
             </div>
           </div>
@@ -268,10 +324,18 @@ const BS7671Module7Section5 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Types Explained</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Type AC:</strong> AC faults only (NOT suitable)</li>
-                  <li><strong>Type A:</strong> AC + pulsating DC</li>
-                  <li><strong>Type B:</strong> AC + DC + smooth DC</li>
-                  <li><strong>Type F:</strong> Mixed frequency faults</li>
+                  <li>
+                    <strong>Type AC:</strong> AC faults only (NOT suitable)
+                  </li>
+                  <li>
+                    <strong>Type A:</strong> AC + pulsating DC
+                  </li>
+                  <li>
+                    <strong>Type B:</strong> AC + DC + smooth DC
+                  </li>
+                  <li>
+                    <strong>Type F:</strong> Mixed frequency faults
+                  </li>
                 </ul>
               </div>
               <div>
@@ -313,7 +377,9 @@ const BS7671Module7Section5 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Location</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Installation Location
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Not in escape routes</li>
                   <li>Adequate ventilation</li>
@@ -357,12 +423,22 @@ const BS7671Module7Section5 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Required Warning Labels:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Required Warning Labels:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Meter position:</strong> "DUAL SUPPLY - ISOLATE PV/BATTERY"</li>
-                <li><strong>Consumer unit:</strong> Warning of generation source</li>
-                <li><strong>Inverter:</strong> DC voltage warning</li>
-                <li><strong>Roof:</strong> Solar panel installation warning</li>
+                <li>
+                  <strong>Meter position:</strong> "DUAL SUPPLY - ISOLATE PV/BATTERY"
+                </li>
+                <li>
+                  <strong>Consumer unit:</strong> Warning of generation source
+                </li>
+                <li>
+                  <strong>Inverter:</strong> DC voltage warning
+                </li>
+                <li>
+                  <strong>Roof:</strong> Solar panel installation warning
+                </li>
               </ul>
             </div>
 
@@ -385,7 +461,9 @@ const BS7671Module7Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Verify G98/G99 requirements and notify/apply to DNO</li>
                 <li>Select appropriate RCD type (Type B or A+DC detection)</li>
@@ -397,10 +475,18 @@ const BS7671Module7Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong RCD type:</strong> — Using Type A where Type B required</li>
-                <li><strong>Missing labels:</strong> — Not warning of dual supplies</li>
-                <li><strong>No DC isolation:</strong> — Forgetting DC side during maintenance</li>
-                <li><strong>DNO notification:</strong> — Failing to notify within 28 days</li>
+                <li>
+                  <strong>Wrong RCD type:</strong> — Using Type A where Type B required
+                </li>
+                <li>
+                  <strong>Missing labels:</strong> — Not warning of dual supplies
+                </li>
+                <li>
+                  <strong>No DC isolation:</strong> — Forgetting DC side during maintenance
+                </li>
+                <li>
+                  <strong>DNO notification:</strong> — Failing to notify within 28 days
+                </li>
               </ul>
             </div>
           </div>
@@ -444,10 +530,7 @@ const BS7671Module7Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

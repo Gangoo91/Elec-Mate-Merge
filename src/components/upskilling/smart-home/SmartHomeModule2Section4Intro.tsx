@@ -12,7 +12,10 @@ export const SmartHomeModule2Section4Intro = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          Smart homes rely on wireless communication, but wireless networks are not perfect. Interference, poor channel planning, and bandwidth limitations can cause devices to drop out or perform slowly. Installers must understand how wireless signals work in the real world to design reliable systems.
+          Smart homes rely on wireless communication, but wireless networks are not perfect.
+          Interference, poor channel planning, and bandwidth limitations can cause devices to drop
+          out or perform slowly. Installers must understand how wireless signals work in the real
+          world to design reliable systems.
         </p>
       </CardContent>
     </Card>

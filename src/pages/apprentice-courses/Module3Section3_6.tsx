@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Wrench,
@@ -18,190 +18,162 @@ import {
   Search,
   Truck,
   HardHat,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
-    id: "dust-protection",
-    question: "Which PPE protects against dust from drilling into masonry?",
-    options: [
-      "Safety glasses only",
-      "Dust mask or respirator",
-      "Hard hat",
-    ],
+    id: 'dust-protection',
+    question: 'Which PPE protects against dust from drilling into masonry?',
+    options: ['Safety glasses only', 'Dust mask or respirator', 'Hard hat'],
     correctIndex: 1,
     explanation:
-      "Dust masks or respirators filter airborne particles generated during masonry drilling, protecting against inhalation of harmful dust.",
+      'Dust masks or respirators filter airborne particles generated during masonry drilling, protecting against inhalation of harmful dust.',
   },
   {
-    id: "insulated-gloves",
-    question: "Name one situation where insulated gloves would be required.",
-    options: [
-      "Handling general tools",
-      "Live electrical testing or work",
-      "Lifting heavy objects",
-    ],
+    id: 'insulated-gloves',
+    question: 'Name one situation where insulated gloves would be required.',
+    options: ['Handling general tools', 'Live electrical testing or work', 'Lifting heavy objects'],
     correctIndex: 1,
     explanation:
-      "Insulated gloves rated for the appropriate voltage are essential when working on or testing live electrical circuits to prevent electric shock.",
+      'Insulated gloves rated for the appropriate voltage are essential when working on or testing live electrical circuits to prevent electric shock.',
   },
   {
-    id: "ppe-inspection",
-    question: "Why should PPE be inspected before each use?",
+    id: 'ppe-inspection',
+    question: 'Why should PPE be inspected before each use?',
     options: [
-      "To check for damage that could compromise protection",
-      "To make it look clean",
-      "To count inventory",
+      'To check for damage that could compromise protection',
+      'To make it look clean',
+      'To count inventory',
     ],
     correctIndex: 0,
     explanation:
-      "Pre-use inspection identifies damage, wear, or defects that could compromise the protective function of PPE, ensuring continued safety.",
+      'Pre-use inspection identifies damage, wear, or defects that could compromise the protective function of PPE, ensuring continued safety.',
   },
   {
-    id: "multi-hazard",
-    question: "Why might multiple types of PPE be needed for one task?",
+    id: 'multi-hazard',
+    question: 'Why might multiple types of PPE be needed for one task?',
     options: [
-      "To look more professional",
-      "Tasks often present multiple hazards simultaneously",
-      "To meet minimum requirements",
+      'To look more professional',
+      'Tasks often present multiple hazards simultaneously',
+      'To meet minimum requirements',
     ],
     correctIndex: 1,
     explanation:
-      "Many electrical tasks present multiple hazards (dust, noise, flying debris, shock risk) requiring coordinated PPE protection.",
+      'Many electrical tasks present multiple hazards (dust, noise, flying debris, shock risk) requiring coordinated PPE protection.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which PPE is essential when cutting metal trunking with a grinder?",
-    options: [
-      "Safety glasses or face shield",
-      "Earplugs",
-      "Dust mask",
-      "All of the above",
-    ],
+    question: 'Which PPE is essential when cutting metal trunking with a grinder?',
+    options: ['Safety glasses or face shield', 'Earplugs', 'Dust mask', 'All of the above'],
     correctAnswer: 3,
     explanation:
-      "Grinding metal produces sparks (eye protection), noise (hearing protection), and metal particles (respiratory protection), requiring all listed PPE.",
+      'Grinding metal produces sparks (eye protection), noise (hearing protection), and metal particles (respiratory protection), requiring all listed PPE.',
   },
   {
     id: 2,
-    question: "What is the main function of insulated gloves?",
+    question: 'What is the main function of insulated gloves?',
     options: [
-      "Improve grip",
-      "Protect against electric shock",
-      "Keep hands warm",
-      "Prevent cuts from sharp metal",
+      'Improve grip',
+      'Protect against electric shock',
+      'Keep hands warm',
+      'Prevent cuts from sharp metal',
     ],
     correctAnswer: 1,
     explanation:
-      "Insulated gloves are specifically designed and rated to protect against electric shock when working on live electrical circuits.",
+      'Insulated gloves are specifically designed and rated to protect against electric shock when working on live electrical circuits.',
   },
   {
     id: 3,
-    question: "True or False: PPE does not need to be replaced unless it is visibly damaged.",
-    options: ["True", "False"],
+    question: 'True or False: PPE does not need to be replaced unless it is visibly damaged.',
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False. PPE should be replaced according to manufacturer recommendations, when performance degrades, or when it no longer meets current standards.",
+      'False. PPE should be replaced according to manufacturer recommendations, when performance degrades, or when it no longer meets current standards.',
   },
   {
     id: 4,
-    question: "Give one example of respiratory protection used by electricians.",
-    options: [
-      "Safety glasses",
-      "Dust mask",
-      "Hard hat",
-      "Gloves",
-    ],
+    question: 'Give one example of respiratory protection used by electricians.',
+    options: ['Safety glasses', 'Dust mask', 'Hard hat', 'Gloves'],
     correctAnswer: 1,
     explanation:
-      "Dust masks, half-face respirators, and full-face respirators are all examples of respiratory protection equipment used by electricians.",
+      'Dust masks, half-face respirators, and full-face respirators are all examples of respiratory protection equipment used by electricians.',
   },
   {
     id: 5,
-    question: "Which type of footwear is generally required on construction sites?",
-    options: [
-      "Trainers",
-      "Safety boots with toe caps",
-      "Sandals",
-      "Rubber slippers",
-    ],
+    question: 'Which type of footwear is generally required on construction sites?',
+    options: ['Trainers', 'Safety boots with toe caps', 'Sandals', 'Rubber slippers'],
     correctAnswer: 1,
     explanation:
-      "Safety boots with steel or composite toe caps protect against dropped tools and provide slip resistance required on construction sites.",
+      'Safety boots with steel or composite toe caps protect against dropped tools and provide slip resistance required on construction sites.',
   },
   {
     id: 6,
-    question: "Why is high-visibility clothing important in certain environments?",
+    question: 'Why is high-visibility clothing important in certain environments?',
     options: [
-      "It looks professional",
-      "Improves visibility to reduce collision risk",
+      'It looks professional',
+      'Improves visibility to reduce collision risk',
       "It's waterproof",
-      "It provides electrical insulation",
+      'It provides electrical insulation',
     ],
     correctAnswer: 1,
     explanation:
-      "High-visibility clothing makes workers more visible to vehicle operators and machinery operators, reducing collision risks.",
+      'High-visibility clothing makes workers more visible to vehicle operators and machinery operators, reducing collision risks.',
   },
   {
     id: 7,
-    question: "Name one maintenance step for PPE.",
+    question: 'Name one maintenance step for PPE.',
     options: [
-      "Ignore manufacturer instructions",
-      "Cleaning after use and proper storage",
-      "Use damaged equipment until replacement",
-      "Store in damp conditions",
+      'Ignore manufacturer instructions',
+      'Cleaning after use and proper storage',
+      'Use damaged equipment until replacement',
+      'Store in damp conditions',
     ],
     correctAnswer: 1,
     explanation:
-      "Regular cleaning, proper storage in dry conditions, and following manufacturer maintenance guidelines are essential for PPE longevity.",
+      'Regular cleaning, proper storage in dry conditions, and following manufacturer maintenance guidelines are essential for PPE longevity.',
   },
   {
     id: 8,
-    question: "Which regulation requires employers to provide and maintain suitable PPE in the UK?",
-    options: [
-      "BS 7671",
-      "PPE at Work Regulations 1992",
-      "COSHH",
-      "LOLER",
-    ],
+    question: 'Which regulation requires employers to provide and maintain suitable PPE in the UK?',
+    options: ['BS 7671', 'PPE at Work Regulations 1992', 'COSHH', 'LOLER'],
     correctAnswer: 1,
     explanation:
-      "The PPE at Work Regulations 1992 (as amended) require employers to provide and maintain suitable PPE where risks cannot be controlled by other means.",
+      'The PPE at Work Regulations 1992 (as amended) require employers to provide and maintain suitable PPE where risks cannot be controlled by other means.',
   },
 ];
 
 const Module3Section3_6: React.FC = () => {
-  console.log("Module3Section3_6 component loaded");
+  console.log('Module3Section3_6 component loaded');
 
   useSEO(
-    "PPE Associated with Tool Use – Module 3 (3.3.6)",
-    "Complete guide to PPE for electrical tool use. Head, eye, hearing, hand, respiratory and foot protection requirements and maintenance."
+    'PPE Associated with Tool Use – Module 3 (3.3.6)',
+    'Complete guide to PPE for electrical tool use. Head, eye, hearing, hand, respiratory and foot protection requirements and maintenance.'
   );
 
   const faqs = [
     {
-      q: "Can I use the same gloves for electrical testing and handling sharp metal?",
-      a: "No — gloves for electrical testing must be rated for voltage, while cut-resistant gloves are designed for mechanical protection. Use task-specific gloves.",
+      q: 'Can I use the same gloves for electrical testing and handling sharp metal?',
+      a: 'No — gloves for electrical testing must be rated for voltage, while cut-resistant gloves are designed for mechanical protection. Use task-specific gloves.',
     },
     {
-      q: "Are earplugs as effective as ear defenders?",
-      a: "Yes, when used correctly, but defenders are often more comfortable for prolonged use and easier to ensure proper positioning.",
+      q: 'Are earplugs as effective as ear defenders?',
+      a: 'Yes, when used correctly, but defenders are often more comfortable for prolonged use and easier to ensure proper positioning.',
     },
     {
-      q: "How often should dust mask filters be replaced?",
-      a: "According to manufacturer recommendations, or sooner if breathing becomes difficult or the filter becomes clogged.",
+      q: 'How often should dust mask filters be replaced?',
+      a: 'According to manufacturer recommendations, or sooner if breathing becomes difficult or the filter becomes clogged.',
     },
     {
-      q: "Can I use my own PPE on site?",
-      a: "Only if it meets site requirements and standards. Employers must ensure all PPE is suitable and maintained regardless of ownership.",
+      q: 'Can I use my own PPE on site?',
+      a: 'Only if it meets site requirements and standards. Employers must ensure all PPE is suitable and maintained regardless of ownership.',
     },
   ];
 
@@ -238,7 +210,8 @@ const Module3Section3_6: React.FC = () => {
             PPE Associated with Tool Use
           </h1>
           <p className="text-white/70">
-            Essential personal protective equipment for safe electrical tool operation and maintenance requirements.
+            Essential personal protective equipment for safe electrical tool operation and
+            maintenance requirements.
           </p>
         </header>
 
@@ -262,13 +235,15 @@ const Module3Section3_6: React.FC = () => {
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  <strong>Spot:</strong> Flying debris, noise levels, sharp edges, electrical hazards.
+                  <strong>Spot:</strong> Flying debris, noise levels, sharp edges, electrical
+                  hazards.
                 </li>
                 <li>
                   <strong>Use:</strong> Task-specific PPE - match protection to hazard type.
                 </li>
                 <li>
-                  <strong>Check:</strong> Condition before use, ratings match requirements, proper fit.
+                  <strong>Check:</strong> Condition before use, ratings match requirements, proper
+                  fit.
                 </li>
               </ul>
             </div>
@@ -604,19 +579,42 @@ const Module3Section3_6: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Wrong glove type for electrical work</strong> - Risk of electric shock with non-insulated gloves</li>
-                <li><strong>Damaged or expired PPE use</strong> - Compromised protection leading to injury</li>
-                <li><strong>Removing PPE in hazardous areas</strong> - Exposure to risks during "quick tasks"</li>
-                <li><strong>Incompatible PPE combinations</strong> - Reduced effectiveness when items don't work together</li>
+                <li>
+                  <strong>Wrong glove type for electrical work</strong> - Risk of electric shock
+                  with non-insulated gloves
+                </li>
+                <li>
+                  <strong>Damaged or expired PPE use</strong> - Compromised protection leading to
+                  injury
+                </li>
+                <li>
+                  <strong>Removing PPE in hazardous areas</strong> - Exposure to risks during "quick
+                  tasks"
+                </li>
+                <li>
+                  <strong>Incompatible PPE combinations</strong> - Reduced effectiveness when items
+                  don't work together
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Compliance Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Inadequate hazard assessment</strong> - Missing PPE requirements for specific tasks</li>
-                <li><strong>Poor maintenance records</strong> - Cannot demonstrate PPE fitness for use</li>
-                <li><strong>No replacement schedule</strong> - Using PPE beyond recommended service life</li>
-                <li><strong>Lack of training</strong> - Incorrect use reducing protective effectiveness</li>
+                <li>
+                  <strong>Inadequate hazard assessment</strong> - Missing PPE requirements for
+                  specific tasks
+                </li>
+                <li>
+                  <strong>Poor maintenance records</strong> - Cannot demonstrate PPE fitness for use
+                </li>
+                <li>
+                  <strong>No replacement schedule</strong> - Using PPE beyond recommended service
+                  life
+                </li>
+                <li>
+                  <strong>Lack of training</strong> - Incorrect use reducing protective
+                  effectiveness
+                </li>
               </ul>
             </div>
           </div>
@@ -632,10 +630,18 @@ const Module3Section3_6: React.FC = () => {
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">PPE at Work Regulations 1992</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Regulation 4:</strong> Employers must provide suitable PPE</li>
-                <li><strong>Regulation 7:</strong> PPE must be maintained in good working order</li>
-                <li><strong>Regulation 9:</strong> Information, instruction and training required</li>
-                <li><strong>Regulation 10:</strong> Employees must use PPE correctly</li>
+                <li>
+                  <strong>Regulation 4:</strong> Employers must provide suitable PPE
+                </li>
+                <li>
+                  <strong>Regulation 7:</strong> PPE must be maintained in good working order
+                </li>
+                <li>
+                  <strong>Regulation 9:</strong> Information, instruction and training required
+                </li>
+                <li>
+                  <strong>Regulation 10:</strong> Employees must use PPE correctly
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
@@ -661,9 +667,10 @@ const Module3Section3_6: React.FC = () => {
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Eye Injury from Overhead Drilling</p>
             <p className="text-sm mb-4">
-              An electrician was drilling overhead into concrete without wearing safety glasses. A small piece of concrete
-              fell into his eye, causing injury and a week off work. After the incident, the company made wearing eye protection
-              mandatory for all drilling tasks, preventing further accidents.
+              An electrician was drilling overhead into concrete without wearing safety glasses. A
+              small piece of concrete fell into his eye, causing injury and a week off work. After
+              the incident, the company made wearing eye protection mandatory for all drilling
+              tasks, preventing further accidents.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
@@ -713,8 +720,9 @@ const Module3Section3_6: React.FC = () => {
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
-              PPE provides crucial protection when using electrical tools. Choosing the right PPE for each task,
-              maintaining it in good condition, and replacing it when worn ensures safety and compliance with workplace regulations.
+              PPE provides crucial protection when using electrical tools. Choosing the right PPE
+              for each task, maintaining it in good condition, and replacing it when worn ensures
+              safety and compliance with workplace regulations.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
@@ -786,12 +794,24 @@ const Module3Section3_6: React.FC = () => {
               <div>
                 <p className="font-medium mb-2">PPE Selection Guide</p>
                 <ul className="space-y-1">
-                  <li>• <strong>Eyes:</strong> All cutting, drilling, grinding</li>
-                  <li>• <strong>Ears:</strong> Power tools, prolonged noise</li>
-                  <li>• <strong>Hands:</strong> Cut-resistant or voltage-rated</li>
-                  <li>• <strong>Lungs:</strong> Dust, fumes, confined spaces</li>
-                  <li>• <strong>Head:</strong> All construction sites</li>
-                  <li>• <strong>Feet:</strong> Safety boots with toe caps</li>
+                  <li>
+                    • <strong>Eyes:</strong> All cutting, drilling, grinding
+                  </li>
+                  <li>
+                    • <strong>Ears:</strong> Power tools, prolonged noise
+                  </li>
+                  <li>
+                    • <strong>Hands:</strong> Cut-resistant or voltage-rated
+                  </li>
+                  <li>
+                    • <strong>Lungs:</strong> Dust, fumes, confined spaces
+                  </li>
+                  <li>
+                    • <strong>Head:</strong> All construction sites
+                  </li>
+                  <li>
+                    • <strong>Feet:</strong> Safety boots with toe caps
+                  </li>
                 </ul>
               </div>
               <div>
@@ -816,10 +836,19 @@ const Module3Section3_6: React.FC = () => {
             Key References
           </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
-            <p><strong>PPE at Work Regulations 1992:</strong> Legal requirements for PPE provision and use</p>
-            <p><strong>BS EN 166:</strong> Eye protection - specifications and testing</p>
-            <p><strong>BS EN 60903:</strong> Gloves and mitts of insulating material for live working</p>
-            <p><strong>HSE L25:</strong> Personal protective equipment at work guidance</p>
+            <p>
+              <strong>PPE at Work Regulations 1992:</strong> Legal requirements for PPE provision
+              and use
+            </p>
+            <p>
+              <strong>BS EN 166:</strong> Eye protection - specifications and testing
+            </p>
+            <p>
+              <strong>BS EN 60903:</strong> Gloves and mitts of insulating material for live working
+            </p>
+            <p>
+              <strong>HSE L25:</strong> Personal protective equipment at work guidance
+            </p>
           </div>
         </section>
 
@@ -834,7 +863,11 @@ const Module3Section3_6: React.FC = () => {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../3-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Safe Use & Storage

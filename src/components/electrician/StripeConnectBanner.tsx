@@ -10,7 +10,9 @@ interface StripeConnectBannerProps {
 }
 
 const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, refreshKey = 0 }) => {
-  const [status, setStatus] = useState<'loading' | 'not_connected' | 'pending' | 'active' | 'dismissed'>('loading');
+  const [status, setStatus] = useState<
+    'loading' | 'not_connected' | 'pending' | 'active' | 'dismissed'
+  >('loading');
   const [connecting, setConnecting] = useState(false);
 
   useEffect(() => {
@@ -169,29 +171,30 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
   }
 
   return (
-    <div className={cn(
-      "relative rounded-xl overflow-hidden",
-      status === 'pending'
-        ? "bg-gradient-to-r from-amber-500/15 to-orange-500/10 border border-amber-500/20"
-        : "bg-gradient-to-r from-indigo-500/15 to-purple-500/10 border border-indigo-500/20",
-      className
-    )}>
+    <div
+      className={cn(
+        'relative rounded-xl overflow-hidden',
+        status === 'pending'
+          ? 'bg-gradient-to-r from-amber-500/15 to-orange-500/10 border border-amber-500/20'
+          : 'bg-gradient-to-r from-indigo-500/15 to-purple-500/10 border border-indigo-500/20',
+        className
+      )}
+    >
       <div className="flex items-center gap-3 p-3 pr-10">
-        <div className={cn(
-          "h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0",
-          status === 'pending' ? "bg-amber-500/20" : "bg-indigo-500/20"
-        )}>
-          <CreditCard className={cn(
-            "h-5 w-5",
-            status === 'pending' ? "text-amber-400" : "text-indigo-400"
-          )} />
+        <div
+          className={cn(
+            'h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0',
+            status === 'pending' ? 'bg-amber-500/20' : 'bg-indigo-500/20'
+          )}
+        >
+          <CreditCard
+            className={cn('h-5 w-5', status === 'pending' ? 'text-amber-400' : 'text-indigo-400')}
+          />
         </div>
 
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-foreground truncate">
-            {status === 'pending'
-              ? 'Finish Stripe setup'
-              : 'Enable card payments'}
+            {status === 'pending' ? 'Finish Stripe setup' : 'Enable card payments'}
           </p>
           <p className="text-xs text-muted-foreground truncate">
             {status === 'pending'
@@ -204,10 +207,10 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
           onClick={handleConnect}
           disabled={connecting}
           className={cn(
-            "flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition-all active:scale-[0.98] touch-manipulation whitespace-nowrap",
+            'flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition-all active:scale-[0.98] touch-manipulation whitespace-nowrap',
             status === 'pending'
-              ? "bg-amber-500 hover:bg-amber-600 text-white"
-              : "bg-indigo-500 hover:bg-indigo-600 text-white"
+              ? 'bg-amber-500 hover:bg-amber-600 text-white'
+              : 'bg-indigo-500 hover:bg-indigo-600 text-white'
           )}
         >
           {connecting ? (

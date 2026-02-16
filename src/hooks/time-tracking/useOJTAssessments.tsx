@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/components/ui/use-toast";
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/components/ui/use-toast';
 
 export interface OJTAssessment {
   id: string;
@@ -74,139 +74,157 @@ export const useOJTAssessments = () => {
   }, [fetchAssessments]);
 
   // Create a new assessment
-  const addAssessment = useCallback(async (input: CreateOJTAssessmentInput): Promise<OJTAssessment | null> => {
-    if (!user?.id) {
-      toast({
-        title: "Error",
-        description: "You must be logged in to add assessments",
-        variant: "destructive",
-      });
-      return null;
-    }
+  const addAssessment = useCallback(
+    async (input: CreateOJTAssessmentInput): Promise<OJTAssessment | null> => {
+      if (!user?.id) {
+        toast({
+          title: 'Error',
+          description: 'You must be logged in to add assessments',
+          variant: 'destructive',
+        });
+        return null;
+      }
 
-    try {
-      const { data, error } = await supabase
-        .from('ojt_assessments')
-        .insert({
-          user_id: user.id,
-          title: input.title,
-          type: input.type,
-          due_date: input.due_date,
-          status: input.status || 'pending',
-        })
-        .select()
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from('ojt_assessments')
+          .insert({
+            user_id: user.id,
+            title: input.title,
+            type: input.type,
+            due_date: input.due_date,
+            status: input.status || 'pending',
+          })
+          .select()
+          .single();
 
-      if (error) throw error;
+        if (error) throw error;
 
-      setAssessments(prev => [...prev, data].sort((a, b) =>
-        new Date(a.due_date).getTime() - new Date(b.due_date).getTime()
-      ));
-      toast({
-        title: "Assessment added",
-        description: "Your assessment has been saved",
-      });
-      return data;
-    } catch (err) {
-      console.error('Error creating OJT assessment:', err);
-      toast({
-        title: "Error",
-        description: "Failed to add assessment",
-        variant: "destructive",
-      });
-      return null;
-    }
-  }, [user?.id, toast]);
+        setAssessments((prev) =>
+          [...prev, data].sort(
+            (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime()
+          )
+        );
+        toast({
+          title: 'Assessment added',
+          description: 'Your assessment has been saved',
+        });
+        return data;
+      } catch (err) {
+        console.error('Error creating OJT assessment:', err);
+        toast({
+          title: 'Error',
+          description: 'Failed to add assessment',
+          variant: 'destructive',
+        });
+        return null;
+      }
+    },
+    [user?.id, toast]
+  );
 
   // Update an assessment
-  const updateAssessment = useCallback(async (id: string, input: UpdateOJTAssessmentInput): Promise<boolean> => {
-    if (!user?.id) return false;
+  const updateAssessment = useCallback(
+    async (id: string, input: UpdateOJTAssessmentInput): Promise<boolean> => {
+      if (!user?.id) return false;
 
-    try {
-      const { error } = await supabase
-        .from('ojt_assessments')
-        .update(input)
-        .eq('id', id)
-        .eq('user_id', user.id);
+      try {
+        const { error } = await supabase
+          .from('ojt_assessments')
+          .update(input)
+          .eq('id', id)
+          .eq('user_id', user.id);
 
-      if (error) throw error;
+        if (error) throw error;
 
-      setAssessments(prev => prev.map(assessment =>
-        assessment.id === id ? { ...assessment, ...input, updated_at: new Date().toISOString() } : assessment
-      ));
-      toast({
-        title: "Assessment updated",
-        description: "Your assessment has been updated",
-      });
-      return true;
-    } catch (err) {
-      console.error('Error updating OJT assessment:', err);
-      toast({
-        title: "Error",
-        description: "Failed to update assessment",
-        variant: "destructive",
-      });
-      return false;
-    }
-  }, [user?.id, toast]);
+        setAssessments((prev) =>
+          prev.map((assessment) =>
+            assessment.id === id
+              ? { ...assessment, ...input, updated_at: new Date().toISOString() }
+              : assessment
+          )
+        );
+        toast({
+          title: 'Assessment updated',
+          description: 'Your assessment has been updated',
+        });
+        return true;
+      } catch (err) {
+        console.error('Error updating OJT assessment:', err);
+        toast({
+          title: 'Error',
+          description: 'Failed to update assessment',
+          variant: 'destructive',
+        });
+        return false;
+      }
+    },
+    [user?.id, toast]
+  );
 
   // Mark assessment as completed
-  const completeAssessment = useCallback(async (id: string, grade?: string, feedback?: string): Promise<boolean> => {
-    return updateAssessment(id, {
-      status: 'completed',
-      grade,
-      feedback,
-    });
-  }, [updateAssessment]);
+  const completeAssessment = useCallback(
+    async (id: string, grade?: string, feedback?: string): Promise<boolean> => {
+      return updateAssessment(id, {
+        status: 'completed',
+        grade,
+        feedback,
+      });
+    },
+    [updateAssessment]
+  );
 
   // Delete an assessment
-  const deleteAssessment = useCallback(async (id: string): Promise<boolean> => {
-    if (!user?.id) return false;
+  const deleteAssessment = useCallback(
+    async (id: string): Promise<boolean> => {
+      if (!user?.id) return false;
 
-    try {
-      const { error } = await supabase
-        .from('ojt_assessments')
-        .delete()
-        .eq('id', id)
-        .eq('user_id', user.id);
+      try {
+        const { error } = await supabase
+          .from('ojt_assessments')
+          .delete()
+          .eq('id', id)
+          .eq('user_id', user.id);
 
-      if (error) throw error;
+        if (error) throw error;
 
-      setAssessments(prev => prev.filter(assessment => assessment.id !== id));
-      toast({
-        title: "Assessment deleted",
-        description: "Your assessment has been removed",
-      });
-      return true;
-    } catch (err) {
-      console.error('Error deleting OJT assessment:', err);
-      toast({
-        title: "Error",
-        description: "Failed to delete assessment",
-        variant: "destructive",
-      });
-      return false;
-    }
-  }, [user?.id, toast]);
+        setAssessments((prev) => prev.filter((assessment) => assessment.id !== id));
+        toast({
+          title: 'Assessment deleted',
+          description: 'Your assessment has been removed',
+        });
+        return true;
+      } catch (err) {
+        console.error('Error deleting OJT assessment:', err);
+        toast({
+          title: 'Error',
+          description: 'Failed to delete assessment',
+          variant: 'destructive',
+        });
+        return false;
+      }
+    },
+    [user?.id, toast]
+  );
 
   // Calculate statistics
   const stats = {
     total: assessments.length,
-    completed: assessments.filter(a => a.status === 'completed').length,
-    pending: assessments.filter(a => a.status === 'pending' || a.status === 'scheduled').length,
-    failed: assessments.filter(a => a.status === 'failed').length,
-    upcoming: assessments.filter(a =>
-      (a.status === 'pending' || a.status === 'scheduled') &&
-      new Date(a.due_date) >= new Date()
+    completed: assessments.filter((a) => a.status === 'completed').length,
+    pending: assessments.filter((a) => a.status === 'pending' || a.status === 'scheduled').length,
+    failed: assessments.filter((a) => a.status === 'failed').length,
+    upcoming: assessments.filter(
+      (a) =>
+        (a.status === 'pending' || a.status === 'scheduled') && new Date(a.due_date) >= new Date()
     ).length,
-    overdue: assessments.filter(a =>
-      (a.status === 'pending' || a.status === 'scheduled') &&
-      new Date(a.due_date) < new Date()
+    overdue: assessments.filter(
+      (a) =>
+        (a.status === 'pending' || a.status === 'scheduled') && new Date(a.due_date) < new Date()
     ).length,
   };
 
   // Get upcoming assessments (next 7 days)
-  const upcomingAssessments = assessments.filter(a => {
+  const upcomingAssessments = assessments.filter((a) => {
     if (a.status === 'completed' || a.status === 'failed') return false;
     const dueDate = new Date(a.due_date);
     const now = new Date();

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -34,21 +33,22 @@ const ContinuityTestingMethodsCard = () => {
         'Using low resistance ohmmeter, test between line and CPC at each outlet',
         'Record the highest reading (furthest point from board)',
         'For ring circuits, test both legs separately',
-        'Verify readings are consistent with cable length and conductor sizes'
+        'Verify readings are consistent with cable length and conductor sizes',
       ],
-      acceptableLimits: 'Must be suitable for earth fault loop impedance requirements. Typically <1.67Ω for ring circuits',
+      acceptableLimits:
+        'Must be suitable for earth fault loop impedance requirements. Typically <1.67Ω for ring circuits',
       practicalTips: [
         'Use adequate test current (minimum 200mA for protective conductors)',
         'Account for test lead resistance in measurements',
         'Test at actual connection points, not through socket outlets',
-        'For ring circuits, readings for both legs should be similar'
+        'For ring circuits, readings for both legs should be similar',
       ],
       commonIssues: [
         'High readings due to loose connections',
         'Parallel paths affecting ring circuit readings',
         'Not testing at the furthest point of the circuit',
-        'Inadequate test current giving unreliable results'
-      ]
+        'Inadequate test current giving unreliable results',
+      ],
     },
     {
       id: 'main-bonding',
@@ -62,21 +62,22 @@ const ContinuityTestingMethodsCard = () => {
         'Test from main earthing terminal to each bonding connection',
         'Use higher test current (up to 1.5A for main bonding conductors)',
         'Test the bonding conductor, not through the service itself',
-        'Record individual readings for each bonded service'
+        'Record individual readings for each bonded service',
       ],
-      acceptableLimits: 'Should be consistent with conductor size and length. Typically <0.05Ω for most installations',
+      acceptableLimits:
+        'Should be consistent with conductor size and length. Typically <0.05Ω for most installations',
       practicalTips: [
         'Test at the connection point, not through metalwork',
         'Use higher test current for accurate readings on larger conductors',
         'Check bonding clamp integrity during testing',
-        'Consider parallel paths through other metalwork'
+        'Consider parallel paths through other metalwork',
       ],
       commonIssues: [
         'Testing through services rather than bonding conductors',
         'Corroded or loose bonding connections',
         'Inadequate bonding conductor size',
-        'Missing bonding to required services'
-      ]
+        'Missing bonding to required services',
+      ],
     },
     {
       id: 'supplementary-bonding',
@@ -90,21 +91,22 @@ const ContinuityTestingMethodsCard = () => {
         'Use appropriate test current for conductor size',
         'Measure actual bonding connections, not through appliances',
         'Verify compliance with maximum resistance values',
-        'Document all tested connections'
+        'Document all tested connections',
       ],
-      acceptableLimits: 'Maximum 0.05Ω between simultaneously accessible exposed and extraneous conductive parts',
+      acceptableLimits:
+        'Maximum 0.05Ω between simultaneously accessible exposed and extraneous conductive parts',
       practicalTips: [
         'Test all combinations of accessible metalwork',
         'Be aware of special location requirements',
         'Consider alternative protection methods if bonding not practical',
-        'Check connection security during testing'
+        'Check connection security during testing',
       ],
       commonIssues: [
         'Exceeding maximum resistance limits',
         'Not testing all required combinations',
         'Poor connections to pipework or appliances',
-        'Omitting bonding where actually required'
-      ]
+        'Omitting bonding where actually required',
+      ],
     },
     {
       id: 'ring-circuit',
@@ -119,25 +121,27 @@ const ContinuityTestingMethodsCard = () => {
         'Test end-to-end resistance of CPC (both legs)',
         'Cross-connect line and neutral at board, test at each socket',
         'Cross-connect line and CPC at board, test at each socket',
-        'Verify readings indicate proper ring formation'
+        'Verify readings indicate proper ring formation',
       ],
-      acceptableLimits: 'End-to-end readings should be similar for both legs. R1+R2 readings should not exceed 1.67Ω',
+      acceptableLimits:
+        'End-to-end readings should be similar for both legs. R1+R2 readings should not exceed 1.67Ω',
       practicalTips: [
         'Both legs should give similar end-to-end readings',
         'Highest R1+R2 reading should be approximately (R1+R2)/4',
         'Any significant deviation indicates ring discontinuity',
-        'Check for interconnections between rings'
+        'Check for interconnections between rings',
       ],
       commonIssues: [
         'Ring wired as radial circuit',
         'Interconnections between different rings',
         'Broken ring continuity at socket connections',
-        'Incorrect interpretation of test results'
-      ]
-    }
+        'Incorrect interpretation of test results',
+      ],
+    },
   ];
 
-  const currentMethod = testMethods.find(method => method.id === selectedMethod) || testMethods[0];
+  const currentMethod =
+    testMethods.find((method) => method.id === selectedMethod) || testMethods[0];
 
   return (
     <Card className="bg-card border-border">
@@ -151,7 +155,7 @@ const ContinuityTestingMethodsCard = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <SmartTabs 
+        <SmartTabs
           tabs={testMethods.map((method) => ({
             value: method.id,
             label: method.name,
@@ -164,7 +168,10 @@ const ContinuityTestingMethodsCard = () => {
                     <div>
                       <h3 className="text-xl font-semibold text-foreground mb-2">{method.name}</h3>
                       <p className="text-gray-300 mb-3">{method.description}</p>
-                      <Badge variant="secondary" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
+                      <Badge
+                        variant="secondary"
+                        className="bg-blue-500/10 text-blue-400 border-blue-500/30"
+                      >
                         {method.regulation}
                       </Badge>
                     </div>
@@ -235,7 +242,7 @@ const ContinuityTestingMethodsCard = () => {
                   </div>
                 </div>
               </div>
-            )
+            ),
           }))}
           value={selectedMethod}
           onValueChange={setSelectedMethod}

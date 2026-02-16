@@ -95,12 +95,7 @@ const quizQuestions = [
     id: 1,
     question:
       'What percentage of total energy consumption on a typical UK construction site comes from diesel fuel?',
-    options: [
-      '20-30%',
-      '40-50%',
-      '60-70%',
-      '80-90%',
-    ],
+    options: ['20-30%', '40-50%', '60-70%', '80-90%'],
     correctAnswer: 2,
     explanation:
       'Diesel fuel typically accounts for 60-70% of total energy consumption on UK construction sites. This includes diesel for generators providing temporary electrical power, mobile plant such as excavators and cranes, and site delivery vehicles. The dominance of diesel makes it the primary target for energy reduction strategies on most construction projects.',
@@ -238,7 +233,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
             <Leaf className="h-7 w-7 text-emerald-400" />
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 mx-auto">
-            <span className="text-emerald-400 text-xs font-semibold">MODULE 3 &middot; SECTION 1</span>
+            <span className="text-emerald-400 text-xs font-semibold">
+              MODULE 3 &middot; SECTION 1
+            </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Use on Construction Sites
@@ -325,22 +322,25 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <Zap className="h-5 w-5 text-emerald-400" />
-                  <p className="text-sm font-medium text-emerald-400">Primary Energy Sources on Site</p>
+                  <p className="text-sm font-medium text-emerald-400">
+                    Primary Energy Sources on Site
+                  </p>
                 </div>
                 <p className="text-sm text-white/80 mb-3">
                   Construction sites typically rely on four main energy sources, each serving
-                  different operational needs. The balance between these sources varies depending
-                  on project type, location, duration, and phase of construction.
+                  different operational needs. The balance between these sources varies depending on
+                  project type, location, duration, and phase of construction.
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
                       <strong className="text-white">Diesel generators:</strong> The dominant energy
-                      source on most sites, providing temporary electrical power before permanent grid
-                      connections are established. Generators power site lighting, welfare facilities,
-                      tower cranes, hoists, and power tools. They are inherently inefficient — typically
-                      converting only 30-40% of fuel energy into useful electricity.
+                      source on most sites, providing temporary electrical power before permanent
+                      grid connections are established. Generators power site lighting, welfare
+                      facilities, tower cranes, hoists, and power tools. They are inherently
+                      inefficient — typically converting only 30-40% of fuel energy into useful
+                      electricity.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -348,9 +348,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <span>
                       <strong className="text-white">Grid electricity:</strong> Where available, a
                       temporary grid connection provides more efficient and lower-carbon power than
-                      diesel generators. Grid connections are typically established as early as possible
-                      in the project programme. The carbon intensity of grid electricity depends on the
-                      national energy mix and time of day.
+                      diesel generators. Grid connections are typically established as early as
+                      possible in the project programme. The carbon intensity of grid electricity
+                      depends on the national energy mix and time of day.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -358,17 +358,19 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <span>
                       <strong className="text-white">Gas heating:</strong> Propane or natural gas is
                       used for heating site accommodation (offices, welfare units, drying rooms) and
-                      for some construction processes such as concrete curing. LPG (liquefied petroleum
-                      gas) cylinders are the most common gas source on sites without a mains gas supply.
+                      for some construction processes such as concrete curing. LPG (liquefied
+                      petroleum gas) cylinders are the most common gas source on sites without a
+                      mains gas supply.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
                       <strong className="text-white">Plant and vehicles:</strong> Mobile plant
-                      (excavators, telehandlers, dumpers, cranes) and delivery vehicles consume large
-                      quantities of diesel fuel. Plant fuel consumption is heavily influenced by operator
-                      behaviour, machine age and condition, and the efficiency of site logistics.
+                      (excavators, telehandlers, dumpers, cranes) and delivery vehicles consume
+                      large quantities of diesel fuel. Plant fuel consumption is heavily influenced
+                      by operator behaviour, machine age and condition, and the efficiency of site
+                      logistics.
                     </span>
                   </li>
                 </ul>
@@ -451,8 +453,8 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-bold text-red-400 mb-2">Scope 1 — Direct Emissions</p>
                   <p className="text-sm text-white/80 mb-2">
-                    Emissions from sources directly owned or controlled by the organisation. On
-                    a construction site, Scope 1 includes:
+                    Emissions from sources directly owned or controlled by the organisation. On a
+                    construction site, Scope 1 includes:
                   </p>
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
@@ -475,7 +477,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 </div>
 
                 <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
-                  <p className="text-sm font-bold text-blue-400 mb-2">Scope 2 — Purchased Electricity</p>
+                  <p className="text-sm font-bold text-blue-400 mb-2">
+                    Scope 2 — Purchased Electricity
+                  </p>
                   <p className="text-sm text-white/80 mb-2">
                     Indirect emissions from the generation of purchased electricity consumed on
                     site. The emissions occur at the power station, not on the construction site,
@@ -489,19 +493,24 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                       <span>
-                        Carbon intensity varies — UK grid average is approximately 0.21 kg CO&#8322;e/kWh
-                        (2024 figure) but falling as renewables increase
+                        Carbon intensity varies — UK grid average is approximately 0.21 kg
+                        CO&#8322;e/kWh (2024 figure) but falling as renewables increase
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
-                      <span>Green tariffs and Renewable Energy Guarantees of Origin (REGOs) can reduce reported Scope 2</span>
+                      <span>
+                        Green tariffs and Renewable Energy Guarantees of Origin (REGOs) can reduce
+                        reported Scope 2
+                      </span>
                     </li>
                   </ul>
                 </div>
 
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
-                  <p className="text-sm font-bold text-amber-400 mb-2">Scope 3 — Supply Chain &amp; Value Chain</p>
+                  <p className="text-sm font-bold text-amber-400 mb-2">
+                    Scope 3 — Supply Chain &amp; Value Chain
+                  </p>
                   <p className="text-sm text-white/80 mb-2">
                     All other indirect emissions in the organisation&rsquo;s value chain. For
                     construction, Scope 3 typically accounts for{' '}
@@ -510,7 +519,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
-                      <span>Embodied carbon in materials (concrete, steel, aluminium, plastics)</span>
+                      <span>
+                        Embodied carbon in materials (concrete, steel, aluminium, plastics)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
@@ -538,8 +549,8 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   The Greenhouse Gas Protocol is the world&rsquo;s most widely used greenhouse gas
                   accounting framework. It provides standardised methods for measuring and reporting
                   emissions across all three scopes. In the UK construction industry, carbon
-                  reporting is increasingly required by clients (particularly public sector clients),
-                  building rating systems (BREEAM, LEED), and financial regulators. The UK
+                  reporting is increasingly required by clients (particularly public sector
+                  clients), building rating systems (BREEAM, LEED), and financial regulators. The UK
                   Government&rsquo;s Streamlined Energy and Carbon Reporting (SECR) framework
                   requires qualifying organisations to report Scope 1 and 2 emissions annually.
                   Major contractors are also voluntarily reporting Scope 3 emissions as part of
@@ -571,7 +582,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <Gauge className="h-5 w-5 text-emerald-400" />
-                  <p className="text-sm font-medium text-emerald-400">Metering &amp; Sub-Metering</p>
+                  <p className="text-sm font-medium text-emerald-400">
+                    Metering &amp; Sub-Metering
+                  </p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -607,7 +620,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
 
               {/* Smart Monitoring */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Smart Monitoring &amp; Dashboards</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Smart Monitoring &amp; Dashboards
+                </p>
                 <p className="text-sm text-white/80 mb-3">
                   Modern construction sites increasingly use IoT (Internet of Things) sensors and
                   cloud-based dashboards to monitor energy consumption in real time:
@@ -618,8 +633,8 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <span>
                       <strong className="text-white">Real-time dashboards:</strong> Web-based
                       platforms displaying live energy data from across the site, accessible on
-                      phones and tablets. These dashboards highlight abnormal consumption
-                      patterns, equipment left running overnight, and week-on-week trends.
+                      phones and tablets. These dashboards highlight abnormal consumption patterns,
+                      equipment left running overnight, and week-on-week trends.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -659,16 +674,20 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-emerald-400 mb-1">120-200</p>
-                    <p className="text-xs text-white/70">kWh/m&sup2; &mdash; complex refurbishment</p>
+                    <p className="text-xs text-white/70">
+                      kWh/m&sup2; &mdash; complex refurbishment
+                    </p>
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-emerald-400 mb-1">&lt;60</p>
-                    <p className="text-xs text-white/70">kWh/m&sup2; &mdash; best practice target</p>
+                    <p className="text-xs text-white/70">
+                      kWh/m&sup2; &mdash; best practice target
+                    </p>
                   </div>
                 </div>
                 <p className="text-xs text-white/50 mt-3">
-                  Benchmarks calculated as total site energy (all sources, converted to kWh) &divide;
-                  gross internal floor area of the completed building
+                  Benchmarks calculated as total site energy (all sources, converted to kWh)
+                  &divide; gross internal floor area of the completed building
                 </p>
               </div>
             </div>
@@ -685,10 +704,11 @@ export default function EnvironmentalSustainabilityModule3Section1() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Temporary site accommodation — offices, meeting rooms, welfare facilities, drying
-                rooms — can account for <strong>15-25% of total site electricity consumption</strong>.
-                Much of this energy is wasted through poor insulation, inefficient lighting, and
-                heating systems running in unoccupied spaces. Modern eco-cabins and simple
-                behavioural changes can dramatically reduce this waste.
+                rooms — can account for{' '}
+                <strong>15-25% of total site electricity consumption</strong>. Much of this energy
+                is wasted through poor insulation, inefficient lighting, and heating systems running
+                in unoccupied spaces. Modern eco-cabins and simple behavioural changes can
+                dramatically reduce this waste.
               </p>
 
               {/* Eco-cabin Features */}
@@ -702,20 +722,20 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
                       <strong className="text-white">Insulated panels:</strong> Modern site cabins
-                      use high-performance insulated wall, floor, and roof panels (typically 60-100mm
-                      PIR or mineral wool insulation) that dramatically reduce heat loss compared to
-                      standard steel containers. Double-glazed windows with low-emissivity coatings
-                      further improve thermal performance.
+                      use high-performance insulated wall, floor, and roof panels (typically
+                      60-100mm PIR or mineral wool insulation) that dramatically reduce heat loss
+                      compared to standard steel containers. Double-glazed windows with
+                      low-emissivity coatings further improve thermal performance.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
                       <strong className="text-white">LED lighting:</strong> LED luminaires use up to
-                      80% less energy than traditional fluorescent tubes and last significantly longer.
-                      The improved light quality also reduces eye strain and improves working
-                      conditions in site offices. LED lighting should be standard in all new and
-                      replacement site accommodation.
+                      80% less energy than traditional fluorescent tubes and last significantly
+                      longer. The improved light quality also reduces eye strain and improves
+                      working conditions in site offices. LED lighting should be standard in all new
+                      and replacement site accommodation.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -733,9 +753,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <span>
                       <strong className="text-white">Timer controls:</strong> Programmable timers on
                       heating and hot water systems ensure they only operate during occupied hours.
-                      A heating system running from 06:00 to 18:00 rather than 24 hours saves 50%
-                      of heating energy. Seven-day timers allow different schedules for weekdays
-                      and weekends.
+                      A heating system running from 06:00 to 18:00 rather than 24 hours saves 50% of
+                      heating energy. Seven-day timers allow different schedules for weekdays and
+                      weekends.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -744,18 +764,18 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                       <strong className="text-white">Efficient heating systems:</strong> Modern
                       eco-cabins use energy-efficient electric panel heaters or air-source heat
                       pumps with individual thermostatic controls in each room, replacing
-                      inefficient fan heaters and convectors. Heat pumps can deliver 3-4 kWh of
-                      heat for every 1 kWh of electricity consumed.
+                      inefficient fan heaters and convectors. Heat pumps can deliver 3-4 kWh of heat
+                      for every 1 kWh of electricity consumed.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
-                      <strong className="text-white">Solar panels on site offices:</strong> Roof-mounted
-                      solar PV panels on site accommodation can generate a significant proportion of
-                      the cabin&rsquo;s daytime electricity needs, particularly during spring and
-                      summer months. Combined with battery storage, solar-equipped cabins can operate
-                      largely independently of the site generator during daylight hours.
+                      <strong className="text-white">Solar panels on site offices:</strong>{' '}
+                      Roof-mounted solar PV panels on site accommodation can generate a significant
+                      proportion of the cabin&rsquo;s daytime electricity needs, particularly during
+                      spring and summer months. Combined with battery storage, solar-equipped cabins
+                      can operate largely independently of the site generator during daylight hours.
                     </span>
                   </li>
                 </ul>
@@ -813,7 +833,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 mb-3">
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg">
-                    <p className="text-sm font-bold text-emerald-400 mb-1">Particulate Matter (PM)</p>
+                    <p className="text-sm font-bold text-emerald-400 mb-1">
+                      Particulate Matter (PM)
+                    </p>
                     <p className="text-xs text-white/70">
                       Reduced by up to 97% compared to pre-regulation engines. Stage V engines use
                       diesel particulate filters (DPF) to capture soot particles.
@@ -829,9 +851,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 </div>
                 <p className="text-sm text-white/80">
                   Many London boroughs and major clients now mandate Stage V compliance for all
-                  plant on site through <strong className="text-white">Non-Road Mobile Machinery
-                  (NRMM) Low Emission Zone</strong> requirements. Specifying Stage V plant is
-                  increasingly standard practice across the UK construction industry.
+                  plant on site through{' '}
+                  <strong className="text-white">
+                    Non-Road Mobile Machinery (NRMM) Low Emission Zone
+                  </strong>{' '}
+                  requirements. Specifying Stage V plant is increasingly standard practice across
+                  the UK construction industry.
                 </p>
               </div>
 
@@ -857,18 +882,18 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                       <strong className="text-white">Electric hand tools:</strong> Battery-powered
                       cordless tools (drills, saws, grinders, impact drivers) running on lithium-ion
                       batteries are significantly more energy-efficient than petrol-powered
-                      equivalents and produce zero direct emissions. Modern battery platforms provide
-                      performance comparable to mains-powered tools for most applications.
+                      equivalents and produce zero direct emissions. Modern battery platforms
+                      provide performance comparable to mains-powered tools for most applications.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
-                      <strong className="text-white">Electric mini-excavators:</strong> Fully electric
-                      compact excavators are now commercially available from major manufacturers.
-                      These machines produce zero direct emissions and operate at significantly lower
-                      noise levels — making them ideal for urban sites, indoor demolition, and
-                      noise-sensitive environments.
+                      <strong className="text-white">Electric mini-excavators:</strong> Fully
+                      electric compact excavators are now commercially available from major
+                      manufacturers. These machines produce zero direct emissions and operate at
+                      significantly lower noise levels — making them ideal for urban sites, indoor
+                      demolition, and noise-sensitive environments.
                     </span>
                   </li>
                 </ul>
@@ -877,7 +902,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               {/* Telematics & Stop-Start */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                  <p className="text-sm font-medium text-white mb-2">Telematics for Utilisation Monitoring</p>
+                  <p className="text-sm font-medium text-white mb-2">
+                    Telematics for Utilisation Monitoring
+                  </p>
                   <ul className="text-sm text-white/80 space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
@@ -889,7 +916,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
-                      <span>Reports excessive idle time — engines running with no productive work</span>
+                      <span>
+                        Reports excessive idle time — engines running with no productive work
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
@@ -902,11 +931,16 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <ul className="text-sm text-white/80 space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
-                      <span>Automatically shuts down engines after a set idle period (typically 3-5 minutes)</span>
+                      <span>
+                        Automatically shuts down engines after a set idle period (typically 3-5
+                        minutes)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
-                      <span>Engine restarts automatically when the operator moves the controls</span>
+                      <span>
+                        Engine restarts automatically when the operator moves the controls
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
@@ -934,16 +968,18 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               <p>
                 The choice of temporary power supply is one of the{' '}
                 <strong>most significant energy decisions</strong> on any construction project.
-                Moving from oversized diesel generators to right-sized, hybrid, and renewable
-                power solutions can reduce energy costs by 30-80% and eliminate thousands of
-                tonnes of CO&#8322; emissions over a project&rsquo;s lifetime.
+                Moving from oversized diesel generators to right-sized, hybrid, and renewable power
+                solutions can reduce energy costs by 30-80% and eliminate thousands of tonnes of
+                CO&#8322; emissions over a project&rsquo;s lifetime.
               </p>
 
               {/* Generator Right-Sizing */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <Battery className="h-5 w-5 text-emerald-400" />
-                  <p className="text-sm font-medium text-emerald-400">Generator Sizing (Right-Sizing)</p>
+                  <p className="text-sm font-medium text-emerald-400">
+                    Generator Sizing (Right-Sizing)
+                  </p>
                 </div>
                 <p className="text-sm text-white/80 mb-3">
                   Generator right-sizing means matching the generator&rsquo;s rated capacity to the
@@ -955,10 +991,10 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
-                      <strong className="text-white">Low load penalty:</strong> A generator running at
-                      25% load wastes up to 40% more fuel per kWh than one running at 75% load. The
-                      engine still consumes a base level of fuel regardless of electrical output,
-                      so the less electricity produced, the worse the fuel efficiency.
+                      <strong className="text-white">Low load penalty:</strong> A generator running
+                      at 25% load wastes up to 40% more fuel per kWh than one running at 75% load.
+                      The engine still consumes a base level of fuel regardless of electrical
+                      output, so the less electricity produced, the worse the fuel efficiency.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1039,17 +1075,17 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                       <strong className="text-white">Solar hybrid generators:</strong> Combine solar
                       PV panels, battery storage, and a small diesel generator in an integrated
                       system. Solar charges the batteries during daylight; batteries handle
-                      low-demand periods; the diesel generator only runs when demand exceeds
-                      stored capacity. Diesel savings of 50-80% are achievable on suitable sites.
+                      low-demand periods; the diesel generator only runs when demand exceeds stored
+                      capacity. Diesel savings of 50-80% are achievable on suitable sites.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
-                      <strong className="text-white">Silent overnight power:</strong> BESS eliminates
-                      the need to run noisy diesel generators overnight for security lighting, CCTV,
-                      and monitoring systems. This is particularly valuable on residential and
-                      urban sites with strict noise restrictions.
+                      <strong className="text-white">Silent overnight power:</strong> BESS
+                      eliminates the need to run noisy diesel generators overnight for security
+                      lighting, CCTV, and monitoring systems. This is particularly valuable on
+                      residential and urban sites with strict noise restrictions.
                     </span>
                   </li>
                 </ul>
@@ -1079,11 +1115,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
           <div className="border-l-2 border-emerald-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Good housekeeping measures are the <strong>lowest-cost, quickest-to-implement</strong>{' '}
-                energy-saving strategies available on any construction site. They require no capital
-                investment — only awareness, discipline, and consistent management attention. Studies
-                show that good housekeeping alone can reduce site energy consumption by{' '}
-                <strong>10-15%</strong> with zero capital expenditure.
+                Good housekeeping measures are the{' '}
+                <strong>lowest-cost, quickest-to-implement</strong> energy-saving strategies
+                available on any construction site. They require no capital investment — only
+                awareness, discipline, and consistent management attention. Studies show that good
+                housekeeping alone can reduce site energy consumption by <strong>10-15%</strong>{' '}
+                with zero capital expenditure.
               </p>
 
               {/* Switch-Off Culture */}
@@ -1093,8 +1130,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 </p>
                 <p className="text-sm text-white/80 mb-3">
                   The single most impactful housekeeping measure is ensuring that plant, equipment,
-                  lighting, and heating are switched off when not actively in use. Research indicates
-                  that idle time can account for 30-40% of operating hours on poorly managed sites.
+                  lighting, and heating are switched off when not actively in use. Research
+                  indicates that idle time can account for 30-40% of operating hours on poorly
+                  managed sites.
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -1109,10 +1147,10 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
-                      <strong className="text-white">Lighting:</strong> Site lighting, task lighting,
-                      and accommodation lighting must be switched off when areas are unoccupied.
-                      External flood lighting should be on timers or photocell controls rather than
-                      manual switches that are often left on 24 hours.
+                      <strong className="text-white">Lighting:</strong> Site lighting, task
+                      lighting, and accommodation lighting must be switched off when areas are
+                      unoccupied. External flood lighting should be on timers or photocell controls
+                      rather than manual switches that are often left on 24 hours.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1138,28 +1176,28 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <span>
                       <strong className="text-white">Closing doors and windows:</strong> Heated
                       accommodation with doors propped open wastes enormous energy. Self-closing
-                      mechanisms and clear signage (&ldquo;Close the door — save energy&rdquo;)
-                      help maintain the thermal envelope of site buildings.
+                      mechanisms and clear signage (&ldquo;Close the door — save energy&rdquo;) help
+                      maintain the thermal envelope of site buildings.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
-                      <strong className="text-white">Maintaining equipment:</strong> Poorly maintained
-                      plant and equipment consumes more fuel — dirty air filters, incorrect tyre
-                      pressures, worn engine components, and poor lubrication all increase energy
-                      consumption. Following manufacturer service schedules is both a safety and
-                      energy efficiency measure.
+                      <strong className="text-white">Maintaining equipment:</strong> Poorly
+                      maintained plant and equipment consumes more fuel — dirty air filters,
+                      incorrect tyre pressures, worn engine components, and poor lubrication all
+                      increase energy consumption. Following manufacturer service schedules is both
+                      a safety and energy efficiency measure.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
                       <strong className="text-white">Awareness campaigns:</strong> Regular
-                      energy-saving communications — posters, toolbox talks, site inductions,
-                      weekly energy reports — keep energy awareness at the forefront of site
-                      culture. Visual displays showing weekly energy consumption and savings
-                      create a sense of shared responsibility.
+                      energy-saving communications — posters, toolbox talks, site inductions, weekly
+                      energy reports — keep energy awareness at the forefront of site culture.
+                      Visual displays showing weekly energy consumption and savings create a sense
+                      of shared responsibility.
                     </span>
                   </li>
                 </ul>
@@ -1236,9 +1274,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <span>
                       <strong className="text-white">UK generation:</strong> Despite the perception
                       that the UK lacks sufficient sunlight, modern solar panels generate useful
-                      electricity even on overcast days. Annual solar irradiation in southern England
-                      is approximately 1,000-1,100 kWh/m&sup2;, sufficient to make solar a viable
-                      contributor to site power throughout the year.
+                      electricity even on overcast days. Annual solar irradiation in southern
+                      England is approximately 1,000-1,100 kWh/m&sup2;, sufficient to make solar a
+                      viable contributor to site power throughout the year.
                     </span>
                   </li>
                 </ul>
@@ -1251,8 +1289,8 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <p className="text-sm text-white/80 mb-3">
                     Small-scale wind turbines can supplement site power in exposed locations with
                     consistent wind. However, urban construction sites typically have poor wind
-                    conditions due to surrounding buildings. Wind is most viable on rural,
-                    coastal, or elevated sites where average wind speeds exceed 5 m/s.
+                    conditions due to surrounding buildings. Wind is most viable on rural, coastal,
+                    or elevated sites where average wind speeds exceed 5 m/s.
                   </p>
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
@@ -1306,11 +1344,13 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   </ul>
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                  <p className="text-sm font-medium text-white mb-2">Green Tariffs for Grid Electricity</p>
+                  <p className="text-sm font-medium text-white mb-2">
+                    Green Tariffs for Grid Electricity
+                  </p>
                   <p className="text-sm text-white/80 mb-3">
                     Purchasing grid electricity on a certified green tariff backed by Renewable
-                    Energy Guarantees of Origin (REGOs) reduces reported Scope 2 emissions to
-                    near zero. This is the simplest way to decarbonise grid electricity consumption.
+                    Energy Guarantees of Origin (REGOs) reduces reported Scope 2 emissions to near
+                    zero. This is the simplest way to decarbonise grid electricity consumption.
                   </p>
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
@@ -1339,7 +1379,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               {/* Eliminate */}
               <div className="bg-green-500/15 border border-green-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-green-400 text-xs font-bold uppercase tracking-wider">1. Eliminate</span>
+                  <span className="text-green-400 text-xs font-bold uppercase tracking-wider">
+                    1. Eliminate
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
                   Remove the need for energy entirely &mdash; off-hire unused plant, remove
@@ -1350,7 +1392,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               {/* Reduce */}
               <div className="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider">2. Reduce</span>
+                  <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                    2. Reduce
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
                   Use less energy for the same output &mdash; insulate cabins, right-size
@@ -1361,7 +1405,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               {/* Replace */}
               <div className="bg-blue-500/15 border border-blue-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-blue-400 text-xs font-bold uppercase tracking-wider">3. Replace</span>
+                  <span className="text-blue-400 text-xs font-bold uppercase tracking-wider">
+                    3. Replace
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
                   Switch to lower-carbon energy sources &mdash; grid connections, HVO biofuel,
@@ -1372,7 +1418,9 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               {/* Renewable */}
               <div className="bg-teal-500/15 border border-teal-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-teal-400 text-xs font-bold uppercase tracking-wider">4. Renewable</span>
+                  <span className="text-teal-400 text-xs font-bold uppercase tracking-wider">
+                    4. Renewable
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
                   Generate clean energy on site &mdash; solar PV panels, battery storage systems,
@@ -1383,11 +1431,13 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               {/* Offset */}
               <div className="bg-amber-500/15 border border-amber-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-amber-400 text-xs font-bold uppercase tracking-wider">5. Offset (Last Resort)</span>
+                  <span className="text-amber-400 text-xs font-bold uppercase tracking-wider">
+                    5. Offset (Last Resort)
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
-                  Compensate for remaining emissions &mdash; verified carbon offset schemes,
-                  tree planting, carbon capture &mdash; only after all other measures exhausted
+                  Compensate for remaining emissions &mdash; verified carbon offset schemes, tree
+                  planting, carbon capture &mdash; only after all other measures exhausted
                 </p>
               </div>
             </div>

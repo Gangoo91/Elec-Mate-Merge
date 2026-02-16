@@ -7,34 +7,34 @@ const EnergyEfficiencyModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "ESOS, SECR, and Building Regs Overview",
+      title: 'ESOS, SECR, and Building Regs Overview',
       icon: FileText,
-      description: "Understanding key regulatory frameworks and compliance requirements"
+      description: 'Understanding key regulatory frameworks and compliance requirements',
     },
     {
       id: 2,
-      title: "ROI Models: Payback, IRR, Life Cycle Costing",
+      title: 'ROI Models: Payback, IRR, Life Cycle Costing',
       icon: Calculator,
-      description: "Financial modelling for energy efficiency investments"
+      description: 'Financial modelling for energy efficiency investments',
     },
     {
       id: 3,
-      title: "Incentives and Funding Opportunities",
+      title: 'Incentives and Funding Opportunities',
       icon: Award,
-      description: "Available grants, incentives, and funding schemes"
+      description: 'Available grants, incentives, and funding schemes',
     },
     {
       id: 4,
-      title: "Developing Energy KPI Dashboards",
+      title: 'Developing Energy KPI Dashboards',
       icon: BarChart,
-      description: "Creating key performance indicator tracking systems"
+      description: 'Creating key performance indicator tracking systems',
     },
     {
       id: 5,
-      title: "Compliance Reporting and Audit Trails",
+      title: 'Compliance Reporting and Audit Trails',
       icon: CheckSquare,
-      description: "Maintaining compliance records and audit documentation"
-    }
+      description: 'Maintaining compliance records and audit documentation',
+    },
   ];
 
   return (

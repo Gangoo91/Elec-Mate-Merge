@@ -16,7 +16,7 @@ import {
   Flashlight,
   SwitchCamera,
   Scan,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
@@ -31,7 +31,7 @@ interface SerialNumberScannerSheetProps {
 export function SerialNumberScannerSheet({
   open,
   onOpenChange,
-  onSerialExtracted
+  onSerialExtracted,
 }: SerialNumberScannerSheetProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -86,7 +86,9 @@ export function SerialNumberScannerSheet({
         setIsStreaming(true);
 
         const track = stream.getVideoTracks()[0];
-        const capabilities = track.getCapabilities?.() as MediaTrackCapabilities & { torch?: boolean };
+        const capabilities = track.getCapabilities?.() as MediaTrackCapabilities & {
+          torch?: boolean;
+        };
         setHasTorch(!!capabilities?.torch);
       }
     } catch (err: any) {
@@ -191,8 +193,8 @@ export function SerialNumberScannerSheet({
       const { data, error: fnError } = await supabase.functions.invoke('parse-serial-number', {
         body: {
           image_base64: base64Data,
-          image_type: 'image/jpeg'
-        }
+          image_type: 'image/jpeg',
+        },
       });
 
       if (fnError) {
@@ -400,8 +402,12 @@ export function SerialNumberScannerSheet({
                         <Check className="h-5 w-5 text-green-400" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-green-400 text-xs font-medium uppercase tracking-wider">Extracted Serial Number</p>
-                        <p className="text-white text-xl font-mono font-bold mt-0.5">{extractedSerial}</p>
+                        <p className="text-green-400 text-xs font-medium uppercase tracking-wider">
+                          Extracted Serial Number
+                        </p>
+                        <p className="text-white text-xl font-mono font-bold mt-0.5">
+                          {extractedSerial}
+                        </p>
                       </div>
                     </div>
                   </div>

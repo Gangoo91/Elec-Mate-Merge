@@ -25,9 +25,7 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
 
   const shouldShowExpandButton = collapsible && outcomes.length > initialVisibleCount;
   const visibleOutcomes =
-    shouldShowExpandButton && !isExpanded
-      ? outcomes.slice(0, initialVisibleCount)
-      : outcomes;
+    shouldShowExpandButton && !isExpanded ? outcomes.slice(0, initialVisibleCount) : outcomes;
 
   return (
     <div className={cn('space-y-4', className)}>
@@ -39,26 +37,23 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
         {visibleOutcomes.map((outcome, index) => (
           <li
             key={index}
-            className={cn(
-              'flex items-start gap-3',
-              'ios-animate-in-delayed'
-            )}
+            className={cn('flex items-start gap-3', 'ios-animate-in-delayed')}
             style={{ '--ios-delay': `${index * 50}ms` } as React.CSSProperties}
           >
             {/* Checkmark Icon */}
-            <div className={cn(
-              'flex-shrink-0 mt-0.5',
-              'w-5 h-5 rounded-full',
-              'bg-emerald-500/20 border border-emerald-500/40',
-              'flex items-center justify-center'
-            )}>
+            <div
+              className={cn(
+                'flex-shrink-0 mt-0.5',
+                'w-5 h-5 rounded-full',
+                'bg-emerald-500/20 border border-emerald-500/40',
+                'flex items-center justify-center'
+              )}
+            >
               <Check className="w-3 h-3 text-emerald-400" />
             </div>
 
             {/* Outcome Text */}
-            <span className="text-ios-body text-white/80 leading-relaxed flex-1">
-              {outcome}
-            </span>
+            <span className="text-ios-body text-white/80 leading-relaxed flex-1">{outcome}</span>
           </li>
         ))}
       </ul>
@@ -77,9 +72,7 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
           )}
         >
           <span className="text-ios-subhead">
-            {isExpanded
-              ? 'Show less'
-              : `Show ${outcomes.length - initialVisibleCount} more`}
+            {isExpanded ? 'Show less' : `Show ${outcomes.length - initialVisibleCount} more`}
           </span>
           <ChevronDown
             className={cn(

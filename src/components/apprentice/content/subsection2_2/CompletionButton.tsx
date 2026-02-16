@@ -1,24 +1,17 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle } from 'lucide-react';
 
 interface CompletionButtonProps {
   isCompleted: boolean;
   markAsComplete: () => void;
 }
 
-const CompletionButton: React.FC<CompletionButtonProps> = ({ 
-  isCompleted, 
-  markAsComplete 
-}) => {
+const CompletionButton: React.FC<CompletionButtonProps> = ({ isCompleted, markAsComplete }) => {
   return (
     <div className="pt-6 border-t border-elec-yellow/20 flex justify-end">
       {!isCompleted ? (
-        <Button 
-          onClick={markAsComplete}
-          className="hover:bg-elec-yellow hover:text-elec-dark"
-        >
+        <Button onClick={markAsComplete} className="hover:bg-elec-yellow hover:text-elec-dark">
           Mark as Complete
         </Button>
       ) : (

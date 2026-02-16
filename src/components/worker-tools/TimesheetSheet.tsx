@@ -107,7 +107,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
       return;
     }
 
-    const job = jobs?.find(j => j.id === selectedJobId);
+    const job = jobs?.find((j) => j.id === selectedJobId);
     if (!job) {
       toast.error('Job not found');
       return;
@@ -147,7 +147,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
 
     const diffMs = endDate.getTime() - startDate.getTime();
     const diffHours = diffMs / (1000 * 60 * 60);
-    const totalHours = Math.max(0, diffHours - (manualData.breakMins / 60));
+    const totalHours = Math.max(0, diffHours - manualData.breakMins / 60);
 
     setIsSubmitting(true);
 
@@ -196,7 +196,10 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -216,9 +219,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
               <SheetTitle className="text-lg font-semibold flex-1 text-center">
                 {getStepTitle()}
               </SheetTitle>
-              <SheetDescription className="sr-only">
-                Manage your work timesheets
-              </SheetDescription>
+              <SheetDescription className="sr-only">Manage your work timesheets</SheetDescription>
               <Button
                 variant="ghost"
                 size="icon"
@@ -313,9 +314,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                         </div>
                         <div className="flex-1 text-left">
                           <p className="font-semibold text-foreground">Manual Entry</p>
-                          <p className="text-sm text-muted-foreground">
-                            Log hours for a past date
-                          </p>
+                          <p className="text-sm text-muted-foreground">Log hours for a past date</p>
                         </div>
                       </div>
                     </button>
@@ -369,9 +368,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                   <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
                     <div className="flex items-center gap-3 text-white/60">
                       <Clock className="h-4 w-4" />
-                      <p className="text-sm">
-                        Start time: {format(new Date(), 'HH:mm')} today
-                      </p>
+                      <p className="text-sm">Start time: {format(new Date(), 'HH:mm')} today</p>
                     </div>
                   </div>
                 </motion.div>
@@ -391,9 +388,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                       <Square className="h-8 w-8 text-red-400" />
                     </div>
                     <p className="text-4xl font-bold text-white font-mono">{duration}</p>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      {clockState.jobTitle}
-                    </p>
+                    <p className="text-sm text-muted-foreground mt-2">{clockState.jobTitle}</p>
                   </div>
 
                   <div className="space-y-3">
@@ -471,7 +466,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                     <Input
                       type="date"
                       value={manualData.date}
-                      onChange={(e) => setManualData(prev => ({ ...prev, date: e.target.value }))}
+                      onChange={(e) => setManualData((prev) => ({ ...prev, date: e.target.value }))}
                       className="h-11 touch-manipulation"
                     />
                   </div>
@@ -482,7 +477,9 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                       <Input
                         type="time"
                         value={manualData.startTime}
-                        onChange={(e) => setManualData(prev => ({ ...prev, startTime: e.target.value }))}
+                        onChange={(e) =>
+                          setManualData((prev) => ({ ...prev, startTime: e.target.value }))
+                        }
                         className="h-11 touch-manipulation"
                       />
                     </div>
@@ -491,7 +488,9 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                       <Input
                         type="time"
                         value={manualData.endTime}
-                        onChange={(e) => setManualData(prev => ({ ...prev, endTime: e.target.value }))}
+                        onChange={(e) =>
+                          setManualData((prev) => ({ ...prev, endTime: e.target.value }))
+                        }
                         className="h-11 touch-manipulation"
                       />
                     </div>
@@ -507,7 +506,12 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                       min="0"
                       max="480"
                       value={manualData.breakMins}
-                      onChange={(e) => setManualData(prev => ({ ...prev, breakMins: parseInt(e.target.value) || 0 }))}
+                      onChange={(e) =>
+                        setManualData((prev) => ({
+                          ...prev,
+                          breakMins: parseInt(e.target.value) || 0,
+                        }))
+                      }
                       className="h-11 touch-manipulation"
                     />
                   </div>
@@ -516,7 +520,9 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                     <Label>Notes (optional)</Label>
                     <Textarea
                       value={manualData.notes}
-                      onChange={(e) => setManualData(prev => ({ ...prev, notes: e.target.value }))}
+                      onChange={(e) =>
+                        setManualData((prev) => ({ ...prev, notes: e.target.value }))
+                      }
                       placeholder="What did you work on?"
                       className="touch-manipulation min-h-[80px]"
                     />

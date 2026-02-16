@@ -12,18 +12,19 @@ export const CableShieldingIntro = () => {
       </CardHeader>
       <CardContent className="space-y-4 text-gray-300">
         <p>
-          Not all twisted pair cables are created equal. Beyond the basic wire twisting that provides 
-          fundamental noise protection, some cables include additional metallic shielding to combat 
-          electromagnetic interference in challenging environments.
+          Not all twisted pair cables are created equal. Beyond the basic wire twisting that
+          provides fundamental noise protection, some cables include additional metallic shielding
+          to combat electromagnetic interference in challenging environments.
         </p>
         <p>
-          Understanding the differences between UTP (Unshielded), FTP (Foiled), and STP (Shielded) 
-          twisted pair cables is crucial for selecting the right solution for each installation environment, 
-          from quiet office spaces to industrial facilities with heavy electrical equipment.
+          Understanding the differences between UTP (Unshielded), FTP (Foiled), and STP (Shielded)
+          twisted pair cables is crucial for selecting the right solution for each installation
+          environment, from quiet office spaces to industrial facilities with heavy electrical
+          equipment.
         </p>
         <p>
-          This section explores when and why you'd choose each cable type, their installation requirements, 
-          and the critical importance of proper grounding for shielded systems.
+          This section explores when and why you'd choose each cable type, their installation
+          requirements, and the critical importance of proper grounding for shielded systems.
         </p>
       </CardContent>
     </Card>

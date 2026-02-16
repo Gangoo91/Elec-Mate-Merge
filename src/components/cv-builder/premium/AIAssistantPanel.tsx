@@ -3,12 +3,12 @@
  * Provides context-aware suggestions and content improvement
  */
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import {
   Sparkles,
   X,
@@ -20,12 +20,12 @@ import {
   Wand2,
   Lightbulb,
   Zap,
-} from "lucide-react";
-import { aiPanelVariants, fadeUpVariants } from "./animations/variants";
+} from 'lucide-react';
+import { aiPanelVariants, fadeUpVariants } from './animations/variants';
 
 interface AISuggestion {
   id: string;
-  type: "summary" | "skill" | "description" | "improvement";
+  type: 'summary' | 'skill' | 'description' | 'improvement';
   content: string;
   confidence?: number;
 }
@@ -42,24 +42,24 @@ interface AIAssistantPanelProps {
 
 // Quick action prompts
 const QUICK_PROMPTS = [
-  { id: "improve", label: "Improve Writing", icon: Wand2 },
-  { id: "professional", label: "Make Professional", icon: Sparkles },
-  { id: "concise", label: "Make Concise", icon: Zap },
-  { id: "expand", label: "Add Details", icon: Lightbulb },
+  { id: 'improve', label: 'Improve Writing', icon: Wand2 },
+  { id: 'professional', label: 'Make Professional', icon: Sparkles },
+  { id: 'concise', label: 'Make Concise', icon: Zap },
+  { id: 'expand', label: 'Add Details', icon: Lightbulb },
 ];
 
 const AIAssistantPanel = ({
   isOpen,
   onClose,
   sectionContext,
-  currentContent = "",
+  currentContent = '',
   onAcceptSuggestion,
   onGenerateSuggestion,
   className,
 }: AIAssistantPanelProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [suggestion, setSuggestion] = useState<string | null>(null);
-  const [customPrompt, setCustomPrompt] = useState("");
+  const [customPrompt, setCustomPrompt] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -71,7 +71,7 @@ const AIAssistantPanel = ({
       const result = await onGenerateSuggestion(prompt);
       setSuggestion(result);
     } catch (err) {
-      setError("Failed to generate suggestion. Please try again.");
+      setError('Failed to generate suggestion. Please try again.');
     } finally {
       setIsGenerating(false);
     }
@@ -99,7 +99,7 @@ const AIAssistantPanel = ({
   const handleCopy = async () => {
     if (suggestion) {
       await navigator.clipboard.writeText(suggestion);
-      setCopiedId("suggestion");
+      setCopiedId('suggestion');
       setTimeout(() => setCopiedId(null), 2000);
     }
   };
@@ -132,9 +132,9 @@ const AIAssistantPanel = ({
             animate="visible"
             exit="exit"
             className={cn(
-              "fixed right-0 top-0 bottom-0 w-full sm:w-96 z-50",
-              "bg-background border-l border-white/10",
-              "flex flex-col",
+              'fixed right-0 top-0 bottom-0 w-full sm:w-96 z-50',
+              'bg-background border-l border-white/10',
+              'flex flex-col',
               className
             )}
           >
@@ -247,9 +247,7 @@ const AIAssistantPanel = ({
                     className="space-y-3"
                   >
                     <div className="flex items-center justify-between">
-                      <label className="text-xs font-medium text-white/60">
-                        AI Suggestion
-                      </label>
+                      <label className="text-xs font-medium text-white/60">AI Suggestion</label>
                       <Badge className="bg-purple-500/20 border-purple-500/30 text-purple-300 text-[10px]">
                         <Sparkles className="h-3 w-3 mr-1" />
                         AI Generated
@@ -276,7 +274,7 @@ const AIAssistantPanel = ({
                         onClick={handleCopy}
                         className="border-white/10 hover:bg-white/10"
                       >
-                        {copiedId === "suggestion" ? (
+                        {copiedId === 'suggestion' ? (
                           <Check className="h-4 w-4 text-emerald-400" />
                         ) : (
                           <Copy className="h-4 w-4" />
@@ -288,9 +286,7 @@ const AIAssistantPanel = ({
                         disabled={isGenerating}
                         className="border-white/10 hover:bg-white/10"
                       >
-                        <RefreshCw
-                          className={cn("h-4 w-4", isGenerating && "animate-spin")}
-                        />
+                        <RefreshCw className={cn('h-4 w-4', isGenerating && 'animate-spin')} />
                       </Button>
                     </div>
                   </motion.div>

@@ -1,45 +1,45 @@
-import { ArrowLeft, Wind, Droplets, Volume2, Layers } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Wind, Droplets, Volume2, Layers } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Air Quality & Dust Control",
+    title: 'Air Quality & Dust Control',
     icon: Wind,
     description:
-      "Sources of airborne pollution on construction sites, dust suppression methods, monitoring air quality, and legal requirements under the Clean Air Act",
+      'Sources of airborne pollution on construction sites, dust suppression methods, monitoring air quality, and legal requirements under the Clean Air Act',
   },
   {
     id: 2,
-    title: "Water Pollution Prevention",
+    title: 'Water Pollution Prevention',
     icon: Droplets,
     description:
-      "Preventing pollutants from entering watercourses, containment of oils and chemicals, silt management, and incident response for water pollution events",
+      'Preventing pollutants from entering watercourses, containment of oils and chemicals, silt management, and incident response for water pollution events',
   },
   {
     id: 3,
-    title: "Noise & Vibration Control",
+    title: 'Noise & Vibration Control',
     icon: Volume2,
     description:
-      "Understanding noise and vibration impacts on workers and neighbours, Control of Noise at Work Regulations, best practicable means, and Section 61 consents",
+      'Understanding noise and vibration impacts on workers and neighbours, Control of Noise at Work Regulations, best practicable means, and Section 61 consents',
   },
   {
     id: 4,
-    title: "Land Contamination & Remediation",
+    title: 'Land Contamination & Remediation',
     icon: Layers,
     description:
-      "Identifying contaminated land, the polluter-pays principle, remediation strategies, and legal responsibilities under Part 2A of the Environmental Protection Act",
+      'Identifying contaminated land, the polluter-pays principle, remediation strategies, and legal responsibilities under Part 2A of the Environmental Protection Act',
   },
 ];
 
 export default function EnvironmentalSustainabilityModule4() {
   useSEO({
-    title: "Module 4: Pollution Prevention | Environmental & Sustainability",
+    title: 'Module 4: Pollution Prevention | Environmental & Sustainability',
     description:
-      "Learn about air quality and dust control, water pollution prevention, noise and vibration management, and land contamination remediation.",
+      'Learn about air quality and dust control, water pollution prevention, noise and vibration management, and land contamination remediation.',
   });
 
   return (
@@ -72,9 +72,7 @@ export default function EnvironmentalSustainabilityModule4() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">30 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Pollution Prevention
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Pollution Prevention</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Learn how to control dust and maintain air quality, prevent water pollution from
               construction activities, manage noise and vibration impacts, and understand your

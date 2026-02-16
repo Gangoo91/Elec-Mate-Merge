@@ -1,50 +1,76 @@
-import { ArrowLeft, ArrowRight, StopCircle, Shield, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, StopCircle, Shield, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Knowing when to escalate or stop work - Module 7.4.6 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn when to escalate issues or stop work for safety and professional reasons in electrical installations.";
+const TITLE = 'Knowing when to escalate or stop work - Module 7.4.6 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn when to escalate issues or stop work for safety and professional reasons in electrical installations.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "When should you stop work immediately?",
-    options: ["When you're tired", "When you identify a safety hazard", "When materials run out", "When it's lunchtime"],
+    question: 'When should you stop work immediately?',
+    options: [
+      "When you're tired",
+      'When you identify a safety hazard',
+      'When materials run out',
+      "When it's lunchtime",
+    ],
     correctIndex: 1,
-    explanation: "Work must stop immediately when safety hazards are identified to prevent injury or further danger."
+    explanation:
+      'Work must stop immediately when safety hazards are identified to prevent injury or further danger.',
   },
   {
     id: 2,
-    question: "Who should you escalate technical problems to?",
-    options: ["Other apprentices", "Your supervisor or qualified electrician", "The client", "Nobody"],
+    question: 'Who should you escalate technical problems to?',
+    options: [
+      'Other apprentices',
+      'Your supervisor or qualified electrician',
+      'The client',
+      'Nobody',
+    ],
     correctIndex: 1,
-    explanation: "Technical problems should be escalated to your supervisor or a qualified electrician for proper guidance."
+    explanation:
+      'Technical problems should be escalated to your supervisor or a qualified electrician for proper guidance.',
   },
   {
     id: 3,
-    question: "What should you do if asked to work beyond your competence?",
-    options: ["Try your best", "Refuse and explain your limitations", "Ask a colleague to help", "Do it anyway"],
+    question: 'What should you do if asked to work beyond your competence?',
+    options: [
+      'Try your best',
+      'Refuse and explain your limitations',
+      'Ask a colleague to help',
+      'Do it anyway',
+    ],
     correctIndex: 1,
-    explanation: "You should refuse work beyond your competence and explain your limitations - this is professional and safe practice."
+    explanation:
+      'You should refuse work beyond your competence and explain your limitations - this is professional and safe practice.',
   },
   {
     id: 4,
-    question: "What is the first step when discovering a safety hazard?",
-    options: ["Call your supervisor", "Secure the area", "Take photos", "Continue working"],
+    question: 'What is the first step when discovering a safety hazard?',
+    options: ['Call your supervisor', 'Secure the area', 'Take photos', 'Continue working'],
     correctIndex: 1,
-    explanation: "The first priority is always to secure the area and prevent further danger before contacting supervisors."
+    explanation:
+      'The first priority is always to secure the area and prevent further danger before contacting supervisors.',
   },
   {
     id: 5,
-    question: "When is it acceptable to work beyond your competence level?",
-    options: ["Never", "Only under direct supervision by qualified personnel", "When the customer requests it", "In emergencies only"],
+    question: 'When is it acceptable to work beyond your competence level?',
+    options: [
+      'Never',
+      'Only under direct supervision by qualified personnel',
+      'When the customer requests it',
+      'In emergencies only',
+    ],
     correctIndex: 1,
-    explanation: "Working beyond competence is only acceptable when under direct supervision by qualified personnel as part of learning."
-  }
+    explanation:
+      'Working beyond competence is only acceptable when under direct supervision by qualified personnel as part of learning.',
+  },
 ];
 
 const Module7Section4_6 = () => {
@@ -53,115 +79,189 @@ const Module7Section4_6 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the most important factor in deciding whether to escalate?",
-      options: ["Time pressure", "Your competence level", "Customer preferences", "Cost considerations"],
+      question: 'What is the most important factor in deciding whether to escalate?',
+      options: [
+        'Time pressure',
+        'Your competence level',
+        'Customer preferences',
+        'Cost considerations',
+      ],
       correctAnswer: 1,
-      explanation: "Your competence level is the primary factor - never work beyond your qualifications or experience."
+      explanation:
+        'Your competence level is the primary factor - never work beyond your qualifications or experience.',
     },
     {
       id: 2,
-      question: "When should you stop work immediately?",
-      options: ["When unsure about procedures", "When discovering dangerous conditions", "When lacking proper tools", "All of the above"],
+      question: 'When should you stop work immediately?',
+      options: [
+        'When unsure about procedures',
+        'When discovering dangerous conditions',
+        'When lacking proper tools',
+        'All of the above',
+      ],
       correctAnswer: 3,
-      explanation: "All these situations require you to stop work immediately to ensure safety and compliance."
+      explanation:
+        'All these situations require you to stop work immediately to ensure safety and compliance.',
     },
     {
       id: 3,
-      question: "What should you document when escalating an issue?",
-      options: ["Nothing", "Just the problem", "The problem, circumstances, and actions taken", "Only your contact details"],
+      question: 'What should you document when escalating an issue?',
+      options: [
+        'Nothing',
+        'Just the problem',
+        'The problem, circumstances, and actions taken',
+        'Only your contact details',
+      ],
       correctAnswer: 2,
-      explanation: "Comprehensive documentation helps the qualified person understand the situation and take appropriate action."
+      explanation:
+        'Comprehensive documentation helps the qualified person understand the situation and take appropriate action.',
     },
     {
       id: 4,
-      question: "Who has the authority to design circuit modifications?",
-      options: ["Any apprentice", "Qualified electricians only", "The customer", "Anyone with tools"],
+      question: 'Who has the authority to design circuit modifications?',
+      options: [
+        'Any apprentice',
+        'Qualified electricians only',
+        'The customer',
+        'Anyone with tools',
+      ],
       correctAnswer: 1,
-      explanation: "Only qualified electricians have the authority and competence to design circuit modifications."
+      explanation:
+        'Only qualified electricians have the authority and competence to design circuit modifications.',
     },
     {
       id: 5,
-      question: "True or False: Customer pressure can override safety requirements.",
-      options: ["False", "True"],
+      question: 'True or False: Customer pressure can override safety requirements.',
+      options: ['False', 'True'],
       correctAnswer: 0,
-      explanation: "False. Customer pressure never overrides safety requirements or professional standards."
+      explanation:
+        'False. Customer pressure never overrides safety requirements or professional standards.',
     },
     {
       id: 6,
-      question: "What should you do if you discover live conductors in a supposedly dead circuit?",
-      options: ["Continue working carefully", "Stop work immediately and secure the area", "Test with your hands", "Ignore it if not your area"],
+      question: 'What should you do if you discover live conductors in a supposedly dead circuit?',
+      options: [
+        'Continue working carefully',
+        'Stop work immediately and secure the area',
+        'Test with your hands',
+        'Ignore it if not your area',
+      ],
       correctAnswer: 1,
-      explanation: "Stop work immediately, secure the area, and escalate to prevent potential electrocution."
+      explanation:
+        'Stop work immediately, secure the area, and escalate to prevent potential electrocution.',
     },
     {
       id: 7,
-      question: "When escalating, who should you contact first?",
-      options: ["Emergency services", "Your direct supervisor", "The customer", "Another apprentice"],
+      question: 'When escalating, who should you contact first?',
+      options: [
+        'Emergency services',
+        'Your direct supervisor',
+        'The customer',
+        'Another apprentice',
+      ],
       correctAnswer: 1,
-      explanation: "Your direct supervisor should be the first contact for most escalations unless it's an immediate emergency."
+      explanation:
+        "Your direct supervisor should be the first contact for most escalations unless it's an immediate emergency.",
     },
     {
       id: 8,
-      question: "What information should you include when reporting a safety hazard?",
-      options: ["Location, nature of hazard, immediate actions taken", "Just the location", "Only what you think caused it", "Your opinion on how to fix it"],
+      question: 'What information should you include when reporting a safety hazard?',
+      options: [
+        'Location, nature of hazard, immediate actions taken',
+        'Just the location',
+        'Only what you think caused it',
+        'Your opinion on how to fix it',
+      ],
       correctAnswer: 0,
-      explanation: "Complete information including location, hazard description, and actions taken helps qualified personnel respond appropriately."
+      explanation:
+        'Complete information including location, hazard description, and actions taken helps qualified personnel respond appropriately.',
     },
     {
       id: 9,
-      question: "Is it acceptable to work beyond your competence if supervised?",
-      options: ["Only if directly supervised by a qualified person", "Never acceptable", "Only in emergencies", "Yes, always"],
+      question: 'Is it acceptable to work beyond your competence if supervised?',
+      options: [
+        'Only if directly supervised by a qualified person',
+        'Never acceptable',
+        'Only in emergencies',
+        'Yes, always',
+      ],
       correctAnswer: 0,
-      explanation: "Working beyond competence is only acceptable under direct supervision by a qualified person as part of training."
+      explanation:
+        'Working beyond competence is only acceptable under direct supervision by a qualified person as part of training.',
     },
     {
       id: 10,
-      question: "What should you do after escalating an issue?",
-      options: ["Continue working", "Wait for instructions before proceeding", "Start a different task", "Go home"],
+      question: 'What should you do after escalating an issue?',
+      options: [
+        'Continue working',
+        'Wait for instructions before proceeding',
+        'Start a different task',
+        'Go home',
+      ],
       correctAnswer: 1,
-      explanation: "After escalating, you must wait for instructions from qualified personnel before proceeding with any work."
+      explanation:
+        'After escalating, you must wait for instructions from qualified personnel before proceeding with any work.',
     },
     {
       id: 11,
-      question: "Which of these requires immediate escalation to emergency services?",
-      options: ["Unexpected test results", "Equipment malfunction", "Risk of electrocution or fire", "Customer complaints"],
+      question: 'Which of these requires immediate escalation to emergency services?',
+      options: [
+        'Unexpected test results',
+        'Equipment malfunction',
+        'Risk of electrocution or fire',
+        'Customer complaints',
+      ],
       correctAnswer: 2,
-      explanation: "Immediate dangers like electrocution risk or fire require emergency services before contacting supervisors."
+      explanation:
+        'Immediate dangers like electrocution risk or fire require emergency services before contacting supervisors.',
     },
     {
       id: 12,
       question: "What makes an electrician 'competent' for a specific task?",
-      options: ["Years of experience only", "Relevant qualifications only", "Knowledge, skills, and experience combined", "Being supervised"],
+      options: [
+        'Years of experience only',
+        'Relevant qualifications only',
+        'Knowledge, skills, and experience combined',
+        'Being supervised',
+      ],
       correctAnswer: 2,
-      explanation: "Competence requires the combination of relevant knowledge, practical skills, and sufficient experience."
-    }
+      explanation:
+        'Competence requires the combination of relevant knowledge, practical skills, and sufficient experience.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Will I get in trouble for escalating too often?",
-      answer: "No - responsible escalation is a sign of professionalism and safety awareness. It's better to escalate unnecessarily than to work unsafely or beyond your competence. Good supervisors encourage proper escalation."
+      question: 'Will I get in trouble for escalating too often?',
+      answer:
+        "No - responsible escalation is a sign of professionalism and safety awareness. It's better to escalate unnecessarily than to work unsafely or beyond your competence. Good supervisors encourage proper escalation.",
     },
     {
-      question: "What if the customer pressures me to continue working when I've identified a problem?",
-      answer: "Customer pressure never overrides safety requirements or professional standards. Politely explain that you must follow proper procedures and escalate if necessary for everyone's safety. Document any pressure applied."
+      question:
+        "What if the customer pressures me to continue working when I've identified a problem?",
+      answer:
+        "Customer pressure never overrides safety requirements or professional standards. Politely explain that you must follow proper procedures and escalate if necessary for everyone's safety. Document any pressure applied.",
     },
     {
-      question: "How do I know if something is definitely beyond my competence?",
-      answer: "If you haven't been specifically trained in the procedure, lack the required qualifications, feel uncertain about safety implications, or are dealing with unfamiliar equipment, it's beyond your competence and should be escalated."
+      question: 'How do I know if something is definitely beyond my competence?',
+      answer:
+        "If you haven't been specifically trained in the procedure, lack the required qualifications, feel uncertain about safety implications, or are dealing with unfamiliar equipment, it's beyond your competence and should be escalated.",
     },
     {
       question: "What if I can't reach my supervisor immediately?",
-      answer: "If it's a safety issue, secure the area and try alternative contacts (site manager, qualified electrician). For immediate dangers, call emergency services first. Never proceed with unsafe work while waiting for contact."
+      answer:
+        "If it's a safety issue, secure the area and try alternative contacts (site manager, qualified electrician). For immediate dangers, call emergency services first. Never proceed with unsafe work while waiting for contact.",
     },
     {
       question: "Should I escalate if I'm just unsure about a procedure?",
-      answer: "Absolutely. Uncertainty about procedures, especially safety-critical ones, should always be escalated. It's professional practice to seek clarification rather than guess."
+      answer:
+        "Absolutely. Uncertainty about procedures, especially safety-critical ones, should always be escalated. It's professional practice to seek clarification rather than guess.",
     },
     {
-      question: "What if escalating delays the project significantly?",
-      answer: "Project delays are preferable to safety incidents or poor-quality work. Proper escalation often prevents bigger problems later. Quality and safety must never be compromised for time pressures."
-    }
+      question: 'What if escalating delays the project significantly?',
+      answer:
+        'Project delays are preferable to safety incidents or poor-quality work. Proper escalation often prevents bigger problems later. Quality and safety must never be compromised for time pressures.',
+    },
   ];
 
   return (
@@ -196,9 +296,7 @@ const Module7Section4_6 = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Knowing When to Escalate or Stop Work
             </h1>
-            <p className="text-white/70 text-lg">
-              Professional safety and competence boundaries
-            </p>
+            <p className="text-white/70 text-lg">Professional safety and competence boundaries</p>
           </header>
 
           {/* In 30 Seconds Summary */}
@@ -219,7 +317,10 @@ const Module7Section4_6 = () => {
               <div>
                 <p className="font-medium text-red-400 mb-2">Critical Safety Principle</p>
                 <p className="text-white/80 text-sm">
-                  Proper escalation and work stoppage decisions prevent 90% of serious electrical accidents and maintain professional standards throughout the industry. CDM Regulations 2015 and BS7671 require workers to stop work immediately when safety risks are identified.
+                  Proper escalation and work stoppage decisions prevent 90% of serious electrical
+                  accidents and maintain professional standards throughout the industry. CDM
+                  Regulations 2015 and BS7671 require workers to stop work immediately when safety
+                  risks are identified.
                 </p>
               </div>
             </div>
@@ -233,10 +334,15 @@ const Module7Section4_6 = () => {
             </h2>
             <ul className="text-white/80 space-y-2">
               <li>• Recognise situations requiring immediate escalation or work stoppage</li>
-              <li>• Understand the legal and professional importance of working within competence limits</li>
+              <li>
+                • Understand the legal and professional importance of working within competence
+                limits
+              </li>
               <li>• Apply systematic escalation procedures and comprehensive documentation</li>
               <li>• Maintain safety and secure work areas while awaiting qualified assistance</li>
-              <li>• Communicate effectively with supervisors, qualified personnel, and customers</li>
+              <li>
+                • Communicate effectively with supervisors, qualified personnel, and customers
+              </li>
               <li>• Demonstrate professional responsibility in challenging situations</li>
             </ul>
           </section>
@@ -249,7 +355,9 @@ const Module7Section4_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Understanding your competence boundaries is fundamental to safe and professional electrical work. Competence is not just about technical ability—it encompasses knowledge, skills, and experience combined with professional judgement.
+                Understanding your competence boundaries is fundamental to safe and professional
+                electrical work. Competence is not just about technical ability—it encompasses
+                knowledge, skills, and experience combined with professional judgement.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -320,14 +428,18 @@ const Module7Section4_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Certain situations require immediate work stoppage to prevent injury, death, or significant damage. Recognising these situations and acting decisively is crucial for electrical safety.
+                Certain situations require immediate work stoppage to prevent injury, death, or
+                significant damage. Recognising these situations and acting decisively is crucial
+                for electrical safety.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Critical Stop Situations</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Electrical Safety Hazards:</p>
+                    <p className="text-sm font-medium text-white/90 mb-2">
+                      Electrical Safety Hazards:
+                    </p>
                     <ul className="text-sm text-white/70 space-y-1">
                       <li>• Live conductors exposed or damaged</li>
                       <li>• Unexpected live circuits during testing</li>
@@ -382,7 +494,8 @@ const Module7Section4_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Beyond immediate safety issues, many situations require escalation to qualified personnel for guidance, technical expertise, or regulatory compliance.
+                Beyond immediate safety issues, many situations require escalation to qualified
+                personnel for guidance, technical expertise, or regulatory compliance.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -455,7 +568,9 @@ const Module7Section4_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Following proper escalation procedures ensures effective communication, maintains safety, and demonstrates professionalism. Each step builds upon the previous to provide comprehensive information and support.
+                Following proper escalation procedures ensures effective communication, maintains
+                safety, and demonstrates professionalism. Each step builds upon the previous to
+                provide comprehensive information and support.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -463,7 +578,9 @@ const Module7Section4_6 = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="p-3 rounded bg-purple-500/10 border border-purple-500/20">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                      <span className="w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                        1
+                      </span>
                       <p className="font-medium text-purple-400">Immediate Safety Actions</p>
                     </div>
                     <ul className="text-sm text-white/70 space-y-1">
@@ -476,7 +593,9 @@ const Module7Section4_6 = () => {
                   </div>
                   <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                      <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                        2
+                      </span>
                       <p className="font-medium text-blue-400">Document Everything</p>
                     </div>
                     <ul className="text-sm text-white/70 space-y-1">
@@ -489,7 +608,9 @@ const Module7Section4_6 = () => {
                   </div>
                   <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                      <span className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                        3
+                      </span>
                       <p className="font-medium text-green-400">Contact Supervisor</p>
                     </div>
                     <ul className="text-sm text-white/70 space-y-1">
@@ -502,7 +623,9 @@ const Module7Section4_6 = () => {
                   </div>
                   <div className="p-3 rounded bg-orange-500/10 border border-orange-500/20">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
+                      <span className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                        4
+                      </span>
                       <p className="font-medium text-orange-400">Await Instructions</p>
                     </div>
                     <ul className="text-sm text-white/70 space-y-1">
@@ -519,7 +642,8 @@ const Module7Section4_6 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-2">Emergency Escalation Priority</p>
                 <p className="text-sm text-white/70 mb-2">
-                  For immediate life-threatening dangers (electrocution risk, fire, explosion, structural collapse):
+                  For immediate life-threatening dangers (electrocution risk, fire, explosion,
+                  structural collapse):
                 </p>
                 <ol className="text-sm text-white/70 space-y-1 list-decimal pl-4">
                   <li>Call 999 emergency services immediately</li>
@@ -549,25 +673,43 @@ const Module7Section4_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Clear, accurate communication is essential for effective escalation. How you communicate can significantly impact the response time and quality of assistance received.
+                Clear, accurate communication is essential for effective escalation. How you
+                communicate can significantly impact the response time and quality of assistance
+                received.
               </p>
 
               <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
                 <p className="font-medium text-cyan-400 mb-3">SBAR Communication Method</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-1"><strong>S</strong>ituation:</p>
-                    <p className="text-sm text-white/70 mb-2">"I am working on [location/task] and have discovered [issue]"</p>
+                    <p className="text-sm font-medium text-white/90 mb-1">
+                      <strong>S</strong>ituation:
+                    </p>
+                    <p className="text-sm text-white/70 mb-2">
+                      "I am working on [location/task] and have discovered [issue]"
+                    </p>
 
-                    <p className="text-sm font-medium text-white/90 mb-1"><strong>B</strong>ackground:</p>
-                    <p className="text-sm text-white/70">"The work involves [description]. The problem occurred when [circumstances]"</p>
+                    <p className="text-sm font-medium text-white/90 mb-1">
+                      <strong>B</strong>ackground:
+                    </p>
+                    <p className="text-sm text-white/70">
+                      "The work involves [description]. The problem occurred when [circumstances]"
+                    </p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-1"><strong>A</strong>ssessment:</p>
-                    <p className="text-sm text-white/70 mb-2">"I believe this is [safety/technical/regulatory] issue because [reasons]"</p>
+                    <p className="text-sm font-medium text-white/90 mb-1">
+                      <strong>A</strong>ssessment:
+                    </p>
+                    <p className="text-sm text-white/70 mb-2">
+                      "I believe this is [safety/technical/regulatory] issue because [reasons]"
+                    </p>
 
-                    <p className="text-sm font-medium text-white/90 mb-1"><strong>R</strong>ecommendation:</p>
-                    <p className="text-sm text-white/70">"I recommend [immediate actions] and need guidance on [specific questions]"</p>
+                    <p className="text-sm font-medium text-white/90 mb-1">
+                      <strong>R</strong>ecommendation:
+                    </p>
+                    <p className="text-sm text-white/70">
+                      "I recommend [immediate actions] and need guidance on [specific questions]"
+                    </p>
                   </div>
                 </div>
               </div>
@@ -646,9 +788,14 @@ const Module7Section4_6 = () => {
                 <p className="font-medium text-blue-400">Emergency Contact Template</p>
               </div>
               <p className="text-sm text-white/70">
-                <strong className="text-white">"This is [Your Name] calling about [Location]. I have discovered [Issue] and have [Actions Taken]. I need [Specific Help] urgently."</strong>
+                <strong className="text-white">
+                  "This is [Your Name] calling about [Location]. I have discovered [Issue] and have
+                  [Actions Taken]. I need [Specific Help] urgently."
+                </strong>
               </p>
-              <p className="text-xs text-white/60 mt-2">Remember: Be calm, clear, and factual. Safety first, everything else second.</p>
+              <p className="text-xs text-white/60 mt-2">
+                Remember: Be calm, clear, and factual. Safety first, everything else second.
+              </p>
             </div>
           </section>
 
@@ -675,7 +822,9 @@ const Module7Section4_6 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="font-medium text-white mb-3">Essential Professional Responsibilities:</p>
+              <p className="font-medium text-white mb-3">
+                Essential Professional Responsibilities:
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <p className="text-sm font-medium text-green-400 mb-2">Safety Obligations</p>
@@ -698,14 +847,21 @@ const Module7Section4_6 = () => {
               </div>
               <div className="pt-4 border-t border-white/10">
                 <p className="text-sm text-white/70">
-                  <strong className="text-white">Core Safety and Professional Principle:</strong> It's always better to stop work and ask for guidance than to continue when unsure. Professional electricians take full responsibility for their decisions, prioritise safety above all else, and demonstrate competence through appropriate escalation when needed.
+                  <strong className="text-white">Core Safety and Professional Principle:</strong>{' '}
+                  It's always better to stop work and ask for guidance than to continue when unsure.
+                  Professional electricians take full responsibility for their decisions, prioritise
+                  safety above all else, and demonstrate competence through appropriate escalation
+                  when needed.
                 </p>
               </div>
             </div>
           </section>
 
           {/* Quiz */}
-          <Quiz questions={quizQuestions} title="Test Your Knowledge: Escalation and Work Stoppage" />
+          <Quiz
+            questions={quizQuestions}
+            title="Test Your Knowledge: Escalation and Work Stoppage"
+          />
 
           {/* Navigation */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">

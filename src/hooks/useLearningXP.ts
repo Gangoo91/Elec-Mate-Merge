@@ -94,7 +94,11 @@ export function useLearningXP() {
           xpToday = 0;
           await supabase
             .from('user_xp_summary' as any)
-            .update({ xp_today: 0, xp_today_date: today, updated_at: new Date().toISOString() } as any)
+            .update({
+              xp_today: 0,
+              xp_today_date: today,
+              updated_at: new Date().toISOString(),
+            } as any)
             .eq('user_id', user.id);
         }
 
@@ -164,8 +168,7 @@ export function useLearningXP() {
 
         if (existing) {
           const row = existing as any;
-          const currentXPToday =
-            row.xp_today_date === today ? (row.xp_today ?? 0) : 0;
+          const currentXPToday = row.xp_today_date === today ? (row.xp_today ?? 0) : 0;
           const newTotalXP = (row.total_xp ?? 0) + xpEarned;
           const newXPToday = currentXPToday + xpEarned;
           const newLevel = getLevelForXP(newTotalXP).level;

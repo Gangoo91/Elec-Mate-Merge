@@ -12,7 +12,9 @@ export const FunctionalTestQuickCheck = () => {
               Quick Check: Why are monthly functional tests deliberately kept short?
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              To avoid draining the battery packs unnecessarily. A short test confirms the luminaires switch to emergency mode and batteries are charging, without reducing battery capacity before they're fully recharged.
+              To avoid draining the battery packs unnecessarily. A short test confirms the
+              luminaires switch to emergency mode and batteries are charging, without reducing
+              battery capacity before they're fully recharged.
             </p>
           </div>
         </div>

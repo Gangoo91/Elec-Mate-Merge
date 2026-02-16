@@ -16,103 +16,94 @@ export const SmartHomeModule3Section3Quiz = () => {
     {
       question: "What does 'dimming' mean in smart lighting?",
       options: [
-        "Turning lights on and off",
-        "Adjusting the brightness level of lights",
-        "Changing the colour of lights",
-        "Setting schedules for lights"
+        'Turning lights on and off',
+        'Adjusting the brightness level of lights',
+        'Changing the colour of lights',
+        'Setting schedules for lights',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Why do old-style dimmers cause problems with LEDs?",
+      question: 'Why do old-style dimmers cause problems with LEDs?',
       options: [
-        "LEDs are too bright",
-        "They reduce voltage instead of using digital control",
-        "They are too expensive",
-        "They don't work with smart phones"
+        'LEDs are too bright',
+        'They reduce voltage instead of using digital control',
+        'They are too expensive',
+        "They don't work with smart phones",
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What does RGBW stand for?",
+      question: 'What does RGBW stand for?',
       options: [
-        "Really Good Bright White",
-        "Red, Green, Blue, White",
-        "Remote Controlled Bright Wireless",
-        "Regulated Great British Wiring"
+        'Really Good Bright White',
+        'Red, Green, Blue, White',
+        'Remote Controlled Bright Wireless',
+        'Regulated Great British Wiring',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What is a drawback of RGB-only bulbs?",
+      question: 'What is a drawback of RGB-only bulbs?',
       options: [
-        "They use too much power",
-        "They are too expensive",
-        "They struggle to replicate natural white effectively",
-        "They don't last long enough"
+        'They use too much power',
+        'They are too expensive',
+        'They struggle to replicate natural white effectively',
+        "They don't last long enough",
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "Give an example of a smart lighting application using RGBW:",
+      question: 'Give an example of a smart lighting application using RGBW:',
       options: [
-        "Basic on/off switching",
-        "Mood lighting for parties with natural white for reading",
-        "Timer-based switching",
-        "Motion sensor activation"
+        'Basic on/off switching',
+        'Mood lighting for parties with natural white for reading',
+        'Timer-based switching',
+        'Motion sensor activation',
       ],
-      correct: 1
+      correct: 1,
     },
     {
       question: "At what Kelvin is 'warm white'?",
-      options: [
-        "6500K",
-        "4000K",
-        "2700K",
-        "1000K"
-      ],
-      correct: 2
+      options: ['6500K', '4000K', '2700K', '1000K'],
+      correct: 2,
     },
     {
       question: "At what Kelvin is 'cool white'?",
-      options: [
-        "2700K",
-        "3500K",
-        "5000-6500K",
-        "8000K"
-      ],
-      correct: 2
+      options: ['2700K', '3500K', '5000-6500K', '8000K'],
+      correct: 2,
     },
     {
-      question: "What is circadian rhythm lighting?",
+      question: 'What is circadian rhythm lighting?',
       options: [
-        "Very bright lighting",
-        "Colour-changing party lights",
-        "Lighting that adjusts colour temperature to match natural daylight patterns",
-        "Emergency lighting systems"
+        'Very bright lighting',
+        'Colour-changing party lights',
+        'Lighting that adjusts colour temperature to match natural daylight patterns',
+        'Emergency lighting systems',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "Name one benefit of dimming for energy efficiency:",
+      question: 'Name one benefit of dimming for energy efficiency:',
       options: [
-        "Lights last longer",
-        "Reduced power consumption at lower brightness levels",
-        "Better colour accuracy",
-        "Faster switching speeds"
+        'Lights last longer',
+        'Reduced power consumption at lower brightness levels',
+        'Better colour accuracy',
+        'Faster switching speeds',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "A client wants mood lighting for parties and natural daylight for reading. What type of bulb would you recommend?",
+      question:
+        'A client wants mood lighting for parties and natural daylight for reading. What type of bulb would you recommend?',
       options: [
-        "Standard white LED",
-        "RGB-only bulb",
-        "RGBW smart bulb",
-        "Halogen bulb with dimmer"
+        'Standard white LED',
+        'RGB-only bulb',
+        'RGBW smart bulb',
+        'Halogen bulb with dimmer',
       ],
-      correct: 2
-    }
+      correct: 2,
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
@@ -155,16 +146,17 @@ export const SmartHomeModule3Section3Quiz = () => {
 
   const getScoreColor = () => {
     const percentage = (score / questions.length) * 100;
-    if (percentage >= 80) return "text-green-400";
-    if (percentage >= 60) return "text-yellow-400";
-    return "text-red-400";
+    if (percentage >= 80) return 'text-green-400';
+    if (percentage >= 60) return 'text-yellow-400';
+    return 'text-red-400';
   };
 
   const getScoreMessage = () => {
     const percentage = (score / questions.length) * 100;
-    if (percentage >= 80) return "Excellent! You have a strong understanding of dimming and colour control.";
-    if (percentage >= 60) return "Good work! Review the areas you missed and try again.";
-    return "Keep studying! This is a complex topic that requires more review.";
+    if (percentage >= 80)
+      return 'Excellent! You have a strong understanding of dimming and colour control.';
+    if (percentage >= 60) return 'Good work! Review the areas you missed and try again.';
+    return 'Keep studying! This is a complex topic that requires more review.';
   };
 
   if (showResults) {
@@ -184,9 +176,7 @@ export const SmartHomeModule3Section3Quiz = () => {
             <div className="text-xl text-foreground">
               {Math.round((score / questions.length) * 100)}% Correct
             </div>
-            <p className="text-foreground max-w-md mx-auto">
-              {getScoreMessage()}
-            </p>
+            <p className="text-foreground max-w-md mx-auto">{getScoreMessage()}</p>
           </div>
 
           <div className="space-y-3">
@@ -194,9 +184,12 @@ export const SmartHomeModule3Section3Quiz = () => {
             {questions.map((question, index) => {
               const userAnswer = parseInt(selectedAnswers[index]);
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
-                <div key={index} className="p-3 bg-emerald-900/20 rounded-lg border border-emerald-600/30">
+                <div
+                  key={index}
+                  className="p-3 bg-emerald-900/20 rounded-lg border border-emerald-600/30"
+                >
                   <div className="flex items-start gap-2">
                     {isCorrect ? (
                       <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -208,11 +201,13 @@ export const SmartHomeModule3Section3Quiz = () => {
                         Q{index + 1}: {question.question}
                       </p>
                       <p className="text-sm text-foreground">
-                        <span className="text-green-400">Correct:</span> {question.options[question.correct]}
+                        <span className="text-green-400">Correct:</span>{' '}
+                        {question.options[question.correct]}
                       </p>
                       {!isCorrect && (
                         <p className="text-sm text-foreground">
-                          <span className="text-red-400">Your answer:</span> {question.options[userAnswer]}
+                          <span className="text-red-400">Your answer:</span>{' '}
+                          {question.options[userAnswer]}
                         </p>
                       )}
                     </div>
@@ -222,10 +217,7 @@ export const SmartHomeModule3Section3Quiz = () => {
             })}
           </div>
 
-          <Button 
-            onClick={resetQuiz}
-            className="w-full bg-emerald-600 hover:bg-emerald-700"
-          >
+          <Button onClick={resetQuiz} className="w-full bg-emerald-600 hover:bg-emerald-700">
             <RotateCcw className="mr-2 h-4 w-4" />
             Retake Quiz
           </Button>
@@ -245,13 +237,12 @@ export const SmartHomeModule3Section3Quiz = () => {
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-foreground">
-            <span>Question {currentQuestion + 1} of {questions.length}</span>
+            <span>
+              Question {currentQuestion + 1} of {questions.length}
+            </span>
             <span>{Math.round(((currentQuestion + 1) / questions.length) * 100)}% Complete</span>
           </div>
-          <Progress 
-            value={((currentQuestion + 1) / questions.length) * 100} 
-            className="h-2"
-          />
+          <Progress value={((currentQuestion + 1) / questions.length) * 100} className="h-2" />
         </div>
 
         <div className="space-y-4">
@@ -260,19 +251,22 @@ export const SmartHomeModule3Section3Quiz = () => {
           </h3>
 
           <RadioGroup
-            value={selectedAnswers[currentQuestion] || ""}
+            value={selectedAnswers[currentQuestion] || ''}
             onValueChange={handleAnswerSelect}
             className="space-y-3"
           >
             {questions[currentQuestion].options.map((option, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-emerald-900/20 transition-colors">
-                <RadioGroupItem 
-                  value={index.toString()} 
+              <div
+                key={index}
+                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-emerald-900/20 transition-colors"
+              >
+                <RadioGroupItem
+                  value={index.toString()}
                   id={`option-${index}`}
                   className="border-emerald-400 text-emerald-400"
                 />
-                <Label 
-                  htmlFor={`option-${index}`} 
+                <Label
+                  htmlFor={`option-${index}`}
                   className="flex-1 text-foreground cursor-pointer"
                 >
                   {option}
@@ -291,13 +285,13 @@ export const SmartHomeModule3Section3Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={!selectedAnswers[currentQuestion]}
             className="bg-emerald-600 hover:bg-emerald-700"
           >
-            {currentQuestion === questions.length - 1 ? "Complete Quiz" : "Next Question"}
+            {currentQuestion === questions.length - 1 ? 'Complete Quiz' : 'Next Question'}
           </Button>
         </div>
       </CardContent>

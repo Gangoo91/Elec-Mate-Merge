@@ -1,11 +1,11 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Calculator, Plus, Minus, Package, TrendingDown } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { ToolItem } from "@/hooks/useToolsData";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Calculator, Plus, Minus, Package, TrendingDown } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { ToolItem } from '@/hooks/useToolsData';
 
 interface BulkItem {
   tool: ToolItem;
@@ -21,7 +21,7 @@ interface BulkToolPricingCalculatorProps {
 
 const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
   categoryName,
-  tools = []
+  tools = [],
 }) => {
   const [bulkItems, setBulkItems] = useState<BulkItem[]>([]);
   const [selectedTool, setSelectedTool] = useState<ToolItem | null>(null);
@@ -44,59 +44,70 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
 
   const addToBulk = () => {
     if (!selectedTool) return;
-    
+
     const unitPrice = parsePrice(selectedTool.price);
     const discountPercent = getBulkDiscount(quantity);
-    
-    const existingIndex = bulkItems.findIndex(item => item.tool.id === selectedTool.id);
-    
+
+    const existingIndex = bulkItems.findIndex((item) => item.tool.id === selectedTool.id);
+
     if (existingIndex >= 0) {
       // Update existing item
-      setBulkItems(prev => prev.map((item, index) => 
-        index === existingIndex 
-          ? { ...item, quantity: item.quantity + quantity, discountPercent: getBulkDiscount(item.quantity + quantity) }
-          : item
-      ));
+      setBulkItems((prev) =>
+        prev.map((item, index) =>
+          index === existingIndex
+            ? {
+                ...item,
+                quantity: item.quantity + quantity,
+                discountPercent: getBulkDiscount(item.quantity + quantity),
+              }
+            : item
+        )
+      );
     } else {
       // Add new item
-      setBulkItems(prev => [...prev, {
-        tool: selectedTool,
-        quantity,
-        unitPrice,
-        discountPercent
-      }]);
+      setBulkItems((prev) => [
+        ...prev,
+        {
+          tool: selectedTool,
+          quantity,
+          unitPrice,
+          discountPercent,
+        },
+      ]);
     }
-    
+
     setSelectedTool(null);
     setQuantity(1);
   };
 
   const updateQuantity = (index: number, newQuantity: number) => {
     if (newQuantity <= 0) {
-      setBulkItems(prev => prev.filter((_, i) => i !== index));
+      setBulkItems((prev) => prev.filter((_, i) => i !== index));
       return;
     }
-    
-    setBulkItems(prev => prev.map((item, i) => 
-      i === index 
-        ? { ...item, quantity: newQuantity, discountPercent: getBulkDiscount(newQuantity) }
-        : item
-    ));
+
+    setBulkItems((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? { ...item, quantity: newQuantity, discountPercent: getBulkDiscount(newQuantity) }
+          : item
+      )
+    );
   };
 
   const totals = useMemo(() => {
-    const subtotal = bulkItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+    const subtotal = bulkItems.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
     const totalDiscount = bulkItems.reduce((sum, item) => {
       const itemSubtotal = item.unitPrice * item.quantity;
-      return sum + (itemSubtotal * item.discountPercent / 100);
+      return sum + (itemSubtotal * item.discountPercent) / 100;
     }, 0);
     const total = subtotal - totalDiscount;
-    
+
     return {
       subtotal,
       totalDiscount,
       total,
-      itemCount: bulkItems.reduce((sum, item) => sum + item.quantity, 0)
+      itemCount: bulkItems.reduce((sum, item) => sum + item.quantity, 0),
     };
   }, [bulkItems]);
 
@@ -159,29 +170,29 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
               </div>
             ) : (
               <div className="grid gap-2 max-h-48 overflow-y-auto">
-                {availableTools.map(tool => (
-                <div
-                  key={tool.id}
-                  onClick={() => setSelectedTool(tool)}
-                  className={`p-3 rounded-lg border cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
-                    selectedTool?.id === tool.id 
-                      ? 'border-elec-yellow bg-elec-yellow/10' 
-                      : 'border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40'
-                  }`}
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="font-medium text-sm">{tool.name}</div>
-                      <div className="text-xs text-muted-foreground">{tool.supplier}</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-semibold text-elec-yellow">{tool.price}</div>
-                      <Badge variant="outline" className="text-xs">
-                        {tool.stockStatus}
-                      </Badge>
+                {availableTools.map((tool) => (
+                  <div
+                    key={tool.id}
+                    onClick={() => setSelectedTool(tool)}
+                    className={`p-3 rounded-lg border cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
+                      selectedTool?.id === tool.id
+                        ? 'border-elec-yellow bg-elec-yellow/10'
+                        : 'border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <div className="font-medium text-sm">{tool.name}</div>
+                        <div className="text-xs text-muted-foreground">{tool.supplier}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold text-elec-yellow">{tool.price}</div>
+                        <Badge variant="outline" className="text-xs">
+                          {tool.stockStatus}
+                        </Badge>
+                      </div>
                     </div>
                   </div>
-                </div>
                 ))}
               </div>
             )}
@@ -235,9 +246,9 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
           <CardContent className="space-y-4">
             {bulkItems.map((item, index) => {
               const itemTotal = item.unitPrice * item.quantity;
-              const itemDiscount = itemTotal * item.discountPercent / 100;
+              const itemDiscount = (itemTotal * item.discountPercent) / 100;
               const itemFinal = itemTotal - itemDiscount;
-              
+
               return (
                 <div key={item.tool.id} className="p-4 border border-elec-yellow/20 rounded-lg">
                   <div className="flex justify-between items-start mb-3">
@@ -246,9 +257,7 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
                       <p className="text-sm text-muted-foreground">{item.tool.supplier}</p>
                     </div>
                     <div className="text-right">
-                      <div className="font-semibold text-elec-yellow">
-                        £{itemFinal.toFixed(2)}
-                      </div>
+                      <div className="font-semibold text-elec-yellow">£{itemFinal.toFixed(2)}</div>
                       {item.discountPercent > 0 && (
                         <div className="text-xs text-muted-foreground line-through">
                           £{itemTotal.toFixed(2)}
@@ -256,7 +265,7 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Button
@@ -277,14 +286,14 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
                         <Plus className="h-3 w-3" />
                       </Button>
                     </div>
-                    
+
                     {item.discountPercent > 0 && (
                       <Badge variant="gold" className="text-xs">
                         {item.discountPercent}% off
                       </Badge>
                     )}
                   </div>
-                  
+
                   <div className="mt-2 text-xs text-muted-foreground">
                     £{item.unitPrice.toFixed(2)} each × {item.quantity} = £{itemTotal.toFixed(2)}
                     {item.discountPercent > 0 && ` - £${itemDiscount.toFixed(2)} discount`}
@@ -323,7 +332,7 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
                 )}
               </div>
             </div>
-            
+
             <div className="mt-6 flex gap-3">
               <Button variant="gold" className="flex-1">
                 Request Quote

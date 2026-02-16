@@ -1,12 +1,17 @@
-
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Search, Filter, X } from "lucide-react";
-import { siteJargonCategories } from "@/data/apprentice/siteJargonData";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Search, Filter, X } from 'lucide-react';
+import { siteJargonCategories } from '@/data/apprentice/siteJargonData';
+import { cn } from '@/lib/utils';
 
 interface SearchAndFilterProps {
   searchTerm: string;
@@ -33,26 +38,30 @@ const JargonSearchAndFilter = ({
   onTagsChange,
   availableTags,
   totalTerms,
-  filteredCount
+  filteredCount,
 }: SearchAndFilterProps) => {
   const [showFilters, setShowFilters] = useState(false);
 
   const clearFilters = () => {
-    onSearchChange("");
-    onCategoryChange("all");
-    onDifficultyChange("all");
+    onSearchChange('');
+    onCategoryChange('all');
+    onDifficultyChange('all');
     onTagsChange([]);
   };
 
   const toggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
-      onTagsChange(selectedTags.filter(t => t !== tag));
+      onTagsChange(selectedTags.filter((t) => t !== tag));
     } else {
       onTagsChange([...selectedTags, tag]);
     }
   };
 
-  const hasActiveFilters = searchTerm || selectedCategory !== "all" || selectedDifficulty !== "all" || selectedTags.length > 0;
+  const hasActiveFilters =
+    searchTerm ||
+    selectedCategory !== 'all' ||
+    selectedDifficulty !== 'all' ||
+    selectedTags.length > 0;
 
   return (
     <div className="space-y-4">
@@ -65,13 +74,13 @@ const JargonSearchAndFilter = ({
           placeholder="Search terms, definitions, or usage examples..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className={cn("pr-12", !searchTerm && "pl-10")}
+          className={cn('pr-12', !searchTerm && 'pl-10')}
         />
         {searchTerm && (
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onSearchChange("")}
+            onClick={() => onSearchChange('')}
             className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0"
           >
             <X className="h-4 w-4" />
@@ -148,7 +157,7 @@ const JargonSearchAndFilter = ({
                 {availableTags.map((tag) => (
                   <Badge
                     key={tag}
-                    variant={selectedTags.includes(tag) ? "default" : "outline"}
+                    variant={selectedTags.includes(tag) ? 'default' : 'outline'}
                     className="cursor-pointer hover:bg-primary/80"
                     onClick={() => toggleTag(tag)}
                   >

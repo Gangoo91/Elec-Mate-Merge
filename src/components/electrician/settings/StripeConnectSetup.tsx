@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
   CreditCard,
   ExternalLink,
@@ -15,7 +15,7 @@ import {
   Shield,
   Unlink,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,7 +26,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 interface StripeConnectStatus {
   connected: boolean;
@@ -63,7 +63,13 @@ const StripeConnectSetup: React.FC = () => {
       const { data: session } = await supabase.auth.getSession();
 
       if (!session.session) {
-        setStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false, detailsSubmitted: false });
+        setStatus({
+          connected: false,
+          status: 'not_connected',
+          chargesEnabled: false,
+          payoutsEnabled: false,
+          detailsSubmitted: false,
+        });
         return;
       }
 
@@ -78,7 +84,13 @@ const StripeConnectSetup: React.FC = () => {
       setStatus(response.data as StripeConnectStatus);
     } catch (error: any) {
       console.error('Error checking Stripe status:', error);
-      setStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false, detailsSubmitted: false });
+      setStatus({
+        connected: false,
+        status: 'not_connected',
+        chargesEnabled: false,
+        payoutsEnabled: false,
+        detailsSubmitted: false,
+      });
     } finally {
       setLoading(false);
     }
@@ -175,7 +187,9 @@ const StripeConnectSetup: React.FC = () => {
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);
-      const errorMessage = error?.message || error?.error ||
+      const errorMessage =
+        error?.message ||
+        error?.error ||
         (typeof error === 'string' ? error : 'Failed to connect Stripe');
       toast.error(errorMessage);
     } finally {
@@ -378,7 +392,8 @@ const StripeConnectSetup: React.FC = () => {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Disconnect Stripe?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will remove your Stripe connection. You won't be able to accept card payments until you reconnect. You can reconnect anytime.
+                      This will remove your Stripe connection. You won't be able to accept card
+                      payments until you reconnect. You can reconnect anytime.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -416,12 +431,11 @@ const StripeConnectSetup: React.FC = () => {
               <div>
                 <h3 className="text-lg font-semibold text-foreground">Stripe Account Restricted</h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Your Stripe account needs attention. Please update your information to continue accepting payments.
+                  Your Stripe account needs attention. Please update your information to continue
+                  accepting payments.
                 </p>
                 {status.disabledReason && (
-                  <p className="text-xs text-red-400 mt-2">
-                    Reason: {status.disabledReason}
-                  </p>
+                  <p className="text-xs text-red-400 mt-2">Reason: {status.disabledReason}</p>
                 )}
               </div>
             </div>
@@ -460,7 +474,8 @@ const StripeConnectSetup: React.FC = () => {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Disconnect Stripe?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will remove your Stripe connection. You can then connect a different Stripe account if you wish.
+                      This will remove your Stripe connection. You can then connect a different
+                      Stripe account if you wish.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -546,7 +561,9 @@ const StripeConnectSetup: React.FC = () => {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Disconnect Stripe?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will remove your Stripe connection. You won't be able to accept card payments until you reconnect. Your Stripe account and any existing payments are not affected.
+                    This will remove your Stripe connection. You won't be able to accept card
+                    payments until you reconnect. Your Stripe account and any existing payments are
+                    not affected.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

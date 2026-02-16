@@ -86,7 +86,10 @@ export default function OJTHub() {
 
   // Sync active section with URL on mount
   useEffect(() => {
-    if (sectionParam && ['home', 'time', 'evidence', 'assessments', 'goals'].includes(sectionParam)) {
+    if (
+      sectionParam &&
+      ['home', 'time', 'evidence', 'assessments', 'goals'].includes(sectionParam)
+    ) {
       setActiveSection(sectionParam);
     }
   }, []);
@@ -221,9 +224,7 @@ export default function OJTHub() {
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4 touch-manipulation" />
           <SheetHeader>
             <SheetTitle>Quick Log</SheetTitle>
-            <SheetDescription>
-              Quickly log your off-the-job training time
-            </SheetDescription>
+            <SheetDescription>Quickly log your off-the-job training time</SheetDescription>
           </SheetHeader>
           <div className="space-y-4 mt-4">
             {/* Activity Type */}
@@ -259,9 +260,7 @@ export default function OJTHub() {
               <Input
                 placeholder="What did you work on?"
                 value={quickLogData.activity}
-                onChange={(e) =>
-                  setQuickLogData({ ...quickLogData, activity: e.target.value })
-                }
+                onChange={(e) => setQuickLogData({ ...quickLogData, activity: e.target.value })}
                 className="h-11 touch-manipulation"
               />
             </div>
@@ -276,9 +275,7 @@ export default function OJTHub() {
                 inputMode="decimal"
                 placeholder="e.g., 2.5"
                 value={quickLogData.duration}
-                onChange={(e) =>
-                  setQuickLogData({ ...quickLogData, duration: e.target.value })
-                }
+                onChange={(e) => setQuickLogData({ ...quickLogData, duration: e.target.value })}
                 className="h-12 text-base touch-manipulation"
               />
             </div>
@@ -289,9 +286,7 @@ export default function OJTHub() {
               <Input
                 type="date"
                 value={quickLogData.date}
-                onChange={(e) =>
-                  setQuickLogData({ ...quickLogData, date: e.target.value })
-                }
+                onChange={(e) => setQuickLogData({ ...quickLogData, date: e.target.value })}
                 className="h-12 text-base touch-manipulation w-full"
               />
             </div>
@@ -302,9 +297,7 @@ export default function OJTHub() {
               <Textarea
                 placeholder="Any additional details..."
                 value={quickLogData.notes}
-                onChange={(e) =>
-                  setQuickLogData({ ...quickLogData, notes: e.target.value })
-                }
+                onChange={(e) => setQuickLogData({ ...quickLogData, notes: e.target.value })}
                 rows={2}
                 className="touch-manipulation"
               />

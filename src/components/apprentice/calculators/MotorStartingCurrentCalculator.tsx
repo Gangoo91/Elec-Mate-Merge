@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Zap,
   Calculator,
@@ -9,13 +9,9 @@ import {
   Info,
   ChevronDown,
   BookOpen,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -24,31 +20,31 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 import {
   calculateMotorStarting,
   MotorStartingInputs,
-} from "@/lib/calculators/engines/motorStartingEngine";
+} from '@/lib/calculators/engines/motorStartingEngine';
 
 const MotorStartingCurrentCalculator = () => {
-  const config = CALCULATOR_CONFIG["power"];
+  const config = CALCULATOR_CONFIG['power'];
 
-  const [power, setPower] = useState<string>("");
-  const [voltage, setVoltage] = useState<string>("400");
-  const [efficiency, setEfficiency] = useState<string>("0.85");
-  const [powerFactor, setPowerFactor] = useState<string>("0.85");
-  const [startingMethod, setStartingMethod] = useState<string>("direct");
-  const [phases, setPhases] = useState<string>("3");
-  const [loadType, setLoadType] = useState<string>("standard");
-  const [serviceTemperature, setServiceTemperature] = useState<string>("40");
-  const [ratedCurrent, setRatedCurrent] = useState<string>("");
-  const [startingTime, setStartingTime] = useState<string>("2");
-  const [cableLength, setCableLength] = useState<string>("50");
-  const [cableSize, setCableSize] = useState<string>("2.5");
-  const [breakerRating, setBreakerRating] = useState<string>("");
-  const [supplyImpedance, setSupplyImpedance] = useState<string>("0.1");
-  const [installationMethod, setInstallationMethod] = useState<string>("clipped");
-  const [groupingFactor, setGroupingFactor] = useState<string>("1.0");
+  const [power, setPower] = useState<string>('');
+  const [voltage, setVoltage] = useState<string>('400');
+  const [efficiency, setEfficiency] = useState<string>('0.85');
+  const [powerFactor, setPowerFactor] = useState<string>('0.85');
+  const [startingMethod, setStartingMethod] = useState<string>('direct');
+  const [phases, setPhases] = useState<string>('3');
+  const [loadType, setLoadType] = useState<string>('standard');
+  const [serviceTemperature, setServiceTemperature] = useState<string>('40');
+  const [ratedCurrent, setRatedCurrent] = useState<string>('');
+  const [startingTime, setStartingTime] = useState<string>('2');
+  const [cableLength, setCableLength] = useState<string>('50');
+  const [cableSize, setCableSize] = useState<string>('2.5');
+  const [breakerRating, setBreakerRating] = useState<string>('');
+  const [supplyImpedance, setSupplyImpedance] = useState<string>('0.1');
+  const [installationMethod, setInstallationMethod] = useState<string>('clipped');
+  const [groupingFactor, setGroupingFactor] = useState<string>('1.0');
 
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
@@ -92,7 +88,7 @@ const MotorStartingCurrentCalculator = () => {
       const inputs: MotorStartingInputs = {
         powerKw: P,
         voltage: V,
-        phases: phases === "3" ? 3 : 1,
+        phases: phases === '3' ? 3 : 1,
         efficiency: eff,
         powerFactor: pf,
         startingMethod: startingMethod as any,
@@ -117,13 +113,10 @@ const MotorStartingCurrentCalculator = () => {
       const recommendedCableSize = `${engineResult.recommendedCableSize}mm²`;
       const minimumCableSize = engineResult.minimumCableSize;
 
-      let cableAnalysis = "Cable sizing meets BS 7671 requirements";
+      let cableAnalysis = 'Cable sizing meets BS 7671 requirements';
       if (engineResult.recommendedCableSize > engineResult.minimumCableSize) {
         cableAnalysis = `Upgrade from ${minimumCableSize}mm² to ${engineResult.recommendedCableSize}mm² required for voltage drop compliance`;
-      } else if (
-        engineResult.voltageDropRunning < 1.5 &&
-        engineResult.minimumCableSize > 2.5
-      ) {
+      } else if (engineResult.voltageDropRunning < 1.5 && engineResult.minimumCableSize > 2.5) {
         cableAnalysis = `Current cable size is adequate with ${engineResult.voltageDropRunning.toFixed(1)}% voltage drop`;
       }
 
@@ -135,19 +128,19 @@ const MotorStartingCurrentCalculator = () => {
         ? `${engineResult.recommendedMcbRating}A ${engineResult.protectionType.toUpperCase()} suitable for motor protection`
         : `${engineResult.recommendedMcbRating}A protection may be unsuitable - verify coordination`;
 
-      let complianceStatus = "BS 7671 Compliant";
+      let complianceStatus = 'BS 7671 Compliant';
       if (!engineResult.bs7671Compliant) {
         if (!engineResult.voltageDropCompliant) {
-          complianceStatus = "Non-compliant - voltage drop exceeds limits";
+          complianceStatus = 'Non-compliant - voltage drop exceeds limits';
         } else if (!engineResult.currentCarryingCheck.suitable) {
-          complianceStatus = "Non-compliant - cable undersized";
+          complianceStatus = 'Non-compliant - cable undersized';
         } else {
-          complianceStatus = "Review required for full compliance";
+          complianceStatus = 'Review required for full compliance';
         }
       }
 
-      if (startingMethod === "direct" && P > 11) {
-        complianceStatus = "Consider reduced starting method (BS 7671 recommendation)";
+      if (startingMethod === 'direct' && P > 11) {
+        complianceStatus = 'Consider reduced starting method (BS 7671 recommendation)';
       }
 
       const whatThisMeans: string[] = [
@@ -159,19 +152,16 @@ const MotorStartingCurrentCalculator = () => {
       ];
 
       const practicalGuidance: string[] = [
-        "Install motor starter close to distribution board to minimise cable runs",
-        "Use thermally protected motor starter for overload protection",
-        startingMethod === "direct"
-          ? "Direct starting suitable for motors <11kW only"
-          : "Reduced starting method reduces supply impact",
-        "Regular testing of motor protection devices is required",
-        `Use ${engineResult.protectionType.includes("c") ? "Type C" : "Type D"} MCB for motor loads`,
+        'Install motor starter close to distribution board to minimise cable runs',
+        'Use thermally protected motor starter for overload protection',
+        startingMethod === 'direct'
+          ? 'Direct starting suitable for motors <11kW only'
+          : 'Reduced starting method reduces supply impact',
+        'Regular testing of motor protection devices is required',
+        `Use ${engineResult.protectionType.includes('c') ? 'Type C' : 'Type D'} MCB for motor loads`,
       ];
 
-      const allRecommendations = [
-        ...engineResult.recommendations,
-        ...engineResult.notes,
-      ];
+      const allRecommendations = [...engineResult.recommendations, ...engineResult.notes];
 
       setResult({
         fullLoadCurrent,
@@ -193,7 +183,7 @@ const MotorStartingCurrentCalculator = () => {
         recommendations:
           allRecommendations.length > 0
             ? allRecommendations
-            : ["Motor installation meets BS 7671 requirements"],
+            : ['Motor installation meets BS 7671 requirements'],
         warnings: engineResult.warnings,
         bs7671Compliant: engineResult.bs7671Compliant,
       });
@@ -201,60 +191,60 @@ const MotorStartingCurrentCalculator = () => {
   };
 
   const reset = () => {
-    setPower("");
-    setVoltage("400");
-    setEfficiency("0.85");
-    setPowerFactor("0.85");
-    setStartingMethod("direct");
-    setPhases("3");
-    setLoadType("standard");
-    setServiceTemperature("40");
-    setRatedCurrent("");
-    setStartingTime("2");
-    setCableLength("50");
-    setCableSize("2.5");
-    setBreakerRating("");
-    setSupplyImpedance("0.1");
-    setInstallationMethod("clipped");
-    setGroupingFactor("1.0");
+    setPower('');
+    setVoltage('400');
+    setEfficiency('0.85');
+    setPowerFactor('0.85');
+    setStartingMethod('direct');
+    setPhases('3');
+    setLoadType('standard');
+    setServiceTemperature('40');
+    setRatedCurrent('');
+    setStartingTime('2');
+    setCableLength('50');
+    setCableSize('2.5');
+    setBreakerRating('');
+    setSupplyImpedance('0.1');
+    setInstallationMethod('clipped');
+    setGroupingFactor('1.0');
     setResult(null);
   };
 
   const isValid = parseFloat(power) > 0;
 
   const voltageOptions = [
-    { value: "230", label: "230V (Single Phase)" },
-    { value: "400", label: "400V (3-Phase)" },
-    { value: "415", label: "415V (3-Phase)" },
-    { value: "690", label: "690V (3-Phase)" },
+    { value: '230', label: '230V (Single Phase)' },
+    { value: '400', label: '400V (3-Phase)' },
+    { value: '415', label: '415V (3-Phase)' },
+    { value: '690', label: '690V (3-Phase)' },
   ];
 
   const phaseOptions = [
-    { value: "1", label: "Single Phase" },
-    { value: "3", label: "Three Phase" },
+    { value: '1', label: 'Single Phase' },
+    { value: '3', label: 'Three Phase' },
   ];
 
   const startingMethodOptions = [
-    { value: "direct", label: "Direct On Line (DOL)" },
-    { value: "star-delta", label: "Star-Delta" },
-    { value: "soft-starter", label: "Soft Starter" },
-    { value: "vfd", label: "Variable Frequency Drive" },
-    { value: "autotransformer", label: "Auto-transformer" },
+    { value: 'direct', label: 'Direct On Line (DOL)' },
+    { value: 'star-delta', label: 'Star-Delta' },
+    { value: 'soft-starter', label: 'Soft Starter' },
+    { value: 'vfd', label: 'Variable Frequency Drive' },
+    { value: 'autotransformer', label: 'Auto-transformer' },
   ];
 
   const loadTypeOptions = [
-    { value: "standard", label: "Standard Load" },
-    { value: "high-torque", label: "High Torque (Conveyors)" },
-    { value: "low-torque", label: "Low Torque (Fans)" },
-    { value: "centrifugal", label: "Centrifugal Pumps" },
+    { value: 'standard', label: 'Standard Load' },
+    { value: 'high-torque', label: 'High Torque (Conveyors)' },
+    { value: 'low-torque', label: 'Low Torque (Fans)' },
+    { value: 'centrifugal', label: 'Centrifugal Pumps' },
   ];
 
   const installationMethodOptions = [
-    { value: "clipped", label: "Clipped Direct" },
-    { value: "conduit", label: "In Conduit" },
-    { value: "trunking", label: "In Trunking" },
-    { value: "underground", label: "Underground" },
-    { value: "tray", label: "Cable Tray" },
+    { value: 'clipped', label: 'Clipped Direct' },
+    { value: 'conduit', label: 'In Conduit' },
+    { value: 'trunking', label: 'In Trunking' },
+    { value: 'underground', label: 'Underground' },
+    { value: 'tray', label: 'Cable Tray' },
   ];
 
   return (
@@ -389,8 +379,8 @@ const MotorStartingCurrentCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showInstallation && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showInstallation && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
@@ -469,10 +459,8 @@ const MotorStartingCurrentCalculator = () => {
             onClick={calculateStartingCurrent}
             disabled={!isValid}
             className={cn(
-              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-              isValid
-                ? "text-black"
-                : "bg-white/10 text-white/30 cursor-not-allowed"
+              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+              isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
             )}
             style={
               isValid
@@ -500,10 +488,10 @@ const MotorStartingCurrentCalculator = () => {
           {/* Compliance Status */}
           <div
             className={cn(
-              "flex items-center gap-2 p-3 rounded-xl border",
+              'flex items-center gap-2 p-3 rounded-xl border',
               result.bs7671Compliant
-                ? "border-green-500/30 bg-green-500/10"
-                : "border-amber-500/30 bg-amber-500/10"
+                ? 'border-green-500/30 bg-green-500/10'
+                : 'border-amber-500/30 bg-amber-500/10'
             )}
           >
             {result.bs7671Compliant ? (
@@ -513,8 +501,8 @@ const MotorStartingCurrentCalculator = () => {
             )}
             <span
               className={cn(
-                "font-medium text-sm",
-                result.bs7671Compliant ? "text-green-400" : "text-amber-400"
+                'font-medium text-sm',
+                result.bs7671Compliant ? 'text-green-400' : 'text-amber-400'
               )}
             >
               {result.complianceStatus}
@@ -657,10 +645,7 @@ const MotorStartingCurrentCalculator = () => {
 
           {/* What This Means */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div
-              className="calculator-card overflow-hidden"
-              style={{ borderColor: "#60a5fa15" }}
-            >
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
@@ -670,8 +655,8 @@ const MotorStartingCurrentCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showGuidance && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -679,10 +664,7 @@ const MotorStartingCurrentCalculator = () => {
               <CollapsibleContent className="p-4 pt-0">
                 <ul className="space-y-2">
                   {result.whatThisMeans.map((point, idx) => (
-                    <li
-                      key={idx}
-                      className="text-sm text-blue-200/80 flex items-start gap-2"
-                    >
+                    <li key={idx} className="text-sm text-blue-200/80 flex items-start gap-2">
                       <span className="text-blue-400 mt-1">•</span>
                       {point}
                     </li>
@@ -728,7 +710,7 @@ const MotorStartingCurrentCalculator = () => {
           <div className="text-xs text-white/70 pt-2 space-y-1">
             <p>
               <strong className="text-white/80">Calculation:</strong> I = P / (
-              {phases === "3" ? "√3 × " : ""}V × η × cos φ)
+              {phases === '3' ? '√3 × ' : ''}V × η × cos φ)
             </p>
             <p>
               <strong className="text-white/80">Voltage Drop:</strong> VD = I × Z × 100 / V
@@ -742,10 +724,7 @@ const MotorStartingCurrentCalculator = () => {
 
       {/* Quick Reference */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div
-          className="calculator-card overflow-hidden"
-          style={{ borderColor: "#fbbf2415" }}
-        >
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
@@ -755,8 +734,8 @@ const MotorStartingCurrentCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showReference && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>

@@ -2,16 +2,34 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Trash2, ChevronDown } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { circuitTypes } from '@/types/circuitTypes';
-import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, bsStandardOptions, protectiveDeviceCurveOptions, rcdBsStandardOptions, bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
+import {
+  protectiveDeviceTypeOptions,
+  protectiveDeviceRatingOptions,
+  bsStandardOptions,
+  protectiveDeviceCurveOptions,
+  rcdBsStandardOptions,
+  bsStandardRequiresCurve,
+} from '@/types/protectiveDeviceTypes';
 import { cableSizeOptions, referenceMethodOptions } from '@/types/cableTypes';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
 import { wiringTypeOptions, rcdTypeOptions } from '@/types/wiringTypes';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import CircuitAutoFillButton from './CircuitAutoFillButton';
 import { cn } from '@/lib/utils';
@@ -24,14 +42,14 @@ interface TestResultMobileCardProps {
   allResults: TestResult[];
 }
 
-const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({ 
-  result, 
-  onUpdate, 
-  onRemove, 
-  allResults 
+const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
+  result,
+  onUpdate,
+  onRemove,
+  allResults,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   // Determine if curve selector should be shown (only for MCB/RCBO based on BS Standard)
   const showCurveSelector = bsStandardRequiresCurve(result.bsStandard || '');
 
@@ -51,11 +69,11 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
   // Auto-fill maxZs when device details change
   const autoFillMaxZs = (bsStandard: string, curve: string, rating: string) => {
     if (!bsStandard || !rating) return;
-    
+
     // For fuses, curve is not needed
     const needsCurve = bsStandardRequiresCurve(bsStandard);
     if (needsCurve && !curve) return;
-    
+
     const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, rating);
     if (maxZs !== null) {
       onUpdate(result.id, 'maxZs', maxZs.toString());
@@ -84,9 +102,7 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
     <Card className={`border-2 ${getBorderColor()}`}>
       <CardHeader className="pb-3">
         <div className="flex justify-between items-center">
-          <CardTitle>
-            {result.circuitDesignation || 'New Circuit'}
-          </CardTitle>
+          <CardTitle>{result.circuitDesignation || 'New Circuit'}</CardTitle>
           <Button variant="destructive" size="icon" onClick={() => onRemove(result.id)}>
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -103,14 +119,14 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
         <CollapsibleContent className="space-y-0">
           <CardContent className="pt-0 pb-4">
             {/* Enhanced Circuit Auto-Fill */}
-            <CircuitAutoFillButton 
-              result={result}
-              onUpdate={handleBulkUpdate}
-            />
+            <CircuitAutoFillButton result={result} onUpdate={handleBulkUpdate} />
 
             {/* Accordion Sections Matching Table Column Order */}
-            <Accordion type="multiple" defaultValue={["circuit", "conductors", "protective", "rcd", "tests"]} className="w-full">
-              
+            <Accordion
+              type="multiple"
+              defaultValue={['circuit', 'conductors', 'protective', 'rcd', 'tests']}
+              className="w-full"
+            >
               {/* GROUP 1: Circuit Details (Columns 1-5) */}
               <AccordionItem value="circuit" className="border-b">
                 <AccordionTrigger className="py-3 hover:no-underline">
@@ -123,7 +139,9 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                 <AccordionContent className="space-y-3 pt-3 pb-4">
                   {/* Field 1: Circuit Designation */}
                   <div className="space-y-2">
-                    <Label htmlFor={`circuitDesignation-${result.id}`}>1. Circuit Designation</Label>
+                    <Label htmlFor={`circuitDesignation-${result.id}`}>
+                      1. Circuit Designation
+                    </Label>
                     <Input
                       id={`circuitDesignation-${result.id}`}
                       value={result.circuitDesignation || ''}
@@ -134,7 +152,9 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
 
                   {/* Field 2: Circuit Description */}
                   <div className="space-y-2">
-                    <Label htmlFor={`circuitDescription-${result.id}`}>2. Circuit Description</Label>
+                    <Label htmlFor={`circuitDescription-${result.id}`}>
+                      2. Circuit Description
+                    </Label>
                     <Input
                       id={`circuitDescription-${result.id}`}
                       value={result.circuitDescription || ''}
@@ -263,10 +283,7 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Field 8: BS (EN) Standard - NEW */}
                   <div className="space-y-2">
                     <Label htmlFor={`bsStandard-${result.id}`}>8. BS (EN) Standard</Label>
-                    <Select
-                      value={result.bsStandard || ''}
-                      onValueChange={handleBsStandardChange}
-                    >
+                    <Select value={result.bsStandard || ''} onValueChange={handleBsStandardChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select standard" />
                       </SelectTrigger>
@@ -283,7 +300,10 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Field 9: Protective Device Curve Type */}
                   <div className="space-y-2">
                     <Label htmlFor={`protectiveDeviceCurve-${result.id}`}>
-                      9. Type {!showCurveSelector && <span className="text-xs text-muted-foreground">(MCB/RCBO only)</span>}
+                      9. Type{' '}
+                      {!showCurveSelector && (
+                        <span className="text-xs text-muted-foreground">(MCB/RCBO only)</span>
+                      )}
                     </Label>
                     <Select
                       value={result.protectiveDeviceCurve || ''}
@@ -305,14 +325,16 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
 
                   {/* Field 11: Protective Device Rating */}
                   <div className="space-y-2">
-                    <Label htmlFor={`protectiveDeviceRating-${result.id}`}>11. Device Rating (A)</Label>
+                    <Label htmlFor={`protectiveDeviceRating-${result.id}`}>
+                      11. Device Rating (A)
+                    </Label>
                     <Select
                       value={result.protectiveDeviceRating || ''}
                       onValueChange={handleRatingChange}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select rating">
-                          {result.protectiveDeviceRating || "Select rating"}
+                          {result.protectiveDeviceRating || 'Select rating'}
                         </SelectValue>
                       </SelectTrigger>
                       <SelectContent>
@@ -327,11 +349,15 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
 
                   {/* Field 12: Breaking Capacity (kA) */}
                   <div className="space-y-2">
-                    <Label htmlFor={`protectiveDeviceKaRating-${result.id}`}>12. Breaking Capacity (kA)</Label>
+                    <Label htmlFor={`protectiveDeviceKaRating-${result.id}`}>
+                      12. Breaking Capacity (kA)
+                    </Label>
                     <Input
                       id={`protectiveDeviceKaRating-${result.id}`}
                       value={result.protectiveDeviceKaRating || ''}
-                      onChange={(e) => onUpdate(result.id, 'protectiveDeviceKaRating', e.target.value)}
+                      onChange={(e) =>
+                        onUpdate(result.id, 'protectiveDeviceKaRating', e.target.value)
+                      }
                       placeholder="e.g., 6"
                       type="number"
                       step="0.5"
@@ -378,7 +404,9 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                       </SelectTrigger>
                       <SelectContent>
                         {rcdBsStandardOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -451,13 +479,15 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Continuity Tests (Fields 18-22) */}
                   <div className="space-y-3 p-3 bg-purple-50/30 rounded-lg border">
                     <h4 className="text-sm font-semibold text-purple-900">Continuity Tests</h4>
-                    
+
                     {/* Ring Final Circuit Tests (Fields 18-20) */}
                     <div className="space-y-2">
                       <Label className="text-sm">18-20. Ring Final Circuit Tests (Ω)</Label>
                       <div className="grid grid-cols-3 gap-2">
                         <div>
-                          <Label htmlFor={`ringR1-${result.id}`} className="text-xs">r₁ (line)</Label>
+                          <Label htmlFor={`ringR1-${result.id}`} className="text-xs">
+                            r₁ (line)
+                          </Label>
                           <Input
                             id={`ringR1-${result.id}`}
                             value={result.ringR1 || ''}
@@ -468,7 +498,9 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                           />
                         </div>
                         <div>
-                          <Label htmlFor={`ringRn-${result.id}`} className="text-xs">rₙ (neutral)</Label>
+                          <Label htmlFor={`ringRn-${result.id}`} className="text-xs">
+                            rₙ (neutral)
+                          </Label>
                           <Input
                             id={`ringRn-${result.id}`}
                             value={result.ringRn || ''}
@@ -479,7 +511,9 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                           />
                         </div>
                         <div>
-                          <Label htmlFor={`ringR2-${result.id}`} className="text-xs">r₂ (cpc)</Label>
+                          <Label htmlFor={`ringR2-${result.id}`} className="text-xs">
+                            r₂ (cpc)
+                          </Label>
                           <Input
                             id={`ringR2-${result.id}`}
                             value={result.ringR2 || ''}
@@ -508,14 +542,18 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
 
                   {/* Insulation Resistance Tests (Fields 23-25) */}
                   <div className="space-y-3 p-3 bg-purple-50/30 rounded-lg border">
-                    <h4 className="text-sm font-semibold text-purple-900">Insulation Resistance Tests</h4>
-                    
+                    <h4 className="text-sm font-semibold text-purple-900">
+                      Insulation Resistance Tests
+                    </h4>
+
                     {/* Field 23: Test Voltage */}
                     <div className="space-y-2">
                       <Label htmlFor={`insulationTestVoltage-${result.id}`}>23. Test Voltage</Label>
                       <Select
                         value={result.insulationTestVoltage || ''}
-                        onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
+                        onValueChange={(value) =>
+                          onUpdate(result.id, 'insulationTestVoltage', value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select voltage" />
@@ -535,22 +573,30 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                       <Label className="text-sm">24-25. Insulation Resistance (MΩ)</Label>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <Label htmlFor={`insulationLiveNeutral-${result.id}`} className="text-xs">Live - Live</Label>
+                          <Label htmlFor={`insulationLiveNeutral-${result.id}`} className="text-xs">
+                            Live - Live
+                          </Label>
                           <Input
                             id={`insulationLiveNeutral-${result.id}`}
                             value={result.insulationLiveNeutral || ''}
-                            onChange={(e) => onUpdate(result.id, 'insulationLiveNeutral', e.target.value)}
+                            onChange={(e) =>
+                              onUpdate(result.id, 'insulationLiveNeutral', e.target.value)
+                            }
                             placeholder=">1.0"
                             type="number"
                             step="0.1"
                           />
                         </div>
                         <div>
-                          <Label htmlFor={`insulationLiveEarth-${result.id}`} className="text-xs">Live - Earth</Label>
+                          <Label htmlFor={`insulationLiveEarth-${result.id}`} className="text-xs">
+                            Live - Earth
+                          </Label>
                           <Input
                             id={`insulationLiveEarth-${result.id}`}
                             value={result.insulationLiveEarth || ''}
-                            onChange={(e) => onUpdate(result.id, 'insulationLiveEarth', e.target.value)}
+                            onChange={(e) =>
+                              onUpdate(result.id, 'insulationLiveEarth', e.target.value)
+                            }
                             placeholder=">1.0"
                             type="number"
                             step="0.1"
@@ -562,8 +608,10 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
 
                   {/* Polarity & Zs Tests (Fields 26-27) */}
                   <div className="space-y-3 p-3 bg-yellow-50/30 rounded-lg border">
-                    <h4 className="text-sm font-semibold text-yellow-900">Polarity & Earth Fault Loop Impedance</h4>
-                    
+                    <h4 className="text-sm font-semibold text-yellow-900">
+                      Polarity & Earth Fault Loop Impedance
+                    </h4>
+
                     {/* Field 26: Polarity */}
                     <div className="space-y-2">
                       <Label htmlFor={`polarity-${result.id}`}>26. Polarity</Label>
@@ -592,10 +640,12 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* RCD Tests (Fields 28-29) */}
                   <div className="space-y-3 p-3 bg-indigo-50/30 rounded-lg border">
                     <h4 className="text-sm font-semibold text-indigo-900">RCD Tests</h4>
-                    
+
                     {/* Field 28: RCD Disconnection Time */}
                     <div className="space-y-2">
-                      <Label htmlFor={`rcdOneX-${result.id}`}>28. RCD Disconnection Time 1×IΔn (ms)</Label>
+                      <Label htmlFor={`rcdOneX-${result.id}`}>
+                        28. RCD Disconnection Time 1×IΔn (ms)
+                      </Label>
                       <Input
                         id={`rcdOneX-${result.id}`}
                         value={result.rcdOneX || ''}
@@ -627,7 +677,7 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Other Tests (Fields 30-32) */}
                   <div className="space-y-3 p-3 bg-cyan-50/30 rounded-lg border">
                     <h4 className="text-sm font-semibold text-cyan-900">Other Tests</h4>
-                    
+
                     {/* Field 30: AFDD Test */}
                     <div className="space-y-2">
                       <Label htmlFor={`afddTest-${result.id}`}>30. AFDD Test</Label>
@@ -661,15 +711,20 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
 
                     {/* Field 32: Functional Testing */}
                     <div className="space-y-2">
-                      <Label htmlFor={`functionalTesting-${result.id}`}>32. Functional Testing</Label>
+                      <Label htmlFor={`functionalTesting-${result.id}`}>
+                        32. Functional Testing
+                      </Label>
                       <Select
                         value={result.functionalTesting || ''}
                         onValueChange={(value) => onUpdate(result.id, 'functionalTesting', value)}
                       >
-                        <SelectTrigger className={cn("h-9",
-                          result.functionalTesting === '✓' && 'text-green-600',
-                          result.functionalTesting === '✗' && 'text-red-600'
-                        )}>
+                        <SelectTrigger
+                          className={cn(
+                            'h-9',
+                            result.functionalTesting === '✓' && 'text-green-600',
+                            result.functionalTesting === '✗' && 'text-red-600'
+                          )}
+                        >
                           <SelectValue placeholder="Select result" />
                         </SelectTrigger>
                         <SelectContent>
@@ -703,7 +758,6 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   </div>
                 </AccordionContent>
               </AccordionItem>
-
             </Accordion>
           </CardContent>
         </CollapsibleContent>

@@ -1,85 +1,94 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import { bmsModule4Section4QuizData } from "@/data/upskilling/bmsModule4Section4QuizData";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { bmsModule4Section4QuizData } from '@/data/upskilling/bmsModule4Section4QuizData';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "shading-purpose",
-    question: "What is the primary purpose of automated shading in a BMS?",
+    id: 'shading-purpose',
+    question: 'What is the primary purpose of automated shading in a BMS?',
     options: [
-      "To replace manual window blinds",
-      "To balance solar heat gain, glare control, and daylight optimisation",
-      "To reduce installation costs",
-      "To eliminate the need for HVAC"
+      'To replace manual window blinds',
+      'To balance solar heat gain, glare control, and daylight optimisation',
+      'To reduce installation costs',
+      'To eliminate the need for HVAC',
     ],
     correctIndex: 1,
-    explanation: "Automated shading systems balance multiple factors - reducing solar heat gain to lower cooling loads, controlling glare for occupant comfort, whilst still maximising useful daylight to reduce artificial lighting needs."
+    explanation:
+      'Automated shading systems balance multiple factors - reducing solar heat gain to lower cooling loads, controlling glare for occupant comfort, whilst still maximising useful daylight to reduce artificial lighting needs.',
   },
   {
-    id: "sun-tracking",
-    question: "Why might a façade automation system use sun position tracking?",
+    id: 'sun-tracking',
+    question: 'Why might a façade automation system use sun position tracking?',
     options: [
-      "To reduce wear on blind motors",
-      "To adjust shading position based on where sunlight is actually coming from",
-      "To synchronise with other buildings",
-      "To comply with planning regulations"
+      'To reduce wear on blind motors',
+      'To adjust shading position based on where sunlight is actually coming from',
+      'To synchronise with other buildings',
+      'To comply with planning regulations',
     ],
     correctIndex: 1,
-    explanation: "Sun position tracking allows the system to anticipate and respond to actual solar conditions. As the sun moves across the sky, blinds automatically adjust to block direct sunlight while maintaining views and daylight where possible."
+    explanation:
+      'Sun position tracking allows the system to anticipate and respond to actual solar conditions. As the sun moves across the sky, blinds automatically adjust to block direct sunlight while maintaining views and daylight where possible.',
   },
   {
-    id: "wind-protection",
-    question: "Why do external shading systems need wind sensors?",
+    id: 'wind-protection',
+    question: 'Why do external shading systems need wind sensors?',
     options: [
-      "To measure air quality",
-      "To retract blinds in high winds preventing damage",
-      "To calculate energy savings",
-      "To adjust HVAC settings"
+      'To measure air quality',
+      'To retract blinds in high winds preventing damage',
+      'To calculate energy savings',
+      'To adjust HVAC settings',
     ],
     correctIndex: 1,
-    explanation: "External blinds, awnings, and louvres are vulnerable to wind damage. Wind sensors trigger automatic retraction when speeds exceed safe limits (typically 10-15 m/s), protecting the equipment and ensuring safety."
+    explanation:
+      'External blinds, awnings, and louvres are vulnerable to wind damage. Wind sensors trigger automatic retraction when speeds exceed safe limits (typically 10-15 m/s), protecting the equipment and ensuring safety.',
   },
   {
-    id: "integration-benefit",
-    question: "How does integrating shading with lighting control maximise energy savings?",
+    id: 'integration-benefit',
+    question: 'How does integrating shading with lighting control maximise energy savings?',
     options: [
-      "By reducing maintenance requirements",
-      "By automatically adjusting artificial lighting based on shading position and daylight",
-      "By eliminating the need for manual overrides",
-      "By simplifying the wiring installation"
+      'By reducing maintenance requirements',
+      'By automatically adjusting artificial lighting based on shading position and daylight',
+      'By eliminating the need for manual overrides',
+      'By simplifying the wiring installation',
     ],
     correctIndex: 1,
-    explanation: "When shading adjusts to optimise daylight, the lighting system responds by dimming artificial lights accordingly. This coordinated approach can achieve 30-40% lighting energy savings while maintaining optimal visual comfort."
-  }
+    explanation:
+      'When shading adjusts to optimise daylight, the lighting system responds by dimming artificial lights accordingly. This coordinated approach can achieve 30-40% lighting energy savings while maintaining optimal visual comfort.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What motors are used for automated blinds?",
-    answer: "Most automated blinds use 230V AC tubular motors (built into roller tube) or 24V DC motors for smaller blinds. DC motors are quieter and allow finer position control but require transformers. Both types include limit switches for end positions."
+    question: 'What motors are used for automated blinds?',
+    answer:
+      'Most automated blinds use 230V AC tubular motors (built into roller tube) or 24V DC motors for smaller blinds. DC motors are quieter and allow finer position control but require transformers. Both types include limit switches for end positions.',
   },
   {
-    question: "How are external louvres controlled differently from internal blinds?",
-    answer: "External louvres typically need weather protection logic (wind/rain sensors), higher torque motors for outdoor conditions, and more robust construction. They're controlled by the BMS but often have local safety overrides that can't be bypassed."
+    question: 'How are external louvres controlled differently from internal blinds?',
+    answer:
+      "External louvres typically need weather protection logic (wind/rain sensors), higher torque motors for outdoor conditions, and more robust construction. They're controlled by the BMS but often have local safety overrides that can't be bypassed.",
   },
   {
-    question: "What happens to blinds during a fire alarm?",
-    answer: "In most systems, blinds are programmed to open fully during fire alarms to aid evacuation visibility and allow firefighter access. This must be coordinated with fire strategy requirements and tested during commissioning."
+    question: 'What happens to blinds during a fire alarm?',
+    answer:
+      'In most systems, blinds are programmed to open fully during fire alarms to aid evacuation visibility and allow firefighter access. This must be coordinated with fire strategy requirements and tested during commissioning.',
   },
   {
-    question: "Can occupants override automated blind positions?",
-    answer: "Most systems allow local override via wall switches or apps, typically with a time limit (2-4 hours) before returning to automatic control. Some premium systems learn user preferences and adapt automatic positions accordingly."
-  }
+    question: 'Can occupants override automated blind positions?',
+    answer:
+      'Most systems allow local override via wall switches or apps, typically with a time limit (2-4 hours) before returning to automatic control. Some premium systems learn user preferences and adapt automatic positions accordingly.',
+  },
 ];
 
 const BMSModule4Section4 = () => {
   useSEO({
-    title: "Shading, Blinds, and Facade Automation | BMS Module 4.4",
-    description: "Master automated shading and facade control in BMS. Learn blind motor wiring, sun tracking, weather sensors, and integration with lighting and HVAC for optimal energy efficiency."
+    title: 'Shading, Blinds, and Facade Automation | BMS Module 4.4',
+    description:
+      'Master automated shading and facade control in BMS. Learn blind motor wiring, sun tracking, weather sensors, and integration with lighting and HVAC for optimal energy efficiency.',
   });
 
   return (
@@ -87,7 +96,12 @@ const BMSModule4Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -116,17 +130,29 @@ const BMSModule4Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Purpose:</strong> Balance solar gain, glare, and daylight</li>
-              <li><strong>Control:</strong> Sun position, weather, occupancy</li>
-              <li><strong>Motors:</strong> 230V AC tubular or 24V DC</li>
-              <li><strong>Savings:</strong> 20-30% cooling, 30-40% lighting</li>
+              <li>
+                <strong>Purpose:</strong> Balance solar gain, glare, and daylight
+              </li>
+              <li>
+                <strong>Control:</strong> Sun position, weather, occupancy
+              </li>
+              <li>
+                <strong>Motors:</strong> 230V AC tubular or 24V DC
+              </li>
+              <li>
+                <strong>Savings:</strong> 20-30% cooling, 30-40% lighting
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Motorised blinds, external louvres, facade panels</li>
-              <li><strong>Use:</strong> Reducing cooling loads, managing glare, daylight optimisation</li>
+              <li>
+                <strong>Spot:</strong> Motorised blinds, external louvres, facade panels
+              </li>
+              <li>
+                <strong>Use:</strong> Reducing cooling loads, managing glare, daylight optimisation
+              </li>
             </ul>
           </div>
         </div>
@@ -136,14 +162,14 @@ const BMSModule4Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Automated shading system types",
-              "Motor technologies and control methods",
-              "Sun position tracking algorithms",
-              "Weather sensor integration",
-              "Lighting system coordination",
-              "HVAC integration strategies",
-              "Wiring and commissioning procedures",
-              "User override and preferences"
+              'Automated shading system types',
+              'Motor technologies and control methods',
+              'Sun position tracking algorithms',
+              'Weather sensor integration',
+              'Lighting system coordination',
+              'HVAC integration strategies',
+              'Wiring and commissioning procedures',
+              'User override and preferences',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -163,17 +189,28 @@ const BMSModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Automated shading systems range from simple internal roller blinds to complex external façade systems.
-              Each type offers different levels of solar control, energy savings, and aesthetic integration.
+              Automated shading systems range from simple internal roller blinds to complex external
+              façade systems. Each type offers different levels of solar control, energy savings,
+              and aesthetic integration.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Shading System Categories:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Shading System Categories:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Internal Blinds:</strong> Roller, venetian, vertical - glare control</li>
-                <li><strong>External Blinds:</strong> External venetian, awnings - solar blocking</li>
-                <li><strong>Louvres:</strong> Fixed or adjustable - architectural integration</li>
-                <li><strong>Electrochromic Glass:</strong> Tintable glass - premium solution</li>
+                <li>
+                  <strong>Internal Blinds:</strong> Roller, venetian, vertical - glare control
+                </li>
+                <li>
+                  <strong>External Blinds:</strong> External venetian, awnings - solar blocking
+                </li>
+                <li>
+                  <strong>Louvres:</strong> Fixed or adjustable - architectural integration
+                </li>
+                <li>
+                  <strong>Electrochromic Glass:</strong> Tintable glass - premium solution
+                </li>
               </ul>
             </div>
 
@@ -210,13 +247,16 @@ const BMSModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Blind motors convert electrical energy into mechanical movement for raising, lowering, and tilting
-              shading elements. Motor selection depends on blind size, control requirements, and installation context.
+              Blind motors convert electrical energy into mechanical movement for raising, lowering,
+              and tilting shading elements. Motor selection depends on blind size, control
+              requirements, and installation context.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">230V AC Tubular Motors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  230V AC Tubular Motors
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Built into roller tube</li>
                   <li>Simple 3-wire control (L, N, reverse)</li>
@@ -238,10 +278,18 @@ const BMSModule4Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Protocols:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Simple Switching:</strong> Up/down/stop via relays</li>
-                <li><strong>SMI (Standard Motor Interface):</strong> Bidirectional communication</li>
-                <li><strong>RS-485/Modbus:</strong> Integration with BMS</li>
-                <li><strong>KNX/BACnet:</strong> Full building automation integration</li>
+                <li>
+                  <strong>Simple Switching:</strong> Up/down/stop via relays
+                </li>
+                <li>
+                  <strong>SMI (Standard Motor Interface):</strong> Bidirectional communication
+                </li>
+                <li>
+                  <strong>RS-485/Modbus:</strong> Integration with BMS
+                </li>
+                <li>
+                  <strong>KNX/BACnet:</strong> Full building automation integration
+                </li>
               </ul>
             </div>
 
@@ -257,8 +305,9 @@ const BMSModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              External shading systems require weather monitoring to protect equipment and ensure safe operation.
-              Weather stations provide inputs that override normal control logic when conditions require.
+              External shading systems require weather monitoring to protect equipment and ensure
+              safe operation. Weather stations provide inputs that override normal control logic
+              when conditions require.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -277,7 +326,9 @@ const BMSModule4Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Weather Override Priorities:</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Weather Override Priorities:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>1. High wind - Immediate full retraction</li>
                 <li>2. Storm warning - Preventive retraction</li>
@@ -298,13 +349,15 @@ const BMSModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Maximum energy benefits come from coordinating shading with lighting and HVAC systems. This requires
-              communication between systems and careful sequencing of control actions.
+              Maximum energy benefits come from coordinating shading with lighting and HVAC systems.
+              This requires communication between systems and careful sequencing of control actions.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lighting Coordination</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Lighting Coordination
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Blinds open → Dim artificial lights</li>
                   <li>Glare detected → Partial close + maintain lux</li>
@@ -333,8 +386,9 @@ const BMSModule4Section4 = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>Challenge:</strong> 20-storey glass office building with severe solar gain and glare issues.
-                Cooling costs were 40% above design targets. Staff complaints about hot spots and screen glare.
+                <strong>Challenge:</strong> 20-storey glass office building with severe solar gain
+                and glare issues. Cooling costs were 40% above design targets. Staff complaints
+                about hot spots and screen glare.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
@@ -396,21 +450,27 @@ const BMSModule4Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={bmsModule4Section4QuizData}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={bmsModule4Section4QuizData} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-4-section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-4-section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

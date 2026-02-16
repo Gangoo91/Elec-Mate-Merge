@@ -1,5 +1,5 @@
-import { Package, TrendingUp, Store, ArrowRight, Loader2 } from "lucide-react";
-import { getCategoryStyle } from "./categoryStyleUtils";
+import { Package, TrendingUp, Store, ArrowRight, Loader2 } from 'lucide-react';
+import { getCategoryStyle } from './categoryStyleUtils';
 
 interface ToolCategory {
   name: string;
@@ -15,7 +15,11 @@ interface PremiumCategoryCardProps {
   isLoading?: boolean;
 }
 
-const PremiumCategoryCard = ({ category, onClick, isLoading = false }: PremiumCategoryCardProps) => {
+const PremiumCategoryCard = ({
+  category,
+  onClick,
+  isLoading = false,
+}: PremiumCategoryCardProps) => {
   const style = getCategoryStyle(category.name);
   const IconComponent = style.icon;
   const isTrending = category.count > 20;
@@ -67,7 +71,7 @@ const PremiumCategoryCard = ({ category, onClick, isLoading = false }: PremiumCa
                 <Loader2 className="h-3 w-3 animate-spin text-primary" />
               ) : (
                 <span className="text-sm font-semibold text-white">
-                  {hasData ? category.count : "—"}
+                  {hasData ? category.count : '—'}
                 </span>
               )}
             </div>
@@ -79,7 +83,7 @@ const PremiumCategoryCard = ({ category, onClick, isLoading = false }: PremiumCa
             <div className="min-w-0">
               <span className="text-xs text-white/60 block">Price Range</span>
               <span className="text-sm font-semibold text-white truncate block">
-                {category.priceRange || "Various"}
+                {category.priceRange || 'Various'}
               </span>
             </div>
           </div>
@@ -94,7 +98,7 @@ const PremiumCategoryCard = ({ category, onClick, isLoading = false }: PremiumCa
           </div>
 
           {/* Stock/Status */}
-          <div className={`metric-box ${hasData ? "metric-box-highlight" : ""}`}>
+          <div className={`metric-box ${hasData ? 'metric-box-highlight' : ''}`}>
             {hasData ? (
               <>
                 <div className="h-2 w-2 rounded-full bg-green-500 shrink-0 animate-pulse" />
@@ -126,7 +130,7 @@ const PremiumCategoryCard = ({ category, onClick, isLoading = false }: PremiumCa
         {/* Footer: Browse Arrow */}
         <div className="flex items-center justify-between pt-3 border-t border-white/10">
           <span className="text-sm text-white/60 group-hover:text-white transition-colors">
-            Browse {category.count > 0 ? `${category.count} tools` : "category"}
+            Browse {category.count > 0 ? `${category.count} tools` : 'category'}
           </span>
           <ArrowRight className="arrow-reveal h-5 w-5 text-primary" />
         </div>

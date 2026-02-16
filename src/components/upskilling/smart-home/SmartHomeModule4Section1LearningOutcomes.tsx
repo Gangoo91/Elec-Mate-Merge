@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule4Section1LearningOutcomes = () => {
   const outcomes = [
-    "Explain the function of smart thermostats compared to traditional models",
-    "Define room zoning and its benefits in smart HVAC systems",
-    "Identify different zoning methods (wired, wireless, radiator-based)",
-    "Recognise integration features (apps, voice assistants, AI scheduling)",
-    "Recommend zoning strategies based on property type and client needs"
+    'Explain the function of smart thermostats compared to traditional models',
+    'Define room zoning and its benefits in smart HVAC systems',
+    'Identify different zoning methods (wired, wireless, radiator-based)',
+    'Recognise integration features (apps, voice assistants, AI scheduling)',
+    'Recommend zoning strategies based on property type and client needs',
   ];
 
   return (

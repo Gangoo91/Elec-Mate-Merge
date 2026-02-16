@@ -1,7 +1,6 @@
-
-import { TestTube, BookOpen, Download } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Button } from "@/components/ui/button";
+import { TestTube, BookOpen, Download } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Button } from '@/components/ui/button';
 
 const TestingHeader = () => {
   return (
@@ -26,8 +25,9 @@ const TestingHeader = () => {
         </div>
       </div>
       <p className="text-white text-sm max-w-3xl">
-        Follow these step-by-step guides for essential electrical testing procedures required for installation 
-        and verification. The interactive wizards will help you complete accurate tests every time.
+        Follow these step-by-step guides for essential electrical testing procedures required for
+        installation and verification. The interactive wizards will help you complete accurate tests
+        every time.
       </p>
       <div className="h-1 w-20 bg-gradient-to-r from-elec-yellow to-yellow-500/70 rounded-full"></div>
     </div>

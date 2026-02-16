@@ -5,71 +5,77 @@
  * Dark theme with elec-yellow accent
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 // ============================================
 // SEO CONFIGURATION
 // ============================================
-const TITLE = "Health & Safety at Work Act (HASAWA) 1974 - Level 3 Module 1 Section 1.1";
-const DESCRIPTION = "Master the foundation of UK workplace health and safety law. Learn employer duties under Section 2, employee responsibilities under Sections 7 and 8, and HSE enforcement powers.";
+const TITLE = 'Health & Safety at Work Act (HASAWA) 1974 - Level 3 Module 1 Section 1.1';
+const DESCRIPTION =
+  'Master the foundation of UK workplace health and safety law. Learn employer duties under Section 2, employee responsibilities under Sections 7 and 8, and HSE enforcement powers.';
 
 // ============================================
 // INLINE CHECK QUESTIONS
 // ============================================
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "Under Section 2(2)(c), what must employers provide to ensure employee safety?",
+    id: 'check-1',
+    question: 'Under Section 2(2)(c), what must employers provide to ensure employee safety?',
     options: [
-      "Higher wages and bonuses",
-      "Information, instruction, training and supervision",
-      "Unlimited overtime opportunities",
-      "Company vehicles for all staff"
+      'Higher wages and bonuses',
+      'Information, instruction, training and supervision',
+      'Unlimited overtime opportunities',
+      'Company vehicles for all staff',
     ],
     correctIndex: 1,
-    explanation: "Section 2(2)(c) specifically requires employers to provide such information, instruction, training and supervision as is necessary to ensure health and safety at work."
+    explanation:
+      'Section 2(2)(c) specifically requires employers to provide such information, instruction, training and supervision as is necessary to ensure health and safety at work.',
   },
   {
-    id: "check-2",
-    question: "An electrician is instructed by their supervisor to work on a live 400V distribution board without isolation. What should they do?",
+    id: 'check-2',
+    question:
+      'An electrician is instructed by their supervisor to work on a live 400V distribution board without isolation. What should they do?',
     options: [
       "Follow the supervisor's instructions",
-      "Refuse as they have a personal duty under Section 7 to take reasonable care",
-      "Do it quickly to minimise risk",
-      "Ask a colleague to do it instead"
+      'Refuse as they have a personal duty under Section 7 to take reasonable care',
+      'Do it quickly to minimise risk',
+      'Ask a colleague to do it instead',
     ],
     correctIndex: 1,
-    explanation: "Section 7 places a personal duty on employees to take reasonable care. 'Following orders' is not a defence if they knowingly work unsafely."
+    explanation:
+      "Section 7 places a personal duty on employees to take reasonable care. 'Following orders' is not a defence if they knowingly work unsafely.",
   },
   {
-    id: "check-3",
-    question: "What is the key difference between an Improvement Notice and a Prohibition Notice?",
+    id: 'check-3',
+    question: 'What is the key difference between an Improvement Notice and a Prohibition Notice?',
     options: [
-      "There is no difference",
-      "Improvement notices stop work immediately; prohibition notices give time to improve",
-      "Improvement notices give time to rectify; prohibition notices stop work immediately",
-      "Both allow unlimited time to comply"
+      'There is no difference',
+      'Improvement notices stop work immediately; prohibition notices give time to improve',
+      'Improvement notices give time to rectify; prohibition notices stop work immediately',
+      'Both allow unlimited time to comply',
     ],
     correctIndex: 2,
-    explanation: "Improvement notices require action within a specified timeframe (minimum 21 days), while Prohibition notices stop work immediately where there is risk of serious injury."
+    explanation:
+      'Improvement notices require action within a specified timeframe (minimum 21 days), while Prohibition notices stop work immediately where there is risk of serious injury.',
   },
   {
-    id: "check-4",
-    question: "Why is training particularly important under HASAWA for electrical contractors?",
+    id: 'check-4',
+    question: 'Why is training particularly important under HASAWA for electrical contractors?',
     options: [
       "It's not legally required",
-      "Employers must ensure workers are competent before allowing them to work on electrical systems",
-      "Only apprentices need training",
-      "Training is optional if workers are experienced"
+      'Employers must ensure workers are competent before allowing them to work on electrical systems',
+      'Only apprentices need training',
+      'Training is optional if workers are experienced',
     ],
     correctIndex: 1,
-    explanation: "Under Section 2(2)(c), employers must provide adequate training. For electrical work, this means ensuring competence before allowing work on electrical systems."
-  }
+    explanation:
+      'Under Section 2(2)(c), employers must provide adequate training. For electrical work, this means ensuring competence before allowing work on electrical systems.',
+  },
 ];
 
 // ============================================
@@ -80,122 +86,136 @@ const quizQuestions = [
     id: 1,
     question: "Under Section 2 of HASAWA 1974, what is the employer's primary duty?",
     options: [
-      "To provide unlimited breaks for employees",
-      "To ensure, so far as is reasonably practicable, the health, safety and welfare of employees",
-      "To provide only basic hand tools",
-      "To allow flexible working hours for all staff"
+      'To provide unlimited breaks for employees',
+      'To ensure, so far as is reasonably practicable, the health, safety and welfare of employees',
+      'To provide only basic hand tools',
+      'To allow flexible working hours for all staff',
     ],
     correctAnswer: 1,
-    explanation: "Section 2 requires employers to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. This is the cornerstone of employer duties."
+    explanation:
+      'Section 2 requires employers to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. This is the cornerstone of employer duties.',
   },
   {
     id: 2,
-    question: "What does Section 7 of HASAWA require employees to do?",
+    question: 'What does Section 7 of HASAWA require employees to do?',
     options: [
-      "Work overtime when requested by supervisors",
-      "Take reasonable care for their own health and safety and that of others",
-      "Provide their own PPE at all times",
-      "Report directly to the HSE for all concerns"
+      'Work overtime when requested by supervisors',
+      'Take reasonable care for their own health and safety and that of others',
+      'Provide their own PPE at all times',
+      'Report directly to the HSE for all concerns',
     ],
     correctAnswer: 1,
-    explanation: "Section 7 places a duty on employees to take reasonable care for the health and safety of themselves and other persons who may be affected by their acts or omissions at work."
+    explanation:
+      'Section 7 places a duty on employees to take reasonable care for the health and safety of themselves and other persons who may be affected by their acts or omissions at work.',
   },
   {
     id: 3,
-    question: "Under Section 8, what must employees NOT do?",
+    question: 'Under Section 8, what must employees NOT do?',
     options: [
-      "Take regular rest breaks",
-      "Intentionally interfere with or misuse safety provisions",
-      "Report hazards to supervisors",
-      "Wear company uniform on site"
+      'Take regular rest breaks',
+      'Intentionally interfere with or misuse safety provisions',
+      'Report hazards to supervisors',
+      'Wear company uniform on site',
     ],
     correctAnswer: 1,
-    explanation: "Section 8 makes it an offence to intentionally or recklessly interfere with or misuse anything provided for health and safety purposes, such as safety guards, RCDs, or warning signs."
+    explanation:
+      'Section 8 makes it an offence to intentionally or recklessly interfere with or misuse anything provided for health and safety purposes, such as safety guards, RCDs, or warning signs.',
   },
   {
     id: 4,
-    question: "What maximum penalty can be imposed for serious HASAWA breaches causing death?",
+    question: 'What maximum penalty can be imposed for serious HASAWA breaches causing death?',
     options: [
-      "A written warning only",
-      "Fine up to £5,000",
-      "Unlimited fine and up to 2 years imprisonment",
-      "Loss of the contract only"
+      'A written warning only',
+      'Fine up to £5,000',
+      'Unlimited fine and up to 2 years imprisonment',
+      'Loss of the contract only',
     ],
     correctAnswer: 2,
-    explanation: "Serious breaches of HASAWA can result in unlimited fines and up to 2 years imprisonment, particularly where there has been gross negligence or a death has occurred."
+    explanation:
+      'Serious breaches of HASAWA can result in unlimited fines and up to 2 years imprisonment, particularly where there has been gross negligence or a death has occurred.',
   },
   {
     id: 5,
-    question: "Under Section 37, who can be personally liable for health and safety offences?",
+    question: 'Under Section 37, who can be personally liable for health and safety offences?',
     options: [
-      "Only the company as a legal entity",
-      "Directors and managers if offence committed with their consent or connivance",
-      "Only the employee who directly caused the accident",
-      "The client who commissioned the work"
+      'Only the company as a legal entity',
+      'Directors and managers if offence committed with their consent or connivance',
+      'Only the employee who directly caused the accident',
+      'The client who commissioned the work',
     ],
     correctAnswer: 1,
-    explanation: "Section 37 allows directors and managers to be prosecuted personally if an offence is committed with their consent, connivance, or due to their neglect."
+    explanation:
+      'Section 37 allows directors and managers to be prosecuted personally if an offence is committed with their consent, connivance, or due to their neglect.',
   },
   {
     id: 6,
-    question: "An electrician works on a live distribution board without proper isolation. Which section of HASAWA are they potentially breaching?",
+    question:
+      'An electrician works on a live distribution board without proper isolation. Which section of HASAWA are they potentially breaching?',
     options: [
-      "Section 2 - Employer duties only",
-      "Section 7 - Employee duty to take reasonable care",
-      "Section 37 - Director liability only",
-      "Section 4 - Premises duties only"
+      'Section 2 - Employer duties only',
+      'Section 7 - Employee duty to take reasonable care',
+      'Section 37 - Director liability only',
+      'Section 4 - Premises duties only',
     ],
     correctAnswer: 1,
-    explanation: "Working live without proper justification and precautions breaches Section 7 as the electrician is not taking reasonable care for their own health and safety."
+    explanation:
+      'Working live without proper justification and precautions breaches Section 7 as the electrician is not taking reasonable care for their own health and safety.',
   },
   {
     id: 7,
-    question: "What power does the HSE have under HASAWA if they find unsafe electrical work in progress?",
+    question:
+      'What power does the HSE have under HASAWA if they find unsafe electrical work in progress?',
     options: [
-      "They can only give verbal advice",
-      "Issue improvement notices or prohibition notices",
-      "Only write reports for future reference",
-      "Nothing until someone is actually injured"
+      'They can only give verbal advice',
+      'Issue improvement notices or prohibition notices',
+      'Only write reports for future reference',
+      'Nothing until someone is actually injured',
     ],
     correctAnswer: 1,
-    explanation: "HSE inspectors can issue improvement notices requiring action within a timeframe, or prohibition notices stopping work immediately if there is serious risk."
+    explanation:
+      'HSE inspectors can issue improvement notices requiring action within a timeframe, or prohibition notices stopping work immediately if there is serious risk.',
   },
   {
     id: 8,
-    question: "Which of the following is an employer duty under Section 2 particularly relevant to electrical work?",
+    question:
+      'Which of the following is an employer duty under Section 2 particularly relevant to electrical work?',
     options: [
-      "Providing free lunches on site",
-      "Providing information, instruction, training and supervision",
-      "Allowing employees to choose their own hours",
-      "Paying overtime automatically for all work"
+      'Providing free lunches on site',
+      'Providing information, instruction, training and supervision',
+      'Allowing employees to choose their own hours',
+      'Paying overtime automatically for all work',
     ],
     correctAnswer: 1,
-    explanation: "Section 2(2)(c) specifically requires employers to provide such information, instruction, training and supervision as is necessary to ensure health and safety."
+    explanation:
+      'Section 2(2)(c) specifically requires employers to provide such information, instruction, training and supervision as is necessary to ensure health and safety.',
   },
   {
     id: 9,
-    question: "A contractor removes a padlock from a distribution board isolation device because they lost their key. Which section do they breach?",
+    question:
+      'A contractor removes a padlock from a distribution board isolation device because they lost their key. Which section do they breach?',
     options: [
-      "Section 2 only",
-      "Section 7 only",
-      "Section 8 - Interfering with safety provisions",
-      "Section 37 only"
+      'Section 2 only',
+      'Section 7 only',
+      'Section 8 - Interfering with safety provisions',
+      'Section 37 only',
     ],
     correctAnswer: 2,
-    explanation: "Section 8 makes it an offence to interfere with or misuse anything provided for health and safety. Locks on distribution boards and isolation devices are safety provisions."
+    explanation:
+      'Section 8 makes it an offence to interfere with or misuse anything provided for health and safety. Locks on distribution boards and isolation devices are safety provisions.',
   },
   {
     id: 10,
     question: "What does 'so far as is reasonably practicable' mean under HASAWA?",
     options: [
-      "Do whatever is easiest and quickest",
-      "Balance the risk against the cost, time and effort of eliminating it",
-      "Only do what the client specifically pays for",
-      "Ignore minor hazards if they seem unlikely"
+      'Do whatever is easiest and quickest',
+      'Balance the risk against the cost, time and effort of eliminating it',
+      'Only do what the client specifically pays for',
+      'Ignore minor hazards if they seem unlikely',
     ],
     correctAnswer: 1,
-    explanation: "Reasonably practicable means weighing the risk against the sacrifice (cost, time, trouble) needed to avert it. If the risk is high, the cost of precautions is usually justified."
-  }
+    explanation:
+      'Reasonably practicable means weighing the risk against the sacrifice (cost, time, trouble) needed to avert it. If the risk is high, the cost of precautions is usually justified.',
+  },
 ];
 
 // ============================================
@@ -203,25 +223,30 @@ const quizQuestions = [
 // ============================================
 const faqs = [
   {
-    question: "Can I be personally prosecuted even if my employer told me to work unsafely?",
-    answer: "Yes. Section 7 places a personal duty on every employee. 'Following orders' is not a defence if you knowingly acted in an unsafe manner. Both you and your employer could face prosecution."
+    question: 'Can I be personally prosecuted even if my employer told me to work unsafely?',
+    answer:
+      "Yes. Section 7 places a personal duty on every employee. 'Following orders' is not a defence if you knowingly acted in an unsafe manner. Both you and your employer could face prosecution.",
   },
   {
     question: "What does 'so far as is reasonably practicable' mean in practice?",
-    answer: "It means weighing the risk against the cost, time and effort of eliminating it. If the risk is high (like electrocution), extensive measures are required. Cost alone is rarely a valid excuse for not controlling serious electrical risks."
+    answer:
+      'It means weighing the risk against the cost, time and effort of eliminating it. If the risk is high (like electrocution), extensive measures are required. Cost alone is rarely a valid excuse for not controlling serious electrical risks.',
   },
   {
-    question: "Can HSE inspectors enter my workplace without an appointment?",
-    answer: "Yes. HSE inspectors have the power to enter any workplace at any reasonable time without prior notice. They can inspect, investigate, take samples and photographs, and require production of documents."
+    question: 'Can HSE inspectors enter my workplace without an appointment?',
+    answer:
+      'Yes. HSE inspectors have the power to enter any workplace at any reasonable time without prior notice. They can inspect, investigate, take samples and photographs, and require production of documents.',
   },
   {
-    question: "What should I do if I witness a colleague bypassing safety equipment?",
-    answer: "Report it immediately to your supervisor or health and safety representative. Under Section 7, you have a duty to cooperate on safety matters. Ignoring such breaches could make you complicit if an accident occurs."
+    question: 'What should I do if I witness a colleague bypassing safety equipment?',
+    answer:
+      'Report it immediately to your supervisor or health and safety representative. Under Section 7, you have a duty to cooperate on safety matters. Ignoring such breaches could make you complicit if an accident occurs.',
   },
   {
-    question: "Does HASAWA apply to self-employed electricians?",
-    answer: "Yes. Section 3 places duties on self-employed persons to conduct their undertaking so that they and others are not exposed to risks. The same principles of safe working apply whether employed or self-employed."
-  }
+    question: 'Does HASAWA apply to self-employed electricians?',
+    answer:
+      'Yes. Section 3 places duties on self-employed persons to conduct their undertaking so that they and others are not exposed to risks. The same principles of safe working apply whether employed or self-employed.',
+  },
 ];
 
 // ============================================
@@ -232,7 +257,6 @@ const Level3Module1Section1_1 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* STICKY HEADER */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -252,35 +276,49 @@ const Level3Module1Section1_1 = () => {
 
       {/* MAIN ARTICLE CONTENT */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* HEADER */}
-        
 
         {/* QUICK SUMMARY BOXES */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Section 2:</strong> Employers must ensure health, safety and welfare of employees</li>
-              <li><strong>Section 7:</strong> Employees must take reasonable care for themselves and others</li>
-              <li><strong>Section 8:</strong> Do not interfere with or misuse safety provisions</li>
-              <li><strong>Penalties:</strong> Unlimited fines, up to 2 years imprisonment for serious breaches</li>
+              <li>
+                <strong>Section 2:</strong> Employers must ensure health, safety and welfare of
+                employees
+              </li>
+              <li>
+                <strong>Section 7:</strong> Employees must take reasonable care for themselves and
+                others
+              </li>
+              <li>
+                <strong>Section 8:</strong> Do not interfere with or misuse safety provisions
+              </li>
+              <li>
+                <strong>Penalties:</strong> Unlimited fines, up to 2 years imprisonment for serious
+                breaches
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Unsafe working conditions, missing safety equipment, lack of training</li>
-              <li><strong>Use:</strong> Report hazards, follow safe systems of work, use provided PPE</li>
-              <li><strong>Apply:</strong> Every electrical task requires HASAWA compliance - from isolation to documentation</li>
+              <li>
+                <strong>Spot:</strong> Unsafe working conditions, missing safety equipment, lack of
+                training
+              </li>
+              <li>
+                <strong>Use:</strong> Report hazards, follow safe systems of work, use provided PPE
+              </li>
+              <li>
+                <strong>Apply:</strong> Every electrical task requires HASAWA compliance - from
+                isolation to documentation
+              </li>
             </ul>
           </div>
         </div>
 
         {/* LEARNING OUTCOMES */}
-        
-
-        
 
         {/* CONTENT SECTION 01 */}
         <section className="mb-10">
@@ -290,22 +328,55 @@ const Level3Module1Section1_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Section 2 of HASAWA places comprehensive duties on employers to protect their workforce. The fundamental requirement is to ensure, "so far as is reasonably practicable," the health, safety and welfare at work of all employees. For electrical contractors, this means creating and maintaining safe working environments where electrical hazards are properly controlled.
+              Section 2 of HASAWA places comprehensive duties on employers to protect their
+              workforce. The fundamental requirement is to ensure, "so far as is reasonably
+              practicable," the health, safety and welfare at work of all employees. For electrical
+              contractors, this means creating and maintaining safe working environments where
+              electrical hazards are properly controlled.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Section 2(2) - Specific Employer Duties:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Section 2(2) - Specific Employer Duties:
+              </p>
               <ul className="text-sm text-white space-y-2 ml-4">
-                <li><strong>Section 2(2)(a) - Safe Plant and Systems:</strong> Employers must provide and maintain safe plant and equipment. For electrical work, this includes properly calibrated test instruments, insulated tools, and PAT-tested portable equipment. Safe systems of work such as isolation procedures and permit-to-work systems must be established.</li>
-                <li><strong>Section 2(2)(b) - Safe Use and Handling:</strong> Arrangements for safe use, handling, storage and transport of articles and substances. This covers cable storage, handling of heavy distribution boards, and procedures for hazardous materials.</li>
-                <li><strong>Section 2(2)(c) - Information, Instruction, Training:</strong> Adequate training is mandatory. Electricians must receive proper instruction on safe isolation, use of test equipment, and recognition of electrical hazards. Apprentices require close supervision.</li>
-                <li><strong>Section 2(2)(d) - Safe Workplace:</strong> The workplace must be maintained safely with safe access and egress. On construction sites, this includes adequate lighting, safe scaffolding for accessing equipment at height, and clear escape routes.</li>
-                <li><strong>Section 2(2)(e) - Welfare Facilities:</strong> Adequate facilities including toilets, washing facilities, drinking water, and rest areas must be provided.</li>
+                <li>
+                  <strong>Section 2(2)(a) - Safe Plant and Systems:</strong> Employers must provide
+                  and maintain safe plant and equipment. For electrical work, this includes properly
+                  calibrated test instruments, insulated tools, and PAT-tested portable equipment.
+                  Safe systems of work such as isolation procedures and permit-to-work systems must
+                  be established.
+                </li>
+                <li>
+                  <strong>Section 2(2)(b) - Safe Use and Handling:</strong> Arrangements for safe
+                  use, handling, storage and transport of articles and substances. This covers cable
+                  storage, handling of heavy distribution boards, and procedures for hazardous
+                  materials.
+                </li>
+                <li>
+                  <strong>Section 2(2)(c) - Information, Instruction, Training:</strong> Adequate
+                  training is mandatory. Electricians must receive proper instruction on safe
+                  isolation, use of test equipment, and recognition of electrical hazards.
+                  Apprentices require close supervision.
+                </li>
+                <li>
+                  <strong>Section 2(2)(d) - Safe Workplace:</strong> The workplace must be
+                  maintained safely with safe access and egress. On construction sites, this
+                  includes adequate lighting, safe scaffolding for accessing equipment at height,
+                  and clear escape routes.
+                </li>
+                <li>
+                  <strong>Section 2(2)(e) - Welfare Facilities:</strong> Adequate facilities
+                  including toilets, washing facilities, drinking water, and rest areas must be
+                  provided.
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> The employer's duty extends to everyone affected by their undertaking - not just employees, but also contractors, visitors, and members of the public who might be affected by electrical work.
+              <strong>Remember:</strong> The employer's duty extends to everyone affected by their
+              undertaking - not just employees, but also contractors, visitors, and members of the
+              public who might be affected by electrical work.
             </p>
           </div>
         </section>
@@ -321,12 +392,17 @@ const Level3Module1Section1_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              While employers carry the primary responsibility for workplace safety, HASAWA recognises that employees also have crucial duties. Sections 7 and 8 place personal legal obligations on every worker - and electricians can be personally prosecuted for breaching these duties.
+              While employers carry the primary responsibility for workplace safety, HASAWA
+              recognises that employees also have crucial duties. Sections 7 and 8 place personal
+              legal obligations on every worker - and electricians can be personally prosecuted for
+              breaching these duties.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Section 7 - Duty to Take Reasonable Care</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Section 7 - Duty to Take Reasonable Care
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Take reasonable care for your own health and safety</li>
                   <li>Take reasonable care for others affected by your work</li>
@@ -336,7 +412,9 @@ const Level3Module1Section1_1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Section 8 - Not to Interfere</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Section 8 - Not to Interfere
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Do not intentionally misuse safety equipment</li>
                   <li>Do not bypass RCDs or safety interlocks</li>
@@ -348,11 +426,16 @@ const Level3Module1Section1_1 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> An electrician who removes a colleague's lock from an isolation switch to restore power is breaching Section 8. Someone who defeats a door interlock on a high-voltage switchroom is committing an offence. Using an RCD as a switch by repeatedly tripping it could be considered misuse.
+              <strong>Example:</strong> An electrician who removes a colleague's lock from an
+              isolation switch to restore power is breaching Section 8. Someone who defeats a door
+              interlock on a high-voltage switchroom is committing an offence. Using an RCD as a
+              switch by repeatedly tripping it could be considered misuse.
             </p>
 
             <p className="text-sm text-elec-yellow/70 mt-4">
-              <strong>Critical Point:</strong> Unlike some areas of employment law, employees can be personally prosecuted under HASAWA. The defence of "I was told to do it" does not excuse criminal liability if you knowingly acted unsafely.
+              <strong>Critical Point:</strong> Unlike some areas of employment law, employees can be
+              personally prosecuted under HASAWA. The defence of "I was told to do it" does not
+              excuse criminal liability if you knowingly acted unsafely.
             </p>
           </div>
         </section>
@@ -368,7 +451,9 @@ const Level3Module1Section1_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The Health and Safety Executive (HSE) enforces HASAWA through inspectors with extensive powers. Understanding these powers helps you appreciate why compliance matters - and what happens when it doesn't.
+              The Health and Safety Executive (HSE) enforces HASAWA through inspectors with
+              extensive powers. Understanding these powers helps you appreciate why compliance
+              matters - and what happens when it doesn't.
             </p>
 
             <div className="my-6">
@@ -386,16 +471,26 @@ const Level3Module1Section1_1 = () => {
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Improvement Notices</p>
-                <p className="text-sm text-white">Issued when an inspector believes a statutory provision is being contravened. Requires the matter to be remedied within a specified period (minimum 21 days). For example, requiring documented safe isolation procedures within 28 days.</p>
+                <p className="text-sm text-white">
+                  Issued when an inspector believes a statutory provision is being contravened.
+                  Requires the matter to be remedied within a specified period (minimum 21 days).
+                  For example, requiring documented safe isolation procedures within 28 days.
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Prohibition Notices</p>
-                <p className="text-sm text-white">Issued where there is risk of serious personal injury. Stops the activity immediately. Can be issued even if no law is being broken, if the risk is serious enough. Work cannot resume until the issue is resolved.</p>
+                <p className="text-sm text-white">
+                  Issued where there is risk of serious personal injury. Stops the activity
+                  immediately. Can be issued even if no law is being broken, if the risk is serious
+                  enough. Work cannot resume until the issue is resolved.
+                </p>
               </div>
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> An electrician found working live on a 400V three-phase supply without proper precautions could face immediate prohibition of all electrical work until safe systems are demonstrated.
+              <strong>Example:</strong> An electrician found working live on a 400V three-phase
+              supply without proper precautions could face immediate prohibition of all electrical
+              work until safe systems are demonstrated.
             </p>
           </div>
         </section>
@@ -411,7 +506,10 @@ const Level3Module1Section1_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Breaches of HASAWA are criminal offences with serious consequences. The 2016 sentencing guidelines significantly increased penalties, particularly for organisations, with fines now based on culpability, harm caused, and the size of the organisation.
+              Breaches of HASAWA are criminal offences with serious consequences. The 2016
+              sentencing guidelines significantly increased penalties, particularly for
+              organisations, with fines now based on culpability, harm caused, and the size of the
+              organisation.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -421,7 +519,9 @@ const Level3Module1Section1_1 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Crown Court</p>
-                <p className="text-white/90 text-xs">Unlimited fines + up to 2 years imprisonment</p>
+                <p className="text-white/90 text-xs">
+                  Unlimited fines + up to 2 years imprisonment
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Section 37</p>
@@ -430,11 +530,18 @@ const Level3Module1Section1_1 = () => {
             </div>
 
             <p>
-              <strong>Section 37 - Personal Liability:</strong> If an offence is committed by a body corporate with the consent or connivance of, or due to neglect by, a director, manager, secretary or similar officer, that individual is also guilty of the offence. Directors of electrical contracting companies can face personal prosecution and cannot hide behind the company structure.
+              <strong>Section 37 - Personal Liability:</strong> If an offence is committed by a body
+              corporate with the consent or connivance of, or due to neglect by, a director,
+              manager, secretary or similar officer, that individual is also guilty of the offence.
+              Directors of electrical contracting companies can face personal prosecution and cannot
+              hide behind the company structure.
             </p>
 
             <p className="text-sm text-elec-yellow/70 mt-4">
-              <strong>Real consequence:</strong> Recent prosecutions have resulted in fines exceeding £1 million for organisations, personal fines for directors, disqualification from being company directors, and in the most serious cases involving fatalities, prison sentences.
+              <strong>Real consequence:</strong> Recent prosecutions have resulted in fines
+              exceeding £1 million for organisations, personal fines for directors, disqualification
+              from being company directors, and in the most serious cases involving fatalities,
+              prison sentences.
             </p>
           </div>
         </section>
@@ -450,10 +557,15 @@ const Level3Module1Section1_1 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When on Site as an Electrician</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When on Site as an Electrician
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always follow safe isolation procedures before working on any circuit</li>
-                <li>Use the correct PPE for the voltage and task - insulated tools, gloves, eye protection</li>
+                <li>
+                  Use the correct PPE for the voltage and task - insulated tools, gloves, eye
+                  protection
+                </li>
                 <li>Check test equipment is calibrated and in good condition before use</li>
                 <li>Report hazards immediately - don't assume someone else will</li>
                 <li>Never take shortcuts, even under time pressure</li>
@@ -461,7 +573,9 @@ const Level3Module1Section1_1 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Supervising Others</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Supervising Others
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Ensure apprentices and less experienced workers are adequately supervised</li>
                 <li>Verify competence before assigning tasks</li>
@@ -473,10 +587,22 @@ const Level3Module1Section1_1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Assuming circuits are dead</strong> - Always prove dead with a tested voltage indicator</li>
-                <li><strong>Bypassing safety interlocks</strong> - This breaches Section 8 and creates serious risk</li>
-                <li><strong>Working live for convenience</strong> - Time pressure is never justification for unsafe work</li>
-                <li><strong>Not reporting near-misses</strong> - These are opportunities to prevent future accidents</li>
+                <li>
+                  <strong>Assuming circuits are dead</strong> - Always prove dead with a tested
+                  voltage indicator
+                </li>
+                <li>
+                  <strong>Bypassing safety interlocks</strong> - This breaches Section 8 and creates
+                  serious risk
+                </li>
+                <li>
+                  <strong>Working live for convenience</strong> - Time pressure is never
+                  justification for unsafe work
+                </li>
+                <li>
+                  <strong>Not reporting near-misses</strong> - These are opportunities to prevent
+                  future accidents
+                </li>
               </ul>
             </div>
           </div>
@@ -500,7 +626,9 @@ const Level3Module1Section1_1 = () => {
         {/* QUICK REFERENCE */}
         <section className="mb-10">
           <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference - HASAWA Key Sections</h3>
+            <h3 className="text-sm font-medium text-white mb-4">
+              Quick Reference - HASAWA Key Sections
+            </h3>
             <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
                 <p className="font-medium text-white mb-1">Employer Duties (Section 2)</p>
@@ -528,10 +656,7 @@ const Level3Module1Section1_1 = () => {
 
         {/* QUIZ */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* NAVIGATION */}
@@ -558,7 +683,6 @@ const Level3Module1Section1_1 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

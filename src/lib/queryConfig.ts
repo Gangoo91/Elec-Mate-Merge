@@ -118,7 +118,7 @@ export const QUERY_KEYS = {
  */
 export function withPreset<T extends keyof typeof QUERY_PRESETS>(
   preset: T,
-  overrides?: Partial<typeof QUERY_PRESETS[T]>
+  overrides?: Partial<(typeof QUERY_PRESETS)[T]>
 ) {
   return {
     ...QUERY_PRESETS[preset],

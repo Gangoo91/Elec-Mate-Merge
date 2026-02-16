@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Module 7: Regulatory Compliance & BS 5839 - Fire Alarm Course";
-const DESCRIPTION = "Learn about fire safety legislation, Building Regulations, BS 5839 parts 1 and 6, and Regulatory Reform Order requirements.";
+const TITLE = 'Module 7: Regulatory Compliance & BS 5839 - Fire Alarm Course';
+const DESCRIPTION =
+  'Learn about fire safety legislation, Building Regulations, BS 5839 parts 1 and 6, and Regulatory Reform Order requirements.';
 
 const FireAlarmModule7 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -13,28 +14,28 @@ const FireAlarmModule7 = () => {
   const sections = [
     {
       id: 1,
-      title: "Fire Safety Legislation",
+      title: 'Fire Safety Legislation',
       icon: CheckCircle,
-      description: "Regulatory Reform Order 2005 and fire safety duties"
+      description: 'Regulatory Reform Order 2005 and fire safety duties',
     },
     {
       id: 2,
-      title: "Building Regulations",
+      title: 'Building Regulations',
       icon: CheckCircle,
-      description: "Approved Document B and compliance routes"
+      description: 'Approved Document B and compliance routes',
     },
     {
       id: 3,
-      title: "BS 5839-1 Requirements",
+      title: 'BS 5839-1 Requirements',
       icon: CheckCircle,
-      description: "Non-domestic systems and categories"
+      description: 'Non-domestic systems and categories',
     },
     {
       id: 4,
-      title: "BS 5839-6 Requirements",
+      title: 'BS 5839-6 Requirements',
       icon: CheckCircle,
-      description: "Domestic systems, grades and LD classifications"
-    }
+      description: 'Domestic systems, grades and LD classifications',
+    },
   ];
 
   return (
@@ -75,7 +76,8 @@ const FireAlarmModule7 = () => {
             Regulatory Compliance & BS 5839
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Understanding the legal framework, standards and regulations governing fire alarm systems in the UK.
+            Understanding the legal framework, standards and regulations governing fire alarm
+            systems in the UK.
           </p>
         </div>
 

@@ -1,134 +1,142 @@
-import { ArrowLeft, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Common Faults and How to Correct Them - Module 4.5.8 | Level 2 Electrical Course";
-const DESCRIPTION = "Master systematic fault-finding and correction techniques for electrical installations. Learn to identify, diagnose, and safely rectify common electrical faults while preventing recurrence.";
+const TITLE = 'Common Faults and How to Correct Them - Module 4.5.8 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Master systematic fault-finding and correction techniques for electrical installations. Learn to identify, diagnose, and safely rectify common electrical faults while preventing recurrence.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What is the main danger of a loose connection?",
-    options: ["Reduced voltage", "Overheating and potential fire risk", "Increased current", "Faster wear"],
+    question: 'What is the main danger of a loose connection?',
+    options: [
+      'Reduced voltage',
+      'Overheating and potential fire risk',
+      'Increased current',
+      'Faster wear',
+    ],
     correctIndex: 1,
-    explanation: "Loose connections create high resistance, leading to overheating, arcing, and potential fire hazards. They can also cause intermittent faults and equipment damage."
+    explanation:
+      'Loose connections create high resistance, leading to overheating, arcing, and potential fire hazards. They can also cause intermittent faults and equipment damage.',
   },
   {
     id: 2,
-    question: "Name one piece of test equipment used to locate open circuits.",
-    options: ["Voltage indicator", "Continuity tester", "Current clamp", "Power analyser"],
+    question: 'Name one piece of test equipment used to locate open circuits.',
+    options: ['Voltage indicator', 'Continuity tester', 'Current clamp', 'Power analyser'],
     correctIndex: 1,
-    explanation: "Continuity testers (including low resistance ohmmeters and multimeters) are used to verify complete electrical paths and identify open circuits."
+    explanation:
+      'Continuity testers (including low resistance ohmmeters and multimeters) are used to verify complete electrical paths and identify open circuits.',
   },
   {
     id: 3,
-    question: "Why should you record all fault rectification work?",
-    options: ["For billing purposes", "For site documentation and quality assurance", "To impress clients", "For tool inventory"],
+    question: 'Why should you record all fault rectification work?',
+    options: [
+      'For billing purposes',
+      'For site documentation and quality assurance',
+      'To impress clients',
+      'For tool inventory',
+    ],
     correctIndex: 1,
-    explanation: "Recording fault rectification provides quality assurance, helps identify recurring problems, supports certification, and assists with future maintenance."
-  }
+    explanation:
+      'Recording fault rectification provides quality assurance, helps identify recurring problems, supports certification, and assists with future maintenance.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which of the following is a dangerous fault caused by swapping live and neutral conductors?",
-    options: [
-      "Open circuit",
-      "Short circuit",
-      "Reversed polarity",
-      "Earth fault"
-    ],
+    question:
+      'Which of the following is a dangerous fault caused by swapping live and neutral conductors?',
+    options: ['Open circuit', 'Short circuit', 'Reversed polarity', 'Earth fault'],
     correctAnswer: 2,
-    explanation: "Reversed polarity occurs when live and neutral conductors are incorrectly connected, creating serious safety hazards."
+    explanation:
+      'Reversed polarity occurs when live and neutral conductors are incorrectly connected, creating serious safety hazards.',
   },
   {
     id: 2,
-    question: "True or False: You should re-test the installation after correcting a fault.",
-    options: [
-      "True",
-      "False",
-      "Only for major faults",
-      "Only if required by regulations"
-    ],
+    question: 'True or False: You should re-test the installation after correcting a fault.',
+    options: ['True', 'False', 'Only for major faults', 'Only if required by regulations'],
     correctAnswer: 0,
-    explanation: "True - Re-testing after fault correction verifies the repair and ensures no new faults were introduced."
+    explanation:
+      'True - Re-testing after fault correction verifies the repair and ensures no new faults were introduced.',
   },
   {
     id: 3,
-    question: "Name two causes of short circuits.",
+    question: 'Name two causes of short circuits.',
     options: [
-      "Insulation damage and conductor contact",
-      "High voltage and low current",
-      "Poor earthing and loose connections",
-      "Wrong cable size and overloading"
+      'Insulation damage and conductor contact',
+      'High voltage and low current',
+      'Poor earthing and loose connections',
+      'Wrong cable size and overloading',
     ],
     correctAnswer: 0,
-    explanation: "Short circuits are typically caused by insulation damage allowing direct contact between live conductors."
+    explanation:
+      'Short circuits are typically caused by insulation damage allowing direct contact between live conductors.',
   },
   {
     id: 4,
-    question: "What is the first step before attempting to repair a fault?",
+    question: 'What is the first step before attempting to repair a fault?',
     options: [
-      "Gather tools",
-      "Isolate and prove dead",
-      "Order replacement parts",
-      "Call supervisor"
+      'Gather tools',
+      'Isolate and prove dead',
+      'Order replacement parts',
+      'Call supervisor',
     ],
     correctAnswer: 1,
-    explanation: "Safety requires complete isolation and verification that circuits are dead before any repair work begins."
+    explanation:
+      'Safety requires complete isolation and verification that circuits are dead before any repair work begins.',
   },
   {
     id: 5,
-    question: "Which test instrument is used to check insulation condition?",
-    options: [
-      "Multimeter",
-      "Insulation resistance tester",
-      "Clamp meter",
-      "Voltage stick"
-    ],
+    question: 'Which test instrument is used to check insulation condition?',
+    options: ['Multimeter', 'Insulation resistance tester', 'Clamp meter', 'Voltage stick'],
     correctAnswer: 1,
-    explanation: "Insulation resistance testers apply high voltage to detect insulation breakdown and deterioration."
+    explanation:
+      'Insulation resistance testers apply high voltage to detect insulation breakdown and deterioration.',
   },
   {
     id: 6,
     question: "Why is it important to tighten terminals to the manufacturer's torque settings?",
     options: [
-      "To prevent loose connections and ensure optimal contact",
-      "To speed up installation",
-      "To reduce material costs",
-      "To comply with colour coding"
+      'To prevent loose connections and ensure optimal contact',
+      'To speed up installation',
+      'To reduce material costs',
+      'To comply with colour coding',
     ],
     correctAnswer: 0,
-    explanation: "Correct torque prevents loose connections while avoiding over-tightening damage, ensuring safe and reliable connections."
+    explanation:
+      'Correct torque prevents loose connections while avoiding over-tightening damage, ensuring safe and reliable connections.',
   },
   {
     id: 7,
-    question: "Give one reason to test at both first fix and second fix stages.",
+    question: 'Give one reason to test at both first fix and second fix stages.',
     options: [
-      "To identify faults early before they become expensive",
-      "To use test equipment regularly",
-      "To satisfy insurance requirements",
-      "To train apprentices"
+      'To identify faults early before they become expensive',
+      'To use test equipment regularly',
+      'To satisfy insurance requirements',
+      'To train apprentices',
     ],
     correctAnswer: 0,
-    explanation: "Early testing identifies faults when they are easier and less expensive to correct, before final installation is complete."
+    explanation:
+      'Early testing identifies faults when they are easier and less expensive to correct, before final installation is complete.',
   },
   {
     id: 8,
-    question: "Why should you address only one fault at a time?",
+    question: 'Why should you address only one fault at a time?',
     options: [
-      "To save time",
-      "To avoid confusion and ensure each repair is verified",
-      "To use fewer tools",
-      "To reduce paperwork"
+      'To save time',
+      'To avoid confusion and ensure each repair is verified',
+      'To use fewer tools',
+      'To reduce paperwork',
     ],
     correctAnswer: 1,
-    explanation: "Addressing one fault at a time prevents confusion, allows proper verification of each repair, and avoids introducing new problems."
-  }
+    explanation:
+      'Addressing one fault at a time prevents confusion, allows proper verification of each repair, and avoids introducing new problems.',
+  },
 ];
 
 const Module4Section5_8 = () => {
@@ -166,7 +174,8 @@ const Module4Section5_8 = () => {
               Common Faults and How to Correct Them
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master systematic fault-finding and correction techniques to ensure safe, compliant, and reliable electrical installations.
+              Master systematic fault-finding and correction techniques to ensure safe, compliant,
+              and reliable electrical installations.
             </p>
           </header>
 
@@ -177,16 +186,27 @@ const Module4Section5_8 = () => {
                 <p className="font-medium text-elec-yellow text-sm mb-2">In 30 Seconds</p>
                 <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
                   <li>Faults can occur during or after installation despite careful work</li>
-                  <li>Common causes include poor workmanship, damaged materials, and inadequate testing</li>
-                  <li>Systematic fault-finding and correction ensures safety and prevents recurrence</li>
+                  <li>
+                    Common causes include poor workmanship, damaged materials, and inadequate
+                    testing
+                  </li>
+                  <li>
+                    Systematic fault-finding and correction ensures safety and prevents recurrence
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">Spot it / Use it</p>
                 <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
-                  <li><strong>Spot:</strong> Fault symptoms, potential causes, safety hazards</li>
-                  <li><strong>Use:</strong> Systematic methods, proper test equipment, safe procedures</li>
-                  <li><strong>Check:</strong> Complete repairs, verify function, prevent recurrence</li>
+                  <li>
+                    <strong>Spot:</strong> Fault symptoms, potential causes, safety hazards
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Systematic methods, proper test equipment, safe procedures
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Complete repairs, verify function, prevent recurrence
+                  </li>
                 </ul>
               </div>
             </div>
@@ -199,11 +219,23 @@ const Module4Section5_8 = () => {
               Learning Outcomes
             </h2>
             <ul className="text-white/80 space-y-2 leading-relaxed list-disc pl-6">
-              <li>Recognise common electrical installation faults and understand their potential consequences</li>
-              <li>Understand the likely causes of faults and how to prevent them through good practice</li>
-              <li>Apply safe and systematic fault-finding techniques using appropriate test equipment</li>
-              <li>Correct faults safely and effectively to restore proper operation and compliance</li>
-              <li>Prevent fault recurrence through improved working methods and quality control procedures</li>
+              <li>
+                Recognise common electrical installation faults and understand their potential
+                consequences
+              </li>
+              <li>
+                Understand the likely causes of faults and how to prevent them through good practice
+              </li>
+              <li>
+                Apply safe and systematic fault-finding techniques using appropriate test equipment
+              </li>
+              <li>
+                Correct faults safely and effectively to restore proper operation and compliance
+              </li>
+              <li>
+                Prevent fault recurrence through improved working methods and quality control
+                procedures
+              </li>
             </ul>
           </section>
 
@@ -214,25 +246,46 @@ const Module4Section5_8 = () => {
               Identification of Common Electrical Faults
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Understanding common fault types enables rapid identification and appropriate corrective action:</p>
+              <p>
+                Understanding common fault types enables rapid identification and appropriate
+                corrective action:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Loose Connections</p>
-                <p className="text-sm mb-2">High resistance faults causing overheating and intermittent operation:</p>
+                <p className="text-sm mb-2">
+                  High resistance faults causing overheating and intermittent operation:
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Symptoms: Flickering lights, intermittent power loss, burning smells, hot terminals</li>
-                  <li>Locations: Terminal blocks, junction boxes, accessory connections, distribution boards</li>
-                  <li>Detection: Visual inspection for burn marks, thermal imaging, resistance testing</li>
+                  <li>
+                    Symptoms: Flickering lights, intermittent power loss, burning smells, hot
+                    terminals
+                  </li>
+                  <li>
+                    Locations: Terminal blocks, junction boxes, accessory connections, distribution
+                    boards
+                  </li>
+                  <li>
+                    Detection: Visual inspection for burn marks, thermal imaging, resistance testing
+                  </li>
                   <li>Consequences: Fire risk, equipment damage, protection device operation</li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Reversed Polarity</p>
-                <p className="text-sm mb-2">Dangerous condition with live and neutral conductors incorrectly connected:</p>
+                <p className="text-sm mb-2">
+                  Dangerous condition with live and neutral conductors incorrectly connected:
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Symptoms: Incorrect operation of equipment, failed polarity tests, safety hazards</li>
-                  <li>Common locations: Junction boxes, switch connections, distribution board terminations</li>
+                  <li>
+                    Symptoms: Incorrect operation of equipment, failed polarity tests, safety
+                    hazards
+                  </li>
+                  <li>
+                    Common locations: Junction boxes, switch connections, distribution board
+                    terminations
+                  </li>
                   <li>Detection: Polarity testing with multimeter or dedicated test instruments</li>
                   <li>Consequences: Shock risk, equipment damage, regulatory non-compliance</li>
                 </ul>
@@ -240,10 +293,19 @@ const Module4Section5_8 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Open Circuits</p>
-                <p className="text-sm mb-2">Complete loss of electrical continuity through broken conductors or failed connections:</p>
+                <p className="text-sm mb-2">
+                  Complete loss of electrical continuity through broken conductors or failed
+                  connections:
+                </p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Symptoms: Complete loss of power, failed continuity tests, non-functioning circuits</li>
-                  <li>Causes: Broken conductors, failed terminations, damaged cables, loose connections</li>
+                  <li>
+                    Symptoms: Complete loss of power, failed continuity tests, non-functioning
+                    circuits
+                  </li>
+                  <li>
+                    Causes: Broken conductors, failed terminations, damaged cables, loose
+                    connections
+                  </li>
                   <li>Detection: Continuity testing, visual inspection, voltage measurements</li>
                   <li>Impact: Circuit malfunction, inability to energise, failed commissioning</li>
                 </ul>
@@ -253,15 +315,28 @@ const Module4Section5_8 = () => {
                 <p className="font-medium text-white mb-2">Short Circuits and Earth Faults</p>
                 <p className="text-sm mb-2">Direct connections between conductors or to earth:</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Short circuits: Direct contact between live conductors causing protection device operation</li>
-                  <li>Earth faults: Live conductor contact with earthed metalwork creating shock risk</li>
-                  <li>Detection: Insulation resistance testing, visual inspection for cable damage</li>
-                  <li>Immediate action: Isolation, identification of fault location, safe repair procedures</li>
+                  <li>
+                    Short circuits: Direct contact between live conductors causing protection device
+                    operation
+                  </li>
+                  <li>
+                    Earth faults: Live conductor contact with earthed metalwork creating shock risk
+                  </li>
+                  <li>
+                    Detection: Insulation resistance testing, visual inspection for cable damage
+                  </li>
+                  <li>
+                    Immediate action: Isolation, identification of fault location, safe repair
+                    procedures
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <p className="text-sm"><strong>Safety priority:</strong> All faults present potential safety hazards requiring immediate assessment and appropriate action.</p>
+                <p className="text-sm">
+                  <strong>Safety priority:</strong> All faults present potential safety hazards
+                  requiring immediate assessment and appropriate action.
+                </p>
               </div>
             </div>
           </section>
@@ -283,13 +358,18 @@ const Module4Section5_8 = () => {
               Root Causes and Contributing Factors
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Understanding fault causes enables prevention strategies and improved working practices:</p>
+              <p>
+                Understanding fault causes enables prevention strategies and improved working
+                practices:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Poor Workmanship Factors</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>Insufficient terminal tightening leading to high resistance connections</li>
-                  <li>Incorrect cable stripping causing damaged conductors or inadequate insertion</li>
+                  <li>
+                    Incorrect cable stripping causing damaged conductors or inadequate insertion
+                  </li>
                   <li>Poor cable routing creating stress points and potential damage</li>
                   <li>Inadequate support allowing movement and connection stress</li>
                 </ul>
@@ -308,7 +388,9 @@ const Module4Section5_8 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Process and Procedural Failures</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Insufficient testing during installation stages missing early fault detection</li>
+                  <li>
+                    Insufficient testing during installation stages missing early fault detection
+                  </li>
                   <li>Lack of systematic inspection procedures allowing errors to progress</li>
                   <li>Poor documentation leading to confusion and incorrect connections</li>
                   <li>Inadequate supervision and quality assurance processes</li>
@@ -316,7 +398,10 @@ const Module4Section5_8 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong>Prevention focus:</strong> Most faults are preventable through proper procedures, quality control, and protection measures.</p>
+                <p className="text-sm">
+                  <strong>Prevention focus:</strong> Most faults are preventable through proper
+                  procedures, quality control, and protection measures.
+                </p>
               </div>
             </div>
           </section>
@@ -338,7 +423,10 @@ const Module4Section5_8 = () => {
               Systematic Fault-Finding Methodologies
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Structured approaches to fault-finding ensure safety, efficiency, and complete problem resolution:</p>
+              <p>
+                Structured approaches to fault-finding ensure safety, efficiency, and complete
+                problem resolution:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Visual Inspection Methodology</p>
@@ -354,8 +442,13 @@ const Module4Section5_8 = () => {
                 <p className="font-medium text-white mb-2">Test Equipment Applications</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>Continuity testers: Low resistance ohmmeters for open circuit detection</li>
-                  <li>Insulation resistance testers: High voltage testing for insulation breakdown</li>
-                  <li>Polarity testers: Multimeters and dedicated instruments for connection verification</li>
+                  <li>
+                    Insulation resistance testers: High voltage testing for insulation breakdown
+                  </li>
+                  <li>
+                    Polarity testers: Multimeters and dedicated instruments for connection
+                    verification
+                  </li>
                   <li>Thermal imaging: Advanced detection of overheating connections</li>
                 </ul>
               </div>
@@ -399,7 +492,10 @@ const Module4Section5_8 = () => {
               Professional Fault Correction Techniques
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Effective fault correction requires proper techniques, quality materials, and verification procedures:</p>
+              <p>
+                Effective fault correction requires proper techniques, quality materials, and
+                verification procedures:
+              </p>
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-green-400 mb-2">Terminal and Connection Repairs</p>
@@ -432,7 +528,10 @@ const Module4Section5_8 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong>Quality standard:</strong> All repairs must meet or exceed original installation standards and current regulations.</p>
+                <p className="text-sm">
+                  <strong>Quality standard:</strong> All repairs must meet or exceed original
+                  installation standards and current regulations.
+                </p>
               </div>
             </div>
           </section>
@@ -444,12 +543,17 @@ const Module4Section5_8 = () => {
               Comprehensive Fault Prevention Strategies
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Proactive prevention reduces faults, improves reliability, and maintains professional standards:</p>
+              <p>
+                Proactive prevention reduces faults, improves reliability, and maintains
+                professional standards:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Quality Control Procedures</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Double-check all connections before progressing to next installation stage</li>
+                  <li>
+                    Double-check all connections before progressing to next installation stage
+                  </li>
                   <li>Implement systematic testing at first fix, second fix, and final stages</li>
                   <li>Use quality checklists and inspection procedures throughout installation</li>
                   <li>Apply peer review processes for critical or complex installations</li>
@@ -459,10 +563,17 @@ const Module4Section5_8 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Protection During Construction</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Keep cables protected using appropriate covers and barriers during building work</li>
+                  <li>
+                    Keep cables protected using appropriate covers and barriers during building work
+                  </li>
                   <li>Coordinate with other trades to prevent damage from their activities</li>
-                  <li>Monitor installation areas for potential damage and take preventive action</li>
-                  <li>Maintain clean working conditions to prevent contamination of electrical components</li>
+                  <li>
+                    Monitor installation areas for potential damage and take preventive action
+                  </li>
+                  <li>
+                    Maintain clean working conditions to prevent contamination of electrical
+                    components
+                  </li>
                 </ul>
               </div>
 
@@ -509,7 +620,10 @@ const Module4Section5_8 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong>Professional standard:</strong> All repairs must meet current standards even if original installation was to earlier requirements.</p>
+                <p className="text-sm">
+                  <strong>Professional standard:</strong> All repairs must meet current standards
+                  even if original installation was to earlier requirements.
+                </p>
               </div>
             </div>
           </section>
@@ -519,7 +633,13 @@ const Module4Section5_8 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="text-lg font-semibold text-white mb-2">Summary</h2>
               <p className="text-white/80 leading-relaxed">
-                Faults in electrical installations can cause serious safety hazards, equipment damage, and costly delays. A systematic approach to fault-finding, correction, and prevention ensures installations are safe, compliant, and reliable. Professional electricians develop expertise in rapid fault diagnosis and effective correction techniques, while implementing quality control procedures that prevent most faults from occurring. This combination of diagnostic skills and prevention strategies ensures high-quality installations and enhances professional reputation.
+                Faults in electrical installations can cause serious safety hazards, equipment
+                damage, and costly delays. A systematic approach to fault-finding, correction, and
+                prevention ensures installations are safe, compliant, and reliable. Professional
+                electricians develop expertise in rapid fault diagnosis and effective correction
+                techniques, while implementing quality control procedures that prevent most faults
+                from occurring. This combination of diagnostic skills and prevention strategies
+                ensures high-quality installations and enhances professional reputation.
               </p>
             </div>
           </section>
@@ -527,7 +647,9 @@ const Module4Section5_8 = () => {
           {/* Quiz */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
-            <p className="text-white/70 mb-6">Test your understanding of fault identification, diagnosis, and correction techniques.</p>
+            <p className="text-white/70 mb-6">
+              Test your understanding of fault identification, diagnosis, and correction techniques.
+            </p>
             <Quiz questions={quizQuestions} />
           </section>
 

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, ReactNode } from "react";
-import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useScrollLock } from "@/hooks/use-scroll-lock";
+import { useEffect, useRef, useState, ReactNode } from 'react';
+import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useScrollLock } from '@/hooks/use-scroll-lock';
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -11,13 +11,7 @@ interface BottomSheetProps {
   className?: string;
 }
 
-const BottomSheet = ({
-  isOpen,
-  onClose,
-  title,
-  children,
-  className
-}: BottomSheetProps) => {
+const BottomSheet = ({ isOpen, onClose, title, children, className }: BottomSheetProps) => {
   const sheetRef = useRef<HTMLDivElement>(null);
   const [dragStart, setDragStart] = useState<number | null>(null);
   const [currentY, setCurrentY] = useState(0);
@@ -62,8 +56,8 @@ const BottomSheet = ({
       {/* Backdrop - Higher z-index to cover tab bar */}
       <div
         className={cn(
-          "fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] transition-opacity duration-300",
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          'fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] transition-opacity duration-300',
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         )}
         onClick={onClose}
       />
@@ -72,15 +66,15 @@ const BottomSheet = ({
       <div
         ref={sheetRef}
         className={cn(
-          "fixed bottom-0 left-0 right-0 z-[101]",
-          "bg-neutral-900 border-t border-white/10 rounded-t-3xl shadow-2xl",
-          "shadow-2xl shadow-black/50",
-          !isDragging && "transition-transform duration-300 ease-out",
+          'fixed bottom-0 left-0 right-0 z-[101]',
+          'bg-neutral-900 border-t border-white/10 rounded-t-3xl shadow-2xl',
+          'shadow-2xl shadow-black/50',
+          !isDragging && 'transition-transform duration-300 ease-out',
           className
         )}
         style={{
           transform: `translateY(${currentY}px)`,
-          maxHeight: '85vh'
+          maxHeight: '85vh',
         }}
       >
         {/* Drag Handle */}
@@ -107,7 +101,10 @@ const BottomSheet = ({
         )}
 
         {/* Content */}
-        <div className="overflow-y-auto px-5 py-5 overscroll-contain" style={{ maxHeight: 'calc(85vh - 80px)' }}>
+        <div
+          className="overflow-y-auto px-5 py-5 overscroll-contain"
+          style={{ maxHeight: 'calc(85vh - 80px)' }}
+        >
           {children}
         </div>
       </div>

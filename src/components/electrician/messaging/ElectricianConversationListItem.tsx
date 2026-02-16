@@ -1,10 +1,10 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { MessageSquare, Clock, Briefcase, MapPin, Building2, Lock, Trash2 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import type { ElectricianConversation } from "@/services/conversationService";
-import { cn } from "@/lib/utils";
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { MessageSquare, Clock, Briefcase, MapPin, Building2, Lock, Trash2 } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import type { ElectricianConversation } from '@/services/conversationService';
+import { cn } from '@/lib/utils';
 
 interface ElectricianConversationListItemProps {
   conversation: ElectricianConversation;
@@ -29,21 +29,27 @@ export function ElectricianConversationListItem({
 
   // Get company initials
   const companyInitials = employer?.company_name
-    ? employer.company_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    ? employer.company_name
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
     : '??';
 
   // Format salary if available
-  const salaryRange = vacancy?.salary_min && vacancy?.salary_max
-    ? `£${(vacancy.salary_min / 1000).toFixed(0)}k - £${(vacancy.salary_max / 1000).toFixed(0)}k`
-    : vacancy?.salary_min
-      ? `From £${(vacancy.salary_min / 1000).toFixed(0)}k`
-      : null;
+  const salaryRange =
+    vacancy?.salary_min && vacancy?.salary_max
+      ? `£${(vacancy.salary_min / 1000).toFixed(0)}k - £${(vacancy.salary_max / 1000).toFixed(0)}k`
+      : vacancy?.salary_min
+        ? `From £${(vacancy.salary_min / 1000).toFixed(0)}k`
+        : null;
 
   return (
     <Card
       className={cn(
-        "cursor-pointer transition-all duration-200 border-border hover:border-elec-yellow/50 hover:shadow-md",
-        hasUnread && "border-l-4 border-l-elec-yellow bg-elec-yellow/5"
+        'cursor-pointer transition-all duration-200 border-border hover:border-elec-yellow/50 hover:shadow-md',
+        hasUnread && 'border-l-4 border-l-elec-yellow bg-elec-yellow/5'
       )}
       onClick={() => onClick(conversation)}
     >
@@ -70,20 +76,18 @@ export function ElectricianConversationListItem({
             <div className="flex items-start justify-between gap-2 mb-1">
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className={cn(
-                    "font-semibold truncate text-foreground",
-                    hasUnread && "text-elec-yellow"
-                  )}>
+                  <h3
+                    className={cn(
+                      'font-semibold truncate text-foreground',
+                      hasUnread && 'text-elec-yellow'
+                    )}
+                  >
                     {employer?.company_name || 'Unknown Company'}
                   </h3>
-                  {!canReply && (
-                    <Lock className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                  )}
+                  {!canReply && <Lock className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
                 </div>
                 {employer?.contact_name && (
-                  <p className="text-xs text-muted-foreground truncate">
-                    {employer.contact_name}
-                  </p>
+                  <p className="text-xs text-muted-foreground truncate">{employer.contact_name}</p>
                 )}
               </div>
 
@@ -99,7 +103,10 @@ export function ElectricianConversationListItem({
             {/* Vacancy info */}
             {vacancy && (
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <Badge variant="outline" className="text-xs px-2 py-0 bg-primary/10 text-primary border-primary/30">
+                <Badge
+                  variant="outline"
+                  className="text-xs px-2 py-0 bg-primary/10 text-primary border-primary/30"
+                >
                   <Briefcase className="h-3 w-3 mr-1" />
                   {vacancy.title}
                 </Badge>
@@ -110,19 +117,19 @@ export function ElectricianConversationListItem({
                   </span>
                 )}
                 {salaryRange && (
-                  <span className="text-xs text-success font-medium">
-                    {salaryRange}
-                  </span>
+                  <span className="text-xs text-success font-medium">{salaryRange}</span>
                 )}
               </div>
             )}
 
             {/* Message preview */}
             {conversation.last_message_preview && (
-              <p className={cn(
-                "text-sm line-clamp-1",
-                hasUnread ? "text-foreground font-medium" : "text-muted-foreground"
-              )}>
+              <p
+                className={cn(
+                  'text-sm line-clamp-1',
+                  hasUnread ? 'text-foreground font-medium' : 'text-muted-foreground'
+                )}
+              >
                 {conversation.last_message_preview}
               </p>
             )}
@@ -149,10 +156,9 @@ export function ElectricianConversationListItem({
                 <Trash2 className="h-4 w-4" />
               </button>
             )}
-            <MessageSquare className={cn(
-              "h-5 w-5",
-              hasUnread ? "text-elec-yellow" : "text-muted-foreground"
-            )} />
+            <MessageSquare
+              className={cn('h-5 w-5', hasUnread ? 'text-elec-yellow' : 'text-muted-foreground')}
+            />
           </div>
         </div>
       </CardContent>

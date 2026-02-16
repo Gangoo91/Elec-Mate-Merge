@@ -1,8 +1,8 @@
-import { ArrowLeft, Clock, Target, Flag } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Clock, Target, Flag } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Link } from 'react-router-dom';
 
 interface ExamDesktopSidebarProps {
   timeRemaining: number;
@@ -27,7 +27,7 @@ export const ExamDesktopSidebar = ({
   onQuestionSelect,
   onSubmit,
   exitPath,
-  formatTime
+  formatTime,
 }: ExamDesktopSidebarProps) => {
   const progressPercentage = (answeredQuestions / totalQuestions) * 100;
 
@@ -68,7 +68,9 @@ export const ExamDesktopSidebar = ({
           <div className="bg-background/50 p-4 rounded-lg border border-elec-yellow/20">
             <div className="flex justify-between items-center mb-3">
               <span className="text-sm font-medium text-elec-light">Progress</span>
-              <span className="text-lg font-bold text-elec-yellow">{answeredQuestions}/{totalQuestions}</span>
+              <span className="text-lg font-bold text-elec-yellow">
+                {answeredQuestions}/{totalQuestions}
+              </span>
             </div>
             <Progress value={progressPercentage} className="h-3 mb-3" />
             <div className="text-xs text-center text-muted-foreground">
@@ -112,19 +114,19 @@ export const ExamDesktopSidebar = ({
               {Array.from({ length: totalQuestions }, (_, index) => {
                 const isFlagged = flaggedQuestions.has(index);
                 const isAnswered = selectedAnswers[index] !== -1;
-                
+
                 return (
                   <button
                     key={index}
                     onClick={() => onQuestionSelect(index)}
                     className={`aspect-square text-xs font-medium rounded border transition-all ${
                       currentQuestion === index
-                        ? "bg-elec-yellow text-elec-dark border-elec-yellow ring-2 ring-elec-yellow/50"
+                        ? 'bg-elec-yellow text-elec-dark border-elec-yellow ring-2 ring-elec-yellow/50'
                         : isAnswered
-                        ? "bg-green-500/20 text-green-500 border-green-500/40 hover:bg-green-500/30"
-                        : isFlagged
-                        ? "bg-red-500/20 text-red-500 border-red-500/40 hover:bg-red-500/30"
-                        : "bg-muted/20 text-muted-foreground border-muted/40 hover:bg-muted/30"
+                          ? 'bg-green-500/20 text-green-500 border-green-500/40 hover:bg-green-500/30'
+                          : isFlagged
+                            ? 'bg-red-500/20 text-red-500 border-red-500/40 hover:bg-red-500/30'
+                            : 'bg-muted/20 text-muted-foreground border-muted/40 hover:bg-muted/30'
                     }`}
                   >
                     {isFlagged && <Flag className="h-2 w-2 mb-0.5 mx-auto fill-current" />}

@@ -8,29 +8,35 @@ export const SmartHomeModule2Section3FAQ = () => {
 
   const faqs = [
     {
-      question: "Is Matter a replacement for Wi-Fi or Zigbee?",
-      answer: "No — Matter works on top of existing protocols to ensure devices interoperate. It uses Wi-Fi, Thread, and Ethernet as its underlying transport protocols, so your existing infrastructure remains valuable."
+      question: 'Is Matter a replacement for Wi-Fi or Zigbee?',
+      answer:
+        'No — Matter works on top of existing protocols to ensure devices interoperate. It uses Wi-Fi, Thread, and Ethernet as its underlying transport protocols, so your existing infrastructure remains valuable.',
     },
     {
-      question: "Do I need special routers for Thread?",
-      answer: "Yes, you need a Thread border router, but this functionality is increasingly built into devices like Apple HomePod, Google Nest Hub, and Amazon Echo devices. Many users already have compatible devices without realising it."
+      question: 'Do I need special routers for Thread?',
+      answer:
+        'Yes, you need a Thread border router, but this functionality is increasingly built into devices like Apple HomePod, Google Nest Hub, and Amazon Echo devices. Many users already have compatible devices without realising it.',
     },
     {
-      question: "Will Wi-Fi devices eventually become obsolete?",
-      answer: "Not likely — Wi-Fi will remain essential for high-bandwidth devices like cameras, smart speakers, and displays. Thread and other protocols complement Wi-Fi rather than replace it."
+      question: 'Will Wi-Fi devices eventually become obsolete?',
+      answer:
+        'Not likely — Wi-Fi will remain essential for high-bandwidth devices like cameras, smart speakers, and displays. Thread and other protocols complement Wi-Fi rather than replace it.',
     },
     {
-      question: "Can I mix different protocols in one smart home system?",
-      answer: "Absolutely! Modern smart homes typically use multiple protocols. Wi-Fi for cameras, Thread for sensors, Bluetooth for locks, and Matter to tie them together. This multi-protocol approach optimises each device type."
+      question: 'Can I mix different protocols in one smart home system?',
+      answer:
+        'Absolutely! Modern smart homes typically use multiple protocols. Wi-Fi for cameras, Thread for sensors, Bluetooth for locks, and Matter to tie them together. This multi-protocol approach optimises each device type.',
     },
     {
-      question: "How do I know if a device supports Matter?",
-      answer: "Look for the Matter certification logo on packaging or product descriptions. Matter-certified devices will work across Apple HomeKit, Google Home, Amazon Alexa, and other compatible platforms."
+      question: 'How do I know if a device supports Matter?',
+      answer:
+        'Look for the Matter certification logo on packaging or product descriptions. Matter-certified devices will work across Apple HomeKit, Google Home, Amazon Alexa, and other compatible platforms.',
     },
     {
-      question: "What happens to my existing non-Matter devices?",
-      answer: "Your existing devices continue to work! You can use protocol bridges or hubs to integrate them into Matter ecosystems. Many manufacturers also provide firmware updates to add Matter support to existing devices."
-    }
+      question: 'What happens to my existing non-Matter devices?',
+      answer:
+        'Your existing devices continue to work! You can use protocol bridges or hubs to integrate them into Matter ecosystems. Many manufacturers also provide firmware updates to add Matter support to existing devices.',
+    },
   ];
 
   const toggleQuestion = (index: number) => {
@@ -62,13 +68,11 @@ export const SmartHomeModule2Section3FAQ = () => {
                 )}
               </div>
             </Button>
-            
+
             {openQuestion === index && (
               <div className="px-4 pb-4">
                 <div className="pt-2 border-t border-gray-600">
-                  <p className="text-foreground text-sm leading-relaxed">
-                    {faq.answer}
-                  </p>
+                  <p className="text-foreground text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             )}

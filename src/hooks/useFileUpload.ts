@@ -20,68 +20,74 @@ export const useFileUpload = (conversationId: string) => {
   const [uploading, setUploading] = useState(false);
   const queryClient = useQueryClient();
 
-  const uploadSingleFile = useCallback(async (file: File): Promise<FileUploadResult | null> => {
-    const validation = validateFile(file);
-    if (!validation.valid) {
-      toast({
-        title: 'Upload Failed',
-        description: validation.error,
-        variant: 'destructive',
-      });
-      return null;
-    }
-
-    try {
-      setUploading(true);
-      setUploadProgress(prev => ({ ...prev, [file.name]: 0 }));
-
-      // Simulate progress (actual progress would need XHR or fetch with ReadableStream)
-      const progressInterval = setInterval(() => {
-        setUploadProgress(prev => ({
-          ...prev,
-          [file.name]: Math.min((prev[file.name] || 0) + 10, 90),
-        }));
-      }, 100);
-
-      const result = await uploadFile(file, conversationId);
-
-      clearInterval(progressInterval);
-      setUploadProgress(prev => ({ ...prev, [file.name]: 100 }));
-
-      // Clear progress after a delay
-      setTimeout(() => {
-        setUploadProgress(prev => {
-          const { [file.name]: _, ...rest } = prev;
-          return rest;
+  const uploadSingleFile = useCallback(
+    async (file: File): Promise<FileUploadResult | null> => {
+      const validation = validateFile(file);
+      if (!validation.valid) {
+        toast({
+          title: 'Upload Failed',
+          description: validation.error,
+          variant: 'destructive',
         });
-      }, 1000);
-
-      return result;
-    } catch (error) {
-      console.error('Upload error:', error);
-      toast({
-        title: 'Upload Failed',
-        description: 'Failed to upload file. Please try again.',
-        variant: 'destructive',
-      });
-      return null;
-    } finally {
-      setUploading(false);
-    }
-  }, [conversationId]);
-
-  const uploadMultipleFiles = useCallback(async (files: File[]): Promise<FileUploadResult[]> => {
-    const results: FileUploadResult[] = [];
-
-    for (const file of files) {
-      const result = await uploadSingleFile(file);
-      if (result) {
-        results.push(result);
+        return null;
       }
-    }
 
-    return results;
-  }, [uploadSingleFile]);
+      try {
+        setUploading(true);
+        setUploadProgress((prev) => ({ ...prev, [file.name]: 0 }));
+
+        // Simulate progress (actual progress would need XHR or fetch with ReadableStream)
+        const progressInterval = setInterval(() => {
+          setUploadProgress((prev) => ({
+            ...prev,
+            [file.name]: Math.min((prev[file.name] || 0) + 10, 90),
+          }));
+        }, 100);
+
+        const result = await uploadFile(file, conversationId);
+
+        clearInterval(progressInterval);
+        setUploadProgress((prev) => ({ ...prev, [file.name]: 100 }));
+
+        // Clear progress after a delay
+        setTimeout(() => {
+          setUploadProgress((prev) => {
+            const { [file.name]: _, ...rest } = prev;
+            return rest;
+          });
+        }, 1000);
+
+        return result;
+      } catch (error) {
+        console.error('Upload error:', error);
+        toast({
+          title: 'Upload Failed',
+          description: 'Failed to upload file. Please try again.',
+          variant: 'destructive',
+        });
+        return null;
+      } finally {
+        setUploading(false);
+      }
+    },
+    [conversationId]
+  );
+
+  const uploadMultipleFiles = useCallback(
+    async (files: File[]): Promise<FileUploadResult[]> => {
+      const results: FileUploadResult[] = [];
+
+      for (const file of files) {
+        const result = await uploadSingleFile(file);
+        if (result) {
+          results.push(result);
+        }
+      }
+
+      return results;
+    },
+    [uploadSingleFile]
+  );
 
   return {
     uploadFile: uploadSingleFile,
@@ -172,16 +178,19 @@ export const useFileDrop = (onDrop: (files: File[]) => void) => {
     e.stopPropagation();
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
 
-    const files = Array.from(e.dataTransfer.files);
-    if (files.length > 0) {
-      onDrop(files);
-    }
-  }, [onDrop]);
+      const files = Array.from(e.dataTransfer.files);
+      if (files.length > 0) {
+        onDrop(files);
+      }
+    },
+    [onDrop]
+  );
 
   return {
     isDragging,

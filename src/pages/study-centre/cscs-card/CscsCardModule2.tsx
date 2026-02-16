@@ -1,45 +1,45 @@
-import { ArrowLeft, ShieldCheck, FileText, HardHat, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ShieldCheck, FileText, HardHat, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Risk Assessment & Method Statements",
+    title: 'Risk Assessment & Method Statements',
     icon: ShieldCheck,
     description:
-      "The 5-step risk assessment process, RAMS preparation, hierarchy of controls, and dynamic risk assessment on site",
+      'The 5-step risk assessment process, RAMS preparation, hierarchy of controls, and dynamic risk assessment on site',
   },
   {
     id: 2,
-    title: "Personal Protective Equipment",
+    title: 'Personal Protective Equipment',
     icon: FileText,
     description:
-      "PPE types, selection, fitting, maintenance, storage, and employer/employee duties under the PPE Regulations 2022",
+      'PPE types, selection, fitting, maintenance, storage, and employer/employee duties under the PPE Regulations 2022',
   },
   {
     id: 3,
-    title: "Workplace Welfare & Site Safety",
+    title: 'Workplace Welfare & Site Safety',
     icon: HardHat,
     description:
-      "Welfare facilities, site inductions, housekeeping, traffic management, and safety signage requirements",
+      'Welfare facilities, site inductions, housekeeping, traffic management, and safety signage requirements',
   },
   {
     id: 4,
-    title: "Accident Reporting & RIDDOR",
+    title: 'Accident Reporting & RIDDOR',
     icon: AlertTriangle,
     description:
-      "Accident books, RIDDOR reporting requirements, near-miss reporting, and investigation procedures",
+      'Accident books, RIDDOR reporting requirements, near-miss reporting, and investigation procedures',
   },
 ];
 
 export default function CscsCardModule2() {
   useSEO({
-    title: "Module 2: General Health & Safety | CSCS Card Preparation",
+    title: 'Module 2: General Health & Safety | CSCS Card Preparation',
     description:
-      "Learn about risk assessment, PPE, workplace welfare, accident reporting, and RIDDOR requirements for the CSCS HS&E test.",
+      'Learn about risk assessment, PPE, workplace welfare, accident reporting, and RIDDOR requirements for the CSCS HS&E test.',
   });
 
   return (

@@ -1,12 +1,11 @@
-
-import { Outlet, useLocation } from "react-router-dom";
-import Sidebar from "@/components/layout/Sidebar";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import Header from "@/components/layout/Header";
-import { useState, useEffect } from "react";
-import { PageTransition } from "@/components/layout/PageTransition";
-import AnnouncementBanner from "@/components/announcements/AnnouncementBanner";
+import { Outlet, useLocation } from 'react-router-dom';
+import Sidebar from '@/components/layout/Sidebar';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import Header from '@/components/layout/Header';
+import { useState, useEffect } from 'react';
+import { PageTransition } from '@/components/layout/PageTransition';
+import AnnouncementBanner from '@/components/announcements/AnnouncementBanner';
 
 const Layout = () => {
   const isMobile = useIsMobile();
@@ -43,7 +42,7 @@ const Layout = () => {
             {/* Announcements Banner */}
             <AnnouncementBanner />
 
-            <div className={cn("min-w-0")}>
+            <div className={cn('min-w-0')}>
               <PageTransition key={location.pathname}>
                 <Outlet />
               </PageTransition>

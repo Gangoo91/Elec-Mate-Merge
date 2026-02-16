@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import ProviderInfoOverlay from "./ProviderInfoOverlay";
+import React, { useRef, useEffect, useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import ProviderInfoOverlay from './ProviderInfoOverlay';
 
 interface TrainingProvider {
   place_id: string;
@@ -41,7 +41,6 @@ interface CourseMapProps {
   userCoordinates: google.maps.LatLngLiteral | null;
   searchRadius: number;
   isLoading: boolean;
-  
 }
 
 interface ProviderMarkerData {
@@ -50,15 +49,15 @@ interface ProviderMarkerData {
   provider: TrainingProvider;
 }
 
-const CourseMap: React.FC<CourseMapProps> = ({ 
-  nearbyProviders, 
-  selectedCourse, 
-  onCourseSelect, 
+const CourseMap: React.FC<CourseMapProps> = ({
+  nearbyProviders,
+  selectedCourse,
+  onCourseSelect,
   onCourseDeselect,
   userLocation,
-  userCoordinates, 
+  userCoordinates,
   searchRadius,
-  isLoading
+  isLoading,
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
@@ -68,8 +67,8 @@ const CourseMap: React.FC<CourseMapProps> = ({
   const providerMarkersRef = useRef<google.maps.Marker[]>([]);
 
   // Get selected provider for overlay
-  const selectedProvider = selectedCourse 
-    ? nearbyProviders.find(provider => provider.place_id === selectedCourse)
+  const selectedProvider = selectedCourse
+    ? nearbyProviders.find((provider) => provider.place_id === selectedCourse)
     : null;
 
   // Debug logging
@@ -78,12 +77,15 @@ const CourseMap: React.FC<CourseMapProps> = ({
   console.log('Search radius:', searchRadius);
   console.log('Selected course ID:', selectedCourse);
   console.log('Selected provider:', selectedProvider);
-  console.log('All provider IDs:', nearbyProviders.map(p => p.place_id));
+  console.log(
+    'All provider IDs:',
+    nearbyProviders.map((p) => p.place_id)
+  );
 
   // Initialize Google Maps with optimized settings
   useEffect(() => {
     if (!window.google?.maps || !mapRef.current) return;
-    
+
     try {
       googleMapRef.current = new window.google.maps.Map(mapRef.current, {
         center: userCoordinates || { lat: 54.7023545, lng: -3.2765753 },
@@ -95,33 +97,32 @@ const CourseMap: React.FC<CourseMapProps> = ({
         zoomControl: true,
         scaleControl: false,
         // Disable auto-loading of extra map types
-        mapTypeId: 'roadmap'
+        mapTypeId: 'roadmap',
       });
-
     } catch (error) {
-      console.error("Error initializing Google Maps:", error);
+      console.error('Error initializing Google Maps:', error);
     }
   }, [userCoordinates]);
 
   // Create markers for Google Places providers (no geocoding needed)
   useEffect(() => {
     if (!googleMapRef.current || !window.google?.maps) return;
-    
+
     // Clear existing provider markers
-    providerMarkersRef.current.forEach(marker => {
+    providerMarkersRef.current.forEach((marker) => {
       marker.setMap(null);
     });
     providerMarkersRef.current = [];
-    
+
     // Create markers for nearby providers - with safety checks
     const providerMarkers = nearbyProviders
-      .filter(provider => provider?.location) // Safety filter
-      .map(provider => {
+      .filter((provider) => provider?.location) // Safety filter
+      .map((provider) => {
         const position = {
           lat: provider.location.lat,
-          lng: provider.location.lng
+          lng: provider.location.lng,
         };
-        
+
         const marker = new window.google.maps.Marker({
           position,
           map: googleMapRef.current,
@@ -135,44 +136,44 @@ const CourseMap: React.FC<CourseMapProps> = ({
           } as any,
           title: `${provider.name} - ${provider.vicinity}`,
         });
-        
+
         marker.addListener('click', () => {
           console.log('🔵 Marker clicked for provider:', provider.name, 'ID:', provider.place_id);
           console.log('🔵 Calling onCourseSelect with ID:', provider.place_id);
           onCourseSelect(provider.place_id);
         });
-        
+
         return marker;
       });
-    
+
     providerMarkersRef.current = providerMarkers;
-    
+
     // Create marker data for overlay - with safety checks
     const markerData: ProviderMarkerData[] = nearbyProviders
-      .filter(provider => provider?.location) // Safety filter
-      .map(provider => ({
+      .filter((provider) => provider?.location) // Safety filter
+      .map((provider) => ({
         providerId: provider.place_id,
         position: {
           lat: provider.location.lat,
-          lng: provider.location.lng
+          lng: provider.location.lng,
         },
-        provider
+        provider,
       }));
-    
+
     setMarkers(markerData);
-    
+
     // Handle map centering and bounds
     if (userCoordinates && googleMapRef.current) {
       googleMapRef.current.setCenter(userCoordinates);
       googleMapRef.current.setZoom(11);
     } else if (markerData.length > 0 && googleMapRef.current) {
       const bounds = new window.google.maps.LatLngBounds();
-      markerData.forEach(marker => {
+      markerData.forEach((marker) => {
         bounds.extend(marker.position);
       });
       googleMapRef.current.fitBounds(bounds);
     }
-    
+
     console.log('Created markers for providers:', markerData.length);
   }, [nearbyProviders, selectedCourse, onCourseSelect, userCoordinates]);
 
@@ -222,30 +223,30 @@ const CourseMap: React.FC<CourseMapProps> = ({
       // Calculate bounds to fit the entire circle within the map
       const radiusInMeters = searchRadius * 1609.34;
       const bounds = new window.google.maps.LatLngBounds();
-      
+
       // Calculate the approximate bounds of the circle
       // Using a rough conversion: 1 degree ≈ 111,320 meters at the equator
       const latOffset = radiusInMeters / 111320;
-      const lngOffset = radiusInMeters / (111320 * Math.cos(userCoordinates.lat * Math.PI / 180));
-      
+      const lngOffset = radiusInMeters / (111320 * Math.cos((userCoordinates.lat * Math.PI) / 180));
+
       // Extend bounds to include the circle's extent in all directions
       bounds.extend({
         lat: userCoordinates.lat - latOffset,
-        lng: userCoordinates.lng - lngOffset
+        lng: userCoordinates.lng - lngOffset,
       });
       bounds.extend({
         lat: userCoordinates.lat + latOffset,
-        lng: userCoordinates.lng + lngOffset
+        lng: userCoordinates.lng + lngOffset,
       });
-      
+
       // Fit the map to these bounds with padding to ensure circle doesn't touch edges
       googleMapRef.current.fitBounds(bounds, {
         top: 50,
         right: 50,
         bottom: 50,
-        left: 50
+        left: 50,
       });
-      
+
       // Set reasonable zoom limits to prevent extreme zoom levels
       const currentZoom = (googleMapRef.current as any).getZoom();
       if (currentZoom && currentZoom > 15) {
@@ -268,32 +269,32 @@ const CourseMap: React.FC<CourseMapProps> = ({
   // Center map on selected provider with smooth animation
   useEffect(() => {
     if (!googleMapRef.current || !selectedCourse || !window.google?.maps) return;
-    
-    const selectedMarker = markers.find(marker => marker.providerId === selectedCourse);
+
+    const selectedMarker = markers.find((marker) => marker.providerId === selectedCourse);
     if (selectedMarker && googleMapRef.current) {
       // Create bounds around the selected provider with buffer for context
       const bounds = new window.google.maps.LatLngBounds();
       const position = selectedMarker.position;
-      
+
       // Add small buffer around the provider position
       const bufferLat = 0.002;
       const bufferLng = 0.002;
-      
+
       bounds.extend({
         lat: position.lat - bufferLat,
-        lng: position.lng - bufferLng
+        lng: position.lng - bufferLng,
       });
       bounds.extend({
         lat: position.lat + bufferLat,
-        lng: position.lng + bufferLng
+        lng: position.lng + bufferLng,
       });
-      
+
       // Apply bounds with same padding as location selection
       googleMapRef.current.fitBounds(bounds, {
         top: 50,
         right: 50,
         bottom: 50,
-        left: 50
+        left: 50,
       });
 
       // Apply same zoom limits as location selection
@@ -312,7 +313,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
   // Reset map view when overlay is closed (selectedCourse becomes null)
   useEffect(() => {
     if (!googleMapRef.current || !window.google?.maps || selectedCourse !== null) return;
-    
+
     // Function to reset map to show full circle and all providers
     const resetMapToFullView = () => {
       const bounds = new window.google.maps.LatLngBounds();
@@ -326,20 +327,21 @@ const CourseMap: React.FC<CourseMapProps> = ({
         // Include the search radius circle perimeter
         const radiusInMeters = searchRadius * 1609.34;
         const latOffset = radiusInMeters / 111320;
-        const lngOffset = radiusInMeters / (111320 * Math.cos(userCoordinates.lat * Math.PI / 180));
-        
+        const lngOffset =
+          radiusInMeters / (111320 * Math.cos((userCoordinates.lat * Math.PI) / 180));
+
         bounds.extend({
           lat: userCoordinates.lat - latOffset,
-          lng: userCoordinates.lng - lngOffset
+          lng: userCoordinates.lng - lngOffset,
         });
         bounds.extend({
           lat: userCoordinates.lat + latOffset,
-          lng: userCoordinates.lng + lngOffset
+          lng: userCoordinates.lng + lngOffset,
         });
       }
 
       // Include all provider markers
-      markers.forEach(marker => {
+      markers.forEach((marker) => {
         bounds.extend(marker.position);
         hasBounds = true;
       });
@@ -350,7 +352,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
           top: 50,
           right: 50,
           bottom: 50,
-          left: 50
+          left: 50,
         });
 
         // Ensure reasonable zoom limits
@@ -374,7 +376,6 @@ const CourseMap: React.FC<CourseMapProps> = ({
     setTimeout(resetMapToFullView, 100);
   }, [selectedCourse, userCoordinates, searchRadius, markers]);
 
-
   if (isLoading) {
     return (
       <Card className="border-elec-yellow/20 bg-elec-gray p-4 relative h-[500px]">
@@ -386,8 +387,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray p-0 relative h-[500px]">
       <div ref={mapRef} className="h-full w-full rounded-md overflow-hidden" />
-      
-      
+
       {/* Empty state message */}
       {nearbyProviders.length === 0 && !isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-[1000]">
@@ -396,17 +396,16 @@ const CourseMap: React.FC<CourseMapProps> = ({
               No training providers found
             </div>
             <div className="text-sm text-muted-foreground mb-4">
-              {userLocation 
+              {userLocation
                 ? `No electrical training providers found within ${searchRadius} miles of ${userLocation}. Try increasing the search radius or searching a different area.`
-                : "Set your location and search for nearby electrical training providers using the search button above."
-              }
+                : 'Set your location and search for nearby electrical training providers using the search button above.'}
             </div>
           </div>
         </div>
       )}
-      
+
       {/* Provider info overlay */}
-      <ProviderInfoOverlay 
+      <ProviderInfoOverlay
         userLocation={userLocation}
         selectedProvider={selectedProvider}
         onClose={onCourseDeselect}
@@ -416,11 +415,14 @@ const CourseMap: React.FC<CourseMapProps> = ({
       {process.env.NODE_ENV === 'development' && (
         <div className="absolute top-2 right-2 bg-black/80 text-foreground p-2 rounded text-xs z-[1000]">
           Providers: {nearbyProviders.length} | Markers: {markers.length}
-          {userCoordinates && <div>User: {userCoordinates.lat.toFixed(4)}, {userCoordinates.lng.toFixed(4)}</div>}
+          {userCoordinates && (
+            <div>
+              User: {userCoordinates.lat.toFixed(4)}, {userCoordinates.lng.toFixed(4)}
+            </div>
+          )}
           {selectedProvider && <div>Selected: {selectedProvider.name}</div>}
         </div>
       )}
-      
     </Card>
   );
 };

@@ -10,8 +10,8 @@ const SHORT_LABELS: Record<AgentType, string> = {
   'circuit-designer': 'designs',
   'cost-engineer': 'quotes',
   'health-safety': 'RAMS',
-  'installer': 'methods',
-  'maintenance': 'maint.',
+  installer: 'methods',
+  maintenance: 'maint.',
 };
 
 export const SavedResultsCard: React.FC = () => {
@@ -19,9 +19,7 @@ export const SavedResultsCard: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   // Get agent types that have results
-  const activeTypes = (Object.keys(counts) as AgentType[]).filter(
-    (type) => counts[type] > 0
-  );
+  const activeTypes = (Object.keys(counts) as AgentType[]).filter((type) => counts[type] > 0);
 
   // Don't render if no results and not loading
   if (!isLoading && totalCount === 0) {

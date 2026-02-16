@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Wrench, Search, FileClock } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, Wrench, Search, FileClock } from 'lucide-react';
 
 interface Subsection9_1Props {
   subsectionId: string;
@@ -13,13 +12,14 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-elec-yellow">Inspection and Testing Principles</h2>
-      
+
       <div className="space-y-4">
         <p>
-          Inspection and testing are essential procedures to verify that an electrical installation is safe for use.
-          These processes confirm compliance with BS 7671 and identify potential defects before energization.
+          Inspection and testing are essential procedures to verify that an electrical installation
+          is safe for use. These processes confirm compliance with BS 7671 and identify potential
+          defects before energization.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
@@ -35,7 +35,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>Documentation of findings</li>
                 <li>Defects must be rectified before testing</li>
               </ul>
-              
+
               <h4 className="font-semibold mt-4">Key Inspection Points</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Connection of conductors</li>
@@ -49,7 +49,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>Methods of protection against electric shock</li>
                 <li>Prevention of mutual detrimental influence</li>
               </ul>
-              
+
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">Common Visual Defects:</h4>
                 <ul className="list-disc pl-5 space-y-1">
@@ -62,7 +62,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Wrench className="h-5 w-5 mr-2" />
@@ -77,7 +77,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>Calibrated test equipment conforming to relevant standards</li>
                 <li>Appropriate test methods for installation type</li>
               </ul>
-              
+
               <h4 className="font-semibold mt-4">Test Sequence</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Continuity of protective conductors</li>
@@ -92,7 +92,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>Phase sequence</li>
                 <li>Functional testing</li>
               </ul>
-              
+
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">Essential Test Equipment:</h4>
                 <ul className="list-disc pl-5 space-y-1">
@@ -106,16 +106,16 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
         </div>
-        
+
         <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <FileClock className="h-5 w-5 mr-2" />
             Documentation and Certification
           </h3>
-          
+
           <div className="space-y-4">
             <p>Proper documentation is a critical element of the inspection and testing process:</p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <h4 className="font-semibold text-white">Certification Documents</h4>
@@ -125,11 +125,15 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <p className="text-sm mt-1">For new installations, alterations, or additions</p>
                   </li>
                   <li>
-                    <span className="font-medium">Minor Electrical Installation Works Certificate (MEIWC)</span>
+                    <span className="font-medium">
+                      Minor Electrical Installation Works Certificate (MEIWC)
+                    </span>
                     <p className="text-sm mt-1">For minor works that don't include a new circuit</p>
                   </li>
                   <li>
-                    <span className="font-medium">Electrical Installation Condition Report (EICR)</span>
+                    <span className="font-medium">
+                      Electrical Installation Condition Report (EICR)
+                    </span>
                     <p className="text-sm mt-1">For existing installation periodic inspection</p>
                   </li>
                   <li>
@@ -138,7 +142,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </li>
                 </ul>
               </div>
-              
+
               <div className="space-y-3">
                 <h4 className="font-semibold text-white">Documentation Components</h4>
                 <ul className="list-disc pl-5 space-y-2">
@@ -148,7 +152,9 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </li>
                   <li>
                     <span className="font-medium">Distribution board schedules</span>
-                    <p className="text-sm mt-1">Identification of all circuits and protective devices</p>
+                    <p className="text-sm mt-1">
+                      Identification of all circuits and protective devices
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">Operation and maintenance manuals</span>
@@ -156,20 +162,28 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </li>
                   <li>
                     <span className="font-medium">As-built drawings</span>
-                    <p className="text-sm mt-1">Accurate representation of completed installation</p>
+                    <p className="text-sm mt-1">
+                      Accurate representation of completed installation
+                    </p>
                   </li>
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
-              <p>BS 7671 Chapter 61 details inspection requirements, while Chapter 62 covers testing. Certificates must be issued by competent persons and provide a declaration of safety and compliance. Copies must be provided to the person ordering the work, and appropriate information given to the user. Documentation should be retained for future reference.</p>
+              <p>
+                BS 7671 Chapter 61 details inspection requirements, while Chapter 62 covers testing.
+                Certificates must be issued by competent persons and provide a declaration of safety
+                and compliance. Copies must be provided to the person ordering the work, and
+                appropriate information given to the user. Documentation should be retained for
+                future reference.
+              </p>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
         <Button
           variant="study"

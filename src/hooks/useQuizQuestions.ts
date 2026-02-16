@@ -39,7 +39,7 @@ export const useQuizQuestions = ({
   course = 'inspection-testing',
   count = 30,
   randomize = true,
-  enabled = true
+  enabled = true,
 }: QuizQuestionsParams = {}) => {
   return useQuery({
     queryKey: ['quiz-questions', { category, difficulty, module, course, count, randomize }],
@@ -77,7 +77,7 @@ export const useQuizQuestions = ({
       }
 
       // Map database format to QuizQuestion interface
-      let questions: QuizQuestion[] = (data as DbQuizQuestion[]).map(q => ({
+      let questions: QuizQuestion[] = (data as DbQuizQuestion[]).map((q) => ({
         id: q.question_id,
         question: q.question,
         options: q.options,
@@ -86,7 +86,7 @@ export const useQuizQuestions = ({
         category: q.category,
         difficulty: q.difficulty as 'Beginner' | 'Intermediate' | 'Advanced',
         regulation: q.regulation || undefined,
-        imageUrl: q.image_url || undefined
+        imageUrl: q.image_url || undefined,
       }));
 
       // Shuffle and limit if randomize is enabled
@@ -100,7 +100,7 @@ export const useQuizQuestions = ({
     gcTime: 15 * 60 * 1000, // 15 minutes cache
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    enabled
+    enabled,
   });
 };
 
@@ -133,7 +133,7 @@ export const useQuizQuestionsByCategories = (
         return [];
       }
 
-      let questions: QuizQuestion[] = (data as DbQuizQuestion[]).map(q => ({
+      let questions: QuizQuestion[] = (data as DbQuizQuestion[]).map((q) => ({
         id: q.question_id,
         question: q.question,
         options: q.options,
@@ -142,7 +142,7 @@ export const useQuizQuestionsByCategories = (
         category: q.category,
         difficulty: q.difficulty as 'Beginner' | 'Intermediate' | 'Advanced',
         regulation: q.regulation || undefined,
-        imageUrl: q.image_url || undefined
+        imageUrl: q.image_url || undefined,
       }));
 
       if (randomize) {
@@ -154,7 +154,7 @@ export const useQuizQuestionsByCategories = (
     staleTime: 5 * 60 * 1000,
     gcTime: 15 * 60 * 1000,
     refetchOnWindowFocus: false,
-    enabled
+    enabled,
   });
 };
 
@@ -174,7 +174,7 @@ export const useQuizCategories = (course: string = 'inspection-testing') => {
       if (error) throw error;
 
       // Get unique categories
-      const categories = [...new Set(data?.map(q => q.category) || [])];
+      const categories = [...new Set(data?.map((q) => q.category) || [])];
       return categories.sort();
     },
     staleTime: 30 * 60 * 1000, // 30 minutes - categories don't change often

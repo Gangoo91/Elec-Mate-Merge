@@ -16,14 +16,17 @@ export const SmartHomeRealWorld = () => {
             The Riverside House Smart Home Retrofit Project
           </p>
           <p className="text-sm mb-4">
-            A Victorian terraced house in Birmingham underwent a comprehensive smart home conversion over 18 months, 
-            demonstrating how traditional properties can successfully integrate modern technology while preserving 
-            their character and addressing common implementation challenges.
+            A Victorian terraced house in Birmingham underwent a comprehensive smart home conversion
+            over 18 months, demonstrating how traditional properties can successfully integrate
+            modern technology while preserving their character and addressing common implementation
+            challenges.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="bg-elec-dark p-3 rounded">
-              <p className="text-foreground font-semibold text-sm mb-2">Phase 1: Core Systems (Months 1-6)</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Phase 1: Core Systems (Months 1-6)
+              </p>
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Smart thermostats in 3 heating zones</li>
                 <li>• 28 smart LED bulbs with dimming</li>
@@ -32,9 +35,11 @@ export const SmartHomeRealWorld = () => {
                 <li>• Central Zigbee hub installation</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-3 rounded">
-              <p className="text-foreground font-semibold text-sm mb-2">Phase 2: Security & Access (Months 7-12)</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Phase 2: Security & Access (Months 7-12)
+              </p>
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Smart locks on front and rear doors</li>
                 <li>• Video doorbell with facial recognition</li>
@@ -43,9 +48,11 @@ export const SmartHomeRealWorld = () => {
                 <li>• Integrated alarm system</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-3 rounded">
-              <p className="text-foreground font-semibold text-sm mb-2">Phase 3: Advanced Features (Months 13-18)</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Phase 3: Advanced Features (Months 13-18)
+              </p>
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Multi-room audio system</li>
                 <li>• Smart garden irrigation</li>
@@ -54,9 +61,11 @@ export const SmartHomeRealWorld = () => {
                 <li>• AI-powered automation routines</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-3 rounded">
-              <p className="text-foreground font-semibold text-sm mb-2">Challenges Encountered & Solutions</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Challenges Encountered & Solutions
+              </p>
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Thick walls → Z-Wave mesh network</li>
                 <li>• Mixed protocols → Matter bridge implementation</li>
@@ -66,9 +75,11 @@ export const SmartHomeRealWorld = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-green-600/20 border border-green-600/40 p-4 rounded">
-            <p className="text-green-400 font-semibold text-sm mb-3">Measured Results After 12 Months:</p>
+            <p className="text-green-400 font-semibold text-sm mb-3">
+              Measured Results After 12 Months:
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <p className="text-foreground font-semibold text-xs mb-1">Energy Efficiency</p>
@@ -99,7 +110,7 @@ export const SmartHomeRealWorld = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-yellow-600/20 border border-yellow-600/40 p-3 rounded mt-4">
             <p className="text-yellow-400 font-semibold text-sm mb-2">Key Lessons Learned:</p>
             <ul className="text-xs text-gray-300 space-y-1">

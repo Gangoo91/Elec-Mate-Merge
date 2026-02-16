@@ -21,15 +21,15 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
   const margin = 20;
-  const contentWidth = pageWidth - (2 * margin);
-  
+  const contentWidth = pageWidth - 2 * margin;
+
   let yPosition = margin;
 
   // Helper functions
   const formatCurrency = (amount: number): string => {
     const currency = companyProfile?.currency || 'GBP';
     const locale = companyProfile?.locale || 'en-GB';
-    
+
     return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: currency,
@@ -40,33 +40,35 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     const fontSize = options.fontSize || 10;
     const fontStyle = options.fontStyle || 'normal';
     const maxWidth = options.maxWidth || contentWidth;
-    
+
     pdf.setFontSize(fontSize);
     pdf.setFont('helvetica', fontStyle);
-    
+
     if (options.color) {
       pdf.setTextColor(options.color[0], options.color[1], options.color[2]);
     } else {
       pdf.setTextColor(0, 0, 0);
     }
-    
+
     const lines = pdf.splitTextToSize(text, maxWidth);
     pdf.text(lines, x, y);
-    
-    return y + (lines.length * fontSize * 0.3528); // Convert pt to mm
+
+    return y + lines.length * fontSize * 0.3528; // Convert pt to mm
   };
 
   const hexToRgb = (hex: string): number[] => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? [
-      parseInt(result[1], 16),
-      parseInt(result[2], 16),
-      parseInt(result[3], 16)
-    ] : [30, 64, 175]; // Default blue
+    return result
+      ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
+      : [30, 64, 175]; // Default blue
   };
 
-  const primaryColor = companyProfile?.primary_color ? hexToRgb(companyProfile.primary_color) : [30, 64, 175];
-  const secondaryColor = companyProfile?.secondary_color ? hexToRgb(companyProfile.secondary_color) : [59, 130, 246];
+  const primaryColor = companyProfile?.primary_color
+    ? hexToRgb(companyProfile.primary_color)
+    : [30, 64, 175];
+  const secondaryColor = companyProfile?.secondary_color
+    ? hexToRgb(companyProfile.secondary_color)
+    : [59, 130, 246];
 
   // Header Section
   const renderHeader = () => {
@@ -75,27 +77,34 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       try {
         const logoImg = new Image();
         logoImg.src = companyProfile.logo_data_url;
-        
+
         // Wait for logo to load to get dimensions
         logoImg.onload = () => {
           // Calculate proper logo dimensions maintaining aspect ratio
           const maxWidth = 45;
           const maxHeight = 25;
           const aspectRatio = logoImg.width / logoImg.height;
-          
+
           let logoWidth = maxWidth;
           let logoHeight = maxWidth / aspectRatio;
-          
+
           if (logoHeight > maxHeight) {
             logoHeight = maxHeight;
             logoWidth = maxHeight * aspectRatio;
           }
-          
+
           // Position logo in top right with proper proportions
           const logoX = pageWidth - margin - logoWidth;
-          pdf.addImage(companyProfile.logo_data_url!, 'JPEG', logoX, yPosition, logoWidth, logoHeight);
+          pdf.addImage(
+            companyProfile.logo_data_url!,
+            'JPEG',
+            logoX,
+            yPosition,
+            logoWidth,
+            logoHeight
+          );
         };
-        
+
         // Fallback dimensions if image doesn't load
         const logoX = pageWidth - margin - 45;
         pdf.addImage(companyProfile.logo_data_url, 'JPEG', logoX, yPosition, 45, 25);
@@ -106,40 +115,55 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
 
     // Company details (left side)
     const companyName = safeText(companyProfile?.company_name || 'Your Company');
-    
+
     yPosition = addText(companyName, margin, yPosition + 8, {
       fontSize: 18,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     if (companyProfile?.company_address) {
       yPosition = addText(safeText(companyProfile.company_address), margin, yPosition + 2, {
         fontSize: 9,
-        maxWidth: contentWidth - 60
+        maxWidth: contentWidth - 60,
       });
     }
 
     // Contact info with proper spacing
     if (companyProfile?.company_phone) {
-      yPosition = addText(`Tel:  ${safeText(companyProfile.company_phone)}`, margin, yPosition + 3, {
-        fontSize: 9,
-        maxWidth: contentWidth - 60
-      });
+      yPosition = addText(
+        `Tel:  ${safeText(companyProfile.company_phone)}`,
+        margin,
+        yPosition + 3,
+        {
+          fontSize: 9,
+          maxWidth: contentWidth - 60,
+        }
+      );
     }
-    
+
     if (companyProfile?.company_email) {
-      yPosition = addText(`Email:  ${safeText(companyProfile.company_email)}`, margin, yPosition + 3, {
-        fontSize: 9,
-        maxWidth: contentWidth - 60
-      });
+      yPosition = addText(
+        `Email:  ${safeText(companyProfile.company_email)}`,
+        margin,
+        yPosition + 3,
+        {
+          fontSize: 9,
+          maxWidth: contentWidth - 60,
+        }
+      );
     }
-    
+
     if (companyProfile?.company_website) {
-      yPosition = addText(`Web: ${safeText(companyProfile.company_website)}`, margin, yPosition + 3, {
-        fontSize: 9,
-        maxWidth: contentWidth - 60
-      });
+      yPosition = addText(
+        `Web: ${safeText(companyProfile.company_website)}`,
+        margin,
+        yPosition + 3,
+        {
+          fontSize: 9,
+          maxWidth: contentWidth - 60,
+        }
+      );
     }
 
     // Quote title and number
@@ -148,7 +172,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     yPosition = addText(quoteTitle, margin, yPosition, {
       fontSize: 22,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     // Line separator
@@ -164,46 +188,46 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
   // Client and quote details
   const renderQuoteDetails = () => {
     const leftColX = margin;
-    const rightColX = margin + (contentWidth / 2) + 5;
+    const rightColX = margin + contentWidth / 2 + 5;
     const startY = yPosition;
 
     // Client details
     addText('QUOTATION FOR:', leftColX, yPosition, {
       fontSize: 11,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     let clientY = yPosition + 6;
     if (quote.client) {
       clientY = addText(safeText(quote.client.name), leftColX, clientY, {
         fontSize: 10,
-        fontStyle: 'bold'
+        fontStyle: 'bold',
       });
-      
+
       if (quote.client.address) {
         clientY = addText(safeText(quote.client.address), leftColX, clientY + 4, {
-          fontSize: 9
-        });
-      }
-      
-      if (quote.client.postcode) {
-        clientY = addText(safeText(quote.client.postcode), leftColX, clientY + 4, {
-          fontSize: 9
-        });
-      }
-      
-      // Render Tel separately
-      if (quote.client.phone) {
-        clientY = addText(`Tel:  ${safeText(quote.client.phone)}`, leftColX, clientY + 4, {
-          fontSize: 9
+          fontSize: 9,
         });
       }
 
-      // Render Email separately  
+      if (quote.client.postcode) {
+        clientY = addText(safeText(quote.client.postcode), leftColX, clientY + 4, {
+          fontSize: 9,
+        });
+      }
+
+      // Render Tel separately
+      if (quote.client.phone) {
+        clientY = addText(`Tel:  ${safeText(quote.client.phone)}`, leftColX, clientY + 4, {
+          fontSize: 9,
+        });
+      }
+
+      // Render Email separately
       if (quote.client.email) {
         clientY = addText(`Email:  ${safeText(quote.client.email)}`, leftColX, clientY + 4, {
-          fontSize: 9
+          fontSize: 9,
         });
       }
     }
@@ -212,11 +236,11 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     addText('QUOTE DETAILS:', rightColX, yPosition, {
       fontSize: 11,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     let detailsY = yPosition + 6;
-    
+
     const quoteDetails = [
       [`Date:`, safeDate(quote.createdAt)],
       [`Valid Until:`, safeDate(quote.expiryDate)],
@@ -234,10 +258,10 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     quoteDetails.forEach(([label, value]) => {
       addText(`${label}`, rightColX, detailsY, {
         fontSize: 9,
-        fontStyle: 'bold'
+        fontStyle: 'bold',
       });
       addText(value, rightColX + 25, detailsY, {
-        fontSize: 9
+        fontSize: 9,
       });
       detailsY += 6;
     });
@@ -252,7 +276,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     if (!quote.items || quote.items.length === 0) {
       yPosition = addText('No items added to this quote.', margin, yPosition, {
         fontSize: 10,
-        color: [128, 128, 128]
+        color: [128, 128, 128],
       });
       return yPosition + 10;
     }
@@ -261,17 +285,19 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     if (typeof pdf.autoTable !== 'function') {
       console.error('PDF Generation - autoTable not available, using fallback table rendering');
       // Fallback to simple table rendering - render manually
-      yPosition = addText('Quote Items:', margin, yPosition, {
-        fontSize: 12,
-        fontStyle: 'bold'
-      }) + 10;
+      yPosition =
+        addText('Quote Items:', margin, yPosition, {
+          fontSize: 12,
+          fontStyle: 'bold',
+        }) + 10;
 
       quote.items.forEach((item, index) => {
         const itemText = `${index + 1}. ${item.description} - Qty: ${item.quantity} ${item.unit} @ ${formatCurrency(item.unitPrice)} = ${formatCurrency(item.totalPrice)}`;
-        yPosition = addText(itemText, margin, yPosition, {
-          fontSize: 9,
-          maxWidth: contentWidth
-        }) + 5;
+        yPosition =
+          addText(itemText, margin, yPosition, {
+            fontSize: 9,
+            maxWidth: contentWidth,
+          }) + 5;
       });
 
       return yPosition + 10;
@@ -283,7 +309,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       `${safeNumber(item.quantity)}`,
       safeText(item.unit),
       formatCurrency(safeNumber(item.unitPrice)),
-      formatCurrency(safeNumber(item.totalPrice))
+      formatCurrency(safeNumber(item.totalPrice)),
     ]);
 
     const tableResult = pdf.autoTable({
@@ -301,13 +327,13 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         fontStyle: 'bold',
         halign: 'center',
         lineWidth: 0.8,
-        lineColor: [180, 180, 180]
+        lineColor: [180, 180, 180],
       },
       bodyStyles: {
         fontSize: 9,
         cellPadding: 5,
         lineColor: [180, 180, 180],
-        lineWidth: 0.8
+        lineWidth: 0.8,
       },
       columnStyles: {
         0: { halign: 'center', cellWidth: 10 },
@@ -315,17 +341,17 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         2: { halign: 'center', cellWidth: 15 },
         3: { halign: 'center', cellWidth: 15 },
         4: { halign: 'right', cellWidth: 25 },
-        5: { halign: 'right', cellWidth: 25 }
+        5: { halign: 'right', cellWidth: 25 },
       },
       alternateRowStyles: {
         fillColor: [252, 252, 252],
         lineColor: [180, 180, 180],
-        lineWidth: 0.8
+        lineWidth: 0.8,
       },
       styles: {
         lineWidth: 0.8,
         lineColor: [180, 180, 180],
-        cellPadding: 5
+        cellPadding: 5,
       },
       rowPageBreak: 'avoid',
       margin: { left: margin, right: margin },
@@ -333,21 +359,16 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
         // Add professional dividing lines between body rows
         if (data.section === 'body' && data.row.index < tableData.length - 1) {
           const { doc, table, cursor } = data;
-          
+
           // Draw a stronger horizontal line after each row
           doc.setDrawColor(160, 160, 160);
           doc.setLineWidth(0.5);
-          doc.line(
-            table.pageStartX, 
-            cursor.y, 
-            table.pageStartX + table.width, 
-            cursor.y
-          );
+          doc.line(table.pageStartX, cursor.y, table.pageStartX + table.width, cursor.y);
         }
       },
       didDrawPage: (data) => {
         yPosition = data.cursor?.y || yPosition;
-      }
+      },
     });
 
     yPosition = (tableResult as any).finalY + 10;
@@ -360,15 +381,15 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     // Create clean grey panel for totals and terms with quadrant layout
     const panelStartY = yPosition + 5;
     pdf.setFillColor(248, 248, 248);
-    
+
     // Calculate panel height for content
     const panelHeight = 70;
-    
+
     pdf.rect(margin, panelStartY, contentWidth, panelHeight, 'F');
-    
+
     // Define quadrant positions
     const leftColX = margin + 10;
-    const rightColX = margin + (contentWidth * 0.6);
+    const rightColX = margin + contentWidth * 0.6;
     const topY = panelStartY + 12;
     const bottomY = panelStartY + 40;
 
@@ -376,14 +397,14 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     addText('QUOTE TOTALS', rightColX, topY, {
       fontSize: 12,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
-    
+
     let totalsY = topY + 10;
 
     // Build totals array
     const totalsData = [];
-    
+
     if (quote.subtotal) {
       totalsData.push(['Subtotal:', formatCurrency(safeNumber(quote.subtotal))]);
     }
@@ -404,11 +425,11 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     totalsData.forEach(([label, amount]) => {
       addText(label, rightColX, totalsY, {
         fontSize: 10,
-        fontStyle: 'normal'
+        fontStyle: 'normal',
       });
       addText(amount, rightColX + 35, totalsY, {
         fontSize: 10,
-        fontStyle: 'normal'
+        fontStyle: 'normal',
       });
       totalsY += 5;
     });
@@ -423,36 +444,36 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
     addText('TOTAL:', rightColX, totalsY, {
       fontSize: 12,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
     addText(formatCurrency(safeNumber(quote.total)), rightColX + 35, totalsY, {
       fontSize: 12,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     // TERMS & CONDITIONS (full width below totals)
     addText('TERMS & CONDITIONS', leftColX, bottomY, {
       fontSize: 10,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
-    
+
     let termsY = bottomY + 6;
     const simpleTerms = [
       '• Payment: 50% deposit, balance within 30 days',
       '• Valid for 30 days from date issued',
       '• Materials comply with BS 7671:18th Edition',
-      '• 12 months warranty on workmanship'
+      '• 12 months warranty on workmanship',
     ];
 
     // Display each term on its own line using full width
     const termWidth = contentWidth - 20; // Full width minus padding
-    
-    simpleTerms.forEach(term => {
+
+    simpleTerms.forEach((term) => {
       addText(term, leftColX, termsY, {
         fontSize: 8,
-        maxWidth: termWidth
+        maxWidth: termWidth,
       });
       termsY += 5;
     });
@@ -469,13 +490,13 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
       yPosition = addText('ADDITIONAL NOTES:', margin, yPosition, {
         fontSize: 10,
         fontStyle: 'bold',
-        color: primaryColor
+        color: primaryColor,
       });
       yPosition += 3;
-      
+
       yPosition = addText(safeText(quote.notes), margin, yPosition, {
         fontSize: 9,
-        maxWidth: contentWidth
+        maxWidth: contentWidth,
       });
       yPosition += 5;
     }
@@ -484,24 +505,29 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
   // Add footer to all pages
   const addFooterToAllPages = () => {
     const totalPages = pdf.getNumberOfPages();
-    
+
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
-      
+
       const footerY = pageHeight - 25;
       pdf.setDrawColor(200, 200, 200);
       pdf.setLineWidth(0.5);
       pdf.line(margin, footerY, pageWidth - margin, footerY);
 
-      addText('Please note: This quote is valid for 30 days from the date raised.', margin, footerY + 5, {
-        fontSize: 8,
-        color: [100, 100, 100]
-      });
+      addText(
+        'Please note: This quote is valid for 30 days from the date raised.',
+        margin,
+        footerY + 5,
+        {
+          fontSize: 8,
+          color: [100, 100, 100],
+        }
+      );
 
       // Page number
       addText(`Page ${i} of ${totalPages}`, pageWidth - margin - 20, footerY + 5, {
         fontSize: 8,
-        color: [100, 100, 100]
+        color: [100, 100, 100],
       });
     }
   };

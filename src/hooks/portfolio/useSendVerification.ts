@@ -74,11 +74,7 @@ export function useSendVerification() {
   const [isSending, setIsSending] = useState(false);
 
   const sendVerification = useCallback(
-    async (
-      contextId: string,
-      type: VerificationType,
-      snapshot: Record<string, unknown>
-    ) => {
+    async (contextId: string, type: VerificationType, snapshot: Record<string, unknown>) => {
       if (!user) {
         toast.error('You must be logged in');
         return;
@@ -92,8 +88,7 @@ export function useSendVerification() {
         const expiresAt = new Date();
         expiresAt.setDate(expiresAt.getDate() + 7);
 
-        const apprenticeName =
-          profile?.full_name || user.email?.split('@')[0] || 'Apprentice';
+        const apprenticeName = profile?.full_name || user.email?.split('@')[0] || 'Apprentice';
 
         const row: Record<string, unknown> = {
           verification_token: token,
@@ -111,9 +106,7 @@ export function useSendVerification() {
           row.portfolio_item_id = contextId;
         }
 
-        const { error } = await supabase
-          .from('supervisor_verifications')
-          .insert(row);
+        const { error } = await supabase.from('supervisor_verifications').insert(row);
 
         if (error) throw error;
 

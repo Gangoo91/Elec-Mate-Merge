@@ -1,11 +1,11 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Trash2, AlertTriangle, Zap } from "lucide-react";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Trash2, AlertTriangle, Zap } from 'lucide-react';
 
 interface LoadEntryProps {
   load: {
@@ -40,23 +40,34 @@ export function LoadEntry({
   onRemove,
   onClearError,
 }: LoadEntryProps) {
-  
   // Group load types by category for better organization
-  const groupedLoadTypes = Object.entries(loadTypes).reduce((acc, [key, value]) => {
-    let category = 'Other';
-    if (key.includes('lighting')) category = 'Lighting';
-    else if (key.includes('socket') || key.includes('power')) category = 'Socket Outlets & Power';
-    else if (key.includes('cooker') || key.includes('water') || key.includes('heating')) category = 'Heating & Cooking';
-    else if (key.includes('motor') || key.includes('equipment') || key.includes('conditioning')) category = 'Motors & Equipment';
-    
-    if (!acc[category]) acc[category] = [];
-    acc[category].push({ value: key, label: key.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), description: value });
-    return acc;
-  }, {} as Record<string, Array<{value: string, label: string, description: string}>>);
+  const groupedLoadTypes = Object.entries(loadTypes).reduce(
+    (acc, [key, value]) => {
+      let category = 'Other';
+      if (key.includes('lighting')) category = 'Lighting';
+      else if (key.includes('socket') || key.includes('power')) category = 'Socket Outlets & Power';
+      else if (key.includes('cooker') || key.includes('water') || key.includes('heating'))
+        category = 'Heating & Cooking';
+      else if (key.includes('motor') || key.includes('equipment') || key.includes('conditioning'))
+        category = 'Motors & Equipment';
+
+      if (!acc[category]) acc[category] = [];
+      acc[category].push({
+        value: key,
+        label: key
+          .split('-')
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' '),
+        description: value,
+      });
+      return acc;
+    },
+    {} as Record<string, Array<{ value: string; label: string; description: string }>>
+  );
 
   const selectOptions = Object.entries(groupedLoadTypes).flatMap(([category, items]) => [
     { value: '', label: `--- ${category} ---`, disabled: true },
-    ...items
+    ...items,
   ]);
 
   return (
@@ -91,14 +102,18 @@ export function LoadEntry({
 
           <div className="grid grid-cols-2 gap-3">
             <MobileInputWrapper
-              label={inputMode === 'kw' ? "Connected Load" : "Connected Load"}
+              label={inputMode === 'kw' ? 'Connected Load' : 'Connected Load'}
               value={load.connectedLoad}
               onChange={(value) => onUpdate(load.id, 'connectedLoad', value)}
               type="text"
               inputMode="decimal"
-              unit={inputMode === 'kw' ? "kW" : "A"}
+              unit={inputMode === 'kw' ? 'kW' : 'A'}
               error={errors[`${load.id}_connectedLoad`]}
-              hint={inputMode === 'kw' ? "Power rating in kilowatts" : "Full load current of the circuit"}
+              hint={
+                inputMode === 'kw'
+                  ? 'Power rating in kilowatts'
+                  : 'Full load current of the circuit'
+              }
             />
 
             <MobileInputWrapper

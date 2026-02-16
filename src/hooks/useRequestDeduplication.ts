@@ -19,7 +19,7 @@ export const useRequestDeduplication = () => {
   ): Promise<T> => {
     // Check if identical request is in flight
     const pending = pendingRequests.current.get(requestKey);
-    
+
     if (pending) {
       console.log(`🔄 Deduplicating request: ${requestKey}`);
       return pending.promise as Promise<T>;
@@ -27,10 +27,10 @@ export const useRequestDeduplication = () => {
 
     // Create new request
     const promise = requestFn();
-    
+
     pendingRequests.current.set(requestKey, {
       promise,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     try {
@@ -62,6 +62,6 @@ export const useRequestDeduplication = () => {
   return {
     deduplicatedRequest,
     clearAll,
-    getPendingCount
+    getPendingCount,
   };
 };

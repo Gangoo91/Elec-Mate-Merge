@@ -7,7 +7,7 @@ export const useAchievements = () => {
   const [achievements, setAchievements] = useState<Achievement[]>(ACHIEVEMENTS);
   const [unlockedAchievements, setUnlockedAchievements] = useState<Achievement[]>([]);
   const [recentlyUnlocked, setRecentlyUnlocked] = useState<Achievement[]>([]);
-  
+
   const { results, getOverallStats, getPerformanceByCategory } = useQuizResults();
 
   const checkAchievements = () => {
@@ -17,7 +17,7 @@ export const useAchievements = () => {
     const performanceByCategory = getPerformanceByCategory();
     const newlyUnlocked: Achievement[] = [];
 
-    const updatedAchievements = achievements.map(achievement => {
+    const updatedAchievements = achievements.map((achievement) => {
       if (achievement.unlocked) return achievement;
 
       let shouldUnlock = false;
@@ -35,53 +35,65 @@ export const useAchievements = () => {
           break;
 
         case 'perfect_score':
-          shouldUnlock = results.some(result => result.percentage >= 100);
+          shouldUnlock = results.some((result) => result.percentage >= 100);
           break;
 
         case 'quiz_completed':
           const { minScore, count: requiredCount, hasRegulation } = achievement.condition.params;
-          let qualifyingQuizzes = results.filter(result => result.percentage >= minScore);
-          
+          let qualifyingQuizzes = results.filter((result) => result.percentage >= minScore);
+
           if (hasRegulation) {
             // This would need assessment data to check regulation field
             // For now, assume some results have regulation data
-            qualifyingQuizzes = qualifyingQuizzes.slice(0, Math.floor(qualifyingQuizzes.length / 2));
+            qualifyingQuizzes = qualifyingQuizzes.slice(
+              0,
+              Math.floor(qualifyingQuizzes.length / 2)
+            );
           }
-          
+
           shouldUnlock = qualifyingQuizzes.length >= requiredCount;
           break;
 
         case 'speed':
           const { maxTimeMinutes } = achievement.condition.params;
           const maxTimeMs = maxTimeMinutes * 60 * 1000;
-          shouldUnlock = results.some(result => result.time_spent <= maxTimeMs);
+          shouldUnlock = results.some((result) => result.time_spent <= maxTimeMs);
           break;
 
         case 'category_mastery':
-          const { 
-            category, 
-            minScore: categoryMinScore, 
-            count: categoryCount, 
+          const {
+            category,
+            minScore: categoryMinScore,
+            count: categoryCount,
             uniqueCategories,
-            allCategories 
+            allCategories,
           } = achievement.condition.params;
 
           if (uniqueCategories) {
             shouldUnlock = performanceByCategory.length >= uniqueCategories;
           } else if (allCategories) {
             const allCategoryNames = [
-              'Visual Inspection', 'Continuity Testing', 'Insulation Resistance',
-              'Polarity Testing', 'Earth Fault Loop Impedance', 'RCD Testing',
-              'Prospective Fault Current', 'Functional Testing'
+              'Visual Inspection',
+              'Continuity Testing',
+              'Insulation Resistance',
+              'Polarity Testing',
+              'Earth Fault Loop Impedance',
+              'RCD Testing',
+              'Prospective Fault Current',
+              'Functional Testing',
             ];
-            const qualifyingCategories = performanceByCategory.filter(cat => 
-              cat.score >= categoryMinScore
+            const qualifyingCategories = performanceByCategory.filter(
+              (cat) => cat.score >= categoryMinScore
             );
             shouldUnlock = qualifyingCategories.length >= allCategoryNames.length;
           } else if (category) {
-            const categoryResults = results.filter(result => 
-              result.category_breakdown[category] && 
-              (result.category_breakdown[category].correct / result.category_breakdown[category].total) * 100 >= categoryMinScore
+            const categoryResults = results.filter(
+              (result) =>
+                result.category_breakdown[category] &&
+                (result.category_breakdown[category].correct /
+                  result.category_breakdown[category].total) *
+                  100 >=
+                  categoryMinScore
             );
             shouldUnlock = categoryResults.length >= (categoryCount || 1);
           }
@@ -92,11 +104,12 @@ export const useAchievements = () => {
           // Check for consecutive results meeting the score requirement
           let currentStreak = 0;
           let maxStreak = 0;
-          
-          const sortedResults = [...results].sort((a, b) => 
-            new Date(a.completed_at || 0).getTime() - new Date(b.completed_at || 0).getTime()
+
+          const sortedResults = [...results].sort(
+            (a, b) =>
+              new Date(a.completed_at || 0).getTime() - new Date(b.completed_at || 0).getTime()
           );
-          
+
           for (const result of sortedResults) {
             if (result.percentage >= streakMinScore) {
               currentStreak++;
@@ -105,29 +118,38 @@ export const useAchievements = () => {
               currentStreak = 0;
             }
           }
-          
+
           shouldUnlock = maxStreak >= streakLength;
           break;
 
         case 'difficulty_cleared':
-          const { difficulty, minScore: difficultyMinScore, allCategories: allDifficultyCategories } = achievement.condition.params;
+          const {
+            difficulty,
+            minScore: difficultyMinScore,
+            allCategories: allDifficultyCategories,
+          } = achievement.condition.params;
           // This would need assessment data to check difficulty
           // For now, simulate based on advanced categories
           if (allDifficultyCategories && difficulty === 'Advanced') {
             const advancedCategories = ['Earth Fault Loop Impedance', 'RCD Testing'];
-            const qualifyingResults = performanceByCategory.filter(cat => 
-              advancedCategories.includes(cat.subject) && cat.score >= difficultyMinScore
+            const qualifyingResults = performanceByCategory.filter(
+              (cat) => advancedCategories.includes(cat.subject) && cat.score >= difficultyMinScore
             );
             shouldUnlock = qualifyingResults.length >= advancedCategories.length;
           }
           break;
 
         case 'regulation_focus':
-          const { regulation, averageScore: regAverageScore, totalQuizzes: regTotalQuizzes } = achievement.condition.params;
+          const {
+            regulation,
+            averageScore: regAverageScore,
+            totalQuizzes: regTotalQuizzes,
+          } = achievement.condition.params;
           // This would need more detailed tracking of regulation-specific quizzes
           // For now, use overall stats as approximation
-          shouldUnlock = overallStats.totalQuizzes >= regTotalQuizzes && 
-                        overallStats.averageScore >= regAverageScore;
+          shouldUnlock =
+            overallStats.totalQuizzes >= regTotalQuizzes &&
+            overallStats.averageScore >= regAverageScore;
           break;
       }
 
@@ -135,7 +157,7 @@ export const useAchievements = () => {
         const unlockedAchievement = {
           ...achievement,
           unlocked: true,
-          unlockedAt: new Date()
+          unlockedAt: new Date(),
         };
         newlyUnlocked.push(unlockedAchievement);
         return unlockedAchievement;
@@ -145,8 +167,8 @@ export const useAchievements = () => {
     });
 
     setAchievements(updatedAchievements);
-    setUnlockedAchievements(updatedAchievements.filter(a => a.unlocked));
-    
+    setUnlockedAchievements(updatedAchievements.filter((a) => a.unlocked));
+
     if (newlyUnlocked.length > 0) {
       setRecentlyUnlocked(newlyUnlocked);
       // Clear recently unlocked after 5 seconds
@@ -168,7 +190,7 @@ export const useAchievements = () => {
         break;
       case 'quiz_completed':
         const { minScore, count } = achievement.condition.params;
-        currentValue = results.filter(r => r.percentage >= minScore).length;
+        currentValue = results.filter((r) => r.percentage >= minScore).length;
         targetValue = count;
         break;
       // Add more progress tracking for other types as needed
@@ -180,12 +202,12 @@ export const useAchievements = () => {
       achievementId: achievement.id,
       currentValue,
       targetValue,
-      percentage: Math.min((currentValue / targetValue) * 100, 100)
+      percentage: Math.min((currentValue / targetValue) * 100, 100),
     };
   };
 
   const getAchievementsByCategory = (category: Achievement['category']) => {
-    return achievements.filter(a => a.category === category);
+    return achievements.filter((a) => a.category === category);
   };
 
   const getAchievementStats = () => {
@@ -197,7 +219,7 @@ export const useAchievements = () => {
       totalAchievements,
       unlockedCount,
       progressPercentage,
-      remainingCount: totalAchievements - unlockedCount
+      remainingCount: totalAchievements - unlockedCount,
     };
   };
 
@@ -212,6 +234,6 @@ export const useAchievements = () => {
     getAchievementProgress,
     getAchievementsByCategory,
     getAchievementStats,
-    checkAchievements
+    checkAchievements,
   };
 };

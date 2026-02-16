@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { EICTabValue } from '@/hooks/useEICTabs';
@@ -48,7 +47,11 @@ interface EICFormTabsProps {
     onAddObservation: () => string;
     onUpdateObservation: (id: string, field: keyof EICObservation, value: any) => void;
     onRemoveObservation: (id: string) => void;
-    onAutoCreateObservation: (inspectionItem: { id: string; item: string; clause: string }) => string;
+    onAutoCreateObservation: (inspectionItem: {
+      id: string;
+      item: string;
+      clause: string;
+    }) => string;
     onNavigateToObservations: () => void;
     onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
   };
@@ -67,10 +70,10 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   observationsProps,
   onGenerateCertificate,
   onSaveDraft,
-  canGenerateCertificate = true
+  canGenerateCertificate = true,
 }) => {
   const isMobile = useIsMobile();
-  
+
   const smartTabs: SmartTab[] = [
     {
       value: 'installation',
@@ -81,7 +84,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
           <EICInstallationDetails formData={formData} onUpdate={onUpdate} />
           <EICTabNavigation {...tabNavigationProps} />
         </div>
-      )
+      ),
     },
     {
       value: 'inspections',
@@ -106,7 +109,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
           />
           <EICTabNavigation {...tabNavigationProps} />
         </div>
-      )
+      ),
     },
     {
       value: 'testing',
@@ -117,7 +120,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
           <EICScheduleOfTesting formData={formData} onUpdate={onUpdate} />
           <EICTabNavigation {...tabNavigationProps} />
         </div>
-      )
+      ),
     },
     {
       value: 'declarations',
@@ -135,15 +138,15 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
             onSaveDraft={onSaveDraft}
           />
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
     <div className="space-y-2 sm:space-y-4">
       <SmartTabs
         tabs={smartTabs}
-        value={currentTab} 
+        value={currentTab}
         onValueChange={onTabChange}
         className="space-y-4"
         breakpoint={3} // Use dropdown when more than 3 tabs

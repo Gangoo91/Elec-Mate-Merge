@@ -1,116 +1,121 @@
-import { ArrowLeft, ArrowRight, Shield, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Shield, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Preventive Maintenance Routines - Instrumentation Course";
-const DESCRIPTION = "Learn preventive maintenance best practices for instrumentation systems including PM checklists, calibration scheduling, and high-risk area identification.";
+const TITLE = 'Preventive Maintenance Routines - Instrumentation Course';
+const DESCRIPTION =
+  'Learn preventive maintenance best practices for instrumentation systems including PM checklists, calibration scheduling, and high-risk area identification.';
 
 const quickCheckQuestions = [
   {
     question: "What's the primary goal of preventive maintenance?",
     options: [
-      "To keep technicians busy",
-      "To identify potential problems before they cause failures",
-      "To replace all equipment regularly",
-      "To document everything"
+      'To keep technicians busy',
+      'To identify potential problems before they cause failures',
+      'To replace all equipment regularly',
+      'To document everything',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
-    question: "How often should critical process instruments typically be calibrated?",
-    options: [
-      "Every 5 years",
-      "Every 6 months",
-      "Only when they fail",
-      "Weekly"
-    ],
-    correctAnswer: 1
-  }
+    question: 'How often should critical process instruments typically be calibrated?',
+    options: ['Every 5 years', 'Every 6 months', 'Only when they fail', 'Weekly'],
+    correctAnswer: 1,
+  },
 ];
 
 const quizQuestions = [
   {
-    id: "im8s4-q1",
+    id: 'im8s4-q1',
     question: "What's the main goal of preventive maintenance?",
     options: [
-      "To keep technicians busy",
-      "To identify and address potential problems before they cause failures, reducing downtime and costs",
-      "To replace all equipment regularly",
-      "To satisfy management requirements"
+      'To keep technicians busy',
+      'To identify and address potential problems before they cause failures, reducing downtime and costs',
+      'To replace all equipment regularly',
+      'To satisfy management requirements',
     ],
     correctAnswer: 1,
-    explanation: "The main goal of preventive maintenance is to identify and address potential problems before they cause failures, thereby reducing downtime, costs, and safety risks."
+    explanation:
+      'The main goal of preventive maintenance is to identify and address potential problems before they cause failures, thereby reducing downtime, costs, and safety risks.',
   },
   {
-    id: "im8s4-q2",
+    id: 'im8s4-q2',
     question: "Name two items you'd check during a PM inspection.",
     options: [
-      "Only calibration certificates",
-      "Cable termination tightness and junction box seal integrity",
-      "Just the sensor readings",
-      "Only the documentation"
+      'Only calibration certificates',
+      'Cable termination tightness and junction box seal integrity',
+      'Just the sensor readings',
+      'Only the documentation',
     ],
     correctAnswer: 1,
-    explanation: "During PM inspections, you should check cable termination tightness to prevent loose connections and junction box seal integrity to prevent moisture ingress."
+    explanation:
+      'During PM inspections, you should check cable termination tightness to prevent loose connections and junction box seal integrity to prevent moisture ingress.',
   },
   {
-    id: "im8s4-q3",
-    question: "Why are cable glands important to inspect?",
+    id: 'im8s4-q3',
+    question: 'Why are cable glands important to inspect?',
     options: [
       "They're expensive to replace",
-      "They prevent moisture ingress which can cause corrosion, signal degradation, and system failures",
-      "They look nice when clean",
-      "They're easy to check"
+      'They prevent moisture ingress which can cause corrosion, signal degradation, and system failures',
+      'They look nice when clean',
+      "They're easy to check",
     ],
     correctAnswer: 1,
-    explanation: "Cable glands are critical sealing points that prevent moisture ingress. Failed glands allow water into enclosures, causing corrosion, signal degradation, and potential system failures."
+    explanation:
+      'Cable glands are critical sealing points that prevent moisture ingress. Failed glands allow water into enclosures, causing corrosion, signal degradation, and potential system failures.',
   },
   {
-    id: "im8s4-q4",
-    question: "How can PM prevent calibration errors?",
+    id: 'im8s4-q4',
+    question: 'How can PM prevent calibration errors?',
     options: [
-      "By replacing all sensors annually",
-      "By tracking calibration dates, monitoring drift trends, and scheduling timely recalibration",
-      "By never calibrating anything",
-      "By using only digital instruments"
+      'By replacing all sensors annually',
+      'By tracking calibration dates, monitoring drift trends, and scheduling timely recalibration',
+      'By never calibrating anything',
+      'By using only digital instruments',
     ],
     correctAnswer: 1,
-    explanation: "PM prevents calibration errors by tracking calibration due dates, monitoring performance trends for drift, and ensuring timely recalibration before accuracy degrades."
+    explanation:
+      'PM prevents calibration errors by tracking calibration due dates, monitoring performance trends for drift, and ensuring timely recalibration before accuracy degrades.',
   },
   {
-    id: "im8s4-q5",
+    id: 'im8s4-q5',
     question: "What's a good tool for scheduling PM tasks?",
     options: [
-      "Paper notebooks only",
-      "CMMS (Computerised Maintenance Management System) or electronic scheduling systems",
-      "Memory alone",
-      "Random scheduling"
+      'Paper notebooks only',
+      'CMMS (Computerised Maintenance Management System) or electronic scheduling systems',
+      'Memory alone',
+      'Random scheduling',
     ],
     correctAnswer: 1,
-    explanation: "A CMMS or electronic scheduling system provides automated reminders, tracks maintenance history, manages resources, and ensures consistent execution of PM activities."
-  }
+    explanation:
+      'A CMMS or electronic scheduling system provides automated reminders, tracks maintenance history, manages resources, and ensures consistent execution of PM activities.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I decide on PM frequency for different instruments?",
-    answer: "Consider criticality (safety, environmental, production impact), historical reliability data, manufacturer recommendations, and environmental conditions. Critical safety instruments may need monthly checks whilst non-critical monitoring devices might only need annual inspection."
+    question: 'How do I decide on PM frequency for different instruments?',
+    answer:
+      'Consider criticality (safety, environmental, production impact), historical reliability data, manufacturer recommendations, and environmental conditions. Critical safety instruments may need monthly checks whilst non-critical monitoring devices might only need annual inspection.',
   },
   {
-    question: "What should I do if I find a problem during PM?",
-    answer: "Document the finding immediately, assess severity and impact, implement temporary controls if needed, raise a work order for corrective action, and update the PM schedule if the issue indicates a need for more frequent checks."
+    question: 'What should I do if I find a problem during PM?',
+    answer:
+      'Document the finding immediately, assess severity and impact, implement temporary controls if needed, raise a work order for corrective action, and update the PM schedule if the issue indicates a need for more frequent checks.',
   },
   {
-    question: "How do I track calibration drift?",
-    answer: "Record as-found readings before any adjustments during each calibration. Compare these over time to identify drift patterns. Modern CMMS systems can graph this data automatically and alert you to accelerating drift that might indicate impending failure."
+    question: 'How do I track calibration drift?',
+    answer:
+      'Record as-found readings before any adjustments during each calibration. Compare these over time to identify drift patterns. Modern CMMS systems can graph this data automatically and alert you to accelerating drift that might indicate impending failure.',
   },
   {
-    question: "What are high-risk areas that need extra attention?",
-    answer: "Hazardous area equipment, safety instrumented systems (SIS), emergency shutdown systems, environmental monitoring, and any instrument where failure could cause injury, environmental damage, or significant production loss."
-  }
+    question: 'What are high-risk areas that need extra attention?',
+    answer:
+      'Hazardous area equipment, safety instrumented systems (SIS), emergency shutdown systems, environmental monitoring, and any instrument where failure could cause injury, environmental damage, or significant production loss.',
+  },
 ];
 
 const InstrumentationModule8Section4 = () => {
@@ -122,7 +127,11 @@ const InstrumentationModule8Section4 = () => {
       <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-3">
           <Link to="/electrician/upskilling/instrumentation-module-8">
-            <Button variant="ghost" size="sm" className="text-white hover:text-elec-yellow touch-manipulation active:scale-[0.98]">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:text-elec-yellow touch-manipulation active:scale-[0.98]"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Module 8
             </Button>
@@ -135,7 +144,9 @@ const InstrumentationModule8Section4 = () => {
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/20 mb-4">
           <Shield className="h-6 w-6 text-elec-yellow" />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Preventive Maintenance Routines</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          Preventive Maintenance Routines
+        </h1>
         <p className="text-gray-400 text-sm">Section 8.4 - 25 minutes</p>
       </div>
 
@@ -174,7 +185,9 @@ const InstrumentationModule8Section4 = () => {
               <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-elec-yellow text-xs font-bold">1</span>
               </div>
-              <p className="text-gray-300 text-sm">Define what's included in preventive maintenance (PM)</p>
+              <p className="text-gray-300 text-sm">
+                Define what's included in preventive maintenance (PM)
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -186,7 +199,9 @@ const InstrumentationModule8Section4 = () => {
               <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-elec-yellow text-xs font-bold">3</span>
               </div>
-              <p className="text-gray-300 text-sm">Recognise high-risk areas that need regular checks</p>
+              <p className="text-gray-300 text-sm">
+                Recognise high-risk areas that need regular checks
+              </p>
             </div>
           </div>
         </div>
@@ -199,13 +214,15 @@ const InstrumentationModule8Section4 = () => {
           </div>
           <div className="space-y-4 text-gray-300">
             <p>
-              Preventive maintenance reduces breakdowns, improves safety, and extends the life
-              of instrumentation systems. A well-structured preventive maintenance programme
-              identifies potential problems before they cause costly failures or safety incidents.
+              Preventive maintenance reduces breakdowns, improves safety, and extends the life of
+              instrumentation systems. A well-structured preventive maintenance programme identifies
+              potential problems before they cause costly failures or safety incidents.
             </p>
             <div className="space-y-4">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                <h4 className="text-blue-400 font-medium mb-3">Clean Sensors and Inspect for Physical Damage</h4>
+                <h4 className="text-blue-400 font-medium mb-3">
+                  Clean Sensors and Inspect for Physical Damage
+                </h4>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-white font-medium mb-2">Cleaning Procedures</p>
@@ -228,7 +245,9 @@ const InstrumentationModule8Section4 = () => {
                 </div>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                <h4 className="text-green-400 font-medium mb-3">Verify Cable Terminations and Grounding</h4>
+                <h4 className="text-green-400 font-medium mb-3">
+                  Verify Cable Terminations and Grounding
+                </h4>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-white font-medium mb-2">Cable Checks</p>
@@ -272,10 +291,13 @@ const InstrumentationModule8Section4 = () => {
           <div className="space-y-4 text-gray-300">
             <p>
               Confirming calibration dates and rescheduling when needed is a critical part of PM.
-              Drift in instrument readings can cause process problems, safety risks, and compliance issues.
+              Drift in instrument readings can cause process problems, safety risks, and compliance
+              issues.
             </p>
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="text-elec-yellow font-medium mb-3">Calibration Frequency Guidelines</h4>
+              <h4 className="text-elec-yellow font-medium mb-3">
+                Calibration Frequency Guidelines
+              </h4>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <div className="bg-card/30 rounded p-3">
@@ -314,8 +336,8 @@ const InstrumentationModule8Section4 = () => {
           </div>
           <div className="space-y-4 text-gray-300">
             <p>
-              A structured checklist ensures consistent maintenance across all technicians
-              and prevents important tasks from being overlooked.
+              A structured checklist ensures consistent maintenance across all technicians and
+              prevents important tasks from being overlooked.
             </p>
             <div className="bg-card/30 rounded-lg p-4">
               <div className="grid sm:grid-cols-2 gap-6">
@@ -436,40 +458,52 @@ const InstrumentationModule8Section4 = () => {
             <h2 className="text-xl font-semibold text-white">Real World Example</h2>
           </div>
           <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30 rounded-lg p-4">
-            <h4 className="text-blue-400 font-medium mb-3">Routine Maintenance Reveals Hidden Corrosion</h4>
+            <h4 className="text-blue-400 font-medium mb-3">
+              Routine Maintenance Reveals Hidden Corrosion
+            </h4>
             <p className="text-gray-300 text-sm mb-4">
-              During a routine quarterly inspection, a technician discovers early signs of
-              corrosion on a field transmitter cable gland. The proactive maintenance
-              approach prevents a costly signal failure and potential safety incident.
+              During a routine quarterly inspection, a technician discovers early signs of corrosion
+              on a field transmitter cable gland. The proactive maintenance approach prevents a
+              costly signal failure and potential safety incident.
             </p>
             <div className="space-y-2 mb-4">
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">1</span>
-                <p className="text-sm text-gray-300">White crystalline deposits noticed around cable entry</p>
+                <p className="text-sm text-gray-300">
+                  White crystalline deposits noticed around cable entry
+                </p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">2</span>
-                <p className="text-sm text-gray-300">Removed cable gland to inspect internal condition</p>
+                <p className="text-sm text-gray-300">
+                  Removed cable gland to inspect internal condition
+                </p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">3</span>
-                <p className="text-sm text-gray-300">Found damaged seal allowing moisture ingress</p>
+                <p className="text-sm text-gray-300">
+                  Found damaged seal allowing moisture ingress
+                </p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">4</span>
-                <p className="text-sm text-gray-300">Replaced gland and upgraded to better seal material</p>
+                <p className="text-sm text-gray-300">
+                  Replaced gland and upgraded to better seal material
+                </p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono text-xs">5</span>
-                <p className="text-sm text-gray-300">Added similar transmitters to enhanced inspection schedule</p>
+                <p className="text-sm text-gray-300">
+                  Added similar transmitters to enhanced inspection schedule
+                </p>
               </div>
             </div>
             <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
               <p className="text-green-400 font-medium text-sm mb-1">Result</p>
               <p className="text-gray-300 text-sm">
                 The proactive approach caught the problem before signal degradation occurred,
-                preventing an estimated GBP15,000 in production losses. The replacement cost
-                was less than GBP200, demonstrating the value of systematic preventive maintenance.
+                preventing an estimated GBP15,000 in production losses. The replacement cost was
+                less than GBP200, demonstrating the value of systematic preventive maintenance.
               </p>
             </div>
           </div>
@@ -481,19 +515,27 @@ const InstrumentationModule8Section4 = () => {
           <div className="bg-card/30 rounded-lg p-4 space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">Use a CMMS to track all PM tasks with automated reminders and work order generation.</p>
+              <p className="text-gray-300 text-sm">
+                Use a CMMS to track all PM tasks with automated reminders and work order generation.
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">Take photos during inspections to document condition and create a historical record.</p>
+              <p className="text-gray-300 text-sm">
+                Take photos during inspections to document condition and create a historical record.
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">Review alarm logs regularly - frequent alarms often indicate developing problems.</p>
+              <p className="text-gray-300 text-sm">
+                Review alarm logs regularly - frequent alarms often indicate developing problems.
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2"></div>
-              <p className="text-gray-300 text-sm">Coordinate PM schedules with production to minimise process interruptions.</p>
+              <p className="text-gray-300 text-sm">
+                Coordinate PM schedules with production to minimise process interruptions.
+              </p>
             </div>
           </div>
         </div>
@@ -513,16 +555,16 @@ const InstrumentationModule8Section4 = () => {
 
         {/* Quiz Section */}
         <div className="mb-12">
-          <Quiz
-            title="Section 8.4 Knowledge Check"
-            questions={quizQuestions}
-          />
+          <Quiz title="Section 8.4 Knowledge Check" questions={quizQuestions} />
         </div>
 
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Link to="/electrician/upskilling/instrumentation-module-8-section-3">
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
+            <Button
+              variant="outline"
+              className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]"
+            >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Previous
             </Button>

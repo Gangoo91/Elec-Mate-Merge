@@ -11,16 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   calculatePhaseBalance,
   calculateNeutralCurrent,
-  getPhaseBalanceColor
+  getPhaseBalanceColor,
 } from '@/utils/threePhaseCalculations';
 
 interface ThreePhaseCellsProps {
@@ -95,11 +90,24 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
               <SelectValue placeholder="Select..." />
             </SelectTrigger>
             <SelectContent className="bg-background border border-border rounded-md z-[100]">
-              <SelectItem value="✓" className="text-sm text-green-400 font-medium hover:text-green-300">✓ Correct</SelectItem>
-              <SelectItem value="✗" className="text-sm text-red-400 font-medium hover:text-red-300">✗ Incorrect</SelectItem>
-              <SelectItem value="L1-L2-L3" className="text-sm text-neutral-100">L1-L2-L3</SelectItem>
-              <SelectItem value="L1-L3-L2" className="text-sm text-neutral-100">L1-L3-L2 (Reversed)</SelectItem>
-              <SelectItem value="N/A" className="text-sm text-neutral-100">N/A</SelectItem>
+              <SelectItem
+                value="✓"
+                className="text-sm text-green-400 font-medium hover:text-green-300"
+              >
+                ✓ Correct
+              </SelectItem>
+              <SelectItem value="✗" className="text-sm text-red-400 font-medium hover:text-red-300">
+                ✗ Incorrect
+              </SelectItem>
+              <SelectItem value="L1-L2-L3" className="text-sm text-neutral-100">
+                L1-L2-L3
+              </SelectItem>
+              <SelectItem value="L1-L3-L2" className="text-sm text-neutral-100">
+                L1-L3-L2 (Reversed)
+              </SelectItem>
+              <SelectItem value="N/A" className="text-sm text-neutral-100">
+                N/A
+              </SelectItem>
             </SelectContent>
           </Select>
           <TooltipProvider>
@@ -109,8 +117,10 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
               </TooltipTrigger>
               <TooltipContent side="top" className="max-w-xs z-50">
                 <p className="text-xs">
-                  <strong>Phase Sequence Test (BS 7671 Reg 612.12)</strong><br />
-                  Verify clockwise rotation L1→L2→L3 using phase rotation meter.<br />
+                  <strong>Phase Sequence Test (BS 7671 Reg 612.12)</strong>
+                  <br />
+                  Verify clockwise rotation L1→L2→L3 using phase rotation meter.
+                  <br />
                   Record as "Correct" or "Incorrect"
                 </p>
               </TooltipContent>
@@ -136,8 +146,10 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
             </TooltipTrigger>
             <TooltipContent side="top" className="max-w-xs">
               <p className="text-xs">
-                <strong>Load Balance L1 (Amps)</strong><br />
-                Measure load current on phase L1. Should be balanced within 10% across all three phases.
+                <strong>Load Balance L1 (Amps)</strong>
+                <br />
+                Measure load current on phase L1. Should be balanced within 10% across all three
+                phases.
               </p>
             </TooltipContent>
           </Tooltip>
@@ -168,7 +180,9 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded text-xs font-medium ${getPhaseBalanceColor(phaseBalanceResult.imbalancePercent)}`}>
+                  <div
+                    className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded text-xs font-medium ${getPhaseBalanceColor(phaseBalanceResult.imbalancePercent)}`}
+                  >
                     {phaseBalanceResult.isCompliant ? (
                       <CheckCircle className="h-3 w-3" />
                     ) : (
@@ -181,13 +195,23 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
                   <div className="text-xs space-y-1">
                     <p className="font-semibold">Phase Balance Analysis (BS7671)</p>
                     <p>Imbalance: {phaseBalanceResult.imbalancePercent}%</p>
-                    <p>Status: {phaseBalanceResult.isCompliant ? '✓ Compliant (<10%)' : '⚠ Non-compliant (>10%)'}</p>
-                    <p>Highest: {phaseBalanceResult.highestPhase} | Lowest: {phaseBalanceResult.lowestPhase}</p>
+                    <p>
+                      Status:{' '}
+                      {phaseBalanceResult.isCompliant
+                        ? '✓ Compliant (<10%)'
+                        : '⚠ Non-compliant (>10%)'}
+                    </p>
+                    <p>
+                      Highest: {phaseBalanceResult.highestPhase} | Lowest:{' '}
+                      {phaseBalanceResult.lowestPhase}
+                    </p>
                     {neutralCurrentResult && (
                       <p>Est. Neutral: {neutralCurrentResult.estimatedAmps}A</p>
                     )}
                     {phaseBalanceResult.recommendation && (
-                      <p className="text-amber-600 dark:text-amber-400">{phaseBalanceResult.recommendation}</p>
+                      <p className="text-amber-600 dark:text-amber-400">
+                        {phaseBalanceResult.recommendation}
+                      </p>
                     )}
                   </div>
                 </TooltipContent>
@@ -214,8 +238,10 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
             </TooltipTrigger>
             <TooltipContent side="top" className="max-w-xs">
               <p className="text-xs">
-                <strong>Line-to-Line Voltage</strong><br />
-                Measure voltage between any two phases (L1-L2, L2-L3, L1-L3).<br />
+                <strong>Line-to-Line Voltage</strong>
+                <br />
+                Measure voltage between any two phases (L1-L2, L2-L3, L1-L3).
+                <br />
                 Nominal: 400V (±10% = 360-440V acceptable)
               </p>
             </TooltipContent>
@@ -237,7 +263,10 @@ export const PhaseTypeBadge: React.FC<{ phaseType?: '1P' | '3P' | '' }> = ({ pha
   }
 
   return (
-    <Badge variant="outline" className="text-xs bg-purple-500/20 text-purple-400 border-purple-500/30">
+    <Badge
+      variant="outline"
+      className="text-xs bg-purple-500/20 text-purple-400 border-purple-500/30"
+    >
       3P
     </Badge>
   );

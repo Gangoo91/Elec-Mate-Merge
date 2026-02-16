@@ -3,14 +3,14 @@ import { Target, CheckCircle } from 'lucide-react';
 
 const BMSModule7Section6LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose of a structured client handover",
-    "Identify the documentation required at handover",
+    'Explain the purpose of a structured client handover',
+    'Identify the documentation required at handover',
     "Recognise the electrician's responsibilities in preparing as-built records",
-    "Apply best practices for client training and support",
-    "Understand warranty obligations and aftercare procedures",
-    "Create comprehensive handover documentation packages",
-    "Demonstrate proper training techniques for building operators",
-    "Establish professional client relationships through quality handover"
+    'Apply best practices for client training and support',
+    'Understand warranty obligations and aftercare procedures',
+    'Create comprehensive handover documentation packages',
+    'Demonstrate proper training techniques for building operators',
+    'Establish professional client relationships through quality handover',
   ];
 
   return (

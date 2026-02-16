@@ -1,7 +1,7 @@
 import React from 'react';
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 interface MobileInputWrapperProps {
   label?: string;
@@ -29,24 +29,24 @@ export function MobileInputWrapper({
   error,
   hint,
   disabled,
-  type = "text",
-  inputMode = "text",
+  type = 'text',
+  inputMode = 'text',
   step,
   min,
   max,
   icon,
   unit,
-  className
+  className,
 }: MobileInputWrapperProps) {
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn('space-y-3', className)}>
       {label && (
         <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
           <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
           {label}
         </Label>
       )}
-      
+
       <div className="relative group">
         <div className="relative">
           {icon && (
@@ -54,7 +54,7 @@ export function MobileInputWrapper({
               {icon}
             </div>
           )}
-          
+
           <Input
             type={type}
             inputMode={inputMode}
@@ -67,25 +67,24 @@ export function MobileInputWrapper({
             disabled={disabled}
             autoComplete="off"
             className={cn(
-              "h-14 bg-card border border-primary/30 rounded-xl text-elec-light",
-              "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
-              "placeholder:text-elec-light/60 text-base font-medium",
-              icon ? "pl-12" : "pl-4",
-              unit ? "pr-16" : "pr-4",
-              error ? "border-destructive focus:border-destructive" : ""
+              'h-14 bg-card border border-primary/30 rounded-xl text-elec-light',
+              'hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200',
+              'placeholder:text-elec-light/60 text-base font-medium',
+              icon ? 'pl-12' : 'pl-4',
+              unit ? 'pr-16' : 'pr-4',
+              error ? 'border-destructive focus:border-destructive' : ''
             )}
             style={{ fontSize: '16px' }} // Prevents zoom on iOS
           />
-          
+
           {unit && (
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-elec-yellow/70 font-medium text-sm">
               {unit}
             </div>
           )}
         </div>
-        
       </div>
-      
+
       {hint && !error && (
         <p className="text-xs text-elec-light/70 flex items-center gap-1">
           <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>

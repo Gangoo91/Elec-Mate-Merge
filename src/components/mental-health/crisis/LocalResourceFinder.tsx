@@ -1,41 +1,40 @@
-
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Search, Phone, Navigation } from "lucide-react";
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MapPin, Search, Phone, Navigation } from 'lucide-react';
 
 const LocalResourceFinder = () => {
-  const [postcode, setPostcode] = useState("");
+  const [postcode, setPostcode] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // Sample local resources for demonstration
   const sampleResources = [
     {
-      name: "NHS Greater Manchester Mental Health Trust",
-      type: "NHS Service",
-      address: "Bury New Road, Prestwich, Manchester M25 3BL",
-      phone: "0161 358 1996",
-      services: ["Crisis Support", "Community Mental Health"],
-      distance: "2.3 miles"
+      name: 'NHS Greater Manchester Mental Health Trust',
+      type: 'NHS Service',
+      address: 'Bury New Road, Prestwich, Manchester M25 3BL',
+      phone: '0161 358 1996',
+      services: ['Crisis Support', 'Community Mental Health'],
+      distance: '2.3 miles',
     },
     {
-      name: "Manchester Mind",
-      type: "Charity",
-      address: "Zion Community Resource Centre, Manchester M15 4ZY",
-      phone: "0161 769 5732",
-      services: ["Counselling", "Support Groups"],
-      distance: "3.1 miles"
+      name: 'Manchester Mind',
+      type: 'Charity',
+      address: 'Zion Community Resource Centre, Manchester M15 4ZY',
+      phone: '0161 769 5732',
+      services: ['Counselling', 'Support Groups'],
+      distance: '3.1 miles',
     },
     {
-      name: "Pennine Care NHS Foundation Trust",
-      type: "NHS Service",
-      address: "225 Old Street, Ashton-under-Lyne OL6 7SR",
-      phone: "0161 716 3000",
-      services: ["24/7 Crisis Line", "Community Teams"],
-      distance: "4.7 miles"
-    }
+      name: 'Pennine Care NHS Foundation Trust',
+      type: 'NHS Service',
+      address: '225 Old Street, Ashton-under-Lyne OL6 7SR',
+      phone: '0161 716 3000',
+      services: ['24/7 Crisis Line', 'Community Teams'],
+      distance: '4.7 miles',
+    },
   ];
 
   const handleSearch = () => {
@@ -80,10 +79,7 @@ const LocalResourceFinder = () => {
             Services near {postcode.toUpperCase()}
           </p>
           {searchResults.map((resource, index) => (
-            <div
-              key={index}
-              className="p-3 rounded-lg border border-green-500/20 bg-green-500/5"
-            >
+            <div key={index} className="p-3 rounded-lg border border-green-500/20 bg-green-500/5">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex-1 min-w-0">
                   <h4 className="font-medium text-foreground text-sm truncate">{resource.name}</h4>
@@ -91,9 +87,7 @@ const LocalResourceFinder = () => {
                     {resource.type}
                   </Badge>
                 </div>
-                <div className="text-xs text-white whitespace-nowrap">
-                  {resource.distance}
-                </div>
+                <div className="text-xs text-white whitespace-nowrap">{resource.distance}</div>
               </div>
 
               <p className="text-xs text-white mb-2 line-clamp-1">{resource.address}</p>
@@ -132,9 +126,7 @@ const LocalResourceFinder = () => {
       {searchResults.length === 0 && !isLoading && (
         <div className="text-center py-4">
           <MapPin className="h-10 w-10 text-green-400/50 mx-auto mb-3" />
-          <p className="text-sm text-white mb-3">
-            Enter your postcode to find local services
-          </p>
+          <p className="text-sm text-white mb-3">Enter your postcode to find local services</p>
           <div className="grid grid-cols-3 gap-2 text-xs">
             <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
               <div className="text-green-400 font-medium">NHS</div>

@@ -18,20 +18,23 @@ export const EmergencyLightingRealWorldSection2_4 = () => {
             The Incident
           </h3>
           <p className="text-foreground leading-relaxed mb-4">
-            In a hotel fire evacuation in Leeds, smoke reduced visibility in corridors. While exit signs were illuminated, several fire extinguishers and a change in direction were poorly lit, causing confusion among guests. The fire service later identified inadequate escape route lighting as a contributing factor.
+            In a hotel fire evacuation in Leeds, smoke reduced visibility in corridors. While exit
+            signs were illuminated, several fire extinguishers and a change in direction were poorly
+            lit, causing confusion among guests. The fire service later identified inadequate escape
+            route lighting as a contributing factor.
           </p>
           <div className="bg-white/5 rounded-lg p-4">
             <p className="text-foreground">
-              <strong>Critical Finding:</strong> The escape route lighting system failed to provide adequate illumination at key decision points, resulting in delayed evacuation and increased risk to occupants.
+              <strong>Critical Finding:</strong> The escape route lighting system failed to provide
+              adequate illumination at key decision points, resulting in delayed evacuation and
+              increased risk to occupants.
             </p>
           </div>
         </div>
 
         {/* Problems Identified */}
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-orange-400 mb-4">
-            Problems Identified
-          </h3>
+          <h3 className="text-xl font-semibold text-orange-400 mb-4">Problems Identified</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -69,9 +72,10 @@ export const EmergencyLightingRealWorldSection2_4 = () => {
             Remedial Action Taken
           </h3>
           <p className="text-foreground mb-4">
-            Following this incident, the system was upgraded with luminaires placed at all changes of direction and near fire-fighting equipment, fully aligning with BS 5266 requirements.
+            Following this incident, the system was upgraded with luminaires placed at all changes
+            of direction and near fire-fighting equipment, fully aligning with BS 5266 requirements.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-foreground mb-3">Immediate Improvements</h4>
@@ -120,32 +124,37 @@ export const EmergencyLightingRealWorldSection2_4 = () => {
 
         {/* Lessons Learned */}
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-blue-400 mb-4">
-            Key Lessons for Electricians
-          </h3>
+          <h3 className="text-xl font-semibold text-blue-400 mb-4">Key Lessons for Electricians</h3>
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-foreground mb-2">1. Complete Route Assessment</h4>
               <p className="text-foreground">
-                Always walk the entire escape route during design phase to identify potential hazards, changes in direction, and critical decision points that require enhanced illumination.
+                Always walk the entire escape route during design phase to identify potential
+                hazards, changes in direction, and critical decision points that require enhanced
+                illumination.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-foreground mb-2">2. Fire Equipment Visibility</h4>
               <p className="text-foreground">
-                Fire extinguishers, alarm call points, and other safety equipment must have dedicated illumination to ensure they can be located quickly during an emergency.
+                Fire extinguishers, alarm call points, and other safety equipment must have
+                dedicated illumination to ensure they can be located quickly during an emergency.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-foreground mb-2">3. Continuous Light Path</h4>
               <p className="text-foreground">
-                Escape route lighting must provide a continuous, uninterrupted path of light with no dark zones or shadows that could cause confusion or delay.
+                Escape route lighting must provide a continuous, uninterrupted path of light with no
+                dark zones or shadows that could cause confusion or delay.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-foreground mb-2">4. BS 5266 Compliance is Critical</h4>
+              <h4 className="font-semibold text-foreground mb-2">
+                4. BS 5266 Compliance is Critical
+              </h4>
               <p className="text-foreground">
-                Meeting minimum standards isn't just about regulatory compliance—it's about ensuring occupant safety during the most critical moments of an emergency evacuation.
+                Meeting minimum standards isn't just about regulatory compliance—it's about ensuring
+                occupant safety during the most critical moments of an emergency evacuation.
               </p>
             </div>
           </div>

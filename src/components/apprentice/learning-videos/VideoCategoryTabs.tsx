@@ -13,7 +13,11 @@ interface VideoCategoryTabsProps {
   onCategoryChange: (category: VideoCategory | 'all') => void;
 }
 
-export function VideoCategoryTabs({ categories, activeCategory, onCategoryChange }: VideoCategoryTabsProps) {
+export function VideoCategoryTabs({
+  categories,
+  activeCategory,
+  onCategoryChange,
+}: VideoCategoryTabsProps) {
   return (
     <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
       <button
@@ -26,7 +30,7 @@ export function VideoCategoryTabs({ categories, activeCategory, onCategoryChange
       >
         All
       </button>
-      {categories.map(cat => (
+      {categories.map((cat) => (
         <button
           key={cat}
           onClick={() => onCategoryChange(cat)}

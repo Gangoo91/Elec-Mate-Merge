@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by MHFA training assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by MHFA training assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Review All Five Modules",
+    title: 'Review All Five Modules',
     description:
-      "Questions are drawn from Mental Health Fundamentals, Depression & Anxiety, Substance Misuse & Suicide, Psychosis & Complex Needs, and Workplace Implementation. Cover every module before attempting the exam.",
+      'Questions are drawn from Mental Health Fundamentals, Depression & Anxiety, Substance Misuse & Suicide, Psychosis & Complex Needs, and Workplace Implementation. Cover every module before attempting the exam.',
   },
   {
-    title: "Know the ALGEE Action Plan",
+    title: 'Know the ALGEE Action Plan',
     description:
-      "Approach, Listen, Give support, Encourage professional help, Encourage other supports. This framework underpins the entire MHFA approach and is heavily tested.",
+      'Approach, Listen, Give support, Encourage professional help, Encourage other supports. This framework underpins the entire MHFA approach and is heavily tested.',
   },
   {
-    title: "Understand the Legal Framework",
+    title: 'Understand the Legal Framework',
     description:
-      "The Health and Safety at Work Act 1974, Equality Act 2010 (mental health as disability), HSE Management Standards, and the Thriving at Work core standards. Know what employers must do.",
+      'The Health and Safety at Work Act 1974, Equality Act 2010 (mental health as disability), HSE Management Standards, and the Thriving at Work core standards. Know what employers must do.',
   },
   {
-    title: "Remember Key Statistics and Warning Signs",
+    title: 'Remember Key Statistics and Warning Signs',
     description:
-      "1 in 4 adults experience mental health problems each year. Construction has the highest suicide rate of any UK industry (3.7x the national average). Know the risk factors and protective factors.",
+      '1 in 4 adults experience mental health problems each year. Construction has the highest suicide rate of any UK industry (3.7x the national average). Know the risk factors and protective factors.',
   },
   {
-    title: "Master Crisis Intervention",
+    title: 'Master Crisis Intervention',
     description:
-      "The TASC model (Tell, Ask, Safety plan, Call), when to call 999, how to ask about suicide directly, safety planning, and key helpline numbers (Samaritans 116 123, SHOUT 85258).",
+      'The TASC model (Tell, Ask, Safety plan, Call), when to call 999, how to ask about suicide directly, safety planning, and key helpline numbers (Samaritans 116 123, SHOUT 85258).',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function MentalHealthModule6() {
   useSEO({
-    title: "Mental Health Mock Exam | Module 6",
+    title: 'Mental Health Mock Exam | Module 6',
     description:
-      "Test your Mental Health First Aid knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your Mental Health First Aid knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -100,9 +110,7 @@ export default function MentalHealthModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Put your Mental Health First Aid knowledge to the test under timed exam conditions.
               Questions are drawn from a 200-question bank covering all five content modules.
@@ -118,7 +126,9 @@ export default function MentalHealthModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real Mental Health First Aid assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real Mental Health First Aid assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -133,9 +143,7 @@ export default function MentalHealthModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -152,11 +160,11 @@ export default function MentalHealthModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { name: "Mental Health Fundamentals", count: 40 },
-                  { name: "Depression, Anxiety & Stress", count: 40 },
-                  { name: "Substance Misuse, Self-Harm & Suicide", count: 40 },
-                  { name: "Psychosis, Eating Disorders & Complex Needs", count: 40 },
-                  { name: "Workplace Implementation & Wellbeing", count: 40 },
+                  { name: 'Mental Health Fundamentals', count: 40 },
+                  { name: 'Depression, Anxiety & Stress', count: 40 },
+                  { name: 'Substance Misuse, Self-Harm & Suicide', count: 40 },
+                  { name: 'Psychosis, Eating Disorders & Complex Needs', count: 40 },
+                  { name: 'Workplace Implementation & Wellbeing', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -210,9 +218,7 @@ export default function MentalHealthModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

@@ -26,7 +26,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdTestButton', '✓');
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdTestButton', '✓');
       });
     }
@@ -40,7 +40,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('afddTest', '✓');
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'afddTest', '✓');
       });
     }
@@ -54,7 +54,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdBsStandard', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdBsStandard', value);
       });
     }
@@ -65,7 +65,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdType', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdType', value);
       });
     }
@@ -76,7 +76,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdRating', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdRating', value);
       });
     }
@@ -87,7 +87,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdRatingA', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'rcdRatingA', value);
       });
     }
@@ -97,10 +97,13 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     });
   };
 
-  const handleApplyRcdPreset = (circuitIds: string[], preset: { bsStandard: string; type: string; rating: string; ratingA: string; label: string }) => {
+  const handleApplyRcdPreset = (
+    circuitIds: string[],
+    preset: { bsStandard: string; type: string; rating: string; ratingA: string; label: string }
+  ) => {
     // Use onBulkUpdate if available for atomic updates, otherwise batch with requestAnimationFrame
     if (onBulkUpdate) {
-      circuitIds.forEach(id => {
+      circuitIds.forEach((id) => {
         onBulkUpdate(id, {
           rcdBsStandard: preset.bsStandard,
           rcdType: preset.type,
@@ -110,7 +113,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
       });
     } else {
       // Batch updates properly using requestAnimationFrame
-      circuitIds.forEach(id => {
+      circuitIds.forEach((id) => {
         requestAnimationFrame(() => {
           onUpdate(id, 'rcdBsStandard', preset.bsStandard);
           onUpdate(id, 'rcdType', preset.type);
@@ -119,7 +122,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
         });
       });
     }
-    
+
     toast.success(`✓ ${preset.label} Applied`, {
       description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
       duration: 2000,
@@ -131,7 +134,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('insulationTestVoltage', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'insulationTestVoltage', value);
       });
     }
@@ -142,7 +145,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('insulationLiveNeutral', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'insulationLiveNeutral', value);
       });
     }
@@ -153,7 +156,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('insulationLiveEarth', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'insulationLiveEarth', value);
       });
     }
@@ -164,7 +167,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('polarity', value);
     } else {
-      testResults.forEach(result => {
+      testResults.forEach((result) => {
         onUpdate(result.id, 'polarity', value);
       });
     }

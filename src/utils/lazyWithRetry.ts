@@ -20,7 +20,7 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
         // On retry, add cache-busting query param to force fresh fetch
         if (attempt > 0) {
           // Clear module cache and wait briefly before retry
-          await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+          await new Promise((resolve) => setTimeout(resolve, 500 * attempt));
           console.log(`[lazyWithRetry] Retry attempt ${attempt} for module`);
         }
 
@@ -43,7 +43,7 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
         if (attempt === retries - 1 && 'caches' in window) {
           try {
             const keys = await caches.keys();
-            await Promise.all(keys.map(k => caches.delete(k)));
+            await Promise.all(keys.map((k) => caches.delete(k)));
             console.log('[lazyWithRetry] Cleared caches before final retry');
           } catch {
             // Ignore cache clearing errors
@@ -84,14 +84,10 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
  */
 export function lazyWithRetryNamed<
   M extends Record<string, ComponentType<unknown>>,
-  K extends keyof M
->(
-  importFn: () => Promise<M>,
-  exportName: K,
-  retries = 2
-): React.LazyExoticComponent<M[K]> {
+  K extends keyof M,
+>(importFn: () => Promise<M>, exportName: K, retries = 2): React.LazyExoticComponent<M[K]> {
   return lazyWithRetry(
-    () => importFn().then(module => ({ default: module[exportName] })),
+    () => importFn().then((module) => ({ default: module[exportName] })),
     retries
   );
 }

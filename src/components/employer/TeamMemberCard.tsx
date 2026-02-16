@@ -1,12 +1,23 @@
-import { Phone, Mail, MessageSquare, Award, Briefcase, AlertTriangle, ChevronRight, CheckSquare, Square, IdCard } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import {
+  Phone,
+  Mail,
+  MessageSquare,
+  Award,
+  Briefcase,
+  AlertTriangle,
+  ChevronRight,
+  CheckSquare,
+  Square,
+  IdCard,
+} from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-type TeamRole = "QS" | "Supervisor" | "Operative" | "Apprentice" | "Project Manager";
-type AvailabilityStatus = "Available" | "On Job" | "On Leave" | "Unavailable";
+type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
+type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 
 interface TeamMemberCardProps {
   id: string;
@@ -31,25 +42,25 @@ interface TeamMemberCardProps {
 }
 
 const roleColors: Record<TeamRole, string> = {
-  "QS": "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
-  "Supervisor": "bg-info/20 text-info border-info/30",
-  "Operative": "bg-success/20 text-success border-success/30",
-  "Apprentice": "bg-warning/20 text-warning border-warning/30",
-  "Project Manager": "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
+  QS: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+  Supervisor: 'bg-info/20 text-info border-info/30',
+  Operative: 'bg-success/20 text-success border-success/30',
+  Apprentice: 'bg-warning/20 text-warning border-warning/30',
+  'Project Manager': 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
 };
 
 const availabilityBorderColors: Record<AvailabilityStatus, string> = {
-  "Available": "border-l-success",
-  "On Job": "border-l-info",
-  "On Leave": "border-l-warning",
-  "Unavailable": "border-l-muted-foreground",
+  Available: 'border-l-success',
+  'On Job': 'border-l-info',
+  'On Leave': 'border-l-warning',
+  Unavailable: 'border-l-muted-foreground',
 };
 
 const availabilityRingColors: Record<AvailabilityStatus, string> = {
-  "Available": "ring-success",
-  "On Job": "ring-info",
-  "On Leave": "ring-warning",
-  "Unavailable": "ring-muted-foreground",
+  Available: 'ring-success',
+  'On Job': 'ring-info',
+  'On Leave': 'ring-warning',
+  Unavailable: 'ring-muted-foreground',
 };
 
 export function TeamMemberCard({
@@ -72,16 +83,22 @@ export function TeamMemberCard({
   onEmail,
   onMessage,
 }: TeamMemberCardProps) {
-  const initials = avatar || name.split(" ").map(n => n[0]).join("").toUpperCase();
+  const initials =
+    avatar ||
+    name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase();
 
   return (
-    <Card 
+    <Card
       className={cn(
-        "border-l-4 transition-all duration-200 cursor-pointer group",
+        'border-l-4 transition-all duration-200 cursor-pointer group',
         availabilityBorderColors[availability],
-        isSelected 
-          ? "ring-2 ring-elec-yellow bg-elec-yellow/5 shadow-md" 
-          : "hover:shadow-md hover:bg-muted/30 active:scale-[0.99]"
+        isSelected
+          ? 'ring-2 ring-elec-yellow bg-elec-yellow/5 shadow-md'
+          : 'hover:shadow-md hover:bg-muted/30 active:scale-[0.99]'
       )}
       onClick={onClick}
     >
@@ -101,10 +118,7 @@ export function TeamMemberCard({
 
           {/* Avatar with availability ring */}
           <div className="flex-shrink-0">
-            <div className={cn(
-              "rounded-full p-0.5 ring-2",
-              availabilityRingColors[availability]
-            )}>
+            <div className={cn('rounded-full p-0.5 ring-2', availabilityRingColors[availability])}>
               <Avatar className="h-14 w-14 border-2 border-background">
                 <AvatarImage src={photo || undefined} alt={name} />
                 <AvatarFallback className="text-base bg-elec-yellow/10 text-elec-yellow font-semibold">
@@ -118,9 +132,9 @@ export function TeamMemberCard({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-foreground truncate">{name}</h3>
-              <Badge 
-                variant="outline" 
-                className={cn("text-[10px] shrink-0 border", roleColors[teamRole])}
+              <Badge
+                variant="outline"
+                className={cn('text-[10px] shrink-0 border', roleColors[teamRole])}
               >
                 {teamRole}
               </Badge>
@@ -200,13 +214,19 @@ export function TeamMemberCard({
           {/* Status badges */}
           <div className="flex items-center gap-1.5">
             {!hasElecId && (
-              <Badge variant="outline" className="text-muted-foreground border-muted-foreground/30 text-[10px]">
+              <Badge
+                variant="outline"
+                className="text-muted-foreground border-muted-foreground/30 text-[10px]"
+              >
                 <IdCard className="h-3 w-3 mr-1" />
                 No Elec-ID
               </Badge>
             )}
             {expiringCerts > 0 && (
-              <Badge variant="outline" className="bg-destructive/10 text-destructive border-destructive/30 text-[10px]">
+              <Badge
+                variant="outline"
+                className="bg-destructive/10 text-destructive border-destructive/30 text-[10px]"
+              >
                 <AlertTriangle className="h-3 w-3 mr-1" />
                 {expiringCerts} Expiring
               </Badge>

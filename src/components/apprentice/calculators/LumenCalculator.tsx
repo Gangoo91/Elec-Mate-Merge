@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Lightbulb,
   Calculator,
@@ -10,13 +10,9 @@ import {
   RotateCcw,
   BookOpen,
   Settings,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -25,39 +21,39 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import { copyToClipboard } from "@/lib/calc-utils";
+} from '@/components/calculators/shared';
+import { copyToClipboard } from '@/lib/calc-utils';
 
 // Room type presets with recommended lux levels
 const ROOM_PRESETS = {
-  office: { name: "Office/Workspace", lux: 500, description: "General office work" },
-  meeting: { name: "Meeting Room", lux: 300, description: "Conference and meetings" },
-  corridor: { name: "Corridor/Hallway", lux: 100, description: "Navigation areas" },
-  warehouse: { name: "Warehouse", lux: 200, description: "General storage areas" },
-  workshop: { name: "Workshop", lux: 750, description: "Detailed manual work" },
-  classroom: { name: "Classroom", lux: 500, description: "Educational spaces" },
-  retail: { name: "Retail Shop", lux: 750, description: "Customer areas" },
-  kitchen: { name: "Kitchen", lux: 500, description: "Food preparation" },
-  bathroom: { name: "Bathroom", lux: 200, description: "General use" },
-  stairwell: { name: "Stairwell", lux: 150, description: "Safety lighting" },
+  office: { name: 'Office/Workspace', lux: 500, description: 'General office work' },
+  meeting: { name: 'Meeting Room', lux: 300, description: 'Conference and meetings' },
+  corridor: { name: 'Corridor/Hallway', lux: 100, description: 'Navigation areas' },
+  warehouse: { name: 'Warehouse', lux: 200, description: 'General storage areas' },
+  workshop: { name: 'Workshop', lux: 750, description: 'Detailed manual work' },
+  classroom: { name: 'Classroom', lux: 500, description: 'Educational spaces' },
+  retail: { name: 'Retail Shop', lux: 750, description: 'Customer areas' },
+  kitchen: { name: 'Kitchen', lux: 500, description: 'Food preparation' },
+  bathroom: { name: 'Bathroom', lux: 200, description: 'General use' },
+  stairwell: { name: 'Stairwell', lux: 150, description: 'Safety lighting' },
 };
 
 const LumenCalculator = () => {
-  const config = CALCULATOR_CONFIG["lighting"];
+  const config = CALCULATOR_CONFIG['lighting'];
 
   const [calculationType, setCalculationType] = useState<
-    "lux-to-lumens" | "lumens-to-lux" | "fixtures-needed"
-  >("lux-to-lumens");
-  const [inputMode, setInputMode] = useState<"area" | "dimensions">("area");
-  const [area, setArea] = useState("");
-  const [length, setLength] = useState("");
-  const [width, setWidth] = useState("");
-  const [lux, setLux] = useState("");
-  const [lumens, setLumens] = useState("");
-  const [fixtureOutput, setFixtureOutput] = useState("");
-  const [mountingHeight, setMountingHeight] = useState("");
-  const [workingHeight, setWorkingHeight] = useState("0.85");
-  const [selectedRoom, setSelectedRoom] = useState("");
+    'lux-to-lumens' | 'lumens-to-lux' | 'fixtures-needed'
+  >('lux-to-lumens');
+  const [inputMode, setInputMode] = useState<'area' | 'dimensions'>('area');
+  const [area, setArea] = useState('');
+  const [length, setLength] = useState('');
+  const [width, setWidth] = useState('');
+  const [lux, setLux] = useState('');
+  const [lumens, setLumens] = useState('');
+  const [fixtureOutput, setFixtureOutput] = useState('');
+  const [mountingHeight, setMountingHeight] = useState('');
+  const [workingHeight, setWorkingHeight] = useState('0.85');
+  const [selectedRoom, setSelectedRoom] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [additionalInfo, setAdditionalInfo] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -66,41 +62,41 @@ const LumenCalculator = () => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
-  const [utilizationFactor, setUtilizationFactor] = useState("0.6");
-  const [maintenanceFactor, setMaintenanceFactor] = useState("0.8");
-  const [fixtureEfficacy, setFixtureEfficacy] = useState("100");
-  const [daylightContribution, setDaylightContribution] = useState("0");
+  const [utilizationFactor, setUtilizationFactor] = useState('0.6');
+  const [maintenanceFactor, setMaintenanceFactor] = useState('0.8');
+  const [fixtureEfficacy, setFixtureEfficacy] = useState('100');
+  const [daylightContribution, setDaylightContribution] = useState('0');
 
   const validateInputs = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (inputMode === "area") {
+    if (inputMode === 'area') {
       if (!area || parseFloat(area) <= 0) {
-        newErrors.area = "Valid area is required";
+        newErrors.area = 'Valid area is required';
       }
     } else {
       if (!length || parseFloat(length) <= 0) {
-        newErrors.length = "Valid length is required";
+        newErrors.length = 'Valid length is required';
       }
       if (!width || parseFloat(width) <= 0) {
-        newErrors.width = "Valid width is required";
+        newErrors.width = 'Valid width is required';
       }
     }
 
-    if (calculationType === "lux-to-lumens") {
+    if (calculationType === 'lux-to-lumens') {
       if (!lux || parseFloat(lux) <= 0) {
-        newErrors.lux = "Valid lux value is required";
+        newErrors.lux = 'Valid lux value is required';
       }
-    } else if (calculationType === "lumens-to-lux") {
+    } else if (calculationType === 'lumens-to-lux') {
       if (!lumens || parseFloat(lumens) <= 0) {
-        newErrors.lumens = "Valid lumens value is required";
+        newErrors.lumens = 'Valid lumens value is required';
       }
-    } else if (calculationType === "fixtures-needed") {
+    } else if (calculationType === 'fixtures-needed') {
       if (!lux || parseFloat(lux) <= 0) {
-        newErrors.lux = "Valid lux value is required";
+        newErrors.lux = 'Valid lux value is required';
       }
       if (!fixtureOutput || parseFloat(fixtureOutput) <= 0) {
-        newErrors.fixtureOutput = "Valid fixture output is required";
+        newErrors.fixtureOutput = 'Valid fixture output is required';
       }
     }
 
@@ -111,16 +107,16 @@ const LumenCalculator = () => {
       const daylight = parseFloat(daylightContribution);
 
       if (uf < 0.2 || uf > 1.0) {
-        newErrors.utilizationFactor = "UF should be 0.2-1.0";
+        newErrors.utilizationFactor = 'UF should be 0.2-1.0';
       }
       if (mf < 0.5 || mf > 1.0) {
-        newErrors.maintenanceFactor = "MF should be 0.5-1.0";
+        newErrors.maintenanceFactor = 'MF should be 0.5-1.0';
       }
       if (efficacy < 20 || efficacy > 200) {
-        newErrors.fixtureEfficacy = "20-200 lm/W";
+        newErrors.fixtureEfficacy = '20-200 lm/W';
       }
       if (daylight < 0 || daylight > 80) {
-        newErrors.daylightContribution = "0-80%";
+        newErrors.daylightContribution = '0-80%';
       }
     }
 
@@ -132,13 +128,13 @@ const LumenCalculator = () => {
     if (!validateInputs()) return;
 
     const areaVal =
-      inputMode === "area" ? parseFloat(area) : parseFloat(length) * parseFloat(width);
+      inputMode === 'area' ? parseFloat(area) : parseFloat(length) * parseFloat(width);
     const uf = parseFloat(utilizationFactor);
     const mf = parseFloat(maintenanceFactor);
     const efficacy = parseFloat(fixtureEfficacy);
     const daylightReduction = parseFloat(daylightContribution) / 100;
 
-    if (calculationType === "lux-to-lumens") {
+    if (calculationType === 'lux-to-lumens') {
       const luxVal = parseFloat(lux);
       let calculatedLumens = luxVal * areaVal;
 
@@ -168,7 +164,7 @@ const LumenCalculator = () => {
         }
       }
       setAdditionalInfo(efficacyInfo);
-    } else if (calculationType === "lumens-to-lux") {
+    } else if (calculationType === 'lumens-to-lux') {
       const lumensVal = parseFloat(lumens);
       let calculatedLux = lumensVal / areaVal;
 
@@ -179,18 +175,18 @@ const LumenCalculator = () => {
 
       setResult(`${calculatedLux.toFixed(1)} lux`);
 
-      let complianceInfo = "Level: ";
-      if (calculatedLux < 100) complianceInfo += "Below minimum for most tasks";
-      else if (calculatedLux < 300) complianceInfo += "Suitable for basic navigation";
-      else if (calculatedLux < 500) complianceInfo += "Adequate for general work";
-      else if (calculatedLux < 750) complianceInfo += "Good for detailed tasks";
-      else complianceInfo += "Excellent for precision work";
+      let complianceInfo = 'Level: ';
+      if (calculatedLux < 100) complianceInfo += 'Below minimum for most tasks';
+      else if (calculatedLux < 300) complianceInfo += 'Suitable for basic navigation';
+      else if (calculatedLux < 500) complianceInfo += 'Adequate for general work';
+      else if (calculatedLux < 750) complianceInfo += 'Good for detailed tasks';
+      else complianceInfo += 'Excellent for precision work';
 
       if (showAdvanced) {
         complianceInfo += ` | UF ${uf}, MF ${mf}`;
       }
       setAdditionalInfo(complianceInfo);
-    } else if (calculationType === "fixtures-needed") {
+    } else if (calculationType === 'fixtures-needed') {
       const luxVal = parseFloat(lux);
       const fixtureVal = parseFloat(fixtureOutput);
       let totalLumensNeeded = luxVal * areaVal;
@@ -220,22 +216,22 @@ const LumenCalculator = () => {
   };
 
   const resetCalculator = () => {
-    setArea("");
-    setLength("");
-    setWidth("");
-    setLux("");
-    setLumens("");
-    setFixtureOutput("");
-    setMountingHeight("");
-    setWorkingHeight("0.85");
-    setSelectedRoom("");
+    setArea('');
+    setLength('');
+    setWidth('');
+    setLux('');
+    setLumens('');
+    setFixtureOutput('');
+    setMountingHeight('');
+    setWorkingHeight('0.85');
+    setSelectedRoom('');
     setResult(null);
     setAdditionalInfo(null);
     setErrors({});
-    setUtilizationFactor("0.6");
-    setMaintenanceFactor("0.8");
-    setFixtureEfficacy("100");
-    setDaylightContribution("0");
+    setUtilizationFactor('0.6');
+    setMaintenanceFactor('0.8');
+    setFixtureEfficacy('100');
+    setDaylightContribution('0');
     setShowAdvanced(false);
   };
 
@@ -252,21 +248,21 @@ const LumenCalculator = () => {
     if (preset) {
       setLux(preset.lux.toString());
       setSelectedRoom(roomKey);
-      clearError("lux");
+      clearError('lux');
     }
   };
 
   const copyResult = async () => {
     if (result) {
-      const copyText = `Lighting Calculation Result: ${result}${additionalInfo ? " | " + additionalInfo : ""}`;
+      const copyText = `Lighting Calculation Result: ${result}${additionalInfo ? ' | ' + additionalInfo : ''}`;
       await copyToClipboard(copyText);
     }
   };
 
   const calculationTypeOptions = [
-    { value: "lux-to-lumens", label: "Lux to Lumens" },
-    { value: "lumens-to-lux", label: "Lumens to Lux" },
-    { value: "fixtures-needed", label: "Fixtures Required" },
+    { value: 'lux-to-lumens', label: 'Lux to Lumens' },
+    { value: 'lumens-to-lux', label: 'Lumens to Lux' },
+    { value: 'fixtures-needed', label: 'Fixtures Required' },
   ];
 
   const roomPresetOptions = Object.entries(ROOM_PRESETS).map(([key, preset]) => ({
@@ -275,10 +271,14 @@ const LumenCalculator = () => {
   }));
 
   const isValid =
-    (inputMode === "area" ? parseFloat(area) > 0 : parseFloat(length) > 0 && parseFloat(width) > 0) &&
-    ((calculationType === "lux-to-lumens" && parseFloat(lux) > 0) ||
-      (calculationType === "lumens-to-lux" && parseFloat(lumens) > 0) ||
-      (calculationType === "fixtures-needed" && parseFloat(lux) > 0 && parseFloat(fixtureOutput) > 0));
+    (inputMode === 'area'
+      ? parseFloat(area) > 0
+      : parseFloat(length) > 0 && parseFloat(width) > 0) &&
+    ((calculationType === 'lux-to-lumens' && parseFloat(lux) > 0) ||
+      (calculationType === 'lumens-to-lux' && parseFloat(lumens) > 0) ||
+      (calculationType === 'fixtures-needed' &&
+        parseFloat(lux) > 0 &&
+        parseFloat(fixtureOutput) > 0));
 
   return (
     <div className="space-y-4">
@@ -297,7 +297,7 @@ const LumenCalculator = () => {
         />
 
         {/* Room Presets */}
-        {(calculationType === "lux-to-lumens" || calculationType === "fixtures-needed") && (
+        {(calculationType === 'lux-to-lumens' || calculationType === 'fixtures-needed') && (
           <div className="space-y-1">
             <CalculatorSelect
               label="Room Type (Optional)"
@@ -321,15 +321,15 @@ const LumenCalculator = () => {
         </div>
         <div className="flex gap-2">
           <button
-            onClick={() => setInputMode("area")}
+            onClick={() => setInputMode('area')}
             className={cn(
-              "flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation",
-              inputMode === "area"
-                ? "text-black"
-                : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+              'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation',
+              inputMode === 'area'
+                ? 'text-black'
+                : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
             )}
             style={
-              inputMode === "area"
+              inputMode === 'area'
                 ? {
                     background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                   }
@@ -339,15 +339,15 @@ const LumenCalculator = () => {
             Direct Area
           </button>
           <button
-            onClick={() => setInputMode("dimensions")}
+            onClick={() => setInputMode('dimensions')}
             className={cn(
-              "flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation",
-              inputMode === "dimensions"
-                ? "text-black"
-                : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+              'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation',
+              inputMode === 'dimensions'
+                ? 'text-black'
+                : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
             )}
             style={
-              inputMode === "dimensions"
+              inputMode === 'dimensions'
                 ? {
                     background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                   }
@@ -359,7 +359,7 @@ const LumenCalculator = () => {
         </div>
 
         {/* Area/Dimension Inputs */}
-        {inputMode === "area" ? (
+        {inputMode === 'area' ? (
           <CalculatorInput
             label="Area"
             unit="m²"
@@ -368,7 +368,7 @@ const LumenCalculator = () => {
             value={area}
             onChange={(val) => {
               setArea(val);
-              clearError("area");
+              clearError('area');
             }}
             placeholder="e.g., 50"
             error={errors.area}
@@ -383,7 +383,7 @@ const LumenCalculator = () => {
               value={length}
               onChange={(val) => {
                 setLength(val);
-                clearError("length");
+                clearError('length');
               }}
               placeholder="e.g., 10"
               error={errors.length}
@@ -396,7 +396,7 @@ const LumenCalculator = () => {
               value={width}
               onChange={(val) => {
                 setWidth(val);
-                clearError("width");
+                clearError('width');
               }}
               placeholder="e.g., 5"
               error={errors.width}
@@ -405,7 +405,7 @@ const LumenCalculator = () => {
         )}
 
         {/* Main Calculation Inputs */}
-        {calculationType === "lux-to-lumens" && (
+        {calculationType === 'lux-to-lumens' && (
           <CalculatorInput
             label="Required Illuminance"
             unit="lx"
@@ -414,7 +414,7 @@ const LumenCalculator = () => {
             value={lux}
             onChange={(val) => {
               setLux(val);
-              clearError("lux");
+              clearError('lux');
             }}
             placeholder="e.g., 500"
             hint="Target lux level for the space"
@@ -422,7 +422,7 @@ const LumenCalculator = () => {
           />
         )}
 
-        {calculationType === "lumens-to-lux" && (
+        {calculationType === 'lumens-to-lux' && (
           <CalculatorInput
             label="Total Light Output"
             unit="lm"
@@ -431,7 +431,7 @@ const LumenCalculator = () => {
             value={lumens}
             onChange={(val) => {
               setLumens(val);
-              clearError("lumens");
+              clearError('lumens');
             }}
             placeholder="e.g., 25000"
             hint="Total fixture lumens installed"
@@ -439,7 +439,7 @@ const LumenCalculator = () => {
           />
         )}
 
-        {calculationType === "fixtures-needed" && (
+        {calculationType === 'fixtures-needed' && (
           <>
             <CalculatorInput
               label="Required Illuminance"
@@ -449,7 +449,7 @@ const LumenCalculator = () => {
               value={lux}
               onChange={(val) => {
                 setLux(val);
-                clearError("lux");
+                clearError('lux');
               }}
               placeholder="e.g., 500"
               error={errors.lux}
@@ -462,7 +462,7 @@ const LumenCalculator = () => {
               value={fixtureOutput}
               onChange={(val) => {
                 setFixtureOutput(val);
-                clearError("fixtureOutput");
+                clearError('fixtureOutput');
               }}
               placeholder="e.g., 3000"
               hint="Lumens per fixture"
@@ -504,8 +504,8 @@ const LumenCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showAdvanced && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showAdvanced && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
@@ -519,7 +519,7 @@ const LumenCalculator = () => {
                 value={utilizationFactor}
                 onChange={(val) => {
                   setUtilizationFactor(val);
-                  clearError("utilizationFactor");
+                  clearError('utilizationFactor');
                 }}
                 placeholder="0.6"
                 hint="Light reaching work plane (0.2-1.0)"
@@ -533,7 +533,7 @@ const LumenCalculator = () => {
                 value={maintenanceFactor}
                 onChange={(val) => {
                   setMaintenanceFactor(val);
-                  clearError("maintenanceFactor");
+                  clearError('maintenanceFactor');
                 }}
                 placeholder="0.8"
                 hint="Depreciation over time (0.5-1.0)"
@@ -548,7 +548,7 @@ const LumenCalculator = () => {
                 value={fixtureEfficacy}
                 onChange={(val) => {
                   setFixtureEfficacy(val);
-                  clearError("fixtureEfficacy");
+                  clearError('fixtureEfficacy');
                 }}
                 placeholder="100"
                 hint="LED: 80-150, Fluorescent: 60-100"
@@ -563,7 +563,7 @@ const LumenCalculator = () => {
                 value={daylightContribution}
                 onChange={(val) => {
                   setDaylightContribution(val);
-                  clearError("daylightContribution");
+                  clearError('daylightContribution');
                 }}
                 placeholder="0"
                 hint="Natural light reduction (0-80%)"
@@ -586,8 +586,8 @@ const LumenCalculator = () => {
             onClick={calculate}
             disabled={!isValid}
             className={cn(
-              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-              isValid ? "text-black" : "bg-white/10 text-white/30 cursor-not-allowed"
+              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+              isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
             )}
             style={
               isValid
@@ -615,9 +615,9 @@ const LumenCalculator = () => {
           <CalculatorResult category="lighting">
             <div className="text-center pb-4 border-b border-white/10">
               <p className="text-sm text-white/60 mb-1">
-                {calculationType === "lux-to-lumens" && "Lumens Required"}
-                {calculationType === "lumens-to-lux" && "Illuminance Level"}
-                {calculationType === "fixtures-needed" && "Fixtures Needed"}
+                {calculationType === 'lux-to-lumens' && 'Lumens Required'}
+                {calculationType === 'lumens-to-lux' && 'Illuminance Level'}
+                {calculationType === 'fixtures-needed' && 'Fixtures Needed'}
               </p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
@@ -636,10 +636,10 @@ const LumenCalculator = () => {
             )}
 
             {/* Compliance Badge for lumens-to-lux */}
-            {calculationType === "lumens-to-lux" && (
+            {calculationType === 'lumens-to-lux' && (
               <div className="flex justify-center pt-3">
                 {(() => {
-                  const luxValue = parseFloat(result.replace(" lux", ""));
+                  const luxValue = parseFloat(result.replace(' lux', ''));
                   if (luxValue >= 500)
                     return (
                       <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/30">
@@ -682,7 +682,7 @@ const LumenCalculator = () => {
 
           {/* What This Means */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
@@ -692,8 +692,8 @@ const LumenCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showGuidance && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -729,7 +729,7 @@ const LumenCalculator = () => {
 
       {/* Quick Reference */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
@@ -739,8 +739,8 @@ const LumenCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showReference && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
@@ -770,9 +770,9 @@ const LumenCalculator = () => {
 
             <div className="mt-4 p-3 rounded-lg bg-amber-400/5 border border-amber-400/20">
               <p className="text-xs text-amber-200/70">
-                <strong className="text-amber-300">Practical Tips:</strong> LED fixtures are typically
-                80-150 lm/W. Mount at 2.4-4m height, space at 1.2× mounting height. Consider daylight
-                sensors to reduce artificial lighting during day.
+                <strong className="text-amber-300">Practical Tips:</strong> LED fixtures are
+                typically 80-150 lm/W. Mount at 2.4-4m height, space at 1.2× mounting height.
+                Consider daylight sensors to reduce artificial lighting during day.
               </p>
             </div>
           </CollapsibleContent>

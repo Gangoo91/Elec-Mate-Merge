@@ -24,11 +24,11 @@ const ConfettiEffect = ({ active, duration = 3000 }: ConfettiEffectProps) => {
     if (!active) return;
 
     const colors = [
-      'hsl(45, 95%, 55%)',  // elec-yellow
+      'hsl(45, 95%, 55%)', // elec-yellow
       'hsl(140, 85%, 45%)', // green
       'hsl(218, 85%, 55%)', // blue
-      'hsl(0, 85%, 55%)',   // red
-      'hsl(38, 95%, 55%)',  // orange
+      'hsl(0, 85%, 55%)', // red
+      'hsl(38, 95%, 55%)', // orange
     ];
 
     const newParticles: ConfettiParticle[] = Array.from({ length: 50 }, (_, i) => ({

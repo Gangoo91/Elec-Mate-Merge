@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by asbestos awareness assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by asbestos awareness assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Review All Five Modules",
+    title: 'Review All Five Modules',
     description:
-      "Questions are drawn equally from Asbestos Types, Legislation, Identification, Safe Working, and Emergency Procedures. Make sure you have covered every module before attempting the exam.",
+      'Questions are drawn equally from Asbestos Types, Legislation, Identification, Safe Working, and Emergency Procedures. Make sure you have covered every module before attempting the exam.',
   },
   {
-    title: "Know Your Fibre Types",
+    title: 'Know Your Fibre Types',
     description:
-      "Chrysotile (white), amosite (brown), and crocidolite (blue) are heavily tested. Understand the difference between serpentine and amphibole fibre groups and their relative dangers.",
+      'Chrysotile (white), amosite (brown), and crocidolite (blue) are heavily tested. Understand the difference between serpentine and amphibole fibre groups and their relative dangers.',
   },
   {
-    title: "Understand CAR 2012",
+    title: 'Understand CAR 2012',
     description:
-      "The Control of Asbestos Regulations 2012 is the primary legislation. Know Regulation 4 (Duty to Manage), the three work categories, and the control limit of 0.1 fibres per cm\u00B3.",
+      'The Control of Asbestos Regulations 2012 is the primary legislation. Know Regulation 4 (Duty to Manage), the three work categories, and the control limit of 0.1 fibres per cm\u00B3.',
   },
   {
-    title: "Remember the 4-S Response",
+    title: 'Remember the 4-S Response',
     description:
-      "STOP, SEAL, SIGN, SUMMON is the emergency procedure for accidental disturbance. Know the detailed actions at each step and who to notify.",
+      'STOP, SEAL, SIGN, SUMMON is the emergency procedure for accidental disturbance. Know the detailed actions at each step and who to notify.',
   },
   {
-    title: "Know Your PPE",
+    title: 'Know Your PPE',
     description:
-      "Understand RPE selection (FFP3, half-mask, full-face, powered air), assigned protection factors, face-fit testing requirements, and the 7-step decontamination sequence.",
+      'Understand RPE selection (FFP3, half-mask, full-face, powered air), assigned protection factors, face-fit testing requirements, and the 7-step decontamination sequence.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function AsbestosModule6() {
   useSEO({
-    title: "Asbestos Awareness Mock Exam | Module 6",
+    title: 'Asbestos Awareness Mock Exam | Module 6',
     description:
-      "Test your asbestos awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your asbestos awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,9 +108,7 @@ export default function AsbestosModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Put your asbestos awareness knowledge to the test under timed exam conditions.
               Questions are drawn from a 200-question bank covering all five content modules.
@@ -115,7 +123,9 @@ export default function AsbestosModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real asbestos awareness assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real asbestos awareness assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +140,7 @@ export default function AsbestosModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +156,11 @@ export default function AsbestosModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Asbestos Types & Properties", count: 40 },
-                  { module: "Module 2", name: "Legislation & Duty to Manage", count: 40 },
-                  { module: "Module 3", name: "Identification & Surveys", count: 40 },
-                  { module: "Module 4", name: "Safe Working & PPE", count: 40 },
-                  { module: "Module 5", name: "Emergency Procedures", count: 40 },
+                  { module: 'Module 1', name: 'Asbestos Types & Properties', count: 40 },
+                  { module: 'Module 2', name: 'Legislation & Duty to Manage', count: 40 },
+                  { module: 'Module 3', name: 'Identification & Surveys', count: 40 },
+                  { module: 'Module 4', name: 'Safe Working & PPE', count: 40 },
+                  { module: 'Module 5', name: 'Emergency Procedures', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +212,7 @@ export default function AsbestosModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

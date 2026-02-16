@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Wand2, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { InstallPlanDataV2 } from "./types";
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Wand2, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { InstallPlanDataV2 } from './types';
 
 interface SmartInputProps {
   onParsed: (data: Partial<InstallPlanDataV2>) => void;
 }
 
 export const SmartInput = ({ onParsed }: SmartInputProps) => {
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -21,23 +21,23 @@ export const SmartInput = ({ onParsed }: SmartInputProps) => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('parse-circuit-description', {
-        body: { description }
+        body: { description },
       });
 
       if (error) throw error;
 
       onParsed(data);
       toast({
-        title: "Description parsed",
-        description: "Form fields updated with your requirements",
+        title: 'Description parsed',
+        description: 'Form fields updated with your requirements',
       });
-      setDescription("");
+      setDescription('');
     } catch (error) {
       console.error('Parse error:', error);
       toast({
-        title: "Parse failed",
-        description: "Could not understand the description. Try being more specific.",
-        variant: "destructive"
+        title: 'Parse failed',
+        description: 'Could not understand the description. Try being more specific.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -54,17 +54,13 @@ export const SmartInput = ({ onParsed }: SmartInputProps) => {
           onKeyDown={(e) => e.key === 'Enter' && handleParse()}
           className="flex-1"
         />
-        <Button 
-          onClick={handleParse} 
+        <Button
+          onClick={handleParse}
           disabled={isLoading || !description.trim()}
           variant="outline"
           className="gap-2"
         >
-          {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Wand2 className="h-4 w-4" />
-          )}
+          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wand2 className="h-4 w-4" />}
           Parse
         </Button>
       </div>

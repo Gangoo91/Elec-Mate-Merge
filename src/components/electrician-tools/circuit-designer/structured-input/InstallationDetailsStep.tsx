@@ -3,11 +3,11 @@
  * Collect detailed installation parameters for each circuit to reduce AI guessing
  */
 
-import { CircuitInput } from "@/types/installation-design";
-import { Badge } from "@/components/ui/badge";
-import { Info, Zap, Wrench, MapPin } from "lucide-react";
-import { IOSSelect } from "@/components/ui/ios-select";
-import { cn } from "@/lib/utils";
+import { CircuitInput } from '@/types/installation-design';
+import { Badge } from '@/components/ui/badge';
+import { Info, Zap, Wrench, MapPin } from 'lucide-react';
+import { IOSSelect } from '@/components/ui/ios-select';
+import { cn } from '@/lib/utils';
 
 interface InstallationDetailsStepProps {
   circuits: CircuitInput[];
@@ -48,8 +48,11 @@ const INDUSTRIAL_INSTALL_METHODS = [
   { value: 'outdoor_tray', label: 'Outdoor Tray (galvanised)' },
 ];
 
-export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }: InstallationDetailsStepProps) => {
-
+export const InstallationDetailsStep = ({
+  circuits,
+  onUpdate,
+  installationType,
+}: InstallationDetailsStepProps) => {
   const getInstallMethodOptions = () => {
     switch (installationType) {
       case 'domestic':
@@ -85,9 +88,9 @@ export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }
       {/* Info Alert */}
       <div
         className={cn(
-          "flex items-start gap-2 p-3 rounded-xl border",
-          "bg-white/5 backdrop-blur",
-          "border-blue-500/30"
+          'flex items-start gap-2 p-3 rounded-xl border',
+          'bg-white/5 backdrop-blur',
+          'border-blue-500/30'
         )}
       >
         <Info className="h-4 w-4 mt-0.5 flex-shrink-0 text-blue-400" />
@@ -102,10 +105,10 @@ export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }
           <div
             key={circuit.id}
             className={cn(
-              "p-4 rounded-xl",
-              "bg-white/5 backdrop-blur border border-white/10",
-              "transition-all duration-ios-fast",
-              "hover:border-white/20"
+              'p-4 rounded-xl',
+              'bg-white/5 backdrop-blur border border-white/10',
+              'transition-all duration-ios-fast',
+              'hover:border-white/20'
             )}
           >
             {/* Circuit Header */}
@@ -115,10 +118,7 @@ export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }
                   <div className="p-1.5 rounded-lg bg-elec-yellow/10">
                     <Zap className="h-3.5 w-3.5 text-elec-yellow" />
                   </div>
-                  <Badge
-                    variant="secondary"
-                    className="bg-white/10 border-0 text-white/80 text-xs"
-                  >
+                  <Badge variant="secondary" className="bg-white/10 border-0 text-white/80 text-xs">
                     Circuit {index + 1}
                   </Badge>
                 </div>
@@ -130,9 +130,7 @@ export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }
                 </p>
               </div>
               {circuit.specialLocation && circuit.specialLocation !== 'none' && (
-                <Badge
-                  className="bg-orange-500/20 text-orange-300 border-0 text-xs capitalize shrink-0"
-                >
+                <Badge className="bg-orange-500/20 text-orange-300 border-0 text-xs capitalize shrink-0">
                   <MapPin className="h-3 w-3 mr-1" />
                   {circuit.specialLocation}
                 </Badge>
@@ -231,16 +229,14 @@ export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }
       {circuits.length === 0 && (
         <div
           className={cn(
-            "p-8 text-center rounded-xl",
-            "bg-white/[0.03] border-2 border-dashed border-white/[0.08]"
+            'p-8 text-center rounded-xl',
+            'bg-white/[0.03] border-2 border-dashed border-white/[0.08]'
           )}
         >
           <div className="inline-flex p-4 rounded-xl bg-white/5 mb-4">
             <Wrench className="h-10 w-10 text-white/40" />
           </div>
-          <h3 className="text-base font-semibold text-white mb-2">
-            No Circuits to Configure
-          </h3>
+          <h3 className="text-base font-semibold text-white mb-2">No Circuits to Configure</h3>
           <p className="text-sm text-white/50">
             Add circuits in the previous step to configure installation details
           </p>

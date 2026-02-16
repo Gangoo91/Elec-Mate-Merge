@@ -31,38 +31,43 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
   // Header
   doc.setFillColor(251, 146, 60);
   doc.rect(0, 0, pageWidth, 40, 'F');
-  
+
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(20);
-  doc.setFont("helvetica", "bold");
-  doc.text("RISK ASSESSMENT", pageWidth / 2, 15, { align: "center" });
-  
+  doc.setFont('helvetica', 'bold');
+  doc.text('RISK ASSESSMENT', pageWidth / 2, 15, { align: 'center' });
+
   doc.setFontSize(10);
-  doc.text(`${data.projectType.toUpperCase()} PROJECT`, pageWidth / 2, 25, { align: "center" });
-  doc.text(`Document Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`, pageWidth / 2, 32, { align: "center" });
+  doc.text(`${data.projectType.toUpperCase()} PROJECT`, pageWidth / 2, 25, { align: 'center' });
+  doc.text(`Document Generated: ${format(new Date(), 'dd/MM/yyyy HH:mm')}`, pageWidth / 2, 32, {
+    align: 'center',
+  });
 
   yPos = 50;
 
   // Project Information
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("Project Information", 15, yPos);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Project Information', 15, yPos);
   yPos += 10;
 
   const projectInfo = [
-    ["Project Name", data.projectName],
-    ["Location", data.location],
-    ["Risk Assessor", data.assessor],
-    ["Assessment Date", format(new Date(data.date), "dd/MM/yyyy")],
-    ["Document Reference", `RA-${data.projectName.replace(/\s+/g, '_')}-${format(new Date(), 'ddMMyyyy')}`]
+    ['Project Name', data.projectName],
+    ['Location', data.location],
+    ['Risk Assessor', data.assessor],
+    ['Assessment Date', format(new Date(data.date), 'dd/MM/yyyy')],
+    [
+      'Document Reference',
+      `RA-${data.projectName.replace(/\s+/g, '_')}-${format(new Date(), 'ddMMyyyy')}`,
+    ],
   ];
 
   autoTable(doc, {
     startY: yPos,
-    head: [["Field", "Details"]],
+    head: [['Field', 'Details']],
     body: projectInfo,
-    theme: "striped",
+    theme: 'striped',
     headStyles: { fillColor: [251, 146, 60] },
     margin: { left: 15, right: 15 },
   });
@@ -71,8 +76,8 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
 
   // Risk Matrix
   doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("Hazard & Risk Assessment", 15, yPos);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Hazard & Risk Assessment', 15, yPos);
   yPos += 10;
 
   const riskData = data.hazards.map((h) => [
@@ -83,14 +88,14 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
     h.riskRating.toString(),
     h.controls,
     h.residualRisk.toString(),
-    h.responsible
+    h.responsible,
   ]);
 
   autoTable(doc, {
     startY: yPos,
-    head: [["Hazard", "Risk", "L", "S", "Rating", "Control Measures", "Residual", "Responsible"]],
+    head: [['Hazard', 'Risk', 'L', 'S', 'Rating', 'Control Measures', 'Residual', 'Responsible']],
     body: riskData,
-    theme: "grid",
+    theme: 'grid',
     headStyles: { fillColor: [251, 146, 60], fontSize: 8 },
     styles: { fontSize: 7, cellPadding: 2 },
     columnStyles: {
@@ -101,7 +106,7 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
       4: { cellWidth: 15 },
       5: { cellWidth: 80 },
       6: { cellWidth: 15 },
-      7: { cellWidth: 30 }
+      7: { cellWidth: 30 },
     },
     didParseCell: (data) => {
       // Colour code risk ratings
@@ -117,7 +122,7 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
           data.cell.styles.textColor = [34, 197, 94]; // Green
         }
       }
-    }
+    },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 15;
@@ -125,13 +130,13 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
   // PPE Requirements
   if (data.requiredPPE && data.requiredPPE.length > 0) {
     doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.text("Required Personal Protective Equipment (PPE)", 15, yPos);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Required Personal Protective Equipment (PPE)', 15, yPos);
     yPos += 8;
 
     doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-    data.requiredPPE.forEach(ppe => {
+    doc.setFont('helvetica', 'normal');
+    data.requiredPPE.forEach((ppe) => {
       doc.text(`• ${ppe}`, 20, yPos);
       yPos += 5;
     });
@@ -146,13 +151,13 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
     }
 
     doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.text("Emergency Procedures", 15, yPos);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Emergency Procedures', 15, yPos);
     yPos += 8;
 
     doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-    data.emergencyProcedures.forEach(proc => {
+    doc.setFont('helvetica', 'normal');
+    data.emergencyProcedures.forEach((proc) => {
       const lines = doc.splitTextToSize(proc, pageWidth - 40);
       doc.text(`• ${lines[0]}`, 20, yPos);
       yPos += 5;
@@ -172,12 +177,12 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
     }
 
     doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.text("Additional Notes", 15, yPos);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Additional Notes', 15, yPos);
     yPos += 8;
 
     doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
+    doc.setFont('helvetica', 'normal');
     const notesLines = doc.splitTextToSize(data.notes, pageWidth - 30);
     doc.text(notesLines, 15, yPos);
   }
@@ -186,21 +191,26 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
   const footerY = doc.internal.pageSize.height - 30;
   doc.setFillColor(34, 197, 94);
   doc.rect(15, footerY - 10, pageWidth - 30, 20, 'F');
-  
+
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("BS 7671:2018+A3:2024 Compliant", pageWidth / 2, footerY - 2, { align: "center" });
-  
+  doc.setFont('helvetica', 'bold');
+  doc.text('BS 7671:2018+A3:2024 Compliant', pageWidth / 2, footerY - 2, { align: 'center' });
+
   doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
-  doc.text("This risk assessment follows HSE guidance and electrical safety regulations", pageWidth / 2, footerY + 4, { align: "center" });
+  doc.setFont('helvetica', 'normal');
+  doc.text(
+    'This risk assessment follows HSE guidance and electrical safety regulations',
+    pageWidth / 2,
+    footerY + 4,
+    { align: 'center' }
+  );
 
   // Footer
   const bottomY = doc.internal.pageSize.height - 10;
   doc.setFontSize(8);
   doc.setTextColor(100, 116, 139);
-  doc.text("Risk Assessment - Confidential", pageWidth / 2, bottomY, { align: "center" });
+  doc.text('Risk Assessment - Confidential', pageWidth / 2, bottomY, { align: 'center' });
 
   return doc;
 };

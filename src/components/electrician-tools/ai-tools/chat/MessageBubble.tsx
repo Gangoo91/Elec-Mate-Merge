@@ -53,19 +53,15 @@ export const MessageBubble = memo(function MessageBubble({
       initial={isStreaming ? false : { opacity: 0, y: 10, x: isUser ? 10 : -10 }}
       animate={{ opacity: 1, y: 0, x: 0 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
-      className={cn(
-        "flex w-full",
-        isUser ? "justify-end" : "justify-start",
-        className
-      )}
+      className={cn('flex w-full', isUser ? 'justify-end' : 'justify-start', className)}
       onMouseEnter={() => setShowCopyButton(true)}
       onMouseLeave={() => setShowCopyButton(false)}
       onTouchStart={() => setShowCopyButton(true)}
     >
       <div
         className={cn(
-          "relative group",
-          isUser ? "max-w-[85%] sm:max-w-[75%]" : "max-w-[95%] sm:max-w-[85%]"
+          'relative group',
+          isUser ? 'max-w-[85%] sm:max-w-[75%]' : 'max-w-[95%] sm:max-w-[85%]'
         )}
       >
         {/* Avatar for assistant */}
@@ -82,16 +78,16 @@ export const MessageBubble = memo(function MessageBubble({
               {/* Message bubble */}
               <div
                 className={cn(
-                  "rounded-2xl rounded-tl-sm px-4 py-3",
-                  "bg-card/80 backdrop-blur-sm",
-                  "border border-border/50",
-                  "shadow-sm"
+                  'rounded-2xl rounded-tl-sm px-4 py-3',
+                  'bg-card/80 backdrop-blur-sm',
+                  'border border-border/50',
+                  'shadow-sm'
                 )}
               >
-                {renderContent ? renderContent(content) : (
-                  <div className="text-foreground whitespace-pre-wrap break-words">
-                    {content}
-                  </div>
+                {renderContent ? (
+                  renderContent(content)
+                ) : (
+                  <div className="text-foreground whitespace-pre-wrap break-words">{content}</div>
                 )}
               </div>
             </div>
@@ -103,15 +99,13 @@ export const MessageBubble = memo(function MessageBubble({
           <div className="flex items-start gap-3">
             <div
               className={cn(
-                "rounded-2xl rounded-tr-sm px-4 py-3",
-                "bg-gradient-to-br from-elec-yellow to-elec-yellow/90",
-                "text-elec-dark",
-                "shadow-lg shadow-elec-yellow/20"
+                'rounded-2xl rounded-tr-sm px-4 py-3',
+                'bg-gradient-to-br from-elec-yellow to-elec-yellow/90',
+                'text-elec-dark',
+                'shadow-lg shadow-elec-yellow/20'
               )}
             >
-              <div className="whitespace-pre-wrap break-words font-medium">
-                {content}
-              </div>
+              <div className="whitespace-pre-wrap break-words font-medium">{content}</div>
             </div>
             <div className="shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-elec-dark to-elec-dark/80 flex items-center justify-center border border-border/50">
               <User className="w-4 h-4 text-foreground/80" />
@@ -125,15 +119,15 @@ export const MessageBubble = memo(function MessageBubble({
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{
               opacity: showCopyButton ? 1 : 0,
-              scale: showCopyButton ? 1 : 0.8
+              scale: showCopyButton ? 1 : 0.8,
             }}
             onClick={handleCopy}
             className={cn(
-              "absolute -bottom-2 p-1.5 rounded-lg",
-              "bg-card/90 backdrop-blur-sm border border-border/50",
-              "shadow-sm hover:shadow-md transition-all",
-              "text-muted-foreground hover:text-foreground",
-              isUser ? "left-0" : "right-0"
+              'absolute -bottom-2 p-1.5 rounded-lg',
+              'bg-card/90 backdrop-blur-sm border border-border/50',
+              'shadow-sm hover:shadow-md transition-all',
+              'text-muted-foreground hover:text-foreground',
+              isUser ? 'left-0' : 'right-0'
             )}
             aria-label="Copy message"
           >
@@ -149,8 +143,8 @@ export const MessageBubble = memo(function MessageBubble({
         {timestamp && !isStreaming && (
           <div
             className={cn(
-              "text-[10px] text-muted-foreground/60 mt-1",
-              isUser ? "text-right mr-11" : "text-left ml-11"
+              'text-[10px] text-muted-foreground/60 mt-1',
+              isUser ? 'text-right mr-11' : 'text-left ml-11'
             )}
           >
             {timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

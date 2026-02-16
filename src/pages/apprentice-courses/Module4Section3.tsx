@@ -1,44 +1,44 @@
-import { ArrowLeft, Wrench, FileText, Package, CheckCircle, Ruler } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Wrench, FileText, Package, CheckCircle, Ruler } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Types of Bends and When to Use Them",
-    description: "Different bend types and their applications",
+    number: 'Subsection 1',
+    title: 'Types of Bends and When to Use Them',
+    description: 'Different bend types and their applications',
     icon: Wrench,
-    href: "3-1"
+    href: '3-1',
   },
   {
-    number: "Subsection 2",
-    title: "Using Conduit Bending Machines (PVC and Metal)",
-    description: "Operating bending machines for different conduit types",
+    number: 'Subsection 2',
+    title: 'Using Conduit Bending Machines (PVC and Metal)',
+    description: 'Operating bending machines for different conduit types',
     icon: FileText,
-    href: "3-2"
+    href: '3-2',
   },
   {
-    number: "Subsection 3",
-    title: "Manual Bending Tools and Techniques",
-    description: "Hand bending methods and tool usage",
+    number: 'Subsection 3',
+    title: 'Manual Bending Tools and Techniques',
+    description: 'Hand bending methods and tool usage',
     icon: Package,
-    href: "3-3"
+    href: '3-3',
   },
   {
-    number: "Subsection 4",
-    title: "Cutting, Deburring, and Preparing Conduit Ends",
-    description: "Proper preparation of conduit ends for installation",
+    number: 'Subsection 4',
+    title: 'Cutting, Deburring, and Preparing Conduit Ends',
+    description: 'Proper preparation of conduit ends for installation',
     icon: CheckCircle,
-    href: "3-4"
+    href: '3-4',
   },
   {
-    number: "Subsection 5",
-    title: "Common Bending Faults and How to Correct Them",
-    description: "Identifying and fixing common bending problems",
+    number: 'Subsection 5',
+    title: 'Common Bending Faults and How to Correct Them',
+    description: 'Identifying and fixing common bending problems',
     icon: Ruler,
-    href: "3-5"
-  }
+    href: '3-5',
+  },
 ];
 
 const Section3 = () => {

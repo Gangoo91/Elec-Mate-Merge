@@ -18,11 +18,15 @@ interface Agent {
 const AVAILABLE_AGENTS: Agent[] = [
   { id: 'designer', name: 'Circuit Designer', description: 'Multi-circuit design & cable sizing' },
   { id: 'cost-engineer', name: 'Cost Engineer', description: 'Material pricing & labour costs' },
-  { id: 'installer', name: 'Installation Specialist', description: 'Installation methods & guidance' },
+  {
+    id: 'installer',
+    name: 'Installation Specialist',
+    description: 'Installation methods & guidance',
+  },
   { id: 'health-safety', name: 'Health & Safety', description: 'RAMS & risk assessments' },
   { id: 'commissioning', name: 'Testing & Commissioning', description: 'Test procedures & EIC' },
   { id: 'maintenance', name: 'Maintenance Specialist', description: 'Periodic inspections' },
-  { id: 'project-manager', name: 'Project Manager', description: 'Project execution planning' }
+  { id: 'project-manager', name: 'Project Manager', description: 'Project execution planning' },
 ];
 
 interface SendToAgentDropdownProps {
@@ -31,19 +35,21 @@ interface SendToAgentDropdownProps {
   onSent?: () => void;
 }
 
-export const SendToAgentDropdown = ({ currentAgent, currentOutput, onSent }: SendToAgentDropdownProps) => {
+export const SendToAgentDropdown = ({
+  currentAgent,
+  currentOutput,
+  onSent,
+}: SendToAgentDropdownProps) => {
   const [open, setOpen] = useState(false);
   const [selectedAgents, setSelectedAgents] = useState<AgentType[]>([]);
   const [userInstruction, setUserInstruction] = useState('');
   const [isSending, setIsSending] = useState(false);
 
-  const availableAgents = AVAILABLE_AGENTS.filter(a => a.id !== currentAgent);
+  const availableAgents = AVAILABLE_AGENTS.filter((a) => a.id !== currentAgent);
 
   const toggleAgent = (agentId: AgentType) => {
-    setSelectedAgents(prev =>
-      prev.includes(agentId)
-        ? prev.filter(id => id !== agentId)
-        : [...prev, agentId]
+    setSelectedAgents((prev) =>
+      prev.includes(agentId) ? prev.filter((id) => id !== agentId) : [...prev, agentId]
     );
   };
 
@@ -56,35 +62,37 @@ export const SendToAgentDropdown = ({ currentAgent, currentOutput, onSent }: Sen
     setIsSending(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Create task queue entries for each selected agent
-      const tasks = selectedAgents.map(targetAgent => ({
+      const tasks = selectedAgents.map((targetAgent) => ({
         user_id: user.id,
         source_agent: currentAgent,
         target_agent: targetAgent,
         context_data: currentOutput,
         user_instruction: userInstruction || null,
         status: 'pending',
-        priority: 0
+        priority: 0,
       }));
 
-      const { error } = await supabase
-        .from('agent_task_queue')
-        .insert(tasks);
+      const { error } = await supabase.from('agent_task_queue').insert(tasks);
 
       if (error) throw error;
 
-      toast.success(`Forwarded to ${selectedAgents.length} agent${selectedAgents.length > 1 ? 's' : ''}`, {
-        description: 'Check their respective pages to continue'
-      });
+      toast.success(
+        `Forwarded to ${selectedAgents.length} agent${selectedAgents.length > 1 ? 's' : ''}`,
+        {
+          description: 'Check their respective pages to continue',
+        }
+      );
 
       setSelectedAgents([]);
       setUserInstruction('');
       setOpen(false);
       onSent?.();
-
     } catch (error) {
       console.error('Error sending to agents:', error);
       toast.error('Failed to forward to agents');
@@ -106,7 +114,7 @@ export const SendToAgentDropdown = ({ currentAgent, currentOutput, onSent }: Sen
           <div>
             <h4 className="font-semibold text-sm mb-2">Forward to:</h4>
             <div className="space-y-2 max-h-64 overflow-y-auto">
-              {availableAgents.map(agent => (
+              {availableAgents.map((agent) => (
                 <div key={agent.id} className="flex items-start space-x-2">
                   <Checkbox
                     id={agent.id}
@@ -120,9 +128,7 @@ export const SendToAgentDropdown = ({ currentAgent, currentOutput, onSent }: Sen
                     >
                       {agent.name}
                     </Label>
-                    <p className="text-xs text-muted-foreground">
-                      {agent.description}
-                    </p>
+                    <p className="text-xs text-muted-foreground">{agent.description}</p>
                   </div>
                 </div>
               ))}

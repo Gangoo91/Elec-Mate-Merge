@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Brain, TrendingUp, Package, Zap, AlertCircle, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Brain, TrendingUp, Package, Zap, AlertCircle, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
-import { type ToolItem } from "@/hooks/useToolsData";
+import { type ToolItem } from '@/hooks/useToolsData';
 
 interface AIRecommendation {
   type: 'alternative' | 'bundle' | 'upgrade' | 'accessory';
@@ -31,19 +31,27 @@ interface ToolAIInsightsProps {
 
 const getTypeIcon = (type: string) => {
   switch (type) {
-    case 'bundle': return Package;
-    case 'upgrade': return TrendingUp;
-    case 'accessory': return Zap;
-    default: return Brain;
+    case 'bundle':
+      return Package;
+    case 'upgrade':
+      return TrendingUp;
+    case 'accessory':
+      return Zap;
+    default:
+      return Brain;
   }
 };
 
 const getTypeBadgeVariant = (type: string) => {
   switch (type) {
-    case 'bundle': return 'default';
-    case 'upgrade': return 'secondary';
-    case 'accessory': return 'outline';
-    default: return 'default';
+    case 'bundle':
+      return 'default';
+    case 'upgrade':
+      return 'secondary';
+    case 'accessory':
+      return 'outline';
+    default:
+      return 'default';
   }
 };
 
@@ -65,12 +73,15 @@ export const ToolAIInsights: React.FC<ToolAIInsightsProps> = ({ tools, searchQue
     setError(null);
 
     try {
-      const { data, error: functionError } = await supabase.functions.invoke('ai-tool-recommendations', {
-        body: { 
-          searchQuery,
-          tools: tools.slice(0, 25) // Limit to first 25 tools for analysis
+      const { data, error: functionError } = await supabase.functions.invoke(
+        'ai-tool-recommendations',
+        {
+          body: {
+            searchQuery,
+            tools: tools.slice(0, 25), // Limit to first 25 tools for analysis
+          },
         }
-      });
+      );
 
       if (functionError) {
         throw functionError;
@@ -86,9 +97,9 @@ export const ToolAIInsights: React.FC<ToolAIInsightsProps> = ({ tools, searchQue
       console.error('Error generating AI insights:', err);
       setError(err instanceof Error ? err.message : 'Failed to generate AI insights');
       toast({
-        title: "AI Analysis Failed",
-        description: "Unable to generate tool insights. Please try again.",
-        variant: "destructive",
+        title: 'AI Analysis Failed',
+        description: 'Unable to generate tool insights. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -222,8 +233,8 @@ export const ToolAIInsights: React.FC<ToolAIInsightsProps> = ({ tools, searchQue
               <Brain className="h-12 w-12 text-muted-foreground mb-4" />
               <h3 className="text-lg font-medium mb-2">No Recommendations Generated</h3>
               <p className="text-muted-foreground text-center">
-                The AI couldn't generate specific recommendations for these tools. 
-                Try refining your search or selecting different tools.
+                The AI couldn't generate specific recommendations for these tools. Try refining your
+                search or selecting different tools.
               </p>
             </CardContent>
           </Card>

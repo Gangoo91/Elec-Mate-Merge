@@ -18,7 +18,7 @@ export const CollapsibleFormSection: React.FC<CollapsibleFormSectionProps> = ({
   badge,
   icon,
   defaultOpen = false,
-  children
+  children,
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -30,11 +30,7 @@ export const CollapsibleFormSection: React.FC<CollapsibleFormSectionProps> = ({
         className="w-full flex items-center justify-between gap-3 mb-3 touch-manipulation"
       >
         <div className="flex items-center gap-2 flex-1 min-w-0">
-          {icon && (
-            <div className="text-yellow-400 flex-shrink-0">
-              {icon}
-            </div>
-          )}
+          {icon && <div className="text-yellow-400 flex-shrink-0">{icon}</div>}
           <div className="text-left flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="text-base font-semibold">{title}</h3>
@@ -44,24 +40,18 @@ export const CollapsibleFormSection: React.FC<CollapsibleFormSectionProps> = ({
                 </Badge>
               )}
             </div>
-            {subtitle && (
-              <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
-            )}
+            {subtitle && <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>}
           </div>
         </div>
-        <ChevronDown 
+        <ChevronDown
           className={cn(
-            "h-5 w-5 text-muted-foreground transition-transform flex-shrink-0",
-            isOpen && "rotate-180"
-          )} 
+            'h-5 w-5 text-muted-foreground transition-transform flex-shrink-0',
+            isOpen && 'rotate-180'
+          )}
         />
       </button>
-      
-      {isOpen && (
-        <div className="animate-fade-in">
-          {children}
-        </div>
-      )}
+
+      {isOpen && <div className="animate-fade-in">{children}</div>}
     </div>
   );
 };

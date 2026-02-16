@@ -7,40 +7,40 @@ const EmergencyLightingModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Emergency Escape Lighting",
+      title: 'Emergency Escape Lighting',
       icon: Shield,
-      description: "Exit route and escape path lighting requirements"
+      description: 'Exit route and escape path lighting requirements',
     },
     {
       id: 2,
-      title: "Open Area (Anti-Panic) Lighting",
+      title: 'Open Area (Anti-Panic) Lighting',
       icon: Eye,
-      description: "General area lighting to prevent panic"
+      description: 'General area lighting to prevent panic',
     },
     {
       id: 3,
-      title: "High-Risk Task Area Lighting",
+      title: 'High-Risk Task Area Lighting',
       icon: Target,
-      description: "Specialist lighting for critical operations"
+      description: 'Specialist lighting for critical operations',
     },
     {
       id: 4,
-      title: "Maintained vs Non-Maintained Systems",
+      title: 'Maintained vs Non-Maintained Systems',
       icon: Settings,
-      description: "System operation modes and configurations"
+      description: 'System operation modes and configurations',
     },
     {
       id: 5,
-      title: "Signage and Wayfinding Lighting",
+      title: 'Signage and Wayfinding Lighting',
       icon: MapPin,
-      description: "Directional and informational lighting systems"
+      description: 'Directional and informational lighting systems',
     },
     {
       id: 6,
-      title: "System Testing and Record Keeping",
+      title: 'System Testing and Record Keeping',
       icon: ClipboardCheck,
-      description: "Testing schedules, maintenance requirements and compliance documentation"
-    }
+      description: 'Testing schedules, maintenance requirements and compliance documentation',
+    },
   ];
 
   return (

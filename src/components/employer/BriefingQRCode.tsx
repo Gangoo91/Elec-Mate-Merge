@@ -1,13 +1,8 @@
-import { useState } from "react";
-import { QRCodeSVG } from "qrcode.react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   QrCode,
   Copy,
@@ -18,12 +13,12 @@ import {
   MapPin,
   Users,
   ExternalLink,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { generateBriefingQRData } from "@/hooks/useBriefingSignatures";
-import { type Briefing } from "@/hooks/useBriefings";
-import { format } from "date-fns";
-import { useToast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
+import { type Briefing } from '@/hooks/useBriefings';
+import { format } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
 
 interface BriefingQRCodeProps {
   open: boolean;
@@ -31,11 +26,7 @@ interface BriefingQRCodeProps {
   briefing: Briefing;
 }
 
-export function BriefingQRCode({
-  open,
-  onOpenChange,
-  briefing,
-}: BriefingQRCodeProps) {
+export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeProps) {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
@@ -47,40 +38,40 @@ export function BriefingQRCode({
       await navigator.clipboard.writeText(signOffUrl);
       setCopied(true);
       toast({
-        title: "Link copied",
-        description: "Sign-off link copied to clipboard.",
+        title: 'Link copied',
+        description: 'Sign-off link copied to clipboard.',
       });
       setTimeout(() => setCopied(false), 2000);
     } catch {
       toast({
-        title: "Copy failed",
-        description: "Could not copy to clipboard.",
-        variant: "destructive",
+        title: 'Copy failed',
+        description: 'Could not copy to clipboard.',
+        variant: 'destructive',
       });
     }
   };
 
   // Download QR code as image
   const handleDownloadQR = () => {
-    const svg = document.getElementById("briefing-qr-code");
+    const svg = document.getElementById('briefing-qr-code');
     if (!svg) return;
 
     const svgData = new XMLSerializer().serializeToString(svg);
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
     const img = new Image();
 
     img.onload = () => {
       canvas.width = img.width * 2;
       canvas.height = img.height * 2;
       if (ctx) {
-        ctx.fillStyle = "white";
+        ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       }
 
-      const pngUrl = canvas.toDataURL("image/png");
-      const downloadLink = document.createElement("a");
+      const pngUrl = canvas.toDataURL('image/png');
+      const downloadLink = document.createElement('a');
       downloadLink.href = pngUrl;
       downloadLink.download = `briefing-qr-${briefing.id.substring(0, 8)}.png`;
       document.body.appendChild(downloadLink);
@@ -88,11 +79,11 @@ export function BriefingQRCode({
       document.body.removeChild(downloadLink);
     };
 
-    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
 
     toast({
-      title: "QR code downloaded",
-      description: "Save and print for site display.",
+      title: 'QR code downloaded',
+      description: 'Save and print for site display.',
     });
   };
 
@@ -116,7 +107,7 @@ export function BriefingQRCode({
 
   // Open in new tab
   const handleOpenLink = () => {
-    window.open(signOffUrl, "_blank");
+    window.open(signOffUrl, '_blank');
   };
 
   return (
@@ -132,9 +123,7 @@ export function BriefingQRCode({
                 </div>
                 <div>
                   <SheetTitle className="text-left">QR Attendance</SheetTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Scan to sign off
-                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Scan to sign off</p>
                 </div>
               </div>
               <Button
@@ -152,14 +141,12 @@ export function BriefingQRCode({
           <div className="flex-1 overflow-y-auto p-4">
             {/* Briefing Info */}
             <div className="p-4 rounded-xl bg-muted/50 mb-6">
-              <h3 className="font-semibold text-foreground mb-2 line-clamp-2">
-                {briefing.title}
-              </h3>
+              <h3 className="font-semibold text-foreground mb-2 line-clamp-2">{briefing.title}</h3>
               <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
                 {briefing.date && (
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
-                    {format(new Date(briefing.date), "dd MMM yyyy")}
+                    {format(new Date(briefing.date), 'dd MMM yyyy')}
                   </span>
                 )}
                 {briefing.location && (
@@ -200,15 +187,21 @@ export function BriefingQRCode({
               <h4 className="font-medium text-foreground mb-2">How to use</h4>
               <ol className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">1</span>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">
+                    1
+                  </span>
                   Display or print this QR code at the briefing location
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">2</span>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">
+                    2
+                  </span>
                   Team members scan with their phone camera
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">3</span>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">
+                    3
+                  </span>
                   They sign with their finger on the sign-off page
                 </li>
               </ol>
@@ -217,9 +210,7 @@ export function BriefingQRCode({
             {/* Link Display */}
             <div className="p-3 rounded-lg bg-muted/50 border border-border">
               <p className="text-xs text-muted-foreground mb-1">Sign-off Link</p>
-              <p className="text-sm text-foreground font-mono break-all">
-                {signOffUrl}
-              </p>
+              <p className="text-sm text-foreground font-mono break-all">{signOffUrl}</p>
             </div>
           </div>
 
@@ -232,7 +223,7 @@ export function BriefingQRCode({
                 className="h-11 touch-manipulation"
               >
                 <Copy className="h-4 w-4 mr-2" />
-                {copied ? "Copied!" : "Copy Link"}
+                {copied ? 'Copied!' : 'Copy Link'}
               </Button>
               <Button
                 variant="outline"
@@ -244,11 +235,7 @@ export function BriefingQRCode({
               </Button>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <Button
-                variant="outline"
-                onClick={handleShare}
-                className="h-11 touch-manipulation"
-              >
+              <Button variant="outline" onClick={handleShare} className="h-11 touch-manipulation">
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
               </Button>

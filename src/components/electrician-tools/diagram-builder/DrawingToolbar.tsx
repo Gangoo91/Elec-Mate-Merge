@@ -1,7 +1,17 @@
-import { MousePointer2, Minus, Square, Type, Eraser, Grid3x3, Magnet, Undo2, Redo2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import type { DrawingTool } from "@/pages/electrician-tools/ai-tools/DiagramBuilderPage";
-import { Separator } from "@/components/ui/separator";
+import {
+  MousePointer2,
+  Minus,
+  Square,
+  Type,
+  Eraser,
+  Grid3x3,
+  Magnet,
+  Undo2,
+  Redo2,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import type { DrawingTool } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
+import { Separator } from '@/components/ui/separator';
 
 interface DrawingToolbarProps {
   activeTool: DrawingTool;
@@ -25,11 +35,11 @@ export const DrawingToolbar = ({
   onRedo,
 }: DrawingToolbarProps) => {
   const tools: { id: DrawingTool; icon: any; label: string }[] = [
-    { id: "select", icon: MousePointer2, label: "Select" },
-    { id: "line", icon: Minus, label: "Line" },
-    { id: "rectangle", icon: Square, label: "Rectangle" },
-    { id: "text", icon: Type, label: "Text" },
-    { id: "eraser", icon: Eraser, label: "Eraser" },
+    { id: 'select', icon: MousePointer2, label: 'Select' },
+    { id: 'line', icon: Minus, label: 'Line' },
+    { id: 'rectangle', icon: Square, label: 'Rectangle' },
+    { id: 'text', icon: Type, label: 'Text' },
+    { id: 'eraser', icon: Eraser, label: 'Eraser' },
   ];
 
   return (
@@ -42,19 +52,19 @@ export const DrawingToolbar = ({
             <span className="text-xs font-medium text-elec-yellow">Click canvas to add text</span>
           </div>
         )}
-        
+
         {tools.map((tool) => {
           const Icon = tool.icon;
           return (
             <Button
               key={tool.id}
-              variant={activeTool === tool.id ? "default" : "outline"}
+              variant={activeTool === tool.id ? 'default' : 'outline'}
               size="sm"
               onClick={() => onToolChange(tool.id)}
               className={
                 activeTool === tool.id
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                  : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
               }
             >
               <Icon className="h-4 w-4" />
@@ -92,13 +102,13 @@ export const DrawingToolbar = ({
 
       <div className="flex items-center gap-1 md:gap-2">
         <Button
-          variant={gridEnabled ? "default" : "outline"}
+          variant={gridEnabled ? 'default' : 'outline'}
           size="sm"
           onClick={onGridToggle}
           className={
             gridEnabled
-              ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-              : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+              : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
           }
         >
           <Grid3x3 className="h-4 w-4" />
@@ -106,13 +116,13 @@ export const DrawingToolbar = ({
         </Button>
 
         <Button
-          variant={snapEnabled ? "default" : "outline"}
+          variant={snapEnabled ? 'default' : 'outline'}
           size="sm"
           onClick={onSnapToggle}
           className={
             snapEnabled
-              ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-              : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+              : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
           }
         >
           <Magnet className="h-4 w-4" />

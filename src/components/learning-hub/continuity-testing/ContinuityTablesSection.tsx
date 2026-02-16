@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Calculator, TrendingUp, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { ModernTableCard, DataGrid } from '@/components/ui/responsive-table';
@@ -16,22 +15,30 @@ const ContinuityTablesSection = () => (
           <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
             <h5 className="font-medium text-green-400 mb-2">Good Reading</h5>
             <p className="text-2xl font-bold text-foreground mb-1">&lt;0.5Ω</p>
-            <p className="text-sm text-white">Most domestic final circuits with reasonable cable lengths</p>
+            <p className="text-sm text-white">
+              Most domestic final circuits with reasonable cable lengths
+            </p>
           </div>
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
             <h5 className="font-medium text-yellow-400 mb-2">Acceptable</h5>
             <p className="text-2xl font-bold text-foreground mb-1">0.5-1.0Ω</p>
-            <p className="text-sm text-white">Longer cable runs - verify against maximum values for protective device</p>
+            <p className="text-sm text-white">
+              Longer cable runs - verify against maximum values for protective device
+            </p>
           </div>
           <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
             <h5 className="font-medium text-red-400 mb-2">Investigate</h5>
             <p className="text-2xl font-bold text-foreground mb-1">&gt;1.0Ω</p>
-            <p className="text-sm text-white">Check connections, cable size, and length. Compare against maximum permitted value</p>
+            <p className="text-sm text-white">
+              Check connections, cable size, and length. Compare against maximum permitted value
+            </p>
           </div>
         </div>
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
           <p className="text-sm text-white">
-            <strong className="text-blue-400">Note:</strong> These are typical guidance values. Always compare measured R1+R2 against the maximum value permitted for your specific protective device using the tables below.
+            <strong className="text-blue-400">Note:</strong> These are typical guidance values.
+            Always compare measured R1+R2 against the maximum value permitted for your specific
+            protective device using the tables below.
           </p>
         </div>
       </div>
@@ -56,10 +63,10 @@ const ContinuityTablesSection = () => (
             ['16', '1.15 mΩ/m'],
             ['25', '0.727 mΩ/m'],
             ['35', '0.524 mΩ/m'],
-            ['50', '0.387 mΩ/m']
+            ['50', '0.387 mΩ/m'],
           ]}
         />
-        
+
         <h5 className="font-medium text-foreground">Temperature Correction Factors:</h5>
         <DataGrid
           headers={['Temp (°C)', 'Factor']}
@@ -71,10 +78,10 @@ const ContinuityTablesSection = () => (
             ['60', '1.16'],
             ['70', '1.20'],
             ['80', '1.24'],
-            ['90', '1.28']
+            ['90', '1.28'],
           ]}
         />
-        
+
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
           <p className="text-yellow-400 font-medium text-sm">
             <strong>Formula:</strong> R₂₀ × (230 + T₁) ÷ (230 + T₂)
@@ -91,7 +98,9 @@ const ContinuityTablesSection = () => (
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h5 className="font-medium text-foreground mb-3">Type B MCBs (0.4s disconnection) - BS 7671 Table 41.3(a):</h5>
+            <h5 className="font-medium text-foreground mb-3">
+              Type B MCBs (0.4s disconnection) - BS 7671 Table 41.3(a):
+            </h5>
             <DataGrid
               headers={['Rating (A)', 'Max Zs (Ω)']}
               rows={[
@@ -102,13 +111,15 @@ const ContinuityTablesSection = () => (
                 ['25', '1.75'],
                 ['32', '1.37'],
                 ['40', '1.09'],
-                ['50', '0.87']
+                ['50', '0.87'],
               ]}
             />
           </div>
-          
+
           <div>
-            <h5 className="font-medium text-foreground mb-3">Type C MCBs (0.4s disconnection) - BS 7671 Table 41.3(b):</h5>
+            <h5 className="font-medium text-foreground mb-3">
+              Type C MCBs (0.4s disconnection) - BS 7671 Table 41.3(b):
+            </h5>
             <DataGrid
               headers={['Rating (A)', 'Max Zs (Ω)']}
               rows={[
@@ -119,52 +130,70 @@ const ContinuityTablesSection = () => (
                 ['25', '0.87'],
                 ['32', '0.68'],
                 ['40', '0.55'],
-                ['50', '0.44']
+                ['50', '0.44'],
               ]}
             />
           </div>
         </div>
-        
+
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
           <h5 className="font-medium text-blue-400 mb-2">Calculation Method:</h5>
           <div className="text-sm space-y-1">
-            <p><strong>Formula:</strong> Maximum R1+R2 = U₀ ÷ (Ia × √3) for TN systems</p>
-            <p><strong>Where:</strong> U₀ = 230V (line to neutral voltage)</p>
-            <p><strong>Ia:</strong> Current causing automatic disconnection in 0.4s</p>
-            <p><strong>Example:</strong> 32A Type B MCB: Ia = 160A, so Max R1+R2 = 230 ÷ 160 = 1.44Ω</p>
+            <p>
+              <strong>Formula:</strong> Maximum R1+R2 = U₀ ÷ (Ia × √3) for TN systems
+            </p>
+            <p>
+              <strong>Where:</strong> U₀ = 230V (line to neutral voltage)
+            </p>
+            <p>
+              <strong>Ia:</strong> Current causing automatic disconnection in 0.4s
+            </p>
+            <p>
+              <strong>Example:</strong> 32A Type B MCB: Ia = 160A, so Max R1+R2 = 230 ÷ 160 = 1.44Ω
+            </p>
           </div>
         </div>
       </div>
     </ModernTableCard>
 
-    <ModernTableCard
-      title="Ring Circuit Specific Values"
-      icon={<CheckCircle2 />}
-      variant="default"
-    >
+    <ModernTableCard title="Ring Circuit Specific Values" icon={<CheckCircle2 />} variant="default">
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-card border border-border rounded-lg p-4">
             <h5 className="font-medium text-foreground mb-3">Ring Final Circuit Limits:</h5>
             <div className="space-y-2 text-sm">
-              <p><strong>Maximum R1+R2:</strong> 1.67Ω (BS 7671 Reg 543.1.4)</p>
-              <p><strong>Maximum floor area:</strong> 100m² per ring</p>
-              <p><strong>Minimum cable size:</strong> 2.5mm² copper</p>
-              <p><strong>Maximum protective device:</strong> 32A (Type B or C)</p>
-              <p><strong>Typical cable length:</strong> 106m maximum loop</p>
+              <p>
+                <strong>Maximum R1+R2:</strong> 1.67Ω (BS 7671 Reg 543.1.4)
+              </p>
+              <p>
+                <strong>Maximum floor area:</strong> 100m² per ring
+              </p>
+              <p>
+                <strong>Minimum cable size:</strong> 2.5mm² copper
+              </p>
+              <p>
+                <strong>Maximum protective device:</strong> 32A (Type B or C)
+              </p>
+              <p>
+                <strong>Typical cable length:</strong> 106m maximum loop
+              </p>
             </div>
           </div>
-          
+
           <div className="bg-card border border-border rounded-lg p-4">
             <h5 className="font-medium text-foreground mb-3">Expected Test Results:</h5>
             <div className="space-y-2 text-sm">
-              <p><strong>2.5mm² ring (both legs):</strong></p>
+              <p>
+                <strong>2.5mm² ring (both legs):</strong>
+              </p>
               <div className="ml-2 space-y-1">
                 <p>• R1 end-to-end: ~0.4Ω per 50m</p>
                 <p>• R2 end-to-end: ~0.4Ω per 50m</p>
                 <p>• Socket test: (R1+R2)/4 ≈ 0.2Ω</p>
               </div>
-              <p><strong>1.5mm² CPC variation:</strong></p>
+              <p>
+                <strong>1.5mm² CPC variation:</strong>
+              </p>
               <div className="ml-2 space-y-1">
                 <p>• R2 end-to-end: ~0.6Ω per 50m</p>
                 <p>• Socket test: (0.4+0.6)/4 = 0.25Ω</p>
@@ -172,7 +201,7 @@ const ContinuityTablesSection = () => (
             </div>
           </div>
         </div>
-        
+
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
           <h5 className="font-medium text-orange-400 mb-3">Ring Circuit Test Sequence:</h5>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -216,7 +245,9 @@ const ContinuityTablesSection = () => (
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h5 className="font-medium text-foreground mb-3">Bonding Conductor Sizing (BS 7671 Table 54.8):</h5>
+            <h5 className="font-medium text-foreground mb-3">
+              Bonding Conductor Sizing (BS 7671 Table 54.8):
+            </h5>
             <DataGrid
               headers={['Supply Conductor (mm²)', 'Min Bonding (mm²)']}
               rows={[
@@ -227,11 +258,11 @@ const ContinuityTablesSection = () => (
                 ['70', '16'],
                 ['95', '25'],
                 ['120', '25'],
-                ['150', '35']
+                ['150', '35'],
               ]}
             />
           </div>
-          
+
           <div>
             <h5 className="font-medium text-foreground mb-3">Expected Resistance Values:</h5>
             <DataGrid
@@ -239,7 +270,7 @@ const ContinuityTablesSection = () => (
               rows={[
                 ['10mm² × 5m', '0.009Ω'],
                 ['16mm² × 10m', '0.007Ω'],
-                ['25mm² × 15m', '0.004Ω']
+                ['25mm² × 15m', '0.004Ω'],
               ]}
             />
             <div className="mt-3 space-y-2">
@@ -256,7 +287,7 @@ const ContinuityTablesSection = () => (
             </div>
           </div>
         </div>
-        
+
         <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
           <h5 className="font-medium text-red-400 mb-3">Bonding Conductor Test Requirements:</h5>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">

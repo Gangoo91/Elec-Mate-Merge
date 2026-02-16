@@ -1,5 +1,15 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Thermometer, Wind, Lightbulb, Wifi, Bell, Settings, GraduationCap } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Thermometer,
+  Wind,
+  Lightbulb,
+  Wifi,
+  Bell,
+  Settings,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,61 +25,61 @@ const BMSCourse = () => {
   }> = [
     {
       id: 1,
-      title: "BMS Overview and Industry Applications",
-      description: "Introduction to Building Management Systems",
-      duration: "50 mins",
-      icon: BookOpen
+      title: 'BMS Overview and Industry Applications',
+      description: 'Introduction to Building Management Systems',
+      duration: '50 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "Control Devices and Field Sensors",
-      description: "Sensors, actuators, and control components",
-      duration: "60 mins",
-      icon: Thermometer
+      title: 'Control Devices and Field Sensors',
+      description: 'Sensors, actuators, and control components',
+      duration: '60 mins',
+      icon: Thermometer,
     },
     {
       id: 3,
-      title: "HVAC Integration and Scheduling Logic",
-      description: "Heating, ventilation, and scheduling",
-      duration: "65 mins",
-      icon: Wind
+      title: 'HVAC Integration and Scheduling Logic',
+      description: 'Heating, ventilation, and scheduling',
+      duration: '65 mins',
+      icon: Wind,
     },
     {
       id: 4,
-      title: "Lighting, Access, and Environmental Control",
-      description: "Lighting systems and access control",
-      duration: "55 mins",
-      icon: Lightbulb
+      title: 'Lighting, Access, and Environmental Control',
+      description: 'Lighting systems and access control',
+      duration: '55 mins',
+      icon: Lightbulb,
     },
     {
       id: 5,
-      title: "Communication Protocols: BACnet, Modbus, KNX",
-      description: "Industry communication standards",
-      duration: "70 mins",
-      icon: Wifi
+      title: 'Communication Protocols: BACnet, Modbus, KNX',
+      description: 'Industry communication standards',
+      duration: '70 mins',
+      icon: Wifi,
     },
     {
       id: 6,
-      title: "Alarms, Monitoring, and Data Logging",
-      description: "System monitoring and alerts",
-      duration: "45 mins",
-      icon: Bell
+      title: 'Alarms, Monitoring, and Data Logging',
+      description: 'System monitoring and alerts',
+      duration: '45 mins',
+      icon: Bell,
     },
     {
       id: 7,
-      title: "BMS Design, Programming, and Commissioning",
-      description: "System design and commissioning",
-      duration: "75 mins",
-      icon: Settings
+      title: 'BMS Design, Programming, and Commissioning',
+      description: 'System design and commissioning',
+      duration: '75 mins',
+      icon: Settings,
     },
     {
       id: 8,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "90 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '90 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (

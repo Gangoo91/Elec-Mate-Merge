@@ -1,166 +1,186 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Maximum Zs Values - Module 5 Section 4";
-const DESCRIPTION = "Understanding BS 7671 maximum Zs tables for different protective devices and disconnection times.";
+const TITLE = 'Maximum Zs Values - Module 5 Section 4';
+const DESCRIPTION =
+  'Understanding BS 7671 maximum Zs tables for different protective devices and disconnection times.';
 
 const quickCheckQuestions = [
   {
-    id: "socket-disconnect",
-    question: "Socket outlets require disconnection within:",
-    options: ["0.1s", "0.4s", "1s", "5s"],
+    id: 'socket-disconnect',
+    question: 'Socket outlets require disconnection within:',
+    options: ['0.1s', '0.4s', '1s', '5s'],
     correctIndex: 1,
-    explanation: "Socket outlets require 0.4s maximum disconnection time to protect users holding portable equipment."
+    explanation:
+      'Socket outlets require 0.4s maximum disconnection time to protect users holding portable equipment.',
   },
   {
-    id: "type-c-reason",
-    question: "Type C MCBs have lower max Zs than Type B because:",
+    id: 'type-c-reason',
+    question: 'Type C MCBs have lower max Zs than Type B because:',
     options: [
-      "They are cheaper",
-      "They trip magnetically at higher current multiples",
-      "They are older technology",
-      "They are used for lighting only"
+      'They are cheaper',
+      'They trip magnetically at higher current multiples',
+      'They are older technology',
+      'They are used for lighting only',
     ],
     correctIndex: 1,
-    explanation: "Type C trips at 5-10×In vs Type B at 3-5×In. Higher current is needed to trip, requiring lower impedance."
+    explanation:
+      'Type C trips at 5-10×In vs Type B at 3-5×In. Higher current is needed to trip, requiring lower impedance.',
   },
   {
-    id: "rcd-backup",
-    question: "An RCD can provide 0.4s disconnection when:",
+    id: 'rcd-backup',
+    question: 'An RCD can provide 0.4s disconnection when:',
     options: [
-      "Zs meets 5s requirements but not 0.4s",
-      "There is no earth fault",
-      "The circuit is overloaded",
-      "Zs exceeds all limits"
+      'Zs meets 5s requirements but not 0.4s',
+      'There is no earth fault',
+      'The circuit is overloaded',
+      'Zs exceeds all limits',
     ],
     correctIndex: 0,
-    explanation: "If Zs meets 5s limits but not 0.4s, an RCD provides the faster protection. Zs must still allow eventual device operation."
-  }
+    explanation:
+      'If Zs meets 5s limits but not 0.4s, an RCD provides the faster protection. Zs must still allow eventual device operation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Maximum Zs values are found in BS 7671:",
-    options: ["Chapter 41 tables", "Chapter 52", "Appendix 5B", "Part 7"],
+    question: 'Maximum Zs values are found in BS 7671:',
+    options: ['Chapter 41 tables', 'Chapter 52', 'Appendix 5B', 'Part 7'],
     correctAnswer: 0,
-    explanation: "BS 7671 Chapter 41 contains the maximum Zs tables for various protective devices and disconnection times."
+    explanation:
+      'BS 7671 Chapter 41 contains the maximum Zs tables for various protective devices and disconnection times.',
   },
   {
     id: 2,
-    question: "Socket outlets require disconnection within:",
-    options: ["0.1s", "0.4s", "1s", "5s"],
+    question: 'Socket outlets require disconnection within:',
+    options: ['0.1s', '0.4s', '1s', '5s'],
     correctAnswer: 1,
-    explanation: "Socket outlets require 0.4s maximum disconnection time to protect users who may be holding portable equipment."
+    explanation:
+      'Socket outlets require 0.4s maximum disconnection time to protect users who may be holding portable equipment.',
   },
   {
     id: 3,
-    question: "Distribution circuits can have disconnection time of:",
-    options: ["0.4s only", "5s maximum", "Any time", "10s"],
+    question: 'Distribution circuits can have disconnection time of:',
+    options: ['0.4s only', '5s maximum', 'Any time', '10s'],
     correctAnswer: 1,
-    explanation: "Distribution circuits and fixed equipment can have 5s disconnection as users are less likely to directly contact faulted parts."
+    explanation:
+      'Distribution circuits and fixed equipment can have 5s disconnection as users are less likely to directly contact faulted parts.',
   },
   {
     id: 4,
-    question: "A 32A Type B MCB has max Zs (0.4s) of approximately:",
-    options: ["0.27Ω", "0.72Ω", "1.37Ω", "1.44Ω"],
+    question: 'A 32A Type B MCB has max Zs (0.4s) of approximately:',
+    options: ['0.27Ω', '0.72Ω', '1.37Ω', '1.44Ω'],
     correctAnswer: 2,
-    explanation: "A 32A Type B MCB has maximum Zs of 1.37Ω for 0.4s disconnection per BS 7671:2018+A3:2024 Table 41.3 (incorporating Cmin = 0.95)."
+    explanation:
+      'A 32A Type B MCB has maximum Zs of 1.37Ω for 0.4s disconnection per BS 7671:2018+A3:2024 Table 41.3 (incorporating Cmin = 0.95).',
   },
   {
     id: 5,
-    question: "Type C MCBs have lower max Zs than Type B because:",
+    question: 'Type C MCBs have lower max Zs than Type B because:',
     options: [
-      "They are cheaper",
-      "They trip magnetically at higher current multiples",
-      "They are older technology",
-      "They are used for lighting only"
+      'They are cheaper',
+      'They trip magnetically at higher current multiples',
+      'They are older technology',
+      'They are used for lighting only',
     ],
     correctAnswer: 1,
-    explanation: "Type C trips at 5-10×In vs Type B at 3-5×In. Higher current needed means lower impedance required."
+    explanation:
+      'Type C trips at 5-10×In vs Type B at 3-5×In. Higher current needed means lower impedance required.',
   },
   {
     id: 6,
-    question: "If measured Zs exceeds the maximum, you can:",
+    question: 'If measured Zs exceeds the maximum, you can:',
     options: [
-      "Accept the circuit anyway",
-      "Increase cable size or add RCD protection",
-      "Increase the MCB rating",
-      "Only retest later"
+      'Accept the circuit anyway',
+      'Increase cable size or add RCD protection',
+      'Increase the MCB rating',
+      'Only retest later',
     ],
     correctAnswer: 1,
-    explanation: "Options include: larger cables (lower R1+R2), shorter runs, different device type, or RCD protection for 0.4s requirement."
+    explanation:
+      'Options include: larger cables (lower R1+R2), shorter runs, different device type, or RCD protection for 0.4s requirement.',
   },
   {
     id: 7,
-    question: "An RCD can provide 0.4s disconnection when:",
+    question: 'An RCD can provide 0.4s disconnection when:',
     options: [
-      "Zs meets 5s requirements but not 0.4s",
-      "There is no earth fault",
-      "The circuit is overloaded",
-      "Zs exceeds all limits"
+      'Zs meets 5s requirements but not 0.4s',
+      'There is no earth fault',
+      'The circuit is overloaded',
+      'Zs exceeds all limits',
     ],
     correctAnswer: 0,
-    explanation: "RCDs trip within 40ms for faults above their rating. If Zs meets 5s limits, the RCD provides the faster 0.4s protection."
+    explanation:
+      'RCDs trip within 40ms for faults above their rating. If Zs meets 5s limits, the RCD provides the faster 0.4s protection.',
   },
   {
     id: 8,
-    question: "Maximum Zs values in BS 7671 allow for:",
+    question: 'Maximum Zs values in BS 7671 allow for:',
     options: [
-      "Only ambient temperature",
-      "Conductor temperature rise under fault",
-      "Summer temperatures only",
-      "No temperature effects"
+      'Only ambient temperature',
+      'Conductor temperature rise under fault',
+      'Summer temperatures only',
+      'No temperature effects',
     ],
     correctAnswer: 1,
-    explanation: "The tabulated values already account for conductor heating. Ambient measurements should be well below these to ensure compliance."
+    explanation:
+      'The tabulated values already account for conductor heating. Ambient measurements should be well below these to ensure compliance.',
   },
   {
     id: 9,
-    question: "For a 6A Type B MCB at 0.4s, max Zs is approximately:",
-    options: ["1.82Ω", "3.64Ω", "5.78Ω", "7.28Ω"],
+    question: 'For a 6A Type B MCB at 0.4s, max Zs is approximately:',
+    options: ['1.82Ω', '3.64Ω', '5.78Ω', '7.28Ω'],
     correctAnswer: 3,
-    explanation: "Lower rated MCBs have higher max Zs because they trip at lower currents. 6A Type B allows approximately 7.28Ω."
+    explanation:
+      'Lower rated MCBs have higher max Zs because they trip at lower currents. 6A Type B allows approximately 7.28Ω.',
   },
   {
     id: 10,
-    question: "Lighting circuits typically use which disconnection time?",
-    options: ["0.2s", "0.4s", "5s", "10s"],
+    question: 'Lighting circuits typically use which disconnection time?',
+    options: ['0.2s', '0.4s', '5s', '10s'],
     correctAnswer: 2,
-    explanation: "Lighting is fixed equipment, so 5s disconnection is generally acceptable (though 0.4s often achieved anyway)."
-  }
+    explanation:
+      'Lighting is fixed equipment, so 5s disconnection is generally acceptable (though 0.4s often achieved anyway).',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why do sockets need 0.4s disconnection?",
-    answer: "Socket outlets can supply portable equipment held by users. The 0.4s limit minimises shock duration and energy, protecting against ventricular fibrillation which can occur with longer exposure to dangerous currents."
+    question: 'Why do sockets need 0.4s disconnection?',
+    answer:
+      'Socket outlets can supply portable equipment held by users. The 0.4s limit minimises shock duration and energy, protecting against ventricular fibrillation which can occur with longer exposure to dangerous currents.',
   },
   {
-    question: "When is 5s disconnection acceptable?",
-    answer: "For distribution circuits and fixed equipment where users are less likely to directly contact faulted parts. Includes lighting circuits, fixed appliances, and distribution boards - equipment people don't normally hold."
+    question: 'When is 5s disconnection acceptable?',
+    answer:
+      "For distribution circuits and fixed equipment where users are less likely to directly contact faulted parts. Includes lighting circuits, fixed appliances, and distribution boards - equipment people don't normally hold.",
   },
   {
-    question: "Why does a Type C MCB have lower max Zs than Type B?",
-    answer: "Type C MCBs trip magnetically at higher current multiples (5-10×In vs 3-5×In for Type B). To achieve the required disconnection time, higher fault current is needed, meaning lower Zs is required."
+    question: 'Why does a Type C MCB have lower max Zs than Type B?',
+    answer:
+      'Type C MCBs trip magnetically at higher current multiples (5-10×In vs 3-5×In for Type B). To achieve the required disconnection time, higher fault current is needed, meaning lower Zs is required.',
   },
   {
-    question: "What if measured Zs exceeds the maximum?",
-    answer: "The circuit fails. Options: increase cable size (lower R1+R2), shorten the circuit run, use a device with higher max Zs, or add RCD protection (which can override EFLI for 0.4s requirement)."
+    question: 'What if measured Zs exceeds the maximum?',
+    answer:
+      'The circuit fails. Options: increase cable size (lower R1+R2), shorten the circuit run, use a device with higher max Zs, or add RCD protection (which can override EFLI for 0.4s requirement).',
   },
   {
-    question: "How does RCD protection affect Zs requirements?",
-    answer: "An RCD will disconnect within 0.4s for any earth fault above its rated residual current (typically 30mA). This can provide 0.4s disconnection even if Zs only meets 5s requirements, but Zs must still allow protective device operation."
+    question: 'How does RCD protection affect Zs requirements?',
+    answer:
+      'An RCD will disconnect within 0.4s for any earth fault above its rated residual current (typically 30mA). This can provide 0.4s disconnection even if Zs only meets 5s requirements, but Zs must still allow protective device operation.',
   },
   {
-    question: "Are the table values at operating temperature?",
-    answer: "No - BS 7671 maximum Zs values allow for conductor temperature rise. If you measure at ambient temperature, your reading should be well under the maximum to ensure compliance when conductors heat up under fault."
-  }
+    question: 'Are the table values at operating temperature?',
+    answer:
+      'No - BS 7671 maximum Zs values allow for conductor temperature rise. If you measure at ambient temperature, your reading should be well under the maximum to ensure compliance when conductors heat up under fault.',
+  },
 ];
 
 const InspectionTestingModule5Section4 = () => {
@@ -171,7 +191,12 @@ const InspectionTestingModule5Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -182,7 +207,6 @@ const InspectionTestingModule5Section4 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -202,19 +226,35 @@ const InspectionTestingModule5Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Tables:</strong> BS 7671 Chapter 41 specifies max Zs</li>
-              <li><strong>Times:</strong> 0.4s for sockets, 5s for distribution</li>
-              <li><strong>Devices:</strong> Type and rating determine max Zs</li>
-              <li><strong>RCD:</strong> Can provide 0.4s backup protection</li>
+              <li>
+                <strong>Tables:</strong> BS 7671 Chapter 41 specifies max Zs
+              </li>
+              <li>
+                <strong>Times:</strong> 0.4s for sockets, 5s for distribution
+              </li>
+              <li>
+                <strong>Devices:</strong> Type and rating determine max Zs
+              </li>
+              <li>
+                <strong>RCD:</strong> Can provide 0.4s backup protection
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Values (0.4s)</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>32A Type B:</strong> ~1.37Ω maximum</li>
-              <li><strong>32A Type C:</strong> ~0.68Ω maximum</li>
-              <li><strong>6A Type B:</strong> ~7.28Ω maximum</li>
-              <li><strong>Always check:</strong> Current BS 7671 tables</li>
+              <li>
+                <strong>32A Type B:</strong> ~1.37Ω maximum
+              </li>
+              <li>
+                <strong>32A Type C:</strong> ~0.68Ω maximum
+              </li>
+              <li>
+                <strong>6A Type B:</strong> ~7.28Ω maximum
+              </li>
+              <li>
+                <strong>Always check:</strong> Current BS 7671 tables
+              </li>
             </ul>
           </div>
         </div>
@@ -224,12 +264,12 @@ const InspectionTestingModule5Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Find maximum Zs values in BS 7671 tables",
-              "Understand 0.4s vs 5s disconnection requirements",
-              "Compare MCB types B, C, and D differences",
-              "Know fuse maximum Zs values (BS 88, BS 1361)",
-              "Apply values by comparing measured to maximum",
-              "Understand when RCDs provide backup protection"
+              'Find maximum Zs values in BS 7671 tables',
+              'Understand 0.4s vs 5s disconnection requirements',
+              'Compare MCB types B, C, and D differences',
+              'Know fuse maximum Zs values (BS 88, BS 1361)',
+              'Apply values by comparing measured to maximum',
+              'Understand when RCDs provide backup protection',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -250,7 +290,8 @@ const InspectionTestingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 specifies maximum disconnection times based on the type of circuit and equipment:
+              BS 7671 specifies maximum disconnection times based on the type of circuit and
+              equipment:
             </p>
 
             <div className="grid grid-cols-2 gap-4 my-6 text-center">
@@ -267,8 +308,9 @@ const InspectionTestingModule5Section4 = () => {
             </div>
 
             <p className="text-sm text-white/70">
-              The shorter time for sockets protects users who may be holding equipment during a fault.
-              Distribution circuits allow 5s because users are less likely to directly contact faulted parts.
+              The shorter time for sockets protects users who may be holding equipment during a
+              fault. Distribution circuits allow 5s because users are less likely to directly
+              contact faulted parts.
             </p>
           </div>
         </section>
@@ -336,22 +378,26 @@ const InspectionTestingModule5Section4 = () => {
             Why Types Differ
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              MCB types have different magnetic trip thresholds:
-            </p>
+            <p>MCB types have different magnetic trip thresholds:</p>
 
             <div className="my-6 space-y-3">
               <div>
                 <p className="text-sm font-medium text-elec-yellow mb-1">Type B: 3-5× In</p>
-                <p className="text-sm text-white/70">Trips magnetically at 3-5 times rated current. Highest max Zs - most lenient.</p>
+                <p className="text-sm text-white/70">
+                  Trips magnetically at 3-5 times rated current. Highest max Zs - most lenient.
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-blue-400 mb-1">Type C: 5-10× In</p>
-                <p className="text-sm text-white/70">Trips at 5-10 times rated. Lower max Zs - needs higher fault current.</p>
+                <p className="text-sm text-white/70">
+                  Trips at 5-10 times rated. Lower max Zs - needs higher fault current.
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-purple-400 mb-1">Type D: 10-20× In</p>
-                <p className="text-sm text-white/70">Trips at 10-20 times rated. Lowest max Zs - very high fault current needed.</p>
+                <p className="text-sm text-white/70">
+                  Trips at 10-20 times rated. Lowest max Zs - very high fault current needed.
+                </p>
               </div>
             </div>
 
@@ -371,11 +417,11 @@ const InspectionTestingModule5Section4 = () => {
             <div className="my-6">
               <ol className="text-sm text-white space-y-2 ml-4">
                 {[
-                  "Identify the protective device type and rating",
-                  "Determine required disconnection time (0.4s or 5s)",
-                  "Look up maximum Zs in BS 7671 Chapter 41",
-                  "Compare your measured Zs to this maximum",
-                  "If measured ≤ maximum = PASS"
+                  'Identify the protective device type and rating',
+                  'Determine required disconnection time (0.4s or 5s)',
+                  'Look up maximum Zs in BS 7671 Chapter 41',
+                  'Compare your measured Zs to this maximum',
+                  'If measured ≤ maximum = PASS',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex items-center justify-center flex-shrink-0">
@@ -398,21 +444,20 @@ const InspectionTestingModule5Section4 = () => {
             RCD Override
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              RCDs can provide the 0.4s requirement even when EFLI only meets 5s values:
-            </p>
+            <p>RCDs can provide the 0.4s requirement even when EFLI only meets 5s values:</p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-emerald-400 mb-2">RCD Trip Time</p>
               <p className="text-sm text-white/70">
-                A 30mA RCD must trip within 300ms at rated current, and typically within 40ms at 5×In.
-                This is well under the 0.4s requirement.
+                A 30mA RCD must trip within 300ms at rated current, and typically within 40ms at
+                5×In. This is well under the 0.4s requirement.
               </p>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> Zs must still be low enough to operate the overcurrent device
-              eventually (to clear sustained faults), but the RCD provides the fast shock protection.
+              <strong>Important:</strong> Zs must still be low enough to operate the overcurrent
+              device eventually (to clear sustained faults), but the RCD provides the fast shock
+              protection.
             </p>
           </div>
         </section>
@@ -424,18 +469,20 @@ const InspectionTestingModule5Section4 = () => {
             When Zs Exceeds Maximum
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              If measured Zs exceeds the maximum for 0.4s disconnection:
-            </p>
+            <p>If measured Zs exceeds the maximum for 0.4s disconnection:</p>
 
             <div className="my-6 space-y-3">
               <div className="border-l-2 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-semibold text-sm">Increase Cable Size</p>
-                <p className="text-white/70 text-xs">Larger cables have lower R1+R2, reducing Zs.</p>
+                <p className="text-white/70 text-xs">
+                  Larger cables have lower R1+R2, reducing Zs.
+                </p>
               </div>
               <div className="border-l-2 border-blue-500 pl-4">
                 <p className="text-blue-400 font-semibold text-sm">Shorten Run</p>
-                <p className="text-white/70 text-xs">Shorter cable length means lower resistance.</p>
+                <p className="text-white/70 text-xs">
+                  Shorter cable length means lower resistance.
+                </p>
               </div>
               <div className="border-l-2 border-purple-500 pl-4">
                 <p className="text-purple-400 font-semibold text-sm">Change Device Type</p>
@@ -443,7 +490,9 @@ const InspectionTestingModule5Section4 = () => {
               </div>
               <div className="border-l-2 border-elec-yellow pl-4">
                 <p className="text-elec-yellow font-semibold text-sm">Add RCD Protection</p>
-                <p className="text-white/70 text-xs">RCD provides 0.4s protection regardless of Zs (if meeting 5s limits).</p>
+                <p className="text-white/70 text-xs">
+                  RCD provides 0.4s protection regardless of Zs (if meeting 5s limits).
+                </p>
               </div>
             </div>
           </div>
@@ -509,12 +558,12 @@ const InspectionTestingModule5Section4 = () => {
           <UnitsPocketCard
             title="Max Zs Quick Reference"
             items={[
-              { term: "0.4s Disconnection", definition: "Socket outlets" },
-              { term: "5s Disconnection", definition: "Fixed/distribution" },
-              { term: "Type B (32A)", definition: "~1.37Ω at 0.4s" },
-              { term: "Type C (32A)", definition: "~0.68Ω at 0.4s" },
-              { term: "Tables Location", definition: "BS 7671 Chapter 41" },
-              { term: "RCD Backup", definition: "Can provide 0.4s" }
+              { term: '0.4s Disconnection', definition: 'Socket outlets' },
+              { term: '5s Disconnection', definition: 'Fixed/distribution' },
+              { term: 'Type B (32A)', definition: '~1.37Ω at 0.4s' },
+              { term: 'Type C (32A)', definition: '~0.68Ω at 0.4s' },
+              { term: 'Tables Location', definition: 'BS 7671 Chapter 41' },
+              { term: 'RCD Backup', definition: 'Can provide 0.4s' },
             ]}
           />
 
@@ -543,28 +592,33 @@ const InspectionTestingModule5Section4 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

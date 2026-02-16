@@ -15,124 +15,134 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the main purpose of an Electrical Installation Certificate (EIC)?",
+    question: 'What is the main purpose of an Electrical Installation Certificate (EIC)?',
     options: [
-      "To record maintenance activities",
-      "To certify that new electrical work complies with BS 7671",
-      "To provide warranty information",
-      "To record energy consumption"
+      'To record maintenance activities',
+      'To certify that new electrical work complies with BS 7671',
+      'To provide warranty information',
+      'To record energy consumption',
     ],
     correctAnswer: 1,
-    explanation: "An EIC certifies that new electrical installation work has been designed, constructed, inspected and tested in accordance with BS 7671, confirming compliance and safety."
+    explanation:
+      'An EIC certifies that new electrical installation work has been designed, constructed, inspected and tested in accordance with BS 7671, confirming compliance and safety.',
   },
   {
     id: 2,
-    question: "Who can sign an Electrical Installation Certificate?",
+    question: 'Who can sign an Electrical Installation Certificate?',
     options: [
-      "Any qualified electrician",
-      "Only the client or building owner",
-      "The person responsible for the design, construction, inspection and testing",
-      "The local building inspector"
+      'Any qualified electrician',
+      'Only the client or building owner',
+      'The person responsible for the design, construction, inspection and testing',
+      'The local building inspector',
     ],
     correctAnswer: 2,
-    explanation: "Only the skilled person responsible for the design, construction, inspection and testing of the electrical work can sign an EIC, taking legal responsibility for compliance."
+    explanation:
+      'Only the skilled person responsible for the design, construction, inspection and testing of the electrical work can sign an EIC, taking legal responsibility for compliance.',
   },
   {
     id: 3,
-    question: "What information must be included on test result schedules?",
+    question: 'What information must be included on test result schedules?',
     options: [
-      "Only failed test results",
-      "All test results including continuity, insulation resistance, polarity, earth fault loop impedance, and RCD tests",
-      "Just the final inspection outcome",
-      "Only visual inspection notes"
+      'Only failed test results',
+      'All test results including continuity, insulation resistance, polarity, earth fault loop impedance, and RCD tests',
+      'Just the final inspection outcome',
+      'Only visual inspection notes',
     ],
     correctAnswer: 1,
-    explanation: "Test result schedules must include ALL test results: continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, and RCD test results."
+    explanation:
+      'Test result schedules must include ALL test results: continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, and RCD test results.',
   },
   {
     id: 4,
-    question: "When should a Minor Electrical Installation Works Certificate (MEIWC) be used?",
+    question: 'When should a Minor Electrical Installation Works Certificate (MEIWC) be used?',
     options: [
-      "For all electrical work",
+      'For all electrical work',
       "For small additions and alterations that don't affect the main characteristics of the installation",
-      "Only for emergency repairs",
-      "For major rewiring projects"
+      'Only for emergency repairs',
+      'For major rewiring projects',
     ],
     correctAnswer: 1,
-    explanation: "MEIWC is used for minor work such as adding socket outlets, lighting points, or replacing consumer units where the work doesn't affect the installation's main characteristics."
+    explanation:
+      "MEIWC is used for minor work such as adding socket outlets, lighting points, or replacing consumer units where the work doesn't affect the installation's main characteristics.",
   },
   {
     id: 5,
-    question: "What is the purpose of an Electrical Installation Condition Report (EICR)?",
+    question: 'What is the purpose of an Electrical Installation Condition Report (EICR)?',
     options: [
-      "To certify new installations",
-      "To assess the condition of existing electrical installations and identify defects",
-      "To record minor electrical work",
-      "To provide energy efficiency ratings"
+      'To certify new installations',
+      'To assess the condition of existing electrical installations and identify defects',
+      'To record minor electrical work',
+      'To provide energy efficiency ratings',
     ],
     correctAnswer: 1,
-    explanation: "An EICR assesses the safety and condition of existing electrical installations, identifying any deterioration, defects, or non-compliance with current standards."
+    explanation:
+      'An EICR assesses the safety and condition of existing electrical installations, identifying any deterioration, defects, or non-compliance with current standards.',
   },
   {
     id: 6,
-    question: "What are the EICR classification codes for defects?",
+    question: 'What are the EICR classification codes for defects?',
     options: [
-      "Pass, Fail, Unsatisfactory",
-      "C1 (Danger present), C2 (Potentially dangerous), C3 (Improvement recommended)",
-      "Red, Amber, Green",
-      "Class A, Class B, Class C"
+      'Pass, Fail, Unsatisfactory',
+      'C1 (Danger present), C2 (Potentially dangerous), C3 (Improvement recommended)',
+      'Red, Amber, Green',
+      'Class A, Class B, Class C',
     ],
     correctAnswer: 1,
-    explanation: "EICR uses C1 (danger present - immediate action required), C2 (potentially dangerous - urgent remedial action required), and C3 (improvement recommended)."
+    explanation:
+      'EICR uses C1 (danger present - immediate action required), C2 (potentially dangerous - urgent remedial action required), and C3 (improvement recommended).',
   },
   {
     id: 7,
-    question: "How long should electrical certificates be retained?",
+    question: 'How long should electrical certificates be retained?',
     options: [
-      "1 year",
-      "5 years",
-      "Until the next inspection or when the installation is modified",
-      "Indefinitely"
+      '1 year',
+      '5 years',
+      'Until the next inspection or when the installation is modified',
+      'Indefinitely',
     ],
     correctAnswer: 2,
-    explanation: "Electrical certificates should be retained until the next inspection/test or when the installation is modified, providing ongoing evidence of compliance and safety."
+    explanation:
+      'Electrical certificates should be retained until the next inspection/test or when the installation is modified, providing ongoing evidence of compliance and safety.',
   },
   {
     id: 8,
-    question: "What must be checked before signing any electrical certificate?",
+    question: 'What must be checked before signing any electrical certificate?',
     options: [
-      "Only the final test results",
-      "That all inspection and test results are accurate and within acceptable limits",
-      "Just the visual inspection",
-      "Only the client's satisfaction"
+      'Only the final test results',
+      'That all inspection and test results are accurate and within acceptable limits',
+      'Just the visual inspection',
+      "Only the client's satisfaction",
     ],
     correctAnswer: 1,
-    explanation: "Before signing, all inspection and test results must be verified as accurate and within acceptable limits defined in BS 7671, ensuring complete compliance."
+    explanation:
+      'Before signing, all inspection and test results must be verified as accurate and within acceptable limits defined in BS 7671, ensuring complete compliance.',
   },
   {
     id: 9,
-    question: "Who should receive copies of electrical certificates?",
+    question: 'Who should receive copies of electrical certificates?',
     options: [
-      "Only the electrician",
-      "The client/building owner and Local Authority Building Control (if applicable)",
-      "Just the client",
-      "Only Building Control"
+      'Only the electrician',
+      'The client/building owner and Local Authority Building Control (if applicable)',
+      'Just the client',
+      'Only Building Control',
     ],
     correctAnswer: 1,
-    explanation: "Copies should be given to the client/building owner for their records and to Local Authority Building Control when required under Building Regulations."
+    explanation:
+      'Copies should be given to the client/building owner for their records and to Local Authority Building Control when required under Building Regulations.',
   },
   {
     id: 10,
-    question: "In the real-world example, what issue was identified during certificate completion?",
+    question: 'In the real-world example, what issue was identified during certificate completion?',
     options: [
-      "Missing test equipment calibration",
-      "Several circuits were not properly identified on the schedule, requiring correction before certificate completion",
-      "Incorrect voltage readings",
-      "Wrong cable calculations"
+      'Missing test equipment calibration',
+      'Several circuits were not properly identified on the schedule, requiring correction before certificate completion',
+      'Incorrect voltage readings',
+      'Wrong cable calculations',
     ],
     correctAnswer: 1,
-    explanation: "In the commercial installation example, several circuits were not properly identified on the test result schedule, requiring correction to ensure accurate documentation before certificate completion."
-  }
+    explanation:
+      'In the commercial installation example, several circuits were not properly identified on the test result schedule, requiring correction to ensure accurate documentation before certificate completion.',
+  },
 ];
 
 const BS7671Module6Section4Quiz = () => {
@@ -189,9 +199,10 @@ const BS7671Module6Section4Quiz = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground">
-            Test your understanding of electrical certification forms and completion procedures with this comprehensive 10-question quiz.
+            Test your understanding of electrical certification forms and completion procedures with
+            this comprehensive 10-question quiz.
           </p>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -215,10 +226,14 @@ const BS7671Module6Section4Quiz = () => {
               {score}/{quizData.length}
             </div>
             <p className="text-foreground mt-2">
-              {score >= 8 ? 'Excellent knowledge of certification procedures!' : score >= 6 ? 'Good understanding!' : 'Review the material and try again!'}
+              {score >= 8
+                ? 'Excellent knowledge of certification procedures!'
+                : score >= 6
+                  ? 'Good understanding!'
+                  : 'Review the material and try again!'}
             </p>
           </div>
-          
+
           <div className="space-y-3">
             {quizData.map((question, index) => (
               <div key={question.id} className="bg-elec-dark p-3 rounded-md border border-gray-600">
@@ -232,16 +247,14 @@ const BS7671Module6Section4Quiz = () => {
                     <p className="text-sm font-semibold text-foreground mb-1">
                       {question.id}. {question.question}
                     </p>
-                    <p className="text-xs text-foreground">
-                      {question.explanation}
-                    </p>
+                    <p className="text-xs text-foreground">{question.explanation}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleRestart}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -265,7 +278,7 @@ const BS7671Module6Section4Quiz = () => {
           </Badge>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           ></div>
@@ -276,7 +289,7 @@ const BS7671Module6Section4Quiz = () => {
           <p className="text-foreground font-semibold mb-4">
             {question.id}. {question.question}
           </p>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => {
               const answered = selectedAnswers[currentQuestion] !== undefined;
@@ -318,13 +331,17 @@ const BS7671Module6Section4Quiz = () => {
                   )}
                   <div>
                     <p className="text-sm font-semibold text-foreground">
-                      {selectedAnswers[currentQuestion] === question.correctAnswer ? 'Correct' : 'Incorrect'}
+                      {selectedAnswers[currentQuestion] === question.correctAnswer
+                        ? 'Correct'
+                        : 'Incorrect'}
                     </p>
                     <p className="text-xs text-foreground">{question.explanation}</p>
                     {selectedAnswers[currentQuestion] !== question.correctAnswer && (
                       <p className="text-xs text-foreground mt-1">
-                        Correct answer: <span className="text-elec-yellow font-medium">
-                          {String.fromCharCode(65 + question.correctAnswer)}. {question.options[question.correctAnswer]}
+                        Correct answer:{' '}
+                        <span className="text-elec-yellow font-medium">
+                          {String.fromCharCode(65 + question.correctAnswer)}.{' '}
+                          {question.options[question.correctAnswer]}
                         </span>
                       </p>
                     )}
@@ -334,7 +351,7 @@ const BS7671Module6Section4Quiz = () => {
             )}
           </div>
         </div>
-        
+
         <div className="flex justify-between">
           <Button
             onClick={handlePrevious}
@@ -344,7 +361,7 @@ const BS7671Module6Section4Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

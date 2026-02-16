@@ -18,7 +18,10 @@ export const ContactSensorsSection = () => {
               How They Work
             </h4>
             <p className="text-gray-300 text-sm">
-              Contact sensors use a <strong className="text-foreground">magnetic reed switch</strong>. When the door or window opens, the magnet separates from the switch, creating an open circuit that triggers an alert.
+              Contact sensors use a{' '}
+              <strong className="text-foreground">magnetic reed switch</strong>. When the door or
+              window opens, the magnet separates from the switch, creating an open circuit that
+              triggers an alert.
             </p>
           </div>
 

@@ -25,7 +25,7 @@ export const useTextToSpeech = () => {
     speed: 1.0,
     customVoiceId: '', // Store custom ElevenLabs voice ID
   });
-  
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isProcessingRef = useRef(false);
 
@@ -39,28 +39,65 @@ export const useTextToSpeech = () => {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-GB';
       utterance.rate = speed;
-      
+
       utterance.onend = () => resolve();
       utterance.onerror = (e) => reject(e);
-      
+
       window.speechSynthesis.speak(utterance);
     });
   }, []);
 
-  const speakWithElevenLabs = useCallback(async (
-    text: string,
-    voice: string,
-    speed: number
-  ): Promise<void> => {
-    // Check cache first
-    const cacheKey = `${text}-${voice}-${speed}`;
-    const cachedAudio = await getFromCache(cacheKey);
-    
-    if (cachedAudio) {
-      console.log('Playing from cache:', text);
-      const audio = new Audio(URL.createObjectURL(cachedAudio));
+  const speakWithElevenLabs = useCallback(
+    async (text: string, voice: string, speed: number): Promise<void> => {
+      // Check cache first
+      const cacheKey = `${text}-${voice}-${speed}`;
+      const cachedAudio = await getFromCache(cacheKey);
+
+      if (cachedAudio) {
+        console.log('Playing from cache:', text);
+        const audio = new Audio(URL.createObjectURL(cachedAudio));
+        audioRef.current = audio;
+
+        return new Promise((resolve, reject) => {
+          audio.onended = () => {
+            audioRef.current = null;
+            resolve();
+          };
+          audio.onerror = reject;
+          audio.playbackRate = speed;
+          audio.play().catch(reject);
+        });
+      }
+
+      // Call ElevenLabs API via edge function
+      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+        body: { text, voice, speed },
+      });
+
+      if (error || data?.error) {
+        throw new Error(data?.error || error?.message || 'Failed to generate speech');
+      }
+
+      if (data?.fallbackToNative) {
+        console.log('Falling back to native TTS');
+        return speakNative(text, speed);
+      }
+
+      // Convert base64 to audio blob
+      const binaryString = atob(data.audioContent);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
+
+      // Cache the audio
+      await saveToCache(cacheKey, audioBlob, text, voice);
+
+      // Play the audio
+      const audio = new Audio(URL.createObjectURL(audioBlob));
       audioRef.current = audio;
-      
+
       return new Promise((resolve, reject) => {
         audio.onended = () => {
           audioRef.current = null;
@@ -70,56 +107,18 @@ export const useTextToSpeech = () => {
         audio.playbackRate = speed;
         audio.play().catch(reject);
       });
-    }
-
-    // Call ElevenLabs API via edge function
-    const { data, error } = await supabase.functions.invoke('text-to-speech', {
-      body: { text, voice, speed }
-    });
-
-    if (error || data?.error) {
-      throw new Error(data?.error || error?.message || 'Failed to generate speech');
-    }
-
-    if (data?.fallbackToNative) {
-      console.log('Falling back to native TTS');
-      return speakNative(text, speed);
-    }
-
-    // Convert base64 to audio blob
-    const binaryString = atob(data.audioContent);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
-    
-    // Cache the audio
-    await saveToCache(cacheKey, audioBlob, text, voice);
-
-    // Play the audio
-    const audio = new Audio(URL.createObjectURL(audioBlob));
-    audioRef.current = audio;
-
-    return new Promise((resolve, reject) => {
-      audio.onended = () => {
-        audioRef.current = null;
-        resolve();
-      };
-      audio.onerror = reject;
-      audio.playbackRate = speed;
-      audio.play().catch(reject);
-    });
-  }, [speakNative]);
+    },
+    [speakNative]
+  );
 
   const processQueue = useCallback(async () => {
     if (isProcessingRef.current || queue.length === 0) return;
-    
+
     isProcessingRef.current = true;
     setIsSpeaking(true);
 
     const { text, options } = queue[0];
-    setQueue(prev => prev.slice(1));
+    setQueue((prev) => prev.slice(1));
 
     try {
       const voice = options.voice || voiceSettings.voice;
@@ -139,15 +138,15 @@ export const useTextToSpeech = () => {
       } catch (nativeError) {
         console.error('Native speech also failed:', nativeError);
         toast({
-          title: "Voice feedback unavailable",
-          description: "Unable to play audio. Check your browser settings.",
-          variant: "destructive",
+          title: 'Voice feedback unavailable',
+          description: 'Unable to play audio. Check your browser settings.',
+          variant: 'destructive',
         });
       }
     } finally {
       isProcessingRef.current = false;
       setIsSpeaking(false);
-      
+
       // Process next in queue
       if (queue.length > 1) {
         setTimeout(() => processQueue(), 100);
@@ -161,22 +160,25 @@ export const useTextToSpeech = () => {
     }
   }, [queue, processQueue]);
 
-  const speak = useCallback((text: string, options: SpeakOptions = {}) => {
-    if (!voiceSettings.enabled && !options.useNative) return;
-    
-    if (options.interrupt) {
-      stop();
-      setQueue([{ text, options }]);
-    } else {
-      setQueue(prev => {
-        const priority = options.priority || 'normal';
-        if (priority === 'high') {
-          return [{ text, options }, ...prev];
-        }
-        return [...prev, { text, options }];
-      });
-    }
-  }, [voiceSettings.enabled]);
+  const speak = useCallback(
+    (text: string, options: SpeakOptions = {}) => {
+      if (!voiceSettings.enabled && !options.useNative) return;
+
+      if (options.interrupt) {
+        stop();
+        setQueue([{ text, options }]);
+      } else {
+        setQueue((prev) => {
+          const priority = options.priority || 'normal';
+          if (priority === 'high') {
+            return [{ text, options }, ...prev];
+          }
+          return [...prev, { text, options }];
+        });
+      }
+    },
+    [voiceSettings.enabled]
+  );
 
   const stop = useCallback(() => {
     if (audioRef.current) {
@@ -190,7 +192,7 @@ export const useTextToSpeech = () => {
   }, []);
 
   const updateSettings = useCallback((settings: Partial<typeof voiceSettings>) => {
-    setVoiceSettings(prev => ({ ...prev, ...settings }));
+    setVoiceSettings((prev) => ({ ...prev, ...settings }));
   }, []);
 
   return {

@@ -5,7 +5,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { SmartTabs } from '@/components/ui/smart-tabs';
-import { CheckCircle2, AlertTriangle, Zap, Calculator, BookOpen, Target, Eye, Lightbulb, Users, Shield } from 'lucide-react';
+import {
+  CheckCircle2,
+  AlertTriangle,
+  Zap,
+  Calculator,
+  BookOpen,
+  Target,
+  Eye,
+  Lightbulb,
+  Users,
+  Shield,
+} from 'lucide-react';
 
 interface CPCTestResult {
   circuitRef: string;
@@ -22,17 +33,17 @@ const EnhancedContinuityCPCTestCard = () => {
     r1r2Reading: '',
     maxPermissible: '',
     result: 'pending',
-    notes: ''
+    notes: '',
   });
 
   const handleAddTest = () => {
     if (currentTest.circuitRef && currentTest.r1r2Reading) {
       const reading = parseFloat(currentTest.r1r2Reading);
       const maxValue = parseFloat(currentTest.maxPermissible);
-      
+
       const result: CPCTestResult = {
         ...currentTest,
-        result: maxValue && reading <= maxValue ? 'pass' : reading > maxValue ? 'fail' : 'pending'
+        result: maxValue && reading <= maxValue ? 'pass' : reading > maxValue ? 'fail' : 'pending',
       };
 
       setTestResults([...testResults, result]);
@@ -41,7 +52,7 @@ const EnhancedContinuityCPCTestCard = () => {
         r1r2Reading: '',
         maxPermissible: '',
         result: 'pending',
-        notes: ''
+        notes: '',
       });
     }
   };
@@ -59,53 +70,65 @@ const EnhancedContinuityCPCTestCard = () => {
             Enhanced CPC Continuity Testing Module
           </CardTitle>
           <CardDescription className="text-gray-300">
-            Comprehensive learning module for Circuit Protective Conductor continuity testing - BS 7671 Regulation 612.2.1
+            Comprehensive learning module for Circuit Protective Conductor continuity testing - BS
+            7671 Regulation 612.2.1
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <SmartTabs 
+          <SmartTabs
             tabs={[
               {
-                value: "why",
-                label: "Why Test?",
+                value: 'why',
+                label: 'Why Test?',
                 icon: <Lightbulb className="h-4 w-4" />,
                 content: (
                   <div className="space-y-4">
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
                         <Lightbulb className="h-4 w-4 text-blue-400" />
-                        <h4 className="font-medium text-blue-400">Why CPC Continuity Testing is Critical</h4>
+                        <h4 className="font-medium text-blue-400">
+                          Why CPC Continuity Testing is Critical
+                        </h4>
                       </div>
                       <div className="space-y-3 text-sm text-gray-300">
                         <div className="flex items-start gap-2">
                           <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="font-medium text-foreground">Life Safety Protection</p>
-                            <p>Ensures protective conductors can carry fault current safely, preventing electric shock and fire hazards.</p>
+                            <p>
+                              Ensures protective conductors can carry fault current safely,
+                              preventing electric shock and fire hazards.
+                            </p>
                           </div>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="font-medium text-foreground">Equipment Protection</p>
-                            <p>Verifies protective devices will operate correctly during earth faults, protecting electrical equipment.</p>
+                            <p>
+                              Verifies protective devices will operate correctly during earth
+                              faults, protecting electrical equipment.
+                            </p>
                           </div>
                         </div>
                         <div className="flex items-start gap-2">
                           <BookOpen className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="font-medium text-foreground">Legal Compliance</p>
-                            <p>Required by BS 7671 for all new installations and periodic inspections - failure to test is a legal liability.</p>
+                            <p>
+                              Required by BS 7671 for all new installations and periodic inspections
+                              - failure to test is a legal liability.
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                )
+                ),
               },
               {
-                value: "practice",
-                label: "Practice",
+                value: 'practice',
+                label: 'Practice',
                 icon: <Calculator className="h-4 w-4" />,
                 content: (
                   <div className="space-y-6">
@@ -122,7 +145,9 @@ const EnhancedContinuityCPCTestCard = () => {
                             id="circuitRef"
                             placeholder="e.g., C1, Kitchen Ring"
                             value={currentTest.circuitRef}
-                            onChange={(e) => setCurrentTest({...currentTest, circuitRef: e.target.value})}
+                            onChange={(e) =>
+                              setCurrentTest({ ...currentTest, circuitRef: e.target.value })
+                            }
                           />
                         </div>
                         <div className="space-y-2">
@@ -133,7 +158,9 @@ const EnhancedContinuityCPCTestCard = () => {
                             step="0.01"
                             placeholder="0.00"
                             value={currentTest.r1r2Reading}
-                            onChange={(e) => setCurrentTest({...currentTest, r1r2Reading: e.target.value})}
+                            onChange={(e) =>
+                              setCurrentTest({ ...currentTest, r1r2Reading: e.target.value })
+                            }
                           />
                         </div>
                         <div className="space-y-2">
@@ -144,7 +171,9 @@ const EnhancedContinuityCPCTestCard = () => {
                             step="0.01"
                             placeholder="1.67 for ring circuits"
                             value={currentTest.maxPermissible}
-                            onChange={(e) => setCurrentTest({...currentTest, maxPermissible: e.target.value})}
+                            onChange={(e) =>
+                              setCurrentTest({ ...currentTest, maxPermissible: e.target.value })
+                            }
                           />
                         </div>
                         <div className="space-y-2">
@@ -153,12 +182,14 @@ const EnhancedContinuityCPCTestCard = () => {
                             id="notes"
                             placeholder="Additional observations"
                             value={currentTest.notes}
-                            onChange={(e) => setCurrentTest({...currentTest, notes: e.target.value})}
+                            onChange={(e) =>
+                              setCurrentTest({ ...currentTest, notes: e.target.value })
+                            }
                           />
                         </div>
                       </div>
 
-                      <Button 
+                      <Button
                         onClick={handleAddTest}
                         className="w-full mt-4 bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30"
                         disabled={!currentTest.circuitRef || !currentTest.r1r2Reading}
@@ -181,10 +212,16 @@ const EnhancedContinuityCPCTestCard = () => {
                               <CardContent className="p-4">
                                 <div className="flex items-center justify-between mb-3">
                                   <div className="flex items-center gap-4">
-                                    <div className="font-medium text-foreground">{test.circuitRef}</div>
-                                    <Badge 
+                                    <div className="font-medium text-foreground">
+                                      {test.circuitRef}
+                                    </div>
+                                    <Badge
                                       variant={test.result === 'pass' ? 'default' : 'destructive'}
-                                      className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
+                                      className={
+                                        test.result === 'pass'
+                                          ? 'bg-green-500/20 text-green-400'
+                                          : 'bg-red-500/20 text-red-400'
+                                      }
                                     >
                                       {test.result.toUpperCase()}
                                     </Badge>
@@ -201,15 +238,21 @@ const EnhancedContinuityCPCTestCard = () => {
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
                                   <div>
                                     <span className="text-gray-400">Reading:</span>
-                                    <span className="text-foreground ml-1">{test.r1r2Reading}Ω</span>
+                                    <span className="text-foreground ml-1">
+                                      {test.r1r2Reading}Ω
+                                    </span>
                                   </div>
                                   <div>
                                     <span className="text-gray-400">Max:</span>
-                                    <span className="text-foreground ml-1">{test.maxPermissible}Ω</span>
+                                    <span className="text-foreground ml-1">
+                                      {test.maxPermissible}Ω
+                                    </span>
                                   </div>
                                   <div>
                                     <span className="text-gray-400">Status:</span>
-                                    <span className={`ml-1 ${test.result === 'pass' ? 'text-green-400' : 'text-red-400'}`}>
+                                    <span
+                                      className={`ml-1 ${test.result === 'pass' ? 'text-green-400' : 'text-red-400'}`}
+                                    >
                                       {test.result === 'pass' ? 'PASS' : 'FAIL'}
                                     </span>
                                   </div>
@@ -226,8 +269,8 @@ const EnhancedContinuityCPCTestCard = () => {
                       </div>
                     )}
                   </div>
-                )
-              }
+                ),
+              },
             ]}
             defaultValue="why"
             className="w-full"

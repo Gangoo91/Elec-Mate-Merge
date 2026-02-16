@@ -3,9 +3,15 @@ import { EICScheduleOfTests } from '@/types/eic-integration';
 import { RAMSData } from '@/types/rams';
 import { MethodStatementData } from '@/types/method-statement';
 import { Quote } from '@/types/quote';
-import { transformInstallerOutputToMethodStatement, InstallerAgentOutput } from './rams-transformer';
+import {
+  transformInstallerOutputToMethodStatement,
+  InstallerAgentOutput,
+} from './rams-transformer';
 import { extractHazardsFromInstallation } from './installer-to-rams-mapper';
-import { transformHealthSafetyOutputToRAMS, HealthSafetyAgentOutput } from './hs-to-rams-transformer';
+import {
+  transformHealthSafetyOutputToRAMS,
+  HealthSafetyAgentOutput,
+} from './hs-to-rams-transformer';
 import { createQuoteFromCostOutput, CostEngineerOutput } from './cost-to-quote-transformer';
 import { generateProjectPDFs } from './project-pdf-generator';
 
@@ -68,7 +74,9 @@ export async function exportCompleteProject(
   };
 
   try {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('User not authenticated');
 
     // Initialize PDFs array
@@ -95,14 +103,11 @@ export async function exportCompleteProject(
 
     // Generate RAMS from Health & Safety output (priority) or Installer output (fallback)
     if (agentOutputs.healthSafety) {
-      projectExport.rams = transformHealthSafetyOutputToRAMS(
-        agentOutputs.healthSafety,
-        {
-          projectName: projectDetails.projectName,
-          location: projectDetails.location,
-          assessor: projectDetails.assessor,
-        }
-      );
+      projectExport.rams = transformHealthSafetyOutputToRAMS(agentOutputs.healthSafety, {
+        projectName: projectDetails.projectName,
+        location: projectDetails.location,
+        assessor: projectDetails.assessor,
+      });
     } else if (agentOutputs.installer) {
       // Fallback: generate RAMS from installer output
       projectExport.rams = extractHazardsFromInstallation(
@@ -145,7 +150,9 @@ export async function exportCompleteProject(
  * Saves project export to database and links all generated documents
  */
 async function saveProjectExport(projectExport: ProjectExport): Promise<void> {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error('User not authenticated');
 
   let eicScheduleId: string | null = null;
@@ -202,17 +209,15 @@ async function saveProjectExport(projectExport: ProjectExport): Promise<void> {
 
   // Save the project export record linking all documents
   // Note: Using 'as any' temporarily until Supabase types regenerate
-  const { error: exportError } = await supabase
-    .from('project_exports' as any)
-    .insert({
-      user_id: user.id,
-      conversation_id: projectExport.sourceConversation,
-      eic_schedule_id: eicScheduleId,
-      quote_id: quoteId,
-      rams_data: projectExport.rams,
-      method_statement_data: projectExport.methodStatement,
-      exported_at: projectExport.exportedAt,
-    });
+  const { error: exportError } = await supabase.from('project_exports' as any).insert({
+    user_id: user.id,
+    conversation_id: projectExport.sourceConversation,
+    eic_schedule_id: eicScheduleId,
+    quote_id: quoteId,
+    rams_data: projectExport.rams,
+    method_statement_data: projectExport.methodStatement,
+    exported_at: projectExport.exportedAt,
+  });
 
   if (exportError) throw exportError;
 }
@@ -221,7 +226,9 @@ async function saveProjectExport(projectExport: ProjectExport): Promise<void> {
  * Retrieves all project exports for the current user
  */
 export async function getUserProjectExports(): Promise<ProjectExport[]> {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error('User not authenticated');
 
   // Note: Using 'as any' temporarily until Supabase types regenerate

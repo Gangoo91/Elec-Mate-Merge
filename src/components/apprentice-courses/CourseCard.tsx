@@ -7,9 +7,9 @@
  * - Clean, minimal design
  */
 
-import { LucideIcon, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { LucideIcon, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 interface CourseCardProps {
   title: string;
@@ -20,34 +20,44 @@ interface CourseCardProps {
   comingSoon?: boolean;
 }
 
-export function CourseCard({ title, description, icon: Icon, href, number, comingSoon }: CourseCardProps) {
+export function CourseCard({
+  title,
+  description,
+  icon: Icon,
+  href,
+  number,
+  comingSoon,
+}: CourseCardProps) {
   const content = (
     <div
       className={cn(
-        "relative flex items-center gap-4 p-4 rounded-2xl h-full min-h-[100px]",
-        "bg-gradient-to-r from-white/[0.06] to-white/[0.02]",
-        "border border-white/10",
-        "transition-all duration-200",
+        'relative flex items-center gap-4 p-4 rounded-2xl h-full min-h-[100px]',
+        'bg-gradient-to-r from-white/[0.06] to-white/[0.02]',
+        'border border-white/10',
+        'transition-all duration-200',
         comingSoon
-          ? "opacity-50"
-          : "active:scale-[0.98] hover:border-elec-yellow/30 hover:from-white/[0.10] hover:to-white/[0.04]"
+          ? 'opacity-50'
+          : 'active:scale-[0.98] hover:border-elec-yellow/30 hover:from-white/[0.10] hover:to-white/[0.04]'
       )}
     >
       {/* Icon with glow */}
       <div className="relative flex-shrink-0 self-start mt-1">
-        <div className={cn(
-          "absolute inset-0 rounded-xl blur-xl",
-          comingSoon ? "bg-elec-yellow/5" : "bg-elec-yellow/20"
-        )} />
-        <div className={cn(
-          "relative w-12 h-12 rounded-xl flex items-center justify-center",
-          "bg-gradient-to-br from-elec-yellow/20 to-amber-600/10",
-          "border border-elec-yellow/20"
-        )}>
-          <Icon className={cn(
-            "h-6 w-6",
-            comingSoon ? "text-elec-yellow/40" : "text-elec-yellow"
-          )} />
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl blur-xl',
+            comingSoon ? 'bg-elec-yellow/5' : 'bg-elec-yellow/20'
+          )}
+        />
+        <div
+          className={cn(
+            'relative w-12 h-12 rounded-xl flex items-center justify-center',
+            'bg-gradient-to-br from-elec-yellow/20 to-amber-600/10',
+            'border border-elec-yellow/20'
+          )}
+        >
+          <Icon
+            className={cn('h-6 w-6', comingSoon ? 'text-elec-yellow/40' : 'text-elec-yellow')}
+          />
         </div>
       </div>
 
@@ -55,27 +65,33 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
       <div className="flex-1 min-w-0 self-start">
         {/* Module number */}
         {number && (
-          <span className={cn(
-            "text-[11px] font-semibold tracking-wide uppercase",
-            comingSoon ? "text-elec-yellow/40" : "text-elec-yellow"
-          )}>
+          <span
+            className={cn(
+              'text-[11px] font-semibold tracking-wide uppercase',
+              comingSoon ? 'text-elec-yellow/40' : 'text-elec-yellow'
+            )}
+          >
             {number}
           </span>
         )}
 
         {/* Title - fixed height for 2 lines */}
-        <h3 className={cn(
-          "font-bold text-[15px] leading-tight line-clamp-2 min-h-[2.5em]",
-          comingSoon ? "text-white/40" : "text-white"
-        )}>
+        <h3
+          className={cn(
+            'font-bold text-[15px] leading-tight line-clamp-2 min-h-[2.5em]',
+            comingSoon ? 'text-white/40' : 'text-white'
+          )}
+        >
           {title}
         </h3>
 
         {/* Description */}
-        <p className={cn(
-          "text-[12px] leading-snug mt-0.5 line-clamp-1",
-          comingSoon ? "text-white/20" : "text-white/50"
-        )}>
+        <p
+          className={cn(
+            'text-[12px] leading-snug mt-0.5 line-clamp-1',
+            comingSoon ? 'text-white/20' : 'text-white/50'
+          )}
+        >
           {description}
         </p>
       </div>

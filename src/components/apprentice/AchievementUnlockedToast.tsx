@@ -8,14 +8,21 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, X } from 'lucide-react';
-import { type AchievementDef, RARITY_COLOURS, RARITY_BG_COLOURS } from '@/data/achievementDefinitions';
+import {
+  type AchievementDef,
+  RARITY_COLOURS,
+  RARITY_BG_COLOURS,
+} from '@/data/achievementDefinitions';
 
 interface AchievementUnlockedToastProps {
   achievement: AchievementDef | null;
   onDismiss: () => void;
 }
 
-export function AchievementUnlockedToast({ achievement, onDismiss }: AchievementUnlockedToastProps) {
+export function AchievementUnlockedToast({
+  achievement,
+  onDismiss,
+}: AchievementUnlockedToastProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -58,14 +65,12 @@ export function AchievementUnlockedToast({ achievement, onDismiss }: Achievement
                     Achievement Unlocked
                   </span>
                 </div>
-                <h4 className="text-white font-semibold text-base truncate">
-                  {achievement.title}
-                </h4>
-                <p className="text-white/60 text-sm mt-0.5">
-                  {achievement.description}
-                </p>
+                <h4 className="text-white font-semibold text-base truncate">{achievement.title}</h4>
+                <p className="text-white/60 text-sm mt-0.5">{achievement.description}</p>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${rarityBg} ${rarityColour} capitalize`}>
+                  <span
+                    className={`text-xs font-medium px-2 py-0.5 rounded-full ${rarityBg} ${rarityColour} capitalize`}
+                  >
                     {achievement.rarity}
                   </span>
                   <span className="text-xs font-semibold text-elec-yellow">

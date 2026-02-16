@@ -1,94 +1,96 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Textarea } from "@/components/ui/textarea";
-import { 
-  MessageSquare, 
-  Star, 
-  Clock, 
-  CheckCircle, 
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  MessageSquare,
+  Star,
+  Clock,
+  CheckCircle,
   AlertCircle,
   Eye,
   Send,
   Reply,
   ThumbsUp,
   Calendar,
-  User
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+  User,
+} from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const TutorReviewSystem = () => {
   const { toast } = useToast();
-  
-  const [replyText, setReplyText] = useState("");
+
+  const [replyText, setReplyText] = useState('');
 
   // Mock review data
   const pendingReviews = [
     {
       id: 1,
-      itemTitle: "Consumer Unit Installation",
-      itemType: "Portfolio Entry",
-      submittedDate: "2024-01-15",
-      tutor: "John Smith",
-      priority: "High",
-      estimatedReviewTime: "2-3 days"
+      itemTitle: 'Consumer Unit Installation',
+      itemType: 'Portfolio Entry',
+      submittedDate: '2024-01-15',
+      tutor: 'John Smith',
+      priority: 'High',
+      estimatedReviewTime: '2-3 days',
     },
     {
       id: 2,
-      itemTitle: "Cable Sizing Evidence",
-      itemType: "Evidence Upload",
-      submittedDate: "2024-01-14",
-      tutor: "Sarah Jones",
-      priority: "Medium",
-      estimatedReviewTime: "3-5 days"
-    }
+      itemTitle: 'Cable Sizing Evidence',
+      itemType: 'Evidence Upload',
+      submittedDate: '2024-01-14',
+      tutor: 'Sarah Jones',
+      priority: 'Medium',
+      estimatedReviewTime: '3-5 days',
+    },
   ];
 
   const completedReviews = [
     {
       id: 1,
-      itemTitle: "Socket Installation Photos",
-      itemType: "Evidence Upload",
-      tutor: "John Smith",
-      tutorAvatar: "/avatars/john.jpg",
-      reviewDate: "2024-01-12",
+      itemTitle: 'Socket Installation Photos',
+      itemType: 'Evidence Upload',
+      tutor: 'John Smith',
+      tutorAvatar: '/avatars/john.jpg',
+      reviewDate: '2024-01-12',
       rating: 5,
-      feedback: "Excellent work! Your installation technique is spot-on and you've clearly demonstrated proper safety procedures. The photos show good attention to detail and the quality of work is professional standard.",
-      grade: "Pass",
+      feedback:
+        "Excellent work! Your installation technique is spot-on and you've clearly demonstrated proper safety procedures. The photos show good attention to detail and the quality of work is professional standard.",
+      grade: 'Pass',
       suggestions: [
-        "Consider documenting the testing sequence in more detail",
-        "Include a brief reflection on any challenges faced"
+        'Consider documenting the testing sequence in more detail',
+        'Include a brief reflection on any challenges faced',
       ],
-      replies: []
+      replies: [],
     },
     {
       id: 2,
-      itemTitle: "Fault Finding Report",
-      itemType: "Portfolio Entry",
-      tutor: "Mike Wilson",
-      tutorAvatar: "/avatars/mike.jpg",
-      reviewDate: "2024-01-10",
+      itemTitle: 'Fault Finding Report',
+      itemType: 'Portfolio Entry',
+      tutor: 'Mike Wilson',
+      tutorAvatar: '/avatars/mike.jpg',
+      reviewDate: '2024-01-10',
       rating: 4,
-      feedback: "Good systematic approach to fault finding. Your methodology is sound and the documentation is clear. There are a few areas where you could provide more technical detail.",
-      grade: "Merit",
+      feedback:
+        'Good systematic approach to fault finding. Your methodology is sound and the documentation is clear. There are a few areas where you could provide more technical detail.',
+      grade: 'Merit',
       suggestions: [
-        "Include more detailed circuit analysis",
-        "Explain the reasoning behind each test step",
-        "Add photos of test equipment readings"
+        'Include more detailed circuit analysis',
+        'Explain the reasoning behind each test step',
+        'Add photos of test equipment readings',
       ],
       replies: [
         {
           id: 1,
-          author: "Student",
-          content: "Thank you for the feedback. I'll make sure to include more technical detail in my next submission.",
-          timestamp: "2024-01-11 10:30"
-        }
-      ]
-    }
+          author: 'Student',
+          content:
+            "Thank you for the feedback. I'll make sure to include more technical detail in my next submission.",
+          timestamp: '2024-01-11 10:30',
+        },
+      ],
+    },
   ];
 
   const reviewStats = {
@@ -96,34 +98,34 @@ const TutorReviewSystem = () => {
     pending: 5,
     completed: 20,
     averageRating: 4.3,
-    averageResponseTime: "3.2 days"
+    averageResponseTime: '3.2 days',
   };
 
   const handleReply = (reviewId: number) => {
     if (!replyText.trim()) {
       toast({
-        title: "Message Required",
-        description: "Please enter a message before sending.",
-        variant: "destructive"
+        title: 'Message Required',
+        description: 'Please enter a message before sending.',
+        variant: 'destructive',
       });
       return;
     }
 
     toast({
-      title: "Reply Sent",
-      description: "Your reply has been sent to your tutor."
+      title: 'Reply Sent',
+      description: 'Your reply has been sent to your tutor.',
     });
 
-    setReplyText("");
+    setReplyText('');
   };
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
-      case "High":
+      case 'High':
         return <Badge className="bg-red-500">High Priority</Badge>;
-      case "Medium":
+      case 'Medium':
         return <Badge className="bg-orange-500">Medium</Badge>;
-      case "Low":
+      case 'Low':
         return <Badge className="bg-green-500">Low</Badge>;
       default:
         return <Badge variant="secondary">{priority}</Badge>;
@@ -132,13 +134,13 @@ const TutorReviewSystem = () => {
 
   const getGradeBadge = (grade: string) => {
     switch (grade) {
-      case "Pass":
+      case 'Pass':
         return <Badge className="bg-green-500">Pass</Badge>;
-      case "Merit":
+      case 'Merit':
         return <Badge className="bg-blue-500">Merit</Badge>;
-      case "Distinction":
+      case 'Distinction':
         return <Badge className="bg-purple-500">Distinction</Badge>;
-      case "Refer":
+      case 'Refer':
         return <Badge className="bg-red-500">Refer</Badge>;
       default:
         return <Badge variant="secondary">{grade}</Badge>;
@@ -149,9 +151,7 @@ const TutorReviewSystem = () => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        className={`h-4 w-4 ${
-          index < rating ? 'fill-current text-yellow-500' : 'text-white/80'
-        }`}
+        className={`h-4 w-4 ${index < rating ? 'fill-current text-yellow-500' : 'text-white/80'}`}
       />
     ));
   };
@@ -166,7 +166,7 @@ const TutorReviewSystem = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -175,7 +175,7 @@ const TutorReviewSystem = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -184,7 +184,7 @@ const TutorReviewSystem = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -209,9 +209,15 @@ const TutorReviewSystem = () => {
 
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="w-full">
-          <TabsTrigger value="pending" className="flex-1">Pending Reviews</TabsTrigger>
-          <TabsTrigger value="completed" className="flex-1">Completed Reviews</TabsTrigger>
-          <TabsTrigger value="communication" className="flex-1">Communication</TabsTrigger>
+          <TabsTrigger value="pending" className="flex-1">
+            Pending Reviews
+          </TabsTrigger>
+          <TabsTrigger value="completed" className="flex-1">
+            Completed Reviews
+          </TabsTrigger>
+          <TabsTrigger value="communication" className="flex-1">
+            Communication
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="pending" className="space-y-6">
@@ -240,7 +246,7 @@ const TutorReviewSystem = () => {
                         </div>
                         {getPriorityBadge(review.priority)}
                       </div>
-                      
+
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-white mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
@@ -255,7 +261,7 @@ const TutorReviewSystem = () => {
                           Est. Review: {review.estimatedReviewTime}
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center gap-2">
                         <AlertCircle className="h-4 w-4 text-orange-500" />
                         <span className="text-sm">Review in progress</span>
@@ -294,7 +300,12 @@ const TutorReviewSystem = () => {
                     <div className="flex items-center gap-3 mb-4">
                       <Avatar>
                         <AvatarImage src={review.tutorAvatar} />
-                        <AvatarFallback>{review.tutor.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        <AvatarFallback>
+                          {review.tutor
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('')}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
                         <p className="font-medium">{review.tutor}</p>

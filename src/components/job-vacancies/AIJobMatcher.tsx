@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { 
-  Brain, 
-  Star, 
-  Settings, 
-  User, 
-  MapPin, 
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Brain,
+  Star,
+  Settings,
+  User,
+  MapPin,
   Briefcase,
   Award,
   Target,
   Sparkles,
-  Filter
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+  Filter,
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface UserProfile {
   experience: string;
@@ -38,88 +38,82 @@ interface AIJobMatcherProps {
 const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
   onProfileUpdate,
   onGenerateMatches,
-  isMatching
+  isMatching,
 }) => {
   const [profile, setProfile] = useState<UserProfile>({
-    experience: "",
+    experience: '',
     skills: [],
     certifications: [],
-    preferredLocation: "",
-    preferredSalary: "",
+    preferredLocation: '',
+    preferredSalary: '',
     jobTypes: [],
-    workMode: []
+    workMode: [],
   });
 
-  const [skillInput, setSkillInput] = useState("");
+  const [skillInput, setSkillInput] = useState('');
   const [showSettings, setShowSettings] = useState(false);
 
   const commonSkills = [
-    "Electrical Installation",
-    "Testing & Inspection",
-    "18th Edition",
-    "PAT Testing",
-    "EICR",
-    "Solar Installation",
-    "EV Charging",
-    "Commercial Electrical",
-    "Domestic Electrical",
-    "Industrial Electrical",
-    "Maintenance",
-    "Fault Finding",
-    "Panel Building",
-    "Motor Control",
-    "LED Lighting"
+    'Electrical Installation',
+    'Testing & Inspection',
+    '18th Edition',
+    'PAT Testing',
+    'EICR',
+    'Solar Installation',
+    'EV Charging',
+    'Commercial Electrical',
+    'Domestic Electrical',
+    'Industrial Electrical',
+    'Maintenance',
+    'Fault Finding',
+    'Panel Building',
+    'Motor Control',
+    'LED Lighting',
   ];
 
   const commonCertifications = [
-    "City & Guilds 2365",
-    "City & Guilds 2382-18",
-    "AM2",
-    "JIB Gold Card",
-    "NICEIC Approved",
-    "Part P Qualified",
-    "IPAF",
-    "SSSTS",
-    "First Aid",
-    "Asbestos Awareness",
-    "Working at Height"
+    'City & Guilds 2365',
+    'City & Guilds 2382-18',
+    'AM2',
+    'JIB Gold Card',
+    'NICEIC Approved',
+    'Part P Qualified',
+    'IPAF',
+    'SSSTS',
+    'First Aid',
+    'Asbestos Awareness',
+    'Working at Height',
   ];
 
   const jobTypes = [
-    "Electrician",
-    "Electrical Engineer", 
-    "Maintenance Electrician",
-    "Electrical Supervisor",
-    "Electrical Tester",
-    "Installation Electrician",
-    "Electrical Designer",
-    "Electrical Project Manager"
+    'Electrician',
+    'Electrical Engineer',
+    'Maintenance Electrician',
+    'Electrical Supervisor',
+    'Electrical Tester',
+    'Installation Electrician',
+    'Electrical Designer',
+    'Electrical Project Manager',
   ];
 
-  const workModes = [
-    "On-site",
-    "Remote", 
-    "Hybrid",
-    "Travel required",
-    "Local work only"
-  ];
+  const workModes = ['On-site', 'Remote', 'Hybrid', 'Travel required', 'Local work only'];
 
   const addSkill = (skill: string) => {
     if (skill && !profile.skills.includes(skill)) {
       const updatedProfile = {
         ...profile,
-        skills: [...profile.skills, skill]
+        skills: [...profile.skills, skill],
       };
       setProfile(updatedProfile);
       onProfileUpdate(updatedProfile);
-      setSkillInput("");
+      setSkillInput('');
     }
   };
 
   const removeSkill = (skill: string) => {
     const updatedProfile = {
       ...profile,
-      skills: profile.skills.filter(s => s !== skill)
+      skills: profile.skills.filter((s) => s !== skill),
     };
     setProfile(updatedProfile);
     onProfileUpdate(updatedProfile);
@@ -129,8 +123,8 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
     const updatedProfile = {
       ...profile,
       certifications: profile.certifications.includes(cert)
-        ? profile.certifications.filter(c => c !== cert)
-        : [...profile.certifications, cert]
+        ? profile.certifications.filter((c) => c !== cert)
+        : [...profile.certifications, cert],
     };
     setProfile(updatedProfile);
     onProfileUpdate(updatedProfile);
@@ -140,8 +134,8 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
     const updatedProfile = {
       ...profile,
       jobTypes: profile.jobTypes.includes(type)
-        ? profile.jobTypes.filter(t => t !== type)
-        : [...profile.jobTypes, type]
+        ? profile.jobTypes.filter((t) => t !== type)
+        : [...profile.jobTypes, type],
     };
     setProfile(updatedProfile);
     onProfileUpdate(updatedProfile);
@@ -151,8 +145,8 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
     const updatedProfile = {
       ...profile,
       workMode: profile.workMode.includes(mode)
-        ? profile.workMode.filter(m => m !== mode)
-        : [...profile.workMode, mode]
+        ? profile.workMode.filter((m) => m !== mode)
+        : [...profile.workMode, mode],
     };
     setProfile(updatedProfile);
     onProfileUpdate(updatedProfile);
@@ -227,7 +221,7 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
                 <Award className="h-4 w-4" />
                 Skills & Expertise
               </Label>
-              
+
               <div className="flex gap-2">
                 <Input
                   placeholder="Add a skill..."
@@ -236,7 +230,7 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
                   onKeyPress={(e) => e.key === 'Enter' && addSkill(skillInput)}
                   className="bg-elec-gray border-elec-yellow/30 text-elec-light"
                 />
-                <Button 
+                <Button
                   onClick={() => addSkill(skillInput)}
                   variant="outline"
                   className="border-elec-yellow/30 text-elec-yellow"
@@ -247,15 +241,18 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
 
               {/* Common Skills */}
               <div className="flex flex-wrap gap-2">
-                {commonSkills.map(skill => (
+                {commonSkills.map((skill) => (
                   <Badge
                     key={skill}
-                    variant={profile.skills.includes(skill) ? "default" : "outline"}
-                    className={profile.skills.includes(skill) 
-                      ? "bg-elec-yellow text-elec-dark cursor-pointer" 
-                      : "border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10"
+                    variant={profile.skills.includes(skill) ? 'default' : 'outline'}
+                    className={
+                      profile.skills.includes(skill)
+                        ? 'bg-elec-yellow text-elec-dark cursor-pointer'
+                        : 'border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10'
                     }
-                    onClick={() => profile.skills.includes(skill) ? removeSkill(skill) : addSkill(skill)}
+                    onClick={() =>
+                      profile.skills.includes(skill) ? removeSkill(skill) : addSkill(skill)
+                    }
                   >
                     {skill}
                   </Badge>
@@ -267,7 +264,7 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
                 <div className="space-y-2">
                   <Label className="text-sm text-muted-foreground">Your Skills:</Label>
                   <div className="flex flex-wrap gap-2">
-                    {profile.skills.map(skill => (
+                    {profile.skills.map((skill) => (
                       <Badge
                         key={skill}
                         className="bg-elec-yellow text-elec-dark cursor-pointer"
@@ -285,15 +282,13 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
             <div className="space-y-3">
               <Label className="text-elec-yellow">Certifications</Label>
               <div className="grid grid-cols-2 gap-2">
-                {commonCertifications.map(cert => (
+                {commonCertifications.map((cert) => (
                   <div key={cert} className="flex items-center space-x-2">
                     <Checkbox
                       checked={profile.certifications.includes(cert)}
                       onCheckedChange={() => toggleCertification(cert)}
                     />
-                    <label className="text-sm text-muted-foreground cursor-pointer">
-                      {cert}
-                    </label>
+                    <label className="text-sm text-muted-foreground cursor-pointer">{cert}</label>
                   </div>
                 ))}
               </div>
@@ -331,15 +326,13 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
                 Preferred Job Types
               </Label>
               <div className="grid grid-cols-2 gap-2">
-                {jobTypes.map(type => (
+                {jobTypes.map((type) => (
                   <div key={type} className="flex items-center space-x-2">
                     <Checkbox
                       checked={profile.jobTypes.includes(type)}
                       onCheckedChange={() => toggleJobType(type)}
                     />
-                    <label className="text-sm text-muted-foreground cursor-pointer">
-                      {type}
-                    </label>
+                    <label className="text-sm text-muted-foreground cursor-pointer">{type}</label>
                   </div>
                 ))}
               </div>
@@ -349,13 +342,14 @@ const AIJobMatcher: React.FC<AIJobMatcherProps> = ({
             <div className="space-y-3">
               <Label className="text-elec-yellow">Work Mode Preference</Label>
               <div className="flex flex-wrap gap-2">
-                {workModes.map(mode => (
+                {workModes.map((mode) => (
                   <Badge
                     key={mode}
-                    variant={profile.workMode.includes(mode) ? "default" : "outline"}
-                    className={profile.workMode.includes(mode) 
-                      ? "bg-elec-yellow text-elec-dark cursor-pointer" 
-                      : "border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10"
+                    variant={profile.workMode.includes(mode) ? 'default' : 'outline'}
+                    className={
+                      profile.workMode.includes(mode)
+                        ? 'bg-elec-yellow text-elec-dark cursor-pointer'
+                        : 'border-elec-yellow/30 text-elec-yellow cursor-pointer hover:bg-elec-yellow/10'
                     }
                     onClick={() => toggleWorkMode(mode)}
                   >

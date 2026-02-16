@@ -36,10 +36,12 @@ export const PageHeader = ({
   };
 
   return (
-    <div className={cn(
-      "border-b border-border bg-card/50 backdrop-blur-sm",
-      sticky && "sticky top-0 z-10"
-    )}>
+    <div
+      className={cn(
+        'border-b border-border bg-card/50 backdrop-blur-sm',
+        sticky && 'sticky top-0 z-10'
+      )}
+    >
       <div className="max-w-7xl mx-auto px-4 py-2.5 sm:px-6 sm:py-4">
         {/* Row 1: Back Button + Title */}
         <div className="flex items-center gap-3 mb-3">
@@ -53,24 +55,16 @@ export const PageHeader = ({
           </Button>
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
             {Icon && <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />}
-            <h1 className="text-lg sm:text-2xl font-bold text-foreground">
-              {title}
-            </h1>
+            <h1 className="text-lg sm:text-2xl font-bold text-foreground">{title}</h1>
           </div>
         </div>
 
         {/* Row 2: Actions */}
-        {actions && (
-          <div className="flex items-center gap-2 pl-0 sm:pl-[52px]">
-            {actions}
-          </div>
-        )}
+        {actions && <div className="flex items-center gap-2 pl-0 sm:pl-[52px]">{actions}</div>}
 
         {/* Subtitle */}
         {subtitle && (
-          <p className="text-sm text-neutral-400 mt-2 pl-[52px] hidden sm:block">
-            {subtitle}
-          </p>
+          <p className="text-sm text-neutral-400 mt-2 pl-[52px] hidden sm:block">{subtitle}</p>
         )}
       </div>
     </div>

@@ -1,32 +1,38 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useEmployer, type Employee } from "@/contexts/EmployerContext";
-import { useJobs } from "@/hooks/useJobs";
-import { toast } from "@/hooks/use-toast";
-import { MessageSquare, Send, Paperclip } from "lucide-react";
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useEmployer, type Employee } from '@/contexts/EmployerContext';
+import { useJobs } from '@/hooks/useJobs';
+import { toast } from '@/hooks/use-toast';
+import { MessageSquare, Send, Paperclip } from 'lucide-react';
 
 const MESSAGE_TYPES = [
-  { id: "general", label: "General Message" },
-  { id: "job", label: "Job Related" },
-  { id: "urgent", label: "Urgent Notice" },
-  { id: "schedule", label: "Schedule Change" },
-  { id: "training", label: "Training Reminder" },
+  { id: 'general', label: 'General Message' },
+  { id: 'job', label: 'Job Related' },
+  { id: 'urgent', label: 'Urgent Notice' },
+  { id: 'schedule', label: 'Schedule Change' },
+  { id: 'training', label: 'Training Reminder' },
 ];
 
 const QUICK_MESSAGES = [
-  "Please call me when you get a chance.",
-  "Can you confirm your availability for tomorrow?",
-  "Site briefing starts at 7:30am sharp.",
+  'Please call me when you get a chance.',
+  'Can you confirm your availability for tomorrow?',
+  'Site briefing starts at 7:30am sharp.',
   "Don't forget to submit your timesheet.",
-  "Please bring your PPE tomorrow.",
+  'Please bring your PPE tomorrow.',
 ];
 
 interface SendMessageDialogProps {
@@ -39,14 +45,14 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
   const isMobile = useIsMobile();
   const { sendMessage } = useEmployer();
   const { data: jobs = [] } = useJobs();
-  const [messageType, setMessageType] = useState("general");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [selectedJobId, setSelectedJobId] = useState<string>("");
+  const [messageType, setMessageType] = useState('general');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [selectedJobId, setSelectedJobId] = useState<string>('');
 
   if (!employee) return null;
 
-  const activeJobs = jobs.filter(j => j.status === "Active");
+  const activeJobs = jobs.filter((j) => j.status === 'Active');
 
   const handleQuickMessage = (quickMessage: string) => {
     setMessage(quickMessage);
@@ -55,9 +61,9 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
   const handleSend = () => {
     if (!message.trim()) {
       toast({
-        title: "Message Required",
-        description: "Please enter a message to send.",
-        variant: "destructive",
+        title: 'Message Required',
+        description: 'Please enter a message to send.',
+        variant: 'destructive',
       });
       return;
     }
@@ -72,22 +78,26 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
     );
 
     toast({
-      title: "Message Sent",
+      title: 'Message Sent',
       description: `Your message has been sent to ${employee.name}.`,
     });
 
-    setMessageType("general");
-    setSubject("");
-    setMessage("");
-    setSelectedJobId("");
+    setMessageType('general');
+    setSubject('');
+    setMessage('');
+    setSelectedJobId('');
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={isMobile ? "max-w-[95vw] max-h-[90vh] p-0 flex flex-col" : "sm:max-w-lg p-0 flex flex-col"}>
+      <DialogContent
+        className={
+          isMobile ? 'max-w-[95vw] max-h-[90vh] p-0 flex flex-col' : 'sm:max-w-lg p-0 flex flex-col'
+        }
+      >
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-info via-info to-info/50 rounded-t-lg" />
-        
+
         {/* Fixed Header */}
         <div className="p-4 pb-3 flex-shrink-0">
           <DialogHeader>
@@ -124,13 +134,15 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
                   </SelectTrigger>
                   <SelectContent>
                     {MESSAGE_TYPES.map((type) => (
-                      <SelectItem key={type.id} value={type.id}>{type.label}</SelectItem>
+                      <SelectItem key={type.id} value={type.id}>
+                        {type.label}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
-              
-              {messageType === "job" && (
+
+              {messageType === 'job' && (
                 <div className="space-y-2">
                   <Label>Related Job</Label>
                   <Select value={selectedJobId} onValueChange={setSelectedJobId}>
@@ -139,7 +151,9 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
                     </SelectTrigger>
                     <SelectContent>
                       {activeJobs.map((job) => (
-                        <SelectItem key={job.id} value={job.id}>{job.title}</SelectItem>
+                        <SelectItem key={job.id} value={job.id}>
+                          {job.title}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -163,9 +177,9 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
               <Label className="text-xs text-muted-foreground">Quick Messages</Label>
               <div className="flex flex-wrap gap-1.5">
                 {QUICK_MESSAGES.map((quickMsg, idx) => (
-                  <Badge 
+                  <Badge
                     key={idx}
-                    variant="outline" 
+                    variant="outline"
                     className="cursor-pointer hover:bg-muted active:bg-muted/80 transition-all touch-manipulation text-xs"
                     onClick={() => handleQuickMessage(quickMsg)}
                   >
@@ -202,11 +216,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
           <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button 
-            className="flex-1 gap-2" 
-            onClick={handleSend}
-            disabled={!message.trim()}
-          >
+          <Button className="flex-1 gap-2" onClick={handleSend} disabled={!message.trim()}>
             <Send className="h-4 w-4" />
             Send Message
           </Button>

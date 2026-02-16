@@ -62,15 +62,7 @@ const CATEGORY_COLOURS: Record<string, string> = {
   'Safety Training': '#EF4444',
 };
 
-const DAY_NAMES = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
+const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const MILESTONE_VALUES = [50, 100, 150, 200, 250, 300, 350, 400];
 
@@ -92,21 +84,20 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
     for (let i = 3; i >= 0; i--) {
       const weekStart = new Date(now);
       // Monday of target week
-      weekStart.setDate(
-        now.getDate() - ((now.getDay() + 6) % 7) - i * 7
-      );
+      weekStart.setDate(now.getDate() - ((now.getDay() + 6) % 7) - i * 7);
       weekStart.setHours(0, 0, 0, 0);
 
       const weekEnd = new Date(weekStart);
       weekEnd.setDate(weekStart.getDate() + 6);
       weekEnd.setHours(23, 59, 59, 999);
 
-      const weekHours = safeEntries
-        .filter((e) => {
-          const d = new Date(e.date);
-          return d >= weekStart && d <= weekEnd;
-        })
-        .reduce((sum, e) => sum + (e.duration || 0), 0) / 60;
+      const weekHours =
+        safeEntries
+          .filter((e) => {
+            const d = new Date(e.date);
+            return d >= weekStart && d <= weekEnd;
+          })
+          .reduce((sum, e) => sum + (e.duration || 0), 0) / 60;
 
       result.push({
         label: weekStart.toLocaleDateString('en-GB', {
@@ -130,10 +121,7 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
       categoryMap.set(name, (categoryMap.get(name) || 0) + entry.duration);
     }
 
-    const totalMins = Array.from(categoryMap.values()).reduce(
-      (a, b) => a + b,
-      0
-    );
+    const totalMins = Array.from(categoryMap.values()).reduce((a, b) => a + b, 0);
 
     return Array.from(categoryMap.entries())
       .map(([name, mins]) => ({
@@ -147,8 +135,7 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
 
   /* OJT streak */
   const streak = useMemo((): OJTStreak => {
-    if (safeEntries.length === 0)
-      return { current: 0, longest: 0, isActiveToday: false };
+    if (safeEntries.length === 0) return { current: 0, longest: 0, isActiveToday: false };
 
     const dateSet = new Set(safeEntries.map((e) => e.date.slice(0, 10)));
     const sortedDates = [...dateSet].sort().reverse();
@@ -184,8 +171,7 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
     for (let i = 0; i < sortedDates.length - 1; i++) {
       const curr = new Date(sortedDates[i] + 'T00:00:00');
       const next = new Date(sortedDates[i + 1] + 'T00:00:00');
-      const diffDays =
-        (curr.getTime() - next.getTime()) / (1000 * 60 * 60 * 24);
+      const diffDays = (curr.getTime() - next.getTime()) / (1000 * 60 * 60 * 24);
       if (Math.round(diffDays) === 1) {
         tempStreak++;
       } else {
@@ -201,9 +187,7 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
   /* Smart suggestion — based on day-of-week patterns */
   const smartSuggestion = useMemo((): SmartSuggestion | null => {
     const todayDay = new Date().getDay();
-    const sameDayEntries = safeEntries.filter(
-      (e) => new Date(e.date).getDay() === todayDay
-    );
+    const sameDayEntries = safeEntries.filter((e) => new Date(e.date).getDay() === todayDay);
 
     if (sameDayEntries.length < 2) return null;
 
@@ -212,18 +196,9 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
     const durationCounts = new Map<string, number>();
 
     for (const e of sameDayEntries) {
-      activityCounts.set(
-        e.activity,
-        (activityCounts.get(e.activity) || 0) + 1
-      );
-      durationSums.set(
-        e.activity,
-        (durationSums.get(e.activity) || 0) + e.duration
-      );
-      durationCounts.set(
-        e.activity,
-        (durationCounts.get(e.activity) || 0) + 1
-      );
+      activityCounts.set(e.activity, (activityCounts.get(e.activity) || 0) + 1);
+      durationSums.set(e.activity, (durationSums.get(e.activity) || 0) + e.duration);
+      durationCounts.set(e.activity, (durationCounts.get(e.activity) || 0) + 1);
     }
 
     let topActivity = '';
@@ -238,8 +213,7 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
     if (!topActivity) return null;
 
     const avgDuration = Math.round(
-      (durationSums.get(topActivity) || 0) /
-        (durationCounts.get(topActivity) || 1)
+      (durationSums.get(topActivity) || 0) / (durationCounts.get(topActivity) || 1)
     );
 
     return {
@@ -262,18 +236,12 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
 
     return Array.from(monthMap.entries())
       .map(([key, monthEntries]) => {
-        const totalMins = monthEntries.reduce(
-          (sum, e) => sum + e.duration,
-          0
-        );
+        const totalMins = monthEntries.reduce((sum, e) => sum + e.duration, 0);
 
         // Top category by time
         const catCounts = new Map<string, number>();
         for (const e of monthEntries) {
-          catCounts.set(
-            e.activity,
-            (catCounts.get(e.activity) || 0) + e.duration
-          );
+          catCounts.set(e.activity, (catCounts.get(e.activity) || 0) + e.duration);
         }
         let topCat = '';
         let topMins = 0;
@@ -315,8 +283,7 @@ export function useOJTInsights(entries: TimeEntry[], yearlyTarget = 400) {
 
   /* Forecast helpers (raw data — component formats the message) */
   const forecastData = useMemo(() => {
-    if (safeEntries.length === 0)
-      return { weeklyRate: 0, weeksElapsed: 0 };
+    if (safeEntries.length === 0) return { weeklyRate: 0, weeksElapsed: 0 };
 
     const dates = safeEntries
       .map((e) => new Date(e.date))

@@ -1,4 +1,13 @@
-import { ArrowLeft, Shield, Zap, Clock, CircuitBoard, Gauge, Flame, TrendingUp } from 'lucide-react';
+import {
+  ArrowLeft,
+  Shield,
+  Zap,
+  Clock,
+  CircuitBoard,
+  Gauge,
+  Flame,
+  TrendingUp,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,46 +16,48 @@ const BS7671Module4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Electric Shock Protection Methods (SELV, PELV, ADS, etc.)",
+      title: 'Electric Shock Protection Methods (SELV, PELV, ADS, etc.)',
       icon: Shield,
-      description: "Safety systems and methods for preventing electric shock in installations"
+      description: 'Safety systems and methods for preventing electric shock in installations',
     },
     {
       id: 2,
-      title: "Overcurrent Protection and Protective Device Selection",
+      title: 'Overcurrent Protection and Protective Device Selection',
       icon: Zap,
-      description: "Choosing and applying appropriate overcurrent protective devices"
+      description: 'Choosing and applying appropriate overcurrent protective devices',
     },
     {
       id: 3,
-      title: "Disconnection Times and Fault Path Integrity",
+      title: 'Disconnection Times and Fault Path Integrity',
       icon: Clock,
-      description: "Understanding fault clearance requirements and protective conductor integrity"
+      description: 'Understanding fault clearance requirements and protective conductor integrity',
     },
     {
       id: 4,
-      title: "Residual Current Devices (RCDs) – Use and Placement",
+      title: 'Residual Current Devices (RCDs) – Use and Placement',
       icon: CircuitBoard,
-      description: "Application and positioning of RCDs including bidirectional protection requirements"
+      description:
+        'Application and positioning of RCDs including bidirectional protection requirements',
     },
     {
       id: 5,
-      title: "Surge Protection Devices (SPDs) – When and Why",
+      title: 'Surge Protection Devices (SPDs) – When and Why',
       icon: Gauge,
-      description: "Understanding surge protection requirements and device selection criteria"
+      description: 'Understanding surge protection requirements and device selection criteria',
     },
     {
       id: 6,
-      title: "Arc Fault Detection Devices (AFDDs) – New Requirements",
+      title: 'Arc Fault Detection Devices (AFDDs) – New Requirements',
       icon: Flame,
-      description: "Latest requirements for arc fault detection including bidirectional systems"
+      description: 'Latest requirements for arc fault detection including bidirectional systems',
     },
     {
       id: 7,
-      title: "Bidirectional Protection Systems (Amendment 3)",
+      title: 'Bidirectional Protection Systems (Amendment 3)',
       icon: TrendingUp,
-      description: "Comprehensive bidirectional protection requirements for renewable energy systems"
-    }
+      description:
+        'Comprehensive bidirectional protection requirements for renewable energy systems',
+    },
   ];
 
   return (
@@ -78,9 +89,7 @@ const BS7671Module4 = () => {
             <span className="text-white/40 text-xs">•</span>
             <span className="text-white/60 text-xs">60 mins</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Protection for Safety
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Protection for Safety</h1>
           <p className="text-white/60 text-sm sm:text-base">
             Comprehensive safety protection methods and protective device requirements
           </p>

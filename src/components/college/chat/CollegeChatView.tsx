@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { useState, useRef, useEffect } from 'react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import {
   ArrowLeft,
   MoreVertical,
@@ -17,22 +17,22 @@ import {
   UserCog,
   Lock,
   Eye,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   useCollegeMessages,
   useSendCollegeMessage,
   useMarkCollegeMessagesAsRead,
-} from "@/hooks/useCollegeChat";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
-import type { CollegeConversation, CollegeMessage } from "@/services/collegeChatService";
+} from '@/hooks/useCollegeChat';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
+import type { CollegeConversation, CollegeMessage } from '@/services/collegeChatService';
 
 interface CollegeChatViewProps {
   conversation: CollegeConversation | null;
@@ -48,7 +48,7 @@ export function CollegeChatView({
   currentUserType,
 }: CollegeChatViewProps) {
   const { user } = useAuth();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isConfidential, setIsConfidential] = useState(false);
   const [visibleToStudent, setVisibleToStudent] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -84,13 +84,13 @@ export function CollegeChatView({
         is_confidential: isConfidential,
         visible_to_student: visibleToStudent,
       });
-      setMessage("");
+      setMessage('');
       setIsConfidential(false);
     } catch (error) {
       toast({
-        title: "Failed to Send",
+        title: 'Failed to Send',
         description: "Your message couldn't be sent. Please try again.",
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -155,24 +155,19 @@ export function CollegeChatView({
   const canSendConfidential = currentUserType === 'staff';
 
   // Show student visibility toggle (for college-employer conversations about a student)
-  const showStudentVisibility = conversation?.conversation_type === 'college_employer' &&
-    conversation?.student_id && currentUserType !== 'student';
+  const showStudentVisibility =
+    conversation?.conversation_type === 'college_employer' &&
+    conversation?.student_id &&
+    currentUserType !== 'student';
 
   if (!conversation) return null;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[95vh] rounded-t-2xl p-0 flex flex-col"
-      >
+      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col">
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-border">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onOpenChange(false)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
 
@@ -188,9 +183,7 @@ export function CollegeChatView({
               <p className="font-semibold truncate">{info.name}</p>
               {info.icon}
             </div>
-            <p className="text-sm text-muted-foreground truncate">
-              {info.subtitle}
-            </p>
+            <p className="text-sm text-muted-foreground truncate">{info.subtitle}</p>
           </div>
 
           {/* Student context badge */}
@@ -209,13 +202,9 @@ export function CollegeChatView({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>View Profile</DropdownMenuItem>
-              {conversation.student && (
-                <DropdownMenuItem>View Student Progress</DropdownMenuItem>
-              )}
+              {conversation.student && <DropdownMenuItem>View Student Progress</DropdownMenuItem>}
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">
-                Archive Conversation
-              </DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive">Archive Conversation</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -256,9 +245,7 @@ export function CollegeChatView({
                       </div>
                       <p className="text-sm mt-1">{metadata?.title || msg.content}</p>
                       {metadata?.details && (
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {metadata.details}
-                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">{metadata.details}</p>
                       )}
                       {metadata?.score !== undefined && (
                         <Badge className="mt-2">{metadata.score}%</Badge>
@@ -308,17 +295,15 @@ export function CollegeChatView({
                     )}
                     <div
                       className={`rounded-2xl px-4 py-2.5 ${
-                        isOwn
-                          ? 'bg-elec-yellow text-black rounded-br-md'
-                          : 'bg-muted rounded-bl-md'
+                        isOwn ? 'bg-elec-yellow text-black rounded-br-md' : 'bg-muted rounded-bl-md'
                       } ${msg.is_confidential ? 'border-2 border-amber-500/50' : ''}`}
                     >
-                      <p className="text-sm whitespace-pre-wrap break-words">
-                        {msg.content}
-                      </p>
-                      <p className={`text-[10px] mt-1 ${
-                        isOwn ? 'text-black/60' : 'text-muted-foreground'
-                      }`}>
+                      <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
+                      <p
+                        className={`text-[10px] mt-1 ${
+                          isOwn ? 'text-black/60' : 'text-muted-foreground'
+                        }`}
+                      >
                         {new Date(msg.sent_at).toLocaleTimeString([], {
                           hour: '2-digit',
                           minute: '2-digit',
@@ -343,7 +328,10 @@ export function CollegeChatView({
                   checked={isConfidential}
                   onCheckedChange={(checked) => setIsConfidential(checked as boolean)}
                 />
-                <Label htmlFor="confidential" className="text-xs cursor-pointer flex items-center gap-1">
+                <Label
+                  htmlFor="confidential"
+                  className="text-xs cursor-pointer flex items-center gap-1"
+                >
                   <Lock className="h-3 w-3" />
                   Confidential
                 </Label>
@@ -356,7 +344,10 @@ export function CollegeChatView({
                   checked={visibleToStudent}
                   onCheckedChange={(checked) => setVisibleToStudent(checked as boolean)}
                 />
-                <Label htmlFor="visible-student" className="text-xs cursor-pointer flex items-center gap-1">
+                <Label
+                  htmlFor="visible-student"
+                  className="text-xs cursor-pointer flex items-center gap-1"
+                >
                   <Eye className="h-3 w-3" />
                   Visible to student
                 </Label>

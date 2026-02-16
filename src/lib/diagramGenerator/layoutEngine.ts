@@ -3,7 +3,18 @@
 
 export interface DiagramElement {
   id: string;
-  type: 'mcb' | 'rcbo' | 'rcd' | 'cable' | 'load' | 'earth' | 'consumer-unit' | 'ev-charger' | 'heat-pump' | 'shower' | 'earthing-arrangement';
+  type:
+    | 'mcb'
+    | 'rcbo'
+    | 'rcd'
+    | 'cable'
+    | 'load'
+    | 'earth'
+    | 'consumer-unit'
+    | 'ev-charger'
+    | 'heat-pump'
+    | 'shower'
+    | 'earthing-arrangement';
   x: number;
   y: number;
   props: Record<string, any>;
@@ -53,16 +64,14 @@ export interface CircuitData {
  * Generate a single-line diagram for one circuit
  * BS 7671 compliant representation
  */
-export function generateSingleLineDiagram(
-  circuitData: CircuitData
-): DiagramLayout {
+export function generateSingleLineDiagram(circuitData: CircuitData): DiagramLayout {
   const elements: DiagramElement[] = [];
   const connections: Connection[] = [];
-  
+
   const centerX = 250;
   let currentY = 50;
   const ySpacing = 120;
-  
+
   // 1. Incoming supply annotation
   elements.push({
     id: 'supply',
@@ -73,12 +82,12 @@ export function generateSingleLineDiagram(
       width: 80,
       height: 40,
       label: 'From CU',
-      mainSwitchRating: 100
-    }
+      mainSwitchRating: 100,
+    },
   });
-  
+
   currentY += 80;
-  
+
   // 2. Protection device (MCB or RCBO)
   const protectionId = circuitData.rcdProtected ? 'rcbo' : 'mcb';
   if (circuitData.rcdProtected && circuitData.rcdRating) {
@@ -93,8 +102,8 @@ export function generateSingleLineDiagram(
         rcdRating: circuitData.rcdRating ?? 30,
         rcdType: 'A',
         label: `Circuit ${circuitData.circuitNumber}`,
-        kaRating: circuitData.protectionDevice?.kaRating ?? 6
-      }
+        kaRating: circuitData.protectionDevice?.kaRating ?? 6,
+      },
     });
     currentY += 110;
   } else {
@@ -107,15 +116,15 @@ export function generateSingleLineDiagram(
         rating: circuitData.protectionDevice?.rating ?? 0,
         curve: circuitData.protectionDevice?.curve || 'B',
         label: `Circuit ${circuitData.circuitNumber}`,
-        kaRating: circuitData.protectionDevice?.kaRating ?? 6
-      }
+        kaRating: circuitData.protectionDevice?.kaRating ?? 6,
+      },
     });
     currentY += 90;
   }
-  
+
   // Connection from protection to cable
   const cableStartY = currentY;
-  
+
   // 3. Cable run
   const cableEndY = currentY + 150;
   elements.push({
@@ -131,12 +140,12 @@ export function generateSingleLineDiagram(
       y1: cableStartY,
       x2: centerX,
       y2: cableEndY,
-      showAnnotation: true
-    }
+      showAnnotation: true,
+    },
   });
-  
+
   currentY = cableEndY + 20;
-  
+
   // 4. Load
   elements.push({
     id: 'load',
@@ -146,12 +155,12 @@ export function generateSingleLineDiagram(
     props: {
       type: mapLoadType(circuitData.loadType),
       label: circuitData.name,
-      rating: circuitData.loadPower
-    }
+      rating: circuitData.loadPower,
+    },
   });
-  
+
   currentY += 80;
-  
+
   // 5. Earth connection
   elements.push({
     id: 'earth',
@@ -160,18 +169,18 @@ export function generateSingleLineDiagram(
     y: currentY,
     props: {
       size: 30,
-      label: `CPC ${circuitData.cpcSize}mm²`
-    }
+      label: `CPC ${circuitData.cpcSize}mm²`,
+    },
   });
-  
+
   // Generate connections
   connections.push({
     id: 'supply-to-protection',
     from: { x: centerX, y: 90 },
     to: { x: centerX, y: currentY - (circuitData.rcdProtected ? 110 : 90) },
-    type: 'line'
+    type: 'line',
   });
-  
+
   return {
     width: 500,
     height: currentY + 100,
@@ -180,23 +189,34 @@ export function generateSingleLineDiagram(
     title: `Circuit ${circuitData.circuitNumber} - ${circuitData.name}`,
     metadata: {
       circuitNumber: String(circuitData.circuitNumber),
-      date: new Date().toLocaleDateString('en-GB')
-    }
+      date: new Date().toLocaleDateString('en-GB'),
+    },
   };
 }
 
-function mapLoadType(loadType: string): 'socket' | 'light' | 'cooker' | 'shower' | 'immersion' | 'heating' | 'ev-charger' | 'motor' | 'generic' {
+function mapLoadType(
+  loadType: string
+):
+  | 'socket'
+  | 'light'
+  | 'cooker'
+  | 'shower'
+  | 'immersion'
+  | 'heating'
+  | 'ev-charger'
+  | 'motor'
+  | 'generic' {
   const mapping: Record<string, any> = {
-    'lighting': 'light',
-    'socket': 'socket',
-    'cooker': 'cooker',
-    'shower': 'shower',
-    'immersion': 'immersion',
-    'heating': 'heating',
+    lighting: 'light',
+    socket: 'socket',
+    cooker: 'cooker',
+    shower: 'shower',
+    immersion: 'immersion',
+    heating: 'heating',
     'ev-charger': 'ev-charger',
-    'motor': 'motor'
+    motor: 'motor',
   };
-  
+
   return mapping[loadType.toLowerCase()] || 'generic';
 }
 
@@ -210,12 +230,12 @@ export function generateConsumerUnitDiagram(
 ): DiagramLayout {
   const elements: DiagramElement[] = [];
   const connections: Connection[] = [];
-  
+
   const cuWidth = 400;
-  const cuHeight = 150 + (Math.ceil(circuits.length / 2) * 100);
+  const cuHeight = 150 + Math.ceil(circuits.length / 2) * 100;
   const cuX = 50;
   const cuY = 50;
-  
+
   // 1. Consumer Unit enclosure
   elements.push({
     id: 'consumer-unit',
@@ -226,22 +246,22 @@ export function generateConsumerUnitDiagram(
       width: cuWidth,
       height: cuHeight,
       mainSwitchRating,
-      label: 'Consumer Unit'
-    }
+      label: 'Consumer Unit',
+    },
   });
-  
+
   // 2. Circuit protection devices in grid layout (2 columns)
   const deviceSpacing = 80;
   const deviceStartY = cuY + 130;
   const deviceStartX = cuX + 60;
-  
+
   circuits.forEach((circuit, index) => {
     const col = index % 2;
     const row = Math.floor(index / 2);
-    
-    const deviceX = deviceStartX + (col * 200);
-    const deviceY = deviceStartY + (row * 100);
-    
+
+    const deviceX = deviceStartX + col * 200;
+    const deviceY = deviceStartY + row * 100;
+
     if (circuit.rcdProtected && circuit.rcdRating) {
       elements.push({
         id: `circuit-${index}`,
@@ -253,8 +273,8 @@ export function generateConsumerUnitDiagram(
           curve: circuit.protectionDevice?.curve || 'B',
           rcdRating: circuit.rcdRating ?? 30,
           label: `C${circuit.circuitNumber}`,
-          kaRating: circuit.protectionDevice?.kaRating ?? 6
-        }
+          kaRating: circuit.protectionDevice?.kaRating ?? 6,
+        },
       });
     } else {
       elements.push({
@@ -266,12 +286,12 @@ export function generateConsumerUnitDiagram(
           rating: circuit.protectionDevice?.rating ?? 0,
           curve: circuit.protectionDevice?.curve || 'B',
           label: `C${circuit.circuitNumber}`,
-          kaRating: circuit.protectionDevice?.kaRating ?? 6
-        }
+          kaRating: circuit.protectionDevice?.kaRating ?? 6,
+        },
       });
     }
   });
-  
+
   return {
     width: cuWidth + 100,
     height: cuHeight + 100,
@@ -279,7 +299,7 @@ export function generateConsumerUnitDiagram(
     connections,
     title: 'Consumer Unit Layout',
     metadata: {
-      date: new Date().toLocaleDateString('en-GB')
-    }
+      date: new Date().toLocaleDateString('en-GB'),
+    },
   };
 }

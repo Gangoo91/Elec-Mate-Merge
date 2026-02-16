@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
 import {
   Brain,
   Sparkles,
@@ -14,12 +14,12 @@ import {
   Clock,
   Truck,
   ChevronRight,
-  Copy
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { MaterialToQuoteItem } from "@/hooks/useQuoteMaterialIntegration";
-import { motion, AnimatePresence } from "framer-motion";
+  Copy,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { MaterialToQuoteItem } from '@/hooks/useQuoteMaterialIntegration';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SmartQuoteBuilderProps {
   onAddToQuote?: (material: MaterialToQuoteItem, quantity?: number) => void;
@@ -50,22 +50,26 @@ interface AnalysisResult {
   };
 }
 
-type Preference = "cheapest" | "balanced" | "best-quality";
-type OptionKey = "cheapest" | "balanced" | "bestQuality";
+type Preference = 'cheapest' | 'balanced' | 'best-quality';
+type OptionKey = 'cheapest' | 'balanced' | 'bestQuality';
 
-const preferenceOptions: { value: Preference; label: string; icon: typeof Scale; color: string }[] = [
-  { value: "cheapest", label: "Cheapest", icon: TrendingDown, color: "green" },
-  { value: "balanced", label: "Balanced", icon: Scale, color: "blue" },
-  { value: "best-quality", label: "Quality", icon: Award, color: "amber" }
-];
+const preferenceOptions: { value: Preference; label: string; icon: typeof Scale; color: string }[] =
+  [
+    { value: 'cheapest', label: 'Cheapest', icon: TrendingDown, color: 'green' },
+    { value: 'balanced', label: 'Balanced', icon: Scale, color: 'blue' },
+    { value: 'best-quality', label: 'Quality', icon: Award, color: 'amber' },
+  ];
 
-export const SmartQuoteBuilder = ({ onAddToQuote, onAddMultipleToQuote }: SmartQuoteBuilderProps) => {
-  const [materialsText, setMaterialsText] = useState("");
-  const [preference, setPreference] = useState<Preference>("balanced");
-  const [maxBudget, setMaxBudget] = useState("");
+export const SmartQuoteBuilder = ({
+  onAddToQuote,
+  onAddMultipleToQuote,
+}: SmartQuoteBuilderProps) => {
+  const [materialsText, setMaterialsText] = useState('');
+  const [preference, setPreference] = useState<Preference>('balanced');
+  const [maxBudget, setMaxBudget] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [activeOption, setActiveOption] = useState<OptionKey>("balanced");
+  const [activeOption, setActiveOption] = useState<OptionKey>('balanced');
 
   const exampleList = `100m 2.5mm twin and earth cable
 20x RCD 30mA
@@ -77,17 +81,17 @@ Consumer unit 12 way
   const handlePasteExample = () => {
     setMaterialsText(exampleList);
     toast({
-      title: "Example Added",
-      description: "Sample materials list pasted"
+      title: 'Example Added',
+      description: 'Sample materials list pasted',
     });
   };
 
   const handleAnalyze = async () => {
     if (!materialsText.trim()) {
       toast({
-        title: "Input Required",
-        description: "Please enter a materials list to analyse",
-        variant: "destructive"
+        title: 'Input Required',
+        description: 'Please enter a materials list to analyse',
+        variant: 'destructive',
       });
       return;
     }
@@ -101,25 +105,24 @@ Consumer unit 12 way
           materialsListText: materialsText,
           preference,
           maxBudget: maxBudget ? parseFloat(maxBudget) : undefined,
-          includeAlternatives: true
-        }
+          includeAlternatives: true,
+        },
       });
 
       if (error) throw error;
 
       setResult(data);
-      setActiveOption(preference === "best-quality" ? "bestQuality" : preference);
+      setActiveOption(preference === 'best-quality' ? 'bestQuality' : preference);
 
       toast({
-        title: "Analysis Complete",
+        title: 'Analysis Complete',
         description: `Found ${data.summary.totalItemsFound} of ${data.summary.totalItemsRequested} items`,
       });
-
     } catch (error: any) {
       toast({
-        title: "Analysis Failed",
-        description: error.message || "Failed to analyse materials list",
-        variant: "destructive"
+        title: 'Analysis Failed',
+        description: error.message || 'Failed to analyse materials list',
+        variant: 'destructive',
       });
     } finally {
       setIsAnalyzing(false);
@@ -129,14 +132,14 @@ Consumer unit 12 way
   const handleAddOption = (option: OptionResult) => {
     if (!onAddMultipleToQuote) {
       toast({
-        title: "Not Available",
-        description: "Quote integration not available in this view",
-        variant: "destructive"
+        title: 'Not Available',
+        description: 'Quote integration not available in this view',
+        variant: 'destructive',
       });
       return;
     }
 
-    const materials: MaterialToQuoteItem[] = option.items.map(item => ({
+    const materials: MaterialToQuoteItem[] = option.items.map((item) => ({
       id: Math.random(),
       name: item.selectedProduct.name,
       category: item.selectedProduct.category || 'Materials',
@@ -144,13 +147,13 @@ Consumer unit 12 way
       supplier: item.selectedProduct.supplier,
       stockStatus: item.selectedProduct.stockStatus || 'In Stock',
       productUrl: item.selectedProduct.productUrl,
-      highlights: item.selectedProduct.highlights || []
+      highlights: item.selectedProduct.highlights || [],
     }));
 
     onAddMultipleToQuote(materials);
 
     toast({
-      title: "Added to Quote",
+      title: 'Added to Quote',
       description: `${option.name} (${materials.length} items, £${option.totalCost.toFixed(2)})`,
     });
   };
@@ -210,11 +213,15 @@ Consumer unit 12 way
                 className={`p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98] ${
                   isSelected
                     ? `bg-${opt.color}-500/20 border-${opt.color}-500/50`
-                    : "bg-white/5 border-white/10"
+                    : 'bg-white/5 border-white/10'
                 }`}
               >
-                <Icon className={`h-5 w-5 mx-auto mb-1 ${isSelected ? `text-${opt.color}-400` : "text-white/50"}`} />
-                <p className={`text-ios-caption-1 font-medium ${isSelected ? `text-${opt.color}-300` : "text-white/70"}`}>
+                <Icon
+                  className={`h-5 w-5 mx-auto mb-1 ${isSelected ? `text-${opt.color}-400` : 'text-white/50'}`}
+                />
+                <p
+                  className={`text-ios-caption-1 font-medium ${isSelected ? `text-${opt.color}-300` : 'text-white/70'}`}
+                >
                   {opt.label}
                 </p>
               </button>
@@ -275,7 +282,8 @@ Consumer unit 12 way
                 </div>
                 <div>
                   <p className="text-ios-subhead font-medium text-green-300">
-                    Found {result.summary.totalItemsFound} of {result.summary.totalItemsRequested} items
+                    Found {result.summary.totalItemsFound} of {result.summary.totalItemsRequested}{' '}
+                    items
                   </p>
                   <p className="text-ios-caption-1 text-green-200/70">
                     {Math.round(result.summary.parseConfidence * 100)}% confidence
@@ -292,7 +300,9 @@ Consumer unit 12 way
                   <div className="space-y-1">
                     <p className="text-ios-subhead font-medium text-amber-300">Items not found:</p>
                     {result.warnings.map((warning, idx) => (
-                      <p key={idx} className="text-ios-caption-1 text-amber-200/70">{warning}</p>
+                      <p key={idx} className="text-ios-caption-1 text-amber-200/70">
+                        {warning}
+                      </p>
                     ))}
                   </div>
                 </div>
@@ -305,16 +315,21 @@ Consumer unit 12 way
                 className="absolute top-1 bottom-1 bg-elec-yellow rounded-lg"
                 initial={false}
                 animate={{
-                  left: activeOption === "cheapest" ? "4px" : activeOption === "balanced" ? "calc(33.33% + 2px)" : "calc(66.66% + 2px)",
-                  width: "calc(33.33% - 4px)"
+                  left:
+                    activeOption === 'cheapest'
+                      ? '4px'
+                      : activeOption === 'balanced'
+                        ? 'calc(33.33% + 2px)'
+                        : 'calc(66.66% + 2px)',
+                  width: 'calc(33.33% - 4px)',
                 }}
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               />
-              {([
-                { key: "cheapest" as OptionKey, label: "Cheapest", icon: TrendingDown },
-                { key: "balanced" as OptionKey, label: "Balanced", icon: Scale },
-                { key: "bestQuality" as OptionKey, label: "Quality", icon: Award }
-              ]).map((tab) => {
+              {[
+                { key: 'cheapest' as OptionKey, label: 'Cheapest', icon: TrendingDown },
+                { key: 'balanced' as OptionKey, label: 'Balanced', icon: Scale },
+                { key: 'bestQuality' as OptionKey, label: 'Quality', icon: Award },
+              ].map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
@@ -322,8 +337,8 @@ Consumer unit 12 way
                     onClick={() => setActiveOption(tab.key)}
                     className={`relative z-10 flex-1 py-2.5 flex items-center justify-center gap-1.5
                                text-ios-caption-1 font-medium transition-colors touch-manipulation ${
-                      activeOption === tab.key ? "text-black" : "text-white/70"
-                    }`}
+                                 activeOption === tab.key ? 'text-black' : 'text-white/70'
+                               }`}
                   >
                     <Icon className="h-4 w-4" />
                     {tab.label}
@@ -341,11 +356,13 @@ Consumer unit 12 way
                 className="space-y-4"
               >
                 {/* Price Hero */}
-                <div className={`bg-gradient-to-br rounded-2xl p-5 border ${
-                  currentOption.withinBudget
-                    ? "from-green-500/20 to-emerald-500/10 border-green-500/30"
-                    : "from-red-500/20 to-orange-500/10 border-red-500/30"
-                }`}>
+                <div
+                  className={`bg-gradient-to-br rounded-2xl p-5 border ${
+                    currentOption.withinBudget
+                      ? 'from-green-500/20 to-emerald-500/10 border-green-500/30'
+                      : 'from-red-500/20 to-orange-500/10 border-red-500/30'
+                  }`}
+                >
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
@@ -355,12 +372,14 @@ Consumer unit 12 way
                         £{currentOption.totalCost.toFixed(2)}
                       </p>
                     </div>
-                    <div className={`px-3 py-1.5 rounded-full text-ios-caption-1 font-medium ${
-                      currentOption.withinBudget
-                        ? "bg-green-500/20 text-green-300"
-                        : "bg-red-500/20 text-red-300"
-                    }`}>
-                      {currentOption.withinBudget ? "✓ Within Budget" : "Over Budget"}
+                    <div
+                      className={`px-3 py-1.5 rounded-full text-ios-caption-1 font-medium ${
+                        currentOption.withinBudget
+                          ? 'bg-green-500/20 text-green-300'
+                          : 'bg-red-500/20 text-red-300'
+                      }`}
+                    >
+                      {currentOption.withinBudget ? '✓ Within Budget' : 'Over Budget'}
                     </div>
                   </div>
                 </div>
@@ -372,21 +391,27 @@ Consumer unit 12 way
                       <Package className="h-3 w-3 text-white/50" />
                       <span className="text-ios-caption-2 text-white/50">Items</span>
                     </div>
-                    <p className="text-ios-title-3 font-semibold text-white">{currentOption.items.length}</p>
+                    <p className="text-ios-title-3 font-semibold text-white">
+                      {currentOption.items.length}
+                    </p>
                   </div>
                   <div className="flex-shrink-0 bg-white/5 border border-white/10 rounded-xl p-3 min-w-[100px]">
                     <div className="flex items-center gap-1 mb-1">
                       <Truck className="h-3 w-3 text-white/50" />
                       <span className="text-ios-caption-2 text-white/50">Delivery</span>
                     </div>
-                    <p className="text-ios-subhead font-semibold text-white">{currentOption.estimatedDelivery}</p>
+                    <p className="text-ios-subhead font-semibold text-white">
+                      {currentOption.estimatedDelivery}
+                    </p>
                   </div>
                   <div className="flex-shrink-0 bg-white/5 border border-white/10 rounded-xl p-3 min-w-[100px]">
                     <div className="flex items-center gap-1 mb-1">
                       <Clock className="h-3 w-3 text-white/50" />
                       <span className="text-ios-caption-2 text-white/50">Suppliers</span>
                     </div>
-                    <p className="text-ios-subhead font-semibold text-white">{currentOption.suppliers.length}</p>
+                    <p className="text-ios-subhead font-semibold text-white">
+                      {currentOption.suppliers.length}
+                    </p>
                   </div>
                 </div>
 

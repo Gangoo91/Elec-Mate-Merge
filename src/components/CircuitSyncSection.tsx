@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RefreshCw } from 'lucide-react';
@@ -22,9 +21,9 @@ const CircuitSyncSection = ({ formData, onSyncCircuits }: CircuitSyncSectionProp
           )}
         </p>
       </div>
-      <Button 
-        onClick={onSyncCircuits} 
-        size="sm" 
+      <Button
+        onClick={onSyncCircuits}
+        size="sm"
         variant="outline"
         className="gap-2 border-blue-300 text-blue-700 hover:bg-blue-100"
       >

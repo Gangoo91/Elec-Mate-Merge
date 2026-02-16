@@ -30,7 +30,10 @@ interface InvoiceClientDetailsStepProps {
   onUpdate: (client: QuoteClient, jobDetails: JobDetails) => void;
 }
 
-export const InvoiceClientDetailsStep = ({ initialData, onUpdate }: InvoiceClientDetailsStepProps) => {
+export const InvoiceClientDetailsStep = ({
+  initialData,
+  onUpdate,
+}: InvoiceClientDetailsStepProps) => {
   const [recentClients, setRecentClients] = useState<QuoteClient[]>([]);
 
   const form = useForm<ClientFormData>({
@@ -101,7 +104,8 @@ export const InvoiceClientDetailsStep = ({ initialData, onUpdate }: InvoiceClien
   }, [form, onUpdate]);
 
   // Clean inline input style for seamless look
-  const inputClassName = 'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+  const inputClassName =
+    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
 
   return (
     <Form {...form}>
@@ -234,7 +238,9 @@ export const InvoiceClientDetailsStep = ({ initialData, onUpdate }: InvoiceClien
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
             <UnifiedAddressFinder
               onAddressSelect={handleAddressSelect}
-              defaultValue={form.watch('address') ? `${form.watch('address')}, ${form.watch('postcode')}` : ''}
+              defaultValue={
+                form.watch('address') ? `${form.watch('address')}, ${form.watch('postcode')}` : ''
+              }
             />
           </div>
         </div>
@@ -309,7 +315,9 @@ export const InvoiceClientDetailsStep = ({ initialData, onUpdate }: InvoiceClien
                       <Calendar className="h-5 w-5 text-black" />
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <label className="text-[12px] text-white block mb-0.5">Work Completion Date</label>
+                      <label className="text-[12px] text-white block mb-0.5">
+                        Work Completion Date
+                      </label>
                       <FormControl>
                         <input
                           {...field}

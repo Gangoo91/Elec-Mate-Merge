@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Module 4: Power Supply, Backup & Cabling - Fire Alarm Course";
-const DESCRIPTION = "Learn about primary and secondary power supplies, battery sizing, cable types, fire resistance ratings and wiring methods for fire alarm systems.";
+const TITLE = 'Module 4: Power Supply, Backup & Cabling - Fire Alarm Course';
+const DESCRIPTION =
+  'Learn about primary and secondary power supplies, battery sizing, cable types, fire resistance ratings and wiring methods for fire alarm systems.';
 
 const FireAlarmModule4 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -13,34 +14,34 @@ const FireAlarmModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Primary Power Supplies",
+      title: 'Primary Power Supplies',
       icon: CheckCircle,
-      description: "Mains supply requirements and protection"
+      description: 'Mains supply requirements and protection',
     },
     {
       id: 2,
-      title: "Secondary Power & Battery Sizing",
+      title: 'Secondary Power & Battery Sizing',
       icon: CheckCircle,
-      description: "Standby battery requirements and calculations"
+      description: 'Standby battery requirements and calculations',
     },
     {
       id: 3,
-      title: "Cable Types & Fire Resistance",
+      title: 'Cable Types & Fire Resistance',
       icon: CheckCircle,
-      description: "Standard, enhanced and fire-resistant cables"
+      description: 'Standard, enhanced and fire-resistant cables',
     },
     {
       id: 4,
-      title: "Wiring Methods & Protection",
+      title: 'Wiring Methods & Protection',
       icon: CheckCircle,
-      description: "Installation methods and segregation"
+      description: 'Installation methods and segregation',
     },
     {
       id: 5,
-      title: "Earth Fault Monitoring",
+      title: 'Earth Fault Monitoring',
       icon: CheckCircle,
-      description: "Class A and Class B circuits"
-    }
+      description: 'Class A and Class B circuits',
+    },
   ];
 
   return (
@@ -81,7 +82,8 @@ const FireAlarmModule4 = () => {
             Power Supply, Backup & Cabling
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Understanding power supply requirements, battery sizing calculations and cable selection for fire alarm installations.
+            Understanding power supply requirements, battery sizing calculations and cable selection
+            for fire alarm installations.
           </p>
         </div>
 

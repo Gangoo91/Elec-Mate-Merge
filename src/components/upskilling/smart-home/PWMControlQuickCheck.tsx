@@ -7,12 +7,12 @@ export const PWMControlQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Name one specialist control type used for LED strips.";
+  const question = 'Name one specialist control type used for LED strips.';
   const options = [
     { id: 'a', text: 'Standard wall dimmer', correct: false },
     { id: 'b', text: 'PWM driver', correct: true },
     { id: 'c', text: 'Light switch', correct: false },
-    { id: 'd', text: 'Circuit breaker', correct: false }
+    { id: 'd', text: 'Circuit breaker', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -35,7 +35,7 @@ export const PWMControlQuickCheck = () => {
       <CardContent>
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-          
+
           <div className="grid gap-2">
             {options.map((option) => (
               <button
@@ -47,11 +47,11 @@ export const PWMControlQuickCheck = () => {
                     ? option.correct
                       ? 'bg-green-900/30 border-green-600 text-green-200'
                       : selectedAnswer === option.id
-                      ? 'bg-red-900/30 border-red-600 text-red-200'
-                      : 'bg-elec-dark border-gray-600 text-gray-400'
+                        ? 'bg-red-900/30 border-red-600 text-red-200'
+                        : 'bg-elec-dark border-gray-600 text-gray-400'
                     : selectedAnswer === option.id
-                    ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                    : 'bg-elec-dark border-gray-600 text-gray-300 hover:border-gray-500'
+                      ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
+                      : 'bg-elec-dark border-gray-600 text-gray-300 hover:border-gray-500'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -69,7 +69,7 @@ export const PWMControlQuickCheck = () => {
           </div>
 
           {!showResult ? (
-            <Button 
+            <Button
               onClick={handleSubmit}
               disabled={!selectedAnswer}
               className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
@@ -81,19 +81,19 @@ export const PWMControlQuickCheck = () => {
               {selectedAnswer === 'b' ? (
                 <div className="bg-green-900/20 border border-green-600/50 p-3 rounded-lg">
                   <p className="text-green-200 text-sm">
-                    ✓ Correct! PWM (Pulse Width Modulation) drivers are specialist controls designed 
+                    ✓ Correct! PWM (Pulse Width Modulation) drivers are specialist controls designed
                     for LED strips, providing precise dimming and colour control.
                   </p>
                 </div>
               ) : (
                 <div className="bg-red-900/20 border border-red-600/50 p-3 rounded-lg">
                   <p className="text-red-200 text-sm">
-                    ✗ Incorrect. LED strips require specialist PWM drivers or DMX controllers 
-                    for proper dimming and colour control - standard wall dimmers won't work.
+                    ✗ Incorrect. LED strips require specialist PWM drivers or DMX controllers for
+                    proper dimming and colour control - standard wall dimmers won't work.
                   </p>
                 </div>
               )}
-              <Button 
+              <Button
                 onClick={handleReset}
                 variant="outline"
                 className="w-full border-gray-600 text-gray-300 hover:bg-gray-700"

@@ -8,10 +8,10 @@ export const OverAutomationRiskQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "It saves more energy", correct: false },
-    { text: "It may annoy users with unexpected light behaviour", correct: true },
-    { text: "It costs more money to install", correct: false },
-    { text: "It makes the system more reliable", correct: false }
+    { text: 'It saves more energy', correct: false },
+    { text: 'It may annoy users with unexpected light behaviour', correct: true },
+    { text: 'It costs more money to install', correct: false },
+    { text: 'It makes the system more reliable', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -33,7 +33,7 @@ export const OverAutomationRiskQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">Q4: What is one risk of over-automation?</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +58,9 @@ export const OverAutomationRiskQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +70,9 @@ export const OverAutomationRiskQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Over-automation can frustrate users when lights turn on/off unexpectedly or don't respond as expected. Users may end up fighting with the system rather than enjoying it.
+              <strong>Correct:</strong> Over-automation can frustrate users when lights turn on/off
+              unexpectedly or don't respond as expected. Users may end up fighting with the system
+              rather than enjoying it.
             </p>
           </div>
         )}

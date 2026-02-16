@@ -3,19 +3,14 @@
  * Native app feel with recent searches, trending, and live preview
  */
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 import {
   Search,
   X,
@@ -27,9 +22,9 @@ import {
   ChevronRight,
   Sparkles,
   Zap,
-} from "lucide-react";
-import { fadeUpVariants } from "./animations/variants";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
+} from 'lucide-react';
+import { fadeUpVariants } from './animations/variants';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
 
 interface SmartSearchSheetProps {
   open: boolean;
@@ -46,10 +41,10 @@ interface SmartSearchSheetProps {
 
 // Quick filter definitions
 const QUICK_FILTERS = [
-  { id: "top-rated", label: "Top Rated", icon: Star },
-  { id: "high-demand", label: "High Demand", icon: TrendingUp },
-  { id: "online", label: "Online", icon: Zap },
-  { id: "part-time", label: "Part-time", icon: Clock },
+  { id: 'top-rated', label: 'Top Rated', icon: Star },
+  { id: 'high-demand', label: 'High Demand', icon: TrendingUp },
+  { id: 'online', label: 'Online', icon: Zap },
+  { id: 'part-time', label: 'Part-time', icon: Clock },
 ];
 
 // Mini result card for search preview
@@ -71,11 +66,7 @@ const MiniResultCard = ({
     {/* Image thumbnail */}
     <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-white/10">
       {programme.imageUrl ? (
-        <img
-          src={programme.imageUrl}
-          alt=""
-          className="w-full h-full object-cover"
-        />
+        <img src={programme.imageUrl} alt="" className="w-full h-full object-cover" />
       ) : (
         <div className="w-full h-full flex items-center justify-center">
           <GraduationCap className="h-5 w-5 text-purple-400" />
@@ -85,12 +76,8 @@ const MiniResultCard = ({
 
     {/* Content */}
     <div className="flex-1 min-w-0">
-      <h4 className="text-sm font-medium text-white line-clamp-1">
-        {programme.title}
-      </h4>
-      <p className="text-xs text-purple-400 line-clamp-1">
-        {programme.institution}
-      </p>
+      <h4 className="text-sm font-medium text-white line-clamp-1">{programme.title}</h4>
+      <p className="text-xs text-purple-400 line-clamp-1">{programme.institution}</p>
       <div className="flex items-center gap-2 mt-1 text-xs text-white/50">
         <span className="flex items-center gap-0.5">
           <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
@@ -118,7 +105,7 @@ const SmartSearchSheet = ({
   categories,
   onSelectCategory,
 }: SmartSearchSheetProps) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<LiveEducationData[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -129,7 +116,7 @@ const SmartSearchSheet = ({
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 100);
     } else {
-      setSearchTerm("");
+      setSearchTerm('');
       setSearchResults([]);
       setActiveFilters([]);
     }
@@ -153,21 +140,20 @@ const SmartSearchSheet = ({
       );
 
       // Apply quick filters
-      if (activeFilters.includes("top-rated")) {
+      if (activeFilters.includes('top-rated')) {
         filtered = filtered.filter((p) => (p.rating || 0) >= 4.5);
       }
-      if (activeFilters.includes("high-demand")) {
+      if (activeFilters.includes('high-demand')) {
         filtered = filtered.filter((p) => (p.employmentRate || 0) >= 90);
       }
-      if (activeFilters.includes("online")) {
+      if (activeFilters.includes('online')) {
         filtered = filtered.filter(
-          (p) =>
-            p.studyMode === "Distance Learning" || p.studyMode === "Online"
+          (p) => p.studyMode === 'Distance Learning' || p.studyMode === 'Online'
         );
       }
-      if (activeFilters.includes("part-time")) {
+      if (activeFilters.includes('part-time')) {
         filtered = filtered.filter(
-          (p) => p.studyMode === "Part-time" || p.studyMode === "Flexible"
+          (p) => p.studyMode === 'Part-time' || p.studyMode === 'Flexible'
         );
       }
 
@@ -190,9 +176,7 @@ const SmartSearchSheet = ({
   // Toggle quick filter
   const toggleFilter = (filterId: string) => {
     setActiveFilters((prev) =>
-      prev.includes(filterId)
-        ? prev.filter((f) => f !== filterId)
-        : [...prev, filterId]
+      prev.includes(filterId) ? prev.filter((f) => f !== filterId) : [...prev, filterId]
     );
   };
 
@@ -220,9 +204,7 @@ const SmartSearchSheet = ({
       <DrawerContent className="h-[95vh] rounded-t-3xl">
         <DrawerHeader className="pb-0">
           <div className="flex items-center justify-between">
-            <DrawerTitle className="text-lg font-semibold">
-              Search Programmes
-            </DrawerTitle>
+            <DrawerTitle className="text-lg font-semibold">Search Programmes</DrawerTitle>
             <Button
               variant="ghost"
               size="icon"
@@ -245,10 +227,10 @@ const SmartSearchSheet = ({
               placeholder="Search courses, providers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               className={cn(
-                "pr-12 h-14 text-base rounded-2xl bg-white/5 border-white/10 focus:border-purple-500/50",
-                !searchTerm && "pl-12"
+                'pr-12 h-14 text-base rounded-2xl bg-white/5 border-white/10 focus:border-purple-500/50',
+                !searchTerm && 'pl-12'
               )}
             />
             <button
@@ -273,11 +255,11 @@ const SmartSearchSheet = ({
                     whileTap={{ scale: 0.95 }}
                     onClick={() => toggleFilter(filter.id)}
                     className={cn(
-                      "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap",
-                      "border transition-all duration-200",
+                      'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap',
+                      'border transition-all duration-200',
                       isActive
-                        ? "bg-purple-500 text-white border-purple-500"
-                        : "bg-white/5 text-white/70 border-white/10 hover:bg-white/10"
+                        ? 'bg-purple-500 text-white border-purple-500'
+                        : 'bg-white/5 text-white/70 border-white/10 hover:bg-white/10'
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -302,9 +284,7 @@ const SmartSearchSheet = ({
                 >
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium text-white/60">
-                      {isSearching
-                        ? "Searching..."
-                        : `${searchResults.length} results`}
+                      {isSearching ? 'Searching...' : `${searchResults.length} results`}
                     </h3>
                     {searchResults.length > 0 && (
                       <Button
@@ -334,9 +314,7 @@ const SmartSearchSheet = ({
                       <div className="text-center py-8">
                         <Search className="h-12 w-12 text-white/20 mx-auto mb-3" />
                         <p className="text-white/60">No programmes found</p>
-                        <p className="text-sm text-white/40 mt-1">
-                          Try different keywords
-                        </p>
+                        <p className="text-sm text-white/40 mt-1">Try different keywords</p>
                       </div>
                     )}
                   </div>
@@ -414,9 +392,7 @@ const SmartSearchSheet = ({
                               <p className="text-sm font-medium text-white truncate">
                                 {category.name}
                               </p>
-                              <p className="text-xs text-white/50">
-                                {category.count} programmes
-                              </p>
+                              <p className="text-xs text-white/50">{category.count} programmes</p>
                             </div>
                           </motion.button>
                         ))}
@@ -427,7 +403,7 @@ const SmartSearchSheet = ({
                   {/* Browse All Prompt */}
                   <div className="text-center pt-4">
                     <p className="text-sm text-white/40">
-                      Or{" "}
+                      Or{' '}
                       <button
                         onClick={() => onOpenChange(false)}
                         className="text-purple-400 hover:text-purple-300 underline underline-offset-2"

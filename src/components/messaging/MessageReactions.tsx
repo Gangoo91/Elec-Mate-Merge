@@ -1,19 +1,36 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { Smile, Plus } from 'lucide-react';
 
 // Common emoji reactions
 const QUICK_REACTIONS = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
 const ALL_REACTIONS = [
-  '👍', '👎', '❤️', '🔥', '😂', '😮', '😢', '😡',
-  '🙏', '👏', '🎉', '💯', '✅', '❌', '⚡', '💡',
-  '🤔', '👀', '🚀', '💪', '🙌', '🤝', '👌', '✨',
+  '👍',
+  '👎',
+  '❤️',
+  '🔥',
+  '😂',
+  '😮',
+  '😢',
+  '😡',
+  '🙏',
+  '👏',
+  '🎉',
+  '💯',
+  '✅',
+  '❌',
+  '⚡',
+  '💡',
+  '🤔',
+  '👀',
+  '🚀',
+  '💪',
+  '🙌',
+  '🤝',
+  '👌',
+  '✨',
 ];
 
 export interface Reaction {
@@ -41,19 +58,20 @@ export function MessageReactions({
   const [showPicker, setShowPicker] = useState(false);
 
   // Group reactions by emoji
-  const groupedReactions = reactions.reduce((acc, reaction) => {
-    if (!acc[reaction.emoji]) {
-      acc[reaction.emoji] = [];
-    }
-    acc[reaction.emoji].push(reaction);
-    return acc;
-  }, {} as Record<string, Reaction[]>);
+  const groupedReactions = reactions.reduce(
+    (acc, reaction) => {
+      if (!acc[reaction.emoji]) {
+        acc[reaction.emoji] = [];
+      }
+      acc[reaction.emoji].push(reaction);
+      return acc;
+    },
+    {} as Record<string, Reaction[]>
+  );
 
   const handleReactionClick = (emoji: string) => {
     // Check if current user already reacted with this emoji
-    const existingReaction = reactions.find(
-      r => r.emoji === emoji && r.userId === currentUserId
-    );
+    const existingReaction = reactions.find((r) => r.emoji === emoji && r.userId === currentUserId);
 
     if (existingReaction) {
       onRemoveReaction(existingReaction.id);
@@ -69,8 +87,8 @@ export function MessageReactions({
     <div className={cn('flex items-center gap-1 flex-wrap', className)}>
       {/* Existing reactions */}
       {Object.entries(groupedReactions).map(([emoji, reactionList]) => {
-        const hasUserReacted = reactionList.some(r => r.userId === currentUserId);
-        const userNames = reactionList.map(r => r.userName || 'User').join(', ');
+        const hasUserReacted = reactionList.some((r) => r.userId === currentUserId);
+        const userNames = reactionList.map((r) => r.userName || 'User').join(', ');
 
         return (
           <button
@@ -105,15 +123,11 @@ export function MessageReactions({
             {hasReactions ? <Plus className="h-3 w-3" /> : <Smile className="h-3.5 w-3.5" />}
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          className="w-64 p-2"
-          align="start"
-          side="top"
-        >
+        <PopoverContent className="w-64 p-2" align="start" side="top">
           <div className="space-y-2">
             {/* Quick reactions */}
             <div className="flex items-center justify-between">
-              {QUICK_REACTIONS.map(emoji => (
+              {QUICK_REACTIONS.map((emoji) => (
                 <button
                   key={emoji}
                   onClick={() => handleReactionClick(emoji)}
@@ -127,7 +141,7 @@ export function MessageReactions({
             {/* All reactions */}
             <div className="border-t pt-2">
               <div className="grid grid-cols-8 gap-1">
-                {ALL_REACTIONS.map(emoji => (
+                {ALL_REACTIONS.map((emoji) => (
                   <button
                     key={emoji}
                     onClick={() => handleReactionClick(emoji)}
@@ -156,8 +170,13 @@ export function ReactionBar({
   className?: string;
 }) {
   return (
-    <div className={cn('flex items-center gap-0.5 bg-background/95 backdrop-blur rounded-full border shadow-sm px-1 py-0.5', className)}>
-      {QUICK_REACTIONS.map(emoji => (
+    <div
+      className={cn(
+        'flex items-center gap-0.5 bg-background/95 backdrop-blur rounded-full border shadow-sm px-1 py-0.5',
+        className
+      )}
+    >
+      {QUICK_REACTIONS.map((emoji) => (
         <button
           key={emoji}
           onClick={() => onReact(emoji)}

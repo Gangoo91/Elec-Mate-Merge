@@ -1,23 +1,22 @@
-
-import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
-import { Link, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Package, AlertTriangle, ExternalLink, Star, BellDot, RefreshCw } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { toast } from "@/hooks/use-toast";
-import MaterialSearch from "@/components/electrician-materials/MaterialSearch";
-import SupplierDealOfDay from "@/components/electrician-materials/SupplierDealOfDay";
-import SupplierProductGrid from "@/components/electrician-materials/SupplierProductGrid";
-import { supplierData, SupplierInfo } from "@/data/electrician/supplierData";
-import { productsBySupplier, MaterialItem } from "@/data/electrician/productData";
-import { Card, CardContent } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { Link, useParams } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Package, AlertTriangle, ExternalLink, Star, BellDot, RefreshCw } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { toast } from '@/hooks/use-toast';
+import MaterialSearch from '@/components/electrician-materials/MaterialSearch';
+import SupplierDealOfDay from '@/components/electrician-materials/SupplierDealOfDay';
+import SupplierProductGrid from '@/components/electrician-materials/SupplierProductGrid';
+import { supplierData, SupplierInfo } from '@/data/electrician/supplierData';
+import { productsBySupplier, MaterialItem } from '@/data/electrician/productData';
+import { Card, CardContent } from '@/components/ui/card';
+import { supabase } from '@/integrations/supabase/client';
 
 const SupplierMaterials = () => {
   const { supplierSlug } = useParams<{ supplierSlug: string }>();
-  const [supplier, setSupplier] = useState<string>("");
+  const [supplier, setSupplier] = useState<string>('');
   const [products, setProducts] = useState<MaterialItem[]>([]);
   const [supplierInfo, setSupplierInfo] = useState<SupplierInfo | null>(null);
   const [isNotifying, setIsNotifying] = useState<boolean>(false);
@@ -27,10 +26,12 @@ const SupplierMaterials = () => {
     if (supplierSlug) {
       // In a real application, this would be an API call
       const supplierKey = supplierSlug.toLowerCase();
-      setSupplier(supplierData[supplierKey as keyof typeof supplierData]?.name || "Unknown Supplier");
+      setSupplier(
+        supplierData[supplierKey as keyof typeof supplierData]?.name || 'Unknown Supplier'
+      );
       setProducts(productsBySupplier[supplierKey as keyof typeof productsBySupplier] || []);
       setSupplierInfo(supplierData[supplierKey as keyof typeof supplierData] || null);
-      
+
       // Check if user is already subscribed to notifications (would use localStorage or backend in production)
       const storedNotifyState = localStorage.getItem(`notify-${supplierKey}`);
       setIsNotifying(storedNotifyState === 'true');
@@ -39,33 +40,33 @@ const SupplierMaterials = () => {
 
   // Create an external URL for the supplier's website
   const getSupplierWebsiteUrl = () => {
-    if (!supplierSlug) return "#";
-    
+    if (!supplierSlug) return '#';
+
     switch (supplierSlug.toLowerCase()) {
-      case "screwfix":
-        return "https://www.screwfix.com";
-      case "city-electrical-factors":
-        return "https://www.cef.co.uk";
-      case "electricaldirect":
-        return "https://www.electricaldirect.co.uk";
-      case "toolstation":
-        return "https://www.toolstation.com";
+      case 'screwfix':
+        return 'https://www.screwfix.com';
+      case 'city-electrical-factors':
+        return 'https://www.cef.co.uk';
+      case 'electricaldirect':
+        return 'https://www.electricaldirect.co.uk';
+      case 'toolstation':
+        return 'https://www.toolstation.com';
       default:
-        return "#";
+        return '#';
     }
   };
 
   const toggleNotifications = () => {
     if (!supplierSlug) return;
-    
+
     const newState = !isNotifying;
     setIsNotifying(newState);
     localStorage.setItem(`notify-${supplierSlug.toLowerCase()}`, String(newState));
-    
+
     toast({
-      title: newState ? "Notifications Enabled" : "Notifications Disabled",
-      description: newState 
-        ? `You'll be notified about new deals from ${supplier}.` 
+      title: newState ? 'Notifications Enabled' : 'Notifications Disabled',
+      description: newState
+        ? `You'll be notified about new deals from ${supplier}.`
         : `You won't receive notifications from ${supplier}.`,
       duration: 3000,
     });
@@ -76,7 +77,7 @@ const SupplierMaterials = () => {
     setIsFetchingLive(true);
     try {
       const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
-        body: { supplierSlug: supplierSlug.toLowerCase(), searchTerm: "cable" }
+        body: { supplierSlug: supplierSlug.toLowerCase(), searchTerm: 'cable' },
       });
 
       if (error) {
@@ -86,22 +87,22 @@ const SupplierMaterials = () => {
       if (data?.products && Array.isArray(data.products) && data.products.length > 0) {
         setProducts(data.products);
         toast({
-          title: "Live deals loaded",
+          title: 'Live deals loaded',
           description: `Showing latest products from ${data.supplier || supplier}.`,
         });
       } else {
         toast({
-          title: "No live deals found",
-          description: "Showing curated products for now.",
-          variant: "destructive"
+          title: 'No live deals found',
+          description: 'Showing curated products for now.',
+          variant: 'destructive',
         });
       }
     } catch (err) {
-      console.error("Error fetching live deals:", err);
+      console.error('Error fetching live deals:', err);
       toast({
-        title: "Failed to load live deals",
-        description: err instanceof Error ? err.message : "Please try again later.",
-        variant: "destructive"
+        title: 'Failed to load live deals',
+        description: err instanceof Error ? err.message : 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setIsFetchingLive(false);
@@ -133,7 +134,10 @@ const SupplierMaterials = () => {
     <div className="space-y-6 animate-fade-in  ">
       <Helmet>
         <title>{`${supplier} Deals | ElecMate Electrical Materials`}</title>
-        <meta name="description" content={`Latest ${supplier} electrical materials and deals. BS 7671 18th Edition aware recommendations for UK electricians.`} />
+        <meta
+          name="description"
+          content={`Latest ${supplier} electrical materials and deals. BS 7671 18th Edition aware recommendations for UK electricians.`}
+        />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
       </Helmet>
       {/* Header with navigation */}
@@ -143,18 +147,16 @@ const SupplierMaterials = () => {
             <Package className="h-8 w-8 text-elec-yellow" />
             {supplier} Deals
           </h1>
-          <p className="text-muted-foreground mt-1">
-            {supplierInfo.description}
-          </p>
+          <p className="text-muted-foreground mt-1">{supplierInfo.description}</p>
         </div>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="icon"
             onClick={toggleNotifications}
-            className={`h-11 w-11 touch-manipulation active:scale-[0.95] ${isNotifying ? "border-elec-yellow text-elec-yellow" : ""}`}
+            className={`h-11 w-11 touch-manipulation active:scale-[0.95] ${isNotifying ? 'border-elec-yellow text-elec-yellow' : ''}`}
           >
-            <BellDot className={`h-5 w-5 ${isNotifying ? "text-elec-yellow" : ""}`} />
+            <BellDot className={`h-5 w-5 ${isNotifying ? 'text-elec-yellow' : ''}`} />
           </Button>
           <Button
             variant="outline"
@@ -162,8 +164,8 @@ const SupplierMaterials = () => {
             disabled={isFetchingLive}
             className="flex items-center gap-2 h-11 touch-manipulation active:scale-[0.98]"
           >
-            <RefreshCw className={`h-4 w-4 ${isFetchingLive ? "animate-spin" : ""}`} />
-            {isFetchingLive ? "Fetching…" : "Fetch Live Deals"}
+            <RefreshCw className={`h-4 w-4 ${isFetchingLive ? 'animate-spin' : ''}`} />
+            {isFetchingLive ? 'Fetching…' : 'Fetch Live Deals'}
           </Button>
           <SmartBackButton />
         </div>
@@ -173,12 +175,23 @@ const SupplierMaterials = () => {
       <Alert className="bg-elec-gray border-elec-yellow/30">
         <AlertTriangle className="h-4 w-4 text-elec-yellow" />
         <AlertDescription className="text-sm">
-          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product availability may vary.
+          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product
+          availability may vary.
         </AlertDescription>
       </Alert>
 
       {/* Search bar */}
-      <MaterialSearch supplierSlug={supplierSlug?.toLowerCase()} onResults={(items) => { setProducts(items); toast({ title: "Search results", description: `Showing ${items.length} items`, duration: 2500 }); }} />
+      <MaterialSearch
+        supplierSlug={supplierSlug?.toLowerCase()}
+        onResults={(items) => {
+          setProducts(items);
+          toast({
+            title: 'Search results',
+            description: `Showing ${items.length} items`,
+            duration: 2500,
+          });
+        }}
+      />
 
       {/* External catalog link */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -187,7 +200,8 @@ const SupplierMaterials = () => {
             <div>
               <h3 className="text-lg font-semibold">Need the full catalog?</h3>
               <p className="text-sm text-muted-foreground">
-                This is a curated selection of popular products. Visit the official website for the complete range.
+                This is a curated selection of popular products. Visit the official website for the
+                complete range.
               </p>
             </div>
             <a href={getSupplierWebsiteUrl()} target="_blank" rel="noopener noreferrer">

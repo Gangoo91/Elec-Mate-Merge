@@ -1,44 +1,44 @@
-import { ArrowLeft, FileText, TestTube, Eye, Wrench, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, FileText, TestTube, Eye, Wrench, Zap } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "What to Record and Why It Matters",
-    description: "Understanding the importance of accurate test documentation",
+    number: 'Subsection 1',
+    title: 'What to Record and Why It Matters',
+    description: 'Understanding the importance of accurate test documentation',
     icon: FileText,
-    href: "6-1"
+    href: '6-1',
   },
   {
-    number: "Subsection 2",
-    title: "Interpreting Test Readings (Pass/Fail Awareness)",
-    description: "Basic interpretation of electrical test results",
+    number: 'Subsection 2',
+    title: 'Interpreting Test Readings (Pass/Fail Awareness)',
+    description: 'Basic interpretation of electrical test results',
     icon: TestTube,
-    href: "6-2"
+    href: '6-2',
   },
   {
-    number: "Subsection 3",
-    title: "Identifying Common Installation Defects",
-    description: "Recognising typical electrical installation problems",
+    number: 'Subsection 3',
+    title: 'Identifying Common Installation Defects',
+    description: 'Recognising typical electrical installation problems',
     icon: Eye,
-    href: "6-3"
+    href: '6-3',
   },
   {
-    number: "Subsection 4",
-    title: "Corrective Action and Retesting",
-    description: "Understanding remedial work and verification procedures",
+    number: 'Subsection 4',
+    title: 'Corrective Action and Retesting',
+    description: 'Understanding remedial work and verification procedures',
     icon: Wrench,
-    href: "6-4"
+    href: '6-4',
   },
   {
-    number: "Subsection 5",
-    title: "Test Sheets and Site Documentation (Intro Level)",
-    description: "Introduction to electrical test documentation and forms",
+    number: 'Subsection 5',
+    title: 'Test Sheets and Site Documentation (Intro Level)',
+    description: 'Introduction to electrical test documentation and forms',
     icon: Zap,
-    href: "6-5"
-  }
+    href: '6-5',
+  },
 ];
 
 const Section6 = () => {

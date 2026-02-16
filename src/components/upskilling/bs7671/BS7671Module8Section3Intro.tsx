@@ -12,12 +12,14 @@ const BS7671Module8Section3Intro = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Amendment 3 to BS 7671:2018 represents the most significant update since the 18th Edition's publication, 
-          introducing enhanced safety requirements and reflecting the rapid evolution of electrical technology and installation practices.
+          Amendment 3 to BS 7671:2018 represents the most significant update since the 18th
+          Edition's publication, introducing enhanced safety requirements and reflecting the rapid
+          evolution of electrical technology and installation practices.
         </p>
         <p>
-          This amendment addresses critical areas including cybersecurity for smart installations, enhanced fire safety measures, 
-          updated prosumer installation requirements, and revised protection standards that align with contemporary electrical demands.
+          This amendment addresses critical areas including cybersecurity for smart installations,
+          enhanced fire safety measures, updated prosumer installation requirements, and revised
+          protection standards that align with contemporary electrical demands.
         </p>
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600 mt-4">
           <h5 className="text-elec-yellow font-semibold mb-2">Key Amendment 3 Focus Areas:</h5>

@@ -17,9 +17,11 @@ export const EmergencyLightingRealWorldSection3_4 = () => {
             The Challenge: Residential Care Home in Bristol
           </h4>
           <p className="text-foreground mb-3">
-            A residential care home in Bristol initially had standard 1 lux escape route lighting installed throughout the building, meeting the basic BS 5266 requirements. However, this generic approach failed to consider the specific needs of the vulnerable residents.
+            A residential care home in Bristol initially had standard 1 lux escape route lighting
+            installed throughout the building, meeting the basic BS 5266 requirements. However, this
+            generic approach failed to consider the specific needs of the vulnerable residents.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-3 bg-red-700/20 rounded border border-red-500/40">
               <h5 className="text-red-200 font-medium mb-2">Initial Installation Issues:</h5>
@@ -30,7 +32,7 @@ export const EmergencyLightingRealWorldSection3_4 = () => {
                 <li>• No consideration of resident profiles</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-red-700/20 rounded border border-red-500/40">
               <h5 className="text-red-200 font-medium mb-2">Problems Identified:</h5>
               <ul className="text-foreground text-sm space-y-1">
@@ -49,9 +51,10 @@ export const EmergencyLightingRealWorldSection3_4 = () => {
             Risk Assessment Findings
           </h4>
           <p className="text-foreground mb-3">
-            During inspection, the Fire Risk Assessment highlighted specific vulnerabilities that the generic lighting design had not addressed.
+            During inspection, the Fire Risk Assessment highlighted specific vulnerabilities that
+            the generic lighting design had not addressed.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-3 bg-blue-700/20 rounded border border-blue-500/40">
               <h5 className="text-blue-200 font-medium mb-2">Resident Profile Analysis:</h5>
@@ -62,7 +65,7 @@ export const EmergencyLightingRealWorldSection3_4 = () => {
                 <li>• Some had dementia affecting wayfinding</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-blue-700/20 rounded border border-blue-500/40">
               <h5 className="text-blue-200 font-medium mb-2">Evacuation Challenges:</h5>
               <ul className="text-foreground text-sm space-y-1">
@@ -81,9 +84,10 @@ export const EmergencyLightingRealWorldSection3_4 = () => {
             Risk-Based Design Solution
           </h4>
           <p className="text-foreground mb-3">
-            The design was completely updated to address the specific risks and occupant needs identified in the assessment.
+            The design was completely updated to address the specific risks and occupant needs
+            identified in the assessment.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-3 bg-green-700/20 rounded border border-green-500/40">
               <h5 className="text-green-200 font-medium mb-2">Enhanced Lighting Levels:</h5>
@@ -94,7 +98,7 @@ export const EmergencyLightingRealWorldSection3_4 = () => {
                 <li>• Enhanced lighting at refuge points</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-green-700/20 rounded border border-green-500/40">
               <h5 className="text-green-200 font-medium mb-2">Extended Duration:</h5>
               <ul className="text-foreground text-sm space-y-1">
@@ -140,7 +144,10 @@ export const EmergencyLightingRealWorldSection3_4 = () => {
             <span className="text-elec-yellow font-semibold">Key Learning Points</span>
           </div>
           <p className="text-foreground text-sm">
-            This example demonstrates that meeting minimum standards is not always sufficient for true safety. Risk-based design adjustments, though requiring higher initial investment, provide better protection for vulnerable occupants and can deliver broader business benefits through improved compliance, reduced liability, and enhanced reputation.
+            This example demonstrates that meeting minimum standards is not always sufficient for
+            true safety. Risk-based design adjustments, though requiring higher initial investment,
+            provide better protection for vulnerable occupants and can deliver broader business
+            benefits through improved compliance, reduced liability, and enhanced reputation.
           </p>
         </div>
       </CardContent>

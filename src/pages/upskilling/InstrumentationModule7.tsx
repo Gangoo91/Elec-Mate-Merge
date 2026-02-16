@@ -1,4 +1,13 @@
-import { ArrowLeft, Cable, Power, Calculator, Palette, Shield, Wrench, AlertTriangle } from 'lucide-react';
+import {
+  ArrowLeft,
+  Cable,
+  Power,
+  Calculator,
+  Palette,
+  Shield,
+  Wrench,
+  AlertTriangle,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -9,44 +18,44 @@ const InstrumentationModule7 = () => {
       id: 1,
       title: "What Is a 4–20mA Loop and Why It's Used",
       icon: Cable,
-      description: "Understanding the 4-20mA current loop standard and its advantages"
+      description: 'Understanding the 4-20mA current loop standard and its advantages',
     },
     {
       id: 2,
-      title: "Loop-Powered vs Externally Powered Devices",
+      title: 'Loop-Powered vs Externally Powered Devices',
       icon: Power,
-      description: "Different power supply configurations for instrumentation loops"
+      description: 'Different power supply configurations for instrumentation loops',
     },
     {
       id: 3,
-      title: "Loop Design and Load Calculations",
+      title: 'Loop Design and Load Calculations',
       icon: Calculator,
-      description: "Designing current loops and calculating power requirements"
+      description: 'Designing current loops and calculating power requirements',
     },
     {
       id: 4,
-      title: "Wiring Standards and Colour Coding",
+      title: 'Wiring Standards and Colour Coding',
       icon: Palette,
-      description: "Industry standards for instrumentation wiring and identification"
+      description: 'Industry standards for instrumentation wiring and identification',
     },
     {
       id: 5,
-      title: "Barriers, Isolators, and Intrinsically Safe Loops",
+      title: 'Barriers, Isolators, and Intrinsically Safe Loops',
       icon: Shield,
-      description: "Safety devices and intrinsically safe system design"
+      description: 'Safety devices and intrinsically safe system design',
     },
     {
       id: 6,
-      title: "Loop Testing Tools (Loop Calibrators, Simulators, Multimeters)",
+      title: 'Loop Testing Tools (Loop Calibrators, Simulators, Multimeters)',
       icon: Wrench,
-      description: "Equipment and techniques for testing current loops"
+      description: 'Equipment and techniques for testing current loops',
     },
     {
       id: 7,
-      title: "Common Wiring Faults and Loop Integrity Checks",
+      title: 'Common Wiring Faults and Loop Integrity Checks',
       icon: AlertTriangle,
-      description: "Troubleshooting wiring problems and verifying loop integrity"
-    }
+      description: 'Troubleshooting wiring problems and verifying loop integrity',
+    },
   ];
 
   return (

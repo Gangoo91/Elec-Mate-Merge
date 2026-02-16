@@ -1,7 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { ConversationListItem, ConversationListItemSkeleton } from "./ConversationListItem";
-import { MessageSquare, Inbox } from "lucide-react";
-import type { Conversation } from "@/services/conversationService";
+import { Card, CardContent } from '@/components/ui/card';
+import { ConversationListItem, ConversationListItemSkeleton } from './ConversationListItem';
+import { MessageSquare, Inbox } from 'lucide-react';
+import type { Conversation } from '@/services/conversationService';
 
 interface ConversationListProps {
   conversations: Conversation[];
@@ -16,7 +16,7 @@ export function ConversationList({
   isLoading,
   onSelect,
   onDelete,
-  emptyMessage = "No conversations yet"
+  emptyMessage = 'No conversations yet',
 }: ConversationListProps) {
   if (isLoading) {
     return (
@@ -34,9 +34,7 @@ export function ConversationList({
         <CardContent className="p-8 text-center">
           <Inbox className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
           <h3 className="font-semibold text-foreground mb-2">No Messages</h3>
-          <p className="text-sm text-muted-foreground">
-            {emptyMessage}
-          </p>
+          <p className="text-sm text-muted-foreground">{emptyMessage}</p>
         </CardContent>
       </Card>
     );

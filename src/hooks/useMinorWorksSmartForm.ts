@@ -76,7 +76,7 @@ export function useMinorWorksSmartForm() {
       electricianPhone: companyProfile.company_phone || '',
       electricianEmail: companyProfile.company_email || '',
       signature: companyProfile.signature_data || '',
-      signatureDate: today
+      signatureDate: today,
     };
   }, [companyProfile]);
 
@@ -88,7 +88,7 @@ export function useMinorWorksSmartForm() {
 
     // Find the multifunction tester (most commonly used for Minor Works)
     const multifunction = companyProfile.testing_instruments.find(
-      i => i.instrument_type === 'multifunction'
+      (i) => i.instrument_type === 'multifunction'
     );
 
     // Fall back to first instrument if no multifunction found
@@ -99,7 +99,7 @@ export function useMinorWorksSmartForm() {
     return {
       testEquipmentModel: `${instrument.make} ${instrument.model}`.trim(),
       testEquipmentSerial: instrument.serial_number || '',
-      testEquipmentCalDate: instrument.calibration_date || ''
+      testEquipmentCalDate: instrument.calibration_date || '',
     };
   }, [companyProfile]);
 
@@ -117,7 +117,7 @@ export function useMinorWorksSmartForm() {
       contractorName: companyProfile.company_name || '',
       contractorAddress: fullAddress,
       contractorPhone: companyProfile.company_phone || '',
-      contractorEmail: companyProfile.company_email || ''
+      contractorEmail: companyProfile.company_email || '',
     };
   }, [companyProfile]);
 
@@ -127,12 +127,12 @@ export function useMinorWorksSmartForm() {
   const getAvailableInstruments = useCallback(() => {
     if (!companyProfile?.testing_instruments?.length) return [];
 
-    return companyProfile.testing_instruments.map(instrument => ({
+    return companyProfile.testing_instruments.map((instrument) => ({
       value: `${instrument.make} ${instrument.model}`.trim(),
       label: `${instrument.make} ${instrument.model}`.trim(),
       serialNumber: instrument.serial_number,
       calibrationDate: instrument.calibration_date,
-      type: instrument.instrument_type
+      type: instrument.instrument_type,
     }));
   }, [companyProfile]);
 
@@ -140,19 +140,23 @@ export function useMinorWorksSmartForm() {
   // Check if Saved Details Available
   // ---------------------------------------------------------------------------
   const hasSavedElectricianDetails = useMemo(() => {
-    return !!(companyProfile?.inspector_name);
+    return !!companyProfile?.inspector_name;
   }, [companyProfile]);
 
   const hasSavedTestEquipment = useMemo(() => {
-    return !!(companyProfile?.testing_instruments?.length);
+    return !!companyProfile?.testing_instruments?.length;
   }, [companyProfile]);
 
   const hasSavedContractorDetails = useMemo(() => {
-    return !!(companyProfile?.company_name);
+    return !!companyProfile?.company_name;
   }, [companyProfile]);
 
   const hasSavedCompanyBranding = useMemo(() => {
-    return !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+    return !!(
+      companyProfile?.company_name ||
+      companyProfile?.logo_url ||
+      companyProfile?.logo_data_url
+    );
   }, [companyProfile]);
 
   // ---------------------------------------------------------------------------
@@ -171,7 +175,7 @@ export function useMinorWorksSmartForm() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
-      companyAccentColor: companyProfile.primary_color || '#f59e0b'
+      companyAccentColor: companyProfile.primary_color || '#f59e0b',
     };
   }, [companyProfile]);
 
@@ -223,21 +227,21 @@ export function useMinorWorksSmartForm() {
   // ---------------------------------------------------------------------------
   // Apply Defaults to Form
   // ---------------------------------------------------------------------------
-  const applySmartDefaults = useCallback((
-    currentFormData: Record<string, any>,
-    onUpdate: (field: string, value: any) => void
-  ) => {
-    const defaults = getInitialFormDefaults();
+  const applySmartDefaults = useCallback(
+    (currentFormData: Record<string, any>, onUpdate: (field: string, value: any) => void) => {
+      const defaults = getInitialFormDefaults();
 
-    // Only apply defaults if fields are empty
-    Object.entries(defaults).forEach(([field, value]) => {
-      if (value && !currentFormData[field]) {
-        onUpdate(field, value);
-      }
-    });
+      // Only apply defaults if fields are empty
+      Object.entries(defaults).forEach(([field, value]) => {
+        if (value && !currentFormData[field]) {
+          onUpdate(field, value);
+        }
+      });
 
-    setHasAppliedDefaults(true);
-  }, [getInitialFormDefaults]);
+      setHasAppliedDefaults(true);
+    },
+    [getInitialFormDefaults]
+  );
 
   // ---------------------------------------------------------------------------
   // Return Hook Interface
@@ -261,7 +265,7 @@ export function useMinorWorksSmartForm() {
 
     // Actions
     applySmartDefaults,
-    refetchProfile: refetch
+    refetchProfile: refetch,
   };
 }
 

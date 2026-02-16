@@ -8,10 +8,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Only the measured values',
       'Circuit ID, measured values, maximum permitted values, and pass/fail assessment',
       'Just the equipment serial number',
-      'Only environmental conditions'
+      'Only environmental conditions',
     ],
     correctAnswer: 1,
-    explanation: 'Complete documentation must include circuit identification, measured values, maximum permitted values, pass/fail assessment, plus supporting details like equipment and environmental data.'
+    explanation:
+      'Complete documentation must include circuit identification, measured values, maximum permitted values, pass/fail assessment, plus supporting details like equipment and environmental data.',
   },
   {
     id: 2,
@@ -20,10 +21,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Ignore the results',
       'Document as non-compliance and specify corrective actions',
       'Adjust the readings to within limits',
-      'Test again until acceptable results are obtained'
+      'Test again until acceptable results are obtained',
     ],
     correctAnswer: 1,
-    explanation: 'Non-compliant results must be documented with details of the non-compliance and specific corrective actions required to achieve compliance.'
+    explanation:
+      'Non-compliant results must be documented with details of the non-compliance and specific corrective actions required to achieve compliance.',
   },
   {
     id: 3,
@@ -32,10 +34,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Equipment type only',
       'Serial number, calibration date, and certificate reference',
       'Just the manufacturer name',
-      'Only if the equipment malfunctions'
+      'Only if the equipment malfunctions',
     ],
     correctAnswer: 1,
-    explanation: 'Record equipment serial number, calibration date, and certificate reference to ensure traceability and demonstrate measurement validity.'
+    explanation:
+      'Record equipment serial number, calibration date, and certificate reference to ensure traceability and demonstrate measurement validity.',
   },
   {
     id: 4,
@@ -44,10 +47,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Weather conditions only',
       'Ambient temperature and any factors affecting measurements',
       'Time of day only',
-      'No environmental data needed'
+      'No environmental data needed',
     ],
     correctAnswer: 1,
-    explanation: 'Ambient temperature and other environmental factors that could affect measurements (humidity, EMI sources) should be recorded for accurate result interpretation.'
+    explanation:
+      'Ambient temperature and other environmental factors that could affect measurements (humidity, EMI sources) should be recorded for accurate result interpretation.',
   },
   {
     id: 5,
@@ -56,10 +60,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Anyone who performed the tests',
       'Only a competent person responsible for the work',
       'The building owner',
-      'Any qualified electrician'
+      'Any qualified electrician',
     ],
     correctAnswer: 1,
-    explanation: 'Only a competent person who is responsible for the design, construction, inspection, and testing can sign electrical installation certificates.'
+    explanation:
+      'Only a competent person who is responsible for the design, construction, inspection, and testing can sign electrical installation certificates.',
   },
   {
     id: 6,
@@ -68,10 +73,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'No protection needed',
       'Password protection and secure backup copies',
       'Only save on the test equipment',
-      'Print immediately and discard digital copies'
+      'Print immediately and discard digital copies',
     ],
     correctAnswer: 1,
-    explanation: 'Digital test data should be protected with access controls, version control, and secure backup copies to maintain data integrity and prevent loss.'
+    explanation:
+      'Digital test data should be protected with access controls, version control, and secure backup copies to maintain data integrity and prevent loss.',
   },
   {
     id: 7,
@@ -80,10 +86,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Accept without comment',
       'Document the values and recommend monitoring or improvement',
       'Reject automatically',
-      'Retest until clearly acceptable'
+      'Retest until clearly acceptable',
     ],
     correctAnswer: 1,
-    explanation: 'Borderline results should be documented with recommendations for monitoring during future inspections or improvement where practical.'
+    explanation:
+      'Borderline results should be documented with recommendations for monitoring during future inspections or improvement where practical.',
   },
   {
     id: 8,
@@ -92,10 +99,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'One year only',
       'For the life of the installation plus inspection intervals',
       'Until the next test',
-      'Records are not required to be kept'
+      'Records are not required to be kept',
     ],
     correctAnswer: 1,
-    explanation: 'Test records should be retained for the life of the installation and made available for future inspections to track performance trends and compliance history.'
+    explanation:
+      'Test records should be retained for the life of the installation and made available for future inspections to track performance trends and compliance history.',
   },
   {
     id: 9,
@@ -104,10 +112,11 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Nothing special required',
       'Detailed justification and assessment of equivalent safety',
       'Just note "special installation"',
-      'Only the clause number'
+      'Only the clause number',
     ],
     correctAnswer: 1,
-    explanation: 'Departures from BS 7671 must include detailed justification, assessment of equivalent safety levels, and demonstration that the installation is not less safe than standard compliance.'
+    explanation:
+      'Departures from BS 7671 must include detailed justification, assessment of equivalent safety levels, and demonstration that the installation is not less safe than standard compliance.',
   },
   {
     id: 10,
@@ -116,9 +125,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
       'Check spelling only',
       'Verify all results are within limits and calculations are correct',
       'Only check signatures',
-      'Verify only the date'
+      'Verify only the date',
     ],
     correctAnswer: 1,
-    explanation: 'Before issuing certificates, verify all test results are within acceptable limits, calculations are correct, required information is complete, and documentation is accurate.'
-  }
+    explanation:
+      'Before issuing certificates, verify all test results are within acceptable limits, calculations are correct, required information is complete, and documentation is accurate.',
+  },
 ];

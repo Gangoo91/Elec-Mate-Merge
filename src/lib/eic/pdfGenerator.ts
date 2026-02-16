@@ -10,7 +10,7 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
   const pdf = new jsPDF({
     orientation: 'landscape',
     unit: 'mm',
-    format: 'a4'
+    format: 'a4',
   });
 
   // Page dimensions
@@ -53,10 +53,23 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
 
   // Test Results Table
   const tableHeaders = [
-    ['Cct', 'Type', 'Description', 'Ref', 'Live\n(mm²)', 'CPC\n(mm²)', 'MCB', 'R1+R2\n(Ω)', 'Insulation\n(MΩ)', 'Zs\n(Ω)', 'Max Zs\n(Ω)', 'RCD\n(mA)']
+    [
+      'Cct',
+      'Type',
+      'Description',
+      'Ref',
+      'Live\n(mm²)',
+      'CPC\n(mm²)',
+      'MCB',
+      'R1+R2\n(Ω)',
+      'Insulation\n(MΩ)',
+      'Zs\n(Ω)',
+      'Max Zs\n(Ω)',
+      'RCD\n(mA)',
+    ],
   ];
 
-  const tableData = schedule.circuits.map(circuit => [
+  const tableData = schedule.circuits.map((circuit) => [
     circuit.circuitNumber,
     circuit.phaseType === 'single' ? '1φ' : '3φ',
     circuit.circuitDescription,
@@ -68,7 +81,7 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
     circuit.insulationResistance || 'N/A',
     circuit.zs || 'N/A',
     circuit.maxZs || 'N/A',
-    circuit.rcdRating || 'N/A'
+    circuit.rcdRating || 'N/A',
   ]);
 
   autoTable(pdf, {
@@ -80,13 +93,13 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
       fontSize: 8,
       cellPadding: 1.5,
       halign: 'center',
-      valign: 'middle'
+      valign: 'middle',
     },
     headStyles: {
       fillColor: [59, 130, 246],
       textColor: [255, 255, 255],
       fontStyle: 'bold',
-      fontSize: 8
+      fontSize: 8,
     },
     columnStyles: {
       0: { cellWidth: 12 }, // Cct
@@ -100,9 +113,9 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
       8: { cellWidth: 22 }, // Insulation
       9: { cellWidth: 18 }, // Zs
       10: { cellWidth: 18 }, // Max Zs
-      11: { cellWidth: 18 }  // RCD
+      11: { cellWidth: 18 }, // RCD
     },
-    margin: { left: margin, right: margin }
+    margin: { left: margin, right: margin },
   });
 
   // Footer Section
@@ -111,7 +124,7 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
   pdf.setFontSize(9);
   pdf.setFont('helvetica', 'bold');
   pdf.text('Testing Standards:', margin, finalY);
-  
+
   pdf.setFont('helvetica', 'normal');
   pdf.setFontSize(8);
   pdf.text('Tested in accordance with BS 7671:2018+A3:2024', margin, finalY + 5);
@@ -122,14 +135,14 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
   pdf.setFontSize(9);
   pdf.setFont('helvetica', 'bold');
   pdf.text('Tested by:', margin, sigStartY);
-  
+
   pdf.setFont('helvetica', 'normal');
   pdf.line(margin + 30, sigStartY, margin + 100, sigStartY);
   pdf.text('Name:', margin + 30, sigStartY + 5);
-  
+
   pdf.line(margin + 140, sigStartY, margin + 210, sigStartY);
   pdf.text('Signature:', margin + 140, sigStartY + 5);
-  
+
   pdf.line(margin + 220, sigStartY, margin + 270, sigStartY);
   pdf.text('Date:', margin + 220, sigStartY + 5);
 
@@ -144,12 +157,9 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
   );
 
   // Certificate number
-  pdf.text(
-    `Cert: ${schedule.installationId}`,
-    pageWidth - margin,
-    pageHeight - 5,
-    { align: 'right' }
-  );
+  pdf.text(`Cert: ${schedule.installationId}`, pageWidth - margin, pageHeight - 5, {
+    align: 'right',
+  });
 
   return pdf.output('blob');
 }
@@ -163,13 +173,13 @@ export async function downloadEICPDF(
 ): Promise<void> {
   const pdfBlob = await generateEICPDF(schedule);
   const url = URL.createObjectURL(pdfBlob);
-  
+
   const link = document.createElement('a');
   link.href = url;
   link.download = filename || `EIC_Schedule_${schedule.installationId}.pdf`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  
+
   URL.revokeObjectURL(url);
 }

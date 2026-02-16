@@ -1,194 +1,187 @@
-import { ArrowLeft, ArrowRight, Package, BookOpen, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import FormulaList from "@/components/apprentice-courses/FormulaList";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Package, BookOpen, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import FormulaList from '@/components/apprentice-courses/FormulaList';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Estimating Materials from Drawings or Site Walkthroughs - Module 5.4.1 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn to accurately estimate materials for electrical installations using technical drawings and site walkthroughs. Master material estimation best practices.";
+const TITLE =
+  'Estimating Materials from Drawings or Site Walkthroughs - Module 5.4.1 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn to accurately estimate materials for electrical installations using technical drawings and site walkthroughs. Master material estimation best practices.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Why is it important to allow for 5–10% wastage when estimating?",
+    question: 'Why is it important to allow for 5–10% wastage when estimating?',
     options: [
-      "To make more profit",
-      "To account for cutting waste and unexpected needs",
-      "To impress clients",
-      "It's not necessary"
+      'To make more profit',
+      'To account for cutting waste and unexpected needs',
+      'To impress clients',
+      "It's not necessary",
     ],
     correctIndex: 1,
-    explanation: "Wastage allowances account for cutting waste, terminations, and unexpected site requirements that weren't visible on drawings."
+    explanation:
+      "Wastage allowances account for cutting waste, terminations, and unexpected site requirements that weren't visible on drawings.",
   },
   {
     id: 2,
-    question: "Name one tool used to measure distances accurately from drawings.",
-    options: [
-      "Ruler",
-      "Scale rule",
-      "Calculator",
-      "Computer"
-    ],
+    question: 'Name one tool used to measure distances accurately from drawings.',
+    options: ['Ruler', 'Scale rule', 'Calculator', 'Computer'],
     correctIndex: 1,
-    explanation: "A scale rule is specifically designed to measure scaled distances on technical drawings accurately."
+    explanation:
+      'A scale rule is specifically designed to measure scaled distances on technical drawings accurately.',
   },
   {
     id: 3,
-    question: "What is the benefit of a site walkthrough compared to drawings alone?",
+    question: 'What is the benefit of a site walkthrough compared to drawings alone?',
     options: [
       "It's faster",
       "It's cheaper",
-      "Confirms actual site conditions and identifies obstacles",
-      "It's not beneficial"
+      'Confirms actual site conditions and identifies obstacles',
+      "It's not beneficial",
     ],
     correctIndex: 2,
-    explanation: "Site walkthroughs reveal physical conditions, obstacles, and additional requirements not shown on drawings."
-  }
+    explanation:
+      'Site walkthroughs reveal physical conditions, obstacles, and additional requirements not shown on drawings.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the main risk of under-estimating materials?",
+    question: 'What is the main risk of under-estimating materials?',
     options: [
-      "Higher profits",
-      "Delays and project stoppages",
-      "Better quality work",
-      "Easier installation"
+      'Higher profits',
+      'Delays and project stoppages',
+      'Better quality work',
+      'Easier installation',
     ],
     correctAnswer: 1,
-    explanation: "Under-estimating leads to material shortages, causing work stoppages and project delays."
+    explanation:
+      'Under-estimating leads to material shortages, causing work stoppages and project delays.',
   },
   {
     id: 2,
-    question: "True or False: Drawings alone always give enough information for accurate estimating.",
-    options: [
-      "True",
-      "False"
-    ],
+    question:
+      'True or False: Drawings alone always give enough information for accurate estimating.',
+    options: ['True', 'False'],
     correctAnswer: 1,
-    explanation: "Drawings don't show all site conditions, obstacles, or practical installation challenges."
+    explanation:
+      "Drawings don't show all site conditions, obstacles, or practical installation challenges.",
   },
   {
     id: 3,
-    question: "What percentage should typically be added for wastage?",
-    options: [
-      "1–2%",
-      "5–10%",
-      "15–20%",
-      "25–30%"
-    ],
+    question: 'What percentage should typically be added for wastage?',
+    options: ['1–2%', '5–10%', '15–20%', '25–30%'],
     correctAnswer: 1,
-    explanation: "5–10% wastage allowance covers cutting waste, terminations, and minor unforeseen requirements."
+    explanation:
+      '5–10% wastage allowance covers cutting waste, terminations, and minor unforeseen requirements.',
   },
   {
     id: 4,
-    question: "Which tool is used to measure scaled distances on drawings?",
-    options: [
-      "Tape measure",
-      "Scale rule",
-      "Calculator",
-      "Spirit level"
-    ],
+    question: 'Which tool is used to measure scaled distances on drawings?',
+    options: ['Tape measure', 'Scale rule', 'Calculator', 'Spirit level'],
     correctAnswer: 1,
-    explanation: "A scale rule is designed specifically for measuring scaled distances on technical drawings."
+    explanation:
+      'A scale rule is designed specifically for measuring scaled distances on technical drawings.',
   },
   {
     id: 5,
-    question: "Why is it important to check site conditions during estimation?",
+    question: 'Why is it important to check site conditions during estimation?',
     options: [
-      "To meet clients",
-      "To identify obstacles and additional material needs",
-      "To take photos",
-      "To check weather"
+      'To meet clients',
+      'To identify obstacles and additional material needs',
+      'To take photos',
+      'To check weather',
     ],
     correctAnswer: 1,
-    explanation: "Site conditions reveal obstacles, existing services, and additional requirements not shown on drawings."
+    explanation:
+      'Site conditions reveal obstacles, existing services, and additional requirements not shown on drawings.',
   },
   {
     id: 6,
-    question: "Name one common error in estimating cable lengths.",
+    question: 'Name one common error in estimating cable lengths.',
     options: [
-      "Using the wrong cable type",
-      "Forgetting vertical drops or rises",
-      "Ordering too much",
-      "Using wrong colours"
+      'Using the wrong cable type',
+      'Forgetting vertical drops or rises',
+      'Ordering too much',
+      'Using wrong colours',
     ],
     correctAnswer: 1,
-    explanation: "Vertical drops, rises, and routing around obstacles are commonly forgotten when measuring from plan views."
+    explanation:
+      'Vertical drops, rises, and routing around obstacles are commonly forgotten when measuring from plan views.',
   },
   {
     id: 7,
-    question: "What should you always include besides cables and containment?",
+    question: 'What should you always include besides cables and containment?',
     options: [
-      "Tools",
-      "Fixings, clips, grommets, and small consumables",
-      "Spare parts",
-      "Test equipment"
+      'Tools',
+      'Fixings, clips, grommets, and small consumables',
+      'Spare parts',
+      'Test equipment',
     ],
     correctAnswer: 1,
-    explanation: "Small items like fixings, clips, and grommets are essential but easily forgotten in estimates."
+    explanation:
+      'Small items like fixings, clips, and grommets are essential but easily forgotten in estimates.',
   },
   {
     id: 8,
-    question: "Who should verify the materials estimate for accuracy?",
-    options: [
-      "The client",
-      "Team members or supervisors",
-      "The supplier",
-      "Nobody"
-    ],
+    question: 'Who should verify the materials estimate for accuracy?',
+    options: ['The client', 'Team members or supervisors', 'The supplier', 'Nobody'],
     correctAnswer: 1,
-    explanation: "Peer review by team members or supervisors helps catch errors and improve accuracy."
+    explanation:
+      'Peer review by team members or supervisors helps catch errors and improve accuracy.',
   },
   {
     id: 9,
-    question: "What is a benefit of using digital estimating software?",
+    question: 'What is a benefit of using digital estimating software?',
     options: [
       "It's free",
-      "Faster calculations and fewer manual errors",
-      "It works offline",
-      "It's easier to learn"
+      'Faster calculations and fewer manual errors',
+      'It works offline',
+      "It's easier to learn",
     ],
     correctAnswer: 1,
-    explanation: "Digital software speeds up calculations and reduces manual measuring errors, though site verification is still needed."
+    explanation:
+      'Digital software speeds up calculations and reduces manual measuring errors, though site verification is still needed.',
   },
   {
     id: 10,
-    question: "Give one example of a consequence of poor estimating.",
+    question: 'Give one example of a consequence of poor estimating.',
     options: [
-      "Better quality work",
-      "Cost overruns, wasted materials, or delayed project completion",
-      "Improved efficiency",
-      "Higher customer satisfaction"
+      'Better quality work',
+      'Cost overruns, wasted materials, or delayed project completion',
+      'Improved efficiency',
+      'Higher customer satisfaction',
     ],
     correctAnswer: 1,
-    explanation: "Poor estimating leads to shortages, excess materials, cost overruns, and project delays."
-  }
+    explanation:
+      'Poor estimating leads to shortages, excess materials, cost overruns, and project delays.',
+  },
 ];
 
 const practicalGuidance = [
-  "Thoroughly review all electrical drawings including layout plans, sections, elevations, and electrical schedules. Highlight key circuits, containment runs, accessories, and any special requirements.",
-  "Conduct a comprehensive site walkthrough with drawings in hand. Take measurements, photographs, and detailed notes of actual conditions, obstacles, and access routes.",
-  "Calculate material needs systematically using appropriate tools (scale rules for drawings, tape measures/laser measures on site). Break down estimates by circuit and installation area.",
-  "Apply realistic allowances for wastage (5-10%) and unforeseen site issues. Consider project complexity, installation method, and site access when determining allowances.",
-  "Create detailed, organised materials lists categorised by type (cables, containment, accessories, fixings). Include part numbers, specifications, and delivery requirements.",
-  "Cross-check estimates with experienced team members or supervisors. Use peer review to catch potential errors and improve accuracy.",
-  "Factor in delivery lead times and potential material availability issues when finalising order quantities and timing."
+  'Thoroughly review all electrical drawings including layout plans, sections, elevations, and electrical schedules. Highlight key circuits, containment runs, accessories, and any special requirements.',
+  'Conduct a comprehensive site walkthrough with drawings in hand. Take measurements, photographs, and detailed notes of actual conditions, obstacles, and access routes.',
+  'Calculate material needs systematically using appropriate tools (scale rules for drawings, tape measures/laser measures on site). Break down estimates by circuit and installation area.',
+  'Apply realistic allowances for wastage (5-10%) and unforeseen site issues. Consider project complexity, installation method, and site access when determining allowances.',
+  'Create detailed, organised materials lists categorised by type (cables, containment, accessories, fixings). Include part numbers, specifications, and delivery requirements.',
+  'Cross-check estimates with experienced team members or supervisors. Use peer review to catch potential errors and improve accuracy.',
+  'Factor in delivery lead times and potential material availability issues when finalising order quantities and timing.',
 ];
 
 const pocketGuideItems = [
-  "Review all electrical drawings thoroughly - plans, sections, schedules.",
-  "Conduct site walkthrough with drawings - confirm actual conditions.",
-  "Use appropriate measurement tools - scale rules, tape measures, laser measures.",
-  "Add realistic wastage allowances - typically 5-10% depending on complexity.",
-  "Include all consumables - fixings, clips, grommets, cable ties, markers.",
-  "Document special requirements - fire barriers, specialist fixings, access issues.",
-  "Cross-check estimates with experienced colleagues before finalising.",
-  "Consider delivery times and material availability in planning.",
-  "Keep detailed records for future reference and continuous improvement."
+  'Review all electrical drawings thoroughly - plans, sections, schedules.',
+  'Conduct site walkthrough with drawings - confirm actual conditions.',
+  'Use appropriate measurement tools - scale rules, tape measures, laser measures.',
+  'Add realistic wastage allowances - typically 5-10% depending on complexity.',
+  'Include all consumables - fixings, clips, grommets, cable ties, markers.',
+  'Document special requirements - fire barriers, specialist fixings, access issues.',
+  'Cross-check estimates with experienced colleagues before finalising.',
+  'Consider delivery times and material availability in planning.',
+  'Keep detailed records for future reference and continuous improvement.',
 ];
 
 const Module5Section4_1 = () => {
@@ -196,33 +189,40 @@ const Module5Section4_1 = () => {
 
   const faqs = [
     {
-      question: "Should I always do both a drawing estimate and a site walkthrough?",
-      answer: "Absolutely yes. Drawings provide scale, layout, and specified requirements, while site walkthroughs reveal actual physical conditions, obstacles, and practical installation challenges. This combination typically improves estimate accuracy by 15-25%."
+      question: 'Should I always do both a drawing estimate and a site walkthrough?',
+      answer:
+        'Absolutely yes. Drawings provide scale, layout, and specified requirements, while site walkthroughs reveal actual physical conditions, obstacles, and practical installation challenges. This combination typically improves estimate accuracy by 15-25%.',
     },
     {
-      question: "How do I estimate cable ties, clips, and fixings accurately?",
-      answer: "Use standard spacing rules: cable clips every 300mm for T&E cables on walls, 400mm for SWA cables, 600mm for cable trays. Check BS 7671 for specific requirements. Different surfaces (masonry, plasterboard, steel) require different fixing types and quantities."
+      question: 'How do I estimate cable ties, clips, and fixings accurately?',
+      answer:
+        'Use standard spacing rules: cable clips every 300mm for T&E cables on walls, 400mm for SWA cables, 600mm for cable trays. Check BS 7671 for specific requirements. Different surfaces (masonry, plasterboard, steel) require different fixing types and quantities.',
     },
     {
-      question: "Can digital software help with material estimation?",
-      answer: "Yes, digital take-off software like Planswift or Bluebeam significantly speeds up calculations and reduces manual measuring errors. However, always verify critical measurements on-site and cross-check software outputs for accuracy."
+      question: 'Can digital software help with material estimation?',
+      answer:
+        'Yes, digital take-off software like Planswift or Bluebeam significantly speeds up calculations and reduces manual measuring errors. However, always verify critical measurements on-site and cross-check software outputs for accuracy.',
     },
     {
       question: "What's the biggest mistake electricians make when estimating?",
-      answer: "Forgetting vertical cable runs and underestimating small consumables. Plan views don't always show floor-to-ceiling heights clearly, and items like grommets, cable ties, and additional fixings are easily overlooked but essential for proper installation."
+      answer:
+        "Forgetting vertical cable runs and underestimating small consumables. Plan views don't always show floor-to-ceiling heights clearly, and items like grommets, cable ties, and additional fixings are easily overlooked but essential for proper installation.",
     },
     {
-      question: "How do I handle estimates for refurbishment work?",
-      answer: "Refurbishments require extra caution. Allow 15-20% wastage instead of 5-10%, as existing buildings often have unexpected obstacles, asbestos issues, and structural complications not shown on drawings. Always inspect thoroughly before estimating."
+      question: 'How do I handle estimates for refurbishment work?',
+      answer:
+        'Refurbishments require extra caution. Allow 15-20% wastage instead of 5-10%, as existing buildings often have unexpected obstacles, asbestos issues, and structural complications not shown on drawings. Always inspect thoroughly before estimating.',
     },
     {
-      question: "Should I include spare materials in my estimates?",
-      answer: "For large projects, include 2-5% spare cable and key accessories for future maintenance and minor modifications. This is separate from wastage allowances and should be clearly itemised for the client."
+      question: 'Should I include spare materials in my estimates?',
+      answer:
+        'For large projects, include 2-5% spare cable and key accessories for future maintenance and minor modifications. This is separate from wastage allowances and should be clearly itemised for the client.',
     },
     {
-      question: "How accurate should my estimates be?",
-      answer: "Professional estimates should be within 5% of actual requirements for straightforward installations, 10% for complex projects. Higher variance suggests inadequate site survey or calculation errors."
-    }
+      question: 'How accurate should my estimates be?',
+      answer:
+        'Professional estimates should be within 5% of actual requirements for straightforward installations, 10% for complex projects. Higher variance suggests inadequate site survey or calculation errors.',
+    },
   ];
 
   return (
@@ -256,7 +256,8 @@ const Module5Section4_1 = () => {
               Estimating Materials from Drawings or Site Walkthroughs
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Learn to accurately estimate materials for electrical installations using technical drawings and site surveys.
+              Learn to accurately estimate materials for electrical installations using technical
+              drawings and site surveys.
             </p>
           </header>
 
@@ -296,7 +297,11 @@ const Module5Section4_1 = () => {
             </h2>
             <div className="text-white/85 space-y-4 leading-relaxed">
               <p>
-                Accurate estimation of materials is critical in electrical installation projects. Whether using technical drawings or conducting on-site walkthroughs, estimating ensures you have the right amount of cables, containment, accessories, and consumables. Poor estimating can lead to delays, shortages, overspending, or wasted resources.
+                Accurate estimation of materials is critical in electrical installation projects.
+                Whether using technical drawings or conducting on-site walkthroughs, estimating
+                ensures you have the right amount of cables, containment, accessories, and
+                consumables. Poor estimating can lead to delays, shortages, overspending, or wasted
+                resources.
               </p>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <div className="flex items-start gap-3">
@@ -304,14 +309,19 @@ const Module5Section4_1 = () => {
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
                     <p className="text-sm text-white/80">
-                      Accurate material estimation in electrical projects reduces waste by up to 30% and prevents costly delays that can impact entire construction schedules. Projects with accurate estimates show 40% fewer emergency orders and improved project profitability.
+                      Accurate material estimation in electrical projects reduces waste by up to 30%
+                      and prevents costly delays that can impact entire construction schedules.
+                      Projects with accurate estimates show 40% fewer emergency orders and improved
+                      project profitability.
                     </p>
                   </div>
                 </div>
               </div>
               <div className="p-3 rounded bg-white/5 border border-white/10">
                 <p className="text-sm text-white/80">
-                  <strong className="text-white">Industry Standard:</strong> BS 7671 requires proper planning and adequate materials to ensure safe and compliant electrical installations.
+                  <strong className="text-white">Industry Standard:</strong> BS 7671 requires proper
+                  planning and adequate materials to ensure safe and compliant electrical
+                  installations.
                 </p>
               </div>
             </div>
@@ -425,7 +435,10 @@ const Module5Section4_1 = () => {
               Importance of Accurate Estimation
             </h2>
             <div className="text-white/85 space-y-4 leading-relaxed">
-              <p>Accurate material estimation is the foundation of successful electrical installations:</p>
+              <p>
+                Accurate material estimation is the foundation of successful electrical
+                installations:
+              </p>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-3">Project Success Benefits</p>
@@ -451,7 +464,8 @@ const Module5Section4_1 = () => {
 
               <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
                 <p className="text-sm text-white/80">
-                  <strong className="text-green-400">Professional Impact:</strong> Accurate estimation demonstrates competence and builds long-term client relationships.
+                  <strong className="text-green-400">Professional Impact:</strong> Accurate
+                  estimation demonstrates competence and builds long-term client relationships.
                 </p>
               </div>
             </div>
@@ -469,11 +483,22 @@ const Module5Section4_1 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Key Steps:</p>
                 <ul className="text-sm text-white/80 space-y-2 ml-4">
-                  <li><strong>Review drawings</strong> - layouts, schedules, specifications</li>
-                  <li><strong>Identify routes</strong> - cable runs, containment paths, accessories</li>
-                  <li><strong>Use scale rules</strong> - measure distances accurately (1:50, 1:100 scales)</li>
-                  <li><strong>Apply calculations</strong> - diversity factors and load requirements</li>
-                  <li><strong>Allow wastage</strong> - typically 5–10% depending on project complexity</li>
+                  <li>
+                    <strong>Review drawings</strong> - layouts, schedules, specifications
+                  </li>
+                  <li>
+                    <strong>Identify routes</strong> - cable runs, containment paths, accessories
+                  </li>
+                  <li>
+                    <strong>Use scale rules</strong> - measure distances accurately (1:50, 1:100
+                    scales)
+                  </li>
+                  <li>
+                    <strong>Apply calculations</strong> - diversity factors and load requirements
+                  </li>
+                  <li>
+                    <strong>Allow wastage</strong> - typically 5–10% depending on project complexity
+                  </li>
                 </ul>
               </div>
 
@@ -481,12 +506,20 @@ const Module5Section4_1 = () => {
                 <p className="font-medium text-elec-yellow mb-3">Common Drawing Scales</p>
                 <div className="grid grid-cols-2 gap-3 text-sm text-white/80">
                   <div>
-                    <p><strong>Plans:</strong> 1:50 or 1:100</p>
-                    <p><strong>Details:</strong> 1:20 or 1:25</p>
+                    <p>
+                      <strong>Plans:</strong> 1:50 or 1:100
+                    </p>
+                    <p>
+                      <strong>Details:</strong> 1:20 or 1:25
+                    </p>
                   </div>
                   <div>
-                    <p><strong>Sections:</strong> 1:50</p>
-                    <p><strong>Elevations:</strong> 1:100</p>
+                    <p>
+                      <strong>Sections:</strong> 1:50
+                    </p>
+                    <p>
+                      <strong>Elevations:</strong> 1:100
+                    </p>
                   </div>
                 </div>
               </div>
@@ -515,11 +548,21 @@ const Module5Section4_1 = () => {
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Measurement Techniques</p>
                 <ul className="text-sm text-white/80 space-y-1">
-                  <li><strong>Horizontal runs:</strong> Use plan views and scale rules</li>
-                  <li><strong>Vertical runs:</strong> Check sections and elevations for heights</li>
-                  <li><strong>Cable trays:</strong> Measure all changes in direction and levels</li>
-                  <li><strong>Containment:</strong> Include all bends, tees, and reducers</li>
-                  <li><strong>Accessories:</strong> Count outlets, switches, and junction boxes</li>
+                  <li>
+                    <strong>Horizontal runs:</strong> Use plan views and scale rules
+                  </li>
+                  <li>
+                    <strong>Vertical runs:</strong> Check sections and elevations for heights
+                  </li>
+                  <li>
+                    <strong>Cable trays:</strong> Measure all changes in direction and levels
+                  </li>
+                  <li>
+                    <strong>Containment:</strong> Include all bends, tees, and reducers
+                  </li>
+                  <li>
+                    <strong>Accessories:</strong> Count outlets, switches, and junction boxes
+                  </li>
                 </ul>
               </div>
             </div>
@@ -542,17 +585,37 @@ const Module5Section4_1 = () => {
               Site Walkthroughs
             </h2>
             <div className="text-white/85 space-y-4 leading-relaxed">
-              <p>Physical site verification ensures estimates match real conditions and reveals information that drawings cannot show:</p>
+              <p>
+                Physical site verification ensures estimates match real conditions and reveals
+                information that drawings cannot show:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Essential Site Inspection Steps:</p>
                 <ul className="text-sm text-white/80 space-y-2 ml-4">
-                  <li><strong>Access verification:</strong> Check route accessibility for installation</li>
-                  <li><strong>Structural obstacles:</strong> Identify beams, existing services, HVAC systems</li>
-                  <li><strong>Floor-to-ceiling heights:</strong> Measure actual dimensions for vertical runs</li>
-                  <li><strong>Wall construction:</strong> Determine fixing requirements (masonry, plasterboard, steel)</li>
-                  <li><strong>Existing services:</strong> Note other trades' installations that may affect routes</li>
-                  <li><strong>Fire stopping:</strong> Identify compartment walls requiring special penetrations</li>
+                  <li>
+                    <strong>Access verification:</strong> Check route accessibility for installation
+                  </li>
+                  <li>
+                    <strong>Structural obstacles:</strong> Identify beams, existing services, HVAC
+                    systems
+                  </li>
+                  <li>
+                    <strong>Floor-to-ceiling heights:</strong> Measure actual dimensions for
+                    vertical runs
+                  </li>
+                  <li>
+                    <strong>Wall construction:</strong> Determine fixing requirements (masonry,
+                    plasterboard, steel)
+                  </li>
+                  <li>
+                    <strong>Existing services:</strong> Note other trades' installations that may
+                    affect routes
+                  </li>
+                  <li>
+                    <strong>Fire stopping:</strong> Identify compartment walls requiring special
+                    penetrations
+                  </li>
                 </ul>
               </div>
 
@@ -582,17 +645,30 @@ const Module5Section4_1 = () => {
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Documentation During Site Visit</p>
                 <ul className="text-sm text-white/80 space-y-1">
-                  <li><strong>Photographs:</strong> Take photos of complex routing areas and obstacles</li>
-                  <li><strong>Measurements:</strong> Record actual distances, especially vertical drops</li>
-                  <li><strong>Notes:</strong> Document special requirements and material modifications</li>
-                  <li><strong>Sketches:</strong> Draw alternative routes if necessary</li>
-                  <li><strong>Coordination:</strong> Note other trades' work that affects installation</li>
+                  <li>
+                    <strong>Photographs:</strong> Take photos of complex routing areas and obstacles
+                  </li>
+                  <li>
+                    <strong>Measurements:</strong> Record actual distances, especially vertical
+                    drops
+                  </li>
+                  <li>
+                    <strong>Notes:</strong> Document special requirements and material modifications
+                  </li>
+                  <li>
+                    <strong>Sketches:</strong> Draw alternative routes if necessary
+                  </li>
+                  <li>
+                    <strong>Coordination:</strong> Note other trades' work that affects installation
+                  </li>
                 </ul>
               </div>
 
               <div className="p-3 rounded bg-orange-500/10 border border-orange-500/20">
                 <p className="text-sm text-white/80">
-                  <strong className="text-orange-400">Professional Tip:</strong> Site conditions often differ from drawings by 10-20%—this is why experienced electricians never rely on drawings alone for material estimates.
+                  <strong className="text-orange-400">Professional Tip:</strong> Site conditions
+                  often differ from drawings by 10-20%—this is why experienced electricians never
+                  rely on drawings alone for material estimates.
                 </p>
               </div>
             </div>
@@ -619,14 +695,14 @@ const Module5Section4_1 = () => {
               <FormulaList
                 items={[
                   {
-                    text: "Cable Length with Wastage: Total Length = Measured Length × 1.1 (10% wastage)"
+                    text: 'Cable Length with Wastage: Total Length = Measured Length × 1.1 (10% wastage)',
                   },
                   {
-                    text: "Conduit Fixings: Clips Required = (Cable Length ÷ 300mm) + 1"
+                    text: 'Conduit Fixings: Clips Required = (Cable Length ÷ 300mm) + 1',
                   },
                   {
-                    text: "Trunking Couplers: Couplers = (Total Length ÷ 3m) - 1"
-                  }
+                    text: 'Trunking Couplers: Couplers = (Total Length ÷ 3m) - 1',
+                  },
                 ]}
               />
             </div>
@@ -678,7 +754,10 @@ const Module5Section4_1 = () => {
             </h2>
             <div className="space-y-3">
               {practicalGuidance.map((item, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10"
+                >
                   <span className="flex-shrink-0 w-6 h-6 bg-elec-yellow/20 text-elec-yellow rounded-full flex items-center justify-center text-sm font-medium">
                     {index + 1}
                   </span>
@@ -696,20 +775,32 @@ const Module5Section4_1 = () => {
             </h2>
             <div className="text-white/85 space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                <h3 className="font-semibold text-red-400 mb-2">Case Study: School Refurbishment Gone Wrong</h3>
+                <h3 className="font-semibold text-red-400 mb-2">
+                  Case Study: School Refurbishment Gone Wrong
+                </h3>
                 <p className="text-white/80 mb-3">
-                  An experienced electrical contractor estimated a school refurbishment project based solely on architectural drawings. The drawings showed clear ceiling spaces and straightforward cable routes. The estimate included standard 5% wastage allowance.
+                  An experienced electrical contractor estimated a school refurbishment project
+                  based solely on architectural drawings. The drawings showed clear ceiling spaces
+                  and straightforward cable routes. The estimate included standard 5% wastage
+                  allowance.
                 </p>
                 <p className="text-white/80 mb-3">
-                  <strong className="text-white">Reality on site:</strong> The existing building had extensive asbestos ceiling tiles, congested service voids with large HVAC ducts, and structural steelwork not shown on drawings. Cable routes had to be completely re-planned, requiring 40% more cable length and additional containment.
+                  <strong className="text-white">Reality on site:</strong> The existing building had
+                  extensive asbestos ceiling tiles, congested service voids with large HVAC ducts,
+                  and structural steelwork not shown on drawings. Cable routes had to be completely
+                  re-planned, requiring 40% more cable length and additional containment.
                 </p>
                 <p className="text-white/80">
-                  <strong className="text-white">Consequences:</strong> 15% material shortfall, two-week project delay, emergency delivery costs, and strained client relationship. Total additional cost exceeded £8,000 on a £45,000 project.
+                  <strong className="text-white">Consequences:</strong> 15% material shortfall,
+                  two-week project delay, emergency delivery costs, and strained client
+                  relationship. Total additional cost exceeded £8,000 on a £45,000 project.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-                <h3 className="font-semibold text-green-400 mb-2">How This Could Have Been Prevented</h3>
+                <h3 className="font-semibold text-green-400 mb-2">
+                  How This Could Have Been Prevented
+                </h3>
                 <ul className="text-white/80 text-sm space-y-1">
                   <li>• Comprehensive site survey before estimating</li>
                   <li>• Asbestos survey review (standard for buildings pre-1980)</li>
@@ -722,7 +813,10 @@ const Module5Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-white/80">
-                  <strong className="text-elec-yellow">Lesson learned:</strong> This contractor now allocates a full day for site surveys on refurbishment projects and has never had a major material shortage since. The initial time investment saves significant costs and maintains professional reputation.
+                  <strong className="text-elec-yellow">Lesson learned:</strong> This contractor now
+                  allocates a full day for site surveys on refurbishment projects and has never had
+                  a major material shortage since. The initial time investment saves significant
+                  costs and maintains professional reputation.
                 </p>
               </div>
             </div>
@@ -770,7 +864,9 @@ const Module5Section4_1 = () => {
             </h2>
             <div className="text-white/85 space-y-4 leading-relaxed">
               <p>
-                In this comprehensive subsection, you have mastered the critical skill of accurate material estimation for electrical installations. This fundamental competency directly impacts project success, profitability, and professional reputation.
+                In this comprehensive subsection, you have mastered the critical skill of accurate
+                material estimation for electrical installations. This fundamental competency
+                directly impacts project success, profitability, and professional reputation.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -799,7 +895,10 @@ const Module5Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <p className="text-white/80">
-                  <strong className="text-amber-400">Remember:</strong> Accurate estimation is both an art and a science—combining technical measurement skills with practical experience and site awareness. Every project teaches valuable lessons that improve future estimates.
+                  <strong className="text-amber-400">Remember:</strong> Accurate estimation is both
+                  an art and a science—combining technical measurement skills with practical
+                  experience and site awareness. Every project teaches valuable lessons that improve
+                  future estimates.
                 </p>
               </div>
             </div>

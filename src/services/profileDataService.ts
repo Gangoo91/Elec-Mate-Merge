@@ -7,7 +7,7 @@
  * 3. Account Profile (fallback)
  */
 
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 // Unified inspector details interface for form auto-fill
 export interface InspectorDetails {
@@ -92,10 +92,15 @@ async function getElecIdData(userId: string): Promise<ProfileDataResult | null> 
 
   return {
     source: 'elec_id',
-    confidence: elecIdProfile.verification_tier === 'verified' || elecIdProfile.verification_tier === 'premium'
-      ? 'verified'
-      : 'user_entered',
-    isVerified: elecIdProfile.is_verified || elecIdProfile.verification_tier === 'verified' || elecIdProfile.verification_tier === 'premium',
+    confidence:
+      elecIdProfile.verification_tier === 'verified' ||
+      elecIdProfile.verification_tier === 'premium'
+        ? 'verified'
+        : 'user_entered',
+    isVerified:
+      elecIdProfile.is_verified ||
+      elecIdProfile.verification_tier === 'verified' ||
+      elecIdProfile.verification_tier === 'premium',
     elecIdNumber: elecIdProfile.elec_id_number,
     data: {
       name: userProfile?.full_name || '',

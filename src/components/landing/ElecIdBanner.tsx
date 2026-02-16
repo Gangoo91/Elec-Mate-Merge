@@ -15,7 +15,10 @@ export const ElecIdBanner = () => {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <section ref={ref} className="w-full py-16 sm:py-20 bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-yellow-500/10 border-y border-yellow-500/20">
+    <section
+      ref={ref}
+      className="w-full py-16 sm:py-20 bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-yellow-500/10 border-y border-yellow-500/20"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Left: Content */}
@@ -37,8 +40,8 @@ export const ElecIdBanner = () => {
             </h2>
 
             <p className="text-white/70 text-lg mb-6 leading-relaxed">
-              A professional identity for UK electricians. Verify your qualifications,
-              share credentials instantly, and build trust with clients.
+              A professional identity for UK electricians. Verify your qualifications, share
+              credentials instantly, and build trust with clients.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-8">
@@ -71,14 +74,14 @@ export const ElecIdBanner = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div
-              className="relative w-[320px] aspect-[1.6/1] rounded-2xl bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 p-[2px] shadow-2xl shadow-yellow-500/20 touch-manipulation transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
-            >
+            <div className="relative w-[320px] aspect-[1.6/1] rounded-2xl bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 p-[2px] shadow-2xl shadow-yellow-500/20 touch-manipulation transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]">
               <div className="absolute inset-[2px] rounded-2xl bg-neutral-900 p-5 flex flex-col justify-between">
                 {/* Top row */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-xs text-white/50 uppercase tracking-wider mb-1">UK Electrical Professional</div>
+                    <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                      UK Electrical Professional
+                    </div>
                     <div className="text-lg font-bold text-white">ELEC-ID</div>
                   </div>
                   <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center">

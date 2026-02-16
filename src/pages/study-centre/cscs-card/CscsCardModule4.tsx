@@ -1,45 +1,45 @@
-import { ArrowLeft, FlaskConical, AlertTriangle, Volume2, Leaf } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, FlaskConical, AlertTriangle, Volume2, Leaf } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "COSHH Essentials",
+    title: 'COSHH Essentials',
     icon: FlaskConical,
     description:
-      "COSHH Regulations 2002, safety data sheets, COSHH assessment, exposure controls, and health surveillance",
+      'COSHH Regulations 2002, safety data sheets, COSHH assessment, exposure controls, and health surveillance',
   },
   {
     id: 2,
-    title: "Asbestos Awareness",
+    title: 'Asbestos Awareness',
     icon: AlertTriangle,
     description:
-      "Asbestos types, where found, health effects, duty to manage, and what to do if you discover suspected asbestos",
+      'Asbestos types, where found, health effects, duty to manage, and what to do if you discover suspected asbestos',
   },
   {
     id: 3,
-    title: "Noise & Vibration",
+    title: 'Noise & Vibration',
     icon: Volume2,
     description:
-      "Noise exposure limits, hearing protection, audiometry, hand-arm vibration syndrome, and exposure action values",
+      'Noise exposure limits, hearing protection, audiometry, hand-arm vibration syndrome, and exposure action values',
   },
   {
     id: 4,
-    title: "Environmental Protection",
+    title: 'Environmental Protection',
     icon: Leaf,
     description:
-      "Waste management, water pollution prevention, dust and emission controls, and sustainable site practices",
+      'Waste management, water pollution prevention, dust and emission controls, and sustainable site practices',
   },
 ];
 
 export default function CscsCardModule4() {
   useSEO({
-    title: "Module 4: Hazardous Substances & Environmental | CSCS Card Preparation",
+    title: 'Module 4: Hazardous Substances & Environmental | CSCS Card Preparation',
     description:
-      "Learn about COSHH, asbestos awareness, noise and vibration exposure, and environmental protection for the CSCS HS&E test.",
+      'Learn about COSHH, asbestos awareness, noise and vibration exposure, and environmental protection for the CSCS HS&E test.',
   });
 
   return (

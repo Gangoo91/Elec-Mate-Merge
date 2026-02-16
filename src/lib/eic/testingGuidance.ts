@@ -12,9 +12,7 @@ export interface TestingGuidanceStep {
   safetyNotes: string[];
 }
 
-export function generateTestingGuidance(
-  circuit: EICCircuitData
-): TestingGuidanceStep[] {
+export function generateTestingGuidance(circuit: EICCircuitData): TestingGuidanceStep[] {
   const guidance: TestingGuidanceStep[] = [];
 
   // Test 1: Continuity of Protective Conductors (R1+R2)
@@ -33,13 +31,13 @@ export function generateTestingGuidance(
     equipment: [
       'Low resistance ohmmeter',
       'Test leads (long enough to reach circuit end)',
-      'Temporary link (for connecting L-CPC at furthest point)'
+      'Temporary link (for connecting L-CPC at furthest point)',
     ],
     safetyNotes: [
       '⚠️ Ensure circuit is isolated before testing',
       '⚠️ Check test leads for continuity before use',
-      '⚠️ Remove any parallel paths that may affect readings'
-    ]
+      '⚠️ Remove any parallel paths that may affect readings',
+    ],
   });
 
   // Test 2: Insulation Resistance
@@ -59,14 +57,14 @@ export function generateTestingGuidance(
     equipment: [
       'Insulation resistance tester (500V DC)',
       'Test leads',
-      'Warning notices for equipment'
+      'Warning notices for equipment',
     ],
     safetyNotes: [
       '⚠️ Disconnect or protect all electronic equipment',
       '⚠️ Ensure circuit is isolated',
       '⚠️ Discharge capacitance after testing',
-      '⚠️ Do not exceed 500V for SELV/PELV circuits'
-    ]
+      '⚠️ Do not exceed 500V for SELV/PELV circuits',
+    ],
   });
 
   // Test 3: Polarity
@@ -83,17 +81,14 @@ export function generateTestingGuidance(
    - For switches: Check switching is in line conductor only
 3. Verify ${circuit.polarity}
 4. Record result on EIC Schedule`,
-    acceptanceCriteria: 'Correct polarity throughout - line conductor to switching contacts and center contacts',
-    equipment: [
-      'Socket tester (for socket circuits)',
-      'Continuity tester',
-      'Multimeter'
-    ],
+    acceptanceCriteria:
+      'Correct polarity throughout - line conductor to switching contacts and center contacts',
+    equipment: ['Socket tester (for socket circuits)', 'Continuity tester', 'Multimeter'],
     safetyNotes: [
       '⚠️ Can be tested live or dead',
       '⚠️ If testing live, use appropriate PPE',
-      '⚠️ Incorrect polarity is a dangerous fault - must be corrected'
-    ]
+      '⚠️ Incorrect polarity is a dangerous fault - must be corrected',
+    ],
   });
 
   // Test 4: Earth Fault Loop Impedance (Zs)
@@ -111,14 +106,14 @@ export function generateTestingGuidance(
     equipment: [
       'Earth fault loop impedance tester',
       'Test leads',
-      'Socket adapter (if testing socket circuit)'
+      'Socket adapter (if testing socket circuit)',
     ],
     safetyNotes: [
       '⚠️ Circuit must be live for this test',
       '⚠️ Use appropriate PPE',
       '⚠️ Test may briefly disconnect RCDs - warn occupants',
-      '⚠️ High Zs readings indicate dangerous fault - isolate and investigate'
-    ]
+      '⚠️ High Zs readings indicate dangerous fault - isolate and investigate',
+    ],
   });
 
   // Test 5: RCD Operation (if applicable)
@@ -140,17 +135,13 @@ export function generateTestingGuidance(
    - Result: ${circuit.rcdTestButton || 'To be tested'}
 4. Record all results on EIC Schedule`,
       acceptanceCriteria: `1× IΔn: ${circuit.rcdOneX || '< 300ms'}\n5× IΔn: < 40ms\nTest button: Must trip`,
-      equipment: [
-        'RCD tester',
-        'Test leads',
-        'Socket adapter (if applicable)'
-      ],
+      equipment: ['RCD tester', 'Test leads', 'Socket adapter (if applicable)'],
       safetyNotes: [
         '⚠️ Circuit must be live for this test',
         '⚠️ Test will cause temporary disconnection',
         '⚠️ Warn occupants before testing',
-        '⚠️ RCD that fails to trip is a dangerous fault'
-      ]
+        '⚠️ RCD that fails to trip is a dangerous fault',
+      ],
     });
   }
 
@@ -166,14 +157,12 @@ export function generateTestingGuidance(
 5. Verify indicator lights show normal operation
 6. Record result: ${circuit.afddTest}`,
       acceptanceCriteria: 'AFDD trips on test button operation',
-      equipment: [
-        'None required (built-in test function)'
-      ],
+      equipment: ['None required (built-in test function)'],
       safetyNotes: [
         '⚠️ Test button only verifies internal circuitry',
         '⚠️ Does not test arc detection capability',
-        '⚠️ For full testing, specialist equipment required'
-      ]
+        '⚠️ For full testing, specialist equipment required',
+      ],
     });
   }
 
@@ -189,15 +178,12 @@ export function generateTestingGuidance(
 6. Record any defects or observations
 7. Result: ${circuit.functionalTesting || 'To be completed'}`,
     acceptanceCriteria: 'All equipment operates correctly and safely',
-    equipment: [
-      'Visual inspection',
-      'Load testing equipment (if applicable)'
-    ],
+    equipment: ['Visual inspection', 'Load testing equipment (if applicable)'],
     safetyNotes: [
       '⚠️ Observe equipment during initial energization',
       '⚠️ Check for abnormal sounds, smells, or heat',
-      '⚠️ Verify correct rotation for three-phase motors'
-    ]
+      '⚠️ Verify correct rotation for three-phase motors',
+    ],
   });
 
   return guidance;
@@ -218,43 +204,43 @@ export function getTestingSequence(): {
       order: 1,
       testName: 'Continuity of Protective Conductors (R1+R2)',
       circuitState: 'isolated',
-      priority: 'critical'
+      priority: 'critical',
     },
     {
       order: 2,
       testName: 'Insulation Resistance',
       circuitState: 'isolated',
-      priority: 'critical'
+      priority: 'critical',
     },
     {
       order: 3,
       testName: 'Polarity',
       circuitState: 'isolated',
-      priority: 'critical'
+      priority: 'critical',
     },
     {
       order: 4,
       testName: 'Earth Fault Loop Impedance (Zs)',
       circuitState: 'energized',
-      priority: 'critical'
+      priority: 'critical',
     },
     {
       order: 5,
       testName: 'RCD Operation',
       circuitState: 'energized',
-      priority: 'essential'
+      priority: 'essential',
     },
     {
       order: 6,
       testName: 'AFDD Testing',
       circuitState: 'energized',
-      priority: 'essential'
+      priority: 'essential',
     },
     {
       order: 7,
       testName: 'Functional Testing',
       circuitState: 'energized',
-      priority: 'functional'
-    }
+      priority: 'functional',
+    },
   ];
 }

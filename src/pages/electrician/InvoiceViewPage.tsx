@@ -1,13 +1,30 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Download, Edit, CheckCircle, AlertCircle, ArrowLeft, User, Calendar, Clock, Phone, Mail, MapPin, FileText, Loader2, Send, Trash2, PoundSterling } from "lucide-react";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { Quote } from "@/types/quote";
-import { format, isPast, differenceInDays } from "date-fns";
-import { toast } from "@/hooks/use-toast";
+import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Download,
+  Edit,
+  CheckCircle,
+  AlertCircle,
+  ArrowLeft,
+  User,
+  Calendar,
+  Clock,
+  Phone,
+  Mail,
+  MapPin,
+  FileText,
+  Loader2,
+  Send,
+  Trash2,
+  PoundSterling,
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { Quote } from '@/types/quote';
+import { format, isPast, differenceInDays } from 'date-fns';
+import { toast } from '@/hooks/use-toast';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,8 +34,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
+} from '@/components/ui/alert-dialog';
+import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
 
 const InvoiceViewPage = () => {
   const { id } = useParams();
@@ -33,10 +50,15 @@ const InvoiceViewPage = () => {
 
   const formatCurrency = (amount: number | undefined | null) => {
     const safeAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
-    return new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(safeAmount);
+    return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+      safeAmount
+    );
   };
 
-  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+  const pollPdfDownloadUrl = async (
+    documentId: string,
+    accessToken: string
+  ): Promise<string | null> => {
     for (let i = 0; i < 45; i++) {
       const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { documentId, mode: 'status' },
@@ -55,10 +77,16 @@ const InvoiceViewPage = () => {
   const fetchInvoice = async () => {
     try {
       setIsLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       if (!user) {
-        toast({ title: 'Authentication required', description: 'Please sign in to view invoice', variant: 'destructive' });
+        toast({
+          title: 'Authentication required',
+          description: 'Please sign in to view invoice',
+          variant: 'destructive',
+        });
         return;
       }
 
@@ -94,7 +122,9 @@ const InvoiceViewPage = () => {
         invoice_date: data.invoice_date ? new Date(data.invoice_date) : undefined,
         invoice_due_date: data.invoice_due_date ? new Date(data.invoice_due_date) : undefined,
         invoice_status: data.invoice_status as any,
-        work_completion_date: data.work_completion_date ? new Date(data.work_completion_date) : undefined,
+        work_completion_date: data.work_completion_date
+          ? new Date(data.work_completion_date)
+          : undefined,
         jobDetails: data.job_details as any,
         pdf_url: data.pdf_url,
         pdf_generated_at: data.pdf_generated_at,
@@ -102,13 +132,19 @@ const InvoiceViewPage = () => {
         external_invoice_id: data.external_invoice_id,
         external_invoice_provider: data.external_invoice_provider,
         external_invoice_url: data.external_invoice_url,
-        external_invoice_synced_at: data.external_invoice_synced_at ? new Date(data.external_invoice_synced_at) : undefined,
+        external_invoice_synced_at: data.external_invoice_synced_at
+          ? new Date(data.external_invoice_synced_at)
+          : undefined,
       };
 
       setInvoice(quoteData);
     } catch (error) {
       console.error('Error fetching invoice:', error);
-      toast({ title: 'Error loading invoice', description: 'Failed to load invoice. Please try again.', variant: 'destructive' });
+      toast({
+        title: 'Error loading invoice',
+        description: 'Failed to load invoice. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -119,7 +155,9 @@ const InvoiceViewPage = () => {
     setIsDownloading(true);
 
     try {
-      const pdfIsCurrent = invoice.pdf_url && invoice.pdf_generated_at &&
+      const pdfIsCurrent =
+        invoice.pdf_url &&
+        invoice.pdf_generated_at &&
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
 
       if (pdfIsCurrent) {
@@ -128,7 +166,9 @@ const InvoiceViewPage = () => {
         return;
       }
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data: companyData } = await supabase
@@ -137,18 +177,23 @@ const InvoiceViewPage = () => {
         .eq('user_id', user.id)
         .single();
 
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: { quote: invoice, companyProfile: companyData, invoice_mode: true },
-        headers: { Authorization: `Bearer ${session.access_token}` }
-      });
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-pdf-monkey',
+        {
+          body: { quote: invoice, companyProfile: companyData, invoice_mode: true },
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        }
+      );
 
       let pdfUrl: string | undefined = pdfData?.downloadUrl;
       const documentId: string | undefined = pdfData?.documentId;
       if (!pdfUrl && documentId) {
-        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        pdfUrl = (await pollPdfDownloadUrl(documentId, session.access_token)) || undefined;
       }
 
       if (pdfError || !pdfUrl) throw new Error('Failed to generate PDF');
@@ -156,14 +201,22 @@ const InvoiceViewPage = () => {
       if (pdfUrl && documentId) {
         await supabase
           .from('quotes')
-          .update({ pdf_document_id: documentId, pdf_url: pdfUrl, pdf_generated_at: new Date().toISOString() })
+          .update({
+            pdf_document_id: documentId,
+            pdf_url: pdfUrl,
+            pdf_generated_at: new Date().toISOString(),
+          })
           .eq('id', invoice.id);
       }
 
       window.open(pdfUrl, '_blank');
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
-      toast({ title: 'Error', description: 'Failed to generate invoice PDF.', variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: 'Failed to generate invoice PDF.',
+        variant: 'destructive',
+      });
     } finally {
       setIsDownloading(false);
     }
@@ -178,17 +231,24 @@ const InvoiceViewPage = () => {
         .from('quotes')
         .update({
           invoice_status: 'paid',
-          invoice_paid_at: new Date().toISOString()
+          invoice_paid_at: new Date().toISOString(),
         })
         .eq('id', invoice.id);
 
       if (error) throw error;
 
-      toast({ title: 'Invoice marked as paid', description: `Invoice ${invoice.invoice_number} has been marked as paid.` });
+      toast({
+        title: 'Invoice marked as paid',
+        description: `Invoice ${invoice.invoice_number} has been marked as paid.`,
+      });
       setShowMarkPaidDialog(false);
       fetchInvoice();
     } catch (error) {
-      toast({ title: 'Error', description: 'Failed to mark invoice as paid.', variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: 'Failed to mark invoice as paid.',
+        variant: 'destructive',
+      });
     } finally {
       setIsMarkingPaid(false);
     }
@@ -207,13 +267,16 @@ const InvoiceViewPage = () => {
           invoice_number: null,
           invoice_status: null,
           invoice_date: null,
-          invoice_due_date: null
+          invoice_due_date: null,
         })
         .eq('id', invoice.id);
 
       if (error) throw error;
 
-      toast({ title: 'Invoice deleted', description: `Invoice ${invoice.invoice_number} has been removed.` });
+      toast({
+        title: 'Invoice deleted',
+        description: `Invoice ${invoice.invoice_number} has been removed.`,
+      });
       navigate('/electrician/invoices');
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to delete invoice.', variant: 'destructive' });
@@ -227,7 +290,8 @@ const InvoiceViewPage = () => {
   const getStatusInfo = () => {
     if (!invoice) return null;
 
-    const isOverdue = invoice.invoice_due_date &&
+    const isOverdue =
+      invoice.invoice_due_date &&
       isPast(new Date(invoice.invoice_due_date)) &&
       invoice.invoice_status !== 'paid';
 
@@ -236,7 +300,7 @@ const InvoiceViewPage = () => {
         gradient: 'from-emerald-500/20 via-emerald-600/10 to-transparent',
         badge: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
         label: 'Paid',
-        icon: CheckCircle
+        icon: CheckCircle,
       };
     }
     if (isOverdue || invoice.invoice_status === 'overdue') {
@@ -244,7 +308,7 @@ const InvoiceViewPage = () => {
         gradient: 'from-red-500/20 via-red-600/10 to-transparent',
         badge: 'bg-red-500/20 text-red-400 border-red-500/30',
         label: 'Overdue',
-        icon: AlertCircle
+        icon: AlertCircle,
       };
     }
     if (invoice.invoice_status === 'sent') {
@@ -252,14 +316,14 @@ const InvoiceViewPage = () => {
         gradient: 'from-blue-500/20 via-blue-600/10 to-transparent',
         badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
         label: 'Sent',
-        icon: Send
+        icon: Send,
       };
     }
     return {
       gradient: 'from-zinc-500/20 via-zinc-600/10 to-transparent',
       badge: 'bg-zinc-500/20 text-zinc-400 border-zinc-500/30',
       label: 'Draft',
-      icon: FileText
+      icon: FileText,
     };
   };
 
@@ -295,9 +359,7 @@ const InvoiceViewPage = () => {
           <p className="text-muted-foreground">
             The invoice you're looking for doesn't exist or may have been deleted.
           </p>
-          <Button onClick={() => navigate('/electrician/invoices')}>
-            View All Invoices
-          </Button>
+          <Button onClick={() => navigate('/electrician/invoices')}>View All Invoices</Button>
         </div>
       </div>
     );
@@ -337,13 +399,17 @@ const InvoiceViewPage = () => {
         {/* Desktop: Two Column Header Layout */}
         <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Hero Card - Takes 2 cols on desktop */}
-          <div className={`lg:col-span-2 rounded-2xl bg-gradient-to-br ${statusInfo?.gradient} border p-6`}>
+          <div
+            className={`lg:col-span-2 rounded-2xl bg-gradient-to-br ${statusInfo?.gradient} border p-6`}
+          >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground font-medium">
                   {invoice.invoice_status === 'paid' ? 'Amount Paid' : 'Amount Due'}
                 </p>
-                <p className="text-4xl sm:text-5xl font-bold text-foreground">{formatCurrency(invoice.total)}</p>
+                <p className="text-4xl sm:text-5xl font-bold text-foreground">
+                  {formatCurrency(invoice.total)}
+                </p>
                 <p className="text-lg text-muted-foreground">{invoice.invoice_number}</p>
               </div>
               <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
@@ -445,25 +511,39 @@ const InvoiceViewPage = () => {
             </h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">Invoice Number</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                  Invoice Number
+                </span>
                 <p className="font-semibold text-base">{invoice.invoice_number}</p>
               </div>
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">Status</span>
-                <p className="font-semibold text-base capitalize">{invoice.invoice_status || 'Draft'}</p>
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                  Status
+                </span>
+                <p className="font-semibold text-base capitalize">
+                  {invoice.invoice_status || 'Draft'}
+                </p>
               </div>
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">Issue Date</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                  Issue Date
+                </span>
                 <p className="font-medium flex items-center gap-1.5">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
                   {invoice.invoice_date ? format(invoice.invoice_date, 'dd MMM yyyy') : 'Not set'}
                 </p>
               </div>
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">Due Date</span>
-                <p className={`font-medium flex items-center gap-1.5 ${daysOverdue ? 'text-destructive' : ''}`}>
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                  Due Date
+                </span>
+                <p
+                  className={`font-medium flex items-center gap-1.5 ${daysOverdue ? 'text-destructive' : ''}`}
+                >
                   <Clock className="h-4 w-4" />
-                  {invoice.invoice_due_date ? format(invoice.invoice_due_date, 'dd MMM yyyy') : 'Not set'}
+                  {invoice.invoice_due_date
+                    ? format(invoice.invoice_due_date, 'dd MMM yyyy')
+                    : 'Not set'}
                 </p>
               </div>
             </div>
@@ -481,7 +561,10 @@ const InvoiceViewPage = () => {
                 {invoice.client?.email && (
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Mail className="h-4 w-4 flex-shrink-0" />
-                    <a href={`mailto:${invoice.client.email}`} className="hover:text-primary truncate">
+                    <a
+                      href={`mailto:${invoice.client.email}`}
+                      className="hover:text-primary truncate"
+                    >
                       {invoice.client.email}
                     </a>
                   </div>
@@ -536,11 +619,19 @@ const InvoiceViewPage = () => {
                     <div className="hidden sm:grid sm:grid-cols-12 gap-4 items-center">
                       <div className="col-span-6">
                         <p className="font-medium">{item.description || item.name}</p>
-                        {item.notes && <p className="text-xs text-muted-foreground mt-0.5">{item.notes}</p>}
+                        {item.notes && (
+                          <p className="text-xs text-muted-foreground mt-0.5">{item.notes}</p>
+                        )}
                       </div>
-                      <div className="col-span-2 text-right text-muted-foreground">{item.quantity}</div>
-                      <div className="col-span-2 text-right text-muted-foreground">{formatCurrency(item.unitPrice || item.price || 0)}</div>
-                      <div className="col-span-2 text-right font-semibold">{formatCurrency(lineTotal)}</div>
+                      <div className="col-span-2 text-right text-muted-foreground">
+                        {item.quantity}
+                      </div>
+                      <div className="col-span-2 text-right text-muted-foreground">
+                        {formatCurrency(item.unitPrice || item.price || 0)}
+                      </div>
+                      <div className="col-span-2 text-right font-semibold">
+                        {formatCurrency(lineTotal)}
+                      </div>
                     </div>
                   </div>
                 );
@@ -570,7 +661,9 @@ const InvoiceViewPage = () => {
               )}
               {(invoice.vatAmount ?? 0) > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">VAT ({invoice.settings?.vatRate || 20}%)</span>
+                  <span className="text-muted-foreground">
+                    VAT ({invoice.settings?.vatRate || 20}%)
+                  </span>
                   <span className="font-medium">{formatCurrency(invoice.vatAmount)}</span>
                 </div>
               )}
@@ -597,7 +690,8 @@ const InvoiceViewPage = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Mark Invoice as Paid?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will mark invoice {invoice.invoice_number} as paid. The payment date will be recorded as today.
+              This will mark invoice {invoice.invoice_number} as paid. The payment date will be
+              recorded as today.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

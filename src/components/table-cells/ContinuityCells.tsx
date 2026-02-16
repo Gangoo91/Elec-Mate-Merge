@@ -10,7 +10,11 @@ interface ContinuityCellsProps {
   validation: TestValidationResults;
 }
 
-const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({ result, onUpdate, validation }) => {
+const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
+  result,
+  onUpdate,
+  validation,
+}) => {
   return (
     <>
       {/* Column 16: r₁ (line) */}

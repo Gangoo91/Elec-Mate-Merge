@@ -1,4 +1,3 @@
-
 export interface CourseUnit {
   id: string;
   title: string;

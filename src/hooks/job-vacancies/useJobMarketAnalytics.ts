@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface RegionStats {
   region: string;
@@ -52,22 +52,27 @@ const extractRegion = (location: string): string => {
   if (loc.includes('london') || loc.includes('central london')) return 'London';
   if (loc.includes('manchester') || loc.includes('salford')) return 'Manchester';
   if (loc.includes('birmingham') || loc.includes('west midlands')) return 'Birmingham';
-  if (loc.includes('leeds') || loc.includes('bradford') || loc.includes('wakefield')) return 'Leeds';
-  if (loc.includes('glasgow') || loc.includes('edinburgh') || loc.includes('scotland')) return 'Scotland';
+  if (loc.includes('leeds') || loc.includes('bradford') || loc.includes('wakefield'))
+    return 'Leeds';
+  if (loc.includes('glasgow') || loc.includes('edinburgh') || loc.includes('scotland'))
+    return 'Scotland';
   if (loc.includes('liverpool') || loc.includes('merseyside')) return 'Liverpool';
   if (loc.includes('bristol') || loc.includes('bath')) return 'Bristol';
   if (loc.includes('sheffield') || loc.includes('south yorkshire')) return 'Sheffield';
-  if (loc.includes('newcastle') || loc.includes('tyne') || loc.includes('sunderland')) return 'Newcastle';
+  if (loc.includes('newcastle') || loc.includes('tyne') || loc.includes('sunderland'))
+    return 'Newcastle';
   if (loc.includes('nottingham')) return 'Nottingham';
   if (loc.includes('cardiff') || loc.includes('wales') || loc.includes('swansea')) return 'Wales';
   if (loc.includes('brighton') || loc.includes('sussex')) return 'Brighton';
   if (loc.includes('cambridge') || loc.includes('east anglia')) return 'Cambridge';
   if (loc.includes('oxford') || loc.includes('oxfordshire')) return 'Oxford';
   if (loc.includes('reading') || loc.includes('berkshire')) return 'Reading';
-  if (loc.includes('southampton') || loc.includes('portsmouth') || loc.includes('hampshire')) return 'Southampton';
+  if (loc.includes('southampton') || loc.includes('portsmouth') || loc.includes('hampshire'))
+    return 'Southampton';
   if (loc.includes('leicester') || loc.includes('leicestershire')) return 'Leicester';
   if (loc.includes('coventry') || loc.includes('warwickshire')) return 'Coventry';
-  if (loc.includes('plymouth') || loc.includes('devon') || loc.includes('cornwall')) return 'Southwest';
+  if (loc.includes('plymouth') || loc.includes('devon') || loc.includes('cornwall'))
+    return 'Southwest';
   if (loc.includes('norwich') || loc.includes('norfolk')) return 'Norwich';
 
   // Check for broader regions
@@ -128,22 +133,25 @@ export const useJobMarketAnalytics = () => {
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-      const newJobsToday = jobs.filter(j => new Date(j.posted_date) >= today).length;
-      const newJobsThisWeek = jobs.filter(j => new Date(j.posted_date) >= weekAgo).length;
+      const newJobsToday = jobs.filter((j) => new Date(j.posted_date) >= today).length;
+      const newJobsThisWeek = jobs.filter((j) => new Date(j.posted_date) >= weekAgo).length;
 
       // Salary analysis
-      const salaries = jobs.map(j => parseSalary(j.salary)).filter(s => s > 10000 && s < 200000);
-      const averageSalary = salaries.length > 0
-        ? Math.round(salaries.reduce((a, b) => a + b, 0) / salaries.length)
-        : 0;
+      const salaries = jobs
+        .map((j) => parseSalary(j.salary))
+        .filter((s) => s > 10000 && s < 200000);
+      const averageSalary =
+        salaries.length > 0 ? Math.round(salaries.reduce((a, b) => a + b, 0) / salaries.length) : 0;
       const sortedSalaries = [...salaries].sort((a, b) => a - b);
-      const medianSalary = sortedSalaries.length > 0
-        ? sortedSalaries[Math.floor(sortedSalaries.length / 2)]
-        : 0;
+      const medianSalary =
+        sortedSalaries.length > 0 ? sortedSalaries[Math.floor(sortedSalaries.length / 2)] : 0;
 
       // Region stats
-      const regionMap = new Map<string, { count: number; salarySum: number; salaryCount: number }>();
-      jobs.forEach(job => {
+      const regionMap = new Map<
+        string,
+        { count: number; salarySum: number; salaryCount: number }
+      >();
+      jobs.forEach((job) => {
         const region = extractRegion(job.location || '');
         const salary = parseSalary(job.salary);
         const existing = regionMap.get(region) || { count: 0, salarySum: 0, salaryCount: 0 };
@@ -166,7 +174,7 @@ export const useJobMarketAnalytics = () => {
 
       // Job type stats
       const typeMap = new Map<string, number>();
-      jobs.forEach(job => {
+      jobs.forEach((job) => {
         const type = normaliseJobType(job.type);
         typeMap.set(type, (typeMap.get(type) || 0) + 1);
       });
@@ -189,8 +197,8 @@ export const useJobMarketAnalytics = () => {
         { range: '£50k+', min: 50000, max: Infinity },
       ];
 
-      const salaryBands: SalaryBand[] = bands.map(band => {
-        const count = salaries.filter(s => s >= band.min && s < band.max).length;
+      const salaryBands: SalaryBand[] = bands.map((band) => {
+        const count = salaries.filter((s) => s >= band.min && s < band.max).length;
         return {
           range: band.range,
           count,
@@ -200,7 +208,7 @@ export const useJobMarketAnalytics = () => {
 
       // Top companies
       const companyMap = new Map<string, number>();
-      jobs.forEach(job => {
+      jobs.forEach((job) => {
         const company = job.company
           .replace(/\s*(Recruitment|Ltd|Limited|PLC|Inc|Group|Agency)\.?$/gi, '')
           .trim();

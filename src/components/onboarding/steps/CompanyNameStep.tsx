@@ -16,13 +16,13 @@ export function CompanyNameStep({ formData, onChange }: StepProps) {
           <Building2 className="h-10 w-10 text-elec-yellow" />
         </div>
         <h3 className="text-xl font-bold mb-2">What's your business name?</h3>
-        <p className="text-muted-foreground">
-          This will appear on all your quotes and invoices
-        </p>
+        <p className="text-muted-foreground">This will appear on all your quotes and invoices</p>
       </div>
 
       <div>
-        <Label htmlFor="company-name" className="text-base">Company Name</Label>
+        <Label htmlFor="company-name" className="text-base">
+          Company Name
+        </Label>
         <Input
           id="company-name"
           value={formData.companyName}
@@ -39,7 +39,8 @@ export function CompanyNameStep({ formData, onChange }: StepProps) {
           <div className="text-sm">
             <p className="font-medium mb-1">Why we need this</p>
             <p className="text-muted-foreground">
-              Your company name builds trust and professionalism. It appears prominently on every quote and invoice you send to clients.
+              Your company name builds trust and professionalism. It appears prominently on every
+              quote and invoice you send to clients.
             </p>
           </div>
         </div>

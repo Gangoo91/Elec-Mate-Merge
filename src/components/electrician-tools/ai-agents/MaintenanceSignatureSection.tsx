@@ -1,6 +1,6 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SignaturePad } from "@/components/electrician-tools/site-safety/common/SignaturePad";
-import { PenTool } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { SignaturePad } from '@/components/electrician-tools/site-safety/common/SignaturePad';
+import { PenTool } from 'lucide-react';
 
 interface MaintenanceSignatureSectionProps {
   technicianSignature: {
@@ -21,7 +21,7 @@ export const MaintenanceSignatureSection = ({
   technicianSignature,
   supervisorSignature,
   onTechnicianChange,
-  onSupervisorChange
+  onSupervisorChange,
 }: MaintenanceSignatureSectionProps) => {
   return (
     <Card className="border-elec-yellow/30 bg-elec-dark">
@@ -31,7 +31,8 @@ export const MaintenanceSignatureSection = ({
           Sign-Off Required
         </CardTitle>
         <CardDescription>
-          Both signatures required before PDF can be downloaded. Digital signatures are legally binding.
+          Both signatures required before PDF can be downloaded. Digital signatures are legally
+          binding.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -57,7 +58,11 @@ export const MaintenanceSignatureSection = ({
 
         <div className="text-xs text-muted-foreground bg-elec-gray/30 p-3 rounded-md border border-elec-yellow/20">
           <p className="font-semibold mb-1">Legal Notice:</p>
-          <p>By signing above, you confirm this maintenance work was completed in accordance with BS 7671:2018+A3:2024 standards. Signatures are timestamped and embedded in the PDF for audit trail purposes.</p>
+          <p>
+            By signing above, you confirm this maintenance work was completed in accordance with BS
+            7671:2018+A3:2024 standards. Signatures are timestamped and embedded in the PDF for
+            audit trail purposes.
+          </p>
         </div>
       </CardContent>
     </Card>

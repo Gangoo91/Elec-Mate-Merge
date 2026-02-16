@@ -27,8 +27,16 @@ const customerSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
   phone: z.string().max(20, 'Phone must be less than 20 characters').optional().or(z.literal('')),
-  address: z.string().max(500, 'Address must be less than 500 characters').optional().or(z.literal('')),
-  notes: z.string().max(1000, 'Notes must be less than 1000 characters').optional().or(z.literal('')),
+  address: z
+    .string()
+    .max(500, 'Address must be less than 500 characters')
+    .optional()
+    .or(z.literal('')),
+  notes: z
+    .string()
+    .max(1000, 'Notes must be less than 1000 characters')
+    .optional()
+    .or(z.literal('')),
 });
 
 type CustomerFormData = z.infer<typeof customerSchema>;
@@ -70,14 +78,14 @@ const FormContent = ({
         className="h-12 bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground rounded-xl"
         placeholder="Enter customer name"
       />
-      {errors.name && (
-        <p className="text-sm text-red-400">{errors.name.message}</p>
-      )}
+      {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
     </div>
 
     {/* Email */}
     <div className="space-y-2">
-      <Label htmlFor="email" className="text-sm font-medium text-foreground">Email</Label>
+      <Label htmlFor="email" className="text-sm font-medium text-foreground">
+        Email
+      </Label>
       <Input
         id="email"
         type="email"
@@ -85,28 +93,28 @@ const FormContent = ({
         className="h-12 bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground rounded-xl"
         placeholder="customer@example.com"
       />
-      {errors.email && (
-        <p className="text-sm text-red-400">{errors.email.message}</p>
-      )}
+      {errors.email && <p className="text-sm text-red-400">{errors.email.message}</p>}
     </div>
 
     {/* Phone */}
     <div className="space-y-2">
-      <Label htmlFor="phone" className="text-sm font-medium text-foreground">Phone</Label>
+      <Label htmlFor="phone" className="text-sm font-medium text-foreground">
+        Phone
+      </Label>
       <Input
         id="phone"
         {...register('phone')}
         className="h-12 bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground rounded-xl"
         placeholder="01234 567890"
       />
-      {errors.phone && (
-        <p className="text-sm text-red-400">{errors.phone.message}</p>
-      )}
+      {errors.phone && <p className="text-sm text-red-400">{errors.phone.message}</p>}
     </div>
 
     {/* Address */}
     <div className="space-y-2">
-      <Label htmlFor="address" className="text-sm font-medium text-foreground">Address</Label>
+      <Label htmlFor="address" className="text-sm font-medium text-foreground">
+        Address
+      </Label>
       <Textarea
         id="address"
         {...register('address')}
@@ -114,14 +122,14 @@ const FormContent = ({
         placeholder="Enter full address"
         rows={3}
       />
-      {errors.address && (
-        <p className="text-sm text-red-400">{errors.address.message}</p>
-      )}
+      {errors.address && <p className="text-sm text-red-400">{errors.address.message}</p>}
     </div>
 
     {/* Notes */}
     <div className="space-y-2">
-      <Label htmlFor="notes" className="text-sm font-medium text-foreground">Notes</Label>
+      <Label htmlFor="notes" className="text-sm font-medium text-foreground">
+        Notes
+      </Label>
       <Textarea
         id="notes"
         {...register('notes')}
@@ -129,9 +137,7 @@ const FormContent = ({
         placeholder="Add any additional notes..."
         rows={3}
       />
-      {errors.notes && (
-        <p className="text-sm text-red-400">{errors.notes.message}</p>
-      )}
+      {errors.notes && <p className="text-sm text-red-400">{errors.notes.message}</p>}
     </div>
 
     {/* Actions */}
@@ -190,7 +196,8 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
 
   const onSubmit = async (data: CustomerFormData) => {
     // Sanitize all inputs before saving
-    const { sanitizeTextInput, sanitizeEmail, sanitizePhone } = await import('@/utils/inputSanitization');
+    const { sanitizeTextInput, sanitizeEmail, sanitizePhone } =
+      await import('@/utils/inputSanitization');
 
     const sanitizedData: CustomerFormData = {
       name: sanitizeTextInput(data.name),
@@ -250,9 +257,7 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[calc(100%-2rem)] max-w-[500px] max-h-[90vh] overflow-y-auto bg-card/95 backdrop-blur-xl border-white/10 p-4 sm:p-6 rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl text-foreground">
-            {title}
-          </DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl text-foreground">{title}</DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">
             {description}
           </DialogDescription>

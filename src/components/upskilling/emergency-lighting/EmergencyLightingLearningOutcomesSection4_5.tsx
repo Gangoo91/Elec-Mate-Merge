@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection4_5 = () => {
   const outcomes = [
-    "Explain the purpose and benefits of remote testing systems",
-    "Identify the different types of monitoring systems available",
-    "Describe how faults and test results are recorded and reported",
-    "Recognise the standards governing automated emergency lighting testing",
-    "Advise clients on when remote testing is most appropriate"
+    'Explain the purpose and benefits of remote testing systems',
+    'Identify the different types of monitoring systems available',
+    'Describe how faults and test results are recorded and reported',
+    'Recognise the standards governing automated emergency lighting testing',
+    'Advise clients on when remote testing is most appropriate',
   ];
 
   return (
@@ -19,9 +19,7 @@ export const EmergencyLightingLearningOutcomesSection4_5 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By completing this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By completing this section, you will be able to:</p>
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">

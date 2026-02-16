@@ -17,7 +17,7 @@ class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
     error: null,
-    errorInfo: null
+    errorInfo: null,
   };
 
   public static getDerivedStateFromError(error: Error): State {
@@ -27,23 +27,25 @@ class ErrorBoundary extends Component<Props, State> {
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     });
 
     // Auto-refresh on chunk loading failures (stale deployment cache)
-    const errorString = `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
+    const errorString =
+      `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
     const stackString = `${errorInfo?.componentStack || ''} ${error?.stack || ''}`.toLowerCase();
     const isNonErrorObject = !(error instanceof Error) && typeof error === 'object';
-    const isChunkError = errorString.includes('dynamically imported module') ||
-                         errorString.includes('failed to fetch') ||
-                         errorString.includes('loading chunk') ||
-                         errorString.includes('text/html') ||
-                         errorString.includes('loading css chunk') ||
-                         errorString.includes('failed to load module script') ||
-                         errorString.includes('importing a module script failed') ||
-                         errorString.includes('mime type') ||
-                         (errorString.includes('typeerror') && stackString.includes('lazy')) ||
-                         (isNonErrorObject && stackString.includes('lazy'));
+    const isChunkError =
+      errorString.includes('dynamically imported module') ||
+      errorString.includes('failed to fetch') ||
+      errorString.includes('loading chunk') ||
+      errorString.includes('text/html') ||
+      errorString.includes('loading css chunk') ||
+      errorString.includes('failed to load module script') ||
+      errorString.includes('importing a module script failed') ||
+      errorString.includes('mime type') ||
+      (errorString.includes('typeerror') && stackString.includes('lazy')) ||
+      (isNonErrorObject && stackString.includes('lazy'));
     if (isChunkError) {
       console.log('[ErrorBoundary] Chunk load failure detected, auto-refreshing...');
       this.hardReload();
@@ -91,9 +93,7 @@ class ErrorBoundary extends Component<Props, State> {
                 <AlertTriangle className="h-8 w-8 text-destructive" />
                 <div>
                   <CardTitle className="text-destructive">Something went wrong</CardTitle>
-                  <CardDescription>
-                    The application encountered an unexpected error
-                  </CardDescription>
+                  <CardDescription>The application encountered an unexpected error</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -104,10 +104,10 @@ class ErrorBoundary extends Component<Props, State> {
                   {this.state.error?.message || 'Unknown error'}
                 </p>
               </div>
-              
+
               <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-4 rounded-lg">
                 <p className="text-sm text-amber-900 dark:text-amber-200">
-                  <strong>Your data is safe.</strong> Any unsaved changes may be in local storage. 
+                  <strong>Your data is safe.</strong> Any unsaved changes may be in local storage.
                   Try refreshing the page or returning to the home screen.
                 </p>
               </div>

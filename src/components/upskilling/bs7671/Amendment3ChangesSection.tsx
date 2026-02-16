@@ -10,16 +10,22 @@ const Amendment3ChangesSection = () => {
           <Zap className="h-6 w-6 text-elec-yellow" />
           Major Amendment 3 Changes Overview
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">Revolutionary Updates</Badge>
+        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">
+          Revolutionary Updates
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Cybersecurity Integration Requirements:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Cybersecurity Integration Requirements:
+          </h5>
+
           <div className="space-y-4">
             <div className="bg-gray-800 p-4 rounded border-l-4 border-purple-400">
               <div className="flex justify-between items-center mb-3">
-                <h6 className="font-bold text-purple-400 text-sm sm:text-base">Smart System Security</h6>
+                <h6 className="font-bold text-purple-400 text-sm sm:text-base">
+                  Smart System Security
+                </h6>
                 <Wifi className="h-5 w-5 text-purple-400" />
               </div>
               <ul className="text-sm sm:text-base space-y-2">
@@ -29,10 +35,12 @@ const Amendment3ChangesSection = () => {
                 <li>• Regular security update procedures</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center mb-3">
-                <h6 className="font-bold text-green-400 text-sm sm:text-base">Data Protection Standards</h6>
+                <h6 className="font-bold text-green-400 text-sm sm:text-base">
+                  Data Protection Standards
+                </h6>
                 <Shield className="h-5 w-5 text-green-400" />
               </div>
               <ul className="text-sm sm:text-base space-y-2">
@@ -43,7 +51,7 @@ const Amendment3ChangesSection = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="hidden lg:block overflow-x-auto mt-6">
             <table className="w-full text-sm border border-gray-600">
               <thead>
@@ -135,25 +143,39 @@ const Amendment3ChangesSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Smart Grid and Vehicle Integration:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Smart Grid and Vehicle Integration:
+          </h5>
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Vehicle-to-Grid (V2G) Standards</h6>
-              <p className="text-sm">New requirements for bidirectional EV charging systems including grid synchronisation, power quality management, and emergency backup capabilities during power outages.</p>
+              <p className="text-sm">
+                New requirements for bidirectional EV charging systems including grid
+                synchronisation, power quality management, and emergency backup capabilities during
+                power outages.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <h6 className="font-bold text-green-400 mb-1">Dynamic Load Management</h6>
-              <p className="text-sm">Mandatory smart load management for installations over 63A, including peak demand limiting, time-of-use optimisation, and renewable energy prioritisation.</p>
+              <p className="text-sm">
+                Mandatory smart load management for installations over 63A, including peak demand
+                limiting, time-of-use optimisation, and renewable energy prioritisation.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-purple-400">
               <h6 className="font-bold text-purple-400 mb-1">Grid Resilience Requirements</h6>
-              <p className="text-sm">Enhanced requirements for installations to support grid stability including voltage regulation, frequency response, and islanding prevention for distributed generation.</p>
+              <p className="text-sm">
+                Enhanced requirements for installations to support grid stability including voltage
+                regulation, frequency response, and islanding prevention for distributed generation.
+              </p>
             </div>
           </div>
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Implementation Timeline and Transition:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Implementation Timeline and Transition:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Immediate Requirements (2025):</h6>
@@ -165,7 +187,9 @@ const Amendment3ChangesSection = () => {
               </ul>
             </div>
             <div>
-              <h6 className="text-yellow-400 font-medium mb-2">Phased Implementation (2025-2027):</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                Phased Implementation (2025-2027):
+              </h6>
               <ul className="text-sm space-y-1">
                 <li>• Gradual rollout of smart grid integration requirements</li>
                 <li>• Training and competence development programs</li>

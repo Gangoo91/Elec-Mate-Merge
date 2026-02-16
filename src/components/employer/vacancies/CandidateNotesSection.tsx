@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Pencil, Save, X, StickyNote, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Pencil, Save, X, StickyNote, Clock } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface CandidateNotesSectionProps {
   notes: string | null;
@@ -20,7 +20,7 @@ export function CandidateNotesSection({
   isLoading = false,
 }: CandidateNotesSectionProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedNotes, setEditedNotes] = useState(notes || "");
+  const [editedNotes, setEditedNotes] = useState(notes || '');
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = async () => {
@@ -29,24 +29,24 @@ export function CandidateNotesSection({
       await onSave(editedNotes);
       setIsEditing(false);
     } catch (error) {
-      console.error("Failed to save notes:", error);
+      console.error('Failed to save notes:', error);
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleCancel = () => {
-    setEditedNotes(notes || "");
+    setEditedNotes(notes || '');
     setIsEditing(false);
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+    return new Date(dateString).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
@@ -66,7 +66,7 @@ export function CandidateNotesSection({
             onClick={() => setIsEditing(true)}
           >
             <Pencil className="h-3.5 w-3.5 mr-1.5" />
-            {notes ? "Edit" : "Add Note"}
+            {notes ? 'Edit' : 'Add Note'}
           </Button>
         )}
       </div>
@@ -83,10 +83,10 @@ export function CandidateNotesSection({
             onChange={(e) => setEditedNotes(e.target.value)}
             placeholder="Add private notes about this candidate... (only visible to you and your team)"
             className={cn(
-              "min-h-[150px] text-base resize-none",
-              "bg-muted/50 border-border",
-              "focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50",
-              "touch-manipulation"
+              'min-h-[150px] text-base resize-none',
+              'bg-muted/50 border-border',
+              'focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50',
+              'touch-manipulation'
             )}
             autoFocus
           />
@@ -108,16 +108,14 @@ export function CandidateNotesSection({
               disabled={isSaving}
             >
               <Save className="h-4 w-4 mr-1.5" />
-              {isSaving ? "Saving..." : "Save Notes"}
+              {isSaving ? 'Saving...' : 'Save Notes'}
             </Button>
           </div>
         </motion.div>
       ) : notes ? (
         <Card className="bg-amber-500/5 border-amber-500/20">
           <CardContent className="p-4">
-            <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">
-              {notes}
-            </p>
+            <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{notes}</p>
             {updatedAt && (
               <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-amber-500/10">
                 <Clock className="h-3 w-3 text-muted-foreground" />
@@ -135,12 +133,7 @@ export function CandidateNotesSection({
             <p className="text-sm text-muted-foreground mb-3">
               No notes yet. Add private notes about this candidate.
             </p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-9"
-              onClick={() => setIsEditing(true)}
-            >
+            <Button variant="outline" size="sm" className="h-9" onClick={() => setIsEditing(true)}>
               <Pencil className="h-3.5 w-3.5 mr-1.5" />
               Add Note
             </Button>

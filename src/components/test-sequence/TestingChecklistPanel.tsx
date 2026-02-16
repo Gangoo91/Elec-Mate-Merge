@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,11 +11,11 @@ interface TestingChecklistPanelProps {
   completion: number;
 }
 
-const TestingChecklistPanel = ({ 
-  checklist, 
-  checkedItems, 
-  onItemChange, 
-  completion 
+const TestingChecklistPanel = ({
+  checklist,
+  checkedItems,
+  onItemChange,
+  completion,
 }: TestingChecklistPanelProps) => {
   return (
     <Card className="border-border">
@@ -24,11 +23,13 @@ const TestingChecklistPanel = ({
         <CardTitle className="text-foreground flex items-center gap-2">
           <CheckSquare className="h-5 w-5 text-elec-yellow" />
           Testing Best Practices Checklist
-          <Badge className={`ml-auto ${
-            completion === 100 
-              ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-              : 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-          }`}>
+          <Badge
+            className={`ml-auto ${
+              completion === 100
+                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                : 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+            }`}
+          >
             {completion}% Complete
           </Badge>
         </CardTitle>

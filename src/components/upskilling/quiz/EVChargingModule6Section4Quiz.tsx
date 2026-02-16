@@ -7,124 +7,135 @@ import { QuizQuestion } from '@/types/quiz';
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the first step in diagnosing EV charging installation faults according to BS 7671?",
+    question:
+      'What is the first step in diagnosing EV charging installation faults according to BS 7671?',
     options: [
-      "Replace the RCD immediately",
-      "Systematic isolation and safe working procedures",
-      "Contact the manufacturer",
-      "Test the earth loop impedance"
+      'Replace the RCD immediately',
+      'Systematic isolation and safe working procedures',
+      'Contact the manufacturer',
+      'Test the earth loop impedance',
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 requires systematic isolation and implementation of safe working procedures before any fault diagnosis begins."
+    explanation:
+      'BS 7671 requires systematic isolation and implementation of safe working procedures before any fault diagnosis begins.',
   },
   {
     id: 2,
-    question: "When an RCD trips repeatedly on an EV charging circuit, the most likely cause is:",
+    question: 'When an RCD trips repeatedly on an EV charging circuit, the most likely cause is:',
     options: [
-      "Overload on the circuit",
-      "Earth leakage current exceeding the RCD rating",
-      "Wrong fuse rating",
-      "Poor ventilation"
+      'Overload on the circuit',
+      'Earth leakage current exceeding the RCD rating',
+      'Wrong fuse rating',
+      'Poor ventilation',
     ],
     correctAnswer: 1,
-    explanation: "Repeated RCD tripping typically indicates earth leakage current exceeding the RCD's rated residual current, often due to insulation breakdown or moisture ingress."
+    explanation:
+      "Repeated RCD tripping typically indicates earth leakage current exceeding the RCD's rated residual current, often due to insulation breakdown or moisture ingress.",
   },
   {
     id: 3,
-    question: "If an EV charging point shows no power output, what should be checked first?",
+    question: 'If an EV charging point shows no power output, what should be checked first?',
     options: [
-      "The vehicle compatibility",
-      "Supply voltage and protective device operation",
-      "The charging cable",
-      "Control pilot signal strength"
+      'The vehicle compatibility',
+      'Supply voltage and protective device operation',
+      'The charging cable',
+      'Control pilot signal strength',
     ],
     correctAnswer: 1,
-    explanation: "First check that supply voltage is present and that no protective devices have operated, as this covers the most common causes of complete power loss."
+    explanation:
+      'First check that supply voltage is present and that no protective devices have operated, as this covers the most common causes of complete power loss.',
   },
   {
     id: 4,
-    question: "When remedial work requires component replacement, BS 7671 requires:",
+    question: 'When remedial work requires component replacement, BS 7671 requires:',
     options: [
-      "Any equivalent component can be used",
-      "Only exact manufacturer replacements",
-      "Components meeting original specifications and standards",
-      "Components rated 10% higher than original"
+      'Any equivalent component can be used',
+      'Only exact manufacturer replacements',
+      'Components meeting original specifications and standards',
+      'Components rated 10% higher than original',
     ],
     correctAnswer: 2,
-    explanation: "Replacement components must meet or exceed the original specifications and relevant standards, but don't need to be from the same manufacturer."
+    explanation:
+      "Replacement components must meet or exceed the original specifications and relevant standards, but don't need to be from the same manufacturer.",
   },
   {
     id: 5,
-    question: "After completing remedial work on an EV charging installation, what is mandatory?",
+    question: 'After completing remedial work on an EV charging installation, what is mandatory?',
     options: [
-      "Visual inspection only",
-      "Full testing schedule and certification",
-      "Basic continuity test only",
-      "Manufacturer notification"
+      'Visual inspection only',
+      'Full testing schedule and certification',
+      'Basic continuity test only',
+      'Manufacturer notification',
     ],
     correctAnswer: 1,
-    explanation: "After remedial work, a full testing schedule must be completed and appropriate certification issued to ensure compliance with BS 7671."
+    explanation:
+      'After remedial work, a full testing schedule must be completed and appropriate certification issued to ensure compliance with BS 7671.',
   },
   {
     id: 6,
-    question: "Common causes of overheating in EV charging connections include:",
+    question: 'Common causes of overheating in EV charging connections include:',
     options: [
-      "Too much current only",
-      "Poor connections, incorrect torque settings, and contamination",
-      "Wrong cable colour",
-      "Excessive ventilation"
+      'Too much current only',
+      'Poor connections, incorrect torque settings, and contamination',
+      'Wrong cable colour',
+      'Excessive ventilation',
     ],
     correctAnswer: 1,
-    explanation: "Overheating typically results from poor connections, incorrect torque settings, contamination, or oxidation increasing resistance at connection points."
+    explanation:
+      'Overheating typically results from poor connections, incorrect torque settings, contamination, or oxidation increasing resistance at connection points.',
   },
   {
     id: 7,
-    question: "When Control Pilot communication fails, possible causes include:",
+    question: 'When Control Pilot communication fails, possible causes include:',
     options: [
-      "Wrong charging rate only",
-      "Cable damage, connector faults, or electronic control issues",
-      "Incorrect earthing only",
-      "Wrong supply voltage"
+      'Wrong charging rate only',
+      'Cable damage, connector faults, or electronic control issues',
+      'Incorrect earthing only',
+      'Wrong supply voltage',
     ],
     correctAnswer: 1,
-    explanation: "Control Pilot failures can result from physical cable damage, connector faults, or electronic control system malfunctions affecting vehicle-charger communication."
+    explanation:
+      'Control Pilot failures can result from physical cable damage, connector faults, or electronic control system malfunctions affecting vehicle-charger communication.',
   },
   {
     id: 8,
-    question: "Documentation requirements for remedial work include:",
+    question: 'Documentation requirements for remedial work include:',
     options: [
-      "Basic work description only",
-      "Detailed records of faults found, work done, and test results",
-      "Invoice only",
-      "Verbal report to client"
+      'Basic work description only',
+      'Detailed records of faults found, work done, and test results',
+      'Invoice only',
+      'Verbal report to client',
     ],
     correctAnswer: 1,
-    explanation: "Comprehensive documentation must include fault identification, remedial action taken, test results, and any recommendations for future maintenance."
+    explanation:
+      'Comprehensive documentation must include fault identification, remedial action taken, test results, and any recommendations for future maintenance.',
   },
   {
     id: 9,
-    question: "When investigating charging speed issues, key factors to check include:",
+    question: 'When investigating charging speed issues, key factors to check include:',
     options: [
-      "Cable length only",
-      "Supply characteristics, temperature derating, and communication protocols",
-      "Cable colour coding",
-      "Time of day only"
+      'Cable length only',
+      'Supply characteristics, temperature derating, and communication protocols',
+      'Cable colour coding',
+      'Time of day only',
     ],
     correctAnswer: 1,
-    explanation: "Charging speed can be affected by supply voltage/frequency, ambient temperature derating, vehicle-charger communication, and load management systems."
+    explanation:
+      'Charging speed can be affected by supply voltage/frequency, ambient temperature derating, vehicle-charger communication, and load management systems.',
   },
   {
     id: 10,
-    question: "Safety isolation requirements during remedial work include:",
+    question: 'Safety isolation requirements during remedial work include:',
     options: [
-      "Switching off at the charger only",
-      "Complete isolation, locking off, and verification of dead circuit",
-      "Unplugging the vehicle only",
-      "Reducing current only"
+      'Switching off at the charger only',
+      'Complete isolation, locking off, and verification of dead circuit',
+      'Unplugging the vehicle only',
+      'Reducing current only',
     ],
     correctAnswer: 1,
-    explanation: "Safe isolation requires complete supply isolation, secure locking off, and verification that the circuit is dead before any remedial work begins."
-  }
+    explanation:
+      'Safe isolation requires complete supply isolation, secure locking off, and verification that the circuit is dead before any remedial work begins.',
+  },
 ];
 
 export const EVChargingModule6Section4Quiz = () => {
@@ -207,9 +218,11 @@ export const EVChargingModule6Section4Quiz = () => {
               {percentage}%
             </div>
             <p className="text-gray-300">
-              {percentage >= 80 ? 'Excellent understanding of fault diagnosis procedures!' : 
-               percentage >= 60 ? 'Good knowledge! Review the areas you missed.' : 
-               'Keep studying fault diagnosis techniques and try again.'}
+              {percentage >= 80
+                ? 'Excellent understanding of fault diagnosis procedures!'
+                : percentage >= 60
+                  ? 'Good knowledge! Review the areas you missed.'
+                  : 'Keep studying fault diagnosis techniques and try again.'}
             </p>
           </div>
 
@@ -217,7 +230,7 @@ export const EVChargingModule6Section4Quiz = () => {
             {quizData.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <div key={question.id} className="bg-[#323232] rounded-lg p-4">
                   <div className="flex items-start gap-3 mb-3">
@@ -228,7 +241,9 @@ export const EVChargingModule6Section4Quiz = () => {
                     )}
                     <div className="flex-1">
                       <p className="text-foreground font-medium mb-2">{question.question}</p>
-                      <p className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                      <p
+                        className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}
+                      >
                         Your answer: {question.options[userAnswer || 0]}
                       </p>
                       {!isCorrect && (
@@ -245,10 +260,7 @@ export const EVChargingModule6Section4Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button
-              onClick={resetQuiz}
-              className="bg-elec-yellow text-black hover:bg-yellow-400"
-            >
+            <Button onClick={resetQuiz} className="bg-elec-yellow text-black hover:bg-yellow-400">
               Retake Quiz
             </Button>
           </div>
@@ -269,12 +281,14 @@ export const EVChargingModule6Section4Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {quizData.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {quizData.length}
+          </span>
           <span>{Math.round(((currentQuestion + 1) / quizData.length) * 100)}% Complete</span>
         </div>
 
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / quizData.length) * 100}%` }}
           />
@@ -282,22 +296,23 @@ export const EVChargingModule6Section4Quiz = () => {
 
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-foreground">{currentQ.question}</h3>
-          
+
           <div className="space-y-3">
             {currentQ.options.map((option, index) => {
               const isSelected = selectedAnswers[currentQuestion] === index;
               const isCorrect = index === currentQ.correctAnswer;
               const showOptionResult = showAnswer;
-              
-              let optionClasses = "w-full text-left p-4 rounded-lg border transition-all duration-200 select-none ";
-              
+
+              let optionClasses =
+                'w-full text-left p-4 rounded-lg border transition-all duration-200 select-none ';
+
               if (showOptionResult) {
                 if (isCorrect) {
-                  optionClasses += "border-green-400 bg-green-400/20 text-green-400";
+                  optionClasses += 'border-green-400 bg-green-400/20 text-green-400';
                 } else if (isSelected && !isCorrect) {
-                  optionClasses += "border-red-400 bg-red-400/20 text-red-400";
+                  optionClasses += 'border-red-400 bg-red-400/20 text-red-400';
                 } else {
-                  optionClasses += "border-gray-600 bg-[#323232] text-gray-300";
+                  optionClasses += 'border-gray-600 bg-[#323232] text-gray-300';
                 }
               } else {
                 optionClasses += `cursor-pointer ${
@@ -306,7 +321,7 @@ export const EVChargingModule6Section4Quiz = () => {
                     : 'border-gray-600 bg-[#323232] text-gray-300 hover:border-gray-500 hover:bg-[#404040]'
                 }`;
               }
-              
+
               return (
                 <div
                   key={index}
@@ -314,17 +329,19 @@ export const EVChargingModule6Section4Quiz = () => {
                   className={optionClasses}
                 >
                   <div className="flex items-center gap-3 pointer-events-none">
-                    <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
-                      showOptionResult
-                        ? (isCorrect 
-                          ? 'border-green-400 bg-green-400 text-black'
-                          : isSelected && !isCorrect
-                          ? 'border-red-400 bg-red-400 text-foreground'
-                          : 'border-gray-500 text-gray-500')
-                        : (isSelected
-                          ? 'border-elec-yellow bg-elec-yellow text-black'
-                          : 'border-gray-500 text-gray-500')
-                    }`}>
+                    <span
+                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
+                        showOptionResult
+                          ? isCorrect
+                            ? 'border-green-400 bg-green-400 text-black'
+                            : isSelected && !isCorrect
+                              ? 'border-red-400 bg-red-400 text-foreground'
+                              : 'border-gray-500 text-gray-500'
+                          : isSelected
+                            ? 'border-elec-yellow bg-elec-yellow text-black'
+                            : 'border-gray-500 text-gray-500'
+                      }`}
+                    >
                       {String.fromCharCode(65 + index)}
                     </span>
                     <span>{option}</span>
@@ -339,7 +356,7 @@ export const EVChargingModule6Section4Quiz = () => {
               );
             })}
           </div>
-          
+
           {showAnswer && (
             <div className="bg-blue-900/30 border border-blue-600 rounded-lg p-4">
               <p className="text-blue-300 font-semibold mb-2">Explanation:</p>
@@ -357,16 +374,17 @@ export const EVChargingModule6Section4Quiz = () => {
           >
             {showAnswer ? 'Back to Question' : 'Previous'}
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={!showAnswer && selectedAnswers[currentQuestion] === undefined}
             className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {showAnswer 
-              ? (currentQuestion === quizData.length - 1 ? 'Finish Quiz' : 'Next Question')
-              : 'Show Answer'
-            }
+            {showAnswer
+              ? currentQuestion === quizData.length - 1
+                ? 'Finish Quiz'
+                : 'Next Question'
+              : 'Show Answer'}
           </Button>
         </div>
       </CardContent>

@@ -61,12 +61,7 @@ export const CustomerOverviewTab = ({
             Contact Details
             <div className="flex gap-2">
               {customer.phone && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="h-9 touch-manipulation"
-                >
+                <Button variant="outline" size="sm" asChild className="h-9 touch-manipulation">
                   <a href={`tel:${customer.phone}`}>
                     <Phone className="h-4 w-4 mr-1 text-green-400" />
                     Call
@@ -74,12 +69,7 @@ export const CustomerOverviewTab = ({
                 </Button>
               )}
               {customer.email && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="h-9 touch-manipulation"
-                >
+                <Button variant="outline" size="sm" asChild className="h-9 touch-manipulation">
                   <a href={`mailto:${customer.email}`}>
                     <Mail className="h-4 w-4 mr-1 text-blue-400" />
                     Email
@@ -137,9 +127,7 @@ export const CustomerOverviewTab = ({
         <Card className="text-center">
           <CardContent className="pt-4 pb-3">
             <div className="text-sm font-medium text-foreground">
-              {customer.lastActivityAt
-                ? formatDate(customer.lastActivityAt)
-                : 'Never'}
+              {customer.lastActivityAt ? formatDate(customer.lastActivityAt) : 'Never'}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Last Activity</p>
           </CardContent>
@@ -156,11 +144,7 @@ export const CustomerOverviewTab = ({
           <Plus className="h-4 w-4 mr-2" />
           New Certificate
         </Button>
-        <Button
-          variant="outline"
-          onClick={onAddNote}
-          className="h-12 touch-manipulation"
-        >
+        <Button variant="outline" onClick={onAddNote} className="h-12 touch-manipulation">
           <StickyNote className="h-4 w-4 mr-2" />
           Add Note
         </Button>
@@ -208,8 +192,7 @@ export const CustomerOverviewTab = ({
                   <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm truncate">
-                      {report.certificate_number ||
-                        report.report_type?.toUpperCase()}
+                      {report.certificate_number || report.report_type?.toUpperCase()}
                     </p>
                     <p className="text-xs text-muted-foreground truncate">
                       {report.installation_address || 'No address'}
@@ -221,8 +204,8 @@ export const CustomerOverviewTab = ({
                         report.status === 'completed'
                           ? 'default'
                           : report.status === 'in-progress'
-                          ? 'secondary'
-                          : 'outline'
+                            ? 'secondary'
+                            : 'outline'
                       }
                       className="text-[10px]"
                     >

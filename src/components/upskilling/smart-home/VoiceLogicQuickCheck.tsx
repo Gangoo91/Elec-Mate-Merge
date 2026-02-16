@@ -11,7 +11,8 @@ const VoiceLogicQuickCheck = () => {
     setShowFeedback(true);
   };
 
-  const correctAnswer = "Conditional automation that uses IF conditions and THEN actions to control devices";
+  const correctAnswer =
+    'Conditional automation that uses IF conditions and THEN actions to control devices';
 
   return (
     <Card className="bg-blue-500/10 border-blue-500/30">
@@ -20,15 +21,17 @@ const VoiceLogicQuickCheck = () => {
           <CheckCircle className="h-5 w-5 text-blue-400" />
           <h4 className="text-lg font-semibold text-foreground">👉 Quick Check</h4>
         </div>
-        
-        <p className="text-foreground mb-4 font-medium">What does "IF–THEN logic" mean in smart home automation?</p>
-        
+
+        <p className="text-foreground mb-4 font-medium">
+          What does "IF–THEN logic" mean in smart home automation?
+        </p>
+
         <div className="space-y-2 mb-4">
           {[
-            "A programming language for smart devices",
-            "Conditional automation that uses IF conditions and THEN actions to control devices",
-            "A manual control method",
-            "A type of voice command"
+            'A programming language for smart devices',
+            'Conditional automation that uses IF conditions and THEN actions to control devices',
+            'A manual control method',
+            'A type of voice command',
           ].map((option, index) => (
             <button
               key={index}
@@ -39,8 +42,8 @@ const VoiceLogicQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-500/20 border-green-500/50 text-green-300'
                     : option === selectedAnswer
-                    ? 'bg-red-500/20 border-red-500/50 text-red-300'
-                    : 'bg-elec-gray/50 border-gray-600 text-gray-400'
+                      ? 'bg-red-500/20 border-red-500/50 text-red-300'
+                      : 'bg-elec-gray/50 border-gray-600 text-gray-400'
                   : 'bg-elec-gray/50 border-gray-600 text-foreground hover:bg-elec-gray hover:border-elec-yellow/50'
               }`}
             >
@@ -50,25 +53,29 @@ const VoiceLogicQuickCheck = () => {
         </div>
 
         {showFeedback && (
-          <div className={`p-3 rounded border ${
-            selectedAnswer === correctAnswer
-              ? 'bg-green-500/10 border-green-500/30'
-              : 'bg-red-500/10 border-red-500/30'
-          }`}>
+          <div
+            className={`p-3 rounded border ${
+              selectedAnswer === correctAnswer
+                ? 'bg-green-500/10 border-green-500/30'
+                : 'bg-red-500/10 border-red-500/30'
+            }`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {selectedAnswer === correctAnswer ? (
                 <CheckCircle className="h-4 w-4 text-green-400" />
               ) : (
                 <AlertCircle className="h-4 w-4 text-red-400" />
               )}
-              <span className={`font-semibold ${
-                selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
-              }`}>
+              <span
+                className={`font-semibold ${
+                  selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
                 {selectedAnswer === correctAnswer ? 'Correct!' : 'Not quite right'}
               </span>
             </div>
             <p className="text-foreground text-sm">
-              IF-THEN logic allows smart homes to respond automatically to conditions. For example: 
+              IF-THEN logic allows smart homes to respond automatically to conditions. For example:
               "IF motion is detected THEN turn on light" creates responsive automation.
             </p>
           </div>

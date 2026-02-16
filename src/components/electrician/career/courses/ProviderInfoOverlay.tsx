@@ -1,6 +1,6 @@
-import React from "react";
-import { MapPin, Star, Phone, Globe, Clock, X, Navigation } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { MapPin, Star, Phone, Globe, Clock, X, Navigation } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface TrainingProvider {
   place_id: string;
@@ -37,16 +37,16 @@ interface ProviderInfoOverlayProps {
   onClose?: () => void;
 }
 
-const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({ 
-  userLocation, 
+const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
+  userLocation,
   selectedProvider,
-  onClose 
+  onClose,
 }) => {
   // Debug logging for overlay rendering
   console.log('🎯 ProviderInfoOverlay rendering with:', {
     hasSelectedProvider: !!selectedProvider,
     providerName: selectedProvider?.name,
-    userLocation
+    userLocation,
   });
 
   if (!selectedProvider) {
@@ -90,18 +90,18 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
   };
 
   const formatRating = (rating?: number, total?: number) => {
-    if (!rating) return "No rating";
+    if (!rating) return 'No rating';
     return `${rating.toFixed(1)} (${total || 0} reviews)`;
   };
 
   const getOpenStatus = () => {
     if (!selectedProvider.opening_hours) return null;
-    return selectedProvider.opening_hours.open_now ? "Open now" : "Closed now";
+    return selectedProvider.opening_hours.open_now ? 'Open now' : 'Closed now';
   };
 
   const getPriceLevel = (level?: number) => {
-    if (!level) return "";
-    return "£".repeat(level);
+    if (!level) return '';
+    return '£'.repeat(level);
   };
 
   return (
@@ -113,9 +113,9 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
           <span className="font-medium">Training Provider</span>
         </div>
         {onClose && (
-          <Button 
-            variant="ghost" 
-            size="sm" 
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={onClose}
             className="h-6 w-6 p-0 text-muted-foreground hover:text-elec-yellow"
           >
@@ -134,13 +134,15 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
         {selectedProvider.rating && (
           <div className="flex items-center text-xs text-muted-foreground">
             <Star className="h-3 w-3 mr-1 text-yellow-400 fill-current" />
-            <span>{formatRating(selectedProvider.rating, selectedProvider.user_ratings_total)}</span>
+            <span>
+              {formatRating(selectedProvider.rating, selectedProvider.user_ratings_total)}
+            </span>
           </div>
         )}
         {getOpenStatus() && (
           <div className="flex items-center text-xs">
             <Clock className="h-3 w-3 mr-1 text-elec-yellow" />
-            <span className={getOpenStatus() === "Open now" ? "text-green-400" : "text-red-400"}>
+            <span className={getOpenStatus() === 'Open now' ? 'text-green-400' : 'text-red-400'}>
               {getOpenStatus()}
             </span>
           </div>
@@ -148,9 +150,7 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
       </div>
 
       {/* Address */}
-      <div className="text-xs text-muted-foreground mb-3">
-        {selectedProvider.vicinity}
-      </div>
+      <div className="text-xs text-muted-foreground mb-3">{selectedProvider.vicinity}</div>
 
       {/* Price level */}
       {selectedProvider.price_level && (
@@ -169,11 +169,11 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
       {/* Action buttons */}
       <div className="flex gap-2 mb-3">
         {/* Directions button hidden per user request */}
-        
+
         {selectedProvider.website && (
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             onClick={handleViewWebsite}
             className="flex-1 h-7 text-xs border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
           >
@@ -181,11 +181,11 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
             Website
           </Button>
         )}
-        
+
         {selectedProvider.phone && (
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             onClick={handleCall}
             className="flex-1 h-7 text-xs border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
           >

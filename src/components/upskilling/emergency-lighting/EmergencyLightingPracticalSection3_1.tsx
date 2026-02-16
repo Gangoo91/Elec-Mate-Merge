@@ -21,15 +21,24 @@ export const EmergencyLightingPracticalSection3_1 = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Always use manufacturer photometric data when designing to ensure lux levels can be achieved</span>
+                  <span>
+                    Always use manufacturer photometric data when designing to ensure lux levels can
+                    be achieved
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Choose 3-hour fittings as standard in most commercial and public buildings to future-proof compliance</span>
+                  <span>
+                    Choose 3-hour fittings as standard in most commercial and public buildings to
+                    future-proof compliance
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Plan for battery replacement cycles and specify quality components from reputable manufacturers</span>
+                  <span>
+                    Plan for battery replacement cycles and specify quality components from
+                    reputable manufacturers
+                  </span>
                 </li>
               </ul>
             </div>
@@ -42,15 +51,23 @@ export const EmergencyLightingPracticalSection3_1 = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>When testing, measure lux at floor level to check real performance, not just fitting brightness</span>
+                  <span>
+                    When testing, measure lux at floor level to check real performance, not just
+                    fitting brightness
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Test both initial performance and after simulated battery ageing conditions</span>
+                  <span>
+                    Test both initial performance and after simulated battery ageing conditions
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Document all measurements with calibrated lux meters and maintain test certificates</span>
+                  <span>
+                    Document all measurements with calibrated lux meters and maintain test
+                    certificates
+                  </span>
                 </li>
               </ul>
             </div>
@@ -65,15 +82,21 @@ export const EmergencyLightingPracticalSection3_1 = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Remember that dirty lenses and poor maintenance reduce effective lux output</span>
+                  <span>
+                    Remember that dirty lenses and poor maintenance reduce effective lux output
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Schedule regular cleaning and inspection programmes to maintain performance</span>
+                  <span>
+                    Schedule regular cleaning and inspection programmes to maintain performance
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Plan battery replacement before performance degrades below compliance levels</span>
+                  <span>
+                    Plan battery replacement before performance degrades below compliance levels
+                  </span>
                 </li>
               </ul>
             </div>
@@ -87,7 +110,9 @@ export const EmergencyLightingPracticalSection3_1 = () => {
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Consider building changes that might affect light distribution patterns</span>
+                  <span>
+                    Consider building changes that might affect light distribution patterns
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -104,22 +129,22 @@ export const EmergencyLightingPracticalSection3_1 = () => {
             <div>
               <h5 className="text-red-400 font-medium text-sm mb-2">Safety Critical</h5>
               <p className="text-xs">
-                Emergency lighting failures can contribute to injuries and fatalities. 
-                Always err on the side of caution when specifying performance levels.
+                Emergency lighting failures can contribute to injuries and fatalities. Always err on
+                the side of caution when specifying performance levels.
               </p>
             </div>
             <div>
               <h5 className="text-blue-400 font-medium text-sm mb-2">Legal Compliance</h5>
               <p className="text-xs">
-                BS 5266 compliance is often a legal requirement. Maintain detailed 
-                documentation to demonstrate adherence to all standards.
+                BS 5266 compliance is often a legal requirement. Maintain detailed documentation to
+                demonstrate adherence to all standards.
               </p>
             </div>
             <div>
               <h5 className="text-green-400 font-medium text-sm mb-2">Future-Proofing</h5>
               <p className="text-xs">
-                Consider building changes, occupancy increases, and evolving standards 
-                when designing systems for long-term reliability.
+                Consider building changes, occupancy increases, and evolving standards when
+                designing systems for long-term reliability.
               </p>
             </div>
           </div>

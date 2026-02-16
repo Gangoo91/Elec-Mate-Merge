@@ -7,12 +7,7 @@
 
 import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import {
   ShieldCheck,
@@ -131,12 +126,14 @@ export function TimeEntryVerificationQRSheet({
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 
-  const snapshot = verification?.evidence_snapshot as {
-    activity?: string;
-    duration_minutes?: number;
-    date?: string;
-    notes?: string;
-  } | undefined;
+  const snapshot = verification?.evidence_snapshot as
+    | {
+        activity?: string;
+        duration_minutes?: number;
+        date?: string;
+        notes?: string;
+      }
+    | undefined;
 
   const formatDuration = (minutes?: number) => {
     if (!minutes) return '';
@@ -149,10 +146,7 @@ export function TimeEntryVerificationQRSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="px-5 pt-5 pb-3 border-b border-border">
@@ -188,31 +182,28 @@ export function TimeEntryVerificationQRSheet({
                   )}
                   {snapshot.date && (
                     <div>
-                      {new Date(snapshot.date + 'T00:00:00').toLocaleDateString(
-                        'en-GB',
-                        { day: 'numeric', month: 'short', year: 'numeric' }
-                      )}
+                      {new Date(snapshot.date + 'T00:00:00').toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
                     </div>
                   )}
                 </div>
                 {snapshot.notes && (
-                  <p className="text-xs text-white/50 mt-2 line-clamp-2">
-                    {snapshot.notes}
-                  </p>
+                  <p className="text-xs text-white/50 mt-2 line-clamp-2">{snapshot.notes}</p>
                 )}
                 {verification && (
                   <div className="flex items-center gap-3 mt-2 text-xs text-white/40">
                     <div className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       Expires{' '}
-                      {new Date(verification.expires_at).toLocaleDateString(
-                        'en-GB',
-                        { day: 'numeric', month: 'short' }
-                      )}
+                      {new Date(verification.expires_at).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                      })}
                     </div>
-                    <div className="flex items-center gap-1">
-                      Views: {verification.view_count}
-                    </div>
+                    <div className="flex items-center gap-1">Views: {verification.view_count}</div>
                   </div>
                 )}
               </div>
@@ -235,14 +226,11 @@ export function TimeEntryVerificationQRSheet({
                   )}
                   <p className="text-xs text-white/30 mt-1">
                     {verification?.verified_at &&
-                      new Date(verification.verified_at).toLocaleDateString(
-                        'en-GB',
-                        {
-                          day: 'numeric',
-                          month: 'long',
-                          year: 'numeric',
-                        }
-                      )}
+                      new Date(verification.verified_at).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
                   </p>
                 </div>
                 {verification?.feedback_text && (
@@ -273,12 +261,8 @@ export function TimeEntryVerificationQRSheet({
 
                 {/* Link display */}
                 <div className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                  <p className="text-xs text-white/40 mb-1">
-                    Verification Link
-                  </p>
-                  <p className="text-xs text-white/60 font-mono break-all">
-                    {verificationUrl}
-                  </p>
+                  <p className="text-xs text-white/40 mb-1">Verification Link</p>
+                  <p className="text-xs text-white/60 font-mono break-all">{verificationUrl}</p>
                 </div>
 
                 {/* Instructions */}

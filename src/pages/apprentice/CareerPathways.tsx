@@ -1,130 +1,245 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Briefcase, Building, Zap, Users, Crown, Wrench, GraduationCap, Shield, Hammer } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  ArrowRight,
+  Briefcase,
+  Building,
+  Zap,
+  Users,
+  Crown,
+  Wrench,
+  GraduationCap,
+  Shield,
+  Hammer,
+} from 'lucide-react';
 
 const CareerPathways = () => {
   const careerPaths = [
     {
-      title: "Qualified Electrician",
-      timeframe: "2-4 years",
-      description: "Complete your apprenticeship to become a fully qualified electrician capable of working independently on domestic and commercial installations",
-      requirements: ["Complete Level 3 Electrical Installation NVQ", "Pass AM2 practical assessment", "Achieve 18th Edition BS 7671 certification", "Accumulate required on-the-job hours"],
-      opportunities: ["Domestic rewires and installations", "Commercial lighting and power", "Industrial maintenance work", "Emergency call-out services", "Testing and inspection work"],
-      salaryRange: "£28,000 - £38,000",
-      progression: "Foundation for all other electrical career paths",
-      icon: <Zap className="h-8 w-8 text-elec-yellow" />
+      title: 'Qualified Electrician',
+      timeframe: '2-4 years',
+      description:
+        'Complete your apprenticeship to become a fully qualified electrician capable of working independently on domestic and commercial installations',
+      requirements: [
+        'Complete Level 3 Electrical Installation NVQ',
+        'Pass AM2 practical assessment',
+        'Achieve 18th Edition BS 7671 certification',
+        'Accumulate required on-the-job hours',
+      ],
+      opportunities: [
+        'Domestic rewires and installations',
+        'Commercial lighting and power',
+        'Industrial maintenance work',
+        'Emergency call-out services',
+        'Testing and inspection work',
+      ],
+      salaryRange: '£28,000 - £38,000',
+      progression: 'Foundation for all other electrical career paths',
+      icon: <Zap className="h-8 w-8 text-elec-yellow" />,
     },
     {
-      title: "Approved Electrician",
-      timeframe: "3-5 years",
-      description: "Gain approved status with registration schemes, enabling you to self-certify work and operate with greater independence",
-      requirements: ["2+ years post-qualification experience", "Registration with approved scheme (NICEIC, NAPIT, etc.)", "Inspection & Testing qualification (2391)", "Professional indemnity insurance"],
-      opportunities: ["Self-certification of electrical work", "Building Control notification", "Electrical Installation Condition Reports (EICRs)", "Portable Appliance Testing (PAT)", "Periodic inspection and testing"],
-      salaryRange: "£32,000 - £45,000",
-      progression: "Gateway to running your own electrical business",
-      icon: <Shield className="h-8 w-8 text-elec-yellow" />
+      title: 'Approved Electrician',
+      timeframe: '3-5 years',
+      description:
+        'Gain approved status with registration schemes, enabling you to self-certify work and operate with greater independence',
+      requirements: [
+        '2+ years post-qualification experience',
+        'Registration with approved scheme (NICEIC, NAPIT, etc.)',
+        'Inspection & Testing qualification (2391)',
+        'Professional indemnity insurance',
+      ],
+      opportunities: [
+        'Self-certification of electrical work',
+        'Building Control notification',
+        'Electrical Installation Condition Reports (EICRs)',
+        'Portable Appliance Testing (PAT)',
+        'Periodic inspection and testing',
+      ],
+      salaryRange: '£32,000 - £45,000',
+      progression: 'Gateway to running your own electrical business',
+      icon: <Shield className="h-8 w-8 text-elec-yellow" />,
     },
     {
-      title: "Specialist Electrician",
-      timeframe: "3-6 years",
-      description: "Develop expertise in specific areas of electrical work, commanding premium rates for specialist knowledge",
-      requirements: ["Standard electrical qualifications", "Specialist training courses", "Manufacturer certifications", "Ongoing CPD in chosen speciality"],
-      opportunities: ["Solar PV and renewable energy systems", "Electric vehicle charging installations", "Smart home automation systems", "Fire alarm and security systems", "Industrial automation and PLCs", "High voltage switching operations"],
-      salaryRange: "£35,000 - £50,000",
-      progression: "Lead to consultancy roles or specialist contracting",
-      icon: <Wrench className="h-8 w-8 text-elec-yellow" />
+      title: 'Specialist Electrician',
+      timeframe: '3-6 years',
+      description:
+        'Develop expertise in specific areas of electrical work, commanding premium rates for specialist knowledge',
+      requirements: [
+        'Standard electrical qualifications',
+        'Specialist training courses',
+        'Manufacturer certifications',
+        'Ongoing CPD in chosen speciality',
+      ],
+      opportunities: [
+        'Solar PV and renewable energy systems',
+        'Electric vehicle charging installations',
+        'Smart home automation systems',
+        'Fire alarm and security systems',
+        'Industrial automation and PLCs',
+        'High voltage switching operations',
+      ],
+      salaryRange: '£35,000 - £50,000',
+      progression: 'Lead to consultancy roles or specialist contracting',
+      icon: <Wrench className="h-8 w-8 text-elec-yellow" />,
     },
     {
-      title: "Electrical Supervisor",
-      timeframe: "5-8 years",
-      description: "Lead teams of electricians on construction sites and oversee electrical installation projects",
-      requirements: ["Extensive practical experience", "Leadership and communication skills", "Knowledge of construction processes", "Health and safety qualifications (SMSTS/SSSTS)"],
-      opportunities: ["Site supervision on major projects", "Quality control and inspection", "Training and mentoring apprentices", "Liaison with other trades and management", "Project planning and coordination"],
-      salaryRange: "£40,000 - £55,000",
-      progression: "Move into project management or contract management",
-      icon: <Users className="h-8 w-8 text-elec-yellow" />
+      title: 'Electrical Supervisor',
+      timeframe: '5-8 years',
+      description:
+        'Lead teams of electricians on construction sites and oversee electrical installation projects',
+      requirements: [
+        'Extensive practical experience',
+        'Leadership and communication skills',
+        'Knowledge of construction processes',
+        'Health and safety qualifications (SMSTS/SSSTS)',
+      ],
+      opportunities: [
+        'Site supervision on major projects',
+        'Quality control and inspection',
+        'Training and mentoring apprentices',
+        'Liaison with other trades and management',
+        'Project planning and coordination',
+      ],
+      salaryRange: '£40,000 - £55,000',
+      progression: 'Move into project management or contract management',
+      icon: <Users className="h-8 w-8 text-elec-yellow" />,
     },
     {
-      title: "Electrical Contractor",
-      timeframe: "6-10 years",
-      description: "Establish and run your own electrical contracting business, taking on projects and employing staff",
-      requirements: ["Approved electrician status", "Business management skills", "Financial planning knowledge", "Public liability and employers' liability insurance", "Registration with trade bodies"],
-      opportunities: ["Tender for commercial contracts", "Build long-term client relationships", "Employ and train apprentices", "Diversify into related services", "Expand into multiple service areas"],
-      salaryRange: "£45,000 - £100,000+",
-      progression: "Scale business operations or specialise in high-value sectors",
-      icon: <Briefcase className="h-8 w-8 text-elec-yellow" />
+      title: 'Electrical Contractor',
+      timeframe: '6-10 years',
+      description:
+        'Establish and run your own electrical contracting business, taking on projects and employing staff',
+      requirements: [
+        'Approved electrician status',
+        'Business management skills',
+        'Financial planning knowledge',
+        "Public liability and employers' liability insurance",
+        'Registration with trade bodies',
+      ],
+      opportunities: [
+        'Tender for commercial contracts',
+        'Build long-term client relationships',
+        'Employ and train apprentices',
+        'Diversify into related services',
+        'Expand into multiple service areas',
+      ],
+      salaryRange: '£45,000 - £100,000+',
+      progression: 'Scale business operations or specialise in high-value sectors',
+      icon: <Briefcase className="h-8 w-8 text-elec-yellow" />,
     },
     {
-      title: "Electrical Engineer",
-      timeframe: "4-7 years",
-      description: "Design electrical systems and work on complex engineering projects requiring technical expertise",
-      requirements: ["Higher education (HNC/HND/Degree)", "Chartered Engineer status (CEng)", "Design software proficiency", "Knowledge of engineering standards"],
-      opportunities: ["Electrical system design", "Power distribution planning", "Technical consultancy work", "Research and development projects", "Building services engineering"],
-      salaryRange: "£40,000 - £65,000",
-      progression: "Senior engineering roles or technical director positions",
-      icon: <Building className="h-8 w-8 text-elec-yellow" />
+      title: 'Electrical Engineer',
+      timeframe: '4-7 years',
+      description:
+        'Design electrical systems and work on complex engineering projects requiring technical expertise',
+      requirements: [
+        'Higher education (HNC/HND/Degree)',
+        'Chartered Engineer status (CEng)',
+        'Design software proficiency',
+        'Knowledge of engineering standards',
+      ],
+      opportunities: [
+        'Electrical system design',
+        'Power distribution planning',
+        'Technical consultancy work',
+        'Research and development projects',
+        'Building services engineering',
+      ],
+      salaryRange: '£40,000 - £65,000',
+      progression: 'Senior engineering roles or technical director positions',
+      icon: <Building className="h-8 w-8 text-elec-yellow" />,
     },
     {
-      title: "Electrical Manager",
-      timeframe: "8-12 years",
-      description: "Manage electrical departments, oversee major projects, and make strategic business decisions",
-      requirements: ["Extensive industry experience", "Management qualifications", "Strategic thinking abilities", "Understanding of business operations", "Leadership experience"],
-      opportunities: ["Department management in large companies", "Strategic planning and budgeting", "Policy development and implementation", "Stakeholder management", "Business development activities"],
-      salaryRange: "£55,000 - £85,000+",
-      progression: "Executive roles or board-level positions",
-      icon: <Crown className="h-8 w-8 text-elec-yellow" />
+      title: 'Electrical Manager',
+      timeframe: '8-12 years',
+      description:
+        'Manage electrical departments, oversee major projects, and make strategic business decisions',
+      requirements: [
+        'Extensive industry experience',
+        'Management qualifications',
+        'Strategic thinking abilities',
+        'Understanding of business operations',
+        'Leadership experience',
+      ],
+      opportunities: [
+        'Department management in large companies',
+        'Strategic planning and budgeting',
+        'Policy development and implementation',
+        'Stakeholder management',
+        'Business development activities',
+      ],
+      salaryRange: '£55,000 - £85,000+',
+      progression: 'Executive roles or board-level positions',
+      icon: <Crown className="h-8 w-8 text-elec-yellow" />,
     },
     {
-      title: "Electrical Trainer/Assessor",
-      timeframe: "6-10 years",
-      description: "Train the next generation of electricians in colleges, training centres, or through apprenticeship programmes",
-      requirements: ["Teaching qualifications (PTLLS/CTLLS)", "Assessor qualifications (A1/D32/D33)", "Up-to-date technical knowledge", "Strong communication skills"],
-      opportunities: ["College/university teaching", "Training centre instruction", "Apprenticeship delivery", "CPD course development", "Industry training consultancy"],
-      salaryRange: "£35,000 - £50,000",
-      progression: "Senior lecturer roles or training centre management",
-      icon: <GraduationCap className="h-8 w-8 text-elec-yellow" />
-    }
+      title: 'Electrical Trainer/Assessor',
+      timeframe: '6-10 years',
+      description:
+        'Train the next generation of electricians in colleges, training centres, or through apprenticeship programmes',
+      requirements: [
+        'Teaching qualifications (PTLLS/CTLLS)',
+        'Assessor qualifications (A1/D32/D33)',
+        'Up-to-date technical knowledge',
+        'Strong communication skills',
+      ],
+      opportunities: [
+        'College/university teaching',
+        'Training centre instruction',
+        'Apprenticeship delivery',
+        'CPD course development',
+        'Industry training consultancy',
+      ],
+      salaryRange: '£35,000 - £50,000',
+      progression: 'Senior lecturer roles or training centre management',
+      icon: <GraduationCap className="h-8 w-8 text-elec-yellow" />,
+    },
   ];
 
   const certificationBodies = [
     {
-      name: "NICEIC",
-      description: "Leading electrical registration body",
-      benefits: ["Industry recognition", "Insurance backing", "Technical support"]
+      name: 'NICEIC',
+      description: 'Leading electrical registration body',
+      benefits: ['Industry recognition', 'Insurance backing', 'Technical support'],
     },
     {
-      name: "NAPIT",
-      description: "Competent person scheme operator",
-      benefits: ["Competitive fees", "Technical helpline", "Business support"]
+      name: 'NAPIT',
+      description: 'Competent person scheme operator',
+      benefits: ['Competitive fees', 'Technical helpline', 'Business support'],
     },
     {
-      name: "ECA",
-      description: "Trade association for electrical contractors",
-      benefits: ["Networking opportunities", "Industry representation", "Business guidance"]
+      name: 'ECA',
+      description: 'Trade association for electrical contractors',
+      benefits: ['Networking opportunities', 'Industry representation', 'Business guidance'],
     },
     {
-      name: "JIB",
-      description: "Joint Industry Board for electrical industry",
-      benefits: ["Grading system", "Training standards", "Employment terms"]
-    }
+      name: 'JIB',
+      description: 'Joint Industry Board for electrical industry',
+      benefits: ['Grading system', 'Training standards', 'Employment terms'],
+    },
   ];
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Electrical Career Progression Pathways</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">
+          Electrical Career Progression Pathways
+        </h1>
         <p className="text-sm sm:text-base text-white text-center max-w-2xl mb-3 sm:mb-4">
-          Explore comprehensive career paths in the UK electrical industry, from apprentice to senior management roles. 
-          Each pathway shows typical progression times, salary ranges, and requirements specific to UK electrical professionals.
+          Explore comprehensive career paths in the UK electrical industry, from apprentice to
+          senior management roles. Each pathway shows typical progression times, salary ranges, and
+          requirements specific to UK electrical professionals.
         </p>
         <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {careerPaths.map((path, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/40 transition-all duration-300">
+          <Card
+            key={index}
+            className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/40 transition-all duration-300"
+          >
             <CardHeader>
               <div className="flex items-center gap-3 mb-2">
                 {path.icon}
@@ -176,11 +291,14 @@ const CareerPathways = () => {
 
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
-          <CardTitle className="text-elec-yellow">UK Electrical Industry Registration Bodies</CardTitle>
+          <CardTitle className="text-elec-yellow">
+            UK Electrical Industry Registration Bodies
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-white mb-4">
-            To become an Approved Electrician in the UK, you'll need to register with one of these competent person schemes:
+            To become an Approved Electrician in the UK, you'll need to register with one of these
+            competent person schemes:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {certificationBodies.map((body, index) => (
@@ -203,7 +321,9 @@ const CareerPathways = () => {
 
       <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
-          <CardTitle className="text-elec-yellow">Planning Your Electrical Career Journey</CardTitle>
+          <CardTitle className="text-elec-yellow">
+            Planning Your Electrical Career Journey
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-sm">
@@ -241,9 +361,10 @@ const CareerPathways = () => {
           <div className="mt-6 p-4 bg-elec-yellow/10 rounded-lg">
             <h4 className="font-semibold text-elec-yellow mb-2">Remember:</h4>
             <p className="text-white text-sm">
-              Career progression isn't always linear. Many successful electrical professionals combine multiple paths, 
-              such as running a contracting business whilst also teaching part-time, or specialising in renewable energy 
-              whilst maintaining general electrical skills. The key is continuous learning and adapting to industry changes.
+              Career progression isn't always linear. Many successful electrical professionals
+              combine multiple paths, such as running a contracting business whilst also teaching
+              part-time, or specialising in renewable energy whilst maintaining general electrical
+              skills. The key is continuous learning and adapting to industry changes.
             </p>
           </div>
         </CardContent>

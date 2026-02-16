@@ -1,51 +1,45 @@
-import {
-  ArrowLeft,
-  Siren,
-  ClipboardList,
-  Users,
-  CalendarDays,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Siren, ClipboardList, Users, CalendarDays } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Emergency Procedures & Rescue",
+    title: 'Emergency Procedures & Rescue',
     icon: Siren,
     description:
-      "Suspension trauma, immediate rescue priority, first aid for falls, spinal protocol, and post-rescue positioning",
+      'Suspension trauma, immediate rescue priority, first aid for falls, spinal protocol, and post-rescue positioning',
   },
   {
     id: 2,
-    title: "Incident Reporting & Investigation",
+    title: 'Incident Reporting & Investigation',
     icon: ClipboardList,
     description:
-      "RIDDOR requirements, investigation process, root cause analysis, and near-miss reporting culture",
+      'RIDDOR requirements, investigation process, root cause analysis, and near-miss reporting culture',
   },
   {
     id: 3,
-    title: "Roles, Responsibilities & Competence",
+    title: 'Roles, Responsibilities & Competence',
     icon: Users,
     description:
-      "Employer, employee, contractor, and client duties under CDM 2015, competent person definition, and training",
+      'Employer, employee, contractor, and client duties under CDM 2015, competent person definition, and training',
   },
   {
     id: 4,
-    title: "Inspection Regimes & Record Keeping",
+    title: 'Inspection Regimes & Record Keeping',
     icon: CalendarDays,
     description:
-      "Pre-use checks, 7-day scaffold inspections, LOLER 6-monthly, record keeping, and legal retention periods",
+      'Pre-use checks, 7-day scaffold inspections, LOLER 6-monthly, record keeping, and legal retention periods',
   },
 ];
 
 export default function WorkingAtHeightModule5() {
   useSEO({
-    title: "Module 5: Incident Response & Responsibilities | Working at Height",
+    title: 'Module 5: Incident Response & Responsibilities | Working at Height',
     description:
-      "Emergency procedures, incident reporting, roles and responsibilities, and inspection regimes for working at height.",
+      'Emergency procedures, incident reporting, roles and responsibilities, and inspection regimes for working at height.',
   });
 
   return (
@@ -72,9 +66,7 @@ export default function WorkingAtHeightModule5() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 mb-3">
-              <span className="text-amber-400 text-xs font-semibold">
-                MODULE 5
-              </span>
+              <span className="text-amber-400 text-xs font-semibold">MODULE 5</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -84,8 +76,8 @@ export default function WorkingAtHeightModule5() {
               Incident Response & Responsibilities
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Emergency procedures, incident reporting, roles and
-              responsibilities, and inspection regimes for working at height
+              Emergency procedures, incident reporting, roles and responsibilities, and inspection
+              regimes for working at height
             </p>
           </div>
 

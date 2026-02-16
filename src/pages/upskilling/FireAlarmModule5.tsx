@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Module 5: Installation & Commissioning - Fire Alarm Course";
-const DESCRIPTION = "Learn about fire alarm installation procedures, wiring methods, commissioning processes and handover requirements.";
+const TITLE = 'Module 5: Installation & Commissioning - Fire Alarm Course';
+const DESCRIPTION =
+  'Learn about fire alarm installation procedures, wiring methods, commissioning processes and handover requirements.';
 
 const FireAlarmModule5 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -13,40 +14,40 @@ const FireAlarmModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Pre-Installation Planning",
+      title: 'Pre-Installation Planning',
       icon: CheckCircle,
-      description: "Site surveys, coordination and logistics"
+      description: 'Site surveys, coordination and logistics',
     },
     {
       id: 2,
-      title: "Control Panel Installation",
+      title: 'Control Panel Installation',
       icon: CheckCircle,
-      description: "Panel positioning and terminations"
+      description: 'Panel positioning and terminations',
     },
     {
       id: 3,
-      title: "Device Installation",
+      title: 'Device Installation',
       icon: CheckCircle,
-      description: "Detector mounting and MCP positioning"
+      description: 'Detector mounting and MCP positioning',
     },
     {
       id: 4,
-      title: "Wiring & Terminations",
+      title: 'Wiring & Terminations',
       icon: CheckCircle,
-      description: "Cable installation and testing"
+      description: 'Cable installation and testing',
     },
     {
       id: 5,
-      title: "Commissioning Procedures",
+      title: 'Commissioning Procedures',
       icon: CheckCircle,
-      description: "System setup and device testing"
+      description: 'System setup and device testing',
     },
     {
       id: 6,
-      title: "Handover & Documentation",
+      title: 'Handover & Documentation',
       icon: CheckCircle,
-      description: "Client training and O&M manuals"
-    }
+      description: 'Client training and O&M manuals',
+    },
   ];
 
   return (
@@ -87,7 +88,8 @@ const FireAlarmModule5 = () => {
             Installation & Commissioning
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Practical guidance on installing fire alarm systems, from planning through to commissioning and handover.
+            Practical guidance on installing fire alarm systems, from planning through to
+            commissioning and handover.
           </p>
         </div>
 

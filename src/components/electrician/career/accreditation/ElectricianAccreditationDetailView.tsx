@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   ArrowLeft,
   ExternalLink,
@@ -17,10 +17,10 @@ import {
   BookOpen,
   Shield,
   Users,
-} from "lucide-react";
-import { AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
-import { getBrandInfo, getLogoUrl, getInitials } from "./accreditationBranding";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { AccreditationOption } from '../../../apprentice/career/accreditation/enhancedAccreditationData';
+import { getBrandInfo, getLogoUrl, getInitials } from './accreditationBranding';
+import { cn } from '@/lib/utils';
 
 interface ElectricianAccreditationDetailViewProps {
   accreditation: AccreditationOption;
@@ -45,37 +45,42 @@ const itemVariants = {
   },
 };
 
-type TabType = "overview" | "benefits" | "requirements" | "process";
+type TabType = 'overview' | 'benefits' | 'requirements' | 'process';
 
-const ElectricianAccreditationDetailView = ({ accreditation, onBack }: ElectricianAccreditationDetailViewProps) => {
-  const [activeTab, setActiveTab] = useState<TabType>("overview");
+const ElectricianAccreditationDetailView = ({
+  accreditation,
+  onBack,
+}: ElectricianAccreditationDetailViewProps) => {
+  const [activeTab, setActiveTab] = useState<TabType>('overview');
   const brandInfo = getBrandInfo(accreditation.accreditationBody);
   const logoUrl = getLogoUrl(accreditation.accreditationBody, accreditation.website);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Entry Level": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Intermediate": return "bg-amber-500/20 text-amber-400 border-amber-500/30";
-      case "Advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "Expert": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      default: return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
+      case 'Entry Level':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Intermediate':
+        return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'Advanced':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'Expert':
+        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      default:
+        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
     }
   };
 
   const tabs = [
-    { id: "overview" as TabType, label: "Overview", icon: Award },
-    { id: "benefits" as TabType, label: "Benefits", icon: Star },
-    { id: "requirements" as TabType, label: "Requirements", icon: BookOpen },
-    { id: "process" as TabType, label: "Get Started", icon: ChevronRight },
+    { id: 'overview' as TabType, label: 'Overview', icon: Award },
+    { id: 'benefits' as TabType, label: 'Benefits', icon: Star },
+    { id: 'requirements' as TabType, label: 'Requirements', icon: BookOpen },
+    { id: 'process' as TabType, label: 'Get Started', icon: ChevronRight },
   ];
 
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Back Button */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, x: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, x: 0 }}>
         <Button
           variant="ghost"
           onClick={onBack}
@@ -91,12 +96,14 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         className="relative overflow-hidden bg-elec-gray/50 border rounded-2xl"
-        style={{ borderColor: brandInfo.brandColor + "40" }}
+        style={{ borderColor: brandInfo.brandColor + '40' }}
       >
         {/* Gradient accent line */}
         <div
           className="absolute inset-x-0 top-0 h-[2px]"
-          style={{ background: `linear-gradient(to right, ${brandInfo.brandColor}60, ${brandInfo.brandColor}, ${brandInfo.brandColor}60)` }}
+          style={{
+            background: `linear-gradient(to right, ${brandInfo.brandColor}60, ${brandInfo.brandColor}, ${brandInfo.brandColor}60)`,
+          }}
         />
 
         <div className="p-4 sm:p-6">
@@ -104,7 +111,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             {/* Logo */}
             <div
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center border-2 bg-white/5 flex-shrink-0"
-              style={{ borderColor: brandInfo.brandColor + "60" }}
+              style={{ borderColor: brandInfo.brandColor + '60' }}
             >
               {logoUrl ? (
                 <img
@@ -131,7 +138,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                   {accreditation.level}
                 </Badge>
                 {accreditation.onlineAvailable && (
-                  <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                  <Badge
+                    variant="outline"
+                    className="bg-blue-500/20 text-blue-400 border-blue-500/30"
+                  >
                     Online Available
                   </Badge>
                 )}
@@ -150,7 +160,9 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
             <div className="bg-white/5 rounded-xl p-3 text-center">
               <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-1" />
-              <div className="text-sm font-medium text-white truncate">{accreditation.duration}</div>
+              <div className="text-sm font-medium text-white truncate">
+                {accreditation.duration}
+              </div>
               <div className="text-[10px] text-white/50">Duration</div>
             </div>
             <div className="bg-white/5 rounded-xl p-3 text-center">
@@ -185,10 +197,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={cn(
-              "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex-shrink-0",
+              'flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex-shrink-0',
               activeTab === tab.id
-                ? "bg-elec-yellow text-black"
-                : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+                ? 'bg-elec-yellow text-black'
+                : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white'
             )}
           >
             <tab.icon className="h-4 w-4" />
@@ -206,15 +218,26 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
         >
-          {activeTab === "overview" && (
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+          {activeTab === 'overview' && (
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4"
+            >
               {/* Description */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <p className="text-white/80 leading-relaxed">{accreditation.description}</p>
               </motion.div>
 
               {/* Career Impact */}
-              <motion.div variants={itemVariants} className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5"
+              >
                 <div className="flex items-start gap-3">
                   <div className="p-2 rounded-lg bg-elec-yellow/20">
                     <TrendingUp className="h-5 w-5 text-elec-yellow" />
@@ -227,7 +250,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
               </motion.div>
 
               {/* Key Benefits Preview */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
                   Key Benefits
@@ -242,7 +268,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                 </div>
                 {accreditation.benefits.length > 4 && (
                   <button
-                    onClick={() => setActiveTab("benefits")}
+                    onClick={() => setActiveTab('benefits')}
                     className="mt-3 text-sm text-elec-yellow hover:text-elec-yellow/80 flex items-center gap-1"
                   >
                     View all {accreditation.benefits.length} benefits
@@ -253,10 +279,18 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </motion.div>
           )}
 
-          {activeTab === "benefits" && (
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+          {activeTab === 'benefits' && (
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4"
+            >
               {/* Professional Recognition */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <div className="flex items-center gap-2 mb-4">
                   <div className="p-2 rounded-lg bg-purple-500/20">
                     <Award className="h-5 w-5 text-purple-400" />
@@ -266,17 +300,24 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 rounded-lg p-3">
                     <h4 className="text-sm font-medium text-purple-300 mb-1">Industry Standing</h4>
-                    <p className="text-xs text-white/60">Instant credibility and recognition within the electrical industry</p>
+                    <p className="text-xs text-white/60">
+                      Instant credibility and recognition within the electrical industry
+                    </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <h4 className="text-sm font-medium text-purple-300 mb-1">Consumer Trust</h4>
-                    <p className="text-xs text-white/60">Customers actively seek accredited professionals</p>
+                    <p className="text-xs text-white/60">
+                      Customers actively seek accredited professionals
+                    </p>
                   </div>
                 </div>
               </motion.div>
 
               {/* Business Advantages */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <div className="flex items-center gap-2 mb-4">
                   <div className="p-2 rounded-lg bg-green-500/20">
                     <Briefcase className="h-5 w-5 text-green-400" />
@@ -288,28 +329,37 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
                     <PoundSterling className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <h4 className="text-sm font-medium text-green-300">Higher Rates</h4>
-                      <p className="text-xs text-white/60">Command 15-25% premium pricing over non-accredited competitors</p>
+                      <p className="text-xs text-white/60">
+                        Command 15-25% premium pricing over non-accredited competitors
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 bg-blue-500/10 rounded-lg p-3">
                     <Users className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <h4 className="text-sm font-medium text-blue-300">Marketing Edge</h4>
-                      <p className="text-xs text-white/60">Use accreditation logos and materials to win more contracts</p>
+                      <p className="text-xs text-white/60">
+                        Use accreditation logos and materials to win more contracts
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 bg-purple-500/10 rounded-lg p-3">
                     <Shield className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <h4 className="text-sm font-medium text-purple-300">Insurance Discounts</h4>
-                      <p className="text-xs text-white/60">Access reduced premiums through accreditation body partnerships</p>
+                      <p className="text-xs text-white/60">
+                        Access reduced premiums through accreditation body partnerships
+                      </p>
                     </div>
                   </div>
                 </div>
               </motion.div>
 
               {/* All Benefits List */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <h3 className="font-semibold text-white mb-4">All Benefits</h3>
                 <div className="space-y-2">
                   {accreditation.benefits.map((benefit, idx) => (
@@ -323,10 +373,18 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </motion.div>
           )}
 
-          {activeTab === "requirements" && (
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+          {activeTab === 'requirements' && (
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4"
+            >
               {/* Essential Requirements */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <div className="flex items-center gap-2 mb-4">
                   <div className="p-2 rounded-lg bg-amber-500/20">
                     <BookOpen className="h-5 w-5 text-amber-400" />
@@ -346,7 +404,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
               </motion.div>
 
               {/* Experience */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <h3 className="font-semibold text-white mb-4">Experience Requirements</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="bg-blue-500/10 rounded-lg p-3 text-center">
@@ -365,16 +426,19 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
               </motion.div>
 
               {/* Documentation */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <h3 className="font-semibold text-white mb-3">Documentation Needed</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {[
-                    "Qualification certificates",
-                    "Work portfolio & references",
-                    "CPD records",
-                    "Insurance documents",
-                    "Business registration",
-                    "Character references",
+                    'Qualification certificates',
+                    'Work portfolio & references',
+                    'CPD records',
+                    'Insurance documents',
+                    'Business registration',
+                    'Character references',
                   ].map((doc, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-sm text-white/70">
                       <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
@@ -386,10 +450,18 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
             </motion.div>
           )}
 
-          {activeTab === "process" && (
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+          {activeTab === 'process' && (
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4"
+            >
               {/* Steps */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <h3 className="font-semibold text-white mb-4">Application Steps</h3>
                 <div className="space-y-3">
                   {accreditation.nextSteps.map((step, idx) => (
@@ -406,7 +478,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
               </motion.div>
 
               {/* Timeline */}
-              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
+              >
                 <h3 className="font-semibold text-white mb-4">Typical Timeline</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
@@ -425,7 +500,10 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
               </motion.div>
 
               {/* Investment */}
-              <motion.div variants={itemVariants} className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5">
+              <motion.div
+                variants={itemVariants}
+                className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5"
+              >
                 <h3 className="font-semibold text-white mb-4">Investment</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>

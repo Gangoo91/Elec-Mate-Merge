@@ -14,19 +14,21 @@ export const SmartHomeModule5Section4Monitoring = () => {
         <div className="bg-purple-600/10 p-4 rounded-lg border border-purple-600/30">
           <h4 className="text-foreground font-semibold mb-3">Comprehensive Remote Control</h4>
           <p className="text-sm mb-3">
-            Apps allow users to check camera feeds, adjust thermostats, or lock doors remotely. 
-            Cloud-based dashboards display energy usage, temperature trends, and security logs, 
+            Apps allow users to check camera feeds, adjust thermostats, or lock doors remotely.
+            Cloud-based dashboards display energy usage, temperature trends, and security logs,
             providing comprehensive oversight of the entire home ecosystem.
           </p>
           <p className="text-sm">
-            Integration with voice assistants (Alexa, Google Assistant) extends control options, 
+            Integration with voice assistants (Alexa, Google Assistant) extends control options,
             enabling voice commands even when away from home through phone-based voice apps.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Remote Control Capabilities</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Remote Control Capabilities
+            </h4>
             <div className="space-y-3">
               <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                 <p className="text-blue-400 font-semibold text-sm mb-1">Security Systems</p>
@@ -59,7 +61,9 @@ export const SmartHomeModule5Section4Monitoring = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Monitoring Dashboard Features</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Monitoring Dashboard Features
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-cyan-400 font-semibold text-sm mb-1">Real-Time Data</p>

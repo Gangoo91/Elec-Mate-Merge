@@ -7,34 +7,34 @@ const EVChargingModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Dynamic Load Management (DLM)",
+      title: 'Dynamic Load Management (DLM)',
       icon: Settings,
-      description: "Implementing intelligent load management systems"
+      description: 'Implementing intelligent load management systems',
     },
     {
       id: 2,
-      title: "EV/PV/Battery Integration via HEMS",
+      title: 'EV/PV/Battery Integration via HEMS',
       icon: Zap,
-      description: "Integrating charging with renewable energy and storage"
+      description: 'Integrating charging with renewable energy and storage',
     },
     {
       id: 3,
-      title: "CT Clamps, Load-Sensing, and Control Logic",
+      title: 'CT Clamps, Load-Sensing, and Control Logic',
       icon: Activity,
-      description: "Monitoring and control technology for load management"
+      description: 'Monitoring and control technology for load management',
     },
     {
       id: 4,
-      title: "Off-Peak Charging Strategies",
+      title: 'Off-Peak Charging Strategies',
       icon: Clock,
-      description: "Optimising charging times for cost and grid impact"
+      description: 'Optimising charging times for cost and grid impact',
     },
     {
       id: 5,
-      title: "Multiple Unit Coordination (Flats/Shared Sites)",
+      title: 'Multiple Unit Coordination (Flats/Shared Sites)',
       icon: Users,
-      description: "Managing charging across multi-unit developments"
-    }
+      description: 'Managing charging across multi-unit developments',
+    },
   ];
 
   return (

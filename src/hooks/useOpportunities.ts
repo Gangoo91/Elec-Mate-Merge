@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 // Types
 export interface TenderOpportunity {
@@ -254,15 +254,15 @@ export function useUpdateTenderPreferences() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-tender-preferences'] });
       toast({
-        title: "Preferences Updated",
-        description: "Your tender search preferences have been saved.",
+        title: 'Preferences Updated',
+        description: 'Your tender search preferences have been saved.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -294,21 +294,21 @@ export function useSaveOpportunity() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['saved-opportunities'] });
       toast({
-        title: "Opportunity Saved",
-        description: "Added to your saved opportunities.",
+        title: 'Opportunity Saved',
+        description: 'Added to your saved opportunities.',
       });
     },
     onError: (error: Error) => {
       if (error.message.includes('duplicate')) {
         toast({
-          title: "Already Saved",
-          description: "This opportunity is already in your saved list.",
+          title: 'Already Saved',
+          description: 'This opportunity is already in your saved list.',
         });
       } else {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       }
     },
@@ -336,15 +336,15 @@ export function useRemoveSavedOpportunity() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['saved-opportunities'] });
       toast({
-        title: "Removed",
-        description: "Opportunity removed from saved list.",
+        title: 'Removed',
+        description: 'Opportunity removed from saved list.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -354,17 +354,21 @@ export function useRemoveSavedOpportunity() {
 export function useSavedOpportunities() {
   return useQuery({
     queryKey: ['saved-opportunities'],
-    queryFn: async (): Promise<(TenderOpportunity & { saved_at: string; notes: string | null })[]> => {
+    queryFn: async (): Promise<
+      (TenderOpportunity & { saved_at: string; notes: string | null })[]
+    > => {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) return [];
 
       const { data, error } = await supabase
         .from('saved_opportunities')
-        .select(`
+        .select(
+          `
           created_at,
           notes,
           opportunity:tender_opportunities(*)
-        `)
+        `
+        )
         .eq('user_id', userData.user.id)
         .order('created_at', { ascending: false });
 
@@ -395,15 +399,15 @@ export function useSyncOpportunities() {
       queryClient.invalidateQueries({ queryKey: ['opportunities'] });
       queryClient.invalidateQueries({ queryKey: ['tender-sources'] });
       toast({
-        title: "Sync Complete",
+        title: 'Sync Complete',
         description: `Fetched ${data?.inserted || 0} new opportunities from ${sourceName}.`,
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Sync Failed",
+        title: 'Sync Failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -452,15 +456,15 @@ export function useCreateTenderApplication() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tender-applications'] });
       toast({
-        title: "Application Created",
-        description: "Your tender application has been started.",
+        title: 'Application Created',
+        description: 'Your tender application has been started.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -476,11 +480,13 @@ export function useTenderApplications() {
 
       const { data, error } = await supabase
         .from('tender_applications')
-        .select(`
+        .select(
+          `
           *,
           opportunity:tender_opportunities(*),
           tender:tenders(*)
-        `)
+        `
+        )
         .eq('user_id', userData.user.id)
         .order('created_at', { ascending: false });
 
@@ -533,7 +539,10 @@ export function formatDeadline(deadline: string | null): { text: string; urgent:
     return { text: `${daysUntil} days left`, urgent: false };
   }
 
-  return { text: deadlineDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }), urgent: false };
+  return {
+    text: deadlineDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
+    urgent: false,
+  };
 }
 
 // Helper: Get category badge color

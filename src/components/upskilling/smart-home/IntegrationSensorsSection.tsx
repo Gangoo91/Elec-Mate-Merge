@@ -18,7 +18,8 @@ export const IntegrationSensorsSection = () => {
               Lighting Automation
             </h4>
             <p className="text-yellow-100 text-sm">
-              PIR sensors trigger lights on entry, providing automatic illumination and acting as a visual deterrent to potential intruders.
+              PIR sensors trigger lights on entry, providing automatic illumination and acting as a
+              visual deterrent to potential intruders.
             </p>
           </div>
 
@@ -28,7 +29,8 @@ export const IntegrationSensorsSection = () => {
               Security Alarms
             </h4>
             <p className="text-red-100 text-sm">
-              Door contact sensors trigger sirens and send immediate alerts when unauthorised entry is detected.
+              Door contact sensors trigger sirens and send immediate alerts when unauthorised entry
+              is detected.
             </p>
           </div>
         </div>
@@ -54,14 +56,17 @@ export const IntegrationSensorsSection = () => {
             Accessibility and Care
           </h4>
           <p className="text-green-100 text-sm">
-            Contact sensors notify carers when doors open, providing peace of mind for elderly residents or children's safety monitoring.
+            Contact sensors notify carers when doors open, providing peace of mind for elderly
+            residents or children's safety monitoring.
           </p>
         </div>
 
         <div className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 border border-purple-600/50 rounded-lg p-4">
           <h4 className="font-semibold text-purple-200 mb-2">Integration Benefits</h4>
           <p className="text-purple-100 text-sm">
-            Smart sensor integration transforms individual devices into a cohesive security ecosystem, enabling intelligent responses that adapt to different scenarios and user needs.
+            Smart sensor integration transforms individual devices into a cohesive security
+            ecosystem, enabling intelligent responses that adapt to different scenarios and user
+            needs.
           </p>
         </div>
       </CardContent>

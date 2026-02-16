@@ -1,12 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Calculator, 
-  Ruler, 
-  Zap, 
+import {
+  Calculator,
+  Ruler,
+  Zap,
   BookOpen,
   Settings,
   AlertTriangle,
-  CheckCircle
+  CheckCircle,
 } from 'lucide-react';
 
 export const EmergencyLightingTechnicalSection2_4 = () => {
@@ -31,15 +31,21 @@ export const EmergencyLightingTechnicalSection2_4 = () => {
               <ul className="space-y-2 text-foreground">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span><strong>1 lux</strong> along centre line of escape route</span>
+                  <span>
+                    <strong>1 lux</strong> along centre line of escape route
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span><strong>0.5 lux</strong> minimum anywhere on route</span>
+                  <span>
+                    <strong>0.5 lux</strong> minimum anywhere on route
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span><strong>40:1</strong> maximum diversity ratio</span>
+                  <span>
+                    <strong>40:1</strong> maximum diversity ratio
+                  </span>
                 </li>
               </ul>
             </div>
@@ -181,7 +187,9 @@ export const EmergencyLightingTechnicalSection2_4 = () => {
             <div>
               <h4 className="font-semibold text-red-400 mb-2">Critical Compliance Note</h4>
               <p className="text-foreground">
-                Failure to meet BS 5266 requirements can result in prosecution under the Regulatory Reform (Fire Safety) Order 2005. Always ensure installations are fully compliant and properly documented.
+                Failure to meet BS 5266 requirements can result in prosecution under the Regulatory
+                Reform (Fire Safety) Order 2005. Always ensure installations are fully compliant and
+                properly documented.
               </p>
             </div>
           </div>

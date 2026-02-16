@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Upload, X, User } from "lucide-react";
-import { toast } from "sonner";
+import { useState, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Upload, X, User } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface ProfilePhotoUploadProps {
   photoUrl?: string;
@@ -11,11 +11,11 @@ interface ProfilePhotoUploadProps {
   isLogo?: boolean;
 }
 
-export function ProfilePhotoUpload({ 
-  photoUrl, 
-  onPhotoChange, 
-  label = "Profile Photo",
-  isLogo = false 
+export function ProfilePhotoUpload({
+  photoUrl,
+  onPhotoChange,
+  label = 'Profile Photo',
+  isLogo = false,
 }: ProfilePhotoUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | undefined>(photoUrl);
@@ -26,13 +26,13 @@ export function ProfilePhotoUpload({
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      toast.error("Please select an image file");
+      toast.error('Please select an image file');
       return;
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image must be less than 5MB");
+      toast.error('Image must be less than 5MB');
       return;
     }
 
@@ -58,16 +58,14 @@ export function ProfilePhotoUpload({
   return (
     <div className="space-y-3">
       <Label className="text-foreground font-semibold">{label}</Label>
-      
+
       <div className="flex items-center gap-4">
         {/* Preview */}
-        <div className={`relative ${isLogo ? 'w-24 h-24' : 'w-20 h-20'} bg-elec-gray-dark border-2 border-elec-gray-light rounded-lg overflow-hidden flex items-center justify-center`}>
+        <div
+          className={`relative ${isLogo ? 'w-24 h-24' : 'w-20 h-20'} bg-elec-gray-dark border-2 border-elec-gray-light rounded-lg overflow-hidden flex items-center justify-center`}
+        >
           {preview ? (
-            <img 
-              src={preview} 
-              alt={label}
-              className="w-full h-full object-cover"
-            />
+            <img src={preview} alt={label} className="w-full h-full object-cover" />
           ) : (
             <User className="w-8 h-8 text-gray-500" />
           )}
@@ -85,7 +83,7 @@ export function ProfilePhotoUpload({
             <Upload className="w-4 h-4 mr-2" />
             {preview ? 'Change' : 'Upload'}
           </Button>
-          
+
           {preview && (
             <Button
               type="button"
@@ -109,9 +107,7 @@ export function ProfilePhotoUpload({
         />
       </div>
 
-      <p className="text-xs text-gray-300">
-        Recommended: Square image, max 5MB (JPG, PNG, WEBP)
-      </p>
+      <p className="text-xs text-gray-300">Recommended: Square image, max 5MB (JPG, PNG, WEBP)</p>
     </div>
   );
 }

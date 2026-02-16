@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -18,8 +17,8 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
     <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
       {/* Header */}
       <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={onBack}
           className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] touch-manipulation"
         >

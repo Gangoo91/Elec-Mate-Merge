@@ -19,8 +19,7 @@ interface CreateTimeEntryVerificationOptions {
 
 // Generate a random 12-char token
 function generateToken(length = 12): string {
-  const chars =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let token = '';
   for (let i = 0; i < length; i++) {
     token += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -29,9 +28,7 @@ function generateToken(length = 12): string {
 }
 
 // SHA-256 hash via Web Crypto API
-async function hashSnapshot(
-  snapshot: Record<string, unknown>
-): Promise<string> {
+async function hashSnapshot(snapshot: Record<string, unknown>): Promise<string> {
   const data = JSON.stringify(snapshot);
   const encoder = new TextEncoder();
   const buffer = await crypto.subtle.digest('SHA-256', encoder.encode(data));
@@ -42,9 +39,7 @@ async function hashSnapshot(
 
 export function useTimeEntryVerification() {
   const { user } = useAuth();
-  const [verifications, setVerifications] = useState<
-    SupervisorVerification[]
-  >([]);
+  const [verifications, setVerifications] = useState<SupervisorVerification[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch time_entry verifications for the current user
@@ -71,9 +66,7 @@ export function useTimeEntryVerification() {
 
   // Create a new verification request for a time entry
   const createVerification = useCallback(
-    async (
-      options: CreateTimeEntryVerificationOptions
-    ): Promise<SupervisorVerification | null> => {
+    async (options: CreateTimeEntryVerificationOptions): Promise<SupervisorVerification | null> => {
       if (!user) {
         toast.error('You must be logged in');
         return null;
@@ -105,10 +98,7 @@ export function useTimeEntryVerification() {
 
         if (error) throw error;
 
-        setVerifications((prev) => [
-          data as SupervisorVerification,
-          ...prev,
-        ]);
+        setVerifications((prev) => [data as SupervisorVerification, ...prev]);
         toast.success('Verification link created!');
         return data as SupervisorVerification;
       } catch (err) {
@@ -179,9 +169,7 @@ export function useTimeEntryVerification() {
         (payload) => {
           const updated = payload.new as SupervisorVerification;
           if (updated.verification_type === 'time_entry') {
-            setVerifications((prev) =>
-              prev.map((v) => (v.id === updated.id ? updated : v))
-            );
+            setVerifications((prev) => prev.map((v) => (v.id === updated.id ? updated : v)));
           }
         }
       )

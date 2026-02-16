@@ -3,7 +3,13 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Calculator, Plus, X, Lightbulb, Zap } from 'lucide-react';
@@ -27,7 +33,7 @@ const diversityFactors = {
   socket: 0.4,
   heating: 1.0,
   motor: 0.8,
-  other: 0.7
+  other: 0.7,
 };
 
 const cableData: CableRecommendation[] = [
@@ -37,7 +43,7 @@ const cableData: CableRecommendation[] = [
   { size: '4.0mm²', current: 31, method: 'Method C (clipped direct)' },
   { size: '6.0mm²', current: 41, method: 'Method C (clipped direct)' },
   { size: '10.0mm²', current: 57, method: 'Method C (clipped direct)' },
-  { size: '16.0mm²', current: 76, method: 'Method C (clipped direct)' }
+  { size: '16.0mm²', current: 76, method: 'Method C (clipped direct)' },
 ];
 
 export const LoadCalculator = () => {
@@ -48,7 +54,7 @@ export const LoadCalculator = () => {
     name: '',
     power: '',
     quantity: '1',
-    type: 'other' as const
+    type: 'other' as const,
   });
 
   const addAppliance = useCallback(() => {
@@ -58,16 +64,16 @@ export const LoadCalculator = () => {
         name: newAppliance.name,
         power: parseFloat(newAppliance.power),
         quantity: parseInt(newAppliance.quantity),
-        type: newAppliance.type
+        type: newAppliance.type,
       };
-      setAppliances(prev => [...prev, appliance]);
+      setAppliances((prev) => [...prev, appliance]);
       setNewAppliance({ name: '', power: '', quantity: '1', type: 'other' });
       setCalculated(false); // Reset calculations when adding new appliance
     }
   }, [newAppliance]);
 
   const removeAppliance = useCallback((id: string) => {
-    setAppliances(prev => prev.filter(a => a.id !== id));
+    setAppliances((prev) => prev.filter((a) => a.id !== id));
     setCalculated(false); // Reset calculations when removing appliance
   }, []);
 
@@ -85,10 +91,11 @@ export const LoadCalculator = () => {
   const calculations = useCallback(() => {
     let totalConnectedLoad = 0;
     let totalMaximumDemand = 0;
-    
-    const breakdownByType: Record<string, { connected: number; demand: number; count: number }> = {};
 
-    appliances.forEach(appliance => {
+    const breakdownByType: Record<string, { connected: number; demand: number; count: number }> =
+      {};
+
+    appliances.forEach((appliance) => {
       const connected = appliance.power * appliance.quantity;
       const diversity = diversityFactors[appliance.type];
       const demand = connected * diversity;
@@ -106,9 +113,25 @@ export const LoadCalculator = () => {
 
     const current = totalMaximumDemand / voltage;
     const designCurrent = current * 1.25; // 25% safety margin
-    const recommendedCable = cableData.find(cable => cable.current >= designCurrent) || cableData[cableData.length - 1];
-    const recommendedMCB = current <= 6 ? 6 : current <= 10 ? 10 : current <= 16 ? 16 : current <= 20 ? 20 : current <= 25 ? 25 : current <= 32 ? 32 : current <= 40 ? 40 : 50;
-    
+    const recommendedCable =
+      cableData.find((cable) => cable.current >= designCurrent) || cableData[cableData.length - 1];
+    const recommendedMCB =
+      current <= 6
+        ? 6
+        : current <= 10
+          ? 10
+          : current <= 16
+            ? 16
+            : current <= 20
+              ? 20
+              : current <= 25
+                ? 25
+                : current <= 32
+                  ? 32
+                  : current <= 40
+                    ? 40
+                    : 50;
+
     // Calculate voltage drop for recommended cable (rough estimate)
     const cableResistance = {
       '1.0mm²': 18.1,
@@ -117,10 +140,11 @@ export const LoadCalculator = () => {
       '4.0mm²': 4.61,
       '6.0mm²': 3.08,
       '10.0mm²': 1.83,
-      '16.0mm²': 1.15
+      '16.0mm²': 1.15,
     };
-    
-    const resistance = cableResistance[recommendedCable.size as keyof typeof cableResistance] || 1.83;
+
+    const resistance =
+      cableResistance[recommendedCable.size as keyof typeof cableResistance] || 1.83;
     const voltageDrop = (current * resistance * 20) / 1000; // Assume 20m run
     const voltageDropPercent = (voltageDrop / voltage) * 100;
 
@@ -132,9 +156,9 @@ export const LoadCalculator = () => {
       recommendedCable,
       recommendedMCB,
       breakdownByType,
-      diversityApplied: ((totalConnectedLoad - totalMaximumDemand) / totalConnectedLoad * 100) || 0,
+      diversityApplied: ((totalConnectedLoad - totalMaximumDemand) / totalConnectedLoad) * 100 || 0,
       voltageDrop,
-      voltageDropPercent
+      voltageDropPercent,
     };
   }, [appliances, voltage]);
 
@@ -157,7 +181,7 @@ export const LoadCalculator = () => {
               id="appliance-name"
               placeholder="e.g. Immersion Heater"
               value={newAppliance.name}
-              onChange={(e) => setNewAppliance(prev => ({ ...prev, name: e.target.value }))}
+              onChange={(e) => setNewAppliance((prev) => ({ ...prev, name: e.target.value }))}
             />
           </div>
           <div className="col-span-1">
@@ -167,7 +191,7 @@ export const LoadCalculator = () => {
               type="number"
               placeholder="3000"
               value={newAppliance.power}
-              onChange={(e) => setNewAppliance(prev => ({ ...prev, power: e.target.value }))}
+              onChange={(e) => setNewAppliance((prev) => ({ ...prev, power: e.target.value }))}
             />
           </div>
           <div className="col-span-1">
@@ -177,12 +201,17 @@ export const LoadCalculator = () => {
               type="number"
               min="1"
               value={newAppliance.quantity}
-              onChange={(e) => setNewAppliance(prev => ({ ...prev, quantity: e.target.value }))}
+              onChange={(e) => setNewAppliance((prev) => ({ ...prev, quantity: e.target.value }))}
             />
           </div>
           <div className="col-span-1">
             <Label htmlFor="appliance-type">Type</Label>
-            <Select value={newAppliance.type} onValueChange={(value) => setNewAppliance(prev => ({ ...prev, type: value as any }))}>
+            <Select
+              value={newAppliance.type}
+              onValueChange={(value) =>
+                setNewAppliance((prev) => ({ ...prev, type: value as any }))
+              }
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -197,7 +226,11 @@ export const LoadCalculator = () => {
           </div>
           <div className="col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-1">
             <Label className="block">&nbsp;</Label>
-            <Button onClick={addAppliance} className="w-full" disabled={!newAppliance.name || !newAppliance.power}>
+            <Button
+              onClick={addAppliance}
+              className="w-full"
+              disabled={!newAppliance.name || !newAppliance.power}
+            >
               <Plus className="w-4 h-4 mr-2" />
               Add
             </Button>
@@ -224,18 +257,27 @@ export const LoadCalculator = () => {
         <div className="mb-6">
           <h4 className="font-medium text-foreground mb-3">Added Appliances</h4>
           <div className="space-y-2">
-            {appliances.map(appliance => (
-              <div key={appliance.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-muted/30 rounded gap-3">
+            {appliances.map((appliance) => (
+              <div
+                key={appliance.id}
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-muted/30 rounded gap-3"
+              >
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                   <span className="font-medium">{appliance.name}</span>
                   <div className="flex items-center gap-2">
                     <Badge variant="outline">{appliance.type}</Badge>
                     <span className="text-sm text-muted-foreground">
-                      {appliance.power}W × {appliance.quantity} = {appliance.power * appliance.quantity}W
+                      {appliance.power}W × {appliance.quantity} ={' '}
+                      {appliance.power * appliance.quantity}W
                     </span>
                   </div>
                 </div>
-                <Button size="sm" variant="ghost" onClick={() => removeAppliance(appliance.id)} className="self-end sm:self-center">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => removeAppliance(appliance.id)}
+                  className="self-end sm:self-center"
+                >
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -262,7 +304,7 @@ export const LoadCalculator = () => {
       {calculated && appliances.length > 0 && (
         <div className="space-y-6">
           <Separator />
-          
+
           <div className="space-y-6">
             <div className="bg-muted/20 p-4 rounded-lg">
               <h4 className="font-medium text-foreground mb-4 flex items-center gap-2">
@@ -272,27 +314,39 @@ export const LoadCalculator = () => {
               <div className="space-y-3">
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
                   <span className="text-sm sm:text-base">Total Connected Load:</span>
-                  <span className="font-medium text-lg sm:text-base">{results.totalConnectedLoad.toFixed(2)} kW</span>
+                  <span className="font-medium text-lg sm:text-base">
+                    {results.totalConnectedLoad.toFixed(2)} kW
+                  </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
                   <span className="text-sm sm:text-base">Maximum Demand (after diversity):</span>
-                  <span className="font-medium text-primary text-lg sm:text-base">{results.totalMaximumDemand.toFixed(2)} kW</span>
+                  <span className="font-medium text-primary text-lg sm:text-base">
+                    {results.totalMaximumDemand.toFixed(2)} kW
+                  </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
                   <span className="text-sm sm:text-base">Design Current (with 25% margin):</span>
-                  <span className="font-medium text-lg sm:text-base">{results.designCurrent.toFixed(1)} A</span>
+                  <span className="font-medium text-lg sm:text-base">
+                    {results.designCurrent.toFixed(1)} A
+                  </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
                   <span className="text-sm sm:text-base">Design Current:</span>
-                  <span className="font-medium text-primary text-lg sm:text-base">{results.current.toFixed(1)} A</span>
+                  <span className="font-medium text-primary text-lg sm:text-base">
+                    {results.current.toFixed(1)} A
+                  </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
                   <span className="text-sm sm:text-base">Voltage Drop (20m run):</span>
-                  <span className="font-medium text-lg sm:text-base">{results.voltageDrop.toFixed(2)}V ({results.voltageDropPercent.toFixed(1)}%)</span>
+                  <span className="font-medium text-lg sm:text-base">
+                    {results.voltageDrop.toFixed(2)}V ({results.voltageDropPercent.toFixed(1)}%)
+                  </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2">
                   <span className="text-sm text-muted-foreground">Diversity Applied:</span>
-                  <span className="text-sm text-muted-foreground">{results.diversityApplied.toFixed(0)}%</span>
+                  <span className="text-sm text-muted-foreground">
+                    {results.diversityApplied.toFixed(0)}%
+                  </span>
                 </div>
               </div>
             </div>
@@ -307,19 +361,26 @@ export const LoadCalculator = () => {
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                     <span className="text-sm text-muted-foreground">Cable Size:</span>
                     <div className="text-right">
-                      <div className="font-medium text-primary text-xl">{results.recommendedCable.size}</div>
-                      <div className="text-xs text-muted-foreground">Capacity: {results.recommendedCable.current}A</div>
+                      <div className="font-medium text-primary text-xl">
+                        {results.recommendedCable.size}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Capacity: {results.recommendedCable.current}A
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="bg-background/50 p-3 rounded border">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                     <span className="text-sm text-muted-foreground">MCB Rating:</span>
-                    <div className="font-medium text-primary text-xl text-right">{results.recommendedMCB}A</div>
+                    <div className="font-medium text-primary text-xl text-right">
+                      {results.recommendedMCB}A
+                    </div>
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-3 rounded">
-                  <strong>Note:</strong> Based on Method C installation. Consider derating factors for final design.
+                  <strong>Note:</strong> Based on Method C installation. Consider derating factors
+                  for final design.
                 </div>
               </div>
             </div>
@@ -337,7 +398,7 @@ export const LoadCalculator = () => {
                       <div>Connected: {(data.connected / 1000).toFixed(2)} kW</div>
                       <div>After Diversity: {(data.demand / 1000).toFixed(2)} kW</div>
                       <div className="text-xs text-muted-foreground">
-                        Diversity: {(diversityFactors[type as keyof typeof diversityFactors] * 100)}%
+                        Diversity: {diversityFactors[type as keyof typeof diversityFactors] * 100}%
                       </div>
                     </div>
                   </div>

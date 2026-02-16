@@ -1,20 +1,20 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  FileText, 
-  Download, 
-  Eye, 
+import React from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  FileText,
+  Download,
+  Eye,
   Share2,
   CheckCircle2,
   AlertTriangle,
   Info,
   Calendar,
   User,
-  MapPin
-} from "lucide-react";
-import { WizardData } from "../types";
+  MapPin,
+} from 'lucide-react';
+import { WizardData } from '../types';
 
 interface ReportPreviewProps {
   wizardData: WizardData;
@@ -29,7 +29,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
   onGenerate,
   onDownload,
   onShare,
-  previewMode = 'detailed'
+  previewMode = 'detailed',
 }) => {
   const { template, clientDetails, inspectionDetails } = wizardData;
 
@@ -42,16 +42,19 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pass': return 'text-green-400 border-green-500/30 bg-green-500/10';
-      case 'fail': return 'text-red-400 border-red-500/30 bg-red-500/10';
-      case 'pending': return 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10';
-      default: return 'text-muted-foreground border-muted/30 bg-muted/10';
+      case 'pass':
+        return 'text-green-400 border-green-500/30 bg-green-500/10';
+      case 'fail':
+        return 'text-red-400 border-red-500/30 bg-red-500/10';
+      case 'pending':
+        return 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10';
+      default:
+        return 'text-muted-foreground border-muted/30 bg-muted/10';
     }
   };
 
-  const estimatedPages = template?.id === 'eicr' ? '8-12' : 
-                        template?.id === 'periodic-inspection' ? '6-10' : 
-                        '3-6';
+  const estimatedPages =
+    template?.id === 'eicr' ? '8-12' : template?.id === 'periodic-inspection' ? '6-10' : '3-6';
 
   const complianceStatus = getComplianceStatus();
 
@@ -62,26 +65,21 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
           <div className="flex items-center gap-3">
             <FileText className="h-5 w-5 text-elec-yellow" />
             <div>
-              <div className="text-sm font-medium text-foreground">
-                {template?.name}
-              </div>
+              <div className="text-sm font-medium text-foreground">{template?.name}</div>
               <div className="text-xs text-muted-foreground">
                 {clientDetails?.clientName} • {estimatedPages} pages
               </div>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2">
-            <Badge 
-              variant="outline" 
-              className={getStatusColor(complianceStatus)}
-            >
+            <Badge variant="outline" className={getStatusColor(complianceStatus)}>
               {complianceStatus === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
               {complianceStatus === 'fail' && <AlertTriangle className="h-3 w-3 mr-1" />}
               {complianceStatus === 'pending' && <Info className="h-3 w-3 mr-1" />}
               {complianceStatus}
             </Badge>
-            
+
             {onGenerate && (
               <Button size="sm" onClick={onGenerate} className="bg-elec-yellow text-elec-dark">
                 Generate
@@ -104,21 +102,19 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
             </div>
             <div>
               <h3 className="text-xl font-bold text-foreground">Report Preview</h3>
-              <p className="text-sm text-muted-foreground">
-                {template?.name}
-              </p>
+              <p className="text-sm text-muted-foreground">{template?.name}</p>
             </div>
           </div>
-          
-          <Badge 
-            variant="outline" 
-            className={`${getStatusColor(complianceStatus)} text-sm`}
-          >
+
+          <Badge variant="outline" className={`${getStatusColor(complianceStatus)} text-sm`}>
             {complianceStatus === 'pass' && <CheckCircle2 className="h-4 w-4 mr-2" />}
             {complianceStatus === 'fail' && <AlertTriangle className="h-4 w-4 mr-2" />}
             {complianceStatus === 'pending' && <Info className="h-4 w-4 mr-2" />}
-            {complianceStatus === 'pass' ? 'Compliant' : 
-             complianceStatus === 'fail' ? 'Non-compliant' : 'Assessment Pending'}
+            {complianceStatus === 'pass'
+              ? 'Compliant'
+              : complianceStatus === 'fail'
+                ? 'Non-compliant'
+                : 'Assessment Pending'}
           </Badge>
         </div>
 
@@ -127,28 +123,30 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
           {/* Document Header */}
           <div className="space-y-4 pb-6 border-b border-elec-yellow/20">
             <div className="flex items-center justify-between">
-              <h4 className="text-lg font-semibold text-foreground">
-                {template?.name}
-              </h4>
+              <h4 className="text-lg font-semibold text-foreground">{template?.name}</h4>
               <Badge variant="outline" className="text-xs border-blue-500/30 text-blue-400">
                 BS 7671:2018 Compliant
               </Badge>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Client:</span>
-                  <span className="text-foreground">{clientDetails?.clientName || 'Not specified'}</span>
+                  <span className="text-foreground">
+                    {clientDetails?.clientName || 'Not specified'}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Property:</span>
-                  <span className="text-foreground truncate">{clientDetails?.installationAddress || 'Not specified'}</span>
+                  <span className="text-foreground truncate">
+                    {clientDetails?.installationAddress || 'Not specified'}
+                  </span>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -170,14 +168,11 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
               <h5 className="text-sm font-medium text-foreground mb-2">Assessment Summary</h5>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Overall Assessment:</span>
-                <Badge 
-                  variant="outline" 
-                  className={getStatusColor(complianceStatus)}
-                >
+                <Badge variant="outline" className={getStatusColor(complianceStatus)}>
                   {inspectionDetails.overallAssessment}
                 </Badge>
               </div>
-              
+
               {inspectionDetails?.faults && inspectionDetails.faults.length > 0 && (
                 <div className="mt-2">
                   <span className="text-sm text-muted-foreground">
@@ -221,7 +216,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
               Generate Report
             </Button>
           )}
-          
+
           {onDownload && (
             <Button
               variant="outline"
@@ -232,7 +227,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({
               Download PDF
             </Button>
           )}
-          
+
           {onShare && (
             <Button
               variant="outline"

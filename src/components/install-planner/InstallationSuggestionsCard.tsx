@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Lightbulb, TrendingUp, Shield, PoundSterling, Wrench, CheckCircle } from "lucide-react";
-import { InstallationSuggestion } from "./types";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Lightbulb, TrendingUp, Shield, PoundSterling, Wrench, CheckCircle } from 'lucide-react';
+import { InstallationSuggestion } from './types';
 
 interface InstallationSuggestionsCardProps {
   suggestions: InstallationSuggestion[];
@@ -11,15 +11,15 @@ interface InstallationSuggestionsCardProps {
 const InstallationSuggestionsCard = ({ suggestions }: InstallationSuggestionsCardProps) => {
   const getSuggestionIcon = (type: string) => {
     switch (type) {
-      case "cable-upgrade":
+      case 'cable-upgrade':
         return <TrendingUp className="h-4 w-4" />;
-      case "installation-method":
+      case 'installation-method':
         return <Wrench className="h-4 w-4" />;
-      case "protective-device":
+      case 'protective-device':
         return <Shield className="h-4 w-4" />;
-      case "cost-optimization":
+      case 'cost-optimization':
         return <PoundSterling className="h-4 w-4" />;
-      case "safety":
+      case 'safety':
         return <Shield className="h-4 w-4" />;
       default:
         return <Lightbulb className="h-4 w-4" />;
@@ -28,14 +28,14 @@ const InstallationSuggestionsCard = ({ suggestions }: InstallationSuggestionsCar
 
   const getSuggestionColor = (impact: string) => {
     switch (impact) {
-      case "high":
-        return "bg-red-500/10 border-red-500/30 text-red-200";
-      case "medium":
-        return "bg-amber-500/10 border-amber-500/30 text-amber-200";
-      case "low":
-        return "bg-blue-500/10 border-blue-500/30 text-blue-200";
+      case 'high':
+        return 'bg-red-500/10 border-red-500/30 text-red-200';
+      case 'medium':
+        return 'bg-amber-500/10 border-amber-500/30 text-amber-200';
+      case 'low':
+        return 'bg-blue-500/10 border-blue-500/30 text-blue-200';
       default:
-        return "bg-gray-500/10 border-gray-500/30 text-gray-200";
+        return 'bg-gray-500/10 border-gray-500/30 text-gray-200';
     }
   };
 
@@ -77,32 +77,34 @@ const InstallationSuggestionsCard = ({ suggestions }: InstallationSuggestionsCar
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <h4 className="font-medium">{suggestion.title}</h4>
-                  <Badge 
-                    variant="outline" 
+                  <Badge
+                    variant="outline"
                     className={`text-xs ${
-                      suggestion.impact === "high" ? "border-red-500/50 text-red-300" :
-                      suggestion.impact === "medium" ? "border-amber-500/50 text-amber-300" :
-                      "border-blue-500/50 text-blue-300"
+                      suggestion.impact === 'high'
+                        ? 'border-red-500/50 text-red-300'
+                        : suggestion.impact === 'medium'
+                          ? 'border-amber-500/50 text-amber-300'
+                          : 'border-blue-500/50 text-blue-300'
                     }`}
                   >
                     {suggestion.impact.toUpperCase()} IMPACT
                   </Badge>
                   {suggestion.cost && (
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className={`text-xs ${
-                        suggestion.cost === "high" ? "border-red-500/50 text-red-300" :
-                        suggestion.cost === "medium" ? "border-amber-500/50 text-amber-300" :
-                        "border-green-500/50 text-green-300"
+                        suggestion.cost === 'high'
+                          ? 'border-red-500/50 text-red-300'
+                          : suggestion.cost === 'medium'
+                            ? 'border-amber-500/50 text-amber-300'
+                            : 'border-green-500/50 text-green-300'
                       }`}
                     >
                       {suggestion.cost.toUpperCase()} COST
                     </Badge>
                   )}
                 </div>
-                <AlertDescription className="text-sm">
-                  {suggestion.description}
-                </AlertDescription>
+                <AlertDescription className="text-sm">{suggestion.description}</AlertDescription>
               </div>
             </div>
           </Alert>

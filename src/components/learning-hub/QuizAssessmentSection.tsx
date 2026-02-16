@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -13,7 +12,7 @@ import {
   Target,
   Settings,
   Activity,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getAllAssessments } from '@/data/quizAssessments';
@@ -26,8 +25,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const itemVariants = {
@@ -35,8 +34,8 @@ const itemVariants = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 500, damping: 30 },
+  },
 };
 
 // Map assessment IDs to icons and colors
@@ -48,7 +47,7 @@ const assessmentConfig: Record<string, { icon: React.ElementType; iconBg: string
   'earth-fault-loop': { icon: Target, iconBg: 'bg-red-500' },
   'rcd-testing': { icon: Shield, iconBg: 'bg-orange-500' },
   'prospective-fault': { icon: Activity, iconBg: 'bg-cyan-500' },
-  'functional-testing': { icon: Settings, iconBg: 'bg-teal-500' }
+  'functional-testing': { icon: Settings, iconBg: 'bg-teal-500' },
 };
 
 const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
@@ -58,16 +57,16 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
 
   const handleStartQuiz = (assessmentId: string) => {
     navigate(`/quiz/${assessmentId}`, {
-      state: { from: location.pathname }
+      state: { from: location.pathname },
     });
   };
 
   // Group assessments
-  const beginnerAssessments = assessments.filter(a => a.difficulty === 'Beginner');
-  const intermediateAssessments = assessments.filter(a => a.difficulty === 'Intermediate');
-  const advancedAssessments = assessments.filter(a => a.difficulty === 'Advanced');
+  const beginnerAssessments = assessments.filter((a) => a.difficulty === 'Beginner');
+  const intermediateAssessments = assessments.filter((a) => a.difficulty === 'Intermediate');
+  const advancedAssessments = assessments.filter((a) => a.difficulty === 'Advanced');
 
-  const renderAssessmentItem = (assessment: typeof assessments[0]) => {
+  const renderAssessmentItem = (assessment: (typeof assessments)[0]) => {
     const config = assessmentConfig[assessment.id] || { icon: Brain, iconBg: 'bg-purple-500' };
     const Icon = config.icon;
 
@@ -78,19 +77,17 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
         onClick={() => handleStartQuiz(assessment.id)}
         className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
       >
-        <div className={cn(
-          "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
-          config.iconBg
-        )}>
+        <div
+          className={cn(
+            'w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0',
+            config.iconBg
+          )}
+        >
           <Icon className="h-5 w-5 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-[15px] font-medium text-white leading-tight">
-            {assessment.title}
-          </h3>
-          <p className="text-[13px] text-white/50 leading-tight mt-0.5">
-            {assessment.regulation}
-          </p>
+          <h3 className="text-[15px] font-medium text-white leading-tight">{assessment.title}</h3>
+          <p className="text-[13px] text-white/50 leading-tight mt-0.5">{assessment.regulation}</p>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           <span className="text-[13px] text-white/30">{assessment.questions} Qs</span>
@@ -117,12 +114,8 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
             <Brain className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <h1 className="text-base font-semibold text-white truncate">
-              Knowledge Quiz
-            </h1>
-            <p className="text-[11px] text-white/50">
-              2391-style Questions
-            </p>
+            <h1 className="text-base font-semibold text-white truncate">Knowledge Quiz</h1>
+            <p className="text-[11px] text-white/50">2391-style Questions</p>
           </div>
         </div>
       </header>

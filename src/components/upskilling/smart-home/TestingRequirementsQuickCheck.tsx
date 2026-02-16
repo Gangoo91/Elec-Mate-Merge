@@ -7,14 +7,14 @@ const TestingRequirementsQuickCheck = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
 
-  const question = "What should you check after pairing a smart device to a hub?";
+  const question = 'What should you check after pairing a smart device to a hub?';
   const options = [
-    "Only that it appears in the app",
-    "Basic functionality, naming, and remote access",
+    'Only that it appears in the app',
+    'Basic functionality, naming, and remote access',
     "Just the device's battery level",
-    "Only the connection speed"
+    'Only the connection speed',
   ];
-  const correctAnswer = "Basic functionality, naming, and remote access";
+  const correctAnswer = 'Basic functionality, naming, and remote access';
 
   const handleSubmit = () => {
     setShowAnswer(true);
@@ -32,7 +32,7 @@ const TestingRequirementsQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -44,11 +44,11 @@ const TestingRequirementsQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-600/20 border-green-600 text-green-100'
                     : option === selectedAnswer && !isCorrect
-                    ? 'bg-red-600/20 border-red-600 text-red-100'
-                    : 'border-gray-600 text-gray-400'
+                      ? 'bg-red-600/20 border-red-600 text-red-100'
+                      : 'border-gray-600 text-gray-400'
                   : selectedAnswer === option
-                  ? 'bg-blue-600/20 border-blue-600 text-blue-100'
-                  : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-blue-600/20 border-blue-600 text-blue-100'
+                    : 'border-gray-600 text-gray-300 hover:bg-gray-700'
               }`}
             >
               {option}
@@ -63,11 +63,11 @@ const TestingRequirementsQuickCheck = () => {
         )}
 
         {showAnswer && (
-          <div className={`p-3 rounded-md border ${
-            isCorrect 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-md border ${
+              isCorrect ? 'bg-green-600/10 border-green-600/30' : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-4 w-4 text-green-400" />
@@ -79,7 +79,9 @@ const TestingRequirementsQuickCheck = () => {
               </span>
             </div>
             <p className="text-gray-300 text-sm">
-              After pairing, you should test basic on/off functionality, ensure the device has a descriptive name (not "Device 3"), verify it responds to commands, and confirm remote access works via the client's smartphone app.
+              After pairing, you should test basic on/off functionality, ensure the device has a
+              descriptive name (not "Device 3"), verify it responds to commands, and confirm remote
+              access works via the client's smartphone app.
             </p>
           </div>
         )}

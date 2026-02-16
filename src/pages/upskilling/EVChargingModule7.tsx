@@ -7,28 +7,28 @@ const EVChargingModule7 = () => {
   const sections = [
     {
       id: 1,
-      title: "OZEV and Workplace Charging Scheme Explained",
+      title: 'OZEV and Workplace Charging Scheme Explained',
       icon: Award,
-      description: "Understanding government incentives and charging schemes"
+      description: 'Understanding government incentives and charging schemes',
     },
     {
       id: 2,
-      title: "Approved Installer Registration Process",
+      title: 'Approved Installer Registration Process',
       icon: UserCheck,
-      description: "Becoming an approved EV charging installer"
+      description: 'Becoming an approved EV charging installer',
     },
     {
       id: 3,
-      title: "Uploading Documents and Claiming Grants",
+      title: 'Uploading Documents and Claiming Grants',
       icon: Upload,
-      description: "Grant application processes and document submission"
+      description: 'Grant application processes and document submission',
     },
     {
       id: 4,
-      title: "Audit-Readiness and Record-Keeping Best Practice",
+      title: 'Audit-Readiness and Record-Keeping Best Practice',
       icon: Archive,
-      description: "Maintaining records for compliance and audits"
-    }
+      description: 'Maintaining records for compliance and audits',
+    },
   ];
 
   return (

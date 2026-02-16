@@ -4,13 +4,48 @@
 import { EnhancedInstallationGuidance, TestingRequirements } from './circuit-design';
 
 // Extended load types for different installation types
-export type DomesticLoadType = 'socket' | 'lighting' | 'cooker' | 'shower' | 'ev-charger' | 'immersion' | 'heating' | 'smoke-alarm' | 'garage' | 'outdoor';
+export type DomesticLoadType =
+  | 'socket'
+  | 'lighting'
+  | 'cooker'
+  | 'shower'
+  | 'ev-charger'
+  | 'immersion'
+  | 'heating'
+  | 'smoke-alarm'
+  | 'garage'
+  | 'outdoor';
 
-export type CommercialLoadType = 'office-sockets' | 'emergency-lighting' | 'hvac' | 'server-room' | 'kitchen-equipment' | 'signage' | 'fire-alarm' | 'access-control' | 'cctv' | 'data-cabinet';
+export type CommercialLoadType =
+  | 'office-sockets'
+  | 'emergency-lighting'
+  | 'hvac'
+  | 'server-room'
+  | 'kitchen-equipment'
+  | 'signage'
+  | 'fire-alarm'
+  | 'access-control'
+  | 'cctv'
+  | 'data-cabinet';
 
-export type IndustrialLoadType = 'three-phase-motor' | 'machine-tool' | 'welding' | 'conveyor' | 'extraction' | 'control-panel' | 'overhead-lighting' | 'workshop-sockets' | 'compressor' | 'production-line';
+export type IndustrialLoadType =
+  | 'three-phase-motor'
+  | 'machine-tool'
+  | 'welding'
+  | 'conveyor'
+  | 'extraction'
+  | 'control-panel'
+  | 'overhead-lighting'
+  | 'workshop-sockets'
+  | 'compressor'
+  | 'production-line';
 
-export type LoadType = DomesticLoadType | CommercialLoadType | IndustrialLoadType | 'motor' | 'other';
+export type LoadType =
+  | DomesticLoadType
+  | CommercialLoadType
+  | IndustrialLoadType
+  | 'motor'
+  | 'other';
 
 export interface CircuitInput {
   id: string;
@@ -21,18 +56,25 @@ export interface CircuitInput {
   phases: 'single' | 'three';
   specialLocation?: 'bathroom' | 'outdoor' | 'underground' | 'kitchen' | 'none';
   notes?: string;
-  
+
   // Circuit Topology (Ring vs Radial for socket circuits)
   circuitTopology?: 'ring' | 'radial' | 'auto';
-  
+
   // NEW: Step 4 - Installation Details (per circuit)
-  installMethod?: 'method_a' | 'method_b' | 'method_c' | 'method_d' | 'method_e' | 'method_f' | 'auto';
+  installMethod?:
+    | 'method_a'
+    | 'method_b'
+    | 'method_c'
+    | 'method_d'
+    | 'method_e'
+    | 'method_f'
+    | 'auto';
   protectionType?: 'auto' | 'MCB' | 'RCBO' | 'RCBO-TypeA' | 'RCBO-TypeB';
   rcdProtection?: boolean;
   bathroomZone?: 'zone_0' | 'zone_1' | 'zone_2' | 'outside_zones';
   outdoorInstall?: 'buried' | 'overhead' | 'wall_mounted' | 'other';
   diversityOverride?: number; // Manual override for experienced users
-  
+
   // NEW: Step 5 - Pre-calculated values (frontend calculations)
   calculatedIb?: number; // Design current
   suggestedMCB?: number; // Suggested MCB rating
@@ -266,7 +308,9 @@ export interface InstallationDesign {
   practicalGuidance: string[];
   // Installation guidance from Design Installation Agent (parallel to circuit design)
   // Per-circuit installation guidance (keyed by circuit_0, circuit_1, etc.)
-  installationGuidance?: Record<string, EnhancedInstallationGuidance> | EnhancedInstallationGuidance;
+  installationGuidance?:
+    | Record<string, EnhancedInstallationGuidance>
+    | EnhancedInstallationGuidance;
   // PHASE 4: Design Reasoning
   reasoning?: {
     voltageContext: string;
@@ -298,7 +342,12 @@ export interface DesignInputs {
   pscc?: number;
   mainSwitchRating?: number;
   ambientTemp?: number;
-  installationMethod?: 'clipped-direct' | 'in-conduit' | 'in-trunking' | 'buried-direct' | 'in-insulation';
+  installationMethod?:
+    | 'clipped-direct'
+    | 'in-conduit'
+    | 'in-trunking'
+    | 'buried-direct'
+    | 'in-insulation';
   groupingFactor?: number;
   propertyAge?: 'new-build' | 'modern' | 'older' | 'very-old';
   existingInstallation?: boolean;

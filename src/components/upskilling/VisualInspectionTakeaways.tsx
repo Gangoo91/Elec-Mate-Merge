@@ -1,13 +1,12 @@
-
 import { CheckCircle, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const VisualInspectionTakeaways = () => {
   const takeaways = [
-    "Visual inspection is mandatory before testing",
-    "It prevents energising unsafe systems",
+    'Visual inspection is mandatory before testing',
+    'It prevents energising unsafe systems',
     "You're checking for signs of damage, poor installation, or regulation breaches",
-    "Always document your findings clearly—whether compliant or not"
+    'Always document your findings clearly—whether compliant or not',
   ];
 
   return (

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -9,7 +8,7 @@ interface PriceMetric {
   name: string;
   value: string;
   change: string;
-  trend: "up" | "down" | "neutral";
+  trend: 'up' | 'down' | 'neutral';
   subItems?: PriceMetric[];
 }
 
@@ -17,7 +16,7 @@ interface Alert {
   id: number;
   message: string;
   date: string;
-  type: "warning" | "info";
+  type: 'warning' | 'info';
 }
 
 interface RegionalPricingData {
@@ -61,23 +60,26 @@ export const useLiveMetalPrices = () => {
   const fetchPrices = async (forceLive = false) => {
     setIsLoading(true);
     setError(null);
-    
+
     logger.info('Starting to fetch metal prices and regional job pricing', { forceLive });
 
     try {
-      const { data: pricesData, error: pricesError } = await supabase.functions.invoke('fetch-metal-prices', {
-        body: {
-          forceLive,
-          cacheBuster: Date.now().toString()
+      const { data: pricesData, error: pricesError } = await supabase.functions.invoke(
+        'fetch-metal-prices',
+        {
+          body: {
+            forceLive,
+            cacheBuster: Date.now().toString(),
+          },
         }
-      });
+      );
 
       if (pricesError) {
         logger.error('Error from fetch-metal-prices function:', pricesError);
         toast({
           title: 'Unable to Fetch Live Prices',
           description: 'Displaying cached pricing data. Please try refreshing in a moment.',
-          variant: 'destructive'
+          variant: 'destructive',
         });
         // Return null to use cached/fallback data
         return null;
@@ -88,16 +90,16 @@ export const useLiveMetalPrices = () => {
         dataSource: pricesData?.dataSource,
         isLive: pricesData?.isLive,
         metalCount: pricesData?.metalPrices?.length,
-        regionalCount: pricesData?.regionalJobPricing?.length
+        regionalCount: pricesData?.regionalJobPricing?.length,
       });
-      
+
       // Check if we have the expected structure
       if (!pricesData) {
         logger.warn('No data returned from fetch-metal-prices function');
         toast({
           title: 'No Pricing Data Available',
           description: 'Unable to load pricing information. Please try again later.',
-          variant: 'destructive'
+          variant: 'destructive',
         });
         return null;
       }
@@ -106,7 +108,7 @@ export const useLiveMetalPrices = () => {
       if (pricesData.regionalJobPricing) {
         logger.info('Regional job pricing data found:', {
           count: pricesData.regionalJobPricing.length,
-          data: pricesData.regionalJobPricing
+          data: pricesData.regionalJobPricing,
         });
       } else {
         logger.warn('No regionalJobPricing in response');
@@ -126,7 +128,7 @@ export const useLiveMetalPrices = () => {
         apiProvider: pricesData.apiProvider,
         apiKeySuffix: pricesData.apiKeySuffix,
         triedLive: pricesData.triedLive,
-        liveAttemptError: pricesData.liveAttemptError
+        liveAttemptError: pricesData.liveAttemptError,
       };
 
       logger.info('Processed data structure:', {
@@ -137,11 +139,13 @@ export const useLiveMetalPrices = () => {
         regionalJobPricingCount: processedData.regionalJobPricing.length,
         lastUpdated: processedData.lastUpdated,
         // Debug: Show metal prices with subItems
-        metalPricesWithSubItems: processedData.metalPrices.filter(p => p.subItems).map(p => ({ 
-          name: p.name, 
-          subItemsCount: p.subItems?.length,
-          subItems: p.subItems?.map(s => s.name)
-        }))
+        metalPricesWithSubItems: processedData.metalPrices
+          .filter((p) => p.subItems)
+          .map((p) => ({
+            name: p.name,
+            subItemsCount: p.subItems?.length,
+            subItems: p.subItems?.map((s) => s.name),
+          })),
       });
 
       setData(processedData);
@@ -150,13 +154,13 @@ export const useLiveMetalPrices = () => {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch metal prices';
       logger.error('Error in fetchPrices:', errorMessage, err);
       setError(errorMessage);
-      
+
       // Only show toast if we don't already have cached data
       if (!data) {
         toast({
           title: 'Connection Issue',
           description: 'Unable to load live pricing. Please check your connection and try again.',
-          variant: 'destructive'
+          variant: 'destructive',
         });
       }
       return null;
@@ -172,24 +176,24 @@ export const useLiveMetalPrices = () => {
   const refreshPrices = async (forceLive = true) => {
     logger.info('Refreshing prices manually', { forceLive });
     const newData = await fetchPrices(forceLive);
-    
+
     if (newData) {
       logger.info('Prices refreshed successfully', {
         dataSource: newData.dataSource,
-        isLive: newData.isLive
+        isLive: newData.isLive,
       });
       toast({
         title: 'Prices Updated',
-        description: newData.isLive 
+        description: newData.isLive
           ? 'Live scrap metal prices loaded from MetalPriceAPI'
           : 'Latest cached pricing data has been loaded',
-        variant: newData.isLive ? 'default' : 'default'
+        variant: newData.isLive ? 'default' : 'default',
       });
     } else {
       toast({
         title: 'Refresh Failed',
         description: 'Could not update prices. Displaying cached data.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     }
   };
@@ -198,6 +202,6 @@ export const useLiveMetalPrices = () => {
     data,
     isLoading,
     error,
-    refreshPrices
+    refreshPrices,
   };
 };

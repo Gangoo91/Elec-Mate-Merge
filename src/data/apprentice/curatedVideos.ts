@@ -35,16 +35,16 @@ export interface CuratedVideo {
 
 export const categoryLabels: Record<VideoCategory, string> = {
   'electrical-theory': 'Electrical Theory',
-  'wiring': 'Wiring',
+  wiring: 'Wiring',
   'testing-inspection': 'Testing & Inspection',
-  'bs7671': 'BS 7671',
+  bs7671: 'BS 7671',
   'am2-prep': 'AM2 Prep',
-  'domestic': 'Domestic',
-  'commercial': 'Commercial',
+  domestic: 'Domestic',
+  commercial: 'Commercial',
   'solar-ev': 'Solar/EV',
-  'safety': 'Safety',
+  safety: 'Safety',
   'tools-equipment': 'Tools & Equipment',
-  'career': 'Career',
+  career: 'Career',
 };
 
 export const curatedVideos: CuratedVideo[] = [
@@ -61,7 +61,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['electricity', 'basics', 'fundamentals', 'atoms', 'electrons'],
     level: 'beginner',
-    description: 'The fundamental working principle of electricity — how and why electrons flow through conductors.',
+    description:
+      'The fundamental working principle of electricity — how and why electrons flow through conductors.',
   },
   {
     id: 'kcL2_D33k3o',
@@ -71,7 +72,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['current', 'AC', 'DC', 'fuses', 'circuit breakers', 'ampere'],
     level: 'beginner',
-    description: 'What electrical current is, the difference between AC and DC, and how fuses and circuit breakers protect circuits.',
+    description:
+      'What electrical current is, the difference between AC and DC, and how fuses and circuit breakers protect circuits.',
   },
   {
     id: 'w82aSjLuD_8',
@@ -81,7 +83,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['voltage', 'potential difference', 'basics', 'fundamentals'],
     level: 'beginner',
-    description: 'What voltage is, how potential difference works, and why it matters in every electrical circuit.',
+    description:
+      'What voltage is, how potential difference works, and why it matters in every electrical circuit.',
   },
   {
     id: 'HsLLq6Rm5tU',
@@ -91,7 +94,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ["Ohm's law", 'resistance', 'voltage', 'current', 'circuit theory'],
     level: 'beginner',
-    description: "How Ohm's law works and how to use it to calculate voltage, current and resistance in circuits.",
+    description:
+      "How Ohm's law works and how to use it to calculate voltage, current and resistance in circuits.",
   },
   {
     id: 'MUh_dOcqgVw',
@@ -101,7 +105,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['conventional current', 'electron flow', 'direction', 'fundamentals'],
     level: 'beginner',
-    description: 'The difference between conventional current direction and actual electron flow — and why both are used.',
+    description:
+      'The difference between conventional current direction and actual electron flow — and why both are used.',
   },
   {
     id: 'VV6tZ3Aqfuc',
@@ -111,7 +116,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['series circuits', 'DC', 'resistance', 'voltage divider'],
     level: 'beginner',
-    description: 'How DC series circuits work — current, voltage and resistance behaviour when components are in series.',
+    description:
+      'How DC series circuits work — current, voltage and resistance behaviour when components are in series.',
   },
   {
     id: '5uyJezQNSHw',
@@ -121,7 +127,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['parallel circuits', 'DC', 'resistance', 'current division'],
     level: 'beginner',
-    description: 'How DC parallel circuits work — how current splits and how to calculate total resistance.',
+    description:
+      'How DC parallel circuits work — how current splits and how to calculate total resistance.',
   },
   {
     id: 'OUcKJuMSSW4',
@@ -131,7 +138,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['AC', 'alternating current', 'frequency', 'sine wave', 'basics'],
     level: 'beginner',
-    description: 'A concise overview of alternating current — what it is, how it differs from DC, and why we use it.',
+    description:
+      'A concise overview of alternating current — what it is, how it differs from DC, and why we use it.',
   },
   {
     id: 'SMPhh8gT_1E',
@@ -141,7 +149,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['kWh', 'kilowatt hour', 'energy', 'calculations', 'billing'],
     level: 'beginner',
-    description: 'What a kilowatt hour is, how to calculate energy consumption, and how it relates to electricity bills.',
+    description:
+      'What a kilowatt hour is, how to calculate energy consumption, and how it relates to electricity bills.',
   },
 
   // ── Electrical Theory — Intermediate ────────────────────────────────
@@ -153,7 +162,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['diodes', 'PN junction', 'semiconductors', 'rectification'],
     level: 'intermediate',
-    description: 'How diodes work, the PN junction principle, and where diodes are used in electrical systems.',
+    description:
+      'How diodes work, the PN junction principle, and where diodes are used in electrical systems.',
   },
   {
     id: 'KSylo01n5FY',
@@ -163,7 +173,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['inductors', 'inductance', 'magnetic field', 'coils'],
     level: 'intermediate',
-    description: 'How inductors store energy in magnetic fields and their role in electrical circuits.',
+    description:
+      'How inductors store energy in magnetic fields and their role in electrical circuits.',
   },
   {
     id: 'PXNKkcB0pI4',
@@ -173,7 +184,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['batteries', 'electrochemistry', 'cells', 'energy storage'],
     level: 'intermediate',
-    description: 'The working principle of batteries — how chemical energy converts to electrical energy.',
+    description:
+      'The working principle of batteries — how chemical energy converts to electrical energy.',
   },
   {
     id: 'O8M2z2hIbag',
@@ -183,7 +195,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['LED', 'light emitting diode', 'semiconductors', 'lighting'],
     level: 'intermediate',
-    description: 'How LEDs produce light, their construction, and why they are so efficient compared to traditional lighting.',
+    description:
+      'How LEDs produce light, their construction, and why they are so efficient compared to traditional lighting.',
   },
   {
     id: 'Tv_7XWf96gg',
@@ -193,7 +206,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['power factor', 'reactive power', 'apparent power', 'AC'],
     level: 'intermediate',
-    description: 'What power factor is, why it matters, and the relationship between real, reactive and apparent power.',
+    description:
+      'What power factor is, why it matters, and the relationship between real, reactive and apparent power.',
   },
   {
     id: 'W0_1xRqT8uU',
@@ -203,7 +217,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['single phase', 'mains supply', 'domestic', 'AC'],
     level: 'intermediate',
-    description: 'How single phase electricity supply works — from the transformer to the consumer unit.',
+    description:
+      'How single phase electricity supply works — from the transformer to the consumer unit.',
   },
   {
     id: '4oRT7PoXSS0',
@@ -213,7 +228,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['three phase', '3 phase', 'power distribution', 'AC'],
     level: 'intermediate',
-    description: 'The basics of three phase electricity — why we use it and how it delivers more power efficiently.',
+    description:
+      'The basics of three phase electricity — why we use it and how it delivers more power efficiently.',
   },
   {
     id: 'qthuFLNSrlg',
@@ -223,7 +239,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['three phase', 'calculations', 'line voltage', 'phase voltage', 'star', 'delta'],
     level: 'intermediate',
-    description: 'Three phase calculations including line vs phase voltage, star and delta configurations.',
+    description:
+      'Three phase calculations including line vs phase voltage, star and delta configurations.',
   },
   {
     id: 'jcY4QN7awEc',
@@ -233,7 +250,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['transformers', 'step up', 'step down', 'electromagnetic induction'],
     level: 'intermediate',
-    description: 'The working principle of transformers — how they step voltage up and down using electromagnetic induction.',
+    description:
+      'The working principle of transformers — how they step voltage up and down using electromagnetic induction.',
   },
   {
     id: 'u0SsejDCVkU',
@@ -243,7 +261,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['three phase', 'transformers', 'power distribution', 'delta', 'star'],
     level: 'intermediate',
-    description: 'How three phase transformers work, the different winding configurations, and why we need them.',
+    description:
+      'How three phase transformers work, the different winding configurations, and why we need them.',
   },
   {
     id: 'GQatiB-JHdI',
@@ -253,7 +272,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['DC motor', 'commutator', 'brushes', 'electromagnetic', 'rotation'],
     level: 'intermediate',
-    description: 'The working principle of DC motors — how they convert electrical energy into mechanical rotation.',
+    description:
+      'The working principle of DC motors — how they convert electrical energy into mechanical rotation.',
   },
   {
     id: '59HBoIXzX_c',
@@ -263,7 +283,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['induction motor', '3 phase', 'AC motor', 'rotating magnetic field'],
     level: 'intermediate',
-    description: 'How three phase AC induction motors work — the rotating magnetic field and squirrel cage rotor.',
+    description:
+      'How three phase AC induction motors work — the rotating magnetic field and squirrel cage rotor.',
   },
 
   // ── Electrical Theory — Advanced ────────────────────────────────────
@@ -275,7 +296,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['capacitors', 'calculations', 'series', 'parallel', 'capacitance'],
     level: 'advanced',
-    description: 'How to calculate total capacitance for capacitors in series and parallel configurations.',
+    description:
+      'How to calculate total capacitance for capacitors in series and parallel configurations.',
   },
   {
     id: 'h89TTwlNnpY',
@@ -285,7 +307,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['star delta', 'motor starter', 'inrush current', 'industrial'],
     level: 'advanced',
-    description: 'How star delta starters work to reduce inrush current when starting large three phase motors.',
+    description:
+      'How star delta starters work to reduce inrush current when starting large three phase motors.',
   },
   {
     id: 'yEPe7RDtkgo',
@@ -295,7 +318,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['VFD', 'variable frequency drive', 'inverter', 'motor speed control'],
     level: 'advanced',
-    description: 'How variable frequency drives control motor speed — the IGBT inverter principle and applications.',
+    description:
+      'How variable frequency drives control motor speed — the IGBT inverter principle and applications.',
   },
 
   // ── Safety (Engineering Mindset) ────────────────────────────────────
@@ -307,7 +331,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['relays', 'coil', 'contacts', 'switching', 'control circuits'],
     level: 'intermediate',
-    description: 'How relays work — the electromagnetic switching principle and their role in control and safety circuits.',
+    description:
+      'How relays work — the electromagnetic switching principle and their role in control and safety circuits.',
   },
   {
     id: 'gqEu9t8HwW0',
@@ -317,7 +342,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['circuit breakers', 'RCD', 'electric shock', 'protection', 'safety'],
     level: 'intermediate',
-    description: 'Why MCBs alone cannot protect against electric shock — and why RCDs are essential for personal safety.',
+    description:
+      'Why MCBs alone cannot protect against electric shock — and why RCDs are essential for personal safety.',
   },
   {
     id: 'RwSga-zQy0I',
@@ -327,7 +353,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['time delay relay', 'timer', 'control circuits', 'automation'],
     level: 'intermediate',
-    description: 'How time delay relays work — the different timing modes and their applications in control circuits.',
+    description:
+      'How time delay relays work — the different timing modes and their applications in control circuits.',
   },
 
   // ── Solar/EV (Engineering Mindset) ──────────────────────────────────
@@ -349,7 +376,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'solar-ev',
     tags: ['generator', 'AC', 'power generation', 'basics'],
     level: 'beginner',
-    description: 'The basic working principle of AC generators — how mechanical energy is converted to electrical energy.',
+    description:
+      'The basic working principle of AC generators — how mechanical energy is converted to electrical energy.',
   },
 
   // ── Tools & Equipment (Engineering Mindset) ─────────────────────────
@@ -361,7 +389,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'tools-equipment',
     tags: ['multimeter', 'clamp meter', 'testing', 'measurement', 'tools'],
     level: 'beginner',
-    description: 'A comprehensive guide to using multimeters and clamp meters for electrical measurement and testing.',
+    description:
+      'A comprehensive guide to using multimeters and clamp meters for electrical measurement and testing.',
   },
 
   // ── Career (Engineering Mindset) ────────────────────────────────────
@@ -373,7 +402,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'career',
     tags: ['Edison', 'Tesla', 'AC vs DC', 'history', 'electrical engineering'],
     level: 'beginner',
-    description: 'The fascinating history of AC vs DC power — how Tesla and Westinghouse changed the world of electricity.',
+    description:
+      'The fascinating history of AC vs DC power — how Tesla and Westinghouse changed the world of electricity.',
   },
 
   // ═══════════════════════════════════════════════════════════════════
@@ -409,7 +439,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['insulation resistance', 'IR testing', 'BS 7671', 'AMD 2'],
     level: 'intermediate',
-    description: 'How to carry out insulation resistance testing in line with the latest BS 7671 amendment.',
+    description:
+      'How to carry out insulation resistance testing in line with the latest BS 7671 amendment.',
   },
   {
     id: 'CSMpfjSQK-g',
@@ -419,7 +450,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['Ze', 'earth fault loop', 'single phase', 'testing'],
     level: 'beginner',
-    description: 'How to carry out a Ze (external earth fault loop impedance) test on a single phase supply.',
+    description:
+      'How to carry out a Ze (external earth fault loop impedance) test on a single phase supply.',
   },
   {
     id: 'DJn8KIQkApo',
@@ -463,7 +495,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'career',
     tags: ['NVQ', 'assessment', 'preparation', 'interview'],
     level: 'beginner',
-    description: 'Tips and advice on preparing for your NVQ assessment, with insights from a learner.',
+    description:
+      'Tips and advice on preparing for your NVQ assessment, with insights from a learner.',
   },
   {
     id: 'wJ-ePLirRgE',
@@ -483,7 +516,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'career',
     tags: ['anxiety', 'wellbeing', 'support', 'apprentice'],
     level: 'beginner',
-    description: 'An honest chat about dealing with anxiety as an apprentice and how to overcome it.',
+    description:
+      'An honest chat about dealing with anxiety as an apprentice and how to overcome it.',
   },
   {
     id: 'asG-Bkv2_vc',
@@ -517,7 +551,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['fault finding', 'assessment', 'NVQ', 'diagnosis'],
     level: 'intermediate',
-    description: 'How to approach fault finding and describe faults properly in your NVQ assessment.',
+    description:
+      'How to approach fault finding and describe faults properly in your NVQ assessment.',
   },
   {
     id: '28ZEFkvkDMc',
@@ -527,7 +562,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['GN3', 'error', 'guidance note', 'learning'],
     level: 'intermediate',
-    description: 'A learner spots an important error in GN3 - a lesson in paying attention to detail.',
+    description:
+      'A learner spots an important error in GN3 - a lesson in paying attention to detail.',
   },
   {
     id: '9p0_OqPdLLo',
@@ -583,7 +619,8 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['safe isolation', 'testing', 'procedure', 'safety'],
     level: 'beginner',
-    description: 'Useful safe isolation information including where to test - essential for every apprentice.',
+    description:
+      'Useful safe isolation information including where to test - essential for every apprentice.',
   },
   {
     id: 'Hu2uCcYElzQ',
@@ -694,10 +731,10 @@ export const curatedVideos: CuratedVideo[] = [
 
 /** Get videos by category */
 export function getVideosByCategory(category: VideoCategory): CuratedVideo[] {
-  return curatedVideos.filter(v => v.category === category);
+  return curatedVideos.filter((v) => v.category === category);
 }
 
 /** Get all unique categories that have videos */
 export function getAvailableCategories(): VideoCategory[] {
-  return Array.from(new Set(curatedVideos.map(v => v.category)));
+  return Array.from(new Set(curatedVideos.map((v) => v.category)));
 }

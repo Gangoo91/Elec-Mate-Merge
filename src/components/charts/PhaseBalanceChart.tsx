@@ -78,9 +78,10 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
           {balanceResult && (
             <Badge
               variant="outline"
-              className={balanceResult.isCompliant
-                ? 'bg-green-50 text-green-700 border-green-200'
-                : 'bg-red-50 text-red-700 border-red-200'
+              className={
+                balanceResult.isCompliant
+                  ? 'bg-green-50 text-green-700 border-green-200'
+                  : 'bg-red-50 text-red-700 border-red-200'
               }
             >
               {balanceResult.isCompliant ? (
@@ -98,10 +99,42 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
         <div className="relative h-32 mb-4">
           <svg viewBox="0 0 200 100" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
             {/* Grid lines */}
-            <line x1="30" y1="10" x2="190" y2="10" stroke="currentColor" strokeOpacity="0.1" strokeWidth="0.5" />
-            <line x1="30" y1="35" x2="190" y2="35" stroke="currentColor" strokeOpacity="0.1" strokeWidth="0.5" />
-            <line x1="30" y1="60" x2="190" y2="60" stroke="currentColor" strokeOpacity="0.1" strokeWidth="0.5" />
-            <line x1="30" y1="85" x2="190" y2="85" stroke="currentColor" strokeOpacity="0.1" strokeWidth="0.5" />
+            <line
+              x1="30"
+              y1="10"
+              x2="190"
+              y2="10"
+              stroke="currentColor"
+              strokeOpacity="0.1"
+              strokeWidth="0.5"
+            />
+            <line
+              x1="30"
+              y1="35"
+              x2="190"
+              y2="35"
+              stroke="currentColor"
+              strokeOpacity="0.1"
+              strokeWidth="0.5"
+            />
+            <line
+              x1="30"
+              y1="60"
+              x2="190"
+              y2="60"
+              stroke="currentColor"
+              strokeOpacity="0.1"
+              strokeWidth="0.5"
+            />
+            <line
+              x1="30"
+              y1="85"
+              x2="190"
+              y2="85"
+              stroke="currentColor"
+              strokeOpacity="0.1"
+              strokeWidth="0.5"
+            />
 
             {/* Y-axis labels */}
             <text x="25" y="13" textAnchor="end" fontSize="6" fill="currentColor" opacity="0.5">
@@ -122,22 +155,24 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
               <>
                 <line
                   x1="35"
-                  y1={10 + (idealLineY * 0.75)}
+                  y1={10 + idealLineY * 0.75}
                   x2="185"
-                  y2={10 + (idealLineY * 0.75)}
+                  y2={10 + idealLineY * 0.75}
                   stroke="#22c55e"
                   strokeWidth="1"
                   strokeDasharray="4,2"
                   opacity="0.6"
                 />
-                <text x="188" y={12 + (idealLineY * 0.75)} fontSize="5" fill="#22c55e">ideal</text>
+                <text x="188" y={12 + idealLineY * 0.75} fontSize="5" fill="#22c55e">
+                  ideal
+                </text>
               </>
             )}
 
             {/* L1 Bar (Red) */}
             <rect
               x="50"
-              y={85 - (l1Height * 0.75)}
+              y={85 - l1Height * 0.75}
               width="30"
               height={l1Height * 0.75}
               fill="#ef4444"
@@ -148,7 +183,13 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
               L1
             </text>
             {L1 > 0 && (
-              <text x="65" y={82 - (l1Height * 0.75)} textAnchor="middle" fontSize="6" fill="currentColor">
+              <text
+                x="65"
+                y={82 - l1Height * 0.75}
+                textAnchor="middle"
+                fontSize="6"
+                fill="currentColor"
+              >
                 {L1}A
               </text>
             )}
@@ -156,7 +197,7 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
             {/* L2 Bar (Yellow) */}
             <rect
               x="95"
-              y={85 - (l2Height * 0.75)}
+              y={85 - l2Height * 0.75}
               width="30"
               height={l2Height * 0.75}
               fill="#eab308"
@@ -167,7 +208,13 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
               L2
             </text>
             {L2 > 0 && (
-              <text x="110" y={82 - (l2Height * 0.75)} textAnchor="middle" fontSize="6" fill="currentColor">
+              <text
+                x="110"
+                y={82 - l2Height * 0.75}
+                textAnchor="middle"
+                fontSize="6"
+                fill="currentColor"
+              >
                 {L2}A
               </text>
             )}
@@ -175,7 +222,7 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
             {/* L3 Bar (Blue) */}
             <rect
               x="140"
-              y={85 - (l3Height * 0.75)}
+              y={85 - l3Height * 0.75}
               width="30"
               height={l3Height * 0.75}
               fill="#3b82f6"
@@ -186,7 +233,13 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
               L3
             </text>
             {L3 > 0 && (
-              <text x="155" y={82 - (l3Height * 0.75)} textAnchor="middle" fontSize="6" fill="currentColor">
+              <text
+                x="155"
+                y={82 - l3Height * 0.75}
+                textAnchor="middle"
+                fontSize="6"
+                fill="currentColor"
+              >
                 {L3}A
               </text>
             )}
@@ -215,7 +268,9 @@ export const PhaseBalanceChart: React.FC<PhaseBalanceChartProps> = ({
         {balanceResult && balanceResult.recommendation && (
           <div className="mt-3 p-2 rounded-md bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs">
             <AlertTriangle className="h-3 w-3 inline mr-1 text-amber-600" />
-            <span className="text-amber-800 dark:text-amber-200">{balanceResult.recommendation}</span>
+            <span className="text-amber-800 dark:text-amber-200">
+              {balanceResult.recommendation}
+            </span>
           </div>
         )}
       </CardContent>
@@ -260,7 +315,15 @@ export const PhaseDistributionPie: React.FC<{
   if (total === 0) {
     return (
       <svg width={size} height={size} viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeOpacity="0.2" strokeWidth="8" />
+        <circle
+          cx="50"
+          cy="50"
+          r="40"
+          fill="none"
+          stroke="currentColor"
+          strokeOpacity="0.2"
+          strokeWidth="8"
+        />
         <text x="50" y="55" textAnchor="middle" fontSize="10" fill="currentColor" opacity="0.5">
           No load
         </text>
@@ -291,7 +354,8 @@ export const PhaseDistributionPie: React.FC<{
     <svg width={size} height={size} viewBox="0 0 100 100">
       {l1Angle > 0 && createArc(-90, -90 + l1Angle, '#ef4444')}
       {l2Angle > 0 && createArc(-90 + l1Angle, -90 + l1Angle + l2Angle, '#eab308')}
-      {l3Angle > 0 && createArc(-90 + l1Angle + l2Angle, -90 + l1Angle + l2Angle + l3Angle, '#3b82f6')}
+      {l3Angle > 0 &&
+        createArc(-90 + l1Angle + l2Angle, -90 + l1Angle + l2Angle + l3Angle, '#3b82f6')}
       <circle cx="50" cy="50" r="20" fill="white" className="dark:fill-gray-900" />
       <text x="50" y="54" textAnchor="middle" fontSize="10" fontWeight="bold" fill="currentColor">
         {total.toFixed(0)}A

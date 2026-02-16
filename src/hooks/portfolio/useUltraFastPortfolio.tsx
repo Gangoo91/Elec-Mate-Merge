@@ -2,8 +2,18 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { PortfolioEntry, PortfolioCategory, PortfolioAnalytics, PortfolioActivity, PortfolioGroup } from '@/types/portfolio';
-import { createPortfolioGroups, getEntriesByGroup, getCategoriesByCompetencyLevel } from '@/utils/portfolioGrouping';
+import {
+  PortfolioEntry,
+  PortfolioCategory,
+  PortfolioAnalytics,
+  PortfolioActivity,
+  PortfolioGroup,
+} from '@/types/portfolio';
+import {
+  createPortfolioGroups,
+  getEntriesByGroup,
+  getCategoriesByCompetencyLevel,
+} from '@/utils/portfolioGrouping';
 
 // Cache keys
 const CACHE_KEYS = {
@@ -11,7 +21,7 @@ const CACHE_KEYS = {
   qualifications: 'ultra-fast-qualifications',
   categories: 'ultra-fast-categories',
   analytics: 'ultra-fast-analytics',
-  lastSync: 'portfolio-last-sync'
+  lastSync: 'portfolio-last-sync',
 };
 
 // Phase 1: Immediate Response with cached data
@@ -34,16 +44,18 @@ const setCachedData = <T,>(key: string, data: T): void => {
 
 // Phase 2: Optimized parallel data loading
 const loadAllPortfolioData = async (userId: string, qualificationId: string) => {
-  const [portfolioResponse, qualificationsResponse, categoriesResponse, complianceResponse] = await Promise.all([
-    supabase
-      .from('portfolio_items')
-      .select('*')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false }),
-    
-    supabase
-      .from('qualification_compliance')
-      .select(`
+  const [portfolioResponse, qualificationsResponse, categoriesResponse, complianceResponse] =
+    await Promise.all([
+      supabase
+        .from('portfolio_items')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false }),
+
+      supabase
+        .from('qualification_compliance')
+        .select(
+          `
         *,
         qualification_categories (
           id,
@@ -55,19 +67,14 @@ const loadAllPortfolioData = async (userId: string, qualificationId: string) => 
           learning_outcomes,
           assessment_criteria
         )
-      `)
-      .eq('user_id', userId),
-    
-    supabase
-      .from('qualification_categories')
-      .select('*')
-      .eq('qualification_id', qualificationId),
-    
-    supabase
-      .from('qualification_compliance')
-      .select('*')
-      .eq('user_id', userId)
-  ]);
+      `
+        )
+        .eq('user_id', userId),
+
+      supabase.from('qualification_categories').select('*').eq('qualification_id', qualificationId),
+
+      supabase.from('qualification_compliance').select('*').eq('user_id', userId),
+    ]);
 
   if (portfolioResponse.error) throw portfolioResponse.error;
   if (qualificationsResponse.error) throw qualificationsResponse.error;
@@ -78,36 +85,43 @@ const loadAllPortfolioData = async (userId: string, qualificationId: string) => 
     portfolio: portfolioResponse.data || [],
     qualifications: qualificationsResponse.data || [],
     categories: categoriesResponse.data || [],
-    compliance: complianceResponse.data || []
+    compliance: complianceResponse.data || [],
   };
 };
 
 // Phase 3: Pre-calculated analytics
-const calculateAnalytics = (entries: PortfolioEntry[], categories: PortfolioCategory[]): PortfolioAnalytics => {
+const calculateAnalytics = (
+  entries: PortfolioEntry[],
+  categories: PortfolioCategory[]
+): PortfolioAnalytics => {
   const totalEntries = entries.length;
-  const completedEntries = entries.filter(e => e.status === 'completed').length;
+  const completedEntries = entries.filter((e) => e.status === 'completed').length;
   const totalTimeSpent = entries.reduce((total, entry) => total + entry.timeSpent, 0);
-  const averageRating = entries.length > 0 
-    ? entries.reduce((total, entry) => total + entry.selfAssessment, 0) / entries.length 
-    : 0;
+  const averageRating =
+    entries.length > 0
+      ? entries.reduce((total, entry) => total + entry.selfAssessment, 0) / entries.length
+      : 0;
 
   const categoriesProgress: { [key: string]: number } = {};
-  categories.forEach(category => {
-    const categoryEntries = entries.filter(e => e.category.id === category.id && e.status === 'completed');
-    categoriesProgress[category.id] = Math.min((categoryEntries.length / category.requiredEntries) * 100, 100);
+  categories.forEach((category) => {
+    const categoryEntries = entries.filter(
+      (e) => e.category.id === category.id && e.status === 'completed'
+    );
+    categoriesProgress[category.id] = Math.min(
+      (categoryEntries.length / category.requiredEntries) * 100,
+      100
+    );
   });
 
-  const skillsDemo = [...new Set(entries.flatMap(entry => entry.skills))];
+  const skillsDemo = [...new Set(entries.flatMap((entry) => entry.skills))];
 
-  const recentActivity: PortfolioActivity[] = entries
-    .slice(-5)
-    .map(entry => ({
-      id: `activity_${entry.id}`,
-      type: 'created',
-      entryId: entry.id,
-      entryTitle: entry.title,
-      date: entry.dateCreated
-    }));
+  const recentActivity: PortfolioActivity[] = entries.slice(-5).map((entry) => ({
+    id: `activity_${entry.id}`,
+    type: 'created',
+    entryId: entry.id,
+    entryTitle: entry.title,
+    date: entry.dateCreated,
+  }));
 
   return {
     totalEntries,
@@ -116,27 +130,29 @@ const calculateAnalytics = (entries: PortfolioEntry[], categories: PortfolioCate
     averageRating,
     categoriesProgress,
     skillsDemo,
-    recentActivity
+    recentActivity,
   };
 };
 
 export const useUltraFastPortfolio = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  
+
   // Phase 1: Immediate state with cached data
   const [instantData, setInstantData] = useState(() => ({
     entries: getCachedData<PortfolioEntry[]>(`${CACHE_KEYS.portfolio}-entries`, []),
     categories: getCachedData<PortfolioCategory[]>(`${CACHE_KEYS.portfolio}-categories`, []),
     analytics: getCachedData<PortfolioAnalytics | null>(`${CACHE_KEYS.portfolio}-analytics`, null),
-    hasData: getCachedData<boolean>(`${CACHE_KEYS.portfolio}-has-data`, false)
+    hasData: getCachedData<boolean>(`${CACHE_KEYS.portfolio}-has-data`, false),
   }));
 
   // Get current user
   const { data: user } = useQuery({
     queryKey: ['current-user'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       return user;
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
@@ -147,13 +163,15 @@ export const useUltraFastPortfolio = () => {
     queryKey: ['user-qualification-selection', user?.id],
     queryFn: async () => {
       if (!user?.id) return null;
-      
+
       const { data, error } = await supabase
         .from('user_qualification_selections')
-        .select(`
+        .select(
+          `
           *,
           qualification:qualifications(*)
-        `)
+        `
+        )
         .eq('user_id', user.id)
         .eq('is_active', true)
         .maybeSingle();
@@ -166,7 +184,11 @@ export const useUltraFastPortfolio = () => {
   });
 
   // Phase 2: Parallel data loading with React Query
-  const { data: portfolioData, isLoading, error } = useQuery({
+  const {
+    data: portfolioData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['ultra-fast-portfolio', user?.id, userSelection?.qualification_id],
     queryFn: () => loadAllPortfolioData(user!.id, userSelection!.qualification_id),
     enabled: !!user?.id && !!userSelection,
@@ -189,10 +211,10 @@ export const useUltraFastPortfolio = () => {
         entries: [],
         categories: [],
         analytics: null,
-        hasData: false
+        hasData: false,
       });
       // Clear all cached data
-      Object.values(CACHE_KEYS).forEach(key => {
+      Object.values(CACHE_KEYS).forEach((key) => {
         try {
           sessionStorage.removeItem(key);
         } catch (error) {
@@ -201,7 +223,7 @@ export const useUltraFastPortfolio = () => {
       });
     } else {
       // Force refresh when qualification changes
-      Object.values(CACHE_KEYS).forEach(key => {
+      Object.values(CACHE_KEYS).forEach((key) => {
         try {
           sessionStorage.removeItem(key);
         } catch (error) {
@@ -220,7 +242,7 @@ export const useUltraFastPortfolio = () => {
         categories: [],
         groups: [],
         analytics: null,
-        hasQualificationSelected: false
+        hasQualificationSelected: false,
       };
     }
 
@@ -230,7 +252,7 @@ export const useUltraFastPortfolio = () => {
         categories: [],
         groups: [],
         analytics: null,
-        hasQualificationSelected: false
+        hasQualificationSelected: false,
       };
     }
 
@@ -241,34 +263,36 @@ export const useUltraFastPortfolio = () => {
         categories: instantData.categories,
         groups: [],
         analytics: instantData.analytics,
-        hasQualificationSelected: instantData.hasData
+        hasQualificationSelected: instantData.hasData,
       };
     }
 
     // Transform database entries to local format
-    const entries: PortfolioEntry[] = data.portfolio.map(item => {
-      const category = data.categories.find(c => c.id === item.qualification_category_id);
+    const entries: PortfolioEntry[] = data.portfolio.map((item) => {
+      const category = data.categories.find((c) => c.id === item.qualification_category_id);
       return {
         id: item.id,
         title: item.title,
         description: item.description || '',
-        category: category ? {
-          id: category.id,
-          name: category.name,
-          description: category.description || '',
-          icon: category.icon || 'folder',
-          color: category.color || 'blue',
-          requiredEntries: category.required_entries,
-          completedEntries: 0
-        } : {
-          id: 'general',
-          name: 'General',
-          description: 'General portfolio entries',
-          icon: 'folder',
-          color: 'gray',
-          requiredEntries: 1,
-          completedEntries: 0
-        },
+        category: category
+          ? {
+              id: category.id,
+              name: category.name,
+              description: category.description || '',
+              icon: category.icon || 'folder',
+              color: category.color || 'blue',
+              requiredEntries: category.required_entries,
+              completedEntries: 0,
+            }
+          : {
+              id: 'general',
+              name: 'General',
+              description: 'General portfolio entries',
+              icon: 'folder',
+              color: 'gray',
+              requiredEntries: 1,
+              completedEntries: 0,
+            },
         skills: item.skills_demonstrated || [],
         reflection: item.reflection_notes || '',
         dateCreated: item.created_at,
@@ -294,16 +318,15 @@ export const useUltraFastPortfolio = () => {
     });
 
     // Transform categories
-    const categories: PortfolioCategory[] = data.categories.map(cat => ({
+    const categories: PortfolioCategory[] = data.categories.map((cat) => ({
       id: cat.id,
       name: cat.name,
       description: cat.description || '',
       icon: cat.icon || 'folder',
       color: cat.color || 'blue',
       requiredEntries: cat.required_entries,
-      completedEntries: entries.filter(e => 
-        e.category.id === cat.id && e.status === 'completed'
-      ).length
+      completedEntries: entries.filter((e) => e.category.id === cat.id && e.status === 'completed')
+        .length,
     }));
 
     // Calculate analytics
@@ -324,7 +347,7 @@ export const useUltraFastPortfolio = () => {
       categories,
       groups,
       analytics,
-      hasQualificationSelected: !!userSelection
+      hasQualificationSelected: !!userSelection,
     };
   }, [portfolioData, instantData, userSelection]);
 
@@ -346,7 +369,7 @@ export const useUltraFastPortfolio = () => {
           assessment_criteria_met: entryData.assessmentCriteria,
           learning_outcomes_met: entryData.learningOutcomes,
           supervisor_feedback: entryData.supervisorFeedback,
-          grade: entryData.status === 'completed' ? 'Pass' : null
+          grade: entryData.status === 'completed' ? 'Pass' : null,
         })
         .select()
         .single();
@@ -369,7 +392,7 @@ export const useUltraFastPortfolio = () => {
       };
 
       // Update instant data for immediate UI response
-      setInstantData(prev => ({
+      setInstantData((prev) => ({
         ...prev,
         entries: [newEntry, ...prev.entries],
       }));
@@ -382,15 +405,15 @@ export const useUltraFastPortfolio = () => {
         queryClient.setQueryData(['ultra-fast-portfolio', user?.id], context.previousData);
       }
       toast({
-        title: "Error adding entry",
-        description: "Failed to add portfolio entry.",
-        variant: "destructive"
+        title: 'Error adding entry',
+        description: 'Failed to add portfolio entry.',
+        variant: 'destructive',
       });
     },
     onSuccess: () => {
       toast({
-        title: "Portfolio entry added",
-        description: "Your new portfolio entry has been saved successfully."
+        title: 'Portfolio entry added',
+        description: 'Your new portfolio entry has been saved successfully.',
       });
     },
     onSettled: () => {
@@ -400,7 +423,13 @@ export const useUltraFastPortfolio = () => {
   });
 
   const updateEntryMutation = useMutation({
-    mutationFn: async ({ entryId, updates }: { entryId: string; updates: Partial<PortfolioEntry> }) => {
+    mutationFn: async ({
+      entryId,
+      updates,
+    }: {
+      entryId: string;
+      updates: Partial<PortfolioEntry>;
+    }) => {
       if (!user) throw new Error('User not authenticated');
 
       const updateData: any = {};
@@ -412,7 +441,8 @@ export const useUltraFastPortfolio = () => {
       }
       if (updates.skills) updateData.skills_demonstrated = updates.skills;
       if (updates.reflection) updateData.reflection_notes = updates.reflection;
-      if (updates.assessmentCriteria) updateData.assessment_criteria_met = updates.assessmentCriteria;
+      if (updates.assessmentCriteria)
+        updateData.assessment_criteria_met = updates.assessmentCriteria;
       if (updates.learningOutcomes) updateData.learning_outcomes_met = updates.learningOutcomes;
       if (updates.supervisorFeedback) updateData.supervisor_feedback = updates.supervisorFeedback;
       if (updates.status) updateData.grade = updates.status === 'completed' ? 'Pass' : null;
@@ -427,16 +457,16 @@ export const useUltraFastPortfolio = () => {
     },
     onSuccess: () => {
       toast({
-        title: "Portfolio entry updated",
-        description: "Your changes have been saved successfully."
+        title: 'Portfolio entry updated',
+        description: 'Your changes have been saved successfully.',
       });
       queryClient.invalidateQueries({ queryKey: ['ultra-fast-portfolio', user?.id] });
     },
     onError: () => {
       toast({
-        title: "Error updating entry",
-        description: "Failed to update portfolio entry.",
-        variant: "destructive"
+        title: 'Error updating entry',
+        description: 'Failed to update portfolio entry.',
+        variant: 'destructive',
       });
     },
   });
@@ -455,16 +485,16 @@ export const useUltraFastPortfolio = () => {
     },
     onSuccess: () => {
       toast({
-        title: "Portfolio entry deleted",
-        description: "The portfolio entry has been removed."
+        title: 'Portfolio entry deleted',
+        description: 'The portfolio entry has been removed.',
       });
       queryClient.invalidateQueries({ queryKey: ['ultra-fast-portfolio', user?.id] });
     },
     onError: () => {
       toast({
-        title: "Error deleting entry",
-        description: "Failed to delete portfolio entry.",
-        variant: "destructive"
+        title: 'Error deleting entry',
+        description: 'Failed to delete portfolio entry.',
+        variant: 'destructive',
       });
     },
   });
@@ -473,9 +503,9 @@ export const useUltraFastPortfolio = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (user?.id && userSelection) {
-        queryClient.refetchQueries({ 
+        queryClient.refetchQueries({
           queryKey: ['ultra-fast-portfolio', user.id, userSelection.qualification_id],
-          type: 'active'
+          type: 'active',
         });
       }
     }, 30000); // Refresh every 30 seconds
@@ -492,18 +522,21 @@ export const useUltraFastPortfolio = () => {
     error,
     hasQualificationSelected: processedData.hasQualificationSelected,
     addEntry: addEntryMutation.mutateAsync,
-    updateEntry: (entryId: string, updates: Partial<PortfolioEntry>) => 
+    updateEntry: (entryId: string, updates: Partial<PortfolioEntry>) =>
       updateEntryMutation.mutateAsync({ entryId, updates }),
     deleteEntry: deleteEntryMutation.mutateAsync,
     isAddingEntry: addEntryMutation.isPending,
     isUpdatingEntry: updateEntryMutation.isPending,
     isDeletingEntry: deleteEntryMutation.isPending,
-    getEntriesByGroup: (groupId: string) => getEntriesByGroup(groupId, processedData.categories, processedData.entries),
-    getCategoriesByCompetencyLevel: (level: 'foundation' | 'intermediate' | 'advanced') => 
+    getEntriesByGroup: (groupId: string) =>
+      getEntriesByGroup(groupId, processedData.categories, processedData.entries),
+    getCategoriesByCompetencyLevel: (level: 'foundation' | 'intermediate' | 'advanced') =>
       getCategoriesByCompetencyLevel(level, processedData.categories),
     refresh: () => {
-      queryClient.invalidateQueries({ queryKey: ['ultra-fast-portfolio', user?.id, userSelection?.qualification_id] });
+      queryClient.invalidateQueries({
+        queryKey: ['ultra-fast-portfolio', user?.id, userSelection?.qualification_id],
+      });
       queryClient.invalidateQueries({ queryKey: ['user-qualification-selection', user?.id] });
-    }
+    },
   };
 };

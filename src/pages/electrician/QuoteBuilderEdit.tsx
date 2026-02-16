@@ -24,30 +24,33 @@ const QuoteBuilderEdit = () => {
       }
 
       try {
-        const { data, error } = await supabase
-          .from('quotes')
-          .select('*')
-          .eq('id', id)
-          .single();
+        const { data, error } = await supabase.from('quotes').select('*').eq('id', id).single();
 
         if (error) throw error;
 
         if (!data) {
           setError(true);
           toast({
-            title: "Quote Not Found",
+            title: 'Quote Not Found',
             description: "The quote you're looking for doesn't exist or has been deleted.",
-            variant: "destructive"
+            variant: 'destructive',
           });
         } else {
           // Transform the database record to Quote type
           const transformedQuote: Quote = {
             id: data.id,
             quoteNumber: data.quote_number,
-            client: typeof data.client_data === 'string' ? JSON.parse(data.client_data) : data.client_data,
+            client:
+              typeof data.client_data === 'string'
+                ? JSON.parse(data.client_data)
+                : data.client_data,
             items: typeof data.items === 'string' ? JSON.parse(data.items) : data.items,
             settings: typeof data.settings === 'string' ? JSON.parse(data.settings) : data.settings,
-            jobDetails: data.job_details ? (typeof data.job_details === 'string' ? JSON.parse(data.job_details) : data.job_details) : undefined,
+            jobDetails: data.job_details
+              ? typeof data.job_details === 'string'
+                ? JSON.parse(data.job_details)
+                : data.job_details
+              : undefined,
             subtotal: data.subtotal || 0,
             overhead: data.overhead || 0,
             profit: data.profit || 0,
@@ -73,9 +76,9 @@ const QuoteBuilderEdit = () => {
         console.error('Error loading quote:', err);
         setError(true);
         toast({
-          title: "Error",
-          description: "Failed to load quote. Please try again.",
-          variant: "destructive"
+          title: 'Error',
+          description: 'Failed to load quote. Please try again.',
+          variant: 'destructive',
         });
       } finally {
         setLoading(false);
@@ -160,7 +163,9 @@ const QuoteBuilderEdit = () => {
             <FileText className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <h1 className="text-base font-semibold text-white truncate">Edit {quote.quoteNumber}</h1>
+            <h1 className="text-base font-semibold text-white truncate">
+              Edit {quote.quoteNumber}
+            </h1>
             <p className="text-[11px] text-white/50">Make changes to your quote</p>
           </div>
         </div>

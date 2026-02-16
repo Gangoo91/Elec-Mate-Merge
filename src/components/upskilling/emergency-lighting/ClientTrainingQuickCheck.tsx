@@ -12,7 +12,10 @@ export const ClientTrainingQuickCheck = () => {
               Quick Check: What is one key responsibility of the client after handover?
             </p>
             <div className="text-foreground text-sm sm:text-base">
-              <p className="mb-2"><strong>Primary responsibility:</strong> Ensure all emergency lighting tests are carried out according to BS 5266-1 schedule:</p>
+              <p className="mb-2">
+                <strong>Primary responsibility:</strong> Ensure all emergency lighting tests are
+                carried out according to BS 5266-1 schedule:
+              </p>
               <ul className="list-disc list-inside space-y-1 ml-2">
                 <li>Monthly functional tests (simulated failure)</li>
                 <li>Annual 3-hour duration tests</li>
@@ -20,7 +23,10 @@ export const ClientTrainingQuickCheck = () => {
                 <li>Rectify any faults or failures promptly</li>
                 <li>Replace batteries and components as required</li>
               </ul>
-              <p className="mt-3 text-gray-300">Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person can face prosecution for failing to maintain emergency lighting.</p>
+              <p className="mt-3 text-gray-300">
+                Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person can
+                face prosecution for failing to maintain emergency lighting.
+              </p>
             </div>
           </div>
         </div>

@@ -1,45 +1,45 @@
-import { ArrowLeft, BookOpen, CreditCard, ClipboardCheck, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, BookOpen, CreditCard, ClipboardCheck, Lightbulb } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Is CSCS?",
+    title: 'What Is CSCS?',
     icon: BookOpen,
     description:
-      "The Construction Skills Certification Scheme, its purpose, who needs a card, and the different card types available",
+      'The Construction Skills Certification Scheme, its purpose, who needs a card, and the different card types available',
   },
   {
     id: 2,
-    title: "Card Types & Colour Codes",
+    title: 'Card Types & Colour Codes',
     icon: CreditCard,
     description:
-      "Green labourer, blue skilled worker, gold advanced craft, black manager, white professionally qualified, and temporary visitor cards",
+      'Green labourer, blue skilled worker, gold advanced craft, black manager, white professionally qualified, and temporary visitor cards',
   },
   {
     id: 3,
-    title: "The HS&E Test Format",
+    title: 'The HS&E Test Format',
     icon: ClipboardCheck,
     description:
-      "Test structure, question types, behavioural case studies, touch-screen format, 50 questions in 45 minutes, and pass marks",
+      'Test structure, question types, behavioural case studies, touch-screen format, 50 questions in 45 minutes, and pass marks',
   },
   {
     id: 4,
-    title: "Booking, Preparation & Study Tips",
+    title: 'Booking, Preparation & Study Tips',
     icon: Lightbulb,
     description:
-      "How to book at Pearson VUE centres, what to bring on the day, effective study strategies, and revision resources",
+      'How to book at Pearson VUE centres, what to bring on the day, effective study strategies, and revision resources',
   },
 ];
 
 export default function CscsCardModule1() {
   useSEO({
-    title: "Module 1: Introduction to CSCS & the HS&E Test | CSCS Card Preparation",
+    title: 'Module 1: Introduction to CSCS & the HS&E Test | CSCS Card Preparation',
     description:
-      "Learn about the CSCS scheme, card types and colour codes, HS&E test format, and how to book and prepare for the test.",
+      'Learn about the CSCS scheme, card types and colour codes, HS&E test format, and how to book and prepare for the test.',
   });
 
   return (

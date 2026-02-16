@@ -1,6 +1,5 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { GraduationCap } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { GraduationCap } from 'lucide-react';
 
 const CareerWelcomeState = () => {
   return (
@@ -12,7 +11,8 @@ const CareerWelcomeState = () => {
         </div>
         <h3 className="text-xl font-semibold text-white mb-2">Choose a Career Path Section</h3>
         <p className="text-white/70 px-4 sm:px-0 max-w-xl mx-auto">
-          Click on one of the boxes above to explore different aspects of your electrical career progression.
+          Click on one of the boxes above to explore different aspects of your electrical career
+          progression.
         </p>
       </CardContent>
     </Card>

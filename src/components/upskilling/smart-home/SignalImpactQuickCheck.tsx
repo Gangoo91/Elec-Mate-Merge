@@ -7,12 +7,12 @@ const SignalImpactQuickCheck = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
 
-  const question = "What happens when Wi-Fi or RF signals are weak in a smart home system?";
+  const question = 'What happens when Wi-Fi or RF signals are weak in a smart home system?';
   const options = [
-    "Devices work faster",
-    "Lower electricity bills",
+    'Devices work faster',
+    'Lower electricity bills',
     "Delays, missed commands, or devices appearing 'offline'",
-    "Better security"
+    'Better security',
   ];
   const correctAnswer = "Delays, missed commands, or devices appearing 'offline'";
 
@@ -32,7 +32,7 @@ const SignalImpactQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -44,11 +44,11 @@ const SignalImpactQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-600/20 border-green-600 text-green-100'
                     : option === selectedAnswer && !isCorrect
-                    ? 'bg-red-600/20 border-red-600 text-red-100'
-                    : 'border-gray-600 text-gray-400'
+                      ? 'bg-red-600/20 border-red-600 text-red-100'
+                      : 'border-gray-600 text-gray-400'
                   : selectedAnswer === option
-                  ? 'bg-blue-600/20 border-blue-600 text-blue-100'
-                  : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-blue-600/20 border-blue-600 text-blue-100'
+                    : 'border-gray-600 text-gray-300 hover:bg-gray-700'
               }`}
             >
               {option}
@@ -63,11 +63,11 @@ const SignalImpactQuickCheck = () => {
         )}
 
         {showAnswer && (
-          <div className={`p-3 rounded-md border ${
-            isCorrect 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-md border ${
+              isCorrect ? 'bg-green-600/10 border-green-600/30' : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-4 w-4 text-green-400" />
@@ -79,7 +79,9 @@ const SignalImpactQuickCheck = () => {
               </span>
             </div>
             <p className="text-gray-300 text-sm">
-              Weak Wi-Fi or RF signals cause delays in response, missed commands, intermittent connectivity, and devices appearing offline in apps. Strong signals are essential for reliable smart home operation.
+              Weak Wi-Fi or RF signals cause delays in response, missed commands, intermittent
+              connectivity, and devices appearing offline in apps. Strong signals are essential for
+              reliable smart home operation.
             </p>
           </div>
         )}

@@ -8,10 +8,10 @@ export const TimeBasedScheduleQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "Lights turn on when someone enters a room", correct: false },
-    { text: "Outdoor lights switch on at sunset", correct: true },
-    { text: "Lights respond to voice commands", correct: false },
-    { text: "Lights change colour randomly", correct: false }
+    { text: 'Lights turn on when someone enters a room', correct: false },
+    { text: 'Outdoor lights switch on at sunset', correct: true },
+    { text: 'Lights respond to voice commands', correct: false },
+    { text: 'Lights change colour randomly', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +32,10 @@ export const TimeBasedScheduleQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q2: Give one example of a time-based schedule.</p>
-        
+        <p className="text-foreground font-medium">
+          Q2: Give one example of a time-based schedule.
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +60,9 @@ export const TimeBasedScheduleQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +72,9 @@ export const TimeBasedScheduleQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Time-based schedules trigger actions at specific times or solar events. Outdoor lights switching on at sunset is a perfect example of automation based on time rather than sensors.
+              <strong>Correct:</strong> Time-based schedules trigger actions at specific times or
+              solar events. Outdoor lights switching on at sunset is a perfect example of automation
+              based on time rather than sensors.
             </p>
           </div>
         )}

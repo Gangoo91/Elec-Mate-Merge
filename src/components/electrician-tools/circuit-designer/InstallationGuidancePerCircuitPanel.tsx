@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { EnhancedInstallationGuidance } from "@/types/circuit-design";
-import { CircuitDesign } from "@/types/installation-design";
-import { InstallationGuidancePanel } from "./InstallationGuidancePanel";
-import { Wrench, AlertCircle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { EnhancedInstallationGuidance } from '@/types/circuit-design';
+import { CircuitDesign } from '@/types/installation-design';
+import { InstallationGuidancePanel } from './InstallationGuidancePanel';
+import { Wrench, AlertCircle } from 'lucide-react';
 
 // The backend may return either EnhancedInstallationGuidance directly or wrapped in { guidance: EnhancedInstallationGuidance }
 type GuidanceEntry = EnhancedInstallationGuidance | { guidance: EnhancedInstallationGuidance };
@@ -23,15 +23,19 @@ const extractGuidance = (entry: GuidanceEntry): EnhancedInstallationGuidance | u
     return entry.guidance as EnhancedInstallationGuidance;
   }
   // Otherwise it's the direct object - check for expected properties
-  if ('safetyConsiderations' in entry || 'materialsRequired' in entry || 'executiveSummary' in entry) {
+  if (
+    'safetyConsiderations' in entry ||
+    'materialsRequired' in entry ||
+    'executiveSummary' in entry
+  ) {
     return entry as EnhancedInstallationGuidance;
   }
   return undefined;
 };
 
-export const InstallationGuidancePerCircuitPanel = ({ 
-  guidance, 
-  circuits 
+export const InstallationGuidancePerCircuitPanel = ({
+  guidance,
+  circuits,
 }: InstallationGuidancePerCircuitPanelProps) => {
   const [selectedCircuitKey, setSelectedCircuitKey] = useState<string>(
     Object.keys(guidance)[0] || 'circuit_0'
@@ -73,10 +77,10 @@ export const InstallationGuidancePerCircuitPanel = ({
             const idx = parseInt(key.replace('circuit_', ''));
             const circuit = circuits[idx];
             const circuitName = circuit?.name || `Circuit ${idx + 1}`;
-            
+
             return (
-              <TabsTrigger 
-                key={key} 
+              <TabsTrigger
+                key={key}
                 value={key}
                 className="data-[state=active]:bg-background data-[state=active]:shadow-sm"
               >
@@ -114,7 +118,7 @@ export const InstallationGuidancePerCircuitPanel = ({
                         <div>
                           <p className="text-muted-foreground text-xs">Protection</p>
                           <p className="font-medium">
-                            {typeof currentCircuit?.protectionDevice === 'object' 
+                            {typeof currentCircuit?.protectionDevice === 'object'
                               ? `${currentCircuit.protectionDevice.rating}A ${currentCircuit.protectionDevice.type} ${currentCircuit.protectionDevice.curve}`
                               : currentCircuit?.protectionDevice || '—'}
                           </p>
@@ -133,22 +137,24 @@ export const InstallationGuidancePerCircuitPanel = ({
 
                   {/* Render guidance using existing component */}
                   <InstallationGuidancePanel guidance={extractedGuidance} />
-              </>
-            ) : (
-              <Card className="border-warning/50 bg-warning/5">
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="h-5 w-5 text-warning mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium">No guidance available for this circuit</p>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        This circuit may not have been fully processed yet.
-                      </p>
+                </>
+              ) : (
+                <Card className="border-warning/50 bg-warning/5">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start gap-3">
+                      <AlertCircle className="h-5 w-5 text-warning mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">
+                          No guidance available for this circuit
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          This circuit may not have been fully processed yet.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+                  </CardContent>
+                </Card>
+              )}
             </TabsContent>
           );
         })}

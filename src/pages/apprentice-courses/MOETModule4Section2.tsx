@@ -1,58 +1,59 @@
-import { ArrowLeft, Eye, Thermometer, Zap, TestTube, DropletIcon, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Eye, Thermometer, Zap, TestTube, DropletIcon, TrendingUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule4Section2 = () => {
   useSEO(
-    "Section 4.2: Condition Monitoring Techniques - MOET Module 4",
-    "Visual inspection, thermal imaging, vibration analysis, insulation testing and predictive maintenance"
+    'Section 4.2: Condition Monitoring Techniques - MOET Module 4',
+    'Visual inspection, thermal imaging, vibration analysis, insulation testing and predictive maintenance'
   );
 
   const subsections = [
     {
-      number: "4.2.1",
-      title: "Visual and Sensory Inspection",
-      description: "Systematic visual inspection techniques and sensory monitoring methods",
+      number: '4.2.1',
+      title: 'Visual and Sensory Inspection',
+      description: 'Systematic visual inspection techniques and sensory monitoring methods',
       icon: Eye,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section2-1"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section2-1',
     },
     {
-      number: "4.2.2",
-      title: "Thermal Imaging",
-      description: "Infrared thermography principles, equipment and interpretation of thermal images",
+      number: '4.2.2',
+      title: 'Thermal Imaging',
+      description:
+        'Infrared thermography principles, equipment and interpretation of thermal images',
       icon: Thermometer,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section2-2"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section2-2',
     },
     {
-      number: "4.2.3",
-      title: "Vibration Analysis",
-      description: "Vibration monitoring techniques, measurement methods and fault identification",
+      number: '4.2.3',
+      title: 'Vibration Analysis',
+      description: 'Vibration monitoring techniques, measurement methods and fault identification',
       icon: Zap,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section2-3"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section2-3',
     },
     {
-      number: "4.2.4",
-      title: "Insulation Resistance Testing",
-      description: "Insulation testing methods, equipment and interpretation of results",
+      number: '4.2.4',
+      title: 'Insulation Resistance Testing',
+      description: 'Insulation testing methods, equipment and interpretation of results',
       icon: TestTube,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section2-4"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section2-4',
     },
     {
-      number: "4.2.5",
-      title: "Oil and Fluid Analysis (where relevant)",
-      description: "Analysis of lubricating oils and hydraulic fluids for condition monitoring",
+      number: '4.2.5',
+      title: 'Oil and Fluid Analysis (where relevant)',
+      description: 'Analysis of lubricating oils and hydraulic fluids for condition monitoring',
       icon: DropletIcon,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section2-5"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section2-5',
     },
     {
-      number: "4.2.6",
-      title: "Trend Analysis and Predictive Maintenance",
-      description: "Data analysis techniques and predictive maintenance strategies",
+      number: '4.2.6',
+      title: 'Trend Analysis and Predictive Maintenance',
+      description: 'Data analysis techniques and predictive maintenance strategies',
       icon: TrendingUp,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section2-6"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module4-section2-6',
+    },
   ];
 
   return (
@@ -60,7 +61,11 @@ const MOETModule4Section2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 4
@@ -76,7 +81,8 @@ const MOETModule4Section2 = () => {
             Section 4.2: Condition Monitoring Techniques
           </h1>
           <p className="text-xl text-muted-foreground max-w-5xl">
-            Visual inspection, thermal imaging, vibration analysis, insulation testing and predictive maintenance.
+            Visual inspection, thermal imaging, vibration analysis, insulation testing and
+            predictive maintenance.
           </p>
         </div>
 

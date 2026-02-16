@@ -19,7 +19,7 @@ import {
   ExternalLink,
   CheckCircle2,
   Percent,
-  BookOpen
+  BookOpen,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule4Section5: React.FC = () => {
@@ -103,8 +103,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
       correctAnswer: 'Net Present Value',
     },
     {
-      question:
-        'In NPV calculations, what happens to future cash flows when discounted?',
+      question: 'In NPV calculations, what happens to future cash flows when discounted?',
       options: [
         'They increase in value',
         'They decrease in value',
@@ -124,8 +123,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
       correctAnswer: 'The discount rate that makes NPV equal to zero',
     },
     {
-      question:
-        'Which organisation provides free energy efficiency calculation tools in the UK?',
+      question: 'Which organisation provides free energy efficiency calculation tools in the UK?',
       options: ['Ofgem', 'Carbon Trust', 'Energy UK', 'British Gas'],
       correctAnswer: 'Carbon Trust',
     },
@@ -151,8 +149,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
       correctAnswer: 'IRR (Internal Rate of Return)',
     },
     {
-      question:
-        'What Excel function is used to calculate Net Present Value?',
+      question: 'What Excel function is used to calculate Net Present Value?',
       options: ['=PMT()', '=NPV()', '=FV()', '=RATE()'],
       correctAnswer: '=NPV()',
     },
@@ -171,14 +168,12 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
   const faqs = [
     {
-      question:
-        'Why is simple payback period not always sufficient for investment decisions?',
+      question: 'Why is simple payback period not always sufficient for investment decisions?',
       answer:
         "Simple payback period ignores the time value of money, cash flows after payback, and doesn't account for the total profitability of an investment. A project with a 3-year payback might generate excellent returns for 15 more years, while another with 2-year payback might have minimal savings thereafter. For comprehensive analysis, combine payback with NPV and IRR calculations.",
     },
     {
-      question:
-        'What discount rate should I use for private sector energy projects?',
+      question: 'What discount rate should I use for private sector energy projects?',
       answer:
         "Private sector discount rates typically range from 8-15%, depending on the company's cost of capital, risk tolerance, and alternative investment opportunities. Many organisations use their Weighted Average Cost of Capital (WACC) as the discount rate. Consult your finance department for company-specific rates, as using incorrect rates can significantly skew investment decisions.",
     },
@@ -188,14 +183,12 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
         "You can either use 'real' discount rates (which exclude inflation) with constant energy prices, or use 'nominal' rates with inflated future energy prices. The Carbon Trust recommends using real rates with constant prices for simplicity. For long-term projects, consider energy price escalation scenarios (e.g., 2%, 4%, 6% annual increases) to stress-test your business case.",
     },
     {
-      question:
-        'What is the difference between NPV and IRR, and when should I use each?',
+      question: 'What is the difference between NPV and IRR, and when should I use each?',
       answer:
-        'NPV gives the absolute value created by a project in today\'s money - useful for understanding total benefit. IRR gives the percentage return - useful for comparing projects of different sizes. Use NPV when you have a fixed budget and want to maximise value; use IRR when comparing projects requiring different investment levels. Most robust analyses use both metrics together.',
+        "NPV gives the absolute value created by a project in today's money - useful for understanding total benefit. IRR gives the percentage return - useful for comparing projects of different sizes. Use NPV when you have a fixed budget and want to maximise value; use IRR when comparing projects requiring different investment levels. Most robust analyses use both metrics together.",
     },
     {
-      question:
-        'How do I include non-financial benefits in a business case?',
+      question: 'How do I include non-financial benefits in a business case?',
       answer:
         "Quantify where possible: reduced maintenance (cost), improved comfort (productivity gains), carbon savings (potential carbon price), enhanced reputation (brand value). Present these as 'co-benefits' alongside financial returns. The Social Value Act may require public sector projects to include wider social value. Use sensitivity analysis to show how including these benefits affects overall project viability.",
     },
@@ -212,14 +205,21 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-4">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
             <p className="text-elec-yellow text-xs font-medium">Module 4 - Section 5</p>
-            <h1 className="text-base font-semibold truncate">ROI Calculators and Energy Saving Tools</h1>
+            <h1 className="text-base font-semibold truncate">
+              ROI Calculators and Energy Saving Tools
+            </h1>
           </div>
           <div className="p-2 bg-elec-yellow/20 rounded-lg">
             <Calculator className="w-5 h-5 text-elec-yellow" />
@@ -231,9 +231,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <p className="text-white/90 leading-relaxed">
-            Master the financial tools and calculations needed to evaluate and justify energy efficiency
-            investments. Learn to calculate payback periods, NPV, IRR, and build compelling business cases
-            that convince decision-makers.
+            Master the financial tools and calculations needed to evaluate and justify energy
+            efficiency investments. Learn to calculate payback periods, NPV, IRR, and build
+            compelling business cases that convince decision-makers.
           </p>
         </div>
 
@@ -270,9 +270,10 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Simple payback period is the most commonly used metric in energy efficiency, representing
-              the time required for energy savings to recover the initial investment cost. While
-              straightforward, understanding its limitations is crucial for sound decision-making.
+              Simple payback period is the most commonly used metric in energy efficiency,
+              representing the time required for energy savings to recover the initial investment
+              cost. While straightforward, understanding its limitations is crucial for sound
+              decision-making.
             </p>
 
             {/* Formula Box */}
@@ -296,8 +297,8 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               </h4>
               <div className="space-y-3 text-white/70">
                 <p>
-                  <strong className="text-white">Scenario:</strong> A warehouse replaces 100 fluorescent
-                  fittings with LED equivalents.
+                  <strong className="text-white">Scenario:</strong> A warehouse replaces 100
+                  fluorescent fittings with LED equivalents.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-white/5 p-3 rounded">
@@ -305,7 +306,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <ul className="text-sm mt-1 space-y-1">
                       <li>LED fittings: 8,000</li>
                       <li>Installation: 2,500</li>
-                      <li><strong className="text-white">Total: 10,500</strong></li>
+                      <li>
+                        <strong className="text-white">Total: 10,500</strong>
+                      </li>
                     </ul>
                   </div>
                   <div className="bg-white/5 p-3 rounded">
@@ -313,7 +316,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <ul className="text-sm mt-1 space-y-1">
                       <li>Energy reduction: 25,000 kWh</li>
                       <li>At 0.14/kWh: 3,500/year</li>
-                      <li><strong className="text-white">Total: 3,500</strong></li>
+                      <li>
+                        <strong className="text-white">Total: 3,500</strong>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -329,7 +334,10 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-amber-400 mb-2">Key Limitations to Consider</h4>
               <ul className="text-white/70 text-sm space-y-1">
-                <li>Does not account for the time value of money (1 today worth more than 1 in 5 years)</li>
+                <li>
+                  Does not account for the time value of money (1 today worth more than 1 in 5
+                  years)
+                </li>
                 <li>Ignores cash flows occurring after the payback period</li>
                 <li>Does not consider project risk or uncertainty</li>
                 <li>Cannot compare projects with different lifespans effectively</li>
@@ -357,9 +365,10 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              NPV accounts for the fact that money received in the future is worth less than money today.
-              By discounting future cash flows, NPV provides the true value of an investment in today's
-              terms, enabling accurate comparison between projects with different timescales.
+              NPV accounts for the fact that money received in the future is worth less than money
+              today. By discounting future cash flows, NPV provides the true value of an investment
+              in today's terms, enabling accurate comparison between projects with different
+              timescales.
             </p>
 
             {/* NPV Formula */}
@@ -370,9 +379,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   NPV = -Initial Cost + Sum of [Cash Flow / (1 + r)^n]
                 </span>
               </div>
-              <p className="text-sm text-white/60 mt-2">
-                Where r = discount rate, n = year number
-              </p>
+              <p className="text-sm text-white/60 mt-2">Where r = discount rate, n = year number</p>
             </div>
 
             {/* UK Discount Rates */}
@@ -410,8 +417,8 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               </h4>
               <div className="space-y-3 text-white/70">
                 <p>
-                  <strong className="text-white">Scenario:</strong> Council building HVAC replacement,
-                  10-year analysis at 3.5% discount rate
+                  <strong className="text-white">Scenario:</strong> Council building HVAC
+                  replacement, 10-year analysis at 3.5% discount rate
                 </p>
                 <div className="bg-white/5 p-3 rounded">
                   <p>Initial Investment: 50,000</p>
@@ -469,7 +476,8 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     Total NPV = 16,289 (Positive NPV = Financially Viable)
                   </p>
                   <p className="text-sm text-white/60 mt-1">
-                    Excel formula: =NPV(0.035, B2:B11) + B1 (where B1 is the initial cost as negative)
+                    Excel formula: =NPV(0.035, B2:B11) + B1 (where B1 is the initial cost as
+                    negative)
                   </p>
                 </div>
               </div>
@@ -496,9 +504,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              IRR is the discount rate at which NPV equals zero. It represents the project's effective
-              annual return, making it ideal for comparing investments of different sizes. If IRR exceeds
-              your required rate of return (hurdle rate), the project is worthwhile.
+              IRR is the discount rate at which NPV equals zero. It represents the project's
+              effective annual return, making it ideal for comparing investments of different sizes.
+              If IRR exceeds your required rate of return (hurdle rate), the project is worthwhile.
             </p>
 
             {/* IRR Concept */}
@@ -528,8 +536,8 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               </h4>
               <div className="space-y-4 text-white/70">
                 <p>
-                  <strong className="text-white">Scenario:</strong> Choose between two energy efficiency
-                  options with different scales
+                  <strong className="text-white">Scenario:</strong> Choose between two energy
+                  efficiency options with different scales
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-4">
@@ -544,7 +552,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     </ul>
                   </div>
                   <div className="bg-white/5 p-4 rounded border border-purple-500/30">
-                    <h5 className="text-purple-400 font-semibold mb-2">Project B: BMS Installation</h5>
+                    <h5 className="text-purple-400 font-semibold mb-2">
+                      Project B: BMS Installation
+                    </h5>
                     <ul className="text-sm space-y-1">
                       <li>Cost: 80,000</li>
                       <li>Annual Savings: 18,000</li>
@@ -557,17 +567,18 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
                 <div className="bg-white/5 p-3 rounded">
                   <p className="text-sm">
-                    <strong className="text-elec-yellow">Analysis:</strong> While Project B has a longer
-                    payback, Project A's higher IRR (24.5% vs 19.8%) indicates better return per pound
-                    invested. However, Project B generates more total savings (270,000 vs 36,000 over
-                    lifetime). Decision depends on budget constraints and strategic priorities.
+                    <strong className="text-elec-yellow">Analysis:</strong> While Project B has a
+                    longer payback, Project A's higher IRR (24.5% vs 19.8%) indicates better return
+                    per pound invested. However, Project B generates more total savings (270,000 vs
+                    36,000 over lifetime). Decision depends on budget constraints and strategic
+                    priorities.
                   </p>
                 </div>
 
                 <div className="bg-white/5 p-3 rounded border border-white/10">
                   <p className="text-sm text-white/60">
-                    <strong className="text-white">Excel Formula:</strong> =IRR(range of cash flows) where
-                    the first value is the negative initial investment
+                    <strong className="text-white">Excel Formula:</strong> =IRR(range of cash flows)
+                    where the first value is the negative initial investment
                   </p>
                   <p className="text-sm text-white/60 mt-1">
                     Example: =IRR(A1:A9) where A1=-15000 and A2:A9 contain 4500
@@ -597,9 +608,10 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Life Cycle Cost (LCC) analysis captures all costs associated with an asset from acquisition
-              through disposal. This comprehensive approach reveals the true cost of ownership and often
-              shows that higher upfront costs deliver lower total costs over the asset's lifetime.
+              Life Cycle Cost (LCC) analysis captures all costs associated with an asset from
+              acquisition through disposal. This comprehensive approach reveals the true cost of
+              ownership and often shows that higher upfront costs deliver lower total costs over the
+              asset's lifetime.
             </p>
 
             {/* LCC Components */}
@@ -633,8 +645,8 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               </h4>
               <div className="space-y-4 text-white/70">
                 <p>
-                  <strong className="text-white">Scenario:</strong> Selecting a 15kW motor with 20-year
-                  life, 4,000 operating hours/year
+                  <strong className="text-white">Scenario:</strong> Selecting a 15kW motor with
+                  20-year life, 4,000 operating hours/year
                 </p>
 
                 <div className="overflow-x-auto">
@@ -708,8 +720,8 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Numerous free tools are available to support energy efficiency calculations. Knowing which
-              tool to use for each situation saves time and improves accuracy.
+              Numerous free tools are available to support energy efficiency calculations. Knowing
+              which tool to use for each situation saves time and improves accuracy.
             </p>
 
             {/* Tools Grid */}
@@ -777,7 +789,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <span>Degree day data for normalisation</span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-2">cibse.org - some tools require membership</p>
+                <p className="text-xs text-white/50 mt-2">
+                  cibse.org - some tools require membership
+                </p>
               </div>
 
               <div className="bg-white/5 p-4 rounded-lg border border-white/10">
@@ -852,8 +866,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Technical excellence alone rarely secures project approval. A compelling business case speaks
-              the language of finance, addresses risks, and aligns with organisational priorities.
+              Technical excellence alone rarely secures project approval. A compelling business case
+              speaks the language of finance, addresses risks, and aligns with organisational
+              priorities.
             </p>
 
             {/* Business Case Structure */}
@@ -861,12 +876,36 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               <h4 className="text-elec-yellow font-semibold mb-3">Business Case Structure</h4>
               <div className="space-y-3">
                 {[
-                  { num: '1', title: 'Executive Summary', desc: 'Key numbers upfront: investment required, annual savings, payback, NPV' },
-                  { num: '2', title: 'Strategic Alignment', desc: 'Link to corporate objectives, net zero targets, regulations' },
-                  { num: '3', title: 'Options Analysis', desc: "Compare alternatives including 'do nothing' baseline" },
-                  { num: '4', title: 'Financial Analysis', desc: 'Payback, NPV, IRR with sensitivity analysis' },
-                  { num: '5', title: 'Risk and Mitigation', desc: "Identify risks and explain how they'll be managed" },
-                  { num: '6', title: 'Implementation Plan', desc: 'Timeline, resources, and success criteria' },
+                  {
+                    num: '1',
+                    title: 'Executive Summary',
+                    desc: 'Key numbers upfront: investment required, annual savings, payback, NPV',
+                  },
+                  {
+                    num: '2',
+                    title: 'Strategic Alignment',
+                    desc: 'Link to corporate objectives, net zero targets, regulations',
+                  },
+                  {
+                    num: '3',
+                    title: 'Options Analysis',
+                    desc: "Compare alternatives including 'do nothing' baseline",
+                  },
+                  {
+                    num: '4',
+                    title: 'Financial Analysis',
+                    desc: 'Payback, NPV, IRR with sensitivity analysis',
+                  },
+                  {
+                    num: '5',
+                    title: 'Risk and Mitigation',
+                    desc: "Identify risks and explain how they'll be managed",
+                  },
+                  {
+                    num: '6',
+                    title: 'Implementation Plan',
+                    desc: 'Timeline, resources, and success criteria',
+                  },
                 ].map((item) => (
                   <div key={item.num} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-elec-yellow text-black flex items-center justify-center text-sm font-bold flex-shrink-0">
@@ -890,21 +929,27 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Frame as Risk Reduction</p>
-                      <p className="text-sm text-white/60">Emphasise protection against energy price volatility</p>
+                      <p className="text-sm text-white/60">
+                        Emphasise protection against energy price volatility
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Show Multiple Scenarios</p>
-                      <p className="text-sm text-white/60">Conservative, expected, and optimistic projections</p>
+                      <p className="text-sm text-white/60">
+                        Conservative, expected, and optimistic projections
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Include Co-Benefits</p>
-                      <p className="text-sm text-white/60">Maintenance savings, comfort, compliance, reputation</p>
+                      <p className="text-sm text-white/60">
+                        Maintenance savings, comfort, compliance, reputation
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -913,7 +958,9 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Use Credible Sources</p>
-                      <p className="text-sm text-white/60">Reference Carbon Trust, BEIS, manufacturer data</p>
+                      <p className="text-sm text-white/60">
+                        Reference Carbon Trust, BEIS, manufacturer data
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
@@ -998,9 +1045,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">Discount Factor</h3>
-              <p className="font-mono text-elec-yellow text-sm">
-                DF = 1 / (1 + r)^n
-              </p>
+              <p className="font-mono text-elec-yellow text-sm">DF = 1 / (1 + r)^n</p>
               <p className="text-xs text-white/60 mt-1">r = rate, n = year number</p>
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
@@ -1012,9 +1057,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">IRR (Excel)</h3>
-              <p className="font-mono text-elec-yellow text-sm">
-                =IRR(all_cash_flows)
-              </p>
+              <p className="font-mono text-elec-yellow text-sm">=IRR(all_cash_flows)</p>
               <p className="text-xs text-white/60 mt-1">Include initial cost in range</p>
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
@@ -1026,9 +1069,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">UK Public Sector Rate</h3>
-              <p className="font-mono text-elec-yellow text-sm">
-                Discount Rate = 3.5%
-              </p>
+              <p className="font-mono text-elec-yellow text-sm">Discount Rate = 3.5%</p>
               <p className="text-xs text-white/60 mt-1">HM Treasury Green Book standard</p>
             </div>
           </div>

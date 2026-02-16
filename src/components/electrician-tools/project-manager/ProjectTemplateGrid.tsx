@@ -1,6 +1,11 @@
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ProjectTemplate, DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES } from '@/lib/project-templates';
+import {
+  ProjectTemplate,
+  DOMESTIC_TEMPLATES,
+  COMMERCIAL_TEMPLATES,
+  INDUSTRIAL_TEMPLATES,
+} from '@/lib/project-templates';
 import { Star, Clock } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
@@ -20,7 +25,13 @@ const getComplexityColor = (complexity: 'Simple' | 'Moderate' | 'Complex') => {
   }
 };
 
-const TemplateCard = ({ template, onSelect }: { template: ProjectTemplate; onSelect: () => void }) => (
+const TemplateCard = ({
+  template,
+  onSelect,
+}: {
+  template: ProjectTemplate;
+  onSelect: () => void;
+}) => (
   <Card
     className="p-3 sm:p-4 cursor-pointer hover:border-pink-400/40 hover:scale-[1.02] transition-all duration-200 touch-manipulation active:scale-[0.98] min-h-[44px]"
     onClick={onSelect}
@@ -41,7 +52,10 @@ const TemplateCard = ({ template, onSelect }: { template: ProjectTemplate; onSel
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-        <Badge variant="outline" className={`${getComplexityColor(template.complexity)} text-xs sm:text-sm`}>
+        <Badge
+          variant="outline"
+          className={`${getComplexityColor(template.complexity)} text-xs sm:text-sm`}
+        >
           {template.complexity}
         </Badge>
         <Badge variant="secondary" className="gap-1 text-xs sm:text-sm">
@@ -55,18 +69,19 @@ const TemplateCard = ({ template, onSelect }: { template: ProjectTemplate; onSel
 
 export const ProjectTemplateGrid = ({
   selectedCategory,
-  onSelectTemplate
+  onSelectTemplate,
 }: ProjectTemplateGridProps) => {
-  const templates = selectedCategory === 'domestic' 
-    ? DOMESTIC_TEMPLATES 
-    : selectedCategory === 'commercial' 
-    ? COMMERCIAL_TEMPLATES 
-    : INDUSTRIAL_TEMPLATES;
+  const templates =
+    selectedCategory === 'domestic'
+      ? DOMESTIC_TEMPLATES
+      : selectedCategory === 'commercial'
+        ? COMMERCIAL_TEMPLATES
+        : INDUSTRIAL_TEMPLATES;
 
   const handleSelectTemplate = (template: ProjectTemplate) => {
     onSelectTemplate(template);
     toast({
-      title: "Template Selected",
+      title: 'Template Selected',
       description: `${template.name} - ${template.estimatedDuration}`,
     });
   };

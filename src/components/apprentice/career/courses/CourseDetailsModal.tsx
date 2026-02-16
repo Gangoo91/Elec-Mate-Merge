@@ -1,22 +1,51 @@
-
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import CourseEnquiryForm from "./CourseEnquiryForm";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
-  X, MapPin, Clock, Users, BookOpen, TrendingUp,
-  PoundSterling, Award, Target, CheckCircle,
-  Calendar, Mail, Star, Briefcase, GraduationCap,
-  ExternalLink, Wifi, Database, Shield, Phone, Building
-} from "lucide-react";
-import { EnhancedCareerCourse } from "./enhancedCoursesData";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import CourseEnquiryForm from './CourseEnquiryForm';
+import {
+  X,
+  MapPin,
+  Clock,
+  Users,
+  BookOpen,
+  TrendingUp,
+  PoundSterling,
+  Award,
+  Target,
+  CheckCircle,
+  Calendar,
+  Mail,
+  Star,
+  Briefcase,
+  GraduationCap,
+  ExternalLink,
+  Wifi,
+  Database,
+  Shield,
+  Phone,
+  Building,
+} from 'lucide-react';
+import { EnhancedCareerCourse } from './enhancedCoursesData';
 
 interface ContactInfo {
   phone?: string;
@@ -49,8 +78,8 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
       const { data, error } = await supabase.functions.invoke('extract-contact-details', {
         body: {
           courseUrl: course.external_url,
-          providerId: course.provider
-        }
+          providerId: course.provider,
+        },
       });
 
       if (error) throw error;
@@ -58,23 +87,23 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
       if (data?.success && data?.contactInfo) {
         setContactInfo(data.contactInfo);
         toast({
-          title: "Contact Details Found",
-          description: "Successfully extracted provider contact information.",
-          variant: "success"
+          title: 'Contact Details Found',
+          description: 'Successfully extracted provider contact information.',
+          variant: 'success',
         });
       } else {
         toast({
-          title: "Contact Details Unavailable",
+          title: 'Contact Details Unavailable',
           description: "Could not extract contact information from provider's website.",
-          variant: "destructive"
+          variant: 'destructive',
         });
       }
     } catch (error) {
       console.error('Error fetching contact details:', error);
       toast({
-        title: "Error",
-        description: "Failed to extract contact details.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to extract contact details.',
+        variant: 'destructive',
       });
     } finally {
       setLoadingContact(false);
@@ -84,9 +113,9 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
   const handleOpenCourseUrl = () => {
     if (!course.external_url) {
       toast({
-        title: "URL Not Available",
-        description: "Course provider URL is not available for this course.",
-        variant: "destructive"
+        title: 'URL Not Available',
+        description: 'Course provider URL is not available for this course.',
+        variant: 'destructive',
       });
       return;
     }
@@ -95,29 +124,38 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
       window.open(course.external_url, '_blank');
     } catch (error) {
       toast({
-        title: "Error Opening URL",
+        title: 'Error Opening URL',
         description: "Unable to open the course provider's website.",
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
 
   const getDemandColor = (demand: string) => {
     switch (demand) {
-      case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Medium": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      default: return "bg-white/10 text-white border-white/20";
+      case 'High':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Medium':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/20';
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Essential Qualifications": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "Emerging Technologies": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Safety & Compliance": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "Specialised Skills": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      case "Business & Management": return "bg-indigo-500/20 text-indigo-400 border-indigo-500/30";
-      default: return "bg-white/10 text-white border-white/20";
+      case 'Essential Qualifications':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'Emerging Technologies':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Safety & Compliance':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      case 'Specialised Skills':
+        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      case 'Business & Management':
+        return 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/20';
     }
   };
 
@@ -127,24 +165,24 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
   // Generate smart content for missing data
   const generateCourseOutline = (title: string) => [
-    "Course fundamentals and overview",
-    "Core principles and regulations",
-    "Practical application techniques",
-    "Assessment and certification",
-    "Industry best practices"
+    'Course fundamentals and overview',
+    'Core principles and regulations',
+    'Practical application techniques',
+    'Assessment and certification',
+    'Industry best practices',
   ];
 
   const generateCareerOutcomes = (title: string) => [
-    "Enhanced professional qualifications",
-    "Improved career advancement opportunities",
-    "Access to specialised project work",
-    "Increased earning potential"
+    'Enhanced professional qualifications',
+    'Improved career advancement opportunities',
+    'Access to specialised project work',
+    'Increased earning potential',
   ];
 
   const generatePrerequisites = () => [
-    "Basic electrical knowledge recommended",
-    "Valid electrical qualification preferred",
-    "Safety awareness certification"
+    'Basic electrical knowledge recommended',
+    'Valid electrical qualification preferred',
+    'Safety awareness certification',
   ];
 
   // Use fallback content for live courses with missing data
@@ -162,15 +200,15 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
   const displayAccreditations = hasValidData(course.accreditation)
     ? course.accreditation
-    : ["Industry recognised certification"];
+    : ['Industry recognised certification'];
 
   const displayLocations = hasValidData(course.locations)
     ? course.locations
-    : ["Multiple UK locations", "Online delivery available"];
+    : ['Multiple UK locations', 'Online delivery available'];
 
   const displayNextDates = hasValidData(course.nextDates)
     ? course.nextDates
-    : ["Contact provider for available dates"];
+    : ['Contact provider for available dates'];
 
   const isLiveCourse = course.isLive || course.source;
 
@@ -186,7 +224,10 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   {course.category}
                 </Badge>
                 {isLiveCourse && (
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 flex items-center gap-1">
+                  <Badge
+                    variant="outline"
+                    className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 flex items-center gap-1"
+                  >
                     <Wifi className="h-3 w-3" />
                     Live Data
                   </Badge>
@@ -197,7 +238,9 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 </div>
               </div>
               <h3 className="text-2xl font-semibold text-white mb-2">{course.title}</h3>
-              <p className="text-elec-yellow text-lg mb-3">{getDisplayValue(course.provider, "Provider TBC")}</p>
+              <p className="text-elec-yellow text-lg mb-3">
+                {getDisplayValue(course.provider, 'Provider TBC')}
+              </p>
 
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 {course.external_url && (
@@ -220,7 +263,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   disabled={loadingContact || !course.external_url}
                 >
                   <Phone className="h-3.5 w-3.5 mr-1.5" />
-                  {loadingContact ? "Getting Contact..." : "Get Contact Details"}
+                  {loadingContact ? 'Getting Contact...' : 'Get Contact Details'}
                 </Button>
               </div>
 
@@ -327,7 +370,11 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               <CardContent className="relative">
                 <div className="flex flex-wrap gap-2">
                   {displayAccreditations.map((acc, idx) => (
-                    <Badge key={idx} variant="outline" className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30">
+                    <Badge
+                      key={idx}
+                      variant="outline"
+                      className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30"
+                    >
                       {acc}
                     </Badge>
                   ))}
@@ -351,7 +398,10 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               <CardContent className="relative">
                 <div className="space-y-2">
                   {displayCourseOutline.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5">
+                    <div
+                      key={idx}
+                      className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5"
+                    >
                       <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
                       <span className="text-white/80">{item}</span>
                     </div>
@@ -373,7 +423,10 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               <CardContent className="relative">
                 <div className="space-y-2">
                   {displayCareerOutcomes.map((outcome, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5">
+                    <div
+                      key={idx}
+                      className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5"
+                    >
                       <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
                       <span className="text-white/80">{outcome}</span>
                     </div>
@@ -403,7 +456,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <span className="text-xs text-white/60">Continuous Assessment</span>
                   <p className="text-sm text-white">
-                    {course.continuousAssessment ? "Yes" : "Final exam only"}
+                    {course.continuousAssessment ? 'Yes' : 'Final exam only'}
                   </p>
                 </div>
               </CardContent>
@@ -422,7 +475,10 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               <CardContent className="relative">
                 <div className="space-y-2">
                   {displayPrerequisites.map((prereq, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5">
+                    <div
+                      key={idx}
+                      className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5"
+                    >
                       <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
                       <span className="text-white/80">{prereq}</span>
                     </div>
@@ -485,15 +541,21 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                     {displayNextDates.map((date, idx) => (
                       <TableRow key={idx} className="border-white/10">
                         <TableCell className="text-white">{date}</TableCell>
-                        <TableCell className="text-white/80">{displayLocations[idx % displayLocations.length]}</TableCell>
-                        <TableCell className="text-white/80">{getDisplayValue(course.format?.split(',')[0], "To be confirmed")}</TableCell>
+                        <TableCell className="text-white/80">
+                          {displayLocations[idx % displayLocations.length]}
+                        </TableCell>
+                        <TableCell className="text-white/80">
+                          {getDisplayValue(course.format?.split(',')[0], 'To be confirmed')}
+                        </TableCell>
                         <TableCell>
-                          <Badge className={`text-xs ${
-                            idx % 3 === 0
-                              ? "bg-red-500/20 text-red-400 border-red-500/30"
-                              : "bg-green-500/20 text-green-400 border-green-500/30"
-                          }`}>
-                            {idx % 3 === 0 ? "Limited spaces" : "Available"}
+                          <Badge
+                            className={`text-xs ${
+                              idx % 3 === 0
+                                ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                                : 'bg-green-500/20 text-green-400 border-green-500/30'
+                            }`}
+                          >
+                            {idx % 3 === 0 ? 'Limited spaces' : 'Available'}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-right">
@@ -505,7 +567,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                             disabled={!course.external_url}
                           >
                             <ExternalLink className="h-3 w-3 mr-1" />
-                            {course.external_url ? "Book Now" : "Contact Provider"}
+                            {course.external_url ? 'Book Now' : 'Contact Provider'}
                           </Button>
                         </TableCell>
                       </TableRow>

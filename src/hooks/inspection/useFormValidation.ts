@@ -16,7 +16,7 @@ export const useFormValidation = (formData: any) => {
   const [validation, setValidation] = useState<ValidationResult>({
     isValid: true,
     errors: [],
-    warnings: []
+    warnings: [],
   });
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const useFormValidation = (formData: any) => {
       errors.push({
         field: 'certificateNumber',
         message: 'Certificate number is required',
-        severity: 'error'
+        severity: 'error',
       });
     }
 
@@ -40,7 +40,7 @@ export const useFormValidation = (formData: any) => {
       errors.push({
         field: 'clientName',
         message: 'Client name is required',
-        severity: 'error'
+        severity: 'error',
       });
     }
 
@@ -48,7 +48,7 @@ export const useFormValidation = (formData: any) => {
       errors.push({
         field: 'propertyAddress',
         message: 'Property address is required',
-        severity: 'error'
+        severity: 'error',
       });
     }
 
@@ -56,12 +56,12 @@ export const useFormValidation = (formData: any) => {
     if (formData.workDate && formData.dateOfCompletion) {
       const workDate = new Date(formData.workDate);
       const completionDate = new Date(formData.dateOfCompletion);
-      
+
       if (completionDate < workDate) {
         errors.push({
           field: 'dateOfCompletion',
           message: 'Completion date cannot be before work start date',
-          severity: 'error'
+          severity: 'error',
         });
       }
     }
@@ -70,12 +70,12 @@ export const useFormValidation = (formData: any) => {
     if (formData.earthFaultLoopImpedance && formData.maxPermittedZs) {
       const zs = parseFloat(formData.earthFaultLoopImpedance);
       const maxZs = parseFloat(formData.maxPermittedZs);
-      
+
       if (zs > maxZs) {
         errors.push({
           field: 'earthFaultLoopImpedance',
           message: `Zs (${zs}Ω) exceeds maximum permitted value (${maxZs}Ω)`,
-          severity: 'error'
+          severity: 'error',
         });
       }
     }
@@ -87,7 +87,7 @@ export const useFormValidation = (formData: any) => {
         errors.push({
           field: 'insulationLiveNeutral',
           message: 'Insulation resistance must be at least 1.0 MΩ',
-          severity: 'error'
+          severity: 'error',
         });
       }
     }
@@ -99,7 +99,7 @@ export const useFormValidation = (formData: any) => {
         warnings.push({
           field: 'continuityR1R2',
           message: 'Unusually high continuity value - please verify',
-          severity: 'warning'
+          severity: 'warning',
         });
       }
     }
@@ -107,7 +107,7 @@ export const useFormValidation = (formData: any) => {
     setValidation({
       isValid: errors.length === 0,
       errors,
-      warnings
+      warnings,
     });
   };
 

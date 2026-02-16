@@ -1,11 +1,16 @@
-import { useState, useMemo } from "react";
-import { Gauge, RotateCcw, AlertTriangle, Zap, Info, BookOpen, ChevronDown, CheckCircle } from "lucide-react";
+import { useState, useMemo } from 'react';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+  Gauge,
+  RotateCcw,
+  AlertTriangle,
+  Zap,
+  Info,
+  BookOpen,
+  ChevronDown,
+  CheckCircle,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -15,7 +20,7 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 interface CalculationResult {
   current: number;
@@ -33,18 +38,18 @@ const InstrumentationCalculator = () => {
   const config = CALCULATOR_CONFIG['testing'];
 
   // Core inputs
-  const [minScale, setMinScale] = useState("");
-  const [maxScale, setMaxScale] = useState("");
-  const [inputType, setInputType] = useState<"engineering" | "percentage">("engineering");
-  const [inputValue, setInputValue] = useState("");
-  const [targetCurrent, setTargetCurrent] = useState("");
-  const [unit, setUnit] = useState("bar");
+  const [minScale, setMinScale] = useState('');
+  const [maxScale, setMaxScale] = useState('');
+  const [inputType, setInputType] = useState<'engineering' | 'percentage'>('engineering');
+  const [inputValue, setInputValue] = useState('');
+  const [targetCurrent, setTargetCurrent] = useState('');
+  const [unit, setUnit] = useState('bar');
 
   // Loop analysis inputs
-  const [supplyVoltage, setSupplyVoltage] = useState("24");
-  const [shuntResistor, setShuntResistor] = useState("250");
-  const [cableLength, setCableLength] = useState("");
-  const [cableResistance, setCableResistance] = useState("0.1");
+  const [supplyVoltage, setSupplyVoltage] = useState('24');
+  const [shuntResistor, setShuntResistor] = useState('250');
+  const [cableLength, setCableLength] = useState('');
+  const [cableResistance, setCableResistance] = useState('0.1');
   const [showLoopAnalysis, setShowLoopAnalysis] = useState(false);
 
   const [showGuidance, setShowGuidance] = useState(false);
@@ -64,27 +69,27 @@ const InstrumentationCalculator = () => {
     if (inputValue) {
       const value = parseFloat(inputValue);
 
-      if (inputType === "percentage") {
+      if (inputType === 'percentage') {
         percentage = value;
-        engineeringValue = min + (span * value / 100);
-        current = 4 + (16 * value / 100);
+        engineeringValue = min + (span * value) / 100;
+        current = 4 + (16 * value) / 100;
       } else {
         engineeringValue = value;
         percentage = ((value - min) / span) * 100;
-        current = 4 + (16 * (value - min) / span);
+        current = 4 + (16 * (value - min)) / span;
       }
     } else if (targetCurrent) {
       current = parseFloat(targetCurrent);
       percentage = ((current - 4) / 16) * 100;
-      engineeringValue = min + (span * (current - 4) / 16);
+      engineeringValue = min + (span * (current - 4)) / 16;
     } else {
       return null;
     }
 
     // Trip points
     const tripPoints = {
-      low: 4 + (16 * 0.1),
-      high: 4 + (16 * 0.9)
+      low: 4 + 16 * 0.1,
+      high: 4 + 16 * 0.9,
     };
 
     // Loop analysis calculations
@@ -127,51 +132,61 @@ const InstrumentationCalculator = () => {
       supplyMargin,
       cableDrop,
       powerInShunt,
-      status
+      status,
     };
-  }, [minScale, maxScale, inputValue, inputType, targetCurrent, supplyVoltage, shuntResistor, cableLength, cableResistance]);
+  }, [
+    minScale,
+    maxScale,
+    inputValue,
+    inputType,
+    targetCurrent,
+    supplyVoltage,
+    shuntResistor,
+    cableLength,
+    cableResistance,
+  ]);
 
   const reset = () => {
-    setMinScale("");
-    setMaxScale("");
-    setInputValue("");
-    setTargetCurrent("");
-    setInputType("engineering");
-    setUnit("bar");
-    setSupplyVoltage("24");
-    setShuntResistor("250");
-    setCableLength("");
-    setCableResistance("0.1");
+    setMinScale('');
+    setMaxScale('');
+    setInputValue('');
+    setTargetCurrent('');
+    setInputType('engineering');
+    setUnit('bar');
+    setSupplyVoltage('24');
+    setShuntResistor('250');
+    setCableLength('');
+    setCableResistance('0.1');
   };
 
   const formatNumber = (num: number | undefined, decimals = 2): string => {
-    if (num === undefined) return "0";
+    if (num === undefined) return '0';
     return num.toFixed(decimals);
   };
 
   const hasValidInputs = () => minScale && maxScale && (inputValue || targetCurrent);
 
   const unitOptions = [
-    { value: "bar", label: "bar (Pressure)" },
-    { value: "°C", label: "°C (Temperature)" },
-    { value: "°F", label: "°F (Temperature)" },
-    { value: "L/min", label: "L/min (Flow)" },
-    { value: "m³/h", label: "m³/h (Flow)" },
-    { value: "rpm", label: "rpm (Speed)" },
-    { value: "pH", label: "pH (Acidity)" },
-    { value: "%", label: "% (Level/Humidity)" },
+    { value: 'bar', label: 'bar (Pressure)' },
+    { value: '°C', label: '°C (Temperature)' },
+    { value: '°F', label: '°F (Temperature)' },
+    { value: 'L/min', label: 'L/min (Flow)' },
+    { value: 'm³/h', label: 'm³/h (Flow)' },
+    { value: 'rpm', label: 'rpm (Speed)' },
+    { value: 'pH', label: 'pH (Acidity)' },
+    { value: '%', label: '% (Level/Humidity)' },
   ];
 
   const currentOptions = [
-    { value: "4", label: "4.0 mA (0%)" },
-    { value: "6", label: "6.0 mA (12.5%)" },
-    { value: "8", label: "8.0 mA (25%)" },
-    { value: "10", label: "10.0 mA (37.5%)" },
-    { value: "12", label: "12.0 mA (50%)" },
-    { value: "14", label: "14.0 mA (62.5%)" },
-    { value: "16", label: "16.0 mA (75%)" },
-    { value: "18", label: "18.0 mA (87.5%)" },
-    { value: "20", label: "20.0 mA (100%)" },
+    { value: '4', label: '4.0 mA (0%)' },
+    { value: '6', label: '6.0 mA (12.5%)' },
+    { value: '8', label: '8.0 mA (25%)' },
+    { value: '10', label: '10.0 mA (37.5%)' },
+    { value: '12', label: '12.0 mA (50%)' },
+    { value: '14', label: '14.0 mA (62.5%)' },
+    { value: '16', label: '16.0 mA (75%)' },
+    { value: '18', label: '18.0 mA (87.5%)' },
+    { value: '20', label: '20.0 mA (100%)' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -218,22 +233,26 @@ const InstrumentationCalculator = () => {
         <CalculatorSelect
           label="Input Type"
           value={inputType}
-          onChange={(v) => setInputType(v as "engineering" | "percentage")}
+          onChange={(v) => setInputType(v as 'engineering' | 'percentage')}
           options={[
-            { value: "percentage", label: "Percentage (0-100%)" },
-            { value: "engineering", label: `Engineering Units (${unit})` },
+            { value: 'percentage', label: 'Percentage (0-100%)' },
+            { value: 'engineering', label: `Engineering Units (${unit})` },
           ]}
         />
 
         <CalculatorInput
-          label={inputType === "percentage" ? "Percentage" : `Trip Setpoint`}
-          unit={inputType === "percentage" ? "%" : unit}
+          label={inputType === 'percentage' ? 'Percentage' : `Trip Setpoint`}
+          unit={inputType === 'percentage' ? '%' : unit}
           type="text"
           inputMode="decimal"
           value={inputValue}
           onChange={setInputValue}
-          placeholder={inputType === "percentage" ? "0-100" : "Alarm value"}
-          hint={inputType === "engineering" ? `Value between ${minScale || '0'} and ${maxScale || '100'} ${unit}` : undefined}
+          placeholder={inputType === 'percentage' ? '0-100' : 'Alarm value'}
+          hint={
+            inputType === 'engineering'
+              ? `Value between ${minScale || '0'} and ${maxScale || '100'} ${unit}`
+              : undefined
+          }
         />
 
         <CalculatorSelect
@@ -253,7 +272,9 @@ const InstrumentationCalculator = () => {
             <Zap className="h-4 w-4 text-purple-400" />
             <span className="text-sm">Loop Analysis (Optional)</span>
           </div>
-          <ChevronDown className={cn("h-4 w-4 transition-transform", showLoopAnalysis && "rotate-180")} />
+          <ChevronDown
+            className={cn('h-4 w-4 transition-transform', showLoopAnalysis && 'rotate-180')}
+          />
         </button>
 
         {showLoopAnalysis && (
@@ -316,8 +337,12 @@ const InstrumentationCalculator = () => {
           <CalculatorResult category="testing">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">4-20mA Output</span>
-              <span className={cn("text-sm font-medium", getStatusColor(result.status))}>
-                {result.status === 'success' ? 'Normal Range' : result.status === 'warning' ? 'Near Limits' : 'Out of Range'}
+              <span className={cn('text-sm font-medium', getStatusColor(result.status))}>
+                {result.status === 'success'
+                  ? 'Normal Range'
+                  : result.status === 'warning'
+                    ? 'Near Limits'
+                    : 'Out of Range'}
               </span>
             </div>
 
@@ -325,11 +350,15 @@ const InstrumentationCalculator = () => {
               <p className="text-sm text-white/60 mb-1">Current Output</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {formatNumber(result.current, 2)} mA
               </div>
-              <p className="text-sm text-white/80 mt-1">{formatNumber(result.percentage, 1)}% of scale</p>
+              <p className="text-sm text-white/80 mt-1">
+                {formatNumber(result.percentage, 1)}% of scale
+              </p>
             </div>
 
             <ResultsGrid columns={2}>
@@ -438,28 +467,35 @@ const InstrumentationCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
                 <ul className="space-y-2 text-sm text-blue-200/80">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
-                    Set calibrator to {formatNumber(result.current, 1)}mA to simulate {formatNumber(result.engineeringValue, 2)} {unit}
+                    Set calibrator to {formatNumber(result.current, 1)}mA to simulate{' '}
+                    {formatNumber(result.engineeringValue, 2)} {unit}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
-                    This represents {formatNumber(result.percentage, 1)}% of scale - ideal for trip testing
+                    This represents {formatNumber(result.percentage, 1)}% of scale - ideal for trip
+                    testing
                   </li>
                   {result.shuntVoltage && (
                     <li className="flex items-start gap-2">
                       <span className="text-blue-400 mt-1">•</span>
-                      Monitor {formatNumber(result.shuntVoltage * 1000, 0)}mV across shunt to confirm signal
+                      Monitor {formatNumber(result.shuntVoltage * 1000, 0)}mV across shunt to
+                      confirm signal
                     </li>
                   )}
                 </ul>
@@ -477,17 +513,28 @@ const InstrumentationCalculator = () => {
               <BookOpen className="h-4 w-4 text-amber-400" />
               <span className="text-sm sm:text-base font-medium text-amber-300">4-20mA Basics</span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showReference && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">
             <div className="space-y-3 text-sm text-amber-200/80">
-              <p><strong className="text-amber-300">Live Zero (4mA):</strong> Allows detection of broken wires vs. zero reading</p>
-              <p><strong className="text-amber-300">Current Loop:</strong> Immune to voltage drops over long cable runs</p>
-              <p><strong className="text-amber-300">Typical Shunt:</strong> 250Ω gives 1-5V output for PLC analog inputs</p>
+              <p>
+                <strong className="text-amber-300">Live Zero (4mA):</strong> Allows detection of
+                broken wires vs. zero reading
+              </p>
+              <p>
+                <strong className="text-amber-300">Current Loop:</strong> Immune to voltage drops
+                over long cable runs
+              </p>
+              <p>
+                <strong className="text-amber-300">Typical Shunt:</strong> 250Ω gives 1-5V output
+                for PLC analog inputs
+              </p>
               <p className="text-xs text-white/80 pt-2 border-t border-white/10">
                 BS 7671: Use screened cables and proper earthing for instrumentation circuits.
               </p>

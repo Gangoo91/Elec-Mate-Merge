@@ -1,11 +1,17 @@
-
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import EvidenceForm from "./EvidenceForm";
-import { TrainingEvidenceItem } from "@/types/time-tracking";
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import EvidenceForm from './EvidenceForm';
+import { TrainingEvidenceItem } from '@/types/time-tracking';
 
 interface TrainingEvidenceDialogProps {
   trigger: React.ReactNode;
@@ -15,12 +21,12 @@ interface TrainingEvidenceDialogProps {
   setIsUploading: (value: boolean) => void;
 }
 
-const TrainingEvidenceDialog = ({ 
-  trigger, 
-  title, 
-  onAddEvidence, 
-  isUploading, 
-  setIsUploading 
+const TrainingEvidenceDialog = ({
+  trigger,
+  title,
+  onAddEvidence,
+  isUploading,
+  setIsUploading,
 }: TrainingEvidenceDialogProps) => {
   const [open, setOpen] = useState(false);
 
@@ -32,9 +38,7 @@ const TrainingEvidenceDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {trigger}
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md max-h-[90vh]">
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle>{title}</DialogTitle>
@@ -45,7 +49,7 @@ const TrainingEvidenceDialog = ({
           </DialogClose>
         </DialogHeader>
         <ScrollArea className="max-h-[calc(90vh-120px)] pr-4">
-          <EvidenceForm 
+          <EvidenceForm
             onAddEvidence={handleAddEvidence}
             isUploading={isUploading}
             setIsUploading={setIsUploading}

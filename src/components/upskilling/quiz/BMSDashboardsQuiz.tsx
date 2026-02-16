@@ -70,7 +70,7 @@ const BMSDashboardsQuiz = () => {
               ~8 minutes
             </Badge>
           </div>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -96,18 +96,19 @@ const BMSDashboardsQuiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)}`}>
               {score}/{bmsDashboardsQuizData.length}
             </div>
-            <div className={`text-xl ${getScoreColor(score)}`}>
-              {percentage}%
-            </div>
+            <div className={`text-xl ${getScoreColor(score)}`}>{percentage}%</div>
           </div>
 
           <div className="space-y-4">
             {bmsDashboardsQuizData.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
-                <div key={question.id} className="bg-elec-dark p-4 rounded-md border border-gray-600">
+                <div
+                  key={question.id}
+                  className="bg-elec-dark p-4 rounded-md border border-gray-600"
+                >
                   <div className="flex items-start gap-3 mb-2">
                     {isCorrect ? (
                       <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -126,9 +127,7 @@ const BMSDashboardsQuiz = () => {
                           Correct answer: {question.options[question.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-gray-300 text-sm">
-                        {question.explanation}
-                      </p>
+                      <p className="text-gray-300 text-sm">{question.explanation}</p>
                     </div>
                   </div>
                 </div>
@@ -136,7 +135,10 @@ const BMSDashboardsQuiz = () => {
             })}
           </div>
 
-          <Button onClick={handleRestart} className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600">
+          <Button
+            onClick={handleRestart}
+            className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600"
+          >
             <RotateCcw className="mr-2 h-4 w-4" />
             Retake Quiz
           </Button>
@@ -162,7 +164,7 @@ const BMSDashboardsQuiz = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg text-foreground">{question.question}</p>
-        
+
         <div className="space-y-3">
           {question.options.map((option, index) => (
             <button

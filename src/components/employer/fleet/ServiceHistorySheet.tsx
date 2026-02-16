@@ -1,22 +1,17 @@
-import { useState } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   Settings,
   X,
@@ -27,8 +22,8 @@ import {
   Calendar,
   PoundSterling,
   Gauge,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useVehicleServices,
   useServiceStats,
@@ -38,8 +33,8 @@ import {
   SERVICE_TYPES,
   type VehicleService,
   type ServiceType,
-} from "@/hooks/useVehicleServices";
-import type { Vehicle } from "@/hooks/useFleet";
+} from '@/hooks/useVehicleServices';
+import type { Vehicle } from '@/hooks/useFleet';
 
 interface ServiceHistorySheetProps {
   open: boolean;
@@ -47,14 +42,10 @@ interface ServiceHistorySheetProps {
   vehicle: Vehicle;
 }
 
-type ViewMode = "history" | "add" | "costs";
+type ViewMode = 'history' | 'add' | 'costs';
 
-export function ServiceHistorySheet({
-  open,
-  onOpenChange,
-  vehicle,
-}: ServiceHistorySheetProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>("history");
+export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHistorySheetProps) {
+  const [viewMode, setViewMode] = useState<ViewMode>('history');
 
   const { data: services = [], isLoading } = useVehicleServices(vehicle.id);
   const { data: stats } = useServiceStats(vehicle.id);
@@ -66,30 +57,30 @@ export function ServiceHistorySheet({
     createService.mutate(
       {
         vehicle_id: vehicle.id,
-        service_date: formData.get("service_date") as string,
-        service_type: formData.get("service_type") as ServiceType,
-        provider: (formData.get("provider") as string) || undefined,
-        mileage: formData.get("mileage")
-          ? parseInt(formData.get("mileage") as string)
+        service_date: formData.get('service_date') as string,
+        service_type: formData.get('service_type') as ServiceType,
+        provider: (formData.get('provider') as string) || undefined,
+        mileage: formData.get('mileage') ? parseInt(formData.get('mileage') as string) : undefined,
+        cost: formData.get('cost') ? parseFloat(formData.get('cost') as string) : undefined,
+        description: (formData.get('description') as string) || undefined,
+        next_service_due: (formData.get('next_service_due') as string) || undefined,
+        next_service_mileage: formData.get('next_service_mileage')
+          ? parseInt(formData.get('next_service_mileage') as string)
           : undefined,
-        cost: formData.get("cost")
-          ? parseFloat(formData.get("cost") as string)
-          : undefined,
-        description: (formData.get("description") as string) || undefined,
-        next_service_due: (formData.get("next_service_due") as string) || undefined,
-        next_service_mileage: formData.get("next_service_mileage")
-          ? parseInt(formData.get("next_service_mileage") as string)
-          : undefined,
-        notes: (formData.get("notes") as string) || undefined,
+        notes: (formData.get('notes') as string) || undefined,
       },
       {
-        onSuccess: () => setViewMode("history"),
+        onSuccess: () => setViewMode('history'),
       }
     );
   };
 
   const handleDelete = (service: VehicleService) => {
-    if (confirm(`Delete this ${SERVICE_TYPES.find((t) => t.value === service.service_type)?.label} record?`)) {
+    if (
+      confirm(
+        `Delete this ${SERVICE_TYPES.find((t) => t.value === service.service_type)?.label} record?`
+      )
+    ) {
       deleteService.mutate({ id: service.id, vehicleId: vehicle.id });
     }
   };
@@ -140,9 +131,9 @@ export function ServiceHistorySheet({
                 {stats.nextServiceDue ? (
                   <>
                     <p className="text-lg font-bold text-foreground">
-                      {new Date(stats.nextServiceDue).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "short",
+                      {new Date(stats.nextServiceDue).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
                       })}
                     </p>
                     <p className="text-xs text-muted-foreground">Next Due</p>
@@ -160,23 +151,23 @@ export function ServiceHistorySheet({
           {/* Tab Toggle */}
           <div className="flex border-b border-border">
             <button
-              onClick={() => setViewMode("history")}
+              onClick={() => setViewMode('history')}
               className={cn(
-                "flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]",
-                viewMode === "history"
-                  ? "text-purple-400 border-b-2 border-purple-400"
-                  : "text-muted-foreground"
+                'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
+                viewMode === 'history'
+                  ? 'text-purple-400 border-b-2 border-purple-400'
+                  : 'text-muted-foreground'
               )}
             >
               History
             </button>
             <button
-              onClick={() => setViewMode("costs")}
+              onClick={() => setViewMode('costs')}
               className={cn(
-                "flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]",
-                viewMode === "costs"
-                  ? "text-purple-400 border-b-2 border-purple-400"
-                  : "text-muted-foreground"
+                'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
+                viewMode === 'costs'
+                  ? 'text-purple-400 border-b-2 border-purple-400'
+                  : 'text-muted-foreground'
               )}
             >
               Cost Analysis
@@ -185,20 +176,20 @@ export function ServiceHistorySheet({
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto p-4">
-            {viewMode === "add" ? (
+            {viewMode === 'add' ? (
               <ServiceForm
                 onSave={handleSave}
-                onCancel={() => setViewMode("history")}
+                onCancel={() => setViewMode('history')}
                 isPending={createService.isPending}
                 currentMileage={vehicle.mileage}
               />
-            ) : viewMode === "costs" ? (
+            ) : viewMode === 'costs' ? (
               <CostAnalysisView costs={costs} />
             ) : (
               <>
                 {/* Add Button */}
                 <Button
-                  onClick={() => setViewMode("add")}
+                  onClick={() => setViewMode('add')}
                   className="w-full h-12 mb-4 bg-purple-600 hover:bg-purple-700 touch-manipulation text-base"
                 >
                   <Plus className="h-5 w-5 mr-2" />
@@ -238,10 +229,10 @@ export function ServiceHistorySheet({
                               )}
                             </div>
                             <p className="text-base text-foreground mt-1.5 font-medium">
-                              {new Date(service.service_date).toLocaleDateString("en-GB", {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
+                              {new Date(service.service_date).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
                               })}
                             </p>
                           </div>
@@ -256,9 +247,7 @@ export function ServiceHistorySheet({
                         </div>
 
                         {service.provider && (
-                          <p className="text-sm text-muted-foreground">
-                            {service.provider}
-                          </p>
+                          <p className="text-sm text-muted-foreground">{service.provider}</p>
                         )}
 
                         {service.mileage && (
@@ -277,7 +266,8 @@ export function ServiceHistorySheet({
                           <div className="mt-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
                             <p className="text-sm text-purple-400">
                               <Calendar className="h-4 w-4 inline mr-1.5" />
-                              Next due: {new Date(service.next_service_due).toLocaleDateString("en-GB")}
+                              Next due:{' '}
+                              {new Date(service.next_service_due).toLocaleDateString('en-GB')}
                               {service.next_service_mileage && (
                                 <> or {service.next_service_mileage.toLocaleString()} miles</>
                               )}
@@ -337,7 +327,7 @@ function ServiceForm({
           <Input
             name="service_date"
             type="date"
-            defaultValue={new Date().toISOString().split("T")[0]}
+            defaultValue={new Date().toISOString().split('T')[0]}
             required
             className="h-11 mt-1.5 touch-manipulation text-base"
           />
@@ -390,7 +380,11 @@ function ServiceForm({
         <div className="grid grid-cols-2 gap-3">
           <div>
             <Label className="text-sm font-medium">Due Date</Label>
-            <Input name="next_service_due" type="date" className="h-11 mt-1.5 touch-manipulation text-base" />
+            <Input
+              name="next_service_due"
+              type="date"
+              className="h-11 mt-1.5 touch-manipulation text-base"
+            />
           </div>
           <div>
             <Label className="text-sm font-medium">Due Mileage</Label>
@@ -406,11 +400,20 @@ function ServiceForm({
 
       <div>
         <Label className="text-sm font-medium">Notes</Label>
-        <Textarea name="notes" placeholder="Any additional notes..." className="mt-1.5 touch-manipulation text-base" />
+        <Textarea
+          name="notes"
+          placeholder="Any additional notes..."
+          className="mt-1.5 touch-manipulation text-base"
+        />
       </div>
 
       <div className="flex gap-3 pt-4">
-        <Button type="button" variant="outline" onClick={onCancel} className="flex-1 h-12 touch-manipulation text-base">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          className="flex-1 h-12 touch-manipulation text-base"
+        >
           Cancel
         </Button>
         <Button
@@ -418,7 +421,7 @@ function ServiceForm({
           disabled={isPending}
           className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 touch-manipulation text-base"
         >
-          {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : "Save Service"}
+          {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Save Service'}
         </Button>
       </div>
     </form>
@@ -426,7 +429,7 @@ function ServiceForm({
 }
 
 // Cost Analysis View
-function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>["data"] }) {
+function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>['data'] }) {
   if (!costs) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -444,9 +447,7 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
             <PoundSterling className="h-5 w-5 text-purple-400" />
             <span className="text-sm text-muted-foreground">Total Costs</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">
-            £{costs.totalCost.toLocaleString()}
-          </p>
+          <p className="text-2xl font-bold text-foreground">£{costs.totalCost.toLocaleString()}</p>
           <div className="flex flex-col gap-1 mt-2 text-sm text-muted-foreground">
             <span>Services: £{costs.totalServiceCost.toLocaleString()}</span>
             <span>Fuel: £{costs.totalFuelCost.toLocaleString()}</span>
@@ -459,7 +460,7 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
             <span className="text-sm text-muted-foreground">Cost per Mile</span>
           </div>
           <p className="text-2xl font-bold text-foreground">
-            {costs.costPerMile > 0 ? `${costs.costPerMile.toFixed(2)}p` : "—"}
+            {costs.costPerMile > 0 ? `${costs.costPerMile.toFixed(2)}p` : '—'}
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             {costs.milesDriven.toLocaleString()} miles tracked
@@ -474,7 +475,7 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
           <span className="text-sm text-muted-foreground">Current Mileage</span>
         </div>
         <p className="text-xl font-bold text-foreground">
-          {costs.currentMileage?.toLocaleString() || "—"} miles
+          {costs.currentMileage?.toLocaleString() || '—'} miles
         </p>
       </div>
 

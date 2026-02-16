@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule5Section1LearningOutcomes = () => {
   const outcomes = [
-    "Explain what a communication protocol is in a BMS",
-    "Identify the main protocols used in building systems (BACnet, Modbus, KNX)",
-    "Describe the differences between open and proprietary protocols",
-    "Apply practical installation practices to support reliable protocol communication"
+    'Explain what a communication protocol is in a BMS',
+    'Identify the main protocols used in building systems (BACnet, Modbus, KNX)',
+    'Describe the differences between open and proprietary protocols',
+    'Apply practical installation practices to support reliable protocol communication',
   ];
 
   return (

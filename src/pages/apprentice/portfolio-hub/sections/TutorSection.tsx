@@ -4,12 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import {
   MessageCircle,
@@ -38,40 +33,35 @@ import { useAuth } from '@/contexts/AuthContext';
  */
 export function TutorSection() {
   const { user } = useAuth();
-  const {
-    threads,
-    unreadCount,
-    actionRequiredCount,
-    isLoading,
-    addReply,
-    resolveComment,
-  } = usePortfolioComments();
+  const { threads, unreadCount, actionRequiredCount, isLoading, addReply, resolveComment } =
+    usePortfolioComments();
 
   const [selectedThread, setSelectedThread] = useState<string | null>(null);
   const [showAllComments, setShowAllComments] = useState(false);
 
   // Sort threads by most recent activity
   const sortedThreads = [...threads].sort((a, b) => {
-    const aLatest = a.replies.length > 0
-      ? new Date(a.replies[a.replies.length - 1].createdAt)
-      : new Date(a.rootComment.createdAt);
-    const bLatest = b.replies.length > 0
-      ? new Date(b.replies[b.replies.length - 1].createdAt)
-      : new Date(b.rootComment.createdAt);
+    const aLatest =
+      a.replies.length > 0
+        ? new Date(a.replies[a.replies.length - 1].createdAt)
+        : new Date(a.rootComment.createdAt);
+    const bLatest =
+      b.replies.length > 0
+        ? new Date(b.replies[b.replies.length - 1].createdAt)
+        : new Date(b.rootComment.createdAt);
     return bLatest.getTime() - aLatest.getTime();
   });
 
   // Get threads requiring action
   const actionThreads = sortedThreads.filter(
-    t => t.rootComment.requiresAction &&
-        !t.rootComment.isResolved &&
-        t.rootComment.actionOwner === user?.id
+    (t) =>
+      t.rootComment.requiresAction &&
+      !t.rootComment.isResolved &&
+      t.rootComment.actionOwner === user?.id
   );
 
   // Recent feedback (resolved threads)
-  const resolvedThreads = sortedThreads
-    .filter(t => t.rootComment.isResolved)
-    .slice(0, 3);
+  const resolvedThreads = sortedThreads.filter((t) => t.rootComment.isResolved).slice(0, 3);
 
   // Pending reviews (items submitted but not yet commented on)
   // In real implementation, this would come from portfolio evidence status
@@ -101,7 +91,7 @@ export function TutorSection() {
   };
 
   const selectedThreadData = selectedThread
-    ? threads.find(t => t.rootComment.id === selectedThread)
+    ? threads.find((t) => t.rootComment.id === selectedThread)
     : null;
 
   return (
@@ -141,7 +131,9 @@ export function TutorSection() {
           </Card>
           <Card className="border-green-500/20 bg-green-500/5">
             <CardContent className="p-2 sm:p-3 text-center">
-              <p className="text-lg sm:text-xl font-bold text-green-500">{resolvedThreads.length}</p>
+              <p className="text-lg sm:text-xl font-bold text-green-500">
+                {resolvedThreads.length}
+              </p>
               <p className="text-[10px] sm:text-xs text-muted-foreground">Resolved</p>
             </CardContent>
           </Card>
@@ -180,10 +172,7 @@ export function TutorSection() {
                         <span className="font-medium text-sm text-foreground">
                           {thread.rootComment.authorName}
                         </span>
-                        <Badge
-                          variant="outline"
-                          className="text-[10px] capitalize"
-                        >
+                        <Badge variant="outline" className="text-[10px] capitalize">
                           {thread.rootComment.authorRole}
                         </Badge>
                       </div>
@@ -255,22 +244,22 @@ export function TutorSection() {
                     key={thread.rootComment.id}
                     onClick={() => setSelectedThread(thread.rootComment.id)}
                     className={cn(
-                      "w-full text-left p-3 rounded-lg border transition-colors",
+                      'w-full text-left p-3 rounded-lg border transition-colors',
                       needsAction
-                        ? "border-amber-500/20 bg-amber-500/5 hover:bg-amber-500/10"
+                        ? 'border-amber-500/20 bg-amber-500/5 hover:bg-amber-500/10'
                         : thread.rootComment.isResolved
-                        ? "border-green-500/20 bg-green-500/5 hover:bg-green-500/10"
-                        : "border-border bg-card hover:bg-muted/50"
+                          ? 'border-green-500/20 bg-green-500/5 hover:bg-green-500/10'
+                          : 'border-border bg-card hover:bg-muted/50'
                     )}
                   >
                     <div className="flex items-start gap-3">
                       <Avatar className="h-10 w-10 shrink-0">
                         <AvatarFallback
                           className={cn(
-                            "text-xs",
+                            'text-xs',
                             thread.rootComment.authorRole !== 'student'
-                              ? "bg-elec-yellow/20 text-elec-yellow"
-                              : "bg-green-500/20 text-green-500"
+                              ? 'bg-elec-yellow/20 text-elec-yellow'
+                              : 'bg-green-500/20 text-green-500'
                           )}
                         >
                           {thread.rootComment.authorInitials}
@@ -283,7 +272,8 @@ export function TutorSection() {
                           </span>
                           {thread.replies.length > 0 && (
                             <Badge variant="secondary" className="text-[10px]">
-                              {thread.replies.length} repl{thread.replies.length === 1 ? 'y' : 'ies'}
+                              {thread.replies.length} repl
+                              {thread.replies.length === 1 ? 'y' : 'ies'}
                             </Badge>
                           )}
                           {needsAction && (
@@ -379,7 +369,9 @@ export function TutorSection() {
                       {thread.rootComment.authorName}
                     </span>
                     <span className="text-[10px] text-muted-foreground">
-                      {formatTimeAgo(new Date(thread.rootComment.resolvedAt || thread.rootComment.createdAt))}
+                      {formatTimeAgo(
+                        new Date(thread.rootComment.resolvedAt || thread.rootComment.createdAt)
+                      )}
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground line-clamp-2">

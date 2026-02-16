@@ -1,9 +1,8 @@
-
-import { useState, useEffect } from "react";
-import SectionBox from "@/components/apprentice/SectionBox";
-import { useParams } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
-import { userKey } from "@/lib/userStorage";
+import { useState, useEffect } from 'react';
+import SectionBox from '@/components/apprentice/SectionBox';
+import { useParams } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { userKey } from '@/lib/userStorage';
 
 interface ElectricalScienceUnitProps {
   unitCode: string;
@@ -17,7 +16,9 @@ const ElectricalScienceUnit = ({ unitCode, onResourceClick }: ElectricalScienceU
 
   // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(userKey(user?.id, `unit_${unitCode}_quiz_completed`));
+    const storedQuizStatus = localStorage.getItem(
+      userKey(user?.id, `unit_${unitCode}_quiz_completed`)
+    );
     if (storedQuizStatus === 'true') {
       setQuizCompleted(true);
     }
@@ -77,7 +78,7 @@ const ElectricalScienceUnit = ({ unitCode, onResourceClick }: ElectricalScienceU
           unitCode={unitCode}
           courseSlug={courseSlug}
         />
-        
+
         {/* Quiz Section */}
         <SectionBox
           sectionNumber="Q"

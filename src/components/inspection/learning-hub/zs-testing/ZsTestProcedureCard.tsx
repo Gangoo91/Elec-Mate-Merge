@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Plug, TestTube2, ClipboardList, Calculator, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -9,37 +8,41 @@ const ZsTestProcedureCard = () => {
       number: 1,
       icon: Plug,
       title: 'Connect Test Equipment',
-      description: 'Connect earth fault loop impedance tester between phase and earth at the test point',
-      color: 'text-red-400'
+      description:
+        'Connect earth fault loop impedance tester between phase and earth at the test point',
+      color: 'text-red-400',
     },
     {
       number: 2,
       icon: TestTube2,
       title: 'Test at Furthest Point',
-      description: 'Test at the furthest accessible point of each final circuit for worst-case measurement',
-      color: 'text-orange-400'
+      description:
+        'Test at the furthest accessible point of each final circuit for worst-case measurement',
+      color: 'text-orange-400',
     },
     {
       number: 3,
       icon: ClipboardList,
       title: 'Record Reading & Temperature',
       description: 'Record the Zs reading and ambient temperature immediately after testing',
-      color: 'text-yellow-400'
+      color: 'text-yellow-400',
     },
     {
       number: 4,
       icon: Calculator,
       title: 'Apply Temperature Correction',
-      description: 'Correct reading to 70°C conductor operating temperature using correction factor',
-      color: 'text-green-400'
+      description:
+        'Correct reading to 70°C conductor operating temperature using correction factor',
+      color: 'text-green-400',
     },
     {
       number: 5,
       icon: CheckCircle,
       title: 'Compare with Maximum Values',
-      description: 'Verify corrected Zs does not exceed maximum permitted values from BS 7671 Appendix 3',
-      color: 'text-blue-400'
-    }
+      description:
+        'Verify corrected Zs does not exceed maximum permitted values from BS 7671 Appendix 3',
+      color: 'text-blue-400',
+    },
   ];
 
   return (
@@ -66,8 +69,12 @@ const ZsTestProcedureCard = () => {
                 </div>
                 <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${step.color} mt-1 shrink-0`} />
                 <div className="flex-1 min-w-0">
-                  <h5 className="font-semibold text-foreground text-sm sm:text-base mb-1">{step.title}</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                  <h5 className="font-semibold text-foreground text-sm sm:text-base mb-1">
+                    {step.title}
+                  </h5>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
               </div>
             </div>

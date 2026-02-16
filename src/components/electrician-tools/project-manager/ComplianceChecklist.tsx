@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { FileCheck, AlertTriangle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { FileCheck, AlertTriangle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface ComplianceChecklistProps {
   complianceTimeline?: {
@@ -39,12 +39,13 @@ const ComplianceChecklist = ({ complianceTimeline, compliance }: ComplianceCheck
   const hasBeforeWork = complianceTimeline?.beforeWork && complianceTimeline.beforeWork.length > 0;
   const hasDuringWork = complianceTimeline?.duringWork && complianceTimeline.duringWork.length > 0;
   const hasAfterWork = complianceTimeline?.afterWork && complianceTimeline.afterWork.length > 0;
-  const hasCompliance = compliance?.notifications || compliance?.certifications || compliance?.inspections;
+  const hasCompliance =
+    compliance?.notifications || compliance?.certifications || compliance?.inspections;
 
   if (!hasBeforeWork && !hasDuringWork && !hasAfterWork && !hasCompliance) return null;
 
   const toggleCheck = (id: string) => {
-    setChecked(prev => ({ ...prev, [id]: !prev[id] }));
+    setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const renderComplianceSection = (
@@ -61,14 +62,12 @@ const ComplianceChecklist = ({ complianceTimeline, compliance }: ComplianceCheck
         {items.map((item, idx) => {
           const itemId = `${prefix}-${idx}`;
           const isChecked = checked[itemId] || false;
-          
+
           return (
-            <div 
+            <div
               key={idx}
               className={`p-3 rounded-lg border transition-all ${
-                isChecked 
-                  ? 'bg-success/10 border-success/30' 
-                  : 'bg-card border-border/40'
+                isChecked ? 'bg-success/10 border-success/30' : 'bg-card border-border/40'
               }`}
             >
               <div className="flex items-start gap-3">
@@ -78,7 +77,9 @@ const ComplianceChecklist = ({ complianceTimeline, compliance }: ComplianceCheck
                   className="mt-1"
                 />
                 <div className="flex-1 space-y-2">
-                  <div className={`font-medium text-sm ${isChecked ? 'line-through text-muted-foreground' : ''}`}>
+                  <div
+                    className={`font-medium text-sm ${isChecked ? 'line-through text-muted-foreground' : ''}`}
+                  >
                     {item.what}
                   </div>
                   <div className="text-xs text-muted-foreground">
@@ -102,7 +103,9 @@ const ComplianceChecklist = ({ complianceTimeline, compliance }: ComplianceCheck
                   {item.consequence && (
                     <div className="text-xs text-destructive flex items-start gap-1 mt-2 p-2 bg-destructive/10 rounded">
                       <AlertTriangle className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                      <span><strong>Consequence:</strong> {item.consequence}</span>
+                      <span>
+                        <strong>Consequence:</strong> {item.consequence}
+                      </span>
                     </div>
                   )}
                   {item.giveClient && (
@@ -119,11 +122,11 @@ const ComplianceChecklist = ({ complianceTimeline, compliance }: ComplianceCheck
     </div>
   );
 
-  const totalItems = 
+  const totalItems =
     (complianceTimeline?.beforeWork?.length || 0) +
     (complianceTimeline?.duringWork?.length || 0) +
     (complianceTimeline?.afterWork?.length || 0);
-  
+
   const completedItems = Object.values(checked).filter(Boolean).length;
   const completionPercentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
@@ -140,33 +143,31 @@ const ComplianceChecklist = ({ complianceTimeline, compliance }: ComplianceCheck
           </div>
         </div>
         <div className="w-full bg-muted rounded-full h-2 mt-2">
-          <div 
+          <div
             className="bg-gradient-to-r from-pink-400 to-pink-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${completionPercentage}%` }}
           />
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {hasBeforeWork && renderComplianceSection(
-          complianceTimeline.beforeWork!,
-          'Before Work Starts',
-          '✅',
-          'before'
-        )}
-        
-        {hasDuringWork && renderComplianceSection(
-          complianceTimeline.duringWork!,
-          'During Work',
-          '🔍',
-          'during'
-        )}
-        
-        {hasAfterWork && renderComplianceSection(
-          complianceTimeline.afterWork!,
-          'After Work Complete',
-          '📋',
-          'after'
-        )}
+        {hasBeforeWork &&
+          renderComplianceSection(
+            complianceTimeline.beforeWork!,
+            'Before Work Starts',
+            '✅',
+            'before'
+          )}
+
+        {hasDuringWork &&
+          renderComplianceSection(complianceTimeline.duringWork!, 'During Work', '🔍', 'during')}
+
+        {hasAfterWork &&
+          renderComplianceSection(
+            complianceTimeline.afterWork!,
+            'After Work Complete',
+            '📋',
+            'after'
+          )}
       </CardContent>
     </Card>
   );

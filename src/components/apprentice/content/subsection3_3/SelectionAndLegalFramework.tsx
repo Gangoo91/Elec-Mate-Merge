@@ -1,6 +1,5 @@
-
-import React from "react";
-import { Zap } from "lucide-react";
+import React from 'react';
+import { Zap } from 'lucide-react';
 
 const SelectionAndLegalFramework = () => {
   return (
@@ -15,7 +14,8 @@ const SelectionAndLegalFramework = () => {
           <ul className="list-disc pl-5 space-y-1">
             <li>Low voltage: up to 1000V AC/1500V DC</li>
             <li>High voltage: above 1000V AC/1500V DC</li>
-            <li>Different classes of insulating gloves required for different voltage ranges:
+            <li>
+              Different classes of insulating gloves required for different voltage ranges:
               <ul className="list-disc pl-5 mt-1">
                 <li>Class 00: Up to 500V AC</li>
                 <li>Class 0: Up to 1000V AC</li>
@@ -26,7 +26,7 @@ const SelectionAndLegalFramework = () => {
               </ul>
             </li>
           </ul>
-          
+
           <h4 className="font-semibold mt-4">Arc Flash Risk Assessment</h4>
           <ul className="list-disc pl-5 space-y-2">
             <li>
@@ -35,7 +35,9 @@ const SelectionAndLegalFramework = () => {
             </li>
             <li>
               <span className="font-medium">Arc flash boundaries</span>
-              <p className="text-sm mt-1">Define Limited, Restricted, and Prohibited approach boundaries</p>
+              <p className="text-sm mt-1">
+                Define Limited, Restricted, and Prohibited approach boundaries
+              </p>
             </li>
           </ul>
         </div>
@@ -51,15 +53,19 @@ const SelectionAndLegalFramework = () => {
               <p className="text-sm mt-1">Specific requirements for electrical safety measures</p>
             </li>
             <li>
-              <span className="font-medium">Personal Protective Equipment at Work Regulations 1992 (amended 2022)</span>
+              <span className="font-medium">
+                Personal Protective Equipment at Work Regulations 1992 (amended 2022)
+              </span>
               <p className="text-sm mt-1">Requirements for PPE provision, maintenance and use</p>
             </li>
             <li>
-              <span className="font-medium">Management of Health and Safety at Work Regulations 1999</span>
+              <span className="font-medium">
+                Management of Health and Safety at Work Regulations 1999
+              </span>
               <p className="text-sm mt-1">Risk assessment requirements</p>
             </li>
           </ul>
-          
+
           <h4 className="font-semibold mt-4">Employer Duties</h4>
           <ul className="list-disc pl-5 space-y-1">
             <li>Provide appropriate PPE free of charge</li>

@@ -1,12 +1,24 @@
 import React from 'react';
-import { ArrowLeft, Flame, Layers, Search, MapPin, Battery, Wrench, FileCheck, BookOpen, GraduationCap } from 'lucide-react';
+import {
+  ArrowLeft,
+  Flame,
+  Layers,
+  Search,
+  MapPin,
+  Battery,
+  Wrench,
+  FileCheck,
+  BookOpen,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Fire Alarm Systems Course - Electrical Upskilling";
-const DESCRIPTION = "Master fire alarm system design, installation and maintenance with our comprehensive BS 5839 compliant course. 7 modules covering system categories, detectors, zone planning, installation, testing and certification.";
+const TITLE = 'Fire Alarm Systems Course - Electrical Upskilling';
+const DESCRIPTION =
+  'Master fire alarm system design, installation and maintenance with our comprehensive BS 5839 compliant course. 7 modules covering system categories, detectors, zone planning, installation, testing and certification.';
 
 const FireAlarmCourse = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -21,61 +33,61 @@ const FireAlarmCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Categories of Fire Alarm Systems",
-      description: "L, P, and M categories under BS 5839-1",
-      duration: "2-3 hours",
-      icon: Layers
+      title: 'Categories of Fire Alarm Systems',
+      description: 'L, P, and M categories under BS 5839-1',
+      duration: '2-3 hours',
+      icon: Layers,
     },
     {
       id: 2,
-      title: "Detectors, Call Points & Devices",
-      description: "Smoke, heat, multisensor detectors and alarms",
-      duration: "3-4 hours",
-      icon: Search
+      title: 'Detectors, Call Points & Devices',
+      description: 'Smoke, heat, multisensor detectors and alarms',
+      duration: '3-4 hours',
+      icon: Search,
     },
     {
       id: 3,
-      title: "System Design & Zone Planning",
-      description: "Zone layouts and addressable systems",
-      duration: "3-4 hours",
-      icon: MapPin
+      title: 'System Design & Zone Planning',
+      description: 'Zone layouts and addressable systems',
+      duration: '3-4 hours',
+      icon: MapPin,
     },
     {
       id: 4,
-      title: "Power Supply, Backup & Cabling",
-      description: "Battery sizing and fire-resistant cables",
-      duration: "2-3 hours",
-      icon: Battery
+      title: 'Power Supply, Backup & Cabling',
+      description: 'Battery sizing and fire-resistant cables',
+      duration: '2-3 hours',
+      icon: Battery,
     },
     {
       id: 5,
-      title: "Installation & Commissioning",
-      description: "Installation procedures and handover",
-      duration: "3-4 hours",
-      icon: Wrench
+      title: 'Installation & Commissioning',
+      description: 'Installation procedures and handover',
+      duration: '3-4 hours',
+      icon: Wrench,
     },
     {
       id: 6,
-      title: "Testing, Servicing & Certification",
-      description: "Routine testing and maintenance schedules",
-      duration: "3-4 hours",
-      icon: FileCheck
+      title: 'Testing, Servicing & Certification',
+      description: 'Routine testing and maintenance schedules',
+      duration: '3-4 hours',
+      icon: FileCheck,
     },
     {
       id: 7,
-      title: "Regulatory Compliance & BS 5839",
-      description: "Fire safety legislation and standards",
-      duration: "2-3 hours",
-      icon: BookOpen
+      title: 'Regulatory Compliance & BS 5839',
+      description: 'Fire safety legislation and standards',
+      duration: '2-3 hours',
+      icon: BookOpen,
     },
     {
       id: 8,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "90 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '90 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -105,11 +117,10 @@ const FireAlarmCourse = () => {
               <Flame className="h-7 w-7 text-red-500" />
             </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Fire Alarm Systems
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Fire Alarm Systems</h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Master fire detection and alarm system design, installation and maintenance to BS 5839-1 and BS 5839-6.
+            Master fire detection and alarm system design, installation and maintenance to BS 5839-1
+            and BS 5839-6.
           </p>
         </div>
 

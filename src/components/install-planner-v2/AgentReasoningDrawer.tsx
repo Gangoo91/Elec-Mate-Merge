@@ -1,8 +1,14 @@
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Clock, BookOpen, AlertCircle, ArrowRight } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Clock, BookOpen, AlertCircle, ArrowRight } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ReasoningStep {
   step: string;
@@ -37,15 +43,15 @@ interface AgentReasoningDrawerProps {
   data: AgentReasoningData;
 }
 
-export const AgentReasoningDrawer = ({ 
-  open, 
-  onClose, 
-  agentName, 
-  data 
+export const AgentReasoningDrawer = ({
+  open,
+  onClose,
+  agentName,
+  data,
 }: AgentReasoningDrawerProps) => {
   return (
     <Sheet open={open} onOpenChange={onClose}>
-      <SheetContent 
+      <SheetContent
         side="bottom"
         className="h-[85vh] sm:h-auto sm:max-w-md sm:right-0 sm:left-auto sm:top-0 sm:bottom-0 sm:rounded-l-2xl rounded-t-2xl overflow-hidden border-t border-border/50"
       >
@@ -73,9 +79,7 @@ export const AgentReasoningDrawer = ({
                       <div className="flex items-start gap-2">
                         <div className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-foreground">
-                            {step.step}
-                          </p>
+                          <p className="text-sm font-medium text-foreground">{step.step}</p>
                           <p className="text-xs text-muted-foreground leading-relaxed mt-1">
                             {step.reasoning}
                           </p>
@@ -106,19 +110,16 @@ export const AgentReasoningDrawer = ({
                   {data.regulationsConsulted.map((reg, idx) => (
                     <div key={idx} className="bg-muted/30 rounded p-3 space-y-1">
                       <div className="flex items-center justify-between">
-                        <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
+                        <Badge
+                          variant="outline"
+                          className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs"
+                        >
                           {reg.source}
                         </Badge>
-                        <span className="text-xs font-mono text-foreground">
-                          {reg.section}
-                        </span>
+                        <span className="text-xs font-mono text-foreground">{reg.section}</span>
                       </div>
-                      <p className="text-sm font-medium text-foreground">
-                        {reg.title}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {reg.relevance}
-                      </p>
+                      <p className="text-sm font-medium text-foreground">{reg.title}</p>
+                      <p className="text-xs text-muted-foreground">{reg.relevance}</p>
                     </div>
                   ))}
                 </div>
@@ -136,7 +137,10 @@ export const AgentReasoningDrawer = ({
                 </h3>
                 <div className="space-y-2">
                   {data.assumptionsMade.map((assumption, idx) => (
-                    <div key={idx} className="bg-yellow-500/5 border border-yellow-500/20 rounded p-3 space-y-1">
+                    <div
+                      key={idx}
+                      className="bg-yellow-500/5 border border-yellow-500/20 rounded p-3 space-y-1"
+                    >
                       <div className="flex items-center justify-between">
                         <p className="text-sm font-medium text-foreground">
                           {assumption.parameter}
@@ -145,9 +149,7 @@ export const AgentReasoningDrawer = ({
                           {assumption.assumed}
                         </Badge>
                       </div>
-                      <p className="text-xs text-muted-foreground">
-                        {assumption.reason}
-                      </p>
+                      <p className="text-xs text-muted-foreground">{assumption.reason}</p>
                       {assumption.impact && (
                         <p className="text-xs text-yellow-400 italic">
                           Impact: {assumption.impact}

@@ -12,16 +12,12 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useCustomers } from '@/hooks/inspection/useCustomers';
-import { useLegacyCertificates, CertificateType, CreateLegacyCertificateInput } from '@/hooks/useLegacyCertificates';
 import {
-  Upload,
-  FileUp,
-  X,
-  Loader2,
-  FileText,
-  Check,
-  AlertCircle,
-} from 'lucide-react';
+  useLegacyCertificates,
+  CertificateType,
+  CreateLegacyCertificateInput,
+} from '@/hooks/useLegacyCertificates';
+import { Upload, FileUp, X, Loader2, FileText, Check, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
@@ -58,7 +54,10 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [bulkFiles, setBulkFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<{ successful: number; failed: number } | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<{
+    successful: number;
+    failed: number;
+  } | null>(null);
 
   // Form state for single upload
   const [formData, setFormData] = useState({
@@ -116,7 +115,7 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
     setIsDragging(false);
 
     const files = Array.from(e.dataTransfer.files).filter(
-      file => file.type === 'application/pdf'
+      (file) => file.type === 'application/pdf'
     );
 
     if (files.length === 0) return;
@@ -140,7 +139,7 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
 
   const handleBulkFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []).filter(
-      file => file.type === 'application/pdf'
+      (file) => file.type === 'application/pdf'
     );
     if (files.length > 0) {
       setBulkFiles(files);
@@ -204,9 +203,7 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
               <FileUp className="h-5 w-5 text-elec-yellow" />
               Import Legacy Certificates
             </SheetTitle>
-            <SheetDescription>
-              Upload existing certificates from other software
-            </SheetDescription>
+            <SheetDescription>Upload existing certificates from other software</SheetDescription>
           </SheetHeader>
 
           <div className="flex-1 overflow-y-auto overscroll-contain p-4">
@@ -226,9 +223,7 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                 >
                   <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                   <p className="text-lg font-medium mb-2">Drop PDF files here</p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    or choose how to upload
-                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">or choose how to upload</p>
 
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Button
@@ -308,7 +303,12 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Certificate Type</Label>
                       <MobileSelectPicker
                         value={formData.certificate_type}
-                        onValueChange={(value) => setFormData(prev => ({ ...prev, certificate_type: value as CertificateType }))}
+                        onValueChange={(value) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            certificate_type: value as CertificateType,
+                          }))
+                        }
                         options={CERTIFICATE_TYPES}
                         placeholder="Select type"
                         title="Certificate Type"
@@ -319,7 +319,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Certificate Number</Label>
                       <Input
                         value={formData.certificate_number}
-                        onChange={(e) => setFormData(prev => ({ ...prev, certificate_number: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, certificate_number: e.target.value }))
+                        }
                         placeholder="e.g., EICR-2024-001"
                         className="h-11 touch-manipulation"
                       />
@@ -329,7 +331,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Client Name</Label>
                       <Input
                         value={formData.client_name}
-                        onChange={(e) => setFormData(prev => ({ ...prev, client_name: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, client_name: e.target.value }))
+                        }
                         placeholder="Enter client name"
                         className="h-11 touch-manipulation"
                       />
@@ -339,8 +343,13 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Link to Customer</Label>
                       <MobileSelectPicker
                         value={formData.customer_id}
-                        onValueChange={(value) => setFormData(prev => ({ ...prev, customer_id: value }))}
-                        options={customers.map(customer => ({ value: customer.id, label: customer.name }))}
+                        onValueChange={(value) =>
+                          setFormData((prev) => ({ ...prev, customer_id: value }))
+                        }
+                        options={customers.map((customer) => ({
+                          value: customer.id,
+                          label: customer.name,
+                        }))}
                         placeholder="Select customer"
                         title="Link to Customer"
                       />
@@ -350,7 +359,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Installation Address</Label>
                       <Input
                         value={formData.installation_address}
-                        onChange={(e) => setFormData(prev => ({ ...prev, installation_address: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, installation_address: e.target.value }))
+                        }
                         placeholder="Enter installation address"
                         className="h-11 touch-manipulation"
                       />
@@ -361,7 +372,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Input
                         type="date"
                         value={formData.issue_date}
-                        onChange={(e) => setFormData(prev => ({ ...prev, issue_date: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, issue_date: e.target.value }))
+                        }
                         className="h-11 touch-manipulation"
                       />
                     </div>
@@ -371,7 +384,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Input
                         type="date"
                         value={formData.expiry_date}
-                        onChange={(e) => setFormData(prev => ({ ...prev, expiry_date: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, expiry_date: e.target.value }))
+                        }
                         className="h-11 touch-manipulation"
                       />
                     </div>
@@ -380,7 +395,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Issuing Company</Label>
                       <Input
                         value={formData.issuing_company}
-                        onChange={(e) => setFormData(prev => ({ ...prev, issuing_company: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, issuing_company: e.target.value }))
+                        }
                         placeholder="Company name"
                         className="h-11 touch-manipulation"
                       />
@@ -390,7 +407,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Imported From</Label>
                       <MobileSelectPicker
                         value={formData.imported_from_system}
-                        onValueChange={(value) => setFormData(prev => ({ ...prev, imported_from_system: value }))}
+                        onValueChange={(value) =>
+                          setFormData((prev) => ({ ...prev, imported_from_system: value }))
+                        }
                         options={IMPORT_SOURCES}
                         placeholder="Select source"
                         title="Import Source"
@@ -401,7 +420,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                       <Label>Notes</Label>
                       <Textarea
                         value={formData.notes}
-                        onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, notes: e.target.value }))
+                        }
                         placeholder="Any additional notes..."
                         className="min-h-[80px] touch-manipulation"
                       />
@@ -424,7 +445,8 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                           </div>
                           <p className="text-lg font-medium">Upload Complete!</p>
                           <p className="text-sm text-muted-foreground">
-                            {uploadProgress.successful} certificate{uploadProgress.successful === 1 ? '' : 's'} uploaded
+                            {uploadProgress.successful} certificate
+                            {uploadProgress.successful === 1 ? '' : 's'} uploaded
                           </p>
                         </div>
                       ) : (
@@ -441,11 +463,7 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                     </div>
 
                     {uploadProgress.failed > 0 && (
-                      <Button
-                        variant="outline"
-                        className="w-full h-11"
-                        onClick={handleClose}
-                      >
+                      <Button variant="outline" className="w-full h-11" onClick={handleClose}>
                         Close
                       </Button>
                     )}
@@ -485,7 +503,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => setBulkFiles(prev => prev.filter((_, i) => i !== index))}
+                            onClick={() =>
+                              setBulkFiles((prev) => prev.filter((_, i) => i !== index))
+                            }
                             className="h-7 w-7 shrink-0"
                           >
                             <X className="h-3 w-3" />
@@ -519,7 +539,11 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                   variant="accent"
                   onClick={mode === 'single' ? handleSingleUpload : handleBulkUpload}
                   className="flex-1 h-11 touch-manipulation"
-                  disabled={isUploading || (mode === 'single' && !selectedFile) || (mode === 'bulk' && bulkFiles.length === 0)}
+                  disabled={
+                    isUploading ||
+                    (mode === 'single' && !selectedFile) ||
+                    (mode === 'bulk' && bulkFiles.length === 0)
+                  }
                 >
                   {isUploading ? (
                     <>
@@ -529,7 +553,9 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                   ) : (
                     <>
                       <Upload className="h-4 w-4 mr-2" />
-                      {mode === 'single' ? 'Upload Certificate' : `Upload ${bulkFiles.length} Certificate${bulkFiles.length === 1 ? '' : 's'}`}
+                      {mode === 'single'
+                        ? 'Upload Certificate'
+                        : `Upload ${bulkFiles.length} Certificate${bulkFiles.length === 1 ? '' : 's'}`}
                     </>
                   )}
                 </Button>

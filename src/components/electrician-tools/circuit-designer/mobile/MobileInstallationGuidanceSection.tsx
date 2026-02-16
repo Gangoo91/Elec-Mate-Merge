@@ -2,7 +2,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Wrench, Package, AlertTriangle, CheckCircle2, FileText, TestTube2, ChevronDown } from 'lucide-react';
+import {
+  Wrench,
+  Package,
+  AlertTriangle,
+  CheckCircle2,
+  FileText,
+  TestTube2,
+  ChevronDown,
+} from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { EnhancedInstallationGuidance } from '@/types/circuit-design';
@@ -11,23 +19,26 @@ interface MobileInstallationGuidanceSectionProps {
   circuit: any;
 }
 
-export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallationGuidanceSectionProps) => {
+export const MobileInstallationGuidanceSection = ({
+  circuit,
+}: MobileInstallationGuidanceSectionProps) => {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     summary: true,
     safety: false,
     materials: false,
     tools: false,
     procedure: false,
-    testing: false
+    testing: false,
   });
 
   const toggleSection = (section: string) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   // Check if we have structured installation guidance
-  const isStructured = circuit.installationGuidance && 
-    typeof circuit.installationGuidance === 'object' && 
+  const isStructured =
+    circuit.installationGuidance &&
+    typeof circuit.installationGuidance === 'object' &&
     !Array.isArray(circuit.installationGuidance);
 
   // If it's just a string or not available
@@ -45,7 +56,8 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
             </p>
           ) : (
             <p className="text-foreground/70">
-              Installation guidance not yet available. Regenerate this circuit to get practical installation advice.
+              Installation guidance not yet available. Regenerate this circuit to get practical
+              installation advice.
             </p>
           )}
         </CardContent>
@@ -85,10 +97,12 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                     <AlertTriangle className="h-5 w-5 text-red-500" />
                     Safety Considerations ({guidance.safetyConsiderations.length})
                   </span>
-                  <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-foreground",
-                    openSections.safety && "rotate-180"
-                  )} />
+                  <ChevronDown
+                    className={cn(
+                      'h-5 w-5 transition-transform text-foreground',
+                      openSections.safety && 'rotate-180'
+                    )}
+                  />
                 </CardTitle>
               </CardHeader>
             </CollapsibleTrigger>
@@ -98,26 +112,27 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                   <div
                     key={idx}
                     className={cn(
-                      "rounded-lg p-4 text-left border-l-4",
-                      safety.priority === 'critical' && "border-l-red-500 bg-red-500/10",
-                      safety.priority === 'high' && "border-l-orange-500 bg-orange-500/10",
-                      safety.priority === 'medium' && "border-l-yellow-500 bg-yellow-500/10"
+                      'rounded-lg p-4 text-left border-l-4',
+                      safety.priority === 'critical' && 'border-l-red-500 bg-red-500/10',
+                      safety.priority === 'high' && 'border-l-orange-500 bg-orange-500/10',
+                      safety.priority === 'medium' && 'border-l-yellow-500 bg-yellow-500/10'
                     )}
                   >
                     <div className="flex items-start gap-3">
                       <AlertTriangle
                         className={cn(
-                          "h-5 w-5 shrink-0 mt-0.5",
-                          safety.priority === 'critical' && "text-red-500",
-                          safety.priority === 'high' && "text-orange-500",
-                          safety.priority === 'medium' && "text-yellow-500"
+                          'h-5 w-5 shrink-0 mt-0.5',
+                          safety.priority === 'critical' && 'text-red-500',
+                          safety.priority === 'high' && 'text-orange-500',
+                          safety.priority === 'medium' && 'text-yellow-500'
                         )}
                       />
                       <div className="space-y-2 text-left flex-1">
                         <p className="font-semibold text-sm text-left text-foreground leading-relaxed">
                           {safety.consideration}
                         </p>
-                        {(safety.bsReference || (safety.toolsRequired && safety.toolsRequired.length > 0)) && (
+                        {(safety.bsReference ||
+                          (safety.toolsRequired && safety.toolsRequired.length > 0)) && (
                           <div className="flex flex-wrap gap-2 text-xs text-foreground/70">
                             {safety.bsReference && (
                               <span className="inline-flex items-center gap-1">
@@ -152,10 +167,12 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                     <Package className="h-5 w-5 text-elec-yellow" />
                     Materials Required ({guidance.materialsRequired.length})
                   </span>
-                  <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-foreground",
-                    openSections.materials && "rotate-180"
-                  )} />
+                  <ChevronDown
+                    className={cn(
+                      'h-5 w-5 transition-transform text-foreground',
+                      openSections.materials && 'rotate-180'
+                    )}
+                  />
                 </CardTitle>
               </CardHeader>
             </CollapsibleTrigger>
@@ -170,7 +187,9 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                       <Package className="h-4 w-4 text-elec-yellow" />
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <p className="font-medium text-sm text-left text-foreground">{material.item}</p>
+                      <p className="font-medium text-sm text-left text-foreground">
+                        {material.item}
+                      </p>
                       <p className="text-xs text-foreground/70 text-left mt-0.5 leading-relaxed">
                         {material.specification}
                       </p>
@@ -180,7 +199,10 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                         </p>
                       )}
                     </div>
-                    <Badge variant="secondary" className="font-mono text-xs shrink-0 border-elec-yellow/30">
+                    <Badge
+                      variant="secondary"
+                      className="font-mono text-xs shrink-0 border-elec-yellow/30"
+                    >
                       {material.quantity}
                     </Badge>
                   </div>
@@ -202,10 +224,12 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                     <Wrench className="h-5 w-5 text-purple-500" />
                     Tools Required ({guidance.toolsRequired.length})
                   </span>
-                  <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-foreground",
-                    openSections.tools && "rotate-180"
-                  )} />
+                  <ChevronDown
+                    className={cn(
+                      'h-5 w-5 transition-transform text-foreground',
+                      openSections.tools && 'rotate-180'
+                    )}
+                  />
                 </CardTitle>
               </CardHeader>
             </CollapsibleTrigger>
@@ -219,7 +243,9 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                     <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
                     <div className="flex-1 text-left">
                       <p className="font-medium text-sm text-left text-foreground">{tool.tool}</p>
-                      <p className="text-xs text-foreground/70 text-left leading-relaxed">{tool.purpose}</p>
+                      <p className="text-xs text-foreground/70 text-left leading-relaxed">
+                        {tool.purpose}
+                      </p>
                       <Badge variant="secondary" className="mt-1.5 text-xs">
                         {tool.category}
                       </Badge>
@@ -243,10 +269,12 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                     <CheckCircle2 className="h-5 w-5 text-green-500" />
                     Installation Procedure ({guidance.installationProcedure.length} steps)
                   </span>
-                  <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-foreground",
-                    openSections.procedure && "rotate-180"
-                  )} />
+                  <ChevronDown
+                    className={cn(
+                      'h-5 w-5 transition-transform text-foreground',
+                      openSections.procedure && 'rotate-180'
+                    )}
+                  />
                 </CardTitle>
               </CardHeader>
             </CollapsibleTrigger>
@@ -278,7 +306,11 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                         {step.toolsForStep && step.toolsForStep.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mt-2 justify-start">
                             {step.toolsForStep.map((tool, toolIdx) => (
-                              <Badge key={toolIdx} variant="outline" className="text-xs border-elec-yellow/30">
+                              <Badge
+                                key={toolIdx}
+                                variant="outline"
+                                className="text-xs border-elec-yellow/30"
+                              >
                                 <Wrench className="h-3 w-3 mr-1" />
                                 {tool}
                               </Badge>
@@ -313,10 +345,12 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                     <TestTube2 className="h-5 w-5 text-teal-500" />
                     Testing Requirements ({guidance.testingRequirements.tests.length})
                   </span>
-                  <ChevronDown className={cn(
-                    "h-5 w-5 transition-transform text-foreground",
-                    openSections.testing && "rotate-180"
-                  )} />
+                  <ChevronDown
+                    className={cn(
+                      'h-5 w-5 transition-transform text-foreground',
+                      openSections.testing && 'rotate-180'
+                    )}
+                  />
                 </CardTitle>
               </CardHeader>
             </CollapsibleTrigger>
@@ -324,7 +358,9 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
               <CardContent className="space-y-3 pt-0">
                 {guidance.testingRequirements.intro && (
                   <>
-                    <p className="text-sm text-foreground text-left leading-relaxed">{guidance.testingRequirements.intro}</p>
+                    <p className="text-sm text-foreground text-left leading-relaxed">
+                      {guidance.testingRequirements.intro}
+                    </p>
                     <Separator className="my-2" />
                   </>
                 )}
@@ -354,7 +390,8 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
                           <div className="space-y-1 text-xs">
                             {test.expectedReading && (
                               <p className="text-left text-foreground/80">
-                                <span className="font-medium text-foreground">Expected:</span> {test.expectedReading}
+                                <span className="font-medium text-foreground">Expected:</span>{' '}
+                                {test.expectedReading}
                               </p>
                             )}
                             <p className="text-left text-foreground/80">

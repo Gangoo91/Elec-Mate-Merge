@@ -1,4 +1,3 @@
-
 export const LoadingState = () => {
   return (
     <div className="flex justify-center items-center p-12">

@@ -4,11 +4,11 @@ import { Badge } from '@/components/ui/badge';
 
 export const EmergencyLightingModule5Section6LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose and importance of a structured client handover",
-    "Identify all documentation and records to be provided at handover",
-    "Demonstrate system operation and testing procedures to the client",
-    "Train the client or Responsible Person in inspection, testing, and logbook maintenance",
-    "Understand legal responsibilities transferred to the client after handover"
+    'Explain the purpose and importance of a structured client handover',
+    'Identify all documentation and records to be provided at handover',
+    'Demonstrate system operation and testing procedures to the client',
+    'Train the client or Responsible Person in inspection, testing, and logbook maintenance',
+    'Understand legal responsibilities transferred to the client after handover',
   ];
 
   return (
@@ -20,8 +20,10 @@ export const EmergencyLightingModule5Section6LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
-        <p className="text-sm sm:text-base lg:text-lg">By completing this section, you will be able to:</p>
-        
+        <p className="text-sm sm:text-base lg:text-lg">
+          By completing this section, you will be able to:
+        </p>
+
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-4">

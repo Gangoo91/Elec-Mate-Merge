@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Progress } from "@/components/ui/progress";
-import { 
-  FileText, 
-  Send, 
-  Check, 
-  Phone, 
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Progress } from '@/components/ui/progress';
+import {
+  FileText,
+  Send,
+  Check,
+  Phone,
   Mail,
   Calendar,
   Clock,
@@ -18,11 +18,11 @@ import {
   Download,
   Copy,
   ExternalLink,
-  Loader2
-} from "lucide-react";
-import { useMarkInvoicePaid, useSendInvoice, useGenerateInvoicePdf } from "@/hooks/useFinance";
-import { toast } from "sonner";
-import type { Invoice } from "@/services/financeService";
+  Loader2,
+} from 'lucide-react';
+import { useMarkInvoicePaid, useSendInvoice, useGenerateInvoicePdf } from '@/hooks/useFinance';
+import { toast } from 'sonner';
+import type { Invoice } from '@/services/financeService';
 
 interface ViewInvoiceSheetProps {
   open: boolean;
@@ -39,19 +39,19 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
   if (!invoice) return null;
 
   const lineItems = Array.isArray(invoice.line_items) ? invoice.line_items : [];
-  const isOverdue = invoice.status === "Overdue";
-  const isPaid = invoice.status === "Paid";
-  const isSent = invoice.status === "Sent" || invoice.status === "Pending";
+  const isOverdue = invoice.status === 'Overdue';
+  const isPaid = invoice.status === 'Paid';
+  const isSent = invoice.status === 'Sent' || invoice.status === 'Pending';
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      "Draft": "bg-muted text-muted-foreground",
-      "Pending": "bg-warning/20 text-warning",
-      "Sent": "bg-blue-500/20 text-blue-400",
-      "Paid": "bg-success/20 text-success",
-      "Overdue": "bg-destructive/20 text-destructive"
+      Draft: 'bg-muted text-muted-foreground',
+      Pending: 'bg-warning/20 text-warning',
+      Sent: 'bg-blue-500/20 text-blue-400',
+      Paid: 'bg-success/20 text-success',
+      Overdue: 'bg-destructive/20 text-destructive',
     };
-    return <Badge className={styles[status] || ""}>{status}</Badge>;
+    return <Badge className={styles[status] || ''}>{status}</Badge>;
   };
 
   const handleMarkPaid = () => {
@@ -64,14 +64,14 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
         if (data?.portalUrl) {
           setInvoiceLink(data.portalUrl);
         }
-      }
+      },
     });
   };
 
   const handleCopyLink = async () => {
     if (invoiceLink) {
       await navigator.clipboard.writeText(invoiceLink);
-      toast.success("Invoice link copied to clipboard");
+      toast.success('Invoice link copied to clipboard');
     }
   };
 
@@ -79,8 +79,10 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
     generatePdfMutation.mutate(invoice.id);
   };
 
-  const daysUntilDue = invoice.due_date 
-    ? Math.ceil((new Date(invoice.due_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+  const daysUntilDue = invoice.due_date
+    ? Math.ceil(
+        (new Date(invoice.due_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+      )
     : 0;
 
   return (
@@ -96,9 +98,11 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
           <SheetHeader className="px-4 pb-4 border-b border-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  isOverdue ? 'bg-destructive/10' : isPaid ? 'bg-success/10' : 'bg-elec-yellow/10'
-                }`}>
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    isOverdue ? 'bg-destructive/10' : isPaid ? 'bg-success/10' : 'bg-elec-yellow/10'
+                  }`}
+                >
                   {isOverdue ? (
                     <AlertTriangle className="h-5 w-5 text-destructive" />
                   ) : isPaid ? (
@@ -108,7 +112,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   )}
                 </div>
                 <div>
-                  <SheetTitle className="text-lg font-semibold">{invoice.invoice_number}</SheetTitle>
+                  <SheetTitle className="text-lg font-semibold">
+                    {invoice.invoice_number}
+                  </SheetTitle>
                   <p className="text-sm text-muted-foreground">{invoice.client}</p>
                 </div>
               </div>
@@ -121,20 +127,26 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
             <div className="space-y-4">
               {/* Payment Status */}
               {!isPaid && (
-                <Card className={`${isOverdue ? 'bg-destructive/10 border-destructive/20' : 'bg-warning/10 border-warning/20'}`}>
+                <Card
+                  className={`${isOverdue ? 'bg-destructive/10 border-destructive/20' : 'bg-warning/10 border-warning/20'}`}
+                >
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <span className={`text-sm font-medium ${isOverdue ? 'text-destructive' : 'text-warning'}`}>
-                        {isOverdue 
-                          ? `${Math.abs(daysUntilDue)} days overdue` 
-                          : daysUntilDue === 0 
+                      <span
+                        className={`text-sm font-medium ${isOverdue ? 'text-destructive' : 'text-warning'}`}
+                      >
+                        {isOverdue
+                          ? `${Math.abs(daysUntilDue)} days overdue`
+                          : daysUntilDue === 0
                             ? 'Due today'
                             : `Due in ${daysUntilDue} days`}
                       </span>
-                      <span className="text-lg font-bold">£{Number(invoice.amount).toLocaleString()}</span>
+                      <span className="text-lg font-bold">
+                        £{Number(invoice.amount).toLocaleString()}
+                      </span>
                     </div>
-                    <Progress 
-                      value={isPaid ? 100 : 0} 
+                    <Progress
+                      value={isPaid ? 100 : 0}
                       className={`h-2 ${isOverdue ? 'bg-destructive/20' : 'bg-warning/20'}`}
                     />
                   </CardContent>
@@ -149,7 +161,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                         <Check className="h-5 w-5 text-success" />
                         <span className="font-medium text-success">Paid in Full</span>
                       </div>
-                      <span className="text-lg font-bold text-success">£{Number(invoice.amount).toLocaleString()}</span>
+                      <span className="text-lg font-bold text-success">
+                        £{Number(invoice.amount).toLocaleString()}
+                      </span>
                     </div>
                     {invoice.paid_date && (
                       <p className="text-sm text-muted-foreground mt-1">
@@ -191,7 +205,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                       <Calendar className="h-4 w-4 text-muted-foreground" />
                       <div>
                         <span className="text-muted-foreground">Created</span>
-                        <p className="font-medium">{new Date(invoice.created_at).toLocaleDateString('en-GB')}</p>
+                        <p className="font-medium">
+                          {new Date(invoice.created_at).toLocaleDateString('en-GB')}
+                        </p>
                       </div>
                     </div>
                     {invoice.due_date && (
@@ -216,8 +232,8 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   <Card className="bg-elec-gray">
                     <CardContent className="p-0">
                       {lineItems.map((item: any, idx: number) => (
-                        <div 
-                          key={item.id || idx} 
+                        <div
+                          key={item.id || idx}
                           className="flex justify-between items-center p-3 border-b border-border last:border-0"
                         >
                           <div className="min-w-0 flex-1">
@@ -239,7 +255,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 <CardContent className="p-4">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-medium">Total Amount</span>
-                    <span className="text-2xl font-bold text-elec-yellow">£{Number(invoice.amount).toLocaleString()}</span>
+                    <span className="text-2xl font-bold text-elec-yellow">
+                      £{Number(invoice.amount).toLocaleString()}
+                    </span>
                   </div>
                 </CardContent>
               </Card>
@@ -250,7 +268,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   <h3 className="font-semibold text-sm">Payment Details / Notes</h3>
                   <Card className="bg-muted/30">
                     <CardContent className="p-3">
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">{invoice.notes}</p>
+                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                        {invoice.notes}
+                      </p>
                     </CardContent>
                   </Card>
                 </div>
@@ -275,7 +295,11 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
             <div className="px-4 py-3 pb-safe space-y-2">
               {!isPaid && (
                 <>
-                  <Button onClick={handleMarkPaid} disabled={markPaidMutation.isPending} className="w-full h-12">
+                  <Button
+                    onClick={handleMarkPaid}
+                    disabled={markPaidMutation.isPending}
+                    className="w-full h-12"
+                  >
                     {markPaidMutation.isPending ? (
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                     ) : (

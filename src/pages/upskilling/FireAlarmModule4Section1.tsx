@@ -1,150 +1,213 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Primary Power Supplies - Fire Alarm Module 4 Section 1";
-const DESCRIPTION = "Learn about mains supply requirements, PSU ratings, load calculations, monitoring and UK compliance for BS 5839-1 fire alarm systems.";
+const TITLE = 'Primary Power Supplies - Fire Alarm Module 4 Section 1';
+const DESCRIPTION =
+  'Learn about mains supply requirements, PSU ratings, load calculations, monitoring and UK compliance for BS 5839-1 fire alarm systems.';
 
 const quickCheckQuestions = [
   {
-    id: "psu-monitoring",
-    question: "Power supplies should be monitored for:",
+    id: 'psu-monitoring',
+    question: 'Power supplies should be monitored for:',
     options: [
-      "Voltage only",
-      "Presence, fault and battery condition",
-      "Frequency only",
-      "Nothing is monitored"
+      'Voltage only',
+      'Presence, fault and battery condition',
+      'Frequency only',
+      'Nothing is monitored',
     ],
     correctIndex: 1,
-    explanation: "BS 5839-1 expects monitoring of supply presence and faults; battery condition is also monitored by the CIE."
+    explanation:
+      'BS 5839-1 expects monitoring of supply presence and faults; battery condition is also monitored by the CIE.',
   },
   {
-    id: "load-calc",
-    question: "Load calculations must consider:",
+    id: 'load-calc',
+    question: 'Load calculations must consider:',
     options: [
-      "Standby only",
-      "Alarm only",
-      "Both standby and alarm currents including safety factors",
-      "Charger current only"
+      'Standby only',
+      'Alarm only',
+      'Both standby and alarm currents including safety factors',
+      'Charger current only',
     ],
     correctIndex: 2,
-    explanation: "You must calculate both standby and full alarm current and include appropriate margins."
+    explanation:
+      'You must calculate both standby and full alarm current and include appropriate margins.',
   },
   {
-    id: "rcd-protection",
-    question: "RCD protection on fire alarm mains supply should be:",
+    id: 'rcd-protection',
+    question: 'RCD protection on fire alarm mains supply should be:',
     options: [
-      "Always fitted",
-      "Avoided or coordinated per BS 5839-1 to prevent nuisance disconnection",
-      "Set to 10mA",
-      "Required by BS 7671 in all cases"
+      'Always fitted',
+      'Avoided or coordinated per BS 5839-1 to prevent nuisance disconnection',
+      'Set to 10mA',
+      'Required by BS 7671 in all cases',
     ],
     correctIndex: 1,
-    explanation: "BS 5839-1 advises avoiding RCD protection where possible, or using time-delayed types to prevent unwanted tripping affecting life safety systems."
-  }
+    explanation:
+      'BS 5839-1 advises avoiding RCD protection where possible, or using time-delayed types to prevent unwanted tripping affecting life safety systems.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Power supplies should be monitored for:",
-    options: ["Voltage only", "Presence, fault and battery condition", "Frequency only", "Nothing is monitored"],
+    question: 'Power supplies should be monitored for:',
+    options: [
+      'Voltage only',
+      'Presence, fault and battery condition',
+      'Frequency only',
+      'Nothing is monitored',
+    ],
     correctAnswer: 1,
-    explanation: "BS 5839-1 expects monitoring of supply presence and faults; battery condition is also monitored by the CIE."
+    explanation:
+      'BS 5839-1 expects monitoring of supply presence and faults; battery condition is also monitored by the CIE.',
   },
   {
     id: 2,
-    question: "Load calculations must consider:",
-    options: ["Standby only", "Alarm only", "Both standby and alarm currents including safety factors", "Charger current only"],
+    question: 'Load calculations must consider:',
+    options: [
+      'Standby only',
+      'Alarm only',
+      'Both standby and alarm currents including safety factors',
+      'Charger current only',
+    ],
     correctAnswer: 2,
-    explanation: "You must calculate both standby and full alarm current and include appropriate margins."
+    explanation:
+      'You must calculate both standby and full alarm current and include appropriate margins.',
   },
   {
     id: 3,
-    question: "Mains supply for CIE should generally be taken from:",
-    options: ["A socket ring final", "A local lighting circuit", "A dedicated, labelled circuit from the distribution board", "Any convenient spur"],
+    question: 'Mains supply for CIE should generally be taken from:',
+    options: [
+      'A socket ring final',
+      'A local lighting circuit',
+      'A dedicated, labelled circuit from the distribution board',
+      'Any convenient spur',
+    ],
     correctAnswer: 2,
-    explanation: "A dedicated, labelled circuit is typical good practice to avoid inadvertent isolation."
+    explanation:
+      'A dedicated, labelled circuit is typical good practice to avoid inadvertent isolation.',
   },
   {
     id: 4,
-    question: "Voltage drop on alarm circuits should be:",
-    options: ["Ignored", "Within manufacturer limits to ensure device operation", "Above 10V", "Exactly 0V"],
+    question: 'Voltage drop on alarm circuits should be:',
+    options: [
+      'Ignored',
+      'Within manufacturer limits to ensure device operation',
+      'Above 10V',
+      'Exactly 0V',
+    ],
     correctAnswer: 1,
-    explanation: "Keep within device and panel instructions so sounders/VADs and interfaces operate correctly."
+    explanation:
+      'Keep within device and panel instructions so sounders/VADs and interfaces operate correctly.',
   },
   {
     id: 5,
-    question: "Which UK wiring regulation addresses prevention of premature collapse of cables?",
-    options: ["BS 7671 411.3.3", "BS 7671 521.10.202", "BS 7671 433.1", "BS 7671 560.7.1"],
+    question: 'Which UK wiring regulation addresses prevention of premature collapse of cables?',
+    options: ['BS 7671 411.3.3', 'BS 7671 521.10.202', 'BS 7671 433.1', 'BS 7671 560.7.1'],
     correctAnswer: 1,
-    explanation: "BS 7671 Reg 521.10.202 requires suitable metallic fixings/supports so wiring systems do not collapse in fire."
+    explanation:
+      'BS 7671 Reg 521.10.202 requires suitable metallic fixings/supports so wiring systems do not collapse in fire.',
   },
   {
     id: 6,
-    question: "Preferred isolation for the fire alarm mains supply is:",
-    options: ["Unlabelled MCB anywhere", "A clearly labelled, lockable device at the origin or local DB", "A plug and socket", "A spur with neon"],
+    question: 'Preferred isolation for the fire alarm mains supply is:',
+    options: [
+      'Unlabelled MCB anywhere',
+      'A clearly labelled, lockable device at the origin or local DB',
+      'A plug and socket',
+      'A spur with neon',
+    ],
     correctAnswer: 1,
-    explanation: "Provide a labelled isolator; avoid accidental disconnection and follow manufacturer guidance."
+    explanation:
+      'Provide a labelled isolator; avoid accidental disconnection and follow manufacturer guidance.',
   },
   {
     id: 7,
-    question: "RCD protection on fire alarm mains supply should be:",
-    options: ["Always fitted", "Avoided or coordinated per BS 5839-1 to prevent nuisance disconnection", "Set to 10mA", "Required by BS 7671 in all cases"],
+    question: 'RCD protection on fire alarm mains supply should be:',
+    options: [
+      'Always fitted',
+      'Avoided or coordinated per BS 5839-1 to prevent nuisance disconnection',
+      'Set to 10mA',
+      'Required by BS 7671 in all cases',
+    ],
     correctAnswer: 1,
-    explanation: "BS 5839-1 advises avoiding RCD protection where possible, or using time-delayed types to prevent unwanted tripping affecting life safety systems."
+    explanation:
+      'BS 5839-1 advises avoiding RCD protection where possible, or using time-delayed types to prevent unwanted tripping affecting life safety systems.',
   },
   {
     id: 8,
-    question: "PSU rating selection should:",
-    options: ["Exactly match calculated alarm current with no margin", "Exceed calculated loads with allowance for diversity and growth", "Ignore standby consumption", "Be based on cable size only"],
+    question: 'PSU rating selection should:',
+    options: [
+      'Exactly match calculated alarm current with no margin',
+      'Exceed calculated loads with allowance for diversity and growth',
+      'Ignore standby consumption',
+      'Be based on cable size only',
+    ],
     correctAnswer: 1,
-    explanation: "Allow headroom for real-world variation, manufacturer advice and future expansion."
+    explanation:
+      'Allow headroom for real-world variation, manufacturer advice and future expansion.',
   },
   {
     id: 9,
-    question: "Supply circuit identification should include:",
-    options: ["No special label", "A durable label stating Fire Alarm - Do Not Switch Off", "Pencil marks", "Temporary tape"],
+    question: 'Supply circuit identification should include:',
+    options: [
+      'No special label',
+      'A durable label stating Fire Alarm - Do Not Switch Off',
+      'Pencil marks',
+      'Temporary tape',
+    ],
     correctAnswer: 1,
-    explanation: "Clear, durable labelling helps prevent inadvertent isolation."
+    explanation: 'Clear, durable labelling helps prevent inadvertent isolation.',
   },
   {
     id: 10,
-    question: "When verifying PSU capacity during commissioning, you should measure:",
-    options: ["Mains voltage only", "Standby current and full alarm current with all devices operating", "Battery voltage only", "Cable resistance only"],
+    question: 'When verifying PSU capacity during commissioning, you should measure:',
+    options: [
+      'Mains voltage only',
+      'Standby current and full alarm current with all devices operating',
+      'Battery voltage only',
+      'Cable resistance only',
+    ],
     correctAnswer: 1,
-    explanation: "Practical verification involves measuring actual currents in both standby and full alarm conditions to confirm calculations and PSU adequacy."
-  }
+    explanation:
+      'Practical verification involves measuring actual currents in both standby and full alarm conditions to confirm calculations and PSU adequacy.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I use a shared socket circuit for the fire alarm?",
-    answer: "No - use a dedicated, labelled circuit from the distribution board to prevent inadvertent isolation."
+    question: 'Can I use a shared socket circuit for the fire alarm?',
+    answer:
+      'No - use a dedicated, labelled circuit from the distribution board to prevent inadvertent isolation.',
   },
   {
-    question: "How much PSU margin should I allow?",
-    answer: "Follow manufacturer guidance; commonly 20-50% depending on loads and future expansion needs."
+    question: 'How much PSU margin should I allow?',
+    answer:
+      'Follow manufacturer guidance; commonly 20-50% depending on loads and future expansion needs.',
   },
   {
-    question: "Does BS 7671 apply to fire alarm power supplies?",
-    answer: "Yes - supply cabling, earthing, identification and fixings must all comply with BS 7671."
+    question: 'Does BS 7671 apply to fire alarm power supplies?',
+    answer:
+      'Yes - supply cabling, earthing, identification and fixings must all comply with BS 7671.',
   },
   {
-    question: "What labelling is required at the supply isolator?",
-    answer: "A durable label stating 'Fire Alarm - Do Not Switch Off' or similar wording."
+    question: 'What labelling is required at the supply isolator?',
+    answer: "A durable label stating 'Fire Alarm - Do Not Switch Off' or similar wording.",
   },
   {
-    question: "Should I fit an RCD on the fire alarm circuit?",
-    answer: "Generally avoid RCDs if possible; if required, use time-delayed (S-type) to prevent nuisance tripping."
+    question: 'Should I fit an RCD on the fire alarm circuit?',
+    answer:
+      'Generally avoid RCDs if possible; if required, use time-delayed (S-type) to prevent nuisance tripping.',
   },
   {
-    question: "How do I verify PSU adequacy during commissioning?",
-    answer: "Measure actual standby and alarm currents with all devices operating and compare to PSU rating."
-  }
+    question: 'How do I verify PSU adequacy during commissioning?',
+    answer:
+      'Measure actual standby and alarm currents with all devices operating and compare to PSU rating.',
+  },
 ];
 
 const FireAlarmModule4Section1 = () => {
@@ -155,7 +218,12 @@ const FireAlarmModule4Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/fire-alarm-course/module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -166,7 +234,6 @@ const FireAlarmModule4Section1 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centred Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -186,18 +253,32 @@ const FireAlarmModule4Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Dedicated circuit:</strong> Labelled, from distribution board</li>
-              <li><strong>PSU capacity:</strong> Cover standby + alarm with margin</li>
-              <li><strong>Monitoring:</strong> Supply presence, faults, battery condition</li>
-              <li><strong>RCDs:</strong> Avoid or use time-delayed types</li>
+              <li>
+                <strong>Dedicated circuit:</strong> Labelled, from distribution board
+              </li>
+              <li>
+                <strong>PSU capacity:</strong> Cover standby + alarm with margin
+              </li>
+              <li>
+                <strong>Monitoring:</strong> Supply presence, faults, battery condition
+              </li>
+              <li>
+                <strong>RCDs:</strong> Avoid or use time-delayed types
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> "Fire Alarm - Do Not Switch Off" label</li>
-              <li><strong>Use:</strong> Calculate standby + alarm loads</li>
-              <li><strong>Apply:</strong> 20-50% PSU margin for growth</li>
+              <li>
+                <strong>Spot:</strong> "Fire Alarm - Do Not Switch Off" label
+              </li>
+              <li>
+                <strong>Use:</strong> Calculate standby + alarm loads
+              </li>
+              <li>
+                <strong>Apply:</strong> 20-50% PSU margin for growth
+              </li>
             </ul>
           </div>
         </div>
@@ -207,12 +288,12 @@ const FireAlarmModule4Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify suitable mains supply arrangements and isolation requirements",
-              "Calculate PSU loading for standby and alarm conditions",
-              "Apply voltage drop limits to ensure device performance",
-              "Implement monitoring and fault indication requirements",
-              "Coordinate fire alarm supplies with BS 7671 requirements",
-              "Verify and document power supply arrangements during commissioning"
+              'Identify suitable mains supply arrangements and isolation requirements',
+              'Calculate PSU loading for standby and alarm conditions',
+              'Apply voltage drop limits to ensure device performance',
+              'Implement monitoring and fault indication requirements',
+              'Coordinate fire alarm supplies with BS 7671 requirements',
+              'Verify and document power supply arrangements during commissioning',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -233,7 +314,9 @@ const FireAlarmModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire alarm control and indicating equipment (CIE) requires a reliable mains supply that cannot be inadvertently disconnected. BS 5839-1 and BS 7671 both influence the design of this supply.
+              Fire alarm control and indicating equipment (CIE) requires a reliable mains supply
+              that cannot be inadvertently disconnected. BS 5839-1 and BS 7671 both influence the
+              design of this supply.
             </p>
 
             <div className="my-6">
@@ -258,17 +341,22 @@ const FireAlarmModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Residual current devices (RCDs) can cause unwanted tripping of fire alarm supplies. BS 5839-1 provides specific guidance on their use.
+              Residual current devices (RCDs) can cause unwanted tripping of fire alarm supplies. BS
+              5839-1 provides specific guidance on their use.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>BS 5839-1 Recommendation:</strong> Where possible, avoid RCD protection on fire alarm circuits. If required, use time-delayed types (S-type) and ensure discrimination with downstream devices.
+                <strong>BS 5839-1 Recommendation:</strong> Where possible, avoid RCD protection on
+                fire alarm circuits. If required, use time-delayed types (S-type) and ensure
+                discrimination with downstream devices.
               </p>
             </div>
 
             <p>
-              The risk of an RCD tripping and disabling the fire alarm system may outweigh the shock protection benefits in many installations. Document your decision and coordinate with BS 7671 requirements.
+              The risk of an RCD tripping and disabling the fire alarm system may outweigh the shock
+              protection benefits in many installations. Document your decision and coordinate with
+              BS 7671 requirements.
             </p>
           </div>
         </section>
@@ -281,7 +369,8 @@ const FireAlarmModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Accurate load calculations ensure the PSU can support the system in all operating conditions. Calculate separately for standby and alarm modes.
+              Accurate load calculations ensure the PSU can support the system in all operating
+              conditions. Calculate separately for standby and alarm modes.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -317,22 +406,31 @@ const FireAlarmModule4Section1 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-white mb-3">Example Calculation:</p>
               <div className="text-sm text-white space-y-2">
-                <p><strong>Standby loads:</strong></p>
+                <p>
+                  <strong>Standby loads:</strong>
+                </p>
                 <ul className="ml-4 space-y-1">
                   <li>Panel quiescent: 120mA</li>
                   <li>Loop devices: 280mA</li>
                   <li>Interfaces: 50mA</li>
-                  <li><strong>Total standby: 450mA</strong></li>
+                  <li>
+                    <strong>Total standby: 450mA</strong>
+                  </li>
                 </ul>
-                <p className="mt-3"><strong>Alarm loads:</strong></p>
+                <p className="mt-3">
+                  <strong>Alarm loads:</strong>
+                </p>
                 <ul className="ml-4 space-y-1">
                   <li>Sounders/VADs: 1.6A</li>
                   <li>Relays: 150mA</li>
                   <li>Panel alarm mode: 200mA</li>
-                  <li><strong>Total alarm: 1.95A</strong></li>
+                  <li>
+                    <strong>Total alarm: 1.95A</strong>
+                  </li>
                 </ul>
                 <p className="mt-3 text-elec-yellow">
-                  <strong>Specification:</strong> PSU rated minimum 2A continuous with surge capacity per manufacturer data. Consider 2.5A or 3A for headroom.
+                  <strong>Specification:</strong> PSU rated minimum 2A continuous with surge
+                  capacity per manufacturer data. Consider 2.5A or 3A for headroom.
                 </p>
               </div>
             </div>
@@ -347,7 +445,8 @@ const FireAlarmModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Excessive voltage drop can prevent sounders, VADs and interfaces from operating correctly during alarm conditions.
+              Excessive voltage drop can prevent sounders, VADs and interfaces from operating
+              correctly during alarm conditions.
             </p>
 
             <div className="my-6">
@@ -372,7 +471,8 @@ const FireAlarmModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 5839-1 requires comprehensive monitoring of power supply status with clear indication at the CIE.
+              BS 5839-1 requires comprehensive monitoring of power supply status with clear
+              indication at the CIE.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -386,7 +486,9 @@ const FireAlarmModule4Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Verification</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Commissioning Verification
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Simulate mains failure - verify battery changeover</li>
                   <li>Confirm fault indications display correctly</li>
@@ -427,9 +529,16 @@ const FireAlarmModule4Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Undersized PSU</strong> - leading to brownouts during alarm</li>
-                <li><strong>Supply from shared circuits</strong> - can be inadvertently switched off</li>
-                <li><strong>Ignoring voltage drop</strong> - on long sounder/VAD circuits causing device malfunction</li>
+                <li>
+                  <strong>Undersized PSU</strong> - leading to brownouts during alarm
+                </li>
+                <li>
+                  <strong>Supply from shared circuits</strong> - can be inadvertently switched off
+                </li>
+                <li>
+                  <strong>Ignoring voltage drop</strong> - on long sounder/VAD circuits causing
+                  device malfunction
+                </li>
               </ul>
             </div>
           </div>
@@ -480,28 +589,33 @@ const FireAlarmModule4Section1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/fire-alarm-course/module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

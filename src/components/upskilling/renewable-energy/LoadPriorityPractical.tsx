@@ -5,7 +5,7 @@ import { Zap, List, Route, Clock } from 'lucide-react';
 
 const LoadPriorityPractical = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("loadpriority") || "classification";
+  const activeTab = searchParams.get('loadpriority') || 'classification';
   const setActiveTab = (tab: string) => setSearchParams({ loadpriority: tab }, { replace: false });
 
   return (
@@ -19,19 +19,31 @@ const LoadPriorityPractical = () => {
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-elec-dark">
-            <TabsTrigger value="classification" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="classification"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <List className="h-4 w-4 mr-1" />
               Load Classification
             </TabsTrigger>
-            <TabsTrigger value="routing" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="routing"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Route className="h-4 w-4 mr-1" />
               Energy Routing
             </TabsTrigger>
-            <TabsTrigger value="shedding" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="shedding"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Zap className="h-4 w-4 mr-1" />
               Load Shedding
             </TabsTrigger>
-            <TabsTrigger value="optimization" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="optimization"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Clock className="h-4 w-4 mr-1" />
               Optimisation
             </TabsTrigger>
@@ -45,7 +57,9 @@ const LoadPriorityPractical = () => {
                   <div className="bg-red-900/30 border border-red-600 p-3 rounded">
                     <h4 className="text-red-300 font-medium mb-2">Critical Loads (Priority 1)</h4>
                     <div className="text-gray-300 space-y-1 text-xs">
-                      <p><strong>Must never lose power</strong></p>
+                      <p>
+                        <strong>Must never lose power</strong>
+                      </p>
                       <ul className="space-y-1">
                         <li>□ Security/alarm systems</li>
                         <li>□ Medical equipment</li>
@@ -59,9 +73,13 @@ const LoadPriorityPractical = () => {
                     </div>
                   </div>
                   <div className="bg-yellow-900/30 border border-yellow-600 p-3 rounded">
-                    <h4 className="text-yellow-300 font-medium mb-2">Essential Loads (Priority 2)</h4>
+                    <h4 className="text-yellow-300 font-medium mb-2">
+                      Essential Loads (Priority 2)
+                    </h4>
                     <div className="text-gray-300 space-y-1 text-xs">
-                      <p><strong>Important but can shed temporarily</strong></p>
+                      <p>
+                        <strong>Important but can shed temporarily</strong>
+                      </p>
                       <ul className="space-y-1">
                         <li>□ Lighting (living areas)</li>
                         <li>□ Kitchen appliances</li>
@@ -77,7 +95,9 @@ const LoadPriorityPractical = () => {
                   <div className="bg-green-900/30 border border-green-600 p-3 rounded">
                     <h4 className="text-green-300 font-medium mb-2">Comfort Loads (Priority 3)</h4>
                     <div className="text-gray-300 space-y-1 text-xs">
-                      <p><strong>Convenience items - first to shed</strong></p>
+                      <p>
+                        <strong>Convenience items - first to shed</strong>
+                      </p>
                       <ul className="space-y-1">
                         <li>□ Entertainment systems</li>
                         <li>□ Electric heating (non-essential)</li>
@@ -99,7 +119,9 @@ const LoadPriorityPractical = () => {
                       <p className="text-xs">Critical loads: ___kW × 100% = ___kW</p>
                       <p className="text-xs">Essential loads: ___kW × 70% = ___kW</p>
                       <p className="text-xs">Comfort loads: ___kW × 40% = ___kW</p>
-                      <p className="text-xs"><strong className="text-elec-yellow">Total: ___kW</strong></p>
+                      <p className="text-xs">
+                        <strong className="text-elec-yellow">Total: ___kW</strong>
+                      </p>
                     </div>
                     <div>
                       <p className="font-medium text-foreground">Battery Sizing Impact:</p>
@@ -115,7 +137,9 @@ const LoadPriorityPractical = () => {
 
           <TabsContent value="routing" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Energy Routing Configuration Guide</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Energy Routing Configuration Guide
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
                   <h4 className="text-foreground font-medium mb-2">Routing Decision Matrix</h4>
@@ -131,11 +155,41 @@ const LoadPriorityPractical = () => {
                         </tr>
                       </thead>
                       <tbody className="text-xs">
-                        <tr><td className="p-2">High solar + Low demand</td><td>✓</td><td>Charging</td><td>Export</td><td>Supply load, charge battery, export excess</td></tr>
-                        <tr><td className="p-2">Medium solar + High demand</td><td>✓</td><td>Supplement</td><td>Import</td><td>Solar + battery to load, import if needed</td></tr>
-                        <tr><td className="p-2">No solar + Day time</td><td>✗</td><td>Conserve</td><td>Primary</td><td>Grid supplies load, battery on standby</td></tr>
-                        <tr><td className="p-2">No solar + Peak tariff</td><td>✗</td><td>Discharge</td><td>Backup</td><td>Battery supplies load, avoid peak rates</td></tr>
-                        <tr><td className="p-2">Grid outage</td><td>Varies</td><td>Primary</td><td>✗</td><td>Solar + battery, shed non-critical loads</td></tr>
+                        <tr>
+                          <td className="p-2">High solar + Low demand</td>
+                          <td>✓</td>
+                          <td>Charging</td>
+                          <td>Export</td>
+                          <td>Supply load, charge battery, export excess</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2">Medium solar + High demand</td>
+                          <td>✓</td>
+                          <td>Supplement</td>
+                          <td>Import</td>
+                          <td>Solar + battery to load, import if needed</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2">No solar + Day time</td>
+                          <td>✗</td>
+                          <td>Conserve</td>
+                          <td>Primary</td>
+                          <td>Grid supplies load, battery on standby</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2">No solar + Peak tariff</td>
+                          <td>✗</td>
+                          <td>Discharge</td>
+                          <td>Backup</td>
+                          <td>Battery supplies load, avoid peak rates</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2">Grid outage</td>
+                          <td>Varies</td>
+                          <td>Primary</td>
+                          <td>✗</td>
+                          <td>Solar + battery, shed non-critical loads</td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -169,45 +223,59 @@ const LoadPriorityPractical = () => {
 
           <TabsContent value="shedding" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Load Shedding Programming Guide</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Load Shedding Programming Guide
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Progressive Load Shedding Schedule</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Progressive Load Shedding Schedule
+                  </h4>
                   <div className="space-y-2">
                     <div className="bg-gray-800 p-2 rounded">
                       <div className="flex justify-between items-center">
                         <span className="text-foreground font-medium">Battery SOC: 80-100%</span>
                         <span className="text-green-400">All loads active</span>
                       </div>
-                      <p className="text-gray-400 text-xs">Normal operation - all systems running</p>
+                      <p className="text-gray-400 text-xs">
+                        Normal operation - all systems running
+                      </p>
                     </div>
                     <div className="bg-gray-800 p-2 rounded">
                       <div className="flex justify-between items-center">
                         <span className="text-foreground font-medium">Battery SOC: 60-80%</span>
                         <span className="text-yellow-400">Shed comfort loads</span>
                       </div>
-                      <p className="text-gray-400 text-xs">Turn off: Entertainment, decorative lighting, pool equipment</p>
+                      <p className="text-gray-400 text-xs">
+                        Turn off: Entertainment, decorative lighting, pool equipment
+                      </p>
                     </div>
                     <div className="bg-gray-800 p-2 rounded">
                       <div className="flex justify-between items-center">
                         <span className="text-foreground font-medium">Battery SOC: 40-60%</span>
                         <span className="text-orange-400">Shed non-essential</span>
                       </div>
-                      <p className="text-gray-400 text-xs">Turn off: Electric heating, EV charging, workshop equipment</p>
+                      <p className="text-gray-400 text-xs">
+                        Turn off: Electric heating, EV charging, workshop equipment
+                      </p>
                     </div>
                     <div className="bg-gray-800 p-2 rounded">
                       <div className="flex justify-between items-center">
                         <span className="text-foreground font-medium">Battery SOC: 20-40%</span>
                         <span className="text-red-400">Essential loads only</span>
                       </div>
-                      <p className="text-gray-400 text-xs">Keep only: Security, lighting, refrigeration, heating controls</p>
+                      <p className="text-gray-400 text-xs">
+                        Keep only: Security, lighting, refrigeration, heating controls
+                      </p>
                     </div>
                     <div className="bg-gray-800 p-2 rounded">
                       <div className="flex justify-between items-center">
                         <span className="text-foreground font-medium">Battery SOC: &lt;20%</span>
                         <span className="text-red-600">Critical loads only</span>
                       </div>
-                      <p className="text-gray-400 text-xs">Minimal power: Security, emergency lighting, communication</p>
+                      <p className="text-gray-400 text-xs">
+                        Minimal power: Security, emergency lighting, communication
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -234,7 +302,9 @@ const LoadPriorityPractical = () => {
 
           <TabsContent value="optimization" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Time-of-Use & Economic Optimisation</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Time-of-Use & Economic Optimisation
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
                   <h4 className="text-foreground font-medium mb-2">Tariff-Based Load Scheduling</h4>
@@ -250,7 +320,9 @@ const LoadPriorityPractical = () => {
                       </ul>
                     </div>
                     <div className="bg-yellow-900/30 border border-yellow-600 p-2 rounded">
-                      <h5 className="text-yellow-300 font-medium text-xs">Standard (07:30-16:00, 20:00-00:30)</h5>
+                      <h5 className="text-yellow-300 font-medium text-xs">
+                        Standard (07:30-16:00, 20:00-00:30)
+                      </h5>
                       <p className="text-gray-300 text-xs">24.5p/kWh</p>
                       <ul className="text-xs text-gray-400 mt-1">
                         <li>• Use solar where possible</li>
@@ -272,7 +344,9 @@ const LoadPriorityPractical = () => {
                   </div>
                 </div>
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Economic Optimisation Strategy</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Economic Optimisation Strategy
+                  </h4>
                   <div className="grid grid-cols-2 gap-3 text-gray-300">
                     <div>
                       <p className="font-medium text-foreground">Battery Strategy:</p>
@@ -297,17 +371,35 @@ const LoadPriorityPractical = () => {
                 <div className="border border-gray-600 p-3 rounded">
                   <h4 className="text-foreground font-medium mb-2">Annual Savings Calculation</h4>
                   <div className="bg-gray-800 p-3 rounded text-xs text-gray-300">
-                    <p className="text-foreground font-medium mb-2">Example 4kW System with 10kWh Battery:</p>
+                    <p className="text-foreground font-medium mb-2">
+                      Example 4kW System with 10kWh Battery:
+                    </p>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <p>Peak shaving (4kWh/day × 365 × 15.4p): <span className="text-elec-yellow">£224/year</span></p>
-                        <p>Off-peak charging advantage: <span className="text-elec-yellow">£156/year</span></p>
-                        <p>Solar self-consumption increase: <span className="text-elec-yellow">£180/year</span></p>
+                        <p>
+                          Peak shaving (4kWh/day × 365 × 15.4p):{' '}
+                          <span className="text-elec-yellow">£224/year</span>
+                        </p>
+                        <p>
+                          Off-peak charging advantage:{' '}
+                          <span className="text-elec-yellow">£156/year</span>
+                        </p>
+                        <p>
+                          Solar self-consumption increase:{' '}
+                          <span className="text-elec-yellow">£180/year</span>
+                        </p>
                       </div>
                       <div>
-                        <p>Load scheduling savings: <span className="text-elec-yellow">£95/year</span></p>
-                        <p>Export optimisation: <span className="text-elec-yellow">£65/year</span></p>
-                        <p><strong className="text-elec-yellow">Total savings: £720/year</strong></p>
+                        <p>
+                          Load scheduling savings:{' '}
+                          <span className="text-elec-yellow">£95/year</span>
+                        </p>
+                        <p>
+                          Export optimisation: <span className="text-elec-yellow">£65/year</span>
+                        </p>
+                        <p>
+                          <strong className="text-elec-yellow">Total savings: £720/year</strong>
+                        </p>
                       </div>
                     </div>
                   </div>

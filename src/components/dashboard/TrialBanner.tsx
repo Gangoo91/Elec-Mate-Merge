@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Clock, AlertTriangle, Sparkles, ChevronRight, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -86,21 +85,24 @@ const TrialBanner = () => {
 
   if (isExpired) {
     return (
-      <Card className={cn("overflow-hidden", colors.border, colors.bg)}>
+      <Card className={cn('overflow-hidden', colors.border, colors.bg)}>
         <CardContent className="p-4 sm:p-5">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className={cn("p-3 rounded-xl", colors.bg, colors.border, "border")}>
-              <StatusIcon className={cn("h-6 w-6", colors.text)} />
+            <div className={cn('p-3 rounded-xl', colors.bg, colors.border, 'border')}>
+              <StatusIcon className={cn('h-6 w-6', colors.text)} />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className={cn("font-semibold text-base sm:text-lg", colors.text)}>
+              <h3 className={cn('font-semibold text-base sm:text-lg', colors.text)}>
                 Your Free Trial Has Ended
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
                 Subscribe now to continue accessing all features and keep your progress.
               </p>
             </div>
-            <Button asChild className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold">
+            <Button
+              asChild
+              className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+            >
               <Link to="/subscriptions">
                 Subscribe Now
                 <ChevronRight className="ml-2 h-4 w-4" />
@@ -113,43 +115,46 @@ const TrialBanner = () => {
   }
 
   return (
-    <Card className={cn("overflow-hidden", colors.border, colors.bg)}>
+    <Card className={cn('overflow-hidden', colors.border, colors.bg)}>
       <CardContent className="p-4 sm:p-5">
         <div className="flex flex-col gap-4">
           {/* Header row */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className={cn("p-2.5 rounded-xl", colors.bg, colors.border, "border")}>
-              <StatusIcon className={cn("h-5 w-5", colors.text)} />
+            <div className={cn('p-2.5 rounded-xl', colors.bg, colors.border, 'border')}>
+              <StatusIcon className={cn('h-5 w-5', colors.text)} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-semibold text-sm sm:text-base text-white">
-                  Free Trial
-                </h3>
-                <span className={cn(
-                  "px-2 py-0.5 rounded-full text-xs font-medium",
-                  colors.bg, colors.text, colors.border, "border"
-                )}>
+                <h3 className="font-semibold text-sm sm:text-base text-white">Free Trial</h3>
+                <span
+                  className={cn(
+                    'px-2 py-0.5 rounded-full text-xs font-medium',
+                    colors.bg,
+                    colors.text,
+                    colors.border,
+                    'border'
+                  )}
+                >
                   {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'} left
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
                 {isUrgent
-                  ? "Your trial is ending soon! Upgrade to keep full access."
+                  ? 'Your trial is ending soon! Upgrade to keep full access.'
                   : isWarning
-                  ? "Enjoying Elec-Mate? Lock in your access with a subscription."
-                  : "Full access to all features. No credit card required."}
+                    ? 'Enjoying Elec-Mate? Lock in your access with a subscription.'
+                    : 'Full access to all features. No credit card required.'}
               </p>
             </div>
             <Button
               asChild
               size="sm"
-              variant={isUrgent ? "default" : "outline"}
+              variant={isUrgent ? 'default' : 'outline'}
               className={cn(
-                "w-full sm:w-auto",
+                'w-full sm:w-auto',
                 isUrgent
-                  ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
-                  : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  ? 'bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold'
+                  : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
               )}
             >
               <Link to="/subscriptions">
@@ -163,13 +168,13 @@ const TrialBanner = () => {
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Trial progress</span>
-              <span className={cn("font-medium", colors.text)}>
+              <span className={cn('font-medium', colors.text)}>
                 Day {7 - daysRemaining + 1} of 7
               </span>
             </div>
             <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
               <div
-                className={cn("h-full rounded-full transition-all duration-500", colors.progress)}
+                className={cn('h-full rounded-full transition-all duration-500', colors.progress)}
                 style={{ width: `${progressPercent}%` }}
               />
             </div>

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -46,8 +47,35 @@ export interface SignOffInput {
   notes?: string;
 }
 
-// Fetch all attendees for a briefing
+// Fetch all attendees for a briefing with real-time sync
 export function useBriefingAttendees(briefingId: string | undefined) {
+  const queryClient = useQueryClient();
+
+  // Real-time subscription for signature updates
+  useEffect(() => {
+    if (!briefingId) return;
+
+    const channel = supabase
+      .channel(`briefing-attendees-${briefingId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'briefing_attendees',
+          filter: `briefing_id=eq.${briefingId}`,
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['briefing-attendees', briefingId] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [briefingId, queryClient]);
+
   return useQuery({
     queryKey: ['briefing-attendees', briefingId],
     queryFn: async (): Promise<BriefingAttendee[]> => {

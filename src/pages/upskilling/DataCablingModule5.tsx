@@ -7,34 +7,34 @@ const DataCablingModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Copper Termination Tools and Techniques",
+      title: 'Copper Termination Tools and Techniques',
       icon: Wrench,
-      description: "Tools and methods for copper cable termination"
+      description: 'Tools and methods for copper cable termination',
     },
     {
       id: 2,
-      title: "Link Testing vs Channel Testing",
+      title: 'Link Testing vs Channel Testing',
       icon: TestTube,
-      description: "Different testing methodologies and applications"
+      description: 'Different testing methodologies and applications',
     },
     {
       id: 3,
-      title: "Test Equipment and Results Interpretation",
+      title: 'Test Equipment and Results Interpretation',
       icon: BarChart,
-      description: "Testing equipment operation and result analysis"
+      description: 'Testing equipment operation and result analysis',
     },
     {
       id: 4,
-      title: "Cable Map and Test Certificate Generation",
+      title: 'Cable Map and Test Certificate Generation',
       icon: AlertCircle,
-      description: "Documentation and certification processes"
+      description: 'Documentation and certification processes',
     },
     {
       id: 5,
-      title: "Fault Diagnosis and Retermination",
+      title: 'Fault Diagnosis and Retermination',
       icon: Search,
-      description: "Troubleshooting and remedial work procedures"
-    }
+      description: 'Troubleshooting and remedial work procedures',
+    },
   ];
 
   return (

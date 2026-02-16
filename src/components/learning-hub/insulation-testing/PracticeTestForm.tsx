@@ -1,10 +1,15 @@
-
 import React from 'react';
 import { Calculator, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { InsulationTestResult, testVoltages } from './types';
 
 interface PracticeTestFormProps {
@@ -32,7 +37,10 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
         </div>
         <div className="space-y-2">
           <Label htmlFor="testVoltage">Test Voltage</Label>
-          <Select value={currentTest.testVoltage} onValueChange={(value) => onUpdateTest('testVoltage', value)}>
+          <Select
+            value={currentTest.testVoltage}
+            onValueChange={(value) => onUpdateTest('testVoltage', value)}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select test voltage" />
             </SelectTrigger>
@@ -86,7 +94,9 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
 
       {currentTest.temperature !== '20' && (
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-4">
-          <div className="text-blue-400 font-medium mb-2">Temperature Corrected Values (20°C reference)</div>
+          <div className="text-blue-400 font-medium mb-2">
+            Temperature Corrected Values (20°C reference)
+          </div>
           <div className="text-sm text-white space-y-1">
             <p>Live-Neutral: {currentTest.correctedValues.liveNeutral || 'N/A'} MΩ</p>
             <p>Live-Earth: {currentTest.correctedValues.liveEarth || 'N/A'} MΩ</p>
@@ -105,10 +115,13 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
         />
       </div>
 
-      <Button 
+      <Button
         onClick={onAddTest}
         className="w-full bg-purple-500/20 text-purple-400 border border-purple-500/30 hover:bg-purple-500/30"
-        disabled={!currentTest.circuitRef || (!currentTest.liveNeutral && !currentTest.liveEarth && !currentTest.neutralEarth)}
+        disabled={
+          !currentTest.circuitRef ||
+          (!currentTest.liveNeutral && !currentTest.liveEarth && !currentTest.neutralEarth)
+        }
       >
         <Calculator className="h-4 w-4 mr-2" />
         Add Insulation Test Result

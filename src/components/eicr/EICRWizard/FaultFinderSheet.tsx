@@ -19,10 +19,7 @@ interface FaultFinderSheetProps {
  * Bottom sheet wrapper for the AI Fault Finder (DiagnosticWizard)
  * Provides a mobile-friendly way to access fault diagnosis from within the EICR wizard
  */
-export const FaultFinderSheet: React.FC<FaultFinderSheetProps> = ({
-  open,
-  onOpenChange,
-}) => {
+export const FaultFinderSheet: React.FC<FaultFinderSheetProps> = ({ open, onOpenChange }) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[90vh] overflow-y-auto">
@@ -39,9 +36,7 @@ export const FaultFinderSheet: React.FC<FaultFinderSheetProps> = ({
                   AI Powered
                 </Badge>
               </SheetTitle>
-              <SheetDescription>
-                Answer questions to diagnose electrical faults
-              </SheetDescription>
+              <SheetDescription>Answer questions to diagnose electrical faults</SheetDescription>
             </div>
           </div>
         </SheetHeader>

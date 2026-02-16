@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { JobPackSelector } from "@/components/employer/smart-docs/JobPackSelector";
-import { useJobPacks } from "@/hooks/useJobPacks";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import type { Section } from "@/pages/employer/EmployerDashboard";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
+import { useJobPacks } from '@/hooks/useJobPacks';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   Receipt,
   Sparkles,
@@ -23,8 +23,8 @@ import {
   RefreshCw,
   Plus,
   Trash2,
-  PoundSterling
-} from "lucide-react";
+  PoundSterling,
+} from 'lucide-react';
 
 interface AIQuoteSectionProps {
   onNavigate: (section: Section) => void;
@@ -42,61 +42,62 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
   const { toast } = useToast();
 
   const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
-  const [clientName, setClientName] = useState("");
-  const [clientAddress, setClientAddress] = useState("");
-  const [projectDescription, setProjectDescription] = useState("");
+  const [clientName, setClientName] = useState('');
+  const [clientAddress, setClientAddress] = useState('');
+  const [projectDescription, setProjectDescription] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([
-    { id: '1', description: '', quantity: 1, unitPrice: 0 }
+    { id: '1', description: '', quantity: 1, unitPrice: 0 },
   ]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const selectedJobPack = jobPacks.find(jp => jp.id === selectedJobPackId);
+  const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
   // Calculate totals
-  const subtotal = lineItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-  const vat = subtotal * 0.20;
+  const subtotal = lineItems.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
+  const vat = subtotal * 0.2;
   const total = subtotal + vat;
 
   const addLineItem = () => {
-    setLineItems([...lineItems, {
-      id: Date.now().toString(),
-      description: '',
-      quantity: 1,
-      unitPrice: 0
-    }]);
+    setLineItems([
+      ...lineItems,
+      {
+        id: Date.now().toString(),
+        description: '',
+        quantity: 1,
+        unitPrice: 0,
+      },
+    ]);
   };
 
   const removeLineItem = (id: string) => {
     if (lineItems.length > 1) {
-      setLineItems(lineItems.filter(item => item.id !== id));
+      setLineItems(lineItems.filter((item) => item.id !== id));
     }
   };
 
   const updateLineItem = (id: string, field: keyof LineItem, value: any) => {
-    setLineItems(lineItems.map(item =>
-      item.id === id ? { ...item, [field]: value } : item
-    ));
+    setLineItems(lineItems.map((item) => (item.id === id ? { ...item, [field]: value } : item)));
   };
 
   const handleGenerate = async () => {
     if (!clientName.trim() || !projectDescription.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please provide client name and project description.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please provide client name and project description.',
+        variant: 'destructive',
       });
       return;
     }
 
-    const validItems = lineItems.filter(item => item.description.trim() && item.unitPrice > 0);
+    const validItems = lineItems.filter((item) => item.description.trim() && item.unitPrice > 0);
     if (validItems.length === 0) {
       toast({
-        title: "No Line Items",
-        description: "Please add at least one line item with description and price.",
-        variant: "destructive"
+        title: 'No Line Items',
+        description: 'Please add at least one line item with description and price.',
+        variant: 'destructive',
       });
       return;
     }
@@ -107,7 +108,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     setResult(null);
 
     const progressInterval = setInterval(() => {
-      setProgress(prev => prev >= 90 ? prev : prev + Math.random() * 20);
+      setProgress((prev) => (prev >= 90 ? prev : prev + Math.random() * 20));
     }, 300);
 
     try {
@@ -121,11 +122,13 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
           vat,
           total,
           jobPackId: selectedJobPackId,
-          projectInfo: selectedJobPack ? {
-            projectName: selectedJobPack.title,
-            location: selectedJobPack.location
-          } : null
-        }
+          projectInfo: selectedJobPack
+            ? {
+                projectName: selectedJobPack.title,
+                location: selectedJobPack.location,
+              }
+            : null,
+        },
       });
 
       clearInterval(progressInterval);
@@ -139,18 +142,17 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
       setIsGenerating(false);
 
       toast({
-        title: "Quote Generated!",
-        description: "Your professional quote has been created.",
+        title: 'Quote Generated!',
+        description: 'Your professional quote has been created.',
       });
-
     } catch (err: any) {
       clearInterval(progressInterval);
       setIsGenerating(false);
       setError(err.message);
       toast({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
@@ -225,7 +227,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
               <JobPackSelector
                 selectedJobPackId={selectedJobPackId}
                 onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate("jobpacks")}
+                onCreateNew={() => onNavigate('jobpacks')}
                 showStatus={false}
               />
             </CardContent>
@@ -267,7 +269,10 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
             </CardHeader>
             <CardContent className="space-y-3">
               {lineItems.map((item, index) => (
-                <div key={item.id} className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/10 space-y-2">
+                <div
+                  key={item.id}
+                  className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/10 space-y-2"
+                >
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">Item {index + 1}</span>
                     {lineItems.length > 1 && (
@@ -295,7 +300,9 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
                       <Input
                         type="number"
                         value={item.quantity}
-                        onChange={(e) => updateLineItem(item.id, 'quantity', parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          updateLineItem(item.id, 'quantity', parseInt(e.target.value) || 0)
+                        }
                         className="bg-elec-dark border-elec-yellow/20 text-sm"
                         disabled={isGenerating}
                       />
@@ -306,7 +313,9 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
                         type="number"
                         step="0.01"
                         value={item.unitPrice}
-                        onChange={(e) => updateLineItem(item.id, 'unitPrice', parseFloat(e.target.value) || 0)}
+                        onChange={(e) =>
+                          updateLineItem(item.id, 'unitPrice', parseFloat(e.target.value) || 0)
+                        }
                         className="bg-elec-dark border-elec-yellow/20 text-sm"
                         disabled={isGenerating}
                       />

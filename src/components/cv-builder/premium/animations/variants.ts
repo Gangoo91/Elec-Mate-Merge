@@ -3,11 +3,11 @@
  * Blue/cyan theme for CV builder
  */
 
-import type { Variants, Transition } from "framer-motion";
+import type { Variants, Transition } from 'framer-motion';
 
 // Native spring configuration
 export const nativeSpringConfig: Transition = {
-  type: "spring",
+  type: 'spring',
   stiffness: 300,
   damping: 24,
 };
@@ -73,7 +73,7 @@ export const listItemVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 500,
       damping: 30,
     },
@@ -94,10 +94,10 @@ export const cardExpandVariants: Variants = {
     transition: { duration: 0.2 },
   },
   expanded: {
-    height: "auto",
+    height: 'auto',
     opacity: 1,
     transition: {
-      height: { type: "spring", stiffness: 300, damping: 30 },
+      height: { type: 'spring', stiffness: 300, damping: 30 },
       opacity: { duration: 0.2, delay: 0.1 },
     },
   },
@@ -105,17 +105,17 @@ export const cardExpandVariants: Variants = {
 
 // Bottom sheet animation
 export const sheetVariants: Variants = {
-  initial: { y: "100%" },
+  initial: { y: '100%' },
   animate: {
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 300,
       damping: 30,
     },
   },
   exit: {
-    y: "100%",
+    y: '100%',
     transition: { duration: 0.2 },
   },
 };
@@ -128,7 +128,7 @@ export const fadeUpVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.3,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
   exit: {
@@ -160,7 +160,7 @@ export const templateCardVariants: Variants = {
     opacity: 1,
     scale: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 400,
       damping: 25,
     },
@@ -173,7 +173,7 @@ export const templateCardVariants: Variants = {
   tap: { scale: 0.98 },
   selected: {
     scale: 1,
-    boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.5)",
+    boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.5)',
   },
 };
 
@@ -181,36 +181,36 @@ export const templateCardVariants: Variants = {
 export const stepIndicatorVariants: Variants = {
   inactive: {
     scale: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   active: {
     scale: 1.1,
-    backgroundColor: "rgba(59, 130, 246, 0.3)",
+    backgroundColor: 'rgba(59, 130, 246, 0.3)',
     transition: nativeSpringConfig,
   },
   completed: {
     scale: 1,
-    backgroundColor: "rgba(34, 197, 94, 0.3)",
+    backgroundColor: 'rgba(34, 197, 94, 0.3)',
   },
 };
 
 // AI panel slide in
 export const aiPanelVariants: Variants = {
   hidden: {
-    x: "100%",
+    x: '100%',
     opacity: 0,
   },
   visible: {
     x: 0,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 300,
       damping: 30,
     },
   },
   exit: {
-    x: "100%",
+    x: '100%',
     opacity: 0,
     transition: { duration: 0.2 },
   },
@@ -224,7 +224,7 @@ export const celebrationVariants: Variants = {
     rotate: [0, 10, -10, 0],
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
 };
@@ -238,7 +238,7 @@ export const pulseVariants: Variants = {
     transition: {
       duration: 2,
       repeat: Infinity,
-      ease: "easeInOut",
+      ease: 'easeInOut',
     },
   },
 };
@@ -251,7 +251,7 @@ export const heroCardVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
       damping: 25,
     },

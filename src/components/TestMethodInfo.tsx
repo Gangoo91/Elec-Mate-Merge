@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,16 +16,19 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={cn(
-      "space-y-4",
-      isMobile ? "px-4 py-4" : ""
-    )}>
-      <div className={cn(
-        "grid gap-4",
-        isMobile ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30"
-      )}>
+    <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : '')}>
+      <div
+        className={cn(
+          'grid gap-4',
+          isMobile
+            ? 'grid-cols-1'
+            : 'grid-cols-1 sm:grid-cols-2 p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30'
+        )}
+      >
         <div className="space-y-2">
-          <Label htmlFor="testMethod" className="text-sm font-medium text-foreground/80">Test Method Applied</Label>
+          <Label htmlFor="testMethod" className="text-sm font-medium text-foreground/80">
+            Test Method Applied
+          </Label>
           <Input
             id="testMethod"
             value={formData.testMethod || ''}
@@ -37,7 +39,9 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="testVoltage" className="text-sm font-medium text-foreground/80">Test Voltage Applied</Label>
+          <Label htmlFor="testVoltage" className="text-sm font-medium text-foreground/80">
+            Test Voltage Applied
+          </Label>
           <MobileSelectPicker
             value={formData.testVoltage || ''}
             onValueChange={(value) => onUpdate('testVoltage', value)}
@@ -49,7 +53,9 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="testNotes" className="text-sm font-medium text-foreground/80">Test Notes & Observations</Label>
+        <Label htmlFor="testNotes" className="text-sm font-medium text-foreground/80">
+          Test Notes & Observations
+        </Label>
         <Textarea
           id="testNotes"
           value={formData.testNotes || ''}

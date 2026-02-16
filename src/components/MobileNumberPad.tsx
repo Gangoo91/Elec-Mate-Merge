@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -34,7 +33,7 @@ const MobileNumberPad = ({ value, onChange, onClose, unit }: MobileNumberPadProp
     ['7', '8', '9'],
     ['4', '5', '6'],
     ['1', '2', '3'],
-    ['.', '0', '⌫']
+    ['.', '0', '⌫'],
   ];
 
   return (
@@ -73,7 +72,10 @@ const MobileNumberPad = ({ value, onChange, onClose, unit }: MobileNumberPadProp
           <Button variant="outline" onClick={handleClear} className="flex-1">
             Clear
           </Button>
-          <Button onClick={onClose} className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black">
+          <Button
+            onClick={onClose}
+            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+          >
             Done
           </Button>
         </div>

@@ -1,37 +1,42 @@
-import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
-import { useState } from "react";
+import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
+import { useState } from 'react';
 
-const TITLE = "Dealing with Incomplete or Conflicting Information - Module 5.1.6 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn to identify and resolve incomplete or conflicting information in electrical drawings and specifications. Master escalation procedures and best practices for safe installations.";
+const TITLE =
+  'Dealing with Incomplete or Conflicting Information - Module 5.1.6 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn to identify and resolve incomplete or conflicting information in electrical drawings and specifications. Master escalation procedures and best practices for safe installations.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What should always be checked to ensure a drawing is up to date?",
-    options: ["The scale", "The revision number", "The date", "The title"],
+    question: 'What should always be checked to ensure a drawing is up to date?',
+    options: ['The scale', 'The revision number', 'The date', 'The title'],
     correctIndex: 1,
-    explanation: "The revision number must always be checked to ensure you're working with the most current version of the drawing."
+    explanation:
+      "The revision number must always be checked to ensure you're working with the most current version of the drawing.",
   },
   {
     id: 2,
-    question: "Who should you escalate conflicting information to first?",
-    options: ["The client", "The site supervisor", "The designer", "Another apprentice"],
+    question: 'Who should you escalate conflicting information to first?',
+    options: ['The client', 'The site supervisor', 'The designer', 'Another apprentice'],
     correctIndex: 1,
-    explanation: "The site supervisor should be your first point of contact when dealing with conflicting or unclear information."
+    explanation:
+      'The site supervisor should be your first point of contact when dealing with conflicting or unclear information.',
   },
   {
     id: 3,
-    question: "What is the main risk of making assumptions about unclear drawings?",
-    options: ["Delays", "Unsafe installations", "Material waste", "All of the above"],
+    question: 'What is the main risk of making assumptions about unclear drawings?',
+    options: ['Delays', 'Unsafe installations', 'Material waste', 'All of the above'],
     correctIndex: 3,
-    explanation: "Making assumptions can lead to all these issues: unsafe installations, delays, and material waste, plus failed inspections."
-  }
+    explanation:
+      'Making assumptions can lead to all these issues: unsafe installations, delays, and material waste, plus failed inspections.',
+  },
 ];
 
 const Module5Section1_6 = () => {
@@ -41,143 +46,139 @@ const Module5Section1_6 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What is a common sign of conflicting information in drawings?",
+      question: 'What is a common sign of conflicting information in drawings?',
       options: [
-        "A socket shown as single in one place but double in another",
-        "Missing title block",
-        "Wrong paper size",
-        "Poor print quality"
+        'A socket shown as single in one place but double in another',
+        'Missing title block',
+        'Wrong paper size',
+        'Poor print quality',
       ],
       correctAnswer: 0,
-      explanation: "When the same component is shown differently in various parts of the drawing, this indicates conflicting information."
+      explanation:
+        'When the same component is shown differently in various parts of the drawing, this indicates conflicting information.',
     },
     {
       id: 2,
-      question: "True or False: It is acceptable to continue work with missing dimensions if you use your best judgement.",
-      options: [
-        "True",
-        "False"
-      ],
+      question:
+        'True or False: It is acceptable to continue work with missing dimensions if you use your best judgement.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Never use your best judgement when dimensions are missing - always seek clarification to avoid costly mistakes."
+      explanation:
+        'False. Never use your best judgement when dimensions are missing - always seek clarification to avoid costly mistakes.',
     },
     {
       id: 3,
-      question: "What should you always check to ensure drawings are current?",
-      options: [
-        "The title",
-        "The revision number",
-        "The scale",
-        "The drawing number"
-      ],
+      question: 'What should you always check to ensure drawings are current?',
+      options: ['The title', 'The revision number', 'The scale', 'The drawing number'],
       correctAnswer: 1,
-      explanation: "The revision number indicates which version of the drawing you have and ensures you're working with the most current information."
+      explanation:
+        "The revision number indicates which version of the drawing you have and ensures you're working with the most current information.",
     },
     {
       id: 4,
-      question: "If drawings and specifications disagree, what should you do?",
+      question: 'If drawings and specifications disagree, what should you do?',
       options: [
-        "Follow the drawing",
-        "Follow the specification",
-        "Escalate the issue to the supervisor or project manager",
-        "Ask another apprentice"
+        'Follow the drawing',
+        'Follow the specification',
+        'Escalate the issue to the supervisor or project manager',
+        'Ask another apprentice',
       ],
       correctAnswer: 2,
-      explanation: "Always escalate conflicts between drawings and specifications to ensure the correct approach is taken."
+      explanation:
+        'Always escalate conflicts between drawings and specifications to ensure the correct approach is taken.',
     },
     {
       id: 5,
-      question: "Who should be contacted first when information is unclear?",
-      options: [
-        "The client",
-        "Site supervisor",
-        "The designer",
-        "Health and safety officer"
-      ],
+      question: 'Who should be contacted first when information is unclear?',
+      options: ['The client', 'Site supervisor', 'The designer', 'Health and safety officer'],
       correctAnswer: 1,
-      explanation: "The site supervisor is your first point of contact for resolving unclear information on-site."
+      explanation:
+        'The site supervisor is your first point of contact for resolving unclear information on-site.',
     },
     {
       id: 6,
-      question: "Why should clarifications always be documented?",
+      question: 'Why should clarifications always be documented?',
       options: [
         "It's not necessary",
-        "To protect yourself and ensure consistent team understanding",
-        "To waste time",
-        "Only for legal reasons"
+        'To protect yourself and ensure consistent team understanding',
+        'To waste time',
+        'Only for legal reasons',
       ],
       correctAnswer: 1,
-      explanation: "Documentation protects you and ensures all team members have consistent understanding of any changes or clarifications."
+      explanation:
+        'Documentation protects you and ensures all team members have consistent understanding of any changes or clarifications.',
     },
     {
       id: 7,
-      question: "What is one risk of ignoring incomplete documentation?",
-      options: [
-        "Nothing happens",
-        "Failed inspection",
-        "Improved efficiency",
-        "Cost savings"
-      ],
+      question: 'What is one risk of ignoring incomplete documentation?',
+      options: ['Nothing happens', 'Failed inspection', 'Improved efficiency', 'Cost savings'],
       correctAnswer: 1,
-      explanation: "Ignoring incomplete documentation can lead to failed inspections, requiring costly rework and delays."
+      explanation:
+        'Ignoring incomplete documentation can lead to failed inspections, requiring costly rework and delays.',
     },
     {
       id: 8,
-      question: "True or False: Specifications always override drawings without confirmation.",
-      options: [
-        "True",
-        "False"
-      ],
+      question: 'True or False: Specifications always override drawings without confirmation.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Clarification is always required when specifications and drawings conflict - never assume priority."
+      explanation:
+        'False. Clarification is always required when specifications and drawings conflict - never assume priority.',
     },
     {
       id: 9,
-      question: "Give one best practice when dealing with unclear drawings.",
+      question: 'Give one best practice when dealing with unclear drawings.',
       options: [
-        "Guess based on experience",
-        "Stop and ask - never guess",
-        "Continue and fix later",
-        "Ignore the problem"
+        'Guess based on experience',
+        'Stop and ask - never guess',
+        'Continue and fix later',
+        'Ignore the problem',
       ],
       correctAnswer: 1,
-      explanation: "The golden rule is to stop and ask for clarification rather than guessing, which prevents costly mistakes."
+      explanation:
+        'The golden rule is to stop and ask for clarification rather than guessing, which prevents costly mistakes.',
     },
     {
       id: 10,
-      question: "What happened in the real-world hospital project example?",
+      question: 'What happened in the real-world hospital project example?',
       options: [
-        "The project finished early",
-        "Everything went smoothly",
-        "Emergency lighting requirements were missed because the drawing and specification conflicted, leading to reinstallation",
-        "The client was happy"
+        'The project finished early',
+        'Everything went smoothly',
+        'Emergency lighting requirements were missed because the drawing and specification conflicted, leading to reinstallation',
+        'The client was happy',
       ],
       correctAnswer: 2,
-      explanation: "The hospital project failed compliance checks due to conflicting emergency lighting requirements, requiring expensive reinstallation."
-    }
+      explanation:
+        'The hospital project failed compliance checks due to conflicting emergency lighting requirements, requiring expensive reinstallation.',
+    },
   ];
 
   const faqs = [
     {
       question: "Can I make small assumptions if the drawing isn't clear?",
-      answer: "No — always clarify to avoid risks and rework. Even small assumptions can lead to major problems and costly corrections."
+      answer:
+        'No — always clarify to avoid risks and rework. Even small assumptions can lead to major problems and costly corrections.',
     },
     {
-      question: "What if drawings and specifications contradict each other?",
-      answer: "Raise the conflict with your supervisor and confirm in writing which takes priority. Never assume one document overrides another."
+      question: 'What if drawings and specifications contradict each other?',
+      answer:
+        'Raise the conflict with your supervisor and confirm in writing which takes priority. Never assume one document overrides another.',
     },
     {
-      question: "Why is documenting clarifications important?",
-      answer: "To protect yourself and ensure consistent work across the team. Written records prevent misunderstandings and provide clear reference for future work."
+      question: 'Why is documenting clarifications important?',
+      answer:
+        'To protect yourself and ensure consistent work across the team. Written records prevent misunderstandings and provide clear reference for future work.',
     },
     {
-      question: "What should I do if my supervisor is unavailable when I find conflicting information?",
-      answer: "Stop work on that area and escalate to the project manager or designer. Never proceed with uncertain information, even under time pressure."
+      question:
+        'What should I do if my supervisor is unavailable when I find conflicting information?',
+      answer:
+        'Stop work on that area and escalate to the project manager or designer. Never proceed with uncertain information, even under time pressure.',
     },
     {
-      question: "How do I know if a drawing revision is the latest version?",
-      answer: "Check the revision number in the title block and compare with the issued drawing register. When in doubt, ask the site supervisor to confirm."
-    }
+      question: 'How do I know if a drawing revision is the latest version?',
+      answer:
+        'Check the revision number in the title block and compare with the issued drawing register. When in doubt, ask the site supervisor to confirm.',
+    },
   ];
 
   return (
@@ -212,7 +213,8 @@ const Module5Section1_6 = () => {
               Dealing with Incomplete or Conflicting Information
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Learn to identify and resolve incomplete or conflicting information in electrical drawings and specifications.
+              Learn to identify and resolve incomplete or conflicting information in electrical
+              drawings and specifications.
             </p>
           </header>
 
@@ -222,17 +224,32 @@ const Module5Section1_6 = () => {
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
-                  <li>Not all drawings and specifications are perfect - information may be missing or contradictory.</li>
+                  <li>
+                    Not all drawings and specifications are perfect - information may be missing or
+                    contradictory.
+                  </li>
                   <li>Making assumptions can lead to unsafe installations and costly rework.</li>
-                  <li>Always escalate unclear information to supervisors and document all clarifications.</li>
+                  <li>
+                    Always escalate unclear information to supervisors and document all
+                    clarifications.
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
-                  <li><strong>Spot:</strong> Missing dimensions, conflicting symbols, outdated revisions.</li>
-                  <li><strong>Use:</strong> Escalation procedures, formal documentation, team communication.</li>
-                  <li><strong>Check:</strong> Revision numbers, drawing-specification consistency, site conditions.</li>
+                  <li>
+                    <strong>Spot:</strong> Missing dimensions, conflicting symbols, outdated
+                    revisions.
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Escalation procedures, formal documentation, team
+                    communication.
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Revision numbers, drawing-specification consistency,
+                    site conditions.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -245,11 +262,16 @@ const Module5Section1_6 = () => {
               Learning Outcomes
             </h2>
             <ul className="list-disc pl-6 space-y-2 text-white/80">
-              <li>Recognise signs of incomplete or conflicting information in drawings/specifications.</li>
+              <li>
+                Recognise signs of incomplete or conflicting information in drawings/specifications.
+              </li>
               <li>Apply methods to verify and resolve discrepancies.</li>
               <li>Understand who to escalate issues to on-site.</li>
               <li>Avoid the risks of making assumptions without confirmation.</li>
-              <li>Work to ensure installations remain safe and compliant despite unclear documentation.</li>
+              <li>
+                Work to ensure installations remain safe and compliant despite unclear
+                documentation.
+              </li>
             </ul>
           </section>
 
@@ -260,15 +282,15 @@ const Module5Section1_6 = () => {
               Common Issues with Documentation
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                Documentation problems occur frequently on electrical projects:
-              </p>
+              <p>Documentation problems occur frequently on electrical projects:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-3">Typical Documentation Problems</p>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <p className="mb-2"><strong className="text-white">Missing information:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Missing information:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Missing dimensions or notes</li>
                       <li>Incomplete circuit details</li>
@@ -277,7 +299,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Conflicting information:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Conflicting information:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Socket marked as single in one place, double in another</li>
                       <li>Different cable types specified in drawing vs schedule</li>
@@ -286,7 +310,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Version control issues:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Version control issues:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Outdated revisions being used</li>
                       <li>Superseded drawings still in circulation</li>
@@ -295,7 +321,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Site condition mismatches:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Site condition mismatches:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Drawings not matching actual site conditions</li>
                       <li>Structural changes not reflected</li>
@@ -306,7 +334,8 @@ const Module5Section1_6 = () => {
                 </div>
 
                 <p className="text-sm text-white/60 mt-3">
-                  <strong>Key principle:</strong> Documentation problems are common - always verify before proceeding
+                  <strong>Key principle:</strong> Documentation problems are common - always verify
+                  before proceeding
                 </p>
               </div>
             </div>
@@ -329,15 +358,15 @@ const Module5Section1_6 = () => {
               Risks of Proceeding Without Clarification
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                The consequences of assuming or guessing can be severe:
-              </p>
+              <p>The consequences of assuming or guessing can be severe:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-white mb-3">Serious Consequences</p>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <p className="mb-2"><strong className="text-white">Safety risks:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Safety risks:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Unsafe installations</li>
                       <li>Non-compliant work</li>
@@ -346,7 +375,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Commercial impacts:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Commercial impacts:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Failed inspections</li>
                       <li>Costly rework and delays</li>
@@ -355,7 +386,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Professional consequences:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Professional consequences:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Breach of contract obligations</li>
                       <li>Damage to reputation</li>
@@ -364,7 +397,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Project impacts:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Project impacts:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Programme delays</li>
                       <li>Budget overruns</li>
@@ -375,7 +410,8 @@ const Module5Section1_6 = () => {
                 </div>
 
                 <p className="text-sm text-white/60 mt-3">
-                  <strong>Remember:</strong> The cost of stopping to ask is always less than the cost of getting it wrong
+                  <strong>Remember:</strong> The cost of stopping to ask is always less than the
+                  cost of getting it wrong
                 </p>
               </div>
             </div>
@@ -398,15 +434,15 @@ const Module5Section1_6 = () => {
               Methods of Resolution
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                Systematic approaches to identifying and resolving documentation issues:
-              </p>
+              <p>Systematic approaches to identifying and resolving documentation issues:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-3">Verification Process</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="mb-2"><strong className="text-white">Document verification:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Document verification:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Always check the revision number of drawings</li>
                       <li>Verify drawing issue dates</li>
@@ -415,7 +451,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Consistency checks:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Consistency checks:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Compare drawings against specifications for consistency</li>
                       <li>Check different drawing sheets for conflicts</li>
@@ -424,7 +462,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Pre-work identification:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Pre-work identification:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Highlight discrepancies before starting work</li>
                       <li>Mark unclear areas on drawings</li>
@@ -435,7 +475,8 @@ const Module5Section1_6 = () => {
                 </div>
 
                 <p className="text-sm text-white/60 mt-3">
-                  <strong>Best practice:</strong> Spend time at the start checking rather than fixing mistakes later
+                  <strong>Best practice:</strong> Spend time at the start checking rather than
+                  fixing mistakes later
                 </p>
               </div>
             </div>
@@ -461,11 +502,13 @@ const Module5Section1_6 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <div className="text-white/80">
-                  <p className="font-medium text-white mb-2">Hospital Project Emergency Lighting Conflict</p>
+                  <p className="font-medium text-white mb-2">
+                    Hospital Project Emergency Lighting Conflict
+                  </p>
                   <p className="text-sm mb-3">
-                    On a hospital project, lighting drawings showed emergency lights in one corridor, but the specification
-                    required double the number. The issue wasn't raised, and the work failed compliance checks, requiring
-                    reinstallation.
+                    On a hospital project, lighting drawings showed emergency lights in one
+                    corridor, but the specification required double the number. The issue wasn't
+                    raised, and the work failed compliance checks, requiring reinstallation.
                   </p>
                   <p className="font-medium text-white mb-2 text-sm">The consequences:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm mb-3">
@@ -475,8 +518,8 @@ const Module5Section1_6 = () => {
                     <li>Client dissatisfaction and potential future work loss</li>
                   </ul>
                   <p className="text-sm font-medium text-green-400">
-                    Proper escalation would have identified the conflict before installation, saving time and money while
-                    ensuring patient safety compliance.
+                    Proper escalation would have identified the conflict before installation, saving
+                    time and money while ensuring patient safety compliance.
                   </p>
                 </div>
               </div>
@@ -494,7 +537,9 @@ const Module5Section1_6 = () => {
                 <p className="font-medium text-white mb-3">Structured Escalation Path</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="mb-2"><strong className="text-white">Step 1 - Site supervisor:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Step 1 - Site supervisor:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Raise questions with the site supervisor first</li>
                       <li>Explain the specific discrepancy clearly</li>
@@ -503,7 +548,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Step 2 - Project manager:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Step 2 - Project manager:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>If unresolved, escalate to the project manager</li>
                       <li>Document previous escalation attempts</li>
@@ -512,7 +559,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Step 3 - Designer/client:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Step 3 - Designer/client:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Final escalation to designer or client</li>
                       <li>Formal documentation required</li>
@@ -521,7 +570,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Documentation requirements:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Documentation requirements:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Record all clarifications formally (emails, site instructions)</li>
                       <li>Keep copies of all correspondence</li>
@@ -532,7 +583,8 @@ const Module5Section1_6 = () => {
                 </div>
 
                 <p className="text-sm text-white/60 mt-3">
-                  <strong>Key rule:</strong> Always get clarifications in writing - verbal instructions can be forgotten or misunderstood
+                  <strong>Key rule:</strong> Always get clarifications in writing - verbal
+                  instructions can be forgotten or misunderstood
                 </p>
               </div>
             </div>
@@ -551,7 +603,9 @@ const Module5Section1_6 = () => {
                 <p className="font-medium text-white mb-3">Professional Standards</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="mb-2"><strong className="text-white">Golden rules:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Golden rules:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Never guess — stop and ask</li>
                       <li>Document everything in writing</li>
@@ -560,7 +614,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Record keeping:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Record keeping:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Keep records of all discrepancies and how they were resolved</li>
                       <li>Maintain a project query log</li>
@@ -569,7 +625,9 @@ const Module5Section1_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="mb-2"><strong className="text-white">Team communication:</strong></p>
+                    <p className="mb-2">
+                      <strong className="text-white">Team communication:</strong>
+                    </p>
                     <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
                       <li>Share clarifications with the whole team to ensure consistency</li>
                       <li>Update all affected personnel immediately</li>
@@ -580,7 +638,8 @@ const Module5Section1_6 = () => {
                 </div>
 
                 <p className="text-sm text-white/60 mt-3">
-                  <strong>Professional approach:</strong> Thorough documentation and communication prevent repeated mistakes
+                  <strong>Professional approach:</strong> Thorough documentation and communication
+                  prevent repeated mistakes
                 </p>
               </div>
             </div>
@@ -600,7 +659,9 @@ const Module5Section1_6 = () => {
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   >
                     <span className="font-medium text-white pr-4">{faq.question}</span>
-                    <ChevronDown className={`w-5 h-5 text-white/60 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      className={`w-5 h-5 text-white/60 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                    />
                   </button>
                   {openFaq === index && (
                     <div className="px-4 pb-4 text-white/70 text-sm border-t border-white/10 pt-3">
@@ -647,7 +708,9 @@ const Module5Section1_6 = () => {
                   <p>1. Site supervisor</p>
                   <p>2. Project manager</p>
                   <p>3. Designer/client</p>
-                  <p className="font-medium text-elec-yellow mt-2">Remember: Stop work if unclear!</p>
+                  <p className="font-medium text-elec-yellow mt-2">
+                    Remember: Stop work if unclear!
+                  </p>
                 </div>
               </div>
             </div>
@@ -665,13 +728,16 @@ const Module5Section1_6 = () => {
                 <li>How to spot incomplete or conflicting information</li>
                 <li>Why it's risky to proceed without clarification</li>
                 <li>The correct escalation process for resolving issues</li>
-                <li>Best practice for ensuring safe and compliant work despite unclear documents</li>
+                <li>
+                  Best practice for ensuring safe and compliant work despite unclear documents
+                </li>
               </ul>
               <div className="mt-4 p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-2">Key takeaway:</p>
                 <p className="text-sm">
-                  By following these steps, you prevent mistakes and keep installations safe, compliant, and efficient.
-                  The time spent clarifying unclear information is always an investment in quality and safety.
+                  By following these steps, you prevent mistakes and keep installations safe,
+                  compliant, and efficient. The time spent clarifying unclear information is always
+                  an investment in quality and safety.
                 </p>
               </div>
             </div>
@@ -679,10 +745,7 @@ const Module5Section1_6 = () => {
 
           {/* Quiz */}
           <div className="mb-10">
-            <Quiz
-              title="Conflicting Information Quiz"
-              questions={quizQuestions}
-            />
+            <Quiz title="Conflicting Information Quiz" questions={quizQuestions} />
           </div>
 
           {/* Navigation Footer */}

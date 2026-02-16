@@ -5,7 +5,13 @@
 
 export type ApplianceClass = 'I' | 'II' | 'III';
 export type TestResult = 'pass' | 'fail' | 'na' | '';
-export type ApplianceCategory = 'IT' | 'portable' | 'moveable' | 'stationary' | 'fixed' | 'hand-held';
+export type ApplianceCategory =
+  | 'IT'
+  | 'portable'
+  | 'moveable'
+  | 'stationary'
+  | 'fixed'
+  | 'hand-held';
 
 export interface Appliance {
   id: string;

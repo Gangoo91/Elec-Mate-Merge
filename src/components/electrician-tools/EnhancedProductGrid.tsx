@@ -1,14 +1,20 @@
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
-import { SortAsc, SortDesc, Grid, List, Loader2, Package } from "lucide-react";
-import { ToolItem } from "@/hooks/useToolsData";
-import PremiumToolCard from "./PremiumToolCard";
-import ToolDetailModal from "./ToolDetailModal";
-import { FilterState } from "./ProductFilters";
-import { usePagination } from "@/hooks/usePagination";
-import ProductPagination from "@/components/ui/product-pagination";
+import { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
+import { SortAsc, SortDesc, Grid, List, Loader2, Package } from 'lucide-react';
+import { ToolItem } from '@/hooks/useToolsData';
+import PremiumToolCard from './PremiumToolCard';
+import ToolDetailModal from './ToolDetailModal';
+import { FilterState } from './ProductFilters';
+import { usePagination } from '@/hooks/usePagination';
+import ProductPagination from '@/components/ui/product-pagination';
 
 interface EnhancedProductGridProps {
   tools: ToolItem[];
@@ -21,8 +27,8 @@ interface EnhancedProductGridProps {
   isCompareDisabled?: boolean;
 }
 
-type SortOption = "relevance" | "price-low" | "price-high" | "name" | "supplier";
-type ViewMode = "grid" | "list";
+type SortOption = 'relevance' | 'price-low' | 'price-high' | 'name' | 'supplier';
+type ViewMode = 'grid' | 'list';
 
 const EnhancedProductGrid = ({
   tools,
@@ -32,10 +38,10 @@ const EnhancedProductGrid = ({
   onAddToCompare,
   onRemoveFromCompare,
   selectedItems = [],
-  isCompareDisabled = false
+  isCompareDisabled = false,
 }: EnhancedProductGridProps) => {
-  const [sortBy, setSortBy] = useState<SortOption>("relevance");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [sortBy, setSortBy] = useState<SortOption>('relevance');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [selectedTool, setSelectedTool] = useState<ToolItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -55,20 +61,23 @@ const EnhancedProductGrid = ({
 
     // Apply search filter
     if (searchTerm) {
-      result = result.filter(tool =>
-        tool.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tool.highlights?.some(highlight => 
-          typeof highlight === 'string' && highlight.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+      result = result.filter(
+        (tool) =>
+          tool.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          tool.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          tool.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          tool.highlights?.some(
+            (highlight) =>
+              typeof highlight === 'string' &&
+              highlight.toLowerCase().includes(searchTerm.toLowerCase())
+          )
       );
     }
 
     // Apply brand filter
     if (filters.brands.length > 0) {
-      result = result.filter(tool => {
+      result = result.filter((tool) => {
         const firstWord = tool.name.split(' ')[0];
         return filters.brands.includes(firstWord);
       });
@@ -76,21 +85,28 @@ const EnhancedProductGrid = ({
 
     // Apply price range filter
     if (filters.priceRanges.length > 0) {
-      result = result.filter(tool => {
+      result = result.filter((tool) => {
         const priceMatch = tool.price?.match(/£([\d,]+\.?\d*)/);
         if (!priceMatch) return false;
-        
+
         const price = parseFloat(priceMatch[1].replace(',', ''));
-        
-        return filters.priceRanges.some(range => {
+
+        return filters.priceRanges.some((range) => {
           switch (range) {
-            case "Under £25": return price < 25;
-            case "£25 - £50": return price >= 25 && price <= 50;
-            case "£50 - £100": return price >= 50 && price <= 100;
-            case "£100 - £250": return price >= 100 && price <= 250;
-            case "£250 - £500": return price >= 250 && price <= 500;
-            case "Over £500": return price > 500;
-            default: return false;
+            case 'Under £25':
+              return price < 25;
+            case '£25 - £50':
+              return price >= 25 && price <= 50;
+            case '£50 - £100':
+              return price >= 50 && price <= 100;
+            case '£100 - £250':
+              return price >= 100 && price <= 250;
+            case '£250 - £500':
+              return price >= 250 && price <= 500;
+            case 'Over £500':
+              return price > 500;
+            default:
+              return false;
           }
         });
       });
@@ -98,16 +114,14 @@ const EnhancedProductGrid = ({
 
     // Apply availability filter
     if (filters.availability.length > 0) {
-      result = result.filter(tool => 
-        tool.stockStatus && filters.availability.includes(tool.stockStatus)
+      result = result.filter(
+        (tool) => tool.stockStatus && filters.availability.includes(tool.stockStatus)
       );
     }
 
     // Apply supplier filter
     if (filters.suppliers.length > 0) {
-      result = result.filter(tool =>
-        tool.supplier && filters.suppliers.includes(tool.supplier)
-      );
+      result = result.filter((tool) => tool.supplier && filters.suppliers.includes(tool.supplier));
     }
 
     return result;
@@ -118,23 +132,23 @@ const EnhancedProductGrid = ({
     const sorted = [...filteredTools];
 
     switch (sortBy) {
-      case "price-low":
+      case 'price-low':
         return sorted.sort((a, b) => {
           const priceA = parseFloat(a.price?.replace(/[£,]/g, '') || '0');
           const priceB = parseFloat(b.price?.replace(/[£,]/g, '') || '0');
           return priceA - priceB;
         });
-      case "price-high":
+      case 'price-high':
         return sorted.sort((a, b) => {
           const priceA = parseFloat(a.price?.replace(/[£,]/g, '') || '0');
           const priceB = parseFloat(b.price?.replace(/[£,]/g, '') || '0');
           return priceB - priceA;
         });
-      case "name":
+      case 'name':
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
-      case "supplier":
+      case 'supplier':
         return sorted.sort((a, b) => (a.supplier || '').localeCompare(b.supplier || ''));
-      case "relevance":
+      case 'relevance':
       default:
         // Sort by relevance: sale items first, then by name
         return sorted.sort((a, b) => {
@@ -155,10 +169,10 @@ const EnhancedProductGrid = ({
     startIndex,
     endIndex,
     setCurrentPage,
-    setItemsPerPage
+    setItemsPerPage,
   } = usePagination<ToolItem>({
     items: sortedTools,
-    itemsPerPage: 12
+    itemsPerPage: 12,
   });
 
   if (isLoading) {
@@ -181,26 +195,24 @@ const EnhancedProductGrid = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="text-elec-light">
           <span className="font-semibold">{totalItems}</span> tools found
-          {searchTerm && (
-            <span className="text-text-muted"> for "{searchTerm}"</span>
-          )}
+          {searchTerm && <span className="text-text-muted"> for "{searchTerm}"</span>}
         </div>
 
         <div className="flex items-center gap-3">
           {/* View Mode Toggle */}
           <div className="flex items-center border border-elec-yellow/20 rounded-lg p-1 bg-elec-card/30">
             <Button
-              variant={viewMode === "grid" ? "gold" : "ghost"}
+              variant={viewMode === 'grid' ? 'gold' : 'ghost'}
               size="sm"
-              onClick={() => setViewMode("grid")}
+              onClick={() => setViewMode('grid')}
               className="h-10 w-10 px-0 touch-manipulation active:scale-[0.98]"
             >
               <Grid className="h-5 w-5" />
             </Button>
             <Button
-              variant={viewMode === "list" ? "gold" : "ghost"}
+              variant={viewMode === 'list' ? 'gold' : 'ghost'}
               size="sm"
-              onClick={() => setViewMode("list")}
+              onClick={() => setViewMode('list')}
               className="h-10 w-10 px-0 touch-manipulation active:scale-[0.98]"
             >
               <List className="h-5 w-5" />
@@ -258,17 +270,20 @@ const EnhancedProductGrid = ({
         </Card>
       ) : (
         <>
-          <div className={viewMode === "grid"
-            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 stagger-enter"
-            : "space-y-4 stagger-enter"
-          }>
+          <div
+            className={
+              viewMode === 'grid'
+                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 stagger-enter'
+                : 'space-y-4 stagger-enter'
+            }
+          >
             {currentTools.map((tool) => (
               <PremiumToolCard
                 key={tool.id || tool.name}
                 item={tool}
                 onAddToCompare={onAddToCompare}
                 onRemoveFromCompare={onRemoveFromCompare}
-                isSelected={selectedItems.some(item => item.id === tool.id)}
+                isSelected={selectedItems.some((item) => item.id === tool.id)}
                 isCompareDisabled={isCompareDisabled}
                 onCardClick={handleCardClick}
                 variant="default"
@@ -296,7 +311,9 @@ const EnhancedProductGrid = ({
             onClose={handleCloseModal}
             onAddToCompare={onAddToCompare}
             onRemoveFromCompare={onRemoveFromCompare}
-            isSelected={selectedTool ? selectedItems.some(item => item.id === selectedTool.id) : false}
+            isSelected={
+              selectedTool ? selectedItems.some((item) => item.id === selectedTool.id) : false
+            }
             isCompareDisabled={isCompareDisabled}
           />
         </>

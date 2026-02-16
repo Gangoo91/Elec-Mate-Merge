@@ -1,26 +1,26 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
-import { cn } from "@/lib/utils";
-import { Search, Filter, Briefcase, PoundSterling, Users, RefreshCw, Plus } from "lucide-react";
-import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { JobCard, AssignedWorker } from "@/components/employer/JobCard";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { AddJobDialog } from "@/components/employer/dialogs/AddJobDialog";
-import { ViewJobSheet } from "@/components/employer/sheets/ViewJobSheet";
-import { JobFilterSheet, JobFilters } from "@/components/employer/sheets/JobFilterSheet";
-import { useJobs } from "@/hooks/useJobs";
-import { Job } from "@/services/jobService";
-import { Skeleton } from "@/components/ui/skeleton";
-import { supabase } from "@/integrations/supabase/client";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { cn } from '@/lib/utils';
+import { Search, Filter, Briefcase, PoundSterling, Users, RefreshCw, Plus } from 'lucide-react';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { JobCard, AssignedWorker } from '@/components/employer/JobCard';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
+import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
+import { JobFilterSheet, JobFilters } from '@/components/employer/sheets/JobFilterSheet';
+import { useJobs } from '@/hooks/useJobs';
+import { Job } from '@/services/jobService';
+import { Skeleton } from '@/components/ui/skeleton';
+import { supabase } from '@/integrations/supabase/client';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export function JobsSection() {
   const queryClient = useQueryClient();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearch = useDebouncedValue(searchQuery, 300);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
@@ -37,9 +37,7 @@ export function JobsSection() {
   const { data: allAssignments = [] } = useQuery({
     queryKey: ['all-job-assignments'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('employer_job_assignments')
-        .select(`
+      const { data, error } = await supabase.from('employer_job_assignments').select(`
           job_id,
           employee:employer_employees(id, name, avatar_initials, photo_url)
         `);
@@ -70,21 +68,29 @@ export function JobsSection() {
   useEffect(() => {
     const channel = supabase
       .channel('jobs-realtime-updates')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'employer_job_assignments'
-      }, () => {
-        queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
-        queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
-      })
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'employer_jobs'
-      }, () => {
-        queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
-      })
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'employer_job_assignments',
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
+          queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'employer_jobs',
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
+        }
+      )
       .subscribe();
 
     return () => {
@@ -94,7 +100,7 @@ export function JobsSection() {
 
   // Calculate max job value for filter
   const maxJobValue = useMemo(() => {
-    return Math.max(...jobs.map(j => j.value || 0), 500000);
+    return Math.max(...jobs.map((j) => j.value || 0), 500000);
   }, [jobs]);
 
   const [filters, setFilters] = useState<JobFilters>({
@@ -106,47 +112,42 @@ export function JobsSection() {
   // Update max value when jobs load
   useMemo(() => {
     if (filters.maxValue === 500000 && maxJobValue > 500000) {
-      setFilters(f => ({ ...f, maxValue: maxJobValue }));
+      setFilters((f) => ({ ...f, maxValue: maxJobValue }));
     }
   }, [maxJobValue]);
 
-  const activeFilterCount = 
-    filters.statuses.length + 
-    (filters.minValue > 0 || filters.maxValue < maxJobValue ? 1 : 0);
+  const activeFilterCount =
+    filters.statuses.length + (filters.minValue > 0 || filters.maxValue < maxJobValue ? 1 : 0);
 
   const filteredJobs = useMemo(() => {
-    return jobs.filter(job => {
+    return jobs.filter((job) => {
       // Search filter (using debounced value for performance)
       const matchesSearch =
         job.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
         job.client.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
         job.location.toLowerCase().includes(debouncedSearch.toLowerCase());
-      
+
       // Status filter
-      const matchesStatus = 
-        filters.statuses.length === 0 || 
-        filters.statuses.includes(job.status);
-      
+      const matchesStatus = filters.statuses.length === 0 || filters.statuses.includes(job.status);
+
       // Value filter
       const jobValue = job.value || 0;
-      const matchesValue = 
-        jobValue >= filters.minValue && 
-        jobValue <= filters.maxValue;
-      
+      const matchesValue = jobValue >= filters.minValue && jobValue <= filters.maxValue;
+
       return matchesSearch && matchesStatus && matchesValue;
     });
   }, [jobs, debouncedSearch, filters]);
 
-  const activeJobs = filteredJobs.filter(j => j.status === "Active");
-  const pendingJobs = filteredJobs.filter(j => j.status === "Pending");
-  const completedJobs = filteredJobs.filter(j => j.status === "Completed");
+  const activeJobs = filteredJobs.filter((j) => j.status === 'Active');
+  const pendingJobs = filteredJobs.filter((j) => j.status === 'Pending');
+  const completedJobs = filteredJobs.filter((j) => j.status === 'Completed');
 
   const totalValue = jobs.reduce((acc, j) => acc + (Number(j.value) || 0), 0);
   const activeValue = activeJobs.reduce((acc, j) => acc + (Number(j.value) || 0), 0);
 
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "-";
-    return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    if (!dateStr) return '-';
+    return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   };
 
   const handleJobClick = (job: Job) => {
@@ -195,10 +196,14 @@ export function JobsSection() {
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-20" />)}
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} className="h-20" />
+          ))}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1, 2, 3, 4, 5, 6].map(i => <Skeleton key={i} className="h-48" />)}
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <Skeleton key={i} className="h-48" />
+          ))}
         </div>
       </div>
     );
@@ -206,184 +211,184 @@ export function JobsSection() {
 
   return (
     <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
-    <div className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col gap-4">
-        {/* Search */}
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search jobs..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("h-12", !searchQuery && "pl-10")}
-          />
-        </div>
-        
-        {/* Actions row */}
-        <div className="flex gap-2 justify-between">
-          <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              size="icon"
-              className="h-12 w-12"
-              onClick={() => refetch()}
-              disabled={isRefetching}
-            >
-              <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
-            </Button>
-            <Button 
-              variant="outline" 
-              className="h-12 gap-2 px-4"
-              onClick={() => setShowFilterSheet(true)}
-            >
-              <Filter className="h-4 w-4" />
-              <span className="hidden sm:inline">Filter</span>
-              {activeFilterCount > 0 && (
-                <Badge variant="default" className="h-5 w-5 p-0 justify-center text-xs">
-                  {activeFilterCount}
-                </Badge>
-              )}
-            </Button>
+      <div className="space-y-6 animate-fade-in">
+        {/* Header */}
+        <div className="flex flex-col gap-4">
+          {/* Search */}
+          <div className="relative flex-1">
+            {!searchQuery && (
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
+            <Input
+              placeholder="Search jobs..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={cn('h-12', !searchQuery && 'pl-10')}
+            />
           </div>
-          
-          <AddJobDialog 
-            open={showAddDialog} 
-            onOpenChange={setShowAddDialog}
-          />
+
+          {/* Actions row */}
+          <div className="flex gap-2 justify-between">
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-12 w-12"
+                onClick={() => refetch()}
+                disabled={isRefetching}
+              >
+                <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
+              </Button>
+              <Button
+                variant="outline"
+                className="h-12 gap-2 px-4"
+                onClick={() => setShowFilterSheet(true)}
+              >
+                <Filter className="h-4 w-4" />
+                <span className="hidden sm:inline">Filter</span>
+                {activeFilterCount > 0 && (
+                  <Badge variant="default" className="h-5 w-5 p-0 justify-center text-xs">
+                    {activeFilterCount}
+                  </Badge>
+                )}
+              </Button>
+            </div>
+
+            <AddJobDialog open={showAddDialog} onOpenChange={setShowAddDialog} />
+          </div>
         </div>
+
+        {/* Stats - Grid on all screens */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {/* Total Jobs */}
+          <Card className="card-hover bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border-elec-yellow/30 overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-50" />
+            <CardContent className="p-4 relative">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-2.5 rounded-xl bg-elec-yellow/15 shadow-inner">
+                  <Briefcase className="h-5 w-5 text-elec-yellow" />
+                </div>
+              </div>
+              <p className="text-3xl font-bold text-foreground tracking-tight">{jobs.length}</p>
+              <p className="text-xs text-muted-foreground font-medium mt-1">Total Jobs</p>
+            </CardContent>
+          </Card>
+
+          {/* Active Jobs */}
+          <Card className=" card-hover bg-gradient-to-br from-success/15 via-success/5 to-transparent border-success/30 overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-success/5 to-transparent opacity-50" />
+            <CardContent className="p-4 relative">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-2.5 rounded-xl bg-success/15 shadow-inner">
+                  <Users className="h-5 w-5 text-success" />
+                </div>
+                <span className="text-[10px] font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full">
+                  LIVE
+                </span>
+              </div>
+              <p className="text-3xl font-bold text-success tracking-tight">{activeJobs.length}</p>
+              <p className="text-xs text-muted-foreground font-medium mt-1">Active</p>
+            </CardContent>
+          </Card>
+
+          {/* Active Value - Premium Gold */}
+          <Card className=" card-hover bg-gradient-to-br from-gold/20 via-gold/10 to-gold-dark/5 border-gold/40 overflow-hidden relative shadow-lg shadow-gold/10">
+            <div className="absolute inset-0 bg-gradient-to-br from-gold/10 via-transparent to-gold-dark/10 opacity-60" />
+            <div className="absolute top-0 right-0 w-16 h-16 bg-gold/20 rounded-full blur-2xl -translate-y-4 translate-x-4" />
+            <CardContent className="p-4 relative">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-2.5 rounded-xl bg-gold/20 shadow-inner border border-gold/30">
+                  <PoundSterling className="h-5 w-5 text-gold-dark" />
+                </div>
+              </div>
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-lg font-bold text-gold-dark">£</span>
+                <p className="text-3xl font-bold text-foreground tracking-tight">
+                  {activeValue >= 1000
+                    ? ((activeValue / 1000) % 1 === 0
+                        ? activeValue / 1000
+                        : (activeValue / 1000).toFixed(1)) + 'k'
+                    : activeValue}
+                </p>
+              </div>
+              <p className="text-xs text-muted-foreground font-medium mt-1">Active Value</p>
+            </CardContent>
+          </Card>
+
+          {/* Total Value - Premium Dark Gold */}
+          <Card className=" card-hover bg-gradient-to-br from-surface-elevated via-surface to-gold/5 border-gold/30 overflow-hidden relative shadow-lg shadow-gold/5">
+            <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10 opacity-40" />
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gold/15 rounded-full blur-2xl translate-y-6 -translate-x-6" />
+            <CardContent className="p-4 relative">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-2.5 rounded-xl bg-gold/15 shadow-inner border border-gold/20">
+                  <PoundSterling className="h-5 w-5 text-gold" />
+                </div>
+                <span className="text-[10px] font-semibold text-gold bg-gold/10 px-2 py-0.5 rounded-full">
+                  TOTAL
+                </span>
+              </div>
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-lg font-bold text-gold">£</span>
+                <p className="text-3xl font-bold text-foreground tracking-tight">
+                  {totalValue >= 1000
+                    ? ((totalValue / 1000) % 1 === 0
+                        ? totalValue / 1000
+                        : (totalValue / 1000).toFixed(1)) + 'k'
+                    : totalValue}
+                </p>
+              </div>
+              <p className="text-xs text-muted-foreground font-medium mt-1">Total Value</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Jobs Tabs */}
+        <Tabs defaultValue="active" className="space-y-4">
+          <TabsList className="w-full md:w-auto grid grid-cols-4 md:flex h-12">
+            <TabsTrigger value="active" className="text-xs sm:text-sm">
+              Active ({activeJobs.length})
+            </TabsTrigger>
+            <TabsTrigger value="pending" className="text-xs sm:text-sm">
+              Pending ({pendingJobs.length})
+            </TabsTrigger>
+            <TabsTrigger value="completed" className="text-xs sm:text-sm">
+              Done ({completedJobs.length})
+            </TabsTrigger>
+            <TabsTrigger value="all" className="text-xs sm:text-sm">
+              All ({filteredJobs.length})
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="active" className="space-y-4 pb-24">
+            {renderJobGrid(activeJobs)}
+          </TabsContent>
+
+          <TabsContent value="pending" className="space-y-4 pb-24">
+            {renderJobGrid(pendingJobs)}
+          </TabsContent>
+
+          <TabsContent value="completed" className="space-y-4 pb-24">
+            {renderJobGrid(completedJobs)}
+          </TabsContent>
+
+          <TabsContent value="all" className="space-y-4 pb-24">
+            {renderJobGrid(filteredJobs)}
+          </TabsContent>
+        </Tabs>
+
+        {/* Filter Sheet */}
+        <JobFilterSheet
+          open={showFilterSheet}
+          onOpenChange={setShowFilterSheet}
+          filters={filters}
+          onFiltersChange={setFilters}
+          maxJobValue={maxJobValue}
+        />
+
+        {/* View/Edit Job Sheet */}
+        <ViewJobSheet job={selectedJob} open={showJobSheet} onOpenChange={setShowJobSheet} />
       </div>
-
-      {/* Stats - Grid on all screens */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {/* Total Jobs */}
-        <Card className="card-hover bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border-elec-yellow/30 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-50" />
-          <CardContent className="p-4 relative">
-            <div className="flex items-center justify-between mb-2">
-              <div className="p-2.5 rounded-xl bg-elec-yellow/15 shadow-inner">
-                <Briefcase className="h-5 w-5 text-elec-yellow" />
-              </div>
-            </div>
-            <p className="text-3xl font-bold text-foreground tracking-tight">{jobs.length}</p>
-            <p className="text-xs text-muted-foreground font-medium mt-1">Total Jobs</p>
-          </CardContent>
-        </Card>
-
-        {/* Active Jobs */}
-        <Card className=" card-hover bg-gradient-to-br from-success/15 via-success/5 to-transparent border-success/30 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-success/5 to-transparent opacity-50" />
-          <CardContent className="p-4 relative">
-            <div className="flex items-center justify-between mb-2">
-              <div className="p-2.5 rounded-xl bg-success/15 shadow-inner">
-                <Users className="h-5 w-5 text-success" />
-              </div>
-              <span className="text-[10px] font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full">LIVE</span>
-            </div>
-            <p className="text-3xl font-bold text-success tracking-tight">{activeJobs.length}</p>
-            <p className="text-xs text-muted-foreground font-medium mt-1">Active</p>
-          </CardContent>
-        </Card>
-
-        {/* Active Value - Premium Gold */}
-        <Card className=" card-hover bg-gradient-to-br from-gold/20 via-gold/10 to-gold-dark/5 border-gold/40 overflow-hidden relative shadow-lg shadow-gold/10">
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/10 via-transparent to-gold-dark/10 opacity-60" />
-          <div className="absolute top-0 right-0 w-16 h-16 bg-gold/20 rounded-full blur-2xl -translate-y-4 translate-x-4" />
-          <CardContent className="p-4 relative">
-            <div className="flex items-center justify-between mb-2">
-              <div className="p-2.5 rounded-xl bg-gold/20 shadow-inner border border-gold/30">
-                <PoundSterling className="h-5 w-5 text-gold-dark" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-lg font-bold text-gold-dark">£</span>
-              <p className="text-3xl font-bold text-foreground tracking-tight">
-                {activeValue >= 1000 
-                  ? ((activeValue / 1000) % 1 === 0 ? (activeValue / 1000) : (activeValue / 1000).toFixed(1)) + 'k'
-                  : activeValue}
-              </p>
-            </div>
-            <p className="text-xs text-muted-foreground font-medium mt-1">Active Value</p>
-          </CardContent>
-        </Card>
-
-        {/* Total Value - Premium Dark Gold */}
-        <Card className=" card-hover bg-gradient-to-br from-surface-elevated via-surface to-gold/5 border-gold/30 overflow-hidden relative shadow-lg shadow-gold/5">
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10 opacity-40" />
-          <div className="absolute bottom-0 left-0 w-20 h-20 bg-gold/15 rounded-full blur-2xl translate-y-6 -translate-x-6" />
-          <CardContent className="p-4 relative">
-            <div className="flex items-center justify-between mb-2">
-              <div className="p-2.5 rounded-xl bg-gold/15 shadow-inner border border-gold/20">
-                <PoundSterling className="h-5 w-5 text-gold" />
-              </div>
-              <span className="text-[10px] font-semibold text-gold bg-gold/10 px-2 py-0.5 rounded-full">TOTAL</span>
-            </div>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-lg font-bold text-gold">£</span>
-              <p className="text-3xl font-bold text-foreground tracking-tight">
-                {totalValue >= 1000 
-                  ? ((totalValue / 1000) % 1 === 0 ? (totalValue / 1000) : (totalValue / 1000).toFixed(1)) + 'k'
-                  : totalValue}
-              </p>
-            </div>
-            <p className="text-xs text-muted-foreground font-medium mt-1">Total Value</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Jobs Tabs */}
-      <Tabs defaultValue="active" className="space-y-4">
-        <TabsList className="w-full md:w-auto grid grid-cols-4 md:flex h-12">
-          <TabsTrigger value="active" className="text-xs sm:text-sm">
-            Active ({activeJobs.length})
-          </TabsTrigger>
-          <TabsTrigger value="pending" className="text-xs sm:text-sm">
-            Pending ({pendingJobs.length})
-          </TabsTrigger>
-          <TabsTrigger value="completed" className="text-xs sm:text-sm">
-            Done ({completedJobs.length})
-          </TabsTrigger>
-          <TabsTrigger value="all" className="text-xs sm:text-sm">
-            All ({filteredJobs.length})
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="active" className="space-y-4 pb-24">
-          {renderJobGrid(activeJobs)}
-        </TabsContent>
-
-        <TabsContent value="pending" className="space-y-4 pb-24">
-          {renderJobGrid(pendingJobs)}
-        </TabsContent>
-
-        <TabsContent value="completed" className="space-y-4 pb-24">
-          {renderJobGrid(completedJobs)}
-        </TabsContent>
-
-        <TabsContent value="all" className="space-y-4 pb-24">
-          {renderJobGrid(filteredJobs)}
-        </TabsContent>
-      </Tabs>
-
-      {/* Filter Sheet */}
-      <JobFilterSheet
-        open={showFilterSheet}
-        onOpenChange={setShowFilterSheet}
-        filters={filters}
-        onFiltersChange={setFilters}
-        maxJobValue={maxJobValue}
-      />
-
-      {/* View/Edit Job Sheet */}
-      <ViewJobSheet
-        job={selectedJob}
-        open={showJobSheet}
-        onOpenChange={setShowJobSheet}
-      />
-
-    </div>
     </PullToRefresh>
   );
 }

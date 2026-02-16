@@ -39,7 +39,7 @@ export const useVacancyApplications = (vacancyId?: string) => {
 
   return useQuery({
     queryKey: vacancyId ? [...APPLICATIONS_KEY, vacancyId] : APPLICATIONS_KEY,
-    queryFn: () => vacancyId ? getApplicationsForVacancy(vacancyId) : getAllApplications(),
+    queryFn: () => (vacancyId ? getApplicationsForVacancy(vacancyId) : getAllApplications()),
   });
 };
 
@@ -130,9 +130,7 @@ export const useBulkUpdateApplicationStatus = () => {
       ids: string[];
       status: VacancyApplication['status'];
     }) => {
-      const results = await Promise.all(
-        ids.map(id => updateApplicationStatus(id, status))
-      );
+      const results = await Promise.all(ids.map((id) => updateApplicationStatus(id, status)));
       return results;
     },
     onSuccess: () => {

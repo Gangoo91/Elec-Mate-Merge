@@ -1,58 +1,58 @@
-import { ArrowLeft, Settings, RotateCcw, Wind, Wrench, Grid3x3, Gauge } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Settings, RotateCcw, Wind, Wrench, Grid3x3, Gauge } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule5Section4 = () => {
   useSEO(
-    "Section 5.4: Process Control and Instrumentation - MOET Module 5",
-    "PID control, pneumatic/hydraulic controls, DCS systems and instrument calibration"
+    'Section 5.4: Process Control and Instrumentation - MOET Module 5',
+    'PID control, pneumatic/hydraulic controls, DCS systems and instrument calibration'
   );
 
   const subsections = [
     {
-      number: "5.4.1",
-      title: "Principles of Process Control",
-      description: "Open and closed loop control, feedback systems and control strategies",
+      number: '5.4.1',
+      title: 'Principles of Process Control',
+      description: 'Open and closed loop control, feedback systems and control strategies',
       icon: Settings,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section4-1"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section4-1',
     },
     {
-      number: "5.4.2",
-      title: "PID Control Loops",
-      description: "Proportional, integral and derivative control principles and tuning",
+      number: '5.4.2',
+      title: 'PID Control Loops',
+      description: 'Proportional, integral and derivative control principles and tuning',
       icon: RotateCcw,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section4-2"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section4-2',
     },
     {
-      number: "5.4.3",
-      title: "Pneumatic and Hydraulic Controls (overview)",
-      description: "Pneumatic and hydraulic control systems and components",
+      number: '5.4.3',
+      title: 'Pneumatic and Hydraulic Controls (overview)',
+      description: 'Pneumatic and hydraulic control systems and components',
       icon: Wind,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section4-3"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section4-3',
     },
     {
-      number: "5.4.4",
-      title: "Control Valves and Actuators",
-      description: "Valve types, actuator selection and control applications",
+      number: '5.4.4',
+      title: 'Control Valves and Actuators',
+      description: 'Valve types, actuator selection and control applications',
       icon: Wrench,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section4-4"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section4-4',
     },
     {
-      number: "5.4.5",
-      title: "Distributed Control Systems (DCS) (overview)",
-      description: "DCS architecture, components and industrial applications",
+      number: '5.4.5',
+      title: 'Distributed Control Systems (DCS) (overview)',
+      description: 'DCS architecture, components and industrial applications',
       icon: Grid3x3,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section4-5"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section4-5',
     },
     {
-      number: "5.4.6",
-      title: "Calibration of Process Instruments",
-      description: "Instrument calibration procedures and standards compliance",
+      number: '5.4.6',
+      title: 'Calibration of Process Instruments',
+      description: 'Instrument calibration procedures and standards compliance',
       icon: Gauge,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section4-6"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module5-section4-6',
+    },
   ];
 
   return (
@@ -60,7 +60,11 @@ const MOETModule5Section4 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5

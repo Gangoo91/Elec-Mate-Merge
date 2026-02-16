@@ -1,176 +1,178 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Prospective Fault Current - Module 5 Section 5";
-const DESCRIPTION = "Understanding and calculating prospective fault current (PSCC/PFC) for protective device selection.";
+const TITLE = 'Prospective Fault Current - Module 5 Section 5';
+const DESCRIPTION =
+  'Understanding and calculating prospective fault current (PSCC/PFC) for protective device selection.';
 
 const quickCheckQuestions = [
   {
-    id: "pscc-calculation",
-    question: "If Zs = 0.5Ω, the PSCC is:",
-    options: ["115A", "230A", "460A", "920A"],
+    id: 'pscc-calculation',
+    question: 'If Zs = 0.5Ω, the PSCC is:',
+    options: ['115A', '230A', '460A', '920A'],
     correctIndex: 2,
-    explanation: "Ipf = Uo / Zs = 230V / 0.5Ω = 460A"
+    explanation: 'Ipf = Uo / Zs = 230V / 0.5Ω = 460A',
   },
   {
-    id: "breaking-capacity",
-    question: "Protective device breaking capacity must be:",
-    options: [
-      "Equal to PSCC",
-      "Less than PSCC",
-      "Greater than PSCC",
-      "Double the PSCC"
-    ],
+    id: 'breaking-capacity',
+    question: 'Protective device breaking capacity must be:',
+    options: ['Equal to PSCC', 'Less than PSCC', 'Greater than PSCC', 'Double the PSCC'],
     correctIndex: 2,
-    explanation: "Breaking capacity must exceed PSCC to safely interrupt maximum possible fault current."
+    explanation:
+      'Breaking capacity must exceed PSCC to safely interrupt maximum possible fault current.',
   },
   {
-    id: "pscc-location",
-    question: "PSCC is highest at:",
+    id: 'pscc-location',
+    question: 'PSCC is highest at:',
     options: [
-      "The furthest point from supply",
-      "The origin of the installation",
-      "All points are equal",
-      "Only socket outlets"
+      'The furthest point from supply',
+      'The origin of the installation',
+      'All points are equal',
+      'Only socket outlets',
     ],
     correctIndex: 1,
-    explanation: "PSCC is highest at the origin where impedance is lowest. It decreases along circuits as impedance increases."
-  }
+    explanation:
+      'PSCC is highest at the origin where impedance is lowest. It decreases along circuits as impedance increases.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Prospective fault current is:",
+    question: 'Prospective fault current is:',
     options: [
-      "Normal load current",
-      "Maximum current during a short circuit",
-      "Current during insulation test",
-      "Leakage current"
+      'Normal load current',
+      'Maximum current during a short circuit',
+      'Current during insulation test',
+      'Leakage current',
     ],
     correctAnswer: 1,
-    explanation: "PSCC is the maximum fault current that could flow during a short circuit at a given point."
+    explanation:
+      'PSCC is the maximum fault current that could flow during a short circuit at a given point.',
   },
   {
     id: 2,
-    question: "The formula for calculating PSCC is:",
-    options: ["Ipf = Uo × Zs", "Ipf = Uo / Zs", "Ipf = Zs / Uo", "Ipf = Uo - Zs"],
+    question: 'The formula for calculating PSCC is:',
+    options: ['Ipf = Uo × Zs', 'Ipf = Uo / Zs', 'Ipf = Zs / Uo', 'Ipf = Uo - Zs'],
     correctAnswer: 1,
-    explanation: "Ipf = Uo / Zs (Ohm's Law). Where Uo is nominal voltage (230V) and Zs is earth fault loop impedance."
+    explanation:
+      "Ipf = Uo / Zs (Ohm's Law). Where Uo is nominal voltage (230V) and Zs is earth fault loop impedance.",
   },
   {
     id: 3,
-    question: "If Zs = 0.5Ω, the PSCC is:",
-    options: ["115A", "230A", "460A", "920A"],
+    question: 'If Zs = 0.5Ω, the PSCC is:',
+    options: ['115A', '230A', '460A', '920A'],
     correctAnswer: 2,
-    explanation: "Ipf = 230V / 0.5Ω = 460A"
+    explanation: 'Ipf = 230V / 0.5Ω = 460A',
   },
   {
     id: 4,
-    question: "Protective device breaking capacity must be:",
-    options: [
-      "Equal to PSCC",
-      "Less than PSCC",
-      "Greater than PSCC",
-      "Double the PSCC"
-    ],
+    question: 'Protective device breaking capacity must be:',
+    options: ['Equal to PSCC', 'Less than PSCC', 'Greater than PSCC', 'Double the PSCC'],
     correctAnswer: 2,
-    explanation: "Breaking capacity must exceed PSCC to safely interrupt the maximum possible fault current without damage."
+    explanation:
+      'Breaking capacity must exceed PSCC to safely interrupt the maximum possible fault current without damage.',
   },
   {
     id: 5,
-    question: "Typical domestic PSCC is:",
-    options: ["<500A", "1-3kA", "10-20kA", ">50kA"],
+    question: 'Typical domestic PSCC is:',
+    options: ['<500A', '1-3kA', '10-20kA', '>50kA'],
     correctAnswer: 1,
-    explanation: "Domestic supplies typically have PSCC of 1-3kA, well within standard 6kA MCB breaking capacity."
+    explanation:
+      'Domestic supplies typically have PSCC of 1-3kA, well within standard 6kA MCB breaking capacity.',
   },
   {
     id: 6,
-    question: "PSCC is highest at:",
+    question: 'PSCC is highest at:',
     options: [
-      "The furthest point from supply",
-      "The origin of the installation",
-      "All points are equal",
-      "Only socket outlets"
+      'The furthest point from supply',
+      'The origin of the installation',
+      'All points are equal',
+      'Only socket outlets',
     ],
     correctAnswer: 1,
-    explanation: "PSCC is highest at the origin where impedance is lowest. It decreases along circuits as impedance increases."
+    explanation:
+      'PSCC is highest at the origin where impedance is lowest. It decreases along circuits as impedance increases.',
   },
   {
     id: 7,
-    question: "Standard domestic MCBs have breaking capacity of:",
-    options: ["1kA", "3kA", "6kA", "10kA"],
+    question: 'Standard domestic MCBs have breaking capacity of:',
+    options: ['1kA', '3kA', '6kA', '10kA'],
     correctAnswer: 2,
-    explanation: "Standard domestic MCBs (Type B/C) typically have 6kA (6000A) breaking capacity."
+    explanation: 'Standard domestic MCBs (Type B/C) typically have 6kA (6000A) breaking capacity.',
   },
   {
     id: 8,
-    question: "If PSCC exceeds device breaking capacity:",
+    question: 'If PSCC exceeds device breaking capacity:',
     options: [
       "It's acceptable",
-      "The device may fail catastrophically during a fault",
-      "The circuit will work normally",
-      "Only labelling is needed"
+      'The device may fail catastrophically during a fault',
+      'The circuit will work normally',
+      'Only labelling is needed',
     ],
     correctAnswer: 1,
-    explanation: "If PSCC exceeds breaking capacity, the device may explode, burn, or fail to clear the fault - creating serious hazards."
+    explanation:
+      'If PSCC exceeds breaking capacity, the device may explode, burn, or fail to clear the fault - creating serious hazards.',
   },
   {
     id: 9,
-    question: "PSCC should be recorded on:",
+    question: 'PSCC should be recorded on:',
     options: [
-      "Only new installations",
-      "Only industrial sites",
-      "All electrical certificates at the origin",
-      "Only TT systems"
+      'Only new installations',
+      'Only industrial sites',
+      'All electrical certificates at the origin',
+      'Only TT systems',
     ],
     correctAnswer: 2,
-    explanation: "PSCC at the origin must be recorded on Electrical Installation Certificates and Periodic Inspection Reports."
+    explanation:
+      'PSCC at the origin must be recorded on Electrical Installation Certificates and Periodic Inspection Reports.',
   },
   {
     id: 10,
-    question: "Lower Zs means:",
-    options: [
-      "Lower PSCC",
-      "Higher PSCC",
-      "No effect on PSCC",
-      "Zero PSCC"
-    ],
+    question: 'Lower Zs means:',
+    options: ['Lower PSCC', 'Higher PSCC', 'No effect on PSCC', 'Zero PSCC'],
     correctAnswer: 1,
-    explanation: "Lower Zs allows more current to flow (Ipf = V/Z). Lower impedance = higher prospective fault current."
-  }
+    explanation:
+      'Lower Zs allows more current to flow (Ipf = V/Z). Lower impedance = higher prospective fault current.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why is PSCC important?",
-    answer: "If a short circuit occurs, the fault current must be interrupted by the protective device. If fault current exceeds the device's breaking capacity, the device may fail catastrophically - potentially causing fire, explosion, or continuing the fault."
+    question: 'Why is PSCC important?',
+    answer:
+      "If a short circuit occurs, the fault current must be interrupted by the protective device. If fault current exceeds the device's breaking capacity, the device may fail catastrophically - potentially causing fire, explosion, or continuing the fault.",
   },
   {
     question: "What's the difference between PSCC and PEFC?",
-    answer: "PSCC (Prospective Short Circuit Current) is the fault current for a line-neutral fault. PEFC (Prospective Earth Fault Current) is for a line-earth fault. PSCC is usually higher because neutral impedance is typically lower than earth path impedance."
+    answer:
+      'PSCC (Prospective Short Circuit Current) is the fault current for a line-neutral fault. PEFC (Prospective Earth Fault Current) is for a line-earth fault. PSCC is usually higher because neutral impedance is typically lower than earth path impedance.',
   },
   {
-    question: "Where is PSCC measured?",
-    answer: "PSCC should be measured or calculated at the origin of the installation (highest value) and at each distribution board. The value decreases along circuit lengths as impedance increases."
+    question: 'Where is PSCC measured?',
+    answer:
+      'PSCC should be measured or calculated at the origin of the installation (highest value) and at each distribution board. The value decreases along circuit lengths as impedance increases.',
   },
   {
-    question: "What breaking capacity do domestic MCBs have?",
-    answer: "Standard domestic MCBs typically have 6kA breaking capacity (Icn). Most domestic supplies have PSCC well under 6kA (typically 1-3kA). Industrial MCBs may have 10kA or higher ratings."
+    question: 'What breaking capacity do domestic MCBs have?',
+    answer:
+      'Standard domestic MCBs typically have 6kA breaking capacity (Icn). Most domestic supplies have PSCC well under 6kA (typically 1-3kA). Industrial MCBs may have 10kA or higher ratings.',
   },
   {
-    question: "Can I calculate PSCC from Zs?",
-    answer: "Yes: Ipf = Uo / Zs where Uo = 230V. For example, if Zs = 0.5Ω: Ipf = 230 / 0.5 = 460A. Modern testers often display PSCC directly as well as impedance."
+    question: 'Can I calculate PSCC from Zs?',
+    answer:
+      'Yes: Ipf = Uo / Zs where Uo = 230V. For example, if Zs = 0.5Ω: Ipf = 230 / 0.5 = 460A. Modern testers often display PSCC directly as well as impedance.',
   },
   {
-    question: "What if PSCC exceeds device rating?",
-    answer: "The protective device is inadequate. Options: use a device with higher breaking capacity, add upstream back-up protection (e.g., fuse), or introduce impedance to limit fault current. This is critical for safety."
-  }
+    question: 'What if PSCC exceeds device rating?',
+    answer:
+      'The protective device is inadequate. Options: use a device with higher breaking capacity, add upstream back-up protection (e.g., fuse), or introduce impedance to limit fault current. This is critical for safety.',
+  },
 ];
 
 const InspectionTestingModule5Section5 = () => {
@@ -181,7 +183,12 @@ const InspectionTestingModule5Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -192,7 +199,6 @@ const InspectionTestingModule5Section5 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -212,19 +218,35 @@ const InspectionTestingModule5Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>PSCC:</strong> Maximum current during a short circuit</li>
-              <li><strong>Formula:</strong> Ipf = Uo / Zs (230V / impedance)</li>
-              <li><strong>Devices:</strong> Breaking capacity must exceed PSCC</li>
-              <li><strong>Critical:</strong> Device failure if capacity exceeded</li>
+              <li>
+                <strong>PSCC:</strong> Maximum current during a short circuit
+              </li>
+              <li>
+                <strong>Formula:</strong> Ipf = Uo / Zs (230V / impedance)
+              </li>
+              <li>
+                <strong>Devices:</strong> Breaking capacity must exceed PSCC
+              </li>
+              <li>
+                <strong>Critical:</strong> Device failure if capacity exceeded
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Typical Values</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Domestic:</strong> 1-3kA typical at origin</li>
-              <li><strong>MCB Capacity:</strong> 6kA standard domestic</li>
-              <li><strong>Industrial:</strong> 10kA+ may be needed</li>
-              <li><strong>Record:</strong> On EIC/EICR at origin</li>
+              <li>
+                <strong>Domestic:</strong> 1-3kA typical at origin
+              </li>
+              <li>
+                <strong>MCB Capacity:</strong> 6kA standard domestic
+              </li>
+              <li>
+                <strong>Industrial:</strong> 10kA+ may be needed
+              </li>
+              <li>
+                <strong>Record:</strong> On EIC/EICR at origin
+              </li>
             </ul>
           </div>
         </div>
@@ -234,12 +256,12 @@ const InspectionTestingModule5Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand what prospective fault current is",
-              "Calculate PSCC using Ipf = Uo / Zs",
-              "Match protective devices to breaking capacity",
-              "Know measurement methods for PSCC",
-              "Record values correctly on certificates",
-              "Recognise typical domestic and industrial values"
+              'Understand what prospective fault current is',
+              'Calculate PSCC using Ipf = Uo / Zs',
+              'Match protective devices to breaking capacity',
+              'Know measurement methods for PSCC',
+              'Record values correctly on certificates',
+              'Recognise typical domestic and industrial values',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -260,20 +282,22 @@ const InspectionTestingModule5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              <strong>Prospective Short Circuit Current (PSCC)</strong> is the maximum
-              current that would flow if a short circuit occurred at a specific point in the installation.
+              <strong>Prospective Short Circuit Current (PSCC)</strong> is the maximum current that
+              would flow if a short circuit occurred at a specific point in the installation.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-red-400 mb-2">Why It Matters</p>
               <p className="text-sm text-white/70">
-                Protective devices must be able to safely interrupt this current. If PSCC exceeds the device's
-                breaking capacity, the device could explode, burn, or fail to clear the fault.
+                Protective devices must be able to safely interrupt this current. If PSCC exceeds
+                the device's breaking capacity, the device could explode, burn, or fail to clear the
+                fault.
               </p>
             </div>
 
             <p className="text-sm text-white/60">
-              PSCC is sometimes referred to as PFC (Prospective Fault Current) or If (fault current).
+              PSCC is sometimes referred to as PFC (Prospective Fault Current) or If (fault
+              current).
             </p>
           </div>
         </section>
@@ -287,14 +311,18 @@ const InspectionTestingModule5Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 text-center">
               <p className="text-2xl font-mono text-elec-yellow mb-2">Ipf = Uo / Zs</p>
-              <p className="text-sm text-white/60">Prospective Fault Current = Voltage / Impedance</p>
+              <p className="text-sm text-white/60">
+                Prospective Fault Current = Voltage / Impedance
+              </p>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Example Calculation:</p>
               <p className="text-sm text-white/70 font-mono">
-                Uo = 230V (nominal voltage)<br />
-                Zs = 0.5Ω (measured impedance)<br />
+                Uo = 230V (nominal voltage)
+                <br />
+                Zs = 0.5Ω (measured impedance)
+                <br />
                 Ipf = 230 / 0.5 = <span className="text-elec-yellow">460A</span>
               </p>
             </div>
@@ -314,9 +342,7 @@ const InspectionTestingModule5Section5 = () => {
             Breaking Capacity
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Every protective device has a maximum current it can safely interrupt:
-            </p>
+            <p>Every protective device has a maximum current it can safely interrupt:</p>
 
             <div className="overflow-x-auto my-6">
               <table className="w-full text-sm">
@@ -366,15 +392,15 @@ const InspectionTestingModule5Section5 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow mb-2">Direct Measurement</p>
                 <p className="text-sm text-white/70">
-                  Modern multifunction testers can measure and display PSCC directly (often labelled PFC or I fault).
-                  This is the quickest method.
+                  Modern multifunction testers can measure and display PSCC directly (often labelled
+                  PFC or I fault). This is the quickest method.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-blue-400 mb-2">Calculation from Zs</p>
                 <p className="text-sm text-white/70">
-                  If your meter shows only impedance, calculate: Ipf = 230 / Zs.
-                  Remember to use the lowest Zs (highest PSCC) point.
+                  If your meter shows only impedance, calculate: Ipf = 230 / Zs. Remember to use the
+                  lowest Zs (highest PSCC) point.
                 </p>
               </div>
             </div>
@@ -406,8 +432,8 @@ const InspectionTestingModule5Section5 = () => {
             </div>
 
             <p className="text-sm text-white/70">
-              Domestic PSCC rarely exceeds 3kA, so standard 6kA MCBs are adequate.
-              Higher values may occur close to transformers.
+              Domestic PSCC rarely exceeds 3kA, so standard 6kA MCBs are adequate. Higher values may
+              occur close to transformers.
             </p>
           </div>
         </section>
@@ -443,7 +469,8 @@ const InspectionTestingModule5Section5 = () => {
             </ul>
 
             <p className="text-sm text-white/70">
-              <strong className="text-elec-yellow">Format:</strong> Record as "PSCC: 2.3kA" or "PFC: 2300A" at origin.
+              <strong className="text-elec-yellow">Format:</strong> Record as "PSCC: 2.3kA" or "PFC:
+              2300A" at origin.
             </p>
           </div>
         </section>
@@ -466,7 +493,9 @@ const InspectionTestingModule5Section5 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Use Direct Measurement</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Use Direct Measurement
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Modern testers display PSCC directly</li>
                 <li>Quicker than calculating from Zs</li>
@@ -506,12 +535,12 @@ const InspectionTestingModule5Section5 = () => {
           <UnitsPocketCard
             title="PSCC Quick Reference"
             items={[
-              { term: "Formula", definition: "Ipf = Uo / Zs" },
-              { term: "Uo (UK)", definition: "230V nominal" },
-              { term: "Domestic MCB", definition: "6kA breaking capacity" },
-              { term: "Typical Domestic", definition: "1-3kA at origin" },
-              { term: "Record On", definition: "EIC/EICR at origin" },
-              { term: "Requirement", definition: "Icn > PSCC" }
+              { term: 'Formula', definition: 'Ipf = Uo / Zs' },
+              { term: 'Uo (UK)', definition: '230V nominal' },
+              { term: 'Domestic MCB', definition: '6kA breaking capacity' },
+              { term: 'Typical Domestic', definition: '1-3kA at origin' },
+              { term: 'Record On', definition: 'EIC/EICR at origin' },
+              { term: 'Requirement', definition: 'Icn > PSCC' },
             ]}
           />
 
@@ -540,28 +569,33 @@ const InspectionTestingModule5Section5 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-6">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

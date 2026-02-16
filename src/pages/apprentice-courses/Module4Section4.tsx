@@ -1,58 +1,67 @@
-import { ArrowLeft, Package, FileText, Wrench, CheckCircle, Ruler, Shield, HardHat } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  Package,
+  FileText,
+  Wrench,
+  CheckCircle,
+  Ruler,
+  Shield,
+  HardHat,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Fixing and Supporting Containment Systems",
-    description: "Methods for securing containment systems properly",
+    number: 'Subsection 1',
+    title: 'Fixing and Supporting Containment Systems',
+    description: 'Methods for securing containment systems properly',
     icon: Package,
-    href: "4-1"
+    href: '4-1',
   },
   {
-    number: "Subsection 2",
-    title: "Spacing Rules and Manufacturer Guidelines",
-    description: "Following spacing requirements and manufacturer specifications",
+    number: 'Subsection 2',
+    title: 'Spacing Rules and Manufacturer Guidelines',
+    description: 'Following spacing requirements and manufacturer specifications',
     icon: FileText,
-    href: "4-2"
+    href: '4-2',
   },
   {
-    number: "Subsection 3",
-    title: "Assembling and Joining Containment (Couplers, Saddles, Bushes)",
-    description: "Using accessories to assemble containment systems",
+    number: 'Subsection 3',
+    title: 'Assembling and Joining Containment (Couplers, Saddles, Bushes)',
+    description: 'Using accessories to assemble containment systems',
     icon: Wrench,
-    href: "4-3"
+    href: '4-3',
   },
   {
-    number: "Subsection 4",
-    title: "Pulling in Single-Core and Multi-Core Cables",
-    description: "Techniques for installing different cable types",
+    number: 'Subsection 4',
+    title: 'Pulling in Single-Core and Multi-Core Cables',
+    description: 'Techniques for installing different cable types',
     icon: CheckCircle,
-    href: "4-4"
+    href: '4-4',
   },
   {
-    number: "Subsection 5",
-    title: "Preventing Damage to Cables During Installation",
-    description: "Protecting cables from damage during the installation process",
+    number: 'Subsection 5',
+    title: 'Preventing Damage to Cables During Installation',
+    description: 'Protecting cables from damage during the installation process',
     icon: Ruler,
-    href: "4-5"
+    href: '4-5',
   },
   {
-    number: "Subsection 6",
-    title: "Earthing of Metallic Containment Systems",
-    description: "Proper earthing techniques for metal containment",
+    number: 'Subsection 6',
+    title: 'Earthing of Metallic Containment Systems',
+    description: 'Proper earthing techniques for metal containment',
     icon: Shield,
-    href: "4-6"
+    href: '4-6',
   },
   {
-    number: "Subsection 7",
-    title: "Working at Height Safely While Installing Systems",
-    description: "Safety procedures for working at height during installation",
+    number: 'Subsection 7',
+    title: 'Working at Height Safely While Installing Systems',
+    description: 'Safety procedures for working at height during installation',
     icon: HardHat,
-    href: "4-7"
-  }
+    href: '4-7',
+  },
 ];
 
 const Section4 = () => {

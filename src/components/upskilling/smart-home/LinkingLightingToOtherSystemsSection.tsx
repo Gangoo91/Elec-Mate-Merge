@@ -12,8 +12,8 @@ export const LinkingLightingToOtherSystemsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Integrating lighting with other smart home systems creates powerful automation scenarios that 
-          enhance security, comfort, energy efficiency, and accessibility.
+          Integrating lighting with other smart home systems creates powerful automation scenarios
+          that enhance security, comfort, energy efficiency, and accessibility.
         </p>
 
         <div className="grid gap-4">
@@ -72,8 +72,8 @@ export const LinkingLightingToOtherSystemsSection = () => {
 
         <div className="bg-green-900/20 border border-green-600/50 p-4 rounded-lg">
           <p className="text-green-200 text-sm">
-            <strong>Integration Advantage:</strong> Linked systems work together intelligently, providing 
-            functionality that exceeds the sum of individual components.
+            <strong>Integration Advantage:</strong> Linked systems work together intelligently,
+            providing functionality that exceeds the sum of individual components.
           </p>
         </div>
       </CardContent>

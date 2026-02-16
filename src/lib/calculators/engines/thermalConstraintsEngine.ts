@@ -69,42 +69,44 @@ export interface ThermalConstraintResult {
 // Enhanced grouping factors based on BS 7671 with more granular spacing
 const enhancedGroupingFactors = {
   conduit: {
-    2: { 0: 0.80, 10: 0.82, 20: 0.85, 50: 0.88 },
-    3: { 0: 0.70, 10: 0.73, 20: 0.76, 50: 0.80 },
+    2: { 0: 0.8, 10: 0.82, 20: 0.85, 50: 0.88 },
+    3: { 0: 0.7, 10: 0.73, 20: 0.76, 50: 0.8 },
     4: { 0: 0.65, 10: 0.68, 20: 0.72, 50: 0.76 },
-    6: { 0: 0.57, 10: 0.61, 20: 0.65, 50: 0.70 },
-    9: { 0: 0.50, 10: 0.54, 20: 0.58, 50: 0.64 }
+    6: { 0: 0.57, 10: 0.61, 20: 0.65, 50: 0.7 },
+    9: { 0: 0.5, 10: 0.54, 20: 0.58, 50: 0.64 },
   },
   trunking: {
     2: { 0: 0.85, 50: 0.88, 100: 0.91, 200: 0.94 },
-    3: { 0: 0.79, 50: 0.82, 100: 0.86, 200: 0.90 },
+    3: { 0: 0.79, 50: 0.82, 100: 0.86, 200: 0.9 },
     4: { 0: 0.75, 50: 0.78, 100: 0.83, 200: 0.88 },
     6: { 0: 0.68, 50: 0.72, 100: 0.77, 200: 0.83 },
-    9: { 0: 0.60, 50: 0.65, 100: 0.71, 200: 0.78 }
+    9: { 0: 0.6, 50: 0.65, 100: 0.71, 200: 0.78 },
   },
   'cable-tray': {
     2: { 0: 0.88, 100: 0.91, 200: 0.94, 300: 0.97 },
-    3: { 0: 0.82, 100: 0.86, 200: 0.90, 300: 0.94 },
+    3: { 0: 0.82, 100: 0.86, 200: 0.9, 300: 0.94 },
     4: { 0: 0.77, 100: 0.82, 200: 0.87, 300: 0.92 },
-    6: { 0: 0.72, 100: 0.78, 200: 0.84, 300: 0.90 },
-    9: { 0: 0.65, 100: 0.72, 200: 0.79, 300: 0.86 }
-  }
+    6: { 0: 0.72, 100: 0.78, 200: 0.84, 300: 0.9 },
+    9: { 0: 0.65, 100: 0.72, 200: 0.79, 300: 0.86 },
+  },
 };
 
 // Temperature ratings for different cable types
 const temperatureRatings = {
   pvc: { normal: 70, emergency: 100 },
   xlpe: { normal: 90, emergency: 130 },
-  mineral: { normal: 105, emergency: 250 }
+  mineral: { normal: 105, emergency: 250 },
 };
 
-export const analyseThermalConstraints = (inputs: ThermalConstraintInputs): ThermalConstraintResult => {
+export const analyseThermalConstraints = (
+  inputs: ThermalConstraintInputs
+): ThermalConstraintResult => {
   const { cables, groupingArrangement, ambientConditions, installationDetails } = inputs;
 
   // Validation
   validateInput(ambientConditions.airTemperature, -10, 60, 'Air temperature');
   validateInput(groupingArrangement.numCircuits, 1, 20, 'Number of circuits');
-  
+
   if (cables.length === 0) {
     throw new CalculationError('At least one cable is required', 'NO_CABLES');
   }
@@ -136,7 +138,7 @@ export const analyseThermalConstraints = (inputs: ThermalConstraintInputs): Ther
   const overallFactor = enhancedGroupingFactor * temperatureFactor * installationFactor;
 
   // Analyse each cable
-  const individualCableAnalysis = cables.map(cable => {
+  const individualCableAnalysis = cables.map((cable) => {
     // Base rating (would normally come from cable capacity tables)
     const baseRating = estimateBaseRating(cable.csa, cable.cableType);
     const deratedRating = baseRating * overallFactor;
@@ -154,12 +156,12 @@ export const analyseThermalConstraints = (inputs: ThermalConstraintInputs): Ther
       deratedRating: Math.round(deratedRating * 10) / 10,
       utilisation: Math.round(utilisation),
       thermalMargin: Math.round(thermalMargin * 10) / 10,
-      status
+      status,
     };
   });
 
   // Hotspot analysis
-  const maxUtilisation = Math.max(...individualCableAnalysis.map(c => c.utilisation));
+  const maxUtilisation = Math.max(...individualCableAnalysis.map((c) => c.utilisation));
   const hotspotAnalysis = calculateHotspotTemperature(
     maxUtilisation,
     ambientConditions.airTemperature,
@@ -203,33 +205,39 @@ export const analyseThermalConstraints = (inputs: ThermalConstraintInputs): Ther
       grouping: enhancedGroupingFactor,
       temperature: temperatureFactor,
       installation: installationFactor,
-      overall: overallFactor
+      overall: overallFactor,
     },
     hotspotAnalysis,
     spacingRecommendations,
     alternatives,
     complianceNotes,
-    warnings
+    warnings,
   };
 };
 
-const calculateEnhancedGroupingFactor = (numCircuits: number, spacing: number, enclosureType: string): number => {
+const calculateEnhancedGroupingFactor = (
+  numCircuits: number,
+  spacing: number,
+  enclosureType: string
+): number => {
   const factors = enhancedGroupingFactors[enclosureType as keyof typeof enhancedGroupingFactors];
   if (!factors) return getGroupingFactor(numCircuits); // Fallback to standard
 
   const circuitFactors = factors[numCircuits as keyof typeof factors] || factors[9]; // Use worst case if not found
-  
+
   // Interpolate based on spacing
-  const spacings = Object.keys(circuitFactors).map(Number).sort((a, b) => a - b);
-  
+  const spacings = Object.keys(circuitFactors)
+    .map(Number)
+    .sort((a, b) => a - b);
+
   for (let i = 0; i < spacings.length - 1; i++) {
     const lowerSpacing = spacings[i];
     const upperSpacing = spacings[i + 1];
-    
+
     if (spacing >= lowerSpacing && spacing <= upperSpacing) {
       const lowerFactor = circuitFactors[lowerSpacing as keyof typeof circuitFactors];
       const upperFactor = circuitFactors[upperSpacing as keyof typeof circuitFactors];
-      
+
       // Linear interpolation
       const ratio = (spacing - lowerSpacing) / (upperSpacing - lowerSpacing);
       return lowerFactor + ratio * (upperFactor - lowerFactor);
@@ -237,7 +245,7 @@ const calculateEnhancedGroupingFactor = (numCircuits: number, spacing: number, e
   }
 
   // Return closest value if outside range
-  return spacing <= spacings[0] 
+  return spacing <= spacings[0]
     ? circuitFactors[spacings[0] as keyof typeof circuitFactors]
     : circuitFactors[spacings[spacings.length - 1] as keyof typeof circuitFactors];
 };
@@ -245,24 +253,28 @@ const calculateEnhancedGroupingFactor = (numCircuits: number, spacing: number, e
 const calculateTemperatureDerating = (ambientTemp: number, cableType: string): number => {
   const referenceTemp = 30; // °C
   const tempRating = temperatureRatings[cableType as keyof typeof temperatureRatings];
-  
+
   if (!tempRating) return 1.0;
 
   // Simplified temperature derating calculation
   if (ambientTemp <= referenceTemp) return 1.0;
-  
+
   const tempRise = ambientTemp - referenceTemp;
   const maxTempRise = tempRating.normal - referenceTemp;
-  
+
   return Math.max(0.5, 1 - (tempRise / maxTempRise) * 0.5);
 };
 
-const calculateInstallationFactor = (enclosure: string, ventilation: string, thermalBarriers?: boolean): number => {
+const calculateInstallationFactor = (
+  enclosure: string,
+  ventilation: string,
+  thermalBarriers?: boolean
+): number => {
   let factor = 1.0;
 
   // Enclosure type adjustments
   if (enclosure === 'conduit') factor *= 0.95;
-  else if (enclosure === 'duct') factor *= 0.90;
+  else if (enclosure === 'duct') factor *= 0.9;
   else if (enclosure === 'trunking') factor *= 0.98;
 
   // Ventilation adjustments
@@ -280,19 +292,25 @@ const estimateBaseRating = (csa: number, cableType: string): number => {
   const baseRatings = {
     pvc: { 1.5: 20, 2.5: 27, 4: 37, 6: 47, 10: 64, 16: 85, 25: 112, 35: 138 },
     xlpe: { 1.5: 23, 2.5: 31, 4: 42, 6: 54, 10: 73, 16: 97, 25: 127, 35: 157 },
-    mineral: { 1.5: 25, 2.5: 33, 4: 45, 6: 58, 10: 78, 16: 104, 25: 136, 35: 168 }
+    mineral: { 1.5: 25, 2.5: 33, 4: 45, 6: 58, 10: 78, 16: 104, 25: 136, 35: 168 },
   };
 
   const ratings = baseRatings[cableType as keyof typeof baseRatings] || baseRatings.pvc;
   return ratings[csa as keyof typeof ratings] || 50; // Default if not found
 };
 
-const calculateHotspotTemperature = (utilisation: number, ambientTemp: number, cableType: string, deratingFactor: number) => {
+const calculateHotspotTemperature = (
+  utilisation: number,
+  ambientTemp: number,
+  cableType: string,
+  deratingFactor: number
+) => {
   const tempRating = temperatureRatings[cableType as keyof typeof temperatureRatings];
   const maxTemp = tempRating?.normal || 70;
 
   // Simplified hotspot calculation
-  const thermalRise = (utilisation / 100) * (utilisation / 100) * (maxTemp - ambientTemp) / deratingFactor;
+  const thermalRise =
+    ((utilisation / 100) * (utilisation / 100) * (maxTemp - ambientTemp)) / deratingFactor;
   const predictedTemp = ambientTemp + thermalRise;
 
   let thermalRisk: 'low' | 'moderate' | 'high' | 'critical';
@@ -304,69 +322,92 @@ const calculateHotspotTemperature = (utilisation: number, ambientTemp: number, c
   return {
     predictedTemperature: Math.round(predictedTemp),
     maxPermittedTemperature: maxTemp,
-    thermalRisk
+    thermalRisk,
   };
 };
 
-const calculateOptimalSpacing = (numCircuits: number, enclosureType: string, currentSpacing: number) => {
+const calculateOptimalSpacing = (
+  numCircuits: number,
+  enclosureType: string,
+  currentSpacing: number
+) => {
   // Calculate optimal spacing for best thermal performance
   const minSpacing = 0;
   const recommendedSpacing = Math.max(currentSpacing, numCircuits * 5); // 5mm per circuit rule of thumb
-  
+
   // Calculate improvement potential
   const currentFactor = calculateEnhancedGroupingFactor(numCircuits, currentSpacing, enclosureType);
-  const improvedFactor = calculateEnhancedGroupingFactor(numCircuits, recommendedSpacing, enclosureType);
+  const improvedFactor = calculateEnhancedGroupingFactor(
+    numCircuits,
+    recommendedSpacing,
+    enclosureType
+  );
   const improvementPotential = ((improvedFactor - currentFactor) / currentFactor) * 100;
 
   return {
     minimumSpacing: minSpacing,
     recommendedSpacing,
-    improvementPotential: Math.max(0, Math.round(improvementPotential))
+    improvementPotential: Math.max(0, Math.round(improvementPotential)),
   };
 };
 
-const generateAlternatives = (arrangement: ThermalConstraintInputs['groupingArrangement'], currentFactor: number) => {
+const generateAlternatives = (
+  arrangement: ThermalConstraintInputs['groupingArrangement'],
+  currentFactor: number
+) => {
   const alternatives = [];
 
   // Cable tray alternative
   if (arrangement.enclosureType !== 'cable-tray') {
-    const trayFactor = calculateEnhancedGroupingFactor(arrangement.numCircuits, arrangement.spacing, 'cable-tray');
+    const trayFactor = calculateEnhancedGroupingFactor(
+      arrangement.numCircuits,
+      arrangement.spacing,
+      'cable-tray'
+    );
     const improvement = ((trayFactor - currentFactor) / currentFactor) * 100;
-    
+
     alternatives.push({
       description: 'Install cables on perforated cable tray',
       groupingImprovement: Math.round(improvement),
       costImpact: 'medium' as const,
-      complexity: 'moderate' as const
+      complexity: 'moderate' as const,
     });
   }
 
   // Increased spacing alternative
   const improvedSpacing = arrangement.spacing + 50;
-  const spacingFactor = calculateEnhancedGroupingFactor(arrangement.numCircuits, improvedSpacing, arrangement.enclosureType);
+  const spacingFactor = calculateEnhancedGroupingFactor(
+    arrangement.numCircuits,
+    improvedSpacing,
+    arrangement.enclosureType
+  );
   const spacingImprovement = ((spacingFactor - currentFactor) / currentFactor) * 100;
 
   alternatives.push({
     description: `Increase cable spacing to ${improvedSpacing}mm`,
     groupingImprovement: Math.round(spacingImprovement),
     costImpact: 'low' as const,
-    complexity: 'simple' as const
+    complexity: 'simple' as const,
   });
 
   // Split circuits alternative
   if (arrangement.numCircuits > 2) {
-    const splitFactor = calculateEnhancedGroupingFactor(Math.ceil(arrangement.numCircuits / 2), arrangement.spacing, arrangement.enclosureType);
+    const splitFactor = calculateEnhancedGroupingFactor(
+      Math.ceil(arrangement.numCircuits / 2),
+      arrangement.spacing,
+      arrangement.enclosureType
+    );
     const splitImprovement = ((splitFactor - currentFactor) / currentFactor) * 100;
 
     alternatives.push({
       description: 'Split circuits into separate enclosures',
       groupingImprovement: Math.round(splitImprovement),
       costImpact: 'high' as const,
-      complexity: 'complex' as const
+      complexity: 'complex' as const,
     });
   }
 
-  return alternatives.filter(alt => alt.groupingImprovement > 5); // Only show meaningful improvements
+  return alternatives.filter((alt) => alt.groupingImprovement > 5); // Only show meaningful improvements
 };
 
 // Helper function for common installation assessment
@@ -382,7 +423,7 @@ export const assessCableGrouping = (
     csa: cableSize,
     current: current,
     cableType: 'pvc' as const,
-    installationMethod: 'enclosed'
+    installationMethod: 'enclosed',
   }));
 
   return analyseThermalConstraints({
@@ -391,12 +432,12 @@ export const assessCableGrouping = (
       numCircuits: numCables,
       spacing,
       formation: 'single-layer',
-      enclosureType: installationType
+      enclosureType: installationType,
     },
     ambientConditions: {
       airTemperature: 30,
-      ventilation: 'natural'
+      ventilation: 'natural',
     },
-    installationDetails: {}
+    installationDetails: {},
   });
 };

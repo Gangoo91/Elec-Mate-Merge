@@ -28,10 +28,16 @@ export const useExpiryReminders = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: reminders, isLoading, error } = useQuery({
+  const {
+    data: reminders,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['expiry-reminders'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -46,13 +52,7 @@ export const useExpiryReminders = () => {
   });
 
   const updateReminder = useMutation({
-    mutationFn: async ({
-      id,
-      updates,
-    }: {
-      id: string;
-      updates: Partial<ExpiryReminder>;
-    }) => {
+    mutationFn: async ({ id, updates }: { id: string; updates: Partial<ExpiryReminder> }) => {
       const { data, error } = await supabase
         .from('certificate_expiry_reminders')
         .update(updates)
@@ -152,10 +152,7 @@ export const useExpiryReminders = () => {
 
   const deleteReminder = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('certificate_expiry_reminders')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('certificate_expiry_reminders').delete().eq('id', id);
 
       if (error) throw error;
     },
@@ -176,13 +173,7 @@ export const useExpiryReminders = () => {
   });
 
   const bulkUpdateStatus = useMutation({
-    mutationFn: async ({
-      ids,
-      status,
-    }: {
-      ids: string[];
-      status: ReminderStatus;
-    }) => {
+    mutationFn: async ({ ids, status }: { ids: string[]; status: ReminderStatus }) => {
       const updates = ids.map((id) =>
         supabase
           .from('certificate_expiry_reminders')

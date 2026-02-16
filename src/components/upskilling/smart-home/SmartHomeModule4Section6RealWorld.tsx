@@ -12,13 +12,15 @@ export const SmartHomeModule4Section6RealWorld = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-foreground mb-3">University BMS Integration Project</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-3">
+            University BMS Integration Project
+          </h3>
           <p className="mb-4">
-            A university installs a comprehensive BMS that links lighting and HVAC systems across 
-            multiple buildings. The system uses occupancy sensors to automatically switch lights 
-            off and reduce ventilation in unused lecture halls and study areas.
+            A university installs a comprehensive BMS that links lighting and HVAC systems across
+            multiple buildings. The system uses occupancy sensors to automatically switch lights off
+            and reduce ventilation in unused lecture halls and study areas.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div className="p-3 bg-[#1a1a1a] rounded-lg">
               <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
@@ -32,7 +34,7 @@ export const SmartHomeModule4Section6RealWorld = () => {
                 <li>• Enhanced student and staff comfort</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] rounded-lg">
               <h4 className="font-semibold text-foreground mb-2">Key Features Implemented</h4>
               <ul className="text-sm space-y-1">
@@ -44,26 +46,36 @@ export const SmartHomeModule4Section6RealWorld = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-green-500/10 border border-green-5=/20 rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-foreground mb-3">Hospital BMS Upgrade Case Study</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-3">
+            Hospital BMS Upgrade Case Study
+          </h3>
           <p className="mb-4">
-            A 300-bed regional hospital implemented a comprehensive BMS upgrade integrating HVAC, 
-            lighting, and medical gas monitoring across 15 buildings. The project addressed aging 
+            A 300-bed regional hospital implemented a comprehensive BMS upgrade integrating HVAC,
+            lighting, and medical gas monitoring across 15 buildings. The project addressed aging
             infrastructure and regulatory compliance requirements.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div className="p-3 bg-[#1a1a1a] rounded-lg">
               <h4 className="font-semibold text-foreground mb-2">Challenge & Solution</h4>
               <ul className="text-sm space-y-1">
-                <li>• <strong>Challenge:</strong> 24/7 operations, critical systems</li>
-                <li>• <strong>Solution:</strong> Phased installation during scheduled maintenance</li>
-                <li>• <strong>Integration:</strong> BACnet backbone with DALI lighting zones</li>
-                <li>• <strong>Features:</strong> Predictive maintenance and energy analytics</li>
+                <li>
+                  • <strong>Challenge:</strong> 24/7 operations, critical systems
+                </li>
+                <li>
+                  • <strong>Solution:</strong> Phased installation during scheduled maintenance
+                </li>
+                <li>
+                  • <strong>Integration:</strong> BACnet backbone with DALI lighting zones
+                </li>
+                <li>
+                  • <strong>Features:</strong> Predictive maintenance and energy analytics
+                </li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] rounded-lg">
               <h4 className="font-semibold text-foreground mb-2">Measurable Outcomes</h4>
               <ul className="text-sm space-y-1">
@@ -75,15 +87,17 @@ export const SmartHomeModule4Section6RealWorld = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-foreground mb-3">Manufacturing Facility Integration</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-3">
+            Manufacturing Facility Integration
+          </h3>
           <p className="mb-4">
-            A 50,000m² automotive parts manufacturer integrated their production environment controls 
-            with office areas, creating a unified BMS managing both industrial processes and 
-            commercial building systems.
+            A 50,000m² automotive parts manufacturer integrated their production environment
+            controls with office areas, creating a unified BMS managing both industrial processes
+            and commercial building systems.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-3 bg-[#1a1a1a] rounded-lg">
               <h4 className="font-semibold text-foreground mb-2">Unique Requirements</h4>
@@ -94,7 +108,7 @@ export const SmartHomeModule4Section6RealWorld = () => {
                 <li>• Safety system integration</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] rounded-lg">
               <h4 className="font-semibold text-foreground mb-2">Results Achieved</h4>
               <ul className="text-sm space-y-1">
@@ -106,7 +120,7 @@ export const SmartHomeModule4Section6RealWorld = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
             <Lightbulb className="h-4 w-4 text-orange-400" />
@@ -117,7 +131,9 @@ export const SmartHomeModule4Section6RealWorld = () => {
           </p>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div>
-              <p><strong>Energy Systems:</strong></p>
+              <p>
+                <strong>Energy Systems:</strong>
+              </p>
               <ul className="list-disc list-inside space-y-1 ml-4 text-xs">
                 <li>Solar panel and battery storage coordination</li>
                 <li>Electric vehicle charging management</li>
@@ -126,7 +142,9 @@ export const SmartHomeModule4Section6RealWorld = () => {
               </ul>
             </div>
             <div>
-              <p><strong>Smart Building Features:</strong></p>
+              <p>
+                <strong>Smart Building Features:</strong>
+              </p>
               <ul className="list-disc list-inside space-y-1 ml-4 text-xs">
                 <li>Weather-responsive building envelope</li>
                 <li>Predictive maintenance algorithms</li>

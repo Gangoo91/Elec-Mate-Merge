@@ -56,12 +56,10 @@ export function AITagSuggestions({
   });
 
   const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const hasAnySuggestions =
-    result.ksb_suggestions.length > 0 ||
-    result.tag_suggestions.length > 0;
+  const hasAnySuggestions = result.ksb_suggestions.length > 0 || result.tag_suggestions.length > 0;
 
   if (!hasAnySuggestions && compact) {
     return null;
@@ -90,11 +88,7 @@ export function AITagSuggestions({
             </Button>
           )}
         </div>
-        {!compact && (
-          <CardDescription className="text-xs">
-            {result.summary}
-          </CardDescription>
-        )}
+        {!compact && <CardDescription className="text-xs">{result.summary}</CardDescription>}
       </CardHeader>
 
       <CardContent className="space-y-4">
@@ -127,10 +121,10 @@ export function AITagSuggestions({
                     <div
                       key={ksb.code}
                       className={cn(
-                        "p-3 rounded-lg border transition-all",
+                        'p-3 rounded-lg border transition-all',
                         isSelected
-                          ? "border-elec-yellow bg-elec-yellow/10"
-                          : "border-border bg-background hover:border-elec-yellow/50"
+                          ? 'border-elec-yellow bg-elec-yellow/10'
+                          : 'border-border bg-background hover:border-elec-yellow/50'
                       )}
                     >
                       <div className="flex items-start justify-between gap-2">
@@ -141,11 +135,16 @@ export function AITagSuggestions({
                             </Badge>
                             <Badge
                               variant="outline"
-                              className={cn("text-xs capitalize", getKSBCategoryColor(ksb.category))}
+                              className={cn(
+                                'text-xs capitalize',
+                                getKSBCategoryColor(ksb.category)
+                              )}
                             >
                               {ksb.category}
                             </Badge>
-                            <Badge className={cn("text-xs", getConfidenceBadgeClass(ksb.confidence))}>
+                            <Badge
+                              className={cn('text-xs', getConfidenceBadgeClass(ksb.confidence))}
+                            >
                               {ksb.confidence}%
                             </Badge>
                           </div>
@@ -177,10 +176,7 @@ export function AITagSuggestions({
                           )}
                         </div>
                       </div>
-                      <Progress
-                        value={ksb.confidence}
-                        className="h-1 mt-2"
-                      />
+                      <Progress value={ksb.confidence} className="h-1 mt-2" />
                     </div>
                   );
                 })}
@@ -219,12 +215,12 @@ export function AITagSuggestions({
                       key={tag.tag}
                       variant="outline"
                       className={cn(
-                        "cursor-pointer transition-all",
+                        'cursor-pointer transition-all',
                         isSelected
-                          ? "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
-                          : "hover:border-elec-yellow/50"
+                          ? 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'
+                          : 'hover:border-elec-yellow/50'
                       )}
-                      onClick={() => isSelected ? onRejectTag?.(tag) : onAcceptTag?.(tag)}
+                      onClick={() => (isSelected ? onRejectTag?.(tag) : onAcceptTag?.(tag))}
                     >
                       {tag.tag}
                       <span className="ml-1 text-[10px] opacity-70">{tag.confidence}%</span>
@@ -254,12 +250,12 @@ export function AITagSuggestions({
                 <Badge
                   variant="outline"
                   className={cn(
-                    "text-xs",
+                    'text-xs',
                     result.quality_assessment.score >= 80
-                      ? "bg-green-500/20 text-green-500 border-green-500/30"
+                      ? 'bg-green-500/20 text-green-500 border-green-500/30'
                       : result.quality_assessment.score >= 60
-                      ? "bg-amber-500/20 text-amber-500 border-amber-500/30"
-                      : "bg-red-500/20 text-red-500 border-red-500/30"
+                        ? 'bg-amber-500/20 text-amber-500 border-amber-500/30'
+                        : 'bg-red-500/20 text-red-500 border-red-500/30'
                   )}
                 >
                   {result.quality_assessment.score}/100
@@ -345,9 +341,7 @@ export function AITagSuggestions({
         {!hasAnySuggestions && (
           <div className="text-center py-6">
             <AlertCircle className="h-8 w-8 text-muted-foreground/50 mx-auto mb-2" />
-            <p className="text-sm text-muted-foreground">
-              No confident suggestions found
-            </p>
+            <p className="text-sm text-muted-foreground">No confident suggestions found</p>
             <p className="text-xs text-muted-foreground mt-1">
               Try adding more detail to the description
             </p>

@@ -15,7 +15,7 @@ import {
   CheckCircle2,
   ArrowLeft,
   ArrowRight,
-  AlertTriangle
+  AlertTriangle,
 } from 'lucide-react';
 import { methodologySteps, MethodologyStep } from '../data/faultFindingData';
 
@@ -23,7 +23,7 @@ interface MethodologyWizardProps {
   onComplete?: () => void;
 }
 
-const getCategoryIcon = (category: string, className: string = "h-6 w-6") => {
+const getCategoryIcon = (category: string, className: string = 'h-6 w-6') => {
   switch (category) {
     case 'preparation':
       return <User className={className} />;
@@ -82,7 +82,7 @@ const MethodologyWizard = ({ onComplete }: MethodologyWizardProps) => {
   const progress = ((currentStep + 1) / totalSteps) * 100;
 
   const handleNext = () => {
-    setCompletedSteps(prev => new Set([...prev, currentStep]));
+    setCompletedSteps((prev) => new Set([...prev, currentStep]));
     if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
     } else if (onComplete) {
@@ -109,9 +109,7 @@ const MethodologyWizard = ({ onComplete }: MethodologyWizardProps) => {
             <span className="text-xs text-muted-foreground">
               Step {currentStep + 1} of {totalSteps}
             </span>
-            <span className="text-xs text-muted-foreground">
-              {Math.round(progress)}% complete
-            </span>
+            <span className="text-xs text-muted-foreground">{Math.round(progress)}% complete</span>
           </div>
           <Progress value={progress} className="h-2" />
         </CardContent>
@@ -133,8 +131,8 @@ const MethodologyWizard = ({ onComplete }: MethodologyWizardProps) => {
                 isCurrent
                   ? `${stepColors.bg} ${stepColors.border} ${stepColors.text}`
                   : isCompleted
-                  ? 'bg-green-500/20 border-green-500/30 text-green-400'
-                  : 'text-muted-foreground'
+                    ? 'bg-green-500/20 border-green-500/30 text-green-400'
+                    : 'text-muted-foreground'
               }`}
               onClick={() => handleStepClick(index)}
             >
@@ -153,15 +151,11 @@ const MethodologyWizard = ({ onComplete }: MethodologyWizardProps) => {
         <CardHeader className="pb-3">
           <div className="flex items-center gap-3">
             <div className={`p-3 rounded-xl ${colors.bg} ${colors.text}`}>
-              {getCategoryIcon(step.category, "h-8 w-8")}
+              {getCategoryIcon(step.category, 'h-8 w-8')}
             </div>
             <div className="flex-1">
-              <CardTitle className={`text-lg sm:text-xl ${colors.text}`}>
-                {step.title}
-              </CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                {step.description}
-              </p>
+              <CardTitle className={`text-lg sm:text-xl ${colors.text}`}>{step.title}</CardTitle>
+              <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
             </div>
           </div>
         </CardHeader>

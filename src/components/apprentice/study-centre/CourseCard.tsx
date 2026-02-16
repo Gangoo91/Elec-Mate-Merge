@@ -1,6 +1,6 @@
-import { LucideIcon } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { LucideIcon } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 interface CourseCardProps {
   title: string;
@@ -11,7 +11,14 @@ interface CourseCardProps {
   comingSoon?: boolean;
 }
 
-export function CourseCard({ title, description, icon: Icon, href, number, comingSoon }: CourseCardProps) {
+export function CourseCard({
+  title,
+  description,
+  icon: Icon,
+  href,
+  number,
+  comingSoon,
+}: CourseCardProps) {
   const CardContent = (
     <div className="p-6 h-full flex flex-col items-center text-center justify-start">
       {comingSoon && (
@@ -25,14 +32,20 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
         <Icon className="h-8 w-8 text-elec-yellow" />
       </div>
       {number && (
-        <h4 className={`text-elec-yellow font-semibold text-base mb-2 flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}>
+        <h4
+          className={`text-elec-yellow font-semibold text-base mb-2 flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}
+        >
           {number}
         </h4>
       )}
-      <h3 className={`text-elec-light font-semibold text-base mb-3 group-hover:text-elec-yellow transition-colors leading-tight flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}>
+      <h3
+        className={`text-elec-light font-semibold text-base mb-3 group-hover:text-elec-yellow transition-colors leading-tight flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}
+      >
         {title}
       </h3>
-      <p className={`text-white leading-relaxed text-sm line-clamp-4 ${comingSoon ? 'opacity-70' : ''}`}>
+      <p
+        className={`text-white leading-relaxed text-sm line-clamp-4 ${comingSoon ? 'opacity-70' : ''}`}
+      >
         {description}
       </p>
     </div>
@@ -49,7 +62,9 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
   }
 
   return (
-    <Card className={`group relative overflow-hidden h-[200px] flex flex-col ${comingSoon ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer active:scale-[0.98]'}`}>
+    <Card
+      className={`group relative overflow-hidden h-[200px] flex flex-col ${comingSoon ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer active:scale-[0.98]'}`}
+    >
       {CardContent}
     </Card>
   );

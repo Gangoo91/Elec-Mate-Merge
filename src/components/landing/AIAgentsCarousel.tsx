@@ -1,6 +1,15 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Bot, Calculator, Paintbrush, ClipboardCheck, Wrench, Zap, BookOpen, Mic } from 'lucide-react';
+import {
+  Bot,
+  Calculator,
+  Paintbrush,
+  ClipboardCheck,
+  Wrench,
+  Zap,
+  BookOpen,
+  Mic,
+} from 'lucide-react';
 import { AIAgentCard } from './AIAgentCard';
 
 const agents = [
@@ -97,7 +106,9 @@ export const AIAgentsCarousel = () => {
               </div>
             ))}
           </div>
-          <p className="text-center text-white/30 text-[10px] mt-3 uppercase tracking-wider">Swipe for more</p>
+          <p className="text-center text-white/30 text-[10px] mt-3 uppercase tracking-wider">
+            Swipe for more
+          </p>
         </div>
 
         {/* Desktop: Grid */}

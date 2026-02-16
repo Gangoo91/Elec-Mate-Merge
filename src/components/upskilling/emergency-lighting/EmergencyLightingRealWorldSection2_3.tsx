@@ -12,20 +12,21 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Incident Overview */}
         <div className="bg-red-600/15 border border-red-400/30 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-4">
             <XCircle className="h-4 w-4 text-red-400" />
             <Badge className="bg-red-600/40 text-red-300 text-xs">Incident Report</Badge>
-            <span className="text-red-300 font-medium text-sm">Power Failure During Production</span>
+            <span className="text-red-300 font-medium text-sm">
+              Power Failure During Production
+            </span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Facility Details:</p>
-                 <ul className="space-y-1 text-xs text-foreground">
+                <ul className="space-y-1 text-xs text-foreground">
                   <li>• Location: Birmingham industrial estate</li>
                   <li>• Type: Automotive component manufacturing</li>
                   <li>• Size: 3,000m² production floor</li>
@@ -33,10 +34,10 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
                   <li>• Workforce: 45 operators on day shift</li>
                 </ul>
               </div>
-              
+
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">What Happened:</p>
-                 <ul className="space-y-1 text-xs text-foreground">
+                <ul className="space-y-1 text-xs text-foreground">
                   <li>• 11:30 AM: Total power failure due to grid fault</li>
                   <li>• Emergency escape lighting activated normally</li>
                   <li>• No dedicated high-risk task area lighting installed</li>
@@ -45,7 +46,7 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div className="bg-red-600/20 rounded-lg p-3">
                 <p className="text-red-300 font-medium text-sm mb-2">Immediate Consequences:</p>
@@ -57,7 +58,7 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
                   <li>• Customer delivery commitments missed</li>
                 </ul>
               </div>
-              
+
               <div className="bg-yellow-600/20 rounded-lg p-3">
                 <p className="text-yellow-300 font-medium text-sm mb-2">HSE Investigation Found:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -77,55 +78,81 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
             <Clock className="h-4 w-4 text-elec-yellow" />
             Incident Timeline
           </h4>
-          
+
           <div className="space-y-3">
             <div className="flex gap-4">
               <div className="w-16 flex-shrink-0">
                 <Badge className="bg-blue-600/40 text-blue-300 text-xs">11:30</Badge>
               </div>
               <div className="bg-elec-gray/40 rounded-lg p-3 flex-1">
-                <p className="text-foreground text-sm font-medium mb-1">Grid power failure occurs</p>
-                <p className="text-foreground text-xs">Substation fault affects entire industrial estate. Emergency escape lighting (0.5 lux) activates correctly but provides insufficient illumination for safe machine shutdown.</p>
+                <p className="text-foreground text-sm font-medium mb-1">
+                  Grid power failure occurs
+                </p>
+                <p className="text-foreground text-xs">
+                  Substation fault affects entire industrial estate. Emergency escape lighting (0.5
+                  lux) activates correctly but provides insufficient illumination for safe machine
+                  shutdown.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex gap-4">
               <div className="w-16 flex-shrink-0">
                 <Badge className="bg-orange-600/40 text-orange-300 text-xs">11:31</Badge>
               </div>
               <div className="bg-elec-gray/40 rounded-lg p-3 flex-1">
-                <p className="text-foreground text-sm font-medium mb-1">Operators struggle in poor light</p>
-                <p className="text-foreground text-xs">Machine operators cannot see control panels clearly. Several attempt to continue operations by feel, creating dangerous conditions. Supervisor shouts for immediate stop.</p>
+                <p className="text-foreground text-sm font-medium mb-1">
+                  Operators struggle in poor light
+                </p>
+                <p className="text-foreground text-xs">
+                  Machine operators cannot see control panels clearly. Several attempt to continue
+                  operations by feel, creating dangerous conditions. Supervisor shouts for immediate
+                  stop.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex gap-4">
               <div className="w-16 flex-shrink-0">
                 <Badge className="bg-red-600/40 text-red-300 text-xs">11:32</Badge>
               </div>
               <div className="bg-elec-gray/40 rounded-lg p-3 flex-1">
-                <p className="text-foreground text-sm font-medium mb-1">Emergency stops activated</p>
-                <p className="text-foreground text-xs">Multiple machines stopped using emergency stops rather than controlled shutdown. CNC #7 suffers spindle damage. Operator John Smith nearly catches hand in lathe chuck while trying to secure work piece.</p>
+                <p className="text-foreground text-sm font-medium mb-1">
+                  Emergency stops activated
+                </p>
+                <p className="text-foreground text-xs">
+                  Multiple machines stopped using emergency stops rather than controlled shutdown.
+                  CNC #7 suffers spindle damage. Operator John Smith nearly catches hand in lathe
+                  chuck while trying to secure work piece.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex gap-4">
               <div className="w-16 flex-shrink-0">
                 <Badge className="bg-purple-600/40 text-purple-300 text-xs">11:35</Badge>
               </div>
               <div className="bg-elec-gray/40 rounded-lg p-3 flex-1">
                 <p className="text-foreground text-sm font-medium mb-1">Evacuation commenced</p>
-                <p className="text-foreground text-xs">All personnel evacuated to assembly point. Several expensive aluminium components left unsecured on machines, later found to be damaged beyond use.</p>
+                <p className="text-foreground text-xs">
+                  All personnel evacuated to assembly point. Several expensive aluminium components
+                  left unsecured on machines, later found to be damaged beyond use.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex gap-4">
               <div className="w-16 flex-shrink-0">
                 <Badge className="bg-green-600/40 text-green-300 text-xs">17:30</Badge>
               </div>
               <div className="bg-elec-gray/40 rounded-lg p-3 flex-1">
-                <p className="text-foreground text-sm font-medium mb-1">Power restored, damage assessed</p>
-                <p className="text-foreground text-xs">Full extent of damage becomes clear. Production cannot resume until CNC machine repaired and work pieces remachined. Total cost impact exceeds £50,000.</p>
+                <p className="text-foreground text-sm font-medium mb-1">
+                  Power restored, damage assessed
+                </p>
+                <p className="text-foreground text-xs">
+                  Full extent of damage becomes clear. Production cannot resume until CNC machine
+                  repaired and work pieces remachined. Total cost impact exceeds £50,000.
+                </p>
               </div>
             </div>
           </div>
@@ -136,9 +163,11 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle className="h-4 w-4 text-green-400" />
             <Badge className="bg-green-600/40 text-green-300 text-xs">Solution Implemented</Badge>
-            <span className="text-green-300 font-medium text-sm">High-Risk Task Area Lighting Installation</span>
+            <span className="text-green-300 font-medium text-sm">
+              High-Risk Task Area Lighting Installation
+            </span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -151,7 +180,7 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
                   <li>• Shutdown time analysis: 3-5 minutes per machine</li>
                 </ul>
               </div>
-              
+
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">System Specifications:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -163,7 +192,7 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Installation Process:</p>
@@ -175,7 +204,7 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
                   <li>• Operator training provided on procedures</li>
                 </ul>
               </div>
-              
+
               <div className="bg-green-600/20 rounded-lg p-3">
                 <p className="text-green-300 font-medium text-sm mb-2">Performance Results:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -196,35 +225,43 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
             <Lightbulb className="h-4 w-4 text-elec-yellow" />
             Operator Testimonials
           </h4>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
             <div className="bg-elec-gray/40 rounded-lg p-4">
               <div className="mb-3">
                 <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">John Smith</Badge>
                 <p className="text-blue-300 text-sm font-medium">Senior Machine Operator</p>
               </div>
               <p className="text-foreground text-sm italic mb-3">
-                "Before the emergency lighting, I nearly lost my hand when the power cut happened. I couldn't see the lathe chuck properly and reached in to stop the work piece. Now with proper lighting, I can safely shutdown the machine step by step, even secure expensive parts properly."
+                "Before the emergency lighting, I nearly lost my hand when the power cut happened. I
+                couldn't see the lathe chuck properly and reached in to stop the work piece. Now
+                with proper lighting, I can safely shutdown the machine step by step, even secure
+                expensive parts properly."
               </p>
               <p className="text-foreground text-xs">
-                John has 15 years experience operating CNC lathes and was involved in the near-miss incident that triggered the lighting upgrade.
+                John has 15 years experience operating CNC lathes and was involved in the near-miss
+                incident that triggered the lighting upgrade.
               </p>
             </div>
 
             <div className="bg-elec-gray/40 rounded-lg p-4">
               <div className="mb-3">
-                <Badge className="bg-purple-600/40 text-purple-300 text-xs mb-2">Sarah Williams</Badge>
+                <Badge className="bg-purple-600/40 text-purple-300 text-xs mb-2">
+                  Sarah Williams
+                </Badge>
                 <p className="text-purple-300 text-sm font-medium">Production Supervisor</p>
               </div>
               <p className="text-foreground text-sm italic mb-3">
-                "The difference is night and day. During the last power cut, I watched my team calmly and safely shut down their machines in proper sequence. No panic, no damage, no injuries. The emergency lighting gives us time to do things right instead of just hitting the panic button."
+                "The difference is night and day. During the last power cut, I watched my team
+                calmly and safely shut down their machines in proper sequence. No panic, no damage,
+                no injuries. The emergency lighting gives us time to do things right instead of just
+                hitting the panic button."
               </p>
               <p className="text-foreground text-xs">
-                Sarah oversees 20 operators across two shifts and was responsible for implementing the new shutdown procedures.
+                Sarah oversees 20 operators across two shifts and was responsible for implementing
+                the new shutdown procedures.
               </p>
             </div>
-            
           </div>
         </div>
 
@@ -232,11 +269,14 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-4">
             <Lightbulb className="h-4 w-4 text-elec-yellow" />
-            <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20">
+            <Badge
+              variant="outline"
+              className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20"
+            >
               Key Lessons Learned
             </Badge>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -250,7 +290,7 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">For Facility Managers:</p>
@@ -265,7 +305,6 @@ export const EmergencyLightingRealWorldSection2_3 = () => {
             </div>
           </div>
         </div>
-        
       </CardContent>
     </Card>
   );

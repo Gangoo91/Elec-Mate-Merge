@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { InstallPlanData } from "./types";
-import { Cable, Route, Info, Ruler, AlertTriangle } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { InstallPlanData } from './types';
+import { Cable, Route, Info, Ruler, AlertTriangle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface CableRunStepProps {
   planData: InstallPlanData;
@@ -13,23 +13,37 @@ interface CableRunStepProps {
 const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
   // Simplified to 6 proven installation methods that actually impact calculations
   const installationMethods = [
-    { value: "clipped-direct", label: "Clipped Direct", description: "Most common - cable clipped to surface" },
-    { value: "in-conduit", label: "In Conduit", description: "Cable in plastic/metal conduit" },
-    { value: "in-trunking", label: "In Trunking", description: "Cable in cable trunking" },
-    { value: "through-insulation", label: "Through Insulation", description: "Cable passing through thermal insulation" },
-    { value: "underground", label: "Underground", description: "Direct buried or ducted underground" },
-    { value: "cable-tray", label: "Cable Tray", description: "On cable tray or ladder" }
+    {
+      value: 'clipped-direct',
+      label: 'Clipped Direct',
+      description: 'Most common - cable clipped to surface',
+    },
+    { value: 'in-conduit', label: 'In Conduit', description: 'Cable in plastic/metal conduit' },
+    { value: 'in-trunking', label: 'In Trunking', description: 'Cable in cable trunking' },
+    {
+      value: 'through-insulation',
+      label: 'Through Insulation',
+      description: 'Cable passing through thermal insulation',
+    },
+    {
+      value: 'underground',
+      label: 'Underground',
+      description: 'Direct buried or ducted underground',
+    },
+    { value: 'cable-tray', label: 'Cable Tray', description: 'On cable tray or ladder' },
   ];
 
   // Auto-selected cable type - removed manual selection
 
   const getVoltageDropGuidance = () => {
-    const maxVoltageDropPercentage = planData.loadType === "lighting" ? 3 : 5;
-    const maxVoltageDropVolts = planData.voltage ? (planData.voltage * maxVoltageDropPercentage) / 100 : 0;
-    
+    const maxVoltageDropPercentage = planData.loadType === 'lighting' ? 3 : 5;
+    const maxVoltageDropVolts = planData.voltage
+      ? (planData.voltage * maxVoltageDropPercentage) / 100
+      : 0;
+
     return {
       percentage: maxVoltageDropPercentage,
-      volts: maxVoltageDropVolts.toFixed(1)
+      volts: maxVoltageDropVolts.toFixed(1),
     };
   };
 
@@ -38,12 +52,12 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
   // Smart stepping for cable length based on typical run lengths
   const getCableLengthStep = () => {
     const length = planData.cableLength || 0;
-    if (length < 10) return "0.5"; // 0.5m steps for short runs
-    if (length < 50) return "1"; // 1m steps for medium runs
-    return "5"; // 5m steps for long runs
+    if (length < 10) return '0.5'; // 0.5m steps for short runs
+    if (length < 50) return '1'; // 1m steps for medium runs
+    return '5'; // 5m steps for long runs
   };
 
-  const getCableLengthMin = () => "0.1"; // Minimum 10cm
+  const getCableLengthMin = () => '0.1'; // Minimum 10cm
 
   return (
     <div className="space-y-8">
@@ -52,7 +66,7 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
         <MobileInputWrapper
           label="Cable Length"
           placeholder={`Enter length (±${getCableLengthStep()}m steps)`}
-          value={planData.cableLength || ""}
+          value={planData.cableLength || ''}
           onChange={(value) => updatePlanData({ cableLength: parseFloat(value) || 0 })}
           type="number"
           step={getCableLengthStep()}
@@ -65,15 +79,18 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
         <MobileSelectWrapper
           label="Installation Method"
           placeholder="Select installation method"
-          value={planData.installationMethod || ""}
+          value={planData.installationMethod || ''}
           onValueChange={(value) => updatePlanData({ installationMethod: value })}
-          options={installationMethods.map(method => ({
+          options={installationMethods.map((method) => ({
             value: method.value,
-            label: method.label
+            label: method.label,
           }))}
-          hint={planData.installationMethod ? 
-            installationMethods.find(m => m.value === planData.installationMethod)?.description || "Choose the method that matches your cable route" 
-            : "Choose the method that matches your cable route"}
+          hint={
+            planData.installationMethod
+              ? installationMethods.find((m) => m.value === planData.installationMethod)
+                  ?.description || 'Choose the method that matches your cable route'
+              : 'Choose the method that matches your cable route'
+          }
         />
 
         {/* Cable type auto-selected by environmental intelligence */}
@@ -84,10 +101,15 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
               <span className="text-sm font-medium text-green-300">Auto-Selected Cable Type</span>
             </div>
             <p className="text-green-200 font-medium">
-              {planData.cableType === "pvc-twin-earth" ? "PVC Twin & Earth" :
-               planData.cableType === "xlpe-lsoh" ? "XLPE-LSOH" :
-               planData.cableType === "swa-xlpe" ? "SWA XLPE" :
-               planData.cableType === "micc" ? "MICC" : planData.cableType}
+              {planData.cableType === 'pvc-twin-earth'
+                ? 'PVC Twin & Earth'
+                : planData.cableType === 'xlpe-lsoh'
+                  ? 'XLPE-LSOH'
+                  : planData.cableType === 'swa-xlpe'
+                    ? 'SWA XLPE'
+                    : planData.cableType === 'micc'
+                      ? 'MICC'
+                      : planData.cableType}
             </p>
             <p className="text-xs text-green-200/70 mt-1">
               Automatically selected based on your environmental conditions
@@ -105,7 +127,9 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
             </div>
             <div>
               <div className="text-lg">Voltage Drop Limits</div>
-              <div className="text-sm font-normal text-blue-200/80">BS 7671 Compliance Requirements</div>
+              <div className="text-sm font-normal text-blue-200/80">
+                BS 7671 Compliance Requirements
+              </div>
             </div>
           </CardTitle>
         </CardHeader>
@@ -113,12 +137,15 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
           <div className="grid grid-cols-1 gap-4">
             <div className="p-4 bg-blue-500/10 rounded-lg">
               <p className="text-sm text-blue-200/90">
-                <span className="font-semibold">Maximum Voltage Drop:</span> {voltageDropGuidance.percentage}% ({voltageDropGuidance.volts}V) for {planData.loadType || 'this'} circuit type
+                <span className="font-semibold">Maximum Voltage Drop:</span>{' '}
+                {voltageDropGuidance.percentage}% ({voltageDropGuidance.volts}V) for{' '}
+                {planData.loadType || 'this'} circuit type
               </p>
             </div>
             <div className="p-4 bg-blue-500/10 rounded-lg">
               <p className="text-sm text-blue-200/90">
-                <span className="font-semibold">Design Consideration:</span> Longer cable runs may require larger cable sizes to maintain compliance
+                <span className="font-semibold">Design Consideration:</span> Longer cable runs may
+                require larger cable sizes to maintain compliance
               </p>
             </div>
           </div>
@@ -135,93 +162,129 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
               </div>
               <div>
                 <div className="text-lg">Installation Guidance</div>
-                <div className="text-sm font-normal text-amber-200/80 capitalize">{planData.installationMethod?.replace('-', ' ')}</div>
+                <div className="text-sm font-normal text-amber-200/80 capitalize">
+                  {planData.installationMethod?.replace('-', ' ')}
+                </div>
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {planData.installationMethod === "clipped-direct" && (
+              {planData.installationMethod === 'clipped-direct' && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Cable clips every 300-400mm horizontally, 250mm vertically</span>
+                    <span className="text-sm text-amber-200">
+                      Cable clips every 300-400mm horizontally, 250mm vertically
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Maintain 50mm separation from other services</span>
+                    <span className="text-sm text-amber-200">
+                      Maintain 50mm separation from other services
+                    </span>
                   </div>
                 </>
               )}
-              {(planData.installationMethod === "conduit-surface" || planData.installationMethod === "conduit-embedded" || planData.installationMethod === "conduit-underground") && (
+              {(planData.installationMethod === 'conduit-surface' ||
+                planData.installationMethod === 'conduit-embedded' ||
+                planData.installationMethod === 'conduit-underground') && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Conduit supports every 1m horizontally, 0.75m vertically</span>
+                    <span className="text-sm text-amber-200">
+                      Conduit supports every 1m horizontally, 0.75m vertically
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Use appropriate conduit size for cable fill factor (max 45%)</span>
+                    <span className="text-sm text-amber-200">
+                      Use appropriate conduit size for cable fill factor (max 45%)
+                    </span>
                   </div>
                 </>
               )}
-              {planData.installationMethod === "direct-buried" && (
+              {planData.installationMethod === 'direct-buried' && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Minimum burial depth 450mm, 750mm under roads</span>
+                    <span className="text-sm text-amber-200">
+                      Minimum burial depth 450mm, 750mm under roads
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Warning tape 150mm above cable, marker posts required</span>
+                    <span className="text-sm text-amber-200">
+                      Warning tape 150mm above cable, marker posts required
+                    </span>
                   </div>
                 </>
               )}
-              {(planData.installationMethod === "trunking-metal" || planData.installationMethod === "trunking-plastic") && (
+              {(planData.installationMethod === 'trunking-metal' ||
+                planData.installationMethod === 'trunking-plastic') && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Trunking supports every 1.5m, use appropriate size for cable quantity</span>
+                    <span className="text-sm text-amber-200">
+                      Trunking supports every 1.5m, use appropriate size for cable quantity
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Separate power and data cables in different compartments</span>
+                    <span className="text-sm text-amber-200">
+                      Separate power and data cables in different compartments
+                    </span>
                   </div>
                 </>
               )}
-              {(planData.installationMethod === "cable-tray" || planData.installationMethod === "cable-ladder" || planData.installationMethod === "basket-tray") && (
+              {(planData.installationMethod === 'cable-tray' ||
+                planData.installationMethod === 'cable-ladder' ||
+                planData.installationMethod === 'basket-tray') && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Support intervals every 2m for cable trays, 3m for ladders</span>
+                    <span className="text-sm text-amber-200">
+                      Support intervals every 2m for cable trays, 3m for ladders
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Consider cable segregation and fire stopping requirements</span>
+                    <span className="text-sm text-amber-200">
+                      Consider cable segregation and fire stopping requirements
+                    </span>
                   </div>
                 </>
               )}
-              {planData.installationMethod === "overhead" && (
+              {planData.installationMethod === 'overhead' && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Minimum clearance heights: 5.2m roads, 5.8m HGV routes</span>
+                    <span className="text-sm text-amber-200">
+                      Minimum clearance heights: 5.2m roads, 5.8m HGV routes
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Weather protection and wind loading considerations</span>
+                    <span className="text-sm text-amber-200">
+                      Weather protection and wind loading considerations
+                    </span>
                   </div>
                 </>
               )}
-              {(planData.installationMethod === "ceiling-void" || planData.installationMethod === "floor-duct") && (
+              {(planData.installationMethod === 'ceiling-void' ||
+                planData.installationMethod === 'floor-duct') && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Fire stopping required at compartment boundaries</span>
+                    <span className="text-sm text-amber-200">
+                      Fire stopping required at compartment boundaries
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Adequate ventilation and access for maintenance</span>
+                    <span className="text-sm text-amber-200">
+                      Adequate ventilation and access for maintenance
+                    </span>
                   </div>
                 </>
               )}
@@ -247,13 +310,17 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
                 {planData.cableLength > 50 && (
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Long run detected - voltage drop calculations critical</span>
+                    <span className="text-sm text-amber-200">
+                      Long run detected - voltage drop calculations critical
+                    </span>
                   </div>
                 )}
                 {planData.cableLength > 100 && (
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-red-200">Very long run - consider intermediate switching or larger cable sizes</span>
+                    <span className="text-sm text-red-200">
+                      Very long run - consider intermediate switching or larger cable sizes
+                    </span>
                   </div>
                 )}
               </div>
@@ -273,7 +340,10 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
             <div className="space-y-3 text-sm max-w-md mx-auto">
               <div className="flex items-start gap-2 text-left">
                 <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></span>
-                <span>Cable selection must consider current-carrying capacity, voltage drop, and fault conditions</span>
+                <span>
+                  Cable selection must consider current-carrying capacity, voltage drop, and fault
+                  conditions
+                </span>
               </div>
               <div className="flex items-start gap-2 text-left">
                 <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></span>

@@ -2,15 +2,15 @@ import { StandardMockExam } from '@/components/shared/StandardMockExam';
 import {
   mentalHealthQuestionBank,
   mentalHealthMockExamConfig,
-  getRandomMentalHealthExamQuestions
+  getRandomMentalHealthExamQuestions,
 } from '@/data/general-upskilling/mentalHealthMockExamData';
 import useSEO from '@/hooks/useSEO';
 
 const MentalHealthMockExam = () => {
   useSEO({
-    title: "Mental Health First Aid Mock Examination",
+    title: 'Mental Health First Aid Mock Examination',
     description:
-      "Practice Mental Health First Aid knowledge test — 20 questions, 30-minute timer, from 200-question bank.",
+      'Practice Mental Health First Aid knowledge test — 20 questions, 30-minute timer, from 200-question bank.',
   });
 
   return (

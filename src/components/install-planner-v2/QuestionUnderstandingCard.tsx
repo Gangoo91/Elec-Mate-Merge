@@ -1,20 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { 
-  Brain, 
-  CheckCircle2, 
-  AlertCircle, 
-  ArrowRight, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Brain,
+  CheckCircle2,
+  AlertCircle,
+  ArrowRight,
   ChevronDown,
   Edit,
   X,
-  Check
-} from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useState } from "react";
+  Check,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useState } from 'react';
 
 interface QuestionAnalysisData {
   userQuestion: string;
@@ -49,33 +49,34 @@ const AGENT_EMOJI: Record<string, string> = {
   'cost-engineer': '💷',
   installer: '🔧',
   'health-safety': '⚠️',
-  commissioning: '✅'
+  commissioning: '✅',
 };
 
-export const QuestionUnderstandingCard = ({ 
-  data, 
-  onEdit, 
-  onConfirm, 
-  onCancel, 
-  isEditable = true 
+export const QuestionUnderstandingCard = ({
+  data,
+  onEdit,
+  onConfirm,
+  onCancel,
+  isEditable = true,
 }: QuestionUnderstandingCardProps) => {
   const [showReasoning, setShowReasoning] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editedData, setEditedData] = useState<QuestionAnalysisData>(data);
-  
-  const complexityColor = {
-    simple: 'bg-green-500/10 text-green-400 border-green-500/30',
-    medium: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30',
-    complex: 'bg-orange-500/10 text-orange-400 border-orange-500/30'
-  }[data.estimatedComplexity] || 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+
+  const complexityColor =
+    {
+      simple: 'bg-green-500/10 text-green-400 border-green-500/30',
+      medium: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30',
+      complex: 'bg-orange-500/10 text-orange-400 border-orange-500/30',
+    }[data.estimatedComplexity] || 'bg-blue-500/10 text-blue-400 border-blue-500/30';
 
   const handleEdit = (field: string, value: any) => {
-    setEditedData(prev => ({
+    setEditedData((prev) => ({
       ...prev,
       interpretedRequirements: {
         ...prev.interpretedRequirements,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
@@ -97,7 +98,9 @@ export const QuestionUnderstandingCard = ({
   const displayData = editMode ? editedData : data;
 
   return (
-    <Card className={`border-elec-yellow/30 bg-gradient-to-br from-blue-500/5 to-purple-500/5 ${editMode ? 'border-elec-yellow/60 shadow-lg shadow-elec-yellow/20' : ''}`}>
+    <Card
+      className={`border-elec-yellow/30 bg-gradient-to-br from-blue-500/5 to-purple-500/5 ${editMode ? 'border-elec-yellow/60 shadow-lg shadow-elec-yellow/20' : ''}`}
+    >
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
@@ -109,7 +112,7 @@ export const QuestionUnderstandingCard = ({
           </Badge>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Detected Parameters */}
         <div className="space-y-2">
@@ -238,9 +241,7 @@ export const QuestionUnderstandingCard = ({
             <div className="flex items-start gap-2">
               <AlertCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
-                <p className="text-xs font-semibold text-yellow-400 mb-1">
-                  Assumptions Required
-                </p>
+                <p className="text-xs font-semibold text-yellow-400 mb-1">Assumptions Required</p>
                 <div className="flex flex-wrap gap-1.5">
                   {data.missingInfo.map((info, idx) => (
                     <Badge key={idx} variant="outline" className="text-[10px] bg-background/50">
@@ -275,38 +276,34 @@ export const QuestionUnderstandingCard = ({
         {/* AI Reasoning (Expandable) */}
         <Collapsible open={showReasoning} onOpenChange={setShowReasoning}>
           <CollapsibleTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="w-full justify-between text-xs h-8"
-            >
+            <Button variant="ghost" size="sm" className="w-full justify-between text-xs h-8">
               <span>AI Reasoning</span>
-              <ChevronDown className={`h-4 w-4 transition-transform ${showReasoning ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${showReasoning ? 'rotate-180' : ''}`}
+              />
             </Button>
           </CollapsibleTrigger>
-          
+
           <CollapsibleContent className="pt-2">
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              {data.reasoning}
-            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed">{data.reasoning}</p>
           </CollapsibleContent>
         </Collapsible>
 
         {/* Confirm/Cancel Buttons (if in edit mode) */}
         {editMode && (
           <div className="flex gap-2">
-            <Button 
+            <Button
               variant="outline"
-              size="sm" 
+              size="sm"
               onClick={handleCancel}
               className="flex-1 border-muted-foreground/30"
             >
               <X className="h-3 w-3 mr-2" />
               Cancel
             </Button>
-            <Button 
+            <Button
               variant="default"
-              size="sm" 
+              size="sm"
               onClick={handleConfirm}
               className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
             >
@@ -315,12 +312,12 @@ export const QuestionUnderstandingCard = ({
             </Button>
           </div>
         )}
-        
+
         {/* Edit Button (if provided and not in edit mode) */}
         {onEdit && !editMode && (
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             onClick={onEdit}
             className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
           >

@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useRef } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useLocation } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 // Global activity tracker - tracks page views, session time, and feature usage
 // This runs in the background and logs to user_events table
@@ -33,13 +33,13 @@ export function ActivityTracker() {
     // Log page view
     (async () => {
       try {
-        await supabase.from("user_events").insert({
+        await supabase.from('user_events').insert({
           user_id: user.id,
-          event_type: "page_view",
+          event_type: 'page_view',
           page_path: location.pathname,
-          event_data: { timestamp: new Date().toISOString() }
+          event_data: { timestamp: new Date().toISOString() },
         });
-        console.debug("[Activity] Page view:", location.pathname);
+        console.debug('[Activity] Page view:', location.pathname);
       } catch {
         // Silently fail
       }
@@ -57,14 +57,14 @@ export function ActivityTracker() {
     // Log session start
     (async () => {
       try {
-        await supabase.from("user_events").insert({
+        await supabase.from('user_events').insert({
           user_id: user.id,
-          event_type: "session_start",
+          event_type: 'session_start',
           page_path: location.pathname,
           event_data: {
             session_id: sessionId.current,
-            started_at: new Date().toISOString()
-          }
+            started_at: new Date().toISOString(),
+          },
         });
       } catch {
         // Silently fail
@@ -78,14 +78,14 @@ export function ActivityTracker() {
       const durationSeconds = Math.floor((Date.now() - sessionStartTime.current) / 1000);
 
       try {
-        await supabase.from("user_events").insert({
+        await supabase.from('user_events').insert({
           user_id: user.id,
-          event_type: "session_heartbeat",
+          event_type: 'session_heartbeat',
           page_path: location.pathname,
           event_data: {
             session_id: sessionId.current,
-            duration_seconds: durationSeconds
-          }
+            duration_seconds: durationSeconds,
+          },
         });
       } catch {
         // Silently fail
@@ -105,14 +105,14 @@ export function ActivityTracker() {
         // Try to log session end
         (async () => {
           try {
-            await supabase.from("user_events").insert({
+            await supabase.from('user_events').insert({
               user_id: user.id,
-              event_type: "session_end",
+              event_type: 'session_end',
               page_path: window.location.pathname,
               event_data: {
                 session_id: sessionId.current,
-                duration_seconds: durationSeconds
-              }
+                duration_seconds: durationSeconds,
+              },
             });
           } catch {
             // Silently fail
@@ -130,19 +130,19 @@ export function ActivityTracker() {
       try {
         if (document.hidden) {
           // User left the tab
-          await supabase.from("user_events").insert({
+          await supabase.from('user_events').insert({
             user_id: user.id,
-            event_type: "tab_hidden",
+            event_type: 'tab_hidden',
             page_path: location.pathname,
-            event_data: { session_id: sessionId.current }
+            event_data: { session_id: sessionId.current },
           });
         } else {
           // User returned to tab
-          await supabase.from("user_events").insert({
+          await supabase.from('user_events').insert({
             user_id: user.id,
-            event_type: "tab_visible",
+            event_type: 'tab_visible',
             page_path: location.pathname,
-            event_data: { session_id: sessionId.current }
+            event_data: { session_id: sessionId.current },
           });
         }
       } catch {
@@ -150,26 +150,26 @@ export function ActivityTracker() {
       }
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [user?.id, location.pathname]);
 
   // Track login (once per session)
   useEffect(() => {
     if (!user?.id) return;
 
-    const lastLoginTrack = sessionStorage.getItem("last-login-track");
+    const lastLoginTrack = sessionStorage.getItem('last-login-track');
     if (lastLoginTrack !== user.id) {
       (async () => {
         try {
-          await supabase.from("user_events").insert({
+          await supabase.from('user_events').insert({
             user_id: user.id,
-            event_type: "login",
+            event_type: 'login',
             page_path: location.pathname,
-            event_data: { timestamp: new Date().toISOString() }
+            event_data: { timestamp: new Date().toISOString() },
           });
-          sessionStorage.setItem("last-login-track", user.id);
-          console.debug("[Activity] Login tracked");
+          sessionStorage.setItem('last-login-track', user.id);
+          console.debug('[Activity] Login tracked');
         } catch {
           // Silently fail
         }
@@ -187,12 +187,12 @@ export async function trackFeatureUse(
   data?: Record<string, unknown>
 ) {
   try {
-    await supabase.from("user_events").insert({
+    await supabase.from('user_events').insert({
       user_id: userId,
-      event_type: "feature_use",
+      event_type: 'feature_use',
       event_name: featureName,
       event_data: data || {},
-      page_path: window.location.pathname
+      page_path: window.location.pathname,
     });
   } catch {
     // Silently fail

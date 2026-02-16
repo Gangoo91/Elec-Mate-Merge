@@ -1,19 +1,18 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Calculator, ShoppingCart, Star, Users, Clock } from "lucide-react";
-import GuideSelector from "./guides/GuideSelector";
-import BudgetCalculator from "./guides/BudgetCalculator";
-import AIGuideModal from "./AIGuideModal";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, BookOpen, Calculator, ShoppingCart, Star, Users, Clock } from 'lucide-react';
+import GuideSelector from './guides/GuideSelector';
+import BudgetCalculator from './guides/BudgetCalculator';
+import AIGuideModal from './AIGuideModal';
 
 const ToolBuyingGuides = () => {
   const [showBudgetCalculator, setShowBudgetCalculator] = useState(false);
   const [budgetData, setBudgetData] = useState<any>(null);
   const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
-  const [selectedGuideType, setSelectedGuideType] = useState<string>("");
-  const [selectedGuideTitle, setSelectedGuideTitle] = useState<string>("");
+  const [selectedGuideType, setSelectedGuideType] = useState<string>('');
+  const [selectedGuideTitle, setSelectedGuideTitle] = useState<string>('');
 
   const handleSelectGuide = (guideId: string, guideTitle: string) => {
     setSelectedGuideType(guideId);
@@ -30,20 +29,20 @@ const ToolBuyingGuides = () => {
   };
 
   const toolCategories = [
-    { id: "testing", name: "Testing Equipment", priceRange: [25, 1500] },
-    { id: "power", name: "Power Tools", priceRange: [45, 800] },
-    { id: "hand", name: "Hand Tools", priceRange: [8, 120] },
-    { id: "ppe", name: "PPE & Safety", priceRange: [5, 85] },
-    { id: "inspection", name: "Inspection Tools", priceRange: [15, 250] },
-    { id: "accessories", name: "Accessories", priceRange: [3, 150] }
+    { id: 'testing', name: 'Testing Equipment', priceRange: [25, 1500] },
+    { id: 'power', name: 'Power Tools', priceRange: [45, 800] },
+    { id: 'hand', name: 'Hand Tools', priceRange: [8, 120] },
+    { id: 'ppe', name: 'PPE & Safety', priceRange: [5, 85] },
+    { id: 'inspection', name: 'Inspection Tools', priceRange: [15, 250] },
+    { id: 'accessories', name: 'Accessories', priceRange: [3, 150] },
   ];
 
   if (showBudgetCalculator) {
     return (
       <div className="space-y-6">
         <div className="flex items-center gap-3 mb-6">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={handleBackToGuides}
             className="border-elec-yellow/30 hover:bg-elec-yellow/10"
           >
@@ -52,14 +51,13 @@ const ToolBuyingGuides = () => {
           </Button>
           <h2 className="text-2xl font-semibold text-foreground">Tool Budget Calculator</h2>
         </div>
-        <BudgetCalculator 
+        <BudgetCalculator
           toolCategories={toolCategories}
           onCalculationUpdate={handleBudgetCalculation}
         />
       </div>
     );
   }
-
 
   return (
     <div className="space-y-6">

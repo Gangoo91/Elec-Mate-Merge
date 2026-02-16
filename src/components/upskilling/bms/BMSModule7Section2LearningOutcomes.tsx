@@ -4,9 +4,9 @@ import { Target, CheckCircle } from 'lucide-react';
 export const BMSModule7Section2LearningOutcomes = () => {
   const outcomes = [
     "Explain what function blocks are and how they're used in BMS programming",
-    "Describe how Boolean logic creates decision-making in BMS",
+    'Describe how Boolean logic creates decision-making in BMS',
     "Understand the basics of PID control loops and where they're applied",
-    "Recognise the electrician's role in verifying programmed functions during commissioning"
+    "Recognise the electrician's role in verifying programmed functions during commissioning",
   ];
 
   return (

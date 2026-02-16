@@ -9,44 +9,52 @@ export const SmartHomeModule5Section4FAQ = () => {
   const faqs = [
     {
       question: "What happens if my internet connection fails while I'm away from home?",
-      answer: "Most smart home systems have local functionality that continues to work during internet outages. Critical security features often have cellular backup connections. However, remote access and notifications will be unavailable until connectivity is restored. Consider systems with 4G backup modules for critical applications.",
-      category: "Connectivity"
+      answer:
+        'Most smart home systems have local functionality that continues to work during internet outages. Critical security features often have cellular backup connections. However, remote access and notifications will be unavailable until connectivity is restored. Consider systems with 4G backup modules for critical applications.',
+      category: 'Connectivity',
     },
     {
-      question: "How secure is remote access to my smart home system?",
-      answer: "Security depends on proper configuration. Use strong, unique passwords, enable two-factor authentication, keep firmware updated, and choose systems with end-to-end encryption. Avoid systems that store unencrypted data or use default passwords. Regular security audits are recommended.",
-      category: "Security"
+      question: 'How secure is remote access to my smart home system?',
+      answer:
+        'Security depends on proper configuration. Use strong, unique passwords, enable two-factor authentication, keep firmware updated, and choose systems with end-to-end encryption. Avoid systems that store unencrypted data or use default passwords. Regular security audits are recommended.',
+      category: 'Security',
     },
     {
-      question: "Can I control my smart home when travelling internationally?",
-      answer: "Yes, remote access works globally as long as you have internet connectivity. However, check that your mobile data plan covers international usage to avoid excessive charges. Some countries may restrict certain cloud services, so verify compatibility before travelling.",
-      category: "Travel"
+      question: 'Can I control my smart home when travelling internationally?',
+      answer:
+        'Yes, remote access works globally as long as you have internet connectivity. However, check that your mobile data plan covers international usage to avoid excessive charges. Some countries may restrict certain cloud services, so verify compatibility before travelling.',
+      category: 'Travel',
     },
     {
-      question: "How do I prevent false alerts from triggering constantly?",
-      answer: "Configure motion sensors properly to avoid pet detection zones, adjust sensitivity settings, use intelligent filtering algorithms, and set up notification schedules. Many systems offer 'smart alerts' that learn normal patterns and reduce false positives over time.",
-      category: "Configuration"
+      question: 'How do I prevent false alerts from triggering constantly?',
+      answer:
+        "Configure motion sensors properly to avoid pet detection zones, adjust sensitivity settings, use intelligent filtering algorithms, and set up notification schedules. Many systems offer 'smart alerts' that learn normal patterns and reduce false positives over time.",
+      category: 'Configuration',
     },
     {
-      question: "What should I do if I lose my smartphone with the smart home app?",
-      answer: "Immediately log into your account from another device and revoke access for the lost phone. Change your account password and enable two-factor authentication if not already active. Most systems allow remote device management to prevent unauthorised access.",
-      category: "Security"
+      question: 'What should I do if I lose my smartphone with the smart home app?',
+      answer:
+        'Immediately log into your account from another device and revoke access for the lost phone. Change your account password and enable two-factor authentication if not already active. Most systems allow remote device management to prevent unauthorised access.',
+      category: 'Security',
     },
     {
-      question: "How much mobile data does remote monitoring typically use?",
-      answer: "Basic monitoring uses minimal data (10-50MB per month). Video streaming significantly increases usage - live viewing can use 100-200MB per hour. Push notifications and status updates use very little data. Consider unlimited data plans for heavy video monitoring usage.",
-      category: "Data Usage"
+      question: 'How much mobile data does remote monitoring typically use?',
+      answer:
+        'Basic monitoring uses minimal data (10-50MB per month). Video streaming significantly increases usage - live viewing can use 100-200MB per hour. Push notifications and status updates use very little data. Consider unlimited data plans for heavy video monitoring usage.',
+      category: 'Data Usage',
     },
     {
-      question: "Can multiple family members have access to the same smart home system?",
-      answer: "Yes, most systems support multiple user accounts with different permission levels. You can grant full access to adults, limited access to children, and temporary access to guests. Each user typically gets their own login credentials and personalised dashboard.",
-      category: "User Management"
+      question: 'Can multiple family members have access to the same smart home system?',
+      answer:
+        'Yes, most systems support multiple user accounts with different permission levels. You can grant full access to adults, limited access to children, and temporary access to guests. Each user typically gets their own login credentials and personalised dashboard.',
+      category: 'User Management',
     },
     {
-      question: "What backup options exist if the cloud service provider goes out of business?",
-      answer: "Choose systems that support local storage and processing, maintain device configuration backups, and avoid proprietary protocols when possible. Look for systems with data export capabilities and open standards compatibility to enable migration to alternative platforms.",
-      category: "Reliability"
-    }
+      question: 'What backup options exist if the cloud service provider goes out of business?',
+      answer:
+        'Choose systems that support local storage and processing, maintain device configuration backups, and avoid proprietary protocols when possible. Look for systems with data export capabilities and open standards compatibility to enable migration to alternative platforms.',
+      category: 'Reliability',
+    },
   ];
 
   const toggleQuestion = (index: number) => {

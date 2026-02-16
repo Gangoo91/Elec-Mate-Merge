@@ -1,7 +1,18 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Area, AreaChart } from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Area,
+  AreaChart,
+} from 'recharts';
 import {
   PoundSterling,
   TrendingUp,
@@ -12,69 +23,90 @@ import {
   Car,
   GraduationCap,
   CheckCircle,
-  Info
-} from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+  Info,
+} from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const SalaryProgressionChart = () => {
   const isMobile = useIsMobile();
 
   const salaryData = [
-    { year: "Year 1", min: 15000, max: 20000, average: 17500, label: "Y1" },
-    { year: "Year 2", min: 20000, max: 25000, average: 22500, label: "Y2" },
-    { year: "Year 3", min: 26000, max: 32000, average: 29000, label: "Y3" },
-    { year: "Year 4", min: 30000, max: 38000, average: 34000, label: "Y4" },
-    { year: "Qualified", min: 34000, max: 50000, average: 42000, label: "Qual" }
+    { year: 'Year 1', min: 15000, max: 20000, average: 17500, label: 'Y1' },
+    { year: 'Year 2', min: 20000, max: 25000, average: 22500, label: 'Y2' },
+    { year: 'Year 3', min: 26000, max: 32000, average: 29000, label: 'Y3' },
+    { year: 'Year 4', min: 30000, max: 38000, average: 34000, label: 'Y4' },
+    { year: 'Qualified', min: 34000, max: 50000, average: 42000, label: 'Qual' },
   ];
 
   const regionalData = [
-    { region: "London", year1: 19000, year2: 24000, year3: 31000, year4: 38000, qualified: 46000 },
-    { region: "Southeast", year1: 17500, year2: 22500, year3: 29500, year4: 36000, qualified: 44000 },
-    { region: "Midlands", year1: 17000, year2: 21500, year3: 28500, year4: 35000, qualified: 42000 },
-    { region: "North", year1: 16500, year2: 20500, year3: 27000, year4: 33000, qualified: 40000 },
-    { region: "Scotland", year1: 16500, year2: 20500, year3: 27000, year4: 32000, qualified: 38000 }
+    { region: 'London', year1: 19000, year2: 24000, year3: 31000, year4: 38000, qualified: 46000 },
+    {
+      region: 'Southeast',
+      year1: 17500,
+      year2: 22500,
+      year3: 29500,
+      year4: 36000,
+      qualified: 44000,
+    },
+    {
+      region: 'Midlands',
+      year1: 17000,
+      year2: 21500,
+      year3: 28500,
+      year4: 35000,
+      qualified: 42000,
+    },
+    { region: 'North', year1: 16500, year2: 20500, year3: 27000, year4: 33000, qualified: 40000 },
+    {
+      region: 'Scotland',
+      year1: 16500,
+      year2: 20500,
+      year3: 27000,
+      year4: 32000,
+      qualified: 38000,
+    },
   ];
 
   const careerEarnings = [
-    { role: "Employed Electrician", salary: "£32k - £42k", growth: "Steady" },
-    { role: "Self-Employed", salary: "£40k - £65k", growth: "Variable" },
-    { role: "Industrial Specialist", salary: "£38k - £52k", growth: "Strong" },
-    { role: "Renewables Specialist", salary: "£35k - £50k", growth: "Fast" },
-    { role: "Electrical Supervisor", salary: "£42k - £55k", growth: "Good" },
-    { role: "Project Manager", salary: "£50k - £70k", growth: "Excellent" }
+    { role: 'Employed Electrician', salary: '£32k - £42k', growth: 'Steady' },
+    { role: 'Self-Employed', salary: '£40k - £65k', growth: 'Variable' },
+    { role: 'Industrial Specialist', salary: '£38k - £52k', growth: 'Strong' },
+    { role: 'Renewables Specialist', salary: '£35k - £50k', growth: 'Fast' },
+    { role: 'Electrical Supervisor', salary: '£42k - £55k', growth: 'Good' },
+    { role: 'Project Manager', salary: '£50k - £70k', growth: 'Excellent' },
   ];
 
   const benefitsData = [
     {
       icon: Car,
-      title: "Company Van",
-      description: "Many employers provide a van - worth £3-5k/year in personal use value",
-      typical: "Common after Year 2"
+      title: 'Company Van',
+      description: 'Many employers provide a van - worth £3-5k/year in personal use value',
+      typical: 'Common after Year 2',
     },
     {
       icon: Briefcase,
-      title: "Tools Provided",
-      description: "Power tools, test equipment, and specialist gear - £2-4k value",
-      typical: "Usually from day one"
+      title: 'Tools Provided',
+      description: 'Power tools, test equipment, and specialist gear - £2-4k value',
+      typical: 'Usually from day one',
     },
     {
       icon: Gift,
-      title: "Pension",
-      description: "Employer contributions typically 3-5% of salary",
-      typical: "Required by law"
+      title: 'Pension',
+      description: 'Employer contributions typically 3-5% of salary',
+      typical: 'Required by law',
     },
     {
       icon: Clock,
-      title: "Overtime",
-      description: "Time and a half to double time rates for extra hours",
-      typical: "£5-15k extra possible"
+      title: 'Overtime',
+      description: 'Time and a half to double time rates for extra hours',
+      typical: '£5-15k extra possible',
     },
     {
       icon: GraduationCap,
-      title: "Training",
-      description: "Continued professional development and certifications paid",
-      typical: "Worth £1-3k/year"
-    }
+      title: 'Training',
+      description: 'Continued professional development and certifications paid',
+      typical: 'Worth £1-3k/year',
+    },
   ];
 
   const overtimeExample = {
@@ -83,7 +115,7 @@ const SalaryProgressionChart = () => {
     overtimeHours: 8,
     overtimeRate: 1.5,
     weeklyOvertime: 8 * (35000 / 52 / 40) * 1.5,
-    annualOvertime: 8 * (35000 / 52 / 40) * 1.5 * 48
+    annualOvertime: 8 * (35000 / 52 / 40) * 1.5 * 48,
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -93,14 +125,9 @@ const SalaryProgressionChart = () => {
           <p className="font-medium text-white mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-2 text-sm">
-              <div
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: entry.color }}
-              />
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
               <span className="text-white/70">{entry.name}:</span>
-              <span className="text-white font-medium">
-                £{entry.value.toLocaleString()}
-              </span>
+              <span className="text-white font-medium">£{entry.value.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -128,19 +155,19 @@ const SalaryProgressionChart = () => {
               <AreaChart data={salaryData}>
                 <defs>
                   <linearGradient id="colorRange" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis
-                  dataKey={isMobile ? "label" : "year"}
+                  dataKey={isMobile ? 'label' : 'year'}
                   stroke="#9CA3AF"
                   tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
                 />
                 <YAxis
                   stroke="#9CA3AF"
-                  tickFormatter={(value) => `£${value/1000}k`}
+                  tickFormatter={(value) => `£${value / 1000}k`}
                   tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
                   width={isMobile ? 45 : 60}
                 />
@@ -227,14 +254,12 @@ const SalaryProgressionChart = () => {
             <MapPin className="h-5 w-5" />
             Regional Salary Comparison
           </CardTitle>
-          <p className="text-sm text-white/70">
-            How salaries vary across different UK regions
-          </p>
+          <p className="text-sm text-white/70">How salaries vary across different UK regions</p>
         </CardHeader>
         <CardContent>
           <div className="h-64 sm:h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={regionalData} barCategoryGap={isMobile ? "15%" : "20%"}>
+              <BarChart data={regionalData} barCategoryGap={isMobile ? '15%' : '20%'}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis
                   dataKey="region"
@@ -243,7 +268,7 @@ const SalaryProgressionChart = () => {
                 />
                 <YAxis
                   stroke="#9CA3AF"
-                  tickFormatter={(value) => `£${value/1000}k`}
+                  tickFormatter={(value) => `£${value / 1000}k`}
                   tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
                   width={isMobile ? 45 : 60}
                 />
@@ -298,9 +323,7 @@ const SalaryProgressionChart = () => {
             <Briefcase className="h-5 w-5" />
             Career Path Earnings
           </CardTitle>
-          <p className="text-sm text-white/70">
-            What you could earn after qualifying
-          </p>
+          <p className="text-sm text-white/70">What you could earn after qualifying</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -311,11 +334,11 @@ const SalaryProgressionChart = () => {
                   <Badge
                     variant="outline"
                     className={`text-xs ${
-                      career.growth === "Excellent" || career.growth === "Fast"
-                        ? "bg-green-500/20 text-green-400 border-green-500/30"
-                        : career.growth === "Strong" || career.growth === "Good"
-                        ? "bg-blue-500/20 text-blue-400 border-blue-500/30"
-                        : "bg-white/10 text-white/60"
+                      career.growth === 'Excellent' || career.growth === 'Fast'
+                        ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                        : career.growth === 'Strong' || career.growth === 'Good'
+                          ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                          : 'bg-white/10 text-white/60'
                     }`}
                   >
                     {career.growth}
@@ -348,7 +371,10 @@ const SalaryProgressionChart = () => {
                   <span className="font-medium text-white">{benefit.title}</span>
                 </div>
                 <p className="text-white/70 text-sm mb-2">{benefit.description}</p>
-                <Badge variant="outline" className="text-xs bg-purple-500/10 text-purple-400 border-purple-500/30">
+                <Badge
+                  variant="outline"
+                  className="text-xs bg-purple-500/10 text-purple-400 border-purple-500/30"
+                >
                   {benefit.typical}
                 </Badge>
               </div>

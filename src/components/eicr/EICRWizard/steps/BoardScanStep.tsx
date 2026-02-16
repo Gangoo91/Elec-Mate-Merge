@@ -2,7 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Camera, Plus, Sparkles, Check, Zap, ArrowRight, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
@@ -37,7 +43,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
     return wizardBoards;
   }, [data.distributionBoards]);
 
-  const selectedBoard = boards.find(b => b.id === selectedBoardId) || boards[0];
+  const selectedBoard = boards.find((b) => b.id === selectedBoardId) || boards[0];
   const hasCircuits = data.circuits && data.circuits.length > 0;
 
   // Handle AI scan completion
@@ -59,7 +65,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
     }));
 
     // Update selected board with detected info
-    const updatedBoards = boards.map(board => {
+    const updatedBoards = boards.map((board) => {
       if (board.id === selectedBoardId) {
         return {
           ...board,
@@ -78,7 +84,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
 
     onChange({
       circuits: [...otherBoardCircuits, ...taggedCircuits],
-      distributionBoards: updatedBoards
+      distributionBoards: updatedBoards,
     });
     setShowScanner(false);
   };
@@ -110,8 +116,8 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
             <div className="space-y-2">
               <h3 className="text-xl font-bold">AI Board Scanner</h3>
               <p className="text-muted-foreground max-w-md">
-                Take a photo of the distribution board and our AI will automatically
-                detect all circuits, ratings, and device types.
+                Take a photo of the distribution board and our AI will automatically detect all
+                circuits, ratings, and device types.
               </p>
             </div>
 
@@ -159,10 +165,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
             {/* Primary Action */}
             <Button
               size="lg"
-              className={cn(
-                'gap-2 px-8',
-                isMobile ? 'h-14 text-lg w-full' : 'h-12'
-              )}
+              className={cn('gap-2 px-8', isMobile ? 'h-14 text-lg w-full' : 'h-12')}
               onClick={() => setShowScanner(true)}
             >
               <Camera className="h-5 w-5" />

@@ -1,72 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m5s1-check1",
-    question: "What must be verified before energising an emergency lighting system?",
-    options: ["Colour of luminaires", "Visual inspection complete", "Cost of installation", "Building occupancy"],
+    id: 'emergencylighting-m5s1-check1',
+    question: 'What must be verified before energising an emergency lighting system?',
+    options: [
+      'Colour of luminaires',
+      'Visual inspection complete',
+      'Cost of installation',
+      'Building occupancy',
+    ],
     correctIndex: 1,
-    explanation: "A thorough visual inspection must be completed before energising any electrical installation. This confirms correct installation, appropriate equipment, and absence of obvious defects."
+    explanation:
+      'A thorough visual inspection must be completed before energising any electrical installation. This confirms correct installation, appropriate equipment, and absence of obvious defects.',
   },
   {
-    id: "emergencylighting-m5s1-check2",
-    question: "What document confirms luminaire positions match the design?",
-    options: ["Invoice", "As-built drawing", "Manufacturer brochure", "Building plan"],
+    id: 'emergencylighting-m5s1-check2',
+    question: 'What document confirms luminaire positions match the design?',
+    options: ['Invoice', 'As-built drawing', 'Manufacturer brochure', 'Building plan'],
     correctIndex: 1,
-    explanation: "As-built drawings should be compared against the actual installation to confirm all luminaires are positioned correctly and the design intent has been achieved."
+    explanation:
+      'As-built drawings should be compared against the actual installation to confirm all luminaires are positioned correctly and the design intent has been achieved.',
   },
   {
-    id: "emergencylighting-m5s1-check3",
-    question: "What should be checked regarding cable installation?",
-    options: ["Cable colour only", "Fire resistance and fixings", "Cable manufacturer", "Cable price"],
+    id: 'emergencylighting-m5s1-check3',
+    question: 'What should be checked regarding cable installation?',
+    options: [
+      'Cable colour only',
+      'Fire resistance and fixings',
+      'Cable manufacturer',
+      'Cable price',
+    ],
     correctIndex: 1,
-    explanation: "Cable fire resistance and appropriate fixings must be verified. Fire-resistant cables with metal fixings are essential for emergency lighting circuit integrity during fire conditions."
-  }
+    explanation:
+      'Cable fire resistance and appropriate fixings must be verified. Fire-resistant cables with metal fixings are essential for emergency lighting circuit integrity during fire conditions.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Who should carry out initial inspection?",
-    answer: "A competent person with appropriate knowledge and experience of emergency lighting systems. This is typically an electrician with emergency lighting training who understands BS 5266-1 and BS 7671 requirements."
+    question: 'Who should carry out initial inspection?',
+    answer:
+      'A competent person with appropriate knowledge and experience of emergency lighting systems. This is typically an electrician with emergency lighting training who understands BS 5266-1 and BS 7671 requirements.',
   },
   {
     question: "What if the installation doesn't match the design?",
-    answer: "Discrepancies must be documented and either corrected or the as-built drawings updated. Significant deviations may require re-approval from the designer or building control to ensure compliance."
+    answer:
+      'Discrepancies must be documented and either corrected or the as-built drawings updated. Significant deviations may require re-approval from the designer or building control to ensure compliance.',
   },
   {
-    question: "Can inspection be combined with testing?",
-    answer: "While often done together, inspection should be substantially complete before energising for testing. Visual inspection without power identifies issues that might be dangerous to test with power applied."
+    question: 'Can inspection be combined with testing?',
+    answer:
+      'While often done together, inspection should be substantially complete before energising for testing. Visual inspection without power identifies issues that might be dangerous to test with power applied.',
   },
   {
-    question: "What inspection records are required?",
-    answer: "A checklist or schedule documenting what was inspected, any defects found, and confirmation of compliance. This forms part of the handover documentation and commissioning records."
-  }
+    question: 'What inspection records are required?',
+    answer:
+      'A checklist or schedule documenting what was inspected, any defects found, and confirmation of compliance. This forms part of the handover documentation and commissioning records.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "Before energising a new emergency lighting installation, what must be verified first?",
-  options: [
-    "System cost is within budget",
-    "Visual inspection confirms correct installation",
-    "Client has signed off the project",
-    "Building is fully occupied"
-  ],
-  correctAnswer: 1,
-  explanation: "Visual inspection must confirm correct installation before any energisation. This includes checking luminaire positions, cable types, fixings, and connections match the design specification."
-  }
+    question:
+      'Before energising a new emergency lighting installation, what must be verified first?',
+    options: [
+      'System cost is within budget',
+      'Visual inspection confirms correct installation',
+      'Client has signed off the project',
+      'Building is fully occupied',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Visual inspection must confirm correct installation before any energisation. This includes checking luminaire positions, cable types, fixings, and connections match the design specification.',
+  },
 ];
 
 const EmergencyLightingModule5Section1 = () => {
   useSEO({
-    title: "Initial Inspection and Verification | Emergency Lighting Module 5.1",
-    description: "Systematic inspection procedures to verify emergency lighting installations comply with BS 5266-1 and BS 7671 before commissioning."
+    title: 'Initial Inspection and Verification | Emergency Lighting Module 5.1',
+    description:
+      'Systematic inspection procedures to verify emergency lighting installations comply with BS 5266-1 and BS 7671 before commissioning.',
   });
 
   return (
@@ -98,9 +118,7 @@ const EmergencyLightingModule5Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Initial Inspection and Verification
           </h1>
-          <p className="text-white/80">
-            Pre-commissioning inspection procedures for compliance
-          </p>
+          <p className="text-white/80">Pre-commissioning inspection procedures for compliance</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +126,29 @@ const EmergencyLightingModule5Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Visual:</strong> Before energising</li>
-              <li><strong>Design check:</strong> Against as-built</li>
-              <li><strong>Documentation:</strong> Inspection records</li>
+              <li>
+                <strong>Visual:</strong> Before energising
+              </li>
+              <li>
+                <strong>Design check:</strong> Against as-built
+              </li>
+              <li>
+                <strong>Documentation:</strong> Inspection records
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Checks</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Luminaires:</strong> Position and type</li>
-              <li><strong>Cables:</strong> Fire resistance</li>
-              <li><strong>Fixings:</strong> Metal clips</li>
+              <li>
+                <strong>Luminaires:</strong> Position and type
+              </li>
+              <li>
+                <strong>Cables:</strong> Fire resistance
+              </li>
+              <li>
+                <strong>Fixings:</strong> Metal clips
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +158,12 @@ const EmergencyLightingModule5Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Conduct systematic visual inspection",
-              "Verify installation against design",
-              "Check cable and fixing compliance",
-              "Document inspection findings",
-              "Identify common installation defects",
-              "Prepare for commissioning tests"
+              'Conduct systematic visual inspection',
+              'Verify installation against design',
+              'Check cable and fixing compliance',
+              'Document inspection findings',
+              'Identify common installation defects',
+              'Prepare for commissioning tests',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,8 +183,8 @@ const EmergencyLightingModule5Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Before energising any emergency lighting system, a thorough visual
-              inspection confirms the installation is safe and matches the approved design.
+              Before energising any emergency lighting system, a thorough visual inspection confirms
+              the installation is safe and matches the approved design.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -205,24 +235,34 @@ const EmergencyLightingModule5Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Compare the actual installation against approved design documents to
-              ensure the emergency lighting system meets specified requirements.
+              Compare the actual installation against approved design documents to ensure the
+              emergency lighting system meets specified requirements.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Verification Points:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Luminaire positions:</strong> Match layout drawing</li>
-                <li><strong>Luminaire types:</strong> Correct models specified</li>
-                <li><strong>Exit signs:</strong> Locations and viewing distances</li>
-                <li><strong>Circuit allocation:</strong> Per design schedule</li>
-                <li><strong>Coverage:</strong> Escape routes covered</li>
+                <li>
+                  <strong>Luminaire positions:</strong> Match layout drawing
+                </li>
+                <li>
+                  <strong>Luminaire types:</strong> Correct models specified
+                </li>
+                <li>
+                  <strong>Exit signs:</strong> Locations and viewing distances
+                </li>
+                <li>
+                  <strong>Circuit allocation:</strong> Per design schedule
+                </li>
+                <li>
+                  <strong>Coverage:</strong> Escape routes covered
+                </li>
               </ul>
             </div>
 
             <p>
-              Any discrepancies between design and installation must be documented.
-              Significant changes may require designer approval or updated calculations.
+              Any discrepancies between design and installation must be documented. Significant
+              changes may require designer approval or updated calculations.
             </p>
           </div>
         </section>
@@ -237,8 +277,8 @@ const EmergencyLightingModule5Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Inspection findings must be recorded to demonstrate compliance and
-              provide a baseline for future maintenance.
+              Inspection findings must be recorded to demonstrate compliance and provide a baseline
+              for future maintenance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -282,12 +322,22 @@ const EmergencyLightingModule5Section1 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Inspection Findings</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Inspection Findings
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong luminaire type:</strong> — NM where M required</li>
-                <li><strong>Missing luminaires:</strong> — At direction changes</li>
-                <li><strong>Plastic fixings:</strong> — Instead of metal</li>
-                <li><strong>No fire stopping:</strong> — At penetrations</li>
+                <li>
+                  <strong>Wrong luminaire type:</strong> — NM where M required
+                </li>
+                <li>
+                  <strong>Missing luminaires:</strong> — At direction changes
+                </li>
+                <li>
+                  <strong>Plastic fixings:</strong> — Instead of metal
+                </li>
+                <li>
+                  <strong>No fire stopping:</strong> — At penetrations
+                </li>
               </ul>
             </div>
           </div>
@@ -333,10 +383,7 @@ const EmergencyLightingModule5Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

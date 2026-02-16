@@ -14,23 +14,57 @@ const AdvancedFinancialConsiderations = () => {
               <div className="bg-red-900/20 p-4 rounded border border-red-500/30">
                 <h5 className="text-foreground font-medium mb-3">Financial Risks:</h5>
                 <ul className="text-gray-300 space-y-2 text-sm">
-                  <li>• <strong>Interest rate changes:</strong> Affects financing costs for borrowed capital</li>
-                  <li>• <strong>Electricity price volatility:</strong> Reduced savings if energy prices fall</li>
-                  <li>• <strong>Technology obsolescence:</strong> Newer, cheaper panels reducing system value</li>
-                  <li>• <strong>Regulatory changes:</strong> Potential reduction in export tariffs</li>
-                  <li>• <strong>Performance degradation:</strong> Annual output decline affects long-term returns</li>
-                  <li>• <strong>Maintenance costs:</strong> Inverter replacement and unexpected repairs</li>
+                  <li>
+                    • <strong>Interest rate changes:</strong> Affects financing costs for borrowed
+                    capital
+                  </li>
+                  <li>
+                    • <strong>Electricity price volatility:</strong> Reduced savings if energy
+                    prices fall
+                  </li>
+                  <li>
+                    • <strong>Technology obsolescence:</strong> Newer, cheaper panels reducing
+                    system value
+                  </li>
+                  <li>
+                    • <strong>Regulatory changes:</strong> Potential reduction in export tariffs
+                  </li>
+                  <li>
+                    • <strong>Performance degradation:</strong> Annual output decline affects
+                    long-term returns
+                  </li>
+                  <li>
+                    • <strong>Maintenance costs:</strong> Inverter replacement and unexpected
+                    repairs
+                  </li>
                 </ul>
               </div>
               <div className="bg-green-900/20 p-4 rounded border border-green-500/30">
                 <h5 className="text-foreground font-medium mb-3">Risk Mitigation Strategies:</h5>
                 <ul className="text-gray-300 space-y-2 text-sm">
-                  <li>• <strong>Performance warranties:</strong> 25-year linear performance guarantees</li>
-                  <li>• <strong>Insurance coverage:</strong> All-risk policies including business interruption</li>
-                  <li>• <strong>Service agreements:</strong> Comprehensive O&M contracts with SLA guarantees</li>
-                  <li>• <strong>Monitoring systems:</strong> Real-time performance tracking and fault detection</li>
-                  <li>• <strong>Conservative modelling:</strong> Use worst-case scenarios in financial projections</li>
-                  <li>• <strong>Diversified portfolios:</strong> Multiple smaller installations vs single large system</li>
+                  <li>
+                    • <strong>Performance warranties:</strong> 25-year linear performance guarantees
+                  </li>
+                  <li>
+                    • <strong>Insurance coverage:</strong> All-risk policies including business
+                    interruption
+                  </li>
+                  <li>
+                    • <strong>Service agreements:</strong> Comprehensive O&M contracts with SLA
+                    guarantees
+                  </li>
+                  <li>
+                    • <strong>Monitoring systems:</strong> Real-time performance tracking and fault
+                    detection
+                  </li>
+                  <li>
+                    • <strong>Conservative modelling:</strong> Use worst-case scenarios in financial
+                    projections
+                  </li>
+                  <li>
+                    • <strong>Diversified portfolios:</strong> Multiple smaller installations vs
+                    single large system
+                  </li>
                 </ul>
               </div>
             </div>
@@ -61,7 +95,9 @@ const AdvancedFinancialConsiderations = () => {
                   </ul>
                 </div>
                 <div>
-                  <h6 className="text-orange-400 font-medium mb-3">Levelised Cost of Electricity (LCOE):</h6>
+                  <h6 className="text-orange-400 font-medium mb-3">
+                    Levelised Cost of Electricity (LCOE):
+                  </h6>
                   <ul className="text-gray-300 space-y-1">
                     <li>• Total lifecycle costs per kWh produced</li>
                     <li>• Include all capex, opex, and financing</li>
@@ -75,10 +111,14 @@ const AdvancedFinancialConsiderations = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold text-cyan-400 mb-4">Financing Structure Impact on Returns:</h4>
+            <h4 className="font-semibold text-cyan-400 mb-4">
+              Financing Structure Impact on Returns:
+            </h4>
             <div className="space-y-4">
               <div className="bg-cyan-900/20 p-4 rounded border border-cyan-500/30">
-                <h5 className="text-foreground font-medium mb-3">Cash Purchase vs Financing Comparison:</h5>
+                <h5 className="text-foreground font-medium mb-3">
+                  Cash Purchase vs Financing Comparison:
+                </h5>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>

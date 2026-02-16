@@ -14,7 +14,17 @@ import { Button } from '@/components/ui/button';
 import { ProgressSteps, Step } from '@/components/ui/ProgressSteps';
 import { useWizardState, WizardStep } from './hooks/useWizardState';
 import { useOrientation } from '@/hooks/useOrientation';
-import { ChevronLeft, ChevronRight, Check, Camera, User, Building, Zap, ClipboardCheck, Search } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Check,
+  Camera,
+  User,
+  Building,
+  Zap,
+  ClipboardCheck,
+  Search,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Step components
@@ -154,20 +164,10 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
   const renderStepContent = () => {
     switch (wizard.currentStepConfig?.id) {
       case 'client':
-        return (
-          <ClientStep
-            data={wizard.data}
-            onChange={wizard.updateData}
-            isMobile={isMobile}
-          />
-        );
+        return <ClientStep data={wizard.data} onChange={wizard.updateData} isMobile={isMobile} />;
       case 'installation':
         return (
-          <InstallationStep
-            data={wizard.data}
-            onChange={wizard.updateData}
-            isMobile={isMobile}
-          />
+          <InstallationStep data={wizard.data} onChange={wizard.updateData} isMobile={isMobile} />
         );
       case 'board-scan':
         return (
@@ -179,13 +179,7 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
           />
         );
       case 'circuits':
-        return (
-          <CircuitsStep
-            data={wizard.data}
-            onChange={wizard.updateData}
-            isMobile={isMobile}
-          />
-        );
+        return <CircuitsStep data={wizard.data} onChange={wizard.updateData} isMobile={isMobile} />;
       case 'inspections':
         return (
           <InspectionsStep
@@ -243,9 +237,7 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
               {wizard.currentStepConfig?.label}
             </h2>
             {wizard.currentStepConfig?.description && (
-              <p className="text-muted-foreground mt-1">
-                {wizard.currentStepConfig.description}
-              </p>
+              <p className="text-muted-foreground mt-1">{wizard.currentStepConfig.description}</p>
             )}
           </div>
 
@@ -263,10 +255,7 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
               variant="outline"
               onClick={wizard.prevStep}
               disabled={wizard.isFirstStep}
-              className={cn(
-                'h-12 gap-2',
-                wizard.isFirstStep && 'invisible'
-              )}
+              className={cn('h-12 gap-2', wizard.isFirstStep && 'invisible')}
             >
               <ChevronLeft className="h-4 w-4" />
               <span className="hidden sm:inline">Back</span>
@@ -319,10 +308,7 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
       </footer>
 
       {/* AI Fault Finder Sheet */}
-      <FaultFinderSheet
-        open={showFaultFinder}
-        onOpenChange={setShowFaultFinder}
-      />
+      <FaultFinderSheet open={showFaultFinder} onOpenChange={setShowFaultFinder} />
     </div>
   );
 };

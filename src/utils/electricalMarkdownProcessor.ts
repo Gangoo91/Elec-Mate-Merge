@@ -8,103 +8,116 @@ export const processElectricalMarkdown = (content: string): string => {
   processedContent = processedContent
     // BS 7671 compliance references
     .replace(/(\[BS 7671[^\]]*\])/g, '<span class="badge badge-bs7671">$1</span>')
-    
+
     // Result badges
     .replace(/\b(PASS|SATISFACTORY)\b/g, '<span class="badge badge-success">$1</span>')
     .replace(/\b(FAIL|UNSATISFACTORY|DANGER)\b/g, '<span class="badge badge-error">$1</span>')
-    
+
     // Code classifications
     .replace(/\b(C1)\b/g, '<span class="badge badge-c1">$1</span>')
     .replace(/\b(C2)\b/g, '<span class="badge badge-c2">$1</span>')
     .replace(/\b(C3)\b/g, '<span class="badge badge-c3">$1</span>')
     .replace(/\b(FI)\b/g, '<span class="badge badge-fi">$1</span>')
-    
+
     // Measurements and values
-    .replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g, '<span class="badge badge-measurement">$1$2</span>');
-  
+    .replace(
+      /(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)\b/g,
+      '<span class="badge badge-measurement">$1$2</span>'
+    );
+
   // Split content into blocks and process each separately
   const blocks = processedContent.split(/\n\s*\n/);
-  const processedBlocks = blocks.map(block => {
-    if (!block.trim()) return '';
-    
-    let processedBlock = block.trim();
-    
-    // Convert horizontal rules first (before headers)
-    processedBlock = processedBlock.replace(/^-{3,}$/gm, '<hr>');
-    
-    // Convert markdown headers (process from h6 to h1 to avoid conflicts)
-    processedBlock = processedBlock
-      .replace(/^#{6} (.+)$/gm, '<h6>$1</h6>')
-      .replace(/^#{5} (.+)$/gm, '<h5>$1</h5>')
-      .replace(/^#{4} (.+)$/gm, '<h4>$1</h4>')
-      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-      .replace(/^# (.+)$/gm, '<h1>$1</h1>');
-    
-    // Convert blockquotes
-    processedBlock = processedBlock.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
-    
-    // Convert text formatting
-    processedBlock = processedBlock
-      .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/`(.+?)`/g, '<code>$1</code>')
-      .replace(/~~(.+?)~~/g, '<del>$1</del>');
-    
-    // Handle tables
-    if (processedBlock.includes('|')) {
-      const tableRows = processedBlock.split('\n').filter(line => line.includes('|'));
-      if (tableRows.length > 0) {
-        const tableHtml = tableRows.map(row => {
-          const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell);
-          return '<tr>' + cells.map(cell => `<td>${cell}</td>`).join('') + '</tr>';
-        }).join('');
-        return `<table>${tableHtml}</table>`;
-      }
-    }
-    
-    // Handle lists
-    if (processedBlock.match(/^[\-\*] /m) || processedBlock.match(/^\d+\. /m)) {
-      const listItems = processedBlock.split('\n').map(line => {
-        if (line.match(/^[\-\*] (.+)$/)) {
-          return `<li>${line.replace(/^[\-\*] /, '')}</li>`;
-        } else if (line.match(/^\d+\. (.+)$/)) {
-          return `<li>${line.replace(/^\d+\. /, '')}</li>`;
+  const processedBlocks = blocks
+    .map((block) => {
+      if (!block.trim()) return '';
+
+      let processedBlock = block.trim();
+
+      // Convert horizontal rules first (before headers)
+      processedBlock = processedBlock.replace(/^-{3,}$/gm, '<hr>');
+
+      // Convert markdown headers (process from h6 to h1 to avoid conflicts)
+      processedBlock = processedBlock
+        .replace(/^#{6} (.+)$/gm, '<h6>$1</h6>')
+        .replace(/^#{5} (.+)$/gm, '<h5>$1</h5>')
+        .replace(/^#{4} (.+)$/gm, '<h4>$1</h4>')
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+      // Convert blockquotes
+      processedBlock = processedBlock.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+
+      // Convert text formatting
+      processedBlock = processedBlock
+        .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`(.+?)`/g, '<code>$1</code>')
+        .replace(/~~(.+?)~~/g, '<del>$1</del>');
+
+      // Handle tables
+      if (processedBlock.includes('|')) {
+        const tableRows = processedBlock.split('\n').filter((line) => line.includes('|'));
+        if (tableRows.length > 0) {
+          const tableHtml = tableRows
+            .map((row) => {
+              const cells = row
+                .split('|')
+                .map((cell) => cell.trim())
+                .filter((cell) => cell);
+              return '<tr>' + cells.map((cell) => `<td>${cell}</td>`).join('') + '</tr>';
+            })
+            .join('');
+          return `<table>${tableHtml}</table>`;
         }
-        return line;
-      }).filter(line => line.startsWith('<li>'));
-      
-      if (listItems.length > 0) {
-        const listType = processedBlock.match(/^\d+\./) ? 'ol' : 'ul';
-        return `<${listType}>${listItems.join('')}</${listType}>`;
       }
-    }
-    
-    // Handle headers (if not already processed)
-    if (processedBlock.match(/^<h[1-6]>/)) {
-      return processedBlock;
-    }
-    
-    // Regular paragraph - convert single line breaks to spaces, preserve formatting
-    processedBlock = processedBlock.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
-    
-    return processedBlock ? `<p>${processedBlock}</p>` : '';
-  }).filter(block => block);
+
+      // Handle lists
+      if (processedBlock.match(/^[\-\*] /m) || processedBlock.match(/^\d+\. /m)) {
+        const listItems = processedBlock
+          .split('\n')
+          .map((line) => {
+            if (line.match(/^[\-\*] (.+)$/)) {
+              return `<li>${line.replace(/^[\-\*] /, '')}</li>`;
+            } else if (line.match(/^\d+\. (.+)$/)) {
+              return `<li>${line.replace(/^\d+\. /, '')}</li>`;
+            }
+            return line;
+          })
+          .filter((line) => line.startsWith('<li>'));
+
+        if (listItems.length > 0) {
+          const listType = processedBlock.match(/^\d+\./) ? 'ol' : 'ul';
+          return `<${listType}>${listItems.join('')}</${listType}>`;
+        }
+      }
+
+      // Handle headers (if not already processed)
+      if (processedBlock.match(/^<h[1-6]>/)) {
+        return processedBlock;
+      }
+
+      // Regular paragraph - convert single line breaks to spaces, preserve formatting
+      processedBlock = processedBlock.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+
+      return processedBlock ? `<p>${processedBlock}</p>` : '';
+    })
+    .filter((block) => block);
 
   return processedBlocks.join('\n');
 };
 
 // Generate PDF using html2pdf.js (browser-compatible)
 export const generateElectricalReportPDF = async (
-  content: string, 
-  reportType: string, 
+  content: string,
+  reportType: string,
   filename?: string
 ): Promise<void> => {
   try {
     // Process the markdown content
     const processedContent = processElectricalMarkdown(content);
-    
+
     // Create the complete HTML document
     const htmlContent = `
       <!DOCTYPE html>
@@ -306,28 +319,29 @@ export const generateElectricalReportPDF = async (
     // Configure PDF options for html2pdf
     const options = {
       margin: [12, 12, 12, 12],
-      filename: filename || `${reportType.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`,
+      filename:
+        filename ||
+        `${reportType.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { 
+      html2canvas: {
         scale: 1.5,
         useCORS: true,
         letterRendering: true,
         allowTaint: true,
         scrollX: 0,
-        scrollY: 0
+        scrollY: 0,
       },
-      jsPDF: { 
-        unit: 'mm', 
-        format: 'a4', 
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
         orientation: 'portrait',
-        compressPDF: true
+        compressPDF: true,
       },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
     };
 
     // Generate and download the PDF
     await html2pdf().set(options).from(htmlContent).save();
-    
   } catch (error) {
     console.error('Failed to generate PDF:', error);
     throw new Error('Failed to generate PDF report');

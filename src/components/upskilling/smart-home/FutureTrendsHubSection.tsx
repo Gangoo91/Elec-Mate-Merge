@@ -12,8 +12,8 @@ export const FutureTrendsHubSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-gray-300">
-          The smart home landscape is evolving rapidly, with new standards and technologies reshaping 
-          how we think about hubs and device connectivity.
+          The smart home landscape is evolving rapidly, with new standards and technologies
+          reshaping how we think about hubs and device connectivity.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -37,7 +37,7 @@ export const FutureTrendsHubSection = () => {
               </li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-green-900/10 border border-green-600/20 rounded-lg">
             <h4 className="font-semibold text-green-200 mb-3 flex items-center gap-2">
               <Sparkles className="h-4 w-4" />
@@ -85,8 +85,9 @@ export const FutureTrendsHubSection = () => {
         <div className="p-3 bg-elec-dark border border-gray-600 rounded-lg">
           <h4 className="font-medium text-elec-yellow mb-2">Installer Recommendation:</h4>
           <p className="text-gray-300 text-sm">
-            Stay informed about Matter adoption and Thread networking, but continue recommending hub-based 
-            solutions for reliability-critical installations. The transition will be evolutionary, not revolutionary.
+            Stay informed about Matter adoption and Thread networking, but continue recommending
+            hub-based solutions for reliability-critical installations. The transition will be
+            evolutionary, not revolutionary.
           </p>
         </div>
       </CardContent>

@@ -1,9 +1,8 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, ShieldAlert, HardHat, Shield } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, ShieldAlert, HardHat, Shield } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 interface Subsection6_2Props {
   subsectionId: string;
@@ -16,12 +15,16 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
     <div className="space-y-8 animate-fade-in pb-8">
       {/* Main Heading */}
       <div>
-        <h2 className="text-2xl font-bold text-elec-yellow">Personal Protective Equipment (PPE) for Electrical Work</h2>
+        <h2 className="text-2xl font-bold text-elec-yellow">
+          Personal Protective Equipment (PPE) for Electrical Work
+        </h2>
         <p className="mt-2 text-elec-light/80">
-          PPE serves as the final line of defence against electrical hazards when all other safety measures have been implemented. The Electricity at Work Regulations 1989 mandate the use of appropriate PPE for electrical work.
+          PPE serves as the final line of defence against electrical hazards when all other safety
+          measures have been implemented. The Electricity at Work Regulations 1989 mandate the use
+          of appropriate PPE for electrical work.
         </p>
       </div>
-      
+
       {/* Decorative Separator with Icon */}
       <div className="flex items-center gap-4 py-2">
         <Separator className="flex-grow bg-elec-yellow/30" />
@@ -30,14 +33,16 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
         <Separator className="flex-grow bg-elec-yellow/30" />
       </div>
-      
+
       {/* PPE Categories Section */}
       <Card className="bg-white/5 border border-elec-yellow/20">
         <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20 pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <HardHat className="h-5 w-5 text-elec-yellow" />
-              <h3 className="text-xl font-bold text-elec-yellow">PPE Categories for Electrical Work</h3>
+              <h3 className="text-xl font-bold text-elec-yellow">
+                PPE Categories for Electrical Work
+              </h3>
             </div>
             <div className="px-3 py-1.5 bg-elec-yellow/10 rounded-full text-sm text-elec-yellow border border-elec-yellow/20 hidden md:flex items-center gap-2">
               <Shield className="h-4 w-4" />
@@ -48,9 +53,10 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
         <CardContent className="pt-6">
           <p className="text-base mb-6">
-            Different categories of PPE provide protection against specific electrical hazards. Selection must be based on risk assessment and the voltage levels involved.
+            Different categories of PPE provide protection against specific electrical hazards.
+            Selection must be based on risk assessment and the voltage levels involved.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Insulating PPE */}
             <div className="space-y-4">
@@ -60,7 +66,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </div>
                 <h4 className="font-medium text-elec-yellow text-lg">Insulating PPE</h4>
               </div>
-              
+
               <div className="space-y-3">
                 <PPECard title="Insulating Gloves">
                   <li>Must comply with BS EN 60903 standard</li>
@@ -70,7 +76,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Require regular inspection and testing</li>
                   <li>Often used with leather overgloves for mechanical protection</li>
                 </PPECard>
-                
+
                 <PPECard title="Insulating Mats">
                   <li>Comply with BS EN 61111 standard</li>
                   <li>Placed in front of electrical equipment</li>
@@ -78,7 +84,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Available in different voltage ratings</li>
                   <li>Must be kept clean and dry to maintain effectiveness</li>
                 </PPECard>
-                
+
                 <PPECard title="Insulating Tools">
                   <li>VDE/BS EN 60900 rated for 1000V AC/1500V DC</li>
                   <li>Double insulation with distinctive colour coding</li>
@@ -88,7 +94,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </PPECard>
               </div>
             </div>
-            
+
             {/* Arc Flash Protection */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
@@ -97,7 +103,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </div>
                 <h4 className="font-medium text-elec-yellow text-lg">Arc Flash Protection</h4>
               </div>
-              
+
               <div className="space-y-3">
                 <PPECard title="Arc Flash Clothing">
                   <li>Rated in cal/cm² (8-40 cal/cm² based on risk)</li>
@@ -107,7 +113,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Must be worn completely fastened</li>
                   <li>No synthetic undergarments should be worn</li>
                 </PPECard>
-                
+
                 <PPECard title="Face and Head Protection">
                   <li>Arc rated face shield (minimum 12 cal/cm²)</li>
                   <li>Arc flash hood for higher energy situations</li>
@@ -126,17 +132,24 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
           </div>
-          
+
           <div className="mt-5 p-4 border-t border-elec-yellow/20 bg-gradient-to-b from-elec-dark/70 to-elec-dark">
             <p className="font-medium mb-1 text-elec-yellow text-sm">Regulatory Requirements:</p>
-            <p className="text-sm">PPE selection must comply with the Personal Protective Equipment at Work Regulations 1992 (as amended), which requires employers to provide suitable PPE where risks cannot be controlled by other means. For electrical work, the Electricity at Work Regulations 1989 requires all reasonable steps to be taken to prevent danger.</p>
+            <p className="text-sm">
+              PPE selection must comply with the Personal Protective Equipment at Work Regulations
+              1992 (as amended), which requires employers to provide suitable PPE where risks cannot
+              be controlled by other means. For electrical work, the Electricity at Work Regulations
+              1989 requires all reasonable steps to be taken to prevent danger.
+            </p>
           </div>
         </CardContent>
       </Card>
-      
+
       {/* General Safety PPE Requirements */}
       <div className="rounded-lg border border-elec-yellow/20 p-4 md:p-6 bg-gradient-to-b from-elec-dark/50 to-elec-dark">
-        <h3 className="text-2xl font-bold text-elec-yellow mb-6">General Safety PPE Requirements</h3>
+        <h3 className="text-2xl font-bold text-elec-yellow mb-6">
+          General Safety PPE Requirements
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Head and Eye Protection */}
           <div className="space-y-4">
@@ -147,19 +160,31 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <ul className="space-y-4">
               <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Safety Helmets</span>
-                <p className="mt-1 text-sm">BS EN 397 compliant with electrical insulation properties. Must be regularly inspected for damage and replaced after significant impact or every 2-5 years depending on manufacturer's guidance.</p>
+                <p className="mt-1 text-sm">
+                  BS EN 397 compliant with electrical insulation properties. Must be regularly
+                  inspected for damage and replaced after significant impact or every 2-5 years
+                  depending on manufacturer's guidance.
+                </p>
               </li>
               <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Safety Glasses/Goggles</span>
-                <p className="mt-1 text-sm">BS EN 166 rated with appropriate impact protection. Side shields are essential for electrical work. Anti-fog coatings improve usability. Must be comfortable enough to wear for extended periods.</p>
+                <p className="mt-1 text-sm">
+                  BS EN 166 rated with appropriate impact protection. Side shields are essential for
+                  electrical work. Anti-fog coatings improve usability. Must be comfortable enough
+                  to wear for extended periods.
+                </p>
               </li>
               <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Face Shields</span>
-                <p className="mt-1 text-sm">For protection against electrical flash and flying particles. Can be integrated with helmet for complete protection. Must provide clear vision and be suitable for wearing with prescription glasses if needed.</p>
+                <p className="mt-1 text-sm">
+                  For protection against electrical flash and flying particles. Can be integrated
+                  with helmet for complete protection. Must provide clear vision and be suitable for
+                  wearing with prescription glasses if needed.
+                </p>
               </li>
             </ul>
           </div>
-          
+
           {/* Body and Extremity Protection */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
@@ -169,26 +194,40 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <ul className="space-y-4">
               <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Safety Footwear</span>
-                <p className="mt-1 text-sm">BS EN ISO 20345 compliant with electrical resistance properties. Additional protection may include metatarsal guards, puncture-resistant soles, and ankle support. Should be comfortable for all-day wear.</p>
+                <p className="mt-1 text-sm">
+                  BS EN ISO 20345 compliant with electrical resistance properties. Additional
+                  protection may include metatarsal guards, puncture-resistant soles, and ankle
+                  support. Should be comfortable for all-day wear.
+                </p>
               </li>
               <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Flame-Resistant Clothing</span>
-                <p className="mt-1 text-sm">BS EN ISO 11612 compliant for thermal hazards. Non-melting fabrics that self-extinguish when removed from ignition source. Must fit correctly and be suitable for seasonal conditions.</p>
+                <p className="mt-1 text-sm">
+                  BS EN ISO 11612 compliant for thermal hazards. Non-melting fabrics that
+                  self-extinguish when removed from ignition source. Must fit correctly and be
+                  suitable for seasonal conditions.
+                </p>
               </li>
               <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Hi-Visibility Clothing</span>
-                <p className="mt-1 text-sm">BS EN ISO 20471 for work near roadways or in low light conditions. Class 2 or 3 depending on risk assessment. Must be compatible with other PPE items and should not interfere with movement.</p>
+                <p className="mt-1 text-sm">
+                  BS EN ISO 20471 for work near roadways or in low light conditions. Class 2 or 3
+                  depending on risk assessment. Must be compatible with other PPE items and should
+                  not interfere with movement.
+                </p>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      
+
       {/* Inspection and Limitations */}
       <Card className="border-elec-yellow/20 bg-white/5">
         <div className="p-4 md:p-6">
-          <h3 className="text-xl font-bold text-elec-yellow mb-4">Inspection, Maintenance and Limitations</h3>
-          
+          <h3 className="text-xl font-bold text-elec-yellow mb-4">
+            Inspection, Maintenance and Limitations
+          </h3>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Testing and Inspection */}
             <div className="space-y-3">
@@ -196,18 +235,30 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <ul className="space-y-3">
                 <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Insulating Gloves</span>
-                  <p className="text-sm mt-1">Visual inspection before each use, air test to check for leaks, formal electrical test every 6 months. Check for cuts, punctures, abrasions, and chemical contamination.</p>
+                  <p className="text-sm mt-1">
+                    Visual inspection before each use, air test to check for leaks, formal
+                    electrical test every 6 months. Check for cuts, punctures, abrasions, and
+                    chemical contamination.
+                  </p>
                 </li>
                 <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Insulating Mats</span>
-                  <p className="text-sm mt-1">Visual inspection before use, periodic electrical testing according to manufacturer's recommendations. Examine for tears, cuts, and contamination that could compromise insulation.</p>
+                  <p className="text-sm mt-1">
+                    Visual inspection before use, periodic electrical testing according to
+                    manufacturer's recommendations. Examine for tears, cuts, and contamination that
+                    could compromise insulation.
+                  </p>
                 </li>
                 <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Insulated Tools</span>
-                  <p className="text-sm mt-1">Regular inspection for cracks, cuts or damage to insulation. Tools with damaged insulation must be removed from service immediately. Annual testing recommended for tools used regularly.</p>
+                  <p className="text-sm mt-1">
+                    Regular inspection for cracks, cuts or damage to insulation. Tools with damaged
+                    insulation must be removed from service immediately. Annual testing recommended
+                    for tools used regularly.
+                  </p>
                 </li>
               </ul>
-              
+
               <div className="mt-4 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/20">
                 <h5 className="font-medium text-elec-yellow text-sm">Documentation Requirements</h5>
                 <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
@@ -219,44 +270,63 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
             </div>
-            
+
             {/* Limitations of PPE */}
             <div className="space-y-3">
               <h4 className="font-semibold text-elec-yellow">Limitations of PPE</h4>
               <ul className="space-y-3">
                 <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Last Line of Defence</span>
-                  <p className="text-sm mt-1">PPE should be used alongside, not instead of, other safety measures in the hierarchy of control. Always prioritise elimination, substitution, and engineering controls.</p>
+                  <p className="text-sm mt-1">
+                    PPE should be used alongside, not instead of, other safety measures in the
+                    hierarchy of control. Always prioritise elimination, substitution, and
+                    engineering controls.
+                  </p>
                 </li>
                 <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Voltage Limits</span>
-                  <p className="text-sm mt-1">Each item of PPE has specific voltage limitations that must not be exceeded. Exceeding these limits can result in catastrophic failure of the protection and serious injury.</p>
+                  <p className="text-sm mt-1">
+                    Each item of PPE has specific voltage limitations that must not be exceeded.
+                    Exceeding these limits can result in catastrophic failure of the protection and
+                    serious injury.
+                  </p>
                 </li>
                 <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Environmental Factors</span>
-                  <p className="text-sm mt-1">Moisture, contaminants, temperature extremes, and UV exposure can significantly degrade PPE performance. Storage conditions must protect PPE from these factors.</p>
+                  <p className="text-sm mt-1">
+                    Moisture, contaminants, temperature extremes, and UV exposure can significantly
+                    degrade PPE performance. Storage conditions must protect PPE from these factors.
+                  </p>
                 </li>
               </ul>
-              
+
               <div className="p-4 bg-white/10 border border-elec-yellow/20 rounded-lg mt-4">
                 <p className="font-medium text-elec-yellow mb-2">Safety First Reminder:</p>
-                <p className="text-sm">Live working should always be avoided where possible. PPE does not eliminate risk entirely and should never be used as justification for working live when isolation is a viable alternative. Only appropriate training and risk assessment can determine when PPE use is suitable.</p>
+                <p className="text-sm">
+                  Live working should always be avoided where possible. PPE does not eliminate risk
+                  entirely and should never be used as justification for working live when isolation
+                  is a viable alternative. Only appropriate training and risk assessment can
+                  determine when PPE use is suitable.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </Card>
-      
+
       {/* PPE Selection Guidance */}
       <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
         <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
           <ShieldAlert className="h-5 w-5 mr-2" />
           PPE Selection Process
         </h3>
-        
+
         <div className="space-y-4">
-          <p>Selecting appropriate PPE requires a systematic approach based on the tasks and risks involved:</p>
-          
+          <p>
+            Selecting appropriate PPE requires a systematic approach based on the tasks and risks
+            involved:
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-3">
               <h4 className="font-semibold text-white">Risk Assessment</h4>
@@ -279,17 +349,21 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </li>
               </ul>
             </div>
-            
+
             <div className="space-y-3">
               <h4 className="font-semibold text-white">User Considerations</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
                   <span className="font-medium">Proper fit</span>
-                  <p className="text-sm mt-1">Individual sizing is essential for effective protection</p>
+                  <p className="text-sm mt-1">
+                    Individual sizing is essential for effective protection
+                  </p>
                 </li>
                 <li>
                   <span className="font-medium">Compatibility</span>
-                  <p className="text-sm mt-1">Ensure all PPE items work together without compromising protection</p>
+                  <p className="text-sm mt-1">
+                    Ensure all PPE items work together without compromising protection
+                  </p>
                 </li>
                 <li>
                   <span className="font-medium">User training</span>
@@ -297,11 +371,13 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </li>
                 <li>
                   <span className="font-medium">Comfort and usability</span>
-                  <p className="text-sm mt-1">PPE that's uncomfortable is less likely to be worn correctly</p>
+                  <p className="text-sm mt-1">
+                    PPE that's uncomfortable is less likely to be worn correctly
+                  </p>
                 </li>
               </ul>
             </div>
-            
+
             <div className="space-y-3">
               <h4 className="font-semibold text-white">Standards Compliance</h4>
               <ul className="list-disc pl-5 space-y-2">
@@ -324,14 +400,20 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
           </div>
-          
+
           <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
             <p className="font-medium mb-1 text-elec-yellow">Employer Responsibilities:</p>
-            <p>Under the Personal Protective Equipment at Work Regulations, employers must ensure that PPE is properly assessed before use, appropriate for the risk and the user, maintained and stored properly, provided with instructions on safe use, and used correctly by employees. PPE must be provided free of charge where it is needed for work activities.</p>
+            <p>
+              Under the Personal Protective Equipment at Work Regulations, employers must ensure
+              that PPE is properly assessed before use, appropriate for the risk and the user,
+              maintained and stored properly, provided with instructions on safe use, and used
+              correctly by employees. PPE must be provided free of charge where it is needed for
+              work activities.
+            </p>
           </div>
         </div>
       </div>
-      
+
       {/* Completion Button */}
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
         <Button

@@ -1,216 +1,248 @@
-import { ArrowLeft, Settings, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "System Balancing - HNC Module 8 Section 2.6";
-const DESCRIPTION = "Master air balancing procedures, commissioning processes, performance verification and O&M documentation requirements for ventilation systems in accordance with BSRIA guides.";
+const TITLE = 'System Balancing - HNC Module 8 Section 2.6';
+const DESCRIPTION =
+  'Master air balancing procedures, commissioning processes, performance verification and O&M documentation requirements for ventilation systems in accordance with BSRIA guides.';
 
 const quickCheckQuestions = [
   {
-    id: "proportional-balancing",
-    question: "In the proportional balancing method, what is the first step after measuring all terminal air flow rates?",
-    options: ["Adjust all dampers equally", "Identify the terminal with the lowest percentage of design flow", "Close all dampers fully", "Increase fan speed to maximum"],
+    id: 'proportional-balancing',
+    question:
+      'In the proportional balancing method, what is the first step after measuring all terminal air flow rates?',
+    options: [
+      'Adjust all dampers equally',
+      'Identify the terminal with the lowest percentage of design flow',
+      'Close all dampers fully',
+      'Increase fan speed to maximum',
+    ],
     correctIndex: 1,
-    explanation: "The proportional balancing method starts by identifying the index terminal - the one with the lowest percentage of design flow. This becomes the reference against which all other terminals are balanced."
+    explanation:
+      'The proportional balancing method starts by identifying the index terminal - the one with the lowest percentage of design flow. This becomes the reference against which all other terminals are balanced.',
   },
   {
-    id: "commissioning-sequence",
-    question: "According to BSRIA guidelines, when should air balancing be carried out in relation to water system commissioning?",
-    options: ["Before water systems are commissioned", "After water systems are commissioned", "Simultaneously with water systems", "Only after the building is occupied"],
+    id: 'commissioning-sequence',
+    question:
+      'According to BSRIA guidelines, when should air balancing be carried out in relation to water system commissioning?',
+    options: [
+      'Before water systems are commissioned',
+      'After water systems are commissioned',
+      'Simultaneously with water systems',
+      'Only after the building is occupied',
+    ],
     correctIndex: 1,
-    explanation: "Air balancing should be carried out after water systems (heating and cooling coils) are commissioned. This ensures that coil capacities are proven before air volumes are finalised, as coil performance affects air-side heat transfer."
+    explanation:
+      'Air balancing should be carried out after water systems (heating and cooling coils) are commissioned. This ensures that coil capacities are proven before air volumes are finalised, as coil performance affects air-side heat transfer.',
   },
   {
-    id: "measurement-tolerance",
-    question: "What is the typical acceptable tolerance for measured air flow rates compared to design values in commissioning?",
-    options: ["+/- 1%", "+/- 5%", "+/- 10%", "+/- 20%"],
+    id: 'measurement-tolerance',
+    question:
+      'What is the typical acceptable tolerance for measured air flow rates compared to design values in commissioning?',
+    options: ['+/- 1%', '+/- 5%', '+/- 10%', '+/- 20%'],
     correctIndex: 2,
-    explanation: "The industry standard tolerance for air flow measurement during commissioning is typically +/- 10% of design values for individual terminals, with +/- 5% acceptable for main branches and total system air flow."
+    explanation:
+      'The industry standard tolerance for air flow measurement during commissioning is typically +/- 10% of design values for individual terminals, with +/- 5% acceptable for main branches and total system air flow.',
   },
   {
-    id: "om-documentation",
-    question: "Which document provides a permanent record of the as-commissioned system performance?",
-    options: ["The design specification", "The commissioning certificate", "The O&M manual", "The tender documents"],
+    id: 'om-documentation',
+    question:
+      'Which document provides a permanent record of the as-commissioned system performance?',
+    options: [
+      'The design specification',
+      'The commissioning certificate',
+      'The O&M manual',
+      'The tender documents',
+    ],
     correctIndex: 2,
-    explanation: "The O&M (Operation and Maintenance) manual provides a permanent record of as-commissioned performance data. This allows future comparison during maintenance and troubleshooting to identify system degradation or faults."
-  }
+    explanation:
+      'The O&M (Operation and Maintenance) manual provides a permanent record of as-commissioned performance data. This allows future comparison during maintenance and troubleshooting to identify system degradation or faults.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the primary purpose of air balancing in a ventilation system?",
+    question: 'What is the primary purpose of air balancing in a ventilation system?',
     options: [
-      "To reduce the cost of the installation",
-      "To ensure design air flow rates are achieved at all terminals",
-      "To maximise fan energy consumption",
-      "To eliminate the need for dampers"
+      'To reduce the cost of the installation',
+      'To ensure design air flow rates are achieved at all terminals',
+      'To maximise fan energy consumption',
+      'To eliminate the need for dampers',
     ],
     correctAnswer: 1,
-    explanation: "Air balancing ensures that the design air flow rates are achieved at all terminals throughout the system. This is essential for maintaining indoor air quality, thermal comfort, and energy efficiency."
+    explanation:
+      'Air balancing ensures that the design air flow rates are achieved at all terminals throughout the system. This is essential for maintaining indoor air quality, thermal comfort, and energy efficiency.',
   },
   {
     id: 2,
-    question: "Which BSRIA guide specifically covers air distribution system commissioning?",
+    question: 'Which BSRIA guide specifically covers air distribution system commissioning?',
     options: [
-      "BSRIA BG 49 - Commissioning Water Systems",
-      "BSRIA BG 29 - Pre-commission Cleaning",
-      "BSRIA BG 35/2021 - Commissioning Air Systems",
-      "BSRIA BG 2 - Commissioning of Building Services"
+      'BSRIA BG 49 - Commissioning Water Systems',
+      'BSRIA BG 29 - Pre-commission Cleaning',
+      'BSRIA BG 35/2021 - Commissioning Air Systems',
+      'BSRIA BG 2 - Commissioning of Building Services',
     ],
     correctAnswer: 2,
-    explanation: "BSRIA BG 35/2021 'Commissioning Air Systems' is the specific guide covering air distribution system commissioning, including balancing procedures, measurement methods, and documentation requirements."
+    explanation:
+      "BSRIA BG 35/2021 'Commissioning Air Systems' is the specific guide covering air distribution system commissioning, including balancing procedures, measurement methods, and documentation requirements.",
   },
   {
     id: 3,
-    question: "What instrument is most commonly used to measure air velocity in ductwork?",
-    options: [
-      "Manometer",
-      "Pitot tube with manometer",
-      "Thermometer",
-      "Hygrometer"
-    ],
+    question: 'What instrument is most commonly used to measure air velocity in ductwork?',
+    options: ['Manometer', 'Pitot tube with manometer', 'Thermometer', 'Hygrometer'],
     correctAnswer: 1,
-    explanation: "A pitot tube connected to a manometer (or digital differential pressure gauge) is the standard method for measuring air velocity in ductwork. It measures the difference between total and static pressure to derive velocity pressure."
+    explanation:
+      'A pitot tube connected to a manometer (or digital differential pressure gauge) is the standard method for measuring air velocity in ductwork. It measures the difference between total and static pressure to derive velocity pressure.',
   },
   {
     id: 4,
-    question: "In proportional balancing, what percentage of design flow should the index terminal achieve before balancing begins?",
-    options: [
-      "50%",
-      "75%",
-      "90%",
-      "100%"
-    ],
+    question:
+      'In proportional balancing, what percentage of design flow should the index terminal achieve before balancing begins?',
+    options: ['50%', '75%', '90%', '100%'],
     correctAnswer: 3,
-    explanation: "The index terminal (lowest percentage of design) should achieve as close to 100% of design flow as possible before balancing other terminals. If it cannot reach 100%, fan speed may need adjustment or system issues investigated."
+    explanation:
+      'The index terminal (lowest percentage of design) should achieve as close to 100% of design flow as possible before balancing other terminals. If it cannot reach 100%, fan speed may need adjustment or system issues investigated.',
   },
   {
     id: 5,
-    question: "What type of damper is specifically designed for air balancing purposes?",
+    question: 'What type of damper is specifically designed for air balancing purposes?',
     options: [
-      "Fire damper",
-      "Volume control damper (VCD) or balancing damper",
-      "Non-return damper",
-      "Smoke damper"
+      'Fire damper',
+      'Volume control damper (VCD) or balancing damper',
+      'Non-return damper',
+      'Smoke damper',
     ],
     correctAnswer: 1,
-    explanation: "Volume control dampers (VCDs) or balancing dampers are specifically designed for air balancing. They have graduated scales or memory stops to allow accurate setting and future reference during maintenance."
+    explanation:
+      'Volume control dampers (VCDs) or balancing dampers are specifically designed for air balancing. They have graduated scales or memory stops to allow accurate setting and future reference during maintenance.',
   },
   {
     id: 6,
-    question: "What is the purpose of a traverse measurement in ductwork?",
+    question: 'What is the purpose of a traverse measurement in ductwork?',
     options: [
-      "To measure duct surface temperature",
-      "To obtain an accurate average air velocity across the duct cross-section",
-      "To check duct insulation thickness",
-      "To measure noise levels"
+      'To measure duct surface temperature',
+      'To obtain an accurate average air velocity across the duct cross-section',
+      'To check duct insulation thickness',
+      'To measure noise levels',
     ],
     correctAnswer: 1,
-    explanation: "A traverse measurement involves taking multiple velocity readings across the duct cross-section in a grid pattern. This accounts for the velocity profile (faster in centre, slower near walls) to calculate an accurate average velocity."
+    explanation:
+      'A traverse measurement involves taking multiple velocity readings across the duct cross-section in a grid pattern. This accounts for the velocity profile (faster in centre, slower near walls) to calculate an accurate average velocity.',
   },
   {
     id: 7,
-    question: "According to good practice, what minimum straight duct length should precede a measurement point?",
+    question:
+      'According to good practice, what minimum straight duct length should precede a measurement point?',
     options: [
-      "1-2 duct diameters",
-      "5-10 duct diameters",
-      "15-20 duct diameters",
-      "30 duct diameters"
+      '1-2 duct diameters',
+      '5-10 duct diameters',
+      '15-20 duct diameters',
+      '30 duct diameters',
     ],
     correctAnswer: 1,
-    explanation: "A minimum of 5-10 duct diameters of straight duct should precede the measurement point to allow flow to develop a stable profile. Turbulence from bends, transitions, or dampers can significantly affect accuracy."
+    explanation:
+      'A minimum of 5-10 duct diameters of straight duct should precede the measurement point to allow flow to develop a stable profile. Turbulence from bends, transitions, or dampers can significantly affect accuracy.',
   },
   {
     id: 8,
-    question: "What is the commissioning tolerance typically specified for total system supply air volume?",
-    options: [
-      "+/- 2%",
-      "+/- 5%",
-      "+/- 10%",
-      "+/- 15%"
-    ],
+    question:
+      'What is the commissioning tolerance typically specified for total system supply air volume?',
+    options: ['+/- 2%', '+/- 5%', '+/- 10%', '+/- 15%'],
     correctAnswer: 1,
-    explanation: "Total system supply air volume typically has a tighter tolerance of +/- 5% compared to individual terminals (+/- 10%). This ensures overall system performance meets design intent while allowing some flexibility at branch level."
+    explanation:
+      'Total system supply air volume typically has a tighter tolerance of +/- 5% compared to individual terminals (+/- 10%). This ensures overall system performance meets design intent while allowing some flexibility at branch level.',
   },
   {
     id: 9,
-    question: "Which document should be completed to formally record that commissioning has been satisfactorily completed?",
+    question:
+      'Which document should be completed to formally record that commissioning has been satisfactorily completed?',
     options: [
-      "Design calculation sheet",
-      "Commissioning certificate or witness record",
-      "Purchase order",
-      "Site instruction"
+      'Design calculation sheet',
+      'Commissioning certificate or witness record',
+      'Purchase order',
+      'Site instruction',
     ],
     correctAnswer: 1,
-    explanation: "A commissioning certificate or witness record formally documents that commissioning has been satisfactorily completed. It should be signed by the commissioning engineer and witnessed by the client or their representative."
+    explanation:
+      'A commissioning certificate or witness record formally documents that commissioning has been satisfactorily completed. It should be signed by the commissioning engineer and witnessed by the client or their representative.',
   },
   {
     id: 10,
-    question: "What information must be recorded for each balancing damper in the commissioning records?",
+    question:
+      'What information must be recorded for each balancing damper in the commissioning records?',
     options: [
-      "Only the damper manufacturer",
-      "Damper position/setting and measured air flow rate",
-      "Only the damper cost",
-      "Only the installation date"
+      'Only the damper manufacturer',
+      'Damper position/setting and measured air flow rate',
+      'Only the damper cost',
+      'Only the installation date',
     ],
     correctAnswer: 1,
-    explanation: "Commissioning records must include damper identification, its final position or setting (blade angle, turns open), and the measured air flow rate. This allows settings to be restored if dampers are disturbed during maintenance."
+    explanation:
+      'Commissioning records must include damper identification, its final position or setting (blade angle, turns open), and the measured air flow rate. This allows settings to be restored if dampers are disturbed during maintenance.',
   },
   {
     id: 11,
-    question: "What is the purpose of pre-commissioning checks before air balancing?",
+    question: 'What is the purpose of pre-commissioning checks before air balancing?',
     options: [
-      "To delay the project",
-      "To ensure the system is complete, clean, and ready for balancing",
-      "To increase costs",
-      "To avoid using test equipment"
+      'To delay the project',
+      'To ensure the system is complete, clean, and ready for balancing',
+      'To increase costs',
+      'To avoid using test equipment',
     ],
     correctAnswer: 1,
-    explanation: "Pre-commissioning checks verify that ductwork is complete and sealed, access doors are fitted, filters are installed, dampers operate freely, and the system is clean. Attempting to balance an incomplete system wastes time and produces invalid results."
+    explanation:
+      'Pre-commissioning checks verify that ductwork is complete and sealed, access doors are fitted, filters are installed, dampers operate freely, and the system is clean. Attempting to balance an incomplete system wastes time and produces invalid results.',
   },
   {
     id: 12,
-    question: "In the O&M manual, what should be included regarding the ventilation system?",
+    question: 'In the O&M manual, what should be included regarding the ventilation system?',
     options: [
-      "Only the original tender price",
-      "As-installed drawings, commissioning results, maintenance schedules, and operating procedures",
+      'Only the original tender price',
+      'As-installed drawings, commissioning results, maintenance schedules, and operating procedures',
       "Only the architect's contact details",
-      "Only the paint specification"
+      'Only the paint specification',
     ],
     correctAnswer: 1,
-    explanation: "The O&M manual should include as-installed drawings, commissioning data and certificates, equipment schedules with nameplate data, maintenance requirements, operating procedures, and spare parts lists. This provides a complete reference for ongoing operation."
-  }
+    explanation:
+      'The O&M manual should include as-installed drawings, commissioning data and certificates, equipment schedules with nameplate data, maintenance requirements, operating procedures, and spare parts lists. This provides a complete reference for ongoing operation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What is the difference between commissioning and balancing?",
-    answer: "Balancing is the process of adjusting air flow rates to match design values using dampers and fan speed adjustments. Commissioning is a broader process that includes balancing but also encompasses pre-commissioning checks, functional testing of controls, verification of all system components, documentation, and handover. Balancing is one element within the overall commissioning process."
+    question: 'What is the difference between commissioning and balancing?',
+    answer:
+      'Balancing is the process of adjusting air flow rates to match design values using dampers and fan speed adjustments. Commissioning is a broader process that includes balancing but also encompasses pre-commissioning checks, functional testing of controls, verification of all system components, documentation, and handover. Balancing is one element within the overall commissioning process.',
   },
   {
-    question: "Why is the proportional balancing method preferred over the stepwise method?",
-    answer: "Proportional balancing is more efficient because it adjusts all terminals relative to the index (lowest percentage) terminal in one pass. The stepwise method adjusts terminals sequentially, but each adjustment affects other terminals, often requiring multiple passes through the system. Proportional balancing typically reduces commissioning time by 30-50%."
+    question: 'Why is the proportional balancing method preferred over the stepwise method?',
+    answer:
+      'Proportional balancing is more efficient because it adjusts all terminals relative to the index (lowest percentage) terminal in one pass. The stepwise method adjusts terminals sequentially, but each adjustment affects other terminals, often requiring multiple passes through the system. Proportional balancing typically reduces commissioning time by 30-50%.',
   },
   {
-    question: "How often should ventilation systems be re-commissioned?",
-    answer: "Building Regulations Approved Document F recommends periodic inspection of ventilation systems, typically every 5 years for non-domestic buildings. Re-commissioning should also be undertaken after any significant modifications, if occupancy patterns change substantially, or if problems with air quality or comfort are reported."
+    question: 'How often should ventilation systems be re-commissioned?',
+    answer:
+      'Building Regulations Approved Document F recommends periodic inspection of ventilation systems, typically every 5 years for non-domestic buildings. Re-commissioning should also be undertaken after any significant modifications, if occupancy patterns change substantially, or if problems with air quality or comfort are reported.',
   },
   {
-    question: "What causes air flow to deviate from design values over time?",
-    answer: "Common causes include: filter loading increasing resistance, belt wear reducing fan speed, damper positions being disturbed during maintenance, duct leakage increasing, grille and diffuser blockage, changes to the building or system, and control system drift. Regular maintenance and periodic verification help identify these issues."
+    question: 'What causes air flow to deviate from design values over time?',
+    answer:
+      'Common causes include: filter loading increasing resistance, belt wear reducing fan speed, damper positions being disturbed during maintenance, duct leakage increasing, grille and diffuser blockage, changes to the building or system, and control system drift. Regular maintenance and periodic verification help identify these issues.',
   },
   {
-    question: "Can balancing be carried out with the BMS controlling the system?",
-    answer: "During initial commissioning, the BMS should typically be in manual override mode to provide stable conditions. Variable air volume (VAV) terminals should be set to maximum flow. Once balancing is complete, the BMS can be commissioned to modulate flows correctly. The BMS commissioning records should reference the balancing data."
+    question: 'Can balancing be carried out with the BMS controlling the system?',
+    answer:
+      'During initial commissioning, the BMS should typically be in manual override mode to provide stable conditions. Variable air volume (VAV) terminals should be set to maximum flow. Once balancing is complete, the BMS can be commissioned to modulate flows correctly. The BMS commissioning records should reference the balancing data.',
   },
   {
-    question: "What qualifications should a commissioning engineer hold?",
-    answer: "Commissioning engineers should ideally hold the Commissioning Specialists Association (CSA) certification or equivalent. They should have completed BSRIA or CIBSE commissioning training and have demonstrated practical experience. For witness testing, the engineer may need to be approved by the client's representative or the Commissioning Management organisation."
-  }
+    question: 'What qualifications should a commissioning engineer hold?',
+    answer:
+      "Commissioning engineers should ideally hold the Commissioning Specialists Association (CSA) certification or equivalent. They should have completed BSRIA or CIBSE commissioning training and have demonstrated practical experience. For witness testing, the engineer may need to be approved by the client's representative or the Commissioning Management organisation.",
+  },
 ];
 
 const HNCModule8Section2_6 = () => {
@@ -221,7 +253,12 @@ const HNCModule8Section2_6 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module8-section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -232,7 +269,6 @@ const HNCModule8Section2_6 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centred Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -252,19 +288,35 @@ const HNCModule8Section2_6 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>Balancing:</strong> Adjusting air flows to match design values</li>
-              <li className="pl-1"><strong>Proportional method:</strong> Most efficient balancing approach</li>
-              <li className="pl-1"><strong>Commissioning:</strong> Complete verification and handover process</li>
-              <li className="pl-1"><strong>Documentation:</strong> O&amp;M manuals and commissioning records</li>
+              <li className="pl-1">
+                <strong>Balancing:</strong> Adjusting air flows to match design values
+              </li>
+              <li className="pl-1">
+                <strong>Proportional method:</strong> Most efficient balancing approach
+              </li>
+              <li className="pl-1">
+                <strong>Commissioning:</strong> Complete verification and handover process
+              </li>
+              <li className="pl-1">
+                <strong>Documentation:</strong> O&amp;M manuals and commissioning records
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>BSRIA BG 35:</strong> Commissioning Air Systems</li>
-              <li className="pl-1"><strong>BSRIA BG 2:</strong> Commissioning Building Services</li>
-              <li className="pl-1"><strong>CIBSE Code W:</strong> Water &amp; Air Commissioning</li>
-              <li className="pl-1"><strong>Building Regs F:</strong> Ventilation requirements</li>
+              <li className="pl-1">
+                <strong>BSRIA BG 35:</strong> Commissioning Air Systems
+              </li>
+              <li className="pl-1">
+                <strong>BSRIA BG 2:</strong> Commissioning Building Services
+              </li>
+              <li className="pl-1">
+                <strong>CIBSE Code W:</strong> Water &amp; Air Commissioning
+              </li>
+              <li className="pl-1">
+                <strong>Building Regs F:</strong> Ventilation requirements
+              </li>
             </ul>
           </div>
         </div>
@@ -274,14 +326,14 @@ const HNCModule8Section2_6 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply the proportional balancing method to ventilation systems",
-              "Select and use appropriate air flow measurement instruments",
-              "Understand BSRIA commissioning procedures and requirements",
-              "Set up and adjust balancing dampers correctly",
-              "Complete commissioning records and documentation",
-              "Verify system performance against design criteria",
-              "Prepare O&M documentation for handover",
-              "Identify common balancing problems and solutions"
+              'Apply the proportional balancing method to ventilation systems',
+              'Select and use appropriate air flow measurement instruments',
+              'Understand BSRIA commissioning procedures and requirements',
+              'Set up and adjust balancing dampers correctly',
+              'Complete commissioning records and documentation',
+              'Verify system performance against design criteria',
+              'Prepare O&M documentation for handover',
+              'Identify common balancing problems and solutions',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -302,20 +354,35 @@ const HNCModule8Section2_6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Air balancing is the systematic process of adjusting the air flow rates in a ventilation system
-              to match the design values. Without proper balancing, some areas may receive excessive air
-              while others are starved, leading to comfort complaints, poor indoor air quality, and
-              wasted energy.
+              Air balancing is the systematic process of adjusting the air flow rates in a
+              ventilation system to match the design values. Without proper balancing, some areas
+              may receive excessive air while others are starved, leading to comfort complaints,
+              poor indoor air quality, and wasted energy.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why Air Balancing is Essential</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Thermal comfort:</strong> Correct air flow ensures heating/cooling capacity reaches each zone</li>
-                <li className="pl-1"><strong>Indoor air quality:</strong> Fresh air is distributed to all occupied spaces</li>
-                <li className="pl-1"><strong>Energy efficiency:</strong> Prevents over-supply to some areas requiring fan energy to be wasted</li>
-                <li className="pl-1"><strong>Noise control:</strong> Excessive velocities cause noise; balancing keeps flows within design limits</li>
-                <li className="pl-1"><strong>Pressure relationships:</strong> Maintains correct pressure differentials between spaces</li>
+                <li className="pl-1">
+                  <strong>Thermal comfort:</strong> Correct air flow ensures heating/cooling
+                  capacity reaches each zone
+                </li>
+                <li className="pl-1">
+                  <strong>Indoor air quality:</strong> Fresh air is distributed to all occupied
+                  spaces
+                </li>
+                <li className="pl-1">
+                  <strong>Energy efficiency:</strong> Prevents over-supply to some areas requiring
+                  fan energy to be wasted
+                </li>
+                <li className="pl-1">
+                  <strong>Noise control:</strong> Excessive velocities cause noise; balancing keeps
+                  flows within design limits
+                </li>
+                <li className="pl-1">
+                  <strong>Pressure relationships:</strong> Maintains correct pressure differentials
+                  between spaces
+                </li>
               </ul>
             </div>
 
@@ -357,7 +424,9 @@ const HNCModule8Section2_6 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Air Flow Measurement Methods</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Air Flow Measurement Methods
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -369,23 +438,39 @@ const HNCModule8Section2_6 = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Pitot tube traverse</td>
-                      <td className="border border-white/10 px-3 py-2">Rectangular and circular ducts</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Pitot tube traverse
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Rectangular and circular ducts
+                      </td>
                       <td className="border border-white/10 px-3 py-2">+/- 3-5%</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Rotating vane anemometer</td>
-                      <td className="border border-white/10 px-3 py-2">Grilles, louvres, open ducts</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Rotating vane anemometer
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Grilles, louvres, open ducts
+                      </td>
                       <td className="border border-white/10 px-3 py-2">+/- 5-10%</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Thermal anemometer</td>
-                      <td className="border border-white/10 px-3 py-2">Low velocities, directional measurement</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Thermal anemometer
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Low velocities, directional measurement
+                      </td>
                       <td className="border border-white/10 px-3 py-2">+/- 3-5%</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Flow hood (capture hood)</td>
-                      <td className="border border-white/10 px-3 py-2">Ceiling diffusers, grilles</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Flow hood (capture hood)
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Ceiling diffusers, grilles
+                      </td>
                       <td className="border border-white/10 px-3 py-2">+/- 5%</td>
                     </tr>
                   </tbody>
@@ -394,9 +479,9 @@ const HNCModule8Section2_6 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Always allow instruments to acclimatise to ambient conditions
-              before taking measurements. Sudden temperature changes can affect readings, particularly
-              for thermal anemometers.
+              <strong>Practical tip:</strong> Always allow instruments to acclimatise to ambient
+              conditions before taking measurements. Sudden temperature changes can affect readings,
+              particularly for thermal anemometers.
             </p>
           </div>
         </section>
@@ -412,55 +497,63 @@ const HNCModule8Section2_6 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               The proportional balancing method, as described in BSRIA guides, is the most efficient
-              approach for balancing air distribution systems. It minimises the number of adjustments
-              required by working relative to an index terminal rather than absolute values.
+              approach for balancing air distribution systems. It minimises the number of
+              adjustments required by working relative to an index terminal rather than absolute
+              values.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Proportional Balancing Procedure</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Proportional Balancing Procedure
+              </p>
               <ol className="text-sm text-white space-y-3 list-decimal list-outside ml-5">
                 <li className="pl-2">
-                  <strong>Pre-commissioning checks:</strong> Verify system is complete, clean, filters installed,
-                  dampers operational, and access available
+                  <strong>Pre-commissioning checks:</strong> Verify system is complete, clean,
+                  filters installed, dampers operational, and access available
                 </li>
                 <li className="pl-2">
-                  <strong>Set all dampers:</strong> Open all balancing dampers and regulating dampers fully
+                  <strong>Set all dampers:</strong> Open all balancing dampers and regulating
+                  dampers fully
                 </li>
                 <li className="pl-2">
-                  <strong>Adjust fan to design total:</strong> Set fan speed so total system air flow matches
-                  design (typically using main duct measurement)
+                  <strong>Adjust fan to design total:</strong> Set fan speed so total system air
+                  flow matches design (typically using main duct measurement)
                 </li>
                 <li className="pl-2">
-                  <strong>Measure all terminals:</strong> Record air flow at every terminal and calculate
-                  percentage of design flow for each
+                  <strong>Measure all terminals:</strong> Record air flow at every terminal and
+                  calculate percentage of design flow for each
                 </li>
                 <li className="pl-2">
-                  <strong>Identify index terminal:</strong> Find the terminal with the lowest percentage of
-                  design flow - this is the index
+                  <strong>Identify index terminal:</strong> Find the terminal with the lowest
+                  percentage of design flow - this is the index
                 </li>
                 <li className="pl-2">
-                  <strong>Balance remaining terminals:</strong> Adjust each other terminal's damper until its
-                  percentage matches the index terminal
+                  <strong>Balance remaining terminals:</strong> Adjust each other terminal's damper
+                  until its percentage matches the index terminal
                 </li>
                 <li className="pl-2">
-                  <strong>Increase fan speed:</strong> If index is below 100%, increase fan speed to bring
-                  index to design flow
+                  <strong>Increase fan speed:</strong> If index is below 100%, increase fan speed to
+                  bring index to design flow
                 </li>
                 <li className="pl-2">
-                  <strong>Final check:</strong> Re-measure all terminals to verify they are within tolerance
+                  <strong>Final check:</strong> Re-measure all terminals to verify they are within
+                  tolerance
                 </li>
               </ol>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-medium text-elec-yellow mb-2">Calculating Proportional Balance</p>
+                <p className="font-medium text-elec-yellow mb-2">
+                  Calculating Proportional Balance
+                </p>
                 <div className="text-sm text-white/90 space-y-2">
                   <p>For each terminal, calculate:</p>
-                  <p className="font-mono bg-black/30 p-2 rounded">% of design = (Measured / Design) x 100</p>
+                  <p className="font-mono bg-black/30 p-2 rounded">
+                    % of design = (Measured / Design) x 100
+                  </p>
                   <p className="mt-2 text-xs text-white/70">
-                    Example: If design is 100 l/s and measured is 85 l/s,
-                    the percentage is 85%.
+                    Example: If design is 100 l/s and measured is 85 l/s, the percentage is 85%.
                   </p>
                 </div>
               </div>
@@ -468,10 +561,12 @@ const HNCModule8Section2_6 = () => {
                 <p className="font-medium text-elec-yellow mb-2">Adjusting to Match Index</p>
                 <div className="text-sm text-white/90 space-y-2">
                   <p>Target flow for non-index terminals:</p>
-                  <p className="font-mono bg-black/30 p-2 rounded">Target = Design x (Index % / 100)</p>
+                  <p className="font-mono bg-black/30 p-2 rounded">
+                    Target = Design x (Index % / 100)
+                  </p>
                   <p className="mt-2 text-xs text-white/70">
-                    Example: If index is at 85% and design is 150 l/s,
-                    target = 150 x 0.85 = 127.5 l/s
+                    Example: If index is at 85% and design is 150 l/s, target = 150 x 0.85 = 127.5
+                    l/s
                   </p>
                 </div>
               </div>
@@ -484,30 +579,56 @@ const HNCModule8Section2_6 = () => {
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Damper Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristics</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Application</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Characteristics
+                      </th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Typical Application
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Single blade (butterfly)</td>
-                      <td className="border border-white/10 px-3 py-2">Simple, economical, can cause turbulence</td>
-                      <td className="border border-white/10 px-3 py-2">Branch takeoffs, small ducts</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Single blade (butterfly)
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Simple, economical, can cause turbulence
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Branch takeoffs, small ducts
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Multi-blade opposed</td>
-                      <td className="border border-white/10 px-3 py-2">Better flow control, lower turbulence</td>
-                      <td className="border border-white/10 px-3 py-2">Main branches, large ducts</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Multi-blade opposed
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Better flow control, lower turbulence
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Main branches, large ducts
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2 font-medium">Iris damper</td>
-                      <td className="border border-white/10 px-3 py-2">Concentrates flow centrally, good measurement point</td>
-                      <td className="border border-white/10 px-3 py-2">Terminal units, laboratory systems</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Concentrates flow centrally, good measurement point
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Terminal units, laboratory systems
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Constant volume regulator</td>
-                      <td className="border border-white/10 px-3 py-2">Self-adjusting to maintain set flow</td>
-                      <td className="border border-white/10 px-3 py-2">Critical spaces, clean rooms</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Constant volume regulator
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Self-adjusting to maintain set flow
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Critical spaces, clean rooms
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -515,9 +636,9 @@ const HNCModule8Section2_6 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Always record damper positions (blade angle, turns open, or scale reading)
-              on the commissioning sheets. This allows settings to be restored if dampers are disturbed
-              during maintenance.
+              <strong>Remember:</strong> Always record damper positions (blade angle, turns open, or
+              scale reading) on the commissioning sheets. This allows settings to be restored if
+              dampers are disturbed during maintenance.
             </p>
           </div>
         </section>
@@ -532,11 +653,14 @@ const HNCModule8Section2_6 = () => {
             <p>
               BSRIA (Building Services Research and Information Association) publishes comprehensive
               guides for commissioning building services. BSRIA BG 35/2021 specifically covers air
-              distribution systems, while BG 2 provides an overall framework for commissioning management.
+              distribution systems, while BG 2 provides an overall framework for commissioning
+              management.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BSRIA Commissioning Phases</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                BSRIA Commissioning Phases
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="font-medium text-elec-yellow mb-2">Phase 1: Pre-commissioning</p>
@@ -563,7 +687,9 @@ const HNCModule8Section2_6 = () => {
                   </ul>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">Phase 3: Regulation (Balancing)</p>
+                  <p className="font-medium text-elec-yellow mb-2">
+                    Phase 3: Regulation (Balancing)
+                  </p>
                   <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
                     <li>Measure air flows throughout system</li>
                     <li>Apply proportional balancing method</li>
@@ -575,7 +701,9 @@ const HNCModule8Section2_6 = () => {
                   </ul>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">Phase 4: Testing and Verification</p>
+                  <p className="font-medium text-elec-yellow mb-2">
+                    Phase 4: Testing and Verification
+                  </p>
                   <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
                     <li>Witness testing with client representative</li>
                     <li>Verify performance against specification</li>
@@ -590,7 +718,9 @@ const HNCModule8Section2_6 = () => {
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-commissioning Checklist Items</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Pre-commissioning Checklist Items
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Ductwork</p>
@@ -646,7 +776,8 @@ const HNCModule8Section2_6 = () => {
                 <br />
                 <strong>Total system air flow:</strong> +/- 5% of design flow
                 <br />
-                Tighter tolerances may be specified for critical applications such as laboratories or clean rooms.
+                Tighter tolerances may be specified for critical applications such as laboratories
+                or clean rooms.
               </p>
             </div>
           </div>
@@ -662,57 +793,98 @@ const HNCModule8Section2_6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Performance verification confirms that the installed and commissioned system meets the design
-              intent and specification requirements. This is documented through commissioning records and
-              compiled into the O&amp;M (Operation and Maintenance) manual for handover to the client.
+              Performance verification confirms that the installed and commissioned system meets the
+              design intent and specification requirements. This is documented through commissioning
+              records and compiled into the O&amp;M (Operation and Maintenance) manual for handover
+              to the client.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Verification Against Design</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Performance Verification Against Design
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Verification Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Acceptance Criteria</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Verification Method
+                      </th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Acceptance Criteria
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Total supply air volume</td>
-                      <td className="border border-white/10 px-3 py-2">Pitot traverse at main duct</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Total supply air volume
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Pitot traverse at main duct
+                      </td>
                       <td className="border border-white/10 px-3 py-2">+/- 5% of design</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Total extract air volume</td>
-                      <td className="border border-white/10 px-3 py-2">Pitot traverse at main duct</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Total extract air volume
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Pitot traverse at main duct
+                      </td>
                       <td className="border border-white/10 px-3 py-2">+/- 5% of design</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Fresh air quantity</td>
-                      <td className="border border-white/10 px-3 py-2">Measurement at intake or CO2 analysis</td>
-                      <td className="border border-white/10 px-3 py-2">&gt; minimum required by Building Regs</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Fresh air quantity
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Measurement at intake or CO2 analysis
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        &gt; minimum required by Building Regs
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Individual terminal flows</td>
-                      <td className="border border-white/10 px-3 py-2">Flow hood or anemometer traverse</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Individual terminal flows
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Flow hood or anemometer traverse
+                      </td>
                       <td className="border border-white/10 px-3 py-2">+/- 10% of design</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Room pressurisation</td>
-                      <td className="border border-white/10 px-3 py-2">Differential pressure measurement</td>
-                      <td className="border border-white/10 px-3 py-2">As specified (e.g., +10 Pa)</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Room pressurisation
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Differential pressure measurement
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        As specified (e.g., +10 Pa)
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Fan external static pressure</td>
-                      <td className="border border-white/10 px-3 py-2">Manometer at fan inlet/outlet</td>
-                      <td className="border border-white/10 px-3 py-2">Within fan curve capability</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Fan external static pressure
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Manometer at fan inlet/outlet
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Within fan curve capability
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2 font-medium">Noise levels</td>
-                      <td className="border border-white/10 px-3 py-2">Sound level meter in occupied spaces</td>
-                      <td className="border border-white/10 px-3 py-2">Meet NR criteria specified</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Sound level meter in occupied spaces
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Meet NR criteria specified
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -720,7 +892,9 @@ const HNCModule8Section2_6 = () => {
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Record Requirements</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Commissioning Record Requirements
+              </p>
               <p className="text-sm text-white/90 mb-3">
                 Each commissioning record sheet should include the following information:
               </p>
@@ -769,7 +943,9 @@ const HNCModule8Section2_6 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">O&amp;M Manual Contents</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                O&amp;M Manual Contents
+              </p>
               <p className="text-sm text-white/90 mb-3">
                 The Operation and Maintenance manual should include:
               </p>
@@ -783,40 +959,74 @@ const HNCModule8Section2_6 = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">System description</td>
-                      <td className="border border-white/10 px-3 py-2">Overview of system function, design parameters, operating principles</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        System description
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Overview of system function, design parameters, operating principles
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">As-installed drawings</td>
-                      <td className="border border-white/10 px-3 py-2">Updated layout drawings, schematics, wiring diagrams reflecting installation</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        As-installed drawings
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Updated layout drawings, schematics, wiring diagrams reflecting installation
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Equipment schedules</td>
-                      <td className="border border-white/10 px-3 py-2">All equipment with model numbers, serial numbers, nameplate data</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Equipment schedules
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        All equipment with model numbers, serial numbers, nameplate data
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Commissioning data</td>
-                      <td className="border border-white/10 px-3 py-2">All commissioning record sheets and certificates</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Commissioning data
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        All commissioning record sheets and certificates
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Operating procedures</td>
-                      <td className="border border-white/10 px-3 py-2">Start-up, shutdown, seasonal changeover, emergency procedures</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Operating procedures
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Start-up, shutdown, seasonal changeover, emergency procedures
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Maintenance schedules</td>
-                      <td className="border border-white/10 px-3 py-2">Routine maintenance tasks, frequencies, and procedures</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Maintenance schedules
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Routine maintenance tasks, frequencies, and procedures
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Manufacturer data</td>
-                      <td className="border border-white/10 px-3 py-2">Product data sheets, installation manuals, technical literature</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Manufacturer data
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Product data sheets, installation manuals, technical literature
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2 font-medium">Spare parts</td>
-                      <td className="border border-white/10 px-3 py-2">Recommended spares list with part numbers and suppliers</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Recommended spares list with part numbers and suppliers
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Warranties and contacts</td>
-                      <td className="border border-white/10 px-3 py-2">Warranty information, supplier contacts, service agreements</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Warranties and contacts
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Warranty information, supplier contacts, service agreements
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -824,11 +1034,14 @@ const HNCModule8Section2_6 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-1">Building Regulations Compliance</p>
+              <p className="text-sm font-medium text-green-400 mb-1">
+                Building Regulations Compliance
+              </p>
               <p className="text-sm text-white/90">
-                Approved Document F requires that commissioning notice be given to Building Control and that
-                a commissioning certificate is provided demonstrating the ventilation system has been properly
-                commissioned. The O&amp;M manual forms part of the building log book required under Part L.
+                Approved Document F requires that commissioning notice be given to Building Control
+                and that a commissioning certificate is provided demonstrating the ventilation
+                system has been properly commissioned. The O&amp;M manual forms part of the building
+                log book required under Part L.
               </p>
             </div>
           </div>
@@ -845,9 +1058,12 @@ const HNCModule8Section2_6 = () => {
 
           <div className="space-y-6">
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 1: Proportional Balancing Calculation</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 1: Proportional Balancing Calculation
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A system has four terminals with the following design and measured flows:
+                <strong>Scenario:</strong> A system has four terminals with the following design and
+                measured flows:
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
                 <p>Terminal A: Design 200 l/s, Measured 190 l/s = 95%</p>
@@ -856,43 +1072,56 @@ const HNCModule8Section2_6 = () => {
                 <p>Terminal D: Design 150 l/s, Measured 142 l/s = 95%</p>
               </div>
               <p className="text-sm text-white mb-2">
-                <strong>Solution:</strong> Terminal C at 78% is the index. Adjust other terminals to 78%:
+                <strong>Solution:</strong> Terminal C at 78% is the index. Adjust other terminals to
+                78%:
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p>Terminal A target: 200 x 0.78 = 156 l/s (reduce from 190)</p>
                 <p>Terminal B target: 150 x 0.78 = 117 l/s (reduce from 160)</p>
                 <p>Terminal D target: 150 x 0.78 = 117 l/s (reduce from 142)</p>
-                <p className="mt-2 text-white/60">After balancing, increase fan speed to bring index to 100 l/s</p>
-                <p className="text-white/60">All terminals will then rise proportionally to design values</p>
+                <p className="mt-2 text-white/60">
+                  After balancing, increase fan speed to bring index to 100 l/s
+                </p>
+                <p className="text-white/60">
+                  All terminals will then rise proportionally to design values
+                </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 2: Pitot Tube Traverse Calculation</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 2: Pitot Tube Traverse Calculation
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A rectangular duct measuring 600mm x 400mm has the following velocity
-                pressure readings from a 9-point traverse:
+                <strong>Scenario:</strong> A rectangular duct measuring 600mm x 400mm has the
+                following velocity pressure readings from a 9-point traverse:
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
                 <p>Velocity pressures (Pa): 45, 52, 48, 50, 58, 52, 44, 50, 46</p>
                 <p className="mt-2">Step 1: Calculate velocity from each pressure:</p>
                 <p>v = 1.29 x sqrt(Pv) for standard air density</p>
-                <p className="mt-2">Velocities (m/s): 8.65, 9.30, 8.94, 9.12, 9.82, 9.30, 8.56, 9.12, 8.75</p>
+                <p className="mt-2">
+                  Velocities (m/s): 8.65, 9.30, 8.94, 9.12, 9.82, 9.30, 8.56, 9.12, 8.75
+                </p>
               </div>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p>Step 2: Calculate average velocity:</p>
                 <p>v_avg = (8.65+9.30+8.94+9.12+9.82+9.30+8.56+9.12+8.75) / 9 = 9.06 m/s</p>
                 <p className="mt-2">Step 3: Calculate volume flow rate:</p>
                 <p>Q = A x v = (0.6 x 0.4) x 9.06 = 0.24 x 9.06 = 2.17 m3/s</p>
-                <p>Q = <strong>2170 l/s</strong></p>
+                <p>
+                  Q = <strong>2170 l/s</strong>
+                </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 3: Verifying Fresh Air Percentage</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 3: Verifying Fresh Air Percentage
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An AHU has total supply of 5000 l/s. The minimum fresh air requirement
-                is 20% (1000 l/s). Measured fresh air intake is 1150 l/s.
+                <strong>Scenario:</strong> An AHU has total supply of 5000 l/s. The minimum fresh
+                air requirement is 20% (1000 l/s). Measured fresh air intake is 1150 l/s.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p>Actual fresh air percentage:</p>
@@ -901,7 +1130,9 @@ const HNCModule8Section2_6 = () => {
                 <p>Measured: 1150 l/s</p>
                 <p>Required minimum: 1000 l/s</p>
                 <p>Excess: 1150 - 1000 = 150 l/s (15% above minimum)</p>
-                <p className="mt-2 text-green-400">Result: PASS - exceeds minimum fresh air requirement</p>
+                <p className="mt-2 text-green-400">
+                  Result: PASS - exceeds minimum fresh air requirement
+                </p>
               </div>
             </div>
           </div>
@@ -909,11 +1140,15 @@ const HNCModule8Section2_6 = () => {
 
         {/* Common Problems and Solutions */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Balancing Problems and Solutions</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">
+            Common Balancing Problems and Solutions
+          </h2>
 
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Problem: Index Terminal Cannot Reach Design Flow</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Problem: Index Terminal Cannot Reach Design Flow
+              </h3>
               <p className="text-sm text-white/90 mb-2">
                 <strong>Possible causes:</strong>
               </p>
@@ -924,13 +1159,15 @@ const HNCModule8Section2_6 = () => {
                 <li className="pl-1">Fan undersized or operating below design speed</li>
               </ul>
               <p className="text-sm text-elec-yellow/70">
-                <strong>Solution:</strong> Investigate branch for restrictions. Check fan duty against design.
-                May require design review if system cannot be balanced.
+                <strong>Solution:</strong> Investigate branch for restrictions. Check fan duty
+                against design. May require design review if system cannot be balanced.
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Problem: Excessive Noise at Balanced Terminals</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Problem: Excessive Noise at Balanced Terminals
+              </h3>
               <p className="text-sm text-white/90 mb-2">
                 <strong>Possible causes:</strong>
               </p>
@@ -941,13 +1178,16 @@ const HNCModule8Section2_6 = () => {
                 <li className="pl-1">Incorrect grille selection for the application</li>
               </ul>
               <p className="text-sm text-elec-yellow/70">
-                <strong>Solution:</strong> Move restriction upstream using branch dampers rather than terminal
-                dampers. Check face velocities against manufacturer limits. Consider acoustic treatment.
+                <strong>Solution:</strong> Move restriction upstream using branch dampers rather
+                than terminal dampers. Check face velocities against manufacturer limits. Consider
+                acoustic treatment.
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Problem: System Flow Changes After Balancing</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Problem: System Flow Changes After Balancing
+              </h3>
               <p className="text-sm text-white/90 mb-2">
                 <strong>Possible causes:</strong>
               </p>
@@ -958,8 +1198,8 @@ const HNCModule8Section2_6 = () => {
                 <li className="pl-1">Belt slip or wear reducing fan speed</li>
               </ul>
               <p className="text-sm text-elec-yellow/70">
-                <strong>Solution:</strong> Establish regular maintenance schedules. Lock damper positions.
-                Document settings clearly. Check fan and motor regularly.
+                <strong>Solution:</strong> Establish regular maintenance schedules. Lock damper
+                positions. Document settings clearly. Check fan and motor regularly.
               </p>
             </div>
           </div>
@@ -1031,28 +1271,33 @@ const HNCModule8Section2_6 = () => {
 
         {/* Quiz */}
         <section className="mb-10 mt-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module8-section2-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Ductwork Design
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module8-section2">
               Complete Section
               <CheckCircle className="w-4 h-4 ml-2" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

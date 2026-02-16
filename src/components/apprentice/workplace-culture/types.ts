@@ -1,5 +1,4 @@
-
-import { LucideIcon } from "lucide-react";
+import { LucideIcon } from 'lucide-react';
 
 export interface CultureExample {
   situation: string;
@@ -9,7 +8,7 @@ export interface CultureExample {
 
 export interface CultureResource {
   title: string;
-  type: "audio" | "document" | "video";
+  type: 'audio' | 'document' | 'video';
   description: string;
   url?: string; // Optional URL field for UK-specific resources
   isUKResource?: boolean; // Flag for UK-specific resources

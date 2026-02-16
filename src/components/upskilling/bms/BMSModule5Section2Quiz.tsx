@@ -7,12 +7,12 @@ const convertedQuizData = bmsModule5Section2QuizData.map((question, index) => ({
   question: question.question,
   options: question.options,
   correctAnswer: question.options.indexOf(question.correctAnswer),
-  explanation: `The correct answer is "${question.correctAnswer}". Understanding BACnet devices and network types is essential for proper electrical installation and system reliability.`
+  explanation: `The correct answer is "${question.correctAnswer}". Understanding BACnet devices and network types is essential for proper electrical installation and system reliability.`,
 }));
 
 export const BMSModule5Section2Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={convertedQuizData}
       title="Section 2 Quiz: BACnet Devices and Network Types"
     />

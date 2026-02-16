@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 const TestEquipmentFAQ = () => {
   return (
@@ -26,24 +26,42 @@ const TestEquipmentFAQ = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Equipment selection depends on application, safety requirements, and accuracy needs:</p>
+              <p className="mb-3">
+                Equipment selection depends on application, safety requirements, and accuracy needs:
+              </p>
               <div className="space-y-3 text-sm">
                 <div className="bg-blue-900/20 p-3 rounded border border-blue-500/30">
                   <h5 className="text-blue-400 font-medium mb-2">Safety Requirements:</h5>
                   <ul className="list-disc list-inside space-y-1">
-                    <li><strong>CAT rating:</strong> Must be CAT III 1000V minimum for PV systems</li>
-                    <li><strong>DC capability:</strong> Essential for current measurements</li>
-                    <li><strong>True RMS:</strong> Accurate readings with non-sinusoidal waveforms</li>
-                    <li><strong>Input protection:</strong> Overload and transient protection</li>
+                    <li>
+                      <strong>CAT rating:</strong> Must be CAT III 1000V minimum for PV systems
+                    </li>
+                    <li>
+                      <strong>DC capability:</strong> Essential for current measurements
+                    </li>
+                    <li>
+                      <strong>True RMS:</strong> Accurate readings with non-sinusoidal waveforms
+                    </li>
+                    <li>
+                      <strong>Input protection:</strong> Overload and transient protection
+                    </li>
                   </ul>
                 </div>
                 <div className="bg-green-900/20 p-3 rounded border border-green-500/30">
                   <h5 className="text-green-400 font-medium mb-2">Application Matching:</h5>
                   <ul className="list-disc list-inside space-y-1">
-                    <li><strong>String current:</strong> DC clamp meter (0.1A resolution)</li>
-                    <li><strong>Voltage measurements:</strong> High-impedance DMM</li>
-                    <li><strong>Thermal analysis:</strong> 160×120 pixel minimum camera</li>
-                    <li><strong>I-V curves:</strong> Dedicated PV analyser</li>
+                    <li>
+                      <strong>String current:</strong> DC clamp meter (0.1A resolution)
+                    </li>
+                    <li>
+                      <strong>Voltage measurements:</strong> High-impedance DMM
+                    </li>
+                    <li>
+                      <strong>Thermal analysis:</strong> 160×120 pixel minimum camera
+                    </li>
+                    <li>
+                      <strong>I-V curves:</strong> Dedicated PV analyser
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -58,15 +76,25 @@ const TestEquipmentFAQ = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Regular calibration ensures measurement accuracy and regulatory compliance:</p>
+              <p className="mb-3">
+                Regular calibration ensures measurement accuracy and regulatory compliance:
+              </p>
               <div className="space-y-3 text-sm">
                 <div className="bg-purple-900/20 p-3 rounded border border-purple-500/30">
                   <h5 className="text-purple-400 font-medium mb-2">Calibration Schedule:</h5>
                   <ul className="list-disc list-inside space-y-1">
-                    <li><strong>Annual:</strong> DMMs, clamp meters, insulation testers</li>
-                    <li><strong>Bi-annual:</strong> Irradiance meters, thermal cameras</li>
-                    <li><strong>Monthly:</strong> Reference cells and pyranometers</li>
-                    <li><strong>After damage:</strong> Any dropped or mishandled equipment</li>
+                    <li>
+                      <strong>Annual:</strong> DMMs, clamp meters, insulation testers
+                    </li>
+                    <li>
+                      <strong>Bi-annual:</strong> Irradiance meters, thermal cameras
+                    </li>
+                    <li>
+                      <strong>Monthly:</strong> Reference cells and pyranometers
+                    </li>
+                    <li>
+                      <strong>After damage:</strong> Any dropped or mishandled equipment
+                    </li>
                   </ul>
                 </div>
               </div>

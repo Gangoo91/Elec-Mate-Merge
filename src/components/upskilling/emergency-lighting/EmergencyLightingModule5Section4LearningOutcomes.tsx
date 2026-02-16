@@ -3,11 +3,11 @@ import { Target } from 'lucide-react';
 
 export const EmergencyLightingModule5Section4LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose of system labelling in emergency lighting installations",
-    "Identify what must be labelled (circuits, fittings, distribution boards, test points)",
-    "Maintain accurate logbooks and service records",
-    "Recognise the role of documentation in legal compliance and fire inspections",
-    "Apply best practice in labelling and record-keeping for ongoing system safety"
+    'Explain the purpose of system labelling in emergency lighting installations',
+    'Identify what must be labelled (circuits, fittings, distribution boards, test points)',
+    'Maintain accurate logbooks and service records',
+    'Recognise the role of documentation in legal compliance and fire inspections',
+    'Apply best practice in labelling and record-keeping for ongoing system safety',
   ];
 
   return (

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Sheet,
   SheetContent,
@@ -16,9 +16,9 @@ import {
   SheetTitle,
   SheetFooter,
   SheetClose,
-} from "@/components/ui/sheet";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/sheet';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface ResponsiveDialogProps {
   open: boolean;
@@ -32,7 +32,7 @@ interface ResponsiveDialogContentProps {
   /** Height for mobile sheet. Defaults to 85vh */
   mobileHeight?: string;
   /** Side for mobile sheet. Defaults to bottom */
-  side?: "bottom" | "right" | "left" | "top";
+  side?: 'bottom' | 'right' | 'left' | 'top';
 }
 
 interface ResponsiveDialogHeaderProps {
@@ -86,11 +86,7 @@ const ResponsiveDialogContext = React.createContext<{
  * </ResponsiveDialog>
  * ```
  */
-export function ResponsiveDialog({
-  open,
-  onOpenChange,
-  children,
-}: ResponsiveDialogProps) {
+export function ResponsiveDialog({ open, onOpenChange, children }: ResponsiveDialogProps) {
   const isMobile = useIsMobile();
 
   return (
@@ -111,8 +107,8 @@ export function ResponsiveDialog({
 export function ResponsiveDialogContent({
   children,
   className,
-  mobileHeight = "85vh",
-  side = "bottom",
+  mobileHeight = '85vh',
+  side = 'bottom',
 }: ResponsiveDialogContentProps) {
   const { isMobile } = React.useContext(ResponsiveDialogContext);
 
@@ -120,12 +116,8 @@ export function ResponsiveDialogContent({
     return (
       <SheetContent
         side={side}
-        className={cn(
-          "flex flex-col p-0",
-          side === "bottom" && "rounded-t-2xl",
-          className
-        )}
-        style={side === "bottom" ? { height: mobileHeight } : undefined}
+        className={cn('flex flex-col p-0', side === 'bottom' && 'rounded-t-2xl', className)}
+        style={side === 'bottom' ? { height: mobileHeight } : undefined}
       >
         {children}
       </SheetContent>
@@ -133,28 +125,18 @@ export function ResponsiveDialogContent({
   }
 
   return (
-    <DialogContent
-      className={cn(
-        "max-h-[90vh] flex flex-col overflow-hidden",
-        className
-      )}
-    >
+    <DialogContent className={cn('max-h-[90vh] flex flex-col overflow-hidden', className)}>
       {children}
     </DialogContent>
   );
 }
 
-export function ResponsiveDialogHeader({
-  children,
-  className,
-}: ResponsiveDialogHeaderProps) {
+export function ResponsiveDialogHeader({ children, className }: ResponsiveDialogHeaderProps) {
   const { isMobile } = React.useContext(ResponsiveDialogContext);
 
   if (isMobile) {
     return (
-      <SheetHeader
-        className={cn("p-4 border-b border-border shrink-0", className)}
-      >
+      <SheetHeader className={cn('p-4 border-b border-border shrink-0', className)}>
         {children}
       </SheetHeader>
     );
@@ -163,10 +145,7 @@ export function ResponsiveDialogHeader({
   return <DialogHeader className={className}>{children}</DialogHeader>;
 }
 
-export function ResponsiveDialogTitle({
-  children,
-  className,
-}: ResponsiveDialogTitleProps) {
+export function ResponsiveDialogTitle({ children, className }: ResponsiveDialogTitleProps) {
   const { isMobile } = React.useContext(ResponsiveDialogContext);
 
   if (isMobile) {
@@ -183,30 +162,18 @@ export function ResponsiveDialogDescription({
   const { isMobile } = React.useContext(ResponsiveDialogContext);
 
   if (isMobile) {
-    return (
-      <SheetDescription className={className}>{children}</SheetDescription>
-    );
+    return <SheetDescription className={className}>{children}</SheetDescription>;
   }
 
-  return (
-    <DialogDescription className={className}>{children}</DialogDescription>
-  );
+  return <DialogDescription className={className}>{children}</DialogDescription>;
 }
 
-export function ResponsiveDialogFooter({
-  children,
-  className,
-}: ResponsiveDialogFooterProps) {
+export function ResponsiveDialogFooter({ children, className }: ResponsiveDialogFooterProps) {
   const { isMobile } = React.useContext(ResponsiveDialogContext);
 
   if (isMobile) {
     return (
-      <SheetFooter
-        className={cn(
-          "p-4 border-t border-border shrink-0 pb-safe",
-          className
-        )}
-      >
+      <SheetFooter className={cn('p-4 border-t border-border shrink-0 pb-safe', className)}>
         {children}
       </SheetFooter>
     );
@@ -247,9 +214,5 @@ export function ResponsiveDialogBody({
   children: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <div className={cn("flex-1 overflow-y-auto p-4", className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('flex-1 overflow-y-auto p-4', className)}>{children}</div>;
 }

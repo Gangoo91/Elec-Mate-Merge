@@ -15,7 +15,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   totalPages,
   onPageChange,
   totalResults,
-  itemsPerPage
+  itemsPerPage,
 }) => {
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalResults);
@@ -25,7 +25,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
       <div className="text-xs sm:text-sm text-gray-400 order-2 sm:order-1">
         Showing {startItem}-{endItem} of {totalResults} regulations
       </div>
-      
+
       <div className="flex items-center gap-2 order-1 sm:order-2">
         <Button
           variant="outline"
@@ -37,7 +37,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
           <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
           <span className="hidden sm:inline">Previous</span>
         </Button>
-        
+
         <div className="hidden sm:flex gap-1">
           {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
             let pageNum;
@@ -50,17 +50,17 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
             } else {
               pageNum = currentPage - 2 + i;
             }
-            
+
             return (
               <Button
                 key={pageNum}
-                variant={currentPage === pageNum ? "default" : "outline"}
+                variant={currentPage === pageNum ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => onPageChange(pageNum)}
                 className={
                   currentPage === pageNum
-                    ? "bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm"
-                    : "border-border text-gray-300 hover:bg-neutral-600 text-xs sm:text-sm"
+                    ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm'
+                    : 'border-border text-gray-300 hover:bg-neutral-600 text-xs sm:text-sm'
                 }
               >
                 {pageNum}
@@ -68,12 +68,12 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
             );
           })}
         </div>
-        
+
         {/* Mobile: Just show current page info */}
         <div className="sm:hidden flex items-center gap-2 text-xs text-gray-400">
           Page {currentPage} of {totalPages}
         </div>
-        
+
         <Button
           variant="outline"
           size="sm"

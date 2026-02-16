@@ -21,7 +21,7 @@ import {
   MapPin,
   Calendar,
   FileCheck,
-  Zap
+  Zap,
 } from 'lucide-react';
 import {
   Dialog,
@@ -36,11 +36,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
@@ -109,8 +105,15 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
     setErrorMessage('');
 
     try {
-      const ccEmails = cc.split(',').map(e => e.trim()).filter(e => isValidEmail(e));
-      await onSend(recipient, ccEmails.length > 0 ? ccEmails : undefined, customMessage || undefined);
+      const ccEmails = cc
+        .split(',')
+        .map((e) => e.trim())
+        .filter((e) => isValidEmail(e));
+      await onSend(
+        recipient,
+        ccEmails.length > 0 ? ccEmails : undefined,
+        customMessage || undefined
+      );
 
       haptics.success();
       setSendStatus('success');
@@ -170,8 +173,8 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
                 overallAssessment === 'satisfactory'
                   ? 'bg-green-500/10 border-green-500/30 text-green-400'
                   : overallAssessment === 'unsatisfactory'
-                  ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                  : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                    ? 'bg-red-500/10 border-red-500/30 text-red-400'
+                    : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
               )}
             >
               <FileCheck className="h-3 w-3 mr-1" />
@@ -196,7 +199,7 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
                   {new Date(inspectionDate).toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric'
+                    year: 'numeric',
                   })}
                 </span>
               </div>
@@ -204,12 +207,14 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
           </div>
 
           {overallAssessment && (
-            <div className={cn(
-              'flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium',
-              overallAssessment === 'satisfactory'
-                ? 'bg-green-500/10 text-green-400'
-                : 'bg-red-500/10 text-red-400'
-            )}>
+            <div
+              className={cn(
+                'flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium',
+                overallAssessment === 'satisfactory'
+                  ? 'bg-green-500/10 text-green-400'
+                  : 'bg-red-500/10 text-red-400'
+              )}
+            >
               {overallAssessment === 'satisfactory' ? (
                 <CheckCircle className="h-4 w-4" />
               ) : (
@@ -224,11 +229,13 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
         <div className="space-y-2 text-muted-foreground">
           <p>Dear {clientName || 'Customer'},</p>
           <p>
-            Please find attached your {certificateType === 'EICR' ? 'Electrical Installation Condition Report' : 'Electrical Installation Certificate'} for the above property.
+            Please find attached your{' '}
+            {certificateType === 'EICR'
+              ? 'Electrical Installation Condition Report'
+              : 'Electrical Installation Certificate'}{' '}
+            for the above property.
           </p>
-          {customMessage && (
-            <p className="text-foreground italic">"{customMessage}"</p>
-          )}
+          {customMessage && <p className="text-foreground italic">"{customMessage}"</p>}
         </div>
 
         {/* Attachment notice */}
@@ -263,7 +270,9 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
             disabled={sendStatus === 'sending'}
             className={cn(
               'h-12 text-base',
-              errorMessage && !isValidEmail(recipient) && 'border-red-500/50 focus-visible:ring-red-500'
+              errorMessage &&
+                !isValidEmail(recipient) &&
+                'border-red-500/50 focus-visible:ring-red-500'
             )}
           />
 
@@ -411,9 +420,7 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
           </SheetHeader>
           <div className="mt-6 space-y-6 pb-6">
             {content}
-            <div className="pt-4 border-t border-border">
-              {footer}
-            </div>
+            <div className="pt-4 border-t border-border">{footer}</div>
           </div>
         </SheetContent>
       </Sheet>
@@ -434,9 +441,7 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
           </DialogDescription>
         </DialogHeader>
         {content}
-        <DialogFooter>
-          {footer}
-        </DialogFooter>
+        <DialogFooter>{footer}</DialogFooter>
       </DialogContent>
     </Dialog>
   );

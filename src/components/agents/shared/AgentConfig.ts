@@ -1,4 +1,4 @@
-import { Calculator, Settings, Shield, Wrench, LucideIcon } from "lucide-react";
+import { Calculator, Settings, Shield, Wrench, LucideIcon } from 'lucide-react';
 
 export type AgentType = 'cost-engineer' | 'maintenance' | 'health-safety' | 'installation';
 
@@ -38,7 +38,7 @@ export const AGENT_CONFIG: Record<AgentType, AgentConfigItem> = {
     estimatedTime: 180,
     confettiColors: ['#fbbf24', '#eab308', '#f59e0b'],
   },
-  'maintenance': {
+  maintenance: {
     icon: Settings,
     gradient: 'from-emerald-400 to-teal-500',
     gradientFrom: '#34d399',
@@ -72,7 +72,7 @@ export const AGENT_CONFIG: Record<AgentType, AgentConfigItem> = {
     estimatedTime: 180,
     confettiColors: ['#fb923c', '#ef4444', '#f97316'],
   },
-  'installation': {
+  installation: {
     icon: Wrench,
     gradient: 'from-blue-400 to-blue-600',
     gradientFrom: '#60a5fa',

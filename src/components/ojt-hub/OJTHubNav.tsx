@@ -1,12 +1,5 @@
 import { cn } from '@/lib/utils';
-import {
-  Home,
-  Clock,
-  FileCheck,
-  Award,
-  Target,
-  type LucideIcon,
-} from 'lucide-react';
+import { Home, Clock, FileCheck, Award, Target, type LucideIcon } from 'lucide-react';
 
 export type OJTNavSection = 'home' | 'time' | 'evidence' | 'assessments' | 'goals';
 
@@ -53,9 +46,7 @@ export function OJTHubNav({ activeSection, onSectionChange }: OJTHubNavProps) {
                   className={cn(
                     'flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-200',
                     'min-w-[60px] touch-manipulation active:scale-95',
-                    isActive
-                      ? 'text-elec-yellow'
-                      : 'text-muted-foreground hover:text-foreground'
+                    isActive ? 'text-elec-yellow' : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
                   <div

@@ -12,7 +12,7 @@ export const LEDCompatibilityIssuesSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          LEDs present unique challenges when it comes to dimming and control, requiring careful 
+          LEDs present unique challenges when it comes to dimming and control, requiring careful
           attention to compatibility to avoid common problems.
         </p>
 
@@ -60,7 +60,9 @@ export const LEDCompatibilityIssuesSection = () => {
           </div>
 
           <div className="bg-green-900/20 border border-green-600/50 p-4 rounded-lg">
-            <h4 className="text-green-300 font-semibold mb-2">Solution: Compatibility Verification</h4>
+            <h4 className="text-green-300 font-semibold mb-2">
+              Solution: Compatibility Verification
+            </h4>
             <ul className="text-green-200 text-sm space-y-1">
               <li>• Always check manufacturer compatibility charts</li>
               <li>• Test combinations before full installation</li>

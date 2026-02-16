@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { Bell, BellRing, Check, CheckCheck, Sparkles, Clock, AlertTriangle, MessageSquare, FileText, Zap, X, ChevronRight } from 'lucide-react';
+import {
+  Bell,
+  BellRing,
+  Check,
+  CheckCheck,
+  Sparkles,
+  Clock,
+  AlertTriangle,
+  MessageSquare,
+  FileText,
+  Zap,
+  X,
+  ChevronRight,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useNotifications, Notification } from './NotificationProvider';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
@@ -18,19 +27,54 @@ import { useNavigate } from 'react-router-dom';
 const getNotificationIcon = (type: string) => {
   switch (type) {
     case 'success':
-      return { icon: Check, color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' };
+      return {
+        icon: Check,
+        color: 'text-green-400',
+        bg: 'bg-green-500/10',
+        border: 'border-green-500/20',
+      };
     case 'warning':
-      return { icon: AlertTriangle, color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' };
+      return {
+        icon: AlertTriangle,
+        color: 'text-amber-400',
+        bg: 'bg-amber-500/10',
+        border: 'border-amber-500/20',
+      };
     case 'error':
-      return { icon: AlertTriangle, color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' };
+      return {
+        icon: AlertTriangle,
+        color: 'text-red-400',
+        bg: 'bg-red-500/10',
+        border: 'border-red-500/20',
+      };
     case 'message':
-      return { icon: MessageSquare, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' };
+      return {
+        icon: MessageSquare,
+        color: 'text-blue-400',
+        bg: 'bg-blue-500/10',
+        border: 'border-blue-500/20',
+      };
     case 'update':
-      return { icon: Sparkles, color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' };
+      return {
+        icon: Sparkles,
+        color: 'text-purple-400',
+        bg: 'bg-purple-500/10',
+        border: 'border-purple-500/20',
+      };
     case 'certificate':
-      return { icon: FileText, color: 'text-elec-yellow', bg: 'bg-elec-yellow/10', border: 'border-elec-yellow/20' };
+      return {
+        icon: FileText,
+        color: 'text-elec-yellow',
+        bg: 'bg-elec-yellow/10',
+        border: 'border-elec-yellow/20',
+      };
     default:
-      return { icon: Zap, color: 'text-elec-yellow', bg: 'bg-elec-yellow/10', border: 'border-elec-yellow/20' };
+      return {
+        icon: Zap,
+        color: 'text-elec-yellow',
+        bg: 'bg-elec-yellow/10',
+        border: 'border-elec-yellow/20',
+      };
   }
 };
 
@@ -49,7 +93,7 @@ const formatTime = (date: Date) => {
 const NotificationItem = ({
   notification,
   onRead,
-  index
+  index,
 }: {
   notification: Notification;
   onRead: () => void;
@@ -64,9 +108,9 @@ const NotificationItem = ({
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.05, duration: 0.2 }}
       className={cn(
-        "group relative px-4 py-3 cursor-pointer transition-all duration-200",
-        "hover:bg-white/5",
-        !notification.read && "bg-elec-yellow/5"
+        'group relative px-4 py-3 cursor-pointer transition-all duration-200',
+        'hover:bg-white/5',
+        !notification.read && 'bg-elec-yellow/5'
       )}
       onClick={onRead}
     >
@@ -77,21 +121,23 @@ const NotificationItem = ({
 
       <div className="flex gap-3">
         {/* Icon */}
-        <div className={cn(
-          "shrink-0 mt-0.5 p-2 rounded-xl border",
-          iconConfig.bg,
-          iconConfig.border
-        )}>
-          <IconComponent className={cn("h-4 w-4", iconConfig.color)} />
+        <div
+          className={cn('shrink-0 mt-0.5 p-2 rounded-xl border', iconConfig.bg, iconConfig.border)}
+        >
+          <IconComponent className={cn('h-4 w-4', iconConfig.color)} />
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
-            <p className={cn(
-              "text-sm leading-snug line-clamp-1",
-              !notification.read ? "font-semibold text-foreground" : "font-medium text-foreground/80"
-            )}>
+            <p
+              className={cn(
+                'text-sm leading-snug line-clamp-1',
+                !notification.read
+                  ? 'font-semibold text-foreground'
+                  : 'font-medium text-foreground/80'
+              )}
+            >
               {notification.title}
             </p>
             {!notification.read && (
@@ -152,15 +198,15 @@ const EnhancedNotificationDropdown = () => {
       <PopoverTrigger asChild>
         <button
           className={cn(
-            "relative h-10 w-10 rounded-xl transition-all duration-300 group",
-            "flex items-center justify-center",
-            "bg-gradient-to-br from-white/10 to-white/5",
-            "border border-white/10 hover:border-white/20",
-            "hover:from-white/15 hover:to-white/10",
-            "hover:shadow-lg hover:shadow-black/20",
-            "active:scale-95",
-            open && "from-elec-yellow/20 to-elec-yellow/10 border-elec-yellow/30",
-            unreadCount > 0 && "from-elec-yellow/15 to-elec-yellow/5 border-elec-yellow/20"
+            'relative h-10 w-10 rounded-xl transition-all duration-300 group',
+            'flex items-center justify-center',
+            'bg-gradient-to-br from-white/10 to-white/5',
+            'border border-white/10 hover:border-white/20',
+            'hover:from-white/15 hover:to-white/10',
+            'hover:shadow-lg hover:shadow-black/20',
+            'active:scale-95',
+            open && 'from-elec-yellow/20 to-elec-yellow/10 border-elec-yellow/30',
+            unreadCount > 0 && 'from-elec-yellow/15 to-elec-yellow/5 border-elec-yellow/20'
           )}
         >
           {/* Glow effect when there are notifications */}
@@ -205,9 +251,9 @@ const EnhancedNotificationDropdown = () => {
                   <span className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-75" />
                   <Badge
                     className={cn(
-                      "relative h-5 min-w-5 px-1.5 flex items-center justify-center text-[10px] font-bold",
-                      "bg-gradient-to-r from-red-500 to-rose-500 text-white border-2 border-elec-dark",
-                      "shadow-lg shadow-red-500/40"
+                      'relative h-5 min-w-5 px-1.5 flex items-center justify-center text-[10px] font-bold',
+                      'bg-gradient-to-r from-red-500 to-rose-500 text-white border-2 border-elec-dark',
+                      'shadow-lg shadow-red-500/40'
                     )}
                   >
                     {unreadCount > 99 ? '99+' : unreadCount}
@@ -229,7 +275,10 @@ const EnhancedNotificationDropdown = () => {
           <div className="flex items-center gap-2">
             <h3 className="font-semibold text-foreground">Notifications</h3>
             {unreadCount > 0 && (
-              <Badge variant="secondary" className="h-5 px-1.5 text-[10px] bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
+              <Badge
+                variant="secondary"
+                className="h-5 px-1.5 text-[10px] bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20"
+              >
                 {unreadCount} new
               </Badge>
             )}

@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection2_5 = () => {
   const outcomes = [
-    "Explain the purpose of emergency exit signage",
-    "Identify where exit signs are required in buildings",
-    "Recognise the design standards, symbols, and colour requirements",
-    "Differentiate between maintained and non-maintained exit signage",
-    "Install, test, and maintain exit signage to comply with regulations"
+    'Explain the purpose of emergency exit signage',
+    'Identify where exit signs are required in buildings',
+    'Recognise the design standards, symbols, and colour requirements',
+    'Differentiate between maintained and non-maintained exit signage',
+    'Install, test, and maintain exit signage to comply with regulations',
   ];
 
   return (

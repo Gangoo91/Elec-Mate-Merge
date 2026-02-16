@@ -1,93 +1,99 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { Search, BookOpen, AlertCircle, Zap, Shield } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+import { Search, BookOpen, AlertCircle, Zap, Shield } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const RegulationsReference = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const regulations = [
     {
-      section: "Part 1",
-      title: "Scope, Object and Fundamental Principles",
-      description: "Basic requirements and fundamental principles for electrical installations",
-      keyPoints: ["Scope of BS 7671", "Protection against electric shock", "Protection against thermal effects"],
-      reference: "BS7671:2018+A3:2024"
+      section: 'Part 1',
+      title: 'Scope, Object and Fundamental Principles',
+      description: 'Basic requirements and fundamental principles for electrical installations',
+      keyPoints: [
+        'Scope of BS 7671',
+        'Protection against electric shock',
+        'Protection against thermal effects',
+      ],
+      reference: 'BS7671:2018+A3:2024',
     },
     {
-      section: "Part 2", 
-      title: "Definitions",
-      description: "Technical definitions used throughout the regulations",
-      keyPoints: ["Circuit definitions", "Equipment classifications", "Installation types"],
-      reference: "BS7671:2018+A3:2024"
+      section: 'Part 2',
+      title: 'Definitions',
+      description: 'Technical definitions used throughout the regulations',
+      keyPoints: ['Circuit definitions', 'Equipment classifications', 'Installation types'],
+      reference: 'BS7671:2018+A3:2024',
     },
     {
-      section: "Part 4",
-      title: "Protection for Safety", 
-      description: "Requirements for protection against electric shock and thermal effects",
-      keyPoints: ["Basic protection", "Fault protection", "Additional protection"],
-      reference: "BS7671:2018+A3:2024"
+      section: 'Part 4',
+      title: 'Protection for Safety',
+      description: 'Requirements for protection against electric shock and thermal effects',
+      keyPoints: ['Basic protection', 'Fault protection', 'Additional protection'],
+      reference: 'BS7671:2018+A3:2024',
     },
     {
-      section: "Part 5",
-      title: "Selection and Erection of Equipment",
-      description: "Requirements for selecting and installing electrical equipment",
-      keyPoints: ["Cable selection", "Switchgear requirements", "Earthing arrangements"],
-      reference: "BS7671:2018+A3:2024"
+      section: 'Part 5',
+      title: 'Selection and Erection of Equipment',
+      description: 'Requirements for selecting and installing electrical equipment',
+      keyPoints: ['Cable selection', 'Switchgear requirements', 'Earthing arrangements'],
+      reference: 'BS7671:2018+A3:2024',
     },
     {
-      section: "Part 6",
-      title: "Inspection and Testing",
-      description: "Requirements for initial verification and periodic inspection",
-      keyPoints: ["Visual inspection", "Testing procedures", "Certification requirements"],
-      reference: "BS7671:2018+A3:2024"
+      section: 'Part 6',
+      title: 'Inspection and Testing',
+      description: 'Requirements for initial verification and periodic inspection',
+      keyPoints: ['Visual inspection', 'Testing procedures', 'Certification requirements'],
+      reference: 'BS7671:2018+A3:2024',
     },
     {
-      section: "Part 7",
-      title: "Special Installations or Locations",
-      description: "Additional requirements for specific locations",
-      keyPoints: ["Bathrooms", "Swimming pools", "Agricultural locations", "Caravan parks"],
-      reference: "BS7671:2018+A3:2024"
-    }
+      section: 'Part 7',
+      title: 'Special Installations or Locations',
+      description: 'Additional requirements for specific locations',
+      keyPoints: ['Bathrooms', 'Swimming pools', 'Agricultural locations', 'Caravan parks'],
+      reference: 'BS7671:2018+A3:2024',
+    },
   ];
 
   const quickReference = [
     {
-      topic: "Maximum Zs Values",
-      description: "Maximum earth fault loop impedance values for different protective devices",
-      icon: <Zap className="h-5 w-5 text-elec-yellow" />
+      topic: 'Maximum Zs Values',
+      description: 'Maximum earth fault loop impedance values for different protective devices',
+      icon: <Zap className="h-5 w-5 text-elec-yellow" />,
     },
     {
-      topic: "Cable Current Ratings",
-      description: "Current-carrying capacity tables for different cable types",
-      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />
+      topic: 'Cable Current Ratings',
+      description: 'Current-carrying capacity tables for different cable types',
+      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
     },
     {
-      topic: "Voltage Drop Limits",
-      description: "Maximum permissible voltage drop for lighting and power circuits",
-      icon: <AlertCircle className="h-5 w-5 text-elec-yellow" />
+      topic: 'Voltage Drop Limits',
+      description: 'Maximum permissible voltage drop for lighting and power circuits',
+      icon: <AlertCircle className="h-5 w-5 text-elec-yellow" />,
     },
     {
-      topic: "IP Ratings",
-      description: "Ingress protection ratings for electrical equipment",
-      icon: <Shield className="h-5 w-5 text-elec-yellow" />
-    }
+      topic: 'IP Ratings',
+      description: 'Ingress protection ratings for electrical equipment',
+      icon: <Shield className="h-5 w-5 text-elec-yellow" />,
+    },
   ];
 
-  const filteredRegulations = regulations.filter(reg =>
-    reg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    reg.section.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    reg.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredRegulations = regulations.filter(
+    (reg) =>
+      reg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      reg.section.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      reg.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">BS 7671 Regulations Quick Reference</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-4">
+          BS 7671 Regulations Quick Reference
+        </h1>
         <p className="text-white text-center max-w-2xl mb-4">
           Quick access to key sections of BS7671:2018+A3:2024 (18th Edition) wiring regulations
         </p>
@@ -102,13 +108,16 @@ const RegulationsReference = () => {
           placeholder="Search regulations..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className={cn(!searchTerm && "pl-10")}
+          className={cn(!searchTerm && 'pl-10')}
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {quickReference.map((item, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 hover:border-elec-yellow/40 transition-colors">
+          <Card
+            key={index}
+            className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 hover:border-elec-yellow/40 transition-colors"
+          >
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
                 {item.icon}
@@ -156,9 +165,9 @@ const RegulationsReference = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white text-sm">
-            This is a quick reference guide only. Always consult the full BS7671:2018+A3:2024 regulations
-            and relevant guidance notes for complete requirements. Ensure you have the latest version of the
-            regulations as they are updated periodically.
+            This is a quick reference guide only. Always consult the full BS7671:2018+A3:2024
+            regulations and relevant guidance notes for complete requirements. Ensure you have the
+            latest version of the regulations as they are updated periodically.
           </p>
         </CardContent>
       </Card>

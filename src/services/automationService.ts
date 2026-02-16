@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 export interface AutomationRule {
   id: string;
@@ -60,13 +60,13 @@ export interface AutomationStats {
 // Fetch all automation rules
 export async function getAutomationRules(): Promise<AutomationRule[]> {
   const { data, error } = await supabase
-    .from("automation_rules")
-    .select("*")
-    .order("category", { ascending: true })
-    .order("name", { ascending: true });
+    .from('automation_rules')
+    .select('*')
+    .order('category', { ascending: true })
+    .order('name', { ascending: true });
 
   if (error) {
-    console.error("Error fetching automation rules:", error);
+    console.error('Error fetching automation rules:', error);
     throw error;
   }
 
@@ -76,13 +76,13 @@ export async function getAutomationRules(): Promise<AutomationRule[]> {
 // Fetch a single automation rule
 export async function getAutomationRule(id: string): Promise<AutomationRule | null> {
   const { data, error } = await supabase
-    .from("automation_rules")
-    .select("*")
-    .eq("id", id)
+    .from('automation_rules')
+    .select('*')
+    .eq('id', id)
     .maybeSingle();
 
   if (error) {
-    console.error("Error fetching automation rule:", error);
+    console.error('Error fetching automation rule:', error);
     throw error;
   }
 
@@ -92,12 +92,12 @@ export async function getAutomationRule(id: string): Promise<AutomationRule | nu
 // Toggle automation rule active state
 export async function toggleAutomationRule(id: string, isActive: boolean): Promise<boolean> {
   const { error } = await supabase
-    .from("automation_rules")
+    .from('automation_rules')
     .update({ is_active: isActive })
-    .eq("id", id);
+    .eq('id', id);
 
   if (error) {
-    console.error("Error toggling automation rule:", error);
+    console.error('Error toggling automation rule:', error);
     throw error;
   }
 
@@ -106,10 +106,20 @@ export async function toggleAutomationRule(id: string, isActive: boolean): Promi
 
 // Create a new automation rule
 export async function createAutomationRule(
-  rule: Omit<AutomationRule, 'id' | 'created_at' | 'updated_at' | 'run_count' | 'success_count' | 'failure_count' | 'last_run_at' | 'next_run_at'>
+  rule: Omit<
+    AutomationRule,
+    | 'id'
+    | 'created_at'
+    | 'updated_at'
+    | 'run_count'
+    | 'success_count'
+    | 'failure_count'
+    | 'last_run_at'
+    | 'next_run_at'
+  >
 ): Promise<AutomationRule> {
   const { data, error } = await supabase
-    .from("automation_rules")
+    .from('automation_rules')
     .insert({
       name: rule.name,
       description: rule.description,
@@ -125,7 +135,7 @@ export async function createAutomationRule(
     .single();
 
   if (error) {
-    console.error("Error creating automation rule:", error);
+    console.error('Error creating automation rule:', error);
     throw error;
   }
 
@@ -135,17 +145,22 @@ export async function createAutomationRule(
 // Update an automation rule
 export async function updateAutomationRule(
   id: string,
-  updates: Partial<Pick<AutomationRule, 'name' | 'description' | 'trigger_config' | 'conditions' | 'actions' | 'is_active'>>
+  updates: Partial<
+    Pick<
+      AutomationRule,
+      'name' | 'description' | 'trigger_config' | 'conditions' | 'actions' | 'is_active'
+    >
+  >
 ): Promise<AutomationRule> {
   const { data, error } = await supabase
-    .from("automation_rules")
+    .from('automation_rules')
     .update(updates)
-    .eq("id", id)
+    .eq('id', id)
     .select()
     .single();
 
   if (error) {
-    console.error("Error updating automation rule:", error);
+    console.error('Error updating automation rule:', error);
     throw error;
   }
 
@@ -154,13 +169,10 @@ export async function updateAutomationRule(
 
 // Delete an automation rule
 export async function deleteAutomationRule(id: string): Promise<boolean> {
-  const { error } = await supabase
-    .from("automation_rules")
-    .delete()
-    .eq("id", id);
+  const { error } = await supabase.from('automation_rules').delete().eq('id', id);
 
   if (error) {
-    console.error("Error deleting automation rule:", error);
+    console.error('Error deleting automation rule:', error);
     throw error;
   }
 
@@ -176,23 +188,23 @@ export async function getAutomationLogs(
   } = {}
 ): Promise<AutomationLog[]> {
   let query = supabase
-    .from("automation_logs")
-    .select("*")
-    .order("executed_at", { ascending: false })
+    .from('automation_logs')
+    .select('*')
+    .order('executed_at', { ascending: false })
     .limit(options.limit || 50);
 
   if (options.ruleId) {
-    query = query.eq("rule_id", options.ruleId);
+    query = query.eq('rule_id', options.ruleId);
   }
 
   if (options.status) {
-    query = query.eq("status", options.status);
+    query = query.eq('status', options.status);
   }
 
   const { data, error } = await query;
 
   if (error) {
-    console.error("Error fetching automation logs:", error);
+    console.error('Error fetching automation logs:', error);
     throw error;
   }
 
@@ -203,11 +215,11 @@ export async function getAutomationLogs(
 export async function getAutomationStats(): Promise<AutomationStats> {
   // Get rules stats
   const { data: rules, error: rulesError } = await supabase
-    .from("automation_rules")
-    .select("is_active, run_count, success_count, failure_count");
+    .from('automation_rules')
+    .select('is_active, run_count, success_count, failure_count');
 
   if (rulesError) {
-    console.error("Error fetching automation stats:", rulesError);
+    console.error('Error fetching automation stats:', rulesError);
     throw rulesError;
   }
 
@@ -216,24 +228,24 @@ export async function getAutomationStats(): Promise<AutomationStats> {
   weekAgo.setDate(weekAgo.getDate() - 7);
 
   const { data: recentLogs, error: logsError } = await supabase
-    .from("automation_logs")
-    .select("actions_taken")
-    .gte("executed_at", weekAgo.toISOString());
+    .from('automation_logs')
+    .select('actions_taken')
+    .gte('executed_at', weekAgo.toISOString());
 
   if (logsError) {
-    console.error("Error fetching recent logs:", logsError);
+    console.error('Error fetching recent logs:', logsError);
     throw logsError;
   }
 
   const totalRules = rules?.length || 0;
-  const activeRules = rules?.filter(r => r.is_active).length || 0;
+  const activeRules = rules?.filter((r) => r.is_active).length || 0;
   const totalExecutions = rules?.reduce((sum, r) => sum + (r.run_count || 0), 0) || 0;
   const successfulExecutions = rules?.reduce((sum, r) => sum + (r.success_count || 0), 0) || 0;
   const failedExecutions = rules?.reduce((sum, r) => sum + (r.failure_count || 0), 0) || 0;
-  
+
   // Count actions from recent logs
   const actionsThisWeek = (recentLogs || []).reduce((sum, log) => {
-    const actions = log.actions_taken as Array<{ type: string; success: boolean }> || [];
+    const actions = (log.actions_taken as Array<{ type: string; success: boolean }>) || [];
     return sum + actions.length;
   }, 0);
 
@@ -248,16 +260,18 @@ export async function getAutomationStats(): Promise<AutomationStats> {
 }
 
 // Manually run an automation rule
-export async function runAutomationRule(ruleId: string): Promise<{ success: boolean; error?: string }> {
+export async function runAutomationRule(
+  ruleId: string
+): Promise<{ success: boolean; error?: string }> {
   try {
-    const { data, error } = await supabase.functions.invoke("run-automations", {
+    const { data, error } = await supabase.functions.invoke('run-automations', {
       body: { ruleId },
     });
 
     if (error) throw error;
     return { success: true };
   } catch (error) {
-    console.error("Error running automation:", error);
+    console.error('Error running automation:', error);
     return { success: false, error: (error as Error).message };
   }
 }

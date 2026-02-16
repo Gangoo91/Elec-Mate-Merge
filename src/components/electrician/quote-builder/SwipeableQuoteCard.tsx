@@ -1,6 +1,20 @@
 import { useState, useRef } from 'react';
 import { motion, PanInfo } from 'framer-motion';
-import { User, Trash2, FileEdit, Send, CheckCircle, XCircle, Clock, Eye, Edit, Calendar, MailOpen, AlertTriangle, Bell } from 'lucide-react';
+import {
+  User,
+  Trash2,
+  FileEdit,
+  Send,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Eye,
+  Edit,
+  Calendar,
+  MailOpen,
+  AlertTriangle,
+  Bell,
+} from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { Quote } from '@/types/quote';
 import { Badge } from '@/components/ui/badge';
@@ -21,7 +35,7 @@ export function SwipeableQuoteCard({
   onDelete,
   onEdit,
   onView,
-  delay = 0
+  delay = 0,
 }: SwipeableQuoteCardProps) {
   const { isMobile, touchSupport } = useMobileEnhanced();
   const [swipeOffset, setSwipeOffset] = useState(0);
@@ -52,65 +66,76 @@ export function SwipeableQuoteCard({
 
   const statusConfig = {
     draft: {
-      color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
+      color:
+        'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
       label: 'Draft',
       icon: FileEdit,
-      borderColor: 'border-slate-500/30 border-l-4 border-l-slate-500/60'
+      borderColor: 'border-slate-500/30 border-l-4 border-l-slate-500/60',
     },
     sent: {
-      color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+      color:
+        'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800',
       label: 'Sent',
       icon: Send,
-      borderColor: 'border-amber-500/30 border-l-4 border-l-amber-500/60'
+      borderColor: 'border-amber-500/30 border-l-4 border-l-amber-500/60',
     },
     pending: {
-      color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+      color:
+        'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800',
       label: 'Pending',
       icon: Clock,
-      borderColor: 'border-amber-500/30 border-l-4 border-l-amber-500/60'
+      borderColor: 'border-amber-500/30 border-l-4 border-l-amber-500/60',
     },
     approved: {
-      color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
+      color:
+        'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
       label: 'Approved',
       icon: CheckCircle,
-      borderColor: 'border-green-500/30 border-l-4 border-l-green-500/60'
+      borderColor: 'border-green-500/30 border-l-4 border-l-green-500/60',
     },
     rejected: {
-      color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800',
+      color:
+        'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800',
       label: 'Declined',
       icon: XCircle,
-      borderColor: 'border-red-500/30 border-l-4 border-l-red-500/60'
+      borderColor: 'border-red-500/30 border-l-4 border-l-red-500/60',
     },
   }[quote.status] || {
-    color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
+    color:
+      'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
     label: quote.status,
     icon: FileEdit,
-    borderColor: 'border-slate-500/30 border-l-4 border-l-slate-500/60'
+    borderColor: 'border-slate-500/30 border-l-4 border-l-slate-500/60',
   };
 
   // Use acceptance_status if available
-  const finalStatus = quote.acceptance_status === 'accepted'
-    ? {
-        color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
-        label: 'Accepted',
-        icon: CheckCircle,
-        borderColor: 'border-green-500/30 border-l-4 border-l-green-500/60'
-      }
-    : quote.acceptance_status === 'rejected'
-    ? {
-        color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800',
-        label: 'Declined',
-        icon: XCircle,
-        borderColor: 'border-red-500/30 border-l-4 border-l-red-500/60'
-      }
-    : statusConfig;
+  const finalStatus =
+    quote.acceptance_status === 'accepted'
+      ? {
+          color:
+            'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
+          label: 'Accepted',
+          icon: CheckCircle,
+          borderColor: 'border-green-500/30 border-l-4 border-l-green-500/60',
+        }
+      : quote.acceptance_status === 'rejected'
+        ? {
+            color:
+              'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800',
+            label: 'Declined',
+            icon: XCircle,
+            borderColor: 'border-red-500/30 border-l-4 border-l-red-500/60',
+          }
+        : statusConfig;
 
   const StatusIcon = finalStatus.icon;
 
   // Calculate expiry status
   const now = new Date();
   const expiryDate = quote.expiryDate ? new Date(quote.expiryDate) : null;
-  const daysUntilExpiry = expiryDate ? Math.ceil((expiryDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)) : null;
+  const daysUntilExpiry = expiryDate
+    ? Math.ceil((expiryDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+    : null;
   const isExpiringSoon = daysUntilExpiry !== null && daysUntilExpiry <= 3 && daysUntilExpiry > 0;
   const isExpired = daysUntilExpiry !== null && daysUntilExpiry <= 0;
 
@@ -138,12 +163,12 @@ export function SwipeableQuoteCard({
       {/* Card Content */}
       <motion.div
         className={cn(
-          "relative bg-elec-card rounded-2xl overflow-hidden touch-manipulation cursor-pointer border",
+          'relative bg-elec-card rounded-2xl overflow-hidden touch-manipulation cursor-pointer border',
           finalStatus.borderColor
         )}
         animate={{ x: swipeOffset }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        drag={enableSwipe ? "x" : false}
+        drag={enableSwipe ? 'x' : false}
         dragConstraints={{ left: -100, right: 0 }}
         dragElastic={0.05}
         dragSnapToOrigin
@@ -155,27 +180,29 @@ export function SwipeableQuoteCard({
         <div className="flex items-start justify-between p-4 pb-3 border-b border-primary/20">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-lg sm:text-xl font-bold">
-                {quote.quoteNumber || 'Quote'}
-              </h3>
+              <h3 className="text-lg sm:text-xl font-bold">{quote.quoteNumber || 'Quote'}</h3>
               <Badge className={cn('text-xs', finalStatus.color)}>
                 <StatusIcon className="h-3 w-3 mr-1" />
                 {finalStatus.label}
               </Badge>
               {/* Viewed indicator - only show for sent quotes that haven't been accepted/rejected */}
-              {quote.status === 'sent' && quote.acceptance_status === 'pending' && hasBeenViewed && (
-                <Badge className="text-xs bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border-blue-200 dark:border-blue-800">
-                  <MailOpen className="h-3 w-3 mr-1" />
-                  Viewed{viewCount > 1 ? ` (${viewCount})` : ''}
-                </Badge>
-              )}
+              {quote.status === 'sent' &&
+                quote.acceptance_status === 'pending' &&
+                hasBeenViewed && (
+                  <Badge className="text-xs bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border-blue-200 dark:border-blue-800">
+                    <MailOpen className="h-3 w-3 mr-1" />
+                    Viewed{viewCount > 1 ? ` (${viewCount})` : ''}
+                  </Badge>
+                )}
               {/* Expiry warning */}
-              {quote.status === 'sent' && quote.acceptance_status === 'pending' && isExpiringSoon && (
-                <Badge className="text-xs bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300 border-orange-200 dark:border-orange-800">
-                  <AlertTriangle className="h-3 w-3 mr-1" />
-                  {daysUntilExpiry === 1 ? 'Expires Tomorrow' : `${daysUntilExpiry} Days Left`}
-                </Badge>
-              )}
+              {quote.status === 'sent' &&
+                quote.acceptance_status === 'pending' &&
+                isExpiringSoon && (
+                  <Badge className="text-xs bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300 border-orange-200 dark:border-orange-800">
+                    <AlertTriangle className="h-3 w-3 mr-1" />
+                    {daysUntilExpiry === 1 ? 'Expires Tomorrow' : `${daysUntilExpiry} Days Left`}
+                  </Badge>
+                )}
               {/* Expired indicator */}
               {isExpired && quote.acceptance_status === 'pending' && (
                 <Badge className="text-xs bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800">
@@ -192,9 +219,7 @@ export function SwipeableQuoteCard({
               )}
             </div>
             {quote.jobDetails?.title && (
-              <div className="text-xs text-muted-foreground">
-                {quote.jobDetails.title}
-              </div>
+              <div className="text-xs text-muted-foreground">{quote.jobDetails.title}</div>
             )}
           </div>
           <Button
@@ -221,9 +246,7 @@ export function SwipeableQuoteCard({
               {quote.client?.name || 'Unknown Client'}
             </div>
             {quote.client?.email && (
-              <div className="text-xs text-muted-foreground truncate">
-                {quote.client.email}
-              </div>
+              <div className="text-xs text-muted-foreground truncate">{quote.client.email}</div>
             )}
           </div>
         </div>
@@ -232,7 +255,11 @@ export function SwipeableQuoteCard({
         <div className="text-center mx-4 mb-4 py-4 bg-background/40 rounded-lg border border-primary/10">
           <div className="text-sm text-muted-foreground mb-1">Quote Value</div>
           <div className="text-3xl sm:text-4xl font-bold text-elec-yellow">
-            £{(quote.total || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            £
+            {(quote.total || 0).toLocaleString('en-GB', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </div>
         </div>
 

@@ -3,13 +3,13 @@ import { Target, CheckCircle2 } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection6_2 = () => {
   const outcomes = [
-    "Explain how emergency lighting fits within UK fire safety legislation and regulatory frameworks",
-    "Identify the legal duties of the Responsible Person under the Regulatory Reform (Fire Safety) Order 2005",
-    "Describe how emergency lighting interacts with fire alarm and detection systems",
-    "Apply BS 5266 requirements in line with fire risk assessments and building evacuation strategies",
-    "Recognise enforcement powers of fire authorities and the implications of non-compliance",
-    "Understand documentation requirements for demonstrating integrated compliance",
-    "Identify critical integration points between emergency lighting and other life-safety systems"
+    'Explain how emergency lighting fits within UK fire safety legislation and regulatory frameworks',
+    'Identify the legal duties of the Responsible Person under the Regulatory Reform (Fire Safety) Order 2005',
+    'Describe how emergency lighting interacts with fire alarm and detection systems',
+    'Apply BS 5266 requirements in line with fire risk assessments and building evacuation strategies',
+    'Recognise enforcement powers of fire authorities and the implications of non-compliance',
+    'Understand documentation requirements for demonstrating integrated compliance',
+    'Identify critical integration points between emergency lighting and other life-safety systems',
   ];
 
   return (

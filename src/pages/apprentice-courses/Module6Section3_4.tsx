@@ -1,130 +1,185 @@
-import { ArrowLeft, CheckCircle, Shield, AlertTriangle, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, CheckCircle, Shield, AlertTriangle, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section3_4 = () => {
   useSEO(
-    "Proving Dead and Safe to Test - Level 2 Electrical Testing & Inspection",
-    "Essential safe isolation procedures and proving dead techniques"
+    'Proving Dead and Safe to Test - Level 2 Electrical Testing & Inspection',
+    'Essential safe isolation procedures and proving dead techniques'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What regulation requires proving dead before work?",
-      options: ["Gas Safety Act", "Electricity at Work Regulations", "Building Regulations", "Health & Safety Act"],
+      question: 'What regulation requires proving dead before work?',
+      options: [
+        'Gas Safety Act',
+        'Electricity at Work Regulations',
+        'Building Regulations',
+        'Health & Safety Act',
+      ],
       correctAnswer: 1,
-      explanation: "The Electricity at Work Regulations (EAWR) 1989 requires that systems are proven dead before work begins to prevent electrical accidents."
+      explanation:
+        'The Electricity at Work Regulations (EAWR) 1989 requires that systems are proven dead before work begins to prevent electrical accidents.',
     },
     {
       id: 2,
-      question: "What is the first step in safe isolation?",
-      options: ["Apply lock-off", "Identify the correct circuit", "Prove dead immediately", "Test the tester"],
+      question: 'What is the first step in safe isolation?',
+      options: [
+        'Apply lock-off',
+        'Identify the correct circuit',
+        'Prove dead immediately',
+        'Test the tester',
+      ],
       correctAnswer: 1,
-      explanation: "Circuit identification is crucial first step - working on the wrong circuit is a common cause of electrical accidents."
+      explanation:
+        'Circuit identification is crucial first step - working on the wrong circuit is a common cause of electrical accidents.',
     },
     {
       id: 3,
-      question: "Which device is used to check a tester works correctly?",
-      options: ["Multimeter", "Proving unit", "Neon screwdriver", "Voltage pen"],
+      question: 'Which device is used to check a tester works correctly?',
+      options: ['Multimeter', 'Proving unit', 'Neon screwdriver', 'Voltage pen'],
       correctAnswer: 1,
-      explanation: "A proving unit provides a known voltage source to verify that your voltage tester is working correctly before and after use."
+      explanation:
+        'A proving unit provides a known voltage source to verify that your voltage tester is working correctly before and after use.',
     },
     {
       id: 4,
-      question: "What is the correct tool to prove dead?",
-      options: ["Two-pole voltage indicator", "Neon screwdriver", "Voltage pen", "Multimeter"],
+      question: 'What is the correct tool to prove dead?',
+      options: ['Two-pole voltage indicator', 'Neon screwdriver', 'Voltage pen', 'Multimeter'],
       correctAnswer: 0,
-      explanation: "Only GS38-compliant two-pole voltage indicators should be used for proving dead - neon screwdrivers and voltage pens are unreliable."
+      explanation:
+        'Only GS38-compliant two-pole voltage indicators should be used for proving dead - neon screwdrivers and voltage pens are unreliable.',
     },
     {
       id: 5,
-      question: "True or False: Circuit labelling can be relied on alone.",
-      options: ["True", "False"],
+      question: 'True or False: Circuit labelling can be relied on alone.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Circuit labels can be incorrect due to modifications, poor maintenance, or human error. Always prove dead regardless of labelling."
+      explanation:
+        'False. Circuit labels can be incorrect due to modifications, poor maintenance, or human error. Always prove dead regardless of labelling.',
     },
     {
       id: 6,
-      question: "Why must you test L–N, L–E, and N–E?",
-      options: ["To confirm correct polarity", "To ensure all conductors are dead", "To check insulation resistance", "To measure voltage drop"],
+      question: 'Why must you test L–N, L–E, and N–E?',
+      options: [
+        'To confirm correct polarity',
+        'To ensure all conductors are dead',
+        'To check insulation resistance',
+        'To measure voltage drop',
+      ],
       correctAnswer: 1,
-      explanation: "Testing all combinations ensures no conductor is live - circuits can be backfed or have switching arrangements that leave some conductors live."
+      explanation:
+        'Testing all combinations ensures no conductor is live - circuits can be backfed or have switching arrangements that leave some conductors live.',
     },
     {
       id: 7,
-      question: "Why do you re-prove your tester after use?",
-      options: ["To check calibration", "To ensure it hasn't failed", "To extend battery life", "To reset the display"],
+      question: 'Why do you re-prove your tester after use?',
+      options: [
+        'To check calibration',
+        "To ensure it hasn't failed",
+        'To extend battery life',
+        'To reset the display',
+      ],
       correctAnswer: 1,
-      explanation: "Re-proving after use confirms the tester hasn't failed during the proving dead procedure - a failed tester could give false readings."
+      explanation:
+        "Re-proving after use confirms the tester hasn't failed during the proving dead procedure - a failed tester could give false readings.",
     },
     {
       id: 8,
-      question: "What should you do with the isolator key?",
-      options: ["Leave it in the switch", "Keep it with you", "Hand it to another worker", "Put it in the office"],
+      question: 'What should you do with the isolator key?',
+      options: [
+        'Leave it in the switch',
+        'Keep it with you',
+        'Hand it to another worker',
+        'Put it in the office',
+      ],
       correctAnswer: 1,
-      explanation: "Keep the isolation key with you to prevent accidental re-energisation by others while you're working on the circuit."
+      explanation:
+        "Keep the isolation key with you to prevent accidental re-energisation by others while you're working on the circuit.",
     },
     {
       id: 9,
-      question: "Which unsafe practice is specifically warned against in GS38?",
-      options: ["Using fused leads", "Using neon screwdrivers", "Using proving units", "Using CAT-rated equipment"],
+      question: 'Which unsafe practice is specifically warned against in GS38?',
+      options: [
+        'Using fused leads',
+        'Using neon screwdrivers',
+        'Using proving units',
+        'Using CAT-rated equipment',
+      ],
       correctAnswer: 1,
-      explanation: "GS38 specifically warns against neon screwdrivers and voltage pens as they are unreliable and can give false readings."
+      explanation:
+        'GS38 specifically warns against neon screwdrivers and voltage pens as they are unreliable and can give false readings.',
     },
     {
       id: 10,
-      question: "What is the main risk of skipping the proving dead procedure?",
-      options: ["Extra paperwork", "Serious injury or death", "Slightly slower work", "Equipment damage"],
+      question: 'What is the main risk of skipping the proving dead procedure?',
+      options: [
+        'Extra paperwork',
+        'Serious injury or death',
+        'Slightly slower work',
+        'Equipment damage',
+      ],
       correctAnswer: 1,
-      explanation: "The main risk is serious injury or death from electric shock, burns, or arc flash incidents when working on live circuits."
-    }
+      explanation:
+        'The main risk is serious injury or death from electric shock, burns, or arc flash incidents when working on live circuits.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Can I just trust the isolator switch?",
-      answer: "No — circuits can be backfed through other connections, switching arrangements may be complex, or the isolator may be faulty. Always prove dead at the point of work regardless of isolation switching."
+      question: 'Can I just trust the isolator switch?',
+      answer:
+        'No — circuits can be backfed through other connections, switching arrangements may be complex, or the isolator may be faulty. Always prove dead at the point of work regardless of isolation switching.',
     },
     {
-      question: "Why do I need to re-prove my tester after use?",
-      answer: "To ensure it hasn't failed during the proving dead procedure. A tester could develop a fault during use, leading to false 'dead' readings on subsequent tests."
+      question: 'Why do I need to re-prove my tester after use?',
+      answer:
+        "To ensure it hasn't failed during the proving dead procedure. A tester could develop a fault during use, leading to false 'dead' readings on subsequent tests.",
     },
     {
-      question: "Can I use a multimeter instead of a voltage indicator?",
-      answer: "No. Only two-pole voltage indicators are recommended under GS38 for proving dead. Multimeters are not suitable for this safety-critical application."
+      question: 'Can I use a multimeter instead of a voltage indicator?',
+      answer:
+        'No. Only two-pole voltage indicators are recommended under GS38 for proving dead. Multimeters are not suitable for this safety-critical application.',
     },
     {
       question: "What if the circuit won't go dead?",
-      answer: "Stop work immediately. Check for alternative supplies, backfeeds, or incorrect circuit identification. Investigate systematically before proceeding with isolation."
+      answer:
+        'Stop work immediately. Check for alternative supplies, backfeeds, or incorrect circuit identification. Investigate systematically before proceeding with isolation.',
     },
     {
-      question: "How long does isolation have to be maintained?",
-      answer: "Throughout the entire work period. The circuit must remain isolated and locked off until all work is complete and the installation is safe to re-energise."
+      question: 'How long does isolation have to be maintained?',
+      answer:
+        'Throughout the entire work period. The circuit must remain isolated and locked off until all work is complete and the installation is safe to re-energise.',
     },
     {
       question: "What if I don't have a proving unit?",
-      answer: "You cannot safely prove dead without one. A proving unit is essential equipment - do not proceed with electrical work without proper testing of your voltage indicator."
+      answer:
+        'You cannot safely prove dead without one. A proving unit is essential equipment - do not proceed with electrical work without proper testing of your voltage indicator.',
     },
     {
-      question: "Can I work alone when proving dead?",
-      answer: "While not prohibited, it's safer to have someone else present, especially in high-risk environments. Follow your company's lone working policies and risk assessments."
+      question: 'Can I work alone when proving dead?',
+      answer:
+        "While not prohibited, it's safer to have someone else present, especially in high-risk environments. Follow your company's lone working policies and risk assessments.",
     },
     {
-      question: "What constitutes adequate warning notices?",
-      answer: "Clear, visible signs stating 'DANGER - MEN WORKING' or similar, positioned at all points where the circuit could be re-energised. Include your name and contact details."
+      question: 'What constitutes adequate warning notices?',
+      answer:
+        "Clear, visible signs stating 'DANGER - MEN WORKING' or similar, positioned at all points where the circuit could be re-energised. Include your name and contact details.",
     },
     {
-      question: "Should I test at the origin or point of work?",
-      answer: "Always test at the point of work - this confirms the circuit is dead where you'll be working, accounting for any intermediate switching or faults."
+      question: 'Should I test at the origin or point of work?',
+      answer:
+        "Always test at the point of work - this confirms the circuit is dead where you'll be working, accounting for any intermediate switching or faults.",
     },
     {
-      question: "What personal protective equipment should I wear?",
-      answer: "At minimum, safety glasses and appropriate gloves. Follow your risk assessment - high-risk work may require arc flash protection and other specialist PPE."
-    }
+      question: 'What personal protective equipment should I wear?',
+      answer:
+        'At minimum, safety glasses and appropriate gloves. Follow your risk assessment - high-risk work may require arc flash protection and other specialist PPE.',
+    },
   ];
 
   return (
@@ -194,10 +249,14 @@ const Module6Section3_4 = () => {
           <section className="mb-10">
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Before any installation or maintenance work begins, electricians must ensure that circuits are dead and safe to work on. Failure to prove dead is one of the most common causes of electrical accidents.
+                Before any installation or maintenance work begins, electricians must ensure that
+                circuits are dead and safe to work on. Failure to prove dead is one of the most
+                common causes of electrical accidents.
               </p>
               <p>
-                This subsection explains how to correctly isolate, prove dead, and verify safety before touching conductors or equipment, following the requirements of the Electricity at Work Regulations and industry best practices.
+                This subsection explains how to correctly isolate, prove dead, and verify safety
+                before touching conductors or equipment, following the requirements of the
+                Electricity at Work Regulations and industry best practices.
               </p>
             </div>
           </section>
@@ -209,7 +268,9 @@ const Module6Section3_4 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-white/80 mb-3">By the end of this subsection, you will be able to:</p>
+              <p className="text-white/80 mb-3">
+                By the end of this subsection, you will be able to:
+              </p>
               <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
@@ -247,7 +308,10 @@ const Module6Section3_4 = () => {
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Electric shock from live conductors can cause serious injury or death</li>
                   <li>• Arc flash incidents can cause severe burns and blast injuries</li>
-                  <li>• Even low voltages can be lethal in certain conditions (wet hands, heart conditions)</li>
+                  <li>
+                    • Even low voltages can be lethal in certain conditions (wet hands, heart
+                    conditions)
+                  </li>
                   <li>• Protects against induced voltages from adjacent circuits or equipment</li>
                   <li>• Prevents damage to sensitive equipment during maintenance</li>
                 </ul>
@@ -256,10 +320,14 @@ const Module6Section3_4 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Confirms Effective Isolation:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Circuit labels may be incorrect due to modifications or poor maintenance</li>
+                  <li>
+                    • Circuit labels may be incorrect due to modifications or poor maintenance
+                  </li>
                   <li>• Circuits can be backfed through alternative supply routes</li>
                   <li>• Isolators may be faulty or not fully disconnecting all poles</li>
-                  <li>• Multiple sources may supply the same equipment (normal/emergency supplies)</li>
+                  <li>
+                    • Multiple sources may supply the same equipment (normal/emergency supplies)
+                  </li>
                   <li>• Induced voltages from parallel circuits can present hazards</li>
                 </ul>
               </div>
@@ -267,10 +335,17 @@ const Module6Section3_4 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Legal and Regulatory Compliance:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Electricity at Work Regulations 1989 - Regulation 4 requires systems to be dead before work</li>
-                  <li>• Health and Safety at Work Act 1974 - duty of care to prevent foreseeable harm</li>
+                  <li>
+                    • Electricity at Work Regulations 1989 - Regulation 4 requires systems to be
+                    dead before work
+                  </li>
+                  <li>
+                    • Health and Safety at Work Act 1974 - duty of care to prevent foreseeable harm
+                  </li>
                   <li>• BS 7671 requirements for safe working practices</li>
-                  <li>• Corporate manslaughter legislation applies to electrical safety failures</li>
+                  <li>
+                    • Corporate manslaughter legislation applies to electrical safety failures
+                  </li>
                   <li>• Professional liability and insurance requirements</li>
                 </ul>
               </div>
@@ -281,7 +356,12 @@ const Module6Section3_4 = () => {
             <InlineCheck
               id="prove-dead-purpose"
               question="What is the primary purpose of proving dead?"
-              options={["To comply with paperwork", "To prevent electrical accidents", "To save time", "To check circuit labels"]}
+              options={[
+                'To comply with paperwork',
+                'To prevent electrical accidents',
+                'To save time',
+                'To check circuit labels',
+              ]}
               correctIndex={1}
               explanation="The primary purpose is to prevent electrical accidents by confirming that circuits are actually dead before work begins."
             />
@@ -297,7 +377,10 @@ const Module6Section3_4 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Step 1: Identify the Correct Circuit</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Use circuit schedules, labels, and physical tracing to confirm circuit identity</li>
+                  <li>
+                    • Use circuit schedules, labels, and physical tracing to confirm circuit
+                    identity
+                  </li>
                   <li>• Test switching operations to verify which circuits are controlled</li>
                   <li>• Check for multiple supplies (emergency lighting, UPS systems)</li>
                   <li>• Identify any interconnections or parallel feeds</li>
@@ -306,20 +389,32 @@ const Module6Section3_4 = () => {
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Step 2: Switch Off the Supply at the Isolator</p>
+                <p className="font-medium text-white mb-2">
+                  Step 2: Switch Off the Supply at the Isolator
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Use the correct isolator - main switch, MCB, or dedicated isolator</li>
                   <li>• Ensure all poles are disconnected (single-phase and three-phase)</li>
                   <li>• Check the isolator is suitable for the load current</li>
-                  <li>• Verify switching operation - some isolators may stick or fail to fully open</li>
-                  <li>• Look for isolation indication on the isolator (visible contact gap where possible)</li>
+                  <li>
+                    • Verify switching operation - some isolators may stick or fail to fully open
+                  </li>
+                  <li>
+                    • Look for isolation indication on the isolator (visible contact gap where
+                    possible)
+                  </li>
                 </ul>
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Step 3: Apply Lock-off Devices and Warning Notices</p>
+                <p className="font-medium text-white mb-2">
+                  Step 3: Apply Lock-off Devices and Warning Notices
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Use appropriate lock-off device: miniature lock-offs for MCBs, hasps for larger isolators</li>
+                  <li>
+                    • Use appropriate lock-off device: miniature lock-offs for MCBs, hasps for
+                    larger isolators
+                  </li>
                   <li>• Apply your personal padlock - only you should have the key</li>
                   <li>• Attach clear warning notices: "DANGER - MEN WORKING" or similar</li>
                   <li>• Include your name, contact details, and expected completion time</li>
@@ -329,7 +424,9 @@ const Module6Section3_4 = () => {
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Step 4: Prove Your Tester on a Proving Unit</p>
+                <p className="font-medium text-white mb-2">
+                  Step 4: Prove Your Tester on a Proving Unit
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Use a proving unit that provides a known voltage (typically 230V AC)</li>
                   <li>• Check your two-pole voltage indicator reads the expected voltage</li>
@@ -340,9 +437,13 @@ const Module6Section3_4 = () => {
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Step 5: Test Between Live, Neutral, and Earth at Point of Work</p>
+                <p className="font-medium text-white mb-2">
+                  Step 5: Test Between Live, Neutral, and Earth at Point of Work
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• Test all combinations: L–N, L–E, N–E (and L1–L2, L2–L3, L3–L1 for three-phase)</li>
+                  <li>
+                    • Test all combinations: L–N, L–E, N–E (and L1–L2, L2–L3, L3–L1 for three-phase)
+                  </li>
                   <li>• Test at the exact point where work will be carried out</li>
                   <li>• Hold test probes firmly against clean conductors or terminals</li>
                   <li>• Allow sufficient time for readings to stabilise (2-3 seconds minimum)</li>
@@ -352,12 +453,18 @@ const Module6Section3_4 = () => {
               </div>
 
               <div>
-                <p className="font-medium text-white mb-2">Step 6: Re-prove Your Tester on the Proving Unit</p>
+                <p className="font-medium text-white mb-2">
+                  Step 6: Re-prove Your Tester on the Proving Unit
+                </p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Immediately re-test the voltage indicator on the proving unit</li>
                   <li>• Confirm it still reads the expected voltage correctly</li>
-                  <li>• This verifies the tester hasn't failed during the proving dead procedure</li>
-                  <li>• If the tester doesn't work on the proving unit, repeat the entire procedure</li>
+                  <li>
+                    • This verifies the tester hasn't failed during the proving dead procedure
+                  </li>
+                  <li>
+                    • If the tester doesn't work on the proving unit, repeat the entire procedure
+                  </li>
                   <li>• Only proceed with work once the complete procedure is successful</li>
                 </ul>
               </div>
@@ -368,7 +475,12 @@ const Module6Section3_4 = () => {
             <InlineCheck
               id="isolation-steps"
               question="What is the correct sequence for safe isolation?"
-              options={["Test, isolate, lock off", "Isolate, lock off, test", "Lock off, test, isolate", "Identify, isolate, lock off, prove tester, test, re-prove"]}
+              options={[
+                'Test, isolate, lock off',
+                'Isolate, lock off, test',
+                'Lock off, test, isolate',
+                'Identify, isolate, lock off, prove tester, test, re-prove',
+              ]}
               correctIndex={3}
               explanation="The correct sequence ensures circuit identity is confirmed before isolation, and tester function is verified before and after testing."
             />
@@ -385,7 +497,9 @@ const Module6Section3_4 = () => {
                 <p className="font-medium text-white mb-2">Two-pole Voltage Indicators Only:</p>
                 <ul className="ml-4 space-y-1 text-sm">
                   <li>• Uses two separate probes to measure voltage between conductors</li>
-                  <li>• Provides clear indication of voltage presence through LED and audible signals</li>
+                  <li>
+                    • Provides clear indication of voltage presence through LED and audible signals
+                  </li>
                   <li>• Self-checking circuitry that identifies internal faults</li>
                   <li>• Designed specifically for proving dead applications</li>
                   <li>• Reliable operation even in harsh electrical environments</li>
@@ -395,11 +509,26 @@ const Module6Section3_4 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Prohibited Equipment:</p>
                 <ul className="ml-4 space-y-1 text-sm">
-                  <li>• <strong>Neon screwdrivers:</strong> Unreliable, can fail without indication, single-pole operation</li>
-                  <li>• <strong>Voltage pens:</strong> Prone to false readings, affected by electromagnetic fields</li>
-                  <li>• <strong>Single-pole testers:</strong> Rely on body capacitance, inconsistent operation</li>
-                  <li>• <strong>Non-contact voltage detectors:</strong> Not suitable for proving dead applications</li>
-                  <li>• <strong>Multimeters:</strong> Not designed for safety-critical proving dead function</li>
+                  <li>
+                    • <strong>Neon screwdrivers:</strong> Unreliable, can fail without indication,
+                    single-pole operation
+                  </li>
+                  <li>
+                    • <strong>Voltage pens:</strong> Prone to false readings, affected by
+                    electromagnetic fields
+                  </li>
+                  <li>
+                    • <strong>Single-pole testers:</strong> Rely on body capacitance, inconsistent
+                    operation
+                  </li>
+                  <li>
+                    • <strong>Non-contact voltage detectors:</strong> Not suitable for proving dead
+                    applications
+                  </li>
+                  <li>
+                    • <strong>Multimeters:</strong> Not designed for safety-critical proving dead
+                    function
+                  </li>
                 </ul>
               </div>
 
@@ -421,7 +550,12 @@ const Module6Section3_4 = () => {
             <InlineCheck
               id="gs38-compliance"
               question="Which tester is GS38-compliant for proving dead?"
-              options={["Neon screwdriver", "Two-pole voltage indicator", "Voltage pen", "Digital multimeter"]}
+              options={[
+                'Neon screwdriver',
+                'Two-pole voltage indicator',
+                'Voltage pen',
+                'Digital multimeter',
+              ]}
               correctIndex={1}
               explanation="Only two-pole voltage indicators meet GS38 requirements for proving dead - they are specifically designed for this safety-critical function."
             />
@@ -438,10 +572,14 @@ const Module6Section3_4 = () => {
                 <div>
                   <p className="font-medium text-white mb-2">Electric Shock or Electrocution:</p>
                   <ul className="ml-4 space-y-1 text-sm">
-                    <li>• Direct contact with live conductors can cause immediate cardiac arrest</li>
+                    <li>
+                      • Direct contact with live conductors can cause immediate cardiac arrest
+                    </li>
                     <li>• Even non-fatal shocks can cause falls from height or into hazards</li>
                     <li>• Secondary injuries from muscular contraction or loss of control</li>
-                    <li>• Long-term health effects including nerve damage and psychological trauma</li>
+                    <li>
+                      • Long-term health effects including nerve damage and psychological trauma
+                    </li>
                     <li>• Risk increases in wet conditions or with damaged PPE</li>
                   </ul>
                 </div>
@@ -458,7 +596,9 @@ const Module6Section3_4 = () => {
                 </div>
 
                 <div>
-                  <p className="font-medium text-white mb-2">Legal and Professional Consequences:</p>
+                  <p className="font-medium text-white mb-2">
+                    Legal and Professional Consequences:
+                  </p>
                   <ul className="ml-4 space-y-1 text-sm">
                     <li>• HSE prosecution under EAWR - unlimited fines and imprisonment</li>
                     <li>• Corporate manslaughter charges for companies</li>
@@ -476,7 +616,12 @@ const Module6Section3_4 = () => {
             <InlineCheck
               id="consequences"
               question="What is the most serious consequence of not proving dead?"
-              options={["Paperwork issues", "Equipment damage", "Serious injury or death", "Delayed completion"]}
+              options={[
+                'Paperwork issues',
+                'Equipment damage',
+                'Serious injury or death',
+                'Delayed completion',
+              ]}
               correctIndex={2}
               explanation="The most serious consequence is serious injury or death from electric shock, burns, or arc flash incidents."
             />
@@ -559,7 +704,9 @@ const Module6Section3_4 = () => {
                 <div>
                   <p className="font-medium text-white mb-2">Emergency Procedures:</p>
                   <ul className="space-y-1 text-sm text-white/80">
-                    <li>• If someone is in contact with live conductors, switch off supply immediately</li>
+                    <li>
+                      • If someone is in contact with live conductors, switch off supply immediately
+                    </li>
                     <li>• Do not touch the person until supply is confirmed dead</li>
                     <li>• Call emergency services and provide first aid if trained</li>
                     <li>• Report all electrical accidents to HSE and company management</li>
@@ -599,11 +746,15 @@ const Module6Section3_4 = () => {
             <div className="grid sm:grid-cols-3 gap-3">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Challenge 1:</p>
-                <p className="text-sm text-white/70">Why is proving dead important before electrical work?</p>
+                <p className="text-sm text-white/70">
+                  Why is proving dead important before electrical work?
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Challenge 2:</p>
-                <p className="text-sm text-white/70">Name the correct type of tester to prove dead.</p>
+                <p className="text-sm text-white/70">
+                  Name the correct type of tester to prove dead.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Challenge 3:</p>
@@ -619,15 +770,23 @@ const Module6Section3_4 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <p className="font-medium text-white mb-3">Case Study: Incorrect Circuit Identification</p>
-              <p className="text-white/80 mb-4">
-                An electrician working in an office assumed a labelled MCB controlled a lighting circuit. Without testing, they touched the live conductor and suffered an electric shock requiring hospital treatment.
+              <p className="font-medium text-white mb-3">
+                Case Study: Incorrect Circuit Identification
               </p>
               <p className="text-white/80 mb-4">
-                Investigation revealed the labelling was wrong due to a previous alteration where circuits had been reconfigured but labels not updated. The "lighting" MCB actually controlled socket outlets that remained energised.
+                An electrician working in an office assumed a labelled MCB controlled a lighting
+                circuit. Without testing, they touched the live conductor and suffered an electric
+                shock requiring hospital treatment.
+              </p>
+              <p className="text-white/80 mb-4">
+                Investigation revealed the labelling was wrong due to a previous alteration where
+                circuits had been reconfigured but labels not updated. The "lighting" MCB actually
+                controlled socket outlets that remained energised.
               </p>
               <p className="text-white/80">
-                <strong>Lesson:</strong> Had the electrician followed the prove-dead procedure and tested all conductors at the point of work, the accident would have been completely avoided. Never trust labelling alone.
+                <strong>Lesson:</strong> Had the electrician followed the prove-dead procedure and
+                tested all conductors at the point of work, the accident would have been completely
+                avoided. Never trust labelling alone.
               </p>
             </div>
           </section>
@@ -643,7 +802,9 @@ const Module6Section3_4 = () => {
                 <details key={index} className="group">
                   <summary className="font-medium text-white cursor-pointer list-none flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
                     <span>{faq.question}</span>
-                    <span className="transition-transform group-open:rotate-180 text-white/40">▼</span>
+                    <span className="transition-transform group-open:rotate-180 text-white/40">
+                      ▼
+                    </span>
                   </summary>
                   <div className="mt-2 p-3 text-sm text-white/70 bg-white/5 rounded-lg">
                     {faq.answer}

@@ -7,28 +7,28 @@ const EmergencyLightingModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "Key Clauses from BS 5266-1 and EN 1838",
+      title: 'Key Clauses from BS 5266-1 and EN 1838',
       icon: FileText,
-      description: "Essential standards and regulatory requirements"
+      description: 'Essential standards and regulatory requirements',
     },
     {
       id: 2,
-      title: "Integration with Fire Safety Regulations",
+      title: 'Integration with Fire Safety Regulations',
       icon: Shield,
-      description: "Coordination with fire safety systems and regulations"
+      description: 'Coordination with fire safety systems and regulations',
     },
     {
       id: 3,
-      title: "Emergency Lighting in Risk Assessments",
+      title: 'Emergency Lighting in Risk Assessments',
       icon: ClipboardCheck,
-      description: "Risk assessment integration and considerations"
+      description: 'Risk assessment integration and considerations',
     },
     {
       id: 4,
-      title: "Documentation for Audits and Fire Authorities",
+      title: 'Documentation for Audits and Fire Authorities',
       icon: FileCheck,
-      description: "Compliance documentation and authority requirements"
-    }
+      description: 'Compliance documentation and authority requirements',
+    },
   ];
 
   return (

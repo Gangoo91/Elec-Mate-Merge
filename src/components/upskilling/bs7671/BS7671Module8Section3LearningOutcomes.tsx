@@ -15,7 +15,9 @@ const BS7671Module8Section3LearningOutcomes = () => {
         <ul className="space-y-3">
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-            <span>The major changes introduced in Amendment 3 and their practical implications</span>
+            <span>
+              The major changes introduced in Amendment 3 and their practical implications
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>

@@ -1,16 +1,11 @@
-import { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Camera, Image, X, Upload, Loader2, Check, Trash2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useState, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Camera, Image, X, Upload, Loader2, Check, Trash2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 interface BriefingPhotoUploadProps {
   open: boolean;
@@ -36,28 +31,28 @@ export function BriefingPhotoUpload({
   const savePhotosMutation = useMutation({
     mutationFn: async (photoUrls: string[]) => {
       const { error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({
           photo_evidence: photoUrls,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", briefingId);
+        .eq('id', briefingId);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
-      queryClient.invalidateQueries({ queryKey: ["briefing", briefingId] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
+      queryClient.invalidateQueries({ queryKey: ['briefing', briefingId] });
       toast({
-        title: "Photos saved",
-        description: "Photo evidence has been updated.",
+        title: 'Photos saved',
+        description: 'Photo evidence has been updated.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Save failed",
+        title: 'Save failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -70,18 +65,20 @@ export function BriefingPhotoUpload({
     setUploading(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const uploadedUrls: string[] = [];
 
       for (const file of Array.from(files)) {
         // Validate file type
-        if (!file.type.startsWith("image/")) {
+        if (!file.type.startsWith('image/')) {
           toast({
-            title: "Invalid file",
+            title: 'Invalid file',
             description: `${file.name} is not an image`,
-            variant: "destructive",
+            variant: 'destructive',
           });
           continue;
         }
@@ -89,9 +86,9 @@ export function BriefingPhotoUpload({
         // Validate file size (max 10MB)
         if (file.size > 10 * 1024 * 1024) {
           toast({
-            title: "File too large",
+            title: 'File too large',
             description: `${file.name} exceeds 10MB limit`,
-            variant: "destructive",
+            variant: 'destructive',
           });
           continue;
         }
@@ -100,10 +97,10 @@ export function BriefingPhotoUpload({
         const compressedFile = await compressImage(file);
 
         // Upload to Supabase Storage
-        const fileName = `briefing-photos/${user.id}/${briefingId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
+        const fileName = `briefing-photos/${user.id}/${briefingId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
 
         const { data, error } = await supabase.storage
-          .from("visual-uploads")
+          .from('visual-uploads')
           .upload(fileName, compressedFile, {
             contentType: file.type,
             upsert: false,
@@ -112,9 +109,7 @@ export function BriefingPhotoUpload({
         if (error) throw error;
 
         // Get public URL
-        const { data: urlData } = supabase.storage
-          .from("visual-uploads")
-          .getPublicUrl(data.path);
+        const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
 
         uploadedUrls.push(urlData.publicUrl);
       }
@@ -123,22 +118,22 @@ export function BriefingPhotoUpload({
         const newPhotos = [...photos, ...uploadedUrls];
         setPhotos(newPhotos);
         toast({
-          title: "Photos uploaded",
+          title: 'Photos uploaded',
           description: `${uploadedUrls.length} photo(s) added successfully.`,
         });
       }
     } catch (error) {
-      console.error("Upload error:", error);
+      console.error('Upload error:', error);
       toast({
-        title: "Upload failed",
-        description: error instanceof Error ? error.message : "Could not upload photos",
-        variant: "destructive",
+        title: 'Upload failed',
+        description: error instanceof Error ? error.message : 'Could not upload photos',
+        variant: 'destructive',
       });
     } finally {
       setUploading(false);
       // Reset file input
-      if (fileInputRef.current) fileInputRef.current.value = "";
-      if (cameraInputRef.current) cameraInputRef.current.value = "";
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      if (cameraInputRef.current) cameraInputRef.current.value = '';
     }
   };
 
@@ -146,8 +141,8 @@ export function BriefingPhotoUpload({
   const compressImage = (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const img = new window.Image();
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
 
       img.onload = () => {
         // Calculate new dimensions (max 1920px)
@@ -176,15 +171,15 @@ export function BriefingPhotoUpload({
             if (blob) {
               resolve(blob);
             } else {
-              reject(new Error("Failed to compress image"));
+              reject(new Error('Failed to compress image'));
             }
           },
-          "image/jpeg",
+          'image/jpeg',
           0.85
         );
       };
 
-      img.onerror = () => reject(new Error("Failed to load image"));
+      img.onerror = () => reject(new Error('Failed to load image'));
       img.src = URL.createObjectURL(file);
     });
   };
@@ -296,8 +291,8 @@ export function BriefingPhotoUpload({
                     {/* Delete overlay - desktop only */}
                     <div
                       className={cn(
-                        "absolute inset-0 bg-black/50 flex items-center justify-center",
-                        "sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hidden sm:flex"
+                        'absolute inset-0 bg-black/50 flex items-center justify-center',
+                        'sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hidden sm:flex'
                       )}
                     >
                       <Button
@@ -326,9 +321,7 @@ export function BriefingPhotoUpload({
             ) : (
               <div className="text-center py-12">
                 <Image className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <p className="text-sm text-muted-foreground">
-                  No photos added yet
-                </p>
+                <p className="text-sm text-muted-foreground">No photos added yet</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Take or upload photos to document attendance
                 </p>
@@ -350,11 +343,7 @@ export function BriefingPhotoUpload({
           {/* Footer */}
           <div className="p-4 border-t border-border shrink-0">
             <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-                className="flex-1 h-12"
-              >
+              <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1 h-12">
                 Cancel
               </Button>
               <Button

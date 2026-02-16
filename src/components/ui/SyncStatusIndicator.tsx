@@ -23,13 +23,16 @@ interface SyncStatusIndicatorProps {
   showLastSaved?: boolean;
 }
 
-const stateConfig: Record<SyncState, {
-  icon: typeof Cloud;
-  label: string;
-  color: string;
-  bgColor: string;
-  pulse: boolean;
-}> = {
+const stateConfig: Record<
+  SyncState,
+  {
+    icon: typeof Cloud;
+    label: string;
+    color: string;
+    bgColor: string;
+    pulse: boolean;
+  }
+> = {
   synced: {
     icon: Check,
     label: 'Saved',
@@ -112,13 +115,7 @@ export function SyncStatusIndicator({
   if (variant === 'minimal') {
     return (
       <div className={cn('flex items-center gap-1', className)}>
-        <Icon
-          className={cn(
-            'h-3.5 w-3.5',
-            config.color,
-            config.pulse && 'animate-spin'
-          )}
-        />
+        <Icon className={cn('h-3.5 w-3.5', config.color, config.pulse && 'animate-spin')} />
       </div>
     );
   }
@@ -133,12 +130,7 @@ export function SyncStatusIndicator({
           className
         )}
       >
-        <Icon
-          className={cn(
-            'h-3 w-3',
-            config.pulse && 'animate-spin'
-          )}
-        />
+        <Icon className={cn('h-3 w-3', config.pulse && 'animate-spin')} />
         <span>{config.label}</span>
       </div>
     );
@@ -159,25 +151,15 @@ export function SyncStatusIndicator({
         )}
       >
         <Icon
-          className={cn(
-            'h-4 w-4 flex-shrink-0',
-            config.color,
-            config.pulse && 'animate-spin'
-          )}
+          className={cn('h-4 w-4 flex-shrink-0', config.color, config.pulse && 'animate-spin')}
         />
         <div className="flex flex-col min-w-0">
-          <span className={cn('text-sm font-medium', config.color)}>
-            {config.label}
-          </span>
+          <span className={cn('text-sm font-medium', config.color)}>{config.label}</span>
           {showLastSaved && timeSince && state === 'synced' && (
-            <span className="text-[10px] text-white/40 truncate">
-              {timeSince}
-            </span>
+            <span className="text-[10px] text-white/40 truncate">{timeSince}</span>
           )}
           {errorMessage && state === 'error' && (
-            <span className="text-[10px] text-red-300/70 truncate">
-              {errorMessage}
-            </span>
+            <span className="text-[10px] text-red-300/70 truncate">{errorMessage}</span>
           )}
         </div>
         {state === 'error' && onRetry && (
@@ -189,9 +171,7 @@ export function SyncStatusIndicator({
           </button>
         )}
         {state === 'offline' && (
-          <span className="ml-auto text-[10px] text-amber-400/70">
-            Saved locally
-          </span>
+          <span className="ml-auto text-[10px] text-amber-400/70">Saved locally</span>
         )}
       </motion.div>
     </AnimatePresence>
@@ -234,29 +214,17 @@ export function StickyFormSyncBar({
       )}
     >
       <div className="flex items-center gap-2">
-        <Icon
-          className={cn(
-            'h-4 w-4',
-            config.color,
-            config.pulse && 'animate-spin'
-          )}
-        />
+        <Icon className={cn('h-4 w-4', config.color, config.pulse && 'animate-spin')} />
         <div className="flex flex-col">
-          <span className={cn('text-xs font-medium', config.color)}>
-            {config.label}
-          </span>
+          <span className={cn('text-xs font-medium', config.color)}>{config.label}</span>
           {timeSince && effectiveState === 'synced' && (
-            <span className="text-[10px] text-white/40">
-              Last saved {timeSince}
-            </span>
+            <span className="text-[10px] text-white/40">Last saved {timeSince}</span>
           )}
         </div>
       </div>
 
       {certificateNumber && (
-        <span className="text-xs text-white/50 font-mono">
-          {certificateNumber}
-        </span>
+        <span className="text-xs text-white/50 font-mono">{certificateNumber}</span>
       )}
 
       {effectiveState === 'error' && onRetry && (
@@ -311,11 +279,10 @@ export function OfflineBanner({ isOnline, offlineSince }: OfflineBannerProps) {
       <div className="flex items-center gap-3">
         <CloudOff className="h-5 w-5 text-amber-400 flex-shrink-0" />
         <div>
-          <p className="text-sm font-medium text-amber-400">
-            You're offline
-          </p>
+          <p className="text-sm font-medium text-amber-400">You're offline</p>
           <p className="text-xs text-amber-400/70">
-            Don't worry - your changes are being saved locally and will sync when you're back online.
+            Don't worry - your changes are being saved locally and will sync when you're back
+            online.
           </p>
         </div>
       </div>

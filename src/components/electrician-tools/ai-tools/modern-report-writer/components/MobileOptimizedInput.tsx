@@ -1,17 +1,10 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { 
-  Smartphone, 
-  Mic, 
-  Camera, 
-  MapPin,
-  Calendar,
-  Zap
-} from "lucide-react";
+import React from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Smartphone, Mic, Camera, MapPin, Calendar, Zap } from 'lucide-react';
 
 interface MobileOptimizedInputProps {
   type: 'text' | 'select' | 'textarea' | 'date' | 'number';
@@ -38,7 +31,7 @@ const MobileOptimizedInput: React.FC<MobileOptimizedInputProps> = ({
   enableLocationHelp = false,
   enableCameraInput = false,
   icon,
-  hint
+  hint,
 }) => {
   const handleVoiceInput = () => {
     // Voice input implementation would go here
@@ -87,7 +80,7 @@ const MobileOptimizedInput: React.FC<MobileOptimizedInputProps> = ({
   return (
     <div className="space-y-3">
       {renderInput()}
-      
+
       {/* Mobile Enhancement Tools */}
       {(enableVoiceInput || enableLocationHelp || enableCameraInput) && (
         <div className="flex flex-wrap gap-2">
@@ -102,7 +95,7 @@ const MobileOptimizedInput: React.FC<MobileOptimizedInputProps> = ({
               Voice
             </Button>
           )}
-          
+
           {enableLocationHelp && (
             <Button
               variant="outline"
@@ -114,7 +107,7 @@ const MobileOptimizedInput: React.FC<MobileOptimizedInputProps> = ({
               Location
             </Button>
           )}
-          
+
           {enableCameraInput && (
             <Button
               variant="outline"
@@ -135,7 +128,7 @@ const MobileOptimizedInput: React.FC<MobileOptimizedInputProps> = ({
           <Smartphone className="h-3 w-3" />
           <span>Mobile optimized</span>
         </div>
-        
+
         {value && (
           <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
             ✓ Completed

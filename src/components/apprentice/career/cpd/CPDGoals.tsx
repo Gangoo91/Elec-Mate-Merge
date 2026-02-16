@@ -1,27 +1,39 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Target, Plus, Calendar, TrendingUp, Edit, Trash2, Clock } from "lucide-react";
-import { useUnifiedCPD, type CPDGoal } from "@/hooks/cpd/useUnifiedCPD";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Target, Plus, Calendar, TrendingUp, Edit, Trash2, Clock } from 'lucide-react';
+import { useUnifiedCPD, type CPDGoal } from '@/hooks/cpd/useUnifiedCPD';
 
 const CPDGoals = () => {
   const { goals, addGoal, updateGoal, deleteGoal, loading } = useUnifiedCPD();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<CPDGoal | null>(null);
   const [formData, setFormData] = useState({
-    title: "",
-    targetHours: "",
-    deadline: "",
-    category: "",
-    description: "",
-    status: "Active" as CPDGoal['status'],
+    title: '',
+    targetHours: '',
+    deadline: '',
+    category: '',
+    description: '',
+    status: 'Active' as CPDGoal['status'],
   });
 
   const handleSubmit = () => {
@@ -32,7 +44,7 @@ const CPDGoals = () => {
       targetHours: parseInt(formData.targetHours),
       currentHours: editingGoal?.currentHours || 0,
       deadline: formData.deadline,
-      category: formData.category || "General",
+      category: formData.category || 'General',
       status: formData.status,
       description: formData.description,
     };
@@ -48,12 +60,12 @@ const CPDGoals = () => {
 
   const resetForm = () => {
     setFormData({
-      title: "",
-      targetHours: "",
-      deadline: "",
-      category: "",
-      description: "",
-      status: "Active",
+      title: '',
+      targetHours: '',
+      deadline: '',
+      category: '',
+      description: '',
+      status: 'Active',
     });
     setEditingGoal(null);
     setIsAddDialogOpen(false);
@@ -65,7 +77,7 @@ const CPDGoals = () => {
       targetHours: goal.targetHours.toString(),
       deadline: goal.deadline,
       category: goal.category,
-      description: goal.description || "",
+      description: goal.description || '',
       status: goal.status,
     });
     setEditingGoal(goal);
@@ -74,12 +86,12 @@ const CPDGoals = () => {
 
   const getStatusColor = (status: CPDGoal['status']) => {
     switch (status) {
-      case "Completed":
-        return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Paused":
-        return "bg-amber-500/10 text-amber-400 border-amber-500/30";
+      case 'Completed':
+        return 'bg-green-500/10 text-green-400 border-green-500/30';
+      case 'Paused':
+        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
       default:
-        return "bg-blue-500/10 text-blue-400 border-blue-500/30";
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
     }
   };
 
@@ -93,7 +105,9 @@ const CPDGoals = () => {
           </div>
           <div>
             <h2 className="text-2xl font-bold text-white">CPD Goals</h2>
-            <p className="text-white/70 text-sm">Set and track your professional development goals</p>
+            <p className="text-white/70 text-sm">
+              Set and track your professional development goals
+            </p>
           </div>
         </div>
 
@@ -117,7 +131,9 @@ const CPDGoals = () => {
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="title" className="text-white">Title</Label>
+                <Label htmlFor="title" className="text-white">
+                  Title
+                </Label>
                 <Input
                   id="title"
                   value={formData.title}
@@ -160,14 +176,21 @@ const CPDGoals = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="category" className="text-white">Category</Label>
-                  <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
+                  <Label htmlFor="category" className="text-white">
+                    Category
+                  </Label>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => setFormData({ ...formData, category: value })}
+                  >
                     <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-white/20">
                       <SelectItem value="Technical Skills">Technical Skills</SelectItem>
-                      <SelectItem value="Regulations & Standards">Regulations & Standards</SelectItem>
+                      <SelectItem value="Regulations & Standards">
+                        Regulations & Standards
+                      </SelectItem>
                       <SelectItem value="Safety & Health">Safety & Health</SelectItem>
                       <SelectItem value="Business Skills">Business Skills</SelectItem>
                       <SelectItem value="General">General</SelectItem>
@@ -176,10 +199,14 @@ const CPDGoals = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="status" className="text-white">Status</Label>
+                  <Label htmlFor="status" className="text-white">
+                    Status
+                  </Label>
                   <Select
                     value={formData.status}
-                    onValueChange={(value: CPDGoal['status']) => setFormData({ ...formData, status: value })}
+                    onValueChange={(value: CPDGoal['status']) =>
+                      setFormData({ ...formData, status: value })
+                    }
                   >
                     <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
                       <SelectValue />
@@ -194,7 +221,9 @@ const CPDGoals = () => {
               </div>
 
               <div>
-                <Label htmlFor="description" className="text-white">Description</Label>
+                <Label htmlFor="description" className="text-white">
+                  Description
+                </Label>
                 <Textarea
                   id="description"
                   value={formData.description}
@@ -234,7 +263,8 @@ const CPDGoals = () => {
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">No goals set yet</h3>
             <p className="text-white/70 mb-6 max-w-md mx-auto">
-              Create your first CPD goal to start tracking your professional development progress and stay on track with your career objectives.
+              Create your first CPD goal to start tracking your professional development progress
+              and stay on track with your career objectives.
             </p>
             <Button
               onClick={() => setIsAddDialogOpen(true)}
@@ -248,7 +278,10 @@ const CPDGoals = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {goals.map((goal) => (
-            <Card key={goal.id} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all overflow-hidden relative">
+            <Card
+              key={goal.id}
+              className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all overflow-hidden relative"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <CardHeader className="pb-3 relative">
                 <div className="flex items-start justify-between gap-3">
@@ -258,7 +291,10 @@ const CPDGoals = () => {
                       <Badge variant="outline" className={getStatusColor(goal.status)}>
                         {goal.status}
                       </Badge>
-                      <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
+                      <Badge
+                        variant="outline"
+                        className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs"
+                      >
                         {goal.category}
                       </Badge>
                     </div>
@@ -294,10 +330,7 @@ const CPDGoals = () => {
                       {goal.currentHours} / {goal.targetHours} hours
                     </span>
                   </div>
-                  <Progress
-                    value={(goal.currentHours / goal.targetHours) * 100}
-                    className="h-2"
-                  />
+                  <Progress value={(goal.currentHours / goal.targetHours) * 100} className="h-2" />
                   <div className="text-xs text-white/60">
                     {Math.round((goal.currentHours / goal.targetHours) * 100)}% complete
                   </div>
@@ -311,9 +344,7 @@ const CPDGoals = () => {
                   </div>
 
                   {goal.description && (
-                    <p className="text-white/60 text-sm line-clamp-2">
-                      {goal.description}
-                    </p>
+                    <p className="text-white/60 text-sm line-clamp-2">{goal.description}</p>
                   )}
                 </div>
 
@@ -321,7 +352,9 @@ const CPDGoals = () => {
                 {goal.targetHours - goal.currentHours > 0 && (
                   <div className="flex items-center gap-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
                     <TrendingUp className="h-4 w-4 text-amber-400" />
-                    <span className="text-sm text-amber-400">{goal.targetHours - goal.currentHours} hours remaining</span>
+                    <span className="text-sm text-amber-400">
+                      {goal.targetHours - goal.currentHours} hours remaining
+                    </span>
                   </div>
                 )}
               </CardContent>

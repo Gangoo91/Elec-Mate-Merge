@@ -1,8 +1,8 @@
-import { 
+import {
   MobileAccordion,
   MobileAccordionItem,
   MobileAccordionTrigger,
-  MobileAccordionContent
+  MobileAccordionContent,
 } from '@/components/ui/mobile-accordion';
 import { Badge } from '@/components/ui/badge';
 import { ClipboardCheck, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -32,7 +32,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
         passCriteria: 'Value recorded and consistent with cable length',
         regulation: circuit.expectedTests.r1r2.regulation,
         status: 'pass',
-        colorClass: 'border-blue-500/50 bg-blue-500/10'
+        colorClass: 'border-blue-500/50 bg-blue-500/10',
       });
     }
 
@@ -40,14 +40,17 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
     if (circuit.expectedTests?.zs) {
       const { expected, maxPermitted, compliant, marginPercent } = circuit.expectedTests.zs;
       const status = compliant ? 'pass' : 'fail';
-      
+
       results.push({
         test: 'Earth Fault Loop (Zs)',
         expectedValue: `${expected.toFixed(3)}Ω (Max: ${maxPermitted.toFixed(3)}Ω) - ${marginPercent.toFixed(1)}% margin`,
         passCriteria: `Zs ≤ ${maxPermitted.toFixed(3)}Ω for disconnection time compliance`,
         regulation: circuit.expectedTests.zs.regulation,
         status,
-        colorClass: status === 'pass' ? 'border-green-500/50 bg-green-500/10' : 'border-red-500/50 bg-red-500/10'
+        colorClass:
+          status === 'pass'
+            ? 'border-green-500/50 bg-green-500/10'
+            : 'border-red-500/50 bg-red-500/10',
       });
     }
 
@@ -59,7 +62,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
         passCriteria: `Minimum ${circuit.expectedTests.insulationResistance.minResistance} between live conductors and earth`,
         regulation: circuit.expectedTests.insulationResistance.regulation,
         status: 'pass',
-        colorClass: 'border-purple-500/50 bg-purple-500/10'
+        colorClass: 'border-purple-500/50 bg-purple-500/10',
       });
     }
 
@@ -70,7 +73,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
       passCriteria: 'All single-pole devices in phase conductor only',
       regulation: 'BS 7671 Reg 643.4',
       status: 'pass',
-      colorClass: 'border-orange-500/50 bg-orange-500/10'
+      colorClass: 'border-orange-500/50 bg-orange-500/10',
     });
 
     // RCD Test - Use expectedTests
@@ -81,7 +84,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
         passCriteria: `Trip within ${circuit.expectedTests.rcd.maxTripTimeMs}ms at rated current`,
         regulation: circuit.expectedTests.rcd.regulation,
         status: 'pass',
-        colorClass: 'border-cyan-500/50 bg-cyan-500/10'
+        colorClass: 'border-cyan-500/50 bg-cyan-500/10',
       });
     }
 
@@ -109,9 +112,9 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
           <div>
             <p className="text-xs text-foreground/60 mb-0.5">After Diversity</p>
             <p className="text-lg font-bold text-elec-yellow">
-              {circuit.calculations?.diversifiedLoad 
-                ? `${Math.round(circuit.calculations.diversifiedLoad).toLocaleString()}W` 
-                : circuit.loadPower 
+              {circuit.calculations?.diversifiedLoad
+                ? `${Math.round(circuit.calculations.diversifiedLoad).toLocaleString()}W`
+                : circuit.loadPower
                   ? `${Math.round(circuit.loadPower * (circuit.calculations?.diversityFactor || 1)).toLocaleString()}W`
                   : '—'}
             </p>
@@ -120,7 +123,8 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
         {circuit.calculations?.diversityFactor && circuit.calculations.diversityFactor < 1 && (
           <div className="mt-2 pt-2 border-t border-elec-yellow/20">
             <p className="text-xs text-foreground/70">
-              Diversity factor: {(circuit.calculations.diversityFactor * 100).toFixed(0)}% applied per BS 7671 Appendix A
+              Diversity factor: {(circuit.calculations.diversityFactor * 100).toFixed(0)}% applied
+              per BS 7671 Appendix A
             </p>
           </div>
         )}
@@ -128,29 +132,38 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
 
       <MobileAccordion type="multiple" className="space-y-2">
         {testResults.map((result, idx) => (
-          <MobileAccordionItem 
-            key={idx} 
+          <MobileAccordionItem
+            key={idx}
             value={`test-${idx}`}
             className={`border-l-4 ${result.colorClass || 'border-elec-yellow/50'} rounded-lg overflow-hidden`}
           >
             <MobileAccordionTrigger
-              icon={result.status === 'pass' ? 
-                <CheckCircle2 className="h-5 w-5 text-green-400" /> : 
-                <AlertCircle className="h-5 w-5 text-red-400" />
+              icon={
+                result.status === 'pass' ? (
+                  <CheckCircle2 className="h-5 w-5 text-green-400" />
+                ) : (
+                  <AlertCircle className="h-5 w-5 text-red-400" />
+                )
               }
               className="bg-elec-gray/50 hover:bg-elec-gray/70"
             >
               <div className="flex items-center justify-between w-full pr-8">
                 <span className="text-sm font-medium">{result.test}</span>
-                <Badge 
-                  variant="outline" 
+                <Badge
+                  variant="outline"
                   className={`ml-2 text-xs ${
-                    result.status === 'pass' ? 'bg-green-500/10 text-green-400 border-green-500/30' :
-                    result.status === 'warning' ? 'bg-orange-500/10 text-orange-400 border-orange-500/30' :
-                    'bg-red-500/10 text-red-400 border-red-500/30'
+                    result.status === 'pass'
+                      ? 'bg-green-500/10 text-green-400 border-green-500/30'
+                      : result.status === 'warning'
+                        ? 'bg-orange-500/10 text-orange-400 border-orange-500/30'
+                        : 'bg-red-500/10 text-red-400 border-red-500/30'
                   }`}
                 >
-                  {result.status === 'pass' ? 'Pass' : result.status === 'warning' ? 'Check' : 'Review'}
+                  {result.status === 'pass'
+                    ? 'Pass'
+                    : result.status === 'warning'
+                      ? 'Check'
+                      : 'Review'}
                 </Badge>
               </div>
             </MobileAccordionTrigger>
@@ -166,7 +179,10 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
                 </div>
                 <div>
                   <p className="text-xs text-foreground/60 mb-1">Regulation</p>
-                  <Badge variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                  <Badge
+                    variant="outline"
+                    className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                  >
                     {result.regulation}
                   </Badge>
                 </div>
@@ -178,7 +194,8 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
 
       <div className="mt-3 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
         <p className="text-xs text-foreground/80">
-          <strong>Note:</strong> All test results must be recorded on the Electrical Installation Certificate (EIC) as per BS 7671 Part 6.
+          <strong>Note:</strong> All test results must be recorded on the Electrical Installation
+          Certificate (EIC) as per BS 7671 Part 6.
         </p>
       </div>
     </div>

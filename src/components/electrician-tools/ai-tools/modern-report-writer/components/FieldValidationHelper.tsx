@@ -1,14 +1,7 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { 
-  CheckCircle2, 
-  AlertTriangle, 
-  XCircle, 
-  Info,
-  BookOpen,
-  Zap
-} from "lucide-react";
+import React from 'react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, AlertTriangle, XCircle, Info, BookOpen, Zap } from 'lucide-react';
 
 interface ValidationRule {
   id: string;
@@ -29,7 +22,7 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
   fieldId,
   value,
   rules = [],
-  showCompliance = true
+  showCompliance = true,
 }) => {
   // Generate validation rules based on field type
   const generateRules = (): ValidationRule[] => {
@@ -45,14 +38,14 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
             type: 'compliance',
             message: 'Inspector must hold appropriate qualifications per BS 7671',
             status: value ? 'pass' : 'warning',
-            regulation: 'BS 7671:2018 Section 610.1'
+            regulation: 'BS 7671:2018 Section 610.1',
           },
           {
             id: '2',
             type: 'recommendation',
             message: 'City & Guilds 2391 or equivalent recommended',
             status: value.includes('2391') ? 'pass' : 'info',
-            regulation: 'Industry Standard'
+            regulation: 'Industry Standard',
           }
         );
         break;
@@ -62,14 +55,14 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
             id: '1',
             type: 'required',
             message: 'Overall assessment must be specified',
-            status: value ? 'pass' : 'error'
+            status: value ? 'pass' : 'error',
           },
           {
             id: '2',
             type: 'compliance',
             message: 'Assessment must follow BS 7671 criteria',
             status: ['satisfactory', 'unsatisfactory'].includes(value) ? 'pass' : 'warning',
-            regulation: 'BS 7671:2018 Section 631'
+            regulation: 'BS 7671:2018 Section 631',
           }
         );
         break;
@@ -79,14 +72,17 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
             id: '1',
             type: 'required',
             message: 'Extent of inspection must be documented',
-            status: value ? 'pass' : 'error'
+            status: value ? 'pass' : 'error',
           },
           {
             id: '2',
             type: 'compliance',
             message: 'Minimum 10% testing recommended for domestic properties',
-            status: value.includes('10-test') || value.includes('25-test') || value.includes('100-test') ? 'pass' : 'info',
-            regulation: 'BS 7671:2018 Section 634.2'
+            status:
+              value.includes('10-test') || value.includes('25-test') || value.includes('100-test')
+                ? 'pass'
+                : 'info',
+            regulation: 'BS 7671:2018 Section 634.2',
           }
         );
         break;
@@ -105,25 +101,35 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'pass': return CheckCircle2;
-      case 'warning': return AlertTriangle;
-      case 'error': return XCircle;
-      case 'info': return Info;
-      default: return Info;
+      case 'pass':
+        return CheckCircle2;
+      case 'warning':
+        return AlertTriangle;
+      case 'error':
+        return XCircle;
+      case 'info':
+        return Info;
+      default:
+        return Info;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pass': return 'text-green-400 border-green-500/30 bg-green-500/10';
-      case 'warning': return 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10';
-      case 'error': return 'text-red-400 border-red-500/30 bg-red-500/10';
-      case 'info': return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
-      default: return 'text-muted-foreground border-muted/30 bg-muted/10';
+      case 'pass':
+        return 'text-green-400 border-green-500/30 bg-green-500/10';
+      case 'warning':
+        return 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10';
+      case 'error':
+        return 'text-red-400 border-red-500/30 bg-red-500/10';
+      case 'info':
+        return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
+      default:
+        return 'text-muted-foreground border-muted/30 bg-muted/10';
     }
   };
 
-  const passCount = validationRules.filter(rule => rule.status === 'pass').length;
+  const passCount = validationRules.filter((rule) => rule.status === 'pass').length;
   const totalRules = validationRules.length;
 
   // Return validation status for programmatic use, but no UI
@@ -132,9 +138,9 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
   }
 
   // Simple validation feedback without the complex UI
-  const hasErrors = validationRules.some(rule => rule.status === 'error');
-  const hasWarnings = validationRules.some(rule => rule.status === 'warning');
-  
+  const hasErrors = validationRules.some((rule) => rule.status === 'error');
+  const hasWarnings = validationRules.some((rule) => rule.status === 'warning');
+
   if (hasErrors || hasWarnings) {
     return (
       <div className="text-xs text-amber-400 mt-1">

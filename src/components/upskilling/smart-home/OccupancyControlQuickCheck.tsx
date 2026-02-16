@@ -7,12 +7,16 @@ export const OccupancyControlQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "How does a BMS prevent wasted energy in unoccupied rooms?";
+  const question = 'How does a BMS prevent wasted energy in unoccupied rooms?';
   const options = [
     { id: 'a', text: 'By turning off all power to the room', correct: false },
-    { id: 'b', text: 'By using occupancy sensors to control lights and HVAC setbacks', correct: true },
+    {
+      id: 'b',
+      text: 'By using occupancy sensors to control lights and HVAC setbacks',
+      correct: true,
+    },
     { id: 'c', text: 'By locking the room doors', correct: false },
-    { id: 'd', text: 'By monitoring only during business hours', correct: false }
+    { id: 'd', text: 'By monitoring only during business hours', correct: false },
   ];
 
   const handleAnswerSelect = (optionId: string) => {
@@ -20,7 +24,7 @@ export const OccupancyControlQuickCheck = () => {
     setShowResult(true);
   };
 
-  const correctAnswer = options.find(option => option.correct);
+  const correctAnswer = options.find((option) => option.correct);
   const isCorrect = selectedAnswer === correctAnswer?.id;
 
   return (
@@ -33,7 +37,7 @@ export const OccupancyControlQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="grid gap-3">
           {options.map((option) => (
             <Button
@@ -46,19 +50,18 @@ export const OccupancyControlQuickCheck = () => {
                   ? option.correct
                     ? 'border-green-500 bg-green-500/10'
                     : selectedAnswer === option.id
-                    ? 'border-red-500 bg-red-500/10'
-                    : 'border-gray-600'
+                      ? 'border-red-500 bg-red-500/10'
+                      : 'border-gray-600'
                   : ''
               }`}
             >
               <div className="flex items-center gap-2">
-                {showResult && (
-                  option.correct ? (
+                {showResult &&
+                  (option.correct ? (
                     <CheckCircle className="h-4 w-4 text-green-400" />
                   ) : selectedAnswer === option.id ? (
                     <XCircle className="h-4 w-4 text-red-400" />
-                  ) : null
-                )}
+                  ) : null)}
                 <span>{option.text}</span>
               </div>
             </Button>
@@ -66,15 +69,16 @@ export const OccupancyControlQuickCheck = () => {
         </div>
 
         {showResult && (
-          <div className={`p-3 rounded-lg ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
+          <div
+            className={`p-3 rounded-lg ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}
+          >
             <p className={`font-medium ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
               {isCorrect ? 'Correct!' : 'Incorrect'}
             </p>
             <p className="text-gray-300 text-sm mt-1">
-              {isCorrect 
+              {isCorrect
                 ? 'Occupancy sensors detect when rooms are empty and automatically switch off lights and adjust HVAC to energy-saving setpoints.'
-                : `The correct answer is "${correctAnswer?.text}". BMS uses occupancy sensors to coordinate both lighting and HVAC systems for optimal energy efficiency.`
-              }
+                : `The correct answer is "${correctAnswer?.text}". BMS uses occupancy sensors to coordinate both lighting and HVAC systems for optimal energy efficiency.`}
             </p>
           </div>
         )}

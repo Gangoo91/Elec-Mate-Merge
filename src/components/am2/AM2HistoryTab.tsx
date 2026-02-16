@@ -169,7 +169,11 @@ export function AM2HistoryTab({ onNavigateToTab }: AM2HistoryTabProps) {
                 config.bg
               )}
             >
-              <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-white/5')}>
+              <div
+                className={cn(
+                  'h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-white/5'
+                )}
+              >
                 <Icon className={cn('h-5 w-5', config.colour)} />
               </div>
 

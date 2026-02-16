@@ -1,200 +1,207 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Smart Home Architectures - Smart Home Technology Module 1 Section 4";
-const DESCRIPTION = "Learn about local, cloud, and hybrid smart home architectures. Compare advantages, disadvantages, and choose the right system for different applications.";
+const TITLE = 'Smart Home Architectures - Smart Home Technology Module 1 Section 4';
+const DESCRIPTION =
+  'Learn about local, cloud, and hybrid smart home architectures. Compare advantages, disadvantages, and choose the right system for different applications.';
 
 const quickCheckQuestions = [
   {
-    id: "local-architecture",
-    question: "What is the main advantage of a local smart home architecture?",
+    id: 'local-architecture',
+    question: 'What is the main advantage of a local smart home architecture?',
     options: [
-      "Requires constant internet connection",
-      "Faster response times and works offline",
-      "Lower initial cost",
-      "Simpler setup process"
+      'Requires constant internet connection',
+      'Faster response times and works offline',
+      'Lower initial cost',
+      'Simpler setup process',
     ],
     correctIndex: 1,
-    explanation: "Local architectures process automation on-premises, providing faster response times and continued operation during internet outages."
+    explanation:
+      'Local architectures process automation on-premises, providing faster response times and continued operation during internet outages.',
   },
   {
-    id: "cloud-architecture",
-    question: "What is a key benefit of cloud-based smart home systems?",
+    id: 'cloud-architecture',
+    question: 'What is a key benefit of cloud-based smart home systems?',
     options: [
-      "Works without internet",
-      "Zero subscription costs",
-      "Easy remote access and advanced AI features",
-      "No privacy concerns"
+      'Works without internet',
+      'Zero subscription costs',
+      'Easy remote access and advanced AI features',
+      'No privacy concerns',
     ],
     correctIndex: 2,
-    explanation: "Cloud-based systems offer easy remote access from anywhere and can leverage powerful AI and machine learning capabilities hosted in data centres."
+    explanation:
+      'Cloud-based systems offer easy remote access from anywhere and can leverage powerful AI and machine learning capabilities hosted in data centres.',
   },
   {
-    id: "hybrid-architecture",
-    question: "What does a hybrid smart home architecture combine?",
+    id: 'hybrid-architecture',
+    question: 'What does a hybrid smart home architecture combine?',
     options: [
-      "Only wireless protocols",
-      "Local processing with cloud connectivity",
-      "Only wired systems",
-      "Manual and automatic controls only"
+      'Only wireless protocols',
+      'Local processing with cloud connectivity',
+      'Only wired systems',
+      'Manual and automatic controls only',
     ],
     correctIndex: 1,
-    explanation: "Hybrid architectures combine local processing for fast, reliable automation with cloud connectivity for remote access and advanced features."
-  }
+    explanation:
+      'Hybrid architectures combine local processing for fast, reliable automation with cloud connectivity for remote access and advanced features.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which architecture type processes all automation locally without requiring internet?",
+    question:
+      'Which architecture type processes all automation locally without requiring internet?',
     options: [
-      "Cloud-only architecture",
-      "Local architecture",
-      "Hybrid architecture",
-      "Distributed architecture"
+      'Cloud-only architecture',
+      'Local architecture',
+      'Hybrid architecture',
+      'Distributed architecture',
     ],
     correctAnswer: 1,
-    explanation: "Local architecture processes all automation on-premises using a hub or controller, without requiring internet connectivity for basic operation."
+    explanation:
+      'Local architecture processes all automation on-premises using a hub or controller, without requiring internet connectivity for basic operation.',
   },
   {
     id: 2,
-    question: "What is a disadvantage of cloud-only smart home systems?",
+    question: 'What is a disadvantage of cloud-only smart home systems?',
     options: [
-      "Too fast response times",
-      "Dependence on internet connectivity",
-      "Too much local storage",
-      "Limited remote access"
+      'Too fast response times',
+      'Dependence on internet connectivity',
+      'Too much local storage',
+      'Limited remote access',
     ],
     correctAnswer: 1,
-    explanation: "Cloud-only systems require internet connectivity to function, meaning outages can disable automation and control capabilities."
+    explanation:
+      'Cloud-only systems require internet connectivity to function, meaning outages can disable automation and control capabilities.',
   },
   {
     id: 3,
-    question: "Which architecture type is best for maintaining privacy of home data?",
-    options: [
-      "Cloud-only",
-      "Local-only",
-      "Social media integrated",
-      "Public cloud"
-    ],
+    question: 'Which architecture type is best for maintaining privacy of home data?',
+    options: ['Cloud-only', 'Local-only', 'Social media integrated', 'Public cloud'],
     correctAnswer: 1,
-    explanation: "Local-only architectures keep all data on-premises, providing maximum privacy as no data is sent to external servers."
+    explanation:
+      'Local-only architectures keep all data on-premises, providing maximum privacy as no data is sent to external servers.',
   },
   {
     id: 4,
-    question: "What is edge computing in smart home context?",
+    question: 'What is edge computing in smart home context?',
     options: [
-      "Computing at network boundaries",
-      "Processing at the device or hub level rather than cloud",
-      "Computing at room edges",
-      "External computing services"
+      'Computing at network boundaries',
+      'Processing at the device or hub level rather than cloud',
+      'Computing at room edges',
+      'External computing services',
     ],
     correctAnswer: 1,
-    explanation: "Edge computing refers to processing data at the device or hub level locally, reducing latency and cloud dependence."
+    explanation:
+      'Edge computing refers to processing data at the device or hub level locally, reducing latency and cloud dependence.',
   },
   {
     id: 5,
-    question: "Which feature typically requires cloud connectivity in smart homes?",
+    question: 'Which feature typically requires cloud connectivity in smart homes?',
     options: [
-      "Local light switching",
-      "Motion sensor triggering",
-      "Voice assistant integration and remote access",
-      "Timer-based automation"
+      'Local light switching',
+      'Motion sensor triggering',
+      'Voice assistant integration and remote access',
+      'Timer-based automation',
     ],
     correctAnswer: 2,
-    explanation: "Voice assistants like Alexa and Google Home typically process voice commands in the cloud, and remote access from outside the home requires cloud connectivity."
+    explanation:
+      'Voice assistants like Alexa and Google Home typically process voice commands in the cloud, and remote access from outside the home requires cloud connectivity.',
   },
   {
     id: 6,
     question: "What is a hybrid architecture's response during internet outage?",
     options: [
-      "Complete system failure",
-      "Local automation continues, remote access unavailable",
-      "All features continue normally",
-      "Only lighting works"
+      'Complete system failure',
+      'Local automation continues, remote access unavailable',
+      'All features continue normally',
+      'Only lighting works',
     ],
     correctAnswer: 1,
-    explanation: "In hybrid systems, local automation continues functioning during outages, but cloud-dependent features like remote access and voice control become unavailable."
+    explanation:
+      'In hybrid systems, local automation continues functioning during outages, but cloud-dependent features like remote access and voice control become unavailable.',
   },
   {
     id: 7,
-    question: "Which architecture requires the most powerful local hardware?",
-    options: [
-      "Cloud-only",
-      "Local processing",
-      "Basic timer systems",
-      "Manual control"
-    ],
+    question: 'Which architecture requires the most powerful local hardware?',
+    options: ['Cloud-only', 'Local processing', 'Basic timer systems', 'Manual control'],
     correctAnswer: 1,
-    explanation: "Local processing architectures require more powerful local hardware (hub/controller) to handle all automation processing on-premises."
+    explanation:
+      'Local processing architectures require more powerful local hardware (hub/controller) to handle all automation processing on-premises.',
   },
   {
     id: 8,
-    question: "What ongoing cost is typically associated with cloud-based systems?",
+    question: 'What ongoing cost is typically associated with cloud-based systems?',
     options: [
-      "No ongoing costs",
-      "Subscription fees for cloud services",
-      "Only electricity costs",
-      "Hardware replacement costs"
+      'No ongoing costs',
+      'Subscription fees for cloud services',
+      'Only electricity costs',
+      'Hardware replacement costs',
     ],
     correctAnswer: 1,
-    explanation: "Many cloud-based systems require subscription fees for cloud storage, advanced features, or continued service access."
+    explanation:
+      'Many cloud-based systems require subscription fees for cloud storage, advanced features, or continued service access.',
   },
   {
     id: 9,
-    question: "Which architecture provides the lowest latency for automation responses?",
-    options: [
-      "Cloud-only",
-      "Local processing",
-      "Internet-dependent",
-      "Satellite-based"
-    ],
+    question: 'Which architecture provides the lowest latency for automation responses?',
+    options: ['Cloud-only', 'Local processing', 'Internet-dependent', 'Satellite-based'],
     correctAnswer: 1,
-    explanation: "Local processing provides the lowest latency as commands are processed on-premises without the round-trip delay to cloud servers."
+    explanation:
+      'Local processing provides the lowest latency as commands are processed on-premises without the round-trip delay to cloud servers.',
   },
   {
     id: 10,
-    question: "For a client prioritising reliability and privacy, which architecture would you recommend?",
+    question:
+      'For a client prioritising reliability and privacy, which architecture would you recommend?',
     options: [
-      "Cloud-only system",
-      "Local or hybrid system with strong local processing",
-      "Public cloud system",
-      "Shared network system"
+      'Cloud-only system',
+      'Local or hybrid system with strong local processing',
+      'Public cloud system',
+      'Shared network system',
     ],
     correctAnswer: 1,
-    explanation: "A local or hybrid system with strong local processing provides reliability during outages and keeps data private on-premises."
-  }
+    explanation:
+      'A local or hybrid system with strong local processing provides reliability during outages and keeps data private on-premises.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Will my smart home work if the internet goes down?",
-    answer: "It depends on your architecture. Local and hybrid systems continue local automation during outages. Cloud-only systems may lose functionality. Check your system type and ensure critical automations can run locally."
+    question: 'Will my smart home work if the internet goes down?',
+    answer:
+      'It depends on your architecture. Local and hybrid systems continue local automation during outages. Cloud-only systems may lose functionality. Check your system type and ensure critical automations can run locally.',
   },
   {
-    question: "Are cloud-based smart home systems secure?",
-    answer: "Reputable cloud providers implement strong security measures, but data does leave your home. Ensure you use strong passwords, enable two-factor authentication, and choose providers with good security track records. Consider what data you are comfortable sharing."
+    question: 'Are cloud-based smart home systems secure?',
+    answer:
+      'Reputable cloud providers implement strong security measures, but data does leave your home. Ensure you use strong passwords, enable two-factor authentication, and choose providers with good security track records. Consider what data you are comfortable sharing.',
   },
   {
-    question: "What happens to my smart home if the manufacturer goes out of business?",
-    answer: "Cloud-dependent systems may stop working if servers are shut down. Local systems are more resilient as they do not depend on external services. Consider systems with local processing capabilities and open standards for long-term reliability."
+    question: 'What happens to my smart home if the manufacturer goes out of business?',
+    answer:
+      'Cloud-dependent systems may stop working if servers are shut down. Local systems are more resilient as they do not depend on external services. Consider systems with local processing capabilities and open standards for long-term reliability.',
   },
   {
-    question: "Can I mix local and cloud devices in one system?",
-    answer: "Yes, hybrid systems are designed for this. Many hubs can integrate both local devices (Zigbee, Z-Wave) and cloud-connected devices (Wi-Fi smart plugs), allowing flexibility in device selection."
+    question: 'Can I mix local and cloud devices in one system?',
+    answer:
+      'Yes, hybrid systems are designed for this. Many hubs can integrate both local devices (Zigbee, Z-Wave) and cloud-connected devices (Wi-Fi smart plugs), allowing flexibility in device selection.',
   },
   {
-    question: "How do I choose between local and cloud systems?",
-    answer: "Consider your priorities: if reliability and privacy are paramount, lean towards local. If remote access and AI features are important, consider hybrid or cloud. Budget, technical ability, and specific use cases all factor into the decision."
+    question: 'How do I choose between local and cloud systems?',
+    answer:
+      'Consider your priorities: if reliability and privacy are paramount, lean towards local. If remote access and AI features are important, consider hybrid or cloud. Budget, technical ability, and specific use cases all factor into the decision.',
   },
   {
-    question: "Do local systems still allow remote access?",
-    answer: "Many local systems can be configured for secure remote access through VPN connections or secure tunnelling. This provides remote capability while keeping processing local, though setup may be more complex than cloud-based remote access."
-  }
+    question: 'Do local systems still allow remote access?',
+    answer:
+      'Many local systems can be configured for secure remote access through VPN connections or secure tunnelling. This provides remote capability while keeping processing local, though setup may be more complex than cloud-based remote access.',
+  },
 ];
 
 const SmartHomeModule1Section4 = () => {
@@ -205,7 +212,12 @@ const SmartHomeModule1Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/smart-home-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -216,7 +228,6 @@ const SmartHomeModule1Section4 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -236,18 +247,32 @@ const SmartHomeModule1Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Local:</strong> Fast, private, works offline</li>
-              <li><strong>Cloud:</strong> Remote access, AI features, subscription costs</li>
-              <li><strong>Hybrid:</strong> Best of both, most flexible</li>
-              <li><strong>Choice:</strong> Based on reliability, privacy, features needed</li>
+              <li>
+                <strong>Local:</strong> Fast, private, works offline
+              </li>
+              <li>
+                <strong>Cloud:</strong> Remote access, AI features, subscription costs
+              </li>
+              <li>
+                <strong>Hybrid:</strong> Best of both, most flexible
+              </li>
+              <li>
+                <strong>Choice:</strong> Based on reliability, privacy, features needed
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Hub location, internet dependency, data flow</li>
-              <li><strong>Use:</strong> Architecture selection, client consultations</li>
-              <li><strong>Apply:</strong> Matching architecture to client needs</li>
+              <li>
+                <strong>Spot:</strong> Hub location, internet dependency, data flow
+              </li>
+              <li>
+                <strong>Use:</strong> Architecture selection, client consultations
+              </li>
+              <li>
+                <strong>Apply:</strong> Matching architecture to client needs
+              </li>
             </ul>
           </div>
         </div>
@@ -257,12 +282,12 @@ const SmartHomeModule1Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand local smart home architecture and its benefits",
-              "Explain cloud-based system advantages and limitations",
-              "Describe hybrid architecture combining local and cloud",
-              "Compare architectures for different use cases",
-              "Evaluate privacy and reliability considerations",
-              "Recommend appropriate architecture based on client needs"
+              'Understand local smart home architecture and its benefits',
+              'Explain cloud-based system advantages and limitations',
+              'Describe hybrid architecture combining local and cloud',
+              'Compare architectures for different use cases',
+              'Evaluate privacy and reliability considerations',
+              'Recommend appropriate architecture based on client needs',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -283,9 +308,9 @@ const SmartHomeModule1Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Local architecture processes all automation on-premises using a hub or controller installed
-              in the home. All device communication, rule processing, and automation execution happens
-              locally without requiring internet connectivity.
+              Local architecture processes all automation on-premises using a hub or controller
+              installed in the home. All device communication, rule processing, and automation
+              execution happens locally without requiring internet connectivity.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -314,10 +339,19 @@ const SmartHomeModule1Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Examples of Local Systems:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Home Assistant:</strong> Open-source, highly customisable, runs on local hardware</li>
-                <li><strong>Hubitat:</strong> Consumer-friendly local hub with Z-Wave/Zigbee support</li>
-                <li><strong>OpenHAB:</strong> Java-based open platform for smart home integration</li>
-                <li><strong>HomeSeer:</strong> Professional-grade local automation system</li>
+                <li>
+                  <strong>Home Assistant:</strong> Open-source, highly customisable, runs on local
+                  hardware
+                </li>
+                <li>
+                  <strong>Hubitat:</strong> Consumer-friendly local hub with Z-Wave/Zigbee support
+                </li>
+                <li>
+                  <strong>OpenHAB:</strong> Java-based open platform for smart home integration
+                </li>
+                <li>
+                  <strong>HomeSeer:</strong> Professional-grade local automation system
+                </li>
               </ul>
             </div>
           </div>
@@ -334,8 +368,8 @@ const SmartHomeModule1Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Cloud architecture relies on remote servers to process automation rules, store data,
-              and provide the interface between users and devices. Devices connect to the manufacturer's
-              cloud service, and all processing happens externally.
+              and provide the interface between users and devices. Devices connect to the
+              manufacturer's cloud service, and all processing happens externally.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -364,10 +398,18 @@ const SmartHomeModule1Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Examples of Cloud Systems:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Google Home:</strong> Cloud-based with strong AI integration</li>
-                <li><strong>Amazon Alexa:</strong> Voice-first cloud platform</li>
-                <li><strong>Apple HomeKit:</strong> Cloud-enabled with local execution option</li>
-                <li><strong>Many Wi-Fi smart devices:</strong> Rely on manufacturer cloud services</li>
+                <li>
+                  <strong>Google Home:</strong> Cloud-based with strong AI integration
+                </li>
+                <li>
+                  <strong>Amazon Alexa:</strong> Voice-first cloud platform
+                </li>
+                <li>
+                  <strong>Apple HomeKit:</strong> Cloud-enabled with local execution option
+                </li>
+                <li>
+                  <strong>Many Wi-Fi smart devices:</strong> Rely on manufacturer cloud services
+                </li>
               </ul>
             </div>
           </div>
@@ -389,7 +431,9 @@ const SmartHomeModule1Section4 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">How Hybrid Systems Work:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                How Hybrid Systems Work:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Local hub processes time-critical automation</li>
                 <li>Cloud provides remote access and voice control</li>
@@ -432,29 +476,49 @@ const SmartHomeModule1Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Response Time Comparison:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Response Time Comparison:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Local:</strong> 10-50ms typical response</li>
-                <li><strong>Hybrid:</strong> 10-100ms depending on function</li>
-                <li><strong>Cloud:</strong> 100-500ms+ depending on connection</li>
+                <li>
+                  <strong>Local:</strong> 10-50ms typical response
+                </li>
+                <li>
+                  <strong>Hybrid:</strong> 10-100ms depending on function
+                </li>
+                <li>
+                  <strong>Cloud:</strong> 100-500ms+ depending on connection
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Privacy Comparison:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Local:</strong> All data stays on-premises</li>
-                <li><strong>Hybrid:</strong> Critical data local, some cloud sharing</li>
-                <li><strong>Cloud:</strong> All data processed externally</li>
+                <li>
+                  <strong>Local:</strong> All data stays on-premises
+                </li>
+                <li>
+                  <strong>Hybrid:</strong> Critical data local, some cloud sharing
+                </li>
+                <li>
+                  <strong>Cloud:</strong> All data processed externally
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Reliability During Outages:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Local:</strong> Full functionality maintained</li>
-                <li><strong>Hybrid:</strong> Local functions continue, cloud features unavailable</li>
-                <li><strong>Cloud:</strong> Most or all functionality lost</li>
+                <li>
+                  <strong>Local:</strong> Full functionality maintained
+                </li>
+                <li>
+                  <strong>Hybrid:</strong> Local functions continue, cloud features unavailable
+                </li>
+                <li>
+                  <strong>Cloud:</strong> Most or all functionality lost
+                </li>
               </ul>
             </div>
           </div>
@@ -511,7 +575,9 @@ const SmartHomeModule1Section4 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Consulting with Clients</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Consulting with Clients
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Ask about internet reliability in their area</li>
                 <li>Discuss privacy concerns and data preferences</li>
@@ -521,7 +587,9 @@ const SmartHomeModule1Section4 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Designing Systems</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Designing Systems
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Ensure critical automation can run locally</li>
                 <li>Plan for graceful degradation during outages</li>
@@ -533,10 +601,18 @@ const SmartHomeModule1Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Over-reliance on cloud</strong> - critical functions should work locally</li>
-                <li><strong>Ignoring privacy concerns</strong> - discuss data handling with clients</li>
-                <li><strong>No offline contingency</strong> - plan for internet outages</li>
-                <li><strong>Vendor lock-in</strong> - consider open standards where possible</li>
+                <li>
+                  <strong>Over-reliance on cloud</strong> - critical functions should work locally
+                </li>
+                <li>
+                  <strong>Ignoring privacy concerns</strong> - discuss data handling with clients
+                </li>
+                <li>
+                  <strong>No offline contingency</strong> - plan for internet outages
+                </li>
+                <li>
+                  <strong>Vendor lock-in</strong> - consider open standards where possible
+                </li>
               </ul>
             </div>
           </div>
@@ -586,28 +662,33 @@ const SmartHomeModule1Section4 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/smart-home-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

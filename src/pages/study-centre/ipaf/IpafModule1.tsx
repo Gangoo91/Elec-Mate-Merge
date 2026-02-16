@@ -1,40 +1,43 @@
-import { ArrowLeft, Scale, BookOpen, FileText, Award } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, BookOpen, FileText, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Work at Height Regulations 2005",
+    title: 'Work at Height Regulations 2005',
     icon: Scale,
-    description: "Hierarchy of control, duty to plan and supervise, Schedule 5 scaffolding requirements",
+    description:
+      'Hierarchy of control, duty to plan and supervise, Schedule 5 scaffolding requirements',
   },
   {
     id: 2,
-    title: "HSWA 1974 & CDM 2015",
+    title: 'HSWA 1974 & CDM 2015',
     icon: BookOpen,
-    description: "General duties, CDM duty holders, how CDM applies to mobile tower scaffold work",
+    description: 'General duties, CDM duty holders, how CDM applies to mobile tower scaffold work',
   },
   {
     id: 3,
-    title: "BS EN 1004-1:2020 & Related Standards",
+    title: 'BS EN 1004-1:2020 & Related Standards',
     icon: FileText,
-    description: "Load classes, max heights, marking requirements, design loads and safety factors",
+    description: 'Load classes, max heights, marking requirements, design loads and safety factors',
   },
   {
     id: 4,
-    title: "PASMA & Competence Requirements",
+    title: 'PASMA & Competence Requirements',
     icon: Award,
-    description: "Towers for Users course, competence vs qualification, card types and renewal cycles",
+    description:
+      'Towers for Users course, competence vs qualification, card types and renewal cycles',
   },
 ];
 
 export default function IpafModule1() {
   useSEO({
-    title: "Module 1: Legislation & Responsibilities | IPAF Mobile Scaffold",
-    description: "Work at Height Regulations 2005, HSWA 1974, CDM 2015, BS EN 1004, and PASMA competence requirements for mobile access tower work.",
+    title: 'Module 1: Legislation & Responsibilities | IPAF Mobile Scaffold',
+    description:
+      'Work at Height Regulations 2005, HSWA 1974, CDM 2015, BS EN 1004, and PASMA competence requirements for mobile access tower work.',
   });
 
   return (
@@ -73,7 +76,8 @@ export default function IpafModule1() {
               Legislation & Responsibilities
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Legal duties, key regulations, standards, and competence requirements for mobile access tower work
+              Legal duties, key regulations, standards, and competence requirements for mobile
+              access tower work
             </p>
           </div>
 

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
   CheckCircle2,
   AlertCircle,
@@ -14,8 +14,8 @@ import {
   FileText,
   Shield,
   Sparkles,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export interface ExtractedField {
   key: string;
@@ -45,15 +45,15 @@ const FIELD_ICONS: Record<string, typeof FileText> = {
 };
 
 function getConfidenceColor(confidence: number): string {
-  if (confidence >= 0.9) return "text-green-500";
-  if (confidence >= 0.7) return "text-amber-500";
-  return "text-red-500";
+  if (confidence >= 0.9) return 'text-green-500';
+  if (confidence >= 0.7) return 'text-amber-500';
+  return 'text-red-500';
 }
 
 function getConfidenceBg(confidence: number): string {
-  if (confidence >= 0.9) return "bg-green-500/10 border-green-500/20";
-  if (confidence >= 0.7) return "bg-amber-500/10 border-amber-500/20";
-  return "bg-red-500/10 border-red-500/20";
+  if (confidence >= 0.9) return 'bg-green-500/10 border-green-500/20';
+  if (confidence >= 0.7) return 'bg-amber-500/10 border-amber-500/20';
+  return 'bg-red-500/10 border-red-500/20';
 }
 
 export function OCRPreview({
@@ -98,7 +98,7 @@ export function OCRPreview({
   const validatedCount = extractedFields.filter((f) => f.validated).length;
 
   return (
-    <Card className={cn("border-border overflow-hidden", className)}>
+    <Card className={cn('border-border overflow-hidden', className)}>
       <CardContent className="p-4 space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -109,7 +109,7 @@ export function OCRPreview({
             <div>
               <p className="font-medium">Document Analysis</p>
               <p className="text-xs text-foreground/70 capitalize">
-                {documentType.replace(/_/g, " ")}
+                {documentType.replace(/_/g, ' ')}
               </p>
             </div>
           </div>
@@ -122,12 +122,12 @@ export function OCRPreview({
             <Badge
               variant="outline"
               className={cn(
-                "border-0",
+                'border-0',
                 overallConfidence >= 0.8
-                  ? "bg-green-500/20 text-green-400"
+                  ? 'bg-green-500/20 text-green-400'
                   : overallConfidence >= 0.6
-                  ? "bg-amber-500/20 text-amber-400"
-                  : "bg-red-500/20 text-red-400"
+                    ? 'bg-amber-500/20 text-amber-400'
+                    : 'bg-red-500/20 text-red-400'
               )}
             >
               {Math.round(overallConfidence * 100)}% Match
@@ -146,9 +146,7 @@ export function OCRPreview({
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <Loader2 className="h-8 w-8 text-purple-400 mx-auto animate-spin" />
-                  <p className="text-sm text-foreground/70 mt-2">
-                    Extracting text...
-                  </p>
+                  <p className="text-sm text-foreground/70 mt-2">Extracting text...</p>
                 </div>
               </div>
             </div>
@@ -180,12 +178,12 @@ export function OCRPreview({
               <Progress
                 value={animatedConfidence}
                 className={cn(
-                  "h-2",
+                  'h-2',
                   overallConfidence >= 0.8
-                    ? "[&>div]:bg-green-500"
+                    ? '[&>div]:bg-green-500'
                     : overallConfidence >= 0.6
-                    ? "[&>div]:bg-amber-500"
-                    : "[&>div]:bg-red-500"
+                      ? '[&>div]:bg-amber-500'
+                      : '[&>div]:bg-red-500'
                 )}
               />
             </div>
@@ -208,9 +206,9 @@ export function OCRPreview({
                   <div
                     key={field.key}
                     className={cn(
-                      "flex items-center gap-3 p-3 rounded-lg border transition-all duration-300",
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
-                      field.value ? getConfidenceBg(field.confidence) : "bg-white/5 border-white/10"
+                      'flex items-center gap-3 p-3 rounded-lg border transition-all duration-300',
+                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2',
+                      field.value ? getConfidenceBg(field.confidence) : 'bg-white/5 border-white/10'
                     )}
                     style={{ transitionDelay: `${index * 50}ms` }}
                   >
@@ -231,7 +229,7 @@ export function OCRPreview({
                       {field.value && (
                         <span
                           className={cn(
-                            "text-xs font-medium",
+                            'text-xs font-medium',
                             getConfidenceColor(field.confidence)
                           )}
                         >
@@ -254,12 +252,10 @@ export function OCRPreview({
               <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <AlertCircle className="h-4 w-4 text-amber-500 mt-0.5" />
                 <div>
-                  <p className="text-sm font-medium text-amber-500">
-                    Low confidence detected
-                  </p>
+                  <p className="text-sm font-medium text-amber-500">Low confidence detected</p>
                   <p className="text-xs text-foreground/70">
-                    Try retaking the photo with better lighting and ensure the
-                    document is flat and in focus.
+                    Try retaking the photo with better lighting and ensure the document is flat and
+                    in focus.
                   </p>
                 </div>
               </div>
@@ -271,9 +267,7 @@ export function OCRPreview({
         {!isProcessing && extractedFields.length === 0 && (
           <div className="text-center py-8">
             <ScanLine className="h-10 w-10 text-foreground/70 mx-auto mb-2" />
-            <p className="text-sm text-foreground/70">
-              Capture a document to analyze
-            </p>
+            <p className="text-sm text-foreground/70">Capture a document to analyze</p>
           </div>
         )}
       </CardContent>

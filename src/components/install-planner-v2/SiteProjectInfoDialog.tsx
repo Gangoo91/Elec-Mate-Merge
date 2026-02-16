@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { InstallPlanDataV2, SiteInfo, ProjectInfo } from "./types";
+} from '@/components/ui/dialog';
+import { InstallPlanDataV2, SiteInfo, ProjectInfo } from './types';
 
 interface SiteProjectInfoDialogProps {
   open: boolean;
@@ -25,12 +25,8 @@ export const SiteProjectInfoDialog = ({
   planData,
   onSave,
 }: SiteProjectInfoDialogProps) => {
-  const [siteInfo, setSiteInfo] = useState<SiteInfo>(
-    planData.siteInfo || {}
-  );
-  const [projectInfo, setProjectInfo] = useState<ProjectInfo>(
-    planData.projectInfo || {}
-  );
+  const [siteInfo, setSiteInfo] = useState<SiteInfo>(planData.siteInfo || {});
+  const [projectInfo, setProjectInfo] = useState<ProjectInfo>(planData.projectInfo || {});
 
   const handleSave = () => {
     onSave(siteInfo, projectInfo);
@@ -57,10 +53,8 @@ export const SiteProjectInfoDialog = ({
                 <Input
                   id="propertyAddress"
                   placeholder="123 High Street, London"
-                  value={siteInfo.propertyAddress || ""}
-                  onChange={(e) =>
-                    setSiteInfo({ ...siteInfo, propertyAddress: e.target.value })
-                  }
+                  value={siteInfo.propertyAddress || ''}
+                  onChange={(e) => setSiteInfo({ ...siteInfo, propertyAddress: e.target.value })}
                 />
               </div>
 
@@ -70,10 +64,8 @@ export const SiteProjectInfoDialog = ({
                   <Input
                     id="postcode"
                     placeholder="SW1A 1AA"
-                    value={siteInfo.postcode || ""}
-                    onChange={(e) =>
-                      setSiteInfo({ ...siteInfo, postcode: e.target.value })
-                    }
+                    value={siteInfo.postcode || ''}
+                    onChange={(e) => setSiteInfo({ ...siteInfo, postcode: e.target.value })}
                   />
                 </div>
 
@@ -82,10 +74,8 @@ export const SiteProjectInfoDialog = ({
                   <Input
                     id="clientName"
                     placeholder="John Smith"
-                    value={siteInfo.clientName || ""}
-                    onChange={(e) =>
-                      setSiteInfo({ ...siteInfo, clientName: e.target.value })
-                    }
+                    value={siteInfo.clientName || ''}
+                    onChange={(e) => setSiteInfo({ ...siteInfo, clientName: e.target.value })}
                   />
                 </div>
               </div>
@@ -95,10 +85,8 @@ export const SiteProjectInfoDialog = ({
                 <Input
                   id="contactNumber"
                   placeholder="07700 900000"
-                  value={siteInfo.contactNumber || ""}
-                  onChange={(e) =>
-                    setSiteInfo({ ...siteInfo, contactNumber: e.target.value })
-                  }
+                  value={siteInfo.contactNumber || ''}
+                  onChange={(e) => setSiteInfo({ ...siteInfo, contactNumber: e.target.value })}
                 />
               </div>
             </div>
@@ -114,7 +102,7 @@ export const SiteProjectInfoDialog = ({
                   <Input
                     id="plannedStartDate"
                     type="date"
-                    value={projectInfo.plannedStartDate || ""}
+                    value={projectInfo.plannedStartDate || ''}
                     onChange={(e) =>
                       setProjectInfo({
                         ...projectInfo,
@@ -129,7 +117,7 @@ export const SiteProjectInfoDialog = ({
                   <Input
                     id="estimatedDuration"
                     placeholder="2 days"
-                    value={projectInfo.estimatedDuration || ""}
+                    value={projectInfo.estimatedDuration || ''}
                     onChange={(e) =>
                       setProjectInfo({
                         ...projectInfo,
@@ -146,7 +134,7 @@ export const SiteProjectInfoDialog = ({
                   <Input
                     id="leadElectrician"
                     placeholder="Jane Doe"
-                    value={projectInfo.leadElectrician || ""}
+                    value={projectInfo.leadElectrician || ''}
                     onChange={(e) =>
                       setProjectInfo({
                         ...projectInfo,
@@ -161,7 +149,7 @@ export const SiteProjectInfoDialog = ({
                   <Input
                     id="registrationNumber"
                     placeholder="NICEIC 12345"
-                    value={projectInfo.registrationNumber || ""}
+                    value={projectInfo.registrationNumber || ''}
                     onChange={(e) =>
                       setProjectInfo({
                         ...projectInfo,

@@ -1,11 +1,10 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Circle, Target, Calendar } from "lucide-react";
-import { useCareerProgress } from "@/hooks/career/useCareerProgress";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, Circle, Target, Calendar } from 'lucide-react';
+import { useCareerProgress } from '@/hooks/career/useCareerProgress';
 
 interface ProgressTrackerProps {
   careerPathId: string;
@@ -18,7 +17,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   careerPathId,
   careerPathTitle,
   milestones,
-  onUpdateProgress
+  onUpdateProgress,
 }) => {
   const { getProgressForPath, updateProgress } = useCareerProgress();
   const progressData = getProgressForPath(careerPathId);
@@ -26,10 +25,10 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   const handleMilestoneToggle = async (milestone: string) => {
     const currentMilestones = progressData?.milestones_completed || [];
     const isCompleted = currentMilestones.includes(milestone);
-    
+
     let newMilestones: string[];
     if (isCompleted) {
-      newMilestones = currentMilestones.filter(m => m !== milestone);
+      newMilestones = currentMilestones.filter((m) => m !== milestone);
     } else {
       newMilestones = [...currentMilestones, milestone];
     }
@@ -72,10 +71,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               {progressData?.progress_percentage || 0}%
             </Badge>
           </div>
-          <Progress 
-            value={progressData?.progress_percentage || 0} 
-            className="h-2" 
-          />
+          <Progress value={progressData?.progress_percentage || 0} className="h-2" />
         </div>
 
         {/* Target Date */}
@@ -89,7 +85,12 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               {new Date(progressData.target_completion_date).toLocaleDateString()}
             </span>
           ) : (
-            <Button variant="outline" size="sm" onClick={setTargetDate} className="touch-manipulation active:scale-[0.98]">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={setTargetDate}
+              className="touch-manipulation active:scale-[0.98]"
+            >
               Set Target
             </Button>
           )}
@@ -112,7 +113,9 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
                   ) : (
                     <Circle className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                   )}
-                  <span className={`text-sm ${isCompleted ? 'text-green-300 line-through' : 'text-foreground'}`}>
+                  <span
+                    className={`text-sm ${isCompleted ? 'text-green-300 line-through' : 'text-foreground'}`}
+                  >
                     {milestone}
                   </span>
                 </div>

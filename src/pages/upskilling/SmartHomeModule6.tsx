@@ -7,34 +7,34 @@ const SmartHomeModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "Hub Types (Home Assistant, SmartThings, proprietary)",
+      title: 'Hub Types (Home Assistant, SmartThings, proprietary)',
       icon: CircleDot,
-      description: "Understanding different smart home hub options"
+      description: 'Understanding different smart home hub options',
     },
     {
       id: 2,
-      title: "Alexa, Google Home, Siri Integration",
+      title: 'Alexa, Google Home, Siri Integration',
       icon: Mic,
-      description: "Connecting smart homes with voice assistants"
+      description: 'Connecting smart homes with voice assistants',
     },
     {
       id: 3,
-      title: "Voice Control Logic and Routine Mapping",
+      title: 'Voice Control Logic and Routine Mapping',
       icon: Settings,
-      description: "Programming voice commands and automation routines"
+      description: 'Programming voice commands and automation routines',
     },
     {
       id: 4,
-      title: "Bridging Systems and Legacy Devices",
+      title: 'Bridging Systems and Legacy Devices',
       icon: ArrowUpDown,
-      description: "Integrating older systems with modern smart home platforms"
+      description: 'Integrating older systems with modern smart home platforms',
     },
     {
       id: 5,
-      title: "Troubleshooting Ecosystem Conflicts",
+      title: 'Troubleshooting Ecosystem Conflicts',
       icon: AlertTriangle,
-      description: "Resolving compatibility issues between different systems"
-    }
+      description: 'Resolving compatibility issues between different systems',
+    },
   ];
 
   return (

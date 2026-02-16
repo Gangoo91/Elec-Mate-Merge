@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { IdCard, Award, Loader2 } from "lucide-react";
-import { useCreateElecIdProfile } from "@/hooks/useElecId";
-import { toast } from "@/hooks/use-toast";
+} from '@/components/ui/select';
+import { IdCard, Award, Loader2 } from 'lucide-react';
+import { useCreateElecIdProfile } from '@/hooks/useElecId';
+import { toast } from '@/hooks/use-toast';
 
 interface CreateElecIDForEmployeeDialogProps {
   employeeId: string;
@@ -30,11 +30,11 @@ interface CreateElecIDForEmployeeDialogProps {
 }
 
 const ECS_CARD_TYPES = [
-  { value: "gold", label: "Gold Card (Electrician)" },
-  { value: "blue", label: "Blue Card (Approved Electrician)" },
-  { value: "black", label: "Black Card (Senior/Manager)" },
-  { value: "white", label: "White Card (Trainee)" },
-  { value: "green", label: "Green Card (Labourer)" },
+  { value: 'gold', label: 'Gold Card (Electrician)' },
+  { value: 'blue', label: 'Blue Card (Approved Electrician)' },
+  { value: 'black', label: 'Black Card (Senior/Manager)' },
+  { value: 'white', label: 'White Card (Trainee)' },
+  { value: 'green', label: 'Green Card (Labourer)' },
 ];
 
 export function CreateElecIDForEmployeeDialog({
@@ -45,13 +45,13 @@ export function CreateElecIDForEmployeeDialog({
   onSuccess,
 }: CreateElecIDForEmployeeDialogProps) {
   const createProfile = useCreateElecIdProfile();
-  
+
   const [formData, setFormData] = useState({
-    ecsCardType: "gold",
-    ecsCardNumber: "",
-    ecsExpiryDate: "",
-    bio: "",
-    specialisations: "",
+    ecsCardType: 'gold',
+    ecsCardNumber: '',
+    ecsExpiryDate: '',
+    bio: '',
+    specialisations: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -65,12 +65,12 @@ export function CreateElecIDForEmployeeDialog({
         ecs_expiry_date: formData.ecsExpiryDate || null,
         bio: formData.bio || null,
         specialisations: formData.specialisations
-          ? formData.specialisations.split(",").map((s) => s.trim())
+          ? formData.specialisations.split(',').map((s) => s.trim())
           : null,
       });
 
       toast({
-        title: "Elec-ID Created",
+        title: 'Elec-ID Created',
         description: `Elec-ID profile created for ${employeeName}`,
       });
 
@@ -79,17 +79,17 @@ export function CreateElecIDForEmployeeDialog({
 
       // Reset form
       setFormData({
-        ecsCardType: "gold",
-        ecsCardNumber: "",
-        ecsExpiryDate: "",
-        bio: "",
-        specialisations: "",
+        ecsCardType: 'gold',
+        ecsCardNumber: '',
+        ecsExpiryDate: '',
+        bio: '',
+        specialisations: '',
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create Elec-ID profile",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create Elec-ID profile',
+        variant: 'destructive',
       });
     }
   };
@@ -104,9 +104,7 @@ export function CreateElecIDForEmployeeDialog({
             </div>
             <div>
               <DialogTitle>Create Elec-ID</DialogTitle>
-              <DialogDescription>
-                Set up digital ID for {employeeName}
-              </DialogDescription>
+              <DialogDescription>Set up digital ID for {employeeName}</DialogDescription>
             </div>
           </div>
         </DialogHeader>
@@ -117,9 +115,7 @@ export function CreateElecIDForEmployeeDialog({
             <Label>ECS Card Type</Label>
             <Select
               value={formData.ecsCardType}
-              onValueChange={(value) =>
-                setFormData((prev) => ({ ...prev, ecsCardType: value }))
-              }
+              onValueChange={(value) => setFormData((prev) => ({ ...prev, ecsCardType: value }))}
             >
               <SelectTrigger>
                 <SelectValue />
@@ -143,9 +139,7 @@ export function CreateElecIDForEmployeeDialog({
             <Input
               placeholder="e.g. ECS123456"
               value={formData.ecsCardNumber}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, ecsCardNumber: e.target.value }))
-              }
+              onChange={(e) => setFormData((prev) => ({ ...prev, ecsCardNumber: e.target.value }))}
             />
           </div>
 
@@ -155,9 +149,7 @@ export function CreateElecIDForEmployeeDialog({
             <Input
               type="date"
               value={formData.ecsExpiryDate}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, ecsExpiryDate: e.target.value }))
-              }
+              onChange={(e) => setFormData((prev) => ({ ...prev, ecsExpiryDate: e.target.value }))}
             />
           </div>
 
@@ -179,9 +171,7 @@ export function CreateElecIDForEmployeeDialog({
             <Textarea
               placeholder="Brief professional summary..."
               value={formData.bio}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, bio: e.target.value }))
-              }
+              onChange={(e) => setFormData((prev) => ({ ...prev, bio: e.target.value }))}
               rows={3}
             />
           </div>
@@ -196,11 +186,7 @@ export function CreateElecIDForEmployeeDialog({
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              className="flex-1"
-              disabled={createProfile.isPending}
-            >
+            <Button type="submit" className="flex-1" disabled={createProfile.isPending}>
               {createProfile.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

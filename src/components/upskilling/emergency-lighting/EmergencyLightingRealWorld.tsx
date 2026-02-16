@@ -14,7 +14,8 @@ export const EmergencyLightingRealWorld = () => {
         <div className="p-4 bg-elec-gray rounded-md">
           <h4 className="text-foreground font-semibold mb-2">Scenario</h4>
           <p className="text-gray-300 text-sm">
-            A 3-storey office building (750m² per floor) undergoes refurbishment. The building owner must ensure compliance with current emergency lighting requirements.
+            A 3-storey office building (750m² per floor) undergoes refurbishment. The building owner
+            must ensure compliance with current emergency lighting requirements.
           </p>
         </div>
 
@@ -31,7 +32,7 @@ export const EmergencyLightingRealWorld = () => {
               <li>BS 5266-1 design standards</li>
             </ul>
           </div>
-          
+
           <div>
             <h5 className="text-foreground font-medium mb-2 flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-green-400" />
@@ -49,7 +50,8 @@ export const EmergencyLightingRealWorld = () => {
 
         <div className="p-3 bg-blue-600/10 border border-blue-600/30 rounded-md">
           <p className="text-blue-400 font-medium text-sm">
-            Key Learning: The building owner is legally required to ensure emergency lighting compliance, with potential criminal liability for failures that result in harm.
+            Key Learning: The building owner is legally required to ensure emergency lighting
+            compliance, with potential criminal liability for failures that result in harm.
           </p>
         </div>
       </CardContent>

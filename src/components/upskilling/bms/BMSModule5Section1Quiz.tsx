@@ -7,12 +7,12 @@ const convertedQuizData = bmsModule5Section1QuizData.map((question, index) => ({
   question: question.question,
   options: question.options,
   correctAnswer: question.options.indexOf(question.correctAnswer),
-  explanation: `The correct answer is "${question.correctAnswer}". Understanding BMS communication protocols is essential for proper electrical installation and system integration.`
+  explanation: `The correct answer is "${question.correctAnswer}". Understanding BMS communication protocols is essential for proper electrical installation and system integration.`,
 }));
 
 export const BMSModule5Section1Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={convertedQuizData}
       title="Section 1 Quiz: Overview of BMS Protocols"
     />

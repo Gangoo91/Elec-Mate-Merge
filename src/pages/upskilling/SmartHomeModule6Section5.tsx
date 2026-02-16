@@ -1,126 +1,138 @@
-import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle, Award } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Troubleshooting Ecosystem Conflicts";
-const DESCRIPTION = "Diagnosing and resolving compatibility issues in multi-brand smart home systems";
+const TITLE = 'Troubleshooting Ecosystem Conflicts';
+const DESCRIPTION =
+  'Diagnosing and resolving compatibility issues in multi-brand smart home systems';
 
 const quickCheckQuestions = [
   {
-    question: "What is the first step when troubleshooting a device that has stopped responding?",
+    question: 'What is the first step when troubleshooting a device that has stopped responding?',
     options: [
-      "Replace the device immediately",
-      "Check if the device is online and powered, then verify hub connectivity",
-      "Reset all devices to factory settings",
-      "Contact the manufacturer"
+      'Replace the device immediately',
+      'Check if the device is online and powered, then verify hub connectivity',
+      'Reset all devices to factory settings',
+      'Contact the manufacturer',
     ],
     correctAnswer: 1,
-    explanation: "Start with the basics: verify the device has power, check if it shows as online in its app, and confirm the hub or bridge is connected. Most issues are resolved at this stage."
+    explanation:
+      'Start with the basics: verify the device has power, check if it shows as online in its app, and confirm the hub or bridge is connected. Most issues are resolved at this stage.',
   },
   {
-    question: "What might cause automation routines to stop working across multiple devices?",
+    question: 'What might cause automation routines to stop working across multiple devices?',
     options: [
-      "Individual device battery depletion",
-      "Hub or cloud service outage affecting the automation engine",
-      "Device firmware updates",
-      "Room temperature changes"
+      'Individual device battery depletion',
+      'Hub or cloud service outage affecting the automation engine',
+      'Device firmware updates',
+      'Room temperature changes',
     ],
     correctAnswer: 1,
-    explanation: "When multiple devices are affected simultaneously, the issue is likely at the hub or cloud level. Check hub status, internet connectivity, and manufacturer service status pages."
+    explanation:
+      'When multiple devices are affected simultaneously, the issue is likely at the hub or cloud level. Check hub status, internet connectivity, and manufacturer service status pages.',
   },
   {
-    question: "Why is it important to keep manufacturer apps updated?",
+    question: 'Why is it important to keep manufacturer apps updated?',
     options: [
-      "To change app colours",
-      "Updates often fix bugs and improve compatibility with other systems",
-      "To reduce battery usage",
-      "To unlock paid features"
+      'To change app colours',
+      'Updates often fix bugs and improve compatibility with other systems',
+      'To reduce battery usage',
+      'To unlock paid features',
     ],
     correctAnswer: 1,
-    explanation: "App and firmware updates frequently address compatibility issues, security vulnerabilities, and bugs. Outdated software is a common cause of integration problems."
-  }
+    explanation:
+      'App and firmware updates frequently address compatibility issues, security vulnerabilities, and bugs. Outdated software is a common cause of integration problems.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What should you check if a Zigbee device is intermittently unresponsive?",
+    question: 'What should you check if a Zigbee device is intermittently unresponsive?',
     options: [
-      "Internet connection speed",
-      "Zigbee mesh strength and router device placement",
-      "Cloud subscription status",
-      "Voice assistant settings"
+      'Internet connection speed',
+      'Zigbee mesh strength and router device placement',
+      'Cloud subscription status',
+      'Voice assistant settings',
     ],
     correctAnswer: 1,
-    explanation: "Zigbee devices rely on mesh networking. Intermittent issues often indicate weak mesh coverage. Check that router devices (mains-powered) are positioned to provide good coverage to end devices."
+    explanation:
+      'Zigbee devices rely on mesh networking. Intermittent issues often indicate weak mesh coverage. Check that router devices (mains-powered) are positioned to provide good coverage to end devices.',
   },
   {
-    question: "What is a common cause of voice commands working but app control failing?",
+    question: 'What is a common cause of voice commands working but app control failing?',
     options: [
-      "Speaker volume too low",
-      "Voice assistant using different cloud path than app",
-      "Device firmware outdated",
-      "Room too cold"
+      'Speaker volume too low',
+      'Voice assistant using different cloud path than app',
+      'Device firmware outdated',
+      'Room too cold',
     ],
     correctAnswer: 1,
-    explanation: "Voice assistants may communicate with devices via different routes than manufacturer apps. If one works and not the other, investigate each communication path independently."
+    explanation:
+      'Voice assistants may communicate with devices via different routes than manufacturer apps. If one works and not the other, investigate each communication path independently.',
   },
   {
-    question: "How can you isolate whether an issue is with a device or the hub?",
+    question: 'How can you isolate whether an issue is with a device or the hub?',
     options: [
-      "Replace both simultaneously",
-      "Test the device via its native app, bypassing the hub",
-      "Wait 24 hours",
-      "Contact the manufacturer"
+      'Replace both simultaneously',
+      'Test the device via its native app, bypassing the hub',
+      'Wait 24 hours',
+      'Contact the manufacturer',
     ],
     correctAnswer: 1,
-    explanation: "Testing the device through its native app (bypassing the hub) helps isolate whether the problem is with the device itself or the hub integration. This determines where to focus troubleshooting."
+    explanation:
+      'Testing the device through its native app (bypassing the hub) helps isolate whether the problem is with the device itself or the hub integration. This determines where to focus troubleshooting.',
   },
   {
-    question: "What might cause two routines to conflict with each other?",
+    question: 'What might cause two routines to conflict with each other?',
     options: [
-      "Using different voice assistants",
-      "Overlapping triggers or contradictory actions on the same device",
-      "Different device brands",
-      "Using Wi-Fi instead of Ethernet"
+      'Using different voice assistants',
+      'Overlapping triggers or contradictory actions on the same device',
+      'Different device brands',
+      'Using Wi-Fi instead of Ethernet',
     ],
     correctAnswer: 1,
-    explanation: "Routines can conflict if they have overlapping triggers (same time or event) with contradictory actions. For example, one turning lights on whilst another turns them off at the same time."
+    explanation:
+      'Routines can conflict if they have overlapping triggers (same time or event) with contradictory actions. For example, one turning lights on whilst another turns them off at the same time.',
   },
   {
-    question: "What is the best approach when a customer reports intermittent issues?",
+    question: 'What is the best approach when a customer reports intermittent issues?',
     options: [
       "Tell them it's normal",
-      "Document patterns, check logs, and identify common factors",
-      "Replace all equipment",
-      "Disable all automations"
+      'Document patterns, check logs, and identify common factors',
+      'Replace all equipment',
+      'Disable all automations',
     ],
     correctAnswer: 1,
-    explanation: "Intermittent issues require systematic investigation. Document when issues occur, check hub and device logs, and look for patterns such as specific times, other device activity, or network congestion."
-  }
+    explanation:
+      'Intermittent issues require systematic investigation. Document when issues occur, check hub and device logs, and look for patterns such as specific times, other device activity, or network congestion.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Should I factory reset devices when troubleshooting?",
-    answer: "Factory reset should be a last resort after other troubleshooting fails. It removes all configuration and may require re-pairing with hubs. Try power cycling, app updates, and re-linking accounts first."
+    question: 'Should I factory reset devices when troubleshooting?',
+    answer:
+      'Factory reset should be a last resort after other troubleshooting fails. It removes all configuration and may require re-pairing with hubs. Try power cycling, app updates, and re-linking accounts first.',
   },
   {
-    question: "How do I know if an issue is with my network or the smart home system?",
-    answer: "Test non-smart devices on the same network. Check if multiple smart devices are affected. Use network diagnostic tools to verify connectivity. If other devices work fine, the issue is likely with the smart home system rather than the network."
+    question: 'How do I know if an issue is with my network or the smart home system?',
+    answer:
+      'Test non-smart devices on the same network. Check if multiple smart devices are affected. Use network diagnostic tools to verify connectivity. If other devices work fine, the issue is likely with the smart home system rather than the network.',
   },
   {
-    question: "What information should I collect before contacting manufacturer support?",
-    answer: "Document: device model and firmware version, hub type and version, when the issue started, what troubleshooting you have tried, error messages or log entries, and whether the issue affects other devices."
-  }
+    question: 'What information should I collect before contacting manufacturer support?',
+    answer:
+      'Document: device model and firmware version, hub type and version, when the issue started, what troubleshooting you have tried, error messages or log entries, and whether the issue affects other devices.',
+  },
 ];
 
 const SmartHomeModule6Section5 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 6`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -148,7 +160,9 @@ const SmartHomeModule6Section5 = () => {
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
             <AlertTriangle className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-elec-yellow">Voice Control and Hub Integration</span>
+            <span className="text-sm font-medium text-elec-yellow">
+              Voice Control and Hub Integration
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
           <p className="text-lg text-white max-w-2xl mx-auto">{DESCRIPTION}</p>
@@ -184,19 +198,27 @@ const SmartHomeModule6Section5 = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Identify common causes of smart home ecosystem conflicts</span>
+                <span className="text-white">
+                  Identify common causes of smart home ecosystem conflicts
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Apply systematic troubleshooting processes to isolate issues</span>
+                <span className="text-white">
+                  Apply systematic troubleshooting processes to isolate issues
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Resolve automation routine conflicts and device communication issues</span>
+                <span className="text-white">
+                  Resolve automation routine conflicts and device communication issues
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Implement preventive measures to reduce future conflicts</span>
+                <span className="text-white">
+                  Implement preventive measures to reduce future conflicts
+                </span>
               </li>
             </ul>
           </div>
@@ -213,35 +235,40 @@ const SmartHomeModule6Section5 = () => {
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Network Issues</h4>
                 <p className="text-white text-sm">
-                  Wi-Fi congestion, weak signal, router compatibility, IP address conflicts, or DNS problems can disrupt communication between devices, hubs, and cloud services.
+                  Wi-Fi congestion, weak signal, router compatibility, IP address conflicts, or DNS
+                  problems can disrupt communication between devices, hubs, and cloud services.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Firmware Incompatibility</h4>
                 <p className="text-white text-sm">
-                  Outdated firmware on devices, hubs, or bridges may cause integration issues. Conversely, new firmware updates can occasionally break existing integrations.
+                  Outdated firmware on devices, hubs, or bridges may cause integration issues.
+                  Conversely, new firmware updates can occasionally break existing integrations.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Account and Authentication</h4>
                 <p className="text-white text-sm">
-                  Expired tokens, changed passwords, or account linking issues can disconnect devices from voice assistants or hub platforms.
+                  Expired tokens, changed passwords, or account linking issues can disconnect
+                  devices from voice assistants or hub platforms.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Cloud Service Outages</h4>
                 <p className="text-white text-sm">
-                  Manufacturer cloud services occasionally experience downtime, affecting device control and automations that rely on cloud connectivity.
+                  Manufacturer cloud services occasionally experience downtime, affecting device
+                  control and automations that rely on cloud connectivity.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Mesh Network Problems</h4>
                 <p className="text-white text-sm">
-                  Zigbee and Z-Wave mesh networks can have coverage gaps, interference issues, or routing problems that cause intermittent device communication.
+                  Zigbee and Z-Wave mesh networks can have coverage gaps, interference issues, or
+                  routing problems that cause intermittent device communication.
                 </p>
               </div>
             </div>
@@ -311,23 +338,36 @@ const SmartHomeModule6Section5 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Automation routines can conflict when they have overlapping triggers or contradictory actions. Identifying and resolving these conflicts requires systematic review.
+              Automation routines can conflict when they have overlapping triggers or contradictory
+              actions. Identifying and resolving these conflicts requires systematic review.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
               <h3 className="font-semibold text-white mb-3">Common Conflict Types</h3>
               <div className="space-y-3 text-sm">
                 <div>
-                  <p className="text-white"><strong>Time overlap:</strong> Two routines triggered at the same time with different actions on the same device.</p>
+                  <p className="text-white">
+                    <strong>Time overlap:</strong> Two routines triggered at the same time with
+                    different actions on the same device.
+                  </p>
                 </div>
                 <div>
-                  <p className="text-white"><strong>Trigger overlap:</strong> Multiple routines responding to the same event (e.g., door unlock).</p>
+                  <p className="text-white">
+                    <strong>Trigger overlap:</strong> Multiple routines responding to the same event
+                    (e.g., door unlock).
+                  </p>
                 </div>
                 <div>
-                  <p className="text-white"><strong>State conflicts:</strong> One routine turns device on whilst another's condition expects it off.</p>
+                  <p className="text-white">
+                    <strong>State conflicts:</strong> One routine turns device on whilst another's
+                    condition expects it off.
+                  </p>
                 </div>
                 <div>
-                  <p className="text-white"><strong>Loop creation:</strong> Routine A triggers Routine B which triggers Routine A.</p>
+                  <p className="text-white">
+                    <strong>Loop creation:</strong> Routine A triggers Routine B which triggers
+                    Routine A.
+                  </p>
                 </div>
               </div>
             </div>
@@ -476,7 +516,9 @@ const SmartHomeModule6Section5 = () => {
               </div>
             </div>
             <p className="text-white mb-4">
-              Congratulations on completing Module 6! You have learned about smart home hubs, voice assistant integration, routine programming, legacy device bridging, and troubleshooting ecosystem conflicts.
+              Congratulations on completing Module 6! You have learned about smart home hubs, voice
+              assistant integration, routine programming, legacy device bridging, and
+              troubleshooting ecosystem conflicts.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
@@ -493,9 +535,7 @@ const SmartHomeModule6Section5 = () => {
                 className="border-white/30 text-white hover:bg-white/10 touch-manipulation"
                 asChild
               >
-                <Link to="/electrician/upskilling/smart-home-course">
-                  Back to Course Overview
-                </Link>
+                <Link to="/electrician/upskilling/smart-home-course">Back to Course Overview</Link>
               </Button>
             </div>
           </div>

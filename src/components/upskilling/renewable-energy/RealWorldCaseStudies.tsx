@@ -9,26 +9,48 @@ const RealWorldCaseStudies = () => {
       <CardContent className="text-gray-300 space-y-4">
         <div className="space-y-6">
           <div className="bg-green-600/10 border border-green-600/20 rounded-md p-4">
-            <h4 className="text-green-400 font-semibold mb-3">Manufacturing Facility Case Study:</h4>
+            <h4 className="text-green-400 font-semibold mb-3">
+              Manufacturing Facility Case Study:
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h6 className="text-foreground font-medium mb-2">System Details:</h6>
                 <ul className="text-gray-300 space-y-1">
-                  <li>• <strong>Capacity:</strong> 250kW rooftop installation</li>
-                  <li>• <strong>Total cost:</strong> £225,000 (£900 per kW)</li>
-                  <li>• <strong>Annual generation:</strong> 218,750 kWh</li>
-                  <li>• <strong>Self-consumption:</strong> 92% during operating hours</li>
-                  <li>• <strong>Installation time:</strong> 3 weeks with minimal disruption</li>
+                  <li>
+                    • <strong>Capacity:</strong> 250kW rooftop installation
+                  </li>
+                  <li>
+                    • <strong>Total cost:</strong> £225,000 (£900 per kW)
+                  </li>
+                  <li>
+                    • <strong>Annual generation:</strong> 218,750 kWh
+                  </li>
+                  <li>
+                    • <strong>Self-consumption:</strong> 92% during operating hours
+                  </li>
+                  <li>
+                    • <strong>Installation time:</strong> 3 weeks with minimal disruption
+                  </li>
                 </ul>
               </div>
               <div>
                 <h6 className="text-foreground font-medium mb-2">Financial Performance:</h6>
                 <ul className="text-gray-300 space-y-1">
-                  <li>• <strong>Annual savings:</strong> £38,500 electricity costs</li>
-                  <li>• <strong>Export income:</strong> £1,750 SEG payments</li>
-                  <li>• <strong>Carbon savings:</strong> 89 tonnes CO₂ annually</li>
-                  <li>• <strong>Simple payback:</strong> 5.6 years</li>
-                  <li>• <strong>25-year NPV:</strong> £467,000 (8% discount rate)</li>
+                  <li>
+                    • <strong>Annual savings:</strong> £38,500 electricity costs
+                  </li>
+                  <li>
+                    • <strong>Export income:</strong> £1,750 SEG payments
+                  </li>
+                  <li>
+                    • <strong>Carbon savings:</strong> 89 tonnes CO₂ annually
+                  </li>
+                  <li>
+                    • <strong>Simple payback:</strong> 5.6 years
+                  </li>
+                  <li>
+                    • <strong>25-year NPV:</strong> £467,000 (8% discount rate)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -77,28 +99,54 @@ const RealWorldCaseStudies = () => {
           </div>
 
           <div className="bg-orange-600/10 border border-orange-600/20 rounded-md p-4">
-            <h4 className="text-orange-400 font-semibold mb-3">Domestic vs Commercial ROI Analysis:</h4>
+            <h4 className="text-orange-400 font-semibold mb-3">
+              Domestic vs Commercial ROI Analysis:
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h6 className="text-green-400 font-medium mb-2">4kW Domestic System:</h6>
                 <ul className="text-gray-300 space-y-1">
-                  <li>• <strong>Total investment:</strong> £6,000 (0% VAT)</li>
-                  <li>• <strong>Annual generation:</strong> 3,500 kWh</li>
-                  <li>• <strong>Self-use (60%):</strong> 2,100 kWh saving £630</li>
-                  <li>• <strong>Export (40%):</strong> 1,400 kWh earning £105</li>
-                  <li>• <strong>Total annual benefit:</strong> £735</li>
-                  <li>• <strong>IRR over 25 years:</strong> 12.3%</li>
+                  <li>
+                    • <strong>Total investment:</strong> £6,000 (0% VAT)
+                  </li>
+                  <li>
+                    • <strong>Annual generation:</strong> 3,500 kWh
+                  </li>
+                  <li>
+                    • <strong>Self-use (60%):</strong> 2,100 kWh saving £630
+                  </li>
+                  <li>
+                    • <strong>Export (40%):</strong> 1,400 kWh earning £105
+                  </li>
+                  <li>
+                    • <strong>Total annual benefit:</strong> £735
+                  </li>
+                  <li>
+                    • <strong>IRR over 25 years:</strong> 12.3%
+                  </li>
                 </ul>
               </div>
               <div>
                 <h6 className="text-orange-400 font-medium mb-2">50kW Commercial System:</h6>
                 <ul className="text-gray-300 space-y-1">
-                  <li>• <strong>Total investment:</strong> £60,000 (VAT reclaimable)</li>
-                  <li>• <strong>Annual generation:</strong> 43,750 kWh</li>
-                  <li>• <strong>Self-use (85%):</strong> 37,188 kWh saving £7,810</li>
-                  <li>• <strong>Export (15%):</strong> 6,562 kWh earning £525</li>
-                  <li>• <strong>Total annual benefit:</strong> £8,335</li>
-                  <li>• <strong>IRR over 25 years:</strong> 13.8%</li>
+                  <li>
+                    • <strong>Total investment:</strong> £60,000 (VAT reclaimable)
+                  </li>
+                  <li>
+                    • <strong>Annual generation:</strong> 43,750 kWh
+                  </li>
+                  <li>
+                    • <strong>Self-use (85%):</strong> 37,188 kWh saving £7,810
+                  </li>
+                  <li>
+                    • <strong>Export (15%):</strong> 6,562 kWh earning £525
+                  </li>
+                  <li>
+                    • <strong>Total annual benefit:</strong> £8,335
+                  </li>
+                  <li>
+                    • <strong>IRR over 25 years:</strong> 13.8%
+                  </li>
                 </ul>
               </div>
             </div>

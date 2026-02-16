@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Calendar, Clock, Target, TrendingUp, Award, Plus } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import TimeEntryDialog from "@/components/apprentice/time-tracking/logbook/TimeEntryDialog";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Calendar, Clock, Target, TrendingUp, Award, Plus } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import TimeEntryDialog from '@/components/apprentice/time-tracking/logbook/TimeEntryDialog';
 
 interface TimeEntry {
   id: string;
@@ -31,7 +31,9 @@ const TimeTrackingTab = () => {
 
   const fetchTimeEntries = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -43,32 +45,29 @@ const TimeTrackingTab = () => {
 
       if (error) throw error;
 
-      const entries: TimeEntry[] = (data || []).map(entry => ({
+      const entries: TimeEntry[] = (data || []).map((entry) => ({
         id: entry.id,
         date: entry.date,
         duration: entry.duration,
         activity: entry.activity,
         notes: entry.notes,
-        is_automatic: entry.is_automatic
+        is_automatic: entry.is_automatic,
       }));
 
       setTimeEntries(entries);
-      
+
       // Calculate total hours for current week
       const currentWeekStart = new Date();
       currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
-      const weekEntries = entries.filter(entry => 
-        new Date(entry.date) >= currentWeekStart
-      );
-      const weeklyHours = weekEntries.reduce((sum, entry) => sum + (entry.duration / 60), 0);
+      const weekEntries = entries.filter((entry) => new Date(entry.date) >= currentWeekStart);
+      const weeklyHours = weekEntries.reduce((sum, entry) => sum + entry.duration / 60, 0);
       setTotalHours(weeklyHours);
-      
     } catch (error) {
       console.error('Error fetching time entries:', error);
       toast({
-        title: "Error",
-        description: "Failed to load time entries",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to load time entries',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -77,12 +76,14 @@ const TimeTrackingTab = () => {
 
   const handleAddTimeEntry = async (duration: number, activity: string, notes: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         toast({
-          title: "Error",
-          description: "You must be logged in to add time entries",
-          variant: "destructive"
+          title: 'Error',
+          description: 'You must be logged in to add time entries',
+          variant: 'destructive',
         });
         return;
       }
@@ -95,7 +96,7 @@ const TimeTrackingTab = () => {
           duration: duration,
           activity: activity,
           notes: notes,
-          is_automatic: false
+          is_automatic: false,
         })
         .select('*')
         .single();
@@ -109,31 +110,30 @@ const TimeTrackingTab = () => {
         duration: data.duration,
         activity: data.activity,
         notes: data.notes,
-        is_automatic: data.is_automatic
+        is_automatic: data.is_automatic,
       };
 
-      setTimeEntries(prev => [newEntry, ...prev]);
+      setTimeEntries((prev) => [newEntry, ...prev]);
 
       // Update weekly hours if the entry is from this week
       const currentWeekStart = new Date();
       currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
       if (new Date(newEntry.date) >= currentWeekStart) {
-        setTotalHours(prev => prev + (duration / 60));
+        setTotalHours((prev) => prev + duration / 60);
       }
 
       setIsDialogOpen(false);
-      
+
       toast({
-        title: "Success",
-        description: "Time entry added successfully",
+        title: 'Success',
+        description: 'Time entry added successfully',
       });
-      
     } catch (error) {
       console.error('Error adding time entry:', error);
       toast({
-        title: "Error",
-        description: "Failed to add time entry",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to add time entry',
+        variant: 'destructive',
       });
     }
   };
@@ -145,7 +145,7 @@ const TimeTrackingTab = () => {
     return (
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3].map((i) => (
             <Card key={i} className="animate-pulse">
               <CardContent className="p-6">
                 <div className="h-8 bg-white/30 rounded mb-2"></div>
@@ -169,9 +169,7 @@ const TimeTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-700">{totalHours.toFixed(1)}h</div>
-            <p className="text-xs text-white">
-              Target: {weeklyTarget}h per week
-            </p>
+            <p className="text-xs text-white">Target: {weeklyTarget}h per week</p>
           </CardContent>
         </Card>
 
@@ -193,9 +191,7 @@ const TimeTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-700">{remainingHours.toFixed(1)}h</div>
-            <p className="text-xs text-white">
-              To reach weekly target
-            </p>
+            <p className="text-xs text-white">To reach weekly target</p>
           </CardContent>
         </Card>
       </div>
@@ -208,7 +204,7 @@ const TimeTrackingTab = () => {
               <Calendar className="h-5 w-5" />
               Recent Training Sessions
             </CardTitle>
-            <Button 
+            <Button
               onClick={() => setIsDialogOpen(true)}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/80 w-full md:w-auto"
             >
@@ -229,7 +225,10 @@ const TimeTrackingTab = () => {
           ) : (
             <div className="space-y-4">
               {timeEntries.map((entry) => (
-                <div key={entry.id} className="bg-white/5 border border-elec-yellow/20 rounded-lg p-4">
+                <div
+                  key={entry.id}
+                  className="bg-white/5 border border-elec-yellow/20 rounded-lg p-4"
+                >
                   <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                     <div className="flex-1">
                       <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2 mb-1">
@@ -242,11 +241,10 @@ const TimeTrackingTab = () => {
                         )}
                       </div>
                       <p className="text-sm text-white">
-                        {new Date(entry.date).toLocaleDateString('en-GB')} • {(entry.duration / 60).toFixed(1)} hours
+                        {new Date(entry.date).toLocaleDateString('en-GB')} •{' '}
+                        {(entry.duration / 60).toFixed(1)} hours
                       </p>
-                      {entry.notes && (
-                        <p className="text-sm text-white mt-1">{entry.notes}</p>
-                      )}
+                      {entry.notes && <p className="text-sm text-white mt-1">{entry.notes}</p>}
                     </div>
                     <div className="text-left md:text-right">
                       <div className="text-lg font-semibold">{entry.duration}m</div>

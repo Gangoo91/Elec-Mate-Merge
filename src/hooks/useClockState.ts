@@ -41,11 +41,11 @@ export const useClockState = () => {
       const start = new Date(clockState.clockInTime).getTime();
       const now = Date.now();
       const diff = Math.floor((now - start) / 1000);
-      
+
       const hours = Math.floor(diff / 3600);
       const minutes = Math.floor((diff % 3600) / 60);
       const seconds = diff % 60;
-      
+
       setDuration(
         `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
       );
@@ -53,69 +53,70 @@ export const useClockState = () => {
 
     updateDuration();
     const interval = setInterval(updateDuration, 1000);
-    
+
     return () => clearInterval(interval);
   }, [clockState]);
 
-  const clockIn = useCallback((
-    employeeId: string,
-    employeeName: string,
-    jobId: string,
-    jobTitle: string
-  ) => {
-    const newState: ClockState = {
-      employeeId,
-      employeeName,
-      jobId,
-      jobTitle,
-      clockInTime: new Date().toISOString(),
-    };
-    
-    localStorage.setItem(CLOCK_STATE_KEY, JSON.stringify(newState));
-    setClockState(newState);
-    toast.success(`Clocked in to ${jobTitle}`);
-  }, []);
+  const clockIn = useCallback(
+    (employeeId: string, employeeName: string, jobId: string, jobTitle: string) => {
+      const newState: ClockState = {
+        employeeId,
+        employeeName,
+        jobId,
+        jobTitle,
+        clockInTime: new Date().toISOString(),
+      };
 
-  const clockOut = useCallback(async (breakMinutes: number = 0) => {
-    if (!clockState) {
-      toast.error('Not currently clocked in');
-      return false;
-    }
+      localStorage.setItem(CLOCK_STATE_KEY, JSON.stringify(newState));
+      setClockState(newState);
+      toast.success(`Clocked in to ${jobTitle}`);
+    },
+    []
+  );
 
-    const clockOutTime = new Date().toISOString();
-    const clockInDate = new Date(clockState.clockInTime);
-    const clockOutDate = new Date(clockOutTime);
-    
-    // Calculate total hours
-    const diffMs = clockOutDate.getTime() - clockInDate.getTime();
-    const diffHours = diffMs / (1000 * 60 * 60);
-    const totalHours = Math.max(0, diffHours - (breakMinutes / 60));
+  const clockOut = useCallback(
+    async (breakMinutes: number = 0) => {
+      if (!clockState) {
+        toast.error('Not currently clocked in');
+        return false;
+      }
 
-    try {
-      await createTimesheet.mutateAsync({
-        employee_id: clockState.employeeId,
-        job_id: clockState.jobId,
-        date: clockInDate.toISOString().split('T')[0],
-        clock_in: clockState.clockInTime,
-        clock_out: clockOutTime,
-        break_minutes: breakMinutes,
-        total_hours: parseFloat(totalHours.toFixed(2)),
-        status: 'Pending',
-        notes: null,
-        approved_by: null,
-        approved_at: null,
-      });
+      const clockOutTime = new Date().toISOString();
+      const clockInDate = new Date(clockState.clockInTime);
+      const clockOutDate = new Date(clockOutTime);
 
-      localStorage.removeItem(CLOCK_STATE_KEY);
-      setClockState(null);
-      toast.success(`Clocked out. ${totalHours.toFixed(1)} hours logged.`);
-      return true;
-    } catch (error) {
-      console.error('Failed to clock out:', error);
-      toast.error('Failed to save timesheet');
-      return false;
-    }
-  }, [clockState, createTimesheet]);
+      // Calculate total hours
+      const diffMs = clockOutDate.getTime() - clockInDate.getTime();
+      const diffHours = diffMs / (1000 * 60 * 60);
+      const totalHours = Math.max(0, diffHours - breakMinutes / 60);
+
+      try {
+        await createTimesheet.mutateAsync({
+          employee_id: clockState.employeeId,
+          job_id: clockState.jobId,
+          date: clockInDate.toISOString().split('T')[0],
+          clock_in: clockState.clockInTime,
+          clock_out: clockOutTime,
+          break_minutes: breakMinutes,
+          total_hours: parseFloat(totalHours.toFixed(2)),
+          status: 'Pending',
+          notes: null,
+          approved_by: null,
+          approved_at: null,
+        });
+
+        localStorage.removeItem(CLOCK_STATE_KEY);
+        setClockState(null);
+        toast.success(`Clocked out. ${totalHours.toFixed(1)} hours logged.`);
+        return true;
+      } catch (error) {
+        console.error('Failed to clock out:', error);
+        toast.error('Failed to save timesheet');
+        return false;
+      }
+    },
+    [clockState, createTimesheet]
+  );
 
   const cancelClockIn = useCallback(() => {
     localStorage.removeItem(CLOCK_STATE_KEY);

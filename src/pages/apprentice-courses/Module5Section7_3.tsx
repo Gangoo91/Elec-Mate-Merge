@@ -1,59 +1,197 @@
-import { ArrowLeft, ArrowRight, FileText, Target, CheckCircle, AlertTriangle, Clipboard } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowRight,
+  FileText,
+  Target,
+  CheckCircle,
+  AlertTriangle,
+  Clipboard,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Maintaining Work Logs and Handover Sheets - Module 5.7.3 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn the importance of work logs and handover sheets for safety, accountability, and efficient project management in electrical installations.";
+const TITLE =
+  'Maintaining Work Logs and Handover Sheets - Module 5.7.3 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn the importance of work logs and handover sheets for safety, accountability, and efficient project management in electrical installations.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What is the primary purpose of work logs?",
-    options: ["To record tasks, progress, and responsibility", "To decorate the site office", "To reduce paperwork", "To replace verbal communication"],
+    question: 'What is the primary purpose of work logs?',
+    options: [
+      'To record tasks, progress, and responsibility',
+      'To decorate the site office',
+      'To reduce paperwork',
+      'To replace verbal communication',
+    ],
     correctIndex: 0,
-    explanation: "Work logs are essential for recording tasks, progress, and responsibility to ensure accountability and traceability."
+    explanation:
+      'Work logs are essential for recording tasks, progress, and responsibility to ensure accountability and traceability.',
   },
   {
     id: 2,
-    question: "Which of the following should NOT be included in a work log?",
-    options: ["Materials used", "Completed tasks", "Lunch break details", "Safety observations"],
+    question: 'Which of the following should NOT be included in a work log?',
+    options: ['Materials used', 'Completed tasks', 'Lunch break details', 'Safety observations'],
     correctIndex: 2,
-    explanation: "Work logs should focus on work-related activities, safety observations, and project progress, not personal break details."
+    explanation:
+      'Work logs should focus on work-related activities, safety observations, and project progress, not personal break details.',
   },
   {
     id: 3,
-    question: "What key information must a handover sheet contain?",
-    options: ["Outstanding tasks and safety notes", "Weather conditions", "Delivery schedules only", "Personal contact numbers"],
+    question: 'What key information must a handover sheet contain?',
+    options: [
+      'Outstanding tasks and safety notes',
+      'Weather conditions',
+      'Delivery schedules only',
+      'Personal contact numbers',
+    ],
     correctIndex: 0,
-    explanation: "Handover sheets must contain outstanding tasks and safety notes to ensure continuity and safety for the next team."
-  }
+    explanation:
+      'Handover sheets must contain outstanding tasks and safety notes to ensure continuity and safety for the next team.',
+  },
 ];
 
 export default function Module5Section7_3() {
   useSEO(TITLE, DESCRIPTION);
 
   const quizQuestions = [
-    { id: 1, question: "What is the primary purpose of work logs?", options: ["To record tasks, progress, and responsibility", "To decorate the site office", "To reduce paperwork", "To replace verbal communication"], correctAnswer: 0 },
-    { id: 2, question: "Which of the following should NOT be included in a work log?", options: ["Materials used", "Completed tasks", "Lunch break details", "Safety observations"], correctAnswer: 2 },
-    { id: 3, question: "What key information must a handover sheet contain?", options: ["Outstanding tasks and safety notes", "Weather conditions", "Delivery schedules only", "Personal contact numbers"], correctAnswer: 0 },
-    { id: 4, question: "Why are handover sheets important for safety?", options: ["They identify isolations and hazards for the next team", "They reduce writing needed", "They are optional under regulations", "They improve team morale"], correctAnswer: 0 },
-    { id: 5, question: "In the real-world scenario, what caused the electrical fault?", options: ["Poor installation materials", "No handover notes left for the night shift", "Incorrect testing procedure", "Equipment failure"], correctAnswer: 1 },
-    { id: 6, question: "What risk can arise from poor record keeping?", options: ["Missed hazards and duplicated work", "Increased energy efficiency", "Fewer site inspections", "Better team coordination"], correctAnswer: 0 },
-    { id: 7, question: "When should work logs and handovers be completed?", options: ["At the end of each week", "At the end of every shift", "Only at project completion", "When the supervisor asks"], correctAnswer: 1 },
-    { id: 8, question: "Why should standardised forms be used for logs and handovers?", options: ["To save money on printing", "To ensure consistency and clarity", "To reduce supervisors needed", "To make filing easier"], correctAnswer: 1 },
-    { id: 9, question: "Where should work logs and handover sheets be stored?", options: ["In a safe, accessible location (physical or digital)", "Thrown away after use", "Kept in personal tool bags", "Left on the work bench"], correctAnswer: 0 },
-    { id: 10, question: "Who should be made aware of handover details?", options: ["The next team, via toolbox talks or briefings", "Only the site manager", "Nobody, as long as it's written down", "Just the apprentices"], correctAnswer: 0 }
+    {
+      id: 1,
+      question: 'What is the primary purpose of work logs?',
+      options: [
+        'To record tasks, progress, and responsibility',
+        'To decorate the site office',
+        'To reduce paperwork',
+        'To replace verbal communication',
+      ],
+      correctAnswer: 0,
+    },
+    {
+      id: 2,
+      question: 'Which of the following should NOT be included in a work log?',
+      options: ['Materials used', 'Completed tasks', 'Lunch break details', 'Safety observations'],
+      correctAnswer: 2,
+    },
+    {
+      id: 3,
+      question: 'What key information must a handover sheet contain?',
+      options: [
+        'Outstanding tasks and safety notes',
+        'Weather conditions',
+        'Delivery schedules only',
+        'Personal contact numbers',
+      ],
+      correctAnswer: 0,
+    },
+    {
+      id: 4,
+      question: 'Why are handover sheets important for safety?',
+      options: [
+        'They identify isolations and hazards for the next team',
+        'They reduce writing needed',
+        'They are optional under regulations',
+        'They improve team morale',
+      ],
+      correctAnswer: 0,
+    },
+    {
+      id: 5,
+      question: 'In the real-world scenario, what caused the electrical fault?',
+      options: [
+        'Poor installation materials',
+        'No handover notes left for the night shift',
+        'Incorrect testing procedure',
+        'Equipment failure',
+      ],
+      correctAnswer: 1,
+    },
+    {
+      id: 6,
+      question: 'What risk can arise from poor record keeping?',
+      options: [
+        'Missed hazards and duplicated work',
+        'Increased energy efficiency',
+        'Fewer site inspections',
+        'Better team coordination',
+      ],
+      correctAnswer: 0,
+    },
+    {
+      id: 7,
+      question: 'When should work logs and handovers be completed?',
+      options: [
+        'At the end of each week',
+        'At the end of every shift',
+        'Only at project completion',
+        'When the supervisor asks',
+      ],
+      correctAnswer: 1,
+    },
+    {
+      id: 8,
+      question: 'Why should standardised forms be used for logs and handovers?',
+      options: [
+        'To save money on printing',
+        'To ensure consistency and clarity',
+        'To reduce supervisors needed',
+        'To make filing easier',
+      ],
+      correctAnswer: 1,
+    },
+    {
+      id: 9,
+      question: 'Where should work logs and handover sheets be stored?',
+      options: [
+        'In a safe, accessible location (physical or digital)',
+        'Thrown away after use',
+        'Kept in personal tool bags',
+        'Left on the work bench',
+      ],
+      correctAnswer: 0,
+    },
+    {
+      id: 10,
+      question: 'Who should be made aware of handover details?',
+      options: [
+        'The next team, via toolbox talks or briefings',
+        'Only the site manager',
+        "Nobody, as long as it's written down",
+        'Just the apprentices',
+      ],
+      correctAnswer: 0,
+    },
   ];
 
   const faqs = [
-    { question: "What information should be included in work logs?", answer: "Work logs should include date and time, worker names, tasks completed, materials used, problems encountered, and health and safety observations." },
-    { question: "How often should handover sheets be completed?", answer: "Handover sheets should be completed at the end of every shift to ensure continuity and safety for the incoming team." },
-    { question: "What are the consequences of poor record keeping?", answer: "Poor record keeping can lead to missed safety hazards, duplicated work, disputes over progress or responsibility, and failed audits or inspections." },
-    { question: "Can digital systems be used for work logs and handovers?", answer: "Yes, digital systems can be used as long as they provide secure storage, easy access for authorised personnel, and maintain proper backup procedures." },
-    { question: "What should I do if I find incomplete handover information?", answer: "Contact the previous shift or responsible person immediately to clarify any missing or unclear information before starting work." }
+    {
+      question: 'What information should be included in work logs?',
+      answer:
+        'Work logs should include date and time, worker names, tasks completed, materials used, problems encountered, and health and safety observations.',
+    },
+    {
+      question: 'How often should handover sheets be completed?',
+      answer:
+        'Handover sheets should be completed at the end of every shift to ensure continuity and safety for the incoming team.',
+    },
+    {
+      question: 'What are the consequences of poor record keeping?',
+      answer:
+        'Poor record keeping can lead to missed safety hazards, duplicated work, disputes over progress or responsibility, and failed audits or inspections.',
+    },
+    {
+      question: 'Can digital systems be used for work logs and handovers?',
+      answer:
+        'Yes, digital systems can be used as long as they provide secure storage, easy access for authorised personnel, and maintain proper backup procedures.',
+    },
+    {
+      question: 'What should I do if I find incomplete handover information?',
+      answer:
+        'Contact the previous shift or responsible person immediately to clarify any missing or unclear information before starting work.',
+    },
   ];
 
   return (
@@ -61,7 +199,11 @@ export default function Module5Section7_3() {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
-          <Button variant="ghost" className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7
@@ -84,7 +226,8 @@ export default function Module5Section7_3() {
               Maintaining Work Logs and Handover Sheets
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding the importance of work logs and handover sheets for safety, accountability, and efficient project management
+              Understanding the importance of work logs and handover sheets for safety,
+              accountability, and efficient project management
             </p>
           </header>
 
@@ -106,9 +249,16 @@ export default function Module5Section7_3() {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li><strong>Spot:</strong> Work log books, handover sheets, shift briefings</li>
-                  <li><strong>Use:</strong> Complete logs daily, note safety concerns, list outstanding tasks</li>
-                  <li><strong>Check:</strong> Information is clear, complete, and accessible</li>
+                  <li>
+                    <strong>Spot:</strong> Work log books, handover sheets, shift briefings
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Complete logs daily, note safety concerns, list
+                    outstanding tasks
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Information is clear, complete, and accessible
+                  </li>
                 </ul>
               </div>
             </div>
@@ -136,7 +286,8 @@ export default function Module5Section7_3() {
               Why Work Logs and Handover Sheets Matter
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Work logs and handover sheets are essential documents that ensure continuity, safety, and accountability on electrical projects:
+              Work logs and handover sheets are essential documents that ensure continuity, safety,
+              and accountability on electrical projects:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -171,11 +322,20 @@ export default function Module5Section7_3() {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm text-white/90"><strong className="text-red-400">Legal requirement:</strong> Proper documentation supports health and safety compliance and contractual obligations</p>
+              <p className="text-sm text-white/90">
+                <strong className="text-red-400">Legal requirement:</strong> Proper documentation
+                supports health and safety compliance and contractual obligations
+              </p>
             </div>
           </section>
 
-          <InlineCheck id="work-logs-purpose-check" question={quickCheckQuestions[0].question} options={quickCheckQuestions[0].options} correctIndex={quickCheckQuestions[0].correctIndex} explanation={quickCheckQuestions[0].explanation} />
+          <InlineCheck
+            id="work-logs-purpose-check"
+            question={quickCheckQuestions[0].question}
+            options={quickCheckQuestions[0].options}
+            correctIndex={quickCheckQuestions[0].correctIndex}
+            explanation={quickCheckQuestions[0].explanation}
+          />
 
           {/* Section 2 - What to Include */}
           <section className="mb-10 mt-8">
@@ -220,7 +380,13 @@ export default function Module5Section7_3() {
             </div>
           </section>
 
-          <InlineCheck id="work-log-content-check" question={quickCheckQuestions[1].question} options={quickCheckQuestions[1].options} correctIndex={quickCheckQuestions[1].correctIndex} explanation={quickCheckQuestions[1].explanation} />
+          <InlineCheck
+            id="work-log-content-check"
+            question={quickCheckQuestions[1].question}
+            options={quickCheckQuestions[1].options}
+            correctIndex={quickCheckQuestions[1].correctIndex}
+            explanation={quickCheckQuestions[1].explanation}
+          />
 
           {/* Section 3 - Handover Sheet Information */}
           <section className="mb-10 mt-8">
@@ -229,7 +395,8 @@ export default function Module5Section7_3() {
               Handover Sheet Information
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Handover sheets bridge the gap between shifts and teams, ensuring critical information is not lost:
+              Handover sheets bridge the gap between shifts and teams, ensuring critical information
+              is not lost:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
@@ -264,11 +431,20 @@ export default function Module5Section7_3() {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm text-white/90"><strong className="text-blue-400">Remember:</strong> Handover information must be communicated verbally as well as in writing</p>
+              <p className="text-sm text-white/90">
+                <strong className="text-blue-400">Remember:</strong> Handover information must be
+                communicated verbally as well as in writing
+              </p>
             </div>
           </section>
 
-          <InlineCheck id="handover-content-check" question={quickCheckQuestions[2].question} options={quickCheckQuestions[2].options} correctIndex={quickCheckQuestions[2].correctIndex} explanation={quickCheckQuestions[2].explanation} />
+          <InlineCheck
+            id="handover-content-check"
+            question={quickCheckQuestions[2].question}
+            options={quickCheckQuestions[2].options}
+            correctIndex={quickCheckQuestions[2].correctIndex}
+            explanation={quickCheckQuestions[2].explanation}
+          />
 
           {/* Section 4 - Risks of Poor Record Keeping */}
           <section className="mb-10 mt-8">
@@ -277,7 +453,8 @@ export default function Module5Section7_3() {
               Risks of Poor Record Keeping
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Inadequate documentation can have serious consequences for safety, efficiency, and project success:
+              Inadequate documentation can have serious consequences for safety, efficiency, and
+              project success:
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
@@ -331,7 +508,10 @@ export default function Module5Section7_3() {
                 <div>
                   <h3 className="font-medium text-white mb-2">The Missing Handover</h3>
                   <p className="text-white/80 text-sm mb-3">
-                    On a commercial installation, the day shift completed containment and partially wired lighting circuits but failed to record which circuits were live and which were still isolated. The night shift, unaware of this, attempted to energise a circuit that was incomplete, causing an electrical fault and damaging equipment.
+                    On a commercial installation, the day shift completed containment and partially
+                    wired lighting circuits but failed to record which circuits were live and which
+                    were still isolated. The night shift, unaware of this, attempted to energise a
+                    circuit that was incomplete, causing an electrical fault and damaging equipment.
                   </p>
                   <div className="bg-red-500/10 p-3 rounded-lg mb-3">
                     <p className="font-medium text-red-400 text-sm mb-1">Consequences:</p>
@@ -344,7 +524,10 @@ export default function Module5Section7_3() {
                   </div>
                   <div className="bg-green-500/10 p-3 rounded-lg">
                     <p className="font-medium text-green-400 text-sm mb-1">Lesson Learned:</p>
-                    <p className="text-white/70 text-xs">Proper handover notes identifying circuit status would have prevented the fault and ensured a safe, smooth transition between shifts.</p>
+                    <p className="text-white/70 text-xs">
+                      Proper handover notes identifying circuit status would have prevented the
+                      fault and ensured a safe, smooth transition between shifts.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -435,7 +618,10 @@ export default function Module5Section7_3() {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
+                >
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
                   <p className="text-white/80 text-sm">A: {faq.answer}</p>
                 </div>
@@ -450,7 +636,9 @@ export default function Module5Section7_3() {
               <h2 className="text-xl font-semibold text-white">Recap</h2>
             </div>
             <p className="text-white/80 mb-4">
-              In this subsection, you learned why maintaining work logs and handover sheets is critical for safety, accountability, and efficiency. Good documentation protects everyone and keeps projects running smoothly.
+              In this subsection, you learned why maintaining work logs and handover sheets is
+              critical for safety, accountability, and efficiency. Good documentation protects
+              everyone and keeps projects running smoothly.
             </p>
             <ul className="list-disc pl-6 space-y-2 text-white/80">
               <li>Work logs record tasks, progress, and responsibility</li>
@@ -465,13 +653,20 @@ export default function Module5Section7_3() {
 
           {/* Navigation */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
-            <Button variant="outline" className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]" asChild>
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
               <Link to="../7-2">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous: Cable Labelling
               </Link>
             </Button>
-            <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]" asChild>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
               <Link to="../7-4">
                 Next: As-Built Drawings
                 <ArrowRight className="w-4 h-4 ml-2" />

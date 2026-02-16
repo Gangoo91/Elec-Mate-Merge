@@ -7,12 +7,12 @@ export const LEDFlickerProblemQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What problem occurs if the wrong dimmer is used with LEDs?";
+  const question = 'What problem occurs if the wrong dimmer is used with LEDs?';
   const options = [
     { id: 'a', text: 'They become too bright', correct: false },
     { id: 'b', text: 'They use more energy', correct: false },
     { id: 'c', text: 'They flicker and buzz', correct: true },
-    { id: 'd', text: 'They change colour randomly', correct: false }
+    { id: 'd', text: 'They change colour randomly', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -35,7 +35,7 @@ export const LEDFlickerProblemQuickCheck = () => {
       <CardContent>
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-          
+
           <div className="grid gap-2">
             {options.map((option) => (
               <button
@@ -47,11 +47,11 @@ export const LEDFlickerProblemQuickCheck = () => {
                     ? option.correct
                       ? 'bg-green-900/30 border-green-600 text-green-200'
                       : selectedAnswer === option.id
-                      ? 'bg-red-900/30 border-red-600 text-red-200'
-                      : 'bg-elec-dark border-gray-600 text-gray-400'
+                        ? 'bg-red-900/30 border-red-600 text-red-200'
+                        : 'bg-elec-dark border-gray-600 text-gray-400'
                     : selectedAnswer === option.id
-                    ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                    : 'bg-elec-dark border-gray-600 text-gray-300 hover:border-gray-500'
+                      ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
+                      : 'bg-elec-dark border-gray-600 text-gray-300 hover:border-gray-500'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -69,7 +69,7 @@ export const LEDFlickerProblemQuickCheck = () => {
           </div>
 
           {!showResult ? (
-            <Button 
+            <Button
               onClick={handleSubmit}
               disabled={!selectedAnswer}
               className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
@@ -81,19 +81,19 @@ export const LEDFlickerProblemQuickCheck = () => {
               {selectedAnswer === 'c' ? (
                 <div className="bg-green-900/20 border border-green-600/50 p-3 rounded-lg">
                   <p className="text-green-200 text-sm">
-                    ✓ Correct! Wrong dimmer types cause LEDs to flicker, buzz, or hum because of 
+                    ✓ Correct! Wrong dimmer types cause LEDs to flicker, buzz, or hum because of
                     incompatible control methods with the LED driver electronics.
                   </p>
                 </div>
               ) : (
                 <div className="bg-red-900/20 border border-red-600/50 p-3 rounded-lg">
                   <p className="text-red-200 text-sm">
-                    ✗ Incorrect. The main problem with wrong dimmers is flickering and buzzing, 
+                    ✗ Incorrect. The main problem with wrong dimmers is flickering and buzzing,
                     caused by the dimmer's control method being incompatible with LED drivers.
                   </p>
                 </div>
               )}
-              <Button 
+              <Button
                 onClick={handleReset}
                 variant="outline"
                 className="w-full border-gray-600 text-gray-300 hover:bg-gray-700"

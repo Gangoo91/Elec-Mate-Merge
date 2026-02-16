@@ -12,11 +12,12 @@ export const InsulationTestMethodsPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Testing sequence for different installation types */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Recommended Testing Sequences</h3>
-          
+          <h3 className="text-lg font-semibold text-foreground mb-4">
+            Recommended Testing Sequences
+          </h3>
+
           <div className="grid gap-4">
             {/* Single phase domestic */}
             <div className="p-4 rounded-lg bg-blue-600/10 border border-blue-600/20">
@@ -26,15 +27,21 @@ export const InsulationTestMethodsPractical = () => {
               </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-3">
-                  <Badge variant="secondary" className="bg-blue-600/20 text-blue-200 min-w-12">1</Badge>
+                  <Badge variant="secondary" className="bg-blue-600/20 text-blue-200 min-w-12">
+                    1
+                  </Badge>
                   <span className="text-foreground text-sm">Test L1-N</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Badge variant="secondary" className="bg-blue-600/20 text-blue-200 min-w-12">2</Badge>
+                  <Badge variant="secondary" className="bg-blue-600/20 text-blue-200 min-w-12">
+                    2
+                  </Badge>
                   <span className="text-foreground text-sm">Test Line to Earth (L-E)</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Badge variant="secondary" className="bg-blue-600/20 text-blue-200 min-w-12">3</Badge>
+                  <Badge variant="secondary" className="bg-blue-600/20 text-blue-200 min-w-12">
+                    3
+                  </Badge>
                   <span className="text-foreground text-sm">Test Neutral to Earth (N-E)</span>
                 </div>
               </div>
@@ -51,15 +58,21 @@ export const InsulationTestMethodsPractical = () => {
                   <p className="font-medium text-green-200">Phase to Phase</p>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">1</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        1
+                      </Badge>
                       <span className="text-foreground">L1-L2</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">2</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        2
+                      </Badge>
                       <span className="text-foreground">L1-L3</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">3</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        3
+                      </Badge>
                       <span className="text-foreground">L2-L3</span>
                     </div>
                   </div>
@@ -68,15 +81,21 @@ export const InsulationTestMethodsPractical = () => {
                   <p className="font-medium text-green-200">Phase to Neutral</p>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">4</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        4
+                      </Badge>
                       <span className="text-foreground">L1-N</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">5</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        5
+                      </Badge>
                       <span className="text-foreground">L2-N</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">6</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        6
+                      </Badge>
                       <span className="text-foreground">L3-N</span>
                     </div>
                   </div>
@@ -85,15 +104,21 @@ export const InsulationTestMethodsPractical = () => {
                   <p className="font-medium text-green-200">Phase to Earth</p>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">7</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        7
+                      </Badge>
                       <span className="text-foreground">L1-E</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">8</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        8
+                      </Badge>
                       <span className="text-foreground">L2-E</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">9</Badge>
+                      <Badge variant="secondary" className="bg-green-600/20 text-green-200 text-xs">
+                        9
+                      </Badge>
                       <span className="text-foreground">L3-E</span>
                     </div>
                   </div>
@@ -106,7 +131,7 @@ export const InsulationTestMethodsPractical = () => {
         {/* Alternative test methods */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-foreground">Alternative Test Methods</h3>
-          
+
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-yellow-600/10 border border-yellow-600/20">
               <h4 className="font-medium text-yellow-200 mb-3 flex items-center gap-2">
@@ -115,7 +140,7 @@ export const InsulationTestMethodsPractical = () => {
               </h4>
               <div className="space-y-3">
                 <p className="text-foreground text-sm">
-                  When equipment cannot be disconnected or individual conductor access is limited, 
+                  When equipment cannot be disconnected or individual conductor access is limited,
                   connect Line and Neutral together and test as a combined unit to Earth.
                 </p>
                 <div className="bg-yellow-600/10 border border-yellow-600/30 rounded p-3">
@@ -131,7 +156,9 @@ export const InsulationTestMethodsPractical = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-purple-600/10 border border-purple-600/20">
-              <h4 className="font-medium text-purple-200 mb-3">Motor and Control Circuit Testing</h4>
+              <h4 className="font-medium text-purple-200 mb-3">
+                Motor and Control Circuit Testing
+              </h4>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-purple-200 text-sm mb-2">Motor Circuits:</p>
@@ -196,22 +223,39 @@ export const InsulationTestMethodsPractical = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <ul className="text-foreground text-sm space-y-2">
-                  <li>• <strong>Not disconnecting electronic equipment</strong> - Can damage equipment and give false readings</li>
-                  <li>• <strong>Using wrong test voltage</strong> - Check circuit voltage rating before selecting test voltage</li>
-                  <li>• <strong>Insufficient contact time</strong> - Not allowing readings to stabilise leads to inaccurate results</li>
+                  <li>
+                    • <strong>Not disconnecting electronic equipment</strong> - Can damage equipment
+                    and give false readings
+                  </li>
+                  <li>
+                    • <strong>Using wrong test voltage</strong> - Check circuit voltage rating
+                    before selecting test voltage
+                  </li>
+                  <li>
+                    • <strong>Insufficient contact time</strong> - Not allowing readings to
+                    stabilise leads to inaccurate results
+                  </li>
                 </ul>
               </div>
               <div>
                 <ul className="text-foreground text-sm space-y-2">
-                  <li>• <strong>Missing conductor combinations</strong> - Incomplete testing may miss specific faults</li>
-                  <li>• <strong>Poor terminal contact</strong> - Dirty or loose connections affect reading accuracy</li>
-                  <li>• <strong>Not documenting limitations</strong> - Failing to record when standard procedures weren't followed</li>
+                  <li>
+                    • <strong>Missing conductor combinations</strong> - Incomplete testing may miss
+                    specific faults
+                  </li>
+                  <li>
+                    • <strong>Poor terminal contact</strong> - Dirty or loose connections affect
+                    reading accuracy
+                  </li>
+                  <li>
+                    • <strong>Not documenting limitations</strong> - Failing to record when standard
+                    procedures weren't followed
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

@@ -22,14 +22,14 @@ export const generateCircuitContext = (
   return {
     projectOverview: `${design.projectName} at ${design.location}. ${design.installationType || 'Domestic'} installation with ${design.circuits.length} circuits. ${design.consumerUnit?.incomingSupply?.voltage || 230}V ${design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S'} supply.`,
 
-    circuitSummaries: circuits.map(c => ({
+    circuitSummaries: circuits.map((c) => ({
       name: c.name,
       description: `${c.loadType} circuit - ${c.loadPower}W load`,
       keySpecs: `${c.cableSize}mm² ${c.cableType || 'T&E'}, ${c.protectionDevice?.rating}A ${c.protectionDevice?.type}, ${c.cableLength}m run`,
-      installationNotes: c.installationMethod || 'Standard installation'
+      installationNotes: c.installationMethod || 'Standard installation',
     })),
 
-    systemDetails: `Main switch: ${design.consumerUnit?.mainSwitchRating || 100}A, Ze: ${design.consumerUnit?.incomingSupply?.Ze || 0.35}Ω, Total load: ${((design.totalLoad || 0) / 1000).toFixed(1)}kW`
+    systemDetails: `Main switch: ${design.consumerUnit?.mainSwitchRating || 100}A, Ze: ${design.consumerUnit?.incomingSupply?.Ze || 0.35}Ω, Total load: ${((design.totalLoad || 0) / 1000).toFixed(1)}kW`,
   };
 };
 
@@ -40,9 +40,11 @@ export const formatContextForAgent = (
   agentType: AgentType
 ): string => {
   // Clean format without markdown - better for textarea display
-  const circuitDetails = context.circuitSummaries.map((c, i) => {
-    return `Circuit ${i + 1}: ${c.name}\n  • ${c.description}\n  • ${c.keySpecs}\n  • ${c.installationNotes}`;
-  }).join('\n\n');
+  const circuitDetails = context.circuitSummaries
+    .map((c, i) => {
+      return `Circuit ${i + 1}: ${c.name}\n  • ${c.description}\n  • ${c.keySpecs}\n  • ${c.installationNotes}`;
+    })
+    .join('\n\n');
 
   // Agent-specific request
   const agentRequests: Record<AgentType, string> = {
@@ -50,7 +52,7 @@ export const formatContextForAgent = (
     rams: 'Generate a RAMS document covering installation of these circuits.',
     'cost-engineer': 'Estimate materials and labour costs for these circuits.',
     'method-statement': 'Generate a method statement for installing these circuits.',
-    maintenance: 'Provide maintenance instructions and schedules for these circuits.'
+    maintenance: 'Provide maintenance instructions and schedules for these circuits.',
   };
 
   return `PROJECT DETAILS
@@ -87,7 +89,7 @@ export const storeContextForAgent = (
     formattedPrompt,
     sourceDesign: design.projectName,
     timestamp: new Date().toISOString(),
-    agentType
+    agentType,
   };
 
   sessionStorage.setItem('circuit-design-context', JSON.stringify(storedContext));

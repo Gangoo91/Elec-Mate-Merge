@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { RefreshCw, Database, Calendar, Clock, CheckCircle, AlertCircle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { RefreshCw, Database, Calendar, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface CacheEntry {
   guide_type: string;
@@ -26,15 +26,17 @@ const CacheManager = () => {
     try {
       const { data, error } = await supabase
         .from('tool_guide_cache')
-        .select('guide_type, created_at, expires_at, refresh_scheduled_for, last_refreshed, cache_version, refresh_status')
+        .select(
+          'guide_type, created_at, expires_at, refresh_scheduled_for, last_refreshed, cache_version, refresh_status'
+        )
         .order('last_refreshed', { ascending: false });
 
       if (error) {
         console.error('Error fetching cache status:', error);
         toast({
-          title: "Error",
-          description: "Failed to load cache status",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to load cache status',
+          variant: 'destructive',
         });
       } else {
         setCacheEntries(data || []);
@@ -42,9 +44,9 @@ const CacheManager = () => {
     } catch (error) {
       console.error('Failed to fetch cache status:', error);
       toast({
-        title: "Error",
-        description: "Failed to load cache status",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load cache status',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -55,20 +57,20 @@ const CacheManager = () => {
     setIsRefreshing(true);
     try {
       const { data, error } = await supabase.functions.invoke('weekly-cache-refresh', {
-        body: { manual: true }
+        body: { manual: true },
       });
 
       if (error) {
         console.error('Cache refresh error:', error);
         toast({
-          title: "Refresh Failed",
-          description: error.message || "Failed to refresh cache",
-          variant: "destructive",
+          title: 'Refresh Failed',
+          description: error.message || 'Failed to refresh cache',
+          variant: 'destructive',
         });
       } else {
         console.log('Cache refresh completed:', data);
         toast({
-          title: "Cache Refreshed",
+          title: 'Cache Refreshed',
           description: `Successfully refreshed ${data.refreshedCount} guides`,
         });
         // Reload cache status
@@ -77,9 +79,9 @@ const CacheManager = () => {
     } catch (error) {
       console.error('Cache refresh failed:', error);
       toast({
-        title: "Refresh Failed",
-        description: "Failed to refresh cache",
-        variant: "destructive",
+        title: 'Refresh Failed',
+        description: 'Failed to refresh cache',
+        variant: 'destructive',
       });
     } finally {
       setIsRefreshing(false);
@@ -92,7 +94,7 @@ const CacheManager = () => {
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -102,19 +104,27 @@ const CacheManager = () => {
 
   const getStatusColor = (status?: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-500/20 text-green-400';
-      case 'in_progress': return 'bg-blue-500/20 text-blue-400';
-      case 'failed': return 'bg-red-500/20 text-red-400';
-      default: return 'bg-gray-500/20 text-gray-400';
+      case 'completed':
+        return 'bg-green-500/20 text-green-400';
+      case 'in_progress':
+        return 'bg-blue-500/20 text-blue-400';
+      case 'failed':
+        return 'bg-red-500/20 text-red-400';
+      default:
+        return 'bg-gray-500/20 text-gray-400';
     }
   };
 
   const getStatusIcon = (status?: string) => {
     switch (status) {
-      case 'completed': return <CheckCircle className="h-3 w-3" />;
-      case 'in_progress': return <RefreshCw className="h-3 w-3 animate-spin" />;
-      case 'failed': return <AlertCircle className="h-3 w-3" />;
-      default: return <Database className="h-3 w-3" />;
+      case 'completed':
+        return <CheckCircle className="h-3 w-3" />;
+      case 'in_progress':
+        return <RefreshCw className="h-3 w-3 animate-spin" />;
+      case 'failed':
+        return <AlertCircle className="h-3 w-3" />;
+      default:
+        return <Database className="h-3 w-3" />;
     }
   };
 
@@ -172,7 +182,7 @@ const CacheManager = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-muted-foreground">
                   <div>
                     <span className="block">Last Updated:</span>
@@ -182,14 +192,18 @@ const CacheManager = () => {
                   </div>
                   <div>
                     <span className="block">Expires:</span>
-                    <span className={isExpired(entry.expires_at) ? 'text-red-400' : 'text-foreground'}>
+                    <span
+                      className={isExpired(entry.expires_at) ? 'text-red-400' : 'text-foreground'}
+                    >
                       {formatDate(entry.expires_at)}
                     </span>
                   </div>
                   <div>
                     <span className="block">Next Refresh:</span>
                     <span className="text-foreground">
-                      {entry.refresh_scheduled_for ? formatDate(entry.refresh_scheduled_for) : 'Not scheduled'}
+                      {entry.refresh_scheduled_for
+                        ? formatDate(entry.refresh_scheduled_for)
+                        : 'Not scheduled'}
                     </span>
                   </div>
                   <div>
@@ -216,8 +230,8 @@ const CacheManager = () => {
             <span className="font-medium">Automatic Refresh Schedule</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            Tool guides are automatically refreshed every Sunday at 2:00 AM UTC. 
-            You can manually trigger a refresh using the button above.
+            Tool guides are automatically refreshed every Sunday at 2:00 AM UTC. You can manually
+            trigger a refresh using the button above.
           </p>
         </div>
       </CardContent>

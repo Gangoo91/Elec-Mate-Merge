@@ -1,50 +1,52 @@
-import { ArrowLeft, Cable, Package, Wrench, Cog, Cloud, CheckCircle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Cable, Package, Wrench, Cog, Cloud, CheckCircle } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Types of Wiring Systems and Cable Types",
-    description: "Overview of different wiring systems, cable classifications and their applications",
+    number: 'Section 1',
+    title: 'Types of Wiring Systems and Cable Types',
+    description:
+      'Overview of different wiring systems, cable classifications and their applications',
     icon: Cable,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
-    title: "Cable Containment Systems",
-    description: "Methods and systems for containing, protecting and supporting electrical cables",
+    number: 'Section 2',
+    title: 'Cable Containment Systems',
+    description: 'Methods and systems for containing, protecting and supporting electrical cables',
     icon: Package,
-    href: "section2"
+    href: 'section2',
   },
   {
-    number: "Section 3",
-    title: "Electrical Tools and Equipment",
-    description: "Essential tools, equipment and testing instruments for electrical installation work",
+    number: 'Section 3',
+    title: 'Electrical Tools and Equipment',
+    description:
+      'Essential tools, equipment and testing instruments for electrical installation work',
     icon: Wrench,
-    href: "section3"
+    href: 'section3',
   },
   {
-    number: "Section 4",
-    title: "Installation Methods and Techniques",
-    description: "Practical installation methods and techniques for electrical systems",
+    number: 'Section 4',
+    title: 'Installation Methods and Techniques',
+    description: 'Practical installation methods and techniques for electrical systems',
     icon: Cog,
-    href: "section4"
+    href: 'section4',
   },
   {
-    number: "Section 5",
-    title: "Environmental Considerations and External Influences",
-    description: "Environmental factors affecting electrical installations and protective measures",
+    number: 'Section 5',
+    title: 'Environmental Considerations and External Influences',
+    description: 'Environmental factors affecting electrical installations and protective measures',
     icon: Cloud,
-    href: "section5"
+    href: 'section5',
   },
   {
-    number: "Section 6",
-    title: "Installation Standards and Best Practice",
-    description: "Industry standards, regulations and best practice guidelines for electrical work",
+    number: 'Section 6',
+    title: 'Installation Standards and Best Practice',
+    description: 'Industry standards, regulations and best practice guidelines for electrical work',
     icon: CheckCircle,
-    href: "section6"
+    href: 'section6',
   },
 ];
 

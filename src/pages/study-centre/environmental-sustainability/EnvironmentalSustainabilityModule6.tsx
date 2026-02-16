@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by environmental awareness assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by environmental awareness assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Know the Key Legislation",
+    title: 'Know the Key Legislation',
     description:
-      "Environmental Protection Act 1990, Environment Act 2021, Clean Air Act, Wildlife and Countryside Act 1981, and the duty of care for waste.",
+      'Environmental Protection Act 1990, Environment Act 2021, Clean Air Act, Wildlife and Countryside Act 1981, and the duty of care for waste.',
   },
   {
-    title: "Learn the Waste Hierarchy",
+    title: 'Learn the Waste Hierarchy',
     description:
-      "Understand the five steps (prevention, reuse, recycling, recovery, disposal) and how to apply them. Know the difference between hazardous and non-hazardous waste classifications.",
+      'Understand the five steps (prevention, reuse, recycling, recovery, disposal) and how to apply them. Know the difference between hazardous and non-hazardous waste classifications.',
   },
   {
-    title: "Understand Pollution Controls",
+    title: 'Understand Pollution Controls',
     description:
-      "Dust suppression, silt management, oil containment, noise limits, Section 61 consents, and incident response procedures for environmental spills.",
+      'Dust suppression, silt management, oil containment, noise limits, Section 61 consents, and incident response procedures for environmental spills.',
   },
   {
-    title: "Master Energy & Resource Topics",
+    title: 'Master Energy & Resource Topics',
     description:
-      "Scope 1, 2, and 3 carbon emissions, energy monitoring on site, water conservation methods, and how to choose sustainable materials with lower embodied carbon.",
+      'Scope 1, 2, and 3 carbon emissions, energy monitoring on site, water conservation methods, and how to choose sustainable materials with lower embodied carbon.',
   },
   {
-    title: "Know Biodiversity Requirements",
+    title: 'Know Biodiversity Requirements',
     description:
-      "Protected species (bats, newts, badgers), when ecological surveys are needed, BREEAM rating categories, and the ISO 14001 environmental management framework.",
+      'Protected species (bats, newts, badgers), when ecological surveys are needed, BREEAM rating categories, and the ISO 14001 environmental management framework.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function EnvironmentalSustainabilityModule6() {
   useSEO({
-    title: "Environmental & Sustainability Mock Exam | Module 6",
+    title: 'Environmental & Sustainability Mock Exam | Module 6',
     description:
-      "Test your environmental and sustainability knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your environmental and sustainability knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,12 +108,11 @@ export default function EnvironmentalSustainabilityModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Put your environmental and sustainability knowledge to the test under timed exam conditions.
-              Questions are drawn from a 200-question bank covering all five content modules.
+              Put your environmental and sustainability knowledge to the test under timed exam
+              conditions. Questions are drawn from a 200-question bank covering all five content
+              modules.
             </p>
           </div>
 
@@ -115,7 +124,9 @@ export default function EnvironmentalSustainabilityModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real environmental awareness assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real environmental awareness assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +141,7 @@ export default function EnvironmentalSustainabilityModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +157,11 @@ export default function EnvironmentalSustainabilityModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Environmental Awareness", count: 40 },
-                  { module: "Module 2", name: "Waste Management", count: 40 },
-                  { module: "Module 3", name: "Energy & Resource Efficiency", count: 40 },
-                  { module: "Module 4", name: "Pollution Prevention", count: 40 },
-                  { module: "Module 5", name: "Biodiversity & Best Practice", count: 40 },
+                  { module: 'Module 1', name: 'Environmental Awareness', count: 40 },
+                  { module: 'Module 2', name: 'Waste Management', count: 40 },
+                  { module: 'Module 3', name: 'Energy & Resource Efficiency', count: 40 },
+                  { module: 'Module 4', name: 'Pollution Prevention', count: 40 },
+                  { module: 'Module 5', name: 'Biodiversity & Best Practice', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +213,7 @@ export default function EnvironmentalSustainabilityModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

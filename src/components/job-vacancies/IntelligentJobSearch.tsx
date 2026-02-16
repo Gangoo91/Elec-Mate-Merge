@@ -1,13 +1,22 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Search, Brain, Zap, MapPin, Clock, ExternalLink, AlertCircle, CheckCircle } from "lucide-react";
-import { Combobox, ComboboxOption } from "@/components/ui/combobox";
-import { cn } from "@/lib/utils";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  Search,
+  Brain,
+  Zap,
+  MapPin,
+  Clock,
+  ExternalLink,
+  AlertCircle,
+  CheckCircle,
+} from 'lucide-react';
+import { Combobox, ComboboxOption } from '@/components/ui/combobox';
+import { cn } from '@/lib/utils';
 
 interface IntelligentJobResult {
   id: string;
@@ -34,37 +43,37 @@ interface SearchResults {
 }
 
 const IntelligentJobSearch: React.FC = () => {
-  const [query, setQuery] = useState("electrician");
-  const [location, setLocation] = useState("United Kingdom");
-  const [jobType, setJobType] = useState("all");
-  const [experienceLevel, setExperienceLevel] = useState("all");
+  const [query, setQuery] = useState('electrician');
+  const [location, setLocation] = useState('United Kingdom');
+  const [jobType, setJobType] = useState('all');
+  const [experienceLevel, setExperienceLevel] = useState('all');
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResults | null>(null);
   const [searchTime, setSearchTime] = useState<number>(0);
 
   // Job type options for the combobox
   const jobTypeOptions: ComboboxOption[] = [
-    { value: "all", label: "All Types" },
-    { value: "full-time", label: "Full-time" },
-    { value: "part-time", label: "Part-time" },
-    { value: "contract", label: "Contract" },
+    { value: 'all', label: 'All Types' },
+    { value: 'full-time', label: 'Full-time' },
+    { value: 'part-time', label: 'Part-time' },
+    { value: 'contract', label: 'Contract' },
   ];
 
   // Experience level options for the combobox
   const experienceLevelOptions: ComboboxOption[] = [
-    { value: "all", label: "All Levels" },
-    { value: "entry", label: "Entry Level" },
-    { value: "intermediate", label: "Intermediate" },
-    { value: "senior", label: "Senior" },
-    { value: "lead", label: "Lead/Management" },
+    { value: 'all', label: 'All Levels' },
+    { value: 'entry', label: 'Entry Level' },
+    { value: 'intermediate', label: 'Intermediate' },
+    { value: 'senior', label: 'Senior' },
+    { value: 'lead', label: 'Lead/Management' },
   ];
 
   const handleSearch = async () => {
     if (!query.trim()) {
       toast({
-        title: "Search Required",
-        description: "Please enter a job search term",
-        variant: "destructive",
+        title: 'Search Required',
+        description: 'Please enter a job search term',
+        variant: 'destructive',
       });
       return;
     }
@@ -76,11 +85,11 @@ const IntelligentJobSearch: React.FC = () => {
       const { data, error } = await supabase.functions.invoke('intelligent-job-search', {
         body: {
           query: query.trim(),
-          location: location.trim() || "United Kingdom",
+          location: location.trim() || 'United Kingdom',
           filters: {
-            jobType: jobType === "all" ? "" : jobType,
-            experienceLevel: experienceLevel === "all" ? "" : experienceLevel,
-          }
+            jobType: jobType === 'all' ? '' : jobType,
+            experienceLevel: experienceLevel === 'all' ? '' : experienceLevel,
+          },
         },
       });
 
@@ -93,16 +102,15 @@ const IntelligentJobSearch: React.FC = () => {
       setResults(data);
 
       toast({
-        title: "Search Complete",
+        title: 'Search Complete',
         description: `Found ${data.totalFound} jobs across ${data.sources.length} sources`,
       });
-
     } catch (error) {
       console.error('Intelligent search error:', error);
       toast({
-        title: "Search Failed",
-        description: error instanceof Error ? error.message : "Failed to search jobs",
-        variant: "destructive",
+        title: 'Search Failed',
+        description: error instanceof Error ? error.message : 'Failed to search jobs',
+        variant: 'destructive',
       });
     } finally {
       setIsSearching(false);
@@ -112,7 +120,7 @@ const IntelligentJobSearch: React.FC = () => {
   const handleApply = (job: IntelligentJobResult) => {
     window.open(job.external_url, '_blank');
     toast({
-      title: "Application Started",
+      title: 'Application Started',
       description: `Opening ${job.source} job listing for ${job.title}`,
     });
   };
@@ -125,9 +133,12 @@ const IntelligentJobSearch: React.FC = () => {
 
   const getSourceBadgeColor = (source: string) => {
     switch (source) {
-      case 'Reed': return 'bg-blue-100 text-blue-700';
-      case 'Adzuna': return 'bg-green-100 text-green-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case 'Reed':
+        return 'bg-blue-100 text-blue-700';
+      case 'Adzuna':
+        return 'bg-green-100 text-green-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
     }
   };
 
@@ -145,10 +156,12 @@ const IntelligentJobSearch: React.FC = () => {
           <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
             <div className="flex items-center gap-2 text-green-700">
               <CheckCircle className="h-4 w-4" />
-              <p className="text-sm font-medium">Now searching real UK job listings from Reed and Adzuna!</p>
+              <p className="text-sm font-medium">
+                Now searching real UK job listings from Reed and Adzuna!
+              </p>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Job Search</label>
@@ -160,7 +173,7 @@ const IntelligentJobSearch: React.FC = () => {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="e.g. electrician, electrical engineer"
-                  className={cn(!query && "pl-10")}
+                  className={cn(!query && 'pl-10')}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
@@ -176,7 +189,7 @@ const IntelligentJobSearch: React.FC = () => {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="e.g. London, Manchester, UK"
-                  className={cn(!location && "pl-10")}
+                  className={cn(!location && 'pl-10')}
                 />
               </div>
             </div>
@@ -208,7 +221,7 @@ const IntelligentJobSearch: React.FC = () => {
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={handleSearch}
             disabled={isSearching || !query.trim()}
             className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
@@ -249,7 +262,11 @@ const IntelligentJobSearch: React.FC = () => {
                 <p className="text-xs text-green-600 mb-1">AI-generated search queries:</p>
                 <div className="flex flex-wrap gap-1">
                   {results.searchQueries.slice(0, 3).map((searchQuery, index) => (
-                    <Badge key={index} variant="outline" className="text-xs border-green-300 text-green-700">
+                    <Badge
+                      key={index}
+                      variant="outline"
+                      className="text-xs border-green-300 text-green-700"
+                    >
                       {searchQuery}
                     </Badge>
                   ))}
@@ -293,9 +310,13 @@ const IntelligentJobSearch: React.FC = () => {
                       <span>{job.salary}</span>
                     </div>
                   )}
-                  <Badge variant="outline" className="text-xs">{job.type}</Badge>
+                  <Badge variant="outline" className="text-xs">
+                    {job.type}
+                  </Badge>
                   {job.experienceLevel && (
-                    <Badge variant="outline" className="text-xs">{job.experienceLevel}</Badge>
+                    <Badge variant="outline" className="text-xs">
+                      {job.experienceLevel}
+                    </Badge>
                   )}
                 </div>
 
@@ -303,7 +324,11 @@ const IntelligentJobSearch: React.FC = () => {
                   <div className="mb-3">
                     <div className="flex flex-wrap gap-1">
                       {job.aiTags.map((tag, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs bg-elec-yellow/10 text-elec-yellow">
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="text-xs bg-elec-yellow/10 text-elec-yellow"
+                        >
                           <Zap className="h-2 w-2 mr-1" />
                           {tag}
                         </Badge>
@@ -325,16 +350,14 @@ const IntelligentJobSearch: React.FC = () => {
                   </div>
                 )}
 
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                  {job.description}
-                </p>
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{job.description}</p>
 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Clock className="h-3 w-3" />
                     Posted {new Date(job.posted_date).toLocaleDateString()}
                   </div>
-                  <Button 
+                  <Button
                     onClick={() => handleApply(job)}
                     className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
                   >

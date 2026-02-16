@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Brain,
   ChevronDown,
@@ -11,18 +11,15 @@ import {
   Lightbulb,
   CheckCircle,
   Sparkles,
-} from "lucide-react";
-import { ToolItem } from "@/hooks/useToolsData";
+} from 'lucide-react';
+import { ToolItem } from '@/hooks/useToolsData';
 
 interface InlineAIInsightsSectionProps {
   tools: ToolItem[];
   categoryName: string;
 }
 
-const InlineAIInsightsSection = ({
-  tools,
-  categoryName,
-}: InlineAIInsightsSectionProps) => {
+const InlineAIInsightsSection = ({ tools, categoryName }: InlineAIInsightsSectionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Generate insights based on tools data
@@ -42,15 +39,13 @@ const InlineAIInsightsSection = ({
     const bestDeal = onSaleTools.length > 0 ? onSaleTools[0] : null;
 
     // Find top rated (if reviews available)
-    const withReviews = tools.filter(
-      (t) => t.reviews && !t.reviews.includes("0 out of 5")
-    );
+    const withReviews = tools.filter((t) => t.reviews && !t.reviews.includes('0 out of 5'));
     const topRated = withReviews.length > 0 ? withReviews[0] : null;
 
     // Find best value (lowest price with good features)
     const sortedByPrice = [...tools].sort((a, b) => {
-      const priceA = parseFloat((a.salePrice || a.price || "0").replace(/[£,]/g, ""));
-      const priceB = parseFloat((b.salePrice || b.price || "0").replace(/[£,]/g, ""));
+      const priceA = parseFloat((a.salePrice || a.price || '0').replace(/[£,]/g, ''));
+      const priceB = parseFloat((b.salePrice || b.price || '0').replace(/[£,]/g, ''));
       return priceA - priceB;
     });
     const bestValue = sortedByPrice[0] || null;
@@ -60,8 +55,9 @@ const InlineAIInsightsSection = ({
 
     // Generate recommendations
     const recommendations = [
-      bestDeal && `Save on ${bestDeal.name.split(" ").slice(0, 3).join(" ")} - currently on sale`,
-      topRated && `${topRated.name.split(" ").slice(0, 3).join(" ")} is highly rated by professionals`,
+      bestDeal && `Save on ${bestDeal.name.split(' ').slice(0, 3).join(' ')} - currently on sale`,
+      topRated &&
+        `${topRated.name.split(' ').slice(0, 3).join(' ')} is highly rated by professionals`,
       tools.length > 10 && `${tools.length} options available - use filters to narrow down`,
     ].filter(Boolean);
 
@@ -134,10 +130,7 @@ const InlineAIInsightsSection = ({
             </h3>
             <div className="space-y-2">
               {insights.recommendations.map((rec, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-2 text-sm text-muted-foreground"
-                >
+                <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                   <CheckCircle className="h-4 w-4 text-success shrink-0 mt-0.5" />
                   <span>{rec}</span>
                 </div>
@@ -158,10 +151,7 @@ const InlineAIInsightsSection = ({
             </h3>
             <div className="space-y-2">
               {insights.tips.map((tip, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-2 text-sm text-muted-foreground"
-                >
+                <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                   <Star className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
                   <span>{tip}</span>
                 </div>
@@ -177,11 +167,9 @@ const InlineAIInsightsSection = ({
                   <TrendingUp className="h-5 w-5 text-success" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white">
-                    Best Deal Available
-                  </p>
+                  <p className="text-sm font-medium text-white">Best Deal Available</p>
                   <p className="text-sm text-muted-foreground">
-                    {insights.bestDeal.name.slice(0, 50)}... -{" "}
+                    {insights.bestDeal.name.slice(0, 50)}... -{' '}
                     <span className="text-success font-semibold">
                       {insights.bestDeal.salePrice}
                     </span>
@@ -202,53 +190,55 @@ const InlineAIInsightsSection = ({
 // Category-specific tips
 const getCategoryTips = (category: string): string[] => {
   const tips: Record<string, string[]> = {
-    "Hand Tools": [
-      "VDE-rated tools are essential for electrical work",
-      "Quality screwdrivers prevent damaged screw heads",
-      "Invest in a good set of pliers - they last decades",
+    'Hand Tools': [
+      'VDE-rated tools are essential for electrical work',
+      'Quality screwdrivers prevent damaged screw heads',
+      'Invest in a good set of pliers - they last decades',
     ],
-    "Power Tools": [
-      "18V platform tools offer best portability vs power",
-      "Brushless motors last longer and are more efficient",
-      "Consider battery compatibility across your tool collection",
+    'Power Tools': [
+      '18V platform tools offer best portability vs power',
+      'Brushless motors last longer and are more efficient',
+      'Consider battery compatibility across your tool collection',
     ],
-    "Test Equipment": [
-      "CAT III or CAT IV rated meters for electrical installations",
-      "Calibration certificates are important for compliance",
-      "Fluke, Megger, and Kewtech are industry standards",
+    'Test Equipment': [
+      'CAT III or CAT IV rated meters for electrical installations',
+      'Calibration certificates are important for compliance',
+      'Fluke, Megger, and Kewtech are industry standards',
     ],
-    "Safety Tools": [
-      "Replace safety glasses if scratched or damaged",
-      "Check insulated gloves regularly for damage",
-      "High-vis should be EN ISO 20471 compliant",
+    'Safety Tools': [
+      'Replace safety glasses if scratched or damaged',
+      'Check insulated gloves regularly for damage',
+      'High-vis should be EN ISO 20471 compliant',
     ],
     PPE: [
-      "Replace hard hats every 5 years or after impact",
-      "Safety footwear should be EN ISO 20345 rated",
-      "Check PPE expiry dates regularly",
+      'Replace hard hats every 5 years or after impact',
+      'Safety footwear should be EN ISO 20345 rated',
+      'Check PPE expiry dates regularly',
     ],
-    "Access Tools & Equipment": [
-      "Check ladder weight limits before purchase",
-      "Platform steps are safer than step ladders",
-      "Consider height and working area requirements",
+    'Access Tools & Equipment': [
+      'Check ladder weight limits before purchase',
+      'Platform steps are safer than step ladders',
+      'Consider height and working area requirements',
     ],
-    "Tool Storage": [
-      "Organised tools save time on every job",
-      "Waterproof options for van and site work",
-      "Consider weight when fully loaded",
+    'Tool Storage': [
+      'Organised tools save time on every job',
+      'Waterproof options for van and site work',
+      'Consider weight when fully loaded',
     ],
-    "Specialist Tools": [
-      "Invest in quality for tools used daily",
-      "Check compatibility with your specific needs",
-      "Professional grade pays for itself over time",
+    'Specialist Tools': [
+      'Invest in quality for tools used daily',
+      'Check compatibility with your specific needs',
+      'Professional grade pays for itself over time',
     ],
   };
 
-  return tips[category] || [
-    "Buy quality tools - they last longer",
-    "Check reviews from other professionals",
-    "Consider warranty and support options",
-  ];
+  return (
+    tips[category] || [
+      'Buy quality tools - they last longer',
+      'Check reviews from other professionals',
+      'Consider warranty and support options',
+    ]
+  );
 };
 
 export default InlineAIInsightsSection;

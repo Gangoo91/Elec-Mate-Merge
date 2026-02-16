@@ -1,147 +1,169 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { TrendingUp, Target, Calendar, BarChart3, Clock, Trophy, CheckCircle, AlertCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import {
+  TrendingUp,
+  Target,
+  Calendar,
+  BarChart3,
+  Clock,
+  Trophy,
+  CheckCircle,
+  AlertCircle,
+} from 'lucide-react';
 
 const ProgressTrackingTab = () => {
   const trackingMethods = [
     {
-      method: "Study Time Logging",
-      description: "Track daily and weekly study hours across different subjects",
-      benefits: ["Identify peak productivity times", "Ensure balanced subject coverage", "Set realistic study goals"],
-      tools: ["Digital calendars", "Study apps", "Time tracking software", "Simple logbooks"],
-      metrics: ["Hours per subject", "Weekly totals", "Consistency streaks", "Goal achievement"]
+      method: 'Study Time Logging',
+      description: 'Track daily and weekly study hours across different subjects',
+      benefits: [
+        'Identify peak productivity times',
+        'Ensure balanced subject coverage',
+        'Set realistic study goals',
+      ],
+      tools: ['Digital calendars', 'Study apps', 'Time tracking software', 'Simple logbooks'],
+      metrics: ['Hours per subject', 'Weekly totals', 'Consistency streaks', 'Goal achievement'],
     },
     {
-      method: "Knowledge Assessment",
-      description: "Regular testing to measure understanding and retention",
-      benefits: ["Identify knowledge gaps", "Track improvement over time", "Build exam confidence"],
-      tools: ["Practice tests", "Flashcard apps", "Quiz platforms", "Self-assessment sheets"],
-      metrics: ["Test scores", "Question accuracy", "Speed improvements", "Concept mastery"]
+      method: 'Knowledge Assessment',
+      description: 'Regular testing to measure understanding and retention',
+      benefits: ['Identify knowledge gaps', 'Track improvement over time', 'Build exam confidence'],
+      tools: ['Practice tests', 'Flashcard apps', 'Quiz platforms', 'Self-assessment sheets'],
+      metrics: ['Test scores', 'Question accuracy', 'Speed improvements', 'Concept mastery'],
     },
     {
-      method: "Milestone Tracking",
-      description: "Break down learning goals into achievable milestones",
-      benefits: ["Maintain motivation", "Celebrate small wins", "Stay on track with deadlines"],
-      tools: ["Goal-setting apps", "Progress charts", "Achievement badges", "Milestone calendars"],
-      metrics: ["Milestones completed", "Target dates met", "Goal progression", "Completion rates"]
+      method: 'Milestone Tracking',
+      description: 'Break down learning goals into achievable milestones',
+      benefits: ['Maintain motivation', 'Celebrate small wins', 'Stay on track with deadlines'],
+      tools: ['Goal-setting apps', 'Progress charts', 'Achievement badges', 'Milestone calendars'],
+      metrics: ['Milestones completed', 'Target dates met', 'Goal progression', 'Completion rates'],
     },
     {
-      method: "Skill Development",
-      description: "Monitor practical and theoretical skill improvements",
-      benefits: ["Focus on weak areas", "Track competency growth", "Prepare for assessments"],
-      tools: ["Skill matrices", "Competency trackers", "Portfolio systems", "Progress journals"],
-      metrics: ["Skill ratings", "Practical assessments", "Employer feedback", "Self-evaluations"]
-    }
+      method: 'Skill Development',
+      description: 'Monitor practical and theoretical skill improvements',
+      benefits: ['Focus on weak areas', 'Track competency growth', 'Prepare for assessments'],
+      tools: ['Skill matrices', 'Competency trackers', 'Portfolio systems', 'Progress journals'],
+      metrics: ['Skill ratings', 'Practical assessments', 'Employer feedback', 'Self-evaluations'],
+    },
   ];
 
   const studyMetrics = [
     {
-      category: "Time Management",
+      category: 'Time Management',
       icon: Clock,
-      color: "text-blue-400",
+      color: 'text-blue-400',
       metrics: [
-        { name: "Daily Study Time", target: "2 hours", current: "1.8 hours", progress: 90 },
-        { name: "Weekly Goals", target: "14 hours", current: "12.6 hours", progress: 90 },
-        { name: "Consistency Streak", target: "30 days", current: "18 days", progress: 60 }
-      ]
+        { name: 'Daily Study Time', target: '2 hours', current: '1.8 hours', progress: 90 },
+        { name: 'Weekly Goals', target: '14 hours', current: '12.6 hours', progress: 90 },
+        { name: 'Consistency Streak', target: '30 days', current: '18 days', progress: 60 },
+      ],
     },
     {
-      category: "Knowledge Retention",
+      category: 'Knowledge Retention',
       icon: BarChart3,
-      color: "text-green-400",
+      color: 'text-green-400',
       metrics: [
-        { name: "18th Edition", target: "85%", current: "78%", progress: 78 },
-        { name: "Level 3 Theory", target: "80%", current: "72%", progress: 72 },
-        { name: "Practical Skills", target: "90%", current: "85%", progress: 85 }
-      ]
+        { name: '18th Edition', target: '85%', current: '78%', progress: 78 },
+        { name: 'Level 3 Theory', target: '80%', current: '72%', progress: 72 },
+        { name: 'Practical Skills', target: '90%', current: '85%', progress: 85 },
+      ],
     },
     {
-      category: "Goal Achievement",
+      category: 'Goal Achievement',
       icon: Target,
-      color: "text-elec-yellow",
+      color: 'text-elec-yellow',
       metrics: [
-        { name: "Monthly Targets", target: "100%", current: "85%", progress: 85 },
-        { name: "Assessment Prep", target: "Ready", current: "75%", progress: 75 },
-        { name: "Portfolio Progress", target: "Complete", current: "60%", progress: 60 }
-      ]
-    }
+        { name: 'Monthly Targets', target: '100%', current: '85%', progress: 85 },
+        { name: 'Assessment Prep', target: 'Ready', current: '75%', progress: 75 },
+        { name: 'Portfolio Progress', target: 'Complete', current: '60%', progress: 60 },
+      ],
+    },
   ];
 
   const trackingTools = [
     {
-      tool: "Digital Study Planners",
-      description: "Comprehensive apps for tracking all aspects of your learning journey",
-      features: ["Integrated calendars", "Progress analytics", "Goal setting", "Reminder systems"],
-      examples: ["Notion", "Trello", "Microsoft OneNote", "Google Workspace"],
-      bestFor: "Students who like detailed planning and analytics"
+      tool: 'Digital Study Planners',
+      description: 'Comprehensive apps for tracking all aspects of your learning journey',
+      features: ['Integrated calendars', 'Progress analytics', 'Goal setting', 'Reminder systems'],
+      examples: ['Notion', 'Trello', 'Microsoft OneNote', 'Google Workspace'],
+      bestFor: 'Students who like detailed planning and analytics',
     },
     {
-      tool: "Time Tracking Apps",
-      description: "Specialised tools for monitoring study time and productivity",
-      features: ["Automatic time tracking", "Category organisation", "Productivity insights", "Goal setting"],
-      examples: ["Toggl", "RescueTime", "Forest", "Clockify"],
-      bestFor: "Students wanting to optimise their study time"
+      tool: 'Time Tracking Apps',
+      description: 'Specialised tools for monitoring study time and productivity',
+      features: [
+        'Automatic time tracking',
+        'Category organisation',
+        'Productivity insights',
+        'Goal setting',
+      ],
+      examples: ['Toggl', 'RescueTime', 'Forest', 'Clockify'],
+      bestFor: 'Students wanting to optimise their study time',
     },
     {
-      tool: "Flashcard Systems",
-      description: "Spaced repetition systems for knowledge retention tracking",
-      features: ["Adaptive algorithms", "Progress tracking", "Performance analytics", "Cross-device sync"],
-      examples: ["Anki", "Quizlet", "Memrise", "Brainscape"],
-      bestFor: "Memorisation and knowledge retention"
+      tool: 'Flashcard Systems',
+      description: 'Spaced repetition systems for knowledge retention tracking',
+      features: [
+        'Adaptive algorithms',
+        'Progress tracking',
+        'Performance analytics',
+        'Cross-device sync',
+      ],
+      examples: ['Anki', 'Quizlet', 'Memrise', 'Brainscape'],
+      bestFor: 'Memorisation and knowledge retention',
     },
     {
-      tool: "Habit Trackers",
-      description: "Simple tools for building and maintaining study habits",
-      features: ["Streak tracking", "Visual progress", "Habit reminders", "Motivation systems"],
-      examples: ["Habitica", "Streaks", "Way of Life", "Loop Habit Tracker"],
-      bestFor: "Building consistent study routines"
-    }
+      tool: 'Habit Trackers',
+      description: 'Simple tools for building and maintaining study habits',
+      features: ['Streak tracking', 'Visual progress', 'Habit reminders', 'Motivation systems'],
+      examples: ['Habitica', 'Streaks', 'Way of Life', 'Loop Habit Tracker'],
+      bestFor: 'Building consistent study routines',
+    },
   ];
 
   const progressStrategies = [
     {
-      strategy: "Weekly Reviews",
-      description: "Regular assessment of progress and adjustment of study plans",
+      strategy: 'Weekly Reviews',
+      description: 'Regular assessment of progress and adjustment of study plans',
       implementation: [
-        "Set aside 30 minutes every Sunday",
+        'Set aside 30 minutes every Sunday',
         "Review the previous week's achievements",
-        "Identify areas that need more attention",
-        "Adjust next week's goals accordingly"
-      ]
+        'Identify areas that need more attention',
+        "Adjust next week's goals accordingly",
+      ],
     },
     {
-      strategy: "Monthly Milestones",
-      description: "Break annual goals into monthly checkpoints",
+      strategy: 'Monthly Milestones',
+      description: 'Break annual goals into monthly checkpoints',
       implementation: [
-        "Define 12 monthly learning objectives",
-        "Create specific, measurable targets",
-        "Celebrate milestone achievements",
-        "Adjust timeline if needed"
-      ]
+        'Define 12 monthly learning objectives',
+        'Create specific, measurable targets',
+        'Celebrate milestone achievements',
+        'Adjust timeline if needed',
+      ],
     },
     {
-      strategy: "Peer Accountability",
-      description: "Share progress with study partners for motivation",
+      strategy: 'Peer Accountability',
+      description: 'Share progress with study partners for motivation',
       implementation: [
-        "Find an accountability partner",
-        "Share weekly progress updates",
-        "Discuss challenges and solutions",
-        "Celebrate successes together"
-      ]
+        'Find an accountability partner',
+        'Share weekly progress updates',
+        'Discuss challenges and solutions',
+        'Celebrate successes together',
+      ],
     },
     {
-      strategy: "Visual Progress Tracking",
-      description: "Use charts and graphs to visualise improvement",
+      strategy: 'Visual Progress Tracking',
+      description: 'Use charts and graphs to visualise improvement',
       implementation: [
-        "Create progress charts for key subjects",
-        "Use colour coding for different topics",
-        "Update charts weekly",
-        "Display prominently in study area"
-      ]
-    }
+        'Create progress charts for key subjects',
+        'Use colour coding for different topics',
+        'Update charts weekly',
+        'Display prominently in study area',
+      ],
+    },
   ];
 
   return (
@@ -156,8 +178,9 @@ const ProgressTrackingTab = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white mb-4">
-            Monitor your learning journey with comprehensive tracking tools and analytics. Research shows that 
-            students who track their progress are 42% more likely to achieve their study goals.
+            Monitor your learning journey with comprehensive tracking tools and analytics. Research
+            shows that students who track their progress are 42% more likely to achieve their study
+            goals.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
@@ -231,25 +254,32 @@ const ProgressTrackingTab = () => {
               <div key={index} className="border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{method.method}</h4>
                 <p className="text-sm text-white mb-3">{method.description}</p>
-                
+
                 <div className="space-y-3">
                   <div>
                     <h5 className="font-medium text-blue-300 text-sm mb-1">Key Benefits:</h5>
                     <ul className="space-y-1">
                       {method.benefits.map((benefit, benefitIndex) => (
-                        <li key={benefitIndex} className="text-xs text-white flex items-start gap-2">
+                        <li
+                          key={benefitIndex}
+                          className="text-xs text-white flex items-start gap-2"
+                        >
                           <CheckCircle className="h-3 w-3 text-blue-400 mt-0.5 flex-shrink-0" />
                           {benefit}
                         </li>
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h5 className="font-medium text-blue-300 text-sm mb-1">Recommended Tools:</h5>
                     <div className="flex flex-wrap gap-1">
                       {method.tools.map((tool, toolIndex) => (
-                        <Badge key={toolIndex} variant="outline" className="text-xs border-blue-400/30 text-blue-300">
+                        <Badge
+                          key={toolIndex}
+                          variant="outline"
+                          className="text-xs border-blue-400/30 text-blue-300"
+                        >
                           {tool}
                         </Badge>
                       ))}
@@ -280,25 +310,32 @@ const ProgressTrackingTab = () => {
                     {tool.bestFor.split(' ')[0]}
                   </Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="font-medium text-green-300 text-sm mb-2">Key Features:</h5>
                     <ul className="space-y-1">
                       {tool.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="text-xs text-white flex items-start gap-2">
+                        <li
+                          key={featureIndex}
+                          className="text-xs text-white flex items-start gap-2"
+                        >
                           <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                           {feature}
                         </li>
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h5 className="font-medium text-green-300 text-sm mb-2">Popular Examples:</h5>
                     <div className="flex flex-wrap gap-1 mb-2">
                       {tool.examples.map((example, exampleIndex) => (
-                        <Badge key={exampleIndex} variant="outline" className="text-xs border-white/20">
+                        <Badge
+                          key={exampleIndex}
+                          variant="outline"
+                          className="text-xs border-white/20"
+                        >
                           {example}
                         </Badge>
                       ))}
@@ -401,9 +438,12 @@ const ProgressTrackingTab = () => {
       {/* Call to Action */}
       <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
         <CardContent className="p-6 text-center">
-          <h3 className="text-xl font-semibold text-elec-yellow mb-2">Start Tracking Your Progress Today</h3>
+          <h3 className="text-xl font-semibold text-elec-yellow mb-2">
+            Start Tracking Your Progress Today
+          </h3>
           <p className="text-white mb-4">
-            Choose your preferred tracking method and begin monitoring your learning journey for better results.
+            Choose your preferred tracking method and begin monitoring your learning journey for
+            better results.
           </p>
           <div className="flex flex-wrap justify-center gap-2">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">

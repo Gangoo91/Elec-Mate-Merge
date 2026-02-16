@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Calendar, Clock, MapPin, ExternalLink, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { Calendar, Clock, MapPin, ExternalLink, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 interface Event {
   name: string;
@@ -23,7 +23,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
 
   const handleRegister = (event: Event) => {
     if (event.url) {
-      window.open(event.url, "_blank", "noopener,noreferrer");
+      window.open(event.url, '_blank', 'noopener,noreferrer');
     } else {
       toast.success(`You've registered for: ${event.name}`);
     }
@@ -47,7 +47,9 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
           </div>
           <div className="text-left">
             <h3 className="font-semibold text-foreground">Upcoming Events</h3>
-            <p className="text-xs text-white/70">{events.length} event{events.length !== 1 ? 's' : ''} scheduled</p>
+            <p className="text-xs text-white/70">
+              {events.length} event{events.length !== 1 ? 's' : ''} scheduled
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-2">

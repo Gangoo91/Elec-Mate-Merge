@@ -12,7 +12,7 @@ export const SmartLightingControlOptionsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Modern smart lighting offers multiple control methods, each with specific installation 
+          Modern smart lighting offers multiple control methods, each with specific installation
           requirements and compatibility considerations.
         </p>
 
@@ -22,7 +22,9 @@ export const SmartLightingControlOptionsSection = () => {
               <Settings className="h-5 w-5 text-elec-yellow" />
               <h4 className="text-foreground font-semibold">Smart Dimmers</h4>
             </div>
-            <p className="text-gray-300 text-sm mb-2">Replace wall dimmers, integrate with smart home hubs</p>
+            <p className="text-gray-300 text-sm mb-2">
+              Replace wall dimmers, integrate with smart home hubs
+            </p>
             <ul className="text-gray-300 text-sm space-y-1">
               <li>• Direct replacement for existing dimmers</li>
               <li>• WiFi or hub-based connectivity</li>
@@ -36,7 +38,9 @@ export const SmartLightingControlOptionsSection = () => {
               <Cpu className="h-5 w-5 text-elec-yellow" />
               <h4 className="text-foreground font-semibold">In-Line Controllers</h4>
             </div>
-            <p className="text-gray-300 text-sm mb-2">Sit behind existing switches to add smart functionality</p>
+            <p className="text-gray-300 text-sm mb-2">
+              Sit behind existing switches to add smart functionality
+            </p>
             <ul className="text-gray-300 text-sm space-y-1">
               <li>• Retrofit solution for existing installations</li>
               <li>• Keep original switch appearance</li>
@@ -64,7 +68,9 @@ export const SmartLightingControlOptionsSection = () => {
               <Mic className="h-5 w-5 text-elec-yellow" />
               <h4 className="text-foreground font-semibold">App/Voice Control</h4>
             </div>
-            <p className="text-gray-300 text-sm mb-2">Digital interface overlaying physical controls</p>
+            <p className="text-gray-300 text-sm mb-2">
+              Digital interface overlaying physical controls
+            </p>
             <ul className="text-gray-300 text-sm space-y-1">
               <li>• Smartphone app interfaces</li>
               <li>• Voice assistant integration</li>
@@ -76,7 +82,7 @@ export const SmartLightingControlOptionsSection = () => {
 
         <div className="bg-blue-900/20 border border-blue-600/50 p-4 rounded-lg">
           <p className="text-blue-200 text-sm">
-            <strong>Installation Tip:</strong> Always ensure adequate neutral wire provision for 
+            <strong>Installation Tip:</strong> Always ensure adequate neutral wire provision for
             smart controls, as many require a permanent live and neutral connection.
           </p>
         </div>

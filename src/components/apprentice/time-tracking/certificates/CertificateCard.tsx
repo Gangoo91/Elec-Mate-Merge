@@ -1,8 +1,7 @@
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Award, Calendar, Eye, Trash2 } from "lucide-react";
-import { Certificate } from "@/types/certificates";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Award, Calendar, Eye, Trash2 } from 'lucide-react';
+import { Certificate } from '@/types/certificates';
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -25,9 +24,9 @@ const CertificateCard = ({ certificate, onDelete }: CertificateCardProps) => {
             <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
               <Eye className="h-4 w-4" />
             </Button>
-            <Button 
-              size="sm" 
-              variant="ghost" 
+            <Button
+              size="sm"
+              variant="ghost"
               className="h-8 w-8 p-0 text-red-400 hover:text-red-300"
               onClick={() => onDelete(certificate.id)}
             >
@@ -35,7 +34,7 @@ const CertificateCard = ({ certificate, onDelete }: CertificateCardProps) => {
             </Button>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-2 gap-2 mt-4 text-sm">
           <div>
             <p className="text-white">Issue Date</p>

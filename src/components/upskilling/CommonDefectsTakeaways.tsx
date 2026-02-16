@@ -1,13 +1,12 @@
-
 import { CheckCircle, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const CommonDefectsTakeaways = () => {
   const takeaways = [
-    "Always inspect terminals, cabling, DBs, and isolation points",
+    'Always inspect terminals, cabling, DBs, and isolation points',
     "Visual defects often indicate deeper issues—don't ignore them",
-    "Labelling, bonding, IP ratings, and cable protection are non-negotiables",
-    "Failing to catch a visual defect could make you legally liable"
+    'Labelling, bonding, IP ratings, and cable protection are non-negotiables',
+    'Failing to catch a visual defect could make you legally liable',
   ];
 
   return (

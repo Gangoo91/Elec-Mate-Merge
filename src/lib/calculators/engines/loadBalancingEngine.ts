@@ -27,9 +27,7 @@ export interface LoadBalancingResult {
   totalLoad: number; // A (average per phase)
 }
 
-export function balanceThreePhaseLoad(
-  circuits: CircuitLoad[]
-): LoadBalancingResult {
+export function balanceThreePhaseLoad(circuits: CircuitLoad[]): LoadBalancingResult {
   // Initialize phase totals
   let l1Total = 0;
   let l2Total = 0;
@@ -42,9 +40,9 @@ export function balanceThreePhaseLoad(
   const sortedCircuits = [...circuits].sort((a, b) => b.designCurrent - a.designCurrent);
 
   // Allocate each circuit to the phase with lowest current total
-  sortedCircuits.forEach(circuit => {
+  sortedCircuits.forEach((circuit) => {
     let assignedPhase: 'L1' | 'L2' | 'L3';
-    
+
     // Find phase with lowest load
     if (l1Total <= l2Total && l1Total <= l3Total) {
       assignedPhase = 'L1';
@@ -61,7 +59,7 @@ export function balanceThreePhaseLoad(
       circuitNumber: circuit.circuitNumber,
       name: circuit.name,
       phase: assignedPhase,
-      loadContribution: circuit.designCurrent
+      loadContribution: circuit.designCurrent,
     });
   });
 
@@ -91,13 +89,19 @@ export function balanceThreePhaseLoad(
   // Check for severely overloaded phases
   const phaseOverloadThreshold = 80; // A (typical for domestic installation)
   if (l1Total > phaseOverloadThreshold) {
-    recommendations.push(`L1 phase heavily loaded (${l1Total.toFixed(1)}A) - consider main switch upgrade`);
+    recommendations.push(
+      `L1 phase heavily loaded (${l1Total.toFixed(1)}A) - consider main switch upgrade`
+    );
   }
   if (l2Total > phaseOverloadThreshold) {
-    recommendations.push(`L2 phase heavily loaded (${l2Total.toFixed(1)}A) - consider main switch upgrade`);
+    recommendations.push(
+      `L2 phase heavily loaded (${l2Total.toFixed(1)}A) - consider main switch upgrade`
+    );
   }
   if (l3Total > phaseOverloadThreshold) {
-    recommendations.push(`L3 phase heavily loaded (${l3Total.toFixed(1)}A) - consider main switch upgrade`);
+    recommendations.push(
+      `L3 phase heavily loaded (${l3Total.toFixed(1)}A) - consider main switch upgrade`
+    );
   }
 
   // Suggest specific circuit relocations if imbalance is high
@@ -113,7 +117,7 @@ export function balanceThreePhaseLoad(
     compliant,
     recommendations,
     circuitAllocation,
-    totalLoad: Number(average.toFixed(2))
+    totalLoad: Number(average.toFixed(2)),
   };
 }
 
@@ -121,19 +125,19 @@ export function balanceThreePhaseLoad(
 export function optimizeLoadBalance(circuits: CircuitLoad[]): LoadBalancingResult {
   // For small numbers of circuits, try all permutations
   // For larger numbers, use the greedy algorithm above
-  
+
   if (circuits.length <= 6) {
     // Try multiple allocation strategies and pick the best
     let bestResult = balanceThreePhaseLoad(circuits);
-    
+
     // Try sorting by different criteria
     const strategies = [
       (a: CircuitLoad, b: CircuitLoad) => b.designCurrent - a.designCurrent, // Largest first
       (a: CircuitLoad, b: CircuitLoad) => a.designCurrent - b.designCurrent, // Smallest first
-      (a: CircuitLoad, b: CircuitLoad) => Math.random() - 0.5 // Random (try a few times)
+      (a: CircuitLoad, b: CircuitLoad) => Math.random() - 0.5, // Random (try a few times)
     ];
 
-    strategies.forEach(sortFn => {
+    strategies.forEach((sortFn) => {
       const sorted = [...circuits].sort(sortFn);
       const result = balanceThreePhaseLoad(sorted);
       if (result.imbalance < bestResult.imbalance) {
@@ -156,14 +160,14 @@ export function calculateNeutralCurrent(
   // For balanced loads, neutral current is zero
   // For unbalanced loads, neutral carries the difference
   // Simplified calculation (actual calculation involves phase angles)
-  
+
   const avgCurrent = (l1Current + l2Current + l3Current) / 3;
   const imbalance = Math.max(
     Math.abs(l1Current - avgCurrent),
     Math.abs(l2Current - avgCurrent),
     Math.abs(l3Current - avgCurrent)
   );
-  
+
   // Neutral current is approximately equal to the maximum imbalance
   return Number(imbalance.toFixed(2));
 }

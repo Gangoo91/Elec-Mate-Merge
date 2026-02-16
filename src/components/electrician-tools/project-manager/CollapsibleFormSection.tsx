@@ -1,6 +1,6 @@
-import { ReactNode, useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ReactNode, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface CollapsibleFormSectionProps {
   title: string;
@@ -34,28 +34,20 @@ export const CollapsibleFormSection = ({
             <div className="flex items-center gap-2">
               <h3 className="text-base font-semibold">{title}</h3>
               {badge && (
-                <span className="text-xs bg-muted px-2 py-0.5 rounded-md font-medium">
-                  {badge}
-                </span>
+                <span className="text-xs bg-muted px-2 py-0.5 rounded-md font-medium">{badge}</span>
               )}
             </div>
-            {subtitle && (
-              <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
-            )}
+            {subtitle && <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>}
           </div>
         </div>
         <ChevronDown
           className={cn(
-            "h-5 w-5 text-muted-foreground transition-transform duration-200",
-            isOpen && "transform rotate-180"
+            'h-5 w-5 text-muted-foreground transition-transform duration-200',
+            isOpen && 'transform rotate-180'
           )}
         />
       </button>
-      {isOpen && (
-        <div className="pb-3 sm:pb-4 px-1 animate-fade-in">
-          {children}
-        </div>
-      )}
+      {isOpen && <div className="pb-3 sm:pb-4 px-1 animate-fade-in">{children}</div>}
     </div>
   );
 };

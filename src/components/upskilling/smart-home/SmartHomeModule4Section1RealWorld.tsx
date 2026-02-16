@@ -13,35 +13,37 @@ export const SmartHomeModule4Section1RealWorld = () => {
       <CardContent className="text-gray-300 space-y-4">
         <div className="p-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-600 rounded-lg">
           <h4 className="font-semibold text-foreground mb-4">The Overheating Bedroom Problem</h4>
-          
+
           <div className="space-y-6">
             <div>
               <h5 className="font-medium text-red-200 mb-3">Initial Problem</h5>
               <p className="text-gray-300 mb-4">
-                A homeowner installs a Nest thermostat controlling the whole house. They later complain that 
-                bedrooms overheat while the living room is comfortable. The single thermostat location creates 
-                uneven heating throughout the property, leading to discomfort and wasted energy.
+                A homeowner installs a Nest thermostat controlling the whole house. They later
+                complain that bedrooms overheat while the living room is comfortable. The single
+                thermostat location creates uneven heating throughout the property, leading to
+                discomfort and wasted energy.
               </p>
               <p className="text-gray-300 mb-4">
-                The thermostat, located in the hallway near the living room, reads the temperature there and 
-                assumes this represents the whole house. However, bedrooms on the upper floor receive more heat 
-                due to rising warm air and different sun exposure, whilst the living room with large windows 
-                loses heat quickly.
+                The thermostat, located in the hallway near the living room, reads the temperature
+                there and assumes this represents the whole house. However, bedrooms on the upper
+                floor receive more heat due to rising warm air and different sun exposure, whilst
+                the living room with large windows loses heat quickly.
               </p>
               <p className="text-gray-300">
-                This common scenario affects many UK homes where a single heating zone serves multiple rooms 
-                with different thermal characteristics, orientation, and usage patterns.
+                This common scenario affects many UK homes where a single heating zone serves
+                multiple rooms with different thermal characteristics, orientation, and usage
+                patterns.
               </p>
             </div>
-            
+
             <div>
               <h5 className="font-medium text-green-200 mb-3">Zoning Solution Implementation</h5>
               <p className="text-gray-300 mb-4">
-                The installer upgrades the system with smart TRVs on radiators, creating individual zones. 
-                This allows each room to have independent temperature control based on its specific needs 
-                and usage patterns.
+                The installer upgrades the system with smart TRVs on radiators, creating individual
+                zones. This allows each room to have independent temperature control based on its
+                specific needs and usage patterns.
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <h6 className="font-medium text-foreground mb-2">Zone Configuration</h6>
@@ -64,21 +66,22 @@ export const SmartHomeModule4Section1RealWorld = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <p className="text-gray-300">
-                The system now responds to actual room conditions rather than a single point measurement, 
-                providing personalised comfort while reducing energy waste in unoccupied spaces.
+                The system now responds to actual room conditions rather than a single point
+                measurement, providing personalised comfort while reducing energy waste in
+                unoccupied spaces.
               </p>
             </div>
-            
+
             <div>
               <h5 className="font-medium text-blue-200 mb-3">Results and Benefits</h5>
               <p className="text-gray-300 mb-4">
-                After installation, the homeowner reported immediate improvements in comfort and a 25% 
-                reduction in heating bills. The bedrooms no longer overheat, and the family can customise 
-                temperatures for different activities and preferences.
+                After installation, the homeowner reported immediate improvements in comfort and a
+                25% reduction in heating bills. The bedrooms no longer overheat, and the family can
+                customise temperatures for different activities and preferences.
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
                 <div className="text-center p-3 bg-green-600/10 border border-green-600/30 rounded">
                   <div className="text-2xl font-bold text-green-400">25%</div>
@@ -94,15 +97,15 @@ export const SmartHomeModule4Section1RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h5 className="font-medium text-orange-200 mb-3">Future Expansion Possibilities</h5>
               <p className="text-gray-300 mb-4">
-                The zoning system provides a foundation for further smart home integration. Potential 
-                additions include occupancy sensors, smart blinds for solar gain control, and integration 
-                with renewable energy systems for optimised heating timing.
+                The zoning system provides a foundation for further smart home integration.
+                Potential additions include occupancy sensors, smart blinds for solar gain control,
+                and integration with renewable energy systems for optimised heating timing.
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <h6 className="font-medium text-foreground mb-2">Short-term Additions</h6>
@@ -123,25 +126,41 @@ export const SmartHomeModule4Section1RealWorld = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="mt-6 p-4 bg-[#0f0f0f] border border-gray-600 rounded">
             <h5 className="font-medium text-elec-yellow mb-3">Discussion Questions:</h5>
             <div className="space-y-3">
               <div>
-                <p className="text-foreground font-medium text-sm">How did zoning solve the client's problem?</p>
-                <p className="text-gray-400 text-xs mt-1">Consider the temperature control precision and energy efficiency improvements.</p>
+                <p className="text-foreground font-medium text-sm">
+                  How did zoning solve the client's problem?
+                </p>
+                <p className="text-gray-400 text-xs mt-1">
+                  Consider the temperature control precision and energy efficiency improvements.
+                </p>
               </div>
               <div>
-                <p className="text-foreground font-medium text-sm">What further improvements could be suggested?</p>
-                <p className="text-gray-400 text-xs mt-1">Think about additional sensors, automation, and integration opportunities.</p>
+                <p className="text-foreground font-medium text-sm">
+                  What further improvements could be suggested?
+                </p>
+                <p className="text-gray-400 text-xs mt-1">
+                  Think about additional sensors, automation, and integration opportunities.
+                </p>
               </div>
               <div>
-                <p className="text-foreground font-medium text-sm">How might this affect energy bills and comfort?</p>
-                <p className="text-gray-400 text-xs mt-1">Analyse both immediate and long-term benefits for the homeowner.</p>
+                <p className="text-foreground font-medium text-sm">
+                  How might this affect energy bills and comfort?
+                </p>
+                <p className="text-gray-400 text-xs mt-1">
+                  Analyse both immediate and long-term benefits for the homeowner.
+                </p>
               </div>
               <div>
-                <p className="text-foreground font-medium text-sm">What installation challenges might arise in similar properties?</p>
-                <p className="text-gray-400 text-xs mt-1">Consider different property types, heating systems, and retrofit complexities.</p>
+                <p className="text-foreground font-medium text-sm">
+                  What installation challenges might arise in similar properties?
+                </p>
+                <p className="text-gray-400 text-xs mt-1">
+                  Consider different property types, heating systems, and retrofit complexities.
+                </p>
               </div>
             </div>
           </div>

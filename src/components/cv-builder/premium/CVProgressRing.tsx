@@ -3,11 +3,11 @@
  * Shows CV completion percentage with spring animation
  */
 
-import { useEffect, useState } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Check, Sparkles } from "lucide-react";
-import { progressSpringConfig } from "./animations/variants";
+import { useEffect, useState } from 'react';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { Check, Sparkles } from 'lucide-react';
+import { progressSpringConfig } from './animations/variants';
 
 interface CVProgressRingProps {
   progress: number; // 0-100
@@ -37,11 +37,7 @@ const CVProgressRing = ({
 
   // Spring animation for progress
   const springProgress = useSpring(0, progressSpringConfig);
-  const strokeDashoffset = useTransform(
-    springProgress,
-    [0, 100],
-    [circumference, 0]
-  );
+  const strokeDashoffset = useTransform(springProgress, [0, 100], [circumference, 0]);
 
   // Update spring value when progress changes
   useEffect(() => {
@@ -50,7 +46,7 @@ const CVProgressRing = ({
 
   // Subscribe to spring value for display
   useEffect(() => {
-    const unsubscribe = springProgress.on("change", (value) => {
+    const unsubscribe = springProgress.on('change', (value) => {
       setDisplayProgress(Math.round(value));
     });
     return unsubscribe;
@@ -67,29 +63,25 @@ const CVProgressRing = ({
 
   // Get color based on progress
   const getProgressColor = () => {
-    if (progress >= 100) return "stroke-emerald-500";
-    if (progress >= 75) return "stroke-blue-500";
-    if (progress >= 50) return "stroke-cyan-500";
-    if (progress >= 25) return "stroke-amber-500";
-    return "stroke-white/30";
+    if (progress >= 100) return 'stroke-emerald-500';
+    if (progress >= 75) return 'stroke-blue-500';
+    if (progress >= 50) return 'stroke-cyan-500';
+    if (progress >= 25) return 'stroke-amber-500';
+    return 'stroke-white/30';
   };
 
   const getTextColor = () => {
-    if (progress >= 100) return "text-emerald-400";
-    if (progress >= 75) return "text-blue-400";
-    if (progress >= 50) return "text-cyan-400";
-    if (progress >= 25) return "text-amber-400";
-    return "text-white/60";
+    if (progress >= 100) return 'text-emerald-400';
+    if (progress >= 75) return 'text-blue-400';
+    if (progress >= 50) return 'text-cyan-400';
+    if (progress >= 25) return 'text-amber-400';
+    return 'text-white/60';
   };
 
   return (
-    <div className={cn("relative inline-flex items-center justify-center", className)}>
+    <div className={cn('relative inline-flex items-center justify-center', className)}>
       {/* Background ring */}
-      <svg
-        width={size}
-        height={size}
-        className="transform -rotate-90"
-      >
+      <svg width={size} height={size} className="transform -rotate-90">
         {/* Track */}
         <circle
           cx={size / 2}
@@ -109,7 +101,7 @@ const CVProgressRing = ({
           fill="none"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
-          className={cn("transition-colors duration-500", getProgressColor())}
+          className={cn('transition-colors duration-500', getProgressColor())}
           style={{
             strokeDasharray: circumference,
             strokeDashoffset,
@@ -126,8 +118,8 @@ const CVProgressRing = ({
             strokeWidth={strokeWidth + 4}
             strokeLinecap="round"
             className={cn(
-              "opacity-30 blur-sm",
-              progress >= 100 ? "stroke-emerald-500" : "stroke-blue-500"
+              'opacity-30 blur-sm',
+              progress >= 100 ? 'stroke-emerald-500' : 'stroke-blue-500'
             )}
             style={{
               strokeDasharray: circumference,
@@ -143,7 +135,7 @@ const CVProgressRing = ({
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
             className="flex flex-col items-center"
           >
             <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center mb-1">
@@ -153,15 +145,10 @@ const CVProgressRing = ({
           </motion.div>
         ) : showPercentage ? (
           <div className="flex flex-col items-center">
-            <motion.span
-              className={cn("text-2xl font-bold", getTextColor())}
-              key={displayProgress}
-            >
+            <motion.span className={cn('text-2xl font-bold', getTextColor())} key={displayProgress}>
               {displayProgress}%
             </motion.span>
-            {children || (
-              <span className="text-xs text-white/50 mt-0.5">Complete</span>
-            )}
+            {children || <span className="text-xs text-white/50 mt-0.5">Complete</span>}
           </div>
         ) : (
           children
@@ -217,11 +204,7 @@ export const MiniProgressRing = ({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <svg
-      width={size}
-      height={size}
-      className={cn("transform -rotate-90", className)}
-    >
+    <svg width={size} height={size} className={cn('transform -rotate-90', className)}>
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -242,8 +225,8 @@ export const MiniProgressRing = ({
         strokeDasharray={circumference}
         strokeDashoffset={offset}
         className={cn(
-          "transition-all duration-500",
-          progress >= 100 ? "text-emerald-500" : "text-blue-500"
+          'transition-all duration-500',
+          progress >= 100 ? 'text-emerald-500' : 'text-blue-500'
         )}
       />
     </svg>

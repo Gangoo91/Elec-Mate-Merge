@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -17,7 +23,7 @@ import {
   Info,
   ChevronDown,
   ChevronUp,
-  ArrowLeftRight
+  ArrowLeftRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -69,14 +75,29 @@ interface AIResultsPreviewProps {
 // CONFIDENCE INDICATOR COMPONENT
 // ============================================================================
 
-const ConfidenceIndicator: React.FC<{ confidence: 'high' | 'medium' | 'low'; showLabel?: boolean }> = ({
-  confidence,
-  showLabel = true
-}) => {
+const ConfidenceIndicator: React.FC<{
+  confidence: 'high' | 'medium' | 'low';
+  showLabel?: boolean;
+}> = ({ confidence, showLabel = true }) => {
   const config = {
-    high: { color: 'bg-green-500', text: 'text-green-700 dark:text-green-400', label: 'High', icon: CheckCircle2 },
-    medium: { color: 'bg-yellow-500', text: 'text-yellow-700 dark:text-yellow-400', label: 'Medium', icon: AlertTriangle },
-    low: { color: 'bg-red-500', text: 'text-red-700 dark:text-red-400', label: 'Low', icon: AlertTriangle }
+    high: {
+      color: 'bg-green-500',
+      text: 'text-green-700 dark:text-green-400',
+      label: 'High',
+      icon: CheckCircle2,
+    },
+    medium: {
+      color: 'bg-yellow-500',
+      text: 'text-yellow-700 dark:text-yellow-400',
+      label: 'Medium',
+      icon: AlertTriangle,
+    },
+    low: {
+      color: 'bg-red-500',
+      text: 'text-red-700 dark:text-red-400',
+      label: 'Low',
+      icon: AlertTriangle,
+    },
   };
 
   const { color, text, label, icon: Icon } = config[confidence];
@@ -85,8 +106,8 @@ const ConfidenceIndicator: React.FC<{ confidence: 'high' | 'medium' | 'low'; sho
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className={cn("flex items-center gap-1.5", text)}>
-            <div className={cn("w-2 h-2 rounded-full", color)} />
+          <div className={cn('flex items-center gap-1.5', text)}>
+            <div className={cn('w-2 h-2 rounded-full', color)} />
             {showLabel && <span className="text-xs font-medium">{label}</span>}
           </div>
         </TooltipTrigger>
@@ -114,7 +135,13 @@ interface CircuitRowProps {
   onCancel: () => void;
 }
 
-const CircuitRow: React.FC<CircuitRowProps> = ({ circuit, isEditing, onEdit, onSave, onCancel }) => {
+const CircuitRow: React.FC<CircuitRowProps> = ({
+  circuit,
+  isEditing,
+  onEdit,
+  onSave,
+  onCancel,
+}) => {
   const [editedLabel, setEditedLabel] = useState(circuit.label);
   const [editedRating, setEditedRating] = useState(circuit.rating?.toString() || '');
   const [editedDevice, setEditedDevice] = useState(circuit.device);
@@ -123,7 +150,7 @@ const CircuitRow: React.FC<CircuitRowProps> = ({ circuit, isEditing, onEdit, onS
     onSave({
       label: editedLabel,
       rating: editedRating ? parseInt(editedRating) : null,
-      device: editedDevice
+      device: editedDevice,
     });
   };
 
@@ -135,13 +162,17 @@ const CircuitRow: React.FC<CircuitRowProps> = ({ circuit, isEditing, onEdit, onS
   };
 
   return (
-    <div className={cn(
-      "flex items-center gap-2 p-2 rounded-lg border transition-colors",
-      circuit.confidence === 'low' && "border-red-300 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20",
-      circuit.confidence === 'medium' && "border-yellow-300 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-950/20",
-      circuit.confidence === 'high' && "border-border bg-card",
-      isEditing && "ring-2 ring-primary"
-    )}>
+    <div
+      className={cn(
+        'flex items-center gap-2 p-2 rounded-lg border transition-colors',
+        circuit.confidence === 'low' &&
+          'border-red-300 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20',
+        circuit.confidence === 'medium' &&
+          'border-yellow-300 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-950/20',
+        circuit.confidence === 'high' && 'border-border bg-card',
+        isEditing && 'ring-2 ring-primary'
+      )}
+    >
       {/* Position */}
       <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center font-mono text-sm font-medium">
         {circuit.position}
@@ -149,7 +180,10 @@ const CircuitRow: React.FC<CircuitRowProps> = ({ circuit, isEditing, onEdit, onS
 
       {/* Phase badge */}
       {circuit.phase === '3P' && (
-        <Badge variant="outline" className="flex-shrink-0 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-300">
+        <Badge
+          variant="outline"
+          className="flex-shrink-0 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-300"
+        >
           3P
         </Badge>
       )}
@@ -187,7 +221,8 @@ const CircuitRow: React.FC<CircuitRowProps> = ({ circuit, isEditing, onEdit, onS
         <div className="flex-1 flex items-center gap-3">
           <span className="font-medium text-sm">{circuit.label || 'Unlabelled'}</span>
           <Badge variant="secondary" className="text-xs">
-            {circuit.device} {circuit.curve || ''}{circuit.rating || '?'}A
+            {circuit.device} {circuit.curve || ''}
+            {circuit.rating || '?'}A
           </Badge>
         </div>
       )}
@@ -228,7 +263,7 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
   imageUrl,
   metadata,
   onApply,
-  onRescan
+  onRescan,
 }) => {
   const [circuits, setCircuits] = useState<DetectedCircuit[]>(initialCircuits);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -240,9 +275,9 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
   }, [initialCircuits]);
 
   const handleEditCircuit = (id: string, updates: Partial<DetectedCircuit>) => {
-    setCircuits(prev => prev.map(c =>
-      c.id === id ? { ...c, ...updates, confidence: 'high' as const } : c
-    ));
+    setCircuits((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, ...updates, confidence: 'high' as const } : c))
+    );
     setEditingId(null);
   };
 
@@ -256,17 +291,17 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
     const reversed = [...circuits].reverse();
     const reindexed = reversed.map((c, idx) => ({
       ...c,
-      position: idx + 1
+      position: idx + 1,
     }));
     setCircuits(reindexed);
     setEditingId(null); // Cancel any active edits
   };
 
   // Statistics
-  const highConfidence = circuits.filter(c => c.confidence === 'high').length;
-  const mediumConfidence = circuits.filter(c => c.confidence === 'medium').length;
-  const lowConfidence = circuits.filter(c => c.confidence === 'low').length;
-  const threePhaseCircuits = circuits.filter(c => c.phase === '3P').length;
+  const highConfidence = circuits.filter((c) => c.confidence === 'high').length;
+  const mediumConfidence = circuits.filter((c) => c.confidence === 'medium').length;
+  const lowConfidence = circuits.filter((c) => c.confidence === 'low').length;
+  const threePhaseCircuits = circuits.filter((c) => c.phase === '3P').length;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -286,7 +321,9 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
             <div>
               <span className="text-muted-foreground">Board:</span>
-              <span className="ml-2 font-medium">{board.make} {board.model}</span>
+              <span className="ml-2 font-medium">
+                {board.make} {board.model}
+              </span>
             </div>
             <div>
               <span className="text-muted-foreground">Main:</span>
@@ -298,11 +335,15 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
             </div>
             <div>
               <span className="text-muted-foreground">SPD:</span>
-              <span className={cn(
-                "ml-2 font-medium",
-                board.spd === 'OK' && "text-green-600",
-                board.spd === 'Replace' && "text-red-600"
-              )}>{board.spd}</span>
+              <span
+                className={cn(
+                  'ml-2 font-medium',
+                  board.spd === 'OK' && 'text-green-600',
+                  board.spd === 'Replace' && 'text-red-600'
+                )}
+              >
+                {board.spd}
+              </span>
             </div>
           </div>
 
@@ -344,7 +385,11 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
             >
               <Info className="h-3.5 w-3.5 mr-1" />
               Details
-              {showDetails ? <ChevronUp className="h-3.5 w-3.5 ml-1" /> : <ChevronDown className="h-3.5 w-3.5 ml-1" />}
+              {showDetails ? (
+                <ChevronUp className="h-3.5 w-3.5 ml-1" />
+              ) : (
+                <ChevronDown className="h-3.5 w-3.5 ml-1" />
+              )}
             </Button>
           )}
         </div>
@@ -353,17 +398,25 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
         {showDetails && metadata && (
           <div className="text-xs space-y-1 p-2 bg-muted/30 rounded-md">
             {metadata.analysisTime && (
-              <p><span className="text-muted-foreground">Analysis time:</span> {metadata.analysisTime}ms</p>
+              <p>
+                <span className="text-muted-foreground">Analysis time:</span>{' '}
+                {metadata.analysisTime}ms
+              </p>
             )}
             {metadata.modelsUsed && (
-              <p><span className="text-muted-foreground">Models:</span> {metadata.modelsUsed.join(' + ')}</p>
+              <p>
+                <span className="text-muted-foreground">Models:</span>{' '}
+                {metadata.modelsUsed.join(' + ')}
+              </p>
             )}
             {metadata.decisions && metadata.decisions.length > 0 && (
               <div>
                 <span className="text-muted-foreground">AI Decisions:</span>
                 <ul className="list-disc list-inside ml-2">
                   {metadata.decisions.slice(0, 5).map((d, i) => (
-                    <li key={i} className="text-muted-foreground">{d}</li>
+                    <li key={i} className="text-muted-foreground">
+                      {d}
+                    </li>
                   ))}
                 </ul>
               </div>

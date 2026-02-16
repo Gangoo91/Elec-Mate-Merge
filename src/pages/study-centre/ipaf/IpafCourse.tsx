@@ -1,65 +1,84 @@
-import { ArrowLeft, Scale, Layers, Wrench, ClipboardCheck, AlertTriangle, GraduationCap, TowerControl, BookOpen, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Scale,
+  Layers,
+  Wrench,
+  ClipboardCheck,
+  AlertTriangle,
+  GraduationCap,
+  TowerControl,
+  BookOpen,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Legislation & Responsibilities",
-    description: "Work at Height Regulations, HSWA 1974, CDM 2015, BS EN 1004, and PASMA competence requirements",
+    title: 'Legislation & Responsibilities',
+    description:
+      'Work at Height Regulations, HSWA 1974, CDM 2015, BS EN 1004, and PASMA competence requirements',
     icon: Scale,
-    duration: "30 mins",
-    link: "../ipaf-module-1",
+    duration: '30 mins',
+    link: '../ipaf-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Tower Types & Components",
-    description: "Standard, GRP, and folding towers — components, stability, safe working loads, and tower selection",
+    title: 'Tower Types & Components',
+    description:
+      'Standard, GRP, and folding towers — components, stability, safe working loads, and tower selection',
     icon: Layers,
-    duration: "35 mins",
-    link: "../ipaf-module-2",
+    duration: '35 mins',
+    link: '../ipaf-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Assembly & Dismantling",
-    description: "3T and AGR assembly methods, planning, preparation, and safe dismantling procedures",
+    title: 'Assembly & Dismantling',
+    description:
+      '3T and AGR assembly methods, planning, preparation, and safe dismantling procedures',
     icon: Wrench,
-    duration: "40 mins",
-    link: "../ipaf-module-3",
+    duration: '40 mins',
+    link: '../ipaf-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Inspection & Maintenance",
-    description: "Pre-use checks, formal inspections, common defects, and documentation requirements",
+    title: 'Inspection & Maintenance',
+    description:
+      'Pre-use checks, formal inspections, common defects, and documentation requirements',
     icon: ClipboardCheck,
-    duration: "30 mins",
-    link: "../ipaf-module-4",
+    duration: '30 mins',
+    link: '../ipaf-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Hazards, Risk Assessment & Rescue",
-    description: "Common hazards, 5-step risk assessment, rescue procedures, and moving towers safely",
+    title: 'Hazards, Risk Assessment & Rescue',
+    description:
+      'Common hazards, 5-step risk assessment, rescue procedures, and moving towers safely',
     icon: AlertTriangle,
-    duration: "35 mins",
-    link: "../ipaf-module-5",
+    duration: '35 mins',
+    link: '../ipaf-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../ipaf-module-6",
+    duration: '30 mins',
+    link: '../ipaf-module-6',
     isExam: true,
   },
 ];
 
 export default function IpafCourse() {
   useSEO({
-    title: "IPAF Mobile Scaffold Training | General Upskilling",
-    description: "Complete IPAF mobile access tower training covering legislation, tower types, assembly methods, inspections, hazards, and mock exam preparation.",
+    title: 'IPAF Mobile Scaffold Training | General Upskilling',
+    description:
+      'Complete IPAF mobile access tower training covering legislation, tower types, assembly methods, inspections, hazards, and mock exam preparation.',
   });
 
   return (

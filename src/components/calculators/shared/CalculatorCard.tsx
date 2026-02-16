@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { CALCULATOR_CONFIG, CalculatorCategory } from "./CalculatorConfig";
+import { ReactNode } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
 
 interface CalculatorCardProps {
   category: CalculatorCategory;
@@ -16,7 +16,7 @@ export const CalculatorCard = ({
   title,
   description,
   children,
-  className
+  className,
 }: CalculatorCardProps) => {
   const config = CALCULATOR_CONFIG[category];
   const Icon = config.icon;
@@ -24,7 +24,7 @@ export const CalculatorCard = ({
   return (
     <Card
       className={cn(
-        "calculator-card bg-card border border-white/10 rounded-2xl overflow-hidden",
+        'calculator-card bg-card border border-white/10 rounded-2xl overflow-hidden',
         className
       )}
       style={{ borderColor: `${config.gradientFrom}15` }}
@@ -51,16 +51,12 @@ export const CalculatorCard = ({
               </span>
             </CardTitle>
             {description && (
-              <CardDescription className="text-sm text-white/60">
-                {description}
-              </CardDescription>
+              <CardDescription className="text-sm text-white/60">{description}</CardDescription>
             )}
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {children}
-      </CardContent>
+      <CardContent className="space-y-4">{children}</CardContent>
     </Card>
   );
 };
@@ -72,16 +68,10 @@ interface CalculatorSectionProps {
   className?: string;
 }
 
-export const CalculatorSection = ({
-  title,
-  children,
-  className
-}: CalculatorSectionProps) => {
+export const CalculatorSection = ({ title, children, className }: CalculatorSectionProps) => {
   return (
-    <div className={cn("space-y-3", className)}>
-      {title && (
-        <h3 className="text-sm font-medium text-white/70">{title}</h3>
-      )}
+    <div className={cn('space-y-3', className)}>
+      {title && <h3 className="text-sm font-medium text-white/70">{title}</h3>}
       {children}
     </div>
   );
@@ -97,17 +87,13 @@ interface CalculatorInputGridProps {
 export const CalculatorInputGrid = ({
   columns = 2,
   children,
-  className
+  className,
 }: CalculatorInputGridProps) => {
   const gridClass = {
-    1: "grid-cols-1",
-    2: "grid-cols-1 sm:grid-cols-2",
-    3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+    1: 'grid-cols-1',
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
   }[columns];
 
-  return (
-    <div className={cn("grid gap-3 sm:gap-4", gridClass, className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('grid gap-3 sm:gap-4', gridClass, className)}>{children}</div>;
 };

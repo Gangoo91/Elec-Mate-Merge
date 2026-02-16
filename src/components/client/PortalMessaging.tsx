@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { Send, MessageCircle } from "lucide-react";
-import { format } from "date-fns";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { Send, MessageCircle } from 'lucide-react';
+import { format } from 'date-fns';
 
 interface Message {
   id: string;
@@ -22,8 +22,14 @@ interface PortalMessagingProps {
   onMessageSent: () => void;
 }
 
-export default function PortalMessaging({ token, jobId, messages, clientName, onMessageSent }: PortalMessagingProps) {
-  const [newMessage, setNewMessage] = useState("");
+export default function PortalMessaging({
+  token,
+  jobId,
+  messages,
+  clientName,
+  onMessageSent,
+}: PortalMessagingProps) {
+  const [newMessage, setNewMessage] = useState('');
   const [sending, setSending] = useState(false);
   const { toast } = useToast();
 
@@ -32,25 +38,23 @@ export default function PortalMessaging({ token, jobId, messages, clientName, on
 
     setSending(true);
     try {
-      const { error } = await supabase
-        .from("client_messages")
-        .insert({
-          access_token: token,
-          job_id: jobId,
-          message: newMessage.trim(),
-          sender_type: "client"
-        });
+      const { error } = await supabase.from('client_messages').insert({
+        access_token: token,
+        job_id: jobId,
+        message: newMessage.trim(),
+        sender_type: 'client',
+      });
 
       if (error) throw error;
 
-      setNewMessage("");
-      toast({ title: "Message sent" });
+      setNewMessage('');
+      toast({ title: 'Message sent' });
       onMessageSent();
     } catch (err) {
-      console.error("Error sending message:", err);
+      console.error('Error sending message:', err);
       toast({
-        title: "Failed to send message",
-        variant: "destructive"
+        title: 'Failed to send message',
+        variant: 'destructive',
       });
     } finally {
       setSending(false);
@@ -77,17 +81,15 @@ export default function PortalMessaging({ token, jobId, messages, clientName, on
               <div
                 key={msg.id}
                 className={`p-3 rounded-lg ${
-                  msg.sender_type === "client"
-                    ? "bg-primary/10 ml-4"
-                    : "bg-muted mr-4"
+                  msg.sender_type === 'client' ? 'bg-primary/10 ml-4' : 'bg-muted mr-4'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-xs font-medium">
-                    {msg.sender_type === "client" ? clientName : "Contractor"}
+                    {msg.sender_type === 'client' ? clientName : 'Contractor'}
                   </span>
                   <span className="text-xs text-muted-foreground">
-                    {format(new Date(msg.created_at), "d MMM, HH:mm")}
+                    {format(new Date(msg.created_at), 'd MMM, HH:mm')}
                   </span>
                 </div>
                 <p className="text-sm">{msg.message}</p>

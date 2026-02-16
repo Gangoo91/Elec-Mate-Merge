@@ -1,265 +1,276 @@
-import { ArrowLeft, ArrowRight, Recycle, CheckCircle, AlertTriangle, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Recycle, CheckCircle, AlertTriangle, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Managing Wastage and Shortages - Module 5.4.4 | Level 2 Electrical Course";
-const DESCRIPTION = "Master material management strategies to minimise wastage, prevent shortages, and promote sustainable practices in electrical installations.";
+const TITLE = 'Managing Wastage and Shortages - Module 5.4.4 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Master material management strategies to minimise wastage, prevent shortages, and promote sustainable practices in electrical installations.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Name one common cause of material wastage.",
+    question: 'Name one common cause of material wastage.',
     options: [
-      "Accurate measuring",
-      "Poor storage conditions",
-      "Proper planning",
-      "Correct handling"
+      'Accurate measuring',
+      'Poor storage conditions',
+      'Proper planning',
+      'Correct handling',
     ],
     correctIndex: 1,
-    explanation: "Poor storage conditions, such as damp storage damaging cables, is a major cause of material wastage."
+    explanation:
+      'Poor storage conditions, such as damp storage damaging cables, is a major cause of material wastage.',
   },
   {
     id: 2,
-    question: "What is one cause of material shortages?",
+    question: 'What is one cause of material shortages?',
     options: [
-      "Over-ordering materials",
-      "Underestimating requirements",
-      "Proper stock control",
-      "Accurate planning"
+      'Over-ordering materials',
+      'Underestimating requirements',
+      'Proper stock control',
+      'Accurate planning',
     ],
     correctIndex: 1,
-    explanation: "Underestimating material requirements during the planning stage is a common cause of shortages."
+    explanation:
+      'Underestimating material requirements during the planning stage is a common cause of shortages.',
   },
   {
     id: 3,
-    question: "What is one effect of material wastage and shortages?",
+    question: 'What is one effect of material wastage and shortages?',
     options: [
-      "Improved efficiency",
-      "Cost savings",
-      "Increased project costs",
-      "Better sustainability"
+      'Improved efficiency',
+      'Cost savings',
+      'Increased project costs',
+      'Better sustainability',
     ],
     correctIndex: 2,
-    explanation: "Both wastage and shortages lead to increased project costs through waste or delays requiring emergency procurement."
+    explanation:
+      'Both wastage and shortages lead to increased project costs through waste or delays requiring emergency procurement.',
   },
   {
     id: 4,
-    question: "Name one strategy to reduce material wastage.",
+    question: 'Name one strategy to reduce material wastage.',
     options: [
-      "Order extra materials",
-      "Store materials outside",
-      "Measure and cut carefully",
-      "Use damaged materials"
+      'Order extra materials',
+      'Store materials outside',
+      'Measure and cut carefully',
+      'Use damaged materials',
     ],
     correctIndex: 2,
-    explanation: "Measuring and cutting carefully prevents wastage from cutting errors and ensures materials are used efficiently."
+    explanation:
+      'Measuring and cutting carefully prevents wastage from cutting errors and ensures materials are used efficiently.',
   },
   {
     id: 5,
-    question: "What is one strategy to prevent shortages?",
+    question: 'What is one strategy to prevent shortages?',
     options: [
-      "Underestimate requirements",
-      "Keep a stock log updated daily",
-      "Avoid supplier coordination",
-      "Use materials immediately"
+      'Underestimate requirements',
+      'Keep a stock log updated daily',
+      'Avoid supplier coordination',
+      'Use materials immediately',
     ],
     correctIndex: 1,
-    explanation: "Keeping a daily updated stock log helps track material levels and prevents unexpected shortages."
+    explanation:
+      'Keeping a daily updated stock log helps track material levels and prevents unexpected shortages.',
   },
   {
     id: 6,
-    question: "Give one example of sustainable practice.",
+    question: 'Give one example of sustainable practice.',
     options: [
-      "Throwing away offcuts",
-      "Over-ordering materials",
-      "Recycling cable offcuts",
-      "Using damaged materials"
+      'Throwing away offcuts',
+      'Over-ordering materials',
+      'Recycling cable offcuts',
+      'Using damaged materials',
     ],
     correctIndex: 2,
-    explanation: "Recycling cable offcuts and metal trunking reduces environmental impact and supports sustainable practices."
-  }
+    explanation:
+      'Recycling cable offcuts and metal trunking reduces environmental impact and supports sustainable practices.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Give one example of a cause of wastage.",
-    options: [
-      "Accurate planning",
-      "Incorrect cutting",
-      "Proper storage",
-      "Good coordination"
-    ],
+    question: 'Give one example of a cause of wastage.',
+    options: ['Accurate planning', 'Incorrect cutting', 'Proper storage', 'Good coordination'],
     correctAnswer: 1,
-    explanation: "Incorrect cutting due to measuring errors is a common cause of material wastage."
+    explanation: 'Incorrect cutting due to measuring errors is a common cause of material wastage.',
   },
   {
     id: 2,
-    question: "What is one cause of shortages?",
+    question: 'What is one cause of shortages?',
     options: [
-      "Over-ordering",
-      "Underestimating requirements",
-      "Proper planning",
-      "Accurate measuring"
+      'Over-ordering',
+      'Underestimating requirements',
+      'Proper planning',
+      'Accurate measuring',
     ],
     correctAnswer: 1,
-    explanation: "Underestimating material requirements during planning leads to shortages during installation."
+    explanation:
+      'Underestimating material requirements during planning leads to shortages during installation.',
   },
   {
     id: 3,
-    question: "True or False: Using damaged materials is acceptable if only minor.",
-    options: [
-      "True - minor damage doesn't matter",
-      "False - safety must never be compromised"
-    ],
+    question: 'True or False: Using damaged materials is acceptable if only minor.',
+    options: ["True - minor damage doesn't matter", 'False - safety must never be compromised'],
     correctAnswer: 1,
-    explanation: "Using damaged materials creates safety risks and can lead to installation failures. Safety always comes first."
+    explanation:
+      'Using damaged materials creates safety risks and can lead to installation failures. Safety always comes first.',
   },
   {
     id: 4,
-    question: "Name one effect of material wastage.",
-    options: [
-      "Cost savings",
-      "Increased costs",
-      "Improved efficiency",
-      "Better sustainability"
-    ],
+    question: 'Name one effect of material wastage.',
+    options: ['Cost savings', 'Increased costs', 'Improved efficiency', 'Better sustainability'],
     correctAnswer: 1,
-    explanation: "Material wastage directly increases project costs through purchasing replacement materials."
+    explanation:
+      'Material wastage directly increases project costs through purchasing replacement materials.',
   },
   {
     id: 5,
-    question: "Why should offcuts be reused where possible?",
+    question: 'Why should offcuts be reused where possible?',
     options: [
-      "To save storage space",
-      "To reduce waste and save costs",
-      "To impress clients",
-      "To finish projects faster"
+      'To save storage space',
+      'To reduce waste and save costs',
+      'To impress clients',
+      'To finish projects faster',
     ],
     correctAnswer: 1,
-    explanation: "Reusing suitable offcuts reduces waste and saves costs by maximizing material utilization."
+    explanation:
+      'Reusing suitable offcuts reduces waste and saves costs by maximizing material utilization.',
   },
   {
     id: 6,
-    question: "What should a stock log be used for?",
+    question: 'What should a stock log be used for?',
     options: [
-      "Recording worker hours",
-      "Monitoring and updating material levels daily",
-      "Planning work schedules",
-      "Tracking tool usage"
+      'Recording worker hours',
+      'Monitoring and updating material levels daily',
+      'Planning work schedules',
+      'Tracking tool usage',
     ],
     correctAnswer: 1,
-    explanation: "A stock log tracks material levels daily to prevent shortages and manage inventory effectively."
+    explanation:
+      'A stock log tracks material levels daily to prevent shortages and manage inventory effectively.',
   },
   {
     id: 7,
-    question: "What type of area should materials be stored in?",
+    question: 'What type of area should materials be stored in?',
     options: [
-      "Open outdoor areas",
-      "Dry, secure, ventilated storage",
-      "Damp basements",
-      "Temporary locations"
+      'Open outdoor areas',
+      'Dry, secure, ventilated storage',
+      'Damp basements',
+      'Temporary locations',
     ],
     correctAnswer: 1,
-    explanation: "Materials must be stored in dry, secure, ventilated areas to prevent damage and theft."
+    explanation:
+      'Materials must be stored in dry, secure, ventilated areas to prevent damage and theft.',
   },
   {
     id: 8,
-    question: "What is a benefit of holding buffer stock?",
+    question: 'What is a benefit of holding buffer stock?',
     options: [
-      "Increases storage costs",
-      "Prevents delays if deliveries are late",
-      "Creates more waste",
-      "Complicates inventory"
+      'Increases storage costs',
+      'Prevents delays if deliveries are late',
+      'Creates more waste',
+      'Complicates inventory',
     ],
     correctAnswer: 1,
-    explanation: "Buffer stock prevents work delays when deliveries are late or unexpected requirements arise."
+    explanation:
+      'Buffer stock prevents work delays when deliveries are late or unexpected requirements arise.',
   },
   {
     id: 9,
-    question: "Give one sustainable practice to reduce waste.",
+    question: 'Give one sustainable practice to reduce waste.',
     options: [
-      "Disposing of all offcuts",
-      "Recycling cable offcuts",
-      "Over-ordering materials",
-      "Using damaged materials"
+      'Disposing of all offcuts',
+      'Recycling cable offcuts',
+      'Over-ordering materials',
+      'Using damaged materials',
     ],
     correctAnswer: 1,
-    explanation: "Recycling cable offcuts and metal components reduces environmental impact and supports sustainability."
+    explanation:
+      'Recycling cable offcuts and metal components reduces environmental impact and supports sustainability.',
   },
   {
     id: 10,
-    question: "Who should be informed immediately if shortages occur?",
+    question: 'Who should be informed immediately if shortages occur?',
     options: [
-      "The client",
-      "The site supervisor or project manager",
-      "The suppliers",
-      "Other trades"
+      'The client',
+      'The site supervisor or project manager',
+      'The suppliers',
+      'Other trades',
     ],
     correctAnswer: 1,
-    explanation: "The site supervisor or project manager must be informed immediately to coordinate solutions and minimize delays."
-  }
+    explanation:
+      'The site supervisor or project manager must be informed immediately to coordinate solutions and minimize delays.',
+  },
 ];
 
 const practicalGuidance = [
-  "Step 1: Check site drawings carefully to order correct quantities and specifications. Include allowances for testing and commissioning but avoid excessive over-ordering that creates waste.",
-  "Step 2: Store materials safely on pallets, racks, or in lockable stores with proper environmental protection. Ensure dry, ventilated conditions and security from theft.",
-  "Step 3: Keep a stock sheet updated daily with deliveries, usage, and remaining quantities. Use digital systems where possible for real-time tracking across the project team.",
-  "Step 4: Train team members to cut and measure accurately using proper techniques and tools. Implement quality checks before cutting to prevent costly errors.",
-  "Step 5: Recycle or return unused items instead of discarding them. Establish relationships with suppliers for returns and local recycling facilities for sustainable disposal.",
-  "Step 6: Implement buffer stock strategies for critical items whilst maintaining lean inventory principles. Balance shortage prevention with waste minimisation through careful planning.",
-  "Step 7: Monitor and analyse wastage patterns to identify improvement opportunities. Use data to refine ordering processes and reduce future waste through continuous improvement."
+  'Step 1: Check site drawings carefully to order correct quantities and specifications. Include allowances for testing and commissioning but avoid excessive over-ordering that creates waste.',
+  'Step 2: Store materials safely on pallets, racks, or in lockable stores with proper environmental protection. Ensure dry, ventilated conditions and security from theft.',
+  'Step 3: Keep a stock sheet updated daily with deliveries, usage, and remaining quantities. Use digital systems where possible for real-time tracking across the project team.',
+  'Step 4: Train team members to cut and measure accurately using proper techniques and tools. Implement quality checks before cutting to prevent costly errors.',
+  'Step 5: Recycle or return unused items instead of discarding them. Establish relationships with suppliers for returns and local recycling facilities for sustainable disposal.',
+  'Step 6: Implement buffer stock strategies for critical items whilst maintaining lean inventory principles. Balance shortage prevention with waste minimisation through careful planning.',
+  'Step 7: Monitor and analyse wastage patterns to identify improvement opportunities. Use data to refine ordering processes and reduce future waste through continuous improvement.',
 ];
 
 const pocketGuideItems = [
-  "Order accurately based on drawings - include reasonable allowances but avoid over-ordering.",
-  "Store materials properly and securely in dry, ventilated, and protected locations.",
-  "Keep a daily stock log updated with deliveries, usage, and current levels.",
-  "Reuse and recycle where possible - offcuts, packaging, and unused materials.",
-  "Hold buffer stock of key items to prevent delays from late deliveries.",
-  "Train staff in accurate measuring and cutting techniques to prevent waste.",
-  "Coordinate with suppliers on lead times and delivery schedules.",
-  "Inspect deliveries immediately and report any damage or shortages.",
-  "Use damaged materials only if safe and suitable - never compromise safety.",
-  "Monitor wastage patterns and implement continuous improvement measures."
+  'Order accurately based on drawings - include reasonable allowances but avoid over-ordering.',
+  'Store materials properly and securely in dry, ventilated, and protected locations.',
+  'Keep a daily stock log updated with deliveries, usage, and current levels.',
+  'Reuse and recycle where possible - offcuts, packaging, and unused materials.',
+  'Hold buffer stock of key items to prevent delays from late deliveries.',
+  'Train staff in accurate measuring and cutting techniques to prevent waste.',
+  'Coordinate with suppliers on lead times and delivery schedules.',
+  'Inspect deliveries immediately and report any damage or shortages.',
+  'Use damaged materials only if safe and suitable - never compromise safety.',
+  'Monitor wastage patterns and implement continuous improvement measures.',
 ];
 
 const faqs = [
   {
-    question: "Can offcuts of cable always be reused?",
-    answer: "Only if they meet the length and safety requirements for the specific circuit. Cable offcuts must be long enough for the application, undamaged, and suitable for the intended use. Never compromise on safety requirements to reuse materials."
+    question: 'Can offcuts of cable always be reused?',
+    answer:
+      'Only if they meet the length and safety requirements for the specific circuit. Cable offcuts must be long enough for the application, undamaged, and suitable for the intended use. Never compromise on safety requirements to reuse materials.',
   },
   {
-    question: "What should be done if material shortages cause delays?",
-    answer: "Notify the supervisor immediately and re-plan tasks until delivery arrives. Document the delay, arrange emergency procurement if possible, and reorganise work to maintain productivity where materials are available."
+    question: 'What should be done if material shortages cause delays?',
+    answer:
+      'Notify the supervisor immediately and re-plan tasks until delivery arrives. Document the delay, arrange emergency procurement if possible, and reorganise work to maintain productivity where materials are available.',
   },
   {
     question: "Is it cheaper to order extra materials 'just in case'?",
-    answer: "No, over-ordering creates waste and locks up budget unnecessarily. Better to order accurately with small allowances and maintain good supplier relationships for quick top-up deliveries when needed."
+    answer:
+      'No, over-ordering creates waste and locks up budget unnecessarily. Better to order accurately with small allowances and maintain good supplier relationships for quick top-up deliveries when needed.',
   },
   {
-    question: "How much buffer stock should be maintained?",
-    answer: "Typically 5-10% for critical items, depending on delivery lead times and project duration. Consider factors like supplier reliability, storage capacity, and cost of shortages when determining buffer levels."
+    question: 'How much buffer stock should be maintained?',
+    answer:
+      'Typically 5-10% for critical items, depending on delivery lead times and project duration. Consider factors like supplier reliability, storage capacity, and cost of shortages when determining buffer levels.',
   },
   {
     question: "What's the best way to prevent theft of materials?",
-    answer: "Use lockable storage containers, implement sign-in/out systems, maintain security lighting, and position valuable materials in secure areas. Consider insurance implications and site security measures."
+    answer:
+      'Use lockable storage containers, implement sign-in/out systems, maintain security lighting, and position valuable materials in secure areas. Consider insurance implications and site security measures.',
   },
   {
-    question: "How should damaged materials be handled?",
-    answer: "Quarantine damaged materials immediately, assess if they can be safely used for non-critical applications, document the damage for insurance claims, and dispose of unsafe materials through proper channels."
+    question: 'How should damaged materials be handled?',
+    answer:
+      'Quarantine damaged materials immediately, assess if they can be safely used for non-critical applications, document the damage for insurance claims, and dispose of unsafe materials through proper channels.',
   },
   {
-    question: "What environmental regulations apply to waste disposal?",
-    answer: "Follow local waste regulations for electrical materials, separate metals for recycling, dispose of hazardous materials through licensed contractors, and maintain waste transfer documentation as required."
+    question: 'What environmental regulations apply to waste disposal?',
+    answer:
+      'Follow local waste regulations for electrical materials, separate metals for recycling, dispose of hazardous materials through licensed contractors, and maintain waste transfer documentation as required.',
   },
   {
-    question: "How can digital tools help with material management?",
-    answer: "Use barcode scanning for stock control, digital inventory systems for real-time tracking, mobile apps for site updates, and integration with supplier systems for automated reordering and delivery scheduling."
-  }
+    question: 'How can digital tools help with material management?',
+    answer:
+      'Use barcode scanning for stock control, digital inventory systems for real-time tracking, mobile apps for site updates, and integration with supplier systems for automated reordering and delivery scheduling.',
+  },
 ];
 
 const Module5Section4_4 = () => {
@@ -297,7 +308,8 @@ const Module5Section4_4 = () => {
               Managing Wastage and Shortages
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master material management strategies to minimise wastage, prevent shortages, and promote sustainable practices in electrical installations.
+              Master material management strategies to minimise wastage, prevent shortages, and
+              promote sustainable practices in electrical installations.
             </p>
           </header>
 
@@ -319,7 +331,9 @@ const Module5Section4_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">By the end of this subsection, you will be able to:</p>
+            <p className="text-white/80 mb-4">
+              By the end of this subsection, you will be able to:
+            </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="space-y-3">
@@ -361,7 +375,9 @@ const Module5Section4_4 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white/80">
-                <strong className="text-white">Impact on Business:</strong> Effective material management reduces project costs by 10-15% and improves sustainability through waste reduction and recycling practices.
+                <strong className="text-white">Impact on Business:</strong> Effective material
+                management reduces project costs by 10-15% and improves sustainability through waste
+                reduction and recycling practices.
               </p>
             </div>
           </section>
@@ -374,7 +390,9 @@ const Module5Section4_4 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Material wastage is a significant cost driver in electrical projects. Understanding the common causes helps implement effective prevention strategies and maintain project profitability.
+              Material wastage is a significant cost driver in electrical projects. Understanding
+              the common causes helps implement effective prevention strategies and maintain project
+              profitability.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -437,7 +455,9 @@ const Module5Section4_4 = () => {
                 <div>
                   <p className="font-medium text-blue-400 mb-2">Cost Impact</p>
                   <p className="text-sm text-white/70">
-                    Material wastage typically accounts for 5-10% of total project costs. Effective management can reduce this to 2-3%, providing significant savings on larger projects.
+                    Material wastage typically accounts for 5-10% of total project costs. Effective
+                    management can reduce this to 2-3%, providing significant savings on larger
+                    projects.
                   </p>
                 </div>
               </div>
@@ -446,7 +466,9 @@ const Module5Section4_4 = () => {
 
           {/* Quick Check 1 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Causes of Wastage</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Causes of Wastage
+            </h3>
             <InlineCheck
               id="wastage-causes-check"
               question={quickCheckQuestions[0].question}
@@ -464,7 +486,9 @@ const Module5Section4_4 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Material shortages can halt work completely, causing costly delays and affecting project schedules. Understanding shortage causes enables better planning and prevention strategies.
+              Material shortages can halt work completely, causing costly delays and affecting
+              project schedules. Understanding shortage causes enables better planning and
+              prevention strategies.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -528,7 +552,9 @@ const Module5Section4_4 = () => {
                 <div>
                   <p className="font-medium text-red-400 mb-2">Impact of Shortages</p>
                   <p className="text-sm text-white/70">
-                    Material shortages can delay projects by days or weeks, incurring penalty costs and affecting team productivity. Emergency procurement often costs 20-30% more than planned orders.
+                    Material shortages can delay projects by days or weeks, incurring penalty costs
+                    and affecting team productivity. Emergency procurement often costs 20-30% more
+                    than planned orders.
                   </p>
                 </div>
               </div>
@@ -537,7 +563,9 @@ const Module5Section4_4 = () => {
 
           {/* Quick Check 2 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Causes of Shortages</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Causes of Shortages
+            </h3>
             <InlineCheck
               id="shortage-causes-check"
               question={quickCheckQuestions[1].question}
@@ -555,7 +583,9 @@ const Module5Section4_4 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Both wastage and shortages have significant impacts on project success, affecting costs, timelines, safety, and environmental sustainability. Understanding these effects motivates better material management practices.
+              Both wastage and shortages have significant impacts on project success, affecting
+              costs, timelines, safety, and environmental sustainability. Understanding these
+              effects motivates better material management practices.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -615,7 +645,9 @@ const Module5Section4_4 = () => {
                 <div>
                   <p className="font-medium text-purple-400 mb-2">Business Reputation</p>
                   <p className="text-sm text-white/70">
-                    Poor material management affects client relationships, subcontractor partnerships, and company reputation. Environmental responsibility is increasingly important for winning contracts.
+                    Poor material management affects client relationships, subcontractor
+                    partnerships, and company reputation. Environmental responsibility is
+                    increasingly important for winning contracts.
                   </p>
                 </div>
               </div>
@@ -624,7 +656,9 @@ const Module5Section4_4 = () => {
 
           {/* Quick Check 3 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Effects of Wastage and Shortages</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Effects of Wastage and Shortages
+            </h3>
             <InlineCheck
               id="effects-check"
               question={quickCheckQuestions[2].question}
@@ -642,7 +676,9 @@ const Module5Section4_4 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Implementing effective wastage reduction strategies requires systematic approaches to planning, handling, storage, and team training. These strategies deliver immediate cost savings and environmental benefits.
+              Implementing effective wastage reduction strategies requires systematic approaches to
+              planning, handling, storage, and team training. These strategies deliver immediate
+              cost savings and environmental benefits.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -707,7 +743,9 @@ const Module5Section4_4 = () => {
                 <div>
                   <p className="font-medium text-green-400 mb-2">Success Metric</p>
                   <p className="text-sm text-white/70">
-                    Well-implemented waste reduction strategies can reduce material waste from 8-10% to 2-3% of total material costs, providing significant savings on medium to large projects.
+                    Well-implemented waste reduction strategies can reduce material waste from 8-10%
+                    to 2-3% of total material costs, providing significant savings on medium to
+                    large projects.
                   </p>
                 </div>
               </div>
@@ -716,7 +754,9 @@ const Module5Section4_4 = () => {
 
           {/* Quick Check 4 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Waste Reduction Strategies</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Waste Reduction Strategies
+            </h3>
             <InlineCheck
               id="waste-reduction-check"
               question={quickCheckQuestions[3].question}
@@ -734,7 +774,9 @@ const Module5Section4_4 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Preventing material shortages requires proactive planning, systematic monitoring, and strong supplier relationships. These strategies ensure continuous work flow and prevent costly delays.
+              Preventing material shortages requires proactive planning, systematic monitoring, and
+              strong supplier relationships. These strategies ensure continuous work flow and
+              prevent costly delays.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -799,7 +841,9 @@ const Module5Section4_4 = () => {
                 <div>
                   <p className="font-medium text-blue-400 mb-2">Best Practice</p>
                   <p className="text-sm text-white/70">
-                    Implement weekly material planning meetings with the site team to review upcoming requirements, check stock levels, and coordinate deliveries. This prevents most shortage-related delays.
+                    Implement weekly material planning meetings with the site team to review
+                    upcoming requirements, check stock levels, and coordinate deliveries. This
+                    prevents most shortage-related delays.
                   </p>
                 </div>
               </div>
@@ -808,7 +852,9 @@ const Module5Section4_4 = () => {
 
           {/* Quick Check 5 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Shortage Prevention</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Shortage Prevention
+            </h3>
             <InlineCheck
               id="shortage-prevention-check"
               question={quickCheckQuestions[4].question}
@@ -826,7 +872,9 @@ const Module5Section4_4 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Sustainable material management reduces environmental impact while often providing cost benefits. Modern electrical contractors increasingly focus on sustainability to meet client requirements and environmental regulations.
+              Sustainable material management reduces environmental impact while often providing
+              cost benefits. Modern electrical contractors increasingly focus on sustainability to
+              meet client requirements and environmental regulations.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -891,7 +939,9 @@ const Module5Section4_4 = () => {
                 <div>
                   <p className="font-medium text-green-400 mb-2">Business Advantage</p>
                   <p className="text-sm text-white/70">
-                    Many clients now require sustainability credentials for major contracts. Demonstrating effective waste management and recycling practices can provide competitive advantages in tendering.
+                    Many clients now require sustainability credentials for major contracts.
+                    Demonstrating effective waste management and recycling practices can provide
+                    competitive advantages in tendering.
                   </p>
                 </div>
               </div>
@@ -900,7 +950,9 @@ const Module5Section4_4 = () => {
 
           {/* Quick Check 6 */}
           <section className="mb-10">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Sustainable Practices</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Check - Sustainable Practices
+            </h3>
             <InlineCheck
               id="sustainable-practices-check"
               question={quickCheckQuestions[5].question}
@@ -918,13 +970,17 @@ const Module5Section4_4 = () => {
             </h2>
 
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h3 className="text-lg font-semibold text-white mb-3">Housing Project Material Damage</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">
+                Housing Project Material Damage
+              </h3>
 
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Problem:</h4>
                   <p className="text-sm text-white/70">
-                    On a 50-unit housing project, cable reels were stored in an uncovered area during autumn. Heavy rain and humidity caused moisture ingress into several cable drums, making the cables unsafe for installation.
+                    On a 50-unit housing project, cable reels were stored in an uncovered area
+                    during autumn. Heavy rain and humidity caused moisture ingress into several
+                    cable drums, making the cables unsafe for installation.
                   </p>
 
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
@@ -941,11 +997,14 @@ const Module5Section4_4 = () => {
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Solution:</h4>
                   <p className="text-sm text-white/70">
-                    Investment in a lockable, weatherproof storage container with proper ventilation and racking systems would have prevented the damage completely.
+                    Investment in a lockable, weatherproof storage container with proper ventilation
+                    and racking systems would have prevented the damage completely.
                   </p>
 
                   <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                    <p className="text-sm font-medium text-green-400 mb-1">Investment vs Savings:</p>
+                    <p className="text-sm font-medium text-green-400 mb-1">
+                      Investment vs Savings:
+                    </p>
                     <ul className="text-sm text-white/70 list-disc pl-4">
                       <li>Storage container cost: £2,500</li>
                       <li>Total loss prevented: £15,000+</li>
@@ -958,7 +1017,10 @@ const Module5Section4_4 = () => {
 
               <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm text-white/70">
-                  <strong className="text-blue-400">Lesson Learned:</strong> Proper material storage is an investment, not a cost. The project manager now includes weatherproof storage in all project planning and has avoided similar losses on subsequent projects.
+                  <strong className="text-blue-400">Lesson Learned:</strong> Proper material storage
+                  is an investment, not a cost. The project manager now includes weatherproof
+                  storage in all project planning and has avoided similar losses on subsequent
+                  projects.
                 </p>
               </div>
             </div>
@@ -972,7 +1034,10 @@ const Module5Section4_4 = () => {
             </h2>
             <div className="space-y-3">
               {practicalGuidance.map((guidance, index) => (
-                <div key={index} className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="text-white/80 text-sm">{guidance}</p>
                 </div>
               ))}
@@ -999,7 +1064,9 @@ const Module5Section4_4 = () => {
           <section className="mb-10">
             <div className="flex items-center gap-3 mb-4">
               <BookOpen className="w-5 h-5 text-elec-yellow" />
-              <h2 className="text-xl font-semibold text-white">Pocket Guide - Managing Wastage & Shortages</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Pocket Guide - Managing Wastage & Shortages
+              </h2>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {pocketGuideItems.map((item, index) => (

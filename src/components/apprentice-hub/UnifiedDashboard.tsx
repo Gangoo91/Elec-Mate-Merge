@@ -23,13 +23,21 @@ import {
   Layers,
   FileText,
   CheckCircle2,
+  Share2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import type { PortfolioEntry } from '@/types/portfolio';
+import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { useHaptics } from '@/hooks/useHaptics';
 import { useAuth } from '@/contexts/AuthContext';
 import { XPProgressRing } from '@/components/apprentice/XPProgressRing';
@@ -42,6 +50,7 @@ import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { ApprenticeHubTab } from './ApprenticeHubNav';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
+import { SharePortfolioSheet } from './SharePortfolioSheet';
 
 interface UnifiedDashboardProps {
   onNavigate: (tab: ApprenticeHubTab) => void;
@@ -60,14 +69,10 @@ function ProgressRing({
 }) {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (Math.min(progress, 1) * circumference);
+  const offset = circumference - Math.min(progress, 1) * circumference;
 
   return (
-    <svg
-      width={size}
-      height={size}
-      className="flex-shrink-0 -rotate-90"
-    >
+    <svg width={size} height={size} className="flex-shrink-0 -rotate-90">
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -95,26 +100,21 @@ function ProgressRing({
 
 /** Thumbnail for evidence files */
 function EvidenceThumbnail({ entry }: { entry: PortfolioEntry }) {
-  const imageFile = entry.evidenceFiles?.find((f) =>
-    f.type?.startsWith('image/') || f.url?.match(/\.(jpg|jpeg|png|webp|gif)$/i)
+  const imageFile = entry.evidenceFiles?.find(
+    (f) => f.type?.startsWith('image/') || f.url?.match(/\.(jpg|jpeg|png|webp|gif)$/i)
   );
 
   if (imageFile?.url) {
     return (
       <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/[0.06] flex-shrink-0">
-        <img
-          src={imageFile.url}
-          alt=""
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
+        <img src={imageFile.url} alt="" className="w-full h-full object-cover" loading="lazy" />
       </div>
     );
   }
 
   return (
     <div className="p-2 rounded-xl bg-white/[0.06] flex-shrink-0">
-      <FileCheck className="h-4 w-4 text-white/70" />
+      <FileCheck className="h-4 w-4 text-white" />
     </div>
   );
 }
@@ -135,18 +135,18 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(new Set());
   const [selectedAC, setSelectedAC] = useState<{ code: string; text: string } | null>(null);
   const [showACEvidence, setShowACEvidence] = useState(false);
+  const [showShareSheet, setShowShareSheet] = useState(false);
 
-  // Build AC → evidence lookup from portfolio entries
+  // Build AC → evidence lookup from portfolio entries (normalised keys)
   const acEvidenceMap = useMemo(() => {
     const map = new Map<string, PortfolioEntry[]>();
     if (!portfolioEntries) return map;
     for (const entry of portfolioEntries) {
       if (entry.assessmentCriteria && entry.assessmentCriteria.length > 0) {
-        for (const acCode of entry.assessmentCriteria) {
-          if (!map.has(acCode)) {
-            map.set(acCode, []);
-          }
-          map.get(acCode)!.push(entry);
+        const normalisedRefs = parseEvidencedACs([entry]);
+        for (const ref of normalisedRefs) {
+          if (!map.has(ref)) map.set(ref, []);
+          map.get(ref)!.push(entry);
         }
       }
     }
@@ -155,14 +155,33 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
   // Overall AC progress
   const { evidencedCount, overallPercent } = useMemo(() => {
-    const allACs = tree.units.flatMap(u =>
-      u.learningOutcomes.flatMap(lo => lo.assessmentCriteria)
+    const allACs = tree.units.flatMap((u) =>
+      u.learningOutcomes.flatMap((lo) => lo.assessmentCriteria)
     );
     const count = allACs.filter(
-      ac => acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)
+      (ac) => acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)
     ).length;
     const pct = tree.totalACs > 0 ? Math.round((count / tree.totalACs) * 100) : 0;
     return { evidencedCount: count, overallPercent: pct };
+  }, [tree, acEvidenceMap]);
+
+  // Find next un-evidenced AC for the smart nudge
+  const nextAC = useMemo(() => {
+    if (tree.totalACs === 0) return null;
+    for (const unit of tree.units) {
+      for (const lo of unit.learningOutcomes) {
+        for (const ac of lo.assessmentCriteria) {
+          if (!acEvidenceMap.has(ac.acRef) && !acEvidenceMap.has(ac.acFullRef)) {
+            return {
+              unitCode: unit.unitCode,
+              acRef: ac.acRef,
+              acText: ac.acText.replace(`${ac.acRef} `, ''),
+            };
+          }
+        }
+      }
+    }
+    return null;
   }, [tree, acEvidenceMap]);
 
   // Stats
@@ -187,7 +206,8 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   };
 
   const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
-  const firstName = fullName.split(' ')[0];
+  const rawFirst = fullName.split(' ')[0];
+  const firstName = rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1).toLowerCase();
 
   const toggleUnit = (unitCode: string) => {
     haptics.tap();
@@ -208,7 +228,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           <h2 className="text-xl font-bold text-white">
             {getGreeting()}, {firstName}
           </h2>
-          <p className="text-sm text-white/70 mt-1">Select your qualification to get started</p>
+          <p className="text-sm text-white mt-1">Select your qualification to get started</p>
         </div>
         <QualificationSelector />
       </div>
@@ -217,27 +237,33 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
   return (
     <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
-      {/* Greeting + Course header */}
-      <div>
-        <h2 className="text-xl font-bold text-white">
-          {getGreeting()}, {firstName}
-        </h2>
-        {userSelection && (
-          <div className="mt-2 space-y-1.5">
-            <div className="flex items-start gap-2">
-              <GraduationCap className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-white leading-snug">
-                {userSelection.qualification?.title}
-              </p>
-            </div>
+      {/* Greeting + Course header — compact */}
+      <div className="flex items-center justify-between">
+        <div className="min-w-0">
+          <h2 className="text-xl font-bold text-white truncate">
+            {getGreeting()}, {firstName}
+          </h2>
+          {userSelection && (
             <button
               onClick={() => setShowCourseSelector(true)}
-              className="ml-6 text-xs text-elec-yellow font-semibold touch-manipulation active:opacity-70 h-8 flex items-center"
+              className="flex items-center gap-1.5 mt-1 text-xs text-white touch-manipulation active:opacity-70"
             >
-              Change Qualification
+              <GraduationCap className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
+              <span className="line-clamp-2">
+                {userSelection.qualification?.title}
+              </span>
             </button>
-          </div>
-        )}
+          )}
+        </div>
+        <XPProgressRing
+          size={40}
+          compact
+          xpToday={xp.xpToday ?? 0}
+          dailyGoal={xp.dailyGoal ?? 50}
+          level={xp.level ?? 1}
+          levelTitle={xp.levelTitle ?? ''}
+          totalXP={xp.totalXP ?? 0}
+        />
       </div>
 
       {/* No-data guard */}
@@ -259,12 +285,11 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       )}
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-3 gap-3">
         <Button
           onClick={onCapture}
           className="h-14 rounded-2xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform shadow-lg shadow-elec-yellow/20"
         >
-          <Plus className="h-5 w-5 mr-2" />
           Add Evidence
         </Button>
         <Button
@@ -274,6 +299,17 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         >
           <Timer className="h-5 w-5 mr-2" />
           Log Time
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            haptics.tap();
+            setShowShareSheet(true);
+          }}
+          className="h-14 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
+        >
+          <Share2 className="h-5 w-5 mr-2" />
+          Share
         </Button>
       </div>
 
@@ -285,9 +321,12 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         >
           <Briefcase className="h-5 w-5 text-elec-yellow mb-2" />
           <p className="text-lg font-bold text-white">
-            {portfolioCompleted}/{portfolioTotal}
+            {tree.totalACs > 0 ? evidencedCount : portfolioCompleted}/
+            {tree.totalACs > 0 ? tree.totalACs : portfolioTotal}
           </p>
-          <p className="text-xs text-white/60">Portfolio</p>
+          <p className="text-xs text-white">
+            {tree.totalACs > 0 ? 'ACs Covered' : 'Portfolio'}
+          </p>
         </button>
         <button
           onClick={() => onNavigate('hours')}
@@ -300,7 +339,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
             )}
           />
           <p className="text-lg font-bold text-white">{weeklyHours.toFixed(1)}h</p>
-          <p className="text-xs text-white/60">This Week</p>
+          <p className="text-xs text-white">This Week</p>
         </button>
         <button
           onClick={() => onNavigate('hours')}
@@ -308,78 +347,91 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         >
           <Target className="h-5 w-5 text-blue-400 mb-2" />
           <p className="text-lg font-bold text-white">{yearlyHours}h</p>
-          <p className="text-xs text-white/60">Yearly OJT</p>
+          <p className="text-xs text-white">Yearly OJT</p>
         </button>
       </div>
 
-      {/* Overall AC Progress */}
-      {tree.totalACs > 0 && (
-        <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] space-y-3">
-          <div className="flex items-baseline justify-between">
-            <span
-              className={cn(
-                'text-3xl font-bold',
-                overallPercent >= 75
-                  ? 'text-green-400'
-                  : overallPercent >= 25
-                    ? 'text-amber-400'
-                    : 'text-red-400'
-              )}
-            >
-              {overallPercent}%
-            </span>
-            <span className="text-xs text-white/60">
-              {evidencedCount} of {tree.totalACs} ACs evidenced · {tree.totalACs - evidencedCount} remaining
+      {/* Next AC to Target — smart nudge */}
+      {tree.totalACs > 0 && nextAC ? (
+        <button
+          onClick={() => {
+            haptics.tap();
+            onCapture();
+          }}
+          className="w-full p-4 rounded-2xl bg-gradient-to-r from-elec-yellow/[0.08] to-transparent border border-elec-yellow/20 text-left touch-manipulation active:scale-[0.99] transition-transform"
+        >
+          <div className="flex items-start gap-3">
+            <div className="p-2 rounded-xl bg-elec-yellow/15 flex-shrink-0">
+              <Target className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs text-white font-medium mb-0.5">Next AC to Target</p>
+              <p className="text-sm font-semibold text-white leading-snug">
+                {nextAC.unitCode} {nextAC.acRef}
+              </p>
+              <p className="text-xs text-white mt-0.5 line-clamp-3">{nextAC.acText}</p>
+            </div>
+            <div className="flex-shrink-0 flex items-center gap-1 mt-1">
+              <Plus className="h-4 w-4 text-elec-yellow" />
+              <span className="text-xs font-semibold text-elec-yellow">Add</span>
+            </div>
+          </div>
+          {/* Thin progress bar */}
+          <div className="mt-3 flex items-center gap-2">
+            <div className="flex-1 h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
+              <motion.div
+                className={cn(
+                  'h-full rounded-full',
+                  overallPercent >= 75
+                    ? 'bg-green-400'
+                    : overallPercent >= 25
+                      ? 'bg-amber-400'
+                      : 'bg-red-400'
+                )}
+                initial={{ width: 0 }}
+                animate={{ width: `${overallPercent}%` }}
+                transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.1 }}
+              />
+            </div>
+            <span className="text-[10px] text-white font-medium flex-shrink-0">
+              {evidencedCount}/{tree.totalACs}
             </span>
           </div>
-          <div className="h-2 rounded-full bg-white/[0.08] overflow-hidden">
-            <motion.div
-              className={cn(
-                'h-full rounded-full',
-                overallPercent >= 75
-                  ? 'bg-green-400'
-                  : overallPercent >= 25
-                    ? 'bg-amber-400'
-                    : 'bg-red-400'
-              )}
-              initial={{ width: 0 }}
-              animate={{ width: `${overallPercent}%` }}
-              transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.1 }}
-            />
+        </button>
+      ) : tree.totalACs > 0 ? (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-green-500/[0.08] to-transparent border border-green-500/20 flex items-center gap-3">
+          <CheckCircle2 className="h-6 w-6 text-green-400 flex-shrink-0" />
+          <div>
+            <p className="text-sm font-semibold text-green-400">All ACs Covered</p>
+            <p className="text-xs text-white mt-0.5">
+              {tree.totalACs} assessment criteria evidenced
+            </p>
           </div>
         </div>
-      )}
+      ) : null}
 
       {/* Course Requirements — Units with LOs & ACs */}
       {(acLoading || qualLoading) && userSelection && (
         <div className="flex items-center justify-center py-8">
           <div className="h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
-          <span className="ml-2 text-sm text-white/60">Loading course data...</span>
+          <span className="ml-2 text-sm text-white">Loading course data...</span>
         </div>
       )}
       {tree.totalACs > 0 && (
         <div className="space-y-4">
-          {/* Section header with stats */}
-          <div>
+          {/* Section header */}
+          <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-white">Course Requirements</h3>
-            <div className="flex items-center gap-3 text-xs text-white/60 mt-1">
-              <span className="flex items-center gap-1">
-                <Layers className="h-3.5 w-3.5 text-elec-yellow" />
-                {tree.units.length} units
-              </span>
-              <span className="flex items-center gap-1">
-                <FileText className="h-3.5 w-3.5 text-green-400" />
-                {evidencedCount}/{tree.totalACs} ACs evidenced
-              </span>
-            </div>
+            <span className="flex items-center gap-1 text-xs text-white">
+              <Layers className="h-3.5 w-3.5 text-elec-yellow" />
+              {tree.units.length} units
+            </span>
           </div>
 
           {/* Units accordion */}
           <div className="space-y-2">
             {tree.units.map((unit) => {
-              const allUnitACs = unit.learningOutcomes.flatMap(
-                (lo) => lo.assessmentCriteria
-              );
+              const allUnitACs = unit.learningOutcomes.flatMap((lo) => lo.assessmentCriteria);
               const totalUnitACs = allUnitACs.length;
               const evidencedUnitACs = allUnitACs.filter(
                 (ac) => acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)
@@ -412,14 +464,14 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                           {expandedUnits.has(unit.unitCode) ? (
                             <ChevronDown className="h-4 w-4 text-elec-yellow" />
                           ) : (
-                            <ChevronRight className="h-4 w-4 text-white/50" />
+                            <ChevronRight className="h-4 w-4 text-white" />
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-semibold text-white leading-tight">
                             {unit.unitTitle}
                           </p>
-                          <p className="text-xs text-white/50 mt-1">
+                          <p className="text-xs text-white mt-1">
                             {unit.unitCode} · {unit.learningOutcomes.length} outcomes ·{' '}
                             {totalUnitACs} ACs
                           </p>
@@ -434,7 +486,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                               'text-[10px] font-medium',
                               evidencedUnitACs === totalUnitACs && totalUnitACs > 0
                                 ? 'text-green-400'
-                                : 'text-white/50'
+                                : 'text-white'
                             )}
                           >
                             {evidencedUnitACs}/{totalUnitACs}
@@ -473,12 +525,15 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                     });
                                     setShowACEvidence(true);
                                   }}
-                                  className="w-full flex items-start gap-2 text-xs text-white text-left touch-manipulation active:bg-white/[0.04] rounded-lg py-1 px-1 -mx-1 transition-colors"
+                                  className={cn(
+                                    'w-full flex items-start gap-2 text-xs text-white text-left touch-manipulation active:bg-white/[0.06] rounded-lg py-2 px-2 -mx-2 transition-colors',
+                                    hasEvidence && 'bg-green-500/[0.04]'
+                                  )}
                                 >
                                   {hasEvidence ? (
-                                    <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-px" />
+                                    <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0 mt-px" />
                                   ) : (
-                                    <span className="text-elec-yellow/60 flex-shrink-0 mt-px w-3.5 text-center">
+                                    <span className="text-elec-yellow flex-shrink-0 mt-px w-4 text-center">
                                       •
                                     </span>
                                   )}
@@ -516,48 +571,78 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         </div>
       )}
 
-      {/* Recent Activity */}
+      {/* Your Evidence */}
       {portfolioEntries && portfolioEntries.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-white">Recent Activity</h3>
+            <h3 className="text-base font-bold text-white">Your Evidence</h3>
             <button
               onClick={() => onNavigate('work')}
               className="text-xs text-elec-yellow font-medium touch-manipulation flex items-center gap-0.5"
             >
-              View All <ChevronRight className="h-3 w-3" />
+              View all {portfolioTotal} items <ChevronRight className="h-3 w-3" />
             </button>
           </div>
           <div className="space-y-2">
-            {portfolioEntries.slice(0, 3).map((entry) => (
-              <div
-                key={entry.id}
-                className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
-              >
-                <div className="p-2 rounded-xl bg-white/[0.06]">
-                  <FileCheck className="h-4 w-4 text-white/70" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-white truncate">{entry.title}</p>
-                  <p className="text-xs text-white/50 mt-0.5">
-                    {formatRelativeDate(new Date(entry.dateCreated))}
-                  </p>
-                </div>
-                <Badge
-                  variant="outline"
-                  className={cn(
-                    'text-[10px] px-2 py-0.5',
-                    entry.status === 'completed' || entry.status === 'reviewed'
-                      ? 'border-green-500/30 text-green-400'
-                      : entry.status === 'in-progress'
-                        ? 'border-blue-500/30 text-blue-400'
-                        : 'border-white/20 text-white/60'
-                  )}
+            {portfolioEntries.slice(0, 5).map((entry) => {
+              const entryACs = entry.assessmentCriteria || [];
+              return (
+                <button
+                  key={entry.id}
+                  onClick={() => onNavigate('work')}
+                  className="w-full flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-left touch-manipulation active:scale-[0.99] transition-transform"
                 >
-                  {String(entry.status || 'draft')}
-                </Badge>
-              </div>
-            ))}
+                  <EvidenceThumbnail entry={entry} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white truncate">{entry.title}</p>
+                    {entryACs.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {entryACs.slice(0, 3).map((ac, i) => {
+                          const shortRef = ac.match(/\bAC\s+(\d+(?:\.\d+)*)/);
+                          const unitCode = ac.match(/^(\S+)/)?.[1];
+                          const label = shortRef
+                            ? `${unitCode} AC ${shortRef[1]}`
+                            : ac.length > 20
+                              ? ac.slice(0, 18) + '...'
+                              : ac;
+                          return (
+                            <span
+                              key={i}
+                              className="inline-flex items-center px-1.5 py-0.5 rounded bg-elec-yellow/10 text-elec-yellow text-[10px] font-medium"
+                            >
+                              {label}
+                            </span>
+                          );
+                        })}
+                        {entryACs.length > 3 && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-white/[0.06] text-white text-[10px]">
+                            +{entryACs.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          'text-[10px] px-2 py-0.5',
+                          entry.status === 'completed' || entry.status === 'reviewed'
+                            ? 'border-green-500/30 text-green-400'
+                            : entry.status === 'in-progress'
+                              ? 'border-blue-500/30 text-blue-400'
+                              : 'border-white/20 text-white'
+                        )}
+                      >
+                        {String(entry.status || 'draft')}
+                      </Badge>
+                      <span className="text-[10px] text-white">
+                        {formatRelativeDate(new Date(entry.dateCreated))}
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -574,10 +659,12 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
           <div className="flex flex-col h-full">
             <SheetHeader className="px-4 pb-3">
-              <SheetTitle className="text-left">
-                {selectedAC?.code}
+              <SheetTitle className="text-left flex items-center gap-2">
+                <Badge className="bg-elec-yellow text-black font-bold text-sm px-2 py-0.5">
+                  {selectedAC?.code}
+                </Badge>
               </SheetTitle>
-              <SheetDescription className="text-left text-white/80 text-sm">
+              <SheetDescription className="text-left text-white text-sm leading-snug">
                 {selectedAC?.text}
               </SheetDescription>
             </SheetHeader>
@@ -603,9 +690,9 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                             className="flex flex-col items-center justify-center py-8 space-y-3"
                           >
                             <div className="p-3 rounded-full bg-white/[0.06]">
-                              <FileText className="h-6 w-6 text-white/40" />
+                              <FileText className="h-6 w-6 text-white" />
                             </div>
-                            <p className="text-sm text-white/60 text-center">
+                            <p className="text-sm text-white text-center">
                               No evidence linked to this criterion yet
                             </p>
                             <Button
@@ -637,27 +724,31 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                 stiffness: 400,
                                 damping: 25,
                               }}
-                              className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
+                              className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] border-l-2 border-l-green-500/40"
                             >
                               <EvidenceThumbnail entry={entry} />
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm text-white truncate">
-                                  {entry.title}
-                                </p>
-                                <p className="text-xs text-white/50 mt-0.5">
-                                  {formatRelativeDate(new Date(entry.dateCreated))}
-                                </p>
+                                <p className="text-sm text-white truncate">{entry.title}</p>
+                                <div className="flex items-center gap-2 mt-0.5">
+                                  <p className="text-xs text-white">
+                                    {formatRelativeDate(new Date(entry.dateCreated))}
+                                  </p>
+                                  {entry.evidenceFiles && entry.evidenceFiles.length > 0 && (
+                                    <span className="text-[10px] text-white">
+                                      {entry.evidenceFiles.length} file{entry.evidenceFiles.length !== 1 ? 's' : ''}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                               <Badge
                                 variant="outline"
                                 className={cn(
                                   'text-[10px] px-2 py-0.5',
-                                  entry.status === 'completed' ||
-                                    entry.status === 'reviewed'
+                                  entry.status === 'completed' || entry.status === 'reviewed'
                                     ? 'border-green-500/30 text-green-400'
                                     : entry.status === 'in-progress'
                                       ? 'border-blue-500/30 text-blue-400'
-                                      : 'border-white/20 text-white/60'
+                                      : 'border-white/20 text-white'
                                 )}
                               >
                                 {String(entry.status || 'draft')}
@@ -706,6 +797,9 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Share Portfolio Sheet */}
+      <SharePortfolioSheet open={showShareSheet} onOpenChange={setShowShareSheet} />
     </div>
   );
 }

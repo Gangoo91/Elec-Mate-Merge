@@ -10,39 +10,69 @@ export const BatteryStorageSection = () => {
           <Battery className="h-5 w-5 text-elec-yellow" />
           Battery Energy Storage Systems (BESS) Safety & Management
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-orange-600 text-foreground">Energy Storage</Badge>
+        <Badge variant="secondary" className="w-fit bg-orange-600 text-foreground">
+          Energy Storage
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Battery Technology Specifications:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Battery Technology Specifications:
+          </h5>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h6 className="text-orange-400 font-medium mb-2">Lithium-Ion Technology:</h6>
               <ul className="text-sm space-y-1">
-                <li>• <strong>Energy density:</strong> 150-250 Wh/kg</li>
-                <li>• <strong>Cycle life:</strong> 5,000-10,000 cycles at 80% DoD</li>
-                <li>• <strong>Round-trip efficiency:</strong> 90-95%</li>
-                <li>• <strong>Operating temperature:</strong> -20°C to +60°C</li>
-                <li>• <strong>Calendar life:</strong> 10-20 years</li>
-                <li>• <strong>Self-discharge rate:</strong> &lt;3% per month</li>
+                <li>
+                  • <strong>Energy density:</strong> 150-250 Wh/kg
+                </li>
+                <li>
+                  • <strong>Cycle life:</strong> 5,000-10,000 cycles at 80% DoD
+                </li>
+                <li>
+                  • <strong>Round-trip efficiency:</strong> 90-95%
+                </li>
+                <li>
+                  • <strong>Operating temperature:</strong> -20°C to +60°C
+                </li>
+                <li>
+                  • <strong>Calendar life:</strong> 10-20 years
+                </li>
+                <li>
+                  • <strong>Self-discharge rate:</strong> &lt;3% per month
+                </li>
               </ul>
             </div>
             <div>
               <h6 className="text-blue-400 font-medium mb-2">Alternative Technologies:</h6>
               <ul className="text-sm space-y-1">
-                <li>• <strong>LiFePO₄:</strong> Enhanced safety, longer cycle life</li>
-                <li>• <strong>Sodium-ion:</strong> Lower cost, abundant materials</li>
-                <li>• <strong>Flow batteries:</strong> Long duration storage &gt;4h</li>
-                <li>• <strong>Compressed air:</strong> Large-scale storage solutions</li>
-                <li>• <strong>Gravity storage:</strong> Mechanical energy storage</li>
-                <li>• <strong>Hydrogen:</strong> Seasonal storage applications</li>
+                <li>
+                  • <strong>LiFePO₄:</strong> Enhanced safety, longer cycle life
+                </li>
+                <li>
+                  • <strong>Sodium-ion:</strong> Lower cost, abundant materials
+                </li>
+                <li>
+                  • <strong>Flow batteries:</strong> Long duration storage &gt;4h
+                </li>
+                <li>
+                  • <strong>Compressed air:</strong> Large-scale storage solutions
+                </li>
+                <li>
+                  • <strong>Gravity storage:</strong> Mechanical energy storage
+                </li>
+                <li>
+                  • <strong>Hydrogen:</strong> Seasonal storage applications
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Battery Management System (BMS) Requirements:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Battery Management System (BMS) Requirements:
+          </h5>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h6 className="text-green-400 font-medium mb-2">Core Monitoring Functions:</h6>
@@ -96,7 +126,7 @@ export const BatteryStorageSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border border-gray-600">
               <h6 className="text-cyan-400 font-medium mb-2">Installation Safety Requirements:</h6>
               <div className="grid md:grid-cols-3 gap-3">
@@ -118,7 +148,9 @@ export const BatteryStorageSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Performance Optimisation & Degradation Management:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Performance Optimisation & Degradation Management:
+          </h5>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h6 className="text-indigo-400 font-medium mb-2">Cycle Management:</h6>
@@ -146,7 +178,9 @@ export const BatteryStorageSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Grid Services & Revenue Optimisation:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Grid Services & Revenue Optimisation:
+          </h5>
           <div className="space-y-3">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -168,7 +202,7 @@ export const BatteryStorageSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="text-yellow-400 font-medium mb-2">Revenue Stream Analysis:</h6>
               <div className="grid md:grid-cols-4 gap-3">
@@ -194,7 +228,9 @@ export const BatteryStorageSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Installation & Commissioning Standards:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Installation & Commissioning Standards:
+          </h5>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h6 className="text-rose-400 font-medium mb-2">Pre-Installation Requirements:</h6>

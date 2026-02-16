@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Copy, Calendar, FileText, Zap } from 'lucide-react';
@@ -16,14 +15,14 @@ const QuickActionsToolbar: React.FC<QuickActionsToolbarProps> = ({ formData, onU
     if (formData.clientAddress) {
       onUpdate('installationAddress', formData.clientAddress);
       toast({
-        title: "Address Copied",
-        description: "Client address copied to installation address",
+        title: 'Address Copied',
+        description: 'Client address copied to installation address',
       });
     } else {
       toast({
-        title: "No Client Address",
-        description: "Please enter a client address first",
-        variant: "destructive",
+        title: 'No Client Address',
+        description: 'Please enter a client address first',
+        variant: 'destructive',
       });
     }
   };
@@ -32,8 +31,8 @@ const QuickActionsToolbar: React.FC<QuickActionsToolbarProps> = ({ formData, onU
     const today = new Date().toISOString().split('T')[0];
     onUpdate('installationDate', today);
     toast({
-      title: "Date Set",
-      description: "Installation date set to today",
+      title: 'Date Set',
+      description: 'Installation date set to today',
     });
   };
 
@@ -41,8 +40,8 @@ const QuickActionsToolbar: React.FC<QuickActionsToolbarProps> = ({ formData, onU
     onUpdate('designStandard', 'BS7671');
     onUpdate('partPCompliance', 'compliant');
     toast({
-      title: "Standards Applied",
-      description: "Standard BS7671 compliance settings applied",
+      title: 'Standards Applied',
+      description: 'Standard BS7671 compliance settings applied',
     });
   };
 
@@ -57,13 +56,13 @@ const QuickActionsToolbar: React.FC<QuickActionsToolbarProps> = ({ formData, onU
       return acc;
     }, {} as any);
 
-    Object.keys(clearedData).forEach(key => {
+    Object.keys(clearedData).forEach((key) => {
       onUpdate(key, clearedData[key]);
     });
 
     toast({
-      title: "Form Cleared",
-      description: "Form cleared (client details preserved)",
+      title: 'Form Cleared',
+      description: 'Form cleared (client details preserved)',
     });
   };
 
@@ -78,33 +77,18 @@ const QuickActionsToolbar: React.FC<QuickActionsToolbarProps> = ({ formData, onU
         <Copy className="h-3 w-3 mr-1" />
         Copy Address
       </Button>
-      
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={handleSetTodayDate}
-        className="text-xs"
-      >
+
+      <Button variant="outline" size="sm" onClick={handleSetTodayDate} className="text-xs">
         <Calendar className="h-3 w-3 mr-1" />
         Today's Date
       </Button>
-      
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={handleAutoFillStandards}
-        className="text-xs"
-      >
+
+      <Button variant="outline" size="sm" onClick={handleAutoFillStandards} className="text-xs">
         <Zap className="h-3 w-3 mr-1" />
         BS7671 Standards
       </Button>
-      
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={handleClearForm}
-        className="text-xs ml-auto"
-      >
+
+      <Button variant="outline" size="sm" onClick={handleClearForm} className="text-xs ml-auto">
         <FileText className="h-3 w-3 mr-1" />
         Clear Form
       </Button>

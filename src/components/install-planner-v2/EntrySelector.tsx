@@ -1,51 +1,54 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Home, Building2, Factory, Zap, Wrench, Sparkles } from "lucide-react";
-import { InstallPlanDataV2 } from "./types";
+import { Card, CardContent } from '@/components/ui/card';
+import { Home, Building2, Factory, Zap, Wrench, Sparkles } from 'lucide-react';
+import { InstallPlanDataV2 } from './types';
 
 interface EntrySelectorProps {
-  onModeSelect: (mode: 'express' | 'professional' | 'multi' | 'ai-guided', presetData?: Partial<InstallPlanDataV2>) => void;
+  onModeSelect: (
+    mode: 'express' | 'professional' | 'multi' | 'ai-guided',
+    presetData?: Partial<InstallPlanDataV2>
+  ) => void;
 }
 
 export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
   const installationTypes = [
     {
       icon: Home,
-      title: "Home Circuit",
-      description: "Quick & Simple",
+      title: 'Home Circuit',
+      description: 'Quick & Simple',
       type: 'domestic' as const,
-      mode: 'express' as const
+      mode: 'express' as const,
     },
     {
       icon: Building2,
-      title: "Commercial",
-      description: "Multiple Options",
+      title: 'Commercial',
+      description: 'Multiple Options',
       type: 'commercial' as const,
-      mode: 'professional' as const
+      mode: 'professional' as const,
     },
     {
       icon: Factory,
-      title: "Industrial",
-      description: "Full System",
+      title: 'Industrial',
+      description: 'Full System',
       type: 'industrial' as const,
-      mode: 'multi' as const
-    }
+      mode: 'multi' as const,
+    },
   ];
 
   const quickStarts = [
     {
       icon: Zap,
-      title: "Common Circuits",
-      description: "Ring Main, Lighting, Cooker",
+      title: 'Common Circuits',
+      description: 'Ring Main, Lighting, Cooker',
       mode: 'express' as const,
-      loadType: 'ring-main'
+      loadType: 'ring-main',
     },
     {
       icon: Wrench,
-      title: "Custom Design",
-      description: "Full Control & Options",
+      title: 'Custom Design',
+      description: 'Full Control & Options',
       mode: 'professional' as const,
-      loadType: ''
-    }
+      loadType: '',
+    },
   ];
 
   return (
@@ -65,7 +68,8 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
                 AI Guided Installation Designer
               </h3>
               <p className="text-base md:text-lg text-foreground/70">
-                Chat with our AI to design your installation - just describe what you need and we'll guide you through the process
+                Chat with our AI to design your installation - just describe what you need and we'll
+                guide you through the process
               </p>
             </div>
           </CardContent>
@@ -73,9 +77,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
       </div>
       {/* Main Selection */}
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-6 text-center">
-          Or do it manually
-        </h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6 text-center">Or do it manually</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {installationTypes.map((type) => (
             <Card
@@ -87,7 +89,9 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:border-primary/40 transition-all">
                   <type.icon className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-foreground mb-1 md:mb-2">{type.title}</h3>
+                <h3 className="text-lg md:text-xl font-bold text-foreground mb-1 md:mb-2">
+                  {type.title}
+                </h3>
                 <p className="text-sm md:text-base text-foreground/70">{type.description}</p>
               </CardContent>
             </Card>
@@ -97,9 +101,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
 
       {/* Quick Starts */}
       <div>
-        <h3 className="text-lg font-semibold text-foreground mb-4 text-center">
-          Or start with:
-        </h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4 text-center">Or start with:</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
           {quickStarts.map((quick) => (
             <Card
@@ -112,7 +114,9 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
                   <quick.icon className="h-5 w-5 md:h-6 md:w-6 text-elec-dark" />
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-sm md:text-base font-semibold text-foreground mb-0.5 md:mb-1">{quick.title}</h4>
+                  <h4 className="text-sm md:text-base font-semibold text-foreground mb-0.5 md:mb-1">
+                    {quick.title}
+                  </h4>
                   <p className="text-xs md:text-sm text-foreground/70">{quick.description}</p>
                 </div>
               </CardContent>

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import posthog from "posthog-js";
-import { useAuth } from "@/contexts/AuthContext";
+import { useEffect, useState } from 'react';
+import posthog from 'posthog-js';
+import { useAuth } from '@/contexts/AuthContext';
 
 // PostHog configuration
 const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
-const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST || "https://eu.i.posthog.com";
+const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST || 'https://eu.i.posthog.com';
 
 // Cookie consent keys (must match CookieConsent.tsx)
 const COOKIE_CONSENT_KEY = 'elec-mate-cookie-consent';
@@ -29,14 +29,14 @@ let isInitialized = false;
 export function initPostHog() {
   // Don't initialize if no API key
   if (!POSTHOG_KEY) {
-    console.log("[PostHog] No API key configured - analytics disabled");
+    console.log('[PostHog] No API key configured - analytics disabled');
     return false;
   }
 
   // CRITICAL: Check for analytics consent BEFORE initializing
   // This ensures we comply with PECR - analytics scripts are NOT loaded without consent
   if (!hasAnalyticsConsent()) {
-    console.log("[PostHog] Analytics consent not given - not loading");
+    console.log('[PostHog] Analytics consent not given - not loading');
     return false;
   }
 
@@ -47,13 +47,13 @@ export function initPostHog() {
 
   posthog.init(POSTHOG_KEY, {
     api_host: POSTHOG_HOST,
-    person_profiles: "identified_only",
+    person_profiles: 'identified_only',
     capture_pageview: true,
     capture_pageleave: true,
     autocapture: true,
     session_recording: {
       maskAllInputs: true,
-      maskTextSelector: "[data-ph-mask]",
+      maskTextSelector: '[data-ph-mask]',
     },
     // Respect Do Not Track browser setting
     respect_dnt: true,
@@ -65,14 +65,14 @@ export function initPostHog() {
         // Disable in development unless explicitly enabled
         if (!import.meta.env.VITE_POSTHOG_DEV) {
           posthog.opt_out_capturing();
-          console.log("[PostHog] Disabled in development");
+          console.log('[PostHog] Disabled in development');
         }
       }
     },
   });
 
   isInitialized = true;
-  console.log("[PostHog] Initialized with user consent");
+  console.log('[PostHog] Initialized with user consent');
   return true;
 }
 
@@ -82,7 +82,7 @@ export function shutdownPostHog() {
     posthog.opt_out_capturing();
     posthog.reset();
     isInitialized = false;
-    console.log("[PostHog] Shutdown - consent withdrawn");
+    console.log('[PostHog] Shutdown - consent withdrawn');
   }
 }
 
@@ -95,7 +95,7 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
   useEffect(() => {
     const handleConsentUpdate = (event: CustomEvent) => {
       const newConsent = event.detail?.analytics === true;
-      console.log("[PostHog] Consent updated:", newConsent);
+      console.log('[PostHog] Consent updated:', newConsent);
       setHasConsent(newConsent);
 
       if (newConsent) {
@@ -132,7 +132,7 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
         subscription_tier: profile.subscription_tier,
         created_at: profile.created_at,
       });
-      console.log("[PostHog] User identified:", user.id);
+      console.log('[PostHog] User identified:', user.id);
     }
   }, [user, profile]);
 
@@ -140,7 +140,7 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
   useEffect(() => {
     if (!user && isInitialized && POSTHOG_KEY) {
       posthog.reset();
-      console.log("[PostHog] User reset");
+      console.log('[PostHog] User reset');
     }
   }, [user]);
 
@@ -162,7 +162,7 @@ export function useTrackEvent() {
 export function useTrackPageView() {
   return (pageName: string, properties?: Record<string, any>) => {
     if (POSTHOG_KEY && isInitialized && hasAnalyticsConsent()) {
-      posthog.capture("$pageview", {
+      posthog.capture('$pageview', {
         $current_url: window.location.href,
         page_name: pageName,
         ...properties,

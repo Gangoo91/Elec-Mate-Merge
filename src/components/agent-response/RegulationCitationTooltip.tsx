@@ -1,7 +1,7 @@
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Badge } from "@/components/ui/badge";
-import { ConfidenceBadge } from "./ConfidenceBadge";
-import { BookOpen } from "lucide-react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Badge } from '@/components/ui/badge';
+import { ConfidenceBadge } from './ConfidenceBadge';
+import { BookOpen } from 'lucide-react';
 
 interface RegulationCitationTooltipProps {
   citation: {
@@ -41,7 +41,7 @@ export const RegulationCitationTooltip = ({ citation, index }: RegulationCitatio
             <div className="text-xs">
               <div className="font-medium mb-1 flex items-center gap-2">
                 <span>Confidence:</span>
-                <Badge variant={confidence > 0.85 ? "default" : "secondary"} className="text-xs">
+                <Badge variant={confidence > 0.85 ? 'default' : 'secondary'} className="text-xs">
                   {Math.round(confidence * 100)}%
                 </Badge>
               </div>

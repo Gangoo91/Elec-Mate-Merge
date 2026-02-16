@@ -1,19 +1,27 @@
-import { useState } from "react";
-import { Globe, FileText, Video, BookOpen, ChevronDown, ExternalLink, FilePlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState } from 'react';
+import {
+  Globe,
+  FileText,
+  Video,
+  BookOpen,
+  ChevronDown,
+  ExternalLink,
+  FilePlus,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { toast } from "sonner";
-import { LucideIcon } from "lucide-react";
+} from '@/components/ui/sheet';
+import { toast } from 'sonner';
+import { LucideIcon } from 'lucide-react';
 
 interface Resource {
   title: string;
@@ -88,17 +96,20 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
   const [suggestion, setSuggestion] = useState({ title: '', description: '', url: '' });
 
   // Group resources by type
-  const groupedResources = resources.reduce((acc, resource) => {
-    const type = resource.type as ResourceType;
-    if (!acc[type]) acc[type] = [];
-    acc[type].push(resource);
-    return acc;
-  }, {} as Record<ResourceType, Resource[]>);
+  const groupedResources = resources.reduce(
+    (acc, resource) => {
+      const type = resource.type as ResourceType;
+      if (!acc[type]) acc[type] = [];
+      acc[type].push(resource);
+      return acc;
+    },
+    {} as Record<ResourceType, Resource[]>
+  );
 
   const handleSuggestion = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you for your suggestion!", {
-      description: "Our team will review it shortly."
+    toast.success('Thank you for your suggestion!', {
+      description: 'Our team will review it shortly.',
     });
     setIsSheetOpen(false);
     setSuggestion({ title: '', description: '', url: '' });
@@ -125,12 +136,16 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
             min-h-[72px] touch-manipulation active:opacity-80 transition-colors duration-300`}
         >
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl ${config.iconBgClass} flex items-center justify-center`}>
+            <div
+              className={`w-10 h-10 rounded-xl ${config.iconBgClass} flex items-center justify-center`}
+            >
               <Icon className={`h-5 w-5 ${config.iconClass}`} />
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-foreground">{config.label}</h3>
-              <p className="text-xs text-white/70">{typeResources.length} resource{typeResources.length !== 1 ? 's' : ''}</p>
+              <p className="text-xs text-white/70">
+                {typeResources.length} resource{typeResources.length !== 1 ? 's' : ''}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -162,7 +177,9 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-foreground text-sm">{resource.title}</h4>
-                    <p className="text-xs text-white/70 line-clamp-2 mt-0.5">{resource.description}</p>
+                    <p className="text-xs text-white/70 line-clamp-2 mt-0.5">
+                      {resource.description}
+                    </p>
                   </div>
                   <ExternalLink className={`h-4 w-4 ${config.iconClass} flex-shrink-0 mt-0.5`} />
                 </div>
@@ -200,9 +217,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <FilePlus className="h-5 w-5 text-cyan-400" />
               Suggest a Resource
             </SheetTitle>
-            <SheetDescription>
-              Help grow our community resources library
-            </SheetDescription>
+            <SheetDescription>Help grow our community resources library</SheetDescription>
           </SheetHeader>
 
           <form onSubmit={handleSuggestion} className="space-y-4 pt-6">

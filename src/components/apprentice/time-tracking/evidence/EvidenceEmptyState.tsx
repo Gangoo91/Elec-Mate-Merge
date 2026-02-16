@@ -1,11 +1,16 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { FileText } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger, DialogClose, DialogHeader } from "@/components/ui/dialog";
-import EvidenceForm from "./EvidenceForm";
-import { TrainingEvidenceItem } from "@/types/time-tracking";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { FileText } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogClose,
+  DialogHeader,
+} from '@/components/ui/dialog';
+import EvidenceForm from './EvidenceForm';
+import { TrainingEvidenceItem } from '@/types/time-tracking';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface EvidenceEmptyStateProps {
   onAddEvidence: (evidence: Omit<TrainingEvidenceItem, 'id'>) => void;
@@ -13,7 +18,11 @@ interface EvidenceEmptyStateProps {
   setIsUploading: (value: boolean) => void;
 }
 
-const EvidenceEmptyState = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceEmptyStateProps) => {
+const EvidenceEmptyState = ({
+  onAddEvidence,
+  isUploading,
+  setIsUploading,
+}: EvidenceEmptyStateProps) => {
   return (
     <Card className="border-dashed border-2 border-elec-yellow/20 bg-white/10">
       <CardContent className="flex flex-col items-center justify-center py-10">
@@ -29,7 +38,7 @@ const EvidenceEmptyState = ({ onAddEvidence, isUploading, setIsUploading }: Evid
           <DialogContent className="max-h-[90vh]">
             <DialogHeader>Add Your First Evidence</DialogHeader>
             <ScrollArea className="max-h-[calc(90vh-120px)] pr-4">
-              <EvidenceForm 
+              <EvidenceForm
                 onAddEvidence={onAddEvidence}
                 isUploading={isUploading}
                 setIsUploading={setIsUploading}

@@ -3,7 +3,7 @@ import { emergencyLightingModule5Section2QuizQuestions } from '@/data/upskilling
 
 export const EmergencyLightingModule5Section2Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={emergencyLightingModule5Section2QuizQuestions}
       title="Section 2 Quiz: Functional Testing and 3-Hour Duration Tests"
     />

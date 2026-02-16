@@ -15,35 +15,40 @@ export const BMSModule5Section3Summary = () => {
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              Modbus is a simple master–slave protocol widely used in BMS applications since the 1970s.
+              Modbus is a simple master–slave protocol widely used in BMS applications since the
+              1970s.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              Modbus RTU runs on RS-485 serial networks, while Modbus TCP/IP uses Ethernet infrastructure.
+              Modbus RTU runs on RS-485 serial networks, while Modbus TCP/IP uses Ethernet
+              infrastructure.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              Common applications include energy meters, boilers, chillers, VSDs, and BMS integration gateways.
+              Common applications include energy meters, boilers, chillers, VSDs, and BMS
+              integration gateways.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              RTU requires proper RS-485 cabling, daisy-chain topology, termination, and unique device addressing.
+              RTU requires proper RS-485 cabling, daisy-chain topology, termination, and unique
+              device addressing.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              TCP/IP offers higher speed and scalability but requires IT coordination for network integration.
+              TCP/IP offers higher speed and scalability but requires IT coordination for network
+              integration.
             </p>
           </div>
         </div>
@@ -54,16 +59,17 @@ export const BMSModule5Section3Summary = () => {
             Critical Point
           </h4>
           <p className="text-foreground text-sm">
-            Miswiring (especially star topology) and duplicate device addresses are the most common causes of Modbus failures. 
-            Proper electrical installation practices are essential for reliable communication.
+            Miswiring (especially star topology) and duplicate device addresses are the most common
+            causes of Modbus failures. Proper electrical installation practices are essential for
+            reliable communication.
           </p>
         </div>
 
         <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Professional Impact</h4>
           <p className="text-foreground text-sm">
-            Understanding Modbus installation requirements enables electricians to deliver reliable BMS networks 
-            that provide accurate data for energy management and building optimisation.
+            Understanding Modbus installation requirements enables electricians to deliver reliable
+            BMS networks that provide accurate data for energy management and building optimisation.
           </p>
         </div>
       </CardContent>

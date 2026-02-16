@@ -1,4 +1,17 @@
-import { Bell, Check, CheckCheck, Sparkles, Clock, AlertTriangle, MessageSquare, FileText, Zap, ChevronRight, X, Trash2 } from 'lucide-react';
+import {
+  Bell,
+  Check,
+  CheckCheck,
+  Sparkles,
+  Clock,
+  AlertTriangle,
+  MessageSquare,
+  FileText,
+  Zap,
+  ChevronRight,
+  X,
+  Trash2,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -19,19 +32,54 @@ interface NotificationsSheetProps {
 const getNotificationIcon = (type: string) => {
   switch (type) {
     case 'success':
-      return { icon: Check, color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' };
+      return {
+        icon: Check,
+        color: 'text-green-400',
+        bg: 'bg-green-500/10',
+        border: 'border-green-500/20',
+      };
     case 'warning':
-      return { icon: AlertTriangle, color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' };
+      return {
+        icon: AlertTriangle,
+        color: 'text-amber-400',
+        bg: 'bg-amber-500/10',
+        border: 'border-amber-500/20',
+      };
     case 'error':
-      return { icon: AlertTriangle, color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' };
+      return {
+        icon: AlertTriangle,
+        color: 'text-red-400',
+        bg: 'bg-red-500/10',
+        border: 'border-red-500/20',
+      };
     case 'message':
-      return { icon: MessageSquare, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' };
+      return {
+        icon: MessageSquare,
+        color: 'text-blue-400',
+        bg: 'bg-blue-500/10',
+        border: 'border-blue-500/20',
+      };
     case 'update':
-      return { icon: Sparkles, color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' };
+      return {
+        icon: Sparkles,
+        color: 'text-purple-400',
+        bg: 'bg-purple-500/10',
+        border: 'border-purple-500/20',
+      };
     case 'certificate':
-      return { icon: FileText, color: 'text-elec-yellow', bg: 'bg-elec-yellow/10', border: 'border-elec-yellow/20' };
+      return {
+        icon: FileText,
+        color: 'text-elec-yellow',
+        bg: 'bg-elec-yellow/10',
+        border: 'border-elec-yellow/20',
+      };
     default:
-      return { icon: Zap, color: 'text-elec-yellow', bg: 'bg-elec-yellow/10', border: 'border-elec-yellow/20' };
+      return {
+        icon: Zap,
+        color: 'text-elec-yellow',
+        bg: 'bg-elec-yellow/10',
+        border: 'border-elec-yellow/20',
+      };
   }
 };
 
@@ -51,7 +99,7 @@ const NotificationItem = ({
   notification,
   onRead,
   onDelete,
-  index
+  index,
 }: {
   notification: Notification;
   onRead: () => void;
@@ -67,9 +115,9 @@ const NotificationItem = ({
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.05, duration: 0.2 }}
       className={cn(
-        "group relative px-4 py-3 cursor-pointer transition-all duration-200",
-        "hover:bg-white/5",
-        !notification.read && "bg-elec-yellow/5"
+        'group relative px-4 py-3 cursor-pointer transition-all duration-200',
+        'hover:bg-white/5',
+        !notification.read && 'bg-elec-yellow/5'
       )}
       onClick={onRead}
     >
@@ -80,21 +128,23 @@ const NotificationItem = ({
 
       <div className="flex gap-3">
         {/* Icon */}
-        <div className={cn(
-          "shrink-0 mt-0.5 p-2 rounded-xl border",
-          iconConfig.bg,
-          iconConfig.border
-        )}>
-          <IconComponent className={cn("h-4 w-4", iconConfig.color)} />
+        <div
+          className={cn('shrink-0 mt-0.5 p-2 rounded-xl border', iconConfig.bg, iconConfig.border)}
+        >
+          <IconComponent className={cn('h-4 w-4', iconConfig.color)} />
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
-            <p className={cn(
-              "text-sm leading-snug line-clamp-1",
-              !notification.read ? "font-semibold text-foreground" : "font-medium text-foreground/80"
-            )}>
+            <p
+              className={cn(
+                'text-sm leading-snug line-clamp-1',
+                !notification.read
+                  ? 'font-semibold text-foreground'
+                  : 'font-medium text-foreground/80'
+              )}
+            >
               {notification.title}
             </p>
             {!notification.read && (
@@ -165,10 +215,10 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
-        side={isMobile ? "bottom" : "right"}
+        side={isMobile ? 'bottom' : 'right'}
         className={cn(
-          "p-0 flex flex-col bg-background",
-          isMobile ? "h-[85vh] rounded-t-2xl" : "w-[380px] max-w-[380px]"
+          'p-0 flex flex-col bg-background',
+          isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[380px] max-w-[380px]'
         )}
       >
         {/* Header */}
@@ -178,9 +228,7 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
               <Bell className="h-5 w-5 text-elec-yellow" />
               Notifications
               {unreadCount > 0 && (
-                <Badge className="bg-elec-yellow text-black ml-2">
-                  {unreadCount} new
-                </Badge>
+                <Badge className="bg-elec-yellow text-black ml-2">{unreadCount} new</Badge>
               )}
             </SheetTitle>
             <div className="flex items-center gap-1">

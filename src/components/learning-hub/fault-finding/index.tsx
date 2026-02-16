@@ -59,11 +59,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
   const renderContent = () => {
     switch (viewState.view) {
       case 'overview':
-        return (
-          <FaultFindingOverview
-            onNavigate={(view) => setViewState({ view })}
-          />
-        );
+        return <FaultFindingOverview onNavigate={(view) => setViewState({ view })} />;
 
       case 'common-faults':
         return (
@@ -75,9 +71,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         );
 
       case 'common-fault-detail':
-        return viewState.selectedId ? (
-          <CommonFaultDetail faultId={viewState.selectedId} />
-        ) : null;
+        return viewState.selectedId ? <CommonFaultDetail faultId={viewState.selectedId} /> : null;
 
       case 'safety':
         return (
@@ -89,9 +83,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         );
 
       case 'safety-detail':
-        return viewState.selectedId ? (
-          <SafetyDetail topicId={viewState.selectedId} />
-        ) : null;
+        return viewState.selectedId ? <SafetyDetail topicId={viewState.selectedId} /> : null;
 
       case 'equipment':
         return (
@@ -103,9 +95,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         );
 
       case 'equipment-detail':
-        return viewState.selectedId ? (
-          <EquipmentDetail equipmentId={viewState.selectedId} />
-        ) : null;
+        return viewState.selectedId ? <EquipmentDetail equipmentId={viewState.selectedId} /> : null;
 
       case 'real-world':
         return (
@@ -117,9 +107,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         );
 
       case 'case-detail':
-        return viewState.selectedId ? (
-          <CaseStudyDetail categoryId={viewState.selectedId} />
-        ) : null;
+        return viewState.selectedId ? <CaseStudyDetail categoryId={viewState.selectedId} /> : null;
 
       case 'diagnostics':
         return (
@@ -128,7 +116,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
               setViewState({
                 view: 'diagnostic-detail',
                 selectedId: categoryId,
-                selectedIndex: diagnosticIndex
+                selectedIndex: diagnosticIndex,
               })
             }
           />
@@ -143,11 +131,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         ) : null;
 
       case 'methodology':
-        return (
-          <MethodologyWizard
-            onComplete={() => setViewState({ view: 'overview' })}
-          />
-        );
+        return <MethodologyWizard onComplete={() => setViewState({ view: 'overview' })} />;
 
       default:
         return null;
@@ -171,12 +155,8 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
             <Wrench className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <h1 className="text-base font-semibold text-white truncate">
-              Fault Finding
-            </h1>
-            <p className="text-[11px] text-white/50">
-              Diagnostic Procedures
-            </p>
+            <h1 className="text-base font-semibold text-white truncate">Fault Finding</h1>
+            <p className="text-[11px] text-white/50">Diagnostic Procedures</p>
           </div>
         </div>
       </header>

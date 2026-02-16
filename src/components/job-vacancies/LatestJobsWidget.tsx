@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { ChevronRight, MapPin, Building2, Loader2, Zap } from "lucide-react";
-import { useLatestJobs, LatestJob } from "@/hooks/job-vacancies/useLatestJobs";
-import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
+import { ChevronRight, MapPin, Building2, Loader2, Zap } from 'lucide-react';
+import { useLatestJobs, LatestJob } from '@/hooks/job-vacancies/useLatestJobs';
+import { motion } from 'framer-motion';
 
 // Format salary for display - convert "45059.00 GBP Annual" to "£45k"
 const formatSalary = (salary: string | undefined): string | null => {
@@ -25,9 +25,7 @@ const formatSalary = (salary: string | undefined): string | null => {
 const formatCompany = (company: string | undefined): string => {
   if (!company) return 'Company';
 
-  return company
-    .replace(/\s*(Recruitment|Ltd|Limited|PLC|Inc|Group)\.?$/gi, '')
-    .trim() || company;
+  return company.replace(/\s*(Recruitment|Ltd|Limited|PLC|Inc|Group)\.?$/gi, '').trim() || company;
 };
 
 // Clean up location - extract key area
@@ -51,9 +49,9 @@ const JobRow = ({ job, index }: { job: LatestJob; index: number }) => {
       transition={{ delay: index * 0.05, duration: 0.2 }}
     >
       <Link
-        to={job.external_url || "/electrician/job-vacancies"}
-        target={job.external_url ? "_blank" : undefined}
-        rel={job.external_url ? "noopener noreferrer" : undefined}
+        to={job.external_url || '/electrician/job-vacancies'}
+        target={job.external_url ? '_blank' : undefined}
+        rel={job.external_url ? 'noopener noreferrer' : undefined}
         className="block"
       >
         <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.06] active:scale-[0.98] transition-all">
@@ -65,9 +63,7 @@ const JobRow = ({ job, index }: { job: LatestJob; index: number }) => {
           {/* Job details - stacked layout */}
           <div className="flex-1 min-w-0">
             {/* Title */}
-            <p className="font-semibold text-[14px] text-white leading-tight">
-              {job.title}
-            </p>
+            <p className="font-semibold text-[14px] text-white leading-tight">{job.title}</p>
 
             {/* Company & Location */}
             <div className="flex items-center gap-2 mt-1.5">

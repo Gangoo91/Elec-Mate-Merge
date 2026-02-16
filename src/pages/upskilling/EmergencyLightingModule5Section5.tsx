@@ -1,72 +1,98 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m5s5-check1",
-    question: "Why is certification important beyond just testing the system?",
-    options: ["For aesthetic documentation", "Provides legal proof of compliance for insurance and fire authorities", "Only required for large installations", "To satisfy building aesthetics"],
+    id: 'emergencylighting-m5s5-check1',
+    question: 'Why is certification important beyond just testing the system?',
+    options: [
+      'For aesthetic documentation',
+      'Provides legal proof of compliance for insurance and fire authorities',
+      'Only required for large installations',
+      'To satisfy building aesthetics',
+    ],
     correctIndex: 1,
-    explanation: "Testing proves the system works at a specific moment. Certification provides legal documentation that the system was designed, installed, and verified to recognised standards - essential for insurance claims, fire authority inspections, and professional liability protection."
+    explanation:
+      'Testing proves the system works at a specific moment. Certification provides legal documentation that the system was designed, installed, and verified to recognised standards - essential for insurance claims, fire authority inspections, and professional liability protection.',
   },
   {
-    id: "emergencylighting-m5s5-check2",
-    question: "Which certificate must be issued before the Emergency Lighting Completion Certificate?",
-    options: ["Commissioning Certificate", "Design Declaration", "Electrical Installation Certificate", "Minor Works Certificate"],
+    id: 'emergencylighting-m5s5-check2',
+    question:
+      'Which certificate must be issued before the Emergency Lighting Completion Certificate?',
+    options: [
+      'Commissioning Certificate',
+      'Design Declaration',
+      'Electrical Installation Certificate',
+      'Minor Works Certificate',
+    ],
     correctIndex: 2,
-    explanation: "The Electrical Installation Certificate must be issued before the Emergency Lighting Completion Certificate, as electrical safety is a prerequisite. The Commissioning Certificate is the final document, confirming all previous work has been verified."
+    explanation:
+      'The Electrical Installation Certificate must be issued before the Emergency Lighting Completion Certificate, as electrical safety is a prerequisite. The Commissioning Certificate is the final document, confirming all previous work has been verified.',
   },
   {
-    id: "emergencylighting-m5s5-check3",
-    question: "Who must sign the certification documents to establish accountability?",
-    options: ["Client only", "Designer, installer, and verifier", "Building manager only", "Fire authority"],
+    id: 'emergencylighting-m5s5-check3',
+    question: 'Who must sign the certification documents to establish accountability?',
+    options: [
+      'Client only',
+      'Designer, installer, and verifier',
+      'Building manager only',
+      'Fire authority',
+    ],
     correctIndex: 1,
-    explanation: "Certification and checklists must be signed by the Designer (confirms design meets standards), Installer (confirms installation follows design), and Verifier/Commissioning Engineer (confirms system performance). This ensures clear accountability at every stage."
-  }
+    explanation:
+      'Certification and checklists must be signed by the Designer (confirms design meets standards), Installer (confirms installation follows design), and Verifier/Commissioning Engineer (confirms system performance). This ensures clear accountability at every stage.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Who is responsible for issuing the emergency lighting certificate?",
-    answer: "The commissioning engineer or qualified person who carried out the verification and final testing is responsible for issuing the emergency lighting certificate. This individual must be competent to verify compliance with BS 5266-1 and BS EN 50172, and should hold appropriate qualifications."
+    question: 'Who is responsible for issuing the emergency lighting certificate?',
+    answer:
+      'The commissioning engineer or qualified person who carried out the verification and final testing is responsible for issuing the emergency lighting certificate. This individual must be competent to verify compliance with BS 5266-1 and BS EN 50172, and should hold appropriate qualifications.',
   },
   {
-    question: "Are commissioning certificates legally required?",
-    answer: "Yes - under BS 5266 and fire safety legislation (specifically the Regulatory Reform (Fire Safety) Order 2005), certification is essential to demonstrate compliance. Without proper certification, an emergency lighting system is considered non-verified, even if physically operational."
+    question: 'Are commissioning certificates legally required?',
+    answer:
+      'Yes - under BS 5266 and fire safety legislation (specifically the Regulatory Reform (Fire Safety) Order 2005), certification is essential to demonstrate compliance. Without proper certification, an emergency lighting system is considered non-verified, even if physically operational.',
   },
   {
-    question: "How long should certificates be retained?",
-    answer: "Certificates should be retained for the life of the installation - and not less than six years. This retention period aligns with professional liability timelines and ensures documentation is available for insurance claims, fire authority inspections, building sales, or legal disputes."
+    question: 'How long should certificates be retained?',
+    answer:
+      'Certificates should be retained for the life of the installation - and not less than six years. This retention period aligns with professional liability timelines and ensures documentation is available for insurance claims, fire authority inspections, building sales, or legal disputes.',
   },
   {
-    question: "Can I use digital checklists instead of paper?",
-    answer: "Many contractors now use digital checklists on tablets with photo evidence and GPS tagging. However, paper checklists remain legally acceptable. Whichever format you use, ensure it is signed, dated, and retained for the life of the installation."
-  }
+    question: 'Can I use digital checklists instead of paper?',
+    answer:
+      'Many contractors now use digital checklists on tablets with photo evidence and GPS tagging. However, paper checklists remain legally acceptable. Whichever format you use, ensure it is signed, dated, and retained for the life of the installation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "A fire inspector requests certification for an emergency lighting system. What happens if certificates are missing?",
+    question:
+      'A fire inspector requests certification for an emergency lighting system. What happens if certificates are missing?',
     options: [
-      "System passes if it works correctly",
-      "Verbal warning only",
-      "System is considered non-verified and non-compliant",
-      "Only affects insurance, not legal compliance"
+      'System passes if it works correctly',
+      'Verbal warning only',
+      'System is considered non-verified and non-compliant',
+      'Only affects insurance, not legal compliance',
     ],
     correctAnswer: 2,
-    explanation: "Under BS 5266 and the Fire Safety Order 2005, a system without proper certification is considered non-verified and non-compliant, regardless of whether it physically works. This can result in enforcement notices, prosecution, and invalid insurance."
-  }
+    explanation:
+      'Under BS 5266 and the Fire Safety Order 2005, a system without proper certification is considered non-verified and non-compliant, regardless of whether it physically works. This can result in enforcement notices, prosecution, and invalid insurance.',
+  },
 ];
 
 const EmergencyLightingModule5Section5 = () => {
   useSEO({
-    title: "Certification and Commissioning Checklists | Emergency Lighting Module 5.5",
-    description: "Emergency lighting certification requirements, commissioning checklists, and sign-off procedures for BS 5266-1 and BS 7671 compliance."
+    title: 'Certification and Commissioning Checklists | Emergency Lighting Module 5.5',
+    description:
+      'Emergency lighting certification requirements, commissioning checklists, and sign-off procedures for BS 5266-1 and BS 7671 compliance.',
   });
 
   return (
@@ -108,17 +134,29 @@ const EmergencyLightingModule5Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Certification:</strong> Legal proof of compliance</li>
-              <li><strong>Checklists:</strong> Structured verification record</li>
-              <li><strong>Retention:</strong> Lifetime of installation (min 6 years)</li>
+              <li>
+                <strong>Certification:</strong> Legal proof of compliance
+              </li>
+              <li>
+                <strong>Checklists:</strong> Structured verification record
+              </li>
+              <li>
+                <strong>Retention:</strong> Lifetime of installation (min 6 years)
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Required Signatories</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Designer:</strong> Confirms design meets standards</li>
-              <li><strong>Installer:</strong> Confirms correct installation</li>
-              <li><strong>Verifier:</strong> Confirms system performance</li>
+              <li>
+                <strong>Designer:</strong> Confirms design meets standards
+              </li>
+              <li>
+                <strong>Installer:</strong> Confirms correct installation
+              </li>
+              <li>
+                <strong>Verifier:</strong> Confirms system performance
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +166,12 @@ const EmergencyLightingModule5Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand the purpose of certification",
-              "Identify required certificate types",
-              "Use commissioning checklists effectively",
-              "Establish clear sign-off accountability",
-              "Retain documentation correctly",
-              "Protect professional liability"
+              'Understand the purpose of certification',
+              'Identify required certificate types',
+              'Use commissioning checklists effectively',
+              'Establish clear sign-off accountability',
+              'Retain documentation correctly',
+              'Protect professional liability',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -154,13 +192,15 @@ const EmergencyLightingModule5Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               After installation, inspection, and testing are complete, the emergency lighting
-              system must be formally certified before it is handed over to the client. Certification
-              provides written proof that the system meets all design and performance requirements
-              under BS 5266-1, BS 7671, and BS EN 50172.
+              system must be formally certified before it is handed over to the client.
+              Certification provides written proof that the system meets all design and performance
+              requirements under BS 5266-1, BS 7671, and BS EN 50172.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Certification Formally Confirms:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Certification Formally Confirms:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>The system design complies with BS 5266 and BS 7671</li>
                 <li>The installation was completed to specification</li>
@@ -206,17 +246,31 @@ const EmergencyLightingModule5Section5 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Primary Certificates</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>EL Completion:</strong> BS 5266-1, Annex G</li>
-                  <li><strong>EIC:</strong> BS 7671 wiring compliance</li>
-                  <li><strong>Design Declaration:</strong> BS 5266-1</li>
+                  <li>
+                    <strong>EL Completion:</strong> BS 5266-1, Annex G
+                  </li>
+                  <li>
+                    <strong>EIC:</strong> BS 7671 wiring compliance
+                  </li>
+                  <li>
+                    <strong>Design Declaration:</strong> BS 5266-1
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Supporting Certificates</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Supporting Certificates
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Commissioning:</strong> BS 5266-1 / BS EN 50172</li>
-                  <li><strong>Minor Works:</strong> BS 7671 for modifications</li>
-                  <li><strong>Test Results:</strong> Duration test records</li>
+                  <li>
+                    <strong>Commissioning:</strong> BS 5266-1 / BS EN 50172
+                  </li>
+                  <li>
+                    <strong>Minor Works:</strong> BS 7671 for modifications
+                  </li>
+                  <li>
+                    <strong>Test Results:</strong> Duration test records
+                  </li>
                 </ul>
               </div>
             </div>
@@ -239,19 +293,32 @@ const EmergencyLightingModule5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A commissioning checklist provides a structured record that every aspect of the
-              system has been verified. It should include confirmation of:
+              A commissioning checklist provides a structured record that every aspect of the system
+              has been verified. It should include confirmation of:
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Checklist Items:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Luminaire verification:</strong> Correct types, positions, mounting heights</li>
-                <li><strong>Battery and autonomy:</strong> 3-hour duration test completed</li>
-                <li><strong>Exit sign compliance:</strong> ISO 7010 pictograms, correct orientation</li>
-                <li><strong>System labelling:</strong> Circuits segregated and marked</li>
-                <li><strong>Documentation:</strong> Drawings, logbook, test results complete</li>
-                <li><strong>Professional sign-off:</strong> All signatures obtained</li>
+                <li>
+                  <strong>Luminaire verification:</strong> Correct types, positions, mounting
+                  heights
+                </li>
+                <li>
+                  <strong>Battery and autonomy:</strong> 3-hour duration test completed
+                </li>
+                <li>
+                  <strong>Exit sign compliance:</strong> ISO 7010 pictograms, correct orientation
+                </li>
+                <li>
+                  <strong>System labelling:</strong> Circuits segregated and marked
+                </li>
+                <li>
+                  <strong>Documentation:</strong> Drawings, logbook, test results complete
+                </li>
+                <li>
+                  <strong>Professional sign-off:</strong> All signatures obtained
+                </li>
               </ul>
             </div>
 
@@ -318,7 +385,9 @@ const EmergencyLightingModule5Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Certification Best Practice</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Certification Best Practice
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Issue EIC before EL Completion Certificate</li>
                 <li>Ensure all signatories are present for final sign-off</li>
@@ -329,12 +398,22 @@ const EmergencyLightingModule5Section5 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Certification Errors</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Certification Errors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Missing signatures:</strong> All three parties must sign</li>
-                <li><strong>Wrong certificate order:</strong> EIC before EL Completion</li>
-                <li><strong>No retention:</strong> Contractor and client both need copies</li>
-                <li><strong>Signing unverified work:</strong> Only sign what you have checked</li>
+                <li>
+                  <strong>Missing signatures:</strong> All three parties must sign
+                </li>
+                <li>
+                  <strong>Wrong certificate order:</strong> EIC before EL Completion
+                </li>
+                <li>
+                  <strong>No retention:</strong> Contractor and client both need copies
+                </li>
+                <li>
+                  <strong>Signing unverified work:</strong> Only sign what you have checked
+                </li>
               </ul>
             </div>
           </div>
@@ -380,10 +459,7 @@ const EmergencyLightingModule5Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

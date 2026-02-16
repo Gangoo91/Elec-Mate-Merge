@@ -9,7 +9,13 @@ import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Camera, Sparkles, Plus, Zap, ArrowRight, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -41,7 +47,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
     return wizardBoards;
   }, [data.distributionBoards]);
 
-  const selectedBoard = boards.find(b => b.id === selectedBoardId) || boards[0];
+  const selectedBoard = boards.find((b) => b.id === selectedBoardId) || boards[0];
   const hasCircuits = data.circuits && data.circuits.length > 0;
   const circuitCount = data.circuits?.length || 0;
   const selectedBoardCircuits = (data.circuits || []).filter(
@@ -56,7 +62,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
   const handleScanComplete = (circuits: any[]) => {
     haptic.success();
     // Tag all scanned circuits with the selected board ID
-    const taggedCircuits = circuits.map(c => ({
+    const taggedCircuits = circuits.map((c) => ({
       ...c,
       boardId: selectedBoardId,
     }));
@@ -86,11 +92,13 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
   // Show scanner overlay if active
   if (showScanner) {
     return (
-      <React.Suspense fallback={
-        <div className="fixed inset-0 z-50 bg-background flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow" />
-        </div>
-      }>
+      <React.Suspense
+        fallback={
+          <div className="fixed inset-0 z-50 bg-background flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow" />
+          </div>
+        }
+      >
         <BoardScannerOverlayWrapper
           onComplete={handleScanComplete}
           onClose={() => setShowScanner(false)}
@@ -145,9 +153,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
           {/* Board Selector - show if multiple boards */}
           {boards.length > 1 && (
             <div className="space-y-1">
-              <label className="text-sm text-muted-foreground">
-                Select board to scan:
-              </label>
+              <label className="text-sm text-muted-foreground">Select board to scan:</label>
               <Select value={selectedBoardId} onValueChange={setSelectedBoardId}>
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select board" />
@@ -185,9 +191,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
                 </div>
                 <div>
                   <p className="font-semibold">{circuitCount} Circuits Added</p>
-                  <p className="text-sm text-muted-foreground">
-                    Ready for testing
-                  </p>
+                  <p className="text-sm text-muted-foreground">Ready for testing</p>
                 </div>
               </div>
               <Button variant="outline" size="sm" onClick={handleAddManually}>
@@ -203,9 +207,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
       <Card className="border-border/50">
         <CardContent className="py-6">
           <div className="text-center space-y-4">
-            <p className="text-muted-foreground">
-              Prefer to add circuits manually?
-            </p>
+            <p className="text-muted-foreground">Prefer to add circuits manually?</p>
             <Button variant="outline" onClick={handleAddManually} className="gap-2">
               <Plus className="h-4 w-4" />
               Add Circuit Manually
@@ -234,15 +236,19 @@ const BoardScannerOverlayWrapper: React.FC<{
   onComplete: (circuits: any[]) => void;
   onClose: () => void;
 }> = ({ onComplete, onClose }) => {
-  const [BoardScannerOverlay, setBoardScannerOverlay] = useState<React.ComponentType<any> | null>(null);
+  const [BoardScannerOverlay, setBoardScannerOverlay] = useState<React.ComponentType<any> | null>(
+    null
+  );
 
   React.useEffect(() => {
-    import('@/components/testing/BoardScannerOverlay').then((mod) => {
-      setBoardScannerOverlay(() => mod.BoardScannerOverlay);
-    }).catch(() => {
-      console.warn('BoardScannerOverlay not available');
-      onClose();
-    });
+    import('@/components/testing/BoardScannerOverlay')
+      .then((mod) => {
+        setBoardScannerOverlay(() => mod.BoardScannerOverlay);
+      })
+      .catch(() => {
+        console.warn('BoardScannerOverlay not available');
+        onClose();
+      });
   }, [onClose]);
 
   // Transform BoardScannerOverlay data format to wizard format

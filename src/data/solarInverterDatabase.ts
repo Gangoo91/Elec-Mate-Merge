@@ -14,31 +14,31 @@ export interface SolarInverter {
   make: string;
   model: string;
   type: InverterType;
-  ratedPowerAc: number;         // kW AC output
-  ratedPowerDc: number;         // kW DC input
+  ratedPowerAc: number; // kW AC output
+  ratedPowerDc: number; // kW DC input
   phases: PhaseType;
   mpptCount: number;
-  mpptVoltageMin: number;       // V
-  mpptVoltageMax: number;       // V
-  maxInputVoltage: number;      // V
-  maxInputCurrent: number;      // A per MPPT
-  maxOutputCurrent: number;     // A AC
-  efficiency: number;           // % (European efficiency)
+  mpptVoltageMin: number; // V
+  mpptVoltageMax: number; // V
+  maxInputVoltage: number; // V
+  maxInputCurrent: number; // A per MPPT
+  maxOutputCurrent: number; // A AC
+  efficiency: number; // % (European efficiency)
   dimensions: {
-    width: number;              // mm
-    height: number;             // mm
-    depth: number;              // mm
+    width: number; // mm
+    height: number; // mm
+    depth: number; // mm
   };
-  weight: number;               // kg
-  ipRating: string;             // e.g., IP65
-  warranty: number;             // Years
+  weight: number; // kg
+  ipRating: string; // e.g., IP65
+  warranty: number; // Years
   mcsCertified: boolean;
   g98g99Compliant: boolean;
   batteryCompatible: boolean;
   hybridCapable: boolean;
   wifi: boolean;
   ethernet: boolean;
-  monitoring: string;           // App/portal name
+  monitoring: string; // App/portal name
   yearIntroduced?: number;
   notes?: string;
 }
@@ -76,7 +76,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
-    notes: 'HD-Wave technology. Requires optimisers. 12 year warranty.'
+    notes: 'HD-Wave technology. Requires optimisers. 12 year warranty.',
   },
   {
     id: 'solaredge-se4000h',
@@ -105,7 +105,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
-    notes: 'Popular residential size. HD-Wave technology.'
+    notes: 'Popular residential size. HD-Wave technology.',
   },
   {
     id: 'solaredge-se5000h',
@@ -134,7 +134,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
-    notes: 'Popular 5kW residential. Optimiser-based system.'
+    notes: 'Popular 5kW residential. Optimiser-based system.',
   },
   {
     id: 'solaredge-se6000h',
@@ -163,7 +163,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
-    notes: 'Largest single phase HD-Wave.'
+    notes: 'Largest single phase HD-Wave.',
   },
   {
     id: 'solaredge-se10k-rws',
@@ -192,7 +192,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2022,
-    notes: 'Three phase hybrid with backup. StorEdge compatible.'
+    notes: 'Three phase hybrid with backup. StorEdge compatible.',
   },
 
   // ========== ENPHASE ==========
@@ -202,7 +202,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     model: 'IQ7+',
     type: 'micro',
     ratedPowerAc: 0.295,
-    ratedPowerDc: 0.360,
+    ratedPowerDc: 0.36,
     phases: 'single',
     mpptCount: 1,
     mpptVoltageMin: 27,
@@ -223,14 +223,14 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'Enlighten',
     yearIntroduced: 2018,
-    notes: 'Per-panel microinverter. 25 year warranty. Requires Envoy.'
+    notes: 'Per-panel microinverter. 25 year warranty. Requires Envoy.',
   },
   {
     id: 'enphase-iq8plus',
     make: 'Enphase',
     model: 'IQ8+',
     type: 'micro',
-    ratedPowerAc: 0.300,
+    ratedPowerAc: 0.3,
     ratedPowerDc: 0.384,
     phases: 'single',
     mpptCount: 1,
@@ -238,7 +238,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     mpptVoltageMax: 54,
     maxInputVoltage: 60,
     maxInputCurrent: 14.0,
-    maxOutputCurrent: 1.30,
+    maxOutputCurrent: 1.3,
     efficiency: 97.5,
     dimensions: { width: 212, height: 175, depth: 30 },
     weight: 1.13,
@@ -252,15 +252,15 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'Enlighten',
     yearIntroduced: 2022,
-    notes: 'Latest IQ8 series. Grid-forming capability. Requires Envoy.'
+    notes: 'Latest IQ8 series. Grid-forming capability. Requires Envoy.',
   },
   {
     id: 'enphase-iq8m',
     make: 'Enphase',
     model: 'IQ8M',
     type: 'micro',
-    ratedPowerAc: 0.330,
-    ratedPowerDc: 0.420,
+    ratedPowerAc: 0.33,
+    ratedPowerDc: 0.42,
     phases: 'single',
     mpptCount: 1,
     mpptVoltageMin: 24,
@@ -281,7 +281,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'Enlighten',
     yearIntroduced: 2022,
-    notes: 'Higher power IQ8. For 400-450W panels.'
+    notes: 'Higher power IQ8. For 400-450W panels.',
   },
 
   // ========== GIVENERGU ==========
@@ -312,7 +312,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2023,
-    notes: 'UK brand. Excellent app. Works with GivEnergy batteries.'
+    notes: 'UK brand. Excellent app. Works with GivEnergy batteries.',
   },
   {
     id: 'givenergy-gen3-5kw',
@@ -341,7 +341,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2023,
-    notes: 'Popular 5kW hybrid. Excellent for domestic installations.'
+    notes: 'Popular 5kW hybrid. Excellent for domestic installations.',
   },
   {
     id: 'givenergy-gen3-6kw',
@@ -370,7 +370,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2023,
-    notes: 'Largest single phase Gen 3.'
+    notes: 'Largest single phase Gen 3.',
   },
   {
     id: 'givenergy-aio-3kw',
@@ -399,7 +399,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2022,
-    notes: 'Inverter + 9.5kWh battery in one unit. Indoor only.'
+    notes: 'Inverter + 9.5kWh battery in one unit. Indoor only.',
   },
 
   // ========== SOLIS ==========
@@ -430,7 +430,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'SolisCloud',
     yearIntroduced: 2022,
-    notes: 'Popular budget option. Good reliability.'
+    notes: 'Popular budget option. Good reliability.',
   },
   {
     id: 'solis-s6-gr1p4k',
@@ -459,7 +459,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'SolisCloud',
     yearIntroduced: 2022,
-    notes: 'Good 4kW option. Dual MPPT.'
+    notes: 'Good 4kW option. Dual MPPT.',
   },
   {
     id: 'solis-s6-gr1p5k',
@@ -488,7 +488,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'SolisCloud',
     yearIntroduced: 2022,
-    notes: 'Best-selling Solis model. Excellent value.'
+    notes: 'Best-selling Solis model. Excellent value.',
   },
   {
     id: 'solis-s6-eh1p5k-l',
@@ -517,7 +517,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'SolisCloud',
     yearIntroduced: 2023,
-    notes: 'Hybrid version. Compatible with LV batteries.'
+    notes: 'Hybrid version. Compatible with LV batteries.',
   },
 
   // ========== HUAWEI ==========
@@ -548,7 +548,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'FusionSolar',
     yearIntroduced: 2021,
-    notes: 'Very high efficiency. Compact design.'
+    notes: 'Very high efficiency. Compact design.',
   },
   {
     id: 'huawei-sun2000-4ktl-l1',
@@ -577,7 +577,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'FusionSolar',
     yearIntroduced: 2021,
-    notes: 'Popular 4kW. Compatible with LUNA2000 batteries.'
+    notes: 'Popular 4kW. Compatible with LUNA2000 batteries.',
   },
   {
     id: 'huawei-sun2000-5ktl-l1',
@@ -606,7 +606,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'FusionSolar',
     yearIntroduced: 2021,
-    notes: 'Best-selling Huawei. Excellent monitoring app.'
+    notes: 'Best-selling Huawei. Excellent monitoring app.',
   },
   {
     id: 'huawei-sun2000-6ktl-l1',
@@ -635,7 +635,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'FusionSolar',
     yearIntroduced: 2021,
-    notes: 'Largest single phase Huawei residential.'
+    notes: 'Largest single phase Huawei residential.',
   },
 
   // ========== FOX ESS ==========
@@ -666,7 +666,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fox ESS Cloud',
     yearIntroduced: 2022,
-    notes: 'Good budget hybrid. Works with Fox batteries.'
+    notes: 'Good budget hybrid. Works with Fox batteries.',
   },
   {
     id: 'fox-ess-h1-5.0',
@@ -695,7 +695,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fox ESS Cloud',
     yearIntroduced: 2022,
-    notes: 'Popular 5kW hybrid. Good value for money.'
+    notes: 'Popular 5kW hybrid. Good value for money.',
   },
   {
     id: 'fox-ess-h1-6.0',
@@ -724,7 +724,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fox ESS Cloud',
     yearIntroduced: 2022,
-    notes: 'Largest Fox single phase hybrid.'
+    notes: 'Largest Fox single phase hybrid.',
   },
 
   // ========== SMA ==========
@@ -755,7 +755,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Sunny Portal',
     yearIntroduced: 2019,
-    notes: 'German quality. Very reliable. Industry standard.'
+    notes: 'German quality. Very reliable. Industry standard.',
   },
   {
     id: 'sma-sunny-boy-4.0',
@@ -784,7 +784,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Sunny Portal',
     yearIntroduced: 2019,
-    notes: 'Dual MPPT. ShadeFix optimisation.'
+    notes: 'Dual MPPT. ShadeFix optimisation.',
   },
   {
     id: 'sma-sunny-boy-5.0',
@@ -813,7 +813,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Sunny Portal',
     yearIntroduced: 2019,
-    notes: 'Best-selling SMA. Proven reliability.'
+    notes: 'Best-selling SMA. Proven reliability.',
   },
   {
     id: 'sma-sunny-boy-6.0',
@@ -842,7 +842,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Sunny Portal',
     yearIntroduced: 2019,
-    notes: 'Largest single phase Sunny Boy.'
+    notes: 'Largest single phase Sunny Boy.',
   },
   {
     id: 'sma-sunny-tripower-10.0',
@@ -871,7 +871,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Sunny Portal',
     yearIntroduced: 2020,
-    notes: 'Premium three phase. ShadeFix included.'
+    notes: 'Premium three phase. ShadeFix included.',
   },
 
   // ========== FRONIUS ==========
@@ -902,7 +902,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fronius Solar.web',
     yearIntroduced: 2020,
-    notes: 'Austrian quality. Excellent monitoring. SnapINverter.'
+    notes: 'Austrian quality. Excellent monitoring. SnapINverter.',
   },
   {
     id: 'fronius-primo-4.0-1',
@@ -931,7 +931,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fronius Solar.web',
     yearIntroduced: 2020,
-    notes: 'Popular 4kW. Dynamic Peak Manager MPP tracking.'
+    notes: 'Popular 4kW. Dynamic Peak Manager MPP tracking.',
   },
   {
     id: 'fronius-primo-5.0-1',
@@ -960,7 +960,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fronius Solar.web',
     yearIntroduced: 2020,
-    notes: 'Best-selling Fronius residential. Premium quality.'
+    notes: 'Best-selling Fronius residential. Premium quality.',
   },
   {
     id: 'fronius-symo-10.0-3-m',
@@ -989,7 +989,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fronius Solar.web',
     yearIntroduced: 2018,
-    notes: 'Three phase commercial. Excellent reliability.'
+    notes: 'Three phase commercial. Excellent reliability.',
   },
 
   // ========== GROWATT ==========
@@ -1020,7 +1020,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'ShinePhone',
     yearIntroduced: 2021,
-    notes: 'Budget-friendly. Good for simple installations.'
+    notes: 'Budget-friendly. Good for simple installations.',
   },
   {
     id: 'growatt-sph-5000tl3-bh-up',
@@ -1049,7 +1049,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'ShinePhone',
     yearIntroduced: 2022,
-    notes: 'Hybrid version with backup capability.'
+    notes: 'Hybrid version with backup capability.',
   },
 
   // ========== 2024-2025 NEW MODELS ==========
@@ -1082,7 +1082,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2024,
-    notes: 'Latest HD-Wave technology. Enhanced efficiency. Requires P505 optimisers.'
+    notes: 'Latest HD-Wave technology. Enhanced efficiency. Requires P505 optimisers.',
   },
 
   // SolarEdge Home Hub 2 (2024)
@@ -1113,7 +1113,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2024,
-    notes: 'Integrated backup capability. Works with SolarEdge Home Battery.'
+    notes: 'Integrated backup capability. Works with SolarEdge Home Battery.',
   },
 
   // Enphase IQ8M (2024)
@@ -1123,7 +1123,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     model: 'IQ8M-72-M-UK',
     type: 'micro',
     ratedPowerAc: 0.366,
-    ratedPowerDc: 0.440,
+    ratedPowerDc: 0.44,
     phases: 'single',
     mpptCount: 1,
     mpptVoltageMin: 27,
@@ -1144,7 +1144,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'Enphase App',
     yearIntroduced: 2024,
-    notes: 'Mid-power microinverter for 340-460W panels. Requires IQ Gateway.'
+    notes: 'Mid-power microinverter for 340-460W panels. Requires IQ Gateway.',
   },
 
   // Enphase IQ8P (2024)
@@ -1154,14 +1154,14 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     model: 'IQ8P-72-M-UK',
     type: 'micro',
     ratedPowerAc: 0.384,
-    ratedPowerDc: 0.460,
+    ratedPowerDc: 0.46,
     phases: 'single',
     mpptCount: 1,
     mpptVoltageMin: 27,
     mpptVoltageMax: 55,
     maxInputVoltage: 60,
     maxInputCurrent: 13.0,
-    maxOutputCurrent: 1.60,
+    maxOutputCurrent: 1.6,
     efficiency: 97.5,
     dimensions: { width: 212, height: 175, depth: 30 },
     weight: 1.08,
@@ -1175,7 +1175,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'Enphase App',
     yearIntroduced: 2024,
-    notes: 'High-power microinverter for 360-500W panels. Requires IQ Gateway.'
+    notes: 'High-power microinverter for 360-500W panels. Requires IQ Gateway.',
   },
 
   // GivEnergy Gen 3 (2024)
@@ -1206,7 +1206,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2024,
-    notes: 'Gen 3 platform with improved efficiency. Fan-less design.'
+    notes: 'Gen 3 platform with improved efficiency. Fan-less design.',
   },
 
   // GivEnergy Gen 3 5kW (2024)
@@ -1237,7 +1237,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2024,
-    notes: 'Gen 3 platform. Works with 2.6kWh & 9.5kWh batteries.'
+    notes: 'Gen 3 platform. Works with 2.6kWh & 9.5kWh batteries.',
   },
 
   // GivEnergy Gen 3 6kW (2024)
@@ -1268,7 +1268,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2024,
-    notes: 'UK designed and engineered. Gen 3 platform.'
+    notes: 'UK designed and engineered. Gen 3 platform.',
   },
 
   // GivEnergy 3-Phase (2024)
@@ -1299,7 +1299,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'GivEnergy Portal',
     yearIntroduced: 2024,
-    notes: 'Three-phase hybrid. G99 compliant for larger systems.'
+    notes: 'Three-phase hybrid. G99 compliant for larger systems.',
   },
 
   // Huawei SUN2000-6KTL-M1 (2024)
@@ -1330,7 +1330,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'FusionSolar',
     yearIntroduced: 2024,
-    notes: 'M2 series with battery-ready capability. Works with LUNA2000 batteries.'
+    notes: 'M2 series with battery-ready capability. Works with LUNA2000 batteries.',
   },
 
   // Huawei SUN2000-8KTL-M2 (2024)
@@ -1361,7 +1361,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'FusionSolar',
     yearIntroduced: 2024,
-    notes: 'Larger M2 model for bigger domestic/small commercial.'
+    notes: 'Larger M2 model for bigger domestic/small commercial.',
   },
 
   // Solis S6-GR1P6K-M (2024)
@@ -1392,7 +1392,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'SolisCloud',
     yearIntroduced: 2024,
-    notes: 'S6 series with enhanced MPPT range. Compact design.'
+    notes: 'S6 series with enhanced MPPT range. Compact design.',
   },
 
   // Solis S6-EH1P6K-L-UK (2024 Hybrid)
@@ -1423,7 +1423,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'SolisCloud',
     yearIntroduced: 2024,
-    notes: 'UK-specific hybrid with EPS backup. Works with LFP batteries.'
+    notes: 'UK-specific hybrid with EPS backup. Works with LFP batteries.',
   },
 
   // Fox ESS H3 6.0 (2024)
@@ -1454,7 +1454,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'FoxCloud',
     yearIntroduced: 2024,
-    notes: 'H3 series with enhanced battery charging capability.'
+    notes: 'H3 series with enhanced battery charging capability.',
   },
 
   // Fox ESS H3 8.0 (2024)
@@ -1485,7 +1485,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'FoxCloud',
     yearIntroduced: 2024,
-    notes: 'Higher power H3 for larger systems.'
+    notes: 'Higher power H3 for larger systems.',
   },
 
   // SMA Sunny Tripower X 12 (2025)
@@ -1516,7 +1516,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Sunny Portal',
     yearIntroduced: 2025,
-    notes: 'Next-generation Tripower X series for commercial.'
+    notes: 'Next-generation Tripower X series for commercial.',
   },
 
   // SMA Sunny Tripower X 15 (2025)
@@ -1547,7 +1547,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Sunny Portal',
     yearIntroduced: 2025,
-    notes: 'Premium three-phase for commercial applications.'
+    notes: 'Premium three-phase for commercial applications.',
   },
 
   // Fronius Tauro ECO 50-3-D (2024)
@@ -1578,7 +1578,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'Fronius Solar.web',
     yearIntroduced: 2024,
-    notes: 'Commercial inverter for large rooftop & ground-mount systems.'
+    notes: 'Commercial inverter for large rooftop & ground-mount systems.',
   },
 
   // Growatt MOD 8000TL3-X (2024)
@@ -1609,7 +1609,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: false,
     monitoring: 'ShinePhone',
     yearIntroduced: 2024,
-    notes: 'MOD series three-phase for commercial use.'
+    notes: 'MOD series three-phase for commercial use.',
   },
 
   // Growatt SPH 6000TL3 BH-UP (2024 Hybrid)
@@ -1640,7 +1640,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'ShinePhone',
     yearIntroduced: 2024,
-    notes: 'Three-phase hybrid with backup capability.'
+    notes: 'Three-phase hybrid with backup capability.',
   },
 ];
 
@@ -1652,7 +1652,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
  * Get unique list of inverter makes
  */
 export function getInverterMakes(): string[] {
-  const makes = new Set(SOLAR_INVERTERS.map(i => i.make));
+  const makes = new Set(SOLAR_INVERTERS.map((i) => i.make));
   return Array.from(makes).sort();
 }
 
@@ -1660,9 +1660,9 @@ export function getInverterMakes(): string[] {
  * Get models for a specific make
  */
 export function getInverterModels(make: string): string[] {
-  return SOLAR_INVERTERS
-    .filter(i => i.make.toLowerCase() === make.toLowerCase())
-    .map(i => i.model);
+  return SOLAR_INVERTERS.filter((i) => i.make.toLowerCase() === make.toLowerCase()).map(
+    (i) => i.model
+  );
 }
 
 /**
@@ -1670,8 +1670,8 @@ export function getInverterModels(make: string): string[] {
  */
 export function findInverter(make: string, model: string): SolarInverter | undefined {
   return SOLAR_INVERTERS.find(
-    i => i.make.toLowerCase() === make.toLowerCase() &&
-         i.model.toLowerCase() === model.toLowerCase()
+    (i) =>
+      i.make.toLowerCase() === make.toLowerCase() && i.model.toLowerCase() === model.toLowerCase()
   );
 }
 
@@ -1679,7 +1679,7 @@ export function findInverter(make: string, model: string): SolarInverter | undef
  * Find inverter by ID
  */
 export function findInverterById(id: string): SolarInverter | undefined {
-  return SOLAR_INVERTERS.find(i => i.id === id);
+  return SOLAR_INVERTERS.find((i) => i.id === id);
 }
 
 /**
@@ -1689,12 +1689,13 @@ export function searchInverters(query: string): SolarInverter[] {
   const q = query.toLowerCase().trim();
   if (!q) return [];
 
-  return SOLAR_INVERTERS.filter(i =>
-    i.make.toLowerCase().includes(q) ||
-    i.model.toLowerCase().includes(q) ||
-    `${i.make} ${i.model}`.toLowerCase().includes(q) ||
-    i.ratedPowerAc.toString().includes(q) ||
-    i.type.toLowerCase().includes(q)
+  return SOLAR_INVERTERS.filter(
+    (i) =>
+      i.make.toLowerCase().includes(q) ||
+      i.model.toLowerCase().includes(q) ||
+      `${i.make} ${i.model}`.toLowerCase().includes(q) ||
+      i.ratedPowerAc.toString().includes(q) ||
+      i.type.toLowerCase().includes(q)
   ).slice(0, 15); // Limit to 15 results
 }
 
@@ -1713,9 +1714,11 @@ export function getInvertersGroupedByManufacturer(): Record<string, SolarInverte
 
   // Sort by manufacturer name
   const sortedGrouped: Record<string, SolarInverter[]> = {};
-  Object.keys(grouped).sort().forEach(key => {
-    sortedGrouped[key] = grouped[key];
-  });
+  Object.keys(grouped)
+    .sort()
+    .forEach((key) => {
+      sortedGrouped[key] = grouped[key];
+    });
 
   return sortedGrouped;
 }
@@ -1767,23 +1770,21 @@ export function getInverterDefaults(inverterId: string): {
  * Filter inverters by capacity range
  */
 export function getInvertersByCapacity(minKw: number, maxKw: number): SolarInverter[] {
-  return SOLAR_INVERTERS.filter(
-    i => i.ratedPowerAc >= minKw && i.ratedPowerAc <= maxKw
-  );
+  return SOLAR_INVERTERS.filter((i) => i.ratedPowerAc >= minKw && i.ratedPowerAc <= maxKw);
 }
 
 /**
  * Get hybrid inverters only
  */
 export function getHybridInverters(): SolarInverter[] {
-  return SOLAR_INVERTERS.filter(i => i.type === 'hybrid' || i.hybridCapable);
+  return SOLAR_INVERTERS.filter((i) => i.type === 'hybrid' || i.hybridCapable);
 }
 
 /**
  * Get micro inverters only
  */
 export function getMicroInverters(): SolarInverter[] {
-  return SOLAR_INVERTERS.filter(i => i.type === 'micro');
+  return SOLAR_INVERTERS.filter((i) => i.type === 'micro');
 }
 
 /**
@@ -1819,20 +1820,28 @@ export function checkInverterCompatibility(
 
   // Check voltage
   if (stringVoc > inverter.maxInputVoltage) {
-    errors.push(`String Voc (${stringVoc}V) exceeds max input voltage (${inverter.maxInputVoltage}V)`);
+    errors.push(
+      `String Voc (${stringVoc}V) exceeds max input voltage (${inverter.maxInputVoltage}V)`
+    );
   }
 
   if (stringVoc < inverter.mpptVoltageMin) {
-    errors.push(`String Voc (${stringVoc}V) below minimum MPPT voltage (${inverter.mpptVoltageMin}V)`);
+    errors.push(
+      `String Voc (${stringVoc}V) below minimum MPPT voltage (${inverter.mpptVoltageMin}V)`
+    );
   }
 
   if (stringVoc > inverter.mpptVoltageMax) {
-    warnings.push(`String Voc (${stringVoc}V) above optimal MPPT range (${inverter.mpptVoltageMax}V) - may limit output`);
+    warnings.push(
+      `String Voc (${stringVoc}V) above optimal MPPT range (${inverter.mpptVoltageMax}V) - may limit output`
+    );
   }
 
   // Check current
   if (stringIsc > inverter.maxInputCurrent) {
-    errors.push(`String Isc (${stringIsc}A) exceeds max input current (${inverter.maxInputCurrent}A)`);
+    errors.push(
+      `String Isc (${stringIsc}A) exceeds max input current (${inverter.maxInputCurrent}A)`
+    );
   }
 
   return {

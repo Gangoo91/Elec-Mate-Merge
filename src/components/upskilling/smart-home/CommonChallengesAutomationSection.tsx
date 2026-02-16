@@ -12,7 +12,7 @@ export const CommonChallengesAutomationSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          While automation offers significant benefits, poor implementation can create frustration. 
+          While automation offers significant benefits, poor implementation can create frustration.
           Understanding common challenges helps installers design better systems.
         </p>
 
@@ -22,7 +22,9 @@ export const CommonChallengesAutomationSection = () => {
               <Zap className="h-5 w-5 text-red-400" />
               <h4 className="text-red-300 font-semibold">Over-Automation</h4>
             </div>
-            <p className="text-red-200 text-sm mb-2">Lights switching unnecessarily leading to user frustration</p>
+            <p className="text-red-200 text-sm mb-2">
+              Lights switching unnecessarily leading to user frustration
+            </p>
             <ul className="text-red-200 text-xs space-y-1">
               <li>• Motion sensors triggering in inappropriate situations</li>
               <li>• Too many automated responses overwhelming users</li>
@@ -36,7 +38,9 @@ export const CommonChallengesAutomationSection = () => {
               <AlertTriangle className="h-5 w-5 text-amber-400" />
               <h4 className="text-amber-300 font-semibold">False Triggers</h4>
             </div>
-            <p className="text-amber-200 text-sm mb-2">Unintended activation causing inconvenience and energy waste</p>
+            <p className="text-amber-200 text-sm mb-2">
+              Unintended activation causing inconvenience and energy waste
+            </p>
             <ul className="text-amber-200 text-xs space-y-1">
               <li>• Pets activating motion sensors unnecessarily</li>
               <li>• Air movement from heating/cooling systems</li>
@@ -50,7 +54,9 @@ export const CommonChallengesAutomationSection = () => {
               <RefreshCw className="h-5 w-5 text-blue-400" />
               <h4 className="text-blue-300 font-semibold">Conflicting Rules</h4>
             </div>
-            <p className="text-blue-200 text-sm mb-2">Multiple automations giving different instructions</p>
+            <p className="text-blue-200 text-sm mb-2">
+              Multiple automations giving different instructions
+            </p>
             <ul className="text-blue-200 text-xs space-y-1">
               <li>• Motion sensor vs. scheduled dimming conflicts</li>
               <li>• Security system vs. energy saving modes</li>
@@ -64,7 +70,9 @@ export const CommonChallengesAutomationSection = () => {
               <Wifi className="h-5 w-5 text-purple-400" />
               <h4 className="text-purple-300 font-semibold">Network and Response Issues</h4>
             </div>
-            <p className="text-purple-200 text-sm mb-2">Technical problems affecting system reliability</p>
+            <p className="text-purple-200 text-sm mb-2">
+              Technical problems affecting system reliability
+            </p>
             <ul className="text-purple-200 text-xs space-y-1">
               <li>• Network lag causing delayed light responses</li>
               <li>• Wi-Fi connectivity issues in some locations</li>

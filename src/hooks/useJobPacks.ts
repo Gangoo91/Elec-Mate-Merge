@@ -52,7 +52,7 @@ export const useJobPackAcknowledgements = (jobPackId: string) => {
 
 export const useCreateJobPack = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (jobPack: Omit<JobPack, 'id' | 'created_at' | 'updated_at'>) =>
       createJobPack(jobPack),
@@ -64,7 +64,7 @@ export const useCreateJobPack = () => {
 
 export const useUpdateJobPack = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: Partial<JobPack> }) =>
       updateJobPack(id, updates),
@@ -77,7 +77,7 @@ export const useUpdateJobPack = () => {
 
 export const useDeleteJobPack = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (id: string) => deleteJobPack(id),
     onSuccess: () => {
@@ -88,10 +88,14 @@ export const useDeleteJobPack = () => {
 
 export const useUpdateJobPackDocument = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: ({ id, documentType, status }: { 
-      id: string; 
+    mutationFn: ({
+      id,
+      documentType,
+      status,
+    }: {
+      id: string;
       documentType: 'rams_generated' | 'method_statement_generated' | 'briefing_pack_generated';
       status: boolean;
     }) => updateJobPackDocumentStatus(id, documentType, status),
@@ -103,7 +107,7 @@ export const useUpdateJobPackDocument = () => {
 
 export const useCreateJobPackDocument = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (document: Omit<JobPackDocument, 'id' | 'created_at' | 'updated_at'>) =>
       createJobPackDocument(document),
@@ -115,7 +119,7 @@ export const useCreateJobPackDocument = () => {
 
 export const useDeleteJobPackDocument = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (id: string) => deleteJobPackDocument(id),
     onSuccess: () => {
@@ -126,12 +130,14 @@ export const useDeleteJobPackDocument = () => {
 
 export const useCreateJobPackAcknowledgement = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (ack: Omit<JobPackAcknowledgement, 'id' | 'created_at' | 'acknowledged_at'>) =>
       createJobPackAcknowledgement(ack),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['job-pack-acknowledgements', variables.job_pack_id] });
+      queryClient.invalidateQueries({
+        queryKey: ['job-pack-acknowledgements', variables.job_pack_id],
+      });
     },
   });
 };

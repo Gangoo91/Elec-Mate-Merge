@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ArrowUpDown } from "lucide-react";
+} from '@/components/ui/dropdown-menu';
+import { ArrowUpDown } from 'lucide-react';
 
-export type SortOption = 
+export type SortOption =
   | 'date-desc'
   | 'date-asc'
   | 'cert-asc'
@@ -36,7 +36,7 @@ export const SortDropdown = ({ sortBy, onSortChange }: SortDropdownProps) => {
     { value: 'status', label: 'Status' },
   ];
 
-  const currentLabel = sortOptions.find(opt => opt.value === sortBy)?.label || 'Sort';
+  const currentLabel = sortOptions.find((opt) => opt.value === sortBy)?.label || 'Sort';
 
   return (
     <DropdownMenu>
@@ -51,7 +51,7 @@ export const SortDropdown = ({ sortBy, onSortChange }: SortDropdownProps) => {
           <DropdownMenuItem
             key={option.value}
             onClick={() => onSortChange(option.value)}
-            className={sortBy === option.value ? "bg-accent" : ""}
+            className={sortBy === option.value ? 'bg-accent' : ''}
           >
             {option.label}
           </DropdownMenuItem>

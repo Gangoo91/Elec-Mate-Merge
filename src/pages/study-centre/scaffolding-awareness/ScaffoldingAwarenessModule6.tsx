@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by scaffolding awareness assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by scaffolding awareness assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Know Your Scaffold Components",
+    title: 'Know Your Scaffold Components',
     description:
-      "Standards, ledgers, transoms, braces, ties, base plates — know what each component does and where it goes in the scaffold structure.",
+      'Standards, ledgers, transoms, braces, ties, base plates — know what each component does and where it goes in the scaffold structure.',
   },
   {
-    title: "Understand the Inspection Regime",
+    title: 'Understand the Inspection Regime',
     description:
-      "7-day inspections, when else to inspect (after weather events, alterations, any event affecting stability), and who can carry out inspections.",
+      '7-day inspections, when else to inspect (after weather events, alterations, any event affecting stability), and who can carry out inspections.',
   },
   {
-    title: "Learn the Scaffold Tag System",
+    title: 'Learn the Scaffold Tag System',
     description:
-      "Green (safe to use), yellow (restrictions apply), and red (do not use) — know the meanings, who applies them, and what to do for each.",
+      'Green (safe to use), yellow (restrictions apply), and red (do not use) — know the meanings, who applies them, and what to do for each.',
   },
   {
-    title: "Master TG20 Basics",
+    title: 'Master TG20 Basics',
     description:
-      "When TG20 applies, when a designed scaffold is needed instead, the role of the NASC, and how TG20 links to BS EN 12811.",
+      'When TG20 applies, when a designed scaffold is needed instead, the role of the NASC, and how TG20 links to BS EN 12811.',
   },
   {
-    title: "Know the Regulations",
+    title: 'Know the Regulations',
     description:
-      "Work at Height Regulations 2005, NASC guidance, BS EN 12811, CDM 2015 — understand the key duties and requirements from each.",
+      'Work at Height Regulations 2005, NASC guidance, BS EN 12811, CDM 2015 — understand the key duties and requirements from each.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function ScaffoldingAwarenessModule6() {
   useSEO({
-    title: "Scaffolding Awareness Mock Exam | Module 6",
+    title: 'Scaffolding Awareness Mock Exam | Module 6',
     description:
-      "Test your scaffolding awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your scaffolding awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,9 +108,7 @@ export default function ScaffoldingAwarenessModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Put your scaffolding awareness knowledge to the test under timed exam conditions.
               Questions are drawn from a 200-question bank covering all five content modules.
@@ -115,7 +123,9 @@ export default function ScaffoldingAwarenessModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real scaffolding awareness assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real scaffolding awareness assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +140,7 @@ export default function ScaffoldingAwarenessModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +156,11 @@ export default function ScaffoldingAwarenessModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Introduction to Scaffolding", count: 40 },
-                  { module: "Module 2", name: "Scaffold Regulations & Standards", count: 40 },
-                  { module: "Module 3", name: "Scaffold Components & Assembly", count: 40 },
-                  { module: "Module 4", name: "Scaffold Inspection & Tagging", count: 40 },
-                  { module: "Module 5", name: "Safe Use & Hazard Awareness", count: 40 },
+                  { module: 'Module 1', name: 'Introduction to Scaffolding', count: 40 },
+                  { module: 'Module 2', name: 'Scaffold Regulations & Standards', count: 40 },
+                  { module: 'Module 3', name: 'Scaffold Components & Assembly', count: 40 },
+                  { module: 'Module 4', name: 'Scaffold Inspection & Tagging', count: 40 },
+                  { module: 'Module 5', name: 'Safe Use & Hazard Awareness', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +212,7 @@ export default function ScaffoldingAwarenessModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

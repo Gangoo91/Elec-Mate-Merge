@@ -1,11 +1,11 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, Calendar, Layers, AlertCircle } from "lucide-react";
-import ProjectOverviewSection from "./ProjectOverviewSection";
-import PhaseTimeline from "./PhaseTimeline";
-import { Card } from "@/components/ui/card";
-import { EditablePhaseCard } from "./editable/EditablePhaseCard";
-import { EditableRiskItem } from "./editable/EditableRiskItem";
-import { EditableProjectPlan, ProjectPhase, ProjectRisk } from "@/types/projectPlan";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { FileText, Calendar, Layers, AlertCircle } from 'lucide-react';
+import ProjectOverviewSection from './ProjectOverviewSection';
+import PhaseTimeline from './PhaseTimeline';
+import { Card } from '@/components/ui/card';
+import { EditablePhaseCard } from './editable/EditablePhaseCard';
+import { EditableRiskItem } from './editable/EditableRiskItem';
+import { EditableProjectPlan, ProjectPhase, ProjectRisk } from '@/types/projectPlan';
 
 interface ProjectResultsTabsProps {
   plan: EditableProjectPlan;
@@ -34,7 +34,7 @@ const ProjectResultsTabs = ({
   onUpdateMaterial,
   onDeleteMaterial,
   onUpdateRisk,
-  onDeleteRisk
+  onDeleteRisk,
 }: ProjectResultsTabsProps) => {
   return (
     <Tabs defaultValue="overview" className="w-full">
@@ -76,7 +76,9 @@ const ProjectResultsTabs = ({
             )}
             <div>
               <span className="text-muted-foreground">Start Date:</span>{' '}
-              <span className="font-medium">{new Date(plan.startDate).toLocaleDateString('en-GB')}</span>
+              <span className="font-medium">
+                {new Date(plan.startDate).toLocaleDateString('en-GB')}
+              </span>
             </div>
             <div>
               <span className="text-muted-foreground">Phases:</span>{' '}
@@ -102,25 +104,28 @@ const ProjectResultsTabs = ({
 
       {/* Tab 2: Timeline */}
       <TabsContent value="timeline" className="space-y-4 mt-0">
-        <PhaseTimeline 
-          phases={plan.phases.map(phase => ({
+        <PhaseTimeline
+          phases={plan.phases.map((phase) => ({
             phase: phase.phaseName,
             phaseName: phase.phaseName,
             duration: phase.dayEnd - phase.dayStart + 1,
             startDay: `Day ${phase.dayStart}`,
             criticalPath: false,
-            tasks: phase.tasks.map(t => t.text)
+            tasks: phase.tasks.map((t) => t.text),
           }))}
           startDate={plan.startDate}
           criticalPath={[]}
         />
-        
+
         {plan.milestones && plan.milestones.length > 0 && (
           <Card className="p-6">
             <h3 className="text-lg font-semibold mb-4">Milestones</h3>
             <div className="space-y-3">
               {plan.milestones.map((milestone) => (
-                <div key={milestone.id} className="flex items-start justify-between p-3 bg-muted/30 rounded-lg">
+                <div
+                  key={milestone.id}
+                  className="flex items-start justify-between p-3 bg-muted/30 rounded-lg"
+                >
                   <div>
                     <h4 className="font-medium">{milestone.name}</h4>
                     {milestone.description && (
@@ -139,7 +144,7 @@ const ProjectResultsTabs = ({
 
       {/* Tab 3: Phases */}
       <TabsContent value="phases" className="space-y-4 mt-0">
-        {plan.phases.map((phase, idx) => (
+        {plan.phases.map((phase, idx) =>
           editMode ? (
             <EditablePhaseCard
               key={phase.id}
@@ -159,14 +164,16 @@ const ProjectResultsTabs = ({
                   Day {phase.dayStart} - {phase.dayEnd} ({phase.dayEnd - phase.dayStart + 1} days)
                 </p>
               </div>
-              
+
               {phase.tasks.length > 0 && (
                 <div className="space-y-2 mb-4">
                   <h4 className="text-sm font-medium text-muted-foreground">Tasks</h4>
                   <div className="space-y-1">
                     {phase.tasks.map((task) => (
                       <div key={task.id} className="flex items-start gap-2 text-sm">
-                        <span className={task.completed ? 'line-through text-muted-foreground' : ''}>
+                        <span
+                          className={task.completed ? 'line-through text-muted-foreground' : ''}
+                        >
                           • {task.text}
                         </span>
                       </div>
@@ -181,7 +188,8 @@ const ProjectResultsTabs = ({
                   <div className="space-y-1">
                     {phase.materials.map((material) => (
                       <div key={material.id} className="text-sm bg-muted/30 rounded-md p-2">
-                        {material.name} - {material.quantity}{material.unit || ''}
+                        {material.name} - {material.quantity}
+                        {material.unit || ''}
                       </div>
                     ))}
                   </div>
@@ -193,7 +201,10 @@ const ProjectResultsTabs = ({
                   <h4 className="text-sm font-medium text-muted-foreground">Hold Points</h4>
                   <div className="space-y-1">
                     {phase.holdPoints.map((point, idx) => (
-                      <div key={idx} className="text-sm bg-orange-500/10 border border-orange-500/20 rounded-md p-2">
+                      <div
+                        key={idx}
+                        className="text-sm bg-orange-500/10 border border-orange-500/20 rounded-md p-2"
+                      >
                         ⚠️ {point}
                       </div>
                     ))}
@@ -202,7 +213,7 @@ const ProjectResultsTabs = ({
               )}
             </Card>
           )
-        ))}
+        )}
       </TabsContent>
 
       {/* Tab 4: Risks */}
@@ -213,7 +224,7 @@ const ProjectResultsTabs = ({
             <p className="text-sm text-muted-foreground">No risks identified</p>
           ) : (
             <div className="space-y-3">
-              {plan.risks.map((risk) => (
+              {plan.risks.map((risk) =>
                 editMode ? (
                   <EditableRiskItem
                     key={risk.id}
@@ -225,27 +236,35 @@ const ProjectResultsTabs = ({
                   <div key={risk.id} className="p-4 bg-muted/30 rounded-lg border border-border/40">
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="font-medium">{risk.description}</h4>
-                      <span className={`text-xs px-2 py-1 rounded-full ${
-                        risk.severity === 'high' ? 'bg-red-500/20 text-red-400' :
-                        risk.severity === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                        'bg-green-500/20 text-green-400'
-                      }`}>
+                      <span
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          risk.severity === 'high'
+                            ? 'bg-red-500/20 text-red-400'
+                            : risk.severity === 'medium'
+                              ? 'bg-yellow-500/20 text-yellow-400'
+                              : 'bg-green-500/20 text-green-400'
+                        }`}
+                      >
                         {risk.severity}
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
                       <strong>Mitigation:</strong> {risk.mitigation}
                     </p>
-                    <span className={`text-xs px-2 py-0.5 rounded ${
-                      risk.status === 'open' ? 'bg-orange-500/20 text-orange-400' :
-                      risk.status === 'mitigated' ? 'bg-green-500/20 text-green-400' :
-                      'bg-gray-500/20 text-gray-400'
-                    }`}>
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded ${
+                        risk.status === 'open'
+                          ? 'bg-orange-500/20 text-orange-400'
+                          : risk.status === 'mitigated'
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-gray-500/20 text-gray-400'
+                      }`}
+                    >
                       {risk.status}
                     </span>
                   </div>
                 )
-              ))}
+              )}
             </div>
           )}
         </Card>

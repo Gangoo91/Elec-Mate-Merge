@@ -1,15 +1,14 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { FileText, Download, Mail, AlertTriangle, Clock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { FileText, Download, Mail, AlertTriangle, Clock } from 'lucide-react';
 
 const DocumentTemplates = () => {
   const templates = [
     {
-      title: "Formal Complaint Letter Template",
-      description: "Template for raising formal concerns with your employer",
-      category: "Complaint",
+      title: 'Formal Complaint Letter Template',
+      description: 'Template for raising formal concerns with your employer',
+      category: 'Complaint',
       icon: AlertTriangle,
       content: `[Date]
 
@@ -35,12 +34,12 @@ I look forward to your prompt response.
 
 Yours sincerely,
 [Your Name]
-[Your Contact Details]`
+[Your Contact Details]`,
     },
     {
-      title: "Training Record Request",
-      description: "Request access to your training records and progress documentation",
-      category: "Request",
+      title: 'Training Record Request',
+      description: 'Request access to your training records and progress documentation',
+      category: 'Request',
       icon: FileText,
       content: `[Date]
 
@@ -67,12 +66,12 @@ Thank you for your assistance.
 Yours sincerely,
 [Your Name]
 [Apprentice ID/Reference Number]
-[Contact Details]`
+[Contact Details]`,
     },
     {
-      title: "Holiday Request Form",
-      description: "Template for requesting annual leave",
-      category: "Request",
+      title: 'Holiday Request Form',
+      description: 'Template for requesting annual leave',
+      category: 'Request',
       icon: Clock,
       content: `Holiday Request Form
 
@@ -103,12 +102,12 @@ For Manager Use:
 Manager Comments:
 [Comments]
 
-Manager Signature: _________________ Date: _________`
+Manager Signature: _________________ Date: _________`,
     },
     {
-      title: "Workplace Incident Report",
-      description: "Template for reporting safety incidents or near misses",
-      category: "Safety",
+      title: 'Workplace Incident Report',
+      description: 'Template for reporting safety incidents or near misses',
+      category: 'Safety',
       icon: AlertTriangle,
       content: `Incident Report Form
 
@@ -143,12 +142,12 @@ Potential Causes:
 Suggestions for Prevention:
 [How similar incidents could be prevented]
 
-Signature: _________________ Date: _________`
-    }
+Signature: _________________ Date: _________`,
+    },
   ];
 
   const downloadTemplate = (template: any) => {
-    const element = document.createElement("a");
+    const element = document.createElement('a');
     const file = new Blob([template.content], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
     element.download = `${template.title.replace(/\s+/g, '_')}.txt`;
@@ -159,10 +158,14 @@ Signature: _________________ Date: _________`
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Complaint": return "bg-red-500/20 text-red-400 border-red-500/40";
-      case "Request": return "bg-blue-500/20 text-blue-400 border-blue-500/40";
-      case "Safety": return "bg-orange-500/20 text-orange-400 border-orange-500/40";
-      default: return "bg-white/10 text-white border-white/30";
+      case 'Complaint':
+        return 'bg-red-500/20 text-red-400 border-red-500/40';
+      case 'Request':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/40';
+      case 'Safety':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/40';
+      default:
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 
@@ -192,11 +195,10 @@ Signature: _________________ Date: _________`
                     <p className="text-sm text-white mb-3">{template.description}</p>
                   </div>
                 </div>
-                
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="w-full border-green-500/40 text-green-400 hover:bg-green-500/20"
+
+                <Button
+                  variant="outline"
+                  className="w-full h-11 touch-manipulation border-green-500/40 text-green-400 hover:bg-green-500/20"
                   onClick={() => downloadTemplate(template)}
                 >
                   <Download className="h-3 w-3 mr-2" />
@@ -206,10 +208,10 @@ Signature: _________________ Date: _________`
             );
           })}
         </div>
-        
+
         <div className="mt-6 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
           <h4 className="font-semibold text-blue-400 mb-2">How to Use These Templates</h4>
-          <ul className="text-sm text-blue-300 space-y-1">
+          <ul className="text-sm text-white space-y-1">
             <li>• Fill in all sections marked with [brackets]</li>
             <li>• Keep copies of all correspondence for your records</li>
             <li>• Send formal letters by email with read receipt when possible</li>

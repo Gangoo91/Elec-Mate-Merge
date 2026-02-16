@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
-export type VerificationTier = "basic" | "verified" | "premium";
-export type ProfileVisibility = "public" | "employers_only" | "private";
-export type RateType = "hourly" | "daily" | "weekly" | "yearly";
+export type VerificationTier = 'basic' | 'verified' | 'premium';
+export type ProfileVisibility = 'public' | 'employers_only' | 'private';
+export type RateType = 'hourly' | 'daily' | 'weekly' | 'yearly';
 
 export interface ElecIdProfile {
   id: string;
@@ -48,7 +48,10 @@ interface UseElecIdProfileReturn {
   error: string | null;
   isActivated: boolean;
   isOptedOut: boolean;
-  activateProfile: (data: Partial<ElecIdProfile>, preGeneratedElecId?: string) => Promise<ActivateResult>;
+  activateProfile: (
+    data: Partial<ElecIdProfile>,
+    preGeneratedElecId?: string
+  ) => Promise<ActivateResult>;
   updateProfile: (data: Partial<ElecIdProfile>) => Promise<boolean>;
   setOptOut: (optOut: boolean) => Promise<boolean>;
   refetch: () => Promise<void>;
@@ -72,9 +75,9 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
     try {
       // First find the employee record for this user
       const { data: employee } = await supabase
-        .from("employer_employees")
-        .select("id")
-        .eq("user_id", user.id)
+        .from('employer_employees')
+        .select('id')
+        .eq('user_id', user.id)
         .maybeSingle();
 
       if (!employee) {
@@ -86,9 +89,9 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
       // Fetch the Elec-ID profile using the employee ID
       const { data, error: fetchError } = await supabase
-        .from("employer_elec_id_profiles")
-        .select("*")
-        .eq("employee_id", employee.id)
+        .from('employer_elec_id_profiles')
+        .select('*')
+        .eq('employee_id', employee.id)
         .maybeSingle();
 
       if (fetchError) {
@@ -97,8 +100,8 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
       setProfile(data as ElecIdProfile | null);
     } catch (err: any) {
-      console.error("Error fetching Elec-ID profile:", err);
-      setError(err.message || "Failed to load profile");
+      console.error('Error fetching Elec-ID profile:', err);
+      setError(err.message || 'Failed to load profile');
     } finally {
       setIsLoading(false);
     }
@@ -110,8 +113,11 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
   // Activate profile (complete onboarding)
   // If preGeneratedElecId is provided, use it; otherwise call the edge function
-  const activateProfile = async (data: Partial<ElecIdProfile>, preGeneratedElecId?: string): Promise<ActivateResult> => {
-    if (!user?.id) return { success: false, error: "User not authenticated" };
+  const activateProfile = async (
+    data: Partial<ElecIdProfile>,
+    preGeneratedElecId?: string
+  ): Promise<ActivateResult> => {
+    if (!user?.id) return { success: false, error: 'User not authenticated' };
 
     try {
       const now = new Date().toISOString();
@@ -119,21 +125,24 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
       // If no pre-generated ID and no existing profile with ID, generate via edge function
       if (!elecIdNumber && !profile?.elec_id_number) {
-        const { data: idData, error: idError } = await supabase.functions.invoke('generate-elec-id', {
-          body: {
-            user_id: user.id,
-            ecs_card_type: data.ecs_card_type || null
+        const { data: idData, error: idError } = await supabase.functions.invoke(
+          'generate-elec-id',
+          {
+            body: {
+              user_id: user.id,
+              ecs_card_type: data.ecs_card_type || null,
+            },
           }
-        });
+        );
 
         if (idError) {
-          console.error("Error generating Elec-ID:", idError);
-          throw new Error("Failed to generate Elec-ID. Please try again.");
+          console.error('Error generating Elec-ID:', idError);
+          throw new Error('Failed to generate Elec-ID. Please try again.');
         }
 
         elecIdNumber = idData?.elec_id_number;
         if (!elecIdNumber) {
-          throw new Error("Failed to generate Elec-ID number.");
+          throw new Error('Failed to generate Elec-ID number.');
         }
       }
 
@@ -152,9 +161,9 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
         }
 
         const { error: updateError } = await supabase
-          .from("employer_elec_id_profiles")
+          .from('employer_elec_id_profiles')
           .update(updateData)
-          .eq("id", profile.id);
+          .eq('id', profile.id);
 
         if (updateError) throw updateError;
       } else {
@@ -163,9 +172,9 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
         // Check if user already has an employee record
         const { data: existingEmployee } = await supabase
-          .from("employer_employees")
-          .select("id")
-          .eq("user_id", user.id)
+          .from('employer_employees')
+          .select('id')
+          .eq('user_id', user.id)
           .maybeSingle();
 
         if (existingEmployee) {
@@ -173,41 +182,39 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
         } else {
           // Create a new employee record for this user
           const { data: newEmployee, error: employeeError } = await supabase
-            .from("employer_employees")
+            .from('employer_employees')
             .insert({
               user_id: user.id,
-              name: user.email?.split("@")[0] || "User",
-              role: "electrician",
-              team_role: "Electrician",
-              status: "active",
-              avatar_initials: (user.email?.substring(0, 2) || "US").toUpperCase(),
+              name: user.email?.split('@')[0] || 'User',
+              role: 'electrician',
+              team_role: 'Electrician',
+              status: 'active',
+              avatar_initials: (user.email?.substring(0, 2) || 'US').toUpperCase(),
               hourly_rate: 0,
               certifications_count: 0,
               active_jobs_count: 0,
             })
-            .select("id")
+            .select('id')
             .single();
 
           if (employeeError) {
-            console.error("Error creating employee record:", employeeError);
-            throw new Error("Failed to create employee record. Please try again.");
+            console.error('Error creating employee record:', employeeError);
+            throw new Error('Failed to create employee record. Please try again.');
           }
           employeeId = newEmployee.id;
         }
 
         // Create new Elec-ID profile
-        const { error: insertError } = await supabase
-          .from("employer_elec_id_profiles")
-          .insert({
-            employee_id: employeeId,
-            elec_id_number: elecIdNumber,
-            activated: true,
-            activated_at: now,
-            verification_tier: "basic",
-            available_for_hire: true,
-            profile_visibility: "employers_only",
-            ...data,
-          });
+        const { error: insertError } = await supabase.from('employer_elec_id_profiles').insert({
+          employee_id: employeeId,
+          elec_id_number: elecIdNumber,
+          activated: true,
+          activated_at: now,
+          verification_tier: 'basic',
+          available_for_hire: true,
+          profile_visibility: 'employers_only',
+          ...data,
+        });
 
         if (insertError) throw insertError;
       }
@@ -215,8 +222,8 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
       await fetchProfile();
       return { success: true, elecIdNumber: elecIdNumber || profile?.elec_id_number };
     } catch (err: any) {
-      console.error("Error activating Elec-ID:", err);
-      const errorMessage = err.message || "Failed to activate profile";
+      console.error('Error activating Elec-ID:', err);
+      const errorMessage = err.message || 'Failed to activate profile';
       setError(errorMessage);
       return { success: false, error: errorMessage };
     }
@@ -228,20 +235,20 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
     try {
       const { error: updateError } = await supabase
-        .from("employer_elec_id_profiles")
+        .from('employer_elec_id_profiles')
         .update({
           ...data,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", profile.id);
+        .eq('id', profile.id);
 
       if (updateError) throw updateError;
 
       await fetchProfile();
       return true;
     } catch (err: any) {
-      console.error("Error updating Elec-ID:", err);
-      setError(err.message || "Failed to update profile");
+      console.error('Error updating Elec-ID:', err);
+      setError(err.message || 'Failed to update profile');
       return false;
     }
   };
@@ -252,21 +259,21 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
     try {
       const { error: updateError } = await supabase
-        .from("employer_elec_id_profiles")
+        .from('employer_elec_id_profiles')
         .update({
           opt_out: optOut,
           opt_out_at: optOut ? new Date().toISOString() : null,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", profile.id);
+        .eq('id', profile.id);
 
       if (updateError) throw updateError;
 
       await fetchProfile();
       return true;
     } catch (err: any) {
-      console.error("Error setting opt-out:", err);
-      setError(err.message || "Failed to update opt-out status");
+      console.error('Error setting opt-out:', err);
+      setError(err.message || 'Failed to update opt-out status');
       return false;
     }
   };

@@ -12,11 +12,8 @@ interface BoardManagementProps {
  * BoardManagement - Header component for managing distribution boards
  * Provides "Add Sub-Board" button and board count summary
  */
-const BoardManagement: React.FC<BoardManagementProps> = ({
-  boards,
-  onAddBoard,
-}) => {
-  const subBoardCount = boards.filter(b => b.order > 0).length;
+const BoardManagement: React.FC<BoardManagementProps> = ({ boards, onAddBoard }) => {
+  const subBoardCount = boards.filter((b) => b.order > 0).length;
 
   return (
     <div className="flex items-center justify-between p-4 bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-xl border border-white/10">

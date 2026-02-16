@@ -1,14 +1,14 @@
-import React, { useState, useRef, useCallback } from "react";
-import { 
-  Camera, 
-  Upload, 
-  X, 
-  Eye, 
-  EyeOff, 
-  Loader, 
-  AlertTriangle, 
-  CheckCircle, 
-  BookOpen, 
+import React, { useState, useRef, useCallback } from 'react';
+import {
+  Camera,
+  Upload,
+  X,
+  Eye,
+  EyeOff,
+  Loader,
+  AlertTriangle,
+  CheckCircle,
+  BookOpen,
   Download,
   Trash2,
   RefreshCw,
@@ -20,31 +20,26 @@ import {
   RotateCcw,
   Save,
   Wand2,
-  Image as ImageIcon
-} from "lucide-react";
-import VisualAnalysisResults from "./VisualAnalysisResults";
-import EvidenceViewer from "./EvidenceViewer";
-import CaptureWizard from "./CaptureWizard";
-import FixPack from "./FixPack";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Slider } from "@/components/ui/slider";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Image as ImageIcon,
+} from 'lucide-react';
+import VisualAnalysisResults from './VisualAnalysisResults';
+import EvidenceViewer from './EvidenceViewer';
+import CaptureWizard from './CaptureWizard';
+import FixPack from './FixPack';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Slider } from '@/components/ui/slider';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 // Lazy load background removal for performance
 const loadBackgroundRemoval = async () => {
-  const { removeBackground, loadImage } = await import("@/lib/background-removal");
+  const { removeBackground, loadImage } = await import('@/lib/background-removal');
   return { removeBackground, loadImage };
 };
 
@@ -98,35 +93,35 @@ interface AnalysisPreset {
 
 const ANALYSIS_PRESETS: AnalysisPreset[] = [
   {
-    name: "Consumer Unit Inspection",
-    description: "Distribution boards and consumer units",
+    name: 'Consumer Unit Inspection',
+    description: 'Distribution boards and consumer units',
     icon: Zap,
     settings: {
-      focus_areas: ["consumer_unit", "mcb", "rcd", "main_switch", "labelling"],
+      focus_areas: ['consumer_unit', 'mcb', 'rcd', 'main_switch', 'labelling'],
       confidence_threshold: 0.8,
-      enable_bounding_boxes: true
-    }
+      enable_bounding_boxes: true,
+    },
   },
   {
-    name: "Socket & Accessory Check",
-    description: "Socket outlets and accessories",
+    name: 'Socket & Accessory Check',
+    description: 'Socket outlets and accessories',
     icon: Target,
     settings: {
-      focus_areas: ["sockets", "switches", "accessories", "cables", "earthing"],
+      focus_areas: ['sockets', 'switches', 'accessories', 'cables', 'earthing'],
       confidence_threshold: 0.75,
-      enable_bounding_boxes: true
-    }
+      enable_bounding_boxes: true,
+    },
   },
   {
-    name: "General Safety Survey",
-    description: "Comprehensive safety analysis",
+    name: 'General Safety Survey',
+    description: 'Comprehensive safety analysis',
     icon: Eye,
     settings: {
-      focus_areas: ["general_safety", "visible_damage", "compliance", "hazards"],
+      focus_areas: ['general_safety', 'visible_damage', 'compliance', 'hazards'],
       confidence_threshold: 0.7,
-      enable_bounding_boxes: false
-    }
-  }
+      enable_bounding_boxes: false,
+    },
+  },
 ];
 
 const VisualAnalysis = () => {
@@ -136,7 +131,9 @@ const VisualAnalysis = () => {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(true);
-  const [analysisHistory, setAnalysisHistory] = useState<Array<{ id: string; images: string[]; result: AnalysisResult; timestamp: Date }>>([]);
+  const [analysisHistory, setAnalysisHistory] = useState<
+    Array<{ id: string; images: string[]; result: AnalysisResult; timestamp: Date }>
+  >([]);
   const [selectedPreset, setSelectedPreset] = useState<AnalysisPreset>(ANALYSIS_PRESETS[0]);
   const [confidenceThreshold, setConfidenceThreshold] = useState([0.8]);
   const [showBoundingBoxes, setShowBoundingBoxes] = useState(true);
@@ -144,7 +141,7 @@ const VisualAnalysis = () => {
   const [currentMode, setCurrentMode] = useState<'capture' | 'analyze' | 'results'>('capture');
   const [fixPacks, setFixPacks] = useState<any[]>([]);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -157,71 +154,74 @@ const VisualAnalysis = () => {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
-      
+
       img.onload = () => {
         const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
-        
+
         if (ctx) {
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const compressedFile = new File([blob], file.name, {
-                type: 'image/jpeg',
-                lastModified: Date.now(),
-              });
-              resolve(compressedFile);
-            } else {
-              resolve(file);
-            }
-          }, 'image/jpeg', quality);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            quality
+          );
         } else {
           resolve(file);
         }
       };
-      
+
       img.src = URL.createObjectURL(file);
     });
   };
 
   const handleFileSelect = useCallback(async (files: FileList | null) => {
     if (!files) return;
-    
-    const imageFiles = Array.from(files).filter(file => 
-      file.type.startsWith('image/')
-    );
-    
+
+    const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
+
     if (imageFiles.length === 0) {
       toast({
-        title: "Invalid file type",
-        description: "Please select image files only.",
-        variant: "destructive",
+        title: 'Invalid file type',
+        description: 'Please select image files only.',
+        variant: 'destructive',
       });
       return;
     }
 
     // Compress images for better performance
-    const compressedImages = await Promise.all(
-      imageFiles.map(file => compressImage(file))
-    );
+    const compressedImages = await Promise.all(imageFiles.map((file) => compressImage(file)));
 
-    setImages(prev => [...prev, ...compressedImages]);
+    setImages((prev) => [...prev, ...compressedImages]);
     toast({
-      title: "Images added",
+      title: 'Images added',
       description: `${compressedImages.length} image(s) added for analysis.`,
     });
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    handleFileSelect(e.dataTransfer.files);
-  }, [handleFileSelect]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      handleFileSelect(e.dataTransfer.files);
+    },
+    [handleFileSelect]
+  );
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } 
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } },
       });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -229,9 +229,9 @@ const VisualAnalysis = () => {
       }
     } catch (error) {
       toast({
-        title: "Camera access denied",
-        description: "Please allow camera access to capture images.",
-        variant: "destructive",
+        title: 'Camera access denied',
+        description: 'Please allow camera access to capture images.',
+        variant: 'destructive',
       });
     }
   };
@@ -239,7 +239,7 @@ const VisualAnalysis = () => {
   const stopCamera = () => {
     if (videoRef.current?.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
+      tracks.forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
     setIsCameraActive(false);
@@ -247,42 +247,45 @@ const VisualAnalysis = () => {
 
   const captureImage = async () => {
     if (!videoRef.current || !canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     const video = videoRef.current;
     const context = canvas.getContext('2d');
-    
+
     if (!context) return;
-    
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0);
-    
+
     canvas.toBlob(async (blob) => {
       if (blob) {
         const file = new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' });
         const compressedFile = await compressImage(file);
-        setImages(prev => [...prev, compressedFile]);
+        setImages((prev) => [...prev, compressedFile]);
         stopCamera();
         toast({
-          title: "Image captured",
-          description: "Image added for analysis.",
+          title: 'Image captured',
+          description: 'Image added for analysis.',
         });
       }
     });
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
     if (primaryImageIndex >= index && primaryImageIndex > 0) {
-      setPrimaryImageIndex(prev => prev - 1);
+      setPrimaryImageIndex((prev) => prev - 1);
     }
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string> => {
     // Get authenticated user ID
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
     if (authError || !user) {
       throw new Error('You must be logged in to upload images');
     }
@@ -299,9 +302,7 @@ const VisualAnalysis = () => {
       throw new Error(`Upload failed: ${uploadError.message}`);
     }
 
-    const { data: urlData } = supabase.storage
-      .from('visual-uploads')
-      .getPublicUrl(filePath);
+    const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(filePath);
 
     return urlData.publicUrl;
   };
@@ -331,9 +332,9 @@ const VisualAnalysis = () => {
   const handleAnalysis = async () => {
     if (images.length === 0) {
       toast({
-        title: "No images selected",
-        description: "Please upload or capture at least one image.",
-        variant: "destructive",
+        title: 'No images selected',
+        description: 'Please upload or capture at least one image.',
+        variant: 'destructive',
       });
       return;
     }
@@ -344,15 +345,16 @@ const VisualAnalysis = () => {
     try {
       // Upload primary image
       const primaryImageUrl = await processImageForAnalysis(images[primaryImageIndex]);
-      
+
       // Upload additional images if any
       const additionalImageUrls = await Promise.all(
-        images.filter((_, index) => index !== primaryImageIndex)
-          .map(image => processImageForAnalysis(image))
+        images
+          .filter((_, index) => index !== primaryImageIndex)
+          .map((image) => processImageForAnalysis(image))
       );
 
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
-        body: { 
+        body: {
           primary_image: primaryImageUrl,
           additional_images: additionalImageUrls,
           analysis_settings: {
@@ -360,68 +362,75 @@ const VisualAnalysis = () => {
             enable_bounding_boxes: showBoundingBoxes,
             focus_areas: selectedPreset.settings.focus_areas,
             remove_background: removeBackground,
-            bs7671_compliance: true
-          }
+            bs7671_compliance: true,
+          },
         },
       });
-      
+
       if (error) {
         throw new Error(error.message || 'Error connecting to the Visual Analysis service');
       }
-      
+
       if (data.error) {
         throw new Error(data.error);
       }
-      
+
       const result: AnalysisResult = data.analysis;
       setAnalysisResult(result);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
-      
+
       // Generate fix packs for findings
-      const generatedFixPacks = result.findings.map(finding => ({
+      const generatedFixPacks = result.findings.map((finding) => ({
         eicr_code: finding.eicr_code,
         finding: finding.description,
-        urgency: finding.eicr_code === 'C1' ? 'immediate' : finding.eicr_code === 'C2' ? 'urgent' : 'recommended',
+        urgency:
+          finding.eicr_code === 'C1'
+            ? 'immediate'
+            : finding.eicr_code === 'C2'
+              ? 'urgent'
+              : 'recommended',
         estimated_time: finding.eicr_code === 'C1' ? '30-60 mins' : '1-2 hours',
         estimated_cost: finding.eicr_code === 'C1' ? '£50-200' : '£100-500',
         difficulty: 'electrician' as const,
-        safety_priority: finding.eicr_code === 'C1' ? 'critical' : 'high' as const,
-        steps: [{
-          id: `step-${finding.eicr_code}-1`,
-          title: 'Safe Isolation',
-          description: 'Safely isolate the circuit before commencing work',
-          duration: '10 mins',
-          safety_notes: ['Use approved voltage tester', 'Apply lock-off procedure'],
-          tools_required: ['Voltage tester', 'Lock-off kit'],
-          materials_needed: [],
-          regulation_reference: 'BS 7671 Regulation 537.2'
-        }],
+        safety_priority: finding.eicr_code === 'C1' ? 'critical' : ('high' as const),
+        steps: [
+          {
+            id: `step-${finding.eicr_code}-1`,
+            title: 'Safe Isolation',
+            description: 'Safely isolate the circuit before commencing work',
+            duration: '10 mins',
+            safety_notes: ['Use approved voltage tester', 'Apply lock-off procedure'],
+            tools_required: ['Voltage tester', 'Lock-off kit'],
+            materials_needed: [],
+            regulation_reference: 'BS 7671 Regulation 537.2',
+          },
+        ],
         materials_list: [],
         verification_steps: ['Test installation', 'Visual inspection', 'Complete certification'],
-        compliance_notes: [`Repair must comply with ${finding.bs7671_clauses.join(', ')}`]
+        compliance_notes: [`Repair must comply with ${finding.bs7671_clauses.join(', ')}`],
       }));
       setFixPacks(generatedFixPacks);
-      
+
       // Save to history
       const historyEntry = {
         id: Date.now().toString(),
         images: [primaryImageUrl, ...additionalImageUrls],
         result,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      setAnalysisHistory(prev => [historyEntry, ...prev.slice(0, 4)]);
+      setAnalysisHistory((prev) => [historyEntry, ...prev.slice(0, 4)]);
       setCurrentMode('results');
-      
+
       toast({
-        title: "Analysis Complete",
-        description: "Visual analysis has been completed successfully.",
+        title: 'Analysis Complete',
+        description: 'Visual analysis has been completed successfully.',
       });
     } catch (error) {
       console.error('Analysis Error:', error);
       toast({
-        title: "Analysis Failed",
-        description: error instanceof Error ? error.message : "Failed to analyse images",
-        variant: "destructive",
+        title: 'Analysis Failed',
+        description: error instanceof Error ? error.message : 'Failed to analyse images',
+        variant: 'destructive',
       });
     } finally {
       setIsAnalyzing(false);
@@ -430,7 +439,7 @@ const VisualAnalysis = () => {
 
   const exportReport = async () => {
     if (!analysisResult) return;
-    
+
     try {
       // Format analysis results for professional PDF
       const reportContent = `
@@ -452,9 +461,12 @@ ${analysisResult.summary}
 
 | Finding | EICR Code | Confidence | BS 7671 Clauses |
 |---------|-----------|------------|------------------|
-${analysisResult.findings.map(finding => 
-  `| ${finding.description} | ${finding.eicr_code} | ${Math.round(finding.confidence * 100)}% | ${finding.bs7671_clauses.join(', ') || 'N/A'} |`
-).join('\n')}
+${analysisResult.findings
+  .map(
+    (finding) =>
+      `| ${finding.description} | ${finding.eicr_code} | ${Math.round(finding.confidence * 100)}% | ${finding.bs7671_clauses.join(', ') || 'N/A'} |`
+  )
+  .join('\n')}
 
 ---
 
@@ -462,9 +474,12 @@ ${analysisResult.findings.map(finding =>
 
 | Action | Priority | BS 7671 Reference | Cost Estimate |
 |--------|----------|-------------------|---------------|
-${analysisResult.recommendations.map(rec => 
-  `| ${rec.action} | ${rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1)} | ${rec.bs7671_reference || 'N/A'} | ${rec.cost_estimate || 'TBC'} |`
-).join('\n')}
+${analysisResult.recommendations
+  .map(
+    (rec) =>
+      `| ${rec.action} | ${rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1)} | ${rec.bs7671_reference || 'N/A'} | ${rec.cost_estimate || 'TBC'} |`
+  )
+  .join('\n')}
 
 ---
 
@@ -477,79 +492,97 @@ ${analysisResult.recommendations.map(rec =>
 **C3 Issues:** ${analysisResult.compliance_summary.c3_count}
       `;
 
-      const { generateProfessionalElectricalPDF } = await import('@/utils/professional-electrical-pdf');
-      
-      await generateProfessionalElectricalPDF(reportContent, "Visual Fault Analysis Report", `visual-analysis-report-${Date.now()}.pdf`, {
-        reportType: "Visual Fault Analysis Report",
-        companyName: "ElecConnect Professional",
-        includeSignatures: true,
-        watermark: "VISUAL ANALYSIS"
-      });
-      
+      const { generateProfessionalElectricalPDF } =
+        await import('@/utils/professional-electrical-pdf');
+
+      await generateProfessionalElectricalPDF(
+        reportContent,
+        'Visual Fault Analysis Report',
+        `visual-analysis-report-${Date.now()}.pdf`,
+        {
+          reportType: 'Visual Fault Analysis Report',
+          companyName: 'ElecConnect Professional',
+          includeSignatures: true,
+          watermark: 'VISUAL ANALYSIS',
+        }
+      );
+
       toast({
-        title: "Professional Report Exported",
-        description: "Enhanced PDF report has been downloaded.",
+        title: 'Professional Report Exported',
+        description: 'Enhanced PDF report has been downloaded.',
       });
     } catch (error) {
       toast({
-        title: "Export Failed",
-        description: "Unable to generate professional PDF report.",
-        variant: "destructive",
+        title: 'Export Failed',
+        description: 'Unable to generate professional PDF report.',
+        variant: 'destructive',
       });
     }
   };
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'bg-red-500 text-foreground border border-red-500';
-      case 'C2': return 'bg-amber-500 text-foreground border border-amber-500';
-      case 'C3': return 'bg-blue-500 text-foreground border border-blue-500';
-      case 'FI': return 'bg-slate-500 text-foreground border border-slate-500';
-      default: return 'bg-muted text-muted-foreground';
+      case 'C1':
+        return 'bg-red-500 text-foreground border border-red-500';
+      case 'C2':
+        return 'bg-amber-500 text-foreground border border-amber-500';
+      case 'C3':
+        return 'bg-blue-500 text-foreground border border-blue-500';
+      case 'FI':
+        return 'bg-slate-500 text-foreground border border-slate-500';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'immediate': return 'bg-red-500/20 text-red-400 border border-red-500/30';
-      case 'urgent': return 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
-      case 'recommended': return 'bg-green-500/20 text-green-400 border border-green-500/30';
-      default: return 'bg-muted text-muted-foreground';
+      case 'immediate':
+        return 'bg-red-500/20 text-red-400 border border-red-500/30';
+      case 'urgent':
+        return 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
+      case 'recommended':
+        return 'bg-green-500/20 text-green-400 border border-green-500/30';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const exampleQueries = [
-    "Consumer unit with overheating signs",
-    "Damaged socket outlet",
-    "Exposed cables in loft space",
-    "Corroded electrical connections",
-    "Faulty distribution board",
-    "Water damaged electrical equipment"
+    'Consumer unit with overheating signs',
+    'Damaged socket outlet',
+    'Exposed cables in loft space',
+    'Corroded electrical connections',
+    'Faulty distribution board',
+    'Water damaged electrical equipment',
   ];
 
   // Keyboard shortcuts
-  const handleKeyPress = useCallback((e: KeyboardEvent) => {
-    if (e.ctrlKey || e.metaKey) {
-      switch (e.key) {
-        case 'u':
-          e.preventDefault();
-          fileInputRef.current?.click();
-          break;
-        case 'Enter':
-          e.preventDefault();
-          if (images.length > 0 && !isAnalyzing) {
-            handleAnalysis();
-          }
-          break;
-        case 'r':
-          e.preventDefault();
-          if (analysisResult && !isAnalyzing) {
-            handleQuickReAnalyse();
-          }
-          break;
+  const handleKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        switch (e.key) {
+          case 'u':
+            e.preventDefault();
+            fileInputRef.current?.click();
+            break;
+          case 'Enter':
+            e.preventDefault();
+            if (images.length > 0 && !isAnalyzing) {
+              handleAnalysis();
+            }
+            break;
+          case 'r':
+            e.preventDefault();
+            if (analysisResult && !isAnalyzing) {
+              handleQuickReAnalyse();
+            }
+            break;
+        }
       }
-    }
-  }, [images.length, isAnalyzing, analysisResult]);
+    },
+    [images.length, isAnalyzing, analysisResult]
+  );
 
   // Add keyboard event listeners
   React.useEffect(() => {
@@ -569,8 +602,9 @@ ${analysisResult.recommendations.map(rec =>
             Visual Fault Analyser
           </h1>
           <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-4xl mx-auto">
-            Upload images of electrical installations for AI-powered safety analysis and BS 7671 18th Edition compliance checking.
-            Get detailed fault identification with severity ratings and actionable recommendations.
+            Upload images of electrical installations for AI-powered safety analysis and BS 7671
+            18th Edition compliance checking. Get detailed fault identification with severity
+            ratings and actionable recommendations.
           </p>
         </div>
 
@@ -585,7 +619,7 @@ ${analysisResult.recommendations.map(rec =>
               Choose a preset optimised for your specific inspection type:
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="p-4 sm:p-6 pt-0">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
               {ANALYSIS_PRESETS.map((preset, index) => {
@@ -594,10 +628,10 @@ ${analysisResult.recommendations.map(rec =>
                   <Tooltip key={index}>
                     <TooltipTrigger asChild>
                       <Button
-                        variant={selectedPreset.name === preset.name ? "default" : "outline"}
+                        variant={selectedPreset.name === preset.name ? 'default' : 'outline'}
                         className={`h-auto p-4 flex flex-col items-start gap-2 ${
-                          selectedPreset.name === preset.name 
-                            ? 'bg-blue-600 text-foreground border-blue-500' 
+                          selectedPreset.name === preset.name
+                            ? 'bg-blue-600 text-foreground border-blue-500'
                             : 'border-border text-gray-300 hover:bg-muted/50'
                         }`}
                         onClick={() => {
@@ -609,7 +643,9 @@ ${analysisResult.recommendations.map(rec =>
                         <IconComponent className="h-5 w-5" />
                         <div className="text-left">
                           <div className="font-semibold text-sm">{preset.name}</div>
-                          <div className="text-xs opacity-80 line-clamp-2">{preset.description}</div>
+                          <div className="text-xs opacity-80 line-clamp-2">
+                            {preset.description}
+                          </div>
                         </div>
                       </Button>
                     </TooltipTrigger>
@@ -631,13 +667,14 @@ ${analysisResult.recommendations.map(rec =>
               <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis</CardTitle>
             </div>
             <CardDescription className="text-gray-300 text-sm sm:text-base">
-              Upload images or capture live photos for intelligent fault detection and safety analysis:
+              Upload images or capture live photos for intelligent fault detection and safety
+              analysis:
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="p-4 sm:p-6 pt-0 space-y-4 sm:space-y-6">
             {/* Image Upload Area */}
-            <div 
+            <div
               className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center space-y-4 hover:border-blue-400 transition-colors"
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
@@ -673,7 +710,7 @@ ${analysisResult.recommendations.map(rec =>
                   </Button>
                 </div>
               </div>
-              
+
               <input
                 ref={fileInputRef}
                 type="file"
@@ -701,26 +738,28 @@ ${analysisResult.recommendations.map(rec =>
                 </div>
               </div>
             )}
-            
+
             <canvas ref={canvasRef} className="hidden" />
 
             {/* Selected Images */}
             {images.length > 0 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Selected Images ({images.length})</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  Selected Images ({images.length})
+                </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {images.map((image, index) => (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className={`relative group rounded-lg border-2 overflow-hidden cursor-pointer transition-all ${
-                        index === primaryImageIndex 
-                          ? 'border-primary ring-2 ring-primary/20' 
+                        index === primaryImageIndex
+                          ? 'border-primary ring-2 ring-primary/20'
                           : 'border-border hover:border-primary/50'
                       }`}
                       onClick={() => setPrimaryImageIndex(index)}
                     >
-                      <img 
-                        src={URL.createObjectURL(image)} 
+                      <img
+                        src={URL.createObjectURL(image)}
                         alt={`Selected ${index + 1}`}
                         className="w-full h-24 object-cover"
                       />
@@ -749,7 +788,7 @@ ${analysisResult.recommendations.map(rec =>
             {/* Analysis Settings */}
             <div className="space-y-4 border border-border rounded-lg p-4 bg-card/30">
               <h3 className="text-lg font-semibold text-foreground">Analysis Settings</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">
@@ -767,10 +806,12 @@ ${analysisResult.recommendations.map(rec =>
                     Higher values show only more confident detections
                   </p>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border">
-                    <label className="text-sm font-medium text-foreground">Background Removal</label>
+                    <label className="text-sm font-medium text-foreground">
+                      Background Removal
+                    </label>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Switch
@@ -784,7 +825,7 @@ ${analysisResult.recommendations.map(rec =>
                       </TooltipContent>
                     </Tooltip>
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border">
                     <label className="text-sm font-medium text-foreground">Bounding Boxes</label>
                     <Tooltip>
@@ -856,7 +897,11 @@ ${analysisResult.recommendations.map(rec =>
                 disabled={!analysisResult}
                 className="border-border hover:bg-accent/50"
               >
-                {showResults ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
+                {showResults ? (
+                  <EyeOff className="h-4 w-4 mr-2" />
+                ) : (
+                  <Eye className="h-4 w-4 mr-2" />
+                )}
                 {showResults ? 'Hide Results' : 'Show Results'}
               </Button>
             </div>
@@ -869,20 +914,23 @@ ${analysisResult.recommendations.map(rec =>
             <CardHeader className="p-4 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
                 <Wand2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                <CardTitle className="text-lg sm:text-xl text-foreground">Guided Capture Mode</CardTitle>
+                <CardTitle className="text-lg sm:text-xl text-foreground">
+                  Guided Capture Mode
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent className="p-4 sm:p-6 pt-0">
-              <CaptureWizard 
+              <CaptureWizard
                 onImagesCapture={(capturedImages) => {
                   setImages(capturedImages);
                   setCurrentMode('analyze');
                 }}
                 onPresetSelect={(capturePreset) => {
                   // Convert CapturePreset to AnalysisPreset format
-                  const analysisPreset = ANALYSIS_PRESETS.find(p => 
-                    p.name.toLowerCase().includes(capturePreset.id.split('-')[0])
-                  ) || ANALYSIS_PRESETS[0];
+                  const analysisPreset =
+                    ANALYSIS_PRESETS.find((p) =>
+                      p.name.toLowerCase().includes(capturePreset.id.split('-')[0])
+                    ) || ANALYSIS_PRESETS[0];
                   setSelectedPreset(analysisPreset);
                 }}
               />
@@ -900,20 +948,24 @@ ${analysisResult.recommendations.map(rec =>
                 <TabsTrigger value="fixpacks">Fix Guidance</TabsTrigger>
                 <TabsTrigger value="compare">Compare & History</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="analysis" className="mt-6">
-                <VisualAnalysisResults 
-                  analysisResult={analysisResult} 
+                <VisualAnalysisResults
+                  analysisResult={analysisResult}
                   onExportReport={exportReport}
                 />
               </TabsContent>
-              
+
               <TabsContent value="evidence" className="mt-6">
                 {uploadedImageUrls.length > 0 && (
                   <div className="space-y-6">
                     <div className="text-center">
-                      <h3 className="text-xl font-semibold text-foreground mb-2">Evidence Gallery</h3>
-                      <p className="text-muted-foreground">Explore findings with visual overlays and bounding boxes</p>
+                      <h3 className="text-xl font-semibold text-foreground mb-2">
+                        Evidence Gallery
+                      </h3>
+                      <p className="text-muted-foreground">
+                        Explore findings with visual overlays and bounding boxes
+                      </p>
                     </div>
                     <div className="grid gap-6">
                       {uploadedImageUrls.map((imageUrl, index) => (
@@ -929,12 +981,16 @@ ${analysisResult.recommendations.map(rec =>
                   </div>
                 )}
               </TabsContent>
-              
+
               <TabsContent value="fixpacks" className="mt-6">
                 <div className="space-y-6">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Fix Guidance Packs</h3>
-                    <p className="text-muted-foreground">Step-by-step repair guidance with materials and compliance notes</p>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      Fix Guidance Packs
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Step-by-step repair guidance with materials and compliance notes
+                    </p>
                   </div>
                   {fixPacks.length > 0 ? (
                     <div className="space-y-4">
@@ -945,8 +1001,8 @@ ${analysisResult.recommendations.map(rec =>
                           userRole="electrician"
                           onStartWork={() => {
                             toast({
-                              title: "Work Started",
-                              description: "Use the checklist to track your progress.",
+                              title: 'Work Started',
+                              description: 'Use the checklist to track your progress.',
                             });
                           }}
                         />
@@ -954,17 +1010,23 @@ ${analysisResult.recommendations.map(rec =>
                     </div>
                   ) : (
                     <Card className="p-8 text-center">
-                      <p className="text-muted-foreground">No fix guidance available. Perform analysis first.</p>
+                      <p className="text-muted-foreground">
+                        No fix guidance available. Perform analysis first.
+                      </p>
                     </Card>
                   )}
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="compare" className="mt-6">
                 <div className="space-y-6">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Analysis History & Comparison</h3>
-                    <p className="text-muted-foreground">Track changes and compare results over time</p>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      Analysis History & Comparison
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Track changes and compare results over time
+                    </p>
                   </div>
                   {analysisHistory.length > 0 ? (
                     <div className="grid gap-4">
@@ -973,7 +1035,8 @@ ${analysisResult.recommendations.map(rec =>
                           <CardContent className="p-4">
                             <div className="flex items-center justify-between mb-2">
                               <span className="text-sm text-muted-foreground">
-                                {entry.timestamp.toLocaleDateString('en-GB')} at {entry.timestamp.toLocaleTimeString('en-GB')}
+                                {entry.timestamp.toLocaleDateString('en-GB')} at{' '}
+                                {entry.timestamp.toLocaleTimeString('en-GB')}
                               </span>
                               <div className="flex gap-2">
                                 <Badge variant="outline" className="text-xs">
@@ -1010,17 +1073,20 @@ ${analysisResult.recommendations.map(rec =>
             <CardHeader className="p-4 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
                 <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                <CardTitle className="text-lg sm:text-xl text-foreground">Recent Analysis History</CardTitle>
+                <CardTitle className="text-lg sm:text-xl text-foreground">
+                  Recent Analysis History
+                </CardTitle>
               </div>
             </CardHeader>
-            
+
             <CardContent className="p-4 sm:p-6 pt-0">
               <div className="space-y-4">
                 {analysisHistory.map((entry) => (
                   <div key={entry.id} className="border border-border rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm text-muted-foreground">
-                        {entry.timestamp.toLocaleDateString('en-GB')} at {entry.timestamp.toLocaleTimeString('en-GB')}
+                        {entry.timestamp.toLocaleDateString('en-GB')} at{' '}
+                        {entry.timestamp.toLocaleTimeString('en-GB')}
                       </span>
                       <Badge variant="outline" className="text-xs">
                         Safety: {entry.result.compliance_summary.safety_rating}/10
@@ -1048,17 +1114,22 @@ ${analysisResult.recommendations.map(rec =>
             <CardHeader className="p-4 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
                 <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" />
-                <CardTitle className="text-lg sm:text-xl text-foreground">Common Analysis Types</CardTitle>
+                <CardTitle className="text-lg sm:text-xl text-foreground">
+                  Common Analysis Types
+                </CardTitle>
               </div>
               <CardDescription className="text-gray-300">
                 Upload images of these common electrical scenarios for analysis:
               </CardDescription>
             </CardHeader>
-            
+
             <CardContent className="p-4 sm:p-6 pt-0">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {exampleQueries.map((query, index) => (
-                  <div key={index} className="p-3 border border-border rounded-lg text-sm text-foreground hover:bg-muted/50 transition-colors">
+                  <div
+                    key={index}
+                    className="p-3 border border-border rounded-lg text-sm text-foreground hover:bg-muted/50 transition-colors"
+                  >
                     {query}
                   </div>
                 ))}

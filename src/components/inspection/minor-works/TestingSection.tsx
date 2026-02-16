@@ -2,7 +2,13 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { TestTube, AlertTriangle, CheckCircle, Settings, Calendar } from 'lucide-react';
@@ -18,7 +24,7 @@ const testLimits = {
   insulationResistance: {
     min: 1.0,
     unit: 'MΩ',
-    note: 'Minimum 1.0 MΩ for circuits up to 500V'
+    note: 'Minimum 1.0 MΩ for circuits up to 500V',
   },
   earthFaultLoop: {
     typical: {
@@ -29,20 +35,20 @@ const testLimits = {
       '25A': 1.75,
       '32A': 1.37,
       '40A': 1.09,
-      '50A': 0.87
+      '50A': 0.87,
     },
-    unit: 'Ω'
+    unit: 'Ω',
   },
   rcdTimes: {
     halfRated: { max: 300, unit: 'ms' },
     ratedCurrent: { max: 300, unit: 'ms' },
-    fiveTimesRated: { max: 40, unit: 'ms' }
+    fiveTimesRated: { max: 40, unit: 'ms' },
   },
   ringCircuit: {
     r1r2Max: 1.67,
     unit: 'Ω',
-    note: 'Typical maximum R1+R2 for 32A ring final circuit'
-  }
+    note: 'Typical maximum R1+R2 for 32A ring final circuit',
+  },
 };
 
 const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
@@ -54,8 +60,16 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
       case 'insulationResistance':
         return numValue >= testLimits.insulationResistance.min ? 'pass' : 'fail';
       case 'earthFaultLoop':
-        if (deviceRating && testLimits.earthFaultLoop.typical[deviceRating as keyof typeof testLimits.earthFaultLoop.typical]) {
-          const limit = testLimits.earthFaultLoop.typical[deviceRating as keyof typeof testLimits.earthFaultLoop.typical];
+        if (
+          deviceRating &&
+          testLimits.earthFaultLoop.typical[
+            deviceRating as keyof typeof testLimits.earthFaultLoop.typical
+          ]
+        ) {
+          const limit =
+            testLimits.earthFaultLoop.typical[
+              deviceRating as keyof typeof testLimits.earthFaultLoop.typical
+            ];
           return numValue <= limit ? 'pass' : 'fail';
         }
         return null;
@@ -77,7 +91,10 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
   const getValidationBadge = (result: string | null) => {
     if (!result) return null;
     return result === 'pass' ? (
-      <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+      <Badge
+        variant="secondary"
+        className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+      >
         <CheckCircle className="h-3 w-3 mr-1" />
         Pass
       </Badge>
@@ -103,10 +120,11 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
           <Alert>
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
-              BS 7671 requires all test instruments to be calibrated and suitable for the tests being performed.
+              BS 7671 requires all test instruments to be calibrated and suitable for the tests
+              being performed.
             </AlertDescription>
           </Alert>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
@@ -137,7 +155,7 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <Label htmlFor="insulationTester" className="text-sm font-medium">
@@ -193,13 +211,13 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 onChange={(e) => onUpdate('ambientTemp', e.target.value)}
               />
             </div>
-            
+
             <div>
               <Label htmlFor="isolationConfirmed" className="text-sm font-medium">
                 Safe Isolation Confirmed *
               </Label>
-              <Select 
-                value={formData.isolationConfirmed || ''} 
+              <Select
+                value={formData.isolationConfirmed || ''}
                 onValueChange={(value) => onUpdate('isolationConfirmed', value)}
               >
                 <SelectTrigger>
@@ -211,13 +229,13 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label htmlFor="testingLimitations" className="text-sm font-medium">
                 Testing Limitations
               </Label>
-              <Select 
-                value={formData.testingLimitations || ''} 
+              <Select
+                value={formData.testingLimitations || ''}
                 onValueChange={(value) => onUpdate('testingLimitations', value)}
               >
                 <SelectTrigger>
@@ -250,8 +268,8 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
               <Label htmlFor="circuitType" className="text-sm font-medium">
                 Circuit Type
               </Label>
-              <Select 
-                value={formData.circuitType || ''} 
+              <Select
+                value={formData.circuitType || ''}
                 onValueChange={(value) => onUpdate('circuitType', value)}
               >
                 <SelectTrigger>
@@ -274,8 +292,8 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
               <Label htmlFor="protectiveDeviceType" className="text-sm font-medium">
                 Protective Device Type
               </Label>
-              <Select 
-                value={formData.protectiveDeviceType || ''} 
+              <Select
+                value={formData.protectiveDeviceType || ''}
                 onValueChange={(value) => onUpdate('protectiveDeviceType', value)}
               >
                 <SelectTrigger>
@@ -291,13 +309,13 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label htmlFor="protectiveDeviceRating" className="text-sm font-medium">
                 Rating (A)
               </Label>
-              <Select 
-                value={formData.protectiveDeviceRating || ''} 
+              <Select
+                value={formData.protectiveDeviceRating || ''}
                 onValueChange={(value) => onUpdate('protectiveDeviceRating', value)}
               >
                 <SelectTrigger>
@@ -315,7 +333,7 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label htmlFor="cableSize" className="text-sm font-medium">
                 Cable Size (mm²)
@@ -333,13 +351,16 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
           <div className="border-t pt-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-400">Dead Tests (Safe Isolation Required)</h3>
+              <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-400">
+                Dead Tests (Safe Isolation Required)
+              </h3>
             </div>
-            
+
             {/* Continuity Tests - Full Width */}
             <div className="space-y-4 mb-6">
               <h4 className="font-semibold text-sm text-muted-foreground">Continuity Tests</h4>
-              {formData.circuitType === 'socket-ring' || (formData.cableSize === '2.5' && formData.protectiveDeviceRating === '32A') ? (
+              {formData.circuitType === 'socket-ring' ||
+              (formData.cableSize === '2.5' && formData.protectiveDeviceRating === '32A') ? (
                 // Ring Final Circuit Tests
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -347,7 +368,9 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                       <Label htmlFor="ringContinuityLive" className="text-sm font-medium">
                         Ring Continuity - Live (Ω) *
                       </Label>
-                      {getValidationBadge(validateTestResult('continuity', formData.ringContinuityLive || ''))}
+                      {getValidationBadge(
+                        validateTestResult('continuity', formData.ringContinuityLive || '')
+                      )}
                     </div>
                     <Input
                       id="ringContinuityLive"
@@ -358,13 +381,15 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                       onChange={(e) => onUpdate('ringContinuityLive', e.target.value)}
                     />
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <Label htmlFor="ringContinuityNeutral" className="text-sm font-medium">
                         Ring Continuity - Neutral (Ω) *
                       </Label>
-                      {getValidationBadge(validateTestResult('continuity', formData.ringContinuityNeutral || ''))}
+                      {getValidationBadge(
+                        validateTestResult('continuity', formData.ringContinuityNeutral || '')
+                      )}
                     </div>
                     <Input
                       id="ringContinuityNeutral"
@@ -375,7 +400,7 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                       onChange={(e) => onUpdate('ringContinuityNeutral', e.target.value)}
                     />
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <Label htmlFor="r1r2Result" className="text-sm font-medium">
@@ -395,13 +420,15 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                       Cross-connected L&N, measure at each socket outlet
                     </p>
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <Label htmlFor="finalRingContinuity" className="text-sm font-medium">
                         Final Ring Continuity Check (Ω) *
                       </Label>
-                      {getValidationBadge(validateTestResult('continuity', formData.finalRingContinuity || ''))}
+                      {getValidationBadge(
+                        validateTestResult('continuity', formData.finalRingContinuity || '')
+                      )}
                     </div>
                     <Input
                       id="finalRingContinuity"
@@ -424,7 +451,9 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                       <Label htmlFor="r1r2Continuity" className="text-sm font-medium">
                         (R1+R2) Continuity (Ω)
                       </Label>
-                      {getValidationBadge(validateTestResult('continuity', formData.r1r2Continuity || ''))}
+                      {getValidationBadge(
+                        validateTestResult('continuity', formData.r1r2Continuity || '')
+                      )}
                     </div>
                     <Input
                       id="r1r2Continuity"
@@ -444,7 +473,9 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                       <Label htmlFor="r2Continuity" className="text-sm font-medium">
                         <span className="font-semibold">or</span> R2 Continuity (Ω)
                       </Label>
-                      {getValidationBadge(validateTestResult('continuity', formData.r2Continuity || ''))}
+                      {getValidationBadge(
+                        validateTestResult('continuity', formData.r2Continuity || '')
+                      )}
                     </div>
                     <Input
                       id="r2Continuity"
@@ -462,10 +493,12 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 </div>
               )}
             </div>
-            
+
             {/* Insulation Resistance Tests - Full Width */}
             <div className="space-y-4 mb-6">
-              <h4 className="font-semibold text-sm text-muted-foreground">Insulation Resistance Tests</h4>
+              <h4 className="font-semibold text-sm text-muted-foreground">
+                Insulation Resistance Tests
+              </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <div>
                   <Label htmlFor="insulationTestVoltage" className="text-sm font-medium">
@@ -491,7 +524,9 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     <Label htmlFor="insulationLiveLive" className="text-sm font-medium">
                       Live-Live (MΩ)
                     </Label>
-                    {getValidationBadge(validateTestResult('insulationResistance', formData.insulationLiveLive || ''))}
+                    {getValidationBadge(
+                      validateTestResult('insulationResistance', formData.insulationLiveLive || '')
+                    )}
                   </div>
                   <Input
                     id="insulationLiveLive"
@@ -509,7 +544,12 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     <Label htmlFor="insulationLiveNeutral" className="text-sm font-medium">
                       Live-Neutral (MΩ) *
                     </Label>
-                    {getValidationBadge(validateTestResult('insulationResistance', formData.insulationLiveNeutral || ''))}
+                    {getValidationBadge(
+                      validateTestResult(
+                        'insulationResistance',
+                        formData.insulationLiveNeutral || ''
+                      )
+                    )}
                   </div>
                   <Input
                     id="insulationLiveNeutral"
@@ -527,7 +567,9 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     <Label htmlFor="insulationLiveEarth" className="text-sm font-medium">
                       Live-Earth (MΩ) *
                     </Label>
-                    {getValidationBadge(validateTestResult('insulationResistance', formData.insulationLiveEarth || ''))}
+                    {getValidationBadge(
+                      validateTestResult('insulationResistance', formData.insulationLiveEarth || '')
+                    )}
                   </div>
                   <Input
                     id="insulationLiveEarth"
@@ -545,7 +587,12 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     <Label htmlFor="insulationNeutralEarth" className="text-sm font-medium">
                       Neutral-Earth (MΩ) *
                     </Label>
-                    {getValidationBadge(validateTestResult('insulationResistance', formData.insulationNeutralEarth || ''))}
+                    {getValidationBadge(
+                      validateTestResult(
+                        'insulationResistance',
+                        formData.insulationNeutralEarth || ''
+                      )
+                    )}
                   </div>
                   <Input
                     id="insulationNeutralEarth"
@@ -564,7 +611,7 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 </AlertDescription>
               </Alert>
             </div>
-            
+
             {/* Polarity Check */}
             <div className="space-y-4">
               <h4 className="font-semibold text-sm text-muted-foreground">Polarity Verification</h4>
@@ -572,8 +619,8 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 <Label htmlFor="polarityResult" className="text-sm font-medium">
                   Polarity Check *
                 </Label>
-                <Select 
-                  value={formData.polarityResult || ''} 
+                <Select
+                  value={formData.polarityResult || ''}
                   onValueChange={(value) => onUpdate('polarityResult', value)}
                 >
                   <SelectTrigger>
@@ -593,16 +640,19 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
           <div className="border-t pt-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-              <h3 className="text-lg font-semibold text-orange-700 dark:text-orange-400">Live Tests (Circuit Must Be Energised)</h3>
+              <h3 className="text-lg font-semibold text-orange-700 dark:text-orange-400">
+                Live Tests (Circuit Must Be Energised)
+              </h3>
             </div>
-            
+
             <Alert className="mb-4 border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/20">
               <AlertTriangle className="h-4 w-4 text-orange-600" />
               <AlertDescription className="text-orange-700 dark:text-orange-300">
-                Ensure all dead tests are satisfactory before energising the circuit for live testing.
+                Ensure all dead tests are satisfactory before energising the circuit for live
+                testing.
               </AlertDescription>
             </Alert>
-            
+
             <div className="space-y-6">
               {/* Earth Fault Loop & PFC */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -611,7 +661,13 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     <Label htmlFor="earthFaultLoopResult" className="text-sm font-medium">
                       Earth Fault Loop Impedance Zs (Ω) *
                     </Label>
-                    {getValidationBadge(validateTestResult('earthFaultLoop', formData.earthFaultLoopResult || '', formData.protectiveDeviceRating))}
+                    {getValidationBadge(
+                      validateTestResult(
+                        'earthFaultLoop',
+                        formData.earthFaultLoopResult || '',
+                        formData.protectiveDeviceRating
+                      )
+                    )}
                   </div>
                   <Input
                     id="earthFaultLoopResult"
@@ -621,13 +677,22 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     value={formData.earthFaultLoopResult || ''}
                     onChange={(e) => onUpdate('earthFaultLoopResult', e.target.value)}
                   />
-                  {formData.protectiveDeviceRating && testLimits.earthFaultLoop.typical[formData.protectiveDeviceRating as keyof typeof testLimits.earthFaultLoop.typical] && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Maximum: {testLimits.earthFaultLoop.typical[formData.protectiveDeviceRating as keyof typeof testLimits.earthFaultLoop.typical]}Ω for {formData.protectiveDeviceRating} device
-                    </p>
-                  )}
+                  {formData.protectiveDeviceRating &&
+                    testLimits.earthFaultLoop.typical[
+                      formData.protectiveDeviceRating as keyof typeof testLimits.earthFaultLoop.typical
+                    ] && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Maximum:{' '}
+                        {
+                          testLimits.earthFaultLoop.typical[
+                            formData.protectiveDeviceRating as keyof typeof testLimits.earthFaultLoop.typical
+                          ]
+                        }
+                        Ω for {formData.protectiveDeviceRating} device
+                      </p>
+                    )}
                 </div>
-                
+
                 <div>
                   <Label htmlFor="prospectiveFault" className="text-sm font-medium">
                     Prospective Fault Current (kA)
@@ -642,23 +707,25 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                   />
                 </div>
               </div>
-              
+
               {/* RCD Testing (if applicable) */}
-              {(formData.protectiveDeviceType === 'rcbo' || 
-                formData.workType === 'rcd' || 
-                formData.circuitType === 'socket-ring' || 
-                formData.circuitType === 'socket-radial' || 
-                formData.circuitType === 'shower' || 
+              {(formData.protectiveDeviceType === 'rcbo' ||
+                formData.workType === 'rcd' ||
+                formData.circuitType === 'socket-ring' ||
+                formData.circuitType === 'socket-radial' ||
+                formData.circuitType === 'shower' ||
                 formData.circuitType === 'outdoor') && (
                 <div className="space-y-4 p-4 bg-blue-50/30 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                  <h4 className="font-semibold text-sm text-blue-700 dark:text-blue-400">RCD Operation Tests</h4>
+                  <h4 className="font-semibold text-sm text-blue-700 dark:text-blue-400">
+                    RCD Operation Tests
+                  </h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                       <Label htmlFor="rcdRating" className="text-sm font-medium">
                         RCD Rating (mA)
                       </Label>
-                      <Select 
-                        value={formData.rcdRating || ''} 
+                      <Select
+                        value={formData.rcdRating || ''}
                         onValueChange={(value) => onUpdate('rcdRating', value)}
                       >
                         <SelectTrigger>
@@ -671,13 +738,15 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <Label htmlFor="rcdTripTime" className="text-sm font-medium">
                           Trip Time at 1×In (ms)
                         </Label>
-                        {getValidationBadge(validateTestResult('rcdRated', formData.rcdTripTime || ''))}
+                        {getValidationBadge(
+                          validateTestResult('rcdRated', formData.rcdTripTime || '')
+                        )}
                       </div>
                       <Input
                         id="rcdTripTime"
@@ -687,13 +756,13 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                         onChange={(e) => onUpdate('rcdTripTime', e.target.value)}
                       />
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="rcdTestButton" className="text-sm font-medium">
                         Test Button Operation *
                       </Label>
-                      <Select 
-                        value={formData.rcdTestButton || ''} 
+                      <Select
+                        value={formData.rcdTestButton || ''}
                         onValueChange={(value) => onUpdate('rcdTestButton', value)}
                       >
                         <SelectTrigger>
@@ -708,16 +777,18 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                   </div>
                 </div>
               )}
-              
+
               {/* Functional Testing - At the bottom */}
               <div className="pt-4 border-t">
-                <h4 className="font-semibold text-sm text-muted-foreground mb-3">Functional Testing</h4>
+                <h4 className="font-semibold text-sm text-muted-foreground mb-3">
+                  Functional Testing
+                </h4>
                 <div className="max-w-xs">
                   <Label htmlFor="functionalTesting" className="text-sm font-medium">
                     Functional Testing *
                   </Label>
-                  <Select 
-                    value={formData.functionalTesting || ''} 
+                  <Select
+                    value={formData.functionalTesting || ''}
                     onValueChange={(value) => onUpdate('functionalTesting', value)}
                   >
                     <SelectTrigger>
@@ -740,10 +811,7 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
       </Card>
 
       {/* Test Method Information */}
-      <TestMethodInfo 
-        formData={formData} 
-        onUpdate={onUpdate} 
-      />
+      <TestMethodInfo formData={formData} onUpdate={onUpdate} />
     </div>
   );
 };

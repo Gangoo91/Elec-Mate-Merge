@@ -1,5 +1,5 @@
-import { Settings } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Settings } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 
 interface InstrumentSetupPanelProps {
   instrumentSetup: string;
@@ -12,7 +12,7 @@ export const InstrumentSetupPanel = ({ instrumentSetup }: InstrumentSetupPanelPr
   }
 
   // Try to parse structured setup instructions
-  const lines = instrumentSetup.split('\n').filter(line => line.trim());
+  const lines = instrumentSetup.split('\n').filter((line) => line.trim());
   const hasMultipleSteps = lines.length > 1;
 
   return (
@@ -28,7 +28,7 @@ export const InstrumentSetupPanel = ({ instrumentSetup }: InstrumentSetupPanelPr
             {lines.map((line, idx) => {
               // Remove existing numbering if present
               const cleanLine = line.replace(/^\d+\.\s*/, '').trim();
-              
+
               return (
                 <li key={idx} className="flex items-start gap-3">
                   <span className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold">

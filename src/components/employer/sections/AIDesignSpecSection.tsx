@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { JobPackSelector } from "@/components/employer/smart-docs/JobPackSelector";
-import { useJobPacks } from "@/hooks/useJobPacks";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import type { Section } from "@/pages/employer/EmployerDashboard";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
+import { useJobPacks } from '@/hooks/useJobPacks';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   Sparkles,
   Loader2,
@@ -21,8 +21,8 @@ import {
   FileText,
   RefreshCw,
   Zap,
-  Settings
-} from "lucide-react";
+  Settings,
+} from 'lucide-react';
 
 interface AIDesignSpecSectionProps {
   onNavigate: (section: Section) => void;
@@ -33,29 +33,29 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
   const { toast } = useToast();
 
   const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
-  const [designQuery, setDesignQuery] = useState("");
-  const [propertyType, setPropertyType] = useState("domestic");
+  const [designQuery, setDesignQuery] = useState('');
+  const [propertyType, setPropertyType] = useState('domestic');
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [currentStep, setCurrentStep] = useState("");
+  const [currentStep, setCurrentStep] = useState('');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const selectedJobPack = jobPacks.find(jp => jp.id === selectedJobPackId);
+  const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
   const handleGenerate = async () => {
     if (!designQuery.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please describe what you need to design.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please describe what you need to design.',
+        variant: 'destructive',
       });
       return;
     }
 
     setIsGenerating(true);
     setProgress(0);
-    setCurrentStep("Creating design job...");
+    setCurrentStep('Creating design job...');
     setError(null);
     setResult(null);
 
@@ -67,13 +67,13 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
           query: designQuery,
           property_type: propertyType,
           status: 'pending',
-          progress: 0
+          progress: 0,
         })
         .select()
         .single();
 
       if (createError || !job) {
-        throw new Error(createError?.message || "Failed to create design job");
+        throw new Error(createError?.message || 'Failed to create design job');
       }
 
       // Subscribe to updates
@@ -85,29 +85,29 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
             event: 'UPDATE',
             schema: 'public',
             table: 'circuit_design_jobs',
-            filter: `id=eq.${job.id}`
+            filter: `id=eq.${job.id}`,
           },
           (payload) => {
             const jobData = payload.new as any;
             setProgress(jobData.progress || 0);
-            setCurrentStep(jobData.current_step || "");
+            setCurrentStep(jobData.current_step || '');
 
             if (jobData.status === 'complete') {
               setIsGenerating(false);
               setResult(jobData.result);
               supabase.removeChannel(channel);
               toast({
-                title: "Design Spec Generated!",
-                description: "Your circuit design has been created successfully.",
+                title: 'Design Spec Generated!',
+                description: 'Your circuit design has been created successfully.',
               });
             } else if (jobData.status === 'failed') {
               setIsGenerating(false);
-              setError(jobData.error_message || "Design generation failed");
+              setError(jobData.error_message || 'Design generation failed');
               supabase.removeChannel(channel);
               toast({
-                title: "Generation Failed",
-                description: jobData.error_message || "Something went wrong.",
-                variant: "destructive"
+                title: 'Generation Failed',
+                description: jobData.error_message || 'Something went wrong.',
+                variant: 'destructive',
               });
             }
           }
@@ -116,21 +116,20 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
 
       // Trigger the edge function
       const { error: invokeError } = await supabase.functions.invoke('create-circuit-design-job', {
-        body: { jobId: job.id }
+        body: { jobId: job.id },
       });
 
       if (invokeError) {
         supabase.removeChannel(channel);
         throw invokeError;
       }
-
     } catch (err: any) {
       setIsGenerating(false);
       setError(err.message);
       toast({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
@@ -151,7 +150,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
     setResult(null);
     setError(null);
     setProgress(0);
-    setCurrentStep("");
+    setCurrentStep('');
   };
 
   return (
@@ -170,15 +169,13 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                 <FileText className="h-4 w-4 text-elec-yellow" />
                 Link to Job Pack (Optional)
               </CardTitle>
-              <CardDescription>
-                Attach the design to a job pack for documentation
-              </CardDescription>
+              <CardDescription>Attach the design to a job pack for documentation</CardDescription>
             </CardHeader>
             <CardContent>
               <JobPackSelector
                 selectedJobPackId={selectedJobPackId}
                 onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate("jobpacks")}
+                onCreateNew={() => onNavigate('jobpacks')}
                 showStatus={false}
               />
             </CardContent>
@@ -198,10 +195,10 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                   {['domestic', 'commercial', 'industrial'].map((type) => (
                     <Button
                       key={type}
-                      variant={propertyType === type ? "default" : "outline"}
+                      variant={propertyType === type ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setPropertyType(type)}
-                      className={propertyType === type ? "bg-elec-yellow text-black" : ""}
+                      className={propertyType === type ? 'bg-elec-yellow text-black' : ''}
                       disabled={isGenerating}
                     >
                       {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -322,7 +319,11 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                       <Download className="h-4 w-4 mr-2" />
                       Download
                     </Button>
-                    <Button variant="outline" onClick={handleReset} className="border-elec-yellow/30">
+                    <Button
+                      variant="outline"
+                      onClick={handleReset}
+                      className="border-elec-yellow/30"
+                    >
                       <RefreshCw className="h-4 w-4 mr-2" />
                       New
                     </Button>
@@ -342,7 +343,8 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                   <div>
                     <h3 className="font-medium text-foreground mb-1">AI Circuit Designer</h3>
                     <p className="text-sm text-muted-foreground">
-                      Get BS 7671 compliant circuit designs with cable sizing, protective devices, and installation guidance.
+                      Get BS 7671 compliant circuit designs with cable sizing, protective devices,
+                      and installation guidance.
                     </p>
                     <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
                       <li>• Circuit schedules and specifications</li>

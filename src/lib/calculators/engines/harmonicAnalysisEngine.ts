@@ -6,7 +6,14 @@ export interface HarmonicLoad {
   name: string;
   power: number; // kW
   current: number; // A
-  loadType: 'led' | 'fluorescent-electronic' | 'fluorescent-magnetic' | 'computer' | 'ups' | 'variable-speed-drive' | 'switch-mode-psu';
+  loadType:
+    | 'led'
+    | 'fluorescent-electronic'
+    | 'fluorescent-magnetic'
+    | 'computer'
+    | 'ups'
+    | 'variable-speed-drive'
+    | 'switch-mode-psu';
   quantity: number;
   powerFactor: number;
 }
@@ -42,33 +49,94 @@ export interface HarmonicResult {
 // Typical harmonic spectra for different load types (% of fundamental)
 const harmonicProfiles = {
   led: {
-    3: 15, 5: 8, 7: 5, 9: 12, 11: 3, 13: 2, 15: 8, 17: 1, 19: 1, 21: 4
+    3: 15,
+    5: 8,
+    7: 5,
+    9: 12,
+    11: 3,
+    13: 2,
+    15: 8,
+    17: 1,
+    19: 1,
+    21: 4,
   },
   'fluorescent-electronic': {
-    3: 25, 5: 12, 7: 8, 9: 18, 11: 5, 13: 3, 15: 12, 17: 2, 19: 2, 21: 6
+    3: 25,
+    5: 12,
+    7: 8,
+    9: 18,
+    11: 5,
+    13: 3,
+    15: 12,
+    17: 2,
+    19: 2,
+    21: 6,
   },
   'fluorescent-magnetic': {
-    3: 5, 5: 3, 7: 2, 9: 2, 11: 1, 13: 1, 15: 1, 17: 0.5, 19: 0.5, 21: 0.5
+    3: 5,
+    5: 3,
+    7: 2,
+    9: 2,
+    11: 1,
+    13: 1,
+    15: 1,
+    17: 0.5,
+    19: 0.5,
+    21: 0.5,
   },
   computer: {
-    3: 30, 5: 15, 7: 10, 9: 20, 11: 8, 13: 5, 15: 15, 17: 3, 19: 3, 21: 8
+    3: 30,
+    5: 15,
+    7: 10,
+    9: 20,
+    11: 8,
+    13: 5,
+    15: 15,
+    17: 3,
+    19: 3,
+    21: 8,
   },
   ups: {
-    3: 35, 5: 20, 7: 15, 9: 25, 11: 10, 13: 8, 15: 20, 17: 5, 19: 5, 21: 12
+    3: 35,
+    5: 20,
+    7: 15,
+    9: 25,
+    11: 10,
+    13: 8,
+    15: 20,
+    17: 5,
+    19: 5,
+    21: 12,
   },
   'variable-speed-drive': {
-    5: 25, 7: 15, 11: 10, 13: 8, 17: 5, 19: 3, 23: 2, 25: 2
+    5: 25,
+    7: 15,
+    11: 10,
+    13: 8,
+    17: 5,
+    19: 3,
+    23: 2,
+    25: 2,
   },
   'switch-mode-psu': {
-    3: 28, 5: 14, 7: 9, 9: 22, 11: 6, 13: 4, 15: 16, 17: 3, 19: 3, 21: 9
-  }
+    3: 28,
+    5: 14,
+    7: 9,
+    9: 22,
+    11: 6,
+    13: 4,
+    15: 16,
+    17: 3,
+    19: 3,
+    21: 9,
+  },
 };
 
 // G5/5 limits (part of BS 7671)
 const g595Limits = {
   voltage: {
     individual: 3.0, // % for individual harmonics
-    total: 5.0 // % THD
+    total: 5.0, // % THD
   },
   current: {
     3: 16.0, // % of fundamental
@@ -80,8 +148,8 @@ const g595Limits = {
     15: 0.3,
     17: 2.0,
     19: 1.5,
-    21: 0.2
-  }
+    21: 0.2,
+  },
 };
 
 export const analyseHarmonics = (loads: HarmonicLoad[], voltage: number = 230): HarmonicResult => {
@@ -95,22 +163,23 @@ export const analyseHarmonics = (loads: HarmonicLoad[], voltage: number = 230): 
   const recommendations: string[] = [];
 
   // Calculate total load
-  const totalLoad = loads.reduce((sum, load) => sum + (load.power * load.quantity), 0);
-  const totalCurrent = loads.reduce((sum, load) => sum + (load.current * load.quantity), 0);
+  const totalLoad = loads.reduce((sum, load) => sum + load.power * load.quantity, 0);
+  const totalCurrent = loads.reduce((sum, load) => sum + load.current * load.quantity, 0);
 
   // Calculate harmonic spectrum
   const harmonicSpectrum: HarmonicResult['harmonicSpectrum'] = [];
   const harmonicCurrents: { [harmonic: number]: number } = {};
 
   // Sum harmonics from all loads
-  for (let harmonic = 3; harmonic <= 21; harmonic += 2) { // Odd harmonics only for single phase
+  for (let harmonic = 3; harmonic <= 21; harmonic += 2) {
+    // Odd harmonics only for single phase
     let totalHarmonicCurrent = 0;
 
-    loads.forEach(load => {
+    loads.forEach((load) => {
       const profile = harmonicProfiles[load.loadType] || {};
       const harmonicPercentage = profile[harmonic] || 0;
       const loadHarmonicCurrent = (load.current * load.quantity * harmonicPercentage) / 100;
-      
+
       // Vector addition for same frequency harmonics
       totalHarmonicCurrent += loadHarmonicCurrent;
     });
@@ -120,7 +189,7 @@ export const analyseHarmonics = (loads: HarmonicLoad[], voltage: number = 230): 
     // Determine significance
     let significance: 'low' | 'moderate' | 'high' | 'critical';
     const percentage = (totalHarmonicCurrent / totalCurrent) * 100;
-    
+
     if (percentage < 2) significance = 'low';
     else if (percentage < 5) significance = 'moderate';
     else if (percentage < 10) significance = 'high';
@@ -130,14 +199,17 @@ export const analyseHarmonics = (loads: HarmonicLoad[], voltage: number = 230): 
       harmonic,
       percentage,
       current: Math.round(totalHarmonicCurrent * 10) / 10,
-      significance
+      significance,
     });
   }
 
   // Calculate THD
-  const harmonicSquareSum = Object.values(harmonicCurrents).reduce((sum, current) => sum + Math.pow(current, 2), 0);
-  const currentTHD = Math.sqrt(harmonicSquareSum) / totalCurrent * 100;
-  
+  const harmonicSquareSum = Object.values(harmonicCurrents).reduce(
+    (sum, current) => sum + Math.pow(current, 2),
+    0
+  );
+  const currentTHD = (Math.sqrt(harmonicSquareSum) / totalCurrent) * 100;
+
   // Estimate voltage THD (simplified - assumes source impedance)
   const voltageTHD = currentTHD * 0.3; // Rough approximation
 
@@ -150,10 +222,10 @@ export const analyseHarmonics = (loads: HarmonicLoad[], voltage: number = 230): 
   // Cable rating calculations
   const lineDerating = Math.max(1.0, 1 + (currentTHD / 100) * 0.86); // Simplified derating
   const neutralDerating = Math.max(1.0, neutralCurrent / totalCurrent);
-  
+
   const recommendedLineRating = totalCurrent * lineDerating;
   const recommendedNeutralRating = Math.max(totalCurrent, neutralCurrent * 1.73); // √3 factor
-  
+
   const recommendedUpsize = lineDerating > 1.1 || neutralDerating > 1.1;
 
   // Compliance checks
@@ -182,10 +254,10 @@ export const analyseHarmonics = (loads: HarmonicLoad[], voltage: number = 230): 
   }
 
   // Add specific load recommendations
-  const highHarmonicLoads = loads.filter(load => 
+  const highHarmonicLoads = loads.filter((load) =>
     ['led', 'computer', 'ups'].includes(load.loadType)
   );
-  
+
   if (highHarmonicLoads.length > 0) {
     recommendations.push('Consider grouping high-harmonic loads on dedicated circuits');
     recommendations.push('Install line reactors or harmonic filters for VSD/UPS loads');
@@ -197,25 +269,29 @@ export const analyseHarmonics = (loads: HarmonicLoad[], voltage: number = 230): 
     harmonicSpectrum,
     thd: {
       voltage: Math.round(voltageTHD * 10) / 10,
-      current: Math.round(currentTHD * 10) / 10
+      current: Math.round(currentTHD * 10) / 10,
     },
     neutralCurrent: Math.round(neutralCurrent * 10) / 10,
     cableRating: {
       lineCondutors: Math.round(recommendedLineRating),
       neutralConductor: Math.round(recommendedNeutralRating),
-      recommendedUpsize
+      recommendedUpsize,
     },
     compliance: {
       g595: g595Compliance ? 'pass' : 'fail',
       bs7671: bs7671Compliance ? 'pass' : 'fail',
-      ieee519: ieee519Compliance ? 'pass' : 'fail'
+      ieee519: ieee519Compliance ? 'pass' : 'fail',
     },
     recommendations,
-    warnings
+    warnings,
   };
 };
 
-const checkG595Compliance = (spectrum: HarmonicResult['harmonicSpectrum'], currentTHD: number, voltageTHD: number): boolean => {
+const checkG595Compliance = (
+  spectrum: HarmonicResult['harmonicSpectrum'],
+  currentTHD: number,
+  voltageTHD: number
+): boolean => {
   // Check voltage limits
   if (voltageTHD > g595Limits.voltage.total) return false;
 
@@ -228,10 +304,13 @@ const checkG595Compliance = (spectrum: HarmonicResult['harmonicSpectrum'], curre
   return true;
 };
 
-const checkIEEE519Compliance = (spectrum: HarmonicResult['harmonicSpectrum'], currentTHD: number): boolean => {
+const checkIEEE519Compliance = (
+  spectrum: HarmonicResult['harmonicSpectrum'],
+  currentTHD: number
+): boolean => {
   // Simplified IEEE 519 check (assumes <120kV system)
   const ieee519Limits = { 3: 4.0, 5: 4.0, 7: 4.0, 11: 2.0, 13: 2.0, 17: 1.5, 19: 1.5 };
-  
+
   for (const harmonic of spectrum) {
     const limit = ieee519Limits[harmonic.harmonic as keyof typeof ieee519Limits];
     if (limit && harmonic.percentage > limit) return false;
@@ -247,14 +326,19 @@ export const assessLEDLighting = (
   powerFactor: number = 0.9
 ): HarmonicResult => {
   const current = (totalLEDPower * 1000) / (circuitVoltage * powerFactor);
-  
-  return analyseHarmonics([{
-    id: 'led-lighting',
-    name: 'LED Lighting',
-    power: totalLEDPower,
-    current,
-    loadType: 'led',
-    quantity: 1,
-    powerFactor
-  }], circuitVoltage);
+
+  return analyseHarmonics(
+    [
+      {
+        id: 'led-lighting',
+        name: 'LED Lighting',
+        power: totalLEDPower,
+        current,
+        loadType: 'led',
+        quantity: 1,
+        powerFactor,
+      },
+    ],
+    circuitVoltage
+  );
 };

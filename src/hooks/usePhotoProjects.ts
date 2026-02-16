@@ -140,12 +140,28 @@ export function usePhotoProjects(statusFilter?: string) {
         if (!projects || projects.length === 0) return [];
 
         // Fetch photo counts and thumbnails for each project
+        // Include both UUID-linked photos AND legacy project_reference matches
         const projectIds = projects.map((p) => p.id);
-        const { data: photoData } = await supabase
-          .from("safety_photos")
-          .select("project_id, photo_type, file_url")
-          .in("project_id", projectIds)
-          .order("created_at", { ascending: false });
+        const projectNames = projects.map((p) => p.name);
+
+        const [{ data: linkedPhotos }, { data: legacyPhotos }] =
+          await Promise.all([
+            supabase
+              .from("safety_photos")
+              .select("project_id, project_reference, photo_type, file_url")
+              .in("project_id", projectIds)
+              .order("created_at", { ascending: false }),
+            supabase
+              .from("safety_photos")
+              .select("project_id, project_reference, photo_type, file_url")
+              .is("project_id", null)
+              .in("project_reference", projectNames)
+              .order("created_at", { ascending: false }),
+          ]);
+        const photoData = [
+          ...(linkedPhotos || []),
+          ...(legacyPhotos || []),
+        ];
 
         // Fetch customer names for projects that have customer_id
         const customerIds = projects
@@ -175,7 +191,9 @@ export function usePhotoProjects(statusFilter?: string) {
         // Build enriched projects
         return projects.map((project) => {
           const projectPhotos = (photoData || []).filter(
-            (p) => p.project_id === project.id,
+            (p) =>
+              p.project_id === project.id ||
+              (!p.project_id && p.project_reference === project.name),
           );
           const typeCounts: Record<string, number> = {};
           projectPhotos.forEach((p) => {
@@ -197,7 +215,8 @@ export function usePhotoProjects(statusFilter?: string) {
             customer_phone: customer?.phone || null,
           } as PhotoProject;
         });
-      } catch {
+      } catch (err) {
+        console.error("[usePhotoProjects] Query failed:", err);
         return [];
       }
     },
@@ -218,11 +237,22 @@ export function usePhotoProjects(statusFilter?: string) {
 
     if (projError || !project) return null;
 
-    const { data: photos } = await supabase
-      .from("safety_photos")
-      .select("*")
-      .eq("project_id", projectId)
-      .order("created_at", { ascending: false });
+    // Fetch photos linked by project_id OR by legacy project_reference matching name
+    const [{ data: linkedPhotos }, { data: legacyPhotos }] =
+      await Promise.all([
+        supabase
+          .from("safety_photos")
+          .select("*")
+          .eq("project_id", projectId)
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("safety_photos")
+          .select("*")
+          .is("project_id", null)
+          .eq("project_reference", project.name)
+          .order("created_at", { ascending: false }),
+      ]);
+    const photos = [...(linkedPhotos || []), ...(legacyPhotos || [])];
 
     // Get customer info
     let customer = null;

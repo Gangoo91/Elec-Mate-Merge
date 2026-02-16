@@ -1,11 +1,10 @@
-
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, MapPin, Calendar } from "lucide-react";
-import { CVData } from "./types";
-import { format } from "date-fns";
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Mail, Phone, MapPin, Calendar } from 'lucide-react';
+import { CVData } from './types';
+import { format } from 'date-fns';
 
 interface CVPreviewProps {
   cvData: CVData;
@@ -14,7 +13,7 @@ interface CVPreviewProps {
 export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
-    
+
     // Handle YYYY-MM format from month input
     if (dateString.match(/^\d{4}-\d{2}$/)) {
       try {
@@ -25,7 +24,7 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
         return dateString;
       }
     }
-    
+
     // Handle other date formats
     try {
       const date = new Date(dateString);
@@ -44,7 +43,7 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-gray-900">
-            {cvData.personalInfo.fullName || "Your Name"}
+            {cvData.personalInfo.fullName || 'Your Name'}
           </h1>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
             {cvData.personalInfo.email && (
@@ -98,14 +97,17 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
                     <div className="text-right text-sm text-gray-600">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
-                        {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}
+                        {formatDate(exp.startDate)} -{' '}
+                        {exp.current ? 'Present' : formatDate(exp.endDate)}
                       </div>
                     </div>
                   </div>
                   {exp.description && (
                     <div className="text-gray-700 text-sm leading-relaxed pl-4 border-l-2 border-gray-200">
                       {exp.description.split('\n').map((line, index) => (
-                        <p key={index} className="mb-1">{line}</p>
+                        <p key={index} className="mb-1">
+                          {line}
+                        </p>
                       ))}
                     </div>
                   )}
@@ -129,14 +131,13 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
                       <h3 className="font-semibold text-lg text-gray-900">{edu.qualification}</h3>
                       <p className="text-gray-700 font-medium">{edu.institution}</p>
                       {edu.location && <p className="text-gray-600 text-sm">{edu.location}</p>}
-                      {edu.grade && (
-                        <p className="text-gray-600 text-sm">Grade: {edu.grade}</p>
-                      )}
+                      {edu.grade && <p className="text-gray-600 text-sm">Grade: {edu.grade}</p>}
                     </div>
                     <div className="text-right text-sm text-gray-600">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
-                        {formatDate(edu.startDate)} - {edu.current ? 'Present' : formatDate(edu.endDate)}
+                        {formatDate(edu.startDate)} -{' '}
+                        {edu.current ? 'Present' : formatDate(edu.endDate)}
                       </div>
                     </div>
                   </div>

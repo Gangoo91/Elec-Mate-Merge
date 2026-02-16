@@ -58,6 +58,9 @@ import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { toast } from 'sonner';
+import { formatDistanceToNow } from 'date-fns';
+import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
+import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { KSBCoverageMap } from './KSBCoverageMap';
 import { EPAGatewayStatus } from './EPAGatewayStatus';
 import { DirectMessaging } from './DirectMessaging';
@@ -66,9 +69,10 @@ import { useDirectMessages } from '@/hooks/portfolio/useDirectMessages';
 export function ProfileSection() {
   const navigate = useNavigate();
   const { user, profile, signOut } = useAuth();
-  const { actionRequiredCount, unreadCount } = usePortfolioComments();
+  const { comments, threads, actionRequiredCount, unreadCount } = usePortfolioComments();
   const { unreadCount: messageUnreadCount, connections } = useDirectMessages();
   const { userSelection } = useQualifications();
+  const { tree: acTree } = useQualificationACs();
   const { entries: portfolioEntries } = usePortfolioData();
   const { entries: timeEntries, totalTime } = useTimeEntries();
   const {
@@ -99,7 +103,11 @@ export function ProfileSection() {
   const [isDownloadingAll, setIsDownloadingAll] = useState(false);
 
   // Get user info
-  const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
+  const rawName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
+  const fullName = rawName
+    .split(' ')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
   const nameParts = fullName.split(' ');
   const firstName = nameParts[0];
   const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
@@ -156,7 +164,9 @@ export function ProfileSection() {
       doc.setTextColor(100);
       doc.text(`${fullName}`, pageWidth / 2, 30, { align: 'center' });
       doc.text(`${qualification}`, pageWidth / 2, 36, { align: 'center' });
-      doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, pageWidth / 2, 42, { align: 'center' });
+      doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, pageWidth / 2, 42, {
+        align: 'center',
+      });
 
       // OJT Hours Summary
       doc.setFontSize(14);
@@ -167,10 +177,27 @@ export function ProfileSection() {
       doc.text(`Total Hours: ${totalTime.hours}h ${totalTime.minutes}m`, 14, 62);
       doc.text(`Sessions Logged: ${timeEntries.length}`, 14, 68);
 
+      // Assessment Criteria Coverage
+      const evidencedACs = parseEvidencedACs(portfolioEntries);
+      const totalACs = acTree?.totalACs || 0;
+      const evidencedCount = evidencedACs.size;
+      const acPercent = totalACs > 0 ? Math.round((evidencedCount / totalACs) * 100) : 0;
+
+      doc.setFontSize(14);
+      doc.setTextColor(40);
+      doc.text('Assessment Criteria Coverage', 14, 78);
+      doc.setFontSize(11);
+      doc.setTextColor(80);
+      doc.text(
+        `${evidencedCount} of ${totalACs} assessment criteria evidenced (${acPercent}%)`,
+        14,
+        85
+      );
+
       // Evidence Table
       doc.setFontSize(14);
       doc.setTextColor(40);
-      doc.text('Portfolio Evidence', 14, 82);
+      doc.text('Portfolio Evidence', 14, 98);
 
       if (portfolioEntries.length > 0) {
         const tableData = portfolioEntries.map((entry: any) => [
@@ -182,7 +209,7 @@ export function ProfileSection() {
         ]);
 
         (doc as any).autoTable({
-          startY: 88,
+          startY: 104,
           head: [['Title', 'Category', 'Status', 'Date', 'KSBs']],
           body: tableData,
           theme: 'striped',
@@ -192,11 +219,13 @@ export function ProfileSection() {
       } else {
         doc.setFontSize(10);
         doc.setTextColor(100);
-        doc.text('No evidence entries found.', 14, 90);
+        doc.text('No evidence entries found.', 14, 106);
       }
 
       // Save PDF
-      doc.save(`${fullName.replace(/\s+/g, '_')}_Portfolio_${new Date().toISOString().split('T')[0]}.pdf`);
+      doc.save(
+        `${fullName.replace(/\s+/g, '_')}_Portfolio_${new Date().toISOString().split('T')[0]}.pdf`
+      );
 
       toast.success('PDF exported successfully!', {
         description: 'Your portfolio has been downloaded.',
@@ -312,7 +341,7 @@ export function ProfileSection() {
             </Avatar>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-bold text-foreground">{fullName}</h2>
-              <p className="text-sm text-white/80">Apprentice Electrician</p>
+              <p className="text-sm text-white">Apprentice Electrician</p>
               <div className="flex items-center gap-2 mt-2">
                 <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
                   <GraduationCap className="h-3 w-3 mr-1" />
@@ -353,7 +382,7 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Actions Required</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 {actionRequiredCount > 0
                   ? `${actionRequiredCount} item${actionRequiredCount !== 1 ? 's' : ''} need attention`
                   : 'All caught up!'}
@@ -364,7 +393,7 @@ export function ProfileSection() {
                 {actionRequiredCount}
               </Badge>
             )}
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
 
           {/* Unread Messages */}
@@ -377,16 +406,14 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Unread Messages</p>
-              <p className="text-xs text-white/80">
-                {unreadCount > 0 ? `${unreadCount} new comment${unreadCount !== 1 ? 's' : ''}` : 'No new messages'}
+              <p className="text-xs text-white">
+                {unreadCount > 0
+                  ? `${unreadCount} new comment${unreadCount !== 1 ? 's' : ''}`
+                  : 'No new messages'}
               </p>
             </div>
-            {unreadCount > 0 && (
-              <Badge className="text-xs bg-blue-500">
-                {unreadCount}
-              </Badge>
-            )}
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            {unreadCount > 0 && <Badge className="text-xs bg-blue-500">{unreadCount}</Badge>}
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
 
           {/* Message Tutor */}
@@ -399,18 +426,16 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Message Tutor</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 {connections.length > 0
                   ? `${connections.length} conversation${connections.length !== 1 ? 's' : ''}`
                   : 'Send a message to your tutor'}
               </p>
             </div>
             {messageUnreadCount > 0 && (
-              <Badge className="bg-purple-500 text-white text-xs">
-                {messageUnreadCount}
-              </Badge>
+              <Badge className="bg-purple-500 text-white text-xs">{messageUnreadCount}</Badge>
             )}
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
         </CardContent>
       </Card>
@@ -433,9 +458,11 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">KSB Coverage Map</p>
-              <p className="text-xs text-white/80">View your knowledge, skills & behaviours progress</p>
+              <p className="text-xs text-white">
+                View your knowledge, skills & behaviours progress
+              </p>
             </div>
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
 
           <button
@@ -447,9 +474,9 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">EPA Gateway Status</p>
-              <p className="text-xs text-white/80">Check your end-point assessment readiness</p>
+              <p className="text-xs text-white">Check your end-point assessment readiness</p>
             </div>
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
         </CardContent>
       </Card>
@@ -472,8 +499,10 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Share Portfolio Link</p>
-              <p className="text-xs text-white/80">
-                {shares.length > 0 ? `${shares.length} active link${shares.length !== 1 ? 's' : ''}` : 'Generate a link to share with tutors'}
+              <p className="text-xs text-white">
+                {shares.length > 0
+                  ? `${shares.length} active link${shares.length !== 1 ? 's' : ''}`
+                  : 'Generate a link to share with tutors'}
               </p>
             </div>
             {shares.length > 0 && (
@@ -481,7 +510,7 @@ export function ProfileSection() {
                 {shares.length}
               </Badge>
             )}
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
 
           <button
@@ -498,11 +527,11 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Export to PDF</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 {isExportingPDF ? 'Generating PDF...' : 'Download your portfolio as a PDF'}
               </p>
             </div>
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
 
           <button
@@ -512,18 +541,18 @@ export function ProfileSection() {
           >
             <div className="p-2 rounded-lg bg-muted">
               {isDownloadingAll ? (
-                <Loader2 className="h-4 w-4 text-white/80 animate-spin" />
+                <Loader2 className="h-4 w-4 text-white animate-spin" />
               ) : (
-                <Download className="h-4 w-4 text-white/80" />
+                <Download className="h-4 w-4 text-white" />
               )}
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Download All Evidence</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 {isDownloadingAll ? 'Creating zip file...' : 'Get a zip of all your files'}
               </p>
             </div>
-            <ChevronRight className="h-4 w-4 text-white/80" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </button>
         </CardContent>
       </Card>
@@ -536,10 +565,10 @@ export function ProfileSection() {
             className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-muted">
-              <Settings className="h-4 w-4 text-white/80" />
+              <Settings className="h-4 w-4 text-white" />
             </div>
             <span className="text-sm font-medium text-foreground">Settings</span>
-            <ChevronRight className="h-4 w-4 text-white/80 ml-auto" />
+            <ChevronRight className="h-4 w-4 text-white ml-auto" />
           </button>
 
           <div className="border-t border-border" />
@@ -574,7 +603,7 @@ export function ProfileSection() {
 
               {/* Expiry Selection */}
               <div className="space-y-2">
-                <label className="text-xs text-white/80">Link expires after</label>
+                <label className="text-xs text-white">Link expires after</label>
                 <Select value={shareExpiry} onValueChange={(v) => setShareExpiry(v as any)}>
                   <SelectTrigger className="h-11">
                     <SelectValue />
@@ -622,12 +651,23 @@ export function ProfileSection() {
                         <p className="text-sm font-medium truncate">
                           {share.title || 'Portfolio Link'}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-white/80">
+                        <div className="flex items-center gap-2 text-xs text-white flex-wrap">
                           <Clock className="h-3 w-3" />
                           <span>{formatExpiry(share.expires_at)}</span>
                           <span className="text-border">•</span>
                           <Eye className="h-3 w-3" />
                           <span>{share.view_count} views</span>
+                          {(share as any).last_viewed_at && (
+                            <>
+                              <span className="text-border">•</span>
+                              <span>
+                                Last viewed{' '}
+                                {formatDistanceToNow(new Date((share as any).last_viewed_at), {
+                                  addSuffix: true,
+                                })}
+                              </span>
+                            </>
+                          )}
                         </div>
                       </div>
                       <Button
@@ -641,7 +681,7 @@ export function ProfileSection() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 p-2 rounded-lg bg-background text-xs text-white/80 truncate">
+                      <div className="flex-1 p-2 rounded-lg bg-background text-xs text-white truncate">
                         {getShareUrl(share.token)}
                       </div>
                       <Button
@@ -663,9 +703,9 @@ export function ProfileSection() {
             )}
 
             {/* Info */}
-            <p className="text-xs text-white/80 text-center">
-              Anyone with a link can view your portfolio (read-only).
-              Tutors can leave comments if they sign in.
+            <p className="text-xs text-white text-center">
+              Anyone with a link can view your portfolio (read-only). Tutors can leave comments if
+              they sign in.
             </p>
           </div>
         </SheetContent>
@@ -677,19 +717,70 @@ export function ProfileSection() {
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
           <SheetHeader>
             <SheetTitle>Messages & Actions</SheetTitle>
-            <SheetDescription>
-              Review comments and actions from your tutor
-            </SheetDescription>
+            <SheetDescription>Review comments and actions from your tutor</SheetDescription>
           </SheetHeader>
 
-          <div className="mt-6 flex flex-col items-center justify-center py-12 text-center">
-            <div className="p-4 rounded-full bg-muted mb-4">
-              <MessageSquare className="h-8 w-8 text-white/80" />
-            </div>
-            <p className="text-sm font-medium text-foreground">No messages yet</p>
-            <p className="text-xs text-white/80 mt-1">
-              Comments from your tutor will appear here
-            </p>
+          <div className="mt-6 overflow-y-auto max-h-[calc(70vh-10rem)] pb-8">
+            {comments.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="p-4 rounded-full bg-muted mb-4">
+                  <MessageSquare className="h-8 w-8 text-white/20" />
+                </div>
+                <p className="text-sm font-medium text-foreground">No messages yet</p>
+                <p className="text-xs text-white mt-1">
+                  Comments from your tutor will appear here
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3 px-4">
+                {comments.map((comment) => (
+                  <div
+                    key={comment.id}
+                    className={cn(
+                      'p-3 rounded-xl border border-border bg-muted/30',
+                      comment.requiresAction && !comment.isResolved && 'border-l-2 border-l-orange-500'
+                    )}
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            'text-[10px]',
+                            comment.authorRole === 'tutor'
+                              ? 'border-blue-500/30 text-blue-400'
+                              : comment.authorRole === 'assessor'
+                                ? 'border-purple-500/30 text-purple-400'
+                                : 'border-border'
+                          )}
+                        >
+                          {comment.authorRole === 'tutor'
+                            ? 'Tutor'
+                            : comment.authorRole === 'assessor'
+                              ? 'Assessor'
+                              : comment.authorRole}
+                        </Badge>
+                        <span className="text-xs text-white font-medium">
+                          {comment.authorName}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {comment.requiresAction && !comment.isResolved && (
+                          <div className="w-2 h-2 rounded-full bg-orange-500" />
+                        )}
+                        {comment.isResolved && (
+                          <Check className="h-3.5 w-3.5 text-green-500" />
+                        )}
+                        <span className="text-xs text-white">
+                          {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-white">{comment.content}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </SheetContent>
       </Sheet>

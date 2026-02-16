@@ -13,105 +13,101 @@ export const SmartHomeModule3Section4Quiz = () => {
 
   const questions = [
     {
-      question: "Name the three main types of loads in lighting circuits.",
+      question: 'Name the three main types of loads in lighting circuits.',
       options: [
-        "Resistive, Inductive, Capacitive",
-        "LED, Halogen, Fluorescent", 
-        "High, Medium, Low",
-        "AC, DC, Mixed"
+        'Resistive, Inductive, Capacitive',
+        'LED, Halogen, Fluorescent',
+        'High, Medium, Low',
+        'AC, DC, Mixed',
       ],
-      correct: 0
+      correct: 0,
     },
     {
-      question: "What type of load are LED drivers usually classified as?",
-      options: [
-        "Resistive",
-        "Inductive", 
-        "Capacitive",
-        "Mixed"
-      ],
-      correct: 2
+      question: 'What type of load are LED drivers usually classified as?',
+      options: ['Resistive', 'Inductive', 'Capacitive', 'Mixed'],
+      correct: 2,
     },
     {
-      question: "Which dimmer type is best for incandescent lamps?",
+      question: 'Which dimmer type is best for incandescent lamps?',
       options: [
-        "Only trailing-edge",
-        "Only leading-edge",
-        "Either leading-edge or trailing-edge", 
-        "PWM controllers only"
+        'Only trailing-edge',
+        'Only leading-edge',
+        'Either leading-edge or trailing-edge',
+        'PWM controllers only',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "Which dimmer type is best for LEDs?",
+      question: 'Which dimmer type is best for LEDs?',
       options: [
-        "Leading-edge (TRIAC)",
-        "Trailing-edge (MOSFET)",
-        "Resistive dimmer",
-        "Any type works equally"
+        'Leading-edge (TRIAC)',
+        'Trailing-edge (MOSFET)',
+        'Resistive dimmer',
+        'Any type works equally',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What happens if a non-dimmable LED is placed on a dimmer?",
+      question: 'What happens if a non-dimmable LED is placed on a dimmer?',
       options: [
-        "It works perfectly",
-        "It becomes more efficient",
-        "It may be damaged or cause safety issues",
-        "Nothing happens"
+        'It works perfectly',
+        'It becomes more efficient',
+        'It may be damaged or cause safety issues',
+        'Nothing happens',
       ],
-      correct: 2
+      correct: 2,
     },
     {
-      question: "What control method is used for LED strips?",
+      question: 'What control method is used for LED strips?',
       options: [
-        "Standard wall dimmers",
-        "PWM drivers or DMX controllers",
-        "Light switches only",
-        "Circuit breakers"
+        'Standard wall dimmers',
+        'PWM drivers or DMX controllers',
+        'Light switches only',
+        'Circuit breakers',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "True or False: You can mix halogen and LED lamps on the same dimmer.",
+      question: 'True or False: You can mix halogen and LED lamps on the same dimmer.',
       options: [
-        "True - they work perfectly together",
+        'True - they work perfectly together',
         "False - it's not recommended due to different characteristics",
-        "True - but only with smart dimmers",
-        "False - it's illegal under BS7671"
+        'True - but only with smart dimmers',
+        "False - it's illegal under BS7671",
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What is PWM dimming?",
+      question: 'What is PWM dimming?',
       options: [
-        "Power Management Wiring",
-        "Pulse Width Modulation - rapid on/off switching",
-        "Permanent Wave Modulation",
-        "Passive Wire Management"
+        'Power Management Wiring',
+        'Pulse Width Modulation - rapid on/off switching',
+        'Permanent Wave Modulation',
+        'Passive Wire Management',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Why should installers check manufacturer compatibility charts?",
+      question: 'Why should installers check manufacturer compatibility charts?',
       options: [
         "It's a legal requirement",
-        "To ensure proper performance and avoid damage",
-        "To get warranty coverage",
-        "To comply with building regulations"
+        'To ensure proper performance and avoid damage',
+        'To get warranty coverage',
+        'To comply with building regulations',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "Scenario: A client complains of buzzing LEDs after an install. What is the most likely cause?",
+      question:
+        'Scenario: A client complains of buzzing LEDs after an install. What is the most likely cause?',
       options: [
-        "LEDs are too bright",
-        "Wrong voltage supply",
-        "Incompatible dimmer type causing interference",
-        "LEDs are overheating"
+        'LEDs are too bright',
+        'Wrong voltage supply',
+        'Incompatible dimmer type causing interference',
+        'LEDs are overheating',
       ],
-      correct: 2
-    }
+      correct: 2,
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
@@ -125,7 +121,7 @@ export const SmartHomeModule3Section4Quiz = () => {
       setShowResult(true);
       const newAnswers = [...userAnswers, selectedAnswer];
       setUserAnswers(newAnswers);
-      
+
       if (parseInt(selectedAnswer) === questions[currentQuestion].correct) {
         setScore(score + 1);
       }
@@ -171,25 +167,29 @@ export const SmartHomeModule3Section4Quiz = () => {
           <div className="text-6xl">🎉</div>
           <h3 className="text-2xl font-bold text-foreground">Well Done!</h3>
           <p className="text-xl">
-            Your Score: <span className={`font-bold ${getScoreColor()}`}>
-              {score}/{questions.length} ({Math.round((score/questions.length)*100)}%)
+            Your Score:{' '}
+            <span className={`font-bold ${getScoreColor()}`}>
+              {score}/{questions.length} ({Math.round((score / questions.length) * 100)}%)
             </span>
           </p>
           <div className="space-y-2">
             {score === questions.length && (
-              <p className="text-green-400">Perfect score! Excellent understanding of load compatibility.</p>
+              <p className="text-green-400">
+                Perfect score! Excellent understanding of load compatibility.
+              </p>
             )}
             {score >= questions.length * 0.8 && score < questions.length && (
-              <p className="text-yellow-400">Great work! Strong grasp of control and load matching.</p>
+              <p className="text-yellow-400">
+                Great work! Strong grasp of control and load matching.
+              </p>
             )}
             {score < questions.length * 0.8 && (
-              <p className="text-red-400">Good effort. Review the material and try again to improve your score.</p>
+              <p className="text-red-400">
+                Good effort. Review the material and try again to improve your score.
+              </p>
             )}
           </div>
-          <Button 
-            onClick={resetQuiz}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-400"
-          >
+          <Button onClick={resetQuiz} className="bg-elec-yellow text-elec-dark hover:bg-yellow-400">
             <RotateCcw className="mr-2 h-4 w-4" />
             Retake Quiz
           </Button>
@@ -217,7 +217,7 @@ export const SmartHomeModule3Section4Quiz = () => {
             <h3 className="text-lg font-semibold text-foreground mb-4">
               {questions[currentQuestion].question}
             </h3>
-            
+
             <div className="grid gap-3">
               {questions[currentQuestion].options.map((option, index) => (
                 <button
@@ -229,11 +229,11 @@ export const SmartHomeModule3Section4Quiz = () => {
                       ? index === questions[currentQuestion].correct
                         ? 'bg-green-900/30 border-green-600 text-green-200'
                         : selectedAnswer === index.toString()
-                        ? 'bg-red-900/30 border-red-600 text-red-200'
-                        : 'bg-elec-dark border-gray-600 text-gray-400'
+                          ? 'bg-red-900/30 border-red-600 text-red-200'
+                          : 'bg-elec-dark border-gray-600 text-gray-400'
                       : selectedAnswer === index.toString()
-                      ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                      : 'bg-elec-dark border-gray-600 text-gray-300 hover:border-gray-500'
+                        ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
+                        : 'bg-elec-dark border-gray-600 text-gray-300 hover:border-gray-500'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -241,9 +241,11 @@ export const SmartHomeModule3Section4Quiz = () => {
                     {showResult && index === questions[currentQuestion].correct && (
                       <CheckCircle className="h-5 w-5 text-green-400" />
                     )}
-                    {showResult && selectedAnswer === index.toString() && index !== questions[currentQuestion].correct && (
-                      <XCircle className="h-5 w-5 text-red-400" />
-                    )}
+                    {showResult &&
+                      selectedAnswer === index.toString() &&
+                      index !== questions[currentQuestion].correct && (
+                        <XCircle className="h-5 w-5 text-red-400" />
+                      )}
                   </div>
                 </button>
               ))}
@@ -251,7 +253,7 @@ export const SmartHomeModule3Section4Quiz = () => {
           </div>
 
           {!showResult ? (
-            <Button 
+            <Button
               onClick={handleSubmit}
               disabled={selectedAnswer === null}
               className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
@@ -267,11 +269,12 @@ export const SmartHomeModule3Section4Quiz = () => {
               ) : (
                 <div className="bg-red-900/20 border border-red-600/50 p-4 rounded-lg">
                   <p className="text-red-200 text-sm">
-                    ✗ Incorrect. The correct answer is: {questions[currentQuestion].options[questions[currentQuestion].correct]}
+                    ✗ Incorrect. The correct answer is:{' '}
+                    {questions[currentQuestion].options[questions[currentQuestion].correct]}
                   </p>
                 </div>
               )}
-              <Button 
+              <Button
                 onClick={handleNext}
                 className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
               >

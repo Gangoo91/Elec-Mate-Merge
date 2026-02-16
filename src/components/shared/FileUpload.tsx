@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Upload, X } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Upload, X } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 interface FileUploadProps {
   onFileSelect: (files: File[]) => void;
@@ -15,32 +15,32 @@ interface FileUploadProps {
 
 const FileUpload = ({
   onFileSelect,
-  acceptedTypes = ".jpg,.jpeg,.png,.pdf,.doc,.docx",
+  acceptedTypes = '.jpg,.jpeg,.png,.pdf,.doc,.docx',
   maxSize = 10,
   multiple = false,
   selectedFiles = [],
   onRemoveFile,
-  disabled = false
+  disabled = false,
 }: FileUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
-    
+
     // Validate file sizes
-    const oversizedFiles = files.filter(file => file.size > maxSize * 1024 * 1024);
+    const oversizedFiles = files.filter((file) => file.size > maxSize * 1024 * 1024);
     if (oversizedFiles.length > 0) {
       toast({
-        title: "File too large",
+        title: 'File too large',
         description: `Maximum file size is ${maxSize}MB. Please select smaller files.`,
-        variant: "destructive"
+        variant: 'destructive',
       });
       return;
     }
 
     onFileSelect(files);
-    
+
     // Reset the input
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -68,9 +68,7 @@ const FileUpload = ({
           <Upload className="h-4 w-4" />
           Choose Files
         </Button>
-        <span className="text-xs text-muted-foreground">
-          Max {maxSize}MB each
-        </span>
+        <span className="text-xs text-muted-foreground">Max {maxSize}MB each</span>
       </div>
 
       <input
@@ -86,15 +84,10 @@ const FileUpload = ({
         <div className="space-y-2">
           <p className="text-sm font-medium">Selected files:</p>
           {selectedFiles.map((file, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-2 bg-muted rounded-lg"
-            >
+            <div key={index} className="flex items-center justify-between p-2 bg-muted rounded-lg">
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{file.name}</p>
-                <p className="text-xs text-muted-foreground">
-                  {formatFileSize(file.size)}
-                </p>
+                <p className="text-xs text-muted-foreground">{formatFileSize(file.size)}</p>
               </div>
               {onRemoveFile && (
                 <Button

@@ -1,87 +1,136 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section2_6 = () => {
   useSEO(
-    "Visual Inspection Checklist and Record-Keeping - Level 2 Electrical Installation",
-    "BS 7671 inspection checklists, documentation requirements and record-keeping procedures"
+    'Visual Inspection Checklist and Record-Keeping - Level 2 Electrical Installation',
+    'BS 7671 inspection checklists, documentation requirements and record-keeping procedures'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the main purpose of a visual inspection checklist?",
-      options: ["To reduce inspection time", "To ensure all items are systematically checked", "To impress clients", "To reduce costs"],
+      question: 'What is the main purpose of a visual inspection checklist?',
+      options: [
+        'To reduce inspection time',
+        'To ensure all items are systematically checked',
+        'To impress clients',
+        'To reduce costs',
+      ],
       correctAnswer: 1,
-      explanation: "The main purpose is to ensure systematic coverage of all inspection items without oversight."
+      explanation:
+        'The main purpose is to ensure systematic coverage of all inspection items without oversight.',
     },
     {
       id: 2,
-      question: "Which appendix in BS 7671 contains the model inspection schedule?",
-      options: ["Appendix 4", "Appendix 5", "Appendix 6", "Appendix 7"],
+      question: 'Which appendix in BS 7671 contains the model inspection schedule?',
+      options: ['Appendix 4', 'Appendix 5', 'Appendix 6', 'Appendix 7'],
       correctAnswer: 2,
-      explanation: "Appendix 6 of BS 7671 contains the model forms for inspection and testing."
+      explanation: 'Appendix 6 of BS 7671 contains the model forms for inspection and testing.',
     },
     {
       id: 3,
-      question: "Name two items that should be included in an inspection checklist.",
-      options: ["Only cable colours", "Condition of accessories and earthing/bonding", "Only switch positions", "Only circuit numbers"],
+      question: 'Name two items that should be included in an inspection checklist.',
+      options: [
+        'Only cable colours',
+        'Condition of accessories and earthing/bonding',
+        'Only switch positions',
+        'Only circuit numbers',
+      ],
       correctAnswer: 1,
-      explanation: "Inspection checklists must include condition of accessories, earthing and bonding, circuit labelling, cable routing, and IP ratings."
+      explanation:
+        'Inspection checklists must include condition of accessories, earthing and bonding, circuit labelling, cable routing, and IP ratings.',
     },
     {
       id: 4,
-      question: "True or False: Relying on memory is acceptable for visual inspections.",
-      options: ["True", "False"],
+      question: 'True or False: Relying on memory is acceptable for visual inspections.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False — visual inspections must be systematic and documented. Memory is unreliable and provides no audit trail."
+      explanation:
+        'False — visual inspections must be systematic and documented. Memory is unreliable and provides no audit trail.',
     },
     {
       id: 5,
-      question: "Which certificates include inspection records?",
-      options: ["Only test certificates", "Electrical Installation Certificate (EIC) and Minor Works Certificate", "Only compliance certificates", "Building control certificates"],
+      question: 'Which certificates include inspection records?',
+      options: [
+        'Only test certificates',
+        'Electrical Installation Certificate (EIC) and Minor Works Certificate',
+        'Only compliance certificates',
+        'Building control certificates',
+      ],
       correctAnswer: 1,
-      explanation: "Both EIC and Minor Works Certificates include inspection records as integral components."
+      explanation:
+        'Both EIC and Minor Works Certificates include inspection records as integral components.',
     },
     {
       id: 6,
-      question: "Why should cosmetic defects not always be recorded?",
-      options: ["They are not important", "Only safety or compliance issues must be documented", "To save time", "To reduce paperwork"],
+      question: 'Why should cosmetic defects not always be recorded?',
+      options: [
+        'They are not important',
+        'Only safety or compliance issues must be documented',
+        'To save time',
+        'To reduce paperwork',
+      ],
       correctAnswer: 1,
-      explanation: "Inspection records should focus on safety-critical and compliance issues, not purely cosmetic defects."
+      explanation:
+        'Inspection records should focus on safety-critical and compliance issues, not purely cosmetic defects.',
     },
     {
       id: 7,
-      question: "What should be done if a safety-critical issue is found?",
-      options: ["Ignore it if minor", "Record it clearly and arrange remedial action before energising", "Note it for later", "Let the client decide"],
+      question: 'What should be done if a safety-critical issue is found?',
+      options: [
+        'Ignore it if minor',
+        'Record it clearly and arrange remedial action before energising',
+        'Note it for later',
+        'Let the client decide',
+      ],
       correctAnswer: 1,
-      explanation: "Safety-critical issues must be recorded clearly and remediated before the installation is energised."
+      explanation:
+        'Safety-critical issues must be recorded clearly and remediated before the installation is energised.',
     },
     {
       id: 8,
-      question: "Give one benefit of proper inspection record-keeping.",
-      options: ["Faster installations", "Legal protection and supports maintenance", "Lower material costs", "Reduced testing time"],
+      question: 'Give one benefit of proper inspection record-keeping.',
+      options: [
+        'Faster installations',
+        'Legal protection and supports maintenance',
+        'Lower material costs',
+        'Reduced testing time',
+      ],
       correctAnswer: 1,
-      explanation: "Proper records provide legal protection, support ongoing maintenance, and build client trust."
+      explanation:
+        'Proper records provide legal protection, support ongoing maintenance, and build client trust.',
     },
     {
       id: 9,
-      question: "In the real-world example, what was missed due to lack of a checklist?",
-      options: ["Cable labelling", "Bonding to exposed structural steelwork", "RCD testing", "Circuit numbering"],
+      question: 'In the real-world example, what was missed due to lack of a checklist?',
+      options: [
+        'Cable labelling',
+        'Bonding to exposed structural steelwork',
+        'RCD testing',
+        'Circuit numbering',
+      ],
       correctAnswer: 1,
-      explanation: "The inspector missed checking bonding to exposed structural steelwork, creating a dangerous potential difference."
+      explanation:
+        'The inspector missed checking bonding to exposed structural steelwork, creating a dangerous potential difference.',
     },
     {
       id: 10,
-      question: "How should completed inspection records be stored?",
-      options: ["In the office only", "Securely with certificates and test results", "On the client's desk", "In the van"],
+      question: 'How should completed inspection records be stored?',
+      options: [
+        'In the office only',
+        'Securely with certificates and test results',
+        "On the client's desk",
+        'In the van',
+      ],
       correctAnswer: 1,
-      explanation: "Inspection records must be stored securely with test results and certificates as permanent documentation."
-    }
+      explanation:
+        'Inspection records must be stored securely with test results and certificates as permanent documentation.',
+    },
   ];
 
   return (
@@ -115,7 +164,8 @@ const Module6Section2_6 = () => {
               Visual Inspection Checklist and Record-Keeping
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              BS 7671 inspection checklists, documentation requirements and record-keeping procedures
+              BS 7671 inspection checklists, documentation requirements and record-keeping
+              procedures
             </p>
           </header>
 
@@ -134,8 +184,13 @@ const Module6Section2_6 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Spot it / Use it</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Spot:</strong> Missing checklists, incomplete records, memory-based inspections</li>
-                  <li><strong>Use:</strong> BS 7671 Appendix 6 schedule; clear documentation</li>
+                  <li>
+                    <strong>Spot:</strong> Missing checklists, incomplete records, memory-based
+                    inspections
+                  </li>
+                  <li>
+                    <strong>Use:</strong> BS 7671 Appendix 6 schedule; clear documentation
+                  </li>
                 </ul>
               </div>
             </div>
@@ -149,7 +204,10 @@ const Module6Section2_6 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Visual inspections are only effective if they are structured, consistent, and properly recorded. Using a checklist ensures that no item is overlooked, while accurate record-keeping provides evidence of compliance and safety. This process is critical under BS 7671 and the Electricity at Work Regulations (EAWR 1989).
+                Visual inspections are only effective if they are structured, consistent, and
+                properly recorded. Using a checklist ensures that no item is overlooked, while
+                accurate record-keeping provides evidence of compliance and safety. This process is
+                critical under BS 7671 and the Electricity at Work Regulations (EAWR 1989).
               </p>
             </div>
           </section>
@@ -209,7 +267,8 @@ const Module6Section2_6 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Memory vs. Checklists</p>
                 <p className="text-sm">
-                  Human memory is unreliable under pressure. Checklists provide systematic coverage regardless of experience level or working conditions.
+                  Human memory is unreliable under pressure. Checklists provide systematic coverage
+                  regardless of experience level or working conditions.
                 </p>
               </div>
             </div>
@@ -218,7 +277,12 @@ const Module6Section2_6 = () => {
               <InlineCheck
                 id="checklist-purpose-check"
                 question="Why is a checklist important in visual inspections?"
-                options={["To save time", "To ensure systematic coverage and prevent missed items", "To reduce costs", "To look professional"]}
+                options={[
+                  'To save time',
+                  'To ensure systematic coverage and prevent missed items',
+                  'To reduce costs',
+                  'To look professional',
+                ]}
                 correctIndex={1}
                 explanation="Checklists ensure systematic coverage of all inspection items, preventing missed hazards or oversight."
               />
@@ -265,7 +329,8 @@ const Module6Section2_6 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">BS 7671 Appendix 6</p>
                 <p className="text-sm">
-                  Use the model inspection schedule in BS 7671 Appendix 6 as the minimum standard for all visual inspections.
+                  Use the model inspection schedule in BS 7671 Appendix 6 as the minimum standard
+                  for all visual inspections.
                 </p>
               </div>
             </div>
@@ -274,7 +339,12 @@ const Module6Section2_6 = () => {
               <InlineCheck
                 id="checklist-items-check"
                 question="Give two examples of items that must be included in an inspection checklist."
-                options={["Only cable colours", "Condition of accessories and earthing/bonding", "Only device ratings", "Only circuit numbers"]}
+                options={[
+                  'Only cable colours',
+                  'Condition of accessories and earthing/bonding',
+                  'Only device ratings',
+                  'Only circuit numbers',
+                ]}
                 correctIndex={1}
                 explanation="Inspection checklists must include condition of accessories, integrity of cables, earthing and bonding, and circuit labelling among other items."
               />
@@ -321,7 +391,8 @@ const Module6Section2_6 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Legal Protection</p>
                 <p className="text-sm">
-                  Proper records provide crucial legal protection. They demonstrate due diligence and professional competence if accidents occur.
+                  Proper records provide crucial legal protection. They demonstrate due diligence
+                  and professional competence if accidents occur.
                 </p>
               </div>
             </div>
@@ -330,7 +401,12 @@ const Module6Section2_6 = () => {
               <InlineCheck
                 id="record-keeping-check"
                 question="What certificate forms part of inspection and record-keeping for new work?"
-                options={["Test Certificate only", "Electrical Installation Certificate (EIC)", "Building Certificate", "Compliance Certificate"]}
+                options={[
+                  'Test Certificate only',
+                  'Electrical Installation Certificate (EIC)',
+                  'Building Certificate',
+                  'Compliance Certificate',
+                ]}
                 correctIndex={1}
                 explanation="The Electrical Installation Certificate (EIC) includes inspection records as an integral component for new installations."
               />
@@ -377,7 +453,8 @@ const Module6Section2_6 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Reputation and Trust</p>
                 <p className="text-sm">
-                  Comprehensive records demonstrate professionalism and build client trust, leading to repeat business and referrals.
+                  Comprehensive records demonstrate professionalism and build client trust, leading
+                  to repeat business and referrals.
                 </p>
               </div>
             </div>
@@ -404,9 +481,15 @@ const Module6Section2_6 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Documentation Tools</p>
                 <div className="text-sm space-y-1">
-                  <p><strong>BS 7671 Forms:</strong> Standard forms and schedules for consistency</p>
-                  <p><strong>Digital Tablets:</strong> Immediate electronic recording on site</p>
-                  <p><strong>Camera:</strong> Photographic evidence of defects</p>
+                  <p>
+                    <strong>BS 7671 Forms:</strong> Standard forms and schedules for consistency
+                  </p>
+                  <p>
+                    <strong>Digital Tablets:</strong> Immediate electronic recording on site
+                  </p>
+                  <p>
+                    <strong>Camera:</strong> Photographic evidence of defects
+                  </p>
                 </div>
               </div>
             </div>
@@ -421,10 +504,14 @@ const Module6Section2_6 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="font-medium text-red-400 mb-3">Warehouse Bonding Incident</p>
               <p className="text-sm text-white/80 mb-3">
-                On a warehouse project, an inspector relied on memory instead of a checklist. They missed checking bonding to exposed structural steelwork. Weeks later, during fault conditions, the lack of bonding caused a dangerous potential difference across metalwork.
+                On a warehouse project, an inspector relied on memory instead of a checklist. They
+                missed checking bonding to exposed structural steelwork. Weeks later, during fault
+                conditions, the lack of bonding caused a dangerous potential difference across
+                metalwork.
               </p>
               <p className="text-sm font-medium text-white">
-                Key Learning: Memory-based inspections create unacceptable safety risks. Systematic checklists and documentation prevent potentially fatal oversights.
+                Key Learning: Memory-based inspections create unacceptable safety risks. Systematic
+                checklists and documentation prevent potentially fatal oversights.
               </p>
             </div>
           </section>
@@ -437,16 +524,31 @@ const Module6Section2_6 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Q: Can I make my own inspection checklist?</p>
-                <p className="text-sm text-white/80">A: Yes, but it must align with BS 7671's Appendix 6 requirements and cover all mandatory inspection items.</p>
+                <p className="font-medium text-white mb-2">
+                  Q: Can I make my own inspection checklist?
+                </p>
+                <p className="text-sm text-white/80">
+                  A: Yes, but it must align with BS 7671's Appendix 6 requirements and cover all
+                  mandatory inspection items.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Q: What if I spot a minor cosmetic issue?</p>
-                <p className="text-sm text-white/80">A: Record only issues that affect safety or compliance. Cosmetic defects that don't impact safety shouldn't be documented.</p>
+                <p className="font-medium text-white mb-2">
+                  Q: What if I spot a minor cosmetic issue?
+                </p>
+                <p className="text-sm text-white/80">
+                  A: Record only issues that affect safety or compliance. Cosmetic defects that
+                  don't impact safety shouldn't be documented.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Q: Do inspection records need to be kept after handover?</p>
-                <p className="text-sm text-white/80">A: Yes - they form part of the installation's permanent documentation and must be retained for legal and maintenance purposes.</p>
+                <p className="font-medium text-white mb-2">
+                  Q: Do inspection records need to be kept after handover?
+                </p>
+                <p className="text-sm text-white/80">
+                  A: Yes - they form part of the installation's permanent documentation and must be
+                  retained for legal and maintenance purposes.
+                </p>
               </div>
             </div>
           </section>
@@ -502,9 +604,7 @@ const Module6Section2_6 = () => {
               className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="..">
-                Back to Section 6.2
-              </Link>
+              <Link to="..">Back to Section 6.2</Link>
             </Button>
           </nav>
         </div>

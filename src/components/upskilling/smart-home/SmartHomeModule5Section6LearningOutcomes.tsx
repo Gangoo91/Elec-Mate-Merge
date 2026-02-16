@@ -4,10 +4,10 @@ import { Badge } from '@/components/ui/badge';
 
 export const SmartHomeModule5Section6LearningOutcomes = () => {
   const outcomes = [
-    "Explain why network security is essential in smart homes",
-    "Identify the main risks to user privacy and system security",
-    "Describe key measures to protect smart home networks",
-    "Understand your role in ensuring systems are installed securely"
+    'Explain why network security is essential in smart homes',
+    'Identify the main risks to user privacy and system security',
+    'Describe key measures to protect smart home networks',
+    'Understand your role in ensuring systems are installed securely',
   ];
 
   return (
@@ -19,15 +19,13 @@ export const SmartHomeModule5Section6LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground">
-          By the end of this section, you should be able to:
-        </p>
-        
+        <p className="text-foreground">By the end of this section, you should be able to:</p>
+
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge 
-                variant="secondary" 
+              <Badge
+                variant="secondary"
                 className="bg-elec-yellow text-elec-dark hover:bg-yellow-500 font-bold text-xs px-2 py-1 mt-1 flex-shrink-0"
               >
                 {index + 1}

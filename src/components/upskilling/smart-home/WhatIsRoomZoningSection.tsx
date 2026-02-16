@@ -12,9 +12,11 @@ export const WhatIsRoomZoningSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Room zoning involves dividing a property into independent heating zones, where each zone has its own thermostat or actuator. This allows precise control over different areas of the building.
+          Room zoning involves dividing a property into independent heating zones, where each zone
+          has its own thermostat or actuator. This allows precise control over different areas of
+          the building.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">How It Works</h4>
           <ul className="space-y-2 text-sm">

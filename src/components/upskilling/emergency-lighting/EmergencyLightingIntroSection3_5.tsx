@@ -12,11 +12,16 @@ export const EmergencyLightingIntroSection3_5 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Even the best-designed emergency lighting system is of little value if it cannot be communicated clearly. Emergency lighting layout drawings are the bridge between the design intent and on-site installation. They provide a visual map showing luminaire types, mounting positions, escape routes, and testing points.
+          Even the best-designed emergency lighting system is of little value if it cannot be
+          communicated clearly. Emergency lighting layout drawings are the bridge between the design
+          intent and on-site installation. They provide a visual map showing luminaire types,
+          mounting positions, escape routes, and testing points.
         </p>
-        
+
         <p>
-          These drawings are also essential for compliance, as they form part of the building's fire safety documentation. For electricians, the ability to interpret, create, and update layout drawings is a professional requirement under BS 5266-1.
+          These drawings are also essential for compliance, as they form part of the building's fire
+          safety documentation. For electricians, the ability to interpret, create, and update
+          layout drawings is a professional requirement under BS 5266-1.
         </p>
       </CardContent>
     </Card>

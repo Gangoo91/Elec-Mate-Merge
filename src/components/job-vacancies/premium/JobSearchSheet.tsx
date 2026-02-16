@@ -3,13 +3,13 @@
  * Recent searches, location input, quick filters, live results preview
  */
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Drawer } from "vaul";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Drawer } from 'vaul';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import {
   Search,
   X,
@@ -21,8 +21,8 @@ import {
   ChevronRight,
   Trash2,
   Briefcase,
-} from "lucide-react";
-import { fadeUpVariants, pillVariants, listItemVariants } from "./animations/variants";
+} from 'lucide-react';
+import { fadeUpVariants, pillVariants, listItemVariants } from './animations/variants';
 
 interface JobSearchSheetProps {
   isOpen: boolean;
@@ -33,30 +33,30 @@ interface JobSearchSheetProps {
 }
 
 // Recent searches storage key
-const RECENT_SEARCHES_KEY = "elecmate-job-recent-searches";
+const RECENT_SEARCHES_KEY = 'elecmate-job-recent-searches';
 const MAX_RECENT_SEARCHES = 8;
 
 // Popular search terms
 const POPULAR_SEARCHES = [
-  "Electrician",
-  "Solar Installer",
-  "EV Technician",
-  "Apprentice",
-  "Site Manager",
-  "Maintenance Engineer",
-  "Fire Alarm",
-  "Data Installer",
+  'Electrician',
+  'Solar Installer',
+  'EV Technician',
+  'Apprentice',
+  'Site Manager',
+  'Maintenance Engineer',
+  'Fire Alarm',
+  'Data Installer',
 ];
 
 // Quick location suggestions
 const LOCATION_SUGGESTIONS = [
-  "London",
-  "Manchester",
-  "Birmingham",
-  "Leeds",
-  "Bristol",
-  "Remote",
-  "Nationwide",
+  'London',
+  'Manchester',
+  'Birmingham',
+  'Leeds',
+  'Bristol',
+  'Remote',
+  'Nationwide',
 ];
 
 interface RecentSearch {
@@ -88,8 +88,8 @@ const JobSearchSheet = ({
   isOpen,
   onClose,
   onSearch,
-  initialQuery = "",
-  initialLocation = "",
+  initialQuery = '',
+  initialLocation = '',
 }: JobSearchSheetProps) => {
   const [query, setQuery] = useState(initialQuery);
   const [location, setLocation] = useState(initialLocation);
@@ -142,7 +142,7 @@ const JobSearchSheet = ({
   }, [query, location, recentSearches, onSearch, onClose]);
 
   // Handle quick search from popular/recent
-  const handleQuickSearch = (searchQuery: string, searchLocation: string = "") => {
+  const handleQuickSearch = (searchQuery: string, searchLocation: string = '') => {
     setQuery(searchQuery);
     setLocation(searchLocation);
     // Trigger search immediately
@@ -154,9 +154,7 @@ const JobSearchSheet = ({
 
     const updated = [
       newSearch,
-      ...recentSearches.filter(
-        (s) => s.query !== searchQuery || s.location !== searchLocation
-      ),
+      ...recentSearches.filter((s) => s.query !== searchQuery || s.location !== searchLocation),
     ].slice(0, MAX_RECENT_SEARCHES);
 
     setRecentSearches(updated);
@@ -231,9 +229,12 @@ const JobSearchSheet = ({
                 ref={queryInputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Job title, skill, or company"
-                className={cn("h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !query && "pl-12")}
+                className={cn(
+                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                  !query && 'pl-12'
+                )}
               />
             </div>
 
@@ -247,9 +248,12 @@ const JobSearchSheet = ({
                 onChange={(e) => setLocation(e.target.value)}
                 onFocus={() => setShowLocationSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowLocationSuggestions(false), 200)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Location (city, postcode, or remote)"
-                className={cn("h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !location && "pl-12")}
+                className={cn(
+                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                  !location && 'pl-12'
+                )}
               />
 
               {/* Location Suggestions Dropdown */}
@@ -283,24 +287,21 @@ const JobSearchSheet = ({
             <button
               onClick={() => setIsAISearchEnabled(!isAISearchEnabled)}
               className={cn(
-                "w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all",
+                'w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all',
                 isAISearchEnabled
-                  ? "bg-purple-500/20 border-purple-500/30"
-                  : "bg-white/5 border-white/10"
+                  ? 'bg-purple-500/20 border-purple-500/30'
+                  : 'bg-white/5 border-white/10'
               )}
             >
               <div className="flex items-center gap-3">
                 <Sparkles
-                  className={cn(
-                    "h-5 w-5",
-                    isAISearchEnabled ? "text-purple-400" : "text-white/40"
-                  )}
+                  className={cn('h-5 w-5', isAISearchEnabled ? 'text-purple-400' : 'text-white/40')}
                 />
                 <div className="text-left">
                   <span
                     className={cn(
-                      "text-sm font-medium",
-                      isAISearchEnabled ? "text-purple-300" : "text-white"
+                      'text-sm font-medium',
+                      isAISearchEnabled ? 'text-purple-300' : 'text-white'
                     )}
                   >
                     AI Job Match
@@ -310,10 +311,10 @@ const JobSearchSheet = ({
               </div>
               <div
                 className={cn(
-                  "w-10 h-6 rounded-full flex items-center transition-all",
+                  'w-10 h-6 rounded-full flex items-center transition-all',
                   isAISearchEnabled
-                    ? "bg-purple-500 justify-end pr-1"
-                    : "bg-white/20 justify-start pl-1"
+                    ? 'bg-purple-500 justify-end pr-1'
+                    : 'bg-white/20 justify-start pl-1'
                 )}
               >
                 <div className="w-4 h-4 rounded-full bg-white shadow" />

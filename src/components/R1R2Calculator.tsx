@@ -110,7 +110,9 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
                 <AlertDescription>
                   <div className="space-y-1">
                     {calculation.warnings.map((warning, index) => (
-                      <div key={index} className="text-sm">{warning}</div>
+                      <div key={index} className="text-sm">
+                        {warning}
+                      </div>
                     ))}
                   </div>
                 </AlertDescription>
@@ -124,7 +126,9 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
                   <div className="font-medium mb-1">Recommendations:</div>
                   <ul className="text-sm space-y-1">
                     {calculation.recommendations.map((rec, index) => (
-                      <li key={index} className="ml-2">• {rec}</li>
+                      <li key={index} className="ml-2">
+                        • {rec}
+                      </li>
                     ))}
                   </ul>
                 </AlertDescription>
@@ -132,9 +136,9 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
             )}
 
             {onUpdate && (
-              <Button 
+              <Button
                 onClick={handleCalculate}
-                size="sm" 
+                size="sm"
                 className="w-full"
                 disabled={!calculation.expectedR1R2}
               >
@@ -146,7 +150,9 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
 
         <div className="text-xs text-muted-foreground">
           <div className="font-medium mb-1">Cable Info:</div>
-          <div>Live: {result.liveSize} • CPC: {result.cpcSize || result.liveSize}</div>
+          <div>
+            Live: {result.liveSize} • CPC: {result.cpcSize || result.liveSize}
+          </div>
           <div>Temperature correction accounts for conductor heating under load</div>
         </div>
       </CardContent>

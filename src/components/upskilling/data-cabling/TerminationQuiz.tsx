@@ -14,64 +14,64 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the maximum insertion force required for a properly made RJ45 termination according to TIA-568 standards?",
+    question:
+      'What is the maximum insertion force required for a properly made RJ45 termination according to TIA-568 standards?',
     options: [
-      "20 Newtons (4.5 lbf)",
-      "40 Newtons (9 lbf)", 
-      "60 Newtons (13.5 lbf)",
-      "80 Newtons (18 lbf)"
+      '20 Newtons (4.5 lbf)',
+      '40 Newtons (9 lbf)',
+      '60 Newtons (13.5 lbf)',
+      '80 Newtons (18 lbf)',
     ],
     correctAnswer: 1,
-    explanation: "TIA-568 specifies that a properly terminated RJ45 connector should require no more than 40 Newtons (approximately 9 lbf) of insertion force to mate with its corresponding jack."
+    explanation:
+      'TIA-568 specifies that a properly terminated RJ45 connector should require no more than 40 Newtons (approximately 9 lbf) of insertion force to mate with its corresponding jack.',
   },
   {
     id: 2,
-    question: "Which termination method provides the most reliable connection for Cat 6A cables in high-vibration environments?",
+    question:
+      'Which termination method provides the most reliable connection for Cat 6A cables in high-vibration environments?',
     options: [
-      "Standard crimp termination",
-      "IDC punch-down termination",
-      "Compression termination with strain relief",
-      "Solder termination"
+      'Standard crimp termination',
+      'IDC punch-down termination',
+      'Compression termination with strain relief',
+      'Solder termination',
     ],
     correctAnswer: 2,
-    explanation: "Compression termination with proper strain relief provides the most reliable connection for Cat 6A in high-vibration environments as it creates a gas-tight connection and better mechanical stability."
+    explanation:
+      'Compression termination with proper strain relief provides the most reliable connection for Cat 6A in high-vibration environments as it creates a gas-tight connection and better mechanical stability.',
   },
   {
     id: 3,
-    question: "What is the correct untwist length for Cat 6A cables when terminating to RJ45 connectors?",
-    options: [
-      "6mm (0.25 inches)",
-      "13mm (0.5 inches)",
-      "19mm (0.75 inches)",
-      "25mm (1 inch)"
-    ],
+    question:
+      'What is the correct untwist length for Cat 6A cables when terminating to RJ45 connectors?',
+    options: ['6mm (0.25 inches)', '13mm (0.5 inches)', '19mm (0.75 inches)', '25mm (1 inch)'],
     correctAnswer: 1,
-    explanation: "For Cat 6A cables, the untwist length should not exceed 13mm (0.5 inches) to maintain proper impedance and minimise crosstalk at the termination point."
+    explanation:
+      'For Cat 6A cables, the untwist length should not exceed 13mm (0.5 inches) to maintain proper impedance and minimise crosstalk at the termination point.',
   },
   {
     id: 4,
-    question: "According to BS 7671, what is the minimum contact resistance for a properly terminated copper connection?",
+    question:
+      'According to BS 7671, what is the minimum contact resistance for a properly terminated copper connection?',
     options: [
-      "Less than 1 milliohm",
-      "Less than 5 milliohms",
-      "Less than 10 milliohms",
-      "Less than 20 milliohms"
+      'Less than 1 milliohm',
+      'Less than 5 milliohms',
+      'Less than 10 milliohms',
+      'Less than 20 milliohms',
     ],
     correctAnswer: 2,
-    explanation: "BS 7671 and related standards specify that properly terminated copper connections should have a contact resistance of less than 10 milliohms to ensure reliable signal transmission and minimal power loss."
+    explanation:
+      'BS 7671 and related standards specify that properly terminated copper connections should have a contact resistance of less than 10 milliohms to ensure reliable signal transmission and minimal power loss.',
   },
   {
     id: 5,
-    question: "Which tool calibration frequency is recommended for professional crimp tools used in Cat 6A installations?",
-    options: [
-      "Monthly",
-      "Quarterly", 
-      "Annually",
-      "Every two years"
-    ],
+    question:
+      'Which tool calibration frequency is recommended for professional crimp tools used in Cat 6A installations?',
+    options: ['Monthly', 'Quarterly', 'Annually', 'Every two years'],
     correctAnswer: 1,
-    explanation: "Professional crimp tools should be calibrated quarterly (every 3 months) to maintain consistent termination quality and ensure compliance with performance standards, especially for high-category cables like Cat 6A."
-  }
+    explanation:
+      'Professional crimp tools should be calibrated quarterly (every 3 months) to maintain consistent termination quality and ensure compliance with performance standards, especially for high-category cables like Cat 6A.',
+  },
 ];
 
 export const TerminationQuiz = () => {
@@ -132,11 +132,15 @@ export const TerminationQuiz = () => {
             <div className="text-3xl font-bold text-elec-yellow mb-2">
               {score} / {quizQuestions.length}
             </div>
-            <div className="text-xl text-foreground mb-4">
-              {percentage}% Complete
-            </div>
-            <div className={`text-lg ${percentage >= 80 ? 'text-green-400' : percentage >= 60 ? 'text-yellow-400' : 'text-red-400'}`}>
-              {percentage >= 80 ? 'Excellent work!' : percentage >= 60 ? 'Good effort!' : 'Keep studying and try again!'}
+            <div className="text-xl text-foreground mb-4">{percentage}% Complete</div>
+            <div
+              className={`text-lg ${percentage >= 80 ? 'text-green-400' : percentage >= 60 ? 'text-yellow-400' : 'text-red-400'}`}
+            >
+              {percentage >= 80
+                ? 'Excellent work!'
+                : percentage >= 60
+                  ? 'Good effort!'
+                  : 'Keep studying and try again!'}
             </div>
           </div>
 
@@ -144,7 +148,7 @@ export const TerminationQuiz = () => {
             {quizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <div key={question.id} className="bg-[#323232] rounded-lg p-4">
                   <div className="flex items-start gap-3 mb-3">
@@ -157,7 +161,9 @@ export const TerminationQuiz = () => {
                       <h4 className="text-foreground font-medium mb-2">
                         Question {index + 1}: {question.question}
                       </h4>
-                      <p className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                      <p
+                        className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}
+                      >
                         Your answer: {question.options[userAnswer]}
                       </p>
                       {!isCorrect && (
@@ -165,9 +171,7 @@ export const TerminationQuiz = () => {
                           Correct answer: {question.options[question.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-gray-400">
-                        {question.explanation}
-                      </p>
+                      <p className="text-sm text-gray-400">{question.explanation}</p>
                     </div>
                   </div>
                 </div>
@@ -176,10 +180,7 @@ export const TerminationQuiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button
-              onClick={resetQuiz}
-              className="bg-elec-yellow text-black hover:bg-yellow-500"
-            >
+            <Button onClick={resetQuiz} className="bg-elec-yellow text-black hover:bg-yellow-500">
               Take Quiz Again
             </Button>
           </div>
@@ -198,14 +199,14 @@ export const TerminationQuiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {quizQuestions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {quizQuestions.length}
+          </span>
           <span>{Math.round(((currentQuestion + 1) / quizQuestions.length) * 100)}% Complete</span>
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-lg font-medium text-foreground">
-            {currentQ.question}
-          </h3>
+          <h3 className="text-lg font-medium text-foreground">{currentQ.question}</h3>
 
           <div className="space-y-3">
             {currentQ.options.map((option, index) => (

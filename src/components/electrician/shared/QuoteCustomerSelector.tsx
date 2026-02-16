@@ -22,9 +22,7 @@ export const QuoteCustomerSelector = ({
     return (
       <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30">
         <Users className="h-4 w-4 text-elec-yellow shrink-0" />
-        <span className="text-[13px] font-medium text-white truncate flex-1">
-          {customerName}
-        </span>
+        <span className="text-[13px] font-medium text-white truncate flex-1">{customerName}</span>
         <button
           type="button"
           onClick={onClear}

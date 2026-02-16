@@ -17,10 +17,7 @@ interface BreadcrumbsProps {
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className }) => {
   return (
-    <nav 
-      className={cn('flex items-center', className)}
-      aria-label="Breadcrumb"
-    >
+    <nav className={cn('flex items-center', className)} aria-label="Breadcrumb">
       <ol className="flex items-center flex-wrap gap-1 sm:gap-2">
         <li>
           <button
@@ -36,17 +33,13 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className }) =>
             <span className="hidden sm:inline">{items[0]?.label}</span>
           </button>
         </li>
-        
+
         {items.slice(1).map((item, index) => (
           <li key={index} className="flex items-center gap-1 sm:gap-2">
             <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
             {item.current ? (
               <span
-                className={cn(
-                  'text-elec-yellow font-medium',
-                  responsiveBody.small,
-                  'px-2 py-1'
-                )}
+                className={cn('text-elec-yellow font-medium', responsiveBody.small, 'px-2 py-1')}
                 aria-current="page"
               >
                 {item.label}

@@ -12,32 +12,46 @@ export const BMSModule5Section6ContentPart1 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Network planning ensures that all devices can communicate efficiently. Poorly planned networks result in data clashes, long delays, or complete loss of control. Understanding the technical limits and requirements is essential for reliable system design.
+          Network planning ensures that all devices can communicate efficiently. Poorly planned
+          networks result in data clashes, long delays, or complete loss of control. Understanding
+          the technical limits and requirements is essential for reliable system design.
         </p>
 
         <h3 className="text-xl font-semibold text-foreground mb-4">Understanding Device Limits</h3>
-        
+
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600 mb-6">
           <h4 className="font-semibold text-yellow-300 text-lg mb-4">Why Device Limits Matter</h4>
           <p className="text-gray-300 mb-4">
-            Each communication protocol has physical and electrical limitations that determine how many devices can reliably communicate on a single network segment. These limits are based on several factors:
+            Each communication protocol has physical and electrical limitations that determine how
+            many devices can reliably communicate on a single network segment. These limits are
+            based on several factors:
           </p>
           <ul className="text-gray-300 space-y-2 mb-4">
             <li className="flex items-start gap-2">
               <span className="text-yellow-400 mt-1">•</span>
-              <span><strong>Electrical loading:</strong> Each device adds capacitance and resistance to the network</span>
+              <span>
+                <strong>Electrical loading:</strong> Each device adds capacitance and resistance to
+                the network
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-yellow-400 mt-1">•</span>
-              <span><strong>Token passing time:</strong> More devices = longer time for each to communicate</span>
+              <span>
+                <strong>Token passing time:</strong> More devices = longer time for each to
+                communicate
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-yellow-400 mt-1">•</span>
-              <span><strong>Address space:</strong> Limited number of unique addresses available</span>
+              <span>
+                <strong>Address space:</strong> Limited number of unique addresses available
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-yellow-400 mt-1">•</span>
-              <span><strong>Collision domain:</strong> More devices increase chance of data conflicts</span>
+              <span>
+                <strong>Collision domain:</strong> More devices increase chance of data conflicts
+              </span>
             </li>
           </ul>
         </div>
@@ -99,15 +113,22 @@ export const BMSModule5Section6ContentPart1 = () => {
         </div>
 
         <h3 className="text-xl font-semibold text-foreground mb-4">Cable Length Calculations</h3>
-        
+
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600 mb-6">
-          <h4 className="font-semibold text-orange-300 text-lg mb-4">RS-485 Cable Length Formula</h4>
+          <h4 className="font-semibold text-orange-300 text-lg mb-4">
+            RS-485 Cable Length Formula
+          </h4>
           <p className="text-gray-300 mb-4">
-            The maximum cable length for RS-485 depends on baud rate and cable quality. Use this formula for planning:
+            The maximum cable length for RS-485 depends on baud rate and cable quality. Use this
+            formula for planning:
           </p>
           <div className="bg-orange-500/10 border border-orange-500/20 rounded p-4 mb-4">
-            <p className="font-mono text-orange-200 text-lg">Max Length = 120,000 ÷ Baud Rate (metres)</p>
-            <p className="text-sm text-orange-100 mt-2">This assumes standard 24 AWG twisted pair cable</p>
+            <p className="font-mono text-orange-200 text-lg">
+              Max Length = 120,000 ÷ Baud Rate (metres)
+            </p>
+            <p className="text-sm text-orange-100 mt-2">
+              This assumes standard 24 AWG twisted pair cable
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-3 bg-red-500/10 border border-red-500/20 rounded">
@@ -129,7 +150,7 @@ export const BMSModule5Section6ContentPart1 = () => {
         </div>
 
         <h3 className="text-xl font-semibold text-foreground mb-4">Network Topology Rules</h3>
-        
+
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* RS-485 Topology */}
           <div className="bg-elec-dark p-5 rounded-lg border border-gray-600">
@@ -139,7 +160,8 @@ export const BMSModule5Section6ContentPart1 = () => {
             </div>
             <div className="space-y-4">
               <p className="text-gray-300 text-sm">
-                RS-485 networks must maintain 120Ω characteristic impedance throughout the cable run. Any branches or stubs create impedance mismatches.
+                RS-485 networks must maintain 120Ω characteristic impedance throughout the cable
+                run. Any branches or stubs create impedance mismatches.
               </p>
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded">
                 <p className="font-medium text-red-200">Critical Requirements:</p>
@@ -171,7 +193,8 @@ export const BMSModule5Section6ContentPart1 = () => {
             </div>
             <div className="space-y-4">
               <p className="text-gray-300 text-sm">
-                Ethernet networks use packet switching and can handle more complex topologies through managed switches.
+                Ethernet networks use packet switching and can handle more complex topologies
+                through managed switches.
               </p>
               <div className="p-3 bg-green-500/10 border border-green-500/20 rounded">
                 <p className="font-medium text-green-200">Design Options:</p>
@@ -196,9 +219,11 @@ export const BMSModule5Section6ContentPart1 = () => {
         </div>
 
         <h3 className="text-xl font-semibold text-foreground mb-4">Practical Planning Example</h3>
-        
+
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600">
-          <h4 className="font-semibold text-blue-300 text-lg mb-4">Office Building HVAC Network Design</h4>
+          <h4 className="font-semibold text-blue-300 text-lg mb-4">
+            Office Building HVAC Network Design
+          </h4>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <p className="font-medium text-blue-200 mb-2">Building Requirements:</p>
@@ -225,13 +250,18 @@ export const BMSModule5Section6ContentPart1 = () => {
           </div>
           <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded">
             <p className="font-medium text-green-200">Result:</p>
-            <p className="text-sm text-green-100">6 segments, maximum 75 devices per segment, well within BACnet MSTP limits. Each segment connects via BACnet/IP router to central supervisory system.</p>
+            <p className="text-sm text-green-100">
+              6 segments, maximum 75 devices per segment, well within BACnet MSTP limits. Each
+              segment connects via BACnet/IP router to central supervisory system.
+            </p>
           </div>
         </div>
 
         <div className="bg-yellow-600/20 border border-yellow-600/40 rounded-lg p-4">
           <p className="text-yellow-100 font-medium">
-            <strong>Installation Tip:</strong> Always check protocol specifications before installation. Exceeding device limits or cable lengths will cause communication failures that are difficult to diagnose later.
+            <strong>Installation Tip:</strong> Always check protocol specifications before
+            installation. Exceeding device limits or cable lengths will cause communication failures
+            that are difficult to diagnose later.
           </p>
         </div>
       </CardContent>

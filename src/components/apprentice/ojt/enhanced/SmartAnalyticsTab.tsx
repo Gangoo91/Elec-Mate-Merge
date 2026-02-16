@@ -1,10 +1,20 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Brain, TrendingUp, Target, Clock, AlertTriangle, CheckCircle, BarChart3, Zap, Loader2, RefreshCw } from "lucide-react";
-import { useOJTAnalytics } from "@/hooks/useOJTAnalytics";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Brain,
+  TrendingUp,
+  Target,
+  Clock,
+  AlertTriangle,
+  CheckCircle,
+  BarChart3,
+  Zap,
+  Loader2,
+  RefreshCw,
+} from 'lucide-react';
+import { useOJTAnalytics } from '@/hooks/useOJTAnalytics';
 
 const SmartAnalyticsTab = () => {
   const {
@@ -17,16 +27,16 @@ const SmartAnalyticsTab = () => {
     learningMetrics,
     isLoading,
     error,
-    refresh
+    refresh,
   } = useOJTAnalytics();
 
   const getPerformanceBadge = (performance: string) => {
     switch (performance) {
-      case "excellent":
+      case 'excellent':
         return <Badge className="bg-green-600 text-white">Excellent</Badge>;
-      case "good":
+      case 'good':
         return <Badge className="bg-blue-600 text-white">Good</Badge>;
-      case "needs-improvement":
+      case 'needs-improvement':
         return <Badge className="bg-orange-600 text-white">Needs Focus</Badge>;
       default:
         return <Badge className="bg-white/15 text-white">Average</Badge>;
@@ -35,9 +45,9 @@ const SmartAnalyticsTab = () => {
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case "up":
+      case 'up':
         return <TrendingUp className="h-4 w-4 text-green-500" />;
-      case "slow":
+      case 'slow':
         return <AlertTriangle className="h-4 w-4 text-orange-500" />;
       default:
         return <Target className="h-4 w-4 text-blue-500" />;
@@ -46,9 +56,12 @@ const SmartAnalyticsTab = () => {
 
   // Calculate derived metrics
   const weeklyProgress = Math.min(Math.round((thisWeekHours / weeklyTarget) * 100), 100);
-  const velocityChange = lastWeekHours > 0
-    ? Math.round(((thisWeekHours - lastWeekHours) / lastWeekHours) * 100)
-    : thisWeekHours > 0 ? 100 : 0;
+  const velocityChange =
+    lastWeekHours > 0
+      ? Math.round(((thisWeekHours - lastWeekHours) / lastWeekHours) * 100)
+      : thisWeekHours > 0
+        ? 100
+        : 0;
 
   // Estimate completion time (assuming 7.5h/week target)
   const remainingHours = 1000 - totalHours;
@@ -60,51 +73,51 @@ const SmartAnalyticsTab = () => {
     const recommendations = [];
 
     // Check for low-progress categories
-    const needsAttention = learningMetrics.filter(m => m.progress < 50);
+    const needsAttention = learningMetrics.filter((m) => m.progress < 50);
     if (needsAttention.length > 0) {
       recommendations.push({
-        type: "urgent",
+        type: 'urgent',
         title: `${needsAttention[0].category} Gap Identified`,
         description: `Progress below target. Recommend focused sessions this week.`,
-        action: "View Study Plan"
+        action: 'View Study Plan',
       });
     }
 
     // Check for excellent performance
-    const excellent = learningMetrics.filter(m => m.performance === 'excellent');
+    const excellent = learningMetrics.filter((m) => m.performance === 'excellent');
     if (excellent.length > 0) {
       recommendations.push({
-        type: "strength",
+        type: 'strength',
         title: `Strong ${excellent[0].category}`,
         description: `Exceptional progress suggests readiness for advanced topics.`,
-        action: "Explore Advanced"
+        action: 'Explore Advanced',
       });
     }
 
     // Check weekly target
     if (thisWeekHours < weeklyTarget * 0.5) {
       recommendations.push({
-        type: "urgent",
-        title: "Weekly Hours Behind",
+        type: 'urgent',
+        title: 'Weekly Hours Behind',
         description: `Only ${thisWeekHours.toFixed(1)}h logged this week. Target: ${weeklyTarget}h.`,
-        action: "Log Hours"
+        action: 'Log Hours',
       });
     } else if (thisWeekHours >= weeklyTarget) {
       recommendations.push({
-        type: "opportunity",
-        title: "Weekly Target Met!",
+        type: 'opportunity',
+        title: 'Weekly Target Met!',
         description: `Great work! You've logged ${thisWeekHours.toFixed(1)}h this week.`,
-        action: "View Progress"
+        action: 'View Progress',
       });
     }
 
     // Default recommendations if none generated
     if (recommendations.length === 0) {
       recommendations.push({
-        type: "opportunity",
-        title: "Continue Your Progress",
-        description: "Keep logging your OJT hours regularly to track your development.",
-        action: "Log Hours"
+        type: 'opportunity',
+        title: 'Continue Your Progress',
+        description: 'Keep logging your OJT hours regularly to track your development.',
+        action: 'Log Hours',
       });
     }
 
@@ -127,7 +140,12 @@ const SmartAnalyticsTab = () => {
       <div className="flex flex-col items-center justify-center p-12">
         <AlertTriangle className="h-8 w-8 text-orange-500 mb-4" />
         <p className="text-white mb-4">{error}</p>
-        <Button onClick={refresh} variant="outline" size="sm" className="h-10 touch-manipulation active:scale-95">
+        <Button
+          onClick={refresh}
+          variant="outline"
+          size="sm"
+          className="h-10 touch-manipulation active:scale-95"
+        >
           <RefreshCw className="h-4 w-4 mr-2" />
           Retry
         </Button>
@@ -147,10 +165,10 @@ const SmartAnalyticsTab = () => {
             <Clock className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{totalHours.toFixed(1)}h</div>
-            <p className="text-xs text-white">
-              {totalEntries} entries logged
-            </p>
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow">
+              {totalHours.toFixed(1)}h
+            </div>
+            <p className="text-xs text-white">{totalEntries} entries logged</p>
           </CardContent>
         </Card>
 
@@ -160,12 +178,12 @@ const SmartAnalyticsTab = () => {
             <Zap className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className={`text-xl sm:text-2xl font-bold ${thisWeekHours >= weeklyTarget ? 'text-green-500' : 'text-blue-500'}`}>
+            <div
+              className={`text-xl sm:text-2xl font-bold ${thisWeekHours >= weeklyTarget ? 'text-green-500' : 'text-blue-500'}`}
+            >
               {thisWeekHours.toFixed(1)}h
             </div>
-            <p className="text-xs text-white">
-              Target: {weeklyTarget}h
-            </p>
+            <p className="text-xs text-white">Target: {weeklyTarget}h</p>
           </CardContent>
         </Card>
 
@@ -175,10 +193,10 @@ const SmartAnalyticsTab = () => {
             <BarChart3 className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className="text-xl sm:text-2xl font-bold text-purple-500">{completionPercentage}%</div>
-            <p className="text-xs text-white">
-              Of OJT complete
-            </p>
+            <div className="text-xl sm:text-2xl font-bold text-purple-500">
+              {completionPercentage}%
+            </div>
+            <p className="text-xs text-white">Of OJT complete</p>
           </CardContent>
         </Card>
 
@@ -223,9 +241,7 @@ const SmartAnalyticsTab = () => {
                       </div>
                     </div>
                     <Progress value={metric.progress} className="h-2" />
-                    <p className="text-xs sm:text-sm text-white italic">
-                      {metric.aiInsight}
-                    </p>
+                    <p className="text-xs sm:text-sm text-white italic">{metric.aiInsight}</p>
                   </div>
                 ))}
               </div>
@@ -250,23 +266,36 @@ const SmartAnalyticsTab = () => {
           <CardContent>
             <div className="space-y-4">
               {recommendations.map((rec, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 bg-white/10">
+                <div
+                  key={index}
+                  className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 bg-white/10"
+                >
                   <div className="flex items-start justify-between mb-2 gap-2">
                     <div className="flex items-center gap-2">
-                      {rec.type === "urgent" && <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />}
-                      {rec.type === "opportunity" && <TrendingUp className="h-4 w-4 text-blue-500 shrink-0" />}
-                      {rec.type === "strength" && <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />}
+                      {rec.type === 'urgent' && (
+                        <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
+                      )}
+                      {rec.type === 'opportunity' && (
+                        <TrendingUp className="h-4 w-4 text-blue-500 shrink-0" />
+                      )}
+                      {rec.type === 'strength' && (
+                        <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
+                      )}
                       <h4 className="font-medium text-sm sm:text-base">{rec.title}</h4>
                     </div>
                     <Badge
-                      variant={rec.type === "urgent" ? "destructive" : "default"}
+                      variant={rec.type === 'urgent' ? 'destructive' : 'default'}
                       className="shrink-0 text-xs"
                     >
                       {rec.type}
                     </Badge>
                   </div>
                   <p className="text-xs sm:text-sm text-white mb-3">{rec.description}</p>
-                  <Button size="sm" variant="outline" className="w-full h-10 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation active:scale-95">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="w-full h-10 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation active:scale-95"
+                  >
                     {rec.action}
                   </Button>
                 </div>
@@ -278,7 +307,12 @@ const SmartAnalyticsTab = () => {
 
       {/* Refresh Button */}
       <div className="flex justify-center">
-        <Button onClick={refresh} variant="ghost" size="sm" className="text-white h-10 touch-manipulation active:scale-95">
+        <Button
+          onClick={refresh}
+          variant="ghost"
+          size="sm"
+          className="text-white h-10 touch-manipulation active:scale-95"
+        >
           <RefreshCw className="h-4 w-4 mr-2" />
           Refresh Analytics
         </Button>

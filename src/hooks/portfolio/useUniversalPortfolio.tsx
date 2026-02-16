@@ -1,14 +1,20 @@
-
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { usePortfolioData } from "./usePortfolioData";
-import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
-import { TimeEntry } from "@/types/time-tracking";
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { usePortfolioData } from './usePortfolioData';
+import { PortfolioEntry, PortfolioCategory } from '@/types/portfolio';
+import { TimeEntry } from '@/types/time-tracking';
 
 export interface UniversalActivityData {
   title: string;
   description: string;
-  activityType: 'time-entry' | 'study-session' | 'quiz' | 'course' | 'assessment' | 'evidence' | 'manual';
+  activityType:
+    | 'time-entry'
+    | 'study-session'
+    | 'quiz'
+    | 'course'
+    | 'assessment'
+    | 'evidence'
+    | 'manual';
   timeSpent: number; // in minutes
   date: string;
   skills?: string[];
@@ -27,31 +33,54 @@ export const useUniversalPortfolio = () => {
     const content = `${title} ${description}`.toLowerCase();
 
     // Health & Safety keywords
-    if (content.includes('safety') || content.includes('ppe') || content.includes('hazard') || 
-        content.includes('risk') || content.includes('isolation') || content.includes('emergency')) {
-      return categories.find(cat => cat.id === 'health-safety') || categories[0];
+    if (
+      content.includes('safety') ||
+      content.includes('ppe') ||
+      content.includes('hazard') ||
+      content.includes('risk') ||
+      content.includes('isolation') ||
+      content.includes('emergency')
+    ) {
+      return categories.find((cat) => cat.id === 'health-safety') || categories[0];
     }
 
     // Testing & Inspection keywords
-    if (content.includes('test') || content.includes('inspection') || content.includes('measurement') ||
-        content.includes('certification') || content.includes('verify') || content.includes('bs7671')) {
-      return categories.find(cat => cat.id === 'testing-inspection') || categories[0];
+    if (
+      content.includes('test') ||
+      content.includes('inspection') ||
+      content.includes('measurement') ||
+      content.includes('certification') ||
+      content.includes('verify') ||
+      content.includes('bs7671')
+    ) {
+      return categories.find((cat) => cat.id === 'testing-inspection') || categories[0];
     }
 
     // Customer Service keywords
-    if (content.includes('customer') || content.includes('client') || content.includes('communication') ||
-        content.includes('presentation') || content.includes('meeting')) {
-      return categories.find(cat => cat.id === 'customer-service') || categories[0];
+    if (
+      content.includes('customer') ||
+      content.includes('client') ||
+      content.includes('communication') ||
+      content.includes('presentation') ||
+      content.includes('meeting')
+    ) {
+      return categories.find((cat) => cat.id === 'customer-service') || categories[0];
     }
 
     // Professional Development keywords
-    if (content.includes('study') || content.includes('course') || content.includes('learning') ||
-        content.includes('development') || content.includes('training') || activityType === 'study-session') {
-      return categories.find(cat => cat.id === 'professional-development') || categories[0];
+    if (
+      content.includes('study') ||
+      content.includes('course') ||
+      content.includes('learning') ||
+      content.includes('development') ||
+      content.includes('training') ||
+      activityType === 'study-session'
+    ) {
+      return categories.find((cat) => cat.id === 'professional-development') || categories[0];
     }
 
     // Default to Practical Skills
-    return categories.find(cat => cat.id === 'practical-skills') || categories[0];
+    return categories.find((cat) => cat.id === 'practical-skills') || categories[0];
   };
 
   // Generate smart skills based on content analysis
@@ -62,21 +91,21 @@ export const useUniversalPortfolio = () => {
 
     // Technical skills detection
     const skillMappings = {
-      'wiring': ['Cable Installation', 'Circuit Design'],
-      'installation': ['Installation Techniques', 'Project Planning'],
-      'testing': ['Testing & Measurement', 'Compliance Verification'],
-      'safety': ['Safety Procedures', 'Risk Assessment'],
-      'troubleshooting': ['Problem Solving', 'Fault Finding'],
-      'customer': ['Customer Service', 'Communication'],
-      'documentation': ['Technical Documentation', 'Report Writing'],
-      'inspection': ['Inspection Procedures', 'Quality Control'],
-      'maintenance': ['Preventive Maintenance', 'Equipment Care'],
-      'compliance': ['Regulatory Compliance', 'Standards Knowledge']
+      wiring: ['Cable Installation', 'Circuit Design'],
+      installation: ['Installation Techniques', 'Project Planning'],
+      testing: ['Testing & Measurement', 'Compliance Verification'],
+      safety: ['Safety Procedures', 'Risk Assessment'],
+      troubleshooting: ['Problem Solving', 'Fault Finding'],
+      customer: ['Customer Service', 'Communication'],
+      documentation: ['Technical Documentation', 'Report Writing'],
+      inspection: ['Inspection Procedures', 'Quality Control'],
+      maintenance: ['Preventive Maintenance', 'Equipment Care'],
+      compliance: ['Regulatory Compliance', 'Standards Knowledge'],
     };
 
     Object.entries(skillMappings).forEach(([keyword, relatedSkills]) => {
       if (content.includes(keyword)) {
-        relatedSkills.forEach(skill => {
+        relatedSkills.forEach((skill) => {
           if (!detectedSkills.includes(skill)) {
             detectedSkills.push(skill);
           }
@@ -155,7 +184,7 @@ export const useUniversalPortfolio = () => {
 
   const createUniversalPortfolioEntry = async (activityData: UniversalActivityData) => {
     setIsProcessing(true);
-    
+
     try {
       const smartCategory = assignSmartCategory(activityData);
       const smartSkills = generateSmartSkills(activityData);
@@ -187,15 +216,15 @@ export const useUniversalPortfolio = () => {
         selfAssessment: 3, // Default rating
         status: 'completed',
         timeSpent: activityData.timeSpent,
-        awardingBodyStandards: []
+        awardingBodyStandards: [],
       };
 
       const entryId = addEntry(portfolioEntry);
-      
+
       if (!activityData.autoGenerated) {
         toast({
-          title: "Added to Portfolio",
-          description: `"${activityData.title}" has been automatically added to your portfolio.`
+          title: 'Added to Portfolio',
+          description: `"${activityData.title}" has been automatically added to your portfolio.`,
         });
       }
 
@@ -203,9 +232,9 @@ export const useUniversalPortfolio = () => {
     } catch (error) {
       console.error('Error creating universal portfolio entry:', error);
       toast({
-        title: "Error",
-        description: "Failed to add entry to portfolio. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to add entry to portfolio. Please try again.',
+        variant: 'destructive',
       });
       throw error;
     } finally {
@@ -221,7 +250,7 @@ export const useUniversalPortfolio = () => {
       activityType: timeEntry.isQuiz ? 'quiz' : 'time-entry',
       timeSpent: timeEntry.duration,
       date: timeEntry.date,
-      sourceData: timeEntry
+      sourceData: timeEntry,
     };
   };
 
@@ -246,6 +275,6 @@ export const useUniversalPortfolio = () => {
     isProcessing,
     categories,
     assignSmartCategory,
-    generateSmartSkills
+    generateSmartSkills,
   };
 };

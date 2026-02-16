@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   FileText,
   ChevronDown,
@@ -8,8 +8,8 @@ import {
   Loader2,
   Trash2,
   Sparkles,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,16 +17,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/dropdown-menu';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import {
   getVacancyTemplates,
   deleteVacancyTemplate,
   type VacancyTemplate,
-} from "@/services/vacancyService";
-import { toast } from "@/hooks/use-toast";
-import type { VacancyFormData } from "./schema";
+} from '@/services/vacancyService';
+import { toast } from '@/hooks/use-toast';
+import type { VacancyFormData } from './schema';
 
 interface TemplateSelectorProps {
   onSelect: (template: Partial<VacancyFormData>) => void;
@@ -47,7 +47,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
       const data = await getVacancyTemplates();
       setTemplates(data);
     } catch (error) {
-      console.error("Error loading templates:", error);
+      console.error('Error loading templates:', error);
     } finally {
       setIsLoading(false);
     }
@@ -57,30 +57,26 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
     // Convert template to form data
     const formData: Partial<VacancyFormData> = {
       title: template.title,
-      type: template.type as VacancyFormData["type"],
-      location: template.location || "",
+      type: template.type as VacancyFormData['type'],
+      location: template.location || '',
       workArrangement:
-        (template.work_arrangement as VacancyFormData["workArrangement"]) ||
-        "On-site",
+        (template.work_arrangement as VacancyFormData['workArrangement']) || 'On-site',
       salaryMin: template.salary_min || undefined,
       salaryMax: template.salary_max || undefined,
-      salaryPeriod:
-        (template.salary_period as VacancyFormData["salaryPeriod"]) || "year",
+      salaryPeriod: (template.salary_period as VacancyFormData['salaryPeriod']) || 'year',
       benefits: template.benefits || [],
       requirements: template.requirements || [],
-      experienceLevel:
-        (template.experience_level as VacancyFormData["experienceLevel"]) ||
-        "Mid",
-      description: template.description || "",
+      experienceLevel: (template.experience_level as VacancyFormData['experienceLevel']) || 'Mid',
+      description: template.description || '',
       niceToHave: template.nice_to_have || [],
-      schedule: template.schedule || "",
+      schedule: template.schedule || '',
     };
 
     onSelect(formData);
     setIsOpen(false);
 
     toast({
-      title: "Template loaded",
+      title: 'Template loaded',
       description: `"${template.name}" template applied. Customize it for your listing.`,
     });
   };
@@ -90,9 +86,9 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
 
     if (template.is_system_template) {
       toast({
-        title: "Cannot delete",
-        description: "System templates cannot be deleted",
-        variant: "destructive",
+        title: 'Cannot delete',
+        description: 'System templates cannot be deleted',
+        variant: 'destructive',
       });
       return;
     }
@@ -101,25 +97,25 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
     if (success) {
       setTemplates((prev) => prev.filter((t) => t.id !== template.id));
       toast({
-        title: "Template deleted",
+        title: 'Template deleted',
         description: `"${template.name}" has been removed`,
       });
     } else {
       toast({
-        title: "Error",
-        description: "Failed to delete template",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to delete template',
+        variant: 'destructive',
       });
     }
   };
 
   const getTemplateIcon = (template: VacancyTemplate) => {
-    if (template.type === "Apprenticeship") {
+    if (template.type === 'Apprenticeship') {
       return <GraduationCap className="h-4 w-4" />;
     }
     if (
-      template.title.toLowerCase().includes("manager") ||
-      template.title.toLowerCase().includes("supervisor")
+      template.title.toLowerCase().includes('manager') ||
+      template.title.toLowerCase().includes('supervisor')
     ) {
       return <Users className="h-4 w-4" />;
     }
@@ -137,8 +133,8 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
           variant="outline"
           size="sm"
           className={cn(
-            "gap-2 text-white/70 border-white/20 hover:bg-white/10",
-            "hover:text-white"
+            'gap-2 text-white/70 border-white/20 hover:bg-white/10',
+            'hover:text-white'
           )}
         >
           {isLoading ? (
@@ -151,10 +147,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="end"
-        className="w-72 bg-elec-gray border-white/10"
-      >
+      <DropdownMenuContent align="end" className="w-72 bg-elec-gray border-white/10">
         <DropdownMenuLabel className="text-white/60 text-xs font-normal">
           Start from a template
         </DropdownMenuLabel>
@@ -172,9 +165,9 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                 key={template.id}
                 onClick={() => handleSelect(template)}
                 className={cn(
-                  "cursor-pointer py-3",
-                  "text-white/80 hover:text-white hover:bg-white/10",
-                  "focus:text-white focus:bg-white/10"
+                  'cursor-pointer py-3',
+                  'text-white/80 hover:text-white hover:bg-white/10',
+                  'focus:text-white focus:bg-white/10'
                 )}
               >
                 <div className="flex items-start gap-3 w-full">
@@ -184,7 +177,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                   <div className="flex-1 min-w-0">
                     <p className="font-medium truncate">{template.name}</p>
                     <p className="text-xs text-white/50 mt-0.5">
-                      {template.type} • {template.experience_level || "Any"} level
+                      {template.type} • {template.experience_level || 'Any'} level
                     </p>
                   </div>
                 </div>
@@ -197,17 +190,15 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         {userTemplates.length > 0 && (
           <>
             <DropdownMenuSeparator className="bg-white/10" />
-            <DropdownMenuLabel className="text-white/40 text-xs">
-              Your Templates
-            </DropdownMenuLabel>
+            <DropdownMenuLabel className="text-white/40 text-xs">Your Templates</DropdownMenuLabel>
             {userTemplates.map((template) => (
               <DropdownMenuItem
                 key={template.id}
                 onClick={() => handleSelect(template)}
                 className={cn(
-                  "cursor-pointer py-3 group",
-                  "text-white/80 hover:text-white hover:bg-white/10",
-                  "focus:text-white focus:bg-white/10"
+                  'cursor-pointer py-3 group',
+                  'text-white/80 hover:text-white hover:bg-white/10',
+                  'focus:text-white focus:bg-white/10'
                 )}
               >
                 <div className="flex items-start gap-3 w-full">
@@ -216,16 +207,14 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium truncate">{template.name}</p>
-                    <p className="text-xs text-white/50 mt-0.5">
-                      {template.type}
-                    </p>
+                    <p className="text-xs text-white/50 mt-0.5">{template.type}</p>
                   </div>
                   <button
                     onClick={(e) => handleDelete(e, template)}
                     className={cn(
-                      "p-1.5 rounded-lg opacity-0 group-hover:opacity-100",
-                      "text-white/40 hover:text-red-400 hover:bg-red-500/10",
-                      "transition-opacity"
+                      'p-1.5 rounded-lg opacity-0 group-hover:opacity-100',
+                      'text-white/40 hover:text-red-400 hover:bg-red-500/10',
+                      'transition-opacity'
                     )}
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -237,9 +226,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         )}
 
         {templates.length === 0 && !isLoading && (
-          <div className="p-4 text-center text-white/50 text-sm">
-            No templates available
-          </div>
+          <div className="p-4 text-center text-white/50 text-sm">No templates available</div>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

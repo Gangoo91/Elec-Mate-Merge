@@ -1,7 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Flame, TrendingUp } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Flame, TrendingUp } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface UpsellOpportunitiesCardProps {
   upsells: any[];
@@ -30,7 +35,9 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
               <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[80px] py-4 px-4 relative">
                 <div className="flex flex-col gap-3 flex-1 text-left w-full pr-8">
                   <div className="flex items-start gap-2 w-full">
-                    {upsell.isHot && <Flame className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />}
+                    {upsell.isHot && (
+                      <Flame className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                    )}
                     <span className="font-medium text-foreground text-base leading-snug flex-1">
                       {upsell.opportunity}
                     </span>

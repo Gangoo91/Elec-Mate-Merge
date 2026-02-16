@@ -12,10 +12,10 @@ export const BMSModule5Section2ContentPart2 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          BACnet supports several types of communication media. The two most common for electricians are 
-          MSTP (RS-485) and BACnet/IP (Ethernet). Each has distinct installation requirements.
+          BACnet supports several types of communication media. The two most common for electricians
+          are MSTP (RS-485) and BACnet/IP (Ethernet). Each has distinct installation requirements.
         </p>
-        
+
         <div className="grid md:grid-cols-1 gap-4">
           <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2 mb-3">
@@ -25,7 +25,9 @@ export const BMSModule5Section2ContentPart2 = () => {
             <div className="space-y-2 text-sm">
               <p className="text-foreground">• Runs on RS-485 twisted-pair cabling</p>
               <p className="text-foreground">• Supports up to 127 devices per segment</p>
-              <p className="text-foreground">• Requires correct termination resistors at both ends</p>
+              <p className="text-foreground">
+                • Requires correct termination resistors at both ends
+              </p>
               <p className="text-foreground">• Common in HVAC field controllers</p>
               <p className="text-foreground">• Lower cost but slower communication speeds</p>
             </div>
@@ -39,9 +41,13 @@ export const BMSModule5Section2ContentPart2 = () => {
             <div className="space-y-2 text-sm">
               <p className="text-foreground">• Uses standard Ethernet cabling and IP networks</p>
               <p className="text-foreground">• Scalable for large buildings and campuses</p>
-              <p className="text-foreground">• Requires coordination with IT departments for addressing</p>
+              <p className="text-foreground">
+                • Requires coordination with IT departments for addressing
+              </p>
               <p className="text-foreground">• High speed and flexible</p>
-              <p className="text-foreground">• Ideal for supervisory control and large installations</p>
+              <p className="text-foreground">
+                • Ideal for supervisory control and large installations
+              </p>
             </div>
           </div>
         </div>

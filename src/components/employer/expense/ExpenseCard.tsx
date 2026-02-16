@@ -1,10 +1,21 @@
 import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import {
-  Check, X, Clock, Receipt, Briefcase,
-  Wrench, Car, ParkingCircle, Hammer, HardHat,
-  GraduationCap, UtensilsCrossed, Package,
-  ChevronRight, DollarSign
+  Check,
+  X,
+  Clock,
+  Receipt,
+  Briefcase,
+  Wrench,
+  Car,
+  ParkingCircle,
+  Hammer,
+  HardHat,
+  GraduationCap,
+  UtensilsCrossed,
+  Package,
+  ChevronRight,
+  DollarSign,
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -48,30 +59,33 @@ const categoryColors: Record<string, string> = {
 };
 
 // Status colors
-const statusConfig: Record<string, { color: string; bgColor: string; borderColor: string; icon: React.ElementType }> = {
+const statusConfig: Record<
+  string,
+  { color: string; bgColor: string; borderColor: string; icon: React.ElementType }
+> = {
   Pending: {
     color: 'text-amber-500',
     bgColor: 'bg-amber-500/10',
     borderColor: 'border-l-amber-500',
-    icon: Clock
+    icon: Clock,
   },
   Approved: {
     color: 'text-green-500',
     bgColor: 'bg-green-500/10',
     borderColor: 'border-l-green-500',
-    icon: Check
+    icon: Check,
   },
   Paid: {
     color: 'text-blue-500',
     bgColor: 'bg-blue-500/10',
     borderColor: 'border-l-blue-500',
-    icon: DollarSign
+    icon: DollarSign,
   },
   Rejected: {
     color: 'text-red-500',
     bgColor: 'bg-red-500/10',
     borderColor: 'border-l-red-500',
-    icon: X
+    icon: X,
   },
 };
 
@@ -92,31 +106,39 @@ export function ExpenseCard({
   const isApproved = expense.status === 'Approved';
 
   // Determine swipe actions based on status
-  const leftAction = isPending && onReject ? {
-    icon: <X className="h-5 w-5" />,
-    label: 'Reject',
-    onClick: () => onReject(expense.id),
-    variant: 'destructive' as const,
-  } : undefined;
+  const leftAction =
+    isPending && onReject
+      ? {
+          icon: <X className="h-5 w-5" />,
+          label: 'Reject',
+          onClick: () => onReject(expense.id),
+          variant: 'destructive' as const,
+        }
+      : undefined;
 
-  const rightAction = isPending && onApprove ? {
-    icon: <Check className="h-5 w-5" />,
-    label: 'Approve',
-    onClick: () => onApprove(expense.id),
-    variant: 'success' as const,
-  } : isApproved && onMarkPaid ? {
-    icon: <DollarSign className="h-5 w-5" />,
-    label: 'Mark Paid',
-    onClick: () => onMarkPaid(expense.id),
-    variant: 'success' as const,
-  } : undefined;
+  const rightAction =
+    isPending && onApprove
+      ? {
+          icon: <Check className="h-5 w-5" />,
+          label: 'Approve',
+          onClick: () => onApprove(expense.id),
+          variant: 'success' as const,
+        }
+      : isApproved && onMarkPaid
+        ? {
+            icon: <DollarSign className="h-5 w-5" />,
+            label: 'Mark Paid',
+            onClick: () => onMarkPaid(expense.id),
+            variant: 'success' as const,
+          }
+        : undefined;
 
   const cardContent = (
     <Card
       className={cn(
-        "border-l-4 transition-all duration-200",
+        'border-l-4 transition-all duration-200',
         status.borderColor,
-        onClick && "cursor-pointer hover:bg-muted/50 active:scale-[0.99]"
+        onClick && 'cursor-pointer hover:bg-muted/50 active:scale-[0.99]'
       )}
       onClick={() => onClick?.(expense)}
     >
@@ -137,9 +159,7 @@ export function ExpenseCard({
                 <p className="font-semibold text-foreground truncate">
                   {expense.employees?.name || 'Unknown'}
                 </p>
-                <p className="text-sm text-muted-foreground line-clamp-1">
-                  {expense.description}
-                </p>
+                <p className="text-sm text-muted-foreground line-clamp-1">{expense.description}</p>
               </div>
               <div className="text-right shrink-0">
                 <p className="text-lg font-bold text-foreground">
@@ -151,13 +171,16 @@ export function ExpenseCard({
             {/* Bottom Row - Meta Info */}
             <div className="flex items-center gap-2 mt-3 flex-wrap">
               {/* Category Badge */}
-              <Badge variant="outline" className={cn("text-xs", categoryColor)}>
+              <Badge variant="outline" className={cn('text-xs', categoryColor)}>
                 <CategoryIcon className="h-3 w-3 mr-1" />
                 {expense.category}
               </Badge>
 
               {/* Status Badge */}
-              <Badge variant="outline" className={cn("text-xs", status.bgColor, status.color, "border-transparent")}>
+              <Badge
+                variant="outline"
+                className={cn('text-xs', status.bgColor, status.color, 'border-transparent')}
+              >
                 <StatusIcon className="h-3 w-3 mr-1" />
                 {expense.status}
               </Badge>
@@ -184,9 +207,7 @@ export function ExpenseCard({
               <p className="text-xs text-muted-foreground">
                 {formatDistanceToNow(new Date(expense.submitted_date), { addSuffix: true })}
               </p>
-              {onClick && (
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
-              )}
+              {onClick && <ChevronRight className="h-4 w-4 text-muted-foreground" />}
             </div>
 
             {/* Rejection Reason */}

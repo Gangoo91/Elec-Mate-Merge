@@ -29,7 +29,7 @@ const EICFormHeaderWithDraft: React.FC<EICFormHeaderWithDraftProps> = ({
   isSaving,
   lastSaveTime,
   currentReportId,
-  formData
+  formData,
 }) => {
   return (
     <div className="space-y-4">
@@ -45,7 +45,7 @@ const EICFormHeaderWithDraft: React.FC<EICFormHeaderWithDraftProps> = ({
           <p className="text-sm text-muted-foreground flex items-center gap-2">
             New Installation Certification - BS 7671:18+A3:2024
             {currentReportId && ` • Report ID: ${currentReportId}`}
-            <SaveStatusIndicator 
+            <SaveStatusIndicator
               hasUnsavedChanges={hasUnsavedChanges}
               isSaving={isSaving}
               lastSaveTime={lastSaveTime}

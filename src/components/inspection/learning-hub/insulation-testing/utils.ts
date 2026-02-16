@@ -1,5 +1,8 @@
-
-export const calculateTemperatureCorrection = (resistance: number, measuredTemp: number, referenceTemp: number = 20): number => {
+export const calculateTemperatureCorrection = (
+  resistance: number,
+  measuredTemp: number,
+  referenceTemp: number = 20
+): number => {
   const tempDifference = measuredTemp - referenceTemp;
   const correctionFactor = Math.pow(1.07, -tempDifference);
   return resistance * correctionFactor;

@@ -24,8 +24,8 @@ export const BMSModule5Section1ContentPart3 = () => {
             </div>
             <div className="bg-blue-500/10 rounded p-2">
               <p className="text-foreground text-xs">
-                <span className="font-medium">For Electricians:</span> MSTP requires RS-485 twisted pair 
-                with proper termination and daisy-chain topology.
+                <span className="font-medium">For Electricians:</span> MSTP requires RS-485 twisted
+                pair with proper termination and daisy-chain topology.
               </p>
             </div>
           </div>
@@ -44,8 +44,8 @@ export const BMSModule5Section1ContentPart3 = () => {
             </div>
             <div className="bg-green-500/10 rounded p-2">
               <p className="text-foreground text-xs">
-                <span className="font-medium">Key Point:</span> Must use daisy-chain wiring. 
-                Star topology causes communication failures.
+                <span className="font-medium">Key Point:</span> Must use daisy-chain wiring. Star
+                topology causes communication failures.
               </p>
             </div>
           </div>
@@ -64,8 +64,8 @@ export const BMSModule5Section1ContentPart3 = () => {
             </div>
             <div className="bg-purple-500/10 rounded p-2">
               <p className="text-foreground text-xs">
-                <span className="font-medium">Options:</span> Twisted pair (most common), 
-                wireless RF, or power line communication.
+                <span className="font-medium">Options:</span> Twisted pair (most common), wireless
+                RF, or power line communication.
               </p>
             </div>
           </div>

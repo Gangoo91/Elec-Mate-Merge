@@ -16,7 +16,9 @@ function generateQuoteNumber(): string {
   const now = new Date();
   const year = now.getFullYear().toString().slice(-2);
   const month = (now.getMonth() + 1).toString().padStart(2, '0');
-  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  const random = Math.floor(Math.random() * 1000)
+    .toString()
+    .padStart(3, '0');
   return `QTE-${year}${month}-${random}`;
 }
 
@@ -25,7 +27,9 @@ function generateInvoiceNumber(): string {
   const now = new Date();
   const year = now.getFullYear().toString().slice(-2);
   const month = (now.getMonth() + 1).toString().padStart(2, '0');
-  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  const random = Math.floor(Math.random() * 1000)
+    .toString()
+    .padStart(3, '0');
   return `INV-${year}${month}-${random}`;
 }
 
@@ -42,7 +46,9 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
   // Helper to get auth session
   const getAuthSession = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (!session) throw new Error('Not authenticated');
     return session;
   };
@@ -116,9 +122,10 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
         connectionTimeoutRef.current = null;
       }
       toast.success('Voice connected', {
-        description: currentSection === 'quotes'
-          ? 'Say "Send quote to..." or "Create a quote for..."'
-          : 'Say "Send invoice to..." or "Create an invoice for..."',
+        description:
+          currentSection === 'quotes'
+            ? 'Say "Send quote to..." or "Create a quote for..."'
+            : 'Say "Send invoice to..." or "Create an invoice for..."',
         duration: 4000,
       });
     },
@@ -167,7 +174,8 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
           if (data?.error) throw new Error(data.error);
 
           triggerRefresh();
-          const clientName = typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
+          const clientName =
+            typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
           return `Quote ${quote.quote_number} sent to ${clientName}`;
         } catch (err) {
           console.error('[QuoteInvoiceVoice] send_quote error:', err);
@@ -194,7 +202,8 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
           if (data?.error) throw new Error(data.error);
 
           triggerRefresh();
-          const clientName = typeof invoice.client_data === 'object' ? invoice.client_data?.name : 'the client';
+          const clientName =
+            typeof invoice.client_data === 'object' ? invoice.client_data?.name : 'the client';
           return `Invoice ${invoice.invoice_number} sent to ${clientName}`;
         } catch (err) {
           console.error('[QuoteInvoiceVoice] send_invoice error:', err);
@@ -248,12 +257,14 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
               title: params.jobTitle,
               description: params.jobDescription || '',
             },
-            items: [{
-              description: params.itemDescription,
-              quantity: quantity,
-              unitPrice: unitPrice,
-              total: lineTotal,
-            }],
+            items: [
+              {
+                description: params.itemDescription,
+                quantity: quantity,
+                unitPrice: unitPrice,
+                total: lineTotal,
+              },
+            ],
             subtotal: subtotal,
             vat_amount: vatAmount,
             total: total,
@@ -266,11 +277,7 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
             invoice_raised: false,
           };
 
-          const { data, error } = await supabase
-            .from('quotes')
-            .insert(quoteData)
-            .select()
-            .single();
+          const { data, error } = await supabase.from('quotes').insert(quoteData).select().single();
 
           if (error) throw new Error(error.message);
 
@@ -335,12 +342,14 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
               title: params.jobTitle,
               description: params.jobDescription || '',
             },
-            items: [{
-              description: params.itemDescription,
-              quantity: quantity,
-              unitPrice: unitPrice,
-              total: lineTotal,
-            }],
+            items: [
+              {
+                description: params.itemDescription,
+                quantity: quantity,
+                unitPrice: unitPrice,
+                total: lineTotal,
+              },
+            ],
             subtotal: subtotal,
             vat_amount: vatAmount,
             total: total,
@@ -379,15 +388,13 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
             return `Cannot delete quote ${quote.quote_number} - it has been converted to an invoice`;
           }
 
-          const { error } = await supabase
-            .from('quotes')
-            .delete()
-            .eq('id', quote.id);
+          const { error } = await supabase.from('quotes').delete().eq('id', quote.id);
 
           if (error) throw new Error(error.message);
 
           triggerRefresh();
-          const clientName = typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
+          const clientName =
+            typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
           return `Quote ${quote.quote_number} for ${clientName} has been deleted`;
         } catch (err) {
           console.error('[QuoteInvoiceVoice] delete_quote error:', err);
@@ -406,15 +413,13 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
             return `Cannot delete invoice ${invoice.invoice_number} - it has been marked as paid`;
           }
 
-          const { error } = await supabase
-            .from('quotes')
-            .delete()
-            .eq('id', invoice.id);
+          const { error } = await supabase.from('quotes').delete().eq('id', invoice.id);
 
           if (error) throw new Error(error.message);
 
           triggerRefresh();
-          const clientName = typeof invoice.client_data === 'object' ? invoice.client_data?.name : 'the client';
+          const clientName =
+            typeof invoice.client_data === 'object' ? invoice.client_data?.name : 'the client';
           return `Invoice ${invoice.invoice_number} for ${clientName} has been deleted`;
         } catch (err) {
           console.error('[QuoteInvoiceVoice] delete_invoice error:', err);
@@ -468,7 +473,8 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
           if (error) throw new Error(error.message);
 
           triggerRefresh();
-          const clientName = typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
+          const clientName =
+            typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
           return `Quote ${quote.quote_number} converted to invoice ${invoiceNumber} for ${clientName}. It's saved as a draft - say "send invoice to ${clientName}" to email it.`;
         } catch (err) {
           console.error('[QuoteInvoiceVoice] convert_quote_to_invoice error:', err);
@@ -536,19 +542,21 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
               workStartDate: params.workStartDate || '',
               specialRequirements: params.specialRequirements || '',
             },
-            items: [{
-              description: params.itemDescription,
-              quantity: quantity,
-              unitPrice: unitPrice,
-              total: lineTotal,
-              category: params.itemCategory || 'general',
-            }],
+            items: [
+              {
+                description: params.itemDescription,
+                quantity: quantity,
+                unitPrice: unitPrice,
+                total: lineTotal,
+                category: params.itemCategory || 'general',
+              },
+            ],
             subtotal: subtotal,
             vat_amount: vatAmount,
             total: total,
             settings: {
               vatRate: vatRate,
-              vatRegistered: params.vatRegistered ?? (vatRate > 0),
+              vatRegistered: params.vatRegistered ?? vatRate > 0,
               labourRate: params.labourRate,
               overheadPercentage: params.overheadPercentage,
               profitMargin: params.profitMargin,
@@ -570,9 +578,12 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
           // Send quote via edge function (auth handled automatically by Supabase client)
           console.log('[QuoteInvoiceVoice] Calling send-quote-resend for new quote:', quote.id);
-          const { data: sendData, error: sendError } = await supabase.functions.invoke('send-quote-resend', {
-            body: { quoteId: quote.id },
-          });
+          const { data: sendData, error: sendError } = await supabase.functions.invoke(
+            'send-quote-resend',
+            {
+              body: { quoteId: quote.id },
+            }
+          );
 
           console.log('[QuoteInvoiceVoice] send-quote-resend response:', { sendData, sendError });
 
@@ -634,7 +645,8 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
               // Already an invoice, just send it
               invoiceId = quote.id;
               invoiceNumber = quote.invoice_number;
-              clientName = typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
+              clientName =
+                typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
             } else {
               // Convert to invoice
               invoiceNumber = generateInvoiceNumber();
@@ -648,12 +660,14 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
                 ...existingSettings,
                 paymentTerms: params.paymentTerms || `Due within ${params.paymentDays || 30} days`,
                 dueDate: dueDate.toISOString(),
-                bankDetails: params.bankName ? {
-                  bankName: params.bankName,
-                  accountName: params.bankAccountName,
-                  accountNumber: params.bankAccountNumber,
-                  sortCode: params.bankSortCode,
-                } : existingSettings?.bankDetails,
+                bankDetails: params.bankName
+                  ? {
+                      bankName: params.bankName,
+                      accountName: params.bankAccountName,
+                      accountNumber: params.bankAccountNumber,
+                      sortCode: params.bankSortCode,
+                    }
+                  : existingSettings?.bankDetails,
               };
 
               const { error: updateError } = await supabase
@@ -674,7 +688,8 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
               if (updateError) throw new Error(updateError.message);
 
               invoiceId = quote.id;
-              clientName = typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
+              clientName =
+                typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
             }
           } else {
             // Create fresh invoice
@@ -720,26 +735,30 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
                 description: params.jobDescription || '',
                 workCompletionDate: params.workCompletionDate || '',
               },
-              items: [{
-                description: params.itemDescription,
-                quantity: quantity,
-                unitPrice: unitPrice,
-                total: lineTotal,
-                category: params.itemCategory || 'general',
-              }],
+              items: [
+                {
+                  description: params.itemDescription,
+                  quantity: quantity,
+                  unitPrice: unitPrice,
+                  total: lineTotal,
+                  category: params.itemCategory || 'general',
+                },
+              ],
               subtotal: subtotal,
               vat_amount: vatAmount,
               total: total,
               settings: {
                 vatRate: vatRate,
-                vatRegistered: params.vatRegistered ?? (vatRate > 0),
+                vatRegistered: params.vatRegistered ?? vatRate > 0,
                 paymentTerms: params.paymentTerms || `Due within ${params.paymentDays || 30} days`,
-                bankDetails: params.bankName ? {
-                  bankName: params.bankName,
-                  accountName: params.bankAccountName,
-                  accountNumber: params.bankAccountNumber,
-                  sortCode: params.bankSortCode,
-                } : undefined,
+                bankDetails: params.bankName
+                  ? {
+                      bankName: params.bankName,
+                      accountName: params.bankAccountName,
+                      accountNumber: params.bankAccountNumber,
+                      sortCode: params.bankSortCode,
+                    }
+                  : undefined,
               },
               invoice_notes: params.invoiceNotes || '',
             };
@@ -758,9 +777,12 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
           // Send invoice via edge function (auth handled automatically by Supabase client)
           console.log('[QuoteInvoiceVoice] Calling send-invoice-resend for invoice:', invoiceId);
-          const { data: sendData, error: sendError } = await supabase.functions.invoke('send-invoice-resend', {
-            body: { invoiceId },
-          });
+          const { data: sendData, error: sendError } = await supabase.functions.invoke(
+            'send-invoice-resend',
+            {
+              body: { invoiceId },
+            }
+          );
 
           console.log('[QuoteInvoiceVoice] send-invoice-resend response:', { sendData, sendError });
 
@@ -802,15 +824,16 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
           if (error) throw new Error(error.message);
           if (!data || data.length === 0) {
-            return params.client
-              ? `No quotes found for ${params.client}`
-              : 'No quotes found';
+            return params.client ? `No quotes found for ${params.client}` : 'No quotes found';
           }
 
-          const quoteList = data.map(q => {
-            const clientName = typeof q.client_data === 'object' ? (q.client_data as any)?.name : 'Unknown';
-            return `${q.quote_number}: ${clientName} - £${q.total?.toFixed(2) || '0.00'} (${q.status})`;
-          }).join('; ');
+          const quoteList = data
+            .map((q) => {
+              const clientName =
+                typeof q.client_data === 'object' ? (q.client_data as any)?.name : 'Unknown';
+              return `${q.quote_number}: ${clientName} - £${q.total?.toFixed(2) || '0.00'} (${q.status})`;
+            })
+            .join('; ');
 
           return `Found ${data.length} quote${data.length > 1 ? 's' : ''}: ${quoteList}`;
         } catch (err) {
@@ -827,7 +850,9 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
           let query = supabase
             .from('quotes')
-            .select('invoice_number, invoice_status, total, client_data, invoice_date, invoice_due_date')
+            .select(
+              'invoice_number, invoice_status, total, client_data, invoice_date, invoice_due_date'
+            )
             .eq('user_id', session.user.id)
             .eq('invoice_raised', true);
 
@@ -842,15 +867,16 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
           if (error) throw new Error(error.message);
           if (!data || data.length === 0) {
-            return params.client
-              ? `No invoices found for ${params.client}`
-              : 'No invoices found';
+            return params.client ? `No invoices found for ${params.client}` : 'No invoices found';
           }
 
-          const invoiceList = data.map(inv => {
-            const clientName = typeof inv.client_data === 'object' ? (inv.client_data as any)?.name : 'Unknown';
-            return `${inv.invoice_number}: ${clientName} - £${inv.total?.toFixed(2) || '0.00'} (${inv.invoice_status || 'draft'})`;
-          }).join('; ');
+          const invoiceList = data
+            .map((inv) => {
+              const clientName =
+                typeof inv.client_data === 'object' ? (inv.client_data as any)?.name : 'Unknown';
+              return `${inv.invoice_number}: ${clientName} - £${inv.total?.toFixed(2) || '0.00'} (${inv.invoice_status || 'draft'})`;
+            })
+            .join('; ');
 
           return `Found ${data.length} invoice${data.length > 1 ? 's' : ''}: ${invoiceList}`;
         } catch (err) {
@@ -881,11 +907,16 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
             return 'No overdue invoices found';
           }
 
-          const overdueList = data.map(inv => {
-            const clientName = typeof inv.client_data === 'object' ? (inv.client_data as any)?.name : 'Unknown';
-            const dueDate = inv.invoice_due_date ? new Date(inv.invoice_due_date).toLocaleDateString('en-GB') : 'unknown';
-            return `${inv.invoice_number}: ${clientName} - £${inv.total?.toFixed(2) || '0.00'} (due ${dueDate})`;
-          }).join('; ');
+          const overdueList = data
+            .map((inv) => {
+              const clientName =
+                typeof inv.client_data === 'object' ? (inv.client_data as any)?.name : 'Unknown';
+              const dueDate = inv.invoice_due_date
+                ? new Date(inv.invoice_due_date).toLocaleDateString('en-GB')
+                : 'unknown';
+              return `${inv.invoice_number}: ${clientName} - £${inv.total?.toFixed(2) || '0.00'} (due ${dueDate})`;
+            })
+            .join('; ');
 
           return `${data.length} overdue invoice${data.length > 1 ? 's' : ''}: ${overdueList}`;
         } catch (err) {
@@ -931,10 +962,11 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
       // Send initial context
       setTimeout(() => {
         if (conversation.status === 'connected') {
-          conversation.sendContextualUpdate(`User is on the ${currentSection} page. Help them create, send, or manage ${currentSection === 'quotes' ? 'quotes' : 'invoices'}.`);
+          conversation.sendContextualUpdate(
+            `User is on the ${currentSection} page. Help them create, send, or manage ${currentSection === 'quotes' ? 'quotes' : 'invoices'}.`
+          );
         }
       }, 500);
-
     } catch (error) {
       console.error('[QuoteInvoiceVoice] Failed to start:', error);
       setIsConnecting(false);

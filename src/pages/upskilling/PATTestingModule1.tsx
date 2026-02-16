@@ -9,32 +9,32 @@ const PATTestingModule1 = () => {
       id: 1,
       title: "What is PAT Testing and Why It's Required",
       icon: FileText,
-      description: "Introduction to PAT testing fundamentals and legal requirements"
+      description: 'Introduction to PAT testing fundamentals and legal requirements',
     },
     {
       id: 2,
-      title: "Legal Duties (EAWR, PUWER, H&S at Work Act)",
+      title: 'Legal Duties (EAWR, PUWER, H&S at Work Act)',
       icon: AlertTriangle,
-      description: "Understanding the legal framework and obligations"
+      description: 'Understanding the legal framework and obligations',
     },
     {
       id: 3,
-      title: "Types of Equipment Covered by PAT",
+      title: 'Types of Equipment Covered by PAT',
       icon: Tag,
-      description: "Classification of equipment requiring PAT testing"
+      description: 'Classification of equipment requiring PAT testing',
     },
     {
       id: 4,
-      title: "Frequency of Inspection and Testing",
+      title: 'Frequency of Inspection and Testing',
       icon: Clock,
-      description: "Determining appropriate testing intervals"
+      description: 'Determining appropriate testing intervals',
     },
     {
       id: 5,
-      title: "User Checks vs Formal Inspection and Testing",
+      title: 'User Checks vs Formal Inspection and Testing',
       icon: UserCheck,
-      description: "Different levels of electrical safety checks"
-    }
+      description: 'Different levels of electrical safety checks',
+    },
   ];
 
   return (

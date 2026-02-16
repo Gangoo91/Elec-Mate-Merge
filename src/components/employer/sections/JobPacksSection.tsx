@@ -1,28 +1,28 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { FloatingActionButton } from "@/components/ui/floating-action-button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "@/hooks/use-toast";
-import { useJobPacks, useUpdateJobPackDocument, useUpdateJobPack } from "@/hooks/useJobPacks";
-import { useEmployees } from "@/hooks/useEmployees";
-import { useJobs } from "@/hooks/useJobs";
-import { AddJobPackDialog } from "@/components/employer/dialogs/AddJobPackDialog";
-import { ViewJobPackSheet } from "@/components/employer/sheets/ViewJobPackSheet";
-import { JobPack } from "@/services/jobPackService";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { 
-  Package, 
-  Search, 
-  FileText, 
-  ClipboardList, 
-  BookOpen, 
-  Users, 
-  CheckCircle2, 
-  Clock, 
+import { useState, useMemo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { FloatingActionButton } from '@/components/ui/floating-action-button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { toast } from '@/hooks/use-toast';
+import { useJobPacks, useUpdateJobPackDocument, useUpdateJobPack } from '@/hooks/useJobPacks';
+import { useEmployees } from '@/hooks/useEmployees';
+import { useJobs } from '@/hooks/useJobs';
+import { AddJobPackDialog } from '@/components/employer/dialogs/AddJobPackDialog';
+import { ViewJobPackSheet } from '@/components/employer/sheets/ViewJobPackSheet';
+import { JobPack } from '@/services/jobPackService';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Package,
+  Search,
+  FileText,
+  ClipboardList,
+  BookOpen,
+  Users,
+  CheckCircle2,
+  Clock,
   AlertTriangle,
   Zap,
   RefreshCw,
@@ -32,25 +32,29 @@ import {
   ChevronRight,
   Briefcase,
   Plus,
-  ArrowRight
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+  ArrowRight,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type StatusTab = 'all' | 'Draft' | 'In Progress' | 'Complete';
 
 const statusConfig = {
-  "Draft": { color: "bg-muted text-muted-foreground border-muted", icon: Clock, accent: "muted" },
-  "In Progress": { color: "bg-info/20 text-info border-info/30", icon: Zap, accent: "info" },
-  "Complete": { color: "bg-success/20 text-success border-success/30", icon: CheckCircle2, accent: "success" },
+  Draft: { color: 'bg-muted text-muted-foreground border-muted', icon: Clock, accent: 'muted' },
+  'In Progress': { color: 'bg-info/20 text-info border-info/30', icon: Zap, accent: 'info' },
+  Complete: {
+    color: 'bg-success/20 text-success border-success/30',
+    icon: CheckCircle2,
+    accent: 'success',
+  },
 };
 
 export const JobPacksSection = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [showNewJobPack, setShowNewJobPack] = useState(false);
   const [selectedJobPack, setSelectedJobPack] = useState<JobPack | null>(null);
   const [showJobPackSheet, setShowJobPackSheet] = useState(false);
   const [activeTab, setActiveTab] = useState<StatusTab>('all');
-  
+
   const { data: jobPacks = [], isLoading, refetch, isRefetching } = useJobPacks();
   const { data: employees = [] } = useEmployees();
   const { data: jobs = [] } = useJobs();
@@ -59,47 +63,52 @@ export const JobPacksSection = () => {
   const isMobile = useIsMobile();
 
   // Find jobs without job packs (awaiting pack creation)
-  const jobPackJobIds = useMemo(() => 
-    new Set(jobPacks.map(jp => jp.title.toLowerCase())),
+  const jobPackJobIds = useMemo(
+    () => new Set(jobPacks.map((jp) => jp.title.toLowerCase())),
     [jobPacks]
   );
-  
-  const jobsAwaitingPack = useMemo(() => 
-    jobs.filter(j => 
-      (j.status === "Active" || j.status === "Pending") && 
-      !jobPackJobIds.has(j.title.toLowerCase())
-    ).slice(0, 5),
+
+  const jobsAwaitingPack = useMemo(
+    () =>
+      jobs
+        .filter(
+          (j) =>
+            (j.status === 'Active' || j.status === 'Pending') &&
+            !jobPackJobIds.has(j.title.toLowerCase())
+        )
+        .slice(0, 5),
     [jobs, jobPackJobIds]
   );
 
   const filteredJobPacks = useMemo(() => {
     let filtered = jobPacks;
-    
+
     if (activeTab !== 'all') {
-      filtered = filtered.filter(jp => jp.status === activeTab);
+      filtered = filtered.filter((jp) => jp.status === activeTab);
     }
-    
+
     if (searchQuery) {
-      filtered = filtered.filter(jp =>
-        jp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        jp.client.toLowerCase().includes(searchQuery.toLowerCase())
+      filtered = filtered.filter(
+        (jp) =>
+          jp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          jp.client.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
-    
+
     return filtered;
   }, [jobPacks, activeTab, searchQuery]);
 
   const stats = {
     total: jobPacks.length,
-    draft: jobPacks.filter(jp => jp.status === "Draft").length,
-    inProgress: jobPacks.filter(jp => jp.status === "In Progress").length,
-    complete: jobPacks.filter(jp => jp.status === "Complete").length,
+    draft: jobPacks.filter((jp) => jp.status === 'Draft').length,
+    inProgress: jobPacks.filter((jp) => jp.status === 'In Progress').length,
+    complete: jobPacks.filter((jp) => jp.status === 'Complete').length,
     awaiting: jobsAwaitingPack.length,
   };
 
   const handleGenerateDocument = async (
     e: React.MouseEvent,
-    jobPackId: string, 
+    jobPackId: string,
     documentType: 'rams_generated' | 'method_statement_generated' | 'briefing_pack_generated',
     documentName: string
   ) => {
@@ -112,9 +121,9 @@ export const JobPacksSection = () => {
       });
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: `Failed to generate ${documentName}.`,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -125,19 +134,19 @@ export const JobPacksSection = () => {
       await updateJobPack.mutateAsync({
         id: jobPack.id,
         updates: {
-          status: "In Progress",
+          status: 'In Progress',
           sent_to_workers_at: new Date().toISOString(),
-        }
+        },
       });
       toast({
-        title: "Job Pack Sent",
+        title: 'Job Pack Sent',
         description: `${jobPack.title} has been sent to assigned workers.`,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to send job pack.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to send job pack.',
+        variant: 'destructive',
       });
     }
   };
@@ -148,7 +157,11 @@ export const JobPacksSection = () => {
   };
 
   const getDocumentProgress = (jobPack: JobPack) => {
-    const docs = [jobPack.rams_generated, jobPack.method_statement_generated, jobPack.briefing_pack_generated];
+    const docs = [
+      jobPack.rams_generated,
+      jobPack.method_statement_generated,
+      jobPack.briefing_pack_generated,
+    ];
     return docs.filter(Boolean).length;
   };
 
@@ -161,10 +174,14 @@ export const JobPacksSection = () => {
         </div>
         <Skeleton className="h-10 w-full" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-20" />)}
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} className="h-20" />
+          ))}
         </div>
         <div className="grid gap-4">
-          {[1, 2, 3].map(i => <Skeleton key={i} className="h-32" />)}
+          {[1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-32" />
+          ))}
         </div>
       </div>
     );
@@ -184,31 +201,28 @@ export const JobPacksSection = () => {
               Manage jobs, documents & workers
             </p>
           </div>
-          
+
           <div className="flex items-center gap-2 shrink-0">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="icon"
               className="h-9 w-9"
               onClick={() => refetch()}
               disabled={isRefetching}
             >
-              <RefreshCw className={cn("h-4 w-4", isRefetching && "animate-spin")} />
+              <RefreshCw className={cn('h-4 w-4', isRefetching && 'animate-spin')} />
             </Button>
             {/* Desktop-only inline button */}
             <div className="hidden sm:block">
-              <AddJobPackDialog 
-                open={showNewJobPack} 
-                onOpenChange={setShowNewJobPack}
-              />
+              <AddJobPackDialog open={showNewJobPack} onOpenChange={setShowNewJobPack} />
             </div>
           </div>
         </div>
-        
+
         {/* Mobile full-width create button */}
         <div className="sm:hidden">
-          <AddJobPackDialog 
-            open={showNewJobPack} 
+          <AddJobPackDialog
+            open={showNewJobPack}
             onOpenChange={setShowNewJobPack}
             trigger={
               <Button className="w-full h-11 gap-2 text-sm font-medium">
@@ -227,7 +241,7 @@ export const JobPacksSection = () => {
         )}
         <Input
           placeholder="Search job packs..."
-          className={cn("h-12 text-base", !searchQuery && "pl-10")}
+          className={cn('h-12 text-base', !searchQuery && 'pl-10')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -236,9 +250,9 @@ export const JobPacksSection = () => {
       {/* Status Tabs - Horizontal scrollable */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar -mx-4 px-4 pb-1">
         <Button
-          variant={activeTab === 'all' ? "default" : "outline"}
+          variant={activeTab === 'all' ? 'default' : 'outline'}
           size="sm"
-          className={cn("shrink-0 h-9", activeTab === 'all' && "bg-elec-yellow")}
+          className={cn('shrink-0 h-9', activeTab === 'all' && 'bg-elec-yellow')}
           onClick={() => setActiveTab('all')}
         >
           All
@@ -247,9 +261,12 @@ export const JobPacksSection = () => {
           </Badge>
         </Button>
         <Button
-          variant={activeTab === 'Draft' ? "default" : "outline"}
+          variant={activeTab === 'Draft' ? 'default' : 'outline'}
           size="sm"
-          className={cn("shrink-0 h-9 gap-1.5", activeTab === 'Draft' && "bg-muted text-foreground")}
+          className={cn(
+            'shrink-0 h-9 gap-1.5',
+            activeTab === 'Draft' && 'bg-muted text-foreground'
+          )}
           onClick={() => setActiveTab('Draft')}
         >
           <Clock className="h-3.5 w-3.5" />
@@ -259,9 +276,12 @@ export const JobPacksSection = () => {
           </Badge>
         </Button>
         <Button
-          variant={activeTab === 'In Progress' ? "default" : "outline"}
+          variant={activeTab === 'In Progress' ? 'default' : 'outline'}
           size="sm"
-          className={cn("shrink-0 h-9 gap-1.5", activeTab === 'In Progress' && "bg-info text-info-foreground")}
+          className={cn(
+            'shrink-0 h-9 gap-1.5',
+            activeTab === 'In Progress' && 'bg-info text-info-foreground'
+          )}
           onClick={() => setActiveTab('In Progress')}
         >
           <Zap className="h-3.5 w-3.5" />
@@ -271,9 +291,12 @@ export const JobPacksSection = () => {
           </Badge>
         </Button>
         <Button
-          variant={activeTab === 'Complete' ? "default" : "outline"}
+          variant={activeTab === 'Complete' ? 'default' : 'outline'}
           size="sm"
-          className={cn("shrink-0 h-9 gap-1.5", activeTab === 'Complete' && "bg-success text-success-foreground")}
+          className={cn(
+            'shrink-0 h-9 gap-1.5',
+            activeTab === 'Complete' && 'bg-success text-success-foreground'
+          )}
           onClick={() => setActiveTab('Complete')}
         >
           <CheckCircle2 className="h-3.5 w-3.5" />
@@ -293,12 +316,14 @@ export const JobPacksSection = () => {
                 <Briefcase className="h-4 w-4 text-elec-yellow" />
               </div>
               <span className="font-semibold text-foreground text-sm">Jobs Awaiting Pack</span>
-              <Badge variant="secondary" className="text-xs">{jobsAwaitingPack.length}</Badge>
+              <Badge variant="secondary" className="text-xs">
+                {jobsAwaitingPack.length}
+              </Badge>
             </div>
           </div>
           <div className="space-y-2">
-            {jobsAwaitingPack.map(job => (
-              <div 
+            {jobsAwaitingPack.map((job) => (
+              <div
                 key={job.id}
                 className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border/50"
               >
@@ -306,8 +331,8 @@ export const JobPacksSection = () => {
                   <p className="font-medium text-foreground text-sm truncate">{job.title}</p>
                   <p className="text-xs text-muted-foreground truncate">{job.client}</p>
                 </div>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   variant="ghost"
                   className="shrink-0 h-8 gap-1 text-elec-yellow hover:text-elec-yellow"
                   onClick={() => setShowNewJobPack(true)}
@@ -333,7 +358,8 @@ export const JobPacksSection = () => {
                 {activeTab === 'all' ? 'No job packs yet' : `No ${activeTab.toLowerCase()} packs`}
               </h3>
               <p className="text-muted-foreground text-sm mb-4 max-w-sm mx-auto">
-                Job packs bundle jobs with auto-generated RAMS, method statements, and briefing packs.
+                Job packs bundle jobs with auto-generated RAMS, method statements, and briefing
+                packs.
               </p>
               <Button onClick={() => setShowNewJobPack(true)} className="gap-2">
                 <Plus className="h-4 w-4" />
@@ -342,26 +368,28 @@ export const JobPacksSection = () => {
             </CardContent>
           </Card>
         )}
-        
+
         {filteredJobPacks.map((jobPack) => {
-          const StatusIcon = statusConfig[jobPack.status as keyof typeof statusConfig]?.icon || Clock;
+          const StatusIcon =
+            statusConfig[jobPack.status as keyof typeof statusConfig]?.icon || Clock;
           const statusStyle = statusConfig[jobPack.status as keyof typeof statusConfig];
-          const assignedEmployees = employees.filter(e => 
+          const assignedEmployees = employees.filter((e) =>
             jobPack.assigned_workers?.includes(e.id)
           );
           const docProgress = getDocumentProgress(jobPack);
           const allDocsReady = docProgress === 3;
-          const canSend = allDocsReady && jobPack.status === 'Draft' && assignedEmployees.length > 0;
-          
+          const canSend =
+            allDocsReady && jobPack.status === 'Draft' && assignedEmployees.length > 0;
+
           return (
-            <Card 
-              key={jobPack.id} 
+            <Card
+              key={jobPack.id}
               className={cn(
-                "overflow-hidden transition-all touch-feedback",
-                "border-l-4",
-                statusStyle?.accent === 'muted' && "border-l-muted-foreground/50",
-                statusStyle?.accent === 'info' && "border-l-info",
-                statusStyle?.accent === 'success' && "border-l-success"
+                'overflow-hidden transition-all touch-feedback',
+                'border-l-4',
+                statusStyle?.accent === 'muted' && 'border-l-muted-foreground/50',
+                statusStyle?.accent === 'info' && 'border-l-info',
+                statusStyle?.accent === 'success' && 'border-l-success'
               )}
               onClick={() => handleJobPackClick(jobPack)}
             >
@@ -369,7 +397,9 @@ export const JobPacksSection = () => {
                 {/* Header Row */}
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-foreground text-base truncate">{jobPack.title}</h3>
+                    <h3 className="font-semibold text-foreground text-base truncate">
+                      {jobPack.title}
+                    </h3>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-0.5">
                       <span className="truncate">{jobPack.client}</span>
                       <span>•</span>
@@ -379,7 +409,7 @@ export const JobPacksSection = () => {
                       </span>
                     </div>
                   </div>
-                  <Badge className={cn("shrink-0", statusStyle?.color)}>
+                  <Badge className={cn('shrink-0', statusStyle?.color)}>
                     <StatusIcon className="h-3 w-3 mr-1" />
                     {jobPack.status}
                   </Badge>
@@ -389,9 +419,9 @@ export const JobPacksSection = () => {
                 {jobPack.hazards && jobPack.hazards.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {jobPack.hazards.slice(0, 3).map((hazard) => (
-                      <Badge 
-                        key={hazard} 
-                        variant="outline" 
+                      <Badge
+                        key={hazard}
+                        variant="outline"
                         className="text-[10px] py-0.5 px-2 bg-warning/10 text-warning border-warning/30"
                       >
                         <AlertTriangle className="h-2.5 w-2.5 mr-1" />
@@ -409,30 +439,36 @@ export const JobPacksSection = () => {
                 {/* Documents Progress */}
                 <div className="flex items-center gap-3 mb-3 p-2.5 rounded-lg bg-muted/30">
                   <div className="flex gap-2">
-                    <div className={cn(
-                      "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md",
-                      jobPack.rams_generated 
-                        ? "bg-success/20 text-success" 
-                        : "bg-muted text-muted-foreground"
-                    )}>
+                    <div
+                      className={cn(
+                        'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md',
+                        jobPack.rams_generated
+                          ? 'bg-success/20 text-success'
+                          : 'bg-muted text-muted-foreground'
+                      )}
+                    >
                       <FileText className="h-3 w-3" />
                       RAMS
                     </div>
-                    <div className={cn(
-                      "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md",
-                      jobPack.method_statement_generated 
-                        ? "bg-success/20 text-success" 
-                        : "bg-muted text-muted-foreground"
-                    )}>
+                    <div
+                      className={cn(
+                        'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md',
+                        jobPack.method_statement_generated
+                          ? 'bg-success/20 text-success'
+                          : 'bg-muted text-muted-foreground'
+                      )}
+                    >
                       <ClipboardList className="h-3 w-3" />
                       Method
                     </div>
-                    <div className={cn(
-                      "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md",
-                      jobPack.briefing_pack_generated 
-                        ? "bg-success/20 text-success" 
-                        : "bg-muted text-muted-foreground"
-                    )}>
+                    <div
+                      className={cn(
+                        'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md',
+                        jobPack.briefing_pack_generated
+                          ? 'bg-success/20 text-success'
+                          : 'bg-muted text-muted-foreground'
+                      )}
+                    >
                       <BookOpen className="h-3 w-3" />
                       Brief
                     </div>
@@ -448,7 +484,7 @@ export const JobPacksSection = () => {
                       <>
                         <div className="flex -space-x-2">
                           {assignedEmployees.slice(0, 3).map((emp, i) => (
-                            <div 
+                            <div
                               key={emp.id}
                               className="w-7 h-7 rounded-full bg-elec-yellow/20 border-2 border-card flex items-center justify-center"
                               style={{ zIndex: 3 - i }}
@@ -467,7 +503,8 @@ export const JobPacksSection = () => {
                           )}
                         </div>
                         <span className="text-xs text-muted-foreground">
-                          {assignedEmployees.length} worker{assignedEmployees.length !== 1 ? 's' : ''}
+                          {assignedEmployees.length} worker
+                          {assignedEmployees.length !== 1 ? 's' : ''}
                         </span>
                       </>
                     ) : (
@@ -479,7 +516,7 @@ export const JobPacksSection = () => {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-2 shrink-0" onClick={e => e.stopPropagation()}>
+                  <div className="flex gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
                     {!allDocsReady && (
                       <Button
                         size="sm"
@@ -489,9 +526,19 @@ export const JobPacksSection = () => {
                           if (!jobPack.rams_generated) {
                             handleGenerateDocument(e, jobPack.id, 'rams_generated', 'RAMS');
                           } else if (!jobPack.method_statement_generated) {
-                            handleGenerateDocument(e, jobPack.id, 'method_statement_generated', 'Method Statement');
+                            handleGenerateDocument(
+                              e,
+                              jobPack.id,
+                              'method_statement_generated',
+                              'Method Statement'
+                            );
                           } else {
-                            handleGenerateDocument(e, jobPack.id, 'briefing_pack_generated', 'Briefing Pack');
+                            handleGenerateDocument(
+                              e,
+                              jobPack.id,
+                              'briefing_pack_generated',
+                              'Briefing Pack'
+                            );
                           }
                         }}
                       >
@@ -509,11 +556,7 @@ export const JobPacksSection = () => {
                         Send
                       </Button>
                     )}
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="h-8 w-8 p-0"
-                    >
+                    <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
                       <ChevronRight className="h-4 w-4" />
                     </Button>
                   </div>

@@ -17,13 +17,13 @@ export const SmartHomeModule5Section6RealWorld = () => {
             <h4 className="font-semibold text-red-400">Case Study: Baby Monitor Hack</h4>
           </div>
           <p className="text-gray-300 text-sm mb-3">
-            In 2022, a UK family discovered their baby monitor camera had been hacked after noticing 
-            it was moving on its own. Investigation revealed the device was still using its default 
+            In 2022, a UK family discovered their baby monitor camera had been hacked after noticing
+            it was moving on its own. Investigation revealed the device was still using its default
             factory password "admin123".
           </p>
           <p className="text-gray-300 text-sm">
-            The hackers had gained access through the unsecured device and could view live footage 
-            of the baby's room, control the camera movement, and even speak through the monitor's 
+            The hackers had gained access through the unsecured device and could view live footage
+            of the baby's room, control the camera movement, and even speak through the monitor's
             built-in speaker system.
           </p>
         </div>
@@ -34,8 +34,8 @@ export const SmartHomeModule5Section6RealWorld = () => {
             <h4 className="font-semibold text-green-400">Resolution</h4>
           </div>
           <p className="text-gray-300 text-sm mb-2">
-            Once the family updated the device with a strong unique password and applied 
-            the latest firmware patch, the problem was resolved. Additional steps taken:
+            Once the family updated the device with a strong unique password and applied the latest
+            firmware patch, the problem was resolved. Additional steps taken:
           </p>
           <ul className="space-y-1 text-gray-300 text-sm">
             <li className="flex items-start gap-2">
@@ -60,10 +60,10 @@ export const SmartHomeModule5Section6RealWorld = () => {
         <div className="bg-blue-950/20 p-4 rounded-lg border border-blue-800/30">
           <h4 className="font-semibold text-blue-400 mb-2">Key Lessons</h4>
           <p className="text-gray-300 text-sm">
-            This case highlights why electricians must stress security to clients during installation. 
-            Default passwords are easily found online, and many attacks target devices that haven't 
-            been properly secured. Professional installation includes security configuration as a 
-            standard service, not an optional extra.
+            This case highlights why electricians must stress security to clients during
+            installation. Default passwords are easily found online, and many attacks target devices
+            that haven't been properly secured. Professional installation includes security
+            configuration as a standard service, not an optional extra.
           </p>
         </div>
       </CardContent>

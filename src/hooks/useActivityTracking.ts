@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { useCallback, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 // Simple activity tracking hook that logs events to Supabase
 // This gives us REAL user activity data we can query in the admin panel
 
-type EventType = "login" | "page_view" | "feature_use" | "session_start" | "session_end";
+type EventType = 'login' | 'page_view' | 'feature_use' | 'session_start' | 'session_end';
 
 interface TrackEventOptions {
   eventName?: string;
@@ -29,7 +29,7 @@ export function useActivityTracking() {
       if (!user?.id) return;
 
       // Debounce page views
-      if (eventType === "page_view") {
+      if (eventType === 'page_view') {
         const key = `${user.id}-${options.pagePath || location.pathname}`;
         const now = Date.now();
         if (lastPageView[key] && now - lastPageView[key] < PAGE_VIEW_DEBOUNCE_MS) {
@@ -39,7 +39,7 @@ export function useActivityTracking() {
       }
 
       try {
-        await supabase.from("user_events").insert({
+        await supabase.from('user_events').insert({
           user_id: user.id,
           event_type: eventType,
           event_name: options.eventName || null,
@@ -48,7 +48,7 @@ export function useActivityTracking() {
         });
       } catch (error) {
         // Silently fail - don't break the app for tracking issues
-        console.debug("[Activity] Failed to track event:", error);
+        console.debug('[Activity] Failed to track event:', error);
       }
     },
     [user?.id, location.pathname]
@@ -57,7 +57,7 @@ export function useActivityTracking() {
   // Track page views automatically
   useEffect(() => {
     if (user?.id) {
-      trackEvent("page_view", { pagePath: location.pathname });
+      trackEvent('page_view', { pagePath: location.pathname });
     }
   }, [location.pathname, user?.id, trackEvent]);
 
@@ -65,7 +65,7 @@ export function useActivityTracking() {
   useEffect(() => {
     if (user?.id && !sessionStarted.current) {
       sessionStarted.current = true;
-      trackEvent("session_start");
+      trackEvent('session_start');
 
       // Track session end on unload
       const handleUnload = () => {
@@ -73,18 +73,15 @@ export function useActivityTracking() {
         if (navigator.sendBeacon) {
           const payload = JSON.stringify({
             user_id: user.id,
-            event_type: "session_end",
+            event_type: 'session_end',
             page_path: location.pathname,
           });
-          navigator.sendBeacon(
-            `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/user_events`,
-            payload
-          );
+          navigator.sendBeacon(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/user_events`, payload);
         }
       };
 
-      window.addEventListener("beforeunload", handleUnload);
-      return () => window.removeEventListener("beforeunload", handleUnload);
+      window.addEventListener('beforeunload', handleUnload);
+      return () => window.removeEventListener('beforeunload', handleUnload);
     }
   }, [user?.id]);
 
@@ -92,10 +89,10 @@ export function useActivityTracking() {
   useEffect(() => {
     if (user?.id) {
       // Check if this is a fresh login (not a page refresh)
-      const lastLoginTrack = sessionStorage.getItem("last-login-track");
+      const lastLoginTrack = sessionStorage.getItem('last-login-track');
       if (lastLoginTrack !== user.id) {
-        trackEvent("login");
-        sessionStorage.setItem("last-login-track", user.id);
+        trackEvent('login');
+        sessionStorage.setItem('last-login-track', user.id);
       }
     }
   }, [user?.id, trackEvent]);
@@ -103,7 +100,7 @@ export function useActivityTracking() {
   // Return a function to track feature usage manually
   const trackFeatureUse = useCallback(
     (featureName: string, data?: Record<string, any>) => {
-      trackEvent("feature_use", {
+      trackEvent('feature_use', {
         eventName: featureName,
         eventData: data,
       });
@@ -121,7 +118,7 @@ export async function trackUserEvent(
   options: TrackEventOptions = {}
 ) {
   try {
-    await supabase.from("user_events").insert({
+    await supabase.from('user_events').insert({
       user_id: userId,
       event_type: eventType,
       event_name: options.eventName || null,
@@ -129,6 +126,6 @@ export async function trackUserEvent(
       page_path: options.pagePath || window.location.pathname,
     });
   } catch (error) {
-    console.debug("[Activity] Failed to track event:", error);
+    console.debug('[Activity] Failed to track event:', error);
   }
 }

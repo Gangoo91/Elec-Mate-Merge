@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Wrench, BookOpen, TrendingUp, Package, FileText, AlertCircle } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Wrench, BookOpen, TrendingUp, Package, FileText, AlertCircle } from 'lucide-react';
 
 interface ExtractionBreakdown {
   practicalWork: {
@@ -39,7 +39,8 @@ export const RAGExtractionBreakdown = ({ extractionBreakdown }: RAGExtractionBre
           <div className="flex-1">
             <h3 className="font-bold text-base sm:text-lg">RAG Extraction Breakdown</h3>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Knowledge extracted from {totalDocuments} database source{totalDocuments !== 1 ? 's' : ''}
+              Knowledge extracted from {totalDocuments} database source
+              {totalDocuments !== 1 ? 's' : ''}
             </p>
           </div>
         </div>
@@ -90,11 +91,13 @@ export const RAGExtractionBreakdown = ({ extractionBreakdown }: RAGExtractionBre
                 </div>
                 <div>
                   <h4 className="font-bold text-sm">Practical Work Intelligence</h4>
-                  <p className="text-xs text-muted-foreground">Real-world installation procedures</p>
+                  <p className="text-xs text-muted-foreground">
+                    Real-world installation procedures
+                  </p>
                 </div>
               </div>
-              <Badge 
-                variant="secondary" 
+              <Badge
+                variant="secondary"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/30 text-xs"
               >
                 {practicalWork.avgConfidence}% confidence
@@ -103,19 +106,27 @@ export const RAGExtractionBreakdown = ({ extractionBreakdown }: RAGExtractionBre
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <div className="text-center p-2 bg-background/50 rounded border border-border/30">
-                <p className="text-lg sm:text-xl font-bold text-foreground">{practicalWork.documentsUsed}</p>
+                <p className="text-lg sm:text-xl font-bold text-foreground">
+                  {practicalWork.documentsUsed}
+                </p>
                 <p className="text-xs text-muted-foreground">Documents</p>
               </div>
               <div className="text-center p-2 bg-background/50 rounded border border-border/30">
-                <p className="text-lg sm:text-xl font-bold text-blue-400">{practicalWork.toolsExtracted}</p>
+                <p className="text-lg sm:text-xl font-bold text-blue-400">
+                  {practicalWork.toolsExtracted}
+                </p>
                 <p className="text-xs text-muted-foreground">Tools</p>
               </div>
               <div className="text-center p-2 bg-background/50 rounded border border-border/30">
-                <p className="text-lg sm:text-xl font-bold text-emerald-400">{practicalWork.materialsExtracted}</p>
+                <p className="text-lg sm:text-xl font-bold text-emerald-400">
+                  {practicalWork.materialsExtracted}
+                </p>
                 <p className="text-xs text-muted-foreground">Materials</p>
               </div>
               <div className="text-center p-2 bg-background/50 rounded border border-border/30">
-                <p className="text-lg sm:text-xl font-bold text-orange-400">{practicalWork.regulationsExtracted}</p>
+                <p className="text-lg sm:text-xl font-bold text-orange-400">
+                  {practicalWork.regulationsExtracted}
+                </p>
                 <p className="text-xs text-muted-foreground">Regulations</p>
               </div>
             </div>
@@ -133,8 +144,8 @@ export const RAGExtractionBreakdown = ({ extractionBreakdown }: RAGExtractionBre
                   <p className="text-xs text-muted-foreground">18th Edition wiring regulations</p>
                 </div>
               </div>
-              <Badge 
-                variant="secondary" 
+              <Badge
+                variant="secondary"
                 className="bg-orange-500/10 text-orange-400 border-orange-400/30 text-xs"
               >
                 {bs7671.avgRelevance}% relevance
@@ -143,11 +154,15 @@ export const RAGExtractionBreakdown = ({ extractionBreakdown }: RAGExtractionBre
 
             <div className="grid grid-cols-2 gap-2">
               <div className="text-center p-2 bg-background/50 rounded border border-border/30">
-                <p className="text-lg sm:text-xl font-bold text-foreground">{bs7671.documentsUsed}</p>
+                <p className="text-lg sm:text-xl font-bold text-foreground">
+                  {bs7671.documentsUsed}
+                </p>
                 <p className="text-xs text-muted-foreground">Regulation Entries</p>
               </div>
               <div className="text-center p-2 bg-background/50 rounded border border-border/30">
-                <p className="text-lg sm:text-xl font-bold text-orange-400">{bs7671.regulationsExtracted}</p>
+                <p className="text-lg sm:text-xl font-bold text-orange-400">
+                  {bs7671.regulationsExtracted}
+                </p>
                 <p className="text-xs text-muted-foreground">Citations</p>
               </div>
             </div>
@@ -158,9 +173,11 @@ export const RAGExtractionBreakdown = ({ extractionBreakdown }: RAGExtractionBre
         <div className="mt-4 flex items-start gap-2 bg-blue-500/5 rounded-lg p-3 border border-blue-500/20">
           <AlertCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
           <p className="text-xs text-muted-foreground leading-relaxed">
-            <strong className="text-foreground">Data Quality:</strong> Higher extraction counts indicate more comprehensive generated steps. 
-            Tools and materials are sourced from practical work database ({practicalWork.documentsUsed} procedures analyzed). 
-            Regulatory compliance verified against {bs7671.documentsUsed} BS 7671 regulation{bs7671.documentsUsed !== 1 ? 's' : ''}.
+            <strong className="text-foreground">Data Quality:</strong> Higher extraction counts
+            indicate more comprehensive generated steps. Tools and materials are sourced from
+            practical work database ({practicalWork.documentsUsed} procedures analyzed). Regulatory
+            compliance verified against {bs7671.documentsUsed} BS 7671 regulation
+            {bs7671.documentsUsed !== 1 ? 's' : ''}.
           </p>
         </div>
       </CardContent>

@@ -1,6 +1,6 @@
-import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
-import CollegePortfolioHub from "@/components/college/portfolio/CollegePortfolioHub";
-import type { CollegeSection } from "@/pages/college/CollegeDashboard";
+import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import CollegePortfolioHub from '@/components/college/portfolio/CollegePortfolioHub';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface PortfolioSectionProps {
   onNavigate: (section: CollegeSection) => void;

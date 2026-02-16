@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 interface Question {
   id: number;
@@ -38,10 +37,10 @@ export const useExam = (exam: Exam | null, questions: Question[]) => {
   // Timer countdown
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    
+
     if (isExamStarted && !isExamFinished && timeRemaining > 0) {
       timer = setInterval(() => {
-        setTimeRemaining(prev => {
+        setTimeRemaining((prev) => {
           if (prev <= 1) {
             clearInterval(timer);
             setIsExamFinished(true);
@@ -51,15 +50,15 @@ export const useExam = (exam: Exam | null, questions: Question[]) => {
         });
       }, 1000);
     }
-    
+
     return () => clearInterval(timer);
   }, [isExamStarted, isExamFinished, timeRemaining]);
 
   // Handle answer selection
   const handleSelectAnswer = (questionId: number, optionIndex: number) => {
-    setSelectedAnswers(prev => ({
+    setSelectedAnswers((prev) => ({
       ...prev,
-      [questionId]: optionIndex
+      [questionId]: optionIndex,
     }));
   };
 
@@ -101,6 +100,6 @@ export const useExam = (exam: Exam | null, questions: Question[]) => {
     goToPreviousQuestion,
     startExam,
     finishExam,
-    setShowResults
+    setShowResults,
   };
 };

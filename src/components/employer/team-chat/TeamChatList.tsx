@@ -1,37 +1,20 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Hash,
-  MessageSquare,
-  Plus,
-  Users,
-  Lock,
-  Globe,
-  Loader2,
-} from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import {
-  useMyTeamChannels,
-  useTeamDMConversations,
-  useCreateChannel,
-} from "@/hooks/useTeamChat";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
-import type { TeamChannel, TeamDirectMessage } from "@/services/teamChatService";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Hash, MessageSquare, Plus, Users, Lock, Globe, Loader2 } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { useMyTeamChannels, useTeamDMConversations, useCreateChannel } from '@/hooks/useTeamChat';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
+import type { TeamChannel, TeamDirectMessage } from '@/services/teamChatService';
 
 interface TeamChatListProps {
   employerId: string;
@@ -39,15 +22,11 @@ interface TeamChatListProps {
   onSelectDM: (dm: TeamDirectMessage) => void;
 }
 
-export function TeamChatList({
-  employerId,
-  onSelectChannel,
-  onSelectDM,
-}: TeamChatListProps) {
+export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamChatListProps) {
   const { user } = useAuth();
   const [showCreateChannel, setShowCreateChannel] = useState(false);
-  const [newChannelName, setNewChannelName] = useState("");
-  const [newChannelDescription, setNewChannelDescription] = useState("");
+  const [newChannelName, setNewChannelName] = useState('');
+  const [newChannelDescription, setNewChannelDescription] = useState('');
   const [newChannelPrivate, setNewChannelPrivate] = useState(false);
 
   // Fetch channels and DMs
@@ -70,19 +49,19 @@ export function TeamChatList({
       });
 
       toast({
-        title: "Channel Created",
+        title: 'Channel Created',
         description: `#${newChannelName.trim()} is ready to use.`,
       });
 
-      setNewChannelName("");
-      setNewChannelDescription("");
+      setNewChannelName('');
+      setNewChannelDescription('');
       setNewChannelPrivate(false);
       setShowCreateChannel(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create channel. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create channel. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -249,7 +228,9 @@ export function TeamChatList({
                 <Input
                   id="channel-name"
                   value={newChannelName}
-                  onChange={(e) => setNewChannelName(e.target.value.toLowerCase().replace(/\s+/g, '-'))}
+                  onChange={(e) =>
+                    setNewChannelName(e.target.value.toLowerCase().replace(/\s+/g, '-'))
+                  }
                   placeholder="general"
                   className="pl-9"
                 />
@@ -269,7 +250,7 @@ export function TeamChatList({
 
             <div className="flex items-center gap-4">
               <Button
-                variant={newChannelPrivate ? "outline" : "default"}
+                variant={newChannelPrivate ? 'outline' : 'default'}
                 className="flex-1 gap-2"
                 onClick={() => setNewChannelPrivate(false)}
               >
@@ -277,7 +258,7 @@ export function TeamChatList({
                 Public
               </Button>
               <Button
-                variant={newChannelPrivate ? "default" : "outline"}
+                variant={newChannelPrivate ? 'default' : 'outline'}
                 className="flex-1 gap-2"
                 onClick={() => setNewChannelPrivate(true)}
               >
@@ -288,8 +269,8 @@ export function TeamChatList({
 
             <p className="text-xs text-muted-foreground">
               {newChannelPrivate
-                ? "Only invited members can see and join this channel."
-                : "Anyone in the team can see and join this channel."}
+                ? 'Only invited members can see and join this channel.'
+                : 'Anyone in the team can see and join this channel.'}
             </p>
 
             <div className="flex gap-2 pt-4">

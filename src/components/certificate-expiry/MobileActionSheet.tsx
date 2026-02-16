@@ -1,6 +1,12 @@
 import { ExpiryReminder } from '@/types/expiryTypes';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { Phone, Mail, CheckCircle2, Calendar, FileText, X } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { useState, useEffect } from 'react';
@@ -34,7 +40,7 @@ export const MobileActionSheet = ({
   useEffect(() => {
     const fetchReportData = async () => {
       if (!reminder?.report_id) return;
-      
+
       setIsLoadingPhone(true);
       try {
         // Get customer_id and pdf_url from report
@@ -89,8 +95,8 @@ export const MobileActionSheet = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent 
-        side="bottom" 
+      <SheetContent
+        side="bottom"
         className="h-auto max-h-[80vh] rounded-t-2xl bg-gradient-to-br from-neutral-900 to-neutral-800 border-t-4 border-t-elec-yellow/60 border-x-neutral-700 border-b-neutral-700"
       >
         <SheetHeader className="text-left pb-4 border-b border-elec-yellow/20">
@@ -98,7 +104,9 @@ export const MobileActionSheet = ({
             Quick Actions
           </SheetTitle>
           <SheetDescription className="space-y-2">
-            <div className="font-semibold text-base text-elec-yellow">{reminder.certificate_number}</div>
+            <div className="font-semibold text-base text-elec-yellow">
+              {reminder.certificate_number}
+            </div>
             <div className="text-sm text-neutral-300">{reminder.client_name}</div>
             <div className="text-xs text-neutral-400">
               Expires: {format(parseISO(reminder.expiry_date), 'dd MMM yyyy')}
@@ -133,7 +141,11 @@ export const MobileActionSheet = ({
             disabled={!clientPhone || isLoadingPhone}
           >
             <Phone className="h-5 w-5 text-elec-yellow" />
-            {isLoadingPhone ? 'Loading...' : clientPhone ? `Call ${clientPhone}` : 'Call Client (No phone)'}
+            {isLoadingPhone
+              ? 'Loading...'
+              : clientPhone
+                ? `Call ${clientPhone}`
+                : 'Call Client (No phone)'}
           </Button>
 
           <Button
@@ -158,7 +170,9 @@ export const MobileActionSheet = ({
               onMarkBooked(reminder);
               onOpenChange(false);
             }}
-            disabled={reminder.reminder_status === 'booked' || reminder.reminder_status === 'completed'}
+            disabled={
+              reminder.reminder_status === 'booked' || reminder.reminder_status === 'completed'
+            }
           >
             <Calendar className="h-5 w-5 text-elec-yellow" />
             Mark as Booked
@@ -172,13 +186,13 @@ export const MobileActionSheet = ({
               if (pdfUrl) {
                 window.open(pdfUrl, '_blank');
                 toast({
-                  title: "Opening Certificate",
-                  description: "PDF certificate opened in new tab",
+                  title: 'Opening Certificate',
+                  description: 'PDF certificate opened in new tab',
                 });
               } else {
                 toast({
-                  title: "Certificate Not Generated",
-                  description: "Redirecting to form to generate certificate",
+                  title: 'Certificate Not Generated',
+                  description: 'Redirecting to form to generate certificate',
                 });
                 onViewCertificate(reminder.report_id);
               }

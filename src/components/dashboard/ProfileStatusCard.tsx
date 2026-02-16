@@ -14,7 +14,8 @@ const ProfileStatusCard = () => {
   const { profiles, getDefaultProfile } = useInspectorProfiles();
   const defaultProfile = getDefaultProfile();
   const hasProfile = profiles.length > 0;
-  const isComplete = defaultProfile &&
+  const isComplete =
+    defaultProfile &&
     defaultProfile.name &&
     defaultProfile.companyName &&
     defaultProfile.qualifications.length > 0 &&
@@ -29,9 +30,14 @@ const ProfileStatusCard = () => {
       className="bg-card border border-primary/30 hover:border-primary/50 transition-all duration-300 cursor-pointer group rounded-2xl active:scale-[0.98] touch-manipulation"
       onClick={handleCardClick}
     >
-      <CardContent className={cn("p-3 sm:p-4 md:p-6")}>
+      <CardContent className={cn('p-3 sm:p-4 md:p-6')}>
         {defaultProfile ? (
-          <div className={cn("flex flex-col sm:flex-row items-center", isMobile ? "gap-3" : "gap-4 sm:gap-6")}>
+          <div
+            className={cn(
+              'flex flex-col sm:flex-row items-center',
+              isMobile ? 'gap-3' : 'gap-4 sm:gap-6'
+            )}
+          >
             {/* Profile Photo */}
             <div className="flex-shrink-0">
               <div className="relative">
@@ -39,11 +45,19 @@ const ProfileStatusCard = () => {
                   <img
                     src={defaultProfile.photoUrl}
                     alt={defaultProfile.name}
-                    className={cn("rounded-full object-cover border-2 border-primary/30", isMobile ? "w-16 h-16" : "w-20 h-20")}
+                    className={cn(
+                      'rounded-full object-cover border-2 border-primary/30',
+                      isMobile ? 'w-16 h-16' : 'w-20 h-20'
+                    )}
                   />
                 ) : (
-                  <div className={cn("rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30", isMobile ? "w-16 h-16" : "w-20 h-20")}>
-                    <User className={cn("text-primary", isMobile ? "w-8 h-8" : "w-10 h-10")} />
+                  <div
+                    className={cn(
+                      'rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30',
+                      isMobile ? 'w-16 h-16' : 'w-20 h-20'
+                    )}
+                  >
+                    <User className={cn('text-primary', isMobile ? 'w-8 h-8' : 'w-10 h-10')} />
                   </div>
                 )}
                 {isComplete && (
@@ -55,19 +69,40 @@ const ProfileStatusCard = () => {
             </div>
 
             {/* Profile Info */}
-            <div className={cn("flex-grow text-center sm:text-left", isMobile ? "space-y-2" : "space-y-3")}>
+            <div
+              className={cn(
+                'flex-grow text-center sm:text-left',
+                isMobile ? 'space-y-2' : 'space-y-3'
+              )}
+            >
               <div>
-                <h3 className={cn("font-bold text-foreground group-hover:text-primary transition-colors", isMobile ? "text-lg" : "text-xl")}>{defaultProfile.name}</h3>
+                <h3
+                  className={cn(
+                    'font-bold text-foreground group-hover:text-primary transition-colors',
+                    isMobile ? 'text-lg' : 'text-xl'
+                  )}
+                >
+                  {defaultProfile.name}
+                </h3>
                 <p className="text-sm text-muted-foreground">{defaultProfile.companyName}</p>
               </div>
 
               {/* Qualifications and Contact in horizontal layout */}
-              <div className={cn("flex flex-col sm:flex-row sm:items-center", isMobile ? "gap-2" : "gap-3 sm:gap-6")}>
+              <div
+                className={cn(
+                  'flex flex-col sm:flex-row sm:items-center',
+                  isMobile ? 'gap-2' : 'gap-3 sm:gap-6'
+                )}
+              >
                 {/* Qualifications */}
                 {defaultProfile.qualifications.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 justify-center sm:justify-start">
                     {defaultProfile.qualifications.map((qual, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs py-0.5 px-2 bg-primary/20 text-primary border-primary/30">
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className="text-xs py-0.5 px-2 bg-primary/20 text-primary border-primary/30"
+                      >
                         {qual}
                       </Badge>
                     ))}
@@ -80,7 +115,9 @@ const ProfileStatusCard = () => {
                     {defaultProfile.companyEmail && (
                       <div className="flex items-center gap-1.5">
                         <Mail className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                        <span className="truncate max-w-[200px]">{defaultProfile.companyEmail}</span>
+                        <span className="truncate max-w-[200px]">
+                          {defaultProfile.companyEmail}
+                        </span>
                       </div>
                     )}
                     {defaultProfile.companyPhone && (
@@ -107,15 +144,28 @@ const ProfileStatusCard = () => {
             </div>
           </div>
         ) : (
-          <div className={cn("flex flex-col sm:flex-row items-center", isMobile ? "gap-3" : "gap-4 sm:gap-6")}>
+          <div
+            className={cn(
+              'flex flex-col sm:flex-row items-center',
+              isMobile ? 'gap-3' : 'gap-4 sm:gap-6'
+            )}
+          >
             <div className="flex-shrink-0">
-              <div className={cn("rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30", isMobile ? "w-16 h-16" : "w-20 h-20")}>
-                <User className={cn("text-primary", isMobile ? "w-8 h-8" : "w-10 h-10")} />
+              <div
+                className={cn(
+                  'rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30',
+                  isMobile ? 'w-16 h-16' : 'w-20 h-20'
+                )}
+              >
+                <User className={cn('text-primary', isMobile ? 'w-8 h-8' : 'w-10 h-10')} />
               </div>
             </div>
             <div className="flex-grow text-center sm:text-left">
-              <p className={cn("text-muted-foreground", isMobile ? "text-sm mb-2" : "text-sm mb-3")}>
-                Complete your inspector profile to auto-fill certificates and maintain professional records.
+              <p
+                className={cn('text-muted-foreground', isMobile ? 'text-sm mb-2' : 'text-sm mb-3')}
+              >
+                Complete your inspector profile to auto-fill certificates and maintain professional
+                records.
               </p>
             </div>
             <div className="flex-shrink-0">

@@ -1,18 +1,12 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  ChevronLeft, 
-  ChevronRight,
-  Star,
-  CheckCircle,
-  Zap
-} from "lucide-react";
-import { format, addDays, startOfWeek, isSameDay } from "date-fns";
-import type { EnhancedElectrician } from "./SparkProfileSheet";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { ChevronLeft, ChevronRight, Star, CheckCircle, Zap } from 'lucide-react';
+import { format, addDays, startOfWeek, isSameDay } from 'date-fns';
+import type { EnhancedElectrician } from './SparkProfileSheet';
 
 interface AvailabilityCalendarProps {
   electricians: EnhancedElectrician[];
@@ -35,8 +29,8 @@ export function AvailabilityCalendar({
 
   // Get availability for an electrician on a specific day
   const getAvailability = (electrician: EnhancedElectrician, date: Date) => {
-    const slot = electrician.availabilitySlots.find(s => 
-      new Date(s.date).toDateString() === date.toDateString()
+    const slot = electrician.availabilitySlots.find(
+      (s) => new Date(s.date).toDateString() === date.toDateString()
     );
     return slot?.slots || [];
   };
@@ -61,14 +55,16 @@ export function AvailabilityCalendar({
           {/* Day Headers */}
           <div className="grid grid-cols-7 gap-1 mb-2">
             {days.map((day) => (
-              <div 
-                key={day.toISOString()} 
+              <div
+                key={day.toISOString()}
                 className={`text-center p-2 rounded-lg ${
                   isSameDay(day, today) ? 'bg-elec-yellow/10' : ''
                 }`}
               >
                 <p className="text-xs text-muted-foreground">{format(day, 'EEE')}</p>
-                <p className={`text-sm font-medium ${isSameDay(day, today) ? 'text-elec-yellow' : ''}`}>
+                <p
+                  className={`text-sm font-medium ${isSameDay(day, today) ? 'text-elec-yellow' : ''}`}
+                >
                   {format(day, 'd')}
                 </p>
               </div>
@@ -82,7 +78,10 @@ export function AvailabilityCalendar({
         <div className="space-y-3">
           {electricians.map((electrician) => {
             const isInLabourBank = labourBankIds.includes(electrician.id);
-            const initials = electrician.name.split(' ').map(n => n[0]).join('');
+            const initials = electrician.name
+              .split(' ')
+              .map((n) => n[0])
+              .join('');
 
             return (
               <Card key={electrician.id} className="bg-elec-gray border-border">
@@ -102,11 +101,13 @@ export function AvailabilityCalendar({
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
                         <span className="font-medium truncate">{electrician.name}</span>
-                        {electrician.verified && <CheckCircle className="h-3.5 w-3.5 text-success shrink-0" />}
+                        {electrician.verified && (
+                          <CheckCircle className="h-3.5 w-3.5 text-success shrink-0" />
+                        )}
                       </div>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{electrician.ecsCardType}</span>
@@ -137,16 +138,24 @@ export function AvailabilityCalendar({
                           disabled={isPast || !hasAvailability}
                           onClick={() => hasAvailability && onSelectElectrician(electrician, day)}
                           className={`h-10 rounded-lg transition-all touch-feedback ${
-                            isPast ? 'bg-muted opacity-50' :
-                            hasAvailability ? 'bg-success/20 hover:bg-success/30 border border-success/30' :
-                            'bg-destructive/10 border border-destructive/20'
+                            isPast
+                              ? 'bg-muted opacity-50'
+                              : hasAvailability
+                                ? 'bg-success/20 hover:bg-success/30 border border-success/30'
+                                : 'bg-destructive/10 border border-destructive/20'
                           }`}
                         >
                           {hasAvailability && !isPast && (
                             <div className="flex flex-col items-center gap-0.5">
-                              {slots.includes('morning') && <div className="w-1.5 h-1.5 bg-success rounded-full" />}
-                              {slots.includes('afternoon') && <div className="w-1.5 h-1.5 bg-success rounded-full" />}
-                              {slots.includes('evening') && <div className="w-1.5 h-1.5 bg-warning rounded-full" />}
+                              {slots.includes('morning') && (
+                                <div className="w-1.5 h-1.5 bg-success rounded-full" />
+                              )}
+                              {slots.includes('afternoon') && (
+                                <div className="w-1.5 h-1.5 bg-success rounded-full" />
+                              )}
+                              {slots.includes('evening') && (
+                                <div className="w-1.5 h-1.5 bg-warning rounded-full" />
+                              )}
                             </div>
                           )}
                         </button>

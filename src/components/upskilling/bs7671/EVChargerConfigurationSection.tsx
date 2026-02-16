@@ -10,11 +10,15 @@ export const EVChargerConfigurationSection = () => {
           <Car className="h-5 w-5 text-elec-yellow" />
           EV Charger Configuration & Modes
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-elec-yellow text-elec-dark">BS 7671 Section 722</Badge>
+        <Badge variant="secondary" className="w-fit bg-elec-yellow text-elec-dark">
+          BS 7671 Section 722
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Electric vehicle charging modes define different methods of connection between the vehicle and the supply, each with specific power levels, safety systems, and installation requirements.
+          Electric vehicle charging modes define different methods of connection between the vehicle
+          and the supply, each with specific power levels, safety systems, and installation
+          requirements.
         </p>
 
         <div className="grid gap-4">
@@ -128,7 +132,9 @@ export const EVChargerConfigurationSection = () => {
         </div>
 
         <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
-          <h5 className="text-yellow-200 font-semibold mb-3">Installation Planning Considerations</h5>
+          <h5 className="text-yellow-200 font-semibold mb-3">
+            Installation Planning Considerations
+          </h5>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h6 className="font-medium text-foreground mb-2">Electrical Infrastructure</h6>

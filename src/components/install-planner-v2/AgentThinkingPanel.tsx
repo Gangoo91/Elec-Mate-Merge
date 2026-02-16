@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Loader2, AlertTriangle, Shield, Handshake } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, Loader2, AlertTriangle, Shield, Handshake } from 'lucide-react';
 
 interface ThinkingStep {
   agent: string;
@@ -27,7 +27,7 @@ const AGENT_EMOJI: Record<string, string> = {
   installer: '🔧',
   'health-safety': '⚠️',
   commissioning: '✅',
-  inspector: '🔍'
+  inspector: '🔍',
 };
 
 const AGENT_NAMES: Record<string, string> = {
@@ -36,18 +36,14 @@ const AGENT_NAMES: Record<string, string> = {
   installer: 'Installation Planner',
   'health-safety': 'Health & Safety',
   commissioning: 'Commissioning Expert',
-  inspector: 'Inspector'
+  inspector: 'Inspector',
 };
 
-export const AgentThinkingPanel = ({
-  steps,
-  currentAgent,
-  isVisible
-}: AgentThinkingPanelProps) => {
+export const AgentThinkingPanel = ({ steps, currentAgent, isVisible }: AgentThinkingPanelProps) => {
   if (!isVisible || steps.length === 0) return null;
 
-  const activeStep = steps.find(s => s.agent === currentAgent && !s.completed);
-  const completedSteps = steps.filter(s => s.completed);
+  const activeStep = steps.find((s) => s.agent === currentAgent && !s.completed);
+  const completedSteps = steps.filter((s) => s.completed);
 
   return (
     <Card className="bg-elec-card/50 border-elec-yellow/20">
@@ -57,7 +53,7 @@ export const AgentThinkingPanel = ({
           Agent Thinking
         </CardTitle>
       </CardHeader>
-      
+
       <CardContent className="space-y-3">
         {/* Current Agent Progress */}
         {activeStep && (
@@ -68,9 +64,7 @@ export const AgentThinkingPanel = ({
                 {AGENT_NAMES[activeStep.agent]}
               </span>
             </div>
-            <p className="text-xs text-muted-foreground mb-2">
-              {activeStep.message}
-            </p>
+            <p className="text-xs text-muted-foreground mb-2">{activeStep.message}</p>
             {activeStep.progress !== undefined && (
               <Progress value={activeStep.progress} className="h-1.5" />
             )}
@@ -88,7 +82,7 @@ export const AgentThinkingPanel = ({
                   <span>{AGENT_EMOJI[step.agent]}</span>
                   <span>{step.message}</span>
                 </div>
-                
+
                 {/* Show challenge if present */}
                 {step.challenge && (
                   <div className="ml-5 pl-3 border-l-2 border-elec-yellow/30 space-y-1">
@@ -98,21 +92,21 @@ export const AgentThinkingPanel = ({
                         {AGENT_EMOJI[step.challenge.challenger]} challenged: {step.challenge.issue}
                       </span>
                     </div>
-                    
+
                     {step.challenge.resolution === 'accepted' && (
                       <div className="flex items-center gap-2 text-xs text-green-500">
                         <CheckCircle2 className="h-3 w-3" />
                         <span>Design revised ✓</span>
                       </div>
                     )}
-                    
+
                     {step.challenge.resolution === 'defended' && (
                       <div className="flex items-center gap-2 text-xs text-blue-500">
                         <Shield className="h-3 w-3" />
                         <span>Original design maintained</span>
                       </div>
                     )}
-                    
+
                     {step.challenge.resolution === 'compromised' && (
                       <div className="flex items-center gap-2 text-xs text-elec-yellow">
                         <Handshake className="h-3 w-3" />

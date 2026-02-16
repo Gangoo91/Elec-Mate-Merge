@@ -7,34 +7,34 @@ const InstrumentationModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Measuring Voltage, Current, and Resistance",
+      title: 'Measuring Voltage, Current, and Resistance',
       icon: Zap,
-      description: "Fundamental electrical measurements and techniques"
+      description: 'Fundamental electrical measurements and techniques',
     },
     {
       id: 2,
-      title: "Frequency and Time-Based Measurements",
+      title: 'Frequency and Time-Based Measurements',
       icon: BarChart,
-      description: "Measuring frequency, period, and time-based parameters"
+      description: 'Measuring frequency, period, and time-based parameters',
     },
     {
       id: 3,
-      title: "Instrument Accuracy, Resolution, and Error",
+      title: 'Instrument Accuracy, Resolution, and Error',
       icon: Target,
-      description: "Understanding measurement precision and error sources"
+      description: 'Understanding measurement precision and error sources',
     },
     {
       id: 4,
-      title: "Measurement Equipment: Multimeters, Clamp Meters, Oscilloscopes",
+      title: 'Measurement Equipment: Multimeters, Clamp Meters, Oscilloscopes',
       icon: Gauge,
-      description: "Overview of common electrical measurement instruments"
+      description: 'Overview of common electrical measurement instruments',
     },
     {
       id: 5,
-      title: "Interpreting and Logging Readings in Real-World Systems",
+      title: 'Interpreting and Logging Readings in Real-World Systems',
       icon: FileText,
-      description: "Practical application of measurements in industrial systems"
-    }
+      description: 'Practical application of measurements in industrial systems',
+    },
   ];
 
   return (

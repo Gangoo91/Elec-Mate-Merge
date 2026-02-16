@@ -1,4 +1,3 @@
-
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { RefreshCcw, Home } from 'lucide-react';
@@ -20,7 +19,7 @@ class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
     error: null,
-    errorInfo: null
+    errorInfo: null,
   };
 
   public static getDerivedStateFromError(_: Error): Partial<State> {
@@ -31,13 +30,14 @@ class ErrorBoundary extends Component<Props, State> {
   public componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     });
 
     // Check for chunk loading errors - auto-refresh instead of showing error
     // Use multiple error representations since some browsers (Edge Mobile, Android WebViews)
     // wrap lazy import errors in non-standard ways where error.message may be empty/object
-    const errorString = `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
+    const errorString =
+      `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
     const stackString = `${errorInfo?.componentStack || ''} ${error?.stack || ''}`.toLowerCase();
     // Also detect non-Error objects (plain objects from failed dynamic imports)
     // React sometimes passes [object Object] when a lazy import promise rejects with a non-Error
@@ -56,7 +56,9 @@ class ErrorBoundary extends Component<Props, State> {
     if (isChunkError) {
       console.log('[ErrorBoundary] Chunk load error, auto-refreshing...');
       if ('caches' in window) {
-        caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
+        caches
+          .keys()
+          .then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
           .finally(() => window.location.reload());
       } else {
         window.location.reload();
@@ -67,14 +69,14 @@ class ErrorBoundary extends Component<Props, State> {
     // Add breadcrumb with component stack for debugging
     addBreadcrumb('ErrorBoundary caught error', 'error', {
       url: window.location.href,
-      componentStack: errorInfo.componentStack?.slice(0, 500)
+      componentStack: errorInfo.componentStack?.slice(0, 500),
     });
 
     // Send ACTUAL error to Sentry (not just "ErrorBoundary caught an error")
     captureError(error, {
       componentStack: errorInfo.componentStack,
       url: window.location.href,
-      errorBoundary: true
+      errorBoundary: true,
     });
 
     // Enhanced error logging with context
@@ -83,11 +85,15 @@ class ErrorBoundary extends Component<Props, State> {
       stack: error.stack,
       componentStack: errorInfo.componentStack,
       url: window.location.href,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
     // Specific guidance for stream errors
-    if (error.message.includes('stream') || error.message.includes('controller') || error.message.includes('enqueue')) {
+    if (
+      error.message.includes('stream') ||
+      error.message.includes('controller') ||
+      error.message.includes('enqueue')
+    ) {
       console.error('🚨 Stream error detected - this may be related to parallel agent execution');
       console.error('💡 Try refreshing the page or starting a new conversation');
     }
@@ -102,7 +108,7 @@ class ErrorBoundary extends Component<Props, State> {
       if (this.props.fallback) {
         return this.props.fallback;
       }
-      
+
       // Default error UI
       return (
         <div className="flex flex-col items-center justify-center min-h-[50vh] p-6 text-center">
@@ -118,7 +124,7 @@ class ErrorBoundary extends Component<Props, State> {
               <RefreshCcw className="h-4 w-4" />
               Refresh page
             </Button>
-            <Button variant="outline" onClick={() => window.location.href = "/dashboard"}>
+            <Button variant="outline" onClick={() => (window.location.href = '/dashboard')}>
               <Home className="h-4 w-4 mr-2" />
               Go to dashboard
             </Button>

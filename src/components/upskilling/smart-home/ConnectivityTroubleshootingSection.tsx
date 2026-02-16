@@ -14,12 +14,13 @@ const ConnectivityTroubleshootingSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Systematic troubleshooting approaches help identify and resolve wireless connectivity problems efficiently.
+            Systematic troubleshooting approaches help identify and resolve wireless connectivity
+            problems efficiently.
           </p>
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Common Connectivity Problems</h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-red-900/20 border border-red-600/30 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
@@ -90,7 +91,7 @@ const ConnectivityTroubleshootingSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Systematic Diagnostic Approach</h4>
-            
+
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h5 className="font-semibold text-elec-yellow mb-3">Step-by-Step Troubleshooting</h5>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -118,7 +119,7 @@ const ConnectivityTroubleshootingSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Advanced Diagnostics</h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-2">Network Analysis Tools</h5>

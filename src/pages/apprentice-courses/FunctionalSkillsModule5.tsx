@@ -1,44 +1,51 @@
-import { ChevronLeft, Target, ClipboardCheck, ClipboardList, Brain, FolderOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import {
+  ChevronLeft,
+  Target,
+  ClipboardCheck,
+  ClipboardList,
+  Brain,
+  FolderOpen,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const FunctionalSkillsModule5 = () => {
   useSEO(
-    "Module 5: Assessment Preparation - Functional Skills",
-    "Prepare for functional skills assessments with practice exams, study techniques and portfolio building"
+    'Module 5: Assessment Preparation - Functional Skills',
+    'Prepare for functional skills assessments with practice exams, study techniques and portfolio building'
   );
 
   const sections = [
     {
-      number: "Section 1",
-      title: "Level 1 Functional Skills Practice",
-      description: "Exam format, sample questions, time management and common mistakes",
+      number: 'Section 1',
+      title: 'Level 1 Functional Skills Practice',
+      description: 'Exam format, sample questions, time management and common mistakes',
       icon: ClipboardCheck,
-      href: "/study-centre/apprentice/functional-skills/module5/section1",
+      href: '/study-centre/apprentice/functional-skills/module5/section1',
     },
     {
-      number: "Section 2",
-      title: "Level 2 Functional Skills Practice",
-      description: "Step-up from Level 1, harder practice questions and strategies",
+      number: 'Section 2',
+      title: 'Level 2 Functional Skills Practice',
+      description: 'Step-up from Level 1, harder practice questions and strategies',
       icon: ClipboardList,
-      href: "/study-centre/apprentice/functional-skills/module5/section2",
+      href: '/study-centre/apprentice/functional-skills/module5/section2',
     },
     {
-      number: "Section 3",
-      title: "Study Techniques & Exam Skills",
-      description: "Revision methods, time management, stress management and past papers",
+      number: 'Section 3',
+      title: 'Study Techniques & Exam Skills',
+      description: 'Revision methods, time management, stress management and past papers',
       icon: Brain,
-      href: "/study-centre/apprentice/functional-skills/module5/section3",
+      href: '/study-centre/apprentice/functional-skills/module5/section3',
     },
     {
-      number: "Section 4",
-      title: "Portfolio Building & Evidence",
-      description: "Assessor expectations, collecting evidence and reflective accounts",
+      number: 'Section 4',
+      title: 'Portfolio Building & Evidence',
+      description: 'Assessor expectations, collecting evidence and reflective accounts',
       icon: FolderOpen,
-      href: "/study-centre/apprentice/functional-skills/module5/section4",
+      href: '/study-centre/apprentice/functional-skills/module5/section4',
     },
   ];
 
@@ -91,7 +98,8 @@ const FunctionalSkillsModule5 = () => {
               </span>
             </h1>
             <p className="text-sm text-white/50 max-w-lg mx-auto">
-              Prepare for functional skills assessments with practice exams, study techniques and portfolio building
+              Prepare for functional skills assessments with practice exams, study techniques and
+              portfolio building
             </p>
           </motion.div>
         </div>

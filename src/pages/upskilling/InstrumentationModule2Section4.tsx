@@ -1,200 +1,217 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Level, Position, and Proximity Sensors - Instrumentation Module 2 Section 4";
-const DESCRIPTION = "Master spatial awareness sensors including level detection, positioning systems, and proximity monitoring for industrial automation.";
+const TITLE = 'Level, Position, and Proximity Sensors - Instrumentation Module 2 Section 4';
+const DESCRIPTION =
+  'Master spatial awareness sensors including level detection, positioning systems, and proximity monitoring for industrial automation.';
 
 const quickCheckQuestions = [
   {
-    id: "level-sensor-choice",
-    question: "Which level sensor technology is best for measuring corrosive liquids without contact?",
+    id: 'level-sensor-choice',
+    question:
+      'Which level sensor technology is best for measuring corrosive liquids without contact?',
     options: [
-      "Float sensor with mechanical switch",
-      "Ultrasonic or radar level sensor",
-      "Capacitive probe sensor",
-      "Pressure differential gauge"
+      'Float sensor with mechanical switch',
+      'Ultrasonic or radar level sensor',
+      'Capacitive probe sensor',
+      'Pressure differential gauge',
     ],
     correctIndex: 1,
-    explanation: "Ultrasonic and radar sensors measure level without contacting the liquid, making them ideal for corrosive substances where wetted materials would be damaged."
+    explanation:
+      'Ultrasonic and radar sensors measure level without contacting the liquid, making them ideal for corrosive substances where wetted materials would be damaged.',
   },
   {
-    id: "encoder-vs-pot",
-    question: "Why would you choose an encoder over a potentiometer for position feedback?",
+    id: 'encoder-vs-pot',
+    question: 'Why would you choose an encoder over a potentiometer for position feedback?',
     options: [
-      "Encoders are always cheaper",
-      "Encoders provide digital output with no mechanical wear",
-      "Potentiometers cannot measure rotation",
-      "Encoders work without power"
+      'Encoders are always cheaper',
+      'Encoders provide digital output with no mechanical wear',
+      'Potentiometers cannot measure rotation',
+      'Encoders work without power',
     ],
     correctIndex: 1,
-    explanation: "Encoders provide digital position feedback with high resolution and no mechanical wear issues, unlike potentiometers which have wipers that wear over time."
+    explanation:
+      'Encoders provide digital position feedback with high resolution and no mechanical wear issues, unlike potentiometers which have wipers that wear over time.',
   },
   {
-    id: "proximity-sensor-type",
-    question: "Which proximity sensor type can detect both metallic and non-metallic objects?",
+    id: 'proximity-sensor-type',
+    question: 'Which proximity sensor type can detect both metallic and non-metallic objects?',
     options: [
-      "Inductive proximity sensor",
-      "Magnetic reed switch",
-      "Capacitive proximity sensor",
-      "Hall effect sensor"
+      'Inductive proximity sensor',
+      'Magnetic reed switch',
+      'Capacitive proximity sensor',
+      'Hall effect sensor',
     ],
     correctIndex: 2,
-    explanation: "Capacitive proximity sensors detect changes in capacitance and can sense all types of materials including plastics, liquids, powders, and metals."
-  }
+    explanation:
+      'Capacitive proximity sensors detect changes in capacitance and can sense all types of materials including plastics, liquids, powders, and metals.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the main use of a proximity sensor?",
+    question: 'What is the main use of a proximity sensor?',
     options: [
-      "To measure temperature changes in objects",
-      "To detect the presence or absence of objects without physical contact",
-      "To measure electrical current flow",
-      "To monitor pressure variations"
+      'To measure temperature changes in objects',
+      'To detect the presence or absence of objects without physical contact',
+      'To measure electrical current flow',
+      'To monitor pressure variations',
     ],
     correctAnswer: 1,
-    explanation: "Proximity sensors detect the presence or absence of objects without requiring physical contact, making them essential for automation, safety systems, and position feedback."
+    explanation:
+      'Proximity sensors detect the presence or absence of objects without requiring physical contact, making them essential for automation, safety systems, and position feedback.',
   },
   {
     id: 2,
-    question: "Which type of sensor is ideal for measuring liquid level without contact?",
-    options: [
-      "Float sensor",
-      "Ultrasonic level sensor",
-      "Mechanical gauge",
-      "Pressure switch"
-    ],
+    question: 'Which type of sensor is ideal for measuring liquid level without contact?',
+    options: ['Float sensor', 'Ultrasonic level sensor', 'Mechanical gauge', 'Pressure switch'],
     correctAnswer: 1,
-    explanation: "Ultrasonic level sensors are ideal for non-contact liquid level measurement. They use sound waves to measure the distance to the liquid surface."
+    explanation:
+      'Ultrasonic level sensors are ideal for non-contact liquid level measurement. They use sound waves to measure the distance to the liquid surface.',
   },
   {
     id: 3,
-    question: "What is the difference between an encoder and a potentiometer?",
+    question: 'What is the difference between an encoder and a potentiometer?',
     options: [
-      "There is no difference between them",
-      "Encoders provide digital output while potentiometers provide analogue output",
-      "Encoders measure temperature while potentiometers measure position",
-      "Potentiometers are more accurate than encoders"
+      'There is no difference between them',
+      'Encoders provide digital output while potentiometers provide analogue output',
+      'Encoders measure temperature while potentiometers measure position',
+      'Potentiometers are more accurate than encoders',
     ],
     correctAnswer: 1,
-    explanation: "Encoders provide digital position feedback with high resolution and no wear issues, while potentiometers provide analogue voltage output but have limited life due to mechanical wipers."
+    explanation:
+      'Encoders provide digital position feedback with high resolution and no wear issues, while potentiometers provide analogue voltage output but have limited life due to mechanical wipers.',
   },
   {
     id: 4,
-    question: "Where would a photoelectric sensor be most useful?",
+    question: 'Where would a photoelectric sensor be most useful?',
     options: [
-      "Measuring water temperature",
-      "Monitoring electrical voltage",
-      "Counting products on a conveyor belt",
-      "Measuring gas pressure"
+      'Measuring water temperature',
+      'Monitoring electrical voltage',
+      'Counting products on a conveyor belt',
+      'Measuring gas pressure',
     ],
     correctAnswer: 2,
-    explanation: "Photoelectric sensors excel at counting products on conveyor belts. They detect objects as they pass through a light beam, providing reliable counting without physical contact."
+    explanation:
+      'Photoelectric sensors excel at counting products on conveyor belts. They detect objects as they pass through a light beam, providing reliable counting without physical contact.',
   },
   {
     id: 5,
-    question: "Why choose a non-contact sensor over a contact sensor?",
+    question: 'Why choose a non-contact sensor over a contact sensor?',
     options: [
-      "They are always cheaper than contact sensors",
-      "To avoid contamination, wear, and mechanical interference",
-      "They consume less power",
-      "They are easier to install"
+      'They are always cheaper than contact sensors',
+      'To avoid contamination, wear, and mechanical interference',
+      'They consume less power',
+      'They are easier to install',
     ],
     correctAnswer: 1,
-    explanation: "Non-contact sensors are chosen to avoid contamination (especially in food/medical applications), eliminate mechanical wear, and prevent interference with the measured object or process."
+    explanation:
+      'Non-contact sensors are chosen to avoid contamination (especially in food/medical applications), eliminate mechanical wear, and prevent interference with the measured object or process.',
   },
   {
     id: 6,
-    question: "What advantage does radar level sensing have over ultrasonic?",
+    question: 'What advantage does radar level sensing have over ultrasonic?',
     options: [
-      "Radar sensors are cheaper",
-      "Radar is unaffected by temperature and can penetrate vapours",
-      "Ultrasonic sensors require more power",
-      "Radar sensors are smaller"
+      'Radar sensors are cheaper',
+      'Radar is unaffected by temperature and can penetrate vapours',
+      'Ultrasonic sensors require more power',
+      'Radar sensors are smaller',
     ],
     correctAnswer: 1,
-    explanation: "Radar level sensors are unaffected by temperature changes and can measure through vapours and foam, unlike ultrasonic sensors which can be affected by these conditions."
+    explanation:
+      'Radar level sensors are unaffected by temperature changes and can measure through vapours and foam, unlike ultrasonic sensors which can be affected by these conditions.',
   },
   {
     id: 7,
-    question: "What is an LVDT used for?",
+    question: 'What is an LVDT used for?',
     options: [
-      "Measuring temperature",
-      "Highly accurate linear position measurement",
-      "Detecting metallic objects",
-      "Measuring electrical current"
+      'Measuring temperature',
+      'Highly accurate linear position measurement',
+      'Detecting metallic objects',
+      'Measuring electrical current',
     ],
     correctAnswer: 1,
-    explanation: "Linear Variable Differential Transformers (LVDTs) are electromagnetic sensors providing extremely accurate linear position measurement with no physical contact and infinite resolution."
+    explanation:
+      'Linear Variable Differential Transformers (LVDTs) are electromagnetic sensors providing extremely accurate linear position measurement with no physical contact and infinite resolution.',
   },
   {
     id: 8,
-    question: "Which proximity sensor type is best for detecting metallic objects in dirty environments?",
+    question:
+      'Which proximity sensor type is best for detecting metallic objects in dirty environments?',
     options: [
-      "Photoelectric sensor",
-      "Inductive proximity sensor",
-      "Capacitive sensor",
-      "Ultrasonic sensor"
+      'Photoelectric sensor',
+      'Inductive proximity sensor',
+      'Capacitive sensor',
+      'Ultrasonic sensor',
     ],
     correctAnswer: 1,
-    explanation: "Inductive proximity sensors are immune to dirt, dust, and moisture while reliably detecting metallic objects. Their electromagnetic sensing principle is unaffected by contamination."
+    explanation:
+      'Inductive proximity sensors are immune to dirt, dust, and moisture while reliably detecting metallic objects. Their electromagnetic sensing principle is unaffected by contamination.',
   },
   {
     id: 9,
-    question: "What is the difference between incremental and absolute encoders?",
+    question: 'What is the difference between incremental and absolute encoders?',
     options: [
-      "Incremental encoders are more accurate",
+      'Incremental encoders are more accurate',
       "Absolute encoders provide a unique position code and don't need a reference point",
-      "Incremental encoders work without power",
-      "There is no practical difference"
+      'Incremental encoders work without power',
+      'There is no practical difference',
     ],
     correctAnswer: 1,
-    explanation: "Absolute encoders provide a unique digital code for each position and retain position data through power loss, while incremental encoders require homing to establish a reference position."
+    explanation:
+      'Absolute encoders provide a unique digital code for each position and retain position data through power loss, while incremental encoders require homing to establish a reference position.',
   },
   {
     id: 10,
-    question: "Why might foam cause problems for ultrasonic level sensors?",
+    question: 'Why might foam cause problems for ultrasonic level sensors?',
     options: [
-      "Foam is too heavy",
-      "Foam absorbs sound waves, preventing accurate measurement",
-      "Foam conducts electricity",
-      "Foam reflects too much light"
+      'Foam is too heavy',
+      'Foam absorbs sound waves, preventing accurate measurement',
+      'Foam conducts electricity',
+      'Foam reflects too much light',
     ],
     correctAnswer: 1,
-    explanation: "Foam absorbs ultrasonic sound waves rather than reflecting them back to the sensor, causing inaccurate readings or complete measurement failure. Radar sensors handle foam better."
-  }
+    explanation:
+      'Foam absorbs ultrasonic sound waves rather than reflecting them back to the sensor, causing inaccurate readings or complete measurement failure. Radar sensors handle foam better.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I choose between contact and non-contact level sensors?",
-    answer: "Consider the measured substance and application requirements. Non-contact sensors (ultrasonic, radar) are better for corrosive liquids, sterile environments, and where contamination must be avoided. Contact sensors (float, capacitive probes) are simpler and more cost-effective for clean, non-critical applications."
+    question: 'How do I choose between contact and non-contact level sensors?',
+    answer:
+      'Consider the measured substance and application requirements. Non-contact sensors (ultrasonic, radar) are better for corrosive liquids, sterile environments, and where contamination must be avoided. Contact sensors (float, capacitive probes) are simpler and more cost-effective for clean, non-critical applications.',
   },
   {
-    question: "What is the sensing range of inductive proximity sensors?",
-    answer: "Standard inductive sensors typically have sensing ranges of 1mm to 60mm, depending on the sensor face diameter. Larger sensors have longer ranges. The range is also affected by the target material and size - ferrous metals provide the best detection range."
+    question: 'What is the sensing range of inductive proximity sensors?',
+    answer:
+      'Standard inductive sensors typically have sensing ranges of 1mm to 60mm, depending on the sensor face diameter. Larger sensors have longer ranges. The range is also affected by the target material and size - ferrous metals provide the best detection range.',
   },
   {
-    question: "Can capacitive sensors see through container walls?",
-    answer: "Yes, capacitive proximity sensors can detect the presence of materials through non-metallic container walls like plastic or glass. This makes them ideal for detecting liquid levels in sealed containers without penetrating the vessel."
+    question: 'Can capacitive sensors see through container walls?',
+    answer:
+      'Yes, capacitive proximity sensors can detect the presence of materials through non-metallic container walls like plastic or glass. This makes them ideal for detecting liquid levels in sealed containers without penetrating the vessel.',
   },
   {
-    question: "What causes false triggers in photoelectric sensors?",
-    answer: "Common causes include ambient light interference, reflective surfaces causing beam scatter, dirty lenses, misalignment between transmitter and receiver, and vibration. Using sensors with appropriate filtering and proper mounting addresses most issues."
+    question: 'What causes false triggers in photoelectric sensors?',
+    answer:
+      'Common causes include ambient light interference, reflective surfaces causing beam scatter, dirty lenses, misalignment between transmitter and receiver, and vibration. Using sensors with appropriate filtering and proper mounting addresses most issues.',
   },
   {
-    question: "When should I use an absolute encoder instead of incremental?",
-    answer: "Use absolute encoders when position must be known immediately after power-up without a homing sequence, in safety-critical applications, or where power loss could occur during operation. Incremental encoders are suitable when cost is critical and a reference home position is acceptable."
+    question: 'When should I use an absolute encoder instead of incremental?',
+    answer:
+      'Use absolute encoders when position must be known immediately after power-up without a homing sequence, in safety-critical applications, or where power loss could occur during operation. Incremental encoders are suitable when cost is critical and a reference home position is acceptable.',
   },
   {
-    question: "What IP rating do I need for outdoor proximity sensors?",
-    answer: "For outdoor industrial applications, IP67 (dust-tight, protected against temporary immersion) is typically minimum. For washdown environments, IP68 or IP69K (high-pressure, high-temperature wash) is recommended. Always verify the sensor's temperature rating for your climate."
-  }
+    question: 'What IP rating do I need for outdoor proximity sensors?',
+    answer:
+      "For outdoor industrial applications, IP67 (dust-tight, protected against temporary immersion) is typically minimum. For washdown environments, IP68 or IP69K (high-pressure, high-temperature wash) is recommended. Always verify the sensor's temperature rating for your climate.",
+  },
 ];
 
 const InstrumentationModule2Section4 = () => {
@@ -205,7 +222,12 @@ const InstrumentationModule2Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/instrumentation-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -216,7 +238,6 @@ const InstrumentationModule2Section4 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -236,18 +257,32 @@ const InstrumentationModule2Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Level Sensors:</strong> Float, ultrasonic, radar, capacitive</li>
-              <li><strong>Position:</strong> Potentiometers, encoders, LVDTs</li>
-              <li><strong>Proximity:</strong> Inductive, capacitive, photoelectric</li>
-              <li><strong>Selection:</strong> Based on material, environment, accuracy</li>
+              <li>
+                <strong>Level Sensors:</strong> Float, ultrasonic, radar, capacitive
+              </li>
+              <li>
+                <strong>Position:</strong> Potentiometers, encoders, LVDTs
+              </li>
+              <li>
+                <strong>Proximity:</strong> Inductive, capacitive, photoelectric
+              </li>
+              <li>
+                <strong>Selection:</strong> Based on material, environment, accuracy
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Tank-mounted sensors, encoder wheels, prox switches</li>
-              <li><strong>Use:</strong> Tank monitoring, machine positioning, object detection</li>
-              <li><strong>Apply:</strong> Safety interlocks, counting, automation feedback</li>
+              <li>
+                <strong>Spot:</strong> Tank-mounted sensors, encoder wheels, prox switches
+              </li>
+              <li>
+                <strong>Use:</strong> Tank monitoring, machine positioning, object detection
+              </li>
+              <li>
+                <strong>Apply:</strong> Safety interlocks, counting, automation feedback
+              </li>
             </ul>
           </div>
         </div>
@@ -257,12 +292,12 @@ const InstrumentationModule2Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand how level, position, and proximity are sensed",
-              "Compare contact and non-contact sensor methods",
-              "Identify ideal sensors for different environments",
-              "Apply selection criteria for spatial monitoring",
-              "Recognise common sensor technologies and outputs",
-              "Match sensor capabilities to application requirements"
+              'Understand how level, position, and proximity are sensed',
+              'Compare contact and non-contact sensor methods',
+              'Identify ideal sensors for different environments',
+              'Apply selection criteria for spatial monitoring',
+              'Recognise common sensor technologies and outputs',
+              'Match sensor capabilities to application requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -283,12 +318,16 @@ const InstrumentationModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Level sensors determine the height of liquids, solids, or interfaces between materials. They range from simple mechanical switches to sophisticated radar systems, each suited to specific applications and environmental conditions.
+              Level sensors determine the height of liquids, solids, or interfaces between
+              materials. They range from simple mechanical switches to sophisticated radar systems,
+              each suited to specific applications and environmental conditions.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Float Sensors</p>
-              <p className="text-sm text-white mb-2">Use buoyancy principles with mechanical switches or continuous position feedback.</p>
+              <p className="text-sm text-white mb-2">
+                Use buoyancy principles with mechanical switches or continuous position feedback.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Advantages</p>
@@ -312,8 +351,12 @@ const InstrumentationModule2Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ultrasonic Level Sensors</p>
-              <p className="text-sm text-white mb-2">Measure time-of-flight of ultrasonic pulses reflected from the surface.</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Ultrasonic Level Sensors
+              </p>
+              <p className="text-sm text-white mb-2">
+                Measure time-of-flight of ultrasonic pulses reflected from the surface.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Advantages</p>
@@ -338,7 +381,9 @@ const InstrumentationModule2Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Radar Level Sensors</p>
-              <p className="text-sm text-white mb-2">Use microwave signals to measure distance to the surface with high accuracy.</p>
+              <p className="text-sm text-white mb-2">
+                Use microwave signals to measure distance to the surface with high accuracy.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Advantages</p>
@@ -373,12 +418,18 @@ const InstrumentationModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Position sensors provide feedback on the location of moving components. They are essential for precise control in automation systems, robotics, and machinery positioning applications.
+              Position sensors provide feedback on the location of moving components. They are
+              essential for precise control in automation systems, robotics, and machinery
+              positioning applications.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Potentiometers (Linear and Rotary)</p>
-              <p className="text-sm text-white mb-2">Provide analogue voltage output proportional to mechanical position.</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Potentiometers (Linear and Rotary)
+              </p>
+              <p className="text-sm text-white mb-2">
+                Provide analogue voltage output proportional to mechanical position.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Advantages</p>
@@ -402,8 +453,12 @@ const InstrumentationModule2Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Encoders (Incremental and Absolute)</p>
-              <p className="text-sm text-white mb-2">Provide digital position feedback with high resolution and reliability.</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Encoders (Incremental and Absolute)
+              </p>
+              <p className="text-sm text-white mb-2">
+                Provide digital position feedback with high resolution and reliability.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Incremental Encoders</p>
@@ -427,8 +482,12 @@ const InstrumentationModule2Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Linear Variable Differential Transformers (LVDT)</p>
-              <p className="text-sm text-white mb-2">Electromagnetic sensors providing highly accurate linear position measurement.</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Linear Variable Differential Transformers (LVDT)
+              </p>
+              <p className="text-sm text-white mb-2">
+                Electromagnetic sensors providing highly accurate linear position measurement.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Advantages</p>
@@ -463,12 +522,18 @@ const InstrumentationModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proximity sensors detect the presence or absence of objects without physical contact. They are fundamental to automation systems, providing input for safety systems, counting applications, and position feedback.
+              Proximity sensors detect the presence or absence of objects without physical contact.
+              They are fundamental to automation systems, providing input for safety systems,
+              counting applications, and position feedback.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inductive Proximity Sensors</p>
-              <p className="text-sm text-white mb-2">Detect metallic objects by sensing changes in electromagnetic field.</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Inductive Proximity Sensors
+              </p>
+              <p className="text-sm text-white mb-2">
+                Detect metallic objects by sensing changes in electromagnetic field.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Advantages</p>
@@ -492,8 +557,12 @@ const InstrumentationModule2Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Capacitive Proximity Sensors</p>
-              <p className="text-sm text-white mb-2">Detect both metallic and non-metallic objects by sensing capacitance changes.</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Capacitive Proximity Sensors
+              </p>
+              <p className="text-sm text-white mb-2">
+                Detect both metallic and non-metallic objects by sensing capacitance changes.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Advantages</p>
@@ -518,7 +587,9 @@ const InstrumentationModule2Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Photoelectric Sensors</p>
-              <p className="text-sm text-white mb-2">Use light beams to detect objects in various configurations.</p>
+              <p className="text-sm text-white mb-2">
+                Use light beams to detect objects in various configurations.
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Types</p>
@@ -553,7 +624,8 @@ const InstrumentationModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Understanding when to use contact versus non-contact sensing methods is crucial for optimal system performance and reliability.
+              Understanding when to use contact versus non-contact sensing methods is crucial for
+              optimal system performance and reliability.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -616,7 +688,9 @@ const InstrumentationModule2Section4 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Selecting Sensors</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Selecting Sensors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Match sensor technology to the target material (metal vs non-metal)</li>
                 <li>Consider environmental conditions (temperature, dust, moisture)</li>
@@ -638,10 +712,22 @@ const InstrumentationModule2Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong sensor type for material</strong> — inductive sensors will not detect plastic or glass</li>
-                <li><strong>Ignoring environmental ratings</strong> — sensors fail in conditions they are not rated for</li>
-                <li><strong>Mounting too close together</strong> — sensors can interfere with each other</li>
-                <li><strong>Inadequate cable protection</strong> — damaged cables cause intermittent faults</li>
+                <li>
+                  <strong>Wrong sensor type for material</strong> — inductive sensors will not
+                  detect plastic or glass
+                </li>
+                <li>
+                  <strong>Ignoring environmental ratings</strong> — sensors fail in conditions they
+                  are not rated for
+                </li>
+                <li>
+                  <strong>Mounting too close together</strong> — sensors can interfere with each
+                  other
+                </li>
+                <li>
+                  <strong>Inadequate cable protection</strong> — damaged cables cause intermittent
+                  faults
+                </li>
               </ul>
             </div>
           </div>
@@ -665,28 +751,33 @@ const InstrumentationModule2Section4 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/instrumentation-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../instrumentation-module-2-section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

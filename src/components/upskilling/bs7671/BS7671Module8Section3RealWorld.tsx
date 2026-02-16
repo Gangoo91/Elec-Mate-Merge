@@ -10,7 +10,9 @@ const BS7671Module8Section3RealWorld = () => {
           <Building2 className="h-6 w-6 text-elec-yellow" />
           Amendment 3 Real-World Implementation
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-emerald-600 text-foreground">Practical Applications</Badge>
+        <Badge variant="secondary" className="w-fit bg-emerald-600 text-foreground">
+          Practical Applications
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
@@ -23,7 +25,9 @@ const BS7671Module8Section3RealWorld = () => {
             </CardHeader>
             <CardContent className="text-foreground space-y-4">
               <div className="bg-gray-800 p-3 rounded">
-                <h6 className="text-elec-yellow font-semibold mb-2">Project: Victorian House Smart Upgrade</h6>
+                <h6 className="text-elec-yellow font-semibold mb-2">
+                  Project: Victorian House Smart Upgrade
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• Full home automation system integration</li>
                   <li>• Solar PV with battery storage installation</li>
@@ -32,7 +36,7 @@ const BS7671Module8Section3RealWorld = () => {
                   <li>• Smart HVAC with heat pump integration</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Amendment 3 Challenges:</h6>
                 <ul className="text-sm space-y-1">
@@ -43,7 +47,7 @@ const BS7671Module8Section3RealWorld = () => {
                   <li>• Smart grid integration and load management</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Implementation Solutions:</h6>
                 <ul className="text-sm space-y-1">
@@ -66,7 +70,9 @@ const BS7671Module8Section3RealWorld = () => {
             </CardHeader>
             <CardContent className="text-foreground space-y-4">
               <div className="bg-gray-800 p-3 rounded">
-                <h6 className="text-elec-yellow font-semibold mb-2">Project: Business Park Microgrid</h6>
+                <h6 className="text-elec-yellow font-semibold mb-2">
+                  Project: Business Park Microgrid
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• 500kW solar PV installation across multiple buildings</li>
                   <li>• 2MWh battery energy storage system</li>
@@ -75,7 +81,7 @@ const BS7671Module8Section3RealWorld = () => {
                   <li>• Grid services provision capability</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Amendment 3 Requirements:</h6>
                 <ul className="text-sm space-y-1">
@@ -86,7 +92,7 @@ const BS7671Module8Section3RealWorld = () => {
                   <li>• Emergency response and islanding procedures</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Technical Implementation:</h6>
                 <ul className="text-sm space-y-1">
@@ -102,13 +108,22 @@ const BS7671Module8Section3RealWorld = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Amendment 3 Implementation Case Studies:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Amendment 3 Implementation Case Studies:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h6 className="text-yellow-400 font-medium mb-2">Case Study 1: Hospital Critical Systems Upgrade</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                Case Study 1: Hospital Critical Systems Upgrade
+              </h6>
               <div className="bg-gray-800 p-3 rounded text-sm">
-                <p className="mb-2"><strong>Challenge:</strong> Upgrade critical power systems while maintaining 24/7 operation</p>
-                <p className="mb-2"><strong>Amendment 3 Requirements:</strong></p>
+                <p className="mb-2">
+                  <strong>Challenge:</strong> Upgrade critical power systems while maintaining 24/7
+                  operation
+                </p>
+                <p className="mb-2">
+                  <strong>Amendment 3 Requirements:</strong>
+                </p>
                 <ul className="space-y-1 text-xs">
                   <li>• Enhanced medical equipment protection standards</li>
                   <li>• Advanced emergency power system monitoring</li>
@@ -116,15 +131,25 @@ const BS7671Module8Section3RealWorld = () => {
                   <li>• Predictive maintenance for critical systems</li>
                   <li>• Enhanced fire safety for patient areas</li>
                 </ul>
-                <p className="mt-2 text-elec-yellow"><strong>Result:</strong> 99.99% uptime maintained during upgrade with zero patient impact</p>
+                <p className="mt-2 text-elec-yellow">
+                  <strong>Result:</strong> 99.99% uptime maintained during upgrade with zero patient
+                  impact
+                </p>
               </div>
             </div>
-            
+
             <div>
-              <h6 className="text-yellow-400 font-medium mb-2">Case Study 2: Educational Campus Smart Transformation</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                Case Study 2: Educational Campus Smart Transformation
+              </h6>
               <div className="bg-gray-800 p-3 rounded text-sm">
-                <p className="mb-2"><strong>Challenge:</strong> Transform 1970s campus into smart, sustainable facility</p>
-                <p className="mb-2"><strong>Amendment 3 Implementation:</strong></p>
+                <p className="mb-2">
+                  <strong>Challenge:</strong> Transform 1970s campus into smart, sustainable
+                  facility
+                </p>
+                <p className="mb-2">
+                  <strong>Amendment 3 Implementation:</strong>
+                </p>
                 <ul className="space-y-1 text-xs">
                   <li>• Campus-wide smart classroom technology</li>
                   <li>• Renewable energy and storage integration</li>
@@ -132,17 +157,24 @@ const BS7671Module8Section3RealWorld = () => {
                   <li>• AI-powered energy management</li>
                   <li>• Advanced emergency response coordination</li>
                 </ul>
-                <p className="mt-2 text-elec-yellow"><strong>Result:</strong> 40% energy reduction with enhanced safety and learning outcomes</p>
+                <p className="mt-2 text-elec-yellow">
+                  <strong>Result:</strong> 40% energy reduction with enhanced safety and learning
+                  outcomes
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Implementation Challenges and Solutions:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Implementation Challenges and Solutions:
+          </h5>
           <div className="space-y-4">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
-              <h6 className="font-bold text-red-400 mb-2">Challenge: Cybersecurity Integration Complexity</h6>
+              <h6 className="font-bold text-red-400 mb-2">
+                Challenge: Cybersecurity Integration Complexity
+              </h6>
               <div className="grid md:grid-cols-2 gap-4 mt-2">
                 <div>
                   <p className="text-xs font-semibold mb-1">Common Issues:</p>
@@ -164,9 +196,11 @@ const BS7671Module8Section3RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-orange-400">
-              <h6 className="font-bold text-orange-400 mb-2">Challenge: Enhanced Fire Safety Requirements</h6>
+              <h6 className="font-bold text-orange-400 mb-2">
+                Challenge: Enhanced Fire Safety Requirements
+              </h6>
               <div className="grid md:grid-cols-2 gap-4 mt-2">
                 <div>
                   <p className="text-xs font-semibold mb-1">Implementation Difficulties:</p>
@@ -188,9 +222,11 @@ const BS7671Module8Section3RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
-              <h6 className="font-bold text-green-400 mb-2">Challenge: Smart System Integration and Interoperability</h6>
+              <h6 className="font-bold text-green-400 mb-2">
+                Challenge: Smart System Integration and Interoperability
+              </h6>
               <div className="grid md:grid-cols-2 gap-4 mt-2">
                 <div>
                   <p className="text-xs font-semibold mb-1">Technical Challenges:</p>
@@ -216,7 +252,9 @@ const BS7671Module8Section3RealWorld = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Professional Development and Training Outcomes:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Professional Development and Training Outcomes:
+          </h5>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-gray-800 p-3 rounded">
               <Shield className="h-5 w-5 text-elec-yellow mb-2" />
@@ -256,15 +294,27 @@ const BS7671Module8Section3RealWorld = () => {
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Market Evolution</h6>
-              <p className="text-sm">Amendment 3 has created new market opportunities in smart systems, cybersecurity, and advanced safety systems, requiring electrical professionals to develop new competencies and service offerings.</p>
+              <p className="text-sm">
+                Amendment 3 has created new market opportunities in smart systems, cybersecurity,
+                and advanced safety systems, requiring electrical professionals to develop new
+                competencies and service offerings.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <h6 className="font-bold text-green-400 mb-1">Client Expectations</h6>
-              <p className="text-sm">Clients now expect integrated solutions combining electrical installation, smart technology, cybersecurity, and ongoing support services, requiring a more consultative approach to project delivery.</p>
+              <p className="text-sm">
+                Clients now expect integrated solutions combining electrical installation, smart
+                technology, cybersecurity, and ongoing support services, requiring a more
+                consultative approach to project delivery.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-purple-400">
               <h6 className="font-bold text-purple-400 mb-1">Professional Recognition</h6>
-              <p className="text-sm">Amendment 3 compliance has become a mark of professional excellence, with clients and partners recognising the additional value and expertise required for contemporary electrical installations.</p>
+              <p className="text-sm">
+                Amendment 3 compliance has become a mark of professional excellence, with clients
+                and partners recognising the additional value and expertise required for
+                contemporary electrical installations.
+              </p>
             </div>
           </div>
         </div>

@@ -1,47 +1,46 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Calculator, RotateCcw, Server } from "lucide-react";
-import { 
-  calculateDataCentre, 
-  redundancyOptions, 
-  coolingMethodOptions, 
-  facilityTypeOptions, 
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileSelectWrapper as MobileSelect } from '@/components/ui/mobile-select-wrapper';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Calculator, RotateCcw, Server } from 'lucide-react';
+import {
+  calculateDataCentre,
+  redundancyOptions,
+  coolingMethodOptions,
+  facilityTypeOptions,
   climateZoneOptions,
-  type DataCentreResults 
-} from "@/lib/datacentre";
-import { DataCentreGuidance } from "./datacentre/DataCentreGuidance";
+  type DataCentreResults,
+} from '@/lib/datacentre';
+import { DataCentreGuidance } from './datacentre/DataCentreGuidance';
 
 const DataCentreCalculator = () => {
   // Core inputs
-  const [itLoad, setItLoad] = useState("");
-  const [redundancy, setRedundancy] = useState("2n");
-  const [coolingMethod, setCoolingMethod] = useState("air");
-  const [coolingRatio, setCoolingRatio] = useState("1.5");
-  const [lightsAndMisc, setLightsAndMisc] = useState("5");
-  
-  // Infrastructure inputs
-  const [upsBatteryHours, setUpsBatteryHours] = useState("15");
-  const [upsEfficiency, setUpsEfficiency] = useState("95");
-  const [powerRedundancy, setPowerRedundancy] = useState("2n");
-  const [coolingRedundancy, setCoolingRedundancy] = useState("n+1");
-  
-  // Advanced inputs
-  const [energyCost, setEnergyCost] = useState("0.15");
-  const [carbonFactor, setCarbonFactor] = useState("0.233");
-  const [designMargin, setDesignMargin] = useState("20");
-  const [facilityType, setFacilityType] = useState("enterprise");
-  const [climateZone, setClimateZone] = useState("temperate");
-  
-  const [result, setResult] = useState<DataCentreResults | null>(null);
+  const [itLoad, setItLoad] = useState('');
+  const [redundancy, setRedundancy] = useState('2n');
+  const [coolingMethod, setCoolingMethod] = useState('air');
+  const [coolingRatio, setCoolingRatio] = useState('1.5');
+  const [lightsAndMisc, setLightsAndMisc] = useState('5');
 
+  // Infrastructure inputs
+  const [upsBatteryHours, setUpsBatteryHours] = useState('15');
+  const [upsEfficiency, setUpsEfficiency] = useState('95');
+  const [powerRedundancy, setPowerRedundancy] = useState('2n');
+  const [coolingRedundancy, setCoolingRedundancy] = useState('n+1');
+
+  // Advanced inputs
+  const [energyCost, setEnergyCost] = useState('0.15');
+  const [carbonFactor, setCarbonFactor] = useState('0.233');
+  const [designMargin, setDesignMargin] = useState('20');
+  const [facilityType, setFacilityType] = useState('enterprise');
+  const [climateZone, setClimateZone] = useState('temperate');
+
+  const [result, setResult] = useState<DataCentreResults | null>(null);
 
   const handleCalculate = () => {
     const baseItLoad = parseFloat(itLoad);
-    
+
     if (!baseItLoad || baseItLoad <= 0) {
       return;
     }
@@ -60,7 +59,7 @@ const DataCentreCalculator = () => {
       carbonFactor: parseFloat(carbonFactor) || 0.233,
       designMargin: parseFloat(designMargin) || 20,
       facilityType,
-      climateZone
+      climateZone,
     };
 
     const results = calculateDataCentre(inputs);
@@ -68,20 +67,20 @@ const DataCentreCalculator = () => {
   };
 
   const reset = () => {
-    setItLoad("");
-    setRedundancy("2n");
-    setCoolingMethod("air");
-    setCoolingRatio("1.5");
-    setLightsAndMisc("5");
-    setUpsBatteryHours("15");
-    setUpsEfficiency("95");
-    setPowerRedundancy("2n");
-    setCoolingRedundancy("n+1");
-    setEnergyCost("0.15");
-    setCarbonFactor("0.233");
-    setDesignMargin("20");
-    setFacilityType("enterprise");
-    setClimateZone("temperate");
+    setItLoad('');
+    setRedundancy('2n');
+    setCoolingMethod('air');
+    setCoolingRatio('1.5');
+    setLightsAndMisc('5');
+    setUpsBatteryHours('15');
+    setUpsEfficiency('95');
+    setPowerRedundancy('2n');
+    setCoolingRedundancy('n+1');
+    setEnergyCost('0.15');
+    setCarbonFactor('0.233');
+    setDesignMargin('20');
+    setFacilityType('enterprise');
+    setClimateZone('temperate');
     setResult(null);
   };
 
@@ -224,8 +223,8 @@ const DataCentreCalculator = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
-            <MobileButton 
-              onClick={handleCalculate} 
+            <MobileButton
+              onClick={handleCalculate}
               variant="elec"
               size="wide"
               className="sm:flex-1"
@@ -233,12 +232,7 @@ const DataCentreCalculator = () => {
               <Calculator className="w-4 h-4 mr-2" />
               Calculate Data Centre
             </MobileButton>
-            <MobileButton 
-              onClick={reset} 
-              variant="outline" 
-              size="default"
-              className="sm:w-auto"
-            >
+            <MobileButton onClick={reset} variant="outline" size="default" className="sm:w-auto">
               <RotateCcw className="w-4 h-4" />
             </MobileButton>
           </div>
@@ -252,9 +246,9 @@ const DataCentreCalculator = () => {
       <Alert>
         <Server className="h-4 w-4" />
         <AlertDescription>
-          This calculator provides comprehensive data centre design guidance including load analysis, 
-          efficiency metrics, annual consumption, costs, and regulatory compliance. Results require 
-          professional engineering validation for critical infrastructure projects.
+          This calculator provides comprehensive data centre design guidance including load
+          analysis, efficiency metrics, annual consumption, costs, and regulatory compliance.
+          Results require professional engineering validation for critical infrastructure projects.
         </AlertDescription>
       </Alert>
     </div>

@@ -10,16 +10,21 @@ const ZsTablesSection = () => {
           <Shield className="h-6 w-6 text-elec-yellow" />
           Earth Fault Loop Impedance (Zs) Tables
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-red-600 text-foreground">Critical Safety Parameter</Badge>
+        <Badge variant="secondary" className="w-fit bg-red-600 text-foreground">
+          Critical Safety Parameter
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Understanding Zs Values and Application:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Understanding Zs Values and Application:
+          </h5>
           <p className="text-sm mb-4">
-            Earth fault loop impedance (Zs) is the total impedance of the earth fault current path, comprising external 
-            earth fault loop impedance (Ze) plus circuit protective conductor impedance (R1+R2).
+            Earth fault loop impedance (Zs) is the total impedance of the earth fault current path,
+            comprising external earth fault loop impedance (Ze) plus circuit protective conductor
+            impedance (R1+R2).
           </p>
-          
+
           <div className="grid gap-4 md:hidden">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
               <div className="flex justify-between items-center mb-2">
@@ -27,37 +32,55 @@ const ZsTablesSection = () => {
                 <AlertTriangle className="h-4 w-4 text-red-400" />
               </div>
               <div className="text-sm space-y-1">
-                <p><strong>0.4s disconnection:</strong> 11.5Ω to 0.92Ω</p>
-                <p><strong>5s disconnection:</strong> 92Ω to 7.36Ω</p>
-                <p><strong>Application:</strong> General purpose circuits</p>
+                <p>
+                  <strong>0.4s disconnection:</strong> 11.5Ω to 0.92Ω
+                </p>
+                <p>
+                  <strong>5s disconnection:</strong> 92Ω to 7.36Ω
+                </p>
+                <p>
+                  <strong>Application:</strong> General purpose circuits
+                </p>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-orange-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-orange-400">Type C MCB (6A-50A)</h6>
                 <AlertTriangle className="h-4 w-4 text-orange-400" />
               </div>
               <div className="text-sm space-y-1">
-                <p><strong>0.4s disconnection:</strong> 5.75Ω to 0.46Ω</p>
-                <p><strong>5s disconnection:</strong> 46Ω to 3.68Ω</p>
-                <p><strong>Application:</strong> Motor circuits, high inrush</p>
+                <p>
+                  <strong>0.4s disconnection:</strong> 5.75Ω to 0.46Ω
+                </p>
+                <p>
+                  <strong>5s disconnection:</strong> 46Ω to 3.68Ω
+                </p>
+                <p>
+                  <strong>Application:</strong> Motor circuits, high inrush
+                </p>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-green-400">30mA RCD Protection</h6>
                 <Shield className="h-4 w-4 text-green-400" />
               </div>
               <div className="text-sm space-y-1">
-                <p><strong>Maximum Zs:</strong> 1667Ω</p>
-                <p><strong>Trip time:</strong> ≤300ms</p>
-                <p><strong>Application:</strong> Additional protection</p>
+                <p>
+                  <strong>Maximum Zs:</strong> 1667Ω
+                </p>
+                <p>
+                  <strong>Trip time:</strong> ≤300ms
+                </p>
+                <p>
+                  <strong>Application:</strong> Additional protection
+                </p>
               </div>
             </div>
           </div>
-          
+
           <div className="hidden md:block overflow-x-auto mt-4">
             <table className="w-full text-sm border border-gray-600">
               <thead>
@@ -104,7 +127,9 @@ const ZsTablesSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Practical Measurement and Verification:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Practical Measurement and Verification:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Measurement Procedure:</h6>
@@ -137,15 +162,24 @@ const ZsTablesSection = () => {
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-1">High Zs Values</h6>
-              <p className="text-sm">Solutions: Increase conductor size, improve earthing arrangements, install RCD for additional protection, check joint connections</p>
+              <p className="text-sm">
+                Solutions: Increase conductor size, improve earthing arrangements, install RCD for
+                additional protection, check joint connections
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">RCD Interaction</h6>
-              <p className="text-sm">Consider: RCD operation may prevent protective device operation, ensure discrimination between devices, test both devices independently</p>
+              <p className="text-sm">
+                Consider: RCD operation may prevent protective device operation, ensure
+                discrimination between devices, test both devices independently
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
               <h6 className="font-bold text-red-400 mb-1">Long Circuit Runs</h6>
-              <p className="text-sm">Mitigation: Use larger conductor sizes, consider sub-distribution, implement local earthing improvements, upgrade protective devices</p>
+              <p className="text-sm">
+                Mitigation: Use larger conductor sizes, consider sub-distribution, implement local
+                earthing improvements, upgrade protective devices
+              </p>
             </div>
           </div>
         </div>

@@ -1,16 +1,24 @@
-
-import React, { useState } from "react";
-import { User, Briefcase, GraduationCap, Award, Camera, CreditCard, FolderKanban, Users } from "lucide-react";
-import { CVData } from "./types";
-import { EnhancedPersonalInfoForm } from "./forms/EnhancedPersonalInfoForm";
-import { PhotoUploadForm } from "./forms/PhotoUploadForm";
-import { ProfessionalCardsForm } from "./forms/ProfessionalCardsForm";
-import { EnhancedExperienceForm } from "./forms/EnhancedExperienceForm";
-import { KeyProjectsForm } from "./forms/KeyProjectsForm";
-import { EducationForm } from "./forms/EducationForm";
-import { EnhancedSkillsForm } from "./forms/EnhancedSkillsForm";
-import { ReferencesForm } from "./forms/ReferencesForm";
-import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
+import React, { useState } from 'react';
+import {
+  User,
+  Briefcase,
+  GraduationCap,
+  Award,
+  Camera,
+  CreditCard,
+  FolderKanban,
+  Users,
+} from 'lucide-react';
+import { CVData } from './types';
+import { EnhancedPersonalInfoForm } from './forms/EnhancedPersonalInfoForm';
+import { PhotoUploadForm } from './forms/PhotoUploadForm';
+import { ProfessionalCardsForm } from './forms/ProfessionalCardsForm';
+import { EnhancedExperienceForm } from './forms/EnhancedExperienceForm';
+import { KeyProjectsForm } from './forms/KeyProjectsForm';
+import { EducationForm } from './forms/EducationForm';
+import { EnhancedSkillsForm } from './forms/EnhancedSkillsForm';
+import { ReferencesForm } from './forms/ReferencesForm';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 
 interface EnhancedCVFormProps {
   cvData: CVData;
@@ -29,50 +37,50 @@ const formTabs: FormTab[] = [
     id: 'personal',
     title: 'Personal Info',
     shortTitle: 'Personal',
-    icon: <User className="h-5 w-5" />
+    icon: <User className="h-5 w-5" />,
   },
   {
     id: 'photo',
     title: 'Photo',
     shortTitle: 'Photo',
-    icon: <Camera className="h-5 w-5" />
+    icon: <Camera className="h-5 w-5" />,
   },
   {
     id: 'cards',
     title: 'Professional Cards',
     shortTitle: 'Cards',
-    icon: <CreditCard className="h-5 w-5" />
+    icon: <CreditCard className="h-5 w-5" />,
   },
   {
     id: 'experience',
     title: 'Experience',
     shortTitle: 'Work',
-    icon: <Briefcase className="h-5 w-5" />
+    icon: <Briefcase className="h-5 w-5" />,
   },
   {
     id: 'projects',
     title: 'Key Projects',
     shortTitle: 'Projects',
-    icon: <FolderKanban className="h-5 w-5" />
+    icon: <FolderKanban className="h-5 w-5" />,
   },
   {
     id: 'education',
     title: 'Education',
     shortTitle: 'Education',
-    icon: <GraduationCap className="h-5 w-5" />
+    icon: <GraduationCap className="h-5 w-5" />,
   },
   {
     id: 'skills',
     title: 'Skills',
     shortTitle: 'Skills',
-    icon: <Award className="h-5 w-5" />
+    icon: <Award className="h-5 w-5" />,
   },
   {
     id: 'references',
     title: 'References',
     shortTitle: 'Refs',
-    icon: <Users className="h-5 w-5" />
-  }
+    icon: <Users className="h-5 w-5" />,
+  },
 ];
 
 export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange }) => {
@@ -86,7 +94,10 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
       case 'photo':
         return !!cvData.personalInfo.photoUrl;
       case 'cards':
-        return !!cvData.professionalCards.ecsCardType || cvData.professionalCards.drivingLicence.length > 0;
+        return (
+          !!cvData.professionalCards.ecsCardType ||
+          cvData.professionalCards.drivingLicence.length > 0
+        );
       case 'experience':
         return cvData.experience.length > 0;
       case 'projects':
@@ -102,7 +113,7 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
     }
   };
 
-  const currentIndex = formTabs.findIndex(t => t.id === activeTab);
+  const currentIndex = formTabs.findIndex((t) => t.id === activeTab);
   const canGoBack = currentIndex > 0;
   const canGoForward = currentIndex < formTabs.length - 1;
 
@@ -143,8 +154,12 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
       <div className="border-2 border-elec-gray/50 rounded-xl p-4 sm:p-6">
         <div className="flex items-center gap-2 sm:gap-3 mb-4">
           <div className="min-w-0">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-light">AI-Enhanced CV Builder</h2>
-            <p className="text-elec-light/60 text-xs sm:text-sm">Complete each section with AI assistance</p>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-light">
+              AI-Enhanced CV Builder
+            </h2>
+            <p className="text-elec-light/60 text-xs sm:text-sm">
+              Complete each section with AI assistance
+            </p>
           </div>
         </div>
 
@@ -170,7 +185,9 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
                 </span>
               </button>
               {index < formTabs.length - 1 && (
-                <div className={`bg-elec-gray/60 mx-1 sm:mx-2 ${isMobile ? 'w-2 h-px' : 'w-4 h-px'} flex-shrink-0`} />
+                <div
+                  className={`bg-elec-gray/60 mx-1 sm:mx-2 ${isMobile ? 'w-2 h-px' : 'w-4 h-px'} flex-shrink-0`}
+                />
               )}
             </div>
           ))}
@@ -181,19 +198,19 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
           <div className="flex-1 h-1.5 bg-elec-gray/50 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-elec-yellow to-amber-500 transition-all duration-300"
-              style={{ width: `${((formTabs.filter(t => isTabCompleted(t.id)).length) / formTabs.length) * 100}%` }}
+              style={{
+                width: `${(formTabs.filter((t) => isTabCompleted(t.id)).length / formTabs.length) * 100}%`,
+              }}
             />
           </div>
           <span className="text-xs text-elec-light/60 flex-shrink-0">
-            {formTabs.filter(t => isTabCompleted(t.id)).length}/{formTabs.length}
+            {formTabs.filter((t) => isTabCompleted(t.id)).length}/{formTabs.length}
           </span>
         </div>
       </div>
 
       {/* Tab Content */}
-      <div className="bg-elec-gray p-4 sm:p-6 rounded-xl">
-        {renderTabContent()}
-      </div>
+      <div className="bg-elec-gray p-4 sm:p-6 rounded-xl">{renderTabContent()}</div>
 
       {/* Navigation Buttons */}
       <div className="flex items-center justify-between gap-4">

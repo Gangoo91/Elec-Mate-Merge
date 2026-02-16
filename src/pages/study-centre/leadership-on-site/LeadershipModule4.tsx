@@ -1,45 +1,45 @@
-import { ArrowLeft, Gauge, Wrench, Swords, Scale } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Gauge, Wrench, Swords, Scale } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Making Decisions Under Pressure",
+    title: 'Making Decisions Under Pressure',
     icon: Gauge,
     description:
-      "Frameworks for quick thinking, balancing speed with accuracy, and owning your calls on site",
+      'Frameworks for quick thinking, balancing speed with accuracy, and owning your calls on site',
   },
   {
     id: 2,
-    title: "Problem-Solving on Site",
+    title: 'Problem-Solving on Site',
     icon: Wrench,
     description:
-      "Root cause analysis, the 5 Whys, systematic troubleshooting, and thinking beyond the obvious fix",
+      'Root cause analysis, the 5 Whys, systematic troubleshooting, and thinking beyond the obvious fix',
   },
   {
     id: 3,
-    title: "Managing Conflict",
+    title: 'Managing Conflict',
     icon: Swords,
     description:
-      "De-escalation techniques, mediating between team members, and turning disagreements into progress",
+      'De-escalation techniques, mediating between team members, and turning disagreements into progress',
   },
   {
     id: 4,
-    title: "Taking Responsibility and Accountability",
+    title: 'Taking Responsibility and Accountability',
     icon: Scale,
     description:
-      "Owning mistakes, holding others accountable fairly, and building a culture of responsibility",
+      'Owning mistakes, holding others accountable fairly, and building a culture of responsibility',
   },
 ];
 
 export default function LeadershipModule4() {
   useSEO({
-    title: "Module 4: Decision-Making & Problem-Solving | Leadership on Site",
+    title: 'Module 4: Decision-Making & Problem-Solving | Leadership on Site',
     description:
-      "Making decisions under pressure, problem-solving on site, managing conflict, and taking responsibility.",
+      'Making decisions under pressure, problem-solving on site, managing conflict, and taking responsibility.',
   });
 
   return (
@@ -66,9 +66,7 @@ export default function LeadershipModule4() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 4
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 4</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +76,8 @@ export default function LeadershipModule4() {
               Decision-Making & Problem-Solving
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Making calls under pressure, systematic problem-solving, managing
-              conflict, and owning your responsibilities
+              Making calls under pressure, systematic problem-solving, managing conflict, and owning
+              your responsibilities
             </p>
           </div>
 

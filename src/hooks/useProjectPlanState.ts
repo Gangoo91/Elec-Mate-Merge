@@ -61,90 +61,102 @@ export const useProjectPlanState = ({
     }
   }, [plan, autoSaveToLocalStorage]);
 
-  const addToHistory = useCallback((action: HistoryAction) => {
-    setHistory(prev => {
-      const newHistory = [...prev.slice(0, historyIndex + 1), action];
-      return newHistory.slice(-MAX_HISTORY); // Keep only last 10 actions
-    });
-    setHistoryIndex(prev => Math.min(prev + 1, MAX_HISTORY - 1));
-    setIsDirty(true);
-  }, [historyIndex]);
+  const addToHistory = useCallback(
+    (action: HistoryAction) => {
+      setHistory((prev) => {
+        const newHistory = [...prev.slice(0, historyIndex + 1), action];
+        return newHistory.slice(-MAX_HISTORY); // Keep only last 10 actions
+      });
+      setHistoryIndex((prev) => Math.min(prev + 1, MAX_HISTORY - 1));
+      setIsDirty(true);
+    },
+    [historyIndex]
+  );
 
   // Phase operations
-  const addPhase = useCallback((phase: Omit<ProjectPhase, 'id' | 'tasks' | 'completed'>) => {
-    const newPhase: ProjectPhase = {
-      ...phase,
-      id: uuidv4(),
-      tasks: [],
-      completed: false,
-    };
-
-    setPlan(prev => ({
-      ...prev,
-      phases: [...prev.phases, newPhase],
-    }));
-
-    addToHistory({
-      type: 'phase',
-      action: 'add',
-      before: null,
-      after: newPhase,
-      timestamp: new Date(),
-    });
-  }, [addToHistory]);
-
-  const updatePhase = useCallback((phaseId: string, updates: Partial<ProjectPhase>) => {
-    setPlan(prev => {
-      const phaseIndex = prev.phases.findIndex(p => p.id === phaseId);
-      if (phaseIndex === -1) return prev;
-
-      const before = prev.phases[phaseIndex];
-      const updated = { ...before, ...updates };
-
-      const newPhases = [...prev.phases];
-      newPhases[phaseIndex] = updated;
-
-      addToHistory({
-        type: 'phase',
-        action: 'update',
-        before,
-        after: updated,
-        timestamp: new Date(),
-      });
-
-      return { ...prev, phases: newPhases };
-    });
-  }, [addToHistory]);
-
-  const deletePhase = useCallback((phaseId: string) => {
-    setPlan(prev => {
-      const phase = prev.phases.find(p => p.id === phaseId);
-      if (!phase) return prev;
-
-      addToHistory({
-        type: 'phase',
-        action: 'delete',
-        before: phase,
-        after: null,
-        timestamp: new Date(),
-      });
-
-      return {
-        ...prev,
-        phases: prev.phases.filter(p => p.id !== phaseId),
+  const addPhase = useCallback(
+    (phase: Omit<ProjectPhase, 'id' | 'tasks' | 'completed'>) => {
+      const newPhase: ProjectPhase = {
+        ...phase,
+        id: uuidv4(),
+        tasks: [],
+        completed: false,
       };
-    });
-  }, [addToHistory]);
+
+      setPlan((prev) => ({
+        ...prev,
+        phases: [...prev.phases, newPhase],
+      }));
+
+      addToHistory({
+        type: 'phase',
+        action: 'add',
+        before: null,
+        after: newPhase,
+        timestamp: new Date(),
+      });
+    },
+    [addToHistory]
+  );
+
+  const updatePhase = useCallback(
+    (phaseId: string, updates: Partial<ProjectPhase>) => {
+      setPlan((prev) => {
+        const phaseIndex = prev.phases.findIndex((p) => p.id === phaseId);
+        if (phaseIndex === -1) return prev;
+
+        const before = prev.phases[phaseIndex];
+        const updated = { ...before, ...updates };
+
+        const newPhases = [...prev.phases];
+        newPhases[phaseIndex] = updated;
+
+        addToHistory({
+          type: 'phase',
+          action: 'update',
+          before,
+          after: updated,
+          timestamp: new Date(),
+        });
+
+        return { ...prev, phases: newPhases };
+      });
+    },
+    [addToHistory]
+  );
+
+  const deletePhase = useCallback(
+    (phaseId: string) => {
+      setPlan((prev) => {
+        const phase = prev.phases.find((p) => p.id === phaseId);
+        if (!phase) return prev;
+
+        addToHistory({
+          type: 'phase',
+          action: 'delete',
+          before: phase,
+          after: null,
+          timestamp: new Date(),
+        });
+
+        return {
+          ...prev,
+          phases: prev.phases.filter((p) => p.id !== phaseId),
+        };
+      });
+    },
+    [addToHistory]
+  );
 
   const reorderPhases = useCallback((fromIndex: number, toIndex: number) => {
-    setPlan(prev => {
+    setPlan((prev) => {
       const newPhases = Array.from(prev.phases);
       const [removed] = newPhases.splice(fromIndex, 1);
       newPhases.splice(toIndex, 0, removed);
 
       // Recalculate day ranges
       let currentDay = 1;
-      const recalculated = newPhases.map(phase => {
+      const recalculated = newPhases.map((phase) => {
         const duration = phase.dayEnd - phase.dayStart + 1;
         const updated = {
           ...phase,
@@ -161,56 +173,60 @@ export const useProjectPlanState = ({
   }, []);
 
   // Task operations
-  const addTask = useCallback((phaseId: string, taskText: string) => {
-    const newTask: ProjectTask = {
-      id: uuidv4(),
-      text: taskText,
-      completed: false,
-    };
+  const addTask = useCallback(
+    (phaseId: string, taskText: string) => {
+      const newTask: ProjectTask = {
+        id: uuidv4(),
+        text: taskText,
+        completed: false,
+      };
 
-    setPlan(prev => ({
-      ...prev,
-      phases: prev.phases.map(phase =>
-        phase.id === phaseId
-          ? { ...phase, tasks: [...phase.tasks, newTask] }
-          : phase
-      ),
-    }));
+      setPlan((prev) => ({
+        ...prev,
+        phases: prev.phases.map((phase) =>
+          phase.id === phaseId ? { ...phase, tasks: [...phase.tasks, newTask] } : phase
+        ),
+      }));
 
-    addToHistory({
-      type: 'task',
-      action: 'add',
-      before: { phaseId, task: null },
-      after: { phaseId, task: newTask },
-      timestamp: new Date(),
-    });
-  }, [addToHistory]);
+      addToHistory({
+        type: 'task',
+        action: 'add',
+        before: { phaseId, task: null },
+        after: { phaseId, task: newTask },
+        timestamp: new Date(),
+      });
+    },
+    [addToHistory]
+  );
 
-  const updateTask = useCallback((phaseId: string, taskId: string, updates: Partial<ProjectTask>) => {
-    setPlan(prev => ({
-      ...prev,
-      phases: prev.phases.map(phase =>
-        phase.id === phaseId
-          ? {
-              ...phase,
-              tasks: phase.tasks.map(task =>
-                task.id === taskId ? { ...task, ...updates } : task
-              ),
-            }
-          : phase
-      ),
-    }));
-    setIsDirty(true);
-  }, []);
+  const updateTask = useCallback(
+    (phaseId: string, taskId: string, updates: Partial<ProjectTask>) => {
+      setPlan((prev) => ({
+        ...prev,
+        phases: prev.phases.map((phase) =>
+          phase.id === phaseId
+            ? {
+                ...phase,
+                tasks: phase.tasks.map((task) =>
+                  task.id === taskId ? { ...task, ...updates } : task
+                ),
+              }
+            : phase
+        ),
+      }));
+      setIsDirty(true);
+    },
+    []
+  );
 
   const deleteTask = useCallback((phaseId: string, taskId: string) => {
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
-      phases: prev.phases.map(phase =>
+      phases: prev.phases.map((phase) =>
         phase.id === phaseId
           ? {
               ...phase,
-              tasks: phase.tasks.filter(task => task.id !== taskId),
+              tasks: phase.tasks.filter((task) => task.id !== taskId),
             }
           : phase
       ),
@@ -219,13 +235,13 @@ export const useProjectPlanState = ({
   }, []);
 
   const toggleTaskComplete = useCallback((phaseId: string, taskId: string) => {
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
-      phases: prev.phases.map(phase =>
+      phases: prev.phases.map((phase) =>
         phase.id === phaseId
           ? {
               ...phase,
-              tasks: phase.tasks.map(task =>
+              tasks: phase.tasks.map((task) =>
                 task.id === taskId ? { ...task, completed: !task.completed } : task
               ),
             }
@@ -236,52 +252,58 @@ export const useProjectPlanState = ({
   }, []);
 
   // Material operations
-  const addMaterial = useCallback((phaseId: string, material: Omit<ProjectMaterial, 'id' | 'ordered'>) => {
-    const newMaterial: ProjectMaterial = {
-      ...material,
-      id: uuidv4(),
-      ordered: false,
-    };
+  const addMaterial = useCallback(
+    (phaseId: string, material: Omit<ProjectMaterial, 'id' | 'ordered'>) => {
+      const newMaterial: ProjectMaterial = {
+        ...material,
+        id: uuidv4(),
+        ordered: false,
+      };
 
-    setPlan(prev => ({
-      ...prev,
-      phases: prev.phases.map(phase =>
-        phase.id === phaseId
-          ? {
-              ...phase,
-              materials: [...(phase.materials || []), newMaterial],
-            }
-          : phase
-      ),
-    }));
-    setIsDirty(true);
-  }, []);
+      setPlan((prev) => ({
+        ...prev,
+        phases: prev.phases.map((phase) =>
+          phase.id === phaseId
+            ? {
+                ...phase,
+                materials: [...(phase.materials || []), newMaterial],
+              }
+            : phase
+        ),
+      }));
+      setIsDirty(true);
+    },
+    []
+  );
 
-  const updateMaterial = useCallback((phaseId: string, materialId: string, updates: Partial<ProjectMaterial>) => {
-    setPlan(prev => ({
-      ...prev,
-      phases: prev.phases.map(phase =>
-        phase.id === phaseId
-          ? {
-              ...phase,
-              materials: (phase.materials || []).map(material =>
-                material.id === materialId ? { ...material, ...updates } : material
-              ),
-            }
-          : phase
-      ),
-    }));
-    setIsDirty(true);
-  }, []);
+  const updateMaterial = useCallback(
+    (phaseId: string, materialId: string, updates: Partial<ProjectMaterial>) => {
+      setPlan((prev) => ({
+        ...prev,
+        phases: prev.phases.map((phase) =>
+          phase.id === phaseId
+            ? {
+                ...phase,
+                materials: (phase.materials || []).map((material) =>
+                  material.id === materialId ? { ...material, ...updates } : material
+                ),
+              }
+            : phase
+        ),
+      }));
+      setIsDirty(true);
+    },
+    []
+  );
 
   const deleteMaterial = useCallback((phaseId: string, materialId: string) => {
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
-      phases: prev.phases.map(phase =>
+      phases: prev.phases.map((phase) =>
         phase.id === phaseId
           ? {
               ...phase,
-              materials: (phase.materials || []).filter(m => m.id !== materialId),
+              materials: (phase.materials || []).filter((m) => m.id !== materialId),
             }
           : phase
       ),
@@ -297,7 +319,7 @@ export const useProjectPlanState = ({
       status: 'open',
     };
 
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
       risks: [...prev.risks, newRisk],
     }));
@@ -305,19 +327,17 @@ export const useProjectPlanState = ({
   }, []);
 
   const updateRisk = useCallback((riskId: string, updates: Partial<ProjectRisk>) => {
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
-      risks: prev.risks.map(risk =>
-        risk.id === riskId ? { ...risk, ...updates } : risk
-      ),
+      risks: prev.risks.map((risk) => (risk.id === riskId ? { ...risk, ...updates } : risk)),
     }));
     setIsDirty(true);
   }, []);
 
   const deleteRisk = useCallback((riskId: string) => {
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
-      risks: prev.risks.filter(r => r.id !== riskId),
+      risks: prev.risks.filter((r) => r.id !== riskId),
     }));
     setIsDirty(true);
   }, []);
@@ -325,14 +345,14 @@ export const useProjectPlanState = ({
   // Undo/Redo
   const undo = useCallback(() => {
     if (historyIndex > 0) {
-      setHistoryIndex(prev => prev - 1);
+      setHistoryIndex((prev) => prev - 1);
       // Implement undo logic based on history[historyIndex - 1]
     }
   }, [historyIndex]);
 
   const redo = useCallback(() => {
     if (historyIndex < history.length - 1) {
-      setHistoryIndex(prev => prev + 1);
+      setHistoryIndex((prev) => prev + 1);
       // Implement redo logic based on history[historyIndex + 1]
     }
   }, [historyIndex, history.length]);
@@ -364,7 +384,7 @@ export const useProjectPlanState = ({
 
   // Update project metadata
   const updateMetadata = useCallback((updates: Partial<EditableProjectPlan>) => {
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
       ...updates,
     }));
@@ -376,40 +396,40 @@ export const useProjectPlanState = ({
     setPlan,
     isDirty,
     setIsDirty,
-    
+
     // Phase operations
     addPhase,
     updatePhase,
     deletePhase,
     reorderPhases,
-    
+
     // Task operations
     addTask,
     updateTask,
     deleteTask,
     toggleTaskComplete,
-    
+
     // Material operations
     addMaterial,
     updateMaterial,
     deleteMaterial,
-    
+
     // Risk operations
     addRisk,
     updateRisk,
     deleteRisk,
-    
+
     // History
     canUndo: historyIndex > 0,
     canRedo: historyIndex < history.length - 1,
     undo,
     redo,
-    
+
     // Export/Import
     exportState,
     loadState,
     clearDraft,
-    
+
     // Metadata
     updateMetadata,
   };

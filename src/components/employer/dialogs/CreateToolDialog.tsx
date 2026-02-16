@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,20 +6,20 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useCreateTool, CreateToolData } from "@/hooks/useCompanyTools";
-import { Loader2 } from "lucide-react";
+} from '@/components/ui/select';
+import { useCreateTool, CreateToolData } from '@/hooks/useCompanyTools';
+import { Loader2 } from 'lucide-react';
 
 interface CreateToolDialogProps {
   open: boolean;
@@ -27,38 +27,33 @@ interface CreateToolDialogProps {
 }
 
 const CATEGORIES = [
-  "Testing",
-  "Power Tools",
-  "Hand Tools",
-  "Access Equipment",
-  "Safety Equipment",
-  "Site Equipment",
-  "Other",
+  'Testing',
+  'Power Tools',
+  'Hand Tools',
+  'Access Equipment',
+  'Safety Equipment',
+  'Site Equipment',
+  'Other',
 ];
 
-const STATUSES = [
-  "Available",
-  "In Use",
-  "On Hire",
-  "Under Repair",
-];
+const STATUSES = ['Available', 'In Use', 'On Hire', 'Under Repair'];
 
 export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) {
   const createTool = useCreateTool();
 
   const [formData, setFormData] = useState<CreateToolData>({
-    name: "",
-    category: "",
-    serial_number: "",
-    purchase_date: "",
+    name: '',
+    category: '',
+    serial_number: '',
+    purchase_date: '',
     purchase_price: 0,
-    assigned_to: "",
-    status: "Available",
-    pat_date: "",
-    pat_due: "",
-    last_calibration: "",
-    next_calibration: "",
-    notes: "",
+    assigned_to: '',
+    status: 'Available',
+    pat_date: '',
+    pat_due: '',
+    last_calibration: '',
+    next_calibration: '',
+    notes: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,12 +67,13 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
     const cleanedData: CreateToolData = {
       name: formData.name,
       category: formData.category,
-      status: formData.status || "Available",
+      status: formData.status || 'Available',
     };
 
     if (formData.serial_number?.trim()) cleanedData.serial_number = formData.serial_number;
     if (formData.purchase_date) cleanedData.purchase_date = formData.purchase_date;
-    if (formData.purchase_price && formData.purchase_price > 0) cleanedData.purchase_price = formData.purchase_price;
+    if (formData.purchase_price && formData.purchase_price > 0)
+      cleanedData.purchase_price = formData.purchase_price;
     if (formData.assigned_to?.trim()) cleanedData.assigned_to = formData.assigned_to;
     if (formData.pat_date) cleanedData.pat_date = formData.pat_date;
     if (formData.pat_due) cleanedData.pat_due = formData.pat_due;
@@ -89,18 +85,18 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
       await createTool.mutateAsync(cleanedData);
       onOpenChange(false);
       setFormData({
-        name: "",
-        category: "",
-        serial_number: "",
-        purchase_date: "",
+        name: '',
+        category: '',
+        serial_number: '',
+        purchase_date: '',
         purchase_price: 0,
-        assigned_to: "",
-        status: "Available",
-        pat_date: "",
-        pat_due: "",
-        last_calibration: "",
-        next_calibration: "",
-        notes: "",
+        assigned_to: '',
+        status: 'Available',
+        pat_date: '',
+        pat_due: '',
+        last_calibration: '',
+        next_calibration: '',
+        notes: '',
       });
     } catch (error) {
       // Error handled by mutation
@@ -129,7 +125,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                 id="name"
                 placeholder="e.g., Fluke 1664FC"
                 value={formData.name}
-                onChange={(e) => updateField("name", e.target.value)}
+                onChange={(e) => updateField('name', e.target.value)}
                 required
               />
             </div>
@@ -139,7 +135,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                 <Label htmlFor="category">Category *</Label>
                 <Select
                   value={formData.category}
-                  onValueChange={(value) => updateField("category", value)}
+                  onValueChange={(value) => updateField('category', value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
@@ -158,7 +154,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                 <Label htmlFor="status">Status</Label>
                 <Select
                   value={formData.status}
-                  onValueChange={(value) => updateField("status", value)}
+                  onValueChange={(value) => updateField('status', value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
@@ -181,7 +177,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                   id="serial_number"
                   placeholder="e.g., FL-12345678"
                   value={formData.serial_number}
-                  onChange={(e) => updateField("serial_number", e.target.value)}
+                  onChange={(e) => updateField('serial_number', e.target.value)}
                 />
               </div>
 
@@ -191,7 +187,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                   id="assigned_to"
                   placeholder="e.g., James Wilson"
                   value={formData.assigned_to}
-                  onChange={(e) => updateField("assigned_to", e.target.value)}
+                  onChange={(e) => updateField('assigned_to', e.target.value)}
                 />
               </div>
             </div>
@@ -203,7 +199,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                   id="purchase_date"
                   type="date"
                   value={formData.purchase_date}
-                  onChange={(e) => updateField("purchase_date", e.target.value)}
+                  onChange={(e) => updateField('purchase_date', e.target.value)}
                 />
               </div>
 
@@ -215,8 +211,8 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                   min="0"
                   step="0.01"
                   placeholder="0.00"
-                  value={formData.purchase_price || ""}
-                  onChange={(e) => updateField("purchase_price", parseFloat(e.target.value) || 0)}
+                  value={formData.purchase_price || ''}
+                  onChange={(e) => updateField('purchase_price', parseFloat(e.target.value) || 0)}
                 />
               </div>
             </div>
@@ -230,7 +226,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                     id="pat_date"
                     type="date"
                     value={formData.pat_date}
-                    onChange={(e) => updateField("pat_date", e.target.value)}
+                    onChange={(e) => updateField('pat_date', e.target.value)}
                   />
                 </div>
 
@@ -240,7 +236,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                     id="pat_due"
                     type="date"
                     value={formData.pat_due}
-                    onChange={(e) => updateField("pat_due", e.target.value)}
+                    onChange={(e) => updateField('pat_due', e.target.value)}
                   />
                 </div>
               </div>
@@ -255,7 +251,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                     id="last_calibration"
                     type="date"
                     value={formData.last_calibration}
-                    onChange={(e) => updateField("last_calibration", e.target.value)}
+                    onChange={(e) => updateField('last_calibration', e.target.value)}
                   />
                 </div>
 
@@ -265,7 +261,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                     id="next_calibration"
                     type="date"
                     value={formData.next_calibration}
-                    onChange={(e) => updateField("next_calibration", e.target.value)}
+                    onChange={(e) => updateField('next_calibration', e.target.value)}
                   />
                 </div>
               </div>
@@ -277,7 +273,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                 id="notes"
                 placeholder="Any additional notes..."
                 value={formData.notes}
-                onChange={(e) => updateField("notes", e.target.value)}
+                onChange={(e) => updateField('notes', e.target.value)}
                 rows={2}
               />
             </div>
@@ -293,9 +289,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
               Cancel
             </Button>
             <Button type="submit" disabled={createTool.isPending}>
-              {createTool.isPending && (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              )}
+              {createTool.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Add Equipment
             </Button>
           </DialogFooter>

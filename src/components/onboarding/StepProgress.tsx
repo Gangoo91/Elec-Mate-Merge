@@ -14,9 +14,7 @@ export function StepProgress({ current, total }: StepProgressProps) {
         <span className="font-medium text-foreground">
           Step {current + 1} of {total}
         </span>
-        <span className="text-muted-foreground">
-          {Math.round(percentage)}% Complete
-        </span>
+        <span className="text-muted-foreground">{Math.round(percentage)}% Complete</span>
       </div>
       <div className="h-2 bg-muted rounded-full overflow-hidden">
         <motion.div

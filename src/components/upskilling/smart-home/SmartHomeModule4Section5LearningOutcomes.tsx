@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule4Section5LearningOutcomes = () => {
   const outcomes = [
-    "Define HVAC integration and interlocks",
-    "Explain why interlocks prevent conflicts between systems",
-    "Describe how heating, cooling, and ventilation are coordinated in smart homes",
-    "Recognise the role of sensors and controllers in interlocked systems",
-    "Recommend best practices for designing efficient HVAC integration"
+    'Define HVAC integration and interlocks',
+    'Explain why interlocks prevent conflicts between systems',
+    'Describe how heating, cooling, and ventilation are coordinated in smart homes',
+    'Recognise the role of sensors and controllers in interlocked systems',
+    'Recommend best practices for designing efficient HVAC integration',
   ];
 
   return (

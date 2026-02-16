@@ -1,33 +1,33 @@
-import { Sigma, Zap, Info } from "lucide-react";
-import { useCableSizing } from "./cable-sizing/useCableSizing";
-import CableSizingForm from "./cable-sizing/CableSizingInputs";
-import CableSizingResult from "./cable-sizing/CableSizingResult";
-import CableSizingInfo from "./cable-sizing/CableSizingInfo";
-import SimpleValidationIndicator from "./SimpleValidationIndicator";
-import CalculationReport from "./CalculationReport";
-import { useToast } from "@/hooks/use-toast";
-import { useEffect, useState, useMemo } from "react";
-import { SimpleValidator, SimpleValidationResult } from "@/services/simplifiedValidation";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Sigma, Zap, Info } from 'lucide-react';
+import { useCableSizing } from './cable-sizing/useCableSizing';
+import CableSizingForm from './cable-sizing/CableSizingInputs';
+import CableSizingResult from './cable-sizing/CableSizingResult';
+import CableSizingInfo from './cable-sizing/CableSizingInfo';
+import SimpleValidationIndicator from './SimpleValidationIndicator';
+import CalculationReport from './CalculationReport';
+import { useToast } from '@/hooks/use-toast';
+import { useEffect, useState, useMemo } from 'react';
+import { SimpleValidator, SimpleValidationResult } from '@/services/simplifiedValidation';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   CalculatorCard,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 const voltageOptions = [
-  { value: "230", label: "230V Single Phase" },
-  { value: "400", label: "400V Three Phase" },
-  { value: "110", label: "110V Site Supply" },
+  { value: '230', label: '230V Single Phase' },
+  { value: '400', label: '400V Three Phase' },
+  { value: '110', label: '110V Site Supply' },
 ];
 
 const phaseOptions = [
-  { value: "single", label: "Single Phase" },
-  { value: "three", label: "Three Phase" },
+  { value: 'single', label: 'Single Phase' },
+  { value: 'three', label: 'Three Phase' },
 ];
 
 const CableSizingCalculator = () => {
@@ -39,9 +39,9 @@ const CableSizingCalculator = () => {
 
   // Load/Current input mode
   const [inputMode, setInputMode] = useState<'current' | 'load'>('current');
-  const [loadPower, setLoadPower] = useState<string>("");
-  const [loadVoltage, setLoadVoltage] = useState<string>("230");
-  const [powerFactor, setPowerFactor] = useState<string>("1.0");
+  const [loadPower, setLoadPower] = useState<string>('');
+  const [loadVoltage, setLoadVoltage] = useState<string>('230');
+  const [powerFactor, setPowerFactor] = useState<string>('1.0');
   const [phases, setPhases] = useState<'single' | 'three'>('single');
 
   const {
@@ -70,7 +70,7 @@ const CableSizingCalculator = () => {
         }
       }
     }
-    return "";
+    return '';
   }, [inputMode, loadPower, loadVoltage, powerFactor, phases]);
 
   // Update inputs.current when calculatedCurrent changes
@@ -125,21 +125,21 @@ const CableSizingCalculator = () => {
 
       if (safetyValidation.criticalAlerts.length > 0) {
         toast({
-          title: "CRITICAL SAFETY ALERT",
-          description: "Serious safety issues detected. Do not proceed with installation.",
-          variant: "destructive",
+          title: 'CRITICAL SAFETY ALERT',
+          description: 'Serious safety issues detected. Do not proceed with installation.',
+          variant: 'destructive',
         });
       } else if (safetyValidation.warnings.length > 0) {
         toast({
-          title: "Cable Size Calculated with Warnings",
-          description: "Please review safety warnings below",
-          variant: "default",
+          title: 'Cable Size Calculated with Warnings',
+          description: 'Please review safety warnings below',
+          variant: 'default',
         });
       } else {
         toast({
-          title: "Cable Size Calculated Safely",
+          title: 'Cable Size Calculated Safely',
           description: `Recommended ${result.recommendedCable.size} cable with safety margin ${safetyValidation.safetyFactors.safetyMargin.toFixed(2)}`,
-          variant: "default",
+          variant: 'default',
         });
       }
     }
@@ -148,9 +148,9 @@ const CableSizingCalculator = () => {
   const handleCalculate = () => {
     if (!inputs.current || !inputs.length) {
       toast({
-        title: "Missing Required Inputs",
-        description: "Please enter both current and cable length to calculate.",
-        variant: "destructive",
+        title: 'Missing Required Inputs',
+        description: 'Please enter both current and cable length to calculate.',
+        variant: 'destructive',
       });
       return;
     }
@@ -160,9 +160,9 @@ const CableSizingCalculator = () => {
 
     if (currentValue <= 0 || lengthValue <= 0) {
       toast({
-        title: "Invalid Input Values",
-        description: "Current and length must be positive numbers.",
-        variant: "destructive",
+        title: 'Invalid Input Values',
+        description: 'Current and length must be positive numbers.',
+        variant: 'destructive',
       });
       return;
     }
@@ -175,11 +175,11 @@ const CableSizingCalculator = () => {
     setValidation(null);
     setCalculationInputs({});
     setCalculationResults({});
-    setLoadPower("");
-    setLoadVoltage("230");
-    setPowerFactor("1.0");
-    setPhases("single");
-    setInputMode("current");
+    setLoadPower('');
+    setLoadVoltage('230');
+    setPowerFactor('1.0');
+    setPhases('single');
+    setInputMode('current');
   };
 
   return (
@@ -202,11 +202,18 @@ const CableSizingCalculator = () => {
         <div className="space-y-6">
           {/* Input Mode Selector */}
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold flex items-center gap-2" style={{ color: config.gradientFrom }}>
+            <h3
+              className="text-sm font-semibold flex items-center gap-2"
+              style={{ color: config.gradientFrom }}
+            >
               <Zap className="h-4 w-4" />
               Current Specification
             </h3>
-            <Tabs value={inputMode} onValueChange={(v) => setInputMode(v as 'current' | 'load')} className="w-full">
+            <Tabs
+              value={inputMode}
+              onValueChange={(v) => setInputMode(v as 'current' | 'load')}
+              className="w-full"
+            >
               <TabsList className="grid w-full grid-cols-2 h-12 bg-white/5 rounded-xl p-1">
                 <TabsTrigger
                   value="current"
@@ -230,7 +237,7 @@ const CableSizingCalculator = () => {
               className="space-y-4 p-4 rounded-xl border"
               style={{
                 borderColor: `${config.gradientFrom}30`,
-                background: `${config.gradientFrom}08`
+                background: `${config.gradientFrom}08`,
               }}
             >
               <h4 className="font-medium text-white flex items-center gap-2 text-sm">
@@ -280,17 +287,16 @@ const CableSizingCalculator = () => {
                   className="p-3 rounded-xl border"
                   style={{
                     borderColor: `${config.gradientFrom}40`,
-                    background: `${config.gradientFrom}10`
+                    background: `${config.gradientFrom}10`,
                   }}
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                    <span className="text-sm font-medium text-white">Calculated Design Current</span>
+                    <span className="text-sm font-medium text-white">
+                      Calculated Design Current
+                    </span>
                   </div>
-                  <div
-                    className="text-2xl font-bold"
-                    style={{ color: config.gradientFrom }}
-                  >
+                  <div className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
                     {calculatedCurrent}A
                   </div>
                   <p className="text-xs text-white/80 mt-1">
@@ -335,14 +341,16 @@ const CableSizingCalculator = () => {
       )}
 
       {/* Calculation Report */}
-      {Object.keys(calculationInputs).length > 0 && Object.keys(calculationResults).length > 0 && validation && (
-        <CalculationReport
-          calculationType="cableSizing"
-          inputs={calculationInputs}
-          results={calculationResults}
-          validation={validation}
-        />
-      )}
+      {Object.keys(calculationInputs).length > 0 &&
+        Object.keys(calculationResults).length > 0 &&
+        validation && (
+          <CalculationReport
+            calculationType="cableSizing"
+            inputs={calculationInputs}
+            results={calculationResults}
+            validation={validation}
+          />
+        )}
 
       {/* Info Section */}
       <CableSizingInfo />

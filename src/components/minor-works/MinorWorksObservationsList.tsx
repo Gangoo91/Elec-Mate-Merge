@@ -16,7 +16,7 @@ const MinorWorksObservationsList: React.FC<MinorWorksObservationsListProps> = ({
   onAddObservation,
   onUpdateObservation,
   onRemoveObservation,
-  onQuickMarkAllNA
+  onQuickMarkAllNA,
 }) => {
   if (observations.length === 0) {
     return (
@@ -27,11 +27,19 @@ const MinorWorksObservationsList: React.FC<MinorWorksObservationsListProps> = ({
           Add observations for any defects, improvements, or investigations required
         </p>
         <div className="flex flex-col sm:flex-row gap-2 justify-center">
-          <Button onClick={onAddObservation} variant="outline" className="w-full sm:w-auto min-h-[44px]">
+          <Button
+            onClick={onAddObservation}
+            variant="outline"
+            className="w-full sm:w-auto min-h-[44px]"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Observation
           </Button>
-          <Button onClick={onQuickMarkAllNA} variant="secondary" className="w-full sm:w-auto min-h-[44px]">
+          <Button
+            onClick={onQuickMarkAllNA}
+            variant="secondary"
+            className="w-full sm:w-auto min-h-[44px]"
+          >
             Mark All N/A
           </Button>
         </div>
@@ -46,16 +54,26 @@ const MinorWorksObservationsList: React.FC<MinorWorksObservationsListProps> = ({
           {observations.length} observation{observations.length !== 1 ? 's' : ''} recorded
         </p>
         <div className="flex flex-col sm:flex-row gap-2">
-          <Button onClick={onAddObservation} variant="outline" size="sm" className="w-full sm:w-auto min-h-[44px]">
+          <Button
+            onClick={onAddObservation}
+            variant="outline"
+            size="sm"
+            className="w-full sm:w-auto min-h-[44px]"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Observation
           </Button>
-          <Button onClick={onQuickMarkAllNA} variant="secondary" size="sm" className="w-full sm:w-auto min-h-[44px]">
+          <Button
+            onClick={onQuickMarkAllNA}
+            variant="secondary"
+            size="sm"
+            className="w-full sm:w-auto min-h-[44px]"
+          >
             Mark All N/A
           </Button>
         </div>
       </div>
-      
+
       {observations.map((observation, index) => (
         <MinorWorksObservationCard
           key={observation.id}

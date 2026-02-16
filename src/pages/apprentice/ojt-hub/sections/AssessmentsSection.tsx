@@ -5,12 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -211,10 +206,8 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter(null)}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
-              !selectedFilter
-                ? "border-elec-yellow/50 bg-elec-yellow/10"
-                : "border-border bg-card"
+              'p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]',
+              !selectedFilter ? 'border-elec-yellow/50 bg-elec-yellow/10' : 'border-border bg-card'
             )}
           >
             <p className="text-lg font-bold text-foreground">{stats.total}</p>
@@ -223,10 +216,10 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter('completed')}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
+              'p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]',
               selectedFilter === 'completed'
-                ? "border-green-500/50 bg-green-500/10"
-                : "border-border bg-card"
+                ? 'border-green-500/50 bg-green-500/10'
+                : 'border-border bg-card'
             )}
           >
             <p className="text-lg font-bold text-green-500">{stats.completed}</p>
@@ -235,10 +228,10 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter('in_progress')}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
+              'p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]',
               selectedFilter === 'in_progress'
-                ? "border-blue-500/50 bg-blue-500/10"
-                : "border-border bg-card"
+                ? 'border-blue-500/50 bg-blue-500/10'
+                : 'border-border bg-card'
             )}
           >
             <p className="text-lg font-bold text-blue-500">{stats.inProgress}</p>
@@ -247,10 +240,10 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter('overdue')}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
+              'p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]',
               selectedFilter === 'overdue'
-                ? "border-red-500/50 bg-red-500/10"
-                : "border-border bg-card"
+                ? 'border-red-500/50 bg-red-500/10'
+                : 'border-border bg-card'
             )}
           >
             <p className="text-lg font-bold text-red-500">{overdueCount}</p>
@@ -280,12 +273,12 @@ export function AssessmentsSection() {
                 <Card
                   key={assessment.id}
                   className={cn(
-                    "border-2 transition-all active:scale-[0.99]",
+                    'border-2 transition-all active:scale-[0.99]',
                     displayStatus === 'overdue'
-                      ? "border-red-500/30 bg-red-500/5"
+                      ? 'border-red-500/30 bg-red-500/5'
                       : displayStatus === 'scheduled'
-                      ? "border-blue-500/20"
-                      : "border-border"
+                        ? 'border-blue-500/20'
+                        : 'border-border'
                   )}
                 >
                   <CardContent className="p-4">
@@ -293,22 +286,22 @@ export function AssessmentsSection() {
                       {/* Icon */}
                       <div
                         className={cn(
-                          "h-12 w-12 rounded-xl flex items-center justify-center shrink-0",
+                          'h-12 w-12 rounded-xl flex items-center justify-center shrink-0',
                           displayStatus === 'completed'
-                            ? "bg-green-500/10"
+                            ? 'bg-green-500/10'
                             : displayStatus === 'overdue'
-                            ? "bg-red-500/10"
-                            : "bg-elec-yellow/10"
+                              ? 'bg-red-500/10'
+                              : 'bg-elec-yellow/10'
                         )}
                       >
                         <TypeIcon
                           className={cn(
-                            "h-6 w-6",
+                            'h-6 w-6',
                             displayStatus === 'completed'
-                              ? "text-green-500"
+                              ? 'text-green-500'
                               : displayStatus === 'overdue'
-                              ? "text-red-500"
-                              : "text-elec-yellow"
+                                ? 'text-red-500'
+                                : 'text-elec-yellow'
                           )}
                         />
                       </div>
@@ -343,19 +336,21 @@ export function AssessmentsSection() {
                             {displayStatus !== 'completed' && (
                               <span
                                 className={cn(
-                                  "ml-1",
+                                  'ml-1',
                                   daysUntil < 0
-                                    ? "text-red-500"
+                                    ? 'text-red-500'
                                     : daysUntil <= 3
-                                    ? "text-amber-500"
-                                    : ""
+                                      ? 'text-amber-500'
+                                      : ''
                                 )}
                               >
-                                ({daysUntil < 0
+                                (
+                                {daysUntil < 0
                                   ? `${Math.abs(daysUntil)}d overdue`
                                   : daysUntil === 0
-                                  ? 'Today'
-                                  : `${daysUntil}d left`})
+                                    ? 'Today'
+                                    : `${daysUntil}d left`}
+                                )
                               </span>
                             )}
                           </div>
@@ -396,9 +391,7 @@ export function AssessmentsSection() {
               <Input
                 placeholder="e.g., Consumer Unit Installation"
                 value={newAssessment.title}
-                onChange={(e) =>
-                  setNewAssessment({ ...newAssessment, title: e.target.value })
-                }
+                onChange={(e) => setNewAssessment({ ...newAssessment, title: e.target.value })}
                 className="h-11 touch-manipulation"
               />
             </div>
@@ -413,13 +406,16 @@ export function AssessmentsSection() {
                     <button
                       key={type.value}
                       onClick={() =>
-                        setNewAssessment({ ...newAssessment, type: type.value as typeof newAssessment.type })
+                        setNewAssessment({
+                          ...newAssessment,
+                          type: type.value as typeof newAssessment.type,
+                        })
                       }
                       className={cn(
-                        "flex items-center gap-2 p-3 rounded-xl border transition-all active:scale-95 touch-manipulation h-11",
+                        'flex items-center gap-2 p-3 rounded-xl border transition-all active:scale-95 touch-manipulation h-11',
                         newAssessment.type === type.value
-                          ? "border-elec-yellow bg-elec-yellow/10"
-                          : "border-border"
+                          ? 'border-elec-yellow bg-elec-yellow/10'
+                          : 'border-border'
                       )}
                     >
                       <Icon className="h-4 w-4 text-elec-yellow" />
@@ -436,9 +432,7 @@ export function AssessmentsSection() {
               <Input
                 type="date"
                 value={newAssessment.dueDate}
-                onChange={(e) =>
-                  setNewAssessment({ ...newAssessment, dueDate: e.target.value })
-                }
+                onChange={(e) => setNewAssessment({ ...newAssessment, dueDate: e.target.value })}
                 className="h-11 touch-manipulation"
               />
             </div>

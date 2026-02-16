@@ -55,9 +55,7 @@ export function SearchResultsGrid({
           Showing <span className="font-medium text-foreground">{products.length}</span> of{' '}
           <span className="font-medium text-foreground">{total.toLocaleString()}</span> results
         </p>
-        {isLoading && (
-          <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-        )}
+        {isLoading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
       </div>
 
       {/* Results List */}
@@ -69,11 +67,7 @@ export function SearchResultsGrid({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
+        <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />
       )}
     </div>
   );

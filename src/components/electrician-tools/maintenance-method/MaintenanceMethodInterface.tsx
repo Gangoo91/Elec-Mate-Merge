@@ -10,7 +10,11 @@ import { MaintenanceMethodResults } from './MaintenanceMethodResults';
 import { MaintenanceSuccess } from './MaintenanceSuccess';
 import { useMaintenanceMethodJobPolling } from '@/hooks/useMaintenanceMethodJobPolling';
 import { buildMaintenancePdfPayload } from '@/utils/maintenance-pdf-payload-builder';
-import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from '@/utils/circuit-context-generator';
+import {
+  getStoredCircuitContext,
+  clearStoredCircuitContext,
+  type StoredCircuitContext,
+} from '@/utils/circuit-context-generator';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 
 type ViewState = 'input' | 'processing' | 'success' | 'results';
@@ -33,7 +37,7 @@ export const MaintenanceMethodInterface = () => {
   const [equipmentDetails, setEquipmentDetails] = useState<MaintenanceEquipmentDetails>({
     equipmentType: '',
     location: '',
-    installationType: 'commercial'
+    installationType: 'commercial',
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -92,7 +96,7 @@ export const MaintenanceMethodInterface = () => {
       toast({
         title: 'Generation Failed',
         description: job.error_message || 'Failed to generate maintenance instructions',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       setViewState('input');
       setCurrentJobId(null);
@@ -104,7 +108,7 @@ export const MaintenanceMethodInterface = () => {
       toast({
         title: 'Query Required',
         description: 'Please describe the equipment requiring maintenance',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
@@ -113,7 +117,7 @@ export const MaintenanceMethodInterface = () => {
       toast({
         title: 'Missing Information',
         description: 'Please provide equipment type and location',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
@@ -126,25 +130,25 @@ export const MaintenanceMethodInterface = () => {
         body: {
           query,
           equipmentDetails,
-          detailLevel: 'normal'
-        }
+          detailLevel: 'normal',
+        },
       });
 
       if (error) throw error;
 
       setCurrentJobId(data.jobId);
       setViewState('processing');
-      
+
       toast({
         title: 'Generation Started',
-        description: 'Generating detailed maintenance instructions...'
+        description: 'Generating detailed maintenance instructions...',
       });
     } catch (error: any) {
       console.error('Error creating maintenance method job:', error);
       toast({
         title: 'Error',
         description: error.message || 'Failed to start generation',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       setViewState('input');
     } finally {
@@ -160,7 +164,7 @@ export const MaintenanceMethodInterface = () => {
       setCurrentJobId(null);
       toast({
         title: 'Cancelled',
-        description: 'Maintenance method generation cancelled'
+        description: 'Maintenance method generation cancelled',
       });
     } finally {
       setIsCancelling(false);
@@ -173,7 +177,7 @@ export const MaintenanceMethodInterface = () => {
     setEquipmentDetails({
       equipmentType: '',
       location: '',
-      installationType: 'commercial'
+      installationType: 'commercial',
     });
     setSavedMethodData(null);
     setViewState('input');
@@ -184,32 +188,32 @@ export const MaintenanceMethodInterface = () => {
       toast({
         title: 'No Data',
         description: 'No maintenance data available to export',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
 
     try {
       setIsSubmitting(true);
-      
+
       toast({
         title: 'Generating PDF',
-        description: 'Creating your maintenance instructions PDF...'
+        description: 'Creating your maintenance instructions PDF...',
       });
 
       // Build properly structured payload using the builder
       const payload = buildMaintenancePdfPayload(job.method_data, equipmentDetails);
-      
+
       console.log('[Maintenance PDF] Payload structure:', {
         reportTitle: payload.reportTitle,
         equipmentType: payload.equipmentDetails.equipmentType,
         stepsCount: payload.steps.length,
         hasRecommendations: payload.recommendations.length > 0,
-        hasSummary: !!payload.summary
+        hasSummary: !!payload.summary,
       });
 
       const { data, error } = await supabase.functions.invoke('generate-maintenance-method-pdf', {
-        body: payload
+        body: payload,
       });
 
       if (error) throw error;
@@ -218,7 +222,7 @@ export const MaintenanceMethodInterface = () => {
         // Fetch PDF as blob and download with custom filename
         const pdfResponse = await fetch(data.downloadUrl);
         const pdfBlob = await pdfResponse.blob();
-        
+
         const blobUrl = URL.createObjectURL(pdfBlob);
         const link = document.createElement('a');
         link.href = blobUrl;
@@ -227,10 +231,10 @@ export const MaintenanceMethodInterface = () => {
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(blobUrl);
-        
+
         toast({
           title: 'PDF Downloaded',
-          description: `Downloaded as ${data.filename || 'Maintenance Instructions.pdf'}`
+          description: `Downloaded as ${data.filename || 'Maintenance Instructions.pdf'}`,
         });
       } else {
         throw new Error('No download URL returned');
@@ -240,7 +244,7 @@ export const MaintenanceMethodInterface = () => {
       toast({
         title: 'Export Failed',
         description: error.message || 'Failed to generate PDF',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -291,7 +295,11 @@ export const MaintenanceMethodInterface = () => {
   }
 
   // Show processing if job is running
-  if (viewState === 'processing' && job && (job.status === 'pending' || job.status === 'processing')) {
+  if (
+    viewState === 'processing' &&
+    job &&
+    (job.status === 'pending' || job.status === 'processing')
+  ) {
     return (
       <MaintenanceMethodProcessingView
         progress={job.progress}

@@ -25,40 +25,40 @@ interface AIGeneratedContent {
   additionalServices?: string[];
 }
 
-export const generateAIEnhancedQuotePDF = async ({ 
-  quote, 
-  companyProfile, 
+export const generateAIEnhancedQuotePDF = async ({
+  quote,
+  companyProfile,
   aiEnhancements = {
     enhancedDescriptions: true,
     executiveSummary: true,
     smartTerms: true,
-    recommendations: true
-  } 
+    recommendations: true,
+  },
 }: AIQuotePDFOptions) => {
   const pdf = new jsPDF('p', 'mm', 'a4');
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
   const margin = 20;
-  const contentWidth = pageWidth - (2 * margin);
-  
+  const contentWidth = pageWidth - 2 * margin;
+
   let yPosition = margin;
 
   // Generate AI content
   let aiContent: AIGeneratedContent = {};
-  
+
   try {
     if (aiEnhancements.executiveSummary && quote.jobDetails) {
       aiContent.executiveSummary = await AIService.generateQuoteSummary(quote, companyProfile);
     }
-    
+
     if (aiEnhancements.enhancedDescriptions && quote.jobDetails) {
       aiContent.enhancedJobDescription = await AIService.enhanceJobDescription(quote.jobDetails);
     }
-    
+
     if (aiEnhancements.smartTerms) {
       aiContent.termsAndConditions = await AIService.generateTermsAndConditions(quote);
     }
-    
+
     if (aiEnhancements.recommendations) {
       aiContent.additionalServices = await AIService.suggestAdditionalServices(quote);
     }
@@ -70,7 +70,7 @@ export const generateAIEnhancedQuotePDF = async ({
   const formatCurrency = (amount: number): string => {
     const currency = companyProfile?.currency || 'GBP';
     const locale = companyProfile?.locale || 'en-GB';
-    
+
     return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: currency,
@@ -81,16 +81,16 @@ export const generateAIEnhancedQuotePDF = async ({
     const fontSize = options.fontSize || 10;
     const fontStyle = options.fontStyle || 'normal';
     const maxWidth = options.maxWidth || contentWidth;
-    
+
     pdf.setFontSize(fontSize);
     pdf.setFont('helvetica', fontStyle);
-    
+
     if (options.color) {
       pdf.setTextColor(options.color[0], options.color[1], options.color[2]);
     } else {
       pdf.setTextColor(0, 0, 0);
     }
-    
+
     // Simple HTML to text conversion for PDF
     const cleanText = text
       .replace(/<p>/g, '')
@@ -105,24 +105,26 @@ export const generateAIEnhancedQuotePDF = async ({
       .replace(/<\/li>/g, '\n')
       .replace(/\n\n+/g, '\n\n')
       .trim();
-    
+
     const lines = pdf.splitTextToSize(cleanText, maxWidth);
     pdf.text(lines, x, y);
-    
-    return y + (lines.length * fontSize * 0.3528); // Convert pt to mm
+
+    return y + lines.length * fontSize * 0.3528; // Convert pt to mm
   };
 
   const hexToRgb = (hex: string): number[] => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? [
-      parseInt(result[1], 16),
-      parseInt(result[2], 16),
-      parseInt(result[3], 16)
-    ] : [30, 64, 175]; // Default blue
+    return result
+      ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
+      : [30, 64, 175]; // Default blue
   };
 
-  const primaryColor = companyProfile?.primary_color ? hexToRgb(companyProfile.primary_color) : [30, 64, 175];
-  const secondaryColor = companyProfile?.secondary_color ? hexToRgb(companyProfile.secondary_color) : [59, 130, 246];
+  const primaryColor = companyProfile?.primary_color
+    ? hexToRgb(companyProfile.primary_color)
+    : [30, 64, 175];
+  const secondaryColor = companyProfile?.secondary_color
+    ? hexToRgb(companyProfile.secondary_color)
+    : [59, 130, 246];
 
   // Header Section
   const renderHeader = () => {
@@ -138,29 +140,32 @@ export const generateAIEnhancedQuotePDF = async ({
     // Company details
     const companyX = companyProfile?.logo_data_url ? margin + 35 : margin;
     const companyName = safeText(companyProfile?.company_name || 'Your Company');
-    
+
     yPosition = addText(companyName, companyX, yPosition + 8, {
       fontSize: 18,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     if (companyProfile?.company_address) {
       yPosition = addText(safeText(companyProfile.company_address), companyX, yPosition + 2, {
         fontSize: 9,
-        maxWidth: contentWidth - 35
+        maxWidth: contentWidth - 35,
       });
     }
 
     const contactInfo = [];
-    if (companyProfile?.company_phone) contactInfo.push(`Tel: ${safeText(companyProfile.company_phone)}`);
-    if (companyProfile?.company_email) contactInfo.push(`Email: ${safeText(companyProfile.company_email)}`);
-    if (companyProfile?.company_website) contactInfo.push(`Web: ${safeText(companyProfile.company_website)}`);
+    if (companyProfile?.company_phone)
+      contactInfo.push(`Tel: ${safeText(companyProfile.company_phone)}`);
+    if (companyProfile?.company_email)
+      contactInfo.push(`Email: ${safeText(companyProfile.company_email)}`);
+    if (companyProfile?.company_website)
+      contactInfo.push(`Web: ${safeText(companyProfile.company_website)}`);
 
     if (contactInfo.length > 0) {
       yPosition = addText(contactInfo.join(' | '), companyX, yPosition + 2, {
         fontSize: 9,
-        maxWidth: contentWidth - 35
+        maxWidth: contentWidth - 35,
       });
     }
 
@@ -170,7 +175,7 @@ export const generateAIEnhancedQuotePDF = async ({
     yPosition = addText(quoteTitle, margin, yPosition, {
       fontSize: 22,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     // Line separator
@@ -193,13 +198,13 @@ export const generateAIEnhancedQuotePDF = async ({
     yPosition = addText('EXECUTIVE SUMMARY', margin, yPosition, {
       fontSize: 14,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     yPosition += 8; // More spacing after heading
     yPosition = addText(aiContent.executiveSummary, margin, yPosition, {
       fontSize: 10,
-      maxWidth: contentWidth
+      maxWidth: contentWidth,
     });
 
     yPosition += 15; // More spacing after section
@@ -217,13 +222,13 @@ export const generateAIEnhancedQuotePDF = async ({
     yPosition = addText('PROJECT DESCRIPTION', margin, yPosition, {
       fontSize: 14,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     yPosition += 8; // More spacing after heading
     yPosition = addText(description, margin, yPosition, {
       fontSize: 10,
-      maxWidth: contentWidth
+      maxWidth: contentWidth,
     });
 
     yPosition += 15; // More spacing after section
@@ -233,42 +238,42 @@ export const generateAIEnhancedQuotePDF = async ({
   // Client and quote details
   const renderQuoteDetails = () => {
     const leftColX = margin;
-    const rightColX = margin + (contentWidth / 2) + 5;
+    const rightColX = margin + contentWidth / 2 + 5;
     const startY = yPosition;
 
     // Client details
     addText('QUOTATION FOR:', leftColX, yPosition, {
       fontSize: 11,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     let clientY = yPosition + 6;
     if (quote.client) {
       clientY = addText(safeText(quote.client.name), leftColX, clientY, {
         fontSize: 10,
-        fontStyle: 'bold'
+        fontStyle: 'bold',
       });
-      
+
       if (quote.client.address) {
         clientY = addText(safeText(quote.client.address), leftColX, clientY + 2, {
-          fontSize: 9
+          fontSize: 9,
         });
       }
-      
+
       if (quote.client.postcode) {
         clientY = addText(safeText(quote.client.postcode), leftColX, clientY + 2, {
-          fontSize: 9
+          fontSize: 9,
         });
       }
-      
+
       const clientContact = [];
       if (quote.client.phone) clientContact.push(`Tel: ${safeText(quote.client.phone)}`);
       if (quote.client.email) clientContact.push(`Email: ${safeText(quote.client.email)}`);
-      
+
       if (clientContact.length > 0) {
         clientY = addText(clientContact.join('\n'), leftColX, clientY + 2, {
-          fontSize: 9
+          fontSize: 9,
         });
       }
     }
@@ -277,11 +282,11 @@ export const generateAIEnhancedQuotePDF = async ({
     addText('QUOTE DETAILS:', rightColX, yPosition, {
       fontSize: 11,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     let detailsY = yPosition + 6;
-    
+
     const quoteDetails = [
       [`Date:`, safeDate(quote.createdAt)],
       [`Valid Until:`, safeDate(quote.expiryDate)],
@@ -299,10 +304,10 @@ export const generateAIEnhancedQuotePDF = async ({
     quoteDetails.forEach(([label, value]) => {
       addText(`${label}`, rightColX, detailsY, {
         fontSize: 9,
-        fontStyle: 'bold'
+        fontStyle: 'bold',
       });
       addText(value, rightColX + 25, detailsY, {
-        fontSize: 9
+        fontSize: 9,
       });
       detailsY += 5;
     });
@@ -317,7 +322,7 @@ export const generateAIEnhancedQuotePDF = async ({
     if (!quote.items || quote.items.length === 0) {
       yPosition = addText('No items added to this quote.', margin, yPosition, {
         fontSize: 10,
-        color: [128, 128, 128]
+        color: [128, 128, 128],
       });
       return yPosition + 10;
     }
@@ -328,7 +333,7 @@ export const generateAIEnhancedQuotePDF = async ({
       `${safeNumber(item.quantity)}`,
       safeText(item.unit),
       formatCurrency(safeNumber(item.unitPrice)),
-      formatCurrency(safeNumber(item.totalPrice))
+      formatCurrency(safeNumber(item.totalPrice)),
     ]);
 
     autoTable(pdf, {
@@ -341,11 +346,11 @@ export const generateAIEnhancedQuotePDF = async ({
         textColor: [255, 255, 255],
         fontSize: 10,
         fontStyle: 'bold',
-        halign: 'center'
+        halign: 'center',
       },
       bodyStyles: {
         fontSize: 9,
-        cellPadding: 3
+        cellPadding: 3,
       },
       columnStyles: {
         0: { halign: 'center', cellWidth: 10 },
@@ -353,15 +358,15 @@ export const generateAIEnhancedQuotePDF = async ({
         2: { halign: 'center', cellWidth: 15 },
         3: { halign: 'center', cellWidth: 15 },
         4: { halign: 'right', cellWidth: 25 },
-        5: { halign: 'right', cellWidth: 25 }
+        5: { halign: 'right', cellWidth: 25 },
       },
       alternateRowStyles: {
-        fillColor: [248, 249, 250]
+        fillColor: [248, 249, 250],
       },
       margin: { left: margin, right: margin },
       didDrawPage: (data) => {
         yPosition = data.cursor?.y || yPosition;
-      }
+      },
     });
 
     // Ensure proper spacing after table
@@ -406,12 +411,12 @@ export const generateAIEnhancedQuotePDF = async ({
       addText(label, totalsX, yPosition, {
         fontSize: 11,
         fontStyle: 'normal',
-        color: [0, 0, 0]
+        color: [0, 0, 0],
       });
       addText(amount, totalsX + 45, yPosition, {
         fontSize: 11,
         fontStyle: 'normal',
-        color: [0, 0, 0]
+        color: [0, 0, 0],
       });
       yPosition += 6;
     });
@@ -427,12 +432,12 @@ export const generateAIEnhancedQuotePDF = async ({
     addText('TOTAL:', totalsX, yPosition, {
       fontSize: 14,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
     addText(formatCurrency(safeNumber(quote.total)), totalsX + 45, yPosition, {
       fontSize: 14,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     yPosition += 25; // More spacing after totals
@@ -452,7 +457,7 @@ export const generateAIEnhancedQuotePDF = async ({
     yPosition = addText('RECOMMENDED ADDITIONAL SERVICES', margin, yPosition, {
       fontSize: 11,
       fontStyle: 'bold',
-      color: primaryColor
+      color: primaryColor,
     });
 
     yPosition += 8; // More spacing after heading
@@ -461,7 +466,7 @@ export const generateAIEnhancedQuotePDF = async ({
     const servicesText = aiContent.additionalServices.join(' ');
     yPosition = addText(servicesText, margin, yPosition, {
       fontSize: 9,
-      maxWidth: contentWidth
+      maxWidth: contentWidth,
     });
 
     yPosition += 15; // More spacing after section
@@ -484,13 +489,13 @@ export const generateAIEnhancedQuotePDF = async ({
       yPosition = addText('TERMS & CONDITIONS:', margin, yPosition, {
         fontSize: 11,
         fontStyle: 'bold',
-        color: primaryColor
+        color: primaryColor,
       });
 
       yPosition += 8; // More spacing after heading
       yPosition = addText(aiContent.termsAndConditions, margin, yPosition, {
         fontSize: 9,
-        maxWidth: contentWidth
+        maxWidth: contentWidth,
       });
       yPosition += 10; // Spacing after T&Cs
     }
@@ -498,15 +503,20 @@ export const generateAIEnhancedQuotePDF = async ({
     // Payment terms and notes
     if (quote.notes || companyProfile?.payment_terms) {
       if (companyProfile?.payment_terms) {
-        yPosition = addText(`Payment Terms: ${safeText(companyProfile.payment_terms)}`, margin, yPosition, {
-          fontSize: 9
-        });
+        yPosition = addText(
+          `Payment Terms: ${safeText(companyProfile.payment_terms)}`,
+          margin,
+          yPosition,
+          {
+            fontSize: 9,
+          }
+        );
         yPosition += 5; // Spacing after payment terms
       }
 
       if (quote.notes) {
         yPosition = addText(`Notes: ${safeText(quote.notes)}`, margin, yPosition, {
-          fontSize: 9
+          fontSize: 9,
         });
         yPosition += 10; // Spacing after notes
       }
@@ -516,24 +526,29 @@ export const generateAIEnhancedQuotePDF = async ({
   // Add footer to all pages
   const addFooterToAllPages = () => {
     const totalPages = pdf.getNumberOfPages();
-    
+
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
-      
+
       const footerY = pageHeight - 25;
       pdf.setDrawColor(200, 200, 200);
       pdf.setLineWidth(0.5);
       pdf.line(margin, footerY, pageWidth - margin, footerY);
 
-      addText('Please note: This quote is valid for 30 days from the date raised.', margin, footerY + 5, {
-        fontSize: 8,
-        color: [100, 100, 100]
-      });
+      addText(
+        'Please note: This quote is valid for 30 days from the date raised.',
+        margin,
+        footerY + 5,
+        {
+          fontSize: 8,
+          color: [100, 100, 100],
+        }
+      );
 
       // Page number
       addText(`Page ${i} of ${totalPages}`, pageWidth - margin - 20, footerY + 5, {
         fontSize: 8,
-        color: [100, 100, 100]
+        color: [100, 100, 100],
       });
     }
   };

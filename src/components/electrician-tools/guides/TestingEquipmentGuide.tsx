@@ -1,59 +1,62 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, CheckCircle, AlertTriangle, TrendingUp, ArrowLeft } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Star, CheckCircle, AlertTriangle, TrendingUp, ArrowLeft } from 'lucide-react';
 
 interface TestingEquipmentGuideProps {
   onBack: () => void;
 }
 
 const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
-  const [selectedBudget, setSelectedBudget] = useState<string>("");
-  const [userLevel, setUserLevel] = useState<string>("");
+  const [selectedBudget, setSelectedBudget] = useState<string>('');
+  const [userLevel, setUserLevel] = useState<string>('');
 
   const budgetRanges = [
-    { id: "budget", label: "Budget (£200-500)", description: "Essential tools for apprentices" },
-    { id: "mid", label: "Mid-range (£500-1000)", description: "Professional quality tools" },
-    { id: "premium", label: "Premium (£1000+)", description: "Top-tier professional equipment" }
+    { id: 'budget', label: 'Budget (£200-500)', description: 'Essential tools for apprentices' },
+    { id: 'mid', label: 'Mid-range (£500-1000)', description: 'Professional quality tools' },
+    { id: 'premium', label: 'Premium (£1000+)', description: 'Top-tier professional equipment' },
   ];
 
   const userLevels = [
-    { id: "apprentice", label: "Apprentice", description: "Starting out in electrical work" },
-    { id: "qualified", label: "Qualified Electrician", description: "Fully qualified professional" },
-    { id: "contractor", label: "Contractor", description: "Running electrical business" }
+    { id: 'apprentice', label: 'Apprentice', description: 'Starting out in electrical work' },
+    {
+      id: 'qualified',
+      label: 'Qualified Electrician',
+      description: 'Fully qualified professional',
+    },
+    { id: 'contractor', label: 'Contractor', description: 'Running electrical business' },
   ];
 
   const recommendations = {
-    "budget-apprentice": {
-      primary: "Kewtech KT65DL",
-      price: "£299.99",
-      reason: "Perfect for apprentices - reliable, affordable, and includes essential tests"
+    'budget-apprentice': {
+      primary: 'Kewtech KT65DL',
+      price: '£299.99',
+      reason: 'Perfect for apprentices - reliable, affordable, and includes essential tests',
     },
-    "mid-qualified": {
-      primary: "Fluke 1663",
-      price: "£649.99", 
-      reason: "Industry standard for qualified electricians - comprehensive testing capabilities"
+    'mid-qualified': {
+      primary: 'Fluke 1663',
+      price: '£649.99',
+      reason: 'Industry standard for qualified electricians - comprehensive testing capabilities',
     },
-    "premium-contractor": {
-      primary: "Megger MFT1741",
-      price: "£999.99",
-      reason: "Professional contractor grade - advanced features and calibration services"
-    }
+    'premium-contractor': {
+      primary: 'Megger MFT1741',
+      price: '£999.99',
+      reason: 'Professional contractor grade - advanced features and calibration services',
+    },
   };
 
   const getRecommendation = () => {
     const key = `${selectedBudget}-${userLevel}`;
-    return recommendations[key as keyof typeof recommendations] || recommendations["mid-qualified"];
+    return recommendations[key as keyof typeof recommendations] || recommendations['mid-qualified'];
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 mb-6">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={onBack}
           className="border-elec-yellow/30 hover:bg-elec-yellow/10"
         >
@@ -61,8 +64,12 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
           Back to Guides
         </Button>
         <div>
-          <h1 className="text-3xl font-bold text-elec-yellow">Essential Testing Equipment Guide 2024</h1>
-          <p className="text-muted-foreground">Complete guide to choosing the right testing equipment</p>
+          <h1 className="text-3xl font-bold text-elec-yellow">
+            Essential Testing Equipment Guide 2024
+          </h1>
+          <p className="text-muted-foreground">
+            Complete guide to choosing the right testing equipment
+          </p>
         </div>
       </div>
 
@@ -77,19 +84,25 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
         <TabsContent value="selector" className="space-y-6">
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-elec-yellow">Find Your Perfect Testing Equipment</CardTitle>
-              <p className="text-muted-foreground">Answer a few questions to get personalised recommendations</p>
+              <CardTitle className="text-elec-yellow">
+                Find Your Perfect Testing Equipment
+              </CardTitle>
+              <p className="text-muted-foreground">
+                Answer a few questions to get personalised recommendations
+              </p>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-foreground mb-3">What's your budget range?</h3>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  What's your budget range?
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {budgetRanges.map((range) => (
-                    <Card 
+                    <Card
                       key={range.id}
                       className={`cursor-pointer transition-all ${
-                        selectedBudget === range.id 
-                          ? 'border-elec-yellow bg-elec-yellow/10' 
+                        selectedBudget === range.id
+                          ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-elec-yellow/20 hover:border-elec-yellow/50'
                       }`}
                       onClick={() => setSelectedBudget(range.id)}
@@ -104,14 +117,16 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-foreground mb-3">What's your experience level?</h3>
+                <h3 className="text-lg font-medium text-foreground mb-3">
+                  What's your experience level?
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {userLevels.map((level) => (
-                    <Card 
+                    <Card
                       key={level.id}
                       className={`cursor-pointer transition-all ${
-                        userLevel === level.id 
-                          ? 'border-elec-yellow bg-elec-yellow/10' 
+                        userLevel === level.id
+                          ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-elec-yellow/20 hover:border-elec-yellow/50'
                       }`}
                       onClick={() => setUserLevel(level.id)}
@@ -134,7 +149,9 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                     </div>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <h4 className="text-xl font-bold text-foreground">{getRecommendation().primary}</h4>
+                        <h4 className="text-xl font-bold text-foreground">
+                          {getRecommendation().primary}
+                        </h4>
                         <Badge className="bg-elec-yellow/20 text-elec-yellow text-lg px-3 py-1">
                           {getRecommendation().price}
                         </Badge>
@@ -216,7 +233,9 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-elec-yellow">Calibration Requirements</CardTitle>
-              <p className="text-muted-foreground">Understanding when and how to calibrate your testing equipment</p>
+              <p className="text-muted-foreground">
+                Understanding when and how to calibrate your testing equipment
+              </p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
@@ -225,10 +244,11 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                   <h3 className="font-medium text-amber-400">Legal Requirement</h3>
                 </div>
                 <p className="text-sm text-amber-300">
-                  All testing equipment must be calibrated annually to maintain accuracy and comply with BS 7671.
+                  All testing equipment must be calibrated annually to maintain accuracy and comply
+                  with BS 7671.
                 </p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
                   <h4 className="font-medium text-foreground mb-2">Calibration Schedule</h4>
@@ -239,7 +259,7 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                     <li>• Before important installations</li>
                   </ul>
                 </div>
-                
+
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
                   <h4 className="font-medium text-foreground mb-2">Typical Costs</h4>
                   <ul className="space-y-1 text-sm text-muted-foreground">
@@ -265,21 +285,27 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Buy from authorised dealers</h4>
-                    <p className="text-sm text-muted-foreground">Ensures warranty and calibration services</p>
+                    <p className="text-sm text-muted-foreground">
+                      Ensures warranty and calibration services
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Consider lease options</h4>
-                    <p className="text-sm text-muted-foreground">Spread costs and include calibration</p>
+                    <p className="text-sm text-muted-foreground">
+                      Spread costs and include calibration
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Check software updates</h4>
-                    <p className="text-sm text-muted-foreground">Ensure compliance with latest standards</p>
+                    <p className="text-sm text-muted-foreground">
+                      Ensure compliance with latest standards
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -294,21 +320,27 @@ const TestingEquipmentGuide = ({ onBack }: TestingEquipmentGuideProps) => {
                   <AlertTriangle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Buying cheap imports</h4>
-                    <p className="text-sm text-muted-foreground">May not meet UK standards or have support</p>
+                    <p className="text-sm text-muted-foreground">
+                      May not meet UK standards or have support
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Ignoring calibration costs</h4>
-                    <p className="text-sm text-muted-foreground">Budget £100-200 annually for calibration</p>
+                    <p className="text-sm text-muted-foreground">
+                      Budget £100-200 annually for calibration
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Not checking warranty</h4>
-                    <p className="text-sm text-muted-foreground">Ensure comprehensive warranty coverage</p>
+                    <p className="text-sm text-muted-foreground">
+                      Ensure comprehensive warranty coverage
+                    </p>
                   </div>
                 </div>
               </CardContent>

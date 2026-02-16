@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,7 +21,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
     if (!completedSteps.includes(stepIndex)) {
       setCompletedSteps([...completedSteps, stepIndex]);
     }
-    
+
     // Auto-advance to next step
     if (stepIndex < procedure.steps.length - 1) {
       setActiveStep(stepIndex + 1);
@@ -39,10 +38,14 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Critical': return 'text-red-400 bg-red-400/10';
-      case 'Essential': return 'text-orange-400 bg-orange-400/10';
-      case 'Required': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-gray-400 bg-gray-400/10';
+      case 'Critical':
+        return 'text-red-400 bg-red-400/10';
+      case 'Essential':
+        return 'text-orange-400 bg-orange-400/10';
+      case 'Required':
+        return 'text-blue-400 bg-blue-400/10';
+      default:
+        return 'text-gray-400 bg-gray-400/10';
     }
   };
 
@@ -50,7 +53,11 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
     return (
       <div className="space-y-6">
         <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={onBack} className="border-elec-yellow text-elec-yellow">
+          <Button
+            variant="outline"
+            onClick={onBack}
+            className="border-elec-yellow text-elec-yellow"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Procedures
           </Button>
@@ -97,7 +104,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
             </div>
 
             <div className="flex gap-4">
-              <Button 
+              <Button
                 onClick={() => {
                   setActiveStep(0);
                   setCompletedSteps([]);
@@ -139,9 +146,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
               <Badge className={getDifficultyColor(procedure.difficulty)}>
                 {procedure.difficulty}
               </Badge>
-              <Badge className="bg-blue-500/20 text-blue-400">
-                {procedure.regulation}
-              </Badge>
+              <Badge className="bg-blue-500/20 text-blue-400">{procedure.regulation}</Badge>
             </div>
           </div>
         </CardHeader>
@@ -160,7 +165,9 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-300">Progress</span>
-              <span className="text-elec-yellow">{completedSteps.length}/{procedure.steps.length} steps</span>
+              <span className="text-elec-yellow">
+                {completedSteps.length}/{procedure.steps.length} steps
+              </span>
             </div>
             <Progress value={progress} className="h-2" />
           </div>

@@ -1,12 +1,11 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckSquare, Clock, BookOpen, AlertTriangle, Zap, Settings } from "lucide-react";
-import { Link } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Progress } from "@/components/ui/progress";
-import { enhancedBS7671Steps } from "@/data/bs7671-steps/enhancedStepData";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckSquare, Clock, BookOpen, AlertTriangle, Zap, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Progress } from '@/components/ui/progress';
+import { enhancedBS7671Steps } from '@/data/bs7671-steps/enhancedStepData';
 
 const BS7671RunThrough = () => {
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
@@ -16,31 +15,46 @@ const BS7671RunThrough = () => {
 
   const getDifficultyColor = (category: string) => {
     switch (category) {
-      case "Safety Critical": return "text-red-400";
-      case "Electrical Testing": return "text-blue-400";
-      case "Visual Inspection": return "text-green-400";
-      case "Documentation": return "text-purple-400";
-      default: return "text-white";
+      case 'Safety Critical':
+        return 'text-red-400';
+      case 'Electrical Testing':
+        return 'text-blue-400';
+      case 'Visual Inspection':
+        return 'text-green-400';
+      case 'Documentation':
+        return 'text-purple-400';
+      default:
+        return 'text-white';
     }
   };
 
   const getDifficultyIcon = (category: string) => {
     switch (category) {
-      case "Safety Critical": return <AlertTriangle className="h-4 w-4" />;
-      case "Electrical Testing": return <Zap className="h-4 w-4" />;
-      case "Visual Inspection": return <CheckSquare className="h-4 w-4" />;
-      case "Documentation": return <BookOpen className="h-4 w-4" />;
-      default: return <Settings className="h-4 w-4" />;
+      case 'Safety Critical':
+        return <AlertTriangle className="h-4 w-4" />;
+      case 'Electrical Testing':
+        return <Zap className="h-4 w-4" />;
+      case 'Visual Inspection':
+        return <CheckSquare className="h-4 w-4" />;
+      case 'Documentation':
+        return <BookOpen className="h-4 w-4" />;
+      default:
+        return <Settings className="h-4 w-4" />;
     }
   };
 
   const getCategoryDescription = (category: string) => {
     switch (category) {
-      case "Safety Critical": return "Life-critical safety procedures";
-      case "Electrical Testing": return "Electrical measurements and testing";
-      case "Visual Inspection": return "Physical inspection and observation";
-      case "Documentation": return "Record keeping and compliance";
-      default: return "General procedures";
+      case 'Safety Critical':
+        return 'Life-critical safety procedures';
+      case 'Electrical Testing':
+        return 'Electrical measurements and testing';
+      case 'Visual Inspection':
+        return 'Physical inspection and observation';
+      case 'Documentation':
+        return 'Record keeping and compliance';
+      default:
+        return 'General procedures';
     }
   };
 
@@ -48,8 +62,12 @@ const BS7671RunThrough = () => {
     <div className="space-y-6 animate-fade-in pb-20">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">BS7671 Inspection & Testing Run-Through</h1>
-          <p className="text-white">Comprehensive electrical safety testing procedures for apprentices</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            BS7671 Inspection & Testing Run-Through
+          </h1>
+          <p className="text-white">
+            Comprehensive electrical safety testing procedures for apprentices
+          </p>
         </div>
         <SmartBackButton className="flex-shrink-0" />
       </div>
@@ -103,7 +121,9 @@ const BS7671RunThrough = () => {
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
               <span>Steps Completed</span>
-              <span>{completedSteps.size} of {totalSteps}</span>
+              <span>
+                {completedSteps.size} of {totalSteps}
+              </span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
             <p className="text-xs text-white">
@@ -124,8 +144,9 @@ const BS7671RunThrough = () => {
         <CardContent>
           <div className="space-y-3">
             <p className="text-sm text-red-100">
-              This is a comprehensive learning tool for apprentices. <strong>Always work under supervision</strong> and 
-              follow your company's safety procedures.
+              This is a comprehensive learning tool for apprentices.{' '}
+              <strong>Always work under supervision</strong> and follow your company's safety
+              procedures.
             </p>
             <ul className="text-sm text-red-100 space-y-1">
               <li className="flex items-start gap-2">
@@ -152,8 +173,8 @@ const BS7671RunThrough = () => {
       {/* Steps Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {enhancedBS7671Steps.map((step) => (
-          <Card 
-            key={step.id} 
+          <Card
+            key={step.id}
             className={`border-elec-yellow/20 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer ${
               completedSteps.has(step.id) ? 'ring-2 ring-green-500/30' : ''
             }`}
@@ -171,14 +192,12 @@ const BS7671RunThrough = () => {
                     </span>
                   </div>
                 </CardTitle>
-                {completedSteps.has(step.id) && (
-                  <CheckSquare className="h-5 w-5 text-green-500" />
-                )}
+                {completedSteps.has(step.id) && <CheckSquare className="h-5 w-5 text-green-500" />}
               </div>
             </CardHeader>
             <CardContent className="space-y-3">
               <CardDescription className="leading-relaxed">{step.description}</CardDescription>
-              
+
               <div className="flex items-center gap-4 text-xs">
                 <div className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />

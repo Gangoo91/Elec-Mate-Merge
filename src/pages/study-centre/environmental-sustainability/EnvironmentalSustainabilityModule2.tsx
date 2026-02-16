@@ -1,45 +1,45 @@
-import { ArrowLeft, Recycle, FileText, AlertTriangle, ClipboardList } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Recycle, FileText, AlertTriangle, ClipboardList } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The Waste Hierarchy",
+    title: 'The Waste Hierarchy',
     icon: Recycle,
     description:
-      "The five steps of the waste hierarchy \u2014 prevention, reuse, recycling, recovery, and disposal \u2014 and how to apply them on construction sites",
+      'The five steps of the waste hierarchy \u2014 prevention, reuse, recycling, recovery, and disposal \u2014 and how to apply them on construction sites',
   },
   {
     id: 2,
-    title: "Duty of Care & Waste Transfer Notes",
+    title: 'Duty of Care & Waste Transfer Notes',
     icon: FileText,
     description:
-      "Your legal duty of care for waste, how to complete waste transfer notes correctly, and the consequences of failing to comply",
+      'Your legal duty of care for waste, how to complete waste transfer notes correctly, and the consequences of failing to comply',
   },
   {
     id: 3,
-    title: "Hazardous vs Non-Hazardous Waste",
+    title: 'Hazardous vs Non-Hazardous Waste',
     icon: AlertTriangle,
     description:
-      "How to identify and classify hazardous waste, segregation requirements, consignment notes, and safe handling procedures",
+      'How to identify and classify hazardous waste, segregation requirements, consignment notes, and safe handling procedures',
   },
   {
     id: 4,
-    title: "Site Waste Management Plans",
+    title: 'Site Waste Management Plans',
     icon: ClipboardList,
     description:
-      "How to create and maintain a site waste management plan, setting waste reduction targets, and recording waste movements",
+      'How to create and maintain a site waste management plan, setting waste reduction targets, and recording waste movements',
   },
 ];
 
 export default function EnvironmentalSustainabilityModule2() {
   useSEO({
-    title: "Module 2: Waste Management | Environmental & Sustainability",
+    title: 'Module 2: Waste Management | Environmental & Sustainability',
     description:
-      "Learn about the waste hierarchy, duty of care, hazardous waste classification, and site waste management plans.",
+      'Learn about the waste hierarchy, duty of care, hazardous waste classification, and site waste management plans.',
   });
 
   return (
@@ -72,13 +72,11 @@ export default function EnvironmentalSustainabilityModule2() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">30 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Waste Management
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Waste Management</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Understand the waste hierarchy and how to apply it on site, learn your legal duty of
-              care for waste, distinguish between hazardous and non-hazardous waste, and master
-              site waste management planning.
+              care for waste, distinguish between hazardous and non-hazardous waste, and master site
+              waste management planning.
             </p>
           </div>
 

@@ -1,5 +1,15 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Zap, Calculator, Shield, BarChart, Wrench, Award, FileCheck } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Zap,
+  Calculator,
+  Shield,
+  BarChart,
+  Wrench,
+  Award,
+  FileCheck,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,61 +25,61 @@ const EVChargingCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to EV Charging Infrastructure",
-      description: "EV charging fundamentals and infrastructure basics",
-      duration: "40 mins",
-      icon: BookOpen
+      title: 'Introduction to EV Charging Infrastructure',
+      description: 'EV charging fundamentals and infrastructure basics',
+      duration: '40 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "EVSE Types, Modes, and Standards",
-      description: "Charging equipment types and international standards",
-      duration: "50 mins",
-      icon: Zap
+      title: 'EVSE Types, Modes, and Standards',
+      description: 'Charging equipment types and international standards',
+      duration: '50 mins',
+      icon: Zap,
     },
     {
       id: 3,
-      title: "Electrical Design and Load Calculation",
-      description: "Designing electrical installations for EV charging",
-      duration: "55 mins",
-      icon: Calculator
+      title: 'Electrical Design and Load Calculation',
+      description: 'Designing electrical installations for EV charging',
+      duration: '55 mins',
+      icon: Calculator,
     },
     {
       id: 4,
-      title: "Earthing and Protection Considerations",
-      description: "Earthing and protection requirements for EV charging",
-      duration: "45 mins",
-      icon: Shield
+      title: 'Earthing and Protection Considerations',
+      description: 'Earthing and protection requirements for EV charging',
+      duration: '45 mins',
+      icon: Shield,
     },
     {
       id: 5,
-      title: "Load Management and Diversity in EV Systems",
-      description: "Load management and system integration strategies",
-      duration: "50 mins",
-      icon: BarChart
+      title: 'Load Management and Diversity in EV Systems',
+      description: 'Load management and system integration strategies',
+      duration: '50 mins',
+      icon: BarChart,
     },
     {
       id: 6,
-      title: "Installation, Inspection, and Testing Procedures",
-      description: "Professional installation and testing practices",
-      duration: "60 mins",
-      icon: Wrench
+      title: 'Installation, Inspection, and Testing Procedures',
+      description: 'Professional installation and testing practices',
+      duration: '60 mins',
+      icon: Wrench,
     },
     {
       id: 7,
-      title: "Government Incentives and Certification (OZEV, etc.)",
-      description: "Grants, certification, and compliance requirements",
-      duration: "35 mins",
-      icon: Award
+      title: 'Government Incentives and Certification (OZEV, etc.)',
+      description: 'Grants, certification, and compliance requirements',
+      duration: '35 mins',
+      icon: Award,
     },
     {
       id: 8,
-      title: "Mock Examination",
-      description: "Test your knowledge",
-      duration: "90 mins",
+      title: 'Mock Examination',
+      description: 'Test your knowledge',
+      duration: '90 mins',
       icon: FileCheck,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (

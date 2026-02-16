@@ -13,7 +13,7 @@ export const KeyClausesQuiz = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <SingleQuestionQuiz 
+        <SingleQuestionQuiz
           questions={emergencyLightingModule6Section1QuizData}
           title="Test your knowledge of BS 5266-1 and EN 1838"
         />

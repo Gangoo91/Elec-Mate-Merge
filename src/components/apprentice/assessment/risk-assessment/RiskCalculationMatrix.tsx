@@ -1,9 +1,8 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Calculator, AlertTriangle, CheckCircle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Calculator, AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface RiskCalculationMatrixProps {
   onRiskCalculated: (likelihood: number, severity: number) => void;
@@ -14,27 +13,48 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
   const [selectedSeverity, setSelectedSeverity] = useState<number | null>(null);
 
   const likelihoodLevels = [
-    { value: 1, label: "Very Unlikely", description: "Extremely rare occurrence", color: "green" },
-    { value: 2, label: "Unlikely", description: "Could happen but rare", color: "green" },
-    { value: 3, label: "Possible", description: "Might happen occasionally", color: "yellow" },
-    { value: 4, label: "Likely", description: "Will probably happen", color: "orange" },
-    { value: 5, label: "Very Likely", description: "Almost certain to happen", color: "red" }
+    { value: 1, label: 'Very Unlikely', description: 'Extremely rare occurrence', color: 'green' },
+    { value: 2, label: 'Unlikely', description: 'Could happen but rare', color: 'green' },
+    { value: 3, label: 'Possible', description: 'Might happen occasionally', color: 'yellow' },
+    { value: 4, label: 'Likely', description: 'Will probably happen', color: 'orange' },
+    { value: 5, label: 'Very Likely', description: 'Almost certain to happen', color: 'red' },
   ];
 
   const severityLevels = [
-    { value: 1, label: "Negligible", description: "No injury or minor discomfort", color: "green" },
-    { value: 2, label: "Minor", description: "Minor injury requiring first aid", color: "green" },
-    { value: 3, label: "Moderate", description: "Medical treatment required", color: "yellow" },
-    { value: 4, label: "Major", description: "Serious injury or illness", color: "orange" },
-    { value: 5, label: "Catastrophic", description: "Fatality or permanent disability", color: "red" }
+    { value: 1, label: 'Negligible', description: 'No injury or minor discomfort', color: 'green' },
+    { value: 2, label: 'Minor', description: 'Minor injury requiring first aid', color: 'green' },
+    { value: 3, label: 'Moderate', description: 'Medical treatment required', color: 'yellow' },
+    { value: 4, label: 'Major', description: 'Serious injury or illness', color: 'orange' },
+    {
+      value: 5,
+      label: 'Catastrophic',
+      description: 'Fatality or permanent disability',
+      color: 'red',
+    },
   ];
 
   const getColorConfig = (color: string, isSelected: boolean) => {
     const configs: Record<string, { bg: string; border: string; text: string }> = {
-      green: { bg: isSelected ? 'bg-green-500/30' : 'bg-green-500/5', border: isSelected ? 'border-green-500' : 'border-green-500/30', text: 'text-green-400' },
-      yellow: { bg: isSelected ? 'bg-elec-yellow/30' : 'bg-elec-yellow/5', border: isSelected ? 'border-elec-yellow' : 'border-elec-yellow/30', text: 'text-elec-yellow' },
-      orange: { bg: isSelected ? 'bg-orange-500/30' : 'bg-orange-500/5', border: isSelected ? 'border-orange-500' : 'border-orange-500/30', text: 'text-orange-400' },
-      red: { bg: isSelected ? 'bg-red-500/30' : 'bg-red-500/5', border: isSelected ? 'border-red-500' : 'border-red-500/30', text: 'text-red-400' }
+      green: {
+        bg: isSelected ? 'bg-green-500/30' : 'bg-green-500/5',
+        border: isSelected ? 'border-green-500' : 'border-green-500/30',
+        text: 'text-green-400',
+      },
+      yellow: {
+        bg: isSelected ? 'bg-elec-yellow/30' : 'bg-elec-yellow/5',
+        border: isSelected ? 'border-elec-yellow' : 'border-elec-yellow/30',
+        text: 'text-elec-yellow',
+      },
+      orange: {
+        bg: isSelected ? 'bg-orange-500/30' : 'bg-orange-500/5',
+        border: isSelected ? 'border-orange-500' : 'border-orange-500/30',
+        text: 'text-orange-400',
+      },
+      red: {
+        bg: isSelected ? 'bg-red-500/30' : 'bg-red-500/5',
+        border: isSelected ? 'border-red-500' : 'border-red-500/30',
+        text: 'text-red-400',
+      },
     };
     return configs[color] || configs.green;
   };
@@ -53,11 +73,40 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
   };
 
   const getRiskLevel = (score: number) => {
-    if (score >= 15) return { level: "Very High", bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' };
-    if (score >= 10) return { level: "High", bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/30' };
-    if (score >= 6) return { level: "Medium", bg: 'bg-elec-yellow/20', text: 'text-elec-yellow', border: 'border-elec-yellow/30' };
-    if (score >= 3) return { level: "Low", bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30' };
-    return { level: "Very Low", bg: 'bg-green-500/15', text: 'text-green-400', border: 'border-green-500/30' };
+    if (score >= 15)
+      return {
+        level: 'Very High',
+        bg: 'bg-red-500/20',
+        text: 'text-red-400',
+        border: 'border-red-500/30',
+      };
+    if (score >= 10)
+      return {
+        level: 'High',
+        bg: 'bg-red-500/15',
+        text: 'text-red-400',
+        border: 'border-red-500/30',
+      };
+    if (score >= 6)
+      return {
+        level: 'Medium',
+        bg: 'bg-elec-yellow/20',
+        text: 'text-elec-yellow',
+        border: 'border-elec-yellow/30',
+      };
+    if (score >= 3)
+      return {
+        level: 'Low',
+        bg: 'bg-green-500/20',
+        text: 'text-green-400',
+        border: 'border-green-500/30',
+      };
+    return {
+      level: 'Very Low',
+      bg: 'bg-green-500/15',
+      text: 'text-green-400',
+      border: 'border-green-500/30',
+    };
   };
 
   const currentRisk = getRiskLevel(getRiskScore());
@@ -77,7 +126,9 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
         {/* Likelihood Selection */}
         <div>
           <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-6 h-6 bg-elec-yellow/20 rounded-lg flex items-center justify-center text-xs text-elec-yellow font-bold">L</span>
+            <span className="w-6 h-6 bg-elec-yellow/20 rounded-lg flex items-center justify-center text-xs text-elec-yellow font-bold">
+              L
+            </span>
             Likelihood of Occurrence
           </h4>
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -102,7 +153,9 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
         {/* Severity Selection */}
         <div>
           <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-6 h-6 bg-red-500/20 rounded-lg flex items-center justify-center text-xs text-red-400 font-bold">S</span>
+            <span className="w-6 h-6 bg-red-500/20 rounded-lg flex items-center justify-center text-xs text-red-400 font-bold">
+              S
+            </span>
             Severity of Consequences
           </h4>
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -134,7 +187,9 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
                 </div>
                 <span className="font-medium text-white">Risk Calculation</span>
               </div>
-              <Badge className={`${currentRisk.bg} ${currentRisk.text} border ${currentRisk.border}`}>
+              <Badge
+                className={`${currentRisk.bg} ${currentRisk.text} border ${currentRisk.border}`}
+              >
                 {currentRisk.level}
               </Badge>
             </div>

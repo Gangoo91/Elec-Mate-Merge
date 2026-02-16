@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, AlertCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface AgentOutput {
   agent: string;
@@ -17,24 +17,24 @@ interface AgentOutputTimelineProps {
 
 const getAgentEmoji = (agent: string) => {
   const emojis: Record<string, string> = {
-    'designer': '📐',
+    designer: '📐',
     'cost-engineer': '💷',
-    'installer': '🔧',
+    installer: '🔧',
     'health-safety': '⚠️',
-    'commissioning': '✅',
-    'project-manager': '📋'
+    commissioning: '✅',
+    'project-manager': '📋',
   };
   return emojis[agent] || '🤖';
 };
 
 const getAgentName = (agent: string) => {
   const names: Record<string, string> = {
-    'designer': 'Circuit Designer',
+    designer: 'Circuit Designer',
     'cost-engineer': 'Cost Engineer',
-    'installer': 'Installation Specialist',
+    installer: 'Installation Specialist',
     'health-safety': 'Health & Safety',
-    'commissioning': 'Testing & Commissioning',
-    'project-manager': 'Project Manager'
+    commissioning: 'Testing & Commissioning',
+    'project-manager': 'Project Manager',
   };
   return names[agent] || agent;
 };
@@ -51,12 +51,12 @@ export const AgentOutputTimeline = ({ outputs, currentAgent }: AgentOutputTimeli
           {outputs.length} {outputs.length === 1 ? 'specialist' : 'specialists'}
         </Badge>
       </div>
-      
+
       <div className="space-y-3">
         {outputs.map((output, index) => {
           const isCurrent = output.agent === currentAgent;
           const isCompleted = !output.hasError && !isCurrent;
-          
+
           return (
             <motion.div
               key={`${output.agent}-${output.timestamp}`}
@@ -64,15 +64,15 @@ export const AgentOutputTimeline = ({ outputs, currentAgent }: AgentOutputTimeli
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.05 }}
               className={cn(
-                "flex items-start gap-3 p-3 rounded-lg border transition-all",
-                isCompleted && "bg-green-500/5 border-green-500/20",
-                isCurrent && "bg-elec-yellow/5 border-elec-yellow/30",
-                output.hasError && "bg-red-500/5 border-red-500/20",
-                !isCompleted && !isCurrent && !output.hasError && "bg-muted/5 border-muted/20"
+                'flex items-start gap-3 p-3 rounded-lg border transition-all',
+                isCompleted && 'bg-green-500/5 border-green-500/20',
+                isCurrent && 'bg-elec-yellow/5 border-elec-yellow/30',
+                output.hasError && 'bg-red-500/5 border-red-500/20',
+                !isCompleted && !isCurrent && !output.hasError && 'bg-muted/5 border-muted/20'
               )}
             >
               <span className="text-xl shrink-0">{getAgentEmoji(output.agent)}</span>
-              
+
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-sm font-medium">{getAgentName(output.agent)}</span>
@@ -84,11 +84,11 @@ export const AgentOutputTimeline = ({ outputs, currentAgent }: AgentOutputTimeli
                     hour: '2-digit',
                     minute: '2-digit',
                     day: 'numeric',
-                    month: 'short'
+                    month: 'short',
                   })}
                 </p>
               </div>
-              
+
               {isCurrent && (
                 <div className="flex items-center gap-1.5 text-xs text-elec-yellow">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow animate-pulse" />

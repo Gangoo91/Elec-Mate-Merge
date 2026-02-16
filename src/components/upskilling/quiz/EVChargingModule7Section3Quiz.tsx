@@ -14,103 +14,106 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the maximum file size allowed for individual uploads on the OZEV portal?",
-    options: [
-      "5MB",
-      "10MB", 
-      "15MB",
-      "20MB"
-    ],
+    question: 'What is the maximum file size allowed for individual uploads on the OZEV portal?',
+    options: ['5MB', '10MB', '15MB', '20MB'],
     correctAnswer: 1,
-    explanation: "The OZEV portal has a maximum file size limit of 10MB for individual document uploads to ensure efficient processing."
+    explanation:
+      'The OZEV portal has a maximum file size limit of 10MB for individual document uploads to ensure efficient processing.',
   },
   {
     id: 2,
-    question: "Which document format is NOT typically accepted by the OZEV portal?",
-    options: ["PDF", "JPEG", "PNG", "DOC"],
+    question: 'Which document format is NOT typically accepted by the OZEV portal?',
+    options: ['PDF', 'JPEG', 'PNG', 'DOC'],
     correctAnswer: 3,
-    explanation: "OZEV portal typically accepts PDF, JPEG, and PNG formats. DOC files should be converted to PDF before upload."
+    explanation:
+      'OZEV portal typically accepts PDF, JPEG, and PNG formats. DOC files should be converted to PDF before upload.',
   },
   {
     id: 3,
-    question: "What is the recommended resolution for photographic evidence?",
+    question: 'What is the recommended resolution for photographic evidence?',
     options: [
-      "At least 1920x1080 pixels",
-      "At least 2592x1944 pixels", 
-      "At least 1024x768 pixels",
-      "Any resolution is acceptable"
+      'At least 1920x1080 pixels',
+      'At least 2592x1944 pixels',
+      'At least 1024x768 pixels',
+      'Any resolution is acceptable',
     ],
     correctAnswer: 1,
-    explanation: "OZEV recommends a minimum resolution of 2592x1944 pixels (5MP) for clear photographic evidence that can be properly assessed."
+    explanation:
+      'OZEV recommends a minimum resolution of 2592x1944 pixels (5MP) for clear photographic evidence that can be properly assessed.',
   },
   {
     id: 4,
-    question: "True or False: You can submit multiple grant claims simultaneously through the OZEV portal.",
-    options: ["True", "False"],
+    question:
+      'True or False: You can submit multiple grant claims simultaneously through the OZEV portal.',
+    options: ['True', 'False'],
     correctAnswer: 0,
-    explanation: "True. The OZEV portal allows installers to submit multiple grant claims simultaneously, improving efficiency for high-volume installers."
+    explanation:
+      'True. The OZEV portal allows installers to submit multiple grant claims simultaneously, improving efficiency for high-volume installers.',
   },
   {
     id: 5,
-    question: "What should you do if document upload fails repeatedly?",
+    question: 'What should you do if document upload fails repeatedly?',
     options: [
-      "Keep trying with the same file",
-      "Check file size, format, and try during off-peak hours",
-      "Contact customer immediately",
-      "Abandon the application"
+      'Keep trying with the same file',
+      'Check file size, format, and try during off-peak hours',
+      'Contact customer immediately',
+      'Abandon the application',
     ],
     correctAnswer: 1,
-    explanation: "If uploads fail, check file size (under 10MB), ensure correct format (PDF/JPEG/PNG), and try during off-peak hours when server load is lower."
+    explanation:
+      'If uploads fail, check file size (under 10MB), ensure correct format (PDF/JPEG/PNG), and try during off-peak hours when server load is lower.',
   },
   {
     id: 6,
-    question: "Which photograph angle provides the best evidence of charger installation?",
+    question: 'Which photograph angle provides the best evidence of charger installation?',
     options: [
-      "Front view only",
-      "Side view only",
-      "Multiple angles showing context and detail",
-      "Top-down view only"
+      'Front view only',
+      'Side view only',
+      'Multiple angles showing context and detail',
+      'Top-down view only',
     ],
     correctAnswer: 2,
-    explanation: "Multiple angles showing both the overall installation context and detailed views provide the most comprehensive evidence for OZEV assessment."
+    explanation:
+      'Multiple angles showing both the overall installation context and detailed views provide the most comprehensive evidence for OZEV assessment.',
   },
   {
     id: 7,
-    question: "What is the consequence of submitting incomplete documentation?",
+    question: 'What is the consequence of submitting incomplete documentation?',
     options: [
-      "Automatic approval",
-      "Application delay or rejection",
-      "Reduced grant amount",
-      "No consequences"
+      'Automatic approval',
+      'Application delay or rejection',
+      'Reduced grant amount',
+      'No consequences',
     ],
     correctAnswer: 1,
-    explanation: "Incomplete documentation leads to application delays or outright rejection, requiring resubmission and potentially delaying grant payments."
+    explanation:
+      'Incomplete documentation leads to application delays or outright rejection, requiring resubmission and potentially delaying grant payments.',
   },
   {
     id: 8,
-    question: "How long should installers retain copies of submitted documents?",
-    options: [
-      "1 year",
-      "3 years",
-      "5 years", 
-      "10 years"
-    ],
+    question: 'How long should installers retain copies of submitted documents?',
+    options: ['1 year', '3 years', '5 years', '10 years'],
     correctAnswer: 2,
-    explanation: "Installers should retain copies of all submitted documents for at least 5 years to support potential audits and compliance checks."
-  }
+    explanation:
+      'Installers should retain copies of all submitted documents for at least 5 years to support potential audits and compliance checks.',
+  },
 ];
 
 export const EVChargingModule7Section3Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(quizQuestions.length).fill(-1));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    new Array(quizQuestions.length).fill(-1)
+  );
   const [showResults, setShowResults] = useState(false);
-  const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(new Array(quizQuestions.length).fill(false));
+  const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
+    new Array(quizQuestions.length).fill(false)
+  );
 
   const handleAnswerSelect = (answerIndex: number) => {
     const newSelectedAnswers = [...selectedAnswers];
     newSelectedAnswers[currentQuestion] = answerIndex;
     setSelectedAnswers(newSelectedAnswers);
-    
+
     const newAnsweredQuestions = [...answeredQuestions];
     newAnsweredQuestions[currentQuestion] = true;
     setAnsweredQuestions(newAnsweredQuestions);
@@ -164,13 +167,13 @@ export const EVChargingModule7Section3Quiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score, quizQuestions.length)}`}>
               {score}/{quizQuestions.length}
             </div>
-            <div className="text-gray-300 text-lg">
-              {percentage}% Correct
-            </div>
+            <div className="text-gray-300 text-lg">{percentage}% Correct</div>
             <div className="mt-2 text-gray-400">
-              {percentage >= 80 ? 'Excellent work!' : 
-               percentage >= 60 ? 'Good job! Review the areas you missed.' :
-               'Keep studying! Review the content and try again.'}
+              {percentage >= 80
+                ? 'Excellent work!'
+                : percentage >= 60
+                  ? 'Good job! Review the areas you missed.'
+                  : 'Keep studying! Review the content and try again.'}
             </div>
           </div>
 
@@ -179,7 +182,10 @@ export const EVChargingModule7Section3Quiz = () => {
             {quizQuestions.map((question, index) => {
               const isCorrect = selectedAnswers[index] === question.correctAnswer;
               return (
-                <div key={question.id} className="bg-elec-dark/50 p-4 rounded-lg border border-gray-600">
+                <div
+                  key={question.id}
+                  className="bg-elec-dark/50 p-4 rounded-lg border border-gray-600"
+                >
                   <div className="flex items-start gap-2 mb-2">
                     {isCorrect ? (
                       <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -187,9 +193,14 @@ export const EVChargingModule7Section3Quiz = () => {
                       <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     )}
                     <div className="flex-1">
-                      <p className="text-foreground font-medium mb-2">Q{index + 1}: {question.question}</p>
+                      <p className="text-foreground font-medium mb-2">
+                        Q{index + 1}: {question.question}
+                      </p>
                       <p className="text-gray-300 text-sm mb-1">
-                        Your answer: {selectedAnswers[index] >= 0 ? question.options[selectedAnswers[index]] : 'Not answered'}
+                        Your answer:{' '}
+                        {selectedAnswers[index] >= 0
+                          ? question.options[selectedAnswers[index]]
+                          : 'Not answered'}
                       </p>
                       {!isCorrect && (
                         <p className="text-green-400 text-sm mb-2">
@@ -205,7 +216,7 @@ export const EVChargingModule7Section3Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestartQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             >
@@ -229,7 +240,7 @@ export const EVChargingModule7Section3Quiz = () => {
           Knowledge Check - Question {currentQuestion + 1} of {quizQuestions.length}
         </CardTitle>
         <div className="w-full bg-elec-dark rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
           ></div>
@@ -238,24 +249,26 @@ export const EVChargingModule7Section3Quiz = () => {
       <CardContent className="space-y-6">
         <div>
           <h3 className="text-foreground text-lg font-medium mb-4">{currentQ.question}</h3>
-          
+
           <div className="space-y-3">
             {currentQ.options.map((option, index) => {
-              let buttonClass = "w-full text-left p-4 rounded-lg border transition-all duration-200 ";
-              
+              let buttonClass =
+                'w-full text-left p-4 rounded-lg border transition-all duration-200 ';
+
               if (isAnswered) {
                 if (index === currentQ.correctAnswer) {
-                  buttonClass += "border-green-500 bg-green-500/20 text-green-300";
+                  buttonClass += 'border-green-500 bg-green-500/20 text-green-300';
                 } else if (index === selectedAnswer && index !== currentQ.correctAnswer) {
-                  buttonClass += "border-red-500 bg-red-500/20 text-red-300";
+                  buttonClass += 'border-red-500 bg-red-500/20 text-red-300';
                 } else {
-                  buttonClass += "border-gray-600 bg-elec-dark/50 text-gray-400";
+                  buttonClass += 'border-gray-600 bg-elec-dark/50 text-gray-400';
                 }
               } else {
                 if (selectedAnswer === index) {
-                  buttonClass += "border-elec-yellow bg-elec-yellow/20 text-foreground";
+                  buttonClass += 'border-elec-yellow bg-elec-yellow/20 text-foreground';
                 } else {
-                  buttonClass += "border-gray-600 bg-elec-dark/50 text-gray-300 hover:border-elec-yellow/50 hover:bg-elec-yellow/10";
+                  buttonClass +=
+                    'border-gray-600 bg-elec-dark/50 text-gray-300 hover:border-elec-yellow/50 hover:bg-elec-yellow/10';
                 }
               }
 

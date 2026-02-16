@@ -11,7 +11,6 @@ export const FaultCurrentSummary = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Key Learning Points */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
@@ -23,21 +22,21 @@ export const FaultCurrentSummary = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  Prospective fault current testing verifies that protective devices can safely interrupt 
-                  fault currents and have adequate breaking capacity.
+                  Prospective fault current testing verifies that protective devices can safely
+                  interrupt fault currents and have adequate breaking capacity.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  Ipsc (short-circuit current) is typically higher than Ipef (earth fault current) 
+                  Ipsc (short-circuit current) is typically higher than Ipef (earth fault current)
                   due to different fault path impedances.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  Modern supplies often have very low impedance, resulting in high fault currents 
+                  Modern supplies often have very low impedance, resulting in high fault currents
                   that require high breaking capacity protective devices.
                 </p>
               </div>
@@ -46,21 +45,21 @@ export const FaultCurrentSummary = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  Temperature effects must be considered as conductor resistance increases with 
+                  Temperature effects must be considered as conductor resistance increases with
                   temperature, reducing fault current levels.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  Testing should be performed at critical points including the origin, distribution 
+                  Testing should be performed at critical points including the origin, distribution
                   boards, and where protective device ratings change.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  Documentation must include test results, protective device compliance, and any 
+                  Documentation must include test results, protective device compliance, and any
                   remedial actions required for non-compliant installations.
                 </p>
               </div>
@@ -79,22 +78,22 @@ export const FaultCurrentSummary = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  <strong>Breaking Capacity Exceeded:</strong> If fault current exceeds protective device 
-                  breaking capacity, the device may fail explosively during fault clearance.
+                  <strong>Breaking Capacity Exceeded:</strong> If fault current exceeds protective
+                  device breaking capacity, the device may fail explosively during fault clearance.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  <strong>Live Testing Hazards:</strong> Fault current testing involves high energy levels 
-                  and must be performed with appropriate PPE and safety procedures.
+                  <strong>Live Testing Hazards:</strong> Fault current testing involves high energy
+                  levels and must be performed with appropriate PPE and safety procedures.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  <strong>Non-Compliance Actions:</strong> Installations with inadequate breaking capacity 
-                  cannot be certified and require immediate remedial action.
+                  <strong>Non-Compliance Actions:</strong> Installations with inadequate breaking
+                  capacity cannot be certified and require immediate remedial action.
                 </p>
               </div>
             </div>
@@ -135,18 +134,20 @@ export const FaultCurrentSummary = () => {
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="space-y-3">
               <p className="text-foreground text-sm">
-                <strong>Regulation 434.5.1:</strong> Every protective device shall have adequate breaking 
-                capacity for the maximum prospective fault current at the point where it is installed.
+                <strong>Regulation 434.5.1:</strong> Every protective device shall have adequate
+                breaking capacity for the maximum prospective fault current at the point where it is
+                installed.
               </p>
               <p className="text-foreground text-sm">
-                <strong>Regulation 434.5.2:</strong> The breaking capacity may be achieved by a combination 
-                of devices in series, provided that the combination can safely interrupt the fault current.
+                <strong>Regulation 434.5.2:</strong> The breaking capacity may be achieved by a
+                combination of devices in series, provided that the combination can safely interrupt
+                the fault current.
               </p>
               <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-3">
                 <p className="text-foreground text-sm">
-                  <strong>Note:</strong> These regulations ensure that electrical installations can safely 
-                  handle fault conditions without endangering persons or property. Compliance verification 
-                  through testing is mandatory for certification.
+                  <strong>Note:</strong> These regulations ensure that electrical installations can
+                  safely handle fault conditions without endangering persons or property. Compliance
+                  verification through testing is mandatory for certification.
                 </p>
               </div>
             </div>
@@ -183,14 +184,14 @@ export const FaultCurrentSummary = () => {
         {/* Section Conclusion */}
         <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4">
           <p className="text-foreground text-sm leading-relaxed">
-            <strong>Section Conclusion:</strong> Prospective fault current testing is a critical verification 
-            process that ensures electrical installations can safely handle fault conditions. By understanding 
-            the relationship between fault current and protective device capabilities, practitioners can ensure 
-            compliance with BS 7671 and maintain the highest safety standards. Regular testing, proper 
-            documentation, and immediate action on non-compliant results are essential for electrical safety.
+            <strong>Section Conclusion:</strong> Prospective fault current testing is a critical
+            verification process that ensures electrical installations can safely handle fault
+            conditions. By understanding the relationship between fault current and protective
+            device capabilities, practitioners can ensure compliance with BS 7671 and maintain the
+            highest safety standards. Regular testing, proper documentation, and immediate action on
+            non-compliant results are essential for electrical safety.
           </p>
         </div>
-
       </CardContent>
     </Card>
   );

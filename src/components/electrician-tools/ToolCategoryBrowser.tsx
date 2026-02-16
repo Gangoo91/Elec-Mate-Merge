@@ -1,101 +1,100 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Wrench, Zap, Eye, HardHat, Package, ArrowRight, TrendingUp, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Wrench, Zap, Eye, HardHat, Package, ArrowRight, TrendingUp, Star } from 'lucide-react';
 
 const ToolCategoryBrowser = () => {
   const categories = [
     {
-      id: "testing",
-      title: "Testing Equipment",
+      id: 'testing',
+      title: 'Testing Equipment',
       icon: Zap,
-      description: "Multifunction testers, insulation testers, socket checkers",
+      description: 'Multifunction testers, insulation testers, socket checkers',
       productCount: 156,
-      priceRange: "£25 - £1,500",
+      priceRange: '£25 - £1,500',
       trending: true,
-      topBrands: ["Fluke", "Megger", "Kewtech", "Martindale"],
+      topBrands: ['Fluke', 'Megger', 'Kewtech', 'Martindale'],
       popularItems: [
-        { name: "Fluke 1663 MFT", price: "£649.99", rating: 4.8 },
-        { name: "Kewtech KT65DL", price: "£299.99", rating: 4.6 },
-        { name: "Socket & See SOK32", price: "£29.99", rating: 4.5 }
-      ]
+        { name: 'Fluke 1663 MFT', price: '£649.99', rating: 4.8 },
+        { name: 'Kewtech KT65DL', price: '£299.99', rating: 4.6 },
+        { name: 'Socket & See SOK32', price: '£29.99', rating: 4.5 },
+      ],
     },
     {
-      id: "power-tools",
-      title: "Power Tools",
+      id: 'power-tools',
+      title: 'Power Tools',
       icon: Wrench,
-      description: "Drills, grinders, saws, and professional power equipment",
+      description: 'Drills, grinders, saws, and professional power equipment',
       productCount: 243,
-      priceRange: "£45 - £800",
+      priceRange: '£45 - £800',
       trending: false,
-      topBrands: ["DeWalt", "Makita", "Bosch", "Milwaukee"],
+      topBrands: ['DeWalt', 'Makita', 'Bosch', 'Milwaukee'],
       popularItems: [
-        { name: "DeWalt 18V Combi Kit", price: "£149.99", rating: 4.9 },
-        { name: "Makita Angle Grinder", price: "£89.99", rating: 4.7 },
-        { name: "Bosch SDS Drill", price: "£125.00", rating: 4.6 }
-      ]
+        { name: 'DeWalt 18V Combi Kit', price: '£149.99', rating: 4.9 },
+        { name: 'Makita Angle Grinder', price: '£89.99', rating: 4.7 },
+        { name: 'Bosch SDS Drill', price: '£125.00', rating: 4.6 },
+      ],
     },
     {
-      id: "hand-tools",
-      title: "Hand Tools",
+      id: 'hand-tools',
+      title: 'Hand Tools',
       icon: Package,
-      description: "Screwdrivers, pliers, cutters, and essential hand tools",
+      description: 'Screwdrivers, pliers, cutters, and essential hand tools',
       productCount: 189,
-      priceRange: "£8 - £120",
+      priceRange: '£8 - £120',
       trending: false,
-      topBrands: ["Wiha", "Knipex", "CK Tools", "Klein"],
+      topBrands: ['Wiha', 'Knipex', 'CK Tools', 'Klein'],
       popularItems: [
-        { name: "Wiha VDE Screwdriver Set", price: "£45.99", rating: 4.8 },
-        { name: "Knipex Side Cutters", price: "£32.50", rating: 4.9 },
-        { name: "CK Electrician's Pliers", price: "£28.99", rating: 4.5 }
-      ]
+        { name: 'Wiha VDE Screwdriver Set', price: '£45.99', rating: 4.8 },
+        { name: 'Knipex Side Cutters', price: '£32.50', rating: 4.9 },
+        { name: "CK Electrician's Pliers", price: '£28.99', rating: 4.5 },
+      ],
     },
     {
-      id: "ppe",
-      title: "PPE & Safety",
+      id: 'ppe',
+      title: 'PPE & Safety',
       icon: HardHat,
-      description: "Hard hats, safety glasses, gloves, and protective equipment",
+      description: 'Hard hats, safety glasses, gloves, and protective equipment',
       productCount: 95,
-      priceRange: "£5 - £85",
+      priceRange: '£5 - £85',
       trending: true,
-      topBrands: ["3M", "Honeywell", "JSP", "Uvex"],
+      topBrands: ['3M', 'Honeywell', 'JSP', 'Uvex'],
       popularItems: [
-        { name: "JSP Hard Hat with Lamp", price: "£24.99", rating: 4.7 },
-        { name: "3M Safety Glasses", price: "£12.50", rating: 4.6 },
-        { name: "Electrical Safety Gloves", price: "£18.99", rating: 4.4 }
-      ]
+        { name: 'JSP Hard Hat with Lamp', price: '£24.99', rating: 4.7 },
+        { name: '3M Safety Glasses', price: '£12.50', rating: 4.6 },
+        { name: 'Electrical Safety Gloves', price: '£18.99', rating: 4.4 },
+      ],
     },
     {
-      id: "inspection",
-      title: "Inspection Tools",
+      id: 'inspection',
+      title: 'Inspection Tools',
       icon: Eye,
-      description: "Torches, cameras, mirrors, and inspection equipment",
+      description: 'Torches, cameras, mirrors, and inspection equipment',
       productCount: 67,
-      priceRange: "£15 - £250",
+      priceRange: '£15 - £250',
       trending: false,
-      topBrands: ["Ledlenser", "Milwaukee", "DeWalt", "Fluke"],
+      topBrands: ['Ledlenser', 'Milwaukee', 'DeWalt', 'Fluke'],
       popularItems: [
-        { name: "Ledlenser Work Light", price: "£45.99", rating: 4.8 },
-        { name: "Inspection Mirror", price: "£15.50", rating: 4.3 },
-        { name: "USB Borescope Camera", price: "£35.00", rating: 4.2 }
-      ]
+        { name: 'Ledlenser Work Light', price: '£45.99', rating: 4.8 },
+        { name: 'Inspection Mirror', price: '£15.50', rating: 4.3 },
+        { name: 'USB Borescope Camera', price: '£35.00', rating: 4.2 },
+      ],
     },
     {
-      id: "accessories",
-      title: "Tool Accessories",
+      id: 'accessories',
+      title: 'Tool Accessories',
       icon: Package,
-      description: "Bits, blades, cases, and tool maintenance items",
+      description: 'Bits, blades, cases, and tool maintenance items',
       productCount: 312,
-      priceRange: "£3 - £150",
+      priceRange: '£3 - £150',
       trending: false,
-      topBrands: ["Wera", "Makita", "DeWalt", "Bosch"],
+      topBrands: ['Wera', 'Makita', 'DeWalt', 'Bosch'],
       popularItems: [
-        { name: "Wera Bit Set", price: "£25.99", rating: 4.7 },
-        { name: "Tool Case Organiser", price: "£45.00", rating: 4.5 },
-        { name: "Drill Bit Set", price: "£18.99", rating: 4.4 }
-      ]
-    }
+        { name: 'Wera Bit Set', price: '£25.99', rating: 4.7 },
+        { name: 'Tool Case Organiser', price: '£45.00', rating: 4.5 },
+        { name: 'Drill Bit Set', price: '£18.99', rating: 4.4 },
+      ],
+    },
   ];
 
   return (
@@ -109,7 +108,10 @@ const ToolCategoryBrowser = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category) => (
-          <Card key={category.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all">
+          <Card
+            key={category.id}
+            className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all"
+          >
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -118,7 +120,9 @@ const ToolCategoryBrowser = () => {
                   </div>
                   <div>
                     <CardTitle className="text-lg text-foreground">{category.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground">{category.productCount} products</p>
+                    <p className="text-sm text-muted-foreground">
+                      {category.productCount} products
+                    </p>
                   </div>
                 </div>
                 {category.trending && (
@@ -132,7 +136,7 @@ const ToolCategoryBrowser = () => {
 
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">{category.description}</p>
-              
+
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Price Range:</span>
                 <span className="text-elec-yellow font-medium">{category.priceRange}</span>

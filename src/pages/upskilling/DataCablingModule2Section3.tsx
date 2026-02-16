@@ -1,74 +1,84 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Performance Ratings and Bandwidth Limits | Data Cabling Module 2.3";
-const DESCRIPTION = "Learn cable performance specifications, bandwidth limitations, and testing requirements for structured cabling per ISO/IEC standards.";
+const TITLE = 'Performance Ratings and Bandwidth Limits | Data Cabling Module 2.3';
+const DESCRIPTION =
+  'Learn cable performance specifications, bandwidth limitations, and testing requirements for structured cabling per ISO/IEC standards.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m2s3-check1",
-    question: "What is the maximum bandwidth for Category 6A cable?",
-    options: ["100 MHz", "250 MHz", "500 MHz", "600 MHz"],
+    id: 'datacabling-m2s3-check1',
+    question: 'What is the maximum bandwidth for Category 6A cable?',
+    options: ['100 MHz', '250 MHz', '500 MHz', '600 MHz'],
     correctIndex: 2,
-    explanation: "Category 6A cable supports frequencies up to 500 MHz, enabling 10GBASE-T transmission over the full 100-metre channel length."
+    explanation:
+      'Category 6A cable supports frequencies up to 500 MHz, enabling 10GBASE-T transmission over the full 100-metre channel length.',
   },
   {
-    id: "datacabling-m2s3-check2",
-    question: "What does NEXT stand for in cable testing?",
+    id: 'datacabling-m2s3-check2',
+    question: 'What does NEXT stand for in cable testing?',
     options: [
-      "Network Extension Test",
-      "Near End Cross Talk",
-      "Nominal Extra Transmission",
-      "Network Error X-Talk"
+      'Network Extension Test',
+      'Near End Cross Talk',
+      'Nominal Extra Transmission',
+      'Network Error X-Talk',
     ],
     correctIndex: 1,
-    explanation: "NEXT (Near End Cross Talk) measures signal interference between adjacent pairs at the transmitting end of the cable. Higher NEXT values indicate better performance."
+    explanation:
+      'NEXT (Near End Cross Talk) measures signal interference between adjacent pairs at the transmitting end of the cable. Higher NEXT values indicate better performance.',
   },
   {
-    id: "datacabling-m2s3-check3",
-    question: "Which Class rating corresponds to Category 6A cable?",
-    options: ["Class D", "Class E", "Class EA", "Class F"],
+    id: 'datacabling-m2s3-check3',
+    question: 'Which Class rating corresponds to Category 6A cable?',
+    options: ['Class D', 'Class E', 'Class EA', 'Class F'],
     correctIndex: 2,
-    explanation: "Category 6A cable achieves Class EA performance rating under ISO/IEC standards, supporting frequencies up to 500 MHz."
-  }
+    explanation:
+      'Category 6A cable achieves Class EA performance rating under ISO/IEC standards, supporting frequencies up to 500 MHz.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between Category and Class ratings?",
-    answer: "Category ratings (TIA/EIA) apply to components like cables and connectors, while Class ratings (ISO/IEC) apply to the complete installed channel. Class D corresponds to Cat5e, Class E to Cat6, and Class EA to Cat6A."
+    answer:
+      'Category ratings (TIA/EIA) apply to components like cables and connectors, while Class ratings (ISO/IEC) apply to the complete installed channel. Class D corresponds to Cat5e, Class E to Cat6, and Class EA to Cat6A.',
   },
   {
-    question: "Why do cables perform worse at higher frequencies?",
-    answer: "Signal attenuation (insertion loss) increases with frequency. Higher frequencies also experience greater crosstalk between pairs and more susceptibility to return loss from impedance mismatches. This is why higher category cables need stricter specifications."
+    question: 'Why do cables perform worse at higher frequencies?',
+    answer:
+      'Signal attenuation (insertion loss) increases with frequency. Higher frequencies also experience greater crosstalk between pairs and more susceptibility to return loss from impedance mismatches. This is why higher category cables need stricter specifications.',
   },
   {
-    question: "What is alien crosstalk and why does it matter?",
-    answer: "Alien crosstalk (ANEXT) is interference between adjacent cables in a bundle, not between pairs within the same cable. It becomes the limiting factor for 10GBASE-T transmission and is why Cat6A specifies ANEXT while Cat6 does not."
+    question: 'What is alien crosstalk and why does it matter?',
+    answer:
+      'Alien crosstalk (ANEXT) is interference between adjacent cables in a bundle, not between pairs within the same cable. It becomes the limiting factor for 10GBASE-T transmission and is why Cat6A specifies ANEXT while Cat6 does not.',
   },
   {
-    question: "How can I verify my installation meets category requirements?",
-    answer: "Use a Level III cable certifier that tests all performance parameters to the relevant category standard. The tester should be calibrated and test results should show pass/fail for each parameter with headroom measurements."
-  }
+    question: 'How can I verify my installation meets category requirements?',
+    answer:
+      'Use a Level III cable certifier that tests all performance parameters to the relevant category standard. The tester should be calibrated and test results should show pass/fail for each parameter with headroom measurements.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A cable test shows the installed link meets Cat6 parameters but fails Cat6A alien crosstalk requirements. What is the most likely cause?",
-  options: [
-    "Faulty cable",
-    "Poor termination quality",
-    "Cables bundled too tightly without proper separation",
-    "Wrong test equipment"
-  ],
-  correctAnswer: 2,
-  explanation: "Alien crosstalk occurs between cables, not within them. Tightly bundled cables without adequate separation or ANEXT-rated installation practices will fail Cat6A alien crosstalk testing even with good Cat6 performance."
-  }
+    question:
+      'A cable test shows the installed link meets Cat6 parameters but fails Cat6A alien crosstalk requirements. What is the most likely cause?',
+    options: [
+      'Faulty cable',
+      'Poor termination quality',
+      'Cables bundled too tightly without proper separation',
+      'Wrong test equipment',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Alien crosstalk occurs between cables, not within them. Tightly bundled cables without adequate separation or ANEXT-rated installation practices will fail Cat6A alien crosstalk testing even with good Cat6 performance.',
+  },
 ];
 
 const DataCablingModule2Section3 = () => {
@@ -103,9 +113,7 @@ const DataCablingModule2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Performance Ratings and Bandwidth Limits
           </h1>
-          <p className="text-white/80">
-            Cable specifications and testing requirements
-          </p>
+          <p className="text-white/80">Cable specifications and testing requirements</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -113,16 +121,26 @@ const DataCablingModule2Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Bandwidth:</strong> Maximum frequency cable can carry</li>
-              <li><strong>Insertion Loss:</strong> Signal attenuation through cable</li>
-              <li><strong>Crosstalk:</strong> Interference between wire pairs</li>
+              <li>
+                <strong>Bandwidth:</strong> Maximum frequency cable can carry
+              </li>
+              <li>
+                <strong>Insertion Loss:</strong> Signal attenuation through cable
+              </li>
+              <li>
+                <strong>Crosstalk:</strong> Interference between wire pairs
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Test results showing dB margins</li>
-              <li><strong>Use:</strong> Verify all parameters pass category spec</li>
+              <li>
+                <strong>Spot:</strong> Test results showing dB margins
+              </li>
+              <li>
+                <strong>Use:</strong> Verify all parameters pass category spec
+              </li>
             </ul>
           </div>
         </div>
@@ -132,12 +150,12 @@ const DataCablingModule2Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand key performance parameters",
-              "Interpret Category and Class standards",
-              "Apply bandwidth limitations to design",
-              "Recognise factors affecting performance",
-              "Read cable test results",
-              "Identify performance degradation causes"
+              'Understand key performance parameters',
+              'Interpret Category and Class standards',
+              'Apply bandwidth limitations to design',
+              'Recognise factors affecting performance',
+              'Read cable test results',
+              'Identify performance degradation causes',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -157,27 +175,45 @@ const DataCablingModule2Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Cable performance is measured through several parameters that together determine
-              the quality and speed of data transmission possible over the link.
+              Cable performance is measured through several parameters that together determine the
+              quality and speed of data transmission possible over the link.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Signal Quality</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Insertion Loss:</strong> Signal attenuation (dB)</li>
-                  <li><strong>Return Loss:</strong> Reflected signal (dB)</li>
-                  <li><strong>Delay:</strong> Propagation time (ns)</li>
-                  <li><strong>Delay Skew:</strong> Timing between pairs</li>
+                  <li>
+                    <strong>Insertion Loss:</strong> Signal attenuation (dB)
+                  </li>
+                  <li>
+                    <strong>Return Loss:</strong> Reflected signal (dB)
+                  </li>
+                  <li>
+                    <strong>Delay:</strong> Propagation time (ns)
+                  </li>
+                  <li>
+                    <strong>Delay Skew:</strong> Timing between pairs
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crosstalk Measurements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Crosstalk Measurements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>NEXT:</strong> Near End Cross Talk</li>
-                  <li><strong>FEXT:</strong> Far End Cross Talk</li>
-                  <li><strong>PSNEXT:</strong> Power Sum NEXT</li>
-                  <li><strong>ANEXT:</strong> Alien crosstalk</li>
+                  <li>
+                    <strong>NEXT:</strong> Near End Cross Talk
+                  </li>
+                  <li>
+                    <strong>FEXT:</strong> Far End Cross Talk
+                  </li>
+                  <li>
+                    <strong>PSNEXT:</strong> Power Sum NEXT
+                  </li>
+                  <li>
+                    <strong>ANEXT:</strong> Alien crosstalk
+                  </li>
                 </ul>
               </div>
             </div>
@@ -209,29 +245,53 @@ const DataCablingModule2Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Two parallel systems define cable performance: TIA/EIA Categories for components
-              and ISO/IEC Classes for installed channels. Understanding both is essential.
+              Two parallel systems define cable performance: TIA/EIA Categories for components and
+              ISO/IEC Classes for installed channels. Understanding both is essential.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">TIA/EIA Categories (Component Ratings):</p>
+              <p className="text-sm font-medium text-white mb-2">
+                TIA/EIA Categories (Component Ratings):
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Category 5e:</strong> 100 MHz bandwidth, Gigabit Ethernet</li>
-                <li><strong>Category 6:</strong> 250 MHz bandwidth, 10G to 55m</li>
-                <li><strong>Category 6A:</strong> 500 MHz bandwidth, 10G to 100m</li>
-                <li><strong>Category 7:</strong> 600 MHz bandwidth, fully shielded</li>
-                <li><strong>Category 8:</strong> 2000 MHz, data centre short runs</li>
+                <li>
+                  <strong>Category 5e:</strong> 100 MHz bandwidth, Gigabit Ethernet
+                </li>
+                <li>
+                  <strong>Category 6:</strong> 250 MHz bandwidth, 10G to 55m
+                </li>
+                <li>
+                  <strong>Category 6A:</strong> 500 MHz bandwidth, 10G to 100m
+                </li>
+                <li>
+                  <strong>Category 7:</strong> 600 MHz bandwidth, fully shielded
+                </li>
+                <li>
+                  <strong>Category 8:</strong> 2000 MHz, data centre short runs
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">ISO/IEC Classes (Channel Ratings):</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                ISO/IEC Classes (Channel Ratings):
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Class D:</strong> Equivalent to Cat5e (100 MHz)</li>
-                <li><strong>Class E:</strong> Equivalent to Cat6 (250 MHz)</li>
-                <li><strong>Class EA:</strong> Equivalent to Cat6A (500 MHz)</li>
-                <li><strong>Class F:</strong> Equivalent to Cat7 (600 MHz)</li>
-                <li><strong>Class FA:</strong> Extended Class F (1000 MHz)</li>
+                <li>
+                  <strong>Class D:</strong> Equivalent to Cat5e (100 MHz)
+                </li>
+                <li>
+                  <strong>Class E:</strong> Equivalent to Cat6 (250 MHz)
+                </li>
+                <li>
+                  <strong>Class EA:</strong> Equivalent to Cat6A (500 MHz)
+                </li>
+                <li>
+                  <strong>Class F:</strong> Equivalent to Cat7 (600 MHz)
+                </li>
+                <li>
+                  <strong>Class FA:</strong> Extended Class F (1000 MHz)
+                </li>
               </ul>
             </div>
           </div>
@@ -273,12 +333,22 @@ const DataCablingModule2Section3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Degradation Factors:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Performance Degradation Factors:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Bundle size:</strong> Increases alien crosstalk</li>
-                <li><strong>Temperature:</strong> Higher temps increase insertion loss</li>
-                <li><strong>Termination quality:</strong> Poor terminations add loss</li>
-                <li><strong>Bend radius:</strong> Sharp bends affect performance</li>
+                <li>
+                  <strong>Bundle size:</strong> Increases alien crosstalk
+                </li>
+                <li>
+                  <strong>Temperature:</strong> Higher temps increase insertion loss
+                </li>
+                <li>
+                  <strong>Termination quality:</strong> Poor terminations add loss
+                </li>
+                <li>
+                  <strong>Bend radius:</strong> Sharp bends affect performance
+                </li>
               </ul>
             </div>
           </div>
@@ -291,7 +361,9 @@ const DataCablingModule2Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Best Practices</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Testing Best Practices
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Test to one category higher than installed cable</li>
                 <li>Perform tests at both ends of permanent links</li>
@@ -303,10 +375,18 @@ const DataCablingModule2Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Assuming compliance:</strong> — Always certify installed links</li>
-                <li><strong>Ignoring headroom:</strong> — Low margins indicate future problems</li>
-                <li><strong>Wrong test limits:</strong> — Use correct category for testing</li>
-                <li><strong>Incomplete testing:</strong> — Test all parameters, not just wiremap</li>
+                <li>
+                  <strong>Assuming compliance:</strong> — Always certify installed links
+                </li>
+                <li>
+                  <strong>Ignoring headroom:</strong> — Low margins indicate future problems
+                </li>
+                <li>
+                  <strong>Wrong test limits:</strong> — Use correct category for testing
+                </li>
+                <li>
+                  <strong>Incomplete testing:</strong> — Test all parameters, not just wiremap
+                </li>
               </ul>
             </div>
           </div>
@@ -350,10 +430,7 @@ const DataCablingModule2Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

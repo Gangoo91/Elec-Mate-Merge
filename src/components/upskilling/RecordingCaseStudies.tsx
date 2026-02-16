@@ -1,41 +1,52 @@
-
 import { FileText, AlertTriangle, CheckCircle, XCircle, Info } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const RecordingCaseStudies = () => {
   const caseStudies = [
     {
-      title: "Domestic EICR - Proper Documentation Saves Lives",
-      situation: "Inspector finds missing RCD protection on bathroom lighting circuit during routine EICR. Correctly codes as C1 and advises immediate isolation.",
-      documentation: "Clear C1 coding with reference to Regulation 411.3.3. Detailed description: 'Bathroom lighting circuit lacks RCD protection - immediate danger present'",
-      outcome: "Client immediately arranges remedial work. Six months later, prevents serious injury when light fitting develops fault.",
-      lesson: "Accurate, urgent coding and clear communication prevent accidents",
-      status: "success"
+      title: 'Domestic EICR - Proper Documentation Saves Lives',
+      situation:
+        'Inspector finds missing RCD protection on bathroom lighting circuit during routine EICR. Correctly codes as C1 and advises immediate isolation.',
+      documentation:
+        "Clear C1 coding with reference to Regulation 411.3.3. Detailed description: 'Bathroom lighting circuit lacks RCD protection - immediate danger present'",
+      outcome:
+        'Client immediately arranges remedial work. Six months later, prevents serious injury when light fitting develops fault.',
+      lesson: 'Accurate, urgent coding and clear communication prevent accidents',
+      status: 'success',
     },
     {
-      title: "Commercial Installation - Vague Documentation Causes Problems",
-      situation: "Inspector notices 'some issues' with bonding but records only 'bonding appears questionable' without specific details or codes.",
-      documentation: "Vague description without regulation references or specific locations. No clear action required.",
-      outcome: "Later electrical fault causes equipment damage. Insurance claim disputed due to unclear documentation and lack of specific non-compliance records.",
-      lesson: "Vague documentation provides no protection and creates liability",
-      status: "failure"
+      title: 'Commercial Installation - Vague Documentation Causes Problems',
+      situation:
+        "Inspector notices 'some issues' with bonding but records only 'bonding appears questionable' without specific details or codes.",
+      documentation:
+        'Vague description without regulation references or specific locations. No clear action required.',
+      outcome:
+        'Later electrical fault causes equipment damage. Insurance claim disputed due to unclear documentation and lack of specific non-compliance records.',
+      lesson: 'Vague documentation provides no protection and creates liability',
+      status: 'failure',
     },
     {
-      title: "Industrial Unit - Handling Access Limitations Professionally",
-      situation: "During EICR, key distribution boards are inaccessible due to ongoing production. Inspector cannot complete full visual inspection.",
-      documentation: "Clearly records limitation: 'DB-3 and DB-7 not accessible due to production constraints. Visual inspection incomplete. Recommend re-inspection when accessible.'",
-      outcome: "Client accepts limitation, schedules follow-up inspection during shutdown. Professional approach maintains relationship and legal protection.",
-      lesson: "Honest limitation recording protects all parties",
-      status: "professional"
+      title: 'Industrial Unit - Handling Access Limitations Professionally',
+      situation:
+        'During EICR, key distribution boards are inaccessible due to ongoing production. Inspector cannot complete full visual inspection.',
+      documentation:
+        "Clearly records limitation: 'DB-3 and DB-7 not accessible due to production constraints. Visual inspection incomplete. Recommend re-inspection when accessible.'",
+      outcome:
+        'Client accepts limitation, schedules follow-up inspection during shutdown. Professional approach maintains relationship and legal protection.',
+      lesson: 'Honest limitation recording protects all parties',
+      status: 'professional',
     },
     {
-      title: "Residential Property - Missing Documentation Creates Confusion",
-      situation: "Inspector completes visual inspection but fails to record several C2 observations on certificate. Only mentions verbally to client.",
-      documentation: "Certificate shows 'satisfactory' for items that were actually non-compliant. Verbal advice not documented.",
-      outcome: "Client sells property believing all is compliant. New owner discovers issues, leading to legal dispute over inspection quality.",
+      title: 'Residential Property - Missing Documentation Creates Confusion',
+      situation:
+        'Inspector completes visual inspection but fails to record several C2 observations on certificate. Only mentions verbally to client.',
+      documentation:
+        "Certificate shows 'satisfactory' for items that were actually non-compliant. Verbal advice not documented.",
+      outcome:
+        'Client sells property believing all is compliant. New owner discovers issues, leading to legal dispute over inspection quality.',
       lesson: "If it's not written down, it didn't happen legally",
-      status: "failure"
-    }
+      status: 'failure',
+    },
   ];
 
   const getStatusIcon = (status: string) => {
@@ -74,8 +85,9 @@ export const RecordingCaseStudies = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground leading-relaxed">
-          These real-world examples demonstrate the critical importance of proper documentation in visual inspection work, 
-          showing both the consequences of poor practice and the benefits of professional approach.
+          These real-world examples demonstrate the critical importance of proper documentation in
+          visual inspection work, showing both the consequences of poor practice and the benefits of
+          professional approach.
         </p>
 
         <div className="space-y-6">
@@ -96,7 +108,7 @@ export const RecordingCaseStudies = () => {
                     {study.documentation}
                   </p>
                 </div>
-                
+
                 <div>
                   <h4 className="text-foreground font-medium mb-2">Outcome</h4>
                   <p className="text-foreground text-sm leading-relaxed">{study.outcome}</p>

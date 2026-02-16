@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { SectionData, Subsection } from "@/data/courseTypes";
+import type { SectionData, Subsection } from '@/data/courseTypes';
 
 interface UseSectionContentProps {
   courseSlug?: string;
@@ -19,7 +18,7 @@ interface UseSectionContentResult {
 export function useSectionContent({
   courseSlug,
   unitSlug,
-  sectionId
+  sectionId,
 }: UseSectionContentProps): UseSectionContentResult {
   const navigate = useNavigate();
   const [sectionData, setSectionData] = useState<SectionData | null>(null);
@@ -40,7 +39,9 @@ export function useSectionContent({
 
   const navigateToSubsection = (subsection: Subsection) => {
     if (courseSlug && unitSlug && sectionId) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsection.id}`);
+      navigate(
+        `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsection.id}`
+      );
     }
   };
 
@@ -48,6 +49,6 @@ export function useSectionContent({
     sectionData,
     loading,
     handleBackClick,
-    navigateToSubsection
+    navigateToSubsection,
   };
 }

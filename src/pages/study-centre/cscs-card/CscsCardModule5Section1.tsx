@@ -126,12 +126,7 @@ const quizQuestions = [
     id: 4,
     question:
       'How close to a known underground service must you switch from mechanical to hand digging?',
-    options: [
-      'Within 2 metres',
-      'Within 1 metre',
-      'Within 500mm',
-      'Within 100mm',
-    ],
+    options: ['Within 2 metres', 'Within 1 metre', 'Within 500mm', 'Within 100mm'],
     correctAnswer: 2,
     explanation:
       'HSG47 guidance states that mechanical excavation must stop and hand digging must be used within 500mm of a known underground service. This distance applies horizontally and vertically. Insulated hand tools should be used where electricity cables may be present, and operatives must be trained in safe digging practices.',
@@ -139,12 +134,7 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What colour are gas main covers and markings in the UK?',
-    options: [
-      'Blue',
-      'Yellow',
-      'Green',
-      'Red',
-    ],
+    options: ['Blue', 'Yellow', 'Green', 'Red'],
     correctAnswer: 1,
     explanation:
       'In the UK, gas services are identified by yellow covers and markings. The standard colour coding for underground services is: red for electricity, blue for water, yellow for gas, green for telecoms/data, and brown or grey for sewers/drainage. Knowing these colours helps you identify which services may be present in an excavation area.',
@@ -166,12 +156,7 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the minimum safe clearance distance from 275kV or 400kV overhead power lines?',
-    options: [
-      '1 metre',
-      '3 metres',
-      '6 metres',
-      '10 metres',
-    ],
+    options: ['1 metre', '3 metres', '6 metres', '10 metres'],
     correctAnswer: 2,
     explanation:
       'For 275kV and 400kV overhead power lines, a minimum clearance of 6 metres must be maintained from all parts of plant, equipment, materials, and loads at maximum reach. For lines up to 132kV, the minimum clearance is 3 metres. Goal posts, barriers, and banksmen should be used where tall plant operates near overhead lines.',
@@ -225,15 +210,17 @@ export default function CscsCardModule5Section1() {
             <Construction className="h-7 w-7 text-green-400" />
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 mb-3 mx-auto">
-            <span className="text-green-400 text-xs font-semibold">MODULE 5 &middot; SECTION 1</span>
+            <span className="text-green-400 text-xs font-semibold">
+              MODULE 5 &middot; SECTION 1
+            </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Excavations &amp; Underground Services
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
-            Excavation hazards and support methods, underground service detection using CAT and Genny,
-            safe digging practices, overhead power lines, inspection requirements, and emergency
-            procedures
+            Excavation hazards and support methods, underground service detection using CAT and
+            Genny, safe digging practices, overhead power lines, inspection requirements, and
+            emergency procedures
           </p>
         </header>
 
@@ -306,8 +293,8 @@ export default function CscsCardModule5Section1() {
                 Excavation work is one of the most dangerous activities on any construction site.
                 Every year in the UK, workers are killed or seriously injured in excavation-related
                 incidents. The Health and Safety Executive publishes guidance in{' '}
-                <strong>HSG47 &mdash; Avoiding danger from underground services</strong>, which
-                sets out the standards for safe excavation work.
+                <strong>HSG47 &mdash; Avoiding danger from underground services</strong>, which sets
+                out the standards for safe excavation work.
               </p>
 
               <p>
@@ -317,9 +304,7 @@ export default function CscsCardModule5Section1() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Principal Excavation Hazards
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Principal Excavation Hazards</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -375,9 +360,9 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Vehicles at the edge</strong> &mdash; plant
-                      and vehicles operating near excavation edges can cause the sides to collapse
-                      due to vibration and surcharge loading, or may topple into the excavation
+                      <strong className="text-white">Vehicles at the edge</strong> &mdash; plant and
+                      vehicles operating near excavation edges can cause the sides to collapse due
+                      to vibration and surcharge loading, or may topple into the excavation
                     </span>
                   </li>
                 </ul>
@@ -386,9 +371,7 @@ export default function CscsCardModule5Section1() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    HSG47 Key Principle
-                  </p>
+                  <p className="text-sm font-medium text-red-400">HSG47 Key Principle</p>
                 </div>
                 <p className="text-sm text-white/80">
                   <strong className="text-white">
@@ -405,9 +388,7 @@ export default function CscsCardModule5Section1() {
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
-                  <p className="text-sm font-medium text-amber-400">
-                    Spoil Heap Distance
-                  </p>
+                  <p className="text-sm font-medium text-amber-400">Spoil Heap Distance</p>
                 </div>
                 <p className="text-sm text-white/80">
                   Excavated material (spoil) must be stored well away from the edge of the
@@ -471,19 +452,19 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Dig trial holes</strong> &mdash; hand-dug
-                      trial holes (also called trial pits or slit trenches) are used to confirm the
-                      exact location and depth of services before the main excavation begins. Trial
-                      holes should be dug using insulated hand tools
+                      <strong className="text-white">Dig trial holes</strong> &mdash; hand-dug trial
+                      holes (also called trial pits or slit trenches) are used to confirm the exact
+                      location and depth of services before the main excavation begins. Trial holes
+                      should be dug using insulated hand tools
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Visual survey of the area</strong> &mdash;
-                      look for evidence of underground services: marker posts, valve covers,
-                      manholes, hydrants, junction boxes, overhead lines (which must go underground
-                      at some point), and recently disturbed ground
+                      <strong className="text-white">Visual survey of the area</strong> &mdash; look
+                      for evidence of underground services: marker posts, valve covers, manholes,
+                      hydrants, junction boxes, overhead lines (which must go underground at some
+                      point), and recently disturbed ground
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -526,9 +507,9 @@ export default function CscsCardModule5Section1() {
                       <p className="text-xs font-medium text-green-400 mb-1">CAT Scan (3 Modes)</p>
                       <p className="text-[11px] text-white/60 leading-relaxed">
                         Sweep the area using <strong className="text-white/80">Power</strong> mode
-                        (detects live cables), <strong className="text-white/80">Radio</strong>{' '}
-                        mode (metallic pipes), and{' '}
-                        <strong className="text-white/80">Genny</strong> mode (applied signal).
+                        (detects live cables), <strong className="text-white/80">Radio</strong> mode
+                        (metallic pipes), and <strong className="text-white/80">Genny</strong> mode
+                        (applied signal).
                       </p>
                     </div>
                     {/* Step 3 */}
@@ -549,8 +530,8 @@ export default function CscsCardModule5Section1() {
                       </div>
                       <p className="text-xs font-medium text-green-400 mb-1">Mark &amp; Protect</p>
                       <p className="text-[11px] text-white/60 leading-relaxed">
-                        Mark all confirmed service locations clearly on the ground. Establish
-                        500mm hand-dig exclusion zones around each service.
+                        Mark all confirmed service locations clearly on the ground. Establish 500mm
+                        hand-dig exclusion zones around each service.
                       </p>
                     </div>
                   </div>
@@ -559,9 +540,9 @@ export default function CscsCardModule5Section1() {
                     <p className="text-xs text-white/80">
                       <strong className="text-amber-400">Important:</strong> The CAT and Genny must
                       be operated by a trained and competent person. The equipment must be checked
-                      and calibrated before each use. A CAT scan alone is not sufficient &mdash;
-                      it must be used alongside utility plans and trial holes. Not all services will
-                      be detected by a CAT (e.g. plastic water pipes without a tracer wire).
+                      and calibrated before each use. A CAT scan alone is not sufficient &mdash; it
+                      must be used alongside utility plans and trial holes. Not all services will be
+                      detected by a CAT (e.g. plastic water pipes without a tracer wire).
                     </p>
                   </div>
                 </div>
@@ -572,10 +553,10 @@ export default function CscsCardModule5Section1() {
                   <strong className="text-green-400">Permit to Dig:</strong> Many sites require a{' '}
                   <strong>Permit to Dig</strong> before any excavation work can commence. This
                   permit confirms that service plans have been obtained, a CAT and Genny survey has
-                  been carried out, trial holes have been dug where necessary, the method of
-                  support has been determined, and the work area has been marked out. The permit
-                  must be signed by a competent person and be available on site throughout the
-                  excavation work.
+                  been carried out, trial holes have been dug where necessary, the method of support
+                  has been determined, and the work area has been marked out. The permit must be
+                  signed by a competent person and be available on site throughout the excavation
+                  work.
                 </p>
               </div>
             </div>
@@ -594,9 +575,9 @@ export default function CscsCardModule5Section1() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Excavation sides must be prevented from collapsing. The method of support selected
-                depends on the depth of the excavation, the type of soil, the water table level,
-                the expected duration of the work, and the available space on site. A competent
-                person must determine the appropriate method.
+                depends on the depth of the excavation, the type of soil, the water table level, the
+                expected duration of the work, and the available space on site. A competent person
+                must determine the appropriate method.
               </p>
 
               {/* Excavation Support Methods Diagram */}
@@ -614,7 +595,9 @@ export default function CscsCardModule5Section1() {
                         <span className="text-emerald-400 text-xs font-bold">A</span>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-emerald-400">Battering (Sloping Sides)</p>
+                        <p className="text-sm font-medium text-emerald-400">
+                          Battering (Sloping Sides)
+                        </p>
                         <p className="text-xs text-white/50">Angle depends on soil type</p>
                       </div>
                     </div>
@@ -623,7 +606,9 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">Ground level</p>
+                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                            Ground level
+                          </p>
                           {/* Left slope */}
                           <div
                             className="absolute left-4 top-4 w-16 h-24 bg-emerald-400/10 border-l-2 border-b-2 border-emerald-400/40"
@@ -666,7 +651,9 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">Ground level</p>
+                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                            Ground level
+                          </p>
                           {/* Left steps */}
                           <div className="absolute left-4 top-4 w-6 h-8 bg-cyan-400/10 border-l-2 border-b-2 border-cyan-400/40" />
                           <div className="absolute left-10 top-12 w-6 h-8 bg-cyan-400/10 border-l-2 border-b-2 border-cyan-400/40" />
@@ -686,8 +673,8 @@ export default function CscsCardModule5Section1() {
                     </div>
                     <p className="text-xs text-white/60 leading-relaxed">
                       A series of horizontal steps are cut into the sides. Each step reduces the
-                      unsupported face height, making collapse less likely. Also requires
-                      additional space beyond the excavation footprint.
+                      unsupported face height, making collapse less likely. Also requires additional
+                      space beyond the excavation footprint.
                     </p>
                   </div>
 
@@ -699,9 +686,7 @@ export default function CscsCardModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-amber-400">Shoring</p>
-                        <p className="text-xs text-white/50">
-                          Props, trench sheets, or timber
-                        </p>
+                        <p className="text-xs text-white/50">Props, trench sheets, or timber</p>
                       </div>
                     </div>
                     <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-3">
@@ -709,7 +694,9 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">Ground level</p>
+                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                            Ground level
+                          </p>
                           {/* Left wall — trench sheet */}
                           <div className="absolute left-12 top-4 w-1.5 h-24 bg-amber-400/40 rounded-sm" />
                           {/* Right wall — trench sheet */}
@@ -729,8 +716,8 @@ export default function CscsCardModule5Section1() {
                     </div>
                     <p className="text-xs text-white/60 leading-relaxed">
                       Trench sheets (steel or aluminium panels) are driven into the ground and held
-                      apart by hydraulic props. Timber shoring uses walings and struts. Suitable
-                      for deeper trenches where space is limited.
+                      apart by hydraulic props. Timber shoring uses walings and struts. Suitable for
+                      deeper trenches where space is limited.
                     </p>
                   </div>
 
@@ -750,7 +737,9 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">Ground level</p>
+                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                            Ground level
+                          </p>
                           {/* Box outline */}
                           <div className="absolute left-10 top-4 right-10 bottom-4 border-2 border-violet-400/50 rounded-sm bg-violet-400/5" />
                           {/* Spreader bars */}
@@ -798,9 +787,9 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Water table</strong> &mdash; a high water
-                      table weakens soil and increases the risk of collapse. Dewatering may be
-                      needed before excavation can proceed safely
+                      <strong className="text-white">Water table</strong> &mdash; a high water table
+                      weakens soil and increases the risk of collapse. Dewatering may be needed
+                      before excavation can proceed safely
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -842,9 +831,7 @@ export default function CscsCardModule5Section1() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Types of Underground Services
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Types of Underground Services</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -888,9 +875,9 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Data cables</strong> &mdash; fibre optic
-                      cables carrying internet and data traffic. Damage can affect critical
-                      infrastructure including hospitals and emergency services
+                      <strong className="text-white">Data cables</strong> &mdash; fibre optic cables
+                      carrying internet and data traffic. Damage can affect critical infrastructure
+                      including hospitals and emergency services
                     </span>
                   </li>
                 </ul>
@@ -955,9 +942,7 @@ export default function CscsCardModule5Section1() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    500mm Hand Digging Rule
-                  </p>
+                  <p className="text-sm font-medium text-red-400">500mm Hand Digging Rule</p>
                 </div>
                 <p className="text-sm text-white/80">
                   <strong className="text-white">
@@ -965,8 +950,8 @@ export default function CscsCardModule5Section1() {
                   </strong>{' '}
                   Within this 500mm exclusion zone, only hand digging is permitted. Use insulated
                   hand tools (spades and shovels with insulated handles) where electricity cables
-                  may be present. Never use pickaxes, forks, or sharp-pointed tools near cables.
-                  Dig alongside the service, not directly on top of it. Once exposed, support the
+                  may be present. Never use pickaxes, forks, or sharp-pointed tools near cables. Dig
+                  alongside the service, not directly on top of it. Once exposed, support the
                   service to prevent damage from its own weight or backfill pressure.
                 </p>
               </div>
@@ -1010,9 +995,7 @@ export default function CscsCardModule5Section1() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Edge Protection Requirements
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Edge Protection Requirements</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -1064,15 +1047,13 @@ export default function CscsCardModule5Section1() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Safe Access &amp; Egress
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Safe Access &amp; Egress</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Ladders</strong> &mdash; ladders must extend
-                      at least 1 metre above the excavation edge to provide a secure handhold. They
+                      <strong className="text-white">Ladders</strong> &mdash; ladders must extend at
+                      least 1 metre above the excavation edge to provide a secure handhold. They
                       must be securely tied or footed, set at the correct angle (1:4 ratio), and
                       placed on a firm, level base
                     </span>
@@ -1080,9 +1061,9 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Ramps</strong> &mdash; for shallow
-                      excavations, properly constructed ramps with non-slip surfaces may be used for
-                      pedestrian and wheelbarrow access. Ramps must be secured to prevent movement
+                      <strong className="text-white">Ramps</strong> &mdash; for shallow excavations,
+                      properly constructed ramps with non-slip surfaces may be used for pedestrian
+                      and wheelbarrow access. Ramps must be secured to prevent movement
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1098,9 +1079,9 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Steps and stairways</strong> &mdash; for
-                      large, deep, or long-duration excavations, purpose-built steps or stairways
-                      may be more appropriate than ladders, providing safer and easier access
+                      <strong className="text-white">Steps and stairways</strong> &mdash; for large,
+                      deep, or long-duration excavations, purpose-built steps or stairways may be
+                      more appropriate than ladders, providing safer and easier access
                     </span>
                   </li>
                 </ul>
@@ -1193,8 +1174,8 @@ export default function CscsCardModule5Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Written reports</strong> &mdash; each
-                      inspection must result in a written report completed on the same shift.
-                      The report must include the date, time, location, name of the inspector,
+                      inspection must result in a written report completed on the same shift. The
+                      report must include the date, time, location, name of the inspector,
                       conditions observed, any defects found, and actions taken
                     </span>
                   </li>
@@ -1223,20 +1204,18 @@ export default function CscsCardModule5Section1() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    No Entry Without Inspection
-                  </p>
+                  <p className="text-sm font-medium text-red-400">No Entry Without Inspection</p>
                 </div>
                 <p className="text-sm text-white/80">
                   <strong className="text-white">
                     No worker may enter an excavation until it has been inspected and declared safe
                     by a competent person.
                   </strong>{' '}
-                  If conditions change during the shift &mdash; for example, if heavy rain begins
-                  or vibration from nearby piling is felt &mdash; all workers must leave the
-                  excavation and a fresh inspection must be carried out before work resumes. The
-                  competent person has the authority to stop work at any time if they consider the
-                  excavation to be unsafe.
+                  If conditions change during the shift &mdash; for example, if heavy rain begins or
+                  vibration from nearby piling is felt &mdash; all workers must leave the excavation
+                  and a fresh inspection must be carried out before work resumes. The competent
+                  person has the authority to stop work at any time if they consider the excavation
+                  to be unsafe.
                 </p>
               </div>
             </div>
@@ -1255,11 +1234,11 @@ export default function CscsCardModule5Section1() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Excavation work often takes place in areas where overhead power lines are present.
-                Contact with overhead lines &mdash; or even approaching too close &mdash; can
-                cause fatal electrocution. Electricity can arc (jump) across air gaps, so direct
-                contact is not necessary for a fatal incident to occur. HSG47 and the Energy
-                Networks Association (ENA) guidance set out the requirements for working safely
-                near overhead power lines.
+                Contact with overhead lines &mdash; or even approaching too close &mdash; can cause
+                fatal electrocution. Electricity can arc (jump) across air gaps, so direct contact
+                is not necessary for a fatal incident to occur. HSG47 and the Energy Networks
+                Association (ENA) guidance set out the requirements for working safely near overhead
+                power lines.
               </p>
 
               <div className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
@@ -1323,10 +1302,10 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Exclusion zones</strong> &mdash; define a
-                      clear exclusion zone beneath and around overhead power lines where no work,
-                      storage of materials, or movement of tall plant is permitted without specific
-                      controls in place
+                      <strong className="text-white">Exclusion zones</strong> &mdash; define a clear
+                      exclusion zone beneath and around overhead power lines where no work, storage
+                      of materials, or movement of tall plant is permitted without specific controls
+                      in place
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1354,9 +1333,7 @@ export default function CscsCardModule5Section1() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    If Contact or Arcing Occurs
-                  </p>
+                  <p className="text-sm font-medium text-red-400">If Contact or Arcing Occurs</p>
                 </div>
                 <p className="text-sm text-white/80">
                   If plant or equipment contacts or comes close to an overhead power line:{' '}
@@ -1383,11 +1360,10 @@ export default function CscsCardModule5Section1() {
           <div className="border-l-2 border-green-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Despite all precautions, emergencies can occur during excavation work. Having
-                clear, rehearsed emergency procedures is essential. Every worker involved in
-                excavation work must understand the emergency plan before they start, including how
-                to raise the alarm, where to assemble, and what actions to take for different
-                scenarios.
+                Despite all precautions, emergencies can occur during excavation work. Having clear,
+                rehearsed emergency procedures is essential. Every worker involved in excavation
+                work must understand the emergency plan before they start, including how to raise
+                the alarm, where to assemble, and what actions to take for different scenarios.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
@@ -1412,17 +1388,16 @@ export default function CscsCardModule5Section1() {
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
-                        <strong className="text-white">Call 999 immediately</strong> &mdash;
-                        request the fire service, who have specialist trench rescue teams and
-                        equipment
+                        <strong className="text-white">Call 999 immediately</strong> &mdash; request
+                        the fire service, who have specialist trench rescue teams and equipment
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
-                        <strong className="text-white">Keep everyone away</strong> &mdash;
-                        establish a safe perimeter around the collapsed excavation. Do not allow
-                        anyone near the edges
+                        <strong className="text-white">Keep everyone away</strong> &mdash; establish
+                        a safe perimeter around the collapsed excavation. Do not allow anyone near
+                        the edges
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -1490,9 +1465,7 @@ export default function CscsCardModule5Section1() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Flooding Response
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Flooding Response</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -1513,10 +1486,10 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Do not re-enter</strong> &mdash; the
-                      excavation must not be re-entered until the water has been removed, the
-                      support system has been inspected by a competent person, and the sides have
-                      been confirmed as stable
+                      <strong className="text-white">Do not re-enter</strong> &mdash; the excavation
+                      must not be re-entered until the water has been removed, the support system
+                      has been inspected by a competent person, and the sides have been confirmed as
+                      stable
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1532,9 +1505,7 @@ export default function CscsCardModule5Section1() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Reporting Incidents
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Reporting Incidents</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -1567,8 +1538,8 @@ export default function CscsCardModule5Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Service strikes</strong> &mdash; all strikes
-                      on underground services must be reported to the utility provider immediately,
+                      <strong className="text-white">Service strikes</strong> &mdash; all strikes on
+                      underground services must be reported to the utility provider immediately,
                       even if no damage is apparent. Hidden damage to cables and pipes can cause
                       delayed failures that are potentially more dangerous
                     </span>
@@ -1637,4 +1608,3 @@ export default function CscsCardModule5Section1() {
     </div>
   );
 }
-

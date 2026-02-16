@@ -1,6 +1,26 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { FileCheck, Scale, Shield, AlertTriangle, Calculator, Building, Home, Factory, PoundSterling, Users, Clock, CheckCircle, Target, TrendingUp, FileText, Briefcase, MapPin, Phone, BookOpen } from 'lucide-react';
+import {
+  FileCheck,
+  Scale,
+  Shield,
+  AlertTriangle,
+  Calculator,
+  Building,
+  Home,
+  Factory,
+  PoundSterling,
+  Users,
+  Clock,
+  CheckCircle,
+  Target,
+  TrendingUp,
+  FileText,
+  Briefcase,
+  MapPin,
+  Phone,
+  BookOpen,
+} from 'lucide-react';
 
 const TaxLegalConsiderations = () => {
   return (
@@ -10,7 +30,7 @@ const TaxLegalConsiderations = () => {
           <Scale className="h-6 w-6 text-elec-yellow" />
           Tax Implications and Legal Considerations
         </h2>
-        
+
         <div className="space-y-12">
           {/* Executive Summary */}
           <div className="bg-gradient-to-r from-elec-yellow/10 to-purple-600/10 p-6 rounded-lg border border-elec-yellow/30">
@@ -19,7 +39,10 @@ const TaxLegalConsiderations = () => {
               Legal and Tax Framework Overview
             </h3>
             <p className="text-gray-300 mb-4">
-              The UK renewable energy sector operates within a complex regulatory framework encompassing VAT treatment, corporation tax allowances, planning legislation, building regulations, and consumer protection laws. Understanding these requirements is essential for compliant and financially optimised installations.
+              The UK renewable energy sector operates within a complex regulatory framework
+              encompassing VAT treatment, corporation tax allowances, planning legislation, building
+              regulations, and consumer protection laws. Understanding these requirements is
+              essential for compliant and financially optimised installations.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-elec-dark/50 p-4 rounded border border-gray-700">
@@ -28,7 +51,9 @@ const TaxLegalConsiderations = () => {
                   <span className="text-foreground font-semibold">VAT Savings</span>
                 </div>
                 <p className="text-2xl font-bold text-green-400">0%</p>
-                <p className="text-xs text-gray-400">Domestic renewable installations (2024-2027)</p>
+                <p className="text-xs text-gray-400">
+                  Domestic renewable installations (2024-2027)
+                </p>
               </div>
               <div className="bg-elec-dark/50 p-4 rounded border border-gray-700">
                 <div className="flex items-center gap-2 mb-2">
@@ -62,17 +87,24 @@ const TaxLegalConsiderations = () => {
                   <Home className="h-4 w-4 text-elec-yellow" />
                   Domestic Installations
                 </h4>
-                
+
                 <div className="space-y-4">
                   <div className="bg-gradient-to-br from-green-900/30 to-green-800/20 p-5 rounded-lg border border-green-700/50">
                     <div className="flex items-center justify-between mb-3">
                       <h5 className="font-semibold text-foreground">0% VAT Rate (Temporary)</h5>
-                      <Badge className="bg-green-600/20 text-green-300 border-green-600/30">Until April 2027</Badge>
+                      <Badge className="bg-green-600/20 text-green-300 border-green-600/30">
+                        Until April 2027
+                      </Badge>
                     </div>
                     <div className="space-y-3">
-                      <p className="text-sm text-gray-300">Applies to qualifying energy-saving materials and installations for residential properties.</p>
+                      <p className="text-sm text-gray-300">
+                        Applies to qualifying energy-saving materials and installations for
+                        residential properties.
+                      </p>
                       <div className="bg-green-900/30 p-3 rounded border border-green-700/50">
-                        <p className="text-xs text-green-200 mb-2"><strong>Eligible Technologies:</strong></p>
+                        <p className="text-xs text-green-200 mb-2">
+                          <strong>Eligible Technologies:</strong>
+                        </p>
                         <div className="grid grid-cols-2 gap-2">
                           <div className="flex items-center gap-1">
                             <CheckCircle className="h-3 w-3 text-green-400" />
@@ -101,7 +133,10 @@ const TaxLegalConsiderations = () => {
                         </div>
                       </div>
                       <div className="bg-red-900/20 p-3 rounded border border-red-700/50">
-                        <p className="text-xs text-red-200"><strong>Important:</strong> Rate reverts to 5% from April 2027 unless extended. Mixed-use properties may have different treatment.</p>
+                        <p className="text-xs text-red-200">
+                          <strong>Important:</strong> Rate reverts to 5% from April 2027 unless
+                          extended. Mixed-use properties may have different treatment.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -139,9 +174,14 @@ const TaxLegalConsiderations = () => {
                   <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-5 rounded-lg border border-blue-700/50">
                     <h5 className="font-semibold text-foreground mb-3">Standard 20% VAT Rate</h5>
                     <div className="space-y-3">
-                      <p className="text-sm text-gray-300">Commercial and industrial renewable installations are subject to standard VAT rates.</p>
+                      <p className="text-sm text-gray-300">
+                        Commercial and industrial renewable installations are subject to standard
+                        VAT rates.
+                      </p>
                       <div className="bg-blue-900/30 p-3 rounded border border-blue-700/50">
-                        <p className="text-xs text-blue-200 mb-2"><strong>VAT Recovery Options:</strong></p>
+                        <p className="text-xs text-blue-200 mb-2">
+                          <strong>VAT Recovery Options:</strong>
+                        </p>
                         <div className="space-y-1 text-xs text-gray-300">
                           <p>• Full input VAT recovery for VAT-registered businesses</p>
                           <p>• Partial exemption considerations for mixed activities</p>
@@ -157,26 +197,42 @@ const TaxLegalConsiderations = () => {
                     <div className="space-y-3">
                       <div className="grid grid-cols-2 gap-3 text-xs">
                         <div>
-                          <span className="text-gray-400">Domestic element:</span><br />
+                          <span className="text-gray-400">Domestic element:</span>
+                          <br />
                           <span className="text-foreground font-semibold">0% VAT</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">Commercial element:</span><br />
+                          <span className="text-gray-400">Commercial element:</span>
+                          <br />
                           <span className="text-foreground font-semibold">20% VAT</span>
                         </div>
                       </div>
                       <div className="bg-purple-900/30 p-3 rounded border border-purple-700/50">
-                        <p className="text-xs text-purple-200"><strong>Apportionment Required:</strong> Based on floor area, energy consumption, or other reasonable basis</p>
+                        <p className="text-xs text-purple-200">
+                          <strong>Apportionment Required:</strong> Based on floor area, energy
+                          consumption, or other reasonable basis
+                        </p>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-gradient-to-br from-teal-900/30 to-teal-800/20 p-5 rounded-lg border border-teal-700/50">
-                    <h5 className="font-semibold text-foreground mb-3">VAT Registration Implications</h5>
+                    <h5 className="font-semibold text-foreground mb-3">
+                      VAT Registration Implications
+                    </h5>
                     <div className="space-y-2 text-sm text-gray-300">
-                      <div className="flex justify-between"><span>Registration threshold:</span><span className="text-foreground">£90,000 (2025)</span></div>
-                      <div className="flex justify-between"><span>Energy sales impact:</span><span className="text-foreground">May trigger registration</span></div>
-                      <div className="flex justify-between"><span>SEG payments:</span><span className="text-foreground">Outside scope if domestic</span></div>
+                      <div className="flex justify-between">
+                        <span>Registration threshold:</span>
+                        <span className="text-foreground">£90,000 (2025)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Energy sales impact:</span>
+                        <span className="text-foreground">May trigger registration</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>SEG payments:</span>
+                        <span className="text-foreground">Outside scope if domestic</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -261,7 +317,9 @@ const TaxLegalConsiderations = () => {
                         <p className="text-xs text-gray-400">Energy/water efficient equipment</p>
                       </div>
                     </td>
-                    <td className="p-4"><span className="text-green-400 font-bold">100%</span></td>
+                    <td className="p-4">
+                      <span className="text-green-400 font-bold">100%</span>
+                    </td>
                     <td className="p-4">No limit</td>
                     <td className="p-4">
                       <div className="text-xs">
@@ -278,7 +336,9 @@ const TaxLegalConsiderations = () => {
                         <p>• Business use required</p>
                       </div>
                     </td>
-                    <td className="p-4"><Badge className="bg-green-600/20 text-green-300">Permanent</Badge></td>
+                    <td className="p-4">
+                      <Badge className="bg-green-600/20 text-green-300">Permanent</Badge>
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-800 hover:bg-elec-dark/30">
                     <td className="p-4">
@@ -287,7 +347,9 @@ const TaxLegalConsiderations = () => {
                         <p className="text-xs text-gray-400">General plant & machinery</p>
                       </div>
                     </td>
-                    <td className="p-4"><span className="text-blue-400 font-bold">100%</span></td>
+                    <td className="p-4">
+                      <span className="text-blue-400 font-bold">100%</span>
+                    </td>
                     <td className="p-4">£1,000,000</td>
                     <td className="p-4">
                       <div className="text-xs">
@@ -304,7 +366,9 @@ const TaxLegalConsiderations = () => {
                         <p>• Group limits apply</p>
                       </div>
                     </td>
-                    <td className="p-4"><Badge className="bg-blue-600/20 text-blue-300">Permanent</Badge></td>
+                    <td className="p-4">
+                      <Badge className="bg-blue-600/20 text-blue-300">Permanent</Badge>
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-800 hover:bg-elec-dark/30">
                     <td className="p-4">
@@ -313,7 +377,9 @@ const TaxLegalConsiderations = () => {
                         <p className="text-xs text-gray-400">Enhanced capital allowances</p>
                       </div>
                     </td>
-                    <td className="p-4"><span className="text-red-400 font-bold">Ended</span></td>
+                    <td className="p-4">
+                      <span className="text-red-400 font-bold">Ended</span>
+                    </td>
                     <td className="p-4">N/A</td>
                     <td className="p-4">
                       <div className="text-xs">
@@ -329,7 +395,9 @@ const TaxLegalConsiderations = () => {
                         <p>• No replacement announced</p>
                       </div>
                     </td>
-                    <td className="p-4"><Badge className="bg-red-600/20 text-red-300">Expired</Badge></td>
+                    <td className="p-4">
+                      <Badge className="bg-red-600/20 text-red-300">Expired</Badge>
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-800 hover:bg-elec-dark/30">
                     <td className="p-4">
@@ -338,7 +406,9 @@ const TaxLegalConsiderations = () => {
                         <p className="text-xs text-gray-400">Standard rate</p>
                       </div>
                     </td>
-                    <td className="p-4"><span className="text-yellow-400 font-bold">18%</span></td>
+                    <td className="p-4">
+                      <span className="text-yellow-400 font-bold">18%</span>
+                    </td>
                     <td className="p-4">No limit</td>
                     <td className="p-4">
                       <div className="text-xs">
@@ -354,7 +424,9 @@ const TaxLegalConsiderations = () => {
                         <p>• Can disclaim</p>
                       </div>
                     </td>
-                    <td className="p-4"><Badge className="bg-yellow-600/20 text-yellow-300">Ongoing</Badge></td>
+                    <td className="p-4">
+                      <Badge className="bg-yellow-600/20 text-yellow-300">Ongoing</Badge>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -367,31 +439,38 @@ const TaxLegalConsiderations = () => {
                   <Building className="h-4 w-4 text-elec-yellow" />
                   Business Rates Treatment
                 </h4>
-                
+
                 <div className="space-y-4">
                   <div className="bg-gradient-to-br from-green-900/30 to-green-800/20 p-5 rounded-lg border border-green-700/50">
                     <h5 className="font-semibold text-foreground mb-3">Rooftop Solar Exemption</h5>
                     <div className="space-y-3">
                       <div className="grid grid-cols-2 gap-3 text-xs">
                         <div>
-                          <span className="text-gray-400">Exemption period:</span><br />
+                          <span className="text-gray-400">Exemption period:</span>
+                          <br />
                           <span className="text-foreground font-semibold">Until March 2035</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">Scope:</span><br />
+                          <span className="text-gray-400">Scope:</span>
+                          <br />
                           <span className="text-foreground font-semibold">England & Wales</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">System size:</span><br />
+                          <span className="text-gray-400">System size:</span>
+                          <br />
                           <span className="text-foreground font-semibold">No limit</span>
                         </div>
                         <div>
-                          <span className="text-gray-400">Property type:</span><br />
+                          <span className="text-gray-400">Property type:</span>
+                          <br />
                           <span className="text-foreground font-semibold">All non-domestic</span>
                         </div>
                       </div>
                       <div className="bg-green-900/30 p-3 rounded border border-green-700/50">
-                        <p className="text-xs text-green-200"><strong>Savings:</strong> Typical 100kW system saves £3,000-£5,000 annually in business rates</p>
+                        <p className="text-xs text-green-200">
+                          <strong>Savings:</strong> Typical 100kW system saves £3,000-£5,000
+                          annually in business rates
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -488,12 +567,20 @@ const TaxLegalConsiderations = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-700 bg-elec-dark/50">
-                    <th className="text-left p-4 text-foreground font-semibold">Installation Type</th>
+                    <th className="text-left p-4 text-foreground font-semibold">
+                      Installation Type
+                    </th>
                     <th className="text-left p-4 text-foreground font-semibold">Domestic</th>
                     <th className="text-left p-4 text-foreground font-semibold">Commercial</th>
-                    <th className="text-left p-4 text-foreground font-semibold">Listed Buildings</th>
-                    <th className="text-left p-4 text-foreground font-semibold">Conservation Areas</th>
-                    <th className="text-left p-4 text-foreground font-semibold">Key Restrictions</th>
+                    <th className="text-left p-4 text-foreground font-semibold">
+                      Listed Buildings
+                    </th>
+                    <th className="text-left p-4 text-foreground font-semibold">
+                      Conservation Areas
+                    </th>
+                    <th className="text-left p-4 text-foreground font-semibold">
+                      Key Restrictions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-300">
@@ -505,7 +592,9 @@ const TaxLegalConsiderations = () => {
                       </div>
                     </td>
                     <td className="p-4">
-                      <Badge className="bg-green-600/20 text-green-300">Permitted Development</Badge>
+                      <Badge className="bg-green-600/20 text-green-300">
+                        Permitted Development
+                      </Badge>
                     </td>
                     <td className="p-4">
                       <Badge className="bg-orange-600/20 text-orange-300">Usually Required</Badge>
@@ -586,7 +675,9 @@ const TaxLegalConsiderations = () => {
                       </div>
                     </td>
                     <td className="p-4">
-                      <Badge className="bg-green-600/20 text-green-300">Permitted Development</Badge>
+                      <Badge className="bg-green-600/20 text-green-300">
+                        Permitted Development
+                      </Badge>
                     </td>
                     <td className="p-4">
                       <Badge className="bg-orange-600/20 text-orange-300">Size Dependent</Badge>
@@ -616,7 +707,7 @@ const TaxLegalConsiderations = () => {
                   <Shield className="h-4 w-4 text-elec-yellow" />
                   Building Regulations Compliance
                 </h4>
-                
+
                 <div className="space-y-4">
                   <div className="bg-elec-dark p-5 rounded-lg border border-gray-700">
                     <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -624,8 +715,12 @@ const TaxLegalConsiderations = () => {
                       Part P - Electrical Safety
                     </h5>
                     <div className="space-y-2 text-sm text-gray-300">
-                      <p><strong>Scope:</strong> All electrical installations in dwellings</p>
-                      <p><strong>Requirements:</strong></p>
+                      <p>
+                        <strong>Scope:</strong> All electrical installations in dwellings
+                      </p>
+                      <p>
+                        <strong>Requirements:</strong>
+                      </p>
                       <ul className="ml-4 space-y-1 text-xs">
                         <li>• Competent person scheme registration</li>
                         <li>• Building control notification for notifiable work</li>
@@ -641,7 +736,9 @@ const TaxLegalConsiderations = () => {
                       Structural Requirements
                     </h5>
                     <div className="space-y-2 text-sm text-gray-300">
-                      <p><strong>Roof Loading:</strong></p>
+                      <p>
+                        <strong>Roof Loading:</strong>
+                      </p>
                       <ul className="ml-4 space-y-1 text-xs">
                         <li>• Structural calculations required</li>
                         <li>• Dead load: 10-25 kg/m² typical</li>
@@ -661,25 +758,61 @@ const TaxLegalConsiderations = () => {
 
                 <div className="space-y-4">
                   <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-5 rounded-lg border border-blue-700/50">
-                    <h5 className="font-semibold text-foreground mb-3">G98 Applications (≤16A per phase)</h5>
+                    <h5 className="font-semibold text-foreground mb-3">
+                      G98 Applications (≤16A per phase)
+                    </h5>
                     <div className="space-y-2 text-sm">
                       <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div><span className="text-gray-400">Capacity limit:</span><br /><span className="text-foreground">3.68kW (single phase)</span></div>
-                        <div><span className="text-gray-400">Process:</span><br /><span className="text-foreground">Notification only</span></div>
-                        <div><span className="text-gray-400">Timeframe:</span><br /><span className="text-foreground">Connect immediately</span></div>
-                        <div><span className="text-gray-400">Cost:</span><br /><span className="text-foreground">Usually free</span></div>
+                        <div>
+                          <span className="text-gray-400">Capacity limit:</span>
+                          <br />
+                          <span className="text-foreground">3.68kW (single phase)</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">Process:</span>
+                          <br />
+                          <span className="text-foreground">Notification only</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">Timeframe:</span>
+                          <br />
+                          <span className="text-foreground">Connect immediately</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">Cost:</span>
+                          <br />
+                          <span className="text-foreground">Usually free</span>
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-gradient-to-br from-orange-900/30 to-orange-800/20 p-5 rounded-lg border border-orange-700/50">
-                    <h5 className="font-semibold text-foreground mb-3">G99 Applications (&gt;16A per phase)</h5>
+                    <h5 className="font-semibold text-foreground mb-3">
+                      G99 Applications (&gt;16A per phase)
+                    </h5>
                     <div className="space-y-2 text-sm">
                       <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div><span className="text-gray-400">Capacity range:</span><br /><span className="text-foreground">&gt;3.68kW to 50MW</span></div>
-                        <div><span className="text-gray-400">Process:</span><br /><span className="text-foreground">Formal application</span></div>
-                        <div><span className="text-gray-400">Timeframe:</span><br /><span className="text-foreground">20-65 working days</span></div>
-                        <div><span className="text-gray-400">Cost:</span><br /><span className="text-foreground">£100-£1,000+</span></div>
+                        <div>
+                          <span className="text-gray-400">Capacity range:</span>
+                          <br />
+                          <span className="text-foreground">&gt;3.68kW to 50MW</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">Process:</span>
+                          <br />
+                          <span className="text-foreground">Formal application</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">Timeframe:</span>
+                          <br />
+                          <span className="text-foreground">20-65 working days</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">Cost:</span>
+                          <br />
+                          <span className="text-foreground">£100-£1,000+</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -701,12 +834,14 @@ const TaxLegalConsiderations = () => {
                   <Users className="h-4 w-4 text-elec-yellow" />
                   Consumer Rights Framework
                 </h4>
-                
+
                 <div className="space-y-4">
                   <div className="bg-gradient-to-br from-red-900/20 to-red-800/10 p-5 rounded-lg border border-red-700/30">
                     <h5 className="font-semibold text-foreground mb-3">Consumer Rights Act 2015</h5>
                     <div className="space-y-2 text-sm text-gray-300">
-                      <p><strong>Key Protections:</strong></p>
+                      <p>
+                        <strong>Key Protections:</strong>
+                      </p>
                       <ul className="ml-4 space-y-1 text-xs">
                         <li>• Goods must be of satisfactory quality</li>
                         <li>• Fit for purpose and as described</li>
@@ -718,9 +853,13 @@ const TaxLegalConsiderations = () => {
                   </div>
 
                   <div className="bg-gradient-to-br from-blue-900/20 to-blue-800/10 p-5 rounded-lg border border-blue-700/30">
-                    <h5 className="font-semibold text-foreground mb-3">Consumer Contracts Regulations</h5>
+                    <h5 className="font-semibold text-foreground mb-3">
+                      Consumer Contracts Regulations
+                    </h5>
                     <div className="space-y-2 text-sm text-gray-300">
-                      <p><strong>Off-Premises Contracts:</strong></p>
+                      <p>
+                        <strong>Off-Premises Contracts:</strong>
+                      </p>
                       <ul className="ml-4 space-y-1 text-xs">
                         <li>• 14-day cooling-off period</li>
                         <li>• Mandatory pre-contract information</li>
@@ -742,7 +881,9 @@ const TaxLegalConsiderations = () => {
                   <div className="bg-gradient-to-br from-green-900/20 to-green-800/10 p-5 rounded-lg border border-green-700/30">
                     <h5 className="font-semibold text-foreground mb-3">MCS Certification</h5>
                     <div className="space-y-2 text-sm text-gray-300">
-                      <p><strong>Requirements:</strong></p>
+                      <p>
+                        <strong>Requirements:</strong>
+                      </p>
                       <ul className="ml-4 space-y-1 text-xs">
                         <li>• Installer MCS accreditation</li>
                         <li>• MCS-approved equipment</li>
@@ -754,9 +895,13 @@ const TaxLegalConsiderations = () => {
                   </div>
 
                   <div className="bg-gradient-to-br from-purple-900/20 to-purple-800/10 p-5 rounded-lg border border-purple-700/30">
-                    <h5 className="font-semibold text-foreground mb-3">Quality Assurance Schemes</h5>
+                    <h5 className="font-semibold text-foreground mb-3">
+                      Quality Assurance Schemes
+                    </h5>
                     <div className="space-y-2 text-sm text-gray-300">
-                      <p><strong>Recognised Schemes:</strong></p>
+                      <p>
+                        <strong>Recognised Schemes:</strong>
+                      </p>
                       <ul className="ml-4 space-y-1 text-xs">
                         <li>• TrustMark (government endorsed)</li>
                         <li>• NICEIC approved contractor</li>
@@ -839,19 +984,27 @@ const TaxLegalConsiderations = () => {
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h5 className="font-semibold text-foreground mb-3">Alternative Dispute Resolution</h5>
+                  <h5 className="font-semibold text-foreground mb-3">
+                    Alternative Dispute Resolution
+                  </h5>
                   <div className="space-y-3">
                     <div className="bg-red-900/20 p-3 rounded border border-red-700/50">
                       <p className="text-foreground font-medium mb-1">RECC Dispute Resolution</p>
-                      <p className="text-xs text-gray-300">Free mediation and arbitration service for renewable energy disputes</p>
+                      <p className="text-xs text-gray-300">
+                        Free mediation and arbitration service for renewable energy disputes
+                      </p>
                     </div>
                     <div className="bg-orange-900/20 p-3 rounded border border-orange-700/50">
                       <p className="text-foreground font-medium mb-1">Trading Standards</p>
-                      <p className="text-xs text-gray-300">Local authority enforcement of consumer protection laws</p>
+                      <p className="text-xs text-gray-300">
+                        Local authority enforcement of consumer protection laws
+                      </p>
                     </div>
                     <div className="bg-yellow-900/20 p-3 rounded border border-yellow-700/50">
                       <p className="text-foreground font-medium mb-1">Ombudsman Services</p>
-                      <p className="text-xs text-gray-300">Independent resolution for consumer complaints</p>
+                      <p className="text-xs text-gray-300">
+                        Independent resolution for consumer complaints
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -860,15 +1013,21 @@ const TaxLegalConsiderations = () => {
                   <div className="space-y-3">
                     <div className="bg-blue-900/20 p-3 rounded border border-blue-700/50">
                       <p className="text-foreground font-medium mb-1">Small Claims Court</p>
-                      <p className="text-xs text-gray-300">Claims up to £10,000 (£5,000 in Scotland)</p>
+                      <p className="text-xs text-gray-300">
+                        Claims up to £10,000 (£5,000 in Scotland)
+                      </p>
                     </div>
                     <div className="bg-green-900/20 p-3 rounded border border-green-700/50">
                       <p className="text-foreground font-medium mb-1">Professional Negligence</p>
-                      <p className="text-xs text-gray-300">Claims against designers and installers</p>
+                      <p className="text-xs text-gray-300">
+                        Claims against designers and installers
+                      </p>
                     </div>
                     <div className="bg-purple-900/20 p-3 rounded border border-purple-700/50">
                       <p className="text-foreground font-medium mb-1">Statutory Rights</p>
-                      <p className="text-xs text-gray-300">Consumer Rights Act and contract law remedies</p>
+                      <p className="text-xs text-gray-300">
+                        Consumer Rights Act and contract law remedies
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -890,49 +1049,81 @@ const TaxLegalConsiderations = () => {
                   HMRC
                 </h5>
                 <div className="text-xs text-gray-300 space-y-1">
-                  <p><strong>VAT Helpline:</strong> 0300 200 3700</p>
-                  <p><strong>Business Tax:</strong> 0300 200 3410</p>
-                  <p><strong>Online:</strong> gov.uk/hmrc</p>
-                  <p><strong>VAT Notice 708:</strong> Energy-saving materials</p>
+                  <p>
+                    <strong>VAT Helpline:</strong> 0300 200 3700
+                  </p>
+                  <p>
+                    <strong>Business Tax:</strong> 0300 200 3410
+                  </p>
+                  <p>
+                    <strong>Online:</strong> gov.uk/hmrc
+                  </p>
+                  <p>
+                    <strong>VAT Notice 708:</strong> Energy-saving materials
+                  </p>
                 </div>
               </div>
-              
+
               <div className="bg-elec-dark p-4 rounded-lg border border-gray-700">
                 <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-elec-yellow" />
                   Planning Portal
                 </h5>
                 <div className="text-xs text-gray-300 space-y-1">
-                  <p><strong>Website:</strong> planningportal.co.uk</p>
-                  <p><strong>Planning guidance</strong></p>
-                  <p><strong>Permitted development rights</strong></p>
-                  <p><strong>Application submissions</strong></p>
+                  <p>
+                    <strong>Website:</strong> planningportal.co.uk
+                  </p>
+                  <p>
+                    <strong>Planning guidance</strong>
+                  </p>
+                  <p>
+                    <strong>Permitted development rights</strong>
+                  </p>
+                  <p>
+                    <strong>Application submissions</strong>
+                  </p>
                 </div>
               </div>
-              
+
               <div className="bg-elec-dark p-4 rounded-lg border border-gray-700">
                 <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                   <Shield className="h-4 w-4 text-elec-yellow" />
                   MCS
                 </h5>
                 <div className="text-xs text-gray-300 space-y-1">
-                  <p><strong>Phone:</strong> 0333 103 8130</p>
-                  <p><strong>Website:</strong> mcscertified.com</p>
-                  <p><strong>Installer search</strong></p>
-                  <p><strong>Certification standards</strong></p>
+                  <p>
+                    <strong>Phone:</strong> 0333 103 8130
+                  </p>
+                  <p>
+                    <strong>Website:</strong> mcscertified.com
+                  </p>
+                  <p>
+                    <strong>Installer search</strong>
+                  </p>
+                  <p>
+                    <strong>Certification standards</strong>
+                  </p>
                 </div>
               </div>
-              
+
               <div className="bg-elec-dark p-4 rounded-lg border border-gray-700">
                 <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-elec-yellow" />
                   Resources
                 </h5>
                 <div className="text-xs text-gray-300 space-y-1">
-                  <p><strong>RECC:</strong> recc.org.uk</p>
-                  <p><strong>Energy Saving Trust</strong></p>
-                  <p><strong>Citizens Advice Bureau</strong></p>
-                  <p><strong>TrustMark:</strong> trustmark.org.uk</p>
+                  <p>
+                    <strong>RECC:</strong> recc.org.uk
+                  </p>
+                  <p>
+                    <strong>Energy Saving Trust</strong>
+                  </p>
+                  <p>
+                    <strong>Citizens Advice Bureau</strong>
+                  </p>
+                  <p>
+                    <strong>TrustMark:</strong> trustmark.org.uk
+                  </p>
                 </div>
               </div>
             </div>

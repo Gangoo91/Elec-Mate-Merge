@@ -16,9 +16,9 @@ interface InstrumentationQuizProps {
   title?: string;
 }
 
-const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({ 
-  questions, 
-  title = "Knowledge Check" 
+const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
+  questions,
+  title = 'Knowledge Check',
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -33,7 +33,7 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
 
   const handleSubmitAnswer = () => {
     if (selectedAnswer === null) return;
-    
+
     const newAnswers = [...userAnswers];
     newAnswers[currentQuestion] = selectedAnswer;
     setUserAnswers(newAnswers);
@@ -69,7 +69,7 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
   if (isQuizComplete) {
     const score = getScore();
     const percentage = getScorePercentage();
-    
+
     return (
       <Card className="bg-elec-gray border-transparent">
         <CardHeader>
@@ -83,9 +83,7 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
             <div className="text-3xl font-bold text-elec-yellow">
               {score}/{questions.length}
             </div>
-            <div className="text-xl">
-              {percentage}% Score
-            </div>
+            <div className="text-xl">{percentage}% Score</div>
             <div className="text-lg">
               {percentage >= 80 ? (
                 <span className="text-green-400">Excellent work! 🎉</span>
@@ -95,7 +93,7 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
                 <span className="text-red-400">Keep studying! 📚</span>
               )}
             </div>
-            <Button 
+            <Button
               onClick={handleRestartQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             >
@@ -103,16 +101,22 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
               Retake Quiz
             </Button>
           </div>
-          
+
           <div className="space-y-3 mt-6">
             <h4 className="text-foreground font-semibold">Review Your Answers:</h4>
             {questions.map((question, index) => (
               <div key={question.id} className="bg-elec-dark p-3 rounded border border-gray-600">
-                <p className="font-semibold mb-2">{index + 1}. {question.question}</p>
+                <p className="font-semibold mb-2">
+                  {index + 1}. {question.question}
+                </p>
                 <div className="text-sm space-y-1">
-                  <div className={`flex items-center gap-2 ${
-                    userAnswers[index] === question.correctAnswer ? 'text-green-400' : 'text-red-400'
-                  }`}>
+                  <div
+                    className={`flex items-center gap-2 ${
+                      userAnswers[index] === question.correctAnswer
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  >
                     {userAnswers[index] === question.correctAnswer ? (
                       <CheckCircle2 className="h-4 w-4" />
                     ) : (
@@ -150,7 +154,7 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
             Question {currentQuestion + 1} of {questions.length}
           </span>
           <div className="w-full max-w-xs bg-gray-600 rounded-full h-2 ml-4">
-            <div 
+            <div
               className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
               style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
             />
@@ -160,7 +164,7 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
       <CardContent className="text-gray-300 space-y-4">
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-foreground">{question.question}</h3>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => (
               <button

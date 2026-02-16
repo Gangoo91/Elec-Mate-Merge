@@ -1,150 +1,215 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Wiring Methods & Protection - Fire Alarm Module 4 Section 4";
-const DESCRIPTION = "Learn about cable routing, segregation, mechanical protection and fixings to prevent premature collapse per BS 5839-1 and BS 7671.";
+const TITLE = 'Wiring Methods & Protection - Fire Alarm Module 4 Section 4';
+const DESCRIPTION =
+  'Learn about cable routing, segregation, mechanical protection and fixings to prevent premature collapse per BS 5839-1 and BS 7671.';
 
 const quickCheckQuestions = [
   {
-    id: "segregation-purpose",
-    question: "Segregation reduces:",
+    id: 'segregation-purpose',
+    question: 'Segregation reduces:',
     options: [
-      "Cable cost",
-      "EMC interference and fault risk",
-      "Colour choice",
-      "Fire rating requirements"
+      'Cable cost',
+      'EMC interference and fault risk',
+      'Colour choice',
+      'Fire rating requirements',
     ],
     correctIndex: 1,
-    explanation: "Segregation from LV power and other services helps avoid interference and faults."
+    explanation:
+      'Segregation from LV power and other services helps avoid interference and faults.',
   },
   {
-    id: "fixings-requirement",
-    question: "Fixings must:",
+    id: 'fixings-requirement',
+    question: 'Fixings must:',
     options: [
-      "Be plastic where hidden",
-      "Resist premature collapse in fire conditions",
-      "Be optional",
-      "Use cable ties only"
+      'Be plastic where hidden',
+      'Resist premature collapse in fire conditions',
+      'Be optional',
+      'Use cable ties only',
     ],
     correctIndex: 1,
-    explanation: "Use metal fixings/supports to prevent collapse (BS 7671 Reg 521.10.202)."
+    explanation: 'Use metal fixings/supports to prevent collapse (BS 7671 Reg 521.10.202).',
   },
   {
-    id: "penetrations",
-    question: "Penetrations should be:",
+    id: 'penetrations',
+    question: 'Penetrations should be:',
     options: [
-      "Left open",
-      "Sealed with appropriate fire-stopping systems",
-      "Covered with tape",
-      "Ignored"
+      'Left open',
+      'Sealed with appropriate fire-stopping systems',
+      'Covered with tape',
+      'Ignored',
     ],
     correctIndex: 1,
-    explanation: "Maintain fire compartmentation; use approved sealing systems."
-  }
+    explanation: 'Maintain fire compartmentation; use approved sealing systems.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Segregation reduces:",
-    options: ["Cable cost", "EMC interference and fault risk", "Colour choice", "Fire rating requirements"],
+    question: 'Segregation reduces:',
+    options: [
+      'Cable cost',
+      'EMC interference and fault risk',
+      'Colour choice',
+      'Fire rating requirements',
+    ],
     correctAnswer: 1,
-    explanation: "Segregation from LV power and other services helps avoid interference and faults."
+    explanation:
+      'Segregation from LV power and other services helps avoid interference and faults.',
   },
   {
     id: 2,
-    question: "Fixings must:",
-    options: ["Be plastic where hidden", "Resist premature collapse in fire conditions", "Be optional", "Use cable ties only"],
+    question: 'Fixings must:',
+    options: [
+      'Be plastic where hidden',
+      'Resist premature collapse in fire conditions',
+      'Be optional',
+      'Use cable ties only',
+    ],
     correctAnswer: 1,
-    explanation: "Use metal fixings/supports to prevent collapse (BS 7671 Reg 521.10.202)."
+    explanation: 'Use metal fixings/supports to prevent collapse (BS 7671 Reg 521.10.202).',
   },
   {
     id: 3,
-    question: "Penetrations should be:",
-    options: ["Left open", "Sealed with appropriate fire-stopping systems", "Covered with tape", "Ignored"],
+    question: 'Penetrations should be:',
+    options: [
+      'Left open',
+      'Sealed with appropriate fire-stopping systems',
+      'Covered with tape',
+      'Ignored',
+    ],
     correctAnswer: 1,
-    explanation: "Maintain fire compartmentation; use approved sealing systems."
+    explanation: 'Maintain fire compartmentation; use approved sealing systems.',
   },
   {
     id: 4,
-    question: "The minimum segregation distance between fire alarm cables and 230V power cables should be:",
-    options: ["No separation needed", "As per manufacturer guidance, typically 300mm or use physical barrier", "Exactly 50mm always", "1 metre minimum"],
+    question:
+      'The minimum segregation distance between fire alarm cables and 230V power cables should be:',
+    options: [
+      'No separation needed',
+      'As per manufacturer guidance, typically 300mm or use physical barrier',
+      'Exactly 50mm always',
+      '1 metre minimum',
+    ],
     correctAnswer: 1,
-    explanation: "Follow manufacturer recommendations; typically 300mm separation or use screening/barriers to prevent EMC issues and reduce fault risk."
+    explanation:
+      'Follow manufacturer recommendations; typically 300mm separation or use screening/barriers to prevent EMC issues and reduce fault risk.',
   },
   {
     id: 5,
-    question: "Fire-resisting cable support spacing should typically not exceed:",
-    options: ["No limit", "Manufacturer recommendations, commonly 300-400mm for horizontal runs", "1 metre", "2 metres"],
+    question: 'Fire-resisting cable support spacing should typically not exceed:',
+    options: [
+      'No limit',
+      'Manufacturer recommendations, commonly 300-400mm for horizontal runs',
+      '1 metre',
+      '2 metres',
+    ],
     correctAnswer: 1,
-    explanation: "Close support spacing maintains cable position and prevents premature collapse in fire; follow manufacturer data sheets."
+    explanation:
+      'Close support spacing maintains cable position and prevents premature collapse in fire; follow manufacturer data sheets.',
   },
   {
     id: 6,
-    question: "Cables passing through fire compartment walls must:",
-    options: ["Be left with gaps around them", "Be firestopped with tested systems maintaining compartmentation", "Use expanding foam only", "Be bundled tightly"],
+    question: 'Cables passing through fire compartment walls must:',
+    options: [
+      'Be left with gaps around them',
+      'Be firestopped with tested systems maintaining compartmentation',
+      'Use expanding foam only',
+      'Be bundled tightly',
+    ],
     correctAnswer: 1,
-    explanation: "Use proprietary firestopping systems tested to maintain the fire resistance rating of the compartment boundary."
+    explanation:
+      'Use proprietary firestopping systems tested to maintain the fire resistance rating of the compartment boundary.',
   },
   {
     id: 7,
-    question: "When installing cables in ceiling voids, consider:",
-    options: ["Hiding them behind insulation", "Accessibility for testing/maintenance and protection from building trades", "Installing without support", "Using domestic cable"],
+    question: 'When installing cables in ceiling voids, consider:',
+    options: [
+      'Hiding them behind insulation',
+      'Accessibility for testing/maintenance and protection from building trades',
+      'Installing without support',
+      'Using domestic cable',
+    ],
     correctAnswer: 1,
-    explanation: "Plan routes for access, protect from damage by other trades, and maintain proper support and separation."
+    explanation:
+      'Plan routes for access, protect from damage by other trades, and maintain proper support and separation.',
   },
   {
     id: 8,
-    question: "Vertical cable runs should be supported to prevent:",
-    options: ["The cable looking untidy", "Mechanical stress and cable sheath damage under its own weight", "People seeing them", "Improved performance"],
+    question: 'Vertical cable runs should be supported to prevent:',
+    options: [
+      'The cable looking untidy',
+      'Mechanical stress and cable sheath damage under its own weight',
+      'People seeing them',
+      'Improved performance',
+    ],
     correctAnswer: 1,
-    explanation: "Adequate vertical support prevents cable weight causing sheath damage, core breakage or joint failure over time."
+    explanation:
+      'Adequate vertical support prevents cable weight causing sheath damage, core breakage or joint failure over time.',
   },
   {
     id: 9,
-    question: "Where crossing LV power, you should:",
-    options: ["Tape together", "Cross at right angles and maintain separation", "Twist around each other", "Share the same conduit without separation"],
+    question: 'Where crossing LV power, you should:',
+    options: [
+      'Tape together',
+      'Cross at right angles and maintain separation',
+      'Twist around each other',
+      'Share the same conduit without separation',
+    ],
     correctAnswer: 1,
-    explanation: "Reduce coupling and maintain segregation."
+    explanation: 'Reduce coupling and maintain segregation.',
   },
   {
     id: 10,
-    question: "Containment choice should consider:",
-    options: ["Only colour", "Environment, fire performance and EMC", "Cheapest cost", "What is in stock"],
+    question: 'Containment choice should consider:',
+    options: [
+      'Only colour',
+      'Environment, fire performance and EMC',
+      'Cheapest cost',
+      'What is in stock',
+    ],
     correctAnswer: 1,
-    explanation: "Select appropriate materials and construction."
-  }
+    explanation: 'Select appropriate materials and construction.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I use plastic clips under metal trunking lids?",
-    answer: "No - plastic clips cannot be the sole support. Use metallic clips or ensure the trunking lid provides adequate support."
+    question: 'Can I use plastic clips under metal trunking lids?',
+    answer:
+      'No - plastic clips cannot be the sole support. Use metallic clips or ensure the trunking lid provides adequate support.',
   },
   {
-    question: "How far should fire alarm cables be from LV power?",
-    answer: "Typically 300mm in free air, or use physical barriers/screening. Follow manufacturer guidance for specific requirements."
+    question: 'How far should fire alarm cables be from LV power?',
+    answer:
+      'Typically 300mm in free air, or use physical barriers/screening. Follow manufacturer guidance for specific requirements.',
   },
   {
-    question: "Do I need to seal small gaps around cables?",
-    answer: "Yes - all penetrations through fire compartment boundaries must be sealed with appropriate firestopping systems."
+    question: 'Do I need to seal small gaps around cables?',
+    answer:
+      'Yes - all penetrations through fire compartment boundaries must be sealed with appropriate firestopping systems.',
   },
   {
-    question: "What documentation is needed for firestopping?",
-    answer: "Record location, materials used, fire rating and photograph before covering. Include in handover documentation."
+    question: 'What documentation is needed for firestopping?',
+    answer:
+      'Record location, materials used, fire rating and photograph before covering. Include in handover documentation.',
   },
   {
-    question: "Can I use cable ties for support?",
-    answer: "Metallic cable ties can be acceptable as part of a support system, but check manufacturer guidance and fire rating requirements."
+    question: 'Can I use cable ties for support?',
+    answer:
+      'Metallic cable ties can be acceptable as part of a support system, but check manufacturer guidance and fire rating requirements.',
   },
   {
-    question: "How do I coordinate with other trades?",
-    answer: "Agree cable routes early, mark containment as fire alarm, and inspect before ceiling closure. Document any deviations."
-  }
+    question: 'How do I coordinate with other trades?',
+    answer:
+      'Agree cable routes early, mark containment as fire alarm, and inspect before ceiling closure. Document any deviations.',
+  },
 ];
 
 const FireAlarmModule4Section4 = () => {
@@ -155,7 +220,12 @@ const FireAlarmModule4Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/fire-alarm-course/module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -166,7 +236,6 @@ const FireAlarmModule4Section4 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centred Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -186,18 +255,32 @@ const FireAlarmModule4Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Segregation:</strong> 300mm from LV power or use barrier</li>
-              <li><strong>Fixings:</strong> Metallic, not plastic alone (Reg 521.10.202)</li>
-              <li><strong>Penetrations:</strong> Firestop all compartment boundaries</li>
-              <li><strong>Spacing:</strong> 300-400mm typical horizontal support</li>
+              <li>
+                <strong>Segregation:</strong> 300mm from LV power or use barrier
+              </li>
+              <li>
+                <strong>Fixings:</strong> Metallic, not plastic alone (Reg 521.10.202)
+              </li>
+              <li>
+                <strong>Penetrations:</strong> Firestop all compartment boundaries
+              </li>
+              <li>
+                <strong>Spacing:</strong> 300-400mm typical horizontal support
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Plastic clips on escape routes = non-compliant</li>
-              <li><strong>Use:</strong> Cross power cables at right angles</li>
-              <li><strong>Apply:</strong> Photograph firestopping before covering</li>
+              <li>
+                <strong>Spot:</strong> Plastic clips on escape routes = non-compliant
+              </li>
+              <li>
+                <strong>Use:</strong> Cross power cables at right angles
+              </li>
+              <li>
+                <strong>Apply:</strong> Photograph firestopping before covering
+              </li>
             </ul>
           </div>
         </div>
@@ -207,12 +290,12 @@ const FireAlarmModule4Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply correct segregation distances from power cables and other services",
-              "Select appropriate fixings and supports for fire alarm cables",
-              "Maintain fire compartmentation with correct penetration sealing",
-              "Route cables for accessibility and protection from damage",
-              "Coordinate with BS 7671 requirements for wiring systems",
-              "Document and photograph installation for handover records"
+              'Apply correct segregation distances from power cables and other services',
+              'Select appropriate fixings and supports for fire alarm cables',
+              'Maintain fire compartmentation with correct penetration sealing',
+              'Route cables for accessibility and protection from damage',
+              'Coordinate with BS 7671 requirements for wiring systems',
+              'Document and photograph installation for handover records',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -233,7 +316,8 @@ const FireAlarmModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire alarm cables must be segregated from power cables to prevent electromagnetic interference (EMC) and reduce fault risk.
+              Fire alarm cables must be segregated from power cables to prevent electromagnetic
+              interference (EMC) and reduce fault risk.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -247,7 +331,9 @@ const FireAlarmModule4Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crossing Power Cables</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Crossing Power Cables
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Cross at right angles to minimise coupling</li>
                   <li>Maintain minimum separation at crossing point</li>
@@ -268,13 +354,15 @@ const FireAlarmModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 Regulation 521.10.202 requires fire alarm cables to be supported so they do not prematurely collapse in fire conditions.
+              BS 7671 Regulation 521.10.202 requires fire alarm cables to be supported so they do
+              not prematurely collapse in fire conditions.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-white mb-2">Key Requirement:</p>
               <p className="text-sm text-white">
-                Use metallic fixings and supports at intervals specified by the manufacturer. Plastic clips alone are not acceptable for fire alarm cables on escape routes.
+                Use metallic fixings and supports at intervals specified by the manufacturer.
+                Plastic clips alone are not acceptable for fire alarm cables on escape routes.
               </p>
             </div>
 
@@ -300,7 +388,8 @@ const FireAlarmModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Support spacing must maintain cable position and prevent sagging or damage. Follow manufacturer recommendations.
+              Support spacing must maintain cable position and prevent sagging or damage. Follow
+              manufacturer recommendations.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -332,12 +421,15 @@ const FireAlarmModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Cables passing through fire-resisting walls and floors must be sealed to maintain compartmentation. This is a life safety requirement.
+              Cables passing through fire-resisting walls and floors must be sealed to maintain
+              compartmentation. This is a life safety requirement.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>Critical:</strong> Use tested and certified firestopping systems. Expanding foam alone is rarely adequate. Maintain the fire resistance rating of the element being penetrated.
+                <strong>Critical:</strong> Use tested and certified firestopping systems. Expanding
+                foam alone is rarely adequate. Maintain the fire resistance rating of the element
+                being penetrated.
               </p>
             </div>
 
@@ -363,7 +455,8 @@ const FireAlarmModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Plan cable routes to protect cables from damage and allow future access for testing and maintenance.
+              Plan cable routes to protect cables from damage and allow future access for testing
+              and maintenance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -397,7 +490,8 @@ const FireAlarmModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Select containment systems appropriate to the environment, fire performance requirements and EMC considerations.
+              Select containment systems appropriate to the environment, fire performance
+              requirements and EMC considerations.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -410,7 +504,9 @@ const FireAlarmModule4Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Environmental Considerations</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Environmental Considerations
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Stainless steel or coated in corrosive environments</li>
                   <li>IP rating for external or wet locations</li>
@@ -450,9 +546,18 @@ const FireAlarmModule4Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Using plastic clips as sole support</strong> - for fire alarm cables on escape routes</li>
-                <li><strong>Leaving cable penetrations unsealed</strong> - or using inadequate firestopping materials</li>
-                <li><strong>Running fire alarm cables in shared containment</strong> - with power cables without proper segregation</li>
+                <li>
+                  <strong>Using plastic clips as sole support</strong> - for fire alarm cables on
+                  escape routes
+                </li>
+                <li>
+                  <strong>Leaving cable penetrations unsealed</strong> - or using inadequate
+                  firestopping materials
+                </li>
+                <li>
+                  <strong>Running fire alarm cables in shared containment</strong> - with power
+                  cables without proper segregation
+                </li>
               </ul>
             </div>
           </div>
@@ -502,28 +607,33 @@ const FireAlarmModule4Section4 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

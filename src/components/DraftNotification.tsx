@@ -17,7 +17,7 @@ const DraftNotification: React.FC<DraftNotificationProps> = ({
   onClose,
   onLoadDraft,
   onStartNew,
-  draftTimestamp
+  draftTimestamp,
 }) => {
   const isMobile = useIsMobile();
   const [isAnimating, setIsAnimating] = useState(false);
@@ -34,7 +34,7 @@ const DraftNotification: React.FC<DraftNotificationProps> = ({
       month: '2-digit',
       year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -58,20 +58,24 @@ const DraftNotification: React.FC<DraftNotificationProps> = ({
   return (
     <div className="fixed inset-0 z-50 pointer-events-none">
       {/* Backdrop */}
-      <div 
+      <div
         className={`absolute inset-0 bg-black/20 transition-opacity duration-300 pointer-events-auto ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={handleClose}
       />
-      
+
       {/* Notification */}
-      <div className={`absolute ${isMobile ? 'top-4 left-4 right-4' : 'top-6 right-6 w-96'} pointer-events-auto`}>
-        <Card className={`
+      <div
+        className={`absolute ${isMobile ? 'top-4 left-4 right-4' : 'top-6 right-6 w-96'} pointer-events-auto`}
+      >
+        <Card
+          className={`
           p-4 border-2 border-elec-yellow/30 bg-card/95 backdrop-blur-sm shadow-xl
           transform transition-all duration-300 ease-out
           ${isAnimating ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-4 opacity-0 scale-95'}
-        `}>
+        `}
+        >
           {/* Header */}
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -98,7 +102,8 @@ const DraftNotification: React.FC<DraftNotificationProps> = ({
 
           {/* Content */}
           <p className="text-sm text-muted-foreground mb-4">
-            Continue with your saved EICR work or start fresh. Your draft will remain available in save points.
+            Continue with your saved EICR work or start fresh. Your draft will remain available in
+            save points.
           </p>
 
           {/* Actions */}

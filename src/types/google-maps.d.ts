@@ -1,4 +1,3 @@
-
 // Type definitions for Google Maps JavaScript API v3
 // This is a simplified version that covers just what we need for our application
 
@@ -39,11 +38,17 @@ declare namespace google {
     }
 
     class Geocoder {
-      geocode(request: GeocoderRequest, callback: (results: GeocoderResult[], status: GeocoderStatus) => void): void;
+      geocode(
+        request: GeocoderRequest,
+        callback: (results: GeocoderResult[], status: GeocoderStatus) => void
+      ): void;
     }
 
     class DistanceMatrixService {
-      getDistanceMatrix(request: DistanceMatrixRequest, callback: (response: DistanceMatrixResponse, status: DistanceMatrixStatus) => void): void;
+      getDistanceMatrix(
+        request: DistanceMatrixRequest,
+        callback: (response: DistanceMatrixResponse, status: DistanceMatrixStatus) => void
+      ): void;
     }
 
     class Size {
@@ -79,9 +84,22 @@ declare namespace google {
 
       class PlacesService {
         constructor(attrContainer: Map | Element);
-        nearbySearch(request: PlaceSearchRequest, callback: (results: PlaceResult[], status: PlacesServiceStatus, pagination: PlaceSearchPagination) => void): void;
-        textSearch(request: TextSearchRequest, callback: (results: PlaceResult[], status: PlacesServiceStatus) => void): void;
-        getDetails(request: PlaceDetailsRequest, callback: (result: PlaceResult, status: PlacesServiceStatus) => void): void;
+        nearbySearch(
+          request: PlaceSearchRequest,
+          callback: (
+            results: PlaceResult[],
+            status: PlacesServiceStatus,
+            pagination: PlaceSearchPagination
+          ) => void
+        ): void;
+        textSearch(
+          request: TextSearchRequest,
+          callback: (results: PlaceResult[], status: PlacesServiceStatus) => void
+        ): void;
+        getDetails(
+          request: PlaceDetailsRequest,
+          callback: (result: PlaceResult, status: PlacesServiceStatus) => void
+        ): void;
       }
 
       interface PlaceSearchRequest {
@@ -108,7 +126,7 @@ declare namespace google {
 
       enum RankBy {
         PROMINENCE = 0,
-        DISTANCE = 1
+        DISTANCE = 1,
       }
 
       interface PlaceSearchPagination {
@@ -146,7 +164,13 @@ declare namespace google {
         maxHeight?: number;
       }
 
-      type PlacesServiceStatus = "OK" | "ZERO_RESULTS" | "OVER_QUERY_LIMIT" | "REQUEST_DENIED" | "INVALID_REQUEST" | "UNKNOWN_ERROR";
+      type PlacesServiceStatus =
+        | 'OK'
+        | 'ZERO_RESULTS'
+        | 'OVER_QUERY_LIMIT'
+        | 'REQUEST_DENIED'
+        | 'INVALID_REQUEST'
+        | 'UNKNOWN_ERROR';
     }
 
     interface MapOptions {
@@ -188,7 +212,7 @@ declare namespace google {
       BACKWARD_OPEN_ARROW = 4,
       CIRCLE = 0,
       FORWARD_CLOSED_ARROW = 1,
-      FORWARD_OPEN_ARROW = 2
+      FORWARD_OPEN_ARROW = 2,
     }
 
     interface Size {
@@ -254,9 +278,19 @@ declare namespace google {
       bounds?: LatLngBounds;
     }
 
-    type GeocoderLocationType = "APPROXIMATE" | "GEOMETRIC_CENTER" | "RANGE_INTERPOLATED" | "ROOFTOP";
+    type GeocoderLocationType =
+      | 'APPROXIMATE'
+      | 'GEOMETRIC_CENTER'
+      | 'RANGE_INTERPOLATED'
+      | 'ROOFTOP';
 
-    type GeocoderStatus = "OK" | "ZERO_RESULTS" | "OVER_QUERY_LIMIT" | "REQUEST_DENIED" | "INVALID_REQUEST" | "UNKNOWN_ERROR";
+    type GeocoderStatus =
+      | 'OK'
+      | 'ZERO_RESULTS'
+      | 'OVER_QUERY_LIMIT'
+      | 'REQUEST_DENIED'
+      | 'INVALID_REQUEST'
+      | 'UNKNOWN_ERROR';
 
     interface DistanceMatrixRequest {
       origins: (string | LatLng | LatLngLiteral)[];
@@ -309,17 +343,24 @@ declare namespace google {
     }
 
     enum TravelMode {
-      DRIVING = "DRIVING",
-      WALKING = "WALKING",
-      BICYCLING = "BICYCLING",
-      TRANSIT = "TRANSIT"
+      DRIVING = 'DRIVING',
+      WALKING = 'WALKING',
+      BICYCLING = 'BICYCLING',
+      TRANSIT = 'TRANSIT',
     }
 
     enum UnitSystem {
       METRIC = 0,
-      IMPERIAL = 1
+      IMPERIAL = 1,
     }
 
-    type DistanceMatrixStatus = "OK" | "INVALID_REQUEST" | "MAX_ELEMENTS_EXCEEDED" | "MAX_DIMENSIONS_EXCEEDED" | "OVER_QUERY_LIMIT" | "REQUEST_DENIED" | "UNKNOWN_ERROR";
+    type DistanceMatrixStatus =
+      | 'OK'
+      | 'INVALID_REQUEST'
+      | 'MAX_ELEMENTS_EXCEEDED'
+      | 'MAX_DIMENSIONS_EXCEEDED'
+      | 'OVER_QUERY_LIMIT'
+      | 'REQUEST_DENIED'
+      | 'UNKNOWN_ERROR';
   }
 }

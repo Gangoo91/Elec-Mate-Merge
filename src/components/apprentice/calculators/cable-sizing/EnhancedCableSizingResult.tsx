@@ -1,21 +1,20 @@
-
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { 
-  CheckCircle, 
-  AlertTriangle, 
-  XCircle, 
-  Download, 
-  Save, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import {
+  CheckCircle,
+  AlertTriangle,
+  XCircle,
+  Download,
+  Save,
   Zap,
   Shield,
   TrendingUp,
-  Info
-} from "lucide-react";
-import type { EnhancedCableSizingResult as EnhancedCableSizingResultType } from "./useEnhancedCableSizing";
+  Info,
+} from 'lucide-react';
+import type { EnhancedCableSizingResult as EnhancedCableSizingResultType } from './useEnhancedCableSizing';
 
 interface EnhancedCableSizingResultProps {
   result: EnhancedCableSizingResultType;
@@ -26,23 +25,31 @@ interface EnhancedCableSizingResultProps {
 const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
   result,
   onSaveToHistory,
-  onExportReport
+  onExportReport,
 }) => {
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'pass': return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'warning': return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
-      case 'fail': return <XCircle className="h-4 w-4 text-red-500" />;
-      default: return <Info className="h-4 w-4 text-blue-500" />;
+      case 'pass':
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
+      case 'warning':
+        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+      case 'fail':
+        return <XCircle className="h-4 w-4 text-red-500" />;
+      default:
+        return <Info className="h-4 w-4 text-blue-500" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pass': return 'text-green-500';
-      case 'warning': return 'text-yellow-500';
-      case 'fail': return 'text-red-500';
-      default: return 'text-blue-500';
+      case 'pass':
+        return 'text-green-500';
+      case 'warning':
+        return 'text-yellow-500';
+      case 'fail':
+        return 'text-red-500';
+      default:
+        return 'text-blue-500';
     }
   };
 
@@ -55,7 +62,8 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
             Enhanced Cable Calculator Ready
           </h3>
           <p className="text-sm sm:text-base text-white max-w-md">
-            Enter your project details and calculation parameters to get comprehensive cable sizing recommendations with compliance checking.
+            Enter your project details and calculation parameters to get comprehensive cable sizing
+            recommendations with compliance checking.
           </p>
         </div>
       </div>
@@ -67,9 +75,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
       <div className="h-full flex items-center justify-center text-center p-4 sm:p-6">
         <div>
           <XCircle className="h-12 w-12 sm:h-16 sm:w-16 text-red-500 mx-auto mb-4" />
-          <h3 className="text-lg sm:text-xl font-medium text-white mb-2">
-            Calculation Errors
-          </h3>
+          <h3 className="text-lg sm:text-xl font-medium text-white mb-2">Calculation Errors</h3>
           <div className="space-y-2 text-sm sm:text-base">
             {Object.entries(result.errors).map(([field, error]) => (
               <p key={field} className="text-red-400">
@@ -121,7 +127,8 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
                   {result.recommendedCable.cable.size}
                 </div>
                 <div className="text-sm text-white">
-                  {result.recommendedCable.cable.coreConfig} • {result.recommendedCable.cable.cableType}
+                  {result.recommendedCable.cable.coreConfig} •{' '}
+                  {result.recommendedCable.cable.cableType}
                 </div>
               </div>
               <div className="space-y-2">
@@ -165,7 +172,9 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
                 </div>
                 <div className="space-y-1">
                   {result.recommendedCable.warningNotes.map((note, index) => (
-                    <p key={index} className="text-xs sm:text-sm text-yellow-400">{note}</p>
+                    <p key={index} className="text-xs sm:text-sm text-yellow-400">
+                      {note}
+                    </p>
                   ))}
                 </div>
               </div>
@@ -187,11 +196,15 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
             <div className="space-y-3">
               <div>
                 <div className="text-xs text-white">Design Current</div>
-                <div className="font-medium text-sm sm:text-base">{result.designCurrent.toFixed(1)}A</div>
+                <div className="font-medium text-sm sm:text-base">
+                  {result.designCurrent.toFixed(1)}A
+                </div>
               </div>
               <div>
                 <div className="text-xs text-white">Protective Device Rating</div>
-                <div className="font-medium text-sm sm:text-base">{result.protectiveDeviceRating}A</div>
+                <div className="font-medium text-sm sm:text-base">
+                  {result.protectiveDeviceRating}A
+                </div>
               </div>
             </div>
             <div className="space-y-3">
@@ -203,8 +216,11 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               </div>
               <div>
                 <div className="text-xs text-white">Zs Calculation</div>
-                <div className={`font-medium text-sm sm:text-base ${result.zsCalculation.compliant ? 'text-green-400' : 'text-red-400'}`}>
-                  {result.zsCalculation.zs.toFixed(2)}Ω (Max: {result.zsCalculation.maxZs.toFixed(2)}Ω)
+                <div
+                  className={`font-medium text-sm sm:text-base ${result.zsCalculation.compliant ? 'text-green-400' : 'text-red-400'}`}
+                >
+                  {result.zsCalculation.zs.toFixed(2)}Ω (Max:{' '}
+                  {result.zsCalculation.maxZs.toFixed(2)}Ω)
                 </div>
               </div>
             </div>
@@ -224,9 +240,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
           <div className="space-y-3">
             {result.complianceChecks.map((check, index) => (
               <div key={index} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                <div className="mt-0.5">
-                  {getStatusIcon(check.status)}
-                </div>
+                <div className="mt-0.5">{getStatusIcon(check.status)}</div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-3">
                     <div className="font-medium text-sm sm:text-base">{check.requirement}</div>
@@ -284,7 +298,9 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
                 </div>
                 <div className="space-y-1">
                   {result.warnings.map((warning, index) => (
-                    <p key={index} className="text-xs sm:text-sm text-yellow-400 pl-6">{warning}</p>
+                    <p key={index} className="text-xs sm:text-sm text-yellow-400 pl-6">
+                      {warning}
+                    </p>
                   ))}
                 </div>
               </div>
@@ -294,11 +310,15 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="h-4 w-4 text-blue-500" />
-                  <span className="font-medium text-blue-500 text-sm sm:text-base">Recommendations</span>
+                  <span className="font-medium text-blue-500 text-sm sm:text-base">
+                    Recommendations
+                  </span>
                 </div>
                 <div className="space-y-1">
                   {result.recommendations.map((rec, index) => (
-                    <p key={index} className="text-xs sm:text-sm text-blue-400 pl-6">{rec}</p>
+                    <p key={index} className="text-xs sm:text-sm text-blue-400 pl-6">
+                      {rec}
+                    </p>
                   ))}
                 </div>
               </div>

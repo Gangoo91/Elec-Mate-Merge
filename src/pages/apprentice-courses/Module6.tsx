@@ -1,57 +1,57 @@
-import { ArrowLeft, TestTube, Eye, Wrench, Zap, Shield, FileText, Award } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, TestTube, Eye, Wrench, Zap, Shield, FileText, Award } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Purpose of Inspection and Testing",
-    description: "Understanding why inspection and testing are essential for electrical safety",
+    number: 'Section 1',
+    title: 'Purpose of Inspection and Testing',
+    description: 'Understanding why inspection and testing are essential for electrical safety',
     icon: TestTube,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
-    title: "Visual Inspection of Electrical Installations",
-    description: "Systematic visual inspection techniques for electrical systems",
+    number: 'Section 2',
+    title: 'Visual Inspection of Electrical Installations',
+    description: 'Systematic visual inspection techniques for electrical systems',
     icon: Eye,
-    href: "section2"
+    href: 'section2',
   },
   {
-    number: "Section 3",
-    title: "Basic Testing Procedures and Instruments",
-    description: "Introduction to electrical testing equipment and procedures",
+    number: 'Section 3',
+    title: 'Basic Testing Procedures and Instruments',
+    description: 'Introduction to electrical testing equipment and procedures',
     icon: Wrench,
-    href: "section3"
+    href: 'section3',
   },
   {
-    number: "Section 4",
-    title: "Continuity and Polarity Checks",
-    description: "Testing for electrical continuity and correct polarity",
+    number: 'Section 4',
+    title: 'Continuity and Polarity Checks',
+    description: 'Testing for electrical continuity and correct polarity',
     icon: Zap,
-    href: "section4"
+    href: 'section4',
   },
   {
-    number: "Section 5",
-    title: "Insulation Resistance Testing (Introduction Only)",
-    description: "Basic introduction to insulation resistance testing principles",
+    number: 'Section 5',
+    title: 'Insulation Resistance Testing (Introduction Only)',
+    description: 'Basic introduction to insulation resistance testing principles',
     icon: Shield,
-    href: "section5"
+    href: 'section5',
   },
   {
-    number: "Section 6",
-    title: "Recording Test Results and Defect Identification",
-    description: "Documenting test results and identifying electrical defects",
+    number: 'Section 6',
+    title: 'Recording Test Results and Defect Identification',
+    description: 'Documenting test results and identifying electrical defects',
     icon: FileText,
-    href: "section6"
+    href: 'section6',
   },
   {
-    number: "Section 7",
-    title: "Introduction to Certification and Documentation",
-    description: "Understanding electrical certification and compliance documentation",
+    number: 'Section 7',
+    title: 'Introduction to Certification and Documentation',
+    description: 'Understanding electrical certification and compliance documentation',
     icon: Award,
-    href: "section7"
+    href: 'section7',
   },
 ];
 

@@ -1,12 +1,18 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Search, SlidersHorizontal, X, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Search, SlidersHorizontal, X, ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface CourseSearchFilters {
   searchTerm: string;
@@ -27,45 +33,44 @@ interface CourseSearchFormProps {
 
 const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
   const [filters, setFilters] = useState<CourseSearchFilters>({
-    searchTerm: "",
-    category: "",
-    level: "",
-    format: "",
-    location: "",
-    provider: "",
-    maxPrice: "",
-    duration: "",
-    sortBy: "relevance"
+    searchTerm: '',
+    category: '',
+    level: '',
+    format: '',
+    location: '',
+    provider: '',
+    maxPrice: '',
+    duration: '',
+    sortBy: 'relevance',
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleFilterChange = (key: keyof CourseSearchFilters, value: string) => {
-    const newFilters = { ...filters, [key]: value === "all" ? "" : value };
+    const newFilters = { ...filters, [key]: value === 'all' ? '' : value };
     setFilters(newFilters);
     onSearch(newFilters);
   };
 
   const handleReset = () => {
     const resetFilters: CourseSearchFilters = {
-      searchTerm: "",
-      category: "",
-      level: "",
-      format: "",
-      location: "",
-      provider: "",
-      maxPrice: "",
-      duration: "",
-      sortBy: "relevance"
+      searchTerm: '',
+      category: '',
+      level: '',
+      format: '',
+      location: '',
+      provider: '',
+      maxPrice: '',
+      duration: '',
+      sortBy: 'relevance',
     };
     setFilters(resetFilters);
     onReset();
   };
 
   const getActiveFilterCount = () => {
-    return Object.entries(filters).filter(([key, value]) => 
-      key !== 'sortBy' && value.length > 0
-    ).length;
+    return Object.entries(filters).filter(([key, value]) => key !== 'sortBy' && value.length > 0)
+      .length;
   };
 
   const activeFilterCount = getActiveFilterCount();
@@ -83,15 +88,18 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
             value={filters.searchTerm}
             onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
             className={cn(
-              "bg-background/50 border-elec-yellow/20 text-foreground placeholder-white/60",
-              !filters.searchTerm && "pl-10"
+              'bg-background/50 border-elec-yellow/20 text-foreground placeholder-white/60',
+              !filters.searchTerm && 'pl-10'
             )}
           />
         </div>
 
         {/* Quick Filters */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Select value={filters.category} onValueChange={(value) => handleFilterChange('category', value)}>
+          <Select
+            value={filters.category}
+            onValueChange={(value) => handleFilterChange('category', value)}
+          >
             <SelectTrigger className="bg-background/50 border-elec-yellow/20">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
@@ -105,7 +113,10 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
             </SelectContent>
           </Select>
 
-          <Select value={filters.format} onValueChange={(value) => handleFilterChange('format', value)}>
+          <Select
+            value={filters.format}
+            onValueChange={(value) => handleFilterChange('format', value)}
+          >
             <SelectTrigger className="bg-background/50 border-elec-yellow/20">
               <SelectValue placeholder="Study Mode" />
             </SelectTrigger>
@@ -119,7 +130,10 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
             </SelectContent>
           </Select>
 
-          <Select value={filters.location} onValueChange={(value) => handleFilterChange('location', value)}>
+          <Select
+            value={filters.location}
+            onValueChange={(value) => handleFilterChange('location', value)}
+          >
             <SelectTrigger className="bg-background/50 border-elec-yellow/20">
               <SelectValue placeholder="Location" />
             </SelectTrigger>
@@ -142,7 +156,9 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
               <Button variant="ghost" className="text-elec-yellow hover:text-elec-yellow/80 p-0">
                 <SlidersHorizontal className="mr-2 h-4 w-4" />
                 Advanced Filters
-                <ChevronDown className={`ml-2 h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`ml-2 h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`}
+                />
               </Button>
             </CollapsibleTrigger>
             <div className="flex items-center gap-2">
@@ -166,7 +182,10 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
 
           <CollapsibleContent className="space-y-4 mt-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Select value={filters.level} onValueChange={(value) => handleFilterChange('level', value)}>
+              <Select
+                value={filters.level}
+                onValueChange={(value) => handleFilterChange('level', value)}
+              >
                 <SelectTrigger className="bg-background/50 border-elec-yellow/20">
                   <SelectValue placeholder="Level" />
                 </SelectTrigger>
@@ -181,7 +200,10 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                 </SelectContent>
               </Select>
 
-              <Select value={filters.provider} onValueChange={(value) => handleFilterChange('provider', value)}>
+              <Select
+                value={filters.provider}
+                onValueChange={(value) => handleFilterChange('provider', value)}
+              >
                 <SelectTrigger className="bg-background/50 border-elec-yellow/20">
                   <SelectValue placeholder="Provider Type" />
                 </SelectTrigger>
@@ -194,7 +216,10 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                 </SelectContent>
               </Select>
 
-              <Select value={filters.maxPrice} onValueChange={(value) => handleFilterChange('maxPrice', value)}>
+              <Select
+                value={filters.maxPrice}
+                onValueChange={(value) => handleFilterChange('maxPrice', value)}
+              >
                 <SelectTrigger className="bg-background/50 border-elec-yellow/20">
                   <SelectValue placeholder="Max Price" />
                 </SelectTrigger>
@@ -207,7 +232,10 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
                 </SelectContent>
               </Select>
 
-              <Select value={filters.duration} onValueChange={(value) => handleFilterChange('duration', value)}>
+              <Select
+                value={filters.duration}
+                onValueChange={(value) => handleFilterChange('duration', value)}
+              >
                 <SelectTrigger className="bg-background/50 border-elec-yellow/20">
                   <SelectValue placeholder="Duration" />
                 </SelectTrigger>

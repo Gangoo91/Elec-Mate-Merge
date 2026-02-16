@@ -55,18 +55,10 @@ export const MobileAwareAnimatePresence: React.FC<MobileAwareAnimatePresenceProp
   const shouldReduce = useShouldReduceAnimations();
 
   if (shouldReduce && !forceFull) {
-    return (
-      <div className={mobileClassName}>
-        {children}
-      </div>
-    );
+    return <div className={mobileClassName}>{children}</div>;
   }
 
-  return (
-    <AnimatePresence {...props}>
-      {children}
-    </AnimatePresence>
-  );
+  return <AnimatePresence {...props}>{children}</AnimatePresence>;
 };
 
 interface MobileAwareMotionDivProps extends MotionProps {
@@ -94,11 +86,7 @@ export const MobileAwareMotionDiv: React.FC<MobileAwareMotionDivProps> = ({
   const shouldReduce = useShouldReduceAnimations();
 
   if (shouldReduce && !forceFull) {
-    return (
-      <div className={cn(mobileClassName, className)}>
-        {children}
-      </div>
-    );
+    return <div className={cn(mobileClassName, className)}>{children}</div>;
   }
 
   return (
@@ -174,19 +162,19 @@ export const SlideIn: React.FC<SlideInProps> = ({
 
   const getInitialPosition = () => {
     switch (direction) {
-      case 'left': return { x: -20, y: 0 };
-      case 'right': return { x: 20, y: 0 };
-      case 'up': return { x: 0, y: 20 };
-      case 'down': return { x: 0, y: -20 };
+      case 'left':
+        return { x: -20, y: 0 };
+      case 'right':
+        return { x: 20, y: 0 };
+      case 'up':
+        return { x: 0, y: 20 };
+      case 'down':
+        return { x: 0, y: -20 };
     }
   };
 
   if (shouldReduce) {
-    return (
-      <div className={cn('animate-in fade-in duration-150', className)}>
-        {children}
-      </div>
-    );
+    return <div className={cn('animate-in fade-in duration-150', className)}>{children}</div>;
   }
 
   const initial = getInitialPosition();

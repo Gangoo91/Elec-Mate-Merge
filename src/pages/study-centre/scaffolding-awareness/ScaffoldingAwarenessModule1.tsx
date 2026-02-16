@@ -1,45 +1,45 @@
-import { ArrowLeft, Construction, Layers, Building2, Users } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Construction, Layers, Building2, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Is Scaffolding?",
+    title: 'What Is Scaffolding?',
     icon: Construction,
     description:
-      "Temporary structures providing access and working platforms for construction, maintenance, and repair at height",
+      'Temporary structures providing access and working platforms for construction, maintenance, and repair at height',
   },
   {
     id: 2,
-    title: "Types of Scaffolding",
+    title: 'Types of Scaffolding',
     icon: Layers,
     description:
-      "Independent, putlog, system, mobile towers, cantilever, suspended, and birdcage scaffolds and when each is used",
+      'Independent, putlog, system, mobile towers, cantilever, suspended, and birdcage scaffolds and when each is used',
   },
   {
     id: 3,
-    title: "Scaffold Terminology",
+    title: 'Scaffold Terminology',
     icon: Building2,
     description:
-      "Standards, ledgers, transoms, braces, putlogs, guard rails, toe boards, sole boards, base plates, and couplers",
+      'Standards, ledgers, transoms, braces, putlogs, guard rails, toe boards, sole boards, base plates, and couplers',
   },
   {
     id: 4,
-    title: "Who Does What?",
+    title: 'Who Does What?',
     icon: Users,
     description:
-      "Scaffolders (CISRS), scaffold inspectors, users, designers, and the competent person role",
+      'Scaffolders (CISRS), scaffold inspectors, users, designers, and the competent person role',
   },
 ];
 
 export default function ScaffoldingAwarenessModule1() {
   useSEO({
-    title: "Module 1: Introduction to Scaffolding | Scaffolding Awareness",
+    title: 'Module 1: Introduction to Scaffolding | Scaffolding Awareness',
     description:
-      "Learn about scaffolding types, terminology, components, and the roles of scaffolders, inspectors, and competent persons.",
+      'Learn about scaffolding types, terminology, components, and the roles of scaffolders, inspectors, and competent persons.',
   });
 
   return (

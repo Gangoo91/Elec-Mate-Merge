@@ -22,13 +22,16 @@ import {
   AlertCircle,
   Loader2,
   CircuitBoard,
-  Receipt
+  Receipt,
 } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
-import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import {
+  createQuoteFromCertificate,
+  createInvoiceFromCertificate,
+} from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
 
 // Import EIC form components
@@ -71,7 +74,7 @@ const getDefaultFormData = () => ({
 
   // Metadata
   designSourceId: null,
-  designSourceDate: null
+  designSourceDate: null,
 });
 
 export default function EICCertificate() {
@@ -87,7 +90,9 @@ export default function EICCertificate() {
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
-  const [savedReportId, setSavedReportId] = useState<string | null>(id !== 'new' ? id || null : null);
+  const [savedReportId, setSavedReportId] = useState<string | null>(
+    id !== 'new' ? id || null : null
+  );
 
   // Hooks for tabs and observations
   const tabProps = useEICTabs(formData);
@@ -97,7 +102,11 @@ export default function EICCertificate() {
   const { companyProfile } = useCompanyProfile();
 
   // Check if company branding is available
-  const hasSavedCompanyBranding = !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+  const hasSavedCompanyBranding = !!(
+    companyProfile?.company_name ||
+    companyProfile?.logo_url ||
+    companyProfile?.logo_data_url
+  );
 
   // Load company branding for PDF
   const loadCompanyBranding = () => {
@@ -115,12 +124,16 @@ export default function EICCertificate() {
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#22c55e',
       registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
-      registrationScheme: companyProfile.registration_scheme || ''
+      registrationScheme: companyProfile.registration_scheme || '',
     };
   };
 
   // Fetch design data if designId is provided
-  const { data: designData, isLoading: isLoadingDesign, error: designError } = useDesignedCircuit(designId || '');
+  const {
+    data: designData,
+    isLoading: isLoadingDesign,
+    error: designError,
+  } = useDesignedCircuit(designId || '');
   const updateDesignStatus = useUpdateDesignedCircuitStatus();
 
   // Pre-populate form from design data
@@ -129,38 +142,39 @@ export default function EICCertificate() {
       const scheduleData = designData.schedule_data;
 
       // Transform design circuits to test results format
-      const transformedCircuits = scheduleData.circuits?.map((circuit: any, idx: number) => ({
-        id: `design-${idx + 1}`,
-        circuitDesignation: `C${idx + 1}`,
-        circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
-        circuitDescription: circuit.circuitDescription || '',
-        phaseType: circuit.phaseType || 'single-phase',
-        referenceMethod: circuit.referenceMethod || '',
-        pointsServed: circuit.pointsServed || '',
-        liveSize: circuit.liveSize || '',
-        cpcSize: circuit.cpcSize || '',
-        bsStandard: circuit.bsStandard || 'BS EN 60898',
-        protectiveDeviceType: circuit.protectiveDeviceType || 'MCB',
-        protectiveDeviceCurve: circuit.protectiveDeviceCurve || 'B',
-        protectiveDeviceRating: circuit.protectiveDeviceRating || '',
-        protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
-        // Expected values from design
-        expectedR1R2: circuit.r1r2 || '',
-        expectedZs: circuit.zs || '',
-        expectedMaxZs: circuit.maxZs || '',
-        // Actual test values (to be filled on-site)
-        r1r2: '',
-        zs: '',
-        maxZs: circuit.maxZs || '',
-        insulationTestVoltage: circuit.insulationTestVoltage || '500V DC',
-        insulationResistance: '',
-        polarity: '',
-        rcdRating: circuit.rcdRating || '',
-        rcdOneX: '',
-        rcdFiveX: '',
-        pfc: '',
-        functionalTesting: ''
-      })) || [];
+      const transformedCircuits =
+        scheduleData.circuits?.map((circuit: any, idx: number) => ({
+          id: `design-${idx + 1}`,
+          circuitDesignation: `C${idx + 1}`,
+          circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
+          circuitDescription: circuit.circuitDescription || '',
+          phaseType: circuit.phaseType || 'single-phase',
+          referenceMethod: circuit.referenceMethod || '',
+          pointsServed: circuit.pointsServed || '',
+          liveSize: circuit.liveSize || '',
+          cpcSize: circuit.cpcSize || '',
+          bsStandard: circuit.bsStandard || 'BS EN 60898',
+          protectiveDeviceType: circuit.protectiveDeviceType || 'MCB',
+          protectiveDeviceCurve: circuit.protectiveDeviceCurve || 'B',
+          protectiveDeviceRating: circuit.protectiveDeviceRating || '',
+          protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
+          // Expected values from design
+          expectedR1R2: circuit.r1r2 || '',
+          expectedZs: circuit.zs || '',
+          expectedMaxZs: circuit.maxZs || '',
+          // Actual test values (to be filled on-site)
+          r1r2: '',
+          zs: '',
+          maxZs: circuit.maxZs || '',
+          insulationTestVoltage: circuit.insulationTestVoltage || '500V DC',
+          insulationResistance: '',
+          polarity: '',
+          rcdRating: circuit.rcdRating || '',
+          rcdOneX: '',
+          rcdFiveX: '',
+          pfc: '',
+          functionalTesting: '',
+        })) || [];
 
       // Pre-populate form data
       setFormData((prev: any) => ({
@@ -170,19 +184,21 @@ export default function EICCertificate() {
         supplyPhases: scheduleData.supply?.phases || 'single',
         earthingSystem: scheduleData.supply?.earthingSystem || 'TN-C-S',
         ze: scheduleData.supply?.ze?.toString() || '',
-        prospectiveFaultCurrent: scheduleData.supply?.pscc ? (scheduleData.supply.pscc / 1000).toFixed(1) : '',
+        prospectiveFaultCurrent: scheduleData.supply?.pscc
+          ? (scheduleData.supply.pscc / 1000).toFixed(1)
+          : '',
         scheduleOfTests: transformedCircuits,
         designSourceId: designId,
         designSourceDate: designData.created_at,
         // Copy project info
         clientName: scheduleData.projectInfo?.clientName || '',
-        description: scheduleData.projectInfo?.projectName || ''
+        description: scheduleData.projectInfo?.projectName || '',
       }));
 
       setHasLoadedDesign(true);
 
       toast.success('Design loaded', {
-        description: `${transformedCircuits.length} circuits pre-filled from Circuit Designer`
+        description: `${transformedCircuits.length} circuits pre-filled from Circuit Designer`,
       });
 
       // Update design status to 'in-progress'
@@ -194,7 +210,7 @@ export default function EICCertificate() {
   const handleUpdate = (field: string, value: any) => {
     setFormData((prev: any) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -202,7 +218,9 @@ export default function EICCertificate() {
   const handleSaveDraft = async () => {
     setIsSaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         toast.error('Please sign in to save');
         return;
@@ -211,7 +229,7 @@ export default function EICCertificate() {
       // Prepare data with status
       const dataToSave = {
         ...formData,
-        status: 'draft'
+        status: 'draft',
       };
 
       if (savedReportId) {
@@ -254,7 +272,7 @@ export default function EICCertificate() {
       // Prepare PDF data
       const pdfData = {
         metadata: {
-          certificate_number: formData.certificateNumber || `EIC-${Date.now()}`
+          certificate_number: formData.certificateNumber || `EIC-${Date.now()}`,
         },
         // Company branding for PDF
         company_logo: branding?.companyLogo || formData.companyLogo || '',
@@ -268,47 +286,51 @@ export default function EICCertificate() {
           client_name: formData.clientName || '',
           client_address: formData.clientAddress || '',
           client_phone: formData.clientTelephone || '',
-          client_email: formData.clientEmail || ''
+          client_email: formData.clientEmail || '',
         },
         installation_details: {
           address: formData.installationAddress || '',
           description: formData.description || '',
-          installation_date: formData.installationDate || ''
+          installation_date: formData.installationDate || '',
         },
         supply_characteristics: {
           supply_voltage: formData.supplyVoltage || '',
           phases: formData.supplyPhases || '',
           earthing_arrangement: formData.earthingSystem || '',
           ze: formData.ze || '',
-          pfc: formData.prospectiveFaultCurrent || ''
+          pfc: formData.prospectiveFaultCurrent || '',
         },
-        schedule_of_tests: formData.scheduleOfTests?.map((test: any) => ({
-          circuit_number: test.circuitNumber || '',
-          circuit_description: test.circuitDescription || '',
-          protective_device_type: test.protectiveDeviceType || '',
-          protective_device_rating: test.protectiveDeviceRating || '',
-          r1r2: test.r1r2 || '',
-          zs: test.zs || '',
-          max_zs: test.maxZs || '',
-          insulation_resistance: test.insulationResistance || '',
-          polarity: test.polarity || '',
-          rcd_one_x: test.rcdOneX || '',
-          pfc: test.pfc || ''
-        })) || [],
+        schedule_of_tests:
+          formData.scheduleOfTests?.map((test: any) => ({
+            circuit_number: test.circuitNumber || '',
+            circuit_description: test.circuitDescription || '',
+            protective_device_type: test.protectiveDeviceType || '',
+            protective_device_rating: test.protectiveDeviceRating || '',
+            r1r2: test.r1r2 || '',
+            zs: test.zs || '',
+            max_zs: test.maxZs || '',
+            insulation_resistance: test.insulationResistance || '',
+            polarity: test.polarity || '',
+            rcd_one_x: test.rcdOneX || '',
+            pfc: test.pfc || '',
+          })) || [],
         declarations: {
           designer: formData.designerDeclaration || {},
           installer: formData.installerDeclaration || {},
-          inspector: formData.inspectorDeclaration || {}
-        }
+          inspector: formData.inspectorDeclaration || {},
+        },
       };
 
       // Call edge function to generate PDF
-      const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-eic-pdf', {
-        body: {
-          formData: pdfData,
-          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
+      const { data: functionData, error: functionError } = await supabase.functions.invoke(
+        'generate-eic-pdf',
+        {
+          body: {
+            formData: pdfData,
+            templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947',
+          },
         }
-      });
+      );
 
       if (functionError) {
         throw new Error(functionError.message || 'Failed to generate PDF');
@@ -393,7 +415,9 @@ export default function EICCertificate() {
                 </div>
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-white">Loading Design</h3>
-                  <p className="text-sm text-white/50">Pre-filling circuits from Circuit Designer...</p>
+                  <p className="text-sm text-white/50">
+                    Pre-filling circuits from Circuit Designer...
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -461,8 +485,8 @@ export default function EICCertificate() {
               {formData.designSourceId && (
                 <Badge
                   className={cn(
-                    "gap-1.5",
-                    "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                    'gap-1.5',
+                    'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30'
                   )}
                 >
                   <CircuitBoard className="h-3 w-3" />
@@ -470,16 +494,14 @@ export default function EICCertificate() {
                 </Badge>
               )}
 
-              <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-500/30">
+              <Badge
+                variant="outline"
+                className="bg-amber-500/10 text-amber-400 border-amber-500/30"
+              >
                 Draft
               </Badge>
 
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-              >
+              <Button variant="outline" size="sm" onClick={handleSaveDraft} disabled={isSaving}>
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 ) : (
@@ -488,11 +510,7 @@ export default function EICCertificate() {
                 Save
               </Button>
 
-              <Button
-                size="sm"
-                onClick={handleGenerateCertificate}
-                disabled={isGenerating}
-              >
+              <Button size="sm" onClick={handleGenerateCertificate} disabled={isGenerating}>
                 {isGenerating ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 ) : (
@@ -520,7 +538,6 @@ export default function EICCertificate() {
                 <Receipt className="h-4 w-4 mr-2" />
                 Invoice
               </Button>
-
             </div>
           </div>
         </div>
@@ -540,8 +557,8 @@ export default function EICCertificate() {
                 <Zap className="h-4 w-4 text-elec-yellow" />
                 <span className="text-elec-yellow font-medium">Circuit Designer Integration:</span>
                 <span className="text-white/70">
-                  {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test values.
-                  Enter actual readings on-site.
+                  {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test
+                  values. Enter actual readings on-site.
                 </span>
               </div>
             </div>
@@ -589,7 +606,7 @@ export default function EICCertificate() {
             onNavigateToObservations: () => tabProps.setCurrentTab('inspections'),
             onSyncToInspectionItem: (itemId: string, outcome: string) => {
               // Sync observation to inspection item
-            }
+            },
           }}
           onGenerateCertificate={handleGenerateCertificate}
           onSaveDraft={handleSaveDraft}

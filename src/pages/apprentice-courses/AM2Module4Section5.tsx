@@ -1,26 +1,37 @@
-import { Search, CheckCircle, AlertTriangle, Target, BookOpen, Eye, FileText, Lightbulb, Award, Shield } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
-import useSEO from "@/hooks/useSEO";
+import {
+  Search,
+  CheckCircle,
+  AlertTriangle,
+  Target,
+  BookOpen,
+  Eye,
+  FileText,
+  Lightbulb,
+  Award,
+  Shield,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module4Section5 = () => {
   useSEO(
-    "Identifying and Reporting Non-Compliances | AM2 Module 4 Section 5",
-    "Master fault identification and compliance reporting for AM2 electrical assessment success"
+    'Identifying and Reporting Non-Compliances | AM2 Module 4 Section 5',
+    'Master fault identification and compliance reporting for AM2 electrical assessment success'
   );
 
   const learningOutcomes = [
-    "Define what a non-compliance is in the context of BS 7671",
-    "Identify common installation faults and unsafe practices",
-    "Interpret test results that fall outside permitted values",
-    "Record non-compliances clearly and accurately on certification",
-    "Explain to an assessor why something is non-compliant"
+    'Define what a non-compliance is in the context of BS 7671',
+    'Identify common installation faults and unsafe practices',
+    'Interpret test results that fall outside permitted values',
+    'Record non-compliances clearly and accurately on certification',
+    'Explain to an assessor why something is non-compliant',
   ];
 
   const quickCheckQuestions: Array<{
@@ -31,117 +42,120 @@ const AM2Module4Section5 = () => {
     explanation: string;
   }> = [
     {
-      id: "rcd-non-compliance",
-      question: "If an RCD fails to trip within limits at x5 IΔn, is that a non-compliance?",
+      id: 'rcd-non-compliance',
+      question: 'If an RCD fails to trip within limits at x5 IΔn, is that a non-compliance?',
       options: [
-        "No, as long as x1 test passes",
-        "Yes - it must be recorded as failing BS 7671 requirements",
-        "Only if it fails by more than 50%",
-        "It depends on the installation type"
+        'No, as long as x1 test passes',
+        'Yes - it must be recorded as failing BS 7671 requirements',
+        'Only if it fails by more than 50%',
+        'It depends on the installation type',
       ],
       correctIndex: 1,
-      explanation: "Any RCD that fails to trip within BS 7671 specified times at either x1 or x5 IΔn is non-compliant and must be recorded as such."
+      explanation:
+        'Any RCD that fails to trip within BS 7671 specified times at either x1 or x5 IΔn is non-compliant and must be recorded as such.',
     },
     {
-      id: "minimum-insulation",
+      id: 'minimum-insulation',
       question: "What's the minimum acceptable insulation resistance value in AM2?",
-      options: [
-        "0.5 MΩ",
-        "1 MΩ",
-        "2 MΩ",
-        "200 MΩ"
-      ],
+      options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '200 MΩ'],
       correctIndex: 1,
-      explanation: "The minimum acceptable insulation resistance for most circuits is 1 MΩ as specified in BS 7671. Values below this indicate insulation failure."
+      explanation:
+        'The minimum acceptable insulation resistance for most circuits is 1 MΩ as specified in BS 7671. Values below this indicate insulation failure.',
     },
     {
-      id: "assessment-failure",
-      question: "True or false: You fail AM2 if you find a non-compliance.",
-      options: [
-        "True",
-        "False"
-      ],
+      id: 'assessment-failure',
+      question: 'True or false: You fail AM2 if you find a non-compliance.',
+      options: ['True', 'False'],
       correctIndex: 1,
-      explanation: "False. You're expected to find and report non-compliances. You fail if you miss obvious defects or fail to record them correctly."
-    }
+      explanation:
+        "False. You're expected to find and report non-compliances. You fail if you miss obvious defects or fail to record them correctly.",
+    },
   ];
 
   const quizQuestions = [
     {
       id: 1,
-      question: "Define a non-compliance in electrical installation terms.",
+      question: 'Define a non-compliance in electrical installation terms.',
       options: [
-        "Any electrical fault",
+        'Any electrical fault',
         "Any part that doesn't meet BS 7671, manufacturer's instructions, or specification",
-        "Only safety-critical faults",
-        "Minor workmanship issues only"
+        'Only safety-critical faults',
+        'Minor workmanship issues only',
       ],
       correctAnswer: 1,
-      explanation: "A non-compliance is any part of an installation that does not meet the requirements of BS 7671, manufacturer's instructions, or the installation specification."
+      explanation:
+        "A non-compliance is any part of an installation that does not meet the requirements of BS 7671, manufacturer's instructions, or the installation specification.",
     },
     {
       id: 2,
-      question: "Give one example of a visual non-compliance.",
+      question: 'Give one example of a visual non-compliance.',
       options: [
-        "High Zs reading",
-        "RCD trip time too slow",
-        "Exposed copper or unsleeved CPC",
-        "Low insulation resistance"
+        'High Zs reading',
+        'RCD trip time too slow',
+        'Exposed copper or unsleeved CPC',
+        'Low insulation resistance',
       ],
       correctAnswer: 2,
-      explanation: "Visual non-compliances include exposed copper, unsleeved CPCs, damaged insulation, poor workmanship, or incorrect polarity that can be seen during inspection."
+      explanation:
+        'Visual non-compliances include exposed copper, unsleeved CPCs, damaged insulation, poor workmanship, or incorrect polarity that can be seen during inspection.',
     },
     {
       id: 3,
       question: "What's the minimum acceptable insulation resistance in AM2?",
-      options: ["0.5 MΩ", "1 MΩ", "2 MΩ", "10 MΩ"],
+      options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '10 MΩ'],
       correctAnswer: 1,
-      explanation: "BS 7671 specifies a minimum insulation resistance of 1 MΩ for most electrical circuits. Values below this indicate insulation failure."
+      explanation:
+        'BS 7671 specifies a minimum insulation resistance of 1 MΩ for most electrical circuits. Values below this indicate insulation failure.',
     },
     {
       id: 4,
-      question: "What does it mean if socket polarity is reversed?",
+      question: 'What does it mean if socket polarity is reversed?',
       options: [
         "Socket won't work",
-        "Live and neutral conductors are connected incorrectly",
-        "Earth is missing",
-        "Voltage is too low"
+        'Live and neutral conductors are connected incorrectly',
+        'Earth is missing',
+        'Voltage is too low',
       ],
       correctAnswer: 1,
-      explanation: "Reversed polarity means the live and neutral conductors are swapped, which can create safety hazards as switches may not isolate the live conductor."
+      explanation:
+        'Reversed polarity means the live and neutral conductors are swapped, which can create safety hazards as switches may not isolate the live conductor.',
     },
     {
       id: 5,
       question: "What's the maximum trip time at x1 for a 30 mA RCD?",
-      options: ["40 ms", "300 ms", "1000 ms", "No limit"],
+      options: ['40 ms', '300 ms', '1000 ms', 'No limit'],
       correctAnswer: 1,
-      explanation: "At x1 rated current (30mA), an RCD should trip but may take up to 300ms according to BS 7671."
+      explanation:
+        'At x1 rated current (30mA), an RCD should trip but may take up to 300ms according to BS 7671.',
     },
     {
       id: 6,
       question: "What's the maximum trip time at x5 for a 30 mA RCD?",
-      options: ["40 ms", "300 ms", "150 ms", "200 ms"],
+      options: ['40 ms', '300 ms', '150 ms', '200 ms'],
       correctAnswer: 0,
-      explanation: "At x5 rated current (150mA), a 30mA RCD must trip within 40ms according to BS 7671 requirements."
+      explanation:
+        'At x5 rated current (150mA), a 30mA RCD must trip within 40ms according to BS 7671 requirements.',
     },
     {
       id: 7,
-      question: "If a Zs result is higher than BS 7671 maximum, what must you do?",
+      question: 'If a Zs result is higher than BS 7671 maximum, what must you do?',
       options: [
-        "Ignore it if close",
-        "Record it as non-compliant",
-        "Test again and hope for better result",
-        "Adjust the reading"
+        'Ignore it if close',
+        'Record it as non-compliant',
+        'Test again and hope for better result',
+        'Adjust the reading',
       ],
       correctAnswer: 1,
-      explanation: "Any Zs reading that exceeds BS 7671 maximum values for the protective device must be recorded as non-compliant."
+      explanation:
+        'Any Zs reading that exceeds BS 7671 maximum values for the protective device must be recorded as non-compliant.',
     },
     {
       id: 8,
-      question: "True or false: You fail AM2 if you find a non-compliance.",
-      options: ["True", "False"],
+      question: 'True or false: You fail AM2 if you find a non-compliance.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Finding and correctly reporting non-compliances demonstrates professional competence. You fail if you miss obvious defects."
+      explanation:
+        'False. Finding and correctly reporting non-compliances demonstrates professional competence. You fail if you miss obvious defects.',
     },
     {
       id: 9,
@@ -150,29 +164,31 @@ const AM2Module4Section5 = () => {
         "Write 'earth missing'",
         "Write 'CPC not connected at socket outlet'",
         "Don't record minor issues",
-        "Just mark as 'fault'"
+        "Just mark as 'fault'",
       ],
       correctAnswer: 1,
-      explanation: "Use specific, technical language like 'CPC not connected at socket outlet' rather than vague terms like 'earth missing'."
+      explanation:
+        "Use specific, technical language like 'CPC not connected at socket outlet' rather than vague terms like 'earth missing'.",
     },
     {
       id: 10,
-      question: "What happens if you ignore an obvious defect in AM2?",
+      question: 'What happens if you ignore an obvious defect in AM2?',
       options: [
-        "Nothing if tests pass",
-        "Minor mark deduction",
-        "Fail the assessment section",
-        "Get a second chance"
+        'Nothing if tests pass',
+        'Minor mark deduction',
+        'Fail the assessment section',
+        'Get a second chance',
       ],
       correctAnswer: 2,
-      explanation: "Ignoring obvious defects shows lack of professional competence and will result in failing the assessment section."
-    }
+      explanation:
+        'Ignoring obvious defects shows lack of professional competence and will result in failing the assessment section.',
+    },
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module4"
-      breadcrumbs={["AM2", "Module 4", "Section 5"]}
+      breadcrumbs={['AM2', 'Module 4', 'Section 5']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -185,10 +201,13 @@ const AM2Module4Section5 = () => {
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Missing Defects = Assessment Failure">
         <p className="text-ios-callout text-white/80 mb-2">
-          Assessors are looking for your ability to spot faults, interpret test results, and apply regulation-based judgement. Candidates who ignore obvious defects or record incorrect results will fail this section.
+          Assessors are looking for your ability to spot faults, interpret test results, and apply
+          regulation-based judgement. Candidates who ignore obvious defects or record incorrect
+          results will fail this section.
         </p>
         <p className="text-ios-callout text-white/90 font-medium">
-          Professional competence includes identifying problems, not just completing tasks. This demonstrates real-world electrical safety awareness.
+          Professional competence includes identifying problems, not just completing tasks. This
+          demonstrates real-world electrical safety awareness.
         </p>
       </AM2CriticalWarning>
 
@@ -207,17 +226,21 @@ const AM2Module4Section5 = () => {
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
           <h4 className="text-ios-headline text-white font-semibold mb-2">Definition:</h4>
           <p className="text-ios-callout text-white/80 mb-3">
-            Any part of an installation that does not meet the requirements of BS 7671, manufacturer's instructions, or the installation specification.
+            Any part of an installation that does not meet the requirements of BS 7671,
+            manufacturer's instructions, or the installation specification.
           </p>
           <p className="text-ios-callout text-elec-yellow">
-            <strong>Key Principle:</strong> Non-compliances can range from safety-critical issues to workmanship standards that affect professional quality.
+            <strong>Key Principle:</strong> Non-compliances can range from safety-critical issues to
+            workmanship standards that affect professional quality.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-4">
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Safety-Critical Non-Compliances:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Safety-Critical Non-Compliances:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
@@ -243,7 +266,9 @@ const AM2Module4Section5 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Design Non-Compliances:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Design Non-Compliances:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -267,7 +292,9 @@ const AM2Module4Section5 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Workmanship Non-Compliances:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Workmanship Non-Compliances:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -289,7 +316,9 @@ const AM2Module4Section5 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Testing Non-Compliances:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Testing Non-Compliances:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -334,7 +363,9 @@ const AM2Module4Section5 = () => {
               <Eye className="h-4 w-4 text-elec-yellow" />
               Visual Inspection:
             </h4>
-            <p className="text-ios-footnote text-white/60 mb-2">Before energising - systematic visual checks</p>
+            <p className="text-ios-footnote text-white/60 mb-2">
+              Before energising - systematic visual checks
+            </p>
             <ul className="text-ios-callout text-white/80 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -356,7 +387,9 @@ const AM2Module4Section5 = () => {
               <Search className="h-4 w-4 text-emerald-400" />
               Test Results:
             </h4>
-            <p className="text-ios-footnote text-white/60 mb-2">Compare readings with BS 7671 limits</p>
+            <p className="text-ios-footnote text-white/60 mb-2">
+              Compare readings with BS 7671 limits
+            </p>
             <ul className="text-ios-callout text-white/80 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -378,7 +411,9 @@ const AM2Module4Section5 = () => {
               <Target className="h-4 w-4 text-purple-400" />
               Functional Checks:
             </h4>
-            <p className="text-ios-footnote text-white/60 mb-2">Circuits not operating as intended</p>
+            <p className="text-ios-footnote text-white/60 mb-2">
+              Circuits not operating as intended
+            </p>
             <ul className="text-ios-callout text-white/80 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -397,10 +432,14 @@ const AM2Module4Section5 = () => {
         </div>
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">Systematic Identification Process:</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">
+            Systematic Identification Process:
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <p className="text-ios-callout text-white font-semibold mb-2">Step-by-Step Approach:</p>
+              <p className="text-ios-callout text-white font-semibold mb-2">
+                Step-by-Step Approach:
+              </p>
               <ol className="text-ios-callout text-white/80 space-y-1 list-decimal list-inside">
                 <li>Pre-energisation visual inspection</li>
                 <li>Dead testing and measurement comparison</li>
@@ -410,7 +449,9 @@ const AM2Module4Section5 = () => {
               </ol>
             </div>
             <div>
-              <p className="text-ios-callout text-white font-semibold mb-2">Critical Reference Points:</p>
+              <p className="text-ios-callout text-white font-semibold mb-2">
+                Critical Reference Points:
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -434,7 +475,9 @@ const AM2Module4Section5 = () => {
       <AM2CriticalWarning title="3. Common Non-Compliances in AM2 (NET Guidance)">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
           <div>
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Most Common Faults Found:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Most Common Faults Found:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
@@ -456,7 +499,9 @@ const AM2Module4Section5 = () => {
           </div>
 
           <div>
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Test Result Failures:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Test Result Failures:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
@@ -496,7 +541,9 @@ const AM2Module4Section5 = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-3">Professional Reporting Principles:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-3">
+              Professional Reporting Principles:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
@@ -518,7 +565,9 @@ const AM2Module4Section5 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-3">What to Include in Reports:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-3">
+              What to Include in Reports:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -543,37 +592,57 @@ const AM2Module4Section5 = () => {
         {/* Good vs Poor Reporting */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-3">Poor Reporting Examples:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-3">
+              Poor Reporting Examples:
+            </h4>
             <div className="space-y-2">
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"Earth missing"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">Too vague, no location specified</p>
+                <p className="text-ios-footnote text-white/60 mt-1">
+                  Too vague, no location specified
+                </p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"Ring fault"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">No detail about nature of fault</p>
+                <p className="text-ios-footnote text-white/60 mt-1">
+                  No detail about nature of fault
+                </p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"RCD broken"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">No test data or specific failure</p>
+                <p className="text-ios-footnote text-white/60 mt-1">
+                  No test data or specific failure
+                </p>
               </div>
             </div>
           </div>
 
           <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-3">Good Reporting Examples:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-3">
+              Good Reporting Examples:
+            </h4>
             <div className="space-y-2">
               <div className="bg-white/5 rounded-lg p-2">
-                <span className="text-ios-callout text-emerald-400">"CPC not connected at socket outlet in kitchen"</span>
+                <span className="text-ios-callout text-emerald-400">
+                  "CPC not connected at socket outlet in kitchen"
+                </span>
                 <p className="text-ios-footnote text-white/60 mt-1">Specific, clear, located</p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
-                <span className="text-ios-callout text-emerald-400">"Ring final broken at consumer unit - L conductor"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">Specific conductor and location</p>
+                <span className="text-ios-callout text-emerald-400">
+                  "Ring final broken at consumer unit - L conductor"
+                </span>
+                <p className="text-ios-footnote text-white/60 mt-1">
+                  Specific conductor and location
+                </p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
-                <span className="text-ios-callout text-emerald-400">"RCD trip time 380ms at x1 IΔn - exceeds 300ms limit"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">Measured value and standard referenced</p>
+                <span className="text-ios-callout text-emerald-400">
+                  "RCD trip time 380ms at x1 IΔn - exceeds 300ms limit"
+                </span>
+                <p className="text-ios-footnote text-white/60 mt-1">
+                  Measured value and standard referenced
+                </p>
               </div>
             </div>
           </div>
@@ -668,7 +737,9 @@ const AM2Module4Section5 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Visual Inspection Tips:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Visual Inspection Tips:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
@@ -688,7 +759,9 @@ const AM2Module4Section5 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Test Result Analysis:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Test Result Analysis:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
@@ -706,7 +779,9 @@ const AM2Module4Section5 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Professional Approach:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Professional Approach:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
@@ -743,32 +818,44 @@ const AM2Module4Section5 = () => {
 
         <div className="space-y-3">
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 1: Missed High Zs Reading</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 1: Missed High Zs Reading
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate measured Zs of 2.5 Ω on a B32 breaker (limit 1.44Ω exceeded). Failed to report - <strong className="text-red-400">lost marks</strong>
+              Candidate measured Zs of 2.5 Ω on a B32 breaker (limit 1.44Ω exceeded). Failed to
+              report - <strong className="text-red-400">lost marks</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
-              Lesson: Always compare measured values with BS 7671 limits. High Zs values indicate potentially dangerous earth fault loop impedance.
+              Lesson: Always compare measured values with BS 7671 limits. High Zs values indicate
+              potentially dangerous earth fault loop impedance.
             </p>
           </div>
 
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 2: Ignored Polarity Error</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 2: Ignored Polarity Error
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate found socket polarity reversed, but didn't note it. Assessor flagged - <strong className="text-red-400">fail</strong>
+              Candidate found socket polarity reversed, but didn't note it. Assessor flagged -{' '}
+              <strong className="text-red-400">fail</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
-              Lesson: Even seemingly minor defects must be recorded. Reversed polarity creates serious safety hazards.
+              Lesson: Even seemingly minor defects must be recorded. Reversed polarity creates
+              serious safety hazards.
             </p>
           </div>
 
           <div className="border-l-4 border-l-emerald-500 bg-emerald-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 3: Correct RCD Documentation</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 3: Correct RCD Documentation
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate recorded RCD 1x test at 280ms, 5x at 36ms. Correctly recorded as pass - <strong className="text-emerald-400">full marks</strong>
+              Candidate recorded RCD 1x test at 280ms, 5x at 36ms. Correctly recorded as pass -{' '}
+              <strong className="text-emerald-400">full marks</strong>
             </p>
             <p className="text-ios-footnote text-emerald-400">
-              Lesson: Accurate recording of actual measured values, even when within limits, demonstrates professional competence.
+              Lesson: Accurate recording of actual measured values, even when within limits,
+              demonstrates professional competence.
             </p>
           </div>
         </div>
@@ -790,7 +877,9 @@ const AM2Module4Section5 = () => {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Visual checks, test results, and functional tests must be interpreted correctly</span>
+              <span>
+                Visual checks, test results, and functional tests must be interpreted correctly
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
@@ -814,7 +903,8 @@ const AM2Module4Section5 = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Next Steps:</h4>
           <p className="text-ios-callout text-white/80">
-            You're now ready to move on to Section 6, where we'll cover time management during testing - a critical skill for AM2 success.
+            You're now ready to move on to Section 6, where we'll cover time management during
+            testing - a critical skill for AM2 success.
           </p>
         </div>
       </AM2ContentCard>

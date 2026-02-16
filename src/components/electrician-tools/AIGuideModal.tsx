@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { 
-  X, 
-  PoundSterling, 
-  CheckCircle, 
-  AlertCircle, 
+import { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  X,
+  PoundSterling,
+  CheckCircle,
+  AlertCircle,
   Zap,
   ShoppingCart,
   TrendingUp,
   Clock,
   Database,
-  RefreshCw
-} from "lucide-react";
+  RefreshCw,
+} from 'lucide-react';
 
 interface GuideRecommendation {
   tool: string;
@@ -63,26 +63,26 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
     if (!forceRefresh && isInitialLoad) {
       setIsLoading(true);
     }
-    
+
     try {
       const { data, error } = await supabase.functions.invoke('generate-tool-guide', {
-        body: { 
+        body: {
           guideType: guideType,
           forceRefresh,
           userProfile: {
             experience: 'professional',
             specialisation: 'general_electrical',
-            business_type: 'mobile_electrician'
-          }
-        }
+            business_type: 'mobile_electrician',
+          },
+        },
       });
 
       if (error) {
         console.error('Error loading guide:', error);
         toast({
-          title: "Guide Loading Failed",
-          description: "Unable to load guide. Please try again.",
-          variant: "destructive",
+          title: 'Guide Loading Failed',
+          description: 'Unable to load guide. Please try again.',
+          variant: 'destructive',
         });
         return;
       }
@@ -94,9 +94,9 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
     } catch (error) {
       console.error('Error:', error);
       toast({
-        title: "Connection Error",
-        description: "Failed to load guide data.",
-        variant: "destructive",
+        title: 'Connection Error',
+        description: 'Failed to load guide data.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -111,7 +111,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent 
+      <DialogContent
         className="max-w-4xl max-h-[90vh] overflow-y-auto bg-elec-gray border-elec-yellow/20"
         onOpenAutoFocus={() => {}}
       >
@@ -171,7 +171,9 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                       <div>
                         <span className="text-muted-foreground">Next Refresh:</span>
                         <p className="text-foreground font-medium">
-                          {cacheInfo.nextRefresh ? new Date(cacheInfo.nextRefresh).toLocaleDateString() : 'N/A'}
+                          {cacheInfo.nextRefresh
+                            ? new Date(cacheInfo.nextRefresh).toLocaleDateString()
+                            : 'N/A'}
                         </p>
                       </div>
                       <div>
@@ -202,15 +204,21 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="text-center p-3 bg-elec-gray rounded-lg border border-elec-yellow/20">
                       <div className="text-elec-yellow font-semibold">Starter</div>
-                      <div className="text-foreground text-lg">{guideData.budgetBreakdown.starter}</div>
+                      <div className="text-foreground text-lg">
+                        {guideData.budgetBreakdown.starter}
+                      </div>
                     </div>
                     <div className="text-center p-3 bg-elec-gray rounded-lg border border-elec-yellow/20">
                       <div className="text-elec-yellow font-semibold">Professional</div>
-                      <div className="text-foreground text-lg">{guideData.budgetBreakdown.professional}</div>
+                      <div className="text-foreground text-lg">
+                        {guideData.budgetBreakdown.professional}
+                      </div>
                     </div>
                     <div className="text-center p-3 bg-elec-gray rounded-lg border border-elec-yellow/20">
                       <div className="text-elec-yellow font-semibold">Premium</div>
-                      <div className="text-foreground text-lg">{guideData.budgetBreakdown.premium}</div>
+                      <div className="text-foreground text-lg">
+                        {guideData.budgetBreakdown.premium}
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -224,7 +232,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-muted-foreground leading-relaxed">{section.content}</p>
-                    
+
                     {section.recommendations.length > 0 && (
                       <div className="space-y-3">
                         <h4 className="text-foreground font-semibold flex items-center gap-2">
@@ -232,10 +240,16 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                           Recommendations
                         </h4>
                         {section.recommendations.map((rec, idx) => (
-                          <div key={idx} className="p-3 bg-elec-gray border border-elec-yellow/20 rounded-lg">
+                          <div
+                            key={idx}
+                            className="p-3 bg-elec-gray border border-elec-yellow/20 rounded-lg"
+                          >
                             <div className="flex justify-between items-start mb-2">
                               <h5 className="text-foreground font-medium">{rec.tool}</h5>
-                              <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
+                              <Badge
+                                variant="outline"
+                                className="text-elec-yellow border-elec-yellow/30"
+                              >
                                 {rec.price}
                               </Badge>
                             </div>
@@ -281,7 +295,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-4">
-                <Button 
+                <Button
                   onClick={() => generateGuide(true)}
                   disabled={isLoading}
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
@@ -289,8 +303,8 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                   <Clock className="h-4 w-4 mr-2" />
                   Update Guide
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={onClose}
                   className="border-elec-yellow/30 hover:bg-elec-yellow/10"
                 >
@@ -308,7 +322,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
                 <p className="text-muted-foreground mb-4">
                   Unable to load the guide at this moment.
                 </p>
-                <Button 
+                <Button
                   onClick={() => generateGuide(false)}
                   disabled={isLoading}
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"

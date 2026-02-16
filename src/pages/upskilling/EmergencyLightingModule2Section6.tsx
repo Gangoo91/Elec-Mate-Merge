@@ -1,72 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m2s6-check1",
-    question: "How often must a full 3-hour duration test be performed?",
-    options: ["Monthly", "Quarterly", "Six-monthly", "Annually"],
+    id: 'emergencylighting-m2s6-check1',
+    question: 'How often must a full 3-hour duration test be performed?',
+    options: ['Monthly', 'Quarterly', 'Six-monthly', 'Annually'],
     correctIndex: 3,
-    explanation: "BS 5266-1 requires an annual full rated duration test (typically 3 hours). This confirms the batteries can sustain full emergency operation for the specified duration."
+    explanation:
+      'BS 5266-1 requires an annual full rated duration test (typically 3 hours). This confirms the batteries can sustain full emergency operation for the specified duration.',
   },
   {
-    id: "emergencylighting-m2s6-check2",
-    question: "What is the minimum duration for monthly functional tests?",
-    options: ["10 seconds", "30 seconds", "1 minute", "5 minutes"],
+    id: 'emergencylighting-m2s6-check2',
+    question: 'What is the minimum duration for monthly functional tests?',
+    options: ['10 seconds', '30 seconds', '1 minute', '5 minutes'],
     correctIndex: 2,
-    explanation: "Monthly functional tests must last at least 1 minute (some sources specify up to 1/4 of rated duration for self-contained luminaires). This verifies the lamp operates and changeover functions correctly."
+    explanation:
+      'Monthly functional tests must last at least 1 minute (some sources specify up to 1/4 of rated duration for self-contained luminaires). This verifies the lamp operates and changeover functions correctly.',
   },
   {
-    id: "emergencylighting-m2s6-check3",
-    question: "Who is responsible for maintaining the emergency lighting log book?",
-    options: ["The installer", "The responsible person", "The fire service", "The local authority"],
+    id: 'emergencylighting-m2s6-check3',
+    question: 'Who is responsible for maintaining the emergency lighting log book?',
+    options: ['The installer', 'The responsible person', 'The fire service', 'The local authority'],
     correctIndex: 1,
-    explanation: "The responsible person (building owner/occupier) is responsible for maintaining the log book and ensuring testing is carried out. They may delegate the testing itself but retain overall responsibility."
-  }
+    explanation:
+      'The responsible person (building owner/occupier) is responsible for maintaining the log book and ensuring testing is carried out. They may delegate the testing itself but retain overall responsibility.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What must be recorded in the emergency lighting log book?",
-    answer: "All tests and inspections must be recorded including: date, type of test, results, any defects found, remedial actions taken, name of person performing test. Annual certificates should also be retained."
+    question: 'What must be recorded in the emergency lighting log book?',
+    answer:
+      'All tests and inspections must be recorded including: date, type of test, results, any defects found, remedial actions taken, name of person performing test. Annual certificates should also be retained.',
   },
   {
-    question: "Can automatic test systems replace manual testing?",
-    answer: "Automatic test systems (DALI, addressable) can perform routine tests automatically, but results must still be reviewed and recorded. Manual inspections remain necessary to check for physical damage, obstruction, and sign legibility."
+    question: 'Can automatic test systems replace manual testing?',
+    answer:
+      'Automatic test systems (DALI, addressable) can perform routine tests automatically, but results must still be reviewed and recorded. Manual inspections remain necessary to check for physical damage, obstruction, and sign legibility.',
   },
   {
-    question: "How soon must defects be rectified?",
-    answer: "Defects affecting safety should be rectified immediately. Other defects should be rectified within a reasonable time - typically 24-48 hours for failed luminaires on escape routes, or before the next working day."
+    question: 'How soon must defects be rectified?',
+    answer:
+      'Defects affecting safety should be rectified immediately. Other defects should be rectified within a reasonable time - typically 24-48 hours for failed luminaires on escape routes, or before the next working day.',
   },
   {
-    question: "What happens after a 3-hour test?",
-    answer: "Batteries need time to recharge - typically 24 hours to reach 80% capacity. During this period, the system offers reduced emergency duration. Schedule annual tests when premises will not be occupied for 24+ hours afterward."
-  }
+    question: 'What happens after a 3-hour test?',
+    answer:
+      'Batteries need time to recharge - typically 24 hours to reach 80% capacity. During this period, the system offers reduced emergency duration. Schedule annual tests when premises will not be occupied for 24+ hours afterward.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A building has 50 emergency luminaires. During the monthly test, 3 luminaires fail to illuminate. What action is required?",
-  options: [
-    "Record in log book, schedule repair within 30 days",
-    "Record in log book, repair immediately as safety critical",
-    "No action needed, retest next month",
-    "Replace all 50 luminaires as a precaution"
-  ],
-  correctAnswer: 1,
-  explanation: "Failed luminaires on escape routes are safety critical defects. They must be recorded and repaired immediately (or as soon as reasonably practicable). The 6% failure rate also suggests a potential systematic issue worth investigating."
-  }
+    question:
+      'A building has 50 emergency luminaires. During the monthly test, 3 luminaires fail to illuminate. What action is required?',
+    options: [
+      'Record in log book, schedule repair within 30 days',
+      'Record in log book, repair immediately as safety critical',
+      'No action needed, retest next month',
+      'Replace all 50 luminaires as a precaution',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Failed luminaires on escape routes are safety critical defects. They must be recorded and repaired immediately (or as soon as reasonably practicable). The 6% failure rate also suggests a potential systematic issue worth investigating.',
+  },
 ];
 
 const EmergencyLightingModule2Section6 = () => {
   useSEO({
-    title: "Testing and Record Keeping | Emergency Lighting Module 2.6",
-    description: "Emergency lighting testing schedules, maintenance requirements, log book documentation and compliance record keeping to BS 5266-1."
+    title: 'Testing and Record Keeping | Emergency Lighting Module 2.6',
+    description:
+      'Emergency lighting testing schedules, maintenance requirements, log book documentation and compliance record keeping to BS 5266-1.',
   });
 
   return (
@@ -108,17 +118,29 @@ const EmergencyLightingModule2Section6 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Daily:</strong> Visual check signs lit</li>
-              <li><strong>Monthly:</strong> 1-minute functional test</li>
-              <li><strong>Annually:</strong> Full 3-hour duration test</li>
+              <li>
+                <strong>Daily:</strong> Visual check signs lit
+              </li>
+              <li>
+                <strong>Monthly:</strong> 1-minute functional test
+              </li>
+              <li>
+                <strong>Annually:</strong> Full 3-hour duration test
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Documentation</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Log book:</strong> BS 5266-8 compliant</li>
-              <li><strong>Records:</strong> All tests and defects</li>
-              <li><strong>Certificates:</strong> Annual inspection</li>
+              <li>
+                <strong>Log book:</strong> BS 5266-8 compliant
+              </li>
+              <li>
+                <strong>Records:</strong> All tests and defects
+              </li>
+              <li>
+                <strong>Certificates:</strong> Annual inspection
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +150,12 @@ const EmergencyLightingModule2Section6 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Implement correct testing schedules",
-              "Perform monthly functional tests",
-              "Conduct annual duration tests",
-              "Maintain BS 5266-8 log books",
-              "Record and rectify defects",
-              "Demonstrate compliance to inspectors"
+              'Implement correct testing schedules',
+              'Perform monthly functional tests',
+              'Conduct annual duration tests',
+              'Maintain BS 5266-8 log books',
+              'Record and rectify defects',
+              'Demonstrate compliance to inspectors',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,28 +175,43 @@ const EmergencyLightingModule2Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 5266-1 and BS EN 50172 specify mandatory testing schedules to ensure
-              emergency lighting remains functional. Testing frequency increases with
-              test duration.
+              BS 5266-1 and BS EN 50172 specify mandatory testing schedules to ensure emergency
+              lighting remains functional. Testing frequency increases with test duration.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Routine Tests</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Daily:</strong> Visual check all signs lit</li>
-                  <li><strong>Monthly:</strong> Functional test (1 min)</li>
-                  <li><strong>Six-monthly:</strong> Partial duration test</li>
-                  <li><strong>Annually:</strong> Full duration test (3h)</li>
+                  <li>
+                    <strong>Daily:</strong> Visual check all signs lit
+                  </li>
+                  <li>
+                    <strong>Monthly:</strong> Functional test (1 min)
+                  </li>
+                  <li>
+                    <strong>Six-monthly:</strong> Partial duration test
+                  </li>
+                  <li>
+                    <strong>Annually:</strong> Full duration test (3h)
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Purpose</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Daily:</strong> Spot obvious failures</li>
-                  <li><strong>Monthly:</strong> Verify changeover works</li>
-                  <li><strong>Six-monthly:</strong> Partial battery check</li>
-                  <li><strong>Annual:</strong> Full battery capacity</li>
+                  <li>
+                    <strong>Daily:</strong> Spot obvious failures
+                  </li>
+                  <li>
+                    <strong>Monthly:</strong> Verify changeover works
+                  </li>
+                  <li>
+                    <strong>Six-monthly:</strong> Partial battery check
+                  </li>
+                  <li>
+                    <strong>Annual:</strong> Full battery capacity
+                  </li>
                 </ul>
               </div>
             </div>
@@ -206,30 +243,52 @@ const EmergencyLightingModule2Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Each test type has specific procedures and pass/fail criteria. Proper
-              testing technique ensures valid results and identifies genuine faults.
+              Each test type has specific procedures and pass/fail criteria. Proper testing
+              technique ensures valid results and identifies genuine faults.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Monthly Functional Test:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Simulate mains failure:</strong> Use test switch or local isolation</li>
-                <li><strong>Verify all luminaires illuminate:</strong> Walk entire premises</li>
-                <li><strong>Check exit signs:</strong> All lit and legible</li>
-                <li><strong>Duration:</strong> Minimum 1 minute (or 1/4 rated duration)</li>
-                <li><strong>Restore mains:</strong> Verify luminaires extinguish (non-maintained)</li>
-                <li><strong>Record results:</strong> Note any failures in log book</li>
+                <li>
+                  <strong>Simulate mains failure:</strong> Use test switch or local isolation
+                </li>
+                <li>
+                  <strong>Verify all luminaires illuminate:</strong> Walk entire premises
+                </li>
+                <li>
+                  <strong>Check exit signs:</strong> All lit and legible
+                </li>
+                <li>
+                  <strong>Duration:</strong> Minimum 1 minute (or 1/4 rated duration)
+                </li>
+                <li>
+                  <strong>Restore mains:</strong> Verify luminaires extinguish (non-maintained)
+                </li>
+                <li>
+                  <strong>Record results:</strong> Note any failures in log book
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Annual Duration Test:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Full rated duration:</strong> Typically 3 hours</li>
-                <li><strong>Schedule carefully:</strong> Premises unoccupied for 24h after</li>
-                <li><strong>Monitor throughout:</strong> Check illumination maintained</li>
-                <li><strong>Check at end:</strong> All luminaires still lit</li>
-                <li><strong>Allow recharge:</strong> 24 hours for 80% capacity</li>
+                <li>
+                  <strong>Full rated duration:</strong> Typically 3 hours
+                </li>
+                <li>
+                  <strong>Schedule carefully:</strong> Premises unoccupied for 24h after
+                </li>
+                <li>
+                  <strong>Monitor throughout:</strong> Check illumination maintained
+                </li>
+                <li>
+                  <strong>Check at end:</strong> All luminaires still lit
+                </li>
+                <li>
+                  <strong>Allow recharge:</strong> 24 hours for 80% capacity
+                </li>
               </ul>
             </div>
           </div>
@@ -245,9 +304,8 @@ const EmergencyLightingModule2Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 5266-8 specifies log book requirements. The log book provides evidence
-              of compliance and is typically requested during fire risk assessments
-              and inspections.
+              BS 5266-8 specifies log book requirements. The log book provides evidence of
+              compliance and is typically requested during fire risk assessments and inspections.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -274,8 +332,8 @@ const EmergencyLightingModule2Section6 = () => {
             </div>
 
             <p>
-              The log book should be kept on premises and available for inspection.
-              Electronic records are acceptable if printable and regularly backed up.
+              The log book should be kept on premises and available for inspection. Electronic
+              records are acceptable if printable and regularly backed up.
             </p>
           </div>
         </section>
@@ -297,12 +355,22 @@ const EmergencyLightingModule2Section6 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Compliance Failures</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Compliance Failures
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>No log book:</strong> — Must have BS 5266-8 compliant log</li>
-                <li><strong>Missing test records:</strong> — Every test must be recorded</li>
-                <li><strong>No annual certificate:</strong> — Competent person inspection required</li>
-                <li><strong>Unrecorded defects:</strong> — All faults must be documented</li>
+                <li>
+                  <strong>No log book:</strong> — Must have BS 5266-8 compliant log
+                </li>
+                <li>
+                  <strong>Missing test records:</strong> — Every test must be recorded
+                </li>
+                <li>
+                  <strong>No annual certificate:</strong> — Competent person inspection required
+                </li>
+                <li>
+                  <strong>Unrecorded defects:</strong> — All faults must be documented
+                </li>
               </ul>
             </div>
           </div>
@@ -347,10 +415,7 @@ const EmergencyLightingModule2Section6 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

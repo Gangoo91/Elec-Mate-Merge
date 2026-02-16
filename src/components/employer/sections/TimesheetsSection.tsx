@@ -1,23 +1,46 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { toast } from "sonner";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { ManualTimeEntryDialog } from "@/components/employer/dialogs/ManualTimeEntryDialog";
-import { LeaveTabContent } from "@/components/employer/sections/LeaveTabContent";
-import { downloadExportCSV, getProviderName } from "@/services/accountingService";
-import { format, startOfWeek, endOfWeek, addWeeks, subWeeks, isWithinInterval, parseISO, eachDayOfInterval, isToday } from "date-fns";
-import { 
-  Clock, 
-  Search, 
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { toast } from 'sonner';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { ManualTimeEntryDialog } from '@/components/employer/dialogs/ManualTimeEntryDialog';
+import { LeaveTabContent } from '@/components/employer/sections/LeaveTabContent';
+import { downloadExportCSV, getProviderName } from '@/services/accountingService';
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  addWeeks,
+  subWeeks,
+  isWithinInterval,
+  parseISO,
+  eachDayOfInterval,
+  isToday,
+} from 'date-fns';
+import {
+  Clock,
+  Search,
   Download,
   Calendar,
   User,
@@ -46,14 +69,20 @@ import {
   CalendarDays,
   FileText,
   Palmtree,
-  Loader2
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { AccountingProvider, PayrollEntry } from "@/services/types";
-import { useTimesheets, useApproveTimesheet, useRejectTimesheet, useBatchApproveTimesheets, useBatchRejectTimesheets } from "@/hooks/useTimesheets";
-import { useEmployees } from "@/hooks/useEmployees";
-import { useActiveJobs } from "@/hooks/useJobs";
-import { useClockState } from "@/hooks/useClockState";
+  Loader2,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { AccountingProvider, PayrollEntry } from '@/services/types';
+import {
+  useTimesheets,
+  useApproveTimesheet,
+  useRejectTimesheet,
+  useBatchApproveTimesheets,
+  useBatchRejectTimesheets,
+} from '@/hooks/useTimesheets';
+import { useEmployees } from '@/hooks/useEmployees';
+import { useActiveJobs } from '@/hooks/useJobs';
+import { useClockState } from '@/hooks/useClockState';
 
 // Normalised timesheet type for display
 interface DisplayTimesheet {
@@ -107,46 +136,41 @@ const ACCOUNTING_PROVIDERS: { id: AccountingProvider; name: string; icon: string
 
 export const TimesheetsSection = () => {
   const isMobile = useIsMobile();
-  
+
   // Supabase data hooks
   const { data: rawTimesheets = [], isLoading: timesheetsLoading } = useTimesheets();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
   const { data: jobs = [], isLoading: jobsLoading } = useActiveJobs();
-  
+
   // Clock state hook
-  const { 
-    isClockedIn, 
-    clockState, 
-    duration, 
-    clockIn, 
-    clockOut, 
-    isClockingOut 
-  } = useClockState();
-  
+  const { isClockedIn, clockState, duration, clockIn, clockOut, isClockingOut } = useClockState();
+
   // Mutations
   const approveTimesheetMutation = useApproveTimesheet();
   const rejectTimesheetMutation = useRejectTimesheet();
   const batchApproveMutation = useBatchApproveTimesheets();
   const batchRejectMutation = useBatchRejectTimesheets();
-  
+
   // Core state
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterEmployee, setFilterEmployee] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
-  const [selectedJobId, setSelectedJobId] = useState<string>("");
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>("");
-  const [activeTab, setActiveTab] = useState("time-entries");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterEmployee, setFilterEmployee] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [selectedJobId, setSelectedJobId] = useState<string>('');
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>('');
+  const [activeTab, setActiveTab] = useState('time-entries');
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [isWorkerBreakdownOpen, setIsWorkerBreakdownOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  
+
   // Week navigation
-  const [currentWeekStart, setCurrentWeekStart] = useState(() => startOfWeek(new Date(), { weekStartsOn: 1 }));
-  
+  const [currentWeekStart, setCurrentWeekStart] = useState(() =>
+    startOfWeek(new Date(), { weekStartsOn: 1 })
+  );
+
   // Batch selection
   const [selectedTimesheetIds, setSelectedTimesheetIds] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
-  
+
   // Accounting integrations
   const [accountingConnections, setAccountingConnections] = useState<AccountingConnection[]>([
     { provider: 'xero', isConnected: false, lastSync: null },
@@ -159,10 +183,10 @@ export const TimesheetsSection = () => {
 
   // Transform raw Supabase timesheets to display format with employee/job names
   const timesheets: DisplayTimesheet[] = useMemo(() => {
-    return rawTimesheets.map(ts => {
-      const employee = employees.find(e => e.id === ts.employee_id);
-      const job = jobs.find(j => j.id === ts.job_id);
-      
+    return rawTimesheets.map((ts) => {
+      const employee = employees.find((e) => e.id === ts.employee_id);
+      const job = jobs.find((j) => j.id === ts.job_id);
+
       return {
         id: ts.id,
         employeeId: ts.employee_id,
@@ -184,8 +208,8 @@ export const TimesheetsSection = () => {
   const currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 });
   const weekLabel = `${format(currentWeekStart, 'd MMM')} - ${format(currentWeekEnd, 'd MMM')}`;
 
-  const goToPreviousWeek = () => setCurrentWeekStart(prev => subWeeks(prev, 1));
-  const goToNextWeek = () => setCurrentWeekStart(prev => addWeeks(prev, 1));
+  const goToPreviousWeek = () => setCurrentWeekStart((prev) => subWeeks(prev, 1));
+  const goToNextWeek = () => setCurrentWeekStart((prev) => addWeeks(prev, 1));
   const goToThisWeek = () => {
     setCurrentWeekStart(startOfWeek(new Date(), { weekStartsOn: 1 }));
     setSelectedDay(null);
@@ -193,25 +217,27 @@ export const TimesheetsSection = () => {
 
   // Filter timesheets for current week
   const weekTimesheets = useMemo(() => {
-    return timesheets.filter(ts => {
+    return timesheets.filter((ts) => {
       const tsDate = parseISO(ts.date);
       return isWithinInterval(tsDate, { start: currentWeekStart, end: currentWeekEnd });
     });
   }, [timesheets, currentWeekStart, currentWeekEnd]);
 
   // Apply search and filters (including day filter)
-  const filteredTimesheets = weekTimesheets.filter(ts => {
-    const matchesSearch = ts.employeeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          ts.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesEmployee = filterEmployee === "all" || ts.employeeId === filterEmployee;
-    const matchesStatus = filterStatus === "all" || ts.status === filterStatus;
-    const matchesDay = !selectedDay || format(parseISO(ts.date), 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
+  const filteredTimesheets = weekTimesheets.filter((ts) => {
+    const matchesSearch =
+      ts.employeeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ts.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesEmployee = filterEmployee === 'all' || ts.employeeId === filterEmployee;
+    const matchesStatus = filterStatus === 'all' || ts.status === filterStatus;
+    const matchesDay =
+      !selectedDay || format(parseISO(ts.date), 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
     return matchesSearch && matchesEmployee && matchesStatus && matchesDay;
   });
 
   // Calculate labour costs using employee hourly rates
   const getHourlyRate = (employeeId: string): number => {
-    const emp = employees.find(e => e.id === employeeId);
+    const emp = employees.find((e) => e.id === employeeId);
     return emp?.hourly_rate || 25;
   };
 
@@ -221,50 +247,63 @@ export const TimesheetsSection = () => {
 
   // Calculate stats
   const totalHours = filteredTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
-  const approvedHours = filteredTimesheets.filter(ts => ts.status === "Approved").reduce((sum, ts) => sum + ts.totalHours, 0);
-  const pendingCount = filteredTimesheets.filter(ts => ts.status === "Pending").length;
-  const totalLabourCost = filteredTimesheets.reduce((sum, ts) => sum + calculateLabourCost(ts.employeeId, ts.totalHours), 0);
+  const approvedHours = filteredTimesheets
+    .filter((ts) => ts.status === 'Approved')
+    .reduce((sum, ts) => sum + ts.totalHours, 0);
+  const pendingCount = filteredTimesheets.filter((ts) => ts.status === 'Pending').length;
+  const totalLabourCost = filteredTimesheets.reduce(
+    (sum, ts) => sum + calculateLabourCost(ts.employeeId, ts.totalHours),
+    0
+  );
   const approvedLabourCost = filteredTimesheets
-    .filter(ts => ts.status === "Approved")
+    .filter((ts) => ts.status === 'Approved')
     .reduce((sum, ts) => sum + calculateLabourCost(ts.employeeId, ts.totalHours), 0);
 
   // Weekly calendar data
   const weekDays = eachDayOfInterval({ start: currentWeekStart, end: currentWeekEnd });
-  const dailyBreakdown = weekDays.map(day => {
-    const dayTimesheets = weekTimesheets.filter(ts => 
-      format(parseISO(ts.date), 'yyyy-MM-dd') === format(day, 'yyyy-MM-dd')
+  const dailyBreakdown = weekDays.map((day) => {
+    const dayTimesheets = weekTimesheets.filter(
+      (ts) => format(parseISO(ts.date), 'yyyy-MM-dd') === format(day, 'yyyy-MM-dd')
     );
     const hours = dayTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
-    const approved = dayTimesheets.filter(ts => ts.status === "Approved").reduce((sum, ts) => sum + ts.totalHours, 0);
-    const pending = dayTimesheets.filter(ts => ts.status === "Pending").reduce((sum, ts) => sum + ts.totalHours, 0);
-    const rejected = dayTimesheets.filter(ts => ts.status === "Rejected").reduce((sum, ts) => sum + ts.totalHours, 0);
+    const approved = dayTimesheets
+      .filter((ts) => ts.status === 'Approved')
+      .reduce((sum, ts) => sum + ts.totalHours, 0);
+    const pending = dayTimesheets
+      .filter((ts) => ts.status === 'Pending')
+      .reduce((sum, ts) => sum + ts.totalHours, 0);
+    const rejected = dayTimesheets
+      .filter((ts) => ts.status === 'Rejected')
+      .reduce((sum, ts) => sum + ts.totalHours, 0);
     return { day, hours, approved, pending, rejected, count: dayTimesheets.length };
   });
 
-  const maxDailyHours = Math.max(...dailyBreakdown.map(d => d.hours), 8);
+  const maxDailyHours = Math.max(...dailyBreakdown.map((d) => d.hours), 8);
 
   // Group by employee for breakdown
-  const employeeBreakdown = employees.map(emp => {
-    const empTimesheets = weekTimesheets.filter(ts => ts.employeeId === emp.id);
-    const hours = empTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
-    const cost = calculateLabourCost(emp.id, hours);
-    return { ...emp, totalHours: hours, entries: empTimesheets.length, cost };
-  }).filter(e => e.entries > 0);
+  const employeeBreakdown = employees
+    .map((emp) => {
+      const empTimesheets = weekTimesheets.filter((ts) => ts.employeeId === emp.id);
+      const hours = empTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
+      const cost = calculateLabourCost(emp.id, hours);
+      return { ...emp, totalHours: hours, entries: empTimesheets.length, cost };
+    })
+    .filter((e) => e.entries > 0);
 
   // Generate payroll entries for export
   const generatePayrollEntries = (): PayrollEntry[] => {
-    const approvedTimesheets = weekTimesheets.filter(ts => ts.status === "Approved");
+    const approvedTimesheets = weekTimesheets.filter((ts) => ts.status === 'Approved');
     const employeeMap = new Map<string, PayrollEntry>();
 
-    approvedTimesheets.forEach(ts => {
+    approvedTimesheets.forEach((ts) => {
       const existing = employeeMap.get(ts.employeeId);
       const hourlyRate = getHourlyRate(ts.employeeId);
       const pay = ts.totalHours * hourlyRate;
-      
+
       if (existing) {
         existing.regularHours += ts.totalHours;
         existing.grossPay += pay;
-        const jobEntry = existing.jobBreakdown.find(j => j.jobId === ts.jobId);
+        const jobEntry = existing.jobBreakdown.find((j) => j.jobId === ts.jobId);
         if (jobEntry) {
           jobEntry.hours += ts.totalHours;
           jobEntry.cost += pay;
@@ -273,7 +312,7 @@ export const TimesheetsSection = () => {
             jobId: ts.jobId,
             jobTitle: ts.jobTitle,
             hours: ts.totalHours,
-            cost: pay
+            cost: pay,
           });
         }
       } else {
@@ -286,12 +325,14 @@ export const TimesheetsSection = () => {
           grossPay: pay,
           periodStart: format(currentWeekStart, 'yyyy-MM-dd'),
           periodEnd: format(currentWeekEnd, 'yyyy-MM-dd'),
-          jobBreakdown: [{
-            jobId: ts.jobId,
-            jobTitle: ts.jobTitle,
-            hours: ts.totalHours,
-            cost: pay
-          }]
+          jobBreakdown: [
+            {
+              jobId: ts.jobId,
+              jobTitle: ts.jobTitle,
+              hours: ts.totalHours,
+              cost: pay,
+            },
+          ],
         });
       }
     });
@@ -302,16 +343,16 @@ export const TimesheetsSection = () => {
   // Handlers
   const handleClockIn = () => {
     if (!selectedEmployeeId) {
-      toast.error("Please select an employee before clocking in.");
+      toast.error('Please select an employee before clocking in.');
       return;
     }
     if (!selectedJobId) {
-      toast.error("Please select a job before clocking in.");
+      toast.error('Please select a job before clocking in.');
       return;
     }
 
-    const job = jobs.find(j => j.id === selectedJobId);
-    const employee = employees.find(e => e.id === selectedEmployeeId);
+    const job = jobs.find((j) => j.id === selectedJobId);
+    const employee = employees.find((e) => e.id === selectedEmployeeId);
     if (job && employee) {
       clockIn(employee.id, employee.name, selectedJobId, job.title);
     }
@@ -323,29 +364,35 @@ export const TimesheetsSection = () => {
   };
 
   const handleApprove = (id: string) => {
-    approveTimesheetMutation.mutate({ id, approvedBy: 'Admin' }, {
-      onSuccess: () => toast.success("Timesheet approved"),
-      onError: () => toast.error("Failed to approve timesheet"),
-    });
+    approveTimesheetMutation.mutate(
+      { id, approvedBy: 'Admin' },
+      {
+        onSuccess: () => toast.success('Timesheet approved'),
+        onError: () => toast.error('Failed to approve timesheet'),
+      }
+    );
   };
 
   const handleReject = (id: string) => {
     rejectTimesheetMutation.mutate(id, {
-      onSuccess: () => toast.success("Timesheet rejected"),
-      onError: () => toast.error("Failed to reject timesheet"),
+      onSuccess: () => toast.success('Timesheet rejected'),
+      onError: () => toast.error('Failed to reject timesheet'),
     });
   };
 
   // Batch actions
   const handleBatchApprove = () => {
-    batchApproveMutation.mutate({ ids: selectedTimesheetIds, approvedBy: 'Admin' }, {
-      onSuccess: () => {
-        toast.success(`${selectedTimesheetIds.length} timesheets approved`);
-        setSelectedTimesheetIds([]);
-        setIsSelectMode(false);
-      },
-      onError: () => toast.error("Failed to approve timesheets"),
-    });
+    batchApproveMutation.mutate(
+      { ids: selectedTimesheetIds, approvedBy: 'Admin' },
+      {
+        onSuccess: () => {
+          toast.success(`${selectedTimesheetIds.length} timesheets approved`);
+          setSelectedTimesheetIds([]);
+          setIsSelectMode(false);
+        },
+        onError: () => toast.error('Failed to approve timesheets'),
+      }
+    );
   };
 
   const handleBatchReject = () => {
@@ -355,26 +402,28 @@ export const TimesheetsSection = () => {
         setSelectedTimesheetIds([]);
         setIsSelectMode(false);
       },
-      onError: () => toast.error("Failed to reject timesheets"),
+      onError: () => toast.error('Failed to reject timesheets'),
     });
   };
 
   const toggleTimesheetSelection = (id: string) => {
-    setSelectedTimesheetIds(prev => 
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    setSelectedTimesheetIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
 
   const selectAllPending = () => {
-    const pendingIds = filteredTimesheets.filter(ts => ts.status === "Pending").map(ts => ts.id);
+    const pendingIds = filteredTimesheets
+      .filter((ts) => ts.status === 'Pending')
+      .map((ts) => ts.id);
     setSelectedTimesheetIds(pendingIds);
   };
 
   // Accounting handlers
   const handleConnectProvider = (provider: AccountingProvider) => {
-    setAccountingConnections(prev => 
-      prev.map(conn => 
-        conn.provider === provider 
+    setAccountingConnections((prev) =>
+      prev.map((conn) =>
+        conn.provider === provider
           ? { ...conn, isConnected: true, lastSync: new Date().toISOString() }
           : conn
       )
@@ -385,11 +434,9 @@ export const TimesheetsSection = () => {
   const handleSyncProvider = (provider: AccountingProvider) => {
     setSyncInProgress(provider);
     setTimeout(() => {
-      setAccountingConnections(prev => 
-        prev.map(conn => 
-          conn.provider === provider 
-            ? { ...conn, lastSync: new Date().toISOString() }
-            : conn
+      setAccountingConnections((prev) =>
+        prev.map((conn) =>
+          conn.provider === provider ? { ...conn, lastSync: new Date().toISOString() } : conn
         )
       );
       setSyncInProgress(null);
@@ -400,30 +447,35 @@ export const TimesheetsSection = () => {
   const handleExport = (provider: AccountingProvider) => {
     const entries = generatePayrollEntries();
     if (entries.length === 0) {
-      toast.error("No approved timesheets to export");
+      toast.error('No approved timesheets to export');
       return;
     }
-    downloadExportCSV(provider, entries, format(currentWeekStart, 'yyyy-MM-dd'), format(currentWeekEnd, 'yyyy-MM-dd'));
+    downloadExportCSV(
+      provider,
+      entries,
+      format(currentWeekStart, 'yyyy-MM-dd'),
+      format(currentWeekEnd, 'yyyy-MM-dd')
+    );
     toast.success(`Timesheet data exported for ${getProviderName(provider)}`);
   };
 
-  const activeJobs = jobs.filter(j => j.status === "Active");
+  const activeJobs = jobs.filter((j) => j.status === 'Active');
 
   // Loading state
   const isLoading = timesheetsLoading || employeesLoading || jobsLoading;
 
   // Render timesheet card
-  const renderTimesheetCard = (ts: typeof filteredTimesheets[0]) => {
+  const renderTimesheetCard = (ts: (typeof filteredTimesheets)[0]) => {
     const labourCost = calculateLabourCost(ts.employeeId, ts.totalHours);
     const hourlyRate = getHourlyRate(ts.employeeId);
     const isSelected = selectedTimesheetIds.includes(ts.id);
-    
+
     return (
-      <Card 
-        key={ts.id} 
+      <Card
+        key={ts.id}
         className={cn(
-          "bg-elec-gray border-border overflow-hidden transition-all",
-          isSelected && "ring-2 ring-elec-yellow border-elec-yellow"
+          'bg-elec-gray border-border overflow-hidden transition-all',
+          isSelected && 'ring-2 ring-elec-yellow border-elec-yellow'
         )}
         onClick={() => isSelectMode && toggleTimesheetSelection(ts.id)}
       >
@@ -431,14 +483,18 @@ export const TimesheetsSection = () => {
           {/* Header with avatar and status */}
           <div className="flex items-start gap-3 mb-4">
             {isSelectMode && (
-              <Checkbox 
+              <Checkbox
                 checked={isSelected}
                 onCheckedChange={() => toggleTimesheetSelection(ts.id)}
                 className="mt-1"
               />
             )}
             <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-elec-yellow font-semibold">
-              {ts.employeeName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+              {ts.employeeName
+                .split(' ')
+                .map((n) => n[0])
+                .join('')
+                .slice(0, 2)}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2">
@@ -449,12 +505,15 @@ export const TimesheetsSection = () => {
                     {ts.jobTitle}
                   </p>
                 </div>
-                <Badge className={cn(
-                  "flex-shrink-0 text-xs",
-                  ts.status === "Approved" && "bg-success/20 text-success border-success/30",
-                  ts.status === "Pending" && "bg-warning/20 text-warning border-warning/30",
-                  ts.status === "Rejected" && "bg-destructive/20 text-destructive border-destructive/30"
-                )}>
+                <Badge
+                  className={cn(
+                    'flex-shrink-0 text-xs',
+                    ts.status === 'Approved' && 'bg-success/20 text-success border-success/30',
+                    ts.status === 'Pending' && 'bg-warning/20 text-warning border-warning/30',
+                    ts.status === 'Rejected' &&
+                      'bg-destructive/20 text-destructive border-destructive/30'
+                  )}
+                >
                   {ts.status}
                 </Badge>
               </div>
@@ -472,12 +531,12 @@ export const TimesheetsSection = () => {
               <span className="text-sm font-medium">{ts.clockOut}</span>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
-              <div 
+              <div
                 className={cn(
-                  "h-full rounded-full transition-all",
-                  ts.status === "Approved" && "bg-success",
-                  ts.status === "Pending" && "bg-warning",
-                  ts.status === "Rejected" && "bg-destructive"
+                  'h-full rounded-full transition-all',
+                  ts.status === 'Approved' && 'bg-success',
+                  ts.status === 'Pending' && 'bg-warning',
+                  ts.status === 'Rejected' && 'bg-destructive'
                 )}
                 style={{ width: `${Math.min((ts.totalHours / 10) * 100, 100)}%` }}
               />
@@ -497,20 +556,26 @@ export const TimesheetsSection = () => {
           </div>
 
           {/* Action buttons */}
-          {ts.status === "Pending" && !isSelectMode && (
+          {ts.status === 'Pending' && !isSelectMode && (
             <div className="flex gap-2">
-              <Button 
+              <Button
                 size="lg"
-                variant="outline" 
-                onClick={(e) => { e.stopPropagation(); handleReject(ts.id); }} 
+                variant="outline"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleReject(ts.id);
+                }}
                 className="flex-1 h-12 touch-feedback text-destructive hover:text-destructive"
               >
                 <X className="h-5 w-5 mr-2" />
                 Reject
               </Button>
-              <Button 
+              <Button
                 size="lg"
-                onClick={(e) => { e.stopPropagation(); handleApprove(ts.id); }} 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleApprove(ts.id);
+                }}
                 className="flex-1 h-12 touch-feedback"
               >
                 <Check className="h-5 w-5 mr-2" />
@@ -534,12 +599,14 @@ export const TimesheetsSection = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-foreground">Timesheets</h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">Track, approve, export</p>
+              <p className="text-xs text-muted-foreground hidden sm:block">
+                Track, approve, export
+              </p>
             </div>
           </div>
-          
+
           <div className="flex gap-2">
-            <ManualTimeEntryDialog 
+            <ManualTimeEntryDialog
               trigger={
                 <Button variant="outline" size="sm" className="gap-1.5 touch-feedback">
                   <Plus className="h-4 w-4" />
@@ -562,13 +629,13 @@ export const TimesheetsSection = () => {
                   </SheetTitle>
                 </SheetHeader>
                 <div className="mt-4 space-y-3 pb-6">
-                  {ACCOUNTING_PROVIDERS.map(provider => {
-                    const conn = accountingConnections.find(c => c.provider === provider.id);
+                  {ACCOUNTING_PROVIDERS.map((provider) => {
+                    const conn = accountingConnections.find((c) => c.provider === provider.id);
                     const isConnected = conn?.isConnected;
                     const isSyncing = syncInProgress === provider.id;
-                    
+
                     return (
-                      <div 
+                      <div
                         key={provider.id}
                         className="flex items-center justify-between p-4 bg-surface rounded-lg border border-border"
                       >
@@ -585,8 +652,8 @@ export const TimesheetsSection = () => {
                         </div>
                         <div className="flex gap-2">
                           {provider.id === 'csv' ? (
-                            <Button 
-                              size="sm" 
+                            <Button
+                              size="sm"
                               onClick={() => handleExport('csv')}
                               className="gap-1.5"
                             >
@@ -595,15 +662,15 @@ export const TimesheetsSection = () => {
                             </Button>
                           ) : isConnected ? (
                             <>
-                              <Button 
-                                size="sm" 
+                              <Button
+                                size="sm"
                                 variant="outline"
                                 onClick={() => handleExport(provider.id)}
                               >
                                 <Download className="h-4 w-4" />
                               </Button>
-                              <Button 
-                                size="sm" 
+                              <Button
+                                size="sm"
                                 onClick={() => handleSyncProvider(provider.id)}
                                 disabled={isSyncing || approvedHours === 0}
                                 className="gap-1.5"
@@ -617,8 +684,8 @@ export const TimesheetsSection = () => {
                               </Button>
                             </>
                           ) : (
-                            <Button 
-                              size="sm" 
+                            <Button
+                              size="sm"
                               variant="outline"
                               onClick={() => handleConnectProvider(provider.id)}
                               className="gap-1.5"
@@ -631,11 +698,13 @@ export const TimesheetsSection = () => {
                       </div>
                     );
                   })}
-                  
+
                   <div className="pt-3 border-t border-border">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Ready to export:</span>
-                      <span className="font-medium text-foreground">{approvedHours.toFixed(1)} hrs • £{approvedLabourCost.toLocaleString()}</span>
+                      <span className="font-medium text-foreground">
+                        {approvedHours.toFixed(1)} hrs • £{approvedLabourCost.toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -665,12 +734,12 @@ export const TimesheetsSection = () => {
       </div>
 
       {/* Clock In/Out Card - Streamlined */}
-      <Card className={cn(
-        "relative overflow-hidden border transition-all",
-        isClockedIn 
-          ? 'bg-success/10 border-success/50' 
-          : 'bg-elec-gray border-border'
-      )}>
+      <Card
+        className={cn(
+          'relative overflow-hidden border transition-all',
+          isClockedIn ? 'bg-success/10 border-success/50' : 'bg-elec-gray border-border'
+        )}
+      >
         <CardContent className="p-4">
           {isClockedIn ? (
             // Clocked In State - Expanded
@@ -685,7 +754,9 @@ export const TimesheetsSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">On the Clock</p>
-                    <p className="text-3xl font-mono font-bold text-success tracking-wide">{duration}</p>
+                    <p className="text-3xl font-mono font-bold text-success tracking-wide">
+                      {duration}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 px-2 py-1 bg-success/20 rounded-full">
@@ -693,20 +764,22 @@ export const TimesheetsSection = () => {
                   <span className="text-xs text-success font-medium">GPS</span>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-2 p-2 bg-surface rounded-lg">
                 <Briefcase className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-foreground truncate">{clockState?.jobTitle || 'Unknown Job'}</span>
+                <span className="text-sm text-foreground truncate">
+                  {clockState?.jobTitle || 'Unknown Job'}
+                </span>
               </div>
-              
+
               <div className="flex gap-2">
                 <Button variant="outline" className="flex-1 h-12 touch-feedback" disabled>
                   <Coffee className="h-5 w-5 mr-2" />
                   Break
                 </Button>
-                <Button 
-                  onClick={handleClockOut} 
-                  variant="destructive" 
+                <Button
+                  onClick={handleClockOut}
+                  variant="destructive"
                   className="flex-1 h-12 touch-feedback"
                   disabled={isClockingOut}
                 >
@@ -727,14 +800,16 @@ export const TimesheetsSection = () => {
                   <SelectValue placeholder="Select employee..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {employees.filter(e => e.status === 'Active' || e.status === 'active').map(emp => (
-                    <SelectItem key={emp.id} value={emp.id}>
-                      <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-muted-foreground" />
-                        {emp.name}
-                      </div>
-                    </SelectItem>
-                  ))}
+                  {employees
+                    .filter((e) => e.status === 'Active' || e.status === 'active')
+                    .map((emp) => (
+                      <SelectItem key={emp.id} value={emp.id}>
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4 text-muted-foreground" />
+                          {emp.name}
+                        </div>
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
               <Select value={selectedJobId} onValueChange={setSelectedJobId}>
@@ -742,7 +817,7 @@ export const TimesheetsSection = () => {
                   <SelectValue placeholder="Select job..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {activeJobs.map(job => (
+                  {activeJobs.map((job) => (
                     <SelectItem key={job.id} value={job.id}>
                       <div className="flex items-center gap-2">
                         <Briefcase className="h-4 w-4 text-muted-foreground" />
@@ -775,7 +850,7 @@ export const TimesheetsSection = () => {
             </div>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-1">
@@ -783,22 +858,26 @@ export const TimesheetsSection = () => {
               <span className="text-xs text-muted-foreground">Labour Cost</span>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-foreground">£{totalLabourCost.toLocaleString()}</span>
+              <span className="text-2xl font-bold text-foreground">
+                £{totalLabourCost.toLocaleString()}
+              </span>
             </div>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-1">
               <CheckCircle2 className="h-4 w-4 text-success" />
               <span className="text-xs text-muted-foreground">Approved</span>
             </div>
-            <span className="text-2xl font-bold text-success">{weekTimesheets.filter(t => t.status === "Approved").length}</span>
+            <span className="text-2xl font-bold text-success">
+              {weekTimesheets.filter((t) => t.status === 'Approved').length}
+            </span>
           </CardContent>
         </Card>
-        
-        <Card className={cn("bg-elec-gray border-border", pendingCount > 0 && "border-warning/50")}>
+
+        <Card className={cn('bg-elec-gray border-border', pendingCount > 0 && 'border-warning/50')}>
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-1">
               <AlertCircle className="h-4 w-4 text-warning" />
@@ -813,79 +892,82 @@ export const TimesheetsSection = () => {
       <div className="overflow-x-auto hide-scrollbar -mx-4 px-4">
         <div className="flex gap-2 min-w-max pb-2">
           {dailyBreakdown.map((data, idx) => {
-            const isSelected = selectedDay && format(data.day, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
+            const isSelected =
+              selectedDay && format(data.day, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
             const isTodayDate = isToday(data.day);
-            
+
             return (
               <button
                 key={idx}
                 onClick={() => setSelectedDay(isSelected ? null : data.day)}
                 className={cn(
-                  "flex flex-col items-center p-3 rounded-xl min-w-[72px] transition-all touch-feedback",
-                  isSelected 
-                    ? "bg-elec-yellow text-elec-dark" 
-                    : isTodayDate 
-                      ? "bg-elec-yellow/20 border border-elec-yellow/50" 
-                      : "bg-surface border border-transparent"
+                  'flex flex-col items-center p-3 rounded-xl min-w-[72px] transition-all touch-feedback',
+                  isSelected
+                    ? 'bg-elec-yellow text-elec-dark'
+                    : isTodayDate
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/50'
+                      : 'bg-surface border border-transparent'
                 )}
               >
-                <span className={cn(
-                  "text-xs font-medium mb-1",
-                  isSelected ? "text-elec-dark" : "text-muted-foreground"
-                )}>
+                <span
+                  className={cn(
+                    'text-xs font-medium mb-1',
+                    isSelected ? 'text-elec-dark' : 'text-muted-foreground'
+                  )}
+                >
                   {DAYS_OF_WEEK[idx]}
                 </span>
-                <span className={cn(
-                  "text-lg font-bold mb-2",
-                  isSelected ? "text-elec-dark" : "text-foreground"
-                )}>
+                <span
+                  className={cn(
+                    'text-lg font-bold mb-2',
+                    isSelected ? 'text-elec-dark' : 'text-foreground'
+                  )}
+                >
                   {format(data.day, 'd')}
                 </span>
-                
+
                 {/* Hours bar */}
-                <div className={cn(
-                  "w-full h-12 rounded-lg overflow-hidden relative",
-                  isSelected ? "bg-elec-dark/20" : "bg-muted/50"
-                )}>
+                <div
+                  className={cn(
+                    'w-full h-12 rounded-lg overflow-hidden relative',
+                    isSelected ? 'bg-elec-dark/20' : 'bg-muted/50'
+                  )}
+                >
                   {data.hours > 0 && (
-                    <div 
+                    <div
                       className="absolute bottom-0 left-0 right-0 flex flex-col"
                       style={{ height: `${Math.min((data.hours / maxDailyHours) * 100, 100)}%` }}
                     >
                       {data.approved > 0 && (
-                        <div 
-                          className={cn(
-                            "flex-1",
-                            isSelected ? "bg-elec-dark" : "bg-success"
-                          )}
+                        <div
+                          className={cn('flex-1', isSelected ? 'bg-elec-dark' : 'bg-success')}
                           style={{ flex: data.approved / data.hours }}
                         />
                       )}
                       {data.pending > 0 && (
-                        <div 
-                          className={cn(
-                            "flex-1",
-                            isSelected ? "bg-elec-dark/70" : "bg-warning"
-                          )}
+                        <div
+                          className={cn('flex-1', isSelected ? 'bg-elec-dark/70' : 'bg-warning')}
                           style={{ flex: data.pending / data.hours }}
                         />
                       )}
                     </div>
                   )}
                 </div>
-                
-                <span className={cn(
-                  "text-xs font-medium mt-1.5",
-                  isSelected ? "text-elec-dark" : "text-foreground"
-                )}>
+
+                <span
+                  className={cn(
+                    'text-xs font-medium mt-1.5',
+                    isSelected ? 'text-elec-dark' : 'text-foreground'
+                  )}
+                >
                   {data.hours.toFixed(1)}h
                 </span>
                 {data.count > 0 && (
-                  <Badge 
-                    variant="secondary" 
+                  <Badge
+                    variant="secondary"
                     className={cn(
-                      "mt-1 text-[10px] px-1.5 py-0",
-                      isSelected && "bg-elec-dark/30 text-elec-dark"
+                      'mt-1 text-[10px] px-1.5 py-0',
+                      isSelected && 'bg-elec-dark/30 text-elec-dark'
                     )}
                   >
                     {data.count}
@@ -935,7 +1017,7 @@ export const TimesheetsSection = () => {
               )}
               <Input
                 placeholder="Search..."
-                className={cn("bg-surface h-10", !searchQuery && "pl-10")}
+                className={cn('bg-surface h-10', !searchQuery && 'pl-10')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -959,8 +1041,10 @@ export const TimesheetsSection = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All Workers</SelectItem>
-                        {employees.map(emp => (
-                          <SelectItem key={emp.id} value={emp.id}>{emp.name}</SelectItem>
+                        {employees.map((emp) => (
+                          <SelectItem key={emp.id} value={emp.id}>
+                            {emp.name}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -985,8 +1069,8 @@ export const TimesheetsSection = () => {
                 </div>
               </SheetContent>
             </Sheet>
-            <Button 
-              variant={isSelectMode ? "default" : "outline"}
+            <Button
+              variant={isSelectMode ? 'default' : 'outline'}
               size="sm"
               onClick={() => {
                 setIsSelectMode(!isSelectMode);
@@ -994,33 +1078,42 @@ export const TimesheetsSection = () => {
               }}
               className="h-10 px-3"
             >
-              {isSelectMode ? "Done" : "Select"}
+              {isSelectMode ? 'Done' : 'Select'}
             </Button>
           </div>
 
           {/* Active filters / day filter */}
-          {(selectedDay || filterEmployee !== "all" || filterStatus !== "all") && (
+          {(selectedDay || filterEmployee !== 'all' || filterStatus !== 'all') && (
             <div className="flex flex-wrap gap-2">
               {selectedDay && (
                 <Badge variant="secondary" className="gap-1.5 pr-1">
                   {format(selectedDay, 'EEE, d MMM')}
-                  <button onClick={() => setSelectedDay(null)} className="ml-1 p-0.5 hover:bg-muted rounded">
+                  <button
+                    onClick={() => setSelectedDay(null)}
+                    className="ml-1 p-0.5 hover:bg-muted rounded"
+                  >
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
               )}
-              {filterEmployee !== "all" && (
+              {filterEmployee !== 'all' && (
                 <Badge variant="secondary" className="gap-1.5 pr-1">
-                  {employees.find(e => e.id === filterEmployee)?.name}
-                  <button onClick={() => setFilterEmployee("all")} className="ml-1 p-0.5 hover:bg-muted rounded">
+                  {employees.find((e) => e.id === filterEmployee)?.name}
+                  <button
+                    onClick={() => setFilterEmployee('all')}
+                    className="ml-1 p-0.5 hover:bg-muted rounded"
+                  >
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
               )}
-              {filterStatus !== "all" && (
+              {filterStatus !== 'all' && (
                 <Badge variant="secondary" className="gap-1.5 pr-1">
                   {filterStatus}
-                  <button onClick={() => setFilterStatus("all")} className="ml-1 p-0.5 hover:bg-muted rounded">
+                  <button
+                    onClick={() => setFilterStatus('all')}
+                    className="ml-1 p-0.5 hover:bg-muted rounded"
+                  >
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
@@ -1033,25 +1126,26 @@ export const TimesheetsSection = () => {
             <div className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium">{selectedTimesheetIds.length} selected</span>
-                <Button variant="ghost" size="sm" onClick={selectAllPending} className="text-xs h-7">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={selectAllPending}
+                  className="text-xs h-7"
+                >
                   Select All Pending
                 </Button>
               </div>
               <div className="flex gap-2">
-                <Button 
-                  size="sm" 
-                  variant="outline" 
+                <Button
+                  size="sm"
+                  variant="outline"
                   onClick={handleBatchReject}
                   className="gap-1 h-8"
                 >
                   <X className="h-3.5 w-3.5" />
                   Reject
                 </Button>
-                <Button 
-                  size="sm" 
-                  onClick={handleBatchApprove}
-                  className="gap-1 h-8"
-                >
+                <Button size="sm" onClick={handleBatchApprove} className="gap-1 h-8">
                   <Check className="h-3.5 w-3.5" />
                   Approve
                 </Button>
@@ -1068,9 +1162,11 @@ export const TimesheetsSection = () => {
                     <CalendarDays className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
                     <p className="text-foreground font-medium mb-1">No timesheets found</p>
                     <p className="text-sm text-muted-foreground">
-                      {selectedDay ? `No entries for ${format(selectedDay, 'EEEE, d MMMM')}` : 'No entries for this week'}
+                      {selectedDay
+                        ? `No entries for ${format(selectedDay, 'EEEE, d MMMM')}`
+                        : 'No entries for this week'}
                     </p>
-                    <ManualTimeEntryDialog 
+                    <ManualTimeEntryDialog
                       trigger={
                         <Button className="mt-4 gap-2">
                           <Plus className="h-4 w-4" />
@@ -1112,15 +1208,12 @@ export const TimesheetsSection = () => {
                       filteredTimesheets.map((ts) => {
                         const labourCost = calculateLabourCost(ts.employeeId, ts.totalHours);
                         const isSelected = selectedTimesheetIds.includes(ts.id);
-                        
+
                         return (
-                          <TableRow 
-                            key={ts.id} 
-                            className={cn(isSelected && "bg-elec-yellow/5")}
-                          >
+                          <TableRow key={ts.id} className={cn(isSelected && 'bg-elec-yellow/5')}>
                             {isSelectMode && (
                               <TableCell>
-                                <Checkbox 
+                                <Checkbox
                                   checked={isSelected}
                                   onCheckedChange={() => toggleTimesheetSelection(ts.id)}
                                 />
@@ -1129,7 +1222,11 @@ export const TimesheetsSection = () => {
                             <TableCell>
                               <div className="flex items-center gap-2">
                                 <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-medium text-elec-yellow">
-                                  {ts.employeeName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                                  {ts.employeeName
+                                    .split(' ')
+                                    .map((n) => n[0])
+                                    .join('')
+                                    .slice(0, 2)}
                                 </div>
                                 <span className="font-medium">{ts.employeeName}</span>
                               </div>
@@ -1142,29 +1239,41 @@ export const TimesheetsSection = () => {
                             </TableCell>
                             <TableCell>{format(parseISO(ts.date), 'EEE, d MMM')}</TableCell>
                             <TableCell>
-                              <span className="font-mono">{ts.clockIn}-{ts.clockOut}</span>
+                              <span className="font-mono">
+                                {ts.clockIn}-{ts.clockOut}
+                              </span>
                               <span className="text-muted-foreground ml-1">({ts.totalHours}h)</span>
                             </TableCell>
                             <TableCell>
                               <span className="font-medium">£{labourCost.toFixed(0)}</span>
                             </TableCell>
                             <TableCell>
-                              <Badge className={cn(
-                                "text-xs",
-                                ts.status === "Approved" && "bg-success/20 text-success",
-                                ts.status === "Pending" && "bg-warning/20 text-warning",
-                                ts.status === "Rejected" && "bg-destructive/20 text-destructive"
-                              )}>
+                              <Badge
+                                className={cn(
+                                  'text-xs',
+                                  ts.status === 'Approved' && 'bg-success/20 text-success',
+                                  ts.status === 'Pending' && 'bg-warning/20 text-warning',
+                                  ts.status === 'Rejected' && 'bg-destructive/20 text-destructive'
+                                )}
+                              >
                                 {ts.status}
                               </Badge>
                             </TableCell>
                             <TableCell>
-                              {ts.status === "Pending" && !isSelectMode && (
+                              {ts.status === 'Pending' && !isSelectMode && (
                                 <div className="flex gap-1">
-                                  <Button size="sm" variant="ghost" onClick={() => handleReject(ts.id)}>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => handleReject(ts.id)}
+                                  >
                                     <X className="h-4 w-4 text-destructive" />
                                   </Button>
-                                  <Button size="sm" variant="ghost" onClick={() => handleApprove(ts.id)}>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => handleApprove(ts.id)}
+                                  >
                                     <Check className="h-4 w-4 text-success" />
                                   </Button>
                                 </div>
@@ -1210,7 +1319,9 @@ export const TimesheetsSection = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-xl font-bold text-foreground">{emp.totalHours.toFixed(1)}h</p>
+                      <p className="text-xl font-bold text-foreground">
+                        {emp.totalHours.toFixed(1)}h
+                      </p>
                       <p className="text-sm text-success font-medium">£{emp.cost.toFixed(0)}</p>
                     </div>
                   </div>
@@ -1218,7 +1329,7 @@ export const TimesheetsSection = () => {
               </Card>
             ))
           )}
-          
+
           {/* Week Summary */}
           <Card className="bg-gradient-to-br from-primary/10 via-card to-card border-elec-yellow/30">
             <CardContent className="p-4">
@@ -1234,7 +1345,9 @@ export const TimesheetsSection = () => {
                   <p className="text-xs text-muted-foreground">Total Entries</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-elec-yellow">£{totalLabourCost.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-elec-yellow">
+                    £{totalLabourCost.toLocaleString()}
+                  </p>
                   <p className="text-xs text-muted-foreground">Labour Spend</p>
                 </div>
               </div>

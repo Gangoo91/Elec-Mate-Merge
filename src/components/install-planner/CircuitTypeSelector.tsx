@@ -1,29 +1,29 @@
-import React, { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { 
-  Plus, 
-  Lightbulb, 
-  Zap, 
-  Fan, 
-  Microwave, 
-  Car, 
-  Hospital, 
-  Cpu, 
-  Flame, 
+import React, { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Plus,
+  Lightbulb,
+  Zap,
+  Fan,
+  Microwave,
+  Car,
+  Hospital,
+  Cpu,
+  Flame,
   Warehouse,
   Search,
   ChevronDown,
   ChevronRight,
-  Filter
-} from "lucide-react";
-import { Circuit } from "./types";
-import { CIRCUIT_TEMPLATES, getAvailableTemplatesForInstallationType } from "./CircuitDefaults";
-import { cn } from "@/lib/utils";
+  Filter,
+} from 'lucide-react';
+import { Circuit } from './types';
+import { CIRCUIT_TEMPLATES, getAvailableTemplatesForInstallationType } from './CircuitDefaults';
+import { cn } from '@/lib/utils';
 
 interface CircuitTypeSelectorProps {
   onAddCircuit: (circuitType: string) => void;
@@ -32,60 +32,81 @@ interface CircuitTypeSelectorProps {
 }
 
 const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
-  onAddCircuit, 
+  onAddCircuit,
   existingCircuits,
-  installationType 
+  installationType,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterCategory, setFilterCategory] = useState("all");
-  const [expandedCategories, setExpandedCategories] = useState<string[]>(["recommended"]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(['recommended']);
 
   const availableTemplates = getAvailableTemplatesForInstallationType(installationType);
-  const existingTypes = existingCircuits.map(c => c.loadType);
+  const existingTypes = existingCircuits.map((c) => c.loadType);
 
   const getCircuitIcon = (type: string) => {
     switch (type) {
-      case "lighting":
-      case "commercial-lighting":
+      case 'lighting':
+      case 'commercial-lighting':
         return Lightbulb;
-      case "power":
-      case "power-radial":
-      case "commercial-power":
+      case 'power':
+      case 'power-radial':
+      case 'commercial-power':
         return Zap;
-      case "cooker": return Microwave;
-      case "shower": return Fan;
-      case "heating": return Flame;
-      case "ev-charging": return Car;
-      case "motor-small":
-      case "motor-large":
-      case "motor": return Fan;
-      case "hvac": return Fan;
-      case "it-equipment": return Cpu;
-      case "emergency": return Zap;
-      case "medical": return Hospital;
-      case "welding": return Flame;
-      case "crane": return Warehouse;
-      case "furnace": return Flame;
-      default: return Zap;
+      case 'cooker':
+        return Microwave;
+      case 'shower':
+        return Fan;
+      case 'heating':
+        return Flame;
+      case 'ev-charging':
+        return Car;
+      case 'motor-small':
+      case 'motor-large':
+      case 'motor':
+        return Fan;
+      case 'hvac':
+        return Fan;
+      case 'it-equipment':
+        return Cpu;
+      case 'emergency':
+        return Zap;
+      case 'medical':
+        return Hospital;
+      case 'welding':
+        return Flame;
+      case 'crane':
+        return Warehouse;
+      case 'furnace':
+        return Flame;
+      default:
+        return Zap;
     }
   };
 
   const circuitCategories = useMemo(() => {
     const categories: { [key: string]: string[] } = {
       recommended: availableTemplates.slice(0, 6),
-      power: availableTemplates.filter(t => 
-        t.includes("power") || t.includes("motor") || t.includes("welding") || t.includes("crane")
+      power: availableTemplates.filter(
+        (t) =>
+          t.includes('power') || t.includes('motor') || t.includes('welding') || t.includes('crane')
       ),
-      lighting: availableTemplates.filter(t => t.includes("lighting")),
-      specialised: availableTemplates.filter(t => 
-        t.includes("hvac") || t.includes("it-equipment") || t.includes("emergency") || 
-        t.includes("medical") || t.includes("furnace") || t.includes("ev-charging") ||
-        t.includes("cooker") || t.includes("shower") || t.includes("heating")
-      )
+      lighting: availableTemplates.filter((t) => t.includes('lighting')),
+      specialised: availableTemplates.filter(
+        (t) =>
+          t.includes('hvac') ||
+          t.includes('it-equipment') ||
+          t.includes('emergency') ||
+          t.includes('medical') ||
+          t.includes('furnace') ||
+          t.includes('ev-charging') ||
+          t.includes('cooker') ||
+          t.includes('shower') ||
+          t.includes('heating')
+      ),
     };
 
     // Remove duplicates
-    Object.keys(categories).forEach(key => {
+    Object.keys(categories).forEach((key) => {
       categories[key] = [...new Set(categories[key])];
     });
 
@@ -94,20 +115,21 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
 
   const filteredCircuits = useMemo(() => {
     let circuits = availableTemplates;
-    
-    if (filterCategory !== "all") {
+
+    if (filterCategory !== 'all') {
       circuits = circuitCategories[filterCategory] || [];
     }
 
     if (searchTerm) {
-      circuits = circuits.filter(type => {
+      circuits = circuits.filter((type) => {
         const template = CIRCUIT_TEMPLATES[type];
-        return template && (
-          template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          template.typicalApplications.some(app => 
-            app.toLowerCase().includes(searchTerm.toLowerCase())
-          )
+        return (
+          template &&
+          (template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            template.typicalApplications.some((app) =>
+              app.toLowerCase().includes(searchTerm.toLowerCase())
+            ))
         );
       });
     }
@@ -116,19 +138,17 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
   }, [availableTemplates, filterCategory, searchTerm, circuitCategories]);
 
   const toggleCategory = (category: string) => {
-    setExpandedCategories(prev => 
-      prev.includes(category) 
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
+    setExpandedCategories((prev) =>
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
     );
   };
 
   const categoryOptions = [
-    { value: "all", label: "All Circuits" },
-    { value: "recommended", label: "Recommended" },
-    { value: "power", label: "Power & Motors" },
-    { value: "lighting", label: "Lighting" },
-    { value: "specialised", label: "Specialised" }
+    { value: 'all', label: 'All Circuits' },
+    { value: 'recommended', label: 'Recommended' },
+    { value: 'power', label: 'Power & Motors' },
+    { value: 'lighting', label: 'Lighting' },
+    { value: 'specialised', label: 'Specialised' },
   ];
 
   const renderCircuitCard = (circuitType: string) => {
@@ -152,7 +172,9 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           <div className="w-full">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <h4 className="font-medium text-sm leading-tight mb-3 text-center">{template.name}</h4>
+                <h4 className="font-medium text-sm leading-tight mb-3 text-center">
+                  {template.name}
+                </h4>
                 <p className="text-xs text-muted-foreground mb-3 leading-tight text-center">
                   {template.description}
                 </p>
@@ -167,7 +189,9 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
                   </div>
                   <div className="bg-elec-dark/50 rounded p-2 text-center">
                     <div className="text-muted-foreground mb-1">Phase</div>
-                    <div className="font-medium text-green-400">{template.phases === 'single' ? '1φ' : '3φ'}</div>
+                    <div className="font-medium text-green-400">
+                      {template.phases === 'single' ? '1φ' : '3φ'}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -208,7 +232,7 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
             placeholder="Search circuit types..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={cn("bg-elec-dark border-elec-yellow/30", !searchTerm && "pl-10")}
+            className={cn('bg-elec-dark border-elec-yellow/30', !searchTerm && 'pl-10')}
           />
         </div>
 
@@ -221,32 +245,38 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
       </div>
 
       {/* Circuit Categories */}
-      {filterCategory === "all" ? (
+      {filterCategory === 'all' ? (
         <div className="space-y-4">
           {Object.entries(circuitCategories).map(([category, types]) => {
             if (types.length === 0) return null;
-            
+
             const isExpanded = expandedCategories.includes(category);
-            const categoryLabel = categoryOptions.find(opt => opt.value === category)?.label || category;
+            const categoryLabel =
+              categoryOptions.find((opt) => opt.value === category)?.label || category;
 
             return (
-              <Collapsible key={category} open={isExpanded} onOpenChange={() => toggleCategory(category)}>
+              <Collapsible
+                key={category}
+                open={isExpanded}
+                onOpenChange={() => toggleCategory(category)}
+              >
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="w-full justify-between p-4 h-auto border border-elec-yellow/20 hover:border-elec-yellow/40"
                   >
                     <div className="flex items-center gap-2">
                       <Filter className="h-4 w-4 text-elec-yellow" />
                       <span className="font-medium">{categoryLabel}</span>
                     </div>
-                    {isExpanded ? 
-                      <ChevronDown className="h-4 w-4" /> : 
+                    {isExpanded ? (
+                      <ChevronDown className="h-4 w-4" />
+                    ) : (
                       <ChevronRight className="h-4 w-4" />
-                    }
+                    )}
                   </Button>
                 </CollapsibleTrigger>
-                
+
                 <CollapsibleContent className="space-y-2 mt-2">
                   {types.map(renderCircuitCard)}
                 </CollapsibleContent>
@@ -255,9 +285,7 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           })}
         </div>
       ) : (
-        <div className="space-y-2">
-          {filteredCircuits.map(renderCircuitCard)}
-        </div>
+        <div className="space-y-2">{filteredCircuits.map(renderCircuitCard)}</div>
       )}
 
       {/* Summary */}
@@ -272,7 +300,11 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {existingCircuits.map((circuit) => (
-                <Badge key={circuit.id} variant="outline" className="border-green-400/30 text-green-400">
+                <Badge
+                  key={circuit.id}
+                  variant="outline"
+                  className="border-green-400/30 text-green-400"
+                >
                   {circuit.name}
                 </Badge>
               ))}

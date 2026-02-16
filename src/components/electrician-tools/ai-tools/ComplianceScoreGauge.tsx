@@ -1,6 +1,6 @@
-import { Card } from "@/components/ui/card";
-import { CheckCircle2, XCircle, AlertCircle, TrendingUp } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { Card } from '@/components/ui/card';
+import { CheckCircle2, XCircle, AlertCircle, TrendingUp } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
 
 interface ComplianceScoreGaugeProps {
   passCount: number;
@@ -9,19 +9,22 @@ interface ComplianceScoreGaugeProps {
   totalChecks: number;
 }
 
-export const ComplianceScoreGauge = ({ 
-  passCount, 
-  failCount, 
+export const ComplianceScoreGauge = ({
+  passCount,
+  failCount,
   requiresTestingCount,
-  totalChecks 
+  totalChecks,
 }: ComplianceScoreGaugeProps) => {
   const passPercentage = totalChecks > 0 ? Math.round((passCount / totalChecks) * 100) : 0;
   const failPercentage = totalChecks > 0 ? Math.round((failCount / totalChecks) * 100) : 0;
-  const testingPercentage = totalChecks > 0 ? Math.round((requiresTestingCount / totalChecks) * 100) : 0;
+  const testingPercentage =
+    totalChecks > 0 ? Math.round((requiresTestingCount / totalChecks) * 100) : 0;
 
   const getOverallStatus = () => {
-    if (failCount > 0) return { text: 'Action Required', color: 'text-red-500', bg: 'bg-red-500/10' };
-    if (requiresTestingCount > 0) return { text: 'Testing Required', color: 'text-amber-500', bg: 'bg-amber-500/10' };
+    if (failCount > 0)
+      return { text: 'Action Required', color: 'text-red-500', bg: 'bg-red-500/10' };
+    if (requiresTestingCount > 0)
+      return { text: 'Testing Required', color: 'text-amber-500', bg: 'bg-amber-500/10' };
     return { text: 'Compliant', color: 'text-green-500', bg: 'bg-green-500/10' };
   };
 
@@ -71,7 +74,7 @@ export const ComplianceScoreGauge = ({
             </div>
             <Progress value={passPercentage} className="h-2 bg-muted/30" />
           </div>
-          
+
           {failCount > 0 && (
             <div>
               <div className="flex items-center justify-between mb-1">
@@ -81,14 +84,17 @@ export const ComplianceScoreGauge = ({
               <Progress value={failPercentage} className="h-2 bg-muted/30 [&>div]:bg-red-500" />
             </div>
           )}
-          
+
           {requiresTestingCount > 0 && (
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs text-muted-foreground">Requires Testing</span>
                 <span className="text-xs font-medium text-amber-500">{testingPercentage}%</span>
               </div>
-              <Progress value={testingPercentage} className="h-2 bg-muted/30 [&>div]:bg-amber-500" />
+              <Progress
+                value={testingPercentage}
+                className="h-2 bg-muted/30 [&>div]:bg-amber-500"
+              />
             </div>
           )}
         </div>

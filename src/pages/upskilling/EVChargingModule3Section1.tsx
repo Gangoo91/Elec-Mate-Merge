@@ -1,82 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m3s1-check1",
-    question: "What is the typical diversity factor for 3 domestic EV chargers?",
-    options: ["100% (no diversity)", "85-90%", "70-75%", "50-60%"],
+    id: 'evcharging-m3s1-check1',
+    question: 'What is the typical diversity factor for 3 domestic EV chargers?',
+    options: ['100% (no diversity)', '85-90%', '70-75%', '50-60%'],
     correctIndex: 1,
-    explanation: "Multiple domestic chargers rarely operate at full load simultaneously. For 2-3 chargers, diversity factors of 85-90% are typical as usage patterns vary between households."
+    explanation:
+      'Multiple domestic chargers rarely operate at full load simultaneously. For 2-3 chargers, diversity factors of 85-90% are typical as usage patterns vary between households.',
   },
   {
-    id: "evcharging-m3s1-check2",
-    question: "Why do we apply a safety factor to load calculations?",
+    id: 'evcharging-m3s1-check2',
+    question: 'Why do we apply a safety factor to load calculations?',
     options: [
-      "To increase installation costs",
-      "To ensure cables run hotter",
-      "To account for future growth and measurement uncertainties",
-      "To reduce the size of protective devices"
+      'To increase installation costs',
+      'To ensure cables run hotter',
+      'To account for future growth and measurement uncertainties',
+      'To reduce the size of protective devices',
     ],
     correctIndex: 2,
-    explanation: "Safety factors (typically 10-20%) account for future load growth, measurement uncertainties, and ensure safe operation under all conditions including temperature variations."
+    explanation:
+      'Safety factors (typically 10-20%) account for future load growth, measurement uncertainties, and ensure safe operation under all conditions including temperature variations.',
   },
   {
-    id: "evcharging-m3s1-check3",
-    question: "What factors affect diversity in workplace charging?",
+    id: 'evcharging-m3s1-check3',
+    question: 'What factors affect diversity in workplace charging?',
     options: [
-      "Cable colour and length only",
-      "Employee arrival/departure patterns, charging durations, vehicle types",
-      "The brand of charging equipment",
-      "Weather conditions only"
+      'Cable colour and length only',
+      'Employee arrival/departure patterns, charging durations, vehicle types',
+      'The brand of charging equipment',
+      'Weather conditions only',
     ],
     correctIndex: 1,
-    explanation: "Workplace diversity is affected by employee arrival/departure patterns, charging durations, vehicle types, and shift patterns - all of which determine simultaneous usage likelihood."
-  }
+    explanation:
+      'Workplace diversity is affected by employee arrival/departure patterns, charging durations, vehicle types, and shift patterns - all of which determine simultaneous usage likelihood.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I determine the connected load vs maximum demand?",
-    answer: "Connected load is the sum of all individual loads that could potentially operate simultaneously. Maximum demand is the actual maximum load drawn in practice, calculated by applying diversity factors to the connected load based on usage patterns."
+    question: 'How do I determine the connected load vs maximum demand?',
+    answer:
+      'Connected load is the sum of all individual loads that could potentially operate simultaneously. Maximum demand is the actual maximum load drawn in practice, calculated by applying diversity factors to the connected load based on usage patterns.',
   },
   {
     question: "What's the difference between static and dynamic load management?",
-    answer: "Static load management allocates fixed power per charger regardless of actual usage. Dynamic load management adjusts power allocation in real-time based on actual demand, optimising use of available supply capacity."
+    answer:
+      'Static load management allocates fixed power per charger regardless of actual usage. Dynamic load management adjusts power allocation in real-time based on actual demand, optimising use of available supply capacity.',
   },
   {
-    question: "When should I use higher diversity factors?",
-    answer: "Higher diversity factors (lower peak demand) can be applied when smart charging systems actively manage charging schedules, when usage patterns are predictable, or when installations have large numbers of charge points where statistical averaging applies."
+    question: 'When should I use higher diversity factors?',
+    answer:
+      'Higher diversity factors (lower peak demand) can be applied when smart charging systems actively manage charging schedules, when usage patterns are predictable, or when installations have large numbers of charge points where statistical averaging applies.',
   },
   {
-    question: "How does temperature affect load calculations?",
-    answer: "Higher ambient temperatures reduce cable current-carrying capacity through derating factors. Cold weather increases EV charging times and energy requirements. Both must be considered in comprehensive load calculations."
-  }
+    question: 'How does temperature affect load calculations?',
+    answer:
+      'Higher ambient temperatures reduce cable current-carrying capacity through derating factors. Cold weather increases EV charging times and energy requirements. Both must be considered in comprehensive load calculations.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A workplace is installing 15 EV chargers at 7kW each. With a diversity factor of 70% and 15% safety factor, what is the maximum demand?",
-  options: [
-    "105kW",
-    "84.5kW",
-    "73.5kW",
-    "121kW"
-  ],
-  correctAnswer: 1,
-  explanation: "Connected load: 15 × 7kW = 105kW. Apply diversity: 105kW × 0.70 = 73.5kW. Apply safety factor: 73.5kW × 1.15 = 84.5kW. This is the calculated maximum demand for infrastructure sizing."
-  }
+    question:
+      'A workplace is installing 15 EV chargers at 7kW each. With a diversity factor of 70% and 15% safety factor, what is the maximum demand?',
+    options: ['105kW', '84.5kW', '73.5kW', '121kW'],
+    correctAnswer: 1,
+    explanation:
+      'Connected load: 15 × 7kW = 105kW. Apply diversity: 105kW × 0.70 = 73.5kW. Apply safety factor: 73.5kW × 1.15 = 84.5kW. This is the calculated maximum demand for infrastructure sizing.',
+  },
 ];
 
 const EVChargingModule3Section1 = () => {
   useSEO({
-    title: "Load Estimation and Diversity | EV Charging Module 3.1",
-    description: "Calculate electrical loads and apply diversity factors for EV charging installations according to BS 7671 and IET guidance."
+    title: 'Load Estimation and Diversity | EV Charging Module 3.1',
+    description:
+      'Calculate electrical loads and apply diversity factors for EV charging installations according to BS 7671 and IET guidance.',
   });
 
   return (
@@ -118,16 +123,26 @@ const EVChargingModule3Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Connected Load:</strong> Sum of all potential loads</li>
-              <li><strong>Diversity Factor:</strong> Reduces peak demand (50-100%)</li>
-              <li><strong>Formula:</strong> Max Demand = Connected × Diversity × Safety</li>
+              <li>
+                <strong>Connected Load:</strong> Sum of all potential loads
+              </li>
+              <li>
+                <strong>Diversity Factor:</strong> Reduces peak demand (50-100%)
+              </li>
+              <li>
+                <strong>Formula:</strong> Max Demand = Connected × Diversity × Safety
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Multiple EV chargers on single supply</li>
-              <li><strong>Use:</strong> Apply diversity to reduce infrastructure costs</li>
+              <li>
+                <strong>Spot:</strong> Multiple EV chargers on single supply
+              </li>
+              <li>
+                <strong>Use:</strong> Apply diversity to reduce infrastructure costs
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +152,12 @@ const EVChargingModule3Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Calculate maximum demand for EV charging",
-              "Apply diversity factors per BS 7671",
-              "Determine cable sizing from load calculations",
-              "Assess existing supply capacity",
-              "Apply load estimation to commercial sites",
-              "Understand load management systems"
+              'Calculate maximum demand for EV charging',
+              'Apply diversity factors per BS 7671',
+              'Determine cable sizing from load calculations',
+              'Assess existing supply capacity',
+              'Apply load estimation to commercial sites',
+              'Understand load management systems',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -162,22 +177,31 @@ const EVChargingModule3Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The <strong>connected load</strong> is the sum of all individual loads that could potentially
-              operate simultaneously. However, the <strong>maximum demand</strong> is the actual maximum
-              load that will be drawn in practice, taking diversity factors into account.
+              The <strong>connected load</strong> is the sum of all individual loads that could
+              potentially operate simultaneously. However, the <strong>maximum demand</strong> is
+              the actual maximum load that will be drawn in practice, taking diversity factors into
+              account.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">BS 7671 Requirements</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Regulation 722:</strong> EV charging equipment</li>
-                  <li><strong>Appendix 15:</strong> Energy storage and EV</li>
-                  <li><strong>Section 528:</strong> Caravan/motor caravan parks</li>
+                  <li>
+                    <strong>Regulation 722:</strong> EV charging equipment
+                  </li>
+                  <li>
+                    <strong>Appendix 15:</strong> Energy storage and EV
+                  </li>
+                  <li>
+                    <strong>Section 528:</strong> Caravan/motor caravan parks
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why Diversity Matters</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Why Diversity Matters
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Prevents oversized installations</li>
                   <li>Reduces infrastructure costs</li>
@@ -188,7 +212,9 @@ const EVChargingModule3Section1 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">Load Calculation Formula</p>
-              <p className="font-mono text-white">Maximum Demand = (Connected Load × Diversity Factor) × Safety Factor</p>
+              <p className="font-mono text-white">
+                Maximum Demand = (Connected Load × Diversity Factor) × Safety Factor
+              </p>
             </div>
           </div>
         </section>
@@ -203,27 +229,47 @@ const EVChargingModule3Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Diversity factors depend on installation type, number of charging points, and user patterns.
-              IET guidance provides recommended factors based on extensive research.
+              Diversity factors depend on installation type, number of charging points, and user
+              patterns. IET guidance provides recommended factors based on extensive research.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Domestic Installations</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Domestic Installations
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Single charger:</strong> 100% (no diversity)</li>
-                  <li><strong>2-3 chargers:</strong> 85-90%</li>
-                  <li><strong>4-5 chargers:</strong> 80-85%</li>
-                  <li><strong>6+ chargers:</strong> 75-80%</li>
+                  <li>
+                    <strong>Single charger:</strong> 100% (no diversity)
+                  </li>
+                  <li>
+                    <strong>2-3 chargers:</strong> 85-90%
+                  </li>
+                  <li>
+                    <strong>4-5 chargers:</strong> 80-85%
+                  </li>
+                  <li>
+                    <strong>6+ chargers:</strong> 75-80%
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commercial Installations</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Commercial Installations
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>2-5 workplace:</strong> 80-85%</li>
-                  <li><strong>6-10 workplace:</strong> 70-80%</li>
-                  <li><strong>11-20 public:</strong> 60-70%</li>
-                  <li><strong>20+ rapid:</strong> 50-60%</li>
+                  <li>
+                    <strong>2-5 workplace:</strong> 80-85%
+                  </li>
+                  <li>
+                    <strong>6-10 workplace:</strong> 70-80%
+                  </li>
+                  <li>
+                    <strong>11-20 public:</strong> 60-70%
+                  </li>
+                  <li>
+                    <strong>20+ rapid:</strong> 50-60%
+                  </li>
                 </ul>
               </div>
             </div>
@@ -251,8 +297,8 @@ const EVChargingModule3Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart charging systems can significantly affect diversity calculations by actively managing
-              charging schedules and preventing simultaneous full-power charging events.
+              Smart charging systems can significantly affect diversity calculations by actively
+              managing charging schedules and preventing simultaneous full-power charging events.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -273,9 +319,15 @@ const EVChargingModule3Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Environmental Factors</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Cable derating:</strong> Higher temperatures reduce current capacity</li>
-                <li><strong>Seasonal variations:</strong> Winter heating adds to electrical demand</li>
-                <li><strong>Battery performance:</strong> Cold weather increases charging times</li>
+                <li>
+                  <strong>Cable derating:</strong> Higher temperatures reduce current capacity
+                </li>
+                <li>
+                  <strong>Seasonal variations:</strong> Winter heating adds to electrical demand
+                </li>
+                <li>
+                  <strong>Battery performance:</strong> Cold weather increases charging times
+                </li>
               </ul>
             </div>
           </div>
@@ -291,12 +343,24 @@ const EVChargingModule3Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <ol className="text-sm text-white space-y-2 ml-4 list-decimal list-inside">
-              <li><strong>Identify all loads:</strong> List existing and new EV charging loads</li>
-              <li><strong>Determine individual ratings:</strong> Note power ratings for each charger</li>
-              <li><strong>Calculate connected load:</strong> Sum all individual loads</li>
-              <li><strong>Apply diversity factor:</strong> Multiply by appropriate factor</li>
-              <li><strong>Add safety margin:</strong> Include 10-20% safety factor</li>
-              <li><strong>Check supply capacity:</strong> Verify existing supply can handle load</li>
+              <li>
+                <strong>Identify all loads:</strong> List existing and new EV charging loads
+              </li>
+              <li>
+                <strong>Determine individual ratings:</strong> Note power ratings for each charger
+              </li>
+              <li>
+                <strong>Calculate connected load:</strong> Sum all individual loads
+              </li>
+              <li>
+                <strong>Apply diversity factor:</strong> Multiply by appropriate factor
+              </li>
+              <li>
+                <strong>Add safety margin:</strong> Include 10-20% safety factor
+              </li>
+              <li>
+                <strong>Check supply capacity:</strong> Verify existing supply can handle load
+              </li>
             </ol>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -327,7 +391,9 @@ const EVChargingModule3Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Calculating Loads</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Calculating Loads
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always distinguish between connected load and maximum demand</li>
                 <li>Apply diversity factors appropriate to installation type</li>
@@ -339,10 +405,19 @@ const EVChargingModule3Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>No diversity applied:</strong> — Leads to oversized, expensive installations</li>
-                <li><strong>Ignoring existing loads:</strong> — May overload the supply</li>
-                <li><strong>No safety factor:</strong> — No room for growth or variations</li>
-                <li><strong>Wrong diversity factor:</strong> — Different for domestic vs commercial</li>
+                <li>
+                  <strong>No diversity applied:</strong> — Leads to oversized, expensive
+                  installations
+                </li>
+                <li>
+                  <strong>Ignoring existing loads:</strong> — May overload the supply
+                </li>
+                <li>
+                  <strong>No safety factor:</strong> — No room for growth or variations
+                </li>
+                <li>
+                  <strong>Wrong diversity factor:</strong> — Different for domestic vs commercial
+                </li>
               </ul>
             </div>
           </div>
@@ -386,10 +461,7 @@ const EVChargingModule3Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

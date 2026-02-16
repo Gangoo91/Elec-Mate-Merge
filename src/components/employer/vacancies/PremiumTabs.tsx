@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 interface TabItem {
   id: string;
@@ -16,17 +16,12 @@ interface PremiumTabsProps {
   className?: string;
 }
 
-export function PremiumTabs({
-  tabs,
-  activeTab,
-  onTabChange,
-  className,
-}: PremiumTabsProps) {
+export function PremiumTabs({ tabs, activeTab, onTabChange, className }: PremiumTabsProps) {
   return (
     <div
       className={cn(
-        "relative flex w-full rounded-xl p-1",
-        "bg-white/5 border border-white/10",
+        'relative flex w-full rounded-xl p-1',
+        'bg-white/5 border border-white/10',
         className
       )}
     >
@@ -38,12 +33,12 @@ export function PremiumTabs({
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
             className={cn(
-              "relative flex-1 flex items-center justify-center gap-2",
-              "px-4 py-3 rounded-lg",
-              "text-sm font-medium",
-              "transition-colors duration-200",
-              "min-h-[48px]",
-              isActive ? "text-black" : "text-white/60 hover:text-white/80"
+              'relative flex-1 flex items-center justify-center gap-2',
+              'px-4 py-3 rounded-lg',
+              'text-sm font-medium',
+              'transition-colors duration-200',
+              'min-h-[48px]',
+              isActive ? 'text-black' : 'text-white/60 hover:text-white/80'
             )}
           >
             {/* Background indicator */}
@@ -51,7 +46,7 @@ export function PremiumTabs({
               <motion.div
                 layoutId="activeTab"
                 className="absolute inset-0 bg-elec-yellow rounded-lg"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               />
             )}
 
@@ -63,13 +58,11 @@ export function PremiumTabs({
                 <Badge
                   variant="secondary"
                   className={cn(
-                    "text-xs px-1.5 py-0 h-5 min-w-[20px] flex items-center justify-center",
-                    isActive
-                      ? "bg-black/20 text-black"
-                      : "bg-white/10 text-white/70"
+                    'text-xs px-1.5 py-0 h-5 min-w-[20px] flex items-center justify-center',
+                    isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-white/70'
                   )}
                 >
-                  {tab.count > 99 ? "99+" : tab.count}
+                  {tab.count > 99 ? '99+' : tab.count}
                 </Badge>
               )}
             </span>

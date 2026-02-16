@@ -1,158 +1,164 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "SI Units and Conversions - Level 3 Module 3 Section 1.5";
-const DESCRIPTION = "Master the International System of Units and converting between different electrical units for accurate calculations and specifications.";
+const TITLE = 'SI Units and Conversions - Level 3 Module 3 Section 1.5';
+const DESCRIPTION =
+  'Master the International System of Units and converting between different electrical units for accurate calculations and specifications.';
 
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "How many microfarads are in 1 nanofarad?",
-    options: [
-      "1000 uF",
-      "0.001 uF",
-      "0.000001 uF",
-      "1,000,000 uF"
-    ],
+    id: 'check-1',
+    question: 'How many microfarads are in 1 nanofarad?',
+    options: ['1000 uF', '0.001 uF', '0.000001 uF', '1,000,000 uF'],
     correctIndex: 1,
-    explanation: "Nano is 10^-9 and micro is 10^-6, so nano is 1000 times smaller than micro. 1nF = 0.001uF. This conversion is common with capacitors where you might see the same value written either way."
+    explanation:
+      'Nano is 10^-9 and micro is 10^-6, so nano is 1000 times smaller than micro. 1nF = 0.001uF. This conversion is common with capacitors where you might see the same value written either way.',
   },
   {
-    id: "check-2",
-    question: "What is 2.5 megohms expressed in kilohms?",
-    options: [
-      "2500 kohms",
-      "0.0025 kohms",
-      "25 kohms",
-      "250 kohms"
-    ],
+    id: 'check-2',
+    question: 'What is 2.5 megohms expressed in kilohms?',
+    options: ['2500 kohms', '0.0025 kohms', '25 kohms', '250 kohms'],
     correctIndex: 0,
-    explanation: "Mega is 10^6 and kilo is 10^3, so mega is 1000 times larger than kilo. 2.5M ohms = 2.5 x 1000 k ohms = 2500k ohms. Insulation resistance is often expressed in megohms for convenience."
+    explanation:
+      'Mega is 10^6 and kilo is 10^3, so mega is 1000 times larger than kilo. 2.5M ohms = 2.5 x 1000 k ohms = 2500k ohms. Insulation resistance is often expressed in megohms for convenience.',
   },
   {
-    id: "check-3",
-    question: "Which of these is a correct SI unit symbol?",
+    id: 'check-3',
+    question: 'Which of these is a correct SI unit symbol?',
     options: [
-      "KW (for kilowatt)",
-      "mA (for milliampere)",
-      "sec (for second)",
-      "KHz (for kilohertz)"
+      'KW (for kilowatt)',
+      'mA (for milliampere)',
+      'sec (for second)',
+      'KHz (for kilohertz)',
     ],
     correctIndex: 1,
-    explanation: "Only 'mA' is correct. Kilo is lowercase 'k' (not K), the second is 's' (not sec), and kilohertz is 'kHz'. Getting symbols right matters - 'M' is mega (million) while 'm' is milli (thousandth)."
+    explanation:
+      "Only 'mA' is correct. Kilo is lowercase 'k' (not K), the second is 's' (not sec), and kilohertz is 'kHz'. Getting symbols right matters - 'M' is mega (million) while 'm' is milli (thousandth).",
   },
   {
-    id: "check-4",
-    question: "A current of 50mA flows for 2 hours. How many coulombs of charge have passed?",
-    options: [
-      "100 C",
-      "0.1 C",
-      "360 C",
-      "3600 C"
-    ],
+    id: 'check-4',
+    question: 'A current of 50mA flows for 2 hours. How many coulombs of charge have passed?',
+    options: ['100 C', '0.1 C', '360 C', '3600 C'],
     correctIndex: 2,
-    explanation: "Q = It, but ensure consistent units. 50mA = 0.05A, 2 hours = 7200 seconds. Q = 0.05 x 7200 = 360 coulombs. Always convert to base units before calculating."
-  }
+    explanation:
+      'Q = It, but ensure consistent units. 50mA = 0.05A, 2 hours = 7200 seconds. Q = 0.05 x 7200 = 360 coulombs. Always convert to base units before calculating.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What prefix represents 10^-6?",
-    options: ["Milli", "Micro", "Nano", "Pico"],
+    question: 'What prefix represents 10^-6?',
+    options: ['Milli', 'Micro', 'Nano', 'Pico'],
     correctAnswer: 1,
-    explanation: "Micro (symbol: u or mu) represents 10^-6 or one millionth. Common in electrical work for microfarads (uF) and microamps (uA). Remember: milli (10^-3), micro (10^-6), nano (10^-9), pico (10^-12)."
+    explanation:
+      'Micro (symbol: u or mu) represents 10^-6 or one millionth. Common in electrical work for microfarads (uF) and microamps (uA). Remember: milli (10^-3), micro (10^-6), nano (10^-9), pico (10^-12).',
   },
   {
     id: 2,
-    question: "Convert 0.00047 farads to microfarads:",
-    options: ["4.7 uF", "47 uF", "470 uF", "4700 uF"],
+    question: 'Convert 0.00047 farads to microfarads:',
+    options: ['4.7 uF', '47 uF', '470 uF', '4700 uF'],
     correctAnswer: 2,
-    explanation: "0.00047F = 0.00047 x 10^6 uF = 470uF. Move the decimal point 6 places to the right when converting to micro. Large electrolytic capacitors are often rated in hundreds of microfarads."
+    explanation:
+      '0.00047F = 0.00047 x 10^6 uF = 470uF. Move the decimal point 6 places to the right when converting to micro. Large electrolytic capacitors are often rated in hundreds of microfarads.',
   },
   {
     id: 3,
-    question: "Which expression equals 1 ohm in base SI units?",
-    options: ["V/A", "A/V", "V x A", "kg.m squared.s to the power of -3.A to the power of -2"],
+    question: 'Which expression equals 1 ohm in base SI units?',
+    options: ['V/A', 'A/V', 'V x A', 'kg.m squared.s to the power of -3.A to the power of -2'],
     correctAnswer: 3,
-    explanation: "While V/A is the practical definition, the base SI unit expression is kg.m squared.s to the power of -3.A to the power of -2. This shows how electrical units derive from the seven base SI units (metre, kilogram, second, ampere, kelvin, mole, candela)."
+    explanation:
+      'While V/A is the practical definition, the base SI unit expression is kg.m squared.s to the power of -3.A to the power of -2. This shows how electrical units derive from the seven base SI units (metre, kilogram, second, ampere, kelvin, mole, candela).',
   },
   {
     id: 4,
-    question: "A cable carries 15A for 8 hours. Express the charge transferred in ampere-hours and coulombs:",
-    options: ["120Ah = 432,000C", "15Ah = 54,000C", "120Ah = 43,200C", "1.875Ah = 6750C"],
+    question:
+      'A cable carries 15A for 8 hours. Express the charge transferred in ampere-hours and coulombs:',
+    options: ['120Ah = 432,000C', '15Ah = 54,000C', '120Ah = 43,200C', '1.875Ah = 6750C'],
     correctAnswer: 0,
-    explanation: "Charge in Ah = I x t = 15A x 8h = 120Ah. To convert to coulombs: 120Ah x 3600 s/h = 432,000C. Battery capacities use Ah; scientific calculations often need coulombs."
+    explanation:
+      'Charge in Ah = I x t = 15A x 8h = 120Ah. To convert to coulombs: 120Ah x 3600 s/h = 432,000C. Battery capacities use Ah; scientific calculations often need coulombs.',
   },
   {
     id: 5,
-    question: "What is the correct way to write fifteen thousand watts?",
-    options: ["15KW", "15kW", "15Kw", "15 kw"],
+    question: 'What is the correct way to write fifteen thousand watts?',
+    options: ['15KW', '15kW', '15Kw', '15 kw'],
     correctAnswer: 1,
-    explanation: "The correct form is 15kW. 'k' for kilo is always lowercase, 'W' for watt is always uppercase (named after James Watt). No space between number and unit in SI notation."
+    explanation:
+      "The correct form is 15kW. 'k' for kilo is always lowercase, 'W' for watt is always uppercase (named after James Watt). No space between number and unit in SI notation.",
   },
   {
     id: 6,
-    question: "Convert 330 nF to picofarads:",
-    options: ["0.33 pF", "3.3 pF", "33,000 pF", "330,000 pF"],
+    question: 'Convert 330 nF to picofarads:',
+    options: ['0.33 pF', '3.3 pF', '33,000 pF', '330,000 pF'],
     correctAnswer: 3,
-    explanation: "Nano is 10^-9, pico is 10^-12. Pico is 1000 times smaller, so multiply by 1000. 330nF = 330 x 1000 pF = 330,000pF. Component markings often use different prefix conventions."
+    explanation:
+      'Nano is 10^-9, pico is 10^-12. Pico is 1000 times smaller, so multiply by 1000. 330nF = 330 x 1000 pF = 330,000pF. Component markings often use different prefix conventions.',
   },
   {
     id: 7,
-    question: "A motor runs at 1450 rpm. Express this in SI units (rad/s):",
-    options: ["151.8 rad/s", "24.2 rad/s", "1450 rad/s", "9110 rad/s"],
+    question: 'A motor runs at 1450 rpm. Express this in SI units (rad/s):',
+    options: ['151.8 rad/s', '24.2 rad/s', '1450 rad/s', '9110 rad/s'],
     correctAnswer: 0,
-    explanation: "RPM isn't an SI unit. Convert: 1450 rpm x (2 x pi rad/revolution) x (1 min/60s) = 151.8 rad/s. The SI unit for angular velocity is radians per second."
+    explanation:
+      "RPM isn't an SI unit. Convert: 1450 rpm x (2 x pi rad/revolution) x (1 min/60s) = 151.8 rad/s. The SI unit for angular velocity is radians per second.",
   },
   {
     id: 8,
-    question: "What is 47k ohms in scientific notation?",
-    options: ["4.7 x 10^3 ohms", "47 x 10^3 ohms", "4.7 x 10^4 ohms", "0.47 x 10^5 ohms"],
+    question: 'What is 47k ohms in scientific notation?',
+    options: ['4.7 x 10^3 ohms', '47 x 10^3 ohms', '4.7 x 10^4 ohms', '0.47 x 10^5 ohms'],
     correctAnswer: 2,
-    explanation: "47k ohms = 47,000 ohms. In proper scientific notation, one digit before the decimal: 4.7 x 10^4 ohms. While 47 x 10^3 is numerically correct, it's not standard scientific notation."
+    explanation:
+      "47k ohms = 47,000 ohms. In proper scientific notation, one digit before the decimal: 4.7 x 10^4 ohms. While 47 x 10^3 is numerically correct, it's not standard scientific notation.",
   },
   {
     id: 9,
-    question: "Energy of 3.6 MJ equals how many kWh?",
-    options: ["0.1 kWh", "1 kWh", "10 kWh", "3600 kWh"],
+    question: 'Energy of 3.6 MJ equals how many kWh?',
+    options: ['0.1 kWh', '1 kWh', '10 kWh', '3600 kWh'],
     correctAnswer: 1,
-    explanation: "1 kWh = 1000W x 3600s = 3,600,000J = 3.6MJ. So 3.6MJ = 1kWh. This conversion is essential - scientific work uses joules, but electricity billing uses kWh."
+    explanation:
+      '1 kWh = 1000W x 3600s = 3,600,000J = 3.6MJ. So 3.6MJ = 1kWh. This conversion is essential - scientific work uses joules, but electricity billing uses kWh.',
   },
   {
     id: 10,
     question: "A specification states '10^-3 S'. What is this in common units?",
-    options: ["1 ohm", "1000 ohms", "1 millisiemens", "1 microsiemens"],
+    options: ['1 ohm', '1000 ohms', '1 millisiemens', '1 microsiemens'],
     correctAnswer: 2,
-    explanation: "10^-3 S = 1mS (one millisiemens). Siemens is the unit of conductance (reciprocal of resistance). 1mS conductance equals 1000 ohms resistance. Conductance is used in parallel circuit calculations."
-  }
+    explanation:
+      '10^-3 S = 1mS (one millisiemens). Siemens is the unit of conductance (reciprocal of resistance). 1mS conductance equals 1000 ohms resistance. Conductance is used in parallel circuit calculations.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why do we use SI units instead of other systems?",
-    answer: "SI (Systeme International) provides a coherent, universal system understood worldwide. It eliminates confusion between different national systems and enables clear technical communication. Electrical standards, regulations, and equipment specifications all use SI units. Using consistent units also simplifies calculations - no awkward conversion factors needed."
+    question: 'Why do we use SI units instead of other systems?',
+    answer:
+      'SI (Systeme International) provides a coherent, universal system understood worldwide. It eliminates confusion between different national systems and enables clear technical communication. Electrical standards, regulations, and equipment specifications all use SI units. Using consistent units also simplifies calculations - no awkward conversion factors needed.',
   },
   {
-    question: "When should I use engineering notation vs scientific notation?",
-    answer: "Engineering notation uses powers of 10 in multiples of 3 (10^3, 10^6, 10^-3, etc.), matching SI prefixes. Scientific notation uses any power of 10. Engineering notation is more practical for electrical work because 4.7 x 10^3 ohms immediately converts to 4.7k ohms. Use engineering notation for everyday work, scientific notation for very large or small numbers."
+    question: 'When should I use engineering notation vs scientific notation?',
+    answer:
+      'Engineering notation uses powers of 10 in multiples of 3 (10^3, 10^6, 10^-3, etc.), matching SI prefixes. Scientific notation uses any power of 10. Engineering notation is more practical for electrical work because 4.7 x 10^3 ohms immediately converts to 4.7k ohms. Use engineering notation for everyday work, scientific notation for very large or small numbers.',
   },
   {
-    question: "How do I remember the order of SI prefixes?",
-    answer: "For large numbers: kilo, mega, giga, tera (King Henry Died Drinking Chocolate Milk - skip H and D). For small: milli, micro, nano, pico (Moving Microbes Need Protection). The key sequence for electrical work is: pico (10^-12), nano (10^-9), micro (10^-6), milli (10^-3), base, kilo (10^3), mega (10^6)."
+    question: 'How do I remember the order of SI prefixes?',
+    answer:
+      'For large numbers: kilo, mega, giga, tera (King Henry Died Drinking Chocolate Milk - skip H and D). For small: milli, micro, nano, pico (Moving Microbes Need Protection). The key sequence for electrical work is: pico (10^-12), nano (10^-9), micro (10^-6), milli (10^-3), base, kilo (10^3), mega (10^6).',
   },
   {
-    question: "Why is the kilogram the base unit for mass, not the gram?",
-    answer: "Historical accident, essentially. When the SI system was formalised, the kilogram was already established as the practical unit. Redefining everything would have caused massive disruption. This does create an oddity - the kilogram is the only base unit with a prefix. In 2019, it was redefined in terms of Planck's constant rather than a physical artefact."
+    question: 'Why is the kilogram the base unit for mass, not the gram?',
+    answer:
+      "Historical accident, essentially. When the SI system was formalised, the kilogram was already established as the practical unit. Redefining everything would have caused massive disruption. This does create an oddity - the kilogram is the only base unit with a prefix. In 2019, it was redefined in terms of Planck's constant rather than a physical artefact.",
   },
   {
     question: "What's the difference between upper and lowercase in unit symbols?",
-    answer: "Generally, units named after people have capital letters (V for Volta, A for Ampere, W for Watt, Hz for Hertz), while other units are lowercase (m for metre, s for second). Prefixes are lowercase for small (m, u, n, p) and uppercase for large (M for mega, G for giga), except kilo which is lowercase k. This matters - 'mA' is milliamp but 'MA' would be megaamp!"
-  }
+    answer:
+      "Generally, units named after people have capital letters (V for Volta, A for Ampere, W for Watt, Hz for Hertz), while other units are lowercase (m for metre, s for second). Prefixes are lowercase for small (m, u, n, p) and uppercase for large (M for mega, G for giga), except kilo which is lowercase k. This matters - 'mA' is milliamp but 'MA' would be megaamp!",
+  },
 ];
 
 const Level3Module3Section1_5 = () => {
@@ -177,31 +183,39 @@ const Level3Module3Section1_5 = () => {
       </div>
 
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-        
-
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Base units:</strong> metre, kilogram, second, ampere, kelvin, mole, candela</li>
-              <li><strong>Derived units:</strong> volt, ohm, watt, hertz, farad, henry</li>
-              <li><strong>Prefixes:</strong> pico, nano, micro, milli, kilo, mega, giga</li>
-              <li><strong>Key skill:</strong> Convert to base units before calculating</li>
+              <li>
+                <strong>Base units:</strong> metre, kilogram, second, ampere, kelvin, mole, candela
+              </li>
+              <li>
+                <strong>Derived units:</strong> volt, ohm, watt, hertz, farad, henry
+              </li>
+              <li>
+                <strong>Prefixes:</strong> pico, nano, micro, milli, kilo, mega, giga
+              </li>
+              <li>
+                <strong>Key skill:</strong> Convert to base units before calculating
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Unit symbols on equipment, prefix notation on components</li>
-              <li><strong>Use:</strong> Convert between prefixes without errors</li>
-              <li><strong>Apply:</strong> Match units in calculations for correct results</li>
+              <li>
+                <strong>Spot:</strong> Unit symbols on equipment, prefix notation on components
+              </li>
+              <li>
+                <strong>Use:</strong> Convert between prefixes without errors
+              </li>
+              <li>
+                <strong>Apply:</strong> Match units in calculations for correct results
+              </li>
             </ul>
           </div>
         </div>
-
-        
-
-        
 
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
@@ -210,24 +224,42 @@ const Level3Module3Section1_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The International System of Units (SI) is built on seven base units from which all other units derive. For electrical work, the most important base unit is the ampere (current). The volt, ohm, watt, and other electrical units are derived from combinations of base units.
+              The International System of Units (SI) is built on seven base units from which all
+              other units derive. For electrical work, the most important base unit is the ampere
+              (current). The volt, ohm, watt, and other electrical units are derived from
+              combinations of base units.
             </p>
             <p>
-              Understanding how units relate helps check your calculations. If your answer comes out in the wrong units, you've made an error somewhere. This dimensional analysis catches many mistakes before they cause problems on site.
+              Understanding how units relate helps check your calculations. If your answer comes out
+              in the wrong units, you've made an error somewhere. This dimensional analysis catches
+              many mistakes before they cause problems on site.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key Electrical Units and Their Derivations:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Key Electrical Units and Their Derivations:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Volt (V):</strong> W/A = J/C = kg.m squared.s to the power of -3.A to the power of -1</li>
-                <li><strong>Ohm:</strong> V/A = kg.m squared.s to the power of -3.A to the power of -2</li>
-                <li><strong>Watt (W):</strong> V.A = J/s = kg.m squared.s to the power of -3</li>
-                <li><strong>Farad (F):</strong> C/V = A squared.s to the power of 4.kg to the power of -1.m to the power of -2</li>
+                <li>
+                  <strong>Volt (V):</strong> W/A = J/C = kg.m squared.s to the power of -3.A to the
+                  power of -1
+                </li>
+                <li>
+                  <strong>Ohm:</strong> V/A = kg.m squared.s to the power of -3.A to the power of -2
+                </li>
+                <li>
+                  <strong>Watt (W):</strong> V.A = J/s = kg.m squared.s to the power of -3
+                </li>
+                <li>
+                  <strong>Farad (F):</strong> C/V = A squared.s to the power of 4.kg to the power of
+                  -1.m to the power of -2
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> When in doubt, break units down to their base components. If both sides of your equation don't have the same base units, something is wrong.
+              <strong>Remember:</strong> When in doubt, break units down to their base components.
+              If both sides of your equation don't have the same base units, something is wrong.
             </p>
           </div>
         </section>
@@ -241,32 +273,53 @@ const Level3Module3Section1_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              SI prefixes allow convenient expression of very large or small quantities. In electrical work, you'll regularly use kilo (k = 10^3), mega (M = 10^6), milli (m = 10^-3), micro (u = 10^-6), and nano (n = 10^-9). Fluent conversion between these is essential.
+              SI prefixes allow convenient expression of very large or small quantities. In
+              electrical work, you'll regularly use kilo (k = 10^3), mega (M = 10^6), milli (m =
+              10^-3), micro (u = 10^-6), and nano (n = 10^-9). Fluent conversion between these is
+              essential.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Large Prefixes</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>kilo (k):</strong> 10^3 = 1,000</li>
-                  <li><strong>mega (M):</strong> 10^6 = 1,000,000</li>
-                  <li><strong>giga (G):</strong> 10^9 = 1,000,000,000</li>
-                  <li><strong>tera (T):</strong> 10^12</li>
+                  <li>
+                    <strong>kilo (k):</strong> 10^3 = 1,000
+                  </li>
+                  <li>
+                    <strong>mega (M):</strong> 10^6 = 1,000,000
+                  </li>
+                  <li>
+                    <strong>giga (G):</strong> 10^9 = 1,000,000,000
+                  </li>
+                  <li>
+                    <strong>tera (T):</strong> 10^12
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Small Prefixes</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>milli (m):</strong> 10^-3 = 0.001</li>
-                  <li><strong>micro (u):</strong> 10^-6 = 0.000001</li>
-                  <li><strong>nano (n):</strong> 10^-9</li>
-                  <li><strong>pico (p):</strong> 10^-12</li>
+                  <li>
+                    <strong>milli (m):</strong> 10^-3 = 0.001
+                  </li>
+                  <li>
+                    <strong>micro (u):</strong> 10^-6 = 0.000001
+                  </li>
+                  <li>
+                    <strong>nano (n):</strong> 10^-9
+                  </li>
+                  <li>
+                    <strong>pico (p):</strong> 10^-12
+                  </li>
                 </ul>
               </div>
             </div>
 
             <p>
-              Watch the case sensitivity: lowercase 'm' is milli (10^-3) but uppercase 'M' is mega (10^6) - a factor of one billion difference! The prefix for kilo is always lowercase 'k', never uppercase.
+              Watch the case sensitivity: lowercase 'm' is milli (10^-3) but uppercase 'M' is mega
+              (10^6) - a factor of one billion difference! The prefix for kilo is always lowercase
+              'k', never uppercase.
             </p>
           </div>
         </section>
@@ -280,20 +333,34 @@ const Level3Module3Section1_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Converting between prefixes is straightforward once you understand the principle: each step of three in the exponent (or factor of 1000) moves you one prefix. When converting to a smaller prefix, multiply; to a larger prefix, divide.
+              Converting between prefixes is straightforward once you understand the principle: each
+              step of three in the exponent (or factor of 1000) moves you one prefix. When
+              converting to a smaller prefix, multiply; to a larger prefix, divide.
             </p>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> Convert 0.0033A to milliamps. Moving from base units to milli means multiplying by 1000 (or moving decimal 3 places right). 0.0033A = 3.3mA. For microamps, multiply by 1000 again: 3.3mA = 3300uA.
+              <strong>Example:</strong> Convert 0.0033A to milliamps. Moving from base units to
+              milli means multiplying by 1000 (or moving decimal 3 places right). 0.0033A = 3.3mA.
+              For microamps, multiply by 1000 again: 3.3mA = 3300uA.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common Conversions in Electrical Work:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Common Conversions in Electrical Work:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1kWh:</strong> 1000Wh = 3,600,000J = 3.6MJ</li>
-                <li><strong>1Ah:</strong> 3600C (ampere-hours to coulombs)</li>
-                <li><strong>1uF:</strong> 1000nF = 1,000,000pF</li>
-                <li><strong>1M ohm:</strong> 1000k ohms = 1,000,000 ohms</li>
+                <li>
+                  <strong>1kWh:</strong> 1000Wh = 3,600,000J = 3.6MJ
+                </li>
+                <li>
+                  <strong>1Ah:</strong> 3600C (ampere-hours to coulombs)
+                </li>
+                <li>
+                  <strong>1uF:</strong> 1000nF = 1,000,000pF
+                </li>
+                <li>
+                  <strong>1M ohm:</strong> 1000k ohms = 1,000,000 ohms
+                </li>
               </ul>
             </div>
           </div>
@@ -308,7 +375,9 @@ const Level3Module3Section1_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The safest approach for calculations is to convert all values to base units first, perform the calculation, then convert the result to a sensible prefix. This eliminates errors from mixing prefixes and makes unit checking straightforward.
+              The safest approach for calculations is to convert all values to base units first,
+              perform the calculation, then convert the result to a sensible prefix. This eliminates
+              errors from mixing prefixes and makes unit checking straightforward.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -327,11 +396,17 @@ const Level3Module3Section1_5 = () => {
             </div>
 
             <p>
-              Engineering notation (powers of 10 in multiples of 3) aligns with SI prefixes and makes conversion easy. Express 47,000 ohms as 47 x 10^3 ohms, immediately recognisable as 47k ohms. This is more practical than scientific notation (4.7 x 10^4 ohms) for everyday electrical work.
+              Engineering notation (powers of 10 in multiples of 3) aligns with SI prefixes and
+              makes conversion easy. Express 47,000 ohms as 47 x 10^3 ohms, immediately recognisable
+              as 47k ohms. This is more practical than scientific notation (4.7 x 10^4 ohms) for
+              everyday electrical work.
             </p>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Pro tip:</strong> When checking calculations, verify your answer is reasonable. If you calculate cable current as 1 million amps or a domestic voltage drop as 100V, you've made a unit error somewhere. Develop intuition for typical values.
+              <strong>Pro tip:</strong> When checking calculations, verify your answer is
+              reasonable. If you calculate cable current as 1 million amps or a domestic voltage
+              drop as 100V, you've made a unit error somewhere. Develop intuition for typical
+              values.
             </p>
           </div>
         </section>
@@ -365,9 +440,17 @@ const Level3Module3Section1_5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Mixing prefixes in calculations</strong> - Convert everything to the same prefix or base units first</li>
-                <li><strong>Wrong case for symbols</strong> - mA is milliamps, MA would be megaamps (wrong)</li>
-                <li><strong>Forgetting kWh conversion</strong> - 1kWh is NOT 1000J, it's 3,600,000J</li>
+                <li>
+                  <strong>Mixing prefixes in calculations</strong> - Convert everything to the same
+                  prefix or base units first
+                </li>
+                <li>
+                  <strong>Wrong case for symbols</strong> - mA is milliamps, MA would be megaamps
+                  (wrong)
+                </li>
+                <li>
+                  <strong>Forgetting kWh conversion</strong> - 1kWh is NOT 1000J, it's 3,600,000J
+                </li>
               </ul>
             </div>
           </div>
@@ -417,10 +500,7 @@ const Level3Module3Section1_5 = () => {
         </section>
 
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">

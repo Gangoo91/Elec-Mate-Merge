@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useAuth } from '@/contexts/AuthContext';
@@ -31,14 +31,14 @@ import {
   GraduationCap,
   Settings2,
   Mic,
-} from "lucide-react";
+} from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 }
-  }
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
+  },
 };
 
 const itemVariants = {
@@ -46,8 +46,8 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' }
-  }
+    transition: { duration: 0.2, ease: 'easeOut' },
+  },
 };
 
 // Certificate types for default selection
@@ -69,7 +69,7 @@ const PreferencesTab = () => {
     isSubscribed: isPushSubscribed,
     isLoading: isPushLoading,
     subscribe: subscribeToPush,
-    unsubscribe: unsubscribeFromPush
+    unsubscribe: unsubscribeFromPush,
   } = usePushNotifications();
 
   // Notification settings
@@ -98,14 +98,14 @@ const PreferencesTab = () => {
           title: 'Test Notification',
           body: 'Push notifications are working correctly!',
           type: 'job',
-          data: {}
-        }
+          data: {},
+        },
       });
       if (error) {
         addNotification({
           title: 'Test Failed',
           message: error.message || 'Failed to send test notification',
-          type: 'error'
+          type: 'error',
         });
       } else {
         // Debug: log full response
@@ -141,7 +141,7 @@ const PreferencesTab = () => {
       addNotification({
         title: 'Test Failed',
         message: 'An error occurred whilst sending the test notification',
-        type: 'error'
+        type: 'error',
       });
     } finally {
       setIsTestingSend(false);
@@ -157,7 +157,7 @@ const PreferencesTab = () => {
           addNotification({
             title: 'Push Notifications Disabled',
             message: "You won't receive notifications when the app is closed",
-            type: 'info'
+            type: 'info',
           });
         }
       } else {
@@ -168,7 +168,7 @@ const PreferencesTab = () => {
           addNotification({
             title: 'Push Notifications Enabled',
             message: "You'll now receive notifications even when the app is closed",
-            type: 'success'
+            type: 'success',
           });
         }
         // Note: subscribeToPush shows its own error toasts, so no need to show another on failure
@@ -178,7 +178,7 @@ const PreferencesTab = () => {
       addNotification({
         title: 'Error',
         message: 'Failed to update push notification settings',
-        type: 'error'
+        type: 'error',
       });
     }
   };
@@ -201,8 +201,10 @@ const PreferencesTab = () => {
     }
     addNotification({
       title: newMuted ? 'Notifications Muted' : 'Notifications Enabled',
-      message: newMuted ? 'All notifications have been muted' : 'All notifications have been enabled',
-      type: 'info'
+      message: newMuted
+        ? 'All notifications have been muted'
+        : 'All notifications have been enabled',
+      type: 'info',
     });
   };
 
@@ -227,11 +229,13 @@ const PreferencesTab = () => {
             <div className="p-4 rounded-xl bg-gradient-to-br from-elec-yellow/10 to-purple-500/10 border border-elec-yellow/20">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                    isPushSubscribed
-                      ? 'bg-green-500/20 ring-2 ring-green-500/30'
-                      : 'bg-elec-yellow/20'
-                  }`}>
+                  <div
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                      isPushSubscribed
+                        ? 'bg-green-500/20 ring-2 ring-green-500/30'
+                        : 'bg-elec-yellow/20'
+                    }`}
+                  >
                     {isPushLoading ? (
                       <Loader2 className="h-6 w-6 text-elec-yellow animate-spin" />
                     ) : isPushSubscribed ? (
@@ -244,9 +248,8 @@ const PreferencesTab = () => {
                     <h3 className="text-base font-semibold text-foreground">Push Notifications</h3>
                     <p className="text-sm text-muted-foreground">
                       {isPushSubscribed
-                        ? "Receive notifications when the app is closed"
-                        : "Get notified about messages and updates"
-                      }
+                        ? 'Receive notifications when the app is closed'
+                        : 'Get notified about messages and updates'}
                     </p>
                   </div>
                 </div>
@@ -312,11 +315,7 @@ const PreferencesTab = () => {
             title="Email Updates"
             description="Receive important updates via email"
           >
-            <Switch
-              checked={emailUpdates}
-              onCheckedChange={setEmailUpdates}
-              disabled={allMuted}
-            />
+            <Switch checked={emailUpdates} onCheckedChange={setEmailUpdates} disabled={allMuted} />
           </SettingsRow>
 
           <SettingsRow
@@ -354,11 +353,7 @@ const PreferencesTab = () => {
             title="Expiry Alerts"
             description="Warnings when certifications expire"
           >
-            <Switch
-              checked={expiryAlerts}
-              onCheckedChange={setExpiryAlerts}
-              disabled={allMuted}
-            />
+            <Switch checked={expiryAlerts} onCheckedChange={setExpiryAlerts} disabled={allMuted} />
           </SettingsRow>
 
           <SettingsRow
@@ -414,10 +409,7 @@ const PreferencesTab = () => {
             title="Auto-Save"
             description="Automatically save certificate drafts"
           >
-            <Switch
-              checked={autoSaveEnabled}
-              onCheckedChange={setAutoSaveEnabled}
-            />
+            <Switch checked={autoSaveEnabled} onCheckedChange={setAutoSaveEnabled} />
           </SettingsRow>
         </SettingsSection>
       </motion.div>
@@ -438,10 +430,7 @@ const PreferencesTab = () => {
             title="AI Suggestions"
             description="Get smart suggestions whilst working"
           >
-            <Switch
-              checked={aiSuggestionsEnabled}
-              onCheckedChange={setAiSuggestionsEnabled}
-            />
+            <Switch checked={aiSuggestionsEnabled} onCheckedChange={setAiSuggestionsEnabled} />
           </SettingsRow>
         </SettingsSection>
       </motion.div>

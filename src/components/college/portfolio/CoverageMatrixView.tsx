@@ -21,7 +21,7 @@ import {
   Wrench,
   Heart,
   ChevronRight,
-  Target
+  Target,
 } from 'lucide-react';
 import { CoverageMatrixEntry, KSBMapping } from '@/hooks/college/useCollegePortfolios';
 
@@ -38,24 +38,24 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
   ksbMappings = [],
   onCategoryClick,
   studentName,
-  qualificationTitle
+  qualificationTitle,
 }) => {
   const [activeTab, setActiveTab] = useState('categories');
 
   // Group KSBs by type
-  const knowledgeKSBs = ksbMappings.filter(k => k.ksbType === 'knowledge');
-  const skillKSBs = ksbMappings.filter(k => k.ksbType === 'skill');
-  const behaviourKSBs = ksbMappings.filter(k => k.ksbType === 'behaviour');
+  const knowledgeKSBs = ksbMappings.filter((k) => k.ksbType === 'knowledge');
+  const skillKSBs = ksbMappings.filter((k) => k.ksbType === 'skill');
+  const behaviourKSBs = ksbMappings.filter((k) => k.ksbType === 'behaviour');
 
   // Calculate stats
   const totalCategories = coverageMatrix.length;
-  const completedCategories = coverageMatrix.filter(c => c.status === 'complete').length;
-  const inProgressCategories = coverageMatrix.filter(c => c.status === 'in_progress').length;
-  const notStartedCategories = coverageMatrix.filter(c => c.status === 'not_started').length;
+  const completedCategories = coverageMatrix.filter((c) => c.status === 'complete').length;
+  const inProgressCategories = coverageMatrix.filter((c) => c.status === 'in_progress').length;
+  const notStartedCategories = coverageMatrix.filter((c) => c.status === 'not_started').length;
 
   const totalKSBs = ksbMappings.length;
-  const verifiedKSBs = ksbMappings.filter(k => k.mappingStatus === 'verified').length;
-  const partialKSBs = ksbMappings.filter(k => k.mappingStatus === 'partial').length;
+  const verifiedKSBs = ksbMappings.filter((k) => k.mappingStatus === 'verified').length;
+  const partialKSBs = ksbMappings.filter((k) => k.mappingStatus === 'partial').length;
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -71,11 +71,19 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'complete':
-        return <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Complete</Badge>;
+        return (
+          <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Complete</Badge>
+        );
       case 'in_progress':
-        return <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">In Progress</Badge>;
+        return (
+          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">In Progress</Badge>
+        );
       default:
-        return <Badge variant="outline" className="text-gray-400">Not Started</Badge>;
+        return (
+          <Badge variant="outline" className="text-gray-400">
+            Not Started
+          </Badge>
+        );
     }
   };
 
@@ -92,8 +100,16 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
     }
   };
 
-  const KSBSection = ({ title, items, icon }: { title: string; items: KSBMapping[]; icon: React.ReactNode }) => {
-    const verified = items.filter(k => k.mappingStatus === 'verified').length;
+  const KSBSection = ({
+    title,
+    items,
+    icon,
+  }: {
+    title: string;
+    items: KSBMapping[];
+    icon: React.ReactNode;
+  }) => {
+    const verified = items.filter((k) => k.mappingStatus === 'verified').length;
     const progress = items.length > 0 ? Math.round((verified / items.length) * 100) : 0;
 
     return (
@@ -104,13 +120,15 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
               {icon}
               <CardTitle className="text-sm font-medium">{title}</CardTitle>
             </div>
-            <Badge variant="outline">{verified}/{items.length}</Badge>
+            <Badge variant="outline">
+              {verified}/{items.length}
+            </Badge>
           </div>
           <Progress value={progress} className="h-1.5 mt-2" />
         </CardHeader>
         <CardContent className="pt-2">
           <div className="space-y-2 max-h-64 overflow-y-auto">
-            {items.map(ksb => (
+            {items.map((ksb) => (
               <div
                 key={ksb.id}
                 className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm"
@@ -133,7 +151,9 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
               </div>
             ))}
             {items.length === 0 && (
-              <p className="text-center text-white/50 py-4 text-sm">No {title.toLowerCase()} mapped yet</p>
+              <p className="text-center text-white/50 py-4 text-sm">
+                No {title.toLowerCase()} mapped yet
+              </p>
             )}
           </div>
         </CardContent>
@@ -163,7 +183,9 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
               </div>
               <div>
                 <p className="text-xs text-white/60">Categories</p>
-                <p className="text-xl font-bold">{completedCategories}/{totalCategories}</p>
+                <p className="text-xl font-bold">
+                  {completedCategories}/{totalCategories}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -177,7 +199,9 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
               </div>
               <div>
                 <p className="text-xs text-white/60">KSBs Verified</p>
-                <p className="text-xl font-bold">{verifiedKSBs}/{totalKSBs}</p>
+                <p className="text-xl font-bold">
+                  {verifiedKSBs}/{totalKSBs}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -241,7 +265,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {coverageMatrix.map(entry => (
+                    {coverageMatrix.map((entry) => (
                       <TableRow
                         key={entry.id}
                         className="border-elec-gray/40 hover:bg-white/5 cursor-pointer"
@@ -257,16 +281,16 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                         <TableCell>
                           <div className="flex items-center gap-2">
                             <Progress value={entry.completionPercentage} className="h-2 w-20" />
-                            <span className="text-xs text-white/60">{entry.completionPercentage}%</span>
+                            <span className="text-xs text-white/60">
+                              {entry.completionPercentage}%
+                            </span>
                           </div>
                         </TableCell>
                         <TableCell className="text-center">
                           {getStatusBadge(entry.status)}
                         </TableCell>
                         <TableCell>
-                          {onCategoryClick && (
-                            <ChevronRight className="h-4 w-4 text-white/40" />
-                          )}
+                          {onCategoryClick && <ChevronRight className="h-4 w-4 text-white/40" />}
                         </TableCell>
                       </TableRow>
                     ))}

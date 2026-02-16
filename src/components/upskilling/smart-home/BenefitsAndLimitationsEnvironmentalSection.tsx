@@ -12,9 +12,10 @@ export const BenefitsAndLimitationsEnvironmentalSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Environmental sensors provide significant benefits for health, comfort, and efficiency, but installers should understand their limitations and implementation challenges.
+          Environmental sensors provide significant benefits for health, comfort, and efficiency,
+          but installers should understand their limitations and implementation challenges.
         </p>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-elec-gray border border-green-600 rounded-lg p-4">
             <h4 className="font-semibold text-green-200 mb-3 flex items-center gap-2">
@@ -24,23 +25,34 @@ export const BenefitsAndLimitationsEnvironmentalSection = () => {
             <div className="space-y-3 text-sm">
               <div>
                 <h5 className="font-medium text-foreground mb-1">Health Improvements</h5>
-                <p className="text-gray-300">Enhanced wellbeing, reduced illness, better respiratory health, and improved sleep quality.</p>
+                <p className="text-gray-300">
+                  Enhanced wellbeing, reduced illness, better respiratory health, and improved sleep
+                  quality.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-1">Comfort Enhancement</h5>
-                <p className="text-gray-300">Balanced humidity and temperature create more pleasant living and working conditions.</p>
+                <p className="text-gray-300">
+                  Balanced humidity and temperature create more pleasant living and working
+                  conditions.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-1">Energy Savings</h5>
-                <p className="text-gray-300">Ventilation operates only when necessary, reducing unnecessary heating and cooling costs.</p>
+                <p className="text-gray-300">
+                  Ventilation operates only when necessary, reducing unnecessary heating and cooling
+                  costs.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-1">Regulatory Compliance</h5>
-                <p className="text-gray-300">Meets building standards, health regulations, and environmental requirements.</p>
+                <p className="text-gray-300">
+                  Meets building standards, health regulations, and environmental requirements.
+                </p>
               </div>
             </div>
           </div>
-          
+
           <div className="bg-elec-gray border border-red-600 rounded-lg p-4">
             <h4 className="font-semibold text-red-200 mb-3 flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
@@ -49,19 +61,28 @@ export const BenefitsAndLimitationsEnvironmentalSection = () => {
             <div className="space-y-3 text-sm">
               <div>
                 <h5 className="font-medium text-foreground mb-1">Calibration Requirements</h5>
-                <p className="text-gray-300">Sensors require regular calibration for accurate readings and may drift over time.</p>
+                <p className="text-gray-300">
+                  Sensors require regular calibration for accurate readings and may drift over time.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-1">Critical Placement</h5>
-                <p className="text-gray-300">Location affects accuracy - must avoid drafts, heat sources, and direct sunlight.</p>
+                <p className="text-gray-300">
+                  Location affects accuracy - must avoid drafts, heat sources, and direct sunlight.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-1">Cost Considerations</h5>
-                <p className="text-gray-300">May be prohibitive in small installations, especially for comprehensive multi-sensor systems.</p>
+                <p className="text-gray-300">
+                  May be prohibitive in small installations, especially for comprehensive
+                  multi-sensor systems.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-1">Energy Balance Risk</h5>
-                <p className="text-gray-300">Over-ventilation can waste energy if not properly balanced with other systems.</p>
+                <p className="text-gray-300">
+                  Over-ventilation can waste energy if not properly balanced with other systems.
+                </p>
               </div>
             </div>
           </div>

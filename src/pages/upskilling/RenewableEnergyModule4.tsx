@@ -7,40 +7,40 @@ const RenewableEnergyModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Types of Batteries (Li-Ion, Lead-Acid, LFP, Flow)",
+      title: 'Types of Batteries (Li-Ion, Lead-Acid, LFP, Flow)',
       icon: Battery,
-      description: "Identify key battery types and compare their performance characteristics"
+      description: 'Identify key battery types and compare their performance characteristics',
     },
     {
       id: 2,
-      title: "Battery Sizing, Depth of Discharge, and Lifespan",
+      title: 'Battery Sizing, Depth of Discharge, and Lifespan',
       icon: TrendingUp,
-      description: "Calculate storage capacity requirements and understand performance metrics"
+      description: 'Calculate storage capacity requirements and understand performance metrics',
     },
     {
       id: 3,
-      title: "Battery Management Systems (BMS)",
+      title: 'Battery Management Systems (BMS)',
       icon: Settings,
-      description: "Understand BMS functions and safety protection mechanisms"
+      description: 'Understand BMS functions and safety protection mechanisms',
     },
     {
       id: 4,
-      title: "Energy Management Strategies",
+      title: 'Energy Management Strategies',
       icon: Zap,
-      description: "Learn load management and demand-side response techniques"
+      description: 'Learn load management and demand-side response techniques',
     },
     {
       id: 5,
-      title: "Grid Integration and Inverter Systems",
+      title: 'Grid Integration and Inverter Systems',
       icon: Cable,
-      description: "Explore grid-tie capabilities and power conversion systems"
+      description: 'Explore grid-tie capabilities and power conversion systems',
     },
     {
       id: 6,
-      title: "Economics and Business Models",
+      title: 'Economics and Business Models',
       icon: Power,
-      description: "Analyse costs, payback periods, and revenue streams"
-    }
+      description: 'Analyse costs, payback periods, and revenue streams',
+    },
   ];
 
   return (

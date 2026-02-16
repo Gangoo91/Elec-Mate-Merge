@@ -21,19 +21,27 @@ export const BMSModule5Section4Practical = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Use certified KNX cable (typically green-sheathed twisted pair)</span>
+                <span className="text-foreground">
+                  Use certified KNX cable (typically green-sheathed twisted pair)
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Polarity matters — red/positive to red/positive connections</span>
+                <span className="text-foreground">
+                  Polarity matters — red/positive to red/positive connections
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">No loops — use line, tree, or star topology only</span>
+                <span className="text-foreground">
+                  No loops — use line, tree, or star topology only
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Segregate from mains voltage unless properly separated</span>
+                <span className="text-foreground">
+                  Segregate from mains voltage unless properly separated
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -50,23 +58,33 @@ export const BMSModule5Section4Practical = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Mount devices in panels or wall boxes per manufacturer specs</span>
+                <span className="text-foreground">
+                  Mount devices in panels or wall boxes per manufacturer specs
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Use only KNX-certified power supplies with integrated choke</span>
+                <span className="text-foreground">
+                  Use only KNX-certified power supplies with integrated choke
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Verify bus voltage (~30V DC) before commissioning</span>
+                <span className="text-foreground">
+                  Verify bus voltage (~30V DC) before commissioning
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Document physical addresses for commissioning team</span>
+                <span className="text-foreground">
+                  Document physical addresses for commissioning team
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Calculate total current consumption vs supply capacity</span>
+                <span className="text-foreground">
+                  Calculate total current consumption vs supply capacity
+                </span>
               </div>
             </div>
           </div>
@@ -80,7 +98,9 @@ export const BMSModule5Section4Practical = () => {
               Common Installation Mistakes
             </h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground">• Incorrect polarity connections (most common issue)</p>
+              <p className="text-foreground">
+                • Incorrect polarity connections (most common issue)
+              </p>
               <p className="text-foreground">• Creating loops in bus topology</p>
               <p className="text-foreground">• Using non-KNX certified cable or power supplies</p>
               <p className="text-foreground">• Exceeding maximum cable lengths or device counts</p>
@@ -100,7 +120,9 @@ export const BMSModule5Section4Practical = () => {
                 <p className="text-foreground pl-2">Check polarity and bus voltage first</p>
               </div>
               <div>
-                <p className="text-foreground font-medium text-red-300">Multiple devices failing:</p>
+                <p className="text-foreground font-medium text-red-300">
+                  Multiple devices failing:
+                </p>
                 <p className="text-foreground pl-2">Check if power supply is overloaded</p>
               </div>
               <div>
@@ -118,7 +140,9 @@ export const BMSModule5Section4Practical = () => {
         {/* Documentation and Testing */}
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
-            <h4 className="text-foreground font-semibold mb-4 text-lg">Installation Documentation</h4>
+            <h4 className="text-foreground font-semibold mb-4 text-lg">
+              Installation Documentation
+            </h4>
             <div className="space-y-2 text-sm">
               <p className="text-foreground">• Record bus line layouts and topology diagrams</p>
               <p className="text-foreground">• Document device locations and mounting details</p>
@@ -132,7 +156,9 @@ export const BMSModule5Section4Practical = () => {
           <div className="bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/20 rounded-lg p-6">
             <h4 className="text-foreground font-semibold mb-4 text-lg">Pre-Commissioning Checks</h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground">• Verify correct bus voltage at all device locations</p>
+              <p className="text-foreground">
+                • Verify correct bus voltage at all device locations
+              </p>
               <p className="text-foreground">• Check polarity at every connection point</p>
               <p className="text-foreground">• Confirm no loops exist in the topology</p>
               <p className="text-foreground">• Test isolation between bus and mains circuits</p>
@@ -144,27 +170,43 @@ export const BMSModule5Section4Practical = () => {
 
         {/* Advanced Installation Techniques */}
         <div className="bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 rounded-lg p-6">
-          <h4 className="text-foreground font-semibold mb-6 text-lg">Advanced Installation Techniques</h4>
+          <h4 className="text-foreground font-semibold mb-6 text-lg">
+            Advanced Installation Techniques
+          </h4>
           <div className="grid lg:grid-cols-2 gap-8 text-sm">
             <div className="space-y-4">
               <div>
-                <p className="text-foreground font-medium mb-3 text-cyan-300">Cable Installation Best Practices:</p>
+                <p className="text-foreground font-medium mb-3 text-cyan-300">
+                  Cable Installation Best Practices:
+                </p>
                 <div className="space-y-2 pl-4 border-l-2 border-cyan-500/30">
                   <p className="text-foreground">• Use cable pulling techniques to avoid damage</p>
-                  <p className="text-foreground">• Maintain minimum bend radius (4x cable diameter)</p>
+                  <p className="text-foreground">
+                    • Maintain minimum bend radius (4x cable diameter)
+                  </p>
                   <p className="text-foreground">• Install spare capacity for future expansion</p>
-                  <p className="text-foreground">• Use proper cable management and support systems</p>
+                  <p className="text-foreground">
+                    • Use proper cable management and support systems
+                  </p>
                 </div>
               </div>
             </div>
             <div className="space-y-4">
               <div>
-                <p className="text-foreground font-medium mb-3 text-blue-300">Power Supply Planning:</p>
+                <p className="text-foreground font-medium mb-3 text-blue-300">
+                  Power Supply Planning:
+                </p>
                 <div className="space-y-2 pl-4 border-l-2 border-blue-500/30">
-                  <p className="text-foreground">• Calculate total device current consumption accurately</p>
-                  <p className="text-foreground">• Allow 20% safety margin for power supply sizing</p>
+                  <p className="text-foreground">
+                    • Calculate total device current consumption accurately
+                  </p>
+                  <p className="text-foreground">
+                    • Allow 20% safety margin for power supply sizing
+                  </p>
                   <p className="text-foreground">• Consider voltage drop over long cable runs</p>
-                  <p className="text-foreground">• Plan for redundant power supplies in critical systems</p>
+                  <p className="text-foreground">
+                    • Plan for redundant power supplies in critical systems
+                  </p>
                 </div>
               </div>
             </div>

@@ -1,9 +1,14 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Plus, Trash2 } from 'lucide-react';
 import { cableSizeOptions } from '@/types/cableTypes';
 
@@ -39,18 +44,21 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
       cpcSize: '1.5',
       installationMethod: '101',
       length: '',
-      rcdProtected: false
+      rcdProtected: false,
     };
-    
+
     onUpdate('circuits', [...circuits, newCircuit]);
   };
 
   const removeCircuit = (id: string) => {
-    onUpdate('circuits', circuits.filter((circuit: Circuit) => circuit.id !== id));
+    onUpdate(
+      'circuits',
+      circuits.filter((circuit: Circuit) => circuit.id !== id)
+    );
   };
 
   const updateCircuit = (id: string, field: string, value: any) => {
-    const updatedCircuits = circuits.map((circuit: Circuit) => 
+    const updatedCircuits = circuits.map((circuit: Circuit) =>
       circuit.id === id ? { ...circuit, [field]: value } : circuit
     );
     onUpdate('circuits', updatedCircuits);
@@ -68,7 +76,10 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
         <CardContent>
           <div className="space-y-6">
             {circuits.map((circuit: Circuit, index: number) => (
-              <Card key={circuit.id} className="border border-border bg-card border-l-4 border-l-elec-yellow">
+              <Card
+                key={circuit.id}
+                className="border border-border bg-card border-l-4 border-l-elec-yellow"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-center">
                     <h4 className="font-medium">Circuit {index + 1}</h4>
@@ -120,7 +131,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">MCB Rating (A)</label>
                       <Select
@@ -143,7 +154,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Live Conductor Size</label>
                       <Select
@@ -162,7 +173,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">CPC Size</label>
                       <Select
@@ -181,12 +192,14 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Installation Method</label>
                       <Select
                         value={circuit.installationMethod}
-                        onValueChange={(value) => updateCircuit(circuit.id, 'installationMethod', value)}
+                        onValueChange={(value) =>
+                          updateCircuit(circuit.id, 'installationMethod', value)
+                        }
                       >
                         <SelectTrigger className="bg-transparent">
                           <SelectValue />
@@ -200,7 +213,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Circuit Length (m)</label>
                       <Input
@@ -209,12 +222,14 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         onChange={(e) => updateCircuit(circuit.id, 'length', e.target.value)}
                       />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">RCD Protected</label>
                       <Select
                         value={circuit.rcdProtected ? 'yes' : 'no'}
-                        onValueChange={(value) => updateCircuit(circuit.id, 'rcdProtected', value === 'yes')}
+                        onValueChange={(value) =>
+                          updateCircuit(circuit.id, 'rcdProtected', value === 'yes')
+                        }
                       >
                         <SelectTrigger className="bg-transparent">
                           <SelectValue />
@@ -229,7 +244,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                 </CardContent>
               </Card>
             ))}
-            
+
             <Button onClick={addCircuit} variant="outline" className="w-full">
               <Plus className="h-4 w-4 mr-2" />
               Add Circuit

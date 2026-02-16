@@ -3,11 +3,11 @@
  * Glass morphism styling with spring-based counter animations
  */
 
-import { useEffect, useState } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from 'react';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   Briefcase,
   TrendingUp,
@@ -18,8 +18,8 @@ import {
   RefreshCw,
   Sparkles,
   Zap,
-} from "lucide-react";
-import { pageVariants, counterSpringConfig, heroCardVariants } from "./animations/variants";
+} from 'lucide-react';
+import { pageVariants, counterSpringConfig, heroCardVariants } from './animations/variants';
 
 interface JobsHeroCardProps {
   totalJobs: number;
@@ -38,8 +38,8 @@ interface JobsHeroCardProps {
 // Animated counter component with spring physics
 const AnimatedCounter = ({
   value,
-  suffix = "",
-  prefix = "",
+  suffix = '',
+  prefix = '',
 }: {
   value: number;
   suffix?: string;
@@ -47,14 +47,14 @@ const AnimatedCounter = ({
 }) => {
   const spring = useSpring(0, counterSpringConfig);
   const display = useTransform(spring, (latest) => Math.round(latest).toLocaleString());
-  const [displayValue, setDisplayValue] = useState("0");
+  const [displayValue, setDisplayValue] = useState('0');
 
   useEffect(() => {
     spring.set(value);
   }, [value, spring]);
 
   useEffect(() => {
-    const unsubscribe = display.on("change", (v) => setDisplayValue(v));
+    const unsubscribe = display.on('change', (v) => setDisplayValue(v));
     return unsubscribe;
   }, [display]);
 
@@ -72,9 +72,9 @@ const StatPill = ({
   icon: Icon,
   value,
   label,
-  suffix = "",
-  prefix = "",
-  iconColor = "text-amber-300",
+  suffix = '',
+  prefix = '',
+  iconColor = 'text-amber-300',
 }: {
   icon: typeof Briefcase;
   value: number;
@@ -88,8 +88,13 @@ const StatPill = ({
     animate={{ opacity: 1, scale: 1 }}
     className="flex items-center gap-2 bg-white/[0.05] rounded-xl px-3 py-2 border border-white/5"
   >
-    <div className={cn("p-1.5 rounded-lg bg-white/5", iconColor.replace('text-', 'bg-').replace('300', '500/20'))}>
-      <Icon className={cn("h-4 w-4", iconColor)} />
+    <div
+      className={cn(
+        'p-1.5 rounded-lg bg-white/5',
+        iconColor.replace('text-', 'bg-').replace('300', '500/20')
+      )}
+    >
+      <Icon className={cn('h-4 w-4', iconColor)} />
     </div>
     <div className="flex flex-col">
       <span className="text-sm font-bold text-white leading-tight">
@@ -116,14 +121,14 @@ const JobsHeroCard = ({
   className,
 }: JobsHeroCardProps) => {
   // Parse salary for counter animation
-  const avgSalaryValue = avgSalary ? parseInt(avgSalary.replace(/[^0-9]/g, "")) || 0 : 35000;
+  const avgSalaryValue = avgSalary ? parseInt(avgSalary.replace(/[^0-9]/g, '')) || 0 : 35000;
 
   return (
     <motion.div
       variants={heroCardVariants}
       initial="initial"
       animate="animate"
-      className={cn("space-y-3", className)}
+      className={cn('space-y-3', className)}
     >
       {/* Compact Hero Card - Mobile Optimised */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/60 via-background to-background border border-slate-600/30">
@@ -147,7 +152,7 @@ const JobsHeroCard = ({
               {/* Title - truncated on mobile */}
               <div className="min-w-0">
                 <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight truncate">
-                  Job{" "}
+                  Job{' '}
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     Vacancies
                   </span>
@@ -178,25 +183,15 @@ const JobsHeroCard = ({
                 variant="ghost"
                 className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0 touch-manipulation"
               >
-                <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
+                <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
               </Button>
             )}
           </div>
 
           {/* Compact Stats Row - Horizontal scroll on mobile */}
           <div className="flex gap-2 mt-3 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
-            <StatPill
-              icon={Briefcase}
-              value={totalJobs}
-              label="Jobs"
-              iconColor="text-blue-300"
-            />
-            <StatPill
-              icon={Zap}
-              value={newJobsToday}
-              label="New"
-              iconColor="text-emerald-300"
-            />
+            <StatPill icon={Briefcase} value={totalJobs} label="Jobs" iconColor="text-blue-300" />
+            <StatPill icon={Zap} value={newJobsToday} label="New" iconColor="text-emerald-300" />
             <StatPill
               icon={TrendingUp}
               value={Math.round(avgSalaryValue / 1000)}
@@ -248,23 +243,21 @@ const JobsHeroCard = ({
 
       {/* Quick Filter Chips - Compact */}
       <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-        {["Electrician", "Solar", "EV Tech", "Apprentice", "Site Manager"].map(
-          (term, index) => (
-            <motion.div
-              key={term}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 + index * 0.03 }}
+        {['Electrician', 'Solar', 'EV Tech', 'Apprentice', 'Site Manager'].map((term, index) => (
+          <motion.div
+            key={term}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 + index * 0.03 }}
+          >
+            <Badge
+              variant="secondary"
+              className="bg-white/5 text-white/80 border-white/10 hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/30 transition-colors cursor-pointer whitespace-nowrap touch-manipulation"
             >
-              <Badge
-                variant="secondary"
-                className="bg-white/5 text-white/80 border-white/10 hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/30 transition-colors cursor-pointer whitespace-nowrap touch-manipulation"
-              >
-                {term}
-              </Badge>
-            </motion.div>
-          )
-        )}
+              {term}
+            </Badge>
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   );

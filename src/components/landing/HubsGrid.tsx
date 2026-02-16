@@ -6,7 +6,8 @@ import { HubCard } from './HubCard';
 const hubs = [
   {
     title: 'Apprentice Hub',
-    description: 'Structured learning paths, progress tracking, and exam preparation for your training.',
+    description:
+      'Structured learning paths, progress tracking, and exam preparation for your training.',
     icon: GraduationCap,
     features: ['Level 2 & 3', 'Progress Tracking', 'AM2 Prep'],
     href: '/apprentice',
@@ -15,7 +16,8 @@ const hubs = [
   },
   {
     title: 'Electrician Hub',
-    description: 'AI-powered tools, certificates, and calculators for professional electrical work.',
+    description:
+      'AI-powered tools, certificates, and calculators for professional electrical work.',
     icon: Wrench,
     features: ['AI Agents', 'Certificates', 'Calculators'],
     href: '/electrician',

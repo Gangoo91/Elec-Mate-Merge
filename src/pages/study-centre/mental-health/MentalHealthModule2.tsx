@@ -1,40 +1,45 @@
-import { ArrowLeft, CloudRain, Cloud, Flame, HeartHandshake } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, CloudRain, Cloud, Flame, HeartHandshake } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Understanding Depression",
+    title: 'Understanding Depression',
     icon: CloudRain,
-    description: "Clinical depression vs low mood, types, symptoms (emotional, physical, cognitive, behavioural), risk factors, NICE guidelines",
+    description:
+      'Clinical depression vs low mood, types, symptoms (emotional, physical, cognitive, behavioural), risk factors, NICE guidelines',
   },
   {
     id: 2,
-    title: "Anxiety Disorders",
+    title: 'Anxiety Disorders',
     icon: Cloud,
-    description: "GAD, panic disorder, social anxiety, phobias, OCD, PTSD, fight-flight-freeze response, physical symptoms",
+    description:
+      'GAD, panic disorder, social anxiety, phobias, OCD, PTSD, fight-flight-freeze response, physical symptoms',
   },
   {
     id: 3,
-    title: "Stress & Burnout",
+    title: 'Stress & Burnout',
     icon: Flame,
-    description: "HSE stress definition, acute vs chronic stress, the Maslach burnout model, stress in construction, risk assessment",
+    description:
+      'HSE stress definition, acute vs chronic stress, the Maslach burnout model, stress in construction, risk assessment',
   },
   {
     id: 4,
-    title: "Supporting Someone with Depression or Anxiety",
+    title: 'Supporting Someone with Depression or Anxiety',
     icon: HeartHandshake,
-    description: "ALGEE in practice, what to say and what not to say, encouraging professional help, GP referral, talking therapies",
+    description:
+      'ALGEE in practice, what to say and what not to say, encouraging professional help, GP referral, talking therapies',
   },
 ];
 
 export default function MentalHealthModule2() {
   useSEO({
-    title: "Module 2: Depression, Anxiety & Stress | Mental Health First Aid",
-    description: "Recognising depression, anxiety disorders, workplace stress and burnout, and supporting colleagues effectively.",
+    title: 'Module 2: Depression, Anxiety & Stress | Mental Health First Aid',
+    description:
+      'Recognising depression, anxiety disorders, workplace stress and burnout, and supporting colleagues effectively.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function MentalHealthModule2() {
               Depression, Anxiety &amp; Stress
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Recognising the most common mental health conditions in the workplace, understanding their impact and learning how to provide effective support
+              Recognising the most common mental health conditions in the workplace, understanding
+              their impact and learning how to provide effective support
             </p>
           </div>
 

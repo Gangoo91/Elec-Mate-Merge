@@ -7,34 +7,34 @@ const IndustrialElectricalModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Layout Planning for MCC and Control Panels",
+      title: 'Layout Planning for MCC and Control Panels',
       icon: Layout,
-      description: "Motor control centre and panel layout design principles"
+      description: 'Motor control centre and panel layout design principles',
     },
     {
       id: 2,
-      title: "Component Mounting and DIN Rail Organisation",
+      title: 'Component Mounting and DIN Rail Organisation',
       icon: PanelLeft,
-      description: "Component arrangement and DIN rail systems"
+      description: 'Component arrangement and DIN rail systems',
     },
     {
       id: 3,
-      title: "Cable Termination and Ferrule ID",
+      title: 'Cable Termination and Ferrule ID',
       icon: Tag,
-      description: "Cable termination techniques and identification methods"
+      description: 'Cable termination techniques and identification methods',
     },
     {
       id: 4,
-      title: "Panel Cooling and IP Ratings",
+      title: 'Panel Cooling and IP Ratings',
       icon: Thermometer,
-      description: "Thermal management and ingress protection"
+      description: 'Thermal management and ingress protection',
     },
     {
       id: 5,
-      title: "Functional Testing and Documentation",
+      title: 'Functional Testing and Documentation',
       icon: TestTube,
-      description: "Testing procedures and documentation requirements"
-    }
+      description: 'Testing procedures and documentation requirements',
+    },
   ];
 
   return (

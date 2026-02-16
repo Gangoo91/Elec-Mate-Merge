@@ -39,7 +39,7 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
     'Gross Pay',
   ];
 
-  const rows = entries.map(e => [
+  const rows = entries.map((e) => [
     e.employeeId,
     e.employeeName,
     e.periodStart,
@@ -50,7 +50,7 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
     e.grossPay.toFixed(2),
   ]);
 
-  return [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
 };
 
 // Format for Sage CSV import
@@ -66,7 +66,7 @@ export const formatForSage = (entries: PayrollEntry[]): string => {
     'Total',
   ];
 
-  const rows = entries.map(e => [
+  const rows = entries.map((e) => [
     e.employeeId,
     `"${e.employeeName}"`,
     format(new Date(e.periodStart), 'dd/MM/yyyy'),
@@ -77,7 +77,7 @@ export const formatForSage = (entries: PayrollEntry[]): string => {
     e.grossPay.toFixed(2),
   ]);
 
-  return [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
 };
 
 // Format for QuickBooks CSV import
@@ -92,10 +92,8 @@ export const formatForQuickBooks = (entries: PayrollEntry[]): string => {
     'Job Allocations',
   ];
 
-  const rows = entries.map(e => {
-    const jobAllocations = e.jobBreakdown
-      .map(j => `${j.jobTitle}: ${j.hours}h`)
-      .join('; ');
+  const rows = entries.map((e) => {
+    const jobAllocations = e.jobBreakdown.map((j) => `${j.jobTitle}: ${j.hours}h`).join('; ');
 
     return [
       `"${e.employeeName}"`,
@@ -108,7 +106,7 @@ export const formatForQuickBooks = (entries: PayrollEntry[]): string => {
     ];
   });
 
-  return [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
 };
 
 // Format for generic CSV export
@@ -127,7 +125,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
     'Gross Pay',
   ];
 
-  const rows = entries.map(e => {
+  const rows = entries.map((e) => {
     const regularPay = e.regularHours * e.hourlyRate;
     const overtimePay = e.overtimeHours * e.hourlyRate * 1.5;
 
@@ -146,7 +144,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
     ];
   });
 
-  return [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
 };
 
 // Get CSV content based on provider
@@ -166,12 +164,17 @@ export const getExportCSV = (provider: AccountingProvider, entries: PayrollEntry
 };
 
 // Download CSV file
-export const downloadExportCSV = (provider: AccountingProvider, entries: PayrollEntry[], periodStart: string, periodEnd: string): void => {
+export const downloadExportCSV = (
+  provider: AccountingProvider,
+  entries: PayrollEntry[],
+  periodStart: string,
+  periodEnd: string
+): void => {
   const csv = getExportCSV(provider, entries);
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');
   const filename = `payroll-export-${provider}-${periodStart}-to-${periodEnd}.csv`;
-  
+
   link.href = URL.createObjectURL(blob);
   link.download = filename;
   link.style.display = 'none';
@@ -193,23 +196,28 @@ export const getProviderName = (provider: AccountingProvider): string => {
 };
 
 // Format for job cost breakdown (useful for job financials)
-export const generateJobCostReport = (entries: PayrollEntry[]): Array<{
+export const generateJobCostReport = (
+  entries: PayrollEntry[]
+): Array<{
   jobId: string;
   jobTitle: string;
   totalHours: number;
   totalCost: number;
   workers: Array<{ name: string; hours: number; cost: number }>;
 }> => {
-  const jobMap = new Map<string, {
-    jobId: string;
-    jobTitle: string;
-    totalHours: number;
-    totalCost: number;
-    workers: Map<string, { name: string; hours: number; cost: number }>;
-  }>();
+  const jobMap = new Map<
+    string,
+    {
+      jobId: string;
+      jobTitle: string;
+      totalHours: number;
+      totalCost: number;
+      workers: Map<string, { name: string; hours: number; cost: number }>;
+    }
+  >();
 
-  entries.forEach(entry => {
-    entry.jobBreakdown.forEach(job => {
+  entries.forEach((entry) => {
+    entry.jobBreakdown.forEach((job) => {
       const existing = jobMap.get(job.jobId) || {
         jobId: job.jobId,
         jobTitle: job.jobTitle,
@@ -234,7 +242,7 @@ export const generateJobCostReport = (entries: PayrollEntry[]): Array<{
     });
   });
 
-  return Array.from(jobMap.values()).map(job => ({
+  return Array.from(jobMap.values()).map((job) => ({
     jobId: job.jobId,
     jobTitle: job.jobTitle,
     totalHours: job.totalHours,

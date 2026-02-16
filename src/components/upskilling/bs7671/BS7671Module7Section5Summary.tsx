@@ -22,35 +22,36 @@ export const BS7671Module7Section5Summary = () => {
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span className="text-sm">
-                    <strong>PEI Definition:</strong> Installations that both consume and generate energy, 
-                    requiring bi-directional energy flow management and advanced protection systems.
+                    <strong>PEI Definition:</strong> Installations that both consume and generate
+                    energy, requiring bi-directional energy flow management and advanced protection
+                    systems.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span className="text-sm">
-                    <strong>Energy Management:</strong> Smart control systems optimise generation, storage, 
-                    and consumption to maximise self-sufficiency and economic benefits.
+                    <strong>Energy Management:</strong> Smart control systems optimise generation,
+                    storage, and consumption to maximise self-sufficiency and economic benefits.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span className="text-sm">
-                    <strong>Grid Integration:</strong> G98/G99 compliance ensures safe connection whilst 
-                    enabling participation in flexibility markets and grid services.
+                    <strong>Grid Integration:</strong> G98/G99 compliance ensures safe connection
+                    whilst enabling participation in flexibility markets and grid services.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span className="text-sm">
-                    <strong>Battery Safety:</strong> Comprehensive BMS, thermal management, and fire 
+                    <strong>Battery Safety:</strong> Comprehensive BMS, thermal management, and fire
                     suppression systems ensure safe operation of energy storage systems.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span className="text-sm">
-                    <strong>Commissioning:</strong> Systematic testing and verification procedures 
+                    <strong>Commissioning:</strong> Systematic testing and verification procedures
                     ensure optimal performance and compliance with all safety requirements.
                   </span>
                 </li>
@@ -68,29 +69,31 @@ export const BS7671Module7Section5Summary = () => {
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <h5 className="text-green-400 font-medium text-sm mb-1">Technical Excellence</h5>
                   <p className="text-xs">
-                    Proper system design, quality components, and professional installation 
-                    are fundamental to achieving long-term performance and reliability.
+                    Proper system design, quality components, and professional installation are
+                    fundamental to achieving long-term performance and reliability.
                   </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <h5 className="text-blue-400 font-medium text-sm mb-1">Regulatory Compliance</h5>
                   <p className="text-xs">
-                    Understanding and adhering to BS 7671 Part 8, G98/G99 requirements, 
-                    and local planning regulations ensures smooth project delivery.
+                    Understanding and adhering to BS 7671 Part 8, G98/G99 requirements, and local
+                    planning regulations ensures smooth project delivery.
                   </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
-                  <h5 className="text-purple-400 font-medium text-sm mb-1">Economic Optimisation</h5>
+                  <h5 className="text-purple-400 font-medium text-sm mb-1">
+                    Economic Optimisation
+                  </h5>
                   <p className="text-xs">
-                    Balancing capital investment with operational savings and revenue 
-                    opportunities maximises the business case for PEI systems.
+                    Balancing capital investment with operational savings and revenue opportunities
+                    maximises the business case for PEI systems.
                   </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <h5 className="text-orange-400 font-medium text-sm mb-1">Future-Proofing</h5>
                   <p className="text-xs">
-                    Designing for scalability and technology evolution ensures systems 
-                    remain viable throughout their operational lifetime.
+                    Designing for scalability and technology evolution ensures systems remain viable
+                    throughout their operational lifetime.
                   </p>
                 </div>
               </div>
@@ -134,8 +137,9 @@ export const BS7671Module7Section5Summary = () => {
         <div className="bg-gradient-to-r from-green-900/30 to-blue-900/30 p-4 rounded-md border border-green-600/30">
           <h4 className="text-foreground font-semibold mb-2">Professional Development Impact</h4>
           <p className="text-sm text-gray-200 mb-3">
-            Mastery of prosumer electrical installations positions you at the forefront of the energy transition. 
-            These skills are increasingly valuable as the UK moves towards net-zero emissions and greater energy independence.
+            Mastery of prosumer electrical installations positions you at the forefront of the
+            energy transition. These skills are increasingly valuable as the UK moves towards
+            net-zero emissions and greater energy independence.
           </p>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
@@ -163,7 +167,7 @@ export const BS7671Module7Section5Summary = () => {
           <h4 className="text-elec-yellow font-semibold mb-3">Next Steps & Continuous Learning</h4>
           <div className="space-y-2">
             <p className="text-sm">
-              The prosumer installation sector continues to evolve rapidly with new technologies, 
+              The prosumer installation sector continues to evolve rapidly with new technologies,
               regulations, and market opportunities. Stay current through:
             </p>
             <ul className="text-sm space-y-1 ml-4">

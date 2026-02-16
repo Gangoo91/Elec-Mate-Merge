@@ -1,7 +1,7 @@
-import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
-import { toast } from "sonner";
-import { Copy, ThumbsUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MobileGestureHandler } from '@/components/ui/mobile-gesture-handler';
+import { toast } from 'sonner';
+import { Copy, ThumbsUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ChatMessageProps {
   message: {
@@ -18,7 +18,7 @@ const AGENT_INFO: Record<string, { name: string; emoji: string }> = {
   installer: { name: 'Installation Specialist', emoji: '🔧' },
   'health-safety': { name: 'Health & Safety Officer', emoji: '⚠️' },
   commissioning: { name: 'Testing & Commissioning', emoji: '✅' },
-  compliance: { name: 'Compliance Specialist', emoji: '📋' }
+  compliance: { name: 'Compliance Specialist', emoji: '📋' },
 };
 
 export const ChatMessage = ({ message, onCopy }: ChatMessageProps) => {
@@ -47,9 +47,7 @@ export const ChatMessage = ({ message, onCopy }: ChatMessageProps) => {
     >
       <div
         className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-          isUser
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-muted text-foreground'
+          isUser ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground'
         }`}
       >
         {agent && (
@@ -58,17 +56,10 @@ export const ChatMessage = ({ message, onCopy }: ChatMessageProps) => {
             <span className="text-xs font-semibold opacity-80">{agent.name}</span>
           </div>
         )}
-        <div className="text-sm whitespace-pre-wrap break-words">
-          {message.content}
-        </div>
+        <div className="text-sm whitespace-pre-wrap break-words">{message.content}</div>
         {!isUser && (
           <div className="mt-2 pt-2 border-t border-border/30 flex gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleCopy}
-              className="h-7 px-2 text-xs"
-            >
+            <Button variant="ghost" size="sm" onClick={handleCopy} className="h-7 px-2 text-xs">
               <Copy className="h-3 w-3 mr-1" />
               Copy
             </Button>

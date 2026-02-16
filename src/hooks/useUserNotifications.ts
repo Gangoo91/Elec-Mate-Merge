@@ -5,7 +5,13 @@ import { useAuth } from '@/contexts/AuthContext';
 export interface UserNotification {
   id: string;
   user_id: string;
-  type: 'quote_accepted' | 'invoice_paid' | 'invoice_overdue' | 'cert_expiring' | 'payment_reminder' | 'general';
+  type:
+    | 'quote_accepted'
+    | 'invoice_paid'
+    | 'invoice_overdue'
+    | 'cert_expiring'
+    | 'payment_reminder'
+    | 'general';
   title: string;
   message: string;
   link?: string;
@@ -20,7 +26,11 @@ export const useUserNotifications = () => {
   const queryClient = useQueryClient();
 
   // Fetch all notifications
-  const { data: notifications = [], isLoading, refetch } = useQuery({
+  const {
+    data: notifications = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['user-notifications', user?.id],
     queryFn: async () => {
       if (!user) return [];
@@ -45,7 +55,7 @@ export const useUserNotifications = () => {
   });
 
   // Count unread notifications
-  const unreadCount = notifications.filter(n => !n.is_read).length;
+  const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   // Mark single notification as read
   const markAsRead = useMutation({
@@ -83,10 +93,7 @@ export const useUserNotifications = () => {
   // Delete a notification
   const deleteNotification = useMutation({
     mutationFn: async (notificationId: string) => {
-      const { error } = await supabase
-        .from('user_notifications')
-        .delete()
-        .eq('id', notificationId);
+      const { error } = await supabase.from('user_notifications').delete().eq('id', notificationId);
 
       if (error) throw error;
     },
@@ -100,10 +107,7 @@ export const useUserNotifications = () => {
     mutationFn: async () => {
       if (!user) return;
 
-      const { error } = await supabase
-        .from('user_notifications')
-        .delete()
-        .eq('user_id', user.id);
+      const { error } = await supabase.from('user_notifications').delete().eq('user_id', user.id);
 
       if (error) throw error;
     },
@@ -113,7 +117,9 @@ export const useUserNotifications = () => {
   });
 
   // Subscribe to real-time notifications
-  const subscribeToNotifications = (onNewNotification: (notification: UserNotification) => void) => {
+  const subscribeToNotifications = (
+    onNewNotification: (notification: UserNotification) => void
+  ) => {
     if (!user) return () => {};
 
     const channel = supabase

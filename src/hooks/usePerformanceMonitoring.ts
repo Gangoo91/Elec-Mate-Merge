@@ -19,11 +19,12 @@ interface PerformanceMetrics {
 }
 
 export const usePerformanceMonitoring = () => {
-  
   const logPerformance = useCallback(async (metrics: PerformanceMetrics) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       // Generate query hash for grouping
       const queryHash = await generateQueryHash(metrics.queryText);
 
@@ -38,12 +39,10 @@ export const usePerformanceMonitoring = () => {
         regulation_count: metrics.regulationCount || 0,
         quality_score: metrics.qualityScore || null,
         user_id: user?.id || null,
-        metadata: metrics.metadata || {}
+        metadata: metrics.metadata || {},
       };
 
-      const { error } = await supabase
-        .from('performance_analytics')
-        .insert([analyticsData]);
+      const { error } = await supabase.from('performance_analytics').insert([analyticsData]);
 
       if (error) {
         console.warn('Failed to log performance metrics:', error);
@@ -55,10 +54,7 @@ export const usePerformanceMonitoring = () => {
     }
   }, []);
 
-  const getAgentPerformance = useCallback(async (
-    agentName: string,
-    limit = 100
-  ) => {
+  const getAgentPerformance = useCallback(async (agentName: string, limit = 100) => {
     try {
       const { data, error } = await supabase
         .from('performance_analytics')
@@ -77,40 +73,43 @@ export const usePerformanceMonitoring = () => {
         cacheHitRate: 0,
         avgRegulationCount: 0,
         avgQualityScore: 0,
-        totalRequests: data?.length || 0
+        totalRequests: data?.length || 0,
       };
 
       if (data && data.length > 0) {
         metrics.avgTotalTime = Math.round(
           data.reduce((sum, m) => sum + (m.total_time_ms || 0), 0) / data.length
         );
-        
-        const ragTimes = data.filter(m => m.rag_time_ms);
+
+        const ragTimes = data.filter((m) => m.rag_time_ms);
         if (ragTimes.length > 0) {
           metrics.avgRagTime = Math.round(
             ragTimes.reduce((sum, m) => sum + (m.rag_time_ms || 0), 0) / ragTimes.length
           );
         }
 
-        const aiTimes = data.filter(m => m.ai_time_ms);
+        const aiTimes = data.filter((m) => m.ai_time_ms);
         if (aiTimes.length > 0) {
           metrics.avgAiTime = Math.round(
             aiTimes.reduce((sum, m) => sum + (m.ai_time_ms || 0), 0) / aiTimes.length
           );
         }
 
-        const cacheHits = data.filter(m => m.cache_hit).length;
+        const cacheHits = data.filter((m) => m.cache_hit).length;
         metrics.cacheHitRate = Math.round((cacheHits / data.length) * 100);
 
         metrics.avgRegulationCount = Math.round(
           data.reduce((sum, m) => sum + (m.regulation_count || 0), 0) / data.length
         );
 
-        const qualityScores = data.filter(m => m.quality_score);
+        const qualityScores = data.filter((m) => m.quality_score);
         if (qualityScores.length > 0) {
-          metrics.avgQualityScore = Number((
-            qualityScores.reduce((sum, m) => sum + (m.quality_score || 0), 0) / qualityScores.length
-          ).toFixed(2));
+          metrics.avgQualityScore = Number(
+            (
+              qualityScores.reduce((sum, m) => sum + (m.quality_score || 0), 0) /
+              qualityScores.length
+            ).toFixed(2)
+          );
         }
       }
 
@@ -121,10 +120,7 @@ export const usePerformanceMonitoring = () => {
     }
   }, []);
 
-  const getSlowQueries = useCallback(async (
-    thresholdMs = 5000,
-    limit = 20
-  ) => {
+  const getSlowQueries = useCallback(async (thresholdMs = 5000, limit = 20) => {
     try {
       const { data, error } = await supabase
         .from('performance_analytics')
@@ -144,7 +140,7 @@ export const usePerformanceMonitoring = () => {
   return {
     logPerformance,
     getAgentPerformance,
-    getSlowQueries
+    getSlowQueries,
   };
 };
 
@@ -152,13 +148,13 @@ export const usePerformanceMonitoring = () => {
 async function generateQueryHash(queryText: string): Promise<string> {
   // Simple hash based on normalized query
   const normalized = queryText.toLowerCase().trim();
-  
+
   // Use Web Crypto API for hashing
   const encoder = new TextEncoder();
   const data = encoder.encode(normalized);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+
   return hashHex.substring(0, 16); // Use first 16 chars
 }

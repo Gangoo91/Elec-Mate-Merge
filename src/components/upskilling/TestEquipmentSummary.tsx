@@ -11,7 +11,6 @@ export const TestEquipmentSummary = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6 pt-0">
-        
         {/* Key Learning Points */}
         <div className="space-y-3 sm:space-y-4">
           <h3 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
@@ -23,21 +22,21 @@ export const TestEquipmentSummary = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-xs sm:text-sm">
-                  Proper test equipment setup is fundamental to obtaining accurate, reliable measurements 
-                  and ensuring safe testing operations.
+                  Proper test equipment setup is fundamental to obtaining accurate, reliable
+                  measurements and ensuring safe testing operations.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-xs sm:text-sm">
-                  Regular calibration and daily verification checks are essential for maintaining 
+                  Regular calibration and daily verification checks are essential for maintaining
                   measurement accuracy and traceability.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-xs sm:text-sm">
-                  Test lead quality and condition directly affect measurement accuracy and safety, 
+                  Test lead quality and condition directly affect measurement accuracy and safety,
                   requiring regular inspection and maintenance.
                 </p>
               </div>
@@ -46,21 +45,21 @@ export const TestEquipmentSummary = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-xs sm:text-sm">
-                  Environmental conditions including temperature, humidity, and EMI can significantly 
-                  affect measurement results and must be considered.
+                  Environmental conditions including temperature, humidity, and EMI can
+                  significantly affect measurement results and must be considered.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-xs sm:text-sm">
-                  Comprehensive safety procedures are essential for live testing, including appropriate 
-                  PPE, work procedures, and emergency protocols.
+                  Comprehensive safety procedures are essential for live testing, including
+                  appropriate PPE, work procedures, and emergency protocols.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-xs sm:text-sm">
-                  Systematic troubleshooting procedures help identify and resolve measurement issues 
+                  Systematic troubleshooting procedures help identify and resolve measurement issues
                   quickly and effectively.
                 </p>
               </div>
@@ -79,22 +78,23 @@ export const TestEquipmentSummary = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  <strong>Live Testing Hazards:</strong> Live electrical testing presents risks of electric shock, 
-                  arc flash, and equipment damage. Always follow comprehensive safety procedures.
+                  <strong>Live Testing Hazards:</strong> Live electrical testing presents risks of
+                  electric shock, arc flash, and equipment damage. Always follow comprehensive
+                  safety procedures.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  <strong>Equipment Failure:</strong> Uncalibrated or faulty equipment can provide misleading 
-                  results that may indicate safety when dangerous conditions exist.
+                  <strong>Equipment Failure:</strong> Uncalibrated or faulty equipment can provide
+                  misleading results that may indicate safety when dangerous conditions exist.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <p className="text-foreground text-sm">
-                  <strong>Test Lead Damage:</strong> Damaged test leads can cause measurement errors and 
-                  create dangerous conditions during testing operations.
+                  <strong>Test Lead Damage:</strong> Damaged test leads can cause measurement errors
+                  and create dangerous conditions during testing operations.
                 </p>
               </div>
             </div>
@@ -133,7 +133,9 @@ export const TestEquipmentSummary = () => {
 
         {/* Equipment Setup Checklist */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Essential Equipment Setup Checklist</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Essential Equipment Setup Checklist
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -141,19 +143,27 @@ export const TestEquipmentSummary = () => {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span className="text-foreground text-sm">Equipment visual inspection completed</span>
+                    <span className="text-foreground text-sm">
+                      Equipment visual inspection completed
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span className="text-foreground text-sm">Calibration certificate validity confirmed</span>
+                    <span className="text-foreground text-sm">
+                      Calibration certificate validity confirmed
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span className="text-foreground text-sm">Battery level adequate for testing</span>
+                    <span className="text-foreground text-sm">
+                      Battery level adequate for testing
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span className="text-foreground text-sm">Test leads inspected and verified</span>
+                    <span className="text-foreground text-sm">
+                      Test leads inspected and verified
+                    </span>
                   </div>
                 </div>
               </div>
@@ -166,11 +176,15 @@ export const TestEquipmentSummary = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span className="text-foreground text-sm">Appropriate voltage range configured</span>
+                    <span className="text-foreground text-sm">
+                      Appropriate voltage range configured
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span className="text-foreground text-sm">Environmental conditions recorded</span>
+                    <span className="text-foreground text-sm">
+                      Environmental conditions recorded
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
@@ -184,22 +198,27 @@ export const TestEquipmentSummary = () => {
 
         {/* Professional Standards */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Professional Standards Compliance</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Professional Standards Compliance
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="space-y-3">
               <p className="text-foreground text-sm">
-                <strong>GS 38 Requirements:</strong> Test equipment and test leads must comply with HSE Guidance Note GS 38 
-                for electrical test equipment used by electricians, including appropriate safety categories and protection features.
+                <strong>GS 38 Requirements:</strong> Test equipment and test leads must comply with
+                HSE Guidance Note GS 38 for electrical test equipment used by electricians,
+                including appropriate safety categories and protection features.
               </p>
               <p className="text-foreground text-sm">
-                <strong>BS 7671 Verification:</strong> Test equipment must be capable of performing all required tests 
-                for initial verification and periodic inspection as specified in BS 7671 Part 6.
+                <strong>BS 7671 Verification:</strong> Test equipment must be capable of performing
+                all required tests for initial verification and periodic inspection as specified in
+                BS 7671 Part 6.
               </p>
               <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-3">
                 <p className="text-foreground text-sm">
-                  <strong>Note:</strong> Professional competence includes not only knowing how to use test equipment, 
-                  but also understanding its limitations, maintaining it properly, and interpreting results correctly 
-                  in the context of electrical safety requirements.
+                  <strong>Note:</strong> Professional competence includes not only knowing how to
+                  use test equipment, but also understanding its limitations, maintaining it
+                  properly, and interpreting results correctly in the context of electrical safety
+                  requirements.
                 </p>
               </div>
             </div>
@@ -236,14 +255,15 @@ export const TestEquipmentSummary = () => {
         {/* Section Conclusion */}
         <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4">
           <p className="text-foreground text-sm leading-relaxed">
-            <strong>Section Conclusion:</strong> Proper test equipment setup and safety procedures are fundamental 
-            to reliable electrical testing. By understanding equipment capabilities and limitations, maintaining 
-            calibration standards, and implementing comprehensive safety procedures, practitioners ensure accurate 
-            measurements while protecting themselves and electrical installations. The investment in proper equipment 
-            management pays dividends in measurement reliability, safety assurance, and professional credibility.
+            <strong>Section Conclusion:</strong> Proper test equipment setup and safety procedures
+            are fundamental to reliable electrical testing. By understanding equipment capabilities
+            and limitations, maintaining calibration standards, and implementing comprehensive
+            safety procedures, practitioners ensure accurate measurements while protecting
+            themselves and electrical installations. The investment in proper equipment management
+            pays dividends in measurement reliability, safety assurance, and professional
+            credibility.
           </p>
         </div>
-
       </CardContent>
     </Card>
   );

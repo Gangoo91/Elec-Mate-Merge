@@ -34,12 +34,12 @@ export const isNotifiableWork = (
   const locationLower = location?.toLowerCase() || '';
 
   // Check if work type is explicitly notifiable
-  if (NOTIFIABLE_WORK_TYPES.some(type => workTypeLower.includes(type))) {
+  if (NOTIFIABLE_WORK_TYPES.some((type) => workTypeLower.includes(type))) {
     return true;
   }
 
   // Check if location is a special location
-  if (SPECIAL_LOCATIONS.some(loc => locationLower.includes(loc))) {
+  if (SPECIAL_LOCATIONS.some((loc) => locationLower.includes(loc))) {
     return true;
   }
 
@@ -77,7 +77,7 @@ export const getDaysUntilDeadline = (deadline: string): number => {
  */
 export const formatDeadlineStatus = (deadline: string): string => {
   const daysRemaining = getDaysUntilDeadline(deadline);
-  
+
   if (daysRemaining > 0) {
     return `Due in ${daysRemaining} day${daysRemaining === 1 ? '' : 's'}`;
   } else if (daysRemaining === 0) {
@@ -92,7 +92,7 @@ export const formatDeadlineStatus = (deadline: string): string => {
  */
 export const getDeadlineUrgency = (deadline: string): 'safe' | 'warning' | 'urgent' | 'overdue' => {
   const daysRemaining = getDaysUntilDeadline(deadline);
-  
+
   if (daysRemaining < 0) return 'overdue';
   if (daysRemaining <= 2) return 'urgent';
   if (daysRemaining <= 7) return 'warning';
@@ -107,7 +107,7 @@ export const getBuildingControlAuthority = async (postcode: string): Promise<str
 
   // Extract postcode prefix (e.g., "SW1" from "SW1A 1AA")
   const prefix = postcode.trim().toUpperCase().split(' ')[0].replace(/[0-9]/g, '');
-  
+
   try {
     const { data, error } = await supabase
       .from('building_control_authorities')
@@ -134,7 +134,8 @@ export const createNotificationFromCertificate = async (
 ): Promise<{ success: boolean; notificationId?: string; error?: string }> => {
   try {
     // Allow notification if explicitly requested via checkbox (minor-works or EIC)
-    const isUserRequested = (reportType === 'minor-works' || reportType === 'eic') && formData.partPNotification === true;
+    const isUserRequested =
+      (reportType === 'minor-works' || reportType === 'eic') && formData.partPNotification === true;
 
     const isAutoNotifiable = isNotifiableWork(
       formData.workType || formData.workDescription || formData.description || '',
@@ -146,11 +147,12 @@ export const createNotificationFromCertificate = async (
     if (!isUserRequested && !isAutoNotifiable) {
       return {
         success: false,
-        error: 'This work is not notifiable under Part P of the Building Regulations'
+        error: 'This work is not notifiable under Part P of the Building Regulations',
       };
     }
 
-    const completionDate = formData.inspectionDate || formData.dateOfInspection || new Date().toISOString();
+    const completionDate =
+      formData.inspectionDate || formData.dateOfInspection || new Date().toISOString();
     const deadline = calculateSubmissionDeadline(completionDate);
 
     const notificationData = {

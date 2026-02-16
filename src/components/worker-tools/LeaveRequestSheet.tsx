@@ -51,11 +51,41 @@ interface LeaveTypeOption {
 }
 
 const LEAVE_TYPES: LeaveTypeOption[] = [
-  { value: 'annual', label: 'Annual Leave', icon: Palmtree, colour: 'text-green-400', bgColour: 'bg-green-500/10' },
-  { value: 'sick', label: 'Sick Leave', icon: Thermometer, colour: 'text-red-400', bgColour: 'bg-red-500/10' },
-  { value: 'unpaid', label: 'Unpaid Leave', icon: Wallet, colour: 'text-gray-400', bgColour: 'bg-gray-500/10' },
-  { value: 'compassionate', label: 'Compassionate', icon: Heart, colour: 'text-pink-400', bgColour: 'bg-pink-500/10' },
-  { value: 'training', label: 'Training', icon: GraduationCap, colour: 'text-blue-400', bgColour: 'bg-blue-500/10' },
+  {
+    value: 'annual',
+    label: 'Annual Leave',
+    icon: Palmtree,
+    colour: 'text-green-400',
+    bgColour: 'bg-green-500/10',
+  },
+  {
+    value: 'sick',
+    label: 'Sick Leave',
+    icon: Thermometer,
+    colour: 'text-red-400',
+    bgColour: 'bg-red-500/10',
+  },
+  {
+    value: 'unpaid',
+    label: 'Unpaid Leave',
+    icon: Wallet,
+    colour: 'text-gray-400',
+    bgColour: 'bg-gray-500/10',
+  },
+  {
+    value: 'compassionate',
+    label: 'Compassionate',
+    icon: Heart,
+    colour: 'text-pink-400',
+    bgColour: 'bg-pink-500/10',
+  },
+  {
+    value: 'training',
+    label: 'Training',
+    icon: GraduationCap,
+    colour: 'text-blue-400',
+    bgColour: 'bg-blue-500/10',
+  },
 ];
 
 const getStatusBadge = (status: LeaveStatus) => {
@@ -186,7 +216,10 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -206,9 +239,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
               <SheetTitle className="text-lg font-semibold flex-1 text-center">
                 {getStepTitle()}
               </SheetTitle>
-              <SheetDescription className="sr-only">
-                Request leave from work
-              </SheetDescription>
+              <SheetDescription className="sr-only">Request leave from work</SheetDescription>
               <Button
                 variant="ghost"
                 size="icon"
@@ -237,9 +268,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                     <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
                       <div className="flex items-center justify-between mb-3">
                         <p className="text-sm font-medium text-white/80">Annual Leave</p>
-                        <p className="text-sm text-white/60">
-                          {new Date().getFullYear()}
-                        </p>
+                        <p className="text-sm text-white/60">{new Date().getFullYear()}</p>
                       </div>
                       <div className="grid grid-cols-3 gap-3 text-center">
                         <div>
@@ -297,7 +326,8 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                               {request.startDate === request.endDate && (
                                 <> {format(parseISO(request.startDate), 'yyyy')}</>
                               )}
-                              {' · '}{request.totalDays} day{request.totalDays !== 1 ? 's' : ''}
+                              {' · '}
+                              {request.totalDays} day{request.totalDays !== 1 ? 's' : ''}
                             </p>
                           </div>
                         ))}
@@ -347,9 +377,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                           <span className="text-sm font-medium text-white flex-1 text-left">
                             {type.label}
                           </span>
-                          {isSelected && (
-                            <CheckCircle className="h-5 w-5 text-elec-yellow" />
-                          )}
+                          {isSelected && <CheckCircle className="h-5 w-5 text-elec-yellow" />}
                         </button>
                       );
                     })}
@@ -375,7 +403,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                     <Switch
                       checked={formData.halfDay}
                       onCheckedChange={(checked) => {
-                        setFormData(prev => ({
+                        setFormData((prev) => ({
                           ...prev,
                           halfDay: checked,
                           endDate: checked ? prev.startDate : prev.endDate,
@@ -395,7 +423,9 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                       >
                         <div className="grid grid-cols-2 gap-3">
                           <button
-                            onClick={() => setFormData(prev => ({ ...prev, halfDayPeriod: 'am' }))}
+                            onClick={() =>
+                              setFormData((prev) => ({ ...prev, halfDayPeriod: 'am' }))
+                            }
                             className={cn(
                               'p-3 rounded-xl border transition-all touch-manipulation',
                               formData.halfDayPeriod === 'am'
@@ -407,7 +437,9 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                             <p className="text-xs text-white/50">AM</p>
                           </button>
                           <button
-                            onClick={() => setFormData(prev => ({ ...prev, halfDayPeriod: 'pm' }))}
+                            onClick={() =>
+                              setFormData((prev) => ({ ...prev, halfDayPeriod: 'pm' }))
+                            }
                             className={cn(
                               'p-3 rounded-xl border transition-all touch-manipulation',
                               formData.halfDayPeriod === 'pm'
@@ -432,11 +464,16 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                     <Input
                       type="date"
                       value={formData.startDate}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        startDate: e.target.value,
-                        endDate: formData.halfDay || e.target.value > prev.endDate ? e.target.value : prev.endDate,
-                      }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          startDate: e.target.value,
+                          endDate:
+                            formData.halfDay || e.target.value > prev.endDate
+                              ? e.target.value
+                              : prev.endDate,
+                        }))
+                      }
                       min={new Date().toISOString().split('T')[0]}
                       className="h-12 touch-manipulation"
                     />
@@ -451,7 +488,9 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                       <Input
                         type="date"
                         value={formData.endDate}
-                        onChange={(e) => setFormData(prev => ({ ...prev, endDate: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, endDate: e.target.value }))
+                        }
                         min={formData.startDate}
                         className="h-12 touch-manipulation"
                       />
@@ -474,7 +513,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                     </Label>
                     <Textarea
                       value={formData.reason}
-                      onChange={(e) => setFormData(prev => ({ ...prev, reason: e.target.value }))}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, reason: e.target.value }))}
                       placeholder="Add any notes for your manager..."
                       className="touch-manipulation min-h-[80px]"
                     />

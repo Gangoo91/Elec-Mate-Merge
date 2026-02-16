@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { FileText, MapPin, User, Calendar, Shield, AlertTriangle } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { FileText, MapPin, User, Calendar, Shield, AlertTriangle } from 'lucide-react';
 
 interface ProjectMetadataCardProps {
   metadata: {
@@ -48,9 +48,7 @@ export const ProjectMetadataCard = ({ metadata }: ProjectMetadataCardProps) => {
           </div>
           <div className="flex-1 text-center sm:text-left">
             <h3 className="font-bold text-lg">Document Information</h3>
-            <p className="text-xs text-muted-foreground">
-              Method Statement Metadata
-            </p>
+            <p className="text-xs text-muted-foreground">Method Statement Metadata</p>
           </div>
           <Badge variant={getStatusBadgeVariant(metadata.documentStatus)}>
             {metadata.documentStatus}
@@ -59,14 +57,46 @@ export const ProjectMetadataCard = ({ metadata }: ProjectMetadataCardProps) => {
 
         {/* 2-Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          <MetadataField icon={<FileText className="h-4 w-4" />} label="Work Type" value={metadata.workType} />
-          <MetadataField icon={<MapPin className="h-4 w-4" />} label="Location" value={metadata.location} />
-          <MetadataField icon={<User className="h-4 w-4" />} label="Principal Contractor" value={metadata.principalContractor} />
-          <MetadataField icon={<FileText className="h-4 w-4" />} label="Reference" value={metadata.reference} />
-          <MetadataField icon={<User className="h-4 w-4" />} label="Prepared By" value={metadata.preparedBy} />
-          <MetadataField icon={<Calendar className="h-4 w-4" />} label="Date" value={metadata.date} />
-          <MetadataField icon={<Calendar className="h-4 w-4" />} label="Programme Duration" value={metadata.programmeDuration} />
-          <MetadataField icon={<Calendar className="h-4 w-4" />} label="Review Date" value={metadata.reviewDate} />
+          <MetadataField
+            icon={<FileText className="h-4 w-4" />}
+            label="Work Type"
+            value={metadata.workType}
+          />
+          <MetadataField
+            icon={<MapPin className="h-4 w-4" />}
+            label="Location"
+            value={metadata.location}
+          />
+          <MetadataField
+            icon={<User className="h-4 w-4" />}
+            label="Principal Contractor"
+            value={metadata.principalContractor}
+          />
+          <MetadataField
+            icon={<FileText className="h-4 w-4" />}
+            label="Reference"
+            value={metadata.reference}
+          />
+          <MetadataField
+            icon={<User className="h-4 w-4" />}
+            label="Prepared By"
+            value={metadata.preparedBy}
+          />
+          <MetadataField
+            icon={<Calendar className="h-4 w-4" />}
+            label="Date"
+            value={metadata.date}
+          />
+          <MetadataField
+            icon={<Calendar className="h-4 w-4" />}
+            label="Programme Duration"
+            value={metadata.programmeDuration}
+          />
+          <MetadataField
+            icon={<Calendar className="h-4 w-4" />}
+            label="Review Date"
+            value={metadata.reviewDate}
+          />
         </div>
 
         {/* Emergency Contacts Section */}
@@ -104,7 +134,9 @@ export const ProjectMetadataCard = ({ metadata }: ProjectMetadataCardProps) => {
           <span className="text-muted-foreground">Associated Risk Assessment:</span>
           <p className="font-semibold text-blue-400 mb-2">{metadata.riskAssessmentReference}</p>
           <p className="text-muted-foreground leading-relaxed">
-            This method statement must be read in conjunction with Risk Assessment Reference: {metadata.riskAssessmentReference}. All personnel must be briefed on both documents before commencing work.
+            This method statement must be read in conjunction with Risk Assessment Reference:{' '}
+            {metadata.riskAssessmentReference}. All personnel must be briefed on both documents
+            before commencing work.
           </p>
         </div>
 
@@ -115,7 +147,9 @@ export const ProjectMetadataCard = ({ metadata }: ProjectMetadataCardProps) => {
             <div>
               <p className="font-semibold text-amber-400 mb-1">STATUTORY COMPLIANCE:</p>
               <p className="text-muted-foreground leading-relaxed">
-                This method statement complies with CDM 2015, Health & Safety at Work Act 1974, and Management of Health & Safety at Work Regulations 1999. All work must be carried out in accordance with BS 7671:2018+A3:2024.
+                This method statement complies with CDM 2015, Health & Safety at Work Act 1974, and
+                Management of Health & Safety at Work Regulations 1999. All work must be carried out
+                in accordance with BS 7671:2018+A3:2024.
               </p>
             </div>
           </div>
@@ -125,7 +159,15 @@ export const ProjectMetadataCard = ({ metadata }: ProjectMetadataCardProps) => {
   );
 };
 
-const MetadataField = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+const MetadataField = ({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) => (
   <div className="flex items-start gap-2">
     <div className="text-muted-foreground mt-0.5">{icon}</div>
     <div className="flex-1 min-w-0">

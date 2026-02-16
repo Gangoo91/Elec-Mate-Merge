@@ -7,18 +7,10 @@ export {
 } from './CalculatorConfig';
 
 // Calculator Card
-export {
-  CalculatorCard,
-  CalculatorSection,
-  CalculatorInputGrid,
-} from './CalculatorCard';
+export { CalculatorCard, CalculatorSection, CalculatorInputGrid } from './CalculatorCard';
 
 // Calculator Input
-export {
-  CalculatorInput,
-  CalculatorSelect,
-  CalculatorNumberInput,
-} from './CalculatorInput';
+export { CalculatorInput, CalculatorSelect, CalculatorNumberInput } from './CalculatorInput';
 
 // Calculator Result
 export {
@@ -30,15 +22,7 @@ export {
 } from './CalculatorResult';
 
 // Calculator Actions
-export {
-  CalculatorActions,
-  CalculateButton,
-  SecondaryButton,
-} from './CalculatorActions';
+export { CalculatorActions, CalculateButton, SecondaryButton } from './CalculatorActions';
 
 // Calculator Formula
-export {
-  CalculatorFormula,
-  InlineFormula,
-  FormulaReference,
-} from './CalculatorFormula';
+export { CalculatorFormula, InlineFormula, FormulaReference } from './CalculatorFormula';

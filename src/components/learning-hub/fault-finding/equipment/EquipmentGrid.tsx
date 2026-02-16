@@ -12,8 +12,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const itemVariants = {
@@ -21,18 +21,13 @@ const itemVariants = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 500, damping: 30 },
+  },
 };
 
 const EquipmentGrid = ({ onSelectEquipment }: EquipmentGridProps) => {
   return (
-    <motion.div
-      className="space-y-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
+    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Equipment List */}
       <div>
         <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">

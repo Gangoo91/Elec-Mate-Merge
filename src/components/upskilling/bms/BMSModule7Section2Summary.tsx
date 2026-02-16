@@ -3,10 +3,10 @@ import { FileText, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section2Summary = () => {
   const keyPoints = [
-    "Function blocks provide a graphical way to program BMS logic using standardised building blocks",
-    "Boolean logic underpins digital decisions using AND, OR, NOT operations for reliable control",
-    "PID loops stabilise variables such as temperature, pressure, and flow through proportional, integral, and derivative control",
-    "Electricians support programming by verifying wiring, testing physical responses, and checking fail-safes during commissioning"
+    'Function blocks provide a graphical way to program BMS logic using standardised building blocks',
+    'Boolean logic underpins digital decisions using AND, OR, NOT operations for reliable control',
+    'PID loops stabilise variables such as temperature, pressure, and flow through proportional, integral, and derivative control',
+    'Electricians support programming by verifying wiring, testing physical responses, and checking fail-safes during commissioning',
   ];
 
   return (
@@ -31,9 +31,10 @@ export const BMSModule7Section2Summary = () => {
         </ul>
         <div className="bg-gradient-to-r from-elec-yellow/10 to-orange-500/10 border border-elec-yellow/20 rounded-lg p-4 mt-4">
           <p className="text-sm text-foreground">
-            <strong>Remember:</strong> Understanding BMS programming methods helps electricians support commissioning, 
-            identify potential issues, and ensure systems operate safely and efficiently. The electrician's role in 
-            verifying programmed functions is critical for successful project delivery.
+            <strong>Remember:</strong> Understanding BMS programming methods helps electricians
+            support commissioning, identify potential issues, and ensure systems operate safely and
+            efficiently. The electrician's role in verifying programmed functions is critical for
+            successful project delivery.
           </p>
         </div>
       </CardContent>

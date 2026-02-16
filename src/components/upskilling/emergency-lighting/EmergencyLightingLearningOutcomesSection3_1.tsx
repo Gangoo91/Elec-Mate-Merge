@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection3_1 = () => {
   const outcomes = [
-    "State the minimum lux levels for different types of emergency lighting (escape routes, anti-panic areas, high-risk task areas)",
-    "Explain the required operating durations and where longer times are necessary",
-    "Apply lux and duration requirements to real design scenarios",
-    "Recognise the impact of poor lighting levels or insufficient duration on occupant safety",
-    "Ensure compliance with BS 5266 during system design and installation"
+    'State the minimum lux levels for different types of emergency lighting (escape routes, anti-panic areas, high-risk task areas)',
+    'Explain the required operating durations and where longer times are necessary',
+    'Apply lux and duration requirements to real design scenarios',
+    'Recognise the impact of poor lighting levels or insufficient duration on occupant safety',
+    'Ensure compliance with BS 5266 during system design and installation',
   ];
 
   return (
@@ -22,7 +22,7 @@ export const EmergencyLightingLearningOutcomesSection3_1 = () => {
         <p className="text-lg text-foreground leading-relaxed">
           By completing this section, you will be able to:
         </p>
-        
+
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
@@ -35,8 +35,8 @@ export const EmergencyLightingLearningOutcomesSection3_1 = () => {
         <div className="bg-elec-dark/40 p-4 rounded-lg border border-gray-600 mt-6">
           <h4 className="text-elec-yellow font-semibold mb-2">Assessment Focus</h4>
           <p className="text-sm text-foreground">
-            This section forms a critical foundation for emergency lighting design. You'll be tested on 
-            your ability to apply specific lux and duration requirements to practical scenarios, 
+            This section forms a critical foundation for emergency lighting design. You'll be tested
+            on your ability to apply specific lux and duration requirements to practical scenarios,
             demonstrating both technical knowledge and safety awareness.
           </p>
         </div>

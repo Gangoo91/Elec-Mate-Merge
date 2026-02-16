@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { CreditCard, Landmark, CheckCircle, Clock, AlertCircle, ExternalLink, Loader2, Zap, ChevronRight, Check } from 'lucide-react';
+import {
+  CreditCard,
+  Landmark,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  ExternalLink,
+  Loader2,
+  Zap,
+  ChevronRight,
+  Check,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -46,7 +57,12 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
       try {
         const { data: session } = await supabase.auth.getSession();
         if (!session.session) {
-          setStripeStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false });
+          setStripeStatus({
+            connected: false,
+            status: 'not_connected',
+            chargesEnabled: false,
+            payoutsEnabled: false,
+          });
           setStripeLoading(false);
           return;
         }
@@ -59,7 +75,12 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
         setStripeStatus(response.data as StripeConnectStatus);
       } catch (error) {
         console.error('Error checking Stripe status:', error);
-        setStripeStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false });
+        setStripeStatus({
+          connected: false,
+          status: 'not_connected',
+          chargesEnabled: false,
+          payoutsEnabled: false,
+        });
       } finally {
         setStripeLoading(false);
       }
@@ -183,7 +204,9 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
               <CreditCard className="h-4 w-4 text-indigo-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Card Payments</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Card Payments
+              </p>
               {stripeLoading ? (
                 <div className="flex items-center gap-2">
                   <Loader2 className="h-3.5 w-3.5 animate-spin text-white/40" />
@@ -230,14 +253,20 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
               <Landmark className="h-4 w-4 text-cyan-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Bank Transfer</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Bank Transfer
+              </p>
               {companyProfile?.bank_details?.accountNumber ? (
                 <>
-                  <p className="text-[15px] text-white">{companyProfile.bank_details.accountName || 'Account'}</p>
+                  <p className="text-[15px] text-white">
+                    {companyProfile.bank_details.accountName || 'Account'}
+                  </p>
                   <p className="text-[13px] text-white/50">
-                    {companyProfile.bank_details.bankName && `${companyProfile.bank_details.bankName} • `}
+                    {companyProfile.bank_details.bankName &&
+                      `${companyProfile.bank_details.bankName} • `}
                     {maskAccountNumber(companyProfile.bank_details.accountNumber)}
-                    {companyProfile.bank_details.sortCode && ` • ${companyProfile.bank_details.sortCode}`}
+                    {companyProfile.bank_details.sortCode &&
+                      ` • ${companyProfile.bank_details.sortCode}`}
                   </p>
                 </>
               ) : (
@@ -250,7 +279,10 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
 
       {/* Edit Sheet */}
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -271,7 +303,11 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (
@@ -299,14 +335,18 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-medium text-white">Accept Card Payments</p>
-                    <p className="text-[13px] text-white/50">Connect Stripe to take payments on invoices</p>
+                    <p className="text-[13px] text-white/50">
+                      Connect Stripe to take payments on invoices
+                    </p>
                   </div>
                   <ChevronRight className="h-5 w-5 text-white/30" />
                 </motion.button>
 
                 {/* Fee breakdown */}
                 <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-                  <p className="text-[13px] font-medium text-white/70 mb-3">Payment Processing Fees</p>
+                  <p className="text-[13px] font-medium text-white/70 mb-3">
+                    Payment Processing Fees
+                  </p>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-[13px] text-white/50">Stripe (UK cards)</span>
@@ -368,7 +408,12 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
               <Input
                 placeholder="12345678"
                 value={formData.accountNumber}
-                onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8) })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8),
+                  })
+                }
                 className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
                 inputMode="numeric"
               />
@@ -382,7 +427,9 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
               <Input
                 placeholder="12-34-56"
                 value={formData.sortCode}
-                onChange={(e) => setFormData({ ...formData, sortCode: formatSortCode(e.target.value) })}
+                onChange={(e) =>
+                  setFormData({ ...formData, sortCode: formatSortCode(e.target.value) })
+                }
                 className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
                 inputMode="numeric"
               />

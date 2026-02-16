@@ -13,8 +13,19 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
-  X, Check, AlertCircle, Trash2, Plus, ChevronUp, ChevronDown,
-  ArrowLeftRight, Zap, Cable, Settings2, ChevronRight, Pencil
+  X,
+  Check,
+  AlertCircle,
+  Trash2,
+  Plus,
+  ChevronUp,
+  ChevronDown,
+  ArrowLeftRight,
+  Zap,
+  Cable,
+  Settings2,
+  ChevronRight,
+  Pencil,
 } from 'lucide-react';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
@@ -23,7 +34,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, getDefaultKaRating } from '@/types/protectiveDeviceTypes';
+import {
+  protectiveDeviceTypeOptions,
+  protectiveDeviceRatingOptions,
+  getDefaultKaRating,
+} from '@/types/protectiveDeviceTypes';
 import { getRecommendedCpcSize } from '@/types/enhancedCircuitTypes';
 import { InsertPositionDialog } from './InsertPositionDialog';
 import { cn } from '@/lib/utils';
@@ -86,19 +101,19 @@ interface SimpleCircuitTableProps {
 // Get pictogram emoji
 const getPictogramEmoji = (type: string): string => {
   const map: Record<string, string> = {
-    'SHOWER': '🚿',
-    'SOCKETS': '🔌',
-    'LIGHTING': '💡',
-    'COOKER_OVEN': '🍳',
-    'HOB': '🔥',
-    'EV_CHARGER': '🚗',
-    'SMOKE_ALARM': '🔔',
-    'FIRE_ALARM': '🔔',
-    'BOILER': '🔧',
-    'HEATER': '🌡️',
-    'OUTDOOR': '🌳',
-    'GARDEN_ROOM': '🌳',
-    'GARAGE': '🏠',
+    SHOWER: '🚿',
+    SOCKETS: '🔌',
+    LIGHTING: '💡',
+    COOKER_OVEN: '🍳',
+    HOB: '🔥',
+    EV_CHARGER: '🚗',
+    SMOKE_ALARM: '🔔',
+    FIRE_ALARM: '🔔',
+    BOILER: '🔧',
+    HEATER: '🌡️',
+    OUTDOOR: '🌳',
+    GARDEN_ROOM: '🌳',
+    GARAGE: '🏠',
   };
   return map[type] || '⚡';
 };
@@ -129,7 +144,10 @@ const detectCircuitType = (label: string): string => {
 };
 
 // Get smart defaults for cable sizes
-const getSmartDefaults = (rating: number | null, label: string): { live: string; cpc: string; ka: string } => {
+const getSmartDefaults = (
+  rating: number | null,
+  label: string
+): { live: string; cpc: string; ka: string } => {
   if (!rating) return { live: '', cpc: '', ka: '' };
 
   const circuitType = detectCircuitType(label);
@@ -192,20 +210,28 @@ const kaOptions = [
   { value: '16.5', label: '16.5kA' },
 ];
 
-export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: SimpleCircuitTableProps) => {
+export const SimpleCircuitTable = ({
+  circuits,
+  board,
+  onApply,
+  onClose,
+}: SimpleCircuitTableProps) => {
   const [editedCircuits, setEditedCircuits] = useState<Circuit[]>(circuits);
   const [insertDialogOpen, setInsertDialogOpen] = useState(false);
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
-  const isThreePhase = board.boardLayout === '3P-vertical' || board.boardLayout === '3P-horizontal' || board.waysPerCircuit === 3;
+  const isThreePhase =
+    board.boardLayout === '3P-vertical' ||
+    board.boardLayout === '3P-horizontal' ||
+    board.waysPerCircuit === 3;
 
   // Count confidence levels
-  const lowCount = editedCircuits.filter(c => c.confidence === 'low').length;
-  const mediumCount = editedCircuits.filter(c => c.confidence === 'medium').length;
+  const lowCount = editedCircuits.filter((c) => c.confidence === 'low').length;
+  const mediumCount = editedCircuits.filter((c) => c.confidence === 'medium').length;
 
   // Auto-populate cable sizes when AI data loads
   useEffect(() => {
-    const populatedCircuits = circuits.map(circuit => {
+    const populatedCircuits = circuits.map((circuit) => {
       if (circuit.liveConductorSize || circuit.cpcSize) return circuit;
 
       const defaults = getSmartDefaults(circuit.rating, circuit.label);
@@ -214,7 +240,7 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
         ...circuit,
         liveConductorSize: defaults.live,
         cpcSize: defaults.cpc,
-        kaRating: defaults.ka
+        kaRating: defaults.ka,
       };
     });
 
@@ -222,8 +248,8 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
   }, [circuits]);
 
   const updateCircuit = (id: number, field: keyof Circuit, value: any) => {
-    setEditedCircuits(prev =>
-      prev.map(c => {
+    setEditedCircuits((prev) =>
+      prev.map((c) => {
         if (c.id !== id) return c;
 
         const updated = { ...c, [field]: value };
@@ -252,17 +278,16 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
   };
 
   const deleteCircuit = (id: number) => {
-    setEditedCircuits(prev => {
-      const filtered = prev.filter(c => c.id !== id);
+    setEditedCircuits((prev) => {
+      const filtered = prev.filter((c) => c.id !== id);
       return filtered.map((c, i) => ({ ...c, position: i + 1 }));
     });
     setExpandedId(null);
   };
 
   const addBlankCircuit = () => {
-    const newPosition = editedCircuits.length > 0
-      ? Math.max(...editedCircuits.map(c => c.position)) + 1
-      : 1;
+    const newPosition =
+      editedCircuits.length > 0 ? Math.max(...editedCircuits.map((c) => c.position)) + 1 : 1;
 
     const newCircuit: Circuit = {
       id: Date.now(),
@@ -275,10 +300,10 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
       cpcSize: null,
       kaRating: null,
       confidence: 'low',
-      notes: ''
+      notes: '',
     };
 
-    setEditedCircuits(prev => [...prev, newCircuit]);
+    setEditedCircuits((prev) => [...prev, newCircuit]);
     setExpandedId(newCircuit.id);
   };
 
@@ -319,7 +344,7 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
   };
 
   const moveCircuit = (id: number, direction: 'up' | 'down') => {
-    const index = editedCircuits.findIndex(c => c.id === id);
+    const index = editedCircuits.findIndex((c) => c.id === id);
     if (index === -1) return;
 
     if (direction === 'up' && index === 0) return;
@@ -360,11 +385,17 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
 
         {/* Stats row */}
         <div className="flex items-center gap-2 mt-3 flex-wrap">
-          <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+          <Badge
+            variant="secondary"
+            className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+          >
             {editedCircuits.length} circuits
           </Badge>
           {isThreePhase && (
-            <Badge variant="secondary" className="bg-purple-500/10 text-purple-400 border-purple-500/30">
+            <Badge
+              variant="secondary"
+              className="bg-purple-500/10 text-purple-400 border-purple-500/30"
+            >
               Three-Phase
             </Badge>
           )}
@@ -374,7 +405,10 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
             </Badge>
           )}
           {mediumCount > 0 && (
-            <Badge variant="secondary" className="bg-amber-500/10 text-amber-400 border-amber-500/30">
+            <Badge
+              variant="secondary"
+              className="bg-amber-500/10 text-amber-400 border-amber-500/30"
+            >
               {mediumCount} to check
             </Badge>
           )}
@@ -418,7 +452,12 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
               <p className="text-sm text-muted-foreground mb-4">
                 Try taking another photo with better lighting
               </p>
-              <Button onClick={addBlankCircuit} variant="outline" size="sm" className="touch-manipulation">
+              <Button
+                onClick={addBlankCircuit}
+                variant="outline"
+                size="sm"
+                className="touch-manipulation"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Circuit Manually
               </Button>
@@ -495,24 +534,30 @@ const CircuitCard: React.FC<CircuitCardProps> = ({
   const hasMediumConfidence = circuit.confidence === 'medium';
 
   return (
-    <Card className={cn(
-      "overflow-hidden transition-all duration-200",
-      hasLowConfidence && "border-red-500/30 bg-red-500/5",
-      hasMediumConfidence && "border-amber-500/30 bg-amber-500/5",
-      !hasLowConfidence && !hasMediumConfidence && "border-border/50"
-    )}>
+    <Card
+      className={cn(
+        'overflow-hidden transition-all duration-200',
+        hasLowConfidence && 'border-red-500/30 bg-red-500/5',
+        hasMediumConfidence && 'border-amber-500/30 bg-amber-500/5',
+        !hasLowConfidence && !hasMediumConfidence && 'border-border/50'
+      )}
+    >
       {/* Card header - always visible */}
       <button
         onClick={onToggle}
         className="w-full p-3 flex items-center gap-3 touch-manipulation text-left"
       >
         {/* Position number */}
-        <div className={cn(
-          "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm",
-          hasLowConfidence ? "bg-red-500/20 text-red-400" :
-          hasMediumConfidence ? "bg-amber-500/20 text-amber-400" :
-          "bg-elec-yellow/20 text-elec-yellow"
-        )}>
+        <div
+          className={cn(
+            'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm',
+            hasLowConfidence
+              ? 'bg-red-500/20 text-red-400'
+              : hasMediumConfidence
+                ? 'bg-amber-500/20 text-amber-400'
+                : 'bg-elec-yellow/20 text-elec-yellow'
+          )}
+        >
           {circuit.position}
         </div>
 
@@ -531,7 +576,10 @@ const CircuitCard: React.FC<CircuitCardProps> = ({
             {circuit.curve && <span>Type {circuit.curve}</span>}
             {circuit.rating && <span>{circuit.rating}A</span>}
             {circuit.phase === '3P' && (
-              <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 bg-purple-500/10 text-purple-400 border-purple-500/30">
+              <Badge
+                variant="outline"
+                className="text-[10px] px-1.5 py-0 h-4 bg-purple-500/10 text-purple-400 border-purple-500/30"
+              >
                 3P
               </Badge>
             )}
@@ -541,10 +589,12 @@ const CircuitCard: React.FC<CircuitCardProps> = ({
         {/* Confidence and expand */}
         <div className="flex items-center gap-2 flex-shrink-0">
           <ConfidenceBadge conf={circuit.confidence} />
-          <ChevronRight className={cn(
-            "h-4 w-4 text-muted-foreground transition-transform",
-            isExpanded && "rotate-90"
-          )} />
+          <ChevronRight
+            className={cn(
+              'h-4 w-4 text-muted-foreground transition-transform',
+              isExpanded && 'rotate-90'
+            )}
+          />
         </div>
       </button>
 

@@ -1,7 +1,7 @@
-import { ArrowLeft, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import ReportWizard from "@/components/electrician-tools/ai-tools/modern-report-writer/ReportWizard";
+import { ArrowLeft, FileText } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import ReportWizard from '@/components/electrician-tools/ai-tools/modern-report-writer/ReportWizard';
 
 const ReportWriterPage = () => {
   return (

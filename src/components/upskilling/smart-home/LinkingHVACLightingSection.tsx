@@ -12,11 +12,11 @@ export const LinkingHVACLightingSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          BMS enables sophisticated coordination between HVAC and lighting systems, creating 
-          energy-efficient building operation through shared sensors, synchronized schedules, 
-          and intelligent demand response.
+          BMS enables sophisticated coordination between HVAC and lighting systems, creating
+          energy-efficient building operation through shared sensors, synchronized schedules, and
+          intelligent demand response.
         </p>
-        
+
         <div className="grid md:grid-cols-3 gap-4">
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
@@ -31,7 +31,7 @@ export const LinkingHVACLightingSection = () => {
               <li>• Override capabilities for special events</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Clock className="h-5 w-5 text-green-400" />
@@ -45,7 +45,7 @@ export const LinkingHVACLightingSection = () => {
               <li>• Seasonal adjustment programming</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="h-5 w-5 text-purple-400" />
@@ -60,22 +60,22 @@ export const LinkingHVACLightingSection = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="font-semibold text-foreground mb-2">Example Integration:</h4>
             <p className="text-sm">
-              A conference room's occupancy sensor triggers both lighting and HVAC. When the room 
-              is vacant for 15 minutes, lights switch off and temperature setpoint changes from 
-              21°C to 18°C, saving energy across both systems.
+              A conference room's occupancy sensor triggers both lighting and HVAC. When the room is
+              vacant for 15 minutes, lights switch off and temperature setpoint changes from 21°C to
+              18°C, saving energy across both systems.
             </p>
           </div>
-          
+
           <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
             <h4 className="font-semibold text-foreground mb-2">Energy Savings:</h4>
             <p className="text-sm">
-              Coordinated control typically achieves 15-25% greater energy savings compared to 
-              independent system operation, with payback periods of 2-4 years in commercial 
+              Coordinated control typically achieves 15-25% greater energy savings compared to
+              independent system operation, with payback periods of 2-4 years in commercial
               applications.
             </p>
           </div>

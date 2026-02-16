@@ -1,13 +1,12 @@
-
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import RecordingIndicator from "../apprentice/timer/RecordingIndicator";
-import UserProfileDropdown from "../auth/UserProfileDropdown";
-import { useRef, useEffect, useState } from "react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import RecordingIndicator from '../apprentice/timer/RecordingIndicator';
+import UserProfileDropdown from '../auth/UserProfileDropdown';
+import { useRef, useEffect, useState } from 'react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -50,7 +49,7 @@ const LiveClock = ({ className }: { className?: string }) => {
   const date = format(time, 'd MMM');
 
   return (
-    <div className={cn("flex items-center gap-2", className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       {/* Date pill */}
       <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
         <span className="text-xs font-medium text-white/60">{day}</span>
@@ -122,12 +121,10 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
     <header
       ref={headerRef}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50",
-        "backdrop-blur-xl bg-background/95",
-        "border-b transition-all duration-300",
-        isScrolled
-          ? "border-white/10 shadow-lg shadow-black/20"
-          : "border-white/[0.06]"
+        'fixed top-0 left-0 right-0 z-50',
+        'backdrop-blur-xl bg-background/95',
+        'border-b transition-all duration-300',
+        isScrolled ? 'border-white/10 shadow-lg shadow-black/20' : 'border-white/[0.06]'
       )}
       style={{
         // Use CSS variable with fallback for safe area
@@ -145,10 +142,10 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
                 size="icon"
                 onClick={toggleSidebar}
                 className={cn(
-                  "h-10 w-10 min-w-[40px] min-h-[40px]",
-                  "hover:bg-white/10 active:bg-white/15",
-                  "touch-manipulation rounded-xl",
-                  "transition-all duration-150"
+                  'h-10 w-10 min-w-[40px] min-h-[40px]',
+                  'hover:bg-white/10 active:bg-white/15',
+                  'touch-manipulation rounded-xl',
+                  'transition-all duration-150'
                 )}
                 aria-label="Toggle navigation menu"
               >
@@ -158,10 +155,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           )}
 
           {/* Branding - Clean single wordmark */}
-          <motion.div
-            className="flex items-center"
-            whileTap={{ scale: 0.97 }}
-          >
+          <motion.div className="flex items-center" whileTap={{ scale: 0.97 }}>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center">
               <span className="text-elec-yellow">Elec</span>
               <span className="text-white/40">-</span>

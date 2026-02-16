@@ -8,14 +8,14 @@
  * - Empty state for first-time users
  */
 
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import {
   FileText,
   Plus,
@@ -27,11 +27,11 @@ import {
   Sparkles,
   ArrowRight,
   Loader2,
-} from "lucide-react";
-import { useCVs, usePrimaryCV, UserCV, calculateCVCompleteness } from "@/hooks/useCV";
-import { useElecIdForCV, useCVSyncStatus } from "@/hooks/useCVSync";
-import CVCard from "./CVCard";
-import { toast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { useCVs, usePrimaryCV, UserCV, calculateCVCompleteness } from '@/hooks/useCV';
+import { useElecIdForCV, useCVSyncStatus } from '@/hooks/useCVSync';
+import CVCard from './CVCard';
+import { toast } from '@/hooks/use-toast';
 
 interface ElecIdCVTabProps {
   onNavigate?: (tabId: string) => void;
@@ -54,16 +54,16 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
 
   const handleCreateCV = () => {
     // Navigate to CV builder
-    navigate("/electrician/cv-builder");
+    navigate('/electrician/cv-builder');
   };
 
   const handleEditCV = (cv: UserCV) => {
     // For now, store CV data in localStorage and navigate to builder
     // Future: add query param support to CV builder
-    localStorage.setItem("elecmate-cv-draft", JSON.stringify(cv.cv_data));
-    localStorage.setItem("elecmate-cv-template", cv.template_id);
-    localStorage.setItem("elecmate-cv-editing-id", cv.id);
-    navigate("/electrician/cv-builder");
+    localStorage.setItem('elecmate-cv-draft', JSON.stringify(cv.cv_data));
+    localStorage.setItem('elecmate-cv-template', cv.template_id);
+    localStorage.setItem('elecmate-cv-editing-id', cv.id);
+    navigate('/electrician/cv-builder');
   };
 
   // Loading state
@@ -88,9 +88,7 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
         <CardContent className="p-6 text-center">
           <AlertCircle className="h-10 w-10 text-red-400 mx-auto mb-3" />
           <h3 className="font-semibold text-foreground">Failed to Load CVs</h3>
-          <p className="text-sm text-foreground/70 mt-1">
-            Please refresh the page to try again.
-          </p>
+          <p className="text-sm text-foreground/70 mt-1">Please refresh the page to try again.</p>
         </CardContent>
       </Card>
     );
@@ -116,8 +114,8 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
                   Create Your Professional CV
                 </h2>
                 <p className="text-foreground/70 mt-2 max-w-md">
-                  Build a professional CV that showcases your electrical qualifications.
-                  Import your credentials directly from your Elec-ID profile.
+                  Build a professional CV that showcases your electrical qualifications. Import your
+                  credentials directly from your Elec-ID profile.
                 </p>
                 <Button
                   onClick={handleCreateCV}
@@ -166,8 +164,8 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
         <div>
           <h2 className="text-lg font-semibold text-foreground">My CVs</h2>
           <p className="text-sm text-foreground/70">
-            {sortedCVs.length} CV{sortedCVs.length !== 1 && "s"}
-            {hasElecIdProfile && " • Synced with Elec-ID"}
+            {sortedCVs.length} CV{sortedCVs.length !== 1 && 's'}
+            {hasElecIdProfile && ' • Synced with Elec-ID'}
           </p>
         </div>
         <Button
@@ -186,8 +184,8 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
           onSyncAll={() => {
             // Future: implement bulk sync
             toast({
-              title: "Sync Available",
-              description: "Edit individual CVs to sync from Elec-ID.",
+              title: 'Sync Available',
+              description: 'Edit individual CVs to sync from Elec-ID.',
             });
           }}
         />
@@ -242,7 +240,12 @@ const FeatureCard = ({
 }) => (
   <Card className="border-white/10 bg-white/[0.03]">
     <CardContent className="p-4">
-      <div className={cn("w-10 h-10 rounded-xl bg-gradient-to-br flex items-center justify-center mb-3", color)}>
+      <div
+        className={cn(
+          'w-10 h-10 rounded-xl bg-gradient-to-br flex items-center justify-center mb-3',
+          color
+        )}
+      >
         <Icon className="h-5 w-5 text-white" />
       </div>
       <h3 className="font-medium text-foreground">{title}</h3>
@@ -252,13 +255,7 @@ const FeatureCard = ({
 );
 
 // Sync status banner
-const SyncStatusBanner = ({
-  cvs,
-  onSyncAll,
-}: {
-  cvs: UserCV[];
-  onSyncAll: () => void;
-}) => {
+const SyncStatusBanner = ({ cvs, onSyncAll }: { cvs: UserCV[]; onSyncAll: () => void }) => {
   // Calculate total pending updates across all CVs
   // For simplicity, we'll just show a generic message
   // Full implementation would check each CV's sync status

@@ -1,6 +1,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, AlertTriangle, Ruler, Map, Building, Calculator, CheckSquare, Users, Clock, Lightbulb, Zap, Eye, ArrowRight } from 'lucide-react';
+import {
+  BookOpen,
+  AlertTriangle,
+  Ruler,
+  Map,
+  Building,
+  Calculator,
+  CheckSquare,
+  Users,
+  Clock,
+  Lightbulb,
+  Zap,
+  Eye,
+  ArrowRight,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const EmergencyLightingContent2_1_Enhanced = () => {
@@ -22,9 +36,10 @@ export const EmergencyLightingContent2_1_Enhanced = () => {
             </h3>
             <div className="space-y-4 text-elec-light">
               <p className="leading-relaxed">
-                Emergency escape lighting must provide adequate illumination to enable safe evacuation 
-                from any point within a building to the final exit or a place of safety. This requirement 
-                is mandated under BS 5266-1:2016 and forms part of the Building Regulations Approved Document B.
+                Emergency escape lighting must provide adequate illumination to enable safe
+                evacuation from any point within a building to the final exit or a place of safety.
+                This requirement is mandated under BS 5266-1:2016 and forms part of the Building
+                Regulations Approved Document B.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-elec-gray/50 rounded-lg p-4 border border-elec-gray">
@@ -72,27 +87,37 @@ export const EmergencyLightingContent2_1_Enhanced = () => {
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Eye className="h-4 w-4 text-elec-yellow" />
-                <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">Standard Routes</Badge>
+                <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                  Standard Routes
+                </Badge>
               </div>
               <div className="space-y-2">
                 <p className="font-bold text-lg text-elec-yellow">1 lux minimum</p>
-                <p className="text-sm text-gray-300">At floor level on centre line of escape route</p>
+                <p className="text-sm text-gray-300">
+                  At floor level on centre line of escape route
+                </p>
               </div>
             </div>
             <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <AlertTriangle className="h-4 w-4 text-orange-400" />
-                <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">High Risk Areas</Badge>
+                <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
+                  High Risk Areas
+                </Badge>
               </div>
               <div className="space-y-2">
                 <p className="font-bold text-lg text-orange-400">15 lux minimum</p>
-                <p className="text-sm text-gray-300">For potentially dangerous areas or processes</p>
+                <p className="text-sm text-gray-300">
+                  For potentially dangerous areas or processes
+                </p>
               </div>
             </div>
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Calculator className="h-4 w-4 text-blue-400" />
-                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">Uniformity Ratio</Badge>
+                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                  Uniformity Ratio
+                </Badge>
               </div>
               <div className="space-y-2">
                 <p className="font-bold text-lg text-blue-400">40:1 maximum</p>
@@ -259,7 +284,7 @@ export const EmergencyLightingContent2_1_Enhanced = () => {
                   </ul>
                 </div>
                 <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded p-3 text-elec-yellow text-xs">
-                  <strong>Case Study:</strong> 20-storey office building requiring 1-hour duration, 
+                  <strong>Case Study:</strong> 20-storey office building requiring 1-hour duration,
                   with enhanced stairwell coverage and refuge areas on every 5th floor.
                 </div>
               </div>
@@ -281,8 +306,8 @@ export const EmergencyLightingContent2_1_Enhanced = () => {
                   </ul>
                 </div>
                 <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded p-3 text-elec-yellow text-xs">
-                  <strong>Case Study:</strong> 300-bed hospital with 3-hour battery backup, 
-                  central monitoring system, and generator backup integration.
+                  <strong>Case Study:</strong> 300-bed hospital with 3-hour battery backup, central
+                  monitoring system, and generator backup integration.
                 </div>
               </div>
             </div>
@@ -303,7 +328,7 @@ export const EmergencyLightingContent2_1_Enhanced = () => {
                   </ul>
                 </div>
                 <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded p-3 text-elec-yellow text-xs">
-                  <strong>Case Study:</strong> Secondary school with 1,200 pupils requiring 
+                  <strong>Case Study:</strong> Secondary school with 1,200 pupils requiring
                   coordinated emergency lighting and fire alarm integration.
                 </div>
               </div>
@@ -311,7 +336,6 @@ export const EmergencyLightingContent2_1_Enhanced = () => {
           </div>
         </CardContent>
       </Card>
-
     </div>
   );
 };

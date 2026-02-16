@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { addDays, isAfter, isBefore } from "date-fns";
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { addDays, isAfter, isBefore } from 'date-fns';
 
 export interface EmployerDashboardStats {
   // Counts
@@ -91,49 +91,40 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         invoicesResult,
       ] = await Promise.all([
         // Active employees count
-        supabase
-          .from("employer_employees")
-          .select("id, status")
-          .eq("status", "Active"),
+        supabase.from('employer_employees').select('id, status').eq('status', 'Active'),
 
         // Active jobs count
         supabase
-          .from("employer_jobs")
-          .select("id, status, value, title, client, end_date")
-          .eq("status", "Active"),
+          .from('employer_jobs')
+          .select('id, status, value, title, client, end_date')
+          .eq('status', 'Active'),
 
         // Certifications with expiry status
         supabase
-          .from("employer_certifications")
-          .select("id, name, expiry_date, status, employee_id")
-          .not("expiry_date", "is", null),
+          .from('employer_certifications')
+          .select('id, name, expiry_date, status, employee_id')
+          .not('expiry_date', 'is', null),
 
         // Available talent in talent pool
         supabase
-          .from("employer_elec_id_profiles")
-          .select("id")
-          .eq("opt_out", false)
-          .eq("available_for_hire", true)
-          .in("profile_visibility", ["public", "employers_only"]),
+          .from('employer_elec_id_profiles')
+          .select('id')
+          .eq('opt_out', false)
+          .eq('available_for_hire', true)
+          .in('profile_visibility', ['public', 'employers_only']),
 
         // Pending expense claims
-        supabase
-          .from("employer_expense_claims")
-          .select("id, status")
-          .eq("status", "Pending"),
+        supabase.from('employer_expense_claims').select('id, status').eq('status', 'Pending'),
 
         // Open vacancies
-        supabase
-          .from("employer_vacancies")
-          .select("id, status")
-          .eq("status", "Open"),
+        supabase.from('employer_vacancies').select('id, status').eq('status', 'Open'),
 
         // Invoices for revenue calculation (paid this year)
         supabase
-          .from("employer_invoices")
-          .select("id, amount, status, paid_date")
-          .eq("status", "Paid")
-          .gte("paid_date", `${now.getFullYear()}-01-01`),
+          .from('employer_invoices')
+          .select('id, amount, status, paid_date')
+          .eq('status', 'Paid')
+          .gte('paid_date', `${now.getFullYear()}-01-01`),
       ]);
 
       // Process employee stats
@@ -186,17 +177,13 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
             id: cert.id,
             title: cert.name,
             subtitle: `Certificate #${cert.id.slice(0, 8)}`,
-            date: isExpired
-              ? "Overdue"
-              : daysUntil === 0
-              ? "Today"
-              : `${daysUntil} days`,
+            date: isExpired ? 'Overdue' : daysUntil === 0 ? 'Today' : `${daysUntil} days`,
             urgent: isUrgent || isExpired,
           };
         })
         .sort((a, b) => {
-          if (a.date === "Overdue") return -1;
-          if (b.date === "Overdue") return 1;
+          if (a.date === 'Overdue') return -1;
+          if (b.date === 'Overdue') return 1;
           return 0;
         });
 
@@ -216,9 +203,9 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         jobsResult.data.slice(0, 2).forEach((job) => {
           recentActivities.push({
             id: job.id,
-            title: "Job in progress",
+            title: 'Job in progress',
             description: `${job.title} - ${job.client}`,
-            time: "Recently",
+            time: 'Recently',
             type: 'job',
           });
         });
@@ -239,8 +226,8 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         recentActivities,
       });
     } catch (err) {
-      console.error("Error fetching employer dashboard stats:", err);
-      setError("Failed to load dashboard statistics");
+      console.error('Error fetching employer dashboard stats:', err);
+      setError('Failed to load dashboard statistics');
     } finally {
       clearTimeout(timeoutId);
       setIsLoading(false);
@@ -255,25 +242,21 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
   // Real-time subscriptions for key tables
   useEffect(() => {
     const channel = supabase
-      .channel("employer-dashboard-changes")
+      .channel('employer-dashboard-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_employees' }, () =>
+        fetchStats()
+      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_jobs' }, () =>
+        fetchStats()
+      )
       .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "employer_employees" },
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'employer_certifications' },
         () => fetchStats()
       )
       .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "employer_jobs" },
-        () => fetchStats()
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "employer_certifications" },
-        () => fetchStats()
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "employer_expense_claims" },
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'employer_expense_claims' },
         () => fetchStats()
       )
       .subscribe();

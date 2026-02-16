@@ -7,34 +7,34 @@ const InstrumentationModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Signal Types: Voltage, Current, Resistance, Frequency",
+      title: 'Signal Types: Voltage, Current, Resistance, Frequency',
       icon: Zap,
-      description: "Understanding different types of electrical signals used in instrumentation"
+      description: 'Understanding different types of electrical signals used in instrumentation',
     },
     {
       id: 2,
-      title: "Standard Ranges: 4–20mA, 0–10V, Pulse Signals",
+      title: 'Standard Ranges: 4–20mA, 0–10V, Pulse Signals',
       icon: BarChart,
-      description: "Industry standard signal ranges and their applications"
+      description: 'Industry standard signal ranges and their applications',
     },
     {
       id: 3,
-      title: "Signal Conditioning: Filtering, Isolation, Amplification",
+      title: 'Signal Conditioning: Filtering, Isolation, Amplification',
       icon: Filter,
-      description: "Techniques for processing and conditioning instrumentation signals"
+      description: 'Techniques for processing and conditioning instrumentation signals',
     },
     {
       id: 4,
-      title: "Signal Scaling, Conversions, and Error Introduction",
+      title: 'Signal Scaling, Conversions, and Error Introduction',
       icon: Settings,
-      description: "Converting between signal types and understanding error sources"
+      description: 'Converting between signal types and understanding error sources',
     },
     {
       id: 5,
-      title: "Signal Integrity: Noise, Ground Loops, and Shielding",
+      title: 'Signal Integrity: Noise, Ground Loops, and Shielding',
       icon: Shield,
-      description: "Maintaining signal quality and preventing interference"
-    }
+      description: 'Maintaining signal quality and preventing interference',
+    },
   ];
 
   return (

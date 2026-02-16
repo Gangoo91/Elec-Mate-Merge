@@ -2,13 +2,14 @@ import { ArrowLeft, Zap, CheckCircle, HelpCircle, Activity, Target, Settings } f
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule5Section2 = () => {
   useSEO({
-    title: "Control Loop Components: PV, Setpoint, Output | Instrumentation Module 5",
-    description: "Explore the essential elements that form the core of every control loop - Process Variable, Setpoint, and Controller Output."
+    title: 'Control Loop Components: PV, Setpoint, Output | Instrumentation Module 5',
+    description:
+      'Explore the essential elements that form the core of every control loop - Process Variable, Setpoint, and Controller Output.',
   });
 
   return (
@@ -16,7 +17,10 @@ const InstrumentationModule5Section2 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-5" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-5"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Module 5
           </Link>
@@ -36,16 +40,18 @@ const InstrumentationModule5Section2 = () => {
             Quick Summary
           </h2>
           <p className="text-white/80 text-sm">
-            Every control loop has three essential components: the Process Variable (PV) - what we measure,
-            the Setpoint (SP) - what we want, and the Output (OP) - the control action taken. Understanding
-            how these interact is fundamental to effective process control.
+            Every control loop has three essential components: the Process Variable (PV) - what we
+            measure, the Setpoint (SP) - what we want, and the Output (OP) - the control action
+            taken. Understanding how these interact is fundamental to effective process control.
           </p>
         </div>
 
         {/* Section 01 - Process Variable */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Process Variable (PV)</h2>
           </div>
 
@@ -55,9 +61,10 @@ const InstrumentationModule5Section2 = () => {
               <div>
                 <h3 className="font-medium text-white mb-2">What is the Process Variable?</h3>
                 <p className="text-white/80 text-sm">
-                  The Process Variable (PV) is the actual measured value of the parameter being controlled.
-                  It represents the current state of the system that we want to maintain or adjust. Sensors
-                  and transmitters measure the PV and send this information to the controller.
+                  The Process Variable (PV) is the actual measured value of the parameter being
+                  controlled. It represents the current state of the system that we want to maintain
+                  or adjust. Sensors and transmitters measure the PV and send this information to
+                  the controller.
                 </p>
               </div>
             </div>
@@ -154,7 +161,9 @@ const InstrumentationModule5Section2 = () => {
         {/* Section 02 - Setpoint */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Setpoint (SP)</h2>
           </div>
 
@@ -164,9 +173,9 @@ const InstrumentationModule5Section2 = () => {
               <div>
                 <h3 className="font-medium text-white mb-2">What is the Setpoint?</h3>
                 <p className="text-white/80 text-sm">
-                  The Setpoint (SP) is the desired target value for the process variable. It represents
-                  what we want the system to achieve and maintain. The controller compares the PV to the
-                  SP to determine what action to take.
+                  The Setpoint (SP) is the desired target value for the process variable. It
+                  represents what we want the system to achieve and maintain. The controller
+                  compares the PV to the SP to determine what action to take.
                 </p>
               </div>
             </div>
@@ -267,7 +276,9 @@ const InstrumentationModule5Section2 = () => {
         {/* Section 03 - Output */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Output (OP)</h2>
           </div>
 
@@ -277,9 +288,9 @@ const InstrumentationModule5Section2 = () => {
               <div>
                 <h3 className="font-medium text-white mb-2">What is the Controller Output?</h3>
                 <p className="text-white/80 text-sm">
-                  The Output (OP) is the control action taken by the controller to bring the process variable
-                  closer to the setpoint. It's the controller's response to the error between PV and SP,
-                  sent to actuators like valves, motors, or dampers.
+                  The Output (OP) is the control action taken by the controller to bring the process
+                  variable closer to the setpoint. It's the controller's response to the error
+                  between PV and SP, sent to actuators like valves, motors, or dampers.
                 </p>
               </div>
             </div>
@@ -367,43 +378,60 @@ const InstrumentationModule5Section2 = () => {
         {/* Section 04 - Control Loop Cycle */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">The Control Loop Cycle</h2>
           </div>
 
           <div className="space-y-4">
             <p className="text-white/80 text-sm">
-              Understanding how sensors, controllers, and actuators work together to maintain control:
+              Understanding how sensors, controllers, and actuators work together to maintain
+              control:
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black font-bold text-xs flex-shrink-0">1</span>
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black font-bold text-xs flex-shrink-0">
+                    1
+                  </span>
                   <div>
                     <p className="text-white font-medium text-sm">Sensor Measures PV</p>
-                    <p className="text-white/70 text-xs">Temperature sensor reads actual temperature: 18°C</p>
+                    <p className="text-white/70 text-xs">
+                      Temperature sensor reads actual temperature: 18°C
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white font-bold text-xs flex-shrink-0">2</span>
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white font-bold text-xs flex-shrink-0">
+                    2
+                  </span>
                   <div>
                     <p className="text-white font-medium text-sm">Controller Compares PV to SP</p>
                     <p className="text-white/70 text-xs">Error = SP - PV = 22°C - 18°C = 4°C</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-orange-500 text-white font-bold text-xs flex-shrink-0">3</span>
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-orange-500 text-white font-bold text-xs flex-shrink-0">
+                    3
+                  </span>
                   <div>
                     <p className="text-white font-medium text-sm">Controller Calculates Output</p>
-                    <p className="text-white/70 text-xs">Determines how much to open heating valve</p>
+                    <p className="text-white/70 text-xs">
+                      Determines how much to open heating valve
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500 text-white font-bold text-xs flex-shrink-0">4</span>
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500 text-white font-bold text-xs flex-shrink-0">
+                    4
+                  </span>
                   <div>
                     <p className="text-white font-medium text-sm">Actuator Responds</p>
-                    <p className="text-white/70 text-xs">Valve opens to increase heating, process repeats</p>
+                    <p className="text-white/70 text-xs">
+                      Valve opens to increase heating, process repeats
+                    </p>
                   </div>
                 </div>
               </div>
@@ -412,7 +440,9 @@ const InstrumentationModule5Section2 = () => {
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <h4 className="font-medium text-blue-300 mb-2">Error Calculation</h4>
               <div className="text-center mb-3">
-                <p className="text-white font-medium">Error (e) = Setpoint (SP) - Process Variable (PV)</p>
+                <p className="text-white font-medium">
+                  Error (e) = Setpoint (SP) - Process Variable (PV)
+                </p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                 <div className="text-center">
@@ -443,25 +473,31 @@ const InstrumentationModule5Section2 = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-2">Who measures the Process Variable?</h4>
               <p className="text-white/70 text-sm">
-                The sensor or transmitter measures the Process Variable and converts it to a standard signal
-                (typically 4-20mA) that is sent to the controller for comparison with the setpoint.
+                The sensor or transmitter measures the Process Variable and converts it to a
+                standard signal (typically 4-20mA) that is sent to the controller for comparison
+                with the setpoint.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">What is the relationship between error and controller output?</h4>
+              <h4 className="font-medium text-white mb-2">
+                What is the relationship between error and controller output?
+              </h4>
               <p className="text-white/70 text-sm">
-                In most control systems, larger errors between PV and SP produce proportionally larger
-                changes in controller output. The exact relationship depends on the controller type and
-                tuning parameters (P, I, D gains).
+                In most control systems, larger errors between PV and SP produce proportionally
+                larger changes in controller output. The exact relationship depends on the
+                controller type and tuning parameters (P, I, D gains).
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">What happens when the setpoint changes?</h4>
+              <h4 className="font-medium text-white mb-2">
+                What happens when the setpoint changes?
+              </h4>
               <p className="text-white/70 text-sm">
-                When the setpoint changes, the controller immediately calculates a new error (SP-PV) and
-                adjusts its output accordingly to drive the process variable to the new target value.
+                When the setpoint changes, the controller immediately calculates a new error (SP-PV)
+                and adjusts its output accordingly to drive the process variable to the new target
+                value.
               </p>
             </div>
           </div>
@@ -472,10 +508,10 @@ const InstrumentationModule5Section2 = () => {
           <SingleQuestionQuiz
             question="In a temperature control system, what represents the manipulated variable?"
             options={[
-              "The room temperature (PV)",
-              "The desired temperature (SP)",
-              "The heating valve position (OP)",
-              "The temperature sensor"
+              'The room temperature (PV)',
+              'The desired temperature (SP)',
+              'The heating valve position (OP)',
+              'The temperature sensor',
             ]}
             correctAnswer={2}
             explanation="The manipulated variable is what the controller adjusts to influence the process - in this case, the heating valve position (output) that controls heat input to the room."

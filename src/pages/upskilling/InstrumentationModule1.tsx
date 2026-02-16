@@ -7,28 +7,30 @@ const InstrumentationModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "What Is Instrumentation?",
+      title: 'What Is Instrumentation?',
       icon: BookOpen,
-      description: "Understanding the fundamentals of instrumentation and its role in industrial systems"
+      description:
+        'Understanding the fundamentals of instrumentation and its role in industrial systems',
     },
     {
       id: 2,
-      title: "Where and Why Instrumentation Is Used (HVAC, Process, BMS, Renewables)",
+      title: 'Where and Why Instrumentation Is Used (HVAC, Process, BMS, Renewables)',
       icon: Map,
-      description: "Applications across different industries and the benefits of instrumentation systems"
+      description:
+        'Applications across different industries and the benefits of instrumentation systems',
     },
     {
       id: 3,
-      title: "Measurement vs Control vs Indication",
+      title: 'Measurement vs Control vs Indication',
       icon: Settings,
-      description: "Understanding the different functions and purposes of instrumentation systems"
+      description: 'Understanding the different functions and purposes of instrumentation systems',
     },
     {
       id: 4,
-      title: "Key Industry Standards (BS EN, UKAS, ISO/IEC 17025)",
+      title: 'Key Industry Standards (BS EN, UKAS, ISO/IEC 17025)',
       icon: FileText,
-      description: "Overview of relevant standards and certification requirements"
-    }
+      description: 'Overview of relevant standards and certification requirements',
+    },
   ];
 
   return (

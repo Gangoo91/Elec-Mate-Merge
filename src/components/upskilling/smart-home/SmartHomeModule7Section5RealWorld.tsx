@@ -12,15 +12,18 @@ const SmartHomeModule7Section5RealWorld = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <h4 className="font-semibold text-foreground">Case Study: Smart Security System Handover in Sheffield</h4>
-          
+          <h4 className="font-semibold text-foreground">
+            Case Study: Smart Security System Handover in Sheffield
+          </h4>
+
           <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h5 className="font-semibold text-red-200 mb-2">The Problem</h5>
                 <p className="text-red-100 text-sm mb-3">
-                  A homeowner had a new smart security system installed but received no proper handover training:
+                  A homeowner had a new smart security system installed but received no proper
+                  handover training:
                 </p>
                 <ul className="space-y-1 text-red-100 text-sm ml-4">
                   <li>• Installer left without showing app functionality</li>
@@ -78,23 +81,28 @@ const SmartHomeModule7Section5RealWorld = () => {
             <ul className="space-y-2 text-gray-300 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Never skip the handover:</strong> It's as important as the installation itself
+                <strong>Never skip the handover:</strong> It's as important as the installation
+                itself
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Poor training destroys client confidence:</strong> Leading to system abandonment
+                <strong>Poor training destroys client confidence:</strong> Leading to system
+                abandonment
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Client understanding prevents support calls:</strong> Proper training reduces callbacks
+                <strong>Client understanding prevents support calls:</strong> Proper training
+                reduces callbacks
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Configuration matters as much as installation:</strong> Settings must match user needs
+                <strong>Configuration matters as much as installation:</strong> Settings must match
+                user needs
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Professional reputation depends on complete service:</strong> Including proper handover
+                <strong>Professional reputation depends on complete service:</strong> Including
+                proper handover
               </li>
             </ul>
           </div>

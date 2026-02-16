@@ -48,10 +48,7 @@ export interface LoadValidationResult {
  * Validates that loaded data actually contains meaningful content
  * Prevents showing empty forms when data should exist
  */
-export function validateLoadedData(
-  data: any,
-  reportType: string
-): DataIntegrityResult {
+export function validateLoadedData(data: any, reportType: string): DataIntegrityResult {
   const result: DataIntegrityResult = {
     isValid: false,
     hasData: false,
@@ -82,14 +79,14 @@ export function validateLoadedData(
   result.hasData = result.fieldCount > 0;
 
   // Check for signature fields (indicates real user data)
-  const presentSignatureFields = SIGNATURE_FIELDS.filter(field => {
+  const presentSignatureFields = SIGNATURE_FIELDS.filter((field) => {
     const value = data[field];
     return value && typeof value === 'string' && value.trim().length > 0;
   });
 
   // Check minimum required fields
   const minimumFields = MINIMUM_FIELDS[reportType] || MINIMUM_FIELDS['eic'];
-  result.missingCriticalFields = minimumFields.filter(field => {
+  result.missingCriticalFields = minimumFields.filter((field) => {
     const value = data[field];
     return !value || (typeof value === 'string' && value.trim().length === 0);
   });
@@ -123,11 +120,7 @@ function getBackupKey(reportType: string, reportId: string): string {
 /**
  * Save to localStorage backup (third layer of redundancy)
  */
-export function saveToLocalStorageBackup(
-  reportType: string,
-  reportId: string,
-  data: any
-): boolean {
+export function saveToLocalStorageBackup(reportType: string, reportId: string, data: any): boolean {
   try {
     const key = getBackupKey(reportType, reportId);
     const backup = {
@@ -201,7 +194,9 @@ export function listAllBackups(): Array<{
         const stored = localStorage.getItem(key);
         if (stored) {
           const backup = JSON.parse(stored);
-          const fieldCount = Object.keys(backup.data || {}).filter(k => !k.startsWith('_')).length;
+          const fieldCount = Object.keys(backup.data || {}).filter(
+            (k) => !k.startsWith('_')
+          ).length;
           backups.push({
             reportType: backup.reportType,
             reportId: backup.reportId,
@@ -240,7 +235,7 @@ export async function verifyDataExistsInDatabase(
     }
 
     const reportData = data.data || {};
-    const fieldCount = Object.keys(reportData).filter(k => !k.startsWith('_')).length;
+    const fieldCount = Object.keys(reportData).filter((k) => !k.startsWith('_')).length;
 
     return {
       exists: true,
@@ -319,7 +314,13 @@ export async function emergencyDataRecovery(
  * Log data integrity event for monitoring
  */
 export function logIntegrityEvent(
-  event: 'load_empty' | 'load_success' | 'recovery_attempted' | 'recovery_success' | 'recovery_failed' | 'backup_saved',
+  event:
+    | 'load_empty'
+    | 'load_success'
+    | 'recovery_attempted'
+    | 'recovery_success'
+    | 'recovery_failed'
+    | 'backup_saved',
   details: {
     reportType: string;
     reportId?: string;

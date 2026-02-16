@@ -45,9 +45,7 @@ export const ConstraintsSection = ({
     <Card>
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Project Constraints</CardTitle>
-        <CardDescription>
-          Specify any limitations or special requirements
-        </CardDescription>
+        <CardDescription>Specify any limitations or special requirements</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Access Restrictions */}
@@ -99,7 +97,9 @@ export const ConstraintsSection = ({
           placeholder="5000"
           unit="£"
           value={constraints.budgetLimit || ''}
-          onChange={(e) => handleUpdate({ budgetLimit: e.target.value ? Number(e.target.value) : undefined })}
+          onChange={(e) =>
+            handleUpdate({ budgetLimit: e.target.value ? Number(e.target.value) : undefined })
+          }
         />
 
         {/* Other Trades */}

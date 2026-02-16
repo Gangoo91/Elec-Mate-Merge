@@ -1,72 +1,93 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m5s2-check1",
-    question: "What is the primary benefit of HEMS integration with EV charging?",
-    options: ["Faster charging speeds", "Maximised renewable energy self-consumption", "Reduced installation costs", "Simplified wiring"],
+    id: 'evcharging-m5s2-check1',
+    question: 'What is the primary benefit of HEMS integration with EV charging?',
+    options: [
+      'Faster charging speeds',
+      'Maximised renewable energy self-consumption',
+      'Reduced installation costs',
+      'Simplified wiring',
+    ],
     correctIndex: 1,
-    explanation: "HEMS enables maximum utilisation of renewable solar energy for EV charging, reducing electricity costs by up to 80% whilst minimising grid dependency and carbon footprint."
+    explanation:
+      'HEMS enables maximum utilisation of renewable solar energy for EV charging, reducing electricity costs by up to 80% whilst minimising grid dependency and carbon footprint.',
   },
   {
-    id: "evcharging-m5s2-check2",
-    question: "What solar PV system size typically provides sufficient energy for daily EV charging?",
-    options: ["1-2kW", "4-6kW", "15-20kW", "50kW+"],
+    id: 'evcharging-m5s2-check2',
+    question:
+      'What solar PV system size typically provides sufficient energy for daily EV charging?',
+    options: ['1-2kW', '4-6kW', '15-20kW', '50kW+'],
     correctIndex: 1,
-    explanation: "A typical 4-6kW solar system can provide 15-25kWh daily generation, sufficient for 60-100 miles of daily EV driving. Larger systems enable complete energy independence."
+    explanation:
+      'A typical 4-6kW solar system can provide 15-25kWh daily generation, sufficient for 60-100 miles of daily EV driving. Larger systems enable complete energy independence.',
   },
   {
-    id: "evcharging-m5s2-check3",
-    question: "How does battery storage enhance EV charging integration?",
-    options: ["By increasing charging speed", "By extending solar availability beyond daylight hours", "By reducing cable requirements", "By eliminating the need for grid connection"],
+    id: 'evcharging-m5s2-check3',
+    question: 'How does battery storage enhance EV charging integration?',
+    options: [
+      'By increasing charging speed',
+      'By extending solar availability beyond daylight hours',
+      'By reducing cable requirements',
+      'By eliminating the need for grid connection',
+    ],
     correctIndex: 1,
-    explanation: "Battery storage extends the availability of solar energy for EV charging beyond daylight hours, provides backup power during outages, and enables participation in grid services for additional revenue."
-  }
+    explanation:
+      'Battery storage extends the availability of solar energy for EV charging beyond daylight hours, provides backup power during outages, and enables participation in grid services for additional revenue.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can HEMS work with existing solar and battery installations?",
-    answer: "Yes, modern HEMS platforms can integrate with most existing solar inverters and battery systems through standard communication protocols like Modbus, SunSpec, and manufacturer APIs. Retrofit integration typically requires minimal additional hardware."
+    question: 'Can HEMS work with existing solar and battery installations?',
+    answer:
+      'Yes, modern HEMS platforms can integrate with most existing solar inverters and battery systems through standard communication protocols like Modbus, SunSpec, and manufacturer APIs. Retrofit integration typically requires minimal additional hardware.',
   },
   {
-    question: "How reliable is solar-dependent EV charging?",
-    answer: "HEMS systems include intelligent fallback to grid charging when solar is insufficient, ensuring reliable EV availability. Battery storage and weather forecasting further improve charging reliability and predictability."
+    question: 'How reliable is solar-dependent EV charging?',
+    answer:
+      'HEMS systems include intelligent fallback to grid charging when solar is insufficient, ensuring reliable EV availability. Battery storage and weather forecasting further improve charging reliability and predictability.',
   },
   {
-    question: "What are the typical cost savings from integrated EV/PV/Battery systems?",
-    answer: "Integrated systems typically achieve 60-80% reduction in electricity costs, £800-2000 annual savings for average households, and 5-8 year payback periods including government incentives."
+    question: 'What are the typical cost savings from integrated EV/PV/Battery systems?',
+    answer:
+      'Integrated systems typically achieve 60-80% reduction in electricity costs, £800-2000 annual savings for average households, and 5-8 year payback periods including government incentives.',
   },
   {
-    question: "How does HEMS handle multiple EVs in one household?",
-    answer: "Advanced HEMS platforms can coordinate multiple EVs through priority scheduling, available solar allocation, and user-defined charging requirements. Systems balance immediate needs with overnight optimisation and grid constraints."
-  }
+    question: 'How does HEMS handle multiple EVs in one household?',
+    answer:
+      'Advanced HEMS platforms can coordinate multiple EVs through priority scheduling, available solar allocation, and user-defined charging requirements. Systems balance immediate needs with overnight optimisation and grid constraints.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A homeowner has an 8kW solar system and wants to maximise EV charging from renewable energy. What HEMS feature should be prioritised?",
-  options: [
-    "Fixed overnight charging schedule",
-    "Maximum power charging at all times",
-    "Excess solar charging with weather forecasting",
-    "Grid-only charging during off-peak hours"
-  ],
-  correctAnswer: 2,
-  explanation: "Excess solar charging with weather forecasting enables the EV to charge when surplus PV generation is available, maximising self-consumption. Weather forecasting allows the system to predict solar availability and plan charging accordingly."
-  }
+    question:
+      'A homeowner has an 8kW solar system and wants to maximise EV charging from renewable energy. What HEMS feature should be prioritised?',
+    options: [
+      'Fixed overnight charging schedule',
+      'Maximum power charging at all times',
+      'Excess solar charging with weather forecasting',
+      'Grid-only charging during off-peak hours',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Excess solar charging with weather forecasting enables the EV to charge when surplus PV generation is available, maximising self-consumption. Weather forecasting allows the system to predict solar availability and plan charging accordingly.',
+  },
 ];
 
 const EVChargingModule5Section2 = () => {
   useSEO({
-    title: "EV/PV/Battery Integration via HEMS | EV Charging Module 5.2",
-    description: "Learn to integrate EV charging with renewable energy sources and battery storage through Home Energy Management Systems (HEMS)."
+    title: 'EV/PV/Battery Integration via HEMS | EV Charging Module 5.2',
+    description:
+      'Learn to integrate EV charging with renewable energy sources and battery storage through Home Energy Management Systems (HEMS).',
   });
 
   return (
@@ -108,16 +129,26 @@ const EVChargingModule5Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>HEMS:</strong> Coordinates EV, solar, and battery systems</li>
-              <li><strong>Self-consumption:</strong> Up to 90% renewable utilisation</li>
-              <li><strong>Savings:</strong> 60-80% reduction in electricity costs</li>
+              <li>
+                <strong>HEMS:</strong> Coordinates EV, solar, and battery systems
+              </li>
+              <li>
+                <strong>Self-consumption:</strong> Up to 90% renewable utilisation
+              </li>
+              <li>
+                <strong>Savings:</strong> 60-80% reduction in electricity costs
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Smart energy controller, CT clamps, cloud app</li>
-              <li><strong>Use:</strong> Prioritise solar charging, coordinate with storage</li>
+              <li>
+                <strong>Spot:</strong> Smart energy controller, CT clamps, cloud app
+              </li>
+              <li>
+                <strong>Use:</strong> Prioritise solar charging, coordinate with storage
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +158,12 @@ const EVChargingModule5Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Design integrated EV/PV/Battery systems",
-              "Calculate energy flows and optimisation strategies",
-              "Configure maximum solar self-consumption",
-              "Coordinate battery storage with EV charging",
-              "Analyse economic benefits of integration",
-              "Troubleshoot multi-device communication"
+              'Design integrated EV/PV/Battery systems',
+              'Calculate energy flows and optimisation strategies',
+              'Configure maximum solar self-consumption',
+              'Coordinate battery storage with EV charging',
+              'Analyse economic benefits of integration',
+              'Troubleshoot multi-device communication',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,26 +184,45 @@ const EVChargingModule5Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Home Energy Management Systems represent the future of intelligent energy consumption,
-              enabling seamless integration between EV charging, solar PV generation, and battery storage.
+              enabling seamless integration between EV charging, solar PV generation, and battery
+              storage.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Management Controller</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Energy Management Controller
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>CPU:</strong> Real-time coordination of all devices</li>
-                  <li><strong>Monitoring:</strong> Continuous generation/consumption data</li>
-                  <li><strong>Optimisation:</strong> Algorithms for efficiency</li>
-                  <li><strong>Interface:</strong> Mobile/web applications</li>
+                  <li>
+                    <strong>CPU:</strong> Real-time coordination of all devices
+                  </li>
+                  <li>
+                    <strong>Monitoring:</strong> Continuous generation/consumption data
+                  </li>
+                  <li>
+                    <strong>Optimisation:</strong> Algorithms for efficiency
+                  </li>
+                  <li>
+                    <strong>Interface:</strong> Mobile/web applications
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Solar PV Integration</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Monitoring:</strong> Real-time PV output measurement</li>
-                  <li><strong>MPPT:</strong> Maximum power point tracking</li>
-                  <li><strong>Export control:</strong> Self-consumption maximisation</li>
-                  <li><strong>Forecasting:</strong> Weather-based prediction</li>
+                  <li>
+                    <strong>Monitoring:</strong> Real-time PV output measurement
+                  </li>
+                  <li>
+                    <strong>MPPT:</strong> Maximum power point tracking
+                  </li>
+                  <li>
+                    <strong>Export control:</strong> Self-consumption maximisation
+                  </li>
+                  <li>
+                    <strong>Forecasting:</strong> Weather-based prediction
+                  </li>
                 </ul>
               </div>
             </div>
@@ -180,10 +230,19 @@ const EVChargingModule5Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Battery Storage Coordination:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>State of Charge:</strong> Optimal charging/discharging strategies</li>
-                <li><strong>Cycle Life:</strong> Battery health preservation through intelligent control</li>
-                <li><strong>Grid Services:</strong> Peak shaving, load shifting, frequency response</li>
-                <li><strong>Backup:</strong> Critical load support during grid outages</li>
+                <li>
+                  <strong>State of Charge:</strong> Optimal charging/discharging strategies
+                </li>
+                <li>
+                  <strong>Cycle Life:</strong> Battery health preservation through intelligent
+                  control
+                </li>
+                <li>
+                  <strong>Grid Services:</strong> Peak shaving, load shifting, frequency response
+                </li>
+                <li>
+                  <strong>Backup:</strong> Critical load support during grid outages
+                </li>
               </ul>
             </div>
           </div>
@@ -205,7 +264,9 @@ const EVChargingModule5Section2 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Excess Solar Charging</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Excess Solar Charging
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>EV power matches surplus PV generation</li>
                   <li>Prevents grid export - uses free solar</li>
@@ -214,7 +275,9 @@ const EVChargingModule5Section2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Scheduled Solar Charging</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Scheduled Solar Charging
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Pre-planned for peak solar periods</li>
                   <li>Weather prediction integration</li>
@@ -227,10 +290,18 @@ const EVChargingModule5Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Battery Priority Management:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Hierarchical:</strong> Home battery priority during peak tariff periods</li>
-                <li><strong>Load balancing:</strong> Simultaneous charging when surplus available</li>
-                <li><strong>Discharge control:</strong> Battery to EV during grid peak periods</li>
-                <li><strong>Reserve management:</strong> Minimum charge for emergency backup</li>
+                <li>
+                  <strong>Hierarchical:</strong> Home battery priority during peak tariff periods
+                </li>
+                <li>
+                  <strong>Load balancing:</strong> Simultaneous charging when surplus available
+                </li>
+                <li>
+                  <strong>Discharge control:</strong> Battery to EV during grid peak periods
+                </li>
+                <li>
+                  <strong>Reserve management:</strong> Minimum charge for emergency backup
+                </li>
               </ul>
             </div>
           </div>
@@ -246,27 +317,43 @@ const EVChargingModule5Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Intelligent control strategies use predictive algorithms and real-time optimisation
-              to maximise system efficiency and user benefit.
+              Intelligent control strategies use predictive algorithms and real-time optimisation to
+              maximise system efficiency and user benefit.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Predictive Control</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Solar forecasting:</strong> 24-48 hour prediction</li>
-                  <li><strong>Load prediction:</strong> Historical analysis</li>
-                  <li><strong>Price forecasting:</strong> Tariff optimisation</li>
-                  <li><strong>User behaviour:</strong> Learning patterns</li>
+                  <li>
+                    <strong>Solar forecasting:</strong> 24-48 hour prediction
+                  </li>
+                  <li>
+                    <strong>Load prediction:</strong> Historical analysis
+                  </li>
+                  <li>
+                    <strong>Price forecasting:</strong> Tariff optimisation
+                  </li>
+                  <li>
+                    <strong>User behaviour:</strong> Learning patterns
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Protocol Integration</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>OCPP:</strong> EV charge point communication</li>
-                  <li><strong>SunSpec Modbus:</strong> Solar inverter standards</li>
-                  <li><strong>CAN Bus:</strong> Battery management protocols</li>
-                  <li><strong>MQTT/HTTP:</strong> Cloud connectivity</li>
+                  <li>
+                    <strong>OCPP:</strong> EV charge point communication
+                  </li>
+                  <li>
+                    <strong>SunSpec Modbus:</strong> Solar inverter standards
+                  </li>
+                  <li>
+                    <strong>CAN Bus:</strong> Battery management protocols
+                  </li>
+                  <li>
+                    <strong>MQTT/HTTP:</strong> Cloud connectivity
+                  </li>
                 </ul>
               </div>
             </div>
@@ -295,7 +382,9 @@ const EVChargingModule5Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">System Sizing Guidelines</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                System Sizing Guidelines
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>4-6kW solar provides 60-100 miles daily EV range</li>
                 <li>8-12kW enables complete energy independence</li>
@@ -307,10 +396,18 @@ const EVChargingModule5Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Undersized solar:</strong> — insufficient generation for EV needs</li>
-                <li><strong>No weather integration:</strong> — missed optimisation opportunities</li>
-                <li><strong>Protocol mismatch:</strong> — devices unable to communicate</li>
-                <li><strong>Ignoring grid backup:</strong> — unreliable charging availability</li>
+                <li>
+                  <strong>Undersized solar:</strong> — insufficient generation for EV needs
+                </li>
+                <li>
+                  <strong>No weather integration:</strong> — missed optimisation opportunities
+                </li>
+                <li>
+                  <strong>Protocol mismatch:</strong> — devices unable to communicate
+                </li>
+                <li>
+                  <strong>Ignoring grid backup:</strong> — unreliable charging availability
+                </li>
               </ul>
             </div>
           </div>
@@ -354,10 +451,7 @@ const EVChargingModule5Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -1,224 +1,248 @@
-import { ArrowLeft, ArrowRight, Settings, CheckCircle, AlertTriangle, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Settings,
+  CheckCircle,
+  AlertTriangle,
+  BookOpen,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Coordinating Equipment with Team Requirements - Module 5.4.5 | Level 2 Electrical Course";
-const DESCRIPTION = "Master equipment coordination strategies to ensure team efficiency, prevent delays, and manage shared resources effectively in electrical installations.";
+const TITLE =
+  'Coordinating Equipment with Team Requirements - Module 5.4.5 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Master equipment coordination strategies to ensure team efficiency, prevent delays, and manage shared resources effectively in electrical installations.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Why is coordinating equipment important on site?",
+    question: 'Why is coordinating equipment important on site?',
     options: [
-      "To increase project costs",
-      "To ensure team members have what they need to work efficiently and safely",
-      "To create more paperwork",
-      "To slow down workflow"
+      'To increase project costs',
+      'To ensure team members have what they need to work efficiently and safely',
+      'To create more paperwork',
+      'To slow down workflow',
     ],
     correctIndex: 1,
-    explanation: "Equipment coordination ensures team members have the right tools and materials when needed, improving efficiency and safety."
+    explanation:
+      'Equipment coordination ensures team members have the right tools and materials when needed, improving efficiency and safety.',
   },
   {
     id: 2,
-    question: "Name one common issue caused by poor coordination.",
+    question: 'Name one common issue caused by poor coordination.',
     options: [
-      "Improved productivity",
-      "Better team relationships",
-      "Multiple workers needing the same specialist tool at once",
-      "Reduced project costs"
+      'Improved productivity',
+      'Better team relationships',
+      'Multiple workers needing the same specialist tool at once',
+      'Reduced project costs',
     ],
     correctIndex: 2,
-    explanation: "When equipment coordination is poor, multiple workers often need the same specialist tool simultaneously, causing delays and conflicts."
+    explanation:
+      'When equipment coordination is poor, multiple workers often need the same specialist tool simultaneously, causing delays and conflicts.',
   },
   {
     id: 3,
-    question: "How can equipment availability be tracked effectively?",
+    question: 'How can equipment availability be tracked effectively?',
     options: [
-      "By memory only",
-      "Using sign-in/out logs or booking systems",
-      "Leaving tools anywhere",
-      "No tracking needed"
+      'By memory only',
+      'Using sign-in/out logs or booking systems',
+      'Leaving tools anywhere',
+      'No tracking needed',
     ],
     correctIndex: 1,
-    explanation: "Sign-in/out logs and booking systems provide clear tracking of who has which equipment and when it should be returned."
-  }
+    explanation:
+      'Sign-in/out logs and booking systems provide clear tracking of who has which equipment and when it should be returned.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Why is equipment coordination important?",
+    question: 'Why is equipment coordination important?',
     options: [
-      "To create more work",
-      "To ensure team members have what they need to work efficiently and safely",
-      "To increase project costs",
-      "To slow down progress"
+      'To create more work',
+      'To ensure team members have what they need to work efficiently and safely',
+      'To increase project costs',
+      'To slow down progress',
     ],
     correctAnswer: 1,
-    explanation: "Equipment coordination ensures team members have the right tools and materials when needed, improving efficiency and safety while preventing delays."
+    explanation:
+      'Equipment coordination ensures team members have the right tools and materials when needed, improving efficiency and safety while preventing delays.',
   },
   {
     id: 2,
-    question: "True or False: Poor coordination can lead to disputes and downtime.",
+    question: 'True or False: Poor coordination can lead to disputes and downtime.',
     options: [
       "False - coordination doesn't affect team dynamics",
-      "True - poor coordination causes conflicts and delays"
+      'True - poor coordination causes conflicts and delays',
     ],
     correctAnswer: 1,
-    explanation: "Poor coordination directly leads to disputes over shared resources and downtime when workers can't access needed equipment."
+    explanation:
+      "Poor coordination directly leads to disputes over shared resources and downtime when workers can't access needed equipment.",
   },
   {
     id: 3,
-    question: "Give one example of shared equipment that often requires scheduling.",
+    question: 'Give one example of shared equipment that often requires scheduling.',
     options: [
-      "Personal hand tools",
-      "MEWPs or scaffold towers",
-      "Individual PPE",
-      "Personal notebooks"
+      'Personal hand tools',
+      'MEWPs or scaffold towers',
+      'Individual PPE',
+      'Personal notebooks',
     ],
     correctAnswer: 1,
-    explanation: "MEWPs (Mobile Elevating Work Platforms) and scaffold towers are expensive shared equipment that multiple teams need, requiring careful scheduling."
+    explanation:
+      'MEWPs (Mobile Elevating Work Platforms) and scaffold towers are expensive shared equipment that multiple teams need, requiring careful scheduling.',
   },
   {
     id: 4,
-    question: "What is a simple system for tracking who has equipment?",
+    question: 'What is a simple system for tracking who has equipment?',
     options: [
-      "Memory only",
-      "A sign-in/out or booking log",
-      "No system needed",
-      "Verbal agreements"
+      'Memory only',
+      'A sign-in/out or booking log',
+      'No system needed',
+      'Verbal agreements',
     ],
     correctAnswer: 1,
-    explanation: "Sign-in/out logs provide clear documentation of who has equipment, when it was taken, and when it should be returned."
+    explanation:
+      'Sign-in/out logs provide clear documentation of who has equipment, when it was taken, and when it should be returned.',
   },
   {
     id: 5,
-    question: "What should be done at daily team briefings?",
+    question: 'What should be done at daily team briefings?',
     options: [
-      "Discuss personal matters only",
-      "Plan equipment use and resolve potential conflicts",
-      "Ignore resource planning",
-      "Focus only on weather"
+      'Discuss personal matters only',
+      'Plan equipment use and resolve potential conflicts',
+      'Ignore resource planning',
+      'Focus only on weather',
     ],
     correctAnswer: 1,
-    explanation: "Daily briefings should include equipment planning to prevent conflicts and ensure all team members know what resources are available."
+    explanation:
+      'Daily briefings should include equipment planning to prevent conflicts and ensure all team members know what resources are available.',
   },
   {
     id: 6,
-    question: "What is one risk of not coordinating equipment properly?",
-    options: [
-      "Improved safety",
-      "Unsafe improvisation",
-      "Better productivity",
-      "Cost savings"
-    ],
+    question: 'What is one risk of not coordinating equipment properly?',
+    options: ['Improved safety', 'Unsafe improvisation', 'Better productivity', 'Cost savings'],
     correctAnswer: 1,
-    explanation: "Poor coordination can lead to workers improvising with inappropriate or unsafe equipment when the correct tools aren't available."
+    explanation:
+      "Poor coordination can lead to workers improvising with inappropriate or unsafe equipment when the correct tools aren't available.",
   },
   {
     id: 7,
-    question: "How should equipment be returned after use?",
+    question: 'How should equipment be returned after use?',
     options: [
-      "In any condition",
-      "In good condition, stored, and ready for the next user",
-      "Damaged is acceptable",
-      "Left where last used"
+      'In any condition',
+      'In good condition, stored, and ready for the next user',
+      'Damaged is acceptable',
+      'Left where last used',
     ],
     correctAnswer: 1,
-    explanation: "Equipment must be returned in good condition and properly stored to maintain its usability for the next team member."
+    explanation:
+      'Equipment must be returned in good condition and properly stored to maintain its usability for the next team member.',
   },
   {
     id: 8,
-    question: "What type of tools should every worker provide themselves?",
+    question: 'What type of tools should every worker provide themselves?',
     options: [
-      "All tools including specialist equipment",
-      "Basic hand tools",
-      "Only PPE",
-      "No tools at all"
+      'All tools including specialist equipment',
+      'Basic hand tools',
+      'Only PPE',
+      'No tools at all',
     ],
     correctAnswer: 1,
-    explanation: "Workers should provide their own basic hand tools, while larger or specialist equipment can be shared through coordination systems."
+    explanation:
+      'Workers should provide their own basic hand tools, while larger or specialist equipment can be shared through coordination systems.',
   },
   {
     id: 9,
-    question: "Why is communication important in equipment coordination?",
+    question: 'Why is communication important in equipment coordination?',
     options: [
-      "It creates more meetings",
-      "It prevents clashes and ensures fair use of shared resources",
-      "It slows down work",
-      "It's not important"
+      'It creates more meetings',
+      'It prevents clashes and ensures fair use of shared resources',
+      'It slows down work',
+      "It's not important",
     ],
     correctAnswer: 1,
-    explanation: "Good communication prevents equipment conflicts and ensures fair access to shared resources, improving overall team productivity."
+    explanation:
+      'Good communication prevents equipment conflicts and ensures fair access to shared resources, improving overall team productivity.',
   },
   {
     id: 10,
-    question: "What was the problem in the warehouse lighting project example?",
+    question: 'What was the problem in the warehouse lighting project example?',
     options: [
-      "Too much equipment available",
-      "Two teams needed the same scissor lift at once, causing delays",
-      "Equipment was too expensive",
-      "No workers available"
+      'Too much equipment available',
+      'Two teams needed the same scissor lift at once, causing delays',
+      'Equipment was too expensive',
+      'No workers available',
     ],
     correctAnswer: 1,
-    explanation: "The lack of a booking system meant two teams needed the same scissor lift simultaneously, causing unnecessary delays and lost productivity."
-  }
+    explanation:
+      'The lack of a booking system meant two teams needed the same scissor lift simultaneously, causing unnecessary delays and lost productivity.',
+  },
 ];
 
 const practicalGuidance = [
-  "Step 1: Map out equipment needs for each stage of the project during planning. Include timing requirements and identify potential conflicts between teams or tasks.",
-  "Step 2: Create a booking system for shared tools and access equipment. Use digital systems or simple paper logs to track availability and reservations.",
-  "Step 3: Hold daily coordination meetings to review needs and resolve conflicts. Keep meetings brief but focused on upcoming resource requirements.",
-  "Step 4: Keep a shared equipment log to track use, condition, and location. Update in real-time and make it accessible to all team members.",
-  "Step 5: Encourage accountability — tools must be returned in good condition and on time. Implement consequences for repeated failure to follow procedures.",
+  'Step 1: Map out equipment needs for each stage of the project during planning. Include timing requirements and identify potential conflicts between teams or tasks.',
+  'Step 2: Create a booking system for shared tools and access equipment. Use digital systems or simple paper logs to track availability and reservations.',
+  'Step 3: Hold daily coordination meetings to review needs and resolve conflicts. Keep meetings brief but focused on upcoming resource requirements.',
+  'Step 4: Keep a shared equipment log to track use, condition, and location. Update in real-time and make it accessible to all team members.',
+  'Step 5: Encourage accountability — tools must be returned in good condition and on time. Implement consequences for repeated failure to follow procedures.',
   "Step 6: Plan for contingencies by identifying alternative equipment or backup plans when primary resources aren't available.",
-  "Step 7: Review and improve coordination processes regularly based on team feedback and observed issues during the project."
+  'Step 7: Review and improve coordination processes regularly based on team feedback and observed issues during the project.',
 ];
 
 const pocketGuideItems = [
-  "Anticipate equipment needs through planning - review task sequences and timing requirements.",
-  "Allocate and schedule shared tools/resources using booking systems or logs.",
-  "Use booking systems or logs for tracking who has what equipment and when.",
-  "Hold daily briefings for coordination and conflict resolution.",
-  "Ensure tools are returned and ready for use by the next team member.",
-  "Communicate equipment issues immediately to prevent delays.",
+  'Anticipate equipment needs through planning - review task sequences and timing requirements.',
+  'Allocate and schedule shared tools/resources using booking systems or logs.',
+  'Use booking systems or logs for tracking who has what equipment and when.',
+  'Hold daily briefings for coordination and conflict resolution.',
+  'Ensure tools are returned and ready for use by the next team member.',
+  'Communicate equipment issues immediately to prevent delays.',
   "Plan contingencies for when primary equipment isn't available.",
-  "Maintain equipment logs with current location and condition status.",
-  "Enforce accountability for equipment care and timely return."
+  'Maintain equipment logs with current location and condition status.',
+  'Enforce accountability for equipment care and timely return.',
 ];
 
 const faqs = [
   {
-    question: "Should every worker bring their own tools?",
-    answer: "Basic hand tools, yes — but larger or specialist equipment can be shared if coordinated properly. Workers should have their personal toolkit while expensive or specialist items are managed through booking systems."
+    question: 'Should every worker bring their own tools?',
+    answer:
+      'Basic hand tools, yes — but larger or specialist equipment can be shared if coordinated properly. Workers should have their personal toolkit while expensive or specialist items are managed through booking systems.',
   },
   {
     question: "What if a team member doesn't return shared tools?",
-    answer: "Site supervisors should enforce accountability using sign-in/out logs. Implement consequences such as restricted access to shared resources or disciplinary action for repeated offences."
+    answer:
+      'Site supervisors should enforce accountability using sign-in/out logs. Implement consequences such as restricted access to shared resources or disciplinary action for repeated offences.',
   },
   {
-    question: "Can daily coordination really save time?",
-    answer: "Yes — even short daily briefings prevent clashes and wasted time. A 10-minute morning briefing can prevent hours of delays and conflicts throughout the day."
+    question: 'Can daily coordination really save time?',
+    answer:
+      'Yes — even short daily briefings prevent clashes and wasted time. A 10-minute morning briefing can prevent hours of delays and conflicts throughout the day.',
   },
   {
-    question: "How should conflicts over equipment be resolved?",
-    answer: "Use the booking system as the primary reference, but site supervisors should mediate based on project priorities and safety requirements. Always prioritise safety-critical tasks."
+    question: 'How should conflicts over equipment be resolved?',
+    answer:
+      'Use the booking system as the primary reference, but site supervisors should mediate based on project priorities and safety requirements. Always prioritise safety-critical tasks.',
   },
   {
     question: "What's the best way to track expensive equipment?",
-    answer: "Use detailed logs with serial numbers, condition reports, and GPS tracking where appropriate. Consider insurance implications and implement security measures for high-value items."
+    answer:
+      'Use detailed logs with serial numbers, condition reports, and GPS tracking where appropriate. Consider insurance implications and implement security measures for high-value items.',
   },
   {
-    question: "How can digital tools improve coordination?",
-    answer: "Digital booking systems, mobile apps, and real-time tracking can provide instant visibility of equipment availability and location, reducing conflicts and improving efficiency."
+    question: 'How can digital tools improve coordination?',
+    answer:
+      'Digital booking systems, mobile apps, and real-time tracking can provide instant visibility of equipment availability and location, reducing conflicts and improving efficiency.',
   },
   {
-    question: "What should be done if equipment breaks during use?",
-    answer: "Stop work immediately, secure the area, report to supervisors, and log the incident. Replace with alternative equipment and arrange repairs through proper channels."
-  }
+    question: 'What should be done if equipment breaks during use?',
+    answer:
+      'Stop work immediately, secure the area, report to supervisors, and log the incident. Replace with alternative equipment and arrange repairs through proper channels.',
+  },
 ];
 
 const Module5Section4_5 = () => {
@@ -256,7 +280,8 @@ const Module5Section4_5 = () => {
               Coordinating Equipment with Team Requirements
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master equipment coordination strategies to ensure team efficiency, prevent delays, and manage shared resources effectively.
+              Master equipment coordination strategies to ensure team efficiency, prevent delays,
+              and manage shared resources effectively.
             </p>
           </header>
 
@@ -272,7 +297,11 @@ const Module5Section4_5 = () => {
             </div>
 
             <p className="text-white/80 leading-relaxed mb-4">
-              Electrical installation projects often involve multiple team members working on different tasks at the same time. Without proper coordination of tools, materials, and equipment, delays, shortages, and inefficiencies can occur. Effective coordination ensures everyone has what they need, when they need it, to complete their work safely and efficiently.
+              Electrical installation projects often involve multiple team members working on
+              different tasks at the same time. Without proper coordination of tools, materials, and
+              equipment, delays, shortages, and inefficiencies can occur. Effective coordination
+              ensures everyone has what they need, when they need it, to complete their work safely
+              and efficiently.
             </p>
 
             <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
@@ -281,7 +310,8 @@ const Module5Section4_5 = () => {
                 <div>
                   <p className="font-medium text-blue-400 mb-2">Why This Matters</p>
                   <p className="text-sm text-white/70">
-                    Effective equipment coordination can improve team productivity by 20-30% and significantly reduce project delays and workplace conflicts.
+                    Effective equipment coordination can improve team productivity by 20-30% and
+                    significantly reduce project delays and workplace conflicts.
                   </p>
                 </div>
               </div>
@@ -294,7 +324,9 @@ const Module5Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">By the end of this subsection, you will be able to:</p>
+            <p className="text-white/80 mb-4">
+              By the end of this subsection, you will be able to:
+            </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="space-y-3">
@@ -344,7 +376,9 @@ const Module5Section4_5 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white/80">
-                <strong className="text-white">Business Impact:</strong> Effective coordination reduces project costs through improved efficiency and prevents costly delays that can impact entire construction schedules.
+                <strong className="text-white">Business Impact:</strong> Effective coordination
+                reduces project costs through improved efficiency and prevents costly delays that
+                can impact entire construction schedules.
               </p>
             </div>
           </section>
@@ -357,7 +391,8 @@ const Module5Section4_5 = () => {
             </h2>
 
             <p className="text-white/80 mb-4 leading-relaxed">
-              Effective equipment coordination is the foundation of successful electrical installations:
+              Effective equipment coordination is the foundation of successful electrical
+              installations:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
@@ -374,7 +409,9 @@ const Module5Section4_5 = () => {
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Professional Impact</p>
                 <p className="text-sm text-white/70">
-                  Effective coordination demonstrates competence and builds long-term team relationships. Projects with proper equipment coordination show 40% fewer delays and improved team satisfaction.
+                  Effective coordination demonstrates competence and builds long-term team
+                  relationships. Projects with proper equipment coordination show 40% fewer delays
+                  and improved team satisfaction.
                 </p>
               </div>
             </div>
@@ -545,7 +582,9 @@ const Module5Section4_5 = () => {
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Problem:</h4>
                   <p className="text-sm text-white/70">
-                    On a warehouse lighting project, two teams needed the same scissor lift at the same time. Because no schedule had been created, one team had to wait several hours, causing delays.
+                    On a warehouse lighting project, two teams needed the same scissor lift at the
+                    same time. Because no schedule had been created, one team had to wait several
+                    hours, causing delays.
                   </p>
 
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
@@ -562,7 +601,8 @@ const Module5Section4_5 = () => {
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Solution:</h4>
                   <p className="text-sm text-white/70">
-                    A simple booking system for shared access equipment would have kept both teams productive and prevented the conflict entirely.
+                    A simple booking system for shared access equipment would have kept both teams
+                    productive and prevented the conflict entirely.
                   </p>
 
                   <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
@@ -579,7 +619,9 @@ const Module5Section4_5 = () => {
 
               <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm text-white/70">
-                  <strong className="text-blue-400">Lesson Learned:</strong> The project manager now uses digital booking systems on all projects, reducing equipment conflicts by 90% and improving team satisfaction significantly.
+                  <strong className="text-blue-400">Lesson Learned:</strong> The project manager now
+                  uses digital booking systems on all projects, reducing equipment conflicts by 90%
+                  and improving team satisfaction significantly.
                 </p>
               </div>
             </div>
@@ -593,7 +635,10 @@ const Module5Section4_5 = () => {
             </h2>
             <div className="space-y-3">
               {practicalGuidance.map((guidance, index) => (
-                <div key={index} className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="text-white/80 text-sm">{guidance}</p>
                 </div>
               ))}
@@ -620,7 +665,9 @@ const Module5Section4_5 = () => {
           <section className="mb-10">
             <div className="flex items-center gap-3 mb-4">
               <BookOpen className="w-5 h-5 text-elec-yellow" />
-              <h2 className="text-xl font-semibold text-white">Pocket Guide – Coordinating Equipment</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Pocket Guide – Coordinating Equipment
+              </h2>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {pocketGuideItems.map((item, index) => (
@@ -642,7 +689,9 @@ const Module5Section4_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-4">
                 <p className="text-white/80 leading-relaxed">
-                  In this subsection, you learned how to coordinate equipment with team requirements. You now understand the importance of planning, communication, and shared resource management to avoid downtime and conflicts.
+                  In this subsection, you learned how to coordinate equipment with team
+                  requirements. You now understand the importance of planning, communication, and
+                  shared resource management to avoid downtime and conflicts.
                 </p>
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
@@ -659,7 +708,9 @@ const Module5Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-white/80 leading-relaxed">
-                  <strong className="text-white">Remember:</strong> Proper coordination improves productivity, keeps workers safe, and ensures projects run smoothly. Every successful project relies on effective resource planning and team communication.
+                  <strong className="text-white">Remember:</strong> Proper coordination improves
+                  productivity, keeps workers safe, and ensures projects run smoothly. Every
+                  successful project relies on effective resource planning and team communication.
                 </p>
               </div>
             </div>

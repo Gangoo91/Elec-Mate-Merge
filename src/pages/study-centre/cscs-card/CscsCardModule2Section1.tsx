@@ -30,8 +30,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'hierarchy-top',
-    question:
-      'What is the most effective level of the Hierarchy of Controls?',
+    question: 'What is the most effective level of the Hierarchy of Controls?',
     options: [
       'Personal Protective Equipment (PPE)',
       'Administrative controls such as training',
@@ -83,8 +82,7 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'Under which regulation are employers required to carry out risk assessments?',
+    question: 'Under which regulation are employers required to carry out risk assessments?',
     options: [
       'The Health and Safety at Work etc. Act 1974',
       'The Management of Health and Safety at Work Regulations 1999',
@@ -151,19 +149,15 @@ const quizQuestions = [
     id: 6,
     question:
       'Employers with how many or more employees must record their risk assessment findings in writing?',
-    options: [
-      '1 or more',
-      '3 or more',
-      '5 or more',
-      '10 or more',
-    ],
+    options: ['1 or more', '3 or more', '5 or more', '10 or more'],
     correctAnswer: 2,
     explanation:
       'Under the Management of Health and Safety at Work Regulations 1999, employers with 5 or more employees must record the significant findings of their risk assessments in writing. However, even employers with fewer than 5 employees are still required to carry out risk assessments &mdash; they simply do not have to record them in writing (although it is strongly recommended as good practice).',
   },
   {
     id: 7,
-    question: 'Which of the following is the most common cause of fatal injuries on construction sites?',
+    question:
+      'Which of the following is the most common cause of fatal injuries on construction sites?',
     options: [
       'Electric shock',
       'Fire and explosion',
@@ -176,8 +170,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question:
-      'Under HASAWA 1974, which sections set out employer and employee duties?',
+    question: 'Under HASAWA 1974, which sections set out employer and employee duties?',
     options: [
       'Section 1 (general purpose) and Section 6 (manufacturers)',
       'Section 2 (employer duties) and Section 7 (employee duties)',
@@ -227,8 +220,8 @@ export default function CscsCardModule2Section1() {
             Risk Assessment &amp; Method Statements
           </h1>
           <p className="text-white/80 max-w-xl mx-auto">
-            The 5-step risk assessment process, hierarchy of controls, RAMS preparation,
-            dynamic risk assessment, and your legal responsibilities on site
+            The 5-step risk assessment process, hierarchy of controls, RAMS preparation, dynamic
+            risk assessment, and your legal responsibilities on site
           </p>
         </div>
 
@@ -245,15 +238,15 @@ export default function CscsCardModule2Section1() {
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
-                    <strong>Hazard vs Risk:</strong> A hazard is anything that could cause harm; risk is the
-                    likelihood and severity of that harm.
+                    <strong>Hazard vs Risk:</strong> A hazard is anything that could cause harm;
+                    risk is the likelihood and severity of that harm.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
-                    <strong>5 Steps:</strong> Identify hazards, decide who is harmed, evaluate risks, record
-                    findings, review and update.
+                    <strong>5 Steps:</strong> Identify hazards, decide who is harmed, evaluate
+                    risks, record findings, review and update.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -266,8 +259,8 @@ export default function CscsCardModule2Section1() {
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
-                    <strong>RAMS:</strong> Risk Assessment and Method Statement &mdash; read, understand,
-                    and sign before starting work.
+                    <strong>RAMS:</strong> Risk Assessment and Method Statement &mdash; read,
+                    understand, and sign before starting work.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -291,19 +284,22 @@ export default function CscsCardModule2Section1() {
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
-                    <strong>Written records:</strong> Required for employers with 5 or more employees.
+                    <strong>Written records:</strong> Required for employers with 5 or more
+                    employees.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
-                    <strong>Falls from height:</strong> The single biggest killer on UK construction sites.
+                    <strong>Falls from height:</strong> The single biggest killer on UK construction
+                    sites.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
-                    <strong>HASAWA 1974:</strong> Section 2 (employer duties), Section 7 (employee duties).
+                    <strong>HASAWA 1974:</strong> Section 2 (employer duties), Section 7 (employee
+                    duties).
                   </span>
                 </li>
               </ul>
@@ -321,11 +317,15 @@ export default function CscsCardModule2Section1() {
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span>Explain the difference between a hazard and a risk with construction examples</span>
+              <span>
+                Explain the difference between a hazard and a risk with construction examples
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span>Describe the 5-step risk assessment process and apply it to common site tasks</span>
+              <span>
+                Describe the 5-step risk assessment process and apply it to common site tasks
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -333,7 +333,9 @@ export default function CscsCardModule2Section1() {
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span>Explain the purpose of a method statement and its relationship to a risk assessment</span>
+              <span>
+                Explain the purpose of a method statement and its relationship to a risk assessment
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -363,8 +365,8 @@ export default function CscsCardModule2Section1() {
                 workplace, so that you can determine whether you have taken enough precautions or
                 whether more needs to be done to prevent injury or ill health. It is a{' '}
                 <strong>legal requirement</strong> under the Management of Health and Safety at Work
-                Regulations 1999, Regulation 3, for every employer to carry out suitable and sufficient
-                risk assessments.
+                Regulations 1999, Regulation 3, for every employer to carry out suitable and
+                sufficient risk assessments.
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
@@ -373,38 +375,43 @@ export default function CscsCardModule2Section1() {
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <p className="text-green-300 font-medium mb-1">Hazard</p>
                     <p className="text-white/80">
-                      Anything with the <strong className="text-white">potential to cause harm</strong>.
-                      Examples include trailing cables, working at height, live electrical conductors,
+                      Anything with the{' '}
+                      <strong className="text-white">potential to cause harm</strong>. Examples
+                      include trailing cables, working at height, live electrical conductors,
                       asbestos, moving vehicles on site, and noisy machinery.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <p className="text-green-300 font-medium mb-1">Risk</p>
                     <p className="text-white/80">
-                      The <strong className="text-white">likelihood</strong> that the hazard will cause
-                      harm, combined with the <strong className="text-white">severity</strong> of that
-                      harm. A high hazard with good controls in place may result in a low risk. An
-                      uncontrolled minor hazard could present a high risk.
+                      The <strong className="text-white">likelihood</strong> that the hazard will
+                      cause harm, combined with the <strong className="text-white">severity</strong>{' '}
+                      of that harm. A high hazard with good controls in place may result in a low
+                      risk. An uncontrolled minor hazard could present a high risk.
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-green-400 font-medium mb-3">Why Risk Assessments Are Essential</h3>
+                <h3 className="text-green-400 font-medium mb-3">
+                  Why Risk Assessments Are Essential
+                </h3>
                 <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong>Legal requirement:</strong> Failure to carry out risk assessments is a
-                      criminal offence that can result in prosecution, unlimited fines, and imprisonment
+                      criminal offence that can result in prosecution, unlimited fines, and
+                      imprisonment
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>Prevent injuries and ill health:</strong> By identifying hazards before
-                      work starts, controls can be put in place to eliminate or reduce the risk
+                      <strong>Prevent injuries and ill health:</strong> By identifying hazards
+                      before work starts, controls can be put in place to eliminate or reduce the
+                      risk
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -419,8 +426,8 @@ export default function CscsCardModule2Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong>Demonstrate compliance:</strong> Written risk assessments provide
-                      evidence that the employer has fulfilled their legal duty and can be crucial in
-                      the event of an HSE investigation or prosecution
+                      evidence that the employer has fulfilled their legal duty and can be crucial
+                      in the event of an HSE investigation or prosecution
                     </span>
                   </li>
                 </ul>
@@ -443,7 +450,8 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Appoint one or more competent persons to assist with health and safety measures
+                      Appoint one or more competent persons to assist with health and safety
+                      measures
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -469,11 +477,11 @@ export default function CscsCardModule2Section1() {
                   <h3 className="font-semibold text-red-300">CSCS Test Tip</h3>
                 </div>
                 <p className="text-white/80 text-sm">
-                  The CSCS HS&amp;E test frequently asks about the difference between a hazard and
-                  a risk. Remember: a <strong className="text-white">hazard</strong> is something
-                  that <em>could</em> cause harm; a <strong className="text-white">risk</strong> is
-                  how <em>likely</em> it is to cause harm and how <em>severe</em> that harm would
-                  be. Do not confuse the two.
+                  The CSCS HS&amp;E test frequently asks about the difference between a hazard and a
+                  risk. Remember: a <strong className="text-white">hazard</strong> is something that{' '}
+                  <em>could</em> cause harm; a <strong className="text-white">risk</strong> is how{' '}
+                  <em>likely</em> it is to cause harm and how <em>severe</em> that harm would be. Do
+                  not confuse the two.
                 </p>
               </div>
             </div>
@@ -508,9 +516,7 @@ export default function CscsCardModule2Section1() {
                       </div>
                       <span className="text-green-300 font-semibold text-sm">Identify Hazards</span>
                     </div>
-                    <p className="text-white/60 text-xs">
-                      Walk the site. What could cause harm?
-                    </p>
+                    <p className="text-white/60 text-xs">Walk the site. What could cause harm?</p>
                   </div>
                   {/* Arrow */}
                   <div className="flex items-center justify-center">
@@ -522,7 +528,9 @@ export default function CscsCardModule2Section1() {
                       <div className="w-7 h-7 rounded-full bg-green-500/30 border border-green-400/60 flex items-center justify-center flex-shrink-0">
                         <span className="text-green-300 font-bold text-sm">2</span>
                       </div>
-                      <span className="text-green-300 font-semibold text-sm">Who Might Be Harmed?</span>
+                      <span className="text-green-300 font-semibold text-sm">
+                        Who Might Be Harmed?
+                      </span>
                     </div>
                     <p className="text-white/60 text-xs">
                       Workers, visitors, public, vulnerable groups
@@ -538,7 +546,9 @@ export default function CscsCardModule2Section1() {
                       <div className="w-7 h-7 rounded-full bg-green-500/30 border border-green-400/60 flex items-center justify-center flex-shrink-0">
                         <span className="text-green-300 font-bold text-sm">3</span>
                       </div>
-                      <span className="text-green-300 font-semibold text-sm">Evaluate Risks &amp; Decide Precautions</span>
+                      <span className="text-green-300 font-semibold text-sm">
+                        Evaluate Risks &amp; Decide Precautions
+                      </span>
                     </div>
                     <p className="text-white/60 text-xs">
                       Apply Hierarchy of Controls. What more can be done?
@@ -554,7 +564,9 @@ export default function CscsCardModule2Section1() {
                       <div className="w-7 h-7 rounded-full bg-green-500/30 border border-green-400/60 flex items-center justify-center flex-shrink-0">
                         <span className="text-green-300 font-bold text-sm">4</span>
                       </div>
-                      <span className="text-green-300 font-semibold text-sm">Record Your Findings</span>
+                      <span className="text-green-300 font-semibold text-sm">
+                        Record Your Findings
+                      </span>
                     </div>
                     <p className="text-white/60 text-xs">
                       Written record required for 5+ employees
@@ -570,7 +582,9 @@ export default function CscsCardModule2Section1() {
                       <div className="w-7 h-7 rounded-full bg-green-500/30 border border-green-400/60 flex items-center justify-center flex-shrink-0">
                         <span className="text-green-300 font-bold text-sm">5</span>
                       </div>
-                      <span className="text-green-300 font-semibold text-sm">Review &amp; Update</span>
+                      <span className="text-green-300 font-semibold text-sm">
+                        Review &amp; Update
+                      </span>
                     </div>
                     <p className="text-white/60 text-xs">
                       After incidents, changes, or at least annually
@@ -578,7 +592,8 @@ export default function CscsCardModule2Section1() {
                   </div>
                 </div>
                 <p className="text-white/50 text-xs text-center mt-4 italic">
-                  The 5-step process is cyclical &mdash; step 5 feeds back into step 1 when conditions change.
+                  The 5-step process is cyclical &mdash; step 5 feeds back into step 1 when
+                  conditions change.
                 </p>
               </div>
 
@@ -597,11 +612,12 @@ export default function CscsCardModule2Section1() {
                       <div className="flex-1">
                         <h4 className="text-green-300 font-medium mb-1">Identify Hazards</h4>
                         <p className="text-white/80 text-sm">
-                          Walk around the workplace or site, observe work activities, talk to workers, check
-                          manufacturer instructions, review accident records, and consider non-routine
-                          activities. On a construction site, common hazards include working at height,
-                          moving plant, excavations, live services, dust, noise, and manual handling. Think
-                          about what could realistically go wrong during each activity.
+                          Walk around the workplace or site, observe work activities, talk to
+                          workers, check manufacturer instructions, review accident records, and
+                          consider non-routine activities. On a construction site, common hazards
+                          include working at height, moving plant, excavations, live services, dust,
+                          noise, and manual handling. Think about what could realistically go wrong
+                          during each activity.
                         </p>
                       </div>
                     </div>
@@ -612,12 +628,15 @@ export default function CscsCardModule2Section1() {
                         <span className="text-green-300 font-bold text-sm">2</span>
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-green-300 font-medium mb-1">Decide Who Might Be Harmed</h4>
+                        <h4 className="text-green-300 font-medium mb-1">
+                          Decide Who Might Be Harmed
+                        </h4>
                         <p className="text-white/80 text-sm">
-                          Consider everyone who could be affected: employees, contractors, sub-contractors,
-                          visitors, members of the public, delivery drivers, and anyone passing by. Pay
-                          particular attention to <strong className="text-white">vulnerable groups</strong> such
-                          as young workers, new starters, pregnant workers, people with disabilities, and
+                          Consider everyone who could be affected: employees, contractors,
+                          sub-contractors, visitors, members of the public, delivery drivers, and
+                          anyone passing by. Pay particular attention to{' '}
+                          <strong className="text-white">vulnerable groups</strong> such as young
+                          workers, new starters, pregnant workers, people with disabilities, and
                           lone workers. Think about how each group might be exposed to the hazard.
                         </p>
                       </div>
@@ -633,15 +652,17 @@ export default function CscsCardModule2Section1() {
                           Evaluate Risks &amp; Decide Precautions
                         </h4>
                         <p className="text-white/80 text-sm">
-                          For each hazard, consider the existing controls already in place, then evaluate
-                          whether the remaining (residual) risk is acceptable. If not, decide what
-                          additional precautions are needed using the{' '}
-                          <strong className="text-white">Hierarchy of Controls</strong>. The aim is to
-                          reduce the risk to a level that is{' '}
-                          <strong className="text-white">as low as reasonably practicable (ALARP)</strong>.
-                          For example: hazard = working at height on a scaffold; existing control =
-                          guardrails fitted; additional control = toe boards and brick guards added,
-                          scaffold inspected weekly.
+                          For each hazard, consider the existing controls already in place, then
+                          evaluate whether the remaining (residual) risk is acceptable. If not,
+                          decide what additional precautions are needed using the{' '}
+                          <strong className="text-white">Hierarchy of Controls</strong>. The aim is
+                          to reduce the risk to a level that is{' '}
+                          <strong className="text-white">
+                            as low as reasonably practicable (ALARP)
+                          </strong>
+                          . For example: hazard = working at height on a scaffold; existing control
+                          = guardrails fitted; additional control = toe boards and brick guards
+                          added, scaffold inspected weekly.
                         </p>
                       </div>
                     </div>
@@ -652,14 +673,17 @@ export default function CscsCardModule2Section1() {
                         <span className="text-green-300 font-bold text-sm">4</span>
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-green-300 font-medium mb-1">Record Your Significant Findings</h4>
+                        <h4 className="text-green-300 font-medium mb-1">
+                          Record Your Significant Findings
+                        </h4>
                         <p className="text-white/80 text-sm">
-                          Employers with <strong className="text-white">5 or more employees</strong> must
-                          record their risk assessment findings in writing. The record should include the
-                          hazards identified, who might be harmed, the existing controls, the residual
-                          risk level, and any additional controls required. The assessment must be shared
-                          with all affected workers and be accessible on site. Even employers with fewer
-                          than 5 employees should keep written records as good practice.
+                          Employers with <strong className="text-white">5 or more employees</strong>{' '}
+                          must record their risk assessment findings in writing. The record should
+                          include the hazards identified, who might be harmed, the existing
+                          controls, the residual risk level, and any additional controls required.
+                          The assessment must be shared with all affected workers and be accessible
+                          on site. Even employers with fewer than 5 employees should keep written
+                          records as good practice.
                         </p>
                       </div>
                     </div>
@@ -672,13 +696,14 @@ export default function CscsCardModule2Section1() {
                       <div className="flex-1">
                         <h4 className="text-green-300 font-medium mb-1">Review &amp; Update</h4>
                         <p className="text-white/80 text-sm">
-                          Risk assessments are <strong className="text-white">living documents</strong> that
-                          must be reviewed and updated regularly. Triggers for review include: after an
+                          Risk assessments are{' '}
+                          <strong className="text-white">living documents</strong> that must be
+                          reviewed and updated regularly. Triggers for review include: after an
                           accident or near miss, when working methods or equipment change, when new
-                          information about hazards becomes available, when new legislation is introduced,
-                          and at a minimum of <strong className="text-white">annually</strong>. A risk
-                          assessment that sits in a drawer and is never revisited is not fulfilling its
-                          purpose.
+                          information about hazards becomes available, when new legislation is
+                          introduced, and at a minimum of{' '}
+                          <strong className="text-white">annually</strong>. A risk assessment that
+                          sits in a drawer and is never revisited is not fulfilling its purpose.
                         </p>
                       </div>
                     </div>
@@ -690,18 +715,16 @@ export default function CscsCardModule2Section1() {
                 <h3 className="font-semibold mb-2 text-green-400">Construction Example</h3>
                 <p className="text-white/80 text-sm">
                   <strong className="text-white">Task:</strong> Installing a consumer unit in a
-                  domestic property.{' '}
-                  <strong className="text-white">Hazard:</strong> Live electrical conductors.{' '}
-                  <strong className="text-white">Who:</strong> Electrician, other trades working
-                  nearby, homeowner.{' '}
-                  <strong className="text-white">Risk evaluation:</strong> High severity (electrocution
-                  can be fatal), reduced likelihood with controls.{' '}
+                  domestic property. <strong className="text-white">Hazard:</strong> Live electrical
+                  conductors. <strong className="text-white">Who:</strong> Electrician, other trades
+                  working nearby, homeowner.{' '}
+                  <strong className="text-white">Risk evaluation:</strong> High severity
+                  (electrocution can be fatal), reduced likelihood with controls.{' '}
                   <strong className="text-white">Controls:</strong> Isolate supply, lock off, prove
                   dead, use GS38 test leads, erect warning signs, competent person only.{' '}
-                  <strong className="text-white">Record:</strong> Documented in RAMS and signed by all
-                  operatives.{' '}
-                  <strong className="text-white">Review:</strong> Before each new installation and
-                  after any near miss.
+                  <strong className="text-white">Record:</strong> Documented in RAMS and signed by
+                  all operatives. <strong className="text-white">Review:</strong> Before each new
+                  installation and after any near miss.
                 </p>
               </div>
             </div>
@@ -722,8 +745,8 @@ export default function CscsCardModule2Section1() {
                 The Hierarchy of Controls is a system for selecting the most effective control
                 measures to reduce risk. Controls at the top of the hierarchy are the most effective
                 because they eliminate or reduce the hazard at source. Controls at the bottom are
-                least effective because they rely on individual behaviour and only protect the person
-                using them.
+                least effective because they rely on individual behaviour and only protect the
+                person using them.
               </p>
 
               {/* Hierarchy of Controls Pyramid */}
@@ -735,32 +758,48 @@ export default function CscsCardModule2Section1() {
                   {/* Level 1 - Elimination (narrowest) */}
                   <div className="w-[40%] sm:w-[35%] bg-green-500/25 border border-green-400/50 rounded-t-lg rounded-b-sm p-2 text-center">
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">Elimination</p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">Remove the hazard entirely</p>
+                    <p className="text-white/50 text-[10px] sm:text-xs">
+                      Remove the hazard entirely
+                    </p>
                   </div>
                   {/* Level 2 - Substitution */}
                   <div className="w-[52%] sm:w-[48%] bg-green-500/20 border border-green-400/40 rounded-sm p-2 text-center">
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">Substitution</p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">Replace with something less dangerous</p>
+                    <p className="text-white/50 text-[10px] sm:text-xs">
+                      Replace with something less dangerous
+                    </p>
                   </div>
                   {/* Level 3 - Engineering Controls */}
                   <div className="w-[64%] sm:w-[61%] bg-green-500/15 border border-green-400/30 rounded-sm p-2 text-center">
-                    <p className="text-green-300 font-semibold text-xs sm:text-sm">Engineering Controls</p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">Isolate people from the hazard</p>
+                    <p className="text-green-300 font-semibold text-xs sm:text-sm">
+                      Engineering Controls
+                    </p>
+                    <p className="text-white/50 text-[10px] sm:text-xs">
+                      Isolate people from the hazard
+                    </p>
                   </div>
                   {/* Level 4 - Administrative Controls */}
                   <div className="w-[76%] sm:w-[74%] bg-green-500/10 border border-green-400/25 rounded-sm p-2 text-center">
-                    <p className="text-green-300 font-semibold text-xs sm:text-sm">Administrative Controls</p>
+                    <p className="text-green-300 font-semibold text-xs sm:text-sm">
+                      Administrative Controls
+                    </p>
                     <p className="text-white/50 text-[10px] sm:text-xs">Change how people work</p>
                   </div>
                   {/* Level 5 - PPE (widest) */}
                   <div className="w-[88%] sm:w-[87%] bg-green-500/5 border border-green-400/20 rounded-sm rounded-b-lg p-2 text-center">
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">PPE</p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">Last resort &mdash; protect the individual</p>
+                    <p className="text-white/50 text-[10px] sm:text-xs">
+                      Last resort &mdash; protect the individual
+                    </p>
                   </div>
                   {/* Labels */}
                   <div className="flex justify-between w-[88%] sm:w-[87%] mt-1">
-                    <span className="text-green-400/60 text-[10px] sm:text-xs italic">&uarr; Most effective</span>
-                    <span className="text-green-400/60 text-[10px] sm:text-xs italic">Least effective &darr;</span>
+                    <span className="text-green-400/60 text-[10px] sm:text-xs italic">
+                      &uarr; Most effective
+                    </span>
+                    <span className="text-green-400/60 text-[10px] sm:text-xs italic">
+                      Least effective &darr;
+                    </span>
                   </div>
                 </div>
                 <p className="text-white/50 text-xs text-center mt-3 italic">
@@ -777,46 +816,47 @@ export default function CscsCardModule2Section1() {
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">1. Elimination</h4>
                     <p className="text-white/80 text-sm">
-                      Prefabricate components at ground level so that working at height is not required.
-                      Design out the hazard entirely &mdash; for example, installing services before
-                      a ceiling is fitted rather than working above a suspended ceiling later.
+                      Prefabricate components at ground level so that working at height is not
+                      required. Design out the hazard entirely &mdash; for example, installing
+                      services before a ceiling is fitted rather than working above a suspended
+                      ceiling later.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">2. Substitution</h4>
                     <p className="text-white/80 text-sm">
-                      Replace a solvent-based adhesive with a water-based alternative to reduce harmful
-                      fume exposure. Use battery-powered tools instead of mains-powered tools in wet
-                      conditions to reduce electrical risk. Use mechanical lifting instead of manual
-                      handling.
+                      Replace a solvent-based adhesive with a water-based alternative to reduce
+                      harmful fume exposure. Use battery-powered tools instead of mains-powered
+                      tools in wet conditions to reduce electrical risk. Use mechanical lifting
+                      instead of manual handling.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">3. Engineering Controls</h4>
                     <p className="text-white/80 text-sm">
-                      Install guardrails and edge protection on scaffolds. Use local exhaust ventilation
-                      (LEV) to capture dust at source. Fit RCD protection on circuits. Install physical
-                      barriers to separate pedestrians from moving vehicles on site. Use enclosed drill
-                      shrouds to contain silica dust.
+                      Install guardrails and edge protection on scaffolds. Use local exhaust
+                      ventilation (LEV) to capture dust at source. Fit RCD protection on circuits.
+                      Install physical barriers to separate pedestrians from moving vehicles on
+                      site. Use enclosed drill shrouds to contain silica dust.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">4. Administrative Controls</h4>
                     <p className="text-white/80 text-sm">
-                      Provide training and toolbox talks. Implement permit-to-work systems for high-risk
-                      activities. Use signage and safety warnings. Rotate workers to reduce exposure time
-                      to noise or vibration. Establish safe systems of work through method statements.
-                      Restrict access to certain areas.
+                      Provide training and toolbox talks. Implement permit-to-work systems for
+                      high-risk activities. Use signage and safety warnings. Rotate workers to
+                      reduce exposure time to noise or vibration. Establish safe systems of work
+                      through method statements. Restrict access to certain areas.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">5. PPE (Last Resort)</h4>
                     <p className="text-white/80 text-sm">
-                      Hard hats, safety boots, hi-vis clothing, hearing protection, eye protection, dust
-                      masks, gloves, and harnesses. PPE is the least effective control because it only
-                      protects the individual wearing it, it depends on being worn correctly, and it can
-                      be uncomfortable, leading workers to remove it. PPE should always supplement
-                      higher-level controls, never replace them.
+                      Hard hats, safety boots, hi-vis clothing, hearing protection, eye protection,
+                      dust masks, gloves, and harnesses. PPE is the least effective control because
+                      it only protects the individual wearing it, it depends on being worn
+                      correctly, and it can be uncomfortable, leading workers to remove it. PPE
+                      should always supplement higher-level controls, never replace them.
                     </p>
                   </div>
                 </div>
@@ -849,8 +889,8 @@ export default function CscsCardModule2Section1() {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                A <strong>method statement</strong> (also called a safe system of work or SSOW) is
-                a document that describes how a particular task or activity will be carried out
+                A <strong>method statement</strong> (also called a safe system of work or SSOW) is a
+                document that describes how a particular task or activity will be carried out
                 safely. It sets out the work in a logical, step-by-step sequence, incorporating the
                 control measures identified in the risk assessment.
               </p>
@@ -913,8 +953,8 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>Responsible persons:</strong> Who is supervising, who is carrying
-                      out the work, and who to report issues to
+                      <strong>Responsible persons:</strong> Who is supervising, who is carrying out
+                      the work, and who to report issues to
                     </span>
                   </li>
                 </ul>
@@ -930,15 +970,23 @@ export default function CscsCardModule2Section1() {
                     <ul className="text-white/80 text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>Identifies <strong className="text-white">what</strong> could go wrong</span>
+                        <span>
+                          Identifies <strong className="text-white">what</strong> could go wrong
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>Evaluates <strong className="text-white">how likely</strong> and <strong className="text-white">how severe</strong></span>
+                        <span>
+                          Evaluates <strong className="text-white">how likely</strong> and{' '}
+                          <strong className="text-white">how severe</strong>
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>Determines <strong className="text-white">what controls</strong> are needed</span>
+                        <span>
+                          Determines <strong className="text-white">what controls</strong> are
+                          needed
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -947,15 +995,22 @@ export default function CscsCardModule2Section1() {
                     <ul className="text-white/80 text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>Describes <strong className="text-white">how</strong> to do the job safely</span>
+                        <span>
+                          Describes <strong className="text-white">how</strong> to do the job safely
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>Sets out the work <strong className="text-white">step by step</strong></span>
+                        <span>
+                          Sets out the work <strong className="text-white">step by step</strong>
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>Incorporates the <strong className="text-white">controls from the RA</strong></span>
+                        <span>
+                          Incorporates the{' '}
+                          <strong className="text-white">controls from the RA</strong>
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -975,15 +1030,15 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      RAMS must be <strong>task-specific</strong> and <strong>site-specific</strong> &mdash;
-                      generic RAMS are not acceptable
+                      RAMS must be <strong>task-specific</strong> and <strong>site-specific</strong>{' '}
+                      &mdash; generic RAMS are not acceptable
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      All operatives must <strong>read, understand, and sign</strong> the RAMS before
-                      starting work
+                      All operatives must <strong>read, understand, and sign</strong> the RAMS
+                      before starting work
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1020,8 +1075,8 @@ export default function CscsCardModule2Section1() {
                 A <strong>dynamic risk assessment</strong> is an ongoing, real-time assessment of
                 risk carried out by workers as conditions change throughout the working day. Unlike
                 a formal written risk assessment which is completed before work begins, a dynamic
-                risk assessment is a continuous mental process that every worker should be performing
-                at all times.
+                risk assessment is a continuous mental process that every worker should be
+                performing at all times.
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
@@ -1030,24 +1085,24 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Conditions on site have <strong className="text-white">changed</strong> since the
-                      original risk assessment was written (e.g. weather deterioration, unexpected
-                      ground conditions)
+                      Conditions on site have <strong className="text-white">changed</strong> since
+                      the original risk assessment was written (e.g. weather deterioration,
+                      unexpected ground conditions)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      An <strong className="text-white">unexpected hazard</strong> appears that was not
-                      identified in the written risk assessment (e.g. unmarked buried services, damaged
-                      scaffolding)
+                      An <strong className="text-white">unexpected hazard</strong> appears that was
+                      not identified in the written risk assessment (e.g. unmarked buried services,
+                      damaged scaffolding)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      The <strong className="text-white">work activity changes</strong> mid-task or the
-                      scope of work differs from what was planned
+                      The <strong className="text-white">work activity changes</strong> mid-task or
+                      the scope of work differs from what was planned
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1060,8 +1115,8 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      You notice a <strong className="text-white">near miss</strong> or unsafe condition
-                      that suggests the existing controls are not adequate
+                      You notice a <strong className="text-white">near miss</strong> or unsafe
+                      condition that suggests the existing controls are not adequate
                     </span>
                   </li>
                 </ul>
@@ -1100,8 +1155,8 @@ export default function CscsCardModule2Section1() {
                     </div>
                     <p className="text-green-300 font-semibold text-sm mb-1">ACT</p>
                     <p className="text-white/60 text-xs">
-                      Either implement a safe control and continue, or stop work entirely and
-                      report the issue to your supervisor.
+                      Either implement a safe control and continue, or stop work entirely and report
+                      the issue to your supervisor.
                     </p>
                   </div>
                 </div>
@@ -1140,8 +1195,8 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      The written risk assessment should be <strong>updated</strong> to reflect the new
-                      findings
+                      The written risk assessment should be <strong>updated</strong> to reflect the
+                      new findings
                     </span>
                   </li>
                 </ul>
@@ -1183,8 +1238,8 @@ export default function CscsCardModule2Section1() {
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Written Records</h3>
                 <p className="text-white/80 text-sm mb-3">
-                  Under the Management of Health and Safety at Work Regulations 1999, employers
-                  with <strong className="text-white">5 or more employees</strong> must record the
+                  Under the Management of Health and Safety at Work Regulations 1999, employers with{' '}
+                  <strong className="text-white">5 or more employees</strong> must record the
                   significant findings of their risk assessments in writing. The written record
                   should include:
                 </p>
@@ -1203,7 +1258,9 @@ export default function CscsCardModule2Section1() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                    <span>Any additional actions required, including who is responsible and by when</span>
+                    <span>
+                      Any additional actions required, including who is responsible and by when
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -1237,9 +1294,9 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>RAMS briefings:</strong> Before starting a task, the supervisor
-                      briefs all operatives on the risk assessment and method statement, and each
-                      person signs to confirm they have understood
+                      <strong>RAMS briefings:</strong> Before starting a task, the supervisor briefs
+                      all operatives on the risk assessment and method statement, and each person
+                      signs to confirm they have understood
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1267,10 +1324,10 @@ export default function CscsCardModule2Section1() {
                   Construction sites often have a diverse workforce with workers whose first
                   language is not English. Employers have a duty to ensure that safety information
                   is understood by <strong className="text-white">all</strong> workers. This may
-                  require translated documents, pictorial safety instructions, visual demonstrations,
-                  buddy systems pairing workers with a bilingual colleague, or the use of
-                  interpreters during inductions and toolbox talks. Simply handing over a written
-                  RAMS document in English to a worker who cannot read English is{' '}
+                  require translated documents, pictorial safety instructions, visual
+                  demonstrations, buddy systems pairing workers with a bilingual colleague, or the
+                  use of interpreters during inductions and toolbox talks. Simply handing over a
+                  written RAMS document in English to a worker who cannot read English is{' '}
                   <strong className="text-white">not</strong> considered adequate communication.
                 </p>
               </div>
@@ -1306,11 +1363,11 @@ export default function CscsCardModule2Section1() {
                     <p className="text-white/80 text-sm">
                       The single largest cause of fatal injuries in UK construction, accounting for
                       approximately <strong className="text-white">40&ndash;50%</strong> of all
-                      construction deaths each year. Falls from roofs, scaffolds, ladders, and through
-                      fragile surfaces (such as roof lights) are all common. The Work at Height
-                      Regulations 2005 require employers to avoid working at height where possible,
-                      prevent falls using guardrails or platforms, and minimise the distance and
-                      consequences of any fall using nets or harnesses.
+                      construction deaths each year. Falls from roofs, scaffolds, ladders, and
+                      through fragile surfaces (such as roof lights) are all common. The Work at
+                      Height Regulations 2005 require employers to avoid working at height where
+                      possible, prevent falls using guardrails or platforms, and minimise the
+                      distance and consequences of any fall using nets or harnesses.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
@@ -1319,8 +1376,8 @@ export default function CscsCardModule2Section1() {
                       Being hit by falling materials, swinging loads from cranes, or moving vehicles
                       on site. This includes being struck by excavator buckets, reversing dumpers,
                       and objects falling from scaffolding. Controls include exclusion zones around
-                      lifting operations, banksmen for vehicle movements, toe boards and brick guards
-                      on scaffolds, and segregation of pedestrian and vehicle routes.
+                      lifting operations, banksmen for vehicle movements, toe boards and brick
+                      guards on scaffolds, and segregation of pedestrian and vehicle routes.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
@@ -1330,8 +1387,8 @@ export default function CscsCardModule2Section1() {
                       temporary works. Trench collapses are particularly deadly &mdash; unsupported
                       trenches can collapse without warning and the weight of soil makes escape
                       extremely difficult. All excavations over 1.2 metres deep must be properly
-                      supported or battered back. Temporary works such as formwork and falsework must
-                      be designed and inspected by a competent person.
+                      supported or battered back. Temporary works such as formwork and falsework
+                      must be designed and inspected by a competent person.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
@@ -1341,9 +1398,9 @@ export default function CscsCardModule2Section1() {
                       heavy or awkward loads. Manual handling injuries are the most common cause of
                       <strong className="text-white"> non-fatal</strong> injuries in construction
                       and often result in long-term back, shoulder, and knee problems. The Manual
-                      Handling Operations Regulations 1992 require employers to avoid manual handling
-                      where possible, assess unavoidable tasks, and reduce the risk using mechanical
-                      aids, team lifts, and good technique training.
+                      Handling Operations Regulations 1992 require employers to avoid manual
+                      handling where possible, assess unavoidable tasks, and reduce the risk using
+                      mechanical aids, team lifts, and good technique training.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
@@ -1352,24 +1409,26 @@ export default function CscsCardModule2Section1() {
                       Contact with live electrical conductors, whether from overhead power lines,
                       underground cables, or the installation being worked on. Electric shock can
                       cause burns, cardiac arrest, and death. As an electrician, you are at
-                      particular risk and must always follow the safe isolation procedure: switch off,
-                      isolate, lock off, prove dead, and post warning notices. The Electricity at Work
-                      Regulations 1989 apply to all electrical work activities.
+                      particular risk and must always follow the safe isolation procedure: switch
+                      off, isolate, lock off, prove dead, and post warning notices. The Electricity
+                      at Work Regulations 1989 apply to all electrical work activities.
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-green-400 font-medium mb-3">Other Significant Construction Hazards</h3>
+                <h3 className="text-green-400 font-medium mb-3">
+                  Other Significant Construction Hazards
+                </h3>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">Harmful Substances</h4>
                     <p className="text-white/80 text-sm">
-                      Asbestos, silica dust, cement, solvents, welding fumes, and lead. The Control of
-                      Substances Hazardous to Health Regulations 2002 (COSHH) require employers to
-                      assess and control exposure. Many construction health hazards have long latency
-                      periods &mdash; symptoms may not appear for years or decades.
+                      Asbestos, silica dust, cement, solvents, welding fumes, and lead. The Control
+                      of Substances Hazardous to Health Regulations 2002 (COSHH) require employers
+                      to assess and control exposure. Many construction health hazards have long
+                      latency periods &mdash; symptoms may not appear for years or decades.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
@@ -1385,21 +1444,21 @@ export default function CscsCardModule2Section1() {
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">Fire</h4>
                     <p className="text-white/80 text-sm">
-                      Fire risks on construction sites are elevated due to the presence of
-                      flammable materials, hot works (welding, cutting, grinding), temporary
-                      electrical installations, and limited escape routes. The Regulatory Reform
-                      (Fire Safety) Order 2005 requires a fire risk assessment and appropriate
-                      prevention and detection measures.
+                      Fire risks on construction sites are elevated due to the presence of flammable
+                      materials, hot works (welding, cutting, grinding), temporary electrical
+                      installations, and limited escape routes. The Regulatory Reform (Fire Safety)
+                      Order 2005 requires a fire risk assessment and appropriate prevention and
+                      detection measures.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">Vibration</h4>
                     <p className="text-white/80 text-sm">
-                      Hand-arm vibration from power tools (e.g. hammer drills, angle grinders, breakers)
-                      can cause Hand-Arm Vibration Syndrome (HAVS) and vibration white finger. The
-                      Control of Vibration at Work Regulations 2005 set daily exposure limits and
-                      require employers to assess and control exposure through tool selection, job
-                      rotation, and health surveillance.
+                      Hand-arm vibration from power tools (e.g. hammer drills, angle grinders,
+                      breakers) can cause Hand-Arm Vibration Syndrome (HAVS) and vibration white
+                      finger. The Control of Vibration at Work Regulations 2005 set daily exposure
+                      limits and require employers to assess and control exposure through tool
+                      selection, job rotation, and health surveillance.
                     </p>
                   </div>
                 </div>
@@ -1424,27 +1483,29 @@ export default function CscsCardModule2Section1() {
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-green-400">When to Review a Risk Assessment</h3>
+                <h3 className="font-semibold mb-2 text-green-400">
+                  When to Review a Risk Assessment
+                </h3>
                 <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>After an accident, incident, or near miss:</strong> Any event that suggests
-                      the existing controls may be inadequate
+                      <strong>After an accident, incident, or near miss:</strong> Any event that
+                      suggests the existing controls may be inadequate
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>When working methods or equipment change:</strong> New plant, materials,
-                      tools, or processes may introduce different hazards
+                      <strong>When working methods or equipment change:</strong> New plant,
+                      materials, tools, or processes may introduce different hazards
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>When the workforce changes:</strong> New workers, young workers, or workers
-                      with different levels of experience may face different risks
+                      <strong>When the workforce changes:</strong> New workers, young workers, or
+                      workers with different levels of experience may face different risks
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1457,16 +1518,16 @@ export default function CscsCardModule2Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>When legislation changes:</strong> New or amended regulations may require
-                      different controls or standards
+                      <strong>When legislation changes:</strong> New or amended regulations may
+                      require different controls or standards
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong>At least annually:</strong> Even if no specific trigger has occurred, risk
-                      assessments should be reviewed at a minimum of once per year to confirm they remain
-                      valid and up to date
+                      <strong>At least annually:</strong> Even if no specific trigger has occurred,
+                      risk assessments should be reviewed at a minimum of once per year to confirm
+                      they remain valid and up to date
                     </span>
                   </li>
                 </ul>
@@ -1485,32 +1546,28 @@ export default function CscsCardModule2Section1() {
                     <ul className="text-white/80 text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>
-                          Provide and maintain safe plant and safe systems of work
-                        </span>
+                        <span>Provide and maintain safe plant and safe systems of work</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
-                          Ensure the safe use, handling, storage, and transport of articles and substances
+                          Ensure the safe use, handling, storage, and transport of articles and
+                          substances
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>
-                          Provide information, instruction, training, and supervision
-                        </span>
+                        <span>Provide information, instruction, training, and supervision</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
+                        <span>Maintain a safe place of work with safe access and egress</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
-                          Maintain a safe place of work with safe access and egress
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>
-                          Provide and maintain a safe working environment with adequate welfare facilities
+                          Provide and maintain a safe working environment with adequate welfare
+                          facilities
                         </span>
                       </li>
                     </ul>
@@ -1522,22 +1579,18 @@ export default function CscsCardModule2Section1() {
                     <ul className="text-white/80 text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>
-                          Take reasonable care of your own health and safety
-                        </span>
+                        <span>Take reasonable care of your own health and safety</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
-                          Take reasonable care of the health and safety of others who may be affected
-                          by your acts or omissions
+                          Take reasonable care of the health and safety of others who may be
+                          affected by your acts or omissions
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                        <span>
-                          Cooperate with your employer on health and safety matters
-                        </span>
+                        <span>Cooperate with your employer on health and safety matters</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -1564,13 +1617,11 @@ export default function CscsCardModule2Section1() {
                 <p className="text-white/80 text-sm">
                   Section 3 of HASAWA 1974 extends the employer&rsquo;s duty of care beyond their
                   own employees. Employers must conduct their work in such a way that{' '}
-                  <strong className="text-white">
-                    persons not in their employment
-                  </strong>{' '}
-                  &mdash; such as members of the public, visitors, delivery drivers, and
-                  contractors from other companies &mdash; are not exposed to risks to their health
-                  and safety. This is particularly important on construction sites where multiple
-                  contractors work alongside each other and the public may be nearby.
+                  <strong className="text-white">persons not in their employment</strong> &mdash;
+                  such as members of the public, visitors, delivery drivers, and contractors from
+                  other companies &mdash; are not exposed to risks to their health and safety. This
+                  is particularly important on construction sites where multiple contractors work
+                  alongside each other and the public may be nearby.
                 </p>
               </div>
 
@@ -1611,7 +1662,8 @@ export default function CscsCardModule2Section1() {
                     <span>
                       <strong className="text-white">Unlimited fines:</strong> Since the Sentencing
                       Council guidelines (2016), fines for health and safety offences can be
-                      unlimited and are calculated based on the size and turnover of the organisation
+                      unlimited and are calculated based on the size and turnover of the
+                      organisation
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1641,8 +1693,8 @@ export default function CscsCardModule2Section1() {
                       &bull;
                     </span>
                     <span className="text-white/80">
-                      <strong className="text-white">HASAWA 1974:</strong> The overarching Act that places
-                      general duties on employers, employees, and the self-employed
+                      <strong className="text-white">HASAWA 1974:</strong> The overarching Act that
+                      places general duties on employers, employees, and the self-employed
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
@@ -1650,9 +1702,9 @@ export default function CscsCardModule2Section1() {
                       &bull;
                     </span>
                     <span className="text-white/80">
-                      <strong className="text-white">Management Regs 1999:</strong> Requires employers to
-                      carry out risk assessments, appoint competent persons, and implement preventive
-                      measures
+                      <strong className="text-white">Management Regs 1999:</strong> Requires
+                      employers to carry out risk assessments, appoint competent persons, and
+                      implement preventive measures
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
@@ -1669,8 +1721,8 @@ export default function CscsCardModule2Section1() {
                       &bull;
                     </span>
                     <span className="text-white/80">
-                      <strong className="text-white">Work at Height Regs 2005:</strong> Requires planning,
-                      organisation, and risk control for all work at height
+                      <strong className="text-white">Work at Height Regs 2005:</strong> Requires
+                      planning, organisation, and risk control for all work at height
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
@@ -1678,8 +1730,8 @@ export default function CscsCardModule2Section1() {
                       &bull;
                     </span>
                     <span className="text-white/80">
-                      <strong className="text-white">COSHH 2002:</strong> Controls exposure to hazardous
-                      substances in the workplace
+                      <strong className="text-white">COSHH 2002:</strong> Controls exposure to
+                      hazardous substances in the workplace
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
@@ -1687,9 +1739,9 @@ export default function CscsCardModule2Section1() {
                       &bull;
                     </span>
                     <span className="text-white/80">
-                      <strong className="text-white">Electricity at Work Regs 1989:</strong> Requires
-                      precautions to be taken against the risk of death or personal injury from
-                      electricity
+                      <strong className="text-white">Electricity at Work Regs 1989:</strong>{' '}
+                      Requires precautions to be taken against the risk of death or personal injury
+                      from electricity
                     </span>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import {
   Star,
   MapPin,
@@ -14,8 +14,8 @@ import {
   Shield,
   Clock,
   FileCheck,
-} from "lucide-react";
-import type { VerificationTier } from "@/components/employer/SparkProfileSheet";
+} from 'lucide-react';
+import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
 
 export interface TalentProfileCardProps {
   id: string;
@@ -41,24 +41,27 @@ export interface TalentProfileCardProps {
 }
 
 // Elec-ID verification tier configuration
-const tierConfig: Record<VerificationTier, { label: string; color: string; bg: string; border: string }> = {
+const tierConfig: Record<
+  VerificationTier,
+  { label: string; color: string; bg: string; border: string }
+> = {
   basic: {
     label: 'Basic',
     color: 'text-muted-foreground',
     bg: 'bg-muted',
-    border: 'border-border/50'
+    border: 'border-border/50',
   },
   verified: {
     label: 'Verified',
     color: 'text-blue-500',
     bg: 'bg-blue-100 dark:bg-blue-900/30',
-    border: 'border-blue-500/30'
+    border: 'border-blue-500/30',
   },
   premium: {
     label: 'Premium',
     color: 'text-elec-yellow',
     bg: 'bg-yellow-100 dark:bg-yellow-900/30',
-    border: 'border-elec-yellow/30'
+    border: 'border-elec-yellow/30',
   },
 };
 
@@ -84,7 +87,10 @@ export function TalentProfileCard({
   onMessage,
   onBook,
 }: TalentProfileCardProps) {
-  const initials = name.split(' ').map(n => n[0]).join('');
+  const initials = name
+    .split(' ')
+    .map((n) => n[0])
+    .join('');
   const tier = tierConfig[verificationTier];
   const isAvailableNow = availability === 'Immediate';
 
@@ -113,7 +119,9 @@ export function TalentProfileCard({
 
             {/* Elec-ID Verification Badge */}
             {verificationTier !== 'basic' && (
-              <div className={`absolute -bottom-0.5 -right-0.5 ${tier.bg} p-0.5 rounded-full ring-2 ring-background`}>
+              <div
+                className={`absolute -bottom-0.5 -right-0.5 ${tier.bg} p-0.5 rounded-full ring-2 ring-background`}
+              >
                 {verificationTier === 'premium' ? (
                   <Award className={`h-3 w-3 ${tier.color}`} />
                 ) : (
@@ -132,9 +140,7 @@ export function TalentProfileCard({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-foreground truncate">{name}</h3>
-              {isInLabourBank && (
-                <Zap className="h-3.5 w-3.5 text-success shrink-0" />
-              )}
+              {isInLabourBank && <Zap className="h-3.5 w-3.5 text-success shrink-0" />}
             </div>
 
             <div className="flex items-center gap-2 text-sm text-muted-foreground mt-0.5">
@@ -151,7 +157,10 @@ export function TalentProfileCard({
 
             {/* Tier Badge + Verified Docs */}
             <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-              <Badge variant="outline" className={`text-xs px-1.5 py-0 ${tier.bg} ${tier.color} border-0`}>
+              <Badge
+                variant="outline"
+                className={`text-xs px-1.5 py-0 ${tier.bg} ${tier.color} border-0`}
+              >
                 {tier.label}
               </Badge>
               {verifiedDocsCount > 0 && (
@@ -202,7 +211,10 @@ export function TalentProfileCard({
             variant="ghost"
             size="sm"
             className="flex-1 h-9"
-            onClick={(e) => { e.stopPropagation(); onSave(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSave();
+            }}
           >
             <Heart className={`h-4 w-4 mr-1.5 ${isSaved ? 'fill-primary text-elec-yellow' : ''}`} />
             {isSaved ? 'Saved' : 'Save'}
@@ -211,7 +223,10 @@ export function TalentProfileCard({
             variant="ghost"
             size="sm"
             className="flex-1 h-9"
-            onClick={(e) => { e.stopPropagation(); onMessage(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMessage();
+            }}
           >
             <MessageSquare className="h-4 w-4 mr-1.5" />
             Message
@@ -220,7 +235,10 @@ export function TalentProfileCard({
             <Button
               size="sm"
               className="flex-1 h-9 bg-success hover:bg-success/90"
-              onClick={(e) => { e.stopPropagation(); onBook(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onBook();
+              }}
             >
               <Calendar className="h-4 w-4 mr-1.5" />
               Book
@@ -229,7 +247,10 @@ export function TalentProfileCard({
             <Button
               size="sm"
               className="flex-1 h-9"
-              onClick={(e) => { e.stopPropagation(); onBook(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onBook();
+              }}
             >
               <Briefcase className="h-4 w-4 mr-1.5" />
               Hire

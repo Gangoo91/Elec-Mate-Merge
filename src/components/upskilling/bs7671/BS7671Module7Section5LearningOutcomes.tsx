@@ -4,37 +4,37 @@ import { Target, CheckCircle } from 'lucide-react';
 export const BS7671Module7Section5LearningOutcomes = () => {
   const outcomes = [
     {
-      category: "Prosumer Installation Fundamentals",
+      category: 'Prosumer Installation Fundamentals',
       items: [
-        "Define prosumer electrical installations and their scope under Part 8",
-        "Identify key components including generation, storage, and load management",
-        "Understand the regulatory framework and compliance requirements"
-      ]
+        'Define prosumer electrical installations and their scope under Part 8',
+        'Identify key components including generation, storage, and load management',
+        'Understand the regulatory framework and compliance requirements',
+      ],
     },
     {
-      category: "Energy Management & Control",
+      category: 'Energy Management & Control',
       items: [
-        "Explain energy flow management in bi-directional systems",
-        "Design energy management systems for optimal performance",
-        "Implement demand response and grid services functionality"
-      ]
+        'Explain energy flow management in bi-directional systems',
+        'Design energy management systems for optimal performance',
+        'Implement demand response and grid services functionality',
+      ],
     },
     {
-      category: "Protection & Safety Systems",
+      category: 'Protection & Safety Systems',
       items: [
-        "Apply protection requirements for prosumer installations",
-        "Implement anti-islanding and grid protection measures",
-        "Design battery energy storage system safety protocols"
-      ]
+        'Apply protection requirements for prosumer installations',
+        'Implement anti-islanding and grid protection measures',
+        'Design battery energy storage system safety protocols',
+      ],
     },
     {
-      category: "Grid Integration & Services",
+      category: 'Grid Integration & Services',
       items: [
-        "Navigate G98/G99 connection requirements and DNO procedures",
-        "Implement export limitation and grid service capabilities",
-        "Understand virtual power plant and aggregation concepts"
-      ]
-    }
+        'Navigate G98/G99 connection requirements and DNO procedures',
+        'Implement export limitation and grid service capabilities',
+        'Understand virtual power plant and aggregation concepts',
+      ],
+    },
   ];
 
   return (
@@ -47,7 +47,7 @@ export const BS7671Module7Section5LearningOutcomes = () => {
       </CardHeader>
       <CardContent className="text-foreground">
         <p className="mb-6">By the end of this section, you should be able to:</p>
-        
+
         <div className="space-y-6">
           {outcomes.map((category, categoryIndex) => (
             <div key={categoryIndex}>
@@ -67,9 +67,9 @@ export const BS7671Module7Section5LearningOutcomes = () => {
         <div className="mt-6 p-4 bg-elec-dark rounded-md border border-gray-600">
           <h4 className="text-elec-yellow font-semibold mb-2">Professional Development:</h4>
           <p className="text-sm">
-            This comprehensive understanding of prosumer installations positions you at the forefront of 
-            the energy transition, enabling you to design, install, and maintain the next generation 
-            of electrical infrastructure supporting the UK's net-zero ambitions.
+            This comprehensive understanding of prosumer installations positions you at the
+            forefront of the energy transition, enabling you to design, install, and maintain the
+            next generation of electrical infrastructure supporting the UK's net-zero ambitions.
           </p>
         </div>
       </CardContent>

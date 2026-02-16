@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Sheet,
-  SheetContent,
-} from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search, X, Clock, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React, { useState, useEffect, useRef } from 'react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search, X, Clock, ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SearchResult {
   id: string;
@@ -35,7 +32,7 @@ interface MobileSearchSheetProps {
 export function MobileSearchSheet({
   open,
   onOpenChange,
-  placeholder = "Search...",
+  placeholder = 'Search...',
   onSearch,
   results = [],
   recentSearches = [],
@@ -43,7 +40,7 @@ export function MobileSearchSheet({
   onClearRecent,
   isLoading = false,
 }: MobileSearchSheetProps) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Auto-focus input when opened
@@ -63,7 +60,7 @@ export function MobileSearchSheet({
   }, [query, onSearch]);
 
   const handleClose = () => {
-    setQuery("");
+    setQuery('');
     onOpenChange(false);
   };
 
@@ -74,10 +71,7 @@ export function MobileSearchSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="top"
-        className="h-full w-full p-0 border-0 bg-background"
-      >
+      <SheetContent side="top" className="h-full w-full p-0 border-0 bg-background">
         <div className="flex flex-col h-full">
           {/* Search Header */}
           <div className="flex items-center gap-2 p-3 border-b border-border bg-elec-gray pt-safe">
@@ -91,14 +85,17 @@ export function MobileSearchSheet({
                 placeholder={placeholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className={cn("pr-10 h-12 text-base bg-background border-border", !query && "pl-10")}
+                className={cn(
+                  'pr-10 h-12 text-base bg-background border-border',
+                  !query && 'pl-10'
+                )}
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"
               />
               {query && (
                 <button
-                  onClick={() => setQuery("")}
+                  onClick={() => setQuery('')}
                   className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
                 >
                   <X className="h-4 w-4" />
@@ -138,13 +135,11 @@ export function MobileSearchSheet({
                         handleClose();
                       }}
                       className={cn(
-                        "w-full flex items-center gap-3 px-4 py-3",
-                        "hover:bg-muted/50 active:bg-muted transition-colors text-left"
+                        'w-full flex items-center gap-3 px-4 py-3',
+                        'hover:bg-muted/50 active:bg-muted transition-colors text-left'
                       )}
                     >
-                      {result.icon && (
-                        <div className="shrink-0">{result.icon}</div>
-                      )}
+                      {result.icon && <div className="shrink-0">{result.icon}</div>}
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-foreground truncate">
                           {result.title}
@@ -200,14 +195,12 @@ export function MobileSearchSheet({
                       key={index}
                       onClick={() => handleRecentClick(term)}
                       className={cn(
-                        "w-full flex items-center gap-3 px-4 py-3",
-                        "hover:bg-muted/50 active:bg-muted transition-colors text-left"
+                        'w-full flex items-center gap-3 px-4 py-3',
+                        'hover:bg-muted/50 active:bg-muted transition-colors text-left'
                       )}
                     >
                       <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
-                      <span className="text-sm text-foreground flex-1 truncate">
-                        {term}
-                      </span>
+                      <span className="text-sm text-foreground flex-1 truncate">{term}</span>
                     </button>
                   ))}
                 </div>

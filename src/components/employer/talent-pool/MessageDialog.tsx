@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { MessageSquare, Send, Loader2, Award, Shield, Info } from "lucide-react";
-import { useStartConversation } from "@/hooks/useConversations";
-import { useSendMessage } from "@/hooks/useMessages";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
-import type { VerificationTier } from "@/components/employer/SparkProfileSheet";
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { MessageSquare, Send, Loader2, Award, Shield, Info } from 'lucide-react';
+import { useStartConversation } from '@/hooks/useConversations';
+import { useSendMessage } from '@/hooks/useMessages';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
+import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
 
 interface MessageDialogProps {
   open: boolean;
@@ -29,12 +29,16 @@ interface MessageDialogProps {
 const tierConfig: Record<VerificationTier, { label: string; color: string; bg: string }> = {
   basic: { label: 'Basic', color: 'text-muted-foreground', bg: 'bg-muted' },
   verified: { label: 'Verified', color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' },
-  premium: { label: 'Premium', color: 'text-elec-yellow', bg: 'bg-yellow-100 dark:bg-yellow-900/30' },
+  premium: {
+    label: 'Premium',
+    color: 'text-elec-yellow',
+    bg: 'bg-yellow-100 dark:bg-yellow-900/30',
+  },
 };
 
 export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: MessageDialogProps) {
   const { user } = useAuth();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
 
   const startConversation = useStartConversation();
@@ -43,9 +47,9 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
   const handleSend = async () => {
     if (!electrician || !message.trim() || !user) {
       toast({
-        title: "Message Required",
-        description: "Please enter a message to send.",
-        variant: "destructive",
+        title: 'Message Required',
+        description: 'Please enter a message to send.',
+        variant: 'destructive',
       });
       return;
     }
@@ -70,19 +74,19 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
       });
 
       toast({
-        title: "Message Sent",
+        title: 'Message Sent',
         description: `Your message has been sent to ${electrician.name}. They'll be able to reply once they apply to one of your vacancies.`,
       });
 
-      setMessage("");
+      setMessage('');
       onOpenChange(false);
       onSuccess?.(conversation.id);
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error('Error sending message:', error);
       toast({
-        title: "Failed to Send",
-        description: "There was an error sending your message. Please try again.",
-        variant: "destructive",
+        title: 'Failed to Send',
+        description: 'There was an error sending your message. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSending(false);
@@ -92,7 +96,10 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
   if (!electrician) return null;
 
   const tier = tierConfig[electrician.verificationTier];
-  const initials = electrician.name.split(' ').map(n => n[0]).join('');
+  const initials = electrician.name
+    .split(' ')
+    .map((n) => n[0])
+    .join('');
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -131,8 +138,8 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
           <div className="flex gap-2 p-3 bg-blue-500/10 rounded-lg text-sm">
             <Info className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
             <p className="text-muted-foreground">
-              <span className="font-medium text-foreground">How it works:</span> You can message any electrician.
-              They'll be able to reply once they apply to one of your job vacancies.
+              <span className="font-medium text-foreground">How it works:</span> You can message any
+              electrician. They'll be able to reply once they apply to one of your job vacancies.
             </p>
           </div>
 

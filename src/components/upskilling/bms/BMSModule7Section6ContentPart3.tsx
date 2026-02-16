@@ -12,10 +12,10 @@ const BMSModule7Section6ContentPart3 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Electricians play a crucial supporting role in ensuring successful handover by providing 
+          Electricians play a crucial supporting role in ensuring successful handover by providing
           accurate documentation and technical assistance during client training.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
@@ -29,7 +29,7 @@ const BMSModule7Section6ContentPart3 = () => {
                 <li>• Label all junction boxes and cable routes</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-[#1a1a1a] rounded-lg">
               <FileCheck className="h-6 w-6 text-elec-yellow mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Accurate Redline Drawings</h4>
@@ -42,7 +42,7 @@ const BMSModule7Section6ContentPart3 = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="p-4 bg-[#1a1a1a] rounded-lg">
               <FileCheck className="h-6 w-6 text-elec-yellow mb-3" />
@@ -55,7 +55,7 @@ const BMSModule7Section6ContentPart3 = () => {
                 <li>• RCD test results where applicable</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-[#1a1a1a] rounded-lg">
               <Wrench className="h-6 w-6 text-elec-yellow mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Demonstration Support</h4>
@@ -69,7 +69,7 @@ const BMSModule7Section6ContentPart3 = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-2">⚠️ Critical Consequences</h4>
           <p className="text-gray-300 mb-2">
@@ -83,7 +83,7 @@ const BMSModule7Section6ContentPart3 = () => {
             <li>• Legal liability increases significantly</li>
           </ul>
         </div>
-        
+
         <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Inline Check</h4>
           <p className="text-foreground">
@@ -92,9 +92,9 @@ const BMSModule7Section6ContentPart3 = () => {
           <details className="mt-2">
             <summary className="cursor-pointer text-elec-yellow">Click for answer</summary>
             <p className="mt-2 text-sm text-foreground">
-              Without accurate as-built drawings, future maintenance becomes dangerous and expensive. 
-              Technicians cannot safely modify the system, troubleshooting takes much longer, 
-              and there's increased risk of electrical accidents.
+              Without accurate as-built drawings, future maintenance becomes dangerous and
+              expensive. Technicians cannot safely modify the system, troubleshooting takes much
+              longer, and there's increased risk of electrical accidents.
             </p>
           </details>
         </div>

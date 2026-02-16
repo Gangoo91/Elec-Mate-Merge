@@ -7,34 +7,34 @@ const DataCablingModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Containment Systems: Basket, Conduit, Trunking",
+      title: 'Containment Systems: Basket, Conduit, Trunking',
       icon: Container,
-      description: "Cable containment systems and installation methods"
+      description: 'Cable containment systems and installation methods',
     },
     {
       id: 2,
-      title: "Cable Separation and Bend Radius",
+      title: 'Cable Separation and Bend Radius',
       icon: Route,
-      description: "Installation guidelines and physical constraints"
+      description: 'Installation guidelines and physical constraints',
     },
     {
       id: 3,
-      title: "Fire-Stopping and Penetration Sealing",
+      title: 'Fire-Stopping and Penetration Sealing',
       icon: Zap,
-      description: "Fire protection and building penetrations"
+      description: 'Fire protection and building penetrations',
     },
     {
       id: 4,
-      title: "ID Labelling Standards and Colour Codes",
+      title: 'ID Labelling Standards and Colour Codes',
       icon: Tag,
-      description: "Cable identification and marking systems"
+      description: 'Cable identification and marking systems',
     },
     {
       id: 5,
-      title: "Rack and Patch Panel Organisation",
+      title: 'Rack and Patch Panel Organisation',
       icon: FileCheck,
-      description: "Equipment room organisation and management"
-    }
+      description: 'Equipment room organisation and management',
+    },
   ];
 
   return (

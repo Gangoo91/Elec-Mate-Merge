@@ -7,34 +7,34 @@ const BMSModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Integration with DALI, 1-10V, and Smart Lighting",
+      title: 'Integration with DALI, 1-10V, and Smart Lighting',
       icon: Lightbulb,
-      description: "Lighting protocols and integration methods"
+      description: 'Lighting protocols and integration methods',
     },
     {
       id: 2,
-      title: "Daylight Harvesting and PIR Logic",
+      title: 'Daylight Harvesting and PIR Logic',
       icon: Sun,
-      description: "Automated lighting and daylight control"
+      description: 'Automated lighting and daylight control',
     },
     {
       id: 3,
-      title: "Access Control Basics and Door Relays",
+      title: 'Access Control Basics and Door Relays',
       icon: Lock,
-      description: "Security integration and door control"
+      description: 'Security integration and door control',
     },
     {
       id: 4,
-      title: "Shading, Blinds, and Facade Automation",
+      title: 'Shading, Blinds, and Facade Automation',
       icon: Blinds,
-      description: "Automated shading and facade systems"
+      description: 'Automated shading and facade systems',
     },
     {
       id: 5,
-      title: "Combined Energy Saving Scenarios (HVAC + Lighting)",
+      title: 'Combined Energy Saving Scenarios (HVAC + Lighting)',
       icon: Zap,
-      description: "Integrated energy optimization strategies"
-    }
+      description: 'Integrated energy optimization strategies',
+    },
   ];
 
   return (

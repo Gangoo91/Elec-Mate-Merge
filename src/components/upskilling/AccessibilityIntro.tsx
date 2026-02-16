@@ -1,4 +1,3 @@
-
 import { Eye, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -13,15 +12,20 @@ export const AccessibilityIntro = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground leading-relaxed text-base sm:text-lg">
-          Before testing begins, it's essential to ensure that all parts of the installation are accessible and properly labelled. This section explains what to look for and why it directly affects safety, accuracy, and compliance.
+          Before testing begins, it's essential to ensure that all parts of the installation are
+          accessible and properly labelled. This section explains what to look for and why it
+          directly affects safety, accuracy, and compliance.
         </p>
         <p className="text-foreground leading-relaxed text-base sm:text-lg">
-          Proper accessibility and labelling are fundamental requirements that enable thorough inspection and testing whilst maintaining safety throughout the process. Without these elements, inspections become incomplete and potentially dangerous.
+          Proper accessibility and labelling are fundamental requirements that enable thorough
+          inspection and testing whilst maintaining safety throughout the process. Without these
+          elements, inspections become incomplete and potentially dangerous.
         </p>
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <p className="text-blue-200 font-medium flex items-center gap-2">
             <Shield className="h-4 w-4" />
-            Remember: BS 7671 requires that equipment be "readily accessible for inspection, testing, and maintenance."
+            Remember: BS 7671 requires that equipment be "readily accessible for inspection,
+            testing, and maintenance."
           </p>
         </div>
       </CardContent>

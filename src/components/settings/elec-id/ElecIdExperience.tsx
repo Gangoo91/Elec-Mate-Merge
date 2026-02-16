@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer } from "vaul";
-import { motion, AnimatePresence } from "framer-motion";
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Drawer } from 'vaul';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
   Briefcase,
@@ -36,18 +36,18 @@ import {
   Award,
   TrendingUp,
   Edit3,
-} from "lucide-react";
-import { UK_JOB_TITLES, getJobTitleLabel } from "@/data/uk-electrician-constants";
-import { useNotifications } from "@/components/notifications/NotificationProvider";
-import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+} from 'lucide-react';
+import { UK_JOB_TITLES, getJobTitleLabel } from '@/data/uk-electrician-constants';
+import { useNotifications } from '@/components/notifications/NotificationProvider';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
 import {
   getWorkHistoryByProfileId,
   addElecIdWorkHistory,
   updateElecIdWorkHistory,
   deleteElecIdWorkHistory,
   ElecIdWorkHistory,
-} from "@/services/elecIdService";
+} from '@/services/elecIdService';
 
 interface WorkExperience {
   id: string;
@@ -112,12 +112,12 @@ const ElecIdExperience = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [isCurrent, setIsCurrent] = useState(false);
   const [formData, setFormData] = useState({
-    employerName: "",
-    jobTitle: "",
-    location: "",
-    startDate: "",
-    endDate: "",
-    description: "",
+    employerName: '',
+    jobTitle: '',
+    location: '',
+    startDate: '',
+    endDate: '',
+    description: '',
   });
 
   const [workHistory, setWorkHistory] = useState<WorkExperience[]>([]);
@@ -148,9 +148,9 @@ const ElecIdExperience = () => {
       } catch (error) {
         console.error('Error fetching work history:', error);
         addNotification({
-          title: "Error",
-          message: "Failed to load work history",
-          type: "error",
+          title: 'Error',
+          message: 'Failed to load work history',
+          type: 'error',
         });
       } finally {
         setIsFetching(false);
@@ -163,9 +163,9 @@ const ElecIdExperience = () => {
   const handleAddExperience = async () => {
     if (!profile?.id) {
       addNotification({
-        title: "Error",
-        message: "Profile not found. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Profile not found. Please try again.',
+        type: 'error',
       });
       return;
     }
@@ -204,16 +204,16 @@ const ElecIdExperience = () => {
       resetForm();
 
       addNotification({
-        title: "Experience Added",
+        title: 'Experience Added',
         message: `${formData.employerName} has been added to your work history.`,
-        type: "success",
+        type: 'success',
       });
     } catch (error) {
       console.error('Error adding experience:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to add experience. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to add experience. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -257,16 +257,16 @@ const ElecIdExperience = () => {
       resetForm();
 
       addNotification({
-        title: "Experience Updated",
-        message: "Your work experience has been updated.",
-        type: "success",
+        title: 'Experience Updated',
+        message: 'Your work experience has been updated.',
+        type: 'success',
       });
     } catch (error) {
       console.error('Error updating experience:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to update experience. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to update experience. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -285,18 +285,18 @@ const ElecIdExperience = () => {
       setDeleteConfirm({ open: false, id: null });
 
       addNotification({
-        title: "Experience Removed",
+        title: 'Experience Removed',
         message: deletedExp
           ? `${deletedExp.employerName} has been removed from your history.`
-          : "Experience has been removed.",
-        type: "info",
+          : 'Experience has been removed.',
+        type: 'info',
       });
     } catch (error) {
       console.error('Error deleting experience:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to delete experience. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to delete experience. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -308,10 +308,10 @@ const ElecIdExperience = () => {
     setFormData({
       employerName: exp.employerName,
       jobTitle: exp.jobTitle,
-      location: exp.location || "",
+      location: exp.location || '',
       startDate: exp.startDate,
-      endDate: exp.endDate || "",
-      description: exp.description || "",
+      endDate: exp.endDate || '',
+      description: exp.description || '',
     });
     setIsCurrent(exp.isCurrent);
     setIsEditSheetOpen(true);
@@ -319,26 +319,26 @@ const ElecIdExperience = () => {
 
   const resetForm = () => {
     setFormData({
-      employerName: "",
-      jobTitle: "",
-      location: "",
-      startDate: "",
-      endDate: "",
-      description: "",
+      employerName: '',
+      jobTitle: '',
+      location: '',
+      startDate: '',
+      endDate: '',
+      description: '',
     });
     setIsCurrent(false);
   };
 
   const formatDateRange = (start: string, end?: string, current?: boolean) => {
-    const startDate = new Date(start).toLocaleDateString("en-GB", {
-      month: "short",
-      year: "numeric",
+    const startDate = new Date(start).toLocaleDateString('en-GB', {
+      month: 'short',
+      year: 'numeric',
     });
     if (current) return `${startDate} - Present`;
     if (!end) return startDate;
-    const endDate = new Date(end).toLocaleDateString("en-GB", {
-      month: "short",
-      year: "numeric",
+    const endDate = new Date(end).toLocaleDateString('en-GB', {
+      month: 'short',
+      year: 'numeric',
     });
     return `${startDate} - ${endDate}`;
   };
@@ -353,16 +353,19 @@ const ElecIdExperience = () => {
     const years = Math.floor(months / 12);
     const remainingMonths = months % 12;
     if (years === 0) return `${remainingMonths} mo`;
-    if (remainingMonths === 0) return `${years} yr${years !== 1 ? "s" : ""}`;
+    if (remainingMonths === 0) return `${years} yr${years !== 1 ? 's' : ''}`;
     return `${years}y ${remainingMonths}m`;
   };
 
   // Group job titles by category
-  const jobTitlesByCategory = UK_JOB_TITLES.reduce((acc, title) => {
-    if (!acc[title.category]) acc[title.category] = [];
-    acc[title.category].push(title);
-    return acc;
-  }, {} as Record<string, typeof UK_JOB_TITLES>);
+  const jobTitlesByCategory = UK_JOB_TITLES.reduce(
+    (acc, title) => {
+      if (!acc[title.category]) acc[title.category] = [];
+      acc[title.category].push(title);
+      return acc;
+    },
+    {} as Record<string, typeof UK_JOB_TITLES>
+  );
 
   // Form content - reusable for both mobile and desktop
   const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
@@ -427,28 +430,32 @@ const ElecIdExperience = () => {
                       type="button"
                       onClick={() => setFormData({ ...formData, jobTitle: title.value })}
                       className={cn(
-                        "w-full flex items-center gap-3 p-3 rounded-lg transition-all touch-manipulation",
+                        'w-full flex items-center gap-3 p-3 rounded-lg transition-all touch-manipulation',
                         formData.jobTitle === title.value
-                          ? "bg-blue-500/20 border border-blue-500/40"
-                          : "hover:bg-white/[0.04] active:bg-white/[0.08]"
+                          ? 'bg-blue-500/20 border border-blue-500/40'
+                          : 'hover:bg-white/[0.04] active:bg-white/[0.08]'
                       )}
                     >
-                      <div className={cn(
-                        "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all",
-                        formData.jobTitle === title.value
-                          ? "border-blue-400 bg-blue-400"
-                          : "border-white/30"
-                      )}>
+                      <div
+                        className={cn(
+                          'w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all',
+                          formData.jobTitle === title.value
+                            ? 'border-blue-400 bg-blue-400'
+                            : 'border-white/30'
+                        )}
+                      >
                         {formData.jobTitle === title.value && (
                           <CheckCircle2 className="h-3 w-3 text-white" />
                         )}
                       </div>
-                      <span className={cn(
-                        "text-sm",
-                        formData.jobTitle === title.value
-                          ? "text-foreground font-medium"
-                          : "text-foreground/80"
-                      )}>
+                      <span
+                        className={cn(
+                          'text-sm',
+                          formData.jobTitle === title.value
+                            ? 'text-foreground font-medium'
+                            : 'text-foreground/80'
+                        )}
+                      >
                         {title.label}
                       </span>
                     </button>
@@ -472,42 +479,50 @@ const ElecIdExperience = () => {
           type="button"
           onClick={() => setIsCurrent(!isCurrent)}
           className={cn(
-            "w-full flex items-center gap-4 p-4 rounded-xl border transition-all touch-manipulation",
+            'w-full flex items-center gap-4 p-4 rounded-xl border transition-all touch-manipulation',
             isCurrent
-              ? "bg-emerald-500/10 border-emerald-500/30"
-              : "bg-white/[0.03] border-white/[0.06] active:bg-white/[0.08]"
+              ? 'bg-emerald-500/10 border-emerald-500/30'
+              : 'bg-white/[0.03] border-white/[0.06] active:bg-white/[0.08]'
           )}
         >
-          <div className={cn(
-            "w-12 h-12 rounded-xl flex items-center justify-center transition-all",
-            isCurrent
-              ? "bg-emerald-500/20"
-              : "bg-white/[0.06]"
-          )}>
-            <Zap className={cn(
-              "h-6 w-6 transition-colors",
-              isCurrent ? "text-emerald-400" : "text-foreground/50"
-            )} />
+          <div
+            className={cn(
+              'w-12 h-12 rounded-xl flex items-center justify-center transition-all',
+              isCurrent ? 'bg-emerald-500/20' : 'bg-white/[0.06]'
+            )}
+          >
+            <Zap
+              className={cn(
+                'h-6 w-6 transition-colors',
+                isCurrent ? 'text-emerald-400' : 'text-foreground/50'
+              )}
+            />
           </div>
           <div className="flex-1 text-left">
-            <p className={cn(
-              "font-medium transition-colors",
-              isCurrent ? "text-emerald-400" : "text-foreground"
-            )}>
+            <p
+              className={cn(
+                'font-medium transition-colors',
+                isCurrent ? 'text-emerald-400' : 'text-foreground'
+              )}
+            >
               Current Position
             </p>
             <p className="text-xs text-foreground/60">
-              {isCurrent ? "You're still working here" : "Toggle if this is your current role"}
+              {isCurrent ? "You're still working here" : 'Toggle if this is your current role'}
             </p>
           </div>
-          <div className={cn(
-            "w-12 h-7 rounded-full p-1 transition-all",
-            isCurrent ? "bg-emerald-500" : "bg-white/[0.15]"
-          )}>
-            <div className={cn(
-              "w-5 h-5 rounded-full bg-white shadow-md transition-transform",
-              isCurrent ? "translate-x-5" : "translate-x-0"
-            )} />
+          <div
+            className={cn(
+              'w-12 h-7 rounded-full p-1 transition-all',
+              isCurrent ? 'bg-emerald-500' : 'bg-white/[0.15]'
+            )}
+          >
+            <div
+              className={cn(
+                'w-5 h-5 rounded-full bg-white shadow-md transition-transform',
+                isCurrent ? 'translate-x-5' : 'translate-x-0'
+              )}
+            />
           </div>
         </button>
 
@@ -526,12 +541,14 @@ const ElecIdExperience = () => {
             />
           </div>
           <div className="space-y-2">
-            <Label className={cn(
-              "text-xs flex items-center gap-1",
-              isCurrent ? "text-foreground/30" : "text-foreground/70"
-            )}>
+            <Label
+              className={cn(
+                'text-xs flex items-center gap-1',
+                isCurrent ? 'text-foreground/30' : 'text-foreground/70'
+              )}
+            >
               <Calendar className="h-3 w-3" />
-              {isCurrent ? "Present" : "Ended"}
+              {isCurrent ? 'Present' : 'Ended'}
             </Label>
             <Input
               type="date"
@@ -539,8 +556,8 @@ const ElecIdExperience = () => {
               onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
               disabled={isCurrent}
               className={cn(
-                "h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-sm",
-                isCurrent && "opacity-40 cursor-not-allowed"
+                'h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-sm',
+                isCurrent && 'opacity-40 cursor-not-allowed'
               )}
             />
           </div>
@@ -551,7 +568,8 @@ const ElecIdExperience = () => {
           <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
             <Clock className="h-4 w-4 text-elec-yellow" />
             <span className="text-sm text-foreground/70">
-              Duration: <span className="text-elec-yellow font-semibold">
+              Duration:{' '}
+              <span className="text-elec-yellow font-semibold">
                 {calculateDuration(formData.startDate, isCurrent ? undefined : formData.endDate)}
               </span>
             </span>
@@ -584,7 +602,7 @@ const ElecIdExperience = () => {
     open,
     onOpenChange,
     title,
-    isEdit = false
+    isEdit = false,
   }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -602,9 +620,7 @@ const ElecIdExperience = () => {
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-            <Drawer.Title className="text-lg font-semibold text-foreground">
-              {title}
-            </Drawer.Title>
+            <Drawer.Title className="text-lg font-semibold text-foreground">{title}</Drawer.Title>
             <button
               onClick={() => {
                 onOpenChange(false);
@@ -637,17 +653,19 @@ const ElecIdExperience = () => {
             <Button
               className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.98]"
               onClick={isEdit ? handleEditExperience : handleAddExperience}
-              disabled={!formData.employerName || !formData.jobTitle || !formData.startDate || isLoading}
+              disabled={
+                !formData.employerName || !formData.jobTitle || !formData.startDate || isLoading
+              }
             >
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  {isEdit ? "Saving..." : "Adding..."}
+                  {isEdit ? 'Saving...' : 'Adding...'}
                 </>
               ) : isEdit ? (
-                "Save Changes"
+                'Save Changes'
               ) : (
-                "Add Experience"
+                'Add Experience'
               )}
             </Button>
           </div>
@@ -661,7 +679,7 @@ const ElecIdExperience = () => {
     open,
     onOpenChange,
     title,
-    isEdit = false
+    isEdit = false,
   }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -689,17 +707,19 @@ const ElecIdExperience = () => {
           <Button
             className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
             onClick={isEdit ? handleEditExperience : handleAddExperience}
-            disabled={!formData.employerName || !formData.jobTitle || !formData.startDate || isLoading}
+            disabled={
+              !formData.employerName || !formData.jobTitle || !formData.startDate || isLoading
+            }
           >
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                {isEdit ? "Saving..." : "Adding..."}
+                {isEdit ? 'Saving...' : 'Adding...'}
               </>
             ) : isEdit ? (
-              "Save Changes"
+              'Save Changes'
             ) : (
-              "Add Experience"
+              'Add Experience'
             )}
           </Button>
         </div>
@@ -761,7 +781,7 @@ const ElecIdExperience = () => {
         <div>
           <h3 className="text-lg font-semibold text-foreground">Work History</h3>
           <p className="text-sm text-foreground/70">
-            {workHistory.length} position{workHistory.length !== 1 ? "s" : ""} recorded
+            {workHistory.length} position{workHistory.length !== 1 ? 's' : ''} recorded
           </p>
         </div>
         <Button
@@ -792,25 +812,23 @@ const ElecIdExperience = () => {
                 {/* Timeline dot */}
                 <div
                   className={cn(
-                    "absolute left-[-14px] w-5 h-5 rounded-full border-2 transition-all z-10 flex items-center justify-center",
+                    'absolute left-[-14px] w-5 h-5 rounded-full border-2 transition-all z-10 flex items-center justify-center',
                     exp.isCurrent
-                      ? "bg-elec-yellow border-elec-yellow shadow-lg shadow-elec-yellow/40"
-                      : "bg-background border-white/30"
+                      ? 'bg-elec-yellow border-elec-yellow shadow-lg shadow-elec-yellow/40'
+                      : 'bg-background border-white/30'
                   )}
-                  style={{ top: "1.75rem" }}
+                  style={{ top: '1.75rem' }}
                 >
-                  {exp.isCurrent && (
-                    <div className="w-2 h-2 rounded-full bg-elec-dark" />
-                  )}
+                  {exp.isCurrent && <div className="w-2 h-2 rounded-full bg-elec-dark" />}
                 </div>
 
                 {/* Enhanced Card */}
                 <div
                   className={cn(
-                    "ml-3 rounded-2xl border overflow-hidden transition-all",
+                    'ml-3 rounded-2xl border overflow-hidden transition-all',
                     exp.isCurrent
-                      ? "bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border-elec-yellow/20 shadow-lg shadow-elec-yellow/10"
-                      : "bg-white/[0.03] border-white/[0.08]"
+                      ? 'bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border-elec-yellow/20 shadow-lg shadow-elec-yellow/10'
+                      : 'bg-white/[0.03] border-white/[0.08]'
                   )}
                 >
                   {/* Current Position Banner */}
@@ -818,7 +836,9 @@ const ElecIdExperience = () => {
                     <div className="px-4 py-2 bg-elec-yellow/20 border-b border-elec-yellow/30 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Zap className="h-4 w-4 text-elec-yellow" />
-                        <span className="text-xs font-semibold text-elec-yellow">Current Position</span>
+                        <span className="text-xs font-semibold text-elec-yellow">
+                          Current Position
+                        </span>
                       </div>
                       <Badge className="bg-elec-yellow/30 text-elec-yellow border-elec-yellow/40 text-xs">
                         Active
@@ -830,7 +850,9 @@ const ElecIdExperience = () => {
                   {exp.verifiedByEmployer && !exp.isCurrent && (
                     <div className="px-4 py-2 bg-emerald-500/10 border-b border-emerald-500/20 flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                      <span className="text-xs font-semibold text-emerald-400">Verified by Employer</span>
+                      <span className="text-xs font-semibold text-emerald-400">
+                        Verified by Employer
+                      </span>
                     </div>
                   )}
 
@@ -841,21 +863,30 @@ const ElecIdExperience = () => {
                   >
                     <div className="flex gap-4">
                       {/* Large Duration Badge */}
-                      <div className={cn(
-                        "flex-shrink-0 w-16 h-16 rounded-xl flex flex-col items-center justify-center",
-                        exp.isCurrent
-                          ? "bg-elec-yellow/20 border border-elec-yellow/30"
-                          : "bg-white/[0.06] border border-white/[0.08]"
-                      )}>
-                        <Clock className={cn(
-                          "h-5 w-5 mb-0.5",
-                          exp.isCurrent ? "text-elec-yellow" : "text-foreground/60"
-                        )} />
-                        <span className={cn(
-                          "text-sm font-bold",
-                          exp.isCurrent ? "text-elec-yellow" : "text-foreground"
-                        )}>
-                          {calculateDuration(exp.startDate, exp.isCurrent ? undefined : exp.endDate)}
+                      <div
+                        className={cn(
+                          'flex-shrink-0 w-16 h-16 rounded-xl flex flex-col items-center justify-center',
+                          exp.isCurrent
+                            ? 'bg-elec-yellow/20 border border-elec-yellow/30'
+                            : 'bg-white/[0.06] border border-white/[0.08]'
+                        )}
+                      >
+                        <Clock
+                          className={cn(
+                            'h-5 w-5 mb-0.5',
+                            exp.isCurrent ? 'text-elec-yellow' : 'text-foreground/60'
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            'text-sm font-bold',
+                            exp.isCurrent ? 'text-elec-yellow' : 'text-foreground'
+                          )}
+                        >
+                          {calculateDuration(
+                            exp.startDate,
+                            exp.isCurrent ? undefined : exp.endDate
+                          )}
                         </span>
                       </div>
 
@@ -878,7 +909,9 @@ const ElecIdExperience = () => {
                         <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3 text-xs">
                           <div className="flex items-center gap-1.5 text-foreground/60">
                             <Calendar className="h-3.5 w-3.5 text-foreground/40" />
-                            <span>{formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}</span>
+                            <span>
+                              {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}
+                            </span>
                           </div>
                           {exp.location && (
                             <div className="flex items-center gap-1.5 text-foreground/60">
@@ -898,13 +931,19 @@ const ElecIdExperience = () => {
                         {/* Status Badges */}
                         <div className="flex items-center gap-2 flex-wrap mt-3">
                           {exp.verifiedByEmployer && (
-                            <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-xs">
+                            <Badge
+                              variant="outline"
+                              className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-xs"
+                            >
                               <Award className="h-3 w-3 mr-1" />
                               Verified
                             </Badge>
                           )}
                           {!exp.verifiedByEmployer && (
-                            <Badge variant="outline" className="bg-white/[0.03] text-foreground/50 border-white/[0.1] text-xs">
+                            <Badge
+                              variant="outline"
+                              className="bg-white/[0.03] text-foreground/50 border-white/[0.1] text-xs"
+                            >
                               <User className="h-3 w-3 mr-1" />
                               Self-Reported
                             </Badge>
@@ -943,16 +982,14 @@ const ElecIdExperience = () => {
         </div>
       ) : (
         /* Empty State */
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="py-8"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="py-8">
           <div className="rounded-2xl border border-dashed border-white/[0.15] bg-gradient-to-br from-white/[0.02] to-transparent p-8 text-center">
             <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-600/10 flex items-center justify-center">
               <Briefcase className="h-10 w-10 text-elec-yellow" />
             </div>
-            <h4 className="text-xl font-semibold text-foreground mb-2">Build Your Career Timeline</h4>
+            <h4 className="text-xl font-semibold text-foreground mb-2">
+              Build Your Career Timeline
+            </h4>
             <p className="text-foreground/60 max-w-sm mx-auto mb-6 leading-relaxed">
               Add your work experience to create a professional timeline that employers can verify.
             </p>

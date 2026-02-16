@@ -167,7 +167,8 @@ export const useAddElecIdQualification = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: Omit<ElecIdQualification, 'id' | 'created_at'>) => addElecIdQualification(data),
+    mutationFn: (data: Omit<ElecIdQualification, 'id' | 'created_at'>) =>
+      addElecIdQualification(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['elec-id-profiles'] });
     },

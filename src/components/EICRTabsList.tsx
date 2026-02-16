@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MobileTabsList, MobileTabsTrigger } from '@/components/ui/mobile-tabs';
 import { TabsTrigger } from '@/components/ui/tabs';
@@ -13,13 +12,13 @@ interface EICRTabsListProps {
 
 const EICRTabsList = ({ currentTab, canAccessTab }: EICRTabsListProps) => {
   const isMobile = useIsMobile();
-  
+
   const tabs = [
     { value: 'details', label: 'Details', fullLabel: 'Installation Details' },
     { value: 'inspection', label: 'Inspect', fullLabel: 'Inspection' },
     { value: 'testing', label: 'Test', fullLabel: 'Testing' },
     { value: 'inspector', label: 'Inspector', fullLabel: 'Inspector' },
-    { value: 'certificate', label: 'Cert', fullLabel: 'Certificate' }
+    { value: 'certificate', label: 'Cert', fullLabel: 'Certificate' },
   ];
 
   return (

@@ -44,8 +44,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
   const quickCheckQuestions = [
     {
       id: 'qc1-m3s2',
-      question:
-        'What is the primary advantage of SMETS2 meters over SMETS1 meters in the UK?',
+      question: 'What is the primary advantage of SMETS2 meters over SMETS1 meters in the UK?',
       options: [
         'They use less electricity',
         'They can switch suppliers without losing smart functionality',
@@ -58,8 +57,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
     },
     {
       id: 'qc2-m3s2',
-      question:
-        'Under P272, which business electricity meters require half-hourly settlement?',
+      question: 'Under P272, which business electricity meters require half-hourly settlement?',
       options: [
         'All business meters regardless of size',
         'Only meters with maximum demand over 1MW',
@@ -72,8 +70,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
     },
     {
       id: 'qc3-m3s2',
-      question:
-        'What does a Consumer Access Device (CAD) connect to for real-time energy data?',
+      question: 'What does a Consumer Access Device (CAD) connect to for real-time energy data?',
       options: [
         'The electricity grid directly',
         'The Home Area Network (HAN) of the smart meter',
@@ -82,7 +79,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       ],
       correctIndex: 1,
       explanation:
-        'A CAD connects to the smart meter\'s Home Area Network (HAN) using ZigBee protocol, allowing real-time access to consumption data without going through the supplier or DCC.',
+        "A CAD connects to the smart meter's Home Area Network (HAN) using ZigBee protocol, allowing real-time access to consumption data without going through the supplier or DCC.",
     },
   ];
 
@@ -110,20 +107,17 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       correctAnswer: 'D0010 and D0036 industry data flows',
     },
     {
-      question:
-        'What information should be recorded alongside a manual meter reading?',
+      question: 'What information should be recorded alongside a manual meter reading?',
       options: [
         'Only the kWh value displayed',
         'Date, time, meter serial number, reading value, and any anomalies',
         'Just the date and reading',
         'The weather conditions only',
       ],
-      correctAnswer:
-        'Date, time, meter serial number, reading value, and any anomalies',
+      correctAnswer: 'Date, time, meter serial number, reading value, and any anomalies',
     },
     {
-      question:
-        'Which protocol do SMETS2 smart meters use for the Home Area Network?',
+      question: 'Which protocol do SMETS2 smart meters use for the Home Area Network?',
       options: ['WiFi 6', 'Bluetooth Low Energy', 'ZigBee', 'LoRaWAN'],
       correctAnswer: 'ZigBee',
     },
@@ -160,40 +154,34 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       correctAnswer: 'Meters on each major load type and floor/zone',
     },
     {
-      question:
-        'How can Building Management System data complement electricity meter data?',
+      question: 'How can Building Management System data complement electricity meter data?',
       options: [
         'BMS data is not relevant to energy analysis',
         'It provides context like occupancy, temperatures, and equipment schedules',
         'It replaces the need for electricity meters',
         'It only monitors fire alarms',
       ],
-      correctAnswer:
-        'It provides context like occupancy, temperatures, and equipment schedules',
+      correctAnswer: 'It provides context like occupancy, temperatures, and equipment schedules',
     },
     {
-      question:
-        'What is the Data Communications Company (DCC) role in UK smart metering?',
+      question: 'What is the Data Communications Company (DCC) role in UK smart metering?',
       options: [
         'Manufacturing smart meters',
         'Providing the secure network linking smart meters to energy suppliers',
         'Setting electricity prices',
         'Installing meters in homes',
       ],
-      correctAnswer:
-        'Providing the secure network linking smart meters to energy suppliers',
+      correctAnswer: 'Providing the secure network linking smart meters to energy suppliers',
     },
     {
-      question:
-        'Which data cleaning technique helps identify outliers in energy consumption data?',
+      question: 'Which data cleaning technique helps identify outliers in energy consumption data?',
       options: [
         'Deleting all data and starting fresh',
         'Statistical analysis using standard deviation and percentile methods',
         'Ignoring any unusual values',
         'Averaging all readings to a single value',
       ],
-      correctAnswer:
-        'Statistical analysis using standard deviation and percentile methods',
+      correctAnswer: 'Statistical analysis using standard deviation and percentile methods',
     },
   ];
 
@@ -201,7 +189,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
     {
       question: 'How do I access half-hourly data from my smart meter as a consumer?',
       answer:
-        'You can request your half-hourly data directly from your energy supplier, who must provide it free of charge within 10 working days under Ofgem rules. Alternatively, use a Consumer Access Device (CAD) to access real-time data via the meter\'s Home Area Network, or register with the Smart Energy GB data access service. Some suppliers also offer online portals or apps where you can download your consumption data in CSV format.',
+        "You can request your half-hourly data directly from your energy supplier, who must provide it free of charge within 10 working days under Ofgem rules. Alternatively, use a Consumer Access Device (CAD) to access real-time data via the meter's Home Area Network, or register with the Smart Energy GB data access service. Some suppliers also offer online portals or apps where you can download your consumption data in CSV format.",
     },
     {
       question: 'What is the difference between SMETS1 and SMETS2 meters?',
@@ -235,7 +223,12 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-3">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -251,12 +244,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
         {/* Page Title */}
         <div className="text-center space-y-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
-            Data Collection Methods
-          </h1>
-          <p className="text-white/80">
-            Manual, Smart Meters, and Building Management System Logs
-          </p>
+          <h1 className="text-2xl md:text-3xl font-bold text-white">Data Collection Methods</h1>
+          <p className="text-white/80">Manual, Smart Meters, and Building Management System Logs</p>
         </div>
 
         {/* Quick Summary */}
@@ -289,11 +278,10 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               </h2>
               <p className="text-white/80 leading-relaxed">
                 Effective energy management begins with reliable data collection. This section
-                covers the practical methods for gathering energy consumption data in UK
-                buildings, from traditional manual readings to modern smart meter systems and
-                building management logs. Understanding these data sources and their
-                characteristics is essential for accurate energy analysis and identifying
-                efficiency opportunities.
+                covers the practical methods for gathering energy consumption data in UK buildings,
+                from traditional manual readings to modern smart meter systems and building
+                management logs. Understanding these data sources and their characteristics is
+                essential for accurate energy analysis and identifying efficiency opportunities.
               </p>
             </div>
           </div>
@@ -308,9 +296,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Despite the rollout of smart meters, manual reading remains important for
-              sub-meters, backup verification, and legacy installations. Accurate manual
-              reading requires systematic approach and proper documentation.
+              Despite the rollout of smart meters, manual reading remains important for sub-meters,
+              backup verification, and legacy installations. Accurate manual reading requires
+              systematic approach and proper documentation.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -331,24 +319,48 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Recommended Reading Schedules</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">
+                  Recommended Reading Schedules
+                </h4>
                 <ul className="text-sm text-white space-y-1">
-                  <li><span className="text-white/80">High consumption sites:</span> Weekly</li>
-                  <li><span className="text-white/80">Medium sites:</span> Fortnightly</li>
-                  <li><span className="text-white/80">Low consumption:</span> Monthly</li>
-                  <li><span className="text-white/80">Sub-meters:</span> Match main meter frequency</li>
-                  <li><span className="text-white/80">Consistency:</span> Same day/time each period</li>
+                  <li>
+                    <span className="text-white/80">High consumption sites:</span> Weekly
+                  </li>
+                  <li>
+                    <span className="text-white/80">Medium sites:</span> Fortnightly
+                  </li>
+                  <li>
+                    <span className="text-white/80">Low consumption:</span> Monthly
+                  </li>
+                  <li>
+                    <span className="text-white/80">Sub-meters:</span> Match main meter frequency
+                  </li>
+                  <li>
+                    <span className="text-white/80">Consistency:</span> Same day/time each period
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Common Reading Errors to Avoid</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">
+                  Common Reading Errors to Avoid
+                </h4>
                 <ul className="text-sm text-white space-y-1">
-                  <li><span className="text-red-400">✗</span> Transposing digits (1234 vs 1243)</li>
-                  <li><span className="text-red-400">✗</span> Missing decimal places</li>
-                  <li><span className="text-red-400">✗</span> Reading wrong register (day/night)</li>
-                  <li><span className="text-red-400">✗</span> Forgetting CT multiplier</li>
-                  <li><span className="text-red-400">✗</span> Inconsistent reading times</li>
+                  <li>
+                    <span className="text-red-400">✗</span> Transposing digits (1234 vs 1243)
+                  </li>
+                  <li>
+                    <span className="text-red-400">✗</span> Missing decimal places
+                  </li>
+                  <li>
+                    <span className="text-red-400">✗</span> Reading wrong register (day/night)
+                  </li>
+                  <li>
+                    <span className="text-red-400">✗</span> Forgetting CT multiplier
+                  </li>
+                  <li>
+                    <span className="text-red-400">✗</span> Inconsistent reading times
+                  </li>
                 </ul>
               </div>
             </div>
@@ -359,9 +371,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 <div>
                   <h4 className="text-elec-yellow font-medium">CT-Connected Meters</h4>
                   <p className="text-sm text-white mt-1">
-                    For meters using Current Transformers, always multiply the displayed
-                    reading by the CT ratio. A meter showing 1,000 kWh with 200:5 CTs actually
-                    represents 40,000 kWh (1,000 × 40).
+                    For meters using Current Transformers, always multiply the displayed reading by
+                    the CT ratio. A meter showing 1,000 kWh with 200:5 CTs actually represents
+                    40,000 kWh (1,000 × 40).
                   </p>
                 </div>
               </div>
@@ -378,9 +390,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              The UK's smart metering infrastructure provides multiple routes to access
-              consumption data. Understanding these pathways is crucial for implementing
-              effective energy monitoring systems.
+              The UK's smart metering infrastructure provides multiple routes to access consumption
+              data. Understanding these pathways is crucial for implementing effective energy
+              monitoring systems.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -392,8 +404,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <div className="bg-blue-600 rounded px-2 py-1 text-xs font-medium">HAN</div>
                   <p>
-                    <strong>Home Area Network:</strong> ZigBee-based local network connecting
-                    meter, IHD (In-Home Display), and authorised CADs within the property.
+                    <strong>Home Area Network:</strong> ZigBee-based local network connecting meter,
+                    IHD (In-Home Display), and authorised CADs within the property.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -406,8 +418,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <div className="bg-purple-600 rounded px-2 py-1 text-xs font-medium">DCC</div>
                   <p>
-                    <strong>Data Communications Company:</strong> Central hub providing secure
-                    data exchange between meters, suppliers, and authorised third parties.
+                    <strong>Data Communications Company:</strong> Central hub providing secure data
+                    exchange between meters, suppliers, and authorised third parties.
                   </p>
                 </div>
               </div>
@@ -415,10 +427,12 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Consumer Access Device (CAD)</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">
+                  Consumer Access Device (CAD)
+                </h4>
                 <p className="text-sm text-white mb-2">
-                  A CAD connects directly to your smart meter's HAN, providing real-time
-                  consumption data without supplier involvement:
+                  A CAD connects directly to your smart meter's HAN, providing real-time consumption
+                  data without supplier involvement:
                 </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Requires pairing with meter via supplier request</li>
@@ -432,11 +446,21 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Data Access Routes</h4>
                 <ul className="text-sm text-white space-y-2">
-                  <li><strong>Via Supplier:</strong> Request HH data (free, 10 working days)</li>
-                  <li><strong>Smart Energy GB:</strong> Consumer data access portal</li>
-                  <li><strong>CAD + Cloud:</strong> Real-time via device manufacturer's API</li>
-                  <li><strong>DCC Access:</strong> For authorised parties (complex, licenced)</li>
-                  <li><strong>Supplier Apps:</strong> Octopus, Bulb, OVO offer data downloads</li>
+                  <li>
+                    <strong>Via Supplier:</strong> Request HH data (free, 10 working days)
+                  </li>
+                  <li>
+                    <strong>Smart Energy GB:</strong> Consumer data access portal
+                  </li>
+                  <li>
+                    <strong>CAD + Cloud:</strong> Real-time via device manufacturer's API
+                  </li>
+                  <li>
+                    <strong>DCC Access:</strong> For authorised parties (complex, licenced)
+                  </li>
+                  <li>
+                    <strong>Supplier Apps:</strong> Octopus, Bulb, OVO offer data downloads
+                  </li>
                 </ul>
               </div>
             </div>
@@ -461,9 +485,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Half-hourly (HH) data provides granular insight into consumption patterns,
-              enabling detailed analysis of peak demand, baseload, and time-of-use
-              optimisation opportunities.
+              Half-hourly (HH) data provides granular insight into consumption patterns, enabling
+              detailed analysis of peak demand, baseload, and time-of-use optimisation
+              opportunities.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -472,15 +496,25 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 P272 and Half-Hourly Settlement
               </h3>
               <p className="text-sm text-white mb-3">
-                Ofgem's P272 modification requires larger business meters (Profile Classes
-                05-08, typically &gt;100kW maximum demand) to be settled on actual half-hourly
-                data rather than estimated profiles. This provides:
+                Ofgem's P272 modification requires larger business meters (Profile Classes 05-08,
+                typically &gt;100kW maximum demand) to be settled on actual half-hourly data rather
+                than estimated profiles. This provides:
               </p>
               <ul className="text-sm text-white space-y-1">
-                <li><span className="text-green-400">✓</span> Accurate billing based on actual consumption times</li>
-                <li><span className="text-green-400">✓</span> Incentive to shift load away from expensive periods (Triads, Red zones)</li>
-                <li><span className="text-green-400">✓</span> Detailed data for energy management</li>
-                <li><span className="text-green-400">✓</span> Demand-side response opportunities</li>
+                <li>
+                  <span className="text-green-400">✓</span> Accurate billing based on actual
+                  consumption times
+                </li>
+                <li>
+                  <span className="text-green-400">✓</span> Incentive to shift load away from
+                  expensive periods (Triads, Red zones)
+                </li>
+                <li>
+                  <span className="text-green-400">✓</span> Detailed data for energy management
+                </li>
+                <li>
+                  <span className="text-green-400">✓</span> Demand-side response opportunities
+                </li>
               </ul>
             </div>
 
@@ -565,9 +599,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Building Management Systems (BMS) provide contextual data essential for
-              understanding energy consumption patterns. Integrating BMS data with meter
-              readings enables sophisticated analysis of building performance.
+              Building Management Systems (BMS) provide contextual data essential for understanding
+              energy consumption patterns. Integrating BMS data with meter readings enables
+              sophisticated analysis of building performance.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -607,8 +641,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <div>
                     <strong className="text-white">Manual Export:</strong>
                     <p className="text-sm text-white/80">
-                      CSV/Excel export from BMS front-end. Suitable for periodic analysis
-                      but labour-intensive for continuous monitoring.
+                      CSV/Excel export from BMS front-end. Suitable for periodic analysis but
+                      labour-intensive for continuous monitoring.
                     </p>
                   </div>
                 </div>
@@ -617,8 +651,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <div>
                     <strong className="text-white">Database Connection:</strong>
                     <p className="text-sm text-white/80">
-                      Direct SQL connection to BMS historian. Enables automated data
-                      extraction for analytics platforms.
+                      Direct SQL connection to BMS historian. Enables automated data extraction for
+                      analytics platforms.
                     </p>
                   </div>
                 </div>
@@ -627,8 +661,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <div>
                     <strong className="text-white">API Integration:</strong>
                     <p className="text-sm text-white/80">
-                      Modern BMS platforms (e.g., Trend IQ4, Honeywell Niagara) offer REST
-                      APIs for real-time data access and integration.
+                      Modern BMS platforms (e.g., Trend IQ4, Honeywell Niagara) offer REST APIs for
+                      real-time data access and integration.
                     </p>
                   </div>
                 </div>
@@ -637,8 +671,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <div>
                     <strong className="text-white">BACnet/Modbus:</strong>
                     <p className="text-sm text-white/80">
-                      Protocol-level integration for adding energy meters directly to BMS
-                      or extracting data to third-party systems.
+                      Protocol-level integration for adding energy meters directly to BMS or
+                      extracting data to third-party systems.
                     </p>
                   </div>
                 </div>
@@ -652,8 +686,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               </h4>
               <p className="text-sm text-white">
                 When correlating BMS data with energy consumption, ensure timestamps are
-                synchronised. BMS systems may use local time while meter data uses UTC.
-                A 1-hour offset during BST can significantly skew analysis results.
+                synchronised. BMS systems may use local time while meter data uses UTC. A 1-hour
+                offset during BST can significantly skew analysis results.
               </p>
             </div>
           </div>
@@ -668,9 +702,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Sub-metering provides the granular data needed to identify specific energy
-              efficiency opportunities. Strategic placement maximises insight while
-              managing installation costs.
+              Sub-metering provides the granular data needed to identify specific energy efficiency
+              opportunities. Strategic placement maximises insight while managing installation
+              costs.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -681,15 +715,21 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <div className="space-y-2 text-sm text-white">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-elec-yellow rounded-full"></div>
-                  <span><strong>Level 1:</strong> Main incomer (fiscal meter) - Total site consumption</span>
+                  <span>
+                    <strong>Level 1:</strong> Main incomer (fiscal meter) - Total site consumption
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 ml-4">
                   <div className="w-2.5 h-2.5 bg-blue-400 rounded-full"></div>
-                  <span><strong>Level 2:</strong> Distribution boards - Major load categories</span>
+                  <span>
+                    <strong>Level 2:</strong> Distribution boards - Major load categories
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 ml-8">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span><strong>Level 3:</strong> End-use circuits - Specific equipment/zones</span>
+                  <span>
+                    <strong>Level 3:</strong> End-use circuits - Specific equipment/zones
+                  </span>
                 </div>
               </div>
             </div>
@@ -698,17 +738,31 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Priority Metering Points</h4>
                 <ul className="text-sm text-white space-y-1">
-                  <li><span className="text-green-400">■</span> HVAC plant (chillers, AHUs, pumps)</li>
-                  <li><span className="text-green-400">■</span> Lighting circuits by zone</li>
-                  <li><span className="text-green-400">■</span> Server rooms/IT loads</li>
-                  <li><span className="text-green-400">■</span> Production equipment</li>
-                  <li><span className="text-green-400">■</span> Catering/kitchen facilities</li>
-                  <li><span className="text-green-400">■</span> Tenant/department areas</li>
+                  <li>
+                    <span className="text-green-400">■</span> HVAC plant (chillers, AHUs, pumps)
+                  </li>
+                  <li>
+                    <span className="text-green-400">■</span> Lighting circuits by zone
+                  </li>
+                  <li>
+                    <span className="text-green-400">■</span> Server rooms/IT loads
+                  </li>
+                  <li>
+                    <span className="text-green-400">■</span> Production equipment
+                  </li>
+                  <li>
+                    <span className="text-green-400">■</span> Catering/kitchen facilities
+                  </li>
+                  <li>
+                    <span className="text-green-400">■</span> Tenant/department areas
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Sub-Meter Selection Criteria</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">
+                  Sub-Meter Selection Criteria
+                </h4>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Accuracy class (MID Class 1 or 2)</li>
                   <li>• Communication protocol (Modbus, M-Bus, Pulse)</li>
@@ -754,9 +808,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Raw energy data often contains errors, gaps, and anomalies that must be
-              identified and addressed before analysis. Robust validation ensures reliable
-              conclusions and recommendations.
+              Raw energy data often contains errors, gaps, and anomalies that must be identified and
+              addressed before analysis. Robust validation ensures reliable conclusions and
+              recommendations.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -792,8 +846,8 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 <div>
                   <h4 className="text-white font-medium mb-1">Range Checks</h4>
                   <p className="text-sm text-white/80">
-                    Verify readings fall within expected bounds. Flag values exceeding
-                    maximum demand or below zero (unless export meter).
+                    Verify readings fall within expected bounds. Flag values exceeding maximum
+                    demand or below zero (unless export meter).
                   </p>
                 </div>
                 <div>
@@ -806,15 +860,15 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 <div>
                   <h4 className="text-white font-medium mb-1">Statistical Outlier Detection</h4>
                   <p className="text-sm text-white/80">
-                    Use standard deviation (flag values &gt;3σ from mean) or interquartile
-                    range (values below Q1-1.5×IQR or above Q3+1.5×IQR) to identify anomalies.
+                    Use standard deviation (flag values &gt;3σ from mean) or interquartile range
+                    (values below Q1-1.5×IQR or above Q3+1.5×IQR) to identify anomalies.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1">Pattern Validation</h4>
                   <p className="text-sm text-white/80">
-                    Compare current period to historical patterns. Unexpected baseload
-                    changes or absent weekday/weekend differentiation may indicate issues.
+                    Compare current period to historical patterns. Unexpected baseload changes or
+                    absent weekday/weekend differentiation may indicate issues.
                   </p>
                 </div>
               </div>
@@ -824,10 +878,19 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Gap Filling Methods</h4>
                 <ul className="text-sm text-white space-y-2">
-                  <li><strong>Linear interpolation:</strong> For gaps under 2 hours</li>
-                  <li><strong>Historical substitution:</strong> Same period from previous week</li>
-                  <li><strong>Regression models:</strong> Based on related variables (weather, occupancy)</li>
-                  <li><strong>Mark as estimated:</strong> Always flag interpolated data</li>
+                  <li>
+                    <strong>Linear interpolation:</strong> For gaps under 2 hours
+                  </li>
+                  <li>
+                    <strong>Historical substitution:</strong> Same period from previous week
+                  </li>
+                  <li>
+                    <strong>Regression models:</strong> Based on related variables (weather,
+                    occupancy)
+                  </li>
+                  <li>
+                    <strong>Mark as estimated:</strong> Always flag interpolated data
+                  </li>
                 </ul>
               </div>
 
@@ -849,10 +912,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 <div>
                   <h4 className="text-red-400 font-medium">Meter Fault Indicators</h4>
                   <p className="text-sm text-white mt-1">
-                    Investigate immediately if you observe: negative consumption values,
-                    readings decreasing over time, consumption during confirmed shutdown
-                    periods, or sudden persistent step changes in baseload without
-                    corresponding operational changes.
+                    Investigate immediately if you observe: negative consumption values, readings
+                    decreasing over time, consumption during confirmed shutdown periods, or sudden
+                    persistent step changes in baseload without corresponding operational changes.
                   </p>
                 </div>
               </div>
@@ -885,12 +947,24 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
             <div>
               <h3 className="text-white font-medium mb-2">Key UK Standards & Codes</h3>
               <ul className="text-sm text-white space-y-1">
-                <li><strong>P272:</strong> Half-hourly settlement for large supplies</li>
-                <li><strong>MID:</strong> Measuring Instruments Directive accuracy</li>
-                <li><strong>CIBSE TM39:</strong> Sub-metering guidance</li>
-                <li><strong>D-flows:</strong> Industry data formats (D0010, D0036)</li>
-                <li><strong>SMETS2:</strong> Second generation smart meter spec</li>
-                <li><strong>ESOS:</strong> Energy audit documentation requirements</li>
+                <li>
+                  <strong>P272:</strong> Half-hourly settlement for large supplies
+                </li>
+                <li>
+                  <strong>MID:</strong> Measuring Instruments Directive accuracy
+                </li>
+                <li>
+                  <strong>CIBSE TM39:</strong> Sub-metering guidance
+                </li>
+                <li>
+                  <strong>D-flows:</strong> Industry data formats (D0010, D0036)
+                </li>
+                <li>
+                  <strong>SMETS2:</strong> Second generation smart meter spec
+                </li>
+                <li>
+                  <strong>ESOS:</strong> Energy audit documentation requirements
+                </li>
               </ul>
             </div>
 
@@ -924,10 +998,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
           <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-2">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border border-white/10 rounded-lg overflow-hidden"
-              >
+              <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
                   <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>

@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m1s4-check1",
-    question: "Which British Standard is the primary code of practice for emergency lighting?",
-    options: ["BS 7671", "BS 5266-1", "BS EN 1838", "BS EN 50172"],
+    id: 'emergencylighting-m1s4-check1',
+    question: 'Which British Standard is the primary code of practice for emergency lighting?',
+    options: ['BS 7671', 'BS 5266-1', 'BS EN 1838', 'BS EN 50172'],
     correctIndex: 1,
-    explanation: "BS 5266-1 is the UK code of practice for emergency lighting of premises. It incorporates European requirements and provides detailed guidance on design, installation, and maintenance."
+    explanation:
+      'BS 5266-1 is the UK code of practice for emergency lighting of premises. It incorporates European requirements and provides detailed guidance on design, installation, and maintenance.',
   },
   {
-    id: "emergencylighting-m1s4-check2",
-    question: "What does BS EN 1838 specifically cover?",
-    options: ["Installation methods", "Light output and photometric requirements", "Battery specifications", "Testing procedures"],
+    id: 'emergencylighting-m1s4-check2',
+    question: 'What does BS EN 1838 specifically cover?',
+    options: [
+      'Installation methods',
+      'Light output and photometric requirements',
+      'Battery specifications',
+      'Testing procedures',
+    ],
     correctIndex: 1,
-    explanation: "BS EN 1838 'Lighting applications - Emergency lighting' covers photometric requirements including illumination levels, uniformity ratios, and colour rendering. BS 5266-1 references this for technical specifications."
+    explanation:
+      "BS EN 1838 'Lighting applications - Emergency lighting' covers photometric requirements including illumination levels, uniformity ratios, and colour rendering. BS 5266-1 references this for technical specifications.",
   },
   {
-    id: "emergencylighting-m1s4-check3",
-    question: "Which standard covers emergency lighting luminaire construction?",
-    options: ["BS 5266-1", "BS EN 60598-2-22", "BS EN 1838", "BS 7671"],
+    id: 'emergencylighting-m1s4-check3',
+    question: 'Which standard covers emergency lighting luminaire construction?',
+    options: ['BS 5266-1', 'BS EN 60598-2-22', 'BS EN 1838', 'BS 7671'],
     correctIndex: 1,
-    explanation: "BS EN 60598-2-22 covers the construction requirements for emergency lighting luminaires, including battery and charging requirements, lamp requirements, and safety aspects."
-  }
+    explanation:
+      'BS EN 60598-2-22 covers the construction requirements for emergency lighting luminaires, including battery and charging requirements, lamp requirements, and safety aspects.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do BS 5266-1 and BS EN 50172 relate?",
-    answer: "BS EN 50172 is the European standard for emergency escape lighting. BS 5266-1 incorporates its requirements while adding UK-specific guidance. Following BS 5266-1 automatically meets BS EN 50172."
+    question: 'How do BS 5266-1 and BS EN 50172 relate?',
+    answer:
+      'BS EN 50172 is the European standard for emergency escape lighting. BS 5266-1 incorporates its requirements while adding UK-specific guidance. Following BS 5266-1 automatically meets BS EN 50172.',
   },
   {
-    question: "Do I need to read all the standards to design emergency lighting?",
-    answer: "BS 5266-1 is the primary reference and incorporates requirements from other standards. It references BS EN 1838 for photometric data and BS EN 60598-2-22 for luminaire specifications."
+    question: 'Do I need to read all the standards to design emergency lighting?',
+    answer:
+      'BS 5266-1 is the primary reference and incorporates requirements from other standards. It references BS EN 1838 for photometric data and BS EN 60598-2-22 for luminaire specifications.',
   },
   {
     question: "What's the relationship between BS 5266 parts?",
-    answer: "BS 5266-1 covers general requirements, BS 5266-2 covers exit signs, BS 5266-7 covers high-risk task lighting, and BS 5266-8 covers the log book. Part 1 is the core document."
+    answer:
+      'BS 5266-1 covers general requirements, BS 5266-2 covers exit signs, BS 5266-7 covers high-risk task lighting, and BS 5266-8 covers the log book. Part 1 is the core document.',
   },
   {
-    question: "Which standard covers wiring of emergency lighting?",
-    answer: "BS 7671 (IET Wiring Regulations) covers all electrical installation work including emergency lighting circuits. BS 5266-1 references specific BS 7671 requirements for emergency lighting wiring."
-  }
+    question: 'Which standard covers wiring of emergency lighting?',
+    answer:
+      'BS 7671 (IET Wiring Regulations) covers all electrical installation work including emergency lighting circuits. BS 5266-1 references specific BS 7671 requirements for emergency lighting wiring.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An inspector asks to see your emergency lighting design calculations. Which standard should your photometric calculations reference?",
-  options: [
-    "BS 5266-1 only",
-    "BS 7671",
-    "BS EN 1838 (referenced via BS 5266-1)",
-    "BS EN 60598-2-22"
-  ],
-  correctAnswer: 2,
-  explanation: "Photometric calculations should reference BS EN 1838 which specifies illumination levels, uniformity ratios, and other lighting requirements. BS 5266-1 references this standard for the technical specifications."
-  }
+    question:
+      'An inspector asks to see your emergency lighting design calculations. Which standard should your photometric calculations reference?',
+    options: [
+      'BS 5266-1 only',
+      'BS 7671',
+      'BS EN 1838 (referenced via BS 5266-1)',
+      'BS EN 60598-2-22',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Photometric calculations should reference BS EN 1838 which specifies illumination levels, uniformity ratios, and other lighting requirements. BS 5266-1 references this standard for the technical specifications.',
+  },
 ];
 
 const EmergencyLightingModule1Section4 = () => {
   useSEO({
-    title: "Overview of BS 5266 and Related Standards | Emergency Lighting Module 1.4",
-    description: "Comprehensive understanding of British Standards and regulations governing emergency lighting including BS 5266-1, BS EN 1838, and BS EN 60598-2-22."
+    title: 'Overview of BS 5266 and Related Standards | Emergency Lighting Module 1.4',
+    description:
+      'Comprehensive understanding of British Standards and regulations governing emergency lighting including BS 5266-1, BS EN 1838, and BS EN 60598-2-22.',
   });
 
   return (
@@ -108,17 +123,29 @@ const EmergencyLightingModule1Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>BS 5266-1:</strong> Primary UK code of practice</li>
-              <li><strong>BS EN 1838:</strong> Photometric requirements</li>
-              <li><strong>BS EN 60598:</strong> Luminaire construction</li>
+              <li>
+                <strong>BS 5266-1:</strong> Primary UK code of practice
+              </li>
+              <li>
+                <strong>BS EN 1838:</strong> Photometric requirements
+              </li>
+              <li>
+                <strong>BS EN 60598:</strong> Luminaire construction
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">BS 5266 Parts</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Part 1:</strong> General requirements</li>
-              <li><strong>Part 2:</strong> Exit signs</li>
-              <li><strong>Part 8:</strong> Log book requirements</li>
+              <li>
+                <strong>Part 1:</strong> General requirements
+              </li>
+              <li>
+                <strong>Part 2:</strong> Exit signs
+              </li>
+              <li>
+                <strong>Part 8:</strong> Log book requirements
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +155,12 @@ const EmergencyLightingModule1Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Navigate the BS 5266 standard series",
-              "Understand European standard relationships",
-              "Reference correct standards for design",
-              "Apply photometric requirements from BS EN 1838",
-              "Identify luminaire specification standards",
-              "Link standards to regulatory requirements"
+              'Navigate the BS 5266 standard series',
+              'Understand European standard relationships',
+              'Reference correct standards for design',
+              'Apply photometric requirements from BS EN 1838',
+              'Identify luminaire specification standards',
+              'Link standards to regulatory requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -161,10 +188,18 @@ const EmergencyLightingModule1Section4 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Parts</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Part 1:</strong> Code of practice (primary)</li>
-                  <li><strong>Part 2:</strong> Emergency escape lighting</li>
-                  <li><strong>Part 7:</strong> High-risk task area lighting</li>
-                  <li><strong>Part 8:</strong> Log book specification</li>
+                  <li>
+                    <strong>Part 1:</strong> Code of practice (primary)
+                  </li>
+                  <li>
+                    <strong>Part 2:</strong> Emergency escape lighting
+                  </li>
+                  <li>
+                    <strong>Part 7:</strong> High-risk task area lighting
+                  </li>
+                  <li>
+                    <strong>Part 8:</strong> Log book specification
+                  </li>
                 </ul>
               </div>
               <div>
@@ -190,8 +225,8 @@ const EmergencyLightingModule1Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              European standards (EN) are incorporated into British Standards. Understanding
-              these relationships ensures designs meet all requirements.
+              European standards (EN) are incorporated into British Standards. Understanding these
+              relationships ensures designs meet all requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -251,10 +286,18 @@ const EmergencyLightingModule1Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key Equipment Standards:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>BS EN 60598-2-22:</strong> Emergency luminaire construction</li>
-                <li><strong>BS EN 62034:</strong> Automatic test systems</li>
-                <li><strong>BS EN 50171:</strong> Central power supply systems</li>
-                <li><strong>BS 7671:</strong> Electrical installation requirements</li>
+                <li>
+                  <strong>BS EN 60598-2-22:</strong> Emergency luminaire construction
+                </li>
+                <li>
+                  <strong>BS EN 62034:</strong> Automatic test systems
+                </li>
+                <li>
+                  <strong>BS EN 50171:</strong> Central power supply systems
+                </li>
+                <li>
+                  <strong>BS 7671:</strong> Electrical installation requirements
+                </li>
               </ul>
             </div>
           </div>
@@ -267,7 +310,9 @@ const EmergencyLightingModule1Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Standards Reference Guide</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Standards Reference Guide
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Design: BS 5266-1 (references BS EN 1838)</li>
                 <li>Calculations: BS EN 1838 photometric data</li>
@@ -279,10 +324,18 @@ const EmergencyLightingModule1Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Standards Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Outdated references:</strong> — Check current versions</li>
-                <li><strong>Wrong standard cited:</strong> — BS 5266-1 for design, not BS 7671</li>
-                <li><strong>Missing European standards:</strong> — BS EN 1838 for photometrics</li>
-                <li><strong>Ignoring parts:</strong> — Part 8 mandatory for log books</li>
+                <li>
+                  <strong>Outdated references:</strong> — Check current versions
+                </li>
+                <li>
+                  <strong>Wrong standard cited:</strong> — BS 5266-1 for design, not BS 7671
+                </li>
+                <li>
+                  <strong>Missing European standards:</strong> — BS EN 1838 for photometrics
+                </li>
+                <li>
+                  <strong>Ignoring parts:</strong> — Part 8 mandatory for log books
+                </li>
               </ul>
             </div>
           </div>
@@ -328,10 +381,7 @@ const EmergencyLightingModule1Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

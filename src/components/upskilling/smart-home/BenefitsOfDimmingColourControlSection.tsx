@@ -12,27 +12,45 @@ export const BenefitsOfDimmingColourControlSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Advanced lighting control delivers measurable benefits across energy efficiency, user comfort, accessibility, and aesthetic impact.
+          Advanced lighting control delivers measurable benefits across energy efficiency, user
+          comfort, accessibility, and aesthetic impact.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="p-3 bg-green-600/10 border border-green-600/20 rounded-lg">
             <h5 className="font-semibold text-green-200 mb-2">Energy Efficiency</h5>
             <ul className="text-sm text-green-100 space-y-1">
-              <li>• <strong>Reduced brightness = lower consumption:</strong> 50% dim ≈ 25% energy use</li>
-              <li>• <strong>Automatic adjustments:</strong> Daylight harvesting and occupancy-based dimming</li>
-              <li>• <strong>Extended lamp life:</strong> Dimmed LEDs last longer and run cooler</li>
-              <li>• <strong>Optimised output:</strong> Right amount of light for each task</li>
+              <li>
+                • <strong>Reduced brightness = lower consumption:</strong> 50% dim ≈ 25% energy use
+              </li>
+              <li>
+                • <strong>Automatic adjustments:</strong> Daylight harvesting and occupancy-based
+                dimming
+              </li>
+              <li>
+                • <strong>Extended lamp life:</strong> Dimmed LEDs last longer and run cooler
+              </li>
+              <li>
+                • <strong>Optimised output:</strong> Right amount of light for each task
+              </li>
             </ul>
           </div>
-          
+
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <h5 className="font-semibold text-blue-200 mb-2">Enhanced Comfort & Mood</h5>
             <ul className="text-sm text-blue-100 space-y-1">
-              <li>• <strong>Cosy evenings:</strong> Warm, dimmed lighting for relaxation</li>
-              <li>• <strong>Productive mornings:</strong> Cool, bright light for alertness</li>
-              <li>• <strong>Mood enhancement:</strong> Colour therapy and ambience control</li>
-              <li>• <strong>Circadian support:</strong> Natural light cycles for better sleep</li>
+              <li>
+                • <strong>Cosy evenings:</strong> Warm, dimmed lighting for relaxation
+              </li>
+              <li>
+                • <strong>Productive mornings:</strong> Cool, bright light for alertness
+              </li>
+              <li>
+                • <strong>Mood enhancement:</strong> Colour therapy and ambience control
+              </li>
+              <li>
+                • <strong>Circadian support:</strong> Natural light cycles for better sleep
+              </li>
             </ul>
           </div>
         </div>
@@ -100,19 +118,22 @@ export const BenefitsOfDimmingColourControlSection = () => {
             <div>
               <h6 className="font-medium text-yellow-100">Home Office Productivity:</h6>
               <p className="text-sm text-yellow-100">
-                5000K cool white during work hours improves focus and reduces eye strain. Automatic dimming to 2700K in evening helps transition to relaxation mode.
+                5000K cool white during work hours improves focus and reduces eye strain. Automatic
+                dimming to 2700K in evening helps transition to relaxation mode.
               </p>
             </div>
             <div>
               <h6 className="font-medium text-yellow-100">Children's Sleep Quality:</h6>
               <p className="text-sm text-yellow-100">
-                Gradual dimming and colour temperature reduction over 30 minutes before bedtime helps establish healthy sleep routines and improves sleep onset.
+                Gradual dimming and colour temperature reduction over 30 minutes before bedtime
+                helps establish healthy sleep routines and improves sleep onset.
               </p>
             </div>
             <div>
               <h6 className="font-medium text-yellow-100">Elderly Care Facilities:</h6>
               <p className="text-sm text-yellow-100">
-                Bright white light during day maintains circadian rhythms, whilst motion-activated warm lighting provides safe night navigation without sleep disruption.
+                Bright white light during day maintains circadian rhythms, whilst motion-activated
+                warm lighting provides safe night navigation without sleep disruption.
               </p>
             </div>
           </div>

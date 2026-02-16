@@ -3,13 +3,13 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule2Section2LearningOutcomes = () => {
   const outcomes = [
-    "Define what mesh networking is and why it matters",
-    "Compare Zigbee and Z-Wave in terms of frequency, range, and power use",
-    "Identify common devices that use each protocol",
-    "Recognise compatibility issues between brands and ecosystems",
-    "Decide which protocol to recommend for different installation scenarios",
-    "Understand the advantages and limitations of each mesh protocol",
-    "Evaluate network capacity and device limitations for each protocol"
+    'Define what mesh networking is and why it matters',
+    'Compare Zigbee and Z-Wave in terms of frequency, range, and power use',
+    'Identify common devices that use each protocol',
+    'Recognise compatibility issues between brands and ecosystems',
+    'Decide which protocol to recommend for different installation scenarios',
+    'Understand the advantages and limitations of each mesh protocol',
+    'Evaluate network capacity and device limitations for each protocol',
   ];
 
   return (

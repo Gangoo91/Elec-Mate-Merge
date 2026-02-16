@@ -35,47 +35,49 @@ export const useConversationPersistence = () => {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
   // Auto-save conversation state
-  const saveConversation = useCallback(async (
-    title: string,
-    contextEnvelope: ContextEnvelope
-  ) => {
-    try {
-      setIsSaving(true);
+  const saveConversation = useCallback(
+    async (title: string, contextEnvelope: ContextEnvelope) => {
+      try {
+        setIsSaving(true);
 
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return null;
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) return null;
 
-      const conversationData = {
-        user_id: user.id,
-        title,
-        context_envelope: contextEnvelope as any,
-        last_agent: contextEnvelope.agentChain[contextEnvelope.agentChain.length - 1] || null,
-        message_count: contextEnvelope.contextHistory?.length || 0,
-        updated_at: new Date().toISOString()
-      };
+        const conversationData = {
+          user_id: user.id,
+          title,
+          context_envelope: contextEnvelope as any,
+          last_agent: contextEnvelope.agentChain[contextEnvelope.agentChain.length - 1] || null,
+          message_count: contextEnvelope.contextHistory?.length || 0,
+          updated_at: new Date().toISOString(),
+        };
 
-      // Upsert conversation
-      const { data, error } = await supabase
-        .from('conversations')
-        .upsert([{ id: conversationId, ...conversationData }], {
-          onConflict: 'id'
-        })
-        .select()
-        .single();
+        // Upsert conversation
+        const { data, error } = await supabase
+          .from('conversations')
+          .upsert([{ id: conversationId, ...conversationData }], {
+            onConflict: 'id',
+          })
+          .select()
+          .single();
 
-      if (error) throw error;
+        if (error) throw error;
 
-      setConversationId(data.id);
-      setLastSaved(new Date());
+        setConversationId(data.id);
+        setLastSaved(new Date());
 
-      return data.id;
-    } catch (error) {
-      console.error('Failed to save conversation:', error);
-      return null;
-    } finally {
-      setIsSaving(false);
-    }
-  }, [conversationId]);
+        return data.id;
+      } catch (error) {
+        console.error('Failed to save conversation:', error);
+        return null;
+      } finally {
+        setIsSaving(false);
+      }
+    },
+    [conversationId]
+  );
 
   // Load conversation by ID
   const loadConversation = useCallback(async (id: string) => {
@@ -96,7 +98,7 @@ export const useConversationPersistence = () => {
         lastAgent: data.last_agent,
         messageCount: data.message_count,
         createdAt: data.created_at,
-        updatedAt: data.updated_at
+        updatedAt: data.updated_at,
       };
     } catch (error) {
       console.error('Failed to load conversation:', error);
@@ -108,7 +110,9 @@ export const useConversationPersistence = () => {
   // Get recent conversations list
   const getRecentConversations = useCallback(async (limit = 10) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
@@ -158,6 +162,6 @@ export const useConversationPersistence = () => {
     loadConversation,
     getRecentConversations,
     archiveConversation,
-    createNewConversation
+    createNewConversation,
   };
 };

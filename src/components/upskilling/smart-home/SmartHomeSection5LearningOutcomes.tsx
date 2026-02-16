@@ -3,13 +3,13 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeSection5LearningOutcomes = () => {
   const outcomes = [
-    "Explain the difference between retrofit and new build smart home systems",
-    "Identify the challenges of installing smart technology in existing homes",
-    "Recognise the advantages of integrating smart systems at the design/build stage",
-    "Compare costs, disruption, and scalability between retrofit and new build",
-    "Advise clients on the best approach based on property type and user needs",
-    "Evaluate practical examples of both installation approaches",
-    "Understand future-proofing strategies for both contexts"
+    'Explain the difference between retrofit and new build smart home systems',
+    'Identify the challenges of installing smart technology in existing homes',
+    'Recognise the advantages of integrating smart systems at the design/build stage',
+    'Compare costs, disruption, and scalability between retrofit and new build',
+    'Advise clients on the best approach based on property type and user needs',
+    'Evaluate practical examples of both installation approaches',
+    'Understand future-proofing strategies for both contexts',
   ];
 
   return (

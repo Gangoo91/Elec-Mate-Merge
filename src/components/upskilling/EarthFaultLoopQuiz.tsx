@@ -13,64 +13,64 @@ export const EarthFaultLoopQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: "What does Zs include that Ze does not?",
+      question: 'What does Zs include that Ze does not?',
       options: [
-        "Supply transformer impedance",
-        "Circuit wiring resistance (R1 + R2)",
-        "Earth electrode resistance",
-        "Supply cable impedance"
+        'Supply transformer impedance',
+        'Circuit wiring resistance (R1 + R2)',
+        'Earth electrode resistance',
+        'Supply cable impedance',
       ],
       correctAnswer: 1,
-      explanation: "Zs includes the circuit wiring resistance (R1 + R2) in addition to the external impedance (Ze)."
+      explanation:
+        'Zs includes the circuit wiring resistance (R1 + R2) in addition to the external impedance (Ze).',
     },
     {
       id: 2,
-      question: "Where should Zs be tested?",
+      question: 'Where should Zs be tested?',
       options: [
-        "At the consumer unit only",
-        "At the nearest socket to the DB",
-        "At the furthest point of the circuit",
-        "At any convenient point"
+        'At the consumer unit only',
+        'At the nearest socket to the DB',
+        'At the furthest point of the circuit',
+        'At any convenient point',
       ],
       correctAnswer: 2,
-      explanation: "Zs should be tested at the furthest point of the circuit to ensure worst-case conditions are verified."
+      explanation:
+        'Zs should be tested at the furthest point of the circuit to ensure worst-case conditions are verified.',
     },
     {
       id: 3,
-      question: "What does a high Zs value indicate?",
+      question: 'What does a high Zs value indicate?',
       options: [
-        "Good earthing arrangement",
-        "Poor fault current path that may not operate protection",
-        "Excellent circuit design",
-        "Normal test results"
+        'Good earthing arrangement',
+        'Poor fault current path that may not operate protection',
+        'Excellent circuit design',
+        'Normal test results',
       ],
       correctAnswer: 1,
-      explanation: "High Zs values indicate poor fault current paths that may not provide sufficient current to operate protective devices quickly."
+      explanation:
+        'High Zs values indicate poor fault current paths that may not provide sufficient current to operate protective devices quickly.',
     },
     {
       id: 4,
-      question: "How do you calculate Zs?",
-      options: [
-        "Ze + R1 + R2",
-        "Ze - R1 - R2",
-        "Ze × R1 × R2",
-        "Ze only"
-      ],
+      question: 'How do you calculate Zs?',
+      options: ['Ze + R1 + R2', 'Ze - R1 - R2', 'Ze × R1 × R2', 'Ze only'],
       correctAnswer: 0,
-      explanation: "Zs is the sum of external impedance (Ze) plus the circuit conductors' resistance (R1 + R2)."
+      explanation:
+        "Zs is the sum of external impedance (Ze) plus the circuit conductors' resistance (R1 + R2).",
     },
     {
       id: 5,
-      question: "What must Zs values be compared against?",
+      question: 'What must Zs values be compared against?',
       options: [
-        "Previous test results only",
-        "Maximum values in BS7671 for the protective device",
-        "Industry averages",
-        "Manufacturer suggestions"
+        'Previous test results only',
+        'Maximum values in BS7671 for the protective device',
+        'Industry averages',
+        'Manufacturer suggestions',
       ],
       correctAnswer: 1,
-      explanation: "Zs must not exceed the maximum values specified in BS7671 tables for the type and rating of protective device installed."
-    }
+      explanation:
+        'Zs must not exceed the maximum values specified in BS7671 tables for the type and rating of protective device installed.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
@@ -123,9 +123,7 @@ export const EarthFaultLoopQuiz = () => {
               <h3 className="text-2xl font-bold text-elec-yellow mb-2">
                 {score} out of {questions.length}
               </h3>
-              <p className="text-gray-300">
-                You scored {percentage.toFixed(0)}%
-              </p>
+              <p className="text-gray-300">You scored {percentage.toFixed(0)}%</p>
             </div>
 
             <div className="space-y-4">
@@ -159,7 +157,7 @@ export const EarthFaultLoopQuiz = () => {
               })}
             </div>
 
-            <Button 
+            <Button
               onClick={resetQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
             >
@@ -185,21 +183,21 @@ export const EarthFaultLoopQuiz = () => {
         <div className="space-y-6">
           <div className="bg-elec-dark p-4 rounded-md">
             <h3 className="text-foreground font-medium mb-4">{currentQ.question}</h3>
-            
+
             <RadioGroup
-              value={selectedAnswers[currentQuestion] || ""}
+              value={selectedAnswers[currentQuestion] || ''}
               onValueChange={handleAnswerSelect}
               className="space-y-3"
             >
               {currentQ.options.map((option, index) => (
                 <div key={index} className="flex items-center space-x-2">
-                  <RadioGroupItem 
-                    value={index.toString()} 
+                  <RadioGroupItem
+                    value={index.toString()}
                     id={`option-${index}`}
                     className="border-gray-400 text-elec-yellow"
                   />
-                  <Label 
-                    htmlFor={`option-${index}`} 
+                  <Label
+                    htmlFor={`option-${index}`}
                     className="text-gray-300 cursor-pointer flex-1"
                   >
                     {option}

@@ -22,7 +22,7 @@ export const EnhancedResponsiveTable: React.FC<EnhancedResponsiveTableProps> = (
     if (!element) return;
 
     const { scrollLeft, scrollWidth, clientWidth } = element;
-    
+
     setShowLeftIndicator(scrollLeft > 10);
     setShowRightIndicator(scrollLeft < scrollWidth - clientWidth - 10);
   };
@@ -55,9 +55,7 @@ export const EnhancedResponsiveTable: React.FC<EnhancedResponsiveTableProps> = (
         ref={scrollRef}
         className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent touch-pan-x"
       >
-        <div className="inline-block min-w-full align-middle">
-          {children}
-        </div>
+        <div className="inline-block min-w-full align-middle">{children}</div>
       </div>
 
       {/* Right scroll indicator */}

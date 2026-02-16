@@ -1,45 +1,45 @@
-import { ArrowLeft, HardHat, GraduationCap, ShieldCheck, Scale } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HardHat, GraduationCap, ShieldCheck, Scale } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Managing the Construction Phase",
+    title: 'Managing the Construction Phase',
     icon: HardHat,
     description:
-      "How the principal contractor plans, manages, monitors, and coordinates the construction phase, including implementing the construction phase plan and managing subcontractors",
+      'How the principal contractor plans, manages, monitors, and coordinates the construction phase, including implementing the construction phase plan and managing subcontractors',
   },
   {
     id: 2,
-    title: "Site Inductions & Competence",
+    title: 'Site Inductions & Competence',
     icon: GraduationCap,
     description:
-      "Requirements for site-specific inductions, ensuring workers have the skills, knowledge, training, and experience to carry out their tasks safely, and the role of CSCS cards",
+      'Requirements for site-specific inductions, ensuring workers have the skills, knowledge, training, and experience to carry out their tasks safely, and the role of CSCS cards',
   },
   {
     id: 3,
-    title: "Welfare Facilities",
+    title: 'Welfare Facilities',
     icon: ShieldCheck,
     description:
-      "The minimum welfare facility requirements under Schedule 2 of CDM 2015 including sanitary conveniences, washing facilities, drinking water, rest facilities, and changing rooms",
+      'The minimum welfare facility requirements under Schedule 2 of CDM 2015 including sanitary conveniences, washing facilities, drinking water, rest facilities, and changing rooms',
   },
   {
     id: 4,
-    title: "Monitoring, Review & Enforcement",
+    title: 'Monitoring, Review & Enforcement',
     icon: Scale,
     description:
-      "How the HSE enforces CDM 2015, the powers of inspectors, improvement and prohibition notices, penalties for non-compliance, and the importance of ongoing monitoring and review",
+      'How the HSE enforces CDM 2015, the powers of inspectors, improvement and prohibition notices, penalties for non-compliance, and the importance of ongoing monitoring and review',
   },
 ];
 
 export default function CdmRegulationsModule5() {
   useSEO({
-    title: "Module 5: Construction Phase & Compliance | CDM Regulations Awareness",
+    title: 'Module 5: Construction Phase & Compliance | CDM Regulations Awareness',
     description:
-      "Learn about managing the construction phase, site inductions and competence, welfare facilities, and monitoring, review and enforcement under CDM 2015.",
+      'Learn about managing the construction phase, site inductions and competence, welfare facilities, and monitoring, review and enforcement under CDM 2015.',
   });
 
   return (

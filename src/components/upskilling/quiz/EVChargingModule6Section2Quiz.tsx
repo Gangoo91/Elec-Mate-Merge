@@ -15,124 +15,121 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the maximum voltage drop allowed for a 32A EV charging circuit according to BS 7671?",
+    question:
+      'What is the maximum voltage drop allowed for a 32A EV charging circuit according to BS 7671?',
     options: [
-      "3% of nominal voltage",
-      "5% of nominal voltage", 
-      "7% of nominal voltage",
-      "10% of nominal voltage"
+      '3% of nominal voltage',
+      '5% of nominal voltage',
+      '7% of nominal voltage',
+      '10% of nominal voltage',
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 allows maximum 5% voltage drop for circuits supplying fixed equipment like EV charging points."
+    explanation:
+      'BS 7671 allows maximum 5% voltage drop for circuits supplying fixed equipment like EV charging points.',
   },
   {
     id: 2,
-    question: "What type of cable is recommended for EV charging installations?",
+    question: 'What type of cable is recommended for EV charging installations?',
     options: [
-      "Standard PVC/PVC cable",
-      "LSF cable for all installations",
-      "SWA cable for outdoor runs, LSF for indoor",
-      "Any BS 6004 compliant cable"
+      'Standard PVC/PVC cable',
+      'LSF cable for all installations',
+      'SWA cable for outdoor runs, LSF for indoor',
+      'Any BS 6004 compliant cable',
     ],
     correctAnswer: 2,
-    explanation: "SWA (Steel Wire Armoured) cable provides mechanical protection for outdoor runs, while LSF (Low Smoke and Fume) cable is used indoors."
+    explanation:
+      'SWA (Steel Wire Armoured) cable provides mechanical protection for outdoor runs, while LSF (Low Smoke and Fume) cable is used indoors.',
   },
   {
     id: 3,
-    question: "When terminating SWA cable, what must be done with the steel wire armour?",
+    question: 'When terminating SWA cable, what must be done with the steel wire armour?',
     options: [
-      "Cut it back and ignore",
-      "Connect to earth via CW gland",
-      "Tape over the cut ends",
-      "Leave it unconnected"
+      'Cut it back and ignore',
+      'Connect to earth via CW gland',
+      'Tape over the cut ends',
+      'Leave it unconnected',
     ],
     correctAnswer: 1,
-    explanation: "Steel wire armour must be properly earthed using a CW (Cable Wire) gland to maintain the earthing integrity and provide fault protection."
+    explanation:
+      'Steel wire armour must be properly earthed using a CW (Cable Wire) gland to maintain the earthing integrity and provide fault protection.',
   },
   {
     id: 4,
-    question: "What is the minimum bending radius for 6mm² SWA cable?",
+    question: 'What is the minimum bending radius for 6mm² SWA cable?',
     options: [
-      "6 times the cable diameter",
-      "8 times the cable diameter",
-      "12 times the cable diameter",
-      "15 times the cable diameter"
+      '6 times the cable diameter',
+      '8 times the cable diameter',
+      '12 times the cable diameter',
+      '15 times the cable diameter',
     ],
     correctAnswer: 2,
-    explanation: "The minimum bending radius for SWA cable is 12 times the overall cable diameter to prevent damage to conductors and armour."
+    explanation:
+      'The minimum bending radius for SWA cable is 12 times the overall cable diameter to prevent damage to conductors and armour.',
   },
   {
     id: 5,
-    question: "How should cable joints be made in EV charging installations?",
+    question: 'How should cable joints be made in EV charging installations?',
     options: [
-      "Electrical tape only",
-      "Proper junction boxes with IP65 rating",
-      "Heat shrink tubing",
-      "Joints should be avoided where possible"
+      'Electrical tape only',
+      'Proper junction boxes with IP65 rating',
+      'Heat shrink tubing',
+      'Joints should be avoided where possible',
     ],
     correctAnswer: 3,
-    explanation: "Cable joints should be avoided where possible. When necessary, use proper junction boxes with appropriate IP rating and maintenance access."
+    explanation:
+      'Cable joints should be avoided where possible. When necessary, use proper junction boxes with appropriate IP rating and maintenance access.',
   },
   {
     id: 6,
-    question: "What size earth conductor is required for a 6mm² EV charging circuit?",
-    options: [
-      "2.5mm²",
-      "4mm²", 
-      "6mm²",
-      "10mm²"
-    ],
+    question: 'What size earth conductor is required for a 6mm² EV charging circuit?',
+    options: ['2.5mm²', '4mm²', '6mm²', '10mm²'],
     correctAnswer: 2,
-    explanation: "For a 6mm² line conductor, a 6mm² earth conductor is required as the CSA is ≤16mm² (same size as line conductor)."
+    explanation:
+      'For a 6mm² line conductor, a 6mm² earth conductor is required as the CSA is ≤16mm² (same size as line conductor).',
   },
   {
     id: 7,
-    question: "What is the correct torque setting for 6mm² terminations in most consumer units?",
-    options: [
-      "1.2 Nm",
-      "2.5 Nm",
-      "3.5 Nm", 
-      "5.0 Nm"
-    ],
+    question: 'What is the correct torque setting for 6mm² terminations in most consumer units?',
+    options: ['1.2 Nm', '2.5 Nm', '3.5 Nm', '5.0 Nm'],
     correctAnswer: 1,
-    explanation: "Most consumer unit terminals require 2.5 Nm torque for 6mm² conductors. Always check manufacturer specifications."
+    explanation:
+      'Most consumer unit terminals require 2.5 Nm torque for 6mm² conductors. Always check manufacturer specifications.',
   },
   {
     id: 8,
-    question: "How should cable entry points through external walls be sealed?",
+    question: 'How should cable entry points through external walls be sealed?',
     options: [
-      "Expanding foam only",
-      "Fire-rated sealant and weatherproofing",
-      "Standard silicone sealant",
-      "No sealing required"
+      'Expanding foam only',
+      'Fire-rated sealant and weatherproofing',
+      'Standard silicone sealant',
+      'No sealing required',
     ],
     correctAnswer: 1,
-    explanation: "Cable entries must be sealed with fire-rated sealant to maintain fire compartmentation and weatherproofing to prevent water ingress."
+    explanation:
+      'Cable entries must be sealed with fire-rated sealant to maintain fire compartmentation and weatherproofing to prevent water ingress.',
   },
   {
     id: 9,
-    question: "What identification should be provided for EV charging circuits?",
+    question: 'What identification should be provided for EV charging circuits?',
     options: [
-      "No special identification required",
-      "Standard circuit number only",
+      'No special identification required',
+      'Standard circuit number only',
       "Clear labelling including 'EV CHARGING CIRCUIT'",
-      "Colour coding only"
+      'Colour coding only',
     ],
     correctAnswer: 2,
-    explanation: "EV charging circuits must be clearly identified with appropriate labelling including 'EV CHARGING CIRCUIT' for easy identification during maintenance."
+    explanation:
+      "EV charging circuits must be clearly identified with appropriate labelling including 'EV CHARGING CIRCUIT' for easy identification during maintenance.",
   },
   {
     id: 10,
-    question: "When routing cables in roof spaces, what minimum clearance from heat sources is required?",
-    options: [
-      "50mm",
-      "100mm",
-      "150mm",
-      "200mm"
-    ],
+    question:
+      'When routing cables in roof spaces, what minimum clearance from heat sources is required?',
+    options: ['50mm', '100mm', '150mm', '200mm'],
     correctAnswer: 2,
-    explanation: "Cables must maintain at least 150mm clearance from heat sources like flues and hot water pipes to prevent thermal damage."
-  }
+    explanation:
+      'Cables must maintain at least 150mm clearance from heat sources like flues and hot water pipes to prevent thermal damage.',
+  },
 ];
 
 export function EVChargingModule6Section2Quiz() {
@@ -205,7 +202,7 @@ export function EVChargingModule6Section2Quiz() {
             {quizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <div key={question.id} className="bg-[#323232] p-4 rounded-lg">
                   <div className="flex items-start gap-3 mb-3">
@@ -217,13 +214,15 @@ export function EVChargingModule6Section2Quiz() {
                     <div className="flex-1">
                       <p className="text-foreground font-medium mb-2">{question.question}</p>
                       <p className="text-sm text-gray-300 mb-2">
-                        Your answer: <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
+                        Your answer:{' '}
+                        <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
                           {question.options[userAnswer]}
                         </span>
                       </p>
                       {!isCorrect && (
                         <p className="text-sm text-gray-300 mb-2">
-                          Correct answer: <span className="text-green-400">
+                          Correct answer:{' '}
+                          <span className="text-green-400">
                             {question.options[question.correctAnswer]}
                           </span>
                         </p>
@@ -237,7 +236,7 @@ export function EVChargingModule6Section2Quiz() {
           </div>
 
           <div className="text-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-400"
             >
@@ -265,7 +264,7 @@ export function EVChargingModule6Section2Quiz() {
           </Badge>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
@@ -286,11 +285,13 @@ export function EVChargingModule6Section2Quiz() {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-elec-yellow'
-                      : 'border-gray-500'
-                  }`}>
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'border-elec-yellow'
+                        : 'border-gray-500'
+                    }`}
+                  >
                     {selectedAnswers[currentQuestion] === index && (
                       <div className="w-2 h-2 rounded-full bg-elec-yellow" />
                     )}
@@ -312,7 +313,7 @@ export function EVChargingModule6Section2Quiz() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

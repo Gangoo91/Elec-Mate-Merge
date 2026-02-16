@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import { Wrench, Clock, Hammer, AlertTriangle, Shield, BookOpen } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Badge } from '@/components/ui/badge';
+import { Wrench, Clock, Hammer, AlertTriangle, Shield, BookOpen } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface HeroSummaryProps {
   steps: number;
@@ -14,13 +14,13 @@ interface HeroSummaryProps {
 const riskColors = {
   low: 'bg-success/10 text-success border-success/20',
   medium: 'bg-warning/10 text-warning border-warning/20',
-  high: 'bg-destructive/10 text-destructive border-destructive/20'
+  high: 'bg-destructive/10 text-destructive border-destructive/20',
 };
 
 // Parse duration intelligently - extract primary value
 const parseDuration = (duration: string): string => {
   if (!duration) return 'N/A';
-  
+
   // Extract patterns like "8-24 hours" from "8-24 hours (typical: 1-2 working days...)"
   const match = duration.match(/(\d+(?:-\d+)?)\s*(hours?|hrs?|minutes?|mins?|days?)/i);
   if (match) {
@@ -31,7 +31,7 @@ const parseDuration = (duration: string): string => {
     if (unit.startsWith('minute') || unit.startsWith('min')) return `${value} mins`;
     if (unit.startsWith('day')) return `${value} days`;
   }
-  
+
   // Fallback: take first part before parenthesis
   const firstPart = duration.split('(')[0].trim();
   return firstPart || duration;
@@ -43,7 +43,7 @@ export const InstallationHeroSummary = ({
   riskLevel,
   toolsCount,
   hazardsCount,
-  regulationsCount
+  regulationsCount,
 }: HeroSummaryProps) => {
   const displayDuration = parseDuration(duration);
 
@@ -104,7 +104,7 @@ export const InstallationHeroSummary = ({
             <Shield className="h-4 w-4" />
             <span className="text-xs font-medium">Risk</span>
           </div>
-          <Badge className={cn(riskColors[riskLevel], "text-sm font-bold uppercase")}>
+          <Badge className={cn(riskColors[riskLevel], 'text-sm font-bold uppercase')}>
             {riskLevel}
           </Badge>
         </div>
@@ -166,7 +166,7 @@ export const InstallationHeroSummary = ({
               <Shield className="h-4 w-4" />
               <span className="text-xs font-medium">RISK</span>
             </div>
-            <Badge className={cn(riskColors[riskLevel], "text-base font-bold uppercase")}>
+            <Badge className={cn(riskColors[riskLevel], 'text-base font-bold uppercase')}>
               {riskLevel}
             </Badge>
           </div>

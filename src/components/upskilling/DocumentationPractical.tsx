@@ -12,16 +12,18 @@ export const DocumentationPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Exercise 1 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 1</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 1
+            </Badge>
             <h3 className="text-foreground font-semibold">Documentation Review Checklist</h3>
           </div>
           <div className="space-y-4">
             <p className="text-foreground text-base sm:text-lg">
-              Create a comprehensive checklist for reviewing electrical documentation before starting an inspection:
+              Create a comprehensive checklist for reviewing electrical documentation before
+              starting an inspection:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
@@ -81,7 +83,9 @@ export const DocumentationPractical = () => {
         {/* Exercise 2 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 2</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 2
+            </Badge>
             <h3 className="text-foreground font-semibold">Creating As-Built Drawings</h3>
           </div>
           <div className="space-y-4">
@@ -94,7 +98,9 @@ export const DocumentationPractical = () => {
                 <div>
                   <h4 className="text-yellow-400 font-medium mb-2">Scenario:</h4>
                   <p className="text-foreground text-sm mb-3">
-                    You arrive at a 10-year-old office building for inspection. The building plans show basic socket layouts but don't include recent office fit-out changes, emergency lighting circuits, or IT infrastructure.
+                    You arrive at a 10-year-old office building for inspection. The building plans
+                    show basic socket layouts but don't include recent office fit-out changes,
+                    emergency lighting circuits, or IT infrastructure.
                   </p>
                   <h4 className="text-yellow-400 font-medium mb-2">Your Task:</h4>
                   <ul className="text-foreground text-sm space-y-1">
@@ -113,30 +119,43 @@ export const DocumentationPractical = () => {
         {/* Exercise 3 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 3</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 3
+            </Badge>
             <h3 className="text-foreground font-semibold">Documentation Gap Analysis</h3>
           </div>
           <div className="space-y-4">
             <p className="text-foreground">
-              Analyse different documentation scenarios and determine the appropriate course of action:
+              Analyse different documentation scenarios and determine the appropriate course of
+              action:
             </p>
             <div className="space-y-3">
               <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                <h4 className="text-red-400 font-medium mb-2">Scenario A: Critical Missing Information</h4>
+                <h4 className="text-red-400 font-medium mb-2">
+                  Scenario A: Critical Missing Information
+                </h4>
                 <p className="text-foreground text-sm">
                   No circuit schedules, protective device ratings unclear, cable types unknown.
-                  <span className="text-red-400 ml-2">Action: Cannot proceed safely - request documentation</span>
+                  <span className="text-red-400 ml-2">
+                    Action: Cannot proceed safely - request documentation
+                  </span>
                 </p>
               </div>
               <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
-                <h4 className="text-yellow-400 font-medium mb-2">Scenario B: Partial Documentation</h4>
+                <h4 className="text-yellow-400 font-medium mb-2">
+                  Scenario B: Partial Documentation
+                </h4>
                 <p className="text-foreground text-sm">
                   Basic circuit schedules available but no building plans or cable routes shown.
-                  <span className="text-yellow-400 ml-2">Action: Proceed with limitations noted</span>
+                  <span className="text-yellow-400 ml-2">
+                    Action: Proceed with limitations noted
+                  </span>
                 </p>
               </div>
               <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                <h4 className="text-green-400 font-medium mb-2">Scenario C: Complete Documentation</h4>
+                <h4 className="text-green-400 font-medium mb-2">
+                  Scenario C: Complete Documentation
+                </h4>
                 <p className="text-foreground text-sm">
                   All certificates, plans, and schedules present and up to date.
                   <span className="text-green-400 ml-2">Action: Proceed with full inspection</span>
@@ -149,7 +168,9 @@ export const DocumentationPractical = () => {
         {/* Exercise 4 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 4</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 4
+            </Badge>
             <h3 className="text-foreground font-semibold">Client Communication Workshop</h3>
           </div>
           <div className="space-y-4">
@@ -188,7 +209,9 @@ export const DocumentationPractical = () => {
                 <li>• Documentation review should always precede any inspection work</li>
                 <li>• Missing information creates limitations that must be clearly documented</li>
                 <li>• Client communication is essential for managing expectations and costs</li>
-                <li>• Professional judgment is required to balance safety with practical constraints</li>
+                <li>
+                  • Professional judgment is required to balance safety with practical constraints
+                </li>
               </ul>
             </div>
           </div>

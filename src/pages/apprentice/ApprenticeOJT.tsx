@@ -1,23 +1,47 @@
-
-import React from "react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Clock, FileText, Target, Award, BarChart3 } from "lucide-react";
-import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
-import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
-import EvidenceAssessmentTab from "@/components/apprentice/ojt/EvidenceAssessmentTab";
-import AssessmentTrackingTab from "@/components/apprentice/ojt/AssessmentTrackingTab";
-import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashboardTab";
+import React from 'react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { DropdownTabs } from '@/components/ui/dropdown-tabs';
+import { Clock, FileText, Target, Award, BarChart3 } from 'lucide-react';
+import TimeTrackingTab from '@/components/apprentice/ojt/TimeTrackingTab';
+import PortfolioBuildingTab from '@/components/apprentice/ojt/PortfolioBuildingTab';
+import EvidenceAssessmentTab from '@/components/apprentice/ojt/EvidenceAssessmentTab';
+import AssessmentTrackingTab from '@/components/apprentice/ojt/AssessmentTrackingTab';
+import ComplianceDashboardTab from '@/components/apprentice/ojt/ComplianceDashboardTab';
 
 const ApprenticeOJT = () => {
   console.log('ApprenticeOJT component rendering');
 
   const tabs = [
-    { value: "portfolio", label: "Portfolio", icon: FileText, content: React.createElement(PortfolioBuildingTab) },
-    { value: "time-tracking", label: "Time Tracking", icon: Clock, content: React.createElement(TimeTrackingTab) },
-    { value: "evidence", label: "Evidence Assessment", icon: Target, content: React.createElement(EvidenceAssessmentTab) },
-    { value: "assessments", label: "Assessments", icon: Award, content: React.createElement(AssessmentTrackingTab) },
-    { value: "compliance", label: "Goals & Progress", icon: BarChart3, content: React.createElement(ComplianceDashboardTab) }
+    {
+      value: 'portfolio',
+      label: 'Portfolio',
+      icon: FileText,
+      content: React.createElement(PortfolioBuildingTab),
+    },
+    {
+      value: 'time-tracking',
+      label: 'Time Tracking',
+      icon: Clock,
+      content: React.createElement(TimeTrackingTab),
+    },
+    {
+      value: 'evidence',
+      label: 'Evidence Assessment',
+      icon: Target,
+      content: React.createElement(EvidenceAssessmentTab),
+    },
+    {
+      value: 'assessments',
+      label: 'Assessments',
+      icon: Award,
+      content: React.createElement(AssessmentTrackingTab),
+    },
+    {
+      value: 'compliance',
+      label: 'Goals & Progress',
+      icon: BarChart3,
+      content: React.createElement(ComplianceDashboardTab),
+    },
   ];
 
   return (
@@ -25,7 +49,8 @@ const ApprenticeOJT = () => {
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Portfolio & OJT Management</h1>
         <p className="text-white text-center max-w-2xl mb-4">
-          Comprehensive portfolio building and management of your 20% off-the-job training requirements, evidence tracking, and apprenticeship progression
+          Comprehensive portfolio building and management of your 20% off-the-job training
+          requirements, evidence tracking, and apprenticeship progression
         </p>
         <SmartBackButton />
       </div>

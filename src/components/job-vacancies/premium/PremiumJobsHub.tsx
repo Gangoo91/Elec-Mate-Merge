@@ -4,12 +4,12 @@
  * Now with unified employer + external job feed
  */
 
-import { useState, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState, useCallback, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   ArrowLeft,
   Briefcase,
@@ -21,31 +21,31 @@ import {
   Shield,
   Building2,
   IdCard,
-} from "lucide-react";
+} from 'lucide-react';
 
 // Premium components
-import JobsHeroCard from "./JobsHeroCard";
-import UnifiedJobCard from "./UnifiedJobCard";
-import JobFilterPills, { type JobFilters } from "./JobFilterPills";
-import JobDetailSheet from "./JobDetailSheet";
-import EmployerJobDetailSheet from "./EmployerJobDetailSheet";
-import JobSearchSheet from "./JobSearchSheet";
-import SavedJobsTab from "./SavedJobsTab";
-import JobCardSkeleton from "./JobCardSkeleton";
-import QuickCVSheet from "./QuickCVSheet";
-import JobMarketInsights from "./JobMarketInsights";
+import JobsHeroCard from './JobsHeroCard';
+import UnifiedJobCard from './UnifiedJobCard';
+import JobFilterPills, { type JobFilters } from './JobFilterPills';
+import JobDetailSheet from './JobDetailSheet';
+import EmployerJobDetailSheet from './EmployerJobDetailSheet';
+import JobSearchSheet from './JobSearchSheet';
+import SavedJobsTab from './SavedJobsTab';
+import JobCardSkeleton from './JobCardSkeleton';
+import QuickCVSheet from './QuickCVSheet';
+import JobMarketInsights from './JobMarketInsights';
 
 // Hooks
-import { useSavedJobs } from "./hooks/useSavedJobs";
-import { useUnifiedJobFeed } from "@/hooks/job-vacancies/useUnifiedJobFeed";
-import { pageVariants, listContainerVariants, listItemVariants } from "./animations/variants";
-import type { UnifiedJobListing } from "@/types/unified-jobs";
+import { useSavedJobs } from './hooks/useSavedJobs';
+import { useUnifiedJobFeed } from '@/hooks/job-vacancies/useUnifiedJobFeed';
+import { pageVariants, listContainerVariants, listItemVariants } from './animations/variants';
+import type { UnifiedJobListing } from '@/types/unified-jobs';
 
 // Apply dialog for employer jobs
-import { ApplyToVacancyDialog } from "@/components/electrician/vacancies/ApplyToVacancyDialog";
-import type { InternalVacancy } from "@/components/electrician/vacancies/InternalVacancyCard";
+import { ApplyToVacancyDialog } from '@/components/electrician/vacancies/ApplyToVacancyDialog';
+import type { InternalVacancy } from '@/components/electrician/vacancies/InternalVacancyCard';
 
-type TabId = "explore" | "saved" | "insights";
+type TabId = 'explore' | 'saved' | 'insights';
 
 interface Tab {
   id: TabId;
@@ -54,9 +54,9 @@ interface Tab {
 }
 
 const TABS: Tab[] = [
-  { id: "explore", label: "Explore", icon: Briefcase },
-  { id: "saved", label: "Saved", icon: Bookmark },
-  { id: "insights", label: "Insights", icon: BarChart3 },
+  { id: 'explore', label: 'Explore', icon: Briefcase },
+  { id: 'saved', label: 'Saved', icon: Bookmark },
+  { id: 'insights', label: 'Insights', icon: BarChart3 },
 ];
 
 // Default filters
@@ -78,13 +78,13 @@ const parseSalary = (salary: string | null): number => {
 const salaryMatchesRange = (salary: string | null, range: string): boolean => {
   const value = parseSalary(salary);
   switch (range) {
-    case "20-30":
+    case '20-30':
       return value >= 20000 && value < 30000;
-    case "30-40":
+    case '30-40':
       return value >= 30000 && value < 40000;
-    case "40-50":
+    case '40-50':
       return value >= 40000 && value < 50000;
-    case "50+":
+    case '50+':
       return value >= 50000;
     default:
       return true;
@@ -107,20 +107,22 @@ const toInternalVacancy = (job: UnifiedJobListing): InternalVacancy => ({
   closing_date: job.closing_date || null,
   views: job.views || 0,
   created_at: job.posted_date,
-  employer: job.employer_id ? {
-    id: job.employer_id,
-    company_name: job.company,
-    logo_url: job.employer_logo || null,
-  } : undefined,
+  employer: job.employer_id
+    ? {
+        id: job.employer_id,
+        company_name: job.company,
+        logo_url: job.employer_logo || null,
+      }
+    : undefined,
   has_applied: job.has_applied,
 });
 
 const PremiumJobsHub = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabId>("explore");
+  const [activeTab, setActiveTab] = useState<TabId>('explore');
   const [filters, setFilters] = useState<JobFilters>(DEFAULT_FILTERS);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchLocation, setSearchLocation] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchLocation, setSearchLocation] = useState('');
   const [selectedJob, setSelectedJob] = useState<UnifiedJobListing | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isEmployerDetailOpen, setIsEmployerDetailOpen] = useState(false);
@@ -175,12 +177,11 @@ const PremiumJobsHub = () => {
     }).length;
 
     // Calculate average salary
-    const salaries = allJobs
-      .map((job) => parseSalary(job.salary))
-      .filter((s) => s > 0);
-    const avgSalary = salaries.length > 0
-      ? Math.round(salaries.reduce((a, b) => a + b, 0) / salaries.length)
-      : 35000;
+    const salaries = allJobs.map((job) => parseSalary(job.salary)).filter((s) => s > 0);
+    const avgSalary =
+      salaries.length > 0
+        ? Math.round(salaries.reduce((a, b) => a + b, 0) / salaries.length)
+        : 35000;
 
     return {
       totalJobs,
@@ -212,7 +213,7 @@ const PremiumJobsHub = () => {
 
       // Source filter
       if (filters.sources.length > 0) {
-        if (!filters.sources.includes(job.source || "")) {
+        if (!filters.sources.includes(job.source || '')) {
           return false;
         }
       }
@@ -262,17 +263,20 @@ const PremiumJobsHub = () => {
       setIsApplyDialogOpen(true);
     } else if (job.url) {
       // External job - open URL
-      window.open(job.url, "_blank", "noopener,noreferrer");
+      window.open(job.url, '_blank', 'noopener,noreferrer');
     }
   };
 
-  const handleSearch = useCallback(async (query: string, location: string) => {
-    setSearchQuery(query);
-    setSearchLocation(location);
-    setHasSearched(true);
-    // Search external jobs
-    await searchExternalJobs(query, location);
-  }, [searchExternalJobs]);
+  const handleSearch = useCallback(
+    async (query: string, location: string) => {
+      setSearchQuery(query);
+      setSearchLocation(location);
+      setHasSearched(true);
+      // Search external jobs
+      await searchExternalJobs(query, location);
+    },
+    [searchExternalJobs]
+  );
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -291,7 +295,7 @@ const PremiumJobsHub = () => {
   };
 
   const handleUploadCV = () => {
-    navigate("/electrician/cv-builder");
+    navigate('/electrician/cv-builder');
   };
 
   const handleApplyDialogClose = () => {
@@ -340,7 +344,7 @@ const PremiumJobsHub = () => {
         }
       }
       if (filters.sources.length > 0) {
-        if (!filters.sources.includes(job.source || "")) {
+        if (!filters.sources.includes(job.source || '')) {
           return false;
         }
       }
@@ -418,17 +422,17 @@ const PremiumJobsHub = () => {
           {TABS.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
-            const count = tab.id === "saved" ? savedCount : undefined;
+            const count = tab.id === 'saved' ? savedCount : undefined;
 
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all",
+                  'flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all',
                   isActive
-                    ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                    : "text-white/60 hover:text-white hover:bg-white/5"
+                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -447,7 +451,7 @@ const PremiumJobsHub = () => {
       {/* Main Content */}
       <main className="pb-20">
         <AnimatePresence mode="wait">
-          {activeTab === "explore" && (
+          {activeTab === 'explore' && (
             <motion.div
               key="explore"
               initial={{ opacity: 0, x: -20 }}
@@ -462,7 +466,7 @@ const PremiumJobsHub = () => {
                 avgSalary={stats.avgSalary}
                 matchPercentage={stats.matchPercentage}
                 isSearching={isLoading}
-                lastUpdated={isLoading ? undefined : "Just now"}
+                lastUpdated={isLoading ? undefined : 'Just now'}
                 onSmartSearch={handleSmartSearch}
                 onUploadCV={handleUploadCV}
                 onRefresh={handleRefresh}
@@ -483,7 +487,8 @@ const PremiumJobsHub = () => {
                     Results for <span className="text-blue-400 font-medium">"{searchQuery}"</span>
                     {searchLocation && (
                       <>
-                        {" "}in <span className="text-blue-400 font-medium">{searchLocation}</span>
+                        {' '}
+                        in <span className="text-blue-400 font-medium">{searchLocation}</span>
                       </>
                     )}
                   </div>
@@ -491,8 +496,8 @@ const PremiumJobsHub = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => {
-                      setSearchQuery("");
-                      setSearchLocation("");
+                      setSearchQuery('');
+                      setSearchLocation('');
                       setHasSearched(false);
                     }}
                     className="h-7 px-2 text-xs text-white/60 hover:text-white"
@@ -517,7 +522,8 @@ const PremiumJobsHub = () => {
                       </div>
                     </div>
                     <Badge className="bg-emerald-500/20 border-emerald-500/30 text-emerald-300 text-xs">
-                      {filteredEmployerJobs.length} {filteredEmployerJobs.length === 1 ? 'job' : 'jobs'}
+                      {filteredEmployerJobs.length}{' '}
+                      {filteredEmployerJobs.length === 1 ? 'job' : 'jobs'}
                     </Badge>
                   </div>
 
@@ -550,24 +556,26 @@ const PremiumJobsHub = () => {
               {/* External Jobs Section */}
               <div className="space-y-3">
                 {/* Section Header - only show if there are employer jobs above */}
-                {filteredEmployerJobs.length > 0 && (filteredExternalJobs.length > 0 || !hasSearched) && (
-                  <div className="flex items-center justify-between pt-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                        <Building2 className="h-4 w-4 text-blue-400" />
+                {filteredEmployerJobs.length > 0 &&
+                  (filteredExternalJobs.length > 0 || !hasSearched) && (
+                    <div className="flex items-center justify-between pt-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                          <Building2 className="h-4 w-4 text-blue-400" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-white">From Job Boards</h3>
+                          <p className="text-xs text-white/50">Reed, Indeed, TotalJobs & more</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-sm font-semibold text-white">From Job Boards</h3>
-                        <p className="text-xs text-white/50">Reed, Indeed, TotalJobs & more</p>
-                      </div>
+                      {filteredExternalJobs.length > 0 && (
+                        <Badge className="bg-blue-500/20 border-blue-500/30 text-blue-300 text-xs">
+                          {filteredExternalJobs.length}{' '}
+                          {filteredExternalJobs.length === 1 ? 'job' : 'jobs'}
+                        </Badge>
+                      )}
                     </div>
-                    {filteredExternalJobs.length > 0 && (
-                      <Badge className="bg-blue-500/20 border-blue-500/30 text-blue-300 text-xs">
-                        {filteredExternalJobs.length} {filteredExternalJobs.length === 1 ? 'job' : 'jobs'}
-                      </Badge>
-                    )}
-                  </div>
-                )}
+                  )}
 
                 {/* External Job Cards */}
                 {isLoadingExternal ? (
@@ -576,7 +584,9 @@ const PremiumJobsHub = () => {
                   <div className="text-center py-6 bg-white/[0.02] rounded-xl border border-white/5">
                     <Briefcase className="h-8 w-8 mx-auto text-white/20 mb-2" />
                     <p className="text-white/60 text-sm mb-1">No jobs match your filters</p>
-                    <p className="text-xs text-white/40">Try adjusting filters or search for something specific</p>
+                    <p className="text-xs text-white/40">
+                      Try adjusting filters or search for something specific
+                    </p>
                   </div>
                 ) : (
                   <motion.div
@@ -601,16 +611,17 @@ const PremiumJobsHub = () => {
               </div>
 
               {/* Results count */}
-              {!isLoading && (filteredEmployerJobs.length > 0 || filteredExternalJobs.length > 0) && (
-                <p className="text-center text-xs text-white/40 py-4">
-                  Showing {filteredEmployerJobs.length + filteredExternalJobs.length} jobs
-                  ({filteredEmployerJobs.length} employer, {filteredExternalJobs.length} external)
-                </p>
-              )}
+              {!isLoading &&
+                (filteredEmployerJobs.length > 0 || filteredExternalJobs.length > 0) && (
+                  <p className="text-center text-xs text-white/40 py-4">
+                    Showing {filteredEmployerJobs.length + filteredExternalJobs.length} jobs (
+                    {filteredEmployerJobs.length} employer, {filteredExternalJobs.length} external)
+                  </p>
+                )}
             </motion.div>
           )}
 
-          {activeTab === "saved" && (
+          {activeTab === 'saved' && (
             <motion.div
               key="saved"
               initial={{ opacity: 0, x: 20 }}
@@ -623,12 +634,12 @@ const PremiumJobsHub = () => {
                 onRemove={removeJob}
                 onSelect={handleJobSelect}
                 onClearAll={clearSavedJobs}
-                onBrowseJobs={() => setActiveTab("explore")}
+                onBrowseJobs={() => setActiveTab('explore')}
               />
             </motion.div>
           )}
 
-          {activeTab === "insights" && (
+          {activeTab === 'insights' && (
             <motion.div
               key="insights"
               initial={{ opacity: 0, x: 20 }}
@@ -644,24 +655,28 @@ const PremiumJobsHub = () => {
 
       {/* External Job Detail Sheet */}
       <JobDetailSheet
-        job={selectedJob && !selectedJob.is_internal ? {
-          id: selectedJob.id,
-          title: selectedJob.title,
-          company: selectedJob.company,
-          location: selectedJob.location,
-          salary: selectedJob.salary,
-          type: selectedJob.type,
-          description: selectedJob.description,
-          external_url: selectedJob.url || '',
-          posted_date: selectedJob.posted_date,
-          source: selectedJob.source,
-          image_url: selectedJob.image_url,
-        } : null}
+        job={
+          selectedJob && !selectedJob.is_internal
+            ? {
+                id: selectedJob.id,
+                title: selectedJob.title,
+                company: selectedJob.company,
+                location: selectedJob.location,
+                salary: selectedJob.salary,
+                type: selectedJob.type,
+                description: selectedJob.description,
+                external_url: selectedJob.url || '',
+                posted_date: selectedJob.posted_date,
+                source: selectedJob.source,
+                image_url: selectedJob.image_url,
+              }
+            : null
+        }
         isOpen={isDetailOpen}
         onClose={() => setIsDetailOpen(false)}
         onApply={(job) => {
           if (job.external_url) {
-            window.open(job.external_url, "_blank", "noopener,noreferrer");
+            window.open(job.external_url, '_blank', 'noopener,noreferrer');
           }
         }}
         onSave={handleSaveJob}
@@ -688,10 +703,7 @@ const PremiumJobsHub = () => {
       />
 
       {/* Quick CV Sheet */}
-      <QuickCVSheet
-        isOpen={isCVSheetOpen}
-        onClose={() => setIsCVSheetOpen(false)}
-      />
+      <QuickCVSheet isOpen={isCVSheetOpen} onClose={() => setIsCVSheetOpen(false)} />
 
       {/* Apply Dialog for Employer Jobs */}
       <ApplyToVacancyDialog

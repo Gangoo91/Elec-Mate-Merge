@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, Circle, Save } from 'lucide-react';
@@ -17,20 +16,20 @@ const SaveStatusIndicator: React.FC<SaveStatusIndicatorProps> = ({
   isSaving = false,
   lastSaveTime,
   syncStatus = 'synced',
-  showSyncIndicator = false
+  showSyncIndicator = false,
 }) => {
   const formatLastSave = (timestamp: number) => {
     const now = Date.now();
     const diff = now - timestamp;
     const minutes = Math.floor(diff / 60000);
-    
+
     if (minutes < 1) return 'just now';
     if (minutes === 1) return '1 minute ago';
     if (minutes < 60) return `${minutes} minutes ago`;
-    
+
     return new Date(timestamp).toLocaleTimeString('en-GB', {
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -46,7 +45,10 @@ const SaveStatusIndicator: React.FC<SaveStatusIndicatorProps> = ({
   if (hasUnsavedChanges) {
     return (
       <div className="flex items-centre gap-2">
-        <Badge variant="outline" className="flex items-center gap-1 text-orange-600 border-orange-300">
+        <Badge
+          variant="outline"
+          className="flex items-center gap-1 text-orange-600 border-orange-300"
+        >
           <Circle className="h-3 w-3 fill-current" />
           Unsaved changes
         </Badge>

@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import {
-  MapPin, Search, Loader2, Navigation, X
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import React, { useState, useRef, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { MapPin, Search, Loader2, Navigation, X } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 interface EnhancedLocationSearchProps {
   onLocationSelect: (location: string, coordinates?: google.maps.LatLngLiteral) => void;
@@ -24,9 +22,9 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
   onClearLocation,
   currentLocation,
   searchRadius,
-  isActive
+  isActive,
 }) => {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -39,7 +37,7 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
     // Initialize Google Places Autocomplete
     autocompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
       types: ['(cities)'],
-      componentRestrictions: { country: 'gb' }
+      componentRestrictions: { country: 'gb' },
     });
 
     autocompleteRef.current.addListener('place_changed', () => {
@@ -47,9 +45,9 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
       if (place && place.geometry?.location) {
         const coordinates = {
           lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
+          lng: place.geometry.location.lng(),
         };
-        const locationName = place.formatted_address || place.name || "";
+        const locationName = place.formatted_address || place.name || '';
         onLocationSelect(locationName, coordinates);
         setSearchInput(locationName);
       }
@@ -70,45 +68,48 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
 
     try {
       const results = await new Promise<google.maps.GeocoderResult[]>((resolve, reject) => {
-        geocoder.geocode({ 
-          address: `${searchInput}, UK`,
-          componentRestrictions: { country: 'GB' }
-        }, (results, status) => {
-          if (status === 'OK' && results) {
-            resolve(results);
-          } else {
-            reject(new Error(`Geocoding failed: ${status}`));
+        geocoder.geocode(
+          {
+            address: `${searchInput}, UK`,
+            componentRestrictions: { country: 'GB' },
+          },
+          (results, status) => {
+            if (status === 'OK' && results) {
+              resolve(results);
+            } else {
+              reject(new Error(`Geocoding failed: ${status}`));
+            }
           }
-        });
+        );
       });
 
       if (results.length > 0) {
         const result = results[0];
         const coordinates = {
           lat: result.geometry.location.lat(),
-          lng: result.geometry.location.lng()
+          lng: result.geometry.location.lng(),
         };
         onLocationSelect(result.formatted_address, coordinates);
         setSearchInput(result.formatted_address);
-        
+
         toast({
-          title: "Location found",
+          title: 'Location found',
           description: `Searching for courses near ${result.formatted_address}`,
-          variant: "success"
+          variant: 'success',
         });
       } else {
         toast({
-          title: "Location not found",
-          description: "Please try a different location or be more specific.",
-          variant: "destructive"
+          title: 'Location not found',
+          description: 'Please try a different location or be more specific.',
+          variant: 'destructive',
         });
       }
     } catch (error) {
-      console.error("Geocoding error:", error);
+      console.error('Geocoding error:', error);
       toast({
-        title: "Search error",
-        description: "Unable to search for location. Please try again.",
-        variant: "destructive"
+        title: 'Search error',
+        description: 'Unable to search for location. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSearching(false);
@@ -118,9 +119,9 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
   const handleCurrentLocation = () => {
     if (!navigator.geolocation) {
       toast({
-        title: "Geolocation not supported",
+        title: 'Geolocation not supported',
         description: "Your browser doesn't support location services.",
-        variant: "destructive"
+        variant: 'destructive',
       });
       return;
     }
@@ -132,37 +133,34 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
         try {
           const { latitude, longitude } = position.coords;
           const geocoder = new window.google.maps.Geocoder();
-          
+
           const results = await new Promise<google.maps.GeocoderResult[]>((resolve, reject) => {
-            geocoder.geocode(
-              { location: { lat: latitude, lng: longitude } },
-              (results, status) => {
-                if (status === 'OK' && results) {
-                  resolve(results);
-                } else {
-                  reject(new Error(`Reverse geocoding failed: ${status}`));
-                }
+            geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+              if (status === 'OK' && results) {
+                resolve(results);
+              } else {
+                reject(new Error(`Reverse geocoding failed: ${status}`));
               }
-            );
+            });
           });
 
           if (results.length > 0) {
             const locationName = results[0].formatted_address;
             onLocationSelect(locationName, { lat: latitude, lng: longitude });
             setSearchInput(locationName);
-            
+
             toast({
-              title: "Current location found",
+              title: 'Current location found',
               description: `Searching for courses near ${locationName}`,
-              variant: "success"
+              variant: 'success',
             });
           }
         } catch (error) {
-          console.error("Reverse geocoding error:", error);
+          console.error('Reverse geocoding error:', error);
           toast({
-            title: "Location error",
-            description: "Unable to determine your exact location.",
-            variant: "destructive"
+            title: 'Location error',
+            description: 'Unable to determine your exact location.',
+            variant: 'destructive',
           });
         } finally {
           setIsGettingLocation(false);
@@ -171,9 +169,9 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
       (error) => {
         setIsGettingLocation(false);
         toast({
-          title: "Location access denied",
-          description: "Please allow location access or enter a location manually.",
-          variant: "destructive"
+          title: 'Location access denied',
+          description: 'Please allow location access or enter a location manually.',
+          variant: 'destructive',
         });
       },
       { timeout: 10000, enableHighAccuracy: true }
@@ -181,12 +179,12 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
   };
 
   const handleClearLocation = () => {
-    setSearchInput("");
+    setSearchInput('');
     onClearLocation();
     toast({
-      title: "Location cleared",
-      description: "Showing all available courses",
-      variant: "default"
+      title: 'Location cleared',
+      description: 'Showing all available courses',
+      variant: 'default',
     });
   };
 
@@ -219,20 +217,20 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
-                className={cn("pr-10", !searchInput && "pl-10")}
+                className={cn('pr-10', !searchInput && 'pl-10')}
               />
               {searchInput && (
                 <Button
                   variant="ghost"
                   size="sm"
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-                  onClick={() => setSearchInput("")}
+                  onClick={() => setSearchInput('')}
                 >
                   <X className="h-3 w-3" />
                 </Button>
               )}
             </div>
-            <Button 
+            <Button
               onClick={handleManualSearch}
               disabled={isSearching || !searchInput.trim()}
               size="sm"
@@ -260,7 +258,7 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
               )}
               Use Current Location
             </Button>
-            
+
             {currentLocation && (
               <Button
                 variant="outline"
@@ -288,11 +286,11 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
             {radiusOptions.map((radius) => (
               <Badge
                 key={radius}
-                variant={searchRadius === radius ? "default" : "outline"}
+                variant={searchRadius === radius ? 'default' : 'outline'}
                 className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
-                  searchRadius === radius 
-                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                    : "border-elec-yellow/30 hover:bg-elec-yellow/10 text-elec-yellow"
+                  searchRadius === radius
+                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                    : 'border-elec-yellow/30 hover:bg-elec-yellow/10 text-elec-yellow'
                 }`}
                 onClick={() => onRadiusChange(radius)}
               >
@@ -303,8 +301,8 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
         </div>
 
         <div className="text-xs text-muted-foreground">
-          Use the search above to find training courses and providers near your location.
-          Results will be filtered based on your selected radius.
+          Use the search above to find training courses and providers near your location. Results
+          will be filtered based on your selected radius.
         </div>
       </CardContent>
     </Card>

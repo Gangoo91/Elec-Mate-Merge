@@ -51,69 +51,78 @@ export const useSwipeable = ({
   const startTime = useRef<number>(0);
   const isTracking = useRef<boolean>(false);
 
-  const getDirection = useCallback((diffX: number, diffY: number): 'left' | 'right' | 'up' | 'down' | null => {
-    const absX = Math.abs(diffX);
-    const absY = Math.abs(diffY);
+  const getDirection = useCallback(
+    (diffX: number, diffY: number): 'left' | 'right' | 'up' | 'down' | null => {
+      const absX = Math.abs(diffX);
+      const absY = Math.abs(diffY);
 
-    if (absX < threshold && absY < threshold) return null;
+      if (absX < threshold && absY < threshold) return null;
 
-    if (absX > absY) {
-      return diffX > 0 ? 'left' : 'right';
-    } else {
-      return diffY > 0 ? 'up' : 'down';
-    }
-  }, [threshold]);
-
-  const handleStart = useCallback((clientX: number, clientY: number) => {
-    touchStartX.current = clientX;
-    touchStartY.current = clientY;
-    touchEndX.current = clientX;
-    touchEndY.current = clientY;
-    startTime.current = Date.now();
-    isTracking.current = true;
-
-    setSwipeState({
-      isSwiping: true,
-      direction: null,
-      deltaX: 0,
-      deltaY: 0,
-      velocity: 0,
-    });
-
-    onSwipeStart?.();
-  }, [onSwipeStart]);
-
-  const handleMove = useCallback((clientX: number, clientY: number, e?: Event) => {
-    if (!isTracking.current) return;
-
-    touchEndX.current = clientX;
-    touchEndY.current = clientY;
-
-    const diffX = touchStartX.current - touchEndX.current;
-    const diffY = touchStartY.current - touchEndY.current;
-    const duration = (Date.now() - startTime.current) / 1000;
-    const distance = Math.sqrt(diffX * diffX + diffY * diffY);
-    const velocity = duration > 0 ? distance / duration : 0;
-    const direction = getDirection(diffX, diffY);
-
-    // Prevent scroll when swiping horizontally (useful for carousels)
-    // Guard with cancelable check to avoid Android intervention warnings
-    if (preventScrollOnHorizontal && Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
-      if (e && 'cancelable' in e && e.cancelable) {
-        e.preventDefault();
+      if (absX > absY) {
+        return diffX > 0 ? 'left' : 'right';
+      } else {
+        return diffY > 0 ? 'up' : 'down';
       }
-    }
+    },
+    [threshold]
+  );
 
-    setSwipeState({
-      isSwiping: true,
-      direction,
-      deltaX: -diffX,
-      deltaY: -diffY,
-      velocity,
-    });
+  const handleStart = useCallback(
+    (clientX: number, clientY: number) => {
+      touchStartX.current = clientX;
+      touchStartY.current = clientY;
+      touchEndX.current = clientX;
+      touchEndY.current = clientY;
+      startTime.current = Date.now();
+      isTracking.current = true;
 
-    onSwipeMove?.(diffX, diffY, velocity);
-  }, [getDirection, preventScrollOnHorizontal, onSwipeMove]);
+      setSwipeState({
+        isSwiping: true,
+        direction: null,
+        deltaX: 0,
+        deltaY: 0,
+        velocity: 0,
+      });
+
+      onSwipeStart?.();
+    },
+    [onSwipeStart]
+  );
+
+  const handleMove = useCallback(
+    (clientX: number, clientY: number, e?: Event) => {
+      if (!isTracking.current) return;
+
+      touchEndX.current = clientX;
+      touchEndY.current = clientY;
+
+      const diffX = touchStartX.current - touchEndX.current;
+      const diffY = touchStartY.current - touchEndY.current;
+      const duration = (Date.now() - startTime.current) / 1000;
+      const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+      const velocity = duration > 0 ? distance / duration : 0;
+      const direction = getDirection(diffX, diffY);
+
+      // Prevent scroll when swiping horizontally (useful for carousels)
+      // Guard with cancelable check to avoid Android intervention warnings
+      if (preventScrollOnHorizontal && Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+        if (e && 'cancelable' in e && e.cancelable) {
+          e.preventDefault();
+        }
+      }
+
+      setSwipeState({
+        isSwiping: true,
+        direction,
+        deltaX: -diffX,
+        deltaY: -diffY,
+        velocity,
+      });
+
+      onSwipeMove?.(diffX, diffY, velocity);
+    },
+    [getDirection, preventScrollOnHorizontal, onSwipeMove]
+  );
 
   const handleEnd = useCallback(() => {
     if (!isTracking.current) return;

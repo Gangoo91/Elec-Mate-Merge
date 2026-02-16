@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -35,7 +35,7 @@ import {
   Palette,
   Shield,
   Calendar,
-  Percent
+  Percent,
 } from 'lucide-react';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useSignatureProfiles } from '@/hooks/useSignatureProfiles';
@@ -47,20 +47,77 @@ import { useAuth } from '@/components/auth/AuthProvider';
 // Default T&Cs options for electrical contractors
 const DEFAULT_TERMS = [
   { id: 'payment_30', label: 'Payment due within 30 days of invoice date', category: 'Payment' },
-  { id: 'deposit_required', label: 'A deposit of the specified percentage is required before work commences', category: 'Payment' },
-  { id: 'additional_charges', label: 'Additional work not included in this quote will be charged at our standard hourly rate', category: 'Payment' },
-  { id: 'warranty_workmanship', label: 'All workmanship is guaranteed for the warranty period specified', category: 'Warranty' },
-  { id: 'warranty_materials', label: 'Materials are covered by manufacturer warranties where applicable', category: 'Warranty' },
-  { id: 'bs7671_compliance', label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations', category: 'Compliance' },
-  { id: 'part_p_notification', label: 'Building control notification (Part P) included where required', category: 'Compliance' },
-  { id: 'testing_cert', label: 'Electrical installation certificate or minor works certificate provided on completion', category: 'Compliance' },
-  { id: 'access_required', label: 'Clear access to work areas must be provided', category: 'Access' },
-  { id: 'power_isolation', label: 'Power may need to be isolated during installation - advance notice will be given', category: 'Access' },
-  { id: 'site_safety', label: 'Work area will be left safe and clean at the end of each working day', category: 'Safety' },
-  { id: 'asbestos_disclaimer', label: 'This quote excludes work involving asbestos - if discovered, work will stop pending survey', category: 'Safety' },
-  { id: 'price_validity', label: 'This quotation is valid for the number of days specified from the date of issue', category: 'General' },
-  { id: 'cancellation', label: 'Cancellation within 48 hours of scheduled work may incur charges', category: 'General' },
-  { id: 'unforeseen_works', label: 'Unforeseen works discovered during installation will be quoted separately', category: 'General' },
+  {
+    id: 'deposit_required',
+    label: 'A deposit of the specified percentage is required before work commences',
+    category: 'Payment',
+  },
+  {
+    id: 'additional_charges',
+    label: 'Additional work not included in this quote will be charged at our standard hourly rate',
+    category: 'Payment',
+  },
+  {
+    id: 'warranty_workmanship',
+    label: 'All workmanship is guaranteed for the warranty period specified',
+    category: 'Warranty',
+  },
+  {
+    id: 'warranty_materials',
+    label: 'Materials are covered by manufacturer warranties where applicable',
+    category: 'Warranty',
+  },
+  {
+    id: 'bs7671_compliance',
+    label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations',
+    category: 'Compliance',
+  },
+  {
+    id: 'part_p_notification',
+    label: 'Building control notification (Part P) included where required',
+    category: 'Compliance',
+  },
+  {
+    id: 'testing_cert',
+    label: 'Electrical installation certificate or minor works certificate provided on completion',
+    category: 'Compliance',
+  },
+  {
+    id: 'access_required',
+    label: 'Clear access to work areas must be provided',
+    category: 'Access',
+  },
+  {
+    id: 'power_isolation',
+    label: 'Power may need to be isolated during installation - advance notice will be given',
+    category: 'Access',
+  },
+  {
+    id: 'site_safety',
+    label: 'Work area will be left safe and clean at the end of each working day',
+    category: 'Safety',
+  },
+  {
+    id: 'asbestos_disclaimer',
+    label:
+      'This quote excludes work involving asbestos - if discovered, work will stop pending survey',
+    category: 'Safety',
+  },
+  {
+    id: 'price_validity',
+    label: 'This quotation is valid for the number of days specified from the date of issue',
+    category: 'General',
+  },
+  {
+    id: 'cancellation',
+    label: 'Cancellation within 48 hours of scheduled work may incur charges',
+    category: 'General',
+  },
+  {
+    id: 'unforeseen_works',
+    label: 'Unforeseen works discovered during installation will be quoted separately',
+    category: 'General',
+  },
 ];
 
 interface SettingsDialogProps {
@@ -84,8 +141,12 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
   const [warrantyPeriod, setWarrantyPeriod] = useState('12 months');
   const [accentColor, setAccentColor] = useState('#FFD700');
   const [selectedTerms, setSelectedTerms] = useState<string[]>([
-    'payment_30', 'deposit_required', 'warranty_workmanship', 'bs7671_compliance',
-    'testing_cert', 'price_validity'
+    'payment_30',
+    'deposit_required',
+    'warranty_workmanship',
+    'bs7671_compliance',
+    'testing_cert',
+    'price_validity',
   ]);
   const [customTerms, setCustomTerms] = useState<{ id: string; label: string }[]>([]);
   const [newCustomTerm, setNewCustomTerm] = useState('');
@@ -100,7 +161,9 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
       try {
         const { data, error } = await supabase
           .from('company_profiles')
-          .select('quote_validity_days, deposit_percentage, warranty_period, accent_color, quote_terms')
+          .select(
+            'quote_validity_days, deposit_percentage, warranty_period, accent_color, quote_terms'
+          )
           .eq('user_id', user.id)
           .single();
 
@@ -134,7 +197,11 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
   // Save quote settings
   const saveQuoteSettings = async () => {
     if (!user?.id) {
-      toast({ title: 'Error', description: 'You must be logged in to save settings', variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: 'You must be logged in to save settings',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -142,7 +209,7 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
     try {
       const termsJson = JSON.stringify({
         selected: selectedTerms,
-        custom: customTerms
+        custom: customTerms,
       });
 
       const { error } = await supabase
@@ -152,7 +219,7 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
           deposit_percentage: depositPercentage,
           warranty_period: warrantyPeriod,
           accent_color: accentColor,
-          quote_terms: termsJson
+          quote_terms: termsJson,
         })
         .eq('user_id', user.id);
 
@@ -161,7 +228,11 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
       toast({ title: 'Saved', description: 'Quote settings saved successfully' });
     } catch (err: any) {
       console.error('Error saving quote settings:', err);
-      toast({ title: 'Error', description: err.message || 'Failed to save settings', variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: err.message || 'Failed to save settings',
+        variant: 'destructive',
+      });
     } finally {
       setIsSavingQuoteSettings(false);
     }
@@ -169,10 +240,8 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
 
   // Toggle term selection
   const toggleTerm = (termId: string) => {
-    setSelectedTerms(prev =>
-      prev.includes(termId)
-        ? prev.filter(id => id !== termId)
-        : [...prev, termId]
+    setSelectedTerms((prev) =>
+      prev.includes(termId) ? prev.filter((id) => id !== termId) : [...prev, termId]
     );
   };
 
@@ -180,15 +249,15 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
   const addCustomTerm = () => {
     if (!newCustomTerm.trim()) return;
     const id = `custom_${Date.now()}`;
-    setCustomTerms(prev => [...prev, { id, label: newCustomTerm.trim() }]);
-    setSelectedTerms(prev => [...prev, id]);
+    setCustomTerms((prev) => [...prev, { id, label: newCustomTerm.trim() }]);
+    setSelectedTerms((prev) => [...prev, id]);
     setNewCustomTerm('');
   };
 
   // Remove custom term
   const removeCustomTerm = (termId: string) => {
-    setCustomTerms(prev => prev.filter(t => t.id !== termId));
-    setSelectedTerms(prev => prev.filter(id => id !== termId));
+    setCustomTerms((prev) => prev.filter((t) => t.id !== termId));
+    setSelectedTerms((prev) => prev.filter((id) => id !== termId));
   };
 
   const exportData = () => {
@@ -197,10 +266,10 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
       signatures,
       settings: {
         autoSaveEnabled,
-        autoSaveInterval
-      }
+        autoSaveInterval,
+      },
     };
-    
+
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -215,8 +284,8 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
       const { offlineStorage } = await import('@/utils/offlineStorage');
       await offlineStorage.clearAll();
       toast({
-        title: "Data cleared",
-        description: "All application data has been cleared"
+        title: 'Data cleared',
+        description: 'All application data has been cleared',
       });
       window.location.reload();
     }
@@ -269,7 +338,7 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
       {(!isMobile || activeTab === 'profiles') && (
         <div className="space-y-6">
           <InspectorProfileForm />
-          
+
           <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -283,10 +352,15 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
                 <p className="text-sm text-muted-foreground">No signatures saved yet</p>
               ) : (
                 signatures.map((sig) => (
-                  <div key={sig.id} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div
+                    key={sig.id}
+                    className="flex items-center justify-between p-3 border rounded-lg"
+                  >
                     <div>
                       <p className="font-medium">{sig.name}</p>
-                      <p className="text-sm text-muted-foreground">{new Date(sig.createdAt).toLocaleDateString()}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(sig.createdAt).toLocaleDateString()}
+                      </p>
                     </div>
                     <Button
                       variant="ghost"
@@ -398,36 +472,38 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Group terms by category */}
-              {['Payment', 'Warranty', 'Compliance', 'Access', 'Safety', 'General'].map(category => {
-                const categoryTerms = DEFAULT_TERMS.filter(t => t.category === category);
-                if (categoryTerms.length === 0) return null;
-                return (
-                  <div key={category} className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
-                      {category}
-                    </h4>
-                    <div className="space-y-2 pl-3">
-                      {categoryTerms.map(term => (
-                        <div key={term.id} className="flex items-start gap-3">
-                          <Checkbox
-                            id={term.id}
-                            checked={selectedTerms.includes(term.id)}
-                            onCheckedChange={() => toggleTerm(term.id)}
-                            className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                          />
-                          <Label
-                            htmlFor={term.id}
-                            className="text-sm leading-tight cursor-pointer"
-                          >
-                            {term.label}
-                          </Label>
-                        </div>
-                      ))}
+              {['Payment', 'Warranty', 'Compliance', 'Access', 'Safety', 'General'].map(
+                (category) => {
+                  const categoryTerms = DEFAULT_TERMS.filter((t) => t.category === category);
+                  if (categoryTerms.length === 0) return null;
+                  return (
+                    <div key={category} className="space-y-2">
+                      <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+                        {category}
+                      </h4>
+                      <div className="space-y-2 pl-3">
+                        {categoryTerms.map((term) => (
+                          <div key={term.id} className="flex items-start gap-3">
+                            <Checkbox
+                              id={term.id}
+                              checked={selectedTerms.includes(term.id)}
+                              onCheckedChange={() => toggleTerm(term.id)}
+                              className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                            />
+                            <Label
+                              htmlFor={term.id}
+                              className="text-sm leading-tight cursor-pointer"
+                            >
+                              {term.label}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
 
               {/* Custom Terms */}
               <div className="space-y-2 pt-2 border-t border-border">
@@ -436,7 +512,7 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
                   Your Custom Terms
                 </h4>
                 <div className="space-y-2 pl-3">
-                  {customTerms.map(term => (
+                  {customTerms.map((term) => (
                     <div key={term.id} className="flex items-start gap-3">
                       <Checkbox
                         id={term.id}
@@ -525,7 +601,9 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <Label htmlFor="auto-save">Enable Auto-Save</Label>
-                  <p className="text-sm text-muted-foreground">Automatically save your work as you type</p>
+                  <p className="text-sm text-muted-foreground">
+                    Automatically save your work as you type
+                  </p>
                 </div>
                 <Switch
                   id="auto-save"

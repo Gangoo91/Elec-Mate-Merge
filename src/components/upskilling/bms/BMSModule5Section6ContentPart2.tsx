@@ -12,21 +12,30 @@ export const BMSModule5Section6ContentPart2 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Segmentation means breaking a large network into smaller, manageable sections. This approach provides multiple benefits for BMS performance and reliability. Understanding when and how to segment networks is crucial for professional BMS installations.
+          Segmentation means breaking a large network into smaller, manageable sections. This
+          approach provides multiple benefits for BMS performance and reliability. Understanding
+          when and how to segment networks is crucial for professional BMS installations.
         </p>
 
-        <h3 className="text-xl font-semibold text-foreground mb-4">The Science Behind Segmentation</h3>
-        
+        <h3 className="text-xl font-semibold text-foreground mb-4">
+          The Science Behind Segmentation
+        </h3>
+
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600 mb-6">
-          <h4 className="font-semibold text-yellow-300 text-lg mb-4">Communication Theory Fundamentals</h4>
+          <h4 className="font-semibold text-yellow-300 text-lg mb-4">
+            Communication Theory Fundamentals
+          </h4>
           <p className="text-gray-300 mb-4">
-            Network performance follows predictable mathematical relationships. Understanding these helps you design better systems:
+            Network performance follows predictable mathematical relationships. Understanding these
+            helps you design better systems:
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded">
               <h5 className="font-medium text-yellow-200 mb-2">Token Passing Time (BACnet MSTP)</h5>
-              <p className="font-mono text-yellow-100 text-sm">T = N × (Ttoken + Tdata + Tsilence)</p>
+              <p className="font-mono text-yellow-100 text-sm">
+                T = N × (Ttoken + Tdata + Tsilence)
+              </p>
               <ul className="text-xs text-yellow-100 mt-2 space-y-1">
                 <li>• N = Number of devices</li>
                 <li>• Ttoken = Token passing time (~5ms)</li>
@@ -34,7 +43,7 @@ export const BMSModule5Section6ContentPart2 = () => {
                 <li>• Tsilence = Silent period (~40ms)</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded">
               <h5 className="font-medium text-blue-200 mb-2">Modbus Poll Time</h5>
               <p className="font-mono text-blue-100 text-sm">T = N × (Tpoll + Tresponse + Tgap)</p>
@@ -55,13 +64,19 @@ export const BMSModule5Section6ContentPart2 = () => {
           <div className="bg-elec-dark p-5 rounded-lg border border-gray-600">
             <div className="flex items-center gap-3 mb-3">
               <TrendingDown className="h-6 w-6 text-green-400" />
-              <h4 className="font-semibold text-green-300 text-lg">Traffic Reduction Calculations</h4>
+              <h4 className="font-semibold text-green-300 text-lg">
+                Traffic Reduction Calculations
+              </h4>
             </div>
             <div className="space-y-4">
-              <p className="text-sm text-gray-300">Let's calculate the performance difference with a real example:</p>
-              
+              <p className="text-sm text-gray-300">
+                Let's calculate the performance difference with a real example:
+              </p>
+
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded">
-                <p className="font-medium text-red-200">Before Segmentation (100 BACnet devices):</p>
+                <p className="font-medium text-red-200">
+                  Before Segmentation (100 BACnet devices):
+                </p>
                 <ul className="text-sm text-red-100 mt-2 space-y-1">
                   <li>• Token rotation time: 100 × 45ms = 4.5 seconds</li>
                   <li>• Each device waits 4.5s between communications</li>
@@ -69,7 +84,7 @@ export const BMSModule5Section6ContentPart2 = () => {
                   <li>• System appears "sluggish" to users</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-green-500/10 border border-green-500/20 rounded">
                 <p className="font-medium text-green-200">After Segmentation (4 × 25 devices):</p>
                 <ul className="text-sm text-green-100 mt-2 space-y-1">
@@ -79,7 +94,7 @@ export const BMSModule5Section6ContentPart2 = () => {
                   <li>• System feels responsive and reliable</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded">
                 <p className="font-medium text-blue-200">Bandwidth Utilisation:</p>
                 <ul className="text-sm text-blue-100 mt-2 space-y-1">
@@ -98,8 +113,10 @@ export const BMSModule5Section6ContentPart2 = () => {
               <h4 className="font-semibold text-blue-300 text-lg">Reliability Mathematics</h4>
             </div>
             <div className="space-y-4">
-              <p className="text-sm text-gray-300">Segmentation dramatically improves system availability:</p>
-              
+              <p className="text-sm text-gray-300">
+                Segmentation dramatically improves system availability:
+              </p>
+
               <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
                 <p className="font-medium text-yellow-200">Failure Impact Analysis:</p>
                 <ul className="text-sm text-yellow-100 mt-2 space-y-1">
@@ -109,7 +126,7 @@ export const BMSModule5Section6ContentPart2 = () => {
                   <li>• Maintenance can be performed on live system</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded">
                 <p className="font-medium text-purple-200">Fault Location Time:</p>
                 <ul className="text-sm text-purple-100 mt-2 space-y-1">
@@ -119,7 +136,7 @@ export const BMSModule5Section6ContentPart2 = () => {
                   <li>• Total diagnostic time reduced by 85%</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-green-500/10 border border-green-500/20 rounded">
                 <p className="font-medium text-green-200">System Availability:</p>
                 <ul className="text-sm text-green-100 mt-2 space-y-1">
@@ -135,8 +152,10 @@ export const BMSModule5Section6ContentPart2 = () => {
         <h3 className="text-xl font-semibold text-foreground mb-4">Segmentation Strategies</h3>
 
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600 mb-6">
-          <h4 className="font-semibold text-green-300 text-lg mb-4">Common Segmentation Approaches</h4>
-          
+          <h4 className="font-semibold text-green-300 text-lg mb-4">
+            Common Segmentation Approaches
+          </h4>
+
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded">
               <h5 className="font-medium text-blue-200 mb-2">Geographic Segmentation</h5>
@@ -146,9 +165,11 @@ export const BMSModule5Section6ContentPart2 = () => {
                 <li>• By building wing or area</li>
                 <li>• Matches cable routing naturally</li>
               </ul>
-              <p className="text-xs text-blue-100 mt-2 italic">Best for: Large buildings, campus sites</p>
+              <p className="text-xs text-blue-100 mt-2 italic">
+                Best for: Large buildings, campus sites
+              </p>
             </div>
-            
+
             <div className="p-4 bg-green-500/10 border border-green-500/20 rounded">
               <h5 className="font-medium text-green-200 mb-2">Functional Segmentation</h5>
               <ul className="text-sm text-green-100 space-y-1">
@@ -159,7 +180,7 @@ export const BMSModule5Section6ContentPart2 = () => {
               </ul>
               <p className="text-xs text-green-100 mt-2 italic">Best for: Complex HVAC systems</p>
             </div>
-            
+
             <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded">
               <h5 className="font-medium text-purple-200 mb-2">Hybrid Segmentation</h5>
               <ul className="text-sm text-purple-100 space-y-1">
@@ -168,19 +189,27 @@ export const BMSModule5Section6ContentPart2 = () => {
                 <li>• Load balancing across segments</li>
                 <li>• Future expansion planning</li>
               </ul>
-              <p className="text-xs text-purple-100 mt-2 italic">Best for: Most commercial installations</p>
+              <p className="text-xs text-purple-100 mt-2 italic">
+                Best for: Most commercial installations
+              </p>
             </div>
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold text-foreground mb-4">Step-by-Step Segmentation Process</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-4">
+          Step-by-Step Segmentation Process
+        </h3>
 
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600 mb-6">
-          <h4 className="font-semibold text-yellow-300 text-lg mb-4">Professional Segmentation Design Method</h4>
-          
+          <h4 className="font-semibold text-yellow-300 text-lg mb-4">
+            Professional Segmentation Design Method
+          </h4>
+
           <div className="space-y-6">
             <div className="flex gap-4">
-              <div className="bg-yellow-500 text-yellow-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">1</div>
+              <div className="bg-yellow-500 text-yellow-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                1
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-yellow-200 mb-2">Device Inventory and Analysis</h5>
                 <ul className="text-sm text-gray-300 space-y-1">
@@ -191,9 +220,11 @@ export const BMSModule5Section6ContentPart2 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="flex gap-4">
-              <div className="bg-blue-500 text-blue-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
+              <div className="bg-blue-500 text-blue-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                2
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-blue-200 mb-2">Calculate Segment Loading</h5>
                 <ul className="text-sm text-gray-300 space-y-1">
@@ -204,9 +235,11 @@ export const BMSModule5Section6ContentPart2 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="flex gap-4">
-              <div className="bg-green-500 text-green-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">3</div>
+              <div className="bg-green-500 text-green-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                3
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-green-200 mb-2">Design Segment Topology</h5>
                 <ul className="text-sm text-gray-300 space-y-1">
@@ -217,9 +250,11 @@ export const BMSModule5Section6ContentPart2 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="flex gap-4">
-              <div className="bg-purple-500 text-purple-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">4</div>
+              <div className="bg-purple-500 text-purple-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                4
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-purple-200 mb-2">Validate and Document</h5>
                 <ul className="text-sm text-gray-300 space-y-1">
@@ -259,7 +294,9 @@ export const BMSModule5Section6ContentPart2 = () => {
 
         <div className="bg-green-600/20 border border-green-600/40 rounded-lg p-4">
           <p className="text-green-100 font-medium">
-            <strong>Best Practice:</strong> Plan segmentation during design phase. It's much more expensive to retrofit segmentation after installation than to implement it from the start.
+            <strong>Best Practice:</strong> Plan segmentation during design phase. It's much more
+            expensive to retrofit segmentation after installation than to implement it from the
+            start.
           </p>
         </div>
       </CardContent>

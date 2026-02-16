@@ -1,9 +1,8 @@
-
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Zap, Home, Building, Factory, Wrench } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Zap, Home, Building, Factory, Wrench } from 'lucide-react';
 
 interface PresetScenario {
   id: string;
@@ -22,7 +21,7 @@ interface QuickCalculationPresetsProps {
 
 const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
   calculatorType,
-  onPresetSelect
+  onPresetSelect,
 }) => {
   const getPresetsForCalculator = (type: string): PresetScenario[] => {
     switch (type) {
@@ -35,7 +34,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'domestic',
             icon: <Home className="h-4 w-4" />,
             inputs: { voltage: '12', current: '1.5' },
-            explanation: 'Common 12V LED strip drawing 1.5A'
+            explanation: 'Common 12V LED strip drawing 1.5A',
           },
           {
             id: 'socket-outlet',
@@ -44,7 +43,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'domestic',
             icon: <Home className="h-4 w-4" />,
             inputs: { voltage: '230', current: '13' },
-            explanation: 'Maximum load on UK domestic socket'
+            explanation: 'Maximum load on UK domestic socket',
           },
           {
             id: 'industrial-motor',
@@ -53,10 +52,10 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'industrial',
             icon: <Factory className="h-4 w-4" />,
             inputs: { voltage: '400', power: '5500' },
-            explanation: '5.5kW industrial motor on 400V supply'
-          }
+            explanation: '5.5kW industrial motor on 400V supply',
+          },
         ];
-      
+
       case 'cable-size':
         return [
           {
@@ -66,7 +65,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'domestic',
             icon: <Home className="h-4 w-4" />,
             inputs: { current: '6', length: '15', voltage: '230', voltageDrop: '3' },
-            explanation: '6A lighting circuit, 15m run, 3% voltage drop limit'
+            explanation: '6A lighting circuit, 15m run, 3% voltage drop limit',
           },
           {
             id: 'socket-circuit',
@@ -75,7 +74,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'domestic',
             icon: <Home className="h-4 w-4" />,
             inputs: { current: '32', length: '50', voltage: '230', voltageDrop: '5' },
-            explanation: '32A ring final, 50m total length'
+            explanation: '32A ring final, 50m total length',
           },
           {
             id: 'submain-feed',
@@ -84,10 +83,10 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'commercial',
             icon: <Building className="h-4 w-4" />,
             inputs: { current: '63', length: '25', voltage: '400', voltageDrop: '5' },
-            explanation: '63A three-phase sub-main, 25m run'
-          }
+            explanation: '63A three-phase sub-main, 25m run',
+          },
         ];
-      
+
       case 'power-factor':
         return [
           {
@@ -97,7 +96,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'commercial',
             icon: <Building className="h-4 w-4" />,
             inputs: { activePower: '2000', apparentPower: '2500' },
-            explanation: 'Typical fluorescent lighting with magnetic ballasts'
+            explanation: 'Typical fluorescent lighting with magnetic ballasts',
           },
           {
             id: 'electric-motor',
@@ -106,7 +105,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'industrial',
             icon: <Factory className="h-4 w-4" />,
             inputs: { voltage: '400', current: '10', activePower: '5500' },
-            explanation: 'Three-phase induction motor at full load'
+            explanation: 'Three-phase induction motor at full load',
           },
           {
             id: 'mixed-commercial',
@@ -115,10 +114,10 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'commercial',
             icon: <Building className="h-4 w-4" />,
             inputs: { activePower: '15000', apparentPower: '18000' },
-            explanation: 'Typical office building with mixed loads'
-          }
+            explanation: 'Typical office building with mixed loads',
+          },
         ];
-      
+
       case 'voltage-drop':
         return [
           {
@@ -128,7 +127,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'domestic',
             icon: <Home className="h-4 w-4" />,
             inputs: { current: '20', length: '40', cableSize: '4', voltage: '230' },
-            explanation: '20A supply to garden office, 40m SWA run'
+            explanation: '20A supply to garden office, 40m SWA run',
           },
           {
             id: 'street-lighting',
@@ -137,17 +136,17 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
             category: 'commercial',
             icon: <Building className="h-4 w-4" />,
             inputs: { current: '10', length: '100', cableSize: '6', voltage: '230' },
-            explanation: 'Street lighting circuit, 100m cable run'
-          }
+            explanation: 'Street lighting circuit, 100m cable run',
+          },
         ];
-      
+
       default:
         return [];
     }
   };
 
   const presets = getPresetsForCalculator(calculatorType);
-  
+
   if (presets.length === 0) return null;
 
   const getCategoryColor = (category: string) => {
@@ -184,31 +183,27 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
                   {preset.icon}
                   <h4 className="font-medium text-sm">{preset.name}</h4>
                 </div>
-                <Badge className={getCategoryColor(preset.category)}>
-                  {preset.category}
-                </Badge>
+                <Badge className={getCategoryColor(preset.category)}>{preset.category}</Badge>
               </div>
-              
-              <p className="text-xs text-white mb-2">
-                {preset.description}
-              </p>
-              
+
+              <p className="text-xs text-white mb-2">{preset.description}</p>
+
               <div className="flex items-center justify-between">
                 <div className="flex gap-1 flex-wrap">
-                  {Object.entries(preset.inputs).slice(0, 3).map(([key, value]) => (
-                    <Badge key={key} variant="outline" className="text-xs">
-                      {key}: {value}
-                    </Badge>
-                  ))}
+                  {Object.entries(preset.inputs)
+                    .slice(0, 3)
+                    .map(([key, value]) => (
+                      <Badge key={key} variant="outline" className="text-xs">
+                        {key}: {value}
+                      </Badge>
+                    ))}
                 </div>
                 <Button variant="ghost" size="sm" className="h-6 px-2">
                   <Zap className="h-3 w-3" />
                 </Button>
               </div>
-              
-              <p className="text-xs text-blue-300 mt-2 italic">
-                {preset.explanation}
-              </p>
+
+              <p className="text-xs text-blue-300 mt-2 italic">{preset.explanation}</p>
             </div>
           ))}
         </div>

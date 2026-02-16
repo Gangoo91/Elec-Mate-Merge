@@ -3,13 +3,13 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeSection4LearningOutcomes = () => {
   const outcomes = [
-    "Define local, cloud, and hybrid smart home architectures",
-    "Compare the advantages and disadvantages of each architectural model",
-    "Explain how latency, reliability, and security differ across system types",
-    "Recognise when to use each architecture based on project needs and constraints",
-    "Identify common platforms and technologies that use each approach",
-    "Evaluate trade-offs between ease of use, performance, and privacy",
-    "Understand the role of edge computing in future smart home systems"
+    'Define local, cloud, and hybrid smart home architectures',
+    'Compare the advantages and disadvantages of each architectural model',
+    'Explain how latency, reliability, and security differ across system types',
+    'Recognise when to use each architecture based on project needs and constraints',
+    'Identify common platforms and technologies that use each approach',
+    'Evaluate trade-offs between ease of use, performance, and privacy',
+    'Understand the role of edge computing in future smart home systems',
   ];
 
   return (

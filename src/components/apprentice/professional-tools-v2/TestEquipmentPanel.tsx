@@ -1,21 +1,15 @@
-import { useState } from "react";
-import { ChevronDown, ChevronRight, Lightbulb } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { useState } from 'react';
+import { ChevronDown, ChevronRight, Lightbulb } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   testInstruments,
   mftFunctions,
   testEquipmentTip,
   brandComparison,
-} from "@/data/professional-tools/testEquipmentData";
+} from '@/data/professional-tools/testEquipmentData';
 
 const TestEquipmentPanel = () => {
-  const [openSections, setOpenSections] = useState<Set<string>>(
-    new Set(["basic"])
-  );
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set(['basic']));
 
   const toggleSection = (id: string) => {
     setOpenSections((prev) => {
@@ -29,36 +23,37 @@ const TestEquipmentPanel = () => {
     });
   };
 
-  const basicInstruments = testInstruments.filter((t) => t.tier === "basic");
-  const professionalInstruments = testInstruments.filter(
-    (t) => t.tier === "professional"
-  );
+  const basicInstruments = testInstruments.filter((t) => t.tier === 'basic');
+  const professionalInstruments = testInstruments.filter((t) => t.tier === 'professional');
 
   const sections = [
     {
-      id: "basic",
-      title: "Basic Test Equipment (Year 1-2)",
+      id: 'basic',
+      title: 'Basic Test Equipment (Year 1-2)',
       count: `${basicInstruments.length} items`,
       instruments: basicInstruments,
     },
     {
-      id: "professional",
-      title: "Professional Test Equipment (Year 3+)",
+      id: 'professional',
+      title: 'Professional Test Equipment (Year 3+)',
       count: `${professionalInstruments.length} items`,
       instruments: professionalInstruments,
     },
-    { id: "mft-reference", title: "MFT Function Reference", count: `${mftFunctions.length} tests` },
-    { id: "brand-comparison", title: "Brand Comparison", count: `${brandComparison.length} brands` },
+    { id: 'mft-reference', title: 'MFT Function Reference', count: `${mftFunctions.length} tests` },
+    {
+      id: 'brand-comparison',
+      title: 'Brand Comparison',
+      count: `${brandComparison.length} brands`,
+    },
   ];
 
   return (
     <div className="space-y-3 animate-fade-in">
       <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
         <p className="text-sm text-white">
-          <span className="font-semibold text-green-300">Test Equipment</span> —
-          Your test instruments are what separate you from a DIYer. An
-          uncalibrated tester means invalid certificates. Build your test kit
-          progressively through your apprenticeship.
+          <span className="font-semibold text-green-300">Test Equipment</span> — Your test
+          instruments are what separate you from a DIYer. An uncalibrated tester means invalid
+          certificates. Build your test kit progressively through your apprenticeship.
         </p>
       </div>
 
@@ -74,14 +69,12 @@ const TestEquipmentPanel = () => {
               <button
                 className={`w-full flex items-center justify-between p-3 rounded-lg transition-all touch-manipulation active:scale-[0.99] ${
                   isOpen
-                    ? "bg-green-500/10 border border-green-500/20"
-                    : "bg-white/5 border border-white/10 hover:border-white/20"
+                    ? 'bg-green-500/10 border border-green-500/20'
+                    : 'bg-white/5 border border-white/10 hover:border-white/20'
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-white">
-                    {section.title}
-                  </span>
+                  <span className="text-sm font-semibold text-white">{section.title}</span>
                   <span className="text-xs text-white px-2 py-0.5 rounded-full bg-white/10">
                     {section.count}
                   </span>
@@ -95,35 +88,28 @@ const TestEquipmentPanel = () => {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="pt-3 space-y-3">
-                {section.id === "mft-reference" ? (
+                {section.id === 'mft-reference' ? (
                   <div className="space-y-3">
                     {mftFunctions.map((fn) => (
                       <div
                         key={fn.test}
                         className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
                       >
-                        <h4 className="text-sm font-semibold text-white">
-                          {fn.test}
-                        </h4>
-                        <p className="text-xs text-white leading-relaxed">
-                          {fn.purpose}
-                        </p>
+                        <h4 className="text-sm font-semibold text-white">{fn.test}</h4>
+                        <p className="text-xs text-white leading-relaxed">{fn.purpose}</p>
                         <div className="text-xs text-white space-y-1">
                           <div>
-                            <span className="font-medium">
-                              Acceptable range:
-                            </span>{" "}
+                            <span className="font-medium">Acceptable range:</span>{' '}
                             {fn.acceptableRange}
                           </div>
                           <div>
-                            <span className="font-medium">Standard:</span>{" "}
-                            {fn.standard}
+                            <span className="font-medium">Standard:</span> {fn.standard}
                           </div>
                         </div>
                       </div>
                     ))}
                   </div>
-                ) : section.id === "brand-comparison" ? (
+                ) : section.id === 'brand-comparison' ? (
                   <div className="space-y-3">
                     {brandComparison.map((brand) => (
                       <div
@@ -131,19 +117,14 @@ const TestEquipmentPanel = () => {
                         className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
                       >
                         <div className="flex items-center justify-between gap-2">
-                          <h4 className="text-sm font-semibold text-white">
-                            {brand.brand}
-                          </h4>
+                          <h4 className="text-sm font-semibold text-white">{brand.brand}</h4>
                           <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-white whitespace-nowrap">
                             {brand.priceRange}
                           </span>
                         </div>
-                        <p className="text-xs text-white leading-relaxed">
-                          {brand.strengths}
-                        </p>
+                        <p className="text-xs text-white leading-relaxed">{brand.strengths}</p>
                         <div className="text-xs text-white">
-                          <span className="font-medium">Key models:</span>{" "}
-                          {brand.models}
+                          <span className="font-medium">Key models:</span> {brand.models}
                         </div>
                       </div>
                     ))}
@@ -155,16 +136,12 @@ const TestEquipmentPanel = () => {
                       className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
                     >
                       <div className="flex items-start justify-between gap-2">
-                        <h4 className="text-sm font-semibold text-white">
-                          {instrument.name}
-                        </h4>
+                        <h4 className="text-sm font-semibold text-white">{instrument.name}</h4>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/20 text-green-300 border border-green-500/30 whitespace-nowrap">
                           {instrument.price}
                         </span>
                       </div>
-                      <p className="text-xs text-white leading-relaxed">
-                        {instrument.description}
-                      </p>
+                      <p className="text-xs text-white leading-relaxed">{instrument.description}</p>
                       {instrument.functions && (
                         <div className="flex flex-wrap gap-1">
                           {instrument.functions.map((fn) => (
@@ -189,16 +166,13 @@ const TestEquipmentPanel = () => {
                       </div>
                       {instrument.calibration && (
                         <div className="text-xs text-white">
-                          <span className="font-medium">Calibration:</span>{" "}
-                          {instrument.calibration}
+                          <span className="font-medium">Calibration:</span> {instrument.calibration}
                         </div>
                       )}
                       {instrument.apprenticeTip && (
                         <div className="p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
                           <p className="text-xs text-white">
-                            <span className="font-semibold text-amber-300">
-                              Tip:{" "}
-                            </span>
+                            <span className="font-semibold text-amber-300">Tip: </span>
                             {instrument.apprenticeTip}
                           </p>
                         </div>

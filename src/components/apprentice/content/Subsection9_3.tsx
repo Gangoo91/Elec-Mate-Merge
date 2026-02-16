@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { SubsectionProps } from './subsection1_1/types';
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Lightbulb, Search, Wrench, Shield } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, Lightbulb, Search, Wrench, Shield } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
@@ -15,60 +14,75 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           Sustainable Electrical Technologies
         </h2>
         <p className="text-white">
-          Exploring renewable energy systems, energy storage, and smart technologies for modern electrical installations.
+          Exploring renewable energy systems, energy storage, and smart technologies for modern
+          electrical installations.
         </p>
       </div>
 
       {/* Section 1: Renewable Energy Systems */}
       <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
-          <h3 className="text-xl font-semibold mb-4">Renewable Energy Systems for UK Installations</h3>
+          <h3 className="text-xl font-semibold mb-4">
+            Renewable Energy Systems for UK Installations
+          </h3>
           <div className="space-y-4">
             <p>
-              Renewable energy systems are increasingly becoming part of standard electrical installations in the UK, 
-              driven by environmental concerns, building regulations, and financial incentives.
+              Renewable energy systems are increasingly becoming part of standard electrical
+              installations in the UK, driven by environmental concerns, building regulations, and
+              financial incentives.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
               <div className="bg-white/10 border border-green-500/30 rounded-md p-4">
-                <h4 className="text-lg font-medium text-green-400 mb-2">Solar Photovoltaic (PV) Systems</h4>
+                <h4 className="text-lg font-medium text-green-400 mb-2">
+                  Solar Photovoltaic (PV) Systems
+                </h4>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>
-                    <strong>System Components</strong>: Solar panels, inverters, mounting systems, and monitoring equipment
+                    <strong>System Components</strong>: Solar panels, inverters, mounting systems,
+                    and monitoring equipment
                   </li>
                   <li>
-                    <strong>UK Considerations</strong>: MCS certification, G99/G100 grid connection requirements, DNO notification
+                    <strong>UK Considerations</strong>: MCS certification, G99/G100 grid connection
+                    requirements, DNO notification
                   </li>
                   <li>
-                    <strong>Installation Standards</strong>: IET Code of Practice for Grid-Connected Solar PV Systems
+                    <strong>Installation Standards</strong>: IET Code of Practice for Grid-Connected
+                    Solar PV Systems
                   </li>
                   <li>
-                    <strong>Current Trends</strong>: Increased adoption of integrated PV systems, higher efficiency panels, and microinverter technology
+                    <strong>Current Trends</strong>: Increased adoption of integrated PV systems,
+                    higher efficiency panels, and microinverter technology
                   </li>
                 </ul>
               </div>
-              
+
               <div className="bg-white/10 border border-green-500/30 rounded-md p-4">
                 <h4 className="text-lg font-medium text-green-400 mb-2">Wind Energy Systems</h4>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>
-                    <strong>System Components</strong>: Wind turbines, inverters, control systems, and tower structures
+                    <strong>System Components</strong>: Wind turbines, inverters, control systems,
+                    and tower structures
                   </li>
                   <li>
-                    <strong>UK Considerations</strong>: Planning permission requirements, noise regulations, and wildlife impact assessments
+                    <strong>UK Considerations</strong>: Planning permission requirements, noise
+                    regulations, and wildlife impact assessments
                   </li>
                   <li>
                     <strong>Installation Standards</strong>: BS EN 61400 series for wind turbines
                   </li>
                   <li>
-                    <strong>Current Trends</strong>: Small-scale vertical axis turbines for urban environments with lower wind speeds
+                    <strong>Current Trends</strong>: Small-scale vertical axis turbines for urban
+                    environments with lower wind speeds
                   </li>
                 </ul>
               </div>
             </div>
-            
+
             <div className="bg-white/10 border border-green-500/30 rounded-md p-4 mt-4">
-              <h4 className="text-lg font-medium text-green-400 mb-2">Heat Pumps and Renewable Heating</h4>
+              <h4 className="text-lg font-medium text-green-400 mb-2">
+                Heat Pumps and Renewable Heating
+              </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <h5 className="font-medium mb-1">Air Source Heat Pumps (ASHPs)</h5>
@@ -78,7 +92,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <li>Financial support: Renewable Heat Incentive (RHI)</li>
                   </ul>
                 </div>
-                
+
                 <div>
                   <h5 className="font-medium mb-1">Ground Source Heat Pumps (GSHPs)</h5>
                   <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -99,13 +113,14 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <h3 className="text-xl font-semibold mb-4">Energy Storage Technologies</h3>
           <div className="space-y-4">
             <p>
-              Energy storage systems are becoming vital components in modern electrical installations, 
-              allowing for better utilisation of renewable energy and providing backup power capabilities.
+              Energy storage systems are becoming vital components in modern electrical
+              installations, allowing for better utilisation of renewable energy and providing
+              backup power capabilities.
             </p>
-            
+
             <div className="bg-white/10 border border-blue-400/30 rounded-md p-4">
               <h4 className="text-lg font-medium text-blue-400 mb-3">Battery Storage Systems</h4>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <h5 className="font-medium">Lithium-Ion Batteries</h5>
@@ -116,7 +131,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <li>5-15 year lifespan in typical UK conditions</li>
                   </ul>
                 </div>
-                
+
                 <div className="space-y-2">
                   <h5 className="font-medium">Lead-Acid Batteries</h5>
                   <ul className="list-disc pl-5 text-sm space-y-1">
@@ -126,7 +141,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <li>3-7 year typical lifespan</li>
                   </ul>
                 </div>
-                
+
                 <div className="space-y-2">
                   <h5 className="font-medium">Flow Batteries</h5>
                   <ul className="list-disc pl-5 text-sm space-y-1">
@@ -137,7 +152,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </ul>
                 </div>
               </div>
-              
+
               <div className="mt-4">
                 <h5 className="font-medium mb-2">UK Installation Requirements:</h5>
                 <ul className="list-disc pl-5 text-sm space-y-1">
@@ -158,10 +173,11 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <h3 className="text-xl font-semibold mb-4">Smart Technologies and Integration</h3>
           <div className="space-y-4">
             <p>
-              Smart technologies are transforming electrical installations into interactive, efficient systems 
-              that provide advanced control, monitoring and automation capabilities.
+              Smart technologies are transforming electrical installations into interactive,
+              efficient systems that provide advanced control, monitoring and automation
+              capabilities.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
@@ -173,17 +189,20 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <strong>Energy Monitoring</strong>: Real-time consumption tracking and analysis
                   </li>
                   <li>
-                    <strong>Load Disaggregation</strong>: Identifying individual appliance usage patterns
+                    <strong>Load Disaggregation</strong>: Identifying individual appliance usage
+                    patterns
                   </li>
                   <li>
-                    <strong>Power Quality Monitoring</strong>: Detection of harmonic issues, voltage variations
+                    <strong>Power Quality Monitoring</strong>: Detection of harmonic issues, voltage
+                    variations
                   </li>
                   <li>
-                    <strong>Installation Standards</strong>: BS EN 50491 series for smart home systems
+                    <strong>Installation Standards</strong>: BS EN 50491 series for smart home
+                    systems
                   </li>
                 </ul>
               </div>
-              
+
               <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Wrench className="h-5 w-5 text-elec-yellow" />
@@ -191,25 +210,31 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </div>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>
-                    <strong>Demand Response</strong>: Dynamic load management based on grid conditions
+                    <strong>Demand Response</strong>: Dynamic load management based on grid
+                    conditions
                   </li>
                   <li>
-                    <strong>Home Energy Management Systems</strong>: Optimising energy use and storage
+                    <strong>Home Energy Management Systems</strong>: Optimising energy use and
+                    storage
                   </li>
                   <li>
-                    <strong>EV Charging Integration</strong>: Smart charging to utilise renewable generation
+                    <strong>EV Charging Integration</strong>: Smart charging to utilise renewable
+                    generation
                   </li>
                   <li>
-                    <strong>UK Requirements</strong>: Smart metering technical specifications (SMETS2)
+                    <strong>UK Requirements</strong>: Smart metering technical specifications
+                    (SMETS2)
                   </li>
                 </ul>
               </div>
             </div>
-            
+
             <div className="bg-white/10 rounded-md p-4 mt-4">
               <div className="flex items-center gap-2 mb-3">
                 <Shield className="h-5 w-5 text-elec-yellow" />
-                <h4 className="text-lg font-medium text-elec-yellow">Security and Safety Considerations</h4>
+                <h4 className="text-lg font-medium text-elec-yellow">
+                  Security and Safety Considerations
+                </h4>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -220,7 +245,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <li>Compliance with IET Code of Practice for Cyber Security</li>
                   </ul>
                 </div>
-                
+
                 <div>
                   <h5 className="font-medium mb-1">Data Protection</h5>
                   <ul className="list-disc pl-5 text-sm space-y-1">
@@ -234,22 +259,24 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </CardContent>
       </Card>
-      
+
       <Separator className="bg-elec-yellow/30" />
-      
+
       {/* UK Market and Future Trends */}
       <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">UK Market and Future Trends</h3>
           <div className="space-y-4">
             <p>
-              The UK sustainable technology market has unique characteristics and is evolving rapidly in response to energy policy, 
-              climate targets and technological advances.
+              The UK sustainable technology market has unique characteristics and is evolving
+              rapidly in response to energy policy, climate targets and technological advances.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white/10 border border-purple-500/30 rounded-md p-4">
-                <h4 className="text-lg font-medium text-purple-400 mb-2">Current UK Market Trends</h4>
+                <h4 className="text-lg font-medium text-purple-400 mb-2">
+                  Current UK Market Trends
+                </h4>
                 <ul className="list-disc pl-5 text-sm space-y-1">
                   <li>Explosive growth in domestic EV charger installations</li>
                   <li>Increasing uptake of battery storage with solar PV</li>
@@ -258,7 +285,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Greater integration of flexibility services for domestic users</li>
                 </ul>
               </div>
-              
+
               <div className="bg-white/10 border border-purple-500/30 rounded-md p-4">
                 <h4 className="text-lg font-medium text-purple-400 mb-2">Future Developments</h4>
                 <ul className="list-disc pl-5 text-sm space-y-1">
@@ -273,11 +300,11 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </CardContent>
       </Card>
-      
+
       {/* Completion Button */}
       {!isCompleted && (
         <div className="pt-4">
-          <Button 
+          <Button
             onClick={markAsComplete}
             className="px-4 py-2 bg-elec-yellow text-elec-dark rounded hover:bg-yellow-400 transition-colors"
           >

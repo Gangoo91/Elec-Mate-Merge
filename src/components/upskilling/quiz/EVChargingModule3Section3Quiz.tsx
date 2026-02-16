@@ -15,64 +15,51 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the minimum RCD type required for EV charging installations under BS 7671?",
-    options: [
-      "Type AC RCD",
-      "Type A RCD", 
-      "Type B RCD",
-      "No RCD required"
-    ],
+    question: 'What is the minimum RCD type required for EV charging installations under BS 7671?',
+    options: ['Type AC RCD', 'Type A RCD', 'Type B RCD', 'No RCD required'],
     correctAnswer: 1,
-    explanation: "Type A RCD is the minimum requirement for EV charging installations, providing protection against AC residual currents and pulsating DC. Type B RCD is preferred for enhanced protection."
+    explanation:
+      'Type A RCD is the minimum requirement for EV charging installations, providing protection against AC residual currents and pulsating DC. Type B RCD is preferred for enhanced protection.',
   },
   {
     id: 2,
-    question: "For a 7.4kW (32A) EV charging installation, what MCB rating should be selected?",
-    options: [
-      "32A Type B",
-      "40A Type B",
-      "32A Type C",
-      "50A Type B"
-    ],
+    question: 'For a 7.4kW (32A) EV charging installation, what MCB rating should be selected?',
+    options: ['32A Type B', '40A Type B', '32A Type C', '50A Type B'],
     correctAnswer: 1,
-    explanation: "A 40A Type B MCB should be selected to provide adequate protection while allowing for sustained 32A loading. The MCB rating must be greater than the design current."
+    explanation:
+      'A 40A Type B MCB should be selected to provide adequate protection while allowing for sustained 32A loading. The MCB rating must be greater than the design current.',
   },
   {
     id: 3,
-    question: "When installing EV charging equipment in livestock areas, what is the minimum mounting height to prevent animal interference?",
-    options: [
-      "1.8m",
-      "2.0m",
-      "2.5m",
-      "3.0m"
-    ],
+    question:
+      'When installing EV charging equipment in livestock areas, what is the minimum mounting height to prevent animal interference?',
+    options: ['1.8m', '2.0m', '2.5m', '3.0m'],
     correctAnswer: 2,
-    explanation: "A minimum height of 2.5m is recommended for equipment in livestock areas to prevent animal contact and damage whilst maintaining reasonable access for humans."
+    explanation:
+      'A minimum height of 2.5m is recommended for equipment in livestock areas to prevent animal contact and damage whilst maintaining reasonable access for humans.',
   },
   {
     id: 4,
-    question: "What is the minimum depth required for direct burial of EV charging supply cables?",
-    options: [
-      "450mm",
-      "600mm",
-      "750mm",
-      "900mm"
-    ],
+    question: 'What is the minimum depth required for direct burial of EV charging supply cables?',
+    options: ['450mm', '600mm', '750mm', '900mm'],
     correctAnswer: 1,
-    explanation: "Direct burial cables must be installed at a minimum depth of 600mm, with 750mm required under driveways and areas subject to vehicle traffic."
+    explanation:
+      'Direct burial cables must be installed at a minimum depth of 600mm, with 750mm required under driveways and areas subject to vehicle traffic.',
   },
   {
     id: 5,
-    question: "Which material consideration is most critical for outdoor EV charging equipment longevity?",
+    question:
+      'Which material consideration is most critical for outdoor EV charging equipment longevity?',
     options: [
-      "Cost effectiveness",
-      "Aesthetic appearance", 
-      "UV resistance",
-      "Electrical conductivity"
+      'Cost effectiveness',
+      'Aesthetic appearance',
+      'UV resistance',
+      'Electrical conductivity',
     ],
     correctAnswer: 2,
-    explanation: "UV resistance is critical as UV radiation degrades plastic components, cable sheaths, and protective coatings, leading to safety risks and premature equipment failure."
-  }
+    explanation:
+      'UV resistance is critical as UV radiation degrades plastic components, cable sheaths, and protective coatings, leading to safety risks and premature equipment failure.',
+  },
 ];
 
 export const EVChargingModule3Section3Quiz = () => {
@@ -119,9 +106,11 @@ export const EVChargingModule3Section3Quiz = () => {
 
   const getScoreMessage = (score: number) => {
     const percentage = (score / quizQuestions.length) * 100;
-    if (percentage >= 80) return "Excellent! You have a strong understanding of outdoor EV charging installations.";
-    if (percentage >= 60) return "Good work! Review the areas you missed to strengthen your knowledge.";
-    return "Keep studying! Review the section content and try again.";
+    if (percentage >= 80)
+      return 'Excellent! You have a strong understanding of outdoor EV charging installations.';
+    if (percentage >= 60)
+      return 'Good work! Review the areas you missed to strengthen your knowledge.';
+    return 'Keep studying! Review the section content and try again.';
   };
 
   if (showResults) {
@@ -141,24 +130,25 @@ export const EVChargingModule3Section3Quiz = () => {
             <div className="text-4xl font-bold text-elec-yellow">
               {score}/{quizQuestions.length}
             </div>
-            <div className="text-2xl text-foreground">
-              {percentage.toFixed(0)}%
-            </div>
-            <Badge 
-              variant={percentage >= 80 ? "default" : percentage >= 60 ? "secondary" : "destructive"}
+            <div className="text-2xl text-foreground">{percentage.toFixed(0)}%</div>
+            <Badge
+              variant={
+                percentage >= 80 ? 'default' : percentage >= 60 ? 'secondary' : 'destructive'
+              }
               className="text-lg px-4 py-2"
             >
-              {percentage >= 80 ? "Excellent" : percentage >= 60 ? "Good" : "Needs Improvement"}
+              {percentage >= 80 ? 'Excellent' : percentage >= 60 ? 'Good' : 'Needs Improvement'}
             </Badge>
-            <p className="text-gray-300">
-              {getScoreMessage(score)}
-            </p>
+            <p className="text-gray-300">{getScoreMessage(score)}</p>
           </div>
 
           <div className="space-y-3">
             <h3 className="text-foreground font-semibold">Question Review:</h3>
             {quizQuestions.map((question, index) => (
-              <div key={question.id} className="bg-elec-dark/50 p-3 rounded-lg border border-elec-yellow/20">
+              <div
+                key={question.id}
+                className="bg-elec-dark/50 p-3 rounded-lg border border-elec-yellow/20"
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswers[index] === question.correctAnswer ? (
                     <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -168,7 +158,7 @@ export const EVChargingModule3Section3Quiz = () => {
                   <div className="flex-1">
                     <p className="text-foreground text-sm font-medium">{question.question}</p>
                     <p className="text-gray-300 text-sm">
-                      Your answer: {question.options[selectedAnswers[index]] || "Not answered"}
+                      Your answer: {question.options[selectedAnswers[index]] || 'Not answered'}
                     </p>
                     {selectedAnswers[index] !== question.correctAnswer && (
                       <p className="text-green-400 text-sm">
@@ -181,7 +171,7 @@ export const EVChargingModule3Section3Quiz = () => {
             ))}
           </div>
 
-          <Button 
+          <Button
             onClick={handleRestartQuiz}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
           >
@@ -212,10 +202,8 @@ export const EVChargingModule3Section3Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-foreground text-lg font-semibold mb-4">
-            {currentQ.question}
-          </h3>
-          
+          <h3 className="text-foreground text-lg font-semibold mb-4">{currentQ.question}</h3>
+
           <div className="space-y-3">
             {currentQ.options.map((option, index) => (
               <Button
@@ -228,8 +216,8 @@ export const EVChargingModule3Section3Quiz = () => {
                     ? index === currentQ.correctAnswer
                       ? 'border-green-500 bg-green-500/10 text-green-400'
                       : index === selectedAnswer && index !== currentQ.correctAnswer
-                      ? 'border-red-500 bg-red-500/10 text-red-400'
-                      : 'border-gray-600 text-gray-400'
+                        ? 'border-red-500 bg-red-500/10 text-red-400'
+                        : 'border-gray-600 text-gray-400'
                     : 'border-gray-600 text-foreground hover:border-elec-yellow hover:text-elec-yellow'
                 }`}
               >
@@ -264,7 +252,7 @@ export const EVChargingModule3Section3Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNextQuestion}
             disabled={!isAnswered}

@@ -1,9 +1,9 @@
-import { ChevronLeft, Laptop, FolderOpen, Table, Smartphone, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import { ChevronLeft, Laptop, FolderOpen, Table, Smartphone, ShieldCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const container = {
   hidden: { opacity: 0 },
@@ -17,42 +17,39 @@ const item = {
 
 const FunctionalSkillsModule3 = () => {
   useSEO(
-    "Module 3: Digital Skills for Electricians",
-    "Computer basics, spreadsheets, digital documentation, apps and online safety for electrical professionals"
+    'Module 3: Digital Skills for Electricians',
+    'Computer basics, spreadsheets, digital documentation, apps and online safety for electrical professionals'
   );
 
   const sections = [
     {
-      number: "3.1",
-      title: "Computer Basics & File Management",
-      description:
-        "OS navigation, file types, cloud storage, naming conventions and backups",
+      number: '3.1',
+      title: 'Computer Basics & File Management',
+      description: 'OS navigation, file types, cloud storage, naming conventions and backups',
       icon: FolderOpen,
-      href: "/study-centre/apprentice/functional-skills/module3/section1",
+      href: '/study-centre/apprentice/functional-skills/module3/section1',
     },
     {
-      number: "3.2",
-      title: "Spreadsheets & Calculations",
+      number: '3.2',
+      title: 'Spreadsheets & Calculations',
       description:
-        "Excel and Sheets for cable calculations, material lists, job costing and formulae",
+        'Excel and Sheets for cable calculations, material lists, job costing and formulae',
       icon: Table,
-      href: "/study-centre/apprentice/functional-skills/module3/section2",
+      href: '/study-centre/apprentice/functional-skills/module3/section2',
     },
     {
-      number: "3.3",
-      title: "Digital Documentation & Apps",
-      description:
-        "Certification software, PDF annotation, photo evidence and digital tools",
+      number: '3.3',
+      title: 'Digital Documentation & Apps',
+      description: 'Certification software, PDF annotation, photo evidence and digital tools',
       icon: Smartphone,
-      href: "/study-centre/apprentice/functional-skills/module3/section3",
+      href: '/study-centre/apprentice/functional-skills/module3/section3',
     },
     {
-      number: "3.4",
-      title: "Online Safety & Communication",
-      description:
-        "Email etiquette, phishing awareness, passwords, GDPR and social media",
+      number: '3.4',
+      title: 'Online Safety & Communication',
+      description: 'Email etiquette, phishing awareness, passwords, GDPR and social media',
       icon: ShieldCheck,
-      href: "/study-centre/apprentice/functional-skills/module3/section4",
+      href: '/study-centre/apprentice/functional-skills/module3/section4',
     },
   ];
 

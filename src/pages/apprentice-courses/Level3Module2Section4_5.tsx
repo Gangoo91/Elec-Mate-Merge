@@ -1,15 +1,28 @@
-import { useState } from "react";
-import { ArrowLeft, ArrowRight, CheckCircle2, XCircle, BookOpen, Zap, ClipboardCheck, AlertTriangle, Shield, FileCheck, Award, Ruler } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import useSEO from "@/hooks/useSEO";
+import { useState } from 'react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  BookOpen,
+  Zap,
+  ClipboardCheck,
+  AlertTriangle,
+  Shield,
+  FileCheck,
+  Award,
+  Ruler,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import useSEO from '@/hooks/useSEO';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 // Types
 interface QuickCheckQuestion {
@@ -56,11 +69,11 @@ const InlineCheck = ({ question, options, correctIndex, explanation }: QuickChec
             className={`w-full text-left p-3 rounded border transition-colors ${
               showResult
                 ? index === correctIndex
-                  ? "border-green-500 bg-green-500/10"
+                  ? 'border-green-500 bg-green-500/10'
                   : index === selected
-                  ? "border-red-500 bg-red-500/10"
-                  : "border-[#333] bg-[#1a1a1a]"
-                : "border-[#333] bg-[#1a1a1a] hover:border-[#E8FF00]/50"
+                    ? 'border-red-500 bg-red-500/10'
+                    : 'border-[#333] bg-[#1a1a1a]'
+                : 'border-[#333] bg-[#1a1a1a] hover:border-[#E8FF00]/50'
             }`}
           >
             {option}
@@ -68,15 +81,17 @@ const InlineCheck = ({ question, options, correctIndex, explanation }: QuickChec
         ))}
       </div>
       {showResult && (
-        <div className={`mt-3 p-3 rounded ${selected === correctIndex ? "bg-green-500/10" : "bg-red-500/10"}`}>
+        <div
+          className={`mt-3 p-3 rounded ${selected === correctIndex ? 'bg-green-500/10' : 'bg-red-500/10'}`}
+        >
           <p className="flex items-center gap-2">
             {selected === correctIndex ? (
               <CheckCircle2 className="h-5 w-5 text-green-500" />
             ) : (
               <XCircle className="h-5 w-5 text-red-500" />
             )}
-            <span className={selected === correctIndex ? "text-green-500" : "text-red-500"}>
-              {selected === correctIndex ? "Correct!" : "Not quite right"}
+            <span className={selected === correctIndex ? 'text-green-500' : 'text-red-500'}>
+              {selected === correctIndex ? 'Correct!' : 'Not quite right'}
             </span>
           </p>
           <p className="text-gray-300 mt-2 text-sm">{explanation}</p>
@@ -89,202 +104,220 @@ const InlineCheck = ({ question, options, correctIndex, explanation }: QuickChec
 // Quick check questions throughout content
 const quickCheckQuestions: QuickCheckQuestion[] = [
   {
-    question: "What is the minimum insulation resistance required for an EV charging circuit at 500V DC test voltage?",
-    options: [
-      "0.5 MOhm",
-      "1.0 MOhm",
-      "2.0 MOhm",
-      "10 MOhm"
-    ],
+    question:
+      'What is the minimum insulation resistance required for an EV charging circuit at 500V DC test voltage?',
+    options: ['0.5 MOhm', '1.0 MOhm', '2.0 MOhm', '10 MOhm'],
     correctIndex: 1,
-    explanation: "For circuits operating at voltages up to and including 500V AC, including EV charging circuits, the minimum insulation resistance is 1.0 MOhm when tested at 500V DC, as per BS 7671 Table 6A."
+    explanation:
+      'For circuits operating at voltages up to and including 500V AC, including EV charging circuits, the minimum insulation resistance is 1.0 MOhm when tested at 500V DC, as per BS 7671 Table 6A.',
   },
   {
-    question: "Which type of RCD test must be performed to verify the 30mA RCD protecting an EV charging circuit?",
+    question:
+      'Which type of RCD test must be performed to verify the 30mA RCD protecting an EV charging circuit?',
     options: [
-      "Only the x1 (30mA) trip test",
-      "x1 and x5 trip tests only",
-      "Full range including x1, x5, and ramp tests",
-      "RCD testing is not required for EV installations"
+      'Only the x1 (30mA) trip test',
+      'x1 and x5 trip tests only',
+      'Full range including x1, x5, and ramp tests',
+      'RCD testing is not required for EV installations',
     ],
     correctIndex: 2,
-    explanation: "Full RCD testing should be performed including x1 (rated current), x5 (5 times rated), and ramp tests to verify correct operation. For Type B RCDs used with EV chargers, additional DC fault testing may be required."
+    explanation:
+      'Full RCD testing should be performed including x1 (rated current), x5 (5 times rated), and ramp tests to verify correct operation. For Type B RCDs used with EV chargers, additional DC fault testing may be required.',
   },
   {
-    question: "What documentation must be provided to the customer upon completion of an EV charger installation?",
+    question:
+      'What documentation must be provided to the customer upon completion of an EV charger installation?',
     options: [
-      "Verbal confirmation only",
-      "Electrical Installation Certificate (EIC) or Minor Works Certificate",
+      'Verbal confirmation only',
+      'Electrical Installation Certificate (EIC) or Minor Works Certificate',
       "Manufacturer's warranty only",
-      "Invoice only"
+      'Invoice only',
     ],
     correctIndex: 1,
-    explanation: "An Electrical Installation Certificate (EIC) is required for new installations including EV charging points. This documents that the work complies with BS 7671 and includes all test results. Minor Works may be appropriate for additions to existing circuits."
+    explanation:
+      'An Electrical Installation Certificate (EIC) is required for new installations including EV charging points. This documents that the work complies with BS 7671 and includes all test results. Minor Works may be appropriate for additions to existing circuits.',
   },
   {
-    question: "Why is functional testing of the EV charger important after installation?",
+    question: 'Why is functional testing of the EV charger important after installation?',
     options: [
-      "It is optional and not required",
-      "Only to check the display works",
-      "To verify the charger operates correctly, communicates with vehicles, and safety features function",
-      "To programme the warranty registration"
+      'It is optional and not required',
+      'Only to check the display works',
+      'To verify the charger operates correctly, communicates with vehicles, and safety features function',
+      'To programme the warranty registration',
     ],
     correctIndex: 2,
-    explanation: "Functional testing verifies the charger operates correctly with a vehicle, the control pilot communication works, safety features activate properly, and any smart charging features are configured and working."
-  }
+    explanation:
+      'Functional testing verifies the charger operates correctly with a vehicle, the control pilot communication works, safety features activate properly, and any smart charging features are configured and working.',
+  },
 ];
 
 // Quiz questions
 const quizQuestions: QuizQuestion[] = [
   {
-    question: "According to BS 7671, what is the maximum permitted earth fault loop impedance (Zs) for a Type B 32A MCB protecting an EV charging circuit?",
-    options: [
-      "0.27 Ohm",
-      "0.55 Ohm",
-      "1.09 Ohm",
-      "1.37 Ohm"
-    ],
+    question:
+      'According to BS 7671, what is the maximum permitted earth fault loop impedance (Zs) for a Type B 32A MCB protecting an EV charging circuit?',
+    options: ['0.27 Ohm', '0.55 Ohm', '1.09 Ohm', '1.37 Ohm'],
     correctAnswer: 3,
-    explanation: "For a Type B 32A MCB with 0.4s disconnection time (as required for EV charging), the maximum Zs is 1.37 Ohm. This ensures fault current is sufficient to trip the MCB within the required time."
+    explanation:
+      'For a Type B 32A MCB with 0.4s disconnection time (as required for EV charging), the maximum Zs is 1.37 Ohm. This ensures fault current is sufficient to trip the MCB within the required time.',
   },
   {
-    question: "What is the purpose of continuity testing the protective conductor in an EV charging installation?",
+    question:
+      'What is the purpose of continuity testing the protective conductor in an EV charging installation?',
     options: [
-      "To check the cable colour is correct",
-      "To verify a continuous, low-resistance path for fault current to the earthing system",
-      "To measure the cable length",
-      "To test the charger electronics"
+      'To check the cable colour is correct',
+      'To verify a continuous, low-resistance path for fault current to the earthing system',
+      'To measure the cable length',
+      'To test the charger electronics',
     ],
     correctAnswer: 1,
-    explanation: "Continuity testing verifies there is a continuous, low-resistance protective conductor path from exposed conductive parts back to the earthing system, ensuring fault current can flow to operate protective devices."
+    explanation:
+      'Continuity testing verifies there is a continuous, low-resistance protective conductor path from exposed conductive parts back to the earthing system, ensuring fault current can flow to operate protective devices.',
   },
   {
-    question: "When testing a Type B RCD protecting an EV charger, what additional test capability is required?",
+    question:
+      'When testing a Type B RCD protecting an EV charger, what additional test capability is required?',
     options: [
-      "Higher test voltage",
-      "AC and DC residual current fault simulation",
-      "Longer test duration",
-      "Lower test current"
+      'Higher test voltage',
+      'AC and DC residual current fault simulation',
+      'Longer test duration',
+      'Lower test current',
     ],
     correctAnswer: 1,
-    explanation: "Type B RCDs detect both AC and DC residual currents. Testers must be capable of simulating DC fault currents to verify the RCD will trip on DC leakage, which can occur with EV onboard chargers."
+    explanation:
+      'Type B RCDs detect both AC and DC residual currents. Testers must be capable of simulating DC fault currents to verify the RCD will trip on DC leakage, which can occur with EV onboard chargers.',
   },
   {
-    question: "What certification scheme is typically required for installers of EV charging points?",
+    question:
+      'What certification scheme is typically required for installers of EV charging points?',
     options: [
-      "No certification required",
-      "CompEx certification",
-      "OZEV-approved installer accreditation (e.g., NICEIC, NAPIT)",
-      "Gas Safe registration"
+      'No certification required',
+      'CompEx certification',
+      'OZEV-approved installer accreditation (e.g., NICEIC, NAPIT)',
+      'Gas Safe registration',
     ],
     correctAnswer: 2,
-    explanation: "For grant-funded domestic installations and to demonstrate competence, installers typically need OZEV (Office for Zero Emission Vehicles) approved certification through bodies like NICEIC, NAPIT, or ELECSA which includes specific EV training."
+    explanation:
+      'For grant-funded domestic installations and to demonstrate competence, installers typically need OZEV (Office for Zero Emission Vehicles) approved certification through bodies like NICEIC, NAPIT, or ELECSA which includes specific EV training.',
   },
   {
-    question: "What is the required test voltage for insulation resistance testing of an EV charging circuit?",
+    question:
+      'What is the required test voltage for insulation resistance testing of an EV charging circuit?',
+    options: ['250V DC', '500V DC', '1000V DC', '230V AC'],
+    correctAnswer: 1,
+    explanation:
+      'For circuits with nominal voltage up to 500V (including standard EV charging circuits), insulation resistance testing is performed at 500V DC as specified in BS 7671.',
+  },
+  {
+    question:
+      'What should be verified during visual inspection before testing an EV charger installation?',
     options: [
-      "250V DC",
-      "500V DC",
-      "1000V DC",
-      "230V AC"
+      'Only the charger display',
+      'Cable sizing, installation method, protection devices, earthing arrangements',
+      'Just the paint colour',
+      'Only the meter readings',
     ],
     correctAnswer: 1,
-    explanation: "For circuits with nominal voltage up to 500V (including standard EV charging circuits), insulation resistance testing is performed at 500V DC as specified in BS 7671."
+    explanation:
+      'Visual inspection should verify cable sizing is adequate, installation method is appropriate, correct protection devices are fitted (MCB type, RCD type), earthing arrangements comply with BS 7671, and all connections are secure.',
   },
   {
-    question: "What should be verified during visual inspection before testing an EV charger installation?",
+    question:
+      'What prospective fault current (PSCC) measurement is required for an EV installation?',
     options: [
-      "Only the charger display",
-      "Cable sizing, installation method, protection devices, earthing arrangements",
-      "Just the paint colour",
-      "Only the meter readings"
+      'Only at the consumer unit',
+      'At the EV charger location to verify protective device rating is adequate',
+      'PSCC testing is not required for EV',
+      'Only at the meter',
     ],
     correctAnswer: 1,
-    explanation: "Visual inspection should verify cable sizing is adequate, installation method is appropriate, correct protection devices are fitted (MCB type, RCD type), earthing arrangements comply with BS 7671, and all connections are secure."
+    explanation:
+      'Prospective short circuit current must be measured at the EV charger location to verify the protective device has adequate breaking capacity. This ensures the MCB can safely interrupt the maximum possible fault current.',
   },
   {
-    question: "What prospective fault current (PSCC) measurement is required for an EV installation?",
+    question: 'What is the polarity test checking in an EV charging installation?',
     options: [
-      "Only at the consumer unit",
-      "At the EV charger location to verify protective device rating is adequate",
-      "PSCC testing is not required for EV",
-      "Only at the meter"
+      'Battery charging direction',
+      'That line, neutral, and protective conductors are correctly connected throughout',
+      'The charger output voltage',
+      'Vehicle battery polarity',
     ],
     correctAnswer: 1,
-    explanation: "Prospective short circuit current must be measured at the EV charger location to verify the protective device has adequate breaking capacity. This ensures the MCB can safely interrupt the maximum possible fault current."
+    explanation:
+      'Polarity testing verifies that line, neutral, and protective conductors are correctly connected throughout the installation, ensuring single-pole devices are in the line conductor and the installation is safe.',
   },
   {
-    question: "What is the polarity test checking in an EV charging installation?",
+    question:
+      'Which installation certificate is appropriate for a new dedicated EV charging circuit?',
     options: [
-      "Battery charging direction",
-      "That line, neutral, and protective conductors are correctly connected throughout",
-      "The charger output voltage",
-      "Vehicle battery polarity"
+      'Minor Electrical Installation Works Certificate only',
+      'Electrical Installation Certificate (EIC)',
+      'No certificate required',
+      'Building regulations certificate only',
     ],
     correctAnswer: 1,
-    explanation: "Polarity testing verifies that line, neutral, and protective conductors are correctly connected throughout the installation, ensuring single-pole devices are in the line conductor and the installation is safe."
+    explanation:
+      'A new dedicated EV charging circuit requires an Electrical Installation Certificate (EIC) as it constitutes new work rather than an addition to an existing circuit. This provides full documentation of design, construction, and test results.',
   },
   {
-    question: "Which installation certificate is appropriate for a new dedicated EV charging circuit?",
-    options: [
-      "Minor Electrical Installation Works Certificate only",
-      "Electrical Installation Certificate (EIC)",
-      "No certificate required",
-      "Building regulations certificate only"
-    ],
-    correctAnswer: 1,
-    explanation: "A new dedicated EV charging circuit requires an Electrical Installation Certificate (EIC) as it constitutes new work rather than an addition to an existing circuit. This provides full documentation of design, construction, and test results."
-  },
-  {
-    question: "What must be done if earth fault loop impedance (Zs) exceeds the maximum permitted value?",
+    question:
+      'What must be done if earth fault loop impedance (Zs) exceeds the maximum permitted value?',
     options: [
       "Proceed anyway as it's only guidance",
-      "Increase cable size, reduce circuit length, or fit RCD for additional protection",
-      "Reduce the MCB rating to 16A",
-      "Install a larger earthing electrode"
+      'Increase cable size, reduce circuit length, or fit RCD for additional protection',
+      'Reduce the MCB rating to 16A',
+      'Install a larger earthing electrode',
     ],
     correctAnswer: 1,
-    explanation: "If Zs exceeds permitted values, corrective action is needed such as increasing cable CSA (reducing R1+R2), reducing circuit length, or installing an RCD which provides disconnection at lower fault currents than MCBs alone."
+    explanation:
+      'If Zs exceeds permitted values, corrective action is needed such as increasing cable CSA (reducing R1+R2), reducing circuit length, or installing an RCD which provides disconnection at lower fault currents than MCBs alone.',
   },
   {
     question: "What functional test should verify the EV charger's built-in RCD (if fitted)?",
     options: [
-      "No testing needed for built-in RCDs",
+      'No testing needed for built-in RCDs',
       "Press the charger's test button to verify manual trip function",
-      "Only test with an RCD tester",
-      "Remove and bench test separately"
+      'Only test with an RCD tester',
+      'Remove and bench test separately',
     ],
     correctAnswer: 1,
-    explanation: "The built-in test button should be pressed to verify the charger's integral RCD trips correctly. This tests the mechanical and electronic trip mechanism. Additional instrument testing verifies trip times and current thresholds."
-  }
+    explanation:
+      "The built-in test button should be pressed to verify the charger's integral RCD trips correctly. This tests the mechanical and electronic trip mechanism. Additional instrument testing verifies trip times and current thresholds.",
+  },
 ];
 
 // FAQs
 const faqs: FAQ[] = [
   {
-    question: "Do I need special test equipment for EV charger installations?",
-    answer: "Standard multifunction testers can perform most tests, but for Type B RCDs (common with EV chargers), you need a tester capable of DC residual current simulation. Some chargers have integrated Type A RCDs plus DC protection, which may require specific testing approaches. Always check your tester's capabilities against the RCD type installed."
+    question: 'Do I need special test equipment for EV charger installations?',
+    answer:
+      "Standard multifunction testers can perform most tests, but for Type B RCDs (common with EV chargers), you need a tester capable of DC residual current simulation. Some chargers have integrated Type A RCDs plus DC protection, which may require specific testing approaches. Always check your tester's capabilities against the RCD type installed.",
   },
   {
-    question: "What certification do I need to install EV chargers?",
-    answer: "You need to be a competent electrician with appropriate qualifications (e.g., Level 3 electrical installation). For OZEV grant-funded work and to demonstrate specialist competence, you should hold accreditation from an approved scheme (NICEIC, NAPIT, ELECSA, etc.) that includes EV-specific training modules covering BS 7671 Section 722 requirements."
+    question: 'What certification do I need to install EV chargers?',
+    answer:
+      'You need to be a competent electrician with appropriate qualifications (e.g., Level 3 electrical installation). For OZEV grant-funded work and to demonstrate specialist competence, you should hold accreditation from an approved scheme (NICEIC, NAPIT, ELECSA, etc.) that includes EV-specific training modules covering BS 7671 Section 722 requirements.',
   },
   {
-    question: "Is Building Control notification required for EV charger installation?",
-    answer: "Generally, if you're registered with a competent person scheme, you can self-certify the work without separate Building Control notification. If not registered, Building Control notification and inspection may be required. The work must comply with Part P of the Building Regulations in England (equivalent regulations apply elsewhere in UK)."
+    question: 'Is Building Control notification required for EV charger installation?',
+    answer:
+      "Generally, if you're registered with a competent person scheme, you can self-certify the work without separate Building Control notification. If not registered, Building Control notification and inspection may be required. The work must comply with Part P of the Building Regulations in England (equivalent regulations apply elsewhere in UK).",
   },
   {
-    question: "What documentation should I provide to the customer?",
-    answer: "Provide an Electrical Installation Certificate (EIC) with schedule of test results, user manual and warranty information for the charger, any smart charger app setup instructions, DNO notification confirmation if required, and OZEV grant paperwork if applicable. Keep copies of all documentation for your records."
+    question: 'What documentation should I provide to the customer?',
+    answer:
+      'Provide an Electrical Installation Certificate (EIC) with schedule of test results, user manual and warranty information for the charger, any smart charger app setup instructions, DNO notification confirmation if required, and OZEV grant paperwork if applicable. Keep copies of all documentation for your records.',
   },
   {
-    question: "How often should EV chargers be inspected and tested?",
-    answer: "Commercial/public chargers should follow a maintenance schedule per manufacturer guidance, typically annually. Domestic chargers should be tested as part of periodic inspection (EICR) - recommended every 5 years for domestic or per occupancy change. Regular user testing of the RCD test button is also recommended (monthly)."
+    question: 'How often should EV chargers be inspected and tested?',
+    answer:
+      'Commercial/public chargers should follow a maintenance schedule per manufacturer guidance, typically annually. Domestic chargers should be tested as part of periodic inspection (EICR) - recommended every 5 years for domestic or per occupancy change. Regular user testing of the RCD test button is also recommended (monthly).',
   },
   {
     question: "What if the existing earthing system is PME and I'm installing an outdoor charger?",
-    answer: "PME supplies require additional protective measures for outdoor EV charging. Options include: installing a separate earth electrode (TT arrangement for the charger), using an approved PME-compliant charger with isolation features, ensuring protective equipotential bonding, and verifying touch voltage limits. Document the earthing arrangement chosen and justify the decision in certification."
-  }
+    answer:
+      'PME supplies require additional protective measures for outdoor EV charging. Options include: installing a separate earth electrode (TT arrangement for the charger), using an approved PME-compliant charger with isolation features, ensuring protective equipotential bonding, and verifying touch voltage limits. Document the earthing arrangement chosen and justify the decision in certification.',
+  },
 ];
 
 const Level3Module2Section4_5 = () => {
@@ -296,8 +329,8 @@ const Level3Module2Section4_5 = () => {
   const [showExplanation, setShowExplanation] = useState(false);
 
   useSEO(
-    "4.5 Testing and Certification - Level 3 EV Charging",
-    "Understanding testing procedures, certification requirements, and compliance documentation for EV charging point installations"
+    '4.5 Testing and Certification - Level 3 EV Charging',
+    'Understanding testing procedures, certification requirements, and compliance documentation for EV charging point installations'
   );
 
   const handleAnswer = (index: number) => {
@@ -334,13 +367,30 @@ const Level3Module2Section4_5 = () => {
       <div className="bg-[#242424] border-b border-[#333]">
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <div className="flex items-center gap-2 p-3 md:p-4 text-xs md:text-sm text-gray-400">
-            <Link to="/apprentice-courses" className="hover:text-[#E8FF00] transition-colors">Courses</Link>
+            <Link to="/apprentice-courses" className="hover:text-[#E8FF00] transition-colors">
+              Courses
+            </Link>
             <span>/</span>
-            <Link to="/apprentice-courses/level-3" className="hover:text-[#E8FF00] transition-colors">Level 3</Link>
+            <Link
+              to="/apprentice-courses/level-3"
+              className="hover:text-[#E8FF00] transition-colors"
+            >
+              Level 3
+            </Link>
             <span>/</span>
-            <Link to="/apprentice-courses/level-3/module-2" className="hover:text-[#E8FF00] transition-colors">Module 2</Link>
+            <Link
+              to="/apprentice-courses/level-3/module-2"
+              className="hover:text-[#E8FF00] transition-colors"
+            >
+              Module 2
+            </Link>
             <span>/</span>
-            <Link to="/apprentice-courses/level-3/module-2/section-4" className="hover:text-[#E8FF00] transition-colors">Section 4</Link>
+            <Link
+              to="/apprentice-courses/level-3/module-2/section-4"
+              className="hover:text-[#E8FF00] transition-colors"
+            >
+              Section 4
+            </Link>
             <span>/</span>
             <span className="text-[#E8FF00]">4.5</span>
           </div>
@@ -356,11 +406,14 @@ const Level3Module2Section4_5 = () => {
             </div>
             <div>
               <p className="text-[#E8FF00] text-sm font-medium">Section 4.5</p>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">Testing and Certification</h1>
+              <h1 className="text-2xl md:text-3xl font-bold text-white">
+                Testing and Certification
+              </h1>
             </div>
           </div>
           <p className="text-gray-400 text-lg">
-            Understanding testing procedures, certification requirements, and compliance documentation for EV charging point installations.
+            Understanding testing procedures, certification requirements, and compliance
+            documentation for EV charging point installations.
           </p>
         </div>
 
@@ -397,7 +450,12 @@ const Level3Module2Section4_5 = () => {
         <Card className="p-4 mb-8 bg-[#E8FF00]/10 border-[#E8FF00]/30">
           <h3 className="font-semibold text-[#E8FF00] mb-2">Quick Summary</h3>
           <p className="text-gray-300 text-sm">
-            EV charging installations require thorough testing to BS 7671 requirements, with particular attention to earth fault loop impedance, RCD operation, and insulation resistance. Type B RCDs require specialist testing equipment capable of DC fault simulation. Proper certification documents compliance and protects both installer and customer. Installer competence through approved certification schemes ensures quality and enables access to OZEV grant funding.
+            EV charging installations require thorough testing to BS 7671 requirements, with
+            particular attention to earth fault loop impedance, RCD operation, and insulation
+            resistance. Type B RCDs require specialist testing equipment capable of DC fault
+            simulation. Proper certification documents compliance and protects both installer and
+            customer. Installer competence through approved certification schemes ensures quality
+            and enables access to OZEV grant funding.
           </p>
         </Card>
 
@@ -412,12 +470,15 @@ const Level3Module2Section4_5 = () => {
 
             <div className="space-y-4 text-gray-300">
               <p>
-                Before an EV charging installation is energised and handed over, initial verification must be completed in accordance with BS 7671 Chapter 6. This comprises visual inspection followed by testing.
+                Before an EV charging installation is energised and handed over, initial
+                verification must be completed in accordance with BS 7671 Chapter 6. This comprises
+                visual inspection followed by testing.
               </p>
 
               <h3 className="text-lg font-medium text-white mt-6 mb-3">Visual Inspection</h3>
               <p>
-                Visual inspection should be carried out before testing to identify obvious defects and verify compliance:
+                Visual inspection should be carried out before testing to identify obvious defects
+                and verify compliance:
               </p>
 
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
@@ -429,7 +490,9 @@ const Level3Module2Section4_5 = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#E8FF00] mt-0.5" />
-                    <span>Cable routing secure, protected, and compliant with manufacturer guidance</span>
+                    <span>
+                      Cable routing secure, protected, and compliant with manufacturer guidance
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#E8FF00] mt-0.5" />
@@ -441,7 +504,9 @@ const Level3Module2Section4_5 = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#E8FF00] mt-0.5" />
-                    <span>Earthing arrangement correct (TT, TN-S, TN-C-S with PME considerations)</span>
+                    <span>
+                      Earthing arrangement correct (TT, TN-S, TN-C-S with PME considerations)
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#E8FF00] mt-0.5" />
@@ -466,17 +531,37 @@ const Level3Module2Section4_5 = () => {
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
                 <h4 className="text-[#E8FF00] font-medium mb-3">Test Sequence (De-energised)</h4>
                 <ol className="text-sm space-y-2 list-decimal list-inside">
-                  <li><strong>Continuity of protective conductors</strong> - Verify CPC continuous from charger to MET</li>
-                  <li><strong>Continuity of ring final circuits</strong> - N/A for dedicated radial EV circuits</li>
-                  <li><strong>Insulation resistance</strong> - Minimum 1.0 MOhm at 500V DC</li>
-                  <li><strong>Polarity</strong> - Verify L, N, E correctly connected</li>
+                  <li>
+                    <strong>Continuity of protective conductors</strong> - Verify CPC continuous
+                    from charger to MET
+                  </li>
+                  <li>
+                    <strong>Continuity of ring final circuits</strong> - N/A for dedicated radial EV
+                    circuits
+                  </li>
+                  <li>
+                    <strong>Insulation resistance</strong> - Minimum 1.0 MOhm at 500V DC
+                  </li>
+                  <li>
+                    <strong>Polarity</strong> - Verify L, N, E correctly connected
+                  </li>
                 </ol>
                 <h4 className="text-[#E8FF00] font-medium mb-3 mt-4">Test Sequence (Energised)</h4>
                 <ol className="text-sm space-y-2 list-decimal list-inside" start={5}>
-                  <li><strong>Earth fault loop impedance (Zs)</strong> - Verify within limits for MCB type/rating</li>
-                  <li><strong>Prospective fault current (PSCC)</strong> - Verify protective device breaking capacity adequate</li>
-                  <li><strong>RCD operation</strong> - Full test including x1, x5, and ramp tests</li>
-                  <li><strong>Functional testing</strong> - Verify charger operates correctly</li>
+                  <li>
+                    <strong>Earth fault loop impedance (Zs)</strong> - Verify within limits for MCB
+                    type/rating
+                  </li>
+                  <li>
+                    <strong>Prospective fault current (PSCC)</strong> - Verify protective device
+                    breaking capacity adequate
+                  </li>
+                  <li>
+                    <strong>RCD operation</strong> - Full test including x1, x5, and ramp tests
+                  </li>
+                  <li>
+                    <strong>Functional testing</strong> - Verify charger operates correctly
+                  </li>
                 </ol>
               </div>
             </div>
@@ -492,14 +577,21 @@ const Level3Module2Section4_5 = () => {
             </h2>
 
             <div className="space-y-4 text-gray-300">
-              <h3 className="text-lg font-medium text-white mt-6 mb-3">Earth Fault Loop Impedance (Zs)</h3>
+              <h3 className="text-lg font-medium text-white mt-6 mb-3">
+                Earth Fault Loop Impedance (Zs)
+              </h3>
               <p>
-                Earth fault loop impedance testing verifies that fault current will be sufficient to operate the protective device within the required disconnection time:
+                Earth fault loop impedance testing verifies that fault current will be sufficient to
+                operate the protective device within the required disconnection time:
               </p>
 
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
-                <h4 className="text-[#E8FF00] font-medium mb-2">Maximum Zs Values for EV Circuits</h4>
-                <p className="text-sm mb-3">For 0.4s disconnection time (required by Regulation 722.411.4.1):</p>
+                <h4 className="text-[#E8FF00] font-medium mb-2">
+                  Maximum Zs Values for EV Circuits
+                </h4>
+                <p className="text-sm mb-3">
+                  For 0.4s disconnection time (required by Regulation 722.411.4.1):
+                </p>
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-[#333]">
@@ -531,12 +623,16 @@ const Level3Module2Section4_5 = () => {
                     </tr>
                   </tbody>
                 </table>
-                <p className="text-xs text-gray-400 mt-2">Values at maximum operating temperature. Apply 0.8 correction factor to values measured at ambient temperature.</p>
+                <p className="text-xs text-gray-400 mt-2">
+                  Values at maximum operating temperature. Apply 0.8 correction factor to values
+                  measured at ambient temperature.
+                </p>
               </div>
 
               <h3 className="text-lg font-medium text-white mt-6 mb-3">RCD Testing</h3>
               <p>
-                RCD testing for EV installations requires particular attention due to the RCD types used:
+                RCD testing for EV installations requires particular attention due to the RCD types
+                used:
               </p>
 
               <div className="grid md:grid-cols-2 gap-4 mt-4">
@@ -567,18 +663,32 @@ const Level3Module2Section4_5 = () => {
                   <AlertTriangle className="h-5 w-5" /> Important: RCD Type Selection
                 </h4>
                 <p className="text-sm text-gray-300">
-                  Many EV chargers include built-in DC leakage protection (6mA DC detection), allowing use of Type A RCD upstream. Always check manufacturer specifications. If the charger does not include DC protection, Type B RCD is required. Document the protection arrangement in the certification.
+                  Many EV chargers include built-in DC leakage protection (6mA DC detection),
+                  allowing use of Type A RCD upstream. Always check manufacturer specifications. If
+                  the charger does not include DC protection, Type B RCD is required. Document the
+                  protection arrangement in the certification.
                 </p>
               </div>
 
-              <h3 className="text-lg font-medium text-white mt-6 mb-3">Insulation Resistance Testing</h3>
+              <h3 className="text-lg font-medium text-white mt-6 mb-3">
+                Insulation Resistance Testing
+              </h3>
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
                 <h4 className="text-[#E8FF00] font-medium mb-2">Test Requirements</h4>
                 <ul className="text-sm space-y-2">
-                  <li><strong>Test Voltage:</strong> 500V DC for circuits up to 500V nominal</li>
-                  <li><strong>Minimum Value:</strong> 1.0 MOhm</li>
-                  <li><strong>Test Configuration:</strong> L-E, N-E, L-N (with charger isolated)</li>
-                  <li><strong>Important:</strong> Disconnect or isolate the EV charger before testing to prevent damage to electronic components</li>
+                  <li>
+                    <strong>Test Voltage:</strong> 500V DC for circuits up to 500V nominal
+                  </li>
+                  <li>
+                    <strong>Minimum Value:</strong> 1.0 MOhm
+                  </li>
+                  <li>
+                    <strong>Test Configuration:</strong> L-E, N-E, L-N (with charger isolated)
+                  </li>
+                  <li>
+                    <strong>Important:</strong> Disconnect or isolate the EV charger before testing
+                    to prevent damage to electronic components
+                  </li>
                 </ul>
               </div>
             </div>
@@ -595,10 +705,13 @@ const Level3Module2Section4_5 = () => {
 
             <div className="space-y-4 text-gray-300">
               <p>
-                Proper documentation is essential for compliance, safety records, and customer protection. The type of certificate depends on the nature of the work.
+                Proper documentation is essential for compliance, safety records, and customer
+                protection. The type of certificate depends on the nature of the work.
               </p>
 
-              <h3 className="text-lg font-medium text-white mt-6 mb-3">Electrical Installation Certificate (EIC)</h3>
+              <h3 className="text-lg font-medium text-white mt-6 mb-3">
+                Electrical Installation Certificate (EIC)
+              </h3>
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
                 <h4 className="text-[#E8FF00] font-medium mb-2">When Required</h4>
                 <ul className="text-sm space-y-1 mb-3">
@@ -617,7 +730,9 @@ const Level3Module2Section4_5 = () => {
                 </ul>
               </div>
 
-              <h3 className="text-lg font-medium text-white mt-6 mb-3">Minor Electrical Installation Works Certificate</h3>
+              <h3 className="text-lg font-medium text-white mt-6 mb-3">
+                Minor Electrical Installation Works Certificate
+              </h3>
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
                 <h4 className="text-[#E8FF00] font-medium mb-2">When Appropriate</h4>
                 <ul className="text-sm space-y-1 mb-3">
@@ -664,18 +779,33 @@ const Level3Module2Section4_5 = () => {
 
             <div className="space-y-4 text-gray-300">
               <p>
-                EV charger installation requires demonstrable competence both for regulatory compliance and to access grant funding schemes.
+                EV charger installation requires demonstrable competence both for regulatory
+                compliance and to access grant funding schemes.
               </p>
 
               <h3 className="text-lg font-medium text-white mt-6 mb-3">Competent Person Schemes</h3>
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
-                <h4 className="text-[#E8FF00] font-medium mb-2">OZEV-Approved Certification Bodies</h4>
-                <p className="text-sm mb-3">To install grant-funded domestic chargers, membership of an approved scheme is required:</p>
+                <h4 className="text-[#E8FF00] font-medium mb-2">
+                  OZEV-Approved Certification Bodies
+                </h4>
+                <p className="text-sm mb-3">
+                  To install grant-funded domestic chargers, membership of an approved scheme is
+                  required:
+                </p>
                 <ul className="text-sm space-y-2">
-                  <li><strong>NICEIC:</strong> Domestic Installer or Approved Contractor with EV module</li>
-                  <li><strong>NAPIT:</strong> Domestic Installer scheme with EV training</li>
-                  <li><strong>ELECSA:</strong> Approved scheme membership with EV competence</li>
-                  <li><strong>BESCA:</strong> Scheme provider for EV installation</li>
+                  <li>
+                    <strong>NICEIC:</strong> Domestic Installer or Approved Contractor with EV
+                    module
+                  </li>
+                  <li>
+                    <strong>NAPIT:</strong> Domestic Installer scheme with EV training
+                  </li>
+                  <li>
+                    <strong>ELECSA:</strong> Approved scheme membership with EV competence
+                  </li>
+                  <li>
+                    <strong>BESCA:</strong> Scheme provider for EV installation
+                  </li>
                 </ul>
               </div>
 
@@ -714,14 +844,26 @@ const Level3Module2Section4_5 = () => {
                 </ul>
               </div>
 
-              <h3 className="text-lg font-medium text-white mt-6 mb-3">Building Regulations Compliance</h3>
+              <h3 className="text-lg font-medium text-white mt-6 mb-3">
+                Building Regulations Compliance
+              </h3>
               <div className="bg-[#242424] p-4 rounded-lg border border-[#333]">
                 <h4 className="text-[#E8FF00] font-medium mb-2">Part P Requirements (England)</h4>
                 <ul className="text-sm space-y-2">
-                  <li><strong>Notifiable Work:</strong> New circuits in domestic premises</li>
-                  <li><strong>Self-Certification:</strong> Available through competent person schemes</li>
-                  <li><strong>Building Control:</strong> Required if not registered with approved scheme</li>
-                  <li><strong>Scotland/Wales/NI:</strong> Equivalent regulations apply - check local requirements</li>
+                  <li>
+                    <strong>Notifiable Work:</strong> New circuits in domestic premises
+                  </li>
+                  <li>
+                    <strong>Self-Certification:</strong> Available through competent person schemes
+                  </li>
+                  <li>
+                    <strong>Building Control:</strong> Required if not registered with approved
+                    scheme
+                  </li>
+                  <li>
+                    <strong>Scotland/Wales/NI:</strong> Equivalent regulations apply - check local
+                    requirements
+                  </li>
                 </ul>
               </div>
             </div>
@@ -754,9 +896,13 @@ const Level3Module2Section4_5 = () => {
                 </ol>
               </div>
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3 mt-4">
-                <p className="text-sm text-elec-yellow font-medium mb-1">Functional Testing Reminder</p>
+                <p className="text-sm text-elec-yellow font-medium mb-1">
+                  Functional Testing Reminder
+                </p>
                 <p className="text-xs text-gray-300">
-                  After electrical testing, verify the charger powers up correctly, communicates with a vehicle (or use charger test mode), emergency stop functions work, and smart features are configured per customer requirements.
+                  After electrical testing, verify the charger powers up correctly, communicates
+                  with a vehicle (or use charger test mode), emergency stop functions work, and
+                  smart features are configured per customer requirements.
                 </p>
               </div>
             </div>
@@ -771,9 +917,7 @@ const Level3Module2Section4_5 = () => {
                   <AccordionTrigger className="text-white hover:text-[#E8FF00]">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-400">
-                    {faq.answer}
-                  </AccordionContent>
+                  <AccordionContent className="text-gray-400">{faq.answer}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -809,7 +953,9 @@ const Level3Module2Section4_5 = () => {
             {!showQuiz ? (
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-[#E8FF00] mb-2">Test Your Knowledge</h3>
-                <p className="text-gray-400 mb-4">Ready to test your understanding of EV testing and certification?</p>
+                <p className="text-gray-400 mb-4">
+                  Ready to test your understanding of EV testing and certification?
+                </p>
                 <Button
                   onClick={() => setShowQuiz(true)}
                   className="bg-[#E8FF00] text-black hover:bg-[#E8FF00]/90"
@@ -820,15 +966,17 @@ const Level3Module2Section4_5 = () => {
             ) : quizComplete ? (
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-[#E8FF00] mb-2">Quiz Complete!</h3>
-                <p className="text-2xl font-bold text-white mb-4">{score}/{quizQuestions.length}</p>
+                <p className="text-2xl font-bold text-white mb-4">
+                  {score}/{quizQuestions.length}
+                </p>
                 <p className="text-gray-400 mb-4">
                   {score === quizQuestions.length
-                    ? "Excellent! Perfect score!"
+                    ? 'Excellent! Perfect score!'
                     : score >= quizQuestions.length * 0.8
-                    ? "Great work! You have a solid understanding."
-                    : score >= quizQuestions.length * 0.6
-                    ? "Good effort! Review the sections you missed."
-                    : "Keep studying and try again!"}
+                      ? 'Great work! You have a solid understanding.'
+                      : score >= quizQuestions.length * 0.6
+                        ? 'Good effort! Review the sections you missed.'
+                        : 'Keep studying and try again!'}
                 </p>
                 <Button
                   onClick={restartQuiz}
@@ -840,7 +988,9 @@ const Level3Module2Section4_5 = () => {
             ) : (
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-[#E8FF00]">Question {currentQuestion + 1}/{quizQuestions.length}</h3>
+                  <h3 className="text-lg font-semibold text-[#E8FF00]">
+                    Question {currentQuestion + 1}/{quizQuestions.length}
+                  </h3>
                   <span className="text-gray-400">Score: {score}</span>
                 </div>
                 <p className="text-white mb-4">{quizQuestions[currentQuestion].question}</p>
@@ -853,11 +1003,11 @@ const Level3Module2Section4_5 = () => {
                       className={`w-full text-left p-3 rounded border transition-colors ${
                         selectedAnswer !== null
                           ? index === quizQuestions[currentQuestion].correctAnswer
-                            ? "border-green-500 bg-green-500/10"
+                            ? 'border-green-500 bg-green-500/10'
                             : index === selectedAnswer
-                            ? "border-red-500 bg-red-500/10"
-                            : "border-[#333] bg-[#1a1a1a]"
-                          : "border-[#333] bg-[#1a1a1a] hover:border-[#E8FF00]/50"
+                              ? 'border-red-500 bg-red-500/10'
+                              : 'border-[#333] bg-[#1a1a1a]'
+                          : 'border-[#333] bg-[#1a1a1a] hover:border-[#E8FF00]/50'
                       }`}
                     >
                       {option}
@@ -865,8 +1015,12 @@ const Level3Module2Section4_5 = () => {
                   ))}
                 </div>
                 {showExplanation && (
-                  <div className={`mt-4 p-3 rounded ${selectedAnswer === quizQuestions[currentQuestion].correctAnswer ? "bg-green-500/10" : "bg-red-500/10"}`}>
-                    <p className="text-gray-300 text-sm">{quizQuestions[currentQuestion].explanation}</p>
+                  <div
+                    className={`mt-4 p-3 rounded ${selectedAnswer === quizQuestions[currentQuestion].correctAnswer ? 'bg-green-500/10' : 'bg-red-500/10'}`}
+                  >
+                    <p className="text-gray-300 text-sm">
+                      {quizQuestions[currentQuestion].explanation}
+                    </p>
                   </div>
                 )}
                 {selectedAnswer !== null && (
@@ -874,7 +1028,7 @@ const Level3Module2Section4_5 = () => {
                     onClick={nextQuestion}
                     className="mt-4 bg-[#E8FF00] text-black hover:bg-[#E8FF00]/90"
                   >
-                    {currentQuestion < quizQuestions.length - 1 ? "Next Question" : "See Results"}
+                    {currentQuestion < quizQuestions.length - 1 ? 'Next Question' : 'See Results'}
                   </Button>
                 )}
               </div>

@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m3s1-check1",
-    question: "What is the minimum illumination level for escape route lighting?",
-    options: ["0.5 lux", "1 lux", "2 lux", "5 lux"],
+    id: 'emergencylighting-m3s1-check1',
+    question: 'What is the minimum illumination level for escape route lighting?',
+    options: ['0.5 lux', '1 lux', '2 lux', '5 lux'],
     correctIndex: 1,
-    explanation: "BS 5266-1 requires minimum 1 lux at floor level along the centre line of escape routes. This is measured on a horizontal plane at floor level."
+    explanation:
+      'BS 5266-1 requires minimum 1 lux at floor level along the centre line of escape routes. This is measured on a horizontal plane at floor level.',
   },
   {
-    id: "emergencylighting-m3s1-check2",
-    question: "What is the standard emergency lighting duration for most premises?",
-    options: ["1 hour", "2 hours", "3 hours", "4 hours"],
+    id: 'emergencylighting-m3s1-check2',
+    question: 'What is the standard emergency lighting duration for most premises?',
+    options: ['1 hour', '2 hours', '3 hours', '4 hours'],
     correctIndex: 2,
-    explanation: "3 hours is the standard rated duration for most premises. This provides adequate time for evacuation, fire service operations, and safe shutdown of activities."
+    explanation:
+      '3 hours is the standard rated duration for most premises. This provides adequate time for evacuation, fire service operations, and safe shutdown of activities.',
   },
   {
-    id: "emergencylighting-m3s1-check3",
-    question: "When is 1-hour duration acceptable instead of 3 hours?",
-    options: ["Small premises only", "When immediate evacuation and reoccupation is possible", "Never acceptable", "During testing only"],
+    id: 'emergencylighting-m3s1-check3',
+    question: 'When is 1-hour duration acceptable instead of 3 hours?',
+    options: [
+      'Small premises only',
+      'When immediate evacuation and reoccupation is possible',
+      'Never acceptable',
+      'During testing only',
+    ],
     correctIndex: 1,
-    explanation: "1-hour duration is acceptable only when immediate evacuation followed by non-reoccupation is the norm (e.g., some industrial premises), and this is documented in the fire risk assessment."
-  }
+    explanation:
+      '1-hour duration is acceptable only when immediate evacuation followed by non-reoccupation is the norm (e.g., some industrial premises), and this is documented in the fire risk assessment.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why is 3 hours the standard duration?",
-    answer: "3 hours allows for: complete evacuation (even in large/complex buildings), fire service operations (investigation, firefighting), utility isolation and safety checks, and provides margin for battery degradation over time."
+    question: 'Why is 3 hours the standard duration?',
+    answer:
+      '3 hours allows for: complete evacuation (even in large/complex buildings), fire service operations (investigation, firefighting), utility isolation and safety checks, and provides margin for battery degradation over time.',
   },
   {
-    question: "Does battery capacity reduce over time?",
-    answer: "Yes, battery capacity typically reduces to 80% of original after 4 years. Systems should be designed with this in mind - specify slightly longer duration or plan for battery replacement at appropriate intervals."
+    question: 'Does battery capacity reduce over time?',
+    answer:
+      'Yes, battery capacity typically reduces to 80% of original after 4 years. Systems should be designed with this in mind - specify slightly longer duration or plan for battery replacement at appropriate intervals.',
   },
   {
-    question: "How is lux measured for verification?",
-    answer: "Using a calibrated lux meter held horizontally at floor level. Measurements are taken along the centre line of escape routes and at representative points in open areas. The lowest reading must meet the minimum requirement."
+    question: 'How is lux measured for verification?',
+    answer:
+      'Using a calibrated lux meter held horizontally at floor level. Measurements are taken along the centre line of escape routes and at representative points in open areas. The lowest reading must meet the minimum requirement.',
   },
   {
-    question: "Do different areas need different durations?",
-    answer: "The entire system should operate for the rated duration. However, some areas (like sleeping accommodation) may need maintained operation to provide instant full illumination, not just duration."
-  }
+    question: 'Do different areas need different durations?',
+    answer:
+      'The entire system should operate for the rated duration. However, some areas (like sleeping accommodation) may need maintained operation to provide instant full illumination, not just duration.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A care home with elderly residents requires emergency lighting. What minimum duration should be specified?",
-  options: [
-    "1 hour (elderly residents)",
-    "2 hours (residential use)",
-    "3 hours (standard duration)",
-    "4 hours (vulnerable occupants)"
-  ],
-  correctAnswer: 2,
-  explanation: "3 hours is the standard requirement regardless of occupant type. The presence of vulnerable occupants may require maintained operation and enhanced illumination levels, but the duration remains 3 hours."
-  }
+    question:
+      'A care home with elderly residents requires emergency lighting. What minimum duration should be specified?',
+    options: [
+      '1 hour (elderly residents)',
+      '2 hours (residential use)',
+      '3 hours (standard duration)',
+      '4 hours (vulnerable occupants)',
+    ],
+    correctAnswer: 2,
+    explanation:
+      '3 hours is the standard requirement regardless of occupant type. The presence of vulnerable occupants may require maintained operation and enhanced illumination levels, but the duration remains 3 hours.',
+  },
 ];
 
 const EmergencyLightingModule3Section1 = () => {
   useSEO({
-    title: "Illumination Levels and Durations | Emergency Lighting Module 3.1",
-    description: "BS 5266-1 minimum lux levels for escape routes, anti-panic areas, and high-risk tasks. Understand 3-hour duration requirements and battery specifications."
+    title: 'Illumination Levels and Durations | Emergency Lighting Module 3.1',
+    description:
+      'BS 5266-1 minimum lux levels for escape routes, anti-panic areas, and high-risk tasks. Understand 3-hour duration requirements and battery specifications.',
   });
 
   return (
@@ -108,17 +123,29 @@ const EmergencyLightingModule3Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Escape routes:</strong> 1 lux minimum</li>
-              <li><strong>Anti-panic:</strong> 0.5 lux minimum</li>
-              <li><strong>High-risk:</strong> 15 lux or 10% normal</li>
+              <li>
+                <strong>Escape routes:</strong> 1 lux minimum
+              </li>
+              <li>
+                <strong>Anti-panic:</strong> 0.5 lux minimum
+              </li>
+              <li>
+                <strong>High-risk:</strong> 15 lux or 10% normal
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Duration</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Standard:</strong> 3 hours</li>
-              <li><strong>Alternative:</strong> 1 hour (restricted)</li>
-              <li><strong>Response:</strong> 50% in 5 seconds</li>
+              <li>
+                <strong>Standard:</strong> 3 hours
+              </li>
+              <li>
+                <strong>Alternative:</strong> 1 hour (restricted)
+              </li>
+              <li>
+                <strong>Response:</strong> 50% in 5 seconds
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +155,12 @@ const EmergencyLightingModule3Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply correct lux levels for each area type",
-              "Specify appropriate duration requirements",
-              "Understand response time requirements",
-              "Account for battery degradation",
-              "Measure illumination for verification",
-              "Document compliance with standards"
+              'Apply correct lux levels for each area type',
+              'Specify appropriate duration requirements',
+              'Understand response time requirements',
+              'Account for battery degradation',
+              'Measure illumination for verification',
+              'Document compliance with standards',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -161,19 +188,35 @@ const EmergencyLightingModule3Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Area Type Levels</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Escape routes:</strong> 1 lux at floor</li>
-                  <li><strong>Anti-panic areas:</strong> 0.5 lux at floor</li>
-                  <li><strong>High-risk tasks:</strong> 10% of normal</li>
-                  <li><strong>High-risk minimum:</strong> 15 lux</li>
+                  <li>
+                    <strong>Escape routes:</strong> 1 lux at floor
+                  </li>
+                  <li>
+                    <strong>Anti-panic areas:</strong> 0.5 lux at floor
+                  </li>
+                  <li>
+                    <strong>High-risk tasks:</strong> 10% of normal
+                  </li>
+                  <li>
+                    <strong>High-risk minimum:</strong> 15 lux
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Requirements</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Uniformity:</strong> 40:1 max (escape/panic)</li>
-                  <li><strong>Uniformity:</strong> 10:1 max (high-risk)</li>
-                  <li><strong>CRI:</strong> Ra 40 minimum</li>
-                  <li><strong>Glare:</strong> Limited per BS EN 1838</li>
+                  <li>
+                    <strong>Uniformity:</strong> 40:1 max (escape/panic)
+                  </li>
+                  <li>
+                    <strong>Uniformity:</strong> 10:1 max (high-risk)
+                  </li>
+                  <li>
+                    <strong>CRI:</strong> Ra 40 minimum
+                  </li>
+                  <li>
+                    <strong>Glare:</strong> Limited per BS EN 1838
+                  </li>
                 </ul>
               </div>
             </div>
@@ -205,8 +248,8 @@ const EmergencyLightingModule3Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Emergency lighting must operate for a specified duration to allow safe evacuation
-              and enable fire service operations. The standard duration is 3 hours.
+              Emergency lighting must operate for a specified duration to allow safe evacuation and
+              enable fire service operations. The standard duration is 3 hours.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -242,24 +285,32 @@ const EmergencyLightingModule3Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Emergency lighting must reach operational levels quickly after mains failure.
-              Response time requirements vary by area type and lighting category.
+              Emergency lighting must reach operational levels quickly after mains failure. Response
+              time requirements vary by area type and lighting category.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Response Standards:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Escape/anti-panic:</strong> 50% output within 5 seconds</li>
-                <li><strong>Escape/anti-panic:</strong> 100% output within 60 seconds</li>
-                <li><strong>High-risk task:</strong> Full output within 5 seconds</li>
-                <li><strong>High-risk preferred:</strong> 0.5 seconds for hazardous areas</li>
+                <li>
+                  <strong>Escape/anti-panic:</strong> 50% output within 5 seconds
+                </li>
+                <li>
+                  <strong>Escape/anti-panic:</strong> 100% output within 60 seconds
+                </li>
+                <li>
+                  <strong>High-risk task:</strong> Full output within 5 seconds
+                </li>
+                <li>
+                  <strong>High-risk preferred:</strong> 0.5 seconds for hazardous areas
+                </li>
               </ul>
             </div>
 
             <p>
-              The two-stage response for escape lighting allows use of fluorescent lamps
-              which may need warm-up time. High-risk areas require near-instant response
-              for immediate safe shutdown of hazardous processes.
+              The two-stage response for escape lighting allows use of fluorescent lamps which may
+              need warm-up time. High-risk areas require near-instant response for immediate safe
+              shutdown of hazardous processes.
             </p>
           </div>
         </section>
@@ -271,7 +322,9 @@ const EmergencyLightingModule3Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Considerations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Design Considerations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Design for end-of-life battery capacity (80%)</li>
                 <li>Use maintained factor in calculations</li>
@@ -281,12 +334,22 @@ const EmergencyLightingModule3Section1 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Specification Errors</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Specification Errors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1-hour without justification:</strong> — Must be documented in FRA</li>
-                <li><strong>Ignoring uniformity:</strong> — 40:1 is critical for safety</li>
-                <li><strong>No degradation factor:</strong> — Batteries lose capacity</li>
-                <li><strong>Wrong response time:</strong> — High-risk needs 5s max</li>
+                <li>
+                  <strong>1-hour without justification:</strong> — Must be documented in FRA
+                </li>
+                <li>
+                  <strong>Ignoring uniformity:</strong> — 40:1 is critical for safety
+                </li>
+                <li>
+                  <strong>No degradation factor:</strong> — Batteries lose capacity
+                </li>
+                <li>
+                  <strong>Wrong response time:</strong> — High-risk needs 5s max
+                </li>
               </ul>
             </div>
           </div>
@@ -332,10 +395,7 @@ const EmergencyLightingModule3Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

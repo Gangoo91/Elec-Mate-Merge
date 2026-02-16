@@ -1,51 +1,51 @@
-import { ArrowLeft, Wrench, TestTube, Zap, Shield, Gauge } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Wrench, TestTube, Zap, Shield, Gauge } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Essential Hand Tools (Strippers, Cutters, Drivers)",
-    description: "Basic hand tools required for electrical installation work",
+    number: 'Subsection 1',
+    title: 'Essential Hand Tools (Strippers, Cutters, Drivers)',
+    description: 'Basic hand tools required for electrical installation work',
     icon: Wrench,
-    href: "3-1"
+    href: '3-1',
   },
   {
-    number: "Subsection 2",
-    title: "Common Power Tools (Drills, SDS, Jigsaws)",
-    description: "Power tools used in electrical installation work",
+    number: 'Subsection 2',
+    title: 'Common Power Tools (Drills, SDS, Jigsaws)',
+    description: 'Power tools used in electrical installation work',
     icon: TestTube,
-    href: "3-2"
+    href: '3-2',
   },
   {
-    number: "Subsection 3",
-    title: "Test Equipment for Installation Work (Overview Only)",
-    description: "Basic testing equipment used during installation",
+    number: 'Subsection 3',
+    title: 'Test Equipment for Installation Work (Overview Only)',
+    description: 'Basic testing equipment used during installation',
     icon: Gauge,
-    href: "3-3"
+    href: '3-3',
   },
   {
-    number: "Subsection 4",
-    title: "Tool Inspection and Maintenance",
-    description: "Maintaining tools in safe working condition",
+    number: 'Subsection 4',
+    title: 'Tool Inspection and Maintenance',
+    description: 'Maintaining tools in safe working condition',
     icon: Shield,
-    href: "3-4"
+    href: '3-4',
   },
   {
-    number: "Subsection 5",
-    title: "Safe Use, Transport, and Storage of Tools",
-    description: "Safe handling and storage practices for tools",
+    number: 'Subsection 5',
+    title: 'Safe Use, Transport, and Storage of Tools',
+    description: 'Safe handling and storage practices for tools',
     icon: Zap,
-    href: "3-5"
+    href: '3-5',
   },
   {
-    number: "Subsection 6",
-    title: "PPE Associated with Tool Use",
-    description: "Personal protective equipment for tool operation",
+    number: 'Subsection 6',
+    title: 'PPE Associated with Tool Use',
+    description: 'Personal protective equipment for tool operation',
     icon: Shield,
-    href: "3-6"
-  }
+    href: '3-6',
+  },
 ];
 
 const Section3 = () => {

@@ -18,7 +18,7 @@ import {
   protectiveDeviceTypes,
   protectiveDeviceRatings,
   cableTypeOptions,
-  referenceMethodOptions
+  referenceMethodOptions,
 } from '@/types/enhancedCircuitTypes';
 import { cableSizeOptions } from '@/types/cableTypes';
 
@@ -40,15 +40,14 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
   return (
     <Card className="overflow-hidden bg-card border border-border">
       <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
-        <SectionHeader 
-          title="Part 4: Circuit Details & Protection" 
+        <SectionHeader
+          title="Part 4: Circuit Details & Protection"
           icon={Shield}
           isOpen={openSections.circuit}
           color="blue-500"
         />
         <CollapsibleContent>
           <CardContent className="space-y-6 pt-6">
-            
             {/* Basic Circuit Information */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div>
@@ -88,11 +87,14 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                 <div className="w-2 h-2 rounded-full bg-blue-400"></div>
                 <Label className="text-sm font-medium">Protective Device</Label>
               </div>
-              
+
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div className="space-y-2">
                   <Label htmlFor="protectiveDeviceType">Type *</Label>
-                  <Select value={formData.protectiveDeviceType} onValueChange={(value) => handleUpdate('protectiveDeviceType', value)}>
+                  <Select
+                    value={formData.protectiveDeviceType}
+                    onValueChange={(value) => handleUpdate('protectiveDeviceType', value)}
+                  >
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
@@ -113,7 +115,10 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
 
                 <div className="space-y-2">
                   <Label htmlFor="protectiveDeviceRating">Rating (A) *</Label>
-                  <Select value={formData.protectiveDeviceRating} onValueChange={(value) => handleUpdate('protectiveDeviceRating', value)}>
+                  <Select
+                    value={formData.protectiveDeviceRating}
+                    onValueChange={(value) => handleUpdate('protectiveDeviceRating', value)}
+                  >
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Rating" />
                     </SelectTrigger>
@@ -122,7 +127,9 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                         <SelectItem key={r.value} value={r.value}>
                           <div className="flex flex-col">
                             <span>{r.label}</span>
-                            <span className="text-xs text-white/50">Typical: {r.typical.join(', ')}</span>
+                            <span className="text-xs text-white/50">
+                              Typical: {r.typical.join(', ')}
+                            </span>
                           </div>
                         </SelectItem>
                       ))}
@@ -132,7 +139,10 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
 
                 <div className="space-y-2">
                   <Label htmlFor="protectiveDeviceKaRating">Short Circuit Capacity (kA)</Label>
-                  <Select value={formData.protectiveDeviceKaRating} onValueChange={(value) => handleUpdate('protectiveDeviceKaRating', value)}>
+                  <Select
+                    value={formData.protectiveDeviceKaRating}
+                    onValueChange={(value) => handleUpdate('protectiveDeviceKaRating', value)}
+                  >
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="kA Rating" />
                     </SelectTrigger>
@@ -146,7 +156,9 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                       <SelectItem value="10">
                         <div className="flex flex-col">
                           <span>10kA</span>
-                          <span className="text-xs text-white/50">Enhanced domestic/light commercial</span>
+                          <span className="text-xs text-white/50">
+                            Enhanced domestic/light commercial
+                          </span>
                         </div>
                       </SelectItem>
                       <SelectItem value="16">
@@ -159,7 +171,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                   </Select>
                 </div>
               </div>
-              
+
               {/* Protection checkboxes */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
                 <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-card/50">
@@ -169,9 +181,14 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     onCheckedChange={(checked) => handleUpdate('protectionRcd', checked)}
                     className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
-                  <Label htmlFor="protectionRcd" className="text-base md:text-sm font-medium cursor-pointer">RCD Protected</Label>
+                  <Label
+                    htmlFor="protectionRcd"
+                    className="text-base md:text-sm font-medium cursor-pointer"
+                  >
+                    RCD Protected
+                  </Label>
                 </div>
-                
+
                 <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-card/50">
                   <Checkbox
                     id="protectionRcbo"
@@ -179,9 +196,14 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     onCheckedChange={(checked) => handleUpdate('protectionRcbo', checked)}
                     className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
-                  <Label htmlFor="protectionRcbo" className="text-base md:text-sm font-medium cursor-pointer">RCBO</Label>
+                  <Label
+                    htmlFor="protectionRcbo"
+                    className="text-base md:text-sm font-medium cursor-pointer"
+                  >
+                    RCBO
+                  </Label>
                 </div>
-                
+
                 <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-card/50">
                   <Checkbox
                     id="protectionAfdd"
@@ -189,9 +211,14 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     onCheckedChange={(checked) => handleUpdate('protectionAfdd', checked)}
                     className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
-                  <Label htmlFor="protectionAfdd" className="text-base md:text-sm font-medium cursor-pointer">AFDD</Label>
+                  <Label
+                    htmlFor="protectionAfdd"
+                    className="text-base md:text-sm font-medium cursor-pointer"
+                  >
+                    AFDD
+                  </Label>
                 </div>
-                
+
                 <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-card/50">
                   <Checkbox
                     id="protectionSpd"
@@ -199,7 +226,12 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     onCheckedChange={(checked) => handleUpdate('protectionSpd', checked)}
                     className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
-                  <Label htmlFor="protectionSpd" className="text-base md:text-sm font-medium cursor-pointer">SPD</Label>
+                  <Label
+                    htmlFor="protectionSpd"
+                    className="text-base md:text-sm font-medium cursor-pointer"
+                  >
+                    SPD
+                  </Label>
                 </div>
               </div>
             </div>
@@ -212,17 +244,25 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                 <div className="w-2 h-2 rounded-full bg-amber-400"></div>
                 <Label className="text-sm font-medium">Cable & Conductors</Label>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <div className="space-y-2">
-                  <Label htmlFor="liveConductorSize" className="text-sm font-semibold">Live Conductor (mm²) *</Label>
-                  <Select value={formData.liveConductorSize} onValueChange={(value) => handleUpdate('liveConductorSize', value)}>
+                  <Label htmlFor="liveConductorSize" className="text-sm font-semibold">
+                    Live Conductor (mm²) *
+                  </Label>
+                  <Select
+                    value={formData.liveConductorSize}
+                    onValueChange={(value) => handleUpdate('liveConductorSize', value)}
+                  >
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Select size" />
                     </SelectTrigger>
                     <SelectContent>
                       {cableSizeOptions.map((s) => (
-                        <SelectItem key={s.value.replace('mm', '')} value={s.value.replace('mm', '')}>
+                        <SelectItem
+                          key={s.value.replace('mm', '')}
+                          value={s.value.replace('mm', '')}
+                        >
                           {s.label}
                         </SelectItem>
                       ))}
@@ -231,14 +271,22 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="cpcSize" className="text-sm font-semibold">CPC Size (mm²) *</Label>
-                  <Select value={formData.cpcSize} onValueChange={(value) => handleUpdate('cpcSize', value)}>
+                  <Label htmlFor="cpcSize" className="text-sm font-semibold">
+                    CPC Size (mm²) *
+                  </Label>
+                  <Select
+                    value={formData.cpcSize}
+                    onValueChange={(value) => handleUpdate('cpcSize', value)}
+                  >
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Select size" />
                     </SelectTrigger>
                     <SelectContent>
                       {cableSizeOptions.map((s) => (
-                        <SelectItem key={s.value.replace('mm', '')} value={s.value.replace('mm', '')}>
+                        <SelectItem
+                          key={s.value.replace('mm', '')}
+                          value={s.value.replace('mm', '')}
+                        >
                           {s.label}
                         </SelectItem>
                       ))}
@@ -247,8 +295,13 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="cableType" className="text-sm font-semibold">Cable Type *</Label>
-                  <Select value={formData.cableType} onValueChange={(value) => handleUpdate('cableType', value)}>
+                  <Label htmlFor="cableType" className="text-sm font-semibold">
+                    Cable Type *
+                  </Label>
+                  <Select
+                    value={formData.cableType}
+                    onValueChange={(value) => handleUpdate('cableType', value)}
+                  >
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
@@ -268,8 +321,13 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="installationMethod" className="text-sm font-semibold">Installation Method</Label>
-                  <Select value={formData.installationMethod} onValueChange={(value) => handleUpdate('installationMethod', value)}>
+                  <Label htmlFor="installationMethod" className="text-sm font-semibold">
+                    Installation Method
+                  </Label>
+                  <Select
+                    value={formData.installationMethod}
+                    onValueChange={(value) => handleUpdate('installationMethod', value)}
+                  >
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Method" />
                     </SelectTrigger>
@@ -288,7 +346,10 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
             {/* Reference Method */}
             <div className="space-y-2">
               <Label htmlFor="referenceMethod">Reference Method (for rating) *</Label>
-              <Select value={formData.referenceMethod} onValueChange={(value) => handleUpdate('referenceMethod', value)}>
+              <Select
+                value={formData.referenceMethod}
+                onValueChange={(value) => handleUpdate('referenceMethod', value)}
+              >
                 <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                   <SelectValue placeholder="Select method" />
                 </SelectTrigger>
@@ -306,7 +367,6 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                 </SelectContent>
               </Select>
             </div>
-
           </CardContent>
         </CollapsibleContent>
       </Collapsible>

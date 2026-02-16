@@ -1,102 +1,162 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Lightbulb, Target, TrendingUp, Award, Clock, PoundSterling, Users, Search, Calculator, Shield, Sparkles, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Lightbulb,
+  Target,
+  TrendingUp,
+  Award,
+  Clock,
+  PoundSterling,
+  Users,
+  Search,
+  Calculator,
+  Shield,
+  Sparkles,
+  CheckCircle,
+} from 'lucide-react';
 
 const CourseSelectionTips = () => {
   const tips = [
     {
       icon: Target,
-      title: "Align with Career Goals",
-      description: "Choose courses that directly support your career progression plans. Consider specialist areas like industrial, commercial, or domestic work. Research salary expectations for each path and match courses to desired outcomes.",
-      color: "blue"
+      title: 'Align with Career Goals',
+      description:
+        'Choose courses that directly support your career progression plans. Consider specialist areas like industrial, commercial, or domestic work. Research salary expectations for each path and match courses to desired outcomes.',
+      color: 'blue',
     },
     {
       icon: TrendingUp,
-      title: "Future-Proof Your Skills",
-      description: "Prioritise emerging technologies like EV charging (£35-50k annually), smart home systems, renewable energy, and energy storage. These sectors are experiencing 40%+ growth annually.",
-      color: "green"
+      title: 'Future-Proof Your Skills',
+      description:
+        'Prioritise emerging technologies like EV charging (£35-50k annually), smart home systems, renewable energy, and energy storage. These sectors are experiencing 40%+ growth annually.',
+      color: 'green',
     },
     {
       icon: Award,
-      title: "Check Accreditations",
-      description: "Ensure courses are recognised by NICEIC, ECA, SELECT, City & Guilds, EAL, or JIB. Verify if the qualification counts towards your JIB grading. Look for courses that include competency assessments.",
-      color: "purple"
+      title: 'Check Accreditations',
+      description:
+        'Ensure courses are recognised by NICEIC, ECA, SELECT, City & Guilds, EAL, or JIB. Verify if the qualification counts towards your JIB grading. Look for courses that include competency assessments.',
+      color: 'purple',
     },
     {
       icon: Clock,
-      title: "Consider Timing & Format",
-      description: "Balance course duration with work commitments. Evening classes (6-9pm), weekend intensive courses, or online hybrid learning are available. Block release courses may suit some employers.",
-      color: "orange"
+      title: 'Consider Timing & Format',
+      description:
+        'Balance course duration with work commitments. Evening classes (6-9pm), weekend intensive courses, or online hybrid learning are available. Block release courses may suit some employers.',
+      color: 'orange',
     },
     {
       icon: PoundSterling,
-      title: "Funding & Employer Support",
-      description: "Many employers offer funding through apprenticeship levy (£15k+ available). Check for government grants, skills bootcamps, or sector-specific funding. Some courses qualify for career development loans.",
-      color: "emerald"
+      title: 'Funding & Employer Support',
+      description:
+        'Many employers offer funding through apprenticeship levy (£15k+ available). Check for government grants, skills bootcamps, or sector-specific funding. Some courses qualify for career development loans.',
+      color: 'emerald',
     },
     {
       icon: Search,
-      title: "Research Training Providers",
-      description: "Compare course quality, pass rates, and industry connections. Read reviews from recent students and check employment outcomes. Visit facilities to assess equipment quality.",
-      color: "cyan"
+      title: 'Research Training Providers',
+      description:
+        'Compare course quality, pass rates, and industry connections. Read reviews from recent students and check employment outcomes. Visit facilities to assess equipment quality.',
+      color: 'cyan',
     },
     {
       icon: Calculator,
-      title: "Calculate Return on Investment",
-      description: "Compare course costs against potential salary increases. Entry-level courses (£500-2000) can lead to £3-5k salary jumps. Specialist qualifications (£2-5k) often result in £8-15k increases.",
-      color: "amber"
+      title: 'Calculate Return on Investment',
+      description:
+        'Compare course costs against potential salary increases. Entry-level courses (£500-2000) can lead to £3-5k salary jumps. Specialist qualifications (£2-5k) often result in £8-15k increases.',
+      color: 'amber',
     },
     {
       icon: Users,
-      title: "Network & Learn from Peers",
-      description: "Join course-related forums, LinkedIn groups, and professional associations. Connect with fellow students for study groups and future job opportunities. Build relationships with instructors.",
-      color: "pink"
-    }
+      title: 'Network & Learn from Peers',
+      description:
+        'Join course-related forums, LinkedIn groups, and professional associations. Connect with fellow students for study groups and future job opportunities. Build relationships with instructors.',
+      color: 'pink',
+    },
   ];
 
   const colorMap: Record<string, { border: string; bg: string; icon: string; iconBg: string }> = {
-    blue: { border: "border-blue-500/20", bg: "bg-blue-500/5", icon: "text-blue-400", iconBg: "bg-blue-500/20" },
-    green: { border: "border-green-500/20", bg: "bg-green-500/5", icon: "text-green-400", iconBg: "bg-green-500/20" },
-    purple: { border: "border-purple-500/20", bg: "bg-purple-500/5", icon: "text-purple-400", iconBg: "bg-purple-500/20" },
-    orange: { border: "border-orange-500/20", bg: "bg-orange-500/5", icon: "text-orange-400", iconBg: "bg-orange-500/20" },
-    emerald: { border: "border-emerald-500/20", bg: "bg-emerald-500/5", icon: "text-emerald-400", iconBg: "bg-emerald-500/20" },
-    cyan: { border: "border-cyan-500/20", bg: "bg-cyan-500/5", icon: "text-cyan-400", iconBg: "bg-cyan-500/20" },
-    amber: { border: "border-amber-500/20", bg: "bg-amber-500/5", icon: "text-amber-400", iconBg: "bg-amber-500/20" },
-    pink: { border: "border-pink-500/20", bg: "bg-pink-500/5", icon: "text-pink-400", iconBg: "bg-pink-500/20" }
+    blue: {
+      border: 'border-blue-500/20',
+      bg: 'bg-blue-500/5',
+      icon: 'text-blue-400',
+      iconBg: 'bg-blue-500/20',
+    },
+    green: {
+      border: 'border-green-500/20',
+      bg: 'bg-green-500/5',
+      icon: 'text-green-400',
+      iconBg: 'bg-green-500/20',
+    },
+    purple: {
+      border: 'border-purple-500/20',
+      bg: 'bg-purple-500/5',
+      icon: 'text-purple-400',
+      iconBg: 'bg-purple-500/20',
+    },
+    orange: {
+      border: 'border-orange-500/20',
+      bg: 'bg-orange-500/5',
+      icon: 'text-orange-400',
+      iconBg: 'bg-orange-500/20',
+    },
+    emerald: {
+      border: 'border-emerald-500/20',
+      bg: 'bg-emerald-500/5',
+      icon: 'text-emerald-400',
+      iconBg: 'bg-emerald-500/20',
+    },
+    cyan: {
+      border: 'border-cyan-500/20',
+      bg: 'bg-cyan-500/5',
+      icon: 'text-cyan-400',
+      iconBg: 'bg-cyan-500/20',
+    },
+    amber: {
+      border: 'border-amber-500/20',
+      bg: 'bg-amber-500/5',
+      icon: 'text-amber-400',
+      iconBg: 'bg-amber-500/20',
+    },
+    pink: {
+      border: 'border-pink-500/20',
+      bg: 'bg-pink-500/5',
+      icon: 'text-pink-400',
+      iconBg: 'bg-pink-500/20',
+    },
   };
 
   const costGuidance = [
     {
-      category: "Entry Level (Level 2)",
-      cost: "£500 - £2,000",
-      duration: "6-12 months",
-      outcome: "Start as trainee, £18-22k salary",
-      color: "blue"
+      category: 'Entry Level (Level 2)',
+      cost: '£500 - £2,000',
+      duration: '6-12 months',
+      outcome: 'Start as trainee, £18-22k salary',
+      color: 'blue',
     },
     {
-      category: "Intermediate (Level 3)",
-      cost: "£1,500 - £4,000",
-      duration: "12-24 months",
-      outcome: "Qualified electrician, £25-35k salary",
-      color: "green"
+      category: 'Intermediate (Level 3)',
+      cost: '£1,500 - £4,000',
+      duration: '12-24 months',
+      outcome: 'Qualified electrician, £25-35k salary',
+      color: 'green',
     },
     {
-      category: "Specialist Courses",
-      cost: "£800 - £3,000 per course",
-      duration: "1-6 months",
-      outcome: "£3-8k salary increase per specialism",
-      color: "purple"
-    }
+      category: 'Specialist Courses',
+      cost: '£800 - £3,000 per course',
+      duration: '1-6 months',
+      outcome: '£3-8k salary increase per specialism',
+      color: 'purple',
+    },
   ];
 
   const qualityIndicators = [
-    "Industry-standard equipment and facilities",
-    "Qualified instructors with recent industry experience",
-    "High pass rates (80%+ for practical assessments)",
-    "Strong employer links and job placement support",
-    "Up-to-date curriculum reflecting current regulations",
-    "Good student reviews and graduate employment rates"
+    'Industry-standard equipment and facilities',
+    'Qualified instructors with recent industry experience',
+    'High pass rates (80%+ for practical assessments)',
+    'Strong employer links and job placement support',
+    'Up-to-date curriculum reflecting current regulations',
+    'Good student reviews and graduate employment rates',
   ];
 
   return (
@@ -185,7 +245,10 @@ const CourseSelectionTips = () => {
         <CardContent className="relative">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {qualityIndicators.map((indicator, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-purple-500/5 border border-purple-500/20">
+              <div
+                key={idx}
+                className="flex items-start gap-3 p-3 rounded-xl bg-purple-500/5 border border-purple-500/20"
+              >
                 <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-white/80">{indicator}</p>
               </div>
@@ -213,22 +276,30 @@ const CourseSelectionTips = () => {
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-3 rounded-lg bg-white/5">
-                <Badge className="bg-green-500/10 text-green-400 border border-green-500/30 text-[10px] mb-2">+65% Growth</Badge>
+                <Badge className="bg-green-500/10 text-green-400 border border-green-500/30 text-[10px] mb-2">
+                  +65% Growth
+                </Badge>
                 <p className="text-xs text-white font-medium">EV Charging Infrastructure</p>
                 <p className="text-[10px] text-white/60 mt-1">£35-55k for specialists</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
-                <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] mb-2">+45% Growth</Badge>
+                <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] mb-2">
+                  +45% Growth
+                </Badge>
                 <p className="text-xs text-white font-medium">Renewable Energy Systems</p>
                 <p className="text-[10px] text-white/60 mt-1">Solar and battery storage</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
-                <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] mb-2">+40% Growth</Badge>
+                <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] mb-2">
+                  +40% Growth
+                </Badge>
                 <p className="text-xs text-white font-medium">Smart Building Technology</p>
                 <p className="text-[10px] text-white/60 mt-1">Commercial and residential</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
-                <Badge className="bg-purple-500/10 text-purple-400 border border-purple-500/30 text-[10px] mb-2">Critical Shortage</Badge>
+                <Badge className="bg-purple-500/10 text-purple-400 border border-purple-500/30 text-[10px] mb-2">
+                  Critical Shortage
+                </Badge>
                 <p className="text-xs text-white font-medium">Data Centre Infrastructure</p>
                 <p className="text-[10px] text-white/60 mt-1">£40-65k for qualified engineers</p>
               </div>
@@ -239,20 +310,48 @@ const CourseSelectionTips = () => {
             <h4 className="font-semibold text-sm text-white mb-3">Regional Considerations</h4>
             <div className="space-y-2 text-xs">
               <div className="flex items-start gap-2">
-                <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-[10px]">London</Badge>
-                <span className="text-white/70">Highest salaries but intense competition and higher course costs</span>
+                <Badge
+                  variant="outline"
+                  className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-[10px]"
+                >
+                  London
+                </Badge>
+                <span className="text-white/70">
+                  Highest salaries but intense competition and higher course costs
+                </span>
               </div>
               <div className="flex items-start gap-2">
-                <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30 text-[10px]">North</Badge>
-                <span className="text-white/70">Strong demand for manufacturing and renewable energy skills</span>
+                <Badge
+                  variant="outline"
+                  className="bg-green-500/10 text-green-400 border-green-500/30 text-[10px]"
+                >
+                  North
+                </Badge>
+                <span className="text-white/70">
+                  Strong demand for manufacturing and renewable energy skills
+                </span>
               </div>
               <div className="flex items-start gap-2">
-                <Badge variant="outline" className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-[10px]">Scotland</Badge>
-                <span className="text-white/70">Offshore wind and renewable energy opportunities, government funding</span>
+                <Badge
+                  variant="outline"
+                  className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-[10px]"
+                >
+                  Scotland
+                </Badge>
+                <span className="text-white/70">
+                  Offshore wind and renewable energy opportunities, government funding
+                </span>
               </div>
               <div className="flex items-start gap-2">
-                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-[10px]">Wales</Badge>
-                <span className="text-white/70">Growing green energy sector with apprenticeship support</span>
+                <Badge
+                  variant="outline"
+                  className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-[10px]"
+                >
+                  Wales
+                </Badge>
+                <span className="text-white/70">
+                  Growing green energy sector with apprenticeship support
+                </span>
               </div>
             </div>
           </div>

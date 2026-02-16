@@ -1,15 +1,9 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { 
-  CheckCircle, 
-  Clock, 
-  Loader2, 
-  XCircle, 
-  Timer 
-} from "lucide-react";
-import { JobSourceStatus, SearchProgress } from "@/hooks/job-vacancies/useUnifiedJobSearch";
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { CheckCircle, Clock, Loader2, XCircle, Timer } from 'lucide-react';
+import { JobSourceStatus, SearchProgress } from '@/hooks/job-vacancies/useUnifiedJobSearch';
 
 interface JobSourceProgressProps {
   searchProgress: SearchProgress;
@@ -36,23 +30,24 @@ const JobSourceProgress: React.FC<JobSourceProgressProps> = ({ searchProgress })
   const getStatusColor = (status: JobSourceStatus['status']) => {
     switch (status) {
       case 'pending':
-        return "bg-muted text-muted-foreground";
+        return 'bg-muted text-muted-foreground';
       case 'loading':
-        return "bg-elec-yellow/20 text-elec-yellow";
+        return 'bg-elec-yellow/20 text-elec-yellow';
       case 'completed':
-        return "bg-green-500/20 text-green-500";
+        return 'bg-green-500/20 text-green-500';
       case 'failed':
-        return "bg-red-500/20 text-red-500";
+        return 'bg-red-500/20 text-red-500';
       case 'timeout':
-        return "bg-orange-500/20 text-orange-500";
+        return 'bg-orange-500/20 text-orange-500';
       default:
-        return "bg-muted text-muted-foreground";
+        return 'bg-muted text-muted-foreground';
     }
   };
 
-  const progressPercentage = searchProgress.totalSources > 0 
-    ? (searchProgress.completedSources / searchProgress.totalSources) * 100 
-    : 0;
+  const progressPercentage =
+    searchProgress.totalSources > 0
+      ? (searchProgress.completedSources / searchProgress.totalSources) * 100
+      : 0;
 
   if (!searchProgress.isSearching && searchProgress.completedSources === 0) {
     return null;

@@ -5,9 +5,9 @@ interface ScreenReaderAnnouncerProps {
   politeness?: 'polite' | 'assertive';
 }
 
-export const ScreenReaderAnnouncer = ({ 
-  message, 
-  politeness = 'polite' 
+export const ScreenReaderAnnouncer = ({
+  message,
+  politeness = 'polite',
 }: ScreenReaderAnnouncerProps) => {
   const previousMessage = useRef('');
 
@@ -21,12 +21,7 @@ export const ScreenReaderAnnouncer = ({
   if (!message) return null;
 
   return (
-    <div
-      role="status"
-      aria-live={politeness}
-      aria-atomic="true"
-      className="sr-only"
-    >
+    <div role="status" aria-live={politeness} aria-atomic="true" className="sr-only">
       {message}
     </div>
   );

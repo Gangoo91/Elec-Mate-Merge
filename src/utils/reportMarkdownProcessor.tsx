@@ -75,22 +75,51 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
         'Work Details': [] as { key: string; value: string }[],
         'Testing Results': [] as { key: string; value: string }[],
         'Inspector Details': [] as { key: string; value: string }[],
-        'Other': [] as { key: string; value: string }[]
+        Other: [] as { key: string; value: string }[],
       };
 
       // Categorize fields based on their keys
-      currentFieldGroup.forEach(field => {
+      currentFieldGroup.forEach((field) => {
         const keyLower = field.key.toLowerCase();
-        
-        if (keyLower.includes('client') || keyLower.includes('name') || keyLower.includes('address') || keyLower.includes('phone')) {
+
+        if (
+          keyLower.includes('client') ||
+          keyLower.includes('name') ||
+          keyLower.includes('address') ||
+          keyLower.includes('phone')
+        ) {
           sections['Client Details'].push(field);
-        } else if (keyLower.includes('installation') || keyLower.includes('supply') || keyLower.includes('earthing') || keyLower.includes('main switch')) {
+        } else if (
+          keyLower.includes('installation') ||
+          keyLower.includes('supply') ||
+          keyLower.includes('earthing') ||
+          keyLower.includes('main switch')
+        ) {
           sections['Installation Details'].push(field);
-        } else if (keyLower.includes('work') || keyLower.includes('circuit') || keyLower.includes('description') || keyLower.includes('extent')) {
+        } else if (
+          keyLower.includes('work') ||
+          keyLower.includes('circuit') ||
+          keyLower.includes('description') ||
+          keyLower.includes('extent')
+        ) {
           sections['Work Details'].push(field);
-        } else if (keyLower.includes('test') || keyLower.includes('fault') || keyLower.includes('c1') || keyLower.includes('c2') || keyLower.includes('c3') || keyLower.includes('assessment') || keyLower.includes('result')) {
+        } else if (
+          keyLower.includes('test') ||
+          keyLower.includes('fault') ||
+          keyLower.includes('c1') ||
+          keyLower.includes('c2') ||
+          keyLower.includes('c3') ||
+          keyLower.includes('assessment') ||
+          keyLower.includes('result')
+        ) {
           sections['Testing Results'].push(field);
-        } else if (keyLower.includes('inspector') || keyLower.includes('tester') || keyLower.includes('installer') || keyLower.includes('qualification') || keyLower.includes('date')) {
+        } else if (
+          keyLower.includes('inspector') ||
+          keyLower.includes('tester') ||
+          keyLower.includes('installer') ||
+          keyLower.includes('qualification') ||
+          keyLower.includes('date')
+        ) {
           sections['Inspector Details'].push(field);
         } else {
           sections['Other'].push(field);
@@ -105,12 +134,12 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
               Report Information
             </h3>
           </div>
-          
+
           <div className="p-6">
             <div className="grid gap-6">
               {Object.entries(sections).map(([sectionTitle, fields]) => {
                 if (fields.length === 0) return null;
-                
+
                 return (
                   <div key={sectionTitle} className="space-y-3">
                     <div className="flex items-center gap-2 pb-2 border-b border-border/10">
@@ -118,10 +147,13 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
                         {sectionTitle}
                       </h4>
                     </div>
-                    
+
                     <div className="grid gap-3 sm:grid-cols-2">
                       {fields.map((field, idx) => (
-                        <div key={idx} className="group hover:bg-muted/20 rounded-lg p-3 transition-colors">
+                        <div
+                          key={idx}
+                          className="group hover:bg-muted/20 rounded-lg p-3 transition-colors"
+                        >
                           <div className="space-y-1">
                             <dt className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
                               {field.key}
@@ -157,10 +189,13 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     }
   };
 
-  const processInlineMarkdown = (text: string, context: 'heading' | 'paragraph' = 'paragraph'): React.ReactNode => {
+  const processInlineMarkdown = (
+    text: string,
+    context: 'heading' | 'paragraph' = 'paragraph'
+  ): React.ReactNode => {
     // Normalize text: trim and normalize spaces
     text = text.trim().replace(/\s+/g, ' ');
-    
+
     // Return null for empty content
     if (!text) return null;
 
@@ -172,70 +207,79 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     // Process compliance badges - replace with React components
     currentText = currentText.replace(/\[BS 7671[^\]]*\]/g, (match) => {
       const id = `__BADGE_${key++}__`;
-      elementMap.set(id, 
+      elementMap.set(
+        id,
         <Badge key={id} variant="outline" className="bg-primary/10 text-primary border-primary/20">
           {match}
         </Badge>
       );
       return id;
     });
-    
+
     // Process result badges (PASS/FAIL/SATISFACTORY/UNSATISFACTORY)
     currentText = currentText.replace(/\b(PASS|SATISFACTORY)\b/g, (match) => {
       const id = `__SUCCESS_${key++}__`;
-      elementMap.set(id,
+      elementMap.set(
+        id,
         <Badge key={id} className="bg-green-500/10 text-green-600 border-green-500/20">
           {match}
         </Badge>
       );
       return id;
     });
-    
+
     currentText = currentText.replace(/\b(FAIL|UNSATISFACTORY|DANGER)\b/g, (match) => {
       const id = `__ERROR_${key++}__`;
-      elementMap.set(id,
+      elementMap.set(
+        id,
         <Badge key={id} className="bg-red-500/10 text-red-600 border-red-500/20">
           {match}
         </Badge>
       );
       return id;
     });
-    
+
     // Process code classifications (C1, C2, C3, FI)
     currentText = currentText.replace(/\b(C1|C2|C3|FI)\b/g, (match) => {
       const id = `__CODE_${key++}__`;
       const colorClasses = {
-        'C1': 'bg-red-500/10 text-red-600 border-red-500/20',
-        'C2': 'bg-orange-500/10 text-orange-600 border-orange-500/20',
-        'C3': 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
-        'FI': 'bg-blue-500/10 text-blue-600 border-blue-500/20'
+        C1: 'bg-red-500/10 text-red-600 border-red-500/20',
+        C2: 'bg-orange-500/10 text-orange-600 border-orange-500/20',
+        C3: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
+        FI: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
       };
-      elementMap.set(id,
+      elementMap.set(
+        id,
         <Badge key={id} className={colorClasses[match]}>
           {match}
         </Badge>
       );
       return id;
     });
-    
+
     // Process measurements and values
-    currentText = currentText.replace(/(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)/g, 
+    currentText = currentText.replace(
+      /(\d+\.?\d*)\s*(Ω|V|A|kW|Hz|mm²?|m)/g,
       '<span className="font-mono font-semibold text-primary">$1$2</span>'
     );
-    
+
     // Process bold text **text** - only apply bold styling in heading context
     if (context === 'heading') {
-      currentText = currentText.replace(/\*\*(.*?)\*\*/g, '<strong className="font-semibold text-primary">$1</strong>');
+      currentText = currentText.replace(
+        /\*\*(.*?)\*\*/g,
+        '<strong className="font-semibold text-primary">$1</strong>'
+      );
     } else {
       // In paragraph context, remove bold markers and render as normal text
       currentText = currentText.replace(/\*\*(.*?)\*\*/g, '$1');
     }
-    
+
     // Process italic text *text*
     currentText = currentText.replace(/\*(.*?)\*/g, '<em className="italic">$1</em>');
-    
+
     // Process links [text](url)
-    currentText = currentText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, 
+    currentText = currentText.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
       '<a href="$2" className="text-primary hover:underline font-medium">$1</a>'
     );
 
@@ -259,9 +303,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     }
 
     // For simple text without special elements, validate it's not empty
-    return currentText.trim() ? (
-      <span dangerouslySetInnerHTML={{ __html: currentText }} />
-    ) : null;
+    return currentText.trim() ? <span dangerouslySetInnerHTML={{ __html: currentText }} /> : null;
   };
 
   const getHeadingComponent = (level: number, text: string) => {
@@ -271,7 +313,7 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       3: 'text-xl font-bold text-primary mb-2 text-left',
       4: 'text-xl font-bold text-primary mb-2 text-left',
       5: 'text-xl font-bold text-primary mb-2 text-left',
-      6: 'text-xl font-bold text-primary mb-1 text-left'
+      6: 'text-xl font-bold text-primary mb-1 text-left',
     };
 
     const icons = {
@@ -281,7 +323,10 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     };
 
     return (
-      <div key={`heading-${key++}`} className={`flex items-center ${headingClasses[level] || headingClasses[6]}`}>
+      <div
+        key={`heading-${key++}`}
+        className={`flex items-center ${headingClasses[level] || headingClasses[6]}`}
+      >
         {level <= 3 && icons[level]}
         {processInlineMarkdown(text, 'heading')}
       </div>
@@ -290,17 +335,17 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
 
   lines.forEach((line, index) => {
     line = line.trim();
-    
+
     // Skip horizontal rules (lines with only dashes)
     if (line.match(/^-+$/)) {
       return;
     }
-    
+
     // Skip lines with only special characters or whitespace
     if (line.match(/^[\s\-_=*#|]+$/)) {
       return;
     }
-    
+
     // Handle code blocks
     if (line.startsWith('```')) {
       if (isInCodeBlock) {
@@ -314,13 +359,12 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       }
       return;
     }
-    
+
     if (isInCodeBlock) {
       codeBlockContent += line + '\n';
       return;
     }
-    
-    
+
     if (!line) {
       flushTable();
       flushList();
@@ -336,10 +380,13 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
       flushFieldGroup();
       const level = headingMatch[1].length;
       const text = headingMatch[2];
-      
+
       if (level === 1) {
         elements.push(
-          <Card key={`header-card-${key++}`} className="bg-primary/5 border-primary/20 p-6 mb-6 text-center">
+          <Card
+            key={`header-card-${key++}`}
+            className="bg-primary/5 border-primary/20 p-6 mb-6 text-center"
+          >
             {getHeadingComponent(level, text)}
           </Card>
         );
@@ -353,9 +400,12 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
     if (line.includes('|')) {
       flushList();
       flushFieldGroup();
-      const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell && cell.length > 0);
+      const cells = line
+        .split('|')
+        .map((cell) => cell.trim())
+        .filter((cell) => cell && cell.length > 0);
       // Only add rows with meaningful content
-      if (cells.length > 0 && cells.some(cell => cell.length > 0)) {
+      if (cells.length > 0 && cells.some((cell) => cell.length > 0)) {
         currentTable.push(cells);
       }
       return;
@@ -441,20 +491,16 @@ export const processReportMarkdown = (text: string): React.ReactNode => {
   flushFieldGroup();
   flushCodeBlock();
 
-  return (
-    <div className="space-y-4 max-w-none">
-      {elements}
-    </div>
-  );
+  return <div className="space-y-4 max-w-none">{elements}</div>;
 };
 
 // Professional report header component
-export const ReportHeader = ({ 
-  title, 
-  subtitle, 
-  reportType, 
-  date 
-}: { 
+export const ReportHeader = ({
+  title,
+  subtitle,
+  reportType,
+  date,
+}: {
   title: string;
   subtitle?: string;
   reportType?: string;
@@ -468,9 +514,7 @@ export const ReportHeader = ({
         </div>
         <div>
           <h1 className="text-2xl font-bold text-primary mb-1">{title}</h1>
-          {subtitle && (
-            <p className="text-muted-foreground text-lg">{subtitle}</p>
-          )}
+          {subtitle && <p className="text-muted-foreground text-lg">{subtitle}</p>}
           {reportType && (
             <Badge variant="secondary" className="mt-2">
               {reportType}

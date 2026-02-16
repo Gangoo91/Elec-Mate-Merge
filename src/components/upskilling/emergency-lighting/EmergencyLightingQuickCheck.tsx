@@ -3,51 +3,56 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
 
 export const EmergencyLightingQuickCheck = () => {
-  const [selectedAnswers, setSelectedAnswers] = useState<{[key: number]: boolean}>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: boolean }>({});
 
   const questions = [
     {
       id: 1,
-      question: "Emergency lighting is only required in buildings over 500m²",
+      question: 'Emergency lighting is only required in buildings over 500m²',
       correct: false,
-      explanation: "Emergency lighting is typically required in buildings over 200m² or based on risk assessment."
+      explanation:
+        'Emergency lighting is typically required in buildings over 200m² or based on risk assessment.',
     },
     {
       id: 2,
-      question: "The RRO places fire safety duties on the responsible person",
+      question: 'The RRO places fire safety duties on the responsible person',
       correct: true,
-      explanation: "Correct. The Regulatory Reform (Fire Safety) Order 2005 defines the responsible person's duties."
+      explanation:
+        "Correct. The Regulatory Reform (Fire Safety) Order 2005 defines the responsible person's duties.",
     },
     {
       id: 3,
-      question: "BS 5266-1 is the primary standard for emergency lighting in the UK",
+      question: 'BS 5266-1 is the primary standard for emergency lighting in the UK',
       correct: true,
-      explanation: "Correct. BS 5266-1:2016 is the main code of practice for emergency lighting."
+      explanation: 'Correct. BS 5266-1:2016 is the main code of practice for emergency lighting.',
     },
     {
       id: 4,
-      question: "Emergency lighting must provide illumination for a minimum of 3 hours",
+      question: 'Emergency lighting must provide illumination for a minimum of 3 hours',
       correct: true,
-      explanation: "Correct. BS 5266-1 requires a minimum duration of 3 hours for emergency lighting systems."
+      explanation:
+        'Correct. BS 5266-1 requires a minimum duration of 3 hours for emergency lighting systems.',
     },
     {
       id: 5,
-      question: "Only qualified electricians can design emergency lighting systems",
+      question: 'Only qualified electricians can design emergency lighting systems',
       correct: false,
-      explanation: "While installation requires qualified electricians, design can be done by competent fire safety engineers or consultants."
+      explanation:
+        'While installation requires qualified electricians, design can be done by competent fire safety engineers or consultants.',
     },
     {
       id: 6,
-      question: "Emergency lighting is required in all escape routes",
+      question: 'Emergency lighting is required in all escape routes',
       correct: true,
-      explanation: "Correct. All escape routes must have adequate emergency lighting to ensure safe evacuation."
-    }
+      explanation:
+        'Correct. All escape routes must have adequate emergency lighting to ensure safe evacuation.',
+    },
   ];
 
   const handleAnswer = (questionId: number, answer: boolean) => {
-    setSelectedAnswers(prev => ({
+    setSelectedAnswers((prev) => ({
       ...prev,
-      [questionId]: answer
+      [questionId]: answer,
     }));
   };
 
@@ -85,7 +90,9 @@ export const EmergencyLightingQuickCheck = () => {
               </button>
             </div>
             {selectedAnswers[q.id] !== undefined && (
-              <p className={`text-sm ${selectedAnswers[q.id] === q.correct ? 'text-green-400' : 'text-red-400'}`}>
+              <p
+                className={`text-sm ${selectedAnswers[q.id] === q.correct ? 'text-green-400' : 'text-red-400'}`}
+              >
                 {selectedAnswers[q.id] === q.correct ? '✓ Correct! ' : '✗ Incorrect. '}
                 {q.explanation}
               </p>

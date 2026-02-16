@@ -1,16 +1,16 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { QuoteSettings } from "@/types/quote";
-import { useEffect } from "react";
-import { Settings, Receipt, List, Percent } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
+import { QuoteSettings } from '@/types/quote';
+import { useEffect } from 'react';
+import { Settings, Receipt, List, Percent } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const settingsSchema = z.object({
-  vatRate: z.number().min(0).max(100, "VAT rate must be between 0-100%"),
+  vatRate: z.number().min(0).max(100, 'VAT rate must be between 0-100%'),
   vatRegistered: z.boolean(),
   showMaterialsBreakdown: z.boolean().optional(),
 });
@@ -46,7 +46,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
     return () => subscription.unsubscribe();
   }, [form, onUpdate]);
 
-  const isVatRegistered = form.watch("vatRegistered");
+  const isVatRegistered = form.watch('vatRegistered');
 
   return (
     <Form {...form}>
@@ -65,10 +65,12 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
               render={({ field }) => (
                 <FormItem className="p-0">
                   <div className="flex items-center gap-3 p-3.5">
-                    <div className={cn(
-                      "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors",
-                      field.value ? "bg-elec-yellow" : "bg-white/[0.1]"
-                    )}>
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors',
+                        field.value ? 'bg-elec-yellow' : 'bg-white/[0.1]'
+                      )}
+                    >
                       <Receipt className="h-5 w-5 text-black" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -110,7 +112,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                             value={field.value}
                             onChange={(e) => {
                               const value = e.target.value;
-                              field.onChange(value === "" ? "" : parseFloat(value) || "");
+                              field.onChange(value === '' ? '' : parseFloat(value) || '');
                             }}
                           />
                         </FormControl>
@@ -138,15 +140,19 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
               render={({ field }) => (
                 <FormItem className="p-0">
                   <div className="flex items-center gap-3 p-3.5">
-                    <div className={cn(
-                      "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors",
-                      field.value !== false ? "bg-elec-yellow" : "bg-white/[0.1]"
-                    )}>
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors',
+                        field.value !== false ? 'bg-elec-yellow' : 'bg-white/[0.1]'
+                      )}
+                    >
                       <List className="h-5 w-5 text-black" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[15px] font-medium text-white">Show Materials Breakdown</p>
-                      <p className="text-[13px] text-white/70">Display each material as a separate line item</p>
+                      <p className="text-[13px] text-white/70">
+                        Display each material as a separate line item
+                      </p>
                     </div>
                     <FormControl>
                       <Switch

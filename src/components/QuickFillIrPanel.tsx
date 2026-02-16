@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
 
 interface QuickFillIrPanelProps {
@@ -13,20 +19,20 @@ interface QuickFillIrPanelProps {
 const testVoltageOptions = [
   { value: '250V', label: '250V' },
   { value: '500V', label: '500V' },
-  { value: '1000V', label: '1000V' }
+  { value: '1000V', label: '1000V' },
 ];
 
 const insulationResistanceOptions = [
   { value: '>200', label: '>200 MΩ' },
   { value: '>999', label: '>999 MΩ' },
   { value: 'N/A', label: 'N/A' },
-  { value: 'LIM', label: 'LIM' }
+  { value: 'LIM', label: 'LIM' },
 ];
 
 const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
   onFillAllInsulationVoltage,
   onFillAllInsulationLiveNeutral,
-  onFillAllInsulationLiveEarth
+  onFillAllInsulationLiveEarth,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [selectedVoltage, setSelectedVoltage] = useState<string>('');
@@ -42,7 +48,9 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
       >
         <div className="flex items-center gap-2">
           <Zap className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-          <span className="font-semibold text-sm text-foreground">Quick Fill Insulation Resistance</span>
+          <span className="font-semibold text-sm text-foreground">
+            Quick Fill Insulation Resistance
+          </span>
           <FieldTooltip
             content="Use this to quickly apply insulation resistance test values to all circuits. Insulation resistance tests verify the integrity of cable insulation between live conductors and earth."
             regulation="Reg 612.3"
@@ -68,8 +76,12 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
                 <SelectContent className="min-w-[160px]">
-                  {testVoltageOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value} className="py-3 text-base touch-manipulation">
+                  {testVoltageOptions.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className="py-3 text-base touch-manipulation"
+                    >
                       {option.label}
                     </SelectItem>
                   ))}
@@ -94,15 +106,21 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
                 <SelectContent className="min-w-[160px]">
-                  {insulationResistanceOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value} className="py-3 text-base touch-manipulation">
+                  {insulationResistanceOptions.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className="py-3 text-base touch-manipulation"
+                    >
                       {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               <Button
-                onClick={() => selectedLiveNeutral && onFillAllInsulationLiveNeutral(selectedLiveNeutral)}
+                onClick={() =>
+                  selectedLiveNeutral && onFillAllInsulationLiveNeutral(selectedLiveNeutral)
+                }
                 disabled={!selectedLiveNeutral}
                 className="h-11 px-4 whitespace-nowrap touch-manipulation"
               >
@@ -120,8 +138,12 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
                 <SelectContent className="min-w-[160px]">
-                  {insulationResistanceOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value} className="py-3 text-base touch-manipulation">
+                  {insulationResistanceOptions.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className="py-3 text-base touch-manipulation"
+                    >
                       {option.label}
                     </SelectItem>
                   ))}

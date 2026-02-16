@@ -22,6 +22,10 @@ export interface SavedReport {
 export const reportStorage = {
   getAllReports: (): SavedReport[] => [],
   getReport: (id: string) => null,
-  saveReport: (data: any, reportType?: string, metadata?: any) => ({ id: '', metadata: {} as ReportMetadata, data: {} }),
+  saveReport: (data: any, reportType?: string, metadata?: any) => ({
+    id: '',
+    metadata: {} as ReportMetadata,
+    data: {},
+  }),
   deleteReport: (id: string) => {},
 };

@@ -60,8 +60,12 @@ export const StudyProgressCard: React.FC = () => {
           {/* Streak */}
           <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <Flame className={`h-4 w-4 ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white/30'}`} />
-              <span className={`text-xl font-bold ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white/50'}`}>
+              <Flame
+                className={`h-4 w-4 ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white/30'}`}
+              />
+              <span
+                className={`text-xl font-bold ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white/50'}`}
+              >
                 {streakDisplay.currentStreak}
               </span>
             </div>
@@ -80,8 +84,12 @@ export const StudyProgressCard: React.FC = () => {
           {/* Average Score */}
           <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <Trophy className={`h-4 w-4 ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white/30'}`} />
-              <span className={`text-xl font-bold ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white/50'}`}>
+              <Trophy
+                className={`h-4 w-4 ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white/30'}`}
+              />
+              <span
+                className={`text-xl font-bold ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white/50'}`}
+              >
                 {quizStats.averageScore}%
               </span>
             </div>
@@ -95,10 +103,10 @@ export const StudyProgressCard: React.FC = () => {
             <Flame className="h-4 w-4 text-orange-400 animate-pulse" />
             <p className="text-xs text-orange-300">
               {streakDisplay.currentStreak === 1
-                ? "Great start! Keep it up tomorrow!"
+                ? 'Great start! Keep it up tomorrow!'
                 : streakDisplay.currentStreak < 7
-                ? `${streakDisplay.currentStreak} days strong! Building good habits.`
-                : `Amazing! ${streakDisplay.currentStreak} day streak! You're on fire!`}
+                  ? `${streakDisplay.currentStreak} days strong! Building good habits.`
+                  : `Amazing! ${streakDisplay.currentStreak} day streak! You're on fire!`}
             </p>
           </div>
         )}
@@ -115,7 +123,9 @@ export const StudyProgressCard: React.FC = () => {
                   <BookOpen className="h-4 w-4 text-elec-yellow" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-white/50 uppercase tracking-wide mb-0.5">Continue Learning</p>
+                  <p className="text-[10px] text-white/50 uppercase tracking-wide mb-0.5">
+                    Continue Learning
+                  </p>
                   <p className="text-sm font-medium text-white truncate group-hover:text-elec-yellow transition-colors">
                     {lastLocation.title}
                   </p>

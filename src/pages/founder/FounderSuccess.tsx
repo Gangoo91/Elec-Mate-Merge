@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { CheckCircle, Loader2, PartyPopper, Crown, ArrowRight, Lock } from "lucide-react";
-import confetti from "canvas-confetti";
+import { useState, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+import { CheckCircle, Loader2, PartyPopper, Crown, ArrowRight, Lock } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 export default function FounderSuccess() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const token = searchParams.get("token");
+  const token = searchParams.get('token');
   const { session } = useAuth();
 
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ export default function FounderSuccess() {
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ["#fbbf24", "#f59e0b", "#22c55e"],
+      colors: ['#fbbf24', '#f59e0b', '#22c55e'],
     });
 
     // Second burst after delay
@@ -39,14 +39,14 @@ export default function FounderSuccess() {
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ["#fbbf24", "#f59e0b"],
+        colors: ['#fbbf24', '#f59e0b'],
       });
       confetti({
         particleCount: 50,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ["#fbbf24", "#f59e0b"],
+        colors: ['#fbbf24', '#f59e0b'],
       });
     }, 300);
   };
@@ -59,13 +59,13 @@ export default function FounderSuccess() {
     }
 
     try {
-      const { data } = await supabase.functions.invoke("founder-checkout", {
-        body: { action: "complete", token },
+      const { data } = await supabase.functions.invoke('founder-checkout', {
+        body: { action: 'complete', token },
       });
       setEmail(data?.email || null);
       setCompleted(true);
     } catch (err) {
-      console.error("Error completing invite:", err);
+      console.error('Error completing invite:', err);
       // Still show success - payment went through
       setCompleted(true);
     } finally {
@@ -74,20 +74,16 @@ export default function FounderSuccess() {
   };
 
   const goToDashboard = () => {
-    navigate("/dashboard");
+    navigate('/dashboard');
   };
 
   const goToSignUp = () => {
-    const url = email
-      ? `/auth/signup?email=${encodeURIComponent(email)}`
-      : "/auth/signup";
+    const url = email ? `/auth/signup?email=${encodeURIComponent(email)}` : '/auth/signup';
     navigate(url);
   };
 
   const goToSignIn = () => {
-    const url = email
-      ? `/auth/signin?email=${encodeURIComponent(email)}`
-      : "/auth/signin";
+    const url = email ? `/auth/signin?email=${encodeURIComponent(email)}` : '/auth/signin';
     navigate(url);
   };
 
@@ -121,7 +117,7 @@ export default function FounderSuccess() {
               className="w-20 h-20 rounded-full bg-gradient-to-br from-green-500/20 to-green-600/10 flex items-center justify-center mx-auto mb-6"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
             >
               <CheckCircle className="h-10 w-10 text-green-400" />
             </motion.div>
@@ -173,7 +169,10 @@ export default function FounderSuccess() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Lock className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
-                  <span>Price <strong className="text-yellow-400">locked forever</strong> - will never increase</span>
+                  <span>
+                    Price <strong className="text-yellow-400">locked forever</strong> - will never
+                    increase
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />

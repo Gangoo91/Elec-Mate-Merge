@@ -1,7 +1,14 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, CheckCircle, Clock, Users, FileText, ShieldAlert, Info } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  Users,
+  FileText,
+  ShieldAlert,
+  Info,
+} from 'lucide-react';
 
 interface RiskOutcomeGuidanceProps {
   riskLevel: string;
@@ -11,105 +18,105 @@ interface RiskOutcomeGuidanceProps {
 const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps) => {
   const getRiskGuidance = () => {
     switch (riskLevel) {
-      case "Very High":
+      case 'Very High':
         return {
-          action: "STOP WORK IMMEDIATELY",
-          timeframe: "Immediate action required",
-          authority: "Senior management approval required",
-          monitoring: "Continuous monitoring required",
-          documentation: "Detailed risk assessment and SWMS mandatory",
+          action: 'STOP WORK IMMEDIATELY',
+          timeframe: 'Immediate action required',
+          authority: 'Senior management approval required',
+          monitoring: 'Continuous monitoring required',
+          documentation: 'Detailed risk assessment and SWMS mandatory',
           bg: 'bg-red-500/20',
           border: 'border-red-500/30',
           text: 'text-red-400',
           badgeBg: 'bg-red-500',
           icon: AlertTriangle,
           recommendations: [
-            "Work must not proceed until risk is reduced",
-            "Implement multiple high-level controls immediately",
-            "Senior management sign-off required",
-            "Emergency procedures must be in place",
-            "Qualified safety officer must be present"
-          ]
+            'Work must not proceed until risk is reduced',
+            'Implement multiple high-level controls immediately',
+            'Senior management sign-off required',
+            'Emergency procedures must be in place',
+            'Qualified safety officer must be present',
+          ],
         };
-      case "High":
+      case 'High':
         return {
-          action: "CAUTION - Enhanced Controls Required",
-          timeframe: "Action required before work starts",
-          authority: "Supervisor approval required",
-          monitoring: "Regular monitoring required",
-          documentation: "Comprehensive risk assessment required",
+          action: 'CAUTION - Enhanced Controls Required',
+          timeframe: 'Action required before work starts',
+          authority: 'Supervisor approval required',
+          monitoring: 'Regular monitoring required',
+          documentation: 'Comprehensive risk assessment required',
           bg: 'bg-red-500/15',
           border: 'border-red-500/30',
           text: 'text-red-400',
           badgeBg: 'bg-red-500/80',
           icon: AlertTriangle,
           recommendations: [
-            "Implement high-level control measures",
-            "Supervisor briefing mandatory",
-            "Regular safety checks during work",
-            "Emergency response plan activated",
-            "Competent persons only"
-          ]
+            'Implement high-level control measures',
+            'Supervisor briefing mandatory',
+            'Regular safety checks during work',
+            'Emergency response plan activated',
+            'Competent persons only',
+          ],
         };
-      case "Medium":
+      case 'Medium':
         return {
-          action: "PROCEED WITH CONTROLS",
-          timeframe: "Controls must be in place",
-          authority: "Team leader approval",
-          monitoring: "Periodic monitoring",
-          documentation: "Standard risk assessment",
+          action: 'PROCEED WITH CONTROLS',
+          timeframe: 'Controls must be in place',
+          authority: 'Team leader approval',
+          monitoring: 'Periodic monitoring',
+          documentation: 'Standard risk assessment',
           bg: 'bg-elec-yellow/20',
           border: 'border-elec-yellow/30',
           text: 'text-elec-yellow',
           badgeBg: 'bg-elec-yellow',
           icon: Clock,
           recommendations: [
-            "Implement appropriate control measures",
-            "Toolbox talk before starting",
-            "Regular safety observations",
-            "Standard operating procedures followed",
-            "Trained workers only"
-          ]
+            'Implement appropriate control measures',
+            'Toolbox talk before starting',
+            'Regular safety observations',
+            'Standard operating procedures followed',
+            'Trained workers only',
+          ],
         };
-      case "Low":
+      case 'Low':
         return {
-          action: "PROCEED WITH STANDARD CONTROLS",
-          timeframe: "Standard precautions",
-          authority: "Self-managed with oversight",
-          monitoring: "Routine monitoring",
-          documentation: "Basic risk documentation",
+          action: 'PROCEED WITH STANDARD CONTROLS',
+          timeframe: 'Standard precautions',
+          authority: 'Self-managed with oversight',
+          monitoring: 'Routine monitoring',
+          documentation: 'Basic risk documentation',
           bg: 'bg-green-500/20',
           border: 'border-green-500/30',
           text: 'text-green-400',
           badgeBg: 'bg-green-500',
           icon: CheckCircle,
           recommendations: [
-            "Follow standard safety procedures",
-            "Basic PPE requirements",
-            "Standard supervision",
-            "Normal work practices",
-            "Regular safety awareness"
-          ]
+            'Follow standard safety procedures',
+            'Basic PPE requirements',
+            'Standard supervision',
+            'Normal work practices',
+            'Regular safety awareness',
+          ],
         };
-      case "Very Low":
+      case 'Very Low':
         return {
-          action: "PROCEED WITH MINIMAL CONTROLS",
-          timeframe: "Basic precautions sufficient",
-          authority: "Self-managed",
-          monitoring: "As needed",
-          documentation: "Brief documentation",
+          action: 'PROCEED WITH MINIMAL CONTROLS',
+          timeframe: 'Basic precautions sufficient',
+          authority: 'Self-managed',
+          monitoring: 'As needed',
+          documentation: 'Brief documentation',
           bg: 'bg-green-500/15',
           border: 'border-green-500/30',
           text: 'text-green-400',
           badgeBg: 'bg-green-400',
           icon: CheckCircle,
           recommendations: [
-            "Standard workplace safety",
-            "Basic awareness required",
-            "Minimal supervision needed",
-            "Standard PPE as required",
-            "Normal monitoring"
-          ]
+            'Standard workplace safety',
+            'Basic awareness required',
+            'Minimal supervision needed',
+            'Standard PPE as required',
+            'Normal monitoring',
+          ],
         };
       default:
         return null;
@@ -120,14 +127,18 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
   if (!guidance) return null;
 
   const GuidanceIcon = guidance.icon;
-  const isHighRisk = riskLevel === "Very High" || riskLevel === "High";
+  const isHighRisk = riskLevel === 'Very High' || riskLevel === 'High';
 
   return (
     <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative animate-fade-in">
-      <div className={`absolute top-0 right-0 w-64 h-64 ${isHighRisk ? 'bg-red-500/5' : 'bg-green-500/5'} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`} />
+      <div
+        className={`absolute top-0 right-0 w-64 h-64 ${isHighRisk ? 'bg-red-500/5' : 'bg-green-500/5'} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`}
+      />
       <CardHeader className="relative">
         <CardTitle className="text-white flex items-center gap-3">
-          <div className={`p-2.5 rounded-xl bg-gradient-to-br ${isHighRisk ? 'from-red-500/20 to-red-500/5 border-red-500/30' : 'from-green-500/20 to-green-500/5 border-green-500/30'} border`}>
+          <div
+            className={`p-2.5 rounded-xl bg-gradient-to-br ${isHighRisk ? 'from-red-500/20 to-red-500/5 border-red-500/30' : 'from-green-500/20 to-green-500/5 border-green-500/30'} border`}
+          >
             <ShieldAlert className={`h-5 w-5 ${isHighRisk ? 'text-red-400' : 'text-green-400'}`} />
           </div>
           Risk Management Guidance
@@ -146,7 +157,9 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 <p className="text-xs text-white">Risk Score: {riskScore}</p>
               </div>
             </div>
-            <Badge className={`${guidance.badgeBg} ${riskLevel === "Medium" || riskLevel === "Very Low" ? 'text-black' : 'text-white'} px-3 py-1`}>
+            <Badge
+              className={`${guidance.badgeBg} ${riskLevel === 'Medium' || riskLevel === 'Very Low' ? 'text-black' : 'text-white'} px-3 py-1`}
+            >
               {riskLevel}
             </Badge>
           </div>
@@ -205,7 +218,9 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 key={index}
                 className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10 hover:border-white/20 transition-colors"
               >
-                <div className={`w-5 h-5 rounded-lg ${guidance.bg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                <div
+                  className={`w-5 h-5 rounded-lg ${guidance.bg} flex items-center justify-center flex-shrink-0 mt-0.5`}
+                >
                   <CheckCircle className={`h-3 w-3 ${guidance.text}`} />
                 </div>
                 <span className="text-sm text-white">{recommendation}</span>
@@ -234,7 +249,9 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 </tr>
               </thead>
               <tbody>
-                <tr className={`border-b border-white/5 ${riskLevel === "Very High" ? 'bg-red-500/10' : ''}`}>
+                <tr
+                  className={`border-b border-white/5 ${riskLevel === 'Very High' ? 'bg-red-500/10' : ''}`}
+                >
                   <td className="py-2 px-2">
                     <Badge className="bg-red-500 text-white text-[10px]">Very High</Badge>
                   </td>
@@ -243,7 +260,9 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                   <td className="py-2 px-2 text-white">Senior Mgmt</td>
                   <td className="py-2 px-2 text-white">Continuous</td>
                 </tr>
-                <tr className={`border-b border-white/5 ${riskLevel === "High" ? 'bg-red-500/10' : ''}`}>
+                <tr
+                  className={`border-b border-white/5 ${riskLevel === 'High' ? 'bg-red-500/10' : ''}`}
+                >
                   <td className="py-2 px-2">
                     <Badge className="bg-red-500/80 text-white text-[10px]">High</Badge>
                   </td>
@@ -252,7 +271,9 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                   <td className="py-2 px-2 text-white">Supervisor</td>
                   <td className="py-2 px-2 text-white">Regular</td>
                 </tr>
-                <tr className={`border-b border-white/5 ${riskLevel === "Medium" ? 'bg-elec-yellow/10' : ''}`}>
+                <tr
+                  className={`border-b border-white/5 ${riskLevel === 'Medium' ? 'bg-elec-yellow/10' : ''}`}
+                >
                   <td className="py-2 px-2">
                     <Badge className="bg-elec-yellow text-black text-[10px]">Medium</Badge>
                   </td>
@@ -261,7 +282,9 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                   <td className="py-2 px-2 text-white">Team Lead</td>
                   <td className="py-2 px-2 text-white">Periodic</td>
                 </tr>
-                <tr className={`border-b border-white/5 ${riskLevel === "Low" ? 'bg-green-500/10' : ''}`}>
+                <tr
+                  className={`border-b border-white/5 ${riskLevel === 'Low' ? 'bg-green-500/10' : ''}`}
+                >
                   <td className="py-2 px-2">
                     <Badge className="bg-green-500 text-white text-[10px]">Low</Badge>
                   </td>
@@ -270,7 +293,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                   <td className="py-2 px-2 text-white">Self-managed</td>
                   <td className="py-2 px-2 text-white">Routine</td>
                 </tr>
-                <tr className={`${riskLevel === "Very Low" ? 'bg-green-500/10' : ''}`}>
+                <tr className={`${riskLevel === 'Very Low' ? 'bg-green-500/10' : ''}`}>
                   <td className="py-2 px-2">
                     <Badge className="bg-green-400 text-black text-[10px]">Very Low</Badge>
                   </td>

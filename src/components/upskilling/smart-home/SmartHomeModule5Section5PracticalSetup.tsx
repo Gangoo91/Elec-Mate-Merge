@@ -12,26 +12,32 @@ export const SmartHomeModule5Section5PracticalSetup = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-purple-600/10 p-4 rounded-lg border border-purple-600/30">
-          <h4 className="text-foreground font-semibold mb-3">Critical Infrastructure Requirements</h4>
+          <h4 className="text-foreground font-semibold mb-3">
+            Critical Infrastructure Requirements
+          </h4>
           <p className="text-sm mb-3">
-            Electricians must ensure circuits are wired correctly for automation triggers, with 
-            proper neutral connections for smart switches and adequate power supply for hub devices. 
-            Scenes require reliable communication between hubs, sensors, and smart switches, which 
+            Electricians must ensure circuits are wired correctly for automation triggers, with
+            proper neutral connections for smart switches and adequate power supply for hub devices.
+            Scenes require reliable communication between hubs, sensors, and smart switches, which
             depends on robust network infrastructure and proper device placement.
           </p>
           <p className="text-sm">
-            Clients should be trained to adjust and test their emergency lighting scenes regularly, 
-            understanding how to override automatic systems and manually activate emergency protocols 
-            when needed.
+            Clients should be trained to adjust and test their emergency lighting scenes regularly,
+            understanding how to override automatic systems and manually activate emergency
+            protocols when needed.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Electrical Infrastructure</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Electrical Infrastructure
+            </h4>
             <div className="space-y-3">
               <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
-                <p className="text-red-400 font-semibold text-sm mb-1">Circuit Design Requirements</p>
+                <p className="text-red-400 font-semibold text-sm mb-1">
+                  Circuit Design Requirements
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Neutral wire availability for smart switches</li>
                   <li>• Adequate load calculations for LED retrofits</li>
@@ -40,7 +46,9 @@ export const SmartHomeModule5Section5PracticalSetup = () => {
                 </ul>
               </div>
               <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                <p className="text-orange-400 font-semibold text-sm mb-1">Smart Switch Integration</p>
+                <p className="text-orange-400 font-semibold text-sm mb-1">
+                  Smart Switch Integration
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Compatible dimmer selection for LED loads</li>
                   <li>• Multi-way switching conversion</li>
@@ -49,7 +57,9 @@ export const SmartHomeModule5Section5PracticalSetup = () => {
                 </ul>
               </div>
               <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
-                <p className="text-blue-400 font-semibold text-sm mb-1">Power Supply Considerations</p>
+                <p className="text-blue-400 font-semibold text-sm mb-1">
+                  Power Supply Considerations
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Hub and controller power requirements</li>
                   <li>• UPS backup for critical components</li>
@@ -64,7 +74,9 @@ export const SmartHomeModule5Section5PracticalSetup = () => {
             <h4 className="text-foreground font-semibold text-lg mb-4">Communication Networks</h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
-                <p className="text-cyan-400 font-semibold text-sm mb-1">Wireless Protocol Selection</p>
+                <p className="text-cyan-400 font-semibold text-sm mb-1">
+                  Wireless Protocol Selection
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Zigbee mesh network advantages</li>
                   <li>• Z-Wave reliability considerations</li>
@@ -149,7 +161,9 @@ export const SmartHomeModule5Section5PracticalSetup = () => {
               </ul>
             </div>
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Solutions and Workarounds:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Solutions and Workarounds:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Bypass modules for switch neutrals</li>
                 <li>• LED-compatible dimmer selection</li>

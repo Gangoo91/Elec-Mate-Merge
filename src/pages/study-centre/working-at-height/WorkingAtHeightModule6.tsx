@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by working at height assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by working at height assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Review All Five Modules",
+    title: 'Review All Five Modules',
     description:
-      "Questions are drawn equally from Understanding Working at Height, Access Equipment, Fall Protection, Safe Systems of Work, and Incident Response. Make sure you have covered every module before attempting the exam.",
+      'Questions are drawn equally from Understanding Working at Height, Access Equipment, Fall Protection, Safe Systems of Work, and Incident Response. Make sure you have covered every module before attempting the exam.',
   },
   {
-    title: "Know the Hierarchy of Controls",
+    title: 'Know the Hierarchy of Controls',
     description:
-      "Avoid, prevent, mitigate is the core hierarchy. Understand when collective protection takes priority over personal protection and how to justify each control measure.",
+      'Avoid, prevent, mitigate is the core hierarchy. Understand when collective protection takes priority over personal protection and how to justify each control measure.',
   },
   {
-    title: "Understand WAH Regs 2005",
+    title: 'Understand WAH Regs 2005',
     description:
-      "The Work at Height Regulations 2005 is the primary legislation. Know the key duties, what counts as working at height, and how it interacts with CDM 2015 and LOLER 1998.",
+      'The Work at Height Regulations 2005 is the primary legislation. Know the key duties, what counts as working at height, and how it interacts with CDM 2015 and LOLER 1998.',
   },
   {
-    title: "Remember Equipment Inspection Requirements",
+    title: 'Remember Equipment Inspection Requirements',
     description:
-      "Know the inspection frequencies — pre-use checks, 7-day scaffold inspections, LOLER 6-monthly thorough examinations, and the legal record retention periods.",
+      'Know the inspection frequencies — pre-use checks, 7-day scaffold inspections, LOLER 6-monthly thorough examinations, and the legal record retention periods.',
   },
   {
-    title: "Know Your PPE — Harness Components",
+    title: 'Know Your PPE — Harness Components',
     description:
-      "Understand harness types, attachment points, lanyard selection, energy absorbers, anchor points, and the difference between work restraint and fall arrest systems.",
+      'Understand harness types, attachment points, lanyard selection, energy absorbers, anchor points, and the difference between work restraint and fall arrest systems.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function WorkingAtHeightModule6() {
   useSEO({
-    title: "Working at Height Mock Exam | Module 6",
+    title: 'Working at Height Mock Exam | Module 6',
     description:
-      "Test your working at height knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your working at height knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,9 +108,7 @@ export default function WorkingAtHeightModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Put your working at height knowledge to the test under timed exam conditions.
               Questions are drawn from a 200-question bank covering all five content modules.
@@ -115,7 +123,9 @@ export default function WorkingAtHeightModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real working at height assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real working at height assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +140,7 @@ export default function WorkingAtHeightModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +156,11 @@ export default function WorkingAtHeightModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Understanding Working at Height", count: 40 },
-                  { module: "Module 2", name: "Access Equipment & Selection", count: 40 },
-                  { module: "Module 3", name: "Fall Protection & Prevention", count: 40 },
-                  { module: "Module 4", name: "Safe Systems of Work", count: 40 },
-                  { module: "Module 5", name: "Incident Response & Responsibilities", count: 40 },
+                  { module: 'Module 1', name: 'Understanding Working at Height', count: 40 },
+                  { module: 'Module 2', name: 'Access Equipment & Selection', count: 40 },
+                  { module: 'Module 3', name: 'Fall Protection & Prevention', count: 40 },
+                  { module: 'Module 4', name: 'Safe Systems of Work', count: 40 },
+                  { module: 'Module 5', name: 'Incident Response & Responsibilities', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +212,7 @@ export default function WorkingAtHeightModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

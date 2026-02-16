@@ -35,10 +35,7 @@ const StreakRing: React.FC<{
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <svg
-      viewBox={`0 0 ${size} ${size}`}
-      className="absolute inset-0 w-full h-full -rotate-90"
-    >
+    <svg viewBox={`0 0 ${size} ${size}`} className="absolute inset-0 w-full h-full -rotate-90">
       {/* Background circle */}
       <circle
         cx={size / 2}
@@ -92,12 +89,20 @@ export function PremiumHero() {
     if (!file || !user) return;
 
     if (!file.type.startsWith('image/')) {
-      toast({ title: 'Invalid file', description: 'Please select an image file', variant: 'destructive' });
+      toast({
+        title: 'Invalid file',
+        description: 'Please select an image file',
+        variant: 'destructive',
+      });
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      toast({ title: 'File too large', description: 'Please select an image under 2MB', variant: 'destructive' });
+      toast({
+        title: 'File too large',
+        description: 'Please select an image under 2MB',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -114,9 +119,9 @@ export function PremiumHero() {
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('avatars').getPublicUrl(filePath);
 
       const { error: updateError } = await supabase
         .from('profiles')
@@ -171,14 +176,16 @@ export function PremiumHero() {
                   <StreakRing progress={streakProgress} strokeWidth={3} />
 
                   {/* Avatar */}
-                  <div className={cn(
-                    'absolute inset-[6px] rounded-full overflow-hidden',
-                    'bg-white/[0.05] border-2 border-white/10',
-                    'flex items-center justify-center',
-                    'transition-all duration-200',
-                    'group-hover:border-elec-yellow/50',
-                    uploading && 'animate-pulse'
-                  )}>
+                  <div
+                    className={cn(
+                      'absolute inset-[6px] rounded-full overflow-hidden',
+                      'bg-white/[0.05] border-2 border-white/10',
+                      'flex items-center justify-center',
+                      'transition-all duration-200',
+                      'group-hover:border-elec-yellow/50',
+                      uploading && 'animate-pulse'
+                    )}
+                  >
                     {avatarUrl || userData.avatarUrl ? (
                       <img
                         src={avatarUrl || userData.avatarUrl || ''}
@@ -191,12 +198,14 @@ export function PremiumHero() {
                   </div>
 
                   {/* Camera overlay on hover */}
-                  <div className="
+                  <div
+                    className="
                     absolute inset-[6px] rounded-full
                     bg-black/60 opacity-0 group-hover:opacity-100
                     hidden sm:flex items-center justify-center
                     transition-opacity duration-200
-                  ">
+                  "
+                  >
                     <Camera className="w-5 h-5 text-white" />
                   </div>
                 </div>

@@ -1,31 +1,31 @@
-import { useState, useCallback, useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { Search, Filter, Plus, Receipt, Download } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { FloatingActionButton } from "@/components/ui/floating-action-button";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { ExpenseStatsBar } from "@/components/employer/expense/ExpenseStatsBar";
-import { ExpenseCard } from "@/components/employer/expense/ExpenseCard";
-import { ExpenseTable } from "@/components/employer/expense/ExpenseTable";
-import { ExpenseFilterSheet } from "@/components/employer/expense/ExpenseFilterSheet";
-import { CreateExpenseSheet } from "@/components/employer/expense/CreateExpenseSheet";
-import { ExpenseDetailSheet } from "@/components/employer/expense/ExpenseDetailSheet";
+import { useState, useCallback, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import { Search, Filter, Plus, Receipt, Download } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { FloatingActionButton } from '@/components/ui/floating-action-button';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { ExpenseStatsBar } from '@/components/employer/expense/ExpenseStatsBar';
+import { ExpenseCard } from '@/components/employer/expense/ExpenseCard';
+import { ExpenseTable } from '@/components/employer/expense/ExpenseTable';
+import { ExpenseFilterSheet } from '@/components/employer/expense/ExpenseFilterSheet';
+import { CreateExpenseSheet } from '@/components/employer/expense/CreateExpenseSheet';
+import { ExpenseDetailSheet } from '@/components/employer/expense/ExpenseDetailSheet';
 import {
   useExpenses,
   exportExpensesToCSV,
   type ExpenseFilters,
   type ExpenseStatus,
-} from "@/hooks/useExpenses";
-import { useJobs } from "@/hooks/useJobs";
-import type { ExpenseClaim } from "@/services/financeService";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "sonner";
+} from '@/hooks/useExpenses';
+import { useJobs } from '@/hooks/useJobs';
+import type { ExpenseClaim } from '@/services/financeService';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 
 interface ExpensesSectionProps {
   /**
@@ -53,12 +53,12 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   const isMobile = useIsMobile();
 
   // State
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<ExpenseFilters>({});
   const [selectedExpense, setSelectedExpense] = useState<ExpenseClaim | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [sortField, setSortField] = useState<string>("submitted_date");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [sortField, setSortField] = useState<string>('submitted_date');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
   // Sheets state
   const [showFilterSheet, setShowFilterSheet] = useState(false);
@@ -66,10 +66,13 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   const [showDetailSheet, setShowDetailSheet] = useState(false);
 
   // Merge employee filter with other filters
-  const mergedFilters = useMemo(() => ({
-    ...filters,
-    ...(employeeIdForFilter ? { employeeId: employeeIdForFilter } : {}),
-  }), [filters, employeeIdForFilter]);
+  const mergedFilters = useMemo(
+    () => ({
+      ...filters,
+      ...(employeeIdForFilter ? { employeeId: employeeIdForFilter } : {}),
+    }),
+    [filters, employeeIdForFilter]
+  );
 
   // Hook
   const {
@@ -87,14 +90,14 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
 
   // Get jobs for linking expenses
   const { data: jobsData = [] } = useJobs();
-  const jobs = useMemo(() =>
-    jobsData.map(j => ({ id: j.id, title: j.title || j.client || 'Untitled Job' })),
+  const jobs = useMemo(
+    () => jobsData.map((j) => ({ id: j.id, title: j.title || j.client || 'Untitled Job' })),
     [jobsData]
   );
 
   // Get employees for filter and create sheets
   const employees = expenses.reduce<{ id: string; name: string }[]>((acc, expense) => {
-    if (expense.employees && !acc.find(e => e.id === expense.employee_id)) {
+    if (expense.employees && !acc.find((e) => e.id === expense.employee_id)) {
       acc.push({ id: expense.employee_id, name: expense.employees.name });
     }
     return acc;
@@ -115,30 +118,30 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   const sortedExpenses = [...filteredExpenses].sort((a, b) => {
     let aVal: any, bVal: any;
     switch (sortField) {
-      case "submitted_date":
+      case 'submitted_date':
         aVal = new Date(a.submitted_date).getTime();
         bVal = new Date(b.submitted_date).getTime();
         break;
-      case "employee":
-        aVal = a.employees?.name || "";
-        bVal = b.employees?.name || "";
+      case 'employee':
+        aVal = a.employees?.name || '';
+        bVal = b.employees?.name || '';
         break;
-      case "category":
+      case 'category':
         aVal = a.category;
         bVal = b.category;
         break;
-      case "amount":
+      case 'amount':
         aVal = Number(a.amount);
         bVal = Number(b.amount);
         break;
-      case "status":
+      case 'status':
         aVal = a.status;
         bVal = b.status;
         break;
       default:
         return 0;
     }
-    if (sortDirection === "asc") {
+    if (sortDirection === 'asc') {
       return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
     }
     return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
@@ -149,33 +152,42 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     setFilters((prev) => ({ ...prev, status }));
   }, []);
 
-  const handleSort = useCallback((field: string) => {
-    if (sortField === field) {
-      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
-    } else {
-      setSortField(field);
-      setSortDirection("desc");
-    }
-  }, [sortField]);
+  const handleSort = useCallback(
+    (field: string) => {
+      if (sortField === field) {
+        setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+      } else {
+        setSortField(field);
+        setSortDirection('desc');
+      }
+    },
+    [sortField]
+  );
 
   const handleView = useCallback((expense: ExpenseClaim) => {
     setSelectedExpense(expense);
     setShowDetailSheet(true);
   }, []);
 
-  const handleCreateSubmit = useCallback((data: any) => {
-    handleCreate(data);
-    setShowCreateSheet(false);
-  }, [handleCreate]);
+  const handleCreateSubmit = useCallback(
+    (data: any) => {
+      handleCreate(data);
+      setShowCreateSheet(false);
+    },
+    [handleCreate]
+  );
 
-  const handleRejectWithReason = useCallback((id: string, reason?: string) => {
-    handleReject({ id, reason: reason || "Rejected" });
-  }, [handleReject]);
+  const handleRejectWithReason = useCallback(
+    (id: string, reason?: string) => {
+      handleReject({ id, reason: reason || 'Rejected' });
+    },
+    [handleReject]
+  );
 
   const handleBulkApprove = useCallback(() => {
     selectedIds.forEach((id) => {
       const expense = expenses.find((e) => e.id === id);
-      if (expense?.status === "Pending") {
+      if (expense?.status === 'Pending') {
         handleApprove(id);
       }
     });
@@ -185,8 +197,8 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   const handleBulkReject = useCallback(() => {
     selectedIds.forEach((id) => {
       const expense = expenses.find((e) => e.id === id);
-      if (expense?.status === "Pending") {
-        handleRejectWithReason(id, "Bulk rejected");
+      if (expense?.status === 'Pending') {
+        handleRejectWithReason(id, 'Bulk rejected');
       }
     });
     setSelectedIds([]);
@@ -195,9 +207,9 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   const handleExport = useCallback(async () => {
     try {
       await exportExpensesToCSV(sortedExpenses);
-      toast.success("Expenses exported to CSV");
+      toast.success('Expenses exported to CSV');
     } catch (error) {
-      toast.error("Failed to export expenses");
+      toast.error('Failed to export expenses');
     }
   }, [sortedExpenses]);
 
@@ -211,11 +223,11 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   ].filter(Boolean).length;
 
   // Dynamic titles based on mode
-  const sectionTitle = isEmployeeMode ? "My Expenses" : "Expense Claims";
+  const sectionTitle = isEmployeeMode ? 'My Expenses' : 'Expense Claims';
   const sectionDescription = isEmployeeMode
-    ? "Submit and track your expense claims"
-    : "Review and approve team expenses";
-  const addButtonLabel = isEmployeeMode ? "Submit Expense" : "Add Expense";
+    ? 'Submit and track your expense claims'
+    : 'Review and approve team expenses';
+  const addButtonLabel = isEmployeeMode ? 'Submit Expense' : 'Add Expense';
 
   // Loading skeleton
   if (isLoading) {
@@ -247,12 +259,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
         action={
           <div className="flex gap-2">
             {!isEmployeeMode && sortedExpenses.length > 0 && (
-              <Button
-                size="sm"
-                variant="outline"
-                className="gap-2"
-                onClick={handleExport}
-              >
+              <Button size="sm" variant="outline" className="gap-2" onClick={handleExport}>
                 <Download className="h-4 w-4" />
                 <span className="hidden sm:inline">Export</span>
               </Button>
@@ -289,7 +296,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                 placeholder="Search expenses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn("h-10 bg-card border-border", !searchQuery && "pl-9")}
+                className={cn('h-10 bg-card border-border', !searchQuery && 'pl-9')}
               />
             </div>
             <Button
@@ -310,15 +317,9 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
           {/* Bulk Actions (desktop only, admin mode only) */}
           {!isMobile && !isEmployeeMode && selectedIds.length > 0 && (
             <div className="flex items-center gap-3 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
-              <span className="text-sm font-medium">
-                {selectedIds.length} selected
-              </span>
+              <span className="text-sm font-medium">{selectedIds.length} selected</span>
               <div className="flex gap-2 ml-auto">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSelectedIds([])}
-                >
+                <Button variant="outline" size="sm" onClick={() => setSelectedIds([])}>
                   Clear
                 </Button>
                 <Button
@@ -348,15 +349,15 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                 <h3 className="font-semibold mb-2">No expenses found</h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   {searchQuery || activeFilterCount > 0
-                    ? "Try adjusting your search or filters"
-                    : "No expense claims have been submitted yet"}
+                    ? 'Try adjusting your search or filters'
+                    : 'No expense claims have been submitted yet'}
                 </p>
                 {(searchQuery || activeFilterCount > 0) && (
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      setSearchQuery("");
+                      setSearchQuery('');
                       setFilters({});
                     }}
                   >

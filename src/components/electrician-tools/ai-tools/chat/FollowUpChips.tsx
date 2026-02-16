@@ -32,10 +32,13 @@ export const FollowUpChips = memo(function FollowUpChips({
 }: FollowUpChipsProps) {
   const haptic = useHaptic();
 
-  const handleSelect = useCallback((question: string) => {
-    haptic.selection();
-    onSelect(question);
-  }, [onSelect, haptic]);
+  const handleSelect = useCallback(
+    (question: string) => {
+      haptic.selection();
+      onSelect(question);
+    },
+    [onSelect, haptic]
+  );
 
   if (!questions || questions.length === 0) return null;
 
@@ -63,15 +66,15 @@ export const FollowUpChips = memo(function FollowUpChips({
             whileTap={{ scale: 0.98 }}
             onClick={() => handleSelect(question)}
             className={cn(
-              "group relative w-full text-left",
-              "px-4 py-3 rounded-xl",
-              "bg-card/60 backdrop-blur-sm",
-              "border border-border/40",
-              "hover:border-elec-yellow/40 hover:bg-card/80",
-              "active:bg-elec-yellow/5",
-              "transition-all duration-200",
-              "touch-manipulation",
-              "flex items-start gap-3"
+              'group relative w-full text-left',
+              'px-4 py-3 rounded-xl',
+              'bg-card/60 backdrop-blur-sm',
+              'border border-border/40',
+              'hover:border-elec-yellow/40 hover:bg-card/80',
+              'active:bg-elec-yellow/5',
+              'transition-all duration-200',
+              'touch-manipulation',
+              'flex items-start gap-3'
             )}
           >
             <ArrowRight className="w-3.5 h-3.5 mt-0.5 shrink-0 text-elec-yellow/50 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />

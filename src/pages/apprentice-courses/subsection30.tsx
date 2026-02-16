@@ -1,43 +1,43 @@
-import { ArrowLeft, Zap, Scale, Calculator, Repeat, Search, Lightbulb } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Zap, Scale, Calculator, Repeat, Search, Lightbulb } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "1.1",
-    title: "What is Electricity?",
-    description: "Fundamental understanding of electricity and electrical phenomena",
+    number: '1.1',
+    title: 'What is Electricity?',
+    description: 'Fundamental understanding of electricity and electrical phenomena',
     icon: Lightbulb,
-    href: "1-1"
+    href: '1-1',
   },
   {
-    number: "1.2", 
-    title: "Voltage, Current, and Resistance – Definitions and Relationships",
-    description: "Core electrical quantities and how they relate to each other",
+    number: '1.2',
+    title: 'Voltage, Current, and Resistance – Definitions and Relationships',
+    description: 'Core electrical quantities and how they relate to each other',
     icon: Zap,
-    href: "1-2"
+    href: '1-2',
   },
   {
-    number: "1.3",
-    title: "Units of Measurement (Volts, Amps, Ohms, Watts, etc.)",
-    description: "Standard units used in electrical measurements and calculations",
+    number: '1.3',
+    title: 'Units of Measurement (Volts, Amps, Ohms, Watts, etc.)',
+    description: 'Standard units used in electrical measurements and calculations',
     icon: Scale,
-    href: "1-3"
+    href: '1-3',
   },
   {
-    number: "1.4",
-    title: "SI Prefixes (milli-, kilo-, mega-) and Conversions",
-    description: "Understanding and converting between different scale units",
+    number: '1.4',
+    title: 'SI Prefixes (milli-, kilo-, mega-) and Conversions',
+    description: 'Understanding and converting between different scale units',
     icon: Repeat,
-    href: "1-4"
+    href: '1-4',
   },
   {
-    number: "1.5",
-    title: "Basic Measuring Instruments (Multimeter overview)",
-    description: "Introduction to essential electrical measurement tools",
+    number: '1.5',
+    title: 'Basic Measuring Instruments (Multimeter overview)',
+    description: 'Introduction to essential electrical measurement tools',
     icon: Search,
-    href: "1-5"
+    href: '1-5',
   },
 ];
 
@@ -47,7 +47,11 @@ const Module2Section2_1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2
@@ -63,7 +67,8 @@ const Module2Section2_1 = () => {
             Module 2, Section 1 – Electrical Quantities and Units
           </h1>
           <p className="text-xl text-white/80 max-w-3xl">
-            Understanding fundamental electrical quantities: voltage, current, resistance, and their units
+            Understanding fundamental electrical quantities: voltage, current, resistance, and their
+            units
           </p>
         </div>
 

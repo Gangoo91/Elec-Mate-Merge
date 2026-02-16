@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { GraduationCap, CheckCircle2, Calendar, Brain } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -36,8 +35,9 @@ const QuizAssessmentHeader = () => {
         </div>
       </div>
       <p className="text-sm sm:text-base text-white max-w-3xl mx-auto px-2 sm:px-4">
-        Master the essential inspection and testing procedures required for electrical installations.
-        Each assessment covers BS 7671:2018 Amendment 3:2024 requirements with practical scenarios and real-world applications.
+        Master the essential inspection and testing procedures required for electrical
+        installations. Each assessment covers BS 7671:2018 Amendment 3:2024 requirements with
+        practical scenarios and real-world applications.
       </p>
     </div>
   );

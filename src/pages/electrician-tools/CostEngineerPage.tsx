@@ -1,13 +1,13 @@
-import { ChevronLeft, Calculator } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import CostEngineerInterface from "@/components/electrician-tools/cost-engineer/CostEngineerInterface";
+import { ChevronLeft, Calculator } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import CostEngineerInterface from '@/components/electrician-tools/cost-engineer/CostEngineerInterface';
 
 const CostEngineerPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const fromAgentSelector = location.state?.fromAgentSelector;
-  const backPath = fromAgentSelector ? "/electrician/agent-selector" : "/electrician";
-  const backLabel = fromAgentSelector ? "Agents" : "Hub";
+  const backPath = fromAgentSelector ? '/electrician/agent-selector' : '/electrician';
+  const backLabel = fromAgentSelector ? 'Agents' : 'Hub';
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background flex flex-col">

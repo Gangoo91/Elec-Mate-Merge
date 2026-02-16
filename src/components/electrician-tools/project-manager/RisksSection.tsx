@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface Risk {
   risk?: string;
@@ -18,7 +18,8 @@ const RisksSection = ({ risks }: RisksSectionProps) => {
 
   const getSeverityColor = (severity?: string) => {
     const sev = severity?.toLowerCase() || 'medium';
-    if (sev.includes('high') || sev.includes('critical')) return 'bg-destructive/20 border-destructive/40 text-destructive';
+    if (sev.includes('high') || sev.includes('critical'))
+      return 'bg-destructive/20 border-destructive/40 text-destructive';
     if (sev.includes('low')) return 'bg-success/20 border-success/40 text-success';
     return 'bg-warning/20 border-warning/40 text-warning';
   };
@@ -30,14 +31,12 @@ const RisksSection = ({ risks }: RisksSectionProps) => {
           <AlertTriangle className="h-5 w-5 text-pink-400" />
           Risk Register
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
-          Potential issues and mitigation strategies
-        </p>
+        <p className="text-sm text-muted-foreground">Potential issues and mitigation strategies</p>
       </CardHeader>
       <CardContent className="space-y-3">
         {risks.map((risk, idx) => (
-          <div 
-            key={idx} 
+          <div
+            key={idx}
             className="p-3 sm:p-4 border border-pink-400/20 rounded-lg bg-pink-400/5 space-y-2"
           >
             <div className="flex items-start justify-between gap-2">

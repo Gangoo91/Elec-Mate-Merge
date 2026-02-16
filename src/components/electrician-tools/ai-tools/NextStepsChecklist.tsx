@@ -1,6 +1,6 @@
-import { CheckSquare, AlertTriangle, Clock, Wrench } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { CheckSquare, AlertTriangle, Clock, Wrench } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface NextStepsChecklistProps {
   failCount: number;
@@ -8,10 +8,10 @@ interface NextStepsChecklistProps {
   recommendations: string[];
 }
 
-export const NextStepsChecklist = ({ 
-  failCount, 
+export const NextStepsChecklist = ({
+  failCount,
   requiresTestingCount,
-  recommendations 
+  recommendations,
 }: NextStepsChecklistProps) => {
   const actionItems = [];
 
@@ -23,7 +23,7 @@ export const NextStepsChecklist = ({
       description: `${failCount} check${failCount > 1 ? 's' : ''} failed and require immediate attention to ensure safety and compliance.`,
       time: 'Immediate action required',
       color: 'text-red-500',
-      bg: 'bg-red-500/10'
+      bg: 'bg-red-500/10',
     });
   }
 
@@ -35,7 +35,7 @@ export const NextStepsChecklist = ({
       description: `${requiresTestingCount} check${requiresTestingCount > 1 ? 's' : ''} require physical testing with appropriate instruments.`,
       time: 'Schedule within 48 hours',
       color: 'text-amber-500',
-      bg: 'bg-amber-500/10'
+      bg: 'bg-amber-500/10',
     });
   }
 
@@ -44,10 +44,11 @@ export const NextStepsChecklist = ({
       icon: CheckSquare,
       priority: 'low',
       title: 'Complete Final Verification',
-      description: 'All visual checks passed. Proceed with comprehensive testing and certification.',
+      description:
+        'All visual checks passed. Proceed with comprehensive testing and certification.',
       time: 'At your convenience',
       color: 'text-green-500',
-      bg: 'bg-green-500/10'
+      bg: 'bg-green-500/10',
     });
   }
 
@@ -63,7 +64,7 @@ export const NextStepsChecklist = ({
           {actionItems.map((item, index) => {
             const Icon = item.icon;
             return (
-              <div 
+              <div
                 key={index}
                 className={`${item.bg} border border-current/20 rounded-lg p-4 space-y-2`}
               >
@@ -72,10 +73,7 @@ export const NextStepsChecklist = ({
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="font-medium text-foreground text-sm">{item.title}</h4>
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs ${item.color} border-current`}
-                      >
+                      <Badge variant="outline" className={`text-xs ${item.color} border-current`}>
                         {item.priority.toUpperCase()}
                       </Badge>
                     </div>

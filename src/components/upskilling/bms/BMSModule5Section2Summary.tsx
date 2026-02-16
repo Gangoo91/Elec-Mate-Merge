@@ -15,35 +15,40 @@ export const BMSModule5Section2Summary = () => {
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              BACnet is the most widely used open protocol in building automation, designed specifically for BMS applications.
+              BACnet is the most widely used open protocol in building automation, designed
+              specifically for BMS applications.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              Key device types include controllers, sensors/actuators, operator workstations, and routers/gateways.
+              Key device types include controllers, sensors/actuators, operator workstations, and
+              routers/gateways.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              Two main network types: MSTP (RS-485) for field devices and BACnet/IP for large-scale integration.
+              Two main network types: MSTP (RS-485) for field devices and BACnet/IP for large-scale
+              integration.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              MSTP requires proper cable selection, daisy-chain topology, and correct termination for reliability.
+              MSTP requires proper cable selection, daisy-chain topology, and correct termination
+              for reliability.
             </p>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
             <p className="text-foreground text-sm">
-              BACnet/IP needs coordination with IT departments for addressing, VLANs, and network segregation.
+              BACnet/IP needs coordination with IT departments for addressing, VLANs, and network
+              segregation.
             </p>
           </div>
         </div>
@@ -54,7 +59,7 @@ export const BMSModule5Section2Summary = () => {
             Remember
           </h4>
           <p className="text-foreground text-sm">
-            Poor wiring practices can cripple BACnet networks, even if the protocol itself is sound. 
+            Poor wiring practices can cripple BACnet networks, even if the protocol itself is sound.
             Your electrical installation work directly impacts system reliability and performance.
           </p>
         </div>

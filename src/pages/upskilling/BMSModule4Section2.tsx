@@ -1,85 +1,95 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import { bmsModule4Section2QuizData } from "@/data/upskilling/bmsModule4Section2QuizData";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { bmsModule4Section2QuizData } from '@/data/upskilling/bmsModule4Section2QuizData';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "daylight-zoning",
-    question: "Why does daylight harvesting often dim only some lights instead of all lights in a space?",
+    id: 'daylight-zoning',
+    question:
+      'Why does daylight harvesting often dim only some lights instead of all lights in a space?',
     options: [
-      "To save money on dimming equipment",
-      "Natural light distribution varies across the space",
-      "The BMS can only control a few fittings",
-      "Occupants prefer varied lighting"
+      'To save money on dimming equipment',
+      'Natural light distribution varies across the space',
+      'The BMS can only control a few fittings',
+      'Occupants prefer varied lighting',
     ],
     correctIndex: 1,
-    explanation: "Natural light penetration decreases with distance from windows. Areas near windows receive abundant daylight and can have artificial lighting dimmed significantly, whilst interior areas still require full artificial illumination to maintain consistent lighting levels."
+    explanation:
+      'Natural light penetration decreases with distance from windows. Areas near windows receive abundant daylight and can have artificial lighting dimmed significantly, whilst interior areas still require full artificial illumination to maintain consistent lighting levels.',
   },
   {
-    id: "pir-delay",
-    question: "Why do PIR-controlled lights have a delay before switching off?",
+    id: 'pir-delay',
+    question: 'Why do PIR-controlled lights have a delay before switching off?',
     options: [
-      "To save energy during the delay period",
-      "To prevent nuisance switching when occupants are still but not moving",
-      "To comply with building regulations",
-      "To extend lamp life"
+      'To save energy during the delay period',
+      'To prevent nuisance switching when occupants are still but not moving',
+      'To comply with building regulations',
+      'To extend lamp life',
     ],
     correctIndex: 1,
-    explanation: "PIR sensors detect movement and heat changes. When people are stationary (reading, typing, thinking), they may not trigger the sensor. A time delay prevents lights from switching off during these still periods, avoiding disruption and annoyance."
+    explanation:
+      'PIR sensors detect movement and heat changes. When people are stationary (reading, typing, thinking), they may not trigger the sensor. A time delay prevents lights from switching off during these still periods, avoiding disruption and annoyance.',
   },
   {
-    id: "combined-strategy",
-    question: "What is one advantage of combining daylight harvesting with PIR logic?",
+    id: 'combined-strategy',
+    question: 'What is one advantage of combining daylight harvesting with PIR logic?',
     options: [
-      "Reduced sensor costs",
-      "Maximum energy savings without sacrificing user comfort",
-      "Simpler wiring requirements",
-      "Less commissioning time"
+      'Reduced sensor costs',
+      'Maximum energy savings without sacrificing user comfort',
+      'Simpler wiring requirements',
+      'Less commissioning time',
     ],
     correctIndex: 1,
-    explanation: "Combined systems address both when lights are needed (occupancy) and how much light is needed (daylight response). This comprehensive approach can achieve 40-60% energy savings whilst maintaining optimal lighting conditions for all scenarios."
+    explanation:
+      'Combined systems address both when lights are needed (occupancy) and how much light is needed (daylight response). This comprehensive approach can achieve 40-60% energy savings whilst maintaining optimal lighting conditions for all scenarios.',
   },
   {
-    id: "sensor-placement",
-    question: "Where should a daylight sensor NOT be positioned?",
+    id: 'sensor-placement',
+    question: 'Where should a daylight sensor NOT be positioned?',
     options: [
-      "In the centre of the controlled zone",
-      "Directly facing a window receiving direct sunlight",
-      "Away from heat sources",
-      "At desk height in open plan offices"
+      'In the centre of the controlled zone',
+      'Directly facing a window receiving direct sunlight',
+      'Away from heat sources',
+      'At desk height in open plan offices',
     ],
     correctIndex: 1,
-    explanation: "Positioning a daylight sensor directly facing a window receiving direct sunlight will cause it to read excessively high lux levels, resulting in inappropriate dimming of artificial lights even when the rest of the space is too dark."
-  }
+    explanation:
+      'Positioning a daylight sensor directly facing a window receiving direct sunlight will cause it to read excessively high lux levels, resulting in inappropriate dimming of artificial lights even when the rest of the space is too dark.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What lux level should be targeted for typical office spaces?",
-    answer: "Office spaces typically require 300-500 lux at desk level. Task areas may need 500-750 lux. The target should be set based on the specific activities performed and BS EN 12464-1 requirements for workplace lighting."
+    question: 'What lux level should be targeted for typical office spaces?',
+    answer:
+      'Office spaces typically require 300-500 lux at desk level. Task areas may need 500-750 lux. The target should be set based on the specific activities performed and BS EN 12464-1 requirements for workplace lighting.',
   },
   {
-    question: "How long should the PIR time delay be set for different applications?",
-    answer: "Meeting rooms: 15-30 minutes (to cover quiet periods), corridors: 5-10 minutes, toilets: 5-10 minutes, private offices: 10-15 minutes. Longer delays prevent nuisance switching but reduce energy savings."
+    question: 'How long should the PIR time delay be set for different applications?',
+    answer:
+      'Meeting rooms: 15-30 minutes (to cover quiet periods), corridors: 5-10 minutes, toilets: 5-10 minutes, private offices: 10-15 minutes. Longer delays prevent nuisance switching but reduce energy savings.',
   },
   {
-    question: "Can daylight sensors work effectively in spaces without windows?",
-    answer: "Daylight harvesting provides minimal benefit in spaces without natural light. However, sensors can still be used to maintain consistent light levels and compensate for lamp depreciation over time."
+    question: 'Can daylight sensors work effectively in spaces without windows?',
+    answer:
+      'Daylight harvesting provides minimal benefit in spaces without natural light. However, sensors can still be used to maintain consistent light levels and compensate for lamp depreciation over time.',
   },
   {
-    question: "What causes false PIR triggers?",
-    answer: "Common causes include HVAC air movement (papers, blinds), direct sunlight on the sensor lens, heat sources near the sensor (radiators, equipment), pets or insects, and vibration from machinery or building movement."
-  }
+    question: 'What causes false PIR triggers?',
+    answer:
+      'Common causes include HVAC air movement (papers, blinds), direct sunlight on the sensor lens, heat sources near the sensor (radiators, equipment), pets or insects, and vibration from machinery or building movement.',
+  },
 ];
 
 const BMSModule4Section2 = () => {
   useSEO({
-    title: "Daylight Harvesting and PIR Logic | BMS Module 4.2",
-    description: "Master daylight harvesting and PIR occupancy sensing in BMS applications. Learn sensor placement, commissioning techniques, and energy-saving strategies for intelligent lighting control."
+    title: 'Daylight Harvesting and PIR Logic | BMS Module 4.2',
+    description:
+      'Master daylight harvesting and PIR occupancy sensing in BMS applications. Learn sensor placement, commissioning techniques, and energy-saving strategies for intelligent lighting control.',
   });
 
   return (
@@ -87,7 +97,12 @@ const BMSModule4Section2 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -116,17 +131,29 @@ const BMSModule4Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Daylight:</strong> Auto-dim based on natural light</li>
-              <li><strong>PIR:</strong> Occupancy-based switching</li>
-              <li><strong>Combined:</strong> 40-60% energy savings achievable</li>
-              <li><strong>Critical:</strong> Sensor placement is everything</li>
+              <li>
+                <strong>Daylight:</strong> Auto-dim based on natural light
+              </li>
+              <li>
+                <strong>PIR:</strong> Occupancy-based switching
+              </li>
+              <li>
+                <strong>Combined:</strong> 40-60% energy savings achievable
+              </li>
+              <li>
+                <strong>Critical:</strong> Sensor placement is everything
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Ceiling lux sensors, PIR detectors, motion sensors</li>
-              <li><strong>Use:</strong> Reducing lighting bills, automatic control</li>
+              <li>
+                <strong>Spot:</strong> Ceiling lux sensors, PIR detectors, motion sensors
+              </li>
+              <li>
+                <strong>Use:</strong> Reducing lighting bills, automatic control
+              </li>
             </ul>
           </div>
         </div>
@@ -136,14 +163,14 @@ const BMSModule4Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Daylight harvesting principles and benefits",
-              "PIR occupancy sensing technology",
-              "Combined control strategies",
-              "Sensor installation best practices",
-              "Wiring techniques for sensor systems",
-              "Commissioning and calibration procedures",
-              "Troubleshooting common issues",
-              "Energy savings optimisation"
+              'Daylight harvesting principles and benefits',
+              'PIR occupancy sensing technology',
+              'Combined control strategies',
+              'Sensor installation best practices',
+              'Wiring techniques for sensor systems',
+              'Commissioning and calibration procedures',
+              'Troubleshooting common issues',
+              'Energy savings optimisation',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -163,24 +190,37 @@ const BMSModule4Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Daylight harvesting systems utilise light sensors (photocells/lux sensors) to continuously monitor natural
-              illumination and automatically adjust artificial lighting to maintain consistent target illumination. This
-              creates optimal visual conditions whilst minimising energy consumption.
+              Daylight harvesting systems utilise light sensors (photocells/lux sensors) to
+              continuously monitor natural illumination and automatically adjust artificial lighting
+              to maintain consistent target illumination. This creates optimal visual conditions
+              whilst minimising energy consumption.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Components and Functions:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                System Components and Functions:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Lux Sensors:</strong> 0-2000 lux range, ±5% accuracy</li>
-                <li><strong>Control Algorithms:</strong> Proportional dimming with time delays</li>
-                <li><strong>Dimming Interface:</strong> DALI, 1-10V, or wireless</li>
-                <li><strong>Zone Configuration:</strong> 3-6m depth from windows typical</li>
+                <li>
+                  <strong>Lux Sensors:</strong> 0-2000 lux range, ±5% accuracy
+                </li>
+                <li>
+                  <strong>Control Algorithms:</strong> Proportional dimming with time delays
+                </li>
+                <li>
+                  <strong>Dimming Interface:</strong> DALI, 1-10V, or wireless
+                </li>
+                <li>
+                  <strong>Zone Configuration:</strong> 3-6m depth from windows typical
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ceiling-Mounted Sensors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Ceiling-Mounted Sensors
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Measure horizontal illumination</li>
                   <li>Ideal for general office use</li>
@@ -200,7 +240,9 @@ const BMSModule4Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Critical Installation Parameters:</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Critical Installation Parameters:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Target illumination: Office 300-500 lux, Retail 500-1000 lux</li>
                 <li>Sensor placement: Representative location, away from direct sunlight</li>
@@ -221,18 +263,26 @@ const BMSModule4Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              PIR (Passive Infrared) sensors detect thermal radiation changes caused by human movement and body heat,
-              enabling automatic lighting control based on actual space occupancy. This technology eliminates energy
-              waste in unoccupied areas.
+              PIR (Passive Infrared) sensors detect thermal radiation changes caused by human
+              movement and body heat, enabling automatic lighting control based on actual space
+              occupancy. This technology eliminates energy waste in unoccupied areas.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">PIR Technology Types:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Standard PIR:</strong> Heat + movement, 5-15m diameter</li>
-                <li><strong>Ultrasonic:</strong> Motion via sound, 360° coverage</li>
-                <li><strong>Dual Technology:</strong> PIR + Ultrasonic, high reliability</li>
-                <li><strong>Microwave:</strong> Radio frequency, through partitions</li>
+                <li>
+                  <strong>Standard PIR:</strong> Heat + movement, 5-15m diameter
+                </li>
+                <li>
+                  <strong>Ultrasonic:</strong> Motion via sound, 360° coverage
+                </li>
+                <li>
+                  <strong>Dual Technology:</strong> PIR + Ultrasonic, high reliability
+                </li>
+                <li>
+                  <strong>Microwave:</strong> Radio frequency, through partitions
+                </li>
               </ul>
             </div>
 
@@ -252,11 +302,19 @@ const BMSModule4Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Common PIR Issues to Avoid:</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Common PIR Issues to Avoid:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>False triggers:</strong> HVAC air movement, direct sunlight, heat sources</li>
-                <li><strong>Poor detection:</strong> Obstructed view, wrong mounting, low sensitivity</li>
-                <li><strong>Nuisance switching:</strong> Time delays too short</li>
+                <li>
+                  <strong>False triggers:</strong> HVAC air movement, direct sunlight, heat sources
+                </li>
+                <li>
+                  <strong>Poor detection:</strong> Obstructed view, wrong mounting, low sensitivity
+                </li>
+                <li>
+                  <strong>Nuisance switching:</strong> Time delays too short
+                </li>
               </ul>
             </div>
 
@@ -272,24 +330,35 @@ const BMSModule4Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The most effective lighting control systems integrate both daylight harvesting and PIR occupancy sensing.
-              This combination addresses both temporal (when lights are needed) and spatial (how much light is needed)
-              efficiency, maximising savings whilst maintaining comfort.
+              The most effective lighting control systems integrate both daylight harvesting and PIR
+              occupancy sensing. This combination addresses both temporal (when lights are needed)
+              and spatial (how much light is needed) efficiency, maximising savings whilst
+              maintaining comfort.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Logic Matrix:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Occupied + Bright:</strong> Dimmed to 20-30% (maximum savings)</li>
-                <li><strong>Occupied + Overcast:</strong> Dimmed to 60-80% (moderate savings)</li>
-                <li><strong>Occupied + Dark:</strong> Full brightness 100% (comfort maintained)</li>
-                <li><strong>Vacant + Any:</strong> Switched OFF (complete savings)</li>
+                <li>
+                  <strong>Occupied + Bright:</strong> Dimmed to 20-30% (maximum savings)
+                </li>
+                <li>
+                  <strong>Occupied + Overcast:</strong> Dimmed to 60-80% (moderate savings)
+                </li>
+                <li>
+                  <strong>Occupied + Dark:</strong> Full brightness 100% (comfort maintained)
+                </li>
+                <li>
+                  <strong>Vacant + Any:</strong> Switched OFF (complete savings)
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Priority Hierarchy</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Control Priority Hierarchy
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>1. Safety override (always first)</li>
                   <li>2. Occupancy primary control</li>
@@ -319,13 +388,16 @@ const BMSModule4Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Successful implementation requires systematic approach to site survey, sensor selection, installation,
-              and commissioning. Poor sensor placement can negate all potential benefits.
+              Successful implementation requires systematic approach to site survey, sensor
+              selection, installation, and commissioning. Poor sensor placement can negate all
+              potential benefits.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Daylight Commissioning</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Daylight Commissioning
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Map daylight gradients with lux meter</li>
                   <li>Position away from direct sunlight</li>
@@ -350,12 +422,15 @@ const BMSModule4Section2 = () => {
 
         {/* Case Study */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Case Study: Secondary School Lighting</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">
+            Case Study: Secondary School Lighting
+          </h2>
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>Challenge:</strong> Large secondary school with 40 classrooms needed lighting control to reduce
-                energy costs whilst maintaining educational lighting standards. Initial installation had poor sensor placement.
+                <strong>Challenge:</strong> Large secondary school with 40 classrooms needed
+                lighting control to reduce energy costs whilst maintaining educational lighting
+                standards. Initial installation had poor sensor placement.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
@@ -379,8 +454,10 @@ const BMSModule4Section2 = () => {
               </div>
             </div>
             <div className="p-3 rounded bg-transparent border border-white/10 text-sm">
-              <p className="text-white"><strong>Result:</strong> 35% annual energy reduction, consistent 400-500 lux
-              throughout classrooms, improved learning environment, reduced maintenance.</p>
+              <p className="text-white">
+                <strong>Result:</strong> 35% annual energy reduction, consistent 400-500 lux
+                throughout classrooms, improved learning environment, reduced maintenance.
+              </p>
             </div>
           </div>
         </section>
@@ -423,21 +500,27 @@ const BMSModule4Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={bmsModule4Section2QuizData}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={bmsModule4Section2QuizData} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-4-section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-4-section-3">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

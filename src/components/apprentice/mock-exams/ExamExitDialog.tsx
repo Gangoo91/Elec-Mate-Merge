@@ -1,5 +1,4 @@
-
-import React from "react";
+import React from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,8 +7,8 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/components/ui/alert-dialog";
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface ExamExitDialogProps {
   open: boolean;
@@ -29,9 +28,7 @@ const ExamExitDialog: React.FC<ExamExitDialogProps> = ({ open, onOpenChange, onE
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Continue Exam</AlertDialogCancel>
-          <AlertDialogAction onClick={onExit}>
-            Exit Exam
-          </AlertDialogAction>
+          <AlertDialogAction onClick={onExit}>Exit Exam</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

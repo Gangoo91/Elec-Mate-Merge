@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, Wrench, Package, AlertTriangle, ShieldCheck } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { CategorisedToolsList } from "./CategorisedToolsList";
-import { categorizeTools, categorizeMaterials } from "@/utils/toolsCategorisation";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, Clock, Wrench, Package, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { CategorisedToolsList } from './CategorisedToolsList';
+import { categorizeTools, categorizeMaterials } from '@/utils/toolsCategorisation';
 
 interface InstallationMethodDisplayProps {
   jobTitle?: string;
@@ -34,12 +34,12 @@ export const InstallationMethodDisplay = ({
   installationType,
   installationGuide,
   steps,
-  summary
+  summary,
 }: InstallationMethodDisplayProps) => {
   const riskColors = {
     low: 'bg-success/10 text-success border-success/20',
     medium: 'bg-warning/10 text-warning border-warning/20',
-    high: 'bg-destructive/10 text-destructive border-destructive/20'
+    high: 'bg-destructive/10 text-destructive border-destructive/20',
   };
 
   const formatStepDuration = (duration: string | number): string => {
@@ -56,7 +56,9 @@ export const InstallationMethodDisplay = ({
         <div className="mb-4">
           <h2 className="text-2xl font-bold text-foreground mb-1">{jobTitle}</h2>
           <p className="text-sm text-muted-foreground">
-            {installationType ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)} Installation` : 'Installation Method Statement'}
+            {installationType
+              ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)} Installation`
+              : 'Installation Method Statement'}
           </p>
         </div>
       )}
@@ -107,8 +109,8 @@ export const InstallationMethodDisplay = ({
                     <Wrench className="h-4 w-4 text-primary" />
                     <span className="font-semibold text-sm text-foreground">Tools Required</span>
                   </div>
-                  <CategorisedToolsList 
-                    categorisedItems={categorizeTools(summary.toolsRequired)} 
+                  <CategorisedToolsList
+                    categorisedItems={categorizeTools(summary.toolsRequired)}
                     icon={<Wrench className="h-4 w-4 text-primary" />}
                   />
                 </div>
@@ -117,10 +119,12 @@ export const InstallationMethodDisplay = ({
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 mb-3">
                     <Package className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-sm text-foreground">Materials Required</span>
+                    <span className="font-semibold text-sm text-foreground">
+                      Materials Required
+                    </span>
                   </div>
-                  <CategorisedToolsList 
-                    categorisedItems={categorizeMaterials(summary.materialsRequired)} 
+                  <CategorisedToolsList
+                    categorisedItems={categorizeMaterials(summary.materialsRequired)}
                     icon={<Package className="h-4 w-4 text-primary" />}
                   />
                 </div>
@@ -165,7 +169,8 @@ export const InstallationMethodDisplay = ({
             </div>
 
             {/* Tools & Materials for THIS STEP */}
-            {(step.toolsRequired && step.toolsRequired.length > 0) || (step.materialsNeeded && step.materialsNeeded.length > 0) ? (
+            {(step.toolsRequired && step.toolsRequired.length > 0) ||
+            (step.materialsNeeded && step.materialsNeeded.length > 0) ? (
               <div className="grid sm:grid-cols-2 gap-3 mb-3">
                 {step.toolsRequired && step.toolsRequired.length > 0 && (
                   <div className="p-2 bg-muted/50 rounded-md">

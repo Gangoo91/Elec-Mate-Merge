@@ -3,14 +3,14 @@ import { BookmarkIcon, CheckCircle, AlertTriangle, Signpost } from 'lucide-react
 
 export const EmergencyLightingSummary2_5 = () => {
   const keyPoints = [
-    "Emergency exit signs guide occupants to safety and must be visible from any point on escape routes",
-    "All signs must comply with ISO 7010 using the running man symbol and appropriate directional arrows",
-    "Signs must be illuminated at all times - either internally or by emergency lighting systems",
-    "Maintained signs (always illuminated) are required in public buildings; non-maintained signs suitable for familiar workplaces",
-    "Signs must be positioned at all final exits, direction changes, and decision points along escape routes",
-    "Monthly functional testing and annual full-duration testing are mandatory for compliance",
-    "Directional arrows must point towards actual exit routes - incorrect arrows are a common installation error",
-    "Consistency is essential - avoid mixing different signage standards within the same building"
+    'Emergency exit signs guide occupants to safety and must be visible from any point on escape routes',
+    'All signs must comply with ISO 7010 using the running man symbol and appropriate directional arrows',
+    'Signs must be illuminated at all times - either internally or by emergency lighting systems',
+    'Maintained signs (always illuminated) are required in public buildings; non-maintained signs suitable for familiar workplaces',
+    'Signs must be positioned at all final exits, direction changes, and decision points along escape routes',
+    'Monthly functional testing and annual full-duration testing are mandatory for compliance',
+    'Directional arrows must point towards actual exit routes - incorrect arrows are a common installation error',
+    'Consistency is essential - avoid mixing different signage standards within the same building',
   ];
 
   return (
@@ -23,8 +23,10 @@ export const EmergencyLightingSummary2_5 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p className="text-lg text-foreground leading-relaxed">
-          Emergency exit signs are critical life safety components that provide clear guidance to building occupants during emergencies. 
-          This section has covered the essential requirements, standards, and best practices for successful exit signage installation and maintenance.
+          Emergency exit signs are critical life safety components that provide clear guidance to
+          building occupants during emergencies. This section has covered the essential
+          requirements, standards, and best practices for successful exit signage installation and
+          maintenance.
         </p>
 
         <div className="space-y-3">
@@ -75,7 +77,10 @@ export const EmergencyLightingSummary2_5 = () => {
             <div>
               <h4 className="font-semibold text-red-400 mb-2">Professional Responsibility</h4>
               <p className="text-foreground">
-                Exit signage directly impacts evacuation success during emergencies. Poor or incorrect signage has contributed to injuries and fatalities in real incidents. Always verify directional accuracy, ensure reliable illumination, and maintain detailed test records.
+                Exit signage directly impacts evacuation success during emergencies. Poor or
+                incorrect signage has contributed to injuries and fatalities in real incidents.
+                Always verify directional accuracy, ensure reliable illumination, and maintain
+                detailed test records.
               </p>
             </div>
           </div>
@@ -84,7 +89,9 @@ export const EmergencyLightingSummary2_5 = () => {
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-yellow-400 mb-2">Next Steps</h4>
           <p className="text-foreground">
-            Complete the comprehensive quiz below to test your understanding of emergency exit signage requirements. This will help ensure you can confidently specify, install, and maintain compliant exit signage systems.
+            Complete the comprehensive quiz below to test your understanding of emergency exit
+            signage requirements. This will help ensure you can confidently specify, install, and
+            maintain compliant exit signage systems.
           </p>
         </div>
       </CardContent>

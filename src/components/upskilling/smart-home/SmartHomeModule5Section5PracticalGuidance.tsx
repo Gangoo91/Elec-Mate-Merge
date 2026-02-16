@@ -12,10 +12,12 @@ export const SmartHomeModule5Section5PracticalGuidance = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/30">
-          <h4 className="text-foreground font-semibold mb-3">Professional Installation Guidelines</h4>
+          <h4 className="text-foreground font-semibold mb-3">
+            Professional Installation Guidelines
+          </h4>
           <p className="text-sm mb-3">
-            When setting up lighting and emergency scenes, electricians must balance aesthetic 
-            preferences with safety requirements and regulatory compliance. Proper planning and 
+            When setting up lighting and emergency scenes, electricians must balance aesthetic
+            preferences with safety requirements and regulatory compliance. Proper planning and
             systematic testing ensure reliable operation when systems are needed most.
           </p>
         </div>
@@ -43,7 +45,9 @@ export const SmartHomeModule5Section5PracticalGuidance = () => {
                 </ul>
               </div>
               <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
-                <p className="text-purple-400 font-semibold text-sm mb-1">Integration Requirements</p>
+                <p className="text-purple-400 font-semibold text-sm mb-1">
+                  Integration Requirements
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Coordinate with existing security systems</li>
                   <li>• Plan CCTV and lighting synchronisation</li>
@@ -55,10 +59,14 @@ export const SmartHomeModule5Section5PracticalGuidance = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Testing and Commissioning</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Testing and Commissioning
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
-                <p className="text-orange-400 font-semibold text-sm mb-1">Sensor Communication Testing</p>
+                <p className="text-orange-400 font-semibold text-sm mb-1">
+                  Sensor Communication Testing
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Test PIR detection ranges and sensitivity</li>
                   <li>• Verify door/window sensor integration</li>
@@ -67,7 +75,9 @@ export const SmartHomeModule5Section5PracticalGuidance = () => {
                 </ul>
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
-                <p className="text-red-400 font-semibold text-sm mb-1">Emergency Scene Verification</p>
+                <p className="text-red-400 font-semibold text-sm mb-1">
+                  Emergency Scene Verification
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Simulate fire alarm activation scenarios</li>
                   <li>• Test evacuation pathway lighting sequences</li>

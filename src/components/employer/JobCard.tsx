@@ -1,9 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { StatusBadge } from "./StatusBadge";
-import { MapPin, Calendar, Users, PoundSterling, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Card, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { StatusBadge } from './StatusBadge';
+import { MapPin, Calendar, Users, PoundSterling, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export interface AssignedWorker {
   id: string;
@@ -30,31 +30,31 @@ interface JobCardProps {
 
 const getStatusColour = (status: string) => {
   switch (status) {
-    case "Active":
-      return "border-l-success";
-    case "Pending":
-      return "border-l-warning";
-    case "Completed":
-      return "border-l-muted-foreground";
-    case "On Hold":
-      return "border-l-info";
-    case "Cancelled":
-      return "border-l-destructive";
+    case 'Active':
+      return 'border-l-success';
+    case 'Pending':
+      return 'border-l-warning';
+    case 'Completed':
+      return 'border-l-muted-foreground';
+    case 'On Hold':
+      return 'border-l-info';
+    case 'Cancelled':
+      return 'border-l-destructive';
     default:
-      return "border-l-border";
+      return 'border-l-border';
   }
 };
 
 const getProgressColour = (status: string) => {
   switch (status) {
-    case "Active":
-      return "bg-success";
-    case "Pending":
-      return "bg-warning";
-    case "Completed":
-      return "bg-muted-foreground";
+    case 'Active':
+      return 'bg-success';
+    case 'Pending':
+      return 'bg-warning';
+    case 'Completed':
+      return 'bg-muted-foreground';
     default:
-      return "bg-elec-yellow";
+      return 'bg-elec-yellow';
   }
 };
 
@@ -71,7 +71,7 @@ export function JobCard({
   description,
   assignedWorkers = [],
   onClick,
-  className
+  className,
 }: JobCardProps) {
   const formatValue = (val: number | null | undefined) => {
     if (!val) return null;
@@ -84,14 +84,14 @@ export function JobCard({
   };
 
   const displayValue = formatValue(value);
-  const hasValidDates = startDate !== "-" && endDate !== "-";
+  const hasValidDates = startDate !== '-' && endDate !== '-';
 
   return (
-    <Card 
+    <Card
       className={cn(
-        "cursor-pointer transition-all duration-200 border-l-4 overflow-hidden touch-manipulation",
-        "hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/5",
-        "active:border-elec-yellow/40 active:shadow-lg active:shadow-elec-yellow/5 active:scale-[0.98]",
+        'cursor-pointer transition-all duration-200 border-l-4 overflow-hidden touch-manipulation',
+        'hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/5',
+        'active:border-elec-yellow/40 active:shadow-lg active:shadow-elec-yellow/5 active:scale-[0.98]',
         getStatusColour(status),
         className
       )}
@@ -111,7 +111,7 @@ export function JobCard({
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </div>
         </div>
-        
+
         {/* Location */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <MapPin className="h-3.5 w-3.5 shrink-0 text-elec-yellow/70" />
@@ -124,7 +124,7 @@ export function JobCard({
             {description}
           </p>
         )}
-        
+
         {/* Progress Bar */}
         <div className="space-y-1.5">
           <div className="flex justify-between items-center text-xs">
@@ -132,13 +132,16 @@ export function JobCard({
             <span className="font-bold text-foreground">{progress}%</span>
           </div>
           <div className="relative h-2 w-full rounded-full bg-muted overflow-hidden">
-            <div 
-              className={cn("h-full rounded-full transition-all duration-300", getProgressColour(status))}
+            <div
+              className={cn(
+                'h-full rounded-full transition-all duration-300',
+                getProgressColour(status)
+              )}
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
-        
+
         {/* Footer - Dates, Workers, Value */}
         <div className="flex items-center justify-between pt-2 border-t border-border/50 text-xs">
           <div className="flex items-center gap-1.5 text-muted-foreground">
@@ -155,7 +158,7 @@ export function JobCard({
               </>
             )}
           </div>
-          
+
           <div className="flex items-center gap-3">
             {/* Worker Avatars or Count */}
             <div className="flex items-center gap-1">
@@ -163,10 +166,7 @@ export function JobCard({
                 <div className="flex items-center">
                   <div className="flex -space-x-1.5">
                     {assignedWorkers.slice(0, 3).map((worker) => (
-                      <Avatar 
-                        key={worker.id} 
-                        className="h-5 w-5 border-2 border-background ring-0"
-                      >
+                      <Avatar key={worker.id} className="h-5 w-5 border-2 border-background ring-0">
                         {worker.photo_url ? (
                           <AvatarImage src={worker.photo_url} alt={worker.name} />
                         ) : null}
@@ -189,7 +189,7 @@ export function JobCard({
                 </>
               )}
             </div>
-            
+
             {displayValue && (
               <div className="flex items-center gap-0.5 text-elec-yellow font-bold text-sm">
                 <span>{displayValue}</span>

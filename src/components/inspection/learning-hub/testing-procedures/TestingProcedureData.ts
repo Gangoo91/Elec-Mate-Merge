@@ -1,5 +1,3 @@
-
-
 export interface TestingStep {
   id: string;
   title: string;
@@ -48,7 +46,7 @@ export const testingEquipment = [
       'Automatic test sequences',
       'Data logging capability',
       'Bluetooth connectivity',
-      'Rechargeable battery'
+      'Rechargeable battery',
     ],
     calibrationRequirement: 'Annual calibration to traceable standards',
     standards: ['IEC 61557-1', 'IEC 61557-2', 'IEC 61557-3', 'IEC 61557-6'],
@@ -56,8 +54,8 @@ export const testingEquipment = [
       'CAT III 300V rated',
       'Fused test leads',
       'Automatic discharge',
-      'Overload protection'
-    ]
+      'Overload protection',
+    ],
   },
   {
     name: 'RCD Tester',
@@ -67,15 +65,10 @@ export const testingEquipment = [
       'Variable test currents',
       'Phase angle selection',
       'Memory for test results',
-      'Auto-ranging'
+      'Auto-ranging',
     ],
     calibrationRequirement: 'Annual calibration required',
     standards: ['IEC 61557-6'],
-    safetyFeatures: [
-      'CAT III rated',
-      'Automatic safety checks',
-      'Overload protection'
-    ]
-  }
+    safetyFeatures: ['CAT III rated', 'Automatic safety checks', 'Overload protection'],
+  },
 ];
-

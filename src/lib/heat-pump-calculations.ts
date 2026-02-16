@@ -1,11 +1,11 @@
-import { 
-  INSULATION_LEVELS, 
-  AIR_TIGHTNESS_LEVELS, 
-  HEAT_PUMP_TYPES, 
-  EMITTER_TYPES, 
+import {
+  INSULATION_LEVELS,
+  AIR_TIGHTNESS_LEVELS,
+  HEAT_PUMP_TYPES,
+  EMITTER_TYPES,
   DHW_OPTIONS,
   ELECTRICAL_CONSTANTS,
-  MCS_REQUIREMENTS
+  MCS_REQUIREMENTS,
 } from './heat-pump-constants';
 
 export interface HeatPumpInputs {
@@ -63,14 +63,14 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     heatPumpType,
     emitterType,
     dhwOption,
-    electricityRate
+    electricityRate,
   } = inputs;
 
   // Base heat loss calculation
   const insulationFactor = INSULATION_LEVELS[insulationLevel].factor;
   const airTightnessMultiplier = AIR_TIGHTNESS_LEVELS[airTightness].multiplier;
   const tempDifference = indoorTemp - designTemp;
-  
+
   // Space heating load (kW)
   const baseHeatLoss = (floorArea * insulationFactor * tempDifference) / 1000;
   const spaceHeatingLoad = baseHeatLoss * airTightnessMultiplier;
@@ -89,13 +89,13 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
   // COP calculation based on heat pump type and flow temperature
   const heatPumpData = HEAT_PUMP_TYPES[heatPumpType];
   let baseCOP = heatPumpData.baseCOP;
-  
+
   // Temperature derating for COP
   const tempDerating = Math.max(0.5, 1 - (5 - designTemp) * heatPumpData.tempDerating);
-  
+
   // Flow temperature derating
   const flowTempDerating = Math.max(0.7, 1 - (flowTemperature - 35) * 0.01);
-  
+
   const cop = baseCOP * tempDerating * flowTempDerating;
 
   // Electrical power requirement
@@ -106,37 +106,52 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
   const annualCost = dailyCost * ELECTRICAL_CONSTANTS.heatingDaysPerYear;
 
   // Carbon savings calculation
-  const gasCO2 = adjustedHeatLoad * ELECTRICAL_CONSTANTS.heatingHoursPerDay * 
-                  ELECTRICAL_CONSTANTS.heatingDaysPerYear * ELECTRICAL_CONSTANTS.gasCO2Factor;
-  const electricCO2 = electricalPower * ELECTRICAL_CONSTANTS.heatingHoursPerDay * 
-                       ELECTRICAL_CONSTANTS.heatingDaysPerYear * ELECTRICAL_CONSTANTS.electricCO2Factor;
+  const gasCO2 =
+    adjustedHeatLoad *
+    ELECTRICAL_CONSTANTS.heatingHoursPerDay *
+    ELECTRICAL_CONSTANTS.heatingDaysPerYear *
+    ELECTRICAL_CONSTANTS.gasCO2Factor;
+  const electricCO2 =
+    electricalPower *
+    ELECTRICAL_CONSTANTS.heatingHoursPerDay *
+    ELECTRICAL_CONSTANTS.heatingDaysPerYear *
+    ELECTRICAL_CONSTANTS.electricCO2Factor;
   const carbonSavings = Math.max(0, gasCO2 - electricCO2);
 
   // Sizing assessment
   const recommendedSize = adjustedHeatLoad * MCS_REQUIREMENTS.designMargin;
   const maxSize = recommendedSize * MCS_REQUIREMENTS.maxOversizing;
   const minSize = recommendedSize * MCS_REQUIREMENTS.minUndersizing;
-  
+
   const sizing = {
     recommended: recommendedSize,
     oversized: electricalPower > maxSize,
     undersized: electricalPower < minSize,
-    withinMCS: electricalPower >= minSize && electricalPower <= maxSize
+    withinMCS: electricalPower >= minSize && electricalPower <= maxSize,
   };
 
   // Performance assessment
   const seasonalCOP = cop * 0.9; // Approximate seasonal efficiency
-  const efficiency = seasonalCOP > 3.5 ? "Excellent" : 
-                    seasonalCOP > 3.0 ? "Good" : 
-                    seasonalCOP > 2.5 ? "Average" : "Poor";
-  
-  const suitability = flowTemperature <= 45 ? "Highly Suitable" :
-                     flowTemperature <= 55 ? "Suitable" : "Consider System Upgrades";
+  const efficiency =
+    seasonalCOP > 3.5
+      ? 'Excellent'
+      : seasonalCOP > 3.0
+        ? 'Good'
+        : seasonalCOP > 2.5
+          ? 'Average'
+          : 'Poor';
+
+  const suitability =
+    flowTemperature <= 45
+      ? 'Highly Suitable'
+      : flowTemperature <= 55
+        ? 'Suitable'
+        : 'Consider System Upgrades';
 
   const performance = {
     efficiency,
     suitability,
-    seasonalCOP
+    seasonalCOP,
   };
 
   // Generate review findings
@@ -152,7 +167,7 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     flowTemperature,
     sizing,
     performance,
-    reviewFindings: [] // temporary for the call
+    reviewFindings: [], // temporary for the call
   });
 
   return {
@@ -167,7 +182,7 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     flowTemperature,
     sizing,
     performance,
-    reviewFindings
+    reviewFindings,
   };
 }
 
@@ -176,42 +191,59 @@ export function getRecommendations(inputs: HeatPumpInputs, results: HeatPumpResu
 
   // Flow temperature recommendations
   if (results.flowTemperature > 55) {
-    recommendations.push("Consider upgrading to low temperature radiators or underfloor heating to improve efficiency");
+    recommendations.push(
+      'Consider upgrading to low temperature radiators or underfloor heating to improve efficiency'
+    );
   }
 
   // COP recommendations
   if (results.cop < 2.5) {
-    recommendations.push("System efficiency is low - consider improving insulation or choosing a different heat pump type");
+    recommendations.push(
+      'System efficiency is low - consider improving insulation or choosing a different heat pump type'
+    );
   }
 
   // Sizing recommendations
   if (results.sizing.oversized) {
-    recommendations.push("Heat pump may be oversized - consider a smaller unit to improve efficiency and reduce costs");
+    recommendations.push(
+      'Heat pump may be oversized - consider a smaller unit to improve efficiency and reduce costs'
+    );
   }
-  
+
   if (results.sizing.undersized) {
-    recommendations.push("Heat pump may be undersized - consider backup heating or improve building fabric");
+    recommendations.push(
+      'Heat pump may be undersized - consider backup heating or improve building fabric'
+    );
   }
 
   // Insulation recommendations
   if (inputs.insulationLevel === 'poor') {
-    recommendations.push("Significant energy savings possible with improved insulation before heat pump installation");
+    recommendations.push(
+      'Significant energy savings possible with improved insulation before heat pump installation'
+    );
   }
 
   // Air tightness recommendations
   if (inputs.airTightness === 'poor') {
-    recommendations.push("Improve air tightness with draught proofing to reduce heat pump load and improve comfort");
+    recommendations.push(
+      'Improve air tightness with draught proofing to reduce heat pump load and improve comfort'
+    );
   }
 
   // DHW recommendations
   if (inputs.dhwOption === 'none' && results.totalHeatLoad > 8) {
-    recommendations.push("Consider integrated DHW solution for larger properties to maximise heat pump benefits");
+    recommendations.push(
+      'Consider integrated DHW solution for larger properties to maximise heat pump benefits'
+    );
   }
 
   return recommendations;
 }
 
-export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResults): ReviewFinding[] {
+export function getReviewFindings(
+  inputs: HeatPumpInputs,
+  results: HeatPumpResults
+): ReviewFinding[] {
   const findings: ReviewFinding[] = [];
 
   // High electrical power requirement
@@ -222,7 +254,7 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
       title: 'High Electrical Power Requirement',
       description: `System requires ${results.electricalPower.toFixed(1)}kW electrical input`,
       recommendation: 'Three-phase supply required. Ensure supply infrastructure can handle load.',
-      regulation: 'BS 7671 - Electrical installations require appropriate protective devices'
+      regulation: 'BS 7671 - Electrical installations require appropriate protective devices',
     });
   }
 
@@ -234,7 +266,7 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
       title: 'Low Coefficient of Performance',
       description: `COP of ${results.cop.toFixed(1)} indicates poor efficiency`,
       recommendation: 'Consider improving building fabric or selecting different heat pump type.',
-      regulation: 'MCS guidelines recommend COP > 2.5 for economic viability'
+      regulation: 'MCS guidelines recommend COP > 2.5 for economic viability',
     });
   }
 
@@ -246,7 +278,7 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
       title: 'High Flow Temperature Required',
       description: `${results.flowTemperature}°C flow temperature reduces efficiency`,
       recommendation: 'Consider upgrading to low temperature radiators or underfloor heating.',
-      regulation: 'Heat pump efficiency decreases significantly above 55°C flow temperature'
+      regulation: 'Heat pump efficiency decreases significantly above 55°C flow temperature',
     });
   }
 
@@ -258,7 +290,7 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
       title: 'System May Be Oversized',
       description: 'Heat pump exceeds MCS recommended sizing guidelines',
       recommendation: 'Consider smaller unit to improve efficiency and reduce short cycling.',
-      regulation: 'MCS guidelines limit oversizing to prevent poor performance'
+      regulation: 'MCS guidelines limit oversizing to prevent poor performance',
     });
   }
 
@@ -270,7 +302,7 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
       title: 'System May Be Undersized',
       description: 'Heat pump below MCS minimum sizing requirements',
       recommendation: 'Consider backup heating or improve building thermal performance.',
-      regulation: 'MCS requires adequate sizing to meet design heat load'
+      regulation: 'MCS requires adequate sizing to meet design heat load',
     });
   }
 
@@ -282,7 +314,7 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
       title: 'Poor Building Insulation',
       description: 'Building fabric improvements could significantly reduce heat demand',
       recommendation: 'Improve insulation before heat pump installation for better ROI.',
-      regulation: 'Building Regulations Part L encourages fabric-first approach'
+      regulation: 'Building Regulations Part L encourages fabric-first approach',
     });
   }
 
@@ -294,7 +326,7 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
       title: 'High Annual Running Costs',
       description: `Estimated £${results.annualCost.toFixed(0)} annual heating cost`,
       recommendation: 'Consider improving building efficiency or alternative heating solutions.',
-      regulation: 'Economic assessment required under MCS installation standards'
+      regulation: 'Economic assessment required under MCS installation standards',
     });
   }
 
@@ -303,12 +335,12 @@ export function getReviewFindings(inputs: HeatPumpInputs, results: HeatPumpResul
 
 export function getRegulatoryGuidance(): string[] {
   return [
-    "Heat pumps must be installed by MCS certified installers for RHI eligibility",
-    "Building Regulations Part L requires SAP calculations for new installations",
-    "Permitted Development allows ASHP installation under 0.6kW without planning permission",
-    "Noise limits: 42dB(A) during day, 35dB(A) at night measured at nearest neighbour",
-    "GSHP installations may require Environment Agency permits for larger systems",
-    "Electrical installation must comply with BS 7671 18th Edition requirements",
-    "Annual maintenance required to maintain warranty and MCS certification"
+    'Heat pumps must be installed by MCS certified installers for RHI eligibility',
+    'Building Regulations Part L requires SAP calculations for new installations',
+    'Permitted Development allows ASHP installation under 0.6kW without planning permission',
+    'Noise limits: 42dB(A) during day, 35dB(A) at night measured at nearest neighbour',
+    'GSHP installations may require Environment Agency permits for larger systems',
+    'Electrical installation must comply with BS 7671 18th Edition requirements',
+    'Annual maintenance required to maintain warranty and MCS certification',
   ];
 }

@@ -18,7 +18,8 @@ export const SmartHomeModule6Section1RealWorld = () => {
             <h4 className="font-semibold text-foreground">Case Study: Leeds Family Home Upgrade</h4>
           </div>
           <p className="text-foreground text-sm">
-            An electrician was tasked with upgrading a family home in Leeds to resolve smart home management issues.
+            An electrician was tasked with upgrading a family home in Leeds to resolve smart home
+            management issues.
           </p>
         </div>
 
@@ -70,10 +71,18 @@ export const SmartHomeModule6Section1RealWorld = () => {
               The electrician migrated all systems to work through a single SmartThings hub:
             </p>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Philips Hue:</strong> Connected via SmartThings integration</li>
-              <li>• <strong>Hive heating:</strong> Integrated through SmartThings app</li>
-              <li>• <strong>Ring security:</strong> Linked via SmartThings partnership</li>
-              <li>• <strong>New devices:</strong> Added directly to SmartThings ecosystem</li>
+              <li>
+                • <strong>Philips Hue:</strong> Connected via SmartThings integration
+              </li>
+              <li>
+                • <strong>Hive heating:</strong> Integrated through SmartThings app
+              </li>
+              <li>
+                • <strong>Ring security:</strong> Linked via SmartThings partnership
+              </li>
+              <li>
+                • <strong>New devices:</strong> Added directly to SmartThings ecosystem
+              </li>
             </ul>
           </div>
         </div>
@@ -107,11 +116,21 @@ export const SmartHomeModule6Section1RealWorld = () => {
         <div className="bg-elec-dark/50 border border-gray-600/30 rounded-lg p-4">
           <h4 className="font-semibold text-elec-yellow mb-3">Key Takeaways for Electricians:</h4>
           <ul className="space-y-2 text-foreground text-sm">
-            <li>• <strong>Assess existing systems</strong> before recommending additional hubs</li>
-            <li>• <strong>Prioritise integration capabilities</strong> when selecting hub platforms</li>
-            <li>• <strong>Consider user experience</strong> - multiple apps create frustration</li>
-            <li>• <strong>Plan for expansion</strong> - unified systems are easier to grow</li>
-            <li>• <strong>Test integrations</strong> before final handover to client</li>
+            <li>
+              • <strong>Assess existing systems</strong> before recommending additional hubs
+            </li>
+            <li>
+              • <strong>Prioritise integration capabilities</strong> when selecting hub platforms
+            </li>
+            <li>
+              • <strong>Consider user experience</strong> - multiple apps create frustration
+            </li>
+            <li>
+              • <strong>Plan for expansion</strong> - unified systems are easier to grow
+            </li>
+            <li>
+              • <strong>Test integrations</strong> before final handover to client
+            </li>
           </ul>
         </div>
       </CardContent>

@@ -15,129 +15,131 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What does OZEV stand for?",
+    question: 'What does OZEV stand for?',
     options: [
-      "Office for Zero Emission Vehicles",
-      "Organisation for Zero Energy Vehicles", 
-      "Office for Zero Energy Ventures",
-      "Organisation for Zero Emission Ventures"
+      'Office for Zero Emission Vehicles',
+      'Organisation for Zero Energy Vehicles',
+      'Office for Zero Energy Ventures',
+      'Organisation for Zero Emission Ventures',
     ],
     correctAnswer: 0,
-    explanation: "OZEV stands for Office for Zero Emission Vehicles, which is the government body responsible for supporting the transition to zero emission vehicles through various grant schemes and initiatives."
+    explanation:
+      'OZEV stands for Office for Zero Emission Vehicles, which is the government body responsible for supporting the transition to zero emission vehicles through various grant schemes and initiatives.',
   },
   {
     id: 2,
-    question: "What is the maximum grant available per socket under the Workplace Charging Scheme?",
-    options: [
-      "£250",
-      "£300",
-      "£350", 
-      "£400"
-    ],
+    question: 'What is the maximum grant available per socket under the Workplace Charging Scheme?',
+    options: ['£250', '£300', '£350', '£400'],
     correctAnswer: 2,
-    explanation: "The Workplace Charging Scheme provides up to £350 per socket to help with the upfront costs of purchasing and installing EV charge points for eligible organisations."
+    explanation:
+      'The Workplace Charging Scheme provides up to £350 per socket to help with the upfront costs of purchasing and installing EV charge points for eligible organisations.',
   },
   {
     id: 3,
-    question: "How many sockets can an organisation claim for under the WCS?",
+    question: 'How many sockets can an organisation claim for under the WCS?',
     options: [
-      "20 sockets maximum",
-      "30 sockets maximum",
-      "40 sockets maximum",
-      "50 sockets maximum"
+      '20 sockets maximum',
+      '30 sockets maximum',
+      '40 sockets maximum',
+      '50 sockets maximum',
     ],
     correctAnswer: 2,
-    explanation: "Under the Workplace Charging Scheme, organisations can claim grants for a maximum of 40 sockets per applicant, providing significant support for larger charging installations."
+    explanation:
+      'Under the Workplace Charging Scheme, organisations can claim grants for a maximum of 40 sockets per applicant, providing significant support for larger charging installations.',
   },
   {
     id: 4,
-    question: "What percentage of total costs does the WCS typically cover?",
-    options: [
-      "Up to 50%",
-      "Up to 65%",
-      "Up to 75%",
-      "Up to 85%"
-    ],
+    question: 'What percentage of total costs does the WCS typically cover?',
+    options: ['Up to 50%', 'Up to 65%', 'Up to 75%', 'Up to 85%'],
     correctAnswer: 2,
-    explanation: "The Workplace Charging Scheme covers up to 75% of the total costs of purchasing and installing charge points, making EV infrastructure more affordable for businesses."
+    explanation:
+      'The Workplace Charging Scheme covers up to 75% of the total costs of purchasing and installing charge points, making EV infrastructure more affordable for businesses.',
   },
   {
     id: 5,
-    question: "Who can install charge points under OZEV grant schemes?",
+    question: 'Who can install charge points under OZEV grant schemes?',
     options: [
-      "Any qualified electrician",
-      "Only OZEV approved installers",
-      "Any EV charging specialist",
-      "Licensed electrical contractors only"
+      'Any qualified electrician',
+      'Only OZEV approved installers',
+      'Any EV charging specialist',
+      'Licensed electrical contractors only',
     ],
     correctAnswer: 1,
-    explanation: "Only OZEV approved installers can carry out installations under grant schemes. This ensures quality standards are maintained and proper procedures are followed for grant-funded projects."
+    explanation:
+      'Only OZEV approved installers can carry out installations under grant schemes. This ensures quality standards are maintained and proper procedures are followed for grant-funded projects.',
   },
   {
     id: 6,
-    question: "Which organisations are typically eligible for the Workplace Charging Scheme?",
+    question: 'Which organisations are typically eligible for the Workplace Charging Scheme?',
     options: [
-      "Private businesses only",
-      "Public sector organisations only",
-      "Charities only",
-      "Businesses, charities, and public sector organisations"
+      'Private businesses only',
+      'Public sector organisations only',
+      'Charities only',
+      'Businesses, charities, and public sector organisations',
     ],
     correctAnswer: 3,
-    explanation: "The Workplace Charging Scheme is available to a wide range of UK-based organisations including businesses, charities, and public sector organisations that meet the eligibility criteria."
+    explanation:
+      'The Workplace Charging Scheme is available to a wide range of UK-based organisations including businesses, charities, and public sector organisations that meet the eligibility criteria.',
   },
   {
     id: 7,
-    question: "What is a key requirement for WCS eligibility regarding parking?",
+    question: 'What is a key requirement for WCS eligibility regarding parking?',
     options: [
-      "Shared parking spaces",
-      "Dedicated parking spaces",
-      "Visitor parking only",
-      "Street parking access"
+      'Shared parking spaces',
+      'Dedicated parking spaces',
+      'Visitor parking only',
+      'Street parking access',
     ],
     correctAnswer: 1,
-    explanation: "Organisations must have dedicated parking spaces for their staff or fleet vehicles to be eligible for the Workplace Charging Scheme, ensuring the charge points serve their intended purpose."
+    explanation:
+      'Organisations must have dedicated parking spaces for their staff or fleet vehicles to be eligible for the Workplace Charging Scheme, ensuring the charge points serve their intended purpose.',
   },
   {
     id: 8,
-    question: "In the WCS application process, what happens after OZEV approval?",
+    question: 'In the WCS application process, what happens after OZEV approval?',
     options: [
-      "Immediate payment is made",
-      "Installation must be completed within 6 months",
-      "Installation proceeds with approved installer",
-      "Another application round begins"
+      'Immediate payment is made',
+      'Installation must be completed within 6 months',
+      'Installation proceeds with approved installer',
+      'Another application round begins',
     ],
     correctAnswer: 2,
-    explanation: "Once the WCS application is approved, the organisation can proceed with installation using an OZEV approved installer, followed by submitting evidence for reimbursement."
+    explanation:
+      'Once the WCS application is approved, the organisation can proceed with installation using an OZEV approved installer, followed by submitting evidence for reimbursement.',
   },
   {
     id: 9,
-    question: "What documentation is typically required for a WCS application?",
+    question: 'What documentation is typically required for a WCS application?',
     options: [
-      "Business registration only",
-      "Proof of parking and site details",
-      "Financial statements only",
-      "Employee vehicle survey only"
+      'Business registration only',
+      'Proof of parking and site details',
+      'Financial statements only',
+      'Employee vehicle survey only',
     ],
     correctAnswer: 1,
-    explanation: "WCS applications require comprehensive documentation including proof of dedicated parking spaces, site details, and evidence that the organisation meets eligibility criteria."
+    explanation:
+      'WCS applications require comprehensive documentation including proof of dedicated parking spaces, site details, and evidence that the organisation meets eligibility criteria.',
   },
   {
     id: 10,
-    question: "What should installers check regarding WCS before making applications?",
+    question: 'What should installers check regarding WCS before making applications?',
     options: [
-      "Local planning permissions",
-      "Customer credit rating",
-      "Latest OZEV guidance and scheme status",
-      "Competitor pricing"
+      'Local planning permissions',
+      'Customer credit rating',
+      'Latest OZEV guidance and scheme status',
+      'Competitor pricing',
     ],
     correctAnswer: 2,
-    explanation: "The WCS is subject to review and changes, so installers should always check the latest OZEV guidance and scheme status before making applications to ensure current requirements are met."
-  }
+    explanation:
+      'The WCS is subject to review and changes, so installers should always check the latest OZEV guidance and scheme status before making applications to ensure current requirements are met.',
+  },
 ];
 
 export const EVChargingModule7Section1Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(quizQuestions.length).fill(-1));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    new Array(quizQuestions.length).fill(-1)
+  );
   const [showResults, setShowResults] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
 
@@ -175,9 +177,9 @@ export const EVChargingModule7Section1Quiz = () => {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 8) return "text-green-400";
-    if (score >= 6) return "text-yellow-400";
-    return "text-red-400";
+    if (score >= 8) return 'text-green-400';
+    if (score >= 6) return 'text-yellow-400';
+    return 'text-red-400';
   };
 
   if (!quizStarted) {
@@ -190,9 +192,12 @@ export const EVChargingModule7Section1Quiz = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
-          <p>Test your knowledge of OZEV grants and the Workplace Charging Scheme with this 10-question quiz.</p>
+          <p>
+            Test your knowledge of OZEV grants and the Workplace Charging Scheme with this
+            10-question quiz.
+          </p>
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={() => setQuizStarted(true)}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             >
@@ -220,7 +225,11 @@ export const EVChargingModule7Section1Quiz = () => {
               {score}/{quizQuestions.length}
             </div>
             <p className="text-gray-300 mt-2">
-              {score >= 8 ? "Excellent work!" : score >= 6 ? "Good effort!" : "Review the material and try again."}
+              {score >= 8
+                ? 'Excellent work!'
+                : score >= 6
+                  ? 'Good effort!'
+                  : 'Review the material and try again.'}
             </p>
           </div>
 
@@ -228,9 +237,12 @@ export const EVChargingModule7Section1Quiz = () => {
             {quizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
-                <div key={question.id} className="bg-elec-dark p-4 rounded-lg border border-gray-600">
+                <div
+                  key={question.id}
+                  className="bg-elec-dark p-4 rounded-lg border border-gray-600"
+                >
                   <div className="flex items-start gap-2 mb-2">
                     {isCorrect ? (
                       <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -256,9 +268,9 @@ export const EVChargingModule7Section1Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
-              variant="outline" 
+              variant="outline"
               className="border-gray-600 text-gray-300 hover:bg-elec-gray"
             >
               <RotateCcw className="mr-2 h-4 w-4" />
@@ -282,10 +294,10 @@ export const EVChargingModule7Section1Quiz = () => {
             {currentQuestion + 1} of {quizQuestions.length}
           </Badge>
         </div>
-        
+
         {/* Progress Bar */}
         <div className="w-full bg-gray-700 rounded-full h-2 mt-4">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           ></div>
@@ -295,7 +307,7 @@ export const EVChargingModule7Section1Quiz = () => {
       <CardContent className="space-y-6">
         <div>
           <h3 className="text-foreground text-lg font-medium mb-4">{currentQ.question}</h3>
-          
+
           <div className="space-y-3">
             {currentQ.options.map((option, index) => (
               <button
@@ -308,11 +320,13 @@ export const EVChargingModule7Section1Quiz = () => {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-bold ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-elec-yellow bg-elec-yellow text-elec-dark'
-                      : 'border-gray-600 text-gray-400'
-                  }`}>
+                  <div
+                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-bold ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'border-elec-yellow bg-elec-yellow text-elec-dark'
+                        : 'border-gray-600 text-gray-400'
+                    }`}
+                  >
                     {String.fromCharCode(65 + index)}
                   </div>
                   <span className="text-sm">{option}</span>
@@ -331,7 +345,7 @@ export const EVChargingModule7Section1Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === -1}

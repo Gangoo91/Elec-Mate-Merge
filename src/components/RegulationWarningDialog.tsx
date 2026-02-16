@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   AlertDialog,
@@ -30,11 +29,11 @@ const RegulationWarningDialog: React.FC<RegulationWarningDialogProps> = ({
   warnings,
   circuitDescription = 'Circuit',
   onApprove,
-  onReject
+  onReject,
 }) => {
-  const criticalWarnings = warnings.filter(w => w.severity === 'critical');
-  const generalWarnings = warnings.filter(w => w.severity === 'warning');
-  const infoWarnings = warnings.filter(w => w.severity === 'info');
+  const criticalWarnings = warnings.filter((w) => w.severity === 'critical');
+  const generalWarnings = warnings.filter((w) => w.severity === 'warning');
+  const infoWarnings = warnings.filter((w) => w.severity === 'info');
 
   const getIcon = (severity: 'info' | 'warning' | 'critical') => {
     if (severity === 'critical') return <XCircle className="h-5 w-5 text-red-500" />;
@@ -43,9 +42,23 @@ const RegulationWarningDialog: React.FC<RegulationWarningDialogProps> = ({
   };
 
   const getSeverityBadge = (severity: 'info' | 'warning' | 'critical') => {
-    if (severity === 'critical') return <Badge variant="destructive" className="text-xs">Critical</Badge>;
-    if (severity === 'warning') return <Badge variant="outline" className="text-xs border-amber-300 text-amber-700">Warning</Badge>;
-    return <Badge variant="outline" className="text-xs border-blue-300 text-blue-700">Info</Badge>;
+    if (severity === 'critical')
+      return (
+        <Badge variant="destructive" className="text-xs">
+          Critical
+        </Badge>
+      );
+    if (severity === 'warning')
+      return (
+        <Badge variant="outline" className="text-xs border-amber-300 text-amber-700">
+          Warning
+        </Badge>
+      );
+    return (
+      <Badge variant="outline" className="text-xs border-blue-300 text-blue-700">
+        Info
+      </Badge>
+    );
   };
 
   if (warnings.length === 0) return null;
@@ -64,11 +77,14 @@ const RegulationWarningDialog: React.FC<RegulationWarningDialogProps> = ({
             <span className="sm:hidden">BS 7671 Check</span>
           </AlertDialogTitle>
           <AlertDialogDescription className="text-xs sm:text-sm pt-1">
-            {circuitDescription && <span className="sm:hidden block text-muted-foreground mb-1">{circuitDescription}</span>}
-            {criticalWarnings.length > 0 
+            {circuitDescription && (
+              <span className="sm:hidden block text-muted-foreground mb-1">
+                {circuitDescription}
+              </span>
+            )}
+            {criticalWarnings.length > 0
               ? `${criticalWarnings.length} critical issue(s) and ${generalWarnings.length} warning(s) detected.`
-              : `${generalWarnings.length} warning(s) detected for your review.`
-            }
+              : `${generalWarnings.length} warning(s) detected for your review.`}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -141,10 +157,13 @@ const RegulationWarningDialog: React.FC<RegulationWarningDialogProps> = ({
         <AlertDialogFooter className="flex-col sm:flex-row gap-2 pt-3 sm:pt-4">
           {criticalWarnings.length > 0 ? (
             <>
-              <AlertDialogCancel onClick={onReject} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
+              <AlertDialogCancel
+                onClick={onReject}
+                className="w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
                 Review Configuration
               </AlertDialogCancel>
-              <AlertDialogAction 
+              <AlertDialogAction
                 onClick={onApprove}
                 className="w-full sm:w-auto min-h-[44px] bg-red-600 hover:bg-red-700 touch-manipulation"
               >
@@ -153,10 +172,16 @@ const RegulationWarningDialog: React.FC<RegulationWarningDialogProps> = ({
             </>
           ) : (
             <>
-              <AlertDialogCancel onClick={onReject} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
+              <AlertDialogCancel
+                onClick={onReject}
+                className="w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
                 Review Warnings
               </AlertDialogCancel>
-              <AlertDialogAction onClick={onApprove} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
+              <AlertDialogAction
+                onClick={onApprove}
+                className="w-full sm:w-auto min-h-[44px] touch-manipulation"
+              >
                 Proceed
               </AlertDialogAction>
             </>

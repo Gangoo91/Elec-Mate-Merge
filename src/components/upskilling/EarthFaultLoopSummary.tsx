@@ -18,10 +18,12 @@ export const EarthFaultLoopSummary = () => {
             <CheckCircle className="h-5 w-5 text-green-400" />
             Key Concepts Mastered
           </h3>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-blue-500">
-              <h4 className="text-foreground font-medium mb-2">Earth Fault Loop Impedance Fundamentals</h4>
+              <h4 className="text-foreground font-medium mb-2">
+                Earth Fault Loop Impedance Fundamentals
+              </h4>
               <ul className="text-sm space-y-1">
                 <li>• Zs represents total earth fault path impedance</li>
                 <li>• Ze is external supply impedance only</li>
@@ -29,7 +31,7 @@ export const EarthFaultLoopSummary = () => {
                 <li>• Critical for protective device operation</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-green-500">
               <h4 className="text-foreground font-medium mb-2">Temperature Correction</h4>
               <ul className="text-sm space-y-1">
@@ -48,7 +50,7 @@ export const EarthFaultLoopSummary = () => {
             <AlertTriangle className="h-5 w-5 text-red-400" />
             Critical Safety Requirements
           </h3>
-          
+
           <div className="bg-red-900/20 border border-red-600 p-4 rounded-lg">
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
@@ -79,11 +81,13 @@ export const EarthFaultLoopSummary = () => {
             <Calculator className="h-5 w-5 text-blue-400" />
             Practical Application Guidelines
           </h3>
-          
+
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-elec-dark p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-blue-600 text-foreground text-xs">Testing</Badge>
+                <Badge variant="secondary" className="bg-blue-600 text-foreground text-xs">
+                  Testing
+                </Badge>
               </div>
               <ul className="text-sm space-y-1">
                 <li>• Ze: main earthing conductor disconnected</li>
@@ -92,10 +96,12 @@ export const EarthFaultLoopSummary = () => {
                 <li>• Check for parallel paths</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-orange-600 text-foreground text-xs">Analysis</Badge>
+                <Badge variant="secondary" className="bg-orange-600 text-foreground text-xs">
+                  Analysis
+                </Badge>
               </div>
               <ul className="text-sm space-y-1">
                 <li>• Compare with BS 7671 limits</li>
@@ -104,10 +110,12 @@ export const EarthFaultLoopSummary = () => {
                 <li>• Document all findings</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-green-600 text-foreground text-xs">Action</Badge>
+                <Badge variant="secondary" className="bg-green-600 text-foreground text-xs">
+                  Action
+                </Badge>
               </div>
               <ul className="text-sm space-y-1">
                 <li>• Investigate high readings</li>
@@ -148,8 +156,8 @@ export const EarthFaultLoopSummary = () => {
         <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
           <h4 className="text-foreground font-semibold mb-3">Moving Forward</h4>
           <p className="text-sm mb-3">
-            With a solid understanding of earth fault loop impedance principles, you're now ready 
-            to explore testing Zs at various points throughout an installation.
+            With a solid understanding of earth fault loop impedance principles, you're now ready to
+            explore testing Zs at various points throughout an installation.
           </p>
           <div className="flex flex-wrap gap-2">
             <Badge variant="outline" className="border-elec-yellow text-elec-yellow">

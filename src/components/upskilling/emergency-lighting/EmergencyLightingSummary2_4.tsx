@@ -3,13 +3,13 @@ import { BookmarkIcon, CheckCircle, AlertTriangle, Route } from 'lucide-react';
 
 export const EmergencyLightingSummary2_4 = () => {
   const keyPoints = [
-    "Escape route lighting ensures safe evacuation by illuminating designated exit paths during mains failure",
-    "BS 5266 requires minimum 1 lux along centre line of escape routes with 0.5 lux minimum anywhere",
-    "Luminaires must be positioned at exits, direction changes, intersections, and fire equipment locations",
-    "All escape routes including corridors, staircases, and exit doors must have adequate illumination",
-    "Monthly functional testing and annual full-duration testing are mandatory for compliance",
-    "Exit signs must be illuminated and maintained type in public buildings for continuous visibility",
-    "Proper documentation including test records and maintenance logs is essential for regulatory compliance"
+    'Escape route lighting ensures safe evacuation by illuminating designated exit paths during mains failure',
+    'BS 5266 requires minimum 1 lux along centre line of escape routes with 0.5 lux minimum anywhere',
+    'Luminaires must be positioned at exits, direction changes, intersections, and fire equipment locations',
+    'All escape routes including corridors, staircases, and exit doors must have adequate illumination',
+    'Monthly functional testing and annual full-duration testing are mandatory for compliance',
+    'Exit signs must be illuminated and maintained type in public buildings for continuous visibility',
+    'Proper documentation including test records and maintenance logs is essential for regulatory compliance',
   ];
 
   return (
@@ -22,9 +22,9 @@ export const EmergencyLightingSummary2_4 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p className="text-lg text-foreground leading-relaxed">
-          Escape route lighting is a critical life safety system that ensures safe evacuation during emergencies. 
-          This section has covered the essential requirements, design principles, and compliance standards needed 
-          for effective escape route lighting installations.
+          Escape route lighting is a critical life safety system that ensures safe evacuation during
+          emergencies. This section has covered the essential requirements, design principles, and
+          compliance standards needed for effective escape route lighting installations.
         </p>
 
         <div className="space-y-3">
@@ -75,9 +75,10 @@ export const EmergencyLightingSummary2_4 = () => {
             <div>
               <h4 className="font-semibold text-red-400 mb-2">Professional Responsibility</h4>
               <p className="text-foreground">
-                As an electrician, your escape route lighting installations directly impact life safety. 
-                Always prioritise compliance with BS 5266, conduct thorough site assessments, and maintain 
-                detailed records. Lives depend on the quality and reliability of your work.
+                As an electrician, your escape route lighting installations directly impact life
+                safety. Always prioritise compliance with BS 5266, conduct thorough site
+                assessments, and maintain detailed records. Lives depend on the quality and
+                reliability of your work.
               </p>
             </div>
           </div>
@@ -86,9 +87,9 @@ export const EmergencyLightingSummary2_4 = () => {
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-yellow-400 mb-2">Next Steps</h4>
           <p className="text-foreground">
-            Test your understanding of escape route lighting principles with the comprehensive quiz below. 
-            This will help reinforce the key concepts and ensure you're ready to design, install, and maintain 
-            compliant escape route lighting systems.
+            Test your understanding of escape route lighting principles with the comprehensive quiz
+            below. This will help reinforce the key concepts and ensure you're ready to design,
+            install, and maintain compliant escape route lighting systems.
           </p>
         </div>
       </CardContent>

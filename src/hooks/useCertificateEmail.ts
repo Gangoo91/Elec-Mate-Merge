@@ -58,86 +58,98 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
   /**
    * Send certificate via email using Resend
    */
-  const sendCertificateEmail = useCallback(async (params: SendEmailParams): Promise<void> => {
-    const { recipientEmail, customMessage } = params;
+  const sendCertificateEmail = useCallback(
+    async (params: SendEmailParams): Promise<void> => {
+      const { recipientEmail, customMessage } = params;
 
-    // Validate email
-    if (!recipientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
-      throw new Error('Please enter a valid email address');
-    }
+      // Validate email
+      if (!recipientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
+        throw new Error('Please enter a valid email address');
+      }
 
-    setIsLoading(true);
-    setError(null);
-    setIsSent(false);
+      setIsLoading(true);
+      setError(null);
+      setIsSent(false);
 
-    try {
-      console.log('[CertificateEmail] Sending email for report:', data.reportId, 'to:', recipientEmail);
+      try {
+        console.log(
+          '[CertificateEmail] Sending email for report:',
+          data.reportId,
+          'to:',
+          recipientEmail
+        );
 
-      // Call the Resend-based edge function
-      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
-        body: {
-          reportId: data.reportId,
-          recipientEmail,
-          customMessage,
-        }
-      });
+        // Call the Resend-based edge function
+        const { data: result, error: fnError } = await supabase.functions.invoke(
+          'send-certificate-resend',
+          {
+            body: {
+              reportId: data.reportId,
+              recipientEmail,
+              customMessage,
+            },
+          }
+        );
 
-      console.log('[CertificateEmail] Response:', result, 'Error:', fnError);
+        console.log('[CertificateEmail] Response:', result, 'Error:', fnError);
 
-      if (fnError) {
-        // Parse error message - could be in various formats
-        let errorMessage = fnError.message || 'Unknown error';
+        if (fnError) {
+          // Parse error message - could be in various formats
+          let errorMessage = fnError.message || 'Unknown error';
 
-        // Check if error message is JSON
-        try {
-          const parsed = JSON.parse(fnError.message);
-          errorMessage = parsed.error || parsed.message || fnError.message;
-        } catch {
-          // Keep original message
-        }
-
-        // Check if there's error context with more details
-        if (fnError.context?.body) {
+          // Check if error message is JSON
           try {
-            const bodyError = typeof fnError.context.body === 'string'
-              ? JSON.parse(fnError.context.body)
-              : fnError.context.body;
-            if (bodyError.error) {
-              errorMessage = bodyError.error;
-            }
+            const parsed = JSON.parse(fnError.message);
+            errorMessage = parsed.error || parsed.message || fnError.message;
           } catch {
             // Keep original message
           }
+
+          // Check if there's error context with more details
+          if (fnError.context?.body) {
+            try {
+              const bodyError =
+                typeof fnError.context.body === 'string'
+                  ? JSON.parse(fnError.context.body)
+                  : fnError.context.body;
+              if (bodyError.error) {
+                errorMessage = bodyError.error;
+              }
+            } catch {
+              // Keep original message
+            }
+          }
+
+          console.error('[CertificateEmail] Error details:', errorMessage, fnError);
+          throw new Error(errorMessage);
         }
 
-        console.error('[CertificateEmail] Error details:', errorMessage, fnError);
-        throw new Error(errorMessage);
-      }
+        if (!result?.success) {
+          const errorMsg = result?.error || result?.hint || 'Failed to send certificate email';
+          console.error('[CertificateEmail] Function returned error:', result);
+          throw new Error(errorMsg);
+        }
 
-      if (!result?.success) {
-        const errorMsg = result?.error || result?.hint || 'Failed to send certificate email';
-        console.error('[CertificateEmail] Function returned error:', result);
-        throw new Error(errorMsg);
+        setIsSent(true);
+        toast({
+          title: 'Certificate Sent',
+          description: `Certificate sent successfully to ${recipientEmail}`,
+        });
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to send email';
+        setError(errorMessage);
+        toast({
+          title: 'Email Failed',
+          description: errorMessage,
+          variant: 'destructive',
+        });
+        throw err;
+      } finally {
+        setIsLoading(false);
       }
-
-      setIsSent(true);
-      toast({
-        title: 'Certificate Sent',
-        description: `Certificate sent successfully to ${recipientEmail}`,
-      });
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to send email';
-      setError(errorMessage);
-      toast({
-        title: 'Email Failed',
-        description: errorMessage,
-        variant: 'destructive',
-      });
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [data, toast]);
+    },
+    [data, toast]
+  );
 
   /**
    * Reset state

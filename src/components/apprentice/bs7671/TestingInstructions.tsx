@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Zap, Settings, CheckCircle, Cable, Home, Building } from "lucide-react";
-import { BS7671StepData } from "@/data/bs7671-steps/enhancedStepData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Zap, Settings, CheckCircle, Cable, Home, Building } from 'lucide-react';
+import { BS7671StepData } from '@/data/bs7671-steps/enhancedStepData';
 
 interface TestingInstructionsProps {
   stepData: BS7671StepData;
@@ -49,7 +48,10 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
               <span className="text-xs font-medium text-blue-400 block mb-2">Required Leads</span>
               <div className="flex flex-wrap gap-2">
                 {stepData.mftSettings.leads.map((lead, index) => (
-                  <Badge key={index} className="bg-blue-500/10 text-blue-300 border border-blue-500/30">
+                  <Badge
+                    key={index}
+                    className="bg-blue-500/10 text-blue-300 border border-blue-500/30"
+                  >
                     {lead}
                   </Badge>
                 ))}
@@ -74,7 +76,10 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
           <CardContent className="relative">
             <ol className="space-y-3">
               {stepData.connections.map((instruction, index) => (
-                <li key={index} className="flex gap-3 p-3 rounded-xl bg-white/10 border border-white/10">
+                <li
+                  key={index}
+                  className="flex gap-3 p-3 rounded-xl bg-white/10 border border-white/10"
+                >
                   <span className="flex-shrink-0 w-7 h-7 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg flex items-center justify-center text-xs font-bold">
                     {index + 1}
                   </span>

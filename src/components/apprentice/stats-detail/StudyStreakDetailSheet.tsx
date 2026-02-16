@@ -12,12 +12,7 @@
  * - Empty state CTA
  */
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   Flame,
   Trophy,
@@ -54,7 +49,18 @@ interface StudyStreakDetailSheetProps {
 }
 
 const smartIconMap: Record<string, LucideIcon> = {
-  RotateCcw, Layers, ClipboardCheck, ArrowRight, PenLine, Clock, TrendingUp, Target, Brain, BookOpen, Flame, Star,
+  RotateCcw,
+  Layers,
+  ClipboardCheck,
+  ArrowRight,
+  PenLine,
+  Clock,
+  TrendingUp,
+  Target,
+  Brain,
+  BookOpen,
+  Flame,
+  Star,
 };
 
 const smartVariantMap: Record<string, RecommendationVariant> = {
@@ -137,7 +143,9 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                   value={currentStreak}
                   className="text-5xl font-bold text-orange-400"
                 />
-                <span className="text-xl text-orange-400/80 ml-1.5">day{currentStreak !== 1 ? 's' : ''}</span>
+                <span className="text-xl text-orange-400/80 ml-1.5">
+                  day{currentStreak !== 1 ? 's' : ''}
+                </span>
               </div>
               <motion.p
                 initial={{ opacity: 0, y: 8 }}
@@ -190,7 +198,12 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     )}
                   >
                     <span className="text-lg">{m.emoji}</span>
-                    <span className={cn('text-[10px] font-semibold', m.unlocked ? 'text-orange-400' : 'text-white/40')}>
+                    <span
+                      className={cn(
+                        'text-[10px] font-semibold',
+                        m.unlocked ? 'text-orange-400' : 'text-white/40'
+                      )}
+                    >
                       {m.label}
                     </span>
                   </motion.div>
@@ -210,12 +223,17 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 { icon: BookOpen, label: 'Sessions', value: totalSessions, suffix: '' },
                 { icon: Brain, label: 'Cards', value: totalCardsReviewed, suffix: '' },
               ].map((stat) => (
-                <div key={stat.label} className="relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-3.5 text-center">
+                <div
+                  key={stat.label}
+                  className="relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-3.5 text-center"
+                >
                   <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500/0 via-orange-400/40 to-orange-500/0" />
                   <stat.icon className="h-5 w-5 text-orange-400 mx-auto mb-1.5" />
                   <div className="flex items-baseline justify-center">
                     <AnimatedCounter value={stat.value} className="text-xl font-bold text-white" />
-                    {stat.suffix && <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>}
+                    {stat.suffix && (
+                      <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                    )}
                   </div>
                   <p className="text-xs text-white/60 mt-0.5">{stat.label}</p>
                 </div>
@@ -232,7 +250,9 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <CalendarDays className="h-4 w-4 text-orange-400" />
-                  <span className="text-xs font-semibold text-white uppercase tracking-wider">Last 7 days</span>
+                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                    Last 7 days
+                  </span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   {Array.from({ length: 7 }).map((_, i) => (
@@ -256,7 +276,9 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <Zap className="h-4 w-4 text-orange-400" />
-                    <span className="text-xs font-semibold text-white uppercase tracking-wider">Best day</span>
+                    <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                      Best day
+                    </span>
                   </div>
                   <p className="text-lg font-bold text-white">{bestStudyDay}</p>
                   <p className="text-xs text-white/60 mt-1">Most active day</p>
@@ -331,42 +353,52 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">What to do next</span>
+                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                    What to do next
+                  </span>
                   <div className="flex-1 border-t border-white/[0.06]" />
                 </div>
 
                 <div className="space-y-3 pb-6">
-                  {smartRecs.length > 0 ? (
-                    smartRecs.map((rec) => {
-                      const Icon = smartIconMap[rec.icon] || BookOpen;
-                      const variant = smartVariantMap[rec.type] || 'orange';
-                      return (
+                  {smartRecs.length > 0
+                    ? smartRecs.map((rec) => {
+                        const Icon = smartIconMap[rec.icon] || BookOpen;
+                        const variant = smartVariantMap[rec.type] || 'orange';
+                        return (
+                          <RecommendationCard
+                            key={rec.id}
+                            icon={Icon}
+                            title={rec.title}
+                            description={rec.description}
+                            actionLabel={rec.actionLabel}
+                            actionPath={rec.actionPath}
+                            variant={variant}
+                            onClose={() => onOpenChange(false)}
+                          />
+                        );
+                      })
+                    : recommendations.map((rec) => (
                         <RecommendationCard
                           key={rec.id}
-                          icon={Icon}
+                          icon={
+                            rec.id === 'study-today'
+                              ? Flame
+                              : rec.id === 'due-cards'
+                                ? Brain
+                                : rec.id === 'milestone-chase'
+                                  ? Star
+                                  : rec.id === 'weak-category'
+                                    ? BookOpen
+                                    : Clock
+                          }
                           title={rec.title}
                           description={rec.description}
                           actionLabel={rec.actionLabel}
                           actionPath={rec.actionPath}
-                          variant={variant}
+                          variant="orange"
                           onClose={() => onOpenChange(false)}
                         />
-                      );
-                    })
-                  ) : (
-                    recommendations.map((rec) => (
-                      <RecommendationCard
-                        key={rec.id}
-                        icon={rec.id === 'study-today' ? Flame : rec.id === 'due-cards' ? Brain : rec.id === 'milestone-chase' ? Star : rec.id === 'weak-category' ? BookOpen : Clock}
-                        title={rec.title}
-                        description={rec.description}
-                        actionLabel={rec.actionLabel}
-                        actionPath={rec.actionPath}
-                        variant="orange"
-                        onClose={() => onOpenChange(false)}
-                      />
-                    ))
-                  )}
+                      ))}
                 </div>
               </motion.div>
             )}

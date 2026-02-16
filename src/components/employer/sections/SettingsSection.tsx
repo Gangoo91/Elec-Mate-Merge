@@ -1,28 +1,70 @@
-import { useState, useEffect, useRef } from "react";
-import { Building2, User, Bell, Shield, Palette, Users, Save, Plus, Trash2, Key, Link2, CheckCircle2, Mail, Loader2, Upload, Image as ImageIcon, CreditCard, Mic, RotateCw } from "lucide-react";
-import { getSetting, setSetting, getCompanySettings, saveCompanySettings, getBrandingSettings, saveBrandingSettings, uploadCompanyLogo, type CompanySettings, type BrandingSettings } from "@/services/settingsService";
-import { useTeamMembers, useInviteTeamMember, useRemoveTeamMember, useResendInvitation, type TeamMemberRole } from "@/hooks/useTeamMembers";
-import { InviteTeamMemberDialog } from "../dialogs/InviteTeamMemberDialog";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { permissionsList, rolePermissions, type TeamRole } from "@/data/employerMockData";
-import { StripeConnectCard } from "../StripeConnectCard";
-import VoiceSettingsPanel from "../VoiceSettingsPanel";
+import { useState, useEffect, useRef } from 'react';
+import {
+  Building2,
+  User,
+  Bell,
+  Shield,
+  Palette,
+  Users,
+  Save,
+  Plus,
+  Trash2,
+  Key,
+  Link2,
+  CheckCircle2,
+  Mail,
+  Loader2,
+  Upload,
+  Image as ImageIcon,
+  CreditCard,
+  Mic,
+  RotateCw,
+} from 'lucide-react';
+import {
+  getSetting,
+  setSetting,
+  getCompanySettings,
+  saveCompanySettings,
+  getBrandingSettings,
+  saveBrandingSettings,
+  uploadCompanyLogo,
+  type CompanySettings,
+  type BrandingSettings,
+} from '@/services/settingsService';
+import {
+  useTeamMembers,
+  useInviteTeamMember,
+  useRemoveTeamMember,
+  useResendInvitation,
+  type TeamMemberRole,
+} from '@/hooks/useTeamMembers';
+import { InviteTeamMemberDialog } from '../dialogs/InviteTeamMemberDialog';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { permissionsList, rolePermissions, type TeamRole } from '@/data/employerMockData';
+import { StripeConnectCard } from '../StripeConnectCard';
+import VoiceSettingsPanel from '../VoiceSettingsPanel';
 
 export function SettingsSection() {
   const isMobile = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [activeTab, setActiveTab] = useState("company");
+  const [activeTab, setActiveTab] = useState('company');
   const [notifications, setNotifications] = useState({
     emailAlerts: true,
     certificationReminders: true,
@@ -32,9 +74,9 @@ export function SettingsSection() {
     safetyAlerts: true,
   });
 
-  const [selectedRole, setSelectedRole] = useState<TeamRole>("Operative");
+  const [selectedRole, setSelectedRole] = useState<TeamRole>('Operative');
   const [rolePerms, setRolePerms] = useState<Record<TeamRole, string[]>>(rolePermissions);
-  const [notificationEmail, setNotificationEmail] = useState("");
+  const [notificationEmail, setNotificationEmail] = useState('');
   const [savingEmail, setSavingEmail] = useState(false);
 
   // Company settings state
@@ -48,7 +90,7 @@ export function SettingsSection() {
     company_website: '',
     bank_account_name: '',
     bank_sort_code: '',
-    bank_account_number: ''
+    bank_account_number: '',
   });
   const [loadingCompany, setLoadingCompany] = useState(true);
   const [savingCompany, setSavingCompany] = useState(false);
@@ -57,7 +99,7 @@ export function SettingsSection() {
   const [brandingSettings, setBrandingSettings] = useState<BrandingSettings>({
     company_logo_url: null,
     brand_primary_color: '#f59e0b',
-    brand_secondary_color: '#0f172a'
+    brand_secondary_color: '#0f172a',
   });
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [savingBranding, setSavingBranding] = useState(false);
@@ -71,7 +113,7 @@ export function SettingsSection() {
 
   useEffect(() => {
     // Load notification email
-    getSetting("business_notification_email").then((value) => {
+    getSetting('business_notification_email').then((value) => {
       if (value) setNotificationEmail(value);
     });
 
@@ -89,18 +131,18 @@ export function SettingsSection() {
 
   const handleSaveNotificationEmail = async () => {
     setSavingEmail(true);
-    const success = await setSetting("business_notification_email", notificationEmail);
+    const success = await setSetting('business_notification_email', notificationEmail);
     setSavingEmail(false);
     if (success) {
       toast({
-        title: "Saved",
-        description: "Notification email updated successfully.",
+        title: 'Saved',
+        description: 'Notification email updated successfully.',
       });
     } else {
       toast({
-        title: "Error",
-        description: "Failed to save notification email.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to save notification email.',
+        variant: 'destructive',
       });
     }
   };
@@ -111,13 +153,21 @@ export function SettingsSection() {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      toast({ title: "Invalid file", description: "Please select an image file.", variant: "destructive" });
+      toast({
+        title: 'Invalid file',
+        description: 'Please select an image file.',
+        variant: 'destructive',
+      });
       return;
     }
 
     // Validate file size (max 20MB)
     if (file.size > 20 * 1024 * 1024) {
-      toast({ title: "File too large", description: "Maximum file size is 20MB.", variant: "destructive" });
+      toast({
+        title: 'File too large',
+        description: 'Maximum file size is 20MB.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -126,10 +176,14 @@ export function SettingsSection() {
     setUploadingLogo(false);
 
     if (logoUrl) {
-      setBrandingSettings(prev => ({ ...prev, company_logo_url: logoUrl }));
-      toast({ title: "Logo uploaded", description: "Your company logo has been updated." });
+      setBrandingSettings((prev) => ({ ...prev, company_logo_url: logoUrl }));
+      toast({ title: 'Logo uploaded', description: 'Your company logo has been updated.' });
     } else {
-      toast({ title: "Upload failed", description: "Failed to upload logo. Please try again.", variant: "destructive" });
+      toast({
+        title: 'Upload failed',
+        description: 'Failed to upload logo. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -138,35 +192,67 @@ export function SettingsSection() {
     const success = await saveBrandingSettings(brandingSettings);
     setSavingBranding(false);
     if (success) {
-      toast({ title: "Saved", description: "Branding settings updated successfully." });
+      toast({ title: 'Saved', description: 'Branding settings updated successfully.' });
     } else {
-      toast({ title: "Error", description: "Failed to save branding settings.", variant: "destructive" });
+      toast({
+        title: 'Error',
+        description: 'Failed to save branding settings.',
+        variant: 'destructive',
+      });
     }
   };
 
-  const handleInviteTeamMember = async (data: { email: string; name?: string; role: TeamMemberRole }) => {
+  const handleInviteTeamMember = async (data: {
+    email: string;
+    name?: string;
+    role: TeamMemberRole;
+  }) => {
     await inviteTeamMember.mutateAsync(data);
   };
 
   const integrations = [
-    { name: "Xero", description: "Accounting & payroll integration", connected: true, icon: "X", color: "bg-[#13B5EA]" },
-    { name: "Google Workspace", description: "Calendar and email sync", connected: false, icon: "G", color: "bg-[#4285F4]" },
-    { name: "Dropbox", description: "Document storage", connected: true, icon: "D", color: "bg-[#0061FF]" },
-    { name: "Sage", description: "Accounting software", connected: false, icon: "S", color: "bg-[#00D632]" },
+    {
+      name: 'Xero',
+      description: 'Accounting & payroll integration',
+      connected: true,
+      icon: 'X',
+      color: 'bg-[#13B5EA]',
+    },
+    {
+      name: 'Google Workspace',
+      description: 'Calendar and email sync',
+      connected: false,
+      icon: 'G',
+      color: 'bg-[#4285F4]',
+    },
+    {
+      name: 'Dropbox',
+      description: 'Document storage',
+      connected: true,
+      icon: 'D',
+      color: 'bg-[#0061FF]',
+    },
+    {
+      name: 'Sage',
+      description: 'Accounting software',
+      connected: false,
+      icon: 'S',
+      color: 'bg-[#00D632]',
+    },
   ];
 
   const handleSavePermissions = () => {
     toast({
-      title: "Permissions Saved",
+      title: 'Permissions Saved',
       description: `Permissions for ${selectedRole} role have been updated.`,
     });
   };
 
   const togglePermission = (permId: string) => {
-    setRolePerms(prev => {
+    setRolePerms((prev) => {
       const currentPerms = prev[selectedRole] || [];
       if (currentPerms.includes(permId)) {
-        return { ...prev, [selectedRole]: currentPerms.filter(p => p !== permId) };
+        return { ...prev, [selectedRole]: currentPerms.filter((p) => p !== permId) };
       } else {
         return { ...prev, [selectedRole]: [...currentPerms, permId] };
       }
@@ -174,19 +260,21 @@ export function SettingsSection() {
   };
 
   const tabOptions = [
-    { value: "company", label: "Company" },
-    { value: "voice", label: "Voice Assistant" },
-    { value: "permissions", label: "Permissions" },
-    { value: "integrations", label: "Integrations" },
-    { value: "notifications", label: "Notifications" },
-    { value: "preferences", label: "Preferences" },
+    { value: 'company', label: 'Company' },
+    { value: 'voice', label: 'Voice Assistant' },
+    { value: 'permissions', label: 'Permissions' },
+    { value: 'integrations', label: 'Integrations' },
+    { value: 'notifications', label: 'Notifications' },
+    { value: 'preferences', label: 'Preferences' },
   ];
 
   return (
     <div className="space-y-6 animate-fade-in pb-safe">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Settings</h1>
-        <p className="text-muted-foreground text-sm">Company settings, permissions, and integrations</p>
+        <p className="text-muted-foreground text-sm">
+          Company settings, permissions, and integrations
+        </p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -222,7 +310,9 @@ export function SettingsSection() {
                 <Palette className="h-5 w-5 text-elec-yellow" />
                 Logo & Branding
               </CardTitle>
-              <CardDescription>Your logo and colours appear on quotes, invoices, and emails</CardDescription>
+              <CardDescription>
+                Your logo and colours appear on quotes, invoices, and emails
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-6 space-y-6">
               {/* Logo Upload */}
@@ -230,15 +320,17 @@ export function SettingsSection() {
                 <Label className="text-base font-medium">Company Logo</Label>
                 <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-start gap-6`}>
                   {/* Logo Preview */}
-                  <div 
+                  <div
                     className="relative group cursor-pointer"
                     onClick={() => fileInputRef.current?.click()}
                   >
-                    <div className={`${isMobile ? 'w-full h-32' : 'w-40 h-24'} rounded-xl border-2 border-dashed border-muted-foreground/30 flex items-center justify-center bg-muted/30 overflow-hidden transition-all hover:border-elec-yellow/50 hover:bg-muted/50`}>
+                    <div
+                      className={`${isMobile ? 'w-full h-32' : 'w-40 h-24'} rounded-xl border-2 border-dashed border-muted-foreground/30 flex items-center justify-center bg-muted/30 overflow-hidden transition-all hover:border-elec-yellow/50 hover:bg-muted/50`}
+                    >
                       {brandingSettings.company_logo_url ? (
-                        <img 
-                          src={brandingSettings.company_logo_url} 
-                          alt="Company logo" 
+                        <img
+                          src={brandingSettings.company_logo_url}
+                          alt="Company logo"
                           className="max-w-full max-h-full object-contain p-2"
                         />
                       ) : (
@@ -254,7 +346,7 @@ export function SettingsSection() {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex-1 space-y-3">
                     <input
                       ref={fileInputRef}
@@ -263,8 +355,8 @@ export function SettingsSection() {
                       onChange={handleLogoUpload}
                       className="hidden"
                     />
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       onClick={() => fileInputRef.current?.click()}
                       disabled={uploadingLogo}
                       className="w-full sm:w-auto h-12"
@@ -291,14 +383,24 @@ export function SettingsSection() {
                         <input
                           type="color"
                           value={brandingSettings.brand_primary_color}
-                          onChange={(e) => setBrandingSettings(prev => ({ ...prev, brand_primary_color: e.target.value }))}
+                          onChange={(e) =>
+                            setBrandingSettings((prev) => ({
+                              ...prev,
+                              brand_primary_color: e.target.value,
+                            }))
+                          }
                           className="w-14 h-14 rounded-xl border-2 border-border cursor-pointer appearance-none bg-transparent"
                           style={{ padding: 0 }}
                         />
                       </div>
                       <Input
                         value={brandingSettings.brand_primary_color}
-                        onChange={(e) => setBrandingSettings(prev => ({ ...prev, brand_primary_color: e.target.value }))}
+                        onChange={(e) =>
+                          setBrandingSettings((prev) => ({
+                            ...prev,
+                            brand_primary_color: e.target.value,
+                          }))
+                        }
                         placeholder="#f59e0b"
                         className="font-mono uppercase h-12"
                       />
@@ -313,14 +415,24 @@ export function SettingsSection() {
                         <input
                           type="color"
                           value={brandingSettings.brand_secondary_color}
-                          onChange={(e) => setBrandingSettings(prev => ({ ...prev, brand_secondary_color: e.target.value }))}
+                          onChange={(e) =>
+                            setBrandingSettings((prev) => ({
+                              ...prev,
+                              brand_secondary_color: e.target.value,
+                            }))
+                          }
                           className="w-14 h-14 rounded-xl border-2 border-border cursor-pointer appearance-none bg-transparent"
                           style={{ padding: 0 }}
                         />
                       </div>
                       <Input
                         value={brandingSettings.brand_secondary_color}
-                        onChange={(e) => setBrandingSettings(prev => ({ ...prev, brand_secondary_color: e.target.value }))}
+                        onChange={(e) =>
+                          setBrandingSettings((prev) => ({
+                            ...prev,
+                            brand_secondary_color: e.target.value,
+                          }))
+                        }
                         placeholder="#0f172a"
                         className="font-mono uppercase h-12"
                       />
@@ -332,15 +444,21 @@ export function SettingsSection() {
                 <div className="mt-4 p-4 rounded-xl border border-border/50 bg-muted/20">
                   <Label className="text-xs text-muted-foreground mb-3 block">Preview</Label>
                   <div className="flex items-center gap-3">
-                    <div 
+                    <div
                       className="h-10 flex-1 rounded-lg flex items-center justify-center text-sm font-medium"
-                      style={{ backgroundColor: brandingSettings.brand_secondary_color, color: '#fff' }}
+                      style={{
+                        backgroundColor: brandingSettings.brand_secondary_color,
+                        color: '#fff',
+                      }}
                     >
                       Header
                     </div>
-                    <div 
+                    <div
                       className="h-10 px-6 rounded-lg flex items-center justify-center text-sm font-medium"
-                      style={{ backgroundColor: brandingSettings.brand_primary_color, color: '#fff' }}
+                      style={{
+                        backgroundColor: brandingSettings.brand_primary_color,
+                        color: '#fff',
+                      }}
                     >
                       Button
                     </div>
@@ -348,8 +466,8 @@ export function SettingsSection() {
                 </div>
               </div>
 
-              <Button 
-                onClick={handleSaveBranding} 
+              <Button
+                onClick={handleSaveBranding}
                 disabled={savingBranding}
                 className="w-full sm:w-auto h-12"
               >
@@ -358,7 +476,7 @@ export function SettingsSection() {
                 ) : (
                   <Save className="h-4 w-4 mr-2" />
                 )}
-                {savingBranding ? "Saving..." : "Save Branding"}
+                {savingBranding ? 'Saving...' : 'Save Branding'}
               </Button>
             </CardContent>
           </Card>
@@ -382,78 +500,111 @@ export function SettingsSection() {
                   <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-4`}>
                     <div className="space-y-2">
                       <Label>Company Name</Label>
-                      <Input 
+                      <Input
                         value={companySettings.company_name}
-                        onChange={(e) => setCompanySettings(prev => ({ ...prev, company_name: e.target.value }))}
+                        onChange={(e) =>
+                          setCompanySettings((prev) => ({ ...prev, company_name: e.target.value }))
+                        }
                         placeholder="Your Company Ltd"
                         className="h-12"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label>Company Number</Label>
-                      <Input 
+                      <Input
                         value={companySettings.company_number}
-                        onChange={(e) => setCompanySettings(prev => ({ ...prev, company_number: e.target.value }))}
+                        onChange={(e) =>
+                          setCompanySettings((prev) => ({
+                            ...prev,
+                            company_number: e.target.value,
+                          }))
+                        }
                         placeholder="12345678"
                         className="h-12"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label>VAT Number</Label>
-                      <Input 
+                      <Input
                         value={companySettings.company_vat_number}
-                        onChange={(e) => setCompanySettings(prev => ({ ...prev, company_vat_number: e.target.value }))}
+                        onChange={(e) =>
+                          setCompanySettings((prev) => ({
+                            ...prev,
+                            company_vat_number: e.target.value,
+                          }))
+                        }
                         placeholder="GB123456789"
                         className="h-12"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label>Phone</Label>
-                      <Input 
+                      <Input
                         value={companySettings.company_phone}
-                        onChange={(e) => setCompanySettings(prev => ({ ...prev, company_phone: e.target.value }))}
+                        onChange={(e) =>
+                          setCompanySettings((prev) => ({ ...prev, company_phone: e.target.value }))
+                        }
                         placeholder="+44 123 456 7890"
                         className="h-12"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label>Email</Label>
-                      <Input 
+                      <Input
                         type="email"
                         value={companySettings.company_email}
-                        onChange={(e) => setCompanySettings(prev => ({ ...prev, company_email: e.target.value }))}
+                        onChange={(e) =>
+                          setCompanySettings((prev) => ({ ...prev, company_email: e.target.value }))
+                        }
                         placeholder="info@yourcompany.com"
                         className="h-12"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label>Website</Label>
-                      <Input 
+                      <Input
                         value={companySettings.company_website}
-                        onChange={(e) => setCompanySettings(prev => ({ ...prev, company_website: e.target.value }))}
+                        onChange={(e) =>
+                          setCompanySettings((prev) => ({
+                            ...prev,
+                            company_website: e.target.value,
+                          }))
+                        }
                         placeholder="https://yourcompany.com"
                         className="h-12"
                       />
                     </div>
                     <div className={`space-y-2 ${isMobile ? '' : 'col-span-2'}`}>
                       <Label>Address</Label>
-                      <Input 
+                      <Input
                         value={companySettings.company_address}
-                        onChange={(e) => setCompanySettings(prev => ({ ...prev, company_address: e.target.value }))}
+                        onChange={(e) =>
+                          setCompanySettings((prev) => ({
+                            ...prev,
+                            company_address: e.target.value,
+                          }))
+                        }
                         placeholder="123 Business Park, City, Postcode"
                         className="h-12"
                       />
                     </div>
                   </div>
-                  <Button 
+                  <Button
                     onClick={async () => {
                       setSavingCompany(true);
                       const success = await saveCompanySettings(companySettings);
                       setSavingCompany(false);
                       if (success) {
-                        toast({ title: "Saved", description: "Company details updated successfully." });
+                        toast({
+                          title: 'Saved',
+                          description: 'Company details updated successfully.',
+                        });
                       } else {
-                        toast({ title: "Error", description: "Failed to save company details.", variant: "destructive" });
+                        toast({
+                          title: 'Error',
+                          description: 'Failed to save company details.',
+                          variant: 'destructive',
+                        });
                       }
                     }}
                     disabled={savingCompany}
@@ -464,7 +615,7 @@ export function SettingsSection() {
                     ) : (
                       <Save className="h-4 w-4 mr-2" />
                     )}
-                    {savingCompany ? "Saving..." : "Save Changes"}
+                    {savingCompany ? 'Saving...' : 'Save Changes'}
                   </Button>
                 </>
               )}
@@ -484,44 +635,58 @@ export function SettingsSection() {
               <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'} gap-4`}>
                 <div className="space-y-2">
                   <Label>Account Name</Label>
-                  <Input 
+                  <Input
                     value={companySettings.bank_account_name}
-                    onChange={(e) => setCompanySettings(prev => ({ ...prev, bank_account_name: e.target.value }))}
+                    onChange={(e) =>
+                      setCompanySettings((prev) => ({ ...prev, bank_account_name: e.target.value }))
+                    }
                     placeholder="Your Company Ltd"
                     className="h-12"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Sort Code</Label>
-                  <Input 
+                  <Input
                     value={companySettings.bank_sort_code}
-                    onChange={(e) => setCompanySettings(prev => ({ ...prev, bank_sort_code: e.target.value }))}
+                    onChange={(e) =>
+                      setCompanySettings((prev) => ({ ...prev, bank_sort_code: e.target.value }))
+                    }
                     placeholder="00-00-00"
                     className="h-12 font-mono"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Account Number</Label>
-                  <Input 
+                  <Input
                     value={companySettings.bank_account_number}
-                    onChange={(e) => setCompanySettings(prev => ({ ...prev, bank_account_number: e.target.value }))}
+                    onChange={(e) =>
+                      setCompanySettings((prev) => ({
+                        ...prev,
+                        bank_account_number: e.target.value,
+                      }))
+                    }
                     placeholder="12345678"
                     className="h-12 font-mono"
                   />
                 </div>
               </div>
               <p className="text-sm text-muted-foreground">
-                These details will appear on invoices sent to clients. The invoice number will be suggested as the payment reference.
+                These details will appear on invoices sent to clients. The invoice number will be
+                suggested as the payment reference.
               </p>
-              <Button 
+              <Button
                 onClick={async () => {
                   setSavingCompany(true);
                   const success = await saveCompanySettings(companySettings);
                   setSavingCompany(false);
                   if (success) {
-                    toast({ title: "Saved", description: "Payment details updated successfully." });
+                    toast({ title: 'Saved', description: 'Payment details updated successfully.' });
                   } else {
-                    toast({ title: "Error", description: "Failed to save payment details.", variant: "destructive" });
+                    toast({
+                      title: 'Error',
+                      description: 'Failed to save payment details.',
+                      variant: 'destructive',
+                    });
                   }
                 }}
                 disabled={savingCompany}
@@ -532,7 +697,7 @@ export function SettingsSection() {
                 ) : (
                   <Save className="h-4 w-4 mr-2" />
                 )}
-                {savingCompany ? "Saving..." : "Save Payment Details"}
+                {savingCompany ? 'Saving...' : 'Save Payment Details'}
               </Button>
             </CardContent>
           </Card>
@@ -549,7 +714,7 @@ export function SettingsSection() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label>Email Address</Label>
-                <Input 
+                <Input
                   type="email"
                   placeholder="e.g. accounts@yourcompany.com"
                   value={notificationEmail}
@@ -560,9 +725,13 @@ export function SettingsSection() {
                   You'll receive notifications here when clients accept or decline quotes
                 </p>
               </div>
-              <Button onClick={handleSaveNotificationEmail} disabled={savingEmail} className="w-full sm:w-auto h-12">
+              <Button
+                onClick={handleSaveNotificationEmail}
+                disabled={savingEmail}
+                className="w-full sm:w-auto h-12"
+              >
                 <Save className="h-4 w-4 mr-2" />
-                {savingEmail ? "Saving..." : "Save Email"}
+                {savingEmail ? 'Saving...' : 'Save Email'}
               </Button>
             </CardContent>
           </Card>
@@ -570,7 +739,9 @@ export function SettingsSection() {
           {/* Team Members */}
           <Card>
             <CardHeader>
-              <div className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'}`}>
+              <div
+                className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'}`}
+              >
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <Users className="h-5 w-5 text-elec-yellow" />
@@ -578,7 +749,11 @@ export function SettingsSection() {
                   </CardTitle>
                   <CardDescription>Manage who has access to the employer dashboard</CardDescription>
                 </div>
-                <Button size="sm" className={isMobile ? 'w-full h-12' : ''} onClick={() => setShowInviteDialog(true)}>
+                <Button
+                  size="sm"
+                  className={isMobile ? 'w-full h-12' : ''}
+                  onClick={() => setShowInviteDialog(true)}
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add User
                 </Button>
@@ -601,11 +776,18 @@ export function SettingsSection() {
               ) : (
                 <div className="space-y-2">
                   {teamMembers.map((member) => (
-                    <div key={member.id} className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 rounded-xl bg-muted/30 border border-border/50`}>
+                    <div
+                      key={member.id}
+                      className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 rounded-xl bg-muted/30 border border-border/50`}
+                    >
                       <div className="flex items-center gap-4">
                         <Avatar className="h-12 w-12 border-2 border-elec-yellow/20">
                           <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-medium">
-                            {(member.name || member.email).split(/[ @]/).map(n => n[0]?.toUpperCase()).slice(0, 2).join("")}
+                            {(member.name || member.email)
+                              .split(/[ @]/)
+                              .map((n) => n[0]?.toUpperCase())
+                              .slice(0, 2)
+                              .join('')}
                           </AvatarFallback>
                         </Avatar>
                         <div>
@@ -615,12 +797,12 @@ export function SettingsSection() {
                       </div>
                       <div className={`flex items-center gap-3 ${isMobile ? 'ml-16' : ''}`}>
                         <Badge
-                          variant={member.status === "Pending" ? "outline" : "secondary"}
-                          className={`h-7 ${member.status === "Pending" ? "border-warning text-warning" : ""}`}
+                          variant={member.status === 'Pending' ? 'outline' : 'secondary'}
+                          className={`h-7 ${member.status === 'Pending' ? 'border-warning text-warning' : ''}`}
                         >
-                          {member.status === "Pending" ? "Pending" : member.role}
+                          {member.status === 'Pending' ? 'Pending' : member.role}
                         </Badge>
-                        {member.status === "Pending" && (
+                        {member.status === 'Pending' && (
                           <Button
                             variant="ghost"
                             size="icon"
@@ -628,10 +810,12 @@ export function SettingsSection() {
                             onClick={() => resendInvitation.mutate(member.id)}
                             disabled={resendInvitation.isPending}
                           >
-                            <RotateCw className={`h-4 w-4 ${resendInvitation.isPending ? 'animate-spin' : ''}`} />
+                            <RotateCw
+                              className={`h-4 w-4 ${resendInvitation.isPending ? 'animate-spin' : ''}`}
+                            />
                           </Button>
                         )}
-                        {member.role !== "Owner" && (
+                        {member.role !== 'Owner' && (
                           <Button
                             variant="ghost"
                             size="icon"
@@ -677,11 +861,11 @@ export function SettingsSection() {
             <CardContent className="space-y-6">
               {/* Role Selector */}
               <div className={`flex gap-2 ${isMobile ? 'flex-wrap' : ''}`}>
-                {(["QS", "Supervisor", "Operative", "Apprentice"] as TeamRole[]).map((role) => (
+                {(['QS', 'Supervisor', 'Operative', 'Apprentice'] as TeamRole[]).map((role) => (
                   <Button
                     key={role}
-                    variant={selectedRole === role ? "default" : "outline"}
-                    size={isMobile ? "default" : "sm"}
+                    variant={selectedRole === role ? 'default' : 'outline'}
+                    size={isMobile ? 'default' : 'sm'}
                     onClick={() => setSelectedRole(role)}
                     className={isMobile ? 'flex-1 h-12' : ''}
                   >
@@ -693,8 +877,8 @@ export function SettingsSection() {
               {/* Permissions Matrix */}
               <div className="space-y-2">
                 {permissionsList.map((perm) => (
-                  <div 
-                    key={perm.id} 
+                  <div
+                    key={perm.id}
                     className="flex items-center justify-between p-4 bg-muted/30 rounded-xl border border-border/50"
                   >
                     <div className="flex items-center gap-3 flex-1">
@@ -727,23 +911,27 @@ export function SettingsSection() {
         <TabsContent value="integrations" className="space-y-6">
           {/* Stripe Connect Card */}
           <StripeConnectCard />
-          
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Link2 className="h-5 w-5 text-elec-yellow" />
                 Other Integrations
               </CardTitle>
-              <CardDescription>Connect third-party services to enhance your workflow</CardDescription>
+              <CardDescription>
+                Connect third-party services to enhance your workflow
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               {integrations.map((integration, idx) => (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4 p-4 rounded-xl border border-border/50 bg-muted/20 transition-all hover:bg-muted/40`}
                 >
                   <div className={`flex items-center gap-4 ${isMobile ? 'w-full' : 'flex-1'}`}>
-                    <div className={`w-14 h-14 rounded-xl ${integration.color} flex items-center justify-center text-foreground font-bold text-xl shrink-0`}>
+                    <div
+                      className={`w-14 h-14 rounded-xl ${integration.color} flex items-center justify-center text-foreground font-bold text-xl shrink-0`}
+                    >
                       {integration.icon}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -756,14 +944,16 @@ export function SettingsSection() {
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-0.5">{integration.description}</p>
+                      <p className="text-sm text-muted-foreground mt-0.5">
+                        {integration.description}
+                      </p>
                     </div>
                   </div>
-                  <Button 
-                    variant={integration.connected ? "outline" : "default"}
+                  <Button
+                    variant={integration.connected ? 'outline' : 'default'}
                     className={`${isMobile ? 'w-full' : ''} h-11 shrink-0`}
                   >
-                    {integration.connected ? "Manage" : "Connect"}
+                    {integration.connected ? 'Manage' : 'Connect'}
                   </Button>
                 </div>
               ))}
@@ -777,15 +967,29 @@ export function SettingsSection() {
                 <Shield className="h-5 w-5 text-elec-yellow" />
                 Document Templates
               </CardTitle>
-              <CardDescription>Manage your RAMS, method statement, and briefing pack templates</CardDescription>
+              <CardDescription>
+                Manage your RAMS, method statement, and briefing pack templates
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              {["RAMS Template", "Method Statement Template", "Briefing Pack Template", "Closeout Report Template"].map((template, idx) => (
-                <div key={idx} className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 bg-muted/30 rounded-xl border border-border/50`}>
+              {[
+                'RAMS Template',
+                'Method Statement Template',
+                'Briefing Pack Template',
+                'Closeout Report Template',
+              ].map((template, idx) => (
+                <div
+                  key={idx}
+                  className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 bg-muted/30 rounded-xl border border-border/50`}
+                >
                   <span className="font-medium">{template}</span>
                   <div className={`flex gap-2 ${isMobile ? 'w-full' : ''}`}>
-                    <Button variant="outline" size="sm" className={isMobile ? 'flex-1 h-11' : ''}>Edit</Button>
-                    <Button variant="outline" size="sm" className={isMobile ? 'flex-1 h-11' : ''}>Download</Button>
+                    <Button variant="outline" size="sm" className={isMobile ? 'flex-1 h-11' : ''}>
+                      Edit
+                    </Button>
+                    <Button variant="outline" size="sm" className={isMobile ? 'flex-1 h-11' : ''}>
+                      Download
+                    </Button>
                   </div>
                 </div>
               ))}
@@ -806,22 +1010,49 @@ export function SettingsSection() {
             <CardContent>
               <div className="space-y-2">
                 {[
-                  { key: "emailAlerts", label: "Email Alerts", description: "Receive important updates via email" },
-                  { key: "certificationReminders", label: "Certification Reminders", description: "Get notified when certifications are expiring" },
-                  { key: "jobUpdates", label: "Job Updates", description: "Notifications about job progress and completions" },
-                  { key: "invoiceAlerts", label: "Invoice Alerts", description: "Payment reminders and overdue notices" },
-                  { key: "tenderDeadlines", label: "Tender Deadlines", description: "Reminders for upcoming tender deadlines" },
-                  { key: "safetyAlerts", label: "Safety Alerts", description: "Immediate notifications for safety incidents" },
+                  {
+                    key: 'emailAlerts',
+                    label: 'Email Alerts',
+                    description: 'Receive important updates via email',
+                  },
+                  {
+                    key: 'certificationReminders',
+                    label: 'Certification Reminders',
+                    description: 'Get notified when certifications are expiring',
+                  },
+                  {
+                    key: 'jobUpdates',
+                    label: 'Job Updates',
+                    description: 'Notifications about job progress and completions',
+                  },
+                  {
+                    key: 'invoiceAlerts',
+                    label: 'Invoice Alerts',
+                    description: 'Payment reminders and overdue notices',
+                  },
+                  {
+                    key: 'tenderDeadlines',
+                    label: 'Tender Deadlines',
+                    description: 'Reminders for upcoming tender deadlines',
+                  },
+                  {
+                    key: 'safetyAlerts',
+                    label: 'Safety Alerts',
+                    description: 'Immediate notifications for safety incidents',
+                  },
                 ].map((item) => (
-                  <div key={item.key} className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/50">
+                  <div
+                    key={item.key}
+                    className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/50"
+                  >
                     <div className="flex-1 pr-4">
                       <p className="font-medium">{item.label}</p>
                       <p className="text-sm text-muted-foreground">{item.description}</p>
                     </div>
                     <Switch
                       checked={notifications[item.key as keyof typeof notifications]}
-                      onCheckedChange={(checked) => 
-                        setNotifications(prev => ({ ...prev, [item.key]: checked }))
+                      onCheckedChange={(checked) =>
+                        setNotifications((prev) => ({ ...prev, [item.key]: checked }))
                       }
                     />
                   </div>
@@ -844,11 +1075,26 @@ export function SettingsSection() {
             <CardContent>
               <div className="space-y-2">
                 {[
-                  { label: "Dark Mode", description: "Use dark theme throughout the app", defaultChecked: true },
-                  { label: "Compact View", description: "Show more information in less space", defaultChecked: false },
-                  { label: "Animations", description: "Enable smooth transitions and animations", defaultChecked: true },
+                  {
+                    label: 'Dark Mode',
+                    description: 'Use dark theme throughout the app',
+                    defaultChecked: true,
+                  },
+                  {
+                    label: 'Compact View',
+                    description: 'Show more information in less space',
+                    defaultChecked: false,
+                  },
+                  {
+                    label: 'Animations',
+                    description: 'Enable smooth transitions and animations',
+                    defaultChecked: true,
+                  },
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/50">
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/50"
+                  >
                     <div className="flex-1 pr-4">
                       <p className="font-medium">{item.label}</p>
                       <p className="text-sm text-muted-foreground">{item.description}</p>
@@ -869,9 +1115,15 @@ export function SettingsSection() {
               <CardDescription>Manage your account security settings</CardDescription>
             </CardHeader>
             <CardContent className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
-              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>Change Password</Button>
-              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>Enable Two-Factor Authentication</Button>
-              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>Manage API Keys</Button>
+              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>
+                Change Password
+              </Button>
+              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>
+                Enable Two-Factor Authentication
+              </Button>
+              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>
+                Manage API Keys
+              </Button>
             </CardContent>
           </Card>
         </TabsContent>

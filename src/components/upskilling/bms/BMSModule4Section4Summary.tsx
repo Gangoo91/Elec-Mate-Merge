@@ -12,7 +12,8 @@ export const BMSModule4Section4Summary = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          This section explored the critical role of shading, blinds, and façade automation in modern building performance and their integration with Building Management Systems.
+          This section explored the critical role of shading, blinds, and façade automation in
+          modern building performance and their integration with Building Management Systems.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -21,33 +22,45 @@ export const BMSModule4Section4Summary = () => {
               <Sun className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">Solar Control Systems</h4>
-                <p className="text-sm text-gray-300">Shading systems reduce solar gain and glare while supporting optimal daylighting and comfort.</p>
+                <p className="text-sm text-gray-300">
+                  Shading systems reduce solar gain and glare while supporting optimal daylighting
+                  and comfort.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-4 bg-gray-800 rounded-lg">
               <Settings className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">Automated Integration</h4>
-                <p className="text-sm text-gray-300">BMS coordination ensures shading works with HVAC and lighting for maximum efficiency.</p>
+                <p className="text-sm text-gray-300">
+                  BMS coordination ensures shading works with HVAC and lighting for maximum
+                  efficiency.
+                </p>
               </div>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-4 bg-gray-800 rounded-lg">
               <Network className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">Professional Installation</h4>
-                <p className="text-sm text-gray-300">Electricians must install motors, relays, and sensors with proper safety and labelling.</p>
+                <p className="text-sm text-gray-300">
+                  Electricians must install motors, relays, and sensors with proper safety and
+                  labelling.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-4 bg-gray-800 rounded-lg">
               <AlertTriangle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">Commissioning Excellence</h4>
-                <p className="text-sm text-gray-300">Correct commissioning and integration ensure energy savings without disrupting occupants.</p>
+                <p className="text-sm text-gray-300">
+                  Correct commissioning and integration ensure energy savings without disrupting
+                  occupants.
+                </p>
               </div>
             </div>
           </div>
@@ -56,26 +69,34 @@ export const BMSModule4Section4Summary = () => {
         {/* Technology Summary */}
         <div className="space-y-4">
           <h4 className="text-xl font-semibold text-elec-yellow">Key Technologies Covered</h4>
-          
+
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             <div className="bg-blue-900/30 border border-blue-600/40 rounded-lg p-3">
               <h5 className="font-semibold mb-2 text-blue-300 text-sm">Motorised Blinds</h5>
-              <p className="text-xs text-gray-300">Automated venetian blinds, roller shades, and vertical louvers</p>
+              <p className="text-xs text-gray-300">
+                Automated venetian blinds, roller shades, and vertical louvers
+              </p>
             </div>
-            
+
             <div className="bg-purple-900/30 border border-purple-600/40 rounded-lg p-3">
               <h5 className="font-semibold mb-2 text-purple-300 text-sm">Dynamic Façades</h5>
-              <p className="text-xs text-gray-300">Kinetic architecture and responsive building envelopes</p>
+              <p className="text-xs text-gray-300">
+                Kinetic architecture and responsive building envelopes
+              </p>
             </div>
-            
+
             <div className="bg-green-900/30 border border-green-600/40 rounded-lg p-3">
               <h5 className="font-semibold mb-2 text-green-300 text-sm">Smart Glass</h5>
-              <p className="text-xs text-gray-300">Electrochromic and thermochromic glazing systems</p>
+              <p className="text-xs text-gray-300">
+                Electrochromic and thermochromic glazing systems
+              </p>
             </div>
-            
+
             <div className="bg-orange-900/30 border border-orange-600/40 rounded-lg p-3">
               <h5 className="font-semibold mb-2 text-orange-300 text-sm">Solar Integration</h5>
-              <p className="text-xs text-gray-300">PV-integrated shading and energy-generating louvers</p>
+              <p className="text-xs text-gray-300">
+                PV-integrated shading and energy-generating louvers
+              </p>
             </div>
           </div>
         </div>

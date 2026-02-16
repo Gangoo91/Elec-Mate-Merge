@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 interface ProjectMetadata {
   documentRef: string;
@@ -46,7 +46,9 @@ export const ProjectMetadataForm = ({ metadata, onChange }: ProjectMetadataFormP
     <Card className="p-4 sm:p-6 space-y-6">
       <div>
         <h3 className="text-lg font-semibold mb-1">Project Metadata</h3>
-        <p className="text-sm text-muted-foreground">Complete these details for the formal method statement document</p>
+        <p className="text-sm text-muted-foreground">
+          Complete these details for the formal method statement document
+        </p>
       </div>
 
       {/* Document Information */}

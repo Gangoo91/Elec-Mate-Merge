@@ -39,129 +39,129 @@ export interface ProcessedCategoryData {
 
 // Updated category mapping to match backend logic (All 12 Categories)
 const categoryMapping: Record<string, string> = {
-  "Cables & Wiring": "cables",
-  "Electrical Components": "components", 
-  "Protection Equipment": "protection",
-  "Installation Accessories": "accessories",
-  "Lighting Solutions": "lighting",
-  "Fixings & Consumables": "fixings",
-  "Cable Management & Conduit": "cable-management",
-  "Smart Home & Controls": "smart-home",
-  "Data & Networking": "data-networking",
-  "Heating Controls": "heating-controls",
-  "EV Charging": "ev-charging",
-  "Fire & Security": "fire-security"
+  'Cables & Wiring': 'cables',
+  'Electrical Components': 'components',
+  'Protection Equipment': 'protection',
+  'Installation Accessories': 'accessories',
+  'Lighting Solutions': 'lighting',
+  'Fixings & Consumables': 'fixings',
+  'Cable Management & Conduit': 'cable-management',
+  'Smart Home & Controls': 'smart-home',
+  'Data & Networking': 'data-networking',
+  'Heating Controls': 'heating-controls',
+  'EV Charging': 'ev-charging',
+  'Fire & Security': 'fire-security',
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
   {
-    id: "cables",
-    title: "Cables & Wiring",
+    id: 'cables',
+    title: 'Cables & Wiring',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Prysmian", "Nexans", "Excel"],
+    priceRange: 'Loading...',
+    topBrands: ['Prysmian', 'Nexans', 'Excel'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "components", 
-    title: "Electrical Components",
+    id: 'components',
+    title: 'Electrical Components',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Schneider", "Hager", "Wylex"],
+    priceRange: 'Loading...',
+    topBrands: ['Schneider', 'Hager', 'Wylex'],
     popularItems: [],
-    trending: false
+    trending: false,
   },
   {
-    id: "protection",
-    title: "Protection Equipment",
+    id: 'protection',
+    title: 'Protection Equipment',
     productCount: 0,
-    priceRange: "Loading...", 
-    topBrands: ["Furse", "Dehn", "Phoenix"],
+    priceRange: 'Loading...',
+    topBrands: ['Furse', 'Dehn', 'Phoenix'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "accessories",
-    title: "Installation Accessories", 
+    id: 'accessories',
+    title: 'Installation Accessories',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Wiska", "Gewiss", "Marshall Tufflex"],
+    priceRange: 'Loading...',
+    topBrands: ['Wiska', 'Gewiss', 'Marshall Tufflex'],
     popularItems: [],
-    trending: false
+    trending: false,
   },
   {
-    id: "lighting",
-    title: "Lighting Solutions",
+    id: 'lighting',
+    title: 'Lighting Solutions',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Ansell", "Kosnic", "Aurora"],
+    priceRange: 'Loading...',
+    topBrands: ['Ansell', 'Kosnic', 'Aurora'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "fixings",
-    title: "Fixings & Consumables",
+    id: 'fixings',
+    title: 'Fixings & Consumables',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Fischer", "Rawlplug", "Hellermann"],
+    priceRange: 'Loading...',
+    topBrands: ['Fischer', 'Rawlplug', 'Hellermann'],
     popularItems: [],
-    trending: false
+    trending: false,
   },
   {
-    id: "cable-management",
-    title: "Cable Management & Conduit",
+    id: 'cable-management',
+    title: 'Cable Management & Conduit',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Marshall Tufflex", "Schneider", "Legrand"],
+    priceRange: 'Loading...',
+    topBrands: ['Marshall Tufflex', 'Schneider', 'Legrand'],
     popularItems: [],
-    trending: false
+    trending: false,
   },
   {
-    id: "smart-home",
-    title: "Smart Home & Controls",
+    id: 'smart-home',
+    title: 'Smart Home & Controls',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Schneider Wiser", "Hive", "Lightwave"],
+    priceRange: 'Loading...',
+    topBrands: ['Schneider Wiser', 'Hive', 'Lightwave'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "data-networking",
-    title: "Data & Networking",
+    id: 'data-networking',
+    title: 'Data & Networking',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Excel", "Panduit", "CommScope"],
+    priceRange: 'Loading...',
+    topBrands: ['Excel', 'Panduit', 'CommScope'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "heating-controls",
-    title: "Heating Controls",
+    id: 'heating-controls',
+    title: 'Heating Controls',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Honeywell", "Danfoss", "Nest"],
+    priceRange: 'Loading...',
+    topBrands: ['Honeywell', 'Danfoss', 'Nest'],
     popularItems: [],
-    trending: false
+    trending: false,
   },
   {
-    id: "ev-charging",
-    title: "EV Charging",
+    id: 'ev-charging',
+    title: 'EV Charging',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Pod Point", "Zappi", "Rolec"],
+    priceRange: 'Loading...',
+    topBrands: ['Pod Point', 'Zappi', 'Rolec'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "fire-security",
-    title: "Fire & Security",
+    id: 'fire-security',
+    title: 'Fire & Security',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Aico", "Honeywell", "Texecom"],
+    priceRange: 'Loading...',
+    topBrands: ['Aico', 'Honeywell', 'Texecom'],
     popularItems: [],
-    trending: false
-  }
+    trending: false,
+  },
 ];
 
 function extractPriceNumber(priceStr: string): number {
@@ -171,9 +171,9 @@ function extractPriceNumber(priceStr: string): number {
 
 // Simple function to add stock status if missing
 function ensureStockStatus(materials: MaterialItem[]): MaterialItem[] {
-  return materials.map(material => ({
+  return materials.map((material) => ({
     ...material,
-    stockStatus: material.stockStatus || (material.inStock !== false ? 'In Stock' : 'Out of Stock')
+    stockStatus: material.stockStatus || (material.inStock !== false ? 'In Stock' : 'Out of Stock'),
   }));
 }
 
@@ -182,8 +182,8 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
     return defaultCategoryData;
   }
 
-  return defaultCategoryData.map(defaultCategory => {
-    const categoryMaterials = materials.filter(material => {
+  return defaultCategoryData.map((defaultCategory) => {
+    const categoryMaterials = materials.filter((material) => {
       const mappedId = categoryMapping[material.category as keyof typeof categoryMapping];
       return mappedId === defaultCategory.id;
     });
@@ -193,59 +193,64 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
     }
 
     // Calculate price range
-    const prices = categoryMaterials
-      .map(m => extractPriceNumber(m.price))
-      .filter(p => p > 0);
-    
+    const prices = categoryMaterials.map((m) => extractPriceNumber(m.price)).filter((p) => p > 0);
+
     const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
     const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
-    const priceRange = prices.length > 0 ? `£${minPrice} - £${maxPrice}` : "Price on request";
+    const priceRange = prices.length > 0 ? `£${minPrice} - £${maxPrice}` : 'Price on request';
 
     // Extract suppliers as brands
-    const suppliers = [...new Set(categoryMaterials.map(m => m.supplier))];
+    const suppliers = [...new Set(categoryMaterials.map((m) => m.supplier))];
     const topBrands = suppliers.slice(0, 4);
 
     // Get popular items (top 3 by price relevance)
-    const popularItems = categoryMaterials
-      .slice(0, 3)
-      .map(material => ({
-        name: material.name,
-        price: material.price,
-        rating: 4.5 + Math.random() * 0.4, // Simulate rating between 4.5-4.9
-        sales: Math.floor(Math.random() * 200) + 50 // Simulate sales data
-      }));
+    const popularItems = categoryMaterials.slice(0, 3).map((material) => ({
+      name: material.name,
+      price: material.price,
+      rating: 4.5 + Math.random() * 0.4, // Simulate rating between 4.5-4.9
+      sales: Math.floor(Math.random() * 200) + 50, // Simulate sales data
+    }));
 
     return {
       ...defaultCategory,
       productCount: categoryMaterials.length,
       priceRange,
       topBrands: topBrands.length > 0 ? topBrands : defaultCategory.topBrands,
-      popularItems
+      popularItems,
     };
   });
 }
 
 // Material categories in marketplace_products (excludes tool categories)
 const MATERIAL_CATEGORIES = [
-  'lighting', 'circuit-protection', 'wiring-accessories', 'containment',
-  'cables', 'fixings', 'ppe', 'fire-security', 'data-networking',
-  'consumer-units', 'ev-charging', 'earthing'
+  'lighting',
+  'circuit-protection',
+  'wiring-accessories',
+  'containment',
+  'cables',
+  'fixings',
+  'ppe',
+  'fire-security',
+  'data-networking',
+  'consumer-units',
+  'ev-charging',
+  'earthing',
 ];
 
 // Map marketplace_products categories to our display categories
 const marketplaceToCategoryMap: Record<string, string> = {
-  'cables': 'cables',
-  'lighting': 'lighting',
-  'fixings': 'fixings',
+  cables: 'cables',
+  lighting: 'lighting',
+  fixings: 'fixings',
   'fire-security': 'fire-security',
   'data-networking': 'data-networking',
   'ev-charging': 'ev-charging',
   'circuit-protection': 'protection',
   'wiring-accessories': 'accessories',
-  'containment': 'cable-management',
+  containment: 'cable-management',
   'consumer-units': 'components',
-  'ppe': 'protection',
-  'earthing': 'components'
+  ppe: 'protection',
+  earthing: 'components',
 };
 
 export const useMaterialsData = () => {
@@ -258,7 +263,9 @@ export const useMaterialsData = () => {
         // Fetch MATERIALS from marketplace_products (filter by material categories)
         const { data, error } = await supabase
           .from('marketplace_products')
-          .select('id, name, brand, category, current_price, regular_price, is_on_sale, discount_percentage, image_url, product_url, stock_status, description, highlights')
+          .select(
+            'id, name, brand, category, current_price, regular_price, is_on_sale, discount_percentage, image_url, product_url, stock_status, description, highlights'
+          )
           .in('category', MATERIAL_CATEGORIES)
           .order('current_price', { ascending: true });
 
@@ -273,7 +280,7 @@ export const useMaterialsData = () => {
             data: defaultCategoryData,
             rawMaterials: [],
             fromCache: false,
-            totalMaterials: 0
+            totalMaterials: 0,
           };
         }
 
@@ -282,11 +289,15 @@ export const useMaterialsData = () => {
         // Transform marketplace_products to MaterialItem format
         const materials: MaterialItem[] = data.map((product: any, index: number) => {
           // Derive supplier from product URL
-          const supplier = product.product_url?.includes('toolstation') ? 'Toolstation'
-                         : product.product_url?.includes('screwfix') ? 'Screwfix'
-                         : product.product_url?.includes('cef') ? 'CEF'
-                         : product.product_url?.includes('edmundson') ? 'Edmundson'
-                         : 'Unknown';
+          const supplier = product.product_url?.includes('toolstation')
+            ? 'Toolstation'
+            : product.product_url?.includes('screwfix')
+              ? 'Screwfix'
+              : product.product_url?.includes('cef')
+                ? 'CEF'
+                : product.product_url?.includes('edmundson')
+                  ? 'Edmundson'
+                  : 'Unknown';
 
           // Format price as string with £
           const formatPrice = (price: number | string | null) => {
@@ -296,9 +307,10 @@ export const useMaterialsData = () => {
           };
 
           // Map to our display category
-          const displayCategory = Object.entries(categoryMapping).find(
-            ([, id]) => id === marketplaceToCategoryMap[product.category]
-          )?.[0] || product.category;
+          const displayCategory =
+            Object.entries(categoryMapping).find(
+              ([, id]) => id === marketplaceToCategoryMap[product.category]
+            )?.[0] || product.category;
 
           return {
             id: index + 1,
@@ -314,7 +326,7 @@ export const useMaterialsData = () => {
             isOnSale: product.is_on_sale || false,
             salePrice: product.is_on_sale ? formatPrice(product.current_price) : undefined,
             stockStatus: product.stock_status || 'In Stock',
-            inStock: product.stock_status !== 'Out of Stock'
+            inStock: product.stock_status !== 'Out of Stock',
           };
         });
 
@@ -324,7 +336,7 @@ export const useMaterialsData = () => {
           data: processedData,
           rawMaterials: materials,
           fromCache: true,
-          totalMaterials: materials.length
+          totalMaterials: materials.length,
         };
       } catch (error) {
         console.error('❌ Error in fetchMaterialsData:', error);
@@ -332,7 +344,7 @@ export const useMaterialsData = () => {
           data: defaultCategoryData,
           rawMaterials: [],
           fromCache: false,
-          totalMaterials: 0
+          totalMaterials: 0,
         };
       }
     },

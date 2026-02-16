@@ -12,11 +12,12 @@ export const ReadinessPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Exercise 1 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 1</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 1
+            </Badge>
             <h3 className="text-foreground font-semibold">Pre-Testing Safety Checklist</h3>
           </div>
           <div className="space-y-4">
@@ -51,26 +52,41 @@ export const ReadinessPractical = () => {
         {/* Exercise 2 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 2</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 2
+            </Badge>
             <h3 className="text-foreground font-semibold">Safe Isolation Procedure</h3>
           </div>
           <div className="space-y-4">
-            <p className="text-foreground">
-              Practice the complete safe isolation procedure:
-            </p>
+            <p className="text-foreground">Practice the complete safe isolation procedure:</p>
             <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" />
                 <div>
                   <h4 className="text-red-400 font-medium mb-2">Step-by-Step Procedure:</h4>
                   <ol className="text-foreground text-sm space-y-2 list-decimal list-inside">
-                    <li><strong>Identify the circuit:</strong> Verify correct circuit using circuit schedule</li>
-                    <li><strong>Test your tester:</strong> Verify voltage tester with proving unit</li>
-                    <li><strong>Switch off:</strong> Operate appropriate isolation device</li>
-                    <li><strong>Secure isolation:</strong> Lock off and tag isolation point</li>
-                    <li><strong>Test dead:</strong> Confirm no voltage present at work location</li>
-                    <li><strong>Test your tester again:</strong> Re-verify with proving unit</li>
-                    <li><strong>Begin work:</strong> Only now is it safe to commence testing</li>
+                    <li>
+                      <strong>Identify the circuit:</strong> Verify correct circuit using circuit
+                      schedule
+                    </li>
+                    <li>
+                      <strong>Test your tester:</strong> Verify voltage tester with proving unit
+                    </li>
+                    <li>
+                      <strong>Switch off:</strong> Operate appropriate isolation device
+                    </li>
+                    <li>
+                      <strong>Secure isolation:</strong> Lock off and tag isolation point
+                    </li>
+                    <li>
+                      <strong>Test dead:</strong> Confirm no voltage present at work location
+                    </li>
+                    <li>
+                      <strong>Test your tester again:</strong> Re-verify with proving unit
+                    </li>
+                    <li>
+                      <strong>Begin work:</strong> Only now is it safe to commence testing
+                    </li>
                   </ol>
                 </div>
               </div>
@@ -81,13 +97,13 @@ export const ReadinessPractical = () => {
         {/* Exercise 3 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 3</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 3
+            </Badge>
             <h3 className="text-foreground font-semibold">Equipment Verification Workshop</h3>
           </div>
           <div className="space-y-4">
-            <p className="text-foreground">
-              Learn to properly verify test equipment before use:
-            </p>
+            <p className="text-foreground">Learn to properly verify test equipment before use:</p>
             <div className="space-y-3">
               <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
                 <h4 className="text-blue-400 font-medium mb-2">Multifunction Tester Check:</h4>
@@ -116,7 +132,9 @@ export const ReadinessPractical = () => {
         {/* Exercise 4 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Exercise 4</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Exercise 4
+            </Badge>
             <h3 className="text-foreground font-semibold">Problem Scenarios Assessment</h3>
           </div>
           <div className="space-y-4">
@@ -130,19 +148,41 @@ export const ReadinessPractical = () => {
                   <h4 className="text-yellow-400 font-medium mb-2">Scenario Analysis:</h4>
                   <div className="space-y-3">
                     <div>
-                      <h5 className="text-foreground text-sm font-medium">Scenario A: Critical Equipment Cannot Be Disconnected</h5>
-                      <p className="text-foreground text-sm">Life support equipment in care home cannot be switched off for testing.</p>
-                      <p className="text-yellow-400 text-sm"><strong>Action:</strong> Arrange planned maintenance window or use specialised testing methods.</p>
+                      <h5 className="text-foreground text-sm font-medium">
+                        Scenario A: Critical Equipment Cannot Be Disconnected
+                      </h5>
+                      <p className="text-foreground text-sm">
+                        Life support equipment in care home cannot be switched off for testing.
+                      </p>
+                      <p className="text-yellow-400 text-sm">
+                        <strong>Action:</strong> Arrange planned maintenance window or use
+                        specialised testing methods.
+                      </p>
                     </div>
                     <div>
-                      <h5 className="text-foreground text-sm font-medium">Scenario B: Isolation Device Faulty</h5>
-                      <p className="text-foreground text-sm">Main isolator contacts are welded closed and cannot isolate circuit.</p>
-                      <p className="text-red-400 text-sm"><strong>Action:</strong> Stop work immediately. Repair isolation before any testing.</p>
+                      <h5 className="text-foreground text-sm font-medium">
+                        Scenario B: Isolation Device Faulty
+                      </h5>
+                      <p className="text-foreground text-sm">
+                        Main isolator contacts are welded closed and cannot isolate circuit.
+                      </p>
+                      <p className="text-red-400 text-sm">
+                        <strong>Action:</strong> Stop work immediately. Repair isolation before any
+                        testing.
+                      </p>
                     </div>
                     <div>
-                      <h5 className="text-foreground text-sm font-medium">Scenario C: Parallel Paths Discovered</h5>
-                      <p className="text-foreground text-sm">Circuit shows continuity when it should be isolated due to undocumented parallel path.</p>
-                      <p className="text-blue-400 text-sm"><strong>Action:</strong> Investigate parallel path, update documentation, reassess test approach.</p>
+                      <h5 className="text-foreground text-sm font-medium">
+                        Scenario C: Parallel Paths Discovered
+                      </h5>
+                      <p className="text-foreground text-sm">
+                        Circuit shows continuity when it should be isolated due to undocumented
+                        parallel path.
+                      </p>
+                      <p className="text-blue-400 text-sm">
+                        <strong>Action:</strong> Investigate parallel path, update documentation,
+                        reassess test approach.
+                      </p>
                     </div>
                   </div>
                 </div>

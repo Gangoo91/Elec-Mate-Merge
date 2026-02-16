@@ -10,7 +10,7 @@ export function useMobileKeyboard() {
   const { isMobile } = useMobileEnhanced();
   const [keyboardState, setKeyboardState] = useState<MobileKeyboardState>({
     isVisible: false,
-    height: 0
+    height: 0,
   });
 
   useEffect(() => {
@@ -21,13 +21,13 @@ export function useMobileKeyboard() {
     const handleResize = () => {
       const currentHeight = window.visualViewport?.height || window.innerHeight;
       const heightDifference = initialViewportHeight - currentHeight;
-      
+
       // Consider keyboard visible if viewport shrunk by more than 150px
       const isKeyboardVisible = heightDifference > 150;
-      
+
       setKeyboardState({
         isVisible: isKeyboardVisible,
-        height: isKeyboardVisible ? heightDifference : 0
+        height: isKeyboardVisible ? heightDifference : 0,
       });
     };
 

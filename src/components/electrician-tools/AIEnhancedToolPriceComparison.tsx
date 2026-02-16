@@ -1,21 +1,42 @@
-import { useState, useEffect, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Brain, Calculator, History, ChevronDown, Download, TrendingUp, Zap, Wrench, 
-  BatteryCharging, AlertTriangle, Scale, Search, Filter, ExternalLink, Star,
-  Loader2, BarChart3, Target
-} from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { ToolSearchInterface } from "./price-comparison/ToolSearchInterface";
+import { useState, useEffect, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Brain,
+  Calculator,
+  History,
+  ChevronDown,
+  Download,
+  TrendingUp,
+  Zap,
+  Wrench,
+  BatteryCharging,
+  AlertTriangle,
+  Scale,
+  Search,
+  Filter,
+  ExternalLink,
+  Star,
+  Loader2,
+  BarChart3,
+  Target,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { ToolSearchInterface } from './price-comparison/ToolSearchInterface';
 
 interface ToolItem {
   id: number;
@@ -59,7 +80,7 @@ interface AIInsights {
     categories: string[];
     averagePrice: number;
     topBrands: string[];
-    priceRange?: { min: number; max: number; };
+    priceRange?: { min: number; max: number };
   };
 }
 
@@ -71,17 +92,17 @@ interface AIEnhancedToolPriceComparisonProps {
   onAddMultipleToQuote?: (tools: any[]) => void;
 }
 
-const AIEnhancedToolPriceComparison = ({ 
-  initialQuery = "", 
-  selectedItems = [], 
-  onClearSelection, 
-  onAddToQuote, 
-  onAddMultipleToQuote 
+const AIEnhancedToolPriceComparison = ({
+  initialQuery = '',
+  selectedItems = [],
+  onClearSelection,
+  onAddToQuote,
+  onAddMultipleToQuote,
 }: AIEnhancedToolPriceComparisonProps) => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedSupplier, setSelectedSupplier] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedSupplier, setSelectedSupplier] = useState('all');
   const [isLoading, setIsLoading] = useState(false);
   const [isAiAnalyzing, setIsAiAnalyzing] = useState(false);
   const [comparisonResult, setComparisonResult] = useState<ToolPriceComparisonResult | null>(null);
@@ -125,16 +146,16 @@ const AIEnhancedToolPriceComparison = ({
       deliveryInfo: 'Standard',
       voltage: extractVoltage(item.name || ''),
       brand: extractBrand(item.name || ''),
-      toolType: extractToolType(item.name || '')
+      toolType: extractToolType(item.name || ''),
     }));
 
     // Filter out items with 0 price and sort by price
-    const validTools = processedTools.filter(t => t.numericPrice > 0);
+    const validTools = processedTools.filter((t) => t.numericPrice > 0);
     const sortedTools = validTools.sort((a, b) => a.numericPrice - b.numericPrice);
 
     if (sortedTools.length === 0) return null;
 
-    const prices = sortedTools.map(t => t.numericPrice);
+    const prices = sortedTools.map((t) => t.numericPrice);
     const cheapestPrice = Math.min(...prices);
     const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
     const priceRange = `${formatPrice(cheapestPrice)} - ${formatPrice(Math.max(...prices))}`;
@@ -144,22 +165,24 @@ const AIEnhancedToolPriceComparison = ({
       tools: sortedTools,
       cheapestPrice,
       averagePrice,
-      priceRange
+      priceRange,
     };
   };
 
   // Enhanced tool processing with tool-specific data enrichment
   const enrichToolData = (tool: any): ToolItem => {
     const supplierData = {
-      'Screwfix': { rating: 4.6, deliveryInfo: 'Click & Collect' },
-      'Toolstation': { rating: 4.5, deliveryInfo: 'Store Pickup' },
+      Screwfix: { rating: 4.6, deliveryInfo: 'Click & Collect' },
+      Toolstation: { rating: 4.5, deliveryInfo: 'Store Pickup' },
       'Amazon Business': { rating: 4.4, deliveryInfo: 'Next Day' },
-      'CEF': { rating: 4.8, deliveryInfo: 'Trade Counter' },
-      'RS Components': { rating: 4.7, deliveryInfo: 'Next Day' }
+      CEF: { rating: 4.8, deliveryInfo: 'Trade Counter' },
+      'RS Components': { rating: 4.7, deliveryInfo: 'Next Day' },
     };
 
-    const enrichment = supplierData[tool.supplier as keyof typeof supplierData] || 
-                     { rating: 4.4, deliveryInfo: 'Standard' };
+    const enrichment = supplierData[tool.supplier as keyof typeof supplierData] || {
+      rating: 4.4,
+      deliveryInfo: 'Standard',
+    };
 
     return {
       ...tool,
@@ -168,7 +191,7 @@ const AIEnhancedToolPriceComparison = ({
       deliveryInfo: enrichment.deliveryInfo,
       voltage: extractVoltage(tool.name),
       brand: extractBrand(tool.name),
-      toolType: extractToolType(tool.name)
+      toolType: extractToolType(tool.name),
     };
   };
 
@@ -178,16 +201,16 @@ const AIEnhancedToolPriceComparison = ({
       console.log('🚫 AI analysis skipped - disabled or no tools');
       return;
     }
-    
+
     console.log(`🤖 Running AI analysis on ${tools.length} tools...`);
     setIsAiAnalyzing(true);
-    
+
     try {
       const { data, error } = await supabase.functions.invoke('ai-tool-recommendations', {
-        body: { 
+        body: {
           searchQuery,
-          tools
-        }
+          tools,
+        },
       });
 
       console.log('🤖 AI analysis response:', { data, error });
@@ -202,9 +225,9 @@ const AIEnhancedToolPriceComparison = ({
     } catch (err: any) {
       console.error('❌ AI analysis failed:', err);
       toast({
-        title: "AI Analysis Failed",
-        description: "Tool comparison still available, but AI insights unavailable.",
-        variant: "destructive"
+        title: 'AI Analysis Failed',
+        description: 'Tool comparison still available, but AI insights unavailable.',
+        variant: 'destructive',
       });
       return null;
     } finally {
@@ -215,27 +238,27 @@ const AIEnhancedToolPriceComparison = ({
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
       toast({
-        title: "Search Required",
-        description: "Please enter a search term to find tools.",
-        variant: "destructive"
+        title: 'Search Required',
+        description: 'Please enter a search term to find tools.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     console.log('🔍 Starting tool search:', { searchQuery, selectedCategory, selectedSupplier });
-    
+
     setIsLoading(true);
     setError(null);
     setShowingPreSelected(false);
-    
+
     try {
       console.log('📡 Calling comprehensive-tools-scraper...');
       const { data, error } = await supabase.functions.invoke('comprehensive-tools-scraper', {
-        body: { 
-          categoryFilter: selectedCategory === 'all' ? null : selectedCategory, 
-          supplierFilter: selectedSupplier === 'all' ? null : selectedSupplier, 
-          searchTerm: searchQuery.trim()
-        }
+        body: {
+          categoryFilter: selectedCategory === 'all' ? null : selectedCategory,
+          supplierFilter: selectedSupplier === 'all' ? null : selectedSupplier,
+          searchTerm: searchQuery.trim(),
+        },
       });
 
       console.log('📡 Scraper response:', { data, error });
@@ -247,16 +270,16 @@ const AIEnhancedToolPriceComparison = ({
 
       if (data?.tools && data.tools.length > 0) {
         console.log(`✅ Found ${data.tools.length} tools`);
-        
+
         // Process and enrich the results
         const processedTools: ToolItem[] = data.tools.map(enrichToolData);
 
         // Filter out items with 0 price
-        const validTools = processedTools.filter(t => t.numericPrice > 0);
-        
+        const validTools = processedTools.filter((t) => t.numericPrice > 0);
+
         const sortedTools = validTools.sort((a, b) => a.numericPrice - b.numericPrice);
 
-        const prices = sortedTools.map(t => t.numericPrice);
+        const prices = sortedTools.map((t) => t.numericPrice);
         const cheapestPrice = Math.min(...prices);
         const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
         const priceRange = `${formatPrice(cheapestPrice)} - ${formatPrice(Math.max(...prices))}`;
@@ -267,7 +290,7 @@ const AIEnhancedToolPriceComparison = ({
           tools: sortedTools,
           cheapestPrice,
           averagePrice,
-          priceRange
+          priceRange,
         };
 
         setComparisonResult(result);
@@ -275,25 +298,27 @@ const AIEnhancedToolPriceComparison = ({
         // Run AI analysis in parallel
         if (aiEnabled) {
           console.log('🤖 Starting AI analysis...');
-          runAiAnalysis(sortedTools).then(aiInsights => {
+          runAiAnalysis(sortedTools).then((aiInsights) => {
             if (aiInsights) {
               console.log('✅ AI analysis completed');
-              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
+              setComparisonResult((prev) => (prev ? { ...prev, aiInsights } : null));
             }
           });
         }
       } else {
         console.log('⚠️ No tools found in response');
-        setError("No tools found for your search. Try different keywords or adjust filters.");
+        setError('No tools found for your search. Try different keywords or adjust filters.');
       }
     } catch (err: any) {
       console.error('❌ Search failed:', err);
-      const errorMessage = err.message || "Failed to fetch tool comparison data";
+      const errorMessage = err.message || 'Failed to fetch tool comparison data';
       setError(errorMessage);
       toast({
-        title: "Search Failed",
-        description: errorMessage.includes('fetch') ? "Network error - please check your connection" : "Please try again in a moment.",
-        variant: "destructive"
+        title: 'Search Failed',
+        description: errorMessage.includes('fetch')
+          ? 'Network error - please check your connection'
+          : 'Please try again in a moment.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -303,26 +328,28 @@ const AIEnhancedToolPriceComparison = ({
   // Export functionality
   const exportToPDF = async () => {
     if (!comparisonResult) return;
-    
+
     try {
       const exportData = {
         searchTerm: comparisonResult.searchTerm,
-        tools: comparisonResult.tools.map(t => ({
+        tools: comparisonResult.tools.map((t) => ({
           name: t.name,
           supplier: t.supplier,
           price: t.price,
           voltage: t.voltage,
           brand: t.brand,
           stockStatus: t.stockStatus,
-          savings: t.numericPrice === comparisonResult.cheapestPrice ? 'Best Price' : 
-                   `+${calculateSavings(t.numericPrice, comparisonResult.cheapestPrice)}%`
+          savings:
+            t.numericPrice === comparisonResult.cheapestPrice
+              ? 'Best Price'
+              : `+${calculateSavings(t.numericPrice, comparisonResult.cheapestPrice)}%`,
         })),
         summary: {
           totalTools: comparisonResult.tools.length,
           priceRange: comparisonResult.priceRange,
-          cheapestPrice: formatPrice(comparisonResult.cheapestPrice)
+          cheapestPrice: formatPrice(comparisonResult.cheapestPrice),
         },
-        exportDate: new Date().toLocaleDateString('en-GB')
+        exportDate: new Date().toLocaleDateString('en-GB'),
       };
 
       const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
@@ -336,14 +363,14 @@ const AIEnhancedToolPriceComparison = ({
       URL.revokeObjectURL(url);
 
       toast({
-        title: "Export Successful",
-        description: "Tool comparison data exported successfully.",
+        title: 'Export Successful',
+        description: 'Tool comparison data exported successfully.',
       });
     } catch (error) {
       toast({
-        title: "Export Failed",
-        description: "Failed to export comparison data.",
-        variant: "destructive"
+        title: 'Export Failed',
+        description: 'Failed to export comparison data.',
+        variant: 'destructive',
       });
     }
   };
@@ -352,7 +379,7 @@ const AIEnhancedToolPriceComparison = ({
   const handleClearSelection = () => {
     setComparisonResult(null);
     setShowingPreSelected(false);
-    setSearchQuery("");
+    setSearchQuery('');
     if (onClearSelection) {
       onClearSelection();
     }
@@ -365,12 +392,12 @@ const AIEnhancedToolPriceComparison = ({
       if (result) {
         setComparisonResult(result);
         setShowingPreSelected(true);
-        
+
         // Run AI analysis on pre-selected items if enabled
         if (aiEnabled) {
-          runAiAnalysis(result.tools).then(aiInsights => {
+          runAiAnalysis(result.tools).then((aiInsights) => {
             if (aiInsights) {
-              setComparisonResult(prev => prev ? { ...prev, aiInsights } : null);
+              setComparisonResult((prev) => (prev ? { ...prev, aiInsights } : null));
             }
           });
         }
@@ -383,7 +410,8 @@ const AIEnhancedToolPriceComparison = ({
       <div className="text-center space-y-4">
         <h2 className="text-3xl font-bold text-foreground">AI-Powered Tool Price Comparison</h2>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Compare tool prices across multiple suppliers with intelligent voltage compatibility and professional recommendations
+          Compare tool prices across multiple suppliers with intelligent voltage compatibility and
+          professional recommendations
         </p>
         <div className="flex items-center justify-center gap-4">
           <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
@@ -414,30 +442,30 @@ const AIEnhancedToolPriceComparison = ({
             {activeTab === 'bulk' && <Calculator className="h-4 w-4 text-elec-yellow" />}
             {activeTab === 'history' && <History className="h-4 w-4 text-elec-yellow" />}
             <span className="text-sm font-medium text-elec-light">
-              {activeTab === 'comparison' && "Tool Price Comparison"}
-              {activeTab === 'bulk' && "Bulk Tool Pricing"}
-              {activeTab === 'history' && "Price History & Alerts"}
+              {activeTab === 'comparison' && 'Tool Price Comparison'}
+              {activeTab === 'bulk' && 'Bulk Tool Pricing'}
+              {activeTab === 'history' && 'Price History & Alerts'}
             </span>
           </div>
           <ChevronDown className="h-4 w-4 text-elec-yellow transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </CollapsibleTrigger>
-        
+
         <CollapsibleContent className="mt-2">
           <div className="bg-elec-gray border border-elec-yellow/20 rounded-xl overflow-hidden">
             {[
               { key: 'comparison', label: 'Tool Price Comparison', icon: Brain, disabled: false },
               { key: 'bulk', label: 'Bulk Tool Pricing', icon: Calculator, disabled: true },
-              { key: 'history', label: 'Price History & Alerts', icon: History, disabled: true }
+              { key: 'history', label: 'Price History & Alerts', icon: History, disabled: true },
             ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => !tab.disabled && setActiveTab(tab.key as any)}
                 disabled={tab.disabled}
                 className={`w-full flex items-center gap-3 p-4 text-left transition-colors mobile-interactive touch-target ${
-                  activeTab === tab.key 
-                    ? 'bg-elec-yellow/10 text-elec-yellow border-l-2 border-elec-yellow' 
-                    : tab.disabled 
-                      ? 'text-muted-foreground cursor-not-allowed' 
+                  activeTab === tab.key
+                    ? 'bg-elec-yellow/10 text-elec-yellow border-l-2 border-elec-yellow'
+                    : tab.disabled
+                      ? 'text-muted-foreground cursor-not-allowed'
                       : 'text-elec-light hover:bg-elec-yellow/5'
                 }`}
               >
@@ -454,10 +482,14 @@ const AIEnhancedToolPriceComparison = ({
         </CollapsibleContent>
       </Collapsible>
 
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="space-y-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={(value) => setActiveTab(value as any)}
+        className="space-y-6"
+      >
         <TabsContent value="comparison" className="space-y-6">
           {/* Search Interface */}
-          <ToolSearchInterface 
+          <ToolSearchInterface
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             selectedCategory={selectedCategory}
@@ -553,32 +585,43 @@ const AIEnhancedToolPriceComparison = ({
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {comparisonResult.aiInsights.recommendations && comparisonResult.aiInsights.recommendations.length > 0 ? (
+                    {comparisonResult.aiInsights.recommendations &&
+                    comparisonResult.aiInsights.recommendations.length > 0 ? (
                       <div className="space-y-4">
-                        {comparisonResult.aiInsights.recommendations.map((rec: any, index: number) => (
-                          <div key={index} className="border border-blue-500/20 rounded-lg p-4">
-                            <div className="flex items-start gap-3">
-                              <div className="p-1 bg-blue-500/20 rounded">
-                                {rec.type === 'bundle' && <Zap className="h-3 w-3 text-blue-400" />}
-                                {rec.type === 'alternative' && <TrendingUp className="h-3 w-3 text-blue-400" />}
-                                {rec.type === 'upgrade' && <Brain className="h-3 w-3 text-blue-400" />}
-                                {rec.type === 'accessory' && <Wrench className="h-3 w-3 text-blue-400" />}
-                              </div>
-                              <div className="flex-1">
-                                <h4 className="font-medium text-blue-400 mb-1">{rec.title}</h4>
-                                <p className="text-sm text-blue-300/80 mb-2">{rec.description}</p>
-                                <p className="text-xs text-blue-400/60">{rec.reasoning}</p>
-                                {rec.potentialSavings && (
-                                  <div className="mt-2">
-                                    <Badge className="bg-green-500/20 text-green-400 text-xs">
-                                      {rec.potentialSavings}
-                                    </Badge>
-                                  </div>
-                                )}
+                        {comparisonResult.aiInsights.recommendations.map(
+                          (rec: any, index: number) => (
+                            <div key={index} className="border border-blue-500/20 rounded-lg p-4">
+                              <div className="flex items-start gap-3">
+                                <div className="p-1 bg-blue-500/20 rounded">
+                                  {rec.type === 'bundle' && (
+                                    <Zap className="h-3 w-3 text-blue-400" />
+                                  )}
+                                  {rec.type === 'alternative' && (
+                                    <TrendingUp className="h-3 w-3 text-blue-400" />
+                                  )}
+                                  {rec.type === 'upgrade' && (
+                                    <Brain className="h-3 w-3 text-blue-400" />
+                                  )}
+                                  {rec.type === 'accessory' && (
+                                    <Wrench className="h-3 w-3 text-blue-400" />
+                                  )}
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="font-medium text-blue-400 mb-1">{rec.title}</h4>
+                                  <p className="text-sm text-blue-300/80 mb-2">{rec.description}</p>
+                                  <p className="text-xs text-blue-400/60">{rec.reasoning}</p>
+                                  {rec.potentialSavings && (
+                                    <div className="mt-2">
+                                      <Badge className="bg-green-500/20 text-green-400 text-xs">
+                                        {rec.potentialSavings}
+                                      </Badge>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          )
+                        )}
                       </div>
                     ) : (
                       <p className="text-blue-400/60 text-sm">AI analysis in progress...</p>
@@ -590,28 +633,25 @@ const AIEnhancedToolPriceComparison = ({
               {/* Tools Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {comparisonResult.tools.map((tool) => (
-                  <Card key={tool.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
+                  <Card
+                    key={tool.id}
+                    className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors"
+                  >
                     <CardContent className="p-4">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold text-sm text-elec-light line-clamp-2">
                           {tool.name}
                         </h3>
                         {tool.isOnSale && (
-                          <Badge className="bg-red-500/20 text-red-400 text-xs">
-                            Sale
-                          </Badge>
+                          <Badge className="bg-red-500/20 text-red-400 text-xs">Sale</Badge>
                         )}
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-lg font-bold text-elec-yellow">
-                            {tool.price}
-                          </span>
+                          <span className="text-lg font-bold text-elec-yellow">{tool.price}</span>
                           <div className="text-right">
-                            <div className="text-xs text-muted-foreground">
-                              {tool.supplier}
-                            </div>
+                            <div className="text-xs text-muted-foreground">{tool.supplier}</div>
                             {tool.rating && (
                               <div className="text-xs text-yellow-400">
                                 ⭐ {tool.rating.toFixed(1)}
@@ -619,7 +659,7 @@ const AIEnhancedToolPriceComparison = ({
                             )}
                           </div>
                         </div>
-                        
+
                         <div className="flex flex-wrap gap-1">
                           {tool.stockStatus === 'In Stock' ? (
                             <Badge className="bg-green-500/20 text-green-400 text-xs">
@@ -641,19 +681,20 @@ const AIEnhancedToolPriceComparison = ({
                             </Badge>
                           )}
                         </div>
-                        
+
                         {/* Savings indicator */}
                         {tool.numericPrice !== comparisonResult.cheapestPrice && (
                           <div className="text-xs text-orange-400">
-                            +{calculateSavings(tool.numericPrice, comparisonResult.cheapestPrice)}% vs best price
+                            +{calculateSavings(tool.numericPrice, comparisonResult.cheapestPrice)}%
+                            vs best price
                           </div>
                         )}
-                        
+
                         <div className="flex gap-2">
                           {tool.productUrl && (
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
+                            <Button
+                              variant="outline"
+                              size="sm"
                               className="flex-1 text-xs"
                               onClick={() => window.open(tool.productUrl, '_blank')}
                             >
@@ -661,9 +702,9 @@ const AIEnhancedToolPriceComparison = ({
                             </Button>
                           )}
                           {onAddToQuote && (
-                            <Button 
-                              variant="secondary" 
-                              size="sm" 
+                            <Button
+                              variant="secondary"
+                              size="sm"
                               className="text-xs"
                               onClick={() => onAddToQuote(tool)}
                             >
@@ -717,7 +758,18 @@ function extractVoltage(name: string): string {
 }
 
 function extractBrand(name: string): string {
-  const brands = ['DeWalt', 'Makita', 'Bosch', 'Milwaukee', 'Fluke', 'Stanley', 'Klein', 'Wera', 'Festool', 'Hilti'];
+  const brands = [
+    'DeWalt',
+    'Makita',
+    'Bosch',
+    'Milwaukee',
+    'Fluke',
+    'Stanley',
+    'Klein',
+    'Wera',
+    'Festool',
+    'Hilti',
+  ];
   for (const brand of brands) {
     if (name.toLowerCase().includes(brand.toLowerCase())) {
       return brand;
@@ -729,22 +781,22 @@ function extractBrand(name: string): string {
 function extractToolType(name: string): string {
   const nameLower = name.toLowerCase();
   const types = {
-    'drill': 'Drill',
-    'driver': 'Driver',
-    'saw': 'Saw',
-    'grinder': 'Grinder',
-    'multimeter': 'Multimeter',
-    'tester': 'Tester',
-    'pliers': 'Pliers',
-    'screwdriver': 'Screwdriver',
-    'torch': 'Torch',
-    'level': 'Level'
+    drill: 'Drill',
+    driver: 'Driver',
+    saw: 'Saw',
+    grinder: 'Grinder',
+    multimeter: 'Multimeter',
+    tester: 'Tester',
+    pliers: 'Pliers',
+    screwdriver: 'Screwdriver',
+    torch: 'Torch',
+    level: 'Level',
   };
-  
+
   for (const [key, value] of Object.entries(types)) {
     if (nameLower.includes(key)) return value;
   }
-  
+
   return '';
 }
 

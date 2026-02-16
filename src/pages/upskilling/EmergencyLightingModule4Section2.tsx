@@ -1,72 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m4s2-check1",
-    question: "What is the main advantage of self-contained emergency luminaires?",
-    options: ["Lower initial cost", "Integrated battery and charger", "Higher light output", "Longer cable runs"],
+    id: 'emergencylighting-m4s2-check1',
+    question: 'What is the main advantage of self-contained emergency luminaires?',
+    options: [
+      'Lower initial cost',
+      'Integrated battery and charger',
+      'Higher light output',
+      'Longer cable runs',
+    ],
     correctIndex: 1,
-    explanation: "Self-contained luminaires have integral batteries and charging circuits, making installation simpler with no central battery room required. Each luminaire operates independently."
+    explanation:
+      'Self-contained luminaires have integral batteries and charging circuits, making installation simpler with no central battery room required. Each luminaire operates independently.',
   },
   {
-    id: "emergencylighting-m4s2-check2",
-    question: "When is a central battery system typically preferred?",
-    options: ["Small residential buildings", "Large installations with many luminaires", "Temporary installations", "Single-storey buildings"],
+    id: 'emergencylighting-m4s2-check2',
+    question: 'When is a central battery system typically preferred?',
+    options: [
+      'Small residential buildings',
+      'Large installations with many luminaires',
+      'Temporary installations',
+      'Single-storey buildings',
+    ],
     correctIndex: 1,
-    explanation: "Central battery systems are cost-effective for large installations where the central infrastructure cost is offset by simpler luminaires. They also allow centralised monitoring and maintenance."
+    explanation:
+      'Central battery systems are cost-effective for large installations where the central infrastructure cost is offset by simpler luminaires. They also allow centralised monitoring and maintenance.',
   },
   {
-    id: "emergencylighting-m4s2-check3",
-    question: "What is the typical battery life for self-contained luminaires?",
-    options: ["1-2 years", "3-4 years", "5-8 years", "10+ years"],
+    id: 'emergencylighting-m4s2-check3',
+    question: 'What is the typical battery life for self-contained luminaires?',
+    options: ['1-2 years', '3-4 years', '5-8 years', '10+ years'],
     correctIndex: 1,
-    explanation: "NiCd and NiMH batteries in self-contained units typically last 3-4 years. Li-ion may last longer. Regular testing identifies batteries approaching end of life."
-  }
+    explanation:
+      'NiCd and NiMH batteries in self-contained units typically last 3-4 years. Li-ion may last longer. Regular testing identifies batteries approaching end of life.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I mix self-contained and central systems in one building?",
-    answer: "Yes, hybrid installations are common. Self-contained units might protect escape routes while central systems serve larger areas. Each system must be compliant independently and documented clearly."
+    question: 'Can I mix self-contained and central systems in one building?',
+    answer:
+      'Yes, hybrid installations are common. Self-contained units might protect escape routes while central systems serve larger areas. Each system must be compliant independently and documented clearly.',
   },
   {
-    question: "What happens to self-contained luminaires during extended power cuts?",
-    answer: "Self-contained units illuminate for their rated duration (1 or 3 hours typically), then require 24 hours recharge before full duration is restored. Partial recharge gives partial duration."
+    question: 'What happens to self-contained luminaires during extended power cuts?',
+    answer:
+      'Self-contained units illuminate for their rated duration (1 or 3 hours typically), then require 24 hours recharge before full duration is restored. Partial recharge gives partial duration.',
   },
   {
-    question: "How do central battery systems handle luminaire failures?",
-    answer: "Central systems can monitor individual luminaires and report failures. The rest of the system continues operating. Self-contained failures affect only that luminaire but may go unnoticed without testing."
+    question: 'How do central battery systems handle luminaire failures?',
+    answer:
+      'Central systems can monitor individual luminaires and report failures. The rest of the system continues operating. Self-contained failures affect only that luminaire but may go unnoticed without testing.',
   },
   {
-    question: "What are the maintenance differences between system types?",
-    answer: "Central systems need centralised battery maintenance but luminaires need minimal attention. Self-contained requires each unit's battery to be maintained and eventually replaced across all luminaires."
-  }
+    question: 'What are the maintenance differences between system types?',
+    answer:
+      "Central systems need centralised battery maintenance but luminaires need minimal attention. Self-contained requires each unit's battery to be maintained and eventually replaced across all luminaires.",
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A shopping centre with 200 emergency luminaires requires a new system. Which system type would typically be most cost-effective?",
-  options: [
-    "Self-contained throughout",
-    "Central battery system",
-    "Hybrid with mostly self-contained",
-    "Individual generators per luminaire"
-  ],
-  correctAnswer: 1,
-  explanation: "For large installations like shopping centres, central battery systems become cost-effective. The centralised infrastructure cost is offset by simpler luminaires, and maintenance is concentrated rather than distributed across 200 units."
-  }
+    question:
+      'A shopping centre with 200 emergency luminaires requires a new system. Which system type would typically be most cost-effective?',
+    options: [
+      'Self-contained throughout',
+      'Central battery system',
+      'Hybrid with mostly self-contained',
+      'Individual generators per luminaire',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'For large installations like shopping centres, central battery systems become cost-effective. The centralised infrastructure cost is offset by simpler luminaires, and maintenance is concentrated rather than distributed across 200 units.',
+  },
 ];
 
 const EmergencyLightingModule4Section2 = () => {
   useSEO({
-    title: "Self-Contained vs Central Battery | Emergency Lighting Module 4.2",
-    description: "Compare self-contained and central battery emergency lighting systems, understand applications, costs, and maintenance considerations."
+    title: 'Self-Contained vs Central Battery | Emergency Lighting Module 4.2',
+    description:
+      'Compare self-contained and central battery emergency lighting systems, understand applications, costs, and maintenance considerations.',
   });
 
   return (
@@ -98,9 +118,7 @@ const EmergencyLightingModule4Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Self-Contained vs Central Battery Systems
           </h1>
-          <p className="text-white/80">
-            System architectures and backup power options
-          </p>
+          <p className="text-white/80">System architectures and backup power options</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +126,29 @@ const EmergencyLightingModule4Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Self-contained:</strong> Integral battery per unit</li>
-              <li><strong>Central:</strong> Shared battery room</li>
-              <li><strong>Hybrid:</strong> Mix of both types</li>
+              <li>
+                <strong>Self-contained:</strong> Integral battery per unit
+              </li>
+              <li>
+                <strong>Central:</strong> Shared battery room
+              </li>
+              <li>
+                <strong>Hybrid:</strong> Mix of both types
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Selection Factors</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Scale:</strong> Number of luminaires</li>
-              <li><strong>Maintenance:</strong> Access considerations</li>
-              <li><strong>Cost:</strong> Initial vs ongoing</li>
+              <li>
+                <strong>Scale:</strong> Number of luminaires
+              </li>
+              <li>
+                <strong>Maintenance:</strong> Access considerations
+              </li>
+              <li>
+                <strong>Cost:</strong> Initial vs ongoing
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +158,12 @@ const EmergencyLightingModule4Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Compare system architectures",
-              "Identify suitable applications",
-              "Understand cost implications",
-              "Plan maintenance strategies",
-              "Select appropriate systems",
-              "Design hybrid solutions"
+              'Compare system architectures',
+              'Identify suitable applications',
+              'Understand cost implications',
+              'Plan maintenance strategies',
+              'Select appropriate systems',
+              'Design hybrid solutions',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,9 +183,8 @@ const EmergencyLightingModule4Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Self-contained luminaires integrate the battery, charger, and control
-              electronics within each fitting. They operate independently of other
-              luminaires in the system.
+              Self-contained luminaires integrate the battery, charger, and control electronics
+              within each fitting. They operate independently of other luminaires in the system.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -206,26 +235,35 @@ const EmergencyLightingModule4Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Central battery systems locate all batteries in a dedicated room, with
-              sub-circuits distributing DC power to simpler luminaires without integral
-              batteries.
+              Central battery systems locate all batteries in a dedicated room, with sub-circuits
+              distributing DC power to simpler luminaires without integral batteries.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">System Components:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Battery room:</strong> Dedicated space with ventilation</li>
-                <li><strong>Charger:</strong> Maintains battery charge</li>
-                <li><strong>Changeover:</strong> Switches to battery on mains fail</li>
-                <li><strong>Sub-circuits:</strong> DC distribution to luminaires</li>
-                <li><strong>Monitoring:</strong> Centralised fault detection</li>
+                <li>
+                  <strong>Battery room:</strong> Dedicated space with ventilation
+                </li>
+                <li>
+                  <strong>Charger:</strong> Maintains battery charge
+                </li>
+                <li>
+                  <strong>Changeover:</strong> Switches to battery on mains fail
+                </li>
+                <li>
+                  <strong>Sub-circuits:</strong> DC distribution to luminaires
+                </li>
+                <li>
+                  <strong>Monitoring:</strong> Centralised fault detection
+                </li>
               </ul>
             </div>
 
             <p>
-              Central systems suit large installations where the infrastructure cost is
-              offset by simpler luminaires and centralised maintenance. BS EN 50171
-              specifies central power supply system requirements.
+              Central systems suit large installations where the infrastructure cost is offset by
+              simpler luminaires and centralised maintenance. BS EN 50171 specifies central power
+              supply system requirements.
             </p>
           </div>
         </section>
@@ -240,13 +278,15 @@ const EmergencyLightingModule4Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Selection depends on building size, maintenance capability, and total
-              cost of ownership over the system lifetime.
+              Selection depends on building size, maintenance capability, and total cost of
+              ownership over the system lifetime.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Self-Contained Best For</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Self-Contained Best For
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Small to medium buildings</li>
                   <li>Simple installations</li>
@@ -274,7 +314,9 @@ const EmergencyLightingModule4Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cost Analysis Factors</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cost Analysis Factors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Initial installation cost per luminaire</li>
                 <li>Battery replacement costs over 20 years</li>
@@ -287,10 +329,18 @@ const EmergencyLightingModule4Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Selection Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Initial cost only:</strong> — Ignoring lifetime maintenance</li>
-                <li><strong>Wrong scale choice:</strong> — Central for small, self-contained for large</li>
-                <li><strong>Access ignored:</strong> — High-level self-contained units</li>
-                <li><strong>No monitoring:</strong> — Missing failures until test</li>
+                <li>
+                  <strong>Initial cost only:</strong> — Ignoring lifetime maintenance
+                </li>
+                <li>
+                  <strong>Wrong scale choice:</strong> — Central for small, self-contained for large
+                </li>
+                <li>
+                  <strong>Access ignored:</strong> — High-level self-contained units
+                </li>
+                <li>
+                  <strong>No monitoring:</strong> — Missing failures until test
+                </li>
               </ul>
             </div>
           </div>
@@ -336,10 +386,7 @@ const EmergencyLightingModule4Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

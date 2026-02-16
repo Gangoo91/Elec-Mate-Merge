@@ -12,7 +12,8 @@ const SmartHomeModule7Section4Practical = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground mb-4">
-          As an electrician working with smart home systems, these practical safety guidelines will ensure BS 7671 compliance and professional standards:
+          As an electrician working with smart home systems, these practical safety guidelines will
+          ensure BS 7671 compliance and professional standards:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -4,98 +4,100 @@ import { Target, Lightbulb, Home, Wifi } from 'lucide-react';
 export const BestUseCasesSection = () => {
   const useCases = [
     {
-      protocol: "Zigbee",
+      protocol: 'Zigbee',
       icon: Lightbulb,
-      title: "Dense Lighting Systems",
-      description: "Large numbers of smart bulbs and switches",
+      title: 'Dense Lighting Systems',
+      description: 'Large numbers of smart bulbs and switches',
       reasons: [
-        "Supports thousands of devices per network",
-        "Wide variety of lighting manufacturers",
-        "Cost-effective for large installations",
-        "Excellent mesh networking for coverage"
+        'Supports thousands of devices per network',
+        'Wide variety of lighting manufacturers',
+        'Cost-effective for large installations',
+        'Excellent mesh networking for coverage',
       ],
-      examples: "Office buildings, hotels, large homes with 30+ lights",
-      bestFor: "High device count scenarios"
+      examples: 'Office buildings, hotels, large homes with 30+ lights',
+      bestFor: 'High device count scenarios',
     },
     {
-      protocol: "Zigbee",
+      protocol: 'Zigbee',
       icon: Wifi,
-      title: "Smart Sensors",
-      description: "Motion, door/window, temperature sensors",
+      title: 'Smart Sensors',
+      description: 'Motion, door/window, temperature sensors',
       reasons: [
-        "Ultra-low power consumption",
-        "Large selection of sensor types",
-        "Affordable sensor options",
-        "Good for dense sensor networks"
+        'Ultra-low power consumption',
+        'Large selection of sensor types',
+        'Affordable sensor options',
+        'Good for dense sensor networks',
       ],
-      examples: "Security systems, environmental monitoring, automation triggers",
-      bestFor: "Battery-powered devices"
+      examples: 'Security systems, environmental monitoring, automation triggers',
+      bestFor: 'Battery-powered devices',
     },
     {
-      protocol: "Z-Wave",
+      protocol: 'Z-Wave',
       icon: Home,
-      title: "Large Homes with Thick Walls",
-      description: "Properties with challenging RF environments",
+      title: 'Large Homes with Thick Walls',
+      description: 'Properties with challenging RF environments',
       reasons: [
-        "Superior wall penetration (sub-1GHz)",
-        "Longer range per device",
-        "No interference from Wi-Fi",
-        "Reliable performance in difficult environments"
+        'Superior wall penetration (sub-1GHz)',
+        'Longer range per device',
+        'No interference from Wi-Fi',
+        'Reliable performance in difficult environments',
       ],
-      examples: "Stone houses, concrete buildings, multi-story homes",
-      bestFor: "Range and penetration critical"
+      examples: 'Stone houses, concrete buildings, multi-story homes',
+      bestFor: 'Range and penetration critical',
     },
     {
-      protocol: "Z-Wave",
+      protocol: 'Z-Wave',
       icon: Target,
-      title: "Professional Security Systems",
-      description: "Mission-critical security and access control",
+      title: 'Professional Security Systems',
+      description: 'Mission-critical security and access control',
       reasons: [
-        "Guaranteed interoperability",
-        "Professional-grade reliability",
-        "Strong certification process",
-        "Excellent for locks and security devices"
+        'Guaranteed interoperability',
+        'Professional-grade reliability',
+        'Strong certification process',
+        'Excellent for locks and security devices',
       ],
-      examples: "Commercial buildings, high-end residential, professional installs",
-      bestFor: "Reliability is paramount"
-    }
+      examples: 'Commercial buildings, high-end residential, professional installs',
+      bestFor: 'Reliability is paramount',
+    },
   ];
 
   const scenarioMatrix = [
     {
-      scenario: "Modern apartment with 50+ smart bulbs",
-      recommended: "Zigbee",
-      reasoning: "High device count, cost considerations, adequate range in smaller space"
+      scenario: 'Modern apartment with 50+ smart bulbs',
+      recommended: 'Zigbee',
+      reasoning: 'High device count, cost considerations, adequate range in smaller space',
     },
     {
-      scenario: "Victorian house with thick stone walls",
-      recommended: "Z-Wave",
-      reasoning: "Superior wall penetration, longer range, fewer devices needed"
+      scenario: 'Victorian house with thick stone walls',
+      recommended: 'Z-Wave',
+      reasoning: 'Superior wall penetration, longer range, fewer devices needed',
     },
     {
-      scenario: "Budget-conscious first smart home",
-      recommended: "Zigbee",
-      reasoning: "Lower device costs, wide selection, good starter ecosystem"
+      scenario: 'Budget-conscious first smart home',
+      recommended: 'Zigbee',
+      reasoning: 'Lower device costs, wide selection, good starter ecosystem',
     },
     {
-      scenario: "Professional security installation",
-      recommended: "Z-Wave",
-      reasoning: "Guaranteed reliability, professional support, certified interoperability"
+      scenario: 'Professional security installation',
+      recommended: 'Z-Wave',
+      reasoning: 'Guaranteed reliability, professional support, certified interoperability',
     },
     {
-      scenario: "Dense sensor network (100+ sensors)",
-      recommended: "Zigbee",
-      reasoning: "Unlimited device support, cost-effective sensors, good mesh"
+      scenario: 'Dense sensor network (100+ sensors)',
+      recommended: 'Zigbee',
+      reasoning: 'Unlimited device support, cost-effective sensors, good mesh',
     },
     {
-      scenario: "Rural property with outbuildings",
-      recommended: "Z-Wave",
-      reasoning: "Maximum range, excellent outdoor performance, fewer repeaters needed"
-    }
+      scenario: 'Rural property with outbuildings',
+      recommended: 'Z-Wave',
+      reasoning: 'Maximum range, excellent outdoor performance, fewer repeaters needed',
+    },
   ];
 
   const getProtocolColor = (protocol: string) => {
-    return protocol === 'Zigbee' ? 'border-blue-600 bg-blue-900/20' : 'border-green-600 bg-green-900/20';
+    return protocol === 'Zigbee'
+      ? 'border-blue-600 bg-blue-900/20'
+      : 'border-green-600 bg-green-900/20';
   };
 
   const getProtocolTextColor = (protocol: string) => {
@@ -112,27 +114,35 @@ export const BestUseCasesSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg font-medium text-foreground mb-6">
-          Choose the right protocol based on specific installation requirements and use case characteristics.
+          Choose the right protocol based on specific installation requirements and use case
+          characteristics.
         </p>
-        
+
         {/* Use Case Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {useCases.map((useCase, index) => (
-            <div key={index} className={`p-4 border rounded-lg ${getProtocolColor(useCase.protocol)}`}>
+            <div
+              key={index}
+              className={`p-4 border rounded-lg ${getProtocolColor(useCase.protocol)}`}
+            >
               <div className="flex items-start gap-3 mb-3">
                 <useCase.icon className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-foreground">{useCase.title}</h4>
-                    <span className={`text-xs px-2 py-1 rounded font-medium ${getProtocolTextColor(useCase.protocol)}`}>
+                    <span
+                      className={`text-xs px-2 py-1 rounded font-medium ${getProtocolTextColor(useCase.protocol)}`}
+                    >
                       {useCase.protocol}
                     </span>
                   </div>
                   <p className="text-gray-300 text-sm mb-3">{useCase.description}</p>
-                  
+
                   <div className="space-y-3">
                     <div>
-                      <h5 className="text-xs font-medium text-gray-400 mb-2">Why {useCase.protocol}:</h5>
+                      <h5 className="text-xs font-medium text-gray-400 mb-2">
+                        Why {useCase.protocol}:
+                      </h5>
                       <ul className="space-y-1">
                         {useCase.reasons.map((reason, reasonIndex) => (
                           <li key={reasonIndex} className="flex items-center gap-2">
@@ -142,12 +152,12 @@ export const BestUseCasesSection = () => {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="text-xs font-medium text-gray-400 mb-1">Examples:</h5>
                       <p className="text-xs text-gray-300">{useCase.examples}</p>
                     </div>
-                    
+
                     <div>
                       <h5 className="text-xs font-medium text-gray-400 mb-1">Best for:</h5>
                       <p className="text-xs font-semibold text-foreground">{useCase.bestFor}</p>
@@ -167,9 +177,13 @@ export const BestUseCasesSection = () => {
               <div key={index} className="p-3 bg-[#0f0f0f] border border-gray-700 rounded">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                   <h5 className="font-medium text-foreground">{scenario.scenario}</h5>
-                  <span className={`text-sm font-medium px-2 py-1 rounded ${
-                    scenario.recommended === 'Zigbee' ? 'bg-blue-600 text-blue-100' : 'bg-green-600 text-green-100'
-                  }`}>
+                  <span
+                    className={`text-sm font-medium px-2 py-1 rounded ${
+                      scenario.recommended === 'Zigbee'
+                        ? 'bg-blue-600 text-blue-100'
+                        : 'bg-green-600 text-green-100'
+                    }`}
+                  >
                     {scenario.recommended}
                   </span>
                 </div>
@@ -202,7 +216,7 @@ export const BestUseCasesSection = () => {
               </li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-green-900/20 border border-green-600 rounded-lg">
             <h4 className="font-semibold text-green-200 mb-3">Z-Wave Installation Tips</h4>
             <ul className="space-y-2 text-sm text-green-100">

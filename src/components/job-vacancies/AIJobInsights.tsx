@@ -1,8 +1,7 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Brain, TrendingUp, MapPin, Clock, Users } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Brain, TrendingUp, MapPin, Clock, Users } from 'lucide-react';
 
 interface AIInsights {
   averageRelevance: number;
@@ -75,27 +74,24 @@ const AIJobInsights: React.FC<AIJobInsightsProps> = ({ insights, isLoading }) =>
               {insights.averageRelevance?.toFixed(0)}%
             </div>
           </div>
-          
+
           <div className="text-center p-3 bg-elec-yellow/10 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Users className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-medium">Jobs Analyzed</span>
             </div>
-            <div className="text-xl font-bold text-foreground">
-              {insights.totalProcessed || 0}
-            </div>
+            <div className="text-xl font-bold text-foreground">{insights.totalProcessed || 0}</div>
           </div>
-          
+
           <div className="text-center p-3 bg-elec-yellow/10 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <MapPin className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-medium">Salary Range</span>
             </div>
             <div className="text-sm font-bold text-foreground">
-              {insights.salaryRange?.min && insights.salaryRange?.max ? 
-                `${formatSalary(insights.salaryRange.min)} - ${formatSalary(insights.salaryRange.max)}` :
-                'N/A'
-              }
+              {insights.salaryRange?.min && insights.salaryRange?.max
+                ? `${formatSalary(insights.salaryRange.min)} - ${formatSalary(insights.salaryRange.max)}`
+                : 'N/A'}
             </div>
           </div>
         </div>
@@ -109,9 +105,9 @@ const AIJobInsights: React.FC<AIJobInsightsProps> = ({ insights, isLoading }) =>
             </h4>
             <div className="flex flex-wrap gap-1">
               {insights.topCategories.map((category, index) => (
-                <Badge 
-                  key={index} 
-                  variant="secondary" 
+                <Badge
+                  key={index}
+                  variant="secondary"
                   className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
                 >
                   {category}

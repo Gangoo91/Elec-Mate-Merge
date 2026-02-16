@@ -1,40 +1,45 @@
-import { ArrowLeft, ClipboardCheck, Eye, FileSearch, Wrench, FolderOpen } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ClipboardCheck, Eye, FileSearch, Wrench, FolderOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Pre-Use Visual Checks",
+    title: 'Pre-Use Visual Checks',
     icon: Eye,
-    description: "Daily checks before each use — component damage, missing parts, castor brakes, stabilisers, guardrails, and ground conditions",
+    description:
+      'Daily checks before each use — component damage, missing parts, castor brakes, stabilisers, guardrails, and ground conditions',
   },
   {
     id: 2,
-    title: "Formal Inspections",
+    title: 'Formal Inspections',
     icon: FileSearch,
-    description: "7-day statutory inspections under WAHR Schedule 7, competent person requirements, and written report obligations",
+    description:
+      '7-day statutory inspections under WAHR Schedule 7, competent person requirements, and written report obligations',
   },
   {
     id: 3,
-    title: "Common Defects & Component Care",
+    title: 'Common Defects & Component Care',
     icon: Wrench,
-    description: "Identifying bent frames, cracked welds, worn castors, cleaning procedures, storage, transport, and condemning equipment",
+    description:
+      'Identifying bent frames, cracked welds, worn castors, cleaning procedures, storage, transport, and condemning equipment',
   },
   {
     id: 4,
-    title: "Documentation & Record Keeping",
+    title: 'Documentation & Record Keeping',
     icon: FolderOpen,
-    description: "Tower Inspection Records, retention periods, PASMA TowerSure app, handover procedures, and RIDDOR reporting",
+    description:
+      'Tower Inspection Records, retention periods, PASMA TowerSure app, handover procedures, and RIDDOR reporting',
   },
 ];
 
 export default function IpafModule4() {
   useSEO({
-    title: "Module 4: Inspection & Maintenance | IPAF Mobile Scaffold",
-    description: "Pre-use checks, formal inspections, common defects, component care, and documentation requirements for mobile access towers.",
+    title: 'Module 4: Inspection & Maintenance | IPAF Mobile Scaffold',
+    description:
+      'Pre-use checks, formal inspections, common defects, component care, and documentation requirements for mobile access towers.',
   });
 
   return (
@@ -73,7 +78,8 @@ export default function IpafModule4() {
               Inspection & Maintenance
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Pre-use checks, formal inspections, common defects, and documentation requirements for mobile access towers
+              Pre-use checks, formal inspections, common defects, and documentation requirements for
+              mobile access towers
             </p>
           </div>
 

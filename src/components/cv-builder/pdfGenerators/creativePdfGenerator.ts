@@ -70,13 +70,17 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
   pdf.setFontSize(cvData.personalInfo.photoUrl ? 22 : 30);
   setColor(pdf, '#ffffff');
   const name = cvData.personalInfo.fullName || 'Your Name';
-  pdf.text(name, pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 6 : 16), { align: 'center' });
+  pdf.text(name, pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 6 : 16), {
+    align: 'center',
+  });
 
   // Professional title - centered below name
   const professionalTitle = generateProfessionalTitle(cvData);
   pdf.setFont('helvetica', 'normal');
   pdf.setFontSize(11);
-  pdf.text(professionalTitle, pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 14 : 26), { align: 'center' });
+  pdf.text(professionalTitle, pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 14 : 26), {
+    align: 'center',
+  });
 
   // Contact info - centered at bottom of header
   pdf.setFontSize(9);
@@ -86,13 +90,20 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
     [cvData.personalInfo.address, cvData.personalInfo.postcode].filter(Boolean).join(', '),
   ].filter(Boolean);
   if (contactParts.length > 0) {
-    pdf.text(contactParts.join('  |  '), pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 22 : 38), { align: 'center' });
+    pdf.text(
+      contactParts.join('  |  '),
+      pageWidth / 2,
+      headerY + (cvData.personalInfo.photoUrl ? 22 : 38),
+      { align: 'center' }
+    );
   }
 
   // LinkedIn if present
   if (cvData.personalInfo.linkedIn) {
     pdf.setFontSize(8);
-    pdf.text(formatLinkedInUrl(cvData.personalInfo.linkedIn), pageWidth / 2, headerHeight - 4, { align: 'center' });
+    pdf.text(formatLinkedInUrl(cvData.personalInfo.linkedIn), pageWidth / 2, headerHeight - 4, {
+      align: 'center',
+    });
   }
 
   y = headerHeight + 12;
@@ -102,7 +113,14 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
   // ═══════════════════════════════════════════════════════════════════════════
 
   if (cvData.professionalCards.ecsCardType) {
-    y = addECSBadge(pdf, cvData.professionalCards.ecsCardType, cvData.professionalCards.ecsExpiry, margin, y, 55);
+    y = addECSBadge(
+      pdf,
+      cvData.professionalCards.ecsCardType,
+      cvData.professionalCards.ecsExpiry,
+      margin,
+      y,
+      55
+    );
 
     // Driving licences on same line if present
     if (cvData.professionalCards.drivingLicence.length > 0) {
@@ -130,7 +148,10 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
     y = checkPageBreak(pdf, y, 50);
 
     // Light purple background box
-    const summaryLines = pdf.splitTextToSize(cvData.personalInfo.professionalSummary, contentWidth - 20);
+    const summaryLines = pdf.splitTextToSize(
+      cvData.personalInfo.professionalSummary,
+      contentWidth - 20
+    );
     const boxHeight = summaryLines.length * 5 + 18;
 
     drawRect(pdf, margin, y, contentWidth, boxHeight, '#faf5ff', 4);
@@ -216,8 +237,9 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
   // KEY CERTIFICATIONS - Badge style at top
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const { essential: essentialCerts, additional: additionalCerts } =
-    categoriseCertifications(cvData.certifications);
+  const { essential: essentialCerts, additional: additionalCerts } = categoriseCertifications(
+    cvData.certifications
+  );
 
   if (essentialCerts.length > 0) {
     y = checkPageBreak(pdf, y, 30);
@@ -372,7 +394,9 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
       pdf.setFont('helvetica', 'normal');
       pdf.setFontSize(9);
       setColor(pdf, colors.secondary);
-      const institutionLine = edu.location ? `${edu.institution}, ${edu.location}` : edu.institution;
+      const institutionLine = edu.location
+        ? `${edu.institution}, ${edu.location}`
+        : edu.institution;
       pdf.text(institutionLine, margin + 6, y + 10);
 
       // Date and grade
@@ -469,7 +493,7 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
   } else {
     const refWidth = contentWidth / 2;
     cvData.references.slice(0, 2).forEach((ref, index) => {
-      const refX = margin + (index * refWidth);
+      const refX = margin + index * refWidth;
 
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(10);

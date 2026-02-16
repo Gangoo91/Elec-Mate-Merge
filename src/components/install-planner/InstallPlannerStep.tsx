@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { InstallPlanData } from "./types";
-import LoadTypeSelectionStep from "./LoadTypeSelectionStep";
-import LoadDetailsStep from "./LoadDetailsStep";
-import CableRunStep from "./CableRunStep";
-import InstallationTypeStep from "./InstallationTypeStep";
-import EnvironmentalIntelligenceStep from "./EnvironmentalIntelligenceStep";
-import ResultsStep from "./ResultsStep";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { SIMPLIFIED_CIRCUIT_TEMPLATES } from "./SimplifiedCircuitDefaults";
+import { useState, useEffect } from 'react';
+import { InstallPlanData } from './types';
+import LoadTypeSelectionStep from './LoadTypeSelectionStep';
+import LoadDetailsStep from './LoadDetailsStep';
+import CableRunStep from './CableRunStep';
+import InstallationTypeStep from './InstallationTypeStep';
+import EnvironmentalIntelligenceStep from './EnvironmentalIntelligenceStep';
+import ResultsStep from './ResultsStep';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { SIMPLIFIED_CIRCUIT_TEMPLATES } from './SimplifiedCircuitDefaults';
 
 interface InstallPlannerStepProps {
   initialData?: Partial<InstallPlanData>;
@@ -20,60 +20,60 @@ interface InstallPlannerStepProps {
 const InstallPlannerStep = ({ initialData, onPlanUpdate }: InstallPlannerStepProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [planData, setPlanData] = useState<InstallPlanData>({
-    installationType: "domestic",
-    loadType: "",
+    installationType: 'domestic',
+    loadType: '',
     totalLoad: 0,
     voltage: 230,
-    phases: "single",
+    phases: 'single',
     powerFactor: 0.85,
     cableLength: 20,
-    cableType: "pvc-twin-earth",
-    installationMethod: "clipped-direct",
+    cableType: 'pvc-twin-earth',
+    installationMethod: 'clipped-direct',
     ambientTemperature: 30,
     groupingFactor: 1.0,
-    protectiveDevice: "mcb-b",
+    protectiveDevice: 'mcb-b',
     environmentalSettings: {
       ambientTemperature: 30,
-      environmentalConditions: "standard",
-      earthingSystem: "tncs",
+      environmentalConditions: 'standard',
+      earthingSystem: 'tncs',
       ze: 0.35,
       globalGroupingFactor: 1.0,
-      specialRequirements: []
+      specialRequirements: [],
     },
-    ...initialData
+    ...initialData,
   });
 
   const steps = [
-    { 
-      title: "Installation Type", 
+    {
+      title: 'Installation Type',
       component: InstallationTypeStep,
-      description: "Select the type of installation" 
+      description: 'Select the type of installation',
     },
-    { 
-      title: "Load Type", 
+    {
+      title: 'Load Type',
       component: LoadTypeSelectionStep,
-      description: "Choose the electrical load type" 
+      description: 'Choose the electrical load type',
     },
-    { 
-      title: "Load Details", 
+    {
+      title: 'Load Details',
       component: LoadDetailsStep,
-      description: "Configure load specifications" 
+      description: 'Configure load specifications',
     },
-    { 
-      title: "Cable Run", 
+    {
+      title: 'Cable Run',
       component: CableRunStep,
-      description: "Define cable route and length" 
+      description: 'Define cable route and length',
     },
-    { 
-      title: "Environment", 
+    {
+      title: 'Environment',
       component: EnvironmentalIntelligenceStep,
-      description: "Smart environmental analysis" 
+      description: 'Smart environmental analysis',
     },
-    { 
-      title: "Results", 
+    {
+      title: 'Results',
       component: ResultsStep,
-      description: "View calculations and recommendations" 
-    }
+      description: 'View calculations and recommendations',
+    },
   ];
 
   const updatePlanData = (updates: Partial<InstallPlanData>) => {
@@ -94,7 +94,7 @@ const InstallPlannerStep = ({ initialData, onPlanUpdate }: InstallPlannerStepPro
           powerFactor: template.powerFactor || 0.85,
           cableType: template.recommendedCableType,
           installationMethod: template.recommendedInstallationMethod,
-          protectiveDevice: template.recommendedProtectiveDevice
+          protectiveDevice: template.recommendedProtectiveDevice,
         });
       }
     }
@@ -141,20 +141,14 @@ const InstallPlannerStep = ({ initialData, onPlanUpdate }: InstallPlannerStepPro
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">
-                {steps[currentStep].title}
-              </h1>
-              <p className="text-elec-light/70 mt-1">
-                {steps[currentStep].description}
-              </p>
+              <h1 className="text-2xl font-bold text-foreground">{steps[currentStep].title}</h1>
+              <p className="text-elec-light/70 mt-1">{steps[currentStep].description}</p>
             </div>
             <div className="text-right">
               <div className="text-sm text-elec-light/70">
                 Step {currentStep + 1} of {steps.length}
               </div>
-              <div className="text-2xl font-bold text-elec-yellow">
-                {Math.round(progress)}%
-              </div>
+              <div className="text-2xl font-bold text-elec-yellow">{Math.round(progress)}%</div>
             </div>
           </div>
           <Progress value={progress} className="h-2" />
@@ -163,10 +157,7 @@ const InstallPlannerStep = ({ initialData, onPlanUpdate }: InstallPlannerStepPro
 
       {/* Step Content */}
       <Card className="p-8 bg-elec-dark/50 border-elec-yellow/20">
-        <CurrentStepComponent 
-          planData={planData} 
-          updatePlanData={updatePlanData} 
-        />
+        <CurrentStepComponent planData={planData} updatePlanData={updatePlanData} />
       </Card>
 
       {/* Navigation */}
@@ -186,9 +177,7 @@ const InstallPlannerStep = ({ initialData, onPlanUpdate }: InstallPlannerStepPro
             <div
               key={index}
               className={`w-3 h-3 rounded-full transition-colors ${
-                index <= currentStep 
-                  ? "bg-elec-yellow" 
-                  : "bg-elec-light/30"
+                index <= currentStep ? 'bg-elec-yellow' : 'bg-elec-light/30'
               }`}
             />
           ))}

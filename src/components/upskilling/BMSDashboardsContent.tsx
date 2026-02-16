@@ -14,13 +14,14 @@ const BMSDashboardsContent = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
           <p>
-            BMS dashboards are the primary interface between building operators and the complex systems they manage. 
-            Effective dashboard design transforms raw data into actionable insights, enabling quick decision-making 
-            and efficient building operations.
+            BMS dashboards are the primary interface between building operators and the complex
+            systems they manage. Effective dashboard design transforms raw data into actionable
+            insights, enabling quick decision-making and efficient building operations.
           </p>
           <p>
-            Modern dashboards integrate real-time data visualisation, alarm management, and control capabilities 
-            in intuitive interfaces that support both routine monitoring and emergency response scenarios.
+            Modern dashboards integrate real-time data visualisation, alarm management, and control
+            capabilities in intuitive interfaces that support both routine monitoring and emergency
+            response scenarios.
           </p>
         </CardContent>
       </Card>
@@ -98,15 +99,21 @@ const BMSDashboardsContent = () => {
             <div className="grid md:grid-cols-3 gap-4">
               <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
                 <h5 className="text-elec-yellow font-semibold mb-2">Real-time Graphics</h5>
-                <p className="text-sm">Dynamic floor plans, system schematics, and live equipment status displays</p>
+                <p className="text-sm">
+                  Dynamic floor plans, system schematics, and live equipment status displays
+                </p>
               </div>
               <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
                 <h5 className="text-elec-yellow font-semibold mb-2">Trending Charts</h5>
-                <p className="text-sm">Historical data analysis, performance comparisons, and pattern identification</p>
+                <p className="text-sm">
+                  Historical data analysis, performance comparisons, and pattern identification
+                </p>
               </div>
               <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
                 <h5 className="text-elec-yellow font-semibold mb-2">Alarm Management</h5>
-                <p className="text-sm">Priority-based notifications, alarm acknowledgment, and escalation procedures</p>
+                <p className="text-sm">
+                  Priority-based notifications, alarm acknowledgment, and escalation procedures
+                </p>
               </div>
             </div>
           </CardContent>
@@ -128,10 +135,12 @@ const BMSDashboardsContent = () => {
                     <strong>Operators:</strong> Real-time monitoring, basic controls, alarm response
                   </div>
                   <div>
-                    <strong>Supervisors:</strong> System configuration, performance analysis, reporting
+                    <strong>Supervisors:</strong> System configuration, performance analysis,
+                    reporting
                   </div>
                   <div>
-                    <strong>Managers:</strong> High-level dashboards, energy reports, strategic planning
+                    <strong>Managers:</strong> High-level dashboards, energy reports, strategic
+                    planning
                   </div>
                 </div>
               </div>

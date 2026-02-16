@@ -12,35 +12,60 @@ const BS7671Module8Section3Quiz = () => {
 
   const questions = [
     {
-      question: "What part of BS 7671 was added in Amendment 2?",
-      options: ["Part 6", "Part 7", "Part 8", "Part 9"],
+      question: 'What part of BS 7671 was added in Amendment 2?',
+      options: ['Part 6', 'Part 7', 'Part 8', 'Part 9'],
       correct: 2,
-      explanation: "Part 8 was introduced in Amendment 2, covering Prosumer Electrical Installations (PEIs) - installations that both consume and generate energy."
+      explanation:
+        'Part 8 was introduced in Amendment 2, covering Prosumer Electrical Installations (PEIs) - installations that both consume and generate energy.',
     },
     {
-      question: "What installations now require AFDDs?",
-      options: ["All domestic properties", "Student accommodation and HMOs", "Industrial premises only", "Commercial offices"],
+      question: 'What installations now require AFDDs?',
+      options: [
+        'All domestic properties',
+        'Student accommodation and HMOs',
+        'Industrial premises only',
+        'Commercial offices',
+      ],
       correct: 1,
-      explanation: "Amendment 2 expanded AFDD requirements to include student accommodation, HMOs, care homes, and other high-risk sleeping accommodation."
+      explanation:
+        'Amendment 2 expanded AFDD requirements to include student accommodation, HMOs, care homes, and other high-risk sleeping accommodation.',
     },
     {
-      question: "Name one documentation update introduced.",
-      options: ["Simplified certificates", "PEI system documentation", "Reduced test requirements", "Optional design records"],
+      question: 'Name one documentation update introduced.',
+      options: [
+        'Simplified certificates',
+        'PEI system documentation',
+        'Reduced test requirements',
+        'Optional design records',
+      ],
       correct: 1,
-      explanation: "Amendment 2 introduced comprehensive PEI system documentation requirements, including energy management system records and grid interaction settings."
+      explanation:
+        'Amendment 2 introduced comprehensive PEI system documentation requirements, including energy management system records and grid interaction settings.',
     },
     {
-      question: "What does Part 8 focus on?",
-      options: ["Testing procedures", "Special locations", "Prosumer electrical installations", "Maintenance schedules"],
+      question: 'What does Part 8 focus on?',
+      options: [
+        'Testing procedures',
+        'Special locations',
+        'Prosumer electrical installations',
+        'Maintenance schedules',
+      ],
       correct: 2,
-      explanation: "Part 8 focuses on Prosumer Electrical Installations (PEIs) - systems that both consume and generate energy, including solar PV, battery storage, and EV charging."
+      explanation:
+        'Part 8 focuses on Prosumer Electrical Installations (PEIs) - systems that both consume and generate energy, including solar PV, battery storage, and EV charging.',
     },
     {
-      question: "Why was fire safety re-emphasised?",
-      options: ["New cable types available", "Increased fire incidents in electrical installations", "Enhanced escape route protection requirements", "Cost reduction measures"],
+      question: 'Why was fire safety re-emphasised?',
+      options: [
+        'New cable types available',
+        'Increased fire incidents in electrical installations',
+        'Enhanced escape route protection requirements',
+        'Cost reduction measures',
+      ],
       correct: 2,
-      explanation: "Fire safety was re-emphasised to improve protection in escape routes, requiring enhanced fire-resistant cables and better fire stopping measures."
-    }
+      explanation:
+        'Fire safety was re-emphasised to improve protection in escape routes, requiring enhanced fire-resistant cables and better fire stopping measures.',
+    },
   ];
 
   const handleAnswerSelect = (value: string) => {
@@ -96,13 +121,13 @@ const BS7671Module8Section3Quiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)}`}>
               {score}/{questions.length}
             </div>
-            <div className={`text-xl ${getScoreColor(score)}`}>
-              {percentage}%
-            </div>
+            <div className={`text-xl ${getScoreColor(score)}`}>{percentage}%</div>
             <p className="text-gray-400 mt-2">
-              {percentage >= 80 ? 'Excellent! You understand Amendment 2 well!' : 
-               percentage >= 60 ? 'Good work! Review the areas you missed.' : 
-               'Keep studying Amendment 2 changes!'}
+              {percentage >= 80
+                ? 'Excellent! You understand Amendment 2 well!'
+                : percentage >= 60
+                  ? 'Good work! Review the areas you missed.'
+                  : 'Keep studying Amendment 2 changes!'}
             </p>
           </div>
 
@@ -110,7 +135,7 @@ const BS7671Module8Section3Quiz = () => {
             {questions.map((question, index) => {
               const userAnswer = parseInt(selectedAnswers[index]);
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
                 <div key={index} className="bg-elec-dark p-4 rounded-md border border-gray-600">
                   <div className="flex items-start gap-3">
@@ -123,7 +148,9 @@ const BS7671Module8Section3Quiz = () => {
                       <h4 className="text-foreground font-medium mb-2">
                         Question {index + 1}: {question.question}
                       </h4>
-                      <p className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                      <p
+                        className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}
+                      >
                         Your answer: {question.options[userAnswer]}
                       </p>
                       {!isCorrect && (
@@ -131,9 +158,7 @@ const BS7671Module8Section3Quiz = () => {
                           Correct answer: {question.options[question.correct]}
                         </p>
                       )}
-                      <p className="text-xs text-gray-400">
-                        {question.explanation}
-                      </p>
+                      <p className="text-xs text-gray-400">{question.explanation}</p>
                     </div>
                   </div>
                 </div>
@@ -142,7 +167,7 @@ const BS7671Module8Section3Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             >
@@ -160,11 +185,13 @@ const BS7671Module8Section3Quiz = () => {
       <CardHeader>
         <CardTitle className="text-foreground">Knowledge Check</CardTitle>
         <div className="flex justify-between text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <span>{Math.round(((currentQuestion + 1) / questions.length) * 100)}% Complete</span>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
           ></div>
@@ -175,23 +202,23 @@ const BS7671Module8Section3Quiz = () => {
           <h3 className="text-lg font-medium text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
-          <RadioGroup 
-            value={selectedAnswers[currentQuestion] || ""} 
+
+          <RadioGroup
+            value={selectedAnswers[currentQuestion] || ''}
             onValueChange={handleAnswerSelect}
             className="space-y-3"
           >
             {questions[currentQuestion].options.map((option, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 rounded-md hover:bg-elec-dark transition-colors">
-                <RadioGroupItem 
-                  value={index.toString()} 
+              <div
+                key={index}
+                className="flex items-center space-x-3 p-3 rounded-md hover:bg-elec-dark transition-colors"
+              >
+                <RadioGroupItem
+                  value={index.toString()}
                   id={`option-${index}`}
                   className="border-gray-400 text-elec-yellow"
                 />
-                <Label 
-                  htmlFor={`option-${index}`} 
-                  className="text-gray-300 cursor-pointer flex-1"
-                >
+                <Label htmlFor={`option-${index}`} className="text-gray-300 cursor-pointer flex-1">
                   {option}
                 </Label>
               </div>
@@ -208,7 +235,7 @@ const BS7671Module8Section3Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={!selectedAnswers[currentQuestion]}

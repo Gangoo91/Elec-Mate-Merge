@@ -5,47 +5,47 @@ import { HardDrive, Network, Cloud, CreditCard, Server, Layers } from 'lucide-re
 export const StorageOptionsSection = () => {
   const storageOptions = [
     {
-      name: "Local DVR",
+      name: 'Local DVR',
       icon: HardDrive,
-      description: "Digital Video Recorder for analogue cameras, older systems",
-      pros: ["No internet required", "One-time cost"],
-      cons: ["Vulnerable to theft", "Limited remote access"]
+      description: 'Digital Video Recorder for analogue cameras, older systems',
+      pros: ['No internet required', 'One-time cost'],
+      cons: ['Vulnerable to theft', 'Limited remote access'],
     },
     {
-      name: "NVR",
+      name: 'NVR',
       icon: Network,
-      description: "Network Video Recorder for IP cameras, connected via Ethernet/PoE",
-      pros: ["Better image quality", "Remote access", "Scalable"],
-      cons: ["More complex setup", "Network dependent"]
+      description: 'Network Video Recorder for IP cameras, connected via Ethernet/PoE',
+      pros: ['Better image quality', 'Remote access', 'Scalable'],
+      cons: ['More complex setup', 'Network dependent'],
     },
     {
-      name: "SD Cards",
+      name: 'SD Cards',
       icon: CreditCard,
-      description: "Built into some cameras, limited capacity",
-      pros: ["Simple setup", "Camera-level storage"],
-      cons: ["Limited capacity", "Vulnerable to theft"]
+      description: 'Built into some cameras, limited capacity',
+      pros: ['Simple setup', 'Camera-level storage'],
+      cons: ['Limited capacity', 'Vulnerable to theft'],
     },
     {
-      name: "NAS",
+      name: 'NAS',
       icon: Server,
-      description: "Network Attached Storage - central storage, expandable",
-      pros: ["Expandable capacity", "Network accessible", "Redundancy options"],
-      cons: ["Higher cost", "Technical setup required"]
+      description: 'Network Attached Storage - central storage, expandable',
+      pros: ['Expandable capacity', 'Network accessible', 'Redundancy options'],
+      cons: ['Higher cost', 'Technical setup required'],
     },
     {
-      name: "Cloud Storage",
+      name: 'Cloud Storage',
       icon: Cloud,
-      description: "Accessible anywhere, subscription-based",
-      pros: ["Remote access", "Secure offsite storage", "No hardware maintenance"],
-      cons: ["Ongoing costs", "Internet dependent", "Upload limitations"]
+      description: 'Accessible anywhere, subscription-based',
+      pros: ['Remote access', 'Secure offsite storage', 'No hardware maintenance'],
+      cons: ['Ongoing costs', 'Internet dependent', 'Upload limitations'],
     },
     {
-      name: "Hybrid Setup",
+      name: 'Hybrid Setup',
       icon: Layers,
-      description: "Combination of local + cloud for resilience",
-      pros: ["Best of both worlds", "Redundancy", "Flexible access"],
-      cons: ["Higher complexity", "Combined costs"]
-    }
+      description: 'Combination of local + cloud for resilience',
+      pros: ['Best of both worlds', 'Redundancy', 'Flexible access'],
+      cons: ['Higher complexity', 'Combined costs'],
+    },
   ];
 
   return (
@@ -67,24 +67,32 @@ export const StorageOptionsSection = () => {
                   <p className="text-gray-400 text-sm mb-3">{option.description}</p>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <div>
                   <p className="text-xs font-medium text-green-400 mb-1">Advantages:</p>
                   <div className="flex flex-wrap gap-1">
                     {option.pros.map((pro, idx) => (
-                      <Badge key={idx} variant="outline" className="border-green-500/30 text-green-400 text-xs">
+                      <Badge
+                        key={idx}
+                        variant="outline"
+                        className="border-green-500/30 text-green-400 text-xs"
+                      >
                         {pro}
                       </Badge>
                     ))}
                   </div>
                 </div>
-                
+
                 <div>
                   <p className="text-xs font-medium text-red-400 mb-1">Disadvantages:</p>
                   <div className="flex flex-wrap gap-1">
                     {option.cons.map((con, idx) => (
-                      <Badge key={idx} variant="outline" className="border-red-500/30 text-red-400 text-xs">
+                      <Badge
+                        key={idx}
+                        variant="outline"
+                        className="border-red-500/30 text-red-400 text-xs"
+                      >
                         {con}
                       </Badge>
                     ))}

@@ -21,7 +21,7 @@ export interface LiveMaterialItem {
 
 const fetchLiveMaterialsData = async (): Promise<LiveMaterialItem[]> => {
   console.log('🔍 Fetching live materials pricing from cache...');
-  
+
   try {
     // Fetch from materials_weekly_cache
     const { data, error } = await supabase
@@ -29,7 +29,7 @@ const fetchLiveMaterialsData = async (): Promise<LiveMaterialItem[]> => {
       .select('materials_data, category, created_at')
       .order('created_at', { ascending: false })
       .limit(1);
-    
+
     if (error) {
       console.error('❌ Error fetching cached materials:', error);
       throw error;
@@ -42,19 +42,19 @@ const fetchLiveMaterialsData = async (): Promise<LiveMaterialItem[]> => {
 
     const cacheData = data[0];
     const materialsData = cacheData.materials_data as any[];
-    
+
     if (!Array.isArray(materialsData)) {
       console.log('⚠️ Invalid materials data format, using static fallback');
       return transformStaticMaterials();
     }
-    
+
     console.log(`✅ Found ${materialsData.length} cached materials from ${cacheData.created_at}`);
 
     // Transform cached materials to LiveMaterialItem format
     const liveMaterials = materialsData.map((item: any, index: number) => {
       const priceMatch = item.price?.match(/£?(\d+\.?\d*)/);
       const supplierPrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
-      
+
       return {
         id: item.id?.toString() || `live-${index}`,
         name: item.name || 'Unknown Material',
@@ -69,12 +69,12 @@ const fetchLiveMaterialsData = async (): Promise<LiveMaterialItem[]> => {
         code: item.code,
         brand: item.brand,
         isLive: true,
-        lastUpdated: cacheData.created_at
+        lastUpdated: cacheData.created_at,
       } as LiveMaterialItem;
     });
 
     // Filter out items with invalid prices
-    return liveMaterials.filter(m => m.supplierPrice > 0);
+    return liveMaterials.filter((m) => m.supplierPrice > 0);
   } catch (error) {
     console.error('Failed to fetch live materials, using static fallback:', error);
     return transformStaticMaterials();
@@ -83,7 +83,7 @@ const fetchLiveMaterialsData = async (): Promise<LiveMaterialItem[]> => {
 
 // Transform static enhanced materials as fallback
 const transformStaticMaterials = (): LiveMaterialItem[] => {
-  return enhancedMaterials.map(item => ({
+  return enhancedMaterials.map((item) => ({
     id: item.id,
     name: item.name,
     category: item.category,
@@ -96,30 +96,47 @@ const transformStaticMaterials = (): LiveMaterialItem[] => {
     code: item.code,
     brand: item.brand,
     isLive: false,
-    lastUpdated: item.lastUpdated
+    lastUpdated: item.lastUpdated,
   }));
 };
 
 // Map scraped categories to quote builder categories
 const mapScrapedCategoryToQuoteCategory = (scrapedCategory: string): string => {
   const lowerCategory = scrapedCategory.toLowerCase();
-  
+
   if (lowerCategory.includes('cable') || lowerCategory.includes('wire')) {
     return 'cables';
   }
-  if (lowerCategory.includes('socket') || lowerCategory.includes('switch') || lowerCategory.includes('accessory')) {
+  if (
+    lowerCategory.includes('socket') ||
+    lowerCategory.includes('switch') ||
+    lowerCategory.includes('accessory')
+  ) {
     return 'accessories';
   }
-  if (lowerCategory.includes('consumer') || lowerCategory.includes('mcb') || lowerCategory.includes('rcbo') || lowerCategory.includes('rcd')) {
+  if (
+    lowerCategory.includes('consumer') ||
+    lowerCategory.includes('mcb') ||
+    lowerCategory.includes('rcbo') ||
+    lowerCategory.includes('rcd')
+  ) {
     return 'distribution';
   }
-  if (lowerCategory.includes('light') || lowerCategory.includes('led') || lowerCategory.includes('downlight')) {
+  if (
+    lowerCategory.includes('light') ||
+    lowerCategory.includes('led') ||
+    lowerCategory.includes('downlight')
+  ) {
     return 'lighting';
   }
-  if (lowerCategory.includes('conduit') || lowerCategory.includes('trunking') || lowerCategory.includes('containment')) {
+  if (
+    lowerCategory.includes('conduit') ||
+    lowerCategory.includes('trunking') ||
+    lowerCategory.includes('containment')
+  ) {
     return 'containment';
   }
-  
+
   return 'materials';
 };
 

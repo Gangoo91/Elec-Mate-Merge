@@ -1,65 +1,78 @@
-import { Shield, Leaf, Zap, Search, TestTube, DraftingCompass, Users, GraduationCap, ChevronLeft } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import {
+  Shield,
+  Leaf,
+  Zap,
+  Search,
+  TestTube,
+  DraftingCompass,
+  Users,
+  GraduationCap,
+  ChevronLeft,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const modules = [
   {
-    number: "Module 1",
-    title: "Health and Safety in Building Services Engineering",
-    description: "Advanced health and safety practices for complex electrical work environments",
+    number: 'Module 1',
+    title: 'Health and Safety in Building Services Engineering',
+    description: 'Advanced health and safety practices for complex electrical work environments',
     icon: Shield,
-    href: "../level3-module1",
+    href: '../level3-module1',
   },
   {
-    number: "Module 2",
-    title: "Environmental Technology Systems",
-    description: "Energy-efficient systems, renewable technologies and environmental compliance",
+    number: 'Module 2',
+    title: 'Environmental Technology Systems',
+    description: 'Energy-efficient systems, renewable technologies and environmental compliance',
     icon: Leaf,
-    href: "../level3-module2",
+    href: '../level3-module2',
   },
   {
-    number: "Module 3",
-    title: "Electrical Science Principles",
-    description: "Advanced electrical theory, AC/DC circuits, and complex electrical calculations",
+    number: 'Module 3',
+    title: 'Electrical Science Principles',
+    description: 'Advanced electrical theory, AC/DC circuits, and complex electrical calculations',
     icon: Zap,
-    href: "../level3-module3",
+    href: '../level3-module3',
   },
   {
-    number: "Module 4",
-    title: "Fault Diagnosis & Rectification",
-    description: "Advanced fault finding techniques and systematic problem-solving methods",
+    number: 'Module 4',
+    title: 'Fault Diagnosis & Rectification',
+    description: 'Advanced fault finding techniques and systematic problem-solving methods',
     icon: Search,
-    href: "../level3-module4",
+    href: '../level3-module4',
   },
   {
-    number: "Module 5",
-    title: "Inspection, Testing & Commissioning",
-    description: "Comprehensive testing procedures, commissioning protocols and compliance verification",
+    number: 'Module 5',
+    title: 'Inspection, Testing & Commissioning',
+    description:
+      'Comprehensive testing procedures, commissioning protocols and compliance verification',
     icon: TestTube,
-    href: "../level3-module5",
+    href: '../level3-module5',
   },
   {
-    number: "Module 6",
-    title: "Electrical Systems Design",
-    description: "Design principles, load calculations, and electrical system specification",
+    number: 'Module 6',
+    title: 'Electrical Systems Design',
+    description: 'Design principles, load calculations, and electrical system specification',
     icon: DraftingCompass,
-    href: "../level3-module6",
+    href: '../level3-module6',
   },
   {
-    number: "Module 7",
-    title: "Career Awareness & Professional Development",
-    description: "Professional standards, career progression and continuing professional development",
+    number: 'Module 7',
+    title: 'Career Awareness & Professional Development',
+    description:
+      'Professional standards, career progression and continuing professional development',
     icon: Users,
-    href: "../level3-module7",
+    href: '../level3-module7',
   },
   {
-    number: "Module 8",
-    title: "Mock Exams",
-    description: "Comprehensive mock examinations and assessment preparation for Level 3 qualification",
+    number: 'Module 8',
+    title: 'Mock Exams',
+    description:
+      'Comprehensive mock examinations and assessment preparation for Level 3 qualification',
     icon: TestTube,
-    href: "../level3-module8",
+    href: '../level3-module8',
   },
 ];
 
@@ -86,10 +99,7 @@ const Level3 = () => {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-6">
           {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <Button
               variant="ghost"
               size="sm"

@@ -1,8 +1,8 @@
-import * as React from "react";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
+import * as React from 'react';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { ChevronDown } from 'lucide-react';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 const MobileAccordion = AccordionPrimitive.Root;
 
@@ -10,13 +10,9 @@ const MobileAccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn("", className)}
-    {...props}
-  />
+  <AccordionPrimitive.Item ref={ref} className={cn('', className)} {...props} />
 ));
-MobileAccordionItem.displayName = "MobileAccordionItem";
+MobileAccordionItem.displayName = 'MobileAccordionItem';
 
 const MobileAccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
@@ -28,9 +24,9 @@ const MobileAccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-start py-4 px-4 text-sm font-medium transition-all hover:underline relative",
-        "bg-elec-gray border border-elec-yellow/20 rounded-t-lg [&[data-state=open]]:rounded-b-none",
-        "touch-manipulation min-h-[48px] text-foreground",
+        'flex flex-1 items-center justify-start py-4 px-4 text-sm font-medium transition-all hover:underline relative',
+        'bg-elec-gray border border-elec-yellow/20 rounded-t-lg [&[data-state=open]]:rounded-b-none',
+        'touch-manipulation min-h-[48px] text-foreground',
         className
       )}
       {...props}
@@ -43,7 +39,7 @@ const MobileAccordionTrigger = React.forwardRef<
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
-MobileAccordionTrigger.displayName = "MobileAccordionTrigger";
+MobileAccordionTrigger.displayName = 'MobileAccordionTrigger';
 
 const MobileAccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
@@ -54,16 +50,9 @@ const MobileAccordionContent = React.forwardRef<
     className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn("p-0 text-foreground", className)}>
-      {children}
-    </div>
+    <div className={cn('p-0 text-foreground', className)}>{children}</div>
   </AccordionPrimitive.Content>
 ));
-MobileAccordionContent.displayName = "MobileAccordionContent";
+MobileAccordionContent.displayName = 'MobileAccordionContent';
 
-export {
-  MobileAccordion,
-  MobileAccordionItem,
-  MobileAccordionTrigger,
-  MobileAccordionContent,
-};
+export { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent };

@@ -1,8 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Target, ListChecks, AlertCircle, Zap, Shield, AlertTriangle, CheckSquare, ChevronDown } from "lucide-react";
-import { LucideIcon } from "lucide-react";
-import { useMemo, useState } from "react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  FileText,
+  Target,
+  ListChecks,
+  AlertCircle,
+  Zap,
+  Shield,
+  AlertTriangle,
+  CheckSquare,
+  ChevronDown,
+} from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface ProjectOverviewSectionProps {
   response?: string;
@@ -61,25 +71,25 @@ const cleanText = (text: string): string => {
 
 const parseStructuredCriticalPath = (text: string): CriticalPathBlock[] => {
   if (!text) return [];
-  
+
   const cleanedText = cleanText(text);
-  const paragraphs = cleanedText.split(/\n\n+/).filter(p => p.trim());
-  
-  return paragraphs.map(para => {
+  const paragraphs = cleanedText.split(/\n\n+/).filter((p) => p.trim());
+
+  return paragraphs.map((para) => {
     const trimmed = para.trim();
-    
+
     if (/(?:Day \d+-\d+|Phase \d+):/i.test(trimmed)) {
       return { type: 'phase-header' as const, content: cleanText(trimmed) };
     }
-    
+
     const lines = trimmed.split('\n');
-    if (lines.length > 1 && lines.some(l => /^[-*•]\s/.test(l.trim()))) {
+    if (lines.length > 1 && lines.some((l) => /^[-*•]\s/.test(l.trim()))) {
       const items = lines
-        .filter(l => /^[-*•]\s/.test(l.trim()))
-        .map(l => cleanText(l.replace(/^[-*•]\s+/, '').trim()));
+        .filter((l) => /^[-*•]\s/.test(l.trim()))
+        .map((l) => cleanText(l.replace(/^[-*•]\s+/, '').trim()));
       return { type: 'list' as const, items };
     }
-    
+
     return { type: 'paragraph' as const, content: cleanText(trimmed) };
   });
 };
@@ -95,24 +105,31 @@ const parseProjectOverview = (text: string): Section[] => {
       icon: Target,
       content: cleanText(businessCaseMatch[1]),
       color: 'blue',
-      type: 'text'
+      type: 'text',
     });
   }
 
-  const workMatch = cleanedText.match(/Work breakdown:([^]*?)(?=Critical path|Acceleration|Compliance|Risk register|$)/i);
+  const workMatch = cleanedText.match(
+    /Work breakdown:([^]*?)(?=Critical path|Acceleration|Compliance|Risk register|$)/i
+  );
   if (workMatch) {
     const workText = workMatch[1].trim();
-    const phases = workText.split(/[,;]/).map(p => cleanText(p)).filter(p => p.length > 0 && !p.toLowerCase().includes('critical path'));
+    const phases = workText
+      .split(/[,;]/)
+      .map((p) => cleanText(p))
+      .filter((p) => p.length > 0 && !p.toLowerCase().includes('critical path'));
     sections.push({
       title: 'Work Breakdown',
       icon: ListChecks,
       content: phases,
       color: 'purple',
-      type: 'list'
+      type: 'list',
     });
   }
 
-  const criticalMatch = cleanedText.match(/Critical path:([^]*?)(?=Acceleration|Compliance|Risk register|$)/i);
+  const criticalMatch = cleanedText.match(
+    /Critical path:([^]*?)(?=Acceleration|Compliance|Risk register|$)/i
+  );
   if (criticalMatch) {
     const criticalText = cleanText(criticalMatch[1].replace(/Acceleration.*$/i, '').trim());
     sections.push({
@@ -120,43 +137,55 @@ const parseProjectOverview = (text: string): Section[] => {
       icon: AlertCircle,
       content: criticalText,
       color: 'red',
-      type: 'critical-path'
+      type: 'critical-path',
     });
   }
 
   const accelMatch = cleanedText.match(/Acceleration tips?:([^]*?)(?=Compliance|Risk register|$)/i);
   if (accelMatch) {
-    const tips = accelMatch[1].trim().split(/[,;]/).map(t => cleanText(t)).filter(t => t.length > 0 && !t.toLowerCase().includes('compliance'));
+    const tips = accelMatch[1]
+      .trim()
+      .split(/[,;]/)
+      .map((t) => cleanText(t))
+      .filter((t) => t.length > 0 && !t.toLowerCase().includes('compliance'));
     sections.push({
       title: 'Acceleration Tips',
       icon: Zap,
       content: tips,
       color: 'amber',
-      type: 'list'
+      type: 'list',
     });
   }
 
   const complianceMatch = cleanedText.match(/Compliance milestones?:([^]*?)(?=Risk register|$)/i);
   if (complianceMatch) {
-    const milestones = complianceMatch[1].trim().split(/[,;]/).map(m => cleanText(m)).filter(m => m.length > 0 && !m.toLowerCase().includes('risk register'));
+    const milestones = complianceMatch[1]
+      .trim()
+      .split(/[,;]/)
+      .map((m) => cleanText(m))
+      .filter((m) => m.length > 0 && !m.toLowerCase().includes('risk register'));
     sections.push({
       title: 'Compliance Milestones',
       icon: Shield,
       content: milestones,
       color: 'green',
-      type: 'checklist'
+      type: 'checklist',
     });
   }
 
   const riskMatch = cleanedText.match(/Risk register(?:\s+high)?\s*items?:([^]*?)$/i);
   if (riskMatch) {
-    const risks = riskMatch[1].trim().split(/[,;]/).map(r => cleanText(r)).filter(r => r.length > 0);
+    const risks = riskMatch[1]
+      .trim()
+      .split(/[,;]/)
+      .map((r) => cleanText(r))
+      .filter((r) => r.length > 0);
     sections.push({
       title: 'Risk Register',
       icon: AlertTriangle,
       content: risks,
       color: 'red',
-      type: 'list'
+      type: 'list',
     });
   }
 
@@ -170,13 +199,15 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
 
   const cleanedResponse = cleanText(response);
   const sections = parseProjectOverview(cleanedResponse);
-  
+
   const businessCase = useMemo(() => {
-    const match = cleanedResponse.match(/(?:business case|project overview|scope)[:\s]*(.+?)(?=\n\n[A-Z][a-z]+:|$)/is);
+    const match = cleanedResponse.match(
+      /(?:business case|project overview|scope)[:\s]*(.+?)(?=\n\n[A-Z][a-z]+:|$)/is
+    );
     if (match) {
       return cleanText(match[1]);
     }
-    const paragraphs = cleanedResponse.split('\n\n').filter(p => p.trim().length > 50);
+    const paragraphs = cleanedResponse.split('\n\n').filter((p) => p.trim().length > 50);
     return cleanText(paragraphs[0] || cleanedResponse.substring(0, 300));
   }, [cleanedResponse]);
 
@@ -200,12 +231,12 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
         const Icon = section.icon;
         const colors = colorClasses[section.color];
         const isOpen = openSections[idx];
-        
+
         return (
           <Collapsible
             key={idx}
             open={isOpen}
-            onOpenChange={(open) => setOpenSections(prev => ({ ...prev, [idx]: open }))}
+            onOpenChange={(open) => setOpenSections((prev) => ({ ...prev, [idx]: open }))}
           >
             <Card className={`${colors.border} ${colors.bg}`}>
               <CollapsibleTrigger className="w-full text-left">
@@ -215,11 +246,13 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                       <Icon className={`h-5 w-5 ${colors.icon}`} />
                       {section.title}
                     </div>
-                    <ChevronDown className={`h-4 w-4 text-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      className={`h-4 w-4 text-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                    />
                   </CardTitle>
                 </CardHeader>
               </CollapsibleTrigger>
-              
+
               <CollapsibleContent>
                 <CardContent className="pt-0">
                   {/* Content */}
@@ -228,27 +261,35 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                       {parseStructuredCriticalPath(section.content as string).map((block, i) => {
                         if (block.type === 'phase-header') {
                           return (
-                            <div key={i} className="bg-red-500/10 rounded-md p-3 border border-red-500/20">
+                            <div
+                              key={i}
+                              className="bg-red-500/10 rounded-md p-3 border border-red-500/20"
+                            >
                               <h4 className="font-semibold text-sm text-foreground leading-relaxed">
                                 {block.content}
                               </h4>
                             </div>
                           );
                         }
-                        
+
                         if (block.type === 'list' && block.items) {
                           return (
                             <ul key={i} className="space-y-2">
                               {block.items.map((item, itemIdx) => (
-                                <li key={itemIdx} className="text-sm text-foreground leading-relaxed flex items-start gap-2">
-                                  <span className="text-red-400 text-lg leading-none mt-0.5">•</span>
+                                <li
+                                  key={itemIdx}
+                                  className="text-sm text-foreground leading-relaxed flex items-start gap-2"
+                                >
+                                  <span className="text-red-400 text-lg leading-none mt-0.5">
+                                    •
+                                  </span>
                                   <span className="flex-1">{item}</span>
                                 </li>
                               ))}
                             </ul>
                           );
                         }
-                        
+
                         return (
                           <p key={i} className="text-sm text-foreground leading-relaxed">
                             {block.content}
@@ -270,12 +311,16 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
                       {(section.content as string[]).map((item, i) => (
                         <div key={i} className="flex items-start gap-2">
                           <CheckSquare className={`h-4 w-4 ${colors.icon} mt-0.5 flex-shrink-0`} />
-                          <span className="text-sm leading-relaxed flex-1 text-foreground">{item}</span>
+                          <span className="text-sm leading-relaxed flex-1 text-foreground">
+                            {item}
+                          </span>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm leading-relaxed text-foreground text-left">{section.content as string}</p>
+                    <p className="text-sm leading-relaxed text-foreground text-left">
+                      {section.content as string}
+                    </p>
                   )}
                 </CardContent>
               </CollapsibleContent>

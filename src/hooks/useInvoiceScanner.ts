@@ -14,13 +14,13 @@ import {
   ScannedInvoiceItem,
   ScannerState,
   ScanResult,
-  InvoiceScannerOptions
+  InvoiceScannerOptions,
 } from '@/types/invoice-scanner';
 
 const DEFAULT_OPTIONS: Required<InvoiceScannerOptions> = {
   minMatchScore: 0.4,
   maxAlternatives: 3,
-  autoSelectThreshold: 0.75
+  autoSelectThreshold: 0.75,
 };
 
 /**
@@ -46,7 +46,7 @@ function calculateSimilarity(str1: string, str2: string): number {
   const bigrams2 = getBigrams(s2);
 
   let intersection = 0;
-  bigrams1.forEach(bigram => {
+  bigrams1.forEach((bigram) => {
     if (bigrams2.has(bigram)) intersection++;
   });
 
@@ -67,9 +67,8 @@ function findLocalMatches(
 
   // First, try exact SKU match if product code exists
   if (productCode) {
-    const exactMatch = commonMaterials.find(m =>
-      m.code === productCode ||
-      m.id === productCode.toLowerCase().replace(/\s+/g, '-')
+    const exactMatch = commonMaterials.find(
+      (m) => m.code === productCode || m.id === productCode.toLowerCase().replace(/\s+/g, '-')
     );
 
     if (exactMatch) {
@@ -82,7 +81,7 @@ function findLocalMatches(
         defaultPrice: exactMatch.defaultPrice,
         code: exactMatch.code,
         score: 1,
-        source: 'local'
+        source: 'local',
       });
     }
   }
@@ -92,34 +91,48 @@ function findLocalMatches(
 
   // Filter by category first if it maps to our categories
   const categoryMappings: Record<string, string[]> = {
-    'cables': ['cables'],
-    'accessories': ['accessories'],
-    'distribution': ['distribution'],
-    'lighting': ['lighting'],
-    'containment': ['containment'],
-    'heating': ['heating'],
+    cables: ['cables'],
+    accessories: ['accessories'],
+    distribution: ['distribution'],
+    lighting: ['lighting'],
+    containment: ['containment'],
+    heating: ['heating'],
     'fire-safety': ['fire-safety'],
-    'security': ['security'],
+    security: ['security'],
     'ev-charging': ['ev-charging'],
     'renewable-energy': ['renewable-energy'],
-    'industrial': ['industrial'],
+    industrial: ['industrial'],
     'data-comms': ['data-comms'],
-    'specialist': ['specialist']
+    specialist: ['specialist'],
   };
 
   const relevantCategories = categoryMappings[category] || [];
-  const materialsToSearch = relevantCategories.length > 0
-    ? commonMaterials.filter(m => relevantCategories.includes(m.category))
-    : commonMaterials;
+  const materialsToSearch =
+    relevantCategories.length > 0
+      ? commonMaterials.filter((m) => relevantCategories.includes(m.category))
+      : commonMaterials;
 
   // Score all materials
-  const scored = materialsToSearch.map(m => {
+  const scored = materialsToSearch.map((m) => {
     // Check for key term matches (boost score)
     const nameLower = m.name.toLowerCase();
     let boost = 0;
 
     // Common electrical terms that should boost matches
-    const keyTerms = ['mm²', 'mm', 'twin', 'earth', 'swa', 'mcb', 'rcd', 'rcbo', 'socket', 'switch', 'led', 'downlight'];
+    const keyTerms = [
+      'mm²',
+      'mm',
+      'twin',
+      'earth',
+      'swa',
+      'mcb',
+      'rcd',
+      'rcbo',
+      'socket',
+      'switch',
+      'led',
+      'downlight',
+    ];
     for (const term of keyTerms) {
       if (descLower.includes(term) && nameLower.includes(term)) {
         boost += 0.15;
@@ -128,9 +141,9 @@ function findLocalMatches(
 
     // Size matches (e.g., "2.5mm" in both)
     const sizeRegex = /(\d+\.?\d*)\s*(mm|amp|a)\b/gi;
-    const descSizes = [...descLower.matchAll(sizeRegex)].map(m => m[1]);
-    const nameSizes = [...nameLower.matchAll(sizeRegex)].map(m => m[1]);
-    if (descSizes.some(s => nameSizes.includes(s))) {
+    const descSizes = [...descLower.matchAll(sizeRegex)].map((m) => m[1]);
+    const nameSizes = [...nameLower.matchAll(sizeRegex)].map((m) => m[1]);
+    if (descSizes.some((s) => nameSizes.includes(s))) {
       boost += 0.2;
     }
 
@@ -139,18 +152,18 @@ function findLocalMatches(
 
     return {
       material: m,
-      score: finalScore
+      score: finalScore,
     };
   });
 
   // Sort by score and take top matches
   scored
-    .filter(s => s.score >= minScore)
+    .filter((s) => s.score >= minScore)
     .sort((a, b) => b.score - a.score)
     .slice(0, maxResults)
     .forEach(({ material, score }) => {
       // Don't add duplicates (from SKU match)
-      if (!matches.some(m => m.id === material.id)) {
+      if (!matches.some((m) => m.id === material.id)) {
         matches.push({
           id: material.id,
           name: material.name,
@@ -160,7 +173,7 @@ function findLocalMatches(
           defaultPrice: material.defaultPrice,
           code: material.code,
           score,
-          source: 'local'
+          source: 'local',
         });
       }
     });
@@ -177,7 +190,7 @@ async function findServerMatches(
 ): Promise<MaterialMatch[]> {
   try {
     const { data, error } = await supabase.functions.invoke('search-materials-autocomplete', {
-      body: { query: description, limit: maxResults }
+      body: { query: description, limit: maxResults },
     });
 
     if (error || !data?.success) {
@@ -192,7 +205,7 @@ async function findServerMatches(
       unit: 'each',
       defaultPrice: 0, // Server doesn't return price
       score: suggestion.score || 0.5,
-      source: 'server' as const
+      source: 'server' as const,
     }));
   } catch (err) {
     console.error('Server material search error:', err);
@@ -220,103 +233,112 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
   /**
    * Process an image and extract invoice items
    */
-  const processImage = useCallback(async (imageBase64: string, imageType: string): Promise<ScanResult> => {
-    setState('processing');
-    setProgress('Analysing invoice...');
+  const processImage = useCallback(
+    async (imageBase64: string, imageType: string): Promise<ScanResult> => {
+      setState('processing');
+      setProgress('Analysing invoice...');
 
-    try {
-      // Call the parse-invoice-photo edge function
-      const { data, error } = await supabase.functions.invoke<ParseInvoiceResponse>('parse-invoice-photo', {
-        body: {
-          image_base64: imageBase64.replace(/^data:image\/\w+;base64,/, ''),
-          image_type: imageType
+      try {
+        // Call the parse-invoice-photo edge function
+        const { data, error } = await supabase.functions.invoke<ParseInvoiceResponse>(
+          'parse-invoice-photo',
+          {
+            body: {
+              image_base64: imageBase64.replace(/^data:image\/\w+;base64,/, ''),
+              image_type: imageType,
+            },
+          }
+        );
+
+        if (error) {
+          throw new Error(error.message || 'Failed to process invoice');
         }
-      });
 
-      if (error) {
-        throw new Error(error.message || 'Failed to process invoice');
-      }
+        if (!data?.success) {
+          throw new Error(data?.error || 'Failed to extract items from invoice');
+        }
 
-      if (!data?.success) {
-        throw new Error(data?.error || 'Failed to extract items from invoice');
-      }
+        // Now match extracted items to materials
+        setProgress(`Processing ${data.items.length} items...`);
 
-      // Now match extracted items to materials
-      setProgress(`Processing ${data.items.length} items...`);
+        // Create scanned items - auto-select all items with valid data
+        const scannedItems: ScannedInvoiceItem[] = data.items.map((extracted) => {
+          // Determine unit price (prefer extracted unit_price, calculate from total if needed)
+          const unitPrice =
+            extracted.unit_price ??
+            (extracted.total_price && extracted.quantity > 0
+              ? Math.round((extracted.total_price / extracted.quantity) * 100) / 100
+              : 0);
 
-      // Create scanned items - auto-select all items with valid data
-      const scannedItems: ScannedInvoiceItem[] = data.items.map((extracted) => {
-        // Determine unit price (prefer extracted unit_price, calculate from total if needed)
-        const unitPrice = extracted.unit_price ??
-          (extracted.total_price && extracted.quantity > 0
-            ? Math.round((extracted.total_price / extracted.quantity) * 100) / 100
-            : 0);
+          // Auto-select items that have valid prices
+          const autoSelect = unitPrice > 0;
 
-        // Auto-select items that have valid prices
-        const autoSelect = unitPrice > 0;
+          return {
+            id: generateId(),
+            extracted,
+            match: null, // Skip material matching - user can edit description
+            alternativeMatches: [],
+            selected: autoSelect,
+            quantity: extracted.quantity,
+            unitPrice,
+          };
+        });
 
-        return {
-          id: generateId(),
-          extracted,
-          match: null, // Skip material matching - user can edit description
-          alternativeMatches: [],
-          selected: autoSelect,
-          quantity: extracted.quantity,
-          unitPrice
+        const scanResult: ScanResult = {
+          success: true,
+          supplierName: data.supplier_name,
+          invoiceNumber: data.invoice_number,
+          invoiceDate: data.invoice_date,
+          items: scannedItems,
         };
-      });
 
-      const scanResult: ScanResult = {
-        success: true,
-        supplierName: data.supplier_name,
-        invoiceNumber: data.invoice_number,
-        invoiceDate: data.invoice_date,
-        items: scannedItems
-      };
+        setState('review');
+        setResult(scanResult);
+        setProgress('');
 
-      setState('review');
-      setResult(scanResult);
-      setProgress('');
+        return scanResult;
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+        console.error('Invoice scan error:', err);
 
-      return scanResult;
+        setState('error');
+        setProgress('');
 
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error('Invoice scan error:', err);
+        const errorResult: ScanResult = {
+          success: false,
+          supplierName: null,
+          invoiceNumber: null,
+          invoiceDate: null,
+          items: [],
+          error: errorMessage,
+        };
 
-      setState('error');
-      setProgress('');
+        setResult(errorResult);
+        toast({
+          title: 'Scan Failed',
+          description: errorMessage,
+          variant: 'destructive',
+        });
 
-      const errorResult: ScanResult = {
-        success: false,
-        supplierName: null,
-        invoiceNumber: null,
-        invoiceDate: null,
-        items: [],
-        error: errorMessage
-      };
-
-      setResult(errorResult);
-      toast({
-        title: 'Scan Failed',
-        description: errorMessage,
-        variant: 'destructive'
-      });
-
-      return errorResult;
-    }
-  }, [opts]);
+        return errorResult;
+      }
+    },
+    [opts]
+  );
 
   /**
    * Handle camera capture
    */
-  const handleCapture = useCallback(async (imageData: string, _file: File) => {
-    // Extract image type from data URL
-    const match = imageData.match(/^data:(image\/\w+);base64,/);
-    const imageType = match ? match[1] : 'image/jpeg';
+  const handleCapture = useCallback(
+    async (imageData: string, _file: File) => {
+      // Extract image type from data URL
+      const match = imageData.match(/^data:(image\/\w+);base64,/);
+      const imageType = match ? match[1] : 'image/jpeg';
 
-    return processImage(imageData, imageType);
-  }, [processImage]);
+      return processImage(imageData, imageType);
+    },
+    [processImage]
+  );
 
   /**
    * Process a single file and return its items
@@ -333,12 +355,15 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
         }
 
         try {
-          const { data, error } = await supabase.functions.invoke<ParseInvoiceResponse>('parse-invoice-photo', {
-            body: {
-              image_base64: base64.replace(/^data:image\/\w+;base64,/, ''),
-              image_type: file.type || 'image/jpeg'
+          const { data, error } = await supabase.functions.invoke<ParseInvoiceResponse>(
+            'parse-invoice-photo',
+            {
+              body: {
+                image_base64: base64.replace(/^data:image\/\w+;base64,/, ''),
+                image_type: file.type || 'image/jpeg',
+              },
             }
-          });
+          );
 
           if (error || !data?.success) {
             console.warn(`Failed to process ${file.name}:`, error || data?.error);
@@ -347,7 +372,8 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
           }
 
           const items: ScannedInvoiceItem[] = data.items.map((extracted) => {
-            const unitPrice = extracted.unit_price ??
+            const unitPrice =
+              extracted.unit_price ??
               (extracted.total_price && extracted.quantity > 0
                 ? Math.round((extracted.total_price / extracted.quantity) * 100) / 100
                 : 0);
@@ -359,7 +385,7 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
               alternativeMatches: [],
               selected: unitPrice > 0,
               quantity: extracted.quantity,
-              unitPrice
+              unitPrice,
             };
           });
 
@@ -382,86 +408,88 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
   /**
    * Handle file upload (supports multiple files)
    */
-  const handleUpload = useCallback(async (files: File | File[]) => {
-    const fileArray = Array.isArray(files) ? files : [files];
+  const handleUpload = useCallback(
+    async (files: File | File[]) => {
+      const fileArray = Array.isArray(files) ? files : [files];
 
-    setState('uploading');
-    setProgress(`Processing ${fileArray.length} ${fileArray.length === 1 ? 'image' : 'images'}...`);
+      setState('uploading');
+      setProgress(
+        `Processing ${fileArray.length} ${fileArray.length === 1 ? 'image' : 'images'}...`
+      );
 
-    try {
-      const allItems: ScannedInvoiceItem[] = [];
-      let supplierName: string | null = null;
+      try {
+        const allItems: ScannedInvoiceItem[] = [];
+        let supplierName: string | null = null;
 
-      for (let i = 0; i < fileArray.length; i++) {
-        setProgress(`Processing ${i + 1} of ${fileArray.length}...`);
+        for (let i = 0; i < fileArray.length; i++) {
+          setProgress(`Processing ${i + 1} of ${fileArray.length}...`);
 
-        const items = await processSingleFile(fileArray[i]);
-        allItems.push(...items);
+          const items = await processSingleFile(fileArray[i]);
+          allItems.push(...items);
 
-        // Try to extract supplier name from first successful scan
-        if (!supplierName && items.length > 0) {
-          // Supplier name is set at result level, not item level
-          // We'll update this after all processing
+          // Try to extract supplier name from first successful scan
+          if (!supplierName && items.length > 0) {
+            // Supplier name is set at result level, not item level
+            // We'll update this after all processing
+          }
         }
+
+        if (allItems.length === 0) {
+          throw new Error('No items could be extracted from the images');
+        }
+
+        const scanResult: ScanResult = {
+          success: true,
+          supplierName: null, // Could aggregate from multiple invoices
+          invoiceNumber: null,
+          invoiceDate: null,
+          items: allItems,
+        };
+
+        setState('review');
+        setResult(scanResult);
+        setProgress('');
+
+        return scanResult;
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+        console.error('Invoice scan error:', err);
+
+        setState('error');
+        setProgress('');
+
+        const errorResult: ScanResult = {
+          success: false,
+          supplierName: null,
+          invoiceNumber: null,
+          invoiceDate: null,
+          items: [],
+          error: errorMessage,
+        };
+
+        setResult(errorResult);
+        toast({
+          title: 'Scan Failed',
+          description: errorMessage,
+          variant: 'destructive',
+        });
+
+        return errorResult;
       }
-
-      if (allItems.length === 0) {
-        throw new Error('No items could be extracted from the images');
-      }
-
-      const scanResult: ScanResult = {
-        success: true,
-        supplierName: null, // Could aggregate from multiple invoices
-        invoiceNumber: null,
-        invoiceDate: null,
-        items: allItems
-      };
-
-      setState('review');
-      setResult(scanResult);
-      setProgress('');
-
-      return scanResult;
-
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error('Invoice scan error:', err);
-
-      setState('error');
-      setProgress('');
-
-      const errorResult: ScanResult = {
-        success: false,
-        supplierName: null,
-        invoiceNumber: null,
-        invoiceDate: null,
-        items: [],
-        error: errorMessage
-      };
-
-      setResult(errorResult);
-      toast({
-        title: 'Scan Failed',
-        description: errorMessage,
-        variant: 'destructive'
-      });
-
-      return errorResult;
-    }
-  }, [processSingleFile]);
+    },
+    [processSingleFile]
+  );
 
   /**
    * Update a scanned item
    */
   const updateItem = useCallback((itemId: string, updates: Partial<ScannedInvoiceItem>) => {
-    setResult(prev => {
+    setResult((prev) => {
       if (!prev) return prev;
 
       return {
         ...prev,
-        items: prev.items.map(item =>
-          item.id === itemId ? { ...item, ...updates } : item
-        )
+        items: prev.items.map((item) => (item.id === itemId ? { ...item, ...updates } : item)),
       };
     });
   }, []);
@@ -470,14 +498,14 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
    * Toggle item selection
    */
   const toggleItemSelection = useCallback((itemId: string) => {
-    setResult(prev => {
+    setResult((prev) => {
       if (!prev) return prev;
 
       return {
         ...prev,
-        items: prev.items.map(item =>
+        items: prev.items.map((item) =>
           item.id === itemId ? { ...item, selected: !item.selected } : item
-        )
+        ),
       };
     });
   }, []);
@@ -485,42 +513,45 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
   /**
    * Select a different match for an item
    */
-  const selectMatch = useCallback((itemId: string, match: MaterialMatch) => {
-    setResult(prev => {
-      if (!prev) return prev;
+  const selectMatch = useCallback(
+    (itemId: string, match: MaterialMatch) => {
+      setResult((prev) => {
+        if (!prev) return prev;
 
-      return {
-        ...prev,
-        items: prev.items.map(item => {
-          if (item.id !== itemId) return item;
+        return {
+          ...prev,
+          items: prev.items.map((item) => {
+            if (item.id !== itemId) return item;
 
-          // Move current match to alternatives if it exists
-          const newAlternatives = item.match
-            ? [item.match, ...item.alternativeMatches.filter(m => m.id !== match.id)]
-            : item.alternativeMatches.filter(m => m.id !== match.id);
+            // Move current match to alternatives if it exists
+            const newAlternatives = item.match
+              ? [item.match, ...item.alternativeMatches.filter((m) => m.id !== match.id)]
+              : item.alternativeMatches.filter((m) => m.id !== match.id);
 
-          return {
-            ...item,
-            match,
-            alternativeMatches: newAlternatives.slice(0, opts.maxAlternatives),
-            selected: true,
-            unitPrice: match.defaultPrice || item.unitPrice
-          };
-        })
-      };
-    });
-  }, [opts.maxAlternatives]);
+            return {
+              ...item,
+              match,
+              alternativeMatches: newAlternatives.slice(0, opts.maxAlternatives),
+              selected: true,
+              unitPrice: match.defaultPrice || item.unitPrice,
+            };
+          }),
+        };
+      });
+    },
+    [opts.maxAlternatives]
+  );
 
   /**
    * Select all items
    */
   const selectAll = useCallback(() => {
-    setResult(prev => {
+    setResult((prev) => {
       if (!prev) return prev;
 
       return {
         ...prev,
-        items: prev.items.map(item => ({ ...item, selected: true }))
+        items: prev.items.map((item) => ({ ...item, selected: true })),
       };
     });
   }, []);
@@ -529,12 +560,12 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
    * Deselect all items
    */
   const deselectAll = useCallback(() => {
-    setResult(prev => {
+    setResult((prev) => {
       if (!prev) return prev;
 
       return {
         ...prev,
-        items: prev.items.map(item => ({ ...item, selected: false }))
+        items: prev.items.map((item) => ({ ...item, selected: false })),
       };
     });
   }, []);
@@ -555,15 +586,15 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
     if (!result) return [];
 
     return result.items
-      .filter(item => item.selected)
-      .map(item => ({
+      .filter((item) => item.selected)
+      .map((item) => ({
         description: item.match?.name || item.extracted.description,
         quantity: item.quantity,
         unit: item.match?.unit || 'each',
         unitPrice: item.unitPrice,
         category: 'materials' as const,
         subcategory: item.match?.subcategory || item.extracted.category,
-        materialCode: item.match?.id
+        materialCode: item.match?.id,
       }));
   }, [result]);
 
@@ -584,6 +615,6 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
     reset,
 
     // Getters
-    getSelectedItems
+    getSelectedItems,
   };
 }

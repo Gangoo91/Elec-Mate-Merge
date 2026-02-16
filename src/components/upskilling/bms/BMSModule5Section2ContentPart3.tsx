@@ -12,16 +12,19 @@ export const BMSModule5Section2ContentPart3 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          BACnet MSTP (RS-485) installation requires specific cable types, termination, and wiring topology 
-          to ensure reliable communication. Poor installation practices are the leading cause of MSTP failures.
+          BACnet MSTP (RS-485) installation requires specific cable types, termination, and wiring
+          topology to ensure reliable communication. Poor installation practices are the leading
+          cause of MSTP failures.
         </p>
-        
+
         <div className="space-y-3">
           <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold mb-2">Cable Requirements</h4>
             <div className="space-y-1 text-sm">
               <p className="text-foreground">• Use shielded twisted pair cable, 120Ω impedance</p>
-              <p className="text-foreground">• Belden 9842 or equivalent (22 AWG, foil + braid shield)</p>
+              <p className="text-foreground">
+                • Belden 9842 or equivalent (22 AWG, foil + braid shield)
+              </p>
               <p className="text-foreground">• Maximum segment length: 1200m (4000ft)</p>
               <p className="text-foreground">• Keep away from mains power cables</p>
             </div>
@@ -30,8 +33,12 @@ export const BMSModule5Section2ContentPart3 = () => {
           <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold mb-2">Termination & Topology</h4>
             <div className="space-y-1 text-sm">
-              <p className="text-foreground">• Fit 120Ω termination resistors at both ends of each segment</p>
-              <p className="text-foreground">• Always daisy-chain devices — never use star wiring</p>
+              <p className="text-foreground">
+                • Fit 120Ω termination resistors at both ends of each segment
+              </p>
+              <p className="text-foreground">
+                • Always daisy-chain devices — never use star wiring
+              </p>
               <p className="text-foreground">• Maximum 127 devices per RS-485 segment</p>
               <p className="text-foreground">• Connect cable shields to earth at one end only</p>
             </div>
@@ -58,9 +65,13 @@ export const BMSModule5Section2ContentPart3 = () => {
           </h4>
           <div className="space-y-1 text-sm">
             <p className="text-foreground">• Label each device with its network address</p>
-            <p className="text-foreground">• Provide clear as-built drawings showing cable routes</p>
+            <p className="text-foreground">
+              • Provide clear as-built drawings showing cable routes
+            </p>
             <p className="text-foreground">• Test continuity and polarity before energising</p>
-            <p className="text-foreground">• Leave spare capacity in cable trays for future expansion</p>
+            <p className="text-foreground">
+              • Leave spare capacity in cable trays for future expansion
+            </p>
           </div>
         </div>
       </CardContent>

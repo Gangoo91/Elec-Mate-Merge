@@ -1,6 +1,6 @@
-import { useState, useRef, ReactNode, useCallback } from "react";
-import { RefreshCw } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState, useRef, ReactNode, useCallback } from 'react';
+import { RefreshCw } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface PullToRefreshProps {
   onRefresh: () => Promise<void>;
@@ -16,7 +16,7 @@ const PullToRefresh = ({
   onRefresh,
   children,
   className,
-  disabled = false
+  disabled = false,
 }: PullToRefreshProps) => {
   const [pullDistance, setPullDistance] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -24,41 +24,47 @@ const PullToRefresh = ({
   const touchStartY = useRef(0);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (disabled || isRefreshing) return;
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (disabled || isRefreshing) return;
 
-    // Only activate if at top of scroll
-    const scrollTop = contentRef.current?.scrollTop || 0;
-    if (scrollTop > 0) return;
+      // Only activate if at top of scroll
+      const scrollTop = contentRef.current?.scrollTop || 0;
+      if (scrollTop > 0) return;
 
-    touchStartY.current = e.touches[0].clientY;
-    setIsActive(true);
-  }, [disabled, isRefreshing]);
+      touchStartY.current = e.touches[0].clientY;
+      setIsActive(true);
+    },
+    [disabled, isRefreshing]
+  );
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!isActive || disabled || isRefreshing) return;
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isActive || disabled || isRefreshing) return;
 
-    const scrollTop = contentRef.current?.scrollTop || 0;
-    if (scrollTop > 0) {
-      setPullDistance(0);
-      return;
-    }
-
-    const currentY = e.touches[0].clientY;
-    const diff = currentY - touchStartY.current;
-
-    if (diff > 0) {
-      // Apply resistance to pull
-      const resistance = 0.4;
-      const distance = Math.min(diff * resistance, MAX_PULL);
-      setPullDistance(distance);
-
-      // Prevent native scroll when pulling down
-      if (distance > 10) {
-        e.preventDefault();
+      const scrollTop = contentRef.current?.scrollTop || 0;
+      if (scrollTop > 0) {
+        setPullDistance(0);
+        return;
       }
-    }
-  }, [isActive, disabled, isRefreshing]);
+
+      const currentY = e.touches[0].clientY;
+      const diff = currentY - touchStartY.current;
+
+      if (diff > 0) {
+        // Apply resistance to pull
+        const resistance = 0.4;
+        const distance = Math.min(diff * resistance, MAX_PULL);
+        setPullDistance(distance);
+
+        // Prevent native scroll when pulling down
+        if (distance > 10) {
+          e.preventDefault();
+        }
+      }
+    },
+    [isActive, disabled, isRefreshing]
+  );
 
   const handleTouchEnd = useCallback(async () => {
     if (!isActive || disabled) {
@@ -88,13 +94,13 @@ const PullToRefresh = ({
   const shouldTrigger = pullDistance >= PULL_THRESHOLD;
 
   return (
-    <div className={cn("relative overflow-hidden", className)}>
+    <div className={cn('relative overflow-hidden', className)}>
       {/* Pull indicator */}
       <div
         className={cn(
-          "absolute left-0 right-0 flex items-center justify-center z-10",
-          "transition-opacity duration-200",
-          (pullDistance > 0 || isRefreshing) ? "opacity-100" : "opacity-0"
+          'absolute left-0 right-0 flex items-center justify-center z-10',
+          'transition-opacity duration-200',
+          pullDistance > 0 || isRefreshing ? 'opacity-100' : 'opacity-0'
         )}
         style={{
           top: 0,
@@ -103,19 +109,19 @@ const PullToRefresh = ({
       >
         <div
           className={cn(
-            "flex items-center justify-center w-10 h-10 rounded-full",
-            "bg-yellow-400/20 border border-yellow-400/30",
-            "transition-all duration-200",
-            shouldTrigger && "bg-yellow-400/30 scale-110"
+            'flex items-center justify-center w-10 h-10 rounded-full',
+            'bg-yellow-400/20 border border-yellow-400/30',
+            'transition-all duration-200',
+            shouldTrigger && 'bg-yellow-400/30 scale-110'
           )}
         >
           <RefreshCw
             className={cn(
-              "h-5 w-5 text-yellow-400 transition-transform duration-200",
-              isRefreshing && "animate-spin",
+              'h-5 w-5 text-yellow-400 transition-transform duration-200',
+              isRefreshing && 'animate-spin'
             )}
             style={{
-              transform: !isRefreshing ? `rotate(${progress * 360}deg)` : undefined
+              transform: !isRefreshing ? `rotate(${progress * 360}deg)` : undefined,
             }}
           />
         </div>
@@ -129,9 +135,10 @@ const PullToRefresh = ({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         style={{
-          transform: pullDistance > 0 || isRefreshing
-            ? `translateY(${isRefreshing ? PULL_THRESHOLD : pullDistance}px)`
-            : undefined,
+          transform:
+            pullDistance > 0 || isRefreshing
+              ? `translateY(${isRefreshing ? PULL_THRESHOLD : pullDistance}px)`
+              : undefined,
           transition: isActive ? 'none' : 'transform 0.2s ease-out',
         }}
       >
@@ -142,12 +149,12 @@ const PullToRefresh = ({
       {pullDistance > 0 && !isRefreshing && (
         <div
           className={cn(
-            "absolute top-2 left-0 right-0 flex justify-center",
-            "text-xs font-medium transition-all duration-200",
-            shouldTrigger ? "text-yellow-400" : "text-white/50"
+            'absolute top-2 left-0 right-0 flex justify-center',
+            'text-xs font-medium transition-all duration-200',
+            shouldTrigger ? 'text-yellow-400' : 'text-white/50'
           )}
         >
-          {shouldTrigger ? "Release to refresh" : "Pull to refresh"}
+          {shouldTrigger ? 'Release to refresh' : 'Pull to refresh'}
         </div>
       )}
     </div>

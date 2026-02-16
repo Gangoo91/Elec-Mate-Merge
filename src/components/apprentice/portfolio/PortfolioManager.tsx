@@ -1,8 +1,7 @@
-
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { DropdownTabs } from '@/components/ui/dropdown-tabs';
+import { Button } from '@/components/ui/button';
 import {
   FileText,
   Plus,
@@ -16,35 +15,30 @@ import {
   Target,
   Clock,
   CheckCircle2,
-  Loader2
-} from "lucide-react";
-import { usePortfolioData } from "@/hooks/portfolio/usePortfolioData";
-import PortfolioEntriesList from "./PortfolioEntriesList";
-import PortfolioEntryForm from "./PortfolioEntryForm";
-import PortfolioDocumentationContent from "./PortfolioDocumentationContent";
-import DigitalToolsIntegration from "./DigitalToolsIntegration";
-import IndustrySpecificSections from "./IndustrySpecificSections";
-import GroupedPortfolioOverview from "../../portfolio/GroupedPortfolioOverview";
-import CompetencyLevelView from "../../portfolio/CompetencyLevelView";
-import { PortfolioEntry } from "@/types/portfolio";
+  Loader2,
+} from 'lucide-react';
+import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import PortfolioEntriesList from './PortfolioEntriesList';
+import PortfolioEntryForm from './PortfolioEntryForm';
+import PortfolioDocumentationContent from './PortfolioDocumentationContent';
+import DigitalToolsIntegration from './DigitalToolsIntegration';
+import IndustrySpecificSections from './IndustrySpecificSections';
+import GroupedPortfolioOverview from '../../portfolio/GroupedPortfolioOverview';
+import CompetencyLevelView from '../../portfolio/CompetencyLevelView';
+import { PortfolioEntry } from '@/types/portfolio';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 // Quick Stats Component
 const QuickStats = ({ entries }: { entries: PortfolioEntry[] }) => {
-  const completed = entries.filter(e => e.status === 'completed').length;
+  const completed = entries.filter((e) => e.status === 'completed').length;
   const totalHours = Math.floor(entries.reduce((total, entry) => total + entry.timeSpent, 0) / 60);
-  const inProgress = entries.filter(e => e.status === 'in-progress').length;
+  const inProgress = entries.filter((e) => e.status === 'in-progress').length;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -112,12 +106,14 @@ const ProgressView = ({
   groups,
   categories,
   getEntriesByGroup,
-  getEntriesByCompetencyLevel
+  getEntriesByCompetencyLevel,
 }: {
   groups: any[];
   categories: any[];
   getEntriesByGroup: (groupId: string) => PortfolioEntry[];
-  getEntriesByCompetencyLevel: (level: 'foundation' | 'intermediate' | 'advanced') => PortfolioEntry[];
+  getEntriesByCompetencyLevel: (
+    level: 'foundation' | 'intermediate' | 'advanced'
+  ) => PortfolioEntry[];
 }) => {
   const [view, setView] = useState<'groups' | 'competency'>('groups');
 
@@ -128,9 +124,7 @@ const ProgressView = ({
         <button
           onClick={() => setView('groups')}
           className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-            view === 'groups'
-              ? 'bg-elec-yellow text-elec-dark'
-              : 'text-white hover:text-white'
+            view === 'groups' ? 'bg-elec-yellow text-elec-dark' : 'text-white hover:text-white'
           }`}
         >
           By Group
@@ -138,9 +132,7 @@ const ProgressView = ({
         <button
           onClick={() => setView('competency')}
           className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-            view === 'competency'
-              ? 'bg-elec-yellow text-elec-dark'
-              : 'text-white hover:text-white'
+            view === 'competency' ? 'bg-elec-yellow text-elec-dark' : 'text-white hover:text-white'
           }`}
         >
           By Level
@@ -149,10 +141,7 @@ const ProgressView = ({
 
       {/* Content */}
       {view === 'groups' ? (
-        <GroupedPortfolioOverview
-          groups={groups}
-          getEntriesByGroup={getEntriesByGroup}
-        />
+        <GroupedPortfolioOverview groups={groups} getEntriesByGroup={getEntriesByGroup} />
       ) : (
         <CompetencyLevelView
           categories={categories}
@@ -168,7 +157,7 @@ const ResourcesDialog = ({
   open,
   onOpenChange,
   activeResource,
-  setActiveResource
+  setActiveResource,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -176,13 +165,23 @@ const ResourcesDialog = ({
   setActiveResource: (resource: string | null) => void;
 }) => {
   const resources = [
-    { id: 'documentation', label: 'Documentation', icon: BookOpen, component: PortfolioDocumentationContent },
+    {
+      id: 'documentation',
+      label: 'Documentation',
+      icon: BookOpen,
+      component: PortfolioDocumentationContent,
+    },
     { id: 'tools', label: 'Digital Tools', icon: Wrench, component: DigitalToolsIntegration },
-    { id: 'industry', label: 'Industry Resources', icon: Building, component: IndustrySpecificSections }
+    {
+      id: 'industry',
+      label: 'Industry Resources',
+      icon: Building,
+      component: IndustrySpecificSections,
+    },
   ];
 
   const ActiveComponent = activeResource
-    ? resources.find(r => r.id === activeResource)?.component
+    ? resources.find((r) => r.id === activeResource)?.component
     : null;
 
   return (
@@ -200,7 +199,7 @@ const ResourcesDialog = ({
                 >
                   Back
                 </Button>
-                {resources.find(r => r.id === activeResource)?.label}
+                {resources.find((r) => r.id === activeResource)?.label}
               </>
             ) : (
               'Resources'
@@ -213,7 +212,7 @@ const ResourcesDialog = ({
             <ActiveComponent />
           ) : (
             <div className="grid gap-3 p-4">
-              {resources.map(resource => {
+              {resources.map((resource) => {
                 const Icon = resource.icon;
                 return (
                   <button
@@ -253,7 +252,7 @@ const PortfolioManager = () => {
     updateEntry,
     deleteEntry,
     getEntriesByGroup,
-    getEntriesByCompetencyLevel
+    getEntriesByCompetencyLevel,
   } = usePortfolioData();
   const [showAddForm, setShowAddForm] = useState(false);
   const [showResources, setShowResources] = useState(false);
@@ -350,18 +349,15 @@ const PortfolioManager = () => {
         defaultValue="overview"
         tabs={[
           {
-            value: "overview",
-            label: "Overview",
+            value: 'overview',
+            label: 'Overview',
             icon: LayoutDashboard,
             content: (
-              <GroupedPortfolioOverview
-                groups={groups}
-                getEntriesByGroup={getEntriesByGroup}
-              />
-            )
+              <GroupedPortfolioOverview groups={groups} getEntriesByGroup={getEntriesByGroup} />
+            ),
           },
           {
-            value: "entries",
+            value: 'entries',
             label: `My Entries (${entries.length})`,
             icon: FolderOpen,
             content: (
@@ -370,11 +366,11 @@ const PortfolioManager = () => {
                 onUpdateEntry={updateEntry}
                 onDeleteEntry={deleteEntry}
               />
-            )
+            ),
           },
           {
-            value: "progress",
-            label: "Progress",
+            value: 'progress',
+            label: 'Progress',
             icon: TrendingUp,
             content: (
               <ProgressView
@@ -383,8 +379,8 @@ const PortfolioManager = () => {
                 getEntriesByGroup={getEntriesByGroup}
                 getEntriesByCompetencyLevel={getEntriesByCompetencyLevel}
               />
-            )
-          }
+            ),
+          },
         ]}
       />
 

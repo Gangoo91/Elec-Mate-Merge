@@ -1,18 +1,24 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { GraduationCap, Loader2, Upload } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { GraduationCap, Loader2, Upload } from 'lucide-react';
 import { useSimpleAgent } from '@/hooks/useSimpleAgent';
 import { transformTutorOutputToPDF } from '@/utils/tutor-transformer';
 import type { TutorAgentOutput } from '@/utils/tutor-transformer';
 import TutorPDFButton from './TutorPDFButton';
 import ReactMarkdown from 'react-markdown';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
 
 const TutorInterface = () => {
   const [qualificationLevel, setQualificationLevel] = useState('');
@@ -21,14 +27,14 @@ const TutorInterface = () => {
   const [query, setQuery] = useState('');
   const [hasPhoto, setHasPhoto] = useState(false);
   const [result, setResult] = useState<TutorAgentOutput | null>(null);
-  
+
   const { callAgent, isLoading, progress } = useSimpleAgent();
 
   const examplePrompts = [
-    "Explain three-phase star and delta connections for Level 3 exam",
-    "Voltage drop calculation step-by-step example",
-    "What is an RCD and how does it work?",
-    "Explain the difference between TN-S and TN-C-S earthing systems"
+    'Explain three-phase star and delta connections for Level 3 exam',
+    'Voltage drop calculation step-by-step example',
+    'What is an RCD and how does it work?',
+    'Explain the difference between TN-S and TN-C-S earthing systems',
   ];
 
   const handleSubmit = async () => {
@@ -39,14 +45,13 @@ const TutorInterface = () => {
       qualificationLevel,
       topicArea,
       learningGoal,
-      hasPhoto
+      hasPhoto,
     });
 
     if (response?.success && response.result) {
       setResult(response.result as TutorAgentOutput);
     }
   };
-
 
   return (
     <div className="space-y-6">
@@ -127,12 +132,10 @@ const TutorInterface = () => {
             <Label>Installation Photo (Optional)</Label>
             <div className="border-2 border-dashed rounded-lg p-8 text-center">
               <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">
-                Photo upload will be available soon
-              </p>
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <p className="text-sm text-muted-foreground">Photo upload will be available soon</p>
+              <Button
+                variant="outline"
+                size="sm"
                 className="mt-2"
                 onClick={() => setHasPhoto(!hasPhoto)}
               >
@@ -159,8 +162,8 @@ const TutorInterface = () => {
             </div>
           </div>
 
-          <Button 
-            onClick={handleSubmit} 
+          <Button
+            onClick={handleSubmit}
             disabled={isLoading || !query.trim()}
             className="w-full"
             size="lg"
@@ -187,14 +190,12 @@ const TutorInterface = () => {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle>Learning Assessment Report</CardTitle>
-                <CardDescription>
-                  Educational guidance for your question
-                </CardDescription>
+                <CardDescription>Educational guidance for your question</CardDescription>
               </div>
               <TutorPDFButton
                 tutorPDFData={transformTutorOutputToPDF(result, {
                   qualificationLevel,
-                  topic: query
+                  topic: query,
                 })}
                 topic={query}
                 variant="outline"
@@ -238,9 +239,7 @@ const TutorInterface = () => {
                 {result.keyPoints.map((kp, idx) => (
                   <div key={idx} className="border-l-2 border-indigo-400 pl-4">
                     <div className="font-semibold">{kp.point}</div>
-                    <div className="text-sm text-muted-foreground mt-1">
-                      Why: {kp.why}
-                    </div>
+                    <div className="text-sm text-muted-foreground mt-1">Why: {kp.why}</div>
                   </div>
                 ))}
               </CollapsibleContent>
@@ -281,7 +280,9 @@ const TutorInterface = () => {
                   <div className="font-medium mb-2 text-green-400">Strengths:</div>
                   <ul className="list-disc pl-5 space-y-1">
                     {result.studyPlan.strengths.map((s, idx) => (
-                      <li key={idx} className="text-sm">✓ {s}</li>
+                      <li key={idx} className="text-sm">
+                        ✓ {s}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -289,7 +290,9 @@ const TutorInterface = () => {
                   <div className="font-medium mb-2 text-orange-400">Areas to Improve:</div>
                   <ul className="list-disc pl-5 space-y-1">
                     {result.studyPlan.weaknesses.map((w, idx) => (
-                      <li key={idx} className="text-sm">⚠ {w}</li>
+                      <li key={idx} className="text-sm">
+                        ⚠ {w}
+                      </li>
                     ))}
                   </ul>
                 </div>

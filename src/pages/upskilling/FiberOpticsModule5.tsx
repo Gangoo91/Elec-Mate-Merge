@@ -1,4 +1,12 @@
-import { ArrowLeft, CheckCircle, ToggleLeft, Activity, BarChart, Award, FileText } from 'lucide-react';
+import {
+  ArrowLeft,
+  CheckCircle,
+  ToggleLeft,
+  Activity,
+  BarChart,
+  Award,
+  FileText,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,34 +15,34 @@ const FiberOpticsModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Continuity and Polarity Checks",
+      title: 'Continuity and Polarity Checks',
       icon: CheckCircle,
-      description: "Basic connectivity and polarity verification"
+      description: 'Basic connectivity and polarity verification',
     },
     {
       id: 3,
-      title: "OTDR Testing Basics",
+      title: 'OTDR Testing Basics',
       icon: Activity,
-      description: "Optical time domain reflectometer fundamentals"
+      description: 'Optical time domain reflectometer fundamentals',
     },
     {
       id: 4,
-      title: "Interpreting Test Results",
+      title: 'Interpreting Test Results',
       icon: BarChart,
-      description: "Understanding and analyzing measurement data"
+      description: 'Understanding and analyzing measurement data',
     },
     {
       id: 5,
-      title: "Fibre Testing Pass/Fail Criteria",
+      title: 'Fibre Testing Pass/Fail Criteria',
       icon: Award,
-      description: "Performance standards and acceptance criteria"
+      description: 'Performance standards and acceptance criteria',
     },
     {
       id: 6,
-      title: "Generating Test Reports",
+      title: 'Generating Test Reports',
       icon: FileText,
-      description: "Documentation and certification reporting"
-    }
+      description: 'Documentation and certification reporting',
+    },
   ];
 
   return (

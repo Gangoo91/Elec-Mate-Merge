@@ -54,68 +54,67 @@ export function useFlashcardProgress() {
   }, [fetchProgress]);
 
   // Get progress for a specific set
-  const getSetProgress = useCallback((setId: string, totalCards: number): SetProgress => {
-    const setCards = progress.filter(p => p.flashcard_set_id === setId);
-    const masteredCards = setCards.filter(p => p.mastery_level >= 3).length;
-    const lastStudied = setCards.reduce((latest, p) => {
-      if (!p.last_reviewed_at) return latest;
-      if (!latest) return p.last_reviewed_at;
-      return new Date(p.last_reviewed_at) > new Date(latest) ? p.last_reviewed_at : latest;
-    }, null as string | null);
+  const getSetProgress = useCallback(
+    (setId: string, totalCards: number): SetProgress => {
+      const setCards = progress.filter((p) => p.flashcard_set_id === setId);
+      const masteredCards = setCards.filter((p) => p.mastery_level >= 3).length;
+      const lastStudied = setCards.reduce(
+        (latest, p) => {
+          if (!p.last_reviewed_at) return latest;
+          if (!latest) return p.last_reviewed_at;
+          return new Date(p.last_reviewed_at) > new Date(latest) ? p.last_reviewed_at : latest;
+        },
+        null as string | null
+      );
 
-    return {
-      setId,
-      totalCards,
-      masteredCards,
-      progressPercentage: totalCards > 0 ? Math.round((masteredCards / totalCards) * 100) : 0,
-      lastStudied
-    };
-  }, [progress]);
+      return {
+        setId,
+        totalCards,
+        masteredCards,
+        progressPercentage: totalCards > 0 ? Math.round((masteredCards / totalCards) * 100) : 0,
+        lastStudied,
+      };
+    },
+    [progress]
+  );
 
   // Update progress after answering a card
-  const updateCardProgress = useCallback(async (
-    setId: string,
-    cardId: string,
-    correct: boolean
-  ) => {
-    if (!user) return;
+  const updateCardProgress = useCallback(
+    async (setId: string, cardId: string, correct: boolean) => {
+      if (!user) return;
 
-    const existing = progress.find(
-      p => p.flashcard_set_id === setId && p.card_id === cardId
-    );
+      const existing = progress.find((p) => p.flashcard_set_id === setId && p.card_id === cardId);
 
-    // Calculate spaced repetition interval
-    const calculateNextReview = (masteryLevel: number): Date => {
-      const intervals = [1, 3, 7, 14, 30, 60]; // days
-      const days = intervals[Math.min(masteryLevel, intervals.length - 1)];
-      const nextDate = new Date();
-      nextDate.setDate(nextDate.getDate() + days);
-      return nextDate;
-    };
+      // Calculate spaced repetition interval
+      const calculateNextReview = (masteryLevel: number): Date => {
+        const intervals = [1, 3, 7, 14, 30, 60]; // days
+        const days = intervals[Math.min(masteryLevel, intervals.length - 1)];
+        const nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + days);
+        return nextDate;
+      };
 
-    if (existing) {
-      // Update existing progress
-      const newMastery = correct
-        ? Math.min(existing.mastery_level + 1, 5)
-        : Math.max(existing.mastery_level - 1, 0);
+      if (existing) {
+        // Update existing progress
+        const newMastery = correct
+          ? Math.min(existing.mastery_level + 1, 5)
+          : Math.max(existing.mastery_level - 1, 0);
 
-      const { error } = await supabase
-        .from('user_flashcard_progress')
-        .update({
-          mastery_level: newMastery,
-          correct_count: existing.correct_count + (correct ? 1 : 0),
-          incorrect_count: existing.incorrect_count + (correct ? 0 : 1),
-          last_reviewed_at: new Date().toISOString(),
-          next_review_at: calculateNextReview(newMastery).toISOString()
-        })
-        .eq('id', existing.id);
+        const { error } = await supabase
+          .from('user_flashcard_progress')
+          .update({
+            mastery_level: newMastery,
+            correct_count: existing.correct_count + (correct ? 1 : 0),
+            incorrect_count: existing.incorrect_count + (correct ? 0 : 1),
+            last_reviewed_at: new Date().toISOString(),
+            next_review_at: calculateNextReview(newMastery).toISOString(),
+          })
+          .eq('id', existing.id);
 
-      if (error) console.error('Error updating progress:', error);
-    } else {
-      // Create new progress entry
-      const { error } = await supabase
-        .from('user_flashcard_progress')
-        .insert({
+        if (error) console.error('Error updating progress:', error);
+      } else {
+        // Create new progress entry
+        const { error } = await supabase.from('user_flashcard_progress').insert({
           user_id: user.id,
           flashcard_set_id: setId,
           card_id: cardId,
@@ -123,27 +122,31 @@ export function useFlashcardProgress() {
           correct_count: correct ? 1 : 0,
           incorrect_count: correct ? 0 : 1,
           last_reviewed_at: new Date().toISOString(),
-          next_review_at: calculateNextReview(correct ? 1 : 0).toISOString()
+          next_review_at: calculateNextReview(correct ? 1 : 0).toISOString(),
         });
 
-      if (error) console.error('Error creating progress:', error);
-    }
+        if (error) console.error('Error creating progress:', error);
+      }
 
-    // Refresh progress
-    fetchProgress();
-  }, [user, progress, fetchProgress]);
+      // Refresh progress
+      fetchProgress();
+    },
+    [user, progress, fetchProgress]
+  );
 
   // Get cards due for review (spaced repetition)
-  const getDueCards = useCallback((setId: string): string[] => {
-    const now = new Date();
-    return progress
-      .filter(p =>
-        p.flashcard_set_id === setId &&
-        p.next_review_at &&
-        new Date(p.next_review_at) <= now
-      )
-      .map(p => p.card_id);
-  }, [progress]);
+  const getDueCards = useCallback(
+    (setId: string): string[] => {
+      const now = new Date();
+      return progress
+        .filter(
+          (p) =>
+            p.flashcard_set_id === setId && p.next_review_at && new Date(p.next_review_at) <= now
+        )
+        .map((p) => p.card_id);
+    },
+    [progress]
+  );
 
   return {
     progress,
@@ -151,6 +154,6 @@ export function useFlashcardProgress() {
     getSetProgress,
     updateCardProgress,
     getDueCards,
-    refetch: fetchProgress
+    refetch: fetchProgress,
   };
 }

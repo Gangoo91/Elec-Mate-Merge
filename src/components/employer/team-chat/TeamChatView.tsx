@@ -1,24 +1,16 @@
-import { useState, useRef, useEffect } from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  ArrowLeft,
-  Hash,
-  MoreVertical,
-  Send,
-  Loader2,
-  Users,
-  Settings,
-} from "lucide-react";
+import { useState, useRef, useEffect } from 'react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ArrowLeft, Hash, MoreVertical, Send, Loader2, Users, Settings } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   useChannelMessages,
   useSendChannelMessage,
@@ -26,10 +18,10 @@ import {
   useTeamDMMessages,
   useSendTeamDM,
   useMarkTeamDMAsRead,
-} from "@/hooks/useTeamChat";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
-import type { TeamChannel, TeamDirectMessage } from "@/services/teamChatService";
+} from '@/hooks/useTeamChat';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
+import type { TeamChannel, TeamDirectMessage } from '@/services/teamChatService';
 
 interface TeamChatViewProps {
   channel?: TeamChannel | null;
@@ -38,28 +30,21 @@ interface TeamChatViewProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function TeamChatView({
-  channel,
-  dmConversation,
-  open,
-  onOpenChange,
-}: TeamChatViewProps) {
+export function TeamChatView({ channel, dmConversation, open, onOpenChange }: TeamChatViewProps) {
   const { user } = useAuth();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // Channel messages
-  const {
-    data: channelMessages = [],
-    isLoading: channelMessagesLoading,
-  } = useChannelMessages(channel?.id);
+  const { data: channelMessages = [], isLoading: channelMessagesLoading } = useChannelMessages(
+    channel?.id
+  );
 
   // DM messages
-  const {
-    data: dmMessages = [],
-    isLoading: dmMessagesLoading,
-  } = useTeamDMMessages(dmConversation?.id);
+  const { data: dmMessages = [], isLoading: dmMessagesLoading } = useTeamDMMessages(
+    dmConversation?.id
+  );
 
   // Channel members
   const { data: members = [] } = useChannelMembers(channel?.id);
@@ -101,12 +86,12 @@ export function TeamChatView({
           content: message.trim(),
         });
       }
-      setMessage("");
+      setMessage('');
     } catch (error) {
       toast({
-        title: "Failed to Send",
+        title: 'Failed to Send',
         description: "Your message couldn't be sent. Please try again.",
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -130,9 +115,8 @@ export function TeamChatView({
     }
     if (dmConversation) {
       // Get the other user's info
-      const otherUserId = dmConversation.user_1_id === user?.id
-        ? dmConversation.user_2_id
-        : dmConversation.user_1_id;
+      const otherUserId =
+        dmConversation.user_1_id === user?.id ? dmConversation.user_2_id : dmConversation.user_1_id;
       return {
         name: 'Team Member', // Would need to fetch user details
         subtitle: 'Direct Message',
@@ -150,17 +134,10 @@ export function TeamChatView({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[95vh] rounded-t-2xl p-0 flex flex-col"
-      >
+      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col">
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-border">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onOpenChange(false)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
 
@@ -179,9 +156,7 @@ export function TeamChatView({
 
           <div className="flex-1 min-w-0">
             <p className="font-semibold truncate">{headerInfo.name}</p>
-            <p className="text-sm text-muted-foreground truncate">
-              {headerInfo.subtitle}
-            </p>
+            <p className="text-sm text-muted-foreground truncate">{headerInfo.subtitle}</p>
           </div>
 
           <DropdownMenu>
@@ -225,9 +200,7 @@ export function TeamChatView({
             <div className="flex-1 flex items-center justify-center h-full">
               <div className="text-center">
                 <p className="text-muted-foreground">No messages yet</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Be the first to say something!
-                </p>
+                <p className="text-xs text-muted-foreground mt-1">Be the first to say something!</p>
               </div>
             </div>
           ) : (
@@ -248,17 +221,15 @@ export function TeamChatView({
                   )}
                   <div
                     className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
-                      isOwn
-                        ? 'bg-elec-yellow text-black rounded-br-md'
-                        : 'bg-muted rounded-bl-md'
+                      isOwn ? 'bg-elec-yellow text-black rounded-br-md' : 'bg-muted rounded-bl-md'
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap break-words">
-                      {msg.content}
-                    </p>
-                    <p className={`text-[10px] mt-1 ${
-                      isOwn ? 'text-black/60' : 'text-muted-foreground'
-                    }`}>
+                    <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
+                    <p
+                      className={`text-[10px] mt-1 ${
+                        isOwn ? 'text-black/60' : 'text-muted-foreground'
+                      }`}
+                    >
                       {new Date(msg.sent_at).toLocaleTimeString([], {
                         hour: '2-digit',
                         minute: '2-digit',

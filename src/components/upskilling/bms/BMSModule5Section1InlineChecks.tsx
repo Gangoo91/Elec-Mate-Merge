@@ -21,12 +21,12 @@ export const ProtocolInlineCheck1 = () => {
             <p className="text-foreground mb-4">
               Why are communication protocols compared to languages?
             </p>
-            
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="protocol-language" 
+                <input
+                  type="radio"
+                  name="protocol-language"
                   value="speed"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -34,9 +34,9 @@ export const ProtocolInlineCheck1 = () => {
                 They both work very quickly
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="protocol-language" 
+                <input
+                  type="radio"
+                  name="protocol-language"
                   value="communication"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -44,9 +44,9 @@ export const ProtocolInlineCheck1 = () => {
                 They enable different devices to understand and communicate with each other
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="protocol-language" 
+                <input
+                  type="radio"
+                  name="protocol-language"
                   value="complex"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -55,7 +55,7 @@ export const ProtocolInlineCheck1 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -64,11 +64,13 @@ export const ProtocolInlineCheck1 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === 'communication' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === 'communication'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === 'communication' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -80,9 +82,9 @@ export const ProtocolInlineCheck1 = () => {
                       {selectedAnswer === 'communication' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      Communication protocols are compared to languages because they provide a structured way 
-                      for different devices to understand and exchange information with each other, just like 
-                      languages allow people to communicate.
+                      Communication protocols are compared to languages because they provide a
+                      structured way for different devices to understand and exchange information
+                      with each other, just like languages allow people to communicate.
                     </p>
                   </div>
                 </div>
@@ -113,12 +115,12 @@ export const ProtocolInlineCheck2 = () => {
             <p className="text-foreground mb-4">
               What is one disadvantage of proprietary communication protocols?
             </p>
-            
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="proprietary-disadvantage" 
+                <input
+                  type="radio"
+                  name="proprietary-disadvantage"
                   value="faster"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -126,9 +128,9 @@ export const ProtocolInlineCheck2 = () => {
                 They work faster than open protocols
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="proprietary-disadvantage" 
+                <input
+                  type="radio"
+                  name="proprietary-disadvantage"
                   value="vendor-lock"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -136,9 +138,9 @@ export const ProtocolInlineCheck2 = () => {
                 They can lock clients into using a single vendor
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="proprietary-disadvantage" 
+                <input
+                  type="radio"
+                  name="proprietary-disadvantage"
                   value="easier"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -147,7 +149,7 @@ export const ProtocolInlineCheck2 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -156,11 +158,13 @@ export const ProtocolInlineCheck2 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === 'vendor-lock' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === 'vendor-lock'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === 'vendor-lock' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -172,8 +176,9 @@ export const ProtocolInlineCheck2 = () => {
                       {selectedAnswer === 'vendor-lock' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      Proprietary protocols can lock clients into using a single vendor, making it difficult 
-                      and expensive to integrate equipment from other manufacturers or upgrade systems.
+                      Proprietary protocols can lock clients into using a single vendor, making it
+                      difficult and expensive to integrate equipment from other manufacturers or
+                      upgrade systems.
                     </p>
                   </div>
                 </div>
@@ -204,12 +209,12 @@ export const ProtocolInlineCheck3 = () => {
             <p className="text-foreground mb-4">
               Which protocol is commonly used for integrating meters and chillers?
             </p>
-            
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="protocol-meters" 
+                <input
+                  type="radio"
+                  name="protocol-meters"
                   value="bacnet"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -217,9 +222,9 @@ export const ProtocolInlineCheck3 = () => {
                 BACnet
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="protocol-meters" 
+                <input
+                  type="radio"
+                  name="protocol-meters"
                   value="modbus"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -227,9 +232,9 @@ export const ProtocolInlineCheck3 = () => {
                 Modbus
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="protocol-meters" 
+                <input
+                  type="radio"
+                  name="protocol-meters"
                   value="knx"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -238,7 +243,7 @@ export const ProtocolInlineCheck3 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -247,11 +252,13 @@ export const ProtocolInlineCheck3 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === 'modbus' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === 'modbus'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === 'modbus' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -263,8 +270,9 @@ export const ProtocolInlineCheck3 = () => {
                       {selectedAnswer === 'modbus' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      Modbus is commonly used for integrating energy meters, boilers, and chillers because 
-                      it's simple, robust, and widely supported by industrial equipment manufacturers.
+                      Modbus is commonly used for integrating energy meters, boilers, and chillers
+                      because it's simple, robust, and widely supported by industrial equipment
+                      manufacturers.
                     </p>
                   </div>
                 </div>
@@ -295,12 +303,12 @@ export const ProtocolInlineCheck4 = () => {
             <p className="text-foreground mb-4">
               What happens if RS-485 bus cables are not terminated correctly?
             </p>
-            
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="rs485-termination" 
+                <input
+                  type="radio"
+                  name="rs485-termination"
                   value="faster"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -308,9 +316,9 @@ export const ProtocolInlineCheck4 = () => {
                 The network runs faster
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="rs485-termination" 
+                <input
+                  type="radio"
+                  name="rs485-termination"
                   value="reflections"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -318,9 +326,9 @@ export const ProtocolInlineCheck4 = () => {
                 Signal reflections cause communication errors
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="rs485-termination" 
+                <input
+                  type="radio"
+                  name="rs485-termination"
                   value="nothing"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -329,7 +337,7 @@ export const ProtocolInlineCheck4 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -338,11 +346,13 @@ export const ProtocolInlineCheck4 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === 'reflections' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === 'reflections'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === 'reflections' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -354,8 +364,8 @@ export const ProtocolInlineCheck4 = () => {
                       {selectedAnswer === 'reflections' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      Without proper termination resistors at both ends, signal reflections occur which 
-                      cause communication errors, data corruption, and network instability.
+                      Without proper termination resistors at both ends, signal reflections occur
+                      which cause communication errors, data corruption, and network instability.
                     </p>
                   </div>
                 </div>

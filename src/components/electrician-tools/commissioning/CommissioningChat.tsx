@@ -1,8 +1,8 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { MessageCircle, Wrench, HelpCircle, ArrowLeft, Send } from "lucide-react";
-import { useState } from "react";
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { MessageCircle, Wrench, HelpCircle, ArrowLeft, Send } from 'lucide-react';
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 interface CommissioningChatProps {
@@ -18,24 +18,24 @@ const CommissioningChat = ({
   queryType,
   citations,
   onStartOver,
-  onAskFollowUp
+  onAskFollowUp,
 }: CommissioningChatProps) => {
-  const [followUpQuery, setFollowUpQuery] = useState("");
+  const [followUpQuery, setFollowUpQuery] = useState('');
 
   const handleFollowUpSubmit = () => {
     if (followUpQuery.trim()) {
       onAskFollowUp(followUpQuery);
-      setFollowUpQuery("");
+      setFollowUpQuery('');
     }
   };
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
-      <Button 
-        onClick={onStartOver} 
-        variant="outline" 
-        size="sm" 
+      <Button
+        onClick={onStartOver}
+        variant="outline"
+        size="sm"
         className="gap-2 touch-manipulation h-10"
       >
         <ArrowLeft className="h-4 w-4" /> New Query
@@ -48,16 +48,24 @@ const CommissioningChat = ({
             <>
               <Wrench className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-purple-300 text-base sm:text-lg">Troubleshooting Mode</h3>
-                <p className="text-xs sm:text-sm text-foreground">Diagnostic advice and fault-finding guidance</p>
+                <h3 className="font-semibold text-purple-300 text-base sm:text-lg">
+                  Troubleshooting Mode
+                </h3>
+                <p className="text-xs sm:text-sm text-foreground">
+                  Diagnostic advice and fault-finding guidance
+                </p>
               </div>
             </>
           ) : (
             <>
               <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-purple-300 text-base sm:text-lg">Question & Answer Mode</h3>
-                <p className="text-xs sm:text-sm text-foreground">Quick reference and clarification</p>
+                <h3 className="font-semibold text-purple-300 text-base sm:text-lg">
+                  Question & Answer Mode
+                </h3>
+                <p className="text-xs sm:text-sm text-foreground">
+                  Quick reference and clarification
+                </p>
               </div>
             </>
           )}
@@ -78,10 +86,7 @@ const CommissioningChat = ({
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {citations.slice(0, 6).map((citation: any, idx: number) => (
-                <div 
-                  key={idx} 
-                  className="text-xs bg-muted/50 p-2 rounded border border-border"
-                >
+                <div key={idx} className="text-xs bg-muted/50 p-2 rounded border border-border">
                   <span className="font-mono text-purple-400">
                     {citation.regulation_number || citation.topic || `Source ${idx + 1}`}
                   </span>
@@ -111,7 +116,7 @@ const CommissioningChat = ({
               }
             }}
           />
-          <Button 
+          <Button
             onClick={handleFollowUpSubmit}
             disabled={!followUpQuery.trim()}
             className="w-full bg-gradient-to-r from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 h-10 sm:h-11"
@@ -128,11 +133,7 @@ const CommissioningChat = ({
         <p className="text-xs text-foreground mb-3">
           For structured testing procedures with step-by-step guides, use a detailed request.
         </p>
-        <Button 
-          onClick={onStartOver}
-          variant="outline"
-          className="w-full h-10"
-        >
+        <Button onClick={onStartOver} variant="outline" className="w-full h-10">
           Generate Full Testing Procedure
         </Button>
       </Card>

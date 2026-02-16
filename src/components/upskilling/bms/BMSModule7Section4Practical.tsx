@@ -14,42 +14,63 @@ export const BMSModule7Section4Practical = () => {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Tag className="h-5 w-5 text-blue-400" />
-            <h3 className="text-xl font-semibold text-foreground">Best Practices for Supporting Upload</h3>
+            <h3 className="text-xl font-semibold text-foreground">
+              Best Practices for Supporting Upload
+            </h3>
           </div>
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-blue-300">Confirm Stable Power:</span>
-                <p className="text-foreground text-sm mt-1">Verify all controllers have correct, stable power before engineers connect. Check voltage levels, test under load, and ensure UPS systems are operational for critical controllers.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Verify all controllers have correct, stable power before engineers connect. Check
+                  voltage levels, test under load, and ensure UPS systems are operational for
+                  critical controllers.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="font-semibold text-blue-300">Verify Communication Infrastructure:</span>
-                <p className="text-foreground text-sm mt-1">Check termination resistors are fitted where RS-485 buses end. Test cable continuity, verify polarity, and ensure network switches are powered and configured correctly.</p>
+                <span className="font-semibold text-blue-300">
+                  Verify Communication Infrastructure:
+                </span>
+                <p className="text-foreground text-sm mt-1">
+                  Check termination resistors are fitted where RS-485 buses end. Test cable
+                  continuity, verify polarity, and ensure network switches are powered and
+                  configured correctly.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-blue-300">Clear Device Labelling:</span>
-                <p className="text-foreground text-sm mt-1">Label each controller with device ID and panel location using permanent labels. Include communication method and any special access requirements.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Label each controller with device ID and panel location using permanent labels.
+                  Include communication method and any special access requirements.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-blue-300">Accessible Connections:</span>
-                <p className="text-foreground text-sm mt-1">Keep a laptop connection point accessible in every panel. Ensure USB ports are clean, Ethernet jacks are functional, and programming cables are available.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Keep a laptop connection point accessible in every panel. Ensure USB ports are
+                  clean, Ethernet jacks are functional, and programming cables are available.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-blue-300">Environmental Conditions:</span>
-                <p className="text-foreground text-sm mt-1">Ensure panels are protected from moisture, dust, and extreme temperatures. Clean any contamination that could affect connections or cooling.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Ensure panels are protected from moisture, dust, and extreme temperatures. Clean
+                  any contamination that could affect connections or cooling.
+                </p>
               </div>
             </li>
           </ul>
@@ -58,49 +79,70 @@ export const BMSModule7Section4Practical = () => {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <FileText className="h-5 w-5 text-green-400" />
-            <h3 className="text-xl font-semibold text-foreground">Best Practices for Controller Setup</h3>
+            <h3 className="text-xl font-semibold text-foreground">
+              Best Practices for Controller Setup
+            </h3>
           </div>
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-green-300">Document All Settings:</span>
-                <p className="text-foreground text-sm mt-1">Record IP addresses and device IDs in commissioning logs and O&M manuals. Include network settings, communication parameters, and any special configurations.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Record IP addresses and device IDs in commissioning logs and O&M manuals. Include
+                  network settings, communication parameters, and any special configurations.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-green-300">Time Synchronisation:</span>
-                <p className="text-foreground text-sm mt-1">Ensure all controllers are time-synchronised with the BMS server. Set up automatic synchronisation schedules and verify daylight saving time handling.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Ensure all controllers are time-synchronised with the BMS server. Set up automatic
+                  synchronisation schedules and verify daylight saving time handling.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-green-300">I/O Point Verification:</span>
-                <p className="text-foreground text-sm mt-1">Verify each I/O point responds correctly after upload. Test inputs by changing field conditions and outputs by commanding equipment operation from the BMS.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Verify each I/O point responds correctly after upload. Test inputs by changing
+                  field conditions and outputs by commanding equipment operation from the BMS.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-green-300">Safety Function Testing:</span>
-                <p className="text-foreground text-sm mt-1">Test fail-safe logic including fire alarm triggers, emergency stops, and high/low limit responses. Verify equipment shuts down correctly during safety events.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Test fail-safe logic including fire alarm triggers, emergency stops, and high/low
+                  limit responses. Verify equipment shuts down correctly during safety events.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-green-300">Parameter Validation:</span>
-                <p className="text-foreground text-sm mt-1">Confirm default setpoints and operating parameters match design specifications. Check temperature ranges, timing parameters, and alarm limits before enabling automatic control.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Confirm default setpoints and operating parameters match design specifications.
+                  Check temperature ranges, timing parameters, and alarm limits before enabling
+                  automatic control.
+                </p>
               </div>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-green-300">Network Performance:</span>
-                <p className="text-foreground text-sm mt-1">Test network performance under full load conditions. Verify communication speeds, check for packet loss, and confirm data integrity across all network segments.</p>
+                <p className="text-foreground text-sm mt-1">
+                  Test network performance under full load conditions. Verify communication speeds,
+                  check for packet loss, and confirm data integrity across all network segments.
+                </p>
               </div>
             </li>
           </ul>
@@ -108,7 +150,7 @@ export const BMSModule7Section4Practical = () => {
 
         <div>
           <h3 className="text-xl font-semibold text-foreground mb-4">Upload Support Workflow</h3>
-          
+
           <div className="bg-gradient-to-r from-blue-500/10 to-green-500/10 border border-blue-500/20 rounded-lg p-4">
             <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -122,7 +164,7 @@ export const BMSModule7Section4Practical = () => {
                     <li>5. Coordinate with engineering team on upload schedule</li>
                   </ol>
                 </div>
-                
+
                 <div className="bg-gray-700 rounded-lg p-3">
                   <p className="text-foreground font-semibold mb-2">During Upload Phase:</p>
                   <ol className="space-y-1 ml-4 text-xs">
@@ -134,7 +176,7 @@ export const BMSModule7Section4Practical = () => {
                   </ol>
                 </div>
               </div>
-              
+
               <div className="bg-gray-700 rounded-lg p-3 text-sm">
                 <p className="text-foreground font-semibold mb-2">Post-Upload Phase:</p>
                 <div className="grid md:grid-cols-3 gap-3 text-xs">
@@ -170,7 +212,7 @@ export const BMSModule7Section4Practical = () => {
 
         <div>
           <h3 className="text-xl font-semibold text-foreground mb-4">Common Pitfalls to Avoid</h3>
-          
+
           <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
             <div className="space-y-3 text-sm">
               <div className="grid md:grid-cols-2 gap-4">
@@ -193,12 +235,13 @@ export const BMSModule7Section4Practical = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="bg-gray-700 rounded p-3 mt-3">
                 <p className="text-red-400 font-semibold mb-1">Critical Warning:</p>
                 <p className="text-xs text-foreground">
-                  A failed upload can brick a controller, requiring factory reprogramming or replacement. Always verify all electrical 
-                  prerequisites before allowing software upload to proceed. Prevention is far more cost-effective than recovery.
+                  A failed upload can brick a controller, requiring factory reprogramming or
+                  replacement. Always verify all electrical prerequisites before allowing software
+                  upload to proceed. Prevention is far more cost-effective than recovery.
                 </p>
               </div>
             </div>

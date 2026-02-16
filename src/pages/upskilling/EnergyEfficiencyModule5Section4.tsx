@@ -26,7 +26,8 @@ import {
 const EnergyEfficiencyModule5Section4: React.FC = () => {
   useSEO({
     title: 'Remote Control and Load Shedding | Energy Efficiency Module 5 Section 4 | Elec-Mate',
-    description: 'Learn about remote monitoring systems, load shedding strategies, UK Demand Flexibility Service, Triad avoidance, and grid revenue opportunities for electrical installations.',
+    description:
+      'Learn about remote monitoring systems, load shedding strategies, UK Demand Flexibility Service, Triad avoidance, and grid revenue opportunities for electrical installations.',
     keywords: [
       'remote control',
       'load shedding',
@@ -39,35 +40,39 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
       'FFR',
       'grid services',
       'energy management',
-      'UK electrician'
+      'UK electrician',
     ],
-    canonicalUrl: '/upskilling/energy-efficiency/module-5/section-4'
+    canonicalUrl: '/upskilling/energy-efficiency/module-5/section-4',
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc1-remote-load-shedding',
-      question: 'During a Demand Flexibility Service (DFS) event, what is the primary goal for participating sites?',
+      question:
+        'During a Demand Flexibility Service (DFS) event, what is the primary goal for participating sites?',
       options: [
         'Increase electricity consumption to support the grid',
         'Reduce electricity consumption below baseline levels',
         'Switch to maximum power output',
-        'Disconnect entirely from the grid'
+        'Disconnect entirely from the grid',
       ],
       correctIndex: 1,
-      explanation: 'The DFS rewards consumers for reducing their electricity consumption below their normal baseline during peak demand periods, helping National Grid ESO balance supply and demand without resorting to emergency measures.'
+      explanation:
+        'The DFS rewards consumers for reducing their electricity consumption below their normal baseline during peak demand periods, helping National Grid ESO balance supply and demand without resorting to emergency measures.',
     },
     {
       id: 'qc2-remote-load-shedding',
-      question: 'When implementing automated load shedding, which loads should typically be shed FIRST?',
+      question:
+        'When implementing automated load shedding, which loads should typically be shed FIRST?',
       options: [
         'Life safety systems and emergency lighting',
         'Server rooms and data centres',
         'Non-essential lighting and HVAC in unoccupied areas',
-        'Refrigeration for food storage'
+        'Refrigeration for food storage',
       ],
       correctIndex: 2,
-      explanation: 'Load shedding hierarchies prioritise maintaining life safety and critical systems. Non-essential loads like lighting and HVAC in unoccupied areas should be shed first, while emergency systems, data centres, and refrigeration typically have higher priority.'
+      explanation:
+        'Load shedding hierarchies prioritise maintaining life safety and critical systems. Non-essential loads like lighting and HVAC in unoccupied areas should be shed first, while emergency systems, data centres, and refrigeration typically have higher priority.',
     },
     {
       id: 'qc3-remote-load-shedding',
@@ -76,78 +81,86 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'Three random days selected for grid maintenance',
         'The three highest half-hour demand periods between November and February',
         'Three-phase power balancing events',
-        'Quarterly billing periods for commercial customers'
+        'Quarterly billing periods for commercial customers',
       ],
       correctIndex: 1,
-      explanation: 'Triads are the three half-hour periods of highest national demand between November and February. Transmission charges for large users are based on their consumption during these periods, making Triad avoidance a significant cost-saving strategy.'
-    }
+      explanation:
+        'Triads are the three half-hour periods of highest national demand between November and February. Transmission charges for large users are based on their consumption during these periods, making Triad avoidance a significant cost-saving strategy.',
+    },
   ];
 
   const quizQuestions = [
     {
-      question: 'What communication protocol is most commonly used for industrial remote monitoring and control in UK installations?',
+      question:
+        'What communication protocol is most commonly used for industrial remote monitoring and control in UK installations?',
       options: ['Bluetooth Low Energy', 'Modbus TCP/IP or BACnet', 'NFC', 'Infrared'],
-      correctAnswer: 'Modbus TCP/IP or BACnet'
+      correctAnswer: 'Modbus TCP/IP or BACnet',
     },
     {
-      question: 'Under the UK Demand Flexibility Service (DFS), participants are typically rewarded based on:',
+      question:
+        'Under the UK Demand Flexibility Service (DFS), participants are typically rewarded based on:',
       options: [
         'Total electricity consumed during events',
         'Reduction below their calculated baseline consumption',
         'The number of events they opt into',
-        'Their maximum demand capacity'
+        'Their maximum demand capacity',
       ],
-      correctAnswer: 'Reduction below their calculated baseline consumption'
+      correctAnswer: 'Reduction below their calculated baseline consumption',
     },
     {
-      question: 'Which UK grid service provides payments for maintaining frequency at 50Hz through rapid power adjustments?',
+      question:
+        'Which UK grid service provides payments for maintaining frequency at 50Hz through rapid power adjustments?',
       options: [
         'Demand Flexibility Service (DFS)',
         'Firm Frequency Response (FFR)',
         'Capacity Market',
-        'Triad Management Service'
+        'Triad Management Service',
       ],
-      correctAnswer: 'Firm Frequency Response (FFR)'
+      correctAnswer: 'Firm Frequency Response (FFR)',
     },
     {
-      question: 'When implementing remote switching for load shedding, what is the minimum safety requirement?',
+      question:
+        'When implementing remote switching for load shedding, what is the minimum safety requirement?',
       options: [
         'Verbal confirmation from site personnel',
         'Local manual override capability and clear status indication',
         'Smartphone app notification',
-        'Email confirmation of switching'
+        'Email confirmation of switching',
       ],
-      correctAnswer: 'Local manual override capability and clear status indication'
+      correctAnswer: 'Local manual override capability and clear status indication',
     },
     {
-      question: 'What is the typical response time requirement for Short Term Operating Reserve (STOR)?',
+      question:
+        'What is the typical response time requirement for Short Term Operating Reserve (STOR)?',
       options: [
         '30 seconds or less',
         '4 hours advance notice',
         '20 minutes or less from instruction',
-        '24 hours advance notice'
+        '24 hours advance notice',
       ],
-      correctAnswer: '20 minutes or less from instruction'
+      correctAnswer: '20 minutes or less from instruction',
     },
     {
-      question: 'In a load priority hierarchy, which category typically has the HIGHEST priority (shed last)?',
+      question:
+        'In a load priority hierarchy, which category typically has the HIGHEST priority (shed last)?',
       options: [
         'Comfort cooling in offices',
         'Decorative lighting',
         'Life safety systems and emergency equipment',
-        'Electric vehicle charging'
+        'Electric vehicle charging',
       ],
-      correctAnswer: 'Life safety systems and emergency equipment'
+      correctAnswer: 'Life safety systems and emergency equipment',
     },
     {
-      question: 'Maximum Demand (MD) charges on commercial electricity bills are typically based on:',
+      question:
+        'Maximum Demand (MD) charges on commercial electricity bills are typically based on:',
       options: [
         'Total kWh consumed in the billing period',
         'The highest kW or kVA recorded in any half-hour period',
         'Average daily consumption',
-        'Standing charge plus unit rate'
+        'Standing charge plus unit rate',
       ],
-      correctAnswer: 'The highest kW or kVA recorded in any half-hour period'
+      correctAnswer: 'The highest kW or kVA recorded in any half-hour period',
     },
     {
       question: 'Before remotely switching off equipment, BS 7671 and good practice require:',
@@ -155,9 +168,10 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'Sending a text message to all staff',
         'Verification that isolation is safe and appropriate warning to affected personnel',
         'Waiting 24 hours after notification',
-        'Government approval'
+        'Government approval',
       ],
-      correctAnswer: 'Verification that isolation is safe and appropriate warning to affected personnel'
+      correctAnswer:
+        'Verification that isolation is safe and appropriate warning to affected personnel',
     },
     {
       question: 'Which factor makes Triad prediction challenging for demand management?',
@@ -165,47 +179,58 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'Triads occur at exactly the same time every year',
         'National Grid announces Triads one week in advance',
         'Triads are only confirmed retrospectively after February',
-        'Triads always occur at midnight'
+        'Triads always occur at midnight',
       ],
-      correctAnswer: 'Triads are only confirmed retrospectively after February'
+      correctAnswer: 'Triads are only confirmed retrospectively after February',
     },
     {
-      question: 'What is the primary benefit of participating in the Capacity Market for commercial sites with flexible loads?',
+      question:
+        'What is the primary benefit of participating in the Capacity Market for commercial sites with flexible loads?',
       options: [
         'Free electricity during winter months',
         'Annual payments for committing to reduce demand during system stress events',
         'Reduced connection charges',
-        'Priority grid connection'
+        'Priority grid connection',
       ],
-      correctAnswer: 'Annual payments for committing to reduce demand during system stress events'
-    }
+      correctAnswer: 'Annual payments for committing to reduce demand during system stress events',
+    },
   ];
 
   const faqs = [
     {
-      question: 'What equipment do I need to implement basic remote monitoring for a commercial installation?',
-      answer: 'For basic remote monitoring, you need: smart meters or sub-meters with communication capability (CT clamps with data loggers are cost-effective), a gateway device to aggregate data and connect to the internet, cloud-based or local monitoring software, and appropriate cybersecurity measures. For remote control, add smart contactors or circuit breakers with communication modules, and ensure proper isolation verification systems are in place. Budget options start from £500-1000 for small commercial sites, while comprehensive BEMS integration may cost £10,000+.'
+      question:
+        'What equipment do I need to implement basic remote monitoring for a commercial installation?',
+      answer:
+        'For basic remote monitoring, you need: smart meters or sub-meters with communication capability (CT clamps with data loggers are cost-effective), a gateway device to aggregate data and connect to the internet, cloud-based or local monitoring software, and appropriate cybersecurity measures. For remote control, add smart contactors or circuit breakers with communication modules, and ensure proper isolation verification systems are in place. Budget options start from £500-1000 for small commercial sites, while comprehensive BEMS integration may cost £10,000+.',
     },
     {
       question: 'How do I sign up for the Demand Flexibility Service (DFS)?',
-      answer: "To participate in DFS, you typically need to register through an aggregator or your energy supplier if they offer DFS participation. You'll need smart metering (half-hourly data), minimum 1kW reduction capability, and the ability to respond to event notifications (usually given day-ahead). Popular aggregators include Octopus Energy, EDF, and specialist demand response companies. Residential customers can often join through apps like Octopus's \"Saving Sessions\". Commercial sites usually work with aggregators who handle the technical requirements and settlement."
+      answer:
+        'To participate in DFS, you typically need to register through an aggregator or your energy supplier if they offer DFS participation. You\'ll need smart metering (half-hourly data), minimum 1kW reduction capability, and the ability to respond to event notifications (usually given day-ahead). Popular aggregators include Octopus Energy, EDF, and specialist demand response companies. Residential customers can often join through apps like Octopus\'s "Saving Sessions". Commercial sites usually work with aggregators who handle the technical requirements and settlement.',
     },
     {
       question: 'What are the legal requirements for remote switching of electrical equipment?',
-      answer: 'Remote switching must comply with BS 7671 requirements for isolation (Regulation 537), ensuring: clear indication of switch position, prevention of unintended reclosure, warning notices at points of supply, and means of local isolation for maintenance. The Electricity at Work Regulations 1989 require that no person should be exposed to danger - this means appropriate warnings before remote switching, verification that equipment is safe to de-energise, and documented procedures. Functional switching must not compromise safety isolation requirements.'
+      answer:
+        'Remote switching must comply with BS 7671 requirements for isolation (Regulation 537), ensuring: clear indication of switch position, prevention of unintended reclosure, warning notices at points of supply, and means of local isolation for maintenance. The Electricity at Work Regulations 1989 require that no person should be exposed to danger - this means appropriate warnings before remote switching, verification that equipment is safe to de-energise, and documented procedures. Functional switching must not compromise safety isolation requirements.',
     },
     {
-      question: 'How accurate are Triad prediction services, and is avoidance worth the disruption?',
-      answer: 'Commercial Triad prediction services typically achieve 80-90% accuracy for warning periods, though predicting exact Triad days remains challenging. For large sites (1MW+), Triad charges can exceed £50,000 annually, making even partial avoidance worthwhile. The disruption depends on your load flexibility - sites with thermal storage, backup generation, or shiftable processes can reduce demand with minimal impact. For smaller sites, the cost-benefit calculation is less clear, and joining an aggregator\'s portfolio may be more practical than individual Triad management.'
+      question:
+        'How accurate are Triad prediction services, and is avoidance worth the disruption?',
+      answer:
+        "Commercial Triad prediction services typically achieve 80-90% accuracy for warning periods, though predicting exact Triad days remains challenging. For large sites (1MW+), Triad charges can exceed £50,000 annually, making even partial avoidance worthwhile. The disruption depends on your load flexibility - sites with thermal storage, backup generation, or shiftable processes can reduce demand with minimal impact. For smaller sites, the cost-benefit calculation is less clear, and joining an aggregator's portfolio may be more practical than individual Triad management.",
     },
     {
-      question: 'Can battery storage systems participate in grid services while also providing backup power?',
-      answer: 'Yes, battery systems can provide multiple "stacked" services. A well-designed system can offer: peak shaving and demand management as primary function, Firm Frequency Response (FFR) or Dynamic Containment for grid frequency support, Triad avoidance by discharging during predicted peaks, and emergency backup power capacity. However, you must carefully manage state of charge to ensure backup capacity when needed. Revenue from grid services (£50-150/kW/year for FFR) can significantly improve battery payback, but requires sophisticated control systems and aggregator partnerships.'
+      question:
+        'Can battery storage systems participate in grid services while also providing backup power?',
+      answer:
+        'Yes, battery systems can provide multiple "stacked" services. A well-designed system can offer: peak shaving and demand management as primary function, Firm Frequency Response (FFR) or Dynamic Containment for grid frequency support, Triad avoidance by discharging during predicted peaks, and emergency backup power capacity. However, you must carefully manage state of charge to ensure backup capacity when needed. Revenue from grid services (£50-150/kW/year for FFR) can significantly improve battery payback, but requires sophisticated control systems and aggregator partnerships.',
     },
     {
-      question: 'What happens if my site fails to deliver promised demand reduction during a grid service event?',
-      answer: "Consequences vary by service: For DFS, you simply won't receive payment for undelivered reduction - there are generally no penalties for residential/small commercial participants. For STOR and FFR contracts, non-delivery can result in financial penalties and potential contract termination. Capacity Market obligations carry significant penalties for non-delivery during stress events (up to the clearing price). Aggregators often manage this risk by over-recruiting capacity, but it's crucial to only commit to reductions you can reliably deliver. Start conservatively and increase commitments as you build confidence in your systems."
-    }
+      question:
+        'What happens if my site fails to deliver promised demand reduction during a grid service event?',
+      answer:
+        "Consequences vary by service: For DFS, you simply won't receive payment for undelivered reduction - there are generally no penalties for residential/small commercial participants. For STOR and FFR contracts, non-delivery can result in financial penalties and potential contract termination. Capacity Market obligations carry significant penalties for non-delivery during stress events (up to the clearing price). Aggregators often manage this risk by over-recruiting capacity, but it's crucial to only commit to reductions you can reliably deliver. Start conservatively and increase commitments as you build confidence in your systems.",
+    },
   ];
 
   return (
@@ -213,14 +238,21 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-5">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
             <p className="text-elec-yellow text-xs font-medium">Module 5 - Section 4</p>
-            <h1 className="text-base font-semibold text-white truncate">Remote Control and Load Shedding</h1>
+            <h1 className="text-base font-semibold text-white truncate">
+              Remote Control and Load Shedding
+            </h1>
           </div>
         </div>
       </div>
@@ -229,7 +261,8 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <p className="text-white/90 leading-relaxed">
-            Master demand response, grid services, and intelligent load management for modern electrical installations.
+            Master demand response, grid services, and intelligent load management for modern
+            electrical installations.
           </p>
         </div>
 
@@ -243,9 +276,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Remote monitoring and control systems enable real-time visibility and management of electrical
-              installations from centralised locations. These systems form the foundation for demand response
-              participation, energy optimisation, and grid service delivery.
+              Remote monitoring and control systems enable real-time visibility and management of
+              electrical installations from centralised locations. These systems form the foundation
+              for demand response participation, energy optimisation, and grid service delivery.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -322,9 +355,10 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 Cybersecurity Considerations
               </h4>
               <p className="text-sm text-white/80">
-                Remote control systems must implement robust cybersecurity: encrypted communications (TLS/SSL),
-                strong authentication, network segmentation, regular firmware updates, and audit logging.
-                The National Cyber Security Centre (NCSC) provides guidance for operational technology security.
+                Remote control systems must implement robust cybersecurity: encrypted communications
+                (TLS/SSL), strong authentication, network segmentation, regular firmware updates,
+                and audit logging. The National Cyber Security Centre (NCSC) provides guidance for
+                operational technology security.
               </p>
             </div>
           </div>
@@ -340,44 +374,65 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Effective load shedding requires careful categorisation of loads by criticality, establishing
-              clear hierarchies, and implementing automated systems that can respond rapidly to demand
-              reduction requirements while maintaining safety and essential operations.
+              Effective load shedding requires careful categorisation of loads by criticality,
+              establishing clear hierarchies, and implementing automated systems that can respond
+              rapidly to demand reduction requirements while maintaining safety and essential
+              operations.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h3 className="text-white font-medium mb-3">Load Priority Hierarchy (Typical Commercial Building)</h3>
+              <h3 className="text-white font-medium mb-3">
+                Load Priority Hierarchy (Typical Commercial Building)
+              </h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
-                  <span className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">P1</span>
+                  <span className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
+                    P1
+                  </span>
                   <div>
                     <h4 className="text-red-400 font-medium">Critical - Never Shed</h4>
-                    <p className="text-sm text-white/70">Life safety systems, emergency lighting, fire alarms, security systems,
-                    medical equipment, data centre UPS, emergency lifts</p>
+                    <p className="text-sm text-white/70">
+                      Life safety systems, emergency lighting, fire alarms, security systems,
+                      medical equipment, data centre UPS, emergency lifts
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-orange-500/10 border border-orange-500/30 rounded-lg">
-                  <span className="bg-orange-600 text-white px-2 py-1 rounded text-xs font-bold">P2</span>
+                  <span className="bg-orange-600 text-white px-2 py-1 rounded text-xs font-bold">
+                    P2
+                  </span>
                   <div>
-                    <h4 className="text-orange-400 font-medium">Essential - Shed Only in Emergency</h4>
-                    <p className="text-sm text-white/70">Server rooms, refrigeration (food safety), essential process equipment,
-                    minimum lighting for safety, communications systems</p>
+                    <h4 className="text-orange-400 font-medium">
+                      Essential - Shed Only in Emergency
+                    </h4>
+                    <p className="text-sm text-white/70">
+                      Server rooms, refrigeration (food safety), essential process equipment,
+                      minimum lighting for safety, communications systems
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-                  <span className="bg-yellow-600 text-black px-2 py-1 rounded text-xs font-bold">P3</span>
+                  <span className="bg-yellow-600 text-black px-2 py-1 rounded text-xs font-bold">
+                    P3
+                  </span>
                   <div>
                     <h4 className="text-yellow-400 font-medium">Important - Shed with Notice</h4>
-                    <p className="text-sm text-white/70">General HVAC (occupied areas), passenger lifts, general office equipment,
-                    kitchen equipment, EV charging (interruptible)</p>
+                    <p className="text-sm text-white/70">
+                      General HVAC (occupied areas), passenger lifts, general office equipment,
+                      kitchen equipment, EV charging (interruptible)
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
-                  <span className="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">P4</span>
+                  <span className="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
+                    P4
+                  </span>
                   <div>
                     <h4 className="text-green-400 font-medium">Discretionary - Shed First</h4>
-                    <p className="text-sm text-white/70">Non-essential lighting, HVAC in unoccupied areas, decorative features,
-                    water heating (with storage), EV charging (deferrable)</p>
+                    <p className="text-sm text-white/70">
+                      Non-essential lighting, HVAC in unoccupied areas, decorative features, water
+                      heating (with storage), EV charging (deferrable)
+                    </p>
                   </div>
                 </div>
               </div>
@@ -449,9 +504,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              The UK offers several demand response programmes that reward consumers for reducing electricity
-              consumption during peak periods or providing flexibility services. These create revenue
-              opportunities while supporting grid stability.
+              The UK offers several demand response programmes that reward consumers for reducing
+              electricity consumption during peak periods or providing flexibility services. These
+              create revenue opportunities while supporting grid stability.
             </p>
 
             <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 rounded-lg p-4">
@@ -460,8 +515,8 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 Demand Flexibility Service (DFS)
               </h3>
               <p className="text-sm mb-3 text-white/80">
-                Introduced by National Grid ESO for winter 2022/23, DFS pays consumers to reduce electricity
-                use during peak demand periods, typically winter evenings (4-7pm).
+                Introduced by National Grid ESO for winter 2022/23, DFS pays consumers to reduce
+                electricity use during peak demand periods, typically winter evenings (4-7pm).
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -493,32 +548,32 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 <div className="border-l-4 border-blue-500 pl-4">
                   <h4 className="text-blue-400 font-medium">Short Term Operating Reserve (STOR)</h4>
                   <p className="text-sm mt-1 text-white/70">
-                    Provides additional power or demand reduction at short notice. Requires 3MW minimum
-                    (can aggregate), response within 20 minutes of instruction, sustain for at least 2 hours.
-                    Revenue: £3-8/kW/year availability + £100-200/MWh utilisation.
+                    Provides additional power or demand reduction at short notice. Requires 3MW
+                    minimum (can aggregate), response within 20 minutes of instruction, sustain for
+                    at least 2 hours. Revenue: £3-8/kW/year availability + £100-200/MWh utilisation.
                   </p>
                 </div>
                 <div className="border-l-4 border-purple-500 pl-4">
                   <h4 className="text-purple-400 font-medium">Firm Frequency Response (FFR)</h4>
                   <p className="text-sm mt-1 text-white/70">
-                    Automatic response to grid frequency deviations. Primary (10 sec), Secondary (30 sec),
-                    High (10 min). Requires 1MW minimum, automatic frequency-triggered response.
-                    Revenue: £50-150/kW/year depending on service type.
+                    Automatic response to grid frequency deviations. Primary (10 sec), Secondary (30
+                    sec), High (10 min). Requires 1MW minimum, automatic frequency-triggered
+                    response. Revenue: £50-150/kW/year depending on service type.
                   </p>
                 </div>
                 <div className="border-l-4 border-green-500 pl-4">
                   <h4 className="text-green-400 font-medium">Dynamic Containment (DC)</h4>
                   <p className="text-sm mt-1 text-white/70">
-                    Fast-acting frequency response (sub-second). Requires battery storage or fast-responding
-                    loads. 1MW minimum. Premium rates for rapid response capability.
+                    Fast-acting frequency response (sub-second). Requires battery storage or
+                    fast-responding loads. 1MW minimum. Premium rates for rapid response capability.
                     Revenue: £100-300/kW/year (highly variable).
                   </p>
                 </div>
                 <div className="border-l-4 border-orange-500 pl-4">
                   <h4 className="text-orange-400 font-medium">Capacity Market (CM)</h4>
                   <p className="text-sm mt-1 text-white/70">
-                    Annual payments for committing capacity during system stress events. Auctions held
-                    4 years and 1 year ahead. Minimum 1MW (DSR), penalties for non-delivery.
+                    Annual payments for committing capacity during system stress events. Auctions
+                    held 4 years and 1 year ahead. Minimum 1MW (DSR), penalties for non-delivery.
                     Revenue: £15-45/kW/year (auction dependent).
                   </p>
                 </div>
@@ -545,16 +600,17 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Maximum demand (MD) charges and Triad-based transmission charges can represent 20-40% of
-              large commercial electricity bills. Understanding and managing these peak demands offers
-              significant cost-saving opportunities.
+              Maximum demand (MD) charges and Triad-based transmission charges can represent 20-40%
+              of large commercial electricity bills. Understanding and managing these peak demands
+              offers significant cost-saving opportunities.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-white font-medium mb-3">Understanding Maximum Demand Charges</h3>
               <p className="text-sm mb-3 text-white/70">
-                MD charges are based on your highest recorded demand (kW or kVA) in any half-hour settlement
-                period during the billing month. A single peak can set your charge for the entire month.
+                MD charges are based on your highest recorded demand (kW or kVA) in any half-hour
+                settlement period during the billing month. A single peak can set your charge for
+                the entire month.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white/5 p-3 rounded">
@@ -586,10 +642,11 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 Triad Periods Explained
               </h3>
               <p className="text-sm mb-3 text-white/80">
-                Triads are the three half-hour periods of highest national electricity demand between
-                <strong className="text-white"> November and February</strong>. Large consumers (100kW+)
-                pay Transmission Network Use of System (TNUoS) charges based on their average consumption
-                during these three periods.
+                Triads are the three half-hour periods of highest national electricity demand
+                between
+                <strong className="text-white"> November and February</strong>. Large consumers
+                (100kW+) pay Transmission Network Use of System (TNUoS) charges based on their
+                average consumption during these three periods.
               </p>
               <div className="grid md:grid-cols-3 gap-4 text-sm">
                 <div className="bg-white/5 p-3 rounded">
@@ -630,18 +687,24 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 border border-yellow-500/30 rounded p-3">
                   <div className="text-yellow-400 font-medium text-sm mb-2">Amber Warning</div>
-                  <p className="text-xs text-white/70">High probability of Triad. Issued morning/afternoon of potential
-                  Triad day. Prepare systems, alert staff, review load status.</p>
+                  <p className="text-xs text-white/70">
+                    High probability of Triad. Issued morning/afternoon of potential Triad day.
+                    Prepare systems, alert staff, review load status.
+                  </p>
                 </div>
                 <div className="flex-1 border border-red-500/30 rounded p-3">
                   <div className="text-red-400 font-medium text-sm mb-2">Red Warning</div>
-                  <p className="text-xs text-white/70">Very high probability. Usually issued 1-2 hours before.
-                  Initiate load shedding, start backup generation, activate battery discharge.</p>
+                  <p className="text-xs text-white/70">
+                    Very high probability. Usually issued 1-2 hours before. Initiate load shedding,
+                    start backup generation, activate battery discharge.
+                  </p>
                 </div>
                 <div className="flex-1 border border-green-500/30 rounded p-3">
                   <div className="text-green-400 font-medium text-sm mb-2">All Clear</div>
-                  <p className="text-xs text-white/70">Triad window passed. Restore normal operations.
-                  Log actual demand achieved for analysis and improvement.</p>
+                  <p className="text-xs text-white/70">
+                    Triad window passed. Restore normal operations. Log actual demand achieved for
+                    analysis and improvement.
+                  </p>
                 </div>
               </div>
             </div>
@@ -666,9 +729,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Remote control of electrical equipment introduces specific safety challenges that must be
-              addressed through proper design, procedures, and compliance with regulations including
-              BS 7671 and the Electricity at Work Regulations 1989.
+              Remote control of electrical equipment introduces specific safety challenges that must
+              be addressed through proper design, procedures, and compliance with regulations
+              including BS 7671 and the Electricity at Work Regulations 1989.
             </p>
 
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
@@ -708,8 +771,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <div>
                     <h4 className="text-white font-medium text-sm">Local Override Capability</h4>
                     <p className="text-xs text-white/60">
-                      Every remotely-controlled circuit must have local manual override for maintenance
-                      and emergency situations. This takes precedence over remote commands.
+                      Every remotely-controlled circuit must have local manual override for
+                      maintenance and emergency situations. This takes precedence over remote
+                      commands.
                     </p>
                   </div>
                 </div>
@@ -728,8 +792,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <div>
                     <h4 className="text-white font-medium text-sm">Pre-Switch Warning</h4>
                     <p className="text-xs text-white/60">
-                      Appropriate warning to affected areas before remote switching. May include visual
-                      indicators, audible alarms, or direct communication with site personnel.
+                      Appropriate warning to affected areas before remote switching. May include
+                      visual indicators, audible alarms, or direct communication with site
+                      personnel.
                     </p>
                   </div>
                 </div>
@@ -738,8 +803,8 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <div>
                     <h4 className="text-white font-medium text-sm">Impact Assessment</h4>
                     <p className="text-xs text-white/60">
-                      Verify what equipment/areas will be affected before switching. Ensure no persons
-                      at risk, no processes that could be damaged by sudden de-energisation.
+                      Verify what equipment/areas will be affected before switching. Ensure no
+                      persons at risk, no processes that could be damaged by sudden de-energisation.
                     </p>
                   </div>
                 </div>
@@ -762,10 +827,10 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 Best Practice: Permit-to-Work Integration
               </h4>
               <p className="text-sm text-white/80">
-                For sites with permit-to-work systems, remote control systems should integrate with the
-                permit system to prevent switching of circuits under active permits. Electronic permit
-                systems can provide automatic interlocking - if a permit is live on a circuit, remote
-                switching is blocked until the permit is cancelled.
+                For sites with permit-to-work systems, remote control systems should integrate with
+                the permit system to prevent switching of circuits under active permits. Electronic
+                permit systems can provide automatic interlocking - if a permit is live on a
+                circuit, remote switching is blocked until the permit is cancelled.
               </p>
             </div>
           </div>
@@ -781,9 +846,10 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Commercial and industrial sites can generate significant revenue by participating in grid
-              services. The UK's transition to renewable energy creates increasing demand for flexible
-              capacity, offering opportunities for sites with controllable loads or storage.
+              Commercial and industrial sites can generate significant revenue by participating in
+              grid services. The UK's transition to renewable energy creates increasing demand for
+              flexible capacity, offering opportunities for sites with controllable loads or
+              storage.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -841,7 +907,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 participate in several services simultaneously or sequentially.
               </p>
               <div className="bg-white/5 p-4 rounded-lg">
-                <h4 className="text-elec-yellow font-medium text-sm mb-3">Example: 1MW Battery System</h4>
+                <h4 className="text-elec-yellow font-medium text-sm mb-3">
+                  Example: 1MW Battery System
+                </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center border-b border-white/10 pb-2">
                     <span className="text-white/80">Dynamic Containment (primary service)</span>
@@ -852,7 +920,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                     <span className="text-green-400">£40,000/year</span>
                   </div>
                   <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                    <span className="text-white/80">Wholesale arbitrage (off-peak charge, peak discharge)</span>
+                    <span className="text-white/80">
+                      Wholesale arbitrage (off-peak charge, peak discharge)
+                    </span>
                     <span className="text-green-400">£25,000/year</span>
                   </div>
                   <div className="flex justify-between items-center border-b border-white/10 pb-2">
@@ -870,8 +940,8 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-white font-medium mb-3">Working with Aggregators</h3>
               <p className="text-sm mb-3 text-white/70">
-                Most sites participate in grid services through aggregators who bundle multiple sites to
-                meet minimum capacity requirements and handle complex market interactions.
+                Most sites participate in grid services through aggregators who bundle multiple
+                sites to meet minimum capacity requirements and handle complex market interactions.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -929,7 +999,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">UK Grid Services Summary</h3>
+              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">
+                UK Grid Services Summary
+              </h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-white/60">DFS</span>
@@ -955,7 +1027,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">Key Dates and Thresholds</h3>
+              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">
+                Key Dates and Thresholds
+              </h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-white/60">Triad Season</span>
@@ -981,7 +1055,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">Load Priority Levels</h3>
+              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">
+                Load Priority Levels
+              </h3>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
                   <span className="bg-red-600 text-white px-2 py-0.5 rounded text-xs">P1</span>
@@ -1003,7 +1079,9 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">Safety Requirements</h3>
+              <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">
+                Safety Requirements
+              </h3>
               <div className="space-y-1 text-sm text-white/80">
                 <p>Local manual override on all remote circuits</p>
                 <p>Clear position indication (verified status)</p>
@@ -1040,13 +1118,20 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Button variant="outline" asChild className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow">
+          <Button
+            variant="outline"
+            asChild
+            className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow"
+          >
             <Link to="../section-3">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Previous: Section 3
             </Link>
           </Button>
-          <Button asChild className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+          <Button
+            asChild
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
             <Link to="../section-5">
               Next: Section 5
               <ArrowRight className="w-5 h-5 ml-2" />

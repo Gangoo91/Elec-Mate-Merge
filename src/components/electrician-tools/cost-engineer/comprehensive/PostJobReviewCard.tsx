@@ -1,11 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ClipboardCheck, TrendingUp, TrendingDown } from "lucide-react";
-import { useState } from "react";
-import { MobileButton } from "@/components/ui/mobile-button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { ClipboardCheck, TrendingUp, TrendingDown } from 'lucide-react';
+import { useState } from 'react';
+import { MobileButton } from '@/components/ui/mobile-button';
 
 interface PostJobReviewCardProps {
   estimatedCost: number;
@@ -18,12 +18,12 @@ const PostJobReviewCard = ({
   estimatedCost,
   estimatedHours,
   estimatedProfit,
-  projectName
+  projectName,
 }: PostJobReviewCardProps) => {
   const [winLoss, setWinLoss] = useState<'won' | 'lost' | 'pending'>('pending');
-  const [actualCost, setActualCost] = useState("");
-  const [actualHours, setActualHours] = useState("");
-  const [reviewNotes, setReviewNotes] = useState("");
+  const [actualCost, setActualCost] = useState('');
+  const [actualHours, setActualHours] = useState('');
+  const [reviewNotes, setReviewNotes] = useState('');
 
   const calculateVariance = (actual: number, estimated: number) => {
     if (!actual || !estimated) return null;
@@ -50,7 +50,7 @@ const PostJobReviewCard = ({
       actualProfit,
       reviewNotes,
       projectName,
-      submittedAt: new Date().toISOString()
+      submittedAt: new Date().toISOString(),
     };
 
     // Save to localStorage
@@ -79,15 +79,24 @@ const PostJobReviewCard = ({
           <RadioGroup value={winLoss} onValueChange={(v: any) => setWinLoss(v)}>
             <div className="flex items-center space-x-2 py-1">
               <RadioGroupItem value="won" id="won" className="h-5 w-5 sm:h-4 sm:w-4" />
-              <Label htmlFor="won" className="cursor-pointer text-base sm:text-sm text-foreground">Won - Job completed</Label>
+              <Label htmlFor="won" className="cursor-pointer text-base sm:text-sm text-foreground">
+                Won - Job completed
+              </Label>
             </div>
             <div className="flex items-center space-x-2 py-1">
               <RadioGroupItem value="lost" id="lost" className="h-5 w-5 sm:h-4 sm:w-4" />
-              <Label htmlFor="lost" className="cursor-pointer text-base sm:text-sm text-foreground">Lost - Client chose competitor</Label>
+              <Label htmlFor="lost" className="cursor-pointer text-base sm:text-sm text-foreground">
+                Lost - Client chose competitor
+              </Label>
             </div>
             <div className="flex items-center space-x-2 py-1">
               <RadioGroupItem value="pending" id="pending" className="h-5 w-5 sm:h-4 sm:w-4" />
-              <Label htmlFor="pending" className="cursor-pointer text-base sm:text-sm text-foreground">Pending - Awaiting decision</Label>
+              <Label
+                htmlFor="pending"
+                className="cursor-pointer text-base sm:text-sm text-foreground"
+              >
+                Pending - Awaiting decision
+              </Label>
             </div>
           </RadioGroup>
         </div>
@@ -97,7 +106,9 @@ const PostJobReviewCard = ({
             {/* Actual vs Estimate */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="actual-cost" className="text-base sm:text-sm text-foreground">Actual Cost (excl. VAT)</Label>
+                <Label htmlFor="actual-cost" className="text-base sm:text-sm text-foreground">
+                  Actual Cost (excl. VAT)
+                </Label>
                 <Input
                   id="actual-cost"
                   type="number"
@@ -107,17 +118,26 @@ const PostJobReviewCard = ({
                   className="min-h-11"
                 />
                 {costVariance !== null && (
-                  <div className={`text-xs flex items-center gap-1 ${
-                    costVariance > 0 ? 'text-red-500' : 'text-green-500'
-                  }`}>
-                    {costVariance > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    {Math.abs(costVariance).toFixed(1)}% {costVariance > 0 ? 'over' : 'under'} estimate
+                  <div
+                    className={`text-xs flex items-center gap-1 ${
+                      costVariance > 0 ? 'text-red-500' : 'text-green-500'
+                    }`}
+                  >
+                    {costVariance > 0 ? (
+                      <TrendingUp className="h-3 w-3" />
+                    ) : (
+                      <TrendingDown className="h-3 w-3" />
+                    )}
+                    {Math.abs(costVariance).toFixed(1)}% {costVariance > 0 ? 'over' : 'under'}{' '}
+                    estimate
                   </div>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="actual-hours" className="text-base sm:text-sm text-foreground">Actual Hours</Label>
+                <Label htmlFor="actual-hours" className="text-base sm:text-sm text-foreground">
+                  Actual Hours
+                </Label>
                 <Input
                   id="actual-hours"
                   type="number"
@@ -127,11 +147,18 @@ const PostJobReviewCard = ({
                   className="min-h-11"
                 />
                 {hoursVariance !== null && (
-                  <div className={`text-xs flex items-center gap-1 ${
-                    hoursVariance > 0 ? 'text-red-500' : 'text-green-500'
-                  }`}>
-                    {hoursVariance > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    {Math.abs(hoursVariance).toFixed(1)}% {hoursVariance > 0 ? 'over' : 'under'} estimate
+                  <div
+                    className={`text-xs flex items-center gap-1 ${
+                      hoursVariance > 0 ? 'text-red-500' : 'text-green-500'
+                    }`}
+                  >
+                    {hoursVariance > 0 ? (
+                      <TrendingUp className="h-3 w-3" />
+                    ) : (
+                      <TrendingDown className="h-3 w-3" />
+                    )}
+                    {Math.abs(hoursVariance).toFixed(1)}% {hoursVariance > 0 ? 'over' : 'under'}{' '}
+                    estimate
                   </div>
                 )}
               </div>
@@ -142,17 +169,20 @@ const PostJobReviewCard = ({
               <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-base sm:text-sm text-foreground">Actual Profit</span>
-                  <span className={`text-2xl sm:text-xl font-bold ${
-                    actualProfit >= estimatedProfit ? 'text-green-500' : 'text-red-500'
-                  }`}>
+                  <span
+                    className={`text-2xl sm:text-xl font-bold ${
+                      actualProfit >= estimatedProfit ? 'text-green-500' : 'text-red-500'
+                    }`}
+                  >
                     £{actualProfit.toFixed(0)}
                   </span>
                 </div>
                 {profitVariance !== null && (
-                  <div className={`text-sm ${
-                    profitVariance >= 0 ? 'text-green-500' : 'text-red-500'
-                  }`}>
-                    {profitVariance >= 0 ? '+' : ''}{profitVariance.toFixed(1)}% vs estimate (£{estimatedProfit.toFixed(0)})
+                  <div
+                    className={`text-sm ${profitVariance >= 0 ? 'text-green-500' : 'text-red-500'}`}
+                  >
+                    {profitVariance >= 0 ? '+' : ''}
+                    {profitVariance.toFixed(1)}% vs estimate (£{estimatedProfit.toFixed(0)})
                   </div>
                 )}
               </div>
@@ -162,7 +192,10 @@ const PostJobReviewCard = ({
 
         {/* Review Notes */}
         <div className="space-y-2">
-          <Label htmlFor="review-notes" className="text-base sm:text-sm font-medium text-foreground">
+          <Label
+            htmlFor="review-notes"
+            className="text-base sm:text-sm font-medium text-foreground"
+          >
             Review Notes
           </Label>
           <Textarea
@@ -175,12 +208,7 @@ const PostJobReviewCard = ({
           />
         </div>
 
-        <MobileButton
-          variant="elec"
-          size="default"
-          onClick={handleSubmit}
-          className="w-full"
-        >
+        <MobileButton variant="elec" size="default" onClick={handleSubmit} className="w-full">
           Save Review
         </MobileButton>
       </CardContent>

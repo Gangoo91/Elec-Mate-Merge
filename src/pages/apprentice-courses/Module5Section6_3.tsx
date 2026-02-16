@@ -1,178 +1,182 @@
-import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Why is it important to report faults immediately?",
+    question: 'Why is it important to report faults immediately?',
     options: [
-      "To prevent unsafe conditions and ensure they are addressed before work continues",
-      "To impress supervisors",
-      "To avoid paperwork later",
-      "It's not always necessary"
+      'To prevent unsafe conditions and ensure they are addressed before work continues',
+      'To impress supervisors',
+      'To avoid paperwork later',
+      "It's not always necessary",
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
   },
   {
     id: 2,
-    question: "Name two common electrical faults that must be reported.",
+    question: 'Name two common electrical faults that must be reported.',
     options: [
-      "Dirty tools and missing lunch",
-      "Damaged cables and reversed polarity",
-      "Late delivery and bad weather",
-      "Expensive materials and tight deadlines"
+      'Dirty tools and missing lunch',
+      'Damaged cables and reversed polarity',
+      'Late delivery and bad weather',
+      'Expensive materials and tight deadlines',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 3,
-    question: "What three key details should always be included when reporting?",
+    question: 'What three key details should always be included when reporting?',
     options: [
-      "Time, date, weather",
-      "Who found it, what the fault/risk is, and where it is located",
-      "Cost, duration, materials",
-      "Client, contractor, supplier"
+      'Time, date, weather',
+      'Who found it, what the fault/risk is, and where it is located',
+      'Cost, duration, materials',
+      'Client, contractor, supplier',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 4,
-    question: "Give two examples of communication methods for reporting risks.",
+    question: 'Give two examples of communication methods for reporting risks.',
     options: [
-      "Email and social media",
-      "Verbal reports and written reports",
-      "Texting and phone calls",
-      "Drawing and sketching"
+      'Email and social media',
+      'Verbal reports and written reports',
+      'Texting and phone calls',
+      'Drawing and sketching',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 5,
     question: "Why is tagging equipment with 'Do Not Use' important?",
     options: [
-      "It looks professional",
-      "It prevents unsafe equipment from being accidentally used",
+      'It looks professional',
+      'It prevents unsafe equipment from being accidentally used',
       "It's required by law",
-      "It saves time"
+      'It saves time',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 6,
-    question: "What is the risk of not updating progress reports?",
+    question: 'What is the risk of not updating progress reports?',
     options: [
-      "Nothing serious happens",
-      "Leads to confusion, duplication of work, or project delays",
-      "Only affects paperwork",
-      "Saves time overall"
+      'Nothing serious happens',
+      'Leads to confusion, duplication of work, or project delays',
+      'Only affects paperwork',
+      'Saves time overall',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 7,
-    question: "What type of report is best for urgent hazards?",
+    question: 'What type of report is best for urgent hazards?',
     options: [
-      "Written report filed later",
-      "Verbal report to the supervisor/foreman",
-      "Email to head office",
-      "Wait until the end of shift"
+      'Written report filed later',
+      'Verbal report to the supervisor/foreman',
+      'Email to head office',
+      'Wait until the end of shift',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 8,
     question: "Why should vague phrases like 'nearly done' be avoided in progress updates?",
     options: [
-      "They sound unprofessional",
+      'They sound unprofessional',
       "They don't give clear, measurable information about what has been completed",
-      "They take too long to say",
-      "They're not allowed on site"
+      'They take too long to say',
+      "They're not allowed on site",
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 9,
-    question: "What can poor communication lead to between team members?",
+    question: 'What can poor communication lead to between team members?',
     options: [
-      "Better relationships",
-      "Reduced trust, confusion, and mistakes",
-      "Faster work completion",
-      "Lower costs"
+      'Better relationships',
+      'Reduced trust, confusion, and mistakes',
+      'Faster work completion',
+      'Lower costs',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 10,
-    question: "What is better: over-reporting or under-reporting issues?",
+    question: 'What is better: over-reporting or under-reporting issues?',
     options: [
-      "Under-reporting saves time",
+      'Under-reporting saves time',
       "Over-reporting — it's safer to raise issues than ignore them",
-      "Both are equally good",
-      "Neither is necessary"
+      'Both are equally good',
+      'Neither is necessary',
     ],
-    correctAnswer: 1
-  }
+    correctAnswer: 1,
+  },
 ];
 
 const quickCheckQuestions = [
   {
-    id: "faults1",
-    question: "What should you do if you discover a damaged cable on site?",
+    id: 'faults1',
+    question: 'What should you do if you discover a damaged cable on site?',
     options: [
-      "Continue working around it",
-      "Report it immediately to your supervisor",
-      "Fix it yourself if possible",
-      "Wait until the end of the shift to mention it"
+      'Continue working around it',
+      'Report it immediately to your supervisor',
+      'Fix it yourself if possible',
+      'Wait until the end of the shift to mention it',
     ],
     correctIndex: 1,
-    explanation: "Damaged cables present immediate safety risks and must be reported immediately to prevent accidents and ensure they are addressed before work continues."
+    explanation:
+      'Damaged cables present immediate safety risks and must be reported immediately to prevent accidents and ensure they are addressed before work continues.',
   },
   {
-    id: "faults2",
-    question: "Which method is best for reporting urgent safety hazards?",
+    id: 'faults2',
+    question: 'Which method is best for reporting urgent safety hazards?',
     options: [
-      "Send an email at the end of the day",
-      "Verbal report immediately to supervisor/foreman",
-      "Write a note and leave it on the desk",
-      "Wait for the weekly safety meeting"
+      'Send an email at the end of the day',
+      'Verbal report immediately to supervisor/foreman',
+      'Write a note and leave it on the desk',
+      'Wait for the weekly safety meeting',
     ],
     correctIndex: 1,
-    explanation: "Urgent safety hazards require immediate verbal reporting to the supervisor or foreman so they can take immediate action to prevent accidents."
+    explanation:
+      'Urgent safety hazards require immediate verbal reporting to the supervisor or foreman so they can take immediate action to prevent accidents.',
   },
   {
-    id: "faults3",
-    question: "What key information should be included when reporting a fault?",
+    id: 'faults3',
+    question: 'What key information should be included when reporting a fault?',
     options: [
-      "Just the location",
-      "Who found it, what the fault/risk is, and where it is located",
-      "Only what the problem is",
-      "Just your name and the time"
+      'Just the location',
+      'Who found it, what the fault/risk is, and where it is located',
+      'Only what the problem is',
+      'Just your name and the time',
     ],
     correctIndex: 1,
-    explanation: "The 'who, what, where' method ensures complete information: who discovered it, what the specific fault or risk is, and exactly where it's located."
+    explanation:
+      "The 'who, what, where' method ensures complete information: who discovered it, what the specific fault or risk is, and exactly where it's located.",
   },
   {
-    id: "faults4",
-    question: "Why should progress updates be specific rather than vague?",
+    id: 'faults4',
+    question: 'Why should progress updates be specific rather than vague?',
     options: [
-      "To use more words",
-      "To provide clear, measurable information about completion status",
-      "To impress supervisors",
-      "To fill out reports properly"
+      'To use more words',
+      'To provide clear, measurable information about completion status',
+      'To impress supervisors',
+      'To fill out reports properly',
     ],
     correctIndex: 1,
-    explanation: "Specific progress updates like '2 out of 3 lighting circuits tested' give clear, measurable information that helps with planning and prevents misunderstandings."
-  }
+    explanation:
+      "Specific progress updates like '2 out of 3 lighting circuits tested' give clear, measurable information that helps with planning and prevents misunderstandings.",
+  },
 ];
 
 const Module5Section6_3 = () => {
   useSEO(
-    "Communicating Faults, Risks, and Task Progress | Electrical Training",
-    "Learn how to effectively communicate faults, risks, and task progress in electrical work to prevent accidents and ensure project success."
+    'Communicating Faults, Risks, and Task Progress | Electrical Training',
+    'Learn how to effectively communicate faults, risks, and task progress in electrical work to prevent accidents and ensure project success.'
   );
 
   return (
@@ -226,9 +230,15 @@ const Module5Section6_3 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="text-white/80 text-sm space-y-1">
-                  <li>• <strong>Spot:</strong> Damaged equipment or unsafe conditions</li>
-                  <li>• <strong>Use:</strong> Immediate verbal reports for urgent issues</li>
-                  <li>• <strong>Check:</strong> All reports include who, what, where details</li>
+                  <li>
+                    • <strong>Spot:</strong> Damaged equipment or unsafe conditions
+                  </li>
+                  <li>
+                    • <strong>Use:</strong> Immediate verbal reports for urgent issues
+                  </li>
+                  <li>
+                    • <strong>Check:</strong> All reports include who, what, where details
+                  </li>
                 </ul>
               </div>
             </div>
@@ -256,7 +266,9 @@ const Module5Section6_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                On-site electrical work often involves identifying faults, highlighting risks, and reporting progress. Clear communication in these areas is critical for safety and project success:
+                On-site electrical work often involves identifying faults, highlighting risks, and
+                reporting progress. Clear communication in these areas is critical for safety and
+                project success:
               </p>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -295,15 +307,27 @@ const Module5Section6_3 = () => {
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Equipment and Installation Faults</p>
-                  <p className="text-sm text-white/70">Damaged cables, connectors, or electrical accessories. Faulty tools or testing equipment. Incorrect installations (e.g., reversed polarity, wrong ratings). Missing or inadequate earthing connections.</p>
+                  <p className="text-sm text-white/70">
+                    Damaged cables, connectors, or electrical accessories. Faulty tools or testing
+                    equipment. Incorrect installations (e.g., reversed polarity, wrong ratings).
+                    Missing or inadequate earthing connections.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Safety Hazards</p>
-                  <p className="text-sm text-white/70">Exposed live conductors or damaged insulation. Water ingress or moisture in electrical equipment. Inadequate isolation or lockout procedures. Missing or insufficient PPE for the task.</p>
+                  <p className="text-sm text-white/70">
+                    Exposed live conductors or damaged insulation. Water ingress or moisture in
+                    electrical equipment. Inadequate isolation or lockout procedures. Missing or
+                    insufficient PPE for the task.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental and Access Issues</p>
-                  <p className="text-sm text-white/70">Unsafe working platforms or access routes. Inadequate lighting in work areas. Presence of other hazards (asbestos, chemical spillages). Changes in site conditions affecting safety.</p>
+                  <p className="text-sm text-white/70">
+                    Unsafe working platforms or access routes. Inadequate lighting in work areas.
+                    Presence of other hazards (asbestos, chemical spillages). Changes in site
+                    conditions affecting safety.
+                  </p>
                 </div>
               </div>
             </div>
@@ -319,25 +343,48 @@ const Module5Section6_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Different situations require different communication methods. Choose the most appropriate for the urgency and nature of the issue:
+                Different situations require different communication methods. Choose the most
+                appropriate for the urgency and nature of the issue:
               </p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
-                  <p className="font-semibold text-red-400 mb-2">Verbal Reports – For urgent issues</p>
-                  <p className="text-sm text-white/70">Direct face-to-face communication with supervisor or foreman. Use for safety hazards that need immediate action. Follow up with written confirmation if required.</p>
+                  <p className="font-semibold text-red-400 mb-2">
+                    Verbal Reports – For urgent issues
+                  </p>
+                  <p className="text-sm text-white/70">
+                    Direct face-to-face communication with supervisor or foreman. Use for safety
+                    hazards that need immediate action. Follow up with written confirmation if
+                    required.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                  <p className="font-semibold text-elec-yellow mb-2">Written Reports – For logging hazards</p>
-                  <p className="text-sm text-white/70">Use site logbooks, incident report forms, or digital systems. Include date, time, location, and detailed description. Provide permanent record for future reference.</p>
+                  <p className="font-semibold text-elec-yellow mb-2">
+                    Written Reports – For logging hazards
+                  </p>
+                  <p className="text-sm text-white/70">
+                    Use site logbooks, incident report forms, or digital systems. Include date,
+                    time, location, and detailed description. Provide permanent record for future
+                    reference.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
-                  <p className="font-semibold text-purple-400 mb-2">Tagging Equipment/Areas – Visual warnings</p>
-                  <p className="text-sm text-white/70">"Do Not Use" tags on faulty tools or unsafe circuits. Barrier tape for hazardous areas. Clear, durable labels that won't be easily removed.</p>
+                  <p className="font-semibold text-purple-400 mb-2">
+                    Tagging Equipment/Areas – Visual warnings
+                  </p>
+                  <p className="text-sm text-white/70">
+                    "Do Not Use" tags on faulty tools or unsafe circuits. Barrier tape for hazardous
+                    areas. Clear, durable labels that won't be easily removed.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
-                  <p className="font-semibold text-blue-400 mb-2">Digital Platforms – Modern reporting</p>
-                  <p className="text-sm text-white/70">Site apps or digital reporting systems. QR code-based incident reporting. Photo and GPS location capture capabilities.</p>
+                  <p className="font-semibold text-blue-400 mb-2">
+                    Digital Platforms – Modern reporting
+                  </p>
+                  <p className="text-sm text-white/70">
+                    Site apps or digital reporting systems. QR code-based incident reporting. Photo
+                    and GPS location capture capabilities.
+                  </p>
                 </div>
               </div>
             </div>
@@ -361,15 +408,25 @@ const Module5Section6_3 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Break work into clear stages</p>
-                    <p className="text-white/70">Started, in progress, completed, awaiting test. Use specific milestones. Include percentage completion where appropriate.</p>
+                    <p className="text-white/70">
+                      Started, in progress, completed, awaiting test. Use specific milestones.
+                      Include percentage completion where appropriate.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Record details accurately</p>
-                    <p className="text-white/70">Use handover sheets, site logs, or progress boards. Include specific quantities and measurements. Note any deviations from original plans.</p>
+                    <p className="text-white/70">
+                      Use handover sheets, site logs, or progress boards. Include specific
+                      quantities and measurements. Note any deviations from original plans.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Use specific language</p>
-                    <p className="text-white/70">Say "2 out of 3 lighting circuits tested" instead of "nearly done". Use "will be complete by 3 PM" instead of "soon". Be precise about quantities, times, and completion status.</p>
+                    <p className="text-white/70">
+                      Say "2 out of 3 lighting circuits tested" instead of "nearly done". Use "will
+                      be complete by 3 PM" instead of "soon". Be precise about quantities, times,
+                      and completion status.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -386,7 +443,8 @@ const Module5Section6_3 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Understanding the potential consequences emphasises why effective communication is essential:
+                Understanding the potential consequences emphasises why effective communication is
+                essential:
               </p>
 
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
@@ -394,15 +452,25 @@ const Module5Section6_3 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Safety consequences</p>
-                    <p className="text-white/70">Unreported faults leading to accidents. Escalation of minor issues into major hazards. Use of unsafe equipment. Inadequate isolation leading to electrical incidents.</p>
+                    <p className="text-white/70">
+                      Unreported faults leading to accidents. Escalation of minor issues into major
+                      hazards. Use of unsafe equipment. Inadequate isolation leading to electrical
+                      incidents.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Project impact</p>
-                    <p className="text-white/70">Repeated work due to misunderstood progress. Project delays and cost overruns. Inefficient resource allocation. Quality issues from incomplete information.</p>
+                    <p className="text-white/70">
+                      Repeated work due to misunderstood progress. Project delays and cost overruns.
+                      Inefficient resource allocation. Quality issues from incomplete information.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Professional relationships</p>
-                    <p className="text-white/70">Reduced trust between team members. Breakdown in working relationships. Loss of confidence from supervisors and clients.</p>
+                    <p className="text-white/70">
+                      Reduced trust between team members. Breakdown in working relationships. Loss
+                      of confidence from supervisors and clients.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -420,7 +488,10 @@ const Module5Section6_3 = () => {
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
               <p className="font-semibold text-amber-400 mb-2">The Hidden Fault</p>
               <p className="text-white/80 text-sm mb-3">
-                On a commercial project, an apprentice notices a cracked socket faceplate but assumes it will be replaced later. No report is made, and another worker installs it thinking it's acceptable. Weeks later, the socket sparks during use, damaging equipment and causing a safety incident.
+                On a commercial project, an apprentice notices a cracked socket faceplate but
+                assumes it will be replaced later. No report is made, and another worker installs it
+                thinking it's acceptable. Weeks later, the socket sparks during use, damaging
+                equipment and causing a safety incident.
               </p>
               <div className="p-3 bg-red-500/10 rounded border border-red-500/20 mb-3">
                 <p className="text-sm text-red-300 font-medium mb-1">Consequences:</p>
@@ -433,7 +504,9 @@ const Module5Section6_3 = () => {
               <div className="p-3 bg-green-500/10 rounded border border-green-500/20">
                 <p className="text-sm text-green-300 font-medium mb-1">Prevention:</p>
                 <p className="text-sm text-white/70">
-                  A simple fault report stating "Cracked socket faceplate found in Room 203 - potential safety hazard - requires replacement before installation" would have prevented this expensive and dangerous incident.
+                  A simple fault report stating "Cracked socket faceplate found in Room 203 -
+                  potential safety hazard - requires replacement before installation" would have
+                  prevented this expensive and dangerous incident.
                 </p>
               </div>
             </div>
@@ -453,7 +526,9 @@ const Module5Section6_3 = () => {
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
-                  <span>Use clear details: Who found it, What the fault is, Where it's located</span>
+                  <span>
+                    Use clear details: Who found it, What the fault is, Where it's located
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
@@ -480,9 +555,15 @@ const Module5Section6_3 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-white/80 text-sm mb-3">In this subsection, you've learned:</p>
               <ul className="text-white/80 text-sm space-y-1">
-                <li>• Why fault, risk, and progress communication is essential for safety and efficiency</li>
+                <li>
+                  • Why fault, risk, and progress communication is essential for safety and
+                  efficiency
+                </li>
                 <li>• Common electrical issues that must be reported immediately</li>
-                <li>• Different methods of communication: verbal, written, tagging, and digital systems</li>
+                <li>
+                  • Different methods of communication: verbal, written, tagging, and digital
+                  systems
+                </li>
                 <li>• How clear, specific updates keep projects on time and prevent confusion</li>
               </ul>
             </div>
@@ -490,7 +571,10 @@ const Module5Section6_3 = () => {
 
           {/* Quiz */}
           <section className="mb-10">
-            <Quiz title="Faults, Risks, and Progress Communication Knowledge Check" questions={quizQuestions} />
+            <Quiz
+              title="Faults, Risks, and Progress Communication Knowledge Check"
+              questions={quizQuestions}
+            />
           </section>
 
           {/* Navigation */}

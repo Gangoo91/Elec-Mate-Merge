@@ -1,13 +1,19 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  ChevronLeft, ChevronRight, Star, TrendingUp, 
-  Users, Clock, Award, Zap 
-} from "lucide-react";
-import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  TrendingUp,
+  Users,
+  Clock,
+  Award,
+  Zap,
+} from 'lucide-react';
+import { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface FeaturedCoursesCarouselProps {
   courses: EnhancedCareerCourse[];
@@ -20,23 +26,24 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
 
   // Enhanced filtering for both live and static courses
   const featuredCourses = courses
-    .filter(course => {
+    .filter((course) => {
       // Primary criteria: high demand, high rating, or emerging tech
-      const isPrimary = course.industryDemand === "High" || 
-                       course.rating >= 4.8 || 
-                       course.category === "Emerging Technologies";
-      
+      const isPrimary =
+        course.industryDemand === 'High' ||
+        course.rating >= 4.8 ||
+        course.category === 'Emerging Technologies';
+
       // Secondary criteria for live courses without full metadata
-      const isLiveRelevant = course.isLive && (
-        course.title?.toLowerCase().includes('18th edition') ||
-        course.title?.toLowerCase().includes('ev') ||
-        course.title?.toLowerCase().includes('electric vehicle') ||
-        course.title?.toLowerCase().includes('solar') ||
-        course.title?.toLowerCase().includes('smart') ||
-        course.title?.toLowerCase().includes('testing') ||
-        course.title?.toLowerCase().includes('inspection')
-      );
-      
+      const isLiveRelevant =
+        course.isLive &&
+        (course.title?.toLowerCase().includes('18th edition') ||
+          course.title?.toLowerCase().includes('ev') ||
+          course.title?.toLowerCase().includes('electric vehicle') ||
+          course.title?.toLowerCase().includes('solar') ||
+          course.title?.toLowerCase().includes('smart') ||
+          course.title?.toLowerCase().includes('testing') ||
+          course.title?.toLowerCase().includes('inspection'));
+
       return isPrimary || isLiveRelevant;
     })
     .sort((a, b) => {
@@ -52,32 +59,34 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
   const maxIndex = Math.max(0, totalSlides - 1);
 
   const nextSlide = () => {
-    setCurrentIndex(prev => Math.min(prev + 1, maxIndex));
+    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
   };
 
   const prevSlide = () => {
-    setCurrentIndex(prev => Math.max(prev - 1, 0));
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const getFeatureIcon = (course: EnhancedCareerCourse) => {
-    if (course.category === "Emerging Technologies") return Zap;
-    if (course.industryDemand === "High") return TrendingUp;
+    if (course.category === 'Emerging Technologies') return Zap;
+    if (course.industryDemand === 'High') return TrendingUp;
     if (course.rating >= 4.8) return Star;
     return Award;
   };
 
   const getFeatureLabel = (course: EnhancedCareerCourse) => {
-    if (course.category === "Emerging Technologies") return "New Technology";
-    if (course.industryDemand === "High") return "High Demand";
-    if (course.rating >= 4.8) return "Top Rated";
-    return "Featured";
+    if (course.category === 'Emerging Technologies') return 'New Technology';
+    if (course.industryDemand === 'High') return 'High Demand';
+    if (course.rating >= 4.8) return 'Top Rated';
+    return 'Featured';
   };
 
   const getFeatureColor = (course: EnhancedCareerCourse) => {
-    if (course.category === "Emerging Technologies") return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-    if (course.industryDemand === "High") return "bg-green-500/20 text-green-400 border-green-500/30";
-    if (course.rating >= 4.8) return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-    return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+    if (course.category === 'Emerging Technologies')
+      return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+    if (course.industryDemand === 'High')
+      return 'bg-green-500/20 text-green-400 border-green-500/30';
+    if (course.rating >= 4.8) return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+    return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
   };
 
   if (featuredCourses.length === 0) return null;
@@ -115,22 +124,22 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
 
       <CardContent className="px-2 sm:px-6 overflow-hidden">
         <div className="relative overflow-hidden w-full min-w-0">
-          <div 
+          <div
             className="flex transition-transform duration-300 ease-in-out"
-            style={{ 
+            style={{
               transform: `translateX(-${currentIndex * 100}%)`,
-              width: `${totalSlides * 100}%`
+              width: `${totalSlides * 100}%`,
             }}
           >
             {featuredCourses.map((course) => {
               const FeatureIcon = getFeatureIcon(course);
-              
+
               return (
                 <div
                   key={course.id}
                   className="flex-shrink-0 px-2 min-w-0"
-                  style={{ 
-                    width: `${100 / totalSlides}%`
+                  style={{
+                    width: `${100 / totalSlides}%`,
                   }}
                 >
                   <Card className="border-elec-yellow/30 bg-elec-dark/30 h-full hover:border-elec-yellow/50 transition-all duration-300">
@@ -152,16 +161,16 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
                           <span>{course.rating}</span>
                         </div>
                       </div>
-                      
+
                       <CardTitle className="text-base leading-tight">{course.title}</CardTitle>
                       <p className="text-sm text-elec-yellow">{course.provider}</p>
                     </CardHeader>
-                    
+
                     <CardContent className="pt-0 space-y-3">
                       <p className="text-xs text-muted-foreground line-clamp-2">
                         {course.description}
                       </p>
-                      
+
                       {/* Quick Stats */}
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="flex items-center gap-1">
@@ -186,9 +195,9 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
                         <span className="text-elec-yellow">{course.nextDates[0]}</span>
                       </div>
 
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                         onClick={() => onViewDetails(course)}
                       >

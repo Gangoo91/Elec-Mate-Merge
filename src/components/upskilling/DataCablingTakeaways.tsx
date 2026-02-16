@@ -4,25 +4,30 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export const DataCablingTakeaways = () => {
   const takeaways = [
     {
-      title: "Standardised Approach",
-      description: "Structured cabling follows industry standards (TIA/EIA, ISO/IEC) for consistent, reliable performance"
+      title: 'Standardised Approach',
+      description:
+        'Structured cabling follows industry standards (TIA/EIA, ISO/IEC) for consistent, reliable performance',
     },
     {
-      title: "Six Key Subsystems", 
-      description: "Understanding horizontal cabling, backbone cabling, work areas, and supporting infrastructure is essential"
+      title: 'Six Key Subsystems',
+      description:
+        'Understanding horizontal cabling, backbone cabling, work areas, and supporting infrastructure is essential',
     },
     {
-      title: "Cable Performance Matters",
-      description: "Choose appropriate cable categories (Cat5e, Cat6, Cat6A, fiber) based on bandwidth and distance requirements"
+      title: 'Cable Performance Matters',
+      description:
+        'Choose appropriate cable categories (Cat5e, Cat6, Cat6A, fiber) based on bandwidth and distance requirements',
     },
     {
-      title: "Future-Proof Investment",
-      description: "Well-designed structured cabling supports multiple applications and emerging technologies"
+      title: 'Future-Proof Investment',
+      description:
+        'Well-designed structured cabling supports multiple applications and emerging technologies',
     },
     {
-      title: "Total Cost Benefits",
-      description: "Higher upfront costs are offset by reduced operational expenses and simplified management"
-    }
+      title: 'Total Cost Benefits',
+      description:
+        'Higher upfront costs are offset by reduced operational expenses and simplified management',
+    },
   ];
 
   return (
@@ -42,12 +47,12 @@ export const DataCablingTakeaways = () => {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-6 p-4 bg-[#323232] rounded-lg border border-gray-700">
           <p className="text-center text-gray-300 text-sm leading-relaxed">
-            <strong className="text-elec-yellow">Remember:</strong> Structured cabling is not just about cables – 
-            it's about creating a comprehensive telecommunications infrastructure that serves as the foundation 
-            for all modern business communications.
+            <strong className="text-elec-yellow">Remember:</strong> Structured cabling is not just
+            about cables – it's about creating a comprehensive telecommunications infrastructure
+            that serves as the foundation for all modern business communications.
           </p>
         </div>
       </CardContent>

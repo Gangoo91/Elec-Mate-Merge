@@ -1,53 +1,53 @@
-import { ArrowLeft, FileText, Clock, Target, BarChart3, CheckCircle, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, FileText, Clock, Target, BarChart3, CheckCircle, Zap } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Mock Exams",
-    description: "Practice exams and timed tests to prepare for real assessments",
+    number: 'Section 1',
+    title: 'Mock Exams',
+    description: 'Practice exams and timed tests to prepare for real assessments',
     icon: FileText,
-    href: "../level3-module8-section1",
+    href: '../level3-module8-section1',
   },
   {
-    number: "Section 2",
-    title: "Practical Help",
-    description: "Practical assessment guides and techniques for hands-on assessments",
+    number: 'Section 2',
+    title: 'Practical Help',
+    description: 'Practical assessment guides and techniques for hands-on assessments',
     icon: Target,
-    href: "../level3-module8-section2",
+    href: '../level3-module8-section2',
   },
   {
-    number: "Section 3",
-    title: "Exam Tips",
-    description: "Time management, memory techniques and stress management strategies",
+    number: 'Section 3',
+    title: 'Exam Tips',
+    description: 'Time management, memory techniques and stress management strategies',
     icon: Clock,
-    href: "../level3-module8-section3",
+    href: '../level3-module8-section3',
   },
   {
-    number: "Section 4",
-    title: "Results Review",
-    description: "Score analysis and progress tracking to identify areas for improvement",
+    number: 'Section 4',
+    title: 'Results Review',
+    description: 'Score analysis and progress tracking to identify areas for improvement',
     icon: BarChart3,
-    href: "../level3-module8-section4",
+    href: '../level3-module8-section4',
   },
 ];
 
 const learningOutcomes = [
-  "Practice with realistic mock examinations under timed conditions",
-  "Develop effective practical assessment techniques",
-  "Apply time management strategies for exam success",
-  "Use memory techniques to retain key information",
-  "Manage exam stress and maintain focus",
-  "Track progress and identify areas requiring improvement",
+  'Practice with realistic mock examinations under timed conditions',
+  'Develop effective practical assessment techniques',
+  'Apply time management strategies for exam success',
+  'Use memory techniques to retain key information',
+  'Manage exam stress and maintain focus',
+  'Track progress and identify areas requiring improvement',
 ];
 
 const Level3Module8 = () => {
   useSEO(
-    "Module 8: Mock Examinations & Assessment - Level 3 Electrical Course",
-    "Comprehensive mock examinations, practical guidance, and exam techniques for Level 3 electrical installation qualifications"
+    'Module 8: Mock Examinations & Assessment - Level 3 Electrical Course',
+    'Comprehensive mock examinations, practical guidance, and exam techniques for Level 3 electrical installation qualifications'
   );
 
   return (
@@ -72,28 +72,22 @@ const Level3Module8 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        
-
-        {/* Sections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {sections.map((section, index) => (
-              <ModuleCard
-                key={index}
-                number={section.number}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                href={section.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Sections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {sections.map((section, index) => (
+                <ModuleCard
+                  key={index}
+                  number={section.number}
+                  title={section.title}
+                  description={section.description}
+                  icon={section.icon}
+                  href={section.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

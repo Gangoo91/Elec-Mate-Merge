@@ -1,45 +1,45 @@
-import { ArrowLeft, HeartPulse, Activity, ClipboardList, GraduationCap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HeartPulse, Activity, ClipboardList, GraduationCap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Musculoskeletal Disorders",
+    title: 'Musculoskeletal Disorders',
     icon: HeartPulse,
     description:
-      "Types of MSDs, symptoms, early reporting, treatment, and return-to-work programmes",
+      'Types of MSDs, symptoms, early reporting, treatment, and return-to-work programmes',
   },
   {
     id: 2,
-    title: "Fitness, Fatigue & Personal Factors",
+    title: 'Fitness, Fatigue & Personal Factors',
     icon: Activity,
     description:
-      "Physical fitness, age considerations, pregnancy, medication, and fatigue management",
+      'Physical fitness, age considerations, pregnancy, medication, and fatigue management',
   },
   {
     id: 3,
-    title: "Incident Reporting & Investigation",
+    title: 'Incident Reporting & Investigation',
     icon: ClipboardList,
     description:
-      "RIDDOR requirements for manual handling injuries, investigation process, and corrective actions",
+      'RIDDOR requirements for manual handling injuries, investigation process, and corrective actions',
   },
   {
     id: 4,
-    title: "Roles, Responsibilities & Training",
+    title: 'Roles, Responsibilities & Training',
     icon: GraduationCap,
     description:
-      "Employer and employee duties, competent person, training requirements, and refresher schedules",
+      'Employer and employee duties, competent person, training requirements, and refresher schedules',
   },
 ];
 
 export default function ManualHandlingModule5() {
   useSEO({
-    title: "Module 5: Health, Welfare & Responsibilities | Manual Handling",
+    title: 'Module 5: Health, Welfare & Responsibilities | Manual Handling',
     description:
-      "Musculoskeletal disorders, fitness and fatigue, RIDDOR reporting, and employer/employee roles and training requirements.",
+      'Musculoskeletal disorders, fitness and fatigue, RIDDOR reporting, and employer/employee roles and training requirements.',
   });
 
   return (
@@ -66,9 +66,7 @@ export default function ManualHandlingModule5() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3">
-              <span className="text-emerald-400 text-xs font-semibold">
-                MODULE 5
-              </span>
+              <span className="text-emerald-400 text-xs font-semibold">MODULE 5</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +76,8 @@ export default function ManualHandlingModule5() {
               Health, Welfare & Responsibilities
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Musculoskeletal disorders, fitness and fatigue, RIDDOR reporting,
-              and employer/employee roles and training requirements
+              Musculoskeletal disorders, fitness and fatigue, RIDDOR reporting, and
+              employer/employee roles and training requirements
             </p>
           </div>
 

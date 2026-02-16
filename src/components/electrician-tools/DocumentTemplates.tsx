@@ -1,33 +1,32 @@
-
-import { useState, useEffect, useMemo } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { FileText, Download, Eye, Edit, Shield, Star } from "lucide-react";
+import { useState, useEffect, useMemo } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { FileText, Download, Eye, Edit, Shield, Star } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { toast } from "@/hooks/use-toast";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DocumentTemplate, DocumentTemplateService } from "@/services/documentTemplateService";
-import DocumentGenerator from "./DocumentGenerator";
-import TemplateSearch, { TemplateFilters } from "./TemplateSearch";
+} from '@/components/ui/dialog';
+import { toast } from '@/hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DocumentTemplate, DocumentTemplateService } from '@/services/documentTemplateService';
+import DocumentGenerator from './DocumentGenerator';
+import TemplateSearch, { TemplateFilters } from './TemplateSearch';
 
 const DocumentTemplates = () => {
   const [templates, setTemplates] = useState<DocumentTemplate[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<DocumentTemplate[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<TemplateFilters>({
-    category: "all",
-    difficulty: "all",
+    category: 'all',
+    difficulty: 'all',
     ukSpecific: false,
-    regulationCompliant: "all"
+    regulationCompliant: 'all',
   });
-  const [activeTab, setActiveTab] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState<string>('all');
   const [selectedTemplate, setSelectedTemplate] = useState<DocumentTemplate | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [showGenerator, setShowGenerator] = useState(false);
@@ -43,9 +42,9 @@ const DocumentTemplates = () => {
         setFilteredTemplates(templatesData);
       } catch (error) {
         toast({
-          title: "Error Loading Templates",
-          description: "Failed to load document templates.",
-          variant: "destructive"
+          title: 'Error Loading Templates',
+          description: 'Failed to load document templates.',
+          variant: 'destructive',
         });
       } finally {
         setLoading(false);
@@ -60,33 +59,34 @@ const DocumentTemplates = () => {
     let result = templates;
 
     // Apply category filter
-    if (filters.category !== "all") {
-      result = result.filter(template => template.category === filters.category);
+    if (filters.category !== 'all') {
+      result = result.filter((template) => template.category === filters.category);
     }
 
     // Apply search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      result = result.filter(template =>
-        template.name.toLowerCase().includes(query) ||
-        template.description.toLowerCase().includes(query) ||
-        template.category.toLowerCase().includes(query)
+      result = result.filter(
+        (template) =>
+          template.name.toLowerCase().includes(query) ||
+          template.description.toLowerCase().includes(query) ||
+          template.category.toLowerCase().includes(query)
       );
     }
 
     // Apply difficulty filter
-    if (filters.difficulty !== "all") {
-      result = result.filter(template => template.difficulty === filters.difficulty);
+    if (filters.difficulty !== 'all') {
+      result = result.filter((template) => template.difficulty === filters.difficulty);
     }
 
     // Apply UK specific filter
     if (filters.ukSpecific) {
-      result = result.filter(template => template.ukSpecific);
+      result = result.filter((template) => template.ukSpecific);
     }
 
     // Apply regulation compliance filter
-    if (filters.regulationCompliant !== "all") {
-      result = result.filter(template => 
+    if (filters.regulationCompliant !== 'all') {
+      result = result.filter((template) =>
         template.regulationCompliant?.includes(filters.regulationCompliant)
       );
     }
@@ -110,14 +110,14 @@ const DocumentTemplates = () => {
     try {
       await DocumentTemplateService.downloadTemplate(template.id);
       toast({
-        title: "Download Started",
+        title: 'Download Started',
         description: `${template.name} template is downloading.`,
       });
     } catch (error) {
       toast({
-        title: "Download Failed",
-        description: "Failed to download template.",
-        variant: "destructive"
+        title: 'Download Failed',
+        description: 'Failed to download template.',
+        variant: 'destructive',
       });
     }
   };
@@ -156,14 +156,17 @@ const DocumentTemplates = () => {
       {/* Category Tabs */}
       <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="bg-elec-gray/50 border border-elec-yellow/20 p-1 rounded-lg">
-          {categories.map(category => (
-            <TabsTrigger 
-              key={category.id} 
-              value={category.id} 
+          {categories.map((category) => (
+            <TabsTrigger
+              key={category.id}
+              value={category.id}
               className="flex items-center gap-2 px-4 py-2 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark transition-all"
             >
               <span className="font-medium">{category.label}</span>
-              <Badge variant="secondary" className="text-xs bg-elec-yellow/20 text-elec-yellow border-none">
+              <Badge
+                variant="secondary"
+                className="text-xs bg-elec-yellow/20 text-elec-yellow border-none"
+              >
                 {category.count}
               </Badge>
             </TabsTrigger>
@@ -173,7 +176,10 @@ const DocumentTemplates = () => {
         <TabsContent value={activeTab} className="mt-6">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filteredTemplates.map((template) => (
-              <Card key={template.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all">
+              <Card
+                key={template.id}
+                className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <FileText className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
@@ -181,13 +187,16 @@ const DocumentTemplates = () => {
                       <div className="flex items-start justify-between">
                         <CardTitle className="text-base leading-tight">{template.name}</CardTitle>
                         {template.ukSpecific && (
-                          <Badge variant="outline" className="ml-2 text-xs bg-blue-500/20 text-blue-400 border-blue-500/30">
+                          <Badge
+                            variant="outline"
+                            className="ml-2 text-xs bg-blue-500/20 text-blue-400 border-blue-500/30"
+                          >
                             UK
                           </Badge>
                         )}
                       </div>
                       <CardDescription className="mt-1">
-                        {template.fileType} • {template.estimatedTime || "Variable time"}
+                        {template.fileType} • {template.estimatedTime || 'Variable time'}
                       </CardDescription>
                     </div>
                   </div>
@@ -201,7 +210,10 @@ const DocumentTemplates = () => {
                     {/* Template Metadata */}
                     <div className="flex flex-wrap gap-2">
                       {template.regulationCompliant && template.regulationCompliant.length > 0 && (
-                        <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500/30">
+                        <Badge
+                          variant="outline"
+                          className="bg-green-500/20 text-green-400 border-green-500/30"
+                        >
                           <Shield className="h-3 w-3 mr-1" />
                           Compliant
                         </Badge>
@@ -211,8 +223,10 @@ const DocumentTemplates = () => {
                     {/* Regulation Compliance */}
                     {template.regulationCompliant && template.regulationCompliant.length > 0 && (
                       <div className="text-xs text-muted-foreground">
-                        <strong>Compliant with:</strong> {template.regulationCompliant.slice(0, 2).join(", ")}
-                        {template.regulationCompliant.length > 2 && ` +${template.regulationCompliant.length - 2} more`}
+                        <strong>Compliant with:</strong>{' '}
+                        {template.regulationCompliant.slice(0, 2).join(', ')}
+                        {template.regulationCompliant.length > 2 &&
+                          ` +${template.regulationCompliant.length - 2} more`}
                       </div>
                     )}
 
@@ -221,22 +235,18 @@ const DocumentTemplates = () => {
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handlePreview(template)}
-                      >
+                      <Button variant="outline" size="sm" onClick={() => handlePreview(template)}>
                         <Eye className="h-3.5 w-3.5 mr-1" /> Preview
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => handleDownloadTemplate(template)}
                       >
                         <Download className="h-3.5 w-3.5 mr-1" /> Download
                       </Button>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         className="col-span-2"
                         onClick={() => handleGenerateDocument(template)}
                       >
@@ -254,10 +264,9 @@ const DocumentTemplates = () => {
               <FileText className="h-12 w-12 text-elec-yellow/50 mx-auto mb-4" />
               <h3 className="text-xl font-medium mb-2">No templates found</h3>
               <p className="text-muted-foreground">
-                {searchQuery || Object.values(filters).some(f => f && f !== "all") 
-                  ? "Try adjusting your search or filters." 
-                  : "There are no templates available in this category yet."
-                }
+                {searchQuery || Object.values(filters).some((f) => f && f !== 'all')
+                  ? 'Try adjusting your search or filters.'
+                  : 'There are no templates available in this category yet.'}
               </p>
             </div>
           )}
@@ -271,37 +280,39 @@ const DocumentTemplates = () => {
             <DialogTitle className="flex items-center gap-2">
               {selectedTemplate?.name}
               {selectedTemplate?.ukSpecific && (
-                <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                <Badge
+                  variant="outline"
+                  className="bg-blue-500/20 text-blue-400 border-blue-500/30"
+                >
                   UK Specific
                 </Badge>
               )}
             </DialogTitle>
-            <DialogDescription>
-              {selectedTemplate?.description}
-            </DialogDescription>
+            <DialogDescription>{selectedTemplate?.description}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             {/* Template Info */}
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <strong>Est. Time:</strong> {selectedTemplate?.estimatedTime || "Variable"}
+                <strong>Est. Time:</strong> {selectedTemplate?.estimatedTime || 'Variable'}
               </div>
               <div>
-                <strong>File Type:</strong> {selectedTemplate?.fileType || "PDF"}
+                <strong>File Type:</strong> {selectedTemplate?.fileType || 'PDF'}
               </div>
             </div>
 
             {/* Regulation Compliance */}
-            {selectedTemplate?.regulationCompliant && selectedTemplate.regulationCompliant.length > 0 && (
-              <div className="text-sm">
-                <strong>Compliant with:</strong>
-                <ul className="list-disc list-inside mt-1 text-muted-foreground">
-                  {selectedTemplate.regulationCompliant.map((reg, index) => (
-                    <li key={index}>{reg}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {selectedTemplate?.regulationCompliant &&
+              selectedTemplate.regulationCompliant.length > 0 && (
+                <div className="text-sm">
+                  <strong>Compliant with:</strong>
+                  <ul className="list-disc list-inside mt-1 text-muted-foreground">
+                    {selectedTemplate.regulationCompliant.map((reg, index) => (
+                      <li key={index}>{reg}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
             {/* Preview Placeholder */}
             <div className="flex justify-center items-center p-6 border rounded-md bg-elec-dark">
@@ -318,10 +329,12 @@ const DocumentTemplates = () => {
             <Button variant="outline" onClick={() => setShowPreview(false)}>
               Close
             </Button>
-            <Button onClick={() => {
-              setShowPreview(false);
-              if (selectedTemplate) handleGenerateDocument(selectedTemplate);
-            }}>
+            <Button
+              onClick={() => {
+                setShowPreview(false);
+                if (selectedTemplate) handleGenerateDocument(selectedTemplate);
+              }}
+            >
               <Edit className="h-4 w-4 mr-2" /> Create Document
             </Button>
           </div>
@@ -332,7 +345,7 @@ const DocumentTemplates = () => {
       <Dialog open={showGenerator} onOpenChange={setShowGenerator}>
         <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
           {selectedTemplate && (
-            <DocumentGenerator 
+            <DocumentGenerator
               template={selectedTemplate}
               onClose={() => setShowGenerator(false)}
             />
@@ -348,7 +361,8 @@ const DocumentTemplates = () => {
             Custom Template Builder
           </CardTitle>
           <CardDescription>
-            Create and customize your own document templates with your branding and specific requirements.
+            Create and customize your own document templates with your branding and specific
+            requirements.
           </CardDescription>
         </CardHeader>
         <CardContent>

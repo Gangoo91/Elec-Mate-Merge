@@ -38,29 +38,21 @@ export const AM2CriticalWarning = memo(function AM2CriticalWarning({
         {/* Header with Icon and Title */}
         <div className="flex items-start gap-3 mb-3">
           {/* Icon with Pulse Animation */}
-          <div className={cn(
-            'flex-shrink-0 p-2 rounded-xl',
-            'bg-red-500/20 border border-red-500/30'
-          )}>
+          <div
+            className={cn('flex-shrink-0 p-2 rounded-xl', 'bg-red-500/20 border border-red-500/30')}
+          >
             <AlertTriangle
-              className={cn(
-                'w-5 h-5 text-red-400',
-                'animate-pulse'
-              )}
+              className={cn('w-5 h-5 text-red-400', 'animate-pulse')}
               aria-hidden="true"
             />
           </div>
 
           {/* Title */}
-          <h3 className="text-ios-headline text-red-300 pt-1.5">
-            {title}
-          </h3>
+          <h3 className="text-ios-headline text-red-300 pt-1.5">{title}</h3>
         </div>
 
         {/* Warning Content */}
-        <div className="pl-[52px] text-ios-body text-red-200/80 leading-relaxed">
-          {children}
-        </div>
+        <div className="pl-[52px] text-ios-body text-red-200/80 leading-relaxed">{children}</div>
       </div>
 
       {/* Decorative left border accent */}

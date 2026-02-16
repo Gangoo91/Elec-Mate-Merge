@@ -1,24 +1,21 @@
-
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Calculator,
-  RotateCcw,
-  Zap,
-  Settings,
-  MapPin,
-  Shield,
-  AlertTriangle
-} from "lucide-react";
-import type { EnhancedCableSizingInputs } from "./useEnhancedCableSizing";
-import { industryTemplates } from "./enhancedCableSizeData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
+import { Calculator, RotateCcw, Zap, Settings, MapPin, Shield, AlertTriangle } from 'lucide-react';
+import type { EnhancedCableSizingInputs } from './useEnhancedCableSizing';
+import { industryTemplates } from './enhancedCableSizeData';
 
 interface EnhancedCableSizingFormProps {
   inputs: EnhancedCableSizingInputs;
@@ -39,7 +36,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
   calculateCableSize,
   resetCalculator,
   currentProject,
-  setCurrentProject
+  setCurrentProject,
 }) => {
   const hasErrors = Object.keys(errors).length > 0;
 
@@ -76,7 +73,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
         <CardContent className="space-y-3 sm:space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="projectName" className="text-sm">Project Name</Label>
+              <Label htmlFor="projectName" className="text-sm">
+                Project Name
+              </Label>
               <Input
                 id="projectName"
                 value={currentProject}
@@ -86,12 +85,14 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               />
             </div>
             <div>
-              <Label htmlFor="template" className="text-sm">Industry Template</Label>
+              <Label htmlFor="template" className="text-sm">
+                Industry Template
+              </Label>
               <Select
                 value={inputs.template}
                 onValueChange={(value) => {
                   updateInput('template', value);
-                  if (value !== "none") applyTemplate(value);
+                  if (value !== 'none') applyTemplate(value);
                 }}
               >
                 <SelectTrigger className="mt-1">
@@ -112,10 +113,10 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           {inputs.template && (
             <div className="p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
               <div className="text-sm font-medium text-elec-yellow mb-1">
-                {industryTemplates.find(t => t.id === inputs.template)?.name}
+                {industryTemplates.find((t) => t.id === inputs.template)?.name}
               </div>
               <div className="text-xs text-white">
-                {industryTemplates.find(t => t.id === inputs.template)?.description}
+                {industryTemplates.find((t) => t.id === inputs.template)?.description}
               </div>
             </div>
           )}
@@ -133,7 +134,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
         <CardContent className="space-y-3 sm:space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="current" className="text-sm">Design Current (A) *</Label>
+              <Label htmlFor="current" className="text-sm">
+                Design Current (A) *
+              </Label>
               <Input
                 id="current"
                 type="text"
@@ -152,7 +155,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="voltage" className="text-sm">Voltage (V) *</Label>
+              <Label htmlFor="voltage" className="text-sm">
+                Voltage (V) *
+              </Label>
               <Select
                 value={inputs.voltage.toString()}
                 onValueChange={(value) => updateInput('voltage', parseFloat(value))}
@@ -169,7 +174,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="phases" className="text-sm">Phases</Label>
+              <Label htmlFor="phases" className="text-sm">
+                Phases
+              </Label>
               <Select
                 value={inputs.phases}
                 onValueChange={(value: '1' | '3') => updateInput('phases', value)}
@@ -185,7 +192,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="powerFactor" className="text-sm">Power Factor</Label>
+              <Label htmlFor="powerFactor" className="text-sm">
+                Power Factor
+              </Label>
               <Input
                 id="powerFactor"
                 type="number"
@@ -199,10 +208,14 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="loadType" className="text-sm">Load Type</Label>
+              <Label htmlFor="loadType" className="text-sm">
+                Load Type
+              </Label>
               <Select
                 value={inputs.loadType}
-                onValueChange={(value: 'resistive' | 'inductive' | 'mixed') => updateInput('loadType', value)}
+                onValueChange={(value: 'resistive' | 'inductive' | 'mixed') =>
+                  updateInput('loadType', value)
+                }
               >
                 <SelectTrigger className="mt-1">
                   <SelectValue />
@@ -216,7 +229,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="futureExpansion" className="text-sm">Future Expansion (%)</Label>
+              <Label htmlFor="futureExpansion" className="text-sm">
+                Future Expansion (%)
+              </Label>
               <Input
                 id="futureExpansion"
                 type="number"
@@ -242,7 +257,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
         <CardContent className="space-y-3 sm:space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="length" className="text-sm">Cable Length (m) *</Label>
+              <Label htmlFor="length" className="text-sm">
+                Cable Length (m) *
+              </Label>
               <Input
                 id="length"
                 type="text"
@@ -261,10 +278,14 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="circuitType" className="text-sm">Circuit Type</Label>
+              <Label htmlFor="circuitType" className="text-sm">
+                Circuit Type
+              </Label>
               <Select
                 value={inputs.circuitType}
-                onValueChange={(value: 'radial' | 'ring' | 'distribution') => updateInput('circuitType', value)}
+                onValueChange={(value: 'radial' | 'ring' | 'distribution') =>
+                  updateInput('circuitType', value)
+                }
               >
                 <SelectTrigger className="mt-1">
                   <SelectValue />
@@ -278,7 +299,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="voltageDropLimit" className="text-sm">Voltage Drop Limit (%)</Label>
+              <Label htmlFor="voltageDropLimit" className="text-sm">
+                Voltage Drop Limit (%)
+              </Label>
               <Input
                 id="voltageDropLimit"
                 type="number"
@@ -305,7 +328,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
         <CardContent className="space-y-3 sm:space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="installationMethod" className="text-sm">Installation Method</Label>
+              <Label htmlFor="installationMethod" className="text-sm">
+                Installation Method
+              </Label>
               <Select
                 value={inputs.installationMethod}
                 onValueChange={(value) => updateInput('installationMethod', value)}
@@ -325,18 +350,24 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="ambientTemperature" className="text-sm">Ambient Temperature (°C)</Label>
+              <Label htmlFor="ambientTemperature" className="text-sm">
+                Ambient Temperature (°C)
+              </Label>
               <Input
                 id="ambientTemperature"
                 type="number"
                 value={inputs.ambientTemperature}
-                onChange={(e) => updateInput('ambientTemperature', parseFloat(e.target.value) || 30)}
+                onChange={(e) =>
+                  updateInput('ambientTemperature', parseFloat(e.target.value) || 30)
+                }
                 className={`mt-1 ${errors.ambientTemperature ? 'border-red-500' : ''}`}
               />
             </div>
 
             <div>
-              <Label htmlFor="groupingFactor" className="text-sm">Grouping Factor</Label>
+              <Label htmlFor="groupingFactor" className="text-sm">
+                Grouping Factor
+              </Label>
               <Input
                 id="groupingFactor"
                 type="number"
@@ -383,7 +414,10 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
                       if (checked) {
                         updateInput('preferredCableTypes', [...inputs.preferredCableTypes, type]);
                       } else {
-                        updateInput('preferredCableTypes', inputs.preferredCableTypes.filter(t => t !== type));
+                        updateInput(
+                          'preferredCableTypes',
+                          inputs.preferredCableTypes.filter((t) => t !== type)
+                        );
                       }
                     }}
                   />
@@ -408,10 +442,14 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
         <CardContent className="space-y-3 sm:space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="protectionType" className="text-sm">Protection Type</Label>
+              <Label htmlFor="protectionType" className="text-sm">
+                Protection Type
+              </Label>
               <Select
                 value={inputs.protectionType}
-                onValueChange={(value: 'mcb' | 'fuse' | 'mccb') => updateInput('protectionType', value)}
+                onValueChange={(value: 'mcb' | 'fuse' | 'mccb') =>
+                  updateInput('protectionType', value)
+                }
               >
                 <SelectTrigger className="mt-1">
                   <SelectValue />
@@ -425,7 +463,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="protectionRating" className="text-sm">Protection Rating (A)</Label>
+              <Label htmlFor="protectionRating" className="text-sm">
+                Protection Rating (A)
+              </Label>
               <Select
                 value={inputs.protectionRating ? String(inputs.protectionRating) : '0'}
                 onValueChange={(value) => updateInput('protectionRating', parseFloat(value) || 0)}
@@ -457,10 +497,14 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="earthingSystem" className="text-sm">Earthing System</Label>
+              <Label htmlFor="earthingSystem" className="text-sm">
+                Earthing System
+              </Label>
               <Select
                 value={inputs.earthingSystem}
-                onValueChange={(value: 'tn-s' | 'tn-c-s' | 'tt' | 'it') => updateInput('earthingSystem', value)}
+                onValueChange={(value: 'tn-s' | 'tn-c-s' | 'tt' | 'it') =>
+                  updateInput('earthingSystem', value)
+                }
               >
                 <SelectTrigger className="mt-1">
                   <SelectValue />
@@ -483,11 +527,15 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           <CardContent className="pt-4">
             <div className="flex items-center gap-2 mb-2">
               <AlertTriangle className="h-4 w-4 text-red-500" />
-              <span className="font-medium text-red-500 text-sm">Please fix the following errors:</span>
+              <span className="font-medium text-red-500 text-sm">
+                Please fix the following errors:
+              </span>
             </div>
             <div className="space-y-1">
               {Object.entries(errors).map(([field, error]) => (
-                <p key={field} className="text-xs text-red-400">• {error}</p>
+                <p key={field} className="text-xs text-red-400">
+                  • {error}
+                </p>
               ))}
             </div>
           </CardContent>

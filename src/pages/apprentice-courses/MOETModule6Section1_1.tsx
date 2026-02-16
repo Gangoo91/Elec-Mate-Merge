@@ -1,12 +1,12 @@
-import { ArrowLeft, PenTool } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, PenTool } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule6Section1_1 = () => {
   useSEO(
-    "Section 6.1.1: Engineering Drawing Conventions - MOET Module 6",
-    "Standard conventions, line types, projection methods and drawing layouts"
+    'Section 6.1.1: Engineering Drawing Conventions - MOET Module 6',
+    'Standard conventions, line types, projection methods and drawing layouts'
   );
 
   return (
@@ -14,7 +14,11 @@ const MOETModule6Section1_1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module6-section1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.1
@@ -41,7 +45,9 @@ const MOETModule6Section1_1 = () => {
 
         <div className="prose prose-invert max-w-none">
           <div className="bg-card/30 border border-elec-yellow/30 rounded-lg p-6 mb-8">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Learning Objectives</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
+              Learning Objectives
+            </h2>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Understand standard engineering drawing conventions and practices</li>
               <li>• Recognise different line types and their meanings</li>
@@ -51,10 +57,14 @@ const MOETModule6Section1_1 = () => {
           </div>
 
           <p className="text-lg text-muted-foreground">
-            This section covers the fundamental conventions used in engineering drawings and technical documentation.
+            This section covers the fundamental conventions used in engineering drawings and
+            technical documentation.
           </p>
-          
-          <p>Content for this subsection will be added here covering engineering drawing standards and conventions.</p>
+
+          <p>
+            Content for this subsection will be added here covering engineering drawing standards
+            and conventions.
+          </p>
         </div>
       </div>
     </div>

@@ -1,66 +1,83 @@
-import { Shield, Zap, Cog, Wrench, Settings, FileText, Award, GraduationCap, ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import {
+  Shield,
+  Zap,
+  Cog,
+  Wrench,
+  Settings,
+  FileText,
+  Award,
+  GraduationCap,
+  ChevronLeft,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const MOET = () => {
   useSEO(
-    "MOET - Maintenance Operations Engineering Technician Course",
-    "Comprehensive maintenance operations engineering training covering health & safety, electrical theory, plant systems, diagnostics and assessment preparation"
+    'MOET - Maintenance Operations Engineering Technician Course',
+    'Comprehensive maintenance operations engineering training covering health & safety, electrical theory, plant systems, diagnostics and assessment preparation'
   );
 
   const modules = [
     {
-      number: "Module 1",
-      title: "Health, Safety and Compliance",
-      description: "Essential health and safety requirements, risk management and regulatory compliance for maintenance operations",
+      number: 'Module 1',
+      title: 'Health, Safety and Compliance',
+      description:
+        'Essential health and safety requirements, risk management and regulatory compliance for maintenance operations',
       icon: Shield,
-      href: "/study-centre/apprentice/m-o-e-t-module1"
+      href: '/study-centre/apprentice/m-o-e-t-module1',
     },
     {
-      number: "Module 2",
-      title: "Engineering Principles and Electrical Theory",
-      description: "Fundamental engineering principles, electrical theory and mathematical applications for maintenance engineering",
+      number: 'Module 2',
+      title: 'Engineering Principles and Electrical Theory',
+      description:
+        'Fundamental engineering principles, electrical theory and mathematical applications for maintenance engineering',
       icon: Zap,
-      href: "/study-centre/apprentice/m-o-e-t-module2"
+      href: '/study-centre/apprentice/m-o-e-t-module2',
     },
     {
-      number: "Module 3",
-      title: "Electrical Plant, Equipment and Systems",
-      description: "Understanding electrical plant, equipment specifications, system operations and maintenance requirements",
+      number: 'Module 3',
+      title: 'Electrical Plant, Equipment and Systems',
+      description:
+        'Understanding electrical plant, equipment specifications, system operations and maintenance requirements',
       icon: Cog,
-      href: "/study-centre/apprentice/m-o-e-t-module3"
+      href: '/study-centre/apprentice/m-o-e-t-module3',
     },
     {
-      number: "Module 4",
-      title: "Maintenance Techniques and Fault Diagnosis",
-      description: "Systematic maintenance approaches, fault finding techniques and diagnostic procedures for engineering systems",
+      number: 'Module 4',
+      title: 'Maintenance Techniques and Fault Diagnosis',
+      description:
+        'Systematic maintenance approaches, fault finding techniques and diagnostic procedures for engineering systems',
       icon: Wrench,
-      href: "/study-centre/apprentice/m-o-e-t-module4"
+      href: '/study-centre/apprentice/m-o-e-t-module4',
     },
     {
-      number: "Module 5",
-      title: "Control, Automation and Instrumentation",
-      description: "Control systems, automation technology, instrumentation and monitoring systems for industrial applications",
+      number: 'Module 5',
+      title: 'Control, Automation and Instrumentation',
+      description:
+        'Control systems, automation technology, instrumentation and monitoring systems for industrial applications',
       icon: Settings,
-      href: "/study-centre/apprentice/m-o-e-t-module5"
+      href: '/study-centre/apprentice/m-o-e-t-module5',
     },
     {
-      number: "Module 6",
-      title: "Technical Documentation and Communication",
-      description: "Technical reporting, documentation standards, communication skills and professional development",
+      number: 'Module 6',
+      title: 'Technical Documentation and Communication',
+      description:
+        'Technical reporting, documentation standards, communication skills and professional development',
       icon: FileText,
-      href: "/study-centre/apprentice/m-o-e-t-module6"
+      href: '/study-centre/apprentice/m-o-e-t-module6',
     },
     {
-      number: "Module 7",
-      title: "End Point Assessment Preparation",
-      description: "Comprehensive preparation for MOET end point assessment including practical tasks and knowledge evaluation",
+      number: 'Module 7',
+      title: 'End Point Assessment Preparation',
+      description:
+        'Comprehensive preparation for MOET end point assessment including practical tasks and knowledge evaluation',
       icon: Award,
-      href: "/study-centre/apprentice/m-o-e-t-module7"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module7',
+    },
   ];
 
   return (
@@ -85,10 +102,7 @@ const MOET = () => {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-6">
           {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <Button
               variant="ghost"
               size="sm"
@@ -121,7 +135,8 @@ const MOET = () => {
               </span>
             </h1>
             <p className="text-sm text-white/50 max-w-lg mx-auto">
-              Comprehensive maintenance operations engineering training covering health & safety, electrical theory, plant systems, diagnostics and assessment preparation
+              Comprehensive maintenance operations engineering training covering health & safety,
+              electrical theory, plant systems, diagnostics and assessment preparation
             </p>
           </motion.div>
         </div>

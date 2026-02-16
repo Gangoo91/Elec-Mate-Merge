@@ -1,11 +1,11 @@
-import { 
-  EnhancedCPDEntry, 
-  CPDSettings, 
-  ProfessionalBodyRequirement, 
+import {
+  EnhancedCPDEntry,
+  CPDSettings,
+  ProfessionalBodyRequirement,
   ComplianceAnalysis,
   CPDReminder,
   EvidenceFile,
-  CPDCategory
+  CPDCategory,
 } from '@/types/cpd-enhanced';
 import { supabase } from '@/integrations/supabase/client';
 import { professionalBodyService } from '@/services/professionalBodyService';
@@ -38,14 +38,14 @@ class EnhancedCPDService {
 
   updateProfessionalBody(body: ProfessionalBodyRequirement): void {
     const settings = this.getSettings();
-    const index = settings.professionalBodies.findIndex(b => b.body === body.body);
-    
+    const index = settings.professionalBodies.findIndex((b) => b.body === body.body);
+
     if (index >= 0) {
       settings.professionalBodies[index] = body;
     } else {
       settings.professionalBodies.push(body);
     }
-    
+
     this.saveSettings(settings);
   }
 
@@ -53,18 +53,18 @@ class EnhancedCPDService {
     const entries = this.getDefaultEntries();
     const requirements = this.getProfessionalBodyRequirements();
     const currentYear = new Date().getFullYear();
-    
+
     // Filter entries for current assessment period
-    const yearEntries = entries.filter(entry => 
-      new Date(entry.date).getFullYear() === currentYear
+    const yearEntries = entries.filter(
+      (entry) => new Date(entry.date).getFullYear() === currentYear
     );
 
     const totalHours = yearEntries.reduce((sum, entry) => sum + entry.hours, 0);
     const requiredHours = requirements.reduce((sum, req) => sum + (req.minHoursPerYear || 35), 0);
-    
+
     // Category analysis
     const categoryMap = new Map<CPDCategory, number>();
-    yearEntries.forEach(entry => {
+    yearEntries.forEach((entry) => {
       const current = categoryMap.get(entry.category) || 0;
       categoryMap.set(entry.category, current + entry.hours);
     });
@@ -73,18 +73,20 @@ class EnhancedCPDService {
       category,
       completed,
       required: this.getRequiredHoursForCategory(category, requirements),
-      status: completed >= this.getRequiredHoursForCategory(category, requirements) 
-        ? 'complete' as const
-        : completed >= this.getRequiredHoursForCategory(category, requirements) * 0.7 
-        ? 'on-track' as const 
-        : 'behind' as const
+      status:
+        completed >= this.getRequiredHoursForCategory(category, requirements)
+          ? ('complete' as const)
+          : completed >= this.getRequiredHoursForCategory(category, requirements) * 0.7
+            ? ('on-track' as const)
+            : ('behind' as const),
     }));
 
-    const overallStatus = totalHours >= requiredHours 
-      ? 'compliant' as const
-      : totalHours >= requiredHours * 0.8 
-      ? 'at-risk' as const 
-      : 'non-compliant' as const;
+    const overallStatus =
+      totalHours >= requiredHours
+        ? ('compliant' as const)
+        : totalHours >= requiredHours * 0.8
+          ? ('at-risk' as const)
+          : ('non-compliant' as const);
 
     return {
       overallStatus,
@@ -92,11 +94,14 @@ class EnhancedCPDService {
       hoursRequired: requiredHours,
       categoryGaps,
       recommendations: this.generateRecommendations(categoryGaps, overallStatus),
-      nextDeadlines: this.getUpcomingDeadlines(requirements)
+      nextDeadlines: this.getUpcomingDeadlines(requirements),
     };
   }
 
-  private getRequiredHoursForCategory(category: CPDCategory, requirements: ProfessionalBodyRequirement[]): number {
+  private getRequiredHoursForCategory(
+    category: CPDCategory,
+    requirements: ProfessionalBodyRequirement[]
+  ): number {
     // Basic category requirements - can be customized per professional body
     const categoryRequirements: Record<CPDCategory, number> = {
       'regulations-standards': 8,
@@ -106,47 +111,55 @@ class EnhancedCPDService {
       'professional-ethics': 2,
       'environmental-sustainability': 3,
       'digital-technology': 4,
-      'customer-service': 3
+      'customer-service': 3,
     };
-    
+
     return categoryRequirements[category] || 0;
   }
 
   private generateRecommendations(categoryGaps: any[], overallStatus: string): string[] {
     const recommendations: string[] = [];
-    
+
     if (overallStatus === 'non-compliant') {
-      recommendations.push('Urgent: You are significantly behind on your CPD requirements. Consider booking formal training courses.');
+      recommendations.push(
+        'Urgent: You are significantly behind on your CPD requirements. Consider booking formal training courses.'
+      );
     } else if (overallStatus === 'at-risk') {
-      recommendations.push('Warning: You are at risk of not meeting your annual CPD target. Plan additional activities soon.');
+      recommendations.push(
+        'Warning: You are at risk of not meeting your annual CPD target. Plan additional activities soon.'
+      );
     }
 
-    categoryGaps.forEach(gap => {
+    categoryGaps.forEach((gap) => {
       if (gap.status === 'behind') {
-        recommendations.push(`Focus on ${gap.category.replace('-', ' ')} activities - you need ${gap.required - gap.completed} more hours.`);
+        recommendations.push(
+          `Focus on ${gap.category.replace('-', ' ')} activities - you need ${gap.required - gap.completed} more hours.`
+        );
       }
     });
 
     return recommendations;
   }
 
-  private getUpcomingDeadlines(requirements: ProfessionalBodyRequirement[]): Array<{date: string, type: string, description: string}> {
-    const deadlines: Array<{date: string, type: string, description: string}> = [];
-    
-    requirements.forEach(req => {
+  private getUpcomingDeadlines(
+    requirements: ProfessionalBodyRequirement[]
+  ): Array<{ date: string; type: string; description: string }> {
+    const deadlines: Array<{ date: string; type: string; description: string }> = [];
+
+    requirements.forEach((req) => {
       if (req.renewalDate) {
         deadlines.push({
           date: req.renewalDate,
           type: 'Professional Body Renewal',
-          description: `${req.body} membership renewal due`
+          description: `${req.body} membership renewal due`,
         });
       }
-      
+
       if (req.nextAssessment) {
         deadlines.push({
           date: req.nextAssessment,
           type: 'Assessment',
-          description: `${req.body} assessment due`
+          description: `${req.body} assessment due`,
         });
       }
     });
@@ -157,7 +170,9 @@ class EnhancedCPDService {
   // Enhanced Evidence Management
   async uploadEvidence(entryId: string, file: File, type: string): Promise<EvidenceFile> {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // Upload file to Supabase storage
@@ -180,7 +195,7 @@ class EnhancedCPDService {
         fileUrl: urlData?.signedUrl || '',
         uploadDate: new Date().toISOString(),
         verified: false,
-        extractedData: this.simulateOCRExtraction(file.name)
+        extractedData: this.simulateOCRExtraction(file.name),
       };
 
       return evidenceFile;
@@ -197,10 +212,10 @@ class EnhancedCPDService {
         certificateNumber: 'CERT-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
         issueDate: new Date().toISOString().split('T')[0],
         expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        hours: Math.floor(Math.random() * 8) + 1
+        hours: Math.floor(Math.random() * 8) + 1,
       };
     }
-    
+
     return {};
   }
 
@@ -208,18 +223,18 @@ class EnhancedCPDService {
   getActiveReminders(): CPDReminder[] {
     const stored = localStorage.getItem(this.REMINDERS_KEY);
     const reminders: CPDReminder[] = stored ? JSON.parse(stored) : [];
-    
+
     // Generate dynamic reminders
     const dynamicReminders = this.generateDynamicReminders();
-    
-    return [...reminders.filter(r => !r.dismissed), ...dynamicReminders];
+
+    return [...reminders.filter((r) => !r.dismissed), ...dynamicReminders];
   }
 
   private generateDynamicReminders(): CPDReminder[] {
     const reminders: CPDReminder[] = [];
     const analysis = this.getComplianceAnalysis();
     const requirements = this.getProfessionalBodyRequirements();
-    
+
     // Compliance warnings
     if (analysis.overallStatus === 'at-risk') {
       reminders.push({
@@ -230,15 +245,17 @@ class EnhancedCPDService {
         dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
         priority: 'medium',
         dismissed: false,
-        actionRequired: 'Book additional training activities'
+        actionRequired: 'Book additional training activities',
       });
     }
 
     // Renewal reminders
-    requirements.forEach(req => {
+    requirements.forEach((req) => {
       const renewalDate = new Date(req.renewalDate);
-      const daysUntilRenewal = Math.ceil((renewalDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-      
+      const daysUntilRenewal = Math.ceil(
+        (renewalDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+      );
+
       if (daysUntilRenewal <= 90 && daysUntilRenewal > 0) {
         reminders.push({
           id: `renewal-${req.body}`,
@@ -248,7 +265,7 @@ class EnhancedCPDService {
           dueDate: req.renewalDate,
           priority: daysUntilRenewal <= 30 ? 'high' : 'medium',
           dismissed: false,
-          actionRequired: 'Prepare renewal documentation'
+          actionRequired: 'Prepare renewal documentation',
         });
       }
     });
@@ -259,12 +276,12 @@ class EnhancedCPDService {
   dismissReminder(id: string): void {
     const stored = localStorage.getItem(this.REMINDERS_KEY);
     const reminders: CPDReminder[] = stored ? JSON.parse(stored) : [];
-    
-    const index = reminders.findIndex(r => r.id === id);
+
+    const index = reminders.findIndex((r) => r.id === id);
     if (index >= 0) {
       reminders[index].dismissed = true;
     }
-    
+
     localStorage.setItem(this.REMINDERS_KEY, JSON.stringify(reminders));
   }
 
@@ -279,16 +296,21 @@ class EnhancedCPDService {
 
       if (error) throw error;
 
-      return data?.map(entry => this.convertToEnhancedEntry(entry)) || [];
+      return data?.map((entry) => this.convertToEnhancedEntry(entry)) || [];
     } catch (error) {
       console.error('Error fetching CPD entries:', error);
       return [];
     }
   }
 
-  async saveEntry(userId: string, entry: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>): Promise<EnhancedCPDEntry> {
+  async saveEntry(
+    userId: string,
+    entry: Omit<EnhancedCPDEntry, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<EnhancedCPDEntry> {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data, error } = await supabase
@@ -303,7 +325,7 @@ class EnhancedCPDService {
           description: entry.description,
           learning_outcomes: entry.learningOutcomes ? [entry.learningOutcomes] : [],
           evidence_files: JSON.stringify(entry.evidenceFiles || []),
-          is_verified: entry.status === 'verified'
+          is_verified: entry.status === 'verified',
         })
         .select()
         .single();
@@ -327,22 +349,27 @@ class EnhancedCPDService {
       hours: data.hours,
       provider: '',
       description: data.description || '',
-      learningOutcomes: Array.isArray(data.learning_outcomes) ? data.learning_outcomes.join('; ') : data.learning_outcomes || '',
+      learningOutcomes: Array.isArray(data.learning_outcomes)
+        ? data.learning_outcomes.join('; ')
+        : data.learning_outcomes || '',
       reflectionNotes: '',
       skillsGained: [],
       evidenceFiles: Array.isArray(data.evidence_files) ? data.evidence_files : [],
       status: data.is_verified ? 'verified' : 'pending',
       isAutomatic: false,
       createdAt: data.created_at,
-      updatedAt: data.updated_at
+      updatedAt: data.updated_at,
     };
   }
 
   // New Supabase methods for enhanced dashboard
-  async getComplianceStats(userId: string, professionalBodyId: string): Promise<CPDComplianceStats> {
+  async getComplianceStats(
+    userId: string,
+    professionalBodyId: string
+  ): Promise<CPDComplianceStats> {
     try {
       const currentYear = new Date().getFullYear();
-      
+
       // Get entries for current year
       const { data: entries, error: entriesError } = await supabase
         .from('cpd_entries')
@@ -365,25 +392,26 @@ class EnhancedCPDService {
       const totalHours = entries?.reduce((sum, entry) => sum + entry.hours, 0) || 0;
       const requiredHours = profBody?.annual_cpd_hours || 35;
       const compliancePercentage = Math.round((totalHours / requiredHours) * 100);
-      
-      const verifiedEntries = entries?.filter(e => e.is_verified).length || 0;
-      const pendingEntries = entries?.filter(e => !e.is_verified).length || 0;
+
+      const verifiedEntries = entries?.filter((e) => e.is_verified).length || 0;
+      const pendingEntries = entries?.filter((e) => !e.is_verified).length || 0;
 
       // Calculate category breakdown from categories JSON
       const categories = Array.isArray(profBody?.categories) ? profBody.categories : [];
-      const categoryStats = categories.map((cat: any) => {
-        const categoryEntries = entries?.filter(e => e.category === cat.category_name) || [];
-        const completedHours = categoryEntries.reduce((sum, entry) => sum + entry.hours, 0);
-        const requiredHours = cat.required_hours || 0;
-        
-        return {
-          id: cat.id,
-          name: cat.category_name,
-          completed_hours: completedHours,
-          required_hours: requiredHours,
-          percentage: requiredHours > 0 ? Math.round((completedHours / requiredHours) * 100) : 0
-        };
-      }) || [];
+      const categoryStats =
+        categories.map((cat: any) => {
+          const categoryEntries = entries?.filter((e) => e.category === cat.category_name) || [];
+          const completedHours = categoryEntries.reduce((sum, entry) => sum + entry.hours, 0);
+          const requiredHours = cat.required_hours || 0;
+
+          return {
+            id: cat.id,
+            name: cat.category_name,
+            completed_hours: completedHours,
+            required_hours: requiredHours,
+            percentage: requiredHours > 0 ? Math.round((completedHours / requiredHours) * 100) : 0,
+          };
+        }) || [];
 
       return {
         compliance_percentage: compliancePercentage,
@@ -392,7 +420,7 @@ class EnhancedCPDService {
         entries_count: entries?.length || 0,
         verified_entries: verifiedEntries,
         pending_verification: pendingEntries,
-        categories: categoryStats
+        categories: categoryStats,
       };
     } catch (error) {
       console.error('Error getting compliance stats:', error);
@@ -400,24 +428,26 @@ class EnhancedCPDService {
     }
   }
 
-  async generatePortfolio(userId: string, professionalBodyId: string, title: string): Promise<void> {
+  async generatePortfolio(
+    userId: string,
+    professionalBodyId: string,
+    title: string
+  ): Promise<void> {
     try {
       const entries = await this.getEntries(userId);
       const stats = await this.getComplianceStats(userId, professionalBodyId);
-      
+
       // Insert portfolio record
-      const { data, error } = await supabase
-        .from('cpd_portfolios')
-        .insert({
-          user_id: userId,
-          professional_body_id: professionalBodyId,
-          title,
-          period_start: `${new Date().getFullYear()}-01-01`,
-          period_end: `${new Date().getFullYear()}-12-31`,
-          total_hours: stats.total_hours,
-          compliance_percentage: stats.compliance_percentage,
-          status: 'ready'
-        });
+      const { data, error } = await supabase.from('cpd_portfolios').insert({
+        user_id: userId,
+        professional_body_id: professionalBodyId,
+        title,
+        period_start: `${new Date().getFullYear()}-01-01`,
+        period_end: `${new Date().getFullYear()}-12-31`,
+        total_hours: stats.total_hours,
+        compliance_percentage: stats.compliance_percentage,
+        status: 'ready',
+      });
 
       if (error) throw error;
     } catch (error) {
@@ -446,17 +476,17 @@ class EnhancedCPDService {
           minHoursPerYear: 35,
           requiredCategories: ['regulations-standards', 'technical-skills', 'safety-health'],
           assessmentRequired: false,
-          complianceStatus: 'compliant'
-        }
+          complianceStatus: 'compliant',
+        },
       ],
       notificationPreferences: {
         email: true,
         push: true,
-        remindBefore: 30
+        remindBefore: 30,
       },
       autoTrackingEnabled: true,
       requireSupervisorApproval: false,
-      defaultProvider: 'Company Training'
+      defaultProvider: 'Company Training',
     };
   }
 
@@ -470,16 +500,22 @@ class EnhancedCPDService {
         type: 'formal-training',
         hours: 8,
         provider: 'NICEIC',
-        description: 'Comprehensive update on the latest changes to BS 7671 including EV charging requirements',
-        learningOutcomes: 'Understanding of new requirements for EV charging and energy storage systems',
+        description:
+          'Comprehensive update on the latest changes to BS 7671 including EV charging requirements',
+        learningOutcomes:
+          'Understanding of new requirements for EV charging and energy storage systems',
         evidenceFiles: [],
         status: 'verified',
         isAutomatic: false,
         createdAt: '2024-01-15T10:00:00Z',
         updatedAt: '2024-01-15T10:00:00Z',
         reflectionNotes: 'Excellent course covering practical applications of the new regulations.',
-        skillsGained: ['EV charging installation', 'Energy storage systems', 'Updated testing procedures']
-      }
+        skillsGained: [
+          'EV charging installation',
+          'Energy storage systems',
+          'Updated testing procedures',
+        ],
+      },
     ];
   }
 
@@ -487,18 +523,18 @@ class EnhancedCPDService {
   async getDetailedAnalytics(userId: string) {
     const entries = await this.getEntries(userId);
     const currentYear = new Date().getFullYear();
-    
+
     // Time-based analysis
     const monthlyData = this.getMonthlyBreakdown(entries, currentYear);
     const categoryData = this.getCategoryBreakdown(entries, currentYear);
     const providerData = this.getProviderBreakdown(entries, currentYear);
-    
+
     return {
       monthlyProgress: monthlyData,
       categoryBreakdown: categoryData,
       providerBreakdown: providerData,
       learningEffectiveness: this.calculateLearningEffectiveness(entries),
-      competencyGaps: this.identifyCompetencyGaps(entries)
+      competencyGaps: this.identifyCompetencyGaps(entries),
     };
   }
 
@@ -506,12 +542,12 @@ class EnhancedCPDService {
     const months = Array.from({ length: 12 }, (_, i) => ({
       month: new Date(year, i, 1).toLocaleString('default', { month: 'short' }),
       hours: 0,
-      activities: 0
+      activities: 0,
     }));
 
     entries
-      .filter(entry => new Date(entry.date).getFullYear() === year)
-      .forEach(entry => {
+      .filter((entry) => new Date(entry.date).getFullYear() === year)
+      .forEach((entry) => {
         const month = new Date(entry.date).getMonth();
         months[month].hours += entry.hours;
         months[month].activities += 1;
@@ -522,33 +558,33 @@ class EnhancedCPDService {
 
   private getCategoryBreakdown(entries: EnhancedCPDEntry[], year: number) {
     const categoryMap = new Map<string, { hours: number; activities: number }>();
-    
+
     entries
-      .filter(entry => new Date(entry.date).getFullYear() === year)
-      .forEach(entry => {
+      .filter((entry) => new Date(entry.date).getFullYear() === year)
+      .forEach((entry) => {
         const current = categoryMap.get(entry.category) || { hours: 0, activities: 0 };
         categoryMap.set(entry.category, {
           hours: current.hours + entry.hours,
-          activities: current.activities + 1
+          activities: current.activities + 1,
         });
       });
 
     return Array.from(categoryMap.entries()).map(([category, data]) => ({
-      category: category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      ...data
+      category: category.replace('-', ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+      ...data,
     }));
   }
 
   private getProviderBreakdown(entries: EnhancedCPDEntry[], year: number) {
     const providerMap = new Map<string, { hours: number; activities: number }>();
-    
+
     entries
-      .filter(entry => new Date(entry.date).getFullYear() === year)
-      .forEach(entry => {
+      .filter((entry) => new Date(entry.date).getFullYear() === year)
+      .forEach((entry) => {
         const current = providerMap.get(entry.provider) || { hours: 0, activities: 0 };
         providerMap.set(entry.provider, {
           hours: current.hours + entry.hours,
-          activities: current.activities + 1
+          activities: current.activities + 1,
         });
       });
 
@@ -560,22 +596,24 @@ class EnhancedCPDService {
   private calculateLearningEffectiveness(entries: EnhancedCPDEntry[]) {
     // Simple effectiveness calculation based on evidence quality and reflection
     const totalEntries = entries.length;
-    const entriesWithEvidence = entries.filter(e => e.evidenceFiles.length > 0).length;
-    const entriesWithReflection = entries.filter(e => e.reflectionNotes).length;
-    const verifiedEntries = entries.filter(e => e.status === 'verified').length;
+    const entriesWithEvidence = entries.filter((e) => e.evidenceFiles.length > 0).length;
+    const entriesWithReflection = entries.filter((e) => e.reflectionNotes).length;
+    const verifiedEntries = entries.filter((e) => e.status === 'verified').length;
 
     return {
       evidenceRate: Math.round((entriesWithEvidence / totalEntries) * 100),
       reflectionRate: Math.round((entriesWithReflection / totalEntries) * 100),
       verificationRate: Math.round((verifiedEntries / totalEntries) * 100),
-      overallEffectiveness: Math.round(((entriesWithEvidence + entriesWithReflection + verifiedEntries) / (totalEntries * 3)) * 100)
+      overallEffectiveness: Math.round(
+        ((entriesWithEvidence + entriesWithReflection + verifiedEntries) / (totalEntries * 3)) * 100
+      ),
     };
   }
 
   private identifyCompetencyGaps(entries: EnhancedCPDEntry[]) {
     const skillsGained = new Set<string>();
-    entries.forEach(entry => {
-      entry.skillsGained?.forEach(skill => skillsGained.add(skill));
+    entries.forEach((entry) => {
+      entry.skillsGained?.forEach((skill) => skillsGained.add(skill));
     });
 
     // Define key competency areas for electricians
@@ -587,16 +625,16 @@ class EnhancedCPDService {
       'Energy efficiency',
       'Building automation',
       'Power quality analysis',
-      'Emergency lighting systems'
+      'Emergency lighting systems',
     ];
 
-    const gaps = keyCompetencies.filter(competency => !skillsGained.has(competency));
-    
+    const gaps = keyCompetencies.filter((competency) => !skillsGained.has(competency));
+
     return {
       totalCompetencies: keyCompetencies.length,
       acquiredCompetencies: skillsGained.size,
       identifiedGaps: gaps,
-      completionPercentage: Math.round((skillsGained.size / keyCompetencies.length) * 100)
+      completionPercentage: Math.round((skillsGained.size / keyCompetencies.length) * 100),
     };
   }
 }

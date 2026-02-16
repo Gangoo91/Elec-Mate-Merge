@@ -1,10 +1,22 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Zap, ArrowLeft, FileText, Building2, Shield, Database, Lock, AlertTriangle, Globe, Users, Mail } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Zap,
+  ArrowLeft,
+  FileText,
+  Building2,
+  Shield,
+  Database,
+  Lock,
+  AlertTriangle,
+  Globe,
+  Users,
+  Mail,
+} from 'lucide-react';
 
 const DataProcessingAgreement = () => {
-  const lastUpdated = "30 January 2026";
+  const lastUpdated = '30 January 2026';
 
   return (
     <div className="bg-black text-white">
@@ -20,7 +32,11 @@ const DataProcessingAgreement = () => {
             </span>
           </Link>
           <Link to="/settings">
-            <Button variant="outline" size="sm" className="h-9 px-3 border-white/20 text-white hover:bg-white/5 touch-manipulation active:scale-95">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-9 px-3 border-white/20 text-white hover:bg-white/5 touch-manipulation active:scale-95"
+            >
               <ArrowLeft className="h-4 w-4 mr-1.5" />
               <span className="hidden sm:inline">Back</span>
             </Button>
@@ -47,7 +63,9 @@ const DataProcessingAgreement = () => {
               <div>
                 <p className="text-white font-medium mb-1">For Business & Enterprise Customers</p>
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  This Data Processing Agreement ("DPA") applies to organisations using Elec-Mate's employer or enterprise services. It supplements our standard Terms of Service and Privacy Policy.
+                  This Data Processing Agreement ("DPA") applies to organisations using Elec-Mate's
+                  employer or enterprise services. It supplements our standard Terms of Service and
+                  Privacy Policy.
                 </p>
               </div>
             </div>
@@ -59,10 +77,22 @@ const DataProcessingAgreement = () => {
           <section>
             <h2 className="text-xl font-bold text-yellow-400 mb-3">1. Parties & Definitions</h2>
             <div className="space-y-3 text-gray-300">
-              <p><strong className="text-white">"Controller"</strong> means the organisation (you) that determines the purposes and means of processing personal data.</p>
-              <p><strong className="text-white">"Processor"</strong> means Elec-Mate Ltd, which processes personal data on behalf of the Controller.</p>
-              <p><strong className="text-white">"Personal Data"</strong> means any information relating to an identified or identifiable natural person as defined under UK GDPR.</p>
-              <p><strong className="text-white">"Processing"</strong> means any operation performed on personal data, including collection, storage, use, and deletion.</p>
+              <p>
+                <strong className="text-white">"Controller"</strong> means the organisation (you)
+                that determines the purposes and means of processing personal data.
+              </p>
+              <p>
+                <strong className="text-white">"Processor"</strong> means Elec-Mate Ltd, which
+                processes personal data on behalf of the Controller.
+              </p>
+              <p>
+                <strong className="text-white">"Personal Data"</strong> means any information
+                relating to an identified or identifiable natural person as defined under UK GDPR.
+              </p>
+              <p>
+                <strong className="text-white">"Processing"</strong> means any operation performed
+                on personal data, including collection, storage, use, and deletion.
+              </p>
             </div>
           </section>
 
@@ -73,7 +103,8 @@ const DataProcessingAgreement = () => {
               2. Subject Matter of Processing
             </h2>
             <p className="text-gray-300 mb-3">
-              This DPA governs the processing of personal data in connection with Elec-Mate's employer services, including:
+              This DPA governs the processing of personal data in connection with Elec-Mate's
+              employer services, including:
             </p>
             <div className="space-y-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
@@ -105,14 +136,17 @@ const DataProcessingAgreement = () => {
               <Shield className="h-5 w-5" />
               3. Processor Obligations
             </h2>
-            <p className="text-gray-300 mb-3">
-              As the data processor, Elec-Mate agrees to:
-            </p>
+            <p className="text-gray-300 mb-3">As the data processor, Elec-Mate agrees to:</p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
               <li>Process personal data only on documented instructions from the Controller</li>
-              <li>Ensure persons authorised to process data are bound by confidentiality obligations</li>
+              <li>
+                Ensure persons authorised to process data are bound by confidentiality obligations
+              </li>
               <li>Implement appropriate technical and organisational security measures</li>
-              <li>Engage sub-processors only with prior authorisation and equivalent contractual protections</li>
+              <li>
+                Engage sub-processors only with prior authorisation and equivalent contractual
+                protections
+              </li>
               <li>Assist the Controller in responding to data subject requests</li>
               <li>Assist the Controller in ensuring compliance with Articles 32-36 of UK GDPR</li>
               <li>Delete or return all personal data upon termination of services</li>
@@ -168,7 +202,8 @@ const DataProcessingAgreement = () => {
               </table>
             </div>
             <p className="text-gray-400 text-sm mt-3">
-              We will notify you of any intended changes to sub-processors, giving you the opportunity to object.
+              We will notify you of any intended changes to sub-processors, giving you the
+              opportunity to object.
             </p>
           </section>
 
@@ -179,7 +214,8 @@ const DataProcessingAgreement = () => {
               5. Security Measures
             </h2>
             <p className="text-gray-300 mb-3">
-              We implement appropriate technical and organisational measures to ensure a level of security appropriate to the risk:
+              We implement appropriate technical and organisational measures to ensure a level of
+              security appropriate to the risk:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
@@ -215,11 +251,20 @@ const DataProcessingAgreement = () => {
               In the event of a personal data breach, Elec-Mate will:
             </p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
-              <li>Notify the Controller without undue delay (within 48 hours where feasible) upon becoming aware of a breach</li>
-              <li>Provide information about the nature of the breach, categories of data affected, and approximate number of data subjects concerned</li>
+              <li>
+                Notify the Controller without undue delay (within 48 hours where feasible) upon
+                becoming aware of a breach
+              </li>
+              <li>
+                Provide information about the nature of the breach, categories of data affected, and
+                approximate number of data subjects concerned
+              </li>
               <li>Describe the likely consequences of the breach</li>
               <li>Describe the measures taken or proposed to address the breach</li>
-              <li>Cooperate with the Controller in notifying the ICO and affected data subjects where required</li>
+              <li>
+                Cooperate with the Controller in notifying the ICO and affected data subjects where
+                required
+              </li>
             </ul>
           </section>
 
@@ -230,12 +275,21 @@ const DataProcessingAgreement = () => {
               7. International Data Transfers
             </h2>
             <p className="text-gray-300 mb-3">
-              Where personal data is transferred outside the UK, we ensure appropriate safeguards are in place:
+              Where personal data is transferred outside the UK, we ensure appropriate safeguards
+              are in place:
             </p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
-              <li><strong className="text-white">EU/EEA:</strong> Covered by UK adequacy decision</li>
-              <li><strong className="text-white">USA:</strong> Standard Contractual Clauses (SCCs) with supplementary measures</li>
-              <li><strong className="text-white">Other countries:</strong> UK Government approved mechanisms only</li>
+              <li>
+                <strong className="text-white">EU/EEA:</strong> Covered by UK adequacy decision
+              </li>
+              <li>
+                <strong className="text-white">USA:</strong> Standard Contractual Clauses (SCCs)
+                with supplementary measures
+              </li>
+              <li>
+                <strong className="text-white">Other countries:</strong> UK Government approved
+                mechanisms only
+              </li>
             </ul>
             <p className="text-gray-400 text-sm mt-3">
               Upon request, we can provide copies of the relevant transfer mechanisms.
@@ -244,9 +298,12 @@ const DataProcessingAgreement = () => {
 
           {/* Data Subject Rights */}
           <section>
-            <h2 className="text-xl font-bold text-yellow-400 mb-3">8. Assisting with Data Subject Rights</h2>
+            <h2 className="text-xl font-bold text-yellow-400 mb-3">
+              8. Assisting with Data Subject Rights
+            </h2>
             <p className="text-gray-300 mb-3">
-              We will assist you in fulfilling your obligations to respond to data subject requests, including:
+              We will assist you in fulfilling your obligations to respond to data subject requests,
+              including:
             </p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
               <li>Access requests (providing copies of personal data)</li>
@@ -262,7 +319,10 @@ const DataProcessingAgreement = () => {
           <section>
             <h2 className="text-xl font-bold text-yellow-400 mb-3">9. Audit Rights</h2>
             <p className="text-gray-300 leading-relaxed">
-              The Controller may audit our compliance with this DPA upon reasonable notice. We will provide reasonable assistance and access to relevant information, systems, and personnel. Audits shall be conducted during normal business hours and shall not unreasonably interfere with our operations.
+              The Controller may audit our compliance with this DPA upon reasonable notice. We will
+              provide reasonable assistance and access to relevant information, systems, and
+              personnel. Audits shall be conducted during normal business hours and shall not
+              unreasonably interfere with our operations.
             </p>
           </section>
 
@@ -270,10 +330,14 @@ const DataProcessingAgreement = () => {
           <section>
             <h2 className="text-xl font-bold text-yellow-400 mb-3">10. Duration & Termination</h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              This DPA remains in effect for the duration of our service agreement. Upon termination:
+              This DPA remains in effect for the duration of our service agreement. Upon
+              termination:
             </p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
-              <li>We will return or delete all personal data within 30 days, unless retention is required by law</li>
+              <li>
+                We will return or delete all personal data within 30 days, unless retention is
+                required by law
+              </li>
               <li>Upon request, we will certify deletion in writing</li>
               <li>Confidentiality obligations survive termination</li>
             </ul>
@@ -290,7 +354,9 @@ const DataProcessingAgreement = () => {
                   <div>
                     <p className="text-white font-medium mb-1">Need a Signed DPA?</p>
                     <p className="text-gray-300 text-sm leading-relaxed">
-                      Enterprise customers requiring a countersigned Data Processing Agreement should contact our legal team. We can provide customised DPAs for specific requirements.
+                      Enterprise customers requiring a countersigned Data Processing Agreement
+                      should contact our legal team. We can provide customised DPAs for specific
+                      requirements.
                     </p>
                   </div>
                 </div>
@@ -304,13 +370,13 @@ const DataProcessingAgreement = () => {
               <Mail className="h-5 w-5" />
               Contact Us
             </h2>
-            <p className="text-gray-300 mb-3">
-              For DPA-related enquiries:
-            </p>
+            <p className="text-gray-300 mb-3">For DPA-related enquiries:</p>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <p className="text-white font-medium">Elec-Mate Legal Team</p>
               <p className="text-gray-400 text-sm">Email: legal@elec-mate.com</p>
-              <p className="text-gray-400 text-sm mt-2">Data Protection Officer: dpo@elec-mate.com</p>
+              <p className="text-gray-400 text-sm mt-2">
+                Data Protection Officer: dpo@elec-mate.com
+              </p>
             </div>
           </section>
         </div>

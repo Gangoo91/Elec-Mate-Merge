@@ -27,7 +27,7 @@ const transformToolsToMaterials = (tools: ToolItem[]): MaterialItem[] => {
     isOnSale: tool.isOnSale,
     salePrice: tool.salePrice,
     highlights: tool.highlights,
-    productUrl: tool.productUrl || tool.view_product_url
+    productUrl: tool.productUrl || tool.view_product_url,
   }));
 };
 
@@ -45,6 +45,6 @@ export const useToolsForMaterials = () => {
     materials: materialItems,
     isLoading,
     error,
-    refetch
+    refetch,
   };
 };

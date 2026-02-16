@@ -1,6 +1,12 @@
 // Service layer types - Backend-ready interfaces
 
-export type LeaveType = 'annual' | 'sick' | 'unpaid' | 'compassionate' | 'training' | 'bank_holiday';
+export type LeaveType =
+  | 'annual'
+  | 'sick'
+  | 'unpaid'
+  | 'compassionate'
+  | 'training'
+  | 'bank_holiday';
 export type LeaveStatus = 'pending' | 'approved' | 'rejected' | 'cancelled';
 export type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'intuit' | 'csv';
 

@@ -1,10 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useMutation } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export interface GenerateBriefingInput {
   jobDescription?: string;
-  siteType?: "domestic" | "commercial" | "industrial";
+  siteType?: 'domestic' | 'commercial' | 'industrial';
   hazards?: string[];
   templateContent?: string;
   location?: string;
@@ -46,7 +46,7 @@ export function useGenerateBriefing() {
 
   return useMutation({
     mutationFn: async (input: GenerateBriefingInput): Promise<GenerateBriefingResponse> => {
-      const { data, error } = await supabase.functions.invoke("generate-toolbox-talk", {
+      const { data, error } = await supabase.functions.invoke('generate-toolbox-talk', {
         body: input,
       });
 
@@ -59,15 +59,15 @@ export function useGenerateBriefing() {
     },
     onSuccess: () => {
       toast({
-        title: "Briefing generated",
-        description: "AI has created your toolbox talk content.",
+        title: 'Briefing generated',
+        description: 'AI has created your toolbox talk content.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Generation failed",
-        description: error.message || "Could not generate briefing content.",
-        variant: "destructive",
+        title: 'Generation failed',
+        description: error.message || 'Could not generate briefing content.',
+        variant: 'destructive',
       });
     },
   });
@@ -87,7 +87,7 @@ export function useGenerateFromTemplate() {
       templateContent: string;
       customContext?: Partial<GenerateBriefingInput>;
     }): Promise<GenerateBriefingResponse> => {
-      const { data, error } = await supabase.functions.invoke("generate-toolbox-talk", {
+      const { data, error } = await supabase.functions.invoke('generate-toolbox-talk', {
         body: {
           templateContent,
           ...customContext,
@@ -103,15 +103,15 @@ export function useGenerateFromTemplate() {
     },
     onSuccess: () => {
       toast({
-        title: "Content customised",
-        description: "Template has been adapted for your context.",
+        title: 'Content customised',
+        description: 'Template has been adapted for your context.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Customisation failed",
-        description: error.message || "Could not adapt template.",
-        variant: "destructive",
+        title: 'Customisation failed',
+        description: error.message || 'Could not adapt template.',
+        variant: 'destructive',
       });
     },
   });

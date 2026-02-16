@@ -10,7 +10,7 @@ export interface AutoFillSuggestion {
 
 // Empty implementation - auto-fill functionality removed for compliance
 export const getAutoFillSuggestions = (
-  result: TestResult, 
+  result: TestResult,
   allResults: TestResult[]
 ): AutoFillSuggestion[] => {
   return [];

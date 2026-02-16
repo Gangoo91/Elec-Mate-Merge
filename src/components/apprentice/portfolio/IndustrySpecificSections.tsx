@@ -1,128 +1,127 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Home, Building, Factory, Zap, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Home, Building, Factory, Zap, CheckCircle } from 'lucide-react';
 
 const IndustrySpecificSections = () => {
   const domesticSections = [
     {
-      title: "Domestic Installation Work",
+      title: 'Domestic Installation Work',
       requirements: [
-        "Consumer unit installations and upgrades",
-        "Socket and lighting circuit installations",
-        "Electric shower and cooker installations",
-        "Smoke alarm and security system installations"
-      ]
+        'Consumer unit installations and upgrades',
+        'Socket and lighting circuit installations',
+        'Electric shower and cooker installations',
+        'Smoke alarm and security system installations',
+      ],
     },
     {
-      title: "Testing and Certification",
+      title: 'Testing and Certification',
       requirements: [
-        "EICR testing and certification",
-        "New installation testing certificates",
-        "Portable appliance testing records",
-        "Minor works certificates"
-      ]
+        'EICR testing and certification',
+        'New installation testing certificates',
+        'Portable appliance testing records',
+        'Minor works certificates',
+      ],
     },
     {
-      title: "Customer Interaction",
+      title: 'Customer Interaction',
       requirements: [
-        "Customer consultation records",
-        "Quotation and estimate examples",
-        "Customer feedback and testimonials",
-        "After-sales service documentation"
-      ]
-    }
+        'Customer consultation records',
+        'Quotation and estimate examples',
+        'Customer feedback and testimonials',
+        'After-sales service documentation',
+      ],
+    },
   ];
 
   const commercialSections = [
     {
-      title: "Commercial Installation Projects",
+      title: 'Commercial Installation Projects',
       requirements: [
-        "Office lighting and power installations",
-        "Retail and hospitality electrical work",
-        "Distribution board installations",
-        "Emergency lighting systems"
-      ]
+        'Office lighting and power installations',
+        'Retail and hospitality electrical work',
+        'Distribution board installations',
+        'Emergency lighting systems',
+      ],
     },
     {
-      title: "Project Management",
+      title: 'Project Management',
       requirements: [
-        "Project planning and scheduling",
-        "Material ordering and management",
-        "Coordination with other trades",
-        "Progress reporting and updates"
-      ]
+        'Project planning and scheduling',
+        'Material ordering and management',
+        'Coordination with other trades',
+        'Progress reporting and updates',
+      ],
     },
     {
-      title: "Compliance and Standards",
+      title: 'Compliance and Standards',
       requirements: [
-        "Building regulations compliance",
-        "BS 7671 application examples",
-        "CDM regulations adherence",
-        "Quality assurance procedures"
-      ]
-    }
+        'Building regulations compliance',
+        'BS 7671 application examples',
+        'CDM regulations adherence',
+        'Quality assurance procedures',
+      ],
+    },
   ];
 
   const industrialSections = [
     {
-      title: "Industrial Systems",
+      title: 'Industrial Systems',
       requirements: [
-        "Motor control installations",
-        "PLC and automation systems",
-        "High voltage work (if qualified)",
-        "Instrumentation and control wiring"
-      ]
+        'Motor control installations',
+        'PLC and automation systems',
+        'High voltage work (if qualified)',
+        'Instrumentation and control wiring',
+      ],
     },
     {
-      title: "Maintenance Activities",
+      title: 'Maintenance Activities',
       requirements: [
-        "Planned preventive maintenance",
-        "Fault finding and diagnostics",
-        "Emergency repair work",
-        "Equipment upgrade projects"
-      ]
+        'Planned preventive maintenance',
+        'Fault finding and diagnostics',
+        'Emergency repair work',
+        'Equipment upgrade projects',
+      ],
     },
     {
-      title: "Safety in Industrial Environments",
+      title: 'Safety in Industrial Environments',
       requirements: [
-        "Risk assessment documentation",
-        "LOTO (Lock Out Tag Out) procedures",
-        "Confined space work permits",
-        "Arc flash safety protocols"
-      ]
-    }
+        'Risk assessment documentation',
+        'LOTO (Lock Out Tag Out) procedures',
+        'Confined space work permits',
+        'Arc flash safety protocols',
+      ],
+    },
   ];
 
   const renewableSections = [
     {
-      title: "Solar PV Installations",
+      title: 'Solar PV Installations',
       requirements: [
-        "Roof survey and design work",
-        "DC and AC installation work",
-        "Grid connection procedures",
-        "Performance monitoring setup"
-      ]
+        'Roof survey and design work',
+        'DC and AC installation work',
+        'Grid connection procedures',
+        'Performance monitoring setup',
+      ],
     },
     {
-      title: "Energy Storage Systems",
+      title: 'Energy Storage Systems',
       requirements: [
-        "Battery storage installations",
-        "EV charging point installations",
-        "Smart grid technology work",
-        "Energy efficiency assessments"
-      ]
+        'Battery storage installations',
+        'EV charging point installations',
+        'Smart grid technology work',
+        'Energy efficiency assessments',
+      ],
     },
     {
-      title: "Renewable Energy Compliance",
+      title: 'Renewable Energy Compliance',
       requirements: [
-        "MCS certification requirements",
-        "DNO application procedures",
-        "Feed-in tariff documentation",
-        "Environmental impact assessments"
-      ]
-    }
+        'MCS certification requirements',
+        'DNO application procedures',
+        'Feed-in tariff documentation',
+        'Environmental impact assessments',
+      ],
+    },
   ];
 
   const SectionCard = ({ section }: { section: any }) => (
@@ -142,7 +141,9 @@ const IndustrySpecificSections = () => {
   return (
     <Card className="border-elec-yellow/30 bg-white/5">
       <CardHeader className="pb-3">
-        <CardTitle className="text-elec-yellow text-base sm:text-lg">Industry-Specific Portfolio Sections</CardTitle>
+        <CardTitle className="text-elec-yellow text-base sm:text-lg">
+          Industry-Specific Portfolio Sections
+        </CardTitle>
         <p className="text-xs sm:text-sm text-white">
           Tailor your portfolio content to match your specific area of electrical work
         </p>
@@ -150,19 +151,31 @@ const IndustrySpecificSections = () => {
       <CardContent className="pt-0">
         <Tabs defaultValue="domestic">
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-1">
-            <TabsTrigger value="domestic" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+            <TabsTrigger
+              value="domestic"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation"
+            >
               <Home className="h-4 w-4" />
               <span>Domestic</span>
             </TabsTrigger>
-            <TabsTrigger value="commercial" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+            <TabsTrigger
+              value="commercial"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation"
+            >
               <Building className="h-4 w-4" />
               <span>Commercial</span>
             </TabsTrigger>
-            <TabsTrigger value="industrial" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+            <TabsTrigger
+              value="industrial"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation"
+            >
               <Factory className="h-4 w-4" />
               <span>Industrial</span>
             </TabsTrigger>
-            <TabsTrigger value="renewable" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+            <TabsTrigger
+              value="renewable"
+              className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation"
+            >
               <Zap className="h-4 w-4" />
               <span>Renewable</span>
             </TabsTrigger>

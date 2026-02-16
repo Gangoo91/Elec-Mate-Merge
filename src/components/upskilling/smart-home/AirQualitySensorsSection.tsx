@@ -12,16 +12,20 @@ export const AirQualitySensorsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Air quality sensors detect various pollutants including particulate matter (PM2.5, PM10) and volatile organic compounds (VOCs), providing comprehensive monitoring of indoor air contamination.
+          Air quality sensors detect various pollutants including particulate matter (PM2.5, PM10)
+          and volatile organic compounds (VOCs), providing comprehensive monitoring of indoor air
+          contamination.
         </p>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-elec-gray border border-red-600 rounded-lg p-4">
             <h4 className="font-semibold text-red-200 mb-3">Particulate Matter (PM)</h4>
             <div className="space-y-3">
               <div>
                 <h5 className="font-medium text-foreground text-sm mb-1">PM2.5 (Fine Particles)</h5>
-                <p className="text-xs text-gray-300 mb-2">Particles smaller than 2.5 micrometers - penetrate deep into lungs</p>
+                <p className="text-xs text-gray-300 mb-2">
+                  Particles smaller than 2.5 micrometers - penetrate deep into lungs
+                </p>
                 <ul className="text-xs text-red-100 space-y-1">
                   <li>• Combustion particles</li>
                   <li>• Vehicle emissions</li>
@@ -29,8 +33,12 @@ export const AirQualitySensorsSection = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-medium text-foreground text-sm mb-1">PM10 (Coarse Particles)</h5>
-                <p className="text-xs text-gray-300 mb-2">Particles 2.5-10 micrometers - trapped in nose and throat</p>
+                <h5 className="font-medium text-foreground text-sm mb-1">
+                  PM10 (Coarse Particles)
+                </h5>
+                <p className="text-xs text-gray-300 mb-2">
+                  Particles 2.5-10 micrometers - trapped in nose and throat
+                </p>
                 <ul className="text-xs text-orange-100 space-y-1">
                   <li>• Dust and pollen</li>
                   <li>• Construction debris</li>
@@ -39,10 +47,14 @@ export const AirQualitySensorsSection = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-elec-gray border border-purple-600 rounded-lg p-4">
-            <h4 className="font-semibold text-purple-200 mb-3">Volatile Organic Compounds (VOCs)</h4>
-            <p className="text-purple-100 text-sm mb-3">Chemical compounds that easily evaporate at room temperature</p>
+            <h4 className="font-semibold text-purple-200 mb-3">
+              Volatile Organic Compounds (VOCs)
+            </h4>
+            <p className="text-purple-100 text-sm mb-3">
+              Chemical compounds that easily evaporate at room temperature
+            </p>
             <div>
               <h5 className="font-medium text-foreground text-sm mb-2">Common Sources</h5>
               <ul className="text-sm text-purple-100 space-y-1">
@@ -113,16 +125,23 @@ export const AirQualitySensorsSection = () => {
         <div className="bg-elec-gray border border-yellow-600 rounded-lg p-4">
           <h4 className="font-semibold text-yellow-200 mb-3">Critical Applications</h4>
           <p className="text-sm text-gray-300 mb-2">
-            Air quality monitoring is particularly important in urban areas with high pollution levels and homes with gas appliances, fireplaces, or attached garages.
+            Air quality monitoring is particularly important in urban areas with high pollution
+            levels and homes with gas appliances, fireplaces, or attached garages.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div>
               <strong className="text-foreground">Urban Environments:</strong>
-              <span className="text-gray-300"> Traffic pollution, industrial emissions, construction dust</span>
+              <span className="text-gray-300">
+                {' '}
+                Traffic pollution, industrial emissions, construction dust
+              </span>
             </div>
             <div>
               <strong className="text-foreground">Gas Appliances:</strong>
-              <span className="text-gray-300"> Combustion byproducts, potential gas leaks, incomplete combustion</span>
+              <span className="text-gray-300">
+                {' '}
+                Combustion byproducts, potential gas leaks, incomplete combustion
+              </span>
             </div>
           </div>
         </div>

@@ -73,7 +73,10 @@ export function usePushNotifications(): UsePushNotificationsReturn {
     console.log('[Push] Starting subscription...');
     console.log('[Push] isSupported:', isSupported);
     console.log('[Push] VAPID key present:', !!VAPID_PUBLIC_KEY);
-    console.log('[Push] VAPID key value:', VAPID_PUBLIC_KEY ? VAPID_PUBLIC_KEY.substring(0, 20) + '...' : 'MISSING');
+    console.log(
+      '[Push] VAPID key value:',
+      VAPID_PUBLIC_KEY ? VAPID_PUBLIC_KEY.substring(0, 20) + '...' : 'MISSING'
+    );
     console.log('[Push] User ID:', user?.id);
 
     if (!VAPID_PUBLIC_KEY) {
@@ -154,7 +157,12 @@ export function usePushNotifications(): UsePushNotificationsReturn {
       if (verifyError || !verifyData) {
         console.error('[Push] Subscription verification failed:', verifyError);
       } else {
-        console.log('[Push] Subscription verified in database:', verifyData.id, 'active:', verifyData.is_active);
+        console.log(
+          '[Push] Subscription verified in database:',
+          verifyData.id,
+          'active:',
+          verifyData.is_active
+        );
       }
 
       setIsSubscribed(true);
@@ -213,29 +221,28 @@ export function usePushNotifications(): UsePushNotificationsReturn {
   /**
    * Show a notification (for testing or manual triggers)
    */
-  const showNotification = useCallback(async (
-    title: string,
-    body: string,
-    data?: Record<string, unknown>
-  ): Promise<void> => {
-    if (permission !== 'granted') {
-      console.warn('Notification permission not granted');
-      return;
-    }
+  const showNotification = useCallback(
+    async (title: string, body: string, data?: Record<string, unknown>): Promise<void> => {
+      if (permission !== 'granted') {
+        console.warn('Notification permission not granted');
+        return;
+      }
 
-    try {
-      const registration = await navigator.serviceWorker.ready;
-      await registration.showNotification(title, {
-        body,
-        icon: '/icons/icon-192x192.png',
-        badge: '/icons/badge-72x72.png',
-        data,
-        vibrate: [100, 50, 100],
-      });
-    } catch (error) {
-      console.error('Failed to show notification:', error);
-    }
-  }, [permission]);
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        await registration.showNotification(title, {
+          body,
+          icon: '/icons/icon-192x192.png',
+          badge: '/icons/badge-72x72.png',
+          data,
+          vibrate: [100, 50, 100],
+        });
+      } catch (error) {
+        console.error('Failed to show notification:', error);
+      }
+    },
+    [permission]
+  );
 
   return {
     isSupported,
@@ -251,9 +258,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 /**
  * Hook to handle incoming push notifications for messages
  */
-export function useMessageNotifications(
-  onNotificationClick?: (conversationId: string) => void
-) {
+export function useMessageNotifications(onNotificationClick?: (conversationId: string) => void) {
   const { user } = useAuth();
 
   useEffect(() => {
@@ -309,7 +314,7 @@ export function useNotificationPreferences() {
   });
 
   const updatePreferences = useCallback((updates: Partial<NotificationPreferences>) => {
-    setPreferences(prev => {
+    setPreferences((prev) => {
       const updated = { ...prev, ...updates };
       localStorage.setItem(PREFERENCES_KEY, JSON.stringify(updated));
       return updated;

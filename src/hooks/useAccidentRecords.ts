@@ -305,6 +305,70 @@ export function useRIDDORDeadlineCheck() {
 }
 
 /**
+ * Fetch RIDDOR-reportable records that have NOT yet been reported.
+ */
+export function useRIDDORPendingReports() {
+  return useQuery({
+    queryKey: ['accident-records', 'riddor-pending'],
+    queryFn: async (): Promise<AccidentRecord[]> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase
+        .from('accident_records')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('is_riddor_reportable', true)
+        .eq('riddor_reported', false)
+        .order('incident_date', { ascending: true });
+
+      if (error) throw error;
+      return data as AccidentRecord[];
+    },
+  });
+}
+
+/**
+ * Mark a RIDDOR-reportable record as reported to the HSE.
+ */
+export function useMarkRIDDORReported() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      riddor_reference,
+      riddor_reported_date,
+    }: {
+      id: string;
+      riddor_reference: string;
+      riddor_reported_date: string;
+    }): Promise<void> => {
+      const { error } = await supabase
+        .from('accident_records')
+        .update({
+          riddor_reported: true,
+          riddor_reference,
+          riddor_reported_date,
+        })
+        .eq('id', id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['accident-records'] });
+      toast({ title: 'RIDDOR reported', description: 'Record marked as reported to HSE.' });
+    },
+    onError: (error) => {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
+  });
+}
+
+/**
  * Trigger server-side archival of accident records older than 3 years.
  * Call on component mount to ensure archival flags are current.
  */

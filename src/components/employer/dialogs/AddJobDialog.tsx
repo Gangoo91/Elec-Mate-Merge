@@ -1,18 +1,36 @@
-import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useCreateJob } from "@/hooks/useJobs";
-import { toast } from "@/hooks/use-toast";
-import { Briefcase, Plus, MapPin, Calendar, Users, PoundSterling } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useOptionalVoiceFormContext } from "@/contexts/VoiceFormContext";
+import { useState, useEffect } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useCreateJob } from '@/hooks/useJobs';
+import { toast } from '@/hooks/use-toast';
+import { Briefcase, Plus, MapPin, Calendar, Users, PoundSterling } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 
-const JOB_STATUSES = ["Active", "Pending", "On Hold"];
+const JOB_STATUSES = ['Active', 'Pending', 'On Hold'];
 
 interface AddJobDialogProps {
   trigger?: React.ReactNode;
@@ -24,28 +42,28 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
-  
+
   const isMobile = useIsMobile();
   const createJob = useCreateJob();
-  
+
   const [formData, setFormData] = useState({
-    title: "",
-    client: "",
-    location: "",
-    status: "Active",
-    value: "",
-    startDate: "",
-    endDate: "",
-    workersCount: "1",
-    description: "",
+    title: '',
+    client: '',
+    location: '',
+    status: 'Active',
+    value: '',
+    startDate: '',
+    endDate: '',
+    workersCount: '1',
+    description: '',
   });
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
-  
+
   useEffect(() => {
     if (!open || !voiceContext) return;
-    
+
     voiceContext.registerForm({
       formId: 'create-job',
       formName: 'Create Job',
@@ -61,7 +79,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
         { name: 'description', label: 'Description', type: 'text' },
       ],
       onFillField: (field, value) => {
-        setFormData(prev => ({ ...prev, [field]: value }));
+        setFormData((prev) => ({ ...prev, [field]: value }));
       },
       onSubmit: () => {
         const form = document.getElementById('job-form') as HTMLFormElement;
@@ -69,18 +87,18 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
       },
       onCancel: () => setOpen(false),
     });
-    
+
     return () => voiceContext.unregisterForm('create-job');
   }, [open, voiceContext]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.client || !formData.location) {
       toast({
-        title: "Missing Fields",
-        description: "Please fill in job title, client and location.",
-        variant: "destructive",
+        title: 'Missing Fields',
+        description: 'Please fill in job title, client and location.',
+        variant: 'destructive',
       });
       return;
     }
@@ -102,27 +120,27 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
       });
 
       toast({
-        title: "Job Created",
+        title: 'Job Created',
         description: `${formData.title} has been created successfully.`,
       });
 
       setFormData({
-        title: "",
-        client: "",
-        location: "",
-        status: "Active",
-        value: "",
-        startDate: "",
-        endDate: "",
-        workersCount: "1",
-        description: "",
+        title: '',
+        client: '',
+        location: '',
+        status: 'Active',
+        value: '',
+        startDate: '',
+        endDate: '',
+        workersCount: '1',
+        description: '',
       });
       setOpen(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create job. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create job. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -135,43 +153,52 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <Briefcase className="h-4 w-4 text-elec-yellow" />
           Job Details
         </div>
-        
+
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <Label
+              htmlFor="title"
+              className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+            >
               Job Title <span className="text-destructive">*</span>
             </Label>
             <Input
               id="title"
               value={formData.title}
-              onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
               placeholder="e.g. Commercial Rewiring"
               className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
             />
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="client" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              <Label
+                htmlFor="client"
+                className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+              >
                 Client <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="client"
                 value={formData.client}
-                onChange={(e) => setFormData(prev => ({ ...prev, client: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, client: e.target.value }))}
                 placeholder="e.g. Tesco Express"
                 className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="location" className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+              <Label
+                htmlFor="location"
+                className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"
+              >
                 <MapPin className="h-3.5 w-3.5" />
                 Location <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="location"
                 value={formData.location}
-                onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
                 placeholder="e.g. Manchester, M1 4BD"
                 className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
               />
@@ -186,32 +213,43 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <PoundSterling className="h-4 w-4 text-success" />
           Financial & Status
         </div>
-        
+
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="value" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <Label
+              htmlFor="value"
+              className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+            >
               Job Value (£)
             </Label>
             <Input
               id="value"
               type="number"
               value={formData.value}
-              onChange={(e) => setFormData(prev => ({ ...prev, value: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, value: e.target.value }))}
               placeholder="50000"
               className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="status" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <Label
+              htmlFor="status"
+              className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+            >
               Status
             </Label>
-            <Select value={formData.status} onValueChange={(val) => setFormData(prev => ({ ...prev, status: val }))}>
+            <Select
+              value={formData.status}
+              onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
+            >
               <SelectTrigger className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {JOB_STATUSES.map(status => (
-                  <SelectItem key={status} value={status}>{status}</SelectItem>
+                {JOB_STATUSES.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -225,29 +263,35 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <Calendar className="h-4 w-4 text-info" />
           Schedule
         </div>
-        
+
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="startDate" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <Label
+              htmlFor="startDate"
+              className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+            >
               Start Date
             </Label>
             <Input
               id="startDate"
               type="date"
               value={formData.startDate}
-              onChange={(e) => setFormData(prev => ({ ...prev, startDate: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, startDate: e.target.value }))}
               className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="endDate" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <Label
+              htmlFor="endDate"
+              className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+            >
               End Date
             </Label>
             <Input
               id="endDate"
               type="date"
               value={formData.endDate}
-              onChange={(e) => setFormData(prev => ({ ...prev, endDate: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, endDate: e.target.value }))}
               className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
             />
           </div>
@@ -256,7 +300,10 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
 
       {/* Workers Section */}
       <div className="space-y-2">
-        <Label htmlFor="workers" className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+        <Label
+          htmlFor="workers"
+          className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"
+        >
           <Users className="h-3.5 w-3.5" />
           Workers Required
         </Label>
@@ -265,20 +312,23 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           type="number"
           min="1"
           value={formData.workersCount}
-          onChange={(e) => setFormData(prev => ({ ...prev, workersCount: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({ ...prev, workersCount: e.target.value }))}
           className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
         />
       </div>
 
       {/* Description */}
       <div className="space-y-2">
-        <Label htmlFor="description" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+        <Label
+          htmlFor="description"
+          className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+        >
           Description
         </Label>
         <Textarea
           id="description"
           value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
           placeholder="Describe the scope of work..."
           rows={3}
           className="bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 resize-none"
@@ -287,10 +337,19 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
 
       {/* Actions */}
       <div className="flex gap-3 pt-6 border-t border-border/50">
-        <Button type="button" variant="outline" className="flex-1 h-12 font-medium" onClick={() => setOpen(false)}>
+        <Button
+          type="button"
+          variant="outline"
+          className="flex-1 h-12 font-medium"
+          onClick={() => setOpen(false)}
+        >
           Cancel
         </Button>
-        <Button type="submit" className="flex-1 h-12 font-semibold gap-2" disabled={createJob.isPending}>
+        <Button
+          type="submit"
+          className="flex-1 h-12 font-semibold gap-2"
+          disabled={createJob.isPending}
+        >
           {createJob.isPending ? (
             <>Creating...</>
           ) : (
@@ -330,9 +389,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <DrawerHeader className="pb-4 border-b border-border/50">
             <DrawerTitle>{header}</DrawerTitle>
           </DrawerHeader>
-          <div className="px-4 pb-6 overflow-y-auto">
-            {formContent}
-          </div>
+          <div className="px-4 pb-6 overflow-y-auto">{formContent}</div>
         </DrawerContent>
       </Drawer>
     );

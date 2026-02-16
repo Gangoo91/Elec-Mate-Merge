@@ -1,4 +1,3 @@
-
 import { BookOpen } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EssentialDocuments } from './documentation/EssentialDocuments';
@@ -18,7 +17,6 @@ export const DocumentationContent = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
-        
         {/* Essential Documents */}
         <EssentialDocuments />
 
@@ -36,7 +34,6 @@ export const DocumentationContent = () => {
 
         {/* Document Storage & Management */}
         <DocumentStorage />
-
       </CardContent>
     </Card>
   );

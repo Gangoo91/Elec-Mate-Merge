@@ -7,12 +7,12 @@ export const ScheduleLimitationQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is the main limitation of fixed schedules?";
+  const question = 'What is the main limitation of fixed schedules?';
   const options = [
-    "They are too expensive to install",
-    "They waste energy when user routines change",
+    'They are too expensive to install',
+    'They waste energy when user routines change',
     "They don't work with smart devices",
-    "They require internet connection"
+    'They require internet connection',
   ];
   const correctAnswer = 1;
 
@@ -36,7 +36,7 @@ export const ScheduleLimitationQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <Button
@@ -49,11 +49,11 @@ export const ScheduleLimitationQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-600/20 border-green-500 text-green-200'
                     : selectedAnswer === index.toString()
-                    ? 'bg-red-600/20 border-red-500 text-red-200'
-                    : 'text-gray-400'
+                      ? 'bg-red-600/20 border-red-500 text-red-200'
+                      : 'text-gray-400'
                   : selectedAnswer === index.toString()
-                  ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
-                  : 'text-gray-300'
+                    ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                    : 'text-gray-300'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -72,7 +72,10 @@ export const ScheduleLimitationQuickCheck = () => {
         {showResult && (
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
             <p className="text-gray-300 text-sm">
-              <strong className="text-foreground">Explanation:</strong> Fixed schedules operate at the same times regardless of whether users are home or their routines have changed. This rigidity leads to energy waste when heating runs unnecessarily or fails to provide comfort when needed.
+              <strong className="text-foreground">Explanation:</strong> Fixed schedules operate at
+              the same times regardless of whether users are home or their routines have changed.
+              This rigidity leads to energy waste when heating runs unnecessarily or fails to
+              provide comfort when needed.
             </p>
             <Button
               onClick={resetQuestion}

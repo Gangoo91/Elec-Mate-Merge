@@ -2,76 +2,82 @@ import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule4Section3 = () => {
   useSEO({
-    title: "Instrument Accuracy, Resolution, and Error | Instrumentation Course",
-    description: "Understand measurement accuracy, precision, resolution, and error sources to make reliable instrumentation measurements."
+    title: 'Instrument Accuracy, Resolution, and Error | Instrumentation Course',
+    description:
+      'Understand measurement accuracy, precision, resolution, and error sources to make reliable instrumentation measurements.',
   });
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the difference between precision and accuracy?",
+      question: 'What is the difference between precision and accuracy?',
       options: [
-        "They are the same thing",
-        "Precision is hitting the target, accuracy is consistent results",
-        "Accuracy is hitting the target, precision is consistent results",
-        "Precision is for digital meters, accuracy is for analogue"
+        'They are the same thing',
+        'Precision is hitting the target, accuracy is consistent results',
+        'Accuracy is hitting the target, precision is consistent results',
+        'Precision is for digital meters, accuracy is for analogue',
       ],
       correct: 2,
-      explanation: "Accuracy refers to how close measurements are to the true value (hitting the target), while precision refers to how consistent repeated measurements are (tight grouping)."
+      explanation:
+        'Accuracy refers to how close measurements are to the true value (hitting the target), while precision refers to how consistent repeated measurements are (tight grouping).',
     },
     {
       id: 2,
-      question: "What does a specification of plus or minus 1% plus 2 digits mean?",
+      question: 'What does a specification of plus or minus 1% plus 2 digits mean?',
       options: [
-        "The reading is within 1% plus 2 extra digits of uncertainty",
-        "The meter has 2 decimal places",
-        "1% error of reading plus uncertainty in the last 2 displayed digits",
-        "The meter costs 1% more with 2 digits"
+        'The reading is within 1% plus 2 extra digits of uncertainty',
+        'The meter has 2 decimal places',
+        '1% error of reading plus uncertainty in the last 2 displayed digits',
+        'The meter costs 1% more with 2 digits',
       ],
       correct: 2,
-      explanation: "This specification means the measurement error is 1% of the reading plus uncertainty in the last 2 digits of the display."
+      explanation:
+        'This specification means the measurement error is 1% of the reading plus uncertainty in the last 2 digits of the display.',
     },
     {
       id: 3,
-      question: "Why is resolution important in low-voltage circuits?",
+      question: 'Why is resolution important in low-voltage circuits?',
       options: [
-        "Low voltages do not matter",
-        "Small changes need to be detected accurately",
-        "It prevents electrical shock",
-        "Resolution only matters for high voltages"
+        'Low voltages do not matter',
+        'Small changes need to be detected accurately',
+        'It prevents electrical shock',
+        'Resolution only matters for high voltages',
       ],
       correct: 1,
-      explanation: "In low-voltage circuits, small voltage changes can be significant. Good resolution allows detection of these small but important variations."
+      explanation:
+        'In low-voltage circuits, small voltage changes can be significant. Good resolution allows detection of these small but important variations.',
     },
     {
       id: 4,
-      question: "What type of error does a noisy environment cause?",
+      question: 'What type of error does a noisy environment cause?',
       options: [
-        "Systematic error",
-        "Calibration error",
-        "Random error from interference",
-        "Operator error"
+        'Systematic error',
+        'Calibration error',
+        'Random error from interference',
+        'Operator error',
       ],
       correct: 2,
-      explanation: "Electrical noise causes random errors that vary unpredictably, making measurements less precise and potentially less accurate."
+      explanation:
+        'Electrical noise causes random errors that vary unpredictably, making measurements less precise and potentially less accurate.',
     },
     {
       id: 5,
-      question: "How can calibration help reduce measurement errors?",
+      question: 'How can calibration help reduce measurement errors?',
       options: [
-        "It makes instruments faster",
-        "It corrects for systematic errors and drift",
-        "It increases resolution",
-        "It prevents electrical noise"
+        'It makes instruments faster',
+        'It corrects for systematic errors and drift',
+        'It increases resolution',
+        'It prevents electrical noise',
       ],
       correct: 1,
-      explanation: "Calibration corrects systematic errors and compensates for instrument drift over time, improving measurement accuracy."
-    }
+      explanation:
+        'Calibration corrects systematic errors and compensates for instrument drift over time, improving measurement accuracy.',
+    },
   ];
 
   return (
@@ -79,7 +85,10 @@ const InstrumentationModule4Section3 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-4" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Module 4
           </Link>
@@ -95,29 +104,32 @@ const InstrumentationModule4Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Instrument Accuracy, Resolution, and Error
           </h1>
-          <p className="text-white/80">
-            Understand measurement quality and limitations
-          </p>
+          <p className="text-white/80">Understand measurement quality and limitations</p>
         </div>
 
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
           <h2 className="font-semibold text-white mb-2">Quick Summary</h2>
           <p className="text-white text-sm">
-            Knowing how precise a reading is and what limitations exist is critical in measurement. Understanding accuracy, precision, resolution, and error sources helps you choose the right instrument and interpret results correctly.
+            Knowing how precise a reading is and what limitations exist is critical in measurement.
+            Understanding accuracy, precision, resolution, and error sources helps you choose the
+            right instrument and interpret results correctly.
           </p>
         </div>
 
         {/* Section 01: Accuracy vs Precision */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Accuracy vs Precision</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              These fundamental concepts are often confused but represent different aspects of measurement quality.
+              These fundamental concepts are often confused but represent different aspects of
+              measurement quality.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
@@ -171,15 +183,21 @@ const InstrumentationModule4Section3 = () => {
               <h3 className="font-semibold text-white mb-3">The Target Analogy</h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                 <div className="bg-background/50 rounded p-3">
-                  <div className="text-green-400 text-sm font-medium mb-1">High Acc + High Prec</div>
+                  <div className="text-green-400 text-sm font-medium mb-1">
+                    High Acc + High Prec
+                  </div>
                   <p className="text-white text-xs">Tight group, on target</p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
-                  <div className="text-yellow-400 text-sm font-medium mb-1">High Acc + Low Prec</div>
+                  <div className="text-yellow-400 text-sm font-medium mb-1">
+                    High Acc + Low Prec
+                  </div>
                   <p className="text-white text-xs">Scattered around target</p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
-                  <div className="text-orange-400 text-sm font-medium mb-1">Low Acc + High Prec</div>
+                  <div className="text-orange-400 text-sm font-medium mb-1">
+                    Low Acc + High Prec
+                  </div>
                   <p className="text-white text-xs">Tight group, off target</p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
@@ -199,13 +217,16 @@ const InstrumentationModule4Section3 = () => {
         {/* Section 02: Resolution */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Resolution and Sensitivity</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              Resolution is the smallest detectable change an instrument can measure. It determines the fineness of the measurement but does not guarantee accuracy.
+              Resolution is the smallest detectable change an instrument can measure. It determines
+              the fineness of the measurement but does not guarantee accuracy.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
@@ -217,9 +238,13 @@ const InstrumentationModule4Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 text-elec-yellow font-semibold">Meter Type</th>
+                      <th className="text-left py-3 px-4 text-elec-yellow font-semibold">
+                        Meter Type
+                      </th>
                       <th className="text-left py-3 px-4 text-white font-semibold">Counts</th>
-                      <th className="text-left py-3 px-4 text-white font-semibold">200V Range Resolution</th>
+                      <th className="text-left py-3 px-4 text-white font-semibold">
+                        200V Range Resolution
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="text-white">
@@ -249,19 +274,22 @@ const InstrumentationModule4Section3 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <div>
-                    <strong>Low-voltage signals:</strong> mV level sensor outputs need high resolution to detect small changes
+                    <strong>Low-voltage signals:</strong> mV level sensor outputs need high
+                    resolution to detect small changes
                   </div>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <div>
-                    <strong>Temperature monitoring:</strong> RTD and thermocouple measurements often require 0.1 degree resolution
+                    <strong>Temperature monitoring:</strong> RTD and thermocouple measurements often
+                    require 0.1 degree resolution
                   </div>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <div>
-                    <strong>Current loop signals:</strong> 4-20mA spans need resolution to detect small process changes
+                    <strong>Current loop signals:</strong> 4-20mA spans need resolution to detect
+                    small process changes
                   </div>
                 </li>
               </ul>
@@ -272,7 +300,9 @@ const InstrumentationModule4Section3 = () => {
         {/* Section 03: Error Sources */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Sources of Measurement Error</h2>
           </div>
 
@@ -341,21 +371,30 @@ const InstrumentationModule4Section3 = () => {
         {/* Section 04: Interpreting Specifications */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
-            <h2 className="text-xl font-semibold text-white">Interpreting Tolerance Specifications</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Interpreting Tolerance Specifications
+            </h2>
           </div>
 
           <div className="space-y-4 text-white">
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-3">Understanding plus or minus 1.5% plus 2 digits</h3>
+              <h3 className="font-semibold text-white mb-3">
+                Understanding plus or minus 1.5% plus 2 digits
+              </h3>
               <div className="bg-background/50 rounded p-4">
                 <p className="text-white text-sm mb-3">
-                  <strong>Example:</strong> Reading 100.0V on 200V range with plus or minus 1.5% plus 2 digits specification
+                  <strong>Example:</strong> Reading 100.0V on 200V range with plus or minus 1.5%
+                  plus 2 digits specification
                 </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Percentage error: 1.5% of 100V = plus or minus 1.5V</li>
                   <li>Digit error: 2 digits x 0.1V (LSD) = plus or minus 0.2V</li>
-                  <li><strong>Total uncertainty: plus or minus 1.7V</strong></li>
+                  <li>
+                    <strong>Total uncertainty: plus or minus 1.7V</strong>
+                  </li>
                   <li>True value lies between 98.3V and 101.7V</li>
                 </ul>
               </div>
@@ -385,7 +424,9 @@ const InstrumentationModule4Section3 = () => {
         {/* Section 05: Improving Measurement Quality */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
             <h2 className="text-xl font-semibold text-white">Improving Measurement Quality</h2>
           </div>
 
@@ -397,28 +438,37 @@ const InstrumentationModule4Section3 = () => {
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Regular Calibration</h4>
-                    <p className="text-white text-xs">Schedule calibration based on accuracy requirements and environmental conditions.</p>
+                    <p className="text-white text-xs">
+                      Schedule calibration based on accuracy requirements and environmental
+                      conditions.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Optimal Range Selection</h4>
-                    <p className="text-white text-xs">Choose the lowest range that accommodates the reading for best resolution.</p>
+                    <p className="text-white text-xs">
+                      Choose the lowest range that accommodates the reading for best resolution.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Multiple Readings</h4>
-                    <p className="text-white text-xs">Take several readings and average to reduce random errors.</p>
+                    <p className="text-white text-xs">
+                      Take several readings and average to reduce random errors.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Proper Connections</h4>
-                    <p className="text-white text-xs">Clean contacts, secure connections, and correct polarity reduce errors.</p>
+                    <p className="text-white text-xs">
+                      Clean contacts, secure connections, and correct polarity reduce errors.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -432,23 +482,35 @@ const InstrumentationModule4Section3 = () => {
 
           <div className="space-y-4">
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">How often should I calibrate my multimeter?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                How often should I calibrate my multimeter?
+              </h3>
               <p className="text-white text-sm">
-                For general use, annual calibration is typical. Critical applications may require 6-monthly or quarterly calibration. Always recalibrate after physical damage, extreme temperature exposure, or when readings seem suspect.
+                For general use, annual calibration is typical. Critical applications may require
+                6-monthly or quarterly calibration. Always recalibrate after physical damage,
+                extreme temperature exposure, or when readings seem suspect.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">Is a more expensive meter always more accurate?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Is a more expensive meter always more accurate?
+              </h3>
               <p className="text-white text-sm">
-                Not necessarily. Higher-priced meters often offer better accuracy, but also include features you may not need. Choose a meter with accuracy specifications that match your application requirements.
+                Not necessarily. Higher-priced meters often offer better accuracy, but also include
+                features you may not need. Choose a meter with accuracy specifications that match
+                your application requirements.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">Can software improve measurement accuracy?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Can software improve measurement accuracy?
+              </h3>
               <p className="text-white text-sm">
-                Software can average multiple readings to reduce random errors and apply correction factors for known systematic errors. However, it cannot improve the fundamental accuracy of the measurement hardware.
+                Software can average multiple readings to reduce random errors and apply correction
+                factors for known systematic errors. However, it cannot improve the fundamental
+                accuracy of the measurement hardware.
               </p>
             </div>
           </div>
@@ -461,13 +523,19 @@ const InstrumentationModule4Section3 = () => {
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-3 pt-6 border-t border-border">
-          <Link to="/electrician/upskilling/instrumentation-module-4-section-2" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4-section-2"
+            className="w-full sm:w-auto"
+          >
             <Button variant="outline" className="w-full sm:w-auto">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
           </Link>
-          <Link to="/electrician/upskilling/instrumentation-module-4-section-4" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4-section-4"
+            className="w-full sm:w-auto"
+          >
             <Button className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

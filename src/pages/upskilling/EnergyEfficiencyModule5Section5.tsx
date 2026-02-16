@@ -27,14 +27,17 @@ import {
 const EnergyEfficiencyModule5Section5: React.FC = () => {
   useSEO({
     title: 'Cybersecurity in Energy Systems | Energy Efficiency Module 5 Section 5 | Elec-Mate',
-    description: 'Learn essential cybersecurity practices for Building Management Systems and energy infrastructure. Covers OT security, network segmentation, UK NIS Regulations, and practical security measures for electricians.',
-    keywords: 'cybersecurity energy systems, BMS security, OT security, NIS Directive UK, building management system security, SCADA security, network segmentation, electrical cybersecurity, critical infrastructure protection, NCSC guidance',
+    description:
+      'Learn essential cybersecurity practices for Building Management Systems and energy infrastructure. Covers OT security, network segmentation, UK NIS Regulations, and practical security measures for electricians.',
+    keywords:
+      'cybersecurity energy systems, BMS security, OT security, NIS Directive UK, building management system security, SCADA security, network segmentation, electrical cybersecurity, critical infrastructure protection, NCSC guidance',
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc1-cyber',
-      question: 'What is the primary difference between OT and IT systems in terms of security priorities?',
+      question:
+        'What is the primary difference between OT and IT systems in terms of security priorities?',
       options: [
         'OT systems prioritise confidentiality over availability',
         'OT systems prioritise availability and safety over confidentiality',
@@ -42,7 +45,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'There is no significant difference in priorities',
       ],
       correctIndex: 1,
-      explanation: 'Operational Technology (OT) systems like BMS prioritise availability and safety because downtime can affect building operations, comfort, and even life safety systems. IT systems typically prioritise confidentiality first (CIA triad), while OT follows AIC - Availability, Integrity, Confidentiality.',
+      explanation:
+        'Operational Technology (OT) systems like BMS prioritise availability and safety because downtime can affect building operations, comfort, and even life safety systems. IT systems typically prioritise confidentiality first (CIA triad), while OT follows AIC - Availability, Integrity, Confidentiality.',
     },
     {
       id: 'qc2-cyber',
@@ -54,7 +58,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'They expire after 30 days automatically',
       ],
       correctIndex: 1,
-      explanation: 'Default passwords for BMS equipment are widely published in manuals and online databases. Many systems remain on default credentials years after installation because changing them requires specialist knowledge or is overlooked. Attackers actively scan for devices using known default credentials.',
+      explanation:
+        'Default passwords for BMS equipment are widely published in manuals and online databases. Many systems remain on default credentials years after installation because changing them requires specialist knowledge or is overlooked. Attackers actively scan for devices using known default credentials.',
     },
     {
       id: 'qc3-cyber',
@@ -66,18 +71,25 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'Monthly password changes only',
       ],
       correctIndex: 1,
-      explanation: 'The UK Network and Information Systems (NIS) Regulations 2018 require Operators of Essential Services to implement appropriate and proportionate security measures and report significant incidents to their competent authority within 72 hours. This applies to energy sector organisations including electricity distributors and suppliers.',
+      explanation:
+        'The UK Network and Information Systems (NIS) Regulations 2018 require Operators of Essential Services to implement appropriate and proportionate security measures and report significant incidents to their competent authority within 72 hours. This applies to energy sector organisations including electricity distributors and suppliers.',
     },
   ];
 
   const quizQuestions = [
     {
       question: 'What does OT stand for in the context of building systems security?',
-      options: ['Online Technology', 'Operational Technology', 'Optimised Transmission', 'Output Terminal'],
+      options: [
+        'Online Technology',
+        'Operational Technology',
+        'Optimised Transmission',
+        'Output Terminal',
+      ],
       correctAnswer: 'Operational Technology',
     },
     {
-      question: 'Which network architecture approach isolates critical BMS components from general IT networks?',
+      question:
+        'Which network architecture approach isolates critical BMS components from general IT networks?',
       options: [
         'Flat networking',
         'Network segmentation with VLANs and firewalls',
@@ -94,10 +106,12 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'A direct monitoring zone for CCTV',
         'A data management zone for backups',
       ],
-      correctAnswer: 'A demilitarised zone - a buffer network between trusted and untrusted networks',
+      correctAnswer:
+        'A demilitarised zone - a buffer network between trusted and untrusted networks',
     },
     {
-      question: 'Which UK regulation specifically addresses cybersecurity for critical infrastructure including energy?',
+      question:
+        'Which UK regulation specifically addresses cybersecurity for critical infrastructure including energy?',
       options: [
         'Data Protection Act only',
         'Health and Safety at Work Act',
@@ -107,7 +121,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       correctAnswer: 'Network and Information Systems (NIS) Regulations 2018',
     },
     {
-      question: 'What is the recommended approach when discovering a BMS controller accessible via its default password?',
+      question:
+        'What is the recommended approach when discovering a BMS controller accessible via its default password?',
       options: [
         'Leave it as the customer prefers convenience',
         'Document and report to the client, recommending immediate password change',
@@ -117,7 +132,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       correctAnswer: 'Document and report to the client, recommending immediate password change',
     },
     {
-      question: 'Which protocol is commonly used by BMS systems but lacks built-in security features?',
+      question:
+        'Which protocol is commonly used by BMS systems but lacks built-in security features?',
       options: ['HTTPS', 'SSH', 'BACnet (original specification)', 'TLS 1.3'],
       correctAnswer: 'BACnet (original specification)',
     },
@@ -139,15 +155,18 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'Internet access voids the warranty',
         'BMS protocols only work on local networks',
       ],
-      correctAnswer: 'It increases attack surface and enables remote exploitation of vulnerabilities',
+      correctAnswer:
+        'It increases attack surface and enables remote exploitation of vulnerabilities',
     },
     {
-      question: 'What organisation provides UK-specific cybersecurity guidance for critical infrastructure?',
+      question:
+        'What organisation provides UK-specific cybersecurity guidance for critical infrastructure?',
       options: ['FBI', 'National Cyber Security Centre (NCSC)', 'OFGEM only', 'Local councils'],
       correctAnswer: 'National Cyber Security Centre (NCSC)',
     },
     {
-      question: 'Which security measure helps ensure only authorised devices connect to a BMS network?',
+      question:
+        'Which security measure helps ensure only authorised devices connect to a BMS network?',
       options: [
         'Using longer Ethernet cables',
         'MAC address filtering and 802.1X port authentication',
@@ -161,27 +180,34 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
   const faqs = [
     {
       question: 'As an electrician, is cybersecurity really my responsibility?',
-      answer: 'Yes, increasingly so. Modern electrical installations involve networked components - smart meters, BMS controllers, EV chargers, solar inverters, and IoT devices. While you may not be a cybersecurity specialist, you have a duty of care to avoid creating vulnerabilities. This includes changing default passwords, avoiding unnecessary internet exposure, documenting network settings for the client, and flagging security concerns. The IET Wiring Regulations increasingly reference data and network considerations. Your professional indemnity insurance may not cover losses from negligent security practices.',
+      answer:
+        'Yes, increasingly so. Modern electrical installations involve networked components - smart meters, BMS controllers, EV chargers, solar inverters, and IoT devices. While you may not be a cybersecurity specialist, you have a duty of care to avoid creating vulnerabilities. This includes changing default passwords, avoiding unnecessary internet exposure, documenting network settings for the client, and flagging security concerns. The IET Wiring Regulations increasingly reference data and network considerations. Your professional indemnity insurance may not cover losses from negligent security practices.',
     },
     {
       question: 'What should I do if I find a BMS system using default credentials?',
-      answer: 'Document your findings professionally and inform the client or facilities manager immediately in writing. Explain the risks in non-technical terms - comparing it to leaving keys in a lock. Recommend they engage their IT team or a specialist to change credentials and review security. If you have the capability and authorisation, offer to assist with password changes. Never change passwords without explicit written permission. Keep records of your communication as evidence of due diligence. This protects both the client and yourself professionally.',
+      answer:
+        'Document your findings professionally and inform the client or facilities manager immediately in writing. Explain the risks in non-technical terms - comparing it to leaving keys in a lock. Recommend they engage their IT team or a specialist to change credentials and review security. If you have the capability and authorisation, offer to assist with password changes. Never change passwords without explicit written permission. Keep records of your communication as evidence of due diligence. This protects both the client and yourself professionally.',
     },
     {
       question: 'How does the UK NIS Directive affect electrical contractors?',
-      answer: 'The NIS Regulations 2018 primarily place obligations on Operators of Essential Services (OES) in sectors like energy, transport, and health. However, contractors working on OES sites must comply with their security requirements. This may include security vetting, following specific procedures, reporting incidents, and ensuring your work does not introduce vulnerabilities. When tendering for work with energy companies, DNOs, or large facilities, expect security questionnaires and compliance requirements. Non-compliance can result in contract termination and reputational damage.',
+      answer:
+        'The NIS Regulations 2018 primarily place obligations on Operators of Essential Services (OES) in sectors like energy, transport, and health. However, contractors working on OES sites must comply with their security requirements. This may include security vetting, following specific procedures, reporting incidents, and ensuring your work does not introduce vulnerabilities. When tendering for work with energy companies, DNOs, or large facilities, expect security questionnaires and compliance requirements. Non-compliance can result in contract termination and reputational damage.',
     },
     {
       question: 'What is the difference between IT security and OT security?',
-      answer: 'IT (Information Technology) security protects data and business systems - computers, servers, databases. The priority order is typically Confidentiality, Integrity, Availability (CIA). OT (Operational Technology) security protects physical processes - BMS, SCADA, PLCs, industrial controls. The priority order reverses to Availability, Integrity, Confidentiality (AIC) because downtime can have physical consequences. OT systems often have longer lifecycles (15-20 years), cannot easily be patched, may run legacy operating systems, and use specialist protocols. Security approaches must account for these differences.',
+      answer:
+        'IT (Information Technology) security protects data and business systems - computers, servers, databases. The priority order is typically Confidentiality, Integrity, Availability (CIA). OT (Operational Technology) security protects physical processes - BMS, SCADA, PLCs, industrial controls. The priority order reverses to Availability, Integrity, Confidentiality (AIC) because downtime can have physical consequences. OT systems often have longer lifecycles (15-20 years), cannot easily be patched, may run legacy operating systems, and use specialist protocols. Security approaches must account for these differences.',
     },
     {
       question: 'Can smart building systems be hacked, and what are the consequences?',
-      answer: 'Yes, smart building systems are regularly compromised. Real-world consequences include: ransomware disabling heating/cooling systems, manipulation of energy systems causing equipment damage, using BMS as an entry point to steal corporate data, disabling fire and safety systems, causing power outages or equipment failures, and cryptocurrency mining using building computing resources. A compromised BMS can affect occupant safety, cause significant financial losses, damage equipment, and create legal liability. The 2013 Target data breach (affecting 40 million customers) originated through an HVAC contractor connection.',
+      answer:
+        'Yes, smart building systems are regularly compromised. Real-world consequences include: ransomware disabling heating/cooling systems, manipulation of energy systems causing equipment damage, using BMS as an entry point to steal corporate data, disabling fire and safety systems, causing power outages or equipment failures, and cryptocurrency mining using building computing resources. A compromised BMS can affect occupant safety, cause significant financial losses, damage equipment, and create legal liability. The 2013 Target data breach (affecting 40 million customers) originated through an HVAC contractor connection.',
     },
     {
-      question: 'What security measures can I implement during installation without specialist IT knowledge?',
-      answer: 'Several practical steps require no specialist knowledge: (1) Always change default passwords to strong unique passwords before handover, (2) Document all IP addresses, passwords, and network settings securely for the client, (3) Disable unused network ports and services, (4) Ensure firmware is updated to the latest version, (5) Use separate network segments where possible - do not connect BMS to guest WiFi, (6) Enable logging if available, (7) Use encrypted protocols where supported (HTTPS, BACnet/SC), (8) Physically secure network equipment in locked enclosures, (9) Label cables and ports clearly, (10) Provide security recommendations in your handover documentation.',
+      question:
+        'What security measures can I implement during installation without specialist IT knowledge?',
+      answer:
+        'Several practical steps require no specialist knowledge: (1) Always change default passwords to strong unique passwords before handover, (2) Document all IP addresses, passwords, and network settings securely for the client, (3) Disable unused network ports and services, (4) Ensure firmware is updated to the latest version, (5) Use separate network segments where possible - do not connect BMS to guest WiFi, (6) Enable logging if available, (7) Use encrypted protocols where supported (HTTPS, BACnet/SC), (8) Physically secure network equipment in locked enclosures, (9) Label cables and ports clearly, (10) Provide security recommendations in your handover documentation.',
     },
   ];
 
@@ -190,14 +216,21 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-5">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
             <p className="text-elec-yellow text-xs font-medium">Module 5 - Section 5</p>
-            <h1 className="text-base font-semibold text-white truncate">Cybersecurity in Energy Systems</h1>
+            <h1 className="text-base font-semibold text-white truncate">
+              Cybersecurity in Energy Systems
+            </h1>
           </div>
         </div>
       </div>
@@ -206,9 +239,9 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <p className="text-white/90 leading-relaxed">
-            Essential cybersecurity practices for Building Management Systems and energy infrastructure.
-            Understand OT security, network segmentation, UK NIS Regulations, and practical security
-            measures every electrician should implement.
+            Essential cybersecurity practices for Building Management Systems and energy
+            infrastructure. Understand OT security, network segmentation, UK NIS Regulations, and
+            practical security measures every electrician should implement.
           </p>
         </div>
 
@@ -219,16 +252,20 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <AlertTriangle className="w-6 h-6 text-red-400" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-red-400 mb-3">Why Cybersecurity Matters for Electricians</h2>
+              <h2 className="text-xl font-semibold text-red-400 mb-3">
+                Why Cybersecurity Matters for Electricians
+              </h2>
               <p className="text-white/80 mb-3">
-                Modern electrical installations are increasingly networked. Smart meters, Building Management Systems,
-                EV chargers, solar inverters, and IoT devices all connect to networks - and all can be compromised.
-                A single vulnerable device can provide attackers access to entire building systems or corporate networks.
+                Modern electrical installations are increasingly networked. Smart meters, Building
+                Management Systems, EV chargers, solar inverters, and IoT devices all connect to
+                networks - and all can be compromised. A single vulnerable device can provide
+                attackers access to entire building systems or corporate networks.
               </p>
               <p className="text-white/80">
-                As electrical professionals, we have a responsibility to understand these risks and implement
-                basic security measures. The consequences of poor security can include ransomware attacks,
-                equipment damage, safety system failures, and significant financial losses.
+                As electrical professionals, we have a responsibility to understand these risks and
+                implement basic security measures. The consequences of poor security can include
+                ransomware attacks, equipment damage, safety system failures, and significant
+                financial losses.
               </p>
             </div>
           </div>
@@ -244,8 +281,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Understanding the fundamental differences between Information Technology (IT) and Operational Technology (OT)
-              is crucial for effective security in building systems.
+              Understanding the fundamental differences between Information Technology (IT) and
+              Operational Technology (OT) is crucial for effective security in building systems.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -311,10 +348,11 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-2">The Convergence Challenge</h4>
               <p className="text-white/70 text-sm">
-                Traditional OT systems were isolated ("air-gapped") from IT networks. Modern smart buildings
-                increasingly connect OT to IT networks for remote monitoring, analytics, and cloud services.
-                This convergence creates new attack vectors. Security strategies must address both worlds -
-                applying IT security concepts while respecting OT operational requirements.
+                Traditional OT systems were isolated ("air-gapped") from IT networks. Modern smart
+                buildings increasingly connect OT to IT networks for remote monitoring, analytics,
+                and cloud services. This convergence creates new attack vectors. Security strategies
+                must address both worlds - applying IT security concepts while respecting OT
+                operational requirements.
               </p>
             </div>
           </div>
@@ -339,8 +377,9 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Building Management Systems and energy infrastructure have numerous common vulnerabilities.
-              Understanding these helps identify and mitigate risks during installation and maintenance.
+              Building Management Systems and energy infrastructure have numerous common
+              vulnerabilities. Understanding these helps identify and mitigate risks during
+              installation and maintenance.
             </p>
 
             <div className="space-y-3">
@@ -350,12 +389,14 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <h4 className="font-semibold text-red-400">Default Credentials</h4>
                 </div>
                 <p className="text-white/70 text-sm mb-2">
-                  The most common and easily exploited vulnerability. Default usernames and passwords
-                  (admin/admin, administrator/password) are published in manuals and online databases.
+                  The most common and easily exploited vulnerability. Default usernames and
+                  passwords (admin/admin, administrator/password) are published in manuals and
+                  online databases.
                 </p>
                 <div className="bg-red-500/10 rounded p-2 text-xs text-red-300">
-                  <strong>Real Example:</strong> Shodan (a search engine for internet-connected devices)
-                  lists thousands of BMS controllers accessible with default credentials worldwide.
+                  <strong>Real Example:</strong> Shodan (a search engine for internet-connected
+                  devices) lists thousands of BMS controllers accessible with default credentials
+                  worldwide.
                 </div>
               </div>
 
@@ -365,9 +406,10 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <h4 className="font-semibold text-orange-400">Unencrypted Protocols</h4>
                 </div>
                 <p className="text-white/70 text-sm">
-                  Legacy protocols like BACnet, Modbus, and LonWorks were designed for isolated networks
-                  and lack encryption or authentication. Data travels in plaintext, vulnerable to
-                  interception and manipulation. BACnet/SC (Secure Connect) addresses this but adoption is slow.
+                  Legacy protocols like BACnet, Modbus, and LonWorks were designed for isolated
+                  networks and lack encryption or authentication. Data travels in plaintext,
+                  vulnerable to interception and manipulation. BACnet/SC (Secure Connect) addresses
+                  this but adoption is slow.
                 </p>
               </div>
 
@@ -377,9 +419,10 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <h4 className="font-semibold text-yellow-400">Unpatched Systems</h4>
                 </div>
                 <p className="text-white/70 text-sm">
-                  OT systems often run outdated operating systems (Windows XP, Windows 7) that no longer
-                  receive security updates. Controllers may have firmware vulnerabilities that cannot be
-                  patched without vendor support or system downtime that operations cannot accept.
+                  OT systems often run outdated operating systems (Windows XP, Windows 7) that no
+                  longer receive security updates. Controllers may have firmware vulnerabilities
+                  that cannot be patched without vendor support or system downtime that operations
+                  cannot accept.
                 </p>
               </div>
 
@@ -389,9 +432,10 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <h4 className="font-semibold text-purple-400">Direct Internet Exposure</h4>
                 </div>
                 <p className="text-white/70 text-sm">
-                  BMS web interfaces and controllers directly accessible from the internet without VPN
-                  or firewall protection. Often done for convenience of remote access but creates
-                  massive attack surface. Port forwarding to BMS devices is particularly dangerous.
+                  BMS web interfaces and controllers directly accessible from the internet without
+                  VPN or firewall protection. Often done for convenience of remote access but
+                  creates massive attack surface. Port forwarding to BMS devices is particularly
+                  dangerous.
                 </p>
               </div>
 
@@ -401,9 +445,10 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <h4 className="font-semibold text-blue-400">Flat Network Architecture</h4>
                 </div>
                 <p className="text-white/70 text-sm">
-                  All devices on a single network segment with no segregation. Once an attacker gains
-                  access to any device, they can reach all others. Common in older installations and
-                  small-to-medium buildings where network design was an afterthought.
+                  All devices on a single network segment with no segregation. Once an attacker
+                  gains access to any device, they can reach all others. Common in older
+                  installations and small-to-medium buildings where network design was an
+                  afterthought.
                 </p>
               </div>
             </div>
@@ -411,10 +456,22 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-2">Notable BMS Security Incidents</h4>
               <ul className="space-y-2 text-sm text-white/70">
-                <li><strong>Target (2013):</strong> 40 million credit cards compromised via HVAC contractor network access</li>
-                <li><strong>German Steel Mill (2014):</strong> Blast furnace damaged by cyberattack through office network</li>
-                <li><strong>Ukrainian Power Grid (2015, 2016):</strong> Substations remotely controlled, causing blackouts</li>
-                <li><strong>Casino Fish Tank (2017):</strong> Network breached through internet-connected aquarium thermometer</li>
+                <li>
+                  <strong>Target (2013):</strong> 40 million credit cards compromised via HVAC
+                  contractor network access
+                </li>
+                <li>
+                  <strong>German Steel Mill (2014):</strong> Blast furnace damaged by cyberattack
+                  through office network
+                </li>
+                <li>
+                  <strong>Ukrainian Power Grid (2015, 2016):</strong> Substations remotely
+                  controlled, causing blackouts
+                </li>
+                <li>
+                  <strong>Casino Fish Tank (2017):</strong> Network breached through
+                  internet-connected aquarium thermometer
+                </li>
               </ul>
             </div>
           </div>
@@ -439,16 +496,21 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Network segmentation is the practice of dividing a network into separate zones with controlled
-              communication between them. This limits the spread of attacks and protects critical systems.
+              Network segmentation is the practice of dividing a network into separate zones with
+              controlled communication between them. This limits the spread of attacks and protects
+              critical systems.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">The Purdue Model for Industrial Networks</h4>
+              <h4 className="font-semibold text-elec-yellow mb-3">
+                The Purdue Model for Industrial Networks
+              </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-3 p-2 bg-purple-500/20 rounded">
                   <span className="text-purple-400 font-mono w-16">Level 5</span>
-                  <span className="text-white/70">Enterprise Network - Corporate IT, internet access</span>
+                  <span className="text-white/70">
+                    Enterprise Network - Corporate IT, internet access
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-blue-500/20 rounded">
                   <span className="text-blue-400 font-mono w-16">Level 4</span>
@@ -456,15 +518,21 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-green-500/20 rounded border-2 border-green-500/50">
                   <span className="text-green-400 font-mono w-16">DMZ</span>
-                  <span className="text-white/70">Demilitarised Zone - Secure buffer between IT and OT</span>
+                  <span className="text-white/70">
+                    Demilitarised Zone - Secure buffer between IT and OT
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-yellow-500/20 rounded">
                   <span className="text-yellow-400 font-mono w-16">Level 3</span>
-                  <span className="text-white/70">Site Operations - BMS head-end, historian, engineering workstations</span>
+                  <span className="text-white/70">
+                    Site Operations - BMS head-end, historian, engineering workstations
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-orange-500/20 rounded">
                   <span className="text-orange-400 font-mono w-16">Level 2</span>
-                  <span className="text-white/70">Area Control - Local HMIs, supervisory systems</span>
+                  <span className="text-white/70">
+                    Area Control - Local HMIs, supervisory systems
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-red-500/20 rounded">
                   <span className="text-red-400 font-mono w-16">Level 1</span>
@@ -472,7 +540,9 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-white/5 rounded">
                   <span className="text-white/50 font-mono w-16">Level 0</span>
-                  <span className="text-white/70">Physical Process - Sensors, actuators, field devices</span>
+                  <span className="text-white/70">
+                    Physical Process - Sensors, actuators, field devices
+                  </span>
                 </div>
               </div>
             </div>
@@ -481,7 +551,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-blue-400 mb-2">VLAN Segmentation</h4>
                 <p className="text-white/70 text-sm mb-2">
-                  Virtual LANs separate network traffic at Layer 2. Different systems get different VLANs:
+                  Virtual LANs separate network traffic at Layer 2. Different systems get different
+                  VLANs:
                 </p>
                 <ul className="space-y-1 text-sm text-white/60">
                   <li>- VLAN 10: Corporate IT</li>
@@ -508,12 +579,15 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             </div>
 
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-2">Practical Tip for Electricians</h4>
+              <h4 className="font-semibold text-elec-yellow mb-2">
+                Practical Tip for Electricians
+              </h4>
               <p className="text-white/70 text-sm">
-                When installing networked equipment, always ask the client about their network architecture.
-                Request the correct VLAN assignment for your devices. Do not simply connect to the nearest
-                available network port - it may be the wrong network segment. Document which VLAN/IP range
-                your equipment uses and provide this to the client's IT team.
+                When installing networked equipment, always ask the client about their network
+                architecture. Request the correct VLAN assignment for your devices. Do not simply
+                connect to the nearest available network port - it may be the wrong network segment.
+                Document which VLAN/IP range your equipment uses and provide this to the client's IT
+                team.
               </p>
             </div>
           </div>
@@ -594,9 +668,12 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Role-Based Access Control (RBAC)</h4>
+              <h4 className="font-semibold text-elec-yellow mb-3">
+                Role-Based Access Control (RBAC)
+              </h4>
               <p className="text-white/70 text-sm mb-3">
-                Users should only have access to what they need for their role - the principle of least privilege:
+                Users should only have access to what they need for their role - the principle of
+                least privilege:
               </p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
@@ -634,12 +711,15 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-2">Multi-Factor Authentication (MFA)</h4>
+              <h4 className="font-semibold text-elec-yellow mb-2">
+                Multi-Factor Authentication (MFA)
+              </h4>
               <p className="text-white/70 text-sm">
-                MFA requires two or more verification methods: something you know (password), something you have
-                (phone/token), or something you are (biometric). Increasingly supported by modern BMS platforms
-                for web interfaces and remote access. Essential for any internet-accessible system. Even if
-                passwords are compromised, MFA prevents unauthorised access.
+                MFA requires two or more verification methods: something you know (password),
+                something you have (phone/token), or something you are (biometric). Increasingly
+                supported by modern BMS platforms for web interfaces and remote access. Essential
+                for any internet-accessible system. Even if passwords are compromised, MFA prevents
+                unauthorised access.
               </p>
             </div>
           </div>
@@ -657,24 +737,35 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
               <div className="flex items-center gap-2 mb-3">
                 <FileText className="w-5 h-5 text-blue-400" />
-                <h4 className="font-semibold text-blue-400">Network and Information Systems (NIS) Regulations 2018</h4>
+                <h4 className="font-semibold text-blue-400">
+                  Network and Information Systems (NIS) Regulations 2018
+                </h4>
               </div>
               <p className="text-white/70 text-sm mb-3">
-                The UK NIS Regulations implement the EU NIS Directive and establish a legal framework for
-                cybersecurity in critical infrastructure sectors including energy. Key requirements:
+                The UK NIS Regulations implement the EU NIS Directive and establish a legal
+                framework for cybersecurity in critical infrastructure sectors including energy. Key
+                requirements:
               </p>
               <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400">-</span>
-                  <span><strong className="text-white">Operators of Essential Services (OES)</strong> must implement appropriate security measures</span>
+                  <span>
+                    <strong className="text-white">Operators of Essential Services (OES)</strong>{' '}
+                    must implement appropriate security measures
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400">-</span>
-                  <span>Report significant incidents to competent authority within <strong className="text-white">72 hours</strong></span>
+                  <span>
+                    Report significant incidents to competent authority within{' '}
+                    <strong className="text-white">72 hours</strong>
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400">-</span>
-                  <span>Energy sector OES include electricity generators, distributors, and suppliers</span>
+                  <span>
+                    Energy sector OES include electricity generators, distributors, and suppliers
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400">-</span>
@@ -682,7 +773,10 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400">-</span>
-                  <span>Penalties up to <strong className="text-white">17 million pounds</strong> for non-compliance</span>
+                  <span>
+                    Penalties up to <strong className="text-white">17 million pounds</strong> for
+                    non-compliance
+                  </span>
                 </li>
               </ul>
             </div>
@@ -690,10 +784,13 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
               <div className="flex items-center gap-2 mb-3">
                 <Shield className="w-5 h-5 text-green-400" />
-                <h4 className="font-semibold text-green-400">NCSC Cyber Assessment Framework (CAF)</h4>
+                <h4 className="font-semibold text-green-400">
+                  NCSC Cyber Assessment Framework (CAF)
+                </h4>
               </div>
               <p className="text-white/70 text-sm mb-3">
-                The National Cyber Security Centre provides the CAF to help organisations achieve NIS compliance:
+                The National Cyber Security Centre provides the CAF to help organisations achieve
+                NIS compliance:
               </p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="bg-green-500/10 p-2 rounded">
@@ -719,7 +816,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <h4 className="font-semibold text-elec-yellow mb-2">Implications for Contractors</h4>
               <div className="space-y-3 text-sm text-white/70">
                 <p>
-                  While NIS obligations fall on OES organisations, contractors working on their sites must:
+                  While NIS obligations fall on OES organisations, contractors working on their
+                  sites must:
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
@@ -749,10 +847,22 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-purple-400 mb-2">Additional UK Guidance</h4>
               <ul className="space-y-1 text-sm text-white/70">
-                <li><strong className="text-white">NCSC:</strong> Extensive free guidance at ncsc.gov.uk including OT-specific advice</li>
-                <li><strong className="text-white">CPNI:</strong> Centre for Protection of National Infrastructure physical security guidance</li>
-                <li><strong className="text-white">Energy Networks Association:</strong> Sector-specific cybersecurity requirements</li>
-                <li><strong className="text-white">BS EN 62443:</strong> Industrial automation security standards (British Standards)</li>
+                <li>
+                  <strong className="text-white">NCSC:</strong> Extensive free guidance at
+                  ncsc.gov.uk including OT-specific advice
+                </li>
+                <li>
+                  <strong className="text-white">CPNI:</strong> Centre for Protection of National
+                  Infrastructure physical security guidance
+                </li>
+                <li>
+                  <strong className="text-white">Energy Networks Association:</strong>{' '}
+                  Sector-specific cybersecurity requirements
+                </li>
+                <li>
+                  <strong className="text-white">BS EN 62443:</strong> Industrial automation
+                  security standards (British Standards)
+                </li>
               </ul>
             </div>
           </div>
@@ -792,27 +902,45 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                 <ul className="space-y-2 text-sm text-white/70">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow font-bold">1.</span>
-                    <span><strong className="text-white">Change all default passwords</strong> before system handover - document new credentials securely</span>
+                    <span>
+                      <strong className="text-white">Change all default passwords</strong> before
+                      system handover - document new credentials securely
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow font-bold">2.</span>
-                    <span><strong className="text-white">Update firmware</strong> to latest version before commissioning</span>
+                    <span>
+                      <strong className="text-white">Update firmware</strong> to latest version
+                      before commissioning
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow font-bold">3.</span>
-                    <span><strong className="text-white">Disable unused services</strong> and network ports on devices</span>
+                    <span>
+                      <strong className="text-white">Disable unused services</strong> and network
+                      ports on devices
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow font-bold">4.</span>
-                    <span><strong className="text-white">Request correct network segment</strong> from IT - do not connect to random ports</span>
+                    <span>
+                      <strong className="text-white">Request correct network segment</strong> from
+                      IT - do not connect to random ports
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow font-bold">5.</span>
-                    <span><strong className="text-white">Enable encrypted protocols</strong> where available (HTTPS, BACnet/SC)</span>
+                    <span>
+                      <strong className="text-white">Enable encrypted protocols</strong> where
+                      available (HTTPS, BACnet/SC)
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow font-bold">6.</span>
-                    <span><strong className="text-white">Physically secure</strong> network equipment in locked enclosures</span>
+                    <span>
+                      <strong className="text-white">Physically secure</strong> network equipment in
+                      locked enclosures
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -827,23 +955,38 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                 <ul className="space-y-2 text-sm text-white/70">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 font-bold">1.</span>
-                    <span><strong className="text-white">Create a secure credentials document</strong> - not just on a sticky note</span>
+                    <span>
+                      <strong className="text-white">Create a secure credentials document</strong> -
+                      not just on a sticky note
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 font-bold">2.</span>
-                    <span><strong className="text-white">Document all IP addresses</strong> and network configuration</span>
+                    <span>
+                      <strong className="text-white">Document all IP addresses</strong> and network
+                      configuration
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 font-bold">3.</span>
-                    <span><strong className="text-white">Provide security recommendations</strong> in handover pack</span>
+                    <span>
+                      <strong className="text-white">Provide security recommendations</strong> in
+                      handover pack
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 font-bold">4.</span>
-                    <span><strong className="text-white">Hand over credentials in person</strong> or via encrypted channel - not plain email</span>
+                    <span>
+                      <strong className="text-white">Hand over credentials in person</strong> or via
+                      encrypted channel - not plain email
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 font-bold">5.</span>
-                    <span><strong className="text-white">Advise client on ongoing security</strong> - firmware updates, password changes</span>
+                    <span>
+                      <strong className="text-white">Advise client on ongoing security</strong> -
+                      firmware updates, password changes
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -858,23 +1001,38 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                 <ul className="space-y-2 text-sm text-white/70">
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400 font-bold">1.</span>
-                    <span><strong className="text-white">Document findings</strong> professionally with screenshots if possible</span>
+                    <span>
+                      <strong className="text-white">Document findings</strong> professionally with
+                      screenshots if possible
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400 font-bold">2.</span>
-                    <span><strong className="text-white">Report to client in writing</strong> - email to facilities manager with IT cc'd</span>
+                    <span>
+                      <strong className="text-white">Report to client in writing</strong> - email to
+                      facilities manager with IT cc'd
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400 font-bold">3.</span>
-                    <span><strong className="text-white">Explain risks in plain English</strong> - "This is like leaving your front door unlocked"</span>
+                    <span>
+                      <strong className="text-white">Explain risks in plain English</strong> - "This
+                      is like leaving your front door unlocked"
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400 font-bold">4.</span>
-                    <span><strong className="text-white">Never exploit vulnerabilities</strong> or access systems without authorisation</span>
+                    <span>
+                      <strong className="text-white">Never exploit vulnerabilities</strong> or
+                      access systems without authorisation
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400 font-bold">5.</span>
-                    <span><strong className="text-white">Keep records</strong> of your due diligence for professional protection</span>
+                    <span>
+                      <strong className="text-white">Keep records</strong> of your due diligence for
+                      professional protection
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -933,11 +1091,22 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Key Contacts and Resources</h4>
               <ul className="space-y-1 text-sm text-white/70">
-                <li><strong className="text-white">NCSC:</strong> ncsc.gov.uk - Free security guidance</li>
-                <li><strong className="text-white">Action Fraud:</strong> 0300 123 2040 - Report cyber crime</li>
-                <li><strong className="text-white">NCSC Reporting:</strong> report.ncsc.gov.uk</li>
-                <li><strong className="text-white">ICO:</strong> Data breach reporting</li>
-                <li><strong className="text-white">Client IT Team:</strong> First point of contact</li>
+                <li>
+                  <strong className="text-white">NCSC:</strong> ncsc.gov.uk - Free security guidance
+                </li>
+                <li>
+                  <strong className="text-white">Action Fraud:</strong> 0300 123 2040 - Report cyber
+                  crime
+                </li>
+                <li>
+                  <strong className="text-white">NCSC Reporting:</strong> report.ncsc.gov.uk
+                </li>
+                <li>
+                  <strong className="text-white">ICO:</strong> Data breach reporting
+                </li>
+                <li>
+                  <strong className="text-white">Client IT Team:</strong> First point of contact
+                </li>
               </ul>
             </div>
 
@@ -994,13 +1163,20 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Button variant="outline" asChild className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow">
+          <Button
+            variant="outline"
+            asChild
+            className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow"
+          >
             <Link to="../section-4">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Previous: Section 4
             </Link>
           </Button>
-          <Button asChild className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+          <Button
+            asChild
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
             <Link to="../../module-6">
               Next: Module 6
               <ArrowRight className="w-5 h-5 ml-2" />

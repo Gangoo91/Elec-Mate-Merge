@@ -7,34 +7,34 @@ const FiberOpticsModule7 = () => {
   const sections = [
     {
       id: 1,
-      title: "Common Fibre Faults and Symptoms",
+      title: 'Common Fibre Faults and Symptoms',
       icon: AlertTriangle,
-      description: "Identifying typical fiber optic issues"
+      description: 'Identifying typical fiber optic issues',
     },
     {
       id: 2,
-      title: "End-Face Contamination and Cleaning",
+      title: 'End-Face Contamination and Cleaning',
       icon: Droplets,
-      description: "Connector cleaning and maintenance procedures"
+      description: 'Connector cleaning and maintenance procedures',
     },
     {
       id: 3,
-      title: "Troubleshooting Tools and OTDR Use",
+      title: 'Troubleshooting Tools and OTDR Use',
       icon: Wrench,
-      description: "Diagnostic equipment and fault location techniques"
+      description: 'Diagnostic equipment and fault location techniques',
     },
     {
       id: 4,
-      title: "Fibre Record-Keeping",
+      title: 'Fibre Record-Keeping',
       icon: FileText,
-      description: "Documentation and maintenance records"
+      description: 'Documentation and maintenance records',
     },
     {
       id: 5,
-      title: "Upgrade Planning and Network Expansion",
+      title: 'Upgrade Planning and Network Expansion',
       icon: TrendingUp,
-      description: "Future-proofing and capacity planning"
-    }
+      description: 'Future-proofing and capacity planning',
+    },
   ];
 
   return (

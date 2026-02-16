@@ -26,10 +26,7 @@ export interface UserProfessionalMembership {
 
 export const professionalBodyService = {
   async getAllProfessionalBodies(): Promise<ProfessionalBody[]> {
-    const { data, error } = await supabase
-      .from('professional_bodies')
-      .select('*')
-      .order('name');
+    const { data, error } = await supabase.from('professional_bodies').select('*').order('name');
 
     if (error) {
       console.error('Error fetching professional bodies:', error);
@@ -42,10 +39,12 @@ export const professionalBodyService = {
   async getUserMemberships(userId: string): Promise<UserProfessionalMembership[]> {
     const { data, error } = await supabase
       .from('user_professional_memberships')
-      .select(`
+      .select(
+        `
         *,
         professional_body:professional_bodies(*)
-      `)
+      `
+      )
       .eq('user_id', userId)
       .eq('is_active', true);
 
@@ -57,14 +56,18 @@ export const professionalBodyService = {
     return data || [];
   },
 
-  async addUserMembership(membership: Omit<UserProfessionalMembership, 'id'>): Promise<UserProfessionalMembership> {
+  async addUserMembership(
+    membership: Omit<UserProfessionalMembership, 'id'>
+  ): Promise<UserProfessionalMembership> {
     const { data, error } = await supabase
       .from('user_professional_memberships')
       .insert(membership)
-      .select(`
+      .select(
+        `
         *,
         professional_body:professional_bodies(*)
-      `)
+      `
+      )
       .single();
 
     if (error) {
@@ -75,15 +78,20 @@ export const professionalBodyService = {
     return data;
   },
 
-  async updateUserMembership(id: string, updates: Partial<UserProfessionalMembership>): Promise<UserProfessionalMembership> {
+  async updateUserMembership(
+    id: string,
+    updates: Partial<UserProfessionalMembership>
+  ): Promise<UserProfessionalMembership> {
     const { data, error } = await supabase
       .from('user_professional_memberships')
       .update(updates)
       .eq('id', id)
-      .select(`
+      .select(
+        `
         *,
         professional_body:professional_bodies(*)
-      `)
+      `
+      )
       .single();
 
     if (error) {
@@ -119,5 +127,5 @@ export const professionalBodyService = {
     }
 
     return data;
-  }
+  },
 };

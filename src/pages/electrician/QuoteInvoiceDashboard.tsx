@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { Button } from "@/components/ui/button";
-import { List, FileText } from "lucide-react";
-import { QuoteInvoiceDashboard as Dashboard } from "@/components/electrician/invoice-builder/QuoteInvoiceDashboard";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Button } from '@/components/ui/button';
+import { List, FileText } from 'lucide-react';
+import { QuoteInvoiceDashboard as Dashboard } from '@/components/electrician/invoice-builder/QuoteInvoiceDashboard';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const QuoteInvoiceDashboard = () => {
   const canonical = `${window.location.origin}/electrician/quote-invoice-dashboard`;

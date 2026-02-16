@@ -1,11 +1,10 @@
-
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, FileText, Wrench, Shield, Lightbulb } from "lucide-react";
-import { level2DiplomaUnits } from "@/data/courseUnits";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { BookOpen, FileText, Wrench, Shield, Lightbulb } from 'lucide-react';
+import { level2DiplomaUnits } from '@/data/courseUnits';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const EALLevel2Diploma = () => {
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ const EALLevel2Diploma = () => {
   // Handle unit selection
   const handleUnitSelect = (unitId: string) => {
     setSelectedUnit(unitId);
-    const selectedUnitData = level2DiplomaUnits.find(unit => unit.id === unitId);
+    const selectedUnitData = level2DiplomaUnits.find((unit) => unit.id === unitId);
     if (selectedUnitData) {
       navigate(`/apprentice/study/eal/level-2-diploma/unit/${unitId}`);
     }
@@ -28,15 +27,15 @@ const EALLevel2Diploma = () => {
 
   // Handle resource completion toggle
   const handleToggleResourceComplete = (resourceId: string) => {
-    setCompletedResources(prev => ({
+    setCompletedResources((prev) => ({
       ...prev,
-      [resourceId]: !prev[resourceId]
+      [resourceId]: !prev[resourceId],
     }));
   };
 
   // Get selected unit data
-  const selectedUnitData = selectedUnit 
-    ? level2DiplomaUnits.find(unit => unit.id === selectedUnit) || null
+  const selectedUnitData = selectedUnit
+    ? level2DiplomaUnits.find((unit) => unit.id === selectedUnit) || null
     : null;
 
   return (
@@ -47,19 +46,18 @@ const EALLevel2Diploma = () => {
           <h1 className="text-3xl font-bold tracking-tight mb-2">
             <span className="gradient-text">EAL Level 2 Diploma</span>
           </h1>
-          <p className="text-white text-sm sm:text-base">
-            Diploma in Electrical Installation
-          </p>
+          <p className="text-white text-sm sm:text-base">Diploma in Electrical Installation</p>
         </div>
-<SmartBackButton />
+        <SmartBackButton />
       </div>
 
       {/* Course description */}
       <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6 mb-8">
         <h2 className="text-xl font-semibold mb-2">Course Overview</h2>
         <p className="text-white">
-          The Level 2 Diploma in Electrical Installation is the foundation qualification for anyone looking to become an electrician. 
-          This course covers essential knowledge and skills needed to start your career in the electrical industry.
+          The Level 2 Diploma in Electrical Installation is the foundation qualification for anyone
+          looking to become an electrician. This course covers essential knowledge and skills needed
+          to start your career in the electrical industry.
         </p>
       </div>
 
@@ -68,25 +66,25 @@ const EALLevel2Diploma = () => {
         {level2DiplomaUnits.map((unit) => {
           // Select the appropriate icon based on the unit code
           let UnitIcon;
-          switch(unit.code) {
-            case "ELEC2/01": 
+          switch (unit.code) {
+            case 'ELEC2/01':
               UnitIcon = Shield;
               break;
-            case "ELEC2/04": 
+            case 'ELEC2/04':
               UnitIcon = BookOpen;
               break;
-            case "ELEC2/05A": 
+            case 'ELEC2/05A':
               UnitIcon = FileText;
               break;
-            case "ELEC2/05B": 
+            case 'ELEC2/05B':
               UnitIcon = Wrench;
               break;
-            default: 
+            default:
               UnitIcon = Lightbulb;
           }
 
           return (
-            <Card 
+            <Card
               key={unit.id}
               className="h-full border-elec-yellow/20 bg-white/5 hover:bg-white/10 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer"
               onClick={() => handleUnitSelect(unit.id)}
@@ -103,8 +101,8 @@ const EALLevel2Diploma = () => {
               <CardContent>
                 <p className="text-white mb-4">{unit.description}</p>
                 <div className="flex justify-end">
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="border-elec-yellow/30 hover:bg-elec-yellow/10 text-sm"
                   >
                     Open Unit

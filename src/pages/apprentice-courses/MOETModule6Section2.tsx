@@ -1,44 +1,44 @@
-import { ArrowLeft, CircuitBoard, Minus, Settings, Hash } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, CircuitBoard, Minus, Settings, Hash } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule6Section2 = () => {
   useSEO(
-    "Section 6.2: Electrical Schematics and Wiring Diagrams - MOET Module 6",
-    "Circuit diagrams, single-line diagrams, control circuits and labelling standards"
+    'Section 6.2: Electrical Schematics and Wiring Diagrams - MOET Module 6',
+    'Circuit diagrams, single-line diagrams, control circuits and labelling standards'
   );
 
   const subsections = [
     {
-      number: "6.2.1",
-      title: "Circuit Diagrams and Symbols",
-      description: "Standard electrical symbols, circuit representation and schematic conventions",
+      number: '6.2.1',
+      title: 'Circuit Diagrams and Symbols',
+      description: 'Standard electrical symbols, circuit representation and schematic conventions',
       icon: CircuitBoard,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section2-1"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section2-1',
     },
     {
-      number: "6.2.2",
-      title: "Single-Line Diagrams",
-      description: "Power system representation, SLD conventions and system overviews",
+      number: '6.2.2',
+      title: 'Single-Line Diagrams',
+      description: 'Power system representation, SLD conventions and system overviews',
       icon: Minus,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section2-2"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section2-2',
     },
     {
-      number: "6.2.3",
-      title: "Control Circuit Wiring Diagrams",
-      description: "Control circuit layouts, wiring methods and connection diagrams",
+      number: '6.2.3',
+      title: 'Control Circuit Wiring Diagrams',
+      description: 'Control circuit layouts, wiring methods and connection diagrams',
       icon: Settings,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section2-3"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section2-3',
     },
     {
-      number: "6.2.4",
-      title: "Labelling and Numbering Standards",
-      description: "Component labelling, wire numbering and identification standards",
+      number: '6.2.4',
+      title: 'Labelling and Numbering Standards',
+      description: 'Component labelling, wire numbering and identification standards',
       icon: Hash,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section2-4"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module6-section2-4',
+    },
   ];
 
   return (
@@ -46,7 +46,11 @@ const MOETModule6Section2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 6

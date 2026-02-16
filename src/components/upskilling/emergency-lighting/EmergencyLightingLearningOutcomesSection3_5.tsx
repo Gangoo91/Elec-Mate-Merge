@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection3_5 = () => {
   const outcomes = [
-    "Explain the purpose and importance of emergency lighting layout drawings",
-    "Identify the key information that must appear on a compliant drawing",
-    "Use symbols and notation correctly when preparing layout plans",
-    "Ensure drawings reflect both design intent and as-installed conditions",
-    "Understand the role of drawings in compliance, inspection, and maintenance"
+    'Explain the purpose and importance of emergency lighting layout drawings',
+    'Identify the key information that must appear on a compliant drawing',
+    'Use symbols and notation correctly when preparing layout plans',
+    'Ensure drawings reflect both design intent and as-installed conditions',
+    'Understand the role of drawings in compliance, inspection, and maintenance',
   ];
 
   return (

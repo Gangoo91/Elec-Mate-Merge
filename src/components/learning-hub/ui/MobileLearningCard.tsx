@@ -39,11 +39,13 @@ export const MobileLearningCard: React.FC<MobileLearningCardProps> = ({
   if (collapsible && isMobile) {
     return (
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <Card className={cn(
-          'touch-manipulation transition-all duration-200',
-          variantStyles[variant],
-          className
-        )}>
+        <Card
+          className={cn(
+            'touch-manipulation transition-all duration-200',
+            variantStyles[variant],
+            className
+          )}
+        >
           <CollapsibleTrigger className="w-full">
             <CardHeader className="flex flex-row items-center justify-between py-3 px-4 space-y-0">
               <div className="flex items-center gap-2">
@@ -59,9 +61,7 @@ export const MobileLearningCard: React.FC<MobileLearningCardProps> = ({
             </CardHeader>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <CardContent className="px-4 pb-4 pt-0">
-              {children}
-            </CardContent>
+            <CardContent className="px-4 pb-4 pt-0">{children}</CardContent>
           </CollapsibleContent>
         </Card>
       </Collapsible>

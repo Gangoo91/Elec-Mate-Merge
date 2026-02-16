@@ -26,8 +26,10 @@ import {
 
 const EnergyEfficiencyModule2Section5: React.FC = () => {
   useSEO({
-    title: 'Reporting Load Profiles and Variations | Energy Efficiency Module 2 Section 5 | Elec-Mate',
-    description: 'Learn professional reporting techniques for load profiles including visualisations, anomaly identification, benchmarking, and presenting actionable recommendations to clients.',
+    title:
+      'Reporting Load Profiles and Variations | Energy Efficiency Module 2 Section 5 | Elec-Mate',
+    description:
+      'Learn professional reporting techniques for load profiles including visualisations, anomaly identification, benchmarking, and presenting actionable recommendations to clients.',
     keywords: [
       'load profile reporting',
       'energy audit reports',
@@ -43,19 +45,17 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
   const quickCheckQuestions = [
     {
       id: 'qc1-m2s5',
-      question: 'What type of visualisation is best for showing energy consumption patterns across both time of day and days of the week?',
-      options: [
-        'Simple bar chart',
-        'Carpet plot or heatmap',
-        'Pie chart',
-        'Scatter plot',
-      ],
+      question:
+        'What type of visualisation is best for showing energy consumption patterns across both time of day and days of the week?',
+      options: ['Simple bar chart', 'Carpet plot or heatmap', 'Pie chart', 'Scatter plot'],
       correctIndex: 1,
-      explanation: 'Carpet plots and heatmaps are ideal for displaying two-dimensional time-based data, allowing viewers to quickly identify patterns across hours of the day and days of the week simultaneously. They use colour intensity to represent consumption levels.',
+      explanation:
+        'Carpet plots and heatmaps are ideal for displaying two-dimensional time-based data, allowing viewers to quickly identify patterns across hours of the day and days of the week simultaneously. They use colour intensity to represent consumption levels.',
     },
     {
       id: 'qc2-m2s5',
-      question: 'When presenting energy efficiency findings to a client, what should be the primary focus?',
+      question:
+        'When presenting energy efficiency findings to a client, what should be the primary focus?',
       options: [
         'Technical specifications and raw data',
         'Actionable recommendations with clear ROI',
@@ -63,7 +63,8 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
         'Industry jargon and complex formulas',
       ],
       correctIndex: 1,
-      explanation: 'Clients are primarily interested in actionable recommendations that show clear return on investment. While technical data supports your findings, the focus should be on practical outcomes, costs, savings, and payback periods that help clients make informed decisions.',
+      explanation:
+        'Clients are primarily interested in actionable recommendations that show clear return on investment. While technical data supports your findings, the focus should be on practical outcomes, costs, savings, and payback periods that help clients make informed decisions.',
     },
     {
       id: 'qc3-m2s5',
@@ -75,7 +76,8 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
         'Randomly to avoid bias',
       ],
       correctIndex: 2,
-      explanation: 'Effective prioritisation uses a matrix approach considering multiple factors: potential energy savings, implementation cost, ease of implementation, and payback period. This helps clients understand which actions offer the best value and where to focus their budget.',
+      explanation:
+        'Effective prioritisation uses a matrix approach considering multiple factors: potential energy savings, implementation cost, ease of implementation, and payback period. This helps clients understand which actions offer the best value and where to focus their budget.',
     },
   ];
 
@@ -131,17 +133,14 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
       correctAnswer: 'Red or orange (warm colours)',
     },
     {
-      question: 'What is the recommended maximum payback period for "quick win" energy efficiency measures?',
-      options: [
-        '10+ years',
-        '5-10 years',
-        '2-3 years or less',
-        '15-20 years',
-      ],
+      question:
+        'What is the recommended maximum payback period for "quick win" energy efficiency measures?',
+      options: ['10+ years', '5-10 years', '2-3 years or less', '15-20 years'],
       correctAnswer: '2-3 years or less',
     },
     {
-      question: 'When identifying load profile anomalies, what pattern suggests equipment malfunction?',
+      question:
+        'When identifying load profile anomalies, what pattern suggests equipment malfunction?',
       options: [
         'Consistent daily peaks during business hours',
         'Sudden unexplained spikes or erratic consumption patterns',
@@ -151,7 +150,8 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
       correctAnswer: 'Sudden unexplained spikes or erratic consumption patterns',
     },
     {
-      question: 'What software tool is commonly used for creating professional load profile visualisations?',
+      question:
+        'What software tool is commonly used for creating professional load profile visualisations?',
       options: [
         'Word processor only',
         'Excel with charts, or specialised energy software',
@@ -185,27 +185,33 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
   const faqs = [
     {
       question: 'What software tools are best for creating load profile reports?',
-      answer: 'Microsoft Excel remains the most accessible tool for creating load profile visualisations, including line charts, heatmaps, and pivot tables. For more advanced analysis, consider specialised energy management software like EnergyCAP, Utility Manager, or Power BI. Many smart meter portals also provide built-in reporting features. The key is choosing tools your client can also access and understand for ongoing monitoring.',
+      answer:
+        'Microsoft Excel remains the most accessible tool for creating load profile visualisations, including line charts, heatmaps, and pivot tables. For more advanced analysis, consider specialised energy management software like EnergyCAP, Utility Manager, or Power BI. Many smart meter portals also provide built-in reporting features. The key is choosing tools your client can also access and understand for ongoing monitoring.',
     },
     {
       question: 'How do I explain technical findings to non-technical clients?',
-      answer: 'Focus on outcomes rather than technical processes. Use analogies (e.g., "leaving equipment on overnight is like leaving taps running"), visual comparisons, and dollar figures rather than kilowatt-hours. Prepare a one-page summary with key points, avoid jargon, and use colour-coded charts that intuitively show good (green) vs concerning (red) patterns. Always relate findings back to their business operations and costs.',
+      answer:
+        'Focus on outcomes rather than technical processes. Use analogies (e.g., "leaving equipment on overnight is like leaving taps running"), visual comparisons, and dollar figures rather than kilowatt-hours. Prepare a one-page summary with key points, avoid jargon, and use colour-coded charts that intuitively show good (green) vs concerning (red) patterns. Always relate findings back to their business operations and costs.',
     },
     {
       question: 'What benchmarks should I use for Australian commercial buildings?',
-      answer: 'The NABERS (National Australian Built Environment Rating System) provides excellent benchmarks for offices, hotels, shopping centres, and data centres. For offices, typical consumption ranges from 100-200 kWh/m²/year for 4-5 star ratings. The Commercial Building Disclosure (CBD) program also provides comparison data. Always compare like-for-like: similar building types, climate zones, and operational hours.',
+      answer:
+        'The NABERS (National Australian Built Environment Rating System) provides excellent benchmarks for offices, hotels, shopping centres, and data centres. For offices, typical consumption ranges from 100-200 kWh/m²/year for 4-5 star ratings. The Commercial Building Disclosure (CBD) program also provides comparison data. Always compare like-for-like: similar building types, climate zones, and operational hours.',
     },
     {
       question: 'How detailed should load profile reports be?',
-      answer: 'Match detail level to your audience. Executive summaries should fit on one page with key metrics and recommendations. Technical appendices can contain detailed data, methodologies, and supporting calculations for those who want to verify findings. Most clients want to understand: what is the problem, what will it cost to fix, how much will they save, and how long until they see returns.',
+      answer:
+        'Match detail level to your audience. Executive summaries should fit on one page with key metrics and recommendations. Technical appendices can contain detailed data, methodologies, and supporting calculations for those who want to verify findings. Most clients want to understand: what is the problem, what will it cost to fix, how much will they save, and how long until they see returns.',
     },
     {
       question: 'What are the most common load profile anomalies to look for?',
-      answer: 'Key anomalies include: high baseload during non-operational hours (equipment left on), unexpected demand spikes (faulty equipment or poor power factor), inconsistent patterns compared to similar days (operational issues), gradual consumption creep over time (degrading equipment), and misalignment between occupancy and energy use (control system issues). Seasonal anomalies like heating running in summer also indicate problems.',
+      answer:
+        'Key anomalies include: high baseload during non-operational hours (equipment left on), unexpected demand spikes (faulty equipment or poor power factor), inconsistent patterns compared to similar days (operational issues), gradual consumption creep over time (degrading equipment), and misalignment between occupancy and energy use (control system issues). Seasonal anomalies like heating running in summer also indicate problems.',
     },
     {
       question: 'How do I prioritise recommendations when clients have limited budgets?',
-      answer: 'Use a prioritisation matrix scoring each recommendation on: potential savings (annual $), implementation cost, ease of implementation, and payback period. Categorise into "quick wins" (low cost, fast payback), "strategic investments" (higher cost but significant savings), and "long-term upgrades" (major capital works). Present options in tiers so clients can choose based on their budget and risk tolerance.',
+      answer:
+        'Use a prioritisation matrix scoring each recommendation on: potential savings (annual $), implementation cost, ease of implementation, and payback period. Categorise into "quick wins" (low cost, fast payback), "strategic investments" (higher cost but significant savings), and "long-term upgrades" (major capital works). Present options in tiers so clients can choose based on their budget and risk tolerance.',
     },
   ];
 
@@ -214,7 +220,12 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-2">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -234,7 +245,8 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
             Reporting Load Profiles and Variations
           </h1>
           <p className="text-white/80">
-            Master professional reporting techniques to communicate load profile findings effectively
+            Master professional reporting techniques to communicate load profile findings
+            effectively
           </p>
         </div>
 
@@ -267,8 +279,8 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
 
           <div className="space-y-4 text-white">
             <p>
-              Effective visualisations transform complex data into instantly understandable insights.
-              The right chart type depends on what patterns you want to highlight.
+              Effective visualisations transform complex data into instantly understandable
+              insights. The right chart type depends on what patterns you want to highlight.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -279,23 +291,32 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <p className="font-medium text-white">Line Charts</p>
-                  <p className="text-sm text-white/80">Best for showing demand over time (24-hour profiles, weekly trends).
-                  Use multiple lines to compare different days or periods.</p>
+                  <p className="text-sm text-white/80">
+                    Best for showing demand over time (24-hour profiles, weekly trends). Use
+                    multiple lines to compare different days or periods.
+                  </p>
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
                   <p className="font-medium text-white">Heatmaps / Carpet Plots</p>
-                  <p className="text-sm text-white/80">Ideal for showing patterns across two time dimensions (hour vs day).
-                  Colour intensity represents consumption level - immediately reveals operational patterns.</p>
+                  <p className="text-sm text-white/80">
+                    Ideal for showing patterns across two time dimensions (hour vs day). Colour
+                    intensity represents consumption level - immediately reveals operational
+                    patterns.
+                  </p>
                 </div>
                 <div className="border-l-2 border-green-500 pl-3">
                   <p className="font-medium text-white">Bar Charts</p>
-                  <p className="text-sm text-white/80">Effective for comparing categories (monthly totals, equipment breakdown,
-                  before/after comparisons). Easy for clients to understand.</p>
+                  <p className="text-sm text-white/80">
+                    Effective for comparing categories (monthly totals, equipment breakdown,
+                    before/after comparisons). Easy for clients to understand.
+                  </p>
                 </div>
                 <div className="border-l-2 border-purple-500 pl-3">
                   <p className="font-medium text-white">Stacked Area Charts</p>
-                  <p className="text-sm text-white/80">Shows how different loads contribute to total consumption over time.
-                  Useful for identifying which equipment dominates at different times.</p>
+                  <p className="text-sm text-white/80">
+                    Shows how different loads contribute to total consumption over time. Useful for
+                    identifying which equipment dominates at different times.
+                  </p>
                 </div>
               </div>
             </div>
@@ -368,7 +389,8 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           <div className="space-y-4 text-white">
             <p>
               Anomaly detection is where load profile analysis delivers the most value. Learning to
-              spot unusual patterns helps identify waste, equipment faults, and optimisation opportunities.
+              spot unusual patterns helps identify waste, equipment faults, and optimisation
+              opportunities.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -378,32 +400,41 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <Flame className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Elevated Baseload</p>
-                    <p className="text-sm text-white/80">High consumption during non-operational hours indicates equipment
-                    running unnecessarily. Compare night/weekend loads to minimum possible (security, refrigeration, etc.).</p>
+                    <p className="text-sm text-white/80">
+                      High consumption during non-operational hours indicates equipment running
+                      unnecessarily. Compare night/weekend loads to minimum possible (security,
+                      refrigeration, etc.).
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Unexplained Demand Spikes</p>
-                    <p className="text-sm text-white/80">Sudden peaks not correlating with known activities may indicate
-                    equipment faults, poor power factor, or uncontrolled motor starts.</p>
+                    <p className="text-sm text-white/80">
+                      Sudden peaks not correlating with known activities may indicate equipment
+                      faults, poor power factor, or uncontrolled motor starts.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Schedule Misalignment</p>
-                    <p className="text-sm text-white/80">HVAC or lighting operating outside business hours, or starting
-                    too early/finishing too late. Often indicates BMS or timer issues.</p>
+                    <p className="text-sm text-white/80">
+                      HVAC or lighting operating outside business hours, or starting too
+                      early/finishing too late. Often indicates BMS or timer issues.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-5 h-5 text-purple-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Consumption Creep</p>
-                    <p className="text-sm text-white/80">Gradual increase in consumption over months/years without operational
-                    changes. May indicate degrading equipment efficiency or control drift.</p>
+                    <p className="text-sm text-white/80">
+                      Gradual increase in consumption over months/years without operational changes.
+                      May indicate degrading equipment efficiency or control drift.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -532,11 +563,21 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-green-400 mb-2">Benchmark Sources</h4>
               <ul className="text-sm text-white space-y-1">
-                <li>• <strong>NABERS:</strong> nabers.gov.au - Australian building ratings</li>
-                <li>• <strong>Energy Rating:</strong> energyrating.gov.au - Appliance benchmarks</li>
-                <li>• <strong>CBD Program:</strong> cbd.gov.au - Commercial disclosure data</li>
-                <li>• <strong>Industry associations:</strong> Sector-specific benchmarks</li>
-                <li>• <strong>Utility data:</strong> Some retailers provide comparison data</li>
+                <li>
+                  • <strong>NABERS:</strong> nabers.gov.au - Australian building ratings
+                </li>
+                <li>
+                  • <strong>Energy Rating:</strong> energyrating.gov.au - Appliance benchmarks
+                </li>
+                <li>
+                  • <strong>CBD Program:</strong> cbd.gov.au - Commercial disclosure data
+                </li>
+                <li>
+                  • <strong>Industry associations:</strong> Sector-specific benchmarks
+                </li>
+                <li>
+                  • <strong>Utility data:</strong> Some retailers provide comparison data
+                </li>
               </ul>
             </div>
           </div>
@@ -563,45 +604,69 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               </h3>
               <ol className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    1
+                  </span>
                   <div>
                     <p className="font-medium text-white">Executive Summary (1 page)</p>
-                    <p className="text-sm text-white/80">Key findings, total savings potential, top 3 recommendations, payback overview</p>
+                    <p className="text-sm text-white/80">
+                      Key findings, total savings potential, top 3 recommendations, payback overview
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    2
+                  </span>
                   <div>
                     <p className="font-medium text-white">Site Overview</p>
-                    <p className="text-sm text-white/80">Building details, operational hours, major equipment, current energy costs</p>
+                    <p className="text-sm text-white/80">
+                      Building details, operational hours, major equipment, current energy costs
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    3
+                  </span>
                   <div>
                     <p className="font-medium text-white">Load Profile Analysis</p>
-                    <p className="text-sm text-white/80">Visualisations, patterns identified, anomalies, benchmark comparisons</p>
+                    <p className="text-sm text-white/80">
+                      Visualisations, patterns identified, anomalies, benchmark comparisons
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    4
+                  </span>
                   <div>
                     <p className="font-medium text-white">Findings and Opportunities</p>
-                    <p className="text-sm text-white/80">Detailed analysis of each issue, evidence, quantified waste</p>
+                    <p className="text-sm text-white/80">
+                      Detailed analysis of each issue, evidence, quantified waste
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    5
+                  </span>
                   <div>
                     <p className="font-medium text-white">Recommendations</p>
-                    <p className="text-sm text-white/80">Prioritised actions with costs, savings, payback periods</p>
+                    <p className="text-sm text-white/80">
+                      Prioritised actions with costs, savings, payback periods
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+                  <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    6
+                  </span>
                   <div>
                     <p className="font-medium text-white">Appendices</p>
-                    <p className="text-sm text-white/80">Raw data, detailed calculations, methodology, equipment lists</p>
+                    <p className="text-sm text-white/80">
+                      Raw data, detailed calculations, methodology, equipment lists
+                    </p>
                   </div>
                 </li>
               </ol>
@@ -666,18 +731,26 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <p className="font-medium text-white">Executive / Finance</p>
-                  <p className="text-sm text-white/80">Focus on ROI, payback periods, risk reduction, compliance. Use dollar
-                  figures prominently. Keep technical detail minimal. One-page summary with clear recommendations.</p>
+                  <p className="text-sm text-white/80">
+                    Focus on ROI, payback periods, risk reduction, compliance. Use dollar figures
+                    prominently. Keep technical detail minimal. One-page summary with clear
+                    recommendations.
+                  </p>
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
                   <p className="font-medium text-white">Facility Managers</p>
-                  <p className="text-sm text-white/80">Technical detail appreciated but practical focus essential. Emphasise
-                  operational changes, BMS adjustments, maintenance implications. Show before/after potential.</p>
+                  <p className="text-sm text-white/80">
+                    Technical detail appreciated but practical focus essential. Emphasise
+                    operational changes, BMS adjustments, maintenance implications. Show
+                    before/after potential.
+                  </p>
                 </div>
                 <div className="border-l-2 border-green-500 pl-3">
                   <p className="font-medium text-white">Operations / Maintenance</p>
-                  <p className="text-sm text-white/80">Detailed equipment-level findings. Specific faults, schedules to adjust,
-                  maintenance requirements. Practical step-by-step guidance.</p>
+                  <p className="text-sm text-white/80">
+                    Detailed equipment-level findings. Specific faults, schedules to adjust,
+                    maintenance requirements. Practical step-by-step guidance.
+                  </p>
                 </div>
               </div>
             </div>
@@ -765,24 +838,43 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Recommendation Format Template</h3>
               <div className="border border-white/20 rounded-lg p-4 text-sm">
-                <p className="text-elec-yellow font-bold mb-2">Recommendation #1: Optimise HVAC Start Times</p>
+                <p className="text-elec-yellow font-bold mb-2">
+                  Recommendation #1: Optimise HVAC Start Times
+                </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="text-white">
-                    <p><span className="text-white/60">Issue:</span> HVAC starts 2 hours before occupancy</p>
-                    <p><span className="text-white/60">Action:</span> Adjust BMS start time to 7:00 AM</p>
-                    <p><span className="text-white/60">Priority:</span> <span className="text-green-400">Quick Win</span></p>
+                    <p>
+                      <span className="text-white/60">Issue:</span> HVAC starts 2 hours before
+                      occupancy
+                    </p>
+                    <p>
+                      <span className="text-white/60">Action:</span> Adjust BMS start time to 7:00
+                      AM
+                    </p>
+                    <p>
+                      <span className="text-white/60">Priority:</span>{' '}
+                      <span className="text-green-400">Quick Win</span>
+                    </p>
                   </div>
                   <div className="text-white">
-                    <p><span className="text-white/60">Est. Cost:</span> $500 (BMS programming)</p>
-                    <p><span className="text-white/60">Annual Savings:</span> $3,200</p>
-                    <p><span className="text-white/60">Payback:</span> 2 months</p>
+                    <p>
+                      <span className="text-white/60">Est. Cost:</span> $500 (BMS programming)
+                    </p>
+                    <p>
+                      <span className="text-white/60">Annual Savings:</span> $3,200
+                    </p>
+                    <p>
+                      <span className="text-white/60">Payback:</span> 2 months
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-3">Typical Quick Wins from Load Profile Analysis</h3>
+              <h3 className="font-semibold text-white mb-3">
+                Typical Quick Wins from Load Profile Analysis
+              </h3>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -810,11 +902,22 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Payback Period Guidelines</h4>
               <ul className="text-sm text-white space-y-1">
-                <li>• <strong>&lt;1 year:</strong> Highly attractive - implement immediately</li>
-                <li>• <strong>1-3 years:</strong> Good return - strong recommendation</li>
-                <li>• <strong>3-5 years:</strong> Acceptable for most businesses</li>
-                <li>• <strong>5-10 years:</strong> Consider for major equipment upgrades</li>
-                <li>• <strong>&gt;10 years:</strong> Usually only justified by other benefits (comfort, compliance)</li>
+                <li>
+                  • <strong>&lt;1 year:</strong> Highly attractive - implement immediately
+                </li>
+                <li>
+                  • <strong>1-3 years:</strong> Good return - strong recommendation
+                </li>
+                <li>
+                  • <strong>3-5 years:</strong> Acceptable for most businesses
+                </li>
+                <li>
+                  • <strong>5-10 years:</strong> Consider for major equipment upgrades
+                </li>
+                <li>
+                  • <strong>&gt;10 years:</strong> Usually only justified by other benefits
+                  (comfort, compliance)
+                </li>
               </ul>
             </div>
           </div>
@@ -853,10 +956,18 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
             <div>
               <h3 className="font-semibold text-elec-yellow mb-2">Key Visualisation Types</h3>
               <ul className="text-sm space-y-1 text-white">
-                <li>• <strong>Heatmap:</strong> Hour vs day patterns</li>
-                <li>• <strong>Line chart:</strong> Daily/weekly trends</li>
-                <li>• <strong>Bar chart:</strong> Category comparisons</li>
-                <li>• <strong>Stacked area:</strong> Load composition</li>
+                <li>
+                  • <strong>Heatmap:</strong> Hour vs day patterns
+                </li>
+                <li>
+                  • <strong>Line chart:</strong> Daily/weekly trends
+                </li>
+                <li>
+                  • <strong>Bar chart:</strong> Category comparisons
+                </li>
+                <li>
+                  • <strong>Stacked area:</strong> Load composition
+                </li>
               </ul>
               <h3 className="font-semibold text-elec-yellow mb-2 mt-4">Benchmarks to Include</h3>
               <ul className="text-sm space-y-1 text-white">
@@ -869,7 +980,9 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           </div>
 
           <div className="mt-4 pt-4 border-t border-elec-yellow/30">
-            <h3 className="font-semibold text-elec-yellow mb-2">Golden Rules for Client Presentations</h3>
+            <h3 className="font-semibold text-elec-yellow mb-2">
+              Golden Rules for Client Presentations
+            </h3>
             <div className="grid md:grid-cols-3 gap-4 text-sm text-white">
               <div className="flex items-center gap-2">
                 <span className="text-elec-yellow font-bold">1.</span>
@@ -892,10 +1005,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-2">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border border-white/10 rounded-lg overflow-hidden"
-              >
+              <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
                   <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>

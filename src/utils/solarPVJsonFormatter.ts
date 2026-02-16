@@ -14,7 +14,7 @@ import {
   ArrayTestResult,
   InverterTestResult,
   Defect,
-  CertificatePhoto
+  CertificatePhoto,
 } from '@/types/solar-pv';
 
 export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
@@ -58,92 +58,131 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
   // Format system type for display
   const formatSystemType = (type: string): string => {
     switch (type) {
-      case 'grid-tied': return 'Grid-Tied';
-      case 'hybrid': return 'Hybrid (Grid + Battery)';
-      case 'off-grid': return 'Off-Grid';
-      default: return type || '';
+      case 'grid-tied':
+        return 'Grid-Tied';
+      case 'hybrid':
+        return 'Hybrid (Grid + Battery)';
+      case 'off-grid':
+        return 'Off-Grid';
+      default:
+        return type || '';
     }
   };
 
   // Format mounting type for display
   const formatMountingType = (type: string): string => {
     switch (type) {
-      case 'roof-integrated': return 'Roof Integrated (In-Roof)';
-      case 'roof-mounted': return 'Roof Mounted (On-Roof)';
-      case 'ground-mounted': return 'Ground Mounted';
-      case 'building-integrated': return 'Building Integrated (BIPV)';
-      default: return type || '';
+      case 'roof-integrated':
+        return 'Roof Integrated (In-Roof)';
+      case 'roof-mounted':
+        return 'Roof Mounted (On-Roof)';
+      case 'ground-mounted':
+        return 'Ground Mounted';
+      case 'building-integrated':
+        return 'Building Integrated (BIPV)';
+      default:
+        return type || '';
     }
   };
 
   // Format inverter type for display
   const formatInverterType = (type: string): string => {
     switch (type) {
-      case 'string': return 'String Inverter';
-      case 'micro': return 'Micro Inverter';
-      case 'hybrid': return 'Hybrid Inverter';
-      case 'central': return 'Central Inverter';
-      default: return type || '';
+      case 'string':
+        return 'String Inverter';
+      case 'micro':
+        return 'Micro Inverter';
+      case 'hybrid':
+        return 'Hybrid Inverter';
+      case 'central':
+        return 'Central Inverter';
+      default:
+        return type || '';
     }
   };
 
   // Format phase type for display
   const formatPhaseType = (type: string): string => {
     switch (type) {
-      case 'single': return 'Single Phase';
-      case 'three': return 'Three Phase';
-      default: return type || '';
+      case 'single':
+        return 'Single Phase';
+      case 'three':
+        return 'Three Phase';
+      default:
+        return type || '';
     }
   };
 
   // Format battery chemistry for display
   const formatBatteryChemistry = (type: string): string => {
     switch (type) {
-      case 'lithium-ion': return 'Lithium-Ion';
-      case 'lfp': return 'LFP (Lithium Iron Phosphate)';
-      case 'lead-acid': return 'Lead Acid';
-      case 'other': return 'Other';
-      default: return type || '';
+      case 'lithium-ion':
+        return 'Lithium-Ion';
+      case 'lfp':
+        return 'LFP (Lithium Iron Phosphate)';
+      case 'lead-acid':
+        return 'Lead Acid';
+      case 'other':
+        return 'Other';
+      default:
+        return type || '';
     }
   };
 
   // Format earthing arrangement for display
   const formatEarthingArrangement = (type: string): string => {
     switch (type) {
-      case 'TN-S': return 'TN-S';
-      case 'TN-C-S': return 'TN-C-S (PME)';
-      case 'TT': return 'TT';
-      default: return type || '';
+      case 'TN-S':
+        return 'TN-S';
+      case 'TN-C-S':
+        return 'TN-C-S (PME)';
+      case 'TT':
+        return 'TT';
+      default:
+        return type || '';
     }
   };
 
   // Format meter type for display
   const formatMeterType = (type: string): string => {
     switch (type) {
-      case 'smart': return 'Smart Meter';
-      case 'export': return 'Export Meter';
-      case 'generation': return 'Generation Meter';
-      case 'none': return 'No Meter';
-      default: return type || '';
+      case 'smart':
+        return 'Smart Meter';
+      case 'export':
+        return 'Export Meter';
+      case 'generation':
+        return 'Generation Meter';
+      case 'none':
+        return 'No Meter';
+      default:
+        return type || '';
     }
   };
 
   // Format defect severity
   const formatSeverity = (severity: string): string => {
     switch (severity) {
-      case 'critical': return 'Critical';
-      case 'non-critical': return 'Non-Critical';
-      case 'recommendation': return 'Recommendation';
-      default: return severity || '';
+      case 'critical':
+        return 'Critical';
+      case 'non-critical':
+        return 'Non-Critical';
+      case 'recommendation':
+        return 'Recommendation';
+      default:
+        return severity || '';
     }
   };
 
   const getSeverityClass = (severity: string): string => {
     switch (severity) {
-      case 'critical': return 'critical';
-      case 'non-critical': return 'non-critical';
-      case 'recommendation': return 'recommendation';
-      default: return 'recommendation';
+      case 'critical':
+        return 'critical';
+      case 'non-critical':
+        return 'non-critical';
+      case 'recommendation':
+        return 'recommendation';
+      default:
+        return 'recommendation';
     }
   };
 
@@ -163,57 +202,84 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
   // Format consumer code for display
   const formatConsumerCode = (code: string): string => {
     switch (code) {
-      case 'RECC': return 'RECC';
-      case 'HIES': return 'HIES';
-      case 'other': return 'Other';
-      default: return code || '';
+      case 'RECC':
+        return 'RECC';
+      case 'HIES':
+        return 'HIES';
+      case 'other':
+        return 'Other';
+      default:
+        return code || '';
     }
   };
 
   // Format certificate type for display
   const formatCertificateType = (type: string): string => {
     switch (type) {
-      case 'installation': return 'Installation Certificate';
-      case 'commissioning': return 'Commissioning Report';
-      case 'design-only': return 'Design Report';
-      default: return 'Installation Certificate';
+      case 'installation':
+        return 'Installation Certificate';
+      case 'commissioning':
+        return 'Commissioning Report';
+      case 'design-only':
+        return 'Design Report';
+      default:
+        return 'Installation Certificate';
     }
   };
 
   // Format work type for display
   const formatWorkType = (type: string): string => {
     switch (type) {
-      case 'new-installation': return 'New Installation';
-      case 'retrofit': return 'Retrofit / Addition';
-      case 'extension': return 'System Extension';
-      case 'replacement': return 'Component Replacement';
-      case 'repair': return 'Repair / Remedial Work';
-      default: return 'New Installation';
+      case 'new-installation':
+        return 'New Installation';
+      case 'retrofit':
+        return 'Retrofit / Addition';
+      case 'extension':
+        return 'System Extension';
+      case 'replacement':
+        return 'Component Replacement';
+      case 'repair':
+        return 'Repair / Remedial Work';
+      default:
+        return 'New Installation';
     }
   };
 
   // Format property type for display
   const formatPropertyType = (type: string): string => {
     switch (type) {
-      case 'domestic': return 'Domestic / Residential';
-      case 'commercial': return 'Commercial';
-      case 'industrial': return 'Industrial';
-      case 'agricultural': return 'Agricultural / Farm';
-      case 'mixed-use': return 'Mixed Use';
-      default: return type || 'Domestic';
+      case 'domestic':
+        return 'Domestic / Residential';
+      case 'commercial':
+        return 'Commercial';
+      case 'industrial':
+        return 'Industrial';
+      case 'agricultural':
+        return 'Agricultural / Farm';
+      case 'mixed-use':
+        return 'Mixed Use';
+      default:
+        return type || 'Domestic';
     }
   };
 
   // Format yield calculation method for display
   const formatYieldMethod = (method: string): string => {
     switch (method) {
-      case 'mcs-estimator': return 'MCS Yield Estimator';
-      case 'sap-2012': return 'SAP 2012 Appendix M';
-      case 'pvgis': return 'PVGIS';
-      case 'pvsyst': return 'PVsyst Simulation';
-      case 'manufacturer': return 'Manufacturer Tool';
-      case 'other': return 'Other Method';
-      default: return 'MCS Yield Estimator';
+      case 'mcs-estimator':
+        return 'MCS Yield Estimator';
+      case 'sap-2012':
+        return 'SAP 2012 Appendix M';
+      case 'pvgis':
+        return 'PVGIS';
+      case 'pvsyst':
+        return 'PVsyst Simulation';
+      case 'manufacturer':
+        return 'Manufacturer Tool';
+      case 'other':
+        return 'Other Method';
+      default:
+        return 'MCS Yield Estimator';
     }
   };
 
@@ -226,7 +292,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       panel_model: arr.panelModel || '',
       panel_wattage: arr.panelWattage || 0,
       panel_count: arr.panelCount || 0,
-      array_capacity: ((arr.panelWattage || 0) * (arr.panelCount || 0) / 1000).toFixed(2),
+      array_capacity: (((arr.panelWattage || 0) * (arr.panelCount || 0)) / 1000).toFixed(2),
       mcs_certified: arr.mcsCertified || false,
       orientation: arr.orientation || '',
       tilt_angle: arr.tiltAngle || 0,
@@ -235,7 +301,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       string_voc: arr.stringVoltage || '',
       string_isc: arr.stringCurrent || '',
       mounting_type: arr.mountingType || '',
-      mounting_type_display: formatMountingType(arr.mountingType || '')
+      mounting_type_display: formatMountingType(arr.mountingType || ''),
     }));
   };
 
@@ -254,7 +320,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       mppt_count: inv.mpptCount || 1,
       phases: inv.phases || 'single',
       phases_display: formatPhaseType(inv.phases || 'single'),
-      location: inv.location || ''
+      location: inv.location || '',
     }));
   };
 
@@ -265,7 +331,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
     const arrays: PVArray[] = formData.arrays || [];
 
     return arrayTests.map((test, index) => {
-      const array = arrays.find(a => a.id === test.arrayId);
+      const array = arrays.find((a) => a.id === test.arrayId);
       return {
         array_number: index + 1,
         array_name: array ? `${array.panelMake} ${array.panelModel}` : `Array ${index + 1}`,
@@ -275,7 +341,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
         polarity_result: formatTestResult(test.polarityCorrect),
         polarity_class: getTestResultClass(test.polarityCorrect),
         continuity_result: formatTestResult(test.stringContinuity),
-        continuity_class: getTestResultClass(test.stringContinuity)
+        continuity_class: getTestResultClass(test.stringContinuity),
       };
     });
   };
@@ -287,7 +353,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
     const inverters: Inverter[] = formData.inverters || [];
 
     return inverterTests.map((test, index) => {
-      const inverter = inverters.find(i => i.id === test.inverterId);
+      const inverter = inverters.find((i) => i.id === test.inverterId);
       return {
         inverter_number: index + 1,
         inverter_name: inverter ? `${inverter.make} ${inverter.model}` : `Inverter ${index + 1}`,
@@ -298,7 +364,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
         anti_islanding_result: formatTestResult(test.antiIslandingTest),
         anti_islanding_class: getTestResultClass(test.antiIslandingTest),
         protection_result: formatTestResult(test.earthFaultProtection),
-        protection_class: getTestResultClass(test.earthFaultProtection)
+        protection_class: getTestResultClass(test.earthFaultProtection),
       };
     });
   };
@@ -325,7 +391,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       bidirectional_device_make: acTests.bidirectionalDeviceMake || '',
       bidirectional_device_model: acTests.bidirectionalDeviceModel || '',
       bidirectional_device_result: formatTestResult(acTests.bidirectionalDeviceInstalled),
-      bidirectional_device_class: getTestResultClass(acTests.bidirectionalDeviceInstalled)
+      bidirectional_device_class: getTestResultClass(acTests.bidirectionalDeviceInstalled),
     };
   };
 
@@ -339,7 +405,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       export_verified: commissioning.exportVerified || false,
       generation_meter_reading: commissioning.generationMeterReading || '',
       customer_briefed: commissioning.customerBriefed || false,
-      documentation_provided: commissioning.documentationProvided || false
+      documentation_provided: commissioning.documentationProvided || false,
     };
   };
 
@@ -352,17 +418,17 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       severity: formatSeverity(d.severity),
       severity_class: getSeverityClass(d.severity),
       rectified: d.rectified || false,
-      rectification_date: formatDateUK(d.rectificationDate || '')
+      rectification_date: formatDateUK(d.rectificationDate || ''),
     }));
   };
 
   // Format Photos for PDF
   const formatPhotos = (): any[] => {
     const photos: CertificatePhoto[] = formData.photos || [];
-    return photos.map(p => ({
+    return photos.map((p) => ({
       url: p.url || '',
       caption: p.caption || '',
-      category: p.category || 'general'
+      category: p.category || 'general',
     }));
   };
 
@@ -376,7 +442,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       serial_number: battery.serialNumber || '',
       capacity: battery.capacity || 0,
       chemistry: battery.chemistry || '',
-      chemistry_display: formatBatteryChemistry(battery.chemistry || '')
+      chemistry_display: formatBatteryChemistry(battery.chemistry || ''),
     };
   };
 
@@ -388,12 +454,13 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       mpan: grid.mpan || '',
       application_reference: grid.applicationReference || '',
       application_type: grid.applicationType || '',
-      application_type_display: grid.applicationType === 'G98' ? 'G98 (≤16A per phase)' : 'G99 (>16A per phase)',
+      application_type_display:
+        grid.applicationType === 'G98' ? 'G98 (≤16A per phase)' : 'G99 (>16A per phase)',
       application_date: formatDateUK(grid.applicationDate || ''),
       approval_date: formatDateUK(grid.approvalDate || ''),
       approval_reference: grid.approvalReference || '',
       export_limited: grid.exportLimited || false,
-      export_limit_kw: grid.exportLimitKw || ''
+      export_limit_kw: grid.exportLimitKw || '',
     };
   };
 
@@ -406,7 +473,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       meter_make: metering.meterMake || '',
       meter_model: metering.meterModel || '',
       meter_serial: metering.meterSerial || '',
-      ct_ratio: metering.ctRatio || ''
+      ct_ratio: metering.ctRatio || '',
     };
   };
 
@@ -418,7 +485,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       warranty_docs_provided: handover.warrantyDocsProvided || false,
       mcs_document_provided: handover.mcsDocumentProvided || false,
       maintenance_schedule_provided: handover.maintenanceScheduleProvided || false,
-      emergency_shutdown_explained: handover.emergencyShutdownExplained || false
+      emergency_shutdown_explained: handover.emergencyShutdownExplained || false,
     };
   };
 
@@ -429,14 +496,14 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
       installer_number: mcs.installerNumber || '',
       installation_number: mcs.installationNumber || '',
       consumer_code: mcs.consumerCode || '',
-      consumer_code_display: formatConsumerCode(mcs.consumerCode || '')
+      consumer_code_display: formatConsumerCode(mcs.consumerCode || ''),
     };
   };
 
   // Calculate totals
   const arrays = formData.arrays || [];
   const totalCapacity = arrays.reduce((sum, arr) => {
-    return sum + ((arr.panelWattage || 0) * (arr.panelCount || 0) / 1000);
+    return sum + ((arr.panelWattage || 0) * (arr.panelCount || 0)) / 1000;
   }, 0);
   const totalPanels = arrays.reduce((sum, arr) => sum + (arr.panelCount || 0), 0);
 
@@ -621,6 +688,6 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
     registration_scheme_logo: get('registrationSchemeLogo'),
-    registration_scheme: get('registrationScheme')
+    registration_scheme: get('registrationScheme'),
   };
 };

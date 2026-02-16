@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 const FaultFindingFAQ = () => {
   return (
@@ -31,13 +31,31 @@ const FaultFindingFAQ = () => {
                 <div className="bg-blue-900/20 p-3 rounded border border-blue-500/30">
                   <h5 className="text-blue-400 font-medium mb-2">Step-by-Step Process:</h5>
                   <ol className="list-decimal list-inside space-y-1">
-                    <li><strong>Document symptoms:</strong> Record error codes, performance data, visual observations</li>
-                    <li><strong>Gather information:</strong> Review recent changes, weather events, maintenance history</li>
-                    <li><strong>Develop hypothesis:</strong> List probable causes based on symptoms</li>
-                    <li><strong>Test systematically:</strong> Start with most likely causes, use elimination method</li>
-                    <li><strong>Isolate the fault:</strong> Test components individually to pinpoint issue</li>
-                    <li><strong>Implement solution:</strong> Repair or replace faulty component</li>
-                    <li><strong>Verify fix:</strong> Test system operation and document resolution</li>
+                    <li>
+                      <strong>Document symptoms:</strong> Record error codes, performance data,
+                      visual observations
+                    </li>
+                    <li>
+                      <strong>Gather information:</strong> Review recent changes, weather events,
+                      maintenance history
+                    </li>
+                    <li>
+                      <strong>Develop hypothesis:</strong> List probable causes based on symptoms
+                    </li>
+                    <li>
+                      <strong>Test systematically:</strong> Start with most likely causes, use
+                      elimination method
+                    </li>
+                    <li>
+                      <strong>Isolate the fault:</strong> Test components individually to pinpoint
+                      issue
+                    </li>
+                    <li>
+                      <strong>Implement solution:</strong> Repair or replace faulty component
+                    </li>
+                    <li>
+                      <strong>Verify fix:</strong> Test system operation and document resolution
+                    </li>
                   </ol>
                 </div>
               </div>
@@ -87,7 +105,9 @@ const FaultFindingFAQ = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Professional diagnostic tools enable accurate fault identification:</p>
+              <p className="mb-3">
+                Professional diagnostic tools enable accurate fault identification:
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div className="bg-green-900/20 p-3 rounded border border-green-500/30">
                   <h5 className="text-green-400 font-medium mb-2">Essential Equipment:</h5>

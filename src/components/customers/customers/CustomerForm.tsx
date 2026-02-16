@@ -19,8 +19,16 @@ const customerSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
   phone: z.string().max(20, 'Phone must be less than 20 characters').optional().or(z.literal('')),
-  address: z.string().max(500, 'Address must be less than 500 characters').optional().or(z.literal('')),
-  notes: z.string().max(1000, 'Notes must be less than 1000 characters').optional().or(z.literal('')),
+  address: z
+    .string()
+    .max(500, 'Address must be less than 500 characters')
+    .optional()
+    .or(z.literal('')),
+  notes: z
+    .string()
+    .max(1000, 'Notes must be less than 1000 characters')
+    .optional()
+    .or(z.literal('')),
 });
 
 type CustomerFormData = z.infer<typeof customerSchema>;
@@ -64,8 +72,9 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
 
   const onSubmit = async (data: CustomerFormData) => {
     // Sanitize all inputs before saving
-    const { sanitizeTextInput, sanitizeEmail, sanitizePhone } = await import('@/utils/inputSanitization');
-    
+    const { sanitizeTextInput, sanitizeEmail, sanitizePhone } =
+      await import('@/utils/inputSanitization');
+
     const sanitizedData: CustomerFormData = {
       name: sanitizeTextInput(data.name),
       email: data.email ? sanitizeEmail(data.email) : '',
@@ -73,7 +82,7 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
       address: data.address ? sanitizeTextInput(data.address) : '',
       notes: data.notes ? sanitizeTextInput(data.notes) : '',
     };
-    
+
     await onSave(sanitizedData);
     reset();
   };
@@ -104,14 +113,14 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
               className="bg-background border-border text-foreground"
               placeholder="Enter customer name"
             />
-            {errors.name && (
-              <p className="text-sm text-red-400">{errors.name.message}</p>
-            )}
+            {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
           </div>
 
           {/* Email */}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-foreground">Email</Label>
+            <Label htmlFor="email" className="text-foreground">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -119,28 +128,28 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
               className="bg-background border-border text-foreground"
               placeholder="customer@example.com"
             />
-            {errors.email && (
-              <p className="text-sm text-red-400">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="text-sm text-red-400">{errors.email.message}</p>}
           </div>
 
           {/* Phone */}
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-foreground">Phone</Label>
+            <Label htmlFor="phone" className="text-foreground">
+              Phone
+            </Label>
             <Input
               id="phone"
               {...register('phone')}
               className="bg-background border-border text-foreground"
               placeholder="01234 567890"
             />
-            {errors.phone && (
-              <p className="text-sm text-red-400">{errors.phone.message}</p>
-            )}
+            {errors.phone && <p className="text-sm text-red-400">{errors.phone.message}</p>}
           </div>
 
           {/* Address */}
           <div className="space-y-2">
-            <Label htmlFor="address" className="text-foreground">Address</Label>
+            <Label htmlFor="address" className="text-foreground">
+              Address
+            </Label>
             <Textarea
               id="address"
               {...register('address')}
@@ -148,14 +157,14 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
               placeholder="Enter full address"
               rows={3}
             />
-            {errors.address && (
-              <p className="text-sm text-red-400">{errors.address.message}</p>
-            )}
+            {errors.address && <p className="text-sm text-red-400">{errors.address.message}</p>}
           </div>
 
           {/* Notes */}
           <div className="space-y-2">
-            <Label htmlFor="notes" className="text-foreground">Notes</Label>
+            <Label htmlFor="notes" className="text-foreground">
+              Notes
+            </Label>
             <Textarea
               id="notes"
               {...register('notes')}
@@ -163,9 +172,7 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
               placeholder="Add any additional notes..."
               rows={3}
             />
-            {errors.notes && (
-              <p className="text-sm text-red-400">{errors.notes.message}</p>
-            )}
+            {errors.notes && <p className="text-sm text-red-400">{errors.notes.message}</p>}
           </div>
 
           {/* Actions */}

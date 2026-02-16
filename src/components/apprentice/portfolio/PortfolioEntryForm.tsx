@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Clock, ImagePlus, ChevronLeft, ChevronRight, Check, BookOpen } from "lucide-react";
-import { PortfolioEntry, PortfolioCategory, PortfolioFile } from "@/types/portfolio";
-import { EvidenceUploader } from "@/components/apprentice/shared/EvidenceUploader";
-import { EvidenceRequirementsGuide } from "@/components/apprentice/portfolio/EvidenceRequirementsGuide";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Clock, ImagePlus, ChevronLeft, ChevronRight, Check, BookOpen } from 'lucide-react';
+import { PortfolioEntry, PortfolioCategory, PortfolioFile } from '@/types/portfolio';
+import { EvidenceUploader } from '@/components/apprentice/shared/EvidenceUploader';
+import { EvidenceRequirementsGuide } from '@/components/apprentice/portfolio/EvidenceRequirementsGuide';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import {
   ScrollbarFreeSelect,
   ScrollbarFreeSelectContent,
   ScrollbarFreeSelectItem,
   ScrollbarFreeSelectTrigger,
   ScrollbarFreeSelectValue,
-} from "@/components/ui/scrollbar-free-select";
-import { SingleSelectWithAdd } from "@/components/ui/single-select-with-add";
-import { useStudentQualification } from "@/hooks/useStudentQualification";
-import { ACPickerSheet } from "@/components/apprentice/portfolio/ACPickerSheet";
+} from '@/components/ui/scrollbar-free-select';
+import { SingleSelectWithAdd } from '@/components/ui/single-select-with-add';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { ACPickerSheet } from '@/components/apprentice/portfolio/ACPickerSheet';
 
 export interface PortfolioEntryFormProps {
   categories: PortfolioCategory[];
@@ -27,50 +27,49 @@ export interface PortfolioEntryFormProps {
 
 // Pre-defined options for dropdowns
 const SKILLS_OPTIONS = [
-  { value: "circuit-analysis", label: "Circuit Analysis" },
-  { value: "electrical-testing", label: "Electrical Testing" },
-  { value: "wiring-installation", label: "Wiring Installation" },
-  { value: "fault-finding", label: "Fault Finding" },
-  { value: "health-safety", label: "Health & Safety" },
-  { value: "conduit-installation", label: "Conduit Installation" },
-  { value: "panel-wiring", label: "Panel Wiring" },
-  { value: "motor-control", label: "Motor Control" },
-  { value: "plc-programming", label: "PLC Programming" },
-  { value: "cable-management", label: "Cable Management" },
-  { value: "earthing-bonding", label: "Earthing & Bonding" },
-  { value: "emergency-lighting", label: "Emergency Lighting" },
-  { value: "fire-alarm-systems", label: "Fire Alarm Systems" },
-  { value: "security-systems", label: "Security Systems" },
-  { value: "data-cabling", label: "Data Cabling" }
+  { value: 'circuit-analysis', label: 'Circuit Analysis' },
+  { value: 'electrical-testing', label: 'Electrical Testing' },
+  { value: 'wiring-installation', label: 'Wiring Installation' },
+  { value: 'fault-finding', label: 'Fault Finding' },
+  { value: 'health-safety', label: 'Health & Safety' },
+  { value: 'conduit-installation', label: 'Conduit Installation' },
+  { value: 'panel-wiring', label: 'Panel Wiring' },
+  { value: 'motor-control', label: 'Motor Control' },
+  { value: 'plc-programming', label: 'PLC Programming' },
+  { value: 'cable-management', label: 'Cable Management' },
+  { value: 'earthing-bonding', label: 'Earthing & Bonding' },
+  { value: 'emergency-lighting', label: 'Emergency Lighting' },
+  { value: 'fire-alarm-systems', label: 'Fire Alarm Systems' },
+  { value: 'security-systems', label: 'Security Systems' },
+  { value: 'data-cabling', label: 'Data Cabling' },
 ];
 
 const TAGS_OPTIONS = [
-  { value: "practical", label: "Practical Work" },
-  { value: "theory", label: "Theory" },
-  { value: "workplace", label: "Workplace Learning" },
-  { value: "college", label: "College Project" },
-  { value: "assessment", label: "Assessment" },
-  { value: "teamwork", label: "Teamwork" },
-  { value: "problem-solving", label: "Problem Solving" },
-  { value: "documentation", label: "Documentation" },
-  { value: "presentation", label: "Presentation" },
-  { value: "research", label: "Research" },
-  { value: "innovation", label: "Innovation" },
-  { value: "leadership", label: "Leadership" }
+  { value: 'practical', label: 'Practical Work' },
+  { value: 'theory', label: 'Theory' },
+  { value: 'workplace', label: 'Workplace Learning' },
+  { value: 'college', label: 'College Project' },
+  { value: 'assessment', label: 'Assessment' },
+  { value: 'teamwork', label: 'Teamwork' },
+  { value: 'problem-solving', label: 'Problem Solving' },
+  { value: 'documentation', label: 'Documentation' },
+  { value: 'presentation', label: 'Presentation' },
+  { value: 'research', label: 'Research' },
+  { value: 'innovation', label: 'Innovation' },
+  { value: 'leadership', label: 'Leadership' },
 ];
 
-
 const AWARDING_BODY_STANDARDS_OPTIONS = [
-  { value: "bs7671", label: "BS 7671:2018 - Wiring Regulations" },
-  { value: "bs5839", label: "BS 5839 - Fire Detection & Alarm Systems" },
-  { value: "bs6651", label: "BS 6651 - Lightning Protection" },
-  { value: "bs5266", label: "BS 5266 - Emergency Lighting" },
-  { value: "iet-guidance", label: "IET Guidance Notes" },
-  { value: "city-guilds-2365", label: "City & Guilds 2365" },
-  { value: "eal-electrical", label: "EAL Electrical Installation" },
-  { value: "btec-electrical", label: "BTEC Electrical Engineering" },
-  { value: "niceic-standards", label: "NICEIC Standards" },
-  { value: "napit-requirements", label: "NAPIT Requirements" }
+  { value: 'bs7671', label: 'BS 7671:2018 - Wiring Regulations' },
+  { value: 'bs5839', label: 'BS 5839 - Fire Detection & Alarm Systems' },
+  { value: 'bs6651', label: 'BS 6651 - Lightning Protection' },
+  { value: 'bs5266', label: 'BS 5266 - Emergency Lighting' },
+  { value: 'iet-guidance', label: 'IET Guidance Notes' },
+  { value: 'city-guilds-2365', label: 'City & Guilds 2365' },
+  { value: 'eal-electrical', label: 'EAL Electrical Installation' },
+  { value: 'btec-electrical', label: 'BTEC Electrical Engineering' },
+  { value: 'niceic-standards', label: 'NICEIC Standards' },
+  { value: 'napit-requirements', label: 'NAPIT Requirements' },
 ];
 
 // Wizard steps configuration
@@ -78,35 +77,40 @@ const WIZARD_STEPS = [
   { id: 'basics', title: 'Basics', shortTitle: 'Basics' },
   { id: 'skills', title: 'Skills & Outcomes', shortTitle: 'Skills' },
   { id: 'evidence', title: 'Evidence', shortTitle: 'Evidence' },
-  { id: 'reflection', title: 'Reflection', shortTitle: 'Reflect' }
+  { id: 'reflection', title: 'Reflection', shortTitle: 'Reflect' },
 ];
 
-const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: PortfolioEntryFormProps) => {
-  const isMobile = useMediaQuery("(max-width: 640px)");
+const PortfolioEntryForm = ({
+  categories,
+  initialData,
+  onSubmit,
+  onCancel,
+}: PortfolioEntryFormProps) => {
+  const isMobile = useMediaQuery('(max-width: 640px)');
   const { qualificationCode } = useStudentQualification();
   const [currentStep, setCurrentStep] = useState(0);
   const [showACPicker, setShowACPicker] = useState(false);
   const [formData, setFormData] = useState({
-    title: initialData?.title || "",
-    description: initialData?.description || "",
-    categoryId: initialData?.category.id || "",
-    reflection: initialData?.reflection || "",
+    title: initialData?.title || '',
+    description: initialData?.description || '',
+    categoryId: initialData?.category.id || '',
+    reflection: initialData?.reflection || '',
     skills: initialData?.skills || [],
     tags: initialData?.tags || [],
     assessmentCriteria: initialData?.assessmentCriteria || [],
     learningOutcomes: initialData?.learningOutcomes || [],
-    supervisorFeedback: initialData?.supervisorFeedback || "",
+    supervisorFeedback: initialData?.supervisorFeedback || '',
     selfAssessment: initialData?.selfAssessment || 3,
-    status: initialData?.status || "draft" as const,
+    status: initialData?.status || ('draft' as const),
     timeSpent: initialData?.timeSpent || 0,
     awardingBodyStandards: initialData?.awardingBodyStandards || [],
-    evidenceFiles: initialData?.evidenceFiles || [] as PortfolioFile[]
+    evidenceFiles: initialData?.evidenceFiles || ([] as PortfolioFile[]),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const selectedCategory = categories.find(cat => cat.id === formData.categoryId);
+    const selectedCategory = categories.find((cat) => cat.id === formData.categoryId);
     if (!selectedCategory) return;
 
     const submitData: Partial<PortfolioEntry> = {
@@ -114,36 +118,37 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       category: selectedCategory,
       dateCreated: initialData?.dateCreated || new Date().toISOString(),
       evidenceFiles: formData.evidenceFiles,
-      ...(formData.status === 'completed' && !initialData?.dateCompleted && {
-        dateCompleted: new Date().toISOString()
-      })
+      ...(formData.status === 'completed' &&
+        !initialData?.dateCompleted && {
+          dateCompleted: new Date().toISOString(),
+        }),
     };
 
     onSubmit(submitData);
   };
 
   const handleFilesChange = (files: PortfolioFile[]) => {
-    setFormData(prev => ({ ...prev, evidenceFiles: files }));
+    setFormData((prev) => ({ ...prev, evidenceFiles: files }));
   };
 
-  const categoryOptions = categories.map(cat => ({
+  const categoryOptions = categories.map((cat) => ({
     value: cat.id,
-    label: cat.name
+    label: cat.name,
   }));
 
   const statusOptions = [
-    { value: "draft", label: "Draft" },
-    { value: "in-progress", label: "In Progress" },
-    { value: "completed", label: "Completed" },
-    { value: "reviewed", label: "Reviewed" }
+    { value: 'draft', label: 'Draft' },
+    { value: 'in-progress', label: 'In Progress' },
+    { value: 'completed', label: 'Completed' },
+    { value: 'reviewed', label: 'Reviewed' },
   ];
 
   const selfAssessmentOptions = [
-    { value: "1", label: "1 - Poor" },
-    { value: "2", label: "2 - Below Average" },
-    { value: "3", label: "3 - Average" },
-    { value: "4", label: "4 - Good" },
-    { value: "5", label: "5 - Excellent" }
+    { value: '1', label: '1 - Poor' },
+    { value: '2', label: '2 - Below Average' },
+    { value: '3', label: '3 - Average' },
+    { value: '4', label: '4 - Good' },
+    { value: '5', label: '5 - Excellent' },
   ];
 
   const canProceed = () => {
@@ -163,13 +168,13 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
 
   const nextStep = () => {
     if (currentStep < WIZARD_STEPS.length - 1) {
-      setCurrentStep(prev => prev + 1);
+      setCurrentStep((prev) => prev + 1);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
-      setCurrentStep(prev => prev - 1);
+      setCurrentStep((prev) => prev - 1);
     }
   };
 
@@ -183,15 +188,17 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
             onClick={() => setCurrentStep(idx)}
             className={`
               flex items-center justify-center transition-all duration-200
-              ${idx === currentStep
-                ? 'bg-elec-yellow text-elec-dark'
-                : idx < currentStep
-                  ? 'bg-green-500 text-white'
-                  : 'bg-white/5 text-elec-light/60'
+              ${
+                idx === currentStep
+                  ? 'bg-elec-yellow text-elec-dark'
+                  : idx < currentStep
+                    ? 'bg-green-500 text-white'
+                    : 'bg-white/5 text-elec-light/60'
               }
-              ${isMobile
-                ? 'w-8 h-8 rounded-full text-xs font-bold'
-                : 'px-3 py-1.5 rounded-lg text-sm font-medium gap-2'
+              ${
+                isMobile
+                  ? 'w-8 h-8 rounded-full text-xs font-bold'
+                  : 'px-3 py-1.5 rounded-lg text-sm font-medium gap-2'
               }
             `}
           >
@@ -209,7 +216,9 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
             )}
           </button>
           {idx < WIZARD_STEPS.length - 1 && (
-            <div className={`w-4 sm:w-8 h-0.5 mx-1 ${idx < currentStep ? 'bg-green-500' : 'bg-white/5'}`} />
+            <div
+              className={`w-4 sm:w-8 h-0.5 mx-1 ${idx < currentStep ? 'bg-green-500' : 'bg-white/5'}`}
+            />
           )}
         </div>
       ))}
@@ -228,7 +237,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         <input
           type="text"
           value={formData.title}
-          onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
           placeholder="e.g., Three-phase motor installation"
           className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
           required
@@ -238,7 +247,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       {/* Category */}
       <ScrollbarFreeSelect
         value={formData.categoryId}
-        onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
+        onValueChange={(value) => setFormData((prev) => ({ ...prev, categoryId: value }))}
       >
         <ScrollbarFreeSelectTrigger
           label="Category"
@@ -263,7 +272,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         </label>
         <textarea
           value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
           placeholder="Describe what you did and what you learned..."
           rows={4}
           className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
@@ -276,7 +285,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       <div className="grid grid-cols-2 gap-4">
         <ScrollbarFreeSelect
           value={formData.status}
-          onValueChange={(value) => setFormData(prev => ({ ...prev, status: value as any }))}
+          onValueChange={(value) => setFormData((prev) => ({ ...prev, status: value as any }))}
         >
           <ScrollbarFreeSelectTrigger label="Status">
             <ScrollbarFreeSelectValue placeholder="Select status" />
@@ -301,10 +310,14 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               type="number"
               min="0"
               value={formData.timeSpent}
-              onChange={(e) => setFormData(prev => ({ ...prev, timeSpent: parseInt(e.target.value) || 0 }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, timeSpent: parseInt(e.target.value) || 0 }))
+              }
               className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium pl-10 pr-16"
             />
-            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-elec-light/60">mins</span>
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-elec-light/60">
+              mins
+            </span>
           </div>
         </div>
       </div>
@@ -319,7 +332,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         label="Skills Demonstrated"
         placeholder="Select a skill"
         value={formData.skills}
-        onValueChange={(value) => setFormData(prev => ({ ...prev, skills: value }))}
+        onValueChange={(value) => setFormData((prev) => ({ ...prev, skills: value }))}
         options={SKILLS_OPTIONS}
         hint="Add electrical skills you used or developed"
       />
@@ -347,7 +360,11 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         {formData.assessmentCriteria.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {formData.assessmentCriteria.slice(0, 6).map((ac) => (
-              <Badge key={ac} variant="outline" className="text-[10px] border-elec-yellow/30 text-elec-yellow">
+              <Badge
+                key={ac}
+                variant="outline"
+                className="text-[10px] border-elec-yellow/30 text-elec-yellow"
+              >
                 {ac}
               </Badge>
             ))}
@@ -368,7 +385,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         label="Tags"
         placeholder="Select a tag"
         value={formData.tags}
-        onValueChange={(value) => setFormData(prev => ({ ...prev, tags: value }))}
+        onValueChange={(value) => setFormData((prev) => ({ ...prev, tags: value }))}
         options={TAGS_OPTIONS}
         hint="Add tags to help categorise your work"
       />
@@ -378,7 +395,9 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         label="Standards & Regulations"
         placeholder="Select a standard or regulation"
         value={formData.awardingBodyStandards}
-        onValueChange={(value) => setFormData(prev => ({ ...prev, awardingBodyStandards: value }))}
+        onValueChange={(value) =>
+          setFormData((prev) => ({ ...prev, awardingBodyStandards: value }))
+        }
         options={AWARDING_BODY_STANDARDS_OPTIONS}
         hint="Add relevant standards or regulations that apply"
       />
@@ -388,7 +407,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         onOpenChange={setShowACPicker}
         qualificationCode={qualificationCode}
         selectedACs={formData.assessmentCriteria}
-        onDone={(acs) => setFormData(prev => ({ ...prev, assessmentCriteria: acs }))}
+        onDone={(acs) => setFormData((prev) => ({ ...prev, assessmentCriteria: acs }))}
       />
     </div>
   );
@@ -400,7 +419,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       {formData.categoryId && (
         <EvidenceRequirementsGuide
           categoryId={formData.categoryId}
-          uploadedFiles={formData.evidenceFiles.map(f => f.file).filter(Boolean) as File[]}
+          uploadedFiles={formData.evidenceFiles.map((f) => f.file).filter(Boolean) as File[]}
           compact={isMobile}
         />
       )}
@@ -430,7 +449,9 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       {/* Self Assessment */}
       <ScrollbarFreeSelect
         value={formData.selfAssessment.toString()}
-        onValueChange={(value) => setFormData(prev => ({ ...prev, selfAssessment: parseInt(value) }))}
+        onValueChange={(value) =>
+          setFormData((prev) => ({ ...prev, selfAssessment: parseInt(value) }))
+        }
       >
         <ScrollbarFreeSelectTrigger
           label="Self Assessment"
@@ -455,7 +476,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         </label>
         <textarea
           value={formData.reflection}
-          onChange={(e) => setFormData(prev => ({ ...prev, reflection: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({ ...prev, reflection: e.target.value }))}
           placeholder="Reflect on your learning, challenges faced, and what you'd do differently..."
           rows={5}
           className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
@@ -476,7 +497,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         </label>
         <textarea
           value={formData.supervisorFeedback}
-          onChange={(e) => setFormData(prev => ({ ...prev, supervisorFeedback: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({ ...prev, supervisorFeedback: e.target.value }))}
           placeholder="Enter any feedback from your supervisor or assessor..."
           rows={3}
           className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
@@ -503,7 +524,9 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
 
   // Navigation Buttons
   const NavigationButtons = () => (
-    <div className={`flex gap-3 pt-4 border-t border-elec-gray/20 ${isMobile ? 'sticky bottom-0 bg-white/5 pb-safe' : ''}`}>
+    <div
+      className={`flex gap-3 pt-4 border-t border-elec-gray/20 ${isMobile ? 'sticky bottom-0 bg-white/5 pb-safe' : ''}`}
+    >
       {currentStep > 0 ? (
         <Button
           type="button"
@@ -542,7 +565,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold py-3 h-12 disabled:opacity-50"
         >
           <Check className="h-4 w-4 mr-1" />
-          {initialData ? "Update Entry" : "Create Entry"}
+          {initialData ? 'Update Entry' : 'Create Entry'}
         </Button>
       )}
     </div>
@@ -553,17 +576,20 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       <DialogContent
         className={`
           bg-white/5 border-elec-gray/40
-          ${isMobile
-            ? 'max-w-full h-[100dvh] max-h-[100dvh] rounded-none p-0 flex flex-col'
-            : 'max-w-2xl max-h-[95vh]'
+          ${
+            isMobile
+              ? 'max-w-full h-[100dvh] max-h-[100dvh] rounded-none p-0 flex flex-col'
+              : 'max-w-2xl max-h-[95vh]'
           }
         `}
       >
         <div className={`${isMobile ? 'flex flex-col h-full' : ''}`}>
           {/* Header */}
-          <DialogHeader className={`pb-2 bg-white/5 ${isMobile ? 'sticky top-0 z-10 px-4 pt-4 border-b border-elec-gray/20' : ''}`}>
+          <DialogHeader
+            className={`pb-2 bg-white/5 ${isMobile ? 'sticky top-0 z-10 px-4 pt-4 border-b border-elec-gray/20' : ''}`}
+          >
             <DialogTitle className="text-elec-light text-lg sm:text-xl font-semibold">
-              {initialData ? "Edit Portfolio Entry" : "New Portfolio Entry"}
+              {initialData ? 'Edit Portfolio Entry' : 'New Portfolio Entry'}
             </DialogTitle>
             <StepIndicator />
           </DialogHeader>
@@ -573,15 +599,14 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
             onSubmit={handleSubmit}
             className={`
               bg-white/5
-              ${isMobile
-                ? 'flex-1 overflow-y-auto px-4 py-4'
-                : 'space-y-6 overflow-y-auto max-h-[calc(95vh-180px)] px-1'
+              ${
+                isMobile
+                  ? 'flex-1 overflow-y-auto px-4 py-4'
+                  : 'space-y-6 overflow-y-auto max-h-[calc(95vh-180px)] px-1'
               }
             `}
           >
-            <div className={isMobile ? 'min-h-full' : ''}>
-              {renderStep()}
-            </div>
+            <div className={isMobile ? 'min-h-full' : ''}>{renderStep()}</div>
 
             {/* Navigation */}
             <NavigationButtons />

@@ -1,69 +1,84 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Patch Cord Design and Performance | Data Cabling Module 5.3";
-const DESCRIPTION = "Understanding patch cord specifications, design principles, and performance criteria for professional network installations.";
+const TITLE = 'Patch Cord Design and Performance | Data Cabling Module 5.3';
+const DESCRIPTION =
+  'Understanding patch cord specifications, design principles, and performance criteria for professional network installations.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m5s3-check1",
-    question: "What is the maximum allowable length for a work area cable according to TIA-568?",
-    options: ["3 metres", "5 metres", "7 metres", "10 metres"],
+    id: 'datacabling-m5s3-check1',
+    question: 'What is the maximum allowable length for a work area cable according to TIA-568?',
+    options: ['3 metres', '5 metres', '7 metres', '10 metres'],
     correctIndex: 1,
-    explanation: "TIA-568 specifies that work area cables (equipment cords) should not exceed 5 metres in length to maintain proper signal integrity and prevent excessive attenuation."
+    explanation:
+      'TIA-568 specifies that work area cables (equipment cords) should not exceed 5 metres in length to maintain proper signal integrity and prevent excessive attenuation.',
   },
   {
-    id: "datacabling-m5s3-check2",
-    question: "What type of conductor is typically used in patch cords for flexibility?",
-    options: ["Solid copper", "Stranded copper", "Copper-clad aluminium", "Steel core"],
+    id: 'datacabling-m5s3-check2',
+    question: 'What type of conductor is typically used in patch cords for flexibility?',
+    options: ['Solid copper', 'Stranded copper', 'Copper-clad aluminium', 'Steel core'],
     correctIndex: 1,
-    explanation: "Stranded copper conductors are used in patch cords because they provide the flexibility needed for frequent handling, plugging, and unplugging without conductor fatigue."
+    explanation:
+      'Stranded copper conductors are used in patch cords because they provide the flexibility needed for frequent handling, plugging, and unplugging without conductor fatigue.',
   },
   {
-    id: "datacabling-m5s3-check3",
-    question: "What is the primary purpose of strain relief in patch cord design?",
-    options: ["Aesthetic appearance", "Prevent cable damage at connection points", "Improve electrical performance", "Meet colour coding requirements"],
+    id: 'datacabling-m5s3-check3',
+    question: 'What is the primary purpose of strain relief in patch cord design?',
+    options: [
+      'Aesthetic appearance',
+      'Prevent cable damage at connection points',
+      'Improve electrical performance',
+      'Meet colour coding requirements',
+    ],
     correctIndex: 1,
-    explanation: "Strain relief prevents mechanical stress from being transferred to the cable-connector interface, which could cause conductor damage, connection failure, or performance degradation."
-  }
+    explanation:
+      'Strain relief prevents mechanical stress from being transferred to the cable-connector interface, which could cause conductor damage, connection failure, or performance degradation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why are patch cords more expensive than bulk cable per metre?",
-    answer: "Patch cords use stranded conductors (more expensive than solid), factory-terminated connectors with quality testing, strain relief boots, and must meet tighter performance specifications. The terminations and testing add significant cost."
+    question: 'Why are patch cords more expensive than bulk cable per metre?',
+    answer:
+      'Patch cords use stranded conductors (more expensive than solid), factory-terminated connectors with quality testing, strain relief boots, and must meet tighter performance specifications. The terminations and testing add significant cost.',
   },
   {
-    question: "Can I make my own patch cords instead of buying factory-made?",
-    answer: "While possible, factory patch cords are generally recommended for Cat 6 and above. Factory terminations use precision equipment and 100% testing. Hand-made cords often have inconsistent performance, especially at higher frequencies."
+    question: 'Can I make my own patch cords instead of buying factory-made?',
+    answer:
+      'While possible, factory patch cords are generally recommended for Cat 6 and above. Factory terminations use precision equipment and 100% testing. Hand-made cords often have inconsistent performance, especially at higher frequencies.',
   },
   {
-    question: "How do I know what category my patch cord needs to be?",
-    answer: "Match or exceed your permanent link category. Using a lower category patch cord creates a bottleneck. For example, Cat 5e patch cords on a Cat 6A installation limit the entire channel to Cat 5e performance."
+    question: 'How do I know what category my patch cord needs to be?',
+    answer:
+      'Match or exceed your permanent link category. Using a lower category patch cord creates a bottleneck. For example, Cat 5e patch cords on a Cat 6A installation limit the entire channel to Cat 5e performance.',
   },
   {
-    question: "When should I use shielded patch cords?",
-    answer: "Use shielded patch cords in electrically noisy environments (factories, hospitals, near power equipment), when required by the installed cable system (must match), or for high-security applications requiring EMI containment."
-  }
+    question: 'When should I use shielded patch cords?',
+    answer:
+      'Use shielded patch cords in electrically noisy environments (factories, hospitals, near power equipment), when required by the installed cable system (must match), or for high-security applications requiring EMI containment.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A data centre is experiencing intermittent connectivity issues. Inspection reveals patch cords with cracked boots and visible conductor fatigue. What is the recommended action?",
-  options: [
-    "Tape the damaged areas for temporary fix",
-    "Replace with new factory-tested patch cords",
-    "Re-terminate the existing cables",
-    "Ignore if connections still work"
-  ],
-  correctAnswer: 1,
-  explanation: "Damaged patch cords should be replaced with new factory-tested units. Strain relief damage and conductor fatigue cause intermittent failures that worsen over time. Factory cords ensure consistent performance and include proper testing."
-  }
+    question:
+      'A data centre is experiencing intermittent connectivity issues. Inspection reveals patch cords with cracked boots and visible conductor fatigue. What is the recommended action?',
+    options: [
+      'Tape the damaged areas for temporary fix',
+      'Replace with new factory-tested patch cords',
+      'Re-terminate the existing cables',
+      'Ignore if connections still work',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Damaged patch cords should be replaced with new factory-tested units. Strain relief damage and conductor fatigue cause intermittent failures that worsen over time. Factory cords ensure consistent performance and include proper testing.',
+  },
 ];
 
 const DataCablingModule5Section3 = () => {
@@ -108,16 +123,26 @@ const DataCablingModule5Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Max length:</strong> 5 metres per cord (10m total)</li>
-              <li><strong>Conductors:</strong> Stranded for flexibility</li>
-              <li><strong>Category:</strong> Must match or exceed permanent link</li>
+              <li>
+                <strong>Max length:</strong> 5 metres per cord (10m total)
+              </li>
+              <li>
+                <strong>Conductors:</strong> Stranded for flexibility
+              </li>
+              <li>
+                <strong>Category:</strong> Must match or exceed permanent link
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Category marking, strain relief, jacket type</li>
-              <li><strong>Use:</strong> Factory-tested cords for Cat 6 and above</li>
+              <li>
+                <strong>Spot:</strong> Category marking, strain relief, jacket type
+              </li>
+              <li>
+                <strong>Use:</strong> Factory-tested cords for Cat 6 and above
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +152,12 @@ const DataCablingModule5Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand patch cord construction",
-              "Select appropriate cord category",
-              "Identify quality indicators",
-              "Apply length limitations correctly",
-              "Choose shielded vs unshielded",
-              "Maintain and manage patch cords"
+              'Understand patch cord construction',
+              'Select appropriate cord category',
+              'Identify quality indicators',
+              'Apply length limitations correctly',
+              'Choose shielded vs unshielded',
+              'Maintain and manage patch cords',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -160,21 +185,41 @@ const DataCablingModule5Section3 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Construction</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Conductors:</strong> Stranded (7x32 AWG typical)</li>
-                  <li><strong>Pairs:</strong> 4-pair twisted configuration</li>
-                  <li><strong>Impedance:</strong> 100Ω ±15Ω</li>
-                  <li><strong>Jacket:</strong> PVC, LSZH, or plenum-rated</li>
-                  <li><strong>Bend radius:</strong> Min 4x cable diameter</li>
+                  <li>
+                    <strong>Conductors:</strong> Stranded (7x32 AWG typical)
+                  </li>
+                  <li>
+                    <strong>Pairs:</strong> 4-pair twisted configuration
+                  </li>
+                  <li>
+                    <strong>Impedance:</strong> 100Ω ±15Ω
+                  </li>
+                  <li>
+                    <strong>Jacket:</strong> PVC, LSZH, or plenum-rated
+                  </li>
+                  <li>
+                    <strong>Bend radius:</strong> Min 4x cable diameter
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connector Features</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Type:</strong> RJ45 (8P8C) standard</li>
-                  <li><strong>Contacts:</strong> Gold-plated (50µin min)</li>
-                  <li><strong>Mating cycles:</strong> 750+ minimum</li>
-                  <li><strong>Strain relief:</strong> Moulded boot</li>
-                  <li><strong>Latch:</strong> Snag-resistant designs available</li>
+                  <li>
+                    <strong>Type:</strong> RJ45 (8P8C) standard
+                  </li>
+                  <li>
+                    <strong>Contacts:</strong> Gold-plated (50µin min)
+                  </li>
+                  <li>
+                    <strong>Mating cycles:</strong> 750+ minimum
+                  </li>
+                  <li>
+                    <strong>Strain relief:</strong> Moulded boot
+                  </li>
+                  <li>
+                    <strong>Latch:</strong> Snag-resistant designs available
+                  </li>
                 </ul>
               </div>
             </div>
@@ -206,12 +251,14 @@ const DataCablingModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Patch cords must meet category-specific performance requirements. These become
-              more stringent at higher categories to support increased bandwidth.
+              Patch cords must meet category-specific performance requirements. These become more
+              stringent at higher categories to support increased bandwidth.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Performance Parameters:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Key Performance Parameters:
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Cat 6 @ 250MHz</p>
@@ -254,29 +301,51 @@ const DataCablingModule5Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper selection, installation, and maintenance of patch cords extends their
-              service life and maintains network reliability.
+              Proper selection, installation, and maintenance of patch cords extends their service
+              life and maintains network reliability.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Indicators</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Category marking:</strong> Clear, permanent labelling</li>
-                  <li><strong>Manufacturer:</strong> Known brand with warranty</li>
-                  <li><strong>Construction:</strong> Consistent diameter, flexible</li>
-                  <li><strong>Boot:</strong> Secure strain relief, not cracked</li>
-                  <li><strong>Contacts:</strong> Bright gold, properly seated</li>
+                  <li>
+                    <strong>Category marking:</strong> Clear, permanent labelling
+                  </li>
+                  <li>
+                    <strong>Manufacturer:</strong> Known brand with warranty
+                  </li>
+                  <li>
+                    <strong>Construction:</strong> Consistent diameter, flexible
+                  </li>
+                  <li>
+                    <strong>Boot:</strong> Secure strain relief, not cracked
+                  </li>
+                  <li>
+                    <strong>Contacts:</strong> Bright gold, properly seated
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Practices</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Installation Practices
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Length:</strong> Appropriate for application</li>
-                  <li><strong>Routing:</strong> Service loops, no tight bends</li>
-                  <li><strong>Management:</strong> Velcro ties, not cable ties</li>
-                  <li><strong>Labelling:</strong> Both ends identified</li>
-                  <li><strong>Documentation:</strong> Record in cable database</li>
+                  <li>
+                    <strong>Length:</strong> Appropriate for application
+                  </li>
+                  <li>
+                    <strong>Routing:</strong> Service loops, no tight bends
+                  </li>
+                  <li>
+                    <strong>Management:</strong> Velcro ties, not cable ties
+                  </li>
+                  <li>
+                    <strong>Labelling:</strong> Both ends identified
+                  </li>
+                  <li>
+                    <strong>Documentation:</strong> Record in cable database
+                  </li>
                 </ul>
               </div>
             </div>
@@ -312,11 +381,21 @@ const DataCablingModule5Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Category mismatch:</strong> — Using Cat 5e cords on Cat 6A systems</li>
-                <li><strong>Excessive length:</strong> — Creating cable management issues</li>
-                <li><strong>Sharp bends:</strong> — Exceeding minimum bend radius</li>
-                <li><strong>Cable ties:</strong> — Over-tightening causes performance issues</li>
-                <li><strong>Cheap cords:</strong> — Saving money costs more in troubleshooting</li>
+                <li>
+                  <strong>Category mismatch:</strong> — Using Cat 5e cords on Cat 6A systems
+                </li>
+                <li>
+                  <strong>Excessive length:</strong> — Creating cable management issues
+                </li>
+                <li>
+                  <strong>Sharp bends:</strong> — Exceeding minimum bend radius
+                </li>
+                <li>
+                  <strong>Cable ties:</strong> — Over-tightening causes performance issues
+                </li>
+                <li>
+                  <strong>Cheap cords:</strong> — Saving money costs more in troubleshooting
+                </li>
               </ul>
             </div>
           </div>
@@ -362,10 +441,7 @@ const DataCablingModule5Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

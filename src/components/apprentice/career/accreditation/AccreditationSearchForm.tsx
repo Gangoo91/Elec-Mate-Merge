@@ -1,13 +1,18 @@
-
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Search, Filter, RotateCcw, X } from "lucide-react";
-import { accreditationCategories, accreditationLevels } from "./enhancedAccreditationData";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Search, Filter, RotateCcw, X } from 'lucide-react';
+import { accreditationCategories, accreditationLevels } from './enhancedAccreditationData';
+import { cn } from '@/lib/utils';
 
 export interface AccreditationSearchFilters {
   searchTerm: string;
@@ -24,14 +29,18 @@ interface AccreditationSearchFormProps {
   resultsCount: number;
 }
 
-const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: AccreditationSearchFormProps) => {
+const AccreditationSearchForm = ({
+  onSearch,
+  onReset,
+  resultsCount,
+}: AccreditationSearchFormProps) => {
   const [filters, setFilters] = useState<AccreditationSearchFilters>({
-    searchTerm: "",
-    category: "All Categories",
-    level: "All Levels", 
+    searchTerm: '',
+    category: 'All Categories',
+    level: 'All Levels',
     onlineOnly: false,
-    maxCost: "",
-    provider: ""
+    maxCost: '',
+    provider: '',
   });
 
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
@@ -43,12 +52,12 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
 
   const handleReset = () => {
     const resetFilters = {
-      searchTerm: "",
-      category: "All Categories",
-      level: "All Levels",
+      searchTerm: '',
+      category: 'All Categories',
+      level: 'All Levels',
       onlineOnly: false,
-      maxCost: "",
-      provider: ""
+      maxCost: '',
+      provider: '',
     };
     setFilters(resetFilters);
     setActiveFilters([]);
@@ -58,9 +67,9 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
   const updateActiveFilters = () => {
     const active: string[] = [];
     if (filters.searchTerm) active.push(`Search: "${filters.searchTerm}"`);
-    if (filters.category !== "All Categories") active.push(`Category: ${filters.category}`);
-    if (filters.level !== "All Levels") active.push(`Level: ${filters.level}`);
-    if (filters.onlineOnly) active.push("Online Available");
+    if (filters.category !== 'All Categories') active.push(`Category: ${filters.category}`);
+    if (filters.level !== 'All Levels') active.push(`Level: ${filters.level}`);
+    if (filters.onlineOnly) active.push('Online Available');
     if (filters.maxCost) active.push(`Max Cost: ${filters.maxCost}`);
     if (filters.provider) active.push(`Provider: ${filters.provider}`);
     setActiveFilters(active);
@@ -68,44 +77,29 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
 
   const removeFilter = (filterToRemove: string) => {
     const newFilters = { ...filters };
-    
-    if (filterToRemove.startsWith("Search:")) {
-      newFilters.searchTerm = "";
-    } else if (filterToRemove.startsWith("Category:")) {
-      newFilters.category = "All Categories";
-    } else if (filterToRemove.startsWith("Level:")) {
-      newFilters.level = "All Levels";
-    } else if (filterToRemove === "Online Available") {
+
+    if (filterToRemove.startsWith('Search:')) {
+      newFilters.searchTerm = '';
+    } else if (filterToRemove.startsWith('Category:')) {
+      newFilters.category = 'All Categories';
+    } else if (filterToRemove.startsWith('Level:')) {
+      newFilters.level = 'All Levels';
+    } else if (filterToRemove === 'Online Available') {
       newFilters.onlineOnly = false;
-    } else if (filterToRemove.startsWith("Max Cost:")) {
-      newFilters.maxCost = "";
-    } else if (filterToRemove.startsWith("Provider:")) {
-      newFilters.provider = "";
+    } else if (filterToRemove.startsWith('Max Cost:')) {
+      newFilters.maxCost = '';
+    } else if (filterToRemove.startsWith('Provider:')) {
+      newFilters.provider = '';
     }
-    
+
     setFilters(newFilters);
     onSearch(newFilters);
     updateActiveFilters();
   };
 
-  const costRanges = [
-    "All Costs",
-    "Under £200",
-    "£200-£500", 
-    "£500-£1000",
-    "Over £1000"
-  ];
+  const costRanges = ['All Costs', 'Under £200', '£200-£500', '£500-£1000', 'Over £1000'];
 
-  const providers = [
-    "All Providers",
-    "IET",
-    "ECA", 
-    "NICEIC",
-    "IOSH",
-    "CITB",
-    "CompEx",
-    "MCS"
-  ];
+  const providers = ['All Providers', 'IET', 'ECA', 'NICEIC', 'IOSH', 'CITB', 'CompEx', 'MCS'];
 
   return (
     <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
@@ -120,8 +114,11 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
             <Input
               placeholder="Search accreditations, providers, or specialities..."
               value={filters.searchTerm}
-              onChange={(e) => setFilters(prev => ({ ...prev, searchTerm: e.target.value }))}
-              className={cn("h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50", !filters.searchTerm && "pl-10")}
+              onChange={(e) => setFilters((prev) => ({ ...prev, searchTerm: e.target.value }))}
+              className={cn(
+                'h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50',
+                !filters.searchTerm && 'pl-10'
+              )}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </div>
@@ -136,46 +133,66 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
 
         {/* Filter Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <Select value={filters.category} onValueChange={(value) => setFilters(prev => ({ ...prev, category: value }))}>
+          <Select
+            value={filters.category}
+            onValueChange={(value) => setFilters((prev) => ({ ...prev, category: value }))}
+          >
             <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-white/20">
-              {accreditationCategories.map(category => (
-                <SelectItem key={category} value={category}>{category}</SelectItem>
+              {accreditationCategories.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
 
-          <Select value={filters.level} onValueChange={(value) => setFilters(prev => ({ ...prev, level: value }))}>
+          <Select
+            value={filters.level}
+            onValueChange={(value) => setFilters((prev) => ({ ...prev, level: value }))}
+          >
             <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-white/20">
-              {accreditationLevels.map(level => (
-                <SelectItem key={level} value={level}>{level}</SelectItem>
+              {accreditationLevels.map((level) => (
+                <SelectItem key={level} value={level}>
+                  {level}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
 
-          <Select value={filters.maxCost} onValueChange={(value) => setFilters(prev => ({ ...prev, maxCost: value }))}>
+          <Select
+            value={filters.maxCost}
+            onValueChange={(value) => setFilters((prev) => ({ ...prev, maxCost: value }))}
+          >
             <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
               <SelectValue placeholder="Cost Range" />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-white/20">
-              {costRanges.map(range => (
-                <SelectItem key={range} value={range}>{range}</SelectItem>
+              {costRanges.map((range) => (
+                <SelectItem key={range} value={range}>
+                  {range}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
 
-          <Select value={filters.provider} onValueChange={(value) => setFilters(prev => ({ ...prev, provider: value }))}>
+          <Select
+            value={filters.provider}
+            onValueChange={(value) => setFilters((prev) => ({ ...prev, provider: value }))}
+          >
             <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
               <SelectValue placeholder="Provider" />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-white/20">
-              {providers.map(provider => (
-                <SelectItem key={provider} value={provider}>{provider}</SelectItem>
+              {providers.map((provider) => (
+                <SelectItem key={provider} value={provider}>
+                  {provider}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -187,7 +204,7 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
             <input
               type="checkbox"
               checked={filters.onlineOnly}
-              onChange={(e) => setFilters(prev => ({ ...prev, onlineOnly: e.target.checked }))}
+              onChange={(e) => setFilters((prev) => ({ ...prev, onlineOnly: e.target.checked }))}
               className="w-4 h-4 rounded border-white/20 bg-white/5 text-elec-yellow focus:ring-elec-yellow/50"
             />
             Online Available Only
@@ -195,7 +212,8 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
 
           <div className="flex items-center gap-3">
             <span className="text-sm text-white/70">
-              <span className="text-elec-yellow font-medium">{resultsCount}</span> {resultsCount === 1 ? 'result' : 'results'}
+              <span className="text-elec-yellow font-medium">{resultsCount}</span>{' '}
+              {resultsCount === 1 ? 'result' : 'results'}
             </span>
             <Button
               variant="outline"

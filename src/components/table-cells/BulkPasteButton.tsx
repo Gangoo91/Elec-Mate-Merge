@@ -67,9 +67,7 @@ export const BulkPasteButton: React.FC<BulkPasteButtonProps> = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handlePasteToAll}>
-              Apply to All
-            </AlertDialogAction>
+            <AlertDialogAction onClick={handlePasteToAll}>Apply to All</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

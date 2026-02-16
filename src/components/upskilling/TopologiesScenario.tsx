@@ -17,8 +17,8 @@ export const TopologiesScenario = () => {
             <div>
               <h4 className="font-semibold text-orange-300 mb-2">The Challenge</h4>
               <p className="text-orange-100 text-sm leading-relaxed">
-                TechCorp University needs to design a network for their new campus with 5 buildings: 
-                Administration, Engineering, Library, Student Centre, and Data Centre. Each building 
+                TechCorp University needs to design a network for their new campus with 5 buildings:
+                Administration, Engineering, Library, Student Centre, and Data Centre. Each building
                 has different requirements for reliability, performance, and cost considerations.
               </p>
             </div>
@@ -33,15 +33,24 @@ export const TopologiesScenario = () => {
               <div className="space-y-3 text-blue-100 text-sm">
                 <div>
                   <strong>Building Level (Star Topology):</strong>
-                  <p>Each building uses star topology with central switches for easy management and fault isolation.</p>
+                  <p>
+                    Each building uses star topology with central switches for easy management and
+                    fault isolation.
+                  </p>
                 </div>
                 <div>
                   <strong>Campus Backbone (Partial Mesh):</strong>
-                  <p>Critical buildings (Data Centre, Administration) have redundant connections, whilst others connect via single links to reduce costs.</p>
+                  <p>
+                    Critical buildings (Data Centre, Administration) have redundant connections,
+                    whilst others connect via single links to reduce costs.
+                  </p>
                 </div>
                 <div>
                   <strong>Departmental Networks (Tree Structure):</strong>
-                  <p>Large departments like Engineering use hierarchical star arrangements with departmental switches feeding into building switches.</p>
+                  <p>
+                    Large departments like Engineering use hierarchical star arrangements with
+                    departmental switches feeding into building switches.
+                  </p>
                 </div>
               </div>
             </div>

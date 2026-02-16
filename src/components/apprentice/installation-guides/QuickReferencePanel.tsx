@@ -1,12 +1,8 @@
-import { AlertTriangle, Info } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-import type { QuickRefCard } from "@/data/installation-guides/installationQuickRefData";
+import { AlertTriangle, Info } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import type { QuickRefCard } from '@/data/installation-guides/installationQuickRefData';
 import {
   cableSizingData,
   cableSizingTip,
@@ -25,7 +21,7 @@ import {
   accessoryHeights,
   partMKeyPoints,
   accessoryHeightsTip,
-} from "@/data/installation-guides/installationQuickRefData";
+} from '@/data/installation-guides/installationQuickRefData';
 
 interface QuickReferencePanelProps {
   card: QuickRefCard;
@@ -35,7 +31,9 @@ interface QuickReferencePanelProps {
 
 function TipBanner({ text, colour }: { text: string; colour: string }) {
   return (
-    <div className={`flex items-start gap-3 p-3 rounded-lg border border-${colour}-500/30 bg-${colour}-500/10`}>
+    <div
+      className={`flex items-start gap-3 p-3 rounded-lg border border-${colour}-500/30 bg-${colour}-500/10`}
+    >
       <Info className={`h-5 w-5 text-${colour}-400 shrink-0 mt-0.5`} />
       <p className="text-white text-sm leading-relaxed">{text}</p>
     </div>
@@ -61,7 +59,7 @@ function Section({
       <CollapsibleTrigger className="flex items-center justify-between w-full h-11 px-3 rounded-lg bg-white/5 border border-white/10 touch-manipulation">
         <span className="text-white text-sm font-medium">{title}</span>
         <ChevronDown
-          className={`h-4 w-4 text-${colour}-400 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`h-4 w-4 text-${colour}-400 transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="pt-3 space-y-3">{children}</CollapsibleContent>
@@ -90,17 +88,19 @@ function CableSizingPanel() {
   return (
     <div className="space-y-3">
       <h3 className="text-white font-semibold">Cable Sizing Quick Reference</h3>
-      <p className="text-white text-sm">T&E current ratings (Reference Method C — clipped direct) from BS 7671 Table 4D5.</p>
+      <p className="text-white text-sm">
+        T&E current ratings (Reference Method C — clipped direct) from BS 7671 Table 4D5.
+      </p>
       {cableSizingData.map((row, i) => (
         <DataCard
           key={i}
           items={[
-            { label: "Cable", value: row.cable },
-            { label: "Rating (Clipped)", value: row.ratingClipped },
-            { label: "Rating (Enclosed)", value: row.ratingEnclosed },
-            { label: "Volt Drop (mV/A/m)", value: row.voltDrop },
-            { label: "Common Circuit", value: row.commonCircuit },
-            { label: "MCB", value: row.mcb },
+            { label: 'Cable', value: row.cable },
+            { label: 'Rating (Clipped)', value: row.ratingClipped },
+            { label: 'Rating (Enclosed)', value: row.ratingEnclosed },
+            { label: 'Volt Drop (mV/A/m)', value: row.voltDrop },
+            { label: 'Common Circuit', value: row.commonCircuit },
+            { label: 'MCB', value: row.mcb },
           ]}
         />
       ))}
@@ -119,10 +119,10 @@ function CircuitEssentialsPanel() {
         <Section key={i} title={circuit.name} colour="blue" defaultOpen={i === 0}>
           <DataCard
             items={[
-              { label: "Cable", value: circuit.cable },
-              { label: "Protection", value: circuit.protection },
-              ...(circuit.maxArea ? [{ label: "Max Floor Area", value: circuit.maxArea }] : []),
-              ...(circuit.maxPoints ? [{ label: "Max Points", value: circuit.maxPoints }] : []),
+              { label: 'Cable', value: circuit.cable },
+              { label: 'Protection', value: circuit.protection },
+              ...(circuit.maxArea ? [{ label: 'Max Floor Area', value: circuit.maxArea }] : []),
+              ...(circuit.maxPoints ? [{ label: 'Max Points', value: circuit.maxPoints }] : []),
             ]}
           />
           {circuit.extras && (
@@ -152,10 +152,10 @@ function IPRatingsPanel() {
         <DataCard
           key={i}
           items={[
-            { label: "IP Code", value: row.code },
-            { label: "Solids", value: row.solids },
-            { label: "Liquids", value: row.liquids },
-            { label: "Example", value: row.example },
+            { label: 'IP Code', value: row.code },
+            { label: 'Solids', value: row.solids },
+            { label: 'Liquids', value: row.liquids },
+            { label: 'Example', value: row.example },
           ]}
         />
       ))}
@@ -165,9 +165,9 @@ function IPRatingsPanel() {
           <DataCard
             key={i}
             items={[
-              { label: "Zone", value: zone.zone },
-              { label: "IP Minimum", value: zone.ipMin },
-              { label: "Notes", value: zone.notes },
+              { label: 'Zone', value: zone.zone },
+              { label: 'IP Minimum', value: zone.ipMin },
+              { label: 'Notes', value: zone.notes },
             ]}
           />
         ))}
@@ -189,7 +189,7 @@ function EarthingSystemsPanel() {
           <div className="space-y-2">
             <p className="text-white text-sm font-medium">{sys.prevalence}</p>
             <p className="text-white text-sm">{sys.description}</p>
-            <DataCard items={[{ label: "Typical Ze", value: sys.ze }]} />
+            <DataCard items={[{ label: 'Typical Ze', value: sys.ze }]} />
             <TipBanner text={sys.tip} colour="amber" />
           </div>
         </Section>
@@ -215,9 +215,9 @@ function ColourTable({
         <DataCard
           key={i}
           items={[
-            { label: "Function", value: row.function },
-            { label: "Fixed Wiring", value: row.fixedWiring },
-            { label: "Flexible Cable", value: row.flexibleCable },
+            { label: 'Function', value: row.function },
+            { label: 'Fixed Wiring', value: row.fixedWiring },
+            { label: 'Flexible Cable', value: row.flexibleCable },
           ]}
         />
       ))}
@@ -229,7 +229,11 @@ function CableColoursPanel() {
   return (
     <div className="space-y-3">
       <h3 className="text-white font-semibold">Cable Colour Identification</h3>
-      <ColourTable title="Current Harmonised Colours (post-2004)" rows={newColours} colour="purple" />
+      <ColourTable
+        title="Current Harmonised Colours (post-2004)"
+        rows={newColours}
+        colour="purple"
+      />
       <ColourTable title="Old Colours (pre-2004)" rows={oldColours} colour="purple" />
 
       <Section title="Key Safety Points" colour="red">
@@ -258,7 +262,10 @@ function SafeIsolationPanel() {
 
       <div className="space-y-2">
         {safeIsolationSteps.map((s) => (
-          <div key={s.step} className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-lg p-3">
+          <div
+            key={s.step}
+            className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-lg p-3"
+          >
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-400 text-sm font-bold shrink-0">
               {s.step}
             </span>
@@ -291,16 +298,18 @@ function SafeIsolationPanel() {
 function AccessoryHeightsPanel() {
   return (
     <div className="space-y-3">
-      <h3 className="text-white font-semibold">Accessory Heights (BS 7671 / Building Regulations)</h3>
+      <h3 className="text-white font-semibold">
+        Accessory Heights (BS 7671 / Building Regulations)
+      </h3>
 
       {accessoryHeights.map((row, i) => (
         <DataCard
           key={i}
           items={[
-            { label: "Accessory", value: row.accessory },
-            { label: "Standard Height", value: row.standardHeight },
-            { label: "Accessible (Part M)", value: row.accessibleHeight },
-            { label: "Notes", value: row.notes },
+            { label: 'Accessory', value: row.accessory },
+            { label: 'Standard Height', value: row.standardHeight },
+            { label: 'Accessible (Part M)', value: row.accessibleHeight },
+            { label: 'Notes', value: row.notes },
           ]}
         />
       ))}
@@ -325,17 +334,19 @@ function AccessoryHeightsPanel() {
 
 export function QuickReferencePanel({ card }: QuickReferencePanelProps) {
   const panels: Record<string, React.ReactNode> = {
-    "cable-sizing": <CableSizingPanel />,
-    "circuit-essentials": <CircuitEssentialsPanel />,
-    "ip-ratings": <IPRatingsPanel />,
-    "earthing-systems": <EarthingSystemsPanel />,
-    "cable-colours": <CableColoursPanel />,
-    "safe-isolation": <SafeIsolationPanel />,
-    "accessory-heights": <AccessoryHeightsPanel />,
+    'cable-sizing': <CableSizingPanel />,
+    'circuit-essentials': <CircuitEssentialsPanel />,
+    'ip-ratings': <IPRatingsPanel />,
+    'earthing-systems': <EarthingSystemsPanel />,
+    'cable-colours': <CableColoursPanel />,
+    'safe-isolation': <SafeIsolationPanel />,
+    'accessory-heights': <AccessoryHeightsPanel />,
   };
 
   return (
-    <div className={`border ${card.borderColour} bg-white/5 rounded-xl p-4 space-y-4 animate-fade-in`}>
+    <div
+      className={`border ${card.borderColour} bg-white/5 rounded-xl p-4 space-y-4 animate-fade-in`}
+    >
       {panels[card.id] ?? null}
     </div>
   );

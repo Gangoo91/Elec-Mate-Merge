@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface ExamQuestionProps {
   question: {
@@ -26,14 +25,14 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
   onNext,
   onFinish,
   isFirstQuestion,
-  isLastQuestion
+  isLastQuestion,
 }) => {
   return (
     <Card className="border-elec-yellow/30 bg-white/5">
       <CardContent className="pt-6">
         <div className="space-y-6">
           <h2 className="text-xl font-medium">{question.text}</h2>
-          
+
           <div className="space-y-3">
             {question.options.map((option, index) => (
               <button
@@ -53,22 +52,14 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
         </div>
       </CardContent>
       <CardFooter className="flex justify-between mt-6">
-        <Button 
-          variant="outline" 
-          onClick={onPrevious}
-          disabled={isFirstQuestion}
-        >
+        <Button variant="outline" onClick={onPrevious} disabled={isFirstQuestion}>
           Previous
         </Button>
-        
+
         {isLastQuestion ? (
-          <Button onClick={onFinish}>
-            Finish Exam
-          </Button>
+          <Button onClick={onFinish}>Finish Exam</Button>
         ) : (
-          <Button onClick={onNext}>
-            Next Question
-          </Button>
+          <Button onClick={onNext}>Next Question</Button>
         )}
       </CardFooter>
     </Card>

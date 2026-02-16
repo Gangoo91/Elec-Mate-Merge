@@ -3,27 +3,27 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const InterferenceCausesSection = () => {
   const commonMistakes = [
-    "Placing router and Zigbee hub right next to each other",
-    "Using overlapping Wi-Fi channels with neighbours",
-    "Installing devices behind metal cabinets or appliances",
-    "Ignoring microwave oven placement near 2.4GHz devices",
-    "Running too many devices on a single Wi-Fi channel"
+    'Placing router and Zigbee hub right next to each other',
+    'Using overlapping Wi-Fi channels with neighbours',
+    'Installing devices behind metal cabinets or appliances',
+    'Ignoring microwave oven placement near 2.4GHz devices',
+    'Running too many devices on a single Wi-Fi channel',
   ];
 
   const physicalFactors = [
-    "Thick walls and concrete structures",
-    "Metal objects and appliances",
-    "Large water features or aquariums",
-    "Electrical panels and circuit breakers",
-    "Cordless phone base stations"
+    'Thick walls and concrete structures',
+    'Metal objects and appliances',
+    'Large water features or aquariums',
+    'Electrical panels and circuit breakers',
+    'Cordless phone base stations',
   ];
 
   const environmentalFactors = [
-    "Neighbouring Wi-Fi networks on same channels",
-    "Baby monitors and wireless cameras",
-    "Bluetooth devices during active use",
-    "LED lights with poor drivers",
-    "Kitchen appliances (microwaves, induction hobs)"
+    'Neighbouring Wi-Fi networks on same channels',
+    'Baby monitors and wireless cameras',
+    'Bluetooth devices during active use',
+    'LED lights with poor drivers',
+    'Kitchen appliances (microwaves, induction hobs)',
   ];
 
   return (
@@ -36,7 +36,9 @@ export const InterferenceCausesSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          Interference in smart homes typically stems from poor planning, physical obstructions, and environmental factors. Identifying these causes is the first step to building reliable wireless networks.
+          Interference in smart homes typically stems from poor planning, physical obstructions, and
+          environmental factors. Identifying these causes is the first step to building reliable
+          wireless networks.
         </p>
 
         <div className="space-y-6">
@@ -109,7 +111,10 @@ export const InterferenceCausesSection = () => {
 
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Quick Check:</h4>
-          <p className="text-sm text-foreground">What's the most common mistake installers make when setting up Wi-Fi and Zigbee networks?</p>
+          <p className="text-sm text-foreground">
+            What's the most common mistake installers make when setting up Wi-Fi and Zigbee
+            networks?
+          </p>
         </div>
       </CardContent>
     </Card>

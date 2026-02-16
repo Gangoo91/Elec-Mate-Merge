@@ -228,9 +228,7 @@ export function ProgressSection() {
 
                     {isExpanded && (
                       <div className="px-3 pb-3 pt-1 border-t border-border space-y-3">
-                        {entry.notes && (
-                          <p className="text-xs text-white">{entry.notes}</p>
-                        )}
+                        {entry.notes && <p className="text-xs text-white">{entry.notes}</p>}
 
                         <div className="flex gap-2">
                           {!isVerified && (
@@ -338,7 +336,9 @@ export function ProgressSection() {
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="text-center p-3 bg-muted/50 rounded-lg">
-              <p className="text-2xl font-bold text-purple-500">{(weeklyMinutes / 60).toFixed(1)}h</p>
+              <p className="text-2xl font-bold text-purple-500">
+                {(weeklyMinutes / 60).toFixed(1)}h
+              </p>
               <p className="text-xs text-muted-foreground">Training Hours</p>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">

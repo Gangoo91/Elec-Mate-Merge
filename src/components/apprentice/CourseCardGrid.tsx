@@ -1,7 +1,6 @@
-
-import { ReactNode } from "react";
-import CourseCard from "./CourseCard";
-import { LucideIcon } from "lucide-react";
+import { ReactNode } from 'react';
+import CourseCard from './CourseCard';
+import { LucideIcon } from 'lucide-react';
 
 interface Course {
   id: string;
@@ -17,7 +16,7 @@ interface CourseCardGridProps {
   emptyState?: ReactNode;
 }
 
-const CourseCardGrid = ({ courses, baseUrl = "", emptyState }: CourseCardGridProps) => {
+const CourseCardGrid = ({ courses, baseUrl = '', emptyState }: CourseCardGridProps) => {
   if (courses.length === 0 && emptyState) {
     return <>{emptyState}</>;
   }
@@ -25,12 +24,12 @@ const CourseCardGrid = ({ courses, baseUrl = "", emptyState }: CourseCardGridPro
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {courses.map((course) => (
-        <CourseCard 
-          key={course.id} 
-          id={course.id} 
-          title={course.title} 
-          description={course.description} 
-          icon={course.icon} 
+        <CourseCard
+          key={course.id}
+          id={course.id}
+          title={course.title}
+          description={course.description}
+          icon={course.icon}
           courses={course.courses}
           baseUrl={baseUrl}
         />

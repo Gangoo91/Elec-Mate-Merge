@@ -2,13 +2,14 @@ import { ArrowLeft, BarChart, CheckCircle, HelpCircle, Clock, Activity } from 'l
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule4Section2 = () => {
   useSEO({
-    title: "Frequency and Time-Based Measurements | Instrumentation Module 4",
-    description: "Beyond voltage and current, frequency and time-based signals carry vital information about electrical and mechanical systems."
+    title: 'Frequency and Time-Based Measurements | Instrumentation Module 4',
+    description:
+      'Beyond voltage and current, frequency and time-based signals carry vital information about electrical and mechanical systems.',
   });
 
   return (
@@ -16,7 +17,10 @@ const InstrumentationModule4Section2 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-4" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             <span className="text-sm">Back to Module 4</span>
           </Link>
@@ -33,7 +37,8 @@ const InstrumentationModule4Section2 = () => {
             Frequency and Time-Based Measurements
           </h1>
           <p className="text-white/70 max-w-2xl mx-auto">
-            Beyond voltage and current, frequency and time-based signals carry vital information about electrical and mechanical systems.
+            Beyond voltage and current, frequency and time-based signals carry vital information
+            about electrical and mechanical systems.
           </p>
         </div>
 
@@ -55,20 +60,26 @@ const InstrumentationModule4Section2 = () => {
         {/* Section 01: Frequency Fundamentals */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Frequency Fundamentals</h2>
           </div>
 
           <div className="space-y-4 text-white/80">
             <p>
-              Frequency is the number of complete cycles that occur in one second, measured in Hertz (Hz). It is a fundamental parameter in electrical systems that affects motor speed, power quality, and signal transmission.
+              Frequency is the number of complete cycles that occur in one second, measured in Hertz
+              (Hz). It is a fundamental parameter in electrical systems that affects motor speed,
+              power quality, and signal transmission.
             </p>
 
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <h3 className="text-blue-300 font-medium mb-3">The Basic Relationship</h3>
               <div className="text-center py-2">
                 <p className="text-white text-lg font-mono">f = 1/T</p>
-                <p className="text-white/60 text-sm mt-2">where f = frequency (Hz) and T = period (seconds)</p>
+                <p className="text-white/60 text-sm mt-2">
+                  where f = frequency (Hz) and T = period (seconds)
+                </p>
               </div>
             </div>
 
@@ -131,8 +142,12 @@ const InstrumentationModule4Section2 = () => {
         {/* Section 02: Period and Pulse Width */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
-            <h2 className="text-xl font-semibold text-white">Period and Pulse Width Measurements</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Period and Pulse Width Measurements
+            </h2>
           </div>
 
           <div className="space-y-4 text-white/80">
@@ -142,7 +157,8 @@ const InstrumentationModule4Section2 = () => {
                 Period Measurement
               </h3>
               <p className="text-white/70 mb-3">
-                Period is the time for one complete cycle - critical for understanding signal timing:
+                Period is the time for one complete cycle - critical for understanding signal
+                timing:
               </p>
               <ul className="text-white/70 text-sm space-y-1">
                 <li>- Motor speed calculation (RPM = 60 x frequency)</li>
@@ -156,22 +172,22 @@ const InstrumentationModule4Section2 = () => {
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
                 <h3 className="text-purple-300 font-medium mb-2">Pulse Width</h3>
                 <p className="text-white/70 text-sm">
-                  Duration of the high or low portion of a square wave signal. Critical for PWM systems.
+                  Duration of the high or low portion of a square wave signal. Critical for PWM
+                  systems.
                 </p>
               </div>
               <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
                 <h3 className="text-orange-300 font-medium mb-2">Duty Cycle</h3>
                 <p className="text-white/70 text-sm">
-                  Percentage of time signal is high during one complete cycle. Controls average power in PWM.
+                  Percentage of time signal is high during one complete cycle. Controls average
+                  power in PWM.
                 </p>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-white font-medium mb-3">Digital Signal Analysis</h3>
-              <p className="text-white/70 mb-3">
-                Modern systems rely heavily on digital timing:
-              </p>
+              <p className="text-white/70 mb-3">Modern systems rely heavily on digital timing:</p>
               <ul className="text-white/70 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
@@ -203,7 +219,9 @@ const InstrumentationModule4Section2 = () => {
         {/* Section 03: Measurement Tools */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Measurement Tools and Techniques</h2>
           </div>
 
@@ -283,7 +301,9 @@ const InstrumentationModule4Section2 = () => {
         {/* Section 04: Practical Applications */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">Practical Applications</h2>
           </div>
 
@@ -330,7 +350,9 @@ const InstrumentationModule4Section2 = () => {
         {/* Section 05: Common Issues */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
             <h2 className="text-xl font-semibold text-white">Common Issues and Troubleshooting</h2>
           </div>
 
@@ -385,14 +407,20 @@ const InstrumentationModule4Section2 = () => {
         {/* Section 06: Real-World Scenario */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">06</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              06
+            </span>
             <h2 className="text-xl font-semibold text-white">Real-World Application</h2>
           </div>
 
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
             <h3 className="text-white font-medium mb-2">Conveyor Speed Monitoring</h3>
             <p className="text-white/70">
-              A bottling line uses frequency sensors to detect conveyor speed. The normal frequency is 25Hz, corresponding to optimal throughput. When technicians notice frequency dropping to 22Hz, they investigate and find a worn drive belt causing slippage. The frequency measurement provided early warning before complete system failure, preventing costly downtime and product loss.
+              A bottling line uses frequency sensors to detect conveyor speed. The normal frequency
+              is 25Hz, corresponding to optimal throughput. When technicians notice frequency
+              dropping to 22Hz, they investigate and find a worn drive belt causing slippage. The
+              frequency measurement provided early warning before complete system failure,
+              preventing costly downtime and product loss.
             </p>
           </div>
         </div>
@@ -406,21 +434,32 @@ const InstrumentationModule4Section2 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">What is the standard frequency for UK mains power?</h3>
+              <h3 className="text-white font-medium mb-2">
+                What is the standard frequency for UK mains power?
+              </h3>
               <p className="text-white/70 text-sm">
-                UK mains operates at 50Hz, meaning the voltage completes 50 cycles per second. This differs from North America which uses 60Hz.
+                UK mains operates at 50Hz, meaning the voltage completes 50 cycles per second. This
+                differs from North America which uses 60Hz.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">How does frequency relate to motor speed?</h3>
+              <h3 className="text-white font-medium mb-2">
+                How does frequency relate to motor speed?
+              </h3>
               <p className="text-white/70 text-sm">
-                For AC motors, speed is directly related to supply frequency. The formula RPM = (120 x frequency) / poles determines synchronous speed. Variable frequency drives control motor speed by varying the supply frequency.
+                For AC motors, speed is directly related to supply frequency. The formula RPM = (120
+                x frequency) / poles determines synchronous speed. Variable frequency drives control
+                motor speed by varying the supply frequency.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">Why is duty cycle important in PWM systems?</h3>
+              <h3 className="text-white font-medium mb-2">
+                Why is duty cycle important in PWM systems?
+              </h3>
               <p className="text-white/70 text-sm">
-                Duty cycle determines the average power delivered. A 50% duty cycle delivers half the maximum power. This allows precise control of motor speed, LED brightness, and heating elements without energy-wasting resistors.
+                Duty cycle determines the average power delivered. A 50% duty cycle delivers half
+                the maximum power. This allows precise control of motor speed, LED brightness, and
+                heating elements without energy-wasting resistors.
               </p>
             </div>
           </div>
@@ -430,7 +469,10 @@ const InstrumentationModule4Section2 = () => {
         <div className="bg-white/5 rounded-lg p-4 mb-8">
           <h2 className="text-white font-semibold mb-2">Summary</h2>
           <p className="text-white/70">
-            Understanding frequency and time-based readings enables engineers to maintain system stability and detect abnormalities early. These measurements are crucial for modern industrial systems where timing, synchronisation, and dynamic behaviour determine overall system performance and reliability.
+            Understanding frequency and time-based readings enables engineers to maintain system
+            stability and detect abnormalities early. These measurements are crucial for modern
+            industrial systems where timing, synchronisation, and dynamic behaviour determine
+            overall system performance and reliability.
           </p>
         </div>
 
@@ -440,10 +482,10 @@ const InstrumentationModule4Section2 = () => {
           sectionId="section-2"
           question="How is frequency used in rotating machinery diagnostics?"
           options={[
-            "It indicates power consumption",
-            "It shows speed and can reveal mechanical problems",
-            "It measures electrical efficiency",
-            "It determines voltage levels"
+            'It indicates power consumption',
+            'It shows speed and can reveal mechanical problems',
+            'It measures electrical efficiency',
+            'It determines voltage levels',
           ]}
           correctAnswer={1}
           explanation="Frequency measurements can indicate motor speed (RPM = 60 x frequency for simple cases) and help identify mechanical issues like bearing problems, misalignment, or belt slippage through changes in the expected frequency."

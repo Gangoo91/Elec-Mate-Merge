@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by CDM awareness assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by CDM awareness assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Know the CDM 2015 Structure",
+    title: 'Know the CDM 2015 Structure',
     description:
-      "Understand the five parts of the regulations, when they apply, and the distinction between domestic and commercial projects including notification thresholds.",
+      'Understand the five parts of the regulations, when they apply, and the distinction between domestic and commercial projects including notification thresholds.',
   },
   {
-    title: "Learn the Duty Holder Roles",
+    title: 'Learn the Duty Holder Roles',
     description:
-      "Know the responsibilities of the client, principal designer, principal contractor, designers, contractors, and workers, and how their duties differ on single-contractor vs multi-contractor projects.",
+      'Know the responsibilities of the client, principal designer, principal contractor, designers, contractors, and workers, and how their duties differ on single-contractor vs multi-contractor projects.',
   },
   {
-    title: "Understand the Key Documents",
+    title: 'Understand the Key Documents',
     description:
-      "Pre-construction information, construction phase plan, and health and safety file: who produces each, when they are required, and what they must contain.",
+      'Pre-construction information, construction phase plan, and health and safety file: who produces each, when they are required, and what they must contain.',
   },
   {
-    title: "Master Design Risk Management",
+    title: 'Master Design Risk Management',
     description:
-      "The hierarchy of risk control in design, the general principles of prevention, and how designers must eliminate hazards, reduce risks, and inform others of residual risks.",
+      'The hierarchy of risk control in design, the general principles of prevention, and how designers must eliminate hazards, reduce risks, and inform others of residual risks.',
   },
   {
-    title: "Know Enforcement & Compliance",
+    title: 'Know Enforcement & Compliance',
     description:
-      "HSE enforcement powers, improvement and prohibition notices, penalties for non-compliance, welfare facility requirements under Schedule 2, and site induction obligations.",
+      'HSE enforcement powers, improvement and prohibition notices, penalties for non-compliance, welfare facility requirements under Schedule 2, and site induction obligations.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function CdmRegulationsModule6() {
   useSEO({
-    title: "CDM Regulations Awareness Mock Exam | Module 6",
+    title: 'CDM Regulations Awareness Mock Exam | Module 6',
     description:
-      "Test your CDM 2015 knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your CDM 2015 knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,12 +108,10 @@ export default function CdmRegulationsModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Put your CDM 2015 knowledge to the test under timed exam conditions.
-              Questions are drawn from a 200-question bank covering all five content modules.
+              Put your CDM 2015 knowledge to the test under timed exam conditions. Questions are
+              drawn from a 200-question bank covering all five content modules.
             </p>
           </div>
 
@@ -115,7 +123,9 @@ export default function CdmRegulationsModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real CDM awareness assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real CDM awareness assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +140,7 @@ export default function CdmRegulationsModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +156,11 @@ export default function CdmRegulationsModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Introduction to CDM 2015", count: 40 },
-                  { module: "Module 2", name: "Duty Holders & Their Roles", count: 40 },
-                  { module: "Module 3", name: "Pre-Construction & Planning", count: 40 },
-                  { module: "Module 4", name: "Design & Risk Management", count: 40 },
-                  { module: "Module 5", name: "Construction Phase & Compliance", count: 40 },
+                  { module: 'Module 1', name: 'Introduction to CDM 2015', count: 40 },
+                  { module: 'Module 2', name: 'Duty Holders & Their Roles', count: 40 },
+                  { module: 'Module 3', name: 'Pre-Construction & Planning', count: 40 },
+                  { module: 'Module 4', name: 'Design & Risk Management', count: 40 },
+                  { module: 'Module 5', name: 'Construction Phase & Compliance', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +212,7 @@ export default function CdmRegulationsModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
@@ -18,7 +17,11 @@ interface DefectObservationsListProps {
   defectObservations: DefectObservation[];
   reportId: string;
   onAddObservation: () => void;
-  onUpdateObservation: (id: string, field: keyof DefectObservation | '__BULK__', value: any) => void;
+  onUpdateObservation: (
+    id: string,
+    field: keyof DefectObservation | '__BULK__',
+    value: any
+  ) => void;
   onRemoveObservation: (id: string) => void;
   certificateContext?: {
     certificateNumber?: string;
@@ -34,14 +37,12 @@ const DefectObservationsList = ({
   onAddObservation,
   onUpdateObservation,
   onRemoveObservation,
-  certificateContext
+  certificateContext,
 }: DefectObservationsListProps) => {
   if (defectObservations.length === 0) {
     return (
       <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
-        <p className="text-muted-foreground mb-2">
-          No observations recorded yet
-        </p>
+        <p className="text-muted-foreground mb-2">No observations recorded yet</p>
         <p className="text-sm text-muted-foreground/80">
           Complete your inspection checklist to automatically populate observations
         </p>

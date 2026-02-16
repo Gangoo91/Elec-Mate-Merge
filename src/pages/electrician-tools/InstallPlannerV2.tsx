@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { EntrySelector } from "@/components/install-planner-v2/EntrySelector";
-import { ExpressMode } from "@/components/install-planner-v2/ExpressMode";
-import { ProfessionalMode } from "@/components/install-planner-v2/ProfessionalMode";
-import { MultiCircuitMode } from "@/components/install-planner-v2/MultiCircuitMode";
-import { AIInstallationDesigner } from "@/components/electrician-tools/circuit-designer/AIInstallationDesigner";
-import { InstallPlanDataV2 } from "@/components/install-planner-v2/types";
-import { SaveManager } from "@/components/install-planner-v2/SaveManager";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { EntrySelector } from '@/components/install-planner-v2/EntrySelector';
+import { ExpressMode } from '@/components/install-planner-v2/ExpressMode';
+import { ProfessionalMode } from '@/components/install-planner-v2/ProfessionalMode';
+import { MultiCircuitMode } from '@/components/install-planner-v2/MultiCircuitMode';
+import { AIInstallationDesigner } from '@/components/electrician-tools/circuit-designer/AIInstallationDesigner';
+import { InstallPlanDataV2 } from '@/components/install-planner-v2/types';
+import { SaveManager } from '@/components/install-planner-v2/SaveManager';
 
 export type PlanMode = 'entry' | 'express' | 'professional' | 'multi' | 'ai-guided';
 
 const InstallPlannerV2 = () => {
   const [searchParams] = useSearchParams();
   const urlMode = searchParams.get('mode');
-  
+
   const [mode, setMode] = useState<PlanMode>('entry');
   const [planData, setPlanData] = useState<InstallPlanDataV2>({
     mode: 'express',
@@ -33,7 +33,7 @@ const InstallPlannerV2 = () => {
         conditions: 'Indoor dry locations',
         earthing: 'TN-S',
         ze: 0.35,
-        grouping: 1
+        grouping: 1,
       },
       userOverrides: {},
       finalApplied: {
@@ -41,17 +41,20 @@ const InstallPlannerV2 = () => {
         conditions: 'Indoor dry locations',
         earthing: 'TN-S',
         ze: 0.35,
-        grouping: 1
-      }
-    }
+        grouping: 1,
+      },
+    },
   });
 
-  const handleModeSelect = (selectedMode: 'express' | 'professional' | 'multi' | 'ai-guided', presetData?: Partial<InstallPlanDataV2>) => {
+  const handleModeSelect = (
+    selectedMode: 'express' | 'professional' | 'multi' | 'ai-guided',
+    presetData?: Partial<InstallPlanDataV2>
+  ) => {
     setMode(selectedMode);
     if (presetData) {
-      setPlanData(prev => ({ ...prev, ...presetData, mode: selectedMode }));
+      setPlanData((prev) => ({ ...prev, ...presetData, mode: selectedMode }));
     } else {
-      setPlanData(prev => ({ ...prev, mode: selectedMode }));
+      setPlanData((prev) => ({ ...prev, mode: selectedMode }));
     }
   };
 
@@ -73,7 +76,7 @@ const InstallPlannerV2 = () => {
           conditions: 'Indoor dry locations',
           earthing: 'TN-S',
           ze: 0.35,
-          grouping: 1
+          grouping: 1,
         },
         userOverrides: {},
         finalApplied: {
@@ -81,9 +84,9 @@ const InstallPlannerV2 = () => {
           conditions: 'Indoor dry locations',
           earthing: 'TN-S',
           ze: 0.35,
-          grouping: 1
-        }
-      }
+          grouping: 1,
+        },
+      },
     });
   };
 
@@ -110,7 +113,10 @@ const InstallPlannerV2 = () => {
             {/* Back button - floating top-left on mobile, inline on desktop */}
             <div className="absolute top-0 left-0 md:hidden">
               <Link to="/electrician">
-                <Button variant="outline" className="h-11 w-11 p-0 touch-manipulation active:scale-[0.95]">
+                <Button
+                  variant="outline"
+                  className="h-11 w-11 p-0 touch-manipulation active:scale-[0.95]"
+                >
                   <ArrowLeft className="h-5 w-5" />
                   <span className="sr-only">Back</span>
                 </Button>
@@ -122,19 +128,24 @@ const InstallPlannerV2 = () => {
               <div className="text-center md:text-left md:flex md:items-center md:gap-3">
                 {/* Back button - visible only on desktop */}
                 <Link to="/electrician" className="hidden md:block">
-                  <Button variant="outline" className="gap-2 h-11 touch-manipulation active:scale-[0.98]">
+                  <Button
+                    variant="outline"
+                    className="gap-2 h-11 touch-manipulation active:scale-[0.98]"
+                  >
                     <ArrowLeft className="h-5 w-5" /> Back
                   </Button>
                 </Link>
-                
+
                 <div>
                   <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
                     Installation Designer
                   </h1>
-                  <p className="text-muted-foreground text-sm md:text-base mt-1">BS 7671:2018 Compliant</p>
+                  <p className="text-muted-foreground text-sm md:text-base mt-1">
+                    BS 7671:2018 Compliant
+                  </p>
                 </div>
               </div>
-              
+
               {/* Save/Load - centered under title on mobile */}
               <div className="flex items-center gap-3 mt-4 md:mt-0">
                 <SaveManager planData={planData} onLoad={setPlanData} />
@@ -143,20 +154,14 @@ const InstallPlannerV2 = () => {
           </div>
 
           {/* Content */}
-          {mode === 'entry' && (
-            <EntrySelector onModeSelect={handleModeSelect} />
-          )}
+          {mode === 'entry' && <EntrySelector onModeSelect={handleModeSelect} />}
 
           {mode === 'express' && (
-            <ExpressMode 
-              planData={planData} 
-              updatePlanData={setPlanData}
-              onReset={handleReset}
-            />
+            <ExpressMode planData={planData} updatePlanData={setPlanData} onReset={handleReset} />
           )}
 
           {mode === 'professional' && (
-            <ProfessionalMode 
+            <ProfessionalMode
               planData={planData}
               updatePlanData={setPlanData}
               onReset={handleReset}
@@ -164,7 +169,7 @@ const InstallPlannerV2 = () => {
           )}
 
           {mode === 'multi' && (
-            <MultiCircuitMode 
+            <MultiCircuitMode
               planData={planData}
               updatePlanData={setPlanData}
               onReset={handleReset}

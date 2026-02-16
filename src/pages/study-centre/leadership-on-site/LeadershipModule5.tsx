@@ -1,45 +1,45 @@
-import { ArrowLeft, CalendarDays, Network, Shield, GraduationCap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, CalendarDays, Network, Shield, GraduationCap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Planning and Organising the Work",
+    title: 'Planning and Organising the Work',
     icon: CalendarDays,
     description:
-      "Programming tasks, managing resources, coordinating timelines, and keeping the job on track",
+      'Programming tasks, managing resources, coordinating timelines, and keeping the job on track',
   },
   {
     id: 2,
-    title: "Managing Subcontractors and Other Trades",
+    title: 'Managing Subcontractors and Other Trades',
     icon: Network,
     description:
-      "Coordinating with other trades, setting expectations, and maintaining standards across teams",
+      'Coordinating with other trades, setting expectations, and maintaining standards across teams',
   },
   {
     id: 3,
-    title: "Health, Safety, and Welfare as a Leader",
+    title: 'Health, Safety, and Welfare as a Leader',
     icon: Shield,
     description:
-      "Your legal duties, leading by example, site inductions, and creating a positive safety culture",
+      'Your legal duties, leading by example, site inductions, and creating a positive safety culture',
   },
   {
     id: 4,
-    title: "Supporting Apprentices and New Starters",
+    title: 'Supporting Apprentices and New Starters',
     icon: GraduationCap,
     description:
-      "Mentoring effectively, setting development goals, and helping the next generation succeed on site",
+      'Mentoring effectively, setting development goals, and helping the next generation succeed on site',
   },
 ];
 
 export default function LeadershipModule5() {
   useSEO({
-    title: "Module 5: Leading on Site | Leadership on Site",
+    title: 'Module 5: Leading on Site | Leadership on Site',
     description:
-      "Planning work, managing subcontractors, health and safety leadership, and supporting apprentices.",
+      'Planning work, managing subcontractors, health and safety leadership, and supporting apprentices.',
   });
 
   return (
@@ -66,20 +66,16 @@ export default function LeadershipModule5() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 5
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 5</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">35 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Leading on Site
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Leading on Site</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Planning and organising work, coordinating trades, leading on
-              safety, and developing apprentices and new starters
+              Planning and organising work, coordinating trades, leading on safety, and developing
+              apprentices and new starters
             </p>
           </div>
 

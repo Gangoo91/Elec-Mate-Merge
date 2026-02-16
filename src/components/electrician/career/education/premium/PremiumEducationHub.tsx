@@ -3,11 +3,11 @@
  * Native app feel with tabs, pull-to-refresh, and seamless navigation
  */
 
-import { useState, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { useState, useMemo, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import {
   Search,
   Bookmark,
@@ -17,28 +17,24 @@ import {
   GraduationCap,
   Loader2,
   AlertCircle,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { useLiveEducationData } from "@/hooks/useLiveEducationData";
-import { useBookmarks } from "./hooks/useBookmarks";
-import { useCompare } from "./hooks/useCompare";
-import { useEducationSearch } from "./hooks/useEducationSearch";
-import {
-  pageVariants,
-  listContainerVariants,
-  listItemVariants,
-} from "./animations/variants";
+import { useLiveEducationData } from '@/hooks/useLiveEducationData';
+import { useBookmarks } from './hooks/useBookmarks';
+import { useCompare } from './hooks/useCompare';
+import { useEducationSearch } from './hooks/useEducationSearch';
+import { pageVariants, listContainerVariants, listItemVariants } from './animations/variants';
 
-import EducationHeroCard from "./EducationHeroCard";
-import CategoryPills from "./CategoryPills";
-import ProgrammeCard from "./ProgrammeCard";
-import ProgrammeCardSkeleton from "./ProgrammeCardSkeleton";
-import SmartSearchSheet from "./SmartSearchSheet";
-import ProgrammeDetailSheet from "./ProgrammeDetailSheet";
-import CompareDrawer from "./CompareDrawer";
-import FundingCalculator from "../../../../apprentice/career/education/FundingCalculator";
+import EducationHeroCard from './EducationHeroCard';
+import CategoryPills from './CategoryPills';
+import ProgrammeCard from './ProgrammeCard';
+import ProgrammeCardSkeleton from './ProgrammeCardSkeleton';
+import SmartSearchSheet from './SmartSearchSheet';
+import ProgrammeDetailSheet from './ProgrammeDetailSheet';
+import CompareDrawer from './CompareDrawer';
+import FundingCalculator from '../../../../apprentice/career/education/FundingCalculator';
 
-type TabType = "explore" | "saved" | "compare";
+type TabType = 'explore' | 'saved' | 'compare';
 
 interface PremiumEducationHubProps {
   onBack?: () => void;
@@ -46,22 +42,10 @@ interface PremiumEducationHubProps {
 
 const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
   // Data hooks
-  const {
-    educationData,
-    analytics,
-    loading,
-    error,
-    lastUpdated,
-    isFromCache,
-    refreshData,
-  } = useLiveEducationData("all");
+  const { educationData, analytics, loading, error, lastUpdated, isFromCache, refreshData } =
+    useLiveEducationData('all');
 
-  const {
-    bookmarkIds,
-    isBookmarked,
-    toggleBookmark,
-    getBookmarkedProgrammes,
-  } = useBookmarks();
+  const { bookmarkIds, isBookmarked, toggleBookmark, getBookmarkedProgrammes } = useBookmarks();
 
   const {
     compareList,
@@ -87,10 +71,10 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
   } = useEducationSearch(educationData);
 
   // Local state
-  const [activeTab, setActiveTab] = useState<TabType>("explore");
+  const [activeTab, setActiveTab] = useState<TabType>('explore');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [detailProgramme, setDetailProgramme] = useState<typeof educationData[0] | null>(null);
+  const [detailProgramme, setDetailProgramme] = useState<(typeof educationData)[0] | null>(null);
   const [compareDrawerOpen, setCompareDrawerOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showFundingCalculator, setShowFundingCalculator] = useState(false);
@@ -115,8 +99,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
       .filter(
         (p) =>
           p.id !== detailProgramme.id &&
-          (p.category === detailProgramme.category ||
-            p.level === detailProgramme.level)
+          (p.category === detailProgramme.category || p.level === detailProgramme.level)
       )
       .slice(0, 4);
   }, [educationData, detailProgramme]);
@@ -131,31 +114,40 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
     }
   }, [refreshData]);
 
-  const handleCategorySelect = useCallback((category: string | null) => {
-    setSelectedCategory(category);
-    if (category) {
-      setFilter("category", category);
-    } else {
-      setFilter("category", "");
-    }
-  }, [setFilter]);
+  const handleCategorySelect = useCallback(
+    (category: string | null) => {
+      setSelectedCategory(category);
+      if (category) {
+        setFilter('category', category);
+      } else {
+        setFilter('category', '');
+      }
+    },
+    [setFilter]
+  );
 
-  const handleSearch = useCallback((term: string) => {
-    setSearchTerm(term);
-    setActiveTab("explore");
-    setSearchOpen(false);
-  }, [setSearchTerm]);
+  const handleSearch = useCallback(
+    (term: string) => {
+      setSearchTerm(term);
+      setActiveTab('explore');
+      setSearchOpen(false);
+    },
+    [setSearchTerm]
+  );
 
-  const handleSelectProgramme = useCallback((programme: typeof educationData[0]) => {
+  const handleSelectProgramme = useCallback((programme: (typeof educationData)[0]) => {
     setDetailProgramme(programme);
   }, []);
 
-  const handleAddToCompare = useCallback((programme: typeof educationData[0]) => {
-    const added = addToCompare(programme);
-    if (!added && isCompareFull) {
-      setCompareDrawerOpen(true);
-    }
-  }, [addToCompare, isCompareFull]);
+  const handleAddToCompare = useCallback(
+    (programme: (typeof educationData)[0]) => {
+      const added = addToCompare(programme);
+      if (!added && isCompareFull) {
+        setCompareDrawerOpen(true);
+      }
+    },
+    [addToCompare, isCompareFull]
+  );
 
   // Render tab content
   const renderTabContent = () => {
@@ -168,11 +160,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
           animate="animate"
           exit="exit"
         >
-          <Button
-            variant="ghost"
-            onClick={() => setShowFundingCalculator(false)}
-            className="mb-4"
-          >
+          <Button variant="ghost" onClick={() => setShowFundingCalculator(false)} className="mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Programmes
           </Button>
@@ -182,7 +170,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
     }
 
     switch (activeTab) {
-      case "explore":
+      case 'explore':
         return (
           <motion.div
             key="explore"
@@ -232,9 +220,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                 {displayedProgrammes.length === 0 ? (
                   <div className="text-center py-12">
                     <GraduationCap className="h-16 w-16 text-white/10 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-white mb-2">
-                      No programmes found
-                    </h3>
+                    <h3 className="text-lg font-semibold text-white mb-2">No programmes found</h3>
                     <p className="text-sm text-white/50 max-w-xs mx-auto mb-4">
                       Try adjusting your filters or search for something else
                     </p>
@@ -283,7 +269,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
           </motion.div>
         );
 
-      case "saved":
+      case 'saved':
         return (
           <motion.div
             key="saved"
@@ -294,9 +280,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
             className="space-y-4"
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">
-                Saved Programmes
-              </h2>
+              <h2 className="text-lg font-semibold text-white">Saved Programmes</h2>
               <Badge variant="secondary" className="bg-white/10">
                 {savedProgrammes.length} saved
               </Badge>
@@ -305,15 +289,11 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
             {savedProgrammes.length === 0 ? (
               <div className="text-center py-12">
                 <Bookmark className="h-16 w-16 text-white/10 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  No saved programmes
-                </h3>
+                <h3 className="text-lg font-semibold text-white mb-2">No saved programmes</h3>
                 <p className="text-sm text-white/50 max-w-xs mx-auto mb-4">
                   Swipe right on a programme card or tap the bookmark icon to save
                 </p>
-                <Button onClick={() => setActiveTab("explore")}>
-                  Browse Programmes
-                </Button>
+                <Button onClick={() => setActiveTab('explore')}>Browse Programmes</Button>
               </div>
             ) : (
               <motion.div
@@ -340,7 +320,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
           </motion.div>
         );
 
-      case "compare":
+      case 'compare':
         return (
           <motion.div
             key="compare"
@@ -351,9 +331,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
             className="space-y-4"
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">
-                Compare Programmes
-              </h2>
+              <h2 className="text-lg font-semibold text-white">Compare Programmes</h2>
               <Badge variant="secondary" className="bg-white/10">
                 {compareCount}/3
               </Badge>
@@ -362,15 +340,11 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
             {compareCount === 0 ? (
               <div className="text-center py-12">
                 <GitCompare className="h-16 w-16 text-white/10 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  No programmes to compare
-                </h3>
+                <h3 className="text-lg font-semibold text-white mb-2">No programmes to compare</h3>
                 <p className="text-sm text-white/50 max-w-xs mx-auto mb-4">
                   Swipe left on programme cards to add them to your comparison
                 </p>
-                <Button onClick={() => setActiveTab("explore")}>
-                  Browse Programmes
-                </Button>
+                <Button onClick={() => setActiveTab('explore')}>Browse Programmes</Button>
               </div>
             ) : (
               <div className="space-y-4">
@@ -419,12 +393,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
         <div className="flex items-center justify-between h-12 sm:h-14 px-3 sm:px-4">
           {/* Left: Back button */}
           {onBack && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="h-9 w-9"
-            >
+            <Button variant="ghost" size="icon" onClick={onBack} className="h-9 w-9">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           )}
@@ -433,18 +402,28 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
           <div className="flex-1 flex justify-center">
             <div className="flex bg-white/5 rounded-full p-1">
               {[
-                { id: "explore" as TabType, label: "Explore", icon: GraduationCap },
-                { id: "saved" as TabType, label: "Saved", icon: Bookmark, count: bookmarkIds.length },
-                { id: "compare" as TabType, label: "Compare", icon: GitCompare, count: compareCount },
+                { id: 'explore' as TabType, label: 'Explore', icon: GraduationCap },
+                {
+                  id: 'saved' as TabType,
+                  label: 'Saved',
+                  icon: Bookmark,
+                  count: bookmarkIds.length,
+                },
+                {
+                  id: 'compare' as TabType,
+                  label: 'Compare',
+                  icon: GitCompare,
+                  count: compareCount,
+                },
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all",
+                    'relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
                     activeTab === tab.id
-                      ? "bg-purple-500 text-white"
-                      : "text-white/60 hover:text-white"
+                      ? 'bg-purple-500 text-white'
+                      : 'text-white/60 hover:text-white'
                   )}
                 >
                   <tab.icon className="h-4 w-4" />
@@ -452,10 +431,10 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                   {tab.count !== undefined && tab.count > 0 && (
                     <Badge
                       className={cn(
-                        "h-5 min-w-[20px] px-1.5 text-[10px]",
+                        'h-5 min-w-[20px] px-1.5 text-[10px]',
                         activeTab === tab.id
-                          ? "bg-white/20 text-white"
-                          : "bg-purple-500/20 text-purple-400"
+                          ? 'bg-white/20 text-white'
+                          : 'bg-purple-500/20 text-purple-400'
                       )}
                     >
                       {tab.count}
@@ -525,7 +504,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
         onClear={clearCompare}
         onAddMore={() => {
           setCompareDrawerOpen(false);
-          setActiveTab("explore");
+          setActiveTab('explore');
         }}
         onSelectProgramme={handleSelectProgramme}
       />

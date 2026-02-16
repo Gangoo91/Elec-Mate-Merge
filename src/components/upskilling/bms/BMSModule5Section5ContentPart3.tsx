@@ -13,9 +13,10 @@ export const BMSModule5Section5ContentPart3 = () => {
       <CardContent className="space-y-6">
         <div className="space-y-4">
           <p className="text-foreground">
-            Understanding gateway benefits helps you explain value to clients and make informed system design decisions:
+            Understanding gateway benefits helps you explain value to clients and make informed
+            system design decisions:
           </p>
-          
+
           <div className="grid gap-5">
             {/* Integration Benefits */}
             <div className="bg-elec-dark p-5 rounded-lg border border-gray-600">
@@ -25,8 +26,8 @@ export const BMSModule5Section5ContentPart3 = () => {
               </div>
               <div className="space-y-3">
                 <p className="text-foreground text-sm">
-                  <strong>Single Interface:</strong> Allows all building data to be visible in one unified interface, 
-                  eliminating the need to check multiple separate systems.
+                  <strong>Single Interface:</strong> Allows all building data to be visible in one
+                  unified interface, eliminating the need to check multiple separate systems.
                 </p>
                 <div className="bg-green-900/20 border border-green-600/30 rounded-lg p-4">
                   <p className="text-green-100 text-sm font-medium">Before Gateway:</p>
@@ -36,7 +37,7 @@ export const BMSModule5Section5ContentPart3 = () => {
                     <li>• KNX software for lighting control</li>
                     <li>• Different alarm systems for each protocol</li>
                   </ul>
-                  
+
                   <p className="text-green-100 text-sm font-medium mt-3">After Gateway:</p>
                   <ul className="text-foreground text-xs mt-2 space-y-1">
                     <li>• Single BMS screen shows all systems</li>
@@ -56,8 +57,8 @@ export const BMSModule5Section5ContentPart3 = () => {
               </div>
               <div className="space-y-3">
                 <p className="text-foreground text-sm">
-                  <strong>Vendor Independence:</strong> Mix devices from different manufacturers without being locked 
-                  into a single supplier's ecosystem.
+                  <strong>Vendor Independence:</strong> Mix devices from different manufacturers
+                  without being locked into a single supplier's ecosystem.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-3">
@@ -90,8 +91,8 @@ export const BMSModule5Section5ContentPart3 = () => {
               </div>
               <div className="space-y-3">
                 <p className="text-foreground text-sm">
-                  <strong>Economic Benefits:</strong> Avoid expensive system replacements and reduce operational costs 
-                  through better system coordination.
+                  <strong>Economic Benefits:</strong> Avoid expensive system replacements and reduce
+                  operational costs through better system coordination.
                 </p>
                 <div className="grid md:grid-cols-3 gap-3">
                   <div className="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-3">
@@ -133,14 +134,16 @@ export const BMSModule5Section5ContentPart3 = () => {
               </div>
               <div className="space-y-3">
                 <p className="text-foreground text-sm">
-                  <strong>Growth Ready:</strong> Simplifies adding new subsystems later without replacing everything, 
-                  supporting business expansion and technology evolution.
+                  <strong>Growth Ready:</strong> Simplifies adding new subsystems later without
+                  replacing everything, supporting business expansion and technology evolution.
                 </p>
                 <div className="bg-purple-900/20 border border-purple-600/30 rounded-lg p-4">
                   <p className="text-purple-100 text-sm font-medium">Expansion Scenarios:</p>
                   <div className="grid md:grid-cols-2 gap-3 mt-3">
                     <div>
-                      <p className="text-foreground text-xs font-medium mb-2">Phase 1 Installation:</p>
+                      <p className="text-foreground text-xs font-medium mb-2">
+                        Phase 1 Installation:
+                      </p>
                       <ul className="text-foreground text-xs space-y-1">
                         <li>• Basic HVAC and lighting</li>
                         <li>• Simple energy monitoring</li>

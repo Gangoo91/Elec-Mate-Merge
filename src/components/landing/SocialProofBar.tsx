@@ -10,13 +10,36 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { icon: <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />, value: 50, suffix: '+', label: 'Calculators' },
-  { icon: <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5" />, value: 6800, suffix: '+', label: 'Questions' },
-  { icon: <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />, value: 14, suffix: '', label: 'Study Topics' },
+  {
+    icon: <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />,
+    value: 50,
+    suffix: '+',
+    label: 'Calculators',
+  },
+  {
+    icon: <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5" />,
+    value: 6800,
+    suffix: '+',
+    label: 'Questions',
+  },
+  {
+    icon: <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />,
+    value: 14,
+    suffix: '',
+    label: 'Study Topics',
+  },
   { icon: <Bot className="w-4 h-4 sm:w-5 sm:h-5" />, value: 8, suffix: '', label: 'AI Agents' },
 ];
 
-const AnimatedCounter = ({ value, suffix, isInView }: { value: number; suffix: string; isInView: boolean }) => {
+const AnimatedCounter = ({
+  value,
+  suffix,
+  isInView,
+}: {
+  value: number;
+  suffix: string;
+  isInView: boolean;
+}) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -42,7 +65,8 @@ const AnimatedCounter = ({ value, suffix, isInView }: { value: number; suffix: s
 
   return (
     <span className="tabular-nums">
-      {count.toLocaleString()}{suffix}
+      {count.toLocaleString()}
+      {suffix}
     </span>
   );
 };
@@ -75,7 +99,9 @@ export const SocialProofBar = () => {
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} isInView={isInView} />
                   </span>
                 </div>
-                <p className="text-[10px] sm:text-xs text-white/40 font-medium uppercase tracking-wider">{stat.label}</p>
+                <p className="text-[10px] sm:text-xs text-white/40 font-medium uppercase tracking-wider">
+                  {stat.label}
+                </p>
               </div>
             </motion.div>
           ))}

@@ -1,57 +1,65 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FolderOpen, Lightbulb, Camera, FileText, CheckCircle, AlertTriangle, Zap, BookOpen } from "lucide-react";
-import PortfolioTemplateSelector from "@/components/apprentice/portfolio/PortfolioTemplateSelector";
-import DocumentationGuide from "@/components/apprentice/portfolio/DocumentationGuide";
-import DigitalToolsIntegration from "@/components/apprentice/portfolio/DigitalToolsIntegration";
-import QualityAssessmentTool from "@/components/apprentice/portfolio/QualityAssessmentTool";
-import IndustrySpecificSections from "@/components/apprentice/portfolio/IndustrySpecificSections";
-import InteractiveLearningFeatures from "@/components/apprentice/portfolio/InteractiveLearningFeatures";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  FolderOpen,
+  Lightbulb,
+  Camera,
+  FileText,
+  CheckCircle,
+  AlertTriangle,
+  Zap,
+  BookOpen,
+} from 'lucide-react';
+import PortfolioTemplateSelector from '@/components/apprentice/portfolio/PortfolioTemplateSelector';
+import DocumentationGuide from '@/components/apprentice/portfolio/DocumentationGuide';
+import DigitalToolsIntegration from '@/components/apprentice/portfolio/DigitalToolsIntegration';
+import QualityAssessmentTool from '@/components/apprentice/portfolio/QualityAssessmentTool';
+import IndustrySpecificSections from '@/components/apprentice/portfolio/IndustrySpecificSections';
+import InteractiveLearningFeatures from '@/components/apprentice/portfolio/InteractiveLearningFeatures';
 
 const PortfolioBuilding = () => {
   const portfolioSections = [
     {
-      title: "Work Evidence Documentation",
-      description: "How to properly document your practical work",
+      title: 'Work Evidence Documentation',
+      description: 'How to properly document your practical work',
       items: [
-        "Take clear before/after photos of installations",
-        "Document materials used and quantities",
-        "Record any problems encountered and solutions",
-        "Note safety considerations and precautions taken"
-      ]
+        'Take clear before/after photos of installations',
+        'Document materials used and quantities',
+        'Record any problems encountered and solutions',
+        'Note safety considerations and precautions taken',
+      ],
     },
     {
-      title: "Assessment Requirements",
-      description: "What assessors look for in your portfolio",
+      title: 'Assessment Requirements',
+      description: 'What assessors look for in your portfolio',
       items: [
-        "Evidence of planning and preparation",
-        "Demonstration of safe working practices",
-        "Quality of workmanship and attention to detail",
-        "Understanding of regulations and standards"
-      ]
+        'Evidence of planning and preparation',
+        'Demonstration of safe working practices',
+        'Quality of workmanship and attention to detail',
+        'Understanding of regulations and standards',
+      ],
     },
     {
-      title: "Common Portfolio Mistakes",
-      description: "Pitfalls to avoid when building your portfolio",
+      title: 'Common Portfolio Mistakes',
+      description: 'Pitfalls to avoid when building your portfolio',
       items: [
-        "Poor quality or unclear photographs",
-        "Insufficient detail in work descriptions",
-        "Missing safety documentation",
-        "Not showing your individual contribution to team projects"
-      ]
-    }
+        'Poor quality or unclear photographs',
+        'Insufficient detail in work descriptions',
+        'Missing safety documentation',
+        'Not showing your individual contribution to team projects',
+      ],
+    },
   ];
 
   const documentationTips = [
-    "Use a consistent format for all entries",
-    "Include dates, locations, and supervisor details",
-    "Explain your role in team projects clearly",
-    "Link practical work to theoretical knowledge",
-    "Show progression in complexity over time",
-    "Include feedback from supervisors"
+    'Use a consistent format for all entries',
+    'Include dates, locations, and supervisor details',
+    'Explain your role in team projects clearly',
+    'Link practical work to theoretical knowledge',
+    'Show progression in complexity over time',
+    'Include feedback from supervisors',
   ];
 
   return (
@@ -59,8 +67,9 @@ const PortfolioBuilding = () => {
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Enhanced Portfolio Builder</h1>
         <p className="text-white text-center max-w-3xl mb-4">
-          Build a professional portfolio that showcases your skills, meets assessment standards, and impresses employers. 
-          Our comprehensive toolkit guides you through every step of the process.
+          Build a professional portfolio that showcases your skills, meets assessment standards, and
+          impresses employers. Our comprehensive toolkit guides you through every step of the
+          process.
         </p>
         <SmartBackButton />
       </div>
@@ -128,8 +137,8 @@ const PortfolioBuilding = () => {
                 <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Pro Tip</h4>
                   <p className="text-sm text-white">
-                    Start documenting from day one! It's much harder to reconstruct your portfolio 
-                    later than to maintain it as you go. Set aside 10 minutes each day to update 
+                    Start documenting from day one! It's much harder to reconstruct your portfolio
+                    later than to maintain it as you go. Set aside 10 minutes each day to update
                     your records.
                   </p>
                 </div>
@@ -146,9 +155,9 @@ const PortfolioBuilding = () => {
             </CardHeader>
             <CardContent>
               <p className="text-white">
-                Your portfolio is more than just a collection of photos - it's proof of your learning 
-                journey and professional development. Quality documentation now will make your 
-                end-point assessment much smoother.
+                Your portfolio is more than just a collection of photos - it's proof of your
+                learning journey and professional development. Quality documentation now will make
+                your end-point assessment much smoother.
               </p>
             </CardContent>
           </Card>
@@ -244,7 +253,9 @@ const PortfolioBuilding = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="p-4 bg-yellow-500/20 rounded-lg border border-yellow-500/30">
-                  <h5 className="font-medium text-yellow-400 mb-2">Important Legal Considerations</h5>
+                  <h5 className="font-medium text-yellow-400 mb-2">
+                    Important Legal Considerations
+                  </h5>
                   <ul className="text-sm text-white space-y-1">
                     <li>• Always obtain permission before photographing client premises</li>
                     <li>• Respect data protection laws when documenting work</li>

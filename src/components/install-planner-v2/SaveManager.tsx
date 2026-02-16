@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Save, FolderOpen } from "lucide-react";
-import { InstallPlanDataV2 } from "./types";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { Save, FolderOpen } from 'lucide-react';
+import { InstallPlanDataV2 } from './types';
+import { useToast } from '@/hooks/use-toast';
 
 interface SaveManagerProps {
   planData: InstallPlanDataV2;
@@ -15,18 +15,18 @@ export const SaveManager = ({ planData, onLoad }: SaveManagerProps) => {
     try {
       const dataToSave = {
         ...planData,
-        savedAt: new Date().toISOString()
+        savedAt: new Date().toISOString(),
       };
       localStorage.setItem('install-planner-v2', JSON.stringify(dataToSave));
       toast({
-        title: "Saved",
-        description: "Your plan has been saved successfully"
+        title: 'Saved',
+        description: 'Your plan has been saved successfully',
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to save plan",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to save plan',
+        variant: 'destructive',
       });
     }
   };
@@ -38,20 +38,20 @@ export const SaveManager = ({ planData, onLoad }: SaveManagerProps) => {
         const data = JSON.parse(saved);
         onLoad(data);
         toast({
-          title: "Loaded",
-          description: "Your saved plan has been loaded"
+          title: 'Loaded',
+          description: 'Your saved plan has been loaded',
         });
       } else {
         toast({
-          title: "No saved data",
-          description: "No previously saved plan found"
+          title: 'No saved data',
+          description: 'No previously saved plan found',
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to load plan",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to load plan',
+        variant: 'destructive',
       });
     }
   };

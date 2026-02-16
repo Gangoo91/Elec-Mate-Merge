@@ -48,11 +48,11 @@ export function ProgressRing({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={cn("relative inline-flex flex-col items-center", className)}>
+    <div className={cn('relative inline-flex flex-col items-center', className)}>
       <svg
         width={config.diameter}
         height={config.diameter}
-        className={cn("transform -rotate-90", animated && "transition-all duration-1000 ease-out")}
+        className={cn('transform -rotate-90', animated && 'transition-all duration-1000 ease-out')}
       >
         {/* Background Track */}
         <circle
@@ -75,7 +75,7 @@ export function ProgressRing({
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={animated ? offset : 0}
-          className={animated ? "transition-all duration-1000 ease-out" : ""}
+          className={animated ? 'transition-all duration-1000 ease-out' : ''}
           style={animated ? { strokeDashoffset: offset } : undefined}
         />
       </svg>
@@ -83,30 +83,20 @@ export function ProgressRing({
       {/* Center Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         {showPercentage && (
-          <span className={cn("font-bold text-foreground", config.fontSize)}>
+          <span className={cn('font-bold text-foreground', config.fontSize)}>
             {Math.round(progress)}%
           </span>
         )}
         {label && !showPercentage && (
-          <span className={cn("font-bold text-foreground", config.fontSize)}>
-            {label}
-          </span>
+          <span className={cn('font-bold text-foreground', config.fontSize)}>{label}</span>
         )}
       </div>
 
       {/* Label Below */}
       {(label || sublabel) && showPercentage && (
         <div className="mt-2 text-center">
-          {label && (
-            <p className={cn("font-medium text-foreground", config.labelSize)}>
-              {label}
-            </p>
-          )}
-          {sublabel && (
-            <p className={cn("text-muted-foreground", config.labelSize)}>
-              {sublabel}
-            </p>
-          )}
+          {label && <p className={cn('font-medium text-foreground', config.labelSize)}>{label}</p>}
+          {sublabel && <p className={cn('text-muted-foreground', config.labelSize)}>{sublabel}</p>}
         </div>
       )}
     </div>
@@ -134,16 +124,14 @@ export function ProgressRingsGroup({
   reviews,
   className,
 }: ProgressRingsGroupProps) {
-  const portfolioPercent = portfolio.target > 0
-    ? Math.round((portfolio.current / portfolio.target) * 100)
-    : 0;
+  const portfolioPercent =
+    portfolio.target > 0 ? Math.round((portfolio.current / portfolio.target) * 100) : 0;
 
-  const otjPercent = otjHours.target > 0
-    ? Math.round((otjHours.current / otjHours.target) * 100)
-    : 0;
+  const otjPercent =
+    otjHours.target > 0 ? Math.round((otjHours.current / otjHours.target) * 100) : 0;
 
   return (
-    <div className={cn("flex items-center justify-center gap-6 sm:gap-10", className)}>
+    <div className={cn('flex items-center justify-center gap-6 sm:gap-10', className)}>
       {/* Portfolio Progress */}
       <ProgressRing
         percentage={portfolioPercent}
@@ -202,7 +190,7 @@ export function MiniProgressRing({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={cn("relative inline-flex items-center justify-center", className)}>
+    <div className={cn('relative inline-flex items-center justify-center', className)}>
       <svg width={size} height={size} className="transform -rotate-90">
         <circle
           cx={size / 2}

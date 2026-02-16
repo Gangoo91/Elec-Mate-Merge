@@ -1,7 +1,6 @@
-
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Zap,
   Wind,
@@ -15,8 +14,8 @@ import {
   CheckCircle,
   Sparkles,
   Phone,
-  Heart
-} from "lucide-react";
+  Heart,
+} from 'lucide-react';
 
 interface QuickTechnique {
   id: string;
@@ -31,107 +30,107 @@ interface QuickTechnique {
 
 const techniques: QuickTechnique[] = [
   {
-    id: "breath",
-    name: "4-7-8 Breath",
-    duration: "1 min",
+    id: 'breath',
+    name: '4-7-8 Breath',
+    duration: '1 min',
     icon: Wind,
-    color: "blue",
-    description: "Instantly calm your nervous system",
-    fastTrack: "Breathe in 4 sec, hold 7 sec, out 8 sec. Repeat 3x.",
+    color: 'blue',
+    description: 'Instantly calm your nervous system',
+    fastTrack: 'Breathe in 4 sec, hold 7 sec, out 8 sec. Repeat 3x.',
     steps: [
-      "Breathe IN through nose for 4 seconds",
-      "HOLD for 7 seconds",
-      "Breathe OUT through mouth for 8 seconds",
-      "Repeat 3 times"
-    ]
+      'Breathe IN through nose for 4 seconds',
+      'HOLD for 7 seconds',
+      'Breathe OUT through mouth for 8 seconds',
+      'Repeat 3 times',
+    ],
   },
   {
-    id: "ground",
-    name: "5-4-3-2-1",
-    duration: "2 min",
+    id: 'ground',
+    name: '5-4-3-2-1',
+    duration: '2 min',
     icon: Eye,
-    color: "purple",
-    description: "Ground yourself with your senses",
-    fastTrack: "Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.",
+    color: 'purple',
+    description: 'Ground yourself with your senses',
+    fastTrack: 'Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.',
     steps: [
-      "Name 5 things you can SEE",
-      "Name 4 things you can FEEL",
-      "Name 3 things you can HEAR",
-      "Name 2 things you can SMELL",
-      "Name 1 thing you can TASTE"
-    ]
+      'Name 5 things you can SEE',
+      'Name 4 things you can FEEL',
+      'Name 3 things you can HEAR',
+      'Name 2 things you can SMELL',
+      'Name 1 thing you can TASTE',
+    ],
   },
   {
-    id: "cold",
-    name: "Cold Reset",
-    duration: "30 sec",
+    id: 'cold',
+    name: 'Cold Reset',
+    duration: '30 sec',
     icon: Droplets,
-    color: "cyan",
-    description: "Activate your calming response",
-    fastTrack: "Splash cold water on face or hold ice cubes. Focus on the sensation.",
+    color: 'cyan',
+    description: 'Activate your calming response',
+    fastTrack: 'Splash cold water on face or hold ice cubes. Focus on the sensation.',
     steps: [
-      "Get cold water or ice",
-      "Splash on your face or hold on wrists",
-      "Focus on the cold sensation",
-      "This activates your dive reflex and slows heart rate"
-    ]
+      'Get cold water or ice',
+      'Splash on your face or hold on wrists',
+      'Focus on the cold sensation',
+      'This activates your dive reflex and slows heart rate',
+    ],
   },
   {
-    id: "muscle",
-    name: "Tension Release",
-    duration: "1 min",
+    id: 'muscle',
+    name: 'Tension Release',
+    duration: '1 min',
     icon: Hand,
-    color: "orange",
-    description: "Quick muscle relaxation",
-    fastTrack: "Clench fists tight for 5 sec, release. Repeat with shoulders and face.",
+    color: 'orange',
+    description: 'Quick muscle relaxation',
+    fastTrack: 'Clench fists tight for 5 sec, release. Repeat with shoulders and face.',
     steps: [
-      "Make tight FISTS for 5 seconds, release",
-      "Scrunch your FACE for 5 seconds, release",
-      "Raise SHOULDERS to ears for 5 seconds, release",
-      "Notice the relaxation in each area"
-    ]
+      'Make tight FISTS for 5 seconds, release',
+      'Scrunch your FACE for 5 seconds, release',
+      'Raise SHOULDERS to ears for 5 seconds, release',
+      'Notice the relaxation in each area',
+    ],
   },
   {
-    id: "mantra",
-    name: "Calming Mantra",
-    duration: "30 sec",
+    id: 'mantra',
+    name: 'Calming Mantra',
+    duration: '30 sec',
     icon: MessageCircle,
-    color: "rose",
-    description: "Reassure yourself",
+    color: 'rose',
+    description: 'Reassure yourself',
     fastTrack: "Repeat slowly: 'This feeling will pass. I am safe right now.'",
     steps: [
-      "Take a slow breath",
+      'Take a slow breath',
       "Repeat: 'This feeling will pass'",
       "Repeat: 'I am safe right now'",
       "Repeat: 'I can handle this'",
-      "Continue until you feel calmer"
-    ]
+      'Continue until you feel calmer',
+    ],
   },
   {
-    id: "distract",
-    name: "Quick Distraction",
-    duration: "2 min",
+    id: 'distract',
+    name: 'Quick Distraction',
+    duration: '2 min',
     icon: Zap,
-    color: "yellow",
-    description: "Break the thought loop",
-    fastTrack: "Count backwards from 100 by 7s (100, 93, 86...) or name countries A-Z.",
+    color: 'yellow',
+    description: 'Break the thought loop',
+    fastTrack: 'Count backwards from 100 by 7s (100, 93, 86...) or name countries A-Z.',
     steps: [
-      "Count backwards from 100 by 7s",
-      "OR: Name a country for each letter A-Z",
-      "OR: List your favourite films alphabetically",
-      "This interrupts anxious thoughts"
-    ]
-  }
+      'Count backwards from 100 by 7s',
+      'OR: Name a country for each letter A-Z',
+      'OR: List your favourite films alphabetically',
+      'This interrupts anxious thoughts',
+    ],
+  },
 ];
 
 const getColorClasses = (color: string) => {
   const colors: Record<string, { bg: string; text: string; border: string }> = {
-    blue: { bg: "bg-blue-500/20", text: "text-blue-400", border: "border-blue-500/20" },
-    purple: { bg: "bg-purple-500/20", text: "text-purple-400", border: "border-purple-500/20" },
-    cyan: { bg: "bg-cyan-500/20", text: "text-cyan-400", border: "border-cyan-500/20" },
-    orange: { bg: "bg-orange-500/20", text: "text-orange-400", border: "border-orange-500/20" },
-    rose: { bg: "bg-rose-500/20", text: "text-rose-400", border: "border-rose-500/20" },
-    yellow: { bg: "bg-yellow-500/20", text: "text-yellow-400", border: "border-yellow-500/20" }
+    blue: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/20' },
+    purple: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/20' },
+    cyan: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/20' },
+    orange: { bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/20' },
+    rose: { bg: 'bg-rose-500/20', text: 'text-rose-400', border: 'border-rose-500/20' },
+    yellow: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/20' },
   };
   return colors[color] || colors.blue;
 };
@@ -174,7 +173,9 @@ const QuickCopingToolkit = () => {
 
         {/* Title */}
         <div className="text-center py-2">
-          <div className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}>
+          <div
+            className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}
+          >
             <Icon className={`h-7 w-7 ${colors.text}`} />
           </div>
           <h2 className="text-xl font-bold text-foreground">{selectedTechnique.name}</h2>
@@ -196,7 +197,9 @@ const QuickCopingToolkit = () => {
 
         {showFastTrack && selectedTechnique.fastTrack ? (
           // Fast track view
-          <Card className={`${colors.border} bg-gradient-to-br ${colors.bg.replace('/20', '/10')} to-transparent`}>
+          <Card
+            className={`${colors.border} bg-gradient-to-br ${colors.bg.replace('/20', '/10')} to-transparent`}
+          >
             <CardContent className="p-6 text-center">
               <Zap className={`h-8 w-8 ${colors.text} mx-auto mb-3`} />
               <p className="text-lg text-foreground leading-relaxed">
@@ -212,9 +215,11 @@ const QuickCopingToolkit = () => {
                 <div
                   key={i}
                   className={`h-1 rounded-full transition-all ${
-                    i < currentStep ? 'bg-green-400 w-8' :
-                    i === currentStep ? `${colors.text.replace('text-', 'bg-')} w-8` :
-                    'bg-white/20 w-4'
+                    i < currentStep
+                      ? 'bg-green-400 w-8'
+                      : i === currentStep
+                        ? `${colors.text.replace('text-', 'bg-')} w-8`
+                        : 'bg-white/20 w-4'
                   }`}
                 />
               ))}
@@ -222,10 +227,14 @@ const QuickCopingToolkit = () => {
 
             {/* Current Step */}
             {currentStep < selectedTechnique.steps.length ? (
-              <Card className={`${colors.border} bg-gradient-to-br ${colors.bg.replace('/20', '/10')} to-transparent`}>
+              <Card
+                className={`${colors.border} bg-gradient-to-br ${colors.bg.replace('/20', '/10')} to-transparent`}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className={`w-10 h-10 rounded-full ${colors.bg} flex items-center justify-center flex-shrink-0`}>
+                    <div
+                      className={`w-10 h-10 rounded-full ${colors.bg} flex items-center justify-center flex-shrink-0`}
+                    >
                       <span className={`font-bold ${colors.text}`}>{currentStep + 1}</span>
                     </div>
                     <p className="text-lg text-foreground leading-relaxed pt-1">
@@ -293,9 +302,7 @@ const QuickCopingToolkit = () => {
           <Zap className="h-6 w-6 text-yellow-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Quick Coping Toolkit</h2>
-        <p className="text-sm text-white">
-          Fast techniques for difficult moments
-        </p>
+        <p className="text-sm text-white">Fast techniques for difficult moments</p>
       </div>
 
       {/* Urgent Help Banner */}
@@ -331,7 +338,9 @@ const QuickCopingToolkit = () => {
             >
               <CardContent className="p-3 min-h-[72px] flex items-center">
                 <div className="flex items-center gap-3 w-full">
-                  <div className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}>
+                  <div
+                    className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}
+                  >
                     <Icon className={`h-6 w-6 ${colors.text}`} />
                   </div>
                   <div className="flex-1 min-w-0">

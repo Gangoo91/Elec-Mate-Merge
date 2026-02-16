@@ -1,51 +1,51 @@
-import { ArrowLeft, FileText, Lock, Shield, HardHat, Home } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, FileText, Lock, Shield, HardHat, Home } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule1Section1 = () => {
   useSEO(
-    "Safe Systems of Work - MOET Module 1",
-    "Permit to work systems, isolation procedures, LOTO, work at height and confined spaces"
+    'Safe Systems of Work - MOET Module 1',
+    'Permit to work systems, isolation procedures, LOTO, work at height and confined spaces'
   );
 
   const subsections = [
     {
-      number: "1.1.1",
-      title: "Permit to Work Systems",
-      description: "Understanding and implementing permit to work procedures",
+      number: '1.1.1',
+      title: 'Permit to Work Systems',
+      description: 'Understanding and implementing permit to work procedures',
       icon: FileText,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section1-1"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section1-1',
     },
     {
-      number: "1.1.2", 
-      title: "Isolation Procedures",
-      description: "Safe isolation of electrical and mechanical systems",
+      number: '1.1.2',
+      title: 'Isolation Procedures',
+      description: 'Safe isolation of electrical and mechanical systems',
       icon: Lock,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section1-2"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section1-2',
     },
     {
-      number: "1.1.3",
-      title: "Lock-Out / Tag-Out (LOTO)", 
-      description: "LOTO procedures for energy isolation and control",
+      number: '1.1.3',
+      title: 'Lock-Out / Tag-Out (LOTO)',
+      description: 'LOTO procedures for energy isolation and control',
       icon: Shield,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section1-3"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section1-3',
     },
     {
-      number: "1.1.4",
-      title: "Safe Access and Work at Height",
-      description: "Working safely at height and access equipment requirements",
+      number: '1.1.4',
+      title: 'Safe Access and Work at Height',
+      description: 'Working safely at height and access equipment requirements',
       icon: HardHat,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section1-4"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section1-4',
     },
     {
-      number: "1.1.5",
-      title: "Working in Confined Spaces",
-      description: "Safe entry and working procedures for confined spaces",
+      number: '1.1.5',
+      title: 'Working in Confined Spaces',
+      description: 'Safe entry and working procedures for confined spaces',
       icon: Home,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section1-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module1-section1-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule1Section1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 1

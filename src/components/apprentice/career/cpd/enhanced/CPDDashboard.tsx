@@ -1,11 +1,19 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Clock, Target, Award, TrendingUp, Calendar, Download, Plus, BarChart3 } from "lucide-react";
-import { useCPDData } from "@/hooks/cpd/useCPDData";
-import { cpdExportService } from "@/services/cpdExportService";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Clock,
+  Target,
+  Award,
+  TrendingUp,
+  Calendar,
+  Download,
+  Plus,
+  BarChart3,
+} from 'lucide-react';
+import { useCPDData } from '@/hooks/cpd/useCPDData';
+import { cpdExportService } from '@/services/cpdExportService';
 
 interface CPDDashboardProps {
   onAddEntry: () => void;
@@ -33,7 +41,10 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
       <div className="space-y-6 animate-fade-in">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <Card key={i} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+            <Card
+              key={i}
+              className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative"
+            >
               <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <CardContent className="p-6 relative">
                 <div className="h-16 bg-white/10 rounded animate-pulse"></div>
@@ -46,10 +57,13 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
   }
 
   const getComplianceStatus = () => {
-    if (stats.completionPercentage >= 100) return { status: "Compliant", color: "bg-green-500/10 text-green-400 border-green-500/30" };
-    if (stats.completionPercentage >= 80) return { status: "On Track", color: "bg-green-500/10 text-green-400 border-green-500/30" };
-    if (stats.completionPercentage >= 60) return { status: "Monitor", color: "bg-amber-500/10 text-amber-400 border-amber-500/30" };
-    return { status: "Attention Needed", color: "bg-red-500/10 text-red-400 border-red-500/30" };
+    if (stats.completionPercentage >= 100)
+      return { status: 'Compliant', color: 'bg-green-500/10 text-green-400 border-green-500/30' };
+    if (stats.completionPercentage >= 80)
+      return { status: 'On Track', color: 'bg-green-500/10 text-green-400 border-green-500/30' };
+    if (stats.completionPercentage >= 60)
+      return { status: 'Monitor', color: 'bg-amber-500/10 text-amber-400 border-amber-500/30' };
+    return { status: 'Attention Needed', color: 'bg-red-500/10 text-red-400 border-red-500/30' };
   };
 
   const compliance = getComplianceStatus();
@@ -175,7 +189,9 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-white">
               <span>Annual Progress</span>
-              <span className="text-elec-yellow font-medium">{stats.hoursThisYear} / {stats.targetHours} hours</span>
+              <span className="text-elec-yellow font-medium">
+                {stats.hoursThisYear} / {stats.targetHours} hours
+              </span>
             </div>
             <Progress value={stats.completionPercentage} className="h-3" />
           </div>
@@ -186,13 +202,17 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
             </div>
             <div className="p-3 rounded-lg bg-white/5 border border-white/10">
               <span className="text-xs text-white/60">Monthly Average</span>
-              <div className="text-lg font-bold text-elec-yellow">{stats.averageHoursPerMonth.toFixed(1)}</div>
+              <div className="text-lg font-bold text-elec-yellow">
+                {stats.averageHoursPerMonth.toFixed(1)}
+              </div>
             </div>
           </div>
           {stats.completionPercentage < 100 && (
             <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <p className="text-sm text-amber-400">
-                You need <span className="font-bold">{stats.targetHours - stats.hoursThisYear}</span> more hours to meet your annual target.
+                You need{' '}
+                <span className="font-bold">{stats.targetHours - stats.hoursThisYear}</span> more
+                hours to meet your annual target.
               </p>
             </div>
           )}
@@ -214,18 +234,21 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
           <div className="space-y-4">
             {stats.categoryBreakdown.map((category, index) => {
               const colors = [
-                { bar: "bg-elec-yellow", text: "text-elec-yellow" },
-                { bar: "bg-blue-500", text: "text-blue-400" },
-                { bar: "bg-green-500", text: "text-green-400" },
-                { bar: "bg-purple-500", text: "text-purple-400" },
-                { bar: "bg-amber-500", text: "text-amber-400" },
+                { bar: 'bg-elec-yellow', text: 'text-elec-yellow' },
+                { bar: 'bg-blue-500', text: 'text-blue-400' },
+                { bar: 'bg-green-500', text: 'text-green-400' },
+                { bar: 'bg-purple-500', text: 'text-purple-400' },
+                { bar: 'bg-amber-500', text: 'text-amber-400' },
               ];
               const color = colors[index % colors.length];
               return (
                 <div key={index} className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium text-white">{category.category}</span>
-                    <span className="text-sm text-white/70">{category.hours} hours <span className={color.text}>({category.percentage}%)</span></span>
+                    <span className="text-sm text-white/70">
+                      {category.hours} hours{' '}
+                      <span className={color.text}>({category.percentage}%)</span>
+                    </span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-2">
                     <div

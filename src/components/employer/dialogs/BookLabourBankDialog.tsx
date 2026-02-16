@@ -1,13 +1,19 @@
-import { useState, useMemo, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { useState, useMemo, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import {
   Calendar,
   Clock,
@@ -16,12 +22,17 @@ import {
   Zap,
   AlertTriangle,
   CheckCircle,
-  Award
-} from "lucide-react";
-import { useJobs } from "@/hooks/useJobs";
-import { useEmployer, type BookingDuration, type ShiftPattern, type UrgencyPremium } from "@/contexts/EmployerContext";
-import { toast } from "@/hooks/use-toast";
-import { useHireTracking } from "@/hooks/useHireTracking";
+  Award,
+} from 'lucide-react';
+import { useJobs } from '@/hooks/useJobs';
+import {
+  useEmployer,
+  type BookingDuration,
+  type ShiftPattern,
+  type UrgencyPremium,
+} from '@/contexts/EmployerContext';
+import { toast } from '@/hooks/use-toast';
+import { useHireTracking } from '@/hooks/useHireTracking';
 
 interface Electrician {
   id: string;
@@ -67,12 +78,12 @@ export function BookLabourBankDialog({
   open,
   onOpenChange,
   electrician,
-  preAgreedRate
+  preAgreedRate,
 }: BookLabourBankDialogProps) {
   const { createBooking } = useEmployer();
   const { recordHire, isRecording } = useHireTracking();
   const { data: jobs = [] } = useJobs();
-  const activeJobs = jobs.filter(j => j.status === 'Active');
+  const activeJobs = jobs.filter((j) => j.status === 'Active');
 
   // Form state
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -88,12 +99,12 @@ export function BookLabourBankDialog({
   // Calculate end date based on duration
   useEffect(() => {
     if (duration === 'Custom' || duration === 'Ongoing') return;
-    
-    const durationData = DURATION_OPTIONS.find(d => d.value === duration);
+
+    const durationData = DURATION_OPTIONS.find((d) => d.value === duration);
     if (durationData && durationData.days > 0) {
       const start = new Date(startDate);
       let daysToAdd = durationData.days;
-      
+
       // Skip weekends
       let currentDate = new Date(start);
       let addedDays = 0;
@@ -110,7 +121,7 @@ export function BookLabourBankDialog({
   // Auto-fill site address from job
   useEffect(() => {
     if (selectedJobId) {
-      const job = activeJobs.find(j => j.id === selectedJobId);
+      const job = activeJobs.find((j) => j.id === selectedJobId);
       if (job) {
         setSiteAddress(job.location);
       }
@@ -120,16 +131,21 @@ export function BookLabourBankDialog({
   // Cost calculations
   const calculations = useMemo(() => {
     const baseRate = preAgreedRate || electrician?.dayRate || 0;
-    const durationData = DURATION_OPTIONS.find(d => d.value === duration);
-    const estimatedDays = duration === 'Custom' || duration === 'Ongoing' 
-      ? (endDate && startDate ? Math.ceil((new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)) + 1 : 1)
-      : durationData?.days || 1;
-    
-    const urgencyData = urgencyEnabled 
-      ? URGENCY_OPTIONS.find(u => u.value === urgencyPremium) 
+    const durationData = DURATION_OPTIONS.find((d) => d.value === duration);
+    const estimatedDays =
+      duration === 'Custom' || duration === 'Ongoing'
+        ? endDate && startDate
+          ? Math.ceil(
+              (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)
+            ) + 1
+          : 1
+        : durationData?.days || 1;
+
+    const urgencyData = urgencyEnabled
+      ? URGENCY_OPTIONS.find((u) => u.value === urgencyPremium)
       : URGENCY_OPTIONS[0];
     const multiplier = urgencyData?.multiplier || 1;
-    
+
     const adjustedDayRate = Math.round(baseRate * multiplier);
     const totalCost = adjustedDayRate * estimatedDays;
     const premiumAmount = adjustedDayRate - baseRate;
@@ -148,7 +164,7 @@ export function BookLabourBankDialog({
     if (!electrician) return;
 
     const jobId = selectedJobId && selectedJobId !== 'none' ? selectedJobId : undefined;
-    const jobTitle = jobId ? activeJobs.find(j => j.id === jobId)?.title : undefined;
+    const jobTitle = jobId ? activeJobs.find((j) => j.id === jobId)?.title : undefined;
 
     // Create the local booking
     createBooking({
@@ -174,7 +190,7 @@ export function BookLabourBankDialog({
     }
 
     toast({
-      title: "Booking Request Sent",
+      title: 'Booking Request Sent',
       description: `Request sent to ${electrician.name} for ${calculations.estimatedDays} day${calculations.estimatedDays > 1 ? 's' : ''} at £${calculations.adjustedDayRate}/day.`,
     });
 
@@ -196,7 +212,10 @@ export function BookLabourBankDialog({
 
   if (!electrician) return null;
 
-  const initials = electrician.name.split(' ').map(n => n[0]).join('');
+  const initials = electrician.name
+    .split(' ')
+    .map((n) => n[0])
+    .join('');
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -267,7 +286,9 @@ export function BookLabourBankDialog({
                   </SelectTrigger>
                   <SelectContent>
                     {DURATION_OPTIONS.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -290,7 +311,10 @@ export function BookLabourBankDialog({
 
             <div className="space-y-2">
               <Label htmlFor="shift">Shift Pattern</Label>
-              <Select value={shiftPattern} onValueChange={(v) => setShiftPattern(v as ShiftPattern)}>
+              <Select
+                value={shiftPattern}
+                onValueChange={(v) => setShiftPattern(v as ShiftPattern)}
+              >
                 <SelectTrigger id="shift" className="h-11">
                   <SelectValue placeholder="Select shift" />
                 </SelectTrigger>
@@ -366,21 +390,20 @@ export function BookLabourBankDialog({
                 <AlertTriangle className="h-4 w-4 text-warning" />
                 <div>
                   <p className="text-sm font-medium">Urgency Premium</p>
-                  <p className="text-xs text-muted-foreground">Add extra for short notice bookings</p>
+                  <p className="text-xs text-muted-foreground">
+                    Add extra for short notice bookings
+                  </p>
                 </div>
               </div>
-              <Switch 
-                checked={urgencyEnabled} 
-                onCheckedChange={setUrgencyEnabled}
-              />
+              <Switch checked={urgencyEnabled} onCheckedChange={setUrgencyEnabled} />
             </div>
 
             {urgencyEnabled && (
               <div className="grid grid-cols-5 gap-2">
-                {URGENCY_OPTIONS.filter(o => o.value !== 'none').map((opt) => (
+                {URGENCY_OPTIONS.filter((o) => o.value !== 'none').map((opt) => (
                   <Button
                     key={opt.value}
-                    variant={urgencyPremium === opt.value ? "default" : "outline"}
+                    variant={urgencyPremium === opt.value ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setUrgencyPremium(opt.value)}
                     className="h-11"
@@ -410,7 +433,9 @@ export function BookLabourBankDialog({
               <Separator className="my-2" />
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Estimated Days</span>
-                <span>{calculations.estimatedDays} {calculations.estimatedDays === 1 ? 'day' : 'days'}</span>
+                <span>
+                  {calculations.estimatedDays} {calculations.estimatedDays === 1 ? 'day' : 'days'}
+                </span>
               </div>
               <div className="flex justify-between font-semibold text-lg pt-2">
                 <span>Total Estimate</span>
@@ -446,24 +471,32 @@ export function BookLabourBankDialog({
               </div>
               <div>
                 <span className="text-muted-foreground">Shift:</span>
-                <p className="font-medium">{SHIFT_OPTIONS.find(s => s.value === shiftPattern)?.label}</p>
+                <p className="font-medium">
+                  {SHIFT_OPTIONS.find((s) => s.value === shiftPattern)?.label}
+                </p>
               </div>
               <div>
                 <span className="text-muted-foreground">Dates:</span>
                 <p className="font-medium">
-                  {new Date(startDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
-                  {endDate && ` - ${new Date(endDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`}
+                  {new Date(startDate).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                  })}
+                  {endDate &&
+                    ` - ${new Date(endDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`}
                 </p>
               </div>
               <div>
                 <span className="text-muted-foreground">Total:</span>
-                <p className="font-bold text-elec-yellow">£{calculations.totalCost.toLocaleString()}</p>
+                <p className="font-bold text-elec-yellow">
+                  £{calculations.totalCost.toLocaleString()}
+                </p>
               </div>
             </div>
             {selectedJobId && (
               <Badge variant="secondary" className="text-xs">
                 <Briefcase className="h-3 w-3 mr-1" />
-                {activeJobs.find(j => j.id === selectedJobId)?.title}
+                {activeJobs.find((j) => j.id === selectedJobId)?.title}
               </Badge>
             )}
           </div>
@@ -478,13 +511,9 @@ export function BookLabourBankDialog({
             >
               Cancel
             </Button>
-            <Button
-              className="flex-1 h-12"
-              onClick={handleConfirmBooking}
-              disabled={isRecording}
-            >
+            <Button className="flex-1 h-12" onClick={handleConfirmBooking} disabled={isRecording}>
               <Calendar className="h-4 w-4 mr-2" />
-              {isRecording ? "Recording..." : "Confirm Booking"}
+              {isRecording ? 'Recording...' : 'Confirm Booking'}
             </Button>
           </div>
         </div>

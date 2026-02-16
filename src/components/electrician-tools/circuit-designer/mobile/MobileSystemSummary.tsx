@@ -12,7 +12,7 @@ import {
   XCircle,
   Activity,
   Cable,
-  Shield
+  Shield,
 } from 'lucide-react';
 import { InstallationDesign } from '@/types/installation-design';
 import { triggerHaptic } from '@/utils/animation-helpers';
@@ -28,7 +28,12 @@ interface MobileSystemSummaryProps {
 }
 
 // Helper component for mobile metric cards
-const MobileMetricCard = ({ icon: Icon, label, value, accent }: {
+const MobileMetricCard = ({
+  icon: Icon,
+  label,
+  value,
+  accent,
+}: {
   icon: any;
   label: string;
   value: string;
@@ -38,7 +43,7 @@ const MobileMetricCard = ({ icon: Icon, label, value, accent }: {
     yellow: 'text-elec-yellow',
     green: 'text-green-400',
     blue: 'text-blue-400',
-    purple: 'text-purple-400'
+    purple: 'text-purple-400',
   };
 
   return (
@@ -61,24 +66,26 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
   // Calculate key metrics with safe defaults
   const totalLoad = design.totalLoad || 0;
   const connectedLoadKw = (totalLoad / 1000).toFixed(1);
-  const diversifiedLoad = design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || totalLoad;
+  const diversifiedLoad =
+    design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || totalLoad;
   const diversifiedLoadKw = (diversifiedLoad / 1000).toFixed(1);
-  const diversityFactor = design.diversityFactor || (totalLoad > 0 ? diversifiedLoad / totalLoad : 1);
+  const diversityFactor =
+    design.diversityFactor || (totalLoad > 0 ? diversifiedLoad / totalLoad : 1);
   const diversityPercent = ((1 - diversityFactor) * 100).toFixed(0);
-  
+
   const mainSwitchRating = design.consumerUnit?.mainSwitchRating || 100;
   const voltage = design.consumerUnit?.incomingSupply?.voltage || 230;
   const designCurrent = diversifiedLoad / voltage;
-  const utilization = ((designCurrent / mainSwitchRating) * 100);
-  
+  const utilization = (designCurrent / mainSwitchRating) * 100;
+
   // Supply details
   const earthingSystem = design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-S';
   const ze = design.consumerUnit?.incomingSupply?.Ze?.toFixed(2) || '0.35';
-  const pscc = design.consumerUnit?.incomingSupply?.incomingPFC 
-    ? (design.consumerUnit.incomingSupply.incomingPFC / 1000).toFixed(1) 
+  const pscc = design.consumerUnit?.incomingSupply?.incomingPFC
+    ? (design.consumerUnit.incomingSupply.incomingPFC / 1000).toFixed(1)
     : '1.5';
-  
-  const phaseType = design.circuits?.some(c => c.phases === 'three') ? '3-Phase' : 'Single Phase';
+
+  const phaseType = design.circuits?.some((c) => c.phases === 'three') ? '3-Phase' : 'Single Phase';
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -146,7 +153,11 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
               .map((c, idx) => {
                 // Use EXACT same logic as complianceStats calculation
                 const status = (c as any).complianceStatus;
-                const isCompliant = status === 'pass' || (!status && c.calculations?.voltageDrop?.compliant && (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999));
+                const isCompliant =
+                  status === 'pass' ||
+                  (!status &&
+                    c.calculations?.voltageDrop?.compliant &&
+                    (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999));
                 const isWarning = status === 'warning' || c.warnings?.length > 0;
                 const needsReview = !isCompliant || isWarning;
 
@@ -157,12 +168,11 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
                     key={idx}
                     className={`${isWarning && isCompliant ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs px-2 py-1`}
                   >
-                    C{c.circuitNumber || (idx + 1)}
+                    C{c.circuitNumber || idx + 1}
                   </Badge>
                 );
               })
-              .filter(Boolean)
-            }
+              .filter(Boolean)}
           </div>
         </div>
       )}
@@ -170,9 +180,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
       {/* Expandable Details */}
       <Collapsible open={isExpanded} onOpenChange={handleToggle}>
         <CollapsibleTrigger asChild>
-          <button
-            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-elec-dark/30 hover:bg-elec-dark/50 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all touch-manipulation min-h-[44px]"
-          >
+          <button className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-elec-dark/30 hover:bg-elec-dark/50 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-all touch-manipulation min-h-[44px]">
             <span className="text-xs text-foreground font-medium">
               {isExpanded ? 'Hide' : 'Show'} Details
             </span>

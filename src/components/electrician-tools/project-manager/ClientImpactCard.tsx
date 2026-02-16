@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle, Lightbulb } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, Lightbulb } from 'lucide-react';
 
 interface ClientImpactCardProps {
   clientImpact: Array<{
@@ -28,7 +28,7 @@ const ClientImpactCard = ({ clientImpact }: ClientImpactCardProps) => {
       </CardHeader>
       <CardContent className="space-y-3">
         {clientImpact.map((impact, idx) => (
-          <div 
+          <div
             key={idx}
             className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30 space-y-2"
           >
@@ -45,7 +45,7 @@ const ClientImpactCard = ({ clientImpact }: ClientImpactCardProps) => {
                 </div>
               </div>
             </div>
-            
+
             {impact.tip && (
               <div className="pt-2 border-t border-orange-500/20">
                 <div className="flex items-start gap-2 text-sm">
@@ -58,9 +58,10 @@ const ClientImpactCard = ({ clientImpact }: ClientImpactCardProps) => {
             )}
           </div>
         ))}
-        
+
         <div className="text-xs text-foreground/80 bg-muted/30 p-3 rounded-lg">
-          💡 <strong>Communication Tip:</strong> Send this list to the client 2-3 days before work starts so they can prepare properly.
+          💡 <strong>Communication Tip:</strong> Send this list to the client 2-3 days before work
+          starts so they can prepare properly.
         </div>
       </CardContent>
     </Card>

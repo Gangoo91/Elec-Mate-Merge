@@ -1,17 +1,11 @@
-
 import React from 'react';
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import {
-  Bot,
-  Lightbulb,
-  Sparkles,
-  GraduationCap
-} from "lucide-react";
-import DailyAITipsTab from "@/components/apprentice/ojt/enhanced/DailyAITipsTab";
-import HelpBotTab from "@/components/apprentice/ojt/enhanced/HelpBotTab";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Bot, Lightbulb, Sparkles, GraduationCap } from 'lucide-react';
+import DailyAITipsTab from '@/components/apprentice/ojt/enhanced/DailyAITipsTab';
+import HelpBotTab from '@/components/apprentice/ojt/enhanced/HelpBotTab';
 
 const AdvancedHelp = () => {
   return (
@@ -31,15 +25,18 @@ const AdvancedHelp = () => {
                 <h1 className="text-2xl font-bold tracking-tight">AI Study Centre</h1>
               </div>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-xs px-2 py-0.5 shrink-0">
+            <Badge
+              variant="outline"
+              className="border-elec-yellow/50 text-elec-yellow text-xs px-2 py-0.5 shrink-0"
+            >
               <Bot className="h-3 w-3 mr-1" />
               AI Enhanced
             </Badge>
           </div>
 
           <p className="text-white text-sm mt-3 max-w-xl">
-            AI-powered learning tools built specifically for UK electrical apprentices.
-            Get expert guidance from Dave, your 20-year veteran electrical mentor.
+            AI-powered learning tools built specifically for UK electrical apprentices. Get expert
+            guidance from Dave, your 20-year veteran electrical mentor.
           </p>
         </div>
       </div>
@@ -52,8 +49,6 @@ const AdvancedHelp = () => {
           <span className="text-sm font-semibold">AI Study Centre</span>
         </div>
       </div>
-
-
 
       {/* Main Tabs Section */}
       <Tabs defaultValue="helpbot" className="w-full flex-1 flex flex-col">
@@ -93,10 +88,13 @@ const AdvancedHelp = () => {
               <GraduationCap className="h-5 w-5 text-elec-yellow" />
             </div>
             <div>
-              <h3 className="font-medium text-sm text-elec-yellow mb-1">Learning Support, Not Replacement</h3>
+              <h3 className="font-medium text-sm text-elec-yellow mb-1">
+                Learning Support, Not Replacement
+              </h3>
               <p className="text-xs text-white">
-                These AI tools are designed to complement your apprenticeship training, not replace it.
-                Always verify critical information with your supervisor or official documentation.
+                These AI tools are designed to complement your apprenticeship training, not replace
+                it. Always verify critical information with your supervisor or official
+                documentation.
               </p>
             </div>
           </div>

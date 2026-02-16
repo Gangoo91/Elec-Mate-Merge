@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import React, { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ConfettiPiece {
   id: number;
@@ -19,12 +19,12 @@ interface ConfettiProps {
 }
 
 const COLORS = [
-  "#FFDC00", // elec-yellow
-  "#3B82F6", // blue
-  "#22C55E", // green
-  "#F97316", // orange
-  "#EC4899", // pink
-  "#8B5CF6", // purple
+  '#FFDC00', // elec-yellow
+  '#3B82F6', // blue
+  '#22C55E', // green
+  '#F97316', // orange
+  '#EC4899', // pink
+  '#8B5CF6', // purple
 ];
 
 export function Confetti({
@@ -66,19 +66,14 @@ export function Confetti({
   if (!isVisible) return null;
 
   return (
-    <div
-      className={cn(
-        "fixed inset-0 pointer-events-none z-50 overflow-hidden",
-        className
-      )}
-    >
+    <div className={cn('fixed inset-0 pointer-events-none z-50 overflow-hidden', className)}>
       {pieces.map((piece) => (
         <div
           key={piece.id}
           className="absolute animate-confetti-fall"
           style={{
             left: `${piece.x}%`,
-            top: "-20px",
+            top: '-20px',
             animationDelay: `${piece.delay}s`,
             animationDuration: `${piece.duration}s`,
           }}
@@ -90,7 +85,7 @@ export function Confetti({
               height: piece.size * 0.6,
               backgroundColor: piece.color,
               transform: `rotate(${piece.rotation}deg)`,
-              borderRadius: "2px",
+              borderRadius: '2px',
             }}
           />
         </div>
@@ -119,7 +114,7 @@ export function CelebrationBurst({ active, className }: CelebrationBurstProps) {
   if (!isVisible) return null;
 
   return (
-    <div className={cn("absolute inset-0 pointer-events-none", className)}>
+    <div className={cn('absolute inset-0 pointer-events-none', className)}>
       {/* Radial burst lines */}
       {[...Array(12)].map((_, i) => (
         <div
@@ -166,7 +161,7 @@ export function StarBurst({ active, count = 8, className }: StarBurstProps) {
   if (!isVisible) return null;
 
   return (
-    <div className={cn("absolute inset-0 pointer-events-none", className)}>
+    <div className={cn('absolute inset-0 pointer-events-none', className)}>
       {stars.map((star) => (
         <div
           key={star.id}
@@ -179,7 +174,7 @@ export function StarBurst({ active, count = 8, className }: StarBurstProps) {
           <svg
             className="w-4 h-4 text-elec-yellow fill-current"
             viewBox="0 0 24 24"
-            style={{ transform: "translateX(40px)" }}
+            style={{ transform: 'translateX(40px)' }}
           >
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
           </svg>

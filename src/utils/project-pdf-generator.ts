@@ -15,10 +15,10 @@ export async function generateProjectPDFs(
   if (agentOutputs.installer) {
     try {
       const designResult = await supabase.functions.invoke('generate-design-spec-pdf', {
-        body: { 
+        body: {
           designData: agentOutputs.installer,
-          userId
-        }
+          userId,
+        },
       });
 
       if (designResult.data?.success) {
@@ -26,25 +26,33 @@ export async function generateProjectPDFs(
           type: 'design_spec',
           name: 'Design Specification',
           url: designResult.data.downloadUrl,
-          generatedAt: timestamp
+          generatedAt: timestamp,
         });
       } else {
-        const fallbackUrl = await generateFallbackPDF('design_spec', agentOutputs.installer, projectDetails);
+        const fallbackUrl = await generateFallbackPDF(
+          'design_spec',
+          agentOutputs.installer,
+          projectDetails
+        );
         pdfs.push({
           type: 'design_spec',
           name: 'Design Specification',
           url: fallbackUrl,
-          generatedAt: timestamp
+          generatedAt: timestamp,
         });
       }
     } catch (error) {
       console.error('Design spec PDF error:', error);
-      const fallbackUrl = await generateFallbackPDF('design_spec', agentOutputs.installer, projectDetails);
+      const fallbackUrl = await generateFallbackPDF(
+        'design_spec',
+        agentOutputs.installer,
+        projectDetails
+      );
       pdfs.push({
         type: 'design_spec',
         name: 'Design Specification',
         url: fallbackUrl,
-        generatedAt: timestamp
+        generatedAt: timestamp,
       });
     }
   }
@@ -53,10 +61,10 @@ export async function generateProjectPDFs(
   if (agentOutputs.costEngineer) {
     try {
       const quoteResult = await supabase.functions.invoke('generate-quote-pdf', {
-        body: { 
+        body: {
           quoteData: agentOutputs.costEngineer,
-          userId
-        }
+          userId,
+        },
       });
 
       if (quoteResult.data?.success) {
@@ -64,25 +72,33 @@ export async function generateProjectPDFs(
           type: 'quote',
           name: 'Client Quote',
           url: quoteResult.data.downloadUrl,
-          generatedAt: timestamp
+          generatedAt: timestamp,
         });
       } else {
-        const fallbackUrl = await generateFallbackPDF('quote', agentOutputs.costEngineer, projectDetails);
+        const fallbackUrl = await generateFallbackPDF(
+          'quote',
+          agentOutputs.costEngineer,
+          projectDetails
+        );
         pdfs.push({
           type: 'quote',
           name: 'Client Quote',
           url: fallbackUrl,
-          generatedAt: timestamp
+          generatedAt: timestamp,
         });
       }
     } catch (error) {
       console.error('Quote PDF error:', error);
-      const fallbackUrl = await generateFallbackPDF('quote', agentOutputs.costEngineer, projectDetails);
+      const fallbackUrl = await generateFallbackPDF(
+        'quote',
+        agentOutputs.costEngineer,
+        projectDetails
+      );
       pdfs.push({
         type: 'quote',
         name: 'Client Quote',
         url: fallbackUrl,
-        generatedAt: timestamp
+        generatedAt: timestamp,
       });
     }
   }
@@ -91,10 +107,10 @@ export async function generateProjectPDFs(
   if (agentOutputs.healthSafety) {
     try {
       const ramsResult = await supabase.functions.invoke('generate-rams-pdf', {
-        body: { 
+        body: {
           ramsData: agentOutputs.healthSafety,
-          userId
-        }
+          userId,
+        },
       });
 
       if (ramsResult.data?.success) {
@@ -102,25 +118,33 @@ export async function generateProjectPDFs(
           type: 'rams',
           name: 'Risk Assessment & Method Statement',
           url: ramsResult.data.downloadUrl,
-          generatedAt: timestamp
+          generatedAt: timestamp,
         });
       } else {
-        const fallbackUrl = await generateFallbackPDF('rams', agentOutputs.healthSafety, projectDetails);
+        const fallbackUrl = await generateFallbackPDF(
+          'rams',
+          agentOutputs.healthSafety,
+          projectDetails
+        );
         pdfs.push({
           type: 'rams',
           name: 'Risk Assessment & Method Statement',
           url: fallbackUrl,
-          generatedAt: timestamp
+          generatedAt: timestamp,
         });
       }
     } catch (error) {
       console.error('RAMS PDF error:', error);
-      const fallbackUrl = await generateFallbackPDF('rams', agentOutputs.healthSafety, projectDetails);
+      const fallbackUrl = await generateFallbackPDF(
+        'rams',
+        agentOutputs.healthSafety,
+        projectDetails
+      );
       pdfs.push({
         type: 'rams',
         name: 'Risk Assessment & Method Statement',
         url: fallbackUrl,
-        generatedAt: timestamp
+        generatedAt: timestamp,
       });
     }
   }

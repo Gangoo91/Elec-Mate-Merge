@@ -14,21 +14,23 @@ export const SmartHomeModule5Section5EmergencyLighting = () => {
         <div className="bg-red-600/10 p-4 rounded-lg border border-red-600/30">
           <h4 className="text-foreground font-semibold mb-3">Life Safety Lighting Systems</h4>
           <p className="text-sm mb-3">
-            Smart lighting can be programmed for emergencies — e.g., flashing lights during a fire 
-            alarm to alert occupants and guide evacuation. Lights can automatically guide occupants 
-            to exits using sequential activation patterns that create clear pathway indication even 
+            Smart lighting can be programmed for emergencies — e.g., flashing lights during a fire
+            alarm to alert occupants and guide evacuation. Lights can automatically guide occupants
+            to exits using sequential activation patterns that create clear pathway indication even
             in smoke-filled conditions.
           </p>
           <p className="text-sm">
-            In some systems, smart bulbs turn red or pulse to alert occupants of danger, while 
-            emergency exit lighting activates to maximum brightness and switches to battery backup 
+            In some systems, smart bulbs turn red or pulse to alert occupants of danger, while
+            emergency exit lighting activates to maximum brightness and switches to battery backup
             power during power failures.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Emergency Response Scenarios</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Emergency Response Scenarios
+            </h4>
             <div className="space-y-3">
               <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
                 <p className="text-red-400 font-semibold text-sm mb-1">Fire Emergency Response</p>
@@ -61,7 +63,9 @@ export const SmartHomeModule5Section5EmergencyLighting = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Evacuation Guidance Systems</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Evacuation Guidance Systems
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-green-400 font-semibold text-sm mb-1">Pathway Illumination</p>
@@ -82,7 +86,9 @@ export const SmartHomeModule5Section5EmergencyLighting = () => {
                 </ul>
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
-                <p className="text-purple-400 font-semibold text-sm mb-1">Smart Response Features</p>
+                <p className="text-purple-400 font-semibold text-sm mb-1">
+                  Smart Response Features
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Automatic exit route calculation</li>
                   <li>• Blocked path detection and rerouting</li>
@@ -95,7 +101,9 @@ export const SmartHomeModule5Section5EmergencyLighting = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-lg">
-          <h4 className="text-elec-yellow font-semibold mb-3">Emergency Lighting Standards and Compliance</h4>
+          <h4 className="text-elec-yellow font-semibold mb-3">
+            Emergency Lighting Standards and Compliance
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <p className="text-foreground font-semibold text-sm mb-2">BS 5266 Requirements:</p>
@@ -107,7 +115,9 @@ export const SmartHomeModule5Section5EmergencyLighting = () => {
               </ul>
             </div>
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Smart System Integration:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Smart System Integration:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Traditional emergency lighting compliance</li>
                 <li>• Smart enhancement overlay systems</li>
@@ -116,7 +126,9 @@ export const SmartHomeModule5Section5EmergencyLighting = () => {
               </ul>
             </div>
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Testing and Verification:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Testing and Verification:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Monthly function testing protocols</li>
                 <li>• Annual duration testing procedures</li>
@@ -140,7 +152,9 @@ export const SmartHomeModule5Section5EmergencyLighting = () => {
               </ul>
             </div>
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Communication Integration:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Communication Integration:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Voice announcement coordination</li>
                 <li>• Mobile alert synchronisation</li>

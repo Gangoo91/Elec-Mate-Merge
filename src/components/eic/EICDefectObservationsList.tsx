@@ -23,7 +23,7 @@ const EICDefectObservationsList: React.FC<EICDefectObservationsListProps> = ({
   reportId,
   onUpdateObservation,
   onRemoveObservation,
-  onSyncToInspectionItem
+  onSyncToInspectionItem,
 }) => {
   if (observations.length === 0) {
     return null;

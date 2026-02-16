@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { cn } from '@/lib/utils';
 import {
   BookOpen,
   Plus,
@@ -31,22 +31,22 @@ import {
   ListChecks,
   FileQuestion,
   Presentation,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 interface Notebook {
   id: string;
@@ -101,8 +101,20 @@ const mockNotebooks: Notebook[] = [
 ];
 
 const mockSources: Source[] = [
-  { id: '1', name: 'BS7671 18th Edition Summary.pdf', type: 'document', addedAt: '2024-01-15', size: '2.4 MB' },
-  { id: '2', name: 'Circuit Protection Notes.docx', type: 'document', addedAt: '2024-01-14', size: '156 KB' },
+  {
+    id: '1',
+    name: 'BS7671 18th Edition Summary.pdf',
+    type: 'document',
+    addedAt: '2024-01-15',
+    size: '2.4 MB',
+  },
+  {
+    id: '2',
+    name: 'Circuit Protection Notes.docx',
+    type: 'document',
+    addedAt: '2024-01-14',
+    size: '156 KB',
+  },
   { id: '3', name: 'https://electricalregs.co.uk/guide', type: 'link', addedAt: '2024-01-12' },
   { id: '4', name: 'Earthing Diagram.png', type: 'image', addedAt: '2024-01-10', size: '890 KB' },
   { id: '5', name: 'Lesson observation notes', type: 'note', addedAt: '2024-01-08' },
@@ -122,13 +134,20 @@ export function TutorNotebookSection() {
 
   const getSourceIcon = (type: Source['type']) => {
     switch (type) {
-      case 'document': return <FileText className="h-4 w-4" />;
-      case 'link': return <Link className="h-4 w-4" />;
-      case 'image': return <Image className="h-4 w-4" />;
-      case 'video': return <Video className="h-4 w-4" />;
-      case 'audio': return <Mic className="h-4 w-4" />;
-      case 'note': return <FileText className="h-4 w-4" />;
-      default: return <File className="h-4 w-4" />;
+      case 'document':
+        return <FileText className="h-4 w-4" />;
+      case 'link':
+        return <Link className="h-4 w-4" />;
+      case 'image':
+        return <Image className="h-4 w-4" />;
+      case 'video':
+        return <Video className="h-4 w-4" />;
+      case 'audio':
+        return <Mic className="h-4 w-4" />;
+      case 'note':
+        return <FileText className="h-4 w-4" />;
+      default:
+        return <File className="h-4 w-4" />;
     }
   };
 
@@ -142,7 +161,7 @@ export function TutorNotebookSection() {
       timestamp: new Date().toISOString(),
     };
 
-    setChatMessages(prev => [...prev, userMessage]);
+    setChatMessages((prev) => [...prev, userMessage]);
     setChatInput('');
 
     // Simulate AI response
@@ -153,14 +172,21 @@ export function TutorNotebookSection() {
         content: `Based on the sources in "${selectedNotebook?.name}", here's what I found:\n\nThe BS7671 18th Edition establishes the requirements for electrical installations. Key points include:\n\n1. **Earthing Requirements** - All installations must have effective earthing arrangements\n2. **Circuit Protection** - Overcurrent protection must be provided for all circuits\n3. **Testing Requirements** - Installations must be tested and verified before energisation\n\nWould you like me to elaborate on any of these points or generate study materials?`,
         timestamp: new Date().toISOString(),
       };
-      setChatMessages(prev => [...prev, aiResponse]);
+      setChatMessages((prev) => [...prev, aiResponse]);
     }, 1500);
   };
 
   const handleCreateNotebook = () => {
     if (!newNotebookName.trim()) return;
 
-    const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-orange-500', 'bg-pink-500', 'bg-cyan-500'];
+    const colors = [
+      'bg-blue-500',
+      'bg-green-500',
+      'bg-purple-500',
+      'bg-orange-500',
+      'bg-pink-500',
+      'bg-cyan-500',
+    ];
     const newNotebook: Notebook = {
       id: Date.now().toString(),
       name: newNotebookName,
@@ -170,15 +196,16 @@ export function TutorNotebookSection() {
       color: colors[Math.floor(Math.random() * colors.length)],
     };
 
-    setNotebooks(prev => [...prev, newNotebook]);
+    setNotebooks((prev) => [...prev, newNotebook]);
     setNewNotebookName('');
     setNewNotebookDesc('');
     setIsCreateDialogOpen(false);
   };
 
-  const filteredNotebooks = notebooks.filter(nb =>
-    nb.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    nb.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredNotebooks = notebooks.filter(
+    (nb) =>
+      nb.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      nb.description?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Notebook list view
@@ -203,11 +230,11 @@ export function TutorNotebookSection() {
         {/* Search */}
         <div className="relative">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             placeholder="Search notebooks..."
-            className={cn("bg-elec-gray border-elec-yellow/20", !searchQuery && "pl-10")}
+            className={cn('bg-elec-gray border-elec-yellow/20', !searchQuery && 'pl-10')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -221,16 +248,26 @@ export function TutorNotebookSection() {
                 <Sparkles className="h-6 w-6 text-elec-yellow" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-foreground mb-1">AI-Powered Teaching Assistant</h3>
-                <p className="text-sm text-muted-foreground mb-3">
+                <h3 className="font-semibold text-foreground mb-1">
+                  AI-Powered Teaching Assistant
+                </h3>
+                <p className="text-sm text-white mb-3">
                   Upload your notes, lesson plans, and resources. Ask questions, generate summaries,
                   create quizzes, and get AI-powered insights from your teaching materials.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">Summarize content</span>
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">Generate quizzes</span>
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">Create study guides</span>
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">Q&A chat</span>
+                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
+                    Summarize content
+                  </span>
+                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
+                    Generate quizzes
+                  </span>
+                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
+                    Create study guides
+                  </span>
+                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
+                    Q&A chat
+                  </span>
                 </div>
               </div>
             </div>
@@ -247,12 +284,18 @@ export function TutorNotebookSection() {
             >
               <CardContent className="p-5">
                 <div className="flex items-start justify-between mb-3">
-                  <div className={`h-10 w-10 rounded-lg ${notebook.color} flex items-center justify-center`}>
+                  <div
+                    className={`h-10 w-10 rounded-lg ${notebook.color} flex items-center justify-center`}
+                  >
                     <BookOpen className="h-5 w-5 text-foreground" />
                   </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                      >
                         <MoreVertical className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -270,9 +313,11 @@ export function TutorNotebookSection() {
                 </div>
                 <h3 className="font-semibold text-foreground mb-1">{notebook.name}</h3>
                 {notebook.description && (
-                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{notebook.description}</p>
+                  <p className="text-sm text-white mb-3 line-clamp-2">
+                    {notebook.description}
+                  </p>
                 )}
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <div className="flex items-center justify-between text-xs text-white">
                   <span className="flex items-center gap-1">
                     <FileText className="h-3 w-3" />
                     {notebook.sourceCount} sources
@@ -295,7 +340,7 @@ export function TutorNotebookSection() {
               <div className="h-12 w-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center mb-3">
                 <FolderPlus className="h-6 w-6 text-elec-yellow" />
               </div>
-              <p className="text-sm text-muted-foreground">Create new notebook</p>
+              <p className="text-sm text-white">Create new notebook</p>
             </CardContent>
           </Card>
         </div>
@@ -355,19 +400,21 @@ export function TutorNotebookSection() {
           variant="ghost"
           size="sm"
           onClick={() => setSelectedNotebook(null)}
-          className="gap-1 text-muted-foreground hover:text-foreground"
+          className="gap-1 text-white hover:text-foreground"
         >
           <ChevronRight className="h-4 w-4 rotate-180" />
           Back
         </Button>
         <div className="h-6 w-px bg-border" />
         <div className="flex items-center gap-3 flex-1">
-          <div className={`h-8 w-8 rounded-lg ${selectedNotebook.color} flex items-center justify-center`}>
+          <div
+            className={`h-8 w-8 rounded-lg ${selectedNotebook.color} flex items-center justify-center`}
+          >
             <BookOpen className="h-4 w-4 text-foreground" />
           </div>
           <div>
             <h1 className="font-semibold text-foreground">{selectedNotebook.name}</h1>
-            <p className="text-xs text-muted-foreground">{sources.length} sources</p>
+            <p className="text-xs text-white">{sources.length} sources</p>
           </div>
         </div>
         <Button
@@ -400,7 +447,7 @@ export function TutorNotebookSection() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{source.name}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white">
                       {source.size || new Date(source.addedAt).toLocaleDateString()}
                     </p>
                   </div>
@@ -487,10 +534,12 @@ export function TutorNotebookSection() {
                     <div className="h-16 w-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mb-4">
                       <MessageSquare className="h-8 w-8 text-elec-yellow" />
                     </div>
-                    <h3 className="font-semibold text-foreground mb-2">Ask anything about your sources</h3>
-                    <p className="text-sm text-muted-foreground max-w-md mb-4">
-                      The AI has read all your uploaded documents and can answer questions,
-                      create summaries, generate quizzes, and more.
+                    <h3 className="font-semibold text-foreground mb-2">
+                      Ask anything about your sources
+                    </h3>
+                    <p className="text-sm text-white max-w-md mb-4">
+                      The AI has read all your uploaded documents and can answer questions, create
+                      summaries, generate quizzes, and more.
                     </p>
                     <div className="flex flex-wrap gap-2 justify-center">
                       <Button
@@ -535,7 +584,7 @@ export function TutorNotebookSection() {
                         {message.role === 'assistant' && (
                           <div className="flex items-center gap-2 mb-2">
                             <Bot className="h-4 w-4 text-elec-yellow" />
-                            <span className="text-xs text-muted-foreground">AI Assistant</span>
+                            <span className="text-xs text-white">AI Assistant</span>
                           </div>
                         )}
                         <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -605,7 +654,7 @@ export function TutorNotebookSection() {
               <span className="text-sm">YouTube Link</span>
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground text-center">
+          <p className="text-xs text-white text-center">
             Supported: PDF, Word, PowerPoint, Images, YouTube, Web links
           </p>
         </DialogContent>

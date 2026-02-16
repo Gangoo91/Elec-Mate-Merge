@@ -1,32 +1,32 @@
-import { useState, useMemo } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Textarea } from "@/components/ui/textarea";
-import { 
-  CheckCircle, 
-  Calendar, 
-  Clock, 
-  Package, 
-  Camera, 
-  Phone, 
+import { useState, useMemo } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  CheckCircle,
+  Calendar,
+  Clock,
+  Package,
+  Camera,
+  Phone,
   MessageSquare,
   MapPin,
   FileText,
   Hammer,
   X,
   ArrowLeft,
-  Map
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { PhotoCategory } from "@/data/employerMockData";
-import { SignatureCapture } from "@/components/ui/signature-capture";
-import { useToast } from "@/hooks/use-toast";
-import { PhotoViewer } from "@/components/employer/PhotoViewer";
-import { PhotoMapView } from "@/components/employer/PhotoMapView";
+  Map,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { PhotoCategory } from '@/data/employerMockData';
+import { SignatureCapture } from '@/components/ui/signature-capture';
+import { useToast } from '@/hooks/use-toast';
+import { PhotoViewer } from '@/components/employer/PhotoViewer';
+import { PhotoMapView } from '@/components/employer/PhotoMapView';
 
 interface ProgressLog {
   id: string;
@@ -64,11 +64,11 @@ interface Photo {
 }
 
 const categoryColors: Record<PhotoCategory, string> = {
-  Before: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  During: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-  After: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  Completion: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  Issue: "bg-red-500/20 text-red-400 border-red-500/30"
+  Before: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  During: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  After: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+  Completion: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+  Issue: 'bg-red-500/20 text-red-400 border-red-500/30',
 };
 
 interface ViewProgressLogSheetProps {
@@ -90,28 +90,28 @@ export function ViewProgressLogSheet({
   onClose,
   onSignOff,
   onMessage,
-  onCall
+  onCall,
 }: ViewProgressLogSheetProps) {
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const [showSignaturePanel, setShowSignaturePanel] = useState(false);
-  const [signOffNotes, setSignOffNotes] = useState("");
+  const [signOffNotes, setSignOffNotes] = useState('');
   const [photoViewerOpen, setPhotoViewerOpen] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [showMapView, setShowMapView] = useState(false);
   const totalMaterialsCost = log.materialsUsed.reduce((s, m) => s + m.cost, 0);
 
   // Check if any photos have location data
-  const photosWithLocation = useMemo(() => 
-    photos.filter(p => p.location?.lat && p.location?.lng), 
+  const photosWithLocation = useMemo(
+    () => photos.filter((p) => p.location?.lat && p.location?.lng),
     [photos]
   );
 
   const handleSignatureCapture = (signatureData: string) => {
     onSignOff(signatureData, signOffNotes);
     setShowSignaturePanel(false);
-    setSignOffNotes("");
-    toast({ title: "Log signed off successfully" });
+    setSignOffNotes('');
+    toast({ title: 'Log signed off successfully' });
   };
 
   const handleStartSignOff = () => {
@@ -120,7 +120,7 @@ export function ViewProgressLogSheet({
 
   const handleCancelSignOff = () => {
     setShowSignaturePanel(false);
-    setSignOffNotes("");
+    setSignOffNotes('');
   };
 
   const handlePhotoClick = (index: number) => {
@@ -130,12 +130,9 @@ export function ViewProgressLogSheet({
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <SheetContent 
-        side={isMobile ? "bottom" : "right"} 
-        className={cn(
-          "p-0 flex flex-col",
-          isMobile ? "h-[95vh] rounded-t-3xl" : "w-[500px]"
-        )}
+      <SheetContent
+        side={isMobile ? 'bottom' : 'right'}
+        className={cn('p-0 flex flex-col', isMobile ? 'h-[95vh] rounded-t-3xl' : 'w-[500px]')}
       >
         {/* Signature Panel View */}
         {showSignaturePanel ? (
@@ -143,9 +140,9 @@ export function ViewProgressLogSheet({
             {/* Signature Header */}
             <div className="p-4 border-b border-border/50">
               <div className="flex items-center gap-3">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="h-10 w-10"
                   onClick={handleCancelSignOff}
                 >
@@ -153,7 +150,9 @@ export function ViewProgressLogSheet({
                 </Button>
                 <div>
                   <h2 className="text-lg font-semibold text-foreground">Sign Off Log</h2>
-                  <p className="text-sm text-foreground/60">{log.employeeName} - {log.date}</p>
+                  <p className="text-sm text-foreground/60">
+                    {log.employeeName} - {log.date}
+                  </p>
                 </div>
               </div>
             </div>
@@ -171,7 +170,9 @@ export function ViewProgressLogSheet({
                     </div>
                     <div>
                       <p className="font-medium text-foreground">{log.employeeName}</p>
-                      <p className="text-xs text-foreground/60">{log.hoursWorked}h on {log.jobTitle}</p>
+                      <p className="text-xs text-foreground/60">
+                        {log.hoursWorked}h on {log.jobTitle}
+                      </p>
                     </div>
                   </div>
                   <p className="text-sm text-foreground/80">{log.summary}</p>
@@ -209,8 +210,8 @@ export function ViewProgressLogSheet({
                   {/* Large Avatar */}
                   <div className="w-16 h-16 rounded-full bg-elec-yellow/20 flex items-center justify-center border-2 border-elec-yellow/30">
                     {employee?.photo ? (
-                      <img 
-                        src={employee.photo} 
+                      <img
+                        src={employee.photo}
                         alt={employee.name}
                         className="w-full h-full rounded-full object-cover"
                       />
@@ -222,7 +223,7 @@ export function ViewProgressLogSheet({
                   </div>
                   <div>
                     <SheetTitle className="text-xl text-foreground">{log.employeeName}</SheetTitle>
-                    <p className="text-sm text-foreground/70">{employee?.role || "Team Member"}</p>
+                    <p className="text-sm text-foreground/70">{employee?.role || 'Team Member'}</p>
                     <div className="flex items-center gap-3 mt-1 text-xs text-foreground/60">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
@@ -235,16 +236,16 @@ export function ViewProgressLogSheet({
                     </div>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="h-10 w-10 -mt-1 -mr-2"
                   onClick={onClose}
                 >
                   <X className="h-5 w-5" />
                 </Button>
               </div>
-              
+
               {/* Status & Job */}
               <div className="flex items-center gap-2 py-3">
                 {log.signedOff ? (
@@ -312,12 +313,16 @@ export function ViewProgressLogSheet({
                                 <p className="font-medium text-foreground">{material.item}</p>
                                 <p className="text-sm text-foreground/60">{material.quantity}</p>
                               </div>
-                              <span className="font-semibold text-foreground">£{material.cost}</span>
+                              <span className="font-semibold text-foreground">
+                                £{material.cost}
+                              </span>
                             </div>
                           ))}
                           <div className="flex items-center justify-between p-3 bg-elec-yellow/5">
                             <span className="font-semibold text-foreground">Total</span>
-                            <span className="font-bold text-elec-yellow text-lg">£{totalMaterialsCost}</span>
+                            <span className="font-bold text-elec-yellow text-lg">
+                              £{totalMaterialsCost}
+                            </span>
                           </div>
                         </div>
                       </CardContent>
@@ -334,9 +339,9 @@ export function ViewProgressLogSheet({
                         <h3 className="font-semibold text-foreground">Photos ({photos.length})</h3>
                       </div>
                       {photosWithLocation.length > 0 && (
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           className="h-8 text-xs gap-1.5 text-elec-yellow"
                           onClick={() => setShowMapView(true)}
                         >
@@ -347,8 +352,8 @@ export function ViewProgressLogSheet({
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                       {photos.map((photo, index) => (
-                        <div 
-                          key={photo.id} 
+                        <div
+                          key={photo.id}
                           className="aspect-square bg-muted/50 rounded-xl flex flex-col items-center justify-center relative cursor-pointer hover:ring-2 ring-elec-yellow/50 transition-all border border-border/30"
                           onClick={() => handlePhotoClick(index)}
                         >
@@ -356,15 +361,17 @@ export function ViewProgressLogSheet({
                           {photo.location && (
                             <MapPin className="absolute top-1.5 left-1.5 h-3 w-3 text-info" />
                           )}
-                          <Badge 
+                          <Badge
                             className={cn(
-                              "absolute -top-1.5 -right-1.5 text-[10px] px-1.5 py-0.5",
+                              'absolute -top-1.5 -right-1.5 text-[10px] px-1.5 py-0.5',
                               categoryColors[photo.category]
                             )}
                           >
                             {photo.category}
                           </Badge>
-                          <span className="text-[10px] text-foreground/50 mt-1 truncate max-w-full px-1">{photo.notes?.slice(0, 15) || photo.filename}</span>
+                          <span className="text-[10px] text-foreground/50 mt-1 truncate max-w-full px-1">
+                            {photo.notes?.slice(0, 15) || photo.filename}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -391,8 +398,8 @@ export function ViewProgressLogSheet({
             {/* Footer Actions */}
             <div className="p-4 border-t border-border/50 space-y-3 pb-safe">
               {!log.signedOff && (
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="w-full h-14 text-base font-semibold"
                   onClick={handleStartSignOff}
                 >
@@ -401,21 +408,11 @@ export function ViewProgressLogSheet({
                 </Button>
               )}
               <div className="grid grid-cols-2 gap-3">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="h-12"
-                  onClick={onMessage}
-                >
+                <Button variant="outline" size="lg" className="h-12" onClick={onMessage}>
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Message
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="h-12"
-                  onClick={onCall}
-                >
+                <Button variant="outline" size="lg" className="h-12" onClick={onCall}>
                   <Phone className="h-4 w-4 mr-2" />
                   Call
                 </Button>
@@ -427,7 +424,7 @@ export function ViewProgressLogSheet({
 
       {/* Photo Viewer */}
       <PhotoViewer
-        photos={photos.map(p => ({
+        photos={photos.map((p) => ({
           id: p.id,
           jobId: p.jobId,
           jobTitle: log.jobTitle,
@@ -440,7 +437,7 @@ export function ViewProgressLogSheet({
           approved: true,
           sharedWithClient: false,
           notes: p.notes || '',
-          progressLogId: p.progressLogId
+          progressLogId: p.progressLogId,
         }))}
         currentIndex={currentPhotoIndex}
         isOpen={photoViewerOpen}
@@ -461,18 +458,24 @@ export function ViewProgressLogSheet({
           </div>
           <div className="h-[calc(100%-60px)]">
             <PhotoMapView
-              photos={photosWithLocation.map(p => ({
+              photos={photosWithLocation.map((p) => ({
                 id: p.id,
                 jobId: p.jobId,
                 jobTitle: log.jobTitle,
                 uploadedBy: log.employeeName,
-                category: p.category.toLowerCase() as 'before' | 'during' | 'after' | 'issue' | 'completion' | 'safety',
+                category: p.category.toLowerCase() as
+                  | 'before'
+                  | 'during'
+                  | 'after'
+                  | 'issue'
+                  | 'completion'
+                  | 'safety',
                 timestamp: log.date,
                 location: p.location?.address,
                 lat: p.location!.lat,
                 lng: p.location!.lng,
                 isApproved: true,
-                isShared: false
+                isShared: false,
               }))}
               onPhotoClick={() => {}}
               onToggleApproval={() => {}}

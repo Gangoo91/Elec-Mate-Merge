@@ -12,7 +12,11 @@ import HelpPanel from './HelpPanel';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
-const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: string, reportType?: string) => void }) => {
+const Dashboard = ({
+  onNavigate,
+}: {
+  onNavigate: (section: string, reportId?: string, reportType?: string) => void;
+}) => {
   const navigate = useNavigate();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -58,7 +62,6 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
 
         {/* Main Content */}
         <main className="px-4 sm:px-6 py-5 pb-24 sm:pb-8 space-y-6">
-
           {/* Create Certificate */}
           <CertificateTypeGrid onNavigate={handleNavigate} />
 
@@ -69,10 +72,7 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
           <DesignedCircuitsCard onNavigate={handleNavigate} />
 
           {/* Recent & Notifications */}
-          <div className={cn(
-            "grid gap-4",
-            isMobile ? "grid-cols-1" : "lg:grid-cols-2"
-          )}>
+          <div className={cn('grid gap-4', isMobile ? 'grid-cols-1' : 'lg:grid-cols-2')}>
             <RecentCertificatesCard onNavigate={handleNavigate} />
             <PendingNotificationsCard onNavigate={onNavigate} />
           </div>

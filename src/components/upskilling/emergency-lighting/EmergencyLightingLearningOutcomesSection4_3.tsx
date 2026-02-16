@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection4_3 = () => {
   const outcomes = [
-    "State the required autonomy durations for different building types",
-    "Explain how battery capacity is calculated for emergency lighting systems",
-    "Apply correction factors for ageing, temperature, and efficiency",
-    "Identify differences between self-contained battery sizing and central battery systems",
-    "Ensure battery selection and sizing comply with UK standards"
+    'State the required autonomy durations for different building types',
+    'Explain how battery capacity is calculated for emergency lighting systems',
+    'Apply correction factors for ageing, temperature, and efficiency',
+    'Identify differences between self-contained battery sizing and central battery systems',
+    'Ensure battery selection and sizing comply with UK standards',
   ];
 
   return (

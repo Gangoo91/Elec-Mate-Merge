@@ -1,10 +1,22 @@
 import { useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -32,7 +44,12 @@ import {
 import { useCreateAutomation } from '@/hooks/useAutomations';
 
 const CATEGORIES = [
-  { value: 'compliance', label: 'Compliance', icon: Shield, color: 'bg-orange-500/20 text-orange-400' },
+  {
+    value: 'compliance',
+    label: 'Compliance',
+    icon: Shield,
+    color: 'bg-orange-500/20 text-orange-400',
+  },
   { value: 'jobs', label: 'Jobs', icon: Briefcase, color: 'bg-blue-500/20 text-blue-400' },
   { value: 'finance', label: 'Finance', icon: DollarSign, color: 'bg-green-500/20 text-green-400' },
   { value: 'hr', label: 'HR', icon: Users, color: 'bg-purple-500/20 text-purple-400' },
@@ -40,8 +57,18 @@ const CATEGORIES = [
 
 const TRIGGER_TYPES = [
   { value: 'schedule', label: 'Schedule', description: 'Run on a schedule', icon: Clock },
-  { value: 'field_change', label: 'Field Change', description: 'When a field changes', icon: RefreshCw },
-  { value: 'record_created', label: 'Record Created', description: 'When a new record is added', icon: Plus },
+  {
+    value: 'field_change',
+    label: 'Field Change',
+    description: 'When a field changes',
+    icon: RefreshCw,
+  },
+  {
+    value: 'record_created',
+    label: 'Record Created',
+    description: 'When a new record is added',
+    icon: Plus,
+  },
 ];
 
 const SCHEDULE_OPTIONS = [
@@ -73,7 +100,9 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
   const [category, setCategory] = useState('');
   const [triggerType, setTriggerType] = useState('');
   const [schedule, setSchedule] = useState('');
-  const [actions, setActions] = useState<Array<{ type: string; config: Record<string, unknown> }>>([]);
+  const [actions, setActions] = useState<Array<{ type: string; config: Record<string, unknown> }>>(
+    []
+  );
 
   const stepLabels = ['Details', 'Trigger', 'Actions'];
 
@@ -91,7 +120,10 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
       description: description || null,
       category,
       trigger_type: triggerType,
-      trigger_config: triggerType === 'schedule' ? { schedule, description: SCHEDULE_OPTIONS.find(s => s.value === schedule)?.label } : {},
+      trigger_config:
+        triggerType === 'schedule'
+          ? { schedule, description: SCHEDULE_OPTIONS.find((s) => s.value === schedule)?.label }
+          : {},
       conditions: [],
       actions,
       is_active: true,
@@ -115,10 +147,14 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
 
   const canProceed = () => {
     switch (step) {
-      case 1: return name.trim() && category;
-      case 2: return triggerType && (triggerType !== 'schedule' || schedule);
-      case 3: return actions.length > 0;
-      default: return false;
+      case 1:
+        return name.trim() && category;
+      case 2:
+        return triggerType && (triggerType !== 'schedule' || schedule);
+      case 3:
+        return actions.length > 0;
+      default:
+        return false;
     }
   };
 
@@ -148,7 +184,9 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-medium text-muted-foreground">{stepLabels[step - 1]}</span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {stepLabels[step - 1]}
+                </span>
                 <IOSStepIndicator steps={3} currentStep={step - 1} className="mt-1" />
               </div>
             </div>
@@ -188,15 +226,20 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                           <Card
                             key={cat.value}
                             className={cn(
-                              "cursor-pointer transition-all touch-manipulation",
+                              'cursor-pointer transition-all touch-manipulation',
                               category === cat.value
-                                ? "border-elec-yellow bg-elec-yellow/10"
-                                : "hover:border-border/80"
+                                ? 'border-elec-yellow bg-elec-yellow/10'
+                                : 'hover:border-border/80'
                             )}
                             onClick={() => setCategory(cat.value)}
                           >
                             <CardContent className="p-4 flex items-center gap-3">
-                              <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center", cat.color)}>
+                              <div
+                                className={cn(
+                                  'h-10 w-10 rounded-lg flex items-center justify-center',
+                                  cat.color
+                                )}
+                              >
                                 <Icon className="h-5 w-5" />
                               </div>
                               <span className="font-medium">{cat.label}</span>
@@ -220,10 +263,10 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                           <Card
                             key={trigger.value}
                             className={cn(
-                              "cursor-pointer transition-all touch-manipulation",
+                              'cursor-pointer transition-all touch-manipulation',
                               triggerType === trigger.value
-                                ? "border-elec-yellow bg-elec-yellow/10"
-                                : "hover:border-border/80"
+                                ? 'border-elec-yellow bg-elec-yellow/10'
+                                : 'hover:border-border/80'
                             )}
                             onClick={() => setTriggerType(trigger.value)}
                           >
@@ -233,7 +276,9 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                               </div>
                               <div>
                                 <p className="font-medium">{trigger.label}</p>
-                                <p className="text-sm text-muted-foreground">{trigger.description}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {trigger.description}
+                                </p>
                               </div>
                             </CardContent>
                           </Card>
@@ -264,8 +309,8 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                     <Card className="bg-muted/30 border-dashed">
                       <CardContent className="p-4 text-center">
                         <p className="text-sm text-muted-foreground">
-                          Field change triggers require advanced configuration.
-                          Please contact support for custom setups.
+                          Field change triggers require advanced configuration. Please contact
+                          support for custom setups.
                         </p>
                       </CardContent>
                     </Card>
@@ -275,8 +320,8 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                     <Card className="bg-muted/30 border-dashed">
                       <CardContent className="p-4 text-center">
                         <p className="text-sm text-muted-foreground">
-                          Record triggers require advanced configuration.
-                          Please contact support for custom setups.
+                          Record triggers require advanced configuration. Please contact support for
+                          custom setups.
                         </p>
                       </CardContent>
                     </Card>
@@ -297,7 +342,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                   {actions.length > 0 && (
                     <div className="space-y-2">
                       {actions.map((action, index) => {
-                        const actionType = ACTION_TYPES.find(a => a.value === action.type);
+                        const actionType = ACTION_TYPES.find((a) => a.value === action.type);
                         const Icon = actionType?.icon || Zap;
                         return (
                           <Card key={index} className="bg-elec-gray">
@@ -329,7 +374,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                     <div className="grid grid-cols-1 gap-2">
                       {ACTION_TYPES.map((actionType) => {
                         const Icon = actionType.icon;
-                        const isAdded = actions.some(a => a.type === actionType.value);
+                        const isAdded = actions.some((a) => a.type === actionType.value);
                         return (
                           <Button
                             key={actionType.value}
@@ -353,13 +398,26 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                       <CardContent className="p-4 space-y-3">
                         <h4 className="font-medium">Summary</h4>
                         <div className="text-sm space-y-1">
-                          <p><span className="text-muted-foreground">Name:</span> {name}</p>
-                          <p><span className="text-muted-foreground">Category:</span> {CATEGORIES.find(c => c.value === category)?.label}</p>
-                          <p><span className="text-muted-foreground">Trigger:</span> {TRIGGER_TYPES.find(t => t.value === triggerType)?.label}</p>
+                          <p>
+                            <span className="text-muted-foreground">Name:</span> {name}
+                          </p>
+                          <p>
+                            <span className="text-muted-foreground">Category:</span>{' '}
+                            {CATEGORIES.find((c) => c.value === category)?.label}
+                          </p>
+                          <p>
+                            <span className="text-muted-foreground">Trigger:</span>{' '}
+                            {TRIGGER_TYPES.find((t) => t.value === triggerType)?.label}
+                          </p>
                           {schedule && (
-                            <p><span className="text-muted-foreground">Schedule:</span> {SCHEDULE_OPTIONS.find(s => s.value === schedule)?.label}</p>
+                            <p>
+                              <span className="text-muted-foreground">Schedule:</span>{' '}
+                              {SCHEDULE_OPTIONS.find((s) => s.value === schedule)?.label}
+                            </p>
                           )}
-                          <p><span className="text-muted-foreground">Actions:</span> {actions.length}</p>
+                          <p>
+                            <span className="text-muted-foreground">Actions:</span> {actions.length}
+                          </p>
                         </div>
                       </CardContent>
                     </Card>
@@ -374,12 +432,20 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
             <div className="px-4 py-3 pb-safe">
               <div className="flex gap-3 w-full">
                 {step > 1 ? (
-                  <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1 h-12">
+                  <Button
+                    variant="outline"
+                    onClick={() => setStep(step - 1)}
+                    className="flex-1 h-12"
+                  >
                     <ChevronLeft className="h-4 w-4 mr-1" />
                     Back
                   </Button>
                 ) : (
-                  <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1 h-12">
+                  <Button
+                    variant="outline"
+                    onClick={() => onOpenChange(false)}
+                    className="flex-1 h-12"
+                  >
                     Cancel
                   </Button>
                 )}

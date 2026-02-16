@@ -82,7 +82,7 @@ export interface Tool {
   name: string;
   description: string;
   price: string;
-  priority: "essential" | "recommended" | "nice-to-have";
+  priority: 'essential' | 'recommended' | 'nice-to-have';
   standard?: string;
   brands: string[];
   apprenticeTip?: string;
@@ -98,7 +98,7 @@ export interface TestInstrument {
   name: string;
   description: string;
   price: string;
-  tier: "basic" | "professional";
+  tier: 'basic' | 'professional';
   functions?: string[];
   brands: string[];
   calibration?: string;
@@ -118,7 +118,7 @@ export interface PPEItem {
   standard: string;
   replacementFrequency: string;
   price: string;
-  group: "daily" | "task-specific";
+  group: 'daily' | 'task-specific';
   apprenticeTip?: string;
 }
 
@@ -145,10 +145,10 @@ export interface VanStockItem {
 }
 
 export type ActiveCategory =
-  | "fixings"
-  | "hand-tools"
-  | "power-tools"
-  | "test-equipment"
-  | "ppe"
-  | "suppliers"
+  | 'fixings'
+  | 'hand-tools'
+  | 'power-tools'
+  | 'test-equipment'
+  | 'ppe'
+  | 'suppliers'
   | null;

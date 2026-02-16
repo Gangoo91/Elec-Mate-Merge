@@ -7,12 +7,12 @@ export const HeatPumpSwitchingQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why are heat pumps less suited to simple on/off switching?";
+  const question = 'Why are heat pumps less suited to simple on/off switching?';
   const options = [
-    "They use too much electricity",
-    "They work best with continuous, steady operation for efficiency",
-    "They are too noisy when starting up",
-    "They only work in summer"
+    'They use too much electricity',
+    'They work best with continuous, steady operation for efficiency',
+    'They are too noisy when starting up',
+    'They only work in summer',
   ];
   const correctAnswer = 1;
 
@@ -36,7 +36,7 @@ export const HeatPumpSwitchingQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <Button
@@ -49,11 +49,11 @@ export const HeatPumpSwitchingQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-600/20 border-green-500 text-green-200'
                     : selectedAnswer === index.toString()
-                    ? 'bg-red-600/20 border-red-500 text-red-200'
-                    : 'text-gray-400'
+                      ? 'bg-red-600/20 border-red-500 text-red-200'
+                      : 'text-gray-400'
                   : selectedAnswer === index.toString()
-                  ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
-                  : 'text-gray-300'
+                    ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                    : 'text-gray-300'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -72,7 +72,10 @@ export const HeatPumpSwitchingQuickCheck = () => {
         {showResult && (
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
             <p className="text-gray-300 text-sm">
-              <strong className="text-foreground">Explanation:</strong> Heat pumps achieve maximum efficiency through continuous, steady operation rather than frequent on/off cycling. They need time to reach optimal operating temperatures and work most efficiently when maintaining consistent output.
+              <strong className="text-foreground">Explanation:</strong> Heat pumps achieve maximum
+              efficiency through continuous, steady operation rather than frequent on/off cycling.
+              They need time to reach optimal operating temperatures and work most efficiently when
+              maintaining consistent output.
             </p>
             <Button
               onClick={resetQuestion}

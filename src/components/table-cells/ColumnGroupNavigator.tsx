@@ -130,9 +130,7 @@ export const ColumnGroupNavigator: React.FC<ColumnGroupNavigatorProps> = ({
               ) : (
                 <Circle className="h-3 w-3 ml-1 text-muted-foreground" />
               )}
-              <span className="ml-1 text-xs text-muted-foreground">
-                {completion.percentage}%
-              </span>
+              <span className="ml-1 text-xs text-muted-foreground">{completion.percentage}%</span>
             </Button>
           );
         })}

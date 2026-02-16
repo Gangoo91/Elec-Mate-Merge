@@ -1,7 +1,7 @@
-import { LucideIcon, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { LucideIcon, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface FeatureTileProps {
   title: string;
@@ -10,17 +10,17 @@ interface FeatureTileProps {
   onClick?: () => void;
   className?: string;
   badge?: string;
-  badgeVariant?: "default" | "warning" | "info" | "success" | "destructive";
+  badgeVariant?: 'default' | 'warning' | 'info' | 'success' | 'destructive';
   compact?: boolean;
   showArrow?: boolean;
 }
 
 const badgeColors = {
-  default: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
-  warning: "bg-warning/20 text-warning border-warning/30",
-  info: "bg-info/20 text-info border-info/30",
-  success: "bg-success/20 text-success border-success/30",
-  destructive: "bg-destructive/20 text-destructive border-destructive/30",
+  default: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+  warning: 'bg-warning/20 text-warning border-warning/30',
+  info: 'bg-info/20 text-info border-info/30',
+  success: 'bg-success/20 text-success border-success/30',
+  destructive: 'bg-destructive/20 text-destructive border-destructive/30',
 };
 
 export function FeatureTile({
@@ -30,17 +30,17 @@ export function FeatureTile({
   onClick,
   className,
   badge,
-  badgeVariant = "default",
+  badgeVariant = 'default',
   compact = false,
-  showArrow = false
+  showArrow = false,
 }: FeatureTileProps) {
   if (compact) {
     return (
       <Card
         className={cn(
-          "cursor-pointer group touch-manipulation",
-          "hover:bg-[#222222] hover:border-elec-yellow/40",
-          "active:scale-[0.98] active:bg-elec-yellow/5",
+          'cursor-pointer group touch-manipulation',
+          'hover:bg-[#222222] hover:border-elec-yellow/40',
+          'active:scale-[0.98] active:bg-elec-yellow/5',
           className
         )}
         onClick={onClick}
@@ -52,9 +52,16 @@ export function FeatureTile({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <p className="font-medium text-foreground text-xs sm:text-sm leading-tight group-hover:text-elec-yellow transition-colors truncate">{title}</p>
+                <p className="font-medium text-foreground text-xs sm:text-sm leading-tight group-hover:text-elec-yellow transition-colors truncate">
+                  {title}
+                </p>
                 {badge && (
-                  <Badge className={cn(badgeColors[badgeVariant], "text-[10px] sm:text-xs px-1.5 py-0 h-4 sm:h-5 border shrink-0")}>
+                  <Badge
+                    className={cn(
+                      badgeColors[badgeVariant],
+                      'text-[10px] sm:text-xs px-1.5 py-0 h-4 sm:h-5 border shrink-0'
+                    )}
+                  >
                     {badge}
                   </Badge>
                 )}
@@ -75,9 +82,9 @@ export function FeatureTile({
   return (
     <Card
       className={cn(
-        "cursor-pointer group touch-manipulation",
-        "hover:bg-[#222222] hover:border-elec-yellow/40",
-        "active:scale-[0.98] active:bg-elec-yellow/5",
+        'cursor-pointer group touch-manipulation',
+        'hover:bg-[#222222] hover:border-elec-yellow/40',
+        'active:scale-[0.98] active:bg-elec-yellow/5',
         className
       )}
       onClick={onClick}
@@ -88,14 +95,16 @@ export function FeatureTile({
             <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
           </div>
           {badge && (
-            <Badge className={cn(badgeColors[badgeVariant], "text-[10px] sm:text-xs border")}>
+            <Badge className={cn(badgeColors[badgeVariant], 'text-[10px] sm:text-xs border')}>
               {badge}
             </Badge>
           )}
         </div>
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-foreground mb-1 text-sm sm:text-base group-hover:text-elec-yellow transition-colors">{title}</h3>
+            <h3 className="font-semibold text-foreground mb-1 text-sm sm:text-base group-hover:text-elec-yellow transition-colors">
+              {title}
+            </h3>
             {description && (
               <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{description}</p>
             )}

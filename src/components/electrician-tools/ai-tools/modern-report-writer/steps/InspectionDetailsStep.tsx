@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Search, 
-  AlertTriangle, 
+import React, { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Progress } from '@/components/ui/progress';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  AlertTriangle,
   CheckCircle2,
   Eye,
   TestTube,
@@ -16,14 +16,14 @@ import {
   Lightbulb,
   Plus,
   X,
-  Sparkles
-} from "lucide-react";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { InspectionDetailsStepProps } from "../types";
-import { useToast } from "@/hooks/use-toast";
-import SmartInputAssistant from "../components/SmartInputAssistant";
-import FieldValidationHelper from "../components/FieldValidationHelper";
+  Sparkles,
+} from 'lucide-react';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { InspectionDetailsStepProps } from '../types';
+import { useToast } from '@/hooks/use-toast';
+import SmartInputAssistant from '../components/SmartInputAssistant';
+import FieldValidationHelper from '../components/FieldValidationHelper';
 
 interface FaultEntry {
   id: string;
@@ -38,7 +38,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
   template,
   onDataChange,
   onNext,
-  onBack
+  onBack,
 }) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState(data);
@@ -51,7 +51,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
   // Form validation based on template
   const getRequiredFields = () => {
     const baseFields = ['extentOfInspection', 'overallAssessment'];
-    
+
     if (template?.id === 'eicr') {
       return [...baseFields, 'faultsFound', 'inspectorName', 'inspectorQualification'];
     }
@@ -62,9 +62,9 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
   };
 
   const requiredFields = getRequiredFields();
-  const completedFields = requiredFields.filter(field => formData[field]?.trim()).length;
+  const completedFields = requiredFields.filter((field) => formData[field]?.trim()).length;
   const fieldProgress = (completedFields / requiredFields.length) * 100;
-  const isFormValid = requiredFields.every(field => formData[field]?.trim());
+  const isFormValid = requiredFields.every((field) => formData[field]?.trim());
 
   useEffect(() => {
     const updatedData = { ...formData, faults };
@@ -72,7 +72,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
   }, [formData, faults, onDataChange]);
 
   const updateField = (fieldId: string, value: string) => {
-    setFormData(prev => ({ ...prev, [fieldId]: value }));
+    setFormData((prev) => ({ ...prev, [fieldId]: value }));
   };
 
   const addFault = () => {
@@ -82,81 +82,94 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         code: newFault.code!,
         description: newFault.description,
         location: newFault.location,
-        recommendation: newFault.recommendation || ''
+        recommendation: newFault.recommendation || '',
       };
-      
-      setFaults(prev => [...prev, fault]);
+
+      setFaults((prev) => [...prev, fault]);
       setNewFault({});
       setShowingFaultForm(false);
-      
+
       toast({
-        title: "Fault added",
+        title: 'Fault added',
         description: `${fault.code} fault has been added to the report.`,
       });
     }
   };
 
   const removeFault = (faultId: string) => {
-    setFaults(prev => prev.filter(f => f.id !== faultId));
+    setFaults((prev) => prev.filter((f) => f.id !== faultId));
     toast({
-      title: "Fault removed",
-      description: "Fault has been removed from the report.",
+      title: 'Fault removed',
+      description: 'Fault has been removed from the report.',
     });
   };
 
   const getFaultColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'bg-red-500/10 text-red-500 border-red-500/30';
-      case 'C2': return 'bg-orange-500/10 text-orange-500 border-orange-500/30';
-      case 'C3': return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30';
-      case 'FI': return 'bg-blue-500/10 text-blue-500 border-blue-500/30';
-      default: return 'bg-muted/10 text-muted-foreground border-muted/30';
+      case 'C1':
+        return 'bg-red-500/10 text-red-500 border-red-500/30';
+      case 'C2':
+        return 'bg-orange-500/10 text-orange-500 border-orange-500/30';
+      case 'C3':
+        return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30';
+      case 'FI':
+        return 'bg-blue-500/10 text-blue-500 border-blue-500/30';
+      default:
+        return 'bg-muted/10 text-muted-foreground border-muted/30';
     }
   };
 
   // Options for different templates
   const extentOptions = [
-    { value: "100-visual-10-test", label: "100% Visual, 10% Testing" },
-    { value: "100-visual-25-test", label: "100% Visual, 25% Testing" },
-    { value: "100-visual-100-test", label: "100% Visual, 100% Testing" },
-    { value: "limited-access", label: "Limited Access - Partial Inspection" },
-    { value: "other", label: "Other (specify in limitations)" }
+    { value: '100-visual-10-test', label: '100% Visual, 10% Testing' },
+    { value: '100-visual-25-test', label: '100% Visual, 25% Testing' },
+    { value: '100-visual-100-test', label: '100% Visual, 100% Testing' },
+    { value: 'limited-access', label: 'Limited Access - Partial Inspection' },
+    { value: 'other', label: 'Other (specify in limitations)' },
   ];
 
   const assessmentOptions = [
-    { value: "satisfactory", label: "Satisfactory" },
-    { value: "unsatisfactory", label: "Unsatisfactory" }
+    { value: 'satisfactory', label: 'Satisfactory' },
+    { value: 'unsatisfactory', label: 'Unsatisfactory' },
   ];
 
   const faultCodeOptions = [
-    { value: "C1", label: "C1 - Danger Present", description: "Immediate action required" },
-    { value: "C2", label: "C2 - Potentially Dangerous", description: "Urgent remedial action required" },
-    { value: "C3", label: "C3 - Improvement Recommended", description: "Improvement recommended" },
-    { value: "FI", label: "FI - Further Investigation", description: "Further investigation required" }
+    { value: 'C1', label: 'C1 - Danger Present', description: 'Immediate action required' },
+    {
+      value: 'C2',
+      label: 'C2 - Potentially Dangerous',
+      description: 'Urgent remedial action required',
+    },
+    { value: 'C3', label: 'C3 - Improvement Recommended', description: 'Improvement recommended' },
+    {
+      value: 'FI',
+      label: 'FI - Further Investigation',
+      description: 'Further investigation required',
+    },
   ];
 
   const conditionOptions = [
-    { value: "good", label: "Good - No issues found" },
-    { value: "fair", label: "Fair - Minor issues identified" },
-    { value: "poor", label: "Poor - Significant issues found" },
-    { value: "dangerous", label: "Dangerous - Immediate action required" }
+    { value: 'good', label: 'Good - No issues found' },
+    { value: 'fair', label: 'Fair - Minor issues identified' },
+    { value: 'poor', label: 'Poor - Significant issues found' },
+    { value: 'dangerous', label: 'Dangerous - Immediate action required' },
   ];
 
   const inspectionTypeOptions = [
-    { value: "routine", label: "Routine Periodic Inspection" },
-    { value: "change-of-occupancy", label: "Change of Occupancy" },
-    { value: "alteration", label: "Following Alteration" },
-    { value: "insurance", label: "Insurance Requirement" },
-    { value: "other", label: "Other" }
+    { value: 'routine', label: 'Routine Periodic Inspection' },
+    { value: 'change-of-occupancy', label: 'Change of Occupancy' },
+    { value: 'alteration', label: 'Following Alteration' },
+    { value: 'insurance', label: 'Insurance Requirement' },
+    { value: 'other', label: 'Other' },
   ];
 
   const qualificationOptions = [
-    { value: "2391", label: "City & Guilds 2391" },
-    { value: "2391-52", label: "City & Guilds 2391-52" },
-    { value: "nvq-level-3", label: "NVQ Level 3 Electrical" },
-    { value: "18th-edition", label: "18th Edition BS 7671" },
-    { value: "am2", label: "AM2 Assessment" },
-    { value: "other", label: "Other Qualification" }
+    { value: '2391', label: 'City & Guilds 2391' },
+    { value: '2391-52', label: 'City & Guilds 2391-52' },
+    { value: 'nvq-level-3', label: 'NVQ Level 3 Electrical' },
+    { value: '18th-edition', label: '18th Edition BS 7671' },
+    { value: 'am2', label: 'AM2 Assessment' },
+    { value: 'other', label: 'Other Qualification' },
   ];
 
   return (
@@ -170,7 +183,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
               Document your inspection findings and observations
             </p>
           </div>
-          
+
           {/* Progress */}
           <div className="w-full sm:w-auto">
             <div className="flex items-center gap-2 mb-2">
@@ -190,12 +203,12 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           <Eye className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-lg font-medium text-foreground">Inspection Scope</h3>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <MobileSelectWrapper
             label="Extent of Inspection"
             placeholder="Select inspection extent"
-            value={formData.extentOfInspection || ""}
+            value={formData.extentOfInspection || ''}
             onValueChange={(value) => updateField('extentOfInspection', value)}
             options={extentOptions}
           />
@@ -204,7 +217,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
             <MobileSelectWrapper
               label="Inspection Type"
               placeholder="Select inspection type"
-              value={formData.inspectionType || ""}
+              value={formData.inspectionType || ''}
               onValueChange={(value) => updateField('inspectionType', value)}
               options={inspectionTypeOptions}
             />
@@ -216,7 +229,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           <Textarea
             placeholder="Enter any limitations encountered during inspection (e.g., areas not accessible, equipment not tested)"
             className="min-h-[80px] bg-elec-dark border border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
-            value={formData.limitations || ""}
+            value={formData.limitations || ''}
             onChange={(e) => updateField('limitations', e.target.value)}
           />
         </div>
@@ -251,12 +264,8 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge className={getFaultColor(fault.code)}>
-                        {fault.code}
-                      </Badge>
-                      <span className="text-sm text-muted-foreground">
-                        {fault.location}
-                      </span>
+                      <Badge className={getFaultColor(fault.code)}>{fault.code}</Badge>
+                      <span className="text-sm text-muted-foreground">{fault.location}</span>
                     </div>
                     <p className="text-sm text-foreground mb-1">{fault.description}</p>
                     {fault.recommendation && (
@@ -303,44 +312,46 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
                 <X className="h-4 w-4" />
               </Button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <MobileSelectWrapper
                 label="Fault Code"
                 placeholder="Select fault code"
-                value={newFault.code || ""}
-                onValueChange={(value) => setNewFault(prev => ({ ...prev, code: value as any }))}
+                value={newFault.code || ''}
+                onValueChange={(value) => setNewFault((prev) => ({ ...prev, code: value as any }))}
                 options={faultCodeOptions}
               />
-              
+
               <MobileInputWrapper
                 label="Location"
                 placeholder="e.g., Consumer unit, Kitchen, Bedroom 1"
-                value={newFault.location || ""}
-                onChange={(value) => setNewFault(prev => ({ ...prev, location: value }))}
+                value={newFault.location || ''}
+                onChange={(value) => setNewFault((prev) => ({ ...prev, location: value }))}
               />
             </div>
-            
+
             <div className="mt-4 space-y-2">
               <label className="text-sm font-medium text-foreground">Description</label>
               <Textarea
                 placeholder="Describe the fault or observation in detail"
                 className="bg-elec-gray border border-primary/30 text-foreground"
-                value={newFault.description || ""}
-                onChange={(e) => setNewFault(prev => ({ ...prev, description: e.target.value }))}
+                value={newFault.description || ''}
+                onChange={(e) => setNewFault((prev) => ({ ...prev, description: e.target.value }))}
               />
             </div>
-            
+
             <div className="mt-4 space-y-2">
               <label className="text-sm font-medium text-foreground">Recommendation</label>
               <Textarea
                 placeholder="Recommended action to address this fault"
                 className="bg-elec-gray border border-primary/30 text-foreground"
-                value={newFault.recommendation || ""}
-                onChange={(e) => setNewFault(prev => ({ ...prev, recommendation: e.target.value }))}
+                value={newFault.recommendation || ''}
+                onChange={(e) =>
+                  setNewFault((prev) => ({ ...prev, recommendation: e.target.value }))
+                }
               />
             </div>
-            
+
             <div className="flex justify-end gap-2 mt-4">
               <Button
                 variant="outline"
@@ -369,20 +380,20 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           <TestTube className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-lg font-medium text-foreground">Overall Assessment</h3>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <MobileSelectWrapper
               label="Overall Assessment"
               placeholder="Select assessment"
-              value={formData.overallAssessment || ""}
+              value={formData.overallAssessment || ''}
               onValueChange={(value) => updateField('overallAssessment', value)}
               options={assessmentOptions}
             />
             {validationFields.includes('overallAssessment') && (
               <FieldValidationHelper
                 fieldId="overallAssessment"
-                value={formData.overallAssessment || ""}
+                value={formData.overallAssessment || ''}
                 showCompliance={true}
               />
             )}
@@ -392,7 +403,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
             <MobileSelectWrapper
               label="Overall Condition"
               placeholder="Select condition"
-              value={formData.overallCondition || ""}
+              value={formData.overallCondition || ''}
               onValueChange={(value) => updateField('overallCondition', value)}
               options={conditionOptions}
             />
@@ -404,7 +415,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           <Textarea
             placeholder="Enter any recommended actions or improvements"
             className="min-h-[80px] bg-elec-dark border border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
-            value={formData.recommendedActions || ""}
+            value={formData.recommendedActions || ''}
             onChange={(e) => updateField('recommendedActions', e.target.value)}
           />
         </div>
@@ -417,39 +428,39 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
             <Lightbulb className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-lg font-medium text-foreground">Inspector Details</h3>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="space-y-2">
               <MobileInputWrapper
                 label="Inspector Name"
                 placeholder="Enter inspector name"
-                value={formData.inspectorName || ""}
+                value={formData.inspectorName || ''}
                 onChange={(value) => updateField('inspectorName', value)}
               />
             </div>
-            
+
             <div className="space-y-2">
               <MobileSelectWrapper
                 label="Inspector Qualification"
                 placeholder="Select qualification"
-                value={formData.inspectorQualification || ""}
+                value={formData.inspectorQualification || ''}
                 onValueChange={(value) => updateField('inspectorQualification', value)}
                 options={qualificationOptions}
               />
               {validationFields.includes('inspectorQualification') && (
                 <FieldValidationHelper
                   fieldId="inspectorQualification"
-                  value={formData.inspectorQualification || ""}
+                  value={formData.inspectorQualification || ''}
                   showCompliance={true}
                 />
               )}
             </div>
-            
+
             <MobileInputWrapper
               label="Inspection Date"
               type="date"
               placeholder="Select inspection date"
-              value={formData.inspectionDate || ""}
+              value={formData.inspectionDate || ''}
               onChange={(value) => updateField('inspectionDate', value)}
             />
           </div>
@@ -469,9 +480,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           </Button>
 
           <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              Step 3 of 4 • Inspection & Findings
-            </p>
+            <p className="text-sm text-muted-foreground">Step 3 of 4 • Inspection & Findings</p>
           </div>
 
           <Button

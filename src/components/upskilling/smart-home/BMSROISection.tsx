@@ -12,10 +12,10 @@ export const BMSROISection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          Understanding the financial benefits of BMS integration helps justify investment decisions 
+          Understanding the financial benefits of BMS integration helps justify investment decisions
           and set realistic expectations for payback periods across different building types.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -43,7 +43,7 @@ export const BMSROISection = () => {
               </div>
             </div>
           </div>
-          
+
           <div>
             <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-blue-400" />
@@ -71,7 +71,7 @@ export const BMSROISection = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="grid md:grid-cols-3 gap-4">
           <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
@@ -79,40 +79,64 @@ export const BMSROISection = () => {
               <h5 className="font-semibold text-foreground text-sm">Office Buildings</h5>
             </div>
             <div className="space-y-2 text-xs">
-              <p><strong>Typical Size:</strong> 5,000-50,000m²</p>
-              <p><strong>Investment:</strong> £100,000-1,000,000</p>
-              <p><strong>Annual Savings:</strong> £20,000-200,000</p>
-              <p><strong>Payback:</strong> 3-7 years</p>
+              <p>
+                <strong>Typical Size:</strong> 5,000-50,000m²
+              </p>
+              <p>
+                <strong>Investment:</strong> £100,000-1,000,000
+              </p>
+              <p>
+                <strong>Annual Savings:</strong> £20,000-200,000
+              </p>
+              <p>
+                <strong>Payback:</strong> 3-7 years
+              </p>
             </div>
           </div>
-          
+
           <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Clock className="h-4 w-4 text-green-400" />
               <h5 className="font-semibold text-foreground text-sm">Educational</h5>
             </div>
             <div className="space-y-2 text-xs">
-              <p><strong>Typical Size:</strong> 10,000-100,000m²</p>
-              <p><strong>Investment:</strong> £200,000-2,000,000</p>
-              <p><strong>Annual Savings:</strong> £40,000-400,000</p>
-              <p><strong>Payback:</strong> 4-8 years</p>
+              <p>
+                <strong>Typical Size:</strong> 10,000-100,000m²
+              </p>
+              <p>
+                <strong>Investment:</strong> £200,000-2,000,000
+              </p>
+              <p>
+                <strong>Annual Savings:</strong> £40,000-400,000
+              </p>
+              <p>
+                <strong>Payback:</strong> 4-8 years
+              </p>
             </div>
           </div>
-          
+
           <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Clock className="h-4 w-4 text-purple-400" />
               <h5 className="font-semibold text-foreground text-sm">Healthcare</h5>
             </div>
             <div className="space-y-2 text-xs">
-              <p><strong>Typical Size:</strong> 20,000-200,000m²</p>
-              <p><strong>Investment:</strong> £500,000-5,000,000</p>
-              <p><strong>Annual Savings:</strong> £100,000-1,000,000</p>
-              <p><strong>Payback:</strong> 2-6 years</p>
+              <p>
+                <strong>Typical Size:</strong> 20,000-200,000m²
+              </p>
+              <p>
+                <strong>Investment:</strong> £500,000-5,000,000
+              </p>
+              <p>
+                <strong>Annual Savings:</strong> £100,000-1,000,000
+              </p>
+              <p>
+                <strong>Payback:</strong> 2-6 years
+              </p>
             </div>
           </div>
         </div>
-        
+
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-2">Key ROI Factors</h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm">

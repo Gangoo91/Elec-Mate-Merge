@@ -1,58 +1,58 @@
-import { ArrowLeft, Activity, Clock, TrendingUp, Zap, Battery, Radio } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Activity, Clock, TrendingUp, Zap, Battery, Radio } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: "4.1",
-    title: "AC Waveforms",
-    description: "Alternating current and voltage waveforms, generation and characteristics",
+    number: '4.1',
+    title: 'AC Waveforms',
+    description: 'Alternating current and voltage waveforms, generation and characteristics',
     icon: Activity,
-    href: "../level3-module3-section4-1",
+    href: '../level3-module3-section4-1',
   },
   {
-    number: "4.2",
-    title: "Frequency, Period and Amplitude",
-    description: "Time-based parameters, RMS and peak values in AC systems",
+    number: '4.2',
+    title: 'Frequency, Period and Amplitude',
+    description: 'Time-based parameters, RMS and peak values in AC systems',
     icon: Clock,
-    href: "../level3-module3-section4-2",
+    href: '../level3-module3-section4-2',
   },
   {
-    number: "4.3",
-    title: "Phasor Diagrams and Vectors",
-    description: "Vector representation of AC quantities and phasor diagram construction",
+    number: '4.3',
+    title: 'Phasor Diagrams and Vectors',
+    description: 'Vector representation of AC quantities and phasor diagram construction',
     icon: TrendingUp,
-    href: "../level3-module3-section4-3",
+    href: '../level3-module3-section4-3',
   },
   {
-    number: "4.4",
-    title: "Impedance and Admittance",
-    description: "Complex impedance in AC circuits and admittance calculations",
+    number: '4.4',
+    title: 'Impedance and Admittance',
+    description: 'Complex impedance in AC circuits and admittance calculations',
     icon: Zap,
-    href: "../level3-module3-section4-4",
+    href: '../level3-module3-section4-4',
   },
   {
-    number: "4.5",
-    title: "Power in AC Circuits",
-    description: "True power, reactive power, apparent power and power triangles",
+    number: '4.5',
+    title: 'Power in AC Circuits',
+    description: 'True power, reactive power, apparent power and power triangles',
     icon: Battery,
-    href: "../level3-module3-section4-5",
+    href: '../level3-module3-section4-5',
   },
   {
-    number: "4.6",
-    title: "Harmonics and Waveform Distortion",
-    description: "Harmonic content, THD and the effects of non-linear loads",
+    number: '4.6',
+    title: 'Harmonics and Waveform Distortion',
+    description: 'Harmonic content, THD and the effects of non-linear loads',
     icon: Radio,
-    href: "../level3-module3-section4-6",
+    href: '../level3-module3-section4-6',
   },
 ];
 
 const Level3Module3Section4 = () => {
   useSEO(
-    "Section 4: AC Theory and Waveforms - Level 3 Module 3",
-    "AC waveforms, phasor diagrams, impedance, power and harmonics"
+    'Section 4: AC Theory and Waveforms - Level 3 Module 3',
+    'AC waveforms, phasor diagrams, impedance, power and harmonics'
   );
 
   return (
@@ -77,26 +77,22 @@ const Level3Module3Section4 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        {/* Subsections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Subsections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {subsections.map((subsection, index) => (
+                <ModuleCard
+                  key={index}
+                  number={subsection.number}
+                  title={subsection.title}
+                  description={subsection.description}
+                  icon={subsection.icon}
+                  href={subsection.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

@@ -1,13 +1,16 @@
-import { CheckCircle2, XCircle, AlertTriangle } from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { TestResult } from "@/types/commissioning-response";
+import { CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { TestResult } from '@/types/commissioning-response';
 
 interface ExpectedReadingsCardProps {
   expectedResult?: TestResult | string;
   acceptanceCriteria: string;
 }
 
-export const ExpectedReadingsCard = ({ expectedResult, acceptanceCriteria }: ExpectedReadingsCardProps) => {
+export const ExpectedReadingsCard = ({
+  expectedResult,
+  acceptanceCriteria,
+}: ExpectedReadingsCardProps) => {
   if (!expectedResult) {
     return (
       <div className="bg-green-500/10 border-2 border-green-500/30 rounded-lg p-4 sm:p-5">
@@ -50,16 +53,18 @@ export const ExpectedReadingsCard = ({ expectedResult, acceptanceCriteria }: Exp
   const StatusIcon = isPassing ? CheckCircle2 : isFailing ? XCircle : AlertTriangle;
 
   return (
-    <div className={cn(
-      "border-2 rounded-lg p-4 sm:p-5",
-      isPassing && "bg-green-500/10 border-green-500/30",
-      isFailing && "bg-red-500/10 border-red-500/30",
-      isWarning && "bg-amber-500/10 border-amber-500/30",
-      !passFail && "bg-green-500/10 border-green-500/30"
-    )}>
+    <div
+      className={cn(
+        'border-2 rounded-lg p-4 sm:p-5',
+        isPassing && 'bg-green-500/10 border-green-500/30',
+        isFailing && 'bg-red-500/10 border-red-500/30',
+        isWarning && 'bg-amber-500/10 border-amber-500/30',
+        !passFail && 'bg-green-500/10 border-green-500/30'
+      )}
+    >
       {/* Header */}
       <div className="flex items-center gap-2 text-base font-semibold mb-4">
-        <StatusIcon className={cn("h-5 w-5", `text-${statusColor}-300`)} />
+        <StatusIcon className={cn('h-5 w-5', `text-${statusColor}-300`)} />
         <span className={cn(`text-${statusColor}-300`)}>Expected Results</span>
       </div>
 
@@ -107,15 +112,15 @@ export const ExpectedReadingsCard = ({ expectedResult, acceptanceCriteria }: Exp
           </div>
           {/* Visual progress bar */}
           <div className="h-2 bg-background/50 rounded-full overflow-hidden">
-            <div 
+            <div
               className={cn(
-                "h-full transition-all duration-500",
-                isPassing && "bg-green-500",
-                isFailing && "bg-red-500",
-                isWarning && "bg-amber-500"
+                'h-full transition-all duration-500',
+                isPassing && 'bg-green-500',
+                isFailing && 'bg-red-500',
+                isWarning && 'bg-amber-500'
               )}
-              style={{ 
-                width: `${Math.min(100, Math.max(0, parseFloat(marginOfSafety) || 0))}%` 
+              style={{
+                width: `${Math.min(100, Math.max(0, parseFloat(marginOfSafety) || 0))}%`,
               }}
             />
           </div>
@@ -124,12 +129,14 @@ export const ExpectedReadingsCard = ({ expectedResult, acceptanceCriteria }: Exp
 
       {/* Pass/Fail Status */}
       {passFail && (
-        <div className={cn(
-          "font-bold text-base sm:text-lg text-center py-2 rounded-lg",
-          isPassing && "bg-green-500/20 text-green-300",
-          isFailing && "bg-red-500/20 text-red-300",
-          isWarning && "bg-amber-500/20 text-amber-300"
-        )}>
+        <div
+          className={cn(
+            'font-bold text-base sm:text-lg text-center py-2 rounded-lg',
+            isPassing && 'bg-green-500/20 text-green-300',
+            isFailing && 'bg-red-500/20 text-red-300',
+            isWarning && 'bg-amber-500/20 text-amber-300'
+          )}
+        >
           {passFail}
         </div>
       )}

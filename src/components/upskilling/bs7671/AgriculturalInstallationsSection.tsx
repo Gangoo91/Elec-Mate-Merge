@@ -10,12 +10,18 @@ export const AgriculturalInstallationsSection = () => {
           <TreePine className="h-5 w-5 text-elec-yellow" />
           Agricultural Installation Requirements
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-amber-600 text-foreground">BS 7671 Section 705</Badge>
+        <Badge variant="secondary" className="w-fit bg-amber-600 text-foreground">
+          BS 7671 Section 705
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-2">Code Reference: BS 7671:2018+A2:2022 Section 705</h5>
-          <p className="text-sm">Agricultural and horticultural premises - Special requirements for livestock safety</p>
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Code Reference: BS 7671:2018+A2:2022 Section 705
+          </h5>
+          <p className="text-sm">
+            Agricultural and horticultural premises - Special requirements for livestock safety
+          </p>
         </div>
 
         <div className="grid gap-6">
@@ -25,7 +31,7 @@ export const AgriculturalInstallationsSection = () => {
               <Shield className="h-4 w-4 text-green-400" />
               <h5 className="text-green-400 font-semibold">Livestock Safety Requirements</h5>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">Animal Sensitivity Factors:</h6>
@@ -48,10 +54,11 @@ export const AgriculturalInstallationsSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-green-900/20 border border-green-600/50 rounded">
               <p className="text-green-200 text-sm">
-                <strong>Critical Requirement:</strong> All metallic structures accessible to livestock must be included in the equipotential bonding system.
+                <strong>Critical Requirement:</strong> All metallic structures accessible to
+                livestock must be included in the equipotential bonding system.
               </p>
             </div>
           </div>
@@ -62,7 +69,7 @@ export const AgriculturalInstallationsSection = () => {
               <Zap className="h-4 w-4 text-yellow-400" />
               <h5 className="text-yellow-400 font-semibold">Enhanced RCD Protection</h5>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">Sensitivity Requirements:</h6>
@@ -99,8 +106,10 @@ export const AgriculturalInstallationsSection = () => {
 
           {/* Equipotential Bonding */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h5 className="text-elec-yellow font-semibold mb-3">Supplementary Equipotential Bonding</h5>
-            
+            <h5 className="text-elec-yellow font-semibold mb-3">
+              Supplementary Equipotential Bonding
+            </h5>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-blue-400 font-medium mb-2">Bonding Requirements:</h6>
@@ -125,10 +134,11 @@ export const AgriculturalInstallationsSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-blue-900/20 border border-blue-600/50 rounded">
               <p className="text-blue-200 text-sm">
-                <strong>Verification Testing:</strong> Equipotential bonding effectiveness must be verified by measuring resistance between all bonded metalwork (≤0.05Ω).
+                <strong>Verification Testing:</strong> Equipotential bonding effectiveness must be
+                verified by measuring resistance between all bonded metalwork (≤0.05Ω).
               </p>
             </div>
           </div>
@@ -136,7 +146,7 @@ export const AgriculturalInstallationsSection = () => {
           {/* Earth Electrode Systems */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
             <h5 className="text-elec-yellow font-semibold mb-3">Earth Electrode Design</h5>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-purple-400 font-medium mb-2">Electrode Types:</h6>
@@ -163,8 +173,10 @@ export const AgriculturalInstallationsSection = () => {
 
           {/* Environmental Hazards */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h5 className="text-elec-yellow font-semibold mb-3">Agricultural Environmental Hazards</h5>
-            
+            <h5 className="text-elec-yellow font-semibold mb-3">
+              Agricultural Environmental Hazards
+            </h5>
+
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <h6 className="text-red-400 font-medium mb-2">Chemical Exposure:</h6>

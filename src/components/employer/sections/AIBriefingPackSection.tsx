@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { JobPackSelector } from "@/components/employer/smart-docs/JobPackSelector";
-import { useJobPacks, useUpdateJobPack } from "@/hooks/useJobPacks";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import type { Section } from "@/pages/employer/EmployerDashboard";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
+import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   Users,
   Sparkles,
@@ -20,8 +20,8 @@ import {
   FileText,
   RefreshCw,
   Shield,
-  ClipboardList
-} from "lucide-react";
+  ClipboardList,
+} from 'lucide-react';
 
 interface AIBriefingPackSectionProps {
   onNavigate: (section: Section) => void;
@@ -33,14 +33,14 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
   const { toast } = useToast();
 
   const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
-  const [additionalNotes, setAdditionalNotes] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [currentStep, setCurrentStep] = useState("");
+  const [currentStep, setCurrentStep] = useState('');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const selectedJobPack = jobPacks.find(jp => jp.id === selectedJobPackId);
+  const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
   // Check prerequisites
   const hasRAMS = selectedJobPack?.rams_generated;
@@ -50,44 +50,47 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
   const handleGenerate = async () => {
     if (!selectedJobPackId) {
       toast({
-        title: "Select a Job Pack",
-        description: "Please select a job pack to generate a briefing for.",
-        variant: "destructive"
+        title: 'Select a Job Pack',
+        description: 'Please select a job pack to generate a briefing for.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (!canGenerate) {
       toast({
-        title: "Prerequisites Missing",
-        description: "RAMS and Method Statement must be generated first.",
-        variant: "destructive"
+        title: 'Prerequisites Missing',
+        description: 'RAMS and Method Statement must be generated first.',
+        variant: 'destructive',
       });
       return;
     }
 
     setIsGenerating(true);
     setProgress(0);
-    setCurrentStep("Generating briefing pack...");
+    setCurrentStep('Generating briefing pack...');
     setError(null);
     setResult(null);
 
     const progressInterval = setInterval(() => {
-      setProgress(prev => prev >= 90 ? prev : prev + Math.random() * 15);
+      setProgress((prev) => (prev >= 90 ? prev : prev + Math.random() * 15));
     }, 400);
 
     try {
-      const { data, error: invokeError } = await supabase.functions.invoke('generate-briefing-content', {
-        body: {
-          jobPackId: selectedJobPackId,
-          projectInfo: {
-            projectName: selectedJobPack?.title,
-            location: selectedJobPack?.location,
-            scope: selectedJobPack?.scope
+      const { data, error: invokeError } = await supabase.functions.invoke(
+        'generate-briefing-content',
+        {
+          body: {
+            jobPackId: selectedJobPackId,
+            projectInfo: {
+              projectName: selectedJobPack?.title,
+              location: selectedJobPack?.location,
+              scope: selectedJobPack?.scope,
+            },
+            additionalNotes,
           },
-          additionalNotes
         }
-      });
+      );
 
       clearInterval(progressInterval);
 
@@ -100,25 +103,24 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
       setIsGenerating(false);
 
       toast({
-        title: "Briefing Pack Generated!",
-        description: "Worker briefing has been created successfully.",
+        title: 'Briefing Pack Generated!',
+        description: 'Worker briefing has been created successfully.',
       });
 
       if (selectedJobPackId) {
         updateJobPack.mutate({
           id: selectedJobPackId,
-          data: { briefing_pack_generated: true }
+          data: { briefing_pack_generated: true },
         });
       }
-
     } catch (err: any) {
       clearInterval(progressInterval);
       setIsGenerating(false);
       setError(err.message);
       toast({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
@@ -139,7 +141,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
     setResult(null);
     setError(null);
     setProgress(0);
-    setCurrentStep("");
+    setCurrentStep('');
   };
 
   return (
@@ -166,14 +168,18 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
               <JobPackSelector
                 selectedJobPackId={selectedJobPackId}
                 onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate("jobpacks")}
+                onCreateNew={() => onNavigate('jobpacks')}
               />
             </CardContent>
           </Card>
 
           {/* Prerequisites Status */}
           {selectedJobPack && (
-            <Card className={canGenerate ? "border-success/20 bg-success/5" : "border-warning/20 bg-warning/5"}>
+            <Card
+              className={
+                canGenerate ? 'border-success/20 bg-success/5' : 'border-warning/20 bg-warning/5'
+              }
+            >
               <CardContent className="p-4">
                 <h4 className="font-medium text-foreground mb-3">Prerequisites</h4>
                 <div className="space-y-2">
@@ -190,7 +196,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                     ) : (
                       <Button
                         variant="outline"
-                        onClick={() => onNavigate("airams")}
+                        onClick={() => onNavigate('airams')}
                         className="h-11 touch-manipulation text-xs"
                       >
                         Generate
@@ -210,7 +216,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                     ) : (
                       <Button
                         variant="outline"
-                        onClick={() => onNavigate("aimethodstatement")}
+                        onClick={() => onNavigate('aimethodstatement')}
                         className="h-11 touch-manipulation text-xs"
                       >
                         Generate
@@ -225,9 +231,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Additional Notes</CardTitle>
-              <CardDescription>
-                Add any extra information for the briefing
-              </CardDescription>
+              <CardDescription>Add any extra information for the briefing</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Textarea
@@ -291,7 +295,11 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   <div>
                     <h3 className="font-medium text-foreground">Generation Failed</h3>
                     <p className="text-sm text-muted-foreground mt-1">{error}</p>
-                    <Button variant="outline" className="mt-3 h-11 touch-manipulation" onClick={handleReset}>
+                    <Button
+                      variant="outline"
+                      className="mt-3 h-11 touch-manipulation"
+                      onClick={handleReset}
+                    >
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Try Again
                     </Button>
@@ -325,7 +333,11 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                       <Download className="h-4 w-4 mr-2" />
                       Download
                     </Button>
-                    <Button variant="outline" onClick={handleReset} className="border-elec-yellow/30 h-11 touch-manipulation">
+                    <Button
+                      variant="outline"
+                      onClick={handleReset}
+                      className="border-elec-yellow/30 h-11 touch-manipulation"
+                    >
                       <RefreshCw className="h-4 w-4 mr-2" />
                       New
                     </Button>
@@ -351,7 +363,8 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   <div>
                     <h3 className="font-medium text-foreground mb-1">AI Briefing Pack</h3>
                     <p className="text-sm text-muted-foreground">
-                      Combines your RAMS and Method Statement into a worker-friendly briefing document.
+                      Combines your RAMS and Method Statement into a worker-friendly briefing
+                      document.
                     </p>
                     <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
                       <li>• Key hazards and controls summary</li>

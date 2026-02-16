@@ -14,13 +14,13 @@ export const SmartHomeModule5Section4Notifications = () => {
         <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
           <h4 className="text-foreground font-semibold mb-3">Push Notification System</h4>
           <p className="text-sm mb-3">
-            Smart devices can send push notifications for key events (motion detected, door opened, 
-            alarm triggered). These instant alerts keep homeowners informed of important activities 
+            Smart devices can send push notifications for key events (motion detected, door opened,
+            alarm triggered). These instant alerts keep homeowners informed of important activities
             even when they're away from home, providing peace of mind and enabling rapid response.
           </p>
           <p className="text-sm">
-            Alerts can be customised — e.g., "Send me an alert if the front door is unlocked after 10 pm." 
-            Some systems support email or SMS alerts as backup communication methods.
+            Alerts can be customised — e.g., "Send me an alert if the front door is unlocked after
+            10 pm." Some systems support email or SMS alerts as backup communication methods.
           </p>
         </div>
 
@@ -59,7 +59,9 @@ export const SmartHomeModule5Section4Notifications = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Notification Customisation</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Notification Customisation
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-purple-400 font-semibold text-sm mb-1">Timing Controls</p>

@@ -1,10 +1,21 @@
-import React, { useRef } from "react";
-import { format } from "date-fns";
-import { Calendar, Clock, Eye, Star, ExternalLink, Users, MapPin, PoundSterling, TrendingUp, Award } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+import React, { useRef } from 'react';
+import { format } from 'date-fns';
+import {
+  Calendar,
+  Clock,
+  Eye,
+  Star,
+  ExternalLink,
+  Users,
+  MapPin,
+  PoundSterling,
+  TrendingUp,
+  Award,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 
 interface CourseNewsCardProps {
   course: EnhancedCareerCourse;
@@ -16,72 +27,76 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
   const erroredImages = useRef(new Set<string>());
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Electrical": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Safety": "bg-orange-500/20 border-orange-500/30 text-orange-300", 
-      "Engineering": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Technology": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Management": "bg-red-500/20 border-red-500/30 text-red-300",
-      "Compliance": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
-      "Testing": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
+      Electrical: 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+      Safety: 'bg-orange-500/20 border-orange-500/30 text-orange-300',
+      Engineering: 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+      Technology: 'bg-green-500/20 border-green-500/30 text-green-300',
+      Management: 'bg-red-500/20 border-red-500/30 text-red-300',
+      Compliance: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-300',
+      Testing: 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return (
+      colors[category as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80'
+    );
   };
 
   const getDemandColor = (demand: string) => {
     const colors = {
-      "High": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Medium": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
-      "Low": "bg-red-500/20 border-red-500/30 text-red-300",
+      High: 'bg-green-500/20 border-green-500/30 text-green-300',
+      Medium: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-300',
+      Low: 'bg-red-500/20 border-red-500/30 text-red-300',
     };
-    return colors[demand as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return (
+      colors[demand as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80'
+    );
   };
 
   const getCategoryImages = (category: string) => {
     const imageArrays = {
-      "Electrical": [
-        "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format&q=80",
+      Electrical: [
+        'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format&q=80',
       ],
-      "Safety": [
-        "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
+      Safety: [
+        'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80',
       ],
-      "Engineering": [
-        "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop&auto=format&q=80",
+      Engineering: [
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop&auto=format&q=80',
       ],
-      "Technology": [
-        "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=250&fit=crop&auto=format&q=80",
+      Technology: [
+        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=250&fit=crop&auto=format&q=80',
       ],
-      "Management": [
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=250&fit=crop&auto=format&q=80",
+      Management: [
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=250&fit=crop&auto=format&q=80',
       ],
-      "Compliance": [
-        "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1594736797933-d0bc02e42ecb?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1604871000636-074fa5117945?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=250&fit=crop&auto=format&q=80",
+      Compliance: [
+        'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1594736797933-d0bc02e42ecb?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1604871000636-074fa5117945?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=250&fit=crop&auto=format&q=80',
       ],
-      "Testing": [
-        "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format&q=80",
-        "https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&h=250&fit=crop&auto=format&q=80",
+      Testing: [
+        'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=250&fit=crop&auto=format&q=80',
+        'https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&h=250&fit=crop&auto=format&q=80',
       ],
     };
-    return imageArrays[category as keyof typeof imageArrays] || imageArrays["Electrical"];
+    return imageArrays[category as keyof typeof imageArrays] || imageArrays['Electrical'];
   };
 
   const getCategoryImage = (category: string, courseId?: string | number) => {
@@ -101,9 +116,9 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
   };
 
   return (
-    <div 
+    <div
       className={cn(
-        "bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] cursor-pointer h-full",
+        'bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] cursor-pointer h-full',
         className
       )}
       onClick={onClick}
@@ -119,12 +134,12 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
             const target = e.currentTarget;
             const imageKey = course.id.toString();
             const currentSrc = target.src;
-            
+
             // If it's already our fallback SVG, don't change anything
             if (currentSrc.startsWith('data:image/svg+xml')) {
               return;
             }
-            
+
             // If this is the first error, try another image from the category
             if (!erroredImages.current.has(imageKey)) {
               erroredImages.current.add(imageKey);
@@ -133,7 +148,8 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
               target.src = fallbackImages[nextIndex];
             } else {
               // Use the ultimate fallback - base64 SVG
-              target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjMmEyYTJhIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiM0YTRhNGEiLz4KPHRleHQgeD0iMjAwIiB5PSIxNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNhYWEiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjUwMCI+RWxlY3RyaWNhbCBDb3Vyc2U8L3RleHQ+Cjwvc3ZnPg==";
+              target.src =
+                'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjMmEyYTJhIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiM0YTRhNGEiLz4KPHRleHQgeD0iMjAwIiB5PSIxNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNhYWEiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjUwMCI+RWxlY3RyaWNhbCBDb3Vyc2U8L3RleHQ+Cjwvc3ZnPg==';
             }
           }}
         />
@@ -168,9 +184,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
         </h3>
 
         {/* Provider */}
-        <p className="text-elec-yellow text-xs sm:text-sm font-medium">
-          {course.provider}
-        </p>
+        <p className="text-elec-yellow text-xs sm:text-sm font-medium">{course.provider}</p>
 
         {/* Description */}
         <p className="text-foreground/90 text-xs sm:text-sm line-clamp-3 lg:line-clamp-2 leading-relaxed flex-grow">
@@ -181,7 +195,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
         <div className="flex items-center gap-2 text-xs text-foreground/80">
           <MapPin className="h-3 w-3" />
           <span className="line-clamp-1">
-            {course.locations.slice(0, 2).join(", ")}
+            {course.locations.slice(0, 2).join(', ')}
             {course.locations.length > 2 && ` +${course.locations.length - 2} more`}
           </span>
         </div>
@@ -196,7 +210,7 @@ const CourseNewsCard = ({ course, className, onClick }: CourseNewsCardProps) => 
               </>
             )}
           </div>
-          
+
           <Button
             size="sm"
             variant="ghost"

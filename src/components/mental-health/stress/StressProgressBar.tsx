@@ -1,6 +1,5 @@
-
-import { Progress } from "@/components/ui/progress";
-import { useState } from "react";
+import { Progress } from '@/components/ui/progress';
+import { useState } from 'react';
 
 const StressProgressBar = () => {
   const [progressValue] = useState(65);

@@ -101,9 +101,7 @@ export function PortfolioOverview({
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
           {greeting}, {firstName}
         </h1>
-        <p className="text-muted-foreground">
-          Here's your portfolio progress at a glance
-        </p>
+        <p className="text-muted-foreground">Here's your portfolio progress at a glance</p>
       </div>
 
       {/* Progress Rings */}
@@ -151,10 +149,10 @@ export function PortfolioOverview({
           window.location.href = '/apprentice/epa-simulator';
         }}
         className={cn(
-          "w-full flex items-center gap-4 p-4 rounded-xl",
-          "bg-gradient-to-r from-purple-500/10 to-purple-500/5",
-          "border border-purple-500/25",
-          "text-left active:scale-[0.98] transition-transform touch-manipulation"
+          'w-full flex items-center gap-4 p-4 rounded-xl',
+          'bg-gradient-to-r from-purple-500/10 to-purple-500/5',
+          'border border-purple-500/25',
+          'text-left active:scale-[0.98] transition-transform touch-manipulation'
         )}
       >
         <div className="h-12 w-12 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
@@ -251,13 +249,7 @@ export function PortfolioOverview({
 }
 
 // Next Action Card
-function NextActionCard({
-  action,
-  onAction,
-}: {
-  action: NextAction;
-  onAction: () => void;
-}) {
+function NextActionCard({ action, onAction }: { action: NextAction; onAction: () => void }) {
   const priorityColors = {
     high: 'bg-red-500/10 border-red-500/30 text-red-500',
     medium: 'bg-amber-500/10 border-amber-500/30 text-amber-500',
@@ -274,17 +266,24 @@ function NextActionCard({
   const Icon = icons[action.type];
 
   return (
-    <Card className={cn(
-      "border overflow-hidden cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
-      priorityColors[action.priority]
-    )}>
+    <Card
+      className={cn(
+        'border overflow-hidden cursor-pointer active:scale-[0.98] transition-transform touch-manipulation',
+        priorityColors[action.priority]
+      )}
+    >
       <CardContent className="p-4" onClick={onAction}>
         <div className="flex items-start gap-3">
-          <div className={cn(
-            "h-10 w-10 rounded-xl flex items-center justify-center shrink-0",
-            action.priority === 'high' ? 'bg-red-500' :
-            action.priority === 'medium' ? 'bg-amber-500' : 'bg-blue-500'
-          )}>
+          <div
+            className={cn(
+              'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
+              action.priority === 'high'
+                ? 'bg-red-500'
+                : action.priority === 'medium'
+                  ? 'bg-amber-500'
+                  : 'bg-blue-500'
+            )}
+          >
             <Icon className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
@@ -322,14 +321,14 @@ function QuickActionCard({
     <button
       onClick={onClick}
       className={cn(
-        "relative flex flex-col items-start p-4 rounded-xl",
-        "bg-card border border-border",
-        "hover:border-elec-yellow/30 hover:bg-elec-yellow/5",
-        "transition-all duration-200",
-        "text-left active:scale-95 touch-manipulation"
+        'relative flex flex-col items-start p-4 rounded-xl',
+        'bg-card border border-border',
+        'hover:border-elec-yellow/30 hover:bg-elec-yellow/5',
+        'transition-all duration-200',
+        'text-left active:scale-95 touch-manipulation'
       )}
     >
-      <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center mb-3", color)}>
+      <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center mb-3', color)}>
         <Icon className="h-5 w-5 text-white" />
       </div>
       <span className="font-medium text-foreground text-sm">{label}</span>
@@ -361,8 +360,10 @@ function ActivityItemRow({ item }: { item: ActivityItem }) {
 
   return (
     <div className="flex items-start gap-3 py-2">
-      <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center shrink-0", config.bg)}>
-        <Icon className={cn("h-4 w-4", config.color)} />
+      <div
+        className={cn('h-8 w-8 rounded-lg flex items-center justify-center shrink-0', config.bg)}
+      >
+        <Icon className={cn('h-4 w-4', config.color)} />
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-foreground line-clamp-1">{item.title}</p>
@@ -384,7 +385,11 @@ function EmptyActivity({ onCapture }: { onCapture: () => void }) {
       </div>
       <p className="text-sm font-medium text-foreground mb-1">No activity yet</p>
       <p className="text-xs text-muted-foreground mb-4">Start building your portfolio today</p>
-      <Button onClick={onCapture} size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+      <Button
+        onClick={onCapture}
+        size="sm"
+        className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+      >
         <Camera className="h-4 w-4 mr-2" />
         Capture First Evidence
       </Button>

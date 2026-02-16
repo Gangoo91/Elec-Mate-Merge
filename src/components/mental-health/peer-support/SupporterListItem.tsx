@@ -78,9 +78,7 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
               </span>
             ))}
             {topics.length > 2 && (
-              <span className="text-xs px-2 py-1 text-white/40">
-                +{topics.length - 2}
-              </span>
+              <span className="text-xs px-2 py-1 text-white/40">+{topics.length - 2}</span>
             )}
           </div>
         )}

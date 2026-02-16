@@ -1,58 +1,58 @@
-import { ArrowLeft, Cpu, Cable, Grid, Clock, Monitor, Wrench } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Cpu, Cable, Grid, Clock, Monitor, Wrench } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule5Section2 = () => {
   useSEO(
-    "Section 5.2: PLCs and Control Systems - MOET Module 5",
-    "PLC hardware, I/O devices, ladder logic, programming software and troubleshooting"
+    'Section 5.2: PLCs and Control Systems - MOET Module 5',
+    'PLC hardware, I/O devices, ladder logic, programming software and troubleshooting'
   );
 
   const subsections = [
     {
-      number: "5.2.1",
-      title: "PLC Hardware and Architecture",
-      description: "CPU modules, memory types, power supplies and system architecture",
+      number: '5.2.1',
+      title: 'PLC Hardware and Architecture',
+      description: 'CPU modules, memory types, power supplies and system architecture',
       icon: Cpu,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section2-1"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-1',
     },
     {
-      number: "5.2.2",
-      title: "Input/Output Devices",
-      description: "Digital and analogue I/O modules, wiring and interfacing",
+      number: '5.2.2',
+      title: 'Input/Output Devices',
+      description: 'Digital and analogue I/O modules, wiring and interfacing',
       icon: Cable,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section2-2"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-2',
     },
     {
-      number: "5.2.3",
-      title: "Ladder Logic Basics",
-      description: "Relay logic concepts, contacts, coils and basic programming elements",
+      number: '5.2.3',
+      title: 'Ladder Logic Basics',
+      description: 'Relay logic concepts, contacts, coils and basic programming elements',
       icon: Grid,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section2-3"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-3',
     },
     {
-      number: "5.2.4",
-      title: "Timers, Counters and Sequencing",
-      description: "Programming timers, counters and sequential control operations",
+      number: '5.2.4',
+      title: 'Timers, Counters and Sequencing',
+      description: 'Programming timers, counters and sequential control operations',
       icon: Clock,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section2-4"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-4',
     },
     {
-      number: "5.2.5",
-      title: "PLC Programming Software (overview)",
-      description: "Software packages, development environments and programming methods",
+      number: '5.2.5',
+      title: 'PLC Programming Software (overview)',
+      description: 'Software packages, development environments and programming methods',
       icon: Monitor,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section2-5"
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-5',
     },
     {
-      number: "5.2.6",
-      title: "Troubleshooting PLC Systems",
-      description: "Diagnostic tools, fault finding and system maintenance",
+      number: '5.2.6',
+      title: 'Troubleshooting PLC Systems',
+      description: 'Diagnostic tools, fault finding and system maintenance',
       icon: Wrench,
-      href: "/study-centre/apprentice/m-o-e-t-module5-section2-6"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-6',
+    },
   ];
 
   return (
@@ -60,7 +60,11 @@ const MOETModule5Section2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5

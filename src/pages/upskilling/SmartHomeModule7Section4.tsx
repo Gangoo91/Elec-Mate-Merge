@@ -1,111 +1,138 @@
-import { ArrowLeft, ArrowRight, Shield, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Shield, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Electrical Safety and Isolation";
-const DESCRIPTION = "Essential guidance on BS 7671 compliance, safe isolation procedures, and electrical safety considerations for smart home installations.";
+const TITLE = 'Electrical Safety and Isolation';
+const DESCRIPTION =
+  'Essential guidance on BS 7671 compliance, safe isolation procedures, and electrical safety considerations for smart home installations.';
 
 const quickCheckQuestions = [
   {
-    question: "What is the primary reason for safe isolation before working on smart devices connected to mains power?",
-    options: ["To save electricity", "To prevent electric shock and ensure worker safety", "To preserve device settings", "To improve device performance"],
+    question:
+      'What is the primary reason for safe isolation before working on smart devices connected to mains power?',
+    options: [
+      'To save electricity',
+      'To prevent electric shock and ensure worker safety',
+      'To preserve device settings',
+      'To improve device performance',
+    ],
     correctIndex: 1,
-    explanation: "Safe isolation prevents electric shock, which can be fatal. It is the most critical safety procedure before working on any electrical installation."
+    explanation:
+      'Safe isolation prevents electric shock, which can be fatal. It is the most critical safety procedure before working on any electrical installation.',
   },
   {
-    question: "According to BS 7671, what type of RCD protection is required for socket outlets in domestic installations?",
-    options: ["100mA", "300mA", "30mA", "No RCD required"],
+    question:
+      'According to BS 7671, what type of RCD protection is required for socket outlets in domestic installations?',
+    options: ['100mA', '300mA', '30mA', 'No RCD required'],
     correctIndex: 2,
-    explanation: "BS 7671 requires 30mA RCD protection for socket outlets in domestic installations to provide protection against electric shock."
+    explanation:
+      'BS 7671 requires 30mA RCD protection for socket outlets in domestic installations to provide protection against electric shock.',
   },
   {
-    question: "When proving a circuit is dead, how many tests should be performed with a voltage indicator?",
-    options: ["One test only", "Two tests - before and after", "Three tests - prove, test, prove", "No tests required"],
+    question:
+      'When proving a circuit is dead, how many tests should be performed with a voltage indicator?',
+    options: [
+      'One test only',
+      'Two tests - before and after',
+      'Three tests - prove, test, prove',
+      'No tests required',
+    ],
     correctIndex: 2,
-    explanation: "The three-point test (prove-test-prove) confirms the voltage indicator works before testing, confirms the circuit is dead, and verifies the indicator still works after."
-  }
+    explanation:
+      'The three-point test (prove-test-prove) confirms the voltage indicator works before testing, confirms the circuit is dead, and verifies the indicator still works after.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What document should be issued after completing electrical work on a smart home installation?",
+    question:
+      'What document should be issued after completing electrical work on a smart home installation?',
     options: [
-      "A simple receipt",
-      "An appropriate electrical installation certificate or minor works certificate",
-      "A warranty card only",
-      "No documentation is required"
+      'A simple receipt',
+      'An appropriate electrical installation certificate or minor works certificate',
+      'A warranty card only',
+      'No documentation is required',
     ],
     correctIndex: 1,
-    explanation: "Electrical work must be documented with appropriate certificates (EIC or Minor Works) as required by Part P and BS 7671 to demonstrate compliance and provide records."
+    explanation:
+      'Electrical work must be documented with appropriate certificates (EIC or Minor Works) as required by Part P and BS 7671 to demonstrate compliance and provide records.',
   },
   {
-    question: "Why is SPD (Surge Protection Device) protection recommended for smart home installations?",
+    question:
+      'Why is SPD (Surge Protection Device) protection recommended for smart home installations?',
     options: [
-      "To reduce electricity bills",
-      "To protect sensitive electronics from voltage surges",
-      "To improve Wi-Fi signal",
-      "It is not recommended"
+      'To reduce electricity bills',
+      'To protect sensitive electronics from voltage surges',
+      'To improve Wi-Fi signal',
+      'It is not recommended',
     ],
     correctIndex: 1,
-    explanation: "SPDs protect sensitive smart home electronics from damage caused by voltage surges from lightning strikes or switching events on the electrical network."
+    explanation:
+      'SPDs protect sensitive smart home electronics from damage caused by voltage surges from lightning strikes or switching events on the electrical network.',
   },
   {
-    question: "When installing smart devices in a bathroom, what must be considered?",
+    question: 'When installing smart devices in a bathroom, what must be considered?',
     options: [
-      "Only the colour of the device",
-      "IP rating, zone restrictions, and supplementary bonding requirements",
+      'Only the colour of the device',
+      'IP rating, zone restrictions, and supplementary bonding requirements',
       "Just the customer's preference",
-      "Nothing special - standard installation applies"
+      'Nothing special - standard installation applies',
     ],
     correctIndex: 1,
-    explanation: "Bathrooms are special locations under BS 7671. Equipment must have appropriate IP ratings for the zone, and supplementary bonding may be required."
+    explanation:
+      'Bathrooms are special locations under BS 7671. Equipment must have appropriate IP ratings for the zone, and supplementary bonding may be required.',
   },
   {
-    question: "What is the safe isolation procedure sequence?",
+    question: 'What is the safe isolation procedure sequence?',
     options: [
-      "Switch off, lock off, warn others",
-      "Identify circuit, isolate, secure, prove dead",
-      "Test with multimeter only",
-      "Turn off main switch only"
+      'Switch off, lock off, warn others',
+      'Identify circuit, isolate, secure, prove dead',
+      'Test with multimeter only',
+      'Turn off main switch only',
     ],
     correctIndex: 1,
-    explanation: "The safe isolation procedure involves: identifying the circuit, isolating at the correct point, securing the isolation (lock off), and proving the circuit is dead using approved equipment."
+    explanation:
+      'The safe isolation procedure involves: identifying the circuit, isolating at the correct point, securing the isolation (lock off), and proving the circuit is dead using approved equipment.',
   },
   {
-    question: "Under Part P of the Building Regulations, which smart home work is notifiable?",
+    question: 'Under Part P of the Building Regulations, which smart home work is notifiable?',
     options: [
-      "All smart device installations",
-      "Only Wi-Fi device setup",
-      "New circuits and work in special locations",
-      "None - smart home work is exempt"
+      'All smart device installations',
+      'Only Wi-Fi device setup',
+      'New circuits and work in special locations',
+      'None - smart home work is exempt',
     ],
     correctIndex: 2,
-    explanation: "Part P requires notification of new circuits, consumer unit work, and work in special locations (bathrooms, swimming pools, etc.). Minor alterations and additions may be exempt."
-  }
+    explanation:
+      'Part P requires notification of new circuits, consumer unit work, and work in special locations (bathrooms, swimming pools, etc.). Minor alterations and additions may be exempt.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Do I need to be a registered electrician to install smart switches?",
-    answer: "If replacing like-for-like and no new wiring is required, this may be considered a minor works. However, if new circuits are needed, work is in special locations, or the consumer unit is affected, the work must be carried out by a competent person and may require Building Regulations notification. Always assess the scope of work against Part P requirements."
+    question: 'Do I need to be a registered electrician to install smart switches?',
+    answer:
+      'If replacing like-for-like and no new wiring is required, this may be considered a minor works. However, if new circuits are needed, work is in special locations, or the consumer unit is affected, the work must be carried out by a competent person and may require Building Regulations notification. Always assess the scope of work against Part P requirements.',
   },
   {
-    question: "Can I install a smart switch without isolating the entire property?",
-    answer: "Yes, you should isolate only the relevant circuit at the consumer unit. Identify the correct circuit using circuit charts or by switching off and testing. Always prove the circuit is dead at the point of work before proceeding. Locking off the circuit breaker prevents accidental re-energisation."
+    question: 'Can I install a smart switch without isolating the entire property?',
+    answer:
+      'Yes, you should isolate only the relevant circuit at the consumer unit. Identify the correct circuit using circuit charts or by switching off and testing. Always prove the circuit is dead at the point of work before proceeding. Locking off the circuit breaker prevents accidental re-energisation.',
   },
   {
-    question: "What testing is required after installing smart switches?",
-    answer: "As a minimum, verify correct polarity, earth continuity, and insulation resistance. Functional testing should confirm the device operates correctly both locally and via the app. Document all test results on the appropriate certificate. For new circuits, full verification testing as per BS 7671 is required."
-  }
+    question: 'What testing is required after installing smart switches?',
+    answer:
+      'As a minimum, verify correct polarity, earth continuity, and insulation resistance. Functional testing should confirm the device operates correctly both locally and via the app. Document all test results on the appropriate certificate. For new circuits, full verification testing as per BS 7671 is required.',
+  },
 ];
 
 const SmartHomeModule7Section4 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 7`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -134,23 +161,23 @@ const SmartHomeModule7Section4 = () => {
           <div className="flex justify-center mb-4">
             <Shield className="h-10 w-10 text-elec-yellow" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            {TITLE}
-          </h1>
-          <p className="text-white text-lg max-w-2xl mx-auto">
-            {DESCRIPTION}
-          </p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
+          <p className="text-white text-lg max-w-2xl mx-auto">{DESCRIPTION}</p>
         </header>
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h3 className="font-semibold text-white mb-1">Safety First</h3>
-            <p className="text-white text-sm">Electrical safety procedures protect lives and property</p>
+            <p className="text-white text-sm">
+              Electrical safety procedures protect lives and property
+            </p>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h3 className="font-semibold text-white mb-1">Compliance Standard</h3>
-            <p className="text-white text-sm">BS 7671 18th Edition requirements apply to all work</p>
+            <p className="text-white text-sm">
+              BS 7671 18th Edition requirements apply to all work
+            </p>
           </div>
         </div>
 
@@ -162,10 +189,10 @@ const SmartHomeModule7Section4 = () => {
           </h2>
           <ul className="space-y-3">
             {[
-              "Apply safe isolation procedures for smart home electrical work",
-              "Understand BS 7671 requirements relevant to smart device installations",
-              "Identify notifiable work under Part P Building Regulations",
-              "Implement appropriate testing and certification procedures"
+              'Apply safe isolation procedures for smart home electrical work',
+              'Understand BS 7671 requirements relevant to smart device installations',
+              'Identify notifiable work under Part P Building Regulations',
+              'Implement appropriate testing and certification procedures',
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -183,22 +210,33 @@ const SmartHomeModule7Section4 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Safe isolation is the most critical safety procedure when working on electrical installations.
-              It must be performed correctly every time to prevent electric shock, which can be fatal.
+              Safe isolation is the most critical safety procedure when working on electrical
+              installations. It must be performed correctly every time to prevent electric shock,
+              which can be fatal.
             </p>
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg">
               <h4 className="font-semibold text-white mb-2">Safe Isolation Sequence</h4>
               <ol className="list-decimal list-inside space-y-2 text-white">
-                <li><span className="font-medium">Identify</span> - Locate the correct circuit to be isolated</li>
-                <li><span className="font-medium">Isolate</span> - Switch off at the appropriate point (circuit breaker, isolator)</li>
-                <li><span className="font-medium">Secure</span> - Lock off using a lock-out device to prevent re-energisation</li>
-                <li><span className="font-medium">Prove</span> - Use approved voltage indicator (prove-test-prove method)</li>
+                <li>
+                  <span className="font-medium">Identify</span> - Locate the correct circuit to be
+                  isolated
+                </li>
+                <li>
+                  <span className="font-medium">Isolate</span> - Switch off at the appropriate point
+                  (circuit breaker, isolator)
+                </li>
+                <li>
+                  <span className="font-medium">Secure</span> - Lock off using a lock-out device to
+                  prevent re-energisation
+                </li>
+                <li>
+                  <span className="font-medium">Prove</span> - Use approved voltage indicator
+                  (prove-test-prove method)
+                </li>
               </ol>
             </div>
             <h4 className="font-semibold text-white">Prove-Test-Prove Method</h4>
-            <p>
-              This three-point test confirms the reliability of your voltage indicator:
-            </p>
+            <p>This three-point test confirms the reliability of your voltage indicator:</p>
             <ol className="list-decimal list-inside space-y-1">
               <li>Prove the voltage indicator works on a known live source</li>
               <li>Test the isolated circuit to confirm it is dead</li>
@@ -208,7 +246,8 @@ const SmartHomeModule7Section4 = () => {
               <h5 className="font-medium text-red-400 mb-2">Critical Warning</h5>
               <p className="text-white text-sm">
                 Never assume a circuit is dead. Always test with an approved voltage indicator.
-                Multimeters alone are not sufficient - use a proprietary voltage indicator (GS 38 compliant).
+                Multimeters alone are not sufficient - use a proprietary voltage indicator (GS 38
+                compliant).
               </p>
             </div>
           </div>
@@ -224,8 +263,8 @@ const SmartHomeModule7Section4 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              All electrical work, including smart home installations, must comply with BS 7671.
-              Key requirements particularly relevant to smart device work include:
+              All electrical work, including smart home installations, must comply with BS 7671. Key
+              requirements particularly relevant to smart device work include:
             </p>
             <h4 className="font-semibold text-white">Circuit Protection</h4>
             <div className="grid gap-4">
@@ -268,8 +307,8 @@ const SmartHomeModule7Section4 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Part 7 of BS 7671 covers special installations and locations with additional requirements.
-              Smart device installations in these areas require careful attention.
+              Part 7 of BS 7671 covers special installations and locations with additional
+              requirements. Smart device installations in these areas require careful attention.
             </p>
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg">
               <h4 className="font-semibold text-white mb-2">Bathrooms (Section 701)</h4>
@@ -285,15 +324,21 @@ const SmartHomeModule7Section4 = () => {
             <div className="grid gap-3">
               <div className="flex gap-3 items-start">
                 <span className="font-medium text-elec-yellow min-w-[100px]">Outdoors:</span>
-                <span className="text-white">IP65 or higher for exposed locations, RCD protection essential</span>
+                <span className="text-white">
+                  IP65 or higher for exposed locations, RCD protection essential
+                </span>
               </div>
               <div className="flex gap-3 items-start">
                 <span className="font-medium text-elec-yellow min-w-[100px]">Kitchens:</span>
-                <span className="text-white">Consider moisture ingress near sinks, heat from cooking appliances</span>
+                <span className="text-white">
+                  Consider moisture ingress near sinks, heat from cooking appliances
+                </span>
               </div>
               <div className="flex gap-3 items-start">
                 <span className="font-medium text-elec-yellow min-w-[100px]">Garages:</span>
-                <span className="text-white">May require IP-rated equipment, consider vehicle movement risks</span>
+                <span className="text-white">
+                  May require IP-rated equipment, consider vehicle movement risks
+                </span>
               </div>
             </div>
           </div>
@@ -309,8 +354,8 @@ const SmartHomeModule7Section4 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Part P of the Building Regulations (England and Wales) governs electrical safety
-              in dwellings. Understanding notification requirements prevents compliance issues.
+              Part P of the Building Regulations (England and Wales) governs electrical safety in
+              dwellings. Understanding notification requirements prevents compliance issues.
             </p>
             <h4 className="font-semibold text-white">Notifiable Work Includes</h4>
             <ul className="list-disc list-inside space-y-2">
@@ -326,8 +371,13 @@ const SmartHomeModule7Section4 = () => {
                 Issue appropriate documentation based on the scope of work:
               </p>
               <ul className="list-disc list-inside space-y-1 text-white text-sm">
-                <li><span className="font-medium">EIC</span> - For new installations and new circuits</li>
-                <li><span className="font-medium">Minor Works Certificate</span> - For alterations that do not require new circuits</li>
+                <li>
+                  <span className="font-medium">EIC</span> - For new installations and new circuits
+                </li>
+                <li>
+                  <span className="font-medium">Minor Works Certificate</span> - For alterations
+                  that do not require new circuits
+                </li>
                 <li>Include smart device details in schedule of items tested</li>
                 <li>Provide copy to customer and retain records</li>
               </ul>

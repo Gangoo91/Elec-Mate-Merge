@@ -11,7 +11,9 @@ const ElecIdPage = () => {
   return (
     <div className="bg-background min-h-screen">
       {/* Header - Not sticky on mobile for native app feel */}
-      <header className={`${isMobile ? '' : 'sticky top-0 z-50'} w-full border-b border-border/50 bg-background`}>
+      <header
+        className={`${isMobile ? '' : 'sticky top-0 z-50'} w-full border-b border-border/50 bg-background`}
+      >
         <div className="max-w-6xl mx-auto px-4 lg:px-8">
           <div className="flex h-14 items-center gap-3">
             <Button

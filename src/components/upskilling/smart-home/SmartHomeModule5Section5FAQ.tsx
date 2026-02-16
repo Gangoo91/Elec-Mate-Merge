@@ -8,45 +8,53 @@ export const SmartHomeModule5Section5FAQ = () => {
 
   const faqs = [
     {
-      question: "Do smart lighting systems meet official emergency lighting standards?",
-      answer: "Smart lighting can supplement but not replace official emergency lighting systems. BS 5266 compliance requires dedicated emergency circuits with battery backup. Smart systems can enhance evacuation guidance but must work alongside, not replace, certified emergency lighting installations.",
-      category: "Compliance"
+      question: 'Do smart lighting systems meet official emergency lighting standards?',
+      answer:
+        'Smart lighting can supplement but not replace official emergency lighting systems. BS 5266 compliance requires dedicated emergency circuits with battery backup. Smart systems can enhance evacuation guidance but must work alongside, not replace, certified emergency lighting installations.',
+      category: 'Compliance',
     },
     {
-      question: "How reliable are lighting scenes during power outages?",
-      answer: "Scene reliability depends on backup power design. Critical emergency scenes should have battery backup or UPS systems. Smart hubs typically include battery backup, but individual smart switches may lose functionality without mains power unless specifically designed with backup capabilities.",
-      category: "Reliability"
+      question: 'How reliable are lighting scenes during power outages?',
+      answer:
+        'Scene reliability depends on backup power design. Critical emergency scenes should have battery backup or UPS systems. Smart hubs typically include battery backup, but individual smart switches may lose functionality without mains power unless specifically designed with backup capabilities.',
+      category: 'Reliability',
     },
     {
-      question: "Can lighting scenes accidentally trigger and cause problems?",
-      answer: "Yes, poorly configured scenes can trigger inappropriately. Use proper sensor calibration, avoid oversensitive motion detection, implement scene priorities, and always include manual override capabilities. Test thoroughly under different conditions to prevent false activations.",
-      category: "Configuration"
+      question: 'Can lighting scenes accidentally trigger and cause problems?',
+      answer:
+        'Yes, poorly configured scenes can trigger inappropriately. Use proper sensor calibration, avoid oversensitive motion detection, implement scene priorities, and always include manual override capabilities. Test thoroughly under different conditions to prevent false activations.',
+      category: 'Configuration',
     },
     {
-      question: "What happens if the smart home hub fails during an emergency?",
-      answer: "Critical emergency lighting should have manual override switches and be designed to fail-safe (lights on). Consider distributed control systems or hybrid approaches that don't rely solely on central hub functionality for life safety systems.",
-      category: "Safety"
+      question: 'What happens if the smart home hub fails during an emergency?',
+      answer:
+        "Critical emergency lighting should have manual override switches and be designed to fail-safe (lights on). Consider distributed control systems or hybrid approaches that don't rely solely on central hub functionality for life safety systems.",
+      category: 'Safety',
     },
     {
-      question: "How do you prevent lighting scenes from interfering with sleep?",
-      answer: "Use appropriate colour temperatures (warm white/red) for night scenes, implement motion sensor timeouts, create 'sleep mode' that disables certain triggers, and use gradual dimming transitions. Consider bedroom-specific scenes that minimize sleep disruption.",
-      category: "Comfort"
+      question: 'How do you prevent lighting scenes from interfering with sleep?',
+      answer:
+        "Use appropriate colour temperatures (warm white/red) for night scenes, implement motion sensor timeouts, create 'sleep mode' that disables certain triggers, and use gradual dimming transitions. Consider bedroom-specific scenes that minimize sleep disruption.",
+      category: 'Comfort',
     },
     {
-      question: "Can intruders disable smart security lighting systems?",
-      answer: "Multiple protection layers help: use tamper-resistant devices, employ mesh networks that route around failed nodes, include cellular backup communication, and combine with traditional wired security lighting. Never rely solely on wireless systems for perimeter security.",
-      category: "Security"
+      question: 'Can intruders disable smart security lighting systems?',
+      answer:
+        'Multiple protection layers help: use tamper-resistant devices, employ mesh networks that route around failed nodes, include cellular backup communication, and combine with traditional wired security lighting. Never rely solely on wireless systems for perimeter security.',
+      category: 'Security',
     },
     {
-      question: "How often should emergency lighting scenes be tested?",
-      answer: "Test monthly for basic functionality, annually for full duration testing. Document all tests as required by regulations. Include smart system integration in testing protocols and verify manual override functionality regularly.",
-      category: "Maintenance"
+      question: 'How often should emergency lighting scenes be tested?',
+      answer:
+        'Test monthly for basic functionality, annually for full duration testing. Document all tests as required by regulations. Include smart system integration in testing protocols and verify manual override functionality regularly.',
+      category: 'Maintenance',
     },
     {
-      question: "Do smart lights consume more energy than traditional lighting?",
-      answer: "LED smart lights typically use less energy than traditional bulbs, but standby power for wireless communication and smart features adds some consumption. Overall energy use usually decreases due to automated scheduling and dimming capabilities.",
-      category: "Energy"
-    }
+      question: 'Do smart lights consume more energy than traditional lighting?',
+      answer:
+        'LED smart lights typically use less energy than traditional bulbs, but standby power for wireless communication and smart features adds some consumption. Overall energy use usually decreases due to automated scheduling and dimming capabilities.',
+      category: 'Energy',
+    },
   ];
 
   const toggleQuestion = (index: number) => {

@@ -10,71 +10,132 @@ export const SmartHomeModule3Section2Quiz = () => {
 
   const questions = [
     {
-      question: "What is a lighting scene?",
-      options: ["A room with smart lights", "A predefined combination of brightness, colour, and zones", "A type of light switch", "A wireless protocol"],
+      question: 'What is a lighting scene?',
+      options: [
+        'A room with smart lights',
+        'A predefined combination of brightness, colour, and zones',
+        'A type of light switch',
+        'A wireless protocol',
+      ],
       correct: 1,
-      explanation: "A lighting scene is a predefined combination of brightness, colour, and zones that creates specific ambience for activities."
+      explanation:
+        'A lighting scene is a predefined combination of brightness, colour, and zones that creates specific ambience for activities.',
     },
     {
-      question: "Give an example of a common household scene.",
-      options: ["Movie Night with dimmed lights", "Turn all lights off", "Replace bulbs", "Update firmware"],
+      question: 'Give an example of a common household scene.',
+      options: [
+        'Movie Night with dimmed lights',
+        'Turn all lights off',
+        'Replace bulbs',
+        'Update firmware',
+      ],
       correct: 0,
-      explanation: "Movie Night is a classic scene example - dimming lounge lights while keeping hallway navigation lighting."
+      explanation:
+        'Movie Night is a classic scene example - dimming lounge lights while keeping hallway navigation lighting.',
     },
     {
-      question: "What is a schedule in smart lighting?",
-      options: ["A list of bulb brands", "Automated control based on time or triggers", "An installation timeline", "A maintenance plan"],
+      question: 'What is a schedule in smart lighting?',
+      options: [
+        'A list of bulb brands',
+        'Automated control based on time or triggers',
+        'An installation timeline',
+        'A maintenance plan',
+      ],
       correct: 1,
-      explanation: "A schedule is automated lighting control triggered by time, events, or environmental conditions."
+      explanation:
+        'A schedule is automated lighting control triggered by time, events, or environmental conditions.',
     },
     {
-      question: "List two types of schedules.",
-      options: ["Fast and slow", "Time-based and event-based", "Wired and wireless", "Indoor and outdoor"],
+      question: 'List two types of schedules.',
+      options: [
+        'Fast and slow',
+        'Time-based and event-based',
+        'Wired and wireless',
+        'Indoor and outdoor',
+      ],
       correct: 1,
-      explanation: "Time-based schedules use clock/solar time, while event-based schedules respond to sensors or device states."
+      explanation:
+        'Time-based schedules use clock/solar time, while event-based schedules respond to sensors or device states.',
     },
     {
-      question: "How can scenes improve security?",
-      options: ["They make lights brighter", "They can simulate occupancy when away", "They save more energy", "They last longer"],
+      question: 'How can scenes improve security?',
+      options: [
+        'They make lights brighter',
+        'They can simulate occupancy when away',
+        'They save more energy',
+        'They last longer',
+      ],
       correct: 1,
-      explanation: "Security scenes can simulate normal occupancy patterns with random lighting when the house is empty."
+      explanation:
+        'Security scenes can simulate normal occupancy patterns with random lighting when the house is empty.',
     },
     {
-      question: "What tools can be used to program schedules?",
-      options: ["Only expensive professional systems", "Mobile apps, voice assistants, and smart hubs", "Manual switches only", "Computer programming only"],
+      question: 'What tools can be used to program schedules?',
+      options: [
+        'Only expensive professional systems',
+        'Mobile apps, voice assistants, and smart hubs',
+        'Manual switches only',
+        'Computer programming only',
+      ],
       correct: 1,
-      explanation: "Many tools exist for schedule programming, from simple mobile apps to advanced home automation hubs."
+      explanation:
+        'Many tools exist for schedule programming, from simple mobile apps to advanced home automation hubs.',
     },
     {
-      question: "True or False: Over-automation always improves convenience.",
-      options: ["True - more automation is always better", "False - it can frustrate users with unexpected behaviour", "True - if it's programmed correctly", "False - it uses too much energy"],
+      question: 'True or False: Over-automation always improves convenience.',
+      options: [
+        'True - more automation is always better',
+        'False - it can frustrate users with unexpected behaviour',
+        "True - if it's programmed correctly",
+        'False - it uses too much energy',
+      ],
       correct: 1,
-      explanation: "Over-automation can annoy users when lights behave unexpectedly or don't respond as wanted."
+      explanation:
+        "Over-automation can annoy users when lights behave unexpectedly or don't respond as wanted.",
     },
     {
       question: "What's one best practice for naming scenes?",
-      options: ["Use numbers like Scene 1, Scene 2", "Keep names clear and activity-based", "Use technical terms only", "Use random names"],
+      options: [
+        'Use numbers like Scene 1, Scene 2',
+        'Keep names clear and activity-based',
+        'Use technical terms only',
+        'Use random names',
+      ],
       correct: 1,
-      explanation: "Clear, activity-based names like 'Reading Light' or 'Movie Night' make scenes intuitive to use."
+      explanation:
+        "Clear, activity-based names like 'Reading Light' or 'Movie Night' make scenes intuitive to use.",
     },
     {
-      question: "Why might a cloud-based schedule fail?",
-      options: ["Bulbs are too old", "No internet connection", "Lights are too bright", "Wrong colour temperature"],
+      question: 'Why might a cloud-based schedule fail?',
+      options: [
+        'Bulbs are too old',
+        'No internet connection',
+        'Lights are too bright',
+        'Wrong colour temperature',
+      ],
       correct: 1,
-      explanation: "Cloud-based schedules depend on internet connectivity and will fail when offline."
+      explanation:
+        'Cloud-based schedules depend on internet connectivity and will fail when offline.',
     },
     {
-      question: "Scenario: A client works night shifts and sleeps during the day. What kind of schedule would you recommend for their bedroom lighting?",
-      options: ["Standard sunrise wake-up schedule", "Blackout mode during day with gradual evening wake-up", "Always bright lights", "Random lighting patterns"],
+      question:
+        'Scenario: A client works night shifts and sleeps during the day. What kind of schedule would you recommend for their bedroom lighting?',
+      options: [
+        'Standard sunrise wake-up schedule',
+        'Blackout mode during day with gradual evening wake-up',
+        'Always bright lights',
+        'Random lighting patterns',
+      ],
       correct: 1,
-      explanation: "Night shift workers need blackout during normal daytime hours and gradual brightening in the evening when they wake up."
-    }
+      explanation:
+        'Night shift workers need blackout during normal daytime hours and gradual brightening in the evening when they wake up.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -123,9 +184,11 @@ export const SmartHomeModule3Section2Quiz = () => {
               You scored {score} out of {questions.length} questions correctly
             </div>
             <div className="text-foreground">
-              {percentage >= 80 ? 'Excellent understanding of scenes and schedules!' : 
-               percentage >= 60 ? 'Good job! Review the areas you missed.' : 
-               'Consider reviewing the material and trying again.'}
+              {percentage >= 80
+                ? 'Excellent understanding of scenes and schedules!'
+                : percentage >= 60
+                  ? 'Good job! Review the areas you missed.'
+                  : 'Consider reviewing the material and trying again.'}
             </div>
           </div>
 
@@ -134,11 +197,16 @@ export const SmartHomeModule3Section2Quiz = () => {
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
-                <div key={index} className={`p-3 rounded-lg border ${
-                  isCorrect ? 'bg-green-600/10 border-green-600/20' : 'bg-red-600/10 border-red-600/20'
-                }`}>
+                <div
+                  key={index}
+                  className={`p-3 rounded-lg border ${
+                    isCorrect
+                      ? 'bg-green-600/10 border-green-600/20'
+                      : 'bg-red-600/10 border-red-600/20'
+                  }`}
+                >
                   <div className="font-medium text-foreground mb-1">
                     Q{index + 1}: {question.question}
                   </div>
@@ -150,9 +218,7 @@ export const SmartHomeModule3Section2Quiz = () => {
                       Correct: {question.options[question.correct]}
                     </div>
                   )}
-                  <div className="text-xs text-foreground mt-2">
-                    {question.explanation}
-                  </div>
+                  <div className="text-xs text-foreground mt-2">{question.explanation}</div>
                 </div>
               );
             })}
@@ -180,14 +246,19 @@ export const SmartHomeModule3Section2Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between text-sm text-foreground mb-4">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex space-x-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}

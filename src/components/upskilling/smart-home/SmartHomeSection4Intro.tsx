@@ -12,7 +12,8 @@ export const SmartHomeSection4Intro = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p className="text-lg font-medium text-foreground mb-4">
-          Smart homes can be built on different architectural models that determine how data is processed, where automation decisions are made, and how systems communicate:
+          Smart homes can be built on different architectural models that determine how data is
+          processed, where automation decisions are made, and how systems communicate:
         </p>
         <div className="grid md:grid-cols-3 gap-4 mb-6">
           <div className="p-3 bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-600 rounded-lg text-center hover:scale-105 transition-transform">
@@ -29,10 +30,15 @@ export const SmartHomeSection4Intro = () => {
           </div>
         </div>
         <p>
-          Each architectural approach has distinct advantages and limitations regarding reliability, speed, cost, security, and ease of use. Understanding these differences is crucial for making informed design and installation choices that match specific project requirements and user preferences.
+          Each architectural approach has distinct advantages and limitations regarding reliability,
+          speed, cost, security, and ease of use. Understanding these differences is crucial for
+          making informed design and installation choices that match specific project requirements
+          and user preferences.
         </p>
         <p>
-          This section explores how these systems operate, their integration capabilities, and provides guidance on selecting the most appropriate architecture for different smart home applications and user scenarios.
+          This section explores how these systems operate, their integration capabilities, and
+          provides guidance on selecting the most appropriate architecture for different smart home
+          applications and user scenarios.
         </p>
       </CardContent>
     </Card>

@@ -1,10 +1,28 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Plus, Minus, Check, Star, Clock, Users, Package, CheckCircle, Zap, Shield, TrendingUp, Award, Eye, ShoppingCart, Timer, Flame } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { ToolItem } from "@/hooks/useToolsData";
-import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  ExternalLink,
+  Plus,
+  Minus,
+  Check,
+  Star,
+  Clock,
+  Users,
+  Package,
+  CheckCircle,
+  Zap,
+  Shield,
+  TrendingUp,
+  Award,
+  Eye,
+  ShoppingCart,
+  Timer,
+  Flame,
+} from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { ToolItem } from '@/hooks/useToolsData';
+import { useState, useEffect } from 'react';
 
 interface ToolCardProps {
   item: ToolItem;
@@ -15,13 +33,13 @@ interface ToolCardProps {
   onCardClick?: (item: ToolItem) => void;
 }
 
-const ToolCard: React.FC<ToolCardProps> = ({ 
-  item, 
-  onAddToCompare, 
-  onRemoveFromCompare, 
-  isSelected = false, 
+const ToolCard: React.FC<ToolCardProps> = ({
+  item,
+  onAddToCompare,
+  onRemoveFromCompare,
+  isSelected = false,
   isCompareDisabled = false,
-  onCardClick
+  onCardClick,
 }) => {
   const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState(false);
@@ -36,10 +54,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
   // Calculate discount percentage
   const getDiscountPercentage = () => {
     if (!item.isOnSale || !item.salePrice || !item.price) return null;
-    
+
     const originalPrice = parseFloat(item.price.replace(/[£,]/g, ''));
     const salePrice = parseFloat(item.salePrice.replace(/[£,]/g, ''));
-    
+
     if (originalPrice > salePrice) {
       return Math.round(((originalPrice - salePrice) / originalPrice) * 100);
     }
@@ -50,44 +68,48 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const getDynamicBadges = () => {
     const badges = [];
     const discount = getDiscountPercentage();
-    
+
     // Deal badges
     if (discount && discount >= 30) {
-      badges.push({ label: "🔥 Hot Deal", variant: "destructive", animate: true });
+      badges.push({ label: '🔥 Hot Deal', variant: 'destructive', animate: true });
     } else if (discount && discount >= 20) {
-      badges.push({ label: "⚡ Flash Sale", variant: "warning", animate: true });
+      badges.push({ label: '⚡ Flash Sale', variant: 'warning', animate: true });
     } else if (item.isOnSale) {
-      badges.push({ label: "💥 Sale", variant: "warning", animate: false });
+      badges.push({ label: '💥 Sale', variant: 'warning', animate: false });
     }
-    
+
     // Trending badge
     if (recentlyViewed > 40) {
-      badges.push({ label: "🔥 Trending", variant: "success", animate: true });
+      badges.push({ label: '🔥 Trending', variant: 'success', animate: true });
     } else if (recentlyViewed > 25) {
-      badges.push({ label: "⭐ Popular", variant: "gold", animate: false });
+      badges.push({ label: '⭐ Popular', variant: 'gold', animate: false });
     }
-    
+
     // Professional badges
     const name = item.name.toLowerCase();
     if (name.includes('professional') || name.includes('pro')) {
-      badges.push({ label: "👨‍🔧 Pro Grade", variant: "outline", animate: false });
+      badges.push({ label: '👨‍🔧 Pro Grade', variant: 'outline', animate: false });
     }
-    
+
     // BS7671 compliance
-    if (name.includes('test') || name.includes('meter') || item.category?.toLowerCase().includes('test')) {
-      badges.push({ label: "✅ BS7671", variant: "success", animate: false });
+    if (
+      name.includes('test') ||
+      name.includes('meter') ||
+      item.category?.toLowerCase().includes('test')
+    ) {
+      badges.push({ label: '✅ BS7671', variant: 'success', animate: false });
     }
-    
+
     return badges.slice(0, 2); // Limit to 2 badges to avoid clutter
   };
 
   // Get urgency indicators
   const getUrgencyIndicator = () => {
-    if (item.stockStatus === "Low Stock") {
-      return { text: "Only few left!", color: "text-red-400", icon: Timer };
+    if (item.stockStatus === 'Low Stock') {
+      return { text: 'Only few left!', color: 'text-red-400', icon: Timer };
     }
     if (recentlyViewed > 35) {
-      return { text: `${recentlyViewed} people viewed today`, color: "text-amber-400", icon: Eye };
+      return { text: `${recentlyViewed} people viewed today`, color: 'text-amber-400', icon: Eye };
     }
     return null;
   };
@@ -96,7 +118,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const getToolInfo = () => {
     const name = item.name.toLowerCase();
     const info: { type?: string; power?: string; voltage?: string; cordless?: boolean } = {};
-    
+
     // Tool type detection
     if (name.includes('drill')) info.type = 'Drill';
     else if (name.includes('saw')) info.type = 'Saw';
@@ -105,18 +127,18 @@ const ToolCard: React.FC<ToolCardProps> = ({
     else if (name.includes('tester')) info.type = 'Tester';
     else if (name.includes('screwdriver')) info.type = 'Screwdriver';
     else if (name.includes('pliers')) info.type = 'Pliers';
-    
+
     // Power detection
     const powerMatch = name.match(/(\d+(?:\.\d+)?)\s*(?:w|watt)/);
     if (powerMatch) info.power = `${powerMatch[1]}W`;
-    
+
     // Voltage detection
     const voltageMatch = name.match(/(\d+(?:\.\d+)?)\s*v(?:olt)?/);
     if (voltageMatch) info.voltage = `${voltageMatch[1]}V`;
-    
+
     // Cordless detection
     info.cordless = name.includes('cordless') || name.includes('battery');
-    
+
     return info;
   };
 
@@ -126,30 +148,32 @@ const ToolCard: React.FC<ToolCardProps> = ({
   // Clean and validate rating/review data
   const getCleanReviewData = () => {
     const reviewText = item.reviews || '';
-    
+
     // Filter out meaningless rating text patterns
     const emptyPatterns = [
       /^0\s*out\s*of\s*5\s*stars?\s*total\s*0\s*ratings?/i,
       /^0\s*stars?\s*out\s*of\s*5/i,
       /^no\s*ratings?/i,
       /^0\s*reviews?/i,
-      /^\s*0\s*$/
+      /^\s*0\s*$/,
     ];
-    
-    const isEmptyReview = emptyPatterns.some(pattern => pattern.test(reviewText));
-    
+
+    const isEmptyReview = emptyPatterns.some((pattern) => pattern.test(reviewText));
+
     if (isEmptyReview || !reviewText.trim()) {
       return null;
     }
-    
+
     // Extract meaningful rating info (e.g., "4.7 stars out of 5 (111)")
-    const ratingMatch = reviewText.match(/(\d+(?:\.\d+)?)\s*(?:stars?\s*)?(?:out\s*of\s*\d+)?\s*\((\d+)\)/i);
+    const ratingMatch = reviewText.match(
+      /(\d+(?:\.\d+)?)\s*(?:stars?\s*)?(?:out\s*of\s*\d+)?\s*\((\d+)\)/i
+    );
     if (ratingMatch) {
       const rating = parseFloat(ratingMatch[1]);
       const count = parseInt(ratingMatch[2]);
       return { rating, count, text: reviewText };
     }
-    
+
     // Extract simple review counts (e.g., "45 reviews")
     const countMatch = reviewText.match(/(\d+)\s*reviews?/i);
     if (countMatch) {
@@ -158,7 +182,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         return { count, text: reviewText };
       }
     }
-    
+
     return null;
   };
 
@@ -166,23 +190,24 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
   // Default URLs if not provided in the data
   const getProductUrl = () => {
-    const supplier = (item.supplier || "").toLowerCase();
+    const supplier = (item.supplier || '').toLowerCase();
     const hosts: Record<string, string> = {
-      "screwfix": "screwfix.com",
-      "city electrical factors": "cef.co.uk",
-      "city-electrical-factors": "cef.co.uk",
-      "electricaldirect": "electricaldirect.co.uk",
-      "toolstation": "toolstation.com",
+      screwfix: 'screwfix.com',
+      'city electrical factors': 'cef.co.uk',
+      'city-electrical-factors': 'cef.co.uk',
+      electricaldirect: 'electricaldirect.co.uk',
+      toolstation: 'toolstation.com',
     };
     const expectedHost = hosts[supplier];
 
     const buildSearch = (q: string) => {
       const term = encodeURIComponent(q);
-      if (supplier.includes("electricaldirect")) return `https://www.electricaldirect.co.uk/search?query=${term}`;
-      if (supplier.includes("city")) return `https://www.cef.co.uk/search?q=${term}`;
-      if (supplier.includes("screwfix")) return `https://www.screwfix.com/search?search=${term}`;
-      if (supplier.includes("toolstation")) return `https://www.toolstation.com/search?q=${term}`;
-      return "#";
+      if (supplier.includes('electricaldirect'))
+        return `https://www.electricaldirect.co.uk/search?query=${term}`;
+      if (supplier.includes('city')) return `https://www.cef.co.uk/search?q=${term}`;
+      if (supplier.includes('screwfix')) return `https://www.screwfix.com/search?search=${term}`;
+      if (supplier.includes('toolstation')) return `https://www.toolstation.com/search?q=${term}`;
+      return '#';
     };
 
     if (item.productUrl || item.view_product_url) {
@@ -204,20 +229,20 @@ const ToolCard: React.FC<ToolCardProps> = ({
   // Normalise image paths and update wid/hei parameters
   const imageSrc = (() => {
     const src = item.image;
-    if (!src) return "/placeholder.svg";
-    
+    if (!src) return '/placeholder.svg';
+
     let finalSrc = src;
-    
+
     // If it's not already an absolute URL, make it one
-    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+    if (!/^https?:\/\//i.test(src) && !src.startsWith('/')) {
       finalSrc = `/${src}`;
     }
-    
+
     // Update image size parameters from 136x136 to 236x236
-    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
-      finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
+    if (finalSrc.includes('wid=136') && finalSrc.includes('hei=136')) {
+      finalSrc = finalSrc.replace(/wid=136/g, 'wid=236').replace(/hei=136/g, 'hei=236');
     }
-    
+
     return finalSrc;
   })();
 
@@ -228,33 +253,33 @@ const ToolCard: React.FC<ToolCardProps> = ({
   // Get stock status info with colors
   const getStockStatusInfo = () => {
     switch (item.stockStatus) {
-      case "In Stock":
-        return { 
-          text: "In Stock", 
-          variant: "success" as const, 
+      case 'In Stock':
+        return {
+          text: 'In Stock',
+          variant: 'success' as const,
           icon: CheckCircle,
-          color: "text-success"
+          color: 'text-success',
         };
-      case "Low Stock":
-        return { 
-          text: "Low Stock", 
-          variant: "warning" as const, 
+      case 'Low Stock':
+        return {
+          text: 'Low Stock',
+          variant: 'warning' as const,
           icon: Timer,
-          color: "text-warning"
+          color: 'text-warning',
         };
-      case "Out of Stock":
-        return { 
-          text: "Out of Stock", 
-          variant: "destructive" as const, 
+      case 'Out of Stock':
+        return {
+          text: 'Out of Stock',
+          variant: 'destructive' as const,
           icon: Package,
-          color: "text-destructive"
+          color: 'text-destructive',
         };
       default:
-        return { 
-          text: "In Stock", 
-          variant: "success" as const, 
+        return {
+          text: 'In Stock',
+          variant: 'success' as const,
           icon: CheckCircle,
-          color: "text-success"
+          color: 'text-success',
         };
     }
   };
@@ -265,10 +290,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
   // Calculate savings amount
   const getSavingsAmount = () => {
     if (!item.isOnSale || !item.salePrice || !item.price) return null;
-    
+
     const originalPrice = parseFloat(item.price.replace(/[£,]/g, ''));
     const salePrice = parseFloat(item.salePrice.replace(/[£,]/g, ''));
-    
+
     if (originalPrice > salePrice) {
       const savings = originalPrice - salePrice;
       return `£${savings.toFixed(2)}`;
@@ -293,19 +318,22 @@ const ToolCard: React.FC<ToolCardProps> = ({
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
             className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-105"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
+            }}
           />
         </div>
-        
+
         {/* Gradient overlay on hover */}
         <div className="absolute inset-0 h-[150px] bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        
-        
-        
+
         {/* Brand chip */}
         {item.brand && (
           <div className="absolute bottom-3 right-3">
-            <Badge variant="secondary" className="rounded-lg text-xs font-semibold px-3 py-1 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
+            <Badge
+              variant="secondary"
+              className="rounded-lg text-xs font-semibold px-3 py-1 flex items-center gap-1.5 backdrop-blur-md shadow-lg"
+            >
               <Award className="h-3 w-3" />
               {item.brand}
             </Badge>
@@ -364,9 +392,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
                     Was {item.price}
                   </span>
                   {savingsAmount && (
-                    <span className="text-xs font-semibold text-success">
-                      Save {savingsAmount}
-                    </span>
+                    <span className="text-xs font-semibold text-success">Save {savingsAmount}</span>
                   )}
                 </>
               )}

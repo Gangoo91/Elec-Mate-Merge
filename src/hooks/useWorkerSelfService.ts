@@ -11,20 +11,33 @@ import { useMyEmployeeRecord, useUpdateOwnLocation } from './useWorkerLocations'
 import { useClockState } from './useClockState';
 import { useCreateTimesheet, useEmployeeTimesheets, Timesheet } from './useTimesheets';
 import { useUnreadCount, useMarkAsRead, useAcknowledgeMessage } from './useCommunications';
-import { Communication, CommunicationRecipient, getUnreadCount } from '@/services/communicationService';
-import { createLeaveRequest, calculateLeaveDays, getLeaveTypeName, getLeaveTypeColour } from '@/services/leaveService';
+import {
+  Communication,
+  CommunicationRecipient,
+  getUnreadCount,
+} from '@/services/communicationService';
+import {
+  createLeaveRequest,
+  calculateLeaveDays,
+  getLeaveTypeName,
+  getLeaveTypeColour,
+} from '@/services/leaveService';
 import { LeaveRequest, LeaveType, LeaveStatus } from '@/services/types';
 
 // Get communications for the current employee
-export const getMyCommunications = async (employeeId: string): Promise<(Communication & { recipient: CommunicationRecipient })[]> => {
+export const getMyCommunications = async (
+  employeeId: string
+): Promise<(Communication & { recipient: CommunicationRecipient })[]> => {
   const now = new Date().toISOString();
 
   const { data, error } = await supabase
     .from('employer_communication_recipients')
-    .select(`
+    .select(
+      `
       *,
       communication:employer_communications (*)
-    `)
+    `
+    )
     .eq('employee_id', employeeId)
     .order('created_at', { ascending: false });
 
@@ -35,11 +48,11 @@ export const getMyCommunications = async (employeeId: string): Promise<(Communic
 
   // Filter out expired communications and map to expected format
   return (data || [])
-    .filter(item => {
+    .filter((item) => {
       const comm = item.communication as Communication;
       return !comm.expires_at || comm.expires_at > now;
     })
-    .map(item => ({
+    .map((item) => ({
       ...(item.communication as Communication),
       recipient: {
         id: item.id,
@@ -66,7 +79,7 @@ export const getMyLeaveRequests = async (employeeId: string): Promise<LeaveReque
   }
 
   // Map database fields to LeaveRequest interface
-  return (data || []).map(item => ({
+  return (data || []).map((item) => ({
     id: item.id,
     employeeId: item.employee_id,
     employeeName: item.employee_name || '',
@@ -119,19 +132,21 @@ export const submitLeaveRequest = async (
     throw error;
   }
 
-  return data ? {
-    id: data.id,
-    employeeId: data.employee_id,
-    employeeName: data.employee_name || '',
-    type: data.leave_type as LeaveType,
-    startDate: data.start_date,
-    endDate: data.end_date,
-    halfDay: data.half_day as 'am' | 'pm' | undefined,
-    totalDays: data.total_days || 0,
-    status: data.status as LeaveStatus,
-    reason: data.reason || undefined,
-    createdAt: data.created_at,
-  } : null;
+  return data
+    ? {
+        id: data.id,
+        employeeId: data.employee_id,
+        employeeName: data.employee_name || '',
+        type: data.leave_type as LeaveType,
+        startDate: data.start_date,
+        endDate: data.end_date,
+        halfDay: data.half_day as 'am' | 'pm' | undefined,
+        totalDays: data.total_days || 0,
+        status: data.status as LeaveStatus,
+        reason: data.reason || undefined,
+        createdAt: data.created_at,
+      }
+    : null;
 };
 
 // Get today's hours for an employee
@@ -210,7 +225,9 @@ export const useTodaysHours = (employeeId: string) => {
 };
 
 // Get leave allowance for the current year
-export const getMyLeaveAllowance = async (employeeId: string): Promise<{
+export const getMyLeaveAllowance = async (
+  employeeId: string
+): Promise<{
   totalDays: number;
   usedDays: number;
   pendingDays: number;
@@ -231,7 +248,8 @@ export const getMyLeaveAllowance = async (employeeId: string): Promise<{
       totalDays: allowance.total_days || 28,
       usedDays: allowance.used_days || 0,
       pendingDays: allowance.pending_days || 0,
-      remainingDays: (allowance.total_days || 28) - (allowance.used_days || 0) - (allowance.pending_days || 0),
+      remainingDays:
+        (allowance.total_days || 28) - (allowance.used_days || 0) - (allowance.pending_days || 0),
     };
   }
 
@@ -245,11 +263,11 @@ export const getMyLeaveAllowance = async (employeeId: string): Promise<{
     .lte('end_date', `${currentYear}-12-31`);
 
   const usedDays = (requests || [])
-    .filter(r => r.status === 'approved')
+    .filter((r) => r.status === 'approved')
     .reduce((sum, r) => sum + (r.total_days || 0), 0);
 
   const pendingDays = (requests || [])
-    .filter(r => r.status === 'pending')
+    .filter((r) => r.status === 'pending')
     .reduce((sum, r) => sum + (r.total_days || 0), 0);
 
   return {
@@ -470,10 +488,12 @@ export const useMyCredentials = () => {
         .maybeSingle();
 
       return {
-        elecId: elecId ? {
-          cardNumber: elecId.card_number,
-          verified: elecId.verified || false,
-        } : undefined,
+        elecId: elecId
+          ? {
+              cardNumber: elecId.card_number,
+              verified: elecId.verified || false,
+            }
+          : undefined,
         certifications: certs || [],
       };
     },
@@ -581,7 +601,8 @@ export const useSafetyDocs = () => {
 
       const { data, error } = await supabase
         .from('safety_document_acknowledgements')
-        .select(`
+        .select(
+          `
           id,
           acknowledged_at,
           document:safety_documents (
@@ -591,7 +612,8 @@ export const useSafetyDocs = () => {
             description,
             mandatory
           )
-        `)
+        `
+        )
         .eq('employee_id', employeeId)
         .order('created_at', { ascending: false });
 

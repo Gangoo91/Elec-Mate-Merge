@@ -37,20 +37,20 @@ interface EnhancedTestResultDesktopTableRowProps {
   rowNumber: number;
 }
 
-const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTableRowProps> = ({ 
-  result, 
-  onUpdate, 
-  onRemove, 
+const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTableRowProps> = ({
+  result,
+  onUpdate,
+  onRemove,
   onBulkUpdate,
   showRegulationStatus = false,
   collapsedGroups,
-  rowNumber
+  rowNumber,
 }) => {
   const [showRegulationWarning, setShowRegulationWarning] = useState(false);
-  
+
   // Validate the test result - memoized to prevent expensive recalculation
   const validation = useMemo(() => validateTestResult(result), [result]);
-  
+
   // Get overall compliance status - memoized helper
   const getOverallCompliance = (validation: any): 'error' | 'warning' | 'pass' => {
     const hasErrors = Object.values(validation).some((v: any) => v?.type === 'error');
@@ -87,7 +87,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         </Button>
       );
     }
-    
+
     const overallCompliance = getOverallCompliance(validation);
     if (overallCompliance === 'warning') {
       return (
@@ -102,7 +102,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         </Button>
       );
     }
-    
+
     return (
       <div className="flex items-center justify-center">
         <CheckCircle className="h-3 w-3 text-green-600" />
@@ -120,24 +120,40 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   // Field completion indicator
   const getFieldCompletion = () => {
     const requiredFields = [
-      'circuitDesignation', 'circuitDescription', 'liveSize', 'cpcSize',
-      'bsStandard', 'protectiveDeviceRating', 'maxZs', 'insulationLiveNeutral',
-      'insulationLiveEarth', 'polarity', 'zs'
+      'circuitDesignation',
+      'circuitDescription',
+      'liveSize',
+      'cpcSize',
+      'bsStandard',
+      'protectiveDeviceRating',
+      'maxZs',
+      'insulationLiveNeutral',
+      'insulationLiveEarth',
+      'polarity',
+      'zs',
     ];
-    
-    const filledFields = requiredFields.filter(field => {
+
+    const filledFields = requiredFields.filter((field) => {
       const value = result[field as keyof TestResult];
       return value && value !== '';
     });
-    
+
     const completionPercentage = (filledFields.length / requiredFields.length) * 100;
-    
+
     if (completionPercentage === 100) {
       return { icon: '✅', color: 'text-green-600', title: '100% Complete' };
     } else if (completionPercentage >= 50) {
-      return { icon: '⚠️', color: 'text-amber-600', title: `${Math.round(completionPercentage)}% Complete` };
+      return {
+        icon: '⚠️',
+        color: 'text-amber-600',
+        title: `${Math.round(completionPercentage)}% Complete`,
+      };
     } else {
-      return { icon: '⭕', color: 'text-muted-foreground', title: `${Math.round(completionPercentage)}% Complete` };
+      return {
+        icon: '⭕',
+        color: 'text-muted-foreground',
+        title: `${Math.round(completionPercentage)}% Complete`,
+      };
     }
   };
 
@@ -179,47 +195,40 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
             <PointsServedCell result={result} onUpdate={onUpdate} />
           </>
         )}
-        
+
         {/* Conductor Details */}
-        {!isGroupCollapsed('conductor') && (
-          <ConductorCells result={result} onUpdate={onUpdate} />
-        )}
-        
+        {!isGroupCollapsed('conductor') && <ConductorCells result={result} onUpdate={onUpdate} />}
+
         {/* Protective Device */}
         {!isGroupCollapsed('protection') && (
           <ProtectiveDeviceCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
         )}
-        
+
         {/* RCD Details */}
         {!isGroupCollapsed('rcdDetails') && (
           <RcdDetailsCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
         )}
-        
+
         {/* Continuity Tests */}
         {!isGroupCollapsed('continuity') && (
           <ContinuityCells result={result} onUpdate={onUpdate} validation={validation} />
         )}
-        
+
         {/* Insulation Tests */}
         {!isGroupCollapsed('insulation') && (
           <InsulationCells result={result} onUpdate={onUpdate} validation={validation} />
         )}
-        
+
         {/* Zs (Ω) Tests */}
         {!isGroupCollapsed('zs') && (
           <ZsCells result={result} onUpdate={onUpdate} validation={validation} />
         )}
-        
+
         {/* RCD Tests */}
-        {!isGroupCollapsed('rcd') && (
-          <RcdTestCells result={result} onUpdate={onUpdate} />
-        )}
-        
+        {!isGroupCollapsed('rcd') && <RcdTestCells result={result} onUpdate={onUpdate} />}
+
         {/* AFDD Test */}
-        {!isGroupCollapsed('afdd') && (
-          <AfddCell result={result} onUpdate={onUpdate} />
-        )}
-        
+        {!isGroupCollapsed('afdd') && <AfddCell result={result} onUpdate={onUpdate} />}
 
         {/* Functional Test */}
         {!isGroupCollapsed('functional') && (
@@ -231,9 +240,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
 
         {/* Regulation Status Column */}
         {showRegulationStatus && (
-          <TableCell className="text-center h-8 p-1">
-            {getRegulationStatusIcon()}
-          </TableCell>
+          <TableCell className="text-center h-8 p-1">{getRegulationStatusIcon()}</TableCell>
         )}
 
         {/* Actions Column */}
@@ -261,7 +268,10 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
 };
 
 // Custom comparator: Set objects need deep comparison to avoid busting memo on every render
-const arePropsEqual = (prev: EnhancedTestResultDesktopTableRowProps, next: EnhancedTestResultDesktopTableRowProps) => {
+const arePropsEqual = (
+  prev: EnhancedTestResultDesktopTableRowProps,
+  next: EnhancedTestResultDesktopTableRowProps
+) => {
   if (prev.result !== next.result) return false;
   if (prev.onUpdate !== next.onUpdate) return false;
   if (prev.onRemove !== next.onRemove) return false;

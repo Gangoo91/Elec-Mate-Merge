@@ -5,9 +5,20 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Heart, Award, CheckCircle, Loader2, ArrowLeft, Shield } from 'lucide-react';
-import { peerSupporterService, supportTopics, TrainingLevel, trainingLevelLabels } from '@/services/peerSupportService';
+import {
+  peerSupporterService,
+  supportTopics,
+  TrainingLevel,
+  trainingLevelLabels,
+} from '@/services/peerSupportService';
 import { useToast } from '@/hooks/use-toast';
 
 interface BecomeSupporterProps {
@@ -24,10 +35,8 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
   const toggleTopic = (topic: string) => {
-    setSelectedTopics(prev =>
-      prev.includes(topic)
-        ? prev.filter(t => t !== topic)
-        : [...prev, topic]
+    setSelectedTopics((prev) =>
+      prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
     );
   };
 
@@ -36,9 +45,9 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
 
     if (!displayName.trim()) {
       toast({
-        title: "Name required",
-        description: "Please enter a display name",
-        variant: "destructive",
+        title: 'Name required',
+        description: 'Please enter a display name',
+        variant: 'destructive',
       });
       return;
     }
@@ -54,17 +63,18 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
       });
 
       toast({
-        title: "Welcome aboard!",
-        description: "You're now registered as a Mental Health Mate. Toggle your availability when you're ready to help.",
+        title: 'Welcome aboard!',
+        description:
+          "You're now registered as a Mental Health Mate. Toggle your availability when you're ready to help.",
       });
 
       onSuccess();
     } catch (error: unknown) {
       console.error('Registration error:', error);
       toast({
-        title: "Registration failed",
-        description: error instanceof Error ? error.message : "Please try again",
-        variant: "destructive",
+        title: 'Registration failed',
+        description: error instanceof Error ? error.message : 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -94,9 +104,9 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
             <div className="space-y-1">
               <h4 className="font-medium text-white">What is a Mental Health Mate?</h4>
               <p className="text-sm text-white">
-                Mental Health Mates are fellow tradespeople who volunteer their time to listen
-                and chat with others who might be struggling. You don't need to be a professional -
-                just someone who cares.
+                Mental Health Mates are fellow tradespeople who volunteer their time to listen and
+                chat with others who might be struggling. You don't need to be a professional - just
+                someone who cares.
               </p>
             </div>
           </div>
@@ -140,15 +150,16 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                 className="bg-white/5 border-white/20 min-h-[100px]"
                 maxLength={300}
               />
-              <p className="text-xs text-white">
-                {bio.length}/300 characters
-              </p>
+              <p className="text-xs text-white">{bio.length}/300 characters</p>
             </div>
 
             {/* Training Level */}
             <div className="space-y-2">
               <Label>Your Experience</Label>
-              <Select value={trainingLevel} onValueChange={(v) => setTrainingLevel(v as TrainingLevel)}>
+              <Select
+                value={trainingLevel}
+                onValueChange={(v) => setTrainingLevel(v as TrainingLevel)}
+              >
                 <SelectTrigger className="bg-white/5 border-white/20">
                   <SelectValue />
                 </SelectTrigger>
@@ -173,9 +184,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                   </SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-xs text-white">
-                MHFA = Mental Health First Aid certification
-              </p>
+              <p className="text-xs text-white">MHFA = Mental Health First Aid certification</p>
             </div>
 
             {/* Topics */}
@@ -194,9 +203,10 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                       onClick={() => toggleTopic(topic)}
                       className={`
                         px-3 py-1.5 rounded-full text-sm border transition-all
-                        ${isSelected
-                          ? 'bg-purple-500/30 border-purple-500/50 text-purple-200'
-                          : 'bg-white/5 border-white/20 text-white hover:bg-white/10'
+                        ${
+                          isSelected
+                            ? 'bg-purple-500/30 border-purple-500/50 text-purple-200'
+                            : 'bg-white/5 border-white/20 text-white hover:bg-white/10'
                         }
                       `}
                     >

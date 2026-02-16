@@ -3,11 +3,11 @@
  * Reuses patterns from education premium for consistency
  */
 
-import type { Variants, Transition } from "framer-motion";
+import type { Variants, Transition } from 'framer-motion';
 
 // Native spring configuration for natural motion
 export const nativeSpringConfig: Transition = {
-  type: "spring",
+  type: 'spring',
   stiffness: 300,
   damping: 24,
 };
@@ -55,7 +55,7 @@ export const listItemVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 500,
       damping: 30,
     },
@@ -74,17 +74,17 @@ export const cardPressSubtleVariants = {
 
 // Bottom sheet animation
 export const sheetVariants: Variants = {
-  initial: { y: "100%" },
+  initial: { y: '100%' },
   animate: {
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 300,
       damping: 30,
     },
   },
   exit: {
-    y: "100%",
+    y: '100%',
     transition: { duration: 0.2 },
   },
 };
@@ -97,7 +97,7 @@ export const fadeUpVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.3,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
   exit: {
@@ -115,7 +115,7 @@ export const pillVariants: Variants = {
     scale: 1,
     transition: {
       delay: index * 0.05,
-      type: "spring",
+      type: 'spring',
       stiffness: 400,
       damping: 25,
     },
@@ -140,13 +140,13 @@ export const scaleInVariants: Variants = {
 
 // Skeleton shimmer animation
 export const shimmerVariants: Variants = {
-  initial: { x: "-100%" },
+  initial: { x: '-100%' },
   animate: {
-    x: "100%",
+    x: '100%',
     transition: {
       repeat: Infinity,
       duration: 1.5,
-      ease: "linear",
+      ease: 'linear',
     },
   },
 };
@@ -159,7 +159,7 @@ export const heroCardVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
       damping: 25,
     },

@@ -86,14 +86,19 @@ export const enhancedCPDService = {
     return data || [];
   },
 
-  async addEntry(entry: Omit<EnhancedCPDEntry, 'id' | 'created_at' | 'updated_at' | 'evidence_files' | 'is_verified' | 'verification_status'>): Promise<EnhancedCPDEntry> {
+  async addEntry(
+    entry: Omit<
+      EnhancedCPDEntry,
+      'id' | 'created_at' | 'updated_at' | 'evidence_files' | 'is_verified' | 'verification_status'
+    >
+  ): Promise<EnhancedCPDEntry> {
     const { data, error } = await supabase
       .from('cpd_entries')
       .insert({
         ...entry,
         evidence_files: [],
         verification_status: 'pending',
-        is_verified: false
+        is_verified: false,
       })
       .select()
       .single();
@@ -123,10 +128,7 @@ export const enhancedCPDService = {
   },
 
   async deleteEntry(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('cpd_entries')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('cpd_entries').delete().eq('id', id);
 
     if (error) {
       console.error('Error deleting CPD entry:', error);
@@ -149,9 +151,9 @@ export const enhancedCPDService = {
     }
 
     // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('cpd-evidence')
-      .getPublicUrl(fileName);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from('cpd-evidence').getPublicUrl(fileName);
 
     // Save file metadata to database
     const { data, error } = await supabase
@@ -163,7 +165,7 @@ export const enhancedCPDService = {
         file_url: publicUrl,
         file_type: file.type,
         file_size: file.size,
-        verification_status: 'pending'
+        verification_status: 'pending',
       })
       .select()
       .single();
@@ -187,8 +189,8 @@ export const enhancedCPDService = {
         id: data.id,
         file_name: data.file_name,
         file_url: data.file_url,
-        file_type: data.file_type
-      }
+        file_type: data.file_type,
+      },
     ];
 
     await supabase
@@ -199,7 +201,10 @@ export const enhancedCPDService = {
     return data;
   },
 
-  async getComplianceStats(userId: string, professionalBodyId: string): Promise<CPDComplianceStats> {
+  async getComplianceStats(
+    userId: string,
+    professionalBodyId: string
+  ): Promise<CPDComplianceStats> {
     // Get professional body requirements
     const { data: professionalBody } = await supabase
       .from('professional_bodies')
@@ -217,29 +222,37 @@ export const enhancedCPDService = {
       .select('*')
       .eq('user_id', userId)
       .eq('professional_body_id', professionalBodyId)
-      .gte('date_completed', new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+      .gte(
+        'date_completed',
+        new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      );
 
-    const totalHours = entries?.reduce((sum, entry) => sum + parseFloat(entry.hours.toString()), 0) || 0;
+    const totalHours =
+      entries?.reduce((sum, entry) => sum + parseFloat(entry.hours.toString()), 0) || 0;
     const requiredHours = professionalBody.annual_cpd_hours;
     const compliancePercentage = Math.round((totalHours / requiredHours) * 100);
 
     // Calculate category breakdown
-    const categories = Array.isArray(professionalBody.categories) ? professionalBody.categories : [];
+    const categories = Array.isArray(professionalBody.categories)
+      ? professionalBody.categories
+      : [];
     const categoryStats = categories.map((category: any) => {
-      const categoryHours = entries?.filter(entry => entry.category === category.id)
-        .reduce((sum, entry) => sum + parseFloat(entry.hours.toString()), 0) || 0;
-      
+      const categoryHours =
+        entries
+          ?.filter((entry) => entry.category === category.id)
+          .reduce((sum, entry) => sum + parseFloat(entry.hours.toString()), 0) || 0;
+
       return {
         id: category.id,
         name: category.name,
         completed_hours: categoryHours,
         required_hours: category.min_hours,
-        percentage: Math.round((categoryHours / category.min_hours) * 100)
+        percentage: Math.round((categoryHours / category.min_hours) * 100),
       };
     });
 
-    const verifiedEntries = entries?.filter(entry => entry.is_verified).length || 0;
-    const pendingVerification = entries?.filter(entry => !entry.is_verified).length || 0;
+    const verifiedEntries = entries?.filter((entry) => entry.is_verified).length || 0;
+    const pendingVerification = entries?.filter((entry) => !entry.is_verified).length || 0;
 
     return {
       total_hours: totalHours,
@@ -248,13 +261,17 @@ export const enhancedCPDService = {
       categories: categoryStats,
       entries_count: entries?.length || 0,
       verified_entries: verifiedEntries,
-      pending_verification: pendingVerification
+      pending_verification: pendingVerification,
     };
   },
 
-  async generatePortfolio(userId: string, professionalBodyId: string, title: string): Promise<CPDPortfolio> {
+  async generatePortfolio(
+    userId: string,
+    professionalBodyId: string,
+    title: string
+  ): Promise<CPDPortfolio> {
     const stats = await this.getComplianceStats(userId, professionalBodyId);
-    
+
     const { data, error } = await supabase
       .from('cpd_portfolios')
       .insert({
@@ -265,7 +282,7 @@ export const enhancedCPDService = {
         period_end: new Date().toISOString().split('T')[0],
         total_hours: stats.total_hours,
         compliance_percentage: stats.compliance_percentage,
-        status: 'draft'
+        status: 'draft',
       })
       .select()
       .single();
@@ -291,5 +308,5 @@ export const enhancedCPDService = {
     }
 
     return data || [];
-  }
+  },
 };

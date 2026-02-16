@@ -5,34 +5,40 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 export const EmergencyLightingFAQSection6_3 = () => {
   const faqs = [
     {
-      question: "Who is responsible for carrying out the fire risk assessment?",
-      answer: "The building's Responsible Person must ensure it's completed by a competent person — often a certified fire risk assessor. This may be an employee with suitable training or an external consultant."
+      question: 'Who is responsible for carrying out the fire risk assessment?',
+      answer:
+        "The building's Responsible Person must ensure it's completed by a competent person — often a certified fire risk assessor. This may be an employee with suitable training or an external consultant.",
     },
     {
-      question: "How often must the assessment be reviewed?",
-      answer: "At least annually or whenever building use, structure, or occupancy changes. More frequent reviews may be required for high-risk premises or following incidents."
+      question: 'How often must the assessment be reviewed?',
+      answer:
+        'At least annually or whenever building use, structure, or occupancy changes. More frequent reviews may be required for high-risk premises or following incidents.',
     },
     {
-      question: "What if the lighting design and risk assessment conflict?",
-      answer: "Always default to the higher safety requirement and document your decision for audit purposes. Consult with the fire risk assessor and the Responsible Person to resolve conflicts before proceeding."
+      question: 'What if the lighting design and risk assessment conflict?',
+      answer:
+        'Always default to the higher safety requirement and document your decision for audit purposes. Consult with the fire risk assessor and the Responsible Person to resolve conflicts before proceeding.',
     },
     {
-      question: "Can I use a 1-hour system if the client wants to save money?",
-      answer: "No — if the risk assessment specifies 3-hour duration, you must comply. Installing inadequate systems makes both you and the client liable for prosecution. Always quote to the correct standard."
+      question: 'Can I use a 1-hour system if the client wants to save money?',
+      answer:
+        'No — if the risk assessment specifies 3-hour duration, you must comply. Installing inadequate systems makes both you and the client liable for prosecution. Always quote to the correct standard.',
     },
     {
       question: "What happens if there's no risk assessment in place?",
-      answer: "This is a legal breach under the Fire Safety Order. You should not proceed with design or installation until a proper risk assessment has been completed and approved."
+      answer:
+        'This is a legal breach under the Fire Safety Order. You should not proceed with design or installation until a proper risk assessment has been completed and approved.',
     },
     {
-      question: "Do I need to keep a copy of the risk assessment?",
-      answer: "Yes — keep it with the emergency lighting logbook and commissioning documents. Fire inspectors will request it during audits to verify that the design matches the assessed risks."
-    }
+      question: 'Do I need to keep a copy of the risk assessment?',
+      answer:
+        'Yes — keep it with the emergency lighting logbook and commissioning documents. Fire inspectors will request it during audits to verify that the design matches the assessed risks.',
+    },
   ];
 
   return (
@@ -50,9 +56,7 @@ export const EmergencyLightingFAQSection6_3 = () => {
               <AccordionTrigger className="text-foreground hover:text-purple-300">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-gray-300">
-                {faq.answer}
-              </AccordionContent>
+              <AccordionContent className="text-gray-300">{faq.answer}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

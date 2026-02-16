@@ -1,10 +1,9 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Clock, Trophy, BookOpen, TrendingUp, PoundSterling, MapPin, Users } from "lucide-react";
-import { ukCareerLevels } from "./ukCareerProgressionData";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Clock, Trophy, BookOpen, TrendingUp, PoundSterling, MapPin, Users } from 'lucide-react';
+import { ukCareerLevels } from './ukCareerProgressionData';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const UKCareerProgressionTimeline = () => {
   return (
@@ -19,7 +18,8 @@ const UKCareerProgressionTimeline = () => {
             UK Electrical Career Progression Timeline
           </CardTitle>
           <p className="text-sm sm:text-base text-white/80">
-            Comprehensive progression path for UK electricians following the JIB grading scheme with regional salary data
+            Comprehensive progression path for UK electricians following the JIB grading scheme with
+            regional salary data
           </p>
         </CardHeader>
         <CardContent>
@@ -30,34 +30,44 @@ const UKCareerProgressionTimeline = () => {
                 {index < ukCareerLevels.length - 1 && (
                   <div className="absolute left-6 sm:left-8 top-20 sm:top-24 w-0.5 h-16 sm:h-20 bg-elec-yellow/30 hidden sm:block" />
                 )}
-                
+
                 <div className="flex flex-col sm:flex-row gap-4">
                   {/* Timeline dot */}
                   <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-elec-yellow/20 border-2 border-elec-yellow/50 flex items-center justify-center mx-auto sm:mx-0">
                     <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                   </div>
-                  
+
                   {/* Content */}
                   <div className="flex-1 space-y-4">
                     <div className="text-center sm:text-left">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div>
-                          <h3 className="text-lg sm:text-xl font-semibold text-white">{level.title}</h3>
-                          <p className="text-sm text-elec-yellow">{level.jib_grade} • {level.typical_experience}</p>
+                          <h3 className="text-lg sm:text-xl font-semibold text-white">
+                            {level.title}
+                          </h3>
+                          <p className="text-sm text-elec-yellow">
+                            {level.jib_grade} • {level.typical_experience}
+                          </p>
                         </div>
                         <div className="flex gap-2 justify-center sm:justify-end">
-                          <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                          <Badge
+                            variant="outline"
+                            className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                          >
                             {level.progression_timeline}
                           </Badge>
                           {level.time_to_achieve && (
-                            <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 flex items-center gap-1">
+                            <Badge
+                              variant="outline"
+                              className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 flex items-center gap-1"
+                            >
                               <Clock className="h-3 w-3" /> {level.time_to_achieve}
                             </Badge>
                           )}
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Enhanced content grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                       {/* Regional Salaries */}
@@ -73,19 +83,27 @@ const UKCareerProgressionTimeline = () => {
                                 <MapPin className="h-3 w-3" />
                                 London:
                               </span>
-                              <span className="text-green-400 font-medium">{level.salary_ranges.london}</span>
+                              <span className="text-green-400 font-medium">
+                                {level.salary_ranges.london}
+                              </span>
                             </div>
                             <div className="flex justify-between">
                               <span>South East:</span>
-                              <span className="text-green-400 font-medium">{level.salary_ranges.south_east}</span>
+                              <span className="text-green-400 font-medium">
+                                {level.salary_ranges.south_east}
+                              </span>
                             </div>
                             <div className="flex justify-between">
                               <span>Midlands:</span>
-                              <span className="text-green-400 font-medium">{level.salary_ranges.midlands}</span>
+                              <span className="text-green-400 font-medium">
+                                {level.salary_ranges.midlands}
+                              </span>
                             </div>
                             <div className="flex justify-between">
                               <span>North:</span>
-                              <span className="text-green-400 font-medium">{level.salary_ranges.north}</span>
+                              <span className="text-green-400 font-medium">
+                                {level.salary_ranges.north}
+                              </span>
                             </div>
                           </div>
                           <div className="mt-3 pt-2 border-t border-elec-yellow/10">
@@ -95,7 +113,7 @@ const UKCareerProgressionTimeline = () => {
                           </div>
                         </CardContent>
                       </Card>
-                      
+
                       {/* Key qualifications */}
                       <Card className="bg-gradient-to-br from-elec-gray to-blue-950/20 border-blue-500/20">
                         <CardContent className="p-4">
@@ -105,7 +123,10 @@ const UKCareerProgressionTimeline = () => {
                           </h4>
                           <div className="space-y-2">
                             {level.key_qualifications.slice(0, 4).map((qual, idx) => (
-                              <div key={idx} className="text-xs flex items-center justify-between gap-2">
+                              <div
+                                key={idx}
+                                className="text-xs flex items-center justify-between gap-2"
+                              >
                                 <div>
                                   <span className="text-blue-300 font-medium">{qual.level}</span>
                                   <div className="text-white">{qual.name}</div>
@@ -114,7 +135,12 @@ const UKCareerProgressionTimeline = () => {
                                   <TooltipProvider>
                                     <Tooltip>
                                       <TooltipTrigger asChild>
-                                        <Badge variant="outline" className="text-[10px] bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">{qual.code}</Badge>
+                                        <Badge
+                                          variant="outline"
+                                          className="text-[10px] bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20"
+                                        >
+                                          {qual.code}
+                                        </Badge>
                                       </TooltipTrigger>
                                       <TooltipContent>
                                         <span>Qualification code</span>
@@ -132,7 +158,7 @@ const UKCareerProgressionTimeline = () => {
                           </div>
                         </CardContent>
                       </Card>
-                      
+
                       {/* Requirements & CPD */}
                       {(level.prerequisites || level.day_rates || level.cpd) && (
                         <Card className="bg-gradient-to-br from-elec-gray to-purple-950/20 border-purple-500/20">
@@ -153,11 +179,16 @@ const UKCareerProgressionTimeline = () => {
                                           {p.name}
                                           {p.code && (
                                             <>
-                                              {" "}
-                                              <Badge variant="outline" className="text-[10px] bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">{p.code}</Badge>
+                                              {' '}
+                                              <Badge
+                                                variant="outline"
+                                                className="text-[10px] bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20"
+                                              >
+                                                {p.code}
+                                              </Badge>
                                             </>
                                           )}
-                                          {p.mandatory ? " • mandatory" : " • recommended"}
+                                          {p.mandatory ? ' • mandatory' : ' • recommended'}
                                         </span>
                                       </li>
                                     ))}
@@ -167,10 +198,20 @@ const UKCareerProgressionTimeline = () => {
                               {level.day_rates && (
                                 <div className="flex flex-wrap gap-3">
                                   {level.day_rates.employed && (
-                                    <Badge variant="outline" className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">Employed: {level.day_rates.employed}</Badge>
+                                    <Badge
+                                      variant="outline"
+                                      className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20"
+                                    >
+                                      Employed: {level.day_rates.employed}
+                                    </Badge>
                                   )}
                                   {level.day_rates.contractor && (
-                                    <Badge variant="outline" className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">Contractor: {level.day_rates.contractor}</Badge>
+                                    <Badge
+                                      variant="outline"
+                                      className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20"
+                                    >
+                                      Contractor: {level.day_rates.contractor}
+                                    </Badge>
                                   )}
                                 </div>
                               )}
@@ -207,7 +248,11 @@ const UKCareerProgressionTimeline = () => {
                               <p className="text-xs text-white mb-1">Key Sectors:</p>
                               <div className="flex flex-wrap gap-1">
                                 {level.work_sectors.slice(0, 3).map((sector, idx) => (
-                                  <Badge key={idx} variant="outline" className="text-xs bg-elec-yellow/5 text-elec-yellow/80 border-elec-yellow/20">
+                                  <Badge
+                                    key={idx}
+                                    variant="outline"
+                                    className="text-xs bg-elec-yellow/5 text-elec-yellow/80 border-elec-yellow/20"
+                                  >
                                     {sector}
                                   </Badge>
                                 ))}
@@ -219,11 +264,15 @@ const UKCareerProgressionTimeline = () => {
                                 Career Prospects:
                               </p>
                               <p className="text-xs">
-                                {level.title.includes("Apprentice") ? "Foundation level with structured learning pathway" :
-                                level.title.includes("Improver") ? "Developing skills towards full qualification" :
-                                level.title.includes("Electrician") ? "Fully qualified (Gold Card) with independent working" :
-                                level.title.includes("Approved") ? "Industry-recognised with testing and certification" :
-                                "Advanced level with leadership opportunities"}
+                                {level.title.includes('Apprentice')
+                                  ? 'Foundation level with structured learning pathway'
+                                  : level.title.includes('Improver')
+                                    ? 'Developing skills towards full qualification'
+                                    : level.title.includes('Electrician')
+                                      ? 'Fully qualified (Gold Card) with independent working'
+                                      : level.title.includes('Approved')
+                                        ? 'Industry-recognised with testing and certification'
+                                        : 'Advanced level with leadership opportunities'}
                               </p>
                             </div>
                           </div>
@@ -244,7 +293,13 @@ const UKCareerProgressionTimeline = () => {
                                   <p className="text-white mb-1">Branching Paths:</p>
                                   <div className="flex flex-wrap gap-2">
                                     {level.branches.map((b) => (
-                                      <Badge key={b.id} variant="outline" className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20">{b.title}</Badge>
+                                      <Badge
+                                        key={b.id}
+                                        variant="outline"
+                                        className="bg-elec-yellow/5 text-elec-yellow border-elec-yellow/20"
+                                      >
+                                        {b.title}
+                                      </Badge>
                                     ))}
                                   </div>
                                 </div>
@@ -270,11 +325,13 @@ const UKCareerProgressionTimeline = () => {
                         </Card>
                       )}
                     </div>
-                    
+
                     {/* Next steps - enhanced */}
                     <Card className="bg-white/10 border-elec-yellow/10">
                       <CardContent className="p-4">
-                        <h4 className="text-sm font-medium mb-3 text-elec-yellow">Next Steps to Progress:</h4>
+                        <h4 className="text-sm font-medium mb-3 text-elec-yellow">
+                          Next Steps to Progress:
+                        </h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           {level.next_steps.slice(0, 6).map((step, idx) => (
                             <div key={idx} className="flex items-start gap-2 text-xs">
@@ -295,7 +352,7 @@ const UKCareerProgressionTimeline = () => {
               </div>
             ))}
           </div>
-          
+
           {/* Additional Information */}
           <Card className="mt-8 border-elec-yellow/10 bg-white/10">
             <CardContent className="p-6">

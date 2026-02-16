@@ -1,27 +1,37 @@
-import { Zap, CheckCircle, AlertTriangle, Target, Settings, BookOpen, Lightbulb, Shield, Eye } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
-import useSEO from "@/hooks/useSEO";
+import {
+  Zap,
+  CheckCircle,
+  AlertTriangle,
+  Target,
+  Settings,
+  BookOpen,
+  Lightbulb,
+  Shield,
+  Eye,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module4Section1 = () => {
   useSEO(
-    "Full Test Sequence and Order of Tests | AM2 Module 4 Section 1",
-    "Master the correct testing sequence for AM2 electrical assessment as per IET Guidance Note 3 and BS 7671 Part 6"
+    'Full Test Sequence and Order of Tests | AM2 Module 4 Section 1',
+    'Master the correct testing sequence for AM2 electrical assessment as per IET Guidance Note 3 and BS 7671 Part 6'
   );
 
   const learningOutcomes = [
-    "Execute the complete testing sequence in correct GN3 order",
-    "Understand the safety rationale behind each test sequence step",
-    "Perform comprehensive dead testing before any live work",
-    "Apply correct test voltages and interpret results accurately",
-    "Document test results systematically throughout the process",
-    "Demonstrate professional competence in electrical testing procedures"
+    'Execute the complete testing sequence in correct GN3 order',
+    'Understand the safety rationale behind each test sequence step',
+    'Perform comprehensive dead testing before any live work',
+    'Apply correct test voltages and interpret results accurately',
+    'Document test results systematically throughout the process',
+    'Demonstrate professional competence in electrical testing procedures',
   ];
 
   const quickCheckQuestions: Array<{
@@ -32,145 +42,158 @@ const AM2Module4Section1 = () => {
     explanation: string;
   }> = [
     {
-      id: "first-test",
-      question: "What is the first electrical test that must be carried out before any live testing?",
+      id: 'first-test',
+      question:
+        'What is the first electrical test that must be carried out before any live testing?',
       options: [
-        "Insulation resistance",
-        "Continuity of protective conductors",
-        "Earth fault loop impedance",
-        "RCD testing"
+        'Insulation resistance',
+        'Continuity of protective conductors',
+        'Earth fault loop impedance',
+        'RCD testing',
       ],
       correctIndex: 1,
-      explanation: "Continuity of protective conductors must be tested first to ensure safety before any live testing is undertaken."
+      explanation:
+        'Continuity of protective conductors must be tested first to ensure safety before any live testing is undertaken.',
     },
     {
-      id: "insulation-voltage",
-      question: "At what voltage should insulation resistance be tested for circuits up to 500V?",
-      options: [
-        "250V DC",
-        "500V DC",
-        "1000V DC",
-        "100V DC"
-      ],
+      id: 'insulation-voltage',
+      question: 'At what voltage should insulation resistance be tested for circuits up to 500V?',
+      options: ['250V DC', '500V DC', '1000V DC', '100V DC'],
       correctIndex: 1,
-      explanation: "BS 7671 requires insulation resistance testing at 500V DC for circuits operating up to 500V."
+      explanation:
+        'BS 7671 requires insulation resistance testing at 500V DC for circuits operating up to 500V.',
     },
     {
-      id: "live-testing-rule",
-      question: "When can live testing commence during AM2 assessment?",
+      id: 'live-testing-rule',
+      question: 'When can live testing commence during AM2 assessment?',
       options: [
-        "Immediately after isolation verification",
-        "Only after all dead tests are complete and satisfactory",
-        "Any time during the assessment",
-        "Before polarity testing"
+        'Immediately after isolation verification',
+        'Only after all dead tests are complete and satisfactory',
+        'Any time during the assessment',
+        'Before polarity testing',
       ],
       correctIndex: 1,
-      explanation: "Live testing must ONLY commence after all dead tests are complete and satisfactory. This is critical for safety and assessment success."
-    }
+      explanation:
+        'Live testing must ONLY commence after all dead tests are complete and satisfactory. This is critical for safety and assessment success.',
+    },
   ];
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the minimum acceptable insulation resistance value for most circuits?",
-      options: ["0.5 MΩ", "1.0 MΩ", "2.0 MΩ", "5.0 MΩ"],
+      question: 'What is the minimum acceptable insulation resistance value for most circuits?',
+      options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '5.0 MΩ'],
       correctAnswer: 1,
-      explanation: "The minimum insulation resistance is 1.0 MΩ for most installations, though some specific circuits may require higher values."
+      explanation:
+        'The minimum insulation resistance is 1.0 MΩ for most installations, though some specific circuits may require higher values.',
     },
     {
       id: 2,
-      question: "During AM2 assessment, which aspect is most critical for assessor evaluation?",
+      question: 'During AM2 assessment, which aspect is most critical for assessor evaluation?',
       options: [
-        "Speed of testing",
-        "Expensive equipment use",
-        "Following GN3 sequence methodically and safely",
-        "Perfect numerical results"
+        'Speed of testing',
+        'Expensive equipment use',
+        'Following GN3 sequence methodically and safely',
+        'Perfect numerical results',
       ],
       correctAnswer: 2,
-      explanation: "Assessors primarily look for methodical adherence to GN3 sequence with safe working practices and realistic results."
+      explanation:
+        'Assessors primarily look for methodical adherence to GN3 sequence with safe working practices and realistic results.',
     },
     {
       id: 3,
-      question: "What happens if you perform live tests before completing dead tests?",
+      question: 'What happens if you perform live tests before completing dead tests?',
       options: [
-        "Minor mark deduction",
-        "Warning from assessor",
-        "Automatic failure for unsafe practice",
-        "No consequence"
+        'Minor mark deduction',
+        'Warning from assessor',
+        'Automatic failure for unsafe practice',
+        'No consequence',
       ],
       correctAnswer: 2,
-      explanation: "Performing live tests before completing dead tests is considered unsafe practice and results in automatic failure."
+      explanation:
+        'Performing live tests before completing dead tests is considered unsafe practice and results in automatic failure.',
     },
     {
       id: 4,
-      question: "Which test must be performed to verify ring circuit integrity?",
+      question: 'Which test must be performed to verify ring circuit integrity?',
       options: [
-        "Earth fault loop impedance",
-        "Continuity of ring final circuit conductors",
-        "RCD testing",
-        "Voltage drop"
+        'Earth fault loop impedance',
+        'Continuity of ring final circuit conductors',
+        'RCD testing',
+        'Voltage drop',
       ],
       correctAnswer: 1,
-      explanation: "Continuity of ring final circuit conductors verifies the ring is complete and identifies any breaks or parallel paths."
+      explanation:
+        'Continuity of ring final circuit conductors verifies the ring is complete and identifies any breaks or parallel paths.',
     },
     {
       id: 5,
-      question: "What is the correct sequence for insulation resistance testing?",
+      question: 'What is the correct sequence for insulation resistance testing?',
       options: [
-        "Test all conductors to earth first",
-        "Test line to neutral, then line to earth, then neutral to earth",
-        "Test randomly",
-        "Test only line to earth"
+        'Test all conductors to earth first',
+        'Test line to neutral, then line to earth, then neutral to earth',
+        'Test randomly',
+        'Test only line to earth',
       ],
       correctAnswer: 1,
-      explanation: "Correct sequence is L-N, L-E, then N-E to ensure comprehensive insulation testing between all conductors."
+      explanation:
+        'Correct sequence is L-N, L-E, then N-E to ensure comprehensive insulation testing between all conductors.',
     },
     {
       id: 6,
-      question: "What is the maximum earth fault loop impedance for a 32A Type B MCB?",
-      options: ["0.72Ω", "1.44Ω", "2.30Ω", "2.87Ω"],
+      question: 'What is the maximum earth fault loop impedance for a 32A Type B MCB?',
+      options: ['0.72Ω', '1.44Ω', '2.30Ω', '2.87Ω'],
       correctAnswer: 1,
-      explanation: "BS 7671 specifies maximum Zs of 1.44Ω for 32A Type B MCB (applying 80% rule for disconnection times)."
+      explanation:
+        'BS 7671 specifies maximum Zs of 1.44Ω for 32A Type B MCB (applying 80% rule for disconnection times).',
     },
     {
       id: 7,
-      question: "At what test current should an RCD trip within 300ms?",
-      options: ["50% of rated current", "100% of rated current", "150% of rated current", "500% of rated current"],
+      question: 'At what test current should an RCD trip within 300ms?',
+      options: [
+        '50% of rated current',
+        '100% of rated current',
+        '150% of rated current',
+        '500% of rated current',
+      ],
       correctAnswer: 1,
-      explanation: "RCD must trip within 300ms at 100% of its rated current (IΔn). At 50% it should not trip."
+      explanation:
+        'RCD must trip within 300ms at 100% of its rated current (IΔn). At 50% it should not trip.',
     },
     {
       id: 8,
-      question: "Which test voltage is used for insulation resistance on 230V circuits?",
-      options: ["250V DC", "500V DC", "1000V DC", "230V AC"],
+      question: 'Which test voltage is used for insulation resistance on 230V circuits?',
+      options: ['250V DC', '500V DC', '1000V DC', '230V AC'],
       correctAnswer: 1,
-      explanation: "BS 7671 requires 500V DC test voltage for circuits with nominal voltage up to 500V."
+      explanation:
+        'BS 7671 requires 500V DC test voltage for circuits with nominal voltage up to 500V.',
     },
     {
       id: 9,
-      question: "What must be disconnected before insulation resistance testing?",
+      question: 'What must be disconnected before insulation resistance testing?',
       options: [
-        "Only fluorescent lamps",
-        "Electronic equipment and surge protective devices",
-        "All switches",
-        "Nothing needs disconnecting"
+        'Only fluorescent lamps',
+        'Electronic equipment and surge protective devices',
+        'All switches',
+        'Nothing needs disconnecting',
       ],
       correctAnswer: 1,
-      explanation: "Electronic equipment, surge protective devices, and capacitors must be disconnected to avoid damage and false readings."
+      explanation:
+        'Electronic equipment, surge protective devices, and capacitors must be disconnected to avoid damage and false readings.',
     },
     {
       id: 10,
-      question: "What is the acceptable voltage range for 230V single-phase supply?",
-      options: ["220V - 240V", "207V - 253V", "200V - 250V", "225V - 235V"],
+      question: 'What is the acceptable voltage range for 230V single-phase supply?',
+      options: ['220V - 240V', '207V - 253V', '200V - 250V', '225V - 235V'],
       correctAnswer: 1,
-      explanation: "BS 7671 accepts ±10% of nominal voltage: 230V ±10% = 207V to 253V range."
-    }
+      explanation: 'BS 7671 accepts ±10% of nominal voltage: 230V ±10% = 207V to 253V range.',
+    },
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module4"
-      breadcrumbs={["AM2", "Module 4", "Section 1"]}
+      breadcrumbs={['AM2', 'Module 4', 'Section 1']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -183,10 +206,13 @@ const AM2Module4Section1 = () => {
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Test Sequence Determines AM2 Success">
         <p className="text-ios-callout text-white/80 mb-2">
-          The test sequence follows IET Guidance Note 3 and BS 7671 Part 6 exactly. Deviation from this order will result in assessment failure. Live testing must ONLY be carried out after all dead tests are complete and satisfactory.
+          The test sequence follows IET Guidance Note 3 and BS 7671 Part 6 exactly. Deviation from
+          this order will result in assessment failure. Live testing must ONLY be carried out after
+          all dead tests are complete and satisfactory.
         </p>
         <p className="text-ios-callout text-white/90 font-medium">
-          Assessors observe whether you can follow safe working practices and systematic procedures. Any unsafe practice results in immediate failure.
+          Assessors observe whether you can follow safe working practices and systematic procedures.
+          Any unsafe practice results in immediate failure.
         </p>
       </AM2CriticalWarning>
 
@@ -198,64 +224,315 @@ const AM2Module4Section1 = () => {
       {/* Dead vs Live Testing Sequence Diagram */}
       <div className="my-8 flex justify-center">
         <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
-          <svg viewBox="0 0 500 450" className="w-full h-auto" role="img" aria-label="Dead vs Live testing sequence diagram showing dead tests must pass before live tests commence">
+          <svg
+            viewBox="0 0 500 450"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Dead vs Live testing sequence diagram showing dead tests must pass before live tests commence"
+          >
             {/* Title */}
-            <text x="250" y="24" textAnchor="middle" fill="#F3F4F6" fontSize="15" fontFamily="system-ui, sans-serif" fontWeight="bold">BS 7671 / GN3 Test Sequence</text>
+            <text
+              x="250"
+              y="24"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="15"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              BS 7671 / GN3 Test Sequence
+            </text>
 
             {/* Left Column - DEAD TESTS */}
             <rect x="10" y="42" width="200" height="36" rx="8" fill="#D97706" />
-            <text x="110" y="66" textAnchor="middle" fill="white" fontSize="14" fontFamily="system-ui, sans-serif" fontWeight="bold">DEAD TESTS</text>
+            <text
+              x="110"
+              y="66"
+              textAnchor="middle"
+              fill="white"
+              fontSize="14"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              DEAD TESTS
+            </text>
 
-            <rect x="10" y="86" width="200" height="40" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
-            <text x="22" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">1.</text>
-            <text x="36" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Continuity of Protective</text>
-            <text x="36" y="118" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Conductors (R1+R2)</text>
+            <rect
+              x="10"
+              y="86"
+              width="200"
+              height="40"
+              rx="6"
+              fill="#1F2937"
+              stroke="#D97706"
+              strokeWidth="1"
+            />
+            <text
+              x="22"
+              y="103"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              1.
+            </text>
+            <text x="36" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Continuity of Protective
+            </text>
+            <text x="36" y="118" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Conductors (R1+R2)
+            </text>
 
-            <rect x="10" y="132" width="200" height="40" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
-            <text x="22" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">2.</text>
-            <text x="36" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Continuity of Ring Final</text>
-            <text x="36" y="164" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Circuit Conductors</text>
+            <rect
+              x="10"
+              y="132"
+              width="200"
+              height="40"
+              rx="6"
+              fill="#1F2937"
+              stroke="#D97706"
+              strokeWidth="1"
+            />
+            <text
+              x="22"
+              y="149"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              2.
+            </text>
+            <text x="36" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Continuity of Ring Final
+            </text>
+            <text x="36" y="164" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Circuit Conductors
+            </text>
 
-            <rect x="10" y="178" width="200" height="34" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
-            <text x="22" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">3.</text>
-            <text x="36" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Insulation Resistance</text>
+            <rect
+              x="10"
+              y="178"
+              width="200"
+              height="34"
+              rx="6"
+              fill="#1F2937"
+              stroke="#D97706"
+              strokeWidth="1"
+            />
+            <text
+              x="22"
+              y="200"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              3.
+            </text>
+            <text x="36" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Insulation Resistance
+            </text>
 
-            <rect x="10" y="218" width="200" height="34" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
-            <text x="22" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">4.</text>
-            <text x="36" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Polarity</text>
+            <rect
+              x="10"
+              y="218"
+              width="200"
+              height="34"
+              rx="6"
+              fill="#1F2937"
+              stroke="#D97706"
+              strokeWidth="1"
+            />
+            <text
+              x="22"
+              y="240"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              4.
+            </text>
+            <text x="36" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Polarity
+            </text>
 
-            <rect x="10" y="258" width="200" height="34" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
-            <text x="22" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">5.</text>
-            <text x="36" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Earth Electrode Resistance</text>
+            <rect
+              x="10"
+              y="258"
+              width="200"
+              height="34"
+              rx="6"
+              fill="#1F2937"
+              stroke="#D97706"
+              strokeWidth="1"
+            />
+            <text
+              x="22"
+              y="280"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              5.
+            </text>
+            <text x="36" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Earth Electrode Resistance
+            </text>
 
             {/* Right Column - LIVE TESTS */}
             <rect x="290" y="42" width="200" height="36" rx="8" fill="#DC2626" />
-            <text x="390" y="66" textAnchor="middle" fill="white" fontSize="14" fontFamily="system-ui, sans-serif" fontWeight="bold">LIVE TESTS</text>
+            <text
+              x="390"
+              y="66"
+              textAnchor="middle"
+              fill="white"
+              fontSize="14"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              LIVE TESTS
+            </text>
 
-            <rect x="290" y="86" width="200" height="40" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
-            <text x="302" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">6.</text>
-            <text x="316" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Earth Fault Loop</text>
-            <text x="316" y="118" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Impedance (Zs)</text>
+            <rect
+              x="290"
+              y="86"
+              width="200"
+              height="40"
+              rx="6"
+              fill="#1F2937"
+              stroke="#DC2626"
+              strokeWidth="1"
+            />
+            <text
+              x="302"
+              y="103"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              6.
+            </text>
+            <text x="316" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Earth Fault Loop
+            </text>
+            <text x="316" y="118" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Impedance (Zs)
+            </text>
 
-            <rect x="290" y="132" width="200" height="40" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
-            <text x="302" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">7.</text>
-            <text x="316" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Prospective Fault</text>
-            <text x="316" y="164" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Current (PFC)</text>
+            <rect
+              x="290"
+              y="132"
+              width="200"
+              height="40"
+              rx="6"
+              fill="#1F2937"
+              stroke="#DC2626"
+              strokeWidth="1"
+            />
+            <text
+              x="302"
+              y="149"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              7.
+            </text>
+            <text x="316" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Prospective Fault
+            </text>
+            <text x="316" y="164" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Current (PFC)
+            </text>
 
-            <rect x="290" y="178" width="200" height="34" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
-            <text x="302" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">8.</text>
-            <text x="316" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">RCD Operation</text>
+            <rect
+              x="290"
+              y="178"
+              width="200"
+              height="34"
+              rx="6"
+              fill="#1F2937"
+              stroke="#DC2626"
+              strokeWidth="1"
+            />
+            <text
+              x="302"
+              y="200"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              8.
+            </text>
+            <text x="316" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              RCD Operation
+            </text>
 
-            <rect x="290" y="218" width="200" height="34" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
-            <text x="302" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">9.</text>
-            <text x="316" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Phase Sequence</text>
+            <rect
+              x="290"
+              y="218"
+              width="200"
+              height="34"
+              rx="6"
+              fill="#1F2937"
+              stroke="#DC2626"
+              strokeWidth="1"
+            />
+            <text
+              x="302"
+              y="240"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              9.
+            </text>
+            <text x="316" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Phase Sequence
+            </text>
 
-            <rect x="290" y="258" width="200" height="34" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
-            <text x="302" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">10.</text>
-            <text x="320" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Functional Testing</text>
+            <rect
+              x="290"
+              y="258"
+              width="200"
+              height="34"
+              rx="6"
+              fill="#1F2937"
+              stroke="#DC2626"
+              strokeWidth="1"
+            />
+            <text
+              x="302"
+              y="280"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              10.
+            </text>
+            <text x="320" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Functional Testing
+            </text>
 
             {/* Central barrier / arrow */}
-            <line x1="250" y1="86" x2="250" y2="292" stroke="#9CA3AF" strokeWidth="2" strokeDasharray="6,4" />
+            <line
+              x1="250"
+              y1="86"
+              x2="250"
+              y2="292"
+              stroke="#9CA3AF"
+              strokeWidth="2"
+              strokeDasharray="6,4"
+            />
 
             {/* Arrow from dead to live */}
             <rect x="218" y="310" width="64" height="24" rx="4" fill="none" />
@@ -263,23 +540,106 @@ const AM2Module4Section1 = () => {
             <polygon points="266,316 276,322 266,328" fill="#9CA3AF" />
 
             {/* Central message box */}
-            <rect x="80" y="350" width="340" height="50" rx="8" fill="#1F2937" stroke="#D97706" strokeWidth="2" />
-            <text x="250" y="372" textAnchor="middle" fill="#FCD34D" fontSize="12" fontFamily="system-ui, sans-serif" fontWeight="bold">ALL DEAD TESTS MUST PASS FIRST</text>
-            <text x="250" y="390" textAnchor="middle" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Live testing without dead test completion = automatic fail</text>
+            <rect
+              x="80"
+              y="350"
+              width="340"
+              height="50"
+              rx="8"
+              fill="#1F2937"
+              stroke="#D97706"
+              strokeWidth="2"
+            />
+            <text
+              x="250"
+              y="372"
+              textAnchor="middle"
+              fill="#FCD34D"
+              fontSize="12"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              ALL DEAD TESTS MUST PASS FIRST
+            </text>
+            <text
+              x="250"
+              y="390"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+            >
+              Live testing without dead test completion = automatic fail
+            </text>
 
             {/* Checkmark on dead side */}
-            <circle cx="110" cy="330" r="12" fill="#22C55E" fillOpacity="0.2" stroke="#22C55E" strokeWidth="1.5" />
-            <path d="M103 330 L108 335 L117 325" stroke="#22C55E" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            <text x="110" y="355" textAnchor="middle" fill="#9CA3AF" fontSize="9" fontFamily="system-ui, sans-serif">Complete</text>
+            <circle
+              cx="110"
+              cy="330"
+              r="12"
+              fill="#22C55E"
+              fillOpacity="0.2"
+              stroke="#22C55E"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M103 330 L108 335 L117 325"
+              stroke="#22C55E"
+              strokeWidth="2.5"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <text
+              x="110"
+              y="355"
+              textAnchor="middle"
+              fill="#9CA3AF"
+              fontSize="9"
+              fontFamily="system-ui, sans-serif"
+            >
+              Complete
+            </text>
 
             {/* Lock on live side — SVG padlock shape */}
-            <circle cx="390" cy="330" r="12" fill="#DC2626" fillOpacity="0.2" stroke="#DC2626" strokeWidth="1.5" />
+            <circle
+              cx="390"
+              cy="330"
+              r="12"
+              fill="#DC2626"
+              fillOpacity="0.2"
+              stroke="#DC2626"
+              strokeWidth="1.5"
+            />
             <rect x="384" y="329" width="12" height="9" rx="1.5" fill="#DC2626" />
-            <path d="M387 329 V326 A3 3 0 0 1 393 326 V329" stroke="#DC2626" strokeWidth="1.5" fill="none" />
-            <text x="390" y="355" textAnchor="middle" fill="#9CA3AF" fontSize="9" fontFamily="system-ui, sans-serif">Locked</text>
+            <path
+              d="M387 329 V326 A3 3 0 0 1 393 326 V329"
+              stroke="#DC2626"
+              strokeWidth="1.5"
+              fill="none"
+            />
+            <text
+              x="390"
+              y="355"
+              textAnchor="middle"
+              fill="#9CA3AF"
+              fontSize="9"
+              fontFamily="system-ui, sans-serif"
+            >
+              Locked
+            </text>
 
             {/* Bottom note */}
-            <text x="250" y="430" textAnchor="middle" fill="#9CA3AF" fontSize="10" fontFamily="system-ui, sans-serif">IET Guidance Note 3 / BS 7671 Part 6</text>
+            <text
+              x="250"
+              y="430"
+              textAnchor="middle"
+              fill="#9CA3AF"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+            >
+              IET Guidance Note 3 / BS 7671 Part 6
+            </text>
           </svg>
         </div>
       </div>
@@ -294,73 +654,104 @@ const AM2Module4Section1 = () => {
         <div className="bg-amber-950/20 border border-amber-800/30 rounded-xl p-4 mb-4">
           <h4 className="font-medium text-amber-200 mb-3">DEAD TESTS FIRST - MANDATORY SEQUENCE</h4>
           <p className="text-ios-callout text-amber-300 mb-4">
-            All dead tests must be completed and satisfactory before ANY live testing commences. This sequence is non-negotiable for AM2 assessment success.
+            All dead tests must be completed and satisfactory before ANY live testing commences.
+            This sequence is non-negotiable for AM2 assessment success.
           </p>
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                1
+              </div>
               <div className="flex-1">
-                <h5 className="font-medium text-white mb-1">Continuity of Protective Conductors (R1 + R2)</h5>
+                <h5 className="font-medium text-white mb-1">
+                  Continuity of Protective Conductors (R1 + R2)
+                </h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
                   Test CPC continuity from consumer unit to all points. Use low resistance ohmmeter.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
-                  <strong>AM2 Requirement:</strong> Record readings for each circuit. Demonstrate safe test lead connection.
+                  <strong>AM2 Requirement:</strong> Record readings for each circuit. Demonstrate
+                  safe test lead connection.
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                2
+              </div>
               <div className="flex-1">
-                <h5 className="font-medium text-white mb-1">Continuity of Ring Final Circuit Conductors</h5>
+                <h5 className="font-medium text-white mb-1">
+                  Continuity of Ring Final Circuit Conductors
+                </h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
                   Test ring continuity for line, neutral and CPC. Calculate (R1 + R2) values.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
-                  <strong>AM2 Requirement:</strong> Show cross-connection method and record end-to-end resistance values.
+                  <strong>AM2 Requirement:</strong> Show cross-connection method and record
+                  end-to-end resistance values.
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                3
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Insulation Resistance</h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
-                  Test at 500V DC minimum for circuits up to 500V. Test between all conductors and to earth.
+                  Test at 500V DC minimum for circuits up to 500V. Test between all conductors and
+                  to earth.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote space-y-1">
-                  <div><strong>Test Sequence:</strong> Line to Neutral, Line to Earth, Neutral to Earth</div>
-                  <div><strong>Minimum Values:</strong> 1.0 MΩ for most circuits, 0.5 MΩ for fire alarm/SELV</div>
-                  <div><strong>AM2 Critical:</strong> Disconnect electronic equipment, remove lamps where practical</div>
+                  <div>
+                    <strong>Test Sequence:</strong> Line to Neutral, Line to Earth, Neutral to Earth
+                  </div>
+                  <div>
+                    <strong>Minimum Values:</strong> 1.0 MΩ for most circuits, 0.5 MΩ for fire
+                    alarm/SELV
+                  </div>
+                  <div>
+                    <strong>AM2 Critical:</strong> Disconnect electronic equipment, remove lamps
+                    where practical
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
+              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                4
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Polarity</h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
-                  Verify correct polarity at all single-pole devices, lampholders and socket outlets.
+                  Verify correct polarity at all single-pole devices, lampholders and socket
+                  outlets.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
-                  <strong>AM2 Requirement:</strong> Test using continuity tester. Verify line conductor connects to correct terminals.
+                  <strong>AM2 Requirement:</strong> Test using continuity tester. Verify line
+                  conductor connects to correct terminals.
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</div>
+              <div className="w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                5
+              </div>
               <div className="flex-1">
-                <h5 className="font-medium text-white mb-1">Earth Electrode Resistance (where applicable)</h5>
+                <h5 className="font-medium text-white mb-1">
+                  Earth Electrode Resistance (where applicable)
+                </h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
                   For TT systems only. Test electrode resistance using appropriate earth tester.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
-                  <strong>Maximum Values:</strong> Typically 200Ω for TT systems with 30mA RCD protection
+                  <strong>Maximum Values:</strong> Typically 200Ω for TT systems with 30mA RCD
+                  protection
                 </div>
               </div>
             </div>
@@ -386,60 +777,86 @@ const AM2Module4Section1 = () => {
         <div className="bg-red-950/20 border border-red-800/30 rounded-xl p-4">
           <h4 className="font-medium text-red-200 mb-3">LIVE TESTS - STRICT SEQUENCE REQUIRED</h4>
           <p className="text-ios-callout text-elec-yellow mb-4">
-            Live testing ONLY after ALL dead tests are satisfactory. Performing live tests prematurely = automatic AM2 failure.
+            Live testing ONLY after ALL dead tests are satisfactory. Performing live tests
+            prematurely = automatic AM2 failure.
           </p>
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">6</div>
+              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                6
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Earth Fault Loop Impedance (Zs)</h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
-                  Measure Zs at furthest point of each circuit. Compare against BS 7671 maximum values.
+                  Measure Zs at furthest point of each circuit. Compare against BS 7671 maximum
+                  values.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote space-y-1">
-                  <div><strong>BS 7671 Maximum Values:</strong></div>
+                  <div>
+                    <strong>BS 7671 Maximum Values:</strong>
+                  </div>
                   <div>Type B MCB: 32A = 1.44Ω, 20A = 2.3Ω, 16A = 2.87Ω, 6A = 7.67Ω</div>
                   <div>Type C MCB: Values x 0.5</div>
-                  <div><strong>AM2 Critical:</strong> Account for 80% rule for protective device operation</div>
+                  <div>
+                    <strong>AM2 Critical:</strong> Account for 80% rule for protective device
+                    operation
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">7</div>
+              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                7
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">RCD Operation and Timing</h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
                   Test RCD trip current and time at rated current and 5x rated current.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote space-y-1">
-                  <div><strong>Test Requirements:</strong></div>
+                  <div>
+                    <strong>Test Requirements:</strong>
+                  </div>
                   <div>Trip at 50% rated current: Should NOT trip</div>
                   <div>Trip at 100% rated current: Must trip within 300ms</div>
                   <div>Trip at 5x rated current: Must trip within 40ms</div>
-                  <div><strong>AM2 Critical:</strong> Test both positive and negative half cycles</div>
+                  <div>
+                    <strong>AM2 Critical:</strong> Test both positive and negative half cycles
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">8</div>
+              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                8
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Voltage Measurements</h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
                   Verify supply voltage at consumer unit and at extremities of circuits.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote space-y-1">
-                  <div><strong>Acceptable Range:</strong> 230V +/-10% (207V - 253V)</div>
-                  <div><strong>3-Phase:</strong> 400V +/-10% (360V - 440V)</div>
-                  <div><strong>AM2 Requirement:</strong> Record voltage drop calculations where significant</div>
+                  <div>
+                    <strong>Acceptable Range:</strong> 230V +/-10% (207V - 253V)
+                  </div>
+                  <div>
+                    <strong>3-Phase:</strong> 400V +/-10% (360V - 440V)
+                  </div>
+                  <div>
+                    <strong>AM2 Requirement:</strong> Record voltage drop calculations where
+                    significant
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">9</div>
+              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                9
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Phase Sequence (3-Phase Only)</h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
@@ -452,14 +869,17 @@ const AM2Module4Section1 = () => {
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">10</div>
+              <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                10
+              </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Functional Testing</h5>
                 <p className="text-ios-footnote text-white/80 mb-2">
                   Test operation of switches, controls, and protective devices.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
-                  <strong>AM2 Requirement:</strong> Demonstrate safe switching procedures and verify correct operation
+                  <strong>AM2 Requirement:</strong> Demonstrate safe switching procedures and verify
+                  correct operation
                 </div>
               </div>
             </div>
@@ -560,28 +980,36 @@ const AM2Module4Section1 = () => {
                 <span className="font-medium text-green-400 min-w-[20px]">&#10003;</span>
                 <div>
                   <strong className="text-white">Strict adherence to GN3 test sequence</strong>
-                  <p className="text-ios-footnote mt-1">No deviation from prescribed order - this demonstrates professional competence</p>
+                  <p className="text-ios-footnote mt-1">
+                    No deviation from prescribed order - this demonstrates professional competence
+                  </p>
                 </div>
               </li>
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">&#10003;</span>
                 <div>
                   <strong className="text-white">Safe working practices throughout</strong>
-                  <p className="text-ios-footnote mt-1">Proper isolation verification, appropriate PPE, safe test procedures</p>
+                  <p className="text-ios-footnote mt-1">
+                    Proper isolation verification, appropriate PPE, safe test procedures
+                  </p>
                 </div>
               </li>
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">&#10003;</span>
                 <div>
                   <strong className="text-white">Competent use of test equipment</strong>
-                  <p className="text-ios-footnote mt-1">Correct instrument selection, proper lead connections, accurate readings</p>
+                  <p className="text-ios-footnote mt-1">
+                    Correct instrument selection, proper lead connections, accurate readings
+                  </p>
                 </div>
               </li>
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">&#10003;</span>
                 <div>
                   <strong className="text-white">Understanding of test results</strong>
-                  <p className="text-ios-footnote mt-1">Ability to interpret readings and identify potential issues</p>
+                  <p className="text-ios-footnote mt-1">
+                    Ability to interpret readings and identify potential issues
+                  </p>
                 </div>
               </li>
             </ul>
@@ -590,12 +1018,24 @@ const AM2Module4Section1 = () => {
           <div className="bg-orange-950/20 border border-orange-800/30 rounded-xl p-4">
             <h4 className="font-medium text-orange-200 mb-2">Common Failure Points</h4>
             <ul className="space-y-1 text-ios-callout text-elec-yellow">
-              <li><strong>Testing live before dead tests complete</strong> - Automatic failure</li>
-              <li><strong>Inadequate isolation verification</strong> - Safety breach</li>
-              <li><strong>Poor test lead technique</strong> - Unreliable results</li>
-              <li><strong>Misunderstanding of test results</strong> - Lacks competence demonstration</li>
-              <li><strong>Incomplete documentation</strong> - Professional standards not met</li>
-              <li><strong>Rushing through procedures</strong> - Mistakes and missed steps</li>
+              <li>
+                <strong>Testing live before dead tests complete</strong> - Automatic failure
+              </li>
+              <li>
+                <strong>Inadequate isolation verification</strong> - Safety breach
+              </li>
+              <li>
+                <strong>Poor test lead technique</strong> - Unreliable results
+              </li>
+              <li>
+                <strong>Misunderstanding of test results</strong> - Lacks competence demonstration
+              </li>
+              <li>
+                <strong>Incomplete documentation</strong> - Professional standards not met
+              </li>
+              <li>
+                <strong>Rushing through procedures</strong> - Mistakes and missed steps
+              </li>
             </ul>
           </div>
 
@@ -629,7 +1069,8 @@ const AM2Module4Section1 = () => {
                 <div>
                   <h5 className="font-medium text-white mb-1">Safe Working Practices</h5>
                   <p className="text-ios-footnote text-white/80">
-                    Demonstrating isolation, proving dead, appropriate PPE, and risk assessment procedures consistently throughout the assessment.
+                    Demonstrating isolation, proving dead, appropriate PPE, and risk assessment
+                    procedures consistently throughout the assessment.
                   </p>
                 </div>
               </div>
@@ -639,7 +1080,8 @@ const AM2Module4Section1 = () => {
                 <div>
                   <h5 className="font-medium text-white mb-1">Methodical Test Sequence</h5>
                   <p className="text-ios-footnote text-white/80">
-                    Following GN3 sequence exactly - dead tests completely finished before ANY live testing commences.
+                    Following GN3 sequence exactly - dead tests completely finished before ANY live
+                    testing commences.
                   </p>
                 </div>
               </div>
@@ -649,7 +1091,8 @@ const AM2Module4Section1 = () => {
                 <div>
                   <h5 className="font-medium text-white mb-1">Correct Equipment Use</h5>
                   <p className="text-ios-footnote text-white/80">
-                    Appropriate test instruments, correct settings, proper lead connections, and understanding equipment limitations.
+                    Appropriate test instruments, correct settings, proper lead connections, and
+                    understanding equipment limitations.
                   </p>
                 </div>
               </div>
@@ -659,7 +1102,8 @@ const AM2Module4Section1 = () => {
                 <div>
                   <h5 className="font-medium text-white mb-1">Accurate Documentation</h5>
                   <p className="text-ios-footnote text-white/80">
-                    Recording results systematically, understanding what values mean, and identifying when results require investigation.
+                    Recording results systematically, understanding what values mean, and
+                    identifying when results require investigation.
                   </p>
                 </div>
               </div>
@@ -669,7 +1113,8 @@ const AM2Module4Section1 = () => {
                 <div>
                   <h5 className="font-medium text-white mb-1">Professional Communication</h5>
                   <p className="text-ios-footnote text-white/80">
-                    Explaining procedures, discussing findings, and demonstrating understanding of regulations and standards.
+                    Explaining procedures, discussing findings, and demonstrating understanding of
+                    regulations and standards.
                   </p>
                 </div>
               </div>
@@ -716,7 +1161,10 @@ const AM2Module4Section1 = () => {
           <ul className="space-y-2 text-ios-callout text-green-300">
             <li className="flex items-start gap-2">
               <span className="text-green-500 text-xs mt-1">&#10003;</span>
-              <span>NET AM2 success depends on following the exact GN3 testing sequence without deviation</span>
+              <span>
+                NET AM2 success depends on following the exact GN3 testing sequence without
+                deviation
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-500 text-xs mt-1">&#10003;</span>
@@ -724,19 +1172,27 @@ const AM2Module4Section1 = () => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-500 text-xs mt-1">&#10003;</span>
-              <span>BS 7671 test values and procedures must be applied correctly and consistently</span>
+              <span>
+                BS 7671 test values and procedures must be applied correctly and consistently
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-500 text-xs mt-1">&#10003;</span>
-              <span>Safe working practices are paramount - unsafe practice results in automatic failure</span>
+              <span>
+                Safe working practices are paramount - unsafe practice results in automatic failure
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-500 text-xs mt-1">&#10003;</span>
-              <span>Professional documentation and result interpretation demonstrate competence</span>
+              <span>
+                Professional documentation and result interpretation demonstrate competence
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-500 text-xs mt-1">&#10003;</span>
-              <span>Assessors evaluate methodology and safety awareness, not just numerical results</span>
+              <span>
+                Assessors evaluate methodology and safety awareness, not just numerical results
+              </span>
             </li>
           </ul>
         </div>
@@ -744,8 +1200,9 @@ const AM2Module4Section1 = () => {
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
           <h4 className="font-medium text-elec-yellow mb-3">Next Steps</h4>
           <p className="text-ios-callout text-white/80 mb-3">
-            Having mastered the testing sequence, you should now focus on practical application and timing.
-            The next section covers specific test procedures and common scenarios you will encounter during your AM2 assessment.
+            Having mastered the testing sequence, you should now focus on practical application and
+            timing. The next section covers specific test procedures and common scenarios you will
+            encounter during your AM2 assessment.
           </p>
           <div className="flex items-center gap-2 text-ios-callout text-elec-yellow">
             <Lightbulb className="w-4 h-4" />

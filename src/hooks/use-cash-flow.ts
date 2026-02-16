@@ -67,9 +67,19 @@ export interface FinancialMetrics {
 }
 
 const defaultScenarios: Scenario[] = [
-  { id: 'pessimistic', name: 'Conservative', multiplier: 0.8, description: 'Cautious outlook with reduced income' },
-  { id: 'realistic', name: 'Realistic', multiplier: 1.0, description: 'Expected business performance' },
-  { id: 'optimistic', name: 'Optimistic', multiplier: 1.2, description: 'Strong growth scenario' }
+  {
+    id: 'pessimistic',
+    name: 'Conservative',
+    multiplier: 0.8,
+    description: 'Cautious outlook with reduced income',
+  },
+  {
+    id: 'realistic',
+    name: 'Realistic',
+    multiplier: 1.0,
+    description: 'Expected business performance',
+  },
+  { id: 'optimistic', name: 'Optimistic', multiplier: 1.2, description: 'Strong growth scenario' },
 ];
 
 const defaultIncomeStreams: IncomeStream[] = [
@@ -79,7 +89,7 @@ const defaultIncomeStreams: IncomeStream[] = [
     amount: 6000,
     frequency: 'monthly',
     paymentDelayDays: 14,
-    growth: 0.05
+    growth: 0.05,
   },
   {
     id: 'seasonal-work',
@@ -88,8 +98,8 @@ const defaultIncomeStreams: IncomeStream[] = [
     frequency: 'seasonal',
     seasonalMultiplier: [0.6, 0.7, 0.9, 1.1, 1.3, 1.5, 1.6, 1.4, 1.2, 1.0, 0.8, 0.7],
     paymentDelayDays: 21,
-    growth: 0.03
-  }
+    growth: 0.03,
+  },
 ];
 
 const defaultExpenseCategories: ExpenseCategory[] = [
@@ -99,7 +109,7 @@ const defaultExpenseCategories: ExpenseCategory[] = [
     amount: 2000,
     frequency: 'monthly',
     variable: true,
-    growth: 0.03
+    growth: 0.03,
   },
   {
     id: 'labour',
@@ -107,7 +117,7 @@ const defaultExpenseCategories: ExpenseCategory[] = [
     amount: 1500,
     frequency: 'monthly',
     variable: true,
-    growth: 0.04
+    growth: 0.04,
   },
   {
     id: 'overheads',
@@ -115,7 +125,7 @@ const defaultExpenseCategories: ExpenseCategory[] = [
     amount: 800,
     frequency: 'monthly',
     variable: false,
-    growth: 0.02
+    growth: 0.02,
   },
   {
     id: 'insurance',
@@ -124,7 +134,7 @@ const defaultExpenseCategories: ExpenseCategory[] = [
     frequency: 'annual',
     timing: 3,
     variable: false,
-    growth: 0.05
+    growth: 0.05,
   },
   {
     id: 'equipment',
@@ -133,8 +143,8 @@ const defaultExpenseCategories: ExpenseCategory[] = [
     frequency: 'quarterly',
     timing: 6,
     variable: false,
-    growth: 0.02
-  }
+    growth: 0.02,
+  },
 ];
 
 export const useCashFlow = () => {
@@ -153,73 +163,111 @@ export const useCashFlow = () => {
     monthlyLoanRepayments: 0,
   });
 
-  const loadTemplate = useCallback((
-    incomeStreams: Omit<IncomeStream, 'id'>[],
-    expenseCategories: Omit<ExpenseCategory, 'id'>[]
-  ) => {
-    setState(prev => ({
-      ...prev,
-      incomeStreams: incomeStreams.map((stream, idx) => ({ ...stream, id: `income-${Date.now()}-${idx}` })),
-      expenseCategories: expenseCategories.map((cat, idx) => ({ ...cat, id: `expense-${Date.now()}-${idx}` }))
-    }));
-  }, []);
+  const loadTemplate = useCallback(
+    (
+      incomeStreams: Omit<IncomeStream, 'id'>[],
+      expenseCategories: Omit<ExpenseCategory, 'id'>[]
+    ) => {
+      setState((prev) => ({
+        ...prev,
+        incomeStreams: incomeStreams.map((stream, idx) => ({
+          ...stream,
+          id: `income-${Date.now()}-${idx}`,
+        })),
+        expenseCategories: expenseCategories.map((cat, idx) => ({
+          ...cat,
+          id: `expense-${Date.now()}-${idx}`,
+        })),
+      }));
+    },
+    []
+  );
 
   const updateIncomeStream = useCallback((id: string, updates: Partial<IncomeStream>) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      incomeStreams: prev.incomeStreams.map(stream =>
+      incomeStreams: prev.incomeStreams.map((stream) =>
         stream.id === id ? { ...stream, ...updates } : stream
-      )
+      ),
     }));
   }, []);
 
   const addIncomeStream = useCallback((stream: Omit<IncomeStream, 'id'>) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      incomeStreams: [...prev.incomeStreams, { ...stream, id: Date.now().toString() }]
+      incomeStreams: [...prev.incomeStreams, { ...stream, id: Date.now().toString() }],
     }));
   }, []);
 
   const removeIncomeStream = useCallback((id: string) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      incomeStreams: prev.incomeStreams.filter(stream => stream.id !== id)
+      incomeStreams: prev.incomeStreams.filter((stream) => stream.id !== id),
     }));
   }, []);
 
   const updateExpenseCategory = useCallback((id: string, updates: Partial<ExpenseCategory>) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      expenseCategories: prev.expenseCategories.map(category =>
+      expenseCategories: prev.expenseCategories.map((category) =>
         category.id === id ? { ...category, ...updates } : category
-      )
+      ),
     }));
   }, []);
 
   const addExpenseCategory = useCallback((category: Omit<ExpenseCategory, 'id'>) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      expenseCategories: [...prev.expenseCategories, { ...category, id: Date.now().toString() }]
+      expenseCategories: [...prev.expenseCategories, { ...category, id: Date.now().toString() }],
     }));
   }, []);
 
   const removeExpenseCategory = useCallback((id: string) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      expenseCategories: prev.expenseCategories.filter(category => category.id !== id)
+      expenseCategories: prev.expenseCategories.filter((category) => category.id !== id),
     }));
   }, []);
 
-  const updateSettings = useCallback((updates: Partial<Pick<CashFlowState,
-    'startingBalance' | 'selectedScenario' | 'emergencyFundTarget' | 'vatQuarter' |
-    'vatScheme' | 'flatRatePercent' | 'badDebtPercent' | 'cardFeesPercent' | 'monthlyLoanRepayments'
-  >>) => {
-    setState(prev => ({ ...prev, ...updates }));
-  }, []);
+  const updateSettings = useCallback(
+    (
+      updates: Partial<
+        Pick<
+          CashFlowState,
+          | 'startingBalance'
+          | 'selectedScenario'
+          | 'emergencyFundTarget'
+          | 'vatQuarter'
+          | 'vatScheme'
+          | 'flatRatePercent'
+          | 'badDebtPercent'
+          | 'cardFeesPercent'
+          | 'monthlyLoanRepayments'
+        >
+      >
+    ) => {
+      setState((prev) => ({ ...prev, ...updates }));
+    },
+    []
+  );
 
   const monthlyProjections = useMemo((): MonthlyProjection[] => {
-    const scenario = state.scenarios.find(s => s.id === state.selectedScenario) || state.scenarios[1];
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const scenario =
+      state.scenarios.find((s) => s.id === state.selectedScenario) || state.scenarios[1];
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     let cumulativeBalance = state.startingBalance;
 
     return Array.from({ length: 12 }, (_, monthIndex) => {
@@ -229,13 +277,16 @@ export const useCashFlow = () => {
 
       // Calculate income
       let totalIncome = 0;
-      state.incomeStreams.forEach(stream => {
+      state.incomeStreams.forEach((stream) => {
         let monthlyAmount = 0;
 
         if (stream.frequency === 'monthly') {
           monthlyAmount = stream.amount * (1 + stream.growth * (monthIndex / 12));
         } else if (stream.frequency === 'seasonal' && stream.seasonalMultiplier) {
-          monthlyAmount = stream.amount * stream.seasonalMultiplier[monthIndex] * (1 + stream.growth * (monthIndex / 12));
+          monthlyAmount =
+            stream.amount *
+            stream.seasonalMultiplier[monthIndex] *
+            (1 + stream.growth * (monthIndex / 12));
         } else if (stream.frequency === 'quarterly' && month % 3 === 1) {
           monthlyAmount = stream.amount * 3 * (1 + stream.growth * (monthIndex / 12));
         }
@@ -247,7 +298,7 @@ export const useCashFlow = () => {
 
       // Calculate expenses
       let totalExpenses = 0;
-      state.expenseCategories.forEach(category => {
+      state.expenseCategories.forEach((category) => {
         let monthlyAmount = 0;
 
         if (category.frequency === 'monthly') {
@@ -287,7 +338,7 @@ export const useCashFlow = () => {
 
       // VAT payment (quarterly, simplified)
       if (month % 3 === state.vatQuarter % 3) {
-        const vatRate = state.vatScheme === 'flat-rate' ? (state.flatRatePercent / 100) : 0.2;
+        const vatRate = state.vatScheme === 'flat-rate' ? state.flatRatePercent / 100 : 0.2;
         const vatPayment = totalIncome * vatRate * 3;
         expenseBreakdown['VAT Payment'] = vatPayment;
         totalExpenses += vatPayment;
@@ -304,26 +355,26 @@ export const useCashFlow = () => {
         netFlow,
         cumulativeBalance,
         incomeBreakdown,
-        expenseBreakdown
+        expenseBreakdown,
       };
     });
   }, [state]);
 
   const insights = useMemo(() => {
     const insights = [];
-    const minBalance = Math.min(...monthlyProjections.map(p => p.cumulativeBalance));
+    const minBalance = Math.min(...monthlyProjections.map((p) => p.cumulativeBalance));
     const totalIncome = monthlyProjections.reduce((sum, p) => sum + p.income, 0);
     const totalExpenses = monthlyProjections.reduce((sum, p) => sum + p.expenses, 0);
     const netAnnual = totalIncome - totalExpenses;
 
     // Cash flow warnings
-    const negativeMonths = monthlyProjections.filter(p => p.cumulativeBalance < 0);
+    const negativeMonths = monthlyProjections.filter((p) => p.cumulativeBalance < 0);
     if (negativeMonths.length > 0) {
       insights.push({
         type: 'warning' as const,
         title: 'Negative Cash Flow Alert',
         message: `Cash flow goes negative in ${negativeMonths.length} month(s). Consider increasing credit facilities or adjusting payment terms.`,
-        priority: 'high' as const
+        priority: 'high' as const,
       });
     }
 
@@ -333,15 +384,15 @@ export const useCashFlow = () => {
         type: 'warning' as const,
         title: 'Emergency Fund Shortfall',
         message: `Minimum balance (£${minBalance.toFixed(0)}) falls below emergency fund target (£${state.emergencyFundTarget.toFixed(0)}).`,
-        priority: 'medium' as const
+        priority: 'medium' as const,
       });
     }
 
     // Seasonal planning
-    const peakMonth = monthlyProjections.reduce((peak, month) => 
+    const peakMonth = monthlyProjections.reduce((peak, month) =>
       month.income > peak.income ? month : peak
     );
-    const lowMonth = monthlyProjections.reduce((low, month) => 
+    const lowMonth = monthlyProjections.reduce((low, month) =>
       month.income < low.income ? month : low
     );
 
@@ -349,7 +400,7 @@ export const useCashFlow = () => {
       type: 'info' as const,
       title: 'Seasonal Pattern',
       message: `Peak income in ${peakMonth.monthName} (£${peakMonth.income.toFixed(0)}), lowest in ${lowMonth.monthName} (£${lowMonth.income.toFixed(0)}).`,
-      priority: 'low' as const
+      priority: 'low' as const,
     });
 
     // Profitability
@@ -358,7 +409,7 @@ export const useCashFlow = () => {
         type: 'success' as const,
         title: 'Positive Annual Outlook',
         message: `Projected annual profit: £${netAnnual.toFixed(0)} across all scenarios.`,
-        priority: 'low' as const
+        priority: 'low' as const,
       });
     }
 
@@ -373,12 +424,15 @@ export const useCashFlow = () => {
     const totalExpenses = monthlyProjections.reduce((sum, p) => sum + p.expenses, 0);
     const avgMonthlyIncome = totalIncome / 12;
     const avgMonthlyExpenses = totalExpenses / 12;
-    const minBalance = Math.min(...monthlyProjections.map(p => p.cumulativeBalance));
-    const maxBalance = Math.max(...monthlyProjections.map(p => p.cumulativeBalance));
+    const minBalance = Math.min(...monthlyProjections.map((p) => p.cumulativeBalance));
+    const maxBalance = Math.max(...monthlyProjections.map((p) => p.cumulativeBalance));
     // Fix infinity bug - return 0 if avgMonthlyExpenses is 0
-    const cashRunway = avgMonthlyExpenses > 0 
-      ? (minBalance < 0 ? 0 : Math.floor(minBalance / avgMonthlyExpenses))
-      : 0;
+    const cashRunway =
+      avgMonthlyExpenses > 0
+        ? minBalance < 0
+          ? 0
+          : Math.floor(minBalance / avgMonthlyExpenses)
+        : 0;
 
     return {
       totalIncome,
@@ -390,25 +444,22 @@ export const useCashFlow = () => {
       maxBalance,
       cashRunway,
       profitMargin: totalIncome > 0 ? ((totalIncome - totalExpenses) / totalIncome) * 100 : 0,
-      breakEvenMonth: monthlyProjections.findIndex(p => p.cumulativeBalance > 0) + 1
+      breakEvenMonth: monthlyProjections.findIndex((p) => p.cumulativeBalance > 0) + 1,
     };
   }, [monthlyProjections]);
 
   const exportToCSV = useCallback(() => {
     const headers = ['Month', 'Income', 'Expenses', 'Net Flow', 'Cumulative Balance'];
-    const rows = monthlyProjections.map(p => [
+    const rows = monthlyProjections.map((p) => [
       p.monthName,
       p.income.toFixed(2),
       p.expenses.toFixed(2),
       p.netFlow.toFixed(2),
-      p.cumulativeBalance.toFixed(2)
+      p.cumulativeBalance.toFixed(2),
     ]);
-    
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.join(','))
-    ].join('\n');
-    
+
+    const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
+
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -426,10 +477,13 @@ Cash Runway: ${financialMetrics.cashRunway} months
 Profit Margin: ${financialMetrics.profitMargin.toFixed(1)}%
 
 Monthly Breakdown:
-${monthlyProjections.map(p => 
-  `${p.monthName}: Income £${p.income.toFixed(0)}, Expenses £${p.expenses.toFixed(0)}, Balance £${p.cumulativeBalance.toFixed(0)}`
-).join('\n')}`;
-    
+${monthlyProjections
+  .map(
+    (p) =>
+      `${p.monthName}: Income £${p.income.toFixed(0)}, Expenses £${p.expenses.toFixed(0)}, Balance £${p.cumulativeBalance.toFixed(0)}`
+  )
+  .join('\n')}`;
+
     navigator.clipboard.writeText(summary);
   }, [monthlyProjections, financialMetrics]);
 
@@ -447,6 +501,6 @@ ${monthlyProjections.map(p =>
     updateSettings,
     loadTemplate,
     exportToCSV,
-    copySummaryToClipboard
+    copySummaryToClipboard,
   };
 };

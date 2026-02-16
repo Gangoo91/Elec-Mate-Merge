@@ -95,8 +95,8 @@ export function InAppBrowserDetector() {
 
         {/* Message */}
         <p className="text-[15px] text-white/70 leading-relaxed">
-          For the best experience, open Elec-Mate in your phone's browser (Safari or Chrome).
-          The {browserName} browser can be slower and may have issues.
+          For the best experience, open Elec-Mate in your phone's browser (Safari or Chrome). The{' '}
+          {browserName} browser can be slower and may have issues.
         </p>
 
         {/* Actions */}

@@ -28,7 +28,7 @@ export const useCertifications = () => {
       return data || [];
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 
@@ -49,7 +49,7 @@ export const useCertificationsByEmployee = (employeeId: string | undefined) => {
     },
     enabled: !!employeeId,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 
@@ -71,6 +71,6 @@ export const useCertificationsByEmployees = (employeeIds: string[]) => {
     },
     enabled: employeeIds.length > 0,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 };

@@ -50,7 +50,7 @@ interface EICWizardData {
   mainSwitchRating?: string;
   mainSwitchBsEn?: string;
   mainSwitchLocation?: string;
-  distributionBoardLocation?: string;  // Legacy field for single board
+  distributionBoardLocation?: string; // Legacy field for single board
   externalLoopImpedance?: string;
   prospectiveFaultCurrent?: string;
 
@@ -136,12 +136,15 @@ export function useEICWizardState(options: UseEICWizardStateOptions) {
   useEffect(() => {
     if (persistKey) {
       try {
-        localStorage.setItem(persistKey, JSON.stringify({
-          data,
-          currentStep,
-          completedSteps: Array.from(completedSteps),
-          skippedSteps: Array.from(skippedSteps),
-        }));
+        localStorage.setItem(
+          persistKey,
+          JSON.stringify({
+            data,
+            currentStep,
+            completedSteps: Array.from(completedSteps),
+            skippedSteps: Array.from(skippedSteps),
+          })
+        );
       } catch (e) {
         console.warn('Failed to persist wizard state:', e);
       }
@@ -166,47 +169,53 @@ export function useEICWizardState(options: UseEICWizardStateOptions) {
     if (currentStep < steps.length - 1) {
       // Mark current as completed if valid
       if (isCurrentStepValid) {
-        setCompletedSteps(prev => new Set([...prev, currentStep]));
+        setCompletedSteps((prev) => new Set([...prev, currentStep]));
       }
-      setCurrentStep(prev => prev + 1);
+      setCurrentStep((prev) => prev + 1);
     }
   }, [currentStep, steps.length, isCurrentStepValid]);
 
   const prevStep = useCallback(() => {
     if (currentStep > 0) {
-      setCurrentStep(prev => prev - 1);
+      setCurrentStep((prev) => prev - 1);
     }
   }, [currentStep]);
 
-  const goToStep = useCallback((step: number) => {
-    if (step >= 0 && step < steps.length) {
-      setCurrentStep(step);
-    }
-  }, [steps.length]);
+  const goToStep = useCallback(
+    (step: number) => {
+      if (step >= 0 && step < steps.length) {
+        setCurrentStep(step);
+      }
+    },
+    [steps.length]
+  );
 
   const skipStep = useCallback(() => {
     if (currentStepConfig?.isOptional) {
-      setSkippedSteps(prev => new Set([...prev, currentStep]));
+      setSkippedSteps((prev) => new Set([...prev, currentStep]));
       nextStep();
     }
   }, [currentStep, currentStepConfig, nextStep]);
 
   // Data updates
   const updateData = useCallback((updates: Partial<EICWizardData>) => {
-    setData(prev => ({ ...prev, ...updates }));
+    setData((prev) => ({ ...prev, ...updates }));
   }, []);
 
   const updateField = useCallback((field: string, value: any) => {
-    setData(prev => ({ ...prev, [field]: value }));
+    setData((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   // Progress calculation
-  const progress = useMemo(() => ({
-    current: currentStep + 1,
-    total: steps.length,
-    percentage: Math.round(((currentStep + 1) / steps.length) * 100),
-    completedCount: completedSteps.size,
-  }), [currentStep, steps.length, completedSteps.size]);
+  const progress = useMemo(
+    () => ({
+      current: currentStep + 1,
+      total: steps.length,
+      percentage: Math.round(((currentStep + 1) / steps.length) * 100),
+      completedCount: completedSteps.size,
+    }),
+    [currentStep, steps.length, completedSteps.size]
+  );
 
   // Complete wizard
   const complete = useCallback(() => {

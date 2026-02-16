@@ -1,18 +1,23 @@
-
-import { useState, useEffect, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Slider } from "@/components/ui/slider";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { 
-  PoundSterling, 
-  TrendingUp, 
-  MapPin, 
-  Award, 
+import { useState, useEffect, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Slider } from '@/components/ui/slider';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  PoundSterling,
+  TrendingUp,
+  MapPin,
+  Award,
   Clock,
   Calculator,
   Target,
@@ -30,19 +35,19 @@ import {
   X,
   Lightbulb,
   MessageSquare,
-  Gauge
-} from "lucide-react";
-import DetailedBreakdown from "./DetailedBreakdown";
+  Gauge,
+} from 'lucide-react';
+import DetailedBreakdown from './DetailedBreakdown';
 
 const KnowingYourWorthTab = () => {
   // Enhanced state management
   const [experience, setExperience] = useState(2);
-  const [location, setLocation] = useState("");
-  const [qualification, setQualification] = useState("");
+  const [location, setLocation] = useState('');
+  const [qualification, setQualification] = useState('');
   const [specialisms, setSpecialisms] = useState<string[]>([]);
-  const [companySize, setCompanySize] = useState("");
-  const [contractType, setContractType] = useState("");
-  const [currentSalary, setCurrentSalary] = useState("");
+  const [companySize, setCompanySize] = useState('');
+  const [contractType, setContractType] = useState('');
+  const [currentSalary, setCurrentSalary] = useState('');
   const [skillsAssessment, setSkillsAssessment] = useState<Record<string, number>>({});
   const [showDetailedBreakdown, setShowDetailedBreakdown] = useState(false);
 
@@ -80,27 +85,29 @@ const KnowingYourWorthTab = () => {
 
     // Location premium (updated for 2025 market conditions)
     const locationPremiums: Record<string, number> = {
-      'london': 1.45,
-      'cambridge': 1.35,
-      'oxford': 1.30,
-      'bristol': 1.25,
-      'reading': 1.25,
-      'manchester': 1.20,
-      'birmingham': 1.15,
-      'leeds': 1.15,
-      'edinburgh': 1.20,
-      'glasgow': 1.15,
-      'cardiff': 1.10,
-      'newcastle': 1.05,
-      'liverpool': 1.10,
-      'nottingham': 1.05,
-      'sheffield': 1.00
+      london: 1.45,
+      cambridge: 1.35,
+      oxford: 1.3,
+      bristol: 1.25,
+      reading: 1.25,
+      manchester: 1.2,
+      birmingham: 1.15,
+      leeds: 1.15,
+      edinburgh: 1.2,
+      glasgow: 1.15,
+      cardiff: 1.1,
+      newcastle: 1.05,
+      liverpool: 1.1,
+      nottingham: 1.05,
+      sheffield: 1.0,
     };
 
     const locationKey = location.toLowerCase();
-    const locationMultiplier = Object.keys(locationPremiums).find(key => 
+    const locationMultiplier = Object.keys(locationPremiums).find((key) =>
       locationKey.includes(key)
-    ) ? locationPremiums[Object.keys(locationPremiums).find(key => locationKey.includes(key))!] : 1.0;
+    )
+      ? locationPremiums[Object.keys(locationPremiums).find((key) => locationKey.includes(key))!]
+      : 1.0;
 
     // Qualification bonus
     const qualBonus = (() => {
@@ -113,167 +120,251 @@ const KnowingYourWorthTab = () => {
 
     // Company size multiplier (new for 2025)
     const companySizeMultiplier = (() => {
-      switch(companySize) {
-        case 'startup': return 0.85;
-        case 'small': return 0.95;
-        case 'medium': return 1.05;
-        case 'large': return 1.15;
-        case 'enterprise': return 1.25;
-        default: return 1.0;
+      switch (companySize) {
+        case 'startup':
+          return 0.85;
+        case 'small':
+          return 0.95;
+        case 'medium':
+          return 1.05;
+        case 'large':
+          return 1.15;
+        case 'enterprise':
+          return 1.25;
+        default:
+          return 1.0;
       }
     })();
 
     // Contract type adjustment
     const contractMultiplier = (() => {
-      switch(contractType) {
-        case 'permanent': return 1.0;
-        case 'contract': return 1.3;
-        case 'freelance': return 1.5;
-        default: return 1.0;
+      switch (contractType) {
+        case 'permanent':
+          return 1.0;
+        case 'contract':
+          return 1.3;
+        case 'freelance':
+          return 1.5;
+        default:
+          return 1.0;
       }
     })();
 
     // Specialism premiums (updated for 2025 demand)
     const specialismBonus = specialisms.reduce((total, spec) => {
       const bonuses: Record<string, number> = {
-        'renewable_energy': 8000,
-        'ev_charging': 6000,
-        'smart_home': 5000,
-        'industrial_automation': 7000,
-        'hv_switching': 12000,
-        'fire_systems': 6000,
-        'data_centres': 9000,
-        'marine_offshore': 10000,
-        'niceic_approved': 4000,
-        'testing_inspection': 5000
+        renewable_energy: 8000,
+        ev_charging: 6000,
+        smart_home: 5000,
+        industrial_automation: 7000,
+        hv_switching: 12000,
+        fire_systems: 6000,
+        data_centres: 9000,
+        marine_offshore: 10000,
+        niceic_approved: 4000,
+        testing_inspection: 5000,
       };
       return total + (bonuses[spec] || 0);
     }, 0);
 
-    const finalBase = Math.round((baseSalary * locationMultiplier * qualBonus * companySizeMultiplier * contractMultiplier) + specialismBonus);
-    const finalMax = Math.round((maxSalary * locationMultiplier * qualBonus * companySizeMultiplier * contractMultiplier) + specialismBonus);
+    const finalBase = Math.round(
+      baseSalary * locationMultiplier * qualBonus * companySizeMultiplier * contractMultiplier +
+        specialismBonus
+    );
+    const finalMax = Math.round(
+      maxSalary * locationMultiplier * qualBonus * companySizeMultiplier * contractMultiplier +
+        specialismBonus
+    );
 
     return { min: finalBase, max: finalMax, confidence: calculateConfidence() };
   }, [experience, location, qualification, specialisms, companySize, contractType]);
 
   const marketTrends2025 = [
     {
-      trend: "EV Infrastructure Boom",
-      impact: "+15-25%",
-      description: "Electric vehicle charging point installations driving massive demand",
-      urgency: "high",
-      icon: <Zap className="h-4 w-4" />
+      trend: 'EV Infrastructure Boom',
+      impact: '+15-25%',
+      description: 'Electric vehicle charging point installations driving massive demand',
+      urgency: 'high',
+      icon: <Zap className="h-4 w-4" />,
     },
     {
-      trend: "Heat Pump Installation",
-      impact: "+10-20%",
-      description: "Government net-zero targets creating new opportunities",
-      urgency: "high",
-      icon: <TrendingUp className="h-4 w-4" />
+      trend: 'Heat Pump Installation',
+      impact: '+10-20%',
+      description: 'Government net-zero targets creating new opportunities',
+      urgency: 'high',
+      icon: <TrendingUp className="h-4 w-4" />,
     },
     {
-      trend: "Data Centre Expansion",
-      impact: "+20-35%",
-      description: "AI and cloud computing infrastructure growth",
-      urgency: "medium",
-      icon: <Brain className="h-4 w-4" />
+      trend: 'Data Centre Expansion',
+      impact: '+20-35%',
+      description: 'AI and cloud computing infrastructure growth',
+      urgency: 'medium',
+      icon: <Brain className="h-4 w-4" />,
     },
     {
-      trend: "Smart Building Integration",
-      impact: "+12-18%",
-      description: "IoT and building automation systems integration",
-      urgency: "medium",
-      icon: <Lightbulb className="h-4 w-4" />
-    }
+      trend: 'Smart Building Integration',
+      impact: '+12-18%',
+      description: 'IoT and building automation systems integration',
+      urgency: 'medium',
+      icon: <Lightbulb className="h-4 w-4" />,
+    },
   ];
 
   const salaryRanges = [
     {
-      level: "Apprentice Electrician",
-      yearRange: "0-2 years",
-      salaryRange: "£20,000 - £28,000",
-      description: "Entry level with 2025 minimum wage increases",
+      level: 'Apprentice Electrician',
+      yearRange: '0-2 years',
+      salaryRange: '£20,000 - £28,000',
+      description: 'Entry level with 2025 minimum wage increases',
       icon: <GraduationCap className="h-5 w-5 text-green-400" />,
-      growth: "+8% from 2024"
+      growth: '+8% from 2024',
     },
     {
-      level: "Qualified Electrician",
-      yearRange: "2-5 years",
-      salaryRange: "£28,000 - £42,000",
-      description: "Fully qualified with Level 3, 18th Edition, AM2",
+      level: 'Qualified Electrician',
+      yearRange: '2-5 years',
+      salaryRange: '£28,000 - £42,000',
+      description: 'Fully qualified with Level 3, 18th Edition, AM2',
       icon: <Award className="h-5 w-5 text-blue-400" />,
-      growth: "+12% from 2024"
+      growth: '+12% from 2024',
     },
     {
-      level: "Specialist Electrician",
-      yearRange: "5-10 years",
-      salaryRange: "£42,000 - £58,000",
-      description: "Specialist skills in high-demand areas",
+      level: 'Specialist Electrician',
+      yearRange: '5-10 years',
+      salaryRange: '£42,000 - £58,000',
+      description: 'Specialist skills in high-demand areas',
       icon: <Star className="h-5 w-5 text-elec-yellow" />,
-      growth: "+15% from 2024"
+      growth: '+15% from 2024',
     },
     {
-      level: "Senior/Lead Electrician",
-      yearRange: "10+ years",
-      salaryRange: "£58,000 - £85,000+",
-      description: "Leadership, project management, technical expertise",
+      level: 'Senior/Lead Electrician',
+      yearRange: '10+ years',
+      salaryRange: '£58,000 - £85,000+',
+      description: 'Leadership, project management, technical expertise',
       icon: <Users className="h-5 w-5 text-purple-400" />,
-      growth: "+18% from 2024"
-    }
+      growth: '+18% from 2024',
+    },
   ];
 
   const regionalVariations = [
-    { region: "London & South East", multiplier: "1.2-1.4x", premium: "20-40% above national average" },
-    { region: "Scotland", multiplier: "1.1-1.2x", premium: "10-20% above national average" },
-    { region: "North West", multiplier: "1.0-1.1x", premium: "National average to 10% above" },
-    { region: "Midlands", multiplier: "0.9-1.0x", premium: "10% below to national average" },
-    { region: "South West", multiplier: "0.9-1.0x", premium: "10% below to national average" },
-    { region: "Wales & North East", multiplier: "0.8-0.9x", premium: "10-20% below national average" }
+    {
+      region: 'London & South East',
+      multiplier: '1.2-1.4x',
+      premium: '20-40% above national average',
+    },
+    { region: 'Scotland', multiplier: '1.1-1.2x', premium: '10-20% above national average' },
+    { region: 'North West', multiplier: '1.0-1.1x', premium: 'National average to 10% above' },
+    { region: 'Midlands', multiplier: '0.9-1.0x', premium: '10% below to national average' },
+    { region: 'South West', multiplier: '0.9-1.0x', premium: '10% below to national average' },
+    {
+      region: 'Wales & North East',
+      multiplier: '0.8-0.9x',
+      premium: '10-20% below national average',
+    },
   ];
 
   const skillPremiums = [
-    { skill: "18th Edition BS 7671", premium: "Essential", description: "Mandatory for all electrical work", demand: "critical" },
-    { skill: "EV Charging Installation", premium: "+£6-12k", description: "Electric vehicle infrastructure - 2025 boom", demand: "very-high" },
-    { skill: "Heat Pump Systems", premium: "+£5-10k", description: "Net-zero government targets driving demand", demand: "very-high" },
-    { skill: "NICEIC/NAPIT Approval", premium: "+£4-8k", description: "Enables domestic/commercial certification", demand: "high" },
-    { skill: "Data Centre/Server Rooms", premium: "+£8-15k", description: "AI and cloud infrastructure growth", demand: "very-high" },
-    { skill: "Industrial Automation", premium: "+£6-12k", description: "Smart manufacturing and robotics", demand: "high" },
-    { skill: "Testing & Inspection", premium: "+£4-8k", description: "EICR and compliance - always needed", demand: "high" },
-    { skill: "Fire Alarm Systems", premium: "+£5-9k", description: "Complex building safety systems", demand: "medium" },
-    { skill: "Solar/Battery Storage", premium: "+£7-14k", description: "Renewable energy and storage systems", demand: "very-high" },
-    { skill: "Smart Home/IoT", premium: "+£4-8k", description: "Home automation and connectivity", demand: "high" },
-    { skill: "HV Switching/AP", premium: "+£10-20k", description: "High voltage operations and safety", demand: "medium" },
-    { skill: "Marine/Offshore", premium: "+£12-25k", description: "Offshore wind and marine installations", demand: "high" }
+    {
+      skill: '18th Edition BS 7671',
+      premium: 'Essential',
+      description: 'Mandatory for all electrical work',
+      demand: 'critical',
+    },
+    {
+      skill: 'EV Charging Installation',
+      premium: '+£6-12k',
+      description: 'Electric vehicle infrastructure - 2025 boom',
+      demand: 'very-high',
+    },
+    {
+      skill: 'Heat Pump Systems',
+      premium: '+£5-10k',
+      description: 'Net-zero government targets driving demand',
+      demand: 'very-high',
+    },
+    {
+      skill: 'NICEIC/NAPIT Approval',
+      premium: '+£4-8k',
+      description: 'Enables domestic/commercial certification',
+      demand: 'high',
+    },
+    {
+      skill: 'Data Centre/Server Rooms',
+      premium: '+£8-15k',
+      description: 'AI and cloud infrastructure growth',
+      demand: 'very-high',
+    },
+    {
+      skill: 'Industrial Automation',
+      premium: '+£6-12k',
+      description: 'Smart manufacturing and robotics',
+      demand: 'high',
+    },
+    {
+      skill: 'Testing & Inspection',
+      premium: '+£4-8k',
+      description: 'EICR and compliance - always needed',
+      demand: 'high',
+    },
+    {
+      skill: 'Fire Alarm Systems',
+      premium: '+£5-9k',
+      description: 'Complex building safety systems',
+      demand: 'medium',
+    },
+    {
+      skill: 'Solar/Battery Storage',
+      premium: '+£7-14k',
+      description: 'Renewable energy and storage systems',
+      demand: 'very-high',
+    },
+    {
+      skill: 'Smart Home/IoT',
+      premium: '+£4-8k',
+      description: 'Home automation and connectivity',
+      demand: 'high',
+    },
+    {
+      skill: 'HV Switching/AP',
+      premium: '+£10-20k',
+      description: 'High voltage operations and safety',
+      demand: 'medium',
+    },
+    {
+      skill: 'Marine/Offshore',
+      premium: '+£12-25k',
+      description: 'Offshore wind and marine installations',
+      demand: 'high',
+    },
   ];
 
   const negotiationTips = [
     {
-      category: "Research & Preparation",
+      category: 'Research & Preparation',
       tips: [
-        "Research company salary bands and recent job postings",
-        "Document your qualifications, certifications, and achievements",
+        'Research company salary bands and recent job postings',
+        'Document your qualifications, certifications, and achievements',
         "Prepare examples of value you've added in previous roles",
-        "Know the local market rates for your experience level"
-      ]
+        'Know the local market rates for your experience level',
+      ],
     },
     {
-      category: "Negotiation Strategy",
+      category: 'Negotiation Strategy',
       tips: [
         "Don't accept the first offer immediately - it's expected to negotiate",
-        "Focus on total package including benefits, pension, overtime rates",
-        "Consider asking for training budget or professional development",
-        "Negotiate start date to allow proper notice period"
-      ]
+        'Focus on total package including benefits, pension, overtime rates',
+        'Consider asking for training budget or professional development',
+        'Negotiate start date to allow proper notice period',
+      ],
     },
     {
-      category: "Beyond Base Salary",
+      category: 'Beyond Base Salary',
       tips: [
-        "Company van and fuel card can add £3-6k value annually",
-        "Private healthcare and enhanced pension contributions",
-        "Overtime rates - time and a half vs double time weekends",
-        "Tool allowance and PPE provision"
-      ]
-    }
+        'Company van and fuel card can add £3-6k value annually',
+        'Private healthcare and enhanced pension contributions',
+        'Overtime rates - time and a half vs double time weekends',
+        'Tool allowance and PPE provision',
+      ],
+    },
   ];
 
   return (
@@ -312,7 +403,9 @@ const KnowingYourWorthTab = () => {
             </CardTitle>
             <div className="flex items-center gap-2 self-start sm:self-auto">
               <Gauge className="h-4 w-4 text-green-400" />
-              <span className="text-sm text-green-400">{calculateSalary.confidence}% confidence</span>
+              <span className="text-sm text-green-400">
+                {calculateSalary.confidence}% confidence
+              </span>
             </div>
           </div>
         </CardHeader>
@@ -470,7 +563,9 @@ const KnowingYourWorthTab = () => {
 
           {/* Specialisms */}
           <div className="space-y-3">
-            <label className="text-sm font-medium text-foreground">Specialisms & Certifications</label>
+            <label className="text-sm font-medium text-foreground">
+              Specialisms & Certifications
+            </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { id: 'renewable_energy', label: 'Renewable Energy' },
@@ -482,7 +577,7 @@ const KnowingYourWorthTab = () => {
                 { id: 'data_centres', label: 'Data Centres' },
                 { id: 'marine_offshore', label: 'Marine/Offshore' },
                 { id: 'niceic_approved', label: 'NICEIC Approved' },
-                { id: 'testing_inspection', label: 'Testing & Inspection' }
+                { id: 'testing_inspection', label: 'Testing & Inspection' },
               ].map((spec) => (
                 <div key={spec.id} className="flex items-center gap-3 py-1.5">
                   <Checkbox
@@ -492,7 +587,7 @@ const KnowingYourWorthTab = () => {
                       if (checked) {
                         setSpecialisms([...specialisms, spec.id]);
                       } else {
-                        setSpecialisms(specialisms.filter(s => s !== spec.id));
+                        setSpecialisms(specialisms.filter((s) => s !== spec.id));
                       }
                     }}
                   />
@@ -513,13 +608,15 @@ const KnowingYourWorthTab = () => {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-green-400" />
-                  <span className="font-medium text-foreground text-sm">Your Estimated Salary Range</span>
+                  <span className="font-medium text-foreground text-sm">
+                    Your Estimated Salary Range
+                  </span>
                 </div>
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30 self-start sm:self-auto mt-1 sm:mt-0">
                   2025 Market Rate
                 </Badge>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="text-center p-4 bg-green-500/10 rounded-lg">
                   <div className="text-sm text-muted-foreground mb-1">Minimum Expected</div>
@@ -547,17 +644,21 @@ const KnowingYourWorthTab = () => {
                 <span className="text-foreground font-medium">Confidence factors: </span>
                 {location ? '✓ Location specified' : '• Add location for better accuracy'},{' '}
                 {qualification ? '✓ Qualification provided' : '• Add qualification'},{' '}
-                {specialisms.length > 0 ? `✓ ${specialisms.length} specialisms` : '• Add specialisms for premium calculation'}
+                {specialisms.length > 0
+                  ? `✓ ${specialisms.length} specialisms`
+                  : '• Add specialisms for premium calculation'}
               </div>
             </div>
 
-            <Button 
+            <Button
               onClick={() => setShowDetailedBreakdown(!showDetailedBreakdown)}
               variant="outline"
               className="w-full border-green-500/20 hover:bg-green-500/10"
             >
               {showDetailedBreakdown ? 'Hide Breakdown' : 'Breakdown'}
-              <ArrowRight className={`h-4 w-4 ml-2 transition-transform ${showDetailedBreakdown ? 'rotate-90' : ''}`} />
+              <ArrowRight
+                className={`h-4 w-4 ml-2 transition-transform ${showDetailedBreakdown ? 'rotate-90' : ''}`}
+              />
             </Button>
           </div>
         </CardContent>
@@ -574,15 +675,20 @@ const KnowingYourWorthTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {marketTrends2025.map((trend, index) => (
-              <div key={index} className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors">
+              <div
+                key={index}
+                className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors"
+              >
                 <div className="flex flex-col items-center text-center md:items-start md:text-left mb-3">
                   <div className="flex items-center gap-2 mb-2">
                     {trend.icon}
-                    <Badge className={`text-xs ${
-                      trend.urgency === 'high' 
-                        ? 'bg-red-500/20 text-red-400 border-red-500/30' 
-                        : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                    }`}>
+                    <Badge
+                      className={`text-xs ${
+                        trend.urgency === 'high'
+                          ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                          : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                      }`}
+                    >
                       {trend.urgency === 'high' ? 'Hot' : 'Rising'}
                     </Badge>
                   </div>
@@ -610,7 +716,10 @@ const KnowingYourWorthTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 gap-4">
             {salaryRanges.map((range, index) => (
-              <div key={index} className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all hover:shadow-lg hover:shadow-blue-500/10">
+              <div
+                key={index}
+                className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all hover:shadow-lg hover:shadow-blue-500/10"
+              >
                 <div className="mb-3">
                   <div className="flex items-center gap-2">
                     {range.icon}
@@ -625,7 +734,7 @@ const KnowingYourWorthTab = () => {
                   <TrendingUp className="h-4 w-4 text-green-400" />
                 </div>
                 <p className="text-xs text-muted-foreground mb-3">{range.description}</p>
-                
+
                 {index === Math.floor(experience / 5) && (
                   <div className="mb-3 p-2 bg-elec-yellow/10 rounded border border-elec-yellow/20">
                     <div className="flex items-center gap-1">
@@ -634,7 +743,7 @@ const KnowingYourWorthTab = () => {
                     </div>
                   </div>
                 )}
-                
+
                 <div className="flex justify-end">
                   <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                     {range.growth}
@@ -657,7 +766,10 @@ const KnowingYourWorthTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {regionalVariations.map((region, index) => (
-              <div key={index} className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
+              <div
+                key={index}
+                className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20"
+              >
                 <h4 className="font-medium text-foreground text-sm mb-1">{region.region}</h4>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-purple-400">{region.multiplier}</span>
@@ -683,35 +795,52 @@ const KnowingYourWorthTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {skillPremiums.map((skill, index) => (
-              <div key={index} className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-all hover:shadow-lg hover:shadow-amber-500/10">
+              <div
+                key={index}
+                className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-all hover:shadow-lg hover:shadow-amber-500/10"
+              >
                 <div className="mb-3">
                   <h4 className="font-medium text-foreground text-sm">{skill.skill}</h4>
                   <div className="mt-2 flex gap-2 flex-wrap">
-                    <Badge className={`text-xs ${
-                      skill.premium === "Essential" 
-                        ? "bg-red-500/20 text-red-400 border-red-500/30" 
-                        : "bg-amber-500/20 text-amber-400 border-amber-500/30"
-                    }`}>
+                    <Badge
+                      className={`text-xs ${
+                        skill.premium === 'Essential'
+                          ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                          : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                      }`}
+                    >
                       {skill.premium}
                     </Badge>
-                    <Badge className={`text-xs ${
-                      skill.demand === "very-high" 
-                        ? "bg-red-500/20 text-red-400 border-red-500/30" 
-                        : skill.demand === "high"
-                        ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
-                        : skill.demand === "medium"
-                        ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
-                        : "bg-gray-500/20 text-gray-400 border-gray-500/30"
-                     }`}>
-                      {skill.demand === "very-high" ? "Very High" : 
-                       skill.demand === "high" ? "High" : 
-                       skill.demand === "medium" ? "Medium" : "Critical"}
-                     </Badge>
+                    <Badge
+                      className={`text-xs ${
+                        skill.demand === 'very-high'
+                          ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                          : skill.demand === 'high'
+                            ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+                            : skill.demand === 'medium'
+                              ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
+                              : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                      }`}
+                    >
+                      {skill.demand === 'very-high'
+                        ? 'Very High'
+                        : skill.demand === 'high'
+                          ? 'High'
+                          : skill.demand === 'medium'
+                            ? 'Medium'
+                            : 'Critical'}
+                    </Badge>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mb-2">{skill.description}</p>
-                
-                {specialisms.includes(skill.skill.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '')) && (
+
+                {specialisms.includes(
+                  skill.skill
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]/g, '_')
+                    .replace(/_+/g, '_')
+                    .replace(/^_|_$/g, '')
+                ) && (
                   <div className="flex items-center gap-1 text-xs text-green-400">
                     <Check className="h-3 w-3" />
                     <span>Added to your profile</span>
@@ -738,7 +867,10 @@ const KnowingYourWorthTab = () => {
                 <h4 className="font-medium text-foreground">{category.category}</h4>
                 <div className="space-y-2">
                   {category.tips.map((tip, tipIndex) => (
-                    <div key={tipIndex} className="p-2 bg-red-500/10 rounded border border-red-500/20">
+                    <div
+                      key={tipIndex}
+                      className="p-2 bg-red-500/10 rounded border border-red-500/20"
+                    >
                       <p className="text-xs text-muted-foreground flex items-start gap-2">
                         <AlertCircle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
                         {tip}
@@ -776,15 +908,13 @@ const KnowingYourWorthTab = () => {
                   Based on {experience} years experience
                 </p>
               </div>
-              
+
               <div className="p-4 bg-white/5 rounded-lg border border-white/10">
                 <h4 className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                   <Gauge className="h-4 w-4 text-blue-400" />
                   Confidence Level
                 </h4>
-                <div className="text-lg font-bold text-blue-400">
-                  {calculateSalary.confidence}%
-                </div>
+                <div className="text-lg font-bold text-blue-400">{calculateSalary.confidence}%</div>
                 <Progress value={calculateSalary.confidence} className="mt-2" />
               </div>
             </div>
@@ -795,7 +925,7 @@ const KnowingYourWorthTab = () => {
                 <Calculator className="h-4 w-4 text-elec-yellow" />
                 Salary Calculation Factors
               </h4>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-3 bg-white/5 rounded border border-white/10">
                   <div className="flex items-center justify-between mb-2">
@@ -805,10 +935,15 @@ const KnowingYourWorthTab = () => {
                     </Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {experience <= 1 ? "Apprentice level" :
-                     experience <= 3 ? "Qualified electrician" :
-                     experience <= 7 ? "Experienced electrician" :
-                     experience <= 12 ? "Senior electrician" : "Expert level"}
+                    {experience <= 1
+                      ? 'Apprentice level'
+                      : experience <= 3
+                        ? 'Qualified electrician'
+                        : experience <= 7
+                          ? 'Experienced electrician'
+                          : experience <= 12
+                            ? 'Senior electrician'
+                            : 'Expert level'}
                   </p>
                 </div>
 
@@ -816,11 +951,11 @@ const KnowingYourWorthTab = () => {
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-foreground">Location</span>
                     <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
-                      {location || "Not specified"}
+                      {location || 'Not specified'}
                     </Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {location ? "Location premium applied" : "Add location for better accuracy"}
+                    {location ? 'Location premium applied' : 'Add location for better accuracy'}
                   </p>
                 </div>
 
@@ -828,11 +963,13 @@ const KnowingYourWorthTab = () => {
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-foreground">Qualification</span>
                     <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                      {qualification || "Not specified"}
+                      {qualification || 'Not specified'}
                     </Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {qualification ? "Qualification bonus applied" : "Add qualification for premium"}
+                    {qualification
+                      ? 'Qualification bonus applied'
+                      : 'Add qualification for premium'}
                   </p>
                 </div>
 
@@ -844,9 +981,9 @@ const KnowingYourWorthTab = () => {
                     </Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {specialisms.length > 0 ? 
-                      `Additional £${(specialisms.length * 5000).toLocaleString()} premium` : 
-                      "Add specialisms for higher rates"}
+                    {specialisms.length > 0
+                      ? `Additional £${(specialisms.length * 5000).toLocaleString()} premium`
+                      : 'Add specialisms for higher rates'}
                   </p>
                 </div>
               </div>
@@ -882,9 +1019,15 @@ const KnowingYourWorthTab = () => {
               </h4>
               <div className="space-y-2 text-xs text-muted-foreground">
                 {!location && <div>• Specify your location for accurate regional rates</div>}
-                {!qualification && <div>• Add your highest qualification for bonus calculation</div>}
-                {specialisms.length === 0 && <div>• Select specialisms to unlock premium rates</div>}
-                {specialisms.length < 2 && <div>• Consider additional specialisms like EV charging or renewable energy</div>}
+                {!qualification && (
+                  <div>• Add your highest qualification for bonus calculation</div>
+                )}
+                {specialisms.length === 0 && (
+                  <div>• Select specialisms to unlock premium rates</div>
+                )}
+                {specialisms.length < 2 && (
+                  <div>• Consider additional specialisms like EV charging or renewable energy</div>
+                )}
                 <div>• NICEIC/NAPIT approval can add £4-8k annually</div>
                 <div>• EV charging certification is in high demand for 2025</div>
               </div>

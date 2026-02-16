@@ -8,45 +8,49 @@ export const NewBuildInstallationsSection = () => {
 
   const practicalExamples = [
     {
-      system: "Structured Cabling",
+      system: 'Structured Cabling',
       icon: Cable,
-      implementation: "Cat 6 ethernet throughout, fibre backbone",
-      benefits: "High-speed networking, future-proof, reliable",
-      typical_cost: "£2,000-5,000",
-      planning_stage: "Design"
+      implementation: 'Cat 6 ethernet throughout, fibre backbone',
+      benefits: 'High-speed networking, future-proof, reliable',
+      typical_cost: '£2,000-5,000',
+      planning_stage: 'Design',
     },
     {
-      system: "Central Control Hub",
+      system: 'Central Control Hub',
       icon: Server,
-      implementation: "Dedicated cabinet with UPS, central processor",
-      benefits: "Centralised control, easy maintenance, professional finish",
-      typical_cost: "£1,500-4,000",
-      planning_stage: "Pre-construction"
+      implementation: 'Dedicated cabinet with UPS, central processor',
+      benefits: 'Centralised control, easy maintenance, professional finish',
+      typical_cost: '£1,500-4,000',
+      planning_stage: 'Pre-construction',
     },
     {
-      system: "Smart Lighting Circuits",
+      system: 'Smart Lighting Circuits',
       icon: Zap,
-      implementation: "Dedicated circuits for smart switches and dimmers",
-      benefits: "Whole-home lighting control, scene management",
-      typical_cost: "£3,000-8,000",
-      planning_stage: "Electrical planning"
+      implementation: 'Dedicated circuits for smart switches and dimmers',
+      benefits: 'Whole-home lighting control, scene management',
+      typical_cost: '£3,000-8,000',
+      planning_stage: 'Electrical planning',
     },
     {
-      system: "Integrated Security",
+      system: 'Integrated Security',
       icon: Shield,
-      implementation: "Wired cameras, sensors, access control",
-      benefits: "Professional security system, hidden wiring",
-      typical_cost: "£5,000-15,000",
-      planning_stage: "Design"
-    }
+      implementation: 'Wired cameras, sensors, access control',
+      benefits: 'Professional security system, hidden wiring',
+      typical_cost: '£5,000-15,000',
+      planning_stage: 'Design',
+    },
   ];
 
   const getStageColor = (stage: string) => {
     switch (stage) {
-      case 'Design': return 'text-blue-400';
-      case 'Pre-construction': return 'text-green-400';
-      case 'Electrical planning': return 'text-yellow-400';
-      default: return 'text-gray-400';
+      case 'Design':
+        return 'text-blue-400';
+      case 'Pre-construction':
+        return 'text-green-400';
+      case 'Electrical planning':
+        return 'text-yellow-400';
+      default:
+        return 'text-gray-400';
     }
   };
 
@@ -62,9 +66,10 @@ export const NewBuildInstallationsSection = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
           <p className="text-lg font-medium text-foreground mb-4">
-            Smart systems integrated at the design and construction stage for optimal performance and aesthetics.
+            Smart systems integrated at the design and construction stage for optimal performance
+            and aesthetics.
           </p>
-          
+
           {/* Key Characteristics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
@@ -88,7 +93,7 @@ export const NewBuildInstallationsSection = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
               <h4 className="font-semibold text-foreground mb-3">Limitations</h4>
               <ul className="space-y-2 text-sm">
@@ -114,7 +119,9 @@ export const NewBuildInstallationsSection = () => {
 
           {/* Practical Examples */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4 text-lg">Practical Examples for New Build</h4>
+            <h4 className="font-semibold text-foreground mb-4 text-lg">
+              Practical Examples for New Build
+            </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {practicalExamples.map((example, index) => (
                 <div key={index} className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
@@ -133,7 +140,9 @@ export const NewBuildInstallationsSection = () => {
                     </div>
                     <div className="flex justify-between items-center pt-2">
                       <span className="text-elec-yellow font-medium">{example.typical_cost}</span>
-                      <span className={`text-xs font-medium ${getStageColor(example.planning_stage)}`}>
+                      <span
+                        className={`text-xs font-medium ${getStageColor(example.planning_stage)}`}
+                      >
                         {example.planning_stage}
                       </span>
                     </div>
@@ -209,24 +218,35 @@ export const NewBuildInstallationsSection = () => {
         <CardContent className="space-y-4">
           <div className="space-y-3">
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q1: What does "future-proofing" mean in new build smart homes?</p>
+              <p className="font-medium text-foreground">
+                Q1: What does "future-proofing" mean in new build smart homes?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q2: Why is structured cabling preferred in new builds?</p>
+              <p className="font-medium text-foreground">
+                Q2: Why is structured cabling preferred in new builds?
+              </p>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-              <p className="font-medium text-foreground">Q3: What is one advantage of integrating systems during construction versus retrofitting?</p>
+              <p className="font-medium text-foreground">
+                Q3: What is one advantage of integrating systems during construction versus
+                retrofitting?
+              </p>
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={() => setShowAnswers(!showAnswers)}
-            variant="outline" 
+            variant="outline"
             className="w-full border-gray-600 text-gray-300 hover:bg-[#323232] hover:text-foreground"
           >
-            {showAnswers ? <ChevronUp className="mr-2 h-4 w-4" /> : <ChevronDown className="mr-2 h-4 w-4" />}
+            {showAnswers ? (
+              <ChevronUp className="mr-2 h-4 w-4" />
+            ) : (
+              <ChevronDown className="mr-2 h-4 w-4" />
+            )}
             {showAnswers ? 'Hide Answers' : 'Show Answers'}
           </Button>
 
@@ -234,17 +254,26 @@ export const NewBuildInstallationsSection = () => {
             <div className="space-y-3 pt-4 border-t border-gray-600">
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A1:</p>
-                <p className="text-gray-300">Installing infrastructure (spare conduits, high-specification cabling) and choosing systems that can be easily upgraded as technology advances.</p>
+                <p className="text-gray-300">
+                  Installing infrastructure (spare conduits, high-specification cabling) and
+                  choosing systems that can be easily upgraded as technology advances.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A2:</p>
-                <p className="text-gray-300">Provides reliable, high-speed connections throughout the home, enables professional system integration, and supports future technology upgrades.</p>
+                <p className="text-gray-300">
+                  Provides reliable, high-speed connections throughout the home, enables
+                  professional system integration, and supports future technology upgrades.
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded-lg">
                 <p className="font-medium text-elec-yellow mb-2">A3:</p>
-                <p className="text-gray-300">Lower overall cost (installing during build is cheaper than retrofitting), hidden cabling for better aesthetics, and seamless integration with architecture.</p>
+                <p className="text-gray-300">
+                  Lower overall cost (installing during build is cheaper than retrofitting), hidden
+                  cabling for better aesthetics, and seamless integration with architecture.
+                </p>
               </div>
             </div>
           )}

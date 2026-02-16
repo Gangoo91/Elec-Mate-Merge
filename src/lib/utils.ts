@@ -1,9 +1,8 @@
-
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function formatTime(seconds: number): string {
@@ -29,7 +28,9 @@ export function formatTime(seconds: number): string {
  * @param intensity - Blur intensity: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
  * @returns CSS class string
  */
-export function mobileBlurClass(intensity: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' = 'md'): string {
+export function mobileBlurClass(
+  intensity: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' = 'md'
+): string {
   // Check if running in browser
   if (typeof window === 'undefined') {
     return `backdrop-blur-${intensity}`;
@@ -68,9 +69,11 @@ export function isLowPowerDevice(): boolean {
   }
 
   // Check for slow connection (if available)
-  const connection = (navigator as Navigator & {
-    connection?: { effectiveType?: string };
-  }).connection;
+  const connection = (
+    navigator as Navigator & {
+      connection?: { effectiveType?: string };
+    }
+  ).connection;
   if (connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') {
     return true;
   }

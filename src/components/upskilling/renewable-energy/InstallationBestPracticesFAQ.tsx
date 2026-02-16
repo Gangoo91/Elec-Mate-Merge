@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 const InstallationBestPracticesFAQ = () => {
   return (
@@ -26,12 +26,26 @@ const InstallationBestPracticesFAQ = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">DC systems lack the natural zero-crossing point that AC systems have, making arc faults more persistent and dangerous:</p>
+              <p className="mb-3">
+                DC systems lack the natural zero-crossing point that AC systems have, making arc
+                faults more persistent and dangerous:
+              </p>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                <li><strong>Arc persistence:</strong> DC arcs do not self-extinguish and can sustain indefinitely</li>
-                <li><strong>Higher energy content:</strong> Continuous energy release without natural interruption</li>
-                <li><strong>Difficult to interrupt:</strong> Requires specialised DC-rated switching equipment</li>
-                <li><strong>Fire risk:</strong> Sustained arcs can reach temperatures over 20,000°C</li>
+                <li>
+                  <strong>Arc persistence:</strong> DC arcs do not self-extinguish and can sustain
+                  indefinitely
+                </li>
+                <li>
+                  <strong>Higher energy content:</strong> Continuous energy release without natural
+                  interruption
+                </li>
+                <li>
+                  <strong>Difficult to interrupt:</strong> Requires specialised DC-rated switching
+                  equipment
+                </li>
+                <li>
+                  <strong>Fire risk:</strong> Sustained arcs can reach temperatures over 20,000°C
+                </li>
               </ul>
             </AccordionContent>
           </AccordionItem>
@@ -44,12 +58,25 @@ const InstallationBestPracticesFAQ = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Cable support spacing depends on cable type and environmental conditions:</p>
+              <p className="mb-3">
+                Cable support spacing depends on cable type and environmental conditions:
+              </p>
               <div className="space-y-2 text-sm">
-                <p><strong>Standard DC cables:</strong> Maximum 400mm spacing horizontally, 300mm vertically</p>
-                <p><strong>Flexible cables:</strong> 300mm maximum spacing in all directions</p>
-                <p><strong>Conduit runs:</strong> Support every 1.5m for PVC, every 2m for steel conduit</p>
-                <p><strong>Special considerations:</strong> Reduce spacing by 50% in high wind areas or where thermal expansion is significant</p>
+                <p>
+                  <strong>Standard DC cables:</strong> Maximum 400mm spacing horizontally, 300mm
+                  vertically
+                </p>
+                <p>
+                  <strong>Flexible cables:</strong> 300mm maximum spacing in all directions
+                </p>
+                <p>
+                  <strong>Conduit runs:</strong> Support every 1.5m for PVC, every 2m for steel
+                  conduit
+                </p>
+                <p>
+                  <strong>Special considerations:</strong> Reduce spacing by 50% in high wind areas
+                  or where thermal expansion is significant
+                </p>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -62,7 +89,9 @@ const InstallationBestPracticesFAQ = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Proper earthing creates an equipotential zone and ensures fault protection:</p>
+              <p className="mb-3">
+                Proper earthing creates an equipotential zone and ensures fault protection:
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-foreground font-medium mb-2">Equipment Bonding:</p>
@@ -91,7 +120,9 @@ const InstallationBestPracticesFAQ = () => {
               What labelling is required for PV installations?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Comprehensive labelling ensures safety during maintenance and emergencies:</p>
+              <p className="mb-3">
+                Comprehensive labelling ensures safety during maintenance and emergencies:
+              </p>
               <div className="space-y-3 text-sm">
                 <div className="bg-elec-dark p-3 rounded border border-gray-600">
                   <p className="text-yellow-400 font-medium mb-2">Mandatory Labels:</p>
@@ -121,7 +152,9 @@ const InstallationBestPracticesFAQ = () => {
               How do I prevent cable damage from wildlife?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Wildlife damage is a common cause of cable faults. Prevention strategies include:</p>
+              <p className="mb-3">
+                Wildlife damage is a common cause of cable faults. Prevention strategies include:
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-foreground font-medium mb-2">Physical Protection:</p>
@@ -150,7 +183,10 @@ const InstallationBestPracticesFAQ = () => {
               What are the key considerations for roof mounting?
             </AccordionTrigger>
             <AccordionContent className="text-gray-300">
-              <p className="mb-3">Roof mounting requires careful consideration of structural and weatherproofing factors:</p>
+              <p className="mb-3">
+                Roof mounting requires careful consideration of structural and weatherproofing
+                factors:
+              </p>
               <div className="space-y-3 text-sm">
                 <div className="bg-orange-900/20 p-3 rounded border border-orange-500/30">
                   <p className="text-orange-400 font-medium mb-2">Structural Assessment:</p>

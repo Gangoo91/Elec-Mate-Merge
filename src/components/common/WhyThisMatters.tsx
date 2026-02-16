@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Lightbulb } from "lucide-react";
-import InfoBox from "@/components/common/InfoBox";
+import * as React from 'react';
+import { Lightbulb } from 'lucide-react';
+import InfoBox from '@/components/common/InfoBox';
 
 interface WhyThisMattersProps {
   title?: string;
@@ -9,7 +9,7 @@ interface WhyThisMattersProps {
 }
 
 const WhyThisMatters: React.FC<WhyThisMattersProps> = ({
-  title = "Why this matters",
+  title = 'Why this matters',
   points,
   className,
 }) => {

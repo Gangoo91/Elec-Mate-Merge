@@ -16,27 +16,27 @@ interface ResultsNavPanelProps {
 export const ResultsNavPanel = ({
   circuits,
   selectedCircuit,
-  onSelectCircuit
+  onSelectCircuit,
 }: ResultsNavPanelProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredCircuits = circuits.filter(circuit => 
-    circuit.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    circuit.circuitNumber?.toString().includes(searchQuery)
+  const filteredCircuits = circuits.filter(
+    (circuit) =>
+      circuit.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      circuit.circuitNumber?.toString().includes(searchQuery)
   );
 
   const getCircuitStatus = (circuit: CircuitDesign) => {
     const warnings = circuit.warnings?.length || 0;
     if (warnings > 0) return 'warning';
-    
+
     // Check expected test results for Zs compliance
-    const zsCompliant = circuit.expectedTests?.zs?.compliant ?? 
-                        circuit.expectedTestResults?.zs?.compliant ?? 
-                        true;
+    const zsCompliant =
+      circuit.expectedTests?.zs?.compliant ?? circuit.expectedTestResults?.zs?.compliant ?? true;
     const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
-    
+
     if (!zsCompliant || !vdCompliant) return 'warning';
-    
+
     return 'success';
   };
 
@@ -52,26 +52,26 @@ export const ResultsNavPanel = ({
             placeholder="Search circuits..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("h-9", !searchQuery && "pl-9")}
+            className={cn('h-9', !searchQuery && 'pl-9')}
           />
         </div>
 
         {/* Circuit List */}
         <div className="space-y-1 max-h-[calc(100vh-200px)] overflow-y-auto pr-1">
           {filteredCircuits.map((circuit, index) => {
-            const actualIndex = circuits.findIndex(c => c === circuit);
+            const actualIndex = circuits.findIndex((c) => c === circuit);
             const isSelected = actualIndex === selectedCircuit;
             const status = getCircuitStatus(circuit);
 
             return (
               <Button
                 key={actualIndex}
-                variant={isSelected ? "secondary" : "ghost"}
+                variant={isSelected ? 'secondary' : 'ghost'}
                 size="sm"
                 onClick={() => onSelectCircuit(actualIndex)}
                 className={cn(
-                  "w-full justify-start h-auto py-2 px-3 font-normal",
-                  isSelected && "bg-primary/10 border-l-2 border-l-primary"
+                  'w-full justify-start h-auto py-2 px-3 font-normal',
+                  isSelected && 'bg-primary/10 border-l-2 border-l-primary'
                 )}
               >
                 <div className="flex items-start gap-2 w-full text-left">
@@ -82,7 +82,7 @@ export const ResultsNavPanel = ({
                       <AlertTriangle className="h-4 w-4 text-orange-500" />
                     )}
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       {circuit.circuitNumber && (
@@ -90,11 +90,9 @@ export const ResultsNavPanel = ({
                           {circuit.circuitNumber}
                         </Badge>
                       )}
-                      <span className="text-sm font-medium truncate">
-                        {circuit.name}
-                      </span>
+                      <span className="text-sm font-medium truncate">{circuit.name}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-xs text-muted-foreground">
                         {circuit.cableSize}mm² • {circuit.protectionDevice?.rating}A
@@ -119,7 +117,7 @@ export const ResultsNavPanel = ({
               Compliant
             </span>
             <span className="font-semibold">
-              {circuits.filter(c => !c.warnings || c.warnings.length === 0).length}
+              {circuits.filter((c) => !c.warnings || c.warnings.length === 0).length}
             </span>
           </div>
           <div className="flex items-center justify-between text-sm">
@@ -128,7 +126,7 @@ export const ResultsNavPanel = ({
               With Warnings
             </span>
             <span className="font-semibold">
-              {circuits.filter(c => c.warnings && c.warnings.length > 0).length}
+              {circuits.filter((c) => c.warnings && c.warnings.length > 0).length}
             </span>
           </div>
         </div>

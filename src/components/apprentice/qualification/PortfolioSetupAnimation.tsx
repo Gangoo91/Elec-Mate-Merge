@@ -149,9 +149,7 @@ export function PortfolioSetupAnimation({
                 {isComplete ? 'Portfolio Ready!' : 'Setting Up Portfolio'}
               </h2>
               {qualificationTitle && (
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {qualificationTitle}
-                </p>
+                <p className="text-sm text-muted-foreground line-clamp-2">{qualificationTitle}</p>
               )}
             </motion.div>
 
@@ -182,11 +180,7 @@ export function PortfolioSetupAnimation({
                     <div
                       className={cn(
                         'w-8 h-8 rounded-full flex items-center justify-center transition-colors',
-                        isDone
-                          ? 'bg-green-500/20'
-                          : isActive
-                          ? 'bg-elec-yellow/20'
-                          : 'bg-muted'
+                        isDone ? 'bg-green-500/20' : isActive ? 'bg-elec-yellow/20' : 'bg-muted'
                       )}
                     >
                       {isDone ? (
@@ -205,8 +199,8 @@ export function PortfolioSetupAnimation({
                         isDone
                           ? 'text-green-500'
                           : isActive
-                          ? 'text-foreground'
-                          : 'text-muted-foreground'
+                            ? 'text-foreground'
+                            : 'text-muted-foreground'
                       )}
                     >
                       {step.label}
@@ -243,9 +237,7 @@ export function PortfolioSetupAnimation({
                   )}
                   initial={{ width: '0%' }}
                   animate={{
-                    width: isComplete
-                      ? '100%'
-                      : `${((currentStep + 1) / steps.length) * 100}%`,
+                    width: isComplete ? '100%' : `${((currentStep + 1) / steps.length) * 100}%`,
                   }}
                   transition={{ duration: 0.3 }}
                 />

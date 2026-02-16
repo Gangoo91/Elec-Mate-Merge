@@ -3,10 +3,10 @@
  * Shows salary trends, regional demand, and hiring patterns
  */
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Loader2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Loader2 } from 'lucide-react';
 import {
   BarChart3,
   TrendingUp,
@@ -16,9 +16,9 @@ import {
   PoundSterling,
   Calendar,
   Users,
-} from "lucide-react";
-import { useJobMarketAnalytics } from "@/hooks/job-vacancies/useJobMarketAnalytics";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { useJobMarketAnalytics } from '@/hooks/job-vacancies/useJobMarketAnalytics';
+import { cn } from '@/lib/utils';
 
 const formatCurrency = (amount: number): string => {
   if (amount >= 1000) {
@@ -40,16 +40,16 @@ const formatDate = (dateStr: string | null): string => {
 
 // Regional color map for visual distinction
 const regionColors: Record<string, { bg: string; text: string }> = {
-  'London': { bg: 'bg-blue-500/15', text: 'text-blue-400' },
-  'Manchester': { bg: 'bg-purple-500/15', text: 'text-purple-400' },
-  'Birmingham': { bg: 'bg-orange-500/15', text: 'text-orange-400' },
-  'Leeds': { bg: 'bg-green-500/15', text: 'text-green-400' },
-  'Scotland': { bg: 'bg-cyan-500/15', text: 'text-cyan-400' },
-  'Liverpool': { bg: 'bg-red-500/15', text: 'text-red-400' },
-  'Bristol': { bg: 'bg-emerald-500/15', text: 'text-emerald-400' },
-  'Sheffield': { bg: 'bg-amber-500/15', text: 'text-amber-400' },
-  'Newcastle': { bg: 'bg-indigo-500/15', text: 'text-indigo-400' },
-  'Wales': { bg: 'bg-rose-500/15', text: 'text-rose-400' },
+  London: { bg: 'bg-blue-500/15', text: 'text-blue-400' },
+  Manchester: { bg: 'bg-purple-500/15', text: 'text-purple-400' },
+  Birmingham: { bg: 'bg-orange-500/15', text: 'text-orange-400' },
+  Leeds: { bg: 'bg-green-500/15', text: 'text-green-400' },
+  Scotland: { bg: 'bg-cyan-500/15', text: 'text-cyan-400' },
+  Liverpool: { bg: 'bg-red-500/15', text: 'text-red-400' },
+  Bristol: { bg: 'bg-emerald-500/15', text: 'text-emerald-400' },
+  Sheffield: { bg: 'bg-amber-500/15', text: 'text-amber-400' },
+  Newcastle: { bg: 'bg-indigo-500/15', text: 'text-indigo-400' },
+  Wales: { bg: 'bg-rose-500/15', text: 'text-rose-400' },
 };
 
 const getRegionColor = (region: string) => {
@@ -115,7 +115,9 @@ const JobMarketInsights = () => {
                 <PoundSterling className="h-5 w-5 text-green-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{formatCurrency(analytics.averageSalary)}</p>
+                <p className="text-2xl font-bold text-white">
+                  {formatCurrency(analytics.averageSalary)}
+                </p>
                 <p className="text-xs text-white/50">Avg Salary</p>
               </div>
             </div>
@@ -173,7 +175,7 @@ const JobMarketInsights = () => {
               <div key={region.region} className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Badge className={cn("text-xs font-medium", colors.bg, colors.text)}>
+                    <Badge className={cn('text-xs font-medium', colors.bg, colors.text)}>
                       {region.region}
                     </Badge>
                   </div>
@@ -217,9 +219,7 @@ const JobMarketInsights = () => {
                     style={{ width: `${Math.max(band.percentage, 5)}%` }}
                   >
                     {band.percentage > 15 && (
-                      <span className="text-[10px] text-white font-medium">
-                        {band.percentage}%
-                      </span>
+                      <span className="text-[10px] text-white font-medium">{band.percentage}%</span>
                     )}
                   </div>
                 </div>
@@ -246,14 +246,14 @@ const JobMarketInsights = () => {
               <Badge
                 key={type.type}
                 className={cn(
-                  "text-sm font-medium px-3 py-1.5",
+                  'text-sm font-medium px-3 py-1.5',
                   type.type === 'Permanent'
-                    ? "bg-blue-500/15 text-blue-400"
+                    ? 'bg-blue-500/15 text-blue-400'
                     : type.type === 'Contract'
-                    ? "bg-amber-500/15 text-amber-400"
-                    : type.type === 'Temporary'
-                    ? "bg-orange-500/15 text-orange-400"
-                    : "bg-white/10 text-white/70"
+                      ? 'bg-amber-500/15 text-amber-400'
+                      : type.type === 'Temporary'
+                        ? 'bg-orange-500/15 text-orange-400'
+                        : 'bg-white/10 text-white/70'
                 )}
               >
                 {type.type}

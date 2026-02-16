@@ -16,7 +16,6 @@ export const CommonDefectsContent = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
-        
         {/* High-Risk Visual Defects */}
         <HighRiskDefects />
 
@@ -31,7 +30,6 @@ export const CommonDefectsContent = () => {
 
         {/* Where to Focus Your Checks */}
         <FocusAreas />
-
       </CardContent>
     </Card>
   );

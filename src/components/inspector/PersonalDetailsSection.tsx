@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -13,11 +12,11 @@ interface PersonalDetailsSectionProps {
   onAutoFillDate: () => void;
 }
 
-const PersonalDetailsSection = ({ 
-  formData, 
-  onUpdate, 
-  onCopyFromClient, 
-  onAutoFillDate 
+const PersonalDetailsSection = ({
+  formData,
+  onUpdate,
+  onCopyFromClient,
+  onAutoFillDate,
 }: PersonalDetailsSectionProps) => {
   return (
     <div className="space-y-6">
@@ -25,7 +24,7 @@ const PersonalDetailsSection = ({
         <User className="h-4 w-4 text-elec-yellow" />
         Personal Details
       </div>
-      
+
       <div className="space-y-6">
         <div className="space-y-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -33,9 +32,9 @@ const PersonalDetailsSection = ({
               Inspector Name *
             </Label>
             {formData.clientName && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onCopyFromClient}
                 className="text-xs h-7 px-2 text-blue-400 hover:text-blue-300 hover:bg-muted self-start sm:self-auto"
               >
@@ -50,7 +49,9 @@ const PersonalDetailsSection = ({
             onChange={(e) => onUpdate('inspectorName', e.target.value)}
             placeholder="Full name of inspector"
             className={`w-full bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow ${
-              !formData.inspectorName?.trim() ? 'border-orange-500 focus:border-orange-400 focus:ring-orange-400' : ''
+              !formData.inspectorName?.trim()
+                ? 'border-orange-500 focus:border-orange-400 focus:ring-orange-400'
+                : ''
             }`}
           />
         </div>

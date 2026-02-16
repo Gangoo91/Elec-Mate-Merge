@@ -8,7 +8,9 @@ import { mountingHeightsPhotometricQuizQuestions } from '@/data/upskilling/mount
 
 export const MountingHeightsPhotometricQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(mountingHeightsPhotometricQuizQuestions.length).fill(-1));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    new Array(mountingHeightsPhotometricQuizQuestions.length).fill(-1)
+  );
   const [showResults, setShowResults] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
@@ -70,13 +72,13 @@ export const MountingHeightsPhotometricQuiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)} mb-2`}>
               {score}/{mountingHeightsPhotometricQuizQuestions.length}
             </div>
-            <div className={`text-2xl ${getScoreColor(score)} mb-4`}>
-              {percentage.toFixed(0)}%
-            </div>
+            <div className={`text-2xl ${getScoreColor(score)} mb-4`}>{percentage.toFixed(0)}%</div>
             <p className="text-gray-300">
-              {percentage >= 80 ? 'Excellent work! You have a strong understanding of mounting heights and photometric considerations.' :
-               percentage >= 60 ? 'Good effort! Review the areas you missed and try again.' :
-               'Keep studying! Review the section content and retake the quiz.'}
+              {percentage >= 80
+                ? 'Excellent work! You have a strong understanding of mounting heights and photometric considerations.'
+                : percentage >= 60
+                  ? 'Good effort! Review the areas you missed and try again.'
+                  : 'Keep studying! Review the section content and retake the quiz.'}
             </p>
           </div>
 
@@ -84,25 +86,29 @@ export const MountingHeightsPhotometricQuiz = () => {
             {mountingHeightsPhotometricQuizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
-                <div key={question.id} className="p-4 bg-gradient-to-br from-gray-700/50 to-gray-800/30 border border-gray-600/50 rounded-lg">
+                <div
+                  key={question.id}
+                  className="p-4 bg-gradient-to-br from-gray-700/50 to-gray-800/30 border border-gray-600/50 rounded-lg"
+                >
                   <div className="flex items-start gap-3 mb-2">
-                    {isCorrect ? 
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
+                    {isCorrect ? (
+                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+                    ) : (
                       <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                    }
+                    )}
                     <div className="flex-1">
                       <p className="text-foreground font-medium mb-2">{question.question}</p>
                       <p className="text-sm text-gray-300 mb-2">
-                        <span className="font-medium">Your answer:</span> {question.options[userAnswer]} 
-                        {!isCorrect && (
-                          <span className="text-red-400"> ✗</span>
-                        )}
+                        <span className="font-medium">Your answer:</span>{' '}
+                        {question.options[userAnswer]}
+                        {!isCorrect && <span className="text-red-400"> ✗</span>}
                       </p>
                       {!isCorrect && (
                         <p className="text-sm text-gray-300 mb-2">
-                          <span className="font-medium">Correct answer:</span> {question.options[question.correct]} ✓
+                          <span className="font-medium">Correct answer:</span>{' '}
+                          {question.options[question.correct]} ✓
                         </p>
                       )}
                       <p className="text-sm text-gray-400">{question.explanation}</p>
@@ -114,7 +120,10 @@ export const MountingHeightsPhotometricQuiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button onClick={handleRestart} className="bg-elec-yellow text-elec-dark hover:bg-yellow-600">
+            <Button
+              onClick={handleRestart}
+              className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
+            >
               <RotateCcw className="mr-2 h-4 w-4" />
               Retake Quiz
             </Button>
@@ -135,8 +144,8 @@ export const MountingHeightsPhotometricQuiz = () => {
           Quiz: Mounting Heights and Photometric Considerations
         </CardTitle>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
-            className="bg-elec-yellow h-2 rounded-full transition-all duration-300" 
+          <div
+            className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           ></div>
         </div>
@@ -147,13 +156,16 @@ export const MountingHeightsPhotometricQuiz = () => {
       <CardContent>
         <div className="mb-6">
           <h3 className="text-foreground text-lg font-semibold mb-4">{question.question}</h3>
-          
-          <RadioGroup 
-            value={selectedAnswers[currentQuestion]?.toString()} 
+
+          <RadioGroup
+            value={selectedAnswers[currentQuestion]?.toString()}
             onValueChange={(value) => handleAnswerSelect(parseInt(value))}
           >
             {question.options.map((option, index) => (
-              <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-700/30 transition-colors">
+              <div
+                key={index}
+                className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-700/30 transition-colors"
+              >
                 <RadioGroupItem value={index.toString()} id={`option-${index}`} />
                 <Label htmlFor={`option-${index}`} className="text-gray-300 cursor-pointer flex-1">
                   {option}
@@ -164,21 +176,23 @@ export const MountingHeightsPhotometricQuiz = () => {
         </div>
 
         <div className="flex justify-between">
-          <Button 
-            onClick={handlePrevious} 
+          <Button
+            onClick={handlePrevious}
             disabled={currentQuestion === 0}
-            variant="outline" 
+            variant="outline"
             className="border-gray-600 text-foreground hover:bg-gray-700"
           >
             Previous
           </Button>
-          
-          <Button 
+
+          <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === -1}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
-            {currentQuestion === mountingHeightsPhotometricQuizQuestions.length - 1 ? 'Finish Quiz' : 'Next Question'}
+            {currentQuestion === mountingHeightsPhotometricQuizQuestions.length - 1
+              ? 'Finish Quiz'
+              : 'Next Question'}
           </Button>
         </div>
       </CardContent>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { TableRow, TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
@@ -18,8 +17,7 @@ import {
   ZsCells,
   RcdTestCells,
   AfddCell,
-  
-  RemarksCell
+  RemarksCell,
 } from './TestResultDesktopTableCells';
 import { CircuitNumberCell } from './table-cells/CircuitNumberCell';
 import { ReferenceMethodCell } from './table-cells/ReferenceMethodCell';
@@ -35,50 +33,54 @@ interface TestResultDesktopTableRowProps {
   rowNumber?: number;
 }
 
-const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({ 
-  result, 
-  onUpdate, 
+const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({
+  result,
+  onUpdate,
   onRemove,
   showRegulationStatus = false,
-  rowNumber = 0
+  rowNumber = 0,
 }) => {
   const [showRegulationDialog, setShowRegulationDialog] = useState(false);
-  
+
   const validation = validateTestResult(result);
   const compliance = getOverallCompliance(validation);
   const regulationCheck = checkRegulationCompliance(result);
-  
+
   const getRowBgColor = () => {
     if (result.sourceCircuitId) return 'bg-blue-50/20 hover:bg-blue-50/40';
-    
+
     // Only show regulation status if explicitly enabled
     if (showRegulationStatus && regulationCheck.warnings.length > 0) {
-      const hasCritical = regulationCheck.warnings.some(w => w.severity === 'critical');
+      const hasCritical = regulationCheck.warnings.some((w) => w.severity === 'critical');
       if (hasCritical) return 'hover:bg-red-50/40 border-l-4 border-l-red-400';
       return 'hover:bg-amber-50/40 border-l-4 border-l-amber-400';
     }
-    
+
     // Default to test validation status
     switch (compliance.status) {
-      case 'pass': return 'hover:bg-green-50/30';
-      case 'warning': return 'hover:bg-amber-50/30';
-      case 'fail': return 'hover:bg-red-50/30';
-      default: return 'hover:bg-muted/20';
+      case 'pass':
+        return 'hover:bg-green-50/30';
+      case 'warning':
+        return 'hover:bg-amber-50/30';
+      case 'fail':
+        return 'hover:bg-red-50/30';
+      default:
+        return 'hover:bg-muted/20';
     }
   };
 
   const getRegulationStatusIcon = () => {
     if (!showRegulationStatus) return null;
-    
+
     if (regulationCheck.warnings.length === 0) {
       return (
-          <div title="No regulation issues">
+        <div title="No regulation issues">
           <CheckCircle className="h-3 w-3 text-green-500" />
         </div>
       );
     }
-    
-    const hasCritical = regulationCheck.warnings.some(w => w.severity === 'critical');
+
+    const hasCritical = regulationCheck.warnings.some((w) => w.severity === 'critical');
     if (hasCritical) {
       return (
         <div title={`${regulationCheck.warnings.length} issues (critical)`}>
@@ -86,7 +88,7 @@ const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({
         </div>
       );
     }
-    
+
     return (
       <div title={`${regulationCheck.warnings.length} warnings`}>
         <AlertTriangle className="h-3 w-3 text-amber-500" />
@@ -102,12 +104,17 @@ const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({
   // Get field completion status
   const getFieldCompletion = () => {
     const requiredFields: (keyof TestResult)[] = [
-      'circuitNumber', 'circuitDescription', 'protectiveDeviceRating', 
-      'r1r2', 'insulationLiveNeutral', 'insulationLiveEarth', 'zs'
+      'circuitNumber',
+      'circuitDescription',
+      'protectiveDeviceRating',
+      'r1r2',
+      'insulationLiveNeutral',
+      'insulationLiveEarth',
+      'zs',
     ];
-    const filledCount = requiredFields.filter(field => result[field]).length;
+    const filledCount = requiredFields.filter((field) => result[field]).length;
     const percentage = Math.round((filledCount / requiredFields.length) * 100);
-    
+
     if (percentage === 100) return { icon: '✅', color: 'text-success' };
     if (percentage > 50) return { icon: '⚠️', color: 'text-warning' };
     return { icon: '⭕', color: 'text-muted-foreground' };
@@ -117,7 +124,7 @@ const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({
 
   return (
     <>
-      <TableRow 
+      <TableRow
         data-circuit-id={result.id}
         className="bg-white hover:bg-neutral-50 border-b border-neutral-300 transition-colors h-5"
       >
@@ -138,46 +145,46 @@ const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({
 
         {/* Circuit Description */}
         <CircuitDetailsCells result={result} onUpdate={onUpdate} />
-        
+
         {/* Column 3: Type of wiring */}
         <TypeOfWiringCell result={result} onUpdate={onUpdate} />
-        
+
         {/* Column 4: Reference method */}
         <ReferenceMethodCell result={result} onUpdate={onUpdate} />
-        
+
         {/* Column 5: Number of points served */}
         <PointsServedCell result={result} onUpdate={onUpdate} />
-        
+
         {/* Columns 6-7: Conductors */}
         <ConductorCells result={result} onUpdate={onUpdate} />
-        
+
         {/* Columns 8-12: Overcurrent Protective Device */}
         <ProtectiveDeviceCells result={result} onUpdate={onUpdate} />
-        
+
         {/* Columns 13-16: RCD Details */}
         <RcdDetailsCells result={result} onUpdate={onUpdate} />
-        
+
         {/* Columns 18-21: Ring Final Circuit Tests (r₁, rₙ, r₂, R₁+R₂) */}
         <ContinuityCells result={result} onUpdate={onUpdate} validation={validation} />
-        
+
         {/* Columns 22-24: Insulation Resistance */}
         <InsulationCells result={result} onUpdate={onUpdate} validation={validation} />
-        
+
         {/* Columns 25-26: Polarity & Zs */}
         <ZsCells result={result} onUpdate={onUpdate} validation={validation} />
-        
+
         {/* Columns 27-28: RCD Tests */}
         <RcdTestCells result={result} onUpdate={onUpdate} />
-        
+
         {/* Column 29: AFDD Test */}
         <AfddCell result={result} onUpdate={onUpdate} />
-        
+
         {/* Column 31: Functional Test */}
         <FunctionalTestCell result={result} onUpdate={onUpdate} />
-        
+
         {/* Column 30: Remarks */}
         <RemarksCell result={result} onUpdate={onUpdate} />
-        
+
         {/* BS 7671 Regulation Status */}
         {showRegulationStatus && (
           <td className="px-2 py-1 w-20">

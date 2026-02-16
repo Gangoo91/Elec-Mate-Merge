@@ -1,7 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import {
   Star,
   MapPin,
@@ -17,8 +17,8 @@ import {
   CheckCircle2,
   IdCard,
   Check,
-} from "lucide-react";
-import type { VerificationTier } from "@/components/employer/SparkProfileSheet";
+} from 'lucide-react';
+import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
 
 export interface PremiumTalentCardProps {
   id: string;
@@ -59,14 +59,17 @@ const ecsCardConfig: Record<string, { label: string; color: string; bg: string }
 };
 
 // Elec-ID verification tier configuration with premium gradients
-const tierConfig: Record<VerificationTier, {
-  label: string;
-  color: string;
-  bg: string;
-  border: string;
-  gradient: string;
-  iconBg: string;
-}> = {
+const tierConfig: Record<
+  VerificationTier,
+  {
+    label: string;
+    color: string;
+    bg: string;
+    border: string;
+    gradient: string;
+    iconBg: string;
+  }
+> = {
   basic: {
     label: 'Basic',
     color: 'text-slate-400',
@@ -121,7 +124,10 @@ export function PremiumTalentCard({
   onMessage,
   onBook,
 }: PremiumTalentCardProps) {
-  const initials = name.split(' ').map(n => n[0]).join('');
+  const initials = name
+    .split(' ')
+    .map((n) => n[0])
+    .join('');
   const tier = tierConfig[verificationTier];
   const isAvailableNow = availability === 'Immediate';
   const ecsCard = ecsCardConfig[ecsCardType.toLowerCase()] || ecsCardConfig.gold;
@@ -139,9 +145,10 @@ export function PremiumTalentCard({
         hover:shadow-lg active:scale-[0.99]
         touch-manipulation
         ${tier.border}
-        ${isInLabourBank
-          ? 'ring-2 ring-success/40 shadow-success/10'
-          : 'hover:border-elec-yellow/30'
+        ${
+          isInLabourBank
+            ? 'ring-2 ring-success/40 shadow-success/10'
+            : 'hover:border-elec-yellow/30'
         }
       `}
       onClick={onClick}
@@ -152,9 +159,14 @@ export function PremiumTalentCard({
       )}
 
       {/* Compact Status Bar */}
-      <div className={`px-4 py-2 flex items-center justify-between border-b border-border/50 bg-gradient-to-r ${tier.gradient}`}>
+      <div
+        className={`px-4 py-2 flex items-center justify-between border-b border-border/50 bg-gradient-to-r ${tier.gradient}`}
+      >
         <div className="flex items-center gap-2">
-          <Badge variant="secondary" className={`text-xs px-2 py-0.5 ${tier.bg} ${tier.color} border-0`}>
+          <Badge
+            variant="secondary"
+            className={`text-xs px-2 py-0.5 ${tier.bg} ${tier.color} border-0`}
+          >
             {verificationTier === 'premium' && <Award className="h-3 w-3 mr-1" />}
             {verificationTier === 'verified' && <Shield className="h-3 w-3 mr-1" />}
             {tier.label}
@@ -200,9 +212,7 @@ export function PremiumTalentCard({
                 </div>
               )}
             </div>
-            {currentRole && (
-              <p className="text-sm text-foreground/80 truncate">{currentRole}</p>
-            )}
+            {currentRole && <p className="text-sm text-foreground/80 truncate">{currentRole}</p>}
             <div className="flex items-center gap-2 text-xs text-foreground/70 mt-0.5">
               {totalYearsExperience !== undefined && totalYearsExperience > 0 && (
                 <>
@@ -274,7 +284,10 @@ export function PremiumTalentCard({
         <div className="flex items-center justify-between text-xs text-foreground/70 pt-1 border-t border-border/30">
           <div className="flex items-center gap-2">
             {/* ECS Card Badge */}
-            <Badge variant="secondary" className={`text-xs px-2 py-0.5 ${ecsCard.bg} ${ecsCard.color} border-0`}>
+            <Badge
+              variant="secondary"
+              className={`text-xs px-2 py-0.5 ${ecsCard.bg} ${ecsCard.color} border-0`}
+            >
               <IdCard className="h-3 w-3 mr-1" />
               {ecsCard.label}
             </Badge>
@@ -292,9 +305,7 @@ export function PremiumTalentCard({
             )}
           </div>
           {elecIdNumber && (
-            <span className="flex items-center gap-1 font-mono text-xs">
-              {elecIdNumber}
-            </span>
+            <span className="flex items-center gap-1 font-mono text-xs">{elecIdNumber}</span>
           )}
         </div>
 
@@ -304,7 +315,10 @@ export function PremiumTalentCard({
             variant="ghost"
             size="sm"
             className={`flex-1 h-11 touch-manipulation ${isSaved ? 'text-elec-yellow' : ''}`}
-            onClick={(e) => { e.stopPropagation(); onSave(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSave();
+            }}
           >
             <Heart className={`h-4 w-4 mr-1.5 ${isSaved ? 'fill-elec-yellow' : ''}`} />
             {isSaved ? 'Saved' : 'Save'}
@@ -313,7 +327,10 @@ export function PremiumTalentCard({
             variant="ghost"
             size="sm"
             className="flex-1 h-11 touch-manipulation"
-            onClick={(e) => { e.stopPropagation(); onMessage(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMessage();
+            }}
           >
             <MessageSquare className="h-4 w-4 mr-1.5" />
             Message
@@ -322,7 +339,10 @@ export function PremiumTalentCard({
             <Button
               size="sm"
               className="flex-1 h-11 bg-success hover:bg-success/90 text-success-foreground font-medium touch-manipulation"
-              onClick={(e) => { e.stopPropagation(); onBook(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onBook();
+              }}
             >
               <Calendar className="h-4 w-4 mr-1.5" />
               Book
@@ -331,7 +351,10 @@ export function PremiumTalentCard({
             <Button
               size="sm"
               className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-yellow-foreground font-medium touch-manipulation"
-              onClick={(e) => { e.stopPropagation(); onBook(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onBook();
+              }}
             >
               <Briefcase className="h-4 w-4 mr-1.5" />
               Hire

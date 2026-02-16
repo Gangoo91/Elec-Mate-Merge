@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Plus, FileText, XCircle, AlertCircle, CheckCircle, ChevronDown } from 'lucide-react';
+import {
+  AlertTriangle,
+  Plus,
+  FileText,
+  XCircle,
+  AlertCircle,
+  CheckCircle,
+  ChevronDown,
+} from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import DefectObservationsList from './DefectObservationsList';
 import PDFExportProgress from './PDFExportProgress';
@@ -24,7 +32,11 @@ interface DefectObservationsSectionProps {
   defectObservations: DefectObservation[];
   reportId: string;
   onAddObservation: () => void;
-  onUpdateObservation: (id: string, field: keyof DefectObservation | '__BULK__', value: any) => void;
+  onUpdateObservation: (
+    id: string,
+    field: keyof DefectObservation | '__BULK__',
+    value: any
+  ) => void;
   onRemoveObservation: (id: string) => void;
   formData?: any;
   onUpdateFormData?: (data: any) => void;
@@ -32,7 +44,19 @@ interface DefectObservationsSectionProps {
 }
 
 const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObservationsSectionProps>(
-  ({ defectObservations, reportId, onAddObservation, onUpdateObservation, onRemoveObservation, formData, onUpdateFormData, defaultOpen = true }, ref) => {
+  (
+    {
+      defectObservations,
+      reportId,
+      onAddObservation,
+      onUpdateObservation,
+      onRemoveObservation,
+      formData,
+      onUpdateFormData,
+      defaultOpen = true,
+    },
+    ref
+  ) => {
     const { toast } = useToast();
     const isMobile = useIsMobile();
     const haptics = useHaptics();
@@ -41,7 +65,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
       isExporting: false,
       exportType: null as 'observations' | 'complete' | null,
       progress: 0,
-      status: 'preparing' as 'preparing' | 'generating' | 'complete' | 'error'
+      status: 'preparing' as 'preparing' | 'generating' | 'complete' | 'error',
     });
 
     const handleExportObservationsPDF = async () => {
@@ -49,27 +73,27 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
         isExporting: true,
         exportType: 'observations',
         progress: 0,
-        status: 'preparing'
+        status: 'preparing',
       });
 
       try {
-        setPdfExportState(prev => ({ ...prev, progress: 25, status: 'preparing' }));
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setPdfExportState(prev => ({ ...prev, progress: 50, status: 'generating' }));
+        setPdfExportState((prev) => ({ ...prev, progress: 25, status: 'preparing' }));
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        setPdfExportState((prev) => ({ ...prev, progress: 50, status: 'generating' }));
         await exportObservationsToPDF(defectObservations, formData || {});
-        setPdfExportState(prev => ({ ...prev, progress: 100, status: 'complete' }));
+        setPdfExportState((prev) => ({ ...prev, progress: 100, status: 'complete' }));
 
         toast({
-          title: "Professional PDF exported",
-          description: "Your observations have been exported as a professional EICR document.",
+          title: 'Professional PDF exported',
+          description: 'Your observations have been exported as a professional EICR document.',
         });
       } catch (error) {
         console.error('PDF export error:', error);
-        setPdfExportState(prev => ({ ...prev, status: 'error' }));
+        setPdfExportState((prev) => ({ ...prev, status: 'error' }));
         toast({
-          title: "Export failed",
-          description: "Failed to export observations PDF. Please try again.",
-          variant: "destructive",
+          title: 'Export failed',
+          description: 'Failed to export observations PDF. Please try again.',
+          variant: 'destructive',
         });
       }
     };
@@ -79,7 +103,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
         isExporting: false,
         exportType: null,
         progress: 0,
-        status: 'preparing'
+        status: 'preparing',
       });
     };
 
@@ -89,10 +113,10 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
     };
 
     // Calculate stats
-    const c1Count = defectObservations.filter(obs => obs.defectCode === 'C1').length;
-    const c2Count = defectObservations.filter(obs => obs.defectCode === 'C2').length;
-    const c3Count = defectObservations.filter(obs => obs.defectCode === 'C3').length;
-    const rectifiedCount = defectObservations.filter(obs => obs.rectified).length;
+    const c1Count = defectObservations.filter((obs) => obs.defectCode === 'C1').length;
+    const c2Count = defectObservations.filter((obs) => obs.defectCode === 'C2').length;
+    const c3Count = defectObservations.filter((obs) => obs.defectCode === 'C3').length;
+    const rectifiedCount = defectObservations.filter((obs) => obs.rectified).length;
     const totalCount = defectObservations.length;
 
     // Determine severity for header styling
@@ -100,38 +124,58 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
     const hasPotentiallyDangerous = c2Count > 0;
 
     return (
-      <div ref={ref} className={cn(isMobile && "-mx-4")}>
-        <Collapsible open={isOpen} onOpenChange={(open) => { haptics.tap(); setIsOpen(open); }}>
+      <div ref={ref} className={cn(isMobile && '-mx-4')}>
+        <Collapsible
+          open={isOpen}
+          onOpenChange={(open) => {
+            haptics.tap();
+            setIsOpen(open);
+          }}
+        >
           {/* Header */}
           <CollapsibleTrigger className="w-full" asChild>
-            <button className={cn(
-              "w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors",
-              "bg-card/50 border-y border-border/30",
-              isOpen && "bg-card/80",
-              "active:bg-card/90"
-            )}>
+            <button
+              className={cn(
+                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
+                'bg-card/50 border-y border-border/30',
+                isOpen && 'bg-card/80',
+                'active:bg-card/90'
+              )}
+            >
               {/* Icon Badge */}
-              <div className={cn(
-                "h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0",
-                hasCritical ? "bg-red-500/20" :
-                hasPotentiallyDangerous ? "bg-orange-500/20" :
-                totalCount > 0 ? "bg-elec-yellow/20" :
-                "bg-white/10"
-              )}>
-                <FileText className={cn(
-                  "h-5 w-5",
-                  hasCritical ? "text-red-500" :
-                  hasPotentiallyDangerous ? "text-orange-500" :
-                  totalCount > 0 ? "text-elec-yellow" :
-                  "text-white/50"
-                )} />
+              <div
+                className={cn(
+                  'h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0',
+                  hasCritical
+                    ? 'bg-red-500/20'
+                    : hasPotentiallyDangerous
+                      ? 'bg-orange-500/20'
+                      : totalCount > 0
+                        ? 'bg-elec-yellow/20'
+                        : 'bg-white/10'
+                )}
+              >
+                <FileText
+                  className={cn(
+                    'h-5 w-5',
+                    hasCritical
+                      ? 'text-red-500'
+                      : hasPotentiallyDangerous
+                        ? 'text-orange-500'
+                        : totalCount > 0
+                          ? 'text-elec-yellow'
+                          : 'text-white/50'
+                  )}
+                />
               </div>
 
               {/* Title */}
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-foreground">Observations & Defects</h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  {totalCount === 0 ? 'No observations recorded' : `${totalCount} observation${totalCount !== 1 ? 's' : ''} recorded`}
+                  {totalCount === 0
+                    ? 'No observations recorded'
+                    : `${totalCount} observation${totalCount !== 1 ? 's' : ''} recorded`}
                 </p>
               </div>
 
@@ -157,20 +201,24 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
               )}
 
               {/* Chevron */}
-              <ChevronDown className={cn(
-                "h-5 w-5 text-muted-foreground transition-transform duration-200",
-                isOpen && "rotate-180"
-              )} />
+              <ChevronDown
+                className={cn(
+                  'h-5 w-5 text-muted-foreground transition-transform duration-200',
+                  isOpen && 'rotate-180'
+                )}
+              />
             </button>
           </CollapsibleTrigger>
 
           <CollapsibleContent>
             {/* Stats Row */}
             {totalCount > 0 && (
-              <div className={cn(
-                "flex flex-wrap items-center gap-2 p-3 bg-card/30 border-b border-border/20",
-                isMobile ? "px-4" : ""
-              )}>
+              <div
+                className={cn(
+                  'flex flex-wrap items-center gap-2 p-3 bg-card/30 border-b border-border/20',
+                  isMobile ? 'px-4' : ''
+                )}
+              >
                 {c1Count > 0 && (
                   <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-500/15 border border-red-500/30">
                     <XCircle className="h-3.5 w-3.5 text-red-400" />
@@ -192,17 +240,16 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
                 {rectifiedCount > 0 && (
                   <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-green-500/15 border border-green-500/30">
                     <CheckCircle className="h-3.5 w-3.5 text-green-400" />
-                    <span className="text-xs font-medium text-green-400">{rectifiedCount} Rectified</span>
+                    <span className="text-xs font-medium text-green-400">
+                      {rectifiedCount} Rectified
+                    </span>
                   </div>
                 )}
               </div>
             )}
 
             {/* Content */}
-            <div className={cn(
-              "bg-card/30",
-              isMobile ? "p-4" : "p-4"
-            )}>
+            <div className={cn('bg-card/30', isMobile ? 'p-4' : 'p-4')}>
               {totalCount === 0 ? (
                 <div className="text-center py-8">
                   <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">

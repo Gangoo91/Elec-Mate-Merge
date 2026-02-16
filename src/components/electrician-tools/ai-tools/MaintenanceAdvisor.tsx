@@ -1,16 +1,36 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Download, Loader2, FileText, CheckCircle2, AlertTriangle, RefreshCw, Copy, Mail, Lightbulb } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Calendar,
+  Download,
+  Loader2,
+  FileText,
+  CheckCircle2,
+  AlertTriangle,
+  RefreshCw,
+  Copy,
+  Mail,
+  Lightbulb,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
-import { generateMaintenanceSchedulePDF, MaintenanceScheduleData } from "@/utils/pdf-generators/maintenance-schedule-pdf";
+import {
+  generateMaintenanceSchedulePDF,
+  MaintenanceScheduleData,
+} from '@/utils/pdf-generators/maintenance-schedule-pdf';
 
 interface MaintenanceTask {
   interval: string;
@@ -35,37 +55,37 @@ interface MaintenanceSchedule {
 }
 
 export const MaintenanceAdvisor = () => {
-  const [equipmentDescription, setEquipmentDescription] = useState("");
-  const [equipmentType, setEquipmentType] = useState<string>("");
-  const [location, setLocation] = useState("");
+  const [equipmentDescription, setEquipmentDescription] = useState('');
+  const [equipmentType, setEquipmentType] = useState<string>('');
+  const [location, setLocation] = useState('');
   const [ageYears, setAgeYears] = useState<number>(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const [schedule, setSchedule] = useState<MaintenanceSchedule | null>(null);
   const [isExportingPDF, setIsExportingPDF] = useState(false);
-  const [generatingProgress, setGeneratingProgress] = useState("");
+  const [generatingProgress, setGeneratingProgress] = useState('');
 
   const handleGenerate = async () => {
     if (!equipmentDescription.trim() || !equipmentType || !location) {
-      toast.error("Please fill in all required fields");
+      toast.error('Please fill in all required fields');
       return;
     }
 
     setIsGenerating(true);
     setSchedule(null);
-    setGeneratingProgress("Analyzing equipment details...");
+    setGeneratingProgress('Analyzing equipment details...');
 
     try {
       // Simulate progress updates
-      setTimeout(() => setGeneratingProgress("Searching GN3 guidance..."), 800);
-      setTimeout(() => setGeneratingProgress("Generating maintenance tasks..."), 1600);
+      setTimeout(() => setGeneratingProgress('Searching GN3 guidance...'), 800);
+      setTimeout(() => setGeneratingProgress('Generating maintenance tasks...'), 1600);
 
       const { data, error } = await supabase.functions.invoke('maintenance-plan-generator', {
         body: {
           equipmentDescription: equipmentDescription.trim(),
           equipmentType,
           location,
-          ageYears: ageYears || 0
-        }
+          ageYears: ageYears || 0,
+        },
       });
 
       if (error) throw error;
@@ -75,26 +95,25 @@ export const MaintenanceAdvisor = () => {
       }
 
       setSchedule(data.schedule);
-      toast.success("Maintenance schedule generated", {
-        description: `${data.schedule.schedule.length} tasks identified`
+      toast.success('Maintenance schedule generated', {
+        description: `${data.schedule.schedule.length} tasks identified`,
       });
-
     } catch (err) {
       console.error('Maintenance generation error:', err);
-      toast.error("Failed to generate schedule", {
-        description: err instanceof Error ? err.message : 'Unknown error'
+      toast.error('Failed to generate schedule', {
+        description: err instanceof Error ? err.message : 'Unknown error',
       });
     } finally {
       setIsGenerating(false);
-      setGeneratingProgress("");
+      setGeneratingProgress('');
     }
   };
 
   const handleReset = () => {
     setSchedule(null);
-    setEquipmentDescription("");
-    setEquipmentType("");
-    setLocation("");
+    setEquipmentDescription('');
+    setEquipmentType('');
+    setLocation('');
     setAgeYears(0);
   };
 
@@ -108,36 +127,37 @@ export const MaintenanceAdvisor = () => {
       const pdfData: MaintenanceScheduleData = {
         projectName: `${schedule.equipmentType} - ${schedule.location}`,
         installationAddress: schedule.location,
-        preparedBy: "Maintenance Advisor AI",
+        preparedBy: 'Maintenance Advisor AI',
         preparedDate: new Date().toLocaleDateString('en-GB'),
         tasks: schedule.schedule.map((task) => ({
           equipment: schedule.equipmentType,
           task: task.task,
           frequency: task.interval,
-          lastCompleted: "",
+          lastCompleted: '',
           nextDue: calculateNextDue(task.interval),
-          responsible: task.priority === 'high' ? 'Qualified Electrician' : 'Competent Person'
+          responsible: task.priority === 'high' ? 'Qualified Electrician' : 'Competent Person',
         })),
         inspectionIntervals: [
           {
-            inspectionType: "Periodic Inspection (EICR)",
+            inspectionType: 'Periodic Inspection (EICR)',
             interval: determineEICRInterval(schedule.ageYears),
-            nextDue: calculateEICRNextDue(schedule.ageYears)
-          }
+            nextDue: calculateEICRNextDue(schedule.ageYears),
+          },
         ],
-        notes: schedule.recommendations.join('\n\n')
+        notes: schedule.recommendations.join('\n\n'),
       };
 
       // Generate PDF client-side
       const pdf = generateMaintenanceSchedulePDF(pdfData);
-      pdf.save(`Maintenance_Schedule_${schedule.equipmentType.replace(/\s+/g, '_')}_${Date.now()}.pdf`);
+      pdf.save(
+        `Maintenance_Schedule_${schedule.equipmentType.replace(/\s+/g, '_')}_${Date.now()}.pdf`
+      );
 
-      toast.success("PDF exported successfully");
-
+      toast.success('PDF exported successfully');
     } catch (err) {
       console.error('PDF export error:', err);
-      toast.error("Failed to export PDF", {
-        description: err instanceof Error ? err.message : 'Unknown error'
+      toast.error('Failed to export PDF', {
+        description: err instanceof Error ? err.message : 'Unknown error',
       });
     } finally {
       setIsExportingPDF(false);
@@ -147,7 +167,8 @@ export const MaintenanceAdvisor = () => {
   const handleCopySchedule = () => {
     if (!schedule) return;
 
-    const text = `MAINTENANCE SCHEDULE\n\n` +
+    const text =
+      `MAINTENANCE SCHEDULE\n\n` +
       `Equipment: ${schedule.equipmentType}\n` +
       `Location: ${schedule.location}\n` +
       `Age: ${schedule.ageYears} years\n\n` +
@@ -155,25 +176,25 @@ export const MaintenanceAdvisor = () => {
       `RECOMMENDATIONS:\n${schedule.recommendations.join('\n')}`;
 
     navigator.clipboard.writeText(text);
-    toast.success("Schedule copied to clipboard");
+    toast.success('Schedule copied to clipboard');
   };
 
   // Helper functions
   const calculateNextDue = (interval: string): string => {
     const now = new Date();
     const match = interval.match(/(\d+)\s*(month|year|week|day)/i);
-    
+
     if (!match) return new Date(now.setMonth(now.getMonth() + 1)).toLocaleDateString('en-GB');
-    
+
     const value = parseInt(match[1]);
     const unit = match[2].toLowerCase();
-    
+
     switch (unit) {
       case 'day':
         now.setDate(now.getDate() + value);
         break;
       case 'week':
-        now.setDate(now.getDate() + (value * 7));
+        now.setDate(now.getDate() + value * 7);
         break;
       case 'month':
         now.setMonth(now.getMonth() + value);
@@ -182,13 +203,13 @@ export const MaintenanceAdvisor = () => {
         now.setFullYear(now.getFullYear() + value);
         break;
     }
-    
+
     return now.toLocaleDateString('en-GB');
   };
 
   const determineEICRInterval = (age: number): string => {
-    if (age > 10) return "5 Years (Older Installation)";
-    return "10 Years (Domestic) / 5 Years (Commercial)";
+    if (age > 10) return '5 Years (Older Installation)';
+    return '10 Years (Domestic) / 5 Years (Commercial)';
   };
 
   const calculateEICRNextDue = (age: number): string => {
@@ -222,13 +243,14 @@ export const MaintenanceAdvisor = () => {
               <div className="flex-1 space-y-2">
                 <h4 className="font-semibold text-elec-light">How this works</h4>
                 <p className="text-sm text-elec-light/70">
-                  Enter your equipment details below and we'll generate a comprehensive maintenance schedule 
-                  based on BS 7671:2018+A3:2024 and GN3 guidance.
+                  Enter your equipment details below and we'll generate a comprehensive maintenance
+                  schedule based on BS 7671:2018+A3:2024 and GN3 guidance.
                 </p>
                 <div className="mt-3 p-3 bg-elec-dark/50 rounded border border-elec-gray/20">
                   <p className="text-xs text-elec-light/60 font-medium mb-1">Example:</p>
                   <p className="text-xs text-elec-light/80">
-                    "18th Edition RCBO consumer unit with 10 circuits, installed in domestic property"
+                    "18th Edition RCBO consumer unit with 10 circuits, installed in domestic
+                    property"
                   </p>
                 </div>
               </div>
@@ -247,10 +269,12 @@ export const MaintenanceAdvisor = () => {
         </CardHeader>
         <CardContent className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="equipment-type" className="text-elec-light font-medium">Equipment Type *</Label>
+            <Label htmlFor="equipment-type" className="text-elec-light font-medium">
+              Equipment Type *
+            </Label>
             <Select value={equipmentType} onValueChange={setEquipmentType}>
-              <SelectTrigger 
-                id="equipment-type" 
+              <SelectTrigger
+                id="equipment-type"
                 className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light touch-manipulation"
               >
                 <SelectValue placeholder="Select equipment type" />
@@ -270,7 +294,9 @@ export const MaintenanceAdvisor = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-elec-light font-medium">Equipment Description *</Label>
+            <Label htmlFor="description" className="text-elec-light font-medium">
+              Equipment Description *
+            </Label>
             <Textarea
               id="description"
               placeholder="E.g., 18th Edition RCBO consumer unit with 10 circuits, installed in domestic property"
@@ -282,7 +308,9 @@ export const MaintenanceAdvisor = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="location" className="text-elec-light font-medium">Location *</Label>
+              <Label htmlFor="location" className="text-elec-light font-medium">
+                Location *
+              </Label>
               <Input
                 id="location"
                 placeholder="E.g., Main entrance hall"
@@ -293,7 +321,9 @@ export const MaintenanceAdvisor = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="age" className="text-elec-light font-medium">Age (Years)</Label>
+              <Label htmlFor="age" className="text-elec-light font-medium">
+                Age (Years)
+              </Label>
               <Input
                 id="age"
                 type="number"
@@ -449,19 +479,19 @@ export const MaintenanceAdvisor = () => {
                     className="p-4 bg-elec-dark/50 border border-elec-gray/20 rounded-lg hover:border-elec-yellow/20 transition-colors touch-manipulation"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="mt-0.5">
-                        {getPriorityIcon(task.priority)}
-                      </div>
+                      <div className="mt-0.5">{getPriorityIcon(task.priority)}</div>
                       <div className="flex-1 space-y-2 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                           <span className="font-semibold text-elec-light">{task.interval}</span>
-                          <span className={`text-xs px-3 py-1 rounded-full font-medium self-start sm:self-auto ${
-                            task.priority === 'high' 
-                              ? 'bg-red-500/20 text-red-300 border border-red-500/30' 
-                              : task.priority === 'medium'
-                              ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
-                              : 'bg-green-500/20 text-green-300 border border-green-500/30'
-                          }`}>
+                          <span
+                            className={`text-xs px-3 py-1 rounded-full font-medium self-start sm:self-auto ${
+                              task.priority === 'high'
+                                ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                                : task.priority === 'medium'
+                                  ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
+                                  : 'bg-green-500/20 text-green-300 border border-green-500/30'
+                            }`}
+                          >
                             {task.priority.toUpperCase()}
                           </span>
                         </div>
@@ -503,7 +533,10 @@ export const MaintenanceAdvisor = () => {
               <CardContent>
                 <div className="space-y-3">
                   {schedule.recommendations.map((rec, idx) => (
-                    <div key={idx} className="p-3 bg-elec-dark/30 rounded-lg border border-elec-gray/10">
+                    <div
+                      key={idx}
+                      className="p-3 bg-elec-dark/30 rounded-lg border border-elec-gray/10"
+                    >
                       <div className="prose prose-invert max-w-none text-sm text-elec-light/80">
                         <ReactMarkdown>{rec}</ReactMarkdown>
                       </div>
@@ -526,7 +559,10 @@ export const MaintenanceAdvisor = () => {
               <CardContent>
                 <div className="space-y-2">
                   {schedule.ragSources.map((source, idx) => (
-                    <div key={idx} className="text-xs p-3 bg-elec-dark/50 rounded-lg border border-elec-gray/10">
+                    <div
+                      key={idx}
+                      className="text-xs p-3 bg-elec-dark/50 rounded-lg border border-elec-gray/10"
+                    >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1">
                         <span className="font-medium text-elec-light">{source.topic}</span>
                         <span className="text-elec-yellow text-xs px-2 py-0.5 bg-elec-yellow/10 rounded">

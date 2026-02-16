@@ -12,8 +12,8 @@ const AftercareMaintenanceSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Structured aftercare and maintenance advice helps clients keep their systems running optimally 
-          while creating opportunities for ongoing professional relationships.
+          Structured aftercare and maintenance advice helps clients keep their systems running
+          optimally while creating opportunities for ongoing professional relationships.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -31,7 +31,7 @@ const AftercareMaintenanceSection = () => {
                 <li>• Performance optimisation and troubleshooting</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-green-500">
               <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
                 <Wrench className="h-4 w-4 text-green-400" />
@@ -61,7 +61,7 @@ const AftercareMaintenanceSection = () => {
                 <li>• System expansion consultation services</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-amber-900/20 border border-amber-600/30 rounded-lg">
               <h4 className="font-medium text-amber-200 mb-2">Tiered Support Packages</h4>
               <p className="text-amber-100 text-sm mb-2">Consider offering different levels:</p>

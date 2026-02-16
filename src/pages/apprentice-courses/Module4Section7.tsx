@@ -1,44 +1,44 @@
-import { ArrowLeft, Shield, FileText, Wrench, CheckCircle, Ruler } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Shield, FileText, Wrench, CheckCircle, Ruler } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Safe Manual Handling of Equipment and Materials",
-    description: "Proper lifting and handling techniques for electrical materials",
+    number: 'Subsection 1',
+    title: 'Safe Manual Handling of Equipment and Materials',
+    description: 'Proper lifting and handling techniques for electrical materials',
     icon: Shield,
-    href: "7-1"
+    href: '7-1',
   },
   {
-    number: "Subsection 2",
-    title: "Using Hand and Power Tools Safely and Legally",
-    description: "Safe operation of tools in compliance with regulations",
+    number: 'Subsection 2',
+    title: 'Using Hand and Power Tools Safely and Legally',
+    description: 'Safe operation of tools in compliance with regulations',
     icon: FileText,
-    href: "7-2"
+    href: '7-2',
   },
   {
-    number: "Subsection 3",
-    title: "PPE for Cutting, Bending, and Fixing Work",
-    description: "Appropriate personal protective equipment for installation tasks",
+    number: 'Subsection 3',
+    title: 'PPE for Cutting, Bending, and Fixing Work',
+    description: 'Appropriate personal protective equipment for installation tasks',
     icon: Wrench,
-    href: "7-3"
+    href: '7-3',
   },
   {
-    number: "Subsection 4",
-    title: "Working in Voids, Risers, and Ceilings",
-    description: "Safety considerations for working in confined or elevated spaces",
+    number: 'Subsection 4',
+    title: 'Working in Voids, Risers, and Ceilings',
+    description: 'Safety considerations for working in confined or elevated spaces',
     icon: CheckCircle,
-    href: "7-4"
+    href: '7-4',
   },
   {
-    number: "Subsection 5",
-    title: "Keeping the Work Area Safe and Organised",
-    description: "Maintaining a clean, safe and organised workplace",
+    number: 'Subsection 5',
+    title: 'Keeping the Work Area Safe and Organised',
+    description: 'Maintaining a clean, safe and organised workplace',
     icon: Ruler,
-    href: "7-5"
-  }
+    href: '7-5',
+  },
 ];
 
 const Section7 = () => {

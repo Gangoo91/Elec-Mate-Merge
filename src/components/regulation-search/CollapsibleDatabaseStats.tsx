@@ -27,7 +27,7 @@ const CollapsibleDatabaseStats: React.FC = () => {
             {isExpanded ? 'Hide Details' : 'Show Details'}
           </Button>
         </div>
-        
+
         {isExpanded && (
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm animate-fade-in">
             <div>
@@ -55,12 +55,14 @@ const CollapsibleDatabaseStats: React.FC = () => {
             <div>
               <h4 className="text-gray-400 mb-2">By Category:</h4>
               <div className="space-y-1">
-                {Object.entries(databaseStats.byCategory).slice(0, 4).map(([cat, count]) => (
-                  <div key={cat} className="flex justify-between">
-                    <span className="text-gray-300 capitalize">{cat.replace('-', ' ')}:</span>
-                    <span className="text-elec-yellow font-semibold">{count}</span>
-                  </div>
-                ))}
+                {Object.entries(databaseStats.byCategory)
+                  .slice(0, 4)
+                  .map(([cat, count]) => (
+                    <div key={cat} className="flex justify-between">
+                      <span className="text-gray-300 capitalize">{cat.replace('-', ' ')}:</span>
+                      <span className="text-elec-yellow font-semibold">{count}</span>
+                    </div>
+                  ))}
               </div>
             </div>
             <div>

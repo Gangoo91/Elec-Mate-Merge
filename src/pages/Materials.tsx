@@ -1,10 +1,10 @@
-import { Helmet } from "react-helmet";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { RefreshCw, CheckCircle2, XCircle } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import MaterialCategoryBrowser from "@/components/electrician-materials/MaterialCategoryBrowser";
+import { Helmet } from 'react-helmet';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { RefreshCw, CheckCircle2, XCircle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import MaterialCategoryBrowser from '@/components/electrician-materials/MaterialCategoryBrowser';
 
 const Materials = () => {
   const [isUpdating, setIsUpdating] = useState(false);
@@ -13,26 +13,26 @@ const Materials = () => {
 
   const addLog = (message: string) => {
     console.log(message);
-    setActionLog(prev => [...prev, message]);
+    setActionLog((prev) => [...prev, message]);
   };
 
   const handleRefresh = async () => {
     setIsUpdating(true);
     setActionLog([]);
-    
+
     try {
-      addLog("🔄 Starting materials refresh...");
-      addLog("📡 Calling comprehensive-materials-scraper edge function...");
-      
+      addLog('🔄 Starting materials refresh...');
+      addLog('📡 Calling comprehensive-materials-scraper edge function...');
+
       toast({
-        title: "Fetching Materials",
-        description: "Retrieving comprehensive materials data...",
+        title: 'Fetching Materials',
+        description: 'Retrieving comprehensive materials data...',
       });
-      
+
       const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
-        body: { mergeAll: false, forceRefresh: true }
+        body: { mergeAll: false, forceRefresh: true },
       });
-      
+
       if (error) {
         addLog(`❌ Edge function error: ${error.message}`);
         throw error;
@@ -42,51 +42,52 @@ const Materials = () => {
         const totalProducts = data.totalFound || data.tools?.length || 0;
         const categoriesFound = data.categoriesFound || 0;
         const totalCategories = data.totalCategories || 8;
-        
+
         addLog(`✅ Edge function completed successfully`);
-        addLog(`📦 Found ${totalProducts} products from ${categoriesFound}/${totalCategories} categories`);
-        
+        addLog(
+          `📦 Found ${totalProducts} products from ${categoriesFound}/${totalCategories} categories`
+        );
+
         if (data.successfulCategories && data.successfulCategories.length > 0) {
           addLog(`✅ Successful categories: ${data.successfulCategories.join(', ')}`);
         }
-        
+
         if (data.failedCategories && data.failedCategories.length > 0) {
           addLog(`⚠️ Failed categories: ${data.failedCategories.join(', ')}`);
         }
-        
+
         if (totalProducts > 0) {
-          addLog("🔄 Refreshing materials data...");
+          addLog('🔄 Refreshing materials data...');
           toast({
-            title: "Success!",
+            title: 'Success!',
             description: `Fetched ${totalProducts} products from ${categoriesFound} categories`,
           });
           // Trigger refetch instead of page reload
           setTimeout(() => window.location.reload(), 1000);
         } else {
-          addLog("⚠️ No materials returned - check edge function logs");
+          addLog('⚠️ No materials returned - check edge function logs');
           toast({
-            title: "No Products Found",
-            description: "The scraper returned 0 products. Check the edge function logs.",
-            variant: "destructive",
+            title: 'No Products Found',
+            description: 'The scraper returned 0 products. Check the edge function logs.',
+            variant: 'destructive',
           });
         }
       } else {
         addLog(`❌ Scraper failed: ${data?.error || 'Unknown error'}`);
         toast({
-          title: "Scraping Failed",
-          description: data?.error || "Failed to scrape materials",
-          variant: "destructive",
+          title: 'Scraping Failed',
+          description: data?.error || 'Failed to scrape materials',
+          variant: 'destructive',
         });
       }
-      
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       addLog(`❌ Error: ${errorMessage}`);
-      
+
       toast({
-        title: "Refresh Failed",
+        title: 'Refresh Failed',
         description: errorMessage,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setIsUpdating(false);
@@ -97,10 +98,16 @@ const Materials = () => {
     <div className="bg-elec-dark text-white">
       <Helmet>
         <title>Electrical Materials - Elec-Mate</title>
-        <meta name="description" content="Browse and source electrical materials from multiple suppliers. Compare prices on cables, components, protection equipment and more." />
-        <meta name="keywords" content="electrical materials, cables, MCBs, RCDs, electrical components, UK suppliers" />
+        <meta
+          name="description"
+          content="Browse and source electrical materials from multiple suppliers. Compare prices on cables, components, protection equipment and more."
+        />
+        <meta
+          name="keywords"
+          content="electrical materials, cables, MCBs, RCDs, electrical components, UK suppliers"
+        />
       </Helmet>
-      
+
       <div className="space-y-8 animate-fade-in">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-2">
@@ -125,13 +132,16 @@ const Materials = () => {
             <h3 className="text-sm font-semibold text-elec-yellow mb-2">Action Log:</h3>
             <div className="space-y-1 text-sm font-mono">
               {actionLog.map((log, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className={`flex items-start gap-2 ${
-                    log.includes('❌') ? 'text-red-400' : 
-                    log.includes('✅') ? 'text-green-400' : 
-                    log.includes('⚠️') ? 'text-yellow-400' :
-                    'text-muted-foreground'
+                    log.includes('❌')
+                      ? 'text-red-400'
+                      : log.includes('✅')
+                        ? 'text-green-400'
+                        : log.includes('⚠️')
+                          ? 'text-yellow-400'
+                          : 'text-muted-foreground'
                   }`}
                 >
                   {log.includes('✅') && <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />}

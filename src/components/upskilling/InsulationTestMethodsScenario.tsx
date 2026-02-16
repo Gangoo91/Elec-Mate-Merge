@@ -1,4 +1,3 @@
-
 import { Users, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -18,16 +17,17 @@ export const InsulationTestMethodsScenario = () => {
             <div>
               <h3 className="text-red-200 font-medium mb-3">The Situation</h3>
               <p className="text-foreground text-sm leading-relaxed mb-4">
-                While testing insulation resistance on a kitchen ring, you notice a reading of 0.15 MΩ 
-                between L and E. You remove a socket faceplate and find water condensation inside.
+                While testing insulation resistance on a kitchen ring, you notice a reading of 0.15
+                MΩ between L and E. You remove a socket faceplate and find water condensation
+                inside.
               </p>
-              
+
               <div className="bg-[#323232] rounded-lg p-3 border-l-4 border-green-500/50 mt-4">
                 <h4 className="text-green-200 font-medium mb-2">The Answer</h4>
                 <p className="text-foreground text-sm leading-relaxed">
-                  Moisture is a common cause of low IR. Never ignore low values—locate and correct 
-                  the source before proceeding. In this case, investigate the source of water ingress, 
-                  dry out the affected area, and improve sealing before re-testing.
+                  Moisture is a common cause of low IR. Never ignore low values—locate and correct
+                  the source before proceeding. In this case, investigate the source of water
+                  ingress, dry out the affected area, and improve sealing before re-testing.
                 </p>
               </div>
             </div>

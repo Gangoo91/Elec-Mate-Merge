@@ -21,27 +21,33 @@ export const BMSModule5Section6Practical = () => {
             <div className="space-y-4">
               <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded">
                 <p className="font-medium text-blue-200">Follow Protocol Limits</p>
-                <p className="text-sm text-blue-100">Never exceed recommended device counts or cable lengths</p>
+                <p className="text-sm text-blue-100">
+                  Never exceed recommended device counts or cable lengths
+                </p>
                 <ul className="text-xs text-blue-100 mt-2 space-y-1">
                   <li>• Check manufacturer specifications</li>
                   <li>• Plan for future expansion</li>
                   <li>• Document device counts per segment</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-green-500/10 border border-green-500/20 rounded">
                 <p className="font-medium text-green-200">Use Correct Cabling</p>
-                <p className="text-sm text-green-100">Shielded twisted pair for RS-485, Cat5e/6 for Ethernet</p>
+                <p className="text-sm text-green-100">
+                  Shielded twisted pair for RS-485, Cat5e/6 for Ethernet
+                </p>
                 <ul className="text-xs text-green-100 mt-2 space-y-1">
                   <li>• 120Ω characteristic impedance for RS-485</li>
                   <li>• Proper termination at both ends</li>
                   <li>• No stubs or branches on RS-485</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded">
                 <p className="font-medium text-purple-200">Maintain Segregation</p>
-                <p className="text-sm text-purple-100">Keep comms cables separate from mains power</p>
+                <p className="text-sm text-purple-100">
+                  Keep comms cables separate from mains power
+                </p>
                 <ul className="text-xs text-purple-100 mt-2 space-y-1">
                   <li>• Minimum 300mm separation from power cables</li>
                   <li>• Extra care near VSDs and motors</li>
@@ -67,7 +73,7 @@ export const BMSModule5Section6Practical = () => {
                   <li>• Allow for thermal expansion</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded">
                 <p className="font-medium text-red-200">Termination Quality</p>
                 <ul className="text-xs text-red-100 mt-2 space-y-1">
@@ -77,7 +83,7 @@ export const BMSModule5Section6Practical = () => {
                   <li>• Apply strain relief correctly</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                 <p className="font-medium text-orange-200">Environmental Protection</p>
                 <ul className="text-xs text-orange-100 mt-2 space-y-1">
@@ -99,7 +105,9 @@ export const BMSModule5Section6Practical = () => {
               <h4 className="font-semibold text-yellow-300 text-lg">Label Segments</h4>
             </div>
             <div className="space-y-3">
-              <p className="text-sm text-gray-300">Each network segment should be clearly identified in panels</p>
+              <p className="text-sm text-gray-300">
+                Each network segment should be clearly identified in panels
+              </p>
               <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
                 <p className="font-medium text-yellow-200">Labelling Requirements:</p>
                 <ul className="text-xs text-yellow-100 mt-2 space-y-1">
@@ -138,11 +146,15 @@ export const BMSModule5Section6Practical = () => {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded">
               <p className="font-medium text-blue-200">Testing Tools</p>
-              <p className="text-sm text-blue-100">Use protocol analysers to confirm communication quality</p>
+              <p className="text-sm text-blue-100">
+                Use protocol analysers to confirm communication quality
+              </p>
             </div>
             <div className="p-3 bg-green-500/10 border border-green-500/20 rounded">
               <p className="font-medium text-green-200">Response Times</p>
-              <p className="text-sm text-green-100">Check device latency (should be under 1 second for most functions)</p>
+              <p className="text-sm text-green-100">
+                Check device latency (should be under 1 second for most functions)
+              </p>
             </div>
             <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
               <p className="font-medium text-yellow-200">Segment Testing</p>

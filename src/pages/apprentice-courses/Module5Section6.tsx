@@ -1,37 +1,37 @@
-import { ArrowLeft, MessageSquare, FileText, Lightbulb, MapPin } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, MessageSquare, FileText, Lightbulb, MapPin } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Verbal Communication: Being Clear, Concise, and Professional",
-    description: "Effective verbal communication skills for electrical work",
+    number: 'Subsection 1',
+    title: 'Verbal Communication: Being Clear, Concise, and Professional',
+    description: 'Effective verbal communication skills for electrical work',
     icon: MessageSquare,
-    href: "6-1"
+    href: '6-1',
   },
   {
-    number: "Subsection 2",
-    title: "Written Instructions and Handovers (Basic Notes, Labels)",
-    description: "Creating clear written documentation and handover notes",
+    number: 'Subsection 2',
+    title: 'Written Instructions and Handovers (Basic Notes, Labels)',
+    description: 'Creating clear written documentation and handover notes',
     icon: FileText,
-    href: "6-2"
+    href: '6-2',
   },
   {
-    number: "Subsection 3",
-    title: "Communicating Faults, Risks, and Task Progress",
-    description: "Reporting problems and progress effectively",
+    number: 'Subsection 3',
+    title: 'Communicating Faults, Risks, and Task Progress',
+    description: 'Reporting problems and progress effectively',
     icon: Lightbulb,
-    href: "6-3"
+    href: '6-3',
   },
   {
-    number: "Subsection 4",
-    title: "Resolving Misunderstandings and Asking for Clarification",
-    description: "Managing communication problems and seeking clarity",
+    number: 'Subsection 4',
+    title: 'Resolving Misunderstandings and Asking for Clarification',
+    description: 'Managing communication problems and seeking clarity',
     icon: MapPin,
-    href: "6-4"
-  }
+    href: '6-4',
+  },
 ];
 
 const Section6 = () => {

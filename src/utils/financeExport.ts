@@ -5,7 +5,7 @@
  * expenses, invoices, job financials, and comprehensive reports.
  */
 
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 // Generic CSV export function
 export function exportToCSV<T extends Record<string, any>>(
@@ -14,20 +14,20 @@ export function exportToCSV<T extends Record<string, any>>(
   filename: string
 ): void {
   if (data.length === 0) {
-    console.warn("No data to export");
+    console.warn('No data to export');
     return;
   }
 
   // Create CSV header
-  const headers = columns.map((col) => `"${col.header}"`).join(",");
+  const headers = columns.map((col) => `"${col.header}"`).join(',');
 
   // Create CSV rows
   const rows = data.map((row) => {
     return columns
       .map((col) => {
         const key = col.key as string;
-        const value = key.includes(".")
-          ? key.split(".").reduce((obj, k) => obj?.[k], row as any)
+        const value = key.includes('.')
+          ? key.split('.').reduce((obj, k) => obj?.[k], row as any)
           : row[key];
 
         const formatted = col.format ? col.format(value, row) : value;
@@ -36,28 +36,28 @@ export function exportToCSV<T extends Record<string, any>>(
         if (formatted === null || formatted === undefined) {
           return '""';
         }
-        if (typeof formatted === "string") {
+        if (typeof formatted === 'string') {
           // Escape quotes and wrap in quotes
           return `"${formatted.replace(/"/g, '""')}"`;
         }
-        if (typeof formatted === "number") {
+        if (typeof formatted === 'number') {
           return formatted.toString();
         }
         return `"${String(formatted).replace(/"/g, '""')}"`;
       })
-      .join(",");
+      .join(',');
   });
 
   // Combine and create blob
-  const csv = [headers, ...rows].join("\n");
-  const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+  const csv = [headers, ...rows].join('\n');
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
 
   // Create download link
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   const url = URL.createObjectURL(blob);
-  link.setAttribute("href", url);
-  link.setAttribute("download", `${filename}_${format(new Date(), "yyyy-MM-dd")}.csv`);
-  link.style.visibility = "hidden";
+  link.setAttribute('href', url);
+  link.setAttribute('download', `${filename}_${format(new Date(), 'yyyy-MM-dd')}.csv`);
+  link.style.visibility = 'hidden';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -66,18 +66,18 @@ export function exportToCSV<T extends Record<string, any>>(
 
 // Format currency for export
 export function formatCurrencyForExport(amount: number | string | null | undefined): string {
-  const num = typeof amount === "string" ? parseFloat(amount) : amount;
-  if (num === null || num === undefined || isNaN(num)) return "0.00";
+  const num = typeof amount === 'string' ? parseFloat(amount) : amount;
+  if (num === null || num === undefined || isNaN(num)) return '0.00';
   return num.toFixed(2);
 }
 
 // Format date for export
 export function formatDateForExport(date: string | Date | null | undefined): string {
-  if (!date) return "";
+  if (!date) return '';
   try {
-    return format(new Date(date), "dd/MM/yyyy");
+    return format(new Date(date), 'dd/MM/yyyy');
   } catch {
-    return "";
+    return '';
   }
 }
 
@@ -99,21 +99,21 @@ interface ExpenseExportData {
   notes?: string;
 }
 
-export function exportExpenses(expenses: ExpenseExportData[], filename = "expenses"): void {
+export function exportExpenses(expenses: ExpenseExportData[], filename = 'expenses'): void {
   exportToCSV(
     expenses,
     [
-      { key: "submitted_date", header: "Date", format: (v) => formatDateForExport(v) },
-      { key: "employees.name", header: "Employee", format: (v) => v || "Unknown" },
-      { key: "description", header: "Description", format: (v) => v || "" },
-      { key: "category", header: "Category", format: (v) => v || "" },
-      { key: "amount", header: "Amount (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "status", header: "Status", format: (v) => v || "" },
-      { key: "jobs.title", header: "Job", format: (v) => v || "" },
-      { key: "has_receipt", header: "Receipt", format: (v) => (v ? "Yes" : "No") },
-      { key: "approved_by", header: "Approved By", format: (v) => v || "" },
-      { key: "approved_date", header: "Approved Date", format: (v) => formatDateForExport(v) },
-      { key: "notes", header: "Notes", format: (v) => v || "" },
+      { key: 'submitted_date', header: 'Date', format: (v) => formatDateForExport(v) },
+      { key: 'employees.name', header: 'Employee', format: (v) => v || 'Unknown' },
+      { key: 'description', header: 'Description', format: (v) => v || '' },
+      { key: 'category', header: 'Category', format: (v) => v || '' },
+      { key: 'amount', header: 'Amount (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'status', header: 'Status', format: (v) => v || '' },
+      { key: 'jobs.title', header: 'Job', format: (v) => v || '' },
+      { key: 'has_receipt', header: 'Receipt', format: (v) => (v ? 'Yes' : 'No') },
+      { key: 'approved_by', header: 'Approved By', format: (v) => v || '' },
+      { key: 'approved_date', header: 'Approved Date', format: (v) => formatDateForExport(v) },
+      { key: 'notes', header: 'Notes', format: (v) => v || '' },
     ],
     filename
   );
@@ -134,19 +134,19 @@ interface InvoiceExportData {
   description?: string;
 }
 
-export function exportInvoices(invoices: InvoiceExportData[], filename = "invoices"): void {
+export function exportInvoices(invoices: InvoiceExportData[], filename = 'invoices'): void {
   exportToCSV(
     invoices,
     [
-      { key: "invoice_number", header: "Invoice No.", format: (v) => v || "" },
-      { key: "issue_date", header: "Issue Date", format: (v) => formatDateForExport(v) },
-      { key: "client_name", header: "Client", format: (v) => v || "" },
-      { key: "description", header: "Description", format: (v) => v || "" },
-      { key: "amount", header: "Amount (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "status", header: "Status", format: (v) => v || "" },
-      { key: "due_date", header: "Due Date", format: (v) => formatDateForExport(v) },
-      { key: "paid_date", header: "Paid Date", format: (v) => formatDateForExport(v) },
-      { key: "jobs.title", header: "Job", format: (v) => v || "" },
+      { key: 'invoice_number', header: 'Invoice No.', format: (v) => v || '' },
+      { key: 'issue_date', header: 'Issue Date', format: (v) => formatDateForExport(v) },
+      { key: 'client_name', header: 'Client', format: (v) => v || '' },
+      { key: 'description', header: 'Description', format: (v) => v || '' },
+      { key: 'amount', header: 'Amount (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'status', header: 'Status', format: (v) => v || '' },
+      { key: 'due_date', header: 'Due Date', format: (v) => formatDateForExport(v) },
+      { key: 'paid_date', header: 'Paid Date', format: (v) => formatDateForExport(v) },
+      { key: 'jobs.title', header: 'Job', format: (v) => v || '' },
     ],
     filename
   );
@@ -174,35 +174,79 @@ interface JobFinancialExportData {
 
 export function exportJobFinancials(
   financials: JobFinancialExportData[],
-  filename = "job-financials"
+  filename = 'job-financials'
 ): void {
   exportToCSV(
     financials,
     [
-      { key: "jobs.title", header: "Job Title", format: (v) => v || "Untitled Job" },
-      { key: "jobs.client", header: "Client", format: (v) => v || "" },
-      { key: "budget_total", header: "Budget Total (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "actual_total", header: "Actual Total (£)", format: (v) => formatCurrencyForExport(v) },
+      { key: 'jobs.title', header: 'Job Title', format: (v) => v || 'Untitled Job' },
+      { key: 'jobs.client', header: 'Client', format: (v) => v || '' },
       {
-        key: "variance",
-        header: "Variance (£)",
+        key: 'budget_total',
+        header: 'Budget Total (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'actual_total',
+        header: 'Actual Total (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'variance',
+        header: 'Variance (£)',
         format: (_, row) => {
           const budget = parseFloat(String(row.budget_total)) || 0;
           const actual = parseFloat(String(row.actual_total)) || 0;
           return formatCurrencyForExport(budget - actual);
         },
       },
-      { key: "invoiced_total", header: "Invoiced (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "paid_total", header: "Paid (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "budget_labour", header: "Budget Labour (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "budget_materials", header: "Budget Materials (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "budget_equipment", header: "Budget Equipment (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "budget_overheads", header: "Budget Overheads (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "budget_profit", header: "Budget Profit (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "actual_labour", header: "Actual Labour (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "actual_materials", header: "Actual Materials (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "actual_equipment", header: "Actual Equipment (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "actual_overheads", header: "Actual Overheads (£)", format: (v) => formatCurrencyForExport(v) },
+      { key: 'invoiced_total', header: 'Invoiced (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'paid_total', header: 'Paid (£)', format: (v) => formatCurrencyForExport(v) },
+      {
+        key: 'budget_labour',
+        header: 'Budget Labour (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'budget_materials',
+        header: 'Budget Materials (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'budget_equipment',
+        header: 'Budget Equipment (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'budget_overheads',
+        header: 'Budget Overheads (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'budget_profit',
+        header: 'Budget Profit (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'actual_labour',
+        header: 'Actual Labour (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'actual_materials',
+        header: 'Actual Materials (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'actual_equipment',
+        header: 'Actual Equipment (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
+      {
+        key: 'actual_overheads',
+        header: 'Actual Overheads (£)',
+        format: (v) => formatCurrencyForExport(v),
+      },
     ],
     filename
   );
@@ -224,19 +268,19 @@ interface VariationOrderExportData {
 
 export function exportVariationOrders(
   orders: VariationOrderExportData[],
-  filename = "variation-orders"
+  filename = 'variation-orders'
 ): void {
   exportToCSV(
     orders,
     [
-      { key: "created_at", header: "Date", format: (v) => formatDateForExport(v) },
-      { key: "jobs.title", header: "Job", format: (v) => v || "" },
-      { key: "description", header: "Description", format: (v) => v || "" },
-      { key: "value", header: "Value (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "status", header: "Status", format: (v) => v || "" },
-      { key: "approved_by", header: "Approved By", format: (v) => v || "" },
-      { key: "approved_date", header: "Approved Date", format: (v) => formatDateForExport(v) },
-      { key: "notes", header: "Notes", format: (v) => v || "" },
+      { key: 'created_at', header: 'Date', format: (v) => formatDateForExport(v) },
+      { key: 'jobs.title', header: 'Job', format: (v) => v || '' },
+      { key: 'description', header: 'Description', format: (v) => v || '' },
+      { key: 'value', header: 'Value (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'status', header: 'Status', format: (v) => v || '' },
+      { key: 'approved_by', header: 'Approved By', format: (v) => v || '' },
+      { key: 'approved_date', header: 'Approved Date', format: (v) => formatDateForExport(v) },
+      { key: 'notes', header: 'Notes', format: (v) => v || '' },
     ],
     filename
   );
@@ -255,17 +299,17 @@ interface ProfitabilityExportData {
 
 export function exportProfitabilityReport(
   data: ProfitabilityExportData[],
-  filename = "profitability-report"
+  filename = 'profitability-report'
 ): void {
   exportToCSV(
     data,
     [
-      { key: "title", header: "Job Title", format: (v) => v || "Untitled" },
-      { key: "client", header: "Client", format: (v) => v || "" },
-      { key: "revenue", header: "Revenue (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "costs", header: "Costs (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "profit", header: "Profit (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "margin", header: "Margin (%)", format: (v) => (v as number).toFixed(1) },
+      { key: 'title', header: 'Job Title', format: (v) => v || 'Untitled' },
+      { key: 'client', header: 'Client', format: (v) => v || '' },
+      { key: 'revenue', header: 'Revenue (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'costs', header: 'Costs (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'profit', header: 'Profit (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'margin', header: 'Margin (%)', format: (v) => (v as number).toFixed(1) },
     ],
     filename
   );
@@ -281,15 +325,15 @@ interface ExpenseByCategoryData {
 
 export function exportExpensesByCategory(
   data: ExpenseByCategoryData[],
-  filename = "expenses-by-category"
+  filename = 'expenses-by-category'
 ): void {
   exportToCSV(
     data,
     [
-      { key: "category", header: "Category", format: (v) => v || "" },
-      { key: "count", header: "Number of Expenses", format: (v) => String(v || 0) },
-      { key: "total", header: "Total (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "percentage", header: "Percentage (%)", format: (v) => (v as number).toFixed(1) },
+      { key: 'category', header: 'Category', format: (v) => v || '' },
+      { key: 'count', header: 'Number of Expenses', format: (v) => String(v || 0) },
+      { key: 'total', header: 'Total (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'percentage', header: 'Percentage (%)', format: (v) => (v as number).toFixed(1) },
     ],
     filename
   );
@@ -307,17 +351,17 @@ interface MonthlyFinancialData {
 
 export function exportMonthlyFinancials(
   data: MonthlyFinancialData[],
-  filename = "monthly-financials"
+  filename = 'monthly-financials'
 ): void {
   exportToCSV(
     data,
     [
-      { key: "month", header: "Month", format: (v) => v || "" },
-      { key: "revenue", header: "Revenue (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "costs", header: "Costs (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "profit", header: "Profit (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "expenses", header: "Expenses (£)", format: (v) => formatCurrencyForExport(v) },
-      { key: "invoiced", header: "Invoiced (£)", format: (v) => formatCurrencyForExport(v) },
+      { key: 'month', header: 'Month', format: (v) => v || '' },
+      { key: 'revenue', header: 'Revenue (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'costs', header: 'Costs (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'profit', header: 'Profit (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'expenses', header: 'Expenses (£)', format: (v) => formatCurrencyForExport(v) },
+      { key: 'invoiced', header: 'Invoiced (£)', format: (v) => formatCurrencyForExport(v) },
     ],
     filename
   );
@@ -348,19 +392,17 @@ interface FinanceSummaryInput {
 
 export function generateFinanceSummaryCSV(
   input: FinanceSummaryInput,
-  filename = "finance-summary"
+  filename = 'finance-summary'
 ): void {
   const lines: string[] = [];
-  const dateFrom = input.dateRange?.from
-    ? format(input.dateRange.from, "dd/MM/yyyy")
-    : "All time";
-  const dateTo = input.dateRange?.to ? format(input.dateRange.to, "dd/MM/yyyy") : "Present";
+  const dateFrom = input.dateRange?.from ? format(input.dateRange.from, 'dd/MM/yyyy') : 'All time';
+  const dateTo = input.dateRange?.to ? format(input.dateRange.to, 'dd/MM/yyyy') : 'Present';
 
   // Header
   lines.push(`"Finance Summary Report"`);
-  lines.push(`"Generated","${format(new Date(), "dd/MM/yyyy HH:mm")}"`);
+  lines.push(`"Generated","${format(new Date(), 'dd/MM/yyyy HH:mm')}"`);
   lines.push(`"Period","${dateFrom} - ${dateTo}"`);
-  lines.push("");
+  lines.push('');
 
   // Profitability Section
   if (input.profitability) {
@@ -369,21 +411,23 @@ export function generateFinanceSummaryCSV(
     lines.push(`"Total Costs","£${formatCurrencyForExport(input.profitability.totalCosts)}"`);
     lines.push(`"Net Profit","£${formatCurrencyForExport(input.profitability.netProfit)}"`);
     lines.push(`"Profit Margin","${input.profitability.profitMargin.toFixed(1)}%"`);
-    lines.push("");
+    lines.push('');
   }
 
   // Cash Flow Section
   if (input.cashFlow) {
     lines.push(`"CASH FLOW SUMMARY"`);
     lines.push(`"Total Paid","£${formatCurrencyForExport(input.cashFlow.totalPaid)}"`);
-    lines.push(`"Total Outstanding","£${formatCurrencyForExport(input.cashFlow.totalOutstanding)}"`);
+    lines.push(
+      `"Total Outstanding","£${formatCurrencyForExport(input.cashFlow.totalOutstanding)}"`
+    );
     lines.push(`"Total Overdue","£${formatCurrencyForExport(input.cashFlow.totalOverdue)}"`);
     lines.push(`"Invoices Paid","${input.cashFlow.invoicesPaid}"`);
     lines.push(`"Invoices Outstanding","${input.cashFlow.invoicesOutstanding}"`);
     lines.push(`"Invoices Overdue","${input.cashFlow.invoicesOverdue}"`);
     lines.push(`"Collection Rate","${input.cashFlow.collectionRate.toFixed(1)}%"`);
     lines.push(`"Average Days to Payment","${input.cashFlow.averageDaysToPayment}"`);
-    lines.push("");
+    lines.push('');
   }
 
   // Expenses by Category Section
@@ -395,7 +439,7 @@ export function generateFinanceSummaryCSV(
         `"${cat.category}","${cat.count}","£${formatCurrencyForExport(cat.total)}","${cat.percentage.toFixed(1)}%"`
       );
     });
-    lines.push("");
+    lines.push('');
   }
 
   // Job Profitability Section
@@ -404,19 +448,19 @@ export function generateFinanceSummaryCSV(
     lines.push(`"Job","Client","Revenue","Costs","Profit","Margin"`);
     input.jobProfitability.slice(0, 10).forEach((job) => {
       lines.push(
-        `"${job.title}","${job.client || ""}","£${formatCurrencyForExport(job.revenue)}","£${formatCurrencyForExport(job.costs)}","£${formatCurrencyForExport(job.profit)}","${job.margin.toFixed(1)}%"`
+        `"${job.title}","${job.client || ''}","£${formatCurrencyForExport(job.revenue)}","£${formatCurrencyForExport(job.costs)}","£${formatCurrencyForExport(job.profit)}","${job.margin.toFixed(1)}%"`
       );
     });
   }
 
   // Create and download
-  const csv = lines.join("\n");
-  const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
+  const csv = lines.join('\n');
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
   const url = URL.createObjectURL(blob);
-  link.setAttribute("href", url);
-  link.setAttribute("download", `${filename}_${format(new Date(), "yyyy-MM-dd")}.csv`);
-  link.style.visibility = "hidden";
+  link.setAttribute('href', url);
+  link.setAttribute('download', `${filename}_${format(new Date(), 'yyyy-MM-dd')}.csv`);
+  link.style.visibility = 'hidden';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

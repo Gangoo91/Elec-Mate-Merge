@@ -10,7 +10,9 @@ const BS7671Module8Section1RealWorld = () => {
           <Wrench className="h-6 w-6 text-elec-yellow" />
           Real-World Applications and Case Studies
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-purple-600 text-foreground">Practical Implementation</Badge>
+        <Badge variant="secondary" className="w-fit bg-purple-600 text-foreground">
+          Practical Implementation
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
@@ -23,7 +25,9 @@ const BS7671Module8Section1RealWorld = () => {
             </CardHeader>
             <CardContent className="text-foreground space-y-4">
               <div className="bg-gray-800 p-3 rounded">
-                <h6 className="text-elec-yellow font-semibold mb-2">Project: Complete House Rewire</h6>
+                <h6 className="text-elec-yellow font-semibold mb-2">
+                  Project: Complete House Rewire
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• 4-bedroom detached house, 180m²</li>
                   <li>• 100A main switch, 12-way consumer unit</li>
@@ -32,7 +36,7 @@ const BS7671Module8Section1RealWorld = () => {
                   <li>• Future EV charging provision required</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Design Challenges:</h6>
                 <ul className="text-sm space-y-1">
@@ -42,7 +46,7 @@ const BS7671Module8Section1RealWorld = () => {
                   <li>• Ze measured at 0.35Ω (PME supply)</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Solutions Applied:</h6>
                 <ul className="text-sm space-y-1">
@@ -64,7 +68,9 @@ const BS7671Module8Section1RealWorld = () => {
             </CardHeader>
             <CardContent className="text-foreground space-y-4">
               <div className="bg-gray-800 p-3 rounded">
-                <h6 className="text-elec-yellow font-semibold mb-2">Project: Office Refurbishment</h6>
+                <h6 className="text-elec-yellow font-semibold mb-2">
+                  Project: Office Refurbishment
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• 5-storey office building, each floor 400m²</li>
                   <li>• Rising main upgrade to 400A</li>
@@ -73,7 +79,7 @@ const BS7671Module8Section1RealWorld = () => {
                   <li>• Heat pump installation for HVAC</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Design Challenges:</h6>
                 <ul className="text-sm space-y-1">
@@ -83,7 +89,7 @@ const BS7671Module8Section1RealWorld = () => {
                   <li>• Fire alarm integration with lighting circuits</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Solutions Applied:</h6>
                 <ul className="text-sm space-y-1">
@@ -98,7 +104,9 @@ const BS7671Module8Section1RealWorld = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Common Design Mistakes and How to Avoid Them:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Common Design Mistakes and How to Avoid Them:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-red-400 font-medium mb-2">Frequent Errors:</h6>
@@ -150,20 +158,37 @@ const BS7671Module8Section1RealWorld = () => {
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-1">High Zs Reading</h6>
-              <p className="text-sm mb-2"><strong>Symptoms:</strong> Test fails, protective devices won't coordinate</p>
-              <p className="text-sm"><strong>Solutions:</strong> Check joint quality, verify earth continuity, consider parallel paths, upgrade protective conductors</p>
+              <p className="text-sm mb-2">
+                <strong>Symptoms:</strong> Test fails, protective devices won't coordinate
+              </p>
+              <p className="text-sm">
+                <strong>Solutions:</strong> Check joint quality, verify earth continuity, consider
+                parallel paths, upgrade protective conductors
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-orange-400">
               <h6 className="font-bold text-orange-400 mb-1">Excessive Voltage Drop</h6>
-              <p className="text-sm mb-2"><strong>Symptoms:</strong> Poor equipment performance, flickering lights, motor issues</p>
-              <p className="text-sm"><strong>Solutions:</strong> Increase cable size, install sub-distribution, reduce circuit length, check connections</p>
+              <p className="text-sm mb-2">
+                <strong>Symptoms:</strong> Poor equipment performance, flickering lights, motor
+                issues
+              </p>
+              <p className="text-sm">
+                <strong>Solutions:</strong> Increase cable size, install sub-distribution, reduce
+                circuit length, check connections
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
               <h6 className="font-bold text-red-400 mb-1">Cable Overheating</h6>
-              <p className="text-sm mb-2"><strong>Symptoms:</strong> Warm cable sheath, insulation deterioration, protective device nuisance tripping</p>
-              <p className="text-sm"><strong>Solutions:</strong> Re-check correction factors, improve ventilation, reduce loading, upgrade cable size</p>
+              <p className="text-sm mb-2">
+                <strong>Symptoms:</strong> Warm cable sheath, insulation deterioration, protective
+                device nuisance tripping
+              </p>
+              <p className="text-sm">
+                <strong>Solutions:</strong> Re-check correction factors, improve ventilation, reduce
+                loading, upgrade cable size
+              </p>
             </div>
           </div>
         </div>

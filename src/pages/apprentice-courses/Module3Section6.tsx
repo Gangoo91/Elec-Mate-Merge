@@ -1,51 +1,51 @@
-import { ArrowLeft, CheckCircle, FileText, Scale, Award, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, CheckCircle, FileText, Scale, Award, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Cable Support Distances (Horizontal/Vertical)",
-    description: "Requirements for supporting cables at correct intervals",
+    number: 'Subsection 1',
+    title: 'Cable Support Distances (Horizontal/Vertical)',
+    description: 'Requirements for supporting cables at correct intervals',
     icon: FileText,
-    href: "6-1"
+    href: '6-1',
   },
   {
-    number: "Subsection 2",
-    title: "Routing Cables in Walls and Floors (Zones and Depths)",
-    description: "Safe zones and depth requirements for concealed cables",
+    number: 'Subsection 2',
+    title: 'Routing Cables in Walls and Floors (Zones and Depths)',
+    description: 'Safe zones and depth requirements for concealed cables',
     icon: Scale,
-    href: "6-2"
+    href: '6-2',
   },
   {
-    number: "Subsection 3",
-    title: "Fire Stopping and Sealing Penetrations",
-    description: "Fire safety measures for cable penetrations",
+    number: 'Subsection 3',
+    title: 'Fire Stopping and Sealing Penetrations',
+    description: 'Fire safety measures for cable penetrations',
     icon: Award,
-    href: "6-3"
+    href: '6-3',
   },
   {
-    number: "Subsection 4",
-    title: "Safe Entry to Enclosures (Grommets, Bushes, Glands)",
-    description: "Methods for safely entering electrical enclosures",
+    number: 'Subsection 4',
+    title: 'Safe Entry to Enclosures (Grommets, Bushes, Glands)',
+    description: 'Methods for safely entering electrical enclosures',
     icon: CheckCircle,
-    href: "6-4"
+    href: '6-4',
   },
   {
-    number: "Subsection 5",
-    title: "Labelling, Identification, and Colour Codes",
-    description: "Proper identification and labelling of electrical systems",
+    number: 'Subsection 5',
+    title: 'Labelling, Identification, and Colour Codes',
+    description: 'Proper identification and labelling of electrical systems',
     icon: Shield,
-    href: "6-5"
+    href: '6-5',
   },
   {
-    number: "Subsection 6",
-    title: "Following Manufacturer Instructions and Site Specs",
-    description: "Importance of following specifications and instructions",
+    number: 'Subsection 6',
+    title: 'Following Manufacturer Instructions and Site Specs',
+    description: 'Importance of following specifications and instructions',
     icon: FileText,
-    href: "6-6"
-  }
+    href: '6-6',
+  },
 ];
 
 const Section6 = () => {

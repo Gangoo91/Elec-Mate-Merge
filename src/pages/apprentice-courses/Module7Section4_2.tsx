@@ -1,42 +1,67 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Understanding the Sequence of Operation - Module 7.4.2 | Level 2 Electrical Course";
-const DESCRIPTION = "Analysing how electrical circuits should function normally to identify where faults occur.";
+const TITLE = 'Understanding the Sequence of Operation - Module 7.4.2 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Analysing how electrical circuits should function normally to identify where faults occur.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What is the sequence of operation in electrical fault diagnosis?",
-    options: ["Random testing order", "The normal operational flow of the circuit", "Installation sequence", "Testing equipment order"],
+    question: 'What is the sequence of operation in electrical fault diagnosis?',
+    options: [
+      'Random testing order',
+      'The normal operational flow of the circuit',
+      'Installation sequence',
+      'Testing equipment order',
+    ],
     correctIndex: 1,
-    explanation: "Sequence of operation refers to understanding how the circuit should work normally, which helps identify where faults interrupt this flow."
+    explanation:
+      'Sequence of operation refers to understanding how the circuit should work normally, which helps identify where faults interrupt this flow.',
   },
   {
     id: 2,
-    question: "Why is understanding normal operation important for fault finding?",
-    options: ["It's required by regulations", "It helps identify where the normal sequence breaks down", "It reduces costs", "It speeds up installation"],
+    question: 'Why is understanding normal operation important for fault finding?',
+    options: [
+      "It's required by regulations",
+      'It helps identify where the normal sequence breaks down',
+      'It reduces costs',
+      'It speeds up installation',
+    ],
     correctIndex: 1,
-    explanation: "Understanding normal operation helps electricians identify exactly where the expected sequence is interrupted by a fault."
+    explanation:
+      'Understanding normal operation helps electricians identify exactly where the expected sequence is interrupted by a fault.',
   },
   {
     id: 3,
-    question: "In a motor control circuit, what should happen before the motor starts?",
-    options: ["Motor runs immediately", "Safety interlocks must be satisfied and control signals activated", "Only power is needed", "Nothing special required"],
+    question: 'In a motor control circuit, what should happen before the motor starts?',
+    options: [
+      'Motor runs immediately',
+      'Safety interlocks must be satisfied and control signals activated',
+      'Only power is needed',
+      'Nothing special required',
+    ],
     correctIndex: 1,
-    explanation: "Motor control circuits have specific sequences including safety interlocks, control signals, and protective systems that must operate correctly."
+    explanation:
+      'Motor control circuits have specific sequences including safety interlocks, control signals, and protective systems that must operate correctly.',
   },
   {
     id: 4,
-    question: "How does sequence analysis help with complex systems?",
-    options: ["It makes them simpler", "It breaks them into logical, testable stages", "It reduces components", "It eliminates documentation"],
+    question: 'How does sequence analysis help with complex systems?',
+    options: [
+      'It makes them simpler',
+      'It breaks them into logical, testable stages',
+      'It reduces components',
+      'It eliminates documentation',
+    ],
     correctIndex: 1,
-    explanation: "Sequence analysis helps break complex systems into manageable, logical stages that can be tested systematically."
-  }
+    explanation:
+      'Sequence analysis helps break complex systems into manageable, logical stages that can be tested systematically.',
+  },
 ];
 
 const Module7Section4_2 = () => {
@@ -47,141 +72,155 @@ const Module7Section4_2 = () => {
       id: 1,
       question: "What does 'sequence of operation' mean in electrical systems?",
       options: [
-        "The order components were installed",
-        "The normal operational flow and timing of circuit functions",
-        "The testing procedure order",
-        "The maintenance schedule"
+        'The order components were installed',
+        'The normal operational flow and timing of circuit functions',
+        'The testing procedure order',
+        'The maintenance schedule',
       ],
       correctAnswer: 1,
-      explanation: "Sequence of operation describes how a circuit should function normally, including the order and timing of electrical events."
+      explanation:
+        'Sequence of operation describes how a circuit should function normally, including the order and timing of electrical events.',
     },
     {
       id: 2,
-      question: "How does understanding sequence help in fault diagnosis?",
+      question: 'How does understanding sequence help in fault diagnosis?',
       options: [
-        "It eliminates the need for testing",
-        "It helps identify where the normal operational flow is interrupted",
-        "It speeds up installation",
-        "It reduces material costs"
+        'It eliminates the need for testing',
+        'It helps identify where the normal operational flow is interrupted',
+        'It speeds up installation',
+        'It reduces material costs',
       ],
       correctAnswer: 1,
-      explanation: "By understanding normal operation, electricians can identify exactly where faults interrupt the expected sequence of events."
+      explanation:
+        'By understanding normal operation, electricians can identify exactly where faults interrupt the expected sequence of events.',
     },
     {
       id: 3,
-      question: "In a lighting circuit, what is the normal sequence of operation?",
+      question: 'In a lighting circuit, what is the normal sequence of operation?',
       options: [
-        "Lamp → Switch → Supply",
-        "Supply → Protection → Switch → Lamp → Neutral return",
-        "Switch → Lamp → Supply",
-        "Protection → Lamp → Switch"
+        'Lamp → Switch → Supply',
+        'Supply → Protection → Switch → Lamp → Neutral return',
+        'Switch → Lamp → Supply',
+        'Protection → Lamp → Switch',
       ],
       correctAnswer: 1,
-      explanation: "Normal lighting sequence: supply voltage → protective device → switch → lamp → neutral return path."
+      explanation:
+        'Normal lighting sequence: supply voltage → protective device → switch → lamp → neutral return path.',
     },
     {
       id: 4,
-      question: "What happens if the neutral connection fails in this sequence?",
+      question: 'What happens if the neutral connection fails in this sequence?',
       options: [
-        "Lamp works normally",
-        "Circuit cannot complete and lamp will not illuminate",
-        "Only lamp brightness is affected",
-        "Switch becomes faulty"
+        'Lamp works normally',
+        'Circuit cannot complete and lamp will not illuminate',
+        'Only lamp brightness is affected',
+        'Switch becomes faulty',
       ],
       correctAnswer: 1,
-      explanation: "Without a proper neutral return path, the circuit cannot complete and the lamp will not function."
+      explanation:
+        'Without a proper neutral return path, the circuit cannot complete and the lamp will not function.',
     },
     {
       id: 5,
-      question: "In motor control systems, what typically happens first in the sequence?",
+      question: 'In motor control systems, what typically happens first in the sequence?',
       options: [
-        "Motor starts immediately",
-        "Safety interlocks and permits are checked",
-        "Overload protection activates",
-        "Motor runs at full speed"
+        'Motor starts immediately',
+        'Safety interlocks and permits are checked',
+        'Overload protection activates',
+        'Motor runs at full speed',
       ],
       correctAnswer: 1,
-      explanation: "Motor control sequences typically begin with safety interlock verification before any other operations can proceed."
+      explanation:
+        'Motor control sequences typically begin with safety interlock verification before any other operations can proceed.',
     },
     {
       id: 6,
-      question: "Why should fault finding follow the operational sequence?",
+      question: 'Why should fault finding follow the operational sequence?',
       options: [
         "It's faster than random testing",
-        "It provides logical progression and prevents missing faults",
-        "It uses less equipment",
-        "It's required by BS 7671"
+        'It provides logical progression and prevents missing faults',
+        'It uses less equipment',
+        "It's required by BS 7671",
       ],
       correctAnswer: 1,
-      explanation: "Following the operational sequence ensures logical, systematic fault finding and prevents missing interconnected problems."
+      explanation:
+        'Following the operational sequence ensures logical, systematic fault finding and prevents missing interconnected problems.',
     },
     {
       id: 7,
-      question: "What should you do if a circuit deviates from expected sequence?",
+      question: 'What should you do if a circuit deviates from expected sequence?',
       options: [
-        "Ignore minor deviations",
-        "Investigate the deviation point as potential fault location",
-        "Continue with normal testing",
-        "Replace all components"
+        'Ignore minor deviations',
+        'Investigate the deviation point as potential fault location',
+        'Continue with normal testing',
+        'Replace all components',
       ],
       correctAnswer: 1,
-      explanation: "Any deviation from expected sequence indicates a potential fault location that requires investigation."
+      explanation:
+        'Any deviation from expected sequence indicates a potential fault location that requires investigation.',
     },
     {
       id: 8,
-      question: "How does sequence analysis help with complex control systems?",
+      question: 'How does sequence analysis help with complex control systems?',
       options: [
-        "It eliminates the need for documentation",
-        "It breaks complex systems into logical, testable stages",
-        "It reduces the number of components",
-        "It simplifies wiring requirements"
+        'It eliminates the need for documentation',
+        'It breaks complex systems into logical, testable stages',
+        'It reduces the number of components',
+        'It simplifies wiring requirements',
       ],
       correctAnswer: 1,
-      explanation: "Sequence analysis helps break complex systems into manageable, logical stages that can be tested systematically."
+      explanation:
+        'Sequence analysis helps break complex systems into manageable, logical stages that can be tested systematically.',
     },
     {
       id: 9,
-      question: "What documentation helps understand circuit sequences?",
+      question: 'What documentation helps understand circuit sequences?',
       options: [
-        "Only installation certificates",
-        "Circuit diagrams, control schematics, and operational manuals",
-        "Only test results",
-        "Material lists only"
+        'Only installation certificates',
+        'Circuit diagrams, control schematics, and operational manuals',
+        'Only test results',
+        'Material lists only',
       ],
       correctAnswer: 1,
-      explanation: "Circuit diagrams, control schematics, and operational manuals provide essential information about intended operational sequences."
+      explanation:
+        'Circuit diagrams, control schematics, and operational manuals provide essential information about intended operational sequences.',
     },
     {
       id: 10,
-      question: "When should sequence analysis be performed?",
+      question: 'When should sequence analysis be performed?',
       options: [
-        "Only after faults occur",
-        "Before starting any fault diagnosis work",
-        "Only during installation",
-        "Only during maintenance"
+        'Only after faults occur',
+        'Before starting any fault diagnosis work',
+        'Only during installation',
+        'Only during maintenance',
       ],
       correctAnswer: 1,
-      explanation: "Sequence analysis should be performed before starting fault diagnosis to understand how the system should work normally."
-    }
+      explanation:
+        'Sequence analysis should be performed before starting fault diagnosis to understand how the system should work normally.',
+    },
   ];
 
   const faqs = [
     {
-      question: "How do you determine the correct sequence of operation?",
-      answer: "Review circuit diagrams, manufacturer documentation, and observe normal system operation. For complex systems, trace the control logic from start to finish."
+      question: 'How do you determine the correct sequence of operation?',
+      answer:
+        'Review circuit diagrams, manufacturer documentation, and observe normal system operation. For complex systems, trace the control logic from start to finish.',
     },
     {
-      question: "What if documentation is missing for sequence analysis?",
-      answer: "Carefully observe system operation when working, trace control circuits visually, and consult manufacturer resources. Document your findings for future reference."
+      question: 'What if documentation is missing for sequence analysis?',
+      answer:
+        'Carefully observe system operation when working, trace control circuits visually, and consult manufacturer resources. Document your findings for future reference.',
     },
     {
-      question: "Can sequence analysis prevent some fault diagnosis work?",
-      answer: "Yes, understanding normal operation often reveals obvious deviations that point directly to fault locations, reducing extensive testing requirements."
+      question: 'Can sequence analysis prevent some fault diagnosis work?',
+      answer:
+        'Yes, understanding normal operation often reveals obvious deviations that point directly to fault locations, reducing extensive testing requirements.',
     },
     {
-      question: "How detailed should sequence analysis be?",
-      answer: "Detail level depends on system complexity. Simple circuits need basic sequence understanding, while complex control systems require detailed operational flow analysis."
-    }
+      question: 'How detailed should sequence analysis be?',
+      answer:
+        'Detail level depends on system complexity. Simple circuits need basic sequence understanding, while complex control systems require detailed operational flow analysis.',
+    },
   ];
 
   return (
@@ -216,7 +255,8 @@ const Module7Section4_2 = () => {
               Understanding the Sequence of Operation
             </h1>
             <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
-              Analysing how electrical circuits should function normally to identify where faults occur.
+              Analysing how electrical circuits should function normally to identify where faults
+              occur.
             </p>
           </header>
 
@@ -224,9 +264,16 @@ const Module7Section4_2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
             <ul className="text-white/80 space-y-1 text-sm">
-              <li>• Understanding normal circuit operation is essential for effective fault diagnosis.</li>
-              <li>• Sequence of operation describes how electrical systems should function step-by-step.</li>
-              <li>• Faults interrupt normal sequences, making deviations key diagnostic indicators.</li>
+              <li>
+                • Understanding normal circuit operation is essential for effective fault diagnosis.
+              </li>
+              <li>
+                • Sequence of operation describes how electrical systems should function
+                step-by-step.
+              </li>
+              <li>
+                • Faults interrupt normal sequences, making deviations key diagnostic indicators.
+              </li>
             </ul>
           </div>
 
@@ -253,7 +300,9 @@ const Module7Section4_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The sequence of operation describes the intended flow of electrical events in a circuit, from initial energisation through normal operation to controlled shutdown. This understanding forms the foundation of effective fault diagnosis.
+                The sequence of operation describes the intended flow of electrical events in a
+                circuit, from initial energisation through normal operation to controlled shutdown.
+                This understanding forms the foundation of effective fault diagnosis.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -292,7 +341,10 @@ const Module7Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Critical insight:</strong> Every electrical system tells an operational story. Understanding this narrative enables electricians to identify precisely where faults disrupt normal function and guides systematic diagnostic approaches.
+                  <strong className="text-elec-yellow">Critical insight:</strong> Every electrical
+                  system tells an operational story. Understanding this narrative enables
+                  electricians to identify precisely where faults disrupt normal function and guides
+                  systematic diagnostic approaches.
                 </p>
               </div>
             </div>
@@ -314,7 +366,9 @@ const Module7Section4_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Basic circuits follow predictable sequences that form the foundation for understanding complex systems. Mastering these fundamental patterns enables effective diagnosis of sophisticated installations.
+                Basic circuits follow predictable sequences that form the foundation for
+                understanding complex systems. Mastering these fundamental patterns enables
+                effective diagnosis of sophisticated installations.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 my-6">
@@ -368,7 +422,10 @@ const Module7Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Diagnostic principle:</strong> Understanding these basic sequences allows electricians to identify exactly where normal operation breaks down, enabling efficient fault location without extensive testing.
+                  <strong className="text-elec-yellow">Diagnostic principle:</strong> Understanding
+                  these basic sequences allows electricians to identify exactly where normal
+                  operation breaks down, enabling efficient fault location without extensive
+                  testing.
                 </p>
               </div>
             </div>
@@ -390,7 +447,9 @@ const Module7Section4_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Industrial and commercial systems involve intricate sequences with multiple decision points, safety interlocks, and coordinated operations that require systematic analysis for effective fault diagnosis.
+                Industrial and commercial systems involve intricate sequences with multiple decision
+                points, safety interlocks, and coordinated operations that require systematic
+                analysis for effective fault diagnosis.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 my-6">
@@ -448,7 +507,10 @@ const Module7Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Complex system principle:</strong> Even the most sophisticated control systems can be broken down into simple, logical sequences. Understanding these building blocks enables systematic fault diagnosis of complex installations.
+                  <strong className="text-elec-yellow">Complex system principle:</strong> Even the
+                  most sophisticated control systems can be broken down into simple, logical
+                  sequences. Understanding these building blocks enables systematic fault diagnosis
+                  of complex installations.
                 </p>
               </div>
             </div>
@@ -470,7 +532,8 @@ const Module7Section4_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Understanding normal sequences allows systematic identification of where faults interrupt expected operation.
+                Understanding normal sequences allows systematic identification of where faults
+                interrupt expected operation.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 my-6">
@@ -521,7 +584,9 @@ const Module7Section4_2 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="font-medium text-white mb-3">Case Study: Manufacturing Conveyor System Failure</p>
+              <p className="font-medium text-white mb-3">
+                Case Study: Manufacturing Conveyor System Failure
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white/90 mb-2">Reported Problem:</p>
@@ -544,7 +609,11 @@ const Module7Section4_2 = () => {
                 </div>
               </div>
               <div className="mt-4 p-3 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong className="text-elec-yellow">Key insight:</strong> By following the operational sequence rather than random testing, the fault was located in 20 minutes instead of potentially hours of motor and control system diagnostics.</p>
+                <p className="text-sm">
+                  <strong className="text-elec-yellow">Key insight:</strong> By following the
+                  operational sequence rather than random testing, the fault was located in 20
+                  minutes instead of potentially hours of motor and control system diagnostics.
+                </p>
               </div>
             </div>
           </section>

@@ -13,7 +13,9 @@ export const WhatAreLightingScenesSection = () => {
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-lg">
           <p className="text-lg leading-relaxed mb-4">
-            A lighting scene is a pre-configured state where multiple lights are set to specific brightness, colour, and on/off states simultaneously. Instead of manually adjusting each light, scenes activate entire lighting configurations with a single command.
+            A lighting scene is a pre-configured state where multiple lights are set to specific
+            brightness, colour, and on/off states simultaneously. Instead of manually adjusting each
+            light, scenes activate entire lighting configurations with a single command.
           </p>
           <div className="grid md:grid-cols-3 gap-4 text-sm">
             <div className="text-center">
@@ -57,11 +59,13 @@ export const WhatAreLightingScenesSection = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="p-4 bg-purple-600/10 border-l-4 border-purple-500 rounded-lg">
               <h5 className="font-semibold text-purple-200">Time-Based Circadian Scenes</h5>
               <div className="text-sm mt-2">
-                <p className="text-purple-100 mb-2">Daily light progression supporting natural rhythms:</p>
+                <p className="text-purple-100 mb-2">
+                  Daily light progression supporting natural rhythms:
+                </p>
                 <div className="grid grid-cols-4 gap-2 text-xs">
                   <div className="bg-purple-800/20 p-2 rounded">
                     <div className="font-medium">Morning (6-10 AM)</div>

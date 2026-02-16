@@ -1,141 +1,212 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Re-Test Period Planning - PAT Testing Module 5 Section 4";
-const DESCRIPTION = "Learn how to plan and schedule PAT testing intervals using risk assessment, IET Code of Practice guidance, and practical scheduling strategies.";
+const TITLE = 'Re-Test Period Planning - PAT Testing Module 5 Section 4';
+const DESCRIPTION =
+  'Learn how to plan and schedule PAT testing intervals using risk assessment, IET Code of Practice guidance, and practical scheduling strategies.';
 
 const quickCheckQuestions = [
   {
-    id: "m5s4-qc1",
-    question: "What is the recommended maximum initial interval for office IT equipment?",
-    options: ["3 months", "6 months", "48 months", "No testing needed"],
+    id: 'm5s4-qc1',
+    question: 'What is the recommended maximum initial interval for office IT equipment?',
+    options: ['3 months', '6 months', '48 months', 'No testing needed'],
     correctIndex: 2,
-    explanation: "The IET Code of Practice suggests up to 48 months for office IT equipment in low-risk environments, though formal visual inspection may be needed more frequently."
+    explanation:
+      'The IET Code of Practice suggests up to 48 months for office IT equipment in low-risk environments, though formal visual inspection may be needed more frequently.',
   },
   {
-    id: "m5s4-qc2",
-    question: "What should be used to determine appropriate test intervals?",
-    options: ["Fixed annual schedule for all", "Risk assessment based on equipment and environment", "Manufacturer recommendation only", "Random selection"],
+    id: 'm5s4-qc2',
+    question: 'What should be used to determine appropriate test intervals?',
+    options: [
+      'Fixed annual schedule for all',
+      'Risk assessment based on equipment and environment',
+      'Manufacturer recommendation only',
+      'Random selection',
+    ],
     correctIndex: 1,
-    explanation: "Risk assessment considering equipment type, environment, usage, and user competence should determine test intervals, not a blanket approach."
+    explanation:
+      'Risk assessment considering equipment type, environment, usage, and user competence should determine test intervals, not a blanket approach.',
   },
   {
-    id: "m5s4-qc3",
-    question: "When should test intervals be shortened?",
-    options: ["Never", "When high failure rates are found", "When equipment is new", "Every other year"],
+    id: 'm5s4-qc3',
+    question: 'When should test intervals be shortened?',
+    options: [
+      'Never',
+      'When high failure rates are found',
+      'When equipment is new',
+      'Every other year',
+    ],
     correctIndex: 1,
-    explanation: "If testing reveals high failure rates, it indicates the interval may be too long and should be reduced to catch faults earlier."
-  }
+    explanation:
+      'If testing reveals high failure rates, it indicates the interval may be too long and should be reduced to catch faults earlier.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "According to the IET Code of Practice, test intervals should be based on:",
-    options: ["Annual fixed schedule", "Risk assessment and review", "Equipment colour", "User preference"],
+    question: 'According to the IET Code of Practice, test intervals should be based on:',
+    options: [
+      'Annual fixed schedule',
+      'Risk assessment and review',
+      'Equipment colour',
+      'User preference',
+    ],
     correctAnswer: 1,
-    explanation: "The IET Code of Practice advocates a risk-based approach, not arbitrary fixed schedules."
+    explanation:
+      'The IET Code of Practice advocates a risk-based approach, not arbitrary fixed schedules.',
   },
   {
     id: 2,
-    question: "What is the suggested initial test interval for Class I construction site equipment?",
-    options: ["48 months", "24 months", "3 months", "Weekly"],
+    question:
+      'What is the suggested initial test interval for Class I construction site equipment?',
+    options: ['48 months', '24 months', '3 months', 'Weekly'],
     correctAnswer: 2,
-    explanation: "Construction site equipment is high-risk and typically requires testing every 1-3 months."
+    explanation:
+      'Construction site equipment is high-risk and typically requires testing every 1-3 months.',
   },
   {
     id: 3,
-    question: "User checks of equipment should typically be conducted:",
-    options: ["Never", "Before each use", "Monthly", "Only when faulty"],
+    question: 'User checks of equipment should typically be conducted:',
+    options: ['Never', 'Before each use', 'Monthly', 'Only when faulty'],
     correctAnswer: 1,
-    explanation: "Users should conduct simple visual checks before each use to spot obvious damage."
+    explanation:
+      'Users should conduct simple visual checks before each use to spot obvious damage.',
   },
   {
     id: 4,
-    question: "What factor would justify extending test intervals?",
-    options: ["Cost savings required", "Consistently low failure rates over time", "New tester appointed", "Equipment getting older"],
+    question: 'What factor would justify extending test intervals?',
+    options: [
+      'Cost savings required',
+      'Consistently low failure rates over time',
+      'New tester appointed',
+      'Equipment getting older',
+    ],
     correctAnswer: 1,
-    explanation: "Consistently low failure rates over multiple test cycles indicate intervals may be safely extended."
+    explanation:
+      'Consistently low failure rates over multiple test cycles indicate intervals may be safely extended.',
   },
   {
     id: 5,
-    question: "In a hotel environment, portable appliances in guest rooms typically require:",
-    options: ["Annual combined inspection and test", "Testing every 5 years", "No testing needed", "Weekly visual inspection"],
+    question: 'In a hotel environment, portable appliances in guest rooms typically require:',
+    options: [
+      'Annual combined inspection and test',
+      'Testing every 5 years',
+      'No testing needed',
+      'Weekly visual inspection',
+    ],
     correctAnswer: 0,
-    explanation: "Hotel environments with public access typically require annual combined inspection and testing."
+    explanation:
+      'Hotel environments with public access typically require annual combined inspection and testing.',
   },
   {
     id: 6,
-    question: "What is the purpose of the IET Code of Practice tables?",
-    options: ["Legal requirements", "Suggested initial intervals requiring review", "Absolute fixed intervals", "Insurance requirements"],
+    question: 'What is the purpose of the IET Code of Practice tables?',
+    options: [
+      'Legal requirements',
+      'Suggested initial intervals requiring review',
+      'Absolute fixed intervals',
+      'Insurance requirements',
+    ],
     correctAnswer: 1,
-    explanation: "The IET tables provide suggested initial intervals as starting points for review and adjustment."
+    explanation:
+      'The IET tables provide suggested initial intervals as starting points for review and adjustment.',
   },
   {
     id: 7,
-    question: "Double-insulated (Class II) equipment generally requires:",
-    options: ["More frequent testing than Class I", "Same intervals as Class I", "Less frequent testing than Class I", "No testing at all"],
+    question: 'Double-insulated (Class II) equipment generally requires:',
+    options: [
+      'More frequent testing than Class I',
+      'Same intervals as Class I',
+      'Less frequent testing than Class I',
+      'No testing at all',
+    ],
     correctAnswer: 2,
-    explanation: "Class II equipment has additional insulation protection and typically requires less frequent testing."
+    explanation:
+      'Class II equipment has additional insulation protection and typically requires less frequent testing.',
   },
   {
     id: 8,
-    question: "Test scheduling should include provision for:",
-    options: ["Testing all equipment on one day", "Equipment not available on scheduled date", "Only testing during holidays", "Random testing times"],
+    question: 'Test scheduling should include provision for:',
+    options: [
+      'Testing all equipment on one day',
+      'Equipment not available on scheduled date',
+      'Only testing during holidays',
+      'Random testing times',
+    ],
     correctAnswer: 1,
-    explanation: "Schedules must accommodate equipment that may be unavailable, with catch-up sessions planned."
+    explanation:
+      'Schedules must accommodate equipment that may be unavailable, with catch-up sessions planned.',
   },
   {
     id: 9,
-    question: "High-risk equipment like electric kettles in commercial kitchens might need:",
-    options: ["Annual testing", "Monthly formal visual inspection", "Testing every 5 years", "User checks only"],
+    question: 'High-risk equipment like electric kettles in commercial kitchens might need:',
+    options: [
+      'Annual testing',
+      'Monthly formal visual inspection',
+      'Testing every 5 years',
+      'User checks only',
+    ],
     correctAnswer: 1,
-    explanation: "High-risk equipment in demanding environments may need monthly formal visual inspections."
+    explanation:
+      'High-risk equipment in demanding environments may need monthly formal visual inspections.',
   },
   {
     id: 10,
-    question: "When implementing a new PAT testing programme, initial intervals should be:",
-    options: ["Very long to save money", "Conservative until failure data is gathered", "Based on guesswork", "The same for all equipment"],
+    question: 'When implementing a new PAT testing programme, initial intervals should be:',
+    options: [
+      'Very long to save money',
+      'Conservative until failure data is gathered',
+      'Based on guesswork',
+      'The same for all equipment',
+    ],
     correctAnswer: 1,
-    explanation: "Start with conservative intervals and adjust based on actual failure data collected."
-  }
+    explanation:
+      'Start with conservative intervals and adjust based on actual failure data collected.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Is annual PAT testing required by law?",
-    answer: "No. There is no legal requirement for annual testing. The law requires equipment to be maintained to prevent danger. Test intervals should be based on risk assessment. Some equipment may need more frequent testing, others less."
+    question: 'Is annual PAT testing required by law?',
+    answer:
+      'No. There is no legal requirement for annual testing. The law requires equipment to be maintained to prevent danger. Test intervals should be based on risk assessment. Some equipment may need more frequent testing, others less.',
   },
   {
-    question: "Can I test all equipment on the same schedule?",
-    answer: "This is not recommended. Different equipment types, environments, and usage patterns require different intervals. A risk-based approach is more effective and often more economical than a blanket schedule."
+    question: 'Can I test all equipment on the same schedule?',
+    answer:
+      'This is not recommended. Different equipment types, environments, and usage patterns require different intervals. A risk-based approach is more effective and often more economical than a blanket schedule.',
   },
   {
-    question: "What if a client insists on annual testing regardless of risk?",
-    answer: "You can explain the risk-based approach but ultimately follow the client's requirements. Document that more frequent testing was requested. Over-testing is not harmful, just potentially unnecessary."
+    question: 'What if a client insists on annual testing regardless of risk?',
+    answer:
+      "You can explain the risk-based approach but ultimately follow the client's requirements. Document that more frequent testing was requested. Over-testing is not harmful, just potentially unnecessary.",
   },
   {
-    question: "How do I handle equipment that is rarely used?",
-    answer: "Consider condition-based testing - test before each use if equipment sits idle for extended periods. Include in regular schedules but note low usage. Faults may develop during storage."
+    question: 'How do I handle equipment that is rarely used?',
+    answer:
+      'Consider condition-based testing - test before each use if equipment sits idle for extended periods. Include in regular schedules but note low usage. Faults may develop during storage.',
   },
   {
-    question: "Should new equipment be tested immediately?",
-    answer: "New equipment should be inspected and may need testing before first use, especially if there is any doubt about condition. This establishes a baseline and verifies equipment arrived undamaged."
+    question: 'Should new equipment be tested immediately?',
+    answer:
+      'New equipment should be inspected and may need testing before first use, especially if there is any doubt about condition. This establishes a baseline and verifies equipment arrived undamaged.',
   },
   {
-    question: "How do I manage multiple test intervals efficiently?",
-    answer: "Group equipment with similar intervals and test in batches. Use PAT management software for scheduling. Consider aligning similar equipment to common test dates during reviews to simplify logistics."
-  }
+    question: 'How do I manage multiple test intervals efficiently?',
+    answer:
+      'Group equipment with similar intervals and test in batches. Use PAT management software for scheduling. Consider aligning similar equipment to common test dates during reviews to simplify logistics.',
+  },
 ];
 
 const PATTestingModule5Section4 = () => {
   useSEO({
     title: TITLE,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -143,7 +214,12 @@ const PATTestingModule5Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/pat-testing-module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -154,7 +230,6 @@ const PATTestingModule5Section4 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -174,18 +249,32 @@ const PATTestingModule5Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Key Principle:</strong> Risk-based intervals, not fixed schedules</li>
-              <li><strong>IET Guidance:</strong> Weekly checks to 48 months testing</li>
-              <li><strong>Review:</strong> Adjust based on failure rates</li>
-              <li><strong>Layers:</strong> User checks, visual, combined testing</li>
+              <li>
+                <strong>Key Principle:</strong> Risk-based intervals, not fixed schedules
+              </li>
+              <li>
+                <strong>IET Guidance:</strong> Weekly checks to 48 months testing
+              </li>
+              <li>
+                <strong>Review:</strong> Adjust based on failure rates
+              </li>
+              <li>
+                <strong>Layers:</strong> User checks, visual, combined testing
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> High-risk equipment needing shorter intervals</li>
-              <li><strong>Use:</strong> IET tables as starting points for review</li>
-              <li><strong>Apply:</strong> Failure data to optimise schedules</li>
+              <li>
+                <strong>Spot:</strong> High-risk equipment needing shorter intervals
+              </li>
+              <li>
+                <strong>Use:</strong> IET tables as starting points for review
+              </li>
+              <li>
+                <strong>Apply:</strong> Failure data to optimise schedules
+              </li>
             </ul>
           </div>
         </div>
@@ -195,12 +284,12 @@ const PATTestingModule5Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply risk assessment to determine test intervals",
-              "Interpret IET Code of Practice interval tables",
-              "Distinguish between inspection types",
-              "Create efficient testing schedules",
-              "Review and adjust intervals based on data",
-              "Handle scheduling challenges practically"
+              'Apply risk assessment to determine test intervals',
+              'Interpret IET Code of Practice interval tables',
+              'Distinguish between inspection types',
+              'Create efficient testing schedules',
+              'Review and adjust intervals based on data',
+              'Handle scheduling challenges practically',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -221,16 +310,17 @@ const PATTestingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The IET Code of Practice advocates a risk-based approach to determining test intervals. This means
-              considering multiple factors rather than applying a blanket schedule to all equipment.
+              The IET Code of Practice advocates a risk-based approach to determining test
+              intervals. This means considering multiple factors rather than applying a blanket
+              schedule to all equipment.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Important clarification:</p>
               <p className="text-sm text-white">
-                There is no legal requirement for annual PAT testing. The law requires equipment to be
-                maintained safely - how often you test depends on risk assessment, not arbitrary schedules.
-                Annual testing is a common misconception, not a legal mandate.
+                There is no legal requirement for annual PAT testing. The law requires equipment to
+                be maintained safely - how often you test depends on risk assessment, not arbitrary
+                schedules. Annual testing is a common misconception, not a legal mandate.
               </p>
             </div>
 
@@ -261,8 +351,9 @@ const PATTestingModule5Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Risk equation:</p>
               <p className="text-sm text-white">
-                Risk = Probability of harm x Severity of harm. Higher risk equipment (high probability or severity)
-                requires more frequent inspection. Lower risk equipment can have extended intervals.
+                Risk = Probability of harm x Severity of harm. Higher risk equipment (high
+                probability or severity) requires more frequent inspection. Lower risk equipment can
+                have extended intervals.
               </p>
             </div>
           </div>
@@ -278,12 +369,15 @@ const PATTestingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The IET Code of Practice identifies three levels of inspection, each with different purposes and intervals.
-              Understanding these helps create a layered approach to equipment safety.
+              The IET Code of Practice identifies three levels of inspection, each with different
+              purposes and intervals. Understanding these helps create a layered approach to
+              equipment safety.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">User Checks (Daily/Before Use)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                User Checks (Daily/Before Use)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Simple visual check by the user before each use</li>
                 <li>Look for obvious damage to case or cable</li>
@@ -294,7 +388,9 @@ const PATTestingModule5Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Formal Visual Inspection (Weekly to 12 months)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Formal Visual Inspection (Weekly to 12 months)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Detailed visual inspection by a competent person</li>
                 <li>Check cable condition and terminations</li>
@@ -305,7 +401,9 @@ const PATTestingModule5Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Combined Inspection and Test (3 to 48 months)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Combined Inspection and Test (3 to 48 months)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Full formal visual inspection plus electrical tests</li>
                 <li>Earth continuity test (Class I equipment)</li>
@@ -327,40 +425,58 @@ const PATTestingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The IET Code of Practice provides tables of suggested initial intervals. These are starting points
-              for review, not absolute requirements. Always apply professional judgement.
+              The IET Code of Practice provides tables of suggested initial intervals. These are
+              starting points for review, not absolute requirements. Always apply professional
+              judgement.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Construction Sites (High Risk)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Construction Sites (High Risk)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>110V/230V portable tools: Daily user check, weekly visual, monthly combined test</li>
+                <li>
+                  110V/230V portable tools: Daily user check, weekly visual, monthly combined test
+                </li>
                 <li>Site lighting: Daily user check, weekly visual, monthly combined test</li>
                 <li>Extension leads: Daily user check, weekly visual, monthly combined test</li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial/Commercial (Medium Risk)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Industrial/Commercial (Medium Risk)
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Portable tools (Class I): Daily check, weekly visual, 6-12 month combined test</li>
+                <li>
+                  Portable tools (Class I): Daily check, weekly visual, 6-12 month combined test
+                </li>
                 <li>Moveable equipment: Weekly check, monthly visual, 12 month combined test</li>
                 <li>Stationary equipment: Monthly check, 6 month visual, 24 month combined test</li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Office/Low Risk Environments</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Office/Low Risk Environments
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>IT equipment (Class I): No user check, 24 month visual, 48 month combined test</li>
-                <li>IT equipment (Class II): No user check, 24 month visual, no combined test needed</li>
-                <li>Kettles/microwaves: Weekly user check, 6 month visual, 12-24 month combined test</li>
+                <li>
+                  IT equipment (Class I): No user check, 24 month visual, 48 month combined test
+                </li>
+                <li>
+                  IT equipment (Class II): No user check, 24 month visual, no combined test needed
+                </li>
+                <li>
+                  Kettles/microwaves: Weekly user check, 6 month visual, 12-24 month combined test
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> These are suggested initial intervals, not requirements. Review and adjust
-              based on actual failure rates. Higher risk items need more frequent attention.
+              <strong>Remember:</strong> These are suggested initial intervals, not requirements.
+              Review and adjust based on actual failure rates. Higher risk items need more frequent
+              attention.
             </p>
           </div>
         </section>
@@ -373,22 +489,33 @@ const PATTestingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Test intervals should not be fixed forever. Regular review of failure data allows you to optimise
-              intervals - extending them where safe and shortening them where problems emerge.
+              Test intervals should not be fixed forever. Regular review of failure data allows you
+              to optimise intervals - extending them where safe and shortening them where problems
+              emerge.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Using failure data:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Low failure rates (&lt;2%):</strong> Consider extending intervals gradually</li>
-                <li><strong>Moderate rates (2-5%):</strong> Current intervals may be appropriate</li>
-                <li><strong>High failure rates (&gt;5%):</strong> Shorten intervals or increase visual inspections</li>
+                <li>
+                  <strong>Low failure rates (&lt;2%):</strong> Consider extending intervals
+                  gradually
+                </li>
+                <li>
+                  <strong>Moderate rates (2-5%):</strong> Current intervals may be appropriate
+                </li>
+                <li>
+                  <strong>High failure rates (&gt;5%):</strong> Shorten intervals or increase visual
+                  inspections
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Extend Intervals</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  When to Extend Intervals
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Consistently low failure rates over 2+ years</li>
                   <li>Equipment is low-risk type</li>
@@ -398,7 +525,9 @@ const PATTestingModule5Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Shorten Intervals</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  When to Shorten Intervals
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>High or increasing failure rates</li>
                   <li>Changes in environment or usage</li>
@@ -421,17 +550,28 @@ const PATTestingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Efficient scheduling minimises disruption while ensuring all equipment is tested on time.
-              Several strategies can help manage the logistics of a PAT testing programme.
+              Efficient scheduling minimises disruption while ensuring all equipment is tested on
+              time. Several strategies can help manage the logistics of a PAT testing programme.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Scheduling approaches:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Rolling programme:</strong> Test a portion each month, spreads workload evenly</li>
-                <li><strong>Annual block testing:</strong> Test all during defined period, efficient for small portfolios</li>
-                <li><strong>Area/department rotation:</strong> Test entire departments at once, reduces site visits</li>
-                <li><strong>Hybrid approach:</strong> Combine methods for practical efficiency</li>
+                <li>
+                  <strong>Rolling programme:</strong> Test a portion each month, spreads workload
+                  evenly
+                </li>
+                <li>
+                  <strong>Annual block testing:</strong> Test all during defined period, efficient
+                  for small portfolios
+                </li>
+                <li>
+                  <strong>Area/department rotation:</strong> Test entire departments at once,
+                  reduces site visits
+                </li>
+                <li>
+                  <strong>Hybrid approach:</strong> Combine methods for practical efficiency
+                </li>
               </ul>
             </div>
 
@@ -469,7 +609,9 @@ const PATTestingModule5Section4 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Implementing New Intervals</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Implementing New Intervals
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Start with IET suggested intervals for your environment</li>
                 <li>Consider your specific risk factors and adjust</li>
@@ -480,7 +622,9 @@ const PATTestingModule5Section4 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Advising Clients</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Advising Clients
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Explain the risk-based approach clearly</li>
                 <li>Show IET guidance supports your recommendations</li>
@@ -492,11 +636,23 @@ const PATTestingModule5Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Applying annual testing to everything</strong> — use risk assessment instead</li>
-                <li><strong>Never reviewing intervals</strong> — data should drive adjustments</li>
-                <li><strong>Ignoring formal visual inspections</strong> — they catch many faults</li>
-                <li><strong>Not encouraging user checks</strong> — first line of defence</li>
-                <li><strong>Treating IET tables as legal requirements</strong> — they are guidance only</li>
+                <li>
+                  <strong>Applying annual testing to everything</strong> — use risk assessment
+                  instead
+                </li>
+                <li>
+                  <strong>Never reviewing intervals</strong> — data should drive adjustments
+                </li>
+                <li>
+                  <strong>Ignoring formal visual inspections</strong> — they catch many faults
+                </li>
+                <li>
+                  <strong>Not encouraging user checks</strong> — first line of defence
+                </li>
+                <li>
+                  <strong>Treating IET tables as legal requirements</strong> — they are guidance
+                  only
+                </li>
               </ul>
             </div>
           </div>
@@ -549,28 +705,33 @@ const PATTestingModule5Section4 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

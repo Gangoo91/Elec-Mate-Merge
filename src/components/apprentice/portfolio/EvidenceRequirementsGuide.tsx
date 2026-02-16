@@ -28,16 +28,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { useCombinedRequirements } from '@/hooks/useCombinedRequirements';
 import type { EvidenceTypeCode, CombinedEvidenceRequirement } from '@/types/evidence';
@@ -80,16 +72,22 @@ function RequirementItem({
     <Circle className="h-4 w-4 text-muted-foreground" />
   );
 
-  const isDueSoon = requirement.due_date && !requirement.is_complete && (() => {
-    const due = new Date(requirement.due_date);
-    const now = new Date();
-    const weekFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-    return due <= weekFromNow;
-  })();
+  const isDueSoon =
+    requirement.due_date &&
+    !requirement.is_complete &&
+    (() => {
+      const due = new Date(requirement.due_date);
+      const now = new Date();
+      const weekFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+      return due <= weekFromNow;
+    })();
 
-  const isOverdue = requirement.due_date && !requirement.is_complete && (() => {
-    return new Date(requirement.due_date) < new Date();
-  })();
+  const isOverdue =
+    requirement.due_date &&
+    !requirement.is_complete &&
+    (() => {
+      return new Date(requirement.due_date) < new Date();
+    })();
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('en-GB', {
@@ -106,8 +104,8 @@ function RequirementItem({
           requirement.is_complete
             ? 'bg-green-500/10'
             : requirement.is_mandatory
-            ? 'bg-amber-500/10'
-            : 'bg-muted/50'
+              ? 'bg-amber-500/10'
+              : 'bg-muted/50'
         )}
       >
         <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -130,9 +128,7 @@ function RequirementItem({
             )}
           </div>
           <span className="text-sm truncate">
-            {requirement.source === 'tutor'
-              ? requirement.title
-              : requirement.assessment_criterion}
+            {requirement.source === 'tutor' ? requirement.title : requirement.assessment_criterion}
           </span>
         </div>
         <div className="flex items-center gap-2 shrink-0">
@@ -176,8 +172,8 @@ function RequirementItem({
           requirement.is_complete
             ? 'border-green-500/30 bg-green-500/5'
             : requirement.is_mandatory
-            ? 'border-amber-500/30 bg-amber-500/5'
-            : 'border-border'
+              ? 'border-amber-500/30 bg-amber-500/5'
+              : 'border-border'
         )}
       >
         <CollapsibleTrigger className="w-full">
@@ -306,9 +302,7 @@ export function EvidenceRequirementsGuide({
     <Card className={cn('', className)}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-semibold">
-            Evidence Requirements
-          </CardTitle>
+          <CardTitle className="text-base font-semibold">Evidence Requirements</CardTitle>
           <Badge variant={progress.allMandatoryComplete ? 'default' : 'outline'}>
             {progress.percentage}%
           </Badge>
@@ -324,9 +318,7 @@ export function EvidenceRequirementsGuide({
             </span>
           )}
           {upcomingDueRequirements.length > 0 && (
-            <span className="text-amber-600">
-              {upcomingDueRequirements.length} due soon
-            </span>
+            <span className="text-amber-600">{upcomingDueRequirements.length} due soon</span>
           )}
         </div>
       </CardHeader>

@@ -7,21 +7,8 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  X,
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  User,
-  Shield,
-  Trash2
-} from 'lucide-react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { X, ArrowLeft, ArrowRight, Check, User, Shield, Trash2 } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -93,19 +80,23 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
   React.useEffect(() => {
     if (open) {
       setCurrentStep('inspected');
-      setInspectedBy(initialInspectedBy || {
-        name: inspectorName?.toUpperCase() || '',
-        signature: savedSignature || '',
-        company: companyName || '',
-        position: 'Inspector',
-      });
-      setAuthorisedBy(initialAuthorisedBy || {
-        name: '',
-        signature: '',
-        company: '',
-        position: '',
-        date: new Date().toISOString().split('T')[0],
-      });
+      setInspectedBy(
+        initialInspectedBy || {
+          name: inspectorName?.toUpperCase() || '',
+          signature: savedSignature || '',
+          company: companyName || '',
+          position: 'Inspector',
+        }
+      );
+      setAuthorisedBy(
+        initialAuthorisedBy || {
+          name: '',
+          signature: '',
+          company: '',
+          position: '',
+          date: new Date().toISOString().split('T')[0],
+        }
+      );
       setSameAsInspected(false);
     }
   }, [open, initialInspectedBy, initialAuthorisedBy, inspectorName, companyName, savedSignature]);
@@ -143,28 +134,39 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
       onComplete(inspectedBy, authorisedBy);
       onOpenChange(false);
     }
-  }, [isInspectedValid, isAuthorisedValid, inspectedBy, authorisedBy, onComplete, onOpenChange, haptics]);
+  }, [
+    isInspectedValid,
+    isAuthorisedValid,
+    inspectedBy,
+    authorisedBy,
+    onComplete,
+    onOpenChange,
+    haptics,
+  ]);
 
   // Handle same as inspected
-  const handleSameAsInspected = useCallback((checked: boolean) => {
-    setSameAsInspected(checked);
-    if (checked) {
-      haptics.tap();
-      setAuthorisedBy({
-        ...inspectedBy,
-        date: new Date().toISOString().split('T')[0],
-      });
-    }
-  }, [inspectedBy, haptics]);
+  const handleSameAsInspected = useCallback(
+    (checked: boolean) => {
+      setSameAsInspected(checked);
+      if (checked) {
+        haptics.tap();
+        setAuthorisedBy({
+          ...inspectedBy,
+          date: new Date().toISOString().split('T')[0],
+        });
+      }
+    },
+    [inspectedBy, haptics]
+  );
 
   // Use saved signature
   const handleUseSavedSignature = useCallback(() => {
     if (savedSignature) {
       haptics.tap();
       if (currentStep === 'inspected') {
-        setInspectedBy(prev => ({ ...prev, signature: savedSignature }));
+        setInspectedBy((prev) => ({ ...prev, signature: savedSignature }));
       } else {
-        setAuthorisedBy(prev => ({ ...prev, signature: savedSignature }));
+        setAuthorisedBy((prev) => ({ ...prev, signature: savedSignature }));
       }
     }
   }, [savedSignature, currentStep, haptics]);
@@ -173,9 +175,9 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
   const handleClearSignature = useCallback(() => {
     haptics.tap();
     if (currentStep === 'inspected') {
-      setInspectedBy(prev => ({ ...prev, signature: '' }));
+      setInspectedBy((prev) => ({ ...prev, signature: '' }));
     } else {
-      setAuthorisedBy(prev => ({ ...prev, signature: '' }));
+      setAuthorisedBy((prev) => ({ ...prev, signature: '' }));
     }
   }, [currentStep, haptics]);
 
@@ -190,9 +192,7 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
           <div className="flex items-center justify-between">
-            <SheetTitle className="text-lg font-semibold">
-              Sign Certificate
-            </SheetTitle>
+            <SheetTitle className="text-lg font-semibold">Sign Certificate</SheetTitle>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="text-xs">
                 Step {currentStep === 'inspected' ? '1' : '2'} of 2
@@ -217,24 +217,24 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
 
               return (
                 <React.Fragment key={step.id}>
-                  <div className={cn(
-                    'flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors',
-                    isActive && 'bg-elec-yellow/10 text-elec-yellow',
-                    isComplete && 'bg-green-500/10 text-green-400',
-                    !isActive && !isComplete && 'text-muted-foreground'
-                  )}>
-                    {isComplete ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      <Icon className="h-4 w-4" />
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors',
+                      isActive && 'bg-elec-yellow/10 text-elec-yellow',
+                      isComplete && 'bg-green-500/10 text-green-400',
+                      !isActive && !isComplete && 'text-muted-foreground'
                     )}
+                  >
+                    {isComplete ? <Check className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
                     <span className="text-sm font-medium hidden sm:inline">{step.label}</span>
                   </div>
                   {index < steps.length - 1 && (
-                    <div className={cn(
-                      'flex-1 h-0.5 rounded-full',
-                      isComplete ? 'bg-green-500/50' : 'bg-border'
-                    )} />
+                    <div
+                      className={cn(
+                        'flex-1 h-0.5 rounded-full',
+                        isComplete ? 'bg-green-500/50' : 'bg-border'
+                      )}
+                    />
                   )}
                 </React.Fragment>
               );
@@ -265,10 +265,12 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
                     <Label>Name (Capitals) *</Label>
                     <Input
                       value={inspectedBy.name}
-                      onChange={(e) => setInspectedBy(prev => ({
-                        ...prev,
-                        name: e.target.value.toUpperCase()
-                      }))}
+                      onChange={(e) =>
+                        setInspectedBy((prev) => ({
+                          ...prev,
+                          name: e.target.value.toUpperCase(),
+                        }))
+                      }
                       placeholder="FULL NAME"
                       className="uppercase h-12 text-base"
                     />
@@ -278,10 +280,12 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
                     <Label>Company</Label>
                     <Input
                       value={inspectedBy.company || ''}
-                      onChange={(e) => setInspectedBy(prev => ({
-                        ...prev,
-                        company: e.target.value
-                      }))}
+                      onChange={(e) =>
+                        setInspectedBy((prev) => ({
+                          ...prev,
+                          company: e.target.value,
+                        }))
+                      }
                       placeholder="Company name"
                       className="h-12 text-base"
                     />
@@ -317,10 +321,12 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
                     <div className="border-2 border-dashed border-border rounded-xl p-2 bg-card/50">
                       <SignatureInput
                         value={inspectedBy.signature}
-                        onChange={(value) => setInspectedBy(prev => ({
-                          ...prev,
-                          signature: value || ''
-                        }))}
+                        onChange={(value) =>
+                          setInspectedBy((prev) => ({
+                            ...prev,
+                            signature: value || '',
+                          }))
+                        }
                         placeholder="Draw or type signature"
                         required
                       />
@@ -360,10 +366,12 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
                     <Label>Name (Capitals) *</Label>
                     <Input
                       value={authorisedBy.name}
-                      onChange={(e) => setAuthorisedBy(prev => ({
-                        ...prev,
-                        name: e.target.value.toUpperCase()
-                      }))}
+                      onChange={(e) =>
+                        setAuthorisedBy((prev) => ({
+                          ...prev,
+                          name: e.target.value.toUpperCase(),
+                        }))
+                      }
                       placeholder="FULL NAME"
                       className="uppercase h-12 text-base"
                     />
@@ -374,10 +382,12 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
                     <Input
                       type="date"
                       value={authorisedBy.date || ''}
-                      onChange={(e) => setAuthorisedBy(prev => ({
-                        ...prev,
-                        date: e.target.value
-                      }))}
+                      onChange={(e) =>
+                        setAuthorisedBy((prev) => ({
+                          ...prev,
+                          date: e.target.value,
+                        }))
+                      }
                       className="h-12 text-base"
                     />
                   </div>
@@ -386,10 +396,12 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
                     <Label>Company</Label>
                     <Input
                       value={authorisedBy.company || ''}
-                      onChange={(e) => setAuthorisedBy(prev => ({
-                        ...prev,
-                        company: e.target.value
-                      }))}
+                      onChange={(e) =>
+                        setAuthorisedBy((prev) => ({
+                          ...prev,
+                          company: e.target.value,
+                        }))
+                      }
                       placeholder="Company name"
                       className="h-12 text-base"
                     />
@@ -425,10 +437,12 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
                     <div className="border-2 border-dashed border-border rounded-xl p-2 bg-card/50">
                       <SignatureInput
                         value={authorisedBy.signature}
-                        onChange={(value) => setAuthorisedBy(prev => ({
-                          ...prev,
-                          signature: value || ''
-                        }))}
+                        onChange={(value) =>
+                          setAuthorisedBy((prev) => ({
+                            ...prev,
+                            signature: value || '',
+                          }))
+                        }
                         placeholder="Draw or type signature"
                         required
                       />
@@ -444,11 +458,7 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
         <div className="p-4 border-t border-border shrink-0 bg-card/50 pb-[env(safe-area-inset-bottom)]">
           <div className="flex gap-3">
             {currentStep === 'authorised' && (
-              <Button
-                variant="outline"
-                onClick={handleBack}
-                className="flex-1 h-12 gap-2"
-              >
+              <Button variant="outline" onClick={handleBack} className="flex-1 h-12 gap-2">
                 <ArrowLeft className="h-4 w-4" />
                 Back
               </Button>

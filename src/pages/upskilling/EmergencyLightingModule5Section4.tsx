@@ -1,72 +1,98 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m5s4-check1",
-    question: "Why must emergency lighting circuits be labelled separately from normal lighting circuits?",
-    options: ["For aesthetic reasons", "To ensure safe isolation and rapid identification during maintenance", "Only required for large installations", "Building regulations only"],
+    id: 'emergencylighting-m5s4-check1',
+    question:
+      'Why must emergency lighting circuits be labelled separately from normal lighting circuits?',
+    options: [
+      'For aesthetic reasons',
+      'To ensure safe isolation and rapid identification during maintenance',
+      'Only required for large installations',
+      'Building regulations only',
+    ],
     correctIndex: 1,
-    explanation: "Separate labelling ensures electricians and maintenance staff can quickly identify and isolate emergency circuits without accidentally disconnecting life-safety systems. This prevents dangerous mistakes during maintenance and allows fire inspectors to verify dedicated protection."
+    explanation:
+      'Separate labelling ensures electricians and maintenance staff can quickly identify and isolate emergency circuits without accidentally disconnecting life-safety systems. This prevents dangerous mistakes during maintenance and allows fire inspectors to verify dedicated protection.',
   },
   {
-    id: "emergencylighting-m5s4-check2",
-    question: "Name three system components that must be labelled for compliance.",
-    options: ["Cables, switches, and fuses only", "Luminaires, distribution boards, and test points", "Walls, ceilings, and floors", "Only the main control panel"],
+    id: 'emergencylighting-m5s4-check2',
+    question: 'Name three system components that must be labelled for compliance.',
+    options: [
+      'Cables, switches, and fuses only',
+      'Luminaires, distribution boards, and test points',
+      'Walls, ceilings, and floors',
+      'Only the main control panel',
+    ],
     correctIndex: 1,
-    explanation: "Luminaires (with circuit references and maintained/non-maintained status), distribution boards (clearly marked as Emergency Lighting Circuits Only), and test points or key switches (identified for monthly functional checks) must all be labelled."
+    explanation:
+      'Luminaires (with circuit references and maintained/non-maintained status), distribution boards (clearly marked as Emergency Lighting Circuits Only), and test points or key switches (identified for monthly functional checks) must all be labelled.',
   },
   {
-    id: "emergencylighting-m5s4-check3",
-    question: "What must always be recorded after a failed luminaire test?",
-    options: ["Only the date", "The fault, luminaire reference, remedial action, and re-test result", "Nothing if fixed immediately", "Just the pass/fail result"],
+    id: 'emergencylighting-m5s4-check3',
+    question: 'What must always be recorded after a failed luminaire test?',
+    options: [
+      'Only the date',
+      'The fault, luminaire reference, remedial action, and re-test result',
+      'Nothing if fixed immediately',
+      'Just the pass/fail result',
+    ],
     correctIndex: 1,
-    explanation: "Complete records must include the specific fault found, luminaire reference number, date of failure, remedial action taken, who carried out the work, and the re-test result confirming the fault has been rectified. This creates a complete audit trail."
-  }
+    explanation:
+      'Complete records must include the specific fault found, luminaire reference number, date of failure, remedial action taken, who carried out the work, and the re-test result confirming the fault has been rectified. This creates a complete audit trail.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can labels be handwritten?",
-    answer: "No - labels must be durable, permanent, and legible under fire conditions. Handwritten labels fade, peel, and are unacceptable to fire inspectors. Use engraved or industrial label printers (Brady, Dymo XTL, Brother) to produce professional, long-lasting labels that comply with BS 5266-1 requirements."
+    question: 'Can labels be handwritten?',
+    answer:
+      'No - labels must be durable, permanent, and legible under fire conditions. Handwritten labels fade, peel, and are unacceptable to fire inspectors. Use engraved or industrial label printers (Brady, Dymo XTL, Brother) to produce professional, long-lasting labels that comply with BS 5266-1 requirements.',
   },
   {
-    question: "Is a paper logbook enough?",
-    answer: "Yes, but electronic systems are recommended for large sites to reduce errors. A bound paper logbook is legally acceptable and remains the most common method for small to medium installations. For sites with 100+ luminaires, digital maintenance software offers automated reminders, fault alerts, cloud backup, and instant compliance reporting."
+    question: 'Is a paper logbook enough?',
+    answer:
+      'Yes, but electronic systems are recommended for large sites to reduce errors. A bound paper logbook is legally acceptable and remains the most common method for small to medium installations. For sites with 100+ luminaires, digital maintenance software offers automated reminders, fault alerts, cloud backup, and instant compliance reporting.',
   },
   {
-    question: "Who is responsible for keeping records up to date?",
-    answer: "The building's Responsible Person under the Fire Safety Order, often supported by contractors. While routine testing can be delegated to competent staff or contractors, the Responsible Person retains ultimate legal responsibility and must ensure systems are in place to maintain compliance."
+    question: 'Who is responsible for keeping records up to date?',
+    answer:
+      "The building's Responsible Person under the Fire Safety Order, often supported by contractors. While routine testing can be delegated to competent staff or contractors, the Responsible Person retains ultimate legal responsibility and must ensure systems are in place to maintain compliance.",
   },
   {
-    question: "What legal risk arises from not keeping maintenance records?",
-    answer: "The Responsible Person can face enforcement notices, unlimited fines, criminal prosecution, and even imprisonment under the Regulatory Reform (Fire Safety) Order 2005. Insurance policies may become void, and civil liability increases significantly if fire-related injury or death occurs due to non-compliance."
-  }
+    question: 'What legal risk arises from not keeping maintenance records?',
+    answer:
+      'The Responsible Person can face enforcement notices, unlimited fines, criminal prosecution, and even imprisonment under the Regulatory Reform (Fire Safety) Order 2005. Insurance policies may become void, and civil liability increases significantly if fire-related injury or death occurs due to non-compliance.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "A fire inspector finds emergency lighting records are missing for 6 months. What is the likely consequence?",
+    question:
+      'A fire inspector finds emergency lighting records are missing for 6 months. What is the likely consequence?',
     options: [
-      "Verbal warning only",
-      "Enforcement notice, potential prosecution, and invalid insurance",
-      "No consequence if the system works",
-      "Small fine only"
+      'Verbal warning only',
+      'Enforcement notice, potential prosecution, and invalid insurance',
+      'No consequence if the system works',
+      'Small fine only',
     ],
     correctAnswer: 1,
-    explanation: "Missing or incomplete records can result in enforcement notices from the Fire and Rescue Authority, invalid insurance policies, criminal prosecution of the Responsible Person, unlimited fines, up to 2 years imprisonment, and significantly increased civil liability."
-  }
+    explanation:
+      'Missing or incomplete records can result in enforcement notices from the Fire and Rescue Authority, invalid insurance policies, criminal prosecution of the Responsible Person, unlimited fines, up to 2 years imprisonment, and significantly increased civil liability.',
+  },
 ];
 
 const EmergencyLightingModule5Section4 = () => {
   useSEO({
-    title: "System Labelling and Maintenance Records | Emergency Lighting Module 5.4",
-    description: "Documentation, compliance, and legal requirements for emergency lighting systems. BS 5266-1 labelling requirements and maintenance record keeping."
+    title: 'System Labelling and Maintenance Records | Emergency Lighting Module 5.4',
+    description:
+      'Documentation, compliance, and legal requirements for emergency lighting systems. BS 5266-1 labelling requirements and maintenance record keeping.',
   });
 
   return (
@@ -108,17 +134,29 @@ const EmergencyLightingModule5Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Labelling:</strong> Durable, permanent, legible</li>
-              <li><strong>Records:</strong> Legal requirement under RRO 2005</li>
-              <li><strong>Consequence:</strong> Prosecution for missing records</li>
+              <li>
+                <strong>Labelling:</strong> Durable, permanent, legible
+              </li>
+              <li>
+                <strong>Records:</strong> Legal requirement under RRO 2005
+              </li>
+              <li>
+                <strong>Consequence:</strong> Prosecution for missing records
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Must Label</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Luminaires:</strong> Circuit ref and M/NM status</li>
-              <li><strong>DBs:</strong> Emergency Lighting Circuits Only</li>
-              <li><strong>Test points:</strong> Monthly check identification</li>
+              <li>
+                <strong>Luminaires:</strong> Circuit ref and M/NM status
+              </li>
+              <li>
+                <strong>DBs:</strong> Emergency Lighting Circuits Only
+              </li>
+              <li>
+                <strong>Test points:</strong> Monthly check identification
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +166,12 @@ const EmergencyLightingModule5Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand labelling requirements under BS 5266-1",
-              "Identify which components require labelling",
-              "Maintain compliant maintenance records",
-              "Understand legal requirements under RRO 2005",
-              "Use digital vs paper logbook systems",
-              "Avoid common documentation failures"
+              'Understand labelling requirements under BS 5266-1',
+              'Identify which components require labelling',
+              'Maintain compliant maintenance records',
+              'Understand legal requirements under RRO 2005',
+              'Use digital vs paper logbook systems',
+              'Avoid common documentation failures',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -154,9 +192,9 @@ const EmergencyLightingModule5Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Clear labelling ensures that emergency lighting systems can be safely maintained,
-              tested, and inspected without confusion or risk. It provides essential information
-              to electricians, fire officers, and building managers, enabling rapid fault-finding
-              and compliance verification.
+              tested, and inspected without confusion or risk. It provides essential information to
+              electricians, fire officers, and building managers, enabling rapid fault-finding and
+              compliance verification.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -207,25 +245,38 @@ const EmergencyLightingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 5266-1 and BS 7671 specify which components of an emergency lighting system
-              must be clearly identified. Every critical element requires appropriate labelling
-              to ensure safe operation and maintenance.
+              BS 5266-1 and BS 7671 specify which components of an emergency lighting system must be
+              clearly identified. Every critical element requires appropriate labelling to ensure
+              safe operation and maintenance.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Components Requiring Labels:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Luminaires:</strong> Maintained or non-maintained, with circuit references</li>
-                <li><strong>Distribution boards:</strong> Clearly marked as supplying emergency circuits</li>
-                <li><strong>Test points / key switches:</strong> Identified for monthly functional checks</li>
-                <li><strong>Cabling:</strong> Where accessible, labelled as Fire-Resistant Emergency Lighting Supply</li>
-                <li><strong>Logbooks:</strong> Must reference labelled circuits for easy correlation</li>
+                <li>
+                  <strong>Luminaires:</strong> Maintained or non-maintained, with circuit references
+                </li>
+                <li>
+                  <strong>Distribution boards:</strong> Clearly marked as supplying emergency
+                  circuits
+                </li>
+                <li>
+                  <strong>Test points / key switches:</strong> Identified for monthly functional
+                  checks
+                </li>
+                <li>
+                  <strong>Cabling:</strong> Where accessible, labelled as Fire-Resistant Emergency
+                  Lighting Supply
+                </li>
+                <li>
+                  <strong>Logbooks:</strong> Must reference labelled circuits for easy correlation
+                </li>
               </ul>
             </div>
 
             <p>
-              Always cross-reference luminaire numbers on the drawings with those in the logbook
-              to ensure accurate identification during maintenance.
+              Always cross-reference luminaire numbers on the drawings with those in the logbook to
+              ensure accurate identification during maintenance.
             </p>
           </div>
         </section>
@@ -241,8 +292,8 @@ const EmergencyLightingModule5Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Maintenance documentation is essential for proving compliance with the Regulatory
-              Reform (Fire Safety) Order 2005. Incomplete or missing records render testing
-              legally worthless, even if the physical system is functioning perfectly.
+              Reform (Fire Safety) Order 2005. Incomplete or missing records render testing legally
+              worthless, even if the physical system is functioning perfectly.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -285,13 +336,15 @@ const EmergencyLightingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person has
-              a legal duty to maintain life-safety systems in efficient working order. Maintenance
+              Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person has a
+              legal duty to maintain life-safety systems in efficient working order. Maintenance
               records provide the only evidence that this duty has been fulfilled.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Legal Consequences of Missing Records:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Legal Consequences of Missing Records:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Enforcement notices requiring immediate action</li>
                 <li>Invalid insurance policies</li>
@@ -302,10 +355,9 @@ const EmergencyLightingModule5Section4 = () => {
             </div>
 
             <p>
-              Fire inspectors and insurers may request records at any time. The Responsible
-              Person (usually the building owner, employer, or facilities manager) has legal
-              accountability for maintaining life-safety systems and ensuring records are
-              complete and accurate.
+              Fire inspectors and insurers may request records at any time. The Responsible Person
+              (usually the building owner, employer, or facilities manager) has legal accountability
+              for maintaining life-safety systems and ensuring records are complete and accurate.
             </p>
           </div>
         </section>
@@ -315,7 +367,9 @@ const EmergencyLightingModule5Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Documentation Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Documentation Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Use engraved or industrial label printers (not handwritten)</li>
                 <li>Cross-reference luminaire numbers between drawings and logbooks</li>
@@ -326,12 +380,22 @@ const EmergencyLightingModule5Section4 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Documentation Failures</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Documentation Failures
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Handwritten labels:</strong> Fade, peel, unacceptable to inspectors</li>
-                <li><strong>Gaps in testing:</strong> 3-6 month gaps trigger enforcement</li>
-                <li><strong>Missing commissioning records:</strong> No proof of initial compliance</li>
-                <li><strong>No remedial work evidence:</strong> Fault fixed but not documented</li>
+                <li>
+                  <strong>Handwritten labels:</strong> Fade, peel, unacceptable to inspectors
+                </li>
+                <li>
+                  <strong>Gaps in testing:</strong> 3-6 month gaps trigger enforcement
+                </li>
+                <li>
+                  <strong>Missing commissioning records:</strong> No proof of initial compliance
+                </li>
+                <li>
+                  <strong>No remedial work evidence:</strong> Fault fixed but not documented
+                </li>
               </ul>
             </div>
           </div>
@@ -377,10 +441,7 @@ const EmergencyLightingModule5Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

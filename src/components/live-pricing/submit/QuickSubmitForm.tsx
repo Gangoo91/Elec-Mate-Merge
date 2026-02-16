@@ -1,13 +1,24 @@
-import { useState, useEffect } from "react";
-import { User, UserX, Check, Loader2, AlertTriangle, PoundSterling, MapPin, FileText, PartyPopper, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { JobTypeConfig } from "@/hooks/useJobTypes";
-import JobTypeSelector from "./JobTypeSelector";
-import JobTypeAttributeFields from "./JobTypeAttributeFields";
+import { useState, useEffect } from 'react';
+import {
+  User,
+  UserX,
+  Check,
+  Loader2,
+  AlertTriangle,
+  PoundSterling,
+  MapPin,
+  FileText,
+  PartyPopper,
+  ArrowRight,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { JobTypeConfig } from '@/hooks/useJobTypes';
+import JobTypeSelector from './JobTypeSelector';
+import JobTypeAttributeFields from './JobTypeAttributeFields';
 
 // Price Preview Component - extracted to avoid render issues
 function PricePreview({ price, averagePrice }: { price: string; averagePrice: number | null }) {
@@ -17,23 +28,28 @@ function PricePreview({ price, averagePrice }: { price: string; averagePrice: nu
     return null;
   }
 
-  const formattedPrice = numPrice.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const formattedPrice = numPrice.toLocaleString('en-GB', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   let comparison = null;
   if (averagePrice && averagePrice > 0) {
     const diff = ((numPrice - averagePrice) / averagePrice) * 100;
     const isAbove = diff > 0;
     const absPercentage = Math.abs(diff).toFixed(0);
-    const formattedAvg = averagePrice.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formattedAvg = averagePrice.toLocaleString('en-GB', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
     comparison = (
       <div className="text-right">
         <p className="text-sm text-white/60">Market average</p>
         <p className="text-lg font-semibold text-white/80">£{formattedAvg}</p>
-        <p className={cn(
-          "text-xs font-medium mt-1",
-          isAbove ? "text-amber-400" : "text-green-400"
-        )}>
+        <p
+          className={cn('text-xs font-medium mt-1', isAbove ? 'text-amber-400' : 'text-green-400')}
+        >
           {isAbove ? `${absPercentage}% above` : `${absPercentage}% below`} market
         </p>
       </div>
@@ -64,23 +80,25 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [userName, setUserName] = useState<string>("");
+  const [userName, setUserName] = useState<string>('');
   const [averagePrice, setAveragePrice] = useState<number | null>(null);
   const [priceWarning, setPriceWarning] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    postcode: "",
+    postcode: '',
     jobType: null as string | null,
     jobTypeConfig: null as JobTypeConfig | null,
     jobAttributes: {} as Record<string, string | number>,
-    customJobDescription: "",
-    price: "",
+    customJobDescription: '',
+    price: '',
   });
 
   // Get user name on mount
   useEffect(() => {
     const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user?.user_metadata?.full_name) {
         setUserName(user.user_metadata.full_name);
       } else if (user?.email) {
@@ -170,22 +188,23 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
   const handleSubmit = async () => {
     // Validate required fields
     const hasJobType = formData.jobType !== null;
-    const hasCustomDescription = formData.jobType === "Other" && formData.customJobDescription.trim();
+    const hasCustomDescription =
+      formData.jobType === 'Other' && formData.customJobDescription.trim();
 
     if (!formData.postcode || !hasJobType || !formData.price) {
       toast({
-        title: "Missing Fields",
-        description: "Please fill in all fields",
-        variant: "destructive"
+        title: 'Missing Fields',
+        description: 'Please fill in all fields',
+        variant: 'destructive',
       });
       return;
     }
 
-    if (formData.jobType === "Other" && !hasCustomDescription) {
+    if (formData.jobType === 'Other' && !hasCustomDescription) {
       toast({
-        title: "Missing Description",
+        title: 'Missing Description',
         description: "Please describe the job when using 'Other'",
-        variant: "destructive"
+        variant: 'destructive',
       });
       return;
     }
@@ -193,73 +212,75 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
     setIsSubmitting(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       // Extract postcode district
       const postcodeDistrict = formData.postcode.split(' ')[0].toUpperCase();
 
       // Prepare job description - either attributes JSON or custom text
-      const jobDescription = formData.jobType === "Other"
-        ? formData.customJobDescription
-        : Object.keys(formData.jobAttributes).length > 0
-          ? JSON.stringify(formData.jobAttributes)
-          : null;
+      const jobDescription =
+        formData.jobType === 'Other'
+          ? formData.customJobDescription
+          : Object.keys(formData.jobAttributes).length > 0
+            ? JSON.stringify(formData.jobAttributes)
+            : null;
 
-      const { error } = await supabase
-        .from('community_pricing_submissions')
-        .insert({
-          user_id: isAnonymous ? null : user?.id,
-          postcode_district: postcodeDistrict,
-          job_type: formData.jobType,
-          job_description: jobDescription,
-          actual_price: parseFloat(formData.price),
-          completion_date: new Date().toISOString().split('T')[0],
-        });
+      const { error } = await supabase.from('community_pricing_submissions').insert({
+        user_id: isAnonymous ? null : user?.id,
+        postcode_district: postcodeDistrict,
+        job_type: formData.jobType,
+        job_description: jobDescription,
+        actual_price: parseFloat(formData.price),
+        completion_date: new Date().toISOString().split('T')[0],
+      });
 
       if (error) throw error;
 
       // Show success state
       setShowSuccess(true);
       onSuccess?.();
-
     } catch (error: any) {
       toast({
-        title: "Submission Failed",
-        description: error.message || "Please try again",
-        variant: "destructive"
+        title: 'Submission Failed',
+        description: error.message || 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const canSubmit = formData.postcode &&
+  const canSubmit =
+    formData.postcode &&
     formData.jobType &&
     formData.price &&
-    (formData.jobType !== "Other" || formData.customJobDescription.trim());
+    (formData.jobType !== 'Other' || formData.customJobDescription.trim());
 
   const handleReset = () => {
     setShowSuccess(false);
     setFormData({
-      postcode: "",
+      postcode: '',
       jobType: null,
       jobTypeConfig: null,
       jobAttributes: {},
-      customJobDescription: "",
-      price: "",
+      customJobDescription: '',
+      price: '',
     });
   };
 
   // Success Screen
   if (showSuccess) {
     return (
-      <div className={cn("flex flex-col items-center justify-center py-12", className)}>
+      <div className={cn('flex flex-col items-center justify-center py-12', className)}>
         <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center mb-6 animate-in zoom-in duration-300">
           <PartyPopper className="h-12 w-12 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-white mb-2">Price Submitted!</h2>
         <p className="text-white/70 text-center mb-8 max-w-xs">
-          Thank you for helping fellow electricians price jobs fairly. Your contribution makes the community stronger.
+          Thank you for helping fellow electricians price jobs fairly. Your contribution makes the
+          community stronger.
         </p>
 
         <div className="flex flex-col gap-3 w-full max-w-xs">
@@ -285,7 +306,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
   }
 
   return (
-    <div className={cn("space-y-5", className)}>
+    <div className={cn('space-y-5', className)}>
       {/* Anonymous Toggle */}
       <div className="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10">
         <div className="flex items-center gap-3">
@@ -300,24 +321,19 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
           )}
           <div>
             <p className="font-semibold text-white">
-              {isAnonymous ? "Anonymous" : userName || "Your Name"}
+              {isAnonymous ? 'Anonymous' : userName || 'Your Name'}
             </p>
             <p className="text-xs text-white/60">
-              {isAnonymous ? "Identity not stored" : "Track your contributions"}
+              {isAnonymous ? 'Identity not stored' : 'Track your contributions'}
             </p>
           </div>
         </div>
-        <Switch
-          checked={isAnonymous}
-          onCheckedChange={setIsAnonymous}
-        />
+        <Switch checked={isAnonymous} onCheckedChange={setIsAnonymous} />
       </div>
 
       {/* Postcode Field */}
       <div>
-        <label className="text-sm font-semibold text-white mb-2 block">
-          Job Postcode
-        </label>
+        <label className="text-sm font-semibold text-white mb-2 block">Job Postcode</label>
         <div className="relative">
           <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-yellow-400 pointer-events-none" />
           <input
@@ -326,11 +342,11 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
             onChange={(e) => setFormData({ ...formData, postcode: e.target.value.toUpperCase() })}
             placeholder="e.g. SW1A 1AA"
             className={cn(
-              "w-full h-14 pl-12 pr-4 rounded-xl",
-              "bg-neutral-800 border-2 border-white/10",
-              "text-white text-lg font-medium placeholder:text-white/30",
-              "focus:outline-none focus:border-yellow-400/50",
-              "transition-all duration-200"
+              'w-full h-14 pl-12 pr-4 rounded-xl',
+              'bg-neutral-800 border-2 border-white/10',
+              'text-white text-lg font-medium placeholder:text-white/30',
+              'focus:outline-none focus:border-yellow-400/50',
+              'transition-all duration-200'
             )}
           />
         </div>
@@ -338,9 +354,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
 
       {/* Job Type Selector */}
       <div>
-        <label className="text-sm font-semibold text-white mb-2 block">
-          Job Type
-        </label>
+        <label className="text-sm font-semibold text-white mb-2 block">Job Type</label>
         <JobTypeSelector
           value={formData.jobType}
           onChange={(jobType, config) => {
@@ -349,7 +363,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
               jobType,
               jobTypeConfig: config,
               jobAttributes: {}, // Reset attributes when job type changes
-              customJobDescription: "", // Reset custom description
+              customJobDescription: '', // Reset custom description
             });
           }}
         />
@@ -365,11 +379,9 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
       )}
 
       {/* Custom Description for "Other" */}
-      {formData.jobType === "Other" && (
+      {formData.jobType === 'Other' && (
         <div>
-          <label className="text-sm font-semibold text-white mb-2 block">
-            Job Description
-          </label>
+          <label className="text-sm font-semibold text-white mb-2 block">Job Description</label>
           <div className="relative">
             <FileText className="absolute left-4 top-4 h-5 w-5 text-yellow-400 pointer-events-none" />
             <textarea
@@ -378,11 +390,11 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
               placeholder="Describe the job in detail..."
               rows={3}
               className={cn(
-                "w-full pl-12 pr-4 py-4 rounded-xl resize-none",
-                "bg-neutral-800 border-2 border-white/10",
-                "text-white text-base placeholder:text-white/30",
-                "focus:outline-none focus:border-yellow-400/50",
-                "transition-all duration-200"
+                'w-full pl-12 pr-4 py-4 rounded-xl resize-none',
+                'bg-neutral-800 border-2 border-white/10',
+                'text-white text-base placeholder:text-white/30',
+                'focus:outline-none focus:border-yellow-400/50',
+                'transition-all duration-200'
               )}
             />
           </div>
@@ -391,9 +403,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
 
       {/* Price Field - Big and Clear */}
       <div>
-        <label className="text-sm font-semibold text-white mb-2 block">
-          Price Charged
-        </label>
+        <label className="text-sm font-semibold text-white mb-2 block">Price Charged</label>
         <div className="relative">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-400/20">
             <PoundSterling className="h-5 w-5 text-yellow-400" />
@@ -406,11 +416,11 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
             step="0.01"
             min="0"
             className={cn(
-              "w-full h-20 pl-20 pr-4 rounded-xl",
-              "bg-neutral-800 border-2 border-white/10",
-              "text-white text-4xl font-black placeholder:text-white/20",
-              "focus:outline-none focus:border-yellow-400/50",
-              "transition-all duration-200"
+              'w-full h-20 pl-20 pr-4 rounded-xl',
+              'bg-neutral-800 border-2 border-white/10',
+              'text-white text-4xl font-black placeholder:text-white/20',
+              'focus:outline-none focus:border-yellow-400/50',
+              'transition-all duration-200'
             )}
           />
         </div>
@@ -432,12 +442,12 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
         onClick={handleSubmit}
         disabled={!canSubmit || isSubmitting}
         className={cn(
-          "w-full h-16 rounded-xl text-lg font-bold",
-          "bg-gradient-to-r from-yellow-400 to-yellow-500",
-          "hover:from-yellow-300 hover:to-yellow-400",
-          "text-black",
-          "transition-all duration-200",
-          "disabled:opacity-50 disabled:cursor-not-allowed"
+          'w-full h-16 rounded-xl text-lg font-bold',
+          'bg-gradient-to-r from-yellow-400 to-yellow-500',
+          'hover:from-yellow-300 hover:to-yellow-400',
+          'text-black',
+          'transition-all duration-200',
+          'disabled:opacity-50 disabled:cursor-not-allowed'
         )}
       >
         {isSubmitting ? (

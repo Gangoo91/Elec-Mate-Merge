@@ -2,9 +2,24 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
-  FileText, Save, Download, RefreshCw, AlertTriangle, Wrench, Shield, Clock,
-  CheckCircle2, ChevronDown, ChevronRight, HardHat, Hammer, Zap,
-  Users, MapPin, Phone, ClipboardCheck
+  FileText,
+  Save,
+  Download,
+  RefreshCw,
+  AlertTriangle,
+  Wrench,
+  Shield,
+  Clock,
+  CheckCircle2,
+  ChevronDown,
+  ChevronRight,
+  HardHat,
+  Hammer,
+  Zap,
+  Users,
+  MapPin,
+  Phone,
+  ClipboardCheck,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -31,13 +46,19 @@ const parseDescription = (description: string): { intro?: string; steps: string[
   }
 
   const intro = parts[0].trim();
-  const steps = parts.slice(1).map(s => s.trim()).filter(s => s.length > 0);
+  const steps = parts
+    .slice(1)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
   return { intro: intro || undefined, steps };
 };
 
 // Render formatted description with sub-steps
-const FormattedDescription: React.FC<{ description: string; isPreview?: boolean }> = ({ description, isPreview = false }) => {
+const FormattedDescription: React.FC<{ description: string; isPreview?: boolean }> = ({
+  description,
+  isPreview = false,
+}) => {
   const { intro, steps } = parseDescription(description);
 
   if (steps.length === 0) {
@@ -51,20 +72,19 @@ const FormattedDescription: React.FC<{ description: string; isPreview?: boolean 
   if (isPreview) {
     // Show just first line for preview
     return (
-      <p className="text-sm text-white/70 leading-relaxed line-clamp-2">
-        {intro || steps[0]}
-      </p>
+      <p className="text-sm text-white/70 leading-relaxed line-clamp-2">{intro || steps[0]}</p>
     );
   }
 
   return (
     <div className="space-y-3">
-      {intro && (
-        <p className="text-sm text-white/80 leading-relaxed">{intro}</p>
-      )}
+      {intro && <p className="text-sm text-white/80 leading-relaxed">{intro}</p>}
       <div className="space-y-2">
         {steps.map((stepText, idx) => (
-          <div key={idx} className="flex items-start gap-3 p-2.5 rounded-lg bg-white/[0.03] border border-white/5">
+          <div
+            key={idx}
+            className="flex items-start gap-3 p-2.5 rounded-lg bg-white/[0.03] border border-white/5"
+          >
             <div className="flex-shrink-0 w-6 h-6 rounded-md bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
               <span className="text-xs font-bold text-emerald-400">{idx + 1}</span>
             </div>
@@ -84,18 +104,23 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
 
   const getRiskStyles = (level: string) => {
     switch (level?.toLowerCase()) {
-      case 'low': return { bg: 'bg-emerald-500', border: 'border-emerald-500/30', text: 'text-emerald-400' };
-      case 'medium': return { bg: 'bg-amber-500', border: 'border-amber-500/30', text: 'text-amber-400' };
-      case 'high': return { bg: 'bg-red-500', border: 'border-red-500/30', text: 'text-red-400' };
-      default: return { bg: 'bg-white/30', border: 'border-white/20', text: 'text-white/60' };
+      case 'low':
+        return { bg: 'bg-emerald-500', border: 'border-emerald-500/30', text: 'text-emerald-400' };
+      case 'medium':
+        return { bg: 'bg-amber-500', border: 'border-amber-500/30', text: 'text-amber-400' };
+      case 'high':
+        return { bg: 'bg-red-500', border: 'border-red-500/30', text: 'text-red-400' };
+      default:
+        return { bg: 'bg-white/30', border: 'border-white/20', text: 'text-white/60' };
     }
   };
 
   const riskStyles = getRiskStyles(step.riskLevel);
-  const hasDetails = (step.safetyRequirements?.length > 0) ||
-                     (step.equipmentNeeded?.length > 0) ||
-                     (step.qualifications?.length > 0) ||
-                     (step.description?.length > 100);
+  const hasDetails =
+    step.safetyRequirements?.length > 0 ||
+    step.equipmentNeeded?.length > 0 ||
+    step.qualifications?.length > 0 ||
+    step.description?.length > 100;
 
   return (
     <motion.div
@@ -105,19 +130,27 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
       className="relative"
     >
       <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
-        <div className={`rounded-2xl overflow-hidden border transition-all ${
-          isExpanded ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-white/10 bg-white/[0.02]'
-        }`}>
+        <div
+          className={`rounded-2xl overflow-hidden border transition-all ${
+            isExpanded
+              ? 'border-emerald-500/40 bg-emerald-500/5'
+              : 'border-white/10 bg-white/[0.02]'
+          }`}
+        >
           {/* Step Header - Always Visible */}
           <CollapsibleTrigger className="w-full text-left p-4 touch-manipulation">
             <div className="flex items-start gap-3">
               {/* Step Number Badge */}
               <div className="flex-shrink-0 relative">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 border border-emerald-500/40 flex items-center justify-center`}>
+                <div
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 border border-emerald-500/40 flex items-center justify-center`}
+                >
                   <span className="text-lg font-bold text-emerald-400">{step.stepNumber}</span>
                 </div>
                 {/* Risk indicator dot */}
-                <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full ${riskStyles.bg} border-2 border-background`} />
+                <div
+                  className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full ${riskStyles.bg} border-2 border-background`}
+                />
               </div>
 
               {/* Title & Quick Info */}
@@ -133,7 +166,9 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
                   </span>
                   {hasDetails && (
                     <span className="text-xs text-emerald-400/80 flex items-center gap-1">
-                      <ChevronDown className={`h-3 w-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      <ChevronDown
+                        className={`h-3 w-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                      />
                       {isExpanded ? 'Less' : 'Details'}
                     </span>
                   )}
@@ -170,7 +205,9 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
                       <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
                         <div className="flex items-center gap-2 mb-2">
                           <Shield className="h-4 w-4 text-orange-400" />
-                          <span className="text-xs font-semibold text-orange-400 uppercase tracking-wide">Safety</span>
+                          <span className="text-xs font-semibold text-orange-400 uppercase tracking-wide">
+                            Safety
+                          </span>
                         </div>
                         <div className="flex flex-wrap gap-1.5">
                           {step.safetyRequirements.map((req, idx) => (
@@ -193,7 +230,9 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
                         <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                           <div className="flex items-center gap-2 mb-2">
                             <Hammer className="h-4 w-4 text-blue-400" />
-                            <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">Equipment</span>
+                            <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">
+                              Equipment
+                            </span>
                           </div>
                           <div className="flex flex-wrap gap-1.5">
                             {step.equipmentNeeded.map((eq, idx) => (
@@ -214,7 +253,9 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
                         <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
                           <div className="flex items-center gap-2 mb-2">
                             <ClipboardCheck className="h-4 w-4 text-purple-400" />
-                            <span className="text-xs font-semibold text-purple-400 uppercase tracking-wide">Qualifications</span>
+                            <span className="text-xs font-semibold text-purple-400 uppercase tracking-wide">
+                              Qualifications
+                            </span>
                           </div>
                           <div className="flex flex-wrap gap-1.5">
                             {step.qualifications.map((qual, idx) => (
@@ -253,14 +294,22 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
   onSave,
   isSaving,
   lastSaved,
-  onStartOver
+  onStartOver,
 }) => {
   const getRiskLevelStyles = (level: string) => {
     switch (level?.toLowerCase()) {
-      case 'low': return { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30' };
-      case 'medium': return { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30' };
-      case 'high': return { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' };
-      default: return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
+      case 'low':
+        return {
+          bg: 'bg-emerald-500/20',
+          text: 'text-emerald-400',
+          border: 'border-emerald-500/30',
+        };
+      case 'medium':
+        return { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30' };
+      case 'high':
+        return { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' };
+      default:
+        return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
     }
   };
 
@@ -290,7 +339,9 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
               <h2 className="text-xl font-bold text-white">{methodData.jobTitle}</h2>
               <div className="flex items-center gap-2 mt-1">
                 <MapPin className="h-3.5 w-3.5 text-white/40" />
-                <span className="text-sm text-white/60">{methodData.location || 'Location not specified'}</span>
+                <span className="text-sm text-white/60">
+                  {methodData.location || 'Location not specified'}
+                </span>
               </div>
             </div>
           </div>
@@ -298,20 +349,38 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
           {/* Quick Stats */}
           <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
             <div className="bg-white/5 rounded-xl p-2 sm:p-3 border border-white/10 text-center overflow-hidden">
-              <p className="text-xl sm:text-2xl font-bold text-white">{methodData.steps?.length || 0}</p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">Steps</p>
+              <p className="text-xl sm:text-2xl font-bold text-white">
+                {methodData.steps?.length || 0}
+              </p>
+              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+                Steps
+              </p>
             </div>
             <div className="bg-white/5 rounded-xl p-2 sm:p-3 border border-white/10 text-center overflow-hidden">
-              <p className="text-sm sm:text-lg font-bold text-white truncate">{methodData.totalEstimatedTime || '-'}</p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">Duration</p>
+              <p className="text-sm sm:text-lg font-bold text-white truncate">
+                {methodData.totalEstimatedTime || '-'}
+              </p>
+              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+                Duration
+              </p>
             </div>
             <div className="bg-white/5 rounded-xl p-2 sm:p-3 border border-white/10 text-center overflow-hidden">
-              <p className="text-xl sm:text-2xl font-bold text-white">{methodData.riskAssessment?.hazards?.length || 0}</p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">Hazards</p>
+              <p className="text-xl sm:text-2xl font-bold text-white">
+                {methodData.riskAssessment?.hazards?.length || 0}
+              </p>
+              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+                Hazards
+              </p>
             </div>
-            <div className={`${riskStyles.bg} rounded-xl p-2 sm:p-3 border ${riskStyles.border} text-center overflow-hidden`}>
-              <p className={`text-xs sm:text-sm font-bold ${riskStyles.text} uppercase truncate`}>{methodData.overallRiskLevel}</p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">Risk</p>
+            <div
+              className={`${riskStyles.bg} rounded-xl p-2 sm:p-3 border ${riskStyles.border} text-center overflow-hidden`}
+            >
+              <p className={`text-xs sm:text-sm font-bold ${riskStyles.text} uppercase truncate`}>
+                {methodData.overallRiskLevel}
+              </p>
+              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+                Risk
+              </p>
             </div>
           </div>
 
@@ -410,11 +479,15 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
                   className={`p-3 rounded-xl ${hazardRiskStyles.bg} border ${hazardRiskStyles.border}`}
                 >
                   <div className="flex items-start gap-2">
-                    <AlertTriangle className={`h-4 w-4 ${hazardRiskStyles.text} flex-shrink-0 mt-0.5`} />
+                    <AlertTriangle
+                      className={`h-4 w-4 ${hazardRiskStyles.text} flex-shrink-0 mt-0.5`}
+                    />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">{hazard.hazard}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-xs font-medium ${hazardRiskStyles.text}`}>{hazard.riskLevel}</span>
+                        <span className={`text-xs font-medium ${hazardRiskStyles.text}`}>
+                          {hazard.riskLevel}
+                        </span>
                         {hazard.linkedToStep > 0 && (
                           <span className="text-xs text-white/40">Step {hazard.linkedToStep}</span>
                         )}
@@ -460,7 +533,9 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
         <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
         <div>
           <p className="text-sm font-medium text-white">BS 7671:2018+A3:2024 Compliant</p>
-          <p className="text-xs text-white/50">Method statement follows current wiring regulations</p>
+          <p className="text-xs text-white/50">
+            Method statement follows current wiring regulations
+          </p>
         </div>
       </div>
     </div>

@@ -25,10 +25,7 @@ const STATUS_LABELS = {
 
 export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
   return (
-    <Badge
-      variant="outline"
-      className={cn(STATUS_STYLES[status], className)}
-    >
+    <Badge variant="outline" className={cn(STATUS_STYLES[status], className)}>
       {STATUS_LABELS[status]}
     </Badge>
   );

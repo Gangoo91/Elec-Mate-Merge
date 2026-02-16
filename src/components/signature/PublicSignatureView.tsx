@@ -1,15 +1,23 @@
-import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { FileText, CheckCircle, X, FileSignature, PenTool, AlertTriangle, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import SignaturePad from "@/components/forms/SignaturePad";
+import { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  FileText,
+  CheckCircle,
+  X,
+  FileSignature,
+  PenTool,
+  AlertTriangle,
+  Loader2,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import SignaturePad from '@/components/forms/SignaturePad';
 
 interface SignatureRequestData {
   id: string;
@@ -30,9 +38,9 @@ const PublicSignatureView = () => {
   const [request, setRequest] = useState<SignatureRequestData | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [signerName, setSignerName] = useState("");
-  const [notes, setNotes] = useState("");
-  const [signatureData, setSignatureData] = useState<string>("");
+  const [signerName, setSignerName] = useState('');
+  const [notes, setNotes] = useState('');
+  const [signatureData, setSignatureData] = useState<string>('');
   const signaturePadRef = useRef<any>(null);
 
   useEffect(() => {
@@ -48,32 +56,31 @@ const PublicSignatureView = () => {
       setLoading(true);
 
       const { data, error } = await supabase
-        .from("signature_requests")
-        .select("*")
-        .eq("access_token", token)
+        .from('signature_requests')
+        .select('*')
+        .eq('access_token', token)
         .single();
 
       if (error || !data) {
-        throw new Error("Signature request not found or expired");
+        throw new Error('Signature request not found or expired');
       }
 
       setRequest(data as SignatureRequestData);
       setSignerName(data.signer_name);
 
       // Update status to Viewed if still Pending or Sent
-      if (["Pending", "Sent"].includes(data.status)) {
+      if (['Pending', 'Sent'].includes(data.status)) {
         await supabase
-          .from("signature_requests")
-          .update({ status: "Viewed", updated_at: new Date().toISOString() })
-          .eq("id", data.id);
+          .from('signature_requests')
+          .update({ status: 'Viewed', updated_at: new Date().toISOString() })
+          .eq('id', data.id);
       }
-
     } catch (error) {
-      console.error("Error loading signature request:", error);
+      console.error('Error loading signature request:', error);
       toast({
-        title: "Error",
-        description: "Signature request not found or has expired",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Signature request not found or has expired',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -83,9 +90,9 @@ const PublicSignatureView = () => {
   const handleSign = async () => {
     if (!request || !signerName || !signatureData) {
       toast({
-        title: "Missing Information",
-        description: "Please enter your name and provide your signature",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please enter your name and provide your signature',
+        variant: 'destructive',
       });
       return;
     }
@@ -97,44 +104,43 @@ const PublicSignatureView = () => {
       const signatureFileName = `signatures/${request.user_id}/sig-${request.id}-${Date.now()}.png`;
 
       const { error: uploadError } = await supabase.storage
-        .from("visual-uploads")
+        .from('visual-uploads')
         .upload(signatureFileName, signatureBlob, { upsert: true });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from("visual-uploads")
-        .getPublicUrl(signatureFileName);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('visual-uploads').getPublicUrl(signatureFileName);
 
       // Update signature request
       const { error: updateError } = await supabase
-        .from("signature_requests")
+        .from('signature_requests')
         .update({
-          status: "Signed",
+          status: 'Signed',
           signed_at: new Date().toISOString(),
           signature_url: publicUrl,
           ip_address: await getUserIP(),
           message: notes.trim() || request.message,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq("id", request.id);
+        .eq('id', request.id);
 
       if (updateError) throw updateError;
 
       toast({
-        title: "Document Signed",
-        description: "Thank you. Your signature has been recorded.",
+        title: 'Document Signed',
+        description: 'Thank you. Your signature has been recorded.',
       });
 
       // Reload to show signed state
       loadRequest();
-
     } catch (error) {
-      console.error("Error signing document:", error);
+      console.error('Error signing document:', error);
       toast({
-        title: "Error",
-        description: "Failed to submit signature. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to submit signature. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setSubmitting(false);
@@ -147,29 +153,28 @@ const PublicSignatureView = () => {
     setSubmitting(true);
     try {
       const { error } = await supabase
-        .from("signature_requests")
+        .from('signature_requests')
         .update({
-          status: "Declined",
+          status: 'Declined',
           ip_address: await getUserIP(),
           message: notes.trim() || null,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq("id", request.id);
+        .eq('id', request.id);
 
       if (error) throw error;
 
       toast({
-        title: "Request Declined",
+        title: 'Request Declined',
       });
 
       loadRequest();
-
     } catch (error) {
-      console.error("Error declining request:", error);
+      console.error('Error declining request:', error);
       toast({
-        title: "Error",
-        description: "Failed to decline. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to decline. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setSubmitting(false);
@@ -216,16 +221,19 @@ const PublicSignatureView = () => {
           <CardContent className="pt-6 text-center">
             <AlertTriangle className="h-16 w-16 text-destructive mx-auto mb-4" />
             <h1 className="text-xl font-bold mb-2">Request Not Found</h1>
-            <p className="text-muted-foreground">This signature request may have expired or been removed.</p>
+            <p className="text-muted-foreground">
+              This signature request may have expired or been removed.
+            </p>
           </CardContent>
         </Card>
       </div>
     );
   }
 
-  const isSigned = request.status === "Signed";
-  const isDeclined = request.status === "Declined";
-  const isExpired = request.status === "Expired" ||
+  const isSigned = request.status === 'Signed';
+  const isDeclined = request.status === 'Declined';
+  const isExpired =
+    request.status === 'Expired' ||
     (request.expires_at && new Date(request.expires_at) < new Date());
   const canSign = !isSigned && !isDeclined && !isExpired;
 
@@ -245,12 +253,14 @@ const PublicSignatureView = () => {
               <div className="text-right">
                 {isSigned && (
                   <Badge className="bg-green-500 hover:bg-green-600">
-                    <CheckCircle className="h-4 w-4 mr-1" />Signed
+                    <CheckCircle className="h-4 w-4 mr-1" />
+                    Signed
                   </Badge>
                 )}
                 {isDeclined && (
                   <Badge variant="destructive">
-                    <X className="h-4 w-4 mr-1" />Declined
+                    <X className="h-4 w-4 mr-1" />
+                    Declined
                   </Badge>
                 )}
                 {isExpired && !isSigned && !isDeclined && (
@@ -283,9 +293,7 @@ const PublicSignatureView = () => {
                     <FileSignature className="h-5 w-5 mr-2" />
                     Sign Document
                   </CardTitle>
-                  <CardDescription>
-                    Please review and sign below to confirm
-                  </CardDescription>
+                  <CardDescription>Please review and sign below to confirm</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
@@ -308,9 +316,7 @@ const PublicSignatureView = () => {
                         className="w-full"
                       />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Draw your signature above
-                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">Draw your signature above</p>
                   </div>
 
                   <div>
@@ -356,7 +362,7 @@ const PublicSignatureView = () => {
 
             {/* Signed/Declined Status */}
             {(isSigned || isDeclined) && (
-              <Card className={isSigned ? "border-green-500" : "border-red-500"}>
+              <Card className={isSigned ? 'border-green-500' : 'border-red-500'}>
                 <CardContent className="pt-6">
                   <div className="text-center">
                     {isSigned ? (
@@ -364,13 +370,16 @@ const PublicSignatureView = () => {
                         <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
                         <h3 className="text-lg font-medium text-green-600 mb-2">Document Signed</h3>
                         <p className="text-sm text-muted-foreground">
-                          Signed on {request.signed_at ? new Date(request.signed_at).toLocaleDateString('en-GB', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          }) : 'N/A'}
+                          Signed on{' '}
+                          {request.signed_at
+                            ? new Date(request.signed_at).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })
+                            : 'N/A'}
                         </p>
                       </>
                     ) : (
@@ -390,7 +399,9 @@ const PublicSignatureView = () => {
                 <CardContent className="pt-6">
                   <div className="text-center">
                     <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-muted-foreground mb-2">Request Expired</h3>
+                    <h3 className="text-lg font-medium text-muted-foreground mb-2">
+                      Request Expired
+                    </h3>
                     <p className="text-sm text-muted-foreground">
                       This signature request is no longer valid.
                     </p>

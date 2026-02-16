@@ -1,12 +1,17 @@
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Wind, Info, BookOpen, ChevronDown, TrendingUp, Clock, PoundSterling, Leaf } from "lucide-react";
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+  Wind,
+  Info,
+  BookOpen,
+  ChevronDown,
+  TrendingUp,
+  Clock,
+  PoundSterling,
+  Leaf,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -17,7 +22,7 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 interface WindPowerResult {
   grossAEP: number;
@@ -85,7 +90,7 @@ export function WindPowerCalculator() {
     { value: '25', label: '25m (Farm)' },
     { value: '30', label: '30m (Commercial)' },
     { value: '40', label: '40m (Large Commercial)' },
-    { value: '50', label: '50m (Wind Farm)' }
+    { value: '50', label: '50m (Wind Farm)' },
   ];
 
   const windClasses = [
@@ -95,7 +100,7 @@ export function WindPowerCalculator() {
     { value: '4', label: 'Class 4 (Good - 16.8-17.9 mph)' },
     { value: '5', label: 'Class 5 (Excellent - 17.9-19.7 mph)' },
     { value: '6', label: 'Class 6 (Outstanding - 19.7-21.0 mph)' },
-    { value: '7', label: 'Class 7 (Superb - >21.0 mph)' }
+    { value: '7', label: 'Class 7 (Superb - >21.0 mph)' },
   ];
 
   const terrainTypes = [
@@ -103,7 +108,7 @@ export function WindPowerCalculator() {
     { value: 'open', label: 'Open Country (Grassland)' },
     { value: 'rough', label: 'Rough Open (Farmland)' },
     { value: 'wooded', label: 'Wooded Country' },
-    { value: 'urban', label: 'Urban/Suburban' }
+    { value: 'urban', label: 'Urban/Suburban' },
   ];
 
   const altitudeBands = [
@@ -111,20 +116,20 @@ export function WindPowerCalculator() {
     { value: '200', label: 'Low Hills (100-300m)' },
     { value: '500', label: 'Moderate Hills (300-700m)' },
     { value: '1000', label: 'High Hills (700-1500m)' },
-    { value: '1500', label: 'Mountains (>1500m)' }
+    { value: '1500', label: 'Mountains (>1500m)' },
   ];
 
   const lossesPresets = [
     { value: 'low', label: 'Low Losses (5%)' },
     { value: 'medium', label: 'Medium Losses (10%)' },
-    { value: 'high', label: 'High Losses (15%)' }
+    { value: 'high', label: 'High Losses (15%)' },
   ];
 
   const electricityPrices = [
     { value: '0.20', label: '£0.20/kWh (Economy)' },
     { value: '0.25', label: '£0.25/kWh (Standard)' },
     { value: '0.30', label: '£0.30/kWh (Peak)' },
-    { value: '0.35', label: '£0.35/kWh (Premium)' }
+    { value: '0.35', label: '£0.35/kWh (Premium)' },
   ];
 
   const annualConsumptions = [
@@ -133,14 +138,14 @@ export function WindPowerCalculator() {
     { value: '4600', label: '4,600 kWh (4 bed house)' },
     { value: '5500', label: '5,500 kWh (5+ bed house)' },
     { value: '10000', label: '10,000 kWh (Small business)' },
-    { value: '25000', label: '25,000 kWh (Medium business)' }
+    { value: '25000', label: '25,000 kWh (Medium business)' },
   ];
 
   const selfConsumptionRates = [
     { value: '30', label: '30% (Standard household)' },
     { value: '50', label: '50% (Home office)' },
     { value: '70', label: '70% (Battery storage/EV)' },
-    { value: '90', label: '90% (Commercial)' }
+    { value: '90', label: '90% (Commercial)' },
   ];
 
   const getTurbineRating = () => {
@@ -150,32 +155,33 @@ export function WindPowerCalculator() {
 
   const calculateCostEstimate = (rating: number, height: number) => {
     let baseCostPerKw = 0;
-    let category = "";
+    let category = '';
 
     if (rating <= 5) {
       baseCostPerKw = 4500;
-      category = "Small Domestic System";
+      category = 'Small Domestic System';
     } else if (rating <= 15) {
       baseCostPerKw = 3500;
-      category = "Medium Domestic System";
+      category = 'Medium Domestic System';
     } else if (rating <= 30) {
       baseCostPerKw = 2800;
-      category = "Small Commercial System";
+      category = 'Small Commercial System';
     } else {
       baseCostPerKw = 2200;
-      category = "Commercial System";
+      category = 'Commercial System';
     }
 
     const turbine = rating * baseCostPerKw * 0.45;
     const tower = Math.max(15000, height * 800);
     const foundation = Math.max(8000, rating * 600);
-    const electrical = 5000 + (rating * 400);
+    const electrical = 5000 + rating * 400;
     const planning = rating <= 10 ? 3000 : 8000;
     const installation = rating * 800;
     const commissioning = Math.max(2000, rating * 150);
 
-    const subtotal = turbine + tower + foundation + electrical + planning + installation + commissioning;
-    const vat = subtotal * 0.20;
+    const subtotal =
+      turbine + tower + foundation + electrical + planning + installation + commissioning;
+    const vat = subtotal * 0.2;
     const totalCost = subtotal + vat;
     const annualMaintenance = totalCost * 0.03;
 
@@ -189,11 +195,11 @@ export function WindPowerCalculator() {
         planning: Math.round(planning),
         installation: Math.round(installation),
         commissioning: Math.round(commissioning),
-        vat: Math.round(vat)
+        vat: Math.round(vat),
       },
       costPerKw: Math.round(totalCost / rating),
       category,
-      annualMaintenance: Math.round(annualMaintenance)
+      annualMaintenance: Math.round(annualMaintenance),
     };
   };
 
@@ -216,11 +222,11 @@ export function WindPowerCalculator() {
     const densityFactor = airDensity / 1.225;
 
     const roughnessFactors = {
-      smooth: 0.10,
+      smooth: 0.1,
       open: 0.15,
-      rough: 0.20,
+      rough: 0.2,
       wooded: 0.25,
-      urban: 0.30
+      urban: 0.3,
     };
     const alpha = roughnessFactors[terrain as keyof typeof roughnessFactors] || 0.15;
 
@@ -236,8 +242,11 @@ export function WindPowerCalculator() {
 
     let capacityFactor = 0;
     for (let v = 0; v <= 30; v += 0.5) {
-      const probability = (weibullK / weibullC) * Math.pow(v / weibullC, weibullK - 1) *
-                         Math.exp(-Math.pow(v / weibullC, weibullK)) * 0.5;
+      const probability =
+        (weibullK / weibullC) *
+        Math.pow(v / weibullC, weibullK - 1) *
+        Math.exp(-Math.pow(v / weibullC, weibullK)) *
+        0.5;
 
       let powerRatio = 0;
       if (v >= cutIn && v < rated) {
@@ -249,8 +258,8 @@ export function WindPowerCalculator() {
       capacityFactor += probability * powerRatio;
     }
 
-    const lossFactors = { low: 0.95, medium: 0.90, high: 0.85 };
-    const lossFactor = lossFactors[losses as keyof typeof lossFactors] || 0.90;
+    const lossFactors = { low: 0.95, medium: 0.9, high: 0.85 };
+    const lossFactor = lossFactors[losses as keyof typeof lossFactors] || 0.9;
 
     const grossAEP = rating * capacityFactor * 8760 * densityFactor;
     const netAEP = grossAEP * lossFactor;
@@ -262,7 +271,7 @@ export function WindPowerCalculator() {
     const selfConsumption = Math.min(netAEP, consumption * selfConsRate);
     const gridExport = netAEP - selfConsumption;
     const exportPrice = price * 0.75;
-    const yearlyValue = (selfConsumption * price) + (gridExport * exportPrice);
+    const yearlyValue = selfConsumption * price + gridExport * exportPrice;
 
     const costEstimate = calculateCostEstimate(rating, height);
     const co2Savings = netAEP * 0.193;
@@ -282,7 +291,7 @@ export function WindPowerCalculator() {
       co2Savings,
       paybackPeriod,
       windSpeedAtHub,
-      costEstimate
+      costEstimate,
     });
   };
 
@@ -300,10 +309,22 @@ export function WindPowerCalculator() {
     setResult(null);
   };
 
-  const hasValidInputs = () => turbineModel && hubHeight && averageWindSpeed && windClass && terrain && altitude && losses && electricityPrice && annualConsumption && selfConsumptionRate;
+  const hasValidInputs = () =>
+    turbineModel &&
+    hubHeight &&
+    averageWindSpeed &&
+    windClass &&
+    terrain &&
+    altitude &&
+    losses &&
+    electricityPrice &&
+    annualConsumption &&
+    selfConsumptionRate;
 
-  const getPaybackColor = (years: number) => years <= 10 ? 'text-green-400' : years <= 15 ? 'text-amber-400' : 'text-red-400';
-  const getCapacityColor = (cf: number) => cf >= 30 ? 'text-green-400' : cf >= 20 ? 'text-amber-400' : 'text-red-400';
+  const getPaybackColor = (years: number) =>
+    years <= 10 ? 'text-green-400' : years <= 15 ? 'text-amber-400' : 'text-red-400';
+  const getCapacityColor = (cf: number) =>
+    cf >= 30 ? 'text-green-400' : cf >= 20 ? 'text-amber-400' : 'text-red-400';
 
   return (
     <div className="space-y-4">
@@ -421,41 +442,77 @@ export function WindPowerCalculator() {
           <CalculatorResult category="renewable">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">Wind Power Analysis</span>
-              <Badge variant="outline" className={cn(
-                result.capacityFactor >= 25 ? "text-green-400 border-green-400/50" : "text-amber-400 border-amber-400/50"
-              )}>
-                {result.capacityFactor >= 30 ? "Excellent Site" : result.capacityFactor >= 20 ? "Good Site" : "Marginal Site"}
+              <Badge
+                variant="outline"
+                className={cn(
+                  result.capacityFactor >= 25
+                    ? 'text-green-400 border-green-400/50'
+                    : 'text-amber-400 border-amber-400/50'
+                )}
+              >
+                {result.capacityFactor >= 30
+                  ? 'Excellent Site'
+                  : result.capacityFactor >= 20
+                    ? 'Good Site'
+                    : 'Marginal Site'}
               </Badge>
             </div>
 
             <div className="text-center py-4">
               <p className="text-sm text-white/60 mb-1">Net Annual Energy</p>
-              <div className="text-4xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
+              >
                 {result.netAEP.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh
               </div>
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="Wind at Hub" value={(result.windSpeedAtHub * 2.23694).toFixed(1)} unit="mph" category="renewable" size="sm" />
-              <ResultValue label="Capacity Factor" value={result.capacityFactor.toFixed(1)} unit="%" category="renewable" size="sm" />
-              <ResultValue label="Avg Power" value={result.averagePower.toFixed(2)} unit="kW" category="renewable" size="sm" />
-              <ResultValue label="Daily Output" value={result.dailyGeneration.toFixed(0)} unit="kWh" category="renewable" size="sm" />
+              <ResultValue
+                label="Wind at Hub"
+                value={(result.windSpeedAtHub * 2.23694).toFixed(1)}
+                unit="mph"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Capacity Factor"
+                value={result.capacityFactor.toFixed(1)}
+                unit="%"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Avg Power"
+                value={result.averagePower.toFixed(2)}
+                unit="kW"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Daily Output"
+                value={result.dailyGeneration.toFixed(0)}
+                unit="kWh"
+                category="renewable"
+                size="sm"
+              />
             </ResultsGrid>
 
             <div className="grid grid-cols-2 gap-3 pt-4 mt-4 border-t border-white/10">
               <div className="text-center p-3 rounded-lg bg-white/5">
                 <Clock className="h-4 w-4 mx-auto mb-1 text-white/60" />
                 <p className="text-xs text-white/60">Payback</p>
-                <p className={cn("text-lg font-bold", getPaybackColor(result.paybackPeriod))}>
+                <p className={cn('text-lg font-bold', getPaybackColor(result.paybackPeriod))}>
                   {result.paybackPeriod.toFixed(1)} yrs
                 </p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5">
                 <PoundSterling className="h-4 w-4 mx-auto mb-1 text-white/60" />
                 <p className="text-xs text-white/60">Annual Value</p>
-                <p className="text-lg font-bold text-green-400">
-                  £{result.yearlyValue.toFixed(0)}
-                </p>
+                <p className="text-lg font-bold text-green-400">£{result.yearlyValue.toFixed(0)}</p>
               </div>
             </div>
           </CalculatorResult>
@@ -467,10 +524,34 @@ export function WindPowerCalculator() {
               <span className="text-sm font-medium text-white">Financial Summary</span>
             </div>
             <ResultsGrid columns={2}>
-              <ResultValue label="Self-Consumed" value={result.selfConsumption.toLocaleString(undefined, { maximumFractionDigits: 0 })} unit="kWh" category="renewable" size="sm" />
-              <ResultValue label="Grid Export" value={result.gridExport.toLocaleString(undefined, { maximumFractionDigits: 0 })} unit="kWh" category="renewable" size="sm" />
-              <ResultValue label="System Cost" value={`£${(result.costEstimate.totalCost / 1000).toFixed(0)}k`} category="renewable" size="sm" />
-              <ResultValue label="Cost/kW" value={`£${result.costEstimate.costPerKw.toLocaleString()}`} category="renewable" size="sm" />
+              <ResultValue
+                label="Self-Consumed"
+                value={result.selfConsumption.toLocaleString(undefined, {
+                  maximumFractionDigits: 0,
+                })}
+                unit="kWh"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Grid Export"
+                value={result.gridExport.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                unit="kWh"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="System Cost"
+                value={`£${(result.costEstimate.totalCost / 1000).toFixed(0)}k`}
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Cost/kW"
+                value={`£${result.costEstimate.costPerKw.toLocaleString()}`}
+                category="renewable"
+                size="sm"
+              />
             </ResultsGrid>
           </CalculatorResult>
 
@@ -483,11 +564,15 @@ export function WindPowerCalculator() {
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
                 <p className="text-green-200/80">CO₂ Savings</p>
-                <p className="font-semibold text-green-300">{result.co2Savings.toLocaleString(undefined, { maximumFractionDigits: 0 })} kg/yr</p>
+                <p className="font-semibold text-green-300">
+                  {result.co2Savings.toLocaleString(undefined, { maximumFractionDigits: 0 })} kg/yr
+                </p>
               </div>
               <div>
                 <p className="text-green-200/80">Equivalent Trees</p>
-                <p className="font-semibold text-green-300">{(result.co2Savings / 21.8).toFixed(0)} trees/yr</p>
+                <p className="font-semibold text-green-300">
+                  {(result.co2Savings / 21.8).toFixed(0)} trees/yr
+                </p>
               </div>
             </div>
           </div>
@@ -498,25 +583,79 @@ export function WindPowerCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <PoundSterling className="h-4 w-4 text-green-400" />
-                  <span className="text-sm sm:text-base font-medium text-green-300">2025 Installation Cost Breakdown</span>
+                  <span className="text-sm sm:text-base font-medium text-green-300">
+                    2025 Installation Cost Breakdown
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showCosts && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showCosts && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="text-center pb-3 border-b border-white/10">
-                  <p className="text-2xl font-bold text-green-400">£{result.costEstimate.totalCost.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-green-400">
+                    £{result.costEstimate.totalCost.toLocaleString()}
+                  </p>
                   <p className="text-sm text-white/60">{result.costEstimate.category}</p>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between"><span className="text-white/70">Turbine</span><span className="text-white">£{result.costEstimate.breakdown.turbine.toLocaleString()}</span></div>
-                  <div className="flex justify-between"><span className="text-white/70">Tower</span><span className="text-white">£{result.costEstimate.breakdown.tower.toLocaleString()}</span></div>
-                  <div className="flex justify-between"><span className="text-white/70">Foundation</span><span className="text-white">£{result.costEstimate.breakdown.foundation.toLocaleString()}</span></div>
-                  <div className="flex justify-between"><span className="text-white/70">Electrical</span><span className="text-white">£{result.costEstimate.breakdown.electrical.toLocaleString()}</span></div>
-                  <div className="flex justify-between"><span className="text-white/70">Planning</span><span className="text-white">£{result.costEstimate.breakdown.planning.toLocaleString()}</span></div>
-                  <div className="flex justify-between"><span className="text-white/70">Installation</span><span className="text-white">£{result.costEstimate.breakdown.installation.toLocaleString()}</span></div>
-                  <div className="flex justify-between"><span className="text-white/70">Commissioning</span><span className="text-white">£{result.costEstimate.breakdown.commissioning.toLocaleString()}</span></div>
-                  <div className="flex justify-between pt-2 border-t border-white/10"><span className="text-white/70">VAT (20%)</span><span className="text-green-400 font-semibold">£{result.costEstimate.breakdown.vat.toLocaleString()}</span></div>
-                  <div className="flex justify-between"><span className="text-white/70">Annual Maintenance</span><span className="text-amber-400">£{result.costEstimate.annualMaintenance.toLocaleString()}/yr</span></div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Turbine</span>
+                    <span className="text-white">
+                      £{result.costEstimate.breakdown.turbine.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Tower</span>
+                    <span className="text-white">
+                      £{result.costEstimate.breakdown.tower.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Foundation</span>
+                    <span className="text-white">
+                      £{result.costEstimate.breakdown.foundation.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Electrical</span>
+                    <span className="text-white">
+                      £{result.costEstimate.breakdown.electrical.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Planning</span>
+                    <span className="text-white">
+                      £{result.costEstimate.breakdown.planning.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Installation</span>
+                    <span className="text-white">
+                      £{result.costEstimate.breakdown.installation.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Commissioning</span>
+                    <span className="text-white">
+                      £{result.costEstimate.breakdown.commissioning.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between pt-2 border-t border-white/10">
+                    <span className="text-white/70">VAT (20%)</span>
+                    <span className="text-green-400 font-semibold">
+                      £{result.costEstimate.breakdown.vat.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white/70">Annual Maintenance</span>
+                    <span className="text-amber-400">
+                      £{result.costEstimate.annualMaintenance.toLocaleString()}/yr
+                    </span>
+                  </div>
                 </div>
               </CollapsibleContent>
             </div>
@@ -528,32 +667,48 @@ export function WindPowerCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="p-3 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-blue-300 mb-1">Capacity Factor ({result.capacityFactor.toFixed(1)}%)</p>
+                  <p className="text-sm font-medium text-blue-300 mb-1">
+                    Capacity Factor ({result.capacityFactor.toFixed(1)}%)
+                  </p>
                   <p className="text-sm text-blue-200/80">
-                    {result.capacityFactor < 20 ? "Poor wind resource - turbine will run at low efficiency. Consider alternative location." :
-                    result.capacityFactor < 30 ? "Moderate wind resource - viable but ensure proper feasibility study." :
-                    result.capacityFactor < 40 ? "Good wind resource - commercially viable with reasonable returns." :
-                    "Excellent wind resource - highly profitable installation."}
+                    {result.capacityFactor < 20
+                      ? 'Poor wind resource - turbine will run at low efficiency. Consider alternative location.'
+                      : result.capacityFactor < 30
+                        ? 'Moderate wind resource - viable but ensure proper feasibility study.'
+                        : result.capacityFactor < 40
+                          ? 'Good wind resource - commercially viable with reasonable returns.'
+                          : 'Excellent wind resource - highly profitable installation.'}
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-blue-300 mb-1">Wind Speed Enhancement</p>
                   <p className="text-sm text-blue-200/80">
-                    Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}mph to {(result.windSpeedAtHub * 2.23694).toFixed(1)}mph, demonstrating the importance of turbine height.
+                    Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}mph to{' '}
+                    {(result.windSpeedAtHub * 2.23694).toFixed(1)}mph, demonstrating the importance
+                    of turbine height.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-blue-300 mb-1">Financial Viability</p>
                   <p className="text-sm text-blue-200/80">
-                    {result.paybackPeriod > 15 ? "May not be financially viable without grants or subsidies." :
-                    result.paybackPeriod > 10 ? "Moderate returns - consider incentives and electricity price trends." :
-                    "Strong financial returns over the turbine's 20-25 year lifespan."}
+                    {result.paybackPeriod > 15
+                      ? 'May not be financially viable without grants or subsidies.'
+                      : result.paybackPeriod > 10
+                        ? 'Moderate returns - consider incentives and electricity price trends.'
+                        : "Strong financial returns over the turbine's 20-25 year lifespan."}
                   </p>
                 </div>
               </CollapsibleContent>
@@ -566,21 +721,49 @@ export function WindPowerCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 & Planning</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    BS 7671 & Planning
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p><strong className="text-amber-300">Section 537:</strong> Install appropriate DC and AC isolators</p>
-                  <p><strong className="text-amber-300">Chapter 54:</strong> Earthing and bonding requirements</p>
-                  <p><strong className="text-amber-300">Chapter 44:</strong> Surge protection required</p>
-                  <p><strong className="text-amber-300">Appendix 4:</strong> Cable sizing for voltage drop</p>
+                  <p>
+                    <strong className="text-amber-300">Section 537:</strong> Install appropriate DC
+                    and AC isolators
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Chapter 54:</strong> Earthing and bonding
+                    requirements
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Chapter 44:</strong> Surge protection
+                    required
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Appendix 4:</strong> Cable sizing for voltage
+                    drop
+                  </p>
                 </div>
                 <div className="pt-2 border-t border-white/10 space-y-2 text-sm text-amber-200/80">
-                  <p><strong className="text-amber-300">Planning:</strong> Turbines &gt;15m typically require full planning permission</p>
-                  <p><strong className="text-amber-300">Noise:</strong> 45dB limit at nearest property boundary</p>
-                  <p><strong className="text-amber-300">Grid:</strong> G98 for ≤16A/phase, G99 for larger systems</p>
+                  <p>
+                    <strong className="text-amber-300">Planning:</strong> Turbines &gt;15m typically
+                    require full planning permission
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Noise:</strong> 45dB limit at nearest
+                    property boundary
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Grid:</strong> G98 for ≤16A/phase, G99 for
+                    larger systems
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>
@@ -592,7 +775,8 @@ export function WindPowerCalculator() {
         <div className="flex items-start gap-2">
           <Wind className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
           <p className="text-sm text-green-200">
-            <strong>Professional assessment essential.</strong> 12+ months anemometer data required for commercial viability.
+            <strong>Professional assessment essential.</strong> 12+ months anemometer data required
+            for commercial viability.
           </p>
         </div>
       </div>

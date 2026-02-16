@@ -11,7 +11,7 @@ interface PfcCellProps {
 const PfcCellComponent: React.FC<PfcCellProps> = ({ result, onUpdate }) => {
   // Use consolidated field, fall back to legacy fields for backward compatibility
   const pfcValue = result.pfc || result.pfcLiveNeutral || '';
-  
+
   return (
     <TableCell className="p-0 h-8 align-middle">
       <ValidatedInput

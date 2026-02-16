@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Shield,
@@ -12,158 +12,154 @@ import {
   Construction,
   Users,
   CheckCircle,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
-const TITLE = "Module 2 Section 2.5: Slip, Trip and Manual Handling Risks | BS7671 Electrical";
-const DESCRIPTION = "Learn to prevent the most common workplace injuries in electrical work. Master TILE method, safe lifting techniques, and workplace housekeeping to eliminate slip, trip and manual handling risks.";
+const TITLE = 'Module 2 Section 2.5: Slip, Trip and Manual Handling Risks | BS7671 Electrical';
+const DESCRIPTION =
+  'Learn to prevent the most common workplace injuries in electrical work. Master TILE method, safe lifting techniques, and workplace housekeeping to eliminate slip, trip and manual handling risks.';
 
 const quickCheckQuestions = [
   {
-    id: "slip-hazards",
-    question: "What is the most common cause of slips in electrical work?",
-    options: [
-      "Poor lighting",
-      "Wet or contaminated floors",
-      "Uneven surfaces",
-      "Wrong footwear",
-    ],
+    id: 'slip-hazards',
+    question: 'What is the most common cause of slips in electrical work?',
+    options: ['Poor lighting', 'Wet or contaminated floors', 'Uneven surfaces', 'Wrong footwear'],
     correctIndex: 1,
     explanation:
-      "Wet or contaminated floors from cleaning, spills, or weather are the primary cause of slips in electrical work environments.",
+      'Wet or contaminated floors from cleaning, spills, or weather are the primary cause of slips in electrical work environments.',
   },
   {
-    id: "tile-method",
+    id: 'tile-method',
     question: "What does the 'I' in TILE stand for?",
     options: [
-      "Installation requirements",
-      "Individual capability",
-      "Inspection checklist",
-      "Impact assessment",
+      'Installation requirements',
+      'Individual capability',
+      'Inspection checklist',
+      'Impact assessment',
     ],
     correctIndex: 1,
     explanation:
       "Individual refers to assessing the person's physical capability, training, health status, and fatigue levels before manual handling.",
   },
   {
-    id: "housekeeping",
-    question: "What is the primary purpose of good housekeeping?",
+    id: 'housekeeping',
+    question: 'What is the primary purpose of good housekeeping?',
     options: [
-      "Professional appearance",
-      "Safety and accident prevention",
-      "Client satisfaction",
-      "Faster work completion",
+      'Professional appearance',
+      'Safety and accident prevention',
+      'Client satisfaction',
+      'Faster work completion',
     ],
     correctIndex: 1,
     explanation:
-      "Good housekeeping is fundamentally about safety and preventing accidents, not appearance or efficiency.",
+      'Good housekeeping is fundamentally about safety and preventing accidents, not appearance or efficiency.',
   },
 ];
 
 const mainQuizQuestions = [
   {
     id: 1,
-    question: "What does the acronym TILE stand for in manual handling assessment?",
+    question: 'What does the acronym TILE stand for in manual handling assessment?',
     options: [
-      "Time, Impact, Load, Equipment",
-      "Task, Individual, Load, Environment",
-      "Training, Inspection, Lifting, Emergency",
-      "Tools, Installation, Labour, Evaluation"
+      'Time, Impact, Load, Equipment',
+      'Task, Individual, Load, Environment',
+      'Training, Inspection, Lifting, Emergency',
+      'Tools, Installation, Labour, Evaluation',
     ],
     correctAnswer: 1,
-    explanation: "TILE stands for Task, Individual, Load, and Environment - the four key factors to assess when planning manual handling operations under the Manual Handling Operations Regulations 1992."
+    explanation:
+      'TILE stands for Task, Individual, Load, and Environment - the four key factors to assess when planning manual handling operations under the Manual Handling Operations Regulations 1992.',
   },
   {
     id: 2,
-    question: "According to HSE guidelines, what is the maximum safe lifting weight for men under ideal conditions?",
-    options: [
-      "20kg",
-      "25kg",
-      "30kg",
-      "No specific limit"
-    ],
+    question:
+      'According to HSE guidelines, what is the maximum safe lifting weight for men under ideal conditions?',
+    options: ['20kg', '25kg', '30kg', 'No specific limit'],
     correctAnswer: 1,
-    explanation: "HSE guidelines suggest a maximum of 25kg for men and 16kg for women under ideal conditions, but risk assessment should always be conducted for loads over 5kg."
+    explanation:
+      'HSE guidelines suggest a maximum of 25kg for men and 16kg for women under ideal conditions, but risk assessment should always be conducted for loads over 5kg.',
   },
   {
     id: 3,
-    question: "Which of these is the most common cause of trips on electrical installations?",
+    question: 'Which of these is the most common cause of trips on electrical installations?',
     options: [
-      "Poor lighting conditions",
-      "Trailing leads and cables across walkways",
-      "Uneven floor surfaces",
-      "Wet or slippery floors"
+      'Poor lighting conditions',
+      'Trailing leads and cables across walkways',
+      'Uneven floor surfaces',
+      'Wet or slippery floors',
     ],
     correctAnswer: 1,
-    explanation: "Trailing leads and tools across walkways are the most common trip hazard on electrical jobs, easily prevented by proper cable management."
+    explanation:
+      'Trailing leads and tools across walkways are the most common trip hazard on electrical jobs, easily prevented by proper cable management.',
   },
   {
     id: 4,
-    question: "What is the correct lifting technique for heavy items?",
+    question: 'What is the correct lifting technique for heavy items?',
     options: [
-      "Bend your back and keep legs straight",
-      "Bend your knees and keep the load close to your body",
-      "Lift as quickly as possible",
-      "Always lift alone to maintain control"
+      'Bend your back and keep legs straight',
+      'Bend your knees and keep the load close to your body',
+      'Lift as quickly as possible',
+      'Always lift alone to maintain control',
     ],
     correctAnswer: 1,
-    explanation: "Safe lifting requires bending your knees (not your back), keeping the load close to your body, maintaining straight spine, and avoiding twisting movements."
+    explanation:
+      'Safe lifting requires bending your knees (not your back), keeping the load close to your body, maintaining straight spine, and avoiding twisting movements.',
   },
   {
     id: 5,
-    question: "Under the Manual Handling Operations Regulations 1992, employers must:",
+    question: 'Under the Manual Handling Operations Regulations 1992, employers must:',
     options: [
-      "Eliminate manual handling tasks where possible",
-      "Provide basic lifting training only",
-      "Set maximum weight limits for all workers",
-      "Allow workers to decide their own lifting limits"
+      'Eliminate manual handling tasks where possible',
+      'Provide basic lifting training only',
+      'Set maximum weight limits for all workers',
+      'Allow workers to decide their own lifting limits',
     ],
     correctAnswer: 0,
-    explanation: "The regulations require employers to avoid hazardous manual handling where reasonably practicable, assess remaining risks, and reduce risks to the lowest level reasonably practicable."
+    explanation:
+      'The regulations require employers to avoid hazardous manual handling where reasonably practicable, assess remaining risks, and reduce risks to the lowest level reasonably practicable.',
   },
   {
     id: 6,
-    question: "What percentage of construction injuries are caused by slips and trips?",
-    options: [
-      "15%",
-      "25%",
-      "Over 30%",
-      "45%"
-    ],
+    question: 'What percentage of construction injuries are caused by slips and trips?',
+    options: ['15%', '25%', 'Over 30%', '45%'],
     correctAnswer: 2,
-    explanation: "Slips and trips account for over 30% of injuries in construction, making them the most common cause of workplace accidents."
+    explanation:
+      'Slips and trips account for over 30% of injuries in construction, making them the most common cause of workplace accidents.',
   },
   {
     id: 7,
-    question: "Which environmental factor is most important when assessing a manual handling task?",
+    question: 'Which environmental factor is most important when assessing a manual handling task?',
     options: [
-      "Room temperature",
-      "Noise levels",
-      "Space constraints and floor conditions",
-      "Lighting colour"
+      'Room temperature',
+      'Noise levels',
+      'Space constraints and floor conditions',
+      'Lighting colour',
     ],
     correctAnswer: 2,
-    explanation: "Space constraints, floor conditions, stairs, doorways, and weather conditions significantly affect the safety of manual handling operations."
+    explanation:
+      'Space constraints, floor conditions, stairs, doorways, and weather conditions significantly affect the safety of manual handling operations.',
   },
   {
     id: 8,
-    question: "True or False: Good housekeeping is primarily about keeping the workplace tidy for appearances.",
-    options: ["True", "False"],
+    question:
+      'True or False: Good housekeeping is primarily about keeping the workplace tidy for appearances.',
+    options: ['True', 'False'],
     correctAnswer: 1,
-    explanation: "False. Good housekeeping is fundamentally about safety and accident prevention, not appearance. It prevents slips, trips, and creates a safer working environment."
-  }
+    explanation:
+      'False. Good housekeeping is fundamentally about safety and accident prevention, not appearance. It prevents slips, trips, and creates a safer working environment.',
+  },
 ];
 
 const Section2_5: React.FC = () => {
-  console.log("Section2_5 component loaded");
-  
+  console.log('Section2_5 component loaded');
+
   useSEO(TITLE, DESCRIPTION);
 
   return (
@@ -191,10 +187,7 @@ const Section2_5: React.FC = () => {
             <div className="p-2 rounded-lg bg-card">
               <AlertTriangle className="w-6 h-6 text-foreground" />
             </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 2.5
             </Badge>
           </div>
@@ -202,7 +195,8 @@ const Section2_5: React.FC = () => {
             Slip, Trip and Manual Handling Risks
           </h1>
           <p className="text-white/80">
-            Preventing the most common workplace injuries in electrical work. Manual Handling Operations Regulations 1992 and workplace safety standards.
+            Preventing the most common workplace injuries in electrical work. Manual Handling
+            Operations Regulations 1992 and workplace safety standards.
           </p>
         </header>
 
@@ -213,18 +207,36 @@ const Section2_5: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Slip/Trip Risks:</strong> Wet surfaces, uneven floors, cables, poor lighting are major hazards.</li>
-                <li><strong>Manual Handling:</strong> Use TILE method - Task, Individual, Load, Environment assessment.</li>
-                <li><strong>Prevention:</strong> Good housekeeping, proper lifting techniques, adequate lighting.</li>
+                <li>
+                  <strong>Slip/Trip Risks:</strong> Wet surfaces, uneven floors, cables, poor
+                  lighting are major hazards.
+                </li>
+                <li>
+                  <strong>Manual Handling:</strong> Use TILE method - Task, Individual, Load,
+                  Environment assessment.
+                </li>
+                <li>
+                  <strong>Prevention:</strong> Good housekeeping, proper lifting techniques,
+                  adequate lighting.
+                </li>
                 <li>Poor practices lead to musculoskeletal injuries and fall accidents.</li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Wet floors, trailing cables, poor lighting, heavy equipment, cluttered walkways.</li>
-                <li><strong>Use:</strong> TILE assessment, lifting aids, proper footwear, team lifts for heavy items.</li>
-                <li><strong>Check:</strong> Clear walkways, adequate lighting, non-slip surfaces, lifting technique.</li>
+                <li>
+                  <strong>Spot:</strong> Wet floors, trailing cables, poor lighting, heavy
+                  equipment, cluttered walkways.
+                </li>
+                <li>
+                  <strong>Use:</strong> TILE assessment, lifting aids, proper footwear, team lifts
+                  for heavy items.
+                </li>
+                <li>
+                  <strong>Check:</strong> Clear walkways, adequate lighting, non-slip surfaces,
+                  lifting technique.
+                </li>
               </ul>
             </div>
           </div>
@@ -232,9 +244,13 @@ const Section2_5: React.FC = () => {
 
         {/* Learning outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+            Learning outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
-            <li>Identify common slip, trip and manual handling risks in electrical work environments</li>
+            <li>
+              Identify common slip, trip and manual handling risks in electrical work environments
+            </li>
             <li>Apply the TILE method to assess manual handling tasks</li>
             <li>Implement effective housekeeping measures to prevent accidents</li>
             <li>Demonstrate proper lifting techniques and use of mechanical aids</li>
@@ -473,7 +489,9 @@ const Section2_5: React.FC = () => {
               <div>
                 <p className="font-medium mb-2">Injury & Legal Consequences</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li>Musculoskeletal disorders (back injuries are most common workplace injury)</li>
+                  <li>
+                    Musculoskeletal disorders (back injuries are most common workplace injury)
+                  </li>
                   <li>Slips, trips and falls causing fractures, sprains, and head injuries</li>
                   <li>Lost time injuries affecting project schedules and costs</li>
                   <li>Legal liability under Health and Safety at Work Act</li>
@@ -539,7 +557,9 @@ const Section2_5: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-elec-yellow/5 border border-elec-yellow/30">
-              <p className="font-medium mb-2">Workplace (Health, Safety and Welfare) Regulations 1992</p>
+              <p className="font-medium mb-2">
+                Workplace (Health, Safety and Welfare) Regulations 1992
+              </p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Adequate lighting requirements</li>
                 <li>Safe traffic routes</li>
@@ -560,8 +580,9 @@ const Section2_5: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
               <p className="font-medium mb-2">The Problem</p>
               <p className="mb-3">
-                An electrician suffered a serious back injury while attempting to lift a 45kg distribution board alone. 
-                The incident occurred in a cramped plant room with poor lighting and cables trailing across the floor.
+                An electrician suffered a serious back injury while attempting to lift a 45kg
+                distribution board alone. The incident occurred in a cramped plant room with poor
+                lighting and cables trailing across the floor.
               </p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>No TILE assessment conducted</li>
@@ -573,7 +594,7 @@ const Section2_5: React.FC = () => {
             <div className="rounded-lg p-4 bg-card border border-green-400/30">
               <p className="font-medium mb-2">The Solution</p>
               <p className="mb-3">
-                Implementation of proper manual handling procedures and workplace organisation 
+                Implementation of proper manual handling procedures and workplace organisation
                 prevented future incidents and improved overall safety performance.
               </p>
               <ul className="list-disc pl-4 space-y-1">
@@ -595,15 +616,29 @@ const Section2_5: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-foreground">
             <div>
               <p className="font-medium mb-1">Do I need special training for manual handling?</p>
-              <p>Yes, under the Manual Handling Operations Regulations 1992, employers must provide suitable training for manual handling tasks. This includes proper lifting techniques, risk assessment, and when to use mechanical aids.</p>
+              <p>
+                Yes, under the Manual Handling Operations Regulations 1992, employers must provide
+                suitable training for manual handling tasks. This includes proper lifting
+                techniques, risk assessment, and when to use mechanical aids.
+              </p>
             </div>
             <div>
-              <p className="font-medium mb-1">What should I do if I'm asked to lift something I think is too heavy?</p>
-              <p>Stop and assess using TILE method. If in doubt, request mechanical aids (trolley, hoist, crane) or additional personnel. Never risk injury - it's better to take time to do it safely.</p>
+              <p className="font-medium mb-1">
+                What should I do if I'm asked to lift something I think is too heavy?
+              </p>
+              <p>
+                Stop and assess using TILE method. If in doubt, request mechanical aids (trolley,
+                hoist, crane) or additional personnel. Never risk injury - it's better to take time
+                to do it safely.
+              </p>
             </div>
             <div>
               <p className="font-medium mb-1">Are there specific weight limits I should follow?</p>
-              <p>HSE guidelines suggest maximum loads of 25kg for men and 16kg for women under ideal conditions, but any load over 5kg requires risk assessment. The key is considering the task, individual, load and environment.</p>
+              <p>
+                HSE guidelines suggest maximum loads of 25kg for men and 16kg for women under ideal
+                conditions, but any load over 5kg requires risk assessment. The key is considering
+                the task, individual, load and environment.
+              </p>
             </div>
           </div>
         </Card>
@@ -655,11 +690,26 @@ const Section2_5: React.FC = () => {
                 Do's
               </h3>
               <ul className="space-y-2">
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" /><span>Conduct TILE assessment before lifting</span></li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" /><span>Keep walkways clear of cables and materials</span></li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" /><span>Use mechanical aids for heavy items</span></li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" /><span>Clean up spills immediately</span></li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" /><span>Wear appropriate non-slip footwear</span></li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Conduct TILE assessment before lifting</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Keep walkways clear of cables and materials</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Use mechanical aids for heavy items</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Clean up spills immediately</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Wear appropriate non-slip footwear</span>
+                </li>
               </ul>
             </div>
             <div className="space-y-3">
@@ -668,11 +718,26 @@ const Section2_5: React.FC = () => {
                 Don'ts
               </h3>
               <ul className="space-y-2">
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Never lift alone if load exceeds guidelines</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Don't leave cables across walkways</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Avoid rushing or taking shortcuts</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Don't ignore spills or trip hazards</span></li>
-                <li className="flex gap-2"><AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" /><span>Never compromise on adequate lighting</span></li>
+                <li className="flex gap-2">
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Never lift alone if load exceeds guidelines</span>
+                </li>
+                <li className="flex gap-2">
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Don't leave cables across walkways</span>
+                </li>
+                <li className="flex gap-2">
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Avoid rushing or taking shortcuts</span>
+                </li>
+                <li className="flex gap-2">
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Don't ignore spills or trip hazards</span>
+                </li>
+                <li className="flex gap-2">
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Never compromise on adequate lighting</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -680,34 +745,49 @@ const Section2_5: React.FC = () => {
 
         {/* Quick Reference Card */}
         <Card className="mb-8 p-6 bg-elec-yellow/5 border border-elec-yellow/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Reference Card</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+            Quick Reference Card
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
             <div>
               <h3 className="font-medium mb-2">Weight Limits (HSE Guidelines)</h3>
               <ul className="space-y-1">
-                <li><strong>Men:</strong> 25kg maximum (ideal conditions)</li>
-                <li><strong>Women:</strong> 16kg maximum (ideal conditions)</li>
-                <li><strong>Team lift:</strong> Required for loads over 30kg</li>
-                <li><strong>Risk assessment:</strong> Required for loads over 5kg</li>
+                <li>
+                  <strong>Men:</strong> 25kg maximum (ideal conditions)
+                </li>
+                <li>
+                  <strong>Women:</strong> 16kg maximum (ideal conditions)
+                </li>
+                <li>
+                  <strong>Team lift:</strong> Required for loads over 30kg
+                </li>
+                <li>
+                  <strong>Risk assessment:</strong> Required for loads over 5kg
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-medium mb-2">Emergency Contacts</h3>
               <ul className="space-y-1">
-                <li><strong>Emergency:</strong> 999</li>
-                <li><strong>HSE:</strong> 0300 003 1647</li>
-                <li><strong>Site Safety Officer:</strong> [Local contact]</li>
-                <li><strong>First Aid:</strong> [Local contact]</li>
+                <li>
+                  <strong>Emergency:</strong> 999
+                </li>
+                <li>
+                  <strong>HSE:</strong> 0300 003 1647
+                </li>
+                <li>
+                  <strong>Site Safety Officer:</strong> [Local contact]
+                </li>
+                <li>
+                  <strong>First Aid:</strong> [Local contact]
+                </li>
               </ul>
             </div>
           </div>
         </Card>
 
         {/* Quiz */}
-        <Quiz 
-          questions={mainQuizQuestions}
-          title="Section 2.5 Knowledge Check"
-        />
+        <Quiz questions={mainQuizQuestions} title="Section 2.5 Knowledge Check" />
 
         {/* Navigation */}
         <div className="flex justify-between mt-8">

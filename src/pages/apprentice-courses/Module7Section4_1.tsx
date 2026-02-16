@@ -1,42 +1,62 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Systematic Fault Diagnosis - Module 7.4.1 | Level 2 Electrical Course";
-const DESCRIPTION = "Professional approach to electrical fault finding using systematic methods and testing procedures according to BS 7671.";
+const TITLE = 'Systematic Fault Diagnosis - Module 7.4.1 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Professional approach to electrical fault finding using systematic methods and testing procedures according to BS 7671.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What is the first step in systematic fault diagnosis?",
-    options: ["Test the circuit", "Question the user", "Replace components", "Check voltage"],
+    question: 'What is the first step in systematic fault diagnosis?',
+    options: ['Test the circuit', 'Question the user', 'Replace components', 'Check voltage'],
     correctIndex: 1,
-    explanation: "Always begin by questioning the user to understand what happened, when the fault occurred, and any relevant circumstances."
+    explanation:
+      'Always begin by questioning the user to understand what happened, when the fault occurred, and any relevant circumstances.',
   },
   {
     id: 2,
-    question: "Why is isolation essential before fault finding?",
-    options: ["To save electricity", "To ensure safety during testing", "To reset protective devices", "To improve test accuracy"],
+    question: 'Why is isolation essential before fault finding?',
+    options: [
+      'To save electricity',
+      'To ensure safety during testing',
+      'To reset protective devices',
+      'To improve test accuracy',
+    ],
     correctIndex: 1,
-    explanation: "Isolation ensures safety by preventing electric shock and allows accurate testing without interference from other circuits."
+    explanation:
+      'Isolation ensures safety by preventing electric shock and allows accurate testing without interference from other circuits.',
   },
   {
     id: 3,
     question: "What should you do if initial tests don't reveal the fault?",
-    options: ["Replace all components", "Apply systematic subdivision", "Give up", "Guess the problem"],
+    options: [
+      'Replace all components',
+      'Apply systematic subdivision',
+      'Give up',
+      'Guess the problem',
+    ],
     correctIndex: 1,
-    explanation: "Use systematic subdivision to break the circuit into smaller sections and test each part methodically."
+    explanation:
+      'Use systematic subdivision to break the circuit into smaller sections and test each part methodically.',
   },
   {
     id: 4,
-    question: "When should you verify repairs are effective?",
-    options: ["Next week", "Before re-energising the circuit", "After the customer pays", "Only if problems persist"],
+    question: 'When should you verify repairs are effective?',
+    options: [
+      'Next week',
+      'Before re-energising the circuit',
+      'After the customer pays',
+      'Only if problems persist',
+    ],
     correctIndex: 1,
-    explanation: "Always verify repairs through appropriate testing before re-energising circuits to ensure safety and effectiveness."
-  }
+    explanation:
+      'Always verify repairs through appropriate testing before re-energising circuits to ensure safety and effectiveness.',
+  },
 ];
 
 const Module7Section4_1 = () => {
@@ -45,147 +65,157 @@ const Module7Section4_1 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the first step in systematic fault diagnosis?",
+      question: 'What is the first step in systematic fault diagnosis?',
       options: [
-        "Start testing immediately",
-        "Question the user about circumstances",
-        "Replace suspected faulty components",
-        "Check the consumer unit"
+        'Start testing immediately',
+        'Question the user about circumstances',
+        'Replace suspected faulty components',
+        'Check the consumer unit',
       ],
       correctAnswer: 1,
-      explanation: "Always begin by questioning the user to understand what happened, when the fault occurred, and any circumstances that may help identify the cause."
+      explanation:
+        'Always begin by questioning the user to understand what happened, when the fault occurred, and any circumstances that may help identify the cause.',
     },
     {
       id: 2,
-      question: "Why must circuits be isolated before fault finding?",
+      question: 'Why must circuits be isolated before fault finding?',
       options: [
-        "To save electricity costs",
-        "To ensure safety and accurate testing",
-        "To reset protective devices",
-        "To comply with manufacturer instructions"
+        'To save electricity costs',
+        'To ensure safety and accurate testing',
+        'To reset protective devices',
+        'To comply with manufacturer instructions',
       ],
       correctAnswer: 1,
-      explanation: "Isolation ensures safety from electric shock and allows accurate testing without interference from parallel paths or live conductors."
+      explanation:
+        'Isolation ensures safety from electric shock and allows accurate testing without interference from parallel paths or live conductors.',
     },
     {
       id: 3,
-      question: "What is systematic subdivision in fault finding?",
+      question: 'What is systematic subdivision in fault finding?',
       options: [
-        "Testing everything at once",
-        "Breaking the circuit into smaller testable sections",
-        "Replacing components one by one",
-        "Using multiple test instruments"
+        'Testing everything at once',
+        'Breaking the circuit into smaller testable sections',
+        'Replacing components one by one',
+        'Using multiple test instruments',
       ],
       correctAnswer: 1,
-      explanation: "Systematic subdivision involves breaking the circuit into smaller sections and testing each part methodically to locate the fault."
+      explanation:
+        'Systematic subdivision involves breaking the circuit into smaller sections and testing each part methodically to locate the fault.',
     },
     {
       id: 4,
-      question: "Which test instrument is most appropriate for checking continuity?",
-      options: [
-        "Voltmeter",
-        "Low resistance ohmmeter",
-        "Clamp meter",
-        "Insulation tester"
-      ],
+      question: 'Which test instrument is most appropriate for checking continuity?',
+      options: ['Voltmeter', 'Low resistance ohmmeter', 'Clamp meter', 'Insulation tester'],
       correctAnswer: 1,
-      explanation: "A low resistance ohmmeter provides accurate continuity measurements and can detect high resistance joints that other instruments might miss."
+      explanation:
+        'A low resistance ohmmeter provides accurate continuity measurements and can detect high resistance joints that other instruments might miss.',
     },
     {
       id: 5,
-      question: "What should you verify before re-energising after repair?",
+      question: 'What should you verify before re-energising after repair?',
       options: [
-        "Only that the repair looks good",
-        "Test results confirm the fault is cleared",
-        "The customer is satisfied",
-        "All tools are packed away"
+        'Only that the repair looks good',
+        'Test results confirm the fault is cleared',
+        'The customer is satisfied',
+        'All tools are packed away',
       ],
       correctAnswer: 1,
-      explanation: "Always verify through appropriate testing that the fault has been completely resolved before restoring power to the circuit."
+      explanation:
+        'Always verify through appropriate testing that the fault has been completely resolved before restoring power to the circuit.',
     },
     {
       id: 6,
-      question: "Why is documentation important in fault finding?",
+      question: 'Why is documentation important in fault finding?',
       options: [
         "It's required by law",
-        "Provides evidence of work done and aids future maintenance",
-        "Customers always request it",
-        "Insurance companies demand it"
+        'Provides evidence of work done and aids future maintenance',
+        'Customers always request it',
+        'Insurance companies demand it',
       ],
       correctAnswer: 1,
-      explanation: "Documentation provides evidence of professional work, helps with future maintenance, and demonstrates compliance with safety standards."
+      explanation:
+        'Documentation provides evidence of professional work, helps with future maintenance, and demonstrates compliance with safety standards.',
     },
     {
       id: 7,
       question: "What is the danger of 'shotgun' fault finding?",
       options: [
-        "It takes too long",
-        "May cause additional faults and safety risks",
+        'It takes too long',
+        'May cause additional faults and safety risks',
         "It's too expensive",
-        "Customers don't like it"
+        "Customers don't like it",
       ],
       correctAnswer: 1,
-      explanation: "Random testing and component replacement can introduce new faults, create safety hazards, and waste time and money."
+      explanation:
+        'Random testing and component replacement can introduce new faults, create safety hazards, and waste time and money.',
     },
     {
       id: 8,
-      question: "How should you handle a fault you cannot identify?",
+      question: 'How should you handle a fault you cannot identify?',
       options: [
-        "Keep trying different approaches",
-        "Seek help from experienced colleagues or specialists",
+        'Keep trying different approaches',
+        'Seek help from experienced colleagues or specialists',
         "Tell the customer it's unfixable",
-        "Replace everything until it works"
+        'Replace everything until it works',
       ],
       correctAnswer: 1,
-      explanation: "Professional practice involves recognising your limitations and seeking appropriate help rather than continuing with unsuccessful methods."
+      explanation:
+        'Professional practice involves recognising your limitations and seeking appropriate help rather than continuing with unsuccessful methods.',
     },
     {
       id: 9,
-      question: "What should be checked if a circuit worked before but fails after modification?",
+      question: 'What should be checked if a circuit worked before but fails after modification?',
       options: [
-        "The original installation only",
-        "The modification work and its effect on existing circuits",
-        "Just the new components",
-        "The consumer unit"
+        'The original installation only',
+        'The modification work and its effect on existing circuits',
+        'Just the new components',
+        'The consumer unit',
       ],
       correctAnswer: 1,
-      explanation: "When faults occur after modifications, check both the new work and how it may have affected existing circuits."
+      explanation:
+        'When faults occur after modifications, check both the new work and how it may have affected existing circuits.',
     },
     {
       id: 10,
       question: "Why is the 'half-split' method effective for fault finding?",
       options: [
         "It's the fastest method",
-        "Eliminates half the circuit with each test",
-        "It requires fewer test instruments",
-        "It's easier to explain to customers"
+        'Eliminates half the circuit with each test',
+        'It requires fewer test instruments',
+        "It's easier to explain to customers",
       ],
       correctAnswer: 1,
-      explanation: "The half-split method efficiently narrows down the fault location by eliminating half the remaining circuit with each test."
-    }
+      explanation:
+        'The half-split method efficiently narrows down the fault location by eliminating half the remaining circuit with each test.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Should you always start with the same test when fault finding?",
-      answer: "No. The first test should be chosen based on the symptoms described and the most likely cause. However, safety checks and isolation should always come first."
+      question: 'Should you always start with the same test when fault finding?',
+      answer:
+        'No. The first test should be chosen based on the symptoms described and the most likely cause. However, safety checks and isolation should always come first.',
     },
     {
-      question: "Is it acceptable to energise circuits to test for faults?",
-      answer: "Only when using appropriate test procedures and equipment designed for live testing. Most fault finding should be done on isolated circuits for safety."
+      question: 'Is it acceptable to energise circuits to test for faults?',
+      answer:
+        'Only when using appropriate test procedures and equipment designed for live testing. Most fault finding should be done on isolated circuits for safety.',
     },
     {
-      question: "How do you avoid creating additional faults during diagnosis?",
-      answer: "Use systematic methods, appropriate test instruments, avoid forcing connections, and don't dismantle more than necessary. Plan your approach before starting."
+      question: 'How do you avoid creating additional faults during diagnosis?',
+      answer:
+        "Use systematic methods, appropriate test instruments, avoid forcing connections, and don't dismantle more than necessary. Plan your approach before starting.",
     },
     {
-      question: "What if the fault is intermittent?",
-      answer: "Intermittent faults require patience and may need monitoring over time. Check for loose connections, thermal effects, and conditions that trigger the fault."
+      question: 'What if the fault is intermittent?',
+      answer:
+        'Intermittent faults require patience and may need monitoring over time. Check for loose connections, thermal effects, and conditions that trigger the fault.',
     },
     {
-      question: "Should customers be present during fault finding?",
-      answer: "It's often helpful as they can provide information about when and how the fault occurs. However, ensure they stay in safe areas and don't interfere with testing."
-    }
+      question: 'Should customers be present during fault finding?',
+      answer:
+        "It's often helpful as they can provide information about when and how the fault occurs. However, ensure they stay in safe areas and don't interfere with testing.",
+    },
   ];
 
   return (
@@ -220,7 +250,8 @@ const Module7Section4_1 = () => {
               Systematic Approach to Fault Diagnosis
             </h1>
             <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
-              Professional methodology for electrical fault finding using systematic testing procedures and logical analysis.
+              Professional methodology for electrical fault finding using systematic testing
+              procedures and logical analysis.
             </p>
           </header>
 
@@ -228,9 +259,17 @@ const Module7Section4_1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
             <ul className="text-white/80 space-y-1 text-sm">
-              <li>• Systematic fault diagnosis follows a logical sequence to identify electrical problems efficiently.</li>
-              <li>• Always start with user questioning, then isolate, test systematically, and verify repairs.</li>
-              <li>• Random 'shotgun' approaches waste time and can create additional safety hazards.</li>
+              <li>
+                • Systematic fault diagnosis follows a logical sequence to identify electrical
+                problems efficiently.
+              </li>
+              <li>
+                • Always start with user questioning, then isolate, test systematically, and verify
+                repairs.
+              </li>
+              <li>
+                • Random 'shotgun' approaches waste time and can create additional safety hazards.
+              </li>
             </ul>
           </div>
 
@@ -241,11 +280,24 @@ const Module7Section4_1 = () => {
               Learning Outcomes
             </h2>
             <ul className="text-white/80 space-y-2 leading-relaxed">
-              <li>• Apply systematic methodology to electrical fault diagnosis in logical sequence.</li>
-              <li>• Demonstrate safe isolation procedures and appropriate testing techniques for fault finding.</li>
-              <li>• Use circuit subdivision methods to efficiently locate faults in complex installations.</li>
-              <li>• Select and use appropriate test instruments for different fault-finding scenarios.</li>
-              <li>• Document fault-finding activities and verify repair effectiveness before re-energisation.</li>
+              <li>
+                • Apply systematic methodology to electrical fault diagnosis in logical sequence.
+              </li>
+              <li>
+                • Demonstrate safe isolation procedures and appropriate testing techniques for fault
+                finding.
+              </li>
+              <li>
+                • Use circuit subdivision methods to efficiently locate faults in complex
+                installations.
+              </li>
+              <li>
+                • Select and use appropriate test instruments for different fault-finding scenarios.
+              </li>
+              <li>
+                • Document fault-finding activities and verify repair effectiveness before
+                re-energisation.
+              </li>
             </ul>
           </section>
 
@@ -257,7 +309,9 @@ const Module7Section4_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Effective fault diagnosis begins with thorough information gathering. Understanding the circumstances and symptoms guides the entire diagnostic process and often reveals the fault location before any testing begins.
+                Effective fault diagnosis begins with thorough information gathering. Understanding
+                the circumstances and symptoms guides the entire diagnostic process and often
+                reveals the fault location before any testing begins.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -296,7 +350,10 @@ const Module7Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Professional approach:</strong> Spend adequate time on information gathering - it's often more valuable than immediate testing and can save hours of unnecessary work. Good questioning can reveal 70% of fault locations before any instruments are used.
+                  <strong className="text-elec-yellow">Professional approach:</strong> Spend
+                  adequate time on information gathering - it's often more valuable than immediate
+                  testing and can save hours of unnecessary work. Good questioning can reveal 70% of
+                  fault locations before any instruments are used.
                 </p>
               </div>
             </div>
@@ -318,18 +375,37 @@ const Module7Section4_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Safety is paramount in fault finding. Proper isolation protects both the electrician and allows accurate testing without interference from other circuits or live conductors.
+                Safety is paramount in fault finding. Proper isolation protects both the electrician
+                and allows accurate testing without interference from other circuits or live
+                conductors.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 my-6">
-                <p className="font-medium text-white mb-3">Safe Isolation Procedure (Prove-Dead Process)</p>
+                <p className="font-medium text-white mb-3">
+                  Safe Isolation Procedure (Prove-Dead Process)
+                </p>
                 <ol className="text-sm space-y-2 list-decimal pl-4">
-                  <li><strong>Identify</strong> the correct circuit and isolation point using circuit diagrams</li>
-                  <li><strong>Test</strong> voltage indicator on known live source to verify operation</li>
-                  <li><strong>Isolate</strong> the circuit at the appropriate point (MCB, isolator, or main switch)</li>
-                  <li><strong>Secure</strong> isolation with lock-off devices and warning notices</li>
-                  <li><strong>Test</strong> for absence of voltage at the work location</li>
-                  <li><strong>Retest</strong> voltage indicator on known live source to confirm operation</li>
+                  <li>
+                    <strong>Identify</strong> the correct circuit and isolation point using circuit
+                    diagrams
+                  </li>
+                  <li>
+                    <strong>Test</strong> voltage indicator on known live source to verify operation
+                  </li>
+                  <li>
+                    <strong>Isolate</strong> the circuit at the appropriate point (MCB, isolator, or
+                    main switch)
+                  </li>
+                  <li>
+                    <strong>Secure</strong> isolation with lock-off devices and warning notices
+                  </li>
+                  <li>
+                    <strong>Test</strong> for absence of voltage at the work location
+                  </li>
+                  <li>
+                    <strong>Retest</strong> voltage indicator on known live source to confirm
+                    operation
+                  </li>
                 </ol>
               </div>
 
@@ -358,7 +434,10 @@ const Module7Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Safety reminder:</strong> Never compromise on isolation procedures. A few extra minutes for proper isolation can prevent serious injury or death. Always verify isolation at the point of work, not just at the distribution board.
+                  <strong className="text-elec-yellow">Safety reminder:</strong> Never compromise on
+                  isolation procedures. A few extra minutes for proper isolation can prevent serious
+                  injury or death. Always verify isolation at the point of work, not just at the
+                  distribution board.
                 </p>
               </div>
             </div>
@@ -380,12 +459,15 @@ const Module7Section4_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Once safety is established, systematic testing locates faults efficiently using logical subdivision methods rather than random testing approaches.
+                Once safety is established, systematic testing locates faults efficiently using
+                logical subdivision methods rather than random testing approaches.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 my-6">
                 <p className="font-medium text-white mb-3">Half-Split Method</p>
-                <p className="text-sm mb-2">The most efficient systematic approach for locating faults:</p>
+                <p className="text-sm mb-2">
+                  The most efficient systematic approach for locating faults:
+                </p>
                 <ol className="text-sm space-y-1 list-decimal pl-4">
                   <li>Test at the midpoint of the circuit to eliminate half the possibilities</li>
                   <li>Based on results, focus on the faulty half and repeat the process</li>
@@ -419,7 +501,9 @@ const Module7Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Efficiency principle:</strong> Systematic subdivision can locate most faults within 3-4 tests, while random testing might require dozens of measurements to find the same problem.
+                  <strong className="text-elec-yellow">Efficiency principle:</strong> Systematic
+                  subdivision can locate most faults within 3-4 tests, while random testing might
+                  require dozens of measurements to find the same problem.
                 </p>
               </div>
             </div>
@@ -441,14 +525,17 @@ const Module7Section4_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Completing the fault diagnosis process requires proper verification of repairs and comprehensive documentation for safety, compliance, and future reference.
+                Completing the fault diagnosis process requires proper verification of repairs and
+                comprehensive documentation for safety, compliance, and future reference.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 my-6">
                 <p className="font-medium text-white mb-3">Repair Verification Tests</p>
                 <p className="text-sm mb-2">Before re-energising any circuit:</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
-                  <li>Repeat the original test that identified the fault to confirm it's resolved</li>
+                  <li>
+                    Repeat the original test that identified the fault to confirm it's resolved
+                  </li>
                   <li>Perform additional tests to ensure repair hasn't affected other circuits</li>
                   <li>Check all connections are secure and properly terminated</li>
                   <li>Verify compliance with BS 7671 requirements for the repair method used</li>
@@ -481,7 +568,10 @@ const Module7Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
                 <p className="text-sm">
-                  <strong className="text-elec-yellow">Professional standard:</strong> Thorough documentation protects both electrician and customer, provides evidence of competent work, and creates valuable records for future maintenance and compliance audits.
+                  <strong className="text-elec-yellow">Professional standard:</strong> Thorough
+                  documentation protects both electrician and customer, provides evidence of
+                  competent work, and creates valuable records for future maintenance and compliance
+                  audits.
                 </p>
               </div>
             </div>
@@ -502,7 +592,9 @@ const Module7Section4_1 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="font-medium text-white mb-3">Case Study: Intermittent Kitchen Socket Fault</p>
+              <p className="font-medium text-white mb-3">
+                Case Study: Intermittent Kitchen Socket Fault
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white/90 mb-2">Reported Symptoms:</p>
@@ -525,7 +617,11 @@ const Module7Section4_1 = () => {
                 </div>
               </div>
               <div className="mt-4 p-3 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm"><strong className="text-elec-yellow">Key learning:</strong> Information gathering revealed the renovation work connection, guiding tests toward recently disturbed areas and saving significant diagnostic time.</p>
+                <p className="text-sm">
+                  <strong className="text-elec-yellow">Key learning:</strong> Information gathering
+                  revealed the renovation work connection, guiding tests toward recently disturbed
+                  areas and saving significant diagnostic time.
+                </p>
               </div>
             </div>
           </section>
@@ -556,8 +652,13 @@ const Module7Section4_1 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Key Takeaways</h3>
                 <ul className="text-sm text-white/70 space-y-2">
-                  <li>• Systematic fault diagnosis follows a logical sequence that improves efficiency and safety</li>
-                  <li>• Information gathering often reveals fault locations before testing begins</li>
+                  <li>
+                    • Systematic fault diagnosis follows a logical sequence that improves efficiency
+                    and safety
+                  </li>
+                  <li>
+                    • Information gathering often reveals fault locations before testing begins
+                  </li>
                   <li>• Safe isolation procedures are mandatory for all fault-finding work</li>
                   <li>• Circuit subdivision methods locate faults faster than random testing</li>
                   <li>• Proper verification and documentation complete the professional process</li>

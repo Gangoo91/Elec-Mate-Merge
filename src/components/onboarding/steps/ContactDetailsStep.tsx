@@ -14,7 +14,9 @@ export function ContactDetailsStep({ formData, onChange }: StepProps) {
   // Pre-fill email from auth user
   useEffect(() => {
     const prefillEmail = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user?.email && !formData.email) {
         onChange({ ...formData, email: user.email });
       }
@@ -29,9 +31,7 @@ export function ContactDetailsStep({ formData, onChange }: StepProps) {
           <Mail className="h-10 w-10 text-blue-500" />
         </div>
         <h3 className="text-xl font-bold mb-2">Contact Information</h3>
-        <p className="text-muted-foreground">
-          How should clients get in touch with you?
-        </p>
+        <p className="text-muted-foreground">How should clients get in touch with you?</p>
       </div>
 
       <div className="space-y-4">

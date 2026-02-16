@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
-import { Archive, Copy, MoreHorizontal, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState, useRef } from 'react';
+import { Archive, Copy, MoreHorizontal, ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface MobileCardSwipeActionsProps {
   children: React.ReactNode;
@@ -10,41 +10,41 @@ interface MobileCardSwipeActionsProps {
   className?: string;
 }
 
-export function MobileCardSwipeActions({ 
-  children, 
-  onArchive, 
-  onCopy, 
+export function MobileCardSwipeActions({
+  children,
+  onArchive,
+  onCopy,
   onMove,
-  className 
+  className,
 }: MobileCardSwipeActionsProps) {
   const [translateX, setTranslateX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef(0);
   const currentX = useRef(0);
-  
+
   const SWIPE_THRESHOLD = 80;
   const MAX_SWIPE = 100;
-  
+
   const handleTouchStart = (e: React.TouchEvent) => {
     startX.current = e.touches[0].clientX;
     currentX.current = e.touches[0].clientX;
     setIsDragging(true);
   };
-  
+
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging) return;
-    
+
     currentX.current = e.touches[0].clientX;
     const diff = currentX.current - startX.current;
-    
+
     // Limit swipe distance
     const clampedDiff = Math.max(-MAX_SWIPE, Math.min(MAX_SWIPE, diff));
     setTranslateX(clampedDiff);
   };
-  
+
   const handleTouchEnd = () => {
     setIsDragging(false);
-    
+
     // Check if swipe exceeded threshold
     if (translateX <= -SWIPE_THRESHOLD) {
       // Swipe left - show archive
@@ -55,7 +55,7 @@ export function MobileCardSwipeActions({
       if (navigator.vibrate) navigator.vibrate(30);
       onCopy?.();
     }
-    
+
     // Reset position
     setTranslateX(0);
   };
@@ -64,9 +64,9 @@ export function MobileCardSwipeActions({
   const rightOpacity = Math.min(-translateX / SWIPE_THRESHOLD, 1);
 
   return (
-    <div className={cn("relative overflow-hidden rounded-lg", className)}>
+    <div className={cn('relative overflow-hidden rounded-lg', className)}>
       {/* Left action (revealed on swipe right) */}
-      <div 
+      <div
         className="absolute inset-y-0 left-0 w-24 flex items-center justify-center bg-elec-yellow"
         style={{ opacity: leftOpacity }}
       >
@@ -75,9 +75,9 @@ export function MobileCardSwipeActions({
           <span className="text-xs font-medium">Copy</span>
         </div>
       </div>
-      
+
       {/* Right action (revealed on swipe left) */}
-      <div 
+      <div
         className="absolute inset-y-0 right-0 w-24 flex items-center justify-center bg-warning"
         style={{ opacity: rightOpacity }}
       >
@@ -86,13 +86,10 @@ export function MobileCardSwipeActions({
           <span className="text-xs font-medium">Archive</span>
         </div>
       </div>
-      
+
       {/* Main content */}
       <div
-        className={cn(
-          "relative bg-background transition-transform",
-          !isDragging && "duration-200"
-        )}
+        className={cn('relative bg-background transition-transform', !isDragging && 'duration-200')}
         style={{ transform: `translateX(${translateX}px)` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}

@@ -7,6 +7,7 @@ export interface VoltageReadings {
   ln: number | null;
   le: number | null;
   ne: number | null;
+  testedAt?: string;
 }
 
 export interface IsolationStep {
@@ -20,6 +21,8 @@ export interface IsolationStep {
   voltageReadings?: VoltageReadings;
   lockOffNumber?: string;
   provingUnitSerial?: string;
+  instrumentModel?: string;
+  instrumentSerial?: string;
 }
 
 export interface SafeIsolationRecord {

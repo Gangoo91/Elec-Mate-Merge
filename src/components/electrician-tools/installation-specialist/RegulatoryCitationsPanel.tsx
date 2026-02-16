@@ -1,7 +1,12 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Link2 } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { BookOpen, Link2 } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 interface RegulatoryCitationsPanelProps {
   regulatoryCitations?: Array<{
@@ -13,18 +18,20 @@ interface RegulatoryCitationsPanelProps {
   }>;
 }
 
-export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCitationsPanelProps) => {
+export const RegulatoryCitationsPanel = ({
+  regulatoryCitations,
+}: RegulatoryCitationsPanelProps) => {
   if (!regulatoryCitations || regulatoryCitations.length === 0) {
     return null;
   }
 
   // Support both formats: old (regulation/applicableToStep) and new (number/description)
-  const isNewFormat = regulatoryCitations.some(c => 'number' in c && 'description' in c);
-  
+  const isNewFormat = regulatoryCitations.some((c) => 'number' in c && 'description' in c);
+
   if (isNewFormat) {
     // New format: Display all regulations in a single list (no step grouping)
-    const referencesWithNumbers = regulatoryCitations.filter(c => c.number && c.description);
-    
+    const referencesWithNumbers = regulatoryCitations.filter((c) => c.number && c.description);
+
     return (
       <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-background shadow-lg">
         <CardContent className="p-5 sm:p-6">
@@ -35,14 +42,15 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
             <div className="flex-1">
               <h3 className="font-bold text-lg">BS 7671:2018+A3:2024 Regulatory References</h3>
               <p className="text-sm text-muted-foreground mt-0.5">
-                {referencesWithNumbers.length} regulation{referencesWithNumbers.length !== 1 ? 's' : ''} referenced
+                {referencesWithNumbers.length} regulation
+                {referencesWithNumbers.length !== 1 ? 's' : ''} referenced
               </p>
             </div>
           </div>
 
           <div className="space-y-2">
             {referencesWithNumbers.map((citation, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-card border border-green-500/20 rounded-lg p-4 hover:border-green-500/40 transition-colors"
               >
@@ -64,24 +72,28 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
           {/* Footer Note */}
           <div className="mt-4 pt-3 border-t border-border/50">
             <p className="text-xs text-muted-foreground">
-              <strong>Reference:</strong> All regulations cited from BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations). 
-              Verify against latest published version before commencing work.
+              <strong>Reference:</strong> All regulations cited from BS 7671:2018+A3:2024 (18th
+              Edition IET Wiring Regulations). Verify against latest published version before
+              commencing work.
             </p>
           </div>
         </CardContent>
       </Card>
     );
   }
-  
+
   // Old format: Group citations by step
-  const citationsByStep = regulatoryCitations.reduce((acc, citation) => {
-    const stepNum = citation.applicableToStep!;
-    if (!acc[stepNum]) {
-      acc[stepNum] = [];
-    }
-    acc[stepNum].push(citation);
-    return acc;
-  }, {} as Record<number, typeof regulatoryCitations>);
+  const citationsByStep = regulatoryCitations.reduce(
+    (acc, citation) => {
+      const stepNum = citation.applicableToStep!;
+      if (!acc[stepNum]) {
+        acc[stepNum] = [];
+      }
+      acc[stepNum].push(citation);
+      return acc;
+    },
+    {} as Record<number, typeof regulatoryCitations>
+  );
 
   return (
     <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-background shadow-lg">
@@ -93,7 +105,9 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
           <div className="flex-1">
             <h3 className="font-bold text-lg">BS 7671:2018+A3:2024 Regulatory Citations</h3>
             <p className="text-sm text-muted-foreground mt-0.5">
-              {regulatoryCitations.length} regulation{regulatoryCitations.length !== 1 ? 's' : ''} referenced across {Object.keys(citationsByStep).length} step{Object.keys(citationsByStep).length !== 1 ? 's' : ''}
+              {regulatoryCitations.length} regulation{regulatoryCitations.length !== 1 ? 's' : ''}{' '}
+              referenced across {Object.keys(citationsByStep).length} step
+              {Object.keys(citationsByStep).length !== 1 ? 's' : ''}
             </p>
           </div>
         </div>
@@ -102,14 +116,17 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
           {Object.entries(citationsByStep)
             .sort(([a], [b]) => Number(a) - Number(b))
             .map(([stepNum, citations]) => (
-              <AccordionItem 
-                key={stepNum} 
+              <AccordionItem
+                key={stepNum}
                 value={`step-${stepNum}`}
                 className="border border-border/50 rounded-lg bg-muted/30 px-4 data-[state=open]:bg-green-500/5"
               >
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-3 text-left">
-                    <Badge variant="outline" className="bg-green-500/10 border-green-500/30 text-green-400 font-semibold">
+                    <Badge
+                      variant="outline"
+                      className="bg-green-500/10 border-green-500/30 text-green-400 font-semibold"
+                    >
                       Step {stepNum}
                     </Badge>
                     <span className="text-sm font-medium text-foreground">
@@ -120,7 +137,7 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
                 <AccordionContent className="pt-2 pb-3">
                   <div className="space-y-3">
                     {citations.map((citation, index) => (
-                      <div 
+                      <div
                         key={index}
                         className="bg-background border border-green-500/20 rounded-lg p-3"
                       >
@@ -132,9 +149,7 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
                             </Badge>
                           </div>
                         </div>
-                        <p className="text-sm text-foreground pl-6">
-                          {citation.requirement}
-                        </p>
+                        <p className="text-sm text-foreground pl-6">{citation.requirement}</p>
                       </div>
                     ))}
                   </div>
@@ -146,8 +161,9 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
         {/* Footer Note */}
         <div className="mt-4 pt-3 border-t border-border/50">
           <p className="text-xs text-muted-foreground">
-            <strong>Reference:</strong> All regulations cited from BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations). 
-            Verify against latest published version before commencing work.
+            <strong>Reference:</strong> All regulations cited from BS 7671:2018+A3:2024 (18th
+            Edition IET Wiring Regulations). Verify against latest published version before
+            commencing work.
           </p>
         </div>
       </CardContent>

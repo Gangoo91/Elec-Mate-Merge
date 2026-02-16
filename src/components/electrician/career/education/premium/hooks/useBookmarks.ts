@@ -3,10 +3,10 @@
  * Persists to localStorage for offline access
  */
 
-import { useState, useEffect, useCallback } from "react";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
+import { useState, useEffect, useCallback } from 'react';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
 
-const STORAGE_KEY = "elecmate_education_bookmarks";
+const STORAGE_KEY = 'elecmate_education_bookmarks';
 
 interface BookmarkData {
   id: string;
@@ -26,7 +26,7 @@ export const useBookmarks = () => {
         setBookmarkIds(parsed.map((b) => b.id));
       }
     } catch (error) {
-      console.error("Failed to load bookmarks:", error);
+      console.error('Failed to load bookmarks:', error);
     } finally {
       setIsLoaded(true);
     }
@@ -41,7 +41,7 @@ export const useBookmarks = () => {
       }));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     } catch (error) {
-      console.error("Failed to save bookmarks:", error);
+      console.error('Failed to save bookmarks:', error);
     }
   }, []);
 

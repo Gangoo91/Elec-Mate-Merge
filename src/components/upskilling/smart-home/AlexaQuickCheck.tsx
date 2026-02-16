@@ -8,16 +8,17 @@ export const AlexaQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is one advantage and one disadvantage of Alexa integration?";
+  const question = 'What is one advantage and one disadvantage of Alexa integration?';
   const options = [
-    "Advantage: Works only with Amazon devices; Disadvantage: Limited voice recognition",
-    "Advantage: Wide device compatibility; Disadvantage: Heavy cloud dependency",
-    "Advantage: Local processing only; Disadvantage: Requires technical setup",
-    "Advantage: Apple integration; Disadvantage: Works only with iOS"
+    'Advantage: Works only with Amazon devices; Disadvantage: Limited voice recognition',
+    'Advantage: Wide device compatibility; Disadvantage: Heavy cloud dependency',
+    'Advantage: Local processing only; Disadvantage: Requires technical setup',
+    'Advantage: Apple integration; Disadvantage: Works only with iOS',
   ];
-  
+
   const correctAnswer = 1;
-  const explanation = "Alexa's main advantage is its wide compatibility with thousands of devices from different brands. However, it relies heavily on cloud services, which can be a disadvantage during internet outages or for privacy-conscious users.";
+  const explanation =
+    "Alexa's main advantage is its wide compatibility with thousands of devices from different brands. However, it relies heavily on cloud services, which can be a disadvantage during internet outages or for privacy-conscious users.";
 
   const handleSubmit = () => {
     setShowResult(true);
@@ -38,7 +39,7 @@ export const AlexaQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <button
@@ -49,11 +50,11 @@ export const AlexaQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'border-green-500 bg-green-500/20 text-foreground'
                     : index === selectedAnswer && index !== correctAnswer
-                    ? 'border-red-500 bg-red-500/20 text-foreground'
-                    : 'border-gray-600 bg-gray-800/50 text-gray-300'
+                      ? 'border-red-500 bg-red-500/20 text-foreground'
+                      : 'border-gray-600 bg-gray-800/50 text-gray-300'
                   : selectedAnswer === index
-                  ? 'border-elec-yellow bg-elec-yellow/20 text-foreground'
-                  : 'border-gray-600 bg-gray-800/50 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
+                    ? 'border-elec-yellow bg-elec-yellow/20 text-foreground'
+                    : 'border-gray-600 bg-gray-800/50 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
               }`}
               disabled={showResult}
             >
@@ -72,7 +73,7 @@ export const AlexaQuickCheck = () => {
         </div>
 
         {!showResult && selectedAnswer !== null && (
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-500"
           >
@@ -82,22 +83,26 @@ export const AlexaQuickCheck = () => {
 
         {showResult && (
           <div className="space-y-3">
-            <div className={`p-4 rounded-lg border ${
-              selectedAnswer === correctAnswer 
-                ? 'border-green-500 bg-green-500/20' 
-                : 'border-red-500 bg-red-500/20'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'border-green-500 bg-green-500/20'
+                  : 'border-red-500 bg-red-500/20'
+              }`}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {selectedAnswer === correctAnswer ? (
-                  <Badge variant="secondary" className="bg-green-500 text-foreground">Correct!</Badge>
+                  <Badge variant="secondary" className="bg-green-500 text-foreground">
+                    Correct!
+                  </Badge>
                 ) : (
                   <Badge variant="destructive">Incorrect</Badge>
                 )}
               </div>
               <p className="text-foreground text-sm">{explanation}</p>
             </div>
-            
-            <Button 
+
+            <Button
               onClick={resetQuiz}
               variant="outline"
               className="w-full border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"

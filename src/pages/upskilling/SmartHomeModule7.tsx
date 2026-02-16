@@ -7,40 +7,40 @@ const SmartHomeModule7 = () => {
   const sections = [
     {
       id: 1,
-      title: "Device Wiring, Power Supplies, and Containment",
+      title: 'Device Wiring, Power Supplies, and Containment',
       icon: Wrench,
-      description: "Proper installation practices and electrical requirements"
+      description: 'Proper installation practices and electrical requirements',
     },
     {
       id: 2,
-      title: "Commissioning and Device Pairing",
+      title: 'Commissioning and Device Pairing',
       icon: CheckCircle,
-      description: "System commissioning procedures and device setup"
+      description: 'System commissioning procedures and device setup',
     },
     {
       id: 3,
-      title: "Wi-Fi and RF Signal Verification",
+      title: 'Wi-Fi and RF Signal Verification',
       icon: Wifi,
-      description: "Testing and optimising wireless communication"
+      description: 'Testing and optimising wireless communication',
     },
     {
       id: 4,
-      title: "Electrical Safety and Isolation (BS 7671 Alignment)",
+      title: 'Electrical Safety and Isolation (BS 7671 Alignment)',
       icon: Shield,
-      description: "Safety procedures aligned with UK electrical regulations"
+      description: 'Safety procedures aligned with UK electrical regulations',
     },
     {
       id: 5,
-      title: "Customer Handover and App Training",
+      title: 'Customer Handover and App Training',
       icon: Users,
-      description: "Training customers on system operation and mobile apps"
+      description: 'Training customers on system operation and mobile apps',
     },
     {
       id: 6,
-      title: "Documentation, Warranty, and Aftercare",
+      title: 'Documentation, Warranty, and Aftercare',
       icon: FileText,
-      description: "Completing installation records and ongoing support"
-    }
+      description: 'Completing installation records and ongoing support',
+    },
   ];
 
   return (

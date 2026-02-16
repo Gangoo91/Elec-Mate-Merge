@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { EnhancedCareerCourse } from "../../../apprentice/career/courses/enhancedCoursesData";
+import React, { useEffect, useRef } from 'react';
+import { EnhancedCareerCourse } from '../../../apprentice/career/courses/enhancedCoursesData';
 
 interface CourseMarkerProps {
   course: EnhancedCareerCourse;
@@ -14,7 +14,7 @@ const CourseMarker: React.FC<CourseMarkerProps> = ({
   position,
   map,
   isSelected,
-  onClick
+  onClick,
 }) => {
   const markerRef = useRef<google.maps.Marker | null>(null);
 
@@ -24,11 +24,11 @@ const CourseMarker: React.FC<CourseMarkerProps> = ({
     const getMarkerIcon = (category: string, isSelected: boolean) => {
       const colors = {
         'Essential Qualifications': '#FFD700',
-        'Emerging Technologies': '#00CED1', 
+        'Emerging Technologies': '#00CED1',
         'Safety & Compliance': '#FF6347',
         'Specialised Skills': '#9370DB',
         'Business & Management': '#32CD32',
-        'default': '#4169E1'
+        default: '#4169E1',
       };
 
       const color = colors[category as keyof typeof colors] || colors.default;

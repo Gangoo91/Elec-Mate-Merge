@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 
 interface InactivityDetectionOptions {
@@ -10,7 +9,7 @@ interface InactivityDetectionOptions {
 export const useInactivityDetection = ({
   timeoutSeconds,
   isVideoContent = false,
-  onInactive
+  onInactive,
 }: InactivityDetectionOptions) => {
   const [isInactive, setIsInactive] = useState(false);
 
@@ -25,14 +24,14 @@ export const useInactivityDetection = ({
     }
 
     let inactivityTimeout: number | null = null;
-    
+
     const handleActivity = () => {
       resetInactivityTimer();
-      
+
       if (inactivityTimeout) {
         window.clearTimeout(inactivityTimeout);
       }
-      
+
       inactivityTimeout = window.setTimeout(() => {
         setIsInactive(true);
         if (onInactive) {
@@ -43,25 +42,25 @@ export const useInactivityDetection = ({
 
     // Set up event listeners for user activity
     const events = ['mousemove', 'mousedown', 'keypress', 'scroll', 'touchstart'];
-    
-    events.forEach(event => {
+
+    events.forEach((event) => {
       document.addEventListener(event, handleActivity);
     });
-    
+
     // Initial setup
     handleActivity();
-    
+
     // Cleanup
     return () => {
       if (inactivityTimeout) {
         window.clearTimeout(inactivityTimeout);
       }
-      
-      events.forEach(event => {
+
+      events.forEach((event) => {
         document.removeEventListener(event, handleActivity);
       });
     };
   }, [timeoutSeconds, isVideoContent, onInactive, resetInactivityTimer]);
-  
+
   return { isInactive, resetInactivityTimer };
 };

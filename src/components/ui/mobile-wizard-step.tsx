@@ -1,8 +1,8 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface MobileWizardStepProps {
   title: string;
@@ -26,13 +26,13 @@ export const MobileWizardStep: React.FC<MobileWizardStepProps> = ({
   totalSteps,
   onNext,
   onPrevious,
-  nextLabel = "Next",
-  previousLabel = "Previous",
+  nextLabel = 'Next',
+  previousLabel = 'Previous',
   nextDisabled = false,
-  className
+  className,
 }) => {
   return (
-    <Card className={cn("mobile-card", className)}>
+    <Card className={cn('mobile-card', className)}>
       <CardHeader className="pb-4">
         {/* Progress indicator */}
         <div className="flex items-center justify-between mb-4">
@@ -41,12 +41,12 @@ export const MobileWizardStep: React.FC<MobileWizardStepProps> = ({
               <div
                 key={i}
                 className={cn(
-                  "h-2 w-8 rounded-full transition-colors",
-                  i < currentStep 
-                    ? "bg-elec-yellow" 
-                    : i === currentStep 
-                    ? "bg-elec-yellow/60" 
-                    : "bg-elec-gray"
+                  'h-2 w-8 rounded-full transition-colors',
+                  i < currentStep
+                    ? 'bg-elec-yellow'
+                    : i === currentStep
+                      ? 'bg-elec-yellow/60'
+                      : 'bg-elec-gray'
                 )}
               />
             ))}
@@ -55,16 +55,14 @@ export const MobileWizardStep: React.FC<MobileWizardStepProps> = ({
             {currentStep + 1} of {totalSteps}
           </span>
         </div>
-        
+
         <CardTitle className="mobile-heading">{title}</CardTitle>
-        {description && (
-          <p className="mobile-text text-muted-foreground">{description}</p>
-        )}
+        {description && <p className="mobile-text text-muted-foreground">{description}</p>}
       </CardHeader>
-      
+
       <CardContent className="mobile-input-spacing">
         {children}
-        
+
         {/* Navigation buttons */}
         <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-border/40">
           {onPrevious && currentStep > 0 && (
@@ -77,7 +75,7 @@ export const MobileWizardStep: React.FC<MobileWizardStepProps> = ({
               {previousLabel}
             </Button>
           )}
-          
+
           {onNext && (
             <Button
               onClick={onNext}

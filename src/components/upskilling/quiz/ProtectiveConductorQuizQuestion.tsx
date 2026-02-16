@@ -1,4 +1,3 @@
-
 import { QuizQuestion } from '@/types/quiz';
 
 interface ProtectiveConductorQuizQuestionProps {
@@ -7,19 +6,19 @@ interface ProtectiveConductorQuizQuestionProps {
   onAnswerSelect: (answerIndex: number) => void;
 }
 
-export const ProtectiveConductorQuizQuestion = ({ 
-  question, 
-  selectedAnswer, 
-  onAnswerSelect 
+export const ProtectiveConductorQuizQuestion = ({
+  question,
+  selectedAnswer,
+  onAnswerSelect,
 }: ProtectiveConductorQuizQuestionProps) => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-foreground">{question.question}</h3>
-      
+
       <div className="space-y-3">
         {question.options.map((option, index) => {
           const isSelected = selectedAnswer === index;
-          
+
           return (
             <div
               key={index}
@@ -31,11 +30,13 @@ export const ProtectiveConductorQuizQuestion = ({
               }`}
             >
               <div className="flex items-center gap-3 pointer-events-none">
-                <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
-                  isSelected
-                    ? 'border-elec-yellow bg-elec-yellow text-black'
-                    : 'border-gray-500 text-gray-500'
-                }`}>
+                <span
+                  className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
+                    isSelected
+                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      : 'border-gray-500 text-gray-500'
+                  }`}
+                >
                   {String.fromCharCode(65 + index)}
                 </span>
                 <span>{option}</span>

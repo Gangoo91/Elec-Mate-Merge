@@ -1,67 +1,110 @@
-import { useState, memo } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Upload, Filter, Eye, Trash2, FileText, Image, Film, Plus, Clock, Tag, User, CheckCircle, Target, TrendingUp, ExternalLink } from "lucide-react";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useTrainingEvidenceDB, type TrainingEvidenceData } from "@/hooks/training-evidence/useTrainingEvidenceDB";
-import { format } from "date-fns";
+import { useState, memo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  Upload,
+  Filter,
+  Eye,
+  Trash2,
+  FileText,
+  Image,
+  Film,
+  Plus,
+  Clock,
+  Tag,
+  User,
+  CheckCircle,
+  Target,
+  TrendingUp,
+  ExternalLink,
+} from 'lucide-react';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  useTrainingEvidenceDB,
+  type TrainingEvidenceData,
+} from '@/hooks/training-evidence/useTrainingEvidenceDB';
+import { format } from 'date-fns';
 
 const EvidenceAssessmentTab = () => {
-  const { evidenceItems, isLoading, isUploading, addEvidence, deleteEvidence } = useTrainingEvidenceDB();
-  const [selectedFilter, setSelectedFilter] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
+  const { evidenceItems, isLoading, isUploading, addEvidence, deleteEvidence } =
+    useTrainingEvidenceDB();
+  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
   const [showUploadDialog, setShowUploadDialog] = useState(false);
   const [selectedEvidence, setSelectedEvidence] = useState<TrainingEvidenceData | null>(null);
 
   // Form state
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    evidence_type: "",
+    title: '',
+    description: '',
+    evidence_type: '',
     date_achieved: new Date().toISOString().split('T')[0],
     time_spent: 60,
-    witness_name: "",
+    witness_name: '',
     tags: [] as string[],
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [customTag, setCustomTag] = useState("");
+  const [customTag, setCustomTag] = useState('');
 
   const evidenceTypes = [
-    "Workshop Activity",
-    "Site Visit",
-    "College Session", 
-    "Online Course",
-    "Practical Assessment",
-    "Written Assessment",
-    "Project Work",
-    "Safety Training",
-    "Technical Documentation",
-    "Peer Review"
+    'Workshop Activity',
+    'Site Visit',
+    'College Session',
+    'Online Course',
+    'Practical Assessment',
+    'Written Assessment',
+    'Project Work',
+    'Safety Training',
+    'Technical Documentation',
+    'Peer Review',
   ];
 
   const suggestedTags = [
-    "Electrical Installation", "Motor Controls", "Health & Safety", "Testing & Inspection",
-    "Distribution Systems", "Lighting Systems", "Practical Work", "Theory", "Project Work",
-    "BS7671 18th Edition", "Site Experience", "Workshop Training"
+    'Electrical Installation',
+    'Motor Controls',
+    'Health & Safety',
+    'Testing & Inspection',
+    'Distribution Systems',
+    'Lighting Systems',
+    'Practical Work',
+    'Theory',
+    'Project Work',
+    'BS7671 18th Edition',
+    'Site Experience',
+    'Workshop Training',
   ];
 
   // Filter evidence based on type and search
-  const filteredEvidence = evidenceItems.filter(item => {
-    const matchesFilter = selectedFilter === "all" || 
+  const filteredEvidence = evidenceItems.filter((item) => {
+    const matchesFilter =
+      selectedFilter === 'all' ||
       item.evidence_type.toLowerCase().includes(selectedFilter.toLowerCase()) ||
       item.category?.toLowerCase().includes(selectedFilter.toLowerCase());
-    
-    const matchesSearch = searchTerm === "" ||
+
+    const matchesSearch =
+      searchTerm === '' ||
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      item.tags?.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return matchesFilter && matchesSearch;
   });
@@ -70,7 +113,8 @@ const EvidenceAssessmentTab = () => {
   const getFileIcon = (fileName?: string) => {
     if (!fileName) return <FileText className="h-5 w-5" />;
     const ext = fileName.split('.').pop()?.toLowerCase();
-    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext || '')) return <Image className="h-5 w-5" />;
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext || ''))
+      return <Image className="h-5 w-5" />;
     if (['mp4', 'avi', 'mov', 'wmv'].includes(ext || '')) return <Film className="h-5 w-5" />;
     return <FileText className="h-5 w-5" />;
   };
@@ -81,16 +125,16 @@ const EvidenceAssessmentTab = () => {
       await addEvidence(formData, selectedFile || undefined);
       setShowUploadDialog(false);
       setFormData({
-        title: "",
-        description: "",
-        evidence_type: "",
+        title: '',
+        description: '',
+        evidence_type: '',
         date_achieved: new Date().toISOString().split('T')[0],
         time_spent: 60,
-        witness_name: "",
+        witness_name: '',
         tags: [],
       });
       setSelectedFile(null);
-      setCustomTag("");
+      setCustomTag('');
     } catch (error) {
       console.error('Failed to upload evidence:', error);
     }
@@ -98,18 +142,18 @@ const EvidenceAssessmentTab = () => {
 
   const addCustomTag = () => {
     if (customTag.trim() && !formData.tags.includes(customTag.trim())) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        tags: [...prev.tags, customTag.trim()]
+        tags: [...prev.tags, customTag.trim()],
       }));
-      setCustomTag("");
+      setCustomTag('');
     }
   };
 
   const removeTag = (tagToRemove: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
   };
 
@@ -117,9 +161,9 @@ const EvidenceAssessmentTab = () => {
     if (formData.tags.includes(tag)) {
       removeTag(tag);
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        tags: [...prev.tags, tag]
+        tags: [...prev.tags, tag],
       }));
     }
   };
@@ -137,16 +181,18 @@ const EvidenceAssessmentTab = () => {
       {/* Header Section */}
       <div className="text-center space-y-4">
         <div className="space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-bold text-elec-light">Evidence Assessment & Management</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-elec-light">
+            Evidence Assessment & Management
+          </h2>
           <p className="text-elec-light/70 max-w-2xl mx-auto">
             Upload, manage, and assess your training evidence with smart categorisation
           </p>
         </div>
-        
+
         <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
           <DialogTrigger asChild>
-            <Button 
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 gap-2" 
+            <Button
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 gap-2"
               size="lg"
             >
               <Upload className="h-4 w-4" />
@@ -159,143 +205,156 @@ const EvidenceAssessmentTab = () => {
             </DialogHeader>
             <div className="overflow-y-auto max-h-[calc(90vh-120px)] pb-4">
               <form onSubmit={handleSubmit} className="space-y-6 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <MobileInputWrapper
-                  label="Evidence Title"
-                  placeholder="Describe what this evidence shows"
-                  value={formData.title}
-                  onChange={(value) => setFormData(prev => ({ ...prev, title: value }))}
-                  icon={<FileText className="h-4 w-4" />}
-                />
-                <MobileSelectWrapper
-                  label="Evidence Type"
-                  placeholder="Select evidence type"
-                  value={formData.evidence_type}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, evidence_type: value }))}
-                  options={evidenceTypes.map(type => ({ value: type, label: type }))}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  Description
-                </Label>
-                <Textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="Provide details about what was learned or achieved"
-                  rows={3}
-                  className="bg-elec-card border-2 border-elec-gray/50 text-elec-light placeholder:text-elec-light/60"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <MobileInputWrapper
-                  label="Date Achieved"
-                  type="date"
-                  value={formData.date_achieved}
-                  onChange={(value) => setFormData(prev => ({ ...prev, date_achieved: value }))}
-                />
-                <MobileInputWrapper
-                  label="Time Spent"
-                  type="number"
-                  value={formData.time_spent}
-                  onChange={(value) => setFormData(prev => ({ ...prev, time_spent: parseInt(value) || 0 }))}
-                  min="0"
-                  unit="mins"
-                  icon={<Clock className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Witness/Supervisor"
-                  placeholder="Optional"
-                  value={formData.witness_name}
-                  onChange={(value) => setFormData(prev => ({ ...prev, witness_name: value }))}
-                  icon={<User className="h-4 w-4" />}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  Upload File
-                </Label>
-                <Input
-                  type="file"
-                  onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-                  accept="image/*,video/*,.pdf,.doc,.docx,.txt"
-                  className="bg-elec-card border-2 border-elec-gray/50 text-elec-light file:bg-elec-yellow file:text-elec-dark file:border-0 file:rounded-md file:px-3 file:py-1"
-                />
-                {selectedFile && (
-                  <p className="text-xs text-elec-light/70 flex items-center gap-1">
-                    <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
-                    Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)}KB)
-                  </p>
-                )}
-              </div>
-
-              {/* Tags Section */}
-              <div className="space-y-3">
-                <Label>Tags (Smart categorisation will add relevant tags automatically)</Label>
-                
-                {/* Selected Tags */}
-                {formData.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {formData.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="gap-1">
-                        {tag}
-                        <button
-                          type="button"
-                          onClick={() => removeTag(tag)}
-                          className="ml-1 text-xs hover:text-destructive"
-                        >
-                          ×
-                        </button>
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-
-                {/* Custom Tag Input */}
-                <div className="flex gap-2">
-                  <Input
-                    value={customTag}
-                    onChange={(e) => setCustomTag(e.target.value)}
-                    placeholder="Add custom tag"
-                    className="flex-1"
-                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomTag())}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <MobileInputWrapper
+                    label="Evidence Title"
+                    placeholder="Describe what this evidence shows"
+                    value={formData.title}
+                    onChange={(value) => setFormData((prev) => ({ ...prev, title: value }))}
+                    icon={<FileText className="h-4 w-4" />}
                   />
-                  <Button type="button" variant="outline" size="sm" onClick={addCustomTag}>
-                    <Plus className="h-3 w-3" />
+                  <MobileSelectWrapper
+                    label="Evidence Type"
+                    placeholder="Select evidence type"
+                    value={formData.evidence_type}
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, evidence_type: value }))
+                    }
+                    options={evidenceTypes.map((type) => ({ value: type, label: type }))}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                    <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                    Description
+                  </Label>
+                  <Textarea
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, description: e.target.value }))
+                    }
+                    placeholder="Provide details about what was learned or achieved"
+                    rows={3}
+                    className="bg-elec-card border-2 border-elec-gray/50 text-elec-light placeholder:text-elec-light/60"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <MobileInputWrapper
+                    label="Date Achieved"
+                    type="date"
+                    value={formData.date_achieved}
+                    onChange={(value) => setFormData((prev) => ({ ...prev, date_achieved: value }))}
+                  />
+                  <MobileInputWrapper
+                    label="Time Spent"
+                    type="number"
+                    value={formData.time_spent}
+                    onChange={(value) =>
+                      setFormData((prev) => ({ ...prev, time_spent: parseInt(value) || 0 }))
+                    }
+                    min="0"
+                    unit="mins"
+                    icon={<Clock className="h-4 w-4" />}
+                  />
+                  <MobileInputWrapper
+                    label="Witness/Supervisor"
+                    placeholder="Optional"
+                    value={formData.witness_name}
+                    onChange={(value) => setFormData((prev) => ({ ...prev, witness_name: value }))}
+                    icon={<User className="h-4 w-4" />}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                    <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                    Upload File
+                  </Label>
+                  <Input
+                    type="file"
+                    onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                    accept="image/*,video/*,.pdf,.doc,.docx,.txt"
+                    className="bg-elec-card border-2 border-elec-gray/50 text-elec-light file:bg-elec-yellow file:text-elec-dark file:border-0 file:rounded-md file:px-3 file:py-1"
+                  />
+                  {selectedFile && (
+                    <p className="text-xs text-elec-light/70 flex items-center gap-1">
+                      <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+                      Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)}KB)
+                    </p>
+                  )}
+                </div>
+
+                {/* Tags Section */}
+                <div className="space-y-3">
+                  <Label>Tags (Smart categorisation will add relevant tags automatically)</Label>
+
+                  {/* Selected Tags */}
+                  {formData.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {formData.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="gap-1">
+                          {tag}
+                          <button
+                            type="button"
+                            onClick={() => removeTag(tag)}
+                            className="ml-1 text-xs hover:text-destructive"
+                          >
+                            ×
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Custom Tag Input */}
+                  <div className="flex gap-2">
+                    <Input
+                      value={customTag}
+                      onChange={(e) => setCustomTag(e.target.value)}
+                      placeholder="Add custom tag"
+                      className="flex-1"
+                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomTag())}
+                    />
+                    <Button type="button" variant="outline" size="sm" onClick={addCustomTag}>
+                      <Plus className="h-3 w-3" />
+                    </Button>
+                  </div>
+
+                  {/* Suggested Tags */}
+                  <div className="space-y-2">
+                    <p className="text-xs text-white">Suggested tags:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {suggestedTags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant={formData.tags.includes(tag) ? 'default' : 'outline'}
+                          className="cursor-pointer hover:bg-primary/20"
+                          onClick={() => toggleSuggestedTag(tag)}
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-3 pt-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowUploadDialog(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isUploading || !formData.title || !formData.evidence_type}
+                  >
+                    {isUploading ? 'Uploading...' : 'Upload Evidence'}
                   </Button>
                 </div>
-
-                {/* Suggested Tags */}
-                <div className="space-y-2">
-                  <p className="text-xs text-white">Suggested tags:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {suggestedTags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant={formData.tags.includes(tag) ? "default" : "outline"}
-                        className="cursor-pointer hover:bg-primary/20"
-                        onClick={() => toggleSuggestedTag(tag)}
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4">
-                <Button type="button" variant="outline" onClick={() => setShowUploadDialog(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={isUploading || !formData.title || !formData.evidence_type}>
-                  {isUploading ? "Uploading..." : "Upload Evidence"}
-                </Button>
-              </div>
               </form>
             </div>
           </DialogContent>
@@ -315,12 +374,12 @@ const EvidenceAssessmentTab = () => {
           value={selectedFilter}
           onValueChange={setSelectedFilter}
           options={[
-            { value: "all", label: "All Evidence" },
-            { value: "workshop", label: "Workshop" },
-            { value: "site", label: "Site Visit" },
-            { value: "college", label: "College" },
-            { value: "online", label: "Online" },
-            { value: "assessment", label: "Assessment" }
+            { value: 'all', label: 'All Evidence' },
+            { value: 'workshop', label: 'Workshop' },
+            { value: 'site', label: 'Site Visit' },
+            { value: 'college', label: 'College' },
+            { value: 'online', label: 'Online' },
+            { value: 'assessment', label: 'Assessment' },
           ]}
         />
       </div>
@@ -332,7 +391,9 @@ const EvidenceAssessmentTab = () => {
             <FileText className="h-6 w-6 text-elec-yellow mb-3" />
             <div className="space-y-1">
               <p className="text-xs text-white leading-tight">Total Evidence</p>
-              <p className="text-xl sm:text-2xl font-bold text-elec-yellow">{evidenceItems.length}</p>
+              <p className="text-xl sm:text-2xl font-bold text-elec-yellow">
+                {evidenceItems.length}
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -342,7 +403,7 @@ const EvidenceAssessmentTab = () => {
             <div className="space-y-1">
               <p className="text-xs text-white leading-tight">Portfolio Linked</p>
               <p className="text-xl sm:text-2xl font-bold text-green-400">
-                {evidenceItems.filter(item => item.portfolio_linked).length}
+                {evidenceItems.filter((item) => item.portfolio_linked).length}
               </p>
             </div>
           </CardContent>
@@ -353,7 +414,10 @@ const EvidenceAssessmentTab = () => {
             <div className="space-y-1">
               <p className="text-xs text-white leading-tight">Total Hours</p>
               <p className="text-xl sm:text-2xl font-bold text-purple-400">
-                {Math.round(evidenceItems.reduce((sum, item) => sum + (item.time_spent || 0), 0) / 60)}h
+                {Math.round(
+                  evidenceItems.reduce((sum, item) => sum + (item.time_spent || 0), 0) / 60
+                )}
+                h
               </p>
             </div>
           </CardContent>
@@ -364,7 +428,7 @@ const EvidenceAssessmentTab = () => {
             <div className="space-y-1">
               <p className="text-xs text-white leading-tight">Unique Skills</p>
               <p className="text-xl sm:text-2xl font-bold text-blue-400">
-                {new Set(evidenceItems.flatMap(item => item.tags || [])).size}
+                {new Set(evidenceItems.flatMap((item) => item.tags || [])).size}
               </p>
             </div>
           </CardContent>
@@ -378,12 +442,11 @@ const EvidenceAssessmentTab = () => {
             <Upload className="h-12 w-12 mx-auto text-elec-yellow/50 mb-4" />
             <h3 className="text-lg font-semibold mb-2 text-elec-light">No Evidence Found</h3>
             <p className="text-elec-light/70 mb-4">
-              {searchTerm || selectedFilter !== "all" 
-                ? "Try adjusting your search or filter criteria"
-                : "Start building your evidence portfolio by uploading your first piece of evidence"
-              }
+              {searchTerm || selectedFilter !== 'all'
+                ? 'Try adjusting your search or filter criteria'
+                : 'Start building your evidence portfolio by uploading your first piece of evidence'}
             </p>
-            <Button 
+            <Button
               onClick={() => setShowUploadDialog(true)}
               className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
             >
@@ -395,7 +458,10 @@ const EvidenceAssessmentTab = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEvidence.map((evidence) => (
-            <Card key={evidence.id} className="border-elec-yellow/20 bg-white/10 hover:border-elec-yellow/50 transition-colors">
+            <Card
+              key={evidence.id}
+              className="border-elec-yellow/20 bg-white/10 hover:border-elec-yellow/50 transition-colors"
+            >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1 flex-1">
@@ -413,11 +479,7 @@ const EvidenceAssessmentTab = () => {
                     </div>
                   </div>
                   <div className="flex gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedEvidence(evidence)}
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => setSelectedEvidence(evidence)}>
                       <Eye className="h-4 w-4" />
                     </Button>
                     <Button
@@ -433,11 +495,9 @@ const EvidenceAssessmentTab = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 {evidence.description && (
-                  <p className="text-sm text-white line-clamp-2">
-                    {evidence.description}
-                  </p>
+                  <p className="text-sm text-white line-clamp-2">{evidence.description}</p>
                 )}
-                
+
                 <div className="flex items-center gap-4 text-xs text-white">
                   <div className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
@@ -500,18 +560,31 @@ const EvidenceAssessmentTab = () => {
                   )}
                 </DialogTitle>
               </DialogHeader>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
                     <h4 className="font-semibold mb-2">Evidence Details</h4>
                     <div className="space-y-2 text-sm">
-                      <div><span className="font-medium">Type:</span> {selectedEvidence.evidence_type}</div>
-                      <div><span className="font-medium">Category:</span> {selectedEvidence.category}</div>
-                      <div><span className="font-medium">Date:</span> {format(new Date(selectedEvidence.date_achieved), 'dd/MM/yyyy')}</div>
-                      <div><span className="font-medium">Time Spent:</span> {Math.round((selectedEvidence.time_spent || 0) / 60)} hours</div>
+                      <div>
+                        <span className="font-medium">Type:</span> {selectedEvidence.evidence_type}
+                      </div>
+                      <div>
+                        <span className="font-medium">Category:</span> {selectedEvidence.category}
+                      </div>
+                      <div>
+                        <span className="font-medium">Date:</span>{' '}
+                        {format(new Date(selectedEvidence.date_achieved), 'dd/MM/yyyy')}
+                      </div>
+                      <div>
+                        <span className="font-medium">Time Spent:</span>{' '}
+                        {Math.round((selectedEvidence.time_spent || 0) / 60)} hours
+                      </div>
                       {selectedEvidence.witness_name && (
-                        <div><span className="font-medium">Witness:</span> {selectedEvidence.witness_name}</div>
+                        <div>
+                          <span className="font-medium">Witness:</span>{' '}
+                          {selectedEvidence.witness_name}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -528,7 +601,9 @@ const EvidenceAssessmentTab = () => {
                       <h4 className="font-semibold mb-2">Skills & Tags</h4>
                       <div className="flex flex-wrap gap-2">
                         {selectedEvidence.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary">{tag}</Badge>
+                          <Badge key={tag} variant="secondary">
+                            {tag}
+                          </Badge>
                         ))}
                       </div>
                     </div>
@@ -551,7 +626,11 @@ const EvidenceAssessmentTab = () => {
                         </div>
                       </div>
                       <Button variant="outline" className="w-full" asChild>
-                        <a href={selectedEvidence.file_url} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={selectedEvidence.file_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <ExternalLink className="h-4 w-4 mr-2" />
                           Open File
                         </a>

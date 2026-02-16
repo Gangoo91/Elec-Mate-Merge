@@ -1,44 +1,85 @@
-import { Book, CheckCircle, Search, AlertTriangle, Shield, Info, Target, Zap, FileText, Settings } from 'lucide-react';
+import {
+  Book,
+  CheckCircle,
+  Search,
+  AlertTriangle,
+  Shield,
+  Info,
+  Target,
+  Zap,
+  FileText,
+  Settings,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const RCDTroubleshootingContent = () => {
   const learningObjectives = [
-    "Master systematic troubleshooting methodologies for RCD problems",
-    "Identify and resolve common RCD failure modes and symptoms",
-    "Use advanced diagnostic techniques and test equipment",
-    "Understand interference and compatibility issues",
-    "Implement proper documentation and reporting procedures",
-    "Apply preventive measures to reduce future problems"
+    'Master systematic troubleshooting methodologies for RCD problems',
+    'Identify and resolve common RCD failure modes and symptoms',
+    'Use advanced diagnostic techniques and test equipment',
+    'Understand interference and compatibility issues',
+    'Implement proper documentation and reporting procedures',
+    'Apply preventive measures to reduce future problems',
   ];
 
   const troubleshootingSteps = [
-    { step: 1, action: "Gather initial information and symptoms" },
-    { step: 2, action: "Perform visual inspection and safety checks" },
-    { step: 3, action: "Conduct systematic electrical testing" },
-    { step: 4, action: "Analyse results and identify root cause" },
-    { step: 5, action: "Implement corrective action" },
-    { step: 6, action: "Verify repair and document solution" }
+    { step: 1, action: 'Gather initial information and symptoms' },
+    { step: 2, action: 'Perform visual inspection and safety checks' },
+    { step: 3, action: 'Conduct systematic electrical testing' },
+    { step: 4, action: 'Analyse results and identify root cause' },
+    { step: 5, action: 'Implement corrective action' },
+    { step: 6, action: 'Verify repair and document solution' },
   ];
 
   const commonProblems = [
     {
-      symptom: "RCD trips immediately when reset",
-      causes: ["Earth fault on protected circuit", "Insulation breakdown", "Water ingress", "Damaged cable"],
-      diagnostics: ["Insulation resistance testing", "Circuit isolation testing", "Visual inspection", "Thermal imaging"],
-      color: "red"
+      symptom: 'RCD trips immediately when reset',
+      causes: [
+        'Earth fault on protected circuit',
+        'Insulation breakdown',
+        'Water ingress',
+        'Damaged cable',
+      ],
+      diagnostics: [
+        'Insulation resistance testing',
+        'Circuit isolation testing',
+        'Visual inspection',
+        'Thermal imaging',
+      ],
+      color: 'red',
     },
     {
       symptom: "RCD won't trip during testing",
-      causes: ["Internal RCD failure", "Incorrect wiring", "Test equipment failure", "Wrong RCD type"],
-      diagnostics: ["Alternative test equipment", "Manual test button", "Wiring verification", "RCD replacement"],
-      color: "orange"
+      causes: [
+        'Internal RCD failure',
+        'Incorrect wiring',
+        'Test equipment failure',
+        'Wrong RCD type',
+      ],
+      diagnostics: [
+        'Alternative test equipment',
+        'Manual test button',
+        'Wiring verification',
+        'RCD replacement',
+      ],
+      color: 'orange',
     },
     {
-      symptom: "Intermittent nuisance tripping",
-      causes: ["Load switching transients", "Environmental factors", "Aging components", "EMI interference"],
-      diagnostics: ["Load analysis", "Environmental monitoring", "Oscilloscope analysis", "Filter installation"],
-      color: "yellow"
-    }
+      symptom: 'Intermittent nuisance tripping',
+      causes: [
+        'Load switching transients',
+        'Environmental factors',
+        'Aging components',
+        'EMI interference',
+      ],
+      diagnostics: [
+        'Load analysis',
+        'Environmental monitoring',
+        'Oscilloscope analysis',
+        'Filter installation',
+      ],
+      color: 'yellow',
+    },
   ];
 
   return (
@@ -50,21 +91,22 @@ const RCDTroubleshootingContent = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* What is RCD Troubleshooting */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Advanced RCD Troubleshooting</h3>
           <div className="bg-[#323232] rounded-lg p-4 space-y-3">
             <p className="text-foreground leading-relaxed text-sm sm:text-base">
-              RCD troubleshooting requires systematic analysis of symptoms, comprehensive testing procedures, and 
-              understanding of both electrical and environmental factors that can affect performance. Effective troubleshooting 
-              minimises downtime and ensures reliable protection.
+              RCD troubleshooting requires systematic analysis of symptoms, comprehensive testing
+              procedures, and understanding of both electrical and environmental factors that can
+              affect performance. Effective troubleshooting minimises downtime and ensures reliable
+              protection.
             </p>
             <div className="flex items-start gap-3 bg-green-600/10 border border-green-600/20 rounded p-3">
               <Shield className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-foreground text-sm sm:text-base">
-                <strong>Remember:</strong> Safety must always be the priority during troubleshooting. Isolate circuits 
-                and use appropriate test equipment to prevent accidents.
+                <strong>Remember:</strong> Safety must always be the priority during
+                troubleshooting. Isolate circuits and use appropriate test equipment to prevent
+                accidents.
               </p>
             </div>
           </div>
@@ -72,11 +114,16 @@ const RCDTroubleshootingContent = () => {
 
         {/* Troubleshooting Methodology */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Systematic Troubleshooting Methodology</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Systematic Troubleshooting Methodology
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="space-y-3">
               {troubleshootingSteps.map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-3 rounded bg-gray-600/10 border border-gray-600/20">
+                <div
+                  key={index}
+                  className="flex items-center gap-4 p-3 rounded bg-gray-600/10 border border-gray-600/20"
+                >
                   <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                     {item.step}
                   </span>
@@ -86,7 +133,8 @@ const RCDTroubleshootingContent = () => {
             </div>
             <div className="mt-4 bg-blue-600/10 border border-blue-600/20 rounded p-3">
               <p className="text-foreground text-sm sm:text-base">
-                <strong>Purpose:</strong> To identify root causes efficiently and implement lasting solutions rather than temporary fixes.
+                <strong>Purpose:</strong> To identify root causes efficiently and implement lasting
+                solutions rather than temporary fixes.
               </p>
             </div>
           </div>
@@ -97,7 +145,10 @@ const RCDTroubleshootingContent = () => {
           <h3 className="text-xl font-semibold text-foreground">Learning Objectives</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {learningObjectives.map((objective, index) => (
-              <div key={index} className="bg-[#323232] rounded-lg p-4 border-l-4 border-blue-600/50">
+              <div
+                key={index}
+                className="bg-[#323232] rounded-lg p-4 border-l-4 border-blue-600/50"
+              >
                 <div className="flex items-start gap-3">
                   <Target className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <p className="text-foreground text-sm sm:text-base">{objective}</p>
@@ -109,11 +160,18 @@ const RCDTroubleshootingContent = () => {
 
         {/* Common Problems and Solutions */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Common Problems and Diagnostic Approaches</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Common Problems and Diagnostic Approaches
+          </h3>
           <div className="space-y-4">
             {commonProblems.map((problem, index) => (
-              <div key={index} className={`bg-${problem.color}-600/10 border border-${problem.color}-600/20 rounded-lg p-4`}>
-                <h4 className={`text-${problem.color}-200 font-medium mb-3 flex items-center gap-2`}>
+              <div
+                key={index}
+                className={`bg-${problem.color}-600/10 border border-${problem.color}-600/20 rounded-lg p-4`}
+              >
+                <h4
+                  className={`text-${problem.color}-200 font-medium mb-3 flex items-center gap-2`}
+                >
                   <AlertTriangle className={`h-5 w-5 text-${problem.color}-400`} />
                   {problem.symptom}
                 </h4>
@@ -210,7 +268,9 @@ const RCDTroubleshootingContent = () => {
 
         {/* Important Considerations */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Important Troubleshooting Considerations</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Important Troubleshooting Considerations
+          </h3>
           <div className="space-y-3">
             <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
               <div className="flex items-start gap-3">
@@ -218,8 +278,9 @@ const RCDTroubleshootingContent = () => {
                 <div>
                   <h4 className="text-red-200 font-medium mb-2">Safety Precautions</h4>
                   <p className="text-foreground text-sm sm:text-base">
-                    Always isolate circuits before detailed investigation. Use appropriate PPE and follow 
-                    lock-out/tag-out procedures. Consider RCD protection compromised until fault is resolved.
+                    Always isolate circuits before detailed investigation. Use appropriate PPE and
+                    follow lock-out/tag-out procedures. Consider RCD protection compromised until
+                    fault is resolved.
                   </p>
                 </div>
               </div>
@@ -230,8 +291,8 @@ const RCDTroubleshootingContent = () => {
                 <div>
                   <h4 className="text-orange-200 font-medium mb-2">System Interactions</h4>
                   <p className="text-foreground text-sm sm:text-base">
-                    Consider interactions with other protective devices, load equipment, and environmental 
-                    factors. Problems may be symptoms of wider system issues.
+                    Consider interactions with other protective devices, load equipment, and
+                    environmental factors. Problems may be symptoms of wider system issues.
                   </p>
                 </div>
               </div>
@@ -242,15 +303,14 @@ const RCDTroubleshootingContent = () => {
                 <div>
                   <h4 className="text-blue-200 font-medium mb-2">Evidence Preservation</h4>
                   <p className="text-foreground text-sm sm:text-base">
-                    Preserve failed components and take photographs before replacement. This evidence 
-                    may be important for warranty claims or incident investigations.
+                    Preserve failed components and take photographs before replacement. This
+                    evidence may be important for warranty claims or incident investigations.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

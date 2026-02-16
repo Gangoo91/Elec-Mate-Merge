@@ -1,7 +1,6 @@
-
-import { Users, MapPin } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Users, MapPin } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const AndysManClub = () => {
   return (
@@ -25,9 +24,11 @@ const AndysManClub = () => {
               </p>
             </div>
           </div>
-          <Button 
+          <Button
             className="w-full bg-purple-600 hover:bg-purple-700 text-foreground text-sm flex items-center gap-2"
-            onClick={() => window.open("https://andysmanclub.co.uk/find-your-nearest-group/", "_blank")}
+            onClick={() =>
+              window.open('https://andysmanclub.co.uk/find-your-nearest-group/', '_blank')
+            }
           >
             <MapPin className="h-4 w-4" />
             Find Nearest Group

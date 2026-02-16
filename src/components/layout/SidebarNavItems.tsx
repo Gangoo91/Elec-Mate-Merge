@@ -10,8 +10,8 @@ import {
   BookOpen,
   Zap,
   School,
-  Shield
-} from "lucide-react";
+  Shield,
+} from 'lucide-react';
 
 export type NavItem = {
   name: string;
@@ -24,72 +24,73 @@ export type NavItem = {
 
 export const mainNavItems: NavItem[] = [
   {
-    name: "Dashboard",
-    path: "/dashboard",
+    name: 'Dashboard',
+    path: '/dashboard',
     icon: <Home className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
   {
-    name: "Apprentice Hub",
-    path: "/apprentice",
+    name: 'Apprentice Hub',
+    path: '/apprentice',
     icon: <GraduationCap className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
   {
-    name: "Electrical Hub",
-    path: "/electrician",
+    name: 'Electrical Hub',
+    path: '/electrician',
     icon: <Zap className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
-  {
-    name: "Employer Hub",
-    path: "/employer",
-    icon: <Briefcase className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
-    allowedEmails: ["founder@elec-mate.com", "andrewgangoo91@gmail.com"],
-  },
-  // College Hub - Hidden until ready for launch
+  // Employer Hub - Hidden for now
   // {
-  //   name: "College Hub",
-  //   path: "/college",
-  //   icon: <School className="h-5 w-5" />,
-  //   roles: ["visitor", "apprentice", "electrician", "employer", "college", "tutor", "admin", "beta_tester"],
+  //   name: 'Employer Hub',
+  //   path: '/employer',
+  //   icon: <Briefcase className="h-5 w-5" />,
+  //   roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
+  //   allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
   // },
   {
-    name: "Study Centre",
-    path: "/study-centre",
+    name: 'College Hub',
+    path: '/college',
+    icon: <School className="h-5 w-5" />,
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
+    allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
+  },
+  {
+    name: 'Study Centre',
+    path: '/study-centre',
     icon: <BookOpen className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
   {
-    name: "Mental Health Hub",
-    path: "/mental-health",
+    name: 'Mental Health Hub',
+    path: '/mental-health',
     icon: <Heart className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
   {
-    name: "Subscriptions",
-    path: "/subscriptions",
+    name: 'Subscriptions',
+    path: '/subscriptions',
     icon: <CreditCard className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
   {
-    name: "Settings",
-    path: "/settings",
+    name: 'Settings',
+    path: '/settings',
     icon: <Settings className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
   {
-    name: "Knowledge Uploader",
-    path: "/admin/knowledge-uploader",
+    name: 'Knowledge Uploader',
+    path: '/admin/knowledge-uploader',
     icon: <Database className="h-5 w-5" />,
-    roles: ["admin"],
+    roles: ['admin'],
   },
   {
-    name: "Admin Panel",
-    path: "/admin",
+    name: 'Admin Panel',
+    path: '/admin',
     icon: <Shield className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin'],
     adminOnly: true,
   },
 ];

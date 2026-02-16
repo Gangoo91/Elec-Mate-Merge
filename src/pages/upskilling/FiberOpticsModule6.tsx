@@ -7,28 +7,28 @@ const FiberOpticsModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "TIA/EIA and ISO/IEC Standards",
+      title: 'TIA/EIA and ISO/IEC Standards',
       icon: Award,
-      description: "International standards and specifications"
+      description: 'International standards and specifications',
     },
     {
       id: 2,
-      title: "Structured Cabling Design Rules",
+      title: 'Structured Cabling Design Rules',
       icon: Building,
-      description: "Design principles and layout requirements"
+      description: 'Design principles and layout requirements',
     },
     {
       id: 3,
-      title: "Loss Budgets and Length Limits",
+      title: 'Loss Budgets and Length Limits',
       icon: Calculator,
-      description: "Performance calculations and distance limitations"
+      description: 'Performance calculations and distance limitations',
     },
     {
       id: 4,
-      title: "Design Scenarios: Campus, Data Centre, Industrial",
+      title: 'Design Scenarios: Campus, Data Centre, Industrial',
       icon: MapPin,
-      description: "Application-specific design considerations"
-    }
+      description: 'Application-specific design considerations',
+    },
   ];
 
   return (

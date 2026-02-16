@@ -15,7 +15,7 @@ export function useGenerateEICSchedule() {
     mutationFn: async ({
       multiCircuitDesign,
       projectInfo,
-      siteInfo
+      siteInfo,
     }: {
       multiCircuitDesign: MultiCircuitDesign;
       projectInfo: ProjectInfo;
@@ -25,8 +25,8 @@ export function useGenerateEICSchedule() {
         body: {
           multiCircuitDesign,
           projectInfo,
-          siteInfo
-        }
+          siteInfo,
+        },
       });
 
       if (error) throw error;
@@ -34,7 +34,7 @@ export function useGenerateEICSchedule() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['eic-schedules'] });
-    }
+    },
   });
 }
 
@@ -49,7 +49,7 @@ export function useEICSchedules() {
 
       if (error) throw error;
       return data;
-    }
+    },
   });
 }
 
@@ -66,6 +66,6 @@ export function useEICSchedule(id: string) {
       if (error) throw error;
       return data;
     },
-    enabled: !!id
+    enabled: !!id,
   });
 }

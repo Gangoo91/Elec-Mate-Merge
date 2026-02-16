@@ -7,12 +7,12 @@ export const BMSDefinitionQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What does BMS stand for?";
+  const question = 'What does BMS stand for?';
   const options = [
     { id: 'a', text: 'Building Monitoring System', correct: false },
     { id: 'b', text: 'Building Management System', correct: true },
     { id: 'c', text: 'Boiler Management System', correct: false },
-    { id: 'd', text: 'Basic Maintenance System', correct: false }
+    { id: 'd', text: 'Basic Maintenance System', correct: false },
   ];
 
   const handleAnswerSelect = (optionId: string) => {
@@ -20,7 +20,7 @@ export const BMSDefinitionQuickCheck = () => {
     setShowResult(true);
   };
 
-  const correctAnswer = options.find(option => option.correct);
+  const correctAnswer = options.find((option) => option.correct);
   const isCorrect = selectedAnswer === correctAnswer?.id;
 
   return (
@@ -33,7 +33,7 @@ export const BMSDefinitionQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="grid gap-3">
           {options.map((option) => (
             <Button
@@ -46,19 +46,18 @@ export const BMSDefinitionQuickCheck = () => {
                   ? option.correct
                     ? 'border-green-500 bg-green-500/10'
                     : selectedAnswer === option.id
-                    ? 'border-red-500 bg-red-500/10'
-                    : 'border-gray-600'
+                      ? 'border-red-500 bg-red-500/10'
+                      : 'border-gray-600'
                   : ''
               }`}
             >
               <div className="flex items-center gap-2">
-                {showResult && (
-                  option.correct ? (
+                {showResult &&
+                  (option.correct ? (
                     <CheckCircle className="h-4 w-4 text-green-400" />
                   ) : selectedAnswer === option.id ? (
                     <XCircle className="h-4 w-4 text-red-400" />
-                  ) : null
-                )}
+                  ) : null)}
                 <span>{option.text}</span>
               </div>
             </Button>
@@ -66,15 +65,16 @@ export const BMSDefinitionQuickCheck = () => {
         </div>
 
         {showResult && (
-          <div className={`p-3 rounded-lg ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
+          <div
+            className={`p-3 rounded-lg ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}
+          >
             <p className={`font-medium ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
               {isCorrect ? 'Correct!' : 'Incorrect'}
             </p>
             <p className="text-gray-300 text-sm mt-1">
-              {isCorrect 
+              {isCorrect
                 ? 'BMS stands for Building Management System - a centralised platform for controlling building services.'
-                : `The correct answer is "${correctAnswer?.text}". BMS is a centralised platform for controlling HVAC, lighting, security, and energy systems.`
-              }
+                : `The correct answer is "${correctAnswer?.text}". BMS is a centralised platform for controlling HVAC, lighting, security, and energy systems.`}
             </p>
           </div>
         )}

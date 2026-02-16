@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import { TimeEntry } from "@/types/time-tracking";
-import { useAuthState } from "./useAuthState";
-import { useEntriesLoader } from "./useEntriesLoader";
-import { useTimeEntryAdder } from "./useTimeEntryAdder";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { TimeEntry } from '@/types/time-tracking';
+import { useAuthState } from './useAuthState';
+import { useEntriesLoader } from './useEntriesLoader';
+import { useTimeEntryAdder } from './useTimeEntryAdder';
+import { supabase } from '@/integrations/supabase/client';
 
 export const useTimeEntries = () => {
   const { userId, isLoading: authLoading } = useAuthState();
   const [manualEntries, setManualEntries] = useState<TimeEntry[]>([]);
-  
-  const { 
-    manualEntries: loadedManualEntries, 
-    courseEntries, 
-    quizEntries, 
-    isLoading: entriesLoading 
+
+  const {
+    manualEntries: loadedManualEntries,
+    courseEntries,
+    quizEntries,
+    isLoading: entriesLoading,
   } = useEntriesLoader(userId);
-  
+
   const { addTimeEntry } = useTimeEntryAdder(userId, setManualEntries);
 
   // Update manual entries when loaded from Supabase/localStorage
@@ -24,10 +24,10 @@ export const useTimeEntries = () => {
       setManualEntries(loadedManualEntries);
     }
   }, [loadedManualEntries]);
-  
+
   // Function to delete all entries
-  const deleteAllEntries = async (filterMonth: string = "all") => {
-    if (filterMonth === "all") {
+  const deleteAllEntries = async (filterMonth: string = 'all') => {
+    if (filterMonth === 'all') {
       // Clear all manual entries if filter is "all"
       setManualEntries([]);
 
@@ -52,22 +52,24 @@ export const useTimeEntries = () => {
       localStorage.removeItem('manualEntries');
     } else {
       // Filter out entries from the specified month
-      const entriesToDelete = manualEntries.filter(entry => {
+      const entriesToDelete = manualEntries.filter((entry) => {
         const date = new Date(entry.date);
         const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         return entryMonth === filterMonth;
       });
 
-      setManualEntries(prev => prev.filter(entry => {
-        const date = new Date(entry.date);
-        const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-        return entryMonth !== filterMonth;
-      }));
+      setManualEntries((prev) =>
+        prev.filter((entry) => {
+          const date = new Date(entry.date);
+          const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+          return entryMonth !== filterMonth;
+        })
+      );
 
       // Delete from Supabase if user is authenticated
       if (userId && entriesToDelete.length > 0) {
         try {
-          const entryIds = entriesToDelete.map(e => e.id);
+          const entryIds = entriesToDelete.map((e) => e.id);
           const { error } = await supabase
             .from('time_entries')
             .delete()
@@ -83,10 +85,10 @@ export const useTimeEntries = () => {
       }
     }
   };
-  
+
   // Combine all entries (manual, course, quiz)
   const allEntries: TimeEntry[] = [...manualEntries, ...courseEntries, ...quizEntries];
-  
+
   // Calculate total minutes
   const totalMinutes = allEntries.reduce((total, entry) => total + entry.duration, 0);
   const hours = Math.floor(totalMinutes / 60);
@@ -97,6 +99,6 @@ export const useTimeEntries = () => {
     totalTime: { hours, minutes },
     addTimeEntry,
     deleteAllEntries,
-    isLoading: authLoading || entriesLoading
+    isLoading: authLoading || entriesLoading,
   };
 };

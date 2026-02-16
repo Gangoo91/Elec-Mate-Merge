@@ -13,8 +13,9 @@ const ElectricalTestingVerificationSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          After installation, comprehensive testing ensures safety compliance and system reliability. 
-          All tests must be performed in the correct sequence before energising any smart devices.
+          After installation, comprehensive testing ensures safety compliance and system
+          reliability. All tests must be performed in the correct sequence before energising any
+          smart devices.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -23,11 +24,13 @@ const ElectricalTestingVerificationSection = () => {
               <ClipboardCheck className="h-5 w-5 text-green-400" />
               Essential Test Sequence
             </h4>
-            
+
             <div className="space-y-3">
               <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-green-500">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-green-500 text-foreground text-xs px-2 py-1 rounded font-bold">1</span>
+                  <span className="bg-green-500 text-foreground text-xs px-2 py-1 rounded font-bold">
+                    1
+                  </span>
                   <h5 className="font-medium text-foreground">Continuity Testing</h5>
                 </div>
                 <p className="text-gray-300 text-sm mb-2">Test before energising any circuits:</p>
@@ -38,10 +41,12 @@ const ElectricalTestingVerificationSection = () => {
                   <li>• Neutral conductor continuity</li>
                 </ul>
               </div>
-              
+
               <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-blue-500">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-blue-500 text-foreground text-xs px-2 py-1 rounded font-bold">2</span>
+                  <span className="bg-blue-500 text-foreground text-xs px-2 py-1 rounded font-bold">
+                    2
+                  </span>
                   <h5 className="font-medium text-foreground">Insulation Resistance</h5>
                 </div>
                 <p className="text-gray-300 text-sm mb-2">Test at 500V DC between:</p>
@@ -52,10 +57,12 @@ const ElectricalTestingVerificationSection = () => {
                   <li>• Minimum acceptable: 1 MΩ</li>
                 </ul>
               </div>
-              
+
               <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-purple-500">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-purple-500 text-foreground text-xs px-2 py-1 rounded font-bold">3</span>
+                  <span className="bg-purple-500 text-foreground text-xs px-2 py-1 rounded font-bold">
+                    3
+                  </span>
                   <h5 className="font-medium text-foreground">Polarity Verification</h5>
                 </div>
                 <p className="text-gray-300 text-sm">Ensure correct connections:</p>
@@ -73,7 +80,7 @@ const ElectricalTestingVerificationSection = () => {
               <Zap className="h-5 w-5 text-yellow-400" />
               Functional Testing
             </h4>
-            
+
             <div className="p-4 bg-amber-900/20 border border-amber-600/30 rounded-lg">
               <h5 className="font-medium text-amber-200 mb-2">RCD Operation Testing</h5>
               <p className="text-amber-100 text-sm mb-2">Test at rated current (usually 30mA):</p>
@@ -84,7 +91,7 @@ const ElectricalTestingVerificationSection = () => {
                 <li>• Record test results on certificate</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-blue-900/20 border border-blue-600/30 rounded-lg">
               <h5 className="font-medium text-blue-200 mb-2">Smart Device Functionality</h5>
               <p className="text-blue-100 text-sm mb-2">After electrical tests pass:</p>

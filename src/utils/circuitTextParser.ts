@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 export async function parseCircuitText(text: string): Promise<TestResult[]> {
   try {
     const { data, error } = await supabase.functions.invoke('parse-circuits', {
-      body: { text }
+      body: { text },
     });
 
     if (error) {

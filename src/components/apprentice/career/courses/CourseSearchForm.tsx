@@ -1,12 +1,17 @@
-
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { cn } from "@/lib/utils";
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, MapPin } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { cn } from '@/lib/utils';
 
 interface SearchFormValues {
   location: string;
@@ -21,9 +26,9 @@ interface CourseSearchFormProps {
 const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
   const form = useForm<SearchFormValues>({
     defaultValues: {
-      location: "All Locations",
-      searchQuery: "",
-    }
+      location: 'All Locations',
+      searchQuery: '',
+    },
   });
 
   return (
@@ -53,8 +58,8 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
                       <Input
                         placeholder="Search courses or centers..."
                         className={cn(
-                          "h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40",
-                          !field.value && "pl-10"
+                          'h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40',
+                          !field.value && 'pl-10'
                         )}
                         {...field}
                       />
@@ -70,10 +75,7 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
                 <FormItem className="w-full md:w-56">
                   <div className="relative">
                     <MapPin className="absolute left-3 top-3 h-4 w-4 text-white/40 z-10" />
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="w-full h-11 pl-10 bg-white/5 border-white/20 text-white">
                           <SelectValue placeholder="Location" />

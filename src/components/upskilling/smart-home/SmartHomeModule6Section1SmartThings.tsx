@@ -8,7 +8,9 @@ export const SmartHomeModule6Section1SmartThings = () => {
       <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">3</span>
+            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">
+              3
+            </span>
             SmartThings (Commercial Hub)
           </CardTitle>
         </CardHeader>
@@ -18,7 +20,8 @@ export const SmartHomeModule6Section1SmartThings = () => {
             <div>
               <h4 className="font-semibold text-foreground mb-2">Samsung SmartThings</h4>
               <p className="text-foreground text-sm">
-                Samsung SmartThings is a popular mainstream hub designed for easy setup and broad compatibility.
+                Samsung SmartThings is a popular mainstream hub designed for easy setup and broad
+                compatibility.
               </p>
             </div>
           </div>
@@ -30,11 +33,21 @@ export const SmartHomeModule6Section1SmartThings = () => {
               <h4 className="font-semibold text-foreground">Advantages</h4>
             </div>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Easy to set up</strong> - simple plug-and-play installation</li>
-              <li>• <strong>User-friendly app</strong> - intuitive mobile interface</li>
-              <li>• <strong>Multi-protocol support</strong> - Zigbee, Z-Wave, and Wi-Fi devices</li>
-              <li>• <strong>Reliable performance</strong> - stable Samsung backing</li>
-              <li>• <strong>Good device compatibility</strong> - works with many brands</li>
+              <li>
+                • <strong>Easy to set up</strong> - simple plug-and-play installation
+              </li>
+              <li>
+                • <strong>User-friendly app</strong> - intuitive mobile interface
+              </li>
+              <li>
+                • <strong>Multi-protocol support</strong> - Zigbee, Z-Wave, and Wi-Fi devices
+              </li>
+              <li>
+                • <strong>Reliable performance</strong> - stable Samsung backing
+              </li>
+              <li>
+                • <strong>Good device compatibility</strong> - works with many brands
+              </li>
             </ul>
           </div>
 
@@ -45,10 +58,18 @@ export const SmartHomeModule6Section1SmartThings = () => {
               <h4 className="font-semibold text-foreground">Disadvantages</h4>
             </div>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• <strong>Cloud dependency</strong> - requires internet for most features</li>
-              <li>• <strong>Limited customisation</strong> - compared to open-source solutions</li>
-              <li>• <strong>Samsung ecosystem bias</strong> - favours Samsung devices</li>
-              <li>• <strong>Privacy concerns</strong> - data stored on Samsung servers</li>
+              <li>
+                • <strong>Cloud dependency</strong> - requires internet for most features
+              </li>
+              <li>
+                • <strong>Limited customisation</strong> - compared to open-source solutions
+              </li>
+              <li>
+                • <strong>Samsung ecosystem bias</strong> - favours Samsung devices
+              </li>
+              <li>
+                • <strong>Privacy concerns</strong> - data stored on Samsung servers
+              </li>
             </ul>
           </div>
 

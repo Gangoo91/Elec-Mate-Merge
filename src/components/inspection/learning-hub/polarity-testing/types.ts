@@ -1,4 +1,3 @@
-
 export interface PolarityTestResult {
   circuitRef: string;
   testMethod: string;
@@ -11,5 +10,5 @@ export interface PolarityTestResult {
 
 export const testMethods = [
   { value: 'dead', label: 'Dead Testing (Preferred)' },
-  { value: 'live', label: 'Live Testing (Where necessary)' }
+  { value: 'live', label: 'Live Testing (Where necessary)' },
 ];

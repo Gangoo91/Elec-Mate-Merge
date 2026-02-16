@@ -65,11 +65,7 @@ export function XPProgressRing({
       aria-label={`Level ${level}: ${xpToday} of ${dailyGoal} XP today`}
     >
       <div className="relative" style={{ width: size, height: size }}>
-        <svg
-          width={size}
-          height={size}
-          className="transform -rotate-90"
-        >
+        <svg width={size} height={size} className="transform -rotate-90">
           {/* Background ring */}
           <circle
             cx={centre}
@@ -105,11 +101,13 @@ export function XPProgressRing({
         {/* Centre content */}
         {showLevel && (
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className={cn(
-              'font-bold',
-              compact ? 'text-lg' : 'text-2xl',
-              goalMet ? 'text-green-400' : 'text-elec-yellow'
-            )}>
+            <span
+              className={cn(
+                'font-bold',
+                compact ? 'text-lg' : 'text-2xl',
+                goalMet ? 'text-green-400' : 'text-elec-yellow'
+              )}
+            >
               {level}
             </span>
             {!compact && (
@@ -123,7 +121,13 @@ export function XPProgressRing({
         {/* Goal met indicator */}
         {goalMet && (
           <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center shadow-lg shadow-green-500/30 animate-bounce">
-            <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <svg
+              className="w-3.5 h-3.5 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={3}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
@@ -134,9 +138,7 @@ export function XPProgressRing({
       {!compact && (
         <div className="text-center">
           <div className="text-sm font-semibold text-white">
-            <span className={goalMet ? 'text-green-400' : 'text-elec-yellow'}>
-              {xpToday}
-            </span>
+            <span className={goalMet ? 'text-green-400' : 'text-elec-yellow'}>{xpToday}</span>
             <span className="text-white/90"> / {dailyGoal} XP</span>
           </div>
           <div className="text-[11px] text-white/70">{levelTitle}</div>

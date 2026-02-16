@@ -3,7 +3,13 @@ import { Calculator, Zap, AlertTriangle, CheckCircle, Info } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
@@ -19,15 +25,60 @@ interface CableSizeData {
 }
 
 const cableSizes: CableSizeData[] = [
-  { csa: 1.5, resistance: 14.8, currentCapacity: { method1: 20, method2: 23, method3: 27 }, cost: 1.0 },
-  { csa: 2.5, resistance: 8.9, currentCapacity: { method1: 27, method2: 31, method3: 36 }, cost: 1.4 },
-  { csa: 4, resistance: 5.6, currentCapacity: { method1: 37, method2: 42, method3: 49 }, cost: 2.0 },
-  { csa: 6, resistance: 3.7, currentCapacity: { method1: 47, method2: 54, method3: 62 }, cost: 2.8 },
-  { csa: 10, resistance: 2.2, currentCapacity: { method1: 64, method2: 73, method3: 83 }, cost: 4.2 },
-  { csa: 16, resistance: 1.4, currentCapacity: { method1: 85, method2: 97, method3: 110 }, cost: 6.5 },
-  { csa: 25, resistance: 0.89, currentCapacity: { method1: 112, method2: 129, method3: 147 }, cost: 9.8 },
-  { csa: 35, resistance: 0.64, currentCapacity: { method1: 138, method2: 158, method3: 179 }, cost: 13.5 },
-  { csa: 50, resistance: 0.45, currentCapacity: { method1: 168, method2: 192, method3: 218 }, cost: 18.7 },
+  {
+    csa: 1.5,
+    resistance: 14.8,
+    currentCapacity: { method1: 20, method2: 23, method3: 27 },
+    cost: 1.0,
+  },
+  {
+    csa: 2.5,
+    resistance: 8.9,
+    currentCapacity: { method1: 27, method2: 31, method3: 36 },
+    cost: 1.4,
+  },
+  {
+    csa: 4,
+    resistance: 5.6,
+    currentCapacity: { method1: 37, method2: 42, method3: 49 },
+    cost: 2.0,
+  },
+  {
+    csa: 6,
+    resistance: 3.7,
+    currentCapacity: { method1: 47, method2: 54, method3: 62 },
+    cost: 2.8,
+  },
+  {
+    csa: 10,
+    resistance: 2.2,
+    currentCapacity: { method1: 64, method2: 73, method3: 83 },
+    cost: 4.2,
+  },
+  {
+    csa: 16,
+    resistance: 1.4,
+    currentCapacity: { method1: 85, method2: 97, method3: 110 },
+    cost: 6.5,
+  },
+  {
+    csa: 25,
+    resistance: 0.89,
+    currentCapacity: { method1: 112, method2: 129, method3: 147 },
+    cost: 9.8,
+  },
+  {
+    csa: 35,
+    resistance: 0.64,
+    currentCapacity: { method1: 138, method2: 158, method3: 179 },
+    cost: 13.5,
+  },
+  {
+    csa: 50,
+    resistance: 0.45,
+    currentCapacity: { method1: 168, method2: 192, method3: 218 },
+    cost: 18.7,
+  },
 ];
 
 export const VoltageDropCalculator = () => {
@@ -67,9 +118,10 @@ export const VoltageDropCalculator = () => {
       actualVoltage = 400;
     }
 
-    const designCurrent = phasesNum === 1 
-      ? (powerNum * 1000) / (actualVoltage * powerFactorNum)  // Convert kW to W
-      : (powerNum * 1000) / (Math.sqrt(3) * actualVoltage * powerFactorNum);
+    const designCurrent =
+      phasesNum === 1
+        ? (powerNum * 1000) / (actualVoltage * powerFactorNum) // Convert kW to W
+        : (powerNum * 1000) / (Math.sqrt(3) * actualVoltage * powerFactorNum);
 
     // Add 125% factor for continuous loads (EV charging)
     const adjustedCurrent = designCurrent * 1.25;
@@ -78,8 +130,8 @@ export const VoltageDropCalculator = () => {
     const tempDerating = getTemperatureDerating(ambientTempNum);
 
     const methodKey = installationMethod as keyof CableSizeData['currentCapacity'];
-    
-    const cableAnalysis = cableSizes.map(cable => {
+
+    const cableAnalysis = cableSizes.map((cable) => {
       // Check current capacity
       const deratedCapacity = cable.currentCapacity[methodKey] * tempDerating;
       const currentOk = deratedCapacity >= adjustedCurrent;
@@ -87,9 +139,9 @@ export const VoltageDropCalculator = () => {
       // Calculate voltage drop using actual voltage for calculations
       let voltageDrop: number;
       if (phasesNum === 1) {
-        voltageDrop = 2 * designCurrent * cable.resistance * lengthNum / 1000; // 2 for line + neutral
+        voltageDrop = (2 * designCurrent * cable.resistance * lengthNum) / 1000; // 2 for line + neutral
       } else {
-        voltageDrop = Math.sqrt(3) * designCurrent * cable.resistance * lengthNum / 1000;
+        voltageDrop = (Math.sqrt(3) * designCurrent * cable.resistance * lengthNum) / 1000;
       }
 
       const voltageDropPercent = (voltageDrop / actualVoltage) * 100;
@@ -105,13 +157,14 @@ export const VoltageDropCalculator = () => {
         voltageDropPercent,
         voltageDropOk,
         suitable: currentOk && voltageDropOk,
-        marginalCurrent: deratedCapacity >= adjustedCurrent && deratedCapacity < adjustedCurrent * 1.1,
-        marginalVoltage: voltageDropPercent > 4.5 && voltageDropPercent <= 5.0
+        marginalCurrent:
+          deratedCapacity >= adjustedCurrent && deratedCapacity < adjustedCurrent * 1.1,
+        marginalVoltage: voltageDropPercent > 4.5 && voltageDropPercent <= 5.0,
       };
     });
 
     // Find recommended cable
-    const suitableCables = cableAnalysis.filter(c => c.suitable);
+    const suitableCables = cableAnalysis.filter((c) => c.suitable);
     const recommendedCable = suitableCables.length > 0 ? suitableCables[0] : null;
 
     // Generate warnings and recommendations
@@ -119,46 +172,63 @@ export const VoltageDropCalculator = () => {
     const recommendations: string[] = [];
 
     if (!recommendedCable) {
-      warnings.push("No standard cable size meets both current capacity and voltage drop requirements!");
-      recommendations.push("Consider reducing cable length, increasing supply voltage, or using larger non-standard cables.");
+      warnings.push(
+        'No standard cable size meets both current capacity and voltage drop requirements!'
+      );
+      recommendations.push(
+        'Consider reducing cable length, increasing supply voltage, or using larger non-standard cables.'
+      );
     } else {
       if (recommendedCable.marginalCurrent) {
-        warnings.push("Cable current capacity is marginal - consider next size up for safety margin.");
+        warnings.push(
+          'Cable current capacity is marginal - consider next size up for safety margin.'
+        );
       }
       if (recommendedCable.marginalVoltage) {
-        warnings.push("Voltage drop is close to the 5% limit - consider next size up for better regulation.");
+        warnings.push(
+          'Voltage drop is close to the 5% limit - consider next size up for better regulation.'
+        );
       }
     }
 
     // Cost analysis
     if (suitableCables.length > 1) {
-      const costDifference = ((suitableCables[1].cost - suitableCables[0].cost) / suitableCables[0].cost) * 100;
+      const costDifference =
+        ((suitableCables[1].cost - suitableCables[0].cost) / suitableCables[0].cost) * 100;
       if (costDifference < 50) {
-        recommendations.push(`Consider ${suitableCables[1].csa}mm² cable - only ${costDifference.toFixed(0)}% more expensive but provides better margin.`);
+        recommendations.push(
+          `Consider ${suitableCables[1].csa}mm² cable - only ${costDifference.toFixed(0)}% more expensive but provides better margin.`
+        );
       }
     }
 
     // Environmental considerations
     if (ambientTempNum > 40) {
-      warnings.push("High ambient temperature significantly reduces cable capacity - ensure adequate ventilation.");
+      warnings.push(
+        'High ambient temperature significantly reduces cable capacity - ensure adequate ventilation.'
+      );
     }
 
     if (lengthNum > 50) {
-      recommendations.push("Long cable run detected - consider three-phase supply or local transformer for better efficiency.");
+      recommendations.push(
+        'Long cable run detected - consider three-phase supply or local transformer for better efficiency.'
+      );
     }
 
     // Power-specific recommendations
     if (powerNum >= 22000) {
-      recommendations.push("High power installation - ensure adequate earthing and consider RCD protection requirements.");
+      recommendations.push(
+        'High power installation - ensure adequate earthing and consider RCD protection requirements.'
+      );
     }
 
     // BS 7671 compliance checks
     const complianceIssues: string[] = [];
     if (recommendedCable && recommendedCable.voltageDropPercent > 5.0) {
-      complianceIssues.push("Voltage drop exceeds BS 7671 5% limit for power circuits");
+      complianceIssues.push('Voltage drop exceeds BS 7671 5% limit for power circuits');
     }
-    if (designCurrent < adjustedCurrent / 1.25 * 0.8) {
-      complianceIssues.push("Consider protective device coordination per BS 7671 Section 433");
+    if (designCurrent < (adjustedCurrent / 1.25) * 0.8) {
+      complianceIssues.push('Consider protective device coordination per BS 7671 Section 433');
     }
 
     setResults({
@@ -172,7 +242,8 @@ export const VoltageDropCalculator = () => {
       recommendations,
       complianceIssues,
       tempDerating,
-      powerFactorImpact: powerFactorNum < 0.95 ? "Poor power factor increases current requirements" : null
+      powerFactorImpact:
+        powerFactorNum < 0.95 ? 'Poor power factor increases current requirements' : null,
     });
   };
 
@@ -198,7 +269,9 @@ export const VoltageDropCalculator = () => {
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="power" className="text-foreground">Power (kW)</Label>
+            <Label htmlFor="power" className="text-foreground">
+              Power (kW)
+            </Label>
             <Input
               id="power"
               type="number"
@@ -208,23 +281,42 @@ export const VoltageDropCalculator = () => {
               className="bg-elec-dark border-gray-600 text-foreground placeholder-white/60"
             />
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="voltage" className="text-foreground">Voltage (V)</Label>
+            <Label htmlFor="voltage" className="text-foreground">
+              Voltage (V)
+            </Label>
             <Select value={voltage} onValueChange={setVoltage}>
               <SelectTrigger className="bg-elec-dark border-gray-600 text-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-gray-600 text-foreground">
-                <SelectItem value="230" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">230V (Single Phase)</SelectItem>
-                <SelectItem value="400" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">400V (Three Phase)</SelectItem>
-                <SelectItem value="230_3ph" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">230V (Three Phase - Line to Neutral)</SelectItem>
+                <SelectItem
+                  value="230"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  230V (Single Phase)
+                </SelectItem>
+                <SelectItem
+                  value="400"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  400V (Three Phase)
+                </SelectItem>
+                <SelectItem
+                  value="230_3ph"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  230V (Three Phase - Line to Neutral)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="length" className="text-foreground">Cable Length (m)</Label>
+            <Label htmlFor="length" className="text-foreground">
+              Cable Length (m)
+            </Label>
             <Input
               id="length"
               type="number"
@@ -236,34 +328,65 @@ export const VoltageDropCalculator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="phases" className="text-foreground">Supply Type</Label>
+            <Label htmlFor="phases" className="text-foreground">
+              Supply Type
+            </Label>
             <Select value={phases} onValueChange={setPhases}>
               <SelectTrigger className="bg-elec-dark border-gray-600 text-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-gray-600 text-foreground">
-                <SelectItem value="1" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">Single Phase</SelectItem>
-                <SelectItem value="3" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">Three Phase</SelectItem>
+                <SelectItem
+                  value="1"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  Single Phase
+                </SelectItem>
+                <SelectItem
+                  value="3"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  Three Phase
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="installation" className="text-foreground">Installation Method</Label>
+            <Label htmlFor="installation" className="text-foreground">
+              Installation Method
+            </Label>
             <Select value={installationMethod} onValueChange={setInstallationMethod}>
               <SelectTrigger className="bg-elec-dark border-gray-600 text-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-gray-600 text-foreground">
-                <SelectItem value="method1" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">Enclosed in Conduit</SelectItem>
-                <SelectItem value="method2" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">Clipped Direct</SelectItem>
-                <SelectItem value="method3" className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground">Underground/SWA</SelectItem>
+                <SelectItem
+                  value="method1"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  Enclosed in Conduit
+                </SelectItem>
+                <SelectItem
+                  value="method2"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  Clipped Direct
+                </SelectItem>
+                <SelectItem
+                  value="method3"
+                  className="text-foreground hover:bg-elec-gray hover:text-foreground focus:bg-elec-gray focus:text-foreground data-[highlighted]:bg-elec-gray data-[highlighted]:text-foreground"
+                >
+                  Underground/SWA
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="ambient" className="text-foreground">Ambient Temp (°C)</Label>
+            <Label htmlFor="ambient" className="text-foreground">
+              Ambient Temp (°C)
+            </Label>
             <Input
               id="ambient"
               type="number"
@@ -275,7 +398,9 @@ export const VoltageDropCalculator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="powerfactor" className="text-foreground">Power Factor</Label>
+            <Label htmlFor="powerfactor" className="text-foreground">
+              Power Factor
+            </Label>
             <Input
               id="powerfactor"
               type="number"
@@ -291,7 +416,7 @@ export const VoltageDropCalculator = () => {
         </div>
 
         <div className="flex gap-4">
-          <Button 
+          <Button
             onClick={calculateVoltageDropAndCableSize}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             disabled={!power || !length}
@@ -299,8 +424,8 @@ export const VoltageDropCalculator = () => {
             <Calculator className="mr-2 h-4 w-4" />
             Calculate Cable Size
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={clearResults}
             className="border-gray-600 text-gray-300 hover:bg-elec-gray"
           >
@@ -315,18 +440,35 @@ export const VoltageDropCalculator = () => {
               <h3 className="text-xl font-semibold text-foreground mb-4">Calculation Results</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-gray-300"><strong>Input Power:</strong> {results.powerKW}kW</p>
-                  <p className="text-gray-300"><strong>Calculation Voltage:</strong> {results.actualVoltage}V</p>
-                  <p className="text-gray-300"><strong>Design Current:</strong> {results.designCurrent.toFixed(1)}A</p>
-                  <p className="text-gray-300"><strong>Adjusted Current (125%):</strong> {results.adjustedCurrent.toFixed(1)}A</p>
-                  <p className="text-gray-300"><strong>Temperature Derating:</strong> {(results.tempDerating * 100).toFixed(0)}%</p>
+                  <p className="text-gray-300">
+                    <strong>Input Power:</strong> {results.powerKW}kW
+                  </p>
+                  <p className="text-gray-300">
+                    <strong>Calculation Voltage:</strong> {results.actualVoltage}V
+                  </p>
+                  <p className="text-gray-300">
+                    <strong>Design Current:</strong> {results.designCurrent.toFixed(1)}A
+                  </p>
+                  <p className="text-gray-300">
+                    <strong>Adjusted Current (125%):</strong> {results.adjustedCurrent.toFixed(1)}A
+                  </p>
+                  <p className="text-gray-300">
+                    <strong>Temperature Derating:</strong> {(results.tempDerating * 100).toFixed(0)}
+                    %
+                  </p>
                 </div>
                 <div>
                   {results.recommendedCable ? (
                     <div className="bg-green-900/30 border border-green-500/50 p-3 rounded">
-                      <p className="text-green-300 font-semibold">✓ Recommended Cable: {results.recommendedCable.csa}mm²</p>
-                      <p className="text-green-200 text-sm">Voltage Drop: {results.recommendedCable.voltageDropPercent.toFixed(2)}%</p>
-                      <p className="text-green-200 text-sm">Current Capacity: {results.recommendedCable.deratedCapacity.toFixed(0)}A</p>
+                      <p className="text-green-300 font-semibold">
+                        ✓ Recommended Cable: {results.recommendedCable.csa}mm²
+                      </p>
+                      <p className="text-green-200 text-sm">
+                        Voltage Drop: {results.recommendedCable.voltageDropPercent.toFixed(2)}%
+                      </p>
+                      <p className="text-green-200 text-sm">
+                        Current Capacity: {results.recommendedCable.deratedCapacity.toFixed(0)}A
+                      </p>
                     </div>
                   ) : (
                     <div className="bg-red-900/30 border border-red-500/50 p-3 rounded">
@@ -407,7 +549,10 @@ export const VoltageDropCalculator = () => {
                   </thead>
                   <tbody>
                     {results.cableAnalysis.slice(0, 8).map((cable: any, index: number) => (
-                      <tr key={index} className={`border-b border-gray-700 ${cable.suitable ? 'bg-green-900/20' : ''}`}>
+                      <tr
+                        key={index}
+                        className={`border-b border-gray-700 ${cable.suitable ? 'bg-green-900/20' : ''}`}
+                      >
                         <td className="py-2 text-foreground font-medium">{cable.csa}</td>
                         <td className="py-2">
                           <span className={cable.currentOk ? 'text-green-300' : 'text-red-300'}>

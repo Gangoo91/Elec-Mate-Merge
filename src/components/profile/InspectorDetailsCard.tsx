@@ -91,7 +91,9 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
   };
 
   // Canvas drawing functions
-  const getCoordinates = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const getCoordinates = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
 
@@ -112,7 +114,9 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
     };
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const startDrawing = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     e.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -200,7 +204,9 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
               <User className="h-4 w-4 text-teal-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Inspector Name</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Inspector Name
+              </p>
               <p className="text-[15px] text-white">
                 {companyProfile?.inspector_name || 'Not set'}
               </p>
@@ -213,7 +219,9 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
               <PenTool className="h-4 w-4 text-indigo-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Signature</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Signature
+              </p>
               {companyProfile?.signature_data ? (
                 <div className="mt-1.5 w-24 h-12 rounded-lg bg-white border border-white/20 overflow-hidden">
                   <img
@@ -231,7 +239,10 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
       </motion.div>
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -252,7 +263,11 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (

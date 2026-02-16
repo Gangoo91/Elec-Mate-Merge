@@ -413,7 +413,10 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
 ];
 
 /** Category display metadata */
-export const ACHIEVEMENT_CATEGORY_META: Record<AchievementCategory, { name: string; colour: string }> = {
+export const ACHIEVEMENT_CATEGORY_META: Record<
+  AchievementCategory,
+  { name: string; colour: string }
+> = {
   flashcards: { name: 'Flashcards', colour: 'text-blue-400' },
   quizzes: { name: 'Quizzes', colour: 'text-green-400' },
   streaks: { name: 'Streaks', colour: 'text-orange-400' },

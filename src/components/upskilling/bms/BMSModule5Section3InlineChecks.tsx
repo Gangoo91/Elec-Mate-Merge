@@ -21,12 +21,12 @@ export const ModbusInlineCheck1 = () => {
             <p className="text-foreground mb-4">
               Why is Modbus often described as simple compared to BACnet?
             </p>
-            
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-simple" 
+                <input
+                  type="radio"
+                  name="modbus-simple"
                   value="faster"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -34,9 +34,9 @@ export const ModbusInlineCheck1 = () => {
                 It runs faster than BACnet
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-simple" 
+                <input
+                  type="radio"
+                  name="modbus-simple"
                   value="basic-data"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -44,9 +44,9 @@ export const ModbusInlineCheck1 = () => {
                 It uses basic data registers and simple addressing
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-simple" 
+                <input
+                  type="radio"
+                  name="modbus-simple"
                   value="newer"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -55,7 +55,7 @@ export const ModbusInlineCheck1 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -64,11 +64,13 @@ export const ModbusInlineCheck1 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === 'basic-data' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === 'basic-data'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === 'basic-data' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -80,8 +82,9 @@ export const ModbusInlineCheck1 = () => {
                       {selectedAnswer === 'basic-data' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      Modbus is considered simple because it uses basic data registers and simple addressing schemes, 
-                      without the complex object-oriented data structures found in BACnet.
+                      Modbus is considered simple because it uses basic data registers and simple
+                      addressing schemes, without the complex object-oriented data structures found
+                      in BACnet.
                     </p>
                   </div>
                 </div>
@@ -112,12 +115,12 @@ export const ModbusInlineCheck2 = () => {
             <p className="text-foreground mb-4">
               How many devices can typically be supported on a single Modbus RTU segment?
             </p>
-            
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-devices" 
+                <input
+                  type="radio"
+                  name="modbus-devices"
                   value="16"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -125,9 +128,9 @@ export const ModbusInlineCheck2 = () => {
                 16 devices
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-devices" 
+                <input
+                  type="radio"
+                  name="modbus-devices"
                   value="32"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -135,9 +138,9 @@ export const ModbusInlineCheck2 = () => {
                 32 devices
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-devices" 
+                <input
+                  type="radio"
+                  name="modbus-devices"
                   value="127"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -146,7 +149,7 @@ export const ModbusInlineCheck2 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -155,11 +158,13 @@ export const ModbusInlineCheck2 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === '32' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === '32'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === '32' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -171,8 +176,9 @@ export const ModbusInlineCheck2 = () => {
                       {selectedAnswer === '32' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      A single Modbus RTU segment typically supports up to 32 devices (including the master). 
-                      This can be extended with repeaters, but 32 is the standard practical limit.
+                      A single Modbus RTU segment typically supports up to 32 devices (including the
+                      master). This can be extended with repeaters, but 32 is the standard practical
+                      limit.
                     </p>
                   </div>
                 </div>
@@ -200,15 +206,13 @@ export const ModbusInlineCheck3 = () => {
           <HelpCircle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
           <div className="flex-1">
             <h4 className="text-foreground font-medium mb-3">Inline Check</h4>
-            <p className="text-foreground mb-4">
-              What is one advantage of Modbus TCP/IP over RTU?
-            </p>
-            
+            <p className="text-foreground mb-4">What is one advantage of Modbus TCP/IP over RTU?</p>
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-tcp-advantage" 
+                <input
+                  type="radio"
+                  name="modbus-tcp-advantage"
                   value="cheaper"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -216,9 +220,9 @@ export const ModbusInlineCheck3 = () => {
                 It's cheaper to install
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-tcp-advantage" 
+                <input
+                  type="radio"
+                  name="modbus-tcp-advantage"
                   value="faster-scalable"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -226,9 +230,9 @@ export const ModbusInlineCheck3 = () => {
                 Much faster communication and more scalable
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-tcp-advantage" 
+                <input
+                  type="radio"
+                  name="modbus-tcp-advantage"
                   value="simpler"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -237,7 +241,7 @@ export const ModbusInlineCheck3 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -246,11 +250,13 @@ export const ModbusInlineCheck3 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === 'faster-scalable' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === 'faster-scalable'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === 'faster-scalable' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -262,8 +268,8 @@ export const ModbusInlineCheck3 = () => {
                       {selectedAnswer === 'faster-scalable' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      Modbus TCP/IP is much faster (100 Mbps vs 115 kbps) and more scalable than RTU, 
-                      supporting many more devices and simultaneous connections.
+                      Modbus TCP/IP is much faster (100 Mbps vs 115 kbps) and more scalable than
+                      RTU, supporting many more devices and simultaneous connections.
                     </p>
                   </div>
                 </div>
@@ -294,12 +300,12 @@ export const ModbusInlineCheck4 = () => {
             <p className="text-foreground mb-4">
               Give one type of building equipment that commonly uses Modbus.
             </p>
-            
+
             <div className="space-y-2 mb-4">
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-equipment" 
+                <input
+                  type="radio"
+                  name="modbus-equipment"
                   value="lighting"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -307,9 +313,9 @@ export const ModbusInlineCheck4 = () => {
                 LED lighting controllers
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-equipment" 
+                <input
+                  type="radio"
+                  name="modbus-equipment"
                   value="meters"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -317,9 +323,9 @@ export const ModbusInlineCheck4 = () => {
                 Energy meters
               </label>
               <label className="flex items-center gap-2 text-foreground cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="modbus-equipment" 
+                <input
+                  type="radio"
+                  name="modbus-equipment"
                   value="fire"
                   className="text-elec-yellow focus:ring-elec-yellow"
                   onChange={(e) => setSelectedAnswer(e.target.value)}
@@ -328,7 +334,7 @@ export const ModbusInlineCheck4 = () => {
               </label>
             </div>
 
-            <Button 
+            <Button
               onClick={handleSubmit}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 mb-4"
               disabled={!selectedAnswer}
@@ -337,11 +343,13 @@ export const ModbusInlineCheck4 = () => {
             </Button>
 
             {showSolution && (
-              <div className={`p-4 rounded-lg border ${
-                selectedAnswer === 'meters' 
-                  ? 'bg-green-500/10 border-green-500/20' 
-                  : 'bg-red-500/10 border-red-500/20'
-              }`}>
+              <div
+                className={`p-4 rounded-lg border ${
+                  selectedAnswer === 'meters'
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
                 <div className="flex items-start gap-2">
                   {selectedAnswer === 'meters' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -353,8 +361,9 @@ export const ModbusInlineCheck4 = () => {
                       {selectedAnswer === 'meters' ? 'Correct!' : 'Not quite right'}
                     </p>
                     <p className="text-foreground text-sm">
-                      Energy meters are one of the most common applications for Modbus in buildings. 
-                      Other common examples include boilers, chillers, and Variable Speed Drives (VSDs).
+                      Energy meters are one of the most common applications for Modbus in buildings.
+                      Other common examples include boilers, chillers, and Variable Speed Drives
+                      (VSDs).
                     </p>
                   </div>
                 </div>

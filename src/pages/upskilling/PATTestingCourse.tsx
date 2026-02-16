@@ -15,47 +15,47 @@ const PATTestingCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Portable Appliance Testing",
-      description: "PAT testing fundamentals and legal requirements",
-      duration: "40 mins",
-      icon: BookOpen
+      title: 'Introduction to Portable Appliance Testing',
+      description: 'PAT testing fundamentals and legal requirements',
+      duration: '40 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "Understanding Class I, II, and III Appliances",
-      description: "Classification of electrical appliances",
-      duration: "45 mins",
-      icon: Zap
+      title: 'Understanding Class I, II, and III Appliances',
+      description: 'Classification of electrical appliances',
+      duration: '45 mins',
+      icon: Zap,
     },
     {
       id: 3,
-      title: "Visual Inspections and Safety Assessment",
-      description: "Comprehensive visual inspection techniques",
-      duration: "50 mins",
-      icon: Eye
+      title: 'Visual Inspections and Safety Assessment',
+      description: 'Comprehensive visual inspection techniques',
+      duration: '50 mins',
+      icon: Eye,
     },
     {
       id: 4,
-      title: "Electrical Testing Methods and Equipment",
-      description: "Practical testing techniques and equipment usage",
-      duration: "55 mins",
-      icon: Wrench
+      title: 'Electrical Testing Methods and Equipment',
+      description: 'Practical testing techniques and equipment usage',
+      duration: '55 mins',
+      icon: Wrench,
     },
     {
       id: 5,
-      title: "Documentation, Labelling, and Legal Requirements",
-      description: "Compliance and record keeping",
-      duration: "45 mins",
-      icon: FileText
+      title: 'Documentation, Labelling, and Legal Requirements',
+      description: 'Compliance and record keeping',
+      duration: '45 mins',
+      icon: FileText,
     },
     {
-      id: "exam",
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "60 mins",
+      id: 'exam',
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '60 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (

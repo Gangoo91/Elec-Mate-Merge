@@ -1,8 +1,17 @@
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { GraduationCap, Users, TrendingUp, Star, BookOpen, Calculator, RefreshCw, ChevronDown } from "lucide-react";
-import type { LiveEducationAnalytics } from "@/hooks/useLiveEducationData";
+import { motion } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  GraduationCap,
+  Users,
+  TrendingUp,
+  Star,
+  BookOpen,
+  Calculator,
+  RefreshCw,
+  ChevronDown,
+} from 'lucide-react';
+import type { LiveEducationAnalytics } from '@/hooks/useLiveEducationData';
 
 interface ModernEducationHeroProps {
   analytics: LiveEducationAnalytics | null;
@@ -40,9 +49,7 @@ const ModernEducationHero = ({
               <h1 className="text-xl sm:text-2xl font-bold text-white">
                 Further <span className="text-purple-400">Education</span>
               </h1>
-              <p className="text-sm text-white mt-1">
-                HNC, HND, degrees & apprenticeship pathways
-              </p>
+              <p className="text-sm text-white mt-1">HNC, HND, degrees & apprenticeship pathways</p>
             </div>
 
             {/* Refresh Button */}
@@ -53,7 +60,7 @@ const ModernEducationHero = ({
               variant="ghost"
               className="text-white hover:text-white hover:bg-white/10"
             >
-              <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+              <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
             </Button>
           </div>
 
@@ -80,12 +87,16 @@ const ModernEducationHero = ({
               </div>
               <div className="bg-white/5 rounded-xl p-3 text-center">
                 <Star className="h-5 w-5 text-elec-yellow mx-auto mb-1" />
-                <div className="text-lg font-bold text-white">{analytics.averageRating.toFixed(1)}</div>
+                <div className="text-lg font-bold text-white">
+                  {analytics.averageRating.toFixed(1)}
+                </div>
                 <div className="text-[10px] text-white">Avg Rating</div>
               </div>
               <div className="bg-white/5 rounded-xl p-3 text-center">
                 <TrendingUp className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-                <div className="text-lg font-bold text-white">{(analytics.averageEmploymentRate || 0).toFixed(0)}%</div>
+                <div className="text-lg font-bold text-white">
+                  {(analytics.averageEmploymentRate || 0).toFixed(0)}%
+                </div>
                 <div className="text-[10px] text-white">Employment</div>
               </div>
             </div>
@@ -104,8 +115,8 @@ const ModernEducationHero = ({
               variant="outline"
               className="border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 flex-1 sm:flex-none"
               onClick={() => {
-                const filterSection = document.getElementById("education-filters");
-                filterSection?.scrollIntoView({ behavior: "smooth" });
+                const filterSection = document.getElementById('education-filters');
+                filterSection?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
               <ChevronDown className="h-4 w-4" />

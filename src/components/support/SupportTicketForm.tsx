@@ -1,27 +1,21 @@
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from "@/components/ui/sheet";
+import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   HeadphonesIcon,
   Plus,
@@ -31,9 +25,9 @@ import {
   ChevronRight,
   Send,
   Loader2,
-} from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { toast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { toast } from '@/hooks/use-toast';
 
 interface Ticket {
   id: string;
@@ -54,11 +48,11 @@ interface TicketResponse {
 }
 
 const categories = [
-  { value: "technical", label: "Technical Issue" },
-  { value: "billing", label: "Billing & Payments" },
-  { value: "account", label: "Account Help" },
-  { value: "feature", label: "Feature Request" },
-  { value: "other", label: "Other" },
+  { value: 'technical', label: 'Technical Issue' },
+  { value: 'billing', label: 'Billing & Payments' },
+  { value: 'account', label: 'Account Help' },
+  { value: 'feature', label: 'Feature Request' },
+  { value: 'other', label: 'Other' },
 ];
 
 export default function SupportTicketForm() {
@@ -66,24 +60,24 @@ export default function SupportTicketForm() {
   const queryClient = useQueryClient();
   const [createOpen, setCreateOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
-  const [replyMessage, setReplyMessage] = useState("");
+  const [replyMessage, setReplyMessage] = useState('');
   const [form, setForm] = useState({
-    subject: "",
-    description: "",
-    category: "technical",
-    priority: "medium",
+    subject: '',
+    description: '',
+    category: 'technical',
+    priority: 'medium',
   });
 
   // Fetch user's tickets
   const { data: tickets, isLoading } = useQuery({
-    queryKey: ["my-support-tickets", user?.id],
+    queryKey: ['my-support-tickets', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
       const { data, error } = await supabase
-        .from("support_tickets")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+        .from('support_tickets')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
       if (error) throw error;
       return data as Ticket[];
     },
@@ -92,14 +86,14 @@ export default function SupportTicketForm() {
 
   // Fetch responses for selected ticket
   const { data: responses } = useQuery({
-    queryKey: ["my-ticket-responses", selectedTicket?.id],
+    queryKey: ['my-ticket-responses', selectedTicket?.id],
     queryFn: async () => {
       if (!selectedTicket) return [];
       const { data, error } = await supabase
-        .from("support_ticket_responses")
+        .from('support_ticket_responses')
         .select(`*, profiles:user_id (full_name)`)
-        .eq("ticket_id", selectedTicket.id)
-        .order("created_at", { ascending: true });
+        .eq('ticket_id', selectedTicket.id)
+        .order('created_at', { ascending: true });
       if (error) throw error;
       return data as TicketResponse[];
     },
@@ -109,24 +103,24 @@ export default function SupportTicketForm() {
   // Create ticket mutation
   const createMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("support_tickets").insert({
+      const { error } = await supabase.from('support_tickets').insert({
         user_id: user?.id,
         subject: form.subject,
         description: form.description,
         category: form.category,
         priority: form.priority,
-        status: "open",
+        status: 'open',
       });
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["my-support-tickets"] });
+      queryClient.invalidateQueries({ queryKey: ['my-support-tickets'] });
       setCreateOpen(false);
-      setForm({ subject: "", description: "", category: "technical", priority: "medium" });
-      toast({ title: "Ticket submitted", description: "We'll respond as soon as possible." });
+      setForm({ subject: '', description: '', category: 'technical', priority: 'medium' });
+      toast({ title: 'Ticket submitted', description: "We'll respond as soon as possible." });
     },
     onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -134,7 +128,7 @@ export default function SupportTicketForm() {
   const replyMutation = useMutation({
     mutationFn: async () => {
       if (!selectedTicket) return;
-      const { error } = await supabase.from("support_ticket_responses").insert({
+      const { error } = await supabase.from('support_ticket_responses').insert({
         ticket_id: selectedTicket.id,
         user_id: user?.id,
         message: replyMessage,
@@ -143,21 +137,21 @@ export default function SupportTicketForm() {
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["my-ticket-responses"] });
-      setReplyMessage("");
-      toast({ title: "Reply sent" });
+      queryClient.invalidateQueries({ queryKey: ['my-ticket-responses'] });
+      setReplyMessage('');
+      toast({ title: 'Reply sent' });
     },
   });
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      open: "bg-blue-500/20 text-blue-400",
-      in_progress: "bg-amber-500/20 text-amber-400",
-      waiting: "bg-purple-500/20 text-purple-400",
-      resolved: "bg-green-500/20 text-green-400",
-      closed: "bg-gray-500/20 text-gray-400",
+      open: 'bg-blue-500/20 text-blue-400',
+      in_progress: 'bg-amber-500/20 text-amber-400',
+      waiting: 'bg-purple-500/20 text-purple-400',
+      resolved: 'bg-green-500/20 text-green-400',
+      closed: 'bg-gray-500/20 text-gray-400',
     };
-    return <Badge className={styles[status] || ""}>{status.replace("_", " ")}</Badge>;
+    return <Badge className={styles[status] || ''}>{status.replace('_', ' ')}</Badge>;
   };
 
   return (
@@ -173,10 +167,7 @@ export default function SupportTicketForm() {
             <p className="text-xs text-muted-foreground">Get help from our team</p>
           </div>
         </div>
-        <Button
-          className="h-11 gap-2 touch-manipulation"
-          onClick={() => setCreateOpen(true)}
-        >
+        <Button className="h-11 gap-2 touch-manipulation" onClick={() => setCreateOpen(true)}>
           <Plus className="h-4 w-4" />
           New Ticket
         </Button>
@@ -187,7 +178,9 @@ export default function SupportTicketForm() {
         <div className="space-y-2">
           {[...Array(3)].map((_, i) => (
             <Card key={i} className="animate-pulse">
-              <CardContent className="pt-4 pb-4"><div className="h-12 bg-muted rounded" /></CardContent>
+              <CardContent className="pt-4 pb-4">
+                <div className="h-12 bg-muted rounded" />
+              </CardContent>
             </Card>
           ))}
         </div>
@@ -248,20 +241,28 @@ export default function SupportTicketForm() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Category</Label>
-                  <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
+                  <Select
+                    value={form.category}
+                    onValueChange={(v) => setForm({ ...form, category: v })}
+                  >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       {categories.map((cat) => (
-                        <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
+                        <SelectItem key={cat.value} value={cat.value}>
+                          {cat.label}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
                   <Label>Priority</Label>
-                  <Select value={form.priority} onValueChange={(v) => setForm({ ...form, priority: v })}>
+                  <Select
+                    value={form.priority}
+                    onValueChange={(v) => setForm({ ...form, priority: v })}
+                  >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
                     </SelectTrigger>
@@ -288,12 +289,17 @@ export default function SupportTicketForm() {
               <Button
                 className="w-full h-12 touch-manipulation"
                 onClick={() => createMutation.mutate()}
-                disabled={!form.subject.trim() || !form.description.trim() || createMutation.isPending}
+                disabled={
+                  !form.subject.trim() || !form.description.trim() || createMutation.isPending
+                }
               >
                 {createMutation.isPending ? (
-                  <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Submitting...</>
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Submitting...
+                  </>
                 ) : (
-                  "Submit Ticket"
+                  'Submit Ticket'
                 )}
               </Button>
             </SheetFooter>
@@ -326,14 +332,19 @@ export default function SupportTicketForm() {
               {responses?.map((response) => (
                 <Card
                   key={response.id}
-                  className={response.is_admin_response ? "border-purple-500/30 bg-purple-500/5" : ""}
+                  className={
+                    response.is_admin_response ? 'border-purple-500/30 bg-purple-500/5' : ''
+                  }
                 >
                   <CardContent className="pt-4 pb-4">
                     <p className="text-xs text-muted-foreground mb-2">
                       {response.is_admin_response ? (
                         <span className="text-purple-400">Elec-Mate Support</span>
-                      ) : "You"}
-                      {" · "}{formatDistanceToNow(new Date(response.created_at), { addSuffix: true })}
+                      ) : (
+                        'You'
+                      )}
+                      {' · '}
+                      {formatDistanceToNow(new Date(response.created_at), { addSuffix: true })}
                     </p>
                     <p className="text-sm whitespace-pre-wrap">{response.message}</p>
                   </CardContent>
@@ -341,7 +352,7 @@ export default function SupportTicketForm() {
               ))}
             </div>
             {/* Reply input */}
-            {selectedTicket?.status !== "closed" && selectedTicket?.status !== "resolved" && (
+            {selectedTicket?.status !== 'closed' && selectedTicket?.status !== 'resolved' && (
               <SheetFooter className="p-4 border-t border-border">
                 <div className="flex gap-2 w-full">
                   <Textarea

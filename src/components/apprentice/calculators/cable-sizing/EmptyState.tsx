@@ -1,5 +1,4 @@
-
-import { Sigma } from "lucide-react";
+import { Sigma } from 'lucide-react';
 
 const EmptyState = () => {
   return (

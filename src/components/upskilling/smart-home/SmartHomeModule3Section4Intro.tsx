@@ -12,13 +12,13 @@ export const SmartHomeModule3Section4Intro = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p className="leading-relaxed">
-          Not all lighting loads are the same, and not all control methods work with every type of load. 
-          Understanding load types (incandescent, LED, fluorescent, inductive, capacitive) and how they 
-          interact with smart dimmers, switches, and controllers is essential to ensure reliable performance 
-          and avoid flicker, overheating, or premature failure.
+          Not all lighting loads are the same, and not all control methods work with every type of
+          load. Understanding load types (incandescent, LED, fluorescent, inductive, capacitive) and
+          how they interact with smart dimmers, switches, and controllers is essential to ensure
+          reliable performance and avoid flicker, overheating, or premature failure.
         </p>
         <p className="leading-relaxed">
-          This section provides practical guidance on matching controls to loads for safe, efficient 
+          This section provides practical guidance on matching controls to loads for safe, efficient
           smart lighting installations.
         </p>
       </CardContent>

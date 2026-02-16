@@ -4,10 +4,23 @@ import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { referenceMethodOptions } from '@/types/cableTypes';
 import { cableSizeOptions } from '@/types/cableTypes';
-import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, bsStandardOptions, protectiveDeviceCurveOptions, rcdBsStandardOptions, bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
+import {
+  protectiveDeviceTypeOptions,
+  protectiveDeviceRatingOptions,
+  bsStandardOptions,
+  protectiveDeviceCurveOptions,
+  rcdBsStandardOptions,
+  bsStandardRequiresCurve,
+} from '@/types/protectiveDeviceTypes';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
 import { wiringTypeOptions, rcdTypeOptions } from '@/types/wiringTypes';
 import { columnGroups } from '@/utils/mobileTableUtils';
@@ -28,7 +41,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   onRemove,
 }) => {
   const { toast } = useToast();
-  
+
   const getBorderColor = () => {
     if (result.sourceCircuitId) return 'border-l-4 border-l-blue-500';
     if (result.autoFilled) return 'border-l-4 border-l-elec-yellow';
@@ -39,21 +52,21 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
     const r1 = parseFloat(result.ringR1 || '');
     const rn = parseFloat(result.ringRn || '');
     const r2 = parseFloat(result.ringR2 || '');
-    
+
     if (isNaN(r1) || isNaN(rn) || isNaN(r2)) {
       toast({
-        title: "Missing Values",
-        description: "Please enter r1, rn, and r2 values first.",
-        variant: "destructive"
+        title: 'Missing Values',
+        description: 'Please enter r1, rn, and r2 values first.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     const calculated = (r1 + r2) / 4;
     onUpdate(result.id, 'r1r2', calculated.toFixed(3));
-    
+
     toast({
-      title: "R1+R2 Calculated",
+      title: 'R1+R2 Calculated',
       description: `R1+R2 = ${calculated.toFixed(3)}Ω`,
     });
   };
@@ -61,11 +74,11 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   // Auto-fill maxZs when device details change
   const autoFillMaxZs = (bsStandard: string, curve: string, rating: string) => {
     if (!bsStandard || !rating) return;
-    
+
     // For fuses, curve is not needed
     const needsCurve = bsStandardRequiresCurve(bsStandard);
     if (needsCurve && !curve) return;
-    
+
     const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, rating);
     if (maxZs !== null) {
       onUpdate(result.id, 'maxZs', maxZs.toString());
@@ -90,11 +103,16 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
     autoFillMaxZs(result.bsStandard || '', result.protectiveDeviceCurve || '', value);
   };
 
-  const inputClassName = "h-11 text-sm px-2 border border-input bg-background text-foreground focus:ring-2 focus:ring-primary text-center touch-manipulation";
-  const selectTriggerClassName = "h-11 text-sm px-2 border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation";
+  const inputClassName =
+    'h-11 text-sm px-2 border border-input bg-background text-foreground focus:ring-2 focus:ring-primary text-center touch-manipulation';
+  const selectTriggerClassName =
+    'h-11 text-sm px-2 border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation';
 
   return (
-    <TableRow className={cn("hover:bg-muted/50 border-b border-border", getBorderColor())} style={{ contentVisibility: 'auto', containIntrinsicSize: '0 48px' }}>
+    <TableRow
+      className={cn('hover:bg-muted/50 border-b border-border', getBorderColor())}
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '0 48px' }}
+    >
       {/* Circuit Details Group */}
       <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-0.5 font-bold text-center whitespace-nowrap bg-elec-gray-light w-[72px] min-w-[72px] max-w-[72px]">
         <Input
@@ -108,7 +126,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
         <Input
           value={result.circuitDescription}
           onChange={(e) => onUpdate(result.id, 'circuitDescription', e.target.value)}
-          className={cn(inputClassName, "truncate")}
+          className={cn(inputClassName, 'truncate')}
           placeholder="Desc"
         />
       </TableCell>
@@ -118,9 +136,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           onValueChange={(value) => onUpdate(result.id, 'typeOfWiring', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Ty">
-              {result.typeOfWiring || "Ty"}
-            </SelectValue>
+            <SelectValue placeholder="Ty">{result.typeOfWiring || 'Ty'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {wiringTypeOptions.map((option) => (
@@ -137,9 +153,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Mth">
-              {result.referenceMethod || "Mth"}
-            </SelectValue>
+            <SelectValue placeholder="Mth">{result.referenceMethod || 'Mth'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {referenceMethodOptions.map((option) => (
@@ -199,10 +213,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
 
       {/* Protection Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
-          value={result.bsStandard || ''}
-          onValueChange={handleBsStandardChange}
-        >
+        <Select value={result.bsStandard || ''} onValueChange={handleBsStandardChange}>
           <SelectTrigger className={selectTriggerClassName}>
             <SelectValue placeholder="BS" />
           </SelectTrigger>
@@ -222,9 +233,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           disabled={!bsStandardRequiresCurve(result.bsStandard || '')}
         >
           <SelectTrigger className={selectTriggerClassName}>
-          <SelectValue placeholder="Ty">
-            {result.protectiveDeviceCurve || "Ty"}
-          </SelectValue>
+            <SelectValue placeholder="Ty">{result.protectiveDeviceCurve || 'Ty'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {protectiveDeviceCurveOptions.map((option) => (
@@ -236,14 +245,9 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
         </Select>
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[80px] min-w-[80px] max-w-[80px]">
-        <Select
-          value={result.protectiveDeviceRating || ''}
-          onValueChange={handleRatingChange}
-        >
+        <Select value={result.protectiveDeviceRating || ''} onValueChange={handleRatingChange}>
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="A">
-              {result.protectiveDeviceRating || "A"}
-            </SelectValue>
+            <SelectValue placeholder="A">{result.protectiveDeviceRating || 'A'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {protectiveDeviceRatingOptions.map((option) => (
@@ -280,9 +284,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           onValueChange={(value) => onUpdate(result.id, 'rcdBsStandard', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="BS">
-              {result.rcdBsStandard || "BS"}
-            </SelectValue>
+            <SelectValue placeholder="BS">{result.rcdBsStandard || 'BS'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[9999]">
             {rcdBsStandardOptions.map((option) => (
@@ -299,9 +301,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           onValueChange={(value) => onUpdate(result.id, 'rcdType', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Ty">
-              {result.rcdType || "Ty"}
-            </SelectValue>
+            <SelectValue placeholder="Ty">{result.rcdType || 'Ty'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {rcdTypeOptions.map((option) => (
@@ -321,11 +321,21 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="mA" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="10" className="text-xs py-2">10mA</SelectItem>
-            <SelectItem value="30" className="text-xs py-2">30mA</SelectItem>
-            <SelectItem value="100" className="text-xs py-2">100mA</SelectItem>
-            <SelectItem value="300" className="text-xs py-2">300mA</SelectItem>
-            <SelectItem value="500" className="text-xs py-2">500mA</SelectItem>
+            <SelectItem value="10" className="text-xs py-2">
+              10mA
+            </SelectItem>
+            <SelectItem value="30" className="text-xs py-2">
+              30mA
+            </SelectItem>
+            <SelectItem value="100" className="text-xs py-2">
+              100mA
+            </SelectItem>
+            <SelectItem value="300" className="text-xs py-2">
+              300mA
+            </SelectItem>
+            <SelectItem value="500" className="text-xs py-2">
+              500mA
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -364,7 +374,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           <Input
             value={result.ringR2 || ''}
             onChange={(e) => onUpdate(result.id, 'ringR2', e.target.value)}
-            className={cn(inputClassName, "flex-1")}
+            className={cn(inputClassName, 'flex-1')}
             placeholder="Ω"
             type="number"
             step="0.001"
@@ -429,10 +439,18 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="MΩ" />
           </SelectTrigger>
           <SelectContent className="z-[100] min-w-[140px]">
-            <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
-            <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
-            <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
-            <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+            <SelectItem value=">200" className="py-3 text-base touch-manipulation">
+              &gt;200 MΩ
+            </SelectItem>
+            <SelectItem value=">999" className="py-3 text-base touch-manipulation">
+              &gt;999 MΩ
+            </SelectItem>
+            <SelectItem value="N/A" className="py-3 text-base touch-manipulation">
+              N/A
+            </SelectItem>
+            <SelectItem value="LIM" className="py-3 text-base touch-manipulation">
+              LIM
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -445,10 +463,18 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="MΩ" />
           </SelectTrigger>
           <SelectContent className="z-[100] min-w-[140px]">
-            <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
-            <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
-            <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
-            <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+            <SelectItem value=">200" className="py-3 text-base touch-manipulation">
+              &gt;200 MΩ
+            </SelectItem>
+            <SelectItem value=">999" className="py-3 text-base touch-manipulation">
+              &gt;999 MΩ
+            </SelectItem>
+            <SelectItem value="N/A" className="py-3 text-base touch-manipulation">
+              N/A
+            </SelectItem>
+            <SelectItem value="LIM" className="py-3 text-base touch-manipulation">
+              LIM
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -463,9 +489,15 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="Pol" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="Correct" className="text-xs py-2">✓</SelectItem>
-            <SelectItem value="Incorrect" className="text-xs py-2">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
+            <SelectItem value="Correct" className="text-xs py-2">
+              ✓
+            </SelectItem>
+            <SelectItem value="Incorrect" className="text-xs py-2">
+              ✗
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -499,9 +531,15 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2">✓</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2">
+              ✓
+            </SelectItem>
+            <SelectItem value="✗" className="text-xs py-2">
+              ✗
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -516,9 +554,15 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2 text-green-600">
+              ✓
+            </SelectItem>
+            <SelectItem value="✗" className="text-xs py-2 text-red-600">
+              ✗
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -529,16 +573,25 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           value={result.functionalTesting || ''}
           onValueChange={(value) => onUpdate(result.id, 'functionalTesting', value)}
         >
-          <SelectTrigger className={cn(selectTriggerClassName,
-            result.functionalTesting === '✓' && 'text-green-600',
-            result.functionalTesting === '✗' && 'text-red-600'
-          )}>
+          <SelectTrigger
+            className={cn(
+              selectTriggerClassName,
+              result.functionalTesting === '✓' && 'text-green-600',
+              result.functionalTesting === '✗' && 'text-red-600'
+            )}
+          >
             <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2 text-green-600">
+              ✓
+            </SelectItem>
+            <SelectItem value="✗" className="text-xs py-2 text-red-600">
+              ✗
+            </SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">
+              N/A
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
@@ -546,7 +599,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
         <Input
           value={result.notes || ''}
           onChange={(e) => onUpdate(result.id, 'notes', e.target.value)}
-          className={cn(inputClassName, "truncate")}
+          className={cn(inputClassName, 'truncate')}
           placeholder="Notes"
         />
       </TableCell>

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,124 +12,139 @@ const ResponsibilityCompetencyQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: "What does competency in electrical inspection and testing include?",
+      question: 'What does competency in electrical inspection and testing include?',
       options: [
-        "A. Holding a qualification only",
-        "B. Knowing how to use test equipment",
-        "C. Skills, knowledge, experience, and understanding",
-        "D. Following what others tell you"
+        'A. Holding a qualification only',
+        'B. Knowing how to use test equipment',
+        'C. Skills, knowledge, experience, and understanding',
+        'D. Following what others tell you',
       ],
       correctAnswer: 2,
-      explanation: "Competency requires all four elements: skills, knowledge, experience, and understanding. A qualification alone is not sufficient - practical ability and judgement are equally important."
+      explanation:
+        'Competency requires all four elements: skills, knowledge, experience, and understanding. A qualification alone is not sufficient - practical ability and judgement are equally important.',
     },
     {
       id: 2,
-      question: "True or False: You can legally sign off a test if someone else confirms it was done correctly.",
+      question:
+        'True or False: You can legally sign off a test if someone else confirms it was done correctly.',
       options: [
-        "A. True - verbal confirmation is sufficient",
-        "B. False - you must personally verify all work you certify",
-        "C. True - if the supervisor is more qualified",
-        "D. True - if it's documented in writing"
+        'A. True - verbal confirmation is sufficient',
+        'B. False - you must personally verify all work you certify',
+        'C. True - if the supervisor is more qualified',
+        "D. True - if it's documented in writing",
       ],
       correctAnswer: 1,
-      explanation: "False. Under EAWR 1989 and professional standards, the person who signs the certificate is legally responsible for the work. You cannot rely on others' confirmation - you must personally verify everything you certify."
+      explanation:
+        "False. Under EAWR 1989 and professional standards, the person who signs the certificate is legally responsible for the work. You cannot rely on others' confirmation - you must personally verify everything you certify.",
     },
     {
       id: 3,
-      question: "Under the Electricity at Work Regulations 1989, who can carry out inspection and testing?",
+      question:
+        'Under the Electricity at Work Regulations 1989, who can carry out inspection and testing?',
       options: [
-        "A. Anyone employed by a contractor",
-        "B. Only persons deemed competent",
-        "C. The site manager",
-        "D. The client"
+        'A. Anyone employed by a contractor',
+        'B. Only persons deemed competent',
+        'C. The site manager',
+        'D. The client',
       ],
       correctAnswer: 1,
-      explanation: "EAWR 1989 Regulation 16 specifically requires that work on electrical systems be carried out only by competent persons. This is a legal requirement, not just best practice."
+      explanation:
+        'EAWR 1989 Regulation 16 specifically requires that work on electrical systems be carried out only by competent persons. This is a legal requirement, not just best practice.',
     },
     {
       id: 4,
-      question: "What is a serious risk of working outside your level of competence?",
+      question: 'What is a serious risk of working outside your level of competence?',
       options: [
-        "A. You might take longer to finish",
-        "B. You may be overcharged for training",
-        "C. You could face legal action and endanger lives",
-        "D. The certificate will need more pages"
+        'A. You might take longer to finish',
+        'B. You may be overcharged for training',
+        'C. You could face legal action and endanger lives',
+        'D. The certificate will need more pages',
       ],
       correctAnswer: 2,
-      explanation: "Working outside competency limits creates serious legal liability and safety risks. This can result in prosecution, imprisonment, fines, and most importantly, could endanger lives through missed hazards or incorrect certification."
+      explanation:
+        'Working outside competency limits creates serious legal liability and safety risks. This can result in prosecution, imprisonment, fines, and most importantly, could endanger lives through missed hazards or incorrect certification.',
     },
     {
       id: 5,
-      question: "Which of these best demonstrates competency for inspection and testing?",
+      question: 'Which of these best demonstrates competency for inspection and testing?',
       options: [
-        "A. Watching online videos",
-        "B. Reading outdated guidance",
-        "C. City & Guilds 2391 qualification plus practical experience",
-        "D. Asking a friend for advice"
+        'A. Watching online videos',
+        'B. Reading outdated guidance',
+        'C. City & Guilds 2391 qualification plus practical experience',
+        'D. Asking a friend for advice',
       ],
       correctAnswer: 2,
-      explanation: "Competency is best demonstrated through recognised qualifications (like C&G 2391) combined with practical experience. This provides both theoretical knowledge and real-world application skills necessary for safe and effective work."
+      explanation:
+        'Competency is best demonstrated through recognised qualifications (like C&G 2391) combined with practical experience. This provides both theoretical knowledge and real-world application skills necessary for safe and effective work.',
     },
     {
       id: 6,
-      question: "What are the potential penalties for electrical work carried out by non-competent persons?",
+      question:
+        'What are the potential penalties for electrical work carried out by non-competent persons?',
       options: [
-        "A. Warning letter only",
-        "B. Unlimited fines and up to 2 years imprisonment",
-        "C. Small fixed penalty notice",
-        "D. Just increased insurance premiums"
+        'A. Warning letter only',
+        'B. Unlimited fines and up to 2 years imprisonment',
+        'C. Small fixed penalty notice',
+        'D. Just increased insurance premiums',
       ],
       correctAnswer: 1,
-      explanation: "Under EAWR 1989 and HASWA 1974, penalties can include unlimited fines, imprisonment up to 2 years, and director disqualification. These are serious criminal offences with severe consequences."
+      explanation:
+        'Under EAWR 1989 and HASWA 1974, penalties can include unlimited fines, imprisonment up to 2 years, and director disqualification. These are serious criminal offences with severe consequences.',
     },
     {
       id: 7,
-      question: "Which regulation specifically requires competent persons for electrical work?",
+      question: 'Which regulation specifically requires competent persons for electrical work?',
       options: [
-        "A. Regulation 4 of EAWR 1989",
-        "B. Regulation 16 of EAWR 1989",
-        "C. Section 7 of HASWA 1974",
-        "D. Building Regulations Part P"
+        'A. Regulation 4 of EAWR 1989',
+        'B. Regulation 16 of EAWR 1989',
+        'C. Section 7 of HASWA 1974',
+        'D. Building Regulations Part P',
       ],
       correctAnswer: 1,
-      explanation: "Regulation 16 of the Electricity at Work Regulations 1989 specifically states that no person shall be engaged in work which requires technical knowledge or experience unless they possess such knowledge or experience."
+      explanation:
+        'Regulation 16 of the Electricity at Work Regulations 1989 specifically states that no person shall be engaged in work which requires technical knowledge or experience unless they possess such knowledge or experience.',
     },
     {
       id: 8,
-      question: "What should you do if asked to inspect an installation type you're unfamiliar with?",
+      question:
+        "What should you do if asked to inspect an installation type you're unfamiliar with?",
       options: [
-        "A. Proceed carefully and do your best",
-        "B. Use similar test methods from other installations",
-        "C. Seek appropriate training or refer to a specialist",
-        "D. Ask the client what they think should be done"
+        'A. Proceed carefully and do your best',
+        'B. Use similar test methods from other installations',
+        'C. Seek appropriate training or refer to a specialist',
+        'D. Ask the client what they think should be done',
       ],
       correctAnswer: 2,
-      explanation: "Working outside your competency area is dangerous and illegal. You should seek appropriate training or refer the work to someone with the necessary competency for that specific installation type."
+      explanation:
+        'Working outside your competency area is dangerous and illegal. You should seek appropriate training or refer the work to someone with the necessary competency for that specific installation type.',
     },
     {
       id: 9,
-      question: "Which professional body membership can help demonstrate ongoing competency?",
+      question: 'Which professional body membership can help demonstrate ongoing competency?',
       options: [
-        "A. Local football club",
-        "B. NICEIC or NAPIT membership",
-        "C. Gym membership",
-        "D. Social media groups"
+        'A. Local football club',
+        'B. NICEIC or NAPIT membership',
+        'C. Gym membership',
+        'D. Social media groups',
       ],
       correctAnswer: 1,
-      explanation: "Professional membership with bodies like NICEIC, NAPIT, ECA, or SELECT provides ongoing assessment, technical support, and demonstrates commitment to maintaining professional standards and competency."
+      explanation:
+        'Professional membership with bodies like NICEIC, NAPIT, ECA, or SELECT provides ongoing assessment, technical support, and demonstrates commitment to maintaining professional standards and competency.',
     },
     {
       id: 10,
-      question: "What is the primary responsibility of the person who signs an electrical certificate?",
+      question:
+        'What is the primary responsibility of the person who signs an electrical certificate?',
       options: [
-        "A. To ensure the work was completed on time",
-        "B. To confirm the installation is safe and complies with BS 7671",
-        "C. To negotiate the best price with suppliers",
-        "D. To arrange follow-up maintenance visits"
+        'A. To ensure the work was completed on time',
+        'B. To confirm the installation is safe and complies with BS 7671',
+        'C. To negotiate the best price with suppliers',
+        'D. To arrange follow-up maintenance visits',
       ],
       correctAnswer: 1,
-      explanation: "The primary responsibility of signing a certificate is to confirm that the installation has been properly inspected, tested, and complies with BS 7671. This carries full legal responsibility for the safety assessment."
-    }
+      explanation:
+        'The primary responsibility of signing a certificate is to confirm that the installation has been properly inspected, tested, and complies with BS 7671. This carries full legal responsibility for the safety assessment.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -173,9 +187,9 @@ const ResponsibilityCompetencyQuiz = () => {
 
   const getScoreColor = (score: number) => {
     const percentage = (score / questions.length) * 100;
-    if (percentage >= 80) return "text-green-400";
-    if (percentage >= 60) return "text-yellow-400";
-    return "text-red-400";
+    if (percentage >= 80) return 'text-green-400';
+    if (percentage >= 60) return 'text-yellow-400';
+    return 'text-red-400';
   };
 
   const currentQ = questions[currentQuestion];
@@ -197,13 +211,13 @@ const ResponsibilityCompetencyQuiz = () => {
               <div className={`text-4xl font-bold mb-2 ${getScoreColor(score)}`}>
                 {score}/{questions.length}
               </div>
-              <div className={`text-2xl font-semibold ${getScoreColor(score)}`}>
-                {percentage}%
-              </div>
+              <div className={`text-2xl font-semibold ${getScoreColor(score)}`}>{percentage}%</div>
               <p className="text-gray-400 mt-2">
-                {percentage >= 80 ? "Excellent understanding!" :
-                 percentage >= 60 ? "Good progress - review the areas below" :
-                 "Review the material and try again"}
+                {percentage >= 80
+                  ? 'Excellent understanding!'
+                  : percentage >= 60
+                    ? 'Good progress - review the areas below'
+                    : 'Review the material and try again'}
               </p>
             </div>
 
@@ -211,9 +225,12 @@ const ResponsibilityCompetencyQuiz = () => {
               {questions.map((question, index) => {
                 const userAnswer = selectedAnswers[index];
                 const isCorrect = userAnswer === question.correctAnswer;
-                
+
                 return (
-                  <div key={question.id} className="bg-[#2a2a2a] p-4 rounded-lg border border-gray-600">
+                  <div
+                    key={question.id}
+                    className="bg-[#2a2a2a] p-4 rounded-lg border border-gray-600"
+                  >
                     <div className="flex items-start gap-3 mb-3">
                       {isCorrect ? (
                         <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -224,7 +241,9 @@ const ResponsibilityCompetencyQuiz = () => {
                         <p className="text-foreground font-medium mb-2">
                           Question {index + 1}: {question.question}
                         </p>
-                        <p className={`text-sm mb-2 ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
+                        <p
+                          className={`text-sm mb-2 ${isCorrect ? 'text-green-300' : 'text-red-300'}`}
+                        >
                           Your answer: {question.options[userAnswer]}
                         </p>
                         {!isCorrect && (
@@ -232,9 +251,7 @@ const ResponsibilityCompetencyQuiz = () => {
                             Correct answer: {question.options[question.correctAnswer]}
                           </p>
                         )}
-                        <p className="text-gray-400 text-sm">
-                          {question.explanation}
-                        </p>
+                        <p className="text-gray-400 text-sm">{question.explanation}</p>
                       </div>
                     </div>
                   </div>
@@ -243,7 +260,7 @@ const ResponsibilityCompetencyQuiz = () => {
             </div>
 
             <div className="flex justify-center mt-6">
-              <Button 
+              <Button
                 onClick={handleRestart}
                 className="bg-elec-yellow text-black hover:bg-yellow-400"
               >
@@ -268,7 +285,7 @@ const ResponsibilityCompetencyQuiz = () => {
           </span>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
           ></div>
@@ -278,15 +295,11 @@ const ResponsibilityCompetencyQuiz = () => {
       {/* Question Card */}
       <Card className="bg-[#323232] border-gray-700">
         <CardHeader>
-          <CardTitle className="text-foreground">
-            Question {currentQuestion + 1}
-          </CardTitle>
+          <CardTitle className="text-foreground">Question {currentQuestion + 1}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-foreground text-lg leading-relaxed">
-            {currentQ.question}
-          </p>
-          
+          <p className="text-foreground text-lg leading-relaxed">{currentQ.question}</p>
+
           <div className="space-y-3">
             {currentQ.options.map((option, index) => (
               <button
@@ -326,12 +339,9 @@ const ResponsibilityCompetencyQuiz = () => {
               Show Results
             </Button>
           )}
-          
+
           {selectedAnswers[currentQuestion] !== undefined && (
-            <Button
-              onClick={handleNext}
-              className="bg-elec-yellow text-black hover:bg-yellow-400"
-            >
+            <Button onClick={handleNext} className="bg-elec-yellow text-black hover:bg-yellow-400">
               {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
             </Button>
           )}

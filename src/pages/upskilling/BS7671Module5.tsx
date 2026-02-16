@@ -7,40 +7,44 @@ const BS7671Module5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Equipment Ratings and Suitability for Purpose",
+      title: 'Equipment Ratings and Suitability for Purpose',
       icon: Settings,
-      description: "Selecting equipment including enhanced consumer units for renewable energy systems"
+      description:
+        'Selecting equipment including enhanced consumer units for renewable energy systems',
     },
     {
       id: 2,
-      title: "Cable Types, Sizing, Grouping, and Routing",
+      title: 'Cable Types, Sizing, Grouping, and Routing',
       icon: Cable,
-      description: "Cable selection, current-carrying capacity calculations, and installation methods"
+      description:
+        'Cable selection, current-carrying capacity calculations, and installation methods',
     },
     {
       id: 3,
-      title: "Containment Systems and Mechanical Protection",
+      title: 'Containment Systems and Mechanical Protection',
       icon: Package,
-      description: "Cable management systems and protection against mechanical damage"
+      description: 'Cable management systems and protection against mechanical damage',
     },
     {
       id: 4,
-      title: "Isolation, Switching, and Emergency Controls",
+      title: 'Isolation, Switching, and Emergency Controls',
       icon: Power,
-      description: "Requirements for isolation devices, switching arrangements, and emergency stopping"
+      description:
+        'Requirements for isolation devices, switching arrangements, and emergency stopping',
     },
     {
       id: 5,
-      title: "Grid Interaction and Anti-Islanding Protection",
+      title: 'Grid Interaction and Anti-Islanding Protection',
       icon: ShieldCheck,
-      description: "Grid interaction safety measures and anti-islanding protection for renewable energy"
+      description:
+        'Grid interaction safety measures and anti-islanding protection for renewable energy',
     },
     {
       id: 6,
-      title: "Environmental Protection (IP Ratings, Fire Resistance)",
+      title: 'Environmental Protection (IP Ratings, Fire Resistance)',
       icon: Package,
-      description: "Protection against environmental influences and fire safety requirements"
-    }
+      description: 'Protection against environmental influences and fire safety requirements',
+    },
   ];
 
   return (

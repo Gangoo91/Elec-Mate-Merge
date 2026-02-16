@@ -12,10 +12,11 @@ export const BMSImplementationSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p>
-          Implementing a BMS requires careful planning, phased installation, and thorough commissioning. 
-          Understanding the process helps installers and clients set realistic expectations and timelines.
+          Implementing a BMS requires careful planning, phased installation, and thorough
+          commissioning. Understanding the process helps installers and clients set realistic
+          expectations and timelines.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -24,7 +25,9 @@ export const BMSImplementationSection = () => {
             </h4>
             <div className="space-y-3">
               <div className="p-3 bg-[#1a1a1a] rounded-lg">
-                <h5 className="font-medium text-foreground text-sm mb-1">Site Survey & Assessment</h5>
+                <h5 className="font-medium text-foreground text-sm mb-1">
+                  Site Survey & Assessment
+                </h5>
                 <ul className="text-xs text-gray-400 space-y-1">
                   <li>• Existing system evaluation</li>
                   <li>• Infrastructure requirements</li>
@@ -43,7 +46,7 @@ export const BMSImplementationSection = () => {
               </div>
             </div>
           </div>
-          
+
           <div>
             <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
               <Monitor className="h-4 w-4 text-green-400" />
@@ -71,7 +74,7 @@ export const BMSImplementationSection = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="grid md:grid-cols-3 gap-4">
           <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
             <h5 className="font-semibold text-foreground mb-2">Typical Timeline</h5>
@@ -82,7 +85,7 @@ export const BMSImplementationSection = () => {
               <li>• Optimisation: 3-6 months</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
             <h5 className="font-semibold text-foreground mb-2">Key Success Factors</h5>
             <ul className="text-sm space-y-1">
@@ -92,7 +95,7 @@ export const BMSImplementationSection = () => {
               <li>• Thorough testing</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg">
             <h5 className="font-semibold text-foreground mb-2 flex items-center gap-1">
               <AlertTriangle className="h-3 w-3" />

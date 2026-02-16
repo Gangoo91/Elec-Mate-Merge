@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { Subsection } from "@/data/healthAndSafety/types";
+import { useNavigate } from 'react-router-dom';
+import { Subsection } from '@/data/healthAndSafety/types';
 
 interface ContentNavigationProps {
   courseSlug?: string;
@@ -14,7 +14,7 @@ export function useContentNavigation({
   unitSlug,
   sectionId,
   isInstallationMethod = false,
-  isCraftSkill = false
+  isCraftSkill = false,
 }: ContentNavigationProps) {
   const navigate = useNavigate();
 
@@ -22,14 +22,20 @@ export function useContentNavigation({
     if (!courseSlug || !unitSlug || !sectionId) return;
 
     const subsectionId = typeof subsection === 'string' ? subsection : subsection.id;
-    
+
     if (isInstallationMethod) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subsectionId}`);
+      navigate(
+        `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subsectionId}`
+      );
     } else if (isCraftSkill) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/craft-skills/${sectionId}/subsection/${subsectionId}`);
+      navigate(
+        `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/craft-skills/${sectionId}/subsection/${subsectionId}`
+      );
     } else {
       // Regular section
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsectionId}`);
+      navigate(
+        `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsectionId}`
+      );
     }
   };
 
@@ -50,6 +56,6 @@ export function useContentNavigation({
 
   return {
     navigateToSubsection,
-    navigateBack
+    navigateBack,
   };
 }

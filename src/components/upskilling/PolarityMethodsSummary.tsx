@@ -11,7 +11,6 @@ export const PolarityMethodsSummary = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
-        
         {/* Testing Methods Mastered */}
         <div className="space-y-4">
           <h4 className="text-foreground font-semibold flex items-center gap-2">
@@ -20,12 +19,27 @@ export const PolarityMethodsSummary = () => {
           </h4>
           <div className="bg-green-900/20 border border-green-700/30 rounded-lg p-4">
             <ul className="list-disc list-inside space-y-2 text-sm text-green-200">
-              <li><strong>Continuity testing method</strong> using 4-200mA test current on dead circuits</li>
-              <li><strong>Socket outlet testing</strong> from DB line terminal to outlet line terminal</li>
-              <li><strong>Lighting circuit verification</strong> including switch positions and lampholders</li>
-              <li><strong>Fixed equipment testing</strong> through isolation switches and FCUs</li>
-              <li><strong>Two-way switching</strong> testing with switches in various positions</li>
-              <li><strong>Result interpretation</strong> recognising correct vs incorrect polarity readings</li>
+              <li>
+                <strong>Continuity testing method</strong> using 4-200mA test current on dead
+                circuits
+              </li>
+              <li>
+                <strong>Socket outlet testing</strong> from DB line terminal to outlet line terminal
+              </li>
+              <li>
+                <strong>Lighting circuit verification</strong> including switch positions and
+                lampholders
+              </li>
+              <li>
+                <strong>Fixed equipment testing</strong> through isolation switches and FCUs
+              </li>
+              <li>
+                <strong>Two-way switching</strong> testing with switches in various positions
+              </li>
+              <li>
+                <strong>Result interpretation</strong> recognising correct vs incorrect polarity
+                readings
+              </li>
             </ul>
           </div>
         </div>
@@ -55,11 +69,15 @@ export const PolarityMethodsSummary = () => {
           <div className="grid gap-3">
             <div className="bg-green-900/20 border border-green-700/30 rounded-lg p-3">
               <h5 className="text-green-200 font-medium text-sm">Correct Polarity</h5>
-              <p className="text-xs text-green-200 mt-1">Low resistance (&lt;0.5Ω) from DB line to outlet line terminal</p>
+              <p className="text-xs text-green-200 mt-1">
+                Low resistance (&lt;0.5Ω) from DB line to outlet line terminal
+              </p>
             </div>
             <div className="bg-red-900/20 border border-red-700/30 rounded-lg p-3">
               <h5 className="text-red-200 font-medium text-sm">Incorrect Polarity</h5>
-              <p className="text-xs text-red-200 mt-1">Continuity from DB line to outlet neutral (reversed connections)</p>
+              <p className="text-xs text-red-200 mt-1">
+                Continuity from DB line to outlet neutral (reversed connections)
+              </p>
             </div>
           </div>
         </div>
@@ -98,9 +116,10 @@ export const PolarityMethodsSummary = () => {
         <div className="bg-elec-dark/50 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Professional Competence Achieved</h4>
           <p className="text-sm text-foreground">
-            You now have the practical skills to perform comprehensive polarity testing on all common 
-            circuit types. These methods ensure compliance with BS 7671 and maintain electrical safety 
-            standards. The next section will build on these skills with earth fault loop impedance testing.
+            You now have the practical skills to perform comprehensive polarity testing on all
+            common circuit types. These methods ensure compliance with BS 7671 and maintain
+            electrical safety standards. The next section will build on these skills with earth
+            fault loop impedance testing.
           </p>
         </div>
       </CardContent>

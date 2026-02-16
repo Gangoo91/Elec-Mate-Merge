@@ -2,8 +2,25 @@ import { useState, memo, Suspense, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Plus, FileText, Target, TrendingUp, AlertTriangle, RefreshCw, Grid, List, BarChart3 } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  Plus,
+  FileText,
+  Target,
+  TrendingUp,
+  AlertTriangle,
+  RefreshCw,
+  Grid,
+  List,
+  BarChart3,
+} from 'lucide-react';
 import { DropdownTabs } from '@/components/ui/dropdown-tabs';
 import { PortfolioEntry } from '@/types/portfolio';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
@@ -20,85 +37,87 @@ import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import PortfolioExportDialog from '@/components/apprentice/portfolio/PortfolioExportDialog';
 
 // Memoized components for performance
-const MemoizedStatsCard = memo(({ 
-  icon: Icon, 
-  label, 
-  value, 
-  color 
-}: { 
-  icon: any; 
-  label: string; 
-  value: string | number; 
-  color: string;
-}) => (
-  <Card className="border-elec-yellow/20 bg-elec-dark">
-    <CardContent className="p-4">
-      <div className="flex items-center gap-2">
-        <Icon className={`h-5 w-5 ${color}`} />
-        <div>
-          <p className="text-sm text-muted-foreground">{label}</p>
-          <p className={`text-2xl font-bold ${color}`}>{value}</p>
-        </div>
-      </div>
-    </CardContent>
-  </Card>
-));
-
-const MemoizedCategoryCard = memo(({ 
-  category, 
-  entries 
-}: { 
-  category: any; 
-  entries: PortfolioEntry[];
-}) => {
-  const categoryEntries = useMemo(
-    () => entries.filter(e => e.category.id === category.id),
-    [entries, category.id]
-  );
-  
-  const completedEntries = useMemo(
-    () => categoryEntries.filter(e => e.status === 'completed').length,
-    [categoryEntries]
-  );
-  
-  const progressPercentage = useMemo(
-    () => Math.round((completedEntries / category.requiredEntries) * 100),
-    [completedEntries, category.requiredEntries]
-  );
-
-  return (
+const MemoizedStatsCard = memo(
+  ({
+    icon: Icon,
+    label,
+    value,
+    color,
+  }: {
+    icon: any;
+    label: string;
+    value: string | number;
+    color: string;
+  }) => (
     <Card className="border-elec-yellow/20 bg-elec-dark">
       <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-semibold">{category.name}</h3>
-          <Badge 
-            variant={progressPercentage >= 100 ? "default" : "secondary"} 
-            className={progressPercentage >= 100 ? "bg-elec-yellow text-elec-dark" : "border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow"}
-          >
-            {completedEntries}/{category.requiredEntries}
-          </Badge>
+        <div className="flex items-center gap-2">
+          <Icon className={`h-5 w-5 ${color}`} />
+          <div>
+            <p className="text-sm text-muted-foreground">{label}</p>
+            <p className={`text-2xl font-bold ${color}`}>{value}</p>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground mb-3">{category.description}</p>
-        <div className="w-full bg-elec-gray rounded-full h-2">
-          <div 
-            className="bg-elec-yellow h-2 rounded-full transition-all duration-500"
-            style={{ width: `${Math.min(progressPercentage, 100)}%` }}
-          />
-        </div>
-        <p className="text-xs text-muted-foreground mt-1">{progressPercentage}% complete</p>
       </CardContent>
     </Card>
-  );
-});
+  )
+);
+
+const MemoizedCategoryCard = memo(
+  ({ category, entries }: { category: any; entries: PortfolioEntry[] }) => {
+    const categoryEntries = useMemo(
+      () => entries.filter((e) => e.category.id === category.id),
+      [entries, category.id]
+    );
+
+    const completedEntries = useMemo(
+      () => categoryEntries.filter((e) => e.status === 'completed').length,
+      [categoryEntries]
+    );
+
+    const progressPercentage = useMemo(
+      () => Math.round((completedEntries / category.requiredEntries) * 100),
+      [completedEntries, category.requiredEntries]
+    );
+
+    return (
+      <Card className="border-elec-yellow/20 bg-elec-dark">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="font-semibold">{category.name}</h3>
+            <Badge
+              variant={progressPercentage >= 100 ? 'default' : 'secondary'}
+              className={
+                progressPercentage >= 100
+                  ? 'bg-elec-yellow text-elec-dark'
+                  : 'border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow'
+              }
+            >
+              {completedEntries}/{category.requiredEntries}
+            </Badge>
+          </div>
+          <p className="text-sm text-muted-foreground mb-3">{category.description}</p>
+          <div className="w-full bg-elec-gray rounded-full h-2">
+            <div
+              className="bg-elec-yellow h-2 rounded-full transition-all duration-500"
+              style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">{progressPercentage}% complete</p>
+        </CardContent>
+      </Card>
+    );
+  }
+);
 
 const PortfolioManager = () => {
   const { clearQualificationSelection } = useQualifications();
-  const { 
-    entries, 
-    categories, 
+  const {
+    entries,
+    categories,
     groups,
-    analytics, 
-    isLoading, 
+    analytics,
+    isLoading,
     hasQualificationSelected,
     addEntry,
     updateEntry,
@@ -106,11 +125,11 @@ const PortfolioManager = () => {
     isAddingEntry,
     getEntriesByGroup,
     getCategoriesByCompetencyLevel,
-    refresh
+    refresh,
   } = useUltraFastPortfolio();
-  
+
   const [showAddForm, setShowAddForm] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState('overview');
 
   const handleChangeCourse = async () => {
     const success = await clearQualificationSelection();
@@ -129,7 +148,7 @@ const PortfolioManager = () => {
     return (
       <div className="space-y-6">
         <QualificationSelector />
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
             <CardTitle>Portfolio Management</CardTitle>
@@ -174,7 +193,7 @@ const PortfolioManager = () => {
 
       {/* Quick Actions */}
       <div className="flex flex-wrap gap-2 sm:gap-3">
-        <Button 
+        <Button
           onClick={() => setShowAddForm(true)}
           disabled={isAddingEntry}
           className="flex items-center gap-1.5 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-sm"
@@ -183,7 +202,7 @@ const PortfolioManager = () => {
           <Plus className="h-3.5 w-3.5" />
           {isAddingEntry ? 'Adding...' : 'Add Entry'}
         </Button>
-        <Button 
+        <Button
           onClick={handleChangeCourse}
           variant="outline"
           className="flex items-center gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm"
@@ -193,7 +212,7 @@ const PortfolioManager = () => {
           Clear Selection
         </Button>
         <PortfolioExportDialog entries={entries} />
-        <Button 
+        <Button
           onClick={() => {
             refresh();
             window.location.reload();
@@ -207,7 +226,6 @@ const PortfolioManager = () => {
         </Button>
       </div>
 
-
       {/* Main Content Tabs */}
       <DropdownTabs
         placeholder="Select portfolio section"
@@ -215,85 +233,102 @@ const PortfolioManager = () => {
         onValueChange={setActiveTab}
         tabs={[
           {
-            value: "grouped",
-            label: "Grouped Overview",
+            value: 'grouped',
+            label: 'Grouped Overview',
             icon: Grid,
             content: (
               <div className="space-y-6 mt-4">
-                <Suspense fallback={<UltraFastLoadingState showSkeleton={false} message="Loading grouped view..." />}>
-                  <GroupedPortfolioOverview 
-                    groups={groups}
-                    getEntriesByGroup={getEntriesByGroup}
-                  />
+                <Suspense
+                  fallback={
+                    <UltraFastLoadingState showSkeleton={false} message="Loading grouped view..." />
+                  }
+                >
+                  <GroupedPortfolioOverview groups={groups} getEntriesByGroup={getEntriesByGroup} />
                 </Suspense>
               </div>
-            )
+            ),
           },
           {
-            value: "competency",
-            label: "Competency Levels",
+            value: 'competency',
+            label: 'Competency Levels',
             icon: BarChart3,
             content: (
               <div className="space-y-6 mt-4">
-                <Suspense fallback={<UltraFastLoadingState showSkeleton={false} message="Loading competency view..." />}>
-                  <CompetencyLevelView 
+                <Suspense
+                  fallback={
+                    <UltraFastLoadingState
+                      showSkeleton={false}
+                      message="Loading competency view..."
+                    />
+                  }
+                >
+                  <CompetencyLevelView
                     categories={categories}
                     getEntriesByCompetencyLevel={(level) => {
                       const levelCategories = getCategoriesByCompetencyLevel(level);
-                      const levelCategoryIds = levelCategories.map(cat => cat.id);
-                      return entries.filter(entry => levelCategoryIds.includes(entry.category.id));
+                      const levelCategoryIds = levelCategories.map((cat) => cat.id);
+                      return entries.filter((entry) =>
+                        levelCategoryIds.includes(entry.category.id)
+                      );
                     }}
                   />
                 </Suspense>
               </div>
-            )
+            ),
           },
           {
-            value: "categories",
-            label: "Individual Categories",
+            value: 'categories',
+            label: 'Individual Categories',
             icon: List,
             content: (
               <div className="space-y-6 mt-4">
                 <div className="grid gap-4">
                   {categories.map((category) => (
-                    <MemoizedCategoryCard
-                      key={category.id}
-                      category={category}
-                      entries={entries}
-                    />
+                    <MemoizedCategoryCard key={category.id} category={category} entries={entries} />
                   ))}
                 </div>
               </div>
-            )
+            ),
           },
           {
-            value: "entries",
-            label: "Portfolio Entries",
+            value: 'entries',
+            label: 'Portfolio Entries',
             icon: FileText,
             content: (
               <div className="mt-4">
-                <Suspense fallback={<UltraFastLoadingState showSkeleton={false} message="Loading entries..." />}>
-                  <PortfolioEntriesList 
+                <Suspense
+                  fallback={
+                    <UltraFastLoadingState showSkeleton={false} message="Loading entries..." />
+                  }
+                >
+                  <PortfolioEntriesList
                     entries={entries}
                     onUpdateEntry={updateEntry}
                     onDeleteEntry={deleteEntry}
                   />
                 </Suspense>
               </div>
-            )
+            ),
           },
           {
-            value: "compliance",
-            label: "Compliance Progress",
+            value: 'compliance',
+            label: 'Compliance Progress',
             icon: TrendingUp,
             content: (
               <div className="mt-4">
-                <Suspense fallback={<UltraFastLoadingState showSkeleton={false} message="Loading compliance data..." />}>
+                <Suspense
+                  fallback={
+                    <UltraFastLoadingState
+                      showSkeleton={false}
+                      message="Loading compliance data..."
+                    />
+                  }
+                >
                   <QualificationCompliance />
                 </Suspense>
               </div>
-            )
-          }
+            ),
+          },
         ]}
       />
 

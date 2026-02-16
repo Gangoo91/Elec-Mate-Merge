@@ -76,47 +76,54 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         {isUpdating && (
           <div className="absolute top-2 right-2 flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
-              <span className={cn(
-                'animate-ping absolute inline-flex h-full w-full rounded-full opacity-75',
-                colors.pulse
-              )} />
-              <span className={cn(
-                'relative inline-flex rounded-full h-2 w-2',
-                colors.pulse
-              )} />
+              <span
+                className={cn(
+                  'animate-ping absolute inline-flex h-full w-full rounded-full opacity-75',
+                  colors.pulse
+                )}
+              />
+              <span className={cn('relative inline-flex rounded-full h-2 w-2', colors.pulse)} />
             </span>
           </div>
         )}
 
-        <div className={cn(
-          'w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2 sm:mb-3',
-          colors.icon,
-          compact && 'w-7 h-7 sm:w-8 sm:h-8 mb-1.5 sm:mb-2'
-        )}>
+        <div
+          className={cn(
+            'w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2 sm:mb-3',
+            colors.icon,
+            compact && 'w-7 h-7 sm:w-8 sm:h-8 mb-1.5 sm:mb-2'
+          )}
+        >
           <div className={cn(compact ? 'scale-75 sm:scale-90' : 'scale-90 sm:scale-100')}>
             {icon}
           </div>
         </div>
 
-        <p className={cn(
-          'text-[10px] sm:text-xs text-muted-foreground font-medium uppercase tracking-wide',
-          compact && 'text-[9px] sm:text-[10px]'
-        )}>
+        <p
+          className={cn(
+            'text-[10px] sm:text-xs text-muted-foreground font-medium uppercase tracking-wide',
+            compact && 'text-[9px] sm:text-[10px]'
+          )}
+        >
           {label}
         </p>
 
-        <p className={cn(
-          'text-lg sm:text-xl font-bold mt-0.5 sm:mt-1 truncate',
-          compact && 'text-base sm:text-lg'
-        )}>
+        <p
+          className={cn(
+            'text-lg sm:text-xl font-bold mt-0.5 sm:mt-1 truncate',
+            compact && 'text-base sm:text-lg'
+          )}
+        >
           {value}
         </p>
 
         {trend && (
-          <div className={cn(
-            'flex items-center gap-1 mt-1.5 sm:mt-2 text-[10px] sm:text-xs font-medium',
-            trend.isPositive ? 'text-emerald-400' : 'text-red-400'
-          )}>
+          <div
+            className={cn(
+              'flex items-center gap-1 mt-1.5 sm:mt-2 text-[10px] sm:text-xs font-medium',
+              trend.isPositive ? 'text-emerald-400' : 'text-red-400'
+            )}
+          >
             {trend.isPositive ? (
               <TrendingUp className="h-3 w-3" />
             ) : (

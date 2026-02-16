@@ -12,9 +12,11 @@ export const IntegrationWithSmartHVACSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Environmental sensors feed real-time data to smart controllers, enabling HVAC systems to respond automatically to changing indoor conditions and maintain optimal environments whilst optimising energy consumption.
+          Environmental sensors feed real-time data to smart controllers, enabling HVAC systems to
+          respond automatically to changing indoor conditions and maintain optimal environments
+          whilst optimising energy consumption.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Data Flow and Control Loop</h4>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
@@ -59,7 +61,7 @@ export const IntegrationWithSmartHVACSection = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-elec-gray border border-green-600 rounded-lg p-4">
             <h4 className="font-semibold text-green-200 mb-3">Smart Control Strategies</h4>
             <ul className="space-y-2 text-sm text-green-100">
@@ -74,9 +76,12 @@ export const IntegrationWithSmartHVACSection = () => {
         </div>
 
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
-          <h4 className="font-semibold text-foreground mb-3">Building Management System (BMS) Integration</h4>
+          <h4 className="font-semibold text-foreground mb-3">
+            Building Management System (BMS) Integration
+          </h4>
           <p className="text-sm text-gray-300 mb-3">
-            BMS platforms use multiple sensors across different zones to provide comprehensive building-wide environmental control and monitoring.
+            BMS platforms use multiple sensors across different zones to provide comprehensive
+            building-wide environmental control and monitoring.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div>

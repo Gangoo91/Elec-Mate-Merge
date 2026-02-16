@@ -133,9 +133,10 @@ export function validateR1R2(value: string, cableSize?: string): ValidationResul
   return {
     status: 'pass',
     message: 'Acceptable',
-    hint: cableSize && range
-      ? `Within expected range for ${cableSize}mm² cable`
-      : `Measured: ${r1r2.toFixed(2)}Ω`,
+    hint:
+      cableSize && range
+        ? `Within expected range for ${cableSize}mm² cable`
+        : `Measured: ${r1r2.toFixed(2)}Ω`,
     bs7671Reference: 'Reg 612.2',
   };
 }
@@ -281,7 +282,12 @@ export function validatePolarity(value: string): ValidationResult {
 
   const normalised = value.toLowerCase().trim();
 
-  if (normalised === 'satisfactory' || normalised === 'sat' || normalised === 'ok' || normalised === '✓') {
+  if (
+    normalised === 'satisfactory' ||
+    normalised === 'sat' ||
+    normalised === 'ok' ||
+    normalised === '✓'
+  ) {
     return {
       status: 'pass',
       message: 'Correct polarity confirmed',
@@ -289,7 +295,12 @@ export function validatePolarity(value: string): ValidationResult {
     };
   }
 
-  if (normalised === 'unsatisfactory' || normalised === 'unsat' || normalised === 'fail' || normalised === '✗') {
+  if (
+    normalised === 'unsatisfactory' ||
+    normalised === 'unsat' ||
+    normalised === 'fail' ||
+    normalised === '✗'
+  ) {
     return {
       status: 'error',
       message: 'Incorrect polarity detected',

@@ -1,17 +1,25 @@
-import { useState, useEffect } from "react";
-import { CreditCard, CheckCircle2, AlertCircle, ExternalLink, Loader2, Unplug, RefreshCw } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
-import { 
-  getStripeConnectStatus, 
-  createStripeConnectAccount, 
+import { useState, useEffect } from 'react';
+import {
+  CreditCard,
+  CheckCircle2,
+  AlertCircle,
+  ExternalLink,
+  Loader2,
+  Unplug,
+  RefreshCw,
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { toast } from '@/hooks/use-toast';
+import {
+  getStripeConnectStatus,
+  createStripeConnectAccount,
   getStripeOnboardingLink,
   disconnectStripeConnect,
-  type StripeConnectStatus 
-} from "@/services/financeService";
-import { getCompanySettings } from "@/services/settingsService";
+  type StripeConnectStatus,
+} from '@/services/financeService';
+import { getCompanySettings } from '@/services/settingsService';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,7 +29,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 export function StripeConnectCard() {
   const [status, setStatus] = useState<StripeConnectStatus | null>(null);
@@ -35,7 +43,7 @@ export function StripeConnectCard() {
       const data = await getStripeConnectStatus();
       setStatus(data);
     } catch (error) {
-      console.error("Error fetching Stripe status:", error);
+      console.error('Error fetching Stripe status:', error);
     } finally {
       setLoading(false);
     }
@@ -43,18 +51,25 @@ export function StripeConnectCard() {
 
   useEffect(() => {
     fetchStatus();
-    
+
     // Check URL params for Stripe redirect status
     const urlParams = new URLSearchParams(window.location.search);
     const stripeStatus = urlParams.get('stripe');
-    
+
     if (stripeStatus === 'success') {
-      toast({ title: "Stripe Setup", description: "Stripe account setup updated. Refreshing status..." });
+      toast({
+        title: 'Stripe Setup',
+        description: 'Stripe account setup updated. Refreshing status...',
+      });
       // Clean URL
       window.history.replaceState({}, '', window.location.pathname);
       fetchStatus();
     } else if (stripeStatus === 'refresh') {
-      toast({ title: "Setup Incomplete", description: "Please complete your Stripe account setup.", variant: "destructive" });
+      toast({
+        title: 'Setup Incomplete',
+        description: 'Please complete your Stripe account setup.',
+        variant: 'destructive',
+      });
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
@@ -67,15 +82,15 @@ export function StripeConnectCard() {
         companySettings.company_name || 'My Company',
         companySettings.company_email || null
       );
-      
+
       // Redirect to Stripe onboarding
       window.location.href = result.onboardingUrl;
     } catch (error: any) {
-      console.error("Error creating Stripe account:", error);
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to start Stripe setup", 
-        variant: "destructive" 
+      console.error('Error creating Stripe account:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to start Stripe setup',
+        variant: 'destructive',
       });
       setActionLoading(false);
     }
@@ -87,11 +102,11 @@ export function StripeConnectCard() {
       const result = await getStripeOnboardingLink('onboarding');
       window.location.href = result.url;
     } catch (error: any) {
-      console.error("Error getting onboarding link:", error);
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to get setup link", 
-        variant: "destructive" 
+      console.error('Error getting onboarding link:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to get setup link',
+        variant: 'destructive',
       });
       setActionLoading(false);
     }
@@ -103,11 +118,11 @@ export function StripeConnectCard() {
       const result = await getStripeOnboardingLink('dashboard');
       window.open(result.url, '_blank');
     } catch (error: any) {
-      console.error("Error getting dashboard link:", error);
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to open Stripe dashboard", 
-        variant: "destructive" 
+      console.error('Error getting dashboard link:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to open Stripe dashboard',
+        variant: 'destructive',
       });
     } finally {
       setActionLoading(false);
@@ -118,14 +133,14 @@ export function StripeConnectCard() {
     setActionLoading(true);
     try {
       await disconnectStripeConnect();
-      toast({ title: "Disconnected", description: "Stripe account has been disconnected." });
+      toast({ title: 'Disconnected', description: 'Stripe account has been disconnected.' });
       fetchStatus();
     } catch (error: any) {
-      console.error("Error disconnecting:", error);
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to disconnect", 
-        variant: "destructive" 
+      console.error('Error disconnecting:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to disconnect',
+        variant: 'destructive',
       });
     } finally {
       setActionLoading(false);
@@ -185,7 +200,9 @@ export function StripeConnectCard() {
             // Stripe not configured at platform level
             <div className="text-center py-4">
               <AlertCircle className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-              <p className="text-muted-foreground">Stripe payments are not configured for this platform.</p>
+              <p className="text-muted-foreground">
+                Stripe payments are not configured for this platform.
+              </p>
             </div>
           ) : !status?.connected ? (
             // Not connected - show connect button
@@ -193,12 +210,13 @@ export function StripeConnectCard() {
               <div className="bg-muted/30 rounded-xl p-4 space-y-2">
                 <p className="text-sm font-medium">Accept online payments</p>
                 <p className="text-sm text-muted-foreground">
-                  Connect your Stripe account to receive payments directly from clients when they view invoices online.
+                  Connect your Stripe account to receive payments directly from clients when they
+                  view invoices online.
                 </p>
               </div>
-              
-              <Button 
-                onClick={handleConnect} 
+
+              <Button
+                onClick={handleConnect}
                 disabled={actionLoading}
                 className="w-full h-12 bg-purple-600 hover:bg-purple-700"
               >
@@ -209,7 +227,7 @@ export function StripeConnectCard() {
                 )}
                 Connect Stripe Account
               </Button>
-              
+
               <p className="text-xs text-muted-foreground text-center">
                 1% platform fee + Stripe processing fees apply to each transaction
               </p>
@@ -226,9 +244,9 @@ export function StripeConnectCard() {
                   Your Stripe account needs additional information before you can accept payments.
                 </p>
               </div>
-              
-              <Button 
-                onClick={handleCompleteSetup} 
+
+              <Button
+                onClick={handleCompleteSetup}
                 disabled={actionLoading}
                 className="w-full h-12 bg-amber-600 hover:bg-amber-700"
               >
@@ -270,10 +288,10 @@ export function StripeConnectCard() {
                   </span>
                 </div>
               </div>
-              
+
               <div className="flex gap-2">
-                <Button 
-                  onClick={handleManageAccount} 
+                <Button
+                  onClick={handleManageAccount}
                   disabled={actionLoading}
                   variant="outline"
                   className="flex-1 h-11"
@@ -295,16 +313,16 @@ export function StripeConnectCard() {
                   <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
                 </Button>
               </div>
-              
-              <Button 
-                onClick={() => setShowDisconnectDialog(true)} 
+
+              <Button
+                onClick={() => setShowDisconnectDialog(true)}
                 variant="ghost"
                 className="w-full h-10 text-destructive hover:text-destructive hover:bg-destructive/10"
               >
                 <Unplug className="h-4 w-4 mr-2" />
                 Disconnect Stripe
               </Button>
-              
+
               <p className="text-xs text-muted-foreground text-center">
                 1% platform fee + Stripe processing fees apply to each transaction
               </p>
@@ -318,7 +336,9 @@ export function StripeConnectCard() {
           <AlertDialogHeader>
             <AlertDialogTitle>Disconnect Stripe Account?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will remove the connection to your Stripe account. You won't be able to accept card payments on invoices until you reconnect. Your Stripe account itself will not be deleted.
+              This will remove the connection to your Stripe account. You won't be able to accept
+              card payments on invoices until you reconnect. Your Stripe account itself will not be
+              deleted.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -327,9 +347,7 @@ export function StripeConnectCard() {
               onClick={handleDisconnect}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {actionLoading ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : null}
+              {actionLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
               Disconnect
             </AlertDialogAction>
           </AlertDialogFooter>

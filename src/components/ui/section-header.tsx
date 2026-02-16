@@ -8,7 +8,15 @@ interface SectionHeaderProps {
   title: string;
   icon: LucideIcon;
   isOpen: boolean;
-  color?: "primary" | "secondary" | "amber-500" | "green-500" | "blue-500" | "purple-500" | "orange-500" | "green-600";
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'amber-500'
+    | 'green-500'
+    | 'blue-500'
+    | 'purple-500'
+    | 'orange-500'
+    | 'green-600';
   completionPercentage?: number;
   isComplete?: boolean;
 }
@@ -17,31 +25,31 @@ export const SectionHeader = ({
   title,
   icon: Icon,
   isOpen,
-  color = "primary",
+  color = 'primary',
   completionPercentage = 0,
-  isComplete = false
+  isComplete = false,
 }: SectionHeaderProps) => {
   return (
     <CollapsibleTrigger asChild>
       <button className="group w-full cursor-pointer touch-manipulation ios-pressable">
         {/* Golden accent line at top */}
-        <div className={cn(
-          "h-0.5 w-full transition-all duration-300",
-          isComplete
-            ? "eicr-section-accent-complete"
-            : "eicr-section-accent"
-        )} />
+        <div
+          className={cn(
+            'h-0.5 w-full transition-all duration-300',
+            isComplete ? 'eicr-section-accent-complete' : 'eicr-section-accent'
+          )}
+        />
 
         {/* Header content */}
         <div className="flex items-center justify-between w-full p-4 transition-all duration-200 hover:bg-white/5 active:bg-white/10">
           <div className="flex items-center gap-3">
             {/* Icon container */}
-            <div className={cn(
-              "p-2.5 rounded-xl transition-all duration-200",
-              isComplete
-                ? "bg-green-500/15"
-                : "bg-elec-yellow/10 group-hover:bg-elec-yellow/20"
-            )}>
+            <div
+              className={cn(
+                'p-2.5 rounded-xl transition-all duration-200',
+                isComplete ? 'bg-green-500/15' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
+              )}
+            >
               {isComplete ? (
                 <CheckCircle className="h-5 w-5 text-green-400" />
               ) : (
@@ -51,22 +59,18 @@ export const SectionHeader = ({
 
             {/* Title and status */}
             <div className="text-left">
-              <h3 className={cn(
-                "font-semibold text-base transition-colors duration-200",
-                isComplete ? "text-green-400" : "text-white group-hover:text-elec-yellow"
-              )}>
+              <h3
+                className={cn(
+                  'font-semibold text-base transition-colors duration-200',
+                  isComplete ? 'text-green-400' : 'text-white group-hover:text-elec-yellow'
+                )}
+              >
                 {title}
               </h3>
               {!isComplete && completionPercentage > 0 && (
-                <p className="text-xs text-white/50 mt-0.5">
-                  {completionPercentage}% complete
-                </p>
+                <p className="text-xs text-white/50 mt-0.5">{completionPercentage}% complete</p>
               )}
-              {isComplete && (
-                <p className="text-xs text-green-400/70 mt-0.5">
-                  Section complete
-                </p>
-              )}
+              {isComplete && <p className="text-xs text-green-400/70 mt-0.5">Section complete</p>}
             </div>
           </div>
 
@@ -77,14 +81,16 @@ export const SectionHeader = ({
                 {completionPercentage}%
               </span>
             )}
-            <div className={cn(
-              "p-1.5 rounded-lg transition-all duration-200",
-              "group-hover:bg-white/10"
-            )}>
+            <div
+              className={cn(
+                'p-1.5 rounded-lg transition-all duration-200',
+                'group-hover:bg-white/10'
+              )}
+            >
               <ChevronDown
                 className={cn(
-                  "h-5 w-5 text-white/50 transition-all duration-300",
-                  isOpen && "rotate-180 text-elec-yellow"
+                  'h-5 w-5 text-white/50 transition-all duration-300',
+                  isOpen && 'rotate-180 text-elec-yellow'
                 )}
               />
             </div>

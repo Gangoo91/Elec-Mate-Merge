@@ -1,18 +1,24 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Wrench, Loader2 } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Wrench, Loader2 } from 'lucide-react';
 import { useSimpleAgent } from '@/hooks/useSimpleAgent';
 import { transformMaintenanceOutputToPDF } from '@/utils/maintenance-transformer';
 import type { MaintenanceAgentOutput } from '@/utils/maintenance-transformer';
 import MaintenancePDFButton from './MaintenancePDFButton';
 import ReactMarkdown from 'react-markdown';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
 import { MaintenanceSignatureSection } from './MaintenanceSignatureSection';
 import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
 import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
@@ -21,7 +27,9 @@ import { toast } from 'sonner';
 const MaintenanceInterface = () => {
   const [equipmentType, setEquipmentType] = useState('');
   const [installationAge, setInstallationAge] = useState('');
-  const [maintenanceType, setMaintenanceType] = useState<'preventive' | 'reactive' | 'periodic_inspection'>('preventive');
+  const [maintenanceType, setMaintenanceType] = useState<
+    'preventive' | 'reactive' | 'periodic_inspection'
+  >('preventive');
   const [location, setLocation] = useState('');
   const [query, setQuery] = useState('');
   const [result, setResult] = useState<MaintenanceAgentOutput | null>(null);
@@ -32,26 +40,26 @@ const MaintenanceInterface = () => {
       toast.success('Context loaded', { description: 'Work forwarded from another agent' });
     }
   };
-  
+
   // Signature state
   const [technicianSignature, setTechnicianSignature] = useState({
     name: '',
     date: '',
-    signatureDataUrl: ''
+    signatureDataUrl: '',
   });
   const [supervisorSignature, setSupervisorSignature] = useState({
     name: '',
     date: '',
-    signatureDataUrl: ''
+    signatureDataUrl: '',
   });
-  
+
   const { callAgent, isLoading, progress } = useSimpleAgent();
 
   const examplePrompts = [
-    "Annual EICR procedure for 10-year-old domestic consumer unit",
-    "Diagnose fault: shower tripping RCD intermittently",
-    "EV charger preventive maintenance schedule",
-    "Periodic inspection checklist for commercial distribution board"
+    'Annual EICR procedure for 10-year-old domestic consumer unit',
+    'Diagnose fault: shower tripping RCD intermittently',
+    'EV charger preventive maintenance schedule',
+    'Periodic inspection checklist for commercial distribution board',
   ];
 
   const handleSubmit = async () => {
@@ -62,7 +70,7 @@ const MaintenanceInterface = () => {
       equipmentType,
       installationAge,
       maintenanceType,
-      location
+      location,
     });
 
     if (response?.success && response.result) {
@@ -74,28 +82,27 @@ const MaintenanceInterface = () => {
   };
 
   const handleTechnicianChange = (field: 'name' | 'date' | 'signature', value: string) => {
-    setTechnicianSignature(prev => ({
+    setTechnicianSignature((prev) => ({
       ...prev,
-      [field === 'signature' ? 'signatureDataUrl' : field]: value
+      [field === 'signature' ? 'signatureDataUrl' : field]: value,
     }));
   };
 
   const handleSupervisorChange = (field: 'name' | 'date' | 'signature', value: string) => {
-    setSupervisorSignature(prev => ({
+    setSupervisorSignature((prev) => ({
       ...prev,
-      [field === 'signature' ? 'signatureDataUrl' : field]: value
+      [field === 'signature' ? 'signatureDataUrl' : field]: value,
     }));
   };
 
   // Validation: both signatures must be complete
-  const signaturesComplete = 
+  const signaturesComplete =
     technicianSignature.name.trim() !== '' &&
     technicianSignature.date !== '' &&
     technicianSignature.signatureDataUrl !== '' &&
     supervisorSignature.name.trim() !== '' &&
     supervisorSignature.date !== '' &&
     supervisorSignature.signatureDataUrl !== '';
-
 
   return (
     <div className="space-y-6">
@@ -198,8 +205,8 @@ const MaintenanceInterface = () => {
             </div>
           </div>
 
-          <Button 
-            onClick={handleSubmit} 
+          <Button
+            onClick={handleSubmit}
             disabled={isLoading || !query.trim()}
             className="w-full"
             size="lg"
@@ -228,151 +235,162 @@ const MaintenanceInterface = () => {
                 <div>
                   <CardTitle>Maintenance Instructions</CardTitle>
                   <CardDescription>
-                    {result.equipmentSummary.equipmentType} - {result.equipmentSummary.maintenanceType}
+                    {result.equipmentSummary.equipmentType} -{' '}
+                    {result.equipmentSummary.maintenanceType}
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Overview */}
-            <div>
-              <h3 className="font-semibold text-lg mb-2">Overview</h3>
-              <div className="prose prose-sm dark:prose-invert max-w-none">
-                <ReactMarkdown>{result.response}</ReactMarkdown>
+            <CardContent className="space-y-6">
+              {/* Overview */}
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Overview</h3>
+                <div className="prose prose-sm dark:prose-invert max-w-none">
+                  <ReactMarkdown>{result.response}</ReactMarkdown>
+                </div>
               </div>
-            </div>
 
-            {/* Collapsible Sections */}
-            <Collapsible>
-              <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted rounded-lg hover:bg-muted/80">
-                <h3 className="font-semibold">Pre-Work Requirements</h3>
-                <ChevronDown className="h-4 w-4" />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2 p-4 border rounded-lg">
-                <ul className="space-y-2">
-                  {result.preWorkRequirements.map((req, idx) => (
-                    <li key={idx} className="flex gap-2">
-                      <span className="font-semibold min-w-24">{req.category}:</span>
-                      <span>{req.requirement} {req.mandatory && <span className="text-red-400">(Mandatory)</span>}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CollapsibleContent>
-            </Collapsible>
-
-            <Collapsible>
-              <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted rounded-lg hover:bg-muted/80">
-                <h3 className="font-semibold">Visual Inspection</h3>
-                <ChevronDown className="h-4 w-4" />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2 p-4 border rounded-lg space-y-3">
-                {result.visualInspection.map((step) => (
-                  <div key={step.stepNumber} className="border-l-2 border-cyan-400 pl-4">
-                    <div className="font-semibold">Step {step.stepNumber}: {step.checkpoint}</div>
-                    <div className="text-sm text-muted-foreground mt-1">
-                      ✓ {step.acceptanceCriteria}
-                    </div>
-                  </div>
-                ))}
-              </CollapsibleContent>
-            </Collapsible>
-
-            <Collapsible>
-              <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted rounded-lg hover:bg-muted/80">
-                <h3 className="font-semibold">Testing Procedures</h3>
-                <ChevronDown className="h-4 w-4" />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2 p-4 border rounded-lg space-y-4">
-                {result.testingProcedures.map((test, idx) => (
-                  <div key={idx} className="border-l-2 border-blue-400 pl-4">
-                    <div className="font-semibold">{test.testName} ({test.testType})</div>
-                    <div className="text-sm space-y-1 mt-2">
-                      {test.procedure.map((step, sIdx) => (
-                        <div key={sIdx}>• {step}</div>
-                      ))}
-                    </div>
-                    <div className="mt-2 text-sm font-medium text-green-400">
-                      Expected: {test.expectedResult.value} - {test.expectedResult.passFailCriteria}
-                    </div>
-                  </div>
-                ))}
-              </CollapsibleContent>
-            </Collapsible>
-
-            {result.commonFaults && result.commonFaults.length > 0 && (
+              {/* Collapsible Sections */}
               <Collapsible>
                 <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted rounded-lg hover:bg-muted/80">
-                  <h3 className="font-semibold">Common Faults</h3>
+                  <h3 className="font-semibold">Pre-Work Requirements</h3>
                   <ChevronDown className="h-4 w-4" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="mt-2 p-4 border rounded-lg space-y-4">
-                  {result.commonFaults.map((fault, idx) => (
-                    <div key={idx} className="space-y-2">
-                      <div className="font-semibold text-orange-400">⚠ {fault.symptom}</div>
-                      <div className="text-sm">
-                        <div className="font-medium">Likely causes:</div>
-                        <ul className="list-disc pl-5">
-                          {fault.likelyCauses.map((cause, cIdx) => (
-                            <li key={cIdx}>{cause}</li>
-                          ))}
-                        </ul>
+                <CollapsibleContent className="mt-2 p-4 border rounded-lg">
+                  <ul className="space-y-2">
+                    {result.preWorkRequirements.map((req, idx) => (
+                      <li key={idx} className="flex gap-2">
+                        <span className="font-semibold min-w-24">{req.category}:</span>
+                        <span>
+                          {req.requirement}{' '}
+                          {req.mandatory && <span className="text-red-400">(Mandatory)</span>}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CollapsibleContent>
+              </Collapsible>
+
+              <Collapsible>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted rounded-lg hover:bg-muted/80">
+                  <h3 className="font-semibold">Visual Inspection</h3>
+                  <ChevronDown className="h-4 w-4" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-2 p-4 border rounded-lg space-y-3">
+                  {result.visualInspection.map((step) => (
+                    <div key={step.stepNumber} className="border-l-2 border-cyan-400 pl-4">
+                      <div className="font-semibold">
+                        Step {step.stepNumber}: {step.checkpoint}
                       </div>
-                      <div className="text-sm">
-                        <div className="font-medium">Remedial action:</div>
-                        <div>{fault.remedialAction}</div>
+                      <div className="text-sm text-muted-foreground mt-1">
+                        ✓ {step.acceptanceCriteria}
                       </div>
                     </div>
                   ))}
                 </CollapsibleContent>
               </Collapsible>
-            )}
-          </CardContent>
-        </Card>
 
-        {/* Signature Section */}
-        <MaintenanceSignatureSection
-          technicianSignature={technicianSignature}
-          supervisorSignature={supervisorSignature}
-          onTechnicianChange={handleTechnicianChange}
-          onSupervisorChange={handleSupervisorChange}
-        />
+              <Collapsible>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted rounded-lg hover:bg-muted/80">
+                  <h3 className="font-semibold">Testing Procedures</h3>
+                  <ChevronDown className="h-4 w-4" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-2 p-4 border rounded-lg space-y-4">
+                  {result.testingProcedures.map((test, idx) => (
+                    <div key={idx} className="border-l-2 border-blue-400 pl-4">
+                      <div className="font-semibold">
+                        {test.testName} ({test.testType})
+                      </div>
+                      <div className="text-sm space-y-1 mt-2">
+                        {test.procedure.map((step, sIdx) => (
+                          <div key={sIdx}>• {step}</div>
+                        ))}
+                      </div>
+                      <div className="mt-2 text-sm font-medium text-green-400">
+                        Expected: {test.expectedResult.value} -{' '}
+                        {test.expectedResult.passFailCriteria}
+                      </div>
+                    </div>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
 
-        {/* PDF Download & Send to Agent */}
-        <Card className="border-green-500/30 bg-green-950/20">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-semibold text-lg mb-1">Download Complete Maintenance Instruction</h3>
-                <p className="text-sm text-muted-foreground">
-                  {signaturesComplete 
-                    ? 'All signatures captured. Ready to download PDF.' 
-                    : 'Please complete both signatures above to enable PDF download.'}
-                </p>
+              {result.commonFaults && result.commonFaults.length > 0 && (
+                <Collapsible>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted rounded-lg hover:bg-muted/80">
+                    <h3 className="font-semibold">Common Faults</h3>
+                    <ChevronDown className="h-4 w-4" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-2 p-4 border rounded-lg space-y-4">
+                    {result.commonFaults.map((fault, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <div className="font-semibold text-orange-400">⚠ {fault.symptom}</div>
+                        <div className="text-sm">
+                          <div className="font-medium">Likely causes:</div>
+                          <ul className="list-disc pl-5">
+                            {fault.likelyCauses.map((cause, cIdx) => (
+                              <li key={cIdx}>{cause}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="text-sm">
+                          <div className="font-medium">Remedial action:</div>
+                          <div>{fault.remedialAction}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Signature Section */}
+          <MaintenanceSignatureSection
+            technicianSignature={technicianSignature}
+            supervisorSignature={supervisorSignature}
+            onTechnicianChange={handleTechnicianChange}
+            onSupervisorChange={handleSupervisorChange}
+          />
+
+          {/* PDF Download & Send to Agent */}
+          <Card className="border-green-500/30 bg-green-950/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">
+                    Download Complete Maintenance Instruction
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {signaturesComplete
+                      ? 'All signatures captured. Ready to download PDF.'
+                      : 'Please complete both signatures above to enable PDF download.'}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <MaintenancePDFButton
+                    maintenancePDFData={transformMaintenanceOutputToPDF(result, {
+                      equipmentType,
+                      location,
+                      installationAge,
+                    })}
+                    equipmentType={equipmentType}
+                    signatures={{
+                      technician: technicianSignature,
+                      supervisor: supervisorSignature,
+                    }}
+                    disabled={!signaturesComplete}
+                    variant="default"
+                    className="gap-2"
+                  />
+                  <SendToAgentDropdown
+                    currentAgent="maintenance"
+                    currentOutput={{ result, equipmentType, location, installationAge }}
+                  />
+                </div>
               </div>
-              <div className="flex gap-2">
-                <MaintenancePDFButton
-                  maintenancePDFData={transformMaintenanceOutputToPDF(result, {
-                    equipmentType,
-                    location,
-                    installationAge
-                  })}
-                  equipmentType={equipmentType}
-                  signatures={{
-                    technician: technicianSignature,
-                    supervisor: supervisorSignature
-                  }}
-                  disabled={!signaturesComplete}
-                  variant="default"
-                  className="gap-2"
-                />
-                <SendToAgentDropdown 
-                  currentAgent="maintenance" 
-                  currentOutput={{ result, equipmentType, location, installationAge }} 
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
         </>
       )}
     </div>

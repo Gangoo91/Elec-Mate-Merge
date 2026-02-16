@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule2Section6LearningOutcomes = () => {
   const outcomes = [
-    "Define compatibility in the context of smart home ecosystems",
+    'Define compatibility in the context of smart home ecosystems',
     "Explain what a bridge is and why it's used",
-    "Identify common bridges used in the market",
-    "Apply compatibility mapping when designing smart home systems",
-    "Troubleshoot common integration issues"
+    'Identify common bridges used in the market',
+    'Apply compatibility mapping when designing smart home systems',
+    'Troubleshoot common integration issues',
   ];
 
   return (

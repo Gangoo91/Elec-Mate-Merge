@@ -11,7 +11,12 @@ interface SearchSuggestionsProps {
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSuggestionClick }) => {
   const [favorites] = useState<string[]>([
-    '612.1', '612.2.1', '612.8', '411.3.3', 'Table 41.3', '701.411.3.3'
+    '612.1',
+    '612.2.1',
+    '612.8',
+    '411.3.3',
+    'Table 41.3',
+    '701.411.3.3',
   ]);
 
   const popularSearches = [
@@ -20,19 +25,23 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSuggestionClick
     'bathroom zones',
     'ring circuit testing',
     'insulation resistance',
-    'polarity testing'
+    'polarity testing',
   ];
 
   const quickRegulations = [
-    '612.1', '612.2.1', '612.3.1', '612.6', '612.8', '612.10',
-    '411.3.3', '415.1.1', 'Table 41.3', '701.411.3.3'
+    '612.1',
+    '612.2.1',
+    '612.3.1',
+    '612.6',
+    '612.8',
+    '612.10',
+    '411.3.3',
+    '415.1.1',
+    'Table 41.3',
+    '701.411.3.3',
   ];
 
-  const recentSearches = [
-    'continuity testing',
-    'earth electrode',
-    'MCB ratings'
-  ];
+  const recentSearches = ['continuity testing', 'earth electrode', 'MCB ratings'];
 
   return (
     <Card className="bg-card border-border">

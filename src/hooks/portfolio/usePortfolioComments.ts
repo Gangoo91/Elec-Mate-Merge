@@ -56,7 +56,7 @@ const generateId = (prefix: string) =>
 const getInitials = (name: string): string => {
   return name
     .split(' ')
-    .map(n => n[0])
+    .map((n) => n[0])
     .join('')
     .toUpperCase()
     .slice(0, 2);
@@ -131,14 +131,14 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
         (payload) => {
           if (payload.eventType === 'INSERT') {
             const newComment = mapDatabaseComment(payload.new);
-            setComments(prev => [...prev, newComment]);
+            setComments((prev) => [...prev, newComment]);
           } else if (payload.eventType === 'UPDATE') {
             const updatedComment = mapDatabaseComment(payload.new);
-            setComments(prev =>
-              prev.map(c => c.id === updatedComment.id ? updatedComment : c)
+            setComments((prev) =>
+              prev.map((c) => (c.id === updatedComment.id ? updatedComment : c))
             );
           } else if (payload.eventType === 'DELETE') {
-            setComments(prev => prev.filter(c => c.id !== payload.old.id));
+            setComments((prev) => prev.filter((c) => c.id !== payload.old.id));
           }
         }
       )
@@ -151,177 +151,173 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
 
   // Organize comments into threads
   const threads = useMemo((): CommentThread[] => {
-    const rootComments = comments.filter(c => !c.parentId);
+    const rootComments = comments.filter((c) => !c.parentId);
 
-    return rootComments.map(root => ({
+    return rootComments.map((root) => ({
       rootComment: root,
       replies: comments
-        .filter(c => c.parentId === root.id)
-        .sort((a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        ),
+        .filter((c) => c.parentId === root.id)
+        .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()),
     }));
   }, [comments]);
 
   // Calculate unread count
   const unreadCount = useMemo(() => {
-    return comments.filter(c =>
-      c.authorRole !== 'student' &&
-      !readCommentIds.has(c.id)
-    ).length;
+    return comments.filter((c) => c.authorRole !== 'student' && !readCommentIds.has(c.id)).length;
   }, [comments, readCommentIds]);
 
   // Calculate action required count
   const actionRequiredCount = useMemo(() => {
-    return comments.filter(c =>
-      c.requiresAction &&
-      !c.isResolved &&
-      c.actionOwner === user?.id
-    ).length;
+    return comments.filter((c) => c.requiresAction && !c.isResolved && c.actionOwner === user?.id)
+      .length;
   }, [comments, user?.id]);
 
   // Add a new comment
-  const addComment = useCallback(async (
-    comment: Omit<PortfolioComment, 'id' | 'createdAt'>
-  ) => {
-    if (!user?.id) return;
+  const addComment = useCallback(
+    async (comment: Omit<PortfolioComment, 'id' | 'createdAt'>) => {
+      if (!user?.id) return;
 
-    const newComment: PortfolioComment = {
-      ...comment,
-      id: generateId('comment'),
-      createdAt: new Date().toISOString(),
-    };
+      const newComment: PortfolioComment = {
+        ...comment,
+        id: generateId('comment'),
+        createdAt: new Date().toISOString(),
+      };
 
-    try {
-      const { error: insertError } = await supabase
-        .from('portfolio_comments')
-        .insert(mapCommentToDatabase(newComment));
+      try {
+        const { error: insertError } = await supabase
+          .from('portfolio_comments')
+          .insert(mapCommentToDatabase(newComment));
 
-      if (insertError) {
-        console.warn('Failed to save comment to database:', insertError);
+        if (insertError) {
+          console.warn('Failed to save comment to database:', insertError);
+        }
+
+        // Optimistically add to local state
+        setComments((prev) => [...prev, newComment]);
+      } catch (err) {
+        console.error('Error adding comment:', err);
+        setError(err instanceof Error ? err : new Error('Failed to add comment'));
+        throw err;
       }
-
-      // Optimistically add to local state
-      setComments(prev => [...prev, newComment]);
-    } catch (err) {
-      console.error('Error adding comment:', err);
-      setError(err instanceof Error ? err : new Error('Failed to add comment'));
-      throw err;
-    }
-  }, [user?.id]);
+    },
+    [user?.id]
+  );
 
   // Add a reply to an existing comment
-  const addReply = useCallback(async (
-    parentId: string,
-    content: string,
-    mentions: string[] = []
-  ) => {
-    if (!user?.id) return;
+  const addReply = useCallback(
+    async (parentId: string, content: string, mentions: string[] = []) => {
+      if (!user?.id) return;
 
-    const parentComment = comments.find(c => c.id === parentId);
-    if (!parentComment) return;
+      const parentComment = comments.find((c) => c.id === parentId);
+      if (!parentComment) return;
 
-    // Find the original tutor to set as action owner
-    const rootComment = parentComment.parentId
-      ? comments.find(c => c.id === parentComment.parentId)
-      : parentComment;
+      // Find the original tutor to set as action owner
+      const rootComment = parentComment.parentId
+        ? comments.find((c) => c.id === parentComment.parentId)
+        : parentComment;
 
-    const actionOwner = rootComment?.authorId !== user.id
-      ? rootComment?.authorId
-      : undefined;
+      const actionOwner = rootComment?.authorId !== user.id ? rootComment?.authorId : undefined;
 
-    await addComment({
-      contextType: parentComment.contextType,
-      contextId: parentComment.contextId,
-      parentId,
-      authorId: user.id,
-      authorName: user.user_metadata?.full_name || 'Apprentice',
-      authorRole: 'student',
-      authorInitials: getInitials(user.user_metadata?.full_name || 'AP'),
-      content,
-      mentions,
-      requiresAction: mentions.length > 0 || !!actionOwner,
-      actionOwner,
-      isResolved: false,
-    });
-  }, [user, comments, addComment]);
+      await addComment({
+        contextType: parentComment.contextType,
+        contextId: parentComment.contextId,
+        parentId,
+        authorId: user.id,
+        authorName: user.user_metadata?.full_name || 'Apprentice',
+        authorRole: 'student',
+        authorInitials: getInitials(user.user_metadata?.full_name || 'AP'),
+        content,
+        mentions,
+        requiresAction: mentions.length > 0 || !!actionOwner,
+        actionOwner,
+        isResolved: false,
+      });
+    },
+    [user, comments, addComment]
+  );
 
   // Resolve a comment/thread
-  const resolveComment = useCallback(async (commentId: string) => {
-    if (!user?.id) return;
+  const resolveComment = useCallback(
+    async (commentId: string) => {
+      if (!user?.id) return;
 
-    const now = new Date().toISOString();
-    const updates = {
-      isResolved: true,
-      resolvedBy: user.id,
-      resolvedByName: user.user_metadata?.full_name || 'Apprentice',
-      resolvedAt: now,
-      requiresAction: false,
-      updatedAt: now,
-    };
+      const now = new Date().toISOString();
+      const updates = {
+        isResolved: true,
+        resolvedBy: user.id,
+        resolvedByName: user.user_metadata?.full_name || 'Apprentice',
+        resolvedAt: now,
+        requiresAction: false,
+        updatedAt: now,
+      };
 
-    try {
-      const { error: updateError } = await supabase
-        .from('portfolio_comments')
-        .update({
-          is_resolved: true,
-          resolved_by: user.id,
-          resolved_by_name: user.user_metadata?.full_name || 'Apprentice',
-          resolved_at: now,
-          requires_action: false,
-          updated_at: now,
-        })
-        .eq('id', commentId);
+      try {
+        const { error: updateError } = await supabase
+          .from('portfolio_comments')
+          .update({
+            is_resolved: true,
+            resolved_by: user.id,
+            resolved_by_name: user.user_metadata?.full_name || 'Apprentice',
+            resolved_at: now,
+            requires_action: false,
+            updated_at: now,
+          })
+          .eq('id', commentId);
 
-      if (updateError) {
-        console.warn('Failed to resolve comment in database:', updateError);
+        if (updateError) {
+          console.warn('Failed to resolve comment in database:', updateError);
+        }
+
+        // Optimistically update local state
+        setComments((prev) => prev.map((c) => (c.id === commentId ? { ...c, ...updates } : c)));
+      } catch (err) {
+        console.error('Error resolving comment:', err);
       }
-
-      // Optimistically update local state
-      setComments(prev => prev.map(c =>
-        c.id === commentId ? { ...c, ...updates } : c
-      ));
-    } catch (err) {
-      console.error('Error resolving comment:', err);
-    }
-  }, [user]);
+    },
+    [user]
+  );
 
   // Mark comments as read
   const markAsRead = useCallback((commentIds: string[]) => {
-    setReadCommentIds(prev => {
+    setReadCommentIds((prev) => {
       const next = new Set(prev);
-      commentIds.forEach(id => next.add(id));
+      commentIds.forEach((id) => next.add(id));
       return next;
     });
   }, []);
 
   // Get comments for a specific evidence item
-  const getCommentsForEvidence = useCallback((evidenceId: string): CommentThread[] => {
-    const evidenceComments = comments.filter(c =>
-      c.contextType === 'evidence' && c.contextId === evidenceId
-    );
+  const getCommentsForEvidence = useCallback(
+    (evidenceId: string): CommentThread[] => {
+      const evidenceComments = comments.filter(
+        (c) => c.contextType === 'evidence' && c.contextId === evidenceId
+      );
 
-    const rootComments = evidenceComments.filter(c => !c.parentId);
+      const rootComments = evidenceComments.filter((c) => !c.parentId);
 
-    return rootComments.map(root => ({
-      rootComment: root,
-      replies: evidenceComments
-        .filter(c => c.parentId === root.id)
-        .sort((a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        ),
-    }));
-  }, [comments]);
+      return rootComments.map((root) => ({
+        rootComment: root,
+        replies: evidenceComments
+          .filter((c) => c.parentId === root.id)
+          .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()),
+      }));
+    },
+    [comments]
+  );
 
   // Get unread count for a specific evidence item
-  const getUnreadForEvidence = useCallback((evidenceId: string): number => {
-    return comments.filter(c =>
-      c.contextType === 'evidence' &&
-      c.contextId === evidenceId &&
-      c.authorRole !== 'student' &&
-      !readCommentIds.has(c.id)
-    ).length;
-  }, [comments, readCommentIds]);
+  const getUnreadForEvidence = useCallback(
+    (evidenceId: string): number => {
+      return comments.filter(
+        (c) =>
+          c.contextType === 'evidence' &&
+          c.contextId === evidenceId &&
+          c.authorRole !== 'student' &&
+          !readCommentIds.has(c.id)
+      ).length;
+    },
+    [comments, readCommentIds]
+  );
 
   return {
     comments,
@@ -399,7 +395,8 @@ function getMockCommentsForUser(userId: string): PortfolioComment[] {
       authorName: 'Dr. Sarah Johnson',
       authorRole: 'tutor',
       authorInitials: 'SJ',
-      content: 'Great work on documenting this installation! The photos clearly show your cable management skills. Can you add a brief note about the testing you performed?',
+      content:
+        'Great work on documenting this installation! The photos clearly show your cable management skills. Can you add a brief note about the testing you performed?',
       mentions: [],
       requiresAction: true,
       actionOwner: userId,
@@ -415,7 +412,8 @@ function getMockCommentsForUser(userId: string): PortfolioComment[] {
       authorName: 'Apprentice',
       authorRole: 'student',
       authorInitials: 'AP',
-      content: 'Thanks for the feedback! I\'ve updated the description with the test results. The insulation resistance was >200MΩ on all circuits.',
+      content:
+        "Thanks for the feedback! I've updated the description with the test results. The insulation resistance was >200MΩ on all circuits.",
       mentions: ['staff-1'],
       requiresAction: true,
       actionOwner: 'staff-1',
@@ -430,7 +428,8 @@ function getMockCommentsForUser(userId: string): PortfolioComment[] {
       authorName: 'Mark Williams',
       authorRole: 'assessor',
       authorInitials: 'MW',
-      content: 'This evidence meets criteria PB1 and PB2. Well done! Consider adding a witness statement from your supervisor for extra verification.',
+      content:
+        'This evidence meets criteria PB1 and PB2. Well done! Consider adding a witness statement from your supervisor for extra verification.',
       mentions: [],
       requiresAction: false,
       isResolved: true,
@@ -447,7 +446,8 @@ function getMockCommentsForUser(userId: string): PortfolioComment[] {
       authorName: 'Dr. Sarah Johnson',
       authorRole: 'tutor',
       authorInitials: 'SJ',
-      content: 'Please provide more detail on the cable sizing calculations. What formula did you use and what factors did you consider?',
+      content:
+        'Please provide more detail on the cable sizing calculations. What formula did you use and what factors did you consider?',
       mentions: [],
       requiresAction: true,
       actionOwner: userId,

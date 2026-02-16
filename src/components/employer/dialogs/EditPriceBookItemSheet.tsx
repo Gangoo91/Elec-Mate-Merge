@@ -3,14 +3,41 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Trash2, Save, Loader2 } from 'lucide-react';
 import type { PriceBookItem } from '@/services/financeService';
 
-const CATEGORIES = ['Cable', 'Accessories', 'Fixings', 'Lighting', 'Switches & Sockets', 'Consumer Units', 'Tools', 'Testing', 'Safety', 'Other'];
+const CATEGORIES = [
+  'Cable',
+  'Accessories',
+  'Fixings',
+  'Lighting',
+  'Switches & Sockets',
+  'Consumer Units',
+  'Tools',
+  'Testing',
+  'Safety',
+  'Other',
+];
 const UNITS = ['each', 'metre', 'roll', 'box', 'pack', 'pair', 'set', 'kg', 'litre'];
 
 interface EditPriceBookItemSheetProps {
@@ -78,18 +105,16 @@ export function EditPriceBookItemSheet({
     onOpenChange(false);
   };
 
-  const markup = buyPrice && sellPrice
-    ? (((parseFloat(sellPrice) - parseFloat(buyPrice)) / parseFloat(buyPrice)) * 100).toFixed(1)
-    : '0';
+  const markup =
+    buyPrice && sellPrice
+      ? (((parseFloat(sellPrice) - parseFloat(buyPrice)) / parseFloat(buyPrice)) * 100).toFixed(1)
+      : '0';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn(
-          "flex flex-col p-0",
-          isMobile ? "h-[90vh] rounded-t-2xl" : "w-[450px]"
-        )}
+        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
@@ -112,7 +137,9 @@ export function EditPriceBookItemSheet({
             <div className="space-y-2">
               <Label htmlFor="buyPrice">Buy Price</Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">£</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  £
+                </span>
                 <Input
                   id="buyPrice"
                   type="number"
@@ -126,7 +153,9 @@ export function EditPriceBookItemSheet({
             <div className="space-y-2">
               <Label htmlFor="sellPrice">Sell Price</Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">£</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  £
+                </span>
                 <Input
                   id="sellPrice"
                   type="number"
@@ -140,9 +169,7 @@ export function EditPriceBookItemSheet({
           </div>
 
           {buyPrice && sellPrice && (
-            <p className="text-sm text-muted-foreground">
-              Markup: {markup}%
-            </p>
+            <p className="text-sm text-muted-foreground">Markup: {markup}%</p>
           )}
 
           <div className="grid grid-cols-2 gap-3">
@@ -154,7 +181,9 @@ export function EditPriceBookItemSheet({
                 </SelectTrigger>
                 <SelectContent>
                   {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -167,7 +196,9 @@ export function EditPriceBookItemSheet({
                 </SelectTrigger>
                 <SelectContent>
                   {UNITS.map((u) => (
-                    <SelectItem key={u} value={u}>{u}</SelectItem>
+                    <SelectItem key={u} value={u}>
+                      {u}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>

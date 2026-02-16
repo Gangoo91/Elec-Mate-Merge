@@ -12,16 +12,19 @@ const SmartHomeModule7Section1RealWorld = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <h4 className="font-semibold text-foreground">Case Study: Smart Relay Installation Gone Wrong</h4>
-          
+          <h4 className="font-semibold text-foreground">
+            Case Study: Smart Relay Installation Gone Wrong
+          </h4>
+
           <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h5 className="font-semibold text-red-200 mb-2">The Problem</h5>
                 <p className="text-red-100 text-sm mb-3">
-                  An installer wired multiple smart relays into a lighting circuit without providing neutral conductors. 
-                  The installation appeared to work initially, but problems soon emerged:
+                  An installer wired multiple smart relays into a lighting circuit without providing
+                  neutral conductors. The installation appeared to work initially, but problems soon
+                  emerged:
                 </p>
                 <ul className="space-y-1 text-red-100 text-sm ml-4">
                   <li>• Flickering lights when relays switched</li>
@@ -39,7 +42,8 @@ const SmartHomeModule7Section1RealWorld = () => {
               <div>
                 <h5 className="font-semibold text-green-200 mb-2">The Solution</h5>
                 <p className="text-green-100 text-sm mb-3">
-                  After rewiring with the correct neutral connections and ensuring proper containment:
+                  After rewiring with the correct neutral connections and ensuring proper
+                  containment:
                 </p>
                 <ul className="space-y-1 text-green-100 text-sm ml-4">
                   <li>• System operated reliably without flickering</li>
@@ -60,7 +64,8 @@ const SmartHomeModule7Section1RealWorld = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                Smart devices often have specific wiring requirements different from traditional switches
+                Smart devices often have specific wiring requirements different from traditional
+                switches
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>

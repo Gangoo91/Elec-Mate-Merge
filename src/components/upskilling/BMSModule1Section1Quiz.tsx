@@ -54,8 +54,8 @@ const BMSModule1Section1Quiz = ({ onBack }: BMSModule1Section1QuizProps) => {
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Section
         </Button>
-        
-        <QuizResults 
+
+        <QuizResults
           questions={bmsModule1Section1QuizData}
           selectedAnswers={selectedAnswers}
           onRestart={handleRestart}
@@ -75,17 +75,17 @@ const BMSModule1Section1Quiz = ({ onBack }: BMSModule1Section1QuizProps) => {
           <h1 className="text-2xl font-bold text-foreground mb-6">
             Knowledge Check ({bmsModule1Section1QuizData.length} Questions)
           </h1>
-          
+
           {/* Progress Bar */}
           <div className="mb-4">
             <div className="w-full bg-gray-700 rounded-full h-3">
-              <div 
+              <div
                 className="bg-elec-yellow h-3 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
           </div>
-          
+
           {/* Question Counter */}
           <div className="text-center text-gray-400 text-lg mb-8">
             Question {currentQuestion + 1} of {bmsModule1Section1QuizData.length}
@@ -94,37 +94,31 @@ const BMSModule1Section1Quiz = ({ onBack }: BMSModule1Section1QuizProps) => {
 
         {/* Question */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-foreground mb-6">
-            {question.question}
-          </h2>
-          
+          <h2 className="text-xl font-semibold text-foreground mb-6">{question.question}</h2>
+
           {/* Options */}
           <div className="space-y-4">
             {question.options.map((option: string, index: number) => {
               const isSelected = selectedAnswers[currentQuestion] === index;
-              
+
               return (
-                <div 
+                <div
                   key={index}
                   className={`flex items-center space-x-4 p-4 rounded-lg border transition-all cursor-pointer ${
-                    isSelected 
-                      ? 'border-elec-yellow bg-elec-yellow/10' 
+                    isSelected
+                      ? 'border-elec-yellow bg-elec-yellow/10'
                       : 'border-gray-600 bg-transparent hover:border-gray-500'
                   }`}
                   onClick={() => handleAnswerSelect(index)}
                 >
-                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                    isSelected 
-                      ? 'border-elec-yellow bg-elec-yellow' 
-                      : 'border-gray-500'
-                  }`}>
-                    {isSelected && (
-                      <div className="w-2 h-2 rounded-full bg-black"></div>
-                    )}
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      isSelected ? 'border-elec-yellow bg-elec-yellow' : 'border-gray-500'
+                    }`}
+                  >
+                    {isSelected && <div className="w-2 h-2 rounded-full bg-black"></div>}
                   </div>
-                  <label className="text-foreground cursor-pointer flex-1">
-                    {option}
-                  </label>
+                  <label className="text-foreground cursor-pointer flex-1">{option}</label>
                 </div>
               );
             })}
@@ -141,7 +135,7 @@ const BMSModule1Section1Quiz = ({ onBack }: BMSModule1Section1QuizProps) => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

@@ -1,9 +1,9 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MapPin, Clock, PoundSterling, ExternalLink, Users, Star, X } from "lucide-react";
-import { EnhancedCareerCourse } from "../../../apprentice/career/courses/enhancedCoursesData";
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { MapPin, Clock, PoundSterling, ExternalLink, Users, Star, X } from 'lucide-react';
+import { EnhancedCareerCourse } from '../../../apprentice/career/courses/enhancedCoursesData';
 
 interface CourseInfoOverlayProps {
   userLocation: string | null;
@@ -16,7 +16,7 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
   userLocation,
   selectedCourse,
   selectedMarkerPosition,
-  onClose
+  onClose,
 }) => {
   if (!selectedCourse) {
     return (
@@ -29,9 +29,7 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
                 Click on a course marker to view details
               </p>
               {userLocation && (
-                <p className="text-xs text-muted-foreground">
-                  Your location: {userLocation}
-                </p>
+                <p className="text-xs text-muted-foreground">Your location: {userLocation}</p>
               )}
             </div>
           </CardContent>
@@ -54,7 +52,9 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
       'Specialised Skills': 'bg-purple-500/10 text-purple-400 border-purple-500/30',
       'Business & Management': 'bg-green-500/10 text-green-400 border-green-500/30',
     };
-    return colors[category as keyof typeof colors] || 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+    return (
+      colors[category as keyof typeof colors] || 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+    );
   };
 
   return (
@@ -82,19 +82,15 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
               {selectedCourse.rating > 0 && (
                 <div className="flex items-center gap-1 shrink-0">
                   <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                  <span className="text-xs text-muted-foreground">
-                    {selectedCourse.rating}
-                  </span>
+                  <span className="text-xs text-muted-foreground">{selectedCourse.rating}</span>
                 </div>
               )}
             </div>
-            
-            <p className="text-xs text-muted-foreground">
-              {selectedCourse.provider}
-            </p>
-            
-            <Badge 
-              variant="outline" 
+
+            <p className="text-xs text-muted-foreground">{selectedCourse.provider}</p>
+
+            <Badge
+              variant="outline"
               className={`text-xs ${getCategoryColor(selectedCourse.category)}`}
             >
               {selectedCourse.category}
@@ -107,17 +103,17 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
               <Clock className="h-3 w-3 text-elec-yellow" />
               <span className="text-muted-foreground">{selectedCourse.duration}</span>
             </div>
-            
+
             <div className="flex items-center gap-1">
               <PoundSterling className="h-3 w-3 text-elec-yellow" />
               <span className="text-muted-foreground">{selectedCourse.price}</span>
             </div>
-            
+
             <div className="flex items-center gap-1">
               <Users className="h-3 w-3 text-elec-yellow" />
               <span className="text-muted-foreground">{selectedCourse.level}</span>
             </div>
-            
+
             <div className="flex items-center gap-1">
               <MapPin className="h-3 w-3 text-elec-yellow" />
               <span className="text-muted-foreground">{selectedCourse.format}</span>
@@ -131,9 +127,7 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
                 <MapPin className="h-3 w-3 inline mr-1" />
                 {selectedCourse.locations[0]}
                 {selectedCourse.locations.length > 1 && (
-                  <span className="ml-1">
-                    (+{selectedCourse.locations.length - 1} more)
-                  </span>
+                  <span className="ml-1">(+{selectedCourse.locations.length - 1} more)</span>
                 )}
               </p>
             </div>
@@ -142,17 +136,15 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
           {/* Next Dates */}
           {selectedCourse.nextDates && selectedCourse.nextDates.length > 0 && (
             <div className="text-xs">
-              <p className="text-muted-foreground">
-                Next start: {selectedCourse.nextDates[0]}
-              </p>
+              <p className="text-muted-foreground">Next start: {selectedCourse.nextDates[0]}</p>
             </div>
           )}
 
           {/* Action Button */}
           <div className="pt-2">
-            <Button 
+            <Button
               onClick={handleViewDetails}
-              size="sm" 
+              size="sm"
               className="w-full text-xs h-8"
               disabled={!selectedCourse.external_url}
             >

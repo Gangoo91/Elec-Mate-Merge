@@ -5,13 +5,19 @@ const EquipmentProtection = () => {
   return (
     <Card className="bg-gradient-to-r from-blue-900/20 to-elec-gray border-blue-600/30">
       <CardHeader>
-        <CardTitle className="text-foreground">Equipment Protection Standards and Selection</CardTitle>
-        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">Protection Standards</Badge>
+        <CardTitle className="text-foreground">
+          Equipment Protection Standards and Selection
+        </CardTitle>
+        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">
+          Protection Standards
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-2">IP Rating Requirements by Application:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            IP Rating Requirements by Application:
+          </h5>
+
           {/* Mobile-friendly cards */}
           <div className="grid gap-3 sm:hidden">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
@@ -19,38 +25,56 @@ const EquipmentProtection = () => {
                 <h6 className="font-bold text-blue-400 text-sm">Outdoor general</h6>
                 <span className="text-xs bg-blue-600 text-foreground px-2 py-1 rounded">IP54</span>
               </div>
-              <p className="text-xs mb-1"><strong>Additional:</strong> UV resistance</p>
-              <p className="text-xs"><strong>Equipment:</strong> Switches, isolators</p>
+              <p className="text-xs mb-1">
+                <strong>Additional:</strong> UV resistance
+              </p>
+              <p className="text-xs">
+                <strong>Equipment:</strong> Switches, isolators
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-green-400 text-sm">Livestock areas</h6>
                 <span className="text-xs bg-green-600 text-foreground px-2 py-1 rounded">IP65</span>
               </div>
-              <p className="text-xs mb-1"><strong>Additional:</strong> Washdown capability</p>
-              <p className="text-xs"><strong>Equipment:</strong> Luminaires, controls</p>
+              <p className="text-xs mb-1">
+                <strong>Additional:</strong> Washdown capability
+              </p>
+              <p className="text-xs">
+                <strong>Equipment:</strong> Luminaires, controls
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-yellow-400 text-sm">Feed preparation</h6>
-                <span className="text-xs bg-yellow-600 text-foreground px-2 py-1 rounded">IP66</span>
+                <span className="text-xs bg-yellow-600 text-foreground px-2 py-1 rounded">
+                  IP66
+                </span>
               </div>
-              <p className="text-xs mb-1"><strong>Additional:</strong> Dust tight sealing</p>
-              <p className="text-xs"><strong>Equipment:</strong> Motors, distribution</p>
+              <p className="text-xs mb-1">
+                <strong>Additional:</strong> Dust tight sealing
+              </p>
+              <p className="text-xs">
+                <strong>Equipment:</strong> Motors, distribution
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-red-400 text-sm">Milking parlours</h6>
                 <span className="text-xs bg-red-600 text-foreground px-2 py-1 rounded">IP67</span>
               </div>
-              <p className="text-xs mb-1"><strong>Additional:</strong> Chemical resistance</p>
-              <p className="text-xs"><strong>Equipment:</strong> All electrical equipment</p>
+              <p className="text-xs mb-1">
+                <strong>Additional:</strong> Chemical resistance
+              </p>
+              <p className="text-xs">
+                <strong>Equipment:</strong> All electrical equipment
+              </p>
             </div>
           </div>
-          
+
           {/* Desktop table - hidden on mobile */}
           <div className="hidden sm:block overflow-x-auto">
             <table className="w-full text-sm">
@@ -91,7 +115,7 @@ const EquipmentProtection = () => {
             </table>
           </div>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
           <h5 className="text-elec-yellow font-semibold mb-2">Material Selection Guidelines:</h5>
           <div className="grid md:grid-cols-2 gap-4">
@@ -117,7 +141,7 @@ const EquipmentProtection = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
           <h5 className="text-elec-yellow font-semibold mb-2">Impact Protection (IK Ratings):</h5>
           <div className="grid md:grid-cols-3 gap-4">
@@ -135,9 +159,11 @@ const EquipmentProtection = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-2">Cable Protection and Installation:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Cable Protection and Installation:
+          </h5>
           <ul className="text-sm space-y-1">
             <li>• Steel wire armoured (SWA) cable for direct burial</li>
             <li>• XLPE insulation for moisture resistance and longevity</li>

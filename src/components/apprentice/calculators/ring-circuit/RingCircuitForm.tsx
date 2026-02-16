@@ -1,12 +1,18 @@
-import React from "react";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Calculator, Settings, TrendingUp, RotateCw, Info, Zap, RotateCcw } from "lucide-react";
+import React from 'react';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { MobileButton } from '@/components/ui/mobile-button';
+import {
+  MobileSelect,
+  MobileSelectContent,
+  MobileSelectItem,
+  MobileSelectTrigger,
+  MobileSelectValue,
+} from '@/components/ui/mobile-select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Calculator, Settings, TrendingUp, RotateCw, Info, Zap, RotateCcw } from 'lucide-react';
 
 interface RingCircuitFormProps {
   readings: {
@@ -42,9 +48,9 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
   onTemperatureChange,
   onCalculate,
   onReset,
-  hasResults
+  hasResults,
 }) => {
-  const hasAllReadings = Object.values(readings).every(value => value.trim() !== "");
+  const hasAllReadings = Object.values(readings).every((value) => value.trim() !== '');
 
   const handleCalculate = () => {
     onCalculate();
@@ -66,7 +72,10 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
               <Zap className="h-5 w-5 text-elec-yellow" />
               <CardTitle className="text-lg sm:text-xl">Ring Final Circuit Calculator</CardTitle>
             </div>
-            <Badge variant="outline" className="text-xs self-start sm:self-auto border-elec-yellow/30 text-elec-yellow">
+            <Badge
+              variant="outline"
+              className="text-xs self-start sm:self-auto border-elec-yellow/30 text-elec-yellow"
+            >
               BS 7671:2018
             </Badge>
           </div>
@@ -76,9 +85,11 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Settings className="h-4 w-4 text-elec-yellow" />
-              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow">Cable Settings (Optional)</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow">
+                Cable Settings (Optional)
+              </h3>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <MobileSelect value={cableType} onValueChange={onCableTypeChange}>
                 <MobileSelectTrigger label="Cable Type">
@@ -91,7 +102,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   <MobileSelectItem value="10mm-twin">10.0mm² Twin & Earth</MobileSelectItem>
                 </MobileSelectContent>
               </MobileSelect>
-              
+
               <div>
                 <MobileInput
                   id="cable-length"
@@ -105,7 +116,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
-              
+
               <div className="sm:col-span-2 lg:col-span-1">
                 <MobileInput
                   id="temperature"
@@ -123,7 +134,8 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
             <Alert className="bg-info/10 border-info/30">
               <Info className="h-4 w-4" />
               <AlertDescription className="text-info text-sm">
-                Cable settings enable comparison with theoretical values and temperature correction for more accurate analysis.
+                Cable settings enable comparison with theoretical values and temperature correction
+                for more accurate analysis.
               </AlertDescription>
             </Alert>
           </div>
@@ -134,7 +146,9 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-elec-yellow" />
-              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow">End-to-End Readings</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow">
+                End-to-End Readings
+              </h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
@@ -145,12 +159,12 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   inputMode="decimal"
                   placeholder="e.g. 1.20"
                   value={readings.endToEndLive}
-                  onChange={(e) => onInputChange("endToEndLive", e.target.value)}
+                  onChange={(e) => onInputChange('endToEndLive', e.target.value)}
                   error={errors.endToEndLive}
                   className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
-              
+
               <div>
                 <MobileInput
                   id="end-to-end-neutral"
@@ -159,12 +173,12 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   inputMode="decimal"
                   placeholder="e.g. 1.20"
                   value={readings.endToEndNeutral}
-                  onChange={(e) => onInputChange("endToEndNeutral", e.target.value)}
+                  onChange={(e) => onInputChange('endToEndNeutral', e.target.value)}
                   error={errors.endToEndNeutral}
                   className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
-              
+
               <div className="sm:col-span-2 lg:col-span-1">
                 <MobileInput
                   id="end-to-end-cpc"
@@ -173,7 +187,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   inputMode="decimal"
                   placeholder="e.g. 1.92"
                   value={readings.endToEndCpc}
-                  onChange={(e) => onInputChange("endToEndCpc", e.target.value)}
+                  onChange={(e) => onInputChange('endToEndCpc', e.target.value)}
                   error={errors.endToEndCpc}
                   className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
@@ -185,7 +199,9 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <RotateCw className="h-4 w-4 text-elec-yellow" />
-              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow">Cross-Connected Readings</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-yellow">
+                Cross-Connected Readings
+              </h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
@@ -196,12 +212,12 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   inputMode="decimal"
                   placeholder="e.g. 0.60"
                   value={readings.liveToNeutral}
-                  onChange={(e) => onInputChange("liveToNeutral", e.target.value)}
+                  onChange={(e) => onInputChange('liveToNeutral', e.target.value)}
                   error={errors.liveToNeutral}
                   className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
-              
+
               <div>
                 <MobileInput
                   id="live-to-cpc"
@@ -210,12 +226,12 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   inputMode="decimal"
                   placeholder="e.g. 1.56"
                   value={readings.liveToCpc}
-                  onChange={(e) => onInputChange("liveToCpc", e.target.value)}
+                  onChange={(e) => onInputChange('liveToCpc', e.target.value)}
                   error={errors.liveToCpc}
                   className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
-              
+
               <div className="sm:col-span-2 lg:col-span-1">
                 <MobileInput
                   id="neutral-to-cpc"
@@ -224,7 +240,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   inputMode="decimal"
                   placeholder="e.g. 1.56"
                   value={readings.neutralToCpc}
-                  onChange={(e) => onInputChange("neutralToCpc", e.target.value)}
+                  onChange={(e) => onInputChange('neutralToCpc', e.target.value)}
                   error={errors.neutralToCpc}
                   className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
@@ -244,11 +260,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
               Calculate Ring Circuit
             </MobileButton>
             {hasResults && (
-              <MobileButton
-                variant="elec-outline"
-                onClick={onReset}
-                className="min-h-[48px]"
-              >
+              <MobileButton variant="elec-outline" onClick={onReset} className="min-h-[48px]">
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             )}

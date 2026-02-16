@@ -29,7 +29,7 @@ export const RetrofitReplacementQuickCheck = () => {
         <p className="text-blue-100 font-medium">
           What's the difference between a retrofit and a replacement smart lock?
         </p>
-        
+
         {!showFeedback ? (
           <div className="space-y-3">
             <Button
@@ -37,50 +37,64 @@ export const RetrofitReplacementQuickCheck = () => {
               className="w-full justify-start text-left border-gray-600 hover:border-blue-400 hover:bg-blue-900/20 whitespace-normal break-words leading-snug"
               onClick={() => handleAnswer('retrofit-easier')}
             >
-              <span className="flex-1 min-w-0 break-words">Retrofit locks are easier to install but less secure</span>
+              <span className="flex-1 min-w-0 break-words">
+                Retrofit locks are easier to install but less secure
+              </span>
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-blue-400 hover:bg-blue-900/20 whitespace-normal break-words leading-snug"
               onClick={() => handleAnswer('retrofit-fits-over')}
             >
-              <span className="flex-1 min-w-0 break-words">Retrofit locks fit over existing deadbolts; replacement locks fully replace the original lock</span>
+              <span className="flex-1 min-w-0 break-words">
+                Retrofit locks fit over existing deadbolts; replacement locks fully replace the
+                original lock
+              </span>
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-blue-400 hover:bg-blue-900/20 whitespace-normal break-words leading-snug"
               onClick={() => handleAnswer('replacement-wireless')}
             >
-              <span className="flex-1 min-w-0 break-words">Replacement locks are always wireless; retrofit locks are always wired</span>
+              <span className="flex-1 min-w-0 break-words">
+                Replacement locks are always wireless; retrofit locks are always wired
+              </span>
             </Button>
           </div>
         ) : (
           <div className="space-y-4">
-            <div className={`p-4 rounded-lg border-2 ${
-              selectedAnswer === 'retrofit-fits-over' 
-                ? 'border-green-500 bg-green-900/20' 
-                : 'border-red-500 bg-red-900/20'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border-2 ${
+                selectedAnswer === 'retrofit-fits-over'
+                  ? 'border-green-500 bg-green-900/20'
+                  : 'border-red-500 bg-red-900/20'
+              }`}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {selectedAnswer === 'retrofit-fits-over' ? (
                   <CheckCircle className="h-5 w-5 text-green-400" />
                 ) : (
                   <XCircle className="h-5 w-5 text-red-400" />
                 )}
-                <span className={`font-semibold ${
-                  selectedAnswer === 'retrofit-fits-over' ? 'text-green-300' : 'text-red-300'
-                }`}>
+                <span
+                  className={`font-semibold ${
+                    selectedAnswer === 'retrofit-fits-over' ? 'text-green-300' : 'text-red-300'
+                  }`}
+                >
                   {selectedAnswer === 'retrofit-fits-over' ? 'Correct!' : 'Not quite right'}
                 </span>
               </div>
               <p className="text-gray-300 text-sm">
-                <strong>Retrofit locks</strong> fit over existing deadbolts (like August Smart Lock), making installation easier but keeping the original lock mechanism. <strong>Replacement locks</strong> completely replace the traditional lock with new electronic hardware.
+                <strong>Retrofit locks</strong> fit over existing deadbolts (like August Smart
+                Lock), making installation easier but keeping the original lock mechanism.{' '}
+                <strong>Replacement locks</strong> completely replace the traditional lock with new
+                electronic hardware.
               </p>
             </div>
-            
-            <Button 
+
+            <Button
               onClick={resetQuiz}
               variant="ghost"
               className="text-blue-400 hover:text-blue-300"

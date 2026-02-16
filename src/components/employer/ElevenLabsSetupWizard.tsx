@@ -39,7 +39,7 @@ export function ElevenLabsSetupWizard({
   lastToolIndex,
   onMarkConfigured,
   onUpdateLastIndex,
-  onClose
+  onClose,
 }: ElevenLabsSetupWizardProps) {
   const [currentIndex, setCurrentIndex] = useState(lastToolIndex);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -63,7 +63,17 @@ export function ElevenLabsSetupWizard({
     }
   };
 
-  const CopyField = ({ label, value, fieldName, mono = false }: { label: string; value: string; fieldName: string; mono?: boolean }) => (
+  const CopyField = ({
+    label,
+    value,
+    fieldName,
+    mono = false,
+  }: {
+    label: string;
+    value: string;
+    fieldName: string;
+    mono?: boolean;
+  }) => (
     <div className="space-y-1">
       <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
         {label}
@@ -126,11 +136,16 @@ export function ElevenLabsSetupWizard({
 
   const getDataType = (type: string) => {
     switch (type) {
-      case 'string': return 'String';
-      case 'number': return 'Number';
-      case 'boolean': return 'Boolean';
-      case 'array': return 'Array';
-      default: return 'String';
+      case 'string':
+        return 'String';
+      case 'number':
+        return 'Number';
+      case 'boolean':
+        return 'Boolean';
+      case 'array':
+        return 'Array';
+      default:
+        return 'String';
     }
   };
 
@@ -172,19 +187,10 @@ export function ElevenLabsSetupWizard({
       {/* Navigation */}
       <div className="border-b border-border p-2">
         <div className="flex items-center justify-center gap-2 max-w-4xl mx-auto">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={goToPrevious}
-            disabled={currentIndex === 0}
-          >
+          <Button variant="outline" size="sm" onClick={goToPrevious} disabled={currentIndex === 0}>
             <ChevronLeft className="h-4 w-4 mr-1" /> Previous
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={skipToNextUnconfigured}
-          >
+          <Button variant="outline" size="sm" onClick={skipToNextUnconfigured}>
             <SkipForward className="h-4 w-4 mr-1" /> Skip to Unconfigured
           </Button>
           <Button
@@ -213,9 +219,7 @@ export function ElevenLabsSetupWizard({
                     </Badge>
                   )}
                 </CardTitle>
-                {currentTool.category && (
-                  <Badge variant="secondary">{currentTool.category}</Badge>
-                )}
+                {currentTool.category && <Badge variant="secondary">{currentTool.category}</Badge>}
               </div>
             </CardHeader>
           </Card>
@@ -229,12 +233,7 @@ export function ElevenLabsSetupWizard({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CopyField 
-                label="Tool Name" 
-                value={currentTool.name} 
-                fieldName="name" 
-                mono 
-              />
+              <CopyField label="Tool Name" value={currentTool.name} fieldName="name" mono />
             </CardContent>
           </Card>
 
@@ -247,10 +246,10 @@ export function ElevenLabsSetupWizard({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CopyField 
-                label="Tool Description" 
-                value={currentTool.description} 
-                fieldName="description" 
+              <CopyField
+                label="Tool Description"
+                value={currentTool.description}
+                fieldName="description"
               />
             </CardContent>
           </Card>
@@ -261,7 +260,8 @@ export function ElevenLabsSetupWizard({
               <CardHeader className="pb-2">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Badge className="bg-elec-yellow/20 text-elec-yellow">Step 3</Badge>
-                  Add {currentTool.parameters.length} PARAMETER{currentTool.parameters.length > 1 ? 'S' : ''}
+                  Add {currentTool.parameters.length} PARAMETER
+                  {currentTool.parameters.length > 1 ? 'S' : ''}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -270,12 +270,13 @@ export function ElevenLabsSetupWizard({
                 </p>
 
                 {currentTool.parameters.map((param, index) => (
-                  <div key={param.name} className="bg-muted/30 rounded-lg p-4 space-y-3 border border-border">
+                  <div
+                    key={param.name}
+                    className="bg-muted/30 rounded-lg p-4 space-y-3 border border-border"
+                  >
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-elec-yellow">Parameter #{index + 1}</span>
-                      {param.required && (
-                        <Badge variant="destructive">Required</Badge>
-                      )}
+                      {param.required && <Badge variant="destructive">Required</Badge>}
                     </div>
 
                     <div className="grid gap-3">
@@ -292,11 +293,11 @@ export function ElevenLabsSetupWizard({
                         </div>
                       </div>
 
-                      <CopyField 
-                        label="Identifier" 
-                        value={param.name} 
-                        fieldName={`param-${param.name}`} 
-                        mono 
+                      <CopyField
+                        label="Identifier"
+                        value={param.name}
+                        fieldName={`param-${param.name}`}
+                        mono
                       />
 
                       <div className="space-y-1">
@@ -308,10 +309,10 @@ export function ElevenLabsSetupWizard({
                         </div>
                       </div>
 
-                      <CopyField 
-                        label="Description" 
-                        value={param.description} 
-                        fieldName={`param-desc-${param.name}`} 
+                      <CopyField
+                        label="Description"
+                        value={param.description}
+                        fieldName={`param-desc-${param.name}`}
                       />
 
                       {param.enum && param.enum.length > 0 && (
@@ -323,12 +324,18 @@ export function ElevenLabsSetupWizard({
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => copyToClipboard(param.enum!.join('\n'), `enums-${param.name}`)}
+                              onClick={() =>
+                                copyToClipboard(param.enum!.join('\n'), `enums-${param.name}`)
+                              }
                             >
                               {copiedField === `enums-${param.name}` ? (
-                                <><Check className="h-3 w-3 mr-1" /> Copied</>
+                                <>
+                                  <Check className="h-3 w-3 mr-1" /> Copied
+                                </>
                               ) : (
-                                <><Copy className="h-3 w-3 mr-1" /> Copy All (one per line)</>
+                                <>
+                                  <Copy className="h-3 w-3 mr-1" /> Copy All (one per line)
+                                </>
                               )}
                             </Button>
                           </div>
@@ -341,7 +348,9 @@ export function ElevenLabsSetupWizard({
                                 onClick={() => copyToClipboard(value, `enum-${value}`)}
                               >
                                 {value}
-                                {copiedField === `enum-${value}` && <Check className="h-2 w-2 ml-1 text-green-500" />}
+                                {copiedField === `enum-${value}` && (
+                                  <Check className="h-2 w-2 ml-1 text-green-500" />
+                                )}
                               </Badge>
                             ))}
                           </div>
@@ -391,15 +400,15 @@ export function ElevenLabsSetupWizard({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <Button
-                size="lg"
-                className="w-full"
-                onClick={markAndNext}
-              >
+              <Button size="lg" className="w-full" onClick={markAndNext}>
                 {isCurrentConfigured ? (
-                  <>Already Configured - Go to Next <ChevronRight className="h-4 w-4 ml-2" /></>
+                  <>
+                    Already Configured - Go to Next <ChevronRight className="h-4 w-4 ml-2" />
+                  </>
                 ) : (
-                  <><CheckCircle2 className="h-4 w-4 mr-2" /> Mark Complete & Go to Next Tool</>
+                  <>
+                    <CheckCircle2 className="h-4 w-4 mr-2" /> Mark Complete & Go to Next Tool
+                  </>
                 )}
               </Button>
             </CardContent>

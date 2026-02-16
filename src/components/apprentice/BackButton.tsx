@@ -1,7 +1,6 @@
-
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface BackButtonProps {
   courseSlug?: string;
@@ -11,43 +10,47 @@ interface BackButtonProps {
 
 const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
   const navigate = useNavigate();
-  
+
   const handleBackClick = () => {
     // Get the current path to check if we're on the electrical theory unit
     const path = window.location.pathname;
-    const isElectricalTheory = path.includes("/elec2-04") || path.includes("/electrical-theory");
-    
+    const isElectricalTheory = path.includes('/elec2-04') || path.includes('/electrical-theory');
+
     // Use the correct unit slug based on the path
     let effectiveUnitSlug = unitSlug;
     if (isElectricalTheory) {
-      effectiveUnitSlug = "elec2-04";
+      effectiveUnitSlug = 'elec2-04';
     } else if (!effectiveUnitSlug) {
-      effectiveUnitSlug = "health-safety";
+      effectiveUnitSlug = 'health-safety';
     }
-    
+
     // If we have a section ID, go back to the section page (not the unit page)
     if (sectionId && effectiveUnitSlug) {
       if (isElectricalTheory) {
         // For electrical theory, always navigate to the section page
-        navigate(`/apprentice/study/eal/${courseSlug || 'level-2-diploma'}/unit/${effectiveUnitSlug}/section/${sectionId}`);
+        navigate(
+          `/apprentice/study/eal/${courseSlug || 'level-2-diploma'}/unit/${effectiveUnitSlug}/section/${sectionId}`
+        );
       } else {
         // For other units, navigate to the unit page
-        navigate(`/apprentice/study/eal/${courseSlug || 'level-2-diploma'}/unit/${effectiveUnitSlug}`);
+        navigate(
+          `/apprentice/study/eal/${courseSlug || 'level-2-diploma'}/unit/${effectiveUnitSlug}`
+        );
       }
     }
     // If we have only a unit ID, go back to the course page
     else if (effectiveUnitSlug) {
       navigate(`/apprentice/study/eal/${courseSlug || 'level-2-diploma'}`);
-    } 
+    }
     // Otherwise, use the browser's history
     else {
       navigate(-1);
     }
   };
-  
+
   return (
-    <Button 
-      variant="outline" 
+    <Button
+      variant="outline"
       className="mb-4 border-elec-yellow/30 hover:bg-elec-yellow/10"
       onClick={handleBackClick}
     >

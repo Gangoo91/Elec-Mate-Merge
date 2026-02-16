@@ -1,191 +1,210 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Earth Fault Path Principles - Module 5 Section 1";
-const DESCRIPTION = "Understand the earth fault loop, its components, and why low impedance is essential for safety.";
+const TITLE = 'Earth Fault Path Principles - Module 5 Section 1';
+const DESCRIPTION =
+  'Understand the earth fault loop, its components, and why low impedance is essential for safety.';
 
 const quickCheckQuestions = [
   {
-    id: "efli-purpose",
-    question: "Why must earth fault loop impedance be low?",
+    id: 'efli-purpose',
+    question: 'Why must earth fault loop impedance be low?',
     options: [
-      "To reduce cable heating",
-      "To allow high fault current for fast device operation",
-      "To save energy",
-      "To reduce cable costs"
+      'To reduce cable heating',
+      'To allow high fault current for fast device operation',
+      'To save energy',
+      'To reduce cable costs',
     ],
     correctIndex: 1,
-    explanation: "Low impedance allows high fault current (I=V/Z). High current operates protective devices quickly, limiting shock duration."
+    explanation:
+      'Low impedance allows high fault current (I=V/Z). High current operates protective devices quickly, limiting shock duration.',
   },
   {
-    id: "zs-formula",
-    question: "The formula for total earth fault loop impedance is:",
-    options: ["Zs = Ze × R1+R2", "Zs = Ze - R1+R2", "Zs = Ze + R1+R2", "Zs = Ze ÷ R1+R2"],
+    id: 'zs-formula',
+    question: 'The formula for total earth fault loop impedance is:',
+    options: ['Zs = Ze × R1+R2', 'Zs = Ze - R1+R2', 'Zs = Ze + R1+R2', 'Zs = Ze ÷ R1+R2'],
     correctIndex: 2,
-    explanation: "Zs = Ze + R1+R2. Total impedance equals external impedance plus the circuit's phase and CPC resistance."
+    explanation:
+      "Zs = Ze + R1+R2. Total impedance equals external impedance plus the circuit's phase and CPC resistance.",
   },
   {
-    id: "ze-meaning",
-    question: "Ze represents:",
+    id: 'ze-meaning',
+    question: 'Ze represents:',
     options: [
-      "Total circuit impedance",
-      "External impedance (outside the installation)",
-      "Earth electrode resistance only",
-      "CPC resistance"
+      'Total circuit impedance',
+      'External impedance (outside the installation)',
+      'Earth electrode resistance only',
+      'CPC resistance',
     ],
     correctIndex: 1,
-    explanation: "Ze is the external earth fault loop impedance - everything outside your installation including the supply network."
-  }
+    explanation:
+      'Ze is the external earth fault loop impedance - everything outside your installation including the supply network.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "The earth fault loop includes:",
+    question: 'The earth fault loop includes:',
     options: [
-      "Only the circuit protective conductor",
-      "The complete path from source, through fault, back to source",
-      "Only the earthing conductor",
-      "Only the supply cable"
+      'Only the circuit protective conductor',
+      'The complete path from source, through fault, back to source',
+      'Only the earthing conductor',
+      'Only the supply cable',
     ],
     correctAnswer: 1,
-    explanation: "The loop is the complete path: source to phase conductor to fault to CPC to earthing to means of earthing back to source."
+    explanation:
+      'The loop is the complete path: source to phase conductor to fault to CPC to earthing to means of earthing back to source.',
   },
   {
     id: 2,
-    question: "Low earth fault loop impedance ensures:",
+    question: 'Low earth fault loop impedance ensures:',
     options: [
-      "Low fault current",
-      "High fault current for fast device operation",
-      "No RCD is needed",
-      "Higher cable ratings"
+      'Low fault current',
+      'High fault current for fast device operation',
+      'No RCD is needed',
+      'Higher cable ratings',
     ],
     correctAnswer: 1,
-    explanation: "Low impedance allows high fault current (I=V/Z). High current makes protective devices operate faster, limiting shock duration."
+    explanation:
+      'Low impedance allows high fault current (I=V/Z). High current makes protective devices operate faster, limiting shock duration.',
   },
   {
     id: 3,
-    question: "The formula for total earth fault loop impedance is:",
-    options: ["Zs = Ze × R1+R2", "Zs = Ze - R1+R2", "Zs = Ze + R1+R2", "Zs = Ze ÷ R1+R2"],
+    question: 'The formula for total earth fault loop impedance is:',
+    options: ['Zs = Ze × R1+R2', 'Zs = Ze - R1+R2', 'Zs = Ze + R1+R2', 'Zs = Ze ÷ R1+R2'],
     correctAnswer: 2,
-    explanation: "Zs = Ze + R1+R2. Total impedance is external impedance plus circuit impedance."
+    explanation: 'Zs = Ze + R1+R2. Total impedance is external impedance plus circuit impedance.',
   },
   {
     id: 4,
-    question: "Ze represents:",
+    question: 'Ze represents:',
     options: [
-      "Total circuit impedance",
-      "External impedance (outside the installation)",
-      "Earth electrode resistance only",
-      "CPC resistance"
+      'Total circuit impedance',
+      'External impedance (outside the installation)',
+      'Earth electrode resistance only',
+      'CPC resistance',
     ],
     correctAnswer: 1,
-    explanation: "Ze is external earth fault loop impedance - everything outside your installation including supply transformer and cables."
+    explanation:
+      'Ze is external earth fault loop impedance - everything outside your installation including supply transformer and cables.',
   },
   {
     id: 5,
-    question: "R1+R2 in the Zs formula represents:",
+    question: 'R1+R2 in the Zs formula represents:',
     options: [
-      "External supply impedance",
-      "Earth electrode resistance",
-      "Phase and CPC resistance of the circuit",
-      "Protective device rating"
+      'External supply impedance',
+      'Earth electrode resistance',
+      'Phase and CPC resistance of the circuit',
+      'Protective device rating',
     ],
     correctAnswer: 2,
-    explanation: "R1+R2 is the combined resistance of the phase conductor (R1) and circuit protective conductor (R2) for the circuit."
+    explanation:
+      'R1+R2 is the combined resistance of the phase conductor (R1) and circuit protective conductor (R2) for the circuit.',
   },
   {
     id: 6,
-    question: "If Zs is too high, the protective device:",
+    question: 'If Zs is too high, the protective device:',
     options: [
-      "Will trip instantly",
-      "May not trip quickly enough",
-      "Will trip before the fault",
-      "Is not affected"
+      'Will trip instantly',
+      'May not trip quickly enough',
+      'Will trip before the fault',
+      'Is not affected',
     ],
     correctAnswer: 1,
-    explanation: "High Zs means low fault current. The device may not reach its operating current quickly enough, delaying protection."
+    explanation:
+      'High Zs means low fault current. The device may not reach its operating current quickly enough, delaying protection.',
   },
   {
     id: 7,
-    question: "Maximum Zs values are determined by:",
+    question: 'Maximum Zs values are determined by:',
     options: [
-      "Cable manufacturer",
-      "Customer preference",
-      "Protective device characteristics and disconnection time requirements",
-      "Length of circuit only"
+      'Cable manufacturer',
+      'Customer preference',
+      'Protective device characteristics and disconnection time requirements',
+      'Length of circuit only',
     ],
     correctAnswer: 2,
-    explanation: "Maximum Zs ensures fault current is high enough to operate the device within required disconnection times (0.4s or 5s typically)."
+    explanation:
+      'Maximum Zs ensures fault current is high enough to operate the device within required disconnection times (0.4s or 5s typically).',
   },
   {
     id: 8,
-    question: "In TT earthing systems, Ze is typically:",
+    question: 'In TT earthing systems, Ze is typically:',
     options: [
-      "Very low (<0.5Ω)",
-      "Higher due to earth electrode resistance",
-      "Zero",
-      "Not measurable"
+      'Very low (<0.5Ω)',
+      'Higher due to earth electrode resistance',
+      'Zero',
+      'Not measurable',
     ],
     correctAnswer: 1,
-    explanation: "TT systems rely on earth electrodes (typically 20-200Ω) rather than a metallic return, giving higher Ze than TN systems."
+    explanation:
+      'TT systems rely on earth electrodes (typically 20-200Ω) rather than a metallic return, giving higher Ze than TN systems.',
   },
   {
     id: 9,
-    question: "The purpose of EFLI testing is to verify:",
+    question: 'The purpose of EFLI testing is to verify:',
     options: [
-      "Insulation quality",
-      "The fault loop allows sufficient current for device operation",
-      "Polarity only",
-      "Cable colours"
+      'Insulation quality',
+      'The fault loop allows sufficient current for device operation',
+      'Polarity only',
+      'Cable colours',
     ],
     correctAnswer: 1,
-    explanation: "EFLI testing confirms the earth fault path has low enough impedance to allow protective device operation within required times."
+    explanation:
+      'EFLI testing confirms the earth fault path has low enough impedance to allow protective device operation within required times.',
   },
   {
     id: 10,
-    question: "What happens during an earth fault?",
+    question: 'What happens during an earth fault?',
     options: [
-      "Current flows through the CPC back to source",
-      "The circuit continues normally",
-      "Nothing - earth faults are harmless",
-      "Only the neutral is affected"
+      'Current flows through the CPC back to source',
+      'The circuit continues normally',
+      'Nothing - earth faults are harmless',
+      'Only the neutral is affected',
     ],
     correctAnswer: 0,
-    explanation: "During an earth fault, current flows from phase through the fault into the CPC, then back to the source via the earthing system."
-  }
+    explanation:
+      'During an earth fault, current flows from phase through the fault into the CPC, then back to the source via the earthing system.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What is the earth fault loop?",
-    answer: "The complete path fault current takes: from the source transformer, through the phase conductor, through the fault, through the CPC back to the consumer unit, then via the earthing conductor and means of earthing back to the transformer neutral/earth point."
+    question: 'What is the earth fault loop?',
+    answer:
+      'The complete path fault current takes: from the source transformer, through the phase conductor, through the fault, through the CPC back to the consumer unit, then via the earthing conductor and means of earthing back to the transformer neutral/earth point.',
   },
   {
-    question: "Why must impedance be low?",
-    answer: "Using Ohm's law (I=V/Z), lower impedance means higher fault current. Higher fault current causes the protective device (MCB, fuse) to operate faster. Fast operation limits the duration someone could receive an electric shock."
+    question: 'Why must impedance be low?',
+    answer:
+      "Using Ohm's law (I=V/Z), lower impedance means higher fault current. Higher fault current causes the protective device (MCB, fuse) to operate faster. Fast operation limits the duration someone could receive an electric shock.",
   },
   {
     question: "What's the difference between Ze and Zs?",
-    answer: "Ze is the external earth fault loop impedance - everything outside your installation (transformer, supply cables, DNO earthing). Zs is the total, including your circuit wiring (R1+R2). Zs = Ze + (R1+R2)."
+    answer:
+      'Ze is the external earth fault loop impedance - everything outside your installation (transformer, supply cables, DNO earthing). Zs is the total, including your circuit wiring (R1+R2). Zs = Ze + (R1+R2).',
   },
   {
-    question: "What happens if Zs is too high?",
-    answer: "High Zs means low fault current. The protective device may not trip quickly enough (or at all for minor faults). This leaves dangerous voltage on exposed metalwork for longer, increasing shock risk."
+    question: 'What happens if Zs is too high?',
+    answer:
+      'High Zs means low fault current. The protective device may not trip quickly enough (or at all for minor faults). This leaves dangerous voltage on exposed metalwork for longer, increasing shock risk.',
   },
   {
-    question: "How do maximum Zs values relate to protective devices?",
-    answer: "Each protective device has a characteristic showing how quickly it operates at different currents. Maximum Zs values are calculated to ensure fault current is high enough to trip the device within required disconnection times (0.4s or 5s)."
+    question: 'How do maximum Zs values relate to protective devices?',
+    answer:
+      'Each protective device has a characteristic showing how quickly it operates at different currents. Maximum Zs values are calculated to ensure fault current is high enough to trip the device within required disconnection times (0.4s or 5s).',
   },
   {
-    question: "Why does TT earthing have higher external impedance?",
-    answer: "TT systems use a local earth electrode rather than the supply neutral. Earth electrode resistance (typically 20-200Ω) is much higher than the metallic return path in TN systems, resulting in higher Ze and Zs."
-  }
+    question: 'Why does TT earthing have higher external impedance?',
+    answer:
+      'TT systems use a local earth electrode rather than the supply neutral. Earth electrode resistance (typically 20-200Ω) is much higher than the metallic return path in TN systems, resulting in higher Ze and Zs.',
+  },
 ];
 
 const InspectionTestingModule5Section1 = () => {
@@ -196,7 +215,12 @@ const InspectionTestingModule5Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -207,7 +231,6 @@ const InspectionTestingModule5Section1 = () => {
 
       {/* Main Content - Full width, minimal padding */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -227,19 +250,35 @@ const InspectionTestingModule5Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Loop:</strong> Complete circuit path for fault current to return to source</li>
-              <li><strong>Low Z:</strong> High fault current means fast device operation</li>
-              <li><strong>Formula:</strong> Zs = Ze + (R1+R2)</li>
-              <li><strong>Safety:</strong> Quick disconnection limits shock duration</li>
+              <li>
+                <strong>Loop:</strong> Complete circuit path for fault current to return to source
+              </li>
+              <li>
+                <strong>Low Z:</strong> High fault current means fast device operation
+              </li>
+              <li>
+                <strong>Formula:</strong> Zs = Ze + (R1+R2)
+              </li>
+              <li>
+                <strong>Safety:</strong> Quick disconnection limits shock duration
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Values</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>TN-C-S Ze:</strong> Typically 0.35 ohm or less</li>
-              <li><strong>TN-S Ze:</strong> Typically 0.8 ohm or less</li>
-              <li><strong>TT Ze:</strong> 20-200 ohm (needs RCD)</li>
-              <li><strong>Disconnect:</strong> 0.4s sockets, 5s distribution</li>
+              <li>
+                <strong>TN-C-S Ze:</strong> Typically 0.35 ohm or less
+              </li>
+              <li>
+                <strong>TN-S Ze:</strong> Typically 0.8 ohm or less
+              </li>
+              <li>
+                <strong>TT Ze:</strong> 20-200 ohm (needs RCD)
+              </li>
+              <li>
+                <strong>Disconnect:</strong> 0.4s sockets, 5s distribution
+              </li>
             </ul>
           </div>
         </div>
@@ -249,12 +288,12 @@ const InspectionTestingModule5Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand each component of the earth fault loop (Zs)",
-              "Relate low impedance to fast disconnection times",
-              "Apply the key formula: Zs = Ze + (R1+R2)",
-              "Explain how EFLI protects against electric shock",
-              "Understand why maximum Zs limits exist",
-              "Know what EFLI testing verifies"
+              'Understand each component of the earth fault loop (Zs)',
+              'Relate low impedance to fast disconnection times',
+              'Apply the key formula: Zs = Ze + (R1+R2)',
+              'Explain how EFLI protects against electric shock',
+              'Understand why maximum Zs limits exist',
+              'Know what EFLI testing verifies',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -275,12 +314,15 @@ const InspectionTestingModule5Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              When a fault occurs between a live conductor and earth (exposed metalwork), current must flow
-              back to the source to be detected. The <strong>earth fault loop</strong> is this complete circuit path.
+              When a fault occurs between a live conductor and earth (exposed metalwork), current
+              must flow back to the source to be detected. The <strong>earth fault loop</strong> is
+              this complete circuit path.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Loop Path (TN-C-S):</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                The Loop Path (TN-C-S):
+              </p>
               <ol className="text-sm text-white space-y-1 ml-4 list-decimal list-inside">
                 <li>Source transformer winding</li>
                 <li>Supply phase conductor to installation</li>
@@ -295,8 +337,8 @@ const InspectionTestingModule5Section1 = () => {
             </div>
 
             <p className="text-sm text-white/90">
-              The total impedance of this path determines how much fault current will flow and how quickly
-              the protective device will operate.
+              The total impedance of this path determines how much fault current will flow and how
+              quickly the protective device will operate.
             </p>
           </div>
         </section>
@@ -316,15 +358,21 @@ const InspectionTestingModule5Section1 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent text-center">
                 <p className="font-medium text-emerald-400 mb-1">Low Z = High I</p>
-                <p className="text-white/70 text-xs">Low impedance allows high fault current to flow</p>
+                <p className="text-white/70 text-xs">
+                  Low impedance allows high fault current to flow
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent text-center">
                 <p className="font-medium text-blue-400 mb-1">High I = Fast Trip</p>
-                <p className="text-white/70 text-xs">High current causes quick protective device operation</p>
+                <p className="text-white/70 text-xs">
+                  High current causes quick protective device operation
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent text-center">
                 <p className="font-medium text-purple-400 mb-1">Fast Trip = Safety</p>
-                <p className="text-white/70 text-xs">Quick disconnection limits shock duration and energy</p>
+                <p className="text-white/70 text-xs">
+                  Quick disconnection limits shock duration and energy
+                </p>
               </div>
             </div>
           </div>
@@ -332,64 +380,234 @@ const InspectionTestingModule5Section1 = () => {
 
         {/* Earth Fault Loop Path Diagram */}
         <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
-          <h4 className="text-sm font-bold text-white mb-4">Earth Fault Loop Impedance Path (Zs = Ze + R1+R2)</h4>
-          <svg viewBox="0 0 800 420" className="w-full h-auto" role="img" aria-label="Earth fault loop impedance path diagram showing Ze external path and R1+R2 internal circuit path">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            Earth Fault Loop Impedance Path (Zs = Ze + R1+R2)
+          </h4>
+          <svg
+            viewBox="0 0 800 420"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Earth fault loop impedance path diagram showing Ze external path and R1+R2 internal circuit path"
+          >
             {/* Transformer */}
-            <rect x="30" y="140" width="100" height="140" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-            <text x="80" y="165" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">SUPPLY</text>
-            <text x="80" y="180" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">TRANSFORMER</text>
+            <rect
+              x="30"
+              y="140"
+              width="100"
+              height="140"
+              rx="8"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="2"
+            />
+            <text
+              x="80"
+              y="165"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.6)"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              SUPPLY
+            </text>
+            <text x="80" y="180" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              TRANSFORMER
+            </text>
             {/* Transformer coils */}
-            <path d="M60,200 Q70,195 80,200 Q90,205 100,200" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-            <path d="M60,215 Q70,210 80,215 Q90,220 100,215" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-            <circle cx="80" cy="250" r="6" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-            <text x="80" y="254" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">N</text>
+            <path
+              d="M60,200 Q70,195 80,200 Q90,205 100,200"
+              fill="none"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M60,215 Q70,210 80,215 Q90,220 100,215"
+              fill="none"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="1.5"
+            />
+            <circle
+              cx="80"
+              cy="250"
+              r="6"
+              fill="none"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+            />
+            <text x="80" y="254" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">
+              N
+            </text>
 
             {/* Consumer Unit */}
-            <rect x="350" y="50" width="120" height="80" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-            <text x="410" y="75" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">CONSUMER</text>
-            <text x="410" y="90" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">UNIT</text>
-            <text x="410" y="115" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">MET</text>
+            <rect
+              x="350"
+              y="50"
+              width="120"
+              height="80"
+              rx="8"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="2"
+            />
+            <text
+              x="410"
+              y="75"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.6)"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              CONSUMER
+            </text>
+            <text x="410" y="90" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              UNIT
+            </text>
+            <text x="410" y="115" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">
+              MET
+            </text>
 
             {/* Fault location */}
-            <rect x="630" y="130" width="120" height="60" rx="8" fill="rgba(239,68,68,0.1)" stroke="#EF4444" strokeWidth="2" />
-            <text x="690" y="155" textAnchor="middle" fill="#EF4444" fontSize="11" fontWeight="bold">FAULT</text>
-            <text x="690" y="170" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">L touches metalwork</text>
+            <rect
+              x="630"
+              y="130"
+              width="120"
+              height="60"
+              rx="8"
+              fill="rgba(239,68,68,0.1)"
+              stroke="#EF4444"
+              strokeWidth="2"
+            />
+            <text
+              x="690"
+              y="155"
+              textAnchor="middle"
+              fill="#EF4444"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              FAULT
+            </text>
+            <text x="690" y="170" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              L touches metalwork
+            </text>
 
             {/* Phase conductor path (R1) — Transformer → CU → Fault */}
             <line x1="130" y1="160" x2="350" y2="70" stroke="#EF4444" strokeWidth="2.5" />
             <line x1="470" y1="70" x2="630" y2="140" stroke="#EF4444" strokeWidth="2.5" />
-            <text x="550" y="90" textAnchor="middle" fill="#EF4444" fontSize="11" fontWeight="bold">R1 (Line)</text>
+            <text x="550" y="90" textAnchor="middle" fill="#EF4444" fontSize="11" fontWeight="bold">
+              R1 (Line)
+            </text>
 
             {/* CPC path (R2) — Fault → CU */}
             <line x1="690" y1="190" x2="690" y2="320" stroke="#22C55E" strokeWidth="2.5" />
             <line x1="690" y1="320" x2="410" y2="320" stroke="#22C55E" strokeWidth="2.5" />
             <line x1="410" y1="320" x2="410" y2="130" stroke="#22C55E" strokeWidth="2.5" />
-            <text x="560" y="310" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">R2 (CPC)</text>
+            <text
+              x="560"
+              y="310"
+              textAnchor="middle"
+              fill="#22C55E"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              R2 (CPC)
+            </text>
 
             {/* Earth return path — CU → Transformer */}
-            <line x1="350" y1="120" x2="80" y2="280" stroke="#F97316" strokeWidth="2" strokeDasharray="6,3" />
-            <text x="200" y="220" textAnchor="middle" fill="#F97316" fontSize="10" fontWeight="bold">Earthing conductor</text>
+            <line
+              x1="350"
+              y1="120"
+              x2="80"
+              y2="280"
+              stroke="#F97316"
+              strokeWidth="2"
+              strokeDasharray="6,3"
+            />
+            <text
+              x="200"
+              y="220"
+              textAnchor="middle"
+              fill="#F97316"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              Earthing conductor
+            </text>
 
             {/* DNO earth return */}
-            <path d="M80,280 L80,360 L400,360" fill="none" stroke="#F97316" strokeWidth="2" strokeDasharray="6,3" />
-            <text x="240" y="380" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">DNO earth return (cable sheath / PEN)</text>
+            <path
+              d="M80,280 L80,360 L400,360"
+              fill="none"
+              stroke="#F97316"
+              strokeWidth="2"
+              strokeDasharray="6,3"
+            />
+            <text x="240" y="380" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              DNO earth return (cable sheath / PEN)
+            </text>
 
             {/* Ze bracket */}
-            <rect x="20" y="395" width="340" height="20" rx="4" fill="rgba(249,115,22,0.1)" stroke="rgba(249,115,22,0.3)" strokeWidth="1" />
-            <text x="190" y="410" textAnchor="middle" fill="#F97316" fontSize="10" fontWeight="bold">Ze (External Impedance)</text>
+            <rect
+              x="20"
+              y="395"
+              width="340"
+              height="20"
+              rx="4"
+              fill="rgba(249,115,22,0.1)"
+              stroke="rgba(249,115,22,0.3)"
+              strokeWidth="1"
+            />
+            <text
+              x="190"
+              y="410"
+              textAnchor="middle"
+              fill="#F97316"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              Ze (External Impedance)
+            </text>
 
             {/* R1+R2 bracket */}
-            <rect x="385" y="395" width="370" height="20" rx="4" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" strokeWidth="1" />
-            <text x="570" y="410" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">R1+R2 (Circuit Impedance)</text>
+            <rect
+              x="385"
+              y="395"
+              width="370"
+              height="20"
+              rx="4"
+              fill="rgba(34,197,94,0.1)"
+              stroke="rgba(34,197,94,0.3)"
+              strokeWidth="1"
+            />
+            <text
+              x="570"
+              y="410"
+              textAnchor="middle"
+              fill="#22C55E"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              R1+R2 (Circuit Impedance)
+            </text>
 
             {/* Zs label */}
-            <text x="400" y="22" textAnchor="middle" fill="#FBBF24" fontSize="14" fontWeight="bold">Zs = Ze + (R1+R2)</text>
+            <text x="400" y="22" textAnchor="middle" fill="#FBBF24" fontSize="14" fontWeight="bold">
+              Zs = Ze + (R1+R2)
+            </text>
 
             {/* Current flow arrows */}
-            <text x="240" y="55" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">Fault current flow →</text>
+            <text x="240" y="55" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">
+              Fault current flow →
+            </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">The earth fault loop: current flows from the transformer through the line conductor (R1) to the fault, returns via the CPC (R2) and earthing conductor, then through the DNO earth return (Ze) back to the transformer.</p>
+          <p className="text-xs text-white/40 mt-3">
+            The earth fault loop: current flows from the transformer through the line conductor (R1)
+            to the fault, returns via the CPC (R2) and earthing conductor, then through the DNO
+            earth return (Ze) back to the transformer.
+          </p>
         </div>
 
         <InlineCheck {...quickCheckQuestions[0]} />
@@ -438,16 +656,16 @@ const InspectionTestingModule5Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-orange-400 mb-2">Ze - External Impedance</p>
               <p className="text-sm text-white/80 mb-4">
-                Everything outside your installation: supply transformer, DNO cables, service head, earthing arrangement.
-                You cannot change this - it's provided by the supply.
+                Everything outside your installation: supply transformer, DNO cables, service head,
+                earthing arrangement. You cannot change this - it's provided by the supply.
               </p>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-emerald-400 mb-2">R1+R2 - Circuit Impedance</p>
               <p className="text-sm text-white/80 mb-4">
-                Your circuit wiring: phase conductor (R1) and CPC (R2). Determined by cable size and length.
-                You control this through design choices.
+                Your circuit wiring: phase conductor (R1) and CPC (R2). Determined by cable size and
+                length. You control this through design choices.
               </p>
             </div>
 
@@ -472,7 +690,8 @@ const InspectionTestingModule5Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 specifies maximum Zs values for each protective device to ensure disconnection within required times:
+              BS 7671 specifies maximum Zs values for each protective device to ensure disconnection
+              within required times:
             </p>
 
             <div className="grid grid-cols-2 gap-4 my-6 text-center">
@@ -482,12 +701,15 @@ const InspectionTestingModule5Section1 = () => {
               </div>
               <div className="p-4 rounded bg-transparent">
                 <p className="text-3xl font-bold text-blue-400">5s</p>
-                <p className="text-white/60 text-sm mt-1">Distribution circuits & fixed equipment</p>
+                <p className="text-white/60 text-sm mt-1">
+                  Distribution circuits & fixed equipment
+                </p>
               </div>
             </div>
 
             <p className="text-sm text-amber-300">
-              Maximum Zs values are found in BS 7671 Chapter 41 tables. Values depend on device type and rating.
+              Maximum Zs values are found in BS 7671 Chapter 41 tables. Values depend on device type
+              and rating.
             </p>
           </div>
         </section>
@@ -548,7 +770,9 @@ const InspectionTestingModule5Section1 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Temperature Correction</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Temperature Correction
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Multiply measured R1+R2 by 1.2 for Zs verification</li>
                 <li>This accounts for conductor heating under fault conditions</li>
@@ -588,12 +812,12 @@ const InspectionTestingModule5Section1 = () => {
           <UnitsPocketCard
             title="Earth Fault Loop Reference"
             items={[
-              { term: "Key Formula", definition: "Zs = Ze + (R1+R2)" },
-              { term: "Ze", definition: "External impedance" },
-              { term: "R1+R2", definition: "Circuit impedance" },
-              { term: "Socket Disconnect", definition: "0.4 seconds or less" },
-              { term: "Distribution Disconnect", definition: "5 seconds or less" },
-              { term: "Temp Correction", definition: "x1.2 for max temp" }
+              { term: 'Key Formula', definition: 'Zs = Ze + (R1+R2)' },
+              { term: 'Ze', definition: 'External impedance' },
+              { term: 'R1+R2', definition: 'Circuit impedance' },
+              { term: 'Socket Disconnect', definition: '0.4 seconds or less' },
+              { term: 'Distribution Disconnect', definition: '5 seconds or less' },
+              { term: 'Temp Correction', definition: 'x1.2 for max temp' },
             ]}
           />
 
@@ -622,28 +846,33 @@ const InspectionTestingModule5Section1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

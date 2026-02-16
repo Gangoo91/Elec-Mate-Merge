@@ -35,9 +35,9 @@ const getResistanceData = (cableType: CableType, size: number, temperature: numb
       2.5: { r: 7.41, x: 0.12 },
       4: { r: 4.61, x: 0.11 },
       6: { r: 3.08, x: 0.11 },
-      10: { r: 1.83, x: 0.10 },
+      10: { r: 1.83, x: 0.1 },
       16: { r: 1.15, x: 0.095 },
-      25: { r: 0.727, x: 0.090 },
+      25: { r: 0.727, x: 0.09 },
       35: { r: 0.524, x: 0.085 },
       50: { r: 0.387, x: 0.082 },
       70: { r: 0.268, x: 0.079 },
@@ -47,9 +47,9 @@ const getResistanceData = (cableType: CableType, size: number, temperature: numb
       185: { r: 0.0991, x: 0.073 },
       240: { r: 0.0754, x: 0.072 },
       300: { r: 0.0601, x: 0.071 },
-      400: { r: 0.0470, x: 0.070 },
+      400: { r: 0.047, x: 0.07 },
       500: { r: 0.0366, x: 0.069 },
-      630: { r: 0.0283, x: 0.068 }
+      630: { r: 0.0283, x: 0.068 },
     },
     'xlpe-single': {
       1.0: { r: 18.1, x: 0.14 },
@@ -57,9 +57,9 @@ const getResistanceData = (cableType: CableType, size: number, temperature: numb
       2.5: { r: 7.41, x: 0.12 },
       4: { r: 4.61, x: 0.11 },
       6: { r: 3.08, x: 0.11 },
-      10: { r: 1.83, x: 0.10 },
+      10: { r: 1.83, x: 0.1 },
       16: { r: 1.15, x: 0.095 },
-      25: { r: 0.727, x: 0.090 },
+      25: { r: 0.727, x: 0.09 },
       35: { r: 0.524, x: 0.085 },
       50: { r: 0.387, x: 0.082 },
       70: { r: 0.268, x: 0.079 },
@@ -69,9 +69,9 @@ const getResistanceData = (cableType: CableType, size: number, temperature: numb
       185: { r: 0.0991, x: 0.073 },
       240: { r: 0.0754, x: 0.072 },
       300: { r: 0.0601, x: 0.071 },
-      400: { r: 0.0470, x: 0.070 },
+      400: { r: 0.047, x: 0.07 },
       500: { r: 0.0366, x: 0.069 },
-      630: { r: 0.0283, x: 0.068 }
+      630: { r: 0.0283, x: 0.068 },
     },
     'pvc-twin-earth': {
       1.0: { r: 18.1, x: 0 },
@@ -83,16 +83,16 @@ const getResistanceData = (cableType: CableType, size: number, temperature: numb
       16: { r: 1.15, x: 0 },
       25: { r: 0.727, x: 0 },
       35: { r: 0.524, x: 0 },
-      50: { r: 0.387, x: 0 }
+      50: { r: 0.387, x: 0 },
     },
-    'swa': {
+    swa: {
       1.5: { r: 12.1, x: 0.13 },
       2.5: { r: 7.41, x: 0.12 },
       4: { r: 4.61, x: 0.11 },
       6: { r: 3.08, x: 0.11 },
-      10: { r: 1.83, x: 0.10 },
+      10: { r: 1.83, x: 0.1 },
       16: { r: 1.15, x: 0.095 },
-      25: { r: 0.727, x: 0.090 },
+      25: { r: 0.727, x: 0.09 },
       35: { r: 0.524, x: 0.085 },
       50: { r: 0.387, x: 0.082 },
       70: { r: 0.268, x: 0.079 },
@@ -102,38 +102,38 @@ const getResistanceData = (cableType: CableType, size: number, temperature: numb
       185: { r: 0.0991, x: 0.073 },
       240: { r: 0.0754, x: 0.072 },
       300: { r: 0.0601, x: 0.071 },
-      400: { r: 0.0470, x: 0.070 },
+      400: { r: 0.047, x: 0.07 },
       500: { r: 0.0366, x: 0.069 },
-      630: { r: 0.0283, x: 0.068 }
+      630: { r: 0.0283, x: 0.068 },
     },
-    'micc': {
-      1.0: { r: 18.1, x: 0.10 },
-      1.5: { r: 12.1, x: 0.10 },
-      2.5: { r: 7.41, x: 0.10 },
-      4: { r: 4.61, x: 0.10 },
-      6: { r: 3.08, x: 0.10 },
-      10: { r: 1.83, x: 0.10 },
-      16: { r: 1.15, x: 0.10 },
-      25: { r: 0.727, x: 0.10 },
-      35: { r: 0.524, x: 0.10 },
-      50: { r: 0.387, x: 0.10 }
+    micc: {
+      1.0: { r: 18.1, x: 0.1 },
+      1.5: { r: 12.1, x: 0.1 },
+      2.5: { r: 7.41, x: 0.1 },
+      4: { r: 4.61, x: 0.1 },
+      6: { r: 3.08, x: 0.1 },
+      10: { r: 1.83, x: 0.1 },
+      16: { r: 1.15, x: 0.1 },
+      25: { r: 0.727, x: 0.1 },
+      35: { r: 0.524, x: 0.1 },
+      50: { r: 0.387, x: 0.1 },
     },
     'aluminium-xlpe': {
       16: { r: 1.91, x: 0.095 },
-      25: { r: 1.20, x: 0.090 },
+      25: { r: 1.2, x: 0.09 },
       35: { r: 0.868, x: 0.085 },
       50: { r: 0.641, x: 0.082 },
       70: { r: 0.443, x: 0.079 },
-      95: { r: 0.320, x: 0.077 },
+      95: { r: 0.32, x: 0.077 },
       120: { r: 0.253, x: 0.075 },
       150: { r: 0.206, x: 0.074 },
       185: { r: 0.164, x: 0.073 },
       240: { r: 0.125, x: 0.072 },
-      300: { r: 0.100, x: 0.071 },
-      400: { r: 0.0778, x: 0.070 },
+      300: { r: 0.1, x: 0.071 },
+      400: { r: 0.0778, x: 0.07 },
       500: { r: 0.0605, x: 0.069 },
-      630: { r: 0.0469, x: 0.068 }
-    }
+      630: { r: 0.0469, x: 0.068 },
+    },
   };
 
   const cableData = baseResistances[cableType];
@@ -142,45 +142,37 @@ const getResistanceData = (cableType: CableType, size: number, temperature: numb
   }
 
   const baseData = cableData[size];
-  
+
   // Temperature correction for resistance
   // R(T) = R(20) × [1 + α(T - 20)]
   // Copper α = 0.00393/°C, Aluminium α = 0.00403/°C
   const tempCoeff = cableType.includes('aluminium') ? 0.00403 : 0.00393;
   const operatingResistance = baseData.r * (1 + tempCoeff * (temperature - 20));
-  
+
   return {
     resistance: operatingResistance,
-    reactance: baseData.x
+    reactance: baseData.x,
   };
 };
 
 export const calculateVoltageDrop = (inputs: VoltageDropInputs): VoltageDropResult | null => {
-  const {
-    cableType,
-    cableSize,
-    length,
-    current,
-    voltage,
-    powerFactor,
-    phaseConfig,
-    temperature
-  } = inputs;
+  const { cableType, cableSize, length, current, voltage, powerFactor, phaseConfig, temperature } =
+    inputs;
 
   const resistanceData = getResistanceData(cableType, cableSize, temperature);
   if (!resistanceData) return null;
 
   const { resistance, reactance } = resistanceData;
-  
-  // Convert mΩ/m to Ω for calculation 
-  const R = resistance * length / 1000; // Ω (total resistance)
-  const X = reactance * length / 1000; // Ω (total reactance)
+
+  // Convert mΩ/m to Ω for calculation
+  const R = (resistance * length) / 1000; // Ω (total resistance)
+  const X = (reactance * length) / 1000; // Ω (total reactance)
   const L = length; // m (for equation display)
-  
+
   // Calculate voltage drop based on phase configuration
   let voltageDrop: number;
   let equation: string;
-  
+
   if (phaseConfig === 'single') {
     // Single phase: Vd = 2 × I × (R × cos φ + X × sin φ)
     const cosφ = powerFactor;
@@ -202,9 +194,9 @@ export const calculateVoltageDrop = (inputs: VoltageDropInputs): VoltageDropResu
   // Check if inputs contain load type information for accurate limit determination
   const isLightingCircuit = (inputs as any).loadType?.includes('lighting') || false;
   const limit = isLightingCircuit ? 3 : 5; // 3% for lighting, 5% for power circuits
-  const limitType = isLightingCircuit ? 
-    '3% (Lighting circuits - BS 7671 Appendix 4)' : 
-    '5% (Power circuits - BS 7671 Appendix 4)';
+  const limitType = isLightingCircuit
+    ? '3% (Lighting circuits - BS 7671 Appendix 4)'
+    : '5% (Power circuits - BS 7671 Appendix 4)';
   const isCompliant = voltageDropPercent <= limit;
 
   return {
@@ -214,30 +206,36 @@ export const calculateVoltageDrop = (inputs: VoltageDropInputs): VoltageDropResu
     compliance: {
       isCompliant,
       limit,
-      limitType
+      limitType,
     },
     equation,
     resistance: Math.round(resistance * 1000) / 1000,
-    reactance: Math.round(reactance * 1000) / 1000
+    reactance: Math.round(reactance * 1000) / 1000,
   };
 };
 
-export const getVoltageDropRecommendations = (result: VoltageDropResult, inputs: VoltageDropInputs): string[] => {
+export const getVoltageDropRecommendations = (
+  result: VoltageDropResult,
+  inputs: VoltageDropInputs
+): string[] => {
   const recommendations: string[] = [];
-  
+
   if (!result.compliance.isCompliant) {
-    recommendations.push(`Voltage drop exceeds ${result.compliance.limit}% limit - consider larger cable size`);
+    recommendations.push(
+      `Voltage drop exceeds ${result.compliance.limit}% limit - consider larger cable size`
+    );
     recommendations.push('Alternative: Reduce cable length or supply closer to load');
     recommendations.push('Consider higher voltage distribution (e.g., 400V instead of 230V)');
   }
-  
+
   if (result.voltageDropPercent > result.compliance.limit * 0.8) {
     recommendations.push('Approaching voltage drop limit - monitor for load increases');
   }
-  
-  if (result.finalVoltage < 207) { // 230V - 10%
+
+  if (result.finalVoltage < 207) {
+    // 230V - 10%
     recommendations.push('Final voltage below recommended minimum (207V)');
   }
-  
+
   return recommendations;
 };

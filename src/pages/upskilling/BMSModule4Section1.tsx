@@ -1,85 +1,95 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import { bmsModule4Section1QuizData } from "@/data/upskilling/bmsModule4Section1QuizData";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { bmsModule4Section1QuizData } from '@/data/upskilling/bmsModule4Section1QuizData';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "dali-flexibility",
-    question: "Why is DALI more flexible than traditional on/off lighting control?",
+    id: 'dali-flexibility',
+    question: 'Why is DALI more flexible than traditional on/off lighting control?',
     options: [
-      "It uses higher voltage for brighter lights",
-      "Individual addressability and digital feedback enable sophisticated control",
-      "It requires less wiring than standard systems",
-      "It operates without any controller"
+      'It uses higher voltage for brighter lights',
+      'Individual addressability and digital feedback enable sophisticated control',
+      'It requires less wiring than standard systems',
+      'It operates without any controller',
     ],
     correctIndex: 1,
-    explanation: "DALI allows each lighting fitting to be individually addressed and controlled, enabling sophisticated strategies like automatic daylight compensation, individual dimming, and real-time status monitoring, unlike simple on/off systems that only provide basic switching functionality."
+    explanation:
+      'DALI allows each lighting fitting to be individually addressed and controlled, enabling sophisticated strategies like automatic daylight compensation, individual dimming, and real-time status monitoring, unlike simple on/off systems that only provide basic switching functionality.',
   },
   {
-    id: "1-10v-feedback",
+    id: '1-10v-feedback',
     question: "Why can't a 1-10V system provide feedback on lamp failures?",
     options: [
-      "The voltage is too low for status signals",
-      "Analog signals only flow one direction without digital feedback capability",
+      'The voltage is too low for status signals',
+      'Analog signals only flow one direction without digital feedback capability',
       "The protocol doesn't support LEDs",
-      "It requires special sensors"
+      'It requires special sensors',
     ],
     correctIndex: 1,
-    explanation: "1-10V systems use simple analog voltage control signals that only flow in one direction (from controller to driver). They lack the bidirectional digital communication required to send status information back from individual fittings to the control system."
+    explanation:
+      '1-10V systems use simple analog voltage control signals that only flow in one direction (from controller to driver). They lack the bidirectional digital communication required to send status information back from individual fittings to the control system.',
   },
   {
-    id: "smart-lighting-advantage",
-    question: "What is one advantage of smart lighting compared to wired protocols like DALI?",
+    id: 'smart-lighting-advantage',
+    question: 'What is one advantage of smart lighting compared to wired protocols like DALI?',
     options: [
-      "Lower initial cost",
-      "Easily scalable without rewiring",
-      "No network infrastructure needed",
-      "Simpler commissioning process"
+      'Lower initial cost',
+      'Easily scalable without rewiring',
+      'No network infrastructure needed',
+      'Simpler commissioning process',
     ],
     correctIndex: 1,
-    explanation: "Smart lighting systems use wireless or network-based communication, allowing new fixtures, sensors, and controls to be added without installing additional control wiring, making expansion and reconfiguration much simpler and more cost-effective."
+    explanation:
+      'Smart lighting systems use wireless or network-based communication, allowing new fixtures, sensors, and controls to be added without installing additional control wiring, making expansion and reconfiguration much simpler and more cost-effective.',
   },
   {
-    id: "warehouse-protocol",
-    question: "Which lighting protocol would you choose for a small warehouse with simple dimming needs?",
+    id: 'warehouse-protocol',
+    question:
+      'Which lighting protocol would you choose for a small warehouse with simple dimming needs?',
     options: [
-      "DALI for individual control",
-      "Smart lighting for analytics",
-      "1-10V dimming systems for reliability and cost",
-      "PoE lighting for data integration"
+      'DALI for individual control',
+      'Smart lighting for analytics',
+      '1-10V dimming systems for reliability and cost',
+      'PoE lighting for data integration',
     ],
     correctIndex: 2,
-    explanation: "For a small warehouse with simple dimming requirements, 1-10V systems are ideal because they offer reliable, cost-effective group dimming control with minimal installation complexity and very low maintenance requirements."
-  }
+    explanation:
+      'For a small warehouse with simple dimming requirements, 1-10V systems are ideal because they offer reliable, cost-effective group dimming control with minimal installation complexity and very low maintenance requirements.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What is the maximum number of devices on a single DALI loop?",
-    answer: "A single DALI loop supports up to 64 individual devices, each with a unique address from 0-63. For larger installations, multiple loops can be controlled through DALI gateways."
+    question: 'What is the maximum number of devices on a single DALI loop?',
+    answer:
+      'A single DALI loop supports up to 64 individual devices, each with a unique address from 0-63. For larger installations, multiple loops can be controlled through DALI gateways.',
   },
   {
-    question: "Can DALI and 1-10V systems be mixed in the same building?",
-    answer: "Yes, different lighting protocols can coexist in the same building using multi-protocol gateways. DALI might control open offices, 1-10V for warehouses, and smart lighting for meeting rooms - all integrated through a central BMS."
+    question: 'Can DALI and 1-10V systems be mixed in the same building?',
+    answer:
+      'Yes, different lighting protocols can coexist in the same building using multi-protocol gateways. DALI might control open offices, 1-10V for warehouses, and smart lighting for meeting rooms - all integrated through a central BMS.',
   },
   {
-    question: "What cable type should be used for 1-10V dimming control?",
-    answer: "Screened/shielded low voltage cable should be used, with proper segregation from mains power circuits. The screen should be earthed at one end only to prevent ground loops and EMI interference."
+    question: 'What cable type should be used for 1-10V dimming control?',
+    answer:
+      'Screened/shielded low voltage cable should be used, with proper segregation from mains power circuits. The screen should be earthed at one end only to prevent ground loops and EMI interference.',
   },
   {
-    question: "How do smart lighting systems handle network failures?",
-    answer: "Well-designed smart systems include failsafe modes - lights typically default to full brightness or last known state if network communication fails. Local manual override capability is essential for critical areas."
-  }
+    question: 'How do smart lighting systems handle network failures?',
+    answer:
+      'Well-designed smart systems include failsafe modes - lights typically default to full brightness or last known state if network communication fails. Local manual override capability is essential for critical areas.',
+  },
 ];
 
 const BMSModule4Section1 = () => {
   useSEO({
-    title: "DALI, 1-10V, and Smart Lighting Integration | BMS Module 4.1",
-    description: "Master DALI, 1-10V dimming, and smart lighting integration with BMS. Learn lighting control protocols, wiring techniques, and commissioning procedures for optimal energy efficiency."
+    title: 'DALI, 1-10V, and Smart Lighting Integration | BMS Module 4.1',
+    description:
+      'Master DALI, 1-10V dimming, and smart lighting integration with BMS. Learn lighting control protocols, wiring techniques, and commissioning procedures for optimal energy efficiency.',
   });
 
   return (
@@ -87,7 +97,12 @@ const BMSModule4Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -116,17 +131,29 @@ const BMSModule4Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>DALI:</strong> Digital, 64 devices/loop, bidirectional</li>
-              <li><strong>1-10V:</strong> Analog, group control, no feedback</li>
-              <li><strong>Smart:</strong> Wireless/IP, scalable, IoT integration</li>
-              <li><strong>Selection:</strong> Match protocol to application needs</li>
+              <li>
+                <strong>DALI:</strong> Digital, 64 devices/loop, bidirectional
+              </li>
+              <li>
+                <strong>1-10V:</strong> Analog, group control, no feedback
+              </li>
+              <li>
+                <strong>Smart:</strong> Wireless/IP, scalable, IoT integration
+              </li>
+              <li>
+                <strong>Selection:</strong> Match protocol to application needs
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> DALI gateways, control cables, wireless nodes</li>
-              <li><strong>Use:</strong> Energy efficiency, occupant comfort, fault monitoring</li>
+              <li>
+                <strong>Spot:</strong> DALI gateways, control cables, wireless nodes
+              </li>
+              <li>
+                <strong>Use:</strong> Energy efficiency, occupant comfort, fault monitoring
+              </li>
             </ul>
           </div>
         </div>
@@ -136,14 +163,14 @@ const BMSModule4Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "DALI, 1-10V, and smart lighting principles",
-              "Integration methods for each protocol",
-              "Wiring and commissioning techniques",
-              "Protocol advantages and limitations",
-              "Selection criteria for projects",
-              "Troubleshooting common issues",
-              "BMS integration architecture",
-              "Hybrid system design approaches"
+              'DALI, 1-10V, and smart lighting principles',
+              'Integration methods for each protocol',
+              'Wiring and commissioning techniques',
+              'Protocol advantages and limitations',
+              'Selection criteria for projects',
+              'Troubleshooting common issues',
+              'BMS integration architecture',
+              'Hybrid system design approaches',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -163,18 +190,29 @@ const BMSModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              DALI (Digital Addressable Lighting Interface) represents the gold standard for intelligent lighting control.
-              As an international standard (IEC 62386), DALI enables sophisticated control strategies through its digital
-              communication protocol with bidirectional feedback capability.
+              DALI (Digital Addressable Lighting Interface) represents the gold standard for
+              intelligent lighting control. As an international standard (IEC 62386), DALI enables
+              sophisticated control strategies through its digital communication protocol with
+              bidirectional feedback capability.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DALI Technical Specifications:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                DALI Technical Specifications:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Device Capacity:</strong> 64 devices per loop, individual control</li>
-                <li><strong>Wiring:</strong> Two-wire bus, polarity-free, simple installation</li>
-                <li><strong>Communication:</strong> Bidirectional digital, status feedback</li>
-                <li><strong>Dimming:</strong> 254 levels, logarithmic for smooth perception</li>
+                <li>
+                  <strong>Device Capacity:</strong> 64 devices per loop, individual control
+                </li>
+                <li>
+                  <strong>Wiring:</strong> Two-wire bus, polarity-free, simple installation
+                </li>
+                <li>
+                  <strong>Communication:</strong> Bidirectional digital, status feedback
+                </li>
+                <li>
+                  <strong>Dimming:</strong> 254 levels, logarithmic for smooth perception
+                </li>
               </ul>
             </div>
 
@@ -189,7 +227,9 @@ const BMSModule4Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Integration Components</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Integration Components
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>DALI Gateway with BMS protocol</li>
                   <li>16V DC Bus Power Supply</li>
@@ -211,18 +251,29 @@ const BMSModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The 1-10V dimming standard provides a cost-effective, reliable method for lighting control using analog
-              voltage signals. While less sophisticated than DALI, 1-10V systems offer excellent reliability and wide
-              industry compatibility for applications requiring simple, robust dimming.
+              The 1-10V dimming standard provides a cost-effective, reliable method for lighting
+              control using analog voltage signals. While less sophisticated than DALI, 1-10V
+              systems offer excellent reliability and wide industry compatibility for applications
+              requiring simple, robust dimming.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">1-10V Technical Parameters:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                1-10V Technical Parameters:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Signal Range:</strong> 1V (minimum) to 10V (maximum brightness)</li>
-                <li><strong>Wiring:</strong> Separate control and mains circuits required</li>
-                <li><strong>Current:</strong> Typically 100μA maximum control current</li>
-                <li><strong>Cable:</strong> Screened/shielded low voltage cable required</li>
+                <li>
+                  <strong>Signal Range:</strong> 1V (minimum) to 10V (maximum brightness)
+                </li>
+                <li>
+                  <strong>Wiring:</strong> Separate control and mains circuits required
+                </li>
+                <li>
+                  <strong>Current:</strong> Typically 100μA maximum control current
+                </li>
+                <li>
+                  <strong>Cable:</strong> Screened/shielded low voltage cable required
+                </li>
               </ul>
             </div>
 
@@ -259,19 +310,28 @@ const BMSModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart lighting represents the cutting edge of lighting control, utilising wireless communication protocols
-              and IP networking for highly flexible, scalable systems. These solutions eliminate traditional control
-              wiring whilst providing unprecedented integration capabilities.
+              Smart lighting represents the cutting edge of lighting control, utilising wireless
+              communication protocols and IP networking for highly flexible, scalable systems. These
+              solutions eliminate traditional control wiring whilst providing unprecedented
+              integration capabilities.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wireless Protocols</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Zigbee 3.0:</strong> Mesh network, 10-100m, self-healing</li>
-                  <li><strong>Bluetooth Mesh:</strong> Smartphone integration, fast setup</li>
-                  <li><strong>Wi-Fi 6:</strong> High bandwidth, existing infrastructure</li>
-                  <li><strong>PoE:</strong> Power + data single cable, 100m</li>
+                  <li>
+                    <strong>Zigbee 3.0:</strong> Mesh network, 10-100m, self-healing
+                  </li>
+                  <li>
+                    <strong>Bluetooth Mesh:</strong> Smartphone integration, fast setup
+                  </li>
+                  <li>
+                    <strong>Wi-Fi 6:</strong> High bandwidth, existing infrastructure
+                  </li>
+                  <li>
+                    <strong>PoE:</strong> Power + data single cable, 100m
+                  </li>
                 </ul>
               </div>
               <div>
@@ -286,7 +346,9 @@ const BMSModule4Section1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Security and Infrastructure Considerations:</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Security and Infrastructure Considerations:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Network vulnerability to cyber attacks</li>
                 <li>Encryption key management complexity</li>
@@ -307,8 +369,9 @@ const BMSModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Selecting the appropriate lighting control protocol requires careful consideration of project requirements,
-              budget constraints, functionality needs, and long-term maintenance implications.
+              Selecting the appropriate lighting control protocol requires careful consideration of
+              project requirements, budget constraints, functionality needs, and long-term
+              maintenance implications.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -332,12 +395,15 @@ const BMSModule4Section1 = () => {
 
         {/* Case Study */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Case Study: London Office Hybrid Integration</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">
+            Case Study: London Office Hybrid Integration
+          </h2>
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>Challenge:</strong> Prestigious London office requiring sophisticated lighting control for diverse
-                workspace requirements whilst achieving aggressive energy efficiency targets. Multiple protocol integration needed.
+                <strong>Challenge:</strong> Prestigious London office requiring sophisticated
+                lighting control for diverse workspace requirements whilst achieving aggressive
+                energy efficiency targets. Multiple protocol integration needed.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
@@ -409,21 +475,27 @@ const BMSModule4Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={bmsModule4Section1QuizData}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={bmsModule4Section1QuizData} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-4-section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

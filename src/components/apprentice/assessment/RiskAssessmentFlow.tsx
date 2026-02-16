@@ -1,15 +1,13 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  ArrowLeft, ArrowRight, CheckCircle, AlertTriangle,
-} from "lucide-react";
-import HazardIdentificationMatrix from "./risk-assessment/HazardIdentificationMatrix";
-import RiskCalculationMatrix from "./risk-assessment/RiskCalculationMatrix";
-import ControlMeasuresGenerator from "./risk-assessment/ControlMeasuresGenerator";
-import RiskOutcomeGuidance from "./risk-assessment/RiskOutcomeGuidance";
-import RiskDocumentation from "./risk-assessment/RiskDocumentation";
-import type { useAssessmentProgress } from "./hooks/useAssessmentProgress";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
+import HazardIdentificationMatrix from './risk-assessment/HazardIdentificationMatrix';
+import RiskCalculationMatrix from './risk-assessment/RiskCalculationMatrix';
+import ControlMeasuresGenerator from './risk-assessment/ControlMeasuresGenerator';
+import RiskOutcomeGuidance from './risk-assessment/RiskOutcomeGuidance';
+import RiskDocumentation from './risk-assessment/RiskDocumentation';
+import type { useAssessmentProgress } from './hooks/useAssessmentProgress';
 
 interface RiskAssessment {
   id: string;
@@ -37,26 +35,32 @@ const steps = [
 ];
 
 const calculateRiskLevel = (score: number): string => {
-  if (score >= 15) return "Very High";
-  if (score >= 10) return "High";
-  if (score >= 6) return "Medium";
-  if (score >= 3) return "Low";
-  return "Very Low";
+  if (score >= 15) return 'Very High';
+  if (score >= 10) return 'High';
+  if (score >= 6) return 'Medium';
+  if (score >= 3) return 'Low';
+  return 'Very Low';
 };
 
 const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedHazard, setSelectedHazard] = useState("");
+  const [selectedHazard, setSelectedHazard] = useState('');
   const [currentAssessment, setCurrentAssessment] = useState<RiskAssessment | null>(null);
 
   const canGoNext = () => {
     switch (currentStep) {
-      case 1: return selectedHazard !== "";
-      case 2: return currentAssessment !== null;
-      case 3: return currentAssessment !== null && currentAssessment.controlMeasures.length > 0;
-      case 4: return currentAssessment !== null;
-      case 5: return true;
-      default: return false;
+      case 1:
+        return selectedHazard !== '';
+      case 2:
+        return currentAssessment !== null;
+      case 3:
+        return currentAssessment !== null && currentAssessment.controlMeasures.length > 0;
+      case 4:
+        return currentAssessment !== null;
+      case 5:
+        return true;
+      default:
+        return false;
     }
   };
 
@@ -78,8 +82,8 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
       riskLevel,
       controlMeasures: [],
       timestamp: new Date().toISOString(),
-      assessor: "Current User",
-      location: "Site Location",
+      assessor: 'Current User',
+      location: 'Site Location',
     };
     setCurrentAssessment(newAssessment);
     setCurrentStep(3);
@@ -105,7 +109,7 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
 
   const handleStartNew = () => {
     setCurrentStep(1);
-    setSelectedHazard("");
+    setSelectedHazard('');
     setCurrentAssessment(null);
   };
 
@@ -122,17 +126,17 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
         {steps.map((step, idx) => (
           <div key={step.number} className="flex items-center">
             <div className="flex flex-col items-center">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${getStepColor(step.number)}`}>
-                {step.number < currentStep ? (
-                  <CheckCircle className="h-4 w-4" />
-                ) : (
-                  step.number
-                )}
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${getStepColor(step.number)}`}
+              >
+                {step.number < currentStep ? <CheckCircle className="h-4 w-4" /> : step.number}
               </div>
               <span className="text-xs text-white mt-1 hidden sm:block">{step.label}</span>
             </div>
             {idx < steps.length - 1 && (
-              <div className={`w-6 sm:w-10 h-0.5 mx-1 ${step.number < currentStep ? 'bg-green-500' : 'bg-white/10'}`} />
+              <div
+                className={`w-6 sm:w-10 h-0.5 mx-1 ${step.number < currentStep ? 'bg-green-500' : 'bg-white/10'}`}
+              />
             )}
           </div>
         ))}
@@ -143,7 +147,8 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
         <div className="flex items-center gap-2 p-3 rounded-xl bg-green-500/10 border border-green-500/30">
           <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
           <span className="text-sm text-white">
-            {progress.riskAssessments.length} assessment{progress.riskAssessments.length !== 1 ? 's' : ''} saved
+            {progress.riskAssessments.length} assessment
+            {progress.riskAssessments.length !== 1 ? 's' : ''} saved
           </span>
         </div>
       )}
@@ -159,7 +164,9 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
                   <div className="flex items-start gap-3">
                     <AlertTriangle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-sm font-semibold text-elec-yellow mb-1">Selected Hazard</div>
+                      <div className="text-sm font-semibold text-elec-yellow mb-1">
+                        Selected Hazard
+                      </div>
                       <div className="text-sm text-white">{selectedHazard}</div>
                     </div>
                   </div>
@@ -169,9 +176,7 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
           </>
         )}
 
-        {currentStep === 2 && (
-          <RiskCalculationMatrix onRiskCalculated={handleRiskCalculated} />
-        )}
+        {currentStep === 2 && <RiskCalculationMatrix onRiskCalculated={handleRiskCalculated} />}
 
         {currentStep === 3 && (
           <ControlMeasuresGenerator onControlMeasuresAdded={handleControlMeasuresAdded} />
@@ -202,7 +207,7 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
         <div className="flex gap-3">
           {currentStep > 1 && (
             <Button
-              onClick={() => setCurrentStep(prev => prev - 1)}
+              onClick={() => setCurrentStep((prev) => prev - 1)}
               variant="outline"
               className="flex-1 h-11 border-white/20 hover:bg-white/5 touch-manipulation active:scale-95 transition-all"
             >
@@ -213,7 +218,7 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
           {/* Steps 2 and 3 auto-advance on action, but still show Next for step 1 and 4 */}
           {(currentStep === 1 || currentStep === 4) && (
             <Button
-              onClick={() => setCurrentStep(prev => prev + 1)}
+              onClick={() => setCurrentStep((prev) => prev + 1)}
               disabled={!canGoNext()}
               className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-95 transition-all disabled:opacity-30"
             >

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
   ArrowRight,
@@ -10,82 +10,76 @@ import {
   CheckCircle,
   FileText,
   Wrench,
-} from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
 const TITLE =
-  "Installing Accessories (Sockets, Switches, FCUs) - Module 3.4.6 | Level 2 Electrical Course";
+  'Installing Accessories (Sockets, Switches, FCUs) - Module 3.4.6 | Level 2 Electrical Course';
 const DESCRIPTION =
-  "Master the installation of electrical accessories including sockets, switches, and FCUs with proper wiring, mounting heights, and BS 7671 compliance.";
+  'Master the installation of electrical accessories including sockets, switches, and FCUs with proper wiring, mounting heights, and BS 7671 compliance.';
 
 // Quiz questions for the end of the page
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "What is the typical mounting height for switches in new builds under Part M?",
-    options: ["450 mm", "900 mm", "1200 mm", "1500 mm"],
+    question: 'What is the typical mounting height for switches in new builds under Part M?',
+    options: ['450 mm', '900 mm', '1200 mm', '1500 mm'],
     correctAnswer: 2,
     explanation:
-      "The typical mounting height for switches in new builds under Part M guidance is 1200 mm above finished floor level.",
+      'The typical mounting height for switches in new builds under Part M guidance is 1200 mm above finished floor level.',
   },
   {
     id: 2,
-    question: "Which BS 7671 requirement applies to almost all socket outlets?",
+    question: 'Which BS 7671 requirement applies to almost all socket outlets?',
     options: [
-      "RCBO protection",
-      "RCD protection",
-      "Earth-free installation",
-      "Overload protection only",
+      'RCBO protection',
+      'RCD protection',
+      'Earth-free installation',
+      'Overload protection only',
     ],
     correctAnswer: 1,
     explanation:
-      "RCD protection is required for almost all socket outlets in accordance with BS 7671.",
+      'RCD protection is required for almost all socket outlets in accordance with BS 7671.',
   },
   {
     id: 3,
-    question: "True or False: Switched live conductors must always be sleeved brown.",
-    options: ["True", "False"],
+    question: 'True or False: Switched live conductors must always be sleeved brown.',
+    options: ['True', 'False'],
     correctAnswer: 0,
     explanation:
-      "True. Switched live conductors must be identified with brown sleeving or brown core to clearly identify them.",
+      'True. Switched live conductors must be identified with brown sleeving or brown core to clearly identify them.',
   },
   {
     id: 4,
-    question: "Name one reason to use an FCU.",
+    question: 'Name one reason to use an FCU.',
     options: [
-      "To reduce cable costs",
-      "To provide a fused spur for a fixed appliance",
-      "To eliminate RCD protection",
-      "To increase socket capacity",
+      'To reduce cable costs',
+      'To provide a fused spur for a fixed appliance',
+      'To eliminate RCD protection',
+      'To increase socket capacity',
     ],
     correctAnswer: 1,
     explanation:
-      "FCUs provide a fused spur from a ring or radial circuit to supply fixed appliances and allow local isolation.",
+      'FCUs provide a fused spur from a ring or radial circuit to supply fixed appliances and allow local isolation.',
   },
   {
     id: 5,
-    question: "What must be done before installing any accessory?",
-    options: [
-      "Fit the faceplate first",
-      "Isolate the supply",
-      "Install the fuse",
-      "Test the load",
-    ],
+    question: 'What must be done before installing any accessory?',
+    options: ['Fit the faceplate first', 'Isolate the supply', 'Install the fuse', 'Test the load'],
     correctAnswer: 1,
     explanation:
-      "The supply must always be isolated before installing any electrical accessory for safety.",
+      'The supply must always be isolated before installing any electrical accessory for safety.',
   },
   {
     id: 6,
-    question: "Why is torqueing terminals important?",
+    question: 'Why is torqueing terminals important?',
     options: [
-      "To make them look neat",
+      'To make them look neat',
       "To ensure safe, secure connections that won't loosen",
-      "To comply with RCD regulations",
-      "To improve cable flexibility",
+      'To comply with RCD regulations',
+      'To improve cable flexibility',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,68 +87,62 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: "Which type of switch is used to control a light from two locations?",
-    options: ["One-way", "Two-way", "Intermediate", "Dimmer"],
+    question: 'Which type of switch is used to control a light from two locations?',
+    options: ['One-way', 'Two-way', 'Intermediate', 'Dimmer'],
     correctAnswer: 1,
-    explanation:
-      "Two-way switches are used to control a light from two different locations.",
+    explanation: 'Two-way switches are used to control a light from two different locations.',
   },
   {
     id: 8,
-    question: "Name one safety consideration for installing sockets outdoors.",
+    question: 'Name one safety consideration for installing sockets outdoors.',
     options: [
-      "Use standard indoor sockets",
-      "Use weatherproof sockets with IP rating and RCD protection",
-      "Install at ground level",
-      "Use plastic conduit only",
+      'Use standard indoor sockets',
+      'Use weatherproof sockets with IP rating and RCD protection',
+      'Install at ground level',
+      'Use plastic conduit only',
     ],
     correctAnswer: 1,
     explanation:
-      "Outdoor sockets must be weatherproof with appropriate IP rating and RCD protection for safety.",
+      'Outdoor sockets must be weatherproof with appropriate IP rating and RCD protection for safety.',
   },
 ];
 
 // Quick knowledge check questions
 const quickCheckQuestions = [
   {
-    id: "mounting-height",
+    id: 'mounting-height',
     question:
-      "What is the typical mounting height for sockets in new builds under Part M guidance?",
+      'What is the typical mounting height for sockets in new builds under Part M guidance?',
+    options: ['300-400 mm', '450-1200 mm', '1200-1500 mm', 'Above 1500 mm'],
+    correctIndex: 1,
+    explanation:
+      'Part M guidance specifies socket mounting height generally between 450 mm to 1200 mm above finished floor level in new builds.',
+  },
+  {
+    id: 'rcd-protection',
+    question: 'Why is RCD protection required for most socket outlets?',
     options: [
-      "300-400 mm",
-      "450-1200 mm",
-      "1200-1500 mm",
-      "Above 1500 mm",
+      'To reduce installation costs',
+      'To protect against electric shock',
+      'To improve socket performance',
+      'To comply with manufacturer warranties',
     ],
     correctIndex: 1,
     explanation:
-      "Part M guidance specifies socket mounting height generally between 450 mm to 1200 mm above finished floor level in new builds.",
+      'RCD protection is required for most socket outlets to protect against electric shock, especially in case of earth faults.',
   },
   {
-    id: "rcd-protection",
-    question: "Why is RCD protection required for most socket outlets?",
+    id: 'terminal-torque',
+    question: 'What can happen if terminals are not properly torqued?',
     options: [
-      "To reduce installation costs",
-      "To protect against electric shock",
-      "To improve socket performance",
-      "To comply with manufacturer warranties",
-    ],
-    correctIndex: 1,
-    explanation:
-      "RCD protection is required for most socket outlets to protect against electric shock, especially in case of earth faults.",
-  },
-  {
-    id: "terminal-torque",
-    question: "What can happen if terminals are not properly torqued?",
-    options: [
-      "Improved electrical performance",
-      "Better cable flexibility",
-      "Terminal loosening and overheating",
-      "Reduced material costs",
+      'Improved electrical performance',
+      'Better cable flexibility',
+      'Terminal loosening and overheating',
+      'Reduced material costs',
     ],
     correctIndex: 2,
     explanation:
-      "Improperly torqued terminals can loosen over time, creating high resistance connections that generate heat and potentially cause fires.",
+      'Improperly torqued terminals can loosen over time, creating high resistance connections that generate heat and potentially cause fires.',
   },
 ];
 
@@ -192,7 +180,8 @@ export default function Module3Section4_6() {
             Installing Accessories (Sockets, Switches, FCUs)
           </h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Master the installation of electrical accessories with proper wiring techniques, mounting heights, and BS 7671 compliance for safe, professional installations.
+            Master the installation of electrical accessories with proper wiring techniques,
+            mounting heights, and BS 7671 compliance for safe, professional installations.
           </p>
         </header>
 
@@ -215,9 +204,16 @@ export default function Module3Section4_6() {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Socket outlets, light switches, FCUs, pull-cord switches.</li>
-                <li><strong>Use:</strong> Correct wiring methods; proper mounting heights; secure fixing.</li>
-                <li><strong>Check:</strong> Polarity, continuity, RCD protection, operation testing.</li>
+                <li>
+                  <strong>Spot:</strong> Socket outlets, light switches, FCUs, pull-cord switches.
+                </li>
+                <li>
+                  <strong>Use:</strong> Correct wiring methods; proper mounting heights; secure
+                  fixing.
+                </li>
+                <li>
+                  <strong>Check:</strong> Polarity, continuity, RCD protection, operation testing.
+                </li>
               </ul>
             </div>
           </div>
@@ -258,19 +254,30 @@ export default function Module3Section4_6() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>13A Single Switched:</strong> Individual appliance connections, compact installations</span>
+                      <span>
+                        <strong>13A Single Switched:</strong> Individual appliance connections,
+                        compact installations
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>13A Double Switched:</strong> Multiple appliances, standard residential/commercial use</span>
+                      <span>
+                        <strong>13A Double Switched:</strong> Multiple appliances, standard
+                        residential/commercial use
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>13A Unswitched:</strong> Permanent appliances, clock connections</span>
+                      <span>
+                        <strong>13A Unswitched:</strong> Permanent appliances, clock connections
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>USB Integrated:</strong> 2.1A-4.8A USB output, reduces adapter requirements</span>
+                      <span>
+                        <strong>USB Integrated:</strong> 2.1A-4.8A USB output, reduces adapter
+                        requirements
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -279,19 +286,31 @@ export default function Module3Section4_6() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Weatherproof (IP55-IP66):</strong> Outdoor installations, garage/shed applications</span>
+                      <span>
+                        <strong>Weatherproof (IP55-IP66):</strong> Outdoor installations,
+                        garage/shed applications
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>RCD Socket Outlets:</strong> Integral 30mA protection, portable appliance use</span>
+                      <span>
+                        <strong>RCD Socket Outlets:</strong> Integral 30mA protection, portable
+                        appliance use
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Floor Sockets:</strong> Pop-up units, raised access floors, conference rooms</span>
+                      <span>
+                        <strong>Floor Sockets:</strong> Pop-up units, raised access floors,
+                        conference rooms
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Industrial Sockets:</strong> 16A/32A, IP44+ rating, CEE form connections</span>
+                      <span>
+                        <strong>Industrial Sockets:</strong> 16A/32A, IP44+ rating, CEE form
+                        connections
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -304,21 +323,51 @@ export default function Module3Section4_6() {
                 <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
                   <h5 className="font-medium text-amber-400 mb-2">BS 7671 Socket Regulations</h5>
                   <ul className="space-y-2 text-sm">
-                    <li><strong>Regulation 411.3.3:</strong> RCD protection (≤30mA, ≤40ms) for all socket outlets except specific exemptions</li>
-                    <li><strong>Regulation 522.6.204:</strong> Cables to be protected against mechanical damage</li>
-                    <li><strong>Regulation 526.3:</strong> Electrical connections must be accessible for inspection</li>
-                    <li><strong>Regulation 132.8:</strong> Every installation must be divided into circuits to prevent danger</li>
-                    <li><strong>Table 55A:</strong> Diversity factors for socket outlet calculations</li>
+                    <li>
+                      <strong>Regulation 411.3.3:</strong> RCD protection (≤30mA, ≤40ms) for all
+                      socket outlets except specific exemptions
+                    </li>
+                    <li>
+                      <strong>Regulation 522.6.204:</strong> Cables to be protected against
+                      mechanical damage
+                    </li>
+                    <li>
+                      <strong>Regulation 526.3:</strong> Electrical connections must be accessible
+                      for inspection
+                    </li>
+                    <li>
+                      <strong>Regulation 132.8:</strong> Every installation must be divided into
+                      circuits to prevent danger
+                    </li>
+                    <li>
+                      <strong>Table 55A:</strong> Diversity factors for socket outlet calculations
+                    </li>
                   </ul>
                 </div>
                 <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-2">Part M Accessibility Requirements</h5>
+                  <h5 className="font-medium text-elec-yellow mb-2">
+                    Part M Accessibility Requirements
+                  </h5>
                   <ul className="space-y-2 text-sm">
-                    <li><strong>Height Range:</strong> 450mm-1200mm above finished floor level for new builds</li>
-                    <li><strong>Horizontal Distance:</strong> Maximum 350mm from internal corner of room</li>
-                    <li><strong>Approach Space:</strong> Minimum 300mm clear space for wheelchair access</li>
-                    <li><strong>Operation Force:</strong> Maximum 5N operating force for switches</li>
-                    <li><strong>Visual Contrast:</strong> Faceplate must contrast with background surface</li>
+                    <li>
+                      <strong>Height Range:</strong> 450mm-1200mm above finished floor level for new
+                      builds
+                    </li>
+                    <li>
+                      <strong>Horizontal Distance:</strong> Maximum 350mm from internal corner of
+                      room
+                    </li>
+                    <li>
+                      <strong>Approach Space:</strong> Minimum 300mm clear space for wheelchair
+                      access
+                    </li>
+                    <li>
+                      <strong>Operation Force:</strong> Maximum 5N operating force for switches
+                    </li>
+                    <li>
+                      <strong>Visual Contrast:</strong> Faceplate must contrast with background
+                      surface
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -408,40 +457,66 @@ export default function Module3Section4_6() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>One-way switches:</strong> Single switching point, basic on/off control</span>
+                      <span>
+                        <strong>One-way switches:</strong> Single switching point, basic on/off
+                        control
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Two-way switches:</strong> Control from two locations, L1, L2, COM terminals</span>
+                      <span>
+                        <strong>Two-way switches:</strong> Control from two locations, L1, L2, COM
+                        terminals
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Intermediate switches:</strong> Control from three+ locations, requires two-way at ends</span>
+                      <span>
+                        <strong>Intermediate switches:</strong> Control from three+ locations,
+                        requires two-way at ends
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Double pole switches:</strong> Isolates both live and neutral, 20A rating</span>
+                      <span>
+                        <strong>Double pole switches:</strong> Isolates both live and neutral, 20A
+                        rating
+                      </span>
                     </li>
                   </ul>
                 </div>
                 <div className="p-4 bg-transparent border border-elec-yellow/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-2">Specialist Switch Applications</h5>
+                  <h5 className="font-medium text-elec-yellow mb-2">
+                    Specialist Switch Applications
+                  </h5>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Dimmer switches:</strong> LED compatible, trailing/leading edge, load matching</span>
+                      <span>
+                        <strong>Dimmer switches:</strong> LED compatible, trailing/leading edge,
+                        load matching
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>PIR switches:</strong> Motion detection, adjustable timing, daylight sensing</span>
+                      <span>
+                        <strong>PIR switches:</strong> Motion detection, adjustable timing, daylight
+                        sensing
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Pull-cord switches:</strong> Bathroom zones, 6A rating, cord length compliance</span>
+                      <span>
+                        <strong>Pull-cord switches:</strong> Bathroom zones, 6A rating, cord length
+                        compliance
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Timer switches:</strong> Fan isolation, heating control, programmable functions</span>
+                      <span>
+                        <strong>Timer switches:</strong> Fan isolation, heating control,
+                        programmable functions
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -457,10 +532,18 @@ export default function Module3Section4_6() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Terminal Connections</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>- <strong>L1:</strong> Permanent live (brown core)</li>
-                        <li>- <strong>L2:</strong> Switched live to load (brown or sleeved blue)</li>
-                        <li>- <strong>Earth:</strong> Continuous protective conductor</li>
-                        <li>- <strong>Neutral:</strong> Direct to load (not switched)</li>
+                        <li>
+                          - <strong>L1:</strong> Permanent live (brown core)
+                        </li>
+                        <li>
+                          - <strong>L2:</strong> Switched live to load (brown or sleeved blue)
+                        </li>
+                        <li>
+                          - <strong>Earth:</strong> Continuous protective conductor
+                        </li>
+                        <li>
+                          - <strong>Neutral:</strong> Direct to load (not switched)
+                        </li>
                       </ul>
                     </div>
                     <div>
@@ -481,18 +564,30 @@ export default function Module3Section4_6() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Switch 1 (Feed End)</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>- <strong>COM:</strong> Permanent live feed</li>
-                        <li>- <strong>L1:</strong> Strapper to other switch L1</li>
-                        <li>- <strong>L2:</strong> Strapper to other switch L2</li>
+                        <li>
+                          - <strong>COM:</strong> Permanent live feed
+                        </li>
+                        <li>
+                          - <strong>L1:</strong> Strapper to other switch L1
+                        </li>
+                        <li>
+                          - <strong>L2:</strong> Strapper to other switch L2
+                        </li>
                         <li>- Three-core & earth cable to Switch 2</li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Switch 2 (Load End)</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>- <strong>COM:</strong> Switched live to load</li>
-                        <li>- <strong>L1:</strong> Strapper from other switch</li>
-                        <li>- <strong>L2:</strong> Strapper from other switch</li>
+                        <li>
+                          - <strong>COM:</strong> Switched live to load
+                        </li>
+                        <li>
+                          - <strong>L1:</strong> Strapper from other switch
+                        </li>
+                        <li>
+                          - <strong>L2:</strong> Strapper from other switch
+                        </li>
                         <li>- Twin & earth to lighting load</li>
                       </ul>
                     </div>
@@ -505,18 +600,34 @@ export default function Module3Section4_6() {
               <h4 className="font-medium text-white mb-3">Advanced Installation Requirements</h4>
               <div className="space-y-4">
                 <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
-                  <h5 className="font-medium text-amber-400 mb-2">Bathroom Zone Regulations (BS 7671 Section 701)</h5>
+                  <h5 className="font-medium text-amber-400 mb-2">
+                    Bathroom Zone Regulations (BS 7671 Section 701)
+                  </h5>
                   <ul className="space-y-2 text-sm">
-                    <li><strong>Zone 0:</strong> No switches permitted (inside bath/shower)</li>
-                    <li><strong>Zone 1:</strong> Pull-cord switches only, minimum IPX4 rating</li>
-                    <li><strong>Zone 2:</strong> Pull-cord or SELV switches, minimum IPX4 rating</li>
-                    <li><strong>Outside Zones:</strong> Standard switches permitted, minimum 0.6m from zone boundary</li>
-                    <li><strong>Cord Length:</strong> Minimum 1.5m, maximum 2.5m for pull-cord switches</li>
+                    <li>
+                      <strong>Zone 0:</strong> No switches permitted (inside bath/shower)
+                    </li>
+                    <li>
+                      <strong>Zone 1:</strong> Pull-cord switches only, minimum IPX4 rating
+                    </li>
+                    <li>
+                      <strong>Zone 2:</strong> Pull-cord or SELV switches, minimum IPX4 rating
+                    </li>
+                    <li>
+                      <strong>Outside Zones:</strong> Standard switches permitted, minimum 0.6m from
+                      zone boundary
+                    </li>
+                    <li>
+                      <strong>Cord Length:</strong> Minimum 1.5m, maximum 2.5m for pull-cord
+                      switches
+                    </li>
                   </ul>
                 </div>
 
                 <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-2">Dimmer Switch Specifications</h5>
+                  <h5 className="font-medium text-elec-yellow mb-2">
+                    Dimmer Switch Specifications
+                  </h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <h6 className="font-medium text-white mb-2">LED Compatibility</h6>
@@ -595,19 +706,31 @@ export default function Module3Section4_6() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Switched FCU:</strong> Local isolation capability, load control, status indication</span>
+                      <span>
+                        <strong>Switched FCU:</strong> Local isolation capability, load control,
+                        status indication
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Unswitched FCU:</strong> Fused protection only, permanent appliance feeds</span>
+                      <span>
+                        <strong>Unswitched FCU:</strong> Fused protection only, permanent appliance
+                        feeds
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>FCU with flex outlet:</strong> Integrated cable connection, sealed cable entry</span>
+                      <span>
+                        <strong>FCU with flex outlet:</strong> Integrated cable connection, sealed
+                        cable entry
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>FCU with socket:</strong> Combination unit, switched fused socket outlet</span>
+                      <span>
+                        <strong>FCU with socket:</strong> Combination unit, switched fused socket
+                        outlet
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -616,19 +739,31 @@ export default function Module3Section4_6() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-teal-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Boiler connections:</strong> 3A fused, dedicated circuit, service switch access</span>
+                      <span>
+                        <strong>Boiler connections:</strong> 3A fused, dedicated circuit, service
+                        switch access
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-teal-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Immersion heater:</strong> 15A/16A fused, heat-resistant design, timer integration</span>
+                      <span>
+                        <strong>Immersion heater:</strong> 15A/16A fused, heat-resistant design,
+                        timer integration
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-teal-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Kitchen appliances:</strong> 13A fused, accessible isolation, appliance labelling</span>
+                      <span>
+                        <strong>Kitchen appliances:</strong> 13A fused, accessible isolation,
+                        appliance labelling
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-teal-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Security systems:</strong> 3A/5A fused, UPS compatibility, tamper resistance</span>
+                      <span>
+                        <strong>Security systems:</strong> 3A/5A fused, UPS compatibility, tamper
+                        resistance
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -636,38 +771,67 @@ export default function Module3Section4_6() {
             </div>
 
             <div className="mb-6">
-              <h4 className="font-medium text-white mb-3">Detailed Fuse Selection and Protection</h4>
+              <h4 className="font-medium text-white mb-3">
+                Detailed Fuse Selection and Protection
+              </h4>
               <div className="space-y-4">
                 <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-3">Fuse Rating Selection Criteria</h5>
+                  <h5 className="font-medium text-elec-yellow mb-3">
+                    Fuse Rating Selection Criteria
+                  </h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <h6 className="font-medium text-white mb-2">Load Assessment</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>- <strong>Continuous loads:</strong> Fuse rating ≥125% of full load current</li>
-                        <li>- <strong>Motor loads:</strong> Consider starting current (typically 6-8x FL)</li>
-                        <li>- <strong>Inductive loads:</strong> Account for power factor and inrush</li>
-                        <li>- <strong>Resistive loads:</strong> Direct calculation: P = V x I</li>
+                        <li>
+                          - <strong>Continuous loads:</strong> Fuse rating ≥125% of full load
+                          current
+                        </li>
+                        <li>
+                          - <strong>Motor loads:</strong> Consider starting current (typically 6-8x
+                          FL)
+                        </li>
+                        <li>
+                          - <strong>Inductive loads:</strong> Account for power factor and inrush
+                        </li>
+                        <li>
+                          - <strong>Resistive loads:</strong> Direct calculation: P = V x I
+                        </li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Common Fuse Ratings</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>- <strong>3A:</strong> Lighting circuits, small appliances, control circuits</li>
-                        <li>- <strong>5A:</strong> Medium appliances, ventilation fans, pumps</li>
-                        <li>- <strong>10A:</strong> Small heating elements, larger fans</li>
-                        <li>- <strong>13A:</strong> Standard appliances, maximum for FCU</li>
+                        <li>
+                          - <strong>3A:</strong> Lighting circuits, small appliances, control
+                          circuits
+                        </li>
+                        <li>
+                          - <strong>5A:</strong> Medium appliances, ventilation fans, pumps
+                        </li>
+                        <li>
+                          - <strong>10A:</strong> Small heating elements, larger fans
+                        </li>
+                        <li>
+                          - <strong>13A:</strong> Standard appliances, maximum for FCU
+                        </li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-elec-yellow mb-3">Cable Sizing and Protection Coordination</h5>
+                  <h5 className="font-medium text-elec-yellow mb-3">
+                    Cable Sizing and Protection Coordination
+                  </h5>
                   <div className="space-y-3">
                     <div>
-                      <h6 className="font-medium text-white mb-2">Discrimination and Selectivity</h6>
-                      <p className="text-sm mb-2">FCU fuse must operate before upstream protective device:</p>
+                      <h6 className="font-medium text-white mb-2">
+                        Discrimination and Selectivity
+                      </h6>
+                      <p className="text-sm mb-2">
+                        FCU fuse must operate before upstream protective device:
+                      </p>
                       <ul className="space-y-1 text-sm pl-4">
                         <li>- FCU fuse: 3A (I²t = 4.5 A²s at 5s)</li>
                         <li>- Ring circuit MCB: 32A (operates at ~1.45 x In = 46.4A)</li>
@@ -692,7 +856,9 @@ export default function Module3Section4_6() {
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">Advanced Installation Procedures</h4>
               <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-                <h5 className="font-medium text-white mb-3">Professional FCU Installation Process</h5>
+                <h5 className="font-medium text-white mb-3">
+                  Professional FCU Installation Process
+                </h5>
                 <div className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -718,13 +884,28 @@ export default function Module3Section4_6() {
                   </div>
 
                   <div className="p-3 border border-amber-400/30 rounded-lg">
-                    <h6 className="font-medium text-amber-400 mb-2">Critical Safety Considerations</h6>
+                    <h6 className="font-medium text-amber-400 mb-2">
+                      Critical Safety Considerations
+                    </h6>
                     <ul className="space-y-1 text-sm">
-                      <li>- <strong>Isolation:</strong> Ensure complete circuit isolation before work</li>
-                      <li>- <strong>Testing:</strong> Verify continuity, insulation, and polarity</li>
-                      <li>- <strong>Load testing:</strong> Confirm operation under actual load conditions</li>
-                      <li>- <strong>Documentation:</strong> Record fuse rating and load details on circuit schedule</li>
-                      <li>- <strong>Labelling:</strong> Clear identification of controlled appliance/circuit</li>
+                      <li>
+                        - <strong>Isolation:</strong> Ensure complete circuit isolation before work
+                      </li>
+                      <li>
+                        - <strong>Testing:</strong> Verify continuity, insulation, and polarity
+                      </li>
+                      <li>
+                        - <strong>Load testing:</strong> Confirm operation under actual load
+                        conditions
+                      </li>
+                      <li>
+                        - <strong>Documentation:</strong> Record fuse rating and load details on
+                        circuit schedule
+                      </li>
+                      <li>
+                        - <strong>Labelling:</strong> Clear identification of controlled
+                        appliance/circuit
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -739,19 +920,27 @@ export default function Module3Section4_6() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Blown fuses:</strong> Overload, fault current, wrong rating</span>
+                      <span>
+                        <strong>Blown fuses:</strong> Overload, fault current, wrong rating
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Overheating:</strong> Loose connections, overload, poor ventilation</span>
+                      <span>
+                        <strong>Overheating:</strong> Loose connections, overload, poor ventilation
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Switch failure:</strong> Contact wear, mechanical fatigue</span>
+                      <span>
+                        <strong>Switch failure:</strong> Contact wear, mechanical fatigue
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Arcing:</strong> Poor connections, contamination, wear</span>
+                      <span>
+                        <strong>Arcing:</strong> Poor connections, contamination, wear
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -760,19 +949,27 @@ export default function Module3Section4_6() {
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Regular inspection:</strong> 6-12 month visual checks</span>
+                      <span>
+                        <strong>Regular inspection:</strong> 6-12 month visual checks
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Thermal imaging:</strong> Annual hot spot detection</span>
+                      <span>
+                        <strong>Thermal imaging:</strong> Annual hot spot detection
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Load monitoring:</strong> Verify operating currents</span>
+                      <span>
+                        <strong>Load monitoring:</strong> Verify operating currents
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span><strong>Contact resistance:</strong> Test switch contact integrity</span>
+                      <span>
+                        <strong>Contact resistance:</strong> Test switch contact integrity
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -869,7 +1066,9 @@ export default function Module3Section4_6() {
                   <li>Torque terminals to manufacturer specification (typically 2-2.5 Nm)</li>
                   <li>Fold cables neatly into back box without straining terminals</li>
                   <li>Secure faceplate with appropriate screws, ensuring level installation</li>
-                  <li>Test installation: polarity, continuity, insulation resistance, and operation</li>
+                  <li>
+                    Test installation: polarity, continuity, insulation resistance, and operation
+                  </li>
                 </ol>
               </div>
 
@@ -915,23 +1114,33 @@ export default function Module3Section4_6() {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span><strong>Incorrect polarity:</strong> Live and neutral reversed</span>
+                    <span>
+                      <strong>Incorrect polarity:</strong> Live and neutral reversed
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span><strong>Loose terminals:</strong> Insufficient torque applied</span>
+                    <span>
+                      <strong>Loose terminals:</strong> Insufficient torque applied
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span><strong>Exposed copper:</strong> Excessive cable stripping</span>
+                    <span>
+                      <strong>Exposed copper:</strong> Excessive cable stripping
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span><strong>Incorrect mounting height:</strong> Non-compliance with Part M</span>
+                    <span>
+                      <strong>Incorrect mounting height:</strong> Non-compliance with Part M
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span><strong>Missing earth connections:</strong> Safety compromise</span>
+                    <span>
+                      <strong>Missing earth connections:</strong> Safety compromise
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -1019,31 +1228,58 @@ export default function Module3Section4_6() {
               <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
                 <h4 className="font-medium text-amber-400 mb-3">BS 7671 Requirements</h4>
                 <ul className="space-y-2 text-sm">
-                  <li><strong>Section 411:</strong> RCD protection for socket outlets (30mA, 40ms)</li>
-                  <li><strong>Section 522:</strong> Cable selection and installation methods</li>
-                  <li><strong>Section 526:</strong> Electrical connections and terminations</li>
-                  <li><strong>Section 701:</strong> Special requirements for bathrooms</li>
-                  <li><strong>Part 6:</strong> Inspection and testing requirements</li>
+                  <li>
+                    <strong>Section 411:</strong> RCD protection for socket outlets (30mA, 40ms)
+                  </li>
+                  <li>
+                    <strong>Section 522:</strong> Cable selection and installation methods
+                  </li>
+                  <li>
+                    <strong>Section 526:</strong> Electrical connections and terminations
+                  </li>
+                  <li>
+                    <strong>Section 701:</strong> Special requirements for bathrooms
+                  </li>
+                  <li>
+                    <strong>Part 6:</strong> Inspection and testing requirements
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 bg-transparent border border-border/30 rounded-lg">
                 <h4 className="font-medium text-elec-yellow mb-3">Building Regulations Part M</h4>
                 <ul className="space-y-2 text-sm">
-                  <li><strong>Socket heights:</strong> 450mm - 1200mm above floor level</li>
-                  <li><strong>Switch heights:</strong> 750mm - 1200mm above floor level</li>
-                  <li><strong>Accessibility:</strong> Clear approach and operation space required</li>
-                  <li><strong>Visual contrast:</strong> Faceplates should contrast with wall colour</li>
+                  <li>
+                    <strong>Socket heights:</strong> 450mm - 1200mm above floor level
+                  </li>
+                  <li>
+                    <strong>Switch heights:</strong> 750mm - 1200mm above floor level
+                  </li>
+                  <li>
+                    <strong>Accessibility:</strong> Clear approach and operation space required
+                  </li>
+                  <li>
+                    <strong>Visual contrast:</strong> Faceplates should contrast with wall colour
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h4 className="font-medium text-green-400 mb-3">Manufacturer Standards</h4>
                 <ul className="space-y-2 text-sm">
-                  <li><strong>Terminal torque:</strong> Follow manufacturer specifications (typically 2-2.5Nm)</li>
-                  <li><strong>Cable entry:</strong> Use appropriate strain relief methods</li>
-                  <li><strong>Environmental rating:</strong> Select appropriate IP rating for location</li>
-                  <li><strong>Load capacity:</strong> Ensure accessories match circuit requirements</li>
+                  <li>
+                    <strong>Terminal torque:</strong> Follow manufacturer specifications (typically
+                    2-2.5Nm)
+                  </li>
+                  <li>
+                    <strong>Cable entry:</strong> Use appropriate strain relief methods
+                  </li>
+                  <li>
+                    <strong>Environmental rating:</strong> Select appropriate IP rating for location
+                  </li>
+                  <li>
+                    <strong>Load capacity:</strong> Ensure accessories match circuit requirements
+                  </li>
                 </ul>
               </div>
             </div>
@@ -1061,10 +1297,15 @@ export default function Module3Section4_6() {
               <strong>Case Study: Office Refurbishment Socket Failure</strong>
             </p>
             <p className="text-xs sm:text-sm text-white mb-3">
-              An electrician installed a row of sockets in an office refurbishment but did not torque the terminals correctly. After several months, one terminal loosened, creating heat damage and tripping the circuit.
+              An electrician installed a row of sockets in an office refurbishment but did not
+              torque the terminals correctly. After several months, one terminal loosened, creating
+              heat damage and tripping the circuit.
             </p>
             <p className="text-xs sm:text-sm text-white">
-              <strong>Resolution:</strong> The fault was resolved by replacing the socket and retightening all connections to manufacturer specifications. A systematic check of all accessories in the installation was conducted, and a maintenance schedule was implemented to prevent recurrence.
+              <strong>Resolution:</strong> The fault was resolved by replacing the socket and
+              retightening all connections to manufacturer specifications. A systematic check of all
+              accessories in the installation was conducted, and a maintenance schedule was
+              implemented to prevent recurrence.
             </p>
           </div>
         </section>
@@ -1077,33 +1318,49 @@ export default function Module3Section4_6() {
           </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: Can I install a socket in a bathroom?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: Can I install a socket in a bathroom?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Generally not, unless it's more than 3m from the edge of the bath or shower and RCD protected. Shaver sockets are allowed in certain zones with appropriate IP rating.
+                A: Generally not, unless it's more than 3m from the edge of the bath or shower and
+                RCD protected. Shaver sockets are allowed in certain zones with appropriate IP
+                rating.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: Do dimmer switches require special consideration?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: Do dimmer switches require special consideration?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Yes - they must match the load type (LED, halogen, incandescent) and wattage. LED dimmers require specific compatibility with LED driver types.
+                A: Yes - they must match the load type (LED, halogen, incandescent) and wattage. LED
+                dimmers require specific compatibility with LED driver types.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: Can I spur multiple sockets from an FCU?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: Can I spur multiple sockets from an FCU?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Yes, as long as the total load is within the fuse rating and cable size limits. Consider diversity and cable de-rating factors.
+                A: Yes, as long as the total load is within the fuse rating and cable size limits.
+                Consider diversity and cable de-rating factors.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: What's the maximum number of sockets on a 32A ring final circuit?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: What's the maximum number of sockets on a 32A ring final circuit?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: There's no specific limit in BS 7671, but guidance suggests a maximum floor area of 100m² and consideration of diversity and load assessment.
+                A: There's no specific limit in BS 7671, but guidance suggests a maximum floor area
+                of 100m² and consideration of diversity and load assessment.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: When should I use an FCU instead of a socket?</h3>
+              <h3 className="font-medium text-white mb-2">
+                Q: When should I use an FCU instead of a socket?
+              </h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Use FCUs for permanent appliances requiring local isolation, appliances exceeding 13A rating, or where enhanced protection is needed for specific loads.
+                A: Use FCUs for permanent appliances requiring local isolation, appliances exceeding
+                13A rating, or where enhanced protection is needed for specific loads.
               </p>
             </div>
           </div>
@@ -1117,7 +1374,9 @@ export default function Module3Section4_6() {
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
             <p className="text-white/90">
-              Sockets, switches, and FCUs are key components of an installation. Correct positioning, secure fixing, accurate wiring, and compliance with regulations ensure these accessories are safe, reliable, and fit for purpose.
+              Sockets, switches, and FCUs are key components of an installation. Correct
+              positioning, secure fixing, accurate wiring, and compliance with regulations ensure
+              these accessories are safe, reliable, and fit for purpose.
             </p>
           </div>
         </section>
@@ -1133,7 +1392,11 @@ export default function Module3Section4_6() {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-6 border-t border-white/10">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../4-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Supporting and Securing Cables

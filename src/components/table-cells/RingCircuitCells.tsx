@@ -21,7 +21,7 @@ export const RingCircuitCells = ({
   onR1Change,
   onRnChange,
   onR2Change,
-  onCalculateR1R2
+  onCalculateR1R2,
 }: RingCircuitCellsProps) => {
   const { toast } = useToast();
 
@@ -32,9 +32,9 @@ export const RingCircuitCells = ({
 
     if (isNaN(r1Val) || isNaN(rnVal) || isNaN(r2Val)) {
       toast({
-        title: "Missing Ring Values",
-        description: "Please enter all ring circuit test values (r1, rn, r2).",
-        variant: "destructive"
+        title: 'Missing Ring Values',
+        description: 'Please enter all ring circuit test values (r1, rn, r2).',
+        variant: 'destructive',
       });
       return;
     }
@@ -42,11 +42,11 @@ export const RingCircuitCells = ({
     // Calculate R1+R2 from ring values using BS 7671 formula
     // R1+R2 = (r1 + r2) / 4
     const calculatedR1R2 = (r1Val + r2Val) / 4;
-    
+
     onCalculateR1R2();
-    
+
     toast({
-      title: "R1+R2 Calculated",
+      title: 'R1+R2 Calculated',
       description: `R1+R2 = ${calculatedR1R2.toFixed(3)}Ω from ring values`,
     });
   };

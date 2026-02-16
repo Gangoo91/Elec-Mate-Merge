@@ -102,13 +102,15 @@ export const getDaysUntilExpiry = (expiryDate: string | Date): number => {
 /**
  * Format expiry status for display
  */
-export const getExpiryStatus = (expiryDate: string | Date): {
+export const getExpiryStatus = (
+  expiryDate: string | Date
+): {
   status: 'valid' | 'expiring' | 'expired';
   label: string;
   color: string;
 } => {
   const days = getDaysUntilExpiry(expiryDate);
-  
+
   if (days < 0) {
     return { status: 'expired', label: 'Expired', color: 'red' };
   }

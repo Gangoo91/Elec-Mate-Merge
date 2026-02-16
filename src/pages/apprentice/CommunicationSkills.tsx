@@ -1,20 +1,22 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageCircle, Users, AlertTriangle, Lightbulb, Heart } from "lucide-react";
-import WorkplaceCommunicationTab from "@/components/apprentice/communication-skills/WorkplaceCommunicationTab";
-import ProfessionalSkillsTab from "@/components/apprentice/communication-skills/ProfessionalSkillsTab";
-import DifficultSituationsTab from "@/components/apprentice/communication-skills/DifficultSituationsTab";
-import InteractivePracticeTab from "@/components/apprentice/communication-skills/InteractivePracticeTab";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { MessageCircle, Users, AlertTriangle, Lightbulb, Heart } from 'lucide-react';
+import WorkplaceCommunicationTab from '@/components/apprentice/communication-skills/WorkplaceCommunicationTab';
+import ProfessionalSkillsTab from '@/components/apprentice/communication-skills/ProfessionalSkillsTab';
+import DifficultSituationsTab from '@/components/apprentice/communication-skills/DifficultSituationsTab';
+import InteractivePracticeTab from '@/components/apprentice/communication-skills/InteractivePracticeTab';
 
 const CommunicationSkills = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Communication Skills for Apprentices</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-4">
+          Communication Skills for Apprentices
+        </h1>
         <p className="text-white text-center max-w-2xl mb-4">
-          Master essential communication skills for the electrical trade - from site conversations to client interactions
+          Master essential communication skills for the electrical trade - from site conversations
+          to client interactions
         </p>
         <SmartBackButton />
       </div>
@@ -65,8 +67,10 @@ const CommunicationSkills = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Good communication in the electrical trade isn't just about being polite - it's about safety, efficiency, and building a reputation as a professional. 
-            Clear communication prevents mistakes, builds trust with clients, and helps you learn faster from experienced colleagues.
+            Good communication in the electrical trade isn't just about being polite - it's about
+            safety, efficiency, and building a reputation as a professional. Clear communication
+            prevents mistakes, builds trust with clients, and helps you learn faster from
+            experienced colleagues.
           </p>
         </CardContent>
       </Card>

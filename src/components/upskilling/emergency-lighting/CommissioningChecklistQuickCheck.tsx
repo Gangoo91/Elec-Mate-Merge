@@ -6,8 +6,7 @@ export const CommissioningChecklistQuickCheck = () => {
     <Card className="bg-blue-500/10 border-blue-500/30">
       <CardHeader className="pb-3">
         <CardTitle className="text-blue-400 flex items-center gap-2 text-base sm:text-lg">
-          <AlertCircle className="h-5 w-5" />
-          ✅ Quick Check
+          <AlertCircle className="h-5 w-5" />✅ Quick Check
         </CardTitle>
       </CardHeader>
       <CardContent>

@@ -29,22 +29,22 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
     const loadConfig = async () => {
       const { offlineStorage } = await import('@/utils/offlineStorage');
       const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
-      
+
       if (credentials.apiKey) {
         setApiKey(credentials.apiKey);
       }
-      
+
       if (credentials.templateId) {
         setTemplateId(credentials.templateId);
       }
-      
+
       // Load EIC and EICR template IDs
       const eicId = credentials.eicTemplateId;
       const eicrId = credentials.eicrTemplateId;
-      
+
       if (eicId) setEicTemplateId(eicId);
       if (eicrId) setEicrTemplateId(eicrId);
-      
+
       if (credentials.apiKey && credentials.templateId) {
         setIsConfigured(true);
         pdfMonkeyService.setConfig(credentials.apiKey, credentials.templateId);
@@ -56,9 +56,9 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
   const handleSave = async () => {
     if (!apiKey.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please provide API key.",
-        variant: "destructive",
+        title: 'Missing Information',
+        description: 'Please provide API key.',
+        variant: 'destructive',
       });
       return;
     }
@@ -66,12 +66,12 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
     // Save to IndexedDB
     const { offlineStorage } = await import('@/utils/offlineStorage');
     await offlineStorage.saveApiCredential('pdfMonkey', 'apiKey', apiKey);
-    
+
     if (templateId.trim()) {
       await offlineStorage.saveApiCredential('pdfMonkey', 'templateId', templateId);
       pdfMonkeyService.setConfig(apiKey, templateId);
     }
-    
+
     // Save EIC and EICR template IDs
     if (eicTemplateId.trim()) {
       await offlineStorage.saveApiCredential('pdfMonkey', 'eicTemplateId', eicTemplateId);
@@ -79,12 +79,12 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
     if (eicrTemplateId.trim()) {
       await offlineStorage.saveApiCredential('pdfMonkey', 'eicrTemplateId', eicrTemplateId);
     }
-    
+
     setIsConfigured(true);
-    
+
     toast({
-      title: "Settings Saved",
-      description: "PDF Monkey configuration has been saved successfully.",
+      title: 'Settings Saved',
+      description: 'PDF Monkey configuration has been saved successfully.',
     });
 
     onSave?.();
@@ -93,9 +93,9 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
   const handleTestConnection = async () => {
     if (!apiKey.trim() || !templateId.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please provide both API key and template ID before testing.",
-        variant: "destructive",
+        title: 'Missing Information',
+        description: 'Please provide both API key and template ID before testing.',
+        variant: 'destructive',
       });
       return;
     }
@@ -105,21 +105,21 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
 
     // Temporarily set config for testing
     pdfMonkeyService.setConfig(apiKey, templateId);
-    
+
     const result = await pdfMonkeyService.testConnection();
     setTestResult(result);
     setIsTesting(false);
 
     if (result.success) {
       toast({
-        title: "Connection Successful",
-        description: "Successfully connected to PDF Monkey template.",
+        title: 'Connection Successful',
+        description: 'Successfully connected to PDF Monkey template.',
       });
     } else {
       toast({
-        title: "Connection Failed",
-        description: result.error || "Could not connect to PDF Monkey.",
-        variant: "destructive",
+        title: 'Connection Failed',
+        description: result.error || 'Could not connect to PDF Monkey.',
+        variant: 'destructive',
       });
     }
   };
@@ -136,10 +136,10 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
     setEicrTemplateId('');
     setIsConfigured(false);
     setTestResult(null);
-    
+
     toast({
-      title: "Settings Cleared",
-      description: "PDF Monkey configuration has been cleared.",
+      title: 'Settings Cleared',
+      description: 'PDF Monkey configuration has been cleared.',
     });
   };
 
@@ -168,9 +168,9 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
                 </Badge>
               )}
             </div>
-            
+
             {testResult && (
-              <Badge variant={testResult.success ? "default" : "destructive"}>
+              <Badge variant={testResult.success ? 'default' : 'destructive'}>
                 {testResult.success ? (
                   <CheckCircle className="h-3 w-3 mr-1" />
                 ) : (
@@ -184,7 +184,9 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
           <Alert>
             <Eye className="h-4 w-4" />
             <AlertDescription>
-              PDF Monkey allows you to use custom certificate templates. Configure your API credentials to generate certificates using your own branded templates instead of the built-in template.
+              PDF Monkey allows you to use custom certificate templates. Configure your API
+              credentials to generate certificates using your own branded templates instead of the
+              built-in template.
             </AlertDescription>
           </Alert>
 
@@ -251,9 +253,9 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
               Save Configuration
             </Button>
 
-            <Button 
-              variant="outline" 
-              onClick={handleTestConnection} 
+            <Button
+              variant="outline"
+              onClick={handleTestConnection}
               disabled={!apiKey.trim() || !templateId.trim() || isTesting}
             >
               <TestTube className="h-4 w-4 mr-2" />
@@ -284,7 +286,9 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
         </CardHeader>
         <CardContent>
           <div className="space-y-2 text-sm text-muted-foreground">
-            <p><strong>Your PDF template should include fields for:</strong></p>
+            <p>
+              <strong>Your PDF template should include fields for:</strong>
+            </p>
             <ul className="list-disc pl-6 space-y-1">
               <li>Certificate details (certificateNumber, workDate)</li>
               <li>Client information (clientName, propertyAddress)</li>
@@ -295,7 +299,8 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
               <li>Declaration (electricianName, position, signatureDate)</li>
             </ul>
             <p className="mt-3">
-              <strong>Note:</strong> Field names in your template should match the form field names for automatic mapping.
+              <strong>Note:</strong> Field names in your template should match the form field names
+              for automatic mapping.
             </p>
           </div>
         </CardContent>

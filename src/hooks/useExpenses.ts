@@ -18,7 +18,7 @@ export const EXPENSE_CATEGORIES = [
   { id: 'Other', icon: 'Package', color: 'gray', label: 'Other' },
 ] as const;
 
-export type ExpenseCategory = typeof EXPENSE_CATEGORIES[number]['id'];
+export type ExpenseCategory = (typeof EXPENSE_CATEGORIES)[number]['id'];
 export type ExpenseStatus = 'Pending' | 'Approved' | 'Paid' | 'Rejected';
 
 export interface ExpenseFilters {
@@ -68,7 +68,11 @@ export function useExpenses(filters?: ExpenseFilters) {
   const queryClient = useQueryClient();
   const { profile } = useAuth();
 
-  const { data: expenses = [], isLoading, refetch } = useQuery({
+  const {
+    data: expenses = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['expense_claims'],
     queryFn: fetchExpenseClaims,
   });
@@ -289,7 +293,9 @@ export function useExpenses(filters?: ExpenseFilters) {
 
   // Create expense mutation
   const createMutation = useMutation({
-    mutationFn: async (claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>) => {
+    mutationFn: async (
+      claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>
+    ) => {
       const { data, error } = await supabase
         .from('employer_expense_claims')
         .insert(claim)
@@ -331,10 +337,7 @@ export function useExpenses(filters?: ExpenseFilters) {
   // Delete expense mutation
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('employer_expense_claims')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('employer_expense_claims').delete().eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -370,7 +373,11 @@ export function useExpenses(filters?: ExpenseFilters) {
 export function useMyExpenses(employeeId?: string) {
   const queryClient = useQueryClient();
 
-  const { data: expenses = [], isLoading, refetch } = useQuery({
+  const {
+    data: expenses = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['my_expense_claims', employeeId],
     queryFn: () => fetchMyExpenseClaims(employeeId!),
     enabled: !!employeeId,
@@ -415,7 +422,9 @@ export function useMyExpenses(employeeId?: string) {
 
   // Submit expense mutation
   const submitMutation = useMutation({
-    mutationFn: async (claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>) => {
+    mutationFn: async (
+      claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>
+    ) => {
       const { data, error } = await supabase
         .from('employer_expense_claims')
         .insert({
@@ -511,7 +520,10 @@ export function formatCompactCurrency(amount: number): string {
 
 // Get category config by ID
 export function getCategoryConfig(categoryId: string) {
-  return EXPENSE_CATEGORIES.find((c) => c.id === categoryId) || EXPENSE_CATEGORIES[EXPENSE_CATEGORIES.length - 1];
+  return (
+    EXPENSE_CATEGORIES.find((c) => c.id === categoryId) ||
+    EXPENSE_CATEGORIES[EXPENSE_CATEGORIES.length - 1]
+  );
 }
 
 // Fetch expenses by job ID
@@ -581,9 +593,9 @@ export function useUploadReceipt() {
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('expense-receipts')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('expense-receipts').getPublicUrl(filePath);
 
       // Update expense with receipt URL
       const { error: updateError } = await supabase
@@ -606,7 +618,10 @@ export function useUploadReceipt() {
 }
 
 // Export expenses to CSV
-export async function exportExpensesToCSV(expenses: ExpenseClaim[], filename?: string): Promise<void> {
+export async function exportExpensesToCSV(
+  expenses: ExpenseClaim[],
+  filename?: string
+): Promise<void> {
   const headers = [
     'Date',
     'Employee',
@@ -635,16 +650,17 @@ export async function exportExpensesToCSV(expenses: ExpenseClaim[], filename?: s
 
   const csvContent = [
     headers.join(','),
-    ...rows.map((row) =>
-      row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(',')
-    ),
+    ...rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(',')),
   ].join('\n');
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.setAttribute('href', url);
-  link.setAttribute('download', filename || `expenses-${new Date().toISOString().split('T')[0]}.csv`);
+  link.setAttribute(
+    'download',
+    filename || `expenses-${new Date().toISOString().split('T')[0]}.csv`
+  );
   link.style.visibility = 'hidden';
   document.body.appendChild(link);
   link.click();
@@ -677,7 +693,10 @@ export function useExpenseStatsByJob() {
   const { allExpenses } = useExpenses();
 
   return useMemo(() => {
-    const jobStats: Record<string, { total: number; count: number; pending: number; approved: number }> = {};
+    const jobStats: Record<
+      string,
+      { total: number; count: number; pending: number; approved: number }
+    > = {};
 
     allExpenses.forEach((exp) => {
       const jobId = exp.job_id || 'unassigned';

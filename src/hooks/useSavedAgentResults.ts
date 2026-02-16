@@ -2,7 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
-export type AgentType = 'circuit-designer' | 'cost-engineer' | 'health-safety' | 'installer' | 'maintenance';
+export type AgentType =
+  | 'circuit-designer'
+  | 'cost-engineer'
+  | 'health-safety'
+  | 'installer'
+  | 'maintenance';
 
 export interface SavedAgentResult {
   id: string;
@@ -26,8 +31,8 @@ const AGENT_LABELS: Record<AgentType, string> = {
   'circuit-designer': 'Circuit Designer',
   'cost-engineer': 'Cost Engineer',
   'health-safety': 'Health & Safety',
-  'installer': 'Installation',
-  'maintenance': 'Maintenance',
+  installer: 'Installation',
+  maintenance: 'Maintenance',
 };
 
 export { AGENT_LABELS };
@@ -50,53 +55,48 @@ export function useSavedAgentResults(): UseSavedAgentResultsReturn {
 
     try {
       // Fetch from all 5 tables in parallel
-      const [
-        circuitDesignRes,
-        costEngineerRes,
-        healthSafetyRes,
-        installationRes,
-        maintenanceRes,
-      ] = await Promise.all([
-        // Circuit Design Jobs
-        supabase
-          .from('circuit_design_jobs')
-          .select('id, completed_at, design_data, job_inputs')
-          .eq('status', 'complete')
-          .order('completed_at', { ascending: false })
-          .limit(20),
+      const [circuitDesignRes, costEngineerRes, healthSafetyRes, installationRes, maintenanceRes] =
+        await Promise.all([
+          // Circuit Design Jobs
+          supabase
+            .from('circuit_design_jobs')
+            .select('id, completed_at, design_data, job_inputs')
+            .eq('status', 'complete')
+            .order('completed_at', { ascending: false })
+            .limit(20),
 
-        // Cost Engineer Jobs
-        supabase
-          .from('cost_engineer_jobs')
-          .select('id, completed_at, output_data, query')
-          .eq('status', 'complete')
-          .order('completed_at', { ascending: false })
-          .limit(20),
+          // Cost Engineer Jobs
+          supabase
+            .from('cost_engineer_jobs')
+            .select('id, completed_at, output_data, query')
+            .eq('status', 'complete')
+            .order('completed_at', { ascending: false })
+            .limit(20),
 
-        // Health & Safety Jobs
-        supabase
-          .from('health_safety_jobs')
-          .select('id, completed_at, output_data, query')
-          .eq('status', 'complete')
-          .order('completed_at', { ascending: false })
-          .limit(20),
+          // Health & Safety Jobs
+          supabase
+            .from('health_safety_jobs')
+            .select('id, completed_at, output_data, query')
+            .eq('status', 'complete')
+            .order('completed_at', { ascending: false })
+            .limit(20),
 
-        // Installation Method Jobs
-        supabase
-          .from('installation_method_jobs')
-          .select('id, completed_at, method_data, query, project_details')
-          .eq('status', 'complete')
-          .order('completed_at', { ascending: false })
-          .limit(20),
+          // Installation Method Jobs
+          supabase
+            .from('installation_method_jobs')
+            .select('id, completed_at, method_data, query, project_details')
+            .eq('status', 'complete')
+            .order('completed_at', { ascending: false })
+            .limit(20),
 
-        // Maintenance Method Jobs
-        supabase
-          .from('maintenance_method_jobs')
-          .select('id, completed_at, method_data, query, equipment_details')
-          .eq('status', 'complete')
-          .order('completed_at', { ascending: false })
-          .limit(20),
-      ]);
+          // Maintenance Method Jobs
+          supabase
+            .from('maintenance_method_jobs')
+            .select('id, completed_at, method_data, query, equipment_details')
+            .eq('status', 'complete')
+            .order('completed_at', { ascending: false })
+            .limit(20),
+        ]);
 
       // Transform and combine results
       const allResults: SavedAgentResult[] = [];
@@ -173,8 +173,8 @@ export function useSavedAgentResults(): UseSavedAgentResultsReturn {
       }
 
       // Sort all results by completed date
-      allResults.sort((a, b) =>
-        new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
+      allResults.sort(
+        (a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
       );
 
       setResults(allResults);
@@ -204,8 +204,8 @@ export function useSavedAgentResults(): UseSavedAgentResultsReturn {
     'circuit-designer': counts['circuit-designer'] || 0,
     'cost-engineer': counts['cost-engineer'] || 0,
     'health-safety': counts['health-safety'] || 0,
-    'installer': counts['installer'] || 0,
-    'maintenance': counts['maintenance'] || 0,
+    installer: counts['installer'] || 0,
+    maintenance: counts['maintenance'] || 0,
   };
 
   return {

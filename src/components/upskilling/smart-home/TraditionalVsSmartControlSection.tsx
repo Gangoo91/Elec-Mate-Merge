@@ -12,7 +12,7 @@ export const TraditionalVsSmartControlSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Control methods range from simple switches to sophisticated smart controllers, each with 
+          Control methods range from simple switches to sophisticated smart controllers, each with
           specific applications and compatibility requirements.
         </p>
 

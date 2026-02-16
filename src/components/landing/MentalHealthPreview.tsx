@@ -61,12 +61,11 @@ export const MentalHealthPreview = () => {
             <span className="text-sm font-medium text-pink-400">Mental Health Hub</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Your Wellbeing{' '}
-            <span className="text-pink-400">Matters</span>
+            Your Wellbeing <span className="text-pink-400">Matters</span>
           </h2>
           <p className="text-white/70 max-w-2xl mx-auto">
-            The electrical trade can be tough. Our Mental Health Hub gives you the tools,
-            support, and community to look after yourself - because you can't pour from an empty cup.
+            The electrical trade can be tough. Our Mental Health Hub gives you the tools, support,
+            and community to look after yourself - because you can't pour from an empty cup.
           </p>
         </motion.div>
 
@@ -80,7 +79,9 @@ export const MentalHealthPreview = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 + index * 0.08 }}
             >
-              <div className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}>
+              <div
+                className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}
+              >
                 <feature.icon className={`w-6 h-6 ${feature.color}`} />
               </div>
               <h3 className="font-semibold text-white mb-1">{feature.title}</h3>

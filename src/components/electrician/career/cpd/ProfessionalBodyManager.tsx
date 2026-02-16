@@ -2,19 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
-import { 
-  Award, 
-  Plus, 
-  Edit3, 
-  Trash2, 
+import {
+  Award,
+  Plus,
+  Edit3,
+  Trash2,
   Calendar,
   AlertTriangle,
   CheckCircle,
-  Settings
+  Settings,
 } from 'lucide-react';
-import { professionalBodyService, UserProfessionalMembership } from '@/services/professionalBodyService';
+import {
+  professionalBodyService,
+  UserProfessionalMembership,
+} from '@/services/professionalBodyService';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import ProfessionalBodySelector from './ProfessionalBodySelector';
@@ -28,7 +38,9 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
   const [loading, setLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [membershipToDelete, setMembershipToDelete] = useState<UserProfessionalMembership | null>(null);
+  const [membershipToDelete, setMembershipToDelete] = useState<UserProfessionalMembership | null>(
+    null
+  );
   const [deleting, setDeleting] = useState(false);
   const { toast } = useToast();
 
@@ -38,7 +50,9 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
 
   const loadMemberships = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const userMemberships = await professionalBodyService.getUserMemberships(user.id);
@@ -46,9 +60,9 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
     } catch (error) {
       console.error('Error loading memberships:', error);
       toast({
-        title: "Error loading memberships",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error loading memberships',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -59,8 +73,8 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
     setMemberships(newMemberships);
     setShowAddDialog(false);
     toast({
-      title: "Professional body added",
-      description: "Your new professional body membership has been added successfully."
+      title: 'Professional body added',
+      description: 'Your new professional body membership has been added successfully.',
     });
   };
 
@@ -70,20 +84,20 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
     setDeleting(true);
     try {
       await professionalBodyService.removeUserMembership(membershipToDelete.id);
-      setMemberships(prev => prev.filter(m => m.id !== membershipToDelete.id));
+      setMemberships((prev) => prev.filter((m) => m.id !== membershipToDelete.id));
       setShowDeleteDialog(false);
       setMembershipToDelete(null);
-      
+
       toast({
-        title: "Membership removed",
-        description: "Professional body membership has been removed successfully."
+        title: 'Membership removed',
+        description: 'Professional body membership has been removed successfully.',
       });
     } catch (error) {
       console.error('Error removing membership:', error);
       toast({
-        title: "Error removing membership",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error removing membership',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setDeleting(false);
@@ -94,22 +108,26 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
     return new Date(dateString).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
   const isRenewalDue = (renewalDate: string) => {
     const renewal = new Date(renewalDate);
     const today = new Date();
-    const daysUntilRenewal = Math.ceil((renewal.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    const daysUntilRenewal = Math.ceil(
+      (renewal.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    );
     return daysUntilRenewal <= 30;
   };
 
   const getRenewalStatus = (renewalDate: string) => {
     const renewal = new Date(renewalDate);
     const today = new Date();
-    const daysUntilRenewal = Math.ceil((renewal.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    
+    const daysUntilRenewal = Math.ceil(
+      (renewal.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
     if (daysUntilRenewal < 0) {
       return { status: 'overdue', color: 'text-red-600', icon: AlertTriangle };
     } else if (daysUntilRenewal <= 30) {
@@ -137,7 +155,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
             Manage your professional body memberships and CPD requirements
           </p>
         </div>
-        
+
         <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
           <DialogTrigger asChild>
             <Button className="bg-elec-yellow text-elec-dark hover:bg-amber-400">
@@ -163,12 +181,15 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
           <CardContent className="p-8 text-center space-y-4">
             <Award className="h-12 w-12 text-muted-foreground mx-auto" />
             <div>
-              <h3 className="text-lg font-semibold text-foreground">No Professional Body Memberships</h3>
+              <h3 className="text-lg font-semibold text-foreground">
+                No Professional Body Memberships
+              </h3>
               <p className="text-muted-foreground">
-                Add your professional body memberships to enable CPD tracking and compliance monitoring
+                Add your professional body memberships to enable CPD tracking and compliance
+                monitoring
               </p>
             </div>
-            <Button 
+            <Button
               onClick={() => setShowAddDialog(true)}
               className="bg-elec-yellow text-elec-dark hover:bg-amber-400"
             >
@@ -180,7 +201,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
       ) : (
         <div className="grid gap-4">
           {memberships.map((membership) => {
-            const renewalStatus = membership.renewal_date 
+            const renewalStatus = membership.renewal_date
               ? getRenewalStatus(membership.renewal_date)
               : null;
             const StatusIcon = renewalStatus?.icon;
@@ -196,11 +217,12 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                           {membership.professional_body?.name}
                         </CardTitle>
                         <CardDescription>
-                          {membership.professional_body?.code} • {membership.professional_body?.description}
+                          {membership.professional_body?.code} •{' '}
+                          {membership.professional_body?.description}
                         </CardDescription>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       {membership.is_active ? (
                         <Badge variant="default" className="bg-green-600 text-foreground">
@@ -211,7 +233,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                           Inactive
                         </Badge>
                       )}
-                      
+
                       <Button
                         variant="ghost"
                         size="sm"
@@ -226,7 +248,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                     </div>
                   </div>
                 </CardHeader>
-                
+
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Membership Details */}
@@ -236,20 +258,26 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                         {membership.membership_number || 'Not provided'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <div className="text-sm font-medium text-foreground">Registration Date</div>
                       <div className="text-muted-foreground">
-                        {membership.registration_date ? formatDate(membership.registration_date) : 'Not provided'}
+                        {membership.registration_date
+                          ? formatDate(membership.registration_date)
+                          : 'Not provided'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <div className="text-sm font-medium text-foreground">Next Renewal</div>
-                      <div className={`flex items-center space-x-2 ${renewalStatus?.color || 'text-muted-foreground'}`}>
+                      <div
+                        className={`flex items-center space-x-2 ${renewalStatus?.color || 'text-muted-foreground'}`}
+                      >
                         {StatusIcon && <StatusIcon className="h-4 w-4" />}
                         <span>
-                          {membership.renewal_date ? formatDate(membership.renewal_date) : 'Not set'}
+                          {membership.renewal_date
+                            ? formatDate(membership.renewal_date)
+                            : 'Not set'}
                         </span>
                       </div>
                     </div>
@@ -267,7 +295,9 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => window.open(membership.professional_body?.website_url, '_blank')}
+                        onClick={() =>
+                          window.open(membership.professional_body?.website_url, '_blank')
+                        }
                         className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
                       >
                         View Guidelines

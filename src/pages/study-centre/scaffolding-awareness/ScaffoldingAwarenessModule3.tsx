@@ -1,45 +1,45 @@
-import { ArrowLeft, Wrench, Layers, ArrowUpFromLine, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Wrench, Layers, ArrowUpFromLine, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Tubes, Couplers & Fittings",
+    title: 'Tubes, Couplers & Fittings',
     icon: Wrench,
     description:
-      "Steel tube specifications, coupler types (right-angle, swivel, putlog, sleeve), fitting methods, and torque requirements",
+      'Steel tube specifications, coupler types (right-angle, swivel, putlog, sleeve), fitting methods, and torque requirements',
   },
   {
     id: 2,
-    title: "Base Plates, Sole Boards & Foundations",
+    title: 'Base Plates, Sole Boards & Foundations',
     icon: Layers,
     description:
-      "Load-bearing requirements, sole board sizing, ground conditions, base plate positioning, and adjustable bases",
+      'Load-bearing requirements, sole board sizing, ground conditions, base plate positioning, and adjustable bases',
   },
   {
     id: 3,
-    title: "Platforms, Guard Rails & Toe Boards",
+    title: 'Platforms, Guard Rails & Toe Boards',
     icon: ArrowUpFromLine,
     description:
-      "Working platform widths, board types, board clips, guard rail heights (950mm), mid rails, toe boards (150mm), and brick guards",
+      'Working platform widths, board types, board clips, guard rail heights (950mm), mid rails, toe boards (150mm), and brick guards',
   },
   {
     id: 4,
-    title: "Bracing, Ties & Stability",
+    title: 'Bracing, Ties & Stability',
     icon: ShieldCheck,
     description:
-      "Ledger bracing, plan bracing, facade bracing, tie patterns (box, lip, through), tie spacing, and why ties are critical",
+      'Ledger bracing, plan bracing, facade bracing, tie patterns (box, lip, through), tie spacing, and why ties are critical',
   },
 ];
 
 export default function ScaffoldingAwarenessModule3() {
   useSEO({
-    title: "Module 3: Scaffold Components & Assembly | Scaffolding Awareness",
+    title: 'Module 3: Scaffold Components & Assembly | Scaffolding Awareness',
     description:
-      "Learn about scaffold tubes, couplers, base plates, sole boards, platforms, guard rails, toe boards, bracing, and ties.",
+      'Learn about scaffold tubes, couplers, base plates, sole boards, platforms, guard rails, toe boards, bracing, and ties.',
   });
 
   return (

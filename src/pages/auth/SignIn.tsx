@@ -2,7 +2,19 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Loader2, AlertTriangle, Zap, Mail, Lock, ArrowRight, CheckCircle2, ChevronLeft, Sparkles, Eye, EyeOff } from 'lucide-react';
+import {
+  Loader2,
+  AlertTriangle,
+  Zap,
+  Mail,
+  Lock,
+  ArrowRight,
+  CheckCircle2,
+  ChevronLeft,
+  Sparkles,
+  Eye,
+  EyeOff,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
@@ -72,9 +84,9 @@ const SignIn = () => {
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.08, 0.12, 0.08]
+            opacity: [0.08, 0.12, 0.08],
           }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-elec-yellow/20 blur-[150px]"
         />
       </div>
@@ -98,7 +110,7 @@ const SignIn = () => {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1, type: "spring", stiffness: 400 }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 400 }}
           >
             <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center shadow-lg shadow-elec-yellow/30">
               <Zap className="h-5 w-5 text-black" />
@@ -149,14 +161,14 @@ const SignIn = () => {
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                   className="flex flex-col items-center gap-4"
                 >
                   <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center">
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
+                      transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
                     >
                       <CheckCircle2 className="h-10 w-10 text-green-400" />
                     </motion.div>
@@ -172,7 +184,7 @@ const SignIn = () => {
             {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: "auto" }}
+                animate={{ opacity: 1, y: 0, height: 'auto' }}
                 exit={{ opacity: 0, y: -10, height: 0 }}
                 className="mb-6 overflow-hidden"
               >
@@ -203,10 +215,12 @@ const SignIn = () => {
                 Email address
               </label>
               <div className="relative">
-                <div className={cn(
-                  "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
-                  focusedField === 'email' ? "text-elec-yellow" : "text-white/40"
-                )}>
+                <div
+                  className={cn(
+                    'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+                    focusedField === 'email' ? 'text-elec-yellow' : 'text-white/40'
+                  )}
+                >
                   <Mail className="h-5 w-5" />
                 </div>
                 <input
@@ -220,12 +234,12 @@ const SignIn = () => {
                   name="login-email"
                   data-form-type="other"
                   className={cn(
-                    "w-full h-14 pl-12 pr-12 rounded-2xl",
-                    "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
-                    "text-[16px] outline-none transition-all duration-200",
+                    'w-full h-14 pl-12 pr-12 rounded-2xl',
+                    'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+                    'text-[16px] outline-none transition-all duration-200',
                     focusedField === 'email'
-                      ? "border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-                      : "border-white/10 hover:border-white/20"
+                      ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                      : 'border-white/10 hover:border-white/20'
                   )}
                 />
                 {/* Success indicator */}
@@ -248,18 +262,18 @@ const SignIn = () => {
 
             {/* Password field */}
             <div className="space-y-2">
-              <label className="block text-[13px] font-medium text-white/70 ml-1">
-                Password
-              </label>
+              <label className="block text-[13px] font-medium text-white/70 ml-1">Password</label>
               <div className="relative">
-                <div className={cn(
-                  "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
-                  focusedField === 'password' ? "text-elec-yellow" : "text-white/40"
-                )}>
+                <div
+                  className={cn(
+                    'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+                    focusedField === 'password' ? 'text-elec-yellow' : 'text-white/40'
+                  )}
+                >
                   <Lock className="h-5 w-5" />
                 </div>
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setFocusedField('password')}
@@ -269,12 +283,12 @@ const SignIn = () => {
                   name="login-password"
                   data-form-type="other"
                   className={cn(
-                    "w-full h-14 pl-12 pr-12 rounded-2xl",
-                    "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
-                    "text-[16px] outline-none transition-all duration-200",
+                    'w-full h-14 pl-12 pr-12 rounded-2xl',
+                    'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+                    'text-[16px] outline-none transition-all duration-200',
                     focusedField === 'password'
-                      ? "border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-                      : "border-white/10 hover:border-white/20"
+                      ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                      : 'border-white/10 hover:border-white/20'
                   )}
                 />
                 {/* Password toggle */}
@@ -308,10 +322,10 @@ const SignIn = () => {
                 type="submit"
                 disabled={isSubmitting || showSuccess}
                 className={cn(
-                  "w-full h-14 rounded-2xl text-[16px] font-semibold",
-                  "bg-elec-yellow hover:bg-elec-yellow/90 text-black",
-                  "shadow-lg shadow-elec-yellow/25 transition-all duration-200",
-                  "disabled:opacity-50 disabled:cursor-not-allowed"
+                  'w-full h-14 rounded-2xl text-[16px] font-semibold',
+                  'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
+                  'shadow-lg shadow-elec-yellow/25 transition-all duration-200',
+                  'disabled:opacity-50 disabled:cursor-not-allowed'
                 )}
               >
                 {isSubmitting ? (
@@ -348,16 +362,14 @@ const SignIn = () => {
             transition={{ delay: 0.7 }}
             className="text-center"
           >
-            <p className="text-[14px] text-white/40 mb-4">
-              Don't have an account?
-            </p>
+            <p className="text-[14px] text-white/40 mb-4">Don't have an account?</p>
             <Link to="/auth/signup" className="block">
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full h-13 rounded-2xl text-[15px] font-semibold",
-                  "bg-transparent border-2 border-white/10 text-white",
-                  "hover:bg-white/5 hover:border-white/20 transition-all duration-200"
+                  'w-full h-13 rounded-2xl text-[15px] font-semibold',
+                  'bg-transparent border-2 border-white/10 text-white',
+                  'hover:bg-white/5 hover:border-white/20 transition-all duration-200'
                 )}
               >
                 <span className="flex items-center gap-2">

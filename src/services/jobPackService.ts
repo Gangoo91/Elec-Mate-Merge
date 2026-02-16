@@ -28,12 +28,12 @@ export const getJobPacks = async (): Promise<JobPack[]> => {
     .from('employer_job_packs')
     .select('*')
     .order('created_at', { ascending: false });
-  
+
   if (error) {
     console.error('Error fetching job packs:', error);
     throw error;
   }
-  
+
   return (data || []) as JobPack[];
 };
 
@@ -43,12 +43,12 @@ export const getJobPackById = async (id: string): Promise<JobPack | null> => {
     .select('*')
     .eq('id', id)
     .single();
-  
+
   if (error) {
     console.error('Error fetching job pack:', error);
     return null;
   }
-  
+
   return data as JobPack;
 };
 
@@ -60,12 +60,12 @@ export const createJobPack = async (
     .insert(jobPack)
     .select()
     .single();
-  
+
   if (error) {
     console.error('Error creating job pack:', error);
     throw error;
   }
-  
+
   return data as JobPack;
 };
 
@@ -79,26 +79,23 @@ export const updateJobPack = async (
     .eq('id', id)
     .select()
     .single();
-  
+
   if (error) {
     console.error('Error updating job pack:', error);
     return null;
   }
-  
+
   return data as JobPack;
 };
 
 export const deleteJobPack = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_job_packs')
-    .delete()
-    .eq('id', id);
-  
+  const { error } = await supabase.from('employer_job_packs').delete().eq('id', id);
+
   if (error) {
     console.error('Error deleting job pack:', error);
     return false;
   }
-  
+
   return true;
 };
 
@@ -111,11 +108,11 @@ export const updateJobPackDocumentStatus = async (
     .from('employer_job_packs')
     .update({ [documentType]: status })
     .eq('id', id);
-  
+
   if (error) {
     console.error('Error updating job pack document status:', error);
     return false;
   }
-  
+
   return true;
 };

@@ -1,12 +1,20 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
-  MapPin, Phone, Globe, Star, Users, TrendingUp,
-  Award, Building, Calendar, CheckCircle, Target
-} from "lucide-react";
-import { EnhancedTrainingCenter } from "./enhancedCoursesData";
+  MapPin,
+  Phone,
+  Globe,
+  Star,
+  Users,
+  TrendingUp,
+  Award,
+  Building,
+  Calendar,
+  CheckCircle,
+  Target,
+} from 'lucide-react';
+import { EnhancedTrainingCenter } from './enhancedCoursesData';
 
 interface EnhancedTrainingCenterCardProps {
   center: EnhancedTrainingCenter;
@@ -94,7 +102,11 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
               </h4>
               <div className="flex flex-wrap gap-2">
                 {center.specialisations.map((spec, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
+                  <Badge
+                    key={idx}
+                    variant="outline"
+                    className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30"
+                  >
                     {spec}
                   </Badge>
                 ))}
@@ -113,7 +125,11 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
               </h4>
               <div className="flex flex-wrap gap-2">
                 {center.accreditations.map((acc, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30">
+                  <Badge
+                    key={idx}
+                    variant="outline"
+                    className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30"
+                  >
                     {acc}
                   </Badge>
                 ))}

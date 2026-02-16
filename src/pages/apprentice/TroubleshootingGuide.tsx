@@ -1,105 +1,117 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertTriangle, Zap, Lightbulb, Settings, CheckCircle } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AlertTriangle, Zap, Lightbulb, Settings, CheckCircle } from 'lucide-react';
 
 const TroubleshootingGuide = () => {
   const commonProblems = [
     {
-      problem: "No Power to Circuit",
-      symptoms: ["Complete loss of power", "No lights or sockets working", "Dead circuit"],
-      causes: ["Tripped MCB/RCD", "Blown fuse", "Loose connection", "Cable fault"],
+      problem: 'No Power to Circuit',
+      symptoms: ['Complete loss of power', 'No lights or sockets working', 'Dead circuit'],
+      causes: ['Tripped MCB/RCD', 'Blown fuse', 'Loose connection', 'Cable fault'],
       solutions: [
-        "Check consumer unit for tripped devices",
-        "Reset RCD and MCBs if safe to do so", 
-        "Check for loose connections at accessories",
-        "Test circuit with appropriate instruments"
+        'Check consumer unit for tripped devices',
+        'Reset RCD and MCBs if safe to do so',
+        'Check for loose connections at accessories',
+        'Test circuit with appropriate instruments',
       ],
-      safety: "Always isolate before investigation",
-      severity: "high"
+      safety: 'Always isolate before investigation',
+      severity: 'high',
     },
     {
-      problem: "RCD Keeps Tripping",
-      symptoms: ["RCD trips repeatedly", "Loss of power to multiple circuits", "Won't stay reset"],
-      causes: ["Earth fault on circuit", "Neutral-earth fault", "Damaged cable", "Faulty appliance"],
-      solutions: [
-        "Disconnect all portable appliances",
-        "Test each circuit individually",
-        "Check for damaged cables or accessories",
-        "Use insulation resistance testing"
+      problem: 'RCD Keeps Tripping',
+      symptoms: ['RCD trips repeatedly', 'Loss of power to multiple circuits', "Won't stay reset"],
+      causes: [
+        'Earth fault on circuit',
+        'Neutral-earth fault',
+        'Damaged cable',
+        'Faulty appliance',
       ],
-      safety: "Do not bypass RCD protection",
-      severity: "high"
+      solutions: [
+        'Disconnect all portable appliances',
+        'Test each circuit individually',
+        'Check for damaged cables or accessories',
+        'Use insulation resistance testing',
+      ],
+      safety: 'Do not bypass RCD protection',
+      severity: 'high',
     },
     {
-      problem: "Lights Flickering",
-      symptoms: ["Intermittent dimming", "Lights flashing on/off", "Voltage fluctuation"],
-      causes: ["Loose connections", "Overloaded circuit", "Neutral fault", "Poor contact"],
+      problem: 'Lights Flickering',
+      symptoms: ['Intermittent dimming', 'Lights flashing on/off', 'Voltage fluctuation'],
+      causes: ['Loose connections', 'Overloaded circuit', 'Neutral fault', 'Poor contact'],
       solutions: [
-        "Check all connections are tight",
-        "Verify circuit loading",
-        "Test voltage at various points",
-        "Check neutral continuity"
+        'Check all connections are tight',
+        'Verify circuit loading',
+        'Test voltage at various points',
+        'Check neutral continuity',
       ],
-      safety: "Could indicate dangerous loose connections",
-      severity: "medium"
+      safety: 'Could indicate dangerous loose connections',
+      severity: 'medium',
     },
     {
-      problem: "Electric Shock from Appliance", 
-      symptoms: ["Tingling sensation", "Shock when touching appliance", "Metal casing live"],
-      causes: ["Loss of earth continuity", "Insulation failure", "Incorrect wiring"],
+      problem: 'Electric Shock from Appliance',
+      symptoms: ['Tingling sensation', 'Shock when touching appliance', 'Metal casing live'],
+      causes: ['Loss of earth continuity', 'Insulation failure', 'Incorrect wiring'],
       solutions: [
-        "Immediately disconnect appliance",
-        "Test earth continuity",
-        "Check insulation resistance",
-        "Verify correct wiring of appliance"
+        'Immediately disconnect appliance',
+        'Test earth continuity',
+        'Check insulation resistance',
+        'Verify correct wiring of appliance',
       ],
-      safety: "IMMEDIATE SAFETY RISK - Isolate immediately",
-      severity: "critical"
-    }
+      safety: 'IMMEDIATE SAFETY RISK - Isolate immediately',
+      severity: 'critical',
+    },
   ];
 
   const testingProcedures = [
     {
-      test: "Insulation Resistance",
-      when: "Testing between live conductors and earth",
-      method: "500V DC test between L-E, N-E, L-N",
-      acceptableLimits: "≥1MΩ for most circuits, ≥0.5MΩ for some equipment",
-      equipment: "Insulation resistance tester (Megger)"
+      test: 'Insulation Resistance',
+      when: 'Testing between live conductors and earth',
+      method: '500V DC test between L-E, N-E, L-N',
+      acceptableLimits: '≥1MΩ for most circuits, ≥0.5MΩ for some equipment',
+      equipment: 'Insulation resistance tester (Megger)',
     },
     {
-      test: "Earth Fault Loop Impedance (Zs)",
-      when: "Verifying earth fault protection",
-      method: "Measurement from line to earth at furthest point",
-      acceptableLimits: "Must not exceed maximum Zs for protective device",
-      equipment: "Earth fault loop impedance tester"
+      test: 'Earth Fault Loop Impedance (Zs)',
+      when: 'Verifying earth fault protection',
+      method: 'Measurement from line to earth at furthest point',
+      acceptableLimits: 'Must not exceed maximum Zs for protective device',
+      equipment: 'Earth fault loop impedance tester',
     },
     {
-      test: "RCD Testing",
-      when: "Verifying RCD operation and times",
-      method: "Test at 0.5x, 1x, and 5x rated tripping current",
-      acceptableLimits: "≤300ms at 1x, ≤40ms at 5x rated current",
-      equipment: "RCD tester"
-    }
+      test: 'RCD Testing',
+      when: 'Verifying RCD operation and times',
+      method: 'Test at 0.5x, 1x, and 5x rated tripping current',
+      acceptableLimits: '≤300ms at 1x, ≤40ms at 5x rated current',
+      equipment: 'RCD tester',
+    },
   ];
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case "critical": return "border-red-500 bg-card";
-      case "high": return "border-orange-500 bg-orange-500/10";
-      case "medium": return "border-yellow-500 bg-card";
-      default: return "border-elec-yellow/20 bg-white/5";
+      case 'critical':
+        return 'border-red-500 bg-card';
+      case 'high':
+        return 'border-orange-500 bg-orange-500/10';
+      case 'medium':
+        return 'border-yellow-500 bg-card';
+      default:
+        return 'border-elec-yellow/20 bg-white/5';
     }
   };
 
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
-      case "critical": return <AlertTriangle className="h-5 w-5 text-red-500" />;
-      case "high": return <Zap className="h-5 w-5 text-orange-500" />;
-      case "medium": return <Lightbulb className="h-5 w-5 text-yellow-500" />;
-      default: return <Settings className="h-5 w-5 text-elec-yellow" />;
+      case 'critical':
+        return <AlertTriangle className="h-5 w-5 text-red-500" />;
+      case 'high':
+        return <Zap className="h-5 w-5 text-orange-500" />;
+      case 'medium':
+        return <Lightbulb className="h-5 w-5 text-yellow-500" />;
+      default:
+        return <Settings className="h-5 w-5 text-elec-yellow" />;
     }
   };
 
@@ -108,7 +120,8 @@ const TroubleshootingGuide = () => {
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Electrical Troubleshooting Guide</h1>
         <p className="text-white text-center max-w-2xl mb-4">
-          Common electrical problems, their causes, and systematic approaches to diagnosis and resolution
+          Common electrical problems, their causes, and systematic approaches to diagnosis and
+          resolution
         </p>
         <SmartBackButton />
       </div>

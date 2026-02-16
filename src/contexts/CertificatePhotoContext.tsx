@@ -38,9 +38,7 @@ export const CertificatePhotoProvider: React.FC<CertificatePhotoProviderProps> =
   };
 
   return (
-    <CertificatePhotoContext.Provider value={value}>
-      {children}
-    </CertificatePhotoContext.Provider>
+    <CertificatePhotoContext.Provider value={value}>{children}</CertificatePhotoContext.Provider>
   );
 };
 
@@ -55,7 +53,11 @@ export function generateProjectRef(data: {
   installationAddress?: string;
 }): string {
   const sanitize = (str: string) =>
-    str.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, 20);
+    str
+      .replace(/[^a-zA-Z0-9]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 20);
 
   const parts = [
     data.certificateNumber,

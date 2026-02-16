@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { format } from "date-fns";
+import { useState } from 'react';
+import { format } from 'date-fns';
 import {
   Check,
   X,
@@ -11,20 +11,14 @@ import {
   User,
   AlertCircle,
   Edit,
-} from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,16 +28,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useAuth } from "@/contexts/AuthContext";
+} from '@/components/ui/alert-dialog';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   useUpdateVariationOrderStatus,
   useUpdateVariationOrder,
   useDeleteVariationOrder,
   type VariationOrder,
-} from "@/hooks/useJobFinancials";
+} from '@/hooks/useJobFinancials';
 
 interface VariationOrderDetailSheetProps {
   variationOrder: VariationOrder | null;
@@ -54,21 +48,21 @@ interface VariationOrderDetailSheetProps {
 
 const statusConfig = {
   Pending: {
-    color: "text-amber-500",
-    bgColor: "bg-amber-500/10",
-    borderColor: "border-amber-500/30",
+    color: 'text-amber-500',
+    bgColor: 'bg-amber-500/10',
+    borderColor: 'border-amber-500/30',
     icon: Clock,
   },
   Approved: {
-    color: "text-green-500",
-    bgColor: "bg-green-500/10",
-    borderColor: "border-green-500/30",
+    color: 'text-green-500',
+    bgColor: 'bg-green-500/10',
+    borderColor: 'border-green-500/30',
     icon: Check,
   },
   Rejected: {
-    color: "text-red-500",
-    bgColor: "bg-red-500/10",
-    borderColor: "border-red-500/30",
+    color: 'text-red-500',
+    bgColor: 'bg-red-500/10',
+    borderColor: 'border-red-500/30',
     icon: X,
   },
 };
@@ -83,12 +77,12 @@ export function VariationOrderDetailSheet({
   const { profile } = useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editDescription, setEditDescription] = useState("");
+  const [editDescription, setEditDescription] = useState('');
   const [editValue, setEditValue] = useState(0);
-  const [editNotes, setEditNotes] = useState("");
+  const [editNotes, setEditNotes] = useState('');
   const [showRejectDialog, setShowRejectDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [rejectReason, setRejectReason] = useState("");
+  const [rejectReason, setRejectReason] = useState('');
 
   const updateStatus = useUpdateVariationOrderStatus();
   const updateOrder = useUpdateVariationOrder();
@@ -98,12 +92,12 @@ export function VariationOrderDetailSheet({
 
   const status = statusConfig[variationOrder.status] || statusConfig.Pending;
   const StatusIcon = status.icon;
-  const isPending = variationOrder.status === "Pending";
+  const isPending = variationOrder.status === 'Pending';
 
   const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
       minimumFractionDigits: 0,
     }).format(amount);
 
@@ -116,8 +110,8 @@ export function VariationOrderDetailSheet({
     updateStatus.mutate(
       {
         id: variationOrder.id,
-        status: "Approved",
-        approvedBy: profile?.full_name || "Manager",
+        status: 'Approved',
+        approvedBy: profile?.full_name || 'Manager',
       },
       {
         onSuccess: () => handleClose(),
@@ -132,16 +126,16 @@ export function VariationOrderDetailSheet({
       {
         id: variationOrder.id,
         updates: {
-          status: "Rejected",
-          approved_by: profile?.full_name || "Manager",
-          approved_date: new Date().toISOString().split("T")[0],
-          notes: `Rejected: ${rejectReason}\n\n${variationOrder.notes || ""}`.trim(),
+          status: 'Rejected',
+          approved_by: profile?.full_name || 'Manager',
+          approved_date: new Date().toISOString().split('T')[0],
+          notes: `Rejected: ${rejectReason}\n\n${variationOrder.notes || ''}`.trim(),
         },
       },
       {
         onSuccess: () => {
           setShowRejectDialog(false);
-          setRejectReason("");
+          setRejectReason('');
           handleClose();
         },
       }
@@ -160,7 +154,7 @@ export function VariationOrderDetailSheet({
   const startEditing = () => {
     setEditDescription(variationOrder.description);
     setEditValue(Number(variationOrder.value));
-    setEditNotes(variationOrder.notes || "");
+    setEditNotes(variationOrder.notes || '');
     setIsEditing(true);
   };
 
@@ -184,11 +178,8 @@ export function VariationOrderDetailSheet({
     <>
       <Sheet open={open} onOpenChange={handleClose}>
         <SheetContent
-          side={isMobile ? "bottom" : "right"}
-          className={cn(
-            "flex flex-col p-0",
-            isMobile ? "h-[85vh] rounded-t-2xl" : "w-[450px]"
-          )}
+          side={isMobile ? 'bottom' : 'right'}
+          className={cn('flex flex-col p-0', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[450px]')}
         >
           {/* Header */}
           <SheetHeader className="p-4 border-b border-border shrink-0">
@@ -196,20 +187,13 @@ export function VariationOrderDetailSheet({
               <SheetTitle>Variation Order</SheetTitle>
               <Badge
                 variant="outline"
-                className={cn(
-                  "gap-1",
-                  status.bgColor,
-                  status.color,
-                  "border-transparent"
-                )}
+                className={cn('gap-1', status.bgColor, status.color, 'border-transparent')}
               >
                 <StatusIcon className="h-3 w-3" />
                 {variationOrder.status}
               </Badge>
             </div>
-            {jobTitle && (
-              <p className="text-sm text-muted-foreground">{jobTitle}</p>
-            )}
+            {jobTitle && <p className="text-sm text-muted-foreground">{jobTitle}</p>}
           </SheetHeader>
 
           {/* Content */}
@@ -217,7 +201,7 @@ export function VariationOrderDetailSheet({
             {/* Value Card */}
             <Card
               className={cn(
-                "p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent",
+                'p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent',
                 status.borderColor
               )}
             >
@@ -231,10 +215,8 @@ export function VariationOrderDetailSheet({
                       step="1"
                       min="0"
                       className="pl-10 text-2xl font-bold text-center h-14"
-                      value={editValue || ""}
-                      onChange={(e) =>
-                        setEditValue(parseFloat(e.target.value) || 0)
-                      }
+                      value={editValue || ''}
+                      onChange={(e) => setEditValue(parseFloat(e.target.value) || 0)}
                     />
                   </div>
                 ) : (
@@ -249,9 +231,7 @@ export function VariationOrderDetailSheet({
             <Card className="p-4 space-y-4">
               {/* Description */}
               <div>
-                <Label className="text-xs text-muted-foreground">
-                  Description
-                </Label>
+                <Label className="text-xs text-muted-foreground">Description</Label>
                 {isEditing ? (
                   <Textarea
                     className="mt-1 min-h-[100px]"
@@ -271,7 +251,7 @@ export function VariationOrderDetailSheet({
                   Created
                 </span>
                 <span className="text-sm font-medium">
-                  {format(new Date(variationOrder.created_at), "dd MMM yyyy")}
+                  {format(new Date(variationOrder.created_at), 'dd MMM yyyy')}
                 </span>
               </div>
 
@@ -281,9 +261,7 @@ export function VariationOrderDetailSheet({
                   <Building2 className="h-3 w-3" />
                   Job
                 </span>
-                <span className="text-sm font-medium">
-                  {jobTitle || "Unknown Job"}
-                </span>
+                <span className="text-sm font-medium">{jobTitle || 'Unknown Job'}</span>
               </div>
 
               {/* Notes */}
@@ -301,9 +279,7 @@ export function VariationOrderDetailSheet({
                     {variationOrder.notes}
                   </p>
                 ) : (
-                  <p className="mt-1 text-sm text-muted-foreground italic">
-                    No notes
-                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground italic">No notes</p>
                 )}
               </div>
             </Card>
@@ -311,19 +287,15 @@ export function VariationOrderDetailSheet({
             {/* Approval Info */}
             {variationOrder.approved_by && (
               <Card className="p-4">
-                <Label className="text-xs text-muted-foreground mb-3 block">
-                  Approval Details
-                </Label>
+                <Label className="text-xs text-muted-foreground mb-3 block">Approval Details</Label>
                 <div className="flex items-start gap-3">
                   <div
                     className={cn(
-                      "p-1.5 rounded-full",
-                      variationOrder.status === "Rejected"
-                        ? "bg-red-500/10"
-                        : "bg-green-500/10"
+                      'p-1.5 rounded-full',
+                      variationOrder.status === 'Rejected' ? 'bg-red-500/10' : 'bg-green-500/10'
                     )}
                   >
-                    {variationOrder.status === "Rejected" ? (
+                    {variationOrder.status === 'Rejected' ? (
                       <X className="h-4 w-4 text-red-500" />
                     ) : (
                       <Check className="h-4 w-4 text-green-500" />
@@ -336,10 +308,7 @@ export function VariationOrderDetailSheet({
                     </p>
                     {variationOrder.approved_date && (
                       <p className="text-xs text-muted-foreground">
-                        {format(
-                          new Date(variationOrder.approved_date),
-                          "dd MMM yyyy"
-                        )}
+                        {format(new Date(variationOrder.approved_date), 'dd MMM yyyy')}
                       </p>
                     )}
                   </div>
@@ -353,13 +322,10 @@ export function VariationOrderDetailSheet({
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-amber-500 mt-0.5" />
                   <div className="text-sm">
-                    <p className="font-medium text-amber-500">
-                      Pending Approval
-                    </p>
+                    <p className="font-medium text-amber-500">Pending Approval</p>
                     <p className="text-muted-foreground">
-                      Approving this variation will add{" "}
-                      {formatCurrency(Number(variationOrder.value))} to the job
-                      budget.
+                      Approving this variation will add{' '}
+                      {formatCurrency(Number(variationOrder.value))} to the job budget.
                     </p>
                   </div>
                 </div>
@@ -371,11 +337,7 @@ export function VariationOrderDetailSheet({
           <SheetFooter className="p-4 border-t border-border shrink-0 pb-safe">
             {isEditing ? (
               <div className="flex gap-3 w-full">
-                <Button
-                  variant="outline"
-                  className="flex-1"
-                  onClick={() => setIsEditing(false)}
-                >
+                <Button variant="outline" className="flex-1" onClick={() => setIsEditing(false)}>
                   Cancel
                 </Button>
                 <Button
@@ -383,7 +345,7 @@ export function VariationOrderDetailSheet({
                   onClick={handleSaveEdit}
                   disabled={updateOrder.isPending}
                 >
-                  {updateOrder.isPending ? "Saving..." : "Save Changes"}
+                  {updateOrder.isPending ? 'Saving...' : 'Save Changes'}
                 </Button>
               </div>
             ) : isPending ? (
@@ -403,14 +365,10 @@ export function VariationOrderDetailSheet({
                     disabled={updateStatus.isPending}
                   >
                     <Check className="h-4 w-4 mr-2" />
-                    {updateStatus.isPending ? "Approving..." : "Approve"}
+                    {updateStatus.isPending ? 'Approving...' : 'Approve'}
                   </Button>
                 </div>
-                <Button
-                  variant="ghost"
-                  className="w-full"
-                  onClick={startEditing}
-                >
+                <Button variant="ghost" className="w-full" onClick={startEditing}>
                   <Edit className="h-4 w-4 mr-2" />
                   Edit Details
                 </Button>
@@ -424,11 +382,7 @@ export function VariationOrderDetailSheet({
                 >
                   Delete
                 </Button>
-                <Button
-                  variant="outline"
-                  className="flex-1"
-                  onClick={handleClose}
-                >
+                <Button variant="outline" className="flex-1" onClick={handleClose}>
                   Close
                 </Button>
               </div>
@@ -461,7 +415,7 @@ export function VariationOrderDetailSheet({
               disabled={!rejectReason.trim() || updateOrder.isPending}
               className="bg-red-500 hover:bg-red-600"
             >
-              {updateOrder.isPending ? "Rejecting..." : "Reject"}
+              {updateOrder.isPending ? 'Rejecting...' : 'Reject'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -473,8 +427,7 @@ export function VariationOrderDetailSheet({
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Variation Order</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this variation order? This action
-              cannot be undone.
+              Are you sure you want to delete this variation order? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -484,7 +437,7 @@ export function VariationOrderDetailSheet({
               disabled={deleteOrder.isPending}
               className="bg-red-500 hover:bg-red-600"
             >
-              {deleteOrder.isPending ? "Deleting..." : "Delete"}
+              {deleteOrder.isPending ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

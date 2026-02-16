@@ -11,13 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import {
   PenTool,
   User,
@@ -173,14 +167,10 @@ const RoleCard: React.FC<{
     >
       <CardContent className="py-4">
         <div className="flex items-center gap-3">
-          <div className={cn(
-            'p-2 rounded-lg',
-            isComplete ? 'bg-green-500/10' : 'bg-elec-yellow/10'
-          )}>
-            <Icon className={cn(
-              'h-5 w-5',
-              isComplete ? 'text-green-500' : 'text-elec-yellow'
-            )} />
+          <div
+            className={cn('p-2 rounded-lg', isComplete ? 'bg-green-500/10' : 'bg-elec-yellow/10')}
+          >
+            <Icon className={cn('h-5 w-5', isComplete ? 'text-green-500' : 'text-elec-yellow')} />
           </div>
           <div className="flex-1">
             <p className="font-semibold">{title}</p>
@@ -338,12 +328,10 @@ const RoleEditSheet: React.FC<{
   );
 };
 
-export const DeclarationsStep: React.FC<DeclarationsStepProps> = ({
-  data,
-  onChange,
-  isMobile,
-}) => {
-  const [editingRole, setEditingRole] = useState<'designer' | 'constructor' | 'inspector' | null>(null);
+export const DeclarationsStep: React.FC<DeclarationsStepProps> = ({ data, onChange, isMobile }) => {
+  const [editingRole, setEditingRole] = useState<'designer' | 'constructor' | 'inspector' | null>(
+    null
+  );
   const haptic = useHaptic();
 
   // Check completion status
@@ -351,7 +339,9 @@ export const DeclarationsStep: React.FC<DeclarationsStepProps> = ({
   const isConstructorComplete = Boolean(data.constructorName && data.constructorSignature);
   const isInspectorComplete = Boolean(data.inspectorName && data.inspectorSignature);
 
-  const completedCount = [isDesignerComplete, isConstructorComplete, isInspectorComplete].filter(Boolean).length;
+  const completedCount = [isDesignerComplete, isConstructorComplete, isInspectorComplete].filter(
+    Boolean
+  ).length;
 
   const handleSave = (roleData: any) => {
     haptic.success();
@@ -387,9 +377,7 @@ export const DeclarationsStep: React.FC<DeclarationsStepProps> = ({
             </div>
             <Badge
               variant={completedCount === 3 ? 'default' : 'secondary'}
-              className={cn(
-                completedCount === 3 && 'bg-green-500'
-              )}
+              className={cn(completedCount === 3 && 'bg-green-500')}
             >
               {completedCount}/3 Complete
             </Badge>

@@ -1,12 +1,12 @@
-import { ArrowLeft, HelpCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HelpCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule7Section1_1 = () => {
   useSEO(
-    "Section 7.1.1: Multiple-Choice Question Banks - MOET Module 7",
-    "Practice question banks covering all module topics and learning outcomes"
+    'Section 7.1.1: Multiple-Choice Question Banks - MOET Module 7',
+    'Practice question banks covering all module topics and learning outcomes'
   );
 
   return (
@@ -14,7 +14,11 @@ const MOETModule7Section1_1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module7-section1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.1
@@ -41,7 +45,9 @@ const MOETModule7Section1_1 = () => {
 
         <div className="prose prose-invert max-w-none">
           <div className="bg-card/30 border border-elec-yellow/30 rounded-lg p-6 mb-8">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Learning Objectives</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
+              Learning Objectives
+            </h2>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Access and use comprehensive question banks for EPA preparation</li>
               <li>• Practice questions covering all MOET course modules and standards</li>
@@ -51,10 +57,14 @@ const MOETModule7Section1_1 = () => {
           </div>
 
           <p className="text-lg text-muted-foreground">
-            This section provides access to extensive question banks designed to prepare you for the EPA knowledge test component.
+            This section provides access to extensive question banks designed to prepare you for the
+            EPA knowledge test component.
           </p>
-          
-          <p>Content for this subsection will be added here covering multiple-choice question practice and preparation strategies.</p>
+
+          <p>
+            Content for this subsection will be added here covering multiple-choice question
+            practice and preparation strategies.
+          </p>
         </div>
       </div>
     </div>

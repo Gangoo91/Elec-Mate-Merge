@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
 
@@ -8,7 +7,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -24,12 +31,15 @@ interface InspectionSectionProgressProps {
   inspectionItems: InspectionItem[];
 }
 
-const InspectionSectionProgress = ({ sectionItems, inspectionItems }: InspectionSectionProgressProps) => {
+const InspectionSectionProgress = ({
+  sectionItems,
+  inspectionItems,
+}: InspectionSectionProgressProps) => {
   const getSectionProgress = () => {
-    const filteredItems = inspectionItems.filter(item => 
-      sectionItems.some(sItem => sItem.id === item.id)
+    const filteredItems = inspectionItems.filter((item) =>
+      sectionItems.some((sItem) => sItem.id === item.id)
     );
-    const inspectedItems = filteredItems.filter(item => item.outcome !== '');
+    const inspectedItems = filteredItems.filter((item) => item.outcome !== '');
     // Ensure we always show the actual section item count, not filtered count
     return { total: sectionItems.length, completed: inspectedItems.length };
   };

@@ -1,10 +1,14 @@
-
 import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { MobileTabs, MobileTabsList, MobileTabsTrigger, MobileTabsContent } from '@/components/ui/mobile-tabs';
+import {
+  MobileTabs,
+  MobileTabsList,
+  MobileTabsTrigger,
+  MobileTabsContent,
+} from '@/components/ui/mobile-tabs';
 import { PenTool, Type, Upload, X } from 'lucide-react';
 import SignaturePad, { SignaturePadRef } from './SignaturePad';
 import SignatureManagerDialog from './SignatureManagerDialog';
@@ -20,12 +24,12 @@ interface SignatureInputProps {
 }
 
 const SignatureInput = ({
-  label = "Signature",
+  label = 'Signature',
   value,
   onChange,
-  placeholder = "Enter signature or draw digitally",
+  placeholder = 'Enter signature or draw digitally',
   required = false,
-  className = ""
+  className = '',
 }: SignatureInputProps) => {
   const { getDefaultSignature } = useSignatureProfiles();
   const [activeTab, setActiveTab] = useState<'text' | 'draw' | 'saved'>('text');
@@ -69,17 +73,30 @@ const SignatureInput = ({
   return (
     <div className={`space-y-2 ${className}`}>
       <Card className="bg-card border-border">
-        <MobileTabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="w-full">
+        <MobileTabs
+          value={activeTab}
+          onValueChange={(value) => setActiveTab(value as any)}
+          className="w-full"
+        >
           <MobileTabsList className="bg-muted">
-            <MobileTabsTrigger value="text" className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]">
+            <MobileTabsTrigger
+              value="text"
+              className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]"
+            >
               <Type className="h-3 w-3" />
               Text
             </MobileTabsTrigger>
-            <MobileTabsTrigger value="draw" className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]">
+            <MobileTabsTrigger
+              value="draw"
+              className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]"
+            >
               <PenTool className="h-3 w-3" />
               Draw
             </MobileTabsTrigger>
-            <MobileTabsTrigger value="saved" className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]">
+            <MobileTabsTrigger
+              value="saved"
+              className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]"
+            >
               <Upload className="h-3 w-3" />
               Saved
             </MobileTabsTrigger>
@@ -149,11 +166,7 @@ const SignatureInput = ({
         </MobileTabs>
       </Card>
 
-      {hasSignature && (
-        <p className="text-xs text-green-400">
-          ✓ Signature captured
-        </p>
-      )}
+      {hasSignature && <p className="text-xs text-green-400">✓ Signature captured</p>}
     </div>
   );
 };

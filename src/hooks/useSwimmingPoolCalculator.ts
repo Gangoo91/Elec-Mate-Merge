@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { calculatePoolInstallation, PoolCalculationInputs, PoolCalculationResult } from '@/lib/swimming-pool';
+import {
+  calculatePoolInstallation,
+  PoolCalculationInputs,
+  PoolCalculationResult,
+} from '@/lib/swimming-pool';
 
 export const useSwimmingPoolCalculator = () => {
   const [inputs, setInputs] = useState<PoolCalculationInputs>({
@@ -23,21 +27,21 @@ export const useSwimmingPoolCalculator = () => {
     hasUnderwaterLighting: false,
     hasPoolCover: false,
     hasEmergencyStop: false,
-    hasAccessibility: false
+    hasAccessibility: false,
   });
 
   const [result, setResult] = useState<PoolCalculationResult | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleInputChange = (field: keyof PoolCalculationInputs, value: any) => {
-    setInputs(prev => ({
+    setInputs((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
 
     // Clear error for this field
     if (errors[field]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[field];
         return newErrors;
@@ -116,7 +120,7 @@ export const useSwimmingPoolCalculator = () => {
       hasUnderwaterLighting: false,
       hasPoolCover: false,
       hasEmergencyStop: false,
-      hasAccessibility: false
+      hasAccessibility: false,
     });
     setResult(null);
     setErrors({});
@@ -129,6 +133,6 @@ export const useSwimmingPoolCalculator = () => {
     handleInputChange,
     calculateValues,
     resetCalculator,
-    isValid: Object.keys(errors).length === 0
+    isValid: Object.keys(errors).length === 0,
   };
 };

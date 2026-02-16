@@ -19,78 +19,119 @@ export const EmergencyEscapeLightingQuiz = () => {
   const questions: QuizQuestion[] = [
     {
       id: 1,
-      question: "What is the minimum horizontal illuminance required on escape routes according to BS 5266-1?",
-      options: ["0.5 lux", "1 lux", "1.5 lux", "2 lux"],
+      question:
+        'What is the minimum horizontal illuminance required on escape routes according to BS 5266-1?',
+      options: ['0.5 lux', '1 lux', '1.5 lux', '2 lux'],
       correctAnswer: 1,
-      explanation: "BS 5266-1 specifies a minimum of 1 lux horizontal illuminance on escape routes to ensure safe movement during evacuation."
+      explanation:
+        'BS 5266-1 specifies a minimum of 1 lux horizontal illuminance on escape routes to ensure safe movement during evacuation.',
     },
     {
       id: 2,
-      question: "What is the maximum uniformity ratio allowed for emergency escape lighting?",
-      options: ["20:1", "30:1", "40:1", "50:1"],
+      question: 'What is the maximum uniformity ratio allowed for emergency escape lighting?',
+      options: ['20:1', '30:1', '40:1', '50:1'],
       correctAnswer: 2,
-      explanation: "The maximum uniformity ratio is 40:1 to ensure there are no excessively dark areas that could impede safe evacuation."
+      explanation:
+        'The maximum uniformity ratio is 40:1 to ensure there are no excessively dark areas that could impede safe evacuation.',
     },
     {
       id: 3,
-      question: "For corridors, what is the maximum spacing between emergency luminaires based on mounting height?",
-      options: ["1 × mounting height", "2 × mounting height", "3 × mounting height", "4 × mounting height"],
+      question:
+        'For corridors, what is the maximum spacing between emergency luminaires based on mounting height?',
+      options: [
+        '1 × mounting height',
+        '2 × mounting height',
+        '3 × mounting height',
+        '4 × mounting height',
+      ],
       correctAnswer: 1,
-      explanation: "For corridors and escape routes, luminaires should be spaced at a maximum of 2 times the mounting height to ensure adequate coverage."
+      explanation:
+        'For corridors and escape routes, luminaires should be spaced at a maximum of 2 times the mounting height to ensure adequate coverage.',
     },
     {
       id: 4,
-      question: "Where must emergency lighting be provided at exit doors?",
-      options: ["Only at final exits", "At fire exits only", "At all exit doors", "Only at main entrances"],
+      question: 'Where must emergency lighting be provided at exit doors?',
+      options: [
+        'Only at final exits',
+        'At fire exits only',
+        'At all exit doors',
+        'Only at main entrances',
+      ],
       correctAnswer: 2,
-      explanation: "Emergency lighting must be provided at all exit doors to ensure they are clearly visible and accessible during an emergency."
+      explanation:
+        'Emergency lighting must be provided at all exit doors to ensure they are clearly visible and accessible during an emergency.',
     },
     {
       id: 5,
-      question: "What type of emergency lighting is specifically designed for escape routes?",
-      options: ["Standby lighting", "Escape route lighting", "Anti-panic lighting", "High risk task area lighting"],
+      question: 'What type of emergency lighting is specifically designed for escape routes?',
+      options: [
+        'Standby lighting',
+        'Escape route lighting',
+        'Anti-panic lighting',
+        'High risk task area lighting',
+      ],
       correctAnswer: 1,
-      explanation: "Escape route lighting is specifically designed to illuminate escape routes and exits to enable safe evacuation."
+      explanation:
+        'Escape route lighting is specifically designed to illuminate escape routes and exits to enable safe evacuation.',
     },
     {
       id: 6,
-      question: "At what height should emergency escape lighting typically be measured for illuminance levels?",
-      options: ["Floor level", "0.5m above floor", "1m above floor", "2m above floor"],
+      question:
+        'At what height should emergency escape lighting typically be measured for illuminance levels?',
+      options: ['Floor level', '0.5m above floor', '1m above floor', '2m above floor'],
       correctAnswer: 0,
-      explanation: "Illuminance levels for emergency escape lighting are measured at floor level where people will be walking during evacuation."
+      explanation:
+        'Illuminance levels for emergency escape lighting are measured at floor level where people will be walking during evacuation.',
     },
     {
       id: 7,
-      question: "What is the minimum duration requirement for emergency escape lighting in most buildings?",
-      options: ["1 hour", "1.5 hours", "2 hours", "3 hours"],
+      question:
+        'What is the minimum duration requirement for emergency escape lighting in most buildings?',
+      options: ['1 hour', '1.5 hours', '2 hours', '3 hours'],
       correctAnswer: 2,
-      explanation: "Most buildings require emergency lighting to operate for a minimum of 3 hours, though some applications may require only 1 hour."
+      explanation:
+        'Most buildings require emergency lighting to operate for a minimum of 3 hours, though some applications may require only 1 hour.',
     },
     {
       id: 8,
-      question: "Emergency lighting must be provided at which of the following locations?",
-      options: ["Changes of direction only", "Level changes only", "All of the above plus toilets", "Changes of direction and level changes"],
+      question: 'Emergency lighting must be provided at which of the following locations?',
+      options: [
+        'Changes of direction only',
+        'Level changes only',
+        'All of the above plus toilets',
+        'Changes of direction and level changes',
+      ],
       correctAnswer: 3,
-      explanation: "Emergency lighting must be provided at changes of direction, changes of level, and other key locations to guide people safely."
+      explanation:
+        'Emergency lighting must be provided at changes of direction, changes of level, and other key locations to guide people safely.',
     },
     {
       id: 9,
-      question: "What is the primary purpose of emergency escape lighting?",
-      options: ["To provide working light", "To illuminate escape routes", "To prevent panic", "To save energy"],
+      question: 'What is the primary purpose of emergency escape lighting?',
+      options: [
+        'To provide working light',
+        'To illuminate escape routes',
+        'To prevent panic',
+        'To save energy',
+      ],
       correctAnswer: 1,
-      explanation: "The primary purpose of emergency escape lighting is to illuminate escape routes and exits to enable safe evacuation during power failure."
+      explanation:
+        'The primary purpose of emergency escape lighting is to illuminate escape routes and exits to enable safe evacuation during power failure.',
     },
     {
       id: 10,
-      question: "According to BS 5266-1, how far should exit signs be visible from?",
-      options: ["5 metres", "10 metres", "15 metres", "20 metres"],
+      question: 'According to BS 5266-1, how far should exit signs be visible from?',
+      options: ['5 metres', '10 metres', '15 metres', '20 metres'],
       correctAnswer: 2,
-      explanation: "Exit signs should be visible from 15 metres away to ensure people can identify escape routes from a reasonable distance."
-    }
+      explanation:
+        'Exit signs should be visible from 15 metres away to ensure people can identify escape routes from a reasonable distance.',
+    },
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(questions.length).fill(-1));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    new Array(questions.length).fill(-1)
+  );
   const [showResults, setShowResults] = useState(false);
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -120,7 +161,8 @@ export const EmergencyEscapeLightingQuiz = () => {
   };
 
   const calculateScore = () => {
-    return selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length;
+    return selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer)
+      .length;
   };
 
   const getScoreColor = (score: number) => {
@@ -132,8 +174,10 @@ export const EmergencyEscapeLightingQuiz = () => {
 
   const getScoreMessage = (score: number) => {
     const percentage = (score / questions.length) * 100;
-    if (percentage >= 80) return 'Excellent! You have a strong understanding of emergency escape lighting.';
-    if (percentage >= 60) return 'Good work! Review the areas you missed to strengthen your knowledge.';
+    if (percentage >= 80)
+      return 'Excellent! You have a strong understanding of emergency escape lighting.';
+    if (percentage >= 60)
+      return 'Good work! Review the areas you missed to strengthen your knowledge.';
     return 'Keep studying! Focus on the explanations to improve your understanding.';
   };
 
@@ -149,9 +193,7 @@ export const EmergencyEscapeLightingQuiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)}`}>
               {score}/{questions.length}
             </div>
-            <div className={`text-xl ${getScoreColor(score)}`}>
-              {percentage}%
-            </div>
+            <div className={`text-xl ${getScoreColor(score)}`}>{percentage}%</div>
             <p className="text-gray-300 mt-2">{getScoreMessage(score)}</p>
           </div>
         </CardHeader>
@@ -170,10 +212,12 @@ export const EmergencyEscapeLightingQuiz = () => {
                       {question.id}. {question.question}
                     </p>
                     <p className="text-gray-300 text-sm mb-1">
-                      <span className="font-medium">Your answer:</span> {question.options[selectedAnswers[index]]}
+                      <span className="font-medium">Your answer:</span>{' '}
+                      {question.options[selectedAnswers[index]]}
                     </p>
                     <p className="text-gray-300 text-sm mb-2">
-                      <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
+                      <span className="font-medium">Correct answer:</span>{' '}
+                      {question.options[question.correctAnswer]}
                     </p>
                     <p className="text-gray-400 text-xs">{question.explanation}</p>
                   </div>
@@ -181,9 +225,12 @@ export const EmergencyEscapeLightingQuiz = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="text-center pt-4">
-            <Button onClick={resetQuiz} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Button
+              onClick={resetQuiz}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
               <RotateCcw className="h-4 w-4 mr-2" />
               Try Again
             </Button>
@@ -201,7 +248,10 @@ export const EmergencyEscapeLightingQuiz = () => {
       <CardHeader>
         <div className="flex justify-between items-center mb-4">
           <CardTitle className="text-foreground">Emergency Escape Lighting Quiz</CardTitle>
-          <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+          <Badge
+            variant="secondary"
+            className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
+          >
             Question {currentQuestion + 1} of {questions.length}
           </Badge>
         </div>
@@ -209,17 +259,22 @@ export const EmergencyEscapeLightingQuiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-lg font-semibold text-foreground mb-4">
-            {question.question}
-          </h3>
+          <h3 className="text-lg font-semibold text-foreground mb-4">{question.question}</h3>
           <RadioGroup
             value={selectedAnswers[currentQuestion].toString()}
             onValueChange={(value) => handleAnswerSelect(parseInt(value))}
             className="space-y-3"
           >
             {question.options.map((option, index) => (
-              <div key={index} className="flex items-center space-x-2 p-3 rounded-lg bg-elec-dark border border-gray-600 hover:border-gray-500 transition-colors">
-                <RadioGroupItem value={index.toString()} id={`option-${index}`} className="text-elec-yellow" />
+              <div
+                key={index}
+                className="flex items-center space-x-2 p-3 rounded-lg bg-elec-dark border border-gray-600 hover:border-gray-500 transition-colors"
+              >
+                <RadioGroupItem
+                  value={index.toString()}
+                  id={`option-${index}`}
+                  className="text-elec-yellow"
+                />
                 <Label htmlFor={`option-${index}`} className="text-gray-300 cursor-pointer flex-1">
                   {option}
                 </Label>
@@ -237,7 +292,7 @@ export const EmergencyEscapeLightingQuiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === -1}

@@ -1,5 +1,5 @@
-import { SmartQuoteBuilder } from "@/components/electrician/quote-builder/SmartQuoteBuilder";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { SmartQuoteBuilder } from '@/components/electrician/quote-builder/SmartQuoteBuilder';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const SmartQuoteBuilderPage = () => {
   return (

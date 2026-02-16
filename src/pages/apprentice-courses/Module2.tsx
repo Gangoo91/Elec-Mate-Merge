@@ -1,50 +1,55 @@
-import { ArrowLeft, Calculator, Zap, GitBranch, Power, Wrench, TrendingUp } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Calculator, Zap, GitBranch, Power, Wrench, TrendingUp } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Electrical Quantities and Units",
-    description: "Understanding fundamental electrical quantities: voltage, current, resistance, and their units",
+    number: 'Section 1',
+    title: 'Electrical Quantities and Units',
+    description:
+      'Understanding fundamental electrical quantities: voltage, current, resistance, and their units',
     icon: Calculator,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
+    number: 'Section 2',
     title: "Ohm's Law and Electrical Calculations",
-    description: "Application of Ohm's Law for calculating voltage, current, and resistance relationships",
+    description:
+      "Application of Ohm's Law for calculating voltage, current, and resistance relationships",
     icon: Zap,
-    href: "section2"
+    href: 'section2',
   },
   {
-    number: "Section 3",
-    title: "Series and Parallel Circuits",
-    description: "Analysis and calculation of electrical parameters in series and parallel circuit configurations",
+    number: 'Section 3',
+    title: 'Series and Parallel Circuits',
+    description:
+      'Analysis and calculation of electrical parameters in series and parallel circuit configurations',
     icon: GitBranch,
-    href: "section3"
+    href: 'section3',
   },
   {
-    number: "Section 4",
-    title: "AC and DC Supply",
-    description: "Understanding alternating and direct current characteristics, waveforms, and applications",
+    number: 'Section 4',
+    title: 'AC and DC Supply',
+    description:
+      'Understanding alternating and direct current characteristics, waveforms, and applications',
     icon: Power,
-    href: "section4"
+    href: 'section4',
   },
   {
-    number: "Section 5",
-    title: "Electrical Materials and Resistance",
-    description: "Properties of electrical materials, conductors, insulators, and factors affecting resistance",
+    number: 'Section 5',
+    title: 'Electrical Materials and Resistance',
+    description:
+      'Properties of electrical materials, conductors, insulators, and factors affecting resistance',
     icon: Wrench,
-    href: "section5"
+    href: 'section5',
   },
   {
-    number: "Section 6",
-    title: "Power, Energy, and Efficiency",
-    description: "Calculating electrical power consumption, energy usage, and system efficiency",
+    number: 'Section 6',
+    title: 'Power, Energy, and Efficiency',
+    description: 'Calculating electrical power consumption, energy usage, and system efficiency',
     icon: TrendingUp,
-    href: "section6"
+    href: 'section6',
   },
 ];
 

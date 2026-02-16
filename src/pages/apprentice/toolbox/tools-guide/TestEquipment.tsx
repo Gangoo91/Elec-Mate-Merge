@@ -1,15 +1,42 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { CircuitBoard, Shield, Zap, Star } from "lucide-react";
-import TestEquipmentTab from "@/components/apprentice/tools-guide/TestEquipmentTab";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { CircuitBoard, Shield, Zap, Star } from 'lucide-react';
+import TestEquipmentTab from '@/components/apprentice/tools-guide/TestEquipmentTab';
 
 const TestEquipment = () => {
   const quickStats = [
-    { label: "Basic Tools", value: "5+", icon: Zap, color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" },
-    { label: "Advanced Tools", value: "5+", icon: CircuitBoard, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
-    { label: "UK Standards", value: "GS38", icon: Shield, color: "text-green-400", bg: "from-green-500/10 to-green-500/5", border: "border-green-500/30" },
-    { label: "18th Edition", value: "BS7671", icon: Star, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5", border: "border-purple-500/30" }
+    {
+      label: 'Basic Tools',
+      value: '5+',
+      icon: Zap,
+      color: 'text-elec-yellow',
+      bg: 'from-elec-yellow/10 to-elec-yellow/5',
+      border: 'border-elec-yellow/30',
+    },
+    {
+      label: 'Advanced Tools',
+      value: '5+',
+      icon: CircuitBoard,
+      color: 'text-blue-400',
+      bg: 'from-blue-500/10 to-blue-500/5',
+      border: 'border-blue-500/30',
+    },
+    {
+      label: 'UK Standards',
+      value: 'GS38',
+      icon: Shield,
+      color: 'text-green-400',
+      bg: 'from-green-500/10 to-green-500/5',
+      border: 'border-green-500/30',
+    },
+    {
+      label: '18th Edition',
+      value: 'BS7671',
+      icon: Star,
+      color: 'text-purple-400',
+      bg: 'from-purple-500/10 to-purple-500/5',
+      border: 'border-purple-500/30',
+    },
   ];
 
   return (
@@ -23,7 +50,8 @@ const TestEquipment = () => {
           Test Equipment Guide
         </h1>
         <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Quality test equipment is essential for safety and compliance. Learn about the testing tools you'll need throughout your apprenticeship and career.
+          Quality test equipment is essential for safety and compliance. Learn about the testing
+          tools you'll need throughout your apprenticeship and career.
         </p>
         <SmartBackButton />
       </div>

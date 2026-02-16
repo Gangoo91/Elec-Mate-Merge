@@ -7,34 +7,34 @@ const RenewableEnergyModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "Comparison: Off-Grid, Grid-Tied, and Hybrid Systems",
+      title: 'Comparison: Off-Grid, Grid-Tied, and Hybrid Systems',
       icon: GitBranch,
-      description: "Understanding the differences between system configurations"
+      description: 'Understanding the differences between system configurations',
     },
     {
       id: 2,
-      title: "Off-Grid Design Considerations (Autonomy, Generator Backup)",
+      title: 'Off-Grid Design Considerations (Autonomy, Generator Backup)',
       icon: Compass,
-      description: "Designing standalone systems with backup generation"
+      description: 'Designing standalone systems with backup generation',
     },
     {
       id: 3,
-      title: "Grid-Tied Sizing and Export Management",
+      title: 'Grid-Tied Sizing and Export Management',
       icon: Wifi,
-      description: "Sizing grid-connected systems and managing energy export"
+      description: 'Sizing grid-connected systems and managing energy export',
     },
     {
       id: 4,
-      title: "Control Strategies: Manual vs Automated Switching",
+      title: 'Control Strategies: Manual vs Automated Switching',
       icon: Settings,
-      description: "Different control approaches for system switching and management"
+      description: 'Different control approaches for system switching and management',
     },
     {
       id: 5,
-      title: "Load Priority, Critical Loads, and Energy Routing",
+      title: 'Load Priority, Critical Loads, and Energy Routing',
       icon: Zap,
-      description: "Managing energy distribution and load prioritisation"
-    }
+      description: 'Managing energy distribution and load prioritisation',
+    },
   ];
 
   return (

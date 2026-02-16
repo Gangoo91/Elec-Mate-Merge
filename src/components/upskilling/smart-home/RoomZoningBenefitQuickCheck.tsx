@@ -7,12 +7,12 @@ export const RoomZoningBenefitQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Give one benefit of room zoning.";
+  const question = 'Give one benefit of room zoning.';
   const options = [
-    "Higher installation costs",
-    "Reduced energy efficiency",
-    "Energy savings by heating only occupied rooms",
-    "More complex maintenance"
+    'Higher installation costs',
+    'Reduced energy efficiency',
+    'Energy savings by heating only occupied rooms',
+    'More complex maintenance',
   ];
   const correctAnswer = 2;
 
@@ -36,7 +36,7 @@ export const RoomZoningBenefitQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <Button
@@ -49,11 +49,11 @@ export const RoomZoningBenefitQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-600/20 border-green-500 text-green-200'
                     : selectedAnswer === index.toString()
-                    ? 'bg-red-600/20 border-red-500 text-red-200'
-                    : 'text-gray-400'
+                      ? 'bg-red-600/20 border-red-500 text-red-200'
+                      : 'text-gray-400'
                   : selectedAnswer === index.toString()
-                  ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
-                  : 'text-gray-300'
+                    ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                    : 'text-gray-300'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -72,7 +72,9 @@ export const RoomZoningBenefitQuickCheck = () => {
         {showResult && (
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
             <p className="text-gray-300 text-sm">
-              <strong className="text-foreground">Explanation:</strong> Room zoning allows heating only the spaces that are occupied, significantly reducing energy waste compared to heating the entire property at once.
+              <strong className="text-foreground">Explanation:</strong> Room zoning allows heating
+              only the spaces that are occupied, significantly reducing energy waste compared to
+              heating the entire property at once.
             </p>
             <Button
               onClick={resetQuestion}

@@ -10,7 +10,9 @@ export const BS7671Module7Section5RealWorld = () => {
           <Building className="h-5 w-5 text-elec-yellow" />
           Real-World Implementation Scenarios
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-emerald-600 text-foreground">Case Studies</Badge>
+        <Badge variant="secondary" className="w-fit bg-emerald-600 text-foreground">
+          Case Studies
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <div className="grid md:grid-cols-3 gap-4">
@@ -20,7 +22,9 @@ export const BS7671Module7Section5RealWorld = () => {
                 <Home className="h-4 w-4 text-blue-400" />
                 Domestic PEI System
               </CardTitle>
-              <Badge variant="outline" className="w-fit text-blue-400 border-blue-400">4kW Solar + 9.6kWh Battery</Badge>
+              <Badge variant="outline" className="w-fit text-blue-400 border-blue-400">
+                4kW Solar + 9.6kWh Battery
+              </Badge>
             </CardHeader>
             <CardContent className="text-foreground space-y-3">
               <div className="space-y-2">
@@ -33,7 +37,7 @@ export const BS7671Module7Section5RealWorld = () => {
                   <li>• Home energy management system</li>
                 </ul>
               </div>
-              
+
               <div className="space-y-2">
                 <h6 className="text-blue-400 font-medium">Typical Performance:</h6>
                 <ul className="text-sm space-y-1">
@@ -69,7 +73,9 @@ export const BS7671Module7Section5RealWorld = () => {
                 <Building className="h-4 w-4 text-green-400" />
                 Commercial Office Building
               </CardTitle>
-              <Badge variant="outline" className="w-fit text-green-400 border-green-400">50kW Solar + 100kWh Storage</Badge>
+              <Badge variant="outline" className="w-fit text-green-400 border-green-400">
+                50kW Solar + 100kWh Storage
+              </Badge>
             </CardHeader>
             <CardContent className="text-foreground space-y-3">
               <div className="space-y-2">
@@ -82,7 +88,7 @@ export const BS7671Module7Section5RealWorld = () => {
                   <li>• EV charging infrastructure (10 × 7kW)</li>
                 </ul>
               </div>
-              
+
               <div className="space-y-2">
                 <h6 className="text-green-400 font-medium">Business Benefits:</h6>
                 <ul className="text-sm space-y-1">
@@ -118,7 +124,9 @@ export const BS7671Module7Section5RealWorld = () => {
                 <Factory className="h-4 w-4 text-purple-400" />
                 Industrial Microgrid
               </CardTitle>
-              <Badge variant="outline" className="w-fit text-purple-400 border-purple-400">500kW Solar + 1MWh Storage</Badge>
+              <Badge variant="outline" className="w-fit text-purple-400 border-purple-400">
+                500kW Solar + 1MWh Storage
+              </Badge>
             </CardHeader>
             <CardContent className="text-foreground space-y-3">
               <div className="space-y-2">
@@ -131,7 +139,7 @@ export const BS7671Module7Section5RealWorld = () => {
                   <li>• CHP backup generation (200kW)</li>
                 </ul>
               </div>
-              
+
               <div className="space-y-2">
                 <h6 className="text-purple-400 font-medium">Operational Advantages:</h6>
                 <ul className="text-sm space-y-1">
@@ -163,25 +171,46 @@ export const BS7671Module7Section5RealWorld = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Implementation Challenges & Solutions:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Implementation Challenges & Solutions:
+          </h5>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h6 className="text-red-400 font-medium mb-2">Common Installation Challenges:</h6>
               <div className="space-y-3">
                 <div className="bg-gray-800 p-3 rounded">
-                  <h6 className="text-orange-400 text-sm font-medium">Network Capacity Constraints</h6>
-                  <p className="text-xs text-gray-300 mb-2">Limited export capacity on local distribution network</p>
-                  <p className="text-xs text-blue-300">Solution: Dynamic export limitation and flexible connection agreements</p>
+                  <h6 className="text-orange-400 text-sm font-medium">
+                    Network Capacity Constraints
+                  </h6>
+                  <p className="text-xs text-gray-300 mb-2">
+                    Limited export capacity on local distribution network
+                  </p>
+                  <p className="text-xs text-blue-300">
+                    Solution: Dynamic export limitation and flexible connection agreements
+                  </p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <h6 className="text-orange-400 text-sm font-medium">Planning Permission Delays</h6>
-                  <p className="text-xs text-gray-300 mb-2">Extended approval times for larger installations</p>
-                  <p className="text-xs text-blue-300">Solution: Early engagement with planning authorities and pre-application discussions</p>
+                  <h6 className="text-orange-400 text-sm font-medium">
+                    Planning Permission Delays
+                  </h6>
+                  <p className="text-xs text-gray-300 mb-2">
+                    Extended approval times for larger installations
+                  </p>
+                  <p className="text-xs text-blue-300">
+                    Solution: Early engagement with planning authorities and pre-application
+                    discussions
+                  </p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <h6 className="text-orange-400 text-sm font-medium">Grid Connection Complexity</h6>
-                  <p className="text-xs text-gray-300 mb-2">Technical requirements for G99 applications</p>
-                  <p className="text-xs text-blue-300">Solution: Specialist grid connection consultancy and phased implementation</p>
+                  <h6 className="text-orange-400 text-sm font-medium">
+                    Grid Connection Complexity
+                  </h6>
+                  <p className="text-xs text-gray-300 mb-2">
+                    Technical requirements for G99 applications
+                  </p>
+                  <p className="text-xs text-blue-300">
+                    Solution: Specialist grid connection consultancy and phased implementation
+                  </p>
                 </div>
               </div>
             </div>
@@ -189,20 +218,34 @@ export const BS7671Module7Section5RealWorld = () => {
               <h6 className="text-green-400 font-medium mb-2">Success Factors:</h6>
               <div className="space-y-3">
                 <div className="bg-gray-800 p-3 rounded">
-                  <h6 className="text-emerald-400 text-sm font-medium">Early Stakeholder Engagement</h6>
-                  <p className="text-xs text-gray-300">Involving DNO, planners, and end users from project inception</p>
+                  <h6 className="text-emerald-400 text-sm font-medium">
+                    Early Stakeholder Engagement
+                  </h6>
+                  <p className="text-xs text-gray-300">
+                    Involving DNO, planners, and end users from project inception
+                  </p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <h6 className="text-emerald-400 text-sm font-medium">Comprehensive Energy Audit</h6>
-                  <p className="text-xs text-gray-300">Detailed analysis of load profiles and energy usage patterns</p>
+                  <h6 className="text-emerald-400 text-sm font-medium">
+                    Comprehensive Energy Audit
+                  </h6>
+                  <p className="text-xs text-gray-300">
+                    Detailed analysis of load profiles and energy usage patterns
+                  </p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
                   <h6 className="text-emerald-400 text-sm font-medium">Modular System Design</h6>
-                  <p className="text-xs text-gray-300">Scalable architecture allowing phased deployment and expansion</p>
+                  <p className="text-xs text-gray-300">
+                    Scalable architecture allowing phased deployment and expansion
+                  </p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <h6 className="text-emerald-400 text-sm font-medium">Ongoing Performance Monitoring</h6>
-                  <p className="text-xs text-gray-300">Continuous optimisation and predictive maintenance programmes</p>
+                  <h6 className="text-emerald-400 text-sm font-medium">
+                    Ongoing Performance Monitoring
+                  </h6>
+                  <p className="text-xs text-gray-300">
+                    Continuous optimisation and predictive maintenance programmes
+                  </p>
                 </div>
               </div>
             </div>
@@ -210,7 +253,9 @@ export const BS7671Module7Section5RealWorld = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Future Trends & Emerging Applications:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Future Trends & Emerging Applications:
+          </h5>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h6 className="text-cyan-400 font-medium mb-2">Technology Integration Trends:</h6>
@@ -238,7 +283,9 @@ export const BS7671Module7Section5RealWorld = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Key Performance Indicators (KPIs) for PEI Systems:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Key Performance Indicators (KPIs) for PEI Systems:
+          </h5>
           <div className="grid md:grid-cols-4 gap-4">
             <div className="bg-gray-800 p-3 rounded text-center">
               <h6 className="text-green-400 font-medium mb-1">Self-Consumption</h6>

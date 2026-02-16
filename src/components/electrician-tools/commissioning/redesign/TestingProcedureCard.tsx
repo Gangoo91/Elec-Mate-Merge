@@ -1,6 +1,10 @@
-import { AlertTriangle, Lightbulb, CheckCircle2, FlaskConical } from "lucide-react";
-import { MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, Lightbulb, CheckCircle2, FlaskConical } from 'lucide-react';
+import {
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { Badge } from '@/components/ui/badge';
 
 interface TestingProcedureCardProps {
   test: {
@@ -22,7 +26,7 @@ export const TestingProcedureCard = ({ test, index }: TestingProcedureCardProps)
   const hasTroubleshooting = test.troubleshooting && test.troubleshooting.length > 0;
   const hasProTips = test.proTips && test.proTips.length > 0;
   const hasEfficiencyTips = test.efficiencyTips && test.efficiencyTips.length > 0;
-  
+
   const whatToLookFor = [...(test.commonMistakes || []), ...(test.troubleshooting || [])];
   const practicalTips = [...(test.proTips || []), ...(test.efficiencyTips || [])];
 
@@ -34,17 +38,21 @@ export const TestingProcedureCard = ({ test, index }: TestingProcedureCardProps)
             <span className="text-sm font-bold">{index + 1}</span>
           </div>
           <div className="text-left flex-1">
-            <div className="font-semibold text-sm sm:text-base text-foreground">{test.testName}</div>
-            <Badge variant="outline" className="mt-1 text-xs border-elec-yellow/30 text-elec-yellow/80">
+            <div className="font-semibold text-sm sm:text-base text-foreground">
+              {test.testName}
+            </div>
+            <Badge
+              variant="outline"
+              className="mt-1 text-xs border-elec-yellow/30 text-elec-yellow/80"
+            >
               {test.regulation}
             </Badge>
           </div>
         </div>
       </MobileAccordionTrigger>
-      
+
       <MobileAccordionContent>
         <div className="p-4 bg-elec-dark/40 border border-elec-yellow/20 rounded-b-lg space-y-4">
-          
           {/* Why We Test */}
           {test.clientExplanation && (
             <div>

@@ -48,26 +48,28 @@ export const useQuizResults = () => {
     }
   };
 
-  const saveQuizResult = async (result: QuizResult & { assessmentId: string; sessionId: string }) => {
+  const saveQuizResult = async (
+    result: QuizResult & { assessmentId: string; sessionId: string }
+  ) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      const { error } = await supabase
-        .from('quiz_results')
-        .insert({
-          user_id: user.id,
-          assessment_id: result.assessmentId,
-          session_id: result.sessionId,
-          score: result.score,
-          total_questions: result.totalQuestions,
-          percentage: result.percentage,
-          time_spent: result.timeSpent,
-          correct_answers: result.correctAnswers,
-          incorrect_answers: result.incorrectAnswers,
-          category_breakdown: result.categoryBreakdown as Json,
-          question_results: [] as Json,
-        });
+      const { error } = await supabase.from('quiz_results').insert({
+        user_id: user.id,
+        assessment_id: result.assessmentId,
+        session_id: result.sessionId,
+        score: result.score,
+        total_questions: result.totalQuestions,
+        percentage: result.percentage,
+        time_spent: result.timeSpent,
+        correct_answers: result.correctAnswers,
+        incorrect_answers: result.incorrectAnswers,
+        category_breakdown: result.categoryBreakdown as Json,
+        question_results: [] as Json,
+      });
 
       if (error) throw error;
 
@@ -100,25 +102,27 @@ export const useQuizResults = () => {
         { subject: 'Regulations', score: 0, color: 'bg-gray-500' },
         { subject: 'Safety', score: 0, color: 'bg-gray-500' },
         { subject: 'Testing', score: 0, color: 'bg-gray-500' },
-        { subject: 'Design', score: 0, color: 'bg-gray-500' }
+        { subject: 'Design', score: 0, color: 'bg-gray-500' },
       ];
     }
 
     // Aggregate performance by category
     const categoryTotals: Record<string, { totalScore: number; count: number }> = {};
-    
-    results.forEach(result => {
+
+    results.forEach((result) => {
       if (result.category_breakdown && typeof result.category_breakdown === 'object') {
-        Object.entries(result.category_breakdown as Record<string, any>).forEach(([category, data]) => {
-          if (!categoryTotals[category]) {
-            categoryTotals[category] = { totalScore: 0, count: 0 };
+        Object.entries(result.category_breakdown as Record<string, any>).forEach(
+          ([category, data]) => {
+            if (!categoryTotals[category]) {
+              categoryTotals[category] = { totalScore: 0, count: 0 };
+            }
+            if (data && typeof data === 'object' && 'correct' in data && 'total' in data) {
+              const categoryPercentage = (data.correct / data.total) * 100;
+              categoryTotals[category].totalScore += categoryPercentage;
+              categoryTotals[category].count += 1;
+            }
           }
-          if (data && typeof data === 'object' && 'correct' in data && 'total' in data) {
-            const categoryPercentage = (data.correct / data.total) * 100;
-            categoryTotals[category].totalScore += categoryPercentage;
-            categoryTotals[category].count += 1;
-          }
-        });
+        );
       }
     });
 
@@ -129,11 +133,11 @@ export const useQuizResults = () => {
     return categories.map((category, index) => {
       const total = categoryTotals[category];
       const averageScore = total ? Math.round(total.totalScore / total.count) : 0;
-      
+
       return {
         subject: category,
         score: averageScore,
-        color: colors[index]
+        color: colors[index],
       };
     });
   };
@@ -144,20 +148,22 @@ export const useQuizResults = () => {
         totalQuizzes: 0,
         averageScore: 0,
         totalTimeSpent: 0,
-        bestScore: 0
+        bestScore: 0,
       };
     }
 
     const totalQuizzes = results.length;
-    const averageScore = Math.round(results.reduce((sum, result) => sum + result.percentage, 0) / totalQuizzes);
+    const averageScore = Math.round(
+      results.reduce((sum, result) => sum + result.percentage, 0) / totalQuizzes
+    );
     const totalTimeSpent = results.reduce((sum, result) => sum + result.time_spent, 0);
-    const bestScore = Math.max(...results.map(result => result.percentage));
+    const bestScore = Math.max(...results.map((result) => result.percentage));
 
     return {
       totalQuizzes,
       averageScore,
       totalTimeSpent,
-      bestScore
+      bestScore,
     };
   };
 
@@ -172,6 +178,6 @@ export const useQuizResults = () => {
     saveQuizResult,
     getPerformanceByCategory,
     getOverallStats,
-    refreshResults: fetchQuizResults
+    refreshResults: fetchQuizResults,
   };
 };

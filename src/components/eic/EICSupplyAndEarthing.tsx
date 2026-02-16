@@ -1,9 +1,14 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface EICSupplyAndEarthingProps {
   formData: any;
@@ -15,7 +20,9 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-gray">Supply Characteristics</CardTitle>
+          <CardTitle className="text-lg font-semibold text-elec-gray">
+            Supply Characteristics
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -109,7 +116,9 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-gray">Main Protective Device</CardTitle>
+          <CardTitle className="text-lg font-semibold text-elec-gray">
+            Main Protective Device
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -155,7 +164,9 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-gray">Earthing and Bonding</CardTitle>
+          <CardTitle className="text-lg font-semibold text-elec-gray">
+            Earthing and Bonding
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

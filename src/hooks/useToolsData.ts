@@ -31,7 +31,9 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
   // Fetch only TOOLS from marketplace_products (filter by tool categories)
   const { data, error } = await supabase
     .from('marketplace_products')
-    .select('id, name, brand, category, current_price, regular_price, is_on_sale, discount_percentage, image_url, product_url, stock_status, description, highlights')
+    .select(
+      'id, name, brand, category, current_price, regular_price, is_on_sale, discount_percentage, image_url, product_url, stock_status, description, highlights'
+    )
     .in('category', TOOL_CATEGORIES)
     .order('current_price', { ascending: true });
 
@@ -50,11 +52,15 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
   // Transform marketplace_products to ToolItem format
   const allTools: ToolItem[] = data.map((product: any, index: number) => {
     // Derive supplier from product URL
-    const supplier = product.product_url?.includes('toolstation') ? 'Toolstation'
-                   : product.product_url?.includes('screwfix') ? 'Screwfix'
-                   : product.product_url?.includes('cef') ? 'CEF'
-                   : product.product_url?.includes('edmundson') ? 'Edmundson'
-                   : 'Unknown';
+    const supplier = product.product_url?.includes('toolstation')
+      ? 'Toolstation'
+      : product.product_url?.includes('screwfix')
+        ? 'Screwfix'
+        : product.product_url?.includes('cef')
+          ? 'CEF'
+          : product.product_url?.includes('edmundson')
+            ? 'Edmundson'
+            : 'Unknown';
 
     // Format price as string with £
     const formatPrice = (price: number | string | null) => {
@@ -71,7 +77,10 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
       supplier,
       brand: product.brand,
       image: product.image_url || '/placeholder.svg',
-      stockStatus: (product.stock_status || 'In Stock') as 'In Stock' | 'Out of Stock' | 'Low Stock',
+      stockStatus: (product.stock_status || 'In Stock') as
+        | 'In Stock'
+        | 'Out of Stock'
+        | 'Low Stock',
       isOnSale: product.is_on_sale || false,
       salePrice: product.is_on_sale ? formatPrice(product.current_price) : undefined,
       originalPrice: product.regular_price ? formatPrice(product.regular_price) : undefined,
@@ -104,6 +113,6 @@ export const useToolsData = () => {
     deals: dealsData.deals,
     dealOfTheDay: dealsData.dealOfTheDay,
     topDiscounts: dealsData.topDiscounts,
-    dealsCount: dealsData.dealsCount
+    dealsCount: dealsData.dealsCount,
   };
 };

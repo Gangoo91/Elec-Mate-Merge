@@ -16,7 +16,7 @@ interface QuizProps {
   title?: string;
 }
 
-export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) => {
+export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Quick Quiz' }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
@@ -28,7 +28,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
       return question.correctAnswer;
     }
     // If it's a string, find the index in options
-    const index = question.options.findIndex(opt => opt === question.correctAnswer);
+    const index = question.options.findIndex((opt) => opt === question.correctAnswer);
     return index >= 0 ? index : 0;
   };
 
@@ -105,11 +105,13 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
             <p className="text-lg text-white/80 mb-2">
               You scored {score} out of {questions.length} questions correctly
             </p>
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
-              passed 
-                ? 'bg-green-500/20 border border-green-400/30 text-green-300' 
-                : 'bg-red-500/20 border border-red-400/30 text-red-300'
-            }`}>
+            <div
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
+                passed
+                  ? 'bg-green-500/20 border border-green-400/30 text-green-300'
+                  : 'bg-red-500/20 border border-red-400/30 text-red-300'
+              }`}
+            >
               {passed ? (
                 <>
                   <CheckCircle className="h-5 w-5" />
@@ -123,7 +125,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
               )}
             </div>
           </div>
-          <Button 
+          <Button
             onClick={restartQuiz}
             variant="outline"
             className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
@@ -144,17 +146,19 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
           {title}
         </CardTitle>
         <div className="flex items-center justify-between text-sm text-white">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex gap-1 items-center">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                  index < currentQuestion 
-                    ? 'bg-green-400' 
-                    : index === currentQuestion 
-                    ? 'bg-elec-yellow' 
-                    : 'bg-white/15'
+                  index < currentQuestion
+                    ? 'bg-green-400'
+                    : index === currentQuestion
+                      ? 'bg-elec-yellow'
+                      : 'bg-white/15'
                 }`}
               />
             ))}
@@ -163,9 +167,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium text-white mb-4">
-            {currentQ?.question}
-          </h3>
+          <h3 className="text-lg font-medium text-white mb-4">{currentQ?.question}</h3>
           <div className="space-y-3">
             {currentQ?.options.map((option, index) => (
               <button
@@ -180,22 +182,24 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                         : 'bg-red-500/20 border-red-400/50 text-red-300'
                       : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
                     : showResult && index === correctIndex
-                    ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                    : 'bg-white/5 border-white/10 hover:border-elec-yellow/30 text-white/80 hover:text-white'
+                      ? 'bg-green-500/20 border-green-400/50 text-green-300'
+                      : 'bg-white/5 border-white/10 hover:border-elec-yellow/30 text-white/80 hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                    selectedAnswers[currentQuestion] === index
-                      ? showResult
-                        ? index === correctIndex
+                  <div
+                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                      selectedAnswers[currentQuestion] === index
+                        ? showResult
+                          ? index === correctIndex
+                            ? 'border-green-400 bg-green-400'
+                            : 'border-red-400 bg-red-400'
+                          : 'border-elec-yellow bg-elec-yellow'
+                        : showResult && index === correctIndex
                           ? 'border-green-400 bg-green-400'
-                          : 'border-red-400 bg-red-400'
-                        : 'border-elec-yellow bg-elec-yellow'
-                      : showResult && index === correctIndex
-                      ? 'border-green-400 bg-green-400'
-                      : 'border-white/60 bg-transparent'
-                   }`}>
+                          : 'border-white/60 bg-transparent'
+                    }`}
+                  >
                     {selectedAnswers[currentQuestion] === index && !showResult && (
                       <div className="w-3 h-3 rounded-full bg-white/10"></div>
                     )}
@@ -217,14 +221,14 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
         </div>
 
         {showResult && currentQ?.explanation && (
-          <div className={`p-4 rounded-lg border ${
-            isCorrect 
-              ? 'bg-green-500/10 border-green-400/30 text-green-300' 
-              : 'bg-blue-500/10 border-blue-400/30 text-blue-300'
-          }`}>
-            <p className="font-medium mb-2">
-              {isCorrect ? '✓ Correct!' : 'ℹ Explanation:'}
-            </p>
+          <div
+            className={`p-4 rounded-lg border ${
+              isCorrect
+                ? 'bg-green-500/10 border-green-400/30 text-green-300'
+                : 'bg-blue-500/10 border-blue-400/30 text-blue-300'
+            }`}
+          >
+            <p className="font-medium mb-2">{isCorrect ? '✓ Correct!' : 'ℹ Explanation:'}</p>
             <p className="text-sm">{currentQ.explanation}</p>
           </div>
         )}
@@ -238,7 +242,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
           >
             Previous
           </Button>
-          
+
           <div className="flex gap-2">
             {!showResult && isAnswered && (
               <Button
@@ -248,7 +252,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                 Submit Answer
               </Button>
             )}
-            
+
             {showResult && (
               <Button
                 onClick={handleNext}

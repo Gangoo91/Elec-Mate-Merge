@@ -20,8 +20,8 @@ export const EmergencyLightingContent2_2 = () => {
             </h3>
             <div className="space-y-3 text-gray-300">
               <p>
-                Anti-panic lighting is designed to reduce the likelihood of panic and provide 
-                sufficient illumination to enable safe movement of occupants towards escape routes 
+                Anti-panic lighting is designed to reduce the likelihood of panic and provide
+                sufficient illumination to enable safe movement of occupants towards escape routes
                 in areas exceeding 60m².
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -55,14 +55,18 @@ export const EmergencyLightingContent2_2 = () => {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4">
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">Minimum Illuminance</Badge>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">
+                    Minimum Illuminance
+                  </Badge>
                   <div className="space-y-2">
                     <p className="text-foreground font-medium">0.5 lux</p>
                     <p className="text-gray-300 text-sm">At floor level anywhere in open area</p>
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4">
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">Uniformity Ratio</Badge>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow mb-2">
+                    Uniformity Ratio
+                  </Badge>
                   <div className="space-y-2">
                     <p className="text-foreground font-medium">40:1 maximum</p>
                     <p className="text-gray-300 text-sm">Between maximum and minimum levels</p>
@@ -80,12 +84,20 @@ export const EmergencyLightingContent2_2 = () => {
                 <h4 className="text-foreground font-medium mb-2">Coverage Calculation:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
                   <div>
-                    <p><strong>Spacing Formula:</strong> Maximum 4 x mounting height</p>
-                    <p><strong>Edge Distance:</strong> Half the spacing distance</p>
+                    <p>
+                      <strong>Spacing Formula:</strong> Maximum 4 x mounting height
+                    </p>
+                    <p>
+                      <strong>Edge Distance:</strong> Half the spacing distance
+                    </p>
                   </div>
                   <div>
-                    <p><strong>Overlap:</strong> Light cones must overlap sufficiently</p>
-                    <p><strong>Calculation Grid:</strong> Use 2m x 2m grid for verification</p>
+                    <p>
+                      <strong>Overlap:</strong> Light cones must overlap sufficiently
+                    </p>
+                    <p>
+                      <strong>Calculation Grid:</strong> Use 2m x 2m grid for verification
+                    </p>
                   </div>
                 </div>
               </div>

@@ -42,19 +42,16 @@ export const useMessages = (conversationId: string) => {
           event: 'INSERT',
           schema: 'public',
           table: 'employer_messages',
-          filter: `conversation_id=eq.${conversationId}`
+          filter: `conversation_id=eq.${conversationId}`,
         },
         (payload) => {
           // Add new message to cache optimistically
-          queryClient.setQueryData<Message[]>(
-            [...MESSAGES_KEY, conversationId],
-            (old) => {
-              if (!old) return [payload.new as Message];
-              // Avoid duplicates
-              if (old.some(m => m.id === (payload.new as Message).id)) return old;
-              return [...old, payload.new as Message];
-            }
-          );
+          queryClient.setQueryData<Message[]>([...MESSAGES_KEY, conversationId], (old) => {
+            if (!old) return [payload.new as Message];
+            // Avoid duplicates
+            if (old.some((m) => m.id === (payload.new as Message).id)) return old;
+            return [...old, payload.new as Message];
+          });
           // Also invalidate conversations to update preview
           queryClient.invalidateQueries({ queryKey: CONVERSATIONS_KEY });
         }
@@ -65,19 +62,16 @@ export const useMessages = (conversationId: string) => {
           event: 'UPDATE',
           schema: 'public',
           table: 'employer_messages',
-          filter: `conversation_id=eq.${conversationId}`
+          filter: `conversation_id=eq.${conversationId}`,
         },
         (payload) => {
           // Update message in cache (for read receipts)
-          queryClient.setQueryData<Message[]>(
-            [...MESSAGES_KEY, conversationId],
-            (old) => {
-              if (!old) return old;
-              return old.map(m =>
-                m.id === (payload.new as Message).id ? (payload.new as Message) : m
-              );
-            }
-          );
+          queryClient.setQueryData<Message[]>([...MESSAGES_KEY, conversationId], (old) => {
+            if (!old) return old;
+            return old.map((m) =>
+              m.id === (payload.new as Message).id ? (payload.new as Message) : m
+            );
+          });
         }
       )
       .subscribe();
@@ -114,10 +108,12 @@ export const useInfiniteMessages = (conversationId: string) => {
           event: 'INSERT',
           schema: 'public',
           table: 'employer_messages',
-          filter: `conversation_id=eq.${conversationId}`
+          filter: `conversation_id=eq.${conversationId}`,
         },
         () => {
-          queryClient.invalidateQueries({ queryKey: [...MESSAGES_KEY, 'infinite', conversationId] });
+          queryClient.invalidateQueries({
+            queryKey: [...MESSAGES_KEY, 'infinite', conversationId],
+          });
         }
       )
       .subscribe();
@@ -196,7 +192,7 @@ export const useSendMessage = () => {
       if (context?.queryKey) {
         queryClient.setQueryData<Message[]>(context.queryKey, (old) => {
           if (!old) return [data];
-          return old.map(m => (m.id.startsWith('temp-') ? data : m));
+          return old.map((m) => (m.id.startsWith('temp-') ? data : m));
         });
       }
       // Invalidate conversations to update preview
@@ -274,10 +270,7 @@ export const useMarkAllAsRead = () => {
       const unreadField = userType === 'employer' ? 'unread_employer' : 'unread_electrician';
       queryClient.setQueryData(CONVERSATIONS_KEY, (old: any[] | undefined) => {
         if (!old) return old;
-        return old.map(c => c.id === conversationId
-          ? { ...c, [unreadField]: 0 }
-          : c
-        );
+        return old.map((c) => (c.id === conversationId ? { ...c, [unreadField]: 0 } : c));
       });
 
       return { previousConversations };
@@ -299,7 +292,11 @@ export const useMarkAllAsRead = () => {
  * Hook for typing indicator using Supabase Presence
  * Fixed: Uses useState for isOtherTyping to trigger re-renders
  */
-export const useTypingIndicator = (conversationId: string, userId: string, userType: 'employer' | 'electrician') => {
+export const useTypingIndicator = (
+  conversationId: string,
+  userId: string,
+  userType: 'employer' | 'electrician'
+) => {
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const isTypingRef = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -308,30 +305,33 @@ export const useTypingIndicator = (conversationId: string, userId: string, userT
   // Track if other party is typing - using useState for reactivity!
   const [isOtherTyping, setIsOtherTyping] = useState(false);
 
-  const setTyping = useCallback((typing: boolean) => {
-    if (!channelRef.current || isTypingRef.current === typing) return;
+  const setTyping = useCallback(
+    (typing: boolean) => {
+      if (!channelRef.current || isTypingRef.current === typing) return;
 
-    isTypingRef.current = typing;
+      isTypingRef.current = typing;
 
-    // Clear existing timeout
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+      // Clear existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-    // Broadcast typing state
-    channelRef.current.send({
-      type: 'broadcast',
-      event: 'typing',
-      payload: { userId, userType, isTyping: typing },
-    });
+      // Broadcast typing state
+      channelRef.current.send({
+        type: 'broadcast',
+        event: 'typing',
+        payload: { userId, userType, isTyping: typing },
+      });
 
-    // Auto-clear typing after 3 seconds of inactivity
-    if (typing) {
-      timeoutRef.current = setTimeout(() => {
-        setTyping(false);
-      }, 3000);
-    }
-  }, [userId, userType]);
+      // Auto-clear typing after 3 seconds of inactivity
+      if (typing) {
+        timeoutRef.current = setTimeout(() => {
+          setTyping(false);
+        }, 3000);
+      }
+    },
+    [userId, userType]
+  );
 
   useEffect(() => {
     if (!conversationId || !userId) return;
@@ -384,8 +384,14 @@ export const useEditMessage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ messageId, content }: { messageId: string; content: string; conversationId: string }) =>
-      editMessage(messageId, content),
+    mutationFn: ({
+      messageId,
+      content,
+    }: {
+      messageId: string;
+      content: string;
+      conversationId: string;
+    }) => editMessage(messageId, content),
     onMutate: async ({ messageId, content, conversationId }) => {
       const queryKey = [...MESSAGES_KEY, conversationId];
       await queryClient.cancelQueries({ queryKey });
@@ -393,7 +399,9 @@ export const useEditMessage = () => {
 
       queryClient.setQueryData<Message[]>(queryKey, (old) => {
         if (!old) return old;
-        return old.map(m => m.id === messageId ? { ...m, content, edited_at: new Date().toISOString() } : m);
+        return old.map((m) =>
+          m.id === messageId ? { ...m, content, edited_at: new Date().toISOString() } : m
+        );
       });
 
       return { previousMessages, queryKey };
@@ -425,7 +433,7 @@ export const useDeleteMessage = () => {
 
       queryClient.setQueryData<Message[]>(queryKey, (old) => {
         if (!old) return old;
-        return old.filter(m => m.id !== messageId);
+        return old.filter((m) => m.id !== messageId);
       });
 
       return { previousMessages, queryKey };
@@ -448,8 +456,16 @@ export const useAddReaction = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ messageId, emoji, userId }: { messageId: string; emoji: string; userId: string; conversationId: string }) =>
-      addReaction(messageId, emoji, userId),
+    mutationFn: ({
+      messageId,
+      emoji,
+      userId,
+    }: {
+      messageId: string;
+      emoji: string;
+      userId: string;
+      conversationId: string;
+    }) => addReaction(messageId, emoji, userId),
     onSuccess: (_, { conversationId }) => {
       queryClient.invalidateQueries({ queryKey: [...MESSAGES_KEY, conversationId] });
     },

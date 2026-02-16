@@ -1,7 +1,7 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, CheckCircle2, Wrench } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { AlertTriangle, CheckCircle2, Wrench } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface EnhancedInspectionCardProps {
   item: string;
@@ -26,28 +26,28 @@ export const EnhancedInspectionCard = ({
   riskLevel,
   checked,
   onCheckedChange,
-  checkboxId
+  checkboxId,
 }: EnhancedInspectionCardProps) => {
   const riskColors = {
-    'C1': 'border-red-500/40 bg-red-500/5',
-    'C2': 'border-amber-500/40 bg-amber-500/5',
-    'C3': 'border-blue-500/40 bg-blue-500/5',
-    'Low': 'border-elec-yellow/20 bg-elec-card'
+    C1: 'border-red-500/40 bg-red-500/5',
+    C2: 'border-amber-500/40 bg-amber-500/5',
+    C3: 'border-blue-500/40 bg-blue-500/5',
+    Low: 'border-elec-yellow/20 bg-elec-card',
   };
 
   const riskBadgeColors = {
-    'C1': 'bg-red-500/20 text-red-300 border-red-500/30',
-    'C2': 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-    'C3': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-    'Low': 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'
+    C1: 'bg-red-500/20 text-red-300 border-red-500/30',
+    C2: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+    C3: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+    Low: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
   };
 
   return (
     <div
       className={cn(
-        "rounded-lg border-2 transition-all duration-200 hover:scale-[1.01]",
+        'rounded-lg border-2 transition-all duration-200 hover:scale-[1.01]',
         riskColors[riskLevel || 'Low'],
-        checked && "opacity-60"
+        checked && 'opacity-60'
       )}
     >
       {/* Header */}
@@ -63,13 +63,16 @@ export const EnhancedInspectionCard = ({
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <h4 className="font-semibold text-base sm:text-lg text-foreground">{item}</h4>
               {riskLevel && (
-                <Badge variant="outline" className={cn("text-xs", riskBadgeColors[riskLevel])}>
+                <Badge variant="outline" className={cn('text-xs', riskBadgeColors[riskLevel])}>
                   {riskLevel} Risk
                 </Badge>
               )}
             </div>
             {reference && (
-              <Badge variant="outline" className="bg-purple-500/20 text-purple-300 border-purple-500/30 text-xs">
+              <Badge
+                variant="outline"
+                className="bg-purple-500/20 text-purple-300 border-purple-500/30 text-xs"
+              >
                 {reference}
               </Badge>
             )}
@@ -96,7 +99,11 @@ export const EnhancedInspectionCard = ({
             </div>
             <div className="flex flex-wrap gap-2">
               {tools.map((tool, idx) => (
-                <Badge key={idx} variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30">
+                <Badge
+                  key={idx}
+                  variant="outline"
+                  className="bg-blue-500/10 text-blue-300 border-blue-500/30"
+                >
                   {tool}
                 </Badge>
               ))}

@@ -12,11 +12,11 @@ export const BMSModule5Section4ContentPart1 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          KNX is a distributed bus system where each device (sensor, switch, actuator) can communicate directly 
-          with others on the same bus. This peer-to-peer communication eliminates the need for a central controller 
-          for basic building automation functions.
+          KNX is a distributed bus system where each device (sensor, switch, actuator) can
+          communicate directly with others on the same bus. This peer-to-peer communication
+          eliminates the need for a central controller for basic building automation functions.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-3">
@@ -25,7 +25,7 @@ export const BMSModule5Section4ContentPart1 = () => {
                 Vendor Neutrality
               </h4>
               <p className="text-foreground text-sm">
-                Hundreds of manufacturers produce KNX-compatible devices, ensuring competition, 
+                Hundreds of manufacturers produce KNX-compatible devices, ensuring competition,
                 choice, and long-term availability of components.
               </p>
             </div>
@@ -36,8 +36,8 @@ export const BMSModule5Section4ContentPart1 = () => {
                 Multiple Media Support
               </h4>
               <p className="text-foreground text-sm">
-                Supports twisted-pair bus (most common), Ethernet/IP (KNXnet/IP), 
-                and wireless communication (KNX RF).
+                Supports twisted-pair bus (most common), Ethernet/IP (KNXnet/IP), and wireless
+                communication (KNX RF).
               </p>
             </div>
           </div>
@@ -59,9 +59,9 @@ export const BMSModule5Section4ContentPart1 = () => {
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Practical Example</h4>
           <p className="text-foreground text-sm">
-            A KNX wall switch can directly control a lighting actuator and a blind motor without requiring 
-            a central controller. The switch sends a telegram on the bus, and any device programmed to 
-            respond to that address will act accordingly.
+            A KNX wall switch can directly control a lighting actuator and a blind motor without
+            requiring a central controller. The switch sends a telegram on the bus, and any device
+            programmed to respond to that address will act accordingly.
           </p>
         </div>
 

@@ -1,6 +1,5 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalendarCheck, ClipboardList, FileSpreadsheet } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CalendarCheck, ClipboardList, FileSpreadsheet } from 'lucide-react';
 
 export const ProjectTools = () => {
   return (
@@ -20,7 +19,7 @@ export const ProjectTools = () => {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
@@ -34,7 +33,7 @@ export const ProjectTools = () => {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">

@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { History, RotateCcw, Trash2, Star, StarOff, Clock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { History, RotateCcw, Trash2, Star, StarOff, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface CalculationEntry {
@@ -24,7 +23,7 @@ interface CalculationHistoryProps {
 
 const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   calculatorType,
-  onRestoreCalculation
+  onRestoreCalculation,
 }) => {
   const [history, setHistory] = useState<CalculationEntry[]>([]);
   const [showAll, setShowAll] = useState(false);
@@ -37,10 +36,12 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
     const savedHistory = localStorage.getItem(`calc_history_${calculatorType}`);
     if (savedHistory) {
       const parsed = JSON.parse(savedHistory);
-      setHistory(parsed.map((entry: any) => ({
-        ...entry,
-        timestamp: new Date(entry.timestamp)
-      })));
+      setHistory(
+        parsed.map((entry: any) => ({
+          ...entry,
+          timestamp: new Date(entry.timestamp),
+        }))
+      );
     }
   };
 
@@ -52,27 +53,21 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
       results,
       timestamp: new Date(),
       isBookmarked: false,
-      isValid
+      isValid,
     };
 
     const updatedHistory = [newEntry, ...history.slice(0, 19)]; // Keep last 20
     setHistory(updatedHistory);
-    
-    localStorage.setItem(
-      `calc_history_${calculatorType}`,
-      JSON.stringify(updatedHistory)
-    );
+
+    localStorage.setItem(`calc_history_${calculatorType}`, JSON.stringify(updatedHistory));
   };
 
   const toggleBookmark = (id: string) => {
-    const updatedHistory = history.map(entry =>
+    const updatedHistory = history.map((entry) =>
       entry.id === id ? { ...entry, isBookmarked: !entry.isBookmarked } : entry
     );
     setHistory(updatedHistory);
-    localStorage.setItem(
-      `calc_history_${calculatorType}`,
-      JSON.stringify(updatedHistory)
-    );
+    localStorage.setItem(`calc_history_${calculatorType}`, JSON.stringify(updatedHistory));
   };
 
   const clearHistory = () => {
@@ -81,11 +76,11 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   };
 
   const displayedHistory = showAll ? history : history.slice(0, 5);
-  const bookmarkedHistory = history.filter(entry => entry.isBookmarked);
+  const bookmarkedHistory = history.filter((entry) => entry.isBookmarked);
 
   // Expose saveCalculation method
   React.useImperativeHandle(React.createRef(), () => ({
-    saveCalculation
+    saveCalculation,
   }));
 
   const formatInputsDisplay = (inputs: any) => {
@@ -96,7 +91,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
       activePower: 'W',
       apparentPower: 'VA',
       length: 'm',
-      resistance: 'Ω'
+      resistance: 'Ω',
     };
 
     return Object.entries(inputs)
@@ -130,11 +125,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
           </CardTitle>
           <div className="flex gap-2">
             {history.length > 5 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowAll(!showAll)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setShowAll(!showAll)}>
                 {showAll ? 'Show Less' : `Show All (${history.length})`}
               </Button>
             )}
@@ -202,39 +193,22 @@ const HistoryEntry: React.FC<{
     <div className="flex items-center justify-between p-2 rounded border border-elec-yellow/10 bg-white/10">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <Badge 
-            variant={entry.isValid ? "default" : "destructive"} 
-            className="text-xs"
-          >
+          <Badge variant={entry.isValid ? 'default' : 'destructive'} className="text-xs">
             {entry.isValid ? 'Valid' : 'Invalid'}
           </Badge>
-          <span className="text-xs text-white">
-            {format(entry.timestamp, 'MMM dd, HH:mm')}
-          </span>
+          <span className="text-xs text-white">{format(entry.timestamp, 'MMM dd, HH:mm')}</span>
         </div>
-        <p className="text-xs text-white truncate">
-          {formatInputsDisplay(entry.inputs)}
-        </p>
+        <p className="text-xs text-white truncate">{formatInputsDisplay(entry.inputs)}</p>
       </div>
       <div className="flex gap-1 ml-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onToggleBookmark}
-          className="h-6 w-6 p-0"
-        >
+        <Button variant="ghost" size="sm" onClick={onToggleBookmark} className="h-6 w-6 p-0">
           {entry.isBookmarked ? (
             <Star className="h-3 w-3 text-elec-yellow fill-current" />
           ) : (
             <StarOff className="h-3 w-3" />
           )}
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onRestore}
-          className="h-6 w-6 p-0"
-        >
+        <Button variant="ghost" size="sm" onClick={onRestore} className="h-6 w-6 p-0">
           <RotateCcw className="h-3 w-3" />
         </Button>
       </div>

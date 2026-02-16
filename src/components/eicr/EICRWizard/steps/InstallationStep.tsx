@@ -17,20 +17,14 @@ interface InstallationStepProps {
  * Step 2: Installation Type
  * Big touch targets for selection
  */
-export const InstallationStep: React.FC<InstallationStepProps> = ({
-  data,
-  onChange,
-  isMobile,
-}) => {
+export const InstallationStep: React.FC<InstallationStepProps> = ({ data, onChange, isMobile }) => {
   return (
     <div className="space-y-6">
       {/* Supply Type */}
       <Card>
         <CardContent className="pt-6 space-y-4">
           <h3 className="font-semibold text-lg">Supply Type</h3>
-          <p className="text-sm text-muted-foreground">
-            Select the type of electrical supply
-          </p>
+          <p className="text-sm text-muted-foreground">Select the type of electrical supply</p>
 
           <div className="grid grid-cols-2 gap-4">
             <SelectionCard
@@ -55,9 +49,7 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({
       <Card>
         <CardContent className="pt-6 space-y-4">
           <h3 className="font-semibold text-lg">Earthing Arrangement</h3>
-          <p className="text-sm text-muted-foreground">
-            Select the earthing system type
-          </p>
+          <p className="text-sm text-muted-foreground">Select the earthing system type</p>
 
           <div className="grid grid-cols-3 gap-3">
             <SelectionCard
@@ -162,7 +154,9 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({
         <CardContent className="pt-6">
           <MultiboardSetup
             boards={data.distributionBoards || []}
-            onBoardsChange={(boards: DistributionBoard[]) => onChange({ distributionBoards: boards })}
+            onBoardsChange={(boards: DistributionBoard[]) =>
+              onChange({ distributionBoards: boards })
+            }
           />
         </CardContent>
       </Card>
@@ -195,19 +189,19 @@ const SelectionCard: React.FC<SelectionCardProps> = ({
     className={cn(
       'relative flex flex-col items-center justify-center rounded-lg border-2 transition-all duration-200 text-center',
       compact
-        ? (isMobile ? 'p-3 min-h-[80px]' : 'p-3 min-h-[70px]')
-        : (isMobile ? 'p-4 min-h-[100px]' : 'p-4 min-h-[90px]'),
+        ? isMobile
+          ? 'p-3 min-h-[80px]'
+          : 'p-3 min-h-[70px]'
+        : isMobile
+          ? 'p-4 min-h-[100px]'
+          : 'p-4 min-h-[90px]',
       selected
         ? 'border-primary bg-primary/5 text-primary'
         : 'border-border bg-card hover:border-primary/50 hover:bg-accent'
     )}
   >
-    {selected && (
-      <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-primary" />
-    )}
-    <span className={cn('font-semibold', compact ? 'text-base' : 'text-lg')}>
-      {title}
-    </span>
+    {selected && <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-primary" />}
+    <span className={cn('font-semibold', compact ? 'text-base' : 'text-lg')}>{title}</span>
     {description && (
       <span className={cn('text-muted-foreground', compact ? 'text-xs' : 'text-sm')}>
         {description}

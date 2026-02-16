@@ -1,92 +1,101 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m6s3-check1",
-    question: "What must always be carried out before any electrical testing begins?",
+    id: 'bs7671-m6s3-check1',
+    question: 'What must always be carried out before any electrical testing begins?',
     options: [
-      "Circuit documentation",
-      "Safe isolation of the installation",
-      "Customer notification",
-      "Equipment calibration check"
+      'Circuit documentation',
+      'Safe isolation of the installation',
+      'Customer notification',
+      'Equipment calibration check',
     ],
     correctIndex: 1,
-    explanation: "Safe isolation must always be the first step. This includes switching off and locking off the supply, testing for absence of voltage using a proven voltage indicator, and ensuring the installation cannot be re-energised during testing. This protects the electrician from electric shock and ensures accurate test results."
+    explanation:
+      'Safe isolation must always be the first step. This includes switching off and locking off the supply, testing for absence of voltage using a proven voltage indicator, and ensuring the installation cannot be re-energised during testing. This protects the electrician from electric shock and ensures accurate test results.',
   },
   {
-    id: "bs7671-m6s3-check2",
-    question: "Name two tests that are carried out while the installation is de-energised.",
+    id: 'bs7671-m6s3-check2',
+    question: 'Name two tests that are carried out while the installation is de-energised.',
     options: [
-      "RCD testing and loop impedance",
-      "Continuity and insulation resistance",
-      "Prospective fault current and functional testing",
-      "Phase sequence and voltage drop"
+      'RCD testing and loop impedance',
+      'Continuity and insulation resistance',
+      'Prospective fault current and functional testing',
+      'Phase sequence and voltage drop',
     ],
     correctIndex: 1,
-    explanation: "Continuity of protective conductors and insulation resistance are both dead tests carried out while the installation is isolated and de-energised for safety. Other dead tests include ring circuit continuity and polarity verification."
+    explanation:
+      'Continuity of protective conductors and insulation resistance are both dead tests carried out while the installation is isolated and de-energised for safety. Other dead tests include ring circuit continuity and polarity verification.',
   },
   {
-    id: "bs7671-m6s3-check3",
-    question: "What test confirms the effectiveness of protective devices under fault conditions?",
+    id: 'bs7671-m6s3-check3',
+    question: 'What test confirms the effectiveness of protective devices under fault conditions?',
     options: [
-      "Insulation resistance testing",
-      "Polarity verification",
-      "Earth fault loop impedance (Zs) testing",
-      "Continuity testing"
+      'Insulation resistance testing',
+      'Polarity verification',
+      'Earth fault loop impedance (Zs) testing',
+      'Continuity testing',
     ],
     correctIndex: 2,
-    explanation: "Earth fault loop impedance testing measures the total impedance of the earth fault loop, which determines whether protective devices will operate quickly enough to provide automatic disconnection in the event of an earth fault. This is fundamental to electrical safety."
+    explanation:
+      'Earth fault loop impedance testing measures the total impedance of the earth fault loop, which determines whether protective devices will operate quickly enough to provide automatic disconnection in the event of an earth fault. This is fundamental to electrical safety.',
   },
   {
-    id: "bs7671-m6s3-check4",
-    question: "Why must test results be recorded and compared to BS 7671 values?",
+    id: 'bs7671-m6s3-check4',
+    question: 'Why must test results be recorded and compared to BS 7671 values?',
     options: [
-      "For marketing purposes only",
-      "To satisfy manufacturer requirements",
-      "To provide documented evidence of compliance and safety",
-      "Only required for commercial installations"
+      'For marketing purposes only',
+      'To satisfy manufacturer requirements',
+      'To provide documented evidence of compliance and safety',
+      'Only required for commercial installations',
     ],
     correctIndex: 2,
-    explanation: "Recording and comparing test results to BS 7671 values provides documented proof that the installation meets safety standards, creates a baseline for future inspections, satisfies legal requirements, and protects both the electrician and client."
-  }
+    explanation:
+      'Recording and comparing test results to BS 7671 values provides documented proof that the installation meets safety standards, creates a baseline for future inspections, satisfies legal requirements, and protects both the electrician and client.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I perform live tests before completing all dead tests?",
-    answer: "No. The test sequence exists for safety reasons. Dead tests must be completed satisfactorily before energising the installation for live testing. This ensures the installation is fundamentally safe before applying power."
+    question: 'Can I perform live tests before completing all dead tests?',
+    answer:
+      'No. The test sequence exists for safety reasons. Dead tests must be completed satisfactorily before energising the installation for live testing. This ensures the installation is fundamentally safe before applying power.',
   },
   {
-    question: "What happens if a ring circuit continuity test fails?",
-    answer: "A failed ring circuit test indicates a break or fault in the circuit. The circuit cannot be certified and must be investigated and repaired. Common causes include broken connections, incorrect wiring, or damaged cables."
+    question: 'What happens if a ring circuit continuity test fails?',
+    answer:
+      'A failed ring circuit test indicates a break or fault in the circuit. The circuit cannot be certified and must be investigated and repaired. Common causes include broken connections, incorrect wiring, or damaged cables.',
   },
   {
-    question: "How often should test instruments be calibrated?",
-    answer: "Test instruments should be calibrated annually as a minimum, with calibration certificates maintained. Pre-use checks should be performed before each testing session to verify instrument accuracy."
-  }
+    question: 'How often should test instruments be calibrated?',
+    answer:
+      'Test instruments should be calibrated annually as a minimum, with calibration certificates maintained. Pre-use checks should be performed before each testing session to verify instrument accuracy.',
+  },
 ];
 
 const quizQuestion = {
-  question: "What is the correct order for electrical testing under BS 7671?",
+  question: 'What is the correct order for electrical testing under BS 7671?',
   options: [
-    "Live tests first, then dead tests",
-    "Any order is acceptable",
-    "Safe isolation, dead tests, then live tests",
-    "Functional tests first, then verification tests"
+    'Live tests first, then dead tests',
+    'Any order is acceptable',
+    'Safe isolation, dead tests, then live tests',
+    'Functional tests first, then verification tests',
   ],
   correctAnswer: 2,
-  explanation: "BS 7671 mandates the sequence: safe isolation first, then dead tests (continuity, insulation resistance, polarity), and finally live tests (loop impedance, RCD operation, prospective fault current, functional tests). This order ensures safety and valid results."
+  explanation:
+    'BS 7671 mandates the sequence: safe isolation first, then dead tests (continuity, insulation resistance, polarity), and finally live tests (loop impedance, RCD operation, prospective fault current, functional tests). This order ensures safety and valid results.',
 };
 
 const BS7671Module6Section3 = () => {
   useSEO({
-    title: "Sequence of Tests and Testing Procedures | BS7671 Module 6.3",
-    description: "Learn the correct order of electrical tests required by BS 7671, including safe isolation, dead tests, and live tests."
+    title: 'Sequence of Tests and Testing Procedures | BS7671 Module 6.3',
+    description:
+      'Learn the correct order of electrical tests required by BS 7671, including safe isolation, dead tests, and live tests.',
   });
 
   return (
@@ -128,16 +137,26 @@ const BS7671Module6Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Always:</strong> Safe isolation → Dead tests → Live tests</li>
-              <li><strong>Dead Tests:</strong> Continuity, insulation resistance, polarity</li>
-              <li><strong>Live Tests:</strong> Loop impedance, RCD, PFC, functional</li>
+              <li>
+                <strong>Always:</strong> Safe isolation → Dead tests → Live tests
+              </li>
+              <li>
+                <strong>Dead Tests:</strong> Continuity, insulation resistance, polarity
+              </li>
+              <li>
+                <strong>Live Tests:</strong> Loop impedance, RCD, PFC, functional
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Testing out of sequence can mask faults and create hazards</li>
-              <li><strong>Use:</strong> Follow BS 7671 Regulation 612 sequence every time</li>
+              <li>
+                <strong>Spot:</strong> Testing out of sequence can mask faults and create hazards
+              </li>
+              <li>
+                <strong>Use:</strong> Follow BS 7671 Regulation 612 sequence every time
+              </li>
             </ul>
           </div>
         </div>
@@ -147,10 +166,10 @@ const BS7671Module6Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Recall the correct order of tests as required by BS 7671",
-              "Understand why sequence is important for safety and accuracy",
-              "Apply testing procedures step by step in real-world installations",
-              "Identify what each test confirms in relation to compliance"
+              'Recall the correct order of tests as required by BS 7671',
+              'Understand why sequence is important for safety and accuracy',
+              'Apply testing procedures step by step in real-world installations',
+              'Identify what each test confirms in relation to compliance',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -170,13 +189,15 @@ const BS7671Module6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Before testing, confirm safe isolation of the installation using proven safe isolation procedures.
-              This is fundamental to electrician safety during verification.
+              Before testing, confirm safe isolation of the installation using proven safe isolation
+              procedures. This is fundamental to electrician safety during verification.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Safe Isolation Procedure</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Safe Isolation Procedure
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>1. Switch off and lock off the supply</li>
                   <li>2. Test voltage indicator on a known live source</li>
@@ -209,15 +230,18 @@ const BS7671Module6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Dead testing is performed on de-energised installations to verify basic safety and integrity
-              before the installation is energised for live testing.
+              Dead testing is performed on de-energised installations to verify basic safety and
+              integrity before the installation is energised for live testing.
             </p>
 
             <div className="space-y-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">A. Continuity of Protective Conductors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  A. Continuity of Protective Conductors
+                </p>
                 <p className="text-sm text-white/80 mb-2">
-                  Including main and supplementary bonding conductors. Ensures all metalwork is properly earthed.
+                  Including main and supplementary bonding conductors. Ensures all metalwork is
+                  properly earthed.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Use low-resistance ohmmeter with test current ≥200mA</li>
@@ -228,7 +252,9 @@ const BS7671Module6Section3 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">B. Continuity of Ring Final Circuit Conductors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  B. Continuity of Ring Final Circuit Conductors
+                </p>
                 <p className="text-sm text-white/80 mb-2">
                   For 32A ring circuits only. Verifies ring integrity and calculates R1 + R2 values.
                 </p>
@@ -241,7 +267,9 @@ const BS7671Module6Section3 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">C. Insulation Resistance</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  C. Insulation Resistance
+                </p>
                 <p className="text-sm text-white/80 mb-2">
                   Tests insulation between conductors and between conductors and earth.
                 </p>
@@ -281,13 +309,15 @@ const BS7671Module6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Live testing is performed after the installation has been safely energised and all dead tests
-              have been completed satisfactorily.
+              Live testing is performed after the installation has been safely energised and all
+              dead tests have been completed satisfactorily.
             </p>
 
             <div className="space-y-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">A. Earth Fault Loop Impedance (Zs)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  A. Earth Fault Loop Impedance (Zs)
+                </p>
                 <p className="text-sm text-white/80 mb-2">
                   Confirms effectiveness of protective devices under earth fault conditions.
                 </p>
@@ -313,7 +343,9 @@ const BS7671Module6Section3 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">C. Prospective Fault Current (PFC/PSC)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  C. Prospective Fault Current (PFC/PSC)
+                </p>
                 <p className="text-sm text-white/80 mb-2">
                   Measures maximum fault currents to ensure protective devices can safely interrupt.
                 </p>
@@ -326,7 +358,9 @@ const BS7671Module6Section3 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">D. Functional Testing</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  D. Functional Testing
+                </p>
                 <p className="text-sm text-white/80 mb-2">
                   Ensures all switches, controls, and protective devices operate correctly.
                 </p>
@@ -353,8 +387,8 @@ const BS7671Module6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The order prevents unsafe energisation and ensures accuracy of results. Proper documentation
-              is essential for compliance and future reference.
+              The order prevents unsafe energisation and ensures accuracy of results. Proper
+              documentation is essential for compliance and future reference.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -369,7 +403,9 @@ const BS7671Module6Section3 = () => {
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Recording Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Recording Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Results recorded on relevant certificate (EIC/MEIWC)</li>
                   <li>Results compared against BS 7671 maximum values</li>
@@ -401,7 +437,9 @@ const BS7671Module6Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-Testing Protocols</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Pre-Testing Protocols
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Conduct thorough risk assessment before starting any work</li>
                 <li>Ensure all test equipment is calibrated and within certification</li>
@@ -410,7 +448,9 @@ const BS7671Module6Section3 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Sequence Management</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Testing Sequence Management
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always follow the dead tests first, live tests second rule</li>
                 <li>Use properly calibrated instruments for valid results</li>
@@ -421,10 +461,21 @@ const BS7671Module6Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Pitfalls to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping tests:</strong> Never skip tests even under time pressure - safety is paramount</li>
-                <li><strong>Parallel paths:</strong> Be aware of parallel paths affecting continuity measurements</li>
-                <li><strong>Temperature effects:</strong> Consider temperature effects on resistance measurements</li>
-                <li><strong>Voltage drop:</strong> Account for voltage drop in long cable runs</li>
+                <li>
+                  <strong>Skipping tests:</strong> Never skip tests even under time pressure -
+                  safety is paramount
+                </li>
+                <li>
+                  <strong>Parallel paths:</strong> Be aware of parallel paths affecting continuity
+                  measurements
+                </li>
+                <li>
+                  <strong>Temperature effects:</strong> Consider temperature effects on resistance
+                  measurements
+                </li>
+                <li>
+                  <strong>Voltage drop:</strong> Account for voltage drop in long cable runs
+                </li>
               </ul>
             </div>
           </div>
@@ -436,11 +487,13 @@ const BS7671Module6Section3 = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <p className="text-sm font-medium text-elec-yellow mb-2">Housing Development Testing Error</p>
+            <p className="text-sm font-medium text-elec-yellow mb-2">
+              Housing Development Testing Error
+            </p>
             <p className="text-sm text-white mb-3">
-              An electrician testing a new housing development with 47 properties skipped the continuity of
-              ring final circuits before energising the installation. The testing schedule was tight, and
-              pressure was mounting to complete certification for handover.
+              An electrician testing a new housing development with 47 properties skipped the
+              continuity of ring final circuits before energising the installation. The testing
+              schedule was tight, and pressure was mounting to complete certification for handover.
             </p>
             <p className="text-sm font-medium text-white mb-2">What Went Wrong:</p>
             <ul className="text-sm text-white space-y-1 ml-4 mb-3">
@@ -456,7 +509,8 @@ const BS7671Module6Section3 = () => {
               <li>Complete re-test required - time and cost far exceeded initial testing</li>
             </ul>
             <p className="text-sm text-elec-yellow/80">
-              <strong>Lesson:</strong> BS 7671 test sequence exists for good reasons - it cannot be abbreviated.
+              <strong>Lesson:</strong> BS 7671 test sequence exists for good reasons - it cannot be
+              abbreviated.
             </p>
           </div>
         </section>

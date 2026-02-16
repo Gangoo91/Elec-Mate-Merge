@@ -3,10 +3,10 @@ import { Badge } from '@/components/ui/badge';
 
 const SmartHomeModule6Section5LearningOutcomes = () => {
   const outcomes = [
-    "Identify common causes of ecosystem conflicts in smart homes",
-    "Explain how device compatibility, network stability, and hub choice affect performance", 
-    "Apply a structured approach to diagnosing and fixing conflicts",
-    "Advise clients on best practices to avoid future issues"
+    'Identify common causes of ecosystem conflicts in smart homes',
+    'Explain how device compatibility, network stability, and hub choice affect performance',
+    'Apply a structured approach to diagnosing and fixing conflicts',
+    'Advise clients on best practices to avoid future issues',
   ];
 
   return (
@@ -17,7 +17,10 @@ const SmartHomeModule6Section5LearningOutcomes = () => {
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge variant="secondary" className="bg-elec-yellow text-elec-dark font-bold min-w-[24px] h-6 flex items-center justify-center text-sm">
+              <Badge
+                variant="secondary"
+                className="bg-elec-yellow text-elec-dark font-bold min-w-[24px] h-6 flex items-center justify-center text-sm"
+              >
                 {index + 1}
               </Badge>
               <p className="text-foreground flex-1 leading-relaxed">{outcome}</p>

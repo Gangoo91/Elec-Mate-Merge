@@ -38,26 +38,74 @@ export interface EarthFaultLoopResult {
 // BS 7671 Table 41.3 - Maximum Zs values for different protective devices
 const maxZsValues = {
   'mcb-b': {
-    6: 7.67, 10: 4.60, 16: 2.87, 20: 2.30, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73, 80: 0.57, 100: 0.46, 125: 0.37
+    6: 7.67,
+    10: 4.6,
+    16: 2.87,
+    20: 2.3,
+    25: 1.84,
+    32: 1.44,
+    40: 1.15,
+    50: 0.92,
+    63: 0.73,
+    80: 0.57,
+    100: 0.46,
+    125: 0.37,
   },
   'mcb-c': {
-    6: 3.83, 10: 2.30, 16: 1.44, 20: 1.15, 25: 0.92, 32: 0.72, 40: 0.57, 50: 0.46, 63: 0.36, 80: 0.29, 100: 0.23, 125: 0.18
+    6: 3.83,
+    10: 2.3,
+    16: 1.44,
+    20: 1.15,
+    25: 0.92,
+    32: 0.72,
+    40: 0.57,
+    50: 0.46,
+    63: 0.36,
+    80: 0.29,
+    100: 0.23,
+    125: 0.18,
   },
   'mcb-d': {
-    6: 1.92, 10: 1.15, 16: 0.72, 20: 0.57, 25: 0.46, 32: 0.36, 40: 0.29, 50: 0.23, 63: 0.18, 80: 0.14, 100: 0.11, 125: 0.09
+    6: 1.92,
+    10: 1.15,
+    16: 0.72,
+    20: 0.57,
+    25: 0.46,
+    32: 0.36,
+    40: 0.29,
+    50: 0.23,
+    63: 0.18,
+    80: 0.14,
+    100: 0.11,
+    125: 0.09,
   },
   'fuse-bs88': {
-    6: 8.0, 10: 4.8, 16: 3.0, 20: 2.4, 25: 1.92, 32: 1.5, 40: 1.2, 50: 0.96, 63: 0.76, 80: 0.6, 100: 0.48
+    6: 8.0,
+    10: 4.8,
+    16: 3.0,
+    20: 2.4,
+    25: 1.92,
+    32: 1.5,
+    40: 1.2,
+    50: 0.96,
+    63: 0.76,
+    80: 0.6,
+    100: 0.48,
   },
   'fuse-bs1361': {
-    5: 9.6, 15: 3.2, 20: 2.4, 30: 1.6, 45: 1.07
-  }
+    5: 9.6,
+    15: 3.2,
+    20: 2.4,
+    30: 1.6,
+    45: 1.07,
+  },
 };
 
 // Cable resistance values (mΩ/m) at 20°C
 const cableResistances = {
   copper: {
-    pvc: { // 70°C conductors
+    pvc: {
+      // 70°C conductors
       1.0: { line: 18.1, cpc: 18.1 },
       1.5: { line: 12.1, cpc: 12.1 },
       2.5: { line: 7.41, cpc: 7.41 },
@@ -67,9 +115,10 @@ const cableResistances = {
       16.0: { line: 1.15, cpc: 1.15 },
       25.0: { line: 0.727, cpc: 0.727 },
       35.0: { line: 0.524, cpc: 0.524 },
-      50.0: { line: 0.387, cpc: 0.387 }
+      50.0: { line: 0.387, cpc: 0.387 },
     },
-    xlpe: { // 90°C conductors
+    xlpe: {
+      // 90°C conductors
       1.0: { line: 18.1, cpc: 18.1 },
       1.5: { line: 12.1, cpc: 12.1 },
       2.5: { line: 7.41, cpc: 7.41 },
@@ -79,15 +128,15 @@ const cableResistances = {
       16.0: { line: 1.15, cpc: 1.15 },
       25.0: { line: 0.727, cpc: 0.727 },
       35.0: { line: 0.524, cpc: 0.524 },
-      50.0: { line: 0.387, cpc: 0.387 }
-    }
-  }
+      50.0: { line: 0.387, cpc: 0.387 },
+    },
+  },
 };
 
 // Temperature factors for cable resistance
 const temperatureFactors = {
   pvc: 1.2, // Factor for 70°C
-  xlpe: 1.28 // Factor for 90°C
+  xlpe: 1.28, // Factor for 90°C
 };
 
 export const calculateEarthFaultLoop = (inputs: EarthFaultLoopInputs): EarthFaultLoopResult => {
@@ -98,7 +147,7 @@ export const calculateEarthFaultLoop = (inputs: EarthFaultLoopInputs): EarthFaul
     cableType,
     conductorMaterial,
     protectiveDevice,
-    disconnectionTime = 0.4
+    disconnectionTime = 0.4,
   } = inputs;
 
   // Validation
@@ -113,7 +162,10 @@ export const calculateEarthFaultLoop = (inputs: EarthFaultLoopInputs): EarthFaul
   // Get cable resistance data
   const resistanceData = cableResistances[conductorMaterial]?.[cableType]?.[cableSize];
   if (!resistanceData) {
-    throw new CalculationError(`Cable data not available for ${cableSize}mm² ${conductorMaterial} ${cableType}`, 'INVALID_CABLE');
+    throw new CalculationError(
+      `Cable data not available for ${cableSize}mm² ${conductorMaterial} ${cableType}`,
+      'INVALID_CABLE'
+    );
   }
 
   // Calculate cable resistances at operating temperature
@@ -130,7 +182,10 @@ export const calculateEarthFaultLoop = (inputs: EarthFaultLoopInputs): EarthFaul
   const maxPermittedZs = deviceData?.[protectiveDevice.rating];
 
   if (!maxPermittedZs) {
-    throw new CalculationError(`Maximum Zs value not available for ${protectiveDevice.type} ${protectiveDevice.rating}A`, 'INVALID_DEVICE');
+    throw new CalculationError(
+      `Maximum Zs value not available for ${protectiveDevice.type} ${protectiveDevice.rating}A`,
+      'INVALID_DEVICE'
+    );
   }
 
   // Calculate fault current
@@ -148,12 +203,19 @@ export const calculateEarthFaultLoop = (inputs: EarthFaultLoopInputs): EarthFaul
   }
 
   // RCD recommendation logic
-  const recommendedRCD = determineRCDRequirement(calculatedZs, maxPermittedZs, compliance, disconnectionTime);
+  const recommendedRCD = determineRCDRequirement(
+    calculatedZs,
+    maxPermittedZs,
+    compliance,
+    disconnectionTime
+  );
 
   // Add compliance notes
-  complianceNotes.push(`Maximum Zs for ${protectiveDevice.type.toUpperCase()} ${protectiveDevice.rating}A: ${maxPermittedZs}Ω`);
+  complianceNotes.push(
+    `Maximum Zs for ${protectiveDevice.type.toUpperCase()} ${protectiveDevice.rating}A: ${maxPermittedZs}Ω`
+  );
   complianceNotes.push(`Calculated Zs: ${calculatedZs.toFixed(3)}Ω`);
-  
+
   if (compliance === 'pass') {
     complianceNotes.push('Earth fault loop impedance meets BS 7671 requirements');
   } else if (compliance === 'fail') {
@@ -174,25 +236,24 @@ export const calculateEarthFaultLoop = (inputs: EarthFaultLoopInputs): EarthFaul
     cableResistances: {
       r1: Math.round(r1 * 1000) / 1000,
       r2: Math.round(r2 * 1000) / 1000,
-      total: Math.round(r1PlusR2 * 1000) / 1000
+      total: Math.round(r1PlusR2 * 1000) / 1000,
     },
     complianceNotes,
-    warnings
+    warnings,
   };
 };
 
 const determineRCDRequirement = (
-  calculatedZs: number, 
-  maxPermittedZs: number, 
+  calculatedZs: number,
+  maxPermittedZs: number,
   compliance: string,
   disconnectionTime: number
 ): EarthFaultLoopResult['recommendedRCD'] => {
-  
   if (compliance === 'fail') {
     return {
       required: true,
       type: '30mA',
-      reason: 'Required due to high Zs - ensures disconnection within 0.4s'
+      reason: 'Required due to high Zs - ensures disconnection within 0.4s',
     };
   }
 
@@ -200,7 +261,7 @@ const determineRCDRequirement = (
     return {
       required: true,
       type: '30mA',
-      reason: 'Required for final circuits to achieve 0.4s disconnection time'
+      reason: 'Required for final circuits to achieve 0.4s disconnection time',
     };
   }
 
@@ -208,31 +269,35 @@ const determineRCDRequirement = (
   if (calculatedZs > maxPermittedZs * 0.9) {
     return {
       required: false,
-      reason: 'Consider RCD for additional protection - Zs approaching limit'
+      reason: 'Consider RCD for additional protection - Zs approaching limit',
     };
   }
 
   return {
     required: false,
-    reason: 'Not required for earth fault protection but may be required for other reasons'
+    reason: 'Not required for earth fault protection but may be required for other reasons',
   };
 };
 
-const calculateDisconnectionTime = (faultCurrent: number, device: EarthFaultLoopInputs['protectiveDevice']): number => {
+const calculateDisconnectionTime = (
+  faultCurrent: number,
+  device: EarthFaultLoopInputs['protectiveDevice']
+): number => {
   // Simplified disconnection time calculation
   // In reality, this would use the device characteristic curves
-  
+
   if (device.type.includes('mcb')) {
     // MCB simplified time-current relationship
-    const magneticTrip = device.rating * (device.type.includes('b') ? 5 : device.type.includes('c') ? 10 : 20);
-    
+    const magneticTrip =
+      device.rating * (device.type.includes('b') ? 5 : device.type.includes('c') ? 10 : 20);
+
     if (faultCurrent >= magneticTrip) {
       return 0.1; // Magnetic trip typically <0.1s
     } else {
       return 5.0; // Thermal trip could be up to 5s
     }
   }
-  
+
   if (device.type.includes('fuse')) {
     // Fuse time-current approximation
     const ratio = faultCurrent / device.rating;
@@ -260,8 +325,8 @@ export const calculateDomesticZs = (
     conductorMaterial: 'copper',
     protectiveDevice: {
       type: 'mcb-b',
-      rating: protectionRating
+      rating: protectionRating,
     },
-    disconnectionTime: 0.4
+    disconnectionTime: 0.4,
   });
 };

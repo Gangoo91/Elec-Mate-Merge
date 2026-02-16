@@ -1,8 +1,8 @@
-import { Brain, ArrowLeft, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { toolOptions } from "@/components/electrician-tools/ai-tools/constants";
+import { Brain, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { toolOptions } from '@/components/electrician-tools/ai-tools/constants';
 
 // Animation variants
 const containerVariants = {
@@ -28,7 +28,7 @@ const toolColors: Record<string, string> = {
   'wiring-instruction': 'from-emerald-400 to-green-500',
   'fault-diagnosis': 'from-orange-400 to-red-500',
   'installation-verify': 'from-cyan-400 to-teal-500',
-  'explainer': 'from-pink-400 to-rose-500',
+  explainer: 'from-pink-400 to-rose-500',
 };
 
 const AITooling = () => {
@@ -71,7 +71,10 @@ const AITooling = () => {
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
             <h2 className="text-base font-bold text-white">Available Tools</h2>
-            <Badge variant="secondary" className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs">
+            <Badge
+              variant="secondary"
+              className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs"
+            >
               {toolOptions.length} Active
             </Badge>
           </div>
@@ -91,15 +94,15 @@ const AITooling = () => {
                       <div className="p-4">
                         <div className="flex items-center gap-3">
                           {/* Icon with gradient background */}
-                          <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}>
+                          <div
+                            className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
+                          >
                             <IconComponent className="h-6 w-6 text-white" />
                           </div>
 
                           <div className="flex-1 min-w-0">
                             {/* Title */}
-                            <h3 className="text-[15px] font-bold text-white">
-                              {tool.label}
-                            </h3>
+                            <h3 className="text-[15px] font-bold text-white">{tool.label}</h3>
                             {/* Description */}
                             <p className="text-[13px] text-white/70 line-clamp-1">
                               {tool.description}

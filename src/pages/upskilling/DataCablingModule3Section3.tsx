@@ -1,69 +1,79 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Cleaving, Splicing and Connectorisation | Data Cabling Module 3.3";
-const DESCRIPTION = "Learn fibre cleaving, fusion and mechanical splicing techniques, and connectorisation methods with quality targets and safety practices.";
+const TITLE = 'Cleaving, Splicing and Connectorisation | Data Cabling Module 3.3';
+const DESCRIPTION =
+  'Learn fibre cleaving, fusion and mechanical splicing techniques, and connectorisation methods with quality targets and safety practices.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m3s3-check1",
-    question: "What is the typical insertion loss for a good fusion splice?",
-    options: ["~0.8 dB", "~0.5 dB", "~0.1 dB", "~0.05 dB"],
+    id: 'datacabling-m3s3-check1',
+    question: 'What is the typical insertion loss for a good fusion splice?',
+    options: ['~0.8 dB', '~0.5 dB', '~0.1 dB', '~0.05 dB'],
     correctIndex: 3,
-    explanation: "A well-executed fusion splice typically achieves ~0.05 dB loss, making it the lowest-loss joining method available."
+    explanation:
+      'A well-executed fusion splice typically achieves ~0.05 dB loss, making it the lowest-loss joining method available.',
   },
   {
-    id: "datacabling-m3s3-check2",
-    question: "What is the target cleave angle for fusion splicing?",
-    options: ["<5°", "<2°", "<0.5°", "<10°"],
+    id: 'datacabling-m3s3-check2',
+    question: 'What is the target cleave angle for fusion splicing?',
+    options: ['<5°', '<2°', '<0.5°', '<10°'],
     correctIndex: 2,
-    explanation: "Poor cleave angles increase splice loss and reflections. The target for fusion splicing is <0.5° for optimal results."
+    explanation:
+      'Poor cleave angles increase splice loss and reflections. The target for fusion splicing is <0.5° for optimal results.',
   },
   {
-    id: "datacabling-m3s3-check3",
-    question: "Which item is essential for safe fibre handling?",
-    options: ["PVC gloves", "Magnet tray", "Fibre disposal container", "Soldering mat"],
+    id: 'datacabling-m3s3-check3',
+    question: 'Which item is essential for safe fibre handling?',
+    options: ['PVC gloves', 'Magnet tray', 'Fibre disposal container', 'Soldering mat'],
     correctIndex: 2,
-    explanation: "Fibre shards are extremely dangerous - they can penetrate skin and are nearly invisible. Always use a designated disposal container."
-  }
+    explanation:
+      'Fibre shards are extremely dangerous - they can penetrate skin and are nearly invisible. Always use a designated disposal container.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When should I choose fusion splicing over mechanical splicing?",
-    answer: "Fusion splicing is preferred when lowest loss is required (0.05 dB vs 0.2-0.5 dB), for permanent installations, pigtail terminations, and any application where performance is critical. Mechanical splicing is useful for emergency repairs or where fusion equipment isn't available."
+    question: 'When should I choose fusion splicing over mechanical splicing?',
+    answer:
+      "Fusion splicing is preferred when lowest loss is required (0.05 dB vs 0.2-0.5 dB), for permanent installations, pigtail terminations, and any application where performance is critical. Mechanical splicing is useful for emergency repairs or where fusion equipment isn't available.",
   },
   {
     question: "What's the best way to connectorise fibre cables?",
-    answer: "Factory-polished pigtails fusion spliced to the cable typically deliver the best performance. While field termination with epoxy and polish can achieve good results, it requires more skill and time. Pre-polished mechanical connectors are fastest but have higher loss."
+    answer:
+      'Factory-polished pigtails fusion spliced to the cable typically deliver the best performance. While field termination with epoxy and polish can achieve good results, it requires more skill and time. Pre-polished mechanical connectors are fastest but have higher loss.',
   },
   {
-    question: "How often should I replace the cleaver blade?",
-    answer: "Follow manufacturer schedules, typically rotating blade positions after a set number of cleaves. A dull blade produces poor cleave angles and increases splice loss. Most precision cleavers have multiple blade positions before replacement is needed."
+    question: 'How often should I replace the cleaver blade?',
+    answer:
+      'Follow manufacturer schedules, typically rotating blade positions after a set number of cleaves. A dull blade produces poor cleave angles and increases splice loss. Most precision cleavers have multiple blade positions before replacement is needed.',
   },
   {
-    question: "Can I re-use heat shrink splice protectors?",
-    answer: "No, heat shrink protectors are single-use. Once heated to protect a splice, they cannot be reliably reused. Always have adequate spare protectors on site - typically 20% more than expected splice count."
-  }
+    question: 'Can I re-use heat shrink splice protectors?',
+    answer:
+      'No, heat shrink protectors are single-use. Once heated to protect a splice, they cannot be reliably reused. Always have adequate spare protectors on site - typically 20% more than expected splice count.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A client requires the lowest-loss connectorisation method for a singlemode backbone. What should you recommend?",
-  options: [
-    "No-epoxy/no-polish mechanical connectors",
-    "Epoxy and polish field terminations",
-    "Pre-terminated pigtail fusion splice",
-    "Cold-cure crimp style connectors"
-  ],
-  correctAnswer: 2,
-  explanation: "Factory-polished pigtails fusion spliced to the cable typically deliver the best and most consistent performance. The fusion splice adds only ~0.05 dB, and the factory-polished connector ensures optimal end-face quality."
-  }
+    question:
+      'A client requires the lowest-loss connectorisation method for a singlemode backbone. What should you recommend?',
+    options: [
+      'No-epoxy/no-polish mechanical connectors',
+      'Epoxy and polish field terminations',
+      'Pre-terminated pigtail fusion splice',
+      'Cold-cure crimp style connectors',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Factory-polished pigtails fusion spliced to the cable typically deliver the best and most consistent performance. The fusion splice adds only ~0.05 dB, and the factory-polished connector ensures optimal end-face quality.',
+  },
 ];
 
 const DataCablingModule3Section3 = () => {
@@ -98,9 +108,7 @@ const DataCablingModule3Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cleaving, Splicing and Connectorisation
           </h1>
-          <p className="text-white/80">
-            Reliable fibre joining methods and quality targets
-          </p>
+          <p className="text-white/80">Reliable fibre joining methods and quality targets</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +116,26 @@ const DataCablingModule3Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Fusion splice:</strong> ~0.05 dB, permanent, best quality</li>
-              <li><strong>Mechanical splice:</strong> 0.2-0.5 dB, quick, field repairs</li>
-              <li><strong>Cleave angle:</strong> &lt;0.5° for fusion splicing</li>
+              <li>
+                <strong>Fusion splice:</strong> ~0.05 dB, permanent, best quality
+              </li>
+              <li>
+                <strong>Mechanical splice:</strong> 0.2-0.5 dB, quick, field repairs
+              </li>
+              <li>
+                <strong>Cleave angle:</strong> &lt;0.5° for fusion splicing
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Splice trays with heat-shrink protectors</li>
-              <li><strong>Use:</strong> Fusion pigtails for best connector performance</li>
+              <li>
+                <strong>Spot:</strong> Splice trays with heat-shrink protectors
+              </li>
+              <li>
+                <strong>Use:</strong> Fusion pigtails for best connector performance
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +145,12 @@ const DataCablingModule3Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Prepare fibre and achieve near-perfect cleaves",
-              "Perform fusion and mechanical splicing",
-              "Choose appropriate connectorisation methods",
-              "Inspect and verify joint quality",
-              "Apply safe working practices",
-              "Meet quality targets for each method"
+              'Prepare fibre and achieve near-perfect cleaves',
+              'Perform fusion and mechanical splicing',
+              'Choose appropriate connectorisation methods',
+              'Inspect and verify joint quality',
+              'Apply safe working practices',
+              'Meet quality targets for each method',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -170,10 +188,18 @@ const DataCablingModule3Section3 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Targets</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Cleave angle:</strong> &lt;0.5° for fusion</li>
-                  <li><strong>End-face:</strong> Mirror finish, no chips</li>
-                  <li><strong>Length:</strong> Consistent strip lengths</li>
-                  <li><strong>Cleanliness:</strong> No contamination</li>
+                  <li>
+                    <strong>Cleave angle:</strong> &lt;0.5° for fusion
+                  </li>
+                  <li>
+                    <strong>End-face:</strong> Mirror finish, no chips
+                  </li>
+                  <li>
+                    <strong>Length:</strong> Consistent strip lengths
+                  </li>
+                  <li>
+                    <strong>Cleanliness:</strong> No contamination
+                  </li>
                 </ul>
               </div>
             </div>
@@ -235,9 +261,15 @@ const DataCablingModule3Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Targets:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Fusion splice:</strong> ≤0.1 dB (typical 0.05 dB)</li>
-                <li><strong>Mechanical splice:</strong> 0.2-0.5 dB</li>
-                <li><strong>Return loss:</strong> ≥50 dB (UPC), ≥60 dB (APC)</li>
+                <li>
+                  <strong>Fusion splice:</strong> ≤0.1 dB (typical 0.05 dB)
+                </li>
+                <li>
+                  <strong>Mechanical splice:</strong> 0.2-0.5 dB
+                </li>
+                <li>
+                  <strong>Return loss:</strong> ≥50 dB (UPC), ≥60 dB (APC)
+                </li>
               </ul>
             </div>
           </div>
@@ -260,9 +292,15 @@ const DataCablingModule3Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Connectorisation Methods:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Fusion Pigtail:</strong> Best performance, requires splice trays</li>
-                <li><strong>Epoxy & Polish:</strong> Good results with skill, labour intensive</li>
-                <li><strong>No-Epoxy/No-Polish:</strong> Fast but higher loss, temporary use</li>
+                <li>
+                  <strong>Fusion Pigtail:</strong> Best performance, requires splice trays
+                </li>
+                <li>
+                  <strong>Epoxy & Polish:</strong> Good results with skill, labour intensive
+                </li>
+                <li>
+                  <strong>No-Epoxy/No-Polish:</strong> Fast but higher loss, temporary use
+                </li>
               </ul>
             </div>
 
@@ -297,7 +335,9 @@ const DataCablingModule3Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Splice Tray Management</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Splice Tray Management
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Plan fibre order to match panel mapping</li>
                 <li>Route loose tubes with radius limiters</li>
@@ -309,10 +349,18 @@ const DataCablingModule3Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Poor cleaves:</strong> — Causes high splice loss</li>
-                <li><strong>Dirty fibres:</strong> — Contamination degrades joints</li>
-                <li><strong>Improper shard disposal:</strong> — Safety hazard</li>
-                <li><strong>Skipping inspection:</strong> — Quality issues go undetected</li>
+                <li>
+                  <strong>Poor cleaves:</strong> — Causes high splice loss
+                </li>
+                <li>
+                  <strong>Dirty fibres:</strong> — Contamination degrades joints
+                </li>
+                <li>
+                  <strong>Improper shard disposal:</strong> — Safety hazard
+                </li>
+                <li>
+                  <strong>Skipping inspection:</strong> — Quality issues go undetected
+                </li>
               </ul>
             </div>
           </div>
@@ -356,10 +404,7 @@ const DataCablingModule3Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

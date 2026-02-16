@@ -1,9 +1,9 @@
-import { useState, useMemo, useCallback } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import { useState, useMemo, useCallback } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { QuickStats, QuickStat } from '@/components/employer/QuickStats';
 import {
   Kanban,
   List,
@@ -21,78 +21,80 @@ import {
   CheckSquare,
   Archive,
   LayoutTemplate,
-  RefreshCw
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { MobileKanban } from "@/components/employer/MobileKanban";
-import { ViewJobSheet } from "@/components/employer/sheets/ViewJobSheet";
-import { ArchivedJobsSheet } from "@/components/employer/sheets/ArchivedJobsSheet";
-import { JobTemplatesSheet } from "@/components/employer/JobTemplatesSheet";
-import { JobCardContextMenu } from "@/components/employer/JobCardContextMenu";
-import { DueDateBadge } from "@/components/employer/DueDateBadge";
-import { useJobs, useUpdateJob, useCreateJob, useArchiveJob, useSetJobAsTemplate } from "@/hooks/useJobs";
-import { useAllJobLabelAssignments, JobLabel } from "@/hooks/useJobLabels";
-import { useAllJobChecklistSummaries } from "@/hooks/useJobChecklists";
-import { JobLabelStrips } from "@/components/employer/JobLabelPicker";
-import { JobChecklistProgress } from "@/components/employer/JobChecklist";
-import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
+  RefreshCw,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { MobileKanban } from '@/components/employer/MobileKanban';
+import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
+import { ArchivedJobsSheet } from '@/components/employer/sheets/ArchivedJobsSheet';
+import { JobTemplatesSheet } from '@/components/employer/JobTemplatesSheet';
+import { JobCardContextMenu } from '@/components/employer/JobCardContextMenu';
+import { DueDateBadge } from '@/components/employer/DueDateBadge';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Checkbox } from "@/components/ui/checkbox";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+  useJobs,
+  useUpdateJob,
+  useCreateJob,
+  useArchiveJob,
+  useSetJobAsTemplate,
+} from '@/hooks/useJobs';
+import { useAllJobLabelAssignments, JobLabel } from '@/hooks/useJobLabels';
+import { useAllJobChecklistSummaries } from '@/hooks/useJobChecklists';
+import { JobLabelStrips } from '@/components/employer/JobLabelPicker';
+import { JobChecklistProgress } from '@/components/employer/JobChecklist';
+import { toast } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Checkbox } from '@/components/ui/checkbox';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 
-type ViewMode = "kanban" | "list";
+type ViewMode = 'kanban' | 'list';
 
 const stages = [
-  { id: "Quoted", label: "Quoted", color: "bg-muted" },
-  { id: "Confirmed", label: "Confirmed", color: "bg-info/20" },
-  { id: "Scheduled", label: "Scheduled", color: "bg-warning/20" },
-  { id: "In Progress", label: "In Progress", color: "bg-elec-yellow/20" },
-  { id: "Testing", label: "Testing", color: "bg-purple-500/20" },
-  { id: "Complete", label: "Complete", color: "bg-success/20" },
+  { id: 'Quoted', label: 'Quoted', color: 'bg-muted' },
+  { id: 'Confirmed', label: 'Confirmed', color: 'bg-info/20' },
+  { id: 'Scheduled', label: 'Scheduled', color: 'bg-warning/20' },
+  { id: 'In Progress', label: 'In Progress', color: 'bg-elec-yellow/20' },
+  { id: 'Testing', label: 'Testing', color: 'bg-purple-500/20' },
+  { id: 'Complete', label: 'Complete', color: 'bg-success/20' },
 ];
 
 // Map stage back to job status/progress
 const stageToStatusMap: Record<string, { status: string; progress: number }> = {
-  'Quoted': { status: 'Pending', progress: 0 },
-  'Confirmed': { status: 'On Hold', progress: 0 },
-  'Scheduled': { status: 'Active', progress: 0 },
+  Quoted: { status: 'Pending', progress: 0 },
+  Confirmed: { status: 'On Hold', progress: 0 },
+  Scheduled: { status: 'Active', progress: 0 },
   'In Progress': { status: 'Active', progress: 25 },
-  'Testing': { status: 'Active', progress: 90 },
-  'Complete': { status: 'Completed', progress: 100 },
+  Testing: { status: 'Active', progress: 90 },
+  Complete: { status: 'Completed', progress: 100 },
 };
 
 // Map job status/progress to pipeline stage
 const getStageFromJob = (job: { status: string; progress: number }): string => {
-  if (job.status === "Completed") return "Complete";
-  if (job.status === "Pending") return "Quoted";
-  if (job.status === "On Hold") return "Confirmed";
-  if (job.progress >= 90) return "Testing";
-  if (job.progress > 0) return "In Progress";
-  return "Scheduled";
+  if (job.status === 'Completed') return 'Complete';
+  if (job.status === 'Pending') return 'Quoted';
+  if (job.status === 'On Hold') return 'Confirmed';
+  if (job.progress >= 90) return 'Testing';
+  if (job.progress > 0) return 'In Progress';
+  return 'Scheduled';
 };
 
 export function JobBoardSection() {
   const isMobile = useIsMobile();
-  const [viewMode, setViewMode] = useState<ViewMode>("kanban");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<ViewMode>('kanban');
+  const [searchQuery, setSearchQuery] = useState('');
   const [draggedJob, setDraggedJob] = useState<string | null>(null);
-  const [selectedJob, setSelectedJob] = useState<typeof jobs[number] | null>(null);
+  const [selectedJob, setSelectedJob] = useState<(typeof jobs)[number] | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [quickAddStage, setQuickAddStage] = useState<string | null>(null);
-  const [quickAddTitle, setQuickAddTitle] = useState("");
-  const [quickAddClient, setQuickAddClient] = useState("");
+  const [quickAddTitle, setQuickAddTitle] = useState('');
+  const [quickAddClient, setQuickAddClient] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
-  const [copySheetJob, setCopySheetJob] = useState<typeof jobs[number] | null>(null);
-  
+  const [copySheetJob, setCopySheetJob] = useState<(typeof jobs)[number] | null>(null);
+
   const queryClient = useQueryClient();
   const { data: jobsData = [], isLoading, refetch } = useJobs();
   const { data: labelAssignments = [] } = useAllJobLabelAssignments();
@@ -101,11 +103,11 @@ export function JobBoardSection() {
   const createJob = useCreateJob();
   const archiveJob = useArchiveJob();
   const setAsTemplate = useSetJobAsTemplate();
-  
+
   // Group labels by job
   const labelsByJob = useMemo(() => {
     const map = new Map<string, JobLabel[]>();
-    labelAssignments.forEach(a => {
+    labelAssignments.forEach((a) => {
       if (!map.has(a.job_id)) {
         map.set(a.job_id, []);
       }
@@ -115,24 +117,24 @@ export function JobBoardSection() {
     });
     return map;
   }, [labelAssignments]);
-  
+
   // Transform jobs with stage
-  const jobs = jobsData.map(job => ({
+  const jobs = jobsData.map((job) => ({
     ...job,
     stage: getStageFromJob(job),
   }));
 
-  const filteredJobs = jobs.filter(job => {
-    const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         job.client.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCompleted = !hideCompleted || job.stage !== "Complete";
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.client.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCompleted = !hideCompleted || job.stage !== 'Complete';
     return matchesSearch && matchesCompleted;
   });
 
-  const getJobsForStage = (stageId: string) => 
-    filteredJobs.filter(job => job.stage === stageId);
+  const getJobsForStage = (stageId: string) => filteredJobs.filter((job) => job.stage === stageId);
 
-  const getStageValue = (stageId: string) => 
+  const getStageValue = (stageId: string) =>
     getJobsForStage(stageId).reduce((sum, job) => sum + (job.value || 0), 0);
 
   const handleDragStart = (jobId: string) => {
@@ -145,30 +147,30 @@ export function JobBoardSection() {
 
   const handleDrop = async (stageId: string) => {
     if (!draggedJob) return;
-    
-    const job = jobs.find(j => j.id === draggedJob);
+
+    const job = jobs.find((j) => j.id === draggedJob);
     if (!job || job.stage === stageId) {
       setDraggedJob(null);
       return;
     }
-    
+
     const { status, progress } = stageToStatusMap[stageId];
-    
+
     try {
       await updateJob.mutateAsync({
         id: draggedJob,
-        updates: { status: status as any, progress }
+        updates: { status: status as any, progress },
       });
       toast.success(`Moved to ${stageId}`);
     } catch (error) {
-      toast.error("Failed to move job");
+      toast.error('Failed to move job');
     }
-    
+
     setDraggedJob(null);
   };
 
   const handleJobClick = (jobId: string) => {
-    const job = jobs.find(j => j.id === jobId);
+    const job = jobs.find((j) => j.id === jobId);
     if (job) {
       setSelectedJob(job);
       setSheetOpen(true);
@@ -177,14 +179,14 @@ export function JobBoardSection() {
 
   const handleQuickAdd = async (stageId: string) => {
     if (!quickAddTitle.trim() || !quickAddClient.trim()) return;
-    
+
     const { status, progress } = stageToStatusMap[stageId];
-    
+
     try {
       await createJob.mutateAsync({
         title: quickAddTitle.trim(),
         client: quickAddClient.trim(),
-        location: "TBC",
+        location: 'TBC',
         status: status as any,
         progress,
         value: 0,
@@ -195,24 +197,24 @@ export function JobBoardSection() {
         end_date: null,
         description: null,
       });
-      toast.success("Job created");
+      toast.success('Job created');
       setQuickAddStage(null);
-      setQuickAddTitle("");
-      setQuickAddClient("");
+      setQuickAddTitle('');
+      setQuickAddClient('');
     } catch (error) {
-      toast.error("Failed to create job");
+      toast.error('Failed to create job');
     }
   };
 
   // Quick add handler for mobile kanban (title only, client set to TBC)
   const handleMobileQuickAdd = async (title: string, stageId: string) => {
     const { status, progress } = stageToStatusMap[stageId];
-    
+
     try {
       await createJob.mutateAsync({
         title: title.trim(),
-        client: "TBC",
-        location: "TBC",
+        client: 'TBC',
+        location: 'TBC',
         status: status as any,
         progress,
         value: 0,
@@ -223,23 +225,23 @@ export function JobBoardSection() {
         end_date: null,
         description: null,
       });
-      toast.success("Job created");
+      toast.success('Job created');
     } catch (error) {
-      toast.error("Failed to create job");
+      toast.error('Failed to create job');
     }
   };
 
   const getStageColor = (stageId: string) => {
-    const stage = stages.find(s => s.id === stageId);
-    return stage?.color || "bg-muted";
+    const stage = stages.find((s) => s.id === stageId);
+    return stage?.color || 'bg-muted';
   };
 
   const handleArchiveJob = async (jobId: string) => {
     try {
       await archiveJob.mutateAsync(jobId);
-      toast.success("Job archived");
+      toast.success('Job archived');
     } catch (error) {
-      toast.error("Failed to archive job");
+      toast.error('Failed to archive job');
     }
   };
 
@@ -249,16 +251,16 @@ export function JobBoardSection() {
       await updateJob.mutateAsync({ id: jobId, updates: { status: status as any, progress } });
       toast.success(`Moved to ${stageId}`);
     } catch (error) {
-      toast.error("Failed to move job");
+      toast.error('Failed to move job');
     }
   };
 
   const handleSetTemplate = async (jobId: string, isTemplate: boolean) => {
     try {
       await setAsTemplate.mutateAsync({ id: jobId, isTemplate });
-      toast.success(isTemplate ? "Saved as template" : "Removed from templates");
+      toast.success(isTemplate ? 'Saved as template' : 'Removed from templates');
     } catch (error) {
-      toast.error("Failed to update template status");
+      toast.error('Failed to update template status');
     }
   };
 
@@ -270,14 +272,14 @@ export function JobBoardSection() {
 
   // Calculate stats
   const totalJobs = jobs.length;
-  const inProgressCount = jobs.filter(j => j.stage === "In Progress").length;
+  const inProgressCount = jobs.filter((j) => j.stage === 'In Progress').length;
   const pipelineValue = jobs.reduce((sum, j) => sum + (j.value || 0), 0);
 
   // Mobile Kanban data - transform to expected format with checklist and label data
-  const mobileKanbanItems = filteredJobs.map(job => {
+  const mobileKanbanItems = filteredJobs.map((job) => {
     const jobLabels = labelsByJob.get(job.id) || [];
     const checklistData = checklistSummaries[job.id];
-    
+
     return {
       id: job.id,
       title: job.title,
@@ -289,7 +291,7 @@ export function JobBoardSection() {
       workersCount: job.workers_count,
       checklistTotal: checklistData?.total || 0,
       checklistCompleted: checklistData?.completed || 0,
-      badges: jobLabels.map(label => ({
+      badges: jobLabels.map((label) => ({
         label: label.name,
         color: label.colour,
       })),
@@ -297,7 +299,7 @@ export function JobBoardSection() {
     };
   });
 
-  const mobileStages = stages.map(stage => ({
+  const mobileStages = stages.map((stage) => ({
     id: stage.id,
     label: stage.label,
     color: stage.color,
@@ -317,9 +319,11 @@ export function JobBoardSection() {
       <div className="flex flex-col gap-3">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-foreground">Live Job Board</h1>
-          <p className="text-sm text-muted-foreground">Drag jobs between stages to update their status</p>
+          <p className="text-sm text-muted-foreground">
+            Drag jobs between stages to update their status
+          </p>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
             {!searchQuery && (
@@ -329,22 +333,22 @@ export function JobBoardSection() {
               placeholder="Search jobs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn("w-full bg-elec-gray", !searchQuery && "pl-9")}
+              className={cn('w-full bg-elec-gray', !searchQuery && 'pl-9')}
             />
           </div>
           <div className="flex gap-2 flex-wrap">
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="gap-2"
               onClick={() => setShowTemplates(true)}
             >
               <LayoutTemplate className="h-4 w-4" />
               <span className="hidden sm:inline">Templates</span>
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="gap-2"
               onClick={() => setShowArchived(true)}
             >
@@ -357,7 +361,9 @@ export function JobBoardSection() {
                   <Filter className="h-4 w-4" />
                   <span className="hidden sm:inline">Filters</span>
                   {hideCompleted && (
-                    <Badge variant="secondary" className="ml-1 h-5 px-1.5">1</Badge>
+                    <Badge variant="secondary" className="ml-1 h-5 px-1.5">
+                      1
+                    </Badge>
                   )}
                 </Button>
               </PopoverTrigger>
@@ -365,12 +371,15 @@ export function JobBoardSection() {
                 <div className="space-y-3">
                   <p className="text-sm font-medium text-foreground">Filters</p>
                   <div className="flex items-center gap-2">
-                    <Checkbox 
+                    <Checkbox
                       id="hide-completed"
                       checked={hideCompleted}
                       onCheckedChange={(checked) => setHideCompleted(checked as boolean)}
                     />
-                    <label htmlFor="hide-completed" className="text-sm text-muted-foreground cursor-pointer">
+                    <label
+                      htmlFor="hide-completed"
+                      className="text-sm text-muted-foreground cursor-pointer"
+                    >
                       Hide completed jobs
                     </label>
                   </div>
@@ -379,17 +388,17 @@ export function JobBoardSection() {
             </Popover>
             <div className="flex bg-muted rounded-lg p-1">
               <Button
-                variant={viewMode === "kanban" ? "secondary" : "ghost"}
+                variant={viewMode === 'kanban' ? 'secondary' : 'ghost'}
                 size="sm"
-                onClick={() => setViewMode("kanban")}
+                onClick={() => setViewMode('kanban')}
                 className="touch-feedback"
               >
                 <Kanban className="h-4 w-4" />
               </Button>
               <Button
-                variant={viewMode === "list" ? "secondary" : "ghost"}
+                variant={viewMode === 'list' ? 'secondary' : 'ghost'}
                 size="sm"
-                onClick={() => setViewMode("list")}
+                onClick={() => setViewMode('list')}
                 className="touch-feedback"
               >
                 <List className="h-4 w-4" />
@@ -405,33 +414,33 @@ export function JobBoardSection() {
           {
             icon: Kanban,
             value: totalJobs,
-            label: "Total Jobs",
-            color: "yellow",
+            label: 'Total Jobs',
+            color: 'yellow',
           },
           {
             icon: TrendingUp,
             value: inProgressCount,
-            label: "In Progress",
-            color: "blue",
+            label: 'In Progress',
+            color: 'blue',
           },
           {
             icon: AlertTriangle,
             value: 0,
-            label: "Issues",
-            color: "orange",
+            label: 'Issues',
+            color: 'orange',
           },
           {
             icon: PoundSterling,
             value: `£${(pipelineValue / 1000).toFixed(0)}k`,
-            label: "Pipeline",
-            color: "green",
+            label: 'Pipeline',
+            color: 'green',
           },
         ]}
       />
 
       {/* Kanban Board - Mobile uses MobileKanban with Pull to Refresh */}
-      {viewMode === "kanban" && (
-        isMobile ? (
+      {viewMode === 'kanban' &&
+        (isMobile ? (
           <PullToRefresh onRefresh={handleRefresh}>
             <MobileKanban
               items={mobileKanbanItems}
@@ -440,10 +449,13 @@ export function JobBoardSection() {
               onStageChange={async (itemId, newStage) => {
                 const { status, progress } = stageToStatusMap[newStage];
                 try {
-                  await updateJob.mutateAsync({ id: itemId, updates: { status: status as any, progress } });
+                  await updateJob.mutateAsync({
+                    id: itemId,
+                    updates: { status: status as any, progress },
+                  });
                   toast.success(`Moved to ${newStage}`);
                 } catch (error) {
-                  toast.error("Failed to move job");
+                  toast.error('Failed to move job');
                 }
               }}
               onArchive={handleArchiveJob}
@@ -456,14 +468,11 @@ export function JobBoardSection() {
               {stages.map((stage) => (
                 <div
                   key={stage.id}
-                  className={cn(
-                    "w-72 flex-shrink-0 transition-all",
-                    draggedJob && "opacity-80"
-                  )}
+                  className={cn('w-72 flex-shrink-0 transition-all', draggedJob && 'opacity-80')}
                   onDragOver={handleDragOver}
                   onDrop={() => handleDrop(stage.id)}
                 >
-                  <div className={cn("rounded-lg p-3 mb-3", stage.color)}>
+                  <div className={cn('rounded-lg p-3 mb-3', stage.color)}>
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-foreground">{stage.label}</h3>
                       <Badge variant="secondary" className="bg-background/50">
@@ -479,7 +488,7 @@ export function JobBoardSection() {
                     {getJobsForStage(stage.id).map((job) => {
                       const jobLabels = labelsByJob.get(job.id) || [];
                       const checklistData = checklistSummaries[job.id];
-                      
+
                       return (
                         <JobCardContextMenu
                           key={job.id}
@@ -502,77 +511,75 @@ export function JobBoardSection() {
                             onDragStart={() => handleDragStart(job.id)}
                             onClick={() => handleJobClick(job.id)}
                             className={cn(
-                              "cursor-pointer bg-elec-gray hover:shadow-md transition-all hover:scale-[1.02]",
-                              draggedJob === job.id && "opacity-50 scale-95 rotate-2"
+                              'cursor-pointer bg-elec-gray hover:shadow-md transition-all hover:scale-[1.02]',
+                              draggedJob === job.id && 'opacity-50 scale-95 rotate-2'
                             )}
                           >
-                          <CardContent className="p-4">
-                            <div className="space-y-3">
-                              {/* Labels at top */}
-                              {jobLabels.length > 0 && (
-                                <JobLabelStrips labels={jobLabels} />
-                              )}
-                              
-                              <div>
-                                <h4 className="font-medium text-foreground">{job.title}</h4>
-                                <p className="text-sm text-muted-foreground">{job.client}</p>
-                              </div>
+                            <CardContent className="p-4">
+                              <div className="space-y-3">
+                                {/* Labels at top */}
+                                {jobLabels.length > 0 && <JobLabelStrips labels={jobLabels} />}
 
-                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <MapPin className="h-3 w-3" />
-                                <span>{job.location.split(",")[0]}</span>
-                              </div>
-
-                              <div className="flex items-center justify-between text-xs">
-                                <div className="flex items-center gap-1 text-muted-foreground">
-                                  <Calendar className="h-3 w-3" />
-                                  <span>{job.end_date || "No end date"}</span>
+                                <div>
+                                  <h4 className="font-medium text-foreground">{job.title}</h4>
+                                  <p className="text-sm text-muted-foreground">{job.client}</p>
                                 </div>
-                                <div className="flex items-center gap-1 text-elec-yellow">
-                                  <PoundSterling className="h-3 w-3" />
-                                  <span>£{((job.value || 0) / 1000).toFixed(0)}k</span>
-                                </div>
-                              </div>
 
-                              {/* Checklist Progress */}
-                              {checklistData && checklistData.total > 0 && (
-                                <div className="flex items-center gap-2 text-xs">
-                                  <CheckSquare className="h-3 w-3 text-muted-foreground" />
-                                  <JobChecklistProgress 
-                                    completed={checklistData.completed} 
-                                    total={checklistData.total} 
-                                  />
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <MapPin className="h-3 w-3" />
+                                  <span>{job.location.split(',')[0]}</span>
                                 </div>
-                              )}
 
-                              {job.stage === "In Progress" && job.workers_count > 0 && (
-                                <div className="flex items-center justify-between pt-2 border-t border-border">
-                                  <div className="flex items-center gap-1 text-xs">
-                                    <Users className="h-3 w-3 text-success" />
-                                    <span className="text-success">
-                                      {job.workers_count} workers
-                                    </span>
+                                <div className="flex items-center justify-between text-xs">
+                                  <div className="flex items-center gap-1 text-muted-foreground">
+                                    <Calendar className="h-3 w-3" />
+                                    <span>{job.end_date || 'No end date'}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1 text-elec-yellow">
+                                    <PoundSterling className="h-3 w-3" />
+                                    <span>£{((job.value || 0) / 1000).toFixed(0)}k</span>
                                   </div>
                                 </div>
-                              )}
 
-                              {job.progress > 0 && job.stage !== "Complete" && (
-                                <div className="space-y-1">
-                                  <div className="flex justify-between text-xs">
-                                    <span className="text-muted-foreground">Progress</span>
-                                    <span className="text-elec-yellow">{job.progress}%</span>
-                                  </div>
-                                  <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                                    <div 
-                                      className="h-full bg-elec-yellow rounded-full"
-                                      style={{ width: `${job.progress}%` }}
+                                {/* Checklist Progress */}
+                                {checklistData && checklistData.total > 0 && (
+                                  <div className="flex items-center gap-2 text-xs">
+                                    <CheckSquare className="h-3 w-3 text-muted-foreground" />
+                                    <JobChecklistProgress
+                                      completed={checklistData.completed}
+                                      total={checklistData.total}
                                     />
                                   </div>
-                                </div>
-                              )}
-                            </div>
-                          </CardContent>
-                        </Card>
+                                )}
+
+                                {job.stage === 'In Progress' && job.workers_count > 0 && (
+                                  <div className="flex items-center justify-between pt-2 border-t border-border">
+                                    <div className="flex items-center gap-1 text-xs">
+                                      <Users className="h-3 w-3 text-success" />
+                                      <span className="text-success">
+                                        {job.workers_count} workers
+                                      </span>
+                                    </div>
+                                  </div>
+                                )}
+
+                                {job.progress > 0 && job.stage !== 'Complete' && (
+                                  <div className="space-y-1">
+                                    <div className="flex justify-between text-xs">
+                                      <span className="text-muted-foreground">Progress</span>
+                                      <span className="text-elec-yellow">{job.progress}%</span>
+                                    </div>
+                                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                                      <div
+                                        className="h-full bg-elec-yellow rounded-full"
+                                        style={{ width: `${job.progress}%` }}
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </CardContent>
+                          </Card>
                         </JobCardContextMenu>
                       );
                     })}
@@ -599,22 +606,26 @@ export function JobBoardSection() {
                             }}
                           />
                           <div className="flex gap-2">
-                            <Button 
-                              size="sm" 
+                            <Button
+                              size="sm"
                               className="flex-1 h-7"
                               onClick={() => handleQuickAdd(stage.id)}
-                              disabled={!quickAddTitle.trim() || !quickAddClient.trim() || createJob.isPending}
+                              disabled={
+                                !quickAddTitle.trim() ||
+                                !quickAddClient.trim() ||
+                                createJob.isPending
+                              }
                             >
                               Add Job
                             </Button>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
+                            <Button
+                              size="sm"
+                              variant="ghost"
                               className="h-7 px-2"
                               onClick={() => {
                                 setQuickAddStage(null);
-                                setQuickAddTitle("");
-                                setQuickAddClient("");
+                                setQuickAddTitle('');
+                                setQuickAddClient('');
                               }}
                             >
                               <X className="h-4 w-4" />
@@ -638,34 +649,40 @@ export function JobBoardSection() {
               ))}
             </div>
           </div>
-        )
-      )}
+        ))}
 
       {/* List View */}
-      {viewMode === "list" && (
+      {viewMode === 'list' && (
         <div className="space-y-3">
           {filteredJobs.map((job) => {
             const jobLabels = labelsByJob.get(job.id) || [];
-            
+
             return (
-              <Card 
-                key={job.id} 
+              <Card
+                key={job.id}
                 className="bg-elec-gray touch-feedback cursor-pointer"
                 onClick={() => handleJobClick(job.id)}
               >
                 <CardContent className="p-3 md:p-4">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                     <div className="flex items-start md:items-center gap-3 md:gap-4">
-                      <Badge className={cn("text-foreground text-[10px] md:text-xs flex-shrink-0", getStageColor(job.stage))}>
+                      <Badge
+                        className={cn(
+                          'text-foreground text-[10px] md:text-xs flex-shrink-0',
+                          getStageColor(job.stage)
+                        )}
+                      >
                         {job.stage}
                       </Badge>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <h4 className="font-medium text-foreground text-sm md:text-base truncate">{job.title}</h4>
+                          <h4 className="font-medium text-foreground text-sm md:text-base truncate">
+                            {job.title}
+                          </h4>
                           {jobLabels.length > 0 && (
                             <div className="flex gap-1">
-                              {jobLabels.slice(0, 2).map(label => (
-                                <div 
+                              {jobLabels.slice(0, 2).map((label) => (
+                                <div
                                   key={label.id}
                                   className="w-2 h-2 rounded-full"
                                   style={{ backgroundColor: label.colour }}
@@ -695,23 +712,13 @@ export function JobBoardSection() {
       )}
 
       {/* Job Detail Sheet */}
-      <ViewJobSheet
-        job={selectedJob}
-        open={sheetOpen}
-        onOpenChange={setSheetOpen}
-      />
+      <ViewJobSheet job={selectedJob} open={sheetOpen} onOpenChange={setSheetOpen} />
 
       {/* Archived Jobs Sheet */}
-      <ArchivedJobsSheet
-        open={showArchived}
-        onOpenChange={setShowArchived}
-      />
+      <ArchivedJobsSheet open={showArchived} onOpenChange={setShowArchived} />
 
       {/* Templates Sheet */}
-      <JobTemplatesSheet
-        open={showTemplates}
-        onOpenChange={setShowTemplates}
-      />
+      <JobTemplatesSheet open={showTemplates} onOpenChange={setShowTemplates} />
     </div>
   );
 }

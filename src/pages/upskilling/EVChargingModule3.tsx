@@ -7,34 +7,34 @@ const EVChargingModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Load Estimation and Diversity in Practice",
+      title: 'Load Estimation and Diversity in Practice',
       icon: Calculator,
-      description: "Calculating electrical loads and applying diversity factors"
+      description: 'Calculating electrical loads and applying diversity factors',
     },
     {
       id: 2,
-      title: "Cable Types, Ratings, and Volt Drop",
+      title: 'Cable Types, Ratings, and Volt Drop',
       icon: Cable,
-      description: "Selecting appropriate cables and calculating voltage drop"
+      description: 'Selecting appropriate cables and calculating voltage drop',
     },
     {
       id: 3,
-      title: "Circuit Protection and RCD Selection",
+      title: 'Circuit Protection and RCD Selection',
       icon: Shield,
-      description: "Choosing protective devices for EV charging circuits"
+      description: 'Choosing protective devices for EV charging circuits',
     },
     {
       id: 4,
-      title: "Cable Routing and Containment",
+      title: 'Cable Routing and Containment',
       icon: Folder,
-      description: "Professional cable installation practices"
+      description: 'Professional cable installation practices',
     },
     {
       id: 5,
-      title: "Future-Proofing Installations (Dual EV, PV Integration)",
+      title: 'Future-Proofing Installations (Dual EV, PV Integration)',
       icon: Zap,
-      description: "Designing installations for future expansion and integration"
-    }
+      description: 'Designing installations for future expansion and integration',
+    },
   ];
 
   return (

@@ -19,8 +19,16 @@ import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generato
 interface RecentQuotesListProps {
   quotes: Quote[];
   onDeleteQuote: (quoteId: string) => Promise<boolean>;
-  onUpdateQuoteStatus?: (quoteId: string, status: Quote['status'], tags?: Quote['tags'], acceptanceStatus?: Quote['acceptance_status']) => Promise<boolean>;
-  onSendPaymentReminder?: (quoteId: string, reminderType: 'gentle' | 'firm' | 'final') => Promise<boolean>;
+  onUpdateQuoteStatus?: (
+    quoteId: string,
+    status: Quote['status'],
+    tags?: Quote['tags'],
+    acceptanceStatus?: Quote['acceptance_status']
+  ) => Promise<boolean>;
+  onSendPaymentReminder?: (
+    quoteId: string,
+    reminderType: 'gentle' | 'firm' | 'final'
+  ) => Promise<boolean>;
   showAll?: boolean;
 }
 
@@ -29,7 +37,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   onDeleteQuote,
   onUpdateQuoteStatus,
   onSendPaymentReminder,
-  showAll = false
+  showAll = false,
 }) => {
   const navigate = useNavigate();
   const { companyProfile } = useCompanyProfile();
@@ -42,7 +50,10 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   const [quoteForInvoice, setQuoteForInvoice] = useState<Quote | null>(null);
 
   // Poll PDF Monkey status until downloadUrl is ready
-  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+  const pollPdfDownloadUrl = async (
+    documentId: string,
+    accessToken: string
+  ): Promise<string | null> => {
     for (let i = 0; i < 45; i++) {
       const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { documentId, mode: 'status' },
@@ -62,7 +73,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   const hasInvoiceRaised = (quote: Quote) => {
     return quote.invoice_raised === true;
   };
-  
+
   const handleRegeneratePDF = async (quote: Quote) => {
     setLoadingAction(`pdf-${quote.id}`);
     try {
@@ -70,35 +81,35 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
       const effectiveCompanyProfile = companyProfile || {
         id: 'default',
         user_id: 'default',
-        company_name: "Your Electrical Company",
-        company_email: "contact@yourcompany.com",
-        company_phone: "0123 456 7890",
-        company_address: "123 Business Street, London",
-        primary_color: "#1e40af",
-        secondary_color: "#3b82f6",
-        currency: "GBP",
-        locale: "en-GB",
-        vat_number: "GB123456789",
-        payment_terms: "Payment due within 30 days",
+        company_name: 'Your Electrical Company',
+        company_email: 'contact@yourcompany.com',
+        company_phone: '0123 456 7890',
+        company_address: '123 Business Street, London',
+        primary_color: '#1e40af',
+        secondary_color: '#3b82f6',
+        currency: 'GBP',
+        locale: 'en-GB',
+        vat_number: 'GB123456789',
+        payment_terms: 'Payment due within 30 days',
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
       };
 
       toast({
-        title: "Generating PDF",
-        description: "Please wait whilst your professional quote PDF is being generated...",
+        title: 'Generating PDF',
+        description: 'Please wait whilst your professional quote PDF is being generated...',
       });
 
       // Call PDF Monkey edge function
       // Use invoice template if this quote has been converted to an invoice
       const isInvoice = quote.invoice_raised === true;
-      
+
       const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: {
           quote,
           companyProfile: effectiveCompanyProfile,
-          invoice_mode: isInvoice
-        }
+          invoice_mode: isInvoice,
+        },
       });
 
       if (error) throw error;
@@ -108,14 +119,16 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
       // If no download URL yet, poll for status
       if (!downloadUrl && documentId) {
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
         if (session) {
           const maxAttempts = 18; // 90 seconds max
           for (let i = 0; i < maxAttempts; i++) {
-            await new Promise(resolve => setTimeout(resolve, 5000));
-            
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+
             const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
-              body: { mode: 'status', documentId }
+              body: { mode: 'status', documentId },
             });
 
             if (statusData?.downloadUrl) {
@@ -134,7 +147,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             pdf_document_id: documentId,
             pdf_url: downloadUrl,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: (quote.pdf_version || 0) + 1
+            pdf_version: (quote.pdf_version || 0) + 1,
           })
           .eq('id', quote.id);
 
@@ -151,9 +164,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         document.body.removeChild(a);
 
         toast({
-          title: "PDF Generated",
+          title: 'PDF Generated',
           description: `Quote ${quote.quoteNumber} has been downloaded successfully.`,
-          variant: "success"
+          variant: 'success',
         });
       } else {
         throw new Error(data.message || 'PDF generation failed');
@@ -161,9 +174,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
-        title: "Error",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to generate PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setLoadingAction('');
@@ -175,15 +188,15 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
       const success = await onDeleteQuote(quote.id);
       if (success) {
         toast({
-          title: "Quote Deleted",
+          title: 'Quote Deleted',
           description: `Quote ${quote.quoteNumber} has been deleted.`,
-          variant: "success"
+          variant: 'success',
         });
       } else {
         toast({
-          title: "Error",
-          description: "Failed to delete quote. Please try again.",
-          variant: "destructive"
+          title: 'Error',
+          description: 'Failed to delete quote. Please try again.',
+          variant: 'destructive',
         });
       }
     }
@@ -265,29 +278,29 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
       };
 
       const success = await saveInvoice(invoiceData);
-      
+
       if (success) {
         toast({
-          title: "Invoice Created",
+          title: 'Invoice Created',
           description: `${invoiceNumber} created successfully from quote ${quoteForInvoice.quoteNumber}`,
-          variant: "success",
+          variant: 'success',
         });
         setShowInvoiceDecision(false);
         setQuoteForInvoice(null);
         navigate('/electrician/invoices');
       } else {
         toast({
-          title: "Error",
-          description: "Failed to create invoice",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to create invoice',
+          variant: 'destructive',
         });
       }
     } catch (error) {
       console.error('Error creating invoice:', error);
       toast({
-        title: "Error",
-        description: "Failed to create invoice",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create invoice',
+        variant: 'destructive',
       });
     } finally {
       setLoadingAction('');
@@ -296,7 +309,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
   const handleShareWhatsApp = async (quote: Quote) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data: freshQuote, error: fetchError } = await supabase
@@ -314,31 +329,36 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         .eq('user_id', user.id)
         .single();
 
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
       toast({
-        title: "Generating PDF",
-        description: "Please wait...",
+        title: 'Generating PDF',
+        description: 'Please wait...',
       });
 
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: freshQuote,
-          companyProfile: companyData,
-          invoice_mode: false,
-          force_regenerate: true
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-pdf-monkey',
+        {
+          body: {
+            quote: freshQuote,
+            companyProfile: companyData,
+            invoice_mode: false,
+            force_regenerate: true,
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
         }
-      });
+      );
 
       let pdfUrl = pdfData?.downloadUrl;
       const documentId = pdfData?.documentId;
 
       if (!pdfUrl && documentId) {
-        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        pdfUrl = (await pollPdfDownloadUrl(documentId, session.access_token)) || undefined;
       }
 
       if (pdfError || !pdfUrl) throw new Error('Failed to generate PDF');
@@ -351,31 +371,31 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             pdf_document_id: documentId,
             pdf_url: pdfUrl,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: newVersion
+            pdf_version: newVersion,
           })
           .eq('id', quote.id);
       }
 
-
       // Don't modify signed URLs - it breaks AWS S3 signature
       const pdfDownloadUrl = pdfUrl;
 
-
-      const clientData = typeof freshQuote.client_data === 'string' 
-        ? JSON.parse(freshQuote.client_data) 
-        : freshQuote.client_data;
+      const clientData =
+        typeof freshQuote.client_data === 'string'
+          ? JSON.parse(freshQuote.client_data)
+          : freshQuote.client_data;
       const clientName = clientData?.name || 'Valued Client';
       const companyName = companyData?.company_name || 'Your Company';
       const totalAmount = freshQuote.total || 0;
-      const validityDate = freshQuote.expiry_date 
+      const validityDate = freshQuote.expiry_date
         ? format(new Date(freshQuote.expiry_date), 'dd MMMM yyyy')
         : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
-      
-      const jobDetails = typeof freshQuote.job_details === 'string' 
-        ? JSON.parse(freshQuote.job_details) 
-        : freshQuote.job_details;
+
+      const jobDetails =
+        typeof freshQuote.job_details === 'string'
+          ? JSON.parse(freshQuote.job_details)
+          : freshQuote.job_details;
       const jobTitle = jobDetails?.title || 'Electrical Work';
-      
+
       const message = `📋 *Quote ${freshQuote.quote_number}*
 
 Dear ${clientName},
@@ -403,8 +423,12 @@ ${companyName}`;
       }
 
       const whatsappWindow = window.open(whatsappUrl, '_blank');
-      
-      if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+
+      if (
+        !whatsappWindow ||
+        whatsappWindow.closed ||
+        typeof whatsappWindow.closed === 'undefined'
+      ) {
         window.location.href = whatsappUrl;
       }
 
@@ -424,7 +448,9 @@ ${companyName}`;
 
   const handleShareEmail = async (quote: Quote) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const { data: freshQuote, error: fetchError } = await supabase
@@ -442,31 +468,36 @@ ${companyName}`;
         .eq('user_id', user.id)
         .single();
 
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
       toast({
-        title: "Generating PDF",
-        description: "Please wait...",
+        title: 'Generating PDF',
+        description: 'Please wait...',
       });
 
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: freshQuote,
-          companyProfile: companyData,
-          invoice_mode: false,
-          force_regenerate: true
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-pdf-monkey',
+        {
+          body: {
+            quote: freshQuote,
+            companyProfile: companyData,
+            invoice_mode: false,
+            force_regenerate: true,
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
         }
-      });
+      );
 
       let pdfUrl = pdfData?.downloadUrl;
       const documentId = pdfData?.documentId;
 
       if (!pdfUrl && documentId) {
-        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        pdfUrl = (await pollPdfDownloadUrl(documentId, session.access_token)) || undefined;
       }
 
       if (pdfError || !pdfUrl) throw new Error('Failed to generate PDF');
@@ -479,29 +510,29 @@ ${companyName}`;
             pdf_document_id: documentId,
             pdf_url: pdfUrl,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: newVersion
+            pdf_version: newVersion,
           })
           .eq('id', quote.id);
       }
 
-
       // Don't modify signed URLs - it breaks AWS S3 signature
       const pdfDownloadUrl = pdfUrl;
 
-
-      const clientData = typeof freshQuote.client_data === 'string' 
-        ? JSON.parse(freshQuote.client_data) 
-        : freshQuote.client_data;
+      const clientData =
+        typeof freshQuote.client_data === 'string'
+          ? JSON.parse(freshQuote.client_data)
+          : freshQuote.client_data;
       const clientEmail = clientData?.email || '';
       const companyName = companyData?.company_name || 'Your Company';
       const totalAmount = freshQuote.total || 0;
-      const validityDate = freshQuote.expiry_date 
+      const validityDate = freshQuote.expiry_date
         ? format(new Date(freshQuote.expiry_date), 'dd MMMM yyyy')
         : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
-      
-      const jobDetails = typeof freshQuote.job_details === 'string' 
-        ? JSON.parse(freshQuote.job_details) 
-        : freshQuote.job_details;
+
+      const jobDetails =
+        typeof freshQuote.job_details === 'string'
+          ? JSON.parse(freshQuote.job_details)
+          : freshQuote.job_details;
       const jobTitle = jobDetails?.title || 'Electrical Work';
 
       const subject = `Quote ${freshQuote.quote_number} - ${jobTitle}`;
@@ -545,31 +576,31 @@ ${companyName}`;
 
   const handleConfirmAction = async () => {
     if (!selectedQuote || !confirmAction || !onUpdateQuoteStatus) return;
-    
+
     setLoadingAction(`action-${selectedQuote.id}`);
     try {
       let success = false;
-      
+
       if (confirmAction === 'accept') {
         success = await onUpdateQuoteStatus(selectedQuote.id, 'approved', [], 'accepted');
       } else if (confirmAction === 'reject') {
         success = await onUpdateQuoteStatus(selectedQuote.id, 'rejected', [], 'rejected');
       }
-      
+
       if (success) {
         toast({
-          title: confirmAction === 'accept' ? "Quote Accepted" : "Quote Rejected",
+          title: confirmAction === 'accept' ? 'Quote Accepted' : 'Quote Rejected',
           description: `Quote ${selectedQuote.quoteNumber} has been ${confirmAction}ed successfully.`,
-          variant: "success"
+          variant: 'success',
         });
       } else {
         throw new Error(`Failed to ${confirmAction} quote`);
       }
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: `Failed to ${confirmAction} quote. Please try again.`,
-        variant: "destructive"
+        variant: 'destructive',
       });
     } finally {
       setLoadingAction('');
@@ -579,26 +610,30 @@ ${companyName}`;
     }
   };
 
-  const handleStatusUpdate = async (quoteId: string, status: Quote['status'], tags?: Quote['tags']) => {
+  const handleStatusUpdate = async (
+    quoteId: string,
+    status: Quote['status'],
+    tags?: Quote['tags']
+  ) => {
     if (!onUpdateQuoteStatus) return;
-    
+
     setLoadingAction(`status-${quoteId}`);
     try {
       const success = await onUpdateQuoteStatus(quoteId, status, tags);
       if (success) {
         toast({
-          title: "Status Updated",
+          title: 'Status Updated',
           description: `Quote status has been updated to ${status}`,
-          variant: "success"
+          variant: 'success',
         });
       } else {
         throw new Error('Failed to update status');
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update quote status",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to update quote status',
+        variant: 'destructive',
       });
     } finally {
       setLoadingAction('');
@@ -607,24 +642,24 @@ ${companyName}`;
 
   const handleSendReminder = async (quoteId: string, reminderType: 'gentle' | 'firm' | 'final') => {
     if (!onSendPaymentReminder) return;
-    
+
     setLoadingAction(`reminder-${quoteId}`);
     try {
       const success = await onSendPaymentReminder(quoteId, reminderType);
       if (success) {
         toast({
-          title: "Reminder Sent",
+          title: 'Reminder Sent',
           description: `${reminderType} payment reminder has been sent`,
-          variant: "success"
+          variant: 'success',
         });
       } else {
         throw new Error('Failed to send reminder');
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to send payment reminder",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to send payment reminder',
+        variant: 'destructive',
       });
     } finally {
       setLoadingAction('');
@@ -633,33 +668,36 @@ ${companyName}`;
 
   const handleMarkWorkComplete = async (quote: Quote) => {
     if (!onUpdateQuoteStatus) return;
-    
+
     setLoadingAction(`work-complete-${quote.id}`);
     try {
       const currentTags = quote.tags || [];
-      const newTags = [...currentTags.filter(tag => tag !== 'work_done'), 'work_done'] as Quote['tags'];
-      
+      const newTags = [
+        ...currentTags.filter((tag) => tag !== 'work_done'),
+        'work_done',
+      ] as Quote['tags'];
+
       const success = await onUpdateQuoteStatus(quote.id, quote.status, newTags);
-      
+
       if (success) {
         // Also update work completion date
         await supabase
           .from('quotes')
           .update({ work_completion_date: new Date().toISOString() })
           .eq('id', quote.id);
-        
+
         toast({
-          title: "Work Marked Complete",
-          description: "You can now raise an invoice for this quote",
+          title: 'Work Marked Complete',
+          description: 'You can now raise an invoice for this quote',
         });
       } else {
         throw new Error('Failed to mark work complete');
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to mark work complete",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to mark work complete',
+        variant: 'destructive',
       });
     } finally {
       setLoadingAction('');
@@ -675,45 +713,48 @@ ${companyName}`;
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
-      currency: 'GBP'
+      currency: 'GBP',
     }).format(amount);
   };
 
   const getAcceptanceStatusBadge = (quote: Quote) => {
     const acceptanceStatus = quote.acceptance_status;
-    
-    if (acceptanceStatus === "accepted") {
+
+    if (acceptanceStatus === 'accepted') {
       return (
         <Badge variant="success" className="text-xs">
           Accepted
         </Badge>
       );
     }
-    
-    if (acceptanceStatus === "rejected") {
+
+    if (acceptanceStatus === 'rejected') {
       return (
         <Badge variant="destructive" className="text-xs">
           Rejected
         </Badge>
       );
     }
-    
-    if (quote.status === "sent") {
+
+    if (quote.status === 'sent') {
       return (
-        <Badge variant="secondary" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+        <Badge
+          variant="secondary"
+          className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30"
+        >
           Sent
         </Badge>
       );
     }
-    
-    if (quote.status === "draft") {
+
+    if (quote.status === 'draft') {
       return (
         <Badge variant="outline" className="text-xs">
           Draft
         </Badge>
       );
     }
-    
+
     return (
       <Badge variant="outline" className="text-xs">
         Pending
@@ -733,7 +774,8 @@ ${companyName}`;
             <div className="space-y-2">
               <h3 className="text-xl font-semibold">No quotes created yet</h3>
               <p className="text-muted-foreground max-w-md mx-auto">
-                Start building professional quotes for your electrical projects. Generated quotes will appear here.
+                Start building professional quotes for your electrical projects. Generated quotes
+                will appear here.
               </p>
             </div>
           </div>
@@ -766,13 +808,11 @@ ${companyName}`;
         onViewInvoice={handleViewInvoice}
         onDeleteQuote={handleDeleteQuote}
       />
-      
+
       {!showAll && quotes.length > 10 && (
         <Card className="border-elec-yellow/20 bg-elec-gray/50">
           <CardContent className="p-4 text-center">
-            <p className="text-sm text-muted-foreground">
-              Showing 10 of {quotes.length} quotes
-            </p>
+            <p className="text-sm text-muted-foreground">Showing 10 of {quotes.length} quotes</p>
             <Button variant="outline" size="sm" className="mt-2">
               View All Quotes
             </Button>

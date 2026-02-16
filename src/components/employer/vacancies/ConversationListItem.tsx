@@ -1,9 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { MessageSquare, Clock, Briefcase, Award, Shield, Trash2 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import type { Conversation } from "@/services/conversationService";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { MessageSquare, Clock, Briefcase, Award, Shield, Trash2 } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import type { Conversation } from '@/services/conversationService';
 
 interface ConversationListItemProps {
   conversation: Conversation;
@@ -17,11 +17,19 @@ const tierConfig: Record<string, { color: string; bg: string; icon: typeof Shiel
   premium: { color: 'text-elec-yellow', bg: 'bg-yellow-100 dark:bg-yellow-900/30', icon: Award },
 };
 
-export function ConversationListItem({ conversation, onClick, onDelete }: ConversationListItemProps) {
+export function ConversationListItem({
+  conversation,
+  onClick,
+  onDelete,
+}: ConversationListItemProps) {
   const profile = conversation.electrician_profile;
   const employee = profile?.employee;
   const name = employee?.name || 'Unknown';
-  const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+  const initials = name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase();
   const tier = tierConfig[profile?.verification_tier || 'basic'];
   const TierIcon = tier.icon;
 
@@ -52,7 +60,9 @@ export function ConversationListItem({ conversation, onClick, onDelete }: Conver
 
             {/* Verification Badge */}
             {profile?.verification_tier && profile.verification_tier !== 'basic' && (
-              <div className={`absolute -bottom-0.5 -right-0.5 ${tier.bg} p-0.5 rounded-full ring-2 ring-background`}>
+              <div
+                className={`absolute -bottom-0.5 -right-0.5 ${tier.bg} p-0.5 rounded-full ring-2 ring-background`}
+              >
                 <TierIcon className={`h-3 w-3 ${tier.color}`} />
               </div>
             )}
@@ -68,13 +78,13 @@ export function ConversationListItem({ conversation, onClick, onDelete }: Conver
           {/* Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2">
-              <h3 className={`font-semibold truncate ${hasUnread ? 'text-foreground' : 'text-foreground/90'}`}>
+              <h3
+                className={`font-semibold truncate ${hasUnread ? 'text-foreground' : 'text-foreground/90'}`}
+              >
                 {name}
               </h3>
               {lastMessageTime && (
-                <span className="text-xs text-muted-foreground shrink-0">
-                  {lastMessageTime}
-                </span>
+                <span className="text-xs text-muted-foreground shrink-0">{lastMessageTime}</span>
               )}
             </div>
 
@@ -88,7 +98,9 @@ export function ConversationListItem({ conversation, onClick, onDelete }: Conver
 
             {/* Last message preview */}
             {conversation.last_message_preview && (
-              <p className={`text-sm mt-1 truncate ${hasUnread ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+              <p
+                className={`text-sm mt-1 truncate ${hasUnread ? 'text-foreground font-medium' : 'text-muted-foreground'}`}
+              >
                 {conversation.last_message_preview}
               </p>
             )}
@@ -96,20 +108,30 @@ export function ConversationListItem({ conversation, onClick, onDelete }: Conver
             {/* Status badges */}
             <div className="flex items-center gap-2 mt-2">
               {profile?.verification_tier && (
-                <Badge variant="outline" className={`text-xs px-1.5 py-0 ${tier.bg} ${tier.color} border-0`}>
-                  {profile.verification_tier.charAt(0).toUpperCase() + profile.verification_tier.slice(1)}
+                <Badge
+                  variant="outline"
+                  className={`text-xs px-1.5 py-0 ${tier.bg} ${tier.color} border-0`}
+                >
+                  {profile.verification_tier.charAt(0).toUpperCase() +
+                    profile.verification_tier.slice(1)}
                 </Badge>
               )}
 
               {!conversation.electrician_can_reply && (
-                <Badge variant="outline" className="text-xs px-1.5 py-0 bg-amber-500/10 text-amber-500 border-0">
+                <Badge
+                  variant="outline"
+                  className="text-xs px-1.5 py-0 bg-amber-500/10 text-amber-500 border-0"
+                >
                   <Clock className="h-3 w-3 mr-1" />
                   Awaiting Application
                 </Badge>
               )}
 
               {conversation.application && (
-                <Badge variant="outline" className="text-xs px-1.5 py-0 bg-success/10 text-success border-0">
+                <Badge
+                  variant="outline"
+                  className="text-xs px-1.5 py-0 bg-success/10 text-success border-0"
+                >
                   Applied
                 </Badge>
               )}
@@ -129,7 +151,9 @@ export function ConversationListItem({ conversation, onClick, onDelete }: Conver
                 <Trash2 className="h-4 w-4" />
               </button>
             )}
-            <MessageSquare className={`h-5 w-5 ${hasUnread ? 'text-elec-yellow' : 'text-muted-foreground'}`} />
+            <MessageSquare
+              className={`h-5 w-5 ${hasUnread ? 'text-elec-yellow' : 'text-muted-foreground'}`}
+            />
           </div>
         </div>
       </CardContent>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -21,7 +20,7 @@ const complianceItems: ComplianceItem[] = [
     description: 'Overload Protection',
     requirement: 'Ib ≤ In ≤ Iz (Design current ≤ Nominal current ≤ Cable capacity)',
     status: 'unchecked',
-    critical: true
+    critical: true,
   },
   {
     id: 'operating_current',
@@ -29,7 +28,7 @@ const complianceItems: ComplianceItem[] = [
     description: 'Operating Current',
     requirement: 'I2 ≤ 1.45 × Iz (Operating current ≤ 1.45 × Cable capacity)',
     status: 'unchecked',
-    critical: true
+    critical: true,
   },
   {
     id: 'voltage_drop',
@@ -37,7 +36,7 @@ const complianceItems: ComplianceItem[] = [
     description: 'Voltage Drop Limits',
     requirement: 'Lighting: 3% (6.9V), Power: 5% (11.5V), Motors: 2.5% (5.75V)',
     status: 'unchecked',
-    critical: true
+    critical: true,
   },
   {
     id: 'correction_factors',
@@ -45,7 +44,7 @@ const complianceItems: ComplianceItem[] = [
     description: 'Environmental Correction Factors',
     requirement: 'Apply ambient temperature, grouping, and thermal insulation factors',
     status: 'unchecked',
-    critical: true
+    critical: true,
   },
   {
     id: 'fault_protection',
@@ -53,7 +52,7 @@ const complianceItems: ComplianceItem[] = [
     description: 'Fault Current Protection',
     requirement: 'Cable must withstand fault current until protective device operates',
     status: 'unchecked',
-    critical: true
+    critical: true,
   },
   {
     id: 'installation_method',
@@ -61,7 +60,7 @@ const complianceItems: ComplianceItem[] = [
     description: 'Installation Method Classification',
     requirement: 'Correct reference method selection and derating factors applied',
     status: 'unchecked',
-    critical: false
+    critical: false,
   },
   {
     id: 'conductor_material',
@@ -69,7 +68,7 @@ const complianceItems: ComplianceItem[] = [
     description: 'Conductor Material Selection',
     requirement: 'Appropriate conductor material for application and environment',
     status: 'unchecked',
-    critical: false
+    critical: false,
   },
   {
     id: 'insulation_type',
@@ -77,17 +76,15 @@ const complianceItems: ComplianceItem[] = [
     description: 'Insulation Type and Temperature Rating',
     requirement: 'Suitable insulation type for operating temperature and environment',
     status: 'unchecked',
-    critical: false
-  }
+    critical: false,
+  },
 ];
 
 export const RegulationComplianceChecklist = () => {
   const [items, setItems] = useState<ComplianceItem[]>(complianceItems);
 
   const updateItemStatus = (id: string, status: ComplianceItem['status']) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, status } : item
-    ));
+    setItems(items.map((item) => (item.id === id ? { ...item, status } : item)));
   };
 
   const getStatusIcon = (status: ComplianceItem['status']) => {
@@ -112,29 +109,38 @@ export const RegulationComplianceChecklist = () => {
       case 'non-compliant':
         return <Badge className="bg-red-500 text-foreground">Non-Compliant</Badge>;
       default:
-        return <Badge variant="outline" className="text-gray-400 border-gray-400">Unchecked</Badge>;
+        return (
+          <Badge variant="outline" className="text-gray-400 border-gray-400">
+            Unchecked
+          </Badge>
+        );
     }
   };
 
-  const criticalItems = items.filter(item => item.critical);
-  const nonCriticalItems = items.filter(item => !item.critical);
-  
-  const overallCompliance = criticalItems.every(item => item.status === 'compliant') && 
-                           !items.some(item => item.status === 'non-compliant');
+  const criticalItems = items.filter((item) => item.critical);
+  const nonCriticalItems = items.filter((item) => !item.critical);
+
+  const overallCompliance =
+    criticalItems.every((item) => item.status === 'compliant') &&
+    !items.some((item) => item.status === 'non-compliant');
 
   const complianceStats = {
-    compliant: items.filter(item => item.status === 'compliant').length,
-    warning: items.filter(item => item.status === 'warning').length,
-    nonCompliant: items.filter(item => item.status === 'non-compliant').length,
-    unchecked: items.filter(item => item.status === 'unchecked').length
+    compliant: items.filter((item) => item.status === 'compliant').length,
+    warning: items.filter((item) => item.status === 'warning').length,
+    nonCompliant: items.filter((item) => item.status === 'non-compliant').length,
+    unchecked: items.filter((item) => item.status === 'unchecked').length,
   };
 
   return (
     <div className="space-y-6">
       {/* Overall Status */}
-      <Card className={`border-2 ${
-        overallCompliance ? 'bg-green-500/10 border-green-500/50' : 'bg-red-500/10 border-red-500/50'
-      }`}>
+      <Card
+        className={`border-2 ${
+          overallCompliance
+            ? 'bg-green-500/10 border-green-500/50'
+            : 'bg-red-500/10 border-red-500/50'
+        }`}
+      >
         <CardHeader>
           <CardTitle className="text-foreground flex items-center gap-2">
             <FileCheck className="h-6 w-6 text-elec-yellow" />
@@ -160,10 +166,14 @@ export const RegulationComplianceChecklist = () => {
               <div className="text-sm text-gray-300">Unchecked</div>
             </div>
           </div>
-          
-          <div className={`p-4 rounded-lg ${
-            overallCompliance ? 'bg-green-500/10 border border-green-500/30' : 'bg-red-500/10 border border-red-500/30'
-          }`}>
+
+          <div
+            className={`p-4 rounded-lg ${
+              overallCompliance
+                ? 'bg-green-500/10 border border-green-500/30'
+                : 'bg-red-500/10 border border-red-500/30'
+            }`}
+          >
             <div className="flex items-center gap-2">
               {overallCompliance ? (
                 <CheckCircle className="h-6 w-6 text-green-400" />
@@ -199,26 +209,26 @@ export const RegulationComplianceChecklist = () => {
                 </div>
                 {getStatusBadge(item.status)}
               </div>
-              
+
               <p className="text-sm text-gray-300 mb-3">{item.requirement}</p>
-              
+
               <div className="flex gap-2">
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => updateItemStatus(item.id, 'compliant')}
                   className="bg-green-600 hover:bg-green-700 text-foreground"
                 >
                   Compliant
                 </Button>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => updateItemStatus(item.id, 'warning')}
                   className="bg-yellow-600 hover:bg-yellow-700 text-foreground"
                 >
                   Warning
                 </Button>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => updateItemStatus(item.id, 'non-compliant')}
                   className="bg-red-600 hover:bg-red-700 text-foreground"
                 >
@@ -251,26 +261,26 @@ export const RegulationComplianceChecklist = () => {
                 </div>
                 {getStatusBadge(item.status)}
               </div>
-              
+
               <p className="text-sm text-gray-300 mb-3">{item.requirement}</p>
-              
+
               <div className="flex gap-2">
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => updateItemStatus(item.id, 'compliant')}
                   className="bg-green-600 hover:bg-green-700 text-foreground"
                 >
                   Compliant
                 </Button>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => updateItemStatus(item.id, 'warning')}
                   className="bg-yellow-600 hover:bg-yellow-700 text-foreground"
                 >
                   Warning
                 </Button>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => updateItemStatus(item.id, 'non-compliant')}
                   className="bg-red-600 hover:bg-red-700 text-foreground"
                 >

@@ -3,12 +3,12 @@ import { Target, CheckCircle } from 'lucide-react';
 
 const SmartHomeModule7Section3LearningOutcomes = () => {
   const outcomes = [
-    "Explain why Wi-Fi and RF signal quality is critical for smart home systems",
-    "Identify tools and methods for testing signal strength",
-    "Optimise device placement to improve connectivity", 
-    "Troubleshoot common wireless issues in smart home installations",
-    "Recommend solutions for improving network coverage",
-    "Understand interference sources and mitigation strategies"
+    'Explain why Wi-Fi and RF signal quality is critical for smart home systems',
+    'Identify tools and methods for testing signal strength',
+    'Optimise device placement to improve connectivity',
+    'Troubleshoot common wireless issues in smart home installations',
+    'Recommend solutions for improving network coverage',
+    'Understand interference sources and mitigation strategies',
   ];
 
   return (

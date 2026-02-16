@@ -1,78 +1,86 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import { bmsModule1Section5QuizData } from "@/data/upskilling/bmsModule1Section5QuizData";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { bmsModule1Section5QuizData } from '@/data/upskilling/bmsModule1Section5QuizData';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Overview of Relevant Standards - BMS Module 1 Section 5";
-const DESCRIPTION = "Learn about ISO 16484 and EN 15232 standards for Building Management Systems. Understand compliance requirements and how to apply standards in practice.";
+const TITLE = 'Overview of Relevant Standards - BMS Module 1 Section 5';
+const DESCRIPTION =
+  'Learn about ISO 16484 and EN 15232 standards for Building Management Systems. Understand compliance requirements and how to apply standards in practice.';
 
 const quickCheckQuestions = [
   {
-    id: "iso-interop",
+    id: 'iso-interop',
     question: "What does ISO 16484 ensure between different manufacturers' BMS systems?",
     options: [
-      "Cost reduction and faster installation",
-      "Interoperability and compatibility",
-      "Energy efficiency improvements",
-      "Reduced maintenance requirements"
+      'Cost reduction and faster installation',
+      'Interoperability and compatibility',
+      'Energy efficiency improvements',
+      'Reduced maintenance requirements',
     ],
     correctIndex: 1,
-    explanation: "ISO 16484 ensures interoperability and compatibility between different manufacturers' systems, allowing them to work together seamlessly."
+    explanation:
+      "ISO 16484 ensures interoperability and compatibility between different manufacturers' systems, allowing them to work together seamlessly.",
   },
   {
-    id: "en-measure",
-    question: "What does EN 15232 measure in relation to BMS?",
+    id: 'en-measure',
+    question: 'What does EN 15232 measure in relation to BMS?',
     options: [
-      "Installation time and labour costs",
-      "Energy performance and efficiency classification",
-      "System reliability and uptime",
-      "User satisfaction and comfort levels"
+      'Installation time and labour costs',
+      'Energy performance and efficiency classification',
+      'System reliability and uptime',
+      'User satisfaction and comfort levels',
     ],
     correctIndex: 1,
-    explanation: "EN 15232 measures and classifies building energy performance through automation systems, using classes A through D."
+    explanation:
+      'EN 15232 measures and classifies building energy performance through automation systems, using classes A through D.',
   },
   {
-    id: "compliance-importance",
-    question: "Why is compliance with BMS standards important for electricians?",
+    id: 'compliance-importance',
+    question: 'Why is compliance with BMS standards important for electricians?',
     options: [
-      "To increase project costs and complexity",
-      "To ensure legal protection, professional credibility, and client confidence",
-      "To limit competition from other electricians",
-      "To reduce the need for ongoing training"
+      'To increase project costs and complexity',
+      'To ensure legal protection, professional credibility, and client confidence',
+      'To limit competition from other electricians',
+      'To reduce the need for ongoing training',
     ],
     correctIndex: 1,
-    explanation: "Standards compliance provides legal protection, builds professional credibility, and ensures client confidence in your work."
+    explanation:
+      'Standards compliance provides legal protection, builds professional credibility, and ensures client confidence in your work.',
   },
   {
-    id: "client-benefit",
-    question: "How can electricians use standards as a benefit when talking to clients?",
+    id: 'client-benefit',
+    question: 'How can electricians use standards as a benefit when talking to clients?',
     options: [
-      "To justify higher project costs without explanation",
-      "To demonstrate professionalism, ensure compliance, and quantify energy savings",
-      "To avoid detailed project discussions",
-      "To limit client involvement in technical decisions"
+      'To justify higher project costs without explanation',
+      'To demonstrate professionalism, ensure compliance, and quantify energy savings',
+      'To avoid detailed project discussions',
+      'To limit client involvement in technical decisions',
     ],
     correctIndex: 1,
-    explanation: "Standards demonstrate professionalism, ensure regulatory compliance, and help quantify measurable energy savings for clients."
-  }
+    explanation:
+      'Standards demonstrate professionalism, ensure regulatory compliance, and help quantify measurable energy savings for clients.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What is the main purpose of ISO 16484?",
-    answer: "ISO 16484 provides comprehensive guidance for Building Automation and Control Systems (BACS), covering project specification, hardware requirements, control functionality, and communication protocols like BACnet."
+    question: 'What is the main purpose of ISO 16484?',
+    answer:
+      'ISO 16484 provides comprehensive guidance for Building Automation and Control Systems (BACS), covering project specification, hardware requirements, control functionality, and communication protocols like BACnet.',
   },
   {
-    question: "What do the EN 15232 energy classes (A-D) mean?",
-    answer: "Class A represents high-performance systems with advanced automation, Class B is advanced, Class C is standard, and Class D represents non-automated buildings. Moving from D to A can achieve 20-30% energy savings."
+    question: 'What do the EN 15232 energy classes (A-D) mean?',
+    answer:
+      'Class A represents high-performance systems with advanced automation, Class B is advanced, Class C is standard, and Class D represents non-automated buildings. Moving from D to A can achieve 20-30% energy savings.',
   },
   {
-    question: "Are BMS standards legally required?",
-    answer: "While not always legally mandated, many public sector and commercial projects require ISO 16484 and EN 15232 compliance as contract conditions. BREEAM certifications often require demonstrable compliance."
-  }
+    question: 'Are BMS standards legally required?',
+    answer:
+      'While not always legally mandated, many public sector and commercial projects require ISO 16484 and EN 15232 compliance as contract conditions. BREEAM certifications often require demonstrable compliance.',
+  },
 ];
 
 const BMSModule1Section5 = () => {
@@ -83,7 +91,12 @@ const BMSModule1Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -94,7 +107,6 @@ const BMSModule1Section5 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -104,9 +116,7 @@ const BMSModule1Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Overview of Relevant Standards
           </h1>
-          <p className="text-white/80">
-            ISO 16484, EN 15232, and Industry Compliance
-          </p>
+          <p className="text-white/80">ISO 16484, EN 15232, and Industry Compliance</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -114,18 +124,32 @@ const BMSModule1Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>ISO 16484:</strong> BMS design, operation, interoperability</li>
-              <li><strong>EN 15232:</strong> Energy performance classification (A-D)</li>
-              <li><strong>Compliance:</strong> Legal protection, credibility, savings</li>
-              <li><strong>Application:</strong> Project specs, documentation, verification</li>
+              <li>
+                <strong>ISO 16484:</strong> BMS design, operation, interoperability
+              </li>
+              <li>
+                <strong>EN 15232:</strong> Energy performance classification (A-D)
+              </li>
+              <li>
+                <strong>Compliance:</strong> Legal protection, credibility, savings
+              </li>
+              <li>
+                <strong>Application:</strong> Project specs, documentation, verification
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Contract requirements, compliance clauses</li>
-              <li><strong>Use:</strong> Client discussions, project justification</li>
-              <li><strong>Apply:</strong> Equipment verification, documentation</li>
+              <li>
+                <strong>Spot:</strong> Contract requirements, compliance clauses
+              </li>
+              <li>
+                <strong>Use:</strong> Client discussions, project justification
+              </li>
+              <li>
+                <strong>Apply:</strong> Equipment verification, documentation
+              </li>
             </ul>
           </div>
         </div>
@@ -135,10 +159,10 @@ const BMSModule1Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify the purpose of ISO 16484 and EN 15232",
-              "Explain how these standards impact BMS design and operation",
-              "Recognise compliance responsibilities of electricians",
-              "Understand how standards help achieve energy efficiency and safety"
+              'Identify the purpose of ISO 16484 and EN 15232',
+              'Explain how these standards impact BMS design and operation',
+              'Recognise compliance responsibilities of electricians',
+              'Understand how standards help achieve energy efficiency and safety',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -160,18 +184,33 @@ const BMSModule1Section5 = () => {
             <p>
               <strong>ISO 16484</strong> is the comprehensive international standard that provides
               detailed guidance for Building Automation and Control Systems (BACS). This multi-part
-              standard establishes the technical framework for professional BMS design, installation, and operation.
+              standard establishes the technical framework for professional BMS design,
+              installation, and operation.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Standard Components:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Key Standard Components:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Part 1:</strong> Project specification and implementation</li>
-                <li><strong>Part 2:</strong> Hardware requirements and installation</li>
-                <li><strong>Part 3:</strong> Control functionality and applications</li>
-                <li><strong>Part 4:</strong> Communication protocols (BACnet, LON, etc.)</li>
-                <li><strong>Part 5:</strong> Data communication and management</li>
-                <li><strong>Part 6:</strong> Data exchange with other building services</li>
+                <li>
+                  <strong>Part 1:</strong> Project specification and implementation
+                </li>
+                <li>
+                  <strong>Part 2:</strong> Hardware requirements and installation
+                </li>
+                <li>
+                  <strong>Part 3:</strong> Control functionality and applications
+                </li>
+                <li>
+                  <strong>Part 4:</strong> Communication protocols (BACnet, LON, etc.)
+                </li>
+                <li>
+                  <strong>Part 5:</strong> Data communication and management
+                </li>
+                <li>
+                  <strong>Part 6:</strong> Data exchange with other building services
+                </li>
               </ul>
             </div>
 
@@ -208,9 +247,10 @@ const BMSModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              <strong>EN 15232</strong> is the European standard that addresses the impact of building
-              automation on energy performance. It provides calculation methods and classification
-              systems to quantify energy savings achieved through intelligent building controls.
+              <strong>EN 15232</strong> is the European standard that addresses the impact of
+              building automation on energy performance. It provides calculation methods and
+              classification systems to quantify energy savings achieved through intelligent
+              building controls.
             </p>
 
             <div className="grid grid-cols-4 gap-3 my-6 text-center text-sm">
@@ -243,7 +283,9 @@ const BMSModule1Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lighting Control Factors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Lighting Control Factors
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Daylight harvesting systems</li>
                   <li>Occupancy detection control</li>
@@ -272,7 +314,9 @@ const BMSModule1Section5 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Professional Benefits</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Professional Benefits
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Enhanced credibility and reputation</li>
                   <li>Compliance with contract requirements</li>
@@ -293,9 +337,9 @@ const BMSModule1Section5 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>Contractual Requirements:</strong> Government and NHS projects typically mandate
-                ISO 16484 and EN 15232 compliance. BREEAM certifications often require demonstrable
-                compliance with energy efficiency standards.
+                <strong>Contractual Requirements:</strong> Government and NHS projects typically
+                mandate ISO 16484 and EN 15232 compliance. BREEAM certifications often require
+                demonstrable compliance with energy efficiency standards.
               </p>
             </div>
           </div>
@@ -311,17 +355,30 @@ const BMSModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Practical application of ISO 16484 and EN 15232 requires a systematic approach throughout
-              the entire project lifecycle - from design through installation, commissioning, and maintenance.
+              Practical application of ISO 16484 and EN 15232 requires a systematic approach
+              throughout the entire project lifecycle - from design through installation,
+              commissioning, and maintenance.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Implementation Steps:</p>
               <ul className="text-sm text-white space-y-2 ml-4">
-                <li><strong>1. Project Specification Review:</strong> Check whether project specs require compliance before beginning work</li>
-                <li><strong>2. Documentation and Recording:</strong> Maintain detailed compliance measures and test results</li>
-                <li><strong>3. Team Collaboration:</strong> Work with BMS engineers to ensure devices meet classifications</li>
-                <li><strong>4. Client Communication:</strong> Use standards as selling points to demonstrate value</li>
+                <li>
+                  <strong>1. Project Specification Review:</strong> Check whether project specs
+                  require compliance before beginning work
+                </li>
+                <li>
+                  <strong>2. Documentation and Recording:</strong> Maintain detailed compliance
+                  measures and test results
+                </li>
+                <li>
+                  <strong>3. Team Collaboration:</strong> Work with BMS engineers to ensure devices
+                  meet classifications
+                </li>
+                <li>
+                  <strong>4. Client Communication:</strong> Use standards as selling points to
+                  demonstrate value
+                </li>
               </ul>
             </div>
 
@@ -336,7 +393,9 @@ const BMSModule1Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Equipment Verification</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Equipment Verification
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Device compliance certificates</li>
                   <li>Protocol compatibility testing</li>
@@ -357,7 +416,9 @@ const BMSModule1Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Knowledge Development</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Knowledge Development
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Familiarise yourself with key parts of ISO 16484 and EN 15232</li>
                 <li>Stay updated on latest revisions and industry best practices</li>
@@ -365,7 +426,9 @@ const BMSModule1Section5 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Verification</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Verification
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Confirm devices and systems meet compliance requirements</li>
                 <li>Test and verify performance against standards</li>
@@ -375,9 +438,15 @@ const BMSModule1Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping spec review</strong> — always check compliance requirements first</li>
-                <li><strong>Poor documentation</strong> — maintain comprehensive records for audits</li>
-                <li><strong>Ignoring interoperability</strong> — verify protocol compatibility</li>
+                <li>
+                  <strong>Skipping spec review</strong> — always check compliance requirements first
+                </li>
+                <li>
+                  <strong>Poor documentation</strong> — maintain comprehensive records for audits
+                </li>
+                <li>
+                  <strong>Ignoring interoperability</strong> — verify protocol compatibility
+                </li>
               </ul>
             </div>
           </div>
@@ -385,15 +454,25 @@ const BMSModule1Section5 = () => {
 
         {/* Case Study */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-          <p className="text-sm font-medium text-elec-yellow mb-2">Case Study: London Commercial Office</p>
+          <p className="text-sm font-medium text-elec-yellow mb-2">
+            Case Study: London Commercial Office
+          </p>
           <p className="text-sm text-white mb-3">
             A commercial office upgraded its BMS to comply with EN 15232 standards:
           </p>
           <ul className="text-sm text-white space-y-1">
-            <li><strong>Before:</strong> Class C (Standard) rating</li>
-            <li><strong>After:</strong> Class A (High Performance) rating</li>
-            <li><strong>Result:</strong> 22% reduction in annual energy bills</li>
-            <li><strong>Benefits:</strong> Met sustainability targets, increased tenant appeal</li>
+            <li>
+              <strong>Before:</strong> Class C (Standard) rating
+            </li>
+            <li>
+              <strong>After:</strong> Class A (High Performance) rating
+            </li>
+            <li>
+              <strong>Result:</strong> 22% reduction in annual energy bills
+            </li>
+            <li>
+              <strong>Benefits:</strong> Met sustainability targets, increased tenant appeal
+            </li>
           </ul>
         </div>
 
@@ -452,20 +531,28 @@ const BMSModule1Section5 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-1-section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-1-section-6">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

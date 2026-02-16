@@ -17,7 +17,14 @@ import { cn } from '@/lib/utils';
 
 export interface CertificateData {
   id: string;
-  reportType: 'eicr' | 'eic' | 'minor-works' | 'ev-charging' | 'fire-alarm' | 'emergency-lighting' | 'pat-testing';
+  reportType:
+    | 'eicr'
+    | 'eic'
+    | 'minor-works'
+    | 'ev-charging'
+    | 'fire-alarm'
+    | 'emergency-lighting'
+    | 'pat-testing';
   clientName?: string;
   installationAddress?: string;
   inspectionDate?: string;
@@ -109,8 +116,7 @@ const getStatusText = (status: string) => {
 };
 
 const formatDate = (timestamp: number | string) => {
-  const date =
-    typeof timestamp === 'string' ? new Date(timestamp) : new Date(timestamp);
+  const date = typeof timestamp === 'string' ? new Date(timestamp) : new Date(timestamp);
   return date.toLocaleDateString('en-GB', {
     day: '2-digit',
     month: 'short',
@@ -172,7 +178,10 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
             )}
             <Badge
               variant="outline"
-              className={cn('flex-shrink-0 text-xs font-semibold', getTypeColor(certificate.reportType))}
+              className={cn(
+                'flex-shrink-0 text-xs font-semibold',
+                getTypeColor(certificate.reportType)
+              )}
             >
               {getTypeLabel(certificate.reportType)}
             </Badge>
@@ -226,9 +235,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
             <Calendar className="h-3.5 w-3.5" />
             <span>{formatDate(certificate.lastModified)}</span>
           </div>
-          {!isBulkMode && (
-            <ChevronRight className="h-4 w-4 text-elec-yellow/30 flex-shrink-0" />
-          )}
+          {!isBulkMode && <ChevronRight className="h-4 w-4 text-elec-yellow/30 flex-shrink-0" />}
         </div>
       </CardContent>
     </Card>

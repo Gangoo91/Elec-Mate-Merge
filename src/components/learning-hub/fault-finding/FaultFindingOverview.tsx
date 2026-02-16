@@ -1,13 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import {
-  AlertTriangle,
-  Target,
-  Search,
-  Shield,
-  Wrench,
-  ChevronRight
-} from 'lucide-react';
+import { AlertTriangle, Target, Search, Shield, Wrench, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type ViewMode =
@@ -32,8 +25,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const itemVariants = {
@@ -41,8 +34,8 @@ const itemVariants = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 500, damping: 30 },
+  },
 };
 
 interface HubItem {
@@ -62,7 +55,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       subtitle: 'Fault types & theory',
       count: '6 types',
       icon: AlertTriangle,
-      iconBg: 'bg-red-500'
+      iconBg: 'bg-red-500',
     },
     {
       id: 'diagnostics',
@@ -70,7 +63,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       subtitle: 'Search symptoms & causes',
       count: '25+ guides',
       icon: Search,
-      iconBg: 'bg-green-500'
+      iconBg: 'bg-green-500',
     },
     {
       id: 'methodology',
@@ -78,8 +71,8 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       subtitle: 'Step-by-step process',
       count: '8 steps',
       icon: Target,
-      iconBg: 'bg-purple-500'
-    }
+      iconBg: 'bg-purple-500',
+    },
   ];
 
   const practicalItems: HubItem[] = [
@@ -89,7 +82,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       subtitle: 'Practical case studies',
       count: '35+ cases',
       icon: Target,
-      iconBg: 'bg-blue-500'
+      iconBg: 'bg-blue-500',
     },
     {
       id: 'safety',
@@ -97,7 +90,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       subtitle: 'Critical safety info',
       count: '6 topics',
       icon: Shield,
-      iconBg: 'bg-orange-500'
+      iconBg: 'bg-orange-500',
     },
     {
       id: 'equipment',
@@ -105,8 +98,8 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       subtitle: 'Test instruments',
       count: '6 tools',
       icon: Wrench,
-      iconBg: 'bg-cyan-500'
-    }
+      iconBg: 'bg-cyan-500',
+    },
   ];
 
   const renderItem = (item: HubItem) => {
@@ -118,19 +111,17 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
         onClick={() => onNavigate(item.id)}
         className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
       >
-        <div className={cn(
-          "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
-          item.iconBg
-        )}>
+        <div
+          className={cn(
+            'w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0',
+            item.iconBg
+          )}
+        >
           <Icon className="h-5 w-5 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-[15px] font-medium text-white leading-tight">
-            {item.title}
-          </h3>
-          <p className="text-[13px] text-white/50 leading-tight mt-0.5">
-            {item.subtitle}
-          </p>
+          <h3 className="text-[15px] font-medium text-white leading-tight">{item.title}</h3>
+          <p className="text-[13px] text-white/50 leading-tight mt-0.5">{item.subtitle}</p>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           <span className="text-[13px] text-white/30">{item.count}</span>
@@ -141,12 +132,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
   };
 
   return (
-    <motion.div
-      className="space-y-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
+    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Diagnostic Tools */}
       <div>
         <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
@@ -171,9 +157,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       <motion.div variants={itemVariants}>
         <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
           <Shield className="h-4 w-4 text-white/30 flex-shrink-0" />
-          <p className="text-[12px] text-white/40">
-            Always isolate safely before fault diagnosis
-          </p>
+          <p className="text-[12px] text-white/40">Always isolate safely before fault diagnosis</p>
         </div>
       </motion.div>
     </motion.div>

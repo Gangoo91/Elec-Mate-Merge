@@ -1,4 +1,4 @@
-import ElectricianCareerPathways from "./enhanced/ElectricianCareerPathways";
+import ElectricianCareerPathways from './enhanced/ElectricianCareerPathways';
 
 const CareerPathways = () => {
   return <ElectricianCareerPathways />;

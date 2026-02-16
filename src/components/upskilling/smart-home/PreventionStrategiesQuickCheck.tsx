@@ -6,15 +6,16 @@ const PreventionStrategiesQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "How can electricians help clients avoid ecosystem conflicts in the future?";
+  const question = 'How can electricians help clients avoid ecosystem conflicts in the future?';
   const options = [
-    "By recommending only the most expensive devices",
-    "By choosing one primary ecosystem and using certified compatible devices",
-    "By installing devices as far apart as possible",
-    "By using only battery-powered devices"
+    'By recommending only the most expensive devices',
+    'By choosing one primary ecosystem and using certified compatible devices',
+    'By installing devices as far apart as possible',
+    'By using only battery-powered devices',
   ];
   const correctAnswer = 1;
-  const explanation = "By choosing one primary ecosystem, using certified compatible devices, documenting the system architecture, and providing clear client training on which apps to use, electricians can prevent most ecosystem conflicts from occurring.";
+  const explanation =
+    'By choosing one primary ecosystem, using certified compatible devices, documenting the system architecture, and providing clear client training on which apps to use, electricians can prevent most ecosystem conflicts from occurring.';
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswer(answerIndex);
@@ -36,7 +37,7 @@ const PreventionStrategiesQuickCheck = () => {
             <p className="text-foreground text-sm mb-4">
               <strong>Question:</strong> {question}
             </p>
-            
+
             {!showResult ? (
               <div className="space-y-2">
                 {options.map((option, index) => (
@@ -45,7 +46,9 @@ const PreventionStrategiesQuickCheck = () => {
                     onClick={() => handleAnswerSelect(index)}
                     className="w-full text-left p-3 rounded-lg bg-elec-dark/50 hover:bg-elec-gray/30 transition-colors duration-200 text-foreground text-sm border border-transparent hover:border-blue-400/30"
                   >
-                    <span className="font-medium text-blue-300 mr-2">{String.fromCharCode(65 + index)}.</span>
+                    <span className="font-medium text-blue-300 mr-2">
+                      {String.fromCharCode(65 + index)}.
+                    </span>
                     {option}
                   </button>
                 ))}
@@ -60,8 +63,8 @@ const PreventionStrategiesQuickCheck = () => {
                         index === correctAnswer
                           ? 'bg-green-500/20 border-green-500/50 text-green-300'
                           : index === selectedAnswer && index !== correctAnswer
-                          ? 'bg-red-500/20 border-red-500/50 text-red-300'
-                          : 'bg-elec-dark/30 border-transparent text-gray-400'
+                            ? 'bg-red-500/20 border-red-500/50 text-red-300'
+                            : 'bg-elec-dark/30 border-transparent text-gray-400'
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -76,13 +79,13 @@ const PreventionStrategiesQuickCheck = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                   <p className="text-blue-300 text-sm">
                     <strong>Explanation:</strong> {explanation}
                   </p>
                 </div>
-                
+
                 <button
                   onClick={resetQuiz}
                   className="text-blue-400 text-sm hover:text-blue-300 transition-colors duration-200"

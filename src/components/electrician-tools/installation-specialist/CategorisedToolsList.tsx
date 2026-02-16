@@ -1,6 +1,11 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
-import { CategorisedItems } from "@/utils/toolsCategorisation";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
+import { CategorisedItems } from '@/utils/toolsCategorisation';
 
 interface CategorisedToolsListProps {
   categorisedItems: CategorisedItems;
@@ -17,12 +22,19 @@ export const CategorisedToolsList = ({ categorisedItems, icon }: CategorisedTool
   return (
     <Accordion type="multiple" className="w-full space-y-2">
       {categories.map((category) => (
-        <AccordionItem key={category} value={category} className="border border-primary/10 rounded-lg px-4">
+        <AccordionItem
+          key={category}
+          value={category}
+          className="border border-primary/10 rounded-lg px-4"
+        >
           <AccordionTrigger className="hover:no-underline py-3">
             <div className="flex items-center gap-2 w-full">
               {icon}
               <span className="font-semibold text-sm text-foreground">{category}</span>
-              <Badge variant="secondary" className="ml-auto mr-2 bg-primary/10 text-primary hover:bg-primary/20">
+              <Badge
+                variant="secondary"
+                className="ml-auto mr-2 bg-primary/10 text-primary hover:bg-primary/20"
+              >
                 {categorisedItems[category].length}
               </Badge>
             </div>

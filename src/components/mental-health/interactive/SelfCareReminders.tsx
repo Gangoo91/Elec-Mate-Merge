@@ -1,29 +1,34 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Plus, Trash2, CheckCircle } from "lucide-react";
-import { useMentalHealth } from "@/contexts/MentalHealthContext";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Clock, Plus, Trash2, CheckCircle } from 'lucide-react';
+import { useMentalHealth } from '@/contexts/MentalHealthContext';
 
 const SelfCareReminders = () => {
   const { reminders, setReminders } = useMentalHealth();
   const [showAddForm, setShowAddForm] = useState(false);
   const [newReminder, setNewReminder] = useState({
-    title: "",
-    time: "",
-    frequency: "daily" as const
+    title: '',
+    time: '',
+    frequency: 'daily' as const,
   });
 
   const defaultReminders = [
-    { title: "Take a 5-minute break", time: "10:00", frequency: "daily" as const },
-    { title: "Practice deep breathing", time: "14:00", frequency: "daily" as const },
-    { title: "Check in with yourself", time: "18:00", frequency: "daily" as const },
-    { title: "Reflect on the week", time: "09:00", frequency: "weekly" as const }
+    { title: 'Take a 5-minute break', time: '10:00', frequency: 'daily' as const },
+    { title: 'Practice deep breathing', time: '14:00', frequency: 'daily' as const },
+    { title: 'Check in with yourself', time: '18:00', frequency: 'daily' as const },
+    { title: 'Reflect on the week', time: '09:00', frequency: 'weekly' as const },
   ];
 
   const addReminder = () => {
@@ -33,42 +38,40 @@ const SelfCareReminders = () => {
         title: newReminder.title.trim(),
         time: newReminder.time,
         frequency: newReminder.frequency,
-        isActive: true
+        isActive: true,
       };
-      
-      setReminders(prev => [...prev, reminder]);
-      setNewReminder({ title: "", time: "", frequency: "daily" });
+
+      setReminders((prev) => [...prev, reminder]);
+      setNewReminder({ title: '', time: '', frequency: 'daily' });
       setShowAddForm(false);
     }
   };
 
-  const addDefaultReminder = (defaultReminder: typeof defaultReminders[0]) => {
+  const addDefaultReminder = (defaultReminder: (typeof defaultReminders)[0]) => {
     const reminder = {
       id: Date.now().toString(),
       ...defaultReminder,
-      isActive: true
+      isActive: true,
     };
-    setReminders(prev => [...prev, reminder]);
+    setReminders((prev) => [...prev, reminder]);
   };
 
   const toggleReminder = (id: string) => {
-    setReminders(prev => 
-      prev.map(reminder => 
-        reminder.id === id 
-          ? { ...reminder, isActive: !reminder.isActive }
-          : reminder
+    setReminders((prev) =>
+      prev.map((reminder) =>
+        reminder.id === id ? { ...reminder, isActive: !reminder.isActive } : reminder
       )
     );
   };
 
   const deleteReminder = (id: string) => {
-    setReminders(prev => prev.filter(reminder => reminder.id !== id));
+    setReminders((prev) => prev.filter((reminder) => reminder.id !== id));
   };
 
   const markCompleted = (id: string) => {
-    setReminders(prev => 
-      prev.map(reminder => 
-        reminder.id === id 
+    setReminders((prev) =>
+      prev.map((reminder) =>
+        reminder.id === id
           ? { ...reminder, lastCompleted: new Date().toISOString().split('T')[0] }
           : reminder
       )
@@ -112,10 +115,12 @@ const SelfCareReminders = () => {
         ) : (
           <div className="space-y-3">
             {reminders.map((reminder) => (
-              <div 
+              <div
                 key={reminder.id}
                 className={`flex items-center justify-between p-3 rounded-lg border ${
-                  reminder.isActive ? 'border-elec-yellow/20 bg-elec-yellow/5' : 'border-gray-600 bg-gray-800/50'
+                  reminder.isActive
+                    ? 'border-elec-yellow/20 bg-elec-yellow/5'
+                    : 'border-gray-600 bg-gray-800/50'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -171,7 +176,7 @@ const SelfCareReminders = () => {
               <Label className="text-sm">Reminder title</Label>
               <Input
                 value={newReminder.title}
-                onChange={(e) => setNewReminder(prev => ({ ...prev, title: e.target.value }))}
+                onChange={(e) => setNewReminder((prev) => ({ ...prev, title: e.target.value }))}
                 placeholder="e.g., Take a walk"
                 className="mt-1"
               />
@@ -182,13 +187,18 @@ const SelfCareReminders = () => {
                 <Input
                   type="time"
                   value={newReminder.time}
-                  onChange={(e) => setNewReminder(prev => ({ ...prev, time: e.target.value }))}
+                  onChange={(e) => setNewReminder((prev) => ({ ...prev, time: e.target.value }))}
                   className="mt-1"
                 />
               </div>
               <div>
                 <Label className="text-sm">Frequency</Label>
-                <Select value={newReminder.frequency} onValueChange={(value: any) => setNewReminder(prev => ({ ...prev, frequency: value }))}>
+                <Select
+                  value={newReminder.frequency}
+                  onValueChange={(value: any) =>
+                    setNewReminder((prev) => ({ ...prev, frequency: value }))
+                  }
+                >
                   <SelectTrigger className="mt-1">
                     <SelectValue />
                   </SelectTrigger>
@@ -201,16 +211,16 @@ const SelfCareReminders = () => {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button onClick={addReminder} size="sm">Add Reminder</Button>
-              <Button onClick={() => setShowAddForm(false)} variant="outline" size="sm">Cancel</Button>
+              <Button onClick={addReminder} size="sm">
+                Add Reminder
+              </Button>
+              <Button onClick={() => setShowAddForm(false)} variant="outline" size="sm">
+                Cancel
+              </Button>
             </div>
           </div>
         ) : (
-          <Button 
-            onClick={() => setShowAddForm(true)}
-            variant="outline"
-            className="w-full"
-          >
+          <Button onClick={() => setShowAddForm(true)} variant="outline" className="w-full">
             <Plus className="h-4 w-4 mr-2" />
             Add New Reminder
           </Button>

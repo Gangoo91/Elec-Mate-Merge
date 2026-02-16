@@ -51,7 +51,7 @@ export const PolarityMethodsQuiz = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <QuizResults 
+          <QuizResults
             questions={polarityMethodsQuizQuestions}
             selectedAnswers={selectedAnswers}
             onRestart={handleRestart}
@@ -70,17 +70,17 @@ export const PolarityMethodsQuiz = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <QuizProgress 
+        <QuizProgress
           currentQuestion={currentQuestion}
           totalQuestions={polarityMethodsQuizQuestions.length}
         />
-        
+
         <QuizQuestion
           question={polarityMethodsQuizQuestions[currentQuestion]}
           selectedAnswer={selectedAnswers[currentQuestion]}
           onAnswerSelect={handleAnswerSelect}
         />
-        
+
         <QuizNavigation
           currentQuestion={currentQuestion}
           totalQuestions={polarityMethodsQuizQuestions.length}

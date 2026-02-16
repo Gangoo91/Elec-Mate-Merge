@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { GraduationCap, IdCard, Shield, Award, ChevronRight, Loader2, Check, ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
+import {
+  GraduationCap,
+  IdCard,
+  Shield,
+  Award,
+  ChevronRight,
+  Loader2,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -89,10 +100,10 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
   };
 
   const toggleQualification = (qual: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       qualifications: prev.qualifications.includes(qual)
-        ? prev.qualifications.filter(q => q !== qual)
+        ? prev.qualifications.filter((q) => q !== qual)
         : [...prev.qualifications, qual],
     }));
   };
@@ -136,7 +147,9 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                 <IdCard className="h-4 w-4 text-emerald-400" />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">ECS Card</p>
+                <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                  ECS Card
+                </p>
                 <p className="text-[15px] text-white">{ecsCardType || 'Not set'}</p>
                 {ecsCardNumber && (
                   <p className="text-[13px] text-white/50 mt-0.5">
@@ -159,13 +172,19 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               <Award className="h-4 w-4 text-purple-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Scheme Registration</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Scheme Registration
+              </p>
               <p className="text-[15px] text-white">
                 {inspectorProfile?.registrationScheme ? (
                   <>
-                    {inspectorProfile.registrationScheme}: {inspectorProfile.registrationNumber || 'No number'}
+                    {inspectorProfile.registrationScheme}:{' '}
+                    {inspectorProfile.registrationNumber || 'No number'}
                     {inspectorProfile.registrationExpiry && (
-                      <span className="text-white/50"> • Exp: {formatDate(inspectorProfile.registrationExpiry)}</span>
+                      <span className="text-white/50">
+                        {' '}
+                        • Exp: {formatDate(inspectorProfile.registrationExpiry)}
+                      </span>
                     )}
                   </>
                 ) : (
@@ -181,7 +200,9 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               <GraduationCap className="h-4 w-4 text-blue-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Qualifications</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Qualifications
+              </p>
               {inspectorProfile?.qualifications && inspectorProfile.qualifications.length > 0 ? (
                 <div className="flex flex-wrap gap-1.5 mt-1.5">
                   {inspectorProfile.qualifications.map((qual) => (
@@ -202,7 +223,10 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
       </motion.div>
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -223,7 +247,11 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (
@@ -237,10 +265,13 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                 <div className="flex items-center gap-2 mb-2">
                   <Shield className="h-4 w-4 text-emerald-400" />
-                  <span className="text-[14px] font-medium text-emerald-400">ECS Card from Elec-ID</span>
+                  <span className="text-[14px] font-medium text-emerald-400">
+                    ECS Card from Elec-ID
+                  </span>
                 </div>
                 <p className="text-[13px] text-white/60">
-                  Your ECS card details are pulled from your verified Elec-ID. Update them in Settings → Elec-ID.
+                  Your ECS card details are pulled from your verified Elec-ID. Update them in
+                  Settings → Elec-ID.
                 </p>
               </div>
             )}
@@ -336,7 +367,9 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                   <Input
                     placeholder="e.g. Hiscox"
                     value={formData.insuranceProvider}
-                    onChange={(e) => setFormData({ ...formData, insuranceProvider: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, insuranceProvider: e.target.value })
+                    }
                     className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
                   />
                 </div>
@@ -347,7 +380,9 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                   <Input
                     placeholder="Policy number"
                     value={formData.insurancePolicyNumber}
-                    onChange={(e) => setFormData({ ...formData, insurancePolicyNumber: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, insurancePolicyNumber: e.target.value })
+                    }
                     className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
                   />
                 </div>
@@ -358,7 +393,9 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                   <Input
                     placeholder="e.g. £2,000,000"
                     value={formData.insuranceCoverage}
-                    onChange={(e) => setFormData({ ...formData, insuranceCoverage: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, insuranceCoverage: e.target.value })
+                    }
                     className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
                   />
                 </div>

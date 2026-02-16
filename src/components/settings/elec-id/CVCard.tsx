@@ -9,12 +9,12 @@
  * - Quick actions (Download, Edit, Delete, Set Primary)
  */
 
-import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import React, { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import {
   FileText,
   Download,
@@ -27,14 +27,14 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -44,12 +44,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { formatDistanceToNow } from "date-fns";
-import { UserCV, useDeleteCV, useSetPrimaryCV, calculateCVCompleteness } from "@/hooks/useCV";
-import { useCVSyncStatus } from "@/hooks/useCVSync";
-import { generateCVPDFByTemplate } from "@/components/cv-builder/pdfGenerators";
-import { toast } from "@/hooks/use-toast";
+} from '@/components/ui/alert-dialog';
+import { formatDistanceToNow } from 'date-fns';
+import { UserCV, useDeleteCV, useSetPrimaryCV, calculateCVCompleteness } from '@/hooks/useCV';
+import { useCVSyncStatus } from '@/hooks/useCVSync';
+import { generateCVPDFByTemplate } from '@/components/cv-builder/pdfGenerators';
+import { toast } from '@/hooks/use-toast';
 
 // Template color configurations
 const TEMPLATE_STYLES: Record<
@@ -57,28 +57,28 @@ const TEMPLATE_STYLES: Record<
   { label: string; color: string; bgColor: string; gradient: string }
 > = {
   classic: {
-    label: "Classic",
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20",
-    gradient: "from-blue-500 to-blue-700",
+    label: 'Classic',
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/20',
+    gradient: 'from-blue-500 to-blue-700',
   },
   modern: {
-    label: "Modern",
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/20",
-    gradient: "from-amber-500 to-orange-600",
+    label: 'Modern',
+    color: 'text-amber-400',
+    bgColor: 'bg-amber-500/20',
+    gradient: 'from-amber-500 to-orange-600',
   },
   creative: {
-    label: "Creative",
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/20",
-    gradient: "from-purple-500 to-pink-500",
+    label: 'Creative',
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/20',
+    gradient: 'from-purple-500 to-pink-500',
   },
   technical: {
-    label: "Technical",
-    color: "text-emerald-400",
-    bgColor: "bg-emerald-500/20",
-    gradient: "from-emerald-500 to-teal-600",
+    label: 'Technical',
+    color: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/20',
+    gradient: 'from-emerald-500 to-teal-600',
   },
 };
 
@@ -105,14 +105,14 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
     try {
       await generateCVPDFByTemplate(cv.cv_data, cv.template_id);
       toast({
-        title: "CV Downloaded",
-        description: "Your CV has been downloaded as a PDF.",
+        title: 'CV Downloaded',
+        description: 'Your CV has been downloaded as a PDF.',
       });
     } catch (error) {
       toast({
-        title: "Download Failed",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
+        title: 'Download Failed',
+        description: 'Failed to generate PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsDownloading(false);
@@ -124,14 +124,14 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
     try {
       await deleteCV.mutateAsync(cv.id);
       toast({
-        title: "CV Deleted",
-        description: "Your CV has been deleted.",
+        title: 'CV Deleted',
+        description: 'Your CV has been deleted.',
       });
     } catch (error) {
       toast({
-        title: "Delete Failed",
-        description: "Failed to delete CV. Please try again.",
-        variant: "destructive",
+        title: 'Delete Failed',
+        description: 'Failed to delete CV. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsDeleting(false);
@@ -143,14 +143,14 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
     try {
       await setPrimaryCV.mutateAsync(cv.id);
       toast({
-        title: "Primary CV Set",
-        description: "This CV will be used by default for job applications.",
+        title: 'Primary CV Set',
+        description: 'This CV will be used by default for job applications.',
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to set primary CV. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to set primary CV. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -164,24 +164,29 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
       >
         <Card
           className={cn(
-            "relative overflow-hidden transition-all duration-200 touch-manipulation",
-            "border-white/10 bg-white/[0.03]",
-            cv.is_primary && "border-elec-yellow/30 ring-1 ring-elec-yellow/20"
+            'relative overflow-hidden transition-all duration-200 touch-manipulation',
+            'border-white/10 bg-white/[0.03]',
+            cv.is_primary && 'border-elec-yellow/30 ring-1 ring-elec-yellow/20'
           )}
         >
           {/* Template accent bar */}
-          <div className={cn("absolute top-0 left-0 right-0 h-1 bg-gradient-to-r", templateStyle.gradient)} />
+          <div
+            className={cn(
+              'absolute top-0 left-0 right-0 h-1 bg-gradient-to-r',
+              templateStyle.gradient
+            )}
+          />
 
           <CardContent className="p-4 pt-5">
             <div className="flex items-start gap-4">
               {/* Template icon */}
               <div
                 className={cn(
-                  "w-12 h-12 rounded-xl flex items-center justify-center shrink-0",
+                  'w-12 h-12 rounded-xl flex items-center justify-center shrink-0',
                   templateStyle.bgColor
                 )}
               >
-                <FileText className={cn("h-6 w-6", templateStyle.color)} />
+                <FileText className={cn('h-6 w-6', templateStyle.color)} />
               </div>
 
               {/* CV info */}
@@ -190,7 +195,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="font-semibold text-foreground truncate">
-                        {cv.title || "My CV"}
+                        {cv.title || 'My CV'}
                       </h3>
                       {cv.is_primary && (
                         <Badge
@@ -218,10 +223,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                         <MoreVertical className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="end"
-                      className="w-48 bg-elec-gray border-white/10"
-                    >
+                    <DropdownMenuContent align="end" className="w-48 bg-elec-gray border-white/10">
                       <DropdownMenuItem onClick={() => onEdit(cv)}>
                         <Edit2 className="h-4 w-4 mr-2" />
                         Edit CV
@@ -261,12 +263,12 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                   <div className="flex items-center gap-1.5">
                     <div
                       className={cn(
-                        "h-2 w-2 rounded-full",
+                        'h-2 w-2 rounded-full',
                         completeness >= 80
-                          ? "bg-green-500"
+                          ? 'bg-green-500'
                           : completeness >= 50
-                          ? "bg-amber-500"
-                          : "bg-red-500"
+                            ? 'bg-amber-500'
+                            : 'bg-red-500'
                       )}
                     />
                     <span className="text-xs text-foreground/70">{completeness}% complete</span>
@@ -307,7 +309,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-11 text-xs border-white/10 bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]",
+                      'h-11 text-xs border-white/10 bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]',
                       templateStyle.color
                     )}
                     onClick={handleDownload}
@@ -333,7 +335,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete CV?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete "{cv.title || "My CV"}". This action cannot be undone.
+              This will permanently delete "{cv.title || 'My CV'}". This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { FileText, Copy, Download } from "lucide-react";
-import { toast } from "sonner";
-import type { CommissioningProgressData } from "@/hooks/useCommissioningProgress";
+import { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { FileText, Copy, Download } from 'lucide-react';
+import { toast } from 'sonner';
+import type { CommissioningProgressData } from '@/hooks/useCommissioningProgress';
 
 interface CertificateDataSectionProps {
   progress: CommissioningProgressData | null;
@@ -28,7 +28,7 @@ export const CertificateDataSection = ({
   const calculateNextInspectionDate = () => {
     const installDate = new Date(installationDate);
     const type = progress.installationType.toLowerCase();
-    
+
     // BS 7671 recommended inspection intervals
     if (type.includes('domestic')) {
       installDate.setFullYear(installDate.getFullYear() + 10);
@@ -39,7 +39,7 @@ export const CertificateDataSection = ({
     } else {
       installDate.setFullYear(installDate.getFullYear() + 5);
     }
-    
+
     return installDate.toISOString().split('T')[0];
   };
 
@@ -56,13 +56,13 @@ export const CertificateDataSection = ({
 
   const generateObservations = () => {
     const observations: string[] = [];
-    
+
     progress.testResults.forEach((result) => {
       if (result.passed === false) {
         observations.push(`${result.testName}: FAILED - ${result.notes || 'See test results'}`);
       }
     });
-    
+
     // Ensure visualChecks is an array before iterating
     if (Array.isArray(progress.visualChecks)) {
       progress.visualChecks.forEach((check, index) => {
@@ -71,33 +71,35 @@ export const CertificateDataSection = ({
         }
       });
     }
-    
+
     if (observations.length === 0) {
       observations.push('No observations - installation complies with BS 7671:2018+A2:2024');
     }
-    
+
     return observations;
   };
 
   const generateRecommendations = () => {
     const recommendations: string[] = [];
-    
+
     const failedTests = progress.testResults.filter((r) => r.passed === false);
-    
+
     if (failedTests.length > 0) {
       recommendations.push('Remedial work required - see observations for details');
       recommendations.push('Re-test after remedial work completion');
     }
-    
+
     const nextInspection = calculateNextInspectionDate();
     recommendations.push(`Next inspection recommended by: ${nextInspection}`);
-    
-    if (progress.installationType.toLowerCase().includes('commercial') || 
-        progress.installationType.toLowerCase().includes('industrial')) {
+
+    if (
+      progress.installationType.toLowerCase().includes('commercial') ||
+      progress.installationType.toLowerCase().includes('industrial')
+    ) {
       recommendations.push('Maintain electrical maintenance log');
       recommendations.push('Test RCDs quarterly as per IET Code of Practice');
     }
-    
+
     return recommendations;
   };
 
@@ -123,9 +125,12 @@ export const CertificateDataSection = ({
 
 | Ref | Test Description | Measured Value | Unit | Pass/Fail | Notes |
 |-----|-----------------|----------------|------|-----------|-------|
-${scheduleData.map((row) => 
-  `| ${row.ref} | ${row.description} | ${row.value} | ${row.unit} | ${row.passed} | ${row.notes} |`
-).join('\n')}
+${scheduleData
+  .map(
+    (row) =>
+      `| ${row.ref} | ${row.description} | ${row.value} | ${row.unit} | ${row.passed} | ${row.notes} |`
+  )
+  .join('\n')}
 
 ## Observations
 
@@ -141,8 +146,8 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
 `;
 
     navigator.clipboard.writeText(markdown);
-    toast.success("Certificate data copied!", {
-      description: "Paste into your certification software or document",
+    toast.success('Certificate data copied!', {
+      description: 'Paste into your certification software or document',
     });
   };
 
@@ -174,8 +179,8 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    toast.success("Certificate data exported!", {
-      description: "JSON file downloaded successfully",
+    toast.success('Certificate data exported!', {
+      description: 'JSON file downloaded successfully',
     });
   };
 
@@ -196,11 +201,13 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className={`px-3 py-1 rounded-full ${
-              overallCondition === 'SATISFACTORY' 
-                ? 'bg-green-500/10 border border-green-500/30 text-green-400' 
-                : 'bg-red-500/10 border border-red-500/30 text-red-400'
-            }`}>
+            <div
+              className={`px-3 py-1 rounded-full ${
+                overallCondition === 'SATISFACTORY'
+                  ? 'bg-green-500/10 border border-green-500/30 text-green-400'
+                  : 'bg-red-500/10 border border-red-500/30 text-red-400'
+              }`}
+            >
               <span className="text-xs font-semibold">{overallCondition}</span>
             </div>
           </div>
@@ -233,7 +240,9 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
 
           {/* Schedule of Test Results */}
           <div>
-            <h4 className="text-base font-semibold text-foreground mb-3">Schedule of Test Results</h4>
+            <h4 className="text-base font-semibold text-foreground mb-3">
+              Schedule of Test Results
+            </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -249,15 +258,19 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
                     <tr key={index} className="border-b border-elec-yellow/10">
                       <td className="py-2 text-foreground">{row.ref}</td>
                       <td className="py-2 text-foreground">{row.description}</td>
-                      <td className="py-2 text-foreground">{row.value} {row.unit}</td>
+                      <td className="py-2 text-foreground">
+                        {row.value} {row.unit}
+                      </td>
                       <td className="py-2">
-                        <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                          row.passed === 'PASS' 
-                            ? 'bg-green-500/10 text-green-400' 
-                            : row.passed === 'FAIL'
-                            ? 'bg-red-500/10 text-red-400'
-                            : 'bg-gray-500/10 text-gray-400'
-                        }`}>
+                        <span
+                          className={`px-2 py-1 rounded text-xs font-semibold ${
+                            row.passed === 'PASS'
+                              ? 'bg-green-500/10 text-green-400'
+                              : row.passed === 'FAIL'
+                                ? 'bg-red-500/10 text-red-400'
+                                : 'bg-gray-500/10 text-gray-400'
+                          }`}
+                        >
                           {row.passed}
                         </span>
                       </td>
@@ -273,7 +286,10 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
             <h4 className="text-base font-semibold text-foreground mb-3">Observations</h4>
             <ul className="space-y-2">
               {observations.map((obs, index) => (
-                <li key={index} className="text-sm text-foreground/80 bg-background/40 p-3 rounded-lg">
+                <li
+                  key={index}
+                  className="text-sm text-foreground/80 bg-background/40 p-3 rounded-lg"
+                >
                   {index + 1}. {obs}
                 </li>
               ))}
@@ -285,7 +301,10 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
             <h4 className="text-base font-semibold text-foreground mb-3">Recommendations</h4>
             <ul className="space-y-2">
               {recommendations.map((rec, index) => (
-                <li key={index} className="text-sm text-foreground/80 bg-background/40 p-3 rounded-lg">
+                <li
+                  key={index}
+                  className="text-sm text-foreground/80 bg-background/40 p-3 rounded-lg"
+                >
                   {index + 1}. {rec}
                 </li>
               ))}
@@ -297,7 +316,8 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
             <p className="text-sm text-foreground/70 mb-1">Next Inspection Recommended By:</p>
             <p className="text-lg font-bold text-elec-yellow">{nextInspectionDate}</p>
             <p className="text-xs text-foreground/60 mt-2">
-              Based on BS 7671:2018+A2:2024 requirements for {progress.installationType} installations
+              Based on BS 7671:2018+A2:2024 requirements for {progress.installationType}{' '}
+              installations
             </p>
           </div>
         </div>

@@ -1,27 +1,19 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  GraduationCap,
-  Building2,
-  UserCog,
-  MessageSquare,
-} from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { useCollegeConversations } from "@/hooks/useCollegeChat";
-import { useAuth } from "@/contexts/AuthContext";
-import type { CollegeConversation } from "@/services/collegeChatService";
+import { Card, CardContent } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { GraduationCap, Building2, UserCog, MessageSquare } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { useCollegeConversations } from '@/hooks/useCollegeChat';
+import { useAuth } from '@/contexts/AuthContext';
+import type { CollegeConversation } from '@/services/collegeChatService';
 
 interface CollegeChatListProps {
   onSelectConversation: (conversation: CollegeConversation) => void;
   currentUserType: 'student' | 'staff' | 'employer';
 }
 
-export function CollegeChatList({
-  onSelectConversation,
-  currentUserType,
-}: CollegeChatListProps) {
+export function CollegeChatList({ onSelectConversation, currentUserType }: CollegeChatListProps) {
   const { user } = useAuth();
   // Always enabled in college chat view
   const { data: conversations = [], isLoading, totalUnread } = useCollegeConversations(true);
@@ -37,18 +29,34 @@ export function CollegeChatList({
     if (type === 'student_tutor') {
       if (currentUserType === 'student') {
         icon = <UserCog className="h-4 w-4 text-blue-500" />;
-        badge = <Badge variant="outline" className="text-xs">Tutor</Badge>;
+        badge = (
+          <Badge variant="outline" className="text-xs">
+            Tutor
+          </Badge>
+        );
       } else {
         icon = <GraduationCap className="h-4 w-4 text-green-500" />;
-        badge = <Badge variant="outline" className="text-xs">Student</Badge>;
+        badge = (
+          <Badge variant="outline" className="text-xs">
+            Student
+          </Badge>
+        );
       }
     } else if (type === 'college_employer') {
       if (currentUserType === 'employer') {
         icon = <UserCog className="h-4 w-4 text-blue-500" />;
-        badge = <Badge variant="outline" className="text-xs">College</Badge>;
+        badge = (
+          <Badge variant="outline" className="text-xs">
+            College
+          </Badge>
+        );
       } else {
         icon = <Building2 className="h-4 w-4 text-orange-500" />;
-        badge = <Badge variant="outline" className="text-xs">Employer</Badge>;
+        badge = (
+          <Badge variant="outline" className="text-xs">
+            Employer
+          </Badge>
+        );
       }
     }
 
@@ -87,10 +95,10 @@ export function CollegeChatList({
           <h3 className="font-semibold text-lg mb-2">No conversations yet</h3>
           <p className="text-muted-foreground">
             {currentUserType === 'student'
-              ? "Your conversations with tutors will appear here"
+              ? 'Your conversations with tutors will appear here'
               : currentUserType === 'staff'
-              ? "Conversations with students and employers will appear here"
-              : "Conversations with college staff will appear here"}
+                ? 'Conversations with students and employers will appear here'
+                : 'Conversations with college staff will appear here'}
           </p>
         </CardContent>
       </Card>
@@ -134,7 +142,9 @@ export function CollegeChatList({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
-                      <p className={`font-medium truncate ${display.unreadCount > 0 ? 'text-foreground' : ''}`}>
+                      <p
+                        className={`font-medium truncate ${display.unreadCount > 0 ? 'text-foreground' : ''}`}
+                      >
                         {display.name}
                       </p>
                       {display.badge}
@@ -162,9 +172,13 @@ export function CollegeChatList({
                   )}
 
                   <div className="flex items-center justify-between gap-2 mt-1">
-                    <p className={`text-sm truncate ${
-                      display.unreadCount > 0 ? 'text-foreground font-medium' : 'text-muted-foreground'
-                    }`}>
+                    <p
+                      className={`text-sm truncate ${
+                        display.unreadCount > 0
+                          ? 'text-foreground font-medium'
+                          : 'text-muted-foreground'
+                      }`}
+                    >
                       {display.lastMessage || 'No messages yet'}
                     </p>
                     {display.unreadCount > 0 && (

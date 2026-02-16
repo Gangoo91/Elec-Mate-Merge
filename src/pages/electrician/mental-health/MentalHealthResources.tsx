@@ -1,7 +1,6 @@
-
-import MentalHealthPageLayout from "@/components/mental-health/MentalHealthPageLayout";
-import ResourcesLibrary from "@/components/mental-health/resources/ResourcesLibrary";
-import { BookOpen } from "lucide-react";
+import MentalHealthPageLayout from '@/components/mental-health/MentalHealthPageLayout';
+import ResourcesLibrary from '@/components/mental-health/resources/ResourcesLibrary';
+import { BookOpen } from 'lucide-react';
 
 const MentalHealthResources = () => {
   return (

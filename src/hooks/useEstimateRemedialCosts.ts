@@ -24,15 +24,15 @@ export interface EstimateResult {
 
 export function useEstimateRemedialCosts() {
   const [isEstimating, setIsEstimating] = useState(false);
-  const [progressStep, setProgressStep] = useState<'idle' | 'authenticating' | 'searching' | 'generating' | 'done'>('idle');
+  const [progressStep, setProgressStep] = useState<
+    'idle' | 'authenticating' | 'searching' | 'generating' | 'done'
+  >('idle');
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const { toast } = useToast();
   const abortRef = useRef<AbortController | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const estimate = async (
-    defects: DefectObservation[]
-  ): Promise<EstimateResult | null> => {
+  const estimate = async (defects: DefectObservation[]): Promise<EstimateResult | null> => {
     // Cancel any previous request
     if (abortRef.current) abortRef.current.abort();
     abortRef.current = new AbortController();
@@ -43,30 +43,29 @@ export function useEstimateRemedialCosts() {
 
     // Start elapsed timer
     timerRef.current = setInterval(() => {
-      setElapsedSeconds(prev => prev + 1);
+      setElapsedSeconds((prev) => prev + 1);
     }, 1000);
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
       setProgressStep('searching');
 
       // Use a timeout race — Supabase functions.invoke doesn't support AbortSignal directly
-      const invokePromise = supabase.functions.invoke(
-        'estimate-remedial-costs',
-        {
-          body: {
-            defects: defects.map(d => ({
-              code: d.code,
-              description: d.description,
-              location: d.location,
-              circuitRef: d.circuitRef,
-            })),
-          },
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        }
-      );
+      const invokePromise = supabase.functions.invoke('estimate-remedial-costs', {
+        body: {
+          defects: defects.map((d) => ({
+            code: d.code,
+            description: d.description,
+            location: d.location,
+            circuitRef: d.circuitRef,
+          })),
+        },
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
 
       // Create an abort promise
       const abortPromise = new Promise<never>((_, reject) => {
@@ -83,7 +82,9 @@ export function useEstimateRemedialCosts() {
           try {
             const body = await error.context.json();
             serverError = body?.error || serverError;
-          } catch { /* response already consumed */ }
+          } catch {
+            /* response already consumed */
+          }
         }
         throw new Error(serverError);
       }
@@ -103,7 +104,8 @@ export function useEstimateRemedialCosts() {
       console.error('Estimate remedial costs error:', error);
       toast({
         title: 'Estimation failed',
-        description: error?.message || 'Could not estimate remedial costs. Falling back to standard pricing.',
+        description:
+          error?.message || 'Could not estimate remedial costs. Falling back to standard pricing.',
         variant: 'destructive',
       });
       setProgressStep('idle');

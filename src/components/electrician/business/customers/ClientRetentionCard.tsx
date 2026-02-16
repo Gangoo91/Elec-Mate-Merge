@@ -1,6 +1,5 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users } from 'lucide-react';
 
 const ClientRetentionCard = () => {
   return (
@@ -10,14 +9,18 @@ const ClientRetentionCard = () => {
           <Users className="h-6 w-6 text-elec-yellow" />
           <div>
             <CardTitle>Long-Term Client Retention</CardTitle>
-            <CardDescription>Nurturing relationships for repeat business and referrals</CardDescription>
+            <CardDescription>
+              Nurturing relationships for repeat business and referrals
+            </CardDescription>
           </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-3 text-slate-200">
         <ul className="list-disc pl-6 space-y-2">
           <li>Create a CRM system to track customer touchpoints and service history</li>
-          <li>Develop an email newsletter with electrical safety tips and seasonal service reminders</li>
+          <li>
+            Develop an email newsletter with electrical safety tips and seasonal service reminders
+          </li>
           <li>Establish a structured feedback collection system after each job</li>
           <li>Implement a service maintenance programme with scheduled check-ups</li>
           <li>Consider annual electrical safety inspections for regular clients</li>

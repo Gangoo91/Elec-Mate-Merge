@@ -1,137 +1,131 @@
-import { ArrowLeft, Calculator, CheckCircle, BookOpen, HelpCircle, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import OhmsCalculator from "@/components/apprentice-courses/OhmsCalculator";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Calculator,
+  CheckCircle,
+  BookOpen,
+  HelpCircle,
+  AlertTriangle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import OhmsCalculator from '@/components/apprentice-courses/OhmsCalculator';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Calculate V, I or R (Step by Step) - Level 2 Module 2 Section 2.3";
-const DESCRIPTION = "Pick any two values and find the third using Ohm's Law with unit conversion tips, UK scenarios and checks.";
+const TITLE = 'Calculate V, I or R (Step by Step) - Level 2 Module 2 Section 2.3';
+const DESCRIPTION =
+  "Pick any two values and find the third using Ohm's Law with unit conversion tips, UK scenarios and checks.";
 
 const quickCheckQuestions = [
   {
-    id: "ohms-law-formula",
-    question: "For V = 48 V and R = 12 Ω, I is…",
-    options: [
-      "4 A",
-      "0.25 A",
-      "36 A",
-      "1 A"
-    ],
+    id: 'ohms-law-formula',
+    question: 'For V = 48 V and R = 12 Ω, I is…',
+    options: ['4 A', '0.25 A', '36 A', '1 A'],
     correctIndex: 0,
-    explanation: "I = V/R = 48/12 = 4 A."
+    explanation: 'I = V/R = 48/12 = 4 A.',
   },
   {
-    id: "unit-conversion",
-    question: "Convert 250 mA to base units:",
-    options: [
-      "0.25 A",
-      "2.5 A",
-      "25 A",
-      "0.025 A"
-    ],
+    id: 'unit-conversion',
+    question: 'Convert 250 mA to base units:',
+    options: ['0.25 A', '2.5 A', '25 A', '0.025 A'],
     correctIndex: 0,
-    explanation: "milli (m) means ÷1000, so 250 ÷ 1000 = 0.25 A."
-  }
+    explanation: 'milli (m) means ÷1000, so 250 ÷ 1000 = 0.25 A.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "A 230 V appliance has R = 920 Ω. Current is…",
-    options: ["0.25 A", "0.5 A", "2 A", "25 A"],
+    question: 'A 230 V appliance has R = 920 Ω. Current is…',
+    options: ['0.25 A', '0.5 A', '2 A', '25 A'],
     correctAnswer: 0,
-    explanation: "I = V/R = 230/920 ≈ 0.25 A."
+    explanation: 'I = V/R = 230/920 ≈ 0.25 A.',
   },
   {
     id: 2,
-    question: "R for V = 24 V, I = 0.12 A?",
-    options: ["200 Ω", "2 Ω", "20 Ω", "2 kΩ"],
+    question: 'R for V = 24 V, I = 0.12 A?',
+    options: ['200 Ω', '2 Ω', '20 Ω', '2 kΩ'],
     correctAnswer: 0,
-    explanation: "R = V/I = 24/0.12 = 200 Ω."
+    explanation: 'R = V/I = 24/0.12 = 200 Ω.',
   },
   {
     id: 3,
-    question: "V for I = 15 mA and R = 1.2 kΩ?",
-    options: ["18 V", "1.8 V", "180 V", "0.018 V"],
+    question: 'V for I = 15 mA and R = 1.2 kΩ?',
+    options: ['18 V', '1.8 V', '180 V', '0.018 V'],
     correctAnswer: 0,
-    explanation: "15 mA = 0.015 A, 1.2 kΩ = 1200 Ω → V = 0.015×1200 = 18 V."
+    explanation: '15 mA = 0.015 A, 1.2 kΩ = 1200 Ω → V = 0.015×1200 = 18 V.',
   },
   {
     id: 4,
-    question: "Convert 2.5 kΩ to base units:",
-    options: ["2500 Ω", "250 Ω", "25 Ω", "2.5 Ω"],
+    question: 'Convert 2.5 kΩ to base units:',
+    options: ['2500 Ω', '250 Ω', '25 Ω', '2.5 Ω'],
     correctAnswer: 0,
-    explanation: "kilo (k) means ×1000, so 2.5 × 1000 = 2500 Ω."
+    explanation: 'kilo (k) means ×1000, so 2.5 × 1000 = 2500 Ω.',
   },
   {
     id: 5,
-    question: "Convert 250 mA to base units:",
-    options: ["0.25 A", "2.5 A", "25 A", "0.025 A"],
+    question: 'Convert 250 mA to base units:',
+    options: ['0.25 A', '2.5 A', '25 A', '0.025 A'],
     correctAnswer: 0,
-    explanation: "milli (m) means ÷1000, so 250 ÷ 1000 = 0.25 A."
+    explanation: 'milli (m) means ÷1000, so 250 ÷ 1000 = 0.25 A.',
   },
   {
     id: 6,
-    question: "Which formula finds voltage?",
-    options: ["V = I × R", "I = V ÷ R", "R = V ÷ I", "P = V × I"],
+    question: 'Which formula finds voltage?',
+    options: ['V = I × R', 'I = V ÷ R', 'R = V ÷ I', 'P = V × I'],
     correctAnswer: 0,
-    explanation: "V = I × R is used to find voltage when current and resistance are known."
+    explanation: 'V = I × R is used to find voltage when current and resistance are known.',
   },
   {
     id: 7,
-    question: "A heating element draws 10A at 230V. Its resistance is:",
-    options: ["23 Ω", "230 Ω", "2300 Ω", "2.3 Ω"],
+    question: 'A heating element draws 10A at 230V. Its resistance is:',
+    options: ['23 Ω', '230 Ω', '2300 Ω', '2.3 Ω'],
     correctAnswer: 0,
-    explanation: "R = V/I = 230/10 = 23 Ω."
+    explanation: 'R = V/I = 230/10 = 23 Ω.',
   },
   {
     id: 8,
-    question: "Safety check: Calculate voltage across a 5Ω resistor with 2A current:",
-    options: ["10 V", "2.5 V", "7 V", "0.4 V"],
+    question: 'Safety check: Calculate voltage across a 5Ω resistor with 2A current:',
+    options: ['10 V', '2.5 V', '7 V', '0.4 V'],
     correctAnswer: 0,
-    explanation: "V = I × R = 2 × 5 = 10 V. Always check results are reasonable!"
+    explanation: 'V = I × R = 2 × 5 = 10 V. Always check results are reasonable!',
   },
   {
     id: 9,
     question: "Which step comes first in Ohm's Law calculations?",
-    options: [
-      "Choose the formula",
-      "Convert to base units",
-      "Calculate and round",
-      "Sanity check"
-    ],
+    options: ['Choose the formula', 'Convert to base units', 'Calculate and round', 'Sanity check'],
     correctAnswer: 1,
-    explanation: "Always convert to base units (V, A, Ω) first to avoid calculation errors."
+    explanation: 'Always convert to base units (V, A, Ω) first to avoid calculation errors.',
   },
   {
     id: 10,
     question: "A circuit has V = 12V and I = 0.5A. What's the resistance?",
-    options: ["24 Ω", "6 Ω", "12.5 Ω", "0.042 Ω"],
+    options: ['24 Ω', '6 Ω', '12.5 Ω', '0.042 Ω'],
     correctAnswer: 0,
-    explanation: "R = V/I = 12/0.5 = 24 Ω."
-  }
+    explanation: 'R = V/I = 12/0.5 = 24 Ω.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Should I always convert to base units?",
-    answer: "Yes, convert to A, V and Ω before calculating, then convert back if needed."
+    question: 'Should I always convert to base units?',
+    answer: 'Yes, convert to A, V and Ω before calculating, then convert back if needed.',
   },
   {
-    question: "How many decimals?",
-    answer: "Match the measurement precision and round sensibly (usually 2–3 dp for site notes)."
+    question: 'How many decimals?',
+    answer: 'Match the measurement precision and round sensibly (usually 2–3 dp for site notes).',
   },
   {
     question: "What if my reading doesn't match the calc?",
-    answer: "Real parts heat up or vary. Check the setup, temperature and instrument tolerance before concluding a fault."
+    answer:
+      'Real parts heat up or vary. Check the setup, temperature and instrument tolerance before concluding a fault.',
   },
   {
-    question: "Do test meters have tolerance?",
-    answer: "Yes. Allow for meter accuracy and lead resistance, especially at low ohms."
-  }
+    question: 'Do test meters have tolerance?',
+    answer: 'Yes. Allow for meter accuracy and lead resistance, especially at low ohms.',
+  },
 ];
 
 const Module2Section2_3 = () => {
@@ -142,7 +136,11 @@ const Module2Section2_3 = () => {
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -162,7 +160,8 @@ const Module2Section2_3 = () => {
             Calculate V, I or R (Step by Step)
           </h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Identify known values, convert units, pick the formula, calculate, round, and sanity-check
+            Identify known values, convert units, pick the formula, calculate, round, and
+            sanity-check
           </p>
         </div>
 
@@ -176,19 +175,42 @@ const Module2Section2_3 = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Ohm's Law:</strong> V = I × R relates voltage, current, and resistance.</li>
-                <li><strong>Formula selection:</strong> Cover what you're finding in the triangle method.</li>
-                <li><strong>Unit conversion:</strong> Always convert to base units (V, A, Ω) before calculating.</li>
-                <li><strong>Process:</strong> Convert units → Choose formula → Calculate → Round → Sanity check.</li>
-                <li><strong>Applications:</strong> Circuit analysis, fault finding, component sizing, safety checks.</li>
+                <li>
+                  <strong>Ohm's Law:</strong> V = I × R relates voltage, current, and resistance.
+                </li>
+                <li>
+                  <strong>Formula selection:</strong> Cover what you're finding in the triangle
+                  method.
+                </li>
+                <li>
+                  <strong>Unit conversion:</strong> Always convert to base units (V, A, Ω) before
+                  calculating.
+                </li>
+                <li>
+                  <strong>Process:</strong> Convert units → Choose formula → Calculate → Round →
+                  Sanity check.
+                </li>
+                <li>
+                  <strong>Applications:</strong> Circuit analysis, fault finding, component sizing,
+                  safety checks.
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Nameplate data (230V, 13A), meter readings, component values.</li>
-                <li><strong>Use:</strong> Load calculations, cable sizing, fuse selection, troubleshooting.</li>
-                <li><strong>Apply:</strong> V=IR, I=V/R, R=V/I calculations with proper unit conversion.</li>
+                <li>
+                  <strong>Spot:</strong> Nameplate data (230V, 13A), meter readings, component
+                  values.
+                </li>
+                <li>
+                  <strong>Use:</strong> Load calculations, cable sizing, fuse selection,
+                  troubleshooting.
+                </li>
+                <li>
+                  <strong>Apply:</strong> V=IR, I=V/R, R=V/I calculations with proper unit
+                  conversion.
+                </li>
               </ul>
             </div>
           </div>
@@ -241,8 +263,9 @@ const Module2Section2_3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              <strong>Ohm's Law</strong> describes the relationship between voltage, current, and resistance in electrical circuits.
-              It states that current is directly proportional to voltage and inversely proportional to resistance.
+              <strong>Ohm's Law</strong> describes the relationship between voltage, current, and
+              resistance in electrical circuits. It states that current is directly proportional to
+              voltage and inversely proportional to resistance.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4 border border-white/10">
@@ -273,10 +296,19 @@ const Module2Section2_3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <ol className="list-decimal pl-6 space-y-2">
-              <li><strong>Write known values with units;</strong> convert prefixes to base units (V, A, Ω).</li>
-              <li><strong>Choose the formula:</strong> V = I×R, I = V/R, or R = V/I.</li>
-              <li><strong>Calculate and round;</strong> keep at least 2–3 significant figures.</li>
-              <li><strong>Sanity-check:</strong> does the result fit the scenario?</li>
+              <li>
+                <strong>Write known values with units;</strong> convert prefixes to base units (V,
+                A, Ω).
+              </li>
+              <li>
+                <strong>Choose the formula:</strong> V = I×R, I = V/R, or R = V/I.
+              </li>
+              <li>
+                <strong>Calculate and round;</strong> keep at least 2–3 significant figures.
+              </li>
+              <li>
+                <strong>Sanity-check:</strong> does the result fit the scenario?
+              </li>
             </ol>
 
             <div className="bg-card/50 rounded-lg p-4 border border-white/10 mt-4">
@@ -299,7 +331,8 @@ const Module2Section2_3 = () => {
             Interactive Ohm's Law Calculator
           </h2>
           <p className="text-white mb-6">
-            Practice with this calculator. Enter any two values and it will calculate the third using Ohm's Law.
+            Practice with this calculator. Enter any two values and it will calculate the third
+            using Ohm's Law.
           </p>
           <OhmsCalculator />
         </section>
@@ -326,16 +359,25 @@ const Module2Section2_3 = () => {
           <div className="bg-card/50 rounded-lg p-4 border border-white/10">
             <h3 className="font-semibold text-orange-400 mb-3">Appliance Testing on Site</h3>
             <p className="text-xs sm:text-sm text-white mb-3">
-              You're testing a 3kW immersion heater on a 230V supply. The nameplate is worn and you need to verify
-              it's drawing the correct current and check its resistance.
+              You're testing a 3kW immersion heater on a 230V supply. The nameplate is worn and you
+              need to verify it's drawing the correct current and check its resistance.
             </p>
             <div className="space-y-2 text-sm text-white">
-              <p><strong>Given:</strong> P = 3kW, V = 230V</p>
-              <p><strong>Step 1:</strong> Find current using P = V × I → I = P/V = 3000/230 = 13.04A</p>
-              <p><strong>Step 2:</strong> Find resistance using R = V/I = 230/13.04 = 17.6Ω</p>
-              <p><strong>Check:</strong> Does 13A sound right for a 3kW heater? Yes!</p>
+              <p>
+                <strong>Given:</strong> P = 3kW, V = 230V
+              </p>
+              <p>
+                <strong>Step 1:</strong> Find current using P = V × I → I = P/V = 3000/230 = 13.04A
+              </p>
+              <p>
+                <strong>Step 2:</strong> Find resistance using R = V/I = 230/13.04 = 17.6Ω
+              </p>
+              <p>
+                <strong>Check:</strong> Does 13A sound right for a 3kW heater? Yes!
+              </p>
               <p className="text-white/70 italic">
-                This demonstrates how Ohm's Law helps verify equipment performance and spot potential faults.
+                This demonstrates how Ohm's Law helps verify equipment performance and spot
+                potential faults.
               </p>
             </div>
           </div>
@@ -349,7 +391,10 @@ const Module2Section2_3 = () => {
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-2 border-blue-800 bg-elec-yellow/10 p-4 rounded-r-lg">
+              <div
+                key={index}
+                className="border-l-2 border-blue-800 bg-elec-yellow/10 p-4 rounded-r-lg"
+              >
                 <p className="font-medium text-white mb-2">{faq.question}</p>
                 <p className="text-sm text-white">{faq.answer}</p>
               </div>
@@ -398,7 +443,8 @@ const Module2Section2_3 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <p className="text-xs sm:text-sm text-white">
-                  <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
+                  <strong>Safety Reminder:</strong> Always isolate and prove dead before work.
+                  Follow BS 7671 and manufacturer instructions.
                 </p>
               </div>
             </div>
@@ -416,13 +462,22 @@ const Module2Section2_3 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/apprentice/level2/module2/section2/2-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Triangle Method
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/apprentice/level2/module2/section2/2-4">
               Next: Power Calculations
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
@@ -436,11 +491,11 @@ const Module2Section2_3 = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
+            '@context': 'https://schema.org',
+            '@type': 'Article',
             headline: TITLE,
             description: DESCRIPTION,
-            inLanguage: "en-GB",
+            inLanguage: 'en-GB',
             isAccessibleForFree: true,
           }),
         }}

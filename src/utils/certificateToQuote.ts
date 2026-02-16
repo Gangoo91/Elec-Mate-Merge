@@ -14,7 +14,10 @@ function extractPostcode(address: string): { address: string; postcode: string }
   if (match) {
     const postcode = match[1].toUpperCase().replace(/\s+/, ' '); // Normalize spacing
     // Remove postcode from address and clean up trailing comma/space
-    const cleanAddress = address.replace(postcodeRegex, '').replace(/,?\s*$/, '').trim();
+    const cleanAddress = address
+      .replace(postcodeRegex, '')
+      .replace(/,?\s*$/, '')
+      .trim();
     return { address: cleanAddress, postcode };
   }
 

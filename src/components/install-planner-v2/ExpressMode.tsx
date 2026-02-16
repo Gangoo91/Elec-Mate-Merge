@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { RotateCcw, ArrowRight, Check } from "lucide-react";
-import { InstallPlanDataV2, CalculationResult } from "./types";
-import { QuickSetupStep } from "./express/QuickSetupStep";
-import { SmartEnvironmentStep } from "./express/SmartEnvironmentStep";
-import { ResultsStep } from "./express/ResultsStep";
-import { calculateCableSelection } from "./CalculationEngine";
-import { calculateSimplifiedCableSize } from "@/lib/calculators/engines/simplifiedCableSizingEngine";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { RotateCcw, ArrowRight, Check } from 'lucide-react';
+import { InstallPlanDataV2, CalculationResult } from './types';
+import { QuickSetupStep } from './express/QuickSetupStep';
+import { SmartEnvironmentStep } from './express/SmartEnvironmentStep';
+import { ResultsStep } from './express/ResultsStep';
+import { calculateCableSelection } from './CalculationEngine';
+import { calculateSimplifiedCableSize } from '@/lib/calculators/engines/simplifiedCableSizingEngine';
 
 interface ExpressModeProps {
   planData: InstallPlanDataV2;
@@ -20,12 +20,12 @@ export const ExpressMode = ({ planData, updatePlanData, onReset }: ExpressModePr
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   const steps = [
-    { num: 1, title: "Quick Setup", component: QuickSetupStep },
-    { num: 2, title: "Environment", component: SmartEnvironmentStep },
-    { num: 3, title: "Results", component: ResultsStep }
+    { num: 1, title: 'Quick Setup', component: QuickSetupStep },
+    { num: 2, title: 'Environment', component: SmartEnvironmentStep },
+    { num: 3, title: 'Results', component: ResultsStep },
   ];
 
-  const currentStepData = steps.find(s => s.num === step);
+  const currentStepData = steps.find((s) => s.num === step);
   const CurrentComponent = currentStepData?.component;
 
   const canProceed = () => {
@@ -57,16 +57,26 @@ export const ExpressMode = ({ planData, updatePlanData, onReset }: ExpressModePr
       <div className="flex items-center justify-center gap-1 md:gap-3">
         {steps.map((s, idx) => (
           <div key={s.num} className="flex items-center">
-            <div className={`flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full transition-all ${
-              step === s.num ? 'bg-primary text-primary-foreground' :
-              step > s.num ? 'bg-green-500 text-foreground' :
-              'bg-muted text-muted-foreground'
-            }`}>
-              {step > s.num ? <Check className="h-3 w-3 md:h-4 md:w-4" /> : <span className="font-bold text-sm md:text-base">{s.num}</span>}
+            <div
+              className={`flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full transition-all ${
+                step === s.num
+                  ? 'bg-primary text-primary-foreground'
+                  : step > s.num
+                    ? 'bg-green-500 text-foreground'
+                    : 'bg-muted text-muted-foreground'
+              }`}
+            >
+              {step > s.num ? (
+                <Check className="h-3 w-3 md:h-4 md:w-4" />
+              ) : (
+                <span className="font-bold text-sm md:text-base">{s.num}</span>
+              )}
               <span className="font-medium text-sm md:text-base hidden md:inline">{s.title}</span>
             </div>
             {idx < steps.length - 1 && (
-              <ArrowRight className={`h-4 w-4 md:h-5 md:w-5 mx-1 md:mx-2 ${step > s.num ? 'text-green-500' : 'text-border'}`} />
+              <ArrowRight
+                className={`h-4 w-4 md:h-5 md:w-5 mx-1 md:mx-2 ${step > s.num ? 'text-green-500' : 'text-border'}`}
+              />
             )}
           </div>
         ))}
@@ -81,8 +91,12 @@ export const ExpressMode = ({ planData, updatePlanData, onReset }: ExpressModePr
         </CardHeader>
         <CardContent className="min-h-[300px] md:min-h-[400px]">
           {step === 1 && <QuickSetupStep planData={planData} updatePlanData={updatePlanData} />}
-          {step === 2 && <SmartEnvironmentStep planData={planData} updatePlanData={updatePlanData} />}
-          {step === 3 && <ResultsStep planData={planData} updatePlanData={updatePlanData} result={result} />}
+          {step === 2 && (
+            <SmartEnvironmentStep planData={planData} updatePlanData={updatePlanData} />
+          )}
+          {step === 3 && (
+            <ResultsStep planData={planData} updatePlanData={updatePlanData} result={result} />
+          )}
         </CardContent>
       </Card>
 
@@ -98,11 +112,7 @@ export const ExpressMode = ({ planData, updatePlanData, onReset }: ExpressModePr
         </Button>
 
         <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3">
-          <Button
-            variant="outline"
-            onClick={onReset}
-            className="gap-2 w-full md:w-auto"
-          >
+          <Button variant="outline" onClick={onReset} className="gap-2 w-full md:w-auto">
             <RotateCcw className="h-4 w-4" /> Start Over
           </Button>
 

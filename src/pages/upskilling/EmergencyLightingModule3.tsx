@@ -1,4 +1,12 @@
-import { ArrowLeft, Lightbulb, Route, Ruler, AlertTriangle, FileText, Calculator } from 'lucide-react';
+import {
+  ArrowLeft,
+  Lightbulb,
+  Route,
+  Ruler,
+  AlertTriangle,
+  FileText,
+  Calculator,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,40 +15,40 @@ const EmergencyLightingModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Minimum Illumination Levels and Durations",
+      title: 'Minimum Illumination Levels and Durations',
       icon: Lightbulb,
-      description: "Required lux levels and operating times"
+      description: 'Required lux levels and operating times',
     },
     {
       id: 2,
-      title: "Escape Route and Coverage Rules",
+      title: 'Escape Route and Coverage Rules',
       icon: Route,
-      description: "Path lighting and coverage requirements"
+      description: 'Path lighting and coverage requirements',
     },
     {
       id: 3,
-      title: "Mounting Heights and Photometric Considerations",
+      title: 'Mounting Heights and Photometric Considerations',
       icon: Ruler,
-      description: "Installation heights and light distribution"
+      description: 'Installation heights and light distribution',
     },
     {
       id: 4,
-      title: "Risk-Based Design Adjustments",
+      title: 'Risk-Based Design Adjustments',
       icon: AlertTriangle,
-      description: "Adapting design based on risk assessment"
+      description: 'Adapting design based on risk assessment',
     },
     {
       id: 5,
-      title: "Emergency Lighting Layout Drawings",
+      title: 'Emergency Lighting Layout Drawings',
       icon: FileText,
-      description: "Technical drawings and documentation"
+      description: 'Technical drawings and documentation',
     },
     {
       id: 6,
-      title: "Software and Calculation Tools",
+      title: 'Software and Calculation Tools',
       icon: Calculator,
-      description: "Design software and calculation methods"
-    }
+      description: 'Design software and calculation methods',
+    },
   ];
 
   return (

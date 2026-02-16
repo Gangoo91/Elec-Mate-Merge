@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Wrench,
@@ -9,185 +9,167 @@ import {
   Target,
   Settings,
   CheckCircle,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
-const TITLE = "PVC and Metal Conduit - Module 3.2.2 | Level 2 Electrical Course";
-const DESCRIPTION = "Complete guide to PVC and steel conduit systems. Surface and recessed installation, best practices and BS 7671 compliance.";
+const TITLE = 'PVC and Metal Conduit - Module 3.2.2 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Complete guide to PVC and steel conduit systems. Surface and recessed installation, best practices and BS 7671 compliance.';
 
 const quickCheckQuestions = [
   {
-    id: "pvc-advantage",
-    question: "Name one advantage of PVC conduit over metal conduit.",
+    id: 'pvc-advantage',
+    question: 'Name one advantage of PVC conduit over metal conduit.',
     options: [
-      "Stronger mechanical protection",
-      "Easier to cut and install",
-      "Better earth path capability",
+      'Stronger mechanical protection',
+      'Easier to cut and install',
+      'Better earth path capability',
     ],
     correctIndex: 1,
     explanation:
-      "PVC conduit is much easier to cut with simple tools and join using solvent cement, requiring less skill than threading and coupling steel conduit.",
+      'PVC conduit is much easier to cut with simple tools and join using solvent cement, requiring less skill than threading and coupling steel conduit.',
   },
   {
-    id: "steel-earthing",
-    question: "Why must steel conduit joints be electrically continuous?",
+    id: 'steel-earthing',
+    question: 'Why must steel conduit joints be electrically continuous?',
     options: [
-      "To prevent rust formation",
-      "To ensure safe earthing path",
-      "To make installation faster",
+      'To prevent rust formation',
+      'To ensure safe earthing path',
+      'To make installation faster',
     ],
     correctIndex: 1,
     explanation:
-      "Steel conduit can serve as the earth path for the circuit, so all joints must be electrically continuous and tested to ensure fault current can safely flow to earth.",
+      'Steel conduit can serve as the earth path for the circuit, so all joints must be electrically continuous and tested to ensure fault current can safely flow to earth.',
   },
   {
-    id: "industrial-conduit",
-    question: "Which type of conduit is more suitable for heavy industrial environments?",
-    options: [
-      "PVC conduit",
-      "Steel conduit",
-      "Flexible PVC conduit",
-    ],
+    id: 'industrial-conduit',
+    question: 'Which type of conduit is more suitable for heavy industrial environments?',
+    options: ['PVC conduit', 'Steel conduit', 'Flexible PVC conduit'],
     correctIndex: 1,
     explanation:
-      "Steel conduit provides superior mechanical protection against impacts from machinery, tools and vehicles commonly found in industrial environments.",
+      'Steel conduit provides superior mechanical protection against impacts from machinery, tools and vehicles commonly found in industrial environments.',
   },
   {
-    id: "conduit-protection",
-    question: "What is used at conduit entry points to protect cable insulation?",
-    options: [
-      "Cable ties",
-      "Bushes or grommets",
-      "Insulation tape",
-    ],
+    id: 'conduit-protection',
+    question: 'What is used at conduit entry points to protect cable insulation?',
+    options: ['Cable ties', 'Bushes or grommets', 'Insulation tape'],
     correctIndex: 1,
     explanation:
-      "Bushes or grommets prevent sharp edges at conduit entry points from cutting through cable insulation during installation or service.",
+      'Bushes or grommets prevent sharp edges at conduit entry points from cutting through cable insulation during installation or service.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is one major advantage of PVC conduit over metal conduit?",
+    question: 'What is one major advantage of PVC conduit over metal conduit?',
     options: [
-      "Stronger mechanical protection",
-      "Easier to cut and install",
-      "Better earth path capability",
-      "Higher heat resistance",
+      'Stronger mechanical protection',
+      'Easier to cut and install',
+      'Better earth path capability',
+      'Higher heat resistance',
     ],
     correctAnswer: 1,
     explanation:
-      "PVC conduit is much easier to cut with simple tools and join using solvent cement, making installation faster and requiring less skilled labour.",
+      'PVC conduit is much easier to cut with simple tools and join using solvent cement, making installation faster and requiring less skilled labour.',
   },
   {
     id: 2,
-    question: "Which type of conduit is more suitable for heavy industrial environments?",
-    options: [
-      "PVC conduit",
-      "Steel conduit",
-      "Flexible PVC conduit",
-      "Aluminium conduit",
-    ],
+    question: 'Which type of conduit is more suitable for heavy industrial environments?',
+    options: ['PVC conduit', 'Steel conduit', 'Flexible PVC conduit', 'Aluminium conduit'],
     correctAnswer: 1,
     explanation:
-      "Steel conduit provides superior mechanical protection against the impacts and harsh conditions typically found in heavy industrial environments.",
+      'Steel conduit provides superior mechanical protection against the impacts and harsh conditions typically found in heavy industrial environments.',
   },
   {
     id: 3,
-    question: "True or False: Steel conduit can act as an earth path.",
-    options: ["True", "False"],
+    question: 'True or False: Steel conduit can act as an earth path.',
+    options: ['True', 'False'],
     correctAnswer: 0,
     explanation:
-      "True. Steel conduit, when properly installed with electrical continuity between all joints, can serve as the protective conductor (earth path) for the circuit.",
+      'True. Steel conduit, when properly installed with electrical continuity between all joints, can serve as the protective conductor (earth path) for the circuit.',
   },
   {
     id: 4,
-    question: "Give one disadvantage of recessed conduit installation.",
+    question: 'Give one disadvantage of recessed conduit installation.',
     options: [
-      "Higher material costs",
-      "More labour-intensive and harder to modify later",
-      "Poor mechanical protection",
-      "Limited cable capacity",
+      'Higher material costs',
+      'More labour-intensive and harder to modify later',
+      'Poor mechanical protection',
+      'Limited cable capacity',
     ],
     correctAnswer: 1,
     explanation:
-      "Recessed installation requires chasing walls, is more time-consuming, and makes future modifications or repairs much more difficult and disruptive.",
+      'Recessed installation requires chasing walls, is more time-consuming, and makes future modifications or repairs much more difficult and disruptive.',
   },
   {
     id: 5,
-    question: "What is used at conduit ends to prevent damage to cable insulation?",
-    options: [
-      "Cable ties",
-      "Insulation tape",
-      "Bushes or grommets",
-      "Plastic sleeves",
-    ],
+    question: 'What is used at conduit ends to prevent damage to cable insulation?',
+    options: ['Cable ties', 'Insulation tape', 'Bushes or grommets', 'Plastic sleeves'],
     correctAnswer: 2,
     explanation:
-      "Bushes or grommets are fitted at conduit entry points to prevent sharp edges from cutting cable insulation during installation or thermal movement.",
+      'Bushes or grommets are fitted at conduit entry points to prevent sharp edges from cutting cable insulation during installation or thermal movement.',
   },
   {
     id: 6,
-    question: "Why is electrical continuity important in metal conduit systems?",
+    question: 'Why is electrical continuity important in metal conduit systems?',
     options: [
-      "To prevent rust",
-      "To ensure safe earthing",
-      "To make installation easier",
-      "To improve appearance",
+      'To prevent rust',
+      'To ensure safe earthing',
+      'To make installation easier',
+      'To improve appearance',
     ],
     correctAnswer: 1,
     explanation:
-      "Electrical continuity ensures the metal conduit can safely carry fault current to earth, providing protection against electric shock and fire.",
+      'Electrical continuity ensures the metal conduit can safely carry fault current to earth, providing protection against electric shock and fire.',
   },
   {
     id: 7,
-    question: "Name one situation where surface-mounted conduit is preferred.",
+    question: 'Name one situation where surface-mounted conduit is preferred.',
     options: [
-      "Domestic living rooms",
-      "Industrial settings or retrofit installations",
-      "Hotel bedrooms",
-      "Office reception areas",
+      'Domestic living rooms',
+      'Industrial settings or retrofit installations',
+      'Hotel bedrooms',
+      'Office reception areas',
     ],
     correctAnswer: 1,
     explanation:
-      "Surface mounting is preferred in industrial settings for durability and accessibility, and in retrofit situations where chasing walls would be disruptive.",
+      'Surface mounting is preferred in industrial settings for durability and accessibility, and in retrofit situations where chasing walls would be disruptive.',
   },
   {
     id: 8,
-    question: "Which regulation covers conduit installation in the UK?",
-    options: [
-      "BS 7909",
-      "BS 7671 (IET Wiring Regulations)",
-      "BS 5839",
-      "BS 6701",
-    ],
+    question: 'Which regulation covers conduit installation in the UK?',
+    options: ['BS 7909', 'BS 7671 (IET Wiring Regulations)', 'BS 5839', 'BS 6701'],
     correctAnswer: 1,
     explanation:
-      "BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including conduit systems, support spacing, and earthing requirements.",
+      'BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including conduit systems, support spacing, and earthing requirements.',
   },
 ];
 
 const faqs = [
   {
-    question: "Can PVC conduit be used outdoors?",
-    answer: "Yes, if it is UV-stabilised and weatherproof fittings are used. Standard PVC can degrade under UV exposure.",
+    question: 'Can PVC conduit be used outdoors?',
+    answer:
+      'Yes, if it is UV-stabilised and weatherproof fittings are used. Standard PVC can degrade under UV exposure.',
   },
   {
-    question: "Is metal conduit always earthed?",
-    answer: "Yes - if used as an earth path, it must be electrically continuous and tested to confirm compliance with BS 7671.",
+    question: 'Is metal conduit always earthed?',
+    answer:
+      'Yes - if used as an earth path, it must be electrically continuous and tested to confirm compliance with BS 7671.',
   },
   {
-    question: "Can recessed conduit be added after walls are finished?",
-    answer: "It's possible but highly disruptive - surface mounting is usually more practical and cost-effective in retrofit situations.",
+    question: 'Can recessed conduit be added after walls are finished?',
+    answer:
+      "It's possible but highly disruptive - surface mounting is usually more practical and cost-effective in retrofit situations.",
   },
   {
     question: "What's the maximum support spacing for 20mm PVC conduit?",
-    answer: "750mm for horizontal runs and 1000mm for vertical runs to prevent sagging and maintain appearance.",
+    answer:
+      '750mm for horizontal runs and 1000mm for vertical runs to prevent sagging and maintain appearance.',
   },
 ];
 
@@ -199,7 +181,12 @@ const Module3Section2_2: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -210,7 +197,6 @@ const Module3Section2_2: React.FC = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -221,7 +207,8 @@ const Module3Section2_2: React.FC = () => {
             PVC and Metal Conduit (Surface/Recessed)
           </h1>
           <p className="text-white/80">
-            Understanding conduit materials, installation methods and practical application techniques
+            Understanding conduit materials, installation methods and practical application
+            techniques
           </p>
         </header>
 
@@ -239,9 +226,18 @@ const Module3Section2_2: React.FC = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Round white (PVC) or grey/black (steel) tubes on surfaces or in walls</li>
-              <li><strong>Use:</strong> PVC for most domestic/light commercial; Steel for industrial/high-risk</li>
-              <li><strong>Check:</strong> Support spacing, bend radius, electrical continuity (steel), bushes at entries</li>
+              <li>
+                <strong>Spot:</strong> Round white (PVC) or grey/black (steel) tubes on surfaces or
+                in walls
+              </li>
+              <li>
+                <strong>Use:</strong> PVC for most domestic/light commercial; Steel for
+                industrial/high-risk
+              </li>
+              <li>
+                <strong>Check:</strong> Support spacing, bend radius, electrical continuity (steel),
+                bushes at entries
+              </li>
             </ul>
           </div>
         </div>
@@ -251,11 +247,11 @@ const Module3Section2_2: React.FC = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify the characteristics of PVC and metal conduit systems",
-              "Explain the differences between surface and recessed conduit installation",
-              "Select the correct conduit type for different environments and applications",
-              "Understand key installation requirements and practical techniques for both conduit types",
-              "Apply BS 7671 requirements for support, earthing and protection"
+              'Identify the characteristics of PVC and metal conduit systems',
+              'Explain the differences between surface and recessed conduit installation',
+              'Select the correct conduit type for different environments and applications',
+              'Understand key installation requirements and practical techniques for both conduit types',
+              'Apply BS 7671 requirements for support, earthing and protection',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -280,7 +276,9 @@ const Module3Section2_2: React.FC = () => {
                 <p className="font-medium text-white text-sm mb-3">PVC Conduit Systems</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Material & Construction</p>
+                    <p className="font-medium text-white/80 text-xs mb-1">
+                      Material & Construction
+                    </p>
                     <ul className="text-xs text-white/70 space-y-1">
                       <li>Rigid PVC (polyvinyl chloride) - non-metallic</li>
                       <li>Available in 16mm, 20mm, 25mm, 32mm diameters</li>
@@ -314,7 +312,9 @@ const Module3Section2_2: React.FC = () => {
                 <p className="font-medium text-white text-sm mb-3">Metal Conduit Systems (Steel)</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Material & Construction</p>
+                    <p className="font-medium text-white/80 text-xs mb-1">
+                      Material & Construction
+                    </p>
                     <ul className="text-xs text-white/70 space-y-1">
                       <li>Galvanised or enamel-coated steel tubes</li>
                       <li>Sizes: 16mm, 20mm, 25mm, 32mm, 40mm, 50mm</li>
@@ -411,7 +411,9 @@ const Module3Section2_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Installation Considerations</p>
+                    <p className="font-medium text-white/80 text-xs mb-1">
+                      Installation Considerations
+                    </p>
                     <ul className="text-xs text-white/70 space-y-1">
                       <li>Chase depth: 1/3 wall thickness maximum</li>
                       <li>Protect conduit during plastering</li>
@@ -487,7 +489,9 @@ const Module3Section2_2: React.FC = () => {
             </div>
 
             <div className="p-4 rounded bg-teal-500/10 border border-teal-400/20">
-              <p className="font-medium text-white text-sm mb-3">Cable Installation Best Practices</p>
+              <p className="font-medium text-white text-sm mb-3">
+                Cable Installation Best Practices
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white/80 text-xs mb-1">Cable Pulling Techniques</p>
@@ -500,7 +504,9 @@ const Module3Section2_2: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Protection and Termination</p>
+                  <p className="font-medium text-white/80 text-xs mb-1">
+                    Protection and Termination
+                  </p>
                   <ul className="text-xs text-white/70 space-y-1">
                     <li>Fit bushes or grommets at all entry points</li>
                     <li>Ensure adequate cable identification</li>
@@ -524,11 +530,16 @@ const Module3Section2_2: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-3 rounded bg-white/5">
-              <p className="font-medium text-elec-yellow text-sm mb-2">Excessive bends between draw points</p>
+              <p className="font-medium text-elec-yellow text-sm mb-2">
+                Excessive bends between draw points
+              </p>
               <ul className="text-xs text-white/80 space-y-1">
                 <li>More than 4 x 90 degrees bends making cable pulling impossible</li>
                 <li>Tight radius bends damaging cables during installation</li>
-                <li><strong>Solution:</strong> Plan routes carefully, use inspection boxes every 4 bends, maintain proper bend radius</li>
+                <li>
+                  <strong>Solution:</strong> Plan routes carefully, use inspection boxes every 4
+                  bends, maintain proper bend radius
+                </li>
               </ul>
             </div>
 
@@ -537,25 +548,38 @@ const Module3Section2_2: React.FC = () => {
               <ul className="text-xs text-white/80 space-y-1">
                 <li>Inadequate support spacing causing conduit sag</li>
                 <li>Using incorrect fixings for wall type</li>
-                <li><strong>Solution:</strong> Follow manufacturer's support spacing guidelines, use appropriate fixings for substrate</li>
+                <li>
+                  <strong>Solution:</strong> Follow manufacturer's support spacing guidelines, use
+                  appropriate fixings for substrate
+                </li>
               </ul>
             </div>
 
             <div className="p-3 rounded bg-white/5">
-              <p className="font-medium text-elec-yellow text-sm mb-2">Steel conduit earthing failures</p>
+              <p className="font-medium text-elec-yellow text-sm mb-2">
+                Steel conduit earthing failures
+              </p>
               <ul className="text-xs text-white/80 space-y-1">
                 <li>Poor electrical continuity through joints</li>
                 <li>Relying on paint or corrosion-compromised connections</li>
-                <li><strong>Solution:</strong> Clean threads, use jointing compound, test continuity, install supplementary earth if needed</li>
+                <li>
+                  <strong>Solution:</strong> Clean threads, use jointing compound, test continuity,
+                  install supplementary earth if needed
+                </li>
               </ul>
             </div>
 
             <div className="p-3 rounded bg-white/5">
-              <p className="font-medium text-elec-yellow text-sm mb-2">Inadequate cable protection</p>
+              <p className="font-medium text-elec-yellow text-sm mb-2">
+                Inadequate cable protection
+              </p>
               <ul className="text-xs text-white/80 space-y-1">
                 <li>Missing bushes allowing cable insulation damage</li>
                 <li>Sharp edges not removed from cut conduit</li>
-                <li><strong>Solution:</strong> Always fit protective bushes, deburr all cut ends, inspect before cable installation</li>
+                <li>
+                  <strong>Solution:</strong> Always fit protective bushes, deburr all cut ends,
+                  inspect before cable installation
+                </li>
               </ul>
             </div>
           </div>
@@ -575,21 +599,39 @@ const Module3Section2_2: React.FC = () => {
             </p>
 
             <ul className="text-sm text-white space-y-2 ml-4">
-              <li><strong>Section 522.8.10:</strong> Mechanical protection requirements - conduit providing adequate protection against damage</li>
-              <li><strong>Section 521.10.202:</strong> Support and fixings to prevent premature collapse during fire</li>
-              <li><strong>Section 543.2.9:</strong> Metallic conduit as protective conductor - electrical continuity and cross-sectional area requirements</li>
-              <li><strong>Section 528:</strong> Proximity to other services and segregation requirements</li>
-              <li><strong>Section 522.3:</strong> Selection according to external influences (temperature, corrosion, impact)</li>
+              <li>
+                <strong>Section 522.8.10:</strong> Mechanical protection requirements - conduit
+                providing adequate protection against damage
+              </li>
+              <li>
+                <strong>Section 521.10.202:</strong> Support and fixings to prevent premature
+                collapse during fire
+              </li>
+              <li>
+                <strong>Section 543.2.9:</strong> Metallic conduit as protective conductor -
+                electrical continuity and cross-sectional area requirements
+              </li>
+              <li>
+                <strong>Section 528:</strong> Proximity to other services and segregation
+                requirements
+              </li>
+              <li>
+                <strong>Section 522.3:</strong> Selection according to external influences
+                (temperature, corrosion, impact)
+              </li>
             </ul>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mt-6">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="font-medium text-elec-yellow text-sm mb-1">Key Testing Requirement</p>
+                  <p className="font-medium text-elec-yellow text-sm mb-1">
+                    Key Testing Requirement
+                  </p>
                   <p className="text-sm text-white">
-                    "Where metallic conduit is used as protective conductor, electrical continuity must be verified by measurement.
-                    Maximum resistance should not exceed 0.05 Ohm per joint." - Section 543.2.9
+                    "Where metallic conduit is used as protective conductor, electrical continuity
+                    must be verified by measurement. Maximum resistance should not exceed 0.05 Ohm
+                    per joint." - Section 543.2.9
                   </p>
                 </div>
               </div>
@@ -609,8 +651,9 @@ const Module3Section2_2: React.FC = () => {
               <div>
                 <p className="font-medium text-white mb-2">The Challenge</p>
                 <p className="text-sm text-white/90 leading-relaxed">
-                  A high-end clothing retailer needed complete rewiring during renovation. The customer area required
-                  an upmarket appearance while the stockroom needed practical, durable installation:
+                  A high-end clothing retailer needed complete rewiring during renovation. The
+                  customer area required an upmarket appearance while the stockroom needed
+                  practical, durable installation:
                 </p>
                 <ul className="list-disc pl-4 mt-2 text-sm text-white/80 space-y-1">
                   <li>Sales floor: Premium finish essential for brand image</li>
@@ -662,9 +705,10 @@ const Module3Section2_2: React.FC = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h2 className="text-lg font-semibold text-elec-yellow mb-2">Summary</h2>
             <p className="text-sm text-white leading-relaxed">
-              PVC and steel conduit each have distinct advantages - choose PVC for ease of installation and cost-effectiveness,
-              steel for maximum protection and harsh environments. Surface mounting provides accessibility and speed,
-              while recessed installation delivers aesthetic appeal at the cost of flexibility.
+              PVC and steel conduit each have distinct advantages - choose PVC for ease of
+              installation and cost-effectiveness, steel for maximum protection and harsh
+              environments. Surface mounting provides accessibility and speed, while recessed
+              installation delivers aesthetic appeal at the cost of flexibility.
             </p>
           </div>
         </section>
@@ -674,28 +718,33 @@ const Module3Section2_2: React.FC = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../2-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../2-3">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

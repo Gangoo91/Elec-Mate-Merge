@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertCircle, HelpCircle } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react';
 
 interface ConfidenceMeterProps {
   level: 'high' | 'medium' | 'low';
@@ -15,7 +15,7 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
       borderColor: 'border-green-500',
       icon: CheckCircle2,
       label: 'High Confidence',
-      description: 'Clear defect - single interpretation'
+      description: 'Clear defect - single interpretation',
     },
     medium: {
       color: 'bg-amber-500/60',
@@ -23,7 +23,7 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
       borderColor: 'border-amber-500',
       icon: AlertCircle,
       label: 'Medium Confidence',
-      description: 'Code depends on installation context'
+      description: 'Code depends on installation context',
     },
     low: {
       color: 'bg-red-500/60',
@@ -31,8 +31,8 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
       borderColor: 'border-red-500',
       icon: HelpCircle,
       label: 'Low Confidence',
-      description: 'Site inspection required'
-    }
+      description: 'Site inspection required',
+    },
   };
 
   const normalizedLevel = (level?.toLowerCase() || 'medium') as 'high' | 'medium' | 'low';
@@ -51,9 +51,7 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
             <Badge className={`${conf.color} text-foreground border-none text-base px-3 py-1.5`}>
               {conf.label}
             </Badge>
-            <span className={`text-4xl font-bold ${conf.textColor}`}>
-              {displayScore}%
-            </span>
+            <span className={`text-4xl font-bold ${conf.textColor}`}>{displayScore}%</span>
           </div>
           <p className="text-base text-foreground leading-relaxed text-left">{conf.description}</p>
           {reasoning && (
@@ -66,7 +64,7 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
 
       {/* Visual confidence bar */}
       <div className="mt-4 h-3 bg-elec-dark rounded-full overflow-hidden">
-        <div 
+        <div
           className={`h-full ${conf.color} transition-all duration-500`}
           style={{ width: `${displayScore}%` }}
         />

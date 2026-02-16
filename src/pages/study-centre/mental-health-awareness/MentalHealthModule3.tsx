@@ -1,45 +1,45 @@
-import { ArrowLeft, HandHeart, Ear, MessageSquare, HardHat } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HandHeart, Ear, MessageSquare, HardHat } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "How to Approach Someone",
+    title: 'How to Approach Someone',
     icon: HandHeart,
     description:
-      "Choosing the right moment, creating a safe space, and opening the conversation with care",
+      'Choosing the right moment, creating a safe space, and opening the conversation with care',
   },
   {
     id: 2,
-    title: "Active Listening and the ALGEE Model",
+    title: 'Active Listening and the ALGEE Model',
     icon: Ear,
     description:
-      "The MHFA England ALGEE action plan, non-judgemental listening, and being fully present",
+      'The MHFA England ALGEE action plan, non-judgemental listening, and being fully present',
   },
   {
     id: 3,
-    title: "What to Say and What Not to Say",
+    title: 'What to Say and What Not to Say',
     icon: MessageSquare,
     description:
-      "Helpful vs harmful language, empathy without fixing, and phrases that shut people down",
+      'Helpful vs harmful language, empathy without fixing, and phrases that shut people down',
   },
   {
     id: 4,
-    title: "Conversations on Site",
+    title: 'Conversations on Site',
     icon: HardHat,
     description:
-      "Practical scenarios for the van, the canteen, and the site — making it normal to talk",
+      'Practical scenarios for the van, the canteen, and the site — making it normal to talk',
   },
 ];
 
 export default function MentalHealthModule3() {
   useSEO({
-    title: "Module 3: Starting Conversations | Mental Health Awareness",
+    title: 'Module 3: Starting Conversations | Mental Health Awareness',
     description:
-      "How to approach someone, active listening, the ALGEE model, and having conversations on site.",
+      'How to approach someone, active listening, the ALGEE model, and having conversations on site.',
   });
 
   return (
@@ -76,8 +76,8 @@ export default function MentalHealthModule3() {
               Starting Conversations
             </h1>
             <p className="text-white text-sm sm:text-base">
-              How to approach someone you're worried about, listen without
-              judgement, and make talking about mental health normal on site
+              How to approach someone you're worried about, listen without judgement, and make
+              talking about mental health normal on site
             </p>
           </div>
 

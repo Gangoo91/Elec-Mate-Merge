@@ -7,12 +7,12 @@ export const HubPurposeQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is the main purpose of a smart home hub?";
+  const question = 'What is the main purpose of a smart home hub?';
   const options = [
-    "To provide internet access to the home",
-    "To act as a central controller connecting and managing smart devices",
-    "To store energy for smart devices",
-    "To replace traditional electrical wiring"
+    'To provide internet access to the home',
+    'To act as a central controller connecting and managing smart devices',
+    'To store energy for smart devices',
+    'To replace traditional electrical wiring',
   ];
   const correctAnswer = 1;
 
@@ -35,7 +35,7 @@ export const HubPurposeQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -47,8 +47,8 @@ export const HubPurposeQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-900/30 border-green-500 text-green-300'
                     : index === selectedAnswer
-                    ? 'bg-red-900/30 border-red-500 text-red-300'
-                    : 'bg-gray-800/30 border-gray-600 text-gray-400'
+                      ? 'bg-red-900/30 border-red-500 text-red-300'
+                      : 'bg-gray-800/30 border-gray-600 text-gray-400'
                   : 'bg-elec-gray border-gray-600 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
               }`}
             >
@@ -67,16 +67,17 @@ export const HubPurposeQuickCheck = () => {
 
         {showResult && (
           <div className="space-y-3">
-            <div className={`p-4 rounded-lg border ${
-              selectedAnswer === correctAnswer
-                ? 'bg-green-900/20 border-green-500/30'
-                : 'bg-red-900/20 border-red-500/30'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'bg-green-900/20 border-green-500/30'
+                  : 'bg-red-900/20 border-red-500/30'
+              }`}
+            >
               <p className="text-foreground text-sm">
                 {selectedAnswer === correctAnswer
-                  ? "Correct! A smart home hub acts as the central controller that connects different smart devices and allows them to communicate with each other, regardless of their individual protocols."
-                  : "Not quite. A smart home hub's main purpose is to act as a central controller that connects and manages all smart devices in the home, translating between different communication protocols."
-                }
+                  ? 'Correct! A smart home hub acts as the central controller that connects different smart devices and allows them to communicate with each other, regardless of their individual protocols.'
+                  : "Not quite. A smart home hub's main purpose is to act as a central controller that connects and manages all smart devices in the home, translating between different communication protocols."}
               </p>
             </div>
 

@@ -87,9 +87,7 @@ export const DataSourceIndicator: React.FC<DataSourceIndicatorProps> = ({
 
       {/* Elec-ID number */}
       {elecIdNumber && activeSource === 'elec_id' && (
-        <span className="text-xs text-muted-foreground ml-2">
-          {elecIdNumber}
-        </span>
+        <span className="text-xs text-muted-foreground ml-2">{elecIdNumber}</span>
       )}
     </div>
   );

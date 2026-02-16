@@ -1,12 +1,11 @@
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Wand2, Loader2, Copy, RefreshCw, CheckCircle } from "lucide-react";
-import { AIService } from "./AIService";
-import { toast } from "@/hooks/use-toast";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { Wand2, Loader2, Copy, RefreshCw, CheckCircle } from 'lucide-react';
+import { AIService } from './AIService';
+import { toast } from '@/hooks/use-toast';
 
 interface SmartContentAssistantProps {
   type: 'professional_summary' | 'job_description' | 'skills' | 'achievements';
@@ -21,7 +20,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
   context,
   onContentGenerated,
   placeholder,
-  currentContent = ''
+  currentContent = '',
 }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedContent, setGeneratedContent] = useState('');
@@ -35,35 +34,35 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
           title: 'Professional Summary Assistant',
           description: 'Generate a compelling professional summary',
           placeholder: 'Add any specific achievements or career goals to highlight...',
-          icon: <Wand2 className="h-4 w-4" />
+          icon: <Wand2 className="h-4 w-4" />,
         };
       case 'job_description':
         return {
           title: 'Job Description Enhancer',
           description: 'Enhance your job responsibilities and achievements',
           placeholder: 'Describe your key responsibilities or any specific projects...',
-          icon: <Wand2 className="h-4 w-4" />
+          icon: <Wand2 className="h-4 w-4" />,
         };
       case 'skills':
         return {
           title: 'Skills Suggester',
           description: 'Get relevant electrical skills suggestions',
           placeholder: 'Mention any specific areas of expertise or equipment you work with...',
-          icon: <Wand2 className="h-4 w-4" />
+          icon: <Wand2 className="h-4 w-4" />,
         };
       case 'achievements':
         return {
           title: 'Achievements Generator',
           description: 'Create impactful achievement statements',
           placeholder: 'Describe any projects, improvements, or recognition you received...',
-          icon: <Wand2 className="h-4 w-4" />
+          icon: <Wand2 className="h-4 w-4" />,
         };
       default:
         return {
           title: 'Content Assistant',
           description: 'AI-powered content generation',
           placeholder: 'Enter your requirements...',
-          icon: <Wand2 className="h-4 w-4" />
+          icon: <Wand2 className="h-4 w-4" />,
         };
     }
   };
@@ -74,7 +73,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
     setIsGenerating(true);
     try {
       let result;
-      
+
       switch (type) {
         case 'professional_summary':
           result = await AIService.generateProfessionalSummary(context, userInput);
@@ -102,14 +101,14 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
           setShowGenerated(true);
           return;
       }
-      
+
       setGeneratedContent(result);
       setShowGenerated(true);
     } catch (error) {
       toast({
-        title: "Generation Failed",
-        description: "There was an error generating content. Please try again.",
-        variant: "destructive"
+        title: 'Generation Failed',
+        description: 'There was an error generating content. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -118,30 +117,31 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
 
   const handleAccept = () => {
     if (type === 'skills') {
-      const skillsArray = generatedContent.split(',').map(skill => skill.trim());
+      const skillsArray = generatedContent.split(',').map((skill) => skill.trim());
       onContentGenerated(skillsArray);
     } else if (type === 'achievements') {
-      const achievementsArray = generatedContent.split('\n•').map(achievement => 
-        achievement.replace('•', '').trim()
-      ).filter(achievement => achievement.length > 0);
+      const achievementsArray = generatedContent
+        .split('\n•')
+        .map((achievement) => achievement.replace('•', '').trim())
+        .filter((achievement) => achievement.length > 0);
       onContentGenerated(achievementsArray);
     } else {
       onContentGenerated(generatedContent);
     }
-    
+
     setShowGenerated(false);
     setUserInput('');
     toast({
-      title: "Content Applied",
-      description: "AI-generated content has been applied to your CV."
+      title: 'Content Applied',
+      description: 'AI-generated content has been applied to your CV.',
     });
   };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(generatedContent);
     toast({
-      title: "Copied to Clipboard",
-      description: "Content has been copied to your clipboard."
+      title: 'Copied to Clipboard',
+      description: 'Content has been copied to your clipboard.',
     });
   };
 
@@ -156,7 +156,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {!showGenerated ? (
           <>
@@ -166,7 +166,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
               placeholder={config.placeholder}
               className="bg-elec-dark border-elec-yellow/20 text-foreground text-sm min-h-20"
             />
-            
+
             <Button
               onClick={handleGenerate}
               disabled={isGenerating}
@@ -185,7 +185,7 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
                 </>
               )}
             </Button>
-            
+
             {currentContent && (
               <div className="text-xs text-gray-400">
                 Current content will be replaced with AI-generated content
@@ -199,20 +199,13 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
                 <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow text-xs">
                   AI Generated
                 </Badge>
-                <Button
-                  onClick={handleCopy}
-                  variant="ghost"
-                  size="sm"
-                  className="h-6 px-2"
-                >
+                <Button onClick={handleCopy} variant="ghost" size="sm" className="h-6 px-2">
                   <Copy className="h-3 w-3" />
                 </Button>
               </div>
-              <p className="text-foreground text-sm whitespace-pre-wrap">
-                {generatedContent}
-              </p>
+              <p className="text-foreground text-sm whitespace-pre-wrap">{generatedContent}</p>
             </div>
-            
+
             <div className="flex gap-2">
               <Button
                 onClick={handleAccept}

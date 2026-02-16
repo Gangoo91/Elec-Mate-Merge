@@ -1,40 +1,42 @@
-import { ArrowLeft, Eye, Calendar, FileText, Smartphone } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Eye, Calendar, FileText, Smartphone } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Pre-Use Visual Checks",
+    title: 'Pre-Use Visual Checks',
     icon: Eye,
-    description: "Who can check, what to inspect, pass/fail criteria, reporting procedures",
+    description: 'Who can check, what to inspect, pass/fail criteria, reporting procedures',
   },
   {
     id: 2,
-    title: "Formal 7-Day Inspections",
+    title: 'Formal 7-Day Inspections',
     icon: Calendar,
-    description: "WAHR Schedule 5, competent person, inspection triggers, retention requirements",
+    description: 'WAHR Schedule 5, competent person, inspection triggers, retention requirements',
   },
   {
     id: 3,
-    title: "Records & Documentation",
+    title: 'Records & Documentation',
     icon: FileText,
-    description: "Schedule 5 requirements, PASMA checklist, photographic evidence, digital vs paper",
+    description:
+      'Schedule 5 requirements, PASMA checklist, photographic evidence, digital vs paper',
   },
   {
     id: 4,
-    title: "TowerSure App & Digital Inspection",
+    title: 'TowerSure App & Digital Inspection',
     icon: Smartphone,
-    description: "What TowerSure is, how it works, benefits vs paper, setup guide",
+    description: 'What TowerSure is, how it works, benefits vs paper, setup guide',
   },
 ];
 
 export default function PasmaModule5() {
   useSEO({
-    title: "Module 5: Inspection & Compliance | PASMA Towers for Users",
-    description: "Pre-use visual checks, formal 7-day inspections, documentation requirements, and the TowerSure digital inspection app.",
+    title: 'Module 5: Inspection & Compliance | PASMA Towers for Users',
+    description:
+      'Pre-use visual checks, formal 7-day inspections, documentation requirements, and the TowerSure digital inspection app.',
   });
 
   return (
@@ -73,7 +75,8 @@ export default function PasmaModule5() {
               Inspection & Compliance
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Visual checks, formal inspections, documentation requirements, and digital inspection tools for tower safety
+              Visual checks, formal inspections, documentation requirements, and digital inspection
+              tools for tower safety
             </p>
           </div>
 

@@ -1,6 +1,5 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Star } from 'lucide-react';
 
 interface CareerSectionCardProps {
   title: string;
@@ -25,17 +24,13 @@ const CareerSectionCard = ({ title, description, icon, onClick }: CareerSectionC
           <ArrowRight className="h-5 w-5 text-white group-hover:text-elec-yellow transition-colors" />
         </div>
       </CardHeader>
-      
+
       <CardContent className="flex-1 flex flex-col justify-between pt-0">
-        <p className="text-sm text-elec-light/80 leading-relaxed mb-4">
-          {description}
-        </p>
-        
+        <p className="text-sm text-elec-light/80 leading-relaxed mb-4">{description}</p>
+
         <div className="flex items-center justify-between">
-          <div className="transition-transform group-hover:scale-110 duration-300">
-            {icon}
-          </div>
-          
+          <div className="transition-transform group-hover:scale-110 duration-300">{icon}</div>
+
           <div className="flex items-center gap-1 text-xs text-white">
             <Star className="h-3 w-3 fill-current text-elec-yellow" />
             <span>Popular</span>

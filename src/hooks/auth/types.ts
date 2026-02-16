@@ -1,4 +1,3 @@
-
 import { Session, User } from '@supabase/supabase-js';
 
 export type ProfileType = {
@@ -20,6 +19,10 @@ export type ProfileType = {
   onboarding_completed?: boolean;
   ecs_card_type?: string;
   elec_id_enabled?: boolean;
+
+  // College-specific fields
+  college_id?: string | null;
+  college_role?: 'admin' | 'head_of_department' | 'tutor' | 'assessor' | 'iqa' | 'support' | null;
 
   // Apprentice-specific fields
   apprentice_year?: number;
@@ -60,24 +63,27 @@ export type AuthContextType = {
   resetPassword: (email: string) => Promise<{ error: any }>;
   updatePassword: (newPassword: string) => Promise<{ error: any }>;
   resendConfirmationEmail: (email: string) => Promise<{ error: any }>;
-  updateProfile: (userId: string, profileData: {
-    role?: string;
-    ecs_card_type?: string;
-    elec_id_enabled?: boolean;
-    onboarding_completed?: boolean;
-    // Apprentice fields
-    apprentice_year?: number;
-    apprentice_level?: string;
-    training_provider?: string;
-    ecs_card_status?: string;
-    supervisor_name?: string;
-    // Electrician fields
-    job_title?: string;
-    specialisation?: string;
-    years_experience?: number;
-    // Employer fields
-    business_position?: string;
-    company_size?: string;
-  }) => Promise<{ error: any }>;
+  updateProfile: (
+    userId: string,
+    profileData: {
+      role?: string;
+      ecs_card_type?: string;
+      elec_id_enabled?: boolean;
+      onboarding_completed?: boolean;
+      // Apprentice fields
+      apprentice_year?: number;
+      apprentice_level?: string;
+      training_provider?: string;
+      ecs_card_status?: string;
+      supervisor_name?: string;
+      // Electrician fields
+      job_title?: string;
+      specialisation?: string;
+      years_experience?: number;
+      // Employer fields
+      business_position?: string;
+      company_size?: string;
+    }
+  ) => Promise<{ error: any }>;
   fetchProfile?: (userId: string) => Promise<ProfileType | null>;
 };

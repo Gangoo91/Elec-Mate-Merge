@@ -1,15 +1,24 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Users, TrendingUp, Award, Clock, PoundSterling, MapPin, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  BookOpen,
+  Users,
+  TrendingUp,
+  Award,
+  Clock,
+  PoundSterling,
+  MapPin,
+  Star,
+} from 'lucide-react';
 
 interface CourseAnalytics {
   totalCourses: number;
   averageRating: number;
-  topCategories: { name: string; count: number; growth: string; }[];
+  topCategories: { name: string; count: number; growth: string }[];
   averagePrice: string;
   averageDuration: string;
-  topProviders: { name: string; courses: number; rating: number; }[];
-  industryTrends: { trend: string; impact: string; }[];
+  topProviders: { name: string; courses: number; rating: number }[];
+  industryTrends: { trend: string; impact: string }[];
   completionRate: number;
   employmentRate: number;
   salaryIncrease: string;
@@ -19,29 +28,29 @@ const courseAnalytics: CourseAnalytics = {
   totalCourses: 347,
   averageRating: 4.3,
   topCategories: [
-    { name: "Electrical Installation", count: 89, growth: "+12%" },
-    { name: "Inspection & Testing", count: 67, growth: "+8%" },
-    { name: "Renewable Energy", count: 54, growth: "+24%" },
-    { name: "Industrial Systems", count: 43, growth: "+6%" },
-    { name: "Health & Safety", count: 38, growth: "+15%" }
+    { name: 'Electrical Installation', count: 89, growth: '+12%' },
+    { name: 'Inspection & Testing', count: 67, growth: '+8%' },
+    { name: 'Renewable Energy', count: 54, growth: '+24%' },
+    { name: 'Industrial Systems', count: 43, growth: '+6%' },
+    { name: 'Health & Safety', count: 38, growth: '+15%' },
   ],
-  averagePrice: "£1,247",
-  averageDuration: "5.2 days",
+  averagePrice: '£1,247',
+  averageDuration: '5.2 days',
   topProviders: [
-    { name: "City & Guilds", courses: 42, rating: 4.6 },
-    { name: "NICEIC", courses: 38, rating: 4.5 },
-    { name: "ECA", courses: 35, rating: 4.4 },
-    { name: "JTL Training", courses: 29, rating: 4.3 }
+    { name: 'City & Guilds', courses: 42, rating: 4.6 },
+    { name: 'NICEIC', courses: 38, rating: 4.5 },
+    { name: 'ECA', courses: 35, rating: 4.4 },
+    { name: 'JTL Training', courses: 29, rating: 4.3 },
   ],
   industryTrends: [
-    { trend: "EV Charging Installation", impact: "High demand - 89% growth" },
-    { trend: "Smart Home Technology", impact: "Growing market - 45% growth" },
-    { trend: "Energy Storage Systems", impact: "Emerging field - 156% growth" },
-    { trend: "Building Management Systems", impact: "Steady demand - 23% growth" }
+    { trend: 'EV Charging Installation', impact: 'High demand - 89% growth' },
+    { trend: 'Smart Home Technology', impact: 'Growing market - 45% growth' },
+    { trend: 'Energy Storage Systems', impact: 'Emerging field - 156% growth' },
+    { trend: 'Building Management Systems', impact: 'Steady demand - 23% growth' },
   ],
   completionRate: 94,
   employmentRate: 87,
-  salaryIncrease: "£3,200-£8,500"
+  salaryIncrease: '£3,200-£8,500',
 };
 
 const CourseAnalyticsDashboard = () => {
@@ -67,7 +76,9 @@ const CourseAnalyticsDashboard = () => {
               <div>
                 <p className="text-foreground/60 text-sm">Average Rating</p>
                 <div className="flex items-center gap-1">
-                  <p className="text-2xl font-bold text-foreground">{courseAnalytics.averageRating}</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {courseAnalytics.averageRating}
+                  </p>
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                 </div>
               </div>
@@ -93,7 +104,9 @@ const CourseAnalyticsDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-foreground/60 text-sm">Average Duration</p>
-                <p className="text-2xl font-bold text-foreground">{courseAnalytics.averageDuration}</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {courseAnalytics.averageDuration}
+                </p>
               </div>
               <Clock className="h-8 w-8 text-elec-yellow" />
             </div>
@@ -113,7 +126,10 @@ const CourseAnalyticsDashboard = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {courseAnalytics.topCategories.map((category, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-background/20 rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between p-3 bg-background/20 rounded-lg"
+              >
                 <div>
                   <p className="font-medium text-foreground">{category.name}</p>
                   <p className="text-sm text-foreground/60">{category.count} courses</p>
@@ -136,7 +152,10 @@ const CourseAnalyticsDashboard = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {courseAnalytics.topProviders.map((provider, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-background/20 rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between p-3 bg-background/20 rounded-lg"
+              >
                 <div>
                   <p className="font-medium text-foreground">{provider.name}</p>
                   <p className="text-sm text-foreground/60">{provider.courses} courses</p>
@@ -183,10 +202,12 @@ const CourseAnalyticsDashboard = () => {
             <div className="p-3 bg-background/20 rounded-lg">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-foreground/60">Course Completion Rate</span>
-                <span className="text-foreground font-medium">{courseAnalytics.completionRate}%</span>
+                <span className="text-foreground font-medium">
+                  {courseAnalytics.completionRate}%
+                </span>
               </div>
               <div className="w-full bg-background/30 rounded-full h-2">
-                <div 
+                <div
                   className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                   style={{ width: `${courseAnalytics.completionRate}%` }}
                 />
@@ -196,10 +217,12 @@ const CourseAnalyticsDashboard = () => {
             <div className="p-3 bg-background/20 rounded-lg">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-foreground/60">Employment Rate</span>
-                <span className="text-foreground font-medium">{courseAnalytics.employmentRate}%</span>
+                <span className="text-foreground font-medium">
+                  {courseAnalytics.employmentRate}%
+                </span>
               </div>
               <div className="w-full bg-background/30 rounded-full h-2">
-                <div 
+                <div
                   className="bg-green-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${courseAnalytics.employmentRate}%` }}
                 />
@@ -208,7 +231,9 @@ const CourseAnalyticsDashboard = () => {
 
             <div className="p-3 bg-background/20 rounded-lg">
               <span className="text-foreground/60 block mb-1">Average Salary Increase</span>
-              <span className="text-elec-yellow font-semibold text-lg">{courseAnalytics.salaryIncrease}</span>
+              <span className="text-elec-yellow font-semibold text-lg">
+                {courseAnalytics.salaryIncrease}
+              </span>
               <p className="text-xs text-foreground/60 mt-1">Per year after course completion</p>
             </div>
           </CardContent>

@@ -1,7 +1,7 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
-import { StatusBadge } from "./StatusBadge";
-import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
+import { StatusBadge } from './StatusBadge';
+import { cn } from '@/lib/utils';
 
 interface EmployeeCardProps {
   name: string;
@@ -22,15 +22,16 @@ export function EmployeeCard({
   certifications = 0,
   activeJobs = 0,
   onClick,
-  className
+  className,
 }: EmployeeCardProps) {
-  const initials = name.split(" ").map(n => n[0]).join("").toUpperCase();
-  
+  const initials = name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase();
+
   return (
-    <Card 
-      className={cn("card-hover cursor-pointer", className)}
-      onClick={onClick}
-    >
+    <Card className={cn('card-hover cursor-pointer', className)} onClick={onClick}>
       <CardContent className="p-4">
         <div className="flex items-center gap-4">
           <Avatar className="h-12 w-12 border-2 border-elec-yellow/20">

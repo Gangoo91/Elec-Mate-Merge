@@ -11,13 +11,13 @@ import DOMPurify from 'dompurify';
  */
 export const sanitizeTextInput = (input: string | null | undefined): string => {
   if (!input) return '';
-  
+
   // Strip all HTML tags and scripts but allow natural spacing during typing
-  const cleaned = DOMPurify.sanitize(input, { 
+  const cleaned = DOMPurify.sanitize(input, {
     ALLOWED_TAGS: [], // No HTML allowed
-    ALLOWED_ATTR: []
+    ALLOWED_ATTR: [],
   });
-  
+
   // NO TRIM - allow users to type spaces freely
   return cleaned;
 };
@@ -28,13 +28,13 @@ export const sanitizeTextInput = (input: string | null | undefined): string => {
  */
 export const sanitizeTextInputForDisplay = (input: string | null | undefined): string => {
   if (!input) return '';
-  
+
   // Strip all HTML tags and scripts
-  const cleaned = DOMPurify.sanitize(input, { 
+  const cleaned = DOMPurify.sanitize(input, {
     ALLOWED_TAGS: [], // No HTML allowed
-    ALLOWED_ATTR: []
+    ALLOWED_ATTR: [],
   });
-  
+
   // Trim and normalise whitespace for final output
   return cleaned.trim().replace(/\s+/g, ' ');
 };
@@ -45,13 +45,13 @@ export const sanitizeTextInputForDisplay = (input: string | null | undefined): s
  */
 export const sanitizeHtmlSafe = (input: string | null | undefined): string => {
   if (!input) return '';
-  
+
   // Allow only safe HTML tags
   const cleaned = DOMPurify.sanitize(input, {
     ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'br', 'ul', 'ol', 'li'],
-    ALLOWED_ATTR: []
+    ALLOWED_ATTR: [],
   });
-  
+
   return cleaned.trim();
 };
 
@@ -61,13 +61,13 @@ export const sanitizeHtmlSafe = (input: string | null | undefined): string => {
  */
 export const sanitizeEmail = (email: string | null | undefined): string => {
   if (!email) return '';
-  
+
   // Remove all HTML, convert to lowercase, trim
-  const cleaned = DOMPurify.sanitize(email, { 
-    ALLOWED_TAGS: [], 
-    ALLOWED_ATTR: [] 
+  const cleaned = DOMPurify.sanitize(email, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
   });
-  
+
   return cleaned.toLowerCase().trim();
 };
 
@@ -77,13 +77,13 @@ export const sanitizeEmail = (email: string | null | undefined): string => {
  */
 export const sanitizePhone = (phone: string | null | undefined): string => {
   if (!phone) return '';
-  
+
   // First strip any HTML
-  const cleaned = DOMPurify.sanitize(phone, { 
-    ALLOWED_TAGS: [], 
-    ALLOWED_ATTR: [] 
+  const cleaned = DOMPurify.sanitize(phone, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
   });
-  
+
   // Allow only phone-safe characters: digits, spaces, +, -, (, )
   return cleaned.replace(/[^\d\s+\-()]/g, '').trim();
 };
@@ -94,13 +94,13 @@ export const sanitizePhone = (phone: string | null | undefined): string => {
  */
 export const sanitizeNumeric = (input: string | null | undefined): string => {
   if (!input) return '';
-  
+
   // Strip HTML first
-  const cleaned = DOMPurify.sanitize(input, { 
-    ALLOWED_TAGS: [], 
-    ALLOWED_ATTR: [] 
+  const cleaned = DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
   });
-  
+
   // Allow only digits, decimal point, and minus sign
   return cleaned.replace(/[^\d.\-]/g, '').trim();
 };
@@ -111,24 +111,24 @@ export const sanitizeNumeric = (input: string | null | undefined): string => {
  */
 export const sanitizeFilename = (filename: string | null | undefined): string => {
   if (!filename) return 'untitled';
-  
+
   // Strip HTML
-  const cleaned = DOMPurify.sanitize(filename, { 
-    ALLOWED_TAGS: [], 
-    ALLOWED_ATTR: [] 
+  const cleaned = DOMPurify.sanitize(filename, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
   });
-  
+
   // Remove path traversal attempts
   let safe = cleaned.replace(/\.\./g, '');
-  
+
   // Allow only alphanumeric, underscore, hyphen, dot
   safe = safe.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
-  
+
   // Ensure it doesn't start with a dot (hidden file)
   if (safe.startsWith('.')) {
     safe = 'file_' + safe;
   }
-  
+
   return safe.trim().substring(0, 255); // Max filename length
 };
 
@@ -144,7 +144,7 @@ export const sanitizeObject = <T extends Record<string, any>>(obj: T): T => {
       // Convert null/undefined to empty string for PDF safety
       sanitized[key as keyof T] = '' as any;
     } else if (Array.isArray(value)) {
-      sanitized[key as keyof T] = value.map(item => 
+      sanitized[key as keyof T] = value.map((item) =>
         typeof item === 'object' ? sanitizeObject(item) : sanitizeTextInputForDisplay(String(item))
       ) as any;
     } else if (typeof value === 'object') {
@@ -177,17 +177,17 @@ export const sanitizeObject = <T extends Record<string, any>>(obj: T): T => {
  */
 export const sanitizeUrl = (url: string | null | undefined): string => {
   if (!url) return '';
-  
-  const cleaned = DOMPurify.sanitize(url, { 
-    ALLOWED_TAGS: [], 
-    ALLOWED_ATTR: [] 
+
+  const cleaned = DOMPurify.sanitize(url, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
   }).trim();
-  
+
   // Only allow http/https protocols
   if (!cleaned.match(/^https?:\/\//i)) {
     return '';
   }
-  
+
   try {
     const urlObj = new URL(cleaned);
     return urlObj.href;

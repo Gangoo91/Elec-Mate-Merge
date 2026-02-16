@@ -8,7 +8,9 @@ export const SmartHomeModule6Section1HubPurpose = () => {
       <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">1</span>
+            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">
+              1
+            </span>
             What is a Smart Home Hub?
           </CardTitle>
         </CardHeader>
@@ -19,7 +21,8 @@ export const SmartHomeModule6Section1HubPurpose = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Central Controller</h4>
                 <p className="text-foreground text-sm">
-                  A hub is a central controller that connects smart devices and allows them to work together.
+                  A hub is a central controller that connects smart devices and allows them to work
+                  together.
                 </p>
               </div>
             </div>
@@ -29,7 +32,8 @@ export const SmartHomeModule6Section1HubPurpose = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Protocol Translation</h4>
                 <p className="text-foreground text-sm">
-                  It communicates with sensors, switches, locks, cameras, and more, translating protocols into one ecosystem.
+                  It communicates with sensors, switches, locks, cameras, and more, translating
+                  protocols into one ecosystem.
                 </p>
               </div>
             </div>

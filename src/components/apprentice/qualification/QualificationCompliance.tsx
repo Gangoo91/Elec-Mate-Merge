@@ -30,13 +30,18 @@ const QualificationCompliance = () => {
     );
   }
 
-  const overallProgress = compliance.length > 0 
-    ? Math.round(compliance.reduce((sum, c) => sum + c.compliance_percentage, 0) / compliance.length)
-    : 0;
+  const overallProgress =
+    compliance.length > 0
+      ? Math.round(
+          compliance.reduce((sum, c) => sum + c.compliance_percentage, 0) / compliance.length
+        )
+      : 0;
 
-  const completedCategories = compliance.filter(c => c.compliance_percentage >= 100).length;
-  const inProgressCategories = compliance.filter(c => c.compliance_percentage > 0 && c.compliance_percentage < 100).length;
-  const notStartedCategories = compliance.filter(c => c.compliance_percentage === 0).length;
+  const completedCategories = compliance.filter((c) => c.compliance_percentage >= 100).length;
+  const inProgressCategories = compliance.filter(
+    (c) => c.compliance_percentage > 0 && c.compliance_percentage < 100
+  ).length;
+  const notStartedCategories = compliance.filter((c) => c.compliance_percentage === 0).length;
 
   return (
     <div className="space-y-6 bg-white/5 min-h-screen p-4">
@@ -44,10 +49,8 @@ const QualificationCompliance = () => {
       <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="p-6 text-center">
           {/* Smaller percentage at the top */}
-          <div className="text-3xl font-bold text-elec-yellow mb-3">
-            {overallProgress}%
-          </div>
-          
+          <div className="text-3xl font-bold text-elec-yellow mb-3">{overallProgress}%</div>
+
           {/* Title and description */}
           <div className="space-y-2 mb-6">
             <h2 className="text-xl font-bold text-elec-light">Overall Progress</h2>
@@ -58,30 +61,33 @@ const QualificationCompliance = () => {
               {userSelection.qualification?.awarding_body}
             </p>
           </div>
-          
+
           {/* Progress bar */}
           <div className="mb-6">
-            <Progress 
-              value={overallProgress} 
-              className="w-full h-2 bg-elec-card"
-            />
+            <Progress value={overallProgress} className="w-full h-2 bg-elec-card" />
           </div>
-          
+
           {/* Stats grid - Mobile optimized */}
           <div className="grid grid-cols-3 gap-2 sm:gap-4">
             <div className="text-center space-y-1 sm:space-y-2">
               <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mx-auto" />
-              <div className="text-xl sm:text-2xl font-bold text-green-400">{completedCategories}</div>
+              <div className="text-xl sm:text-2xl font-bold text-green-400">
+                {completedCategories}
+              </div>
               <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">Completed</p>
             </div>
             <div className="text-center space-y-1 sm:space-y-2">
               <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400 mx-auto" />
-              <div className="text-xl sm:text-2xl font-bold text-orange-400">{inProgressCategories}</div>
+              <div className="text-xl sm:text-2xl font-bold text-orange-400">
+                {inProgressCategories}
+              </div>
               <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">In Progress</p>
             </div>
             <div className="text-center space-y-1 sm:space-y-2">
               <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mx-auto" />
-              <div className="text-xl sm:text-2xl font-bold text-red-400">{notStartedCategories}</div>
+              <div className="text-xl sm:text-2xl font-bold text-red-400">
+                {notStartedCategories}
+              </div>
               <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">Not Started</p>
             </div>
           </div>
@@ -93,7 +99,7 @@ const QualificationCompliance = () => {
         <h3 className="text-lg font-semibold text-elec-light text-center">Category Progress</h3>
         <div className="grid gap-4">
           {compliance.map((complianceRecord) => {
-            const category = categories.find(c => c.id === complianceRecord.category_id);
+            const category = categories.find((c) => c.id === complianceRecord.category_id);
             if (!category) return null;
 
             const getStatusIcon = () => {
@@ -115,21 +121,19 @@ const QualificationCompliance = () => {
                       {complianceRecord.compliance_percentage}%
                     </div>
                   </div>
-                  
+
                   {/* Title - centered with optional status icon */}
                   <div className="text-center mb-4">
                     {getStatusIcon() && (
-                      <div className="flex items-center justify-center mb-2">
-                        {getStatusIcon()}
-                      </div>
+                      <div className="flex items-center justify-center mb-2">{getStatusIcon()}</div>
                     )}
                     <h4 className="font-semibold text-lg text-elec-light">{category.name}</h4>
                   </div>
-                  
+
                   <p className="text-sm text-elec-light/70 mb-4 text-center leading-relaxed">
                     {category.description}
                   </p>
-                  
+
                   {/* Progress section */}
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm text-elec-light">
@@ -138,8 +142,11 @@ const QualificationCompliance = () => {
                         {complianceRecord.completed_entries} / {complianceRecord.required_entries}
                       </span>
                     </div>
-                    <Progress 
-                      value={(complianceRecord.completed_entries / complianceRecord.required_entries) * 100} 
+                    <Progress
+                      value={
+                        (complianceRecord.completed_entries / complianceRecord.required_entries) *
+                        100
+                      }
                       className="w-full h-3 bg-elec-card"
                     />
                   </div>
@@ -147,7 +154,9 @@ const QualificationCompliance = () => {
                   {/* Learning outcomes */}
                   {category.learning_outcomes && category.learning_outcomes.length > 0 && (
                     <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                      <p className="text-xs font-medium text-elec-light/70 mb-2 text-center">Learning Outcomes:</p>
+                      <p className="text-xs font-medium text-elec-light/70 mb-2 text-center">
+                        Learning Outcomes:
+                      </p>
                       <ul className="text-xs text-elec-light/60 space-y-1">
                         {category.learning_outcomes.slice(0, 2).map((outcome, index) => (
                           <li key={index} className="flex items-start gap-2">

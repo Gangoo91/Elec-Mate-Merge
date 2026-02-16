@@ -12,8 +12,8 @@ export const BenefitsOfGroupingLinkingMotionSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Combining grouping, system linking, and motion logic creates comprehensive automation that delivers 
-          tangible benefits across multiple aspects of home management and daily living.
+          Combining grouping, system linking, and motion logic creates comprehensive automation that
+          delivers tangible benefits across multiple aspects of home management and daily living.
         </p>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -75,27 +75,40 @@ export const BenefitsOfGroupingLinkingMotionSection = () => {
           <div className="grid gap-3 md:grid-cols-2">
             <div>
               <h5 className="text-gray-300 font-semibold text-sm mb-2">Energy Savings</h5>
-              <p className="text-gray-300 text-xs">Motion sensors in offices can reduce lighting energy consumption by 30-50% compared to manual switching.</p>
+              <p className="text-gray-300 text-xs">
+                Motion sensors in offices can reduce lighting energy consumption by 30-50% compared
+                to manual switching.
+              </p>
             </div>
             <div>
               <h5 className="text-gray-300 font-semibold text-sm mb-2">Security Enhancement</h5>
-              <p className="text-gray-300 text-xs">Automated security lighting can reduce break-in attempts by creating the impression of occupancy.</p>
+              <p className="text-gray-300 text-xs">
+                Automated security lighting can reduce break-in attempts by creating the impression
+                of occupancy.
+              </p>
             </div>
             <div>
               <h5 className="text-gray-300 font-semibold text-sm mb-2">Daily Convenience</h5>
-              <p className="text-gray-300 text-xs">Grouping allows "goodnight" scenes that turn off all lights except essential pathway lighting.</p>
+              <p className="text-gray-300 text-xs">
+                Grouping allows "goodnight" scenes that turn off all lights except essential pathway
+                lighting.
+              </p>
             </div>
             <div>
               <h5 className="text-gray-300 font-semibold text-sm mb-2">Accessibility Support</h5>
-              <p className="text-gray-300 text-xs">Motion-activated corridor lighting prevents falls for elderly residents during night-time movement.</p>
+              <p className="text-gray-300 text-xs">
+                Motion-activated corridor lighting prevents falls for elderly residents during
+                night-time movement.
+              </p>
             </div>
           </div>
         </div>
 
         <div className="bg-green-900/20 border border-green-600/50 p-4 rounded-lg">
           <p className="text-green-200 text-sm">
-            <strong>Combined Effect:</strong> When grouping, linking, and motion logic work together, the benefits 
-            multiply, creating a lighting system that anticipates needs and enhances quality of life.
+            <strong>Combined Effect:</strong> When grouping, linking, and motion logic work
+            together, the benefits multiply, creating a lighting system that anticipates needs and
+            enhances quality of life.
           </p>
         </div>
       </CardContent>

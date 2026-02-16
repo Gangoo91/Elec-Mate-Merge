@@ -7,28 +7,28 @@ const RenewableEnergyModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "Introduction to Renewables: The Need, Benefits & Grid Impact",
+      title: 'Introduction to Renewables: The Need, Benefits & Grid Impact',
       icon: Lightbulb,
-      description: "Understanding the need for renewable energy and its impact on the grid"
+      description: 'Understanding the need for renewable energy and its impact on the grid',
     },
     {
       id: 2,
-      title: "Overview of Key Systems: Solar PV, Wind, Hydro, Biomass",
+      title: 'Overview of Key Systems: Solar PV, Wind, Hydro, Biomass',
       icon: Layers,
-      description: "Comprehensive overview of different renewable energy technologies"
+      description: 'Comprehensive overview of different renewable energy technologies',
     },
     {
       id: 3,
-      title: "Renewable Generation vs Energy Storage",
+      title: 'Renewable Generation vs Energy Storage',
       icon: Battery,
-      description: "Understanding the relationship between generation and storage systems"
+      description: 'Understanding the relationship between generation and storage systems',
     },
     {
       id: 4,
-      title: "Global & UK Regulatory Landscape (Net Zero, Smart Export Guarantee)",
+      title: 'Global & UK Regulatory Landscape (Net Zero, Smart Export Guarantee)',
       icon: Globe,
-      description: "Overview of regulations, net zero targets, and export guarantees"
-    }
+      description: 'Overview of regulations, net zero targets, and export guarantees',
+    },
   ];
 
   return (

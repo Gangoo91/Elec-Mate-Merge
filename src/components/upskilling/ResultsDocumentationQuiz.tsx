@@ -13,62 +13,65 @@ export const ResultsDocumentationQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: "What must Zs values be compared against?",
+      question: 'What must Zs values be compared against?',
       options: [
-        "Previous test results",
-        "The maximums listed in BS7671 Appendix 3",
-        "Industry average values",
-        "Manufacturer recommendations only"
+        'Previous test results',
+        'The maximums listed in BS7671 Appendix 3',
+        'Industry average values',
+        'Manufacturer recommendations only',
       ],
       correctAnswer: 1,
-      explanation: "Zs values must be compared against the maximum values specified in BS7671 Appendix 3 for the type and rating of protective device installed."
+      explanation:
+        'Zs values must be compared against the maximum values specified in BS7671 Appendix 3 for the type and rating of protective device installed.',
     },
     {
       id: 2,
-      question: "True or False: It's acceptable to write 'pass' instead of the test value on a certificate.",
-      options: [
-        "True",
-        "False"
-      ],
+      question:
+        "True or False: It's acceptable to write 'pass' instead of the test value on a certificate.",
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. You must always record actual test values with units. Writing 'pass' or 'OK' is unacceptable and potentially illegal."
+      explanation:
+        "False. You must always record actual test values with units. Writing 'pass' or 'OK' is unacceptable and potentially illegal.",
     },
     {
       id: 3,
-      question: "What information must be recorded for every test result?",
+      question: 'What information must be recorded for every test result?',
       options: [
-        "Just the numerical value",
-        "Value, units, test method, and environmental conditions",
-        "Only pass or fail",
-        "Just the date tested"
+        'Just the numerical value',
+        'Value, units, test method, and environmental conditions',
+        'Only pass or fail',
+        'Just the date tested',
       ],
       correctAnswer: 1,
-      explanation: "Complete documentation requires actual values with units, test methods used, and relevant environmental conditions."
+      explanation:
+        'Complete documentation requires actual values with units, test methods used, and relevant environmental conditions.',
     },
     {
       id: 4,
-      question: "How long must test records be retained?",
+      question: 'How long must test records be retained?',
       options: [
-        "1 year minimum",
-        "Until the next inspection",
-        "Permanently for legal protection",
-        "6 months only"
+        '1 year minimum',
+        'Until the next inspection',
+        'Permanently for legal protection',
+        '6 months only',
       ],
       correctAnswer: 2,
-      explanation: "Test records should be retained permanently as they provide legal evidence of due diligence and proper testing."
+      explanation:
+        'Test records should be retained permanently as they provide legal evidence of due diligence and proper testing.',
     },
     {
       id: 5,
-      question: "What should you do if a test result appears unusually high or low?",
+      question: 'What should you do if a test result appears unusually high or low?',
       options: [
-        "Record it without question",
-        "Change it to a normal value",
-        "Investigate and retest to verify accuracy",
-        "Ignore the unusual reading"
+        'Record it without question',
+        'Change it to a normal value',
+        'Investigate and retest to verify accuracy',
+        'Ignore the unusual reading',
       ],
       correctAnswer: 2,
-      explanation: "Unusual readings should always be investigated and verified through retesting to ensure accuracy and identify potential issues."
-    }
+      explanation:
+        'Unusual readings should always be investigated and verified through retesting to ensure accuracy and identify potential issues.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
@@ -149,7 +152,9 @@ export const ResultsDocumentationQuiz = () => {
                             Correct answer: {question.options[question.correctAnswer]}
                           </p>
                         )}
-                        <p className="text-foreground text-sm mt-2 sm:text-base">{question.explanation}</p>
+                        <p className="text-foreground text-sm mt-2 sm:text-base">
+                          {question.explanation}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -157,7 +162,7 @@ export const ResultsDocumentationQuiz = () => {
               })}
             </div>
 
-            <Button 
+            <Button
               onClick={resetQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
             >
@@ -183,21 +188,21 @@ export const ResultsDocumentationQuiz = () => {
         <div className="space-y-6">
           <div className="bg-elec-dark p-4 rounded-md">
             <h3 className="text-foreground font-medium mb-4">{currentQ.question}</h3>
-            
+
             <RadioGroup
-              value={selectedAnswers[currentQuestion] || ""}
+              value={selectedAnswers[currentQuestion] || ''}
               onValueChange={handleAnswerSelect}
               className="space-y-3"
             >
               {currentQ.options.map((option, index) => (
                 <div key={index} className="flex items-center space-x-2">
-                  <RadioGroupItem 
-                    value={index.toString()} 
+                  <RadioGroupItem
+                    value={index.toString()}
                     id={`option-${index}`}
                     className="border-gray-400 text-elec-yellow"
                   />
-                  <Label 
-                    htmlFor={`option-${index}`} 
+                  <Label
+                    htmlFor={`option-${index}`}
                     className="text-foreground cursor-pointer flex-1 text-sm sm:text-base"
                   >
                     {option}

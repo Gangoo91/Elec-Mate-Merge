@@ -7,8 +7,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Quote } from "@/types/quote";
+} from '@/components/ui/alert-dialog';
+import { Quote } from '@/types/quote';
 
 interface DeleteInvoiceDialogProps {
   open: boolean;
@@ -40,8 +40,8 @@ export const DeleteInvoiceDialog = ({
           <AlertDialogDescription className="space-y-2">
             <p>
               This will permanently delete invoice{' '}
-              <strong className="text-foreground">#{invoice.invoice_number}</strong>{' '}
-              for {formatCurrency(invoice.total)}.
+              <strong className="text-foreground">#{invoice.invoice_number}</strong> for{' '}
+              {formatCurrency(invoice.total)}.
             </p>
             {isPaid && (
               <p className="text-orange-600 font-semibold">

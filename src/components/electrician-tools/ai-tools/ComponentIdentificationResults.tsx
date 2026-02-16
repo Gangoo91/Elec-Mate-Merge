@@ -1,11 +1,26 @@
-import { useState } from "react";
-import { Package, Zap, BookOpen, Wrench, Info, CheckCircle2, AlertTriangle, AlertCircle, Lightbulb, Camera, Clock, Target, Shield, Hash } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { ScrollableChips, ExpandableSection } from "./results";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import {
+  Package,
+  Zap,
+  BookOpen,
+  Wrench,
+  Info,
+  CheckCircle2,
+  AlertTriangle,
+  AlertCircle,
+  Lightbulb,
+  Camera,
+  Clock,
+  Target,
+  Shield,
+  Hash,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { ScrollableChips, ExpandableSection } from './results';
+import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ComponentIdentificationResultsProps {
   analysisResult: {
@@ -45,7 +60,10 @@ interface ComponentIdentificationResultsProps {
   onRetry?: () => void;
 }
 
-export default function ComponentIdentificationResults({ analysisResult, onRetry }: ComponentIdentificationResultsProps) {
+export default function ComponentIdentificationResults({
+  analysisResult,
+  onRetry,
+}: ComponentIdentificationResultsProps) {
   const [checkedItems, setCheckedItems] = useState<Record<number, boolean>>({});
   const component = analysisResult.component;
 
@@ -58,7 +76,8 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
             <div>
               <CardTitle className="text-lg">Unable to Identify Component</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">
-                The image could not be processed. This usually happens when the component or its labels are not clearly visible.
+                The image could not be processed. This usually happens when the component or its
+                labels are not clearly visible.
               </p>
             </div>
           </div>
@@ -90,11 +109,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           </div>
 
           {onRetry && (
-            <Button
-              onClick={onRetry}
-              className="w-full gap-2"
-              variant="outline"
-            >
+            <Button onClick={onRetry} className="w-full gap-2" variant="outline">
               <Camera className="h-4 w-4" />
               Try Again
             </Button>
@@ -106,7 +121,8 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
 
   // Fix confidence display
   const rawConfidence = component.confidence || 0;
-  const confidence = rawConfidence < 1 ? Math.round(rawConfidence * 100) : Math.round(rawConfidence);
+  const confidence =
+    rawConfidence < 1 ? Math.round(rawConfidence * 100) : Math.round(rawConfidence);
 
   const confidenceVariant: 'success' | 'warning' | 'danger' =
     confidence >= 90 ? 'success' : confidence >= 70 ? 'warning' : 'danger';
@@ -139,16 +155,17 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
     : [];
 
   const toggleCheck = (index: number) => {
-    setCheckedItems(prev => ({ ...prev, [index]: !prev[index] }));
+    setCheckedItems((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   const checkedCount = Object.values(checkedItems).filter(Boolean).length;
   const totalChecks = component.visual_identifiers?.length || 0;
 
   // Respect prefers-reduced-motion
-  const prefersReducedMotion = typeof window !== 'undefined'
-    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    : false;
+  const prefersReducedMotion =
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
 
   // Helper: Get icon for spec type
   const getSpecIcon = (label: string) => {
@@ -167,22 +184,59 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
     const yearMatch = age.match(/(\d{4})/);
     if (yearMatch) {
       const year = parseInt(yearMatch[1]);
-      if (year >= 2020) return { text: 'text-green-400', icon: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' };
-      if (year >= 1980) return { text: 'text-amber-400', icon: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' };
-      return { text: 'text-red-400', icon: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' };
+      if (year >= 2020)
+        return {
+          text: 'text-green-400',
+          icon: 'text-green-400',
+          bg: 'bg-green-500/10',
+          border: 'border-green-500/20',
+        };
+      if (year >= 1980)
+        return {
+          text: 'text-amber-400',
+          icon: 'text-amber-400',
+          bg: 'bg-amber-500/10',
+          border: 'border-amber-500/20',
+        };
+      return {
+        text: 'text-red-400',
+        icon: 'text-red-400',
+        bg: 'bg-red-500/10',
+        border: 'border-red-500/20',
+      };
     }
     // Keyword-based detection
     if (age.includes('modern') || age.includes('recent') || age.includes('new')) {
-      return { text: 'text-green-400', icon: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' };
+      return {
+        text: 'text-green-400',
+        icon: 'text-green-400',
+        bg: 'bg-green-500/10',
+        border: 'border-green-500/20',
+      };
     }
     if (age.includes('old') || age.includes('dated')) {
-      return { text: 'text-amber-400', icon: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' };
+      return {
+        text: 'text-amber-400',
+        icon: 'text-amber-400',
+        bg: 'bg-amber-500/10',
+        border: 'border-amber-500/20',
+      };
     }
     if (age.includes('vintage') || age.includes('obsolete') || age.includes('very old')) {
-      return { text: 'text-red-400', icon: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' };
+      return {
+        text: 'text-red-400',
+        icon: 'text-red-400',
+        bg: 'bg-red-500/10',
+        border: 'border-red-500/20',
+      };
     }
     // Unknown/default
-    return { text: 'text-blue-400', icon: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' };
+    return {
+      text: 'text-blue-400',
+      icon: 'text-blue-400',
+      bg: 'bg-blue-500/10',
+      border: 'border-blue-500/20',
+    };
   };
 
   // Animation variants for specs grid
@@ -190,16 +244,16 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.08
-      }
-    }
+        staggerChildren: prefersReducedMotion ? 0 : 0.08,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: {
       opacity: prefersReducedMotion ? 1 : 0,
       y: prefersReducedMotion ? 0 : 20,
-      scale: 1
+      scale: 1,
     },
     visible: {
       opacity: 1,
@@ -207,9 +261,9 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       scale: 1,
       transition: {
         duration: prefersReducedMotion ? 0 : 0.4,
-        ease: [0.25, 0.1, 0.25, 1]
-      }
-    }
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    },
   };
 
   return (
@@ -220,11 +274,11 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
         className={cn(
-          "relative overflow-hidden rounded-2xl",
-          "border border-elec-yellow/20",
-          "bg-gradient-to-br from-card via-card/95 to-card/90",
-          "backdrop-blur-xl",
-          "shadow-xl shadow-black/5"
+          'relative overflow-hidden rounded-2xl',
+          'border border-elec-yellow/20',
+          'bg-gradient-to-br from-card via-card/95 to-card/90',
+          'backdrop-blur-xl',
+          'shadow-xl shadow-black/5'
         )}
       >
         {/* Gradient overlay */}
@@ -259,9 +313,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                 transition={{ delay: 0.3, duration: 0.3 }}
                 className="space-y-2"
               >
-                <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-                  {component.name}
-                </h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{component.name}</h1>
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="outline" className="text-xs">
                     {component.type}
@@ -272,7 +324,10 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.45, duration: 0.2, ease: 'easeOut' }}
                     >
-                      <Badge variant="outline" className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30">
+                      <Badge
+                        variant="outline"
+                        className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30"
+                      >
                         {component.manufacturer}
                       </Badge>
                     </motion.div>
@@ -295,9 +350,9 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                   style={{ background: getConfidenceColor() }}
                   animate={{
                     scale: [1, 1.15, 1],
-                    opacity: [0.4, 0.6, 0.4]
+                    opacity: [0.4, 0.6, 0.4],
                   }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 />
 
                 {/* Glass background circle */}
@@ -308,8 +363,8 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     boxShadow: [
                       `0 0 20px ${getConfidenceColor()}20`,
                       `0 0 40px ${getConfidenceColor()}40`,
-                      `0 0 20px ${getConfidenceColor()}20`
-                    ]
+                      `0 0 20px ${getConfidenceColor()}20`,
+                    ],
                   }}
                   transition={{ duration: 2.5, repeat: Infinity }}
                 />
@@ -340,7 +395,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     animate={{ strokeDashoffset }}
                     transition={{ duration: 1.2, ease: 'easeOut', delay: 0.6 }}
                     style={{
-                      filter: `drop-shadow(0 0 8px ${getConfidenceColor()}60)`
+                      filter: `drop-shadow(0 0 8px ${getConfidenceColor()}60)`,
                     }}
                   />
                 </svg>
@@ -398,7 +453,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                 className="p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.80, duration: 0.3 }}
+                transition={{ delay: 0.8, duration: 0.3 }}
               >
                 <div className="flex items-center gap-2 mb-1">
                   <Clock className="h-3.5 w-3.5 text-blue-400" />
@@ -406,7 +461,9 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     Age
                   </span>
                 </div>
-                <div className="text-sm font-bold text-blue-400 truncate">{component.age_estimate}</div>
+                <div className="text-sm font-bold text-blue-400 truncate">
+                  {component.age_estimate}
+                </div>
               </motion.div>
             )}
 
@@ -414,39 +471,42 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
             {component.current_compliance && (
               <motion.div
                 className={cn(
-                  "p-3 rounded-xl border",
+                  'p-3 rounded-xl border',
                   component.current_compliance.toLowerCase().includes('meets') ||
-                  component.current_compliance.toLowerCase().includes('compliant')
-                    ? "bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/30"
-                    : "bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/30"
+                    component.current_compliance.toLowerCase().includes('compliant')
+                    ? 'bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/30'
+                    : 'bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/30'
                 )}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.85, duration: 0.3 }}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <CheckCircle2 className={cn(
-                    "h-3.5 w-3.5",
-                    component.current_compliance.toLowerCase().includes('meets') ||
-                    component.current_compliance.toLowerCase().includes('compliant')
-                      ? "text-green-400"
-                      : "text-amber-400"
-                  )} />
+                  <CheckCircle2
+                    className={cn(
+                      'h-3.5 w-3.5',
+                      component.current_compliance.toLowerCase().includes('meets') ||
+                        component.current_compliance.toLowerCase().includes('compliant')
+                        ? 'text-green-400'
+                        : 'text-amber-400'
+                    )}
+                  />
                   <span className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">
                     Compliance
                   </span>
                 </div>
-                <div className={cn(
-                  "text-sm font-bold truncate",
-                  component.current_compliance.toLowerCase().includes('meets') ||
-                  component.current_compliance.toLowerCase().includes('compliant')
-                    ? "text-green-400"
-                    : "text-amber-400"
-                )}>
+                <div
+                  className={cn(
+                    'text-sm font-bold truncate',
+                    component.current_compliance.toLowerCase().includes('meets') ||
+                      component.current_compliance.toLowerCase().includes('compliant')
+                      ? 'text-green-400'
+                      : 'text-amber-400'
+                  )}
+                >
                   {component.current_compliance.length > 15
                     ? component.current_compliance.substring(0, 15) + '...'
-                    : component.current_compliance
-                  }
+                    : component.current_compliance}
                 </div>
               </motion.div>
             )}
@@ -457,7 +517,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                 className="p-3 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.90, duration: 0.3 }}
+                transition={{ delay: 0.9, duration: 0.3 }}
               >
                 <div className="flex items-center gap-2 mb-1">
                   <Zap className="h-3.5 w-3.5 text-purple-400" />
@@ -508,14 +568,14 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                 variants={itemVariants}
                 custom={idx}
                 className={cn(
-                  "p-4 rounded-xl",
-                  "bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5",
-                  "border border-elec-yellow/20",
-                  "backdrop-blur-sm",
-                  "hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/10",
-                  "active:scale-[0.98]",
-                  "transition-all duration-200",
-                  "touch-manipulation"
+                  'p-4 rounded-xl',
+                  'bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5',
+                  'border border-elec-yellow/20',
+                  'backdrop-blur-sm',
+                  'hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/10',
+                  'active:scale-[0.98]',
+                  'transition-all duration-200',
+                  'touch-manipulation'
                 )}
               >
                 <div className="flex items-center gap-2 mb-2">
@@ -526,9 +586,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     {spec.label}
                   </span>
                 </div>
-                <div className="text-lg font-bold text-elec-yellow truncate">
-                  {spec.value}
-                </div>
+                <div className="text-lg font-bold text-elec-yellow truncate">{spec.value}</div>
               </motion.div>
             );
           })}
@@ -597,22 +655,22 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                 key={idx}
                 onClick={() => toggleCheck(idx)}
                 className={cn(
-                  "w-full flex items-start gap-3 p-3 rounded-lg text-left",
-                  "min-h-[48px] touch-manipulation",
-                  "transition-all duration-200",
+                  'w-full flex items-start gap-3 p-3 rounded-lg text-left',
+                  'min-h-[48px] touch-manipulation',
+                  'transition-all duration-200',
                   checkedItems[idx]
-                    ? "bg-green-500/10 border border-green-500/30"
-                    : "bg-background/50 border border-border/30 hover:bg-accent/30"
+                    ? 'bg-green-500/10 border border-green-500/30'
+                    : 'bg-background/50 border border-border/30 hover:bg-accent/30'
                 )}
                 whileTap={{ scale: 0.98 }}
               >
                 <motion.div
                   className={cn(
-                    "w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5",
-                    "border-2",
+                    'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5',
+                    'border-2',
                     checkedItems[idx]
-                      ? "bg-green-500 border-green-500 text-white"
-                      : "border-muted-foreground/30"
+                      ? 'bg-green-500 border-green-500 text-white'
+                      : 'border-muted-foreground/30'
                   )}
                   animate={{ scale: checkedItems[idx] ? [1, 1.2, 1] : 1 }}
                   transition={{ duration: 0.3 }}
@@ -630,10 +688,12 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     )}
                   </AnimatePresence>
                 </motion.div>
-                <span className={cn(
-                  "text-sm leading-relaxed",
-                  checkedItems[idx] ? "text-foreground" : "text-foreground/80"
-                )}>
+                <span
+                  className={cn(
+                    'text-sm leading-relaxed',
+                    checkedItems[idx] ? 'text-foreground' : 'text-foreground/80'
+                  )}
+                >
                   {identifier}
                 </span>
               </motion.button>
@@ -646,7 +706,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
               <motion.div
                 className="px-4 py-3 bg-green-500/10 border-t border-green-500/30"
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
@@ -673,26 +733,23 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, duration: 0.4 }}
         >
-          {component.age_estimate && (() => {
-            const ageColors = getAgeColor(component.age_estimate);
-            return (
-              <div className={cn(
-                "p-4 rounded-xl border",
-                ageColors.bg,
-                ageColors.border
-              )}>
-                <div className="flex items-center gap-2 mb-1">
-                  <Clock className={cn("h-4 w-4", ageColors.icon)} />
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                    Estimated Age
+          {component.age_estimate &&
+            (() => {
+              const ageColors = getAgeColor(component.age_estimate);
+              return (
+                <div className={cn('p-4 rounded-xl border', ageColors.bg, ageColors.border)}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Clock className={cn('h-4 w-4', ageColors.icon)} />
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      Estimated Age
+                    </p>
+                  </div>
+                  <p className={cn('text-base font-semibold', ageColors.text)}>
+                    {component.age_estimate}
                   </p>
                 </div>
-                <p className={cn("text-base font-semibold", ageColors.text)}>
-                  {component.age_estimate}
-                </p>
-              </div>
-            );
-          })()}
+              );
+            })()}
           {component.current_compliance && (
             <div className="p-4 rounded-xl bg-card/50 border border-border/30">
               <div className="flex items-center gap-2 mb-1">
@@ -706,13 +763,15 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                   Compliance Status
                 </p>
               </div>
-              <p className={cn(
-                "text-base font-semibold",
-                component.current_compliance.toLowerCase().includes('meets') ||
-                component.current_compliance.toLowerCase().includes('compliant')
-                  ? 'text-green-400'
-                  : 'text-amber-400'
-              )}>
+              <p
+                className={cn(
+                  'text-base font-semibold',
+                  component.current_compliance.toLowerCase().includes('meets') ||
+                    component.current_compliance.toLowerCase().includes('compliant')
+                    ? 'text-green-400'
+                    : 'text-amber-400'
+                )}
+              >
                 {component.current_compliance}
               </p>
             </div>
@@ -734,9 +793,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
               Where You'll Find This
             </p>
           </div>
-          <p className="text-sm text-foreground/90 leading-relaxed">
-            {component.where_found}
-          </p>
+          <p className="text-sm text-foreground/90 leading-relaxed">{component.where_found}</p>
         </motion.div>
       )}
 
@@ -747,11 +804,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.4 }}
         >
-          <ExpandableSection
-            title="Typical Applications"
-            icon={Zap}
-            defaultOpen={true}
-          >
+          <ExpandableSection title="Typical Applications" icon={Zap} defaultOpen={true}>
             <div className="space-y-2">
               {component.typical_applications.map((app, idx) => (
                 <motion.div
@@ -777,11 +830,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.45, duration: 0.4 }}
         >
-          <ExpandableSection
-            title="BS 7671 Requirements"
-            icon={BookOpen}
-            defaultOpen={false}
-          >
+          <ExpandableSection title="BS 7671 Requirements" icon={BookOpen} defaultOpen={false}>
             <div className="space-y-3">
               {component.bs7671_requirements.map((req, idx) => (
                 <motion.div
@@ -807,11 +856,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.4 }}
         >
-          <ExpandableSection
-            title="Installation & Replacement"
-            icon={Wrench}
-            defaultOpen={false}
-          >
+          <ExpandableSection title="Installation & Replacement" icon={Wrench} defaultOpen={false}>
             <div className="space-y-3">
               {/* Installation Notes */}
               {component.installation_notes && (
@@ -862,12 +907,12 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     className="absolute inset-0 bg-red-500/5 pointer-events-none"
                     animate={{
                       opacity: [0.3, 0.6, 0.3],
-                      scale: [1, 1.02, 1]
+                      scale: [1, 1.02, 1],
                     }}
                     transition={{
                       duration: 2,
                       repeat: Infinity,
-                      ease: "easeInOut"
+                      ease: 'easeInOut',
                     }}
                   />
                   <div className="relative">
@@ -875,12 +920,12 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                       <motion.div
                         animate={{
                           scale: [1, 1.1, 1],
-                          rotate: [0, 5, -5, 0]
+                          rotate: [0, 5, -5, 0],
                         }}
                         transition={{
                           duration: 2,
                           repeat: Infinity,
-                          ease: "easeInOut"
+                          ease: 'easeInOut',
                         }}
                       >
                         <AlertTriangle className="h-4 w-4 text-red-400" />
@@ -905,11 +950,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.55, duration: 0.4 }}
         >
-          <ExpandableSection
-            title="Similar Components"
-            icon={Package}
-            defaultOpen={false}
-          >
+          <ExpandableSection title="Similar Components" icon={Package} defaultOpen={false}>
             <div className="space-y-2">
               {analysisResult.similar_components.map((similar, idx) => (
                 <motion.div
@@ -932,7 +973,6 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           </ExpandableSection>
         </motion.div>
       )}
-
 
       {/* Summary - Enhanced with disclaimer styling */}
       {analysisResult.summary && (
@@ -959,7 +999,9 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
             <div className="flex items-start gap-2">
               <AlertCircle className="h-3.5 w-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
               <p className="text-xs text-muted-foreground leading-relaxed">
-                <span className="font-semibold text-amber-400">Important:</span> AI-generated results should be verified by a qualified electrician before making any decisions. Always consult BS 7671 and manufacturer documentation.
+                <span className="font-semibold text-amber-400">Important:</span> AI-generated
+                results should be verified by a qualified electrician before making any decisions.
+                Always consult BS 7671 and manufacturer documentation.
               </p>
             </div>
           </div>

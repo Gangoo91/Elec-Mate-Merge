@@ -29,7 +29,7 @@ export const CloudStorageQuickCheck = () => {
         <p className="text-cyan-100 font-medium">
           Give one advantage and one disadvantage of cloud storage.
         </p>
-        
+
         {!showFeedback ? (
           <div className="space-y-3">
             <Button
@@ -39,15 +39,16 @@ export const CloudStorageQuickCheck = () => {
             >
               Advantage: Faster access; Disadvantage: More expensive than local
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-cyan-400 hover:bg-cyan-900/20"
               onClick={() => handleAnswer('remote-subscription')}
             >
-              Advantage: Remote access anywhere; Disadvantage: Requires internet and subscription fees
+              Advantage: Remote access anywhere; Disadvantage: Requires internet and subscription
+              fees
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-cyan-400 hover:bg-cyan-900/20"
@@ -58,29 +59,35 @@ export const CloudStorageQuickCheck = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className={`p-4 rounded-lg border-2 ${
-              selectedAnswer === 'remote-subscription' 
-                ? 'border-green-500 bg-green-900/20' 
-                : 'border-red-500 bg-red-900/20'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border-2 ${
+                selectedAnswer === 'remote-subscription'
+                  ? 'border-green-500 bg-green-900/20'
+                  : 'border-red-500 bg-red-900/20'
+              }`}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {selectedAnswer === 'remote-subscription' ? (
                   <CheckCircle className="h-5 w-5 text-green-400" />
                 ) : (
                   <XCircle className="h-5 w-5 text-red-400" />
                 )}
-                <span className={`font-semibold ${
-                  selectedAnswer === 'remote-subscription' ? 'text-green-300' : 'text-red-300'
-                }`}>
+                <span
+                  className={`font-semibold ${
+                    selectedAnswer === 'remote-subscription' ? 'text-green-300' : 'text-red-300'
+                  }`}
+                >
                   {selectedAnswer === 'remote-subscription' ? 'Correct!' : 'Not quite right'}
                 </span>
               </div>
               <p className="text-gray-300 text-sm">
-                <strong>Cloud storage advantages:</strong> Access footage from anywhere, secure offsite backup, automatic updates. <strong>Disadvantages:</strong> Requires reliable internet, ongoing subscription costs, potential privacy concerns.
+                <strong>Cloud storage advantages:</strong> Access footage from anywhere, secure
+                offsite backup, automatic updates. <strong>Disadvantages:</strong> Requires reliable
+                internet, ongoing subscription costs, potential privacy concerns.
               </p>
             </div>
-            
-            <Button 
+
+            <Button
               onClick={resetQuiz}
               variant="ghost"
               className="text-cyan-400 hover:text-cyan-300"

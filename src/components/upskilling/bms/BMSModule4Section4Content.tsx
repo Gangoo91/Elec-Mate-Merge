@@ -14,11 +14,16 @@ export const BMSModule4Section4Content = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p>
-            Façade automation and shading systems are sophisticated building components that manage solar heat gain, glare control, and daylight harvesting. When properly integrated with a Building Management System (BMS), these systems can reduce building energy consumption by 20-40% while significantly improving occupant comfort and workplace productivity.
+            Façade automation and shading systems are sophisticated building components that manage
+            solar heat gain, glare control, and daylight harvesting. When properly integrated with a
+            Building Management System (BMS), these systems can reduce building energy consumption
+            by 20-40% while significantly improving occupant comfort and workplace productivity.
           </p>
 
           <p>
-            Modern intelligent façades respond to multiple environmental variables including solar irradiance, wind speed, external temperature, occupancy patterns, and even weather forecasts to optimise building performance throughout the day.
+            Modern intelligent façades respond to multiple environmental variables including solar
+            irradiance, wind speed, external temperature, occupancy patterns, and even weather
+            forecasts to optimise building performance throughout the day.
           </p>
 
           {/* Mobile-Friendly Integration Cards */}
@@ -29,10 +34,19 @@ export const BMSModule4Section4Content = () => {
                 <h4 className="font-semibold text-elec-yellow">Solar Heat Gain Management</h4>
               </div>
               <div className="space-y-2 text-sm">
-                <p><strong>Function:</strong> Automated shading reduces solar loads by up to 70%</p>
-                <p><strong>Benefit:</strong> Significant reduction in cooling energy and HVAC load</p>
-                <p><strong>Example:</strong> External blinds close when solar irradiance exceeds 300W/m²</p>
-                <p><strong>Advanced Feature:</strong> Predictive control using weather forecast data</p>
+                <p>
+                  <strong>Function:</strong> Automated shading reduces solar loads by up to 70%
+                </p>
+                <p>
+                  <strong>Benefit:</strong> Significant reduction in cooling energy and HVAC load
+                </p>
+                <p>
+                  <strong>Example:</strong> External blinds close when solar irradiance exceeds
+                  300W/m²
+                </p>
+                <p>
+                  <strong>Advanced Feature:</strong> Predictive control using weather forecast data
+                </p>
               </div>
             </div>
 
@@ -42,10 +56,20 @@ export const BMSModule4Section4Content = () => {
                 <h4 className="font-semibold text-blue-300">Daylight Harvesting</h4>
               </div>
               <div className="space-y-2 text-sm">
-                <p><strong>Function:</strong> Automated dimming based on natural light levels</p>
-                <p><strong>Benefit:</strong> Reduces artificial lighting energy by 40-60%</p>
-                <p><strong>Example:</strong> Light sensors adjust blinds to maintain 500 lux at desk height</p>
-                <p><strong>Advanced Feature:</strong> Individual zone control based on occupancy detection</p>
+                <p>
+                  <strong>Function:</strong> Automated dimming based on natural light levels
+                </p>
+                <p>
+                  <strong>Benefit:</strong> Reduces artificial lighting energy by 40-60%
+                </p>
+                <p>
+                  <strong>Example:</strong> Light sensors adjust blinds to maintain 500 lux at desk
+                  height
+                </p>
+                <p>
+                  <strong>Advanced Feature:</strong> Individual zone control based on occupancy
+                  detection
+                </p>
               </div>
             </div>
 
@@ -55,10 +79,21 @@ export const BMSModule4Section4Content = () => {
                 <h4 className="font-semibold text-green-300">Glare Protection</h4>
               </div>
               <div className="space-y-2 text-sm">
-                <p><strong>Function:</strong> Automatic adjustment to prevent visual discomfort</p>
-                <p><strong>Benefit:</strong> Improved workplace productivity and occupant satisfaction</p>
-                <p><strong>Example:</strong> Blinds adjust based on solar angle and workstation position</p>
-                <p><strong>Advanced Feature:</strong> Individual user preference learning and adaptation</p>
+                <p>
+                  <strong>Function:</strong> Automatic adjustment to prevent visual discomfort
+                </p>
+                <p>
+                  <strong>Benefit:</strong> Improved workplace productivity and occupant
+                  satisfaction
+                </p>
+                <p>
+                  <strong>Example:</strong> Blinds adjust based on solar angle and workstation
+                  position
+                </p>
+                <p>
+                  <strong>Advanced Feature:</strong> Individual user preference learning and
+                  adaptation
+                </p>
               </div>
             </div>
 
@@ -68,17 +103,30 @@ export const BMSModule4Section4Content = () => {
                 <h4 className="font-semibold text-purple-300">Integrated Control</h4>
               </div>
               <div className="space-y-2 text-sm">
-                <p><strong>Function:</strong> Coordination with HVAC, lighting, and security systems</p>
-                <p><strong>Benefit:</strong> Holistic building performance optimisation</p>
-                <p><strong>Example:</strong> Shading adjusts based on HVAC load predictions</p>
-                <p><strong>Advanced Feature:</strong> Machine learning algorithms for performance optimisation</p>
+                <p>
+                  <strong>Function:</strong> Coordination with HVAC, lighting, and security systems
+                </p>
+                <p>
+                  <strong>Benefit:</strong> Holistic building performance optimisation
+                </p>
+                <p>
+                  <strong>Example:</strong> Shading adjusts based on HVAC load predictions
+                </p>
+                <p>
+                  <strong>Advanced Feature:</strong> Machine learning algorithms for performance
+                  optimisation
+                </p>
               </div>
             </div>
           </div>
 
           <div className="bg-blue-600/20 border border-blue-600/40 rounded-lg p-4">
             <p className="text-blue-100">
-              <strong>Real-world scenario:</strong> A commercial office uses intelligent electrochromic glass that automatically transitions from clear to tinted based on solar conditions. The system communicates with the BMS to pre-cool spaces before peak solar load, reducing chiller energy by 25% while maintaining optimal daylight levels for productivity.
+              <strong>Real-world scenario:</strong> A commercial office uses intelligent
+              electrochromic glass that automatically transitions from clear to tinted based on
+              solar conditions. The system communicates with the BMS to pre-cool spaces before peak
+              solar load, reducing chiller energy by 25% while maintaining optimal daylight levels
+              for productivity.
             </p>
           </div>
         </CardContent>

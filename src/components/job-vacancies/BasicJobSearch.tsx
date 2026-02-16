@@ -1,9 +1,8 @@
-
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   Search,
   MapPin,
@@ -12,15 +11,15 @@ import {
   Building2,
   Calendar,
   Loader2,
-  AlertCircle
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { formatDistanceToNow } from "date-fns";
-import { LocationService } from "@/services/locationService";
-import EnhancedJobCard from "./EnhancedJobCard";
-import { supabase } from "@/integrations/supabase/client";
-import SearchError from "./SearchError";
-import { cn } from "@/lib/utils";
+  AlertCircle,
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { formatDistanceToNow } from 'date-fns';
+import { LocationService } from '@/services/locationService';
+import EnhancedJobCard from './EnhancedJobCard';
+import { supabase } from '@/integrations/supabase/client';
+import SearchError from './SearchError';
+import { cn } from '@/lib/utils';
 
 interface Job {
   id: string;
@@ -36,8 +35,8 @@ interface Job {
 }
 
 const BasicJobSearch = () => {
-  const [query, setQuery] = useState("electrician");
-  const [location, setLocation] = useState("Cumbria");
+  const [query, setQuery] = useState('electrician');
+  const [location, setLocation] = useState('Cumbria');
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,8 +62,8 @@ const BasicJobSearch = () => {
   const handleSearch = async () => {
     if (!query.trim()) {
       toast({
-        title: "Please enter a search term",
-        variant: "destructive"
+        title: 'Please enter a search term',
+        variant: 'destructive',
       });
       return;
     }
@@ -73,23 +72,23 @@ const BasicJobSearch = () => {
     let searchQuery = query.trim();
     if (searchQuery.length >= 2 && searchQuery.length < 8) {
       const expansions: { [key: string]: string } = {
-        'elec': 'electrical',
-        'elect': 'electrical', 
-        'electr': 'electrical',
-        'electri': 'electrical',
-        'electric': 'electrical',
-        'spark': 'electrician',
-        'wire': 'electrical wiring',
-        'install': 'electrical installation',
-        'maint': 'electrical maintenance',
-        'test': 'electrical testing',
-        'design': 'electrical design',
-        'comm': 'electrical commissioning',
-        'ev': 'electric vehicle charging',
-        'solar': 'solar electrical',
-        'led': 'led lighting electrical'
+        elec: 'electrical',
+        elect: 'electrical',
+        electr: 'electrical',
+        electri: 'electrical',
+        electric: 'electrical',
+        spark: 'electrician',
+        wire: 'electrical wiring',
+        install: 'electrical installation',
+        maint: 'electrical maintenance',
+        test: 'electrical testing',
+        design: 'electrical design',
+        comm: 'electrical commissioning',
+        ev: 'electric vehicle charging',
+        solar: 'solar electrical',
+        led: 'led lighting electrical',
       };
-      
+
       const lowerQuery = searchQuery.toLowerCase();
       if (expansions[lowerQuery]) {
         searchQuery = expansions[lowerQuery];
@@ -107,8 +106,8 @@ const BasicJobSearch = () => {
         body: {
           keywords: searchQuery,
           location: location.trim() || undefined,
-          page: 1
-        }
+          page: 1,
+        },
       });
 
       if (error) {
@@ -122,36 +121,41 @@ const BasicJobSearch = () => {
       }
 
       let jobResults = data.jobs || [];
-      
+
       // Apply client-side location filtering if specific location is provided
-      if (location.trim() && location.toLowerCase() !== 'uk' && location.toLowerCase() !== 'united kingdom') {
+      if (
+        location.trim() &&
+        location.toLowerCase() !== 'uk' &&
+        location.toLowerCase() !== 'united kingdom'
+      ) {
         console.log('📍 Applying client-side location filtering for:', location);
         jobResults = LocationService.filterJobsByLocation(jobResults, location, 100);
-        console.log(`Applied location filtering: ${jobResults.length} jobs within 100 miles of ${location}`);
+        console.log(
+          `Applied location filtering: ${jobResults.length} jobs within 100 miles of ${location}`
+        );
       }
 
       setJobs(jobResults);
 
       if (jobResults.length === 0 && searchQuery !== query.trim()) {
         toast({
-          title: "Search Auto-Expanded",
-          description: `Searched for "${searchQuery}" instead of "${query.trim()}" but no results found. Try different terms.`
+          title: 'Search Auto-Expanded',
+          description: `Searched for "${searchQuery}" instead of "${query.trim()}" but no results found. Try different terms.`,
         });
       } else {
         toast({
-          title: "Search Complete", 
-          description: `Found ${jobResults.length} jobs${searchQuery !== query.trim() ? ` (searched for "${searchQuery}")` : ''}`
+          title: 'Search Complete',
+          description: `Found ${jobResults.length} jobs${searchQuery !== query.trim() ? ` (searched for "${searchQuery}")` : ''}`,
         });
       }
-
     } catch (error) {
       console.error('❌ Search error:', error);
-      const errorMessage = error instanceof Error ? error.message : "Please try again";
+      const errorMessage = error instanceof Error ? error.message : 'Please try again';
       setError(errorMessage);
       toast({
-        title: "Search Failed",
+        title: 'Search Failed',
         description: errorMessage,
-        variant: "destructive"
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -160,10 +164,10 @@ const BasicJobSearch = () => {
 
   const handleApply = (jobId: string, url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
-    
+
     toast({
-      title: "Application Opened",
-      description: "The job application has opened in a new tab. Good luck!"
+      title: 'Application Opened',
+      description: 'The job application has opened in a new tab. Good luck!',
     });
   };
 
@@ -191,7 +195,7 @@ const BasicJobSearch = () => {
                 className="h-11 sm:h-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
               />
             </div>
-            
+
             <div className="lg:col-span-4 space-y-2 relative">
               <label className="text-sm font-medium text-elec-yellow">Location</label>
               <div className="relative">
@@ -203,10 +207,13 @@ const BasicJobSearch = () => {
                   value={location}
                   onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className={cn("h-11 sm:h-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors", !location && "pl-10 sm:pl-12")}
+                  className={cn(
+                    'h-11 sm:h-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors',
+                    !location && 'pl-10 sm:pl-12'
+                  )}
                 />
               </div>
-              
+
               {/* Location Suggestions */}
               {showLocationSuggestions && (
                 <div className="absolute z-50 w-full mt-1 bg-elec-card border border-elec-yellow/30 rounded-lg shadow-xl max-h-48 overflow-y-auto scrollbar-none">
@@ -225,8 +232,8 @@ const BasicJobSearch = () => {
             </div>
 
             <div className="lg:col-span-3 flex items-end">
-              <Button 
-                onClick={handleSearch} 
+              <Button
+                onClick={handleSearch}
                 disabled={loading}
                 className="h-11 sm:h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 w-full font-semibold transition-all duration-200"
               >
@@ -280,10 +287,9 @@ const BasicJobSearch = () => {
             <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2 text-elec-light">No Jobs Found</h3>
             <p className="text-muted-foreground mb-4">
-              {location 
+              {location
                 ? `No electrical jobs found matching "${query}" in or near ${location}`
-                : `No electrical jobs found matching "${query}"`
-              }
+                : `No electrical jobs found matching "${query}"`}
             </p>
             <div className="bg-elec-dark/50 rounded-lg p-4 mt-4">
               <p className="text-elec-yellow font-medium mb-3">Search suggestions:</p>
@@ -302,7 +308,9 @@ const BasicJobSearch = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-0.5">•</span>
-                  <span>Use job-specific terms like "testing", "installation", or "commissioning"</span>
+                  <span>
+                    Use job-specific terms like "testing", "installation", or "commissioning"
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-0.5">•</span>
@@ -312,7 +320,8 @@ const BasicJobSearch = () => {
               <div className="mt-4 pt-3 border-t border-elec-yellow/20">
                 <p className="text-xs text-elec-yellow/70 font-medium mb-2">Popular searches:</p>
                 <p className="text-xs text-elec-light/60">
-                  "electrician", "electrical engineer", "maintenance electrician", "electrical testing"
+                  "electrician", "electrical engineer", "maintenance electrician", "electrical
+                  testing"
                 </p>
               </div>
             </div>

@@ -1,6 +1,5 @@
-
 import { useRef, useEffect, useState } from 'react';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from '@/components/ui/use-toast';
 
 interface AutoSaveOptions {
   sessionTime: number;
@@ -20,14 +19,14 @@ export const useAutoSave = ({
   currentActivity,
   saveInterval = 5 * 60 * 1000, // 5 minutes default
   minimumEntryDuration = 30, // 30 minutes default
-  onSave
+  onSave,
 }: AutoSaveOptions) => {
   const { toast } = useToast();
   const autoSaveRef = useRef<NodeJS.Timeout | null>(null);
   const lastAutoSaveRef = useRef<number>(0);
   const accumulatedTimeRef = useRef<number>(0);
   const [isSaving, setIsSaving] = useState(false);
-  
+
   // Auto-save functionality
   useEffect(() => {
     if (isTracking) {
@@ -36,28 +35,28 @@ export const useAutoSave = ({
           if (sessionTime > lastAutoSaveRef.current) {
             // Calculate elapsed seconds since last checkpoint
             const elapsedSeconds = sessionTime - lastAutoSaveRef.current;
-            
+
             // Add to accumulated time
             accumulatedTimeRef.current += elapsedSeconds;
             lastAutoSaveRef.current = sessionTime;
-            
+
             // Check if we've reached minimum entry duration (convert to seconds)
             const minimumSeconds = minimumEntryDuration * 60;
-            
+
             if (accumulatedTimeRef.current >= minimumSeconds && currentActivity) {
               // Create a time entry for the accumulated time (in minutes)
               const minutesToSave = Math.floor(accumulatedTimeRef.current / 60);
               onSave(minutesToSave, currentActivity);
-              
+
               // Reset accumulated time
               accumulatedTimeRef.current = 0;
-              
+
               // Show notification
               setIsSaving(true);
               toast({
-                title: "Training time saved",
+                title: 'Training time saved',
                 description: `${minutesToSave} minutes of training time recorded`,
-                variant: "default",
+                variant: 'default',
               });
               setTimeout(() => setIsSaving(false), 3000);
             }
@@ -68,26 +67,26 @@ export const useAutoSave = ({
       clearInterval(autoSaveRef.current);
       autoSaveRef.current = null;
     }
-    
+
     return () => {
       if (autoSaveRef.current) {
         clearInterval(autoSaveRef.current);
       }
     };
   }, [isTracking, sessionTime, currentActivity, onSave, saveInterval, toast, minimumEntryDuration]);
-  
+
   // Method to manually save current time
   const saveCurrentProgress = () => {
     if (currentActivity) {
       // Add any time since last auto-save to our accumulated time
       if (sessionTime > lastAutoSaveRef.current) {
-        accumulatedTimeRef.current += (sessionTime - lastAutoSaveRef.current);
+        accumulatedTimeRef.current += sessionTime - lastAutoSaveRef.current;
       }
-      
+
       // Only save if we have accumulated time
       if (accumulatedTimeRef.current > 0) {
         const minutesToSave = Math.max(5, Math.floor(accumulatedTimeRef.current / 60));
-        
+
         onSave(minutesToSave, currentActivity);
         lastAutoSaveRef.current = sessionTime;
         accumulatedTimeRef.current = 0;
@@ -96,7 +95,7 @@ export const useAutoSave = ({
     }
     return 0;
   };
-  
+
   // Reset auto-save state
   const resetAutoSave = () => {
     lastAutoSaveRef.current = 0;
@@ -108,6 +107,6 @@ export const useAutoSave = ({
     accumulatedTime: accumulatedTimeRef.current,
     isSaving,
     saveCurrentProgress,
-    resetAutoSave
+    resetAutoSave,
   };
 };

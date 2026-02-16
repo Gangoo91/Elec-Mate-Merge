@@ -1,11 +1,17 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Sparkles, Loader2, ArrowLeft, Mic } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { SimplifiedRoomForm } from "./SimplifiedRoomForm";
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Sparkles, Loader2, ArrowLeft, Mic } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { SimplifiedRoomForm } from './SimplifiedRoomForm';
 
 const QUICK_TEMPLATES = [
   {
@@ -13,22 +19,25 @@ const QUICK_TEMPLATES = [
     name: 'Kitchen',
     icon: '🍳',
     dimensions: '4m × 3m',
-    description: 'Kitchen - 4m north wall with window centred, 3m east wall with door on right, 4m south wall with 2x double sockets 1.5m apart, 3m west wall with light switch near door, ceiling light in centre'
+    description:
+      'Kitchen - 4m north wall with window centred, 3m east wall with door on right, 4m south wall with 2x double sockets 1.5m apart, 3m west wall with light switch near door, ceiling light in centre',
   },
   {
     id: 'bedroom',
     name: 'Bedroom',
     icon: '🛏️',
     dimensions: '3m × 4m',
-    description: 'Bedroom - 3m north wall with window centred, 4m east wall, 3m south wall with door on left and 2x double sockets, 4m west wall with 1x double socket, 2-way light switches on east and west walls near door, ceiling light in centre'
+    description:
+      'Bedroom - 3m north wall with window centred, 4m east wall, 3m south wall with door on left and 2x double sockets, 4m west wall with 1x double socket, 2-way light switches on east and west walls near door, ceiling light in centre',
   },
   {
     id: 'office',
     name: 'Office',
     icon: '💼',
     dimensions: '5m × 4m',
-    description: 'Office - 5m north wall with 2x windows, 4m east wall, 5m south wall with door on left and 4x double sockets evenly spaced, 4m west wall with 2x double sockets, light switch near door, 2x ceiling lights'
-  }
+    description:
+      'Office - 5m north wall with 2x windows, 4m east wall, 5m south wall with door on left and 4x double sockets evenly spaced, 4m west wall with 2x double sockets, light switch near door, 2x ceiling lights',
+  },
 ];
 
 interface AIRoomBuilderDialogProps {
@@ -37,19 +46,23 @@ interface AIRoomBuilderDialogProps {
   onRoomGenerated: (roomData: any) => void;
 }
 
-export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIRoomBuilderDialogProps) => {
-  const [description, setDescription] = useState("");
+export const AIRoomBuilderDialog = ({
+  open,
+  onOpenChange,
+  onRoomGenerated,
+}: AIRoomBuilderDialogProps) => {
+  const [description, setDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [mode, setMode] = useState<'quickstart' | 'advanced'>('quickstart');
   const [isListening, setIsListening] = useState(false);
 
-  const handleQuickGenerate = async (template: typeof QUICK_TEMPLATES[0]) => {
+  const handleQuickGenerate = async (template: (typeof QUICK_TEMPLATES)[0]) => {
     setIsGenerating(true);
     toast.loading(`Generating ${template.name}...`);
-    
+
     try {
       const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { description: template.description }
+        body: { description: template.description },
       });
 
       if (error) throw error;
@@ -63,7 +76,7 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
       }
     } catch (error) {
       console.error('Room generation error:', error);
-      toast.error(error instanceof Error ? error.message : "Failed to generate room");
+      toast.error(error instanceof Error ? error.message : 'Failed to generate room');
     } finally {
       setIsGenerating(false);
     }
@@ -72,10 +85,10 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
   const handleSimpleFormGenerate = async (generatedDescription: string) => {
     setIsGenerating(true);
     toast.loading('Generating your room...');
-    
+
     try {
       const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { description: generatedDescription }
+        body: { description: generatedDescription },
       });
 
       if (error) throw error;
@@ -89,7 +102,7 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
       }
     } catch (error) {
       console.error('Room generation error:', error);
-      toast.error(error instanceof Error ? error.message : "Failed to generate room");
+      toast.error(error instanceof Error ? error.message : 'Failed to generate room');
     } finally {
       setIsGenerating(false);
     }
@@ -97,7 +110,7 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
 
   const handleGenerate = async () => {
     if (!description.trim()) {
-      toast.error("Please describe your room first");
+      toast.error('Please describe your room first');
       return;
     }
 
@@ -106,25 +119,25 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
 
     try {
       const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { description: description.trim() }
+        body: { description: description.trim() },
       });
 
       if (error) throw error;
 
       toast.loading('Drawing walls and symbols...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       if (data.success && data.roomData) {
         toast.success('Room diagram generated!');
         onRoomGenerated(data.roomData);
-        setDescription("");
+        setDescription('');
         onOpenChange(false);
       } else {
         throw new Error(data.error || 'Failed to generate room diagram');
       }
     } catch (error) {
       console.error('Room generation error:', error);
-      toast.error(error instanceof Error ? error.message : "Failed to generate room diagram");
+      toast.error(error instanceof Error ? error.message : 'Failed to generate room diagram');
     } finally {
       setIsGenerating(false);
     }
@@ -214,8 +227,8 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
         ) : (
           <div className="space-y-4">
             <DialogHeader>
-              <button 
-                onClick={() => setMode('quickstart')} 
+              <button
+                onClick={() => setMode('quickstart')}
                 className="text-xs text-elec-yellow mb-2 flex items-center gap-1 hover:underline"
               >
                 <ArrowLeft className="h-3 w-3" />
@@ -226,7 +239,7 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
                 Describe your room in natural language and let AI create the electrical diagram
               </DialogDescription>
             </DialogHeader>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium text-elec-light">Room Description</label>
               <div className="relative">
@@ -252,9 +265,10 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
             <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
               <h4 className="text-sm font-semibold text-elec-yellow mb-2">Example Format:</h4>
               <p className="text-xs text-elec-light/70 leading-relaxed">
-                "Living room - 5m by 4m. North wall (5m) has two windows. East wall (4m) has the door on the right side. 
-                South wall (5m) needs 4 double sockets evenly spaced. West wall (4m) needs 1 double socket. 
-                Put a light switch near the door and 2 ceiling lights."
+                "Living room - 5m by 4m. North wall (5m) has two windows. East wall (4m) has the
+                door on the right side. South wall (5m) needs 4 double sockets evenly spaced. West
+                wall (4m) needs 1 double socket. Put a light switch near the door and 2 ceiling
+                lights."
               </p>
             </div>
 
@@ -262,7 +276,9 @@ export const AIRoomBuilderDialog = ({ open, onOpenChange, onRoomGenerated }: AIR
               <h4 className="text-sm font-semibold text-elec-light">Tips:</h4>
               <ul className="text-xs text-elec-light/70 space-y-1 list-disc list-inside">
                 <li>Specify room dimensions (width x height in metres)</li>
-                <li>Mention wall orientations (north/south/east/west) and features (windows/doors)</li>
+                <li>
+                  Mention wall orientations (north/south/east/west) and features (windows/doors)
+                </li>
                 <li>Indicate socket quantities and positions along walls</li>
                 <li>Specify lighting (ceiling lights, wall lights) and switch locations</li>
               </ul>

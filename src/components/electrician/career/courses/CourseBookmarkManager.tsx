@@ -1,14 +1,22 @@
-import React, { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Bookmark, BookmarkCheck, Heart, Download, Share2, 
-  Filter, X, Calendar, Clock, Star 
-} from "lucide-react";
-import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
-import { useToast } from "@/hooks/use-toast";
-import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
+import React, { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Bookmark,
+  BookmarkCheck,
+  Heart,
+  Download,
+  Share2,
+  Filter,
+  X,
+  Calendar,
+  Clock,
+  Star,
+} from 'lucide-react';
+import { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
+import { useToast } from '@/hooks/use-toast';
+import { useCareerBookmarks } from '@/hooks/career/useCareerBookmarks';
 
 interface CourseBookmarkManagerProps {
   courses: EnhancedCareerCourse[];
@@ -18,24 +26,28 @@ interface CourseBookmarkManagerProps {
 interface BookmarkedCourse extends EnhancedCareerCourse {
   bookmarkedAt: Date;
   notes?: string;
-  priority: "high" | "medium" | "low";
+  priority: 'high' | 'medium' | 'low';
 }
 
 const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManagerProps) => {
-  const { bookmarks, toggleBookmark: toggleDatabaseBookmark, isBookmarked: isDatabaseBookmarked } = useCareerBookmarks();
-  const [filterPriority, setFilterPriority] = useState<string>("all");
+  const {
+    bookmarks,
+    toggleBookmark: toggleDatabaseBookmark,
+    isBookmarked: isDatabaseBookmarked,
+  } = useCareerBookmarks();
+  const [filterPriority, setFilterPriority] = useState<string>('all');
   const { toast } = useToast();
 
   // Convert database bookmarks to bookmarked courses with additional metadata
   const bookmarkedCourses = useMemo(() => {
     return courses
-      .filter(course => isDatabaseBookmarked(String(course.id)))
-      .map(course => {
-        const bookmark = bookmarks.find(b => b.career_path_id === String(course.id));
+      .filter((course) => isDatabaseBookmarked(String(course.id)))
+      .map((course) => {
+        const bookmark = bookmarks.find((b) => b.career_path_id === String(course.id));
         return {
           ...course,
           bookmarkedAt: bookmark ? new Date(bookmark.created_at) : new Date(),
-          priority: "medium" as const // Default priority for now
+          priority: 'medium' as const, // Default priority for now
         };
       });
   }, [courses, bookmarks, isDatabaseBookmarked]);
@@ -44,12 +56,12 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
     toggleDatabaseBookmark(String(course.id));
   };
 
-  const updatePriority = (courseId: string | number, priority: "high" | "medium" | "low") => {
+  const updatePriority = (courseId: string | number, priority: 'high' | 'medium' | 'low') => {
     // For now, just show a toast as priority isn't stored in database yet
     toast({
-      title: "Priority updated locally",
-      description: "Priority changes are not yet persisted to the database.",
-      variant: "default"
+      title: 'Priority updated locally',
+      description: 'Priority changes are not yet persisted to the database.',
+      variant: 'default',
     });
   };
 
@@ -58,7 +70,7 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
   };
 
   const exportBookmarks = () => {
-    const data = bookmarkedCourses.map(course => ({
+    const data = bookmarkedCourses.map((course) => ({
       title: course.title,
       provider: course.provider,
       category: course.category,
@@ -66,12 +78,12 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
       price: course.price,
       priority: course.priority,
       bookmarkedAt: course.bookmarkedAt.toLocaleDateString(),
-      nextDates: course.nextDates.join(', ')
+      nextDates: course.nextDates.join(', '),
     }));
 
     const csv = [
       Object.keys(data[0]).join(','),
-      ...data.map(row => Object.values(row).join(','))
+      ...data.map((row) => Object.values(row).join(',')),
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -83,62 +95,67 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
     window.URL.revokeObjectURL(url);
 
     toast({
-      title: "Export complete",
-      description: "Your saved courses have been exported as CSV.",
-      variant: "success"
+      title: 'Export complete',
+      description: 'Your saved courses have been exported as CSV.',
+      variant: 'success',
     });
   };
 
   const shareBookmarks = () => {
     const courseList = bookmarkedCourses
-      .map(course => `• ${course.title} (${course.provider})`)
+      .map((course) => `• ${course.title} (${course.provider})`)
       .join('\n');
-    
+
     const shareText = `My Saved Electrical Career Courses:\n\n${courseList}`;
-    
+
     if (navigator.share) {
       navigator.share({
         title: 'Saved Career Courses',
-        text: shareText
+        text: shareText,
       });
     } else {
       navigator.clipboard.writeText(shareText);
       toast({
-        title: "Copied to clipboard",
-        description: "Course list has been copied to your clipboard.",
-        variant: "success"
+        title: 'Copied to clipboard',
+        description: 'Course list has been copied to your clipboard.',
+        variant: 'success',
       });
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "high": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "medium": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "low": return "bg-green-500/20 text-green-400 border-green-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      case 'high':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'medium':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'low':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
 
-  const filteredBookmarks = bookmarkedCourses.filter(course => 
-    filterPriority === "all" || course.priority === filterPriority
+  const filteredBookmarks = bookmarkedCourses.filter(
+    (course) => filterPriority === 'all' || course.priority === filterPriority
   );
 
   return (
     <div className="space-y-6">
       {/* Bookmark Actions for Course Cards */}
       <div className="hidden">
-        {courses.map(course => (
+        {courses.map((course) => (
           <Button
             key={course.id}
             variant="ghost"
             size="sm"
             onClick={() => toggleBookmark(course)}
-            className={`${isBookmarked(course.id) ? 
-              'text-elec-yellow hover:text-elec-yellow/80' : 
-              'text-muted-foreground hover:text-elec-yellow'
+            className={`${
+              isBookmarked(course.id)
+                ? 'text-elec-yellow hover:text-elec-yellow/80'
+                : 'text-muted-foreground hover:text-elec-yellow'
             }`}
-            title={isBookmarked(course.id) ? "Remove from saved" : "Save course"}
+            title={isBookmarked(course.id) ? 'Remove from saved' : 'Save course'}
           >
             {isBookmarked(course.id) ? (
               <BookmarkCheck className="h-4 w-4" />
@@ -177,18 +194,21 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
               <Filter className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-medium">Filter by priority:</span>
               <div className="flex gap-2">
-                {["all", "high", "medium", "low"].map(priority => (
+                {['all', 'high', 'medium', 'low'].map((priority) => (
                   <Button
                     key={priority}
-                    variant={filterPriority === priority ? "default" : "outline"}
+                    variant={filterPriority === priority ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setFilterPriority(priority)}
-                    className={filterPriority === priority ? 
-                      "bg-elec-yellow text-elec-dark" : 
-                      "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    className={
+                      filterPriority === priority
+                        ? 'bg-elec-yellow text-elec-dark'
+                        : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
                     }
                   >
-                    {priority === "all" ? "All" : priority.charAt(0).toUpperCase() + priority.slice(1)}
+                    {priority === 'all'
+                      ? 'All'
+                      : priority.charAt(0).toUpperCase() + priority.slice(1)}
                   </Button>
                 ))}
               </div>
@@ -196,8 +216,8 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
 
             {/* Saved Courses List */}
             <div className="space-y-3">
-              {filteredBookmarks.map(course => (
-                <div 
+              {filteredBookmarks.map((course) => (
+                <div
                   key={course.id}
                   className="border border-elec-yellow/10 rounded-lg p-4 hover:border-elec-yellow/20 transition-colors"
                 >
@@ -209,9 +229,9 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
                           {course.priority} priority
                         </Badge>
                       </div>
-                      
+
                       <p className="text-xs text-elec-yellow">{course.provider}</p>
-                      
+
                       <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
@@ -231,10 +251,10 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
                     <div className="flex items-center gap-2">
                       {/* Priority Buttons */}
                       <div className="flex gap-1">
-                        {["high", "medium", "low"].map(priority => (
+                        {['high', 'medium', 'low'].map((priority) => (
                           <Button
                             key={priority}
-                            variant={course.priority === priority ? "default" : "ghost"}
+                            variant={course.priority === priority ? 'default' : 'ghost'}
                             size="sm"
                             className="h-6 px-2 text-xs"
                             onClick={() => updatePriority(course.id, priority as any)}
@@ -244,14 +264,10 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
                         ))}
                       </div>
 
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onViewDetails(course)}
-                      >
+                      <Button variant="outline" size="sm" onClick={() => onViewDetails(course)}>
                         View
                       </Button>
-                      
+
                       <Button
                         variant="ghost"
                         size="sm"
@@ -279,18 +295,18 @@ export const useBookmarkManager = () => {
 
   const toggleBookmark = (course: EnhancedCareerCourse) => {
     if (bookmarkedCourses.includes(course.id)) {
-      setBookmarkedCourses(prev => prev.filter(id => id !== course.id));
+      setBookmarkedCourses((prev) => prev.filter((id) => id !== course.id));
       toast({
-        title: "Course removed from saved",
+        title: 'Course removed from saved',
         description: `${course.title} has been removed from your saved courses.`,
-        variant: "default"
+        variant: 'default',
       });
     } else {
-      setBookmarkedCourses(prev => [...prev, course.id]);
+      setBookmarkedCourses((prev) => [...prev, course.id]);
       toast({
-        title: "Course saved!",
+        title: 'Course saved!',
         description: `${course.title} has been added to your saved courses.`,
-        variant: "success"
+        variant: 'success',
       });
     }
   };

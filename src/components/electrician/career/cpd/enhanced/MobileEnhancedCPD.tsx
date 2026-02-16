@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Plus, 
-  Clock, 
-  Target, 
-  Camera, 
-  Mic, 
-  MapPin, 
+import {
+  Plus,
+  Clock,
+  Target,
+  Camera,
+  Mic,
+  MapPin,
   Bell,
   TrendingUp,
   Award,
@@ -18,7 +18,7 @@ import {
   AlertTriangle,
   Calendar,
   Star,
-  FileText
+  FileText,
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 import { CPD_ACTIVITY_TEMPLATES, QUICK_ACTIVITY_TEMPLATES } from '@/data/cpd-templates';
@@ -29,13 +29,17 @@ interface MobileEnhancedCPDProps {
   onManageGoals?: () => void;
 }
 
-const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileEnhancedCPDProps) => {
+const MobileEnhancedCPD = ({
+  onAddEntry,
+  onViewHistory,
+  onManageGoals,
+}: MobileEnhancedCPDProps) => {
   const { entries, compliance, reminders, addFromTemplate } = useEnhancedCPD();
   const [activeTab, setActiveTab] = useState('dashboard');
 
   const recentEntries = entries.slice(0, 3);
-  const urgentReminders = reminders.filter(r => r.priority === 'high').slice(0, 2);
-  const popularTemplates = CPD_ACTIVITY_TEMPLATES.filter(t => t.isPopular).slice(0, 4);
+  const urgentReminders = reminders.filter((r) => r.priority === 'high').slice(0, 2);
+  const popularTemplates = CPD_ACTIVITY_TEMPLATES.filter((t) => t.isPopular).slice(0, 4);
 
   const handleQuickAdd = (template: any) => {
     addFromTemplate(template);
@@ -54,23 +58,24 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
               <p className="text-xs text-muted-foreground">Hours Logged</p>
             </div>
             <div>
-              <div className="text-xl font-bold text-foreground">
-                {entries.length}
-              </div>
+              <div className="text-xl font-bold text-foreground">{entries.length}</div>
               <p className="text-xs text-muted-foreground">Activities</p>
             </div>
             <div>
               <div className="text-xl font-bold text-foreground">
-                {compliance ? Math.round((compliance.hoursCompleted / compliance.hoursRequired) * 100) : 0}%
+                {compliance
+                  ? Math.round((compliance.hoursCompleted / compliance.hoursRequired) * 100)
+                  : 0}
+                %
               </div>
               <p className="text-xs text-muted-foreground">Progress</p>
             </div>
           </div>
-          
+
           {compliance && (
             <div className="mt-4">
-              <Progress 
-                value={Math.min((compliance.hoursCompleted / compliance.hoursRequired) * 100, 100)} 
+              <Progress
+                value={Math.min((compliance.hoursCompleted / compliance.hoursRequired) * 100, 100)}
                 className="h-2"
               />
               <p className="text-xs text-muted-foreground text-center mt-1">
@@ -105,10 +110,18 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="dashboard" className="text-xs">Overview</TabsTrigger>
-          <TabsTrigger value="quick-add" className="text-xs">Quick Add</TabsTrigger>
-          <TabsTrigger value="recent" className="text-xs">Recent</TabsTrigger>
-          <TabsTrigger value="reminders" className="text-xs">Alerts</TabsTrigger>
+          <TabsTrigger value="dashboard" className="text-xs">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="quick-add" className="text-xs">
+            Quick Add
+          </TabsTrigger>
+          <TabsTrigger value="recent" className="text-xs">
+            Recent
+          </TabsTrigger>
+          <TabsTrigger value="reminders" className="text-xs">
+            Alerts
+          </TabsTrigger>
         </TabsList>
 
         {/* Dashboard Overview */}
@@ -124,13 +137,13 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between mb-3">
-                  <Badge 
+                  <Badge
                     className={
-                      compliance.overallStatus === 'compliant' 
+                      compliance.overallStatus === 'compliant'
                         ? 'bg-green-500/10 text-green-400 border-green-500/30'
                         : compliance.overallStatus === 'at-risk'
-                        ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30'
-                        : 'bg-red-500/10 text-red-400 border-red-500/30'
+                          ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30'
+                          : 'bg-red-500/10 text-red-400 border-red-500/30'
                     }
                   >
                     {compliance.overallStatus.replace('-', ' ').toUpperCase()}
@@ -139,9 +152,12 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
                     {compliance.hoursCompleted}/{compliance.hoursRequired}h
                   </span>
                 </div>
-                
-                <Progress 
-                  value={Math.min((compliance.hoursCompleted / compliance.hoursRequired) * 100, 100)} 
+
+                <Progress
+                  value={Math.min(
+                    (compliance.hoursCompleted / compliance.hoursRequired) * 100,
+                    100
+                  )}
                   className="h-3"
                 />
 
@@ -169,25 +185,23 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
                           {gap.category.replace('-', ' ')}
                         </span>
                         <div className="flex items-center gap-1">
-                          <Badge 
+                          <Badge
                             variant="outline"
                             className={
-                              gap.status === 'complete' 
-                                ? 'text-green-400 border-green-500/30' 
+                              gap.status === 'complete'
+                                ? 'text-green-400 border-green-500/30'
                                 : gap.status === 'on-track'
-                                ? 'text-yellow-400 border-yellow-500/30'
-                                : 'text-red-400 border-red-500/30'
+                                  ? 'text-yellow-400 border-yellow-500/30'
+                                  : 'text-red-400 border-red-500/30'
                             }
                           >
                             {gap.status}
                           </Badge>
-                          <span className="text-xs text-muted-foreground">
-                            {gap.completed}h
-                          </span>
+                          <span className="text-xs text-muted-foreground">{gap.completed}h</span>
                         </div>
                       </div>
-                      <Progress 
-                        value={Math.min((gap.completed / gap.required) * 100, 100)} 
+                      <Progress
+                        value={Math.min((gap.completed / gap.required) * 100, 100)}
                         className="h-1"
                       />
                     </div>
@@ -238,7 +252,10 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
             <CardContent>
               <div className="space-y-2">
                 {popularTemplates.map((template) => (
-                  <div key={template.id} className="flex items-center justify-between p-2 bg-muted/20 rounded">
+                  <div
+                    key={template.id}
+                    className="flex items-center justify-between p-2 bg-muted/20 rounded"
+                  >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground truncate">
                         {template.title}
@@ -252,11 +269,7 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
                         </Badge>
                       </div>
                     </div>
-                    <Button
-                      size="sm"
-                      onClick={() => handleQuickAdd(template)}
-                      className="ml-2"
-                    >
+                    <Button size="sm" onClick={() => handleQuickAdd(template)} className="ml-2">
                       <Plus className="h-4 w-4" />
                     </Button>
                   </div>
@@ -354,34 +367,32 @@ const MobileEnhancedCPD = ({ onAddEntry, onViewHistory, onManageGoals }: MobileE
                   {reminders.slice(0, 5).map((reminder) => (
                     <div key={reminder.id} className="p-2 bg-muted/20 rounded">
                       <div className="flex items-start gap-2">
-                        <div className={`p-1 rounded ${
-                          reminder.priority === 'high' 
-                            ? 'bg-red-500/10 text-red-400'
-                            : reminder.priority === 'medium'
-                            ? 'bg-yellow-500/10 text-yellow-400'
-                            : 'bg-blue-500/10 text-blue-400'
-                        }`}>
+                        <div
+                          className={`p-1 rounded ${
+                            reminder.priority === 'high'
+                              ? 'bg-red-500/10 text-red-400'
+                              : reminder.priority === 'medium'
+                                ? 'bg-yellow-500/10 text-yellow-400'
+                                : 'bg-blue-500/10 text-blue-400'
+                          }`}
+                        >
                           <Bell className="h-3 w-3" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-foreground">
-                            {reminder.title}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {reminder.message}
-                          </p>
+                          <p className="text-sm font-medium text-foreground">{reminder.title}</p>
+                          <p className="text-xs text-muted-foreground">{reminder.message}</p>
                           <div className="flex items-center gap-1 mt-1">
                             <Badge variant="outline" className="text-xs">
                               {reminder.type.replace('-', ' ')}
                             </Badge>
-                            <Badge 
-                              variant="outline" 
+                            <Badge
+                              variant="outline"
                               className={`text-xs ${
-                                reminder.priority === 'high' 
+                                reminder.priority === 'high'
                                   ? 'border-red-500/30 text-red-400'
                                   : reminder.priority === 'medium'
-                                  ? 'border-yellow-500/30 text-yellow-400'
-                                  : 'border-blue-500/30 text-blue-400'
+                                    ? 'border-yellow-500/30 text-yellow-400'
+                                    : 'border-blue-500/30 text-blue-400'
                               }`}
                             >
                               {reminder.priority}

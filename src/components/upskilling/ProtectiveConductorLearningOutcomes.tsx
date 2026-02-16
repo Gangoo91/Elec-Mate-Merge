@@ -1,14 +1,13 @@
-
 import { Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const ProtectiveConductorLearningOutcomes = () => {
   const outcomes = [
-    "Explain how to test continuity of protective conductors",
-    "Identify where and how continuity should be verified", 
-    "Understand acceptable resistance values and test methods",
-    "Recognise when CPC continuity testing is required",
-    "Apply proper testing procedures for bonding conductors"
+    'Explain how to test continuity of protective conductors',
+    'Identify where and how continuity should be verified',
+    'Understand acceptable resistance values and test methods',
+    'Recognise when CPC continuity testing is required',
+    'Apply proper testing procedures for bonding conductors',
   ];
 
   return (

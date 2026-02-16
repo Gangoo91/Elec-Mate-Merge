@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { 
-  Lightbulb, 
-  Wand2, 
-  MapPin, 
-  Calendar,
-  X,
-  CheckCircle2,
-  AlertTriangle
-} from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Lightbulb, Wand2, MapPin, Calendar, X, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 interface SmartSuggestion {
   id: string;
@@ -37,10 +29,10 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
   currentValue,
   onSuggestionApply,
   suggestions = [],
-  onDismiss
+  onDismiss,
 }) => {
   const [showSuggestions, setShowSuggestions] = useState(true);
-  const [customValue, setCustomValue] = useState("");
+  const [customValue, setCustomValue] = useState('');
 
   // Generate smart suggestions based on field type
   const generateSuggestions = (): SmartSuggestion[] => {
@@ -51,23 +43,86 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
     switch (fieldId) {
       case 'clientName':
         baseSuggestions.push(
-          { id: '1', field: fieldId, value: 'Smith Property Management', label: 'Smith Property Management', confidence: 'high', category: 'recent' },
-          { id: '2', field: fieldId, value: 'ABC Construction Ltd', label: 'ABC Construction Ltd', confidence: 'medium', category: 'common' },
-          { id: '3', field: fieldId, value: 'Johnson & Sons Electrical', label: 'Johnson & Sons Electrical', confidence: 'medium', category: 'recent' }
+          {
+            id: '1',
+            field: fieldId,
+            value: 'Smith Property Management',
+            label: 'Smith Property Management',
+            confidence: 'high',
+            category: 'recent',
+          },
+          {
+            id: '2',
+            field: fieldId,
+            value: 'ABC Construction Ltd',
+            label: 'ABC Construction Ltd',
+            confidence: 'medium',
+            category: 'common',
+          },
+          {
+            id: '3',
+            field: fieldId,
+            value: 'Johnson & Sons Electrical',
+            label: 'Johnson & Sons Electrical',
+            confidence: 'medium',
+            category: 'recent',
+          }
         );
         break;
       case 'propertyAddress':
         baseSuggestions.push(
-          { id: '1', field: fieldId, value: '123 High Street, London', label: '123 High Street, London', confidence: 'high', category: 'location' },
-          { id: '2', field: fieldId, value: '45 Oak Avenue, Manchester', label: '45 Oak Avenue, Manchester', confidence: 'medium', category: 'location' },
-          { id: '3', field: fieldId, value: '78 Victoria Road, Birmingham', label: '78 Victoria Road, Birmingham', confidence: 'medium', category: 'location' }
+          {
+            id: '1',
+            field: fieldId,
+            value: '123 High Street, London',
+            label: '123 High Street, London',
+            confidence: 'high',
+            category: 'location',
+          },
+          {
+            id: '2',
+            field: fieldId,
+            value: '45 Oak Avenue, Manchester',
+            label: '45 Oak Avenue, Manchester',
+            confidence: 'medium',
+            category: 'location',
+          },
+          {
+            id: '3',
+            field: fieldId,
+            value: '78 Victoria Road, Birmingham',
+            label: '78 Victoria Road, Birmingham',
+            confidence: 'medium',
+            category: 'location',
+          }
         );
         break;
       case 'inspectorName':
         baseSuggestions.push(
-          { id: '1', field: fieldId, value: 'John Smith', label: 'John Smith (Previous reports)', confidence: 'high', category: 'recent' },
-          { id: '2', field: fieldId, value: 'Sarah Johnson', label: 'Sarah Johnson (Team member)', confidence: 'medium', category: 'common' },
-          { id: '3', field: fieldId, value: 'Michael Brown', label: 'Michael Brown (Frequent)', confidence: 'medium', category: 'recent' }
+          {
+            id: '1',
+            field: fieldId,
+            value: 'John Smith',
+            label: 'John Smith (Previous reports)',
+            confidence: 'high',
+            category: 'recent',
+          },
+          {
+            id: '2',
+            field: fieldId,
+            value: 'Sarah Johnson',
+            label: 'Sarah Johnson (Team member)',
+            confidence: 'medium',
+            category: 'common',
+          },
+          {
+            id: '3',
+            field: fieldId,
+            value: 'Michael Brown',
+            label: 'Michael Brown (Frequent)',
+            confidence: 'medium',
+            category: 'recent',
+          }
         );
         break;
       default:
@@ -81,19 +136,27 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
 
   const getConfidenceColor = (confidence: string) => {
     switch (confidence) {
-      case 'high': return 'border-green-500/30 bg-green-500/10 text-green-400';
-      case 'medium': return 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400';
-      case 'low': return 'border-blue-500/30 bg-blue-500/10 text-blue-400';
-      default: return 'border-muted/30 bg-muted/10 text-muted-foreground';
+      case 'high':
+        return 'border-green-500/30 bg-green-500/10 text-green-400';
+      case 'medium':
+        return 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400';
+      case 'low':
+        return 'border-blue-500/30 bg-blue-500/10 text-blue-400';
+      default:
+        return 'border-muted/30 bg-muted/10 text-muted-foreground';
     }
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'location': return MapPin;
-      case 'recent': return Calendar;
-      case 'intelligent': return Wand2;
-      default: return Lightbulb;
+      case 'location':
+        return MapPin;
+      case 'recent':
+        return Calendar;
+      case 'intelligent':
+        return Wand2;
+      default:
+        return Lightbulb;
     }
   };
 
@@ -127,7 +190,7 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
       <div className="space-y-2">
         {smartSuggestions.slice(0, 3).map((suggestion) => {
           const IconComponent = getCategoryIcon(suggestion.category);
-          
+
           return (
             <button
               key={suggestion.id}
@@ -141,18 +204,18 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
                     <div className="text-sm text-foreground font-medium truncate">
                       {suggestion.value}
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      {suggestion.label}
-                    </div>
+                    <div className="text-xs text-muted-foreground">{suggestion.label}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge 
-                    variant="outline" 
+                  <Badge
+                    variant="outline"
                     className={`text-xs ${getConfidenceColor(suggestion.confidence)}`}
                   >
                     {suggestion.confidence === 'high' && <CheckCircle2 className="h-3 w-3 mr-1" />}
-                    {suggestion.confidence === 'medium' && <AlertTriangle className="h-3 w-3 mr-1" />}
+                    {suggestion.confidence === 'medium' && (
+                      <AlertTriangle className="h-3 w-3 mr-1" />
+                    )}
                     {suggestion.confidence}
                   </Badge>
                 </div>
@@ -176,7 +239,7 @@ const SmartInputAssistant: React.FC<SmartInputAssistantProps> = ({
             onClick={() => {
               if (customValue.trim()) {
                 onSuggestionApply(customValue.trim());
-                setCustomValue("");
+                setCustomValue('');
               }
             }}
             disabled={!customValue.trim()}

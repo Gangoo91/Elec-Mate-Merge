@@ -1,22 +1,21 @@
-
-import { Button } from "@/components/ui/button";
-import { SearchX, RefreshCw } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { SearchX, RefreshCw } from 'lucide-react';
 
 interface EmptySearchResultsProps {
-  type: "courses" | "centers";
+  type: 'courses' | 'centers';
   onReset: () => void;
 }
 
 const EmptySearchResults = ({ type, onReset }: EmptySearchResultsProps) => {
   return (
-    <div className={`${type === "courses" ? "col-span-full" : ""} text-center py-12`}>
+    <div className={`${type === 'courses' ? 'col-span-full' : ''} text-center py-12`}>
       <div className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/10 max-w-lg mx-auto">
         <div className="p-4 rounded-full bg-white/5 w-fit mx-auto mb-4">
           <SearchX className="h-8 w-8 text-white/40" />
         </div>
         <h3 className="text-lg font-medium text-white mb-2">No Results Found</h3>
         <p className="text-white/70 text-sm mb-4">
-          No {type === "centers" ? "training centres" : type} found matching your search criteria.
+          No {type === 'centers' ? 'training centres' : type} found matching your search criteria.
           Try adjusting your filters or search terms.
         </p>
         <Button

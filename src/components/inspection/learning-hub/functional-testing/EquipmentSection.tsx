@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +14,6 @@ const EquipmentSection = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-gray-300">
-          
           {/* Basic Equipment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -29,31 +27,39 @@ const EquipmentSection = () => {
                     <h6 className="font-medium text-foreground">Visual Inspection Checklist</h6>
                     <p className="text-xs text-gray-400">Standardised inspection forms</p>
                   </div>
-                  <Badge variant="outline" className="text-green-400 border-green-400">Essential</Badge>
+                  <Badge variant="outline" className="text-green-400 border-green-400">
+                    Essential
+                  </Badge>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Torch/Inspection Light</h6>
                     <p className="text-xs text-gray-400">LED torch with focusing beam</p>
                   </div>
-                  <Badge variant="outline" className="text-green-400 border-green-400">Essential</Badge>
+                  <Badge variant="outline" className="text-green-400 border-green-400">
+                    Essential
+                  </Badge>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Communication Equipment</h6>
                     <p className="text-xs text-gray-400">Two-way radios or mobile phones</p>
                   </div>
-                  <Badge variant="outline" className="text-blue-400 border-blue-400">Important</Badge>
+                  <Badge variant="outline" className="text-blue-400 border-blue-400">
+                    Important
+                  </Badge>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Basic Hand Tools</h6>
                     <p className="text-xs text-gray-400">Screwdrivers, spanners, pliers</p>
                   </div>
-                  <Badge variant="outline" className="text-gray-400 border-gray-400">Useful</Badge>
+                  <Badge variant="outline" className="text-gray-400 border-gray-400">
+                    Useful
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -69,31 +75,39 @@ const EquipmentSection = () => {
                     <h6 className="font-medium text-foreground">Personal Protective Equipment</h6>
                     <p className="text-xs text-gray-400">Hard hat, safety glasses, gloves</p>
                   </div>
-                  <Badge variant="outline" className="text-red-400 border-red-400">Critical</Badge>
+                  <Badge variant="outline" className="text-red-400 border-red-400">
+                    Critical
+                  </Badge>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Warning Notices</h6>
                     <p className="text-xs text-gray-400">Test in progress signs</p>
                   </div>
-                  <Badge variant="outline" className="text-red-400 border-red-400">Critical</Badge>
+                  <Badge variant="outline" className="text-red-400 border-red-400">
+                    Critical
+                  </Badge>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Barriers/Tape</h6>
                     <p className="text-xs text-gray-400">Area isolation if required</p>
                   </div>
-                  <Badge variant="outline" className="text-orange-400 border-orange-400">Conditional</Badge>
+                  <Badge variant="outline" className="text-orange-400 border-orange-400">
+                    Conditional
+                  </Badge>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Emergency Contact List</h6>
                     <p className="text-xs text-gray-400">Key personnel contact details</p>
                   </div>
-                  <Badge variant="outline" className="text-blue-400 border-blue-400">Important</Badge>
+                  <Badge variant="outline" className="text-blue-400 border-blue-400">
+                    Important
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -105,19 +119,25 @@ const EquipmentSection = () => {
               <CheckCircle2 className="h-4 w-4 text-purple-400" />
               Specialised Testing Equipment
             </h4>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Card className="bg-muted/30 border-border">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-foreground">RCD Test Button Verification</CardTitle>
+                  <CardTitle className="text-sm text-foreground">
+                    RCD Test Button Verification
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <p className="text-xs text-gray-300">
                     Built-in test mechanism - no external equipment required
                   </p>
                   <div className="flex flex-wrap gap-1">
-                    <Badge variant="outline" className="text-xs text-green-400 border-green-400">No Cost</Badge>
-                    <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">Always Available</Badge>
+                    <Badge variant="outline" className="text-xs text-green-400 border-green-400">
+                      No Cost
+                    </Badge>
+                    <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">
+                      Always Available
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -131,8 +151,12 @@ const EquipmentSection = () => {
                     For measuring response times of safety systems
                   </p>
                   <div className="flex flex-wrap gap-1">
-                    <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">Optional</Badge>
-                    <Badge variant="outline" className="text-xs text-gray-400 border-gray-400">Digital Preferred</Badge>
+                    <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">
+                      Optional
+                    </Badge>
+                    <Badge variant="outline" className="text-xs text-gray-400 border-gray-400">
+                      Digital Preferred
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -142,12 +166,14 @@ const EquipmentSection = () => {
                   <CardTitle className="text-sm text-foreground">Digital Camera</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
-                    Document equipment condition and defects
-                  </p>
+                  <p className="text-xs text-gray-300">Document equipment condition and defects</p>
                   <div className="flex flex-wrap gap-1">
-                    <Badge variant="outline" className="text-xs text-green-400 border-green-400">Recommended</Badge>
-                    <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">Evidence</Badge>
+                    <Badge variant="outline" className="text-xs text-green-400 border-green-400">
+                      Recommended
+                    </Badge>
+                    <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">
+                      Evidence
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -157,12 +183,14 @@ const EquipmentSection = () => {
                   <CardTitle className="text-sm text-foreground">Test Certificates</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <p className="text-xs text-gray-300">
-                    Blank forms for recording test results
-                  </p>
+                  <p className="text-xs text-gray-300">Blank forms for recording test results</p>
                   <div className="flex flex-wrap gap-1">
-                    <Badge variant="outline" className="text-xs text-red-400 border-red-400">Essential</Badge>
-                    <Badge variant="outline" className="text-xs text-purple-400 border-purple-400">Legal Requirement</Badge>
+                    <Badge variant="outline" className="text-xs text-red-400 border-red-400">
+                      Essential
+                    </Badge>
+                    <Badge variant="outline" className="text-xs text-purple-400 border-purple-400">
+                      Legal Requirement
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>

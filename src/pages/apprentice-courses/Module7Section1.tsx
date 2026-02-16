@@ -1,44 +1,44 @@
-import { ArrowLeft, AlertTriangle, Zap, Search, TestTube, Eye } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, AlertTriangle, Zap, Search, TestTube, Eye } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "What Is a Fault?",
-    description: "Basic definition and understanding of electrical faults",
+    number: 'Subsection 1',
+    title: 'What Is a Fault?',
+    description: 'Basic definition and understanding of electrical faults',
     icon: AlertTriangle,
-    href: "1-1"
+    href: '1-1',
   },
   {
-    number: "Subsection 2",
-    title: "Why Faults Occur in Electrical Installations",
-    description: "Understanding the root causes of electrical faults",
+    number: 'Subsection 2',
+    title: 'Why Faults Occur in Electrical Installations',
+    description: 'Understanding the root causes of electrical faults',
     icon: Zap,
-    href: "1-2"
+    href: '1-2',
   },
   {
-    number: "Subsection 3",
-    title: "Risks and Consequences of Electrical Faults",
-    description: "Impact and potential dangers of electrical fault conditions",
+    number: 'Subsection 3',
+    title: 'Risks and Consequences of Electrical Faults',
+    description: 'Impact and potential dangers of electrical fault conditions',
     icon: Search,
-    href: "1-3"
+    href: '1-3',
   },
   {
-    number: "Subsection 4",
-    title: "Overview of Fault Categories (Design, Installation, Deterioration, External Damage)",
-    description: "Classifying electrical faults by their origin and cause",
+    number: 'Subsection 4',
+    title: 'Overview of Fault Categories (Design, Installation, Deterioration, External Damage)',
+    description: 'Classifying electrical faults by their origin and cause',
     icon: TestTube,
-    href: "1-4"
+    href: '1-4',
   },
   {
-    number: "Subsection 5",
-    title: "Legal and Safety Responsibilities When Dealing with Faults",
-    description: "Understanding obligations and responsibilities in fault situations",
+    number: 'Subsection 5',
+    title: 'Legal and Safety Responsibilities When Dealing with Faults',
+    description: 'Understanding obligations and responsibilities in fault situations',
     icon: Eye,
-    href: "1-5"
-  }
+    href: '1-5',
+  },
 ];
 
 const Section1 = () => {

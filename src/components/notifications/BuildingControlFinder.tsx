@@ -112,11 +112,14 @@ export const BuildingControlFinder = ({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 style={{ textAlign: 'left' }}
-                className={cn("min-h-[48px] text-left placeholder:text-left", !searchQuery && "pl-10")}
+                className={cn(
+                  'min-h-[48px] text-left placeholder:text-left',
+                  !searchQuery && 'pl-10'
+                )}
               />
             </div>
-            <Button 
-              onClick={handleSearch} 
+            <Button
+              onClick={handleSearch}
               disabled={isLoading}
               className="min-h-[48px] min-w-[100px]"
             >
@@ -205,7 +208,9 @@ export const BuildingControlFinder = ({
             <div className="text-center py-8 text-muted-foreground">
               <MapPin className="w-12 h-12 mx-auto mb-3 opacity-50" />
               <p className="text-sm">Enter a postcode or address to find your local council</p>
-              <p className="text-xs mt-2">Try entering your full postcode (e.g., CA25 5EL) for best results</p>
+              <p className="text-xs mt-2">
+                Try entering your full postcode (e.g., CA25 5EL) for best results
+              </p>
             </div>
           )}
         </div>

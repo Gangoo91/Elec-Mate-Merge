@@ -16,11 +16,11 @@ interface ClientGroupCardProps {
   children?: React.ReactNode;
 }
 
-export const ClientGroupCard = ({ 
-  group, 
-  onSelectReminder, 
+export const ClientGroupCard = ({
+  group,
+  onSelectReminder,
   selectedIds,
-  children 
+  children,
 }: ClientGroupCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isMobile = useIsMobile();
@@ -34,12 +34,14 @@ export const ClientGroupCard = ({
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
               <Building2 className="h-5 w-5 text-muted-foreground shrink-0" />
-              <h3 className="text-base sm:text-lg font-semibold break-words">{group.clientName || 'Unnamed Client'}</h3>
+              <h3 className="text-base sm:text-lg font-semibold break-words">
+                {group.clientName || 'Unnamed Client'}
+              </h3>
               <Badge variant="outline" className={urgencyBadgeClass}>
                 {group.propertyCount} {group.propertyCount === 1 ? 'Property' : 'Properties'}
               </Badge>
             </div>
-            
+
             <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
@@ -56,16 +58,17 @@ export const ClientGroupCard = ({
 
           <Button
             variant="ghost"
-            size={isMobile ? "default" : "sm"}
+            size={isMobile ? 'default' : 'sm'}
             onClick={() => setIsExpanded(!isExpanded)}
-            className={cn(
-              "shrink-0",
-              isMobile && "min-h-[44px] min-w-[44px] p-2"
-            )}
-            aria-label={isExpanded ? "Collapse" : "Expand"}
+            className={cn('shrink-0', isMobile && 'min-h-[44px] min-w-[44px] p-2')}
+            aria-label={isExpanded ? 'Collapse' : 'Expand'}
           >
             {isMobile ? (
-              isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />
+              isExpanded ? (
+                <ChevronUp className="h-5 w-5" />
+              ) : (
+                <ChevronDown className="h-5 w-5" />
+              )
             ) : (
               <>
                 {isExpanded ? (
@@ -88,18 +91,15 @@ export const ClientGroupCard = ({
       {isExpanded && (
         <CardContent className="space-y-3 pt-0">
           {group.reminders.map((reminder) => (
-            <div
-              key={reminder.id}
-              className="border rounded-lg p-3 space-y-2 bg-card"
-            >
+            <div key={reminder.id} className="border rounded-lg p-3 space-y-2 bg-card">
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
                   checked={selectedIds.has(reminder.id)}
                   onChange={() => onSelectReminder(reminder.id)}
                   className={cn(
-                    "mt-1 rounded border-border cursor-pointer",
-                    isMobile ? "h-6 w-6 min-h-[24px] min-w-[24px]" : "h-4 w-4"
+                    'mt-1 rounded border-border cursor-pointer',
+                    isMobile ? 'h-6 w-6 min-h-[24px] min-w-[24px]' : 'h-4 w-4'
                   )}
                   aria-label={`Select reminder ${reminder.certificate_number}`}
                 />

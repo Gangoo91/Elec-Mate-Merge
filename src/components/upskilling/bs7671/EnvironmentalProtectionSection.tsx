@@ -10,12 +10,18 @@ export const EnvironmentalProtectionSection = () => {
           <Sun className="h-5 w-5 text-elec-yellow" />
           Environmental Protection Requirements
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">Environmental Resilience</Badge>
+        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">
+          Environmental Resilience
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-2">Code Reference: BS 7671:2018+A2:2022 Section 512.2</h5>
-          <p className="text-sm">External influences and selection of equipment - Environmental conditions</p>
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Code Reference: BS 7671:2018+A2:2022 Section 512.2
+          </h5>
+          <p className="text-sm">
+            External influences and selection of equipment - Environmental conditions
+          </p>
         </div>
 
         <div className="grid gap-6">
@@ -25,7 +31,7 @@ export const EnvironmentalProtectionSection = () => {
               <Sun className="h-4 w-4 text-orange-400" />
               <h5 className="text-orange-400 font-semibold">UV Radiation Protection</h5>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">Cable Selection:</h6>
@@ -48,10 +54,11 @@ export const EnvironmentalProtectionSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-orange-900/20 border border-orange-600/50 rounded">
               <p className="text-orange-200 text-sm">
-                <strong>Critical Note:</strong> Standard PVC cables can degrade within 2-3 years under direct sunlight, leading to insulation failure and potential fire hazards.
+                <strong>Critical Note:</strong> Standard PVC cables can degrade within 2-3 years
+                under direct sunlight, leading to insulation failure and potential fire hazards.
               </p>
             </div>
           </div>
@@ -62,7 +69,7 @@ export const EnvironmentalProtectionSection = () => {
               <Droplets className="h-4 w-4 text-blue-400" />
               <h5 className="text-blue-400 font-semibold">Moisture and Water Ingress Protection</h5>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">IP Rating Requirements:</h6>
@@ -95,10 +102,11 @@ export const EnvironmentalProtectionSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-blue-900/20 border border-blue-600/50 rounded">
               <p className="text-blue-200 text-sm">
-                <strong>Testing Requirement:</strong> All enclosures must undergo IP testing verification as per BS EN 60529 before commissioning.
+                <strong>Testing Requirement:</strong> All enclosures must undergo IP testing
+                verification as per BS EN 60529 before commissioning.
               </p>
             </div>
           </div>
@@ -109,7 +117,7 @@ export const EnvironmentalProtectionSection = () => {
               <Thermometer className="h-4 w-4 text-red-400" />
               <h5 className="text-red-400 font-semibold">Temperature Variation Management</h5>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-elec-yellow font-medium mb-2">UK Climate Considerations:</h6>
@@ -132,10 +140,11 @@ export const EnvironmentalProtectionSection = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-3 bg-red-900/20 border border-red-600/50 rounded">
               <p className="text-red-200 text-sm">
-                <strong>Derating Requirements:</strong> Cable current-carrying capacity must be derated by up to 20% for high ambient temperature installations.
+                <strong>Derating Requirements:</strong> Cable current-carrying capacity must be
+                derated by up to 20% for high ambient temperature installations.
               </p>
             </div>
           </div>
@@ -143,12 +152,12 @@ export const EnvironmentalProtectionSection = () => {
           {/* Mechanical Protection */}
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
             <h5 className="text-elec-yellow font-semibold mb-3">Mechanical Impact Protection</h5>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h6 className="text-green-400 font-medium mb-2">IK Rating Requirements:</h6>
                 <ul className="text-sm space-y-1">
-                  <li>• IK07 minimum for accessible locations</li>  
+                  <li>• IK07 minimum for accessible locations</li>
                   <li>• IK08 for agricultural machinery areas</li>
                   <li>• IK09 for vehicle impact zones</li>
                   <li>• IK10 for extreme impact environments</li>

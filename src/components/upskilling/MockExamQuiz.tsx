@@ -19,7 +19,7 @@ const MockExamQuiz = () => {
   const [endTime, setEndTime] = useState<Date | null>(null);
 
   const handleStartExam = () => {
-    console.log("Starting exam...");
+    console.log('Starting exam...');
     const newQuestions = getRandomMockExamQuestions(30);
     setExamQuestions(newQuestions);
     setExamStarted(true);
@@ -29,7 +29,7 @@ const MockExamQuiz = () => {
     setShowResults(false);
     setQuizCompleted(false);
     setEndTime(null);
-    console.log("Exam started with", newQuestions.length, "questions");
+    console.log('Exam started with', newQuestions.length, 'questions');
   };
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -82,29 +82,32 @@ const MockExamQuiz = () => {
     const percentage = (score / examQuestions.length) * 100;
     if (percentage >= 80) {
       return {
-        grade: "Distinction",
-        message: "Outstanding performance! You demonstrate excellent understanding of inspection and testing principles.",
-        color: "text-green-400"
+        grade: 'Distinction',
+        message:
+          'Outstanding performance! You demonstrate excellent understanding of inspection and testing principles.',
+        color: 'text-green-400',
       };
     }
     if (percentage >= 65) {
       return {
-        grade: "Merit", 
-        message: "Good performance! You have a solid grasp of inspection and testing fundamentals.",
-        color: "text-blue-400"
+        grade: 'Merit',
+        message: 'Good performance! You have a solid grasp of inspection and testing fundamentals.',
+        color: 'text-blue-400',
       };
     }
     if (percentage >= 60) {
       return {
-        grade: "Pass",
-        message: "Satisfactory performance. You meet the minimum requirements but could benefit from further study.",
-        color: "text-yellow-400"
+        grade: 'Pass',
+        message:
+          'Satisfactory performance. You meet the minimum requirements but could benefit from further study.',
+        color: 'text-yellow-400',
       };
     }
     return {
-      grade: "Fail",
-      message: "Unfortunately, you haven't met the pass criteria. Please review the material and try again.",
-      color: "text-red-400"
+      grade: 'Fail',
+      message:
+        "Unfortunately, you haven't met the pass criteria. Please review the material and try again.",
+      color: 'text-red-400',
     };
   };
 
@@ -120,7 +123,8 @@ const MockExamQuiz = () => {
             <div className="text-center space-y-6">
               <FileCheck className="h-16 w-16 text-elec-yellow mx-auto" />
               <p className="text-gray-300 text-lg">
-                Test your knowledge with 30 comprehensive questions covering inspection and testing procedures
+                Test your knowledge with 30 comprehensive questions covering inspection and testing
+                procedures
               </p>
             </div>
 
@@ -153,15 +157,15 @@ const MockExamQuiz = () => {
 
             {/* Start Button */}
             <div className="text-center pt-4">
-              <Button 
+              <Button
                 onClick={() => {
-                  console.log("Button clicked - this should appear in console");
+                  console.log('Button clicked - this should appear in console');
                   handleStartExam();
                 }}
                 className="bg-elec-yellow text-black hover:bg-yellow-400 px-8 py-3 text-lg font-semibold"
                 size="lg"
-                onMouseDown={() => console.log("Button mouse down")}
-                onMouseUp={() => console.log("Button mouse up")}
+                onMouseDown={() => console.log('Button mouse down')}
+                onMouseUp={() => console.log('Button mouse up')}
               >
                 <FileCheck className="mr-2 h-5 w-5" />
                 Begin Examination
@@ -183,7 +187,9 @@ const MockExamQuiz = () => {
       <div className="space-y-6">
         <Card className="bg-elec-gray border-transparent">
           <CardHeader>
-            <CardTitle className="text-foreground text-center text-2xl">Examination Results</CardTitle>
+            <CardTitle className="text-foreground text-center text-2xl">
+              Examination Results
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="text-center space-y-4">
@@ -199,32 +205,26 @@ const MockExamQuiz = () => {
                 </div>
                 <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
                   <h3 className="text-gray-400 text-sm">Grade</h3>
-                  <div className={`text-3xl font-bold ${gradeInfo.color}`}>
-                    {gradeInfo.grade}
-                  </div>
+                  <div className={`text-3xl font-bold ${gradeInfo.color}`}>{gradeInfo.grade}</div>
                 </div>
                 <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
                   <h3 className="text-gray-400 text-sm">Duration</h3>
-                  <div className="text-3xl font-bold text-foreground">
-                    {duration}
-                  </div>
+                  <div className="text-3xl font-bold text-foreground">{duration}</div>
                   <div className="text-gray-300 text-sm">minutes</div>
                 </div>
               </div>
-              
+
               <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
-                <p className={`${gradeInfo.color} font-medium`}>
-                  {gradeInfo.message}
-                </p>
+                <p className={`${gradeInfo.color} font-medium`}>{gradeInfo.message}</p>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <h3 className="text-foreground font-semibold">Question Review:</h3>
               {examQuestions.map((question, index) => {
                 const userAnswer = selectedAnswers[index];
                 const isCorrect = userAnswer === question.correctAnswer;
-                
+
                 return (
                   <Card key={question.id} className="bg-elec-dark border-gray-600">
                     <CardContent className="p-4">
@@ -247,7 +247,8 @@ const MockExamQuiz = () => {
                           </p>
                           {!isCorrect && (
                             <p className="text-gray-300 text-xs mb-2">
-                              <strong>Correct answer:</strong> {question.options[question.correctAnswer]}
+                              <strong>Correct answer:</strong>{' '}
+                              {question.options[question.correctAnswer]}
                             </p>
                           )}
                           <p className="text-gray-400 text-xs">
@@ -260,9 +261,9 @@ const MockExamQuiz = () => {
                 );
               })}
             </div>
-            
+
             <div className="text-center space-x-4">
-              <Button 
+              <Button
                 onClick={handleRestart}
                 className="bg-elec-yellow text-black hover:bg-yellow-400"
               >
@@ -281,10 +282,7 @@ const MockExamQuiz = () => {
 
   return (
     <div className="space-y-6">
-      <QuizProgress 
-        currentQuestion={currentQuestion}
-        totalQuestions={examQuestions.length}
-      />
+      <QuizProgress currentQuestion={currentQuestion} totalQuestions={examQuestions.length} />
 
       <QuizQuestion
         question={question}

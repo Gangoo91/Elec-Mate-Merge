@@ -20,7 +20,9 @@ export const usePhotoUpload = () => {
 
     try {
       // Get current user
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         toast.error('You must be logged in to upload photos');
         return null;
@@ -55,9 +57,9 @@ export const usePhotoUpload = () => {
       }
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('visual-uploads')
-        .getPublicUrl(data.path);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
 
       const uploadedPhoto: UploadedPhoto = {
         id: uuidv4(),
@@ -67,7 +69,7 @@ export const usePhotoUpload = () => {
         uploadedAt: new Date(),
       };
 
-      setUploadedPhotos(prev => [...prev, uploadedPhoto]);
+      setUploadedPhotos((prev) => [...prev, uploadedPhoto]);
       toast.success('Photo uploaded successfully');
 
       return uploadedPhoto;
@@ -82,9 +84,7 @@ export const usePhotoUpload = () => {
 
   const deletePhoto = useCallback(async (photoPath: string): Promise<boolean> => {
     try {
-      const { error } = await supabase.storage
-        .from('visual-uploads')
-        .remove([photoPath]);
+      const { error } = await supabase.storage.from('visual-uploads').remove([photoPath]);
 
       if (error) {
         console.error('Delete error:', error);
@@ -92,7 +92,7 @@ export const usePhotoUpload = () => {
         return false;
       }
 
-      setUploadedPhotos(prev => prev.filter(p => p.url !== photoPath));
+      setUploadedPhotos((prev) => prev.filter((p) => p.url !== photoPath));
       toast.success('Photo deleted');
       return true;
     } catch (error) {
@@ -114,16 +114,16 @@ async function compressImage(file: File, maxSize: number): Promise<File> {
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    
+
     reader.onload = (event) => {
       const img = new Image();
       img.src = event.target?.result as string;
-      
+
       img.onload = () => {
         const canvas = document.createElement('canvas');
         let width = img.width;
         let height = img.height;
-        
+
         // Calculate new dimensions maintaining aspect ratio
         const maxDimension = 1920;
         if (width > height && width > maxDimension) {
@@ -133,13 +133,13 @@ async function compressImage(file: File, maxSize: number): Promise<File> {
           width = (width * maxDimension) / height;
           height = maxDimension;
         }
-        
+
         canvas.width = width;
         canvas.height = height;
-        
+
         const ctx = canvas.getContext('2d');
         ctx?.drawImage(img, 0, 0, width, height);
-        
+
         canvas.toBlob(
           (blob) => {
             if (blob) {

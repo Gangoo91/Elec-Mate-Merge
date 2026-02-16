@@ -1,14 +1,24 @@
-import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Archive, RotateCcw, Trash2, MapPin, Loader2 } from "lucide-react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { format } from "date-fns";
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Archive, RotateCcw, Trash2, MapPin, Loader2 } from 'lucide-react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { format } from 'date-fns';
 
 interface ArchivedJobsSheetProps {
   open: boolean;
@@ -26,7 +36,7 @@ interface ArchivedJob {
 
 export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps) {
   const queryClient = useQueryClient();
-  
+
   const { data: archivedJobs = [], isLoading } = useQuery({
     queryKey: ['archived-jobs'],
     queryFn: async (): Promise<ArchivedJob[]> => {
@@ -35,48 +45,45 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
         .select('id, title, client, location, value, archived_at')
         .not('archived_at', 'is', null)
         .order('archived_at', { ascending: false });
-      
+
       if (error) throw error;
       return data as ArchivedJob[];
     },
     enabled: open,
   });
-  
+
   const restoreJob = useMutation({
     mutationFn: async (jobId: string) => {
       const { error } = await supabase
         .from('employer_jobs')
         .update({ archived_at: null, status: 'Pending', updated_at: new Date().toISOString() })
         .eq('id', jobId);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['archived-jobs'] });
       queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
-      toast.success("Job restored");
+      toast.success('Job restored');
     },
     onError: () => {
-      toast.error("Failed to restore job");
-    }
+      toast.error('Failed to restore job');
+    },
   });
-  
+
   const permanentlyDelete = useMutation({
     mutationFn: async (jobId: string) => {
-      const { error } = await supabase
-        .from('employer_jobs')
-        .delete()
-        .eq('id', jobId);
-      
+      const { error } = await supabase.from('employer_jobs').delete().eq('id', jobId);
+
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['archived-jobs'] });
-      toast.success("Job permanently deleted");
+      toast.success('Job permanently deleted');
     },
     onError: () => {
-      toast.error("Failed to delete job");
-    }
+      toast.error('Failed to delete job');
+    },
   });
 
   return (
@@ -88,7 +95,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
             Archived Jobs
           </SheetTitle>
         </SheetHeader>
-        
+
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -113,7 +120,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
                         <span className="truncate">{job.location}</span>
                       </div>
                       <p className="text-xs text-muted-foreground/70 mt-2">
-                        Archived {format(new Date(job.archived_at), "d MMM yyyy")}
+                        Archived {format(new Date(job.archived_at), 'd MMM yyyy')}
                       </p>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -146,7 +153,8 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
                             <AlertDialogHeader>
                               <AlertDialogTitle>Permanently Delete?</AlertDialogTitle>
                               <AlertDialogDescription>
-                                This will permanently delete "{job.title}". This action cannot be undone.
+                                This will permanently delete "{job.title}". This action cannot be
+                                undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>

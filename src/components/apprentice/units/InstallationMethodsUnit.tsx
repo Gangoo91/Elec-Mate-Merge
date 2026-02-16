@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface InstallationMethodsUnitProps {
@@ -10,9 +9,7 @@ const InstallationMethodsUnit = ({ unitCode, onResourceClick }: InstallationMeth
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold">Installation Methods</h2>
-      <p className="text-white">
-        Placeholder for future installation methods content.
-      </p>
+      <p className="text-white">Placeholder for future installation methods content.</p>
     </div>
   );
 };

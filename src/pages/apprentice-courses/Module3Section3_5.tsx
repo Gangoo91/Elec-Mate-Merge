@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Wrench,
@@ -17,190 +17,183 @@ import {
   Activity,
   Search,
   Truck,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
-    id: "battery-removal",
-    question: "Why should power tool batteries be removed before transport?",
+    id: 'battery-removal',
+    question: 'Why should power tool batteries be removed before transport?',
     options: [
-      "To reduce weight",
-      "To prevent accidental operation and damage",
-      "To save battery charge",
+      'To reduce weight',
+      'To prevent accidental operation and damage',
+      'To save battery charge',
     ],
     correctIndex: 1,
     explanation:
-      "Removing batteries prevents accidental activation during transport, which could cause injury or damage to the tool or surrounding items.",
+      'Removing batteries prevents accidental activation during transport, which could cause injury or damage to the tool or surrounding items.',
   },
   {
-    id: "height-safety",
-    question: "Name one method of preventing tools from falling when working at height.",
+    id: 'height-safety',
+    question: 'Name one method of preventing tools from falling when working at height.',
     options: [
-      "Work faster to finish quickly",
-      "Use tool lanyards or belts",
-      "Only use lightweight tools",
+      'Work faster to finish quickly',
+      'Use tool lanyards or belts',
+      'Only use lightweight tools',
     ],
     correctIndex: 1,
     explanation:
-      "Tool lanyards and belts secure tools to the worker, preventing them from falling and potentially injuring people below.",
+      'Tool lanyards and belts secure tools to the worker, preventing them from falling and potentially injuring people below.',
   },
   {
-    id: "insulated-storage",
-    question: "Give one reason why insulated tools should be stored separately.",
-    options: [
-      "They cost more money",
-      "To prevent confusion and misuse",
-      "They take up more space",
-    ],
+    id: 'insulated-storage',
+    question: 'Give one reason why insulated tools should be stored separately.',
+    options: ['They cost more money', 'To prevent confusion and misuse', 'They take up more space'],
     correctIndex: 1,
     explanation:
-      "Separate storage prevents confusion between insulated and non-insulated tools, ensuring the right tool is used for electrical work.",
+      'Separate storage prevents confusion between insulated and non-insulated tools, ensuring the right tool is used for electrical work.',
   },
   {
-    id: "transport-inspection",
-    question: "What should be done before using tools after transport?",
-    options: [
-      "Polish them clean",
-      "Inspect for transport-related damage",
-      "Test the weight",
-    ],
+    id: 'transport-inspection',
+    question: 'What should be done before using tools after transport?',
+    options: ['Polish them clean', 'Inspect for transport-related damage', 'Test the weight'],
     correctIndex: 1,
     explanation:
-      "Tools should be inspected after transport to identify any damage that may have occurred during movement before use.",
+      'Tools should be inspected after transport to identify any damage that may have occurred during movement before use.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Why is it important to choose the right tool for the job?",
+    question: 'Why is it important to choose the right tool for the job?',
     options: [
-      "It makes the job look more professional",
-      "It reduces wear on the tool and prevents accidents",
-      "It speeds up the job every time",
-      "It avoids having to read instructions",
+      'It makes the job look more professional',
+      'It reduces wear on the tool and prevents accidents',
+      'It speeds up the job every time',
+      'It avoids having to read instructions',
     ],
     correctAnswer: 1,
     explanation:
-      "Using the right tool reduces wear, prevents damage, and significantly reduces the risk of accidents caused by tool misuse.",
+      'Using the right tool reduces wear, prevents damage, and significantly reduces the risk of accidents caused by tool misuse.',
   },
   {
     id: 2,
-    question: "Which PPE might be required when using power tools?",
+    question: 'Which PPE might be required when using power tools?',
     options: [
-      "Hard hat, gloves, and boots only",
-      "Safety glasses, gloves, hearing protection, dust mask (depending on the tool)",
-      "High-vis vest only",
-      "No PPE is needed for small tools",
+      'Hard hat, gloves, and boots only',
+      'Safety glasses, gloves, hearing protection, dust mask (depending on the tool)',
+      'High-vis vest only',
+      'No PPE is needed for small tools',
     ],
     correctAnswer: 1,
     explanation:
-      "PPE requirements vary by tool and task, but commonly include safety glasses, gloves, hearing protection, and dust masks depending on the specific tool and application.",
+      'PPE requirements vary by tool and task, but commonly include safety glasses, gloves, hearing protection, and dust masks depending on the specific tool and application.',
   },
   {
     id: 3,
-    question: "True or False: It's safe to carry a screwdriver in your pocket with the point exposed.",
-    options: ["True", "False"],
+    question:
+      "True or False: It's safe to carry a screwdriver in your pocket with the point exposed.",
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False. Sharp tools should never be carried loose in pockets as they can cause injury. Always use protective covers or proper tool storage.",
+      'False. Sharp tools should never be carried loose in pockets as they can cause injury. Always use protective covers or proper tool storage.',
   },
   {
     id: 4,
-    question: "Give one method of securing tools during vehicle transport.",
+    question: 'Give one method of securing tools during vehicle transport.',
     options: [
-      "Leave them loose in the vehicle",
-      "Use toolboxes or tie-down straps",
-      "Put them on the dashboard",
-      "Hold them while driving",
+      'Leave them loose in the vehicle',
+      'Use toolboxes or tie-down straps',
+      'Put them on the dashboard',
+      'Hold them while driving',
     ],
     correctAnswer: 1,
     explanation:
-      "Toolboxes, tie-down straps, or secure storage compartments prevent tools from moving during transport, avoiding damage and injury.",
+      'Toolboxes, tie-down straps, or secure storage compartments prevent tools from moving during transport, avoiding damage and injury.',
   },
   {
     id: 5,
-    question: "Why should insulated tools be stored separately from non-insulated tools?",
+    question: 'Why should insulated tools be stored separately from non-insulated tools?',
     options: [
-      "To keep them looking new",
-      "To prevent confusion and misuse",
-      "To avoid rust",
-      "To save space",
+      'To keep them looking new',
+      'To prevent confusion and misuse',
+      'To avoid rust',
+      'To save space',
     ],
     correctAnswer: 1,
     explanation:
-      "Separate storage prevents accidental use of non-insulated tools for electrical work, which could result in electric shock.",
+      'Separate storage prevents accidental use of non-insulated tools for electrical work, which could result in electric shock.',
   },
   {
     id: 6,
     question: "What's the main reason for using tool lanyards when working at height?",
     options: [
-      "To speed up work",
-      "To prevent tools from falling and injuring people",
-      "To identify tools easily",
-      "To stop theft",
+      'To speed up work',
+      'To prevent tools from falling and injuring people',
+      'To identify tools easily',
+      'To stop theft',
     ],
     correctAnswer: 1,
     explanation:
-      "Tool lanyards prevent dropped tools from falling and potentially causing serious injury to people working below.",
+      'Tool lanyards prevent dropped tools from falling and potentially causing serious injury to people working below.',
   },
   {
     id: 7,
-    question: "Name one risk of improper tool storage.",
+    question: 'Name one risk of improper tool storage.',
     options: [
-      "Tools become more expensive",
-      "Corrosion, theft, or tool damage",
-      "Tools become heavier",
-      "Tools change colour",
+      'Tools become more expensive',
+      'Corrosion, theft, or tool damage',
+      'Tools become heavier',
+      'Tools change colour',
     ],
     correctAnswer: 1,
     explanation:
-      "Improper storage can lead to corrosion from moisture, theft from poor security, or damage from tools knocking together.",
+      'Improper storage can lead to corrosion from moisture, theft from poor security, or damage from tools knocking together.',
   },
   {
     id: 8,
-    question: "What should be done before using tools after transport?",
+    question: 'What should be done before using tools after transport?',
     options: [
-      "Apply new labels",
-      "Inspect them for any transport-related damage",
-      "Weigh them",
-      "Change the batteries",
+      'Apply new labels',
+      'Inspect them for any transport-related damage',
+      'Weigh them',
+      'Change the batteries',
     ],
     correctAnswer: 1,
     explanation:
-      "Post-transport inspection ensures any damage that occurred during movement is identified before use, preventing accidents.",
+      'Post-transport inspection ensures any damage that occurred during movement is identified before use, preventing accidents.',
   },
 ];
 
 const Module3Section3_5: React.FC = () => {
-  console.log("Module3Section3_5 component loaded");
+  console.log('Module3Section3_5 component loaded');
 
   useSEO(
-    "Safe Use, Transport, and Storage of Tools – Module 3 (3.3.5)",
-    "Complete guide to safe tool handling, transport methods and storage practices. PPE requirements and workplace safety compliance."
+    'Safe Use, Transport, and Storage of Tools – Module 3 (3.3.5)',
+    'Complete guide to safe tool handling, transport methods and storage practices. PPE requirements and workplace safety compliance.'
   );
 
   const faqs = [
     {
-      q: "Can tools be left on a scaffold platform if no one is working there?",
-      a: "No — tools should be removed or secured to prevent falling hazards. Even when work areas are unoccupied, unsecured tools pose risks.",
+      q: 'Can tools be left on a scaffold platform if no one is working there?',
+      a: 'No — tools should be removed or secured to prevent falling hazards. Even when work areas are unoccupied, unsecured tools pose risks.',
     },
     {
-      q: "Is it safe to store power tools in a vehicle overnight?",
-      a: "Only if they are secured against theft and environmental damage. Extreme cold can harm batteries and moisture can damage electrical components.",
+      q: 'Is it safe to store power tools in a vehicle overnight?',
+      a: 'Only if they are secured against theft and environmental damage. Extreme cold can harm batteries and moisture can damage electrical components.',
     },
     {
-      q: "Do I need to store PPE with my tools?",
+      q: 'Do I need to store PPE with my tools?',
       a: "It's good practice to store PPE nearby, but PPE should be kept clean and dry, so it's often stored separately from oily or dusty tools.",
     },
     {
-      q: "What should I do if a tool is damaged during transport?",
-      a: "Remove it from service immediately, tag it as defective, and arrange for proper repair or replacement before use.",
+      q: 'What should I do if a tool is damaged during transport?',
+      a: 'Remove it from service immediately, tag it as defective, and arrange for proper repair or replacement before use.',
     },
   ];
 
@@ -237,7 +230,8 @@ const Module3Section3_5: React.FC = () => {
             Safe Use, Transport, and Storage of Tools
           </h1>
           <p className="text-white/70">
-            Essential practices for safe tool handling, transport methods and storage to prevent injury and extend tool life.
+            Essential practices for safe tool handling, transport methods and storage to prevent
+            injury and extend tool life.
           </p>
         </header>
 
@@ -261,13 +255,16 @@ const Module3Section3_5: React.FC = () => {
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  <strong>Spot:</strong> Loose tools, missing covers, mixed storage, unsafe carrying.
+                  <strong>Spot:</strong> Loose tools, missing covers, mixed storage, unsafe
+                  carrying.
                 </li>
                 <li>
-                  <strong>Use:</strong> Proper containers, lanyards at height, organised storage systems.
+                  <strong>Use:</strong> Proper containers, lanyards at height, organised storage
+                  systems.
                 </li>
                 <li>
-                  <strong>Check:</strong> PPE requirements, transport security, post-move inspection.
+                  <strong>Check:</strong> PPE requirements, transport security, post-move
+                  inspection.
                 </li>
               </ul>
             </div>
@@ -515,19 +512,39 @@ const Module3Section3_5: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Carrying sharp tools loose</strong> - Risk of cuts and puncture wounds</li>
-                <li><strong>No lanyards at height</strong> - Potential for serious head injuries from dropped tools</li>
-                <li><strong>Unsecured transport</strong> - Tool damage and vehicle safety hazards</li>
-                <li><strong>Mixed storage of insulated tools</strong> - Confusion leading to electric shock risk</li>
+                <li>
+                  <strong>Carrying sharp tools loose</strong> - Risk of cuts and puncture wounds
+                </li>
+                <li>
+                  <strong>No lanyards at height</strong> - Potential for serious head injuries from
+                  dropped tools
+                </li>
+                <li>
+                  <strong>Unsecured transport</strong> - Tool damage and vehicle safety hazards
+                </li>
+                <li>
+                  <strong>Mixed storage of insulated tools</strong> - Confusion leading to electric
+                  shock risk
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Equipment Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Poor storage conditions</strong> - Accelerated corrosion and premature failure</li>
-                <li><strong>Batteries left in tools</strong> - Accidental activation during transport</li>
-                <li><strong>No protective covers</strong> - Damaged cutting edges and safety hazards</li>
-                <li><strong>Inadequate organisation</strong> - Time wasted searching, increased handling damage</li>
+                <li>
+                  <strong>Poor storage conditions</strong> - Accelerated corrosion and premature
+                  failure
+                </li>
+                <li>
+                  <strong>Batteries left in tools</strong> - Accidental activation during transport
+                </li>
+                <li>
+                  <strong>No protective covers</strong> - Damaged cutting edges and safety hazards
+                </li>
+                <li>
+                  <strong>Inadequate organisation</strong> - Time wasted searching, increased
+                  handling damage
+                </li>
               </ul>
             </div>
           </div>
@@ -543,10 +560,19 @@ const Module3Section3_5: React.FC = () => {
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">Regulatory Requirements</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>PUWER 1998:</strong> Safe use and maintenance of work equipment</li>
-                <li><strong>MHSWR 1999:</strong> Risk assessment and safe systems of work</li>
-                <li><strong>Work at Height Regulations:</strong> Prevention of falls and dropped objects</li>
-                <li><strong>PPE Regulations:</strong> Appropriate protective equipment provision</li>
+                <li>
+                  <strong>PUWER 1998:</strong> Safe use and maintenance of work equipment
+                </li>
+                <li>
+                  <strong>MHSWR 1999:</strong> Risk assessment and safe systems of work
+                </li>
+                <li>
+                  <strong>Work at Height Regulations:</strong> Prevention of falls and dropped
+                  objects
+                </li>
+                <li>
+                  <strong>PPE Regulations:</strong> Appropriate protective equipment provision
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
@@ -572,9 +598,10 @@ const Module3Section3_5: React.FC = () => {
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Falling Angle Grinder Near Miss</p>
             <p className="text-sm mb-4">
-              On a commercial site, an unsecured angle grinder fell from a scaffold platform after being left on the edge.
-              It narrowly missed a worker below. Following the incident, the company implemented a mandatory tool lanyard policy
-              for elevated work and introduced tool storage racks on scaffolds to prevent recurrence.
+              On a commercial site, an unsecured angle grinder fell from a scaffold platform after
+              being left on the edge. It narrowly missed a worker below. Following the incident, the
+              company implemented a mandatory tool lanyard policy for elevated work and introduced
+              tool storage racks on scaffolds to prevent recurrence.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
@@ -624,8 +651,9 @@ const Module3Section3_5: React.FC = () => {
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
-              Safe use, transport, and storage of tools are key elements of site safety and professionalism.
-              Proper handling prevents accidents, protects tools from damage, and ensures they are ready for work when needed.
+              Safe use, transport, and storage of tools are key elements of site safety and
+              professionalism. Proper handling prevents accidents, protects tools from damage, and
+              ensures they are ready for work when needed.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
@@ -697,23 +725,47 @@ const Module3Section3_5: React.FC = () => {
               <div>
                 <p className="font-medium mb-2">Safe Use Checklist</p>
                 <ul className="space-y-1">
-                  <li>• <strong>PPE:</strong> Eyes, hands, ears, lungs</li>
-                  <li>• <strong>Position:</strong> Stable, well-lit workspace</li>
-                  <li>• <strong>Tool:</strong> Right tool for the job</li>
-                  <li>• <strong>Power:</strong> Disconnect before changes</li>
-                  <li>• <strong>Guards:</strong> Never bypass safety features</li>
-                  <li>• <strong>Area:</strong> Clear of trip hazards</li>
+                  <li>
+                    • <strong>PPE:</strong> Eyes, hands, ears, lungs
+                  </li>
+                  <li>
+                    • <strong>Position:</strong> Stable, well-lit workspace
+                  </li>
+                  <li>
+                    • <strong>Tool:</strong> Right tool for the job
+                  </li>
+                  <li>
+                    • <strong>Power:</strong> Disconnect before changes
+                  </li>
+                  <li>
+                    • <strong>Guards:</strong> Never bypass safety features
+                  </li>
+                  <li>
+                    • <strong>Area:</strong> Clear of trip hazards
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="font-medium mb-2">Transport & Storage</p>
                 <ul className="space-y-1">
-                  <li>• <strong>Carry:</strong> Secure containers, never loose</li>
-                  <li>• <strong>Height:</strong> Lanyards mandatory above 2m</li>
-                  <li>• <strong>Vehicle:</strong> Tied down, batteries out</li>
-                  <li>• <strong>Storage:</strong> Dry, organised, separate types</li>
-                  <li>• <strong>Access:</strong> Easy to find and retrieve</li>
-                  <li>• <strong>Security:</strong> Locked when unattended</li>
+                  <li>
+                    • <strong>Carry:</strong> Secure containers, never loose
+                  </li>
+                  <li>
+                    • <strong>Height:</strong> Lanyards mandatory above 2m
+                  </li>
+                  <li>
+                    • <strong>Vehicle:</strong> Tied down, batteries out
+                  </li>
+                  <li>
+                    • <strong>Storage:</strong> Dry, organised, separate types
+                  </li>
+                  <li>
+                    • <strong>Access:</strong> Easy to find and retrieve
+                  </li>
+                  <li>
+                    • <strong>Security:</strong> Locked when unattended
+                  </li>
                 </ul>
               </div>
             </div>
@@ -727,10 +779,19 @@ const Module3Section3_5: React.FC = () => {
             Key References
           </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
-            <p><strong>PUWER 1998:</strong> Provision and Use of Work Equipment Regulations</p>
-            <p><strong>Work at Height Regulations 2005:</strong> Prevention of falls and dropped objects</p>
-            <p><strong>MHSWR 1999:</strong> Management of Health and Safety at Work Regulations</p>
-            <p><strong>PPE Regulations 2002:</strong> Personal Protective Equipment at Work</p>
+            <p>
+              <strong>PUWER 1998:</strong> Provision and Use of Work Equipment Regulations
+            </p>
+            <p>
+              <strong>Work at Height Regulations 2005:</strong> Prevention of falls and dropped
+              objects
+            </p>
+            <p>
+              <strong>MHSWR 1999:</strong> Management of Health and Safety at Work Regulations
+            </p>
+            <p>
+              <strong>PPE Regulations 2002:</strong> Personal Protective Equipment at Work
+            </p>
           </div>
         </section>
 
@@ -745,7 +806,11 @@ const Module3Section3_5: React.FC = () => {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../3-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Tool Inspection

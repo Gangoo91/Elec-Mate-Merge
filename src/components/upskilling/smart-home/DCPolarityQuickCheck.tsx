@@ -7,14 +7,14 @@ const DCPolarityQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why is correct polarity important for DC-powered smart devices?";
+  const question = 'Why is correct polarity important for DC-powered smart devices?';
   const options = [
-    "It only affects the brightness of LED indicators",
-    "Reverse polarity can cause permanent damage or create safety hazards", 
+    'It only affects the brightness of LED indicators',
+    'Reverse polarity can cause permanent damage or create safety hazards',
     "It's not important as long as the voltage is correct",
-    "It only matters for devices over 24V"
+    'It only matters for devices over 24V',
   ];
-  const correctAnswer = "Reverse polarity can cause permanent damage or create safety hazards";
+  const correctAnswer = 'Reverse polarity can cause permanent damage or create safety hazards';
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer);
@@ -38,7 +38,7 @@ const DCPolarityQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <Button
@@ -49,8 +49,8 @@ const DCPolarityQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-900/20 border-green-600 text-green-200'
                     : selectedAnswer === option
-                    ? 'bg-red-900/20 border-red-600 text-red-200'
-                    : 'bg-gray-800 border-gray-600 text-gray-400'
+                      ? 'bg-red-900/20 border-red-600 text-red-200'
+                      : 'bg-gray-800 border-gray-600 text-gray-400'
                   : 'text-gray-300 hover:text-foreground hover:border-elec-yellow'
               }`}
               onClick={() => !showResult && handleAnswerSelect(option)}
@@ -73,11 +73,11 @@ const DCPolarityQuickCheck = () => {
         </div>
 
         {showResult && (
-          <div className={`p-4 rounded-lg border ${
-            isCorrect
-              ? 'bg-green-900/20 border-green-600'
-              : 'bg-red-900/20 border-red-600'
-          }`}>
+          <div
+            className={`p-4 rounded-lg border ${
+              isCorrect ? 'bg-green-900/20 border-green-600' : 'bg-red-900/20 border-red-600'
+            }`}
+          >
             <div className="flex items-start gap-3">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -85,18 +85,15 @@ const DCPolarityQuickCheck = () => {
                 <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               )}
               <div className="flex-1">
-                <p className={`font-semibold mb-2 ${
-                  isCorrect ? 'text-green-200' : 'text-red-200'
-                }`}>
+                <p
+                  className={`font-semibold mb-2 ${isCorrect ? 'text-green-200' : 'text-red-200'}`}
+                >
                   {isCorrect ? 'Correct!' : 'Not quite right.'}
                 </p>
-                <p className={`text-sm ${
-                  isCorrect ? 'text-green-100' : 'text-red-100'
-                }`}>
-                  {isCorrect 
-                    ? "Excellent! DC devices have specific positive and negative terminals. Connecting them incorrectly can damage internal components, void warranties, or in extreme cases create fire hazards. Always verify polarity before energising DC circuits."
-                    : "DC polarity is critical for device safety and functionality. Reverse polarity can damage sensitive electronic components, cause devices to malfunction, or create safety hazards. Unlike AC circuits, DC circuits have distinct positive and negative terminals that must be connected correctly."
-                  }
+                <p className={`text-sm ${isCorrect ? 'text-green-100' : 'text-red-100'}`}>
+                  {isCorrect
+                    ? 'Excellent! DC devices have specific positive and negative terminals. Connecting them incorrectly can damage internal components, void warranties, or in extreme cases create fire hazards. Always verify polarity before energising DC circuits.'
+                    : 'DC polarity is critical for device safety and functionality. Reverse polarity can damage sensitive electronic components, cause devices to malfunction, or create safety hazards. Unlike AC circuits, DC circuits have distinct positive and negative terminals that must be connected correctly.'}
                 </p>
               </div>
             </div>

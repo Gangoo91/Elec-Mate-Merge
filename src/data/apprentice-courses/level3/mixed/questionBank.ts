@@ -22,9 +22,9 @@ export interface Question {
 
 // Add module identifier to each question
 const addModuleTag = (questions: any[], moduleTag: string): Question[] => {
-  return questions.map(q => ({
+  return questions.map((q) => ({
     ...q,
-    module: moduleTag
+    module: moduleTag,
   }));
 };
 
@@ -45,7 +45,7 @@ export const mixedQuestions: Question[] = [
   ...module4WithTag.map((q, i) => ({ ...q, id: i + 601 })),
   ...module5WithTag.map((q, i) => ({ ...q, id: i + 801 })),
   ...module6WithTag.map((q, i) => ({ ...q, id: i + 1001 })),
-  ...module7WithTag.map((q, i) => ({ ...q, id: i + 1201 }))
+  ...module7WithTag.map((q, i) => ({ ...q, id: i + 1201 })),
 ];
 
 // Total: 1,400 questions from all 7 modules
@@ -72,7 +72,7 @@ export const getBalancedRandomQuestions = (count: number): Question[] => {
     module4WithTag,
     module5WithTag,
     module6WithTag,
-    module7WithTag
+    module7WithTag,
   ];
 
   modules.forEach((moduleQuestions, index) => {
@@ -88,12 +88,14 @@ export const getBalancedRandomQuestions = (count: number): Question[] => {
 
 // Helper function to get questions by module
 export const getQuestionsByModule = (moduleName: string): Question[] => {
-  return mixedQuestions.filter(q => q.module === moduleName);
+  return mixedQuestions.filter((q) => q.module === moduleName);
 };
 
 // Helper function to get questions by difficulty across all modules
-export const getQuestionsByDifficulty = (difficulty: 'basic' | 'intermediate' | 'advanced'): Question[] => {
-  return mixedQuestions.filter(q => q.difficulty === difficulty);
+export const getQuestionsByDifficulty = (
+  difficulty: 'basic' | 'intermediate' | 'advanced'
+): Question[] => {
+  return mixedQuestions.filter((q) => q.difficulty === difficulty);
 };
 
 // Helper function to get random questions with minimum from each difficulty level
@@ -103,14 +105,14 @@ export const getDifficultyBalancedQuestions = (count: number): Question[] => {
   const intermediateCount = Math.floor(count * 0.5);
   const advancedCount = count - basicCount - intermediateCount;
 
-  const basicQuestions = mixedQuestions.filter(q => q.difficulty === 'basic');
-  const intermediateQuestions = mixedQuestions.filter(q => q.difficulty === 'intermediate');
-  const advancedQuestions = mixedQuestions.filter(q => q.difficulty === 'advanced');
+  const basicQuestions = mixedQuestions.filter((q) => q.difficulty === 'basic');
+  const intermediateQuestions = mixedQuestions.filter((q) => q.difficulty === 'intermediate');
+  const advancedQuestions = mixedQuestions.filter((q) => q.difficulty === 'advanced');
 
   const selected: Question[] = [
     ...basicQuestions.sort(() => Math.random() - 0.5).slice(0, basicCount),
     ...intermediateQuestions.sort(() => Math.random() - 0.5).slice(0, intermediateCount),
-    ...advancedQuestions.sort(() => Math.random() - 0.5).slice(0, advancedCount)
+    ...advancedQuestions.sort(() => Math.random() - 0.5).slice(0, advancedCount),
   ];
 
   // Shuffle the final selection
@@ -128,13 +130,13 @@ export const getQuestionBankStats = () => {
       'Module 4: Fault Diagnosis': module4Questions.length,
       'Module 5: Inspection & Testing': module5Questions.length,
       'Module 6: Systems Design': module6Questions.length,
-      'Module 7: Career Development': module7Questions.length
+      'Module 7: Career Development': module7Questions.length,
     },
     byDifficulty: {
-      basic: mixedQuestions.filter(q => q.difficulty === 'basic').length,
-      intermediate: mixedQuestions.filter(q => q.difficulty === 'intermediate').length,
-      advanced: mixedQuestions.filter(q => q.difficulty === 'advanced').length
-    }
+      basic: mixedQuestions.filter((q) => q.difficulty === 'basic').length,
+      intermediate: mixedQuestions.filter((q) => q.difficulty === 'intermediate').length,
+      advanced: mixedQuestions.filter((q) => q.difficulty === 'advanced').length,
+    },
   };
   return stats;
 };
@@ -147,7 +149,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
   'Module 4: Fault Diagnosis': 'Fault Diagnosis',
   'Module 5: Inspection & Testing': 'Inspection & Testing',
   'Module 6: Systems Design': 'Systems Design',
-  'Module 7: Career Development': 'Career Development'
+  'Module 7: Career Development': 'Career Development',
 };
 
 // Get category breakdown from exam results
@@ -174,7 +176,7 @@ export const getCategoryBreakdown = (
       category,
       label: CATEGORY_LABELS[category] || category,
       ...stats,
-      percent: Math.round((stats.correct / stats.total) * 100)
+      percent: Math.round((stats.correct / stats.total) * 100),
     }));
 };
 

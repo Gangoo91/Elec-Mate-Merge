@@ -1,106 +1,97 @@
-import { ArrowLeft, BookOpen, CheckCircle, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, BookOpen, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "tg20-scope",
-    question:
-      "What type of scaffolding does TG20:13 specifically apply to?",
+    id: 'tg20-scope',
+    question: 'What type of scaffolding does TG20:13 specifically apply to?',
     options: [
-      "Tube and fitting scaffolds using standard configurations",
-      "All types of scaffolding including system scaffolds and suspended scaffolds",
-      "Only independent tied scaffolds over 50 metres in height",
-      "Scaffolding erected exclusively for domestic construction projects",
+      'Tube and fitting scaffolds using standard configurations',
+      'All types of scaffolding including system scaffolds and suspended scaffolds',
+      'Only independent tied scaffolds over 50 metres in height',
+      'Scaffolding erected exclusively for domestic construction projects',
     ],
     correctIndex: 0,
     explanation:
-      "TG20:13 applies specifically to tube and fitting scaffolds that fall within its defined standard configurations. System scaffolds, suspended scaffolds, and bespoke designs fall outside the scope of TG20 and require a specific scaffold design from a competent engineer.",
+      'TG20:13 applies specifically to tube and fitting scaffolds that fall within its defined standard configurations. System scaffolds, suspended scaffolds, and bespoke designs fall outside the scope of TG20 and require a specific scaffold design from a competent engineer.',
   },
   {
-    id: "eguide-purpose",
-    question:
-      "What is the primary purpose of the TG20 eGuide software?",
+    id: 'eguide-purpose',
+    question: 'What is the primary purpose of the TG20 eGuide software?',
     options: [
-      "To replace the need for a scaffolding contractor on site",
-      "To generate compliant configuration sheets for standard scaffolds that fall within TG20 parameters",
-      "To calculate the cost of scaffolding materials for a given project",
-      "To provide three-dimensional models of scaffold structures for planning applications",
+      'To replace the need for a scaffolding contractor on site',
+      'To generate compliant configuration sheets for standard scaffolds that fall within TG20 parameters',
+      'To calculate the cost of scaffolding materials for a given project',
+      'To provide three-dimensional models of scaffold structures for planning applications',
     ],
     correctIndex: 1,
     explanation:
-      "The TG20 eGuide software generates compliant configuration sheets (also called compliance sheets) for standard tube and fitting scaffolds that fall within TG20 parameters. If the scaffold falls outside these parameters, the eGuide will flag it as non-standard and a bespoke scaffold design from a competent engineer will be required.",
+      'The TG20 eGuide software generates compliant configuration sheets (also called compliance sheets) for standard tube and fitting scaffolds that fall within TG20 parameters. If the scaffold falls outside these parameters, the eGuide will flag it as non-standard and a bespoke scaffold design from a competent engineer will be required.',
   },
   {
-    id: "nasc-membership",
-    question:
-      "What is a key benefit of using a scaffolding contractor who holds NASC membership?",
+    id: 'nasc-membership',
+    question: 'What is a key benefit of using a scaffolding contractor who holds NASC membership?',
     options: [
-      "NASC members are exempt from local authority scaffold licensing requirements",
-      "NASC members are audited to ensure compliance with industry standards including SG4, SG6, TG20, and relevant British Standards",
-      "NASC members can erect scaffolds without any form of inspection regime",
-      "NASC membership replaces the need for a scaffold design under any circumstances",
+      'NASC members are exempt from local authority scaffold licensing requirements',
+      'NASC members are audited to ensure compliance with industry standards including SG4, SG6, TG20, and relevant British Standards',
+      'NASC members can erect scaffolds without any form of inspection regime',
+      'NASC membership replaces the need for a scaffold design under any circumstances',
     ],
     correctIndex: 1,
     explanation:
-      "NASC member companies are regularly audited against a comprehensive set of criteria including compliance with NASC guidance notes (SG4, SG6, TG20), health and safety management systems, training and competence of operatives, insurance, and adherence to British and European standards. This gives clients confidence in the quality and safety of the scaffolding work.",
+      'NASC member companies are regularly audited against a comprehensive set of criteria including compliance with NASC guidance notes (SG4, SG6, TG20), health and safety management systems, training and competence of operatives, insurance, and adherence to British and European standards. This gives clients confidence in the quality and safety of the scaffolding work.',
   },
 ];
 
 const faqs = [
   {
-    question:
-      "Can TG20 be used for scaffolds on buildings with unusual shapes or complex facades?",
+    question: 'Can TG20 be used for scaffolds on buildings with unusual shapes or complex facades?',
     answer:
-      "TG20:13 covers a defined range of standard configurations — including independent tied scaffolds, birdcage scaffolds, putlog scaffolds, and certain loading bay arrangements. If the building has an unusual shape, a complex facade with setbacks, or the scaffold must follow a curved building line, the configuration is unlikely to fall within TG20 parameters. In these cases, a bespoke scaffold design must be produced by a competent scaffold designer or structural engineer. The TG20 eGuide will flag configurations that fall outside its scope, making it clear when a specific design is needed.",
+      'TG20:13 covers a defined range of standard configurations — including independent tied scaffolds, birdcage scaffolds, putlog scaffolds, and certain loading bay arrangements. If the building has an unusual shape, a complex facade with setbacks, or the scaffold must follow a curved building line, the configuration is unlikely to fall within TG20 parameters. In these cases, a bespoke scaffold design must be produced by a competent scaffold designer or structural engineer. The TG20 eGuide will flag configurations that fall outside its scope, making it clear when a specific design is needed.',
   },
   {
-    question:
-      "What is the difference between a TG20 compliance sheet and a full scaffold design?",
+    question: 'What is the difference between a TG20 compliance sheet and a full scaffold design?',
     answer:
-      "A TG20 compliance sheet (generated by the TG20 eGuide software) confirms that a particular standard configuration meets the requirements of TG20:13 for a given set of parameters — including height, bay length, lift height, number of boarded lifts, tie pattern, wind zone, and site exposure. It is not a bespoke design — it confirms compliance with pre-validated configurations. A full scaffold design, by contrast, is a bespoke engineering document produced by a competent scaffold designer or structural engineer for a specific project. It includes detailed calculations for loads, wind forces, tie capacities, foundation bearing pressures, and other structural considerations. A full design is required whenever the scaffold falls outside TG20 standard configurations.",
+      'A TG20 compliance sheet (generated by the TG20 eGuide software) confirms that a particular standard configuration meets the requirements of TG20:13 for a given set of parameters — including height, bay length, lift height, number of boarded lifts, tie pattern, wind zone, and site exposure. It is not a bespoke design — it confirms compliance with pre-validated configurations. A full scaffold design, by contrast, is a bespoke engineering document produced by a competent scaffold designer or structural engineer for a specific project. It includes detailed calculations for loads, wind forces, tie capacities, foundation bearing pressures, and other structural considerations. A full design is required whenever the scaffold falls outside TG20 standard configurations.',
   },
   {
-    question:
-      "How does TG20 handle wind loading on scaffolds?",
+    question: 'How does TG20 handle wind loading on scaffolds?',
     answer:
       "TG20:13 divides the United Kingdom into wind zones based on geographic location, altitude, and proximity to the coast. The eGuide uses the scaffold's postcode, site altitude, and exposure category (town or country) to determine the applicable wind speed and calculate wind loading on the scaffold. The system accounts for cladding (sheeted, debris netting, brick guards), the number of boarded lifts, and the scaffold's overall height and width. If the calculated wind load exceeds the capacity of the standard configuration, TG20 will flag the scaffold as non-standard and a bespoke design will be required. Wind loading is one of the most common reasons for a scaffold to fall outside TG20 parameters — particularly in coastal areas, on tall buildings, or when the scaffold is heavily clad.",
   },
   {
-    question:
-      "Is the TG20 eGuide free to use, and who can access it?",
+    question: 'Is the TG20 eGuide free to use, and who can access it?',
     answer:
-      "The TG20 eGuide software is available by subscription through the NASC. It is not free of charge — access is licensed on an annual basis. NASC member companies typically have access as part of their membership benefits, and non-member scaffolding contractors can purchase a licence directly. The software can be used by any competent person who understands tube and fitting scaffold terminology, configurations, and the TG20 system. It runs on standard desktop and laptop computers and generates printable compliance sheets in PDF format. The eGuide is regularly updated to reflect changes in standards and wind data.",
+      'The TG20 eGuide software is available by subscription through the NASC. It is not free of charge — access is licensed on an annual basis. NASC member companies typically have access as part of their membership benefits, and non-member scaffolding contractors can purchase a licence directly. The software can be used by any competent person who understands tube and fitting scaffold terminology, configurations, and the TG20 system. It runs on standard desktop and laptop computers and generates printable compliance sheets in PDF format. The eGuide is regularly updated to reflect changes in standards and wind data.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "TG20:13 is a guidance document published by which organisation?",
+    question: 'TG20:13 is a guidance document published by which organisation?',
     options: [
-      "The Health and Safety Executive (HSE)",
-      "The National Access and Scaffolding Confederation (NASC)",
-      "The British Standards Institution (BSI)",
-      "The Construction Industry Training Board (CITB)",
+      'The Health and Safety Executive (HSE)',
+      'The National Access and Scaffolding Confederation (NASC)',
+      'The British Standards Institution (BSI)',
+      'The Construction Industry Training Board (CITB)',
     ],
     correctAnswer: 1,
     explanation:
-      "TG20:13 is published by the National Access and Scaffolding Confederation (NASC). It provides operational guidance for tube and fitting scaffolds and is recognised by the HSE as an authoritative source of good practice for the scaffolding industry.",
+      'TG20:13 is published by the National Access and Scaffolding Confederation (NASC). It provides operational guidance for tube and fitting scaffolds and is recognised by the HSE as an authoritative source of good practice for the scaffolding industry.',
   },
   {
     id: 2,
-    question:
-      "What does TG20 stand for in the context of scaffolding?",
+    question: 'What does TG20 stand for in the context of scaffolding?',
     options: [
-      "Technical Guidance Note 20",
-      "Temporary Works Guide 20",
-      "Trade Group Standard 20",
-      "Testing Grade 20",
+      'Technical Guidance Note 20',
+      'Temporary Works Guide 20',
+      'Trade Group Standard 20',
+      'Testing Grade 20',
     ],
     correctAnswer: 0,
     explanation:
@@ -108,13 +99,12 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      "When using the TG20 eGuide, which of the following inputs is NOT required?",
+    question: 'When using the TG20 eGuide, which of the following inputs is NOT required?',
     options: [
-      "The site postcode and altitude",
-      "The scaffold height and bay length",
+      'The site postcode and altitude',
+      'The scaffold height and bay length',
       "The name of the scaffolding contractor's insurance provider",
-      "The tie pattern and cladding type",
+      'The tie pattern and cladding type',
     ],
     correctAnswer: 2,
     explanation:
@@ -123,68 +113,66 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      "A scaffold is 35 metres tall, has an unusual tie pattern, and is fully sheeted in a coastal location. What is the most likely outcome when checked against TG20?",
+      'A scaffold is 35 metres tall, has an unusual tie pattern, and is fully sheeted in a coastal location. What is the most likely outcome when checked against TG20?',
     options: [
-      "TG20 will automatically approve the scaffold as standard",
-      "TG20 will generate a compliance sheet confirming it meets standard parameters",
-      "TG20 will flag the scaffold as non-standard, requiring a bespoke scaffold design",
-      "TG20 does not apply to scaffolds over 20 metres in height",
+      'TG20 will automatically approve the scaffold as standard',
+      'TG20 will generate a compliance sheet confirming it meets standard parameters',
+      'TG20 will flag the scaffold as non-standard, requiring a bespoke scaffold design',
+      'TG20 does not apply to scaffolds over 20 metres in height',
     ],
     correctAnswer: 2,
     explanation:
-      "A 35-metre tall scaffold that is fully sheeted in a coastal location with an unusual tie pattern is very likely to fall outside TG20 standard configurations. The combination of height, full sheeting (which significantly increases wind load), coastal exposure (higher wind speeds), and a non-standard tie pattern would almost certainly result in the eGuide flagging the scaffold as non-standard. A bespoke scaffold design from a competent engineer would be required.",
+      'A 35-metre tall scaffold that is fully sheeted in a coastal location with an unusual tie pattern is very likely to fall outside TG20 standard configurations. The combination of height, full sheeting (which significantly increases wind load), coastal exposure (higher wind speeds), and a non-standard tie pattern would almost certainly result in the eGuide flagging the scaffold as non-standard. A bespoke scaffold design from a competent engineer would be required.',
   },
   {
     id: 5,
-    question:
-      "Which of the following is a standard scaffold type covered by TG20:13?",
+    question: 'Which of the following is a standard scaffold type covered by TG20:13?',
     options: [
-      "Suspended scaffold on wire ropes",
-      "Independent tied scaffold",
-      "Mast climbing work platform",
-      "Mobile aluminium tower scaffold",
+      'Suspended scaffold on wire ropes',
+      'Independent tied scaffold',
+      'Mast climbing work platform',
+      'Mobile aluminium tower scaffold',
     ],
     correctAnswer: 1,
     explanation:
-      "TG20:13 covers tube and fitting scaffold types including independent tied scaffolds, putlog scaffolds, birdcage scaffolds, and certain loading bay configurations. Suspended scaffolds, mast climbing work platforms, and mobile aluminium towers are not tube and fitting scaffolds and are therefore outside the scope of TG20.",
+      'TG20:13 covers tube and fitting scaffold types including independent tied scaffolds, putlog scaffolds, birdcage scaffolds, and certain loading bay configurations. Suspended scaffolds, mast climbing work platforms, and mobile aluminium towers are not tube and fitting scaffolds and are therefore outside the scope of TG20.',
   },
   {
     id: 6,
     question:
-      "What is the maximum general purpose scaffold height that TG20:13 standard configurations typically cover?",
+      'What is the maximum general purpose scaffold height that TG20:13 standard configurations typically cover?',
     options: [
-      "Up to 15 metres",
-      "Up to 30 metres",
-      "Up to 50 metres",
-      "There is no height limit in TG20",
+      'Up to 15 metres',
+      'Up to 30 metres',
+      'Up to 50 metres',
+      'There is no height limit in TG20',
     ],
     correctAnswer: 2,
     explanation:
-      "TG20:13 standard configurations for general purpose independent tied scaffolds typically cover scaffolds up to 50 metres in height, provided all other parameters (tie pattern, bay length, cladding, wind loading, etc.) fall within the defined limits. However, many practical combinations of height, cladding, and exposure will fall outside TG20 well before 50 metres is reached — particularly in exposed or coastal locations.",
+      'TG20:13 standard configurations for general purpose independent tied scaffolds typically cover scaffolds up to 50 metres in height, provided all other parameters (tie pattern, bay length, cladding, wind loading, etc.) fall within the defined limits. However, many practical combinations of height, cladding, and exposure will fall outside TG20 well before 50 metres is reached — particularly in exposed or coastal locations.',
   },
   {
     id: 7,
     question:
-      "What must a scaffolding contractor produce if the scaffold does not fall within TG20 standard configurations?",
+      'What must a scaffolding contractor produce if the scaffold does not fall within TG20 standard configurations?',
     options: [
-      "A verbal agreement with the site manager",
-      "A risk assessment only, with no structural calculations",
-      "A bespoke scaffold design from a competent scaffold designer or structural engineer",
+      'A verbal agreement with the site manager',
+      'A risk assessment only, with no structural calculations',
+      'A bespoke scaffold design from a competent scaffold designer or structural engineer',
       "A letter confirming the scaffold is safe based on the contractor's experience",
     ],
     correctAnswer: 2,
     explanation:
-      "If the scaffold falls outside TG20 standard configurations, a bespoke scaffold design must be produced by a competent scaffold designer or structural engineer. This design must include detailed calculations for loads, wind forces, tie capacities, foundation bearing pressures, and other structural considerations specific to the project. A verbal agreement, risk assessment alone, or experience-based letter is not sufficient.",
+      'If the scaffold falls outside TG20 standard configurations, a bespoke scaffold design must be produced by a competent scaffold designer or structural engineer. This design must include detailed calculations for loads, wind forces, tie capacities, foundation bearing pressures, and other structural considerations specific to the project. A verbal agreement, risk assessment alone, or experience-based letter is not sufficient.',
   },
   {
     id: 8,
-    question:
-      "NASC member companies are subject to which of the following?",
+    question: 'NASC member companies are subject to which of the following?',
     options: [
-      "Annual audits checking compliance with NASC guidance, safety management, training, and insurance",
-      "A single audit at the time of joining, with no further checks",
-      "Self-certification only, with no external verification",
-      "Audits by the local authority building control department",
+      'Annual audits checking compliance with NASC guidance, safety management, training, and insurance',
+      'A single audit at the time of joining, with no further checks',
+      'Self-certification only, with no external verification',
+      'Audits by the local authority building control department',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,9 +182,9 @@ const quizQuestions = [
 
 const ScaffoldingAwarenessModule2Section2 = () => {
   useSEO({
-    title: "NASC Guidance & TG20 | Scaffolding Awareness Module 2.2",
+    title: 'NASC Guidance & TG20 | Scaffolding Awareness Module 2.2',
     description:
-      "TG20:13 compliance guidance for tube and fitting scaffolds — what TG20 covers, standard and non-standard configurations, the TG20 eGuide software, wind loading, tie patterns, maximum heights, and the role of the NASC.",
+      'TG20:13 compliance guidance for tube and fitting scaffolds — what TG20 covers, standard and non-standard configurations, the TG20 eGuide software, wind loading, tie patterns, maximum heights, and the role of the NASC.',
   });
 
   return (
@@ -233,9 +221,8 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             NASC Guidance &amp; TG20
           </h1>
           <p className="text-white/70 max-w-xl mx-auto">
-            Understanding the TG20:13 compliance system for tube and fitting
-            scaffolds, the role of the NASC, and when a bespoke scaffold
-            design is needed
+            Understanding the TG20:13 compliance system for tube and fitting scaffolds, the role of
+            the NASC, and when a bespoke scaffold design is needed
           </p>
         </div>
 
@@ -247,30 +234,29 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">NASC:</strong> National Access
-                  and Scaffolding Confederation — the trade body for scaffolding
+                  <strong className="text-white">NASC:</strong> National Access and Scaffolding
+                  Confederation — the trade body for scaffolding
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">TG20:13:</strong> Technical
-                  Guidance Note 20 — compliance guidance for tube and fitting
-                  scaffolds
+                  <strong className="text-white">TG20:13:</strong> Technical Guidance Note 20 —
+                  compliance guidance for tube and fitting scaffolds
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Standard configs:</strong>{" "}
-                  covered by TG20 — compliance sheet from the eGuide
+                  <strong className="text-white">Standard configs:</strong> covered by TG20 —
+                  compliance sheet from the eGuide
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Non-standard:</strong> outside
-                  TG20 — bespoke design from a competent engineer
+                  <strong className="text-white">Non-standard:</strong> outside TG20 — bespoke
+                  design from a competent engineer
                 </span>
               </li>
             </ul>
@@ -281,29 +267,29 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Check:</strong> is there a TG20
-                  compliance sheet or a bespoke scaffold design on site?
+                  <strong className="text-white">Check:</strong> is there a TG20 compliance sheet or
+                  a bespoke scaffold design on site?
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Verify:</strong> does the
-                  scaffold as erected match the compliance sheet or design?
+                  <strong className="text-white">Verify:</strong> does the scaffold as erected match
+                  the compliance sheet or design?
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Report:</strong> any
-                  deviations from the compliance sheet or design
+                  <strong className="text-white">Report:</strong> any deviations from the compliance
+                  sheet or design
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">NASC member:</strong> always
-                  prefer contractors with NASC membership
+                  <strong className="text-white">NASC member:</strong> always prefer contractors
+                  with NASC membership
                 </span>
               </li>
             </ul>
@@ -312,20 +298,16 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
         {/* Learning Outcomes */}
         <section className="mb-10">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
-            Learning Outcomes
-          </h2>
-          <p className="text-white/70 mb-4">
-            By the end of this section, you will be able to:
-          </p>
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
-              "Explain what TG20:13 is, who publishes it, and what types of scaffolding it covers",
-              "Distinguish between standard configurations (covered by TG20) and non-standard configurations (requiring a bespoke design)",
-              "Describe the role and function of the TG20 eGuide software in generating compliance sheets",
-              "Explain how TG20 handles wind loading, tie patterns, cladding, and maximum heights",
-              "Identify the role of the NASC as the UK trade body for scaffolding and the benefits of NASC membership",
-              "State when a bespoke scaffold design from a competent engineer is required instead of a TG20 compliance sheet",
+              'Explain what TG20:13 is, who publishes it, and what types of scaffolding it covers',
+              'Distinguish between standard configurations (covered by TG20) and non-standard configurations (requiring a bespoke design)',
+              'Describe the role and function of the TG20 eGuide software in generating compliance sheets',
+              'Explain how TG20 handles wind loading, tie patterns, cladding, and maximum heights',
+              'Identify the role of the NASC as the UK trade body for scaffolding and the benefits of NASC membership',
+              'State when a bespoke scaffold design from a competent engineer is required instead of a TG20 compliance sheet',
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-slate-400/70 mt-0.5 flex-shrink-0" />
@@ -346,104 +328,73 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                <strong className="text-white">TG20:13</strong> (Technical
-                Guidance Note 20, 2013 edition) is the principal compliance
-                guidance document for{" "}
-                <strong className="text-white">
-                  tube and fitting scaffolds
-                </strong>{" "}
-                in the United Kingdom. It is published by the{" "}
+                <strong className="text-white">TG20:13</strong> (Technical Guidance Note 20, 2013
+                edition) is the principal compliance guidance document for{' '}
+                <strong className="text-white">tube and fitting scaffolds</strong> in the United
+                Kingdom. It is published by the{' '}
                 <strong className="text-white">
                   National Access and Scaffolding Confederation (NASC)
-                </strong>{" "}
-                and is recognised by the{" "}
-                <strong className="text-white">
-                  Health and Safety Executive (HSE)
-                </strong>{" "}
-                as an authoritative source of good practice for the scaffolding
-                industry.
+                </strong>{' '}
+                and is recognised by the{' '}
+                <strong className="text-white">Health and Safety Executive (HSE)</strong> as an
+                authoritative source of good practice for the scaffolding industry.
               </p>
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-slate-400">
-                  Key Definition: TG20:13
-                </h3>
+                <h3 className="font-semibold mb-2 text-slate-400">Key Definition: TG20:13</h3>
                 <p className="text-white/80 text-sm">
-                  TG20:13 is a{" "}
-                  <strong className="text-white">
-                    compliance guidance system
-                  </strong>{" "}
-                  for tube and fitting scaffolds. It defines a range of{" "}
-                  <strong className="text-white">
-                    standard configurations
-                  </strong>{" "}
-                  — scaffolds that have been pre-validated by structural
-                  analysis — and provides a software tool (the{" "}
-                  <strong className="text-white">TG20 eGuide</strong>) that
-                  generates{" "}
-                  <strong className="text-white">compliance sheets</strong>{" "}
-                  confirming that a particular scaffold falls within the
-                  validated parameters.
+                  TG20:13 is a <strong className="text-white">compliance guidance system</strong>{' '}
+                  for tube and fitting scaffolds. It defines a range of{' '}
+                  <strong className="text-white">standard configurations</strong> — scaffolds that
+                  have been pre-validated by structural analysis — and provides a software tool (the{' '}
+                  <strong className="text-white">TG20 eGuide</strong>) that generates{' '}
+                  <strong className="text-white">compliance sheets</strong> confirming that a
+                  particular scaffold falls within the validated parameters.
                 </p>
               </div>
 
               <p>
-                The 2013 edition replaced the earlier TG20:08 and introduced
-                significant improvements, including the eGuide software,
-                postcode-specific wind loading data, and a greatly expanded
-                range of validated scaffold configurations. TG20:13 is based on
-                the structural requirements of{" "}
-                <strong className="text-white">BS EN 12811-1</strong> and uses
-                wind loading data derived from{" "}
-                <strong className="text-white">BS EN 1991-1-4</strong> (the
-                Eurocode for wind actions on structures).
+                The 2013 edition replaced the earlier TG20:08 and introduced significant
+                improvements, including the eGuide software, postcode-specific wind loading data,
+                and a greatly expanded range of validated scaffold configurations. TG20:13 is based
+                on the structural requirements of{' '}
+                <strong className="text-white">BS EN 12811-1</strong> and uses wind loading data
+                derived from <strong className="text-white">BS EN 1991-1-4</strong> (the Eurocode
+                for wind actions on structures).
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-slate-400 font-medium mb-2">
-                  What TG20:13 Covers
-                </h3>
+                <h3 className="text-slate-400 font-medium mb-2">What TG20:13 Covers</h3>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Independent tied scaffolds:
-                      </strong>{" "}
-                      the most common type — standing independently from the
-                      building and tied back to it for stability
+                      <strong className="text-white">Independent tied scaffolds:</strong> the most
+                      common type — standing independently from the building and tied back to it for
+                      stability
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Putlog scaffolds:
-                      </strong>{" "}
-                      a single-pole scaffold with one row of standards, used
-                      during brickwork construction with putlogs built into the
-                      wall
+                      <strong className="text-white">Putlog scaffolds:</strong> a single-pole
+                      scaffold with one row of standards, used during brickwork construction with
+                      putlogs built into the wall
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Birdcage scaffolds:
-                      </strong>{" "}
-                      freestanding internal scaffolds providing a working
-                      platform at ceiling height — typically used for plastering,
-                      painting, or services installation
+                      <strong className="text-white">Birdcage scaffolds:</strong> freestanding
+                      internal scaffolds providing a working platform at ceiling height — typically
+                      used for plastering, painting, or services installation
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Loading bays:
-                      </strong>{" "}
-                      platforms within the scaffold structure designed to receive
-                      materials from cranes or hoists
+                      <strong className="text-white">Loading bays:</strong> platforms within the
+                      scaffold structure designed to receive materials from cranes or hoists
                     </div>
                   </li>
                 </ul>
@@ -452,19 +403,18 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <div className="bg-white/5 border border-slate-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-slate-300">
-                    What TG20:13 Does NOT Cover
-                  </h3>
+                  <h3 className="font-semibold text-slate-300">What TG20:13 Does NOT Cover</h3>
                 </div>
                 <p className="text-white/70 text-sm mb-3">
-                  TG20 applies only to tube and fitting scaffolds. The
-                  following are outside its scope and require separate
-                  guidance, design, or manufacturer instructions:
+                  TG20 applies only to tube and fitting scaffolds. The following are outside its
+                  scope and require separate guidance, design, or manufacturer instructions:
                 </p>
                 <ul className="text-white/70 space-y-1.5 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
-                    <span>System scaffolds (proprietary modular systems such as Layher, HAKI, Cuplok)</span>
+                    <span>
+                      System scaffolds (proprietary modular systems such as Layher, HAKI, Cuplok)
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
@@ -480,7 +430,9 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
-                    <span>Scaffolding used as temporary structures for events or entertainment</span>
+                    <span>
+                      Scaffolding used as temporary structures for events or entertainment
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -497,41 +449,35 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                The{" "}
+                The{' '}
                 <strong className="text-white">
                   National Access and Scaffolding Confederation (NASC)
-                </strong>{" "}
-                is the UK trade body for the access and scaffolding industry.
-                Founded in 1945, it represents scaffolding contractors,
-                manufacturers, and suppliers and plays a central role in setting
-                and maintaining industry standards.
+                </strong>{' '}
+                is the UK trade body for the access and scaffolding industry. Founded in 1945, it
+                represents scaffolding contractors, manufacturers, and suppliers and plays a central
+                role in setting and maintaining industry standards.
               </p>
 
               <p>
-                The NASC publishes a comprehensive library of{" "}
-                <strong className="text-white">guidance notes</strong> that
-                cover virtually every aspect of scaffolding practice. These
-                guidance notes are widely recognised by the HSE and are
-                considered industry best practice. Key guidance notes include:
+                The NASC publishes a comprehensive library of{' '}
+                <strong className="text-white">guidance notes</strong> that cover virtually every
+                aspect of scaffolding practice. These guidance notes are widely recognised by the
+                HSE and are considered industry best practice. Key guidance notes include:
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-slate-400 font-medium mb-3">
-                  Key NASC Guidance Notes
-                </h3>
+                <h3 className="text-slate-400 font-medium mb-3">Key NASC Guidance Notes</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-slate-500/20 border border-slate-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-slate-300 text-xs font-bold">1</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        TG20:13 — Tube and Fitting Scaffolds
-                      </p>
+                      <p className="text-white font-medium">TG20:13 — Tube and Fitting Scaffolds</p>
                       <p className="text-white/60">
-                        The primary compliance guidance for standard tube and
-                        fitting scaffold configurations, including the eGuide
-                        software for generating compliance sheets.
+                        The primary compliance guidance for standard tube and fitting scaffold
+                        configurations, including the eGuide software for generating compliance
+                        sheets.
                       </p>
                     </div>
                   </div>
@@ -544,10 +490,9 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                         SG4:15 — Preventing Falls in Scaffolding
                       </p>
                       <p className="text-white/60">
-                        Guidance on preventing falls during scaffold erection,
-                        alteration, and dismantling — the &ldquo;advance guard
-                        rail&rdquo; method and the use of personal fall
-                        protection.
+                        Guidance on preventing falls during scaffold erection, alteration, and
+                        dismantling — the &ldquo;advance guard rail&rdquo; method and the use of
+                        personal fall protection.
                       </p>
                     </div>
                   </div>
@@ -560,9 +505,9 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                         SG6 — Manual Handling in the Scaffolding Industry
                       </p>
                       <p className="text-white/60">
-                        Guidance on safe manual handling of scaffold tubes,
-                        fittings, and boards — including weight limits, team
-                        handling, and reducing musculoskeletal injury risk.
+                        Guidance on safe manual handling of scaffold tubes, fittings, and boards —
+                        including weight limits, team handling, and reducing musculoskeletal injury
+                        risk.
                       </p>
                     </div>
                   </div>
@@ -571,14 +516,11 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-slate-300 text-xs font-bold">4</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        SG25 — Scaffold Inspection
-                      </p>
+                      <p className="text-white font-medium">SG25 — Scaffold Inspection</p>
                       <p className="text-white/60">
-                        Guidance on inspecting scaffolds before first use, at
-                        7-day intervals, and after events likely to have affected
-                        stability — including what to inspect, record, and
-                        report.
+                        Guidance on inspecting scaffolds before first use, at 7-day intervals, and
+                        after events likely to have affected stability — including what to inspect,
+                        record, and report.
                       </p>
                     </div>
                   </div>
@@ -586,49 +528,41 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               </div>
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-slate-400">
-                  Benefits of NASC Membership
-                </h3>
+                <h3 className="font-semibold mb-2 text-slate-400">Benefits of NASC Membership</h3>
                 <p className="text-white/80 text-sm mb-3">
-                  NASC member companies are subject to regular audits that
-                  check compliance across multiple areas. Specifying an NASC
-                  member contractor gives clients confidence in quality and
-                  safety:
+                  NASC member companies are subject to regular audits that check compliance across
+                  multiple areas. Specifying an NASC member contractor gives clients confidence in
+                  quality and safety:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      Compliance with NASC guidance notes (SG4, SG6, TG20, SG25,
-                      and others)
+                      Compliance with NASC guidance notes (SG4, SG6, TG20, SG25, and others)
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
+                    <span>Health and safety management systems meeting current legislation</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
+                    <span>
+                      Operative training and competence — including CISRS card status for all
+                      scaffolders
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      Health and safety management systems meeting current
-                      legislation
+                      Adequate employers&rsquo; liability and public liability insurance cover
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      Operative training and competence — including CISRS card
-                      status for all scaffolders
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
-                    <span>
-                      Adequate employers&rsquo; liability and public liability
-                      insurance cover
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
-                    <span>
-                      Adherence to British and European standards including BS EN
-                      12811 and BS EN 12810
+                      Adherence to British and European standards including BS EN 12811 and BS EN
+                      12810
                     </span>
                   </li>
                 </ul>
@@ -648,27 +582,18 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                The fundamental distinction in TG20:13 is between{" "}
-                <strong className="text-white">standard configurations</strong>{" "}
-                — scaffolds that fall within the pre-validated parameters
-                defined in TG20 — and{" "}
-                <strong className="text-white">
-                  non-standard configurations
-                </strong>{" "}
-                — scaffolds that fall outside those parameters and require a
-                bespoke design.
+                The fundamental distinction in TG20:13 is between{' '}
+                <strong className="text-white">standard configurations</strong> — scaffolds that
+                fall within the pre-validated parameters defined in TG20 — and{' '}
+                <strong className="text-white">non-standard configurations</strong> — scaffolds that
+                fall outside those parameters and require a bespoke design.
               </p>
 
               <p>
-                Understanding this distinction is critical because it
-                determines whether a{" "}
-                <strong className="text-white">TG20 compliance sheet</strong>{" "}
-                is sufficient or whether a{" "}
-                <strong className="text-white">
-                  full bespoke scaffold design
-                </strong>{" "}
-                from a competent engineer must be produced before the scaffold
-                is erected.
+                Understanding this distinction is critical because it determines whether a{' '}
+                <strong className="text-white">TG20 compliance sheet</strong> is sufficient or
+                whether a <strong className="text-white">full bespoke scaffold design</strong> from
+                a competent engineer must be produced before the scaffold is erected.
               </p>
 
               {/* Standard vs Non-Standard Diagram */}
@@ -687,8 +612,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       </h4>
                     </div>
                     <p className="text-white/60 text-xs mb-3">
-                      Falls within TG20 parameters — compliance sheet from
-                      eGuide is sufficient
+                      Falls within TG20 parameters — compliance sheet from eGuide is sufficient
                     </p>
                     <ul className="space-y-2 text-xs">
                       <li className="flex items-start gap-2">
@@ -706,8 +630,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
                         <span className="text-white/70">
-                          Heights within TG20 limits (up to 50 m for general
-                          purpose)
+                          Heights within TG20 limits (up to 50 m for general purpose)
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
@@ -719,15 +642,13 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
                         <span className="text-white/70">
-                          Wind loading within validated limits for the site
-                          location
+                          Wind loading within validated limits for the site location
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
                         <span className="text-white/70">
-                          Standard cladding types (open, debris netting, brick
-                          guards)
+                          Standard cladding types (open, debris netting, brick guards)
                         </span>
                       </li>
                     </ul>
@@ -747,15 +668,13 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       </h4>
                     </div>
                     <p className="text-white/60 text-xs mb-3">
-                      Falls outside TG20 parameters — bespoke scaffold design
-                      required from a competent engineer
+                      Falls outside TG20 parameters — bespoke scaffold design required from a
+                      competent engineer
                     </p>
                     <ul className="space-y-2 text-xs">
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
-                          Bay lengths exceeding TG20 maximums
-                        </span>
+                        <span className="text-white/70">Bay lengths exceeding TG20 maximums</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
@@ -778,8 +697,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
                         <span className="text-white/70">
-                          Complex building shapes (curved facades, large
-                          setbacks)
+                          Complex building shapes (curved facades, large setbacks)
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
@@ -799,21 +717,16 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               </div>
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-slate-400">
-                  Why This Distinction Matters
-                </h3>
+                <h3 className="font-semibold mb-2 text-slate-400">Why This Distinction Matters</h3>
                 <p className="text-white/80 text-sm">
-                  A scaffold erected without either a valid TG20 compliance
-                  sheet or a bespoke scaffold design is{" "}
-                  <strong className="text-white">
-                    non-compliant with industry standards
-                  </strong>
-                  . The HSE expects that every tube and fitting scaffold on site
-                  has the appropriate documentation — either a TG20 compliance
-                  sheet confirming it falls within standard parameters, or a
-                  full scaffold design for non-standard configurations. Failure
-                  to produce this documentation during an HSE inspection can
-                  result in enforcement action.
+                  A scaffold erected without either a valid TG20 compliance sheet or a bespoke
+                  scaffold design is{' '}
+                  <strong className="text-white">non-compliant with industry standards</strong>. The
+                  HSE expects that every tube and fitting scaffold on site has the appropriate
+                  documentation — either a TG20 compliance sheet confirming it falls within standard
+                  parameters, or a full scaffold design for non-standard configurations. Failure to
+                  produce this documentation during an HSE inspection can result in enforcement
+                  action.
                 </p>
               </div>
             </div>
@@ -829,23 +742,18 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                The{" "}
-                <strong className="text-white">TG20 eGuide</strong> is a
-                software application published by the NASC that automates the
-                process of checking whether a tube and fitting scaffold falls
-                within TG20:13 standard configurations. It generates a{" "}
-                <strong className="text-white">compliance sheet</strong>{" "}
-                (sometimes called a configuration sheet) that serves as the
-                formal record of TG20 compliance for that scaffold.
+                The <strong className="text-white">TG20 eGuide</strong> is a software application
+                published by the NASC that automates the process of checking whether a tube and
+                fitting scaffold falls within TG20:13 standard configurations. It generates a{' '}
+                <strong className="text-white">compliance sheet</strong> (sometimes called a
+                configuration sheet) that serves as the formal record of TG20 compliance for that
+                scaffold.
               </p>
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
-                <h3 className="text-blue-300 font-medium mb-3">
-                  Inputs Required by the eGuide
-                </h3>
+                <h3 className="text-blue-300 font-medium mb-3">Inputs Required by the eGuide</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  The eGuide requires the following information to generate a
-                  compliance sheet:
+                  The eGuide requires the following information to generate a compliance sheet:
                 </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
@@ -853,13 +761,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-blue-300 text-xs font-bold">1</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        Site Location
-                      </p>
+                      <p className="text-white font-medium">Site Location</p>
                       <p className="text-white/60">
-                        The site postcode, altitude, and exposure category (town
-                        or country). This determines the wind speed and wind
-                        loading for the site.
+                        The site postcode, altitude, and exposure category (town or country). This
+                        determines the wind speed and wind loading for the site.
                       </p>
                     </div>
                   </div>
@@ -868,12 +773,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-blue-300 text-xs font-bold">2</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        Scaffold Type
-                      </p>
+                      <p className="text-white font-medium">Scaffold Type</p>
                       <p className="text-white/60">
-                        Whether the scaffold is an independent tied scaffold,
-                        putlog scaffold, birdcage scaffold, or loading bay.
+                        Whether the scaffold is an independent tied scaffold, putlog scaffold,
+                        birdcage scaffold, or loading bay.
                       </p>
                     </div>
                   </div>
@@ -882,13 +785,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-blue-300 text-xs font-bold">3</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        Scaffold Dimensions
-                      </p>
+                      <p className="text-white font-medium">Scaffold Dimensions</p>
                       <p className="text-white/60">
-                        Height, bay length, scaffold width (ledger length), and
-                        lift height. These must fall within the ranges defined in
-                        TG20.
+                        Height, bay length, scaffold width (ledger length), and lift height. These
+                        must fall within the ranges defined in TG20.
                       </p>
                     </div>
                   </div>
@@ -897,13 +797,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-blue-300 text-xs font-bold">4</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        Boarded Lifts
-                      </p>
+                      <p className="text-white font-medium">Boarded Lifts</p>
                       <p className="text-white/60">
-                        The number of boarded lifts (working platforms) in the
-                        scaffold. More boarded lifts increase wind loading and
-                        dead load.
+                        The number of boarded lifts (working platforms) in the scaffold. More
+                        boarded lifts increase wind loading and dead load.
                       </p>
                     </div>
                   </div>
@@ -912,13 +809,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-blue-300 text-xs font-bold">5</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        Tie Pattern
-                      </p>
+                      <p className="text-white font-medium">Tie Pattern</p>
                       <p className="text-white/60">
-                        The spacing and arrangement of ties connecting the
-                        scaffold to the building. TG20 defines standard tie
-                        patterns and spacings.
+                        The spacing and arrangement of ties connecting the scaffold to the building.
+                        TG20 defines standard tie patterns and spacings.
                       </p>
                     </div>
                   </div>
@@ -927,13 +821,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-blue-300 text-xs font-bold">6</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium">
-                        Cladding Type
-                      </p>
+                      <p className="text-white font-medium">Cladding Type</p>
                       <p className="text-white/60">
-                        Whether the scaffold is open (no cladding), fitted with
-                        debris netting, brick guards, or fully sheeted. Cladding
-                        significantly affects wind loading.
+                        Whether the scaffold is open (no cladding), fitted with debris netting,
+                        brick guards, or fully sheeted. Cladding significantly affects wind loading.
                       </p>
                     </div>
                   </div>
@@ -941,21 +832,16 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               </div>
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-slate-400">
-                  The Compliance Sheet
-                </h3>
+                <h3 className="font-semibold mb-2 text-slate-400">The Compliance Sheet</h3>
                 <p className="text-white/80 text-sm">
-                  If the scaffold falls within TG20 standard configurations,
-                  the eGuide generates a{" "}
-                  <strong className="text-white">compliance sheet</strong> in
-                  PDF format. This document records the scaffold type,
-                  dimensions, location, tie pattern, cladding, wind loading
-                  data, and a confirmation that the configuration is compliant
-                  with TG20:13. The compliance sheet must be{" "}
-                  <strong className="text-white">kept on site</strong> and
-                  made available to scaffold inspectors, site managers, and HSE
-                  inspectors. It serves as the formal evidence that the scaffold
-                  has been checked against an accepted standard.
+                  If the scaffold falls within TG20 standard configurations, the eGuide generates a{' '}
+                  <strong className="text-white">compliance sheet</strong> in PDF format. This
+                  document records the scaffold type, dimensions, location, tie pattern, cladding,
+                  wind loading data, and a confirmation that the configuration is compliant with
+                  TG20:13. The compliance sheet must be{' '}
+                  <strong className="text-white">kept on site</strong> and made available to
+                  scaffold inspectors, site managers, and HSE inspectors. It serves as the formal
+                  evidence that the scaffold has been checked against an accepted standard.
                 </p>
               </div>
 
@@ -967,20 +853,14 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   </h3>
                 </div>
                 <p className="text-white/70 text-sm">
-                  If any of the inputs fall outside TG20 parameters — for
-                  example, the height exceeds the limit for the given wind zone,
-                  or the tie pattern is not one of the recognised standard
-                  patterns — the eGuide will{" "}
-                  <strong className="text-white">
-                    flag the scaffold as non-standard
-                  </strong>{" "}
-                  and will <strong className="text-white">not</strong> generate
-                  a compliance sheet. In this case, a{" "}
-                  <strong className="text-white">
-                    bespoke scaffold design
-                  </strong>{" "}
-                  must be produced by a competent scaffold designer or
-                  structural engineer before the scaffold is erected.
+                  If any of the inputs fall outside TG20 parameters — for example, the height
+                  exceeds the limit for the given wind zone, or the tie pattern is not one of the
+                  recognised standard patterns — the eGuide will{' '}
+                  <strong className="text-white">flag the scaffold as non-standard</strong> and will{' '}
+                  <strong className="text-white">not</strong> generate a compliance sheet. In this
+                  case, a <strong className="text-white">bespoke scaffold design</strong> must be
+                  produced by a competent scaffold designer or structural engineer before the
+                  scaffold is erected.
                 </p>
               </div>
             </div>
@@ -998,10 +878,9 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                Before erecting any tube and fitting scaffold, the contractor
-                must determine whether the scaffold falls within TG20 standard
-                configurations or requires a bespoke design. The following
-                flowchart shows the decision process:
+                Before erecting any tube and fitting scaffold, the contractor must determine whether
+                the scaffold falls within TG20 standard configurations or requires a bespoke design.
+                The following flowchart shows the decision process:
               </p>
 
               {/* TG20 Decision Flowchart Diagram */}
@@ -1027,8 +906,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <div className="w-0.5 h-4 bg-red-400/40"></div>
                       <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2 text-center mt-1">
                         <p className="text-white/70 text-xs">
-                          TG20 does not apply — use manufacturer guidance or
-                          bespoke design
+                          TG20 does not apply — use manufacturer guidance or bespoke design
                         </p>
                       </div>
                     </div>
@@ -1043,8 +921,8 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                 <div className="flex justify-center mb-3">
                   <div className="bg-teal-500/15 border-2 border-teal-500/40 rounded-xl px-5 py-3 text-center max-w-sm">
                     <p className="text-white font-semibold text-sm">
-                      Enter parameters into TG20 eGuide (type, height, bay
-                      length, ties, cladding, location)
+                      Enter parameters into TG20 eGuide (type, height, bay length, ties, cladding,
+                      location)
                     </p>
                   </div>
                 </div>
@@ -1058,8 +936,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                 <div className="flex justify-center mb-3">
                   <div className="bg-teal-500/15 border-2 border-teal-500/40 rounded-xl px-5 py-3 text-center max-w-sm rotate-0">
                     <p className="text-white font-semibold text-sm">
-                      Does the eGuide confirm the scaffold is within standard
-                      parameters?
+                      Does the eGuide confirm the scaffold is within standard parameters?
                     </p>
                   </div>
                 </div>
@@ -1087,8 +964,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                           Non-Standard Configuration
                         </p>
                         <p className="text-white/60 text-xs">
-                          Commission a bespoke scaffold design from a competent
-                          engineer
+                          Commission a bespoke scaffold design from a competent engineer
                         </p>
                       </div>
                     </div>
@@ -1113,15 +989,23 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-teal-400/60 mt-0.5 flex-shrink-0" />
-                        <span>Erect scaffold in accordance with the documented configuration or design</span>
+                        <span>
+                          Erect scaffold in accordance with the documented configuration or design
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-teal-400/60 mt-0.5 flex-shrink-0" />
-                        <span>Inspect before first use, at 7-day intervals, and after any event affecting stability</span>
+                        <span>
+                          Inspect before first use, at 7-day intervals, and after any event
+                          affecting stability
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-teal-400/60 mt-0.5 flex-shrink-0" />
-                        <span>Any deviation from the documented configuration or design must be re-assessed</span>
+                        <span>
+                          Any deviation from the documented configuration or design must be
+                          re-assessed
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -1129,11 +1013,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               </div>
 
               <p>
-                The flowchart above should be applied to{" "}
-                <strong className="text-white">every</strong> tube and fitting
-                scaffold before erection. There is no exemption based on the
-                scaffold being &ldquo;simple&rdquo; or &ldquo;small&rdquo; —
-                even a straightforward scaffold must be checked against TG20
+                The flowchart above should be applied to{' '}
+                <strong className="text-white">every</strong> tube and fitting scaffold before
+                erection. There is no exemption based on the scaffold being &ldquo;simple&rdquo; or
+                &ldquo;small&rdquo; — even a straightforward scaffold must be checked against TG20
                 parameters and documented accordingly.
               </p>
             </div>
@@ -1149,56 +1032,43 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                Wind loading is one of the most critical factors in scaffold
-                design and the most common reason for a scaffold to fall outside
-                TG20 standard configurations. TG20:13 uses a sophisticated wind
-                loading model based on{" "}
-                <strong className="text-white">BS EN 1991-1-4</strong>{" "}
-                (Eurocode 1: Actions on Structures — Wind Actions) to calculate
-                the wind forces acting on a scaffold.
+                Wind loading is one of the most critical factors in scaffold design and the most
+                common reason for a scaffold to fall outside TG20 standard configurations. TG20:13
+                uses a sophisticated wind loading model based on{' '}
+                <strong className="text-white">BS EN 1991-1-4</strong> (Eurocode 1: Actions on
+                Structures — Wind Actions) to calculate the wind forces acting on a scaffold.
               </p>
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
-                <h3 className="text-purple-300 font-medium mb-3">
-                  Wind Zone System
-                </h3>
+                <h3 className="text-purple-300 font-medium mb-3">Wind Zone System</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  TG20:13 divides the United Kingdom into{" "}
-                  <strong className="text-white">wind zones</strong> based on
-                  three key factors:
+                  TG20:13 divides the United Kingdom into{' '}
+                  <strong className="text-white">wind zones</strong> based on three key factors:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Geographic location:
-                      </strong>{" "}
-                      the site&rsquo;s position within the UK, determined by
-                      postcode. Western and northern areas of the UK generally
-                      have higher wind speeds than sheltered inland areas.
+                      <strong className="text-white">Geographic location:</strong> the site&rsquo;s
+                      position within the UK, determined by postcode. Western and northern areas of
+                      the UK generally have higher wind speeds than sheltered inland areas.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Altitude:</strong> the
-                      height of the site above sea level. Higher altitude sites
-                      experience greater wind speeds due to reduced terrain
-                      shielding.
+                      <strong className="text-white">Altitude:</strong> the height of the site above
+                      sea level. Higher altitude sites experience greater wind speeds due to reduced
+                      terrain shielding.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Exposure category:
-                      </strong>{" "}
-                      whether the site is in a &ldquo;town&rdquo; (urban, with
-                      surrounding buildings providing shelter) or
-                      &ldquo;country&rdquo; (rural, open terrain with less
-                      shielding). Country sites experience significantly higher
-                      effective wind speeds.
+                      <strong className="text-white">Exposure category:</strong> whether the site is
+                      in a &ldquo;town&rdquo; (urban, with surrounding buildings providing shelter)
+                      or &ldquo;country&rdquo; (rural, open terrain with less shielding). Country
+                      sites experience significantly higher effective wind speeds.
                     </div>
                   </li>
                 </ul>
@@ -1209,70 +1079,57 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   Effect of Cladding on Wind Loading
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  The type of cladding on a scaffold has a dramatic effect on
-                  the wind force it must resist. Cladding increases the
-                  effective wind area — turning the scaffold from a relatively
-                  open framework into a surface that catches the wind like a
-                  sail:
+                  The type of cladding on a scaffold has a dramatic effect on the wind force it must
+                  resist. Cladding increases the effective wind area — turning the scaffold from a
+                  relatively open framework into a surface that catches the wind like a sail:
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Open scaffold</strong>{" "}
-                      (no cladding) — lowest wind loading. The wind passes
-                      through the open framework with minimal resistance.
+                      <strong className="text-white">Open scaffold</strong> (no cladding) — lowest
+                      wind loading. The wind passes through the open framework with minimal
+                      resistance.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Debris netting</strong>{" "}
-                      — moderately increased wind loading. The fine mesh of
-                      debris netting catches a significant proportion of the
-                      wind, increasing the force on the scaffold.
+                      <strong className="text-white">Debris netting</strong> — moderately increased
+                      wind loading. The fine mesh of debris netting catches a significant proportion
+                      of the wind, increasing the force on the scaffold.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Brick guards</strong>{" "}
-                      — similar to debris netting but typically covering only
-                      the outer face of the scaffold at specific lifts.
+                      <strong className="text-white">Brick guards</strong> — similar to debris
+                      netting but typically covering only the outer face of the scaffold at specific
+                      lifts.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Full sheeting (monarflex or polythene)
-                      </strong>{" "}
-                      — highest wind loading. The scaffold becomes an almost
-                      solid surface, dramatically increasing the wind force. A
-                      fully sheeted scaffold in an exposed location is very
-                      likely to fall outside TG20 standard configurations.
+                      <strong className="text-white">Full sheeting (monarflex or polythene)</strong>{' '}
+                      — highest wind loading. The scaffold becomes an almost solid surface,
+                      dramatically increasing the wind force. A fully sheeted scaffold in an exposed
+                      location is very likely to fall outside TG20 standard configurations.
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-slate-400">
-                  Why Wind Loading Matters
-                </h3>
+                <h3 className="font-semibold mb-2 text-slate-400">Why Wind Loading Matters</h3>
                 <p className="text-white/80 text-sm">
-                  Wind loading is the dominant horizontal force on most
-                  scaffolds. If the wind force exceeds the capacity of the ties,
-                  the scaffold can{" "}
-                  <strong className="text-white">
-                    pull away from the building
-                  </strong>{" "}
-                  or{" "}
-                  <strong className="text-white">collapse</strong>. Scaffold
-                  collapses caused by wind are among the most serious
-                  scaffolding incidents investigated by the HSE. Correct wind
-                  loading calculations — and adequate ties to resist the
-                  calculated forces — are essential for scaffold safety.
+                  Wind loading is the dominant horizontal force on most scaffolds. If the wind force
+                  exceeds the capacity of the ties, the scaffold can{' '}
+                  <strong className="text-white">pull away from the building</strong> or{' '}
+                  <strong className="text-white">collapse</strong>. Scaffold collapses caused by
+                  wind are among the most serious scaffolding incidents investigated by the HSE.
+                  Correct wind loading calculations — and adequate ties to resist the calculated
+                  forces — are essential for scaffold safety.
                 </p>
               </div>
             </div>
@@ -1288,90 +1145,68 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                <strong className="text-white">Ties</strong> are the
-                connections that anchor the scaffold to the building. They are
-                critical structural elements — without adequate ties, the
-                scaffold cannot resist wind forces and will be at risk of
-                collapse. TG20:13 defines standard tie patterns and maximum
-                spacings that must be met for a scaffold to qualify as a
-                standard configuration.
+                <strong className="text-white">Ties</strong> are the connections that anchor the
+                scaffold to the building. They are critical structural elements — without adequate
+                ties, the scaffold cannot resist wind forces and will be at risk of collapse.
+                TG20:13 defines standard tie patterns and maximum spacings that must be met for a
+                scaffold to qualify as a standard configuration.
               </p>
 
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
-                <h3 className="text-amber-300 font-medium mb-3">
-                  Standard Tie Patterns in TG20
-                </h3>
+                <h3 className="text-amber-300 font-medium mb-3">Standard Tie Patterns in TG20</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  TG20:13 recognises several standard tie patterns. The most
-                  common for independent tied scaffolds are:
+                  TG20:13 recognises several standard tie patterns. The most common for independent
+                  tied scaffolds are:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Every lift, every other standard:
-                      </strong>{" "}
-                      a tie at every lift height, at every other standard
-                      (vertical tube). This creates a regular grid pattern and
-                      is one of the most common arrangements.
+                      <strong className="text-white">Every lift, every other standard:</strong> a
+                      tie at every lift height, at every other standard (vertical tube). This
+                      creates a regular grid pattern and is one of the most common arrangements.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Every lift, every standard:
-                      </strong>{" "}
-                      a tie at every lift and every standard — the densest
-                      standard pattern. Used when wind loading is high or the
-                      scaffold is clad.
+                      <strong className="text-white">Every lift, every standard:</strong> a tie at
+                      every lift and every standard — the densest standard pattern. Used when wind
+                      loading is high or the scaffold is clad.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Staggered (chequerboard) pattern:
-                      </strong>{" "}
-                      ties arranged in a staggered pattern so that each standard
-                      is tied at alternate lifts. This is acceptable in many
-                      standard configurations but provides less restraint than
-                      the denser patterns.
+                      <strong className="text-white">Staggered (chequerboard) pattern:</strong> ties
+                      arranged in a staggered pattern so that each standard is tied at alternate
+                      lifts. This is acceptable in many standard configurations but provides less
+                      restraint than the denser patterns.
                     </div>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-amber-400 font-medium mb-3">
-                  Tie Types
-                </h3>
+                <h3 className="text-amber-400 font-medium mb-3">Tie Types</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  The type of tie used affects the load it can carry. Common tie
-                  types include:
+                  The type of tie used affects the load it can carry. Common tie types include:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Through ties (ring bolts):
-                      </strong>{" "}
-                      a bolt passed through the wall with a plate on the inside.
-                      Very strong — typically 6.1 kN or more in tension and
-                      compression.
+                      <strong className="text-white">Through ties (ring bolts):</strong> a bolt
+                      passed through the wall with a plate on the inside. Very strong — typically
+                      6.1 kN or more in tension and compression.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Box ties (reveal ties):
-                      </strong>{" "}
-                      a tube pressed into a window or door reveal, restrained by
-                      a packing piece and a right-angle coupler. Lower capacity
-                      than through ties — typically around 3.5 kN.
+                      <strong className="text-white">Box ties (reveal ties):</strong> a tube pressed
+                      into a window or door reveal, restrained by a packing piece and a right-angle
+                      coupler. Lower capacity than through ties — typically around 3.5 kN.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -1379,23 +1214,20 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     <div>
                       <strong className="text-white">
                         Anchor ties (resin or expansion bolts):
-                      </strong>{" "}
-                      a proprietary anchor fixed into the building structure.
-                      Capacity depends on the anchor type, the substrate
-                      material, and the installation quality. Pull-out testing
-                      may be required.
+                      </strong>{' '}
+                      a proprietary anchor fixed into the building structure. Capacity depends on
+                      the anchor type, the substrate material, and the installation quality.
+                      Pull-out testing may be required.
                     </div>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
-                <h3 className="text-amber-300 font-medium mb-3">
-                  Maximum Heights
-                </h3>
+                <h3 className="text-amber-300 font-medium mb-3">Maximum Heights</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  The maximum height of a scaffold within TG20 standard
-                  configurations depends on several interacting factors:
+                  The maximum height of a scaffold within TG20 standard configurations depends on
+                  several interacting factors:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
@@ -1403,34 +1235,27 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     <div>
                       <strong className="text-white">
                         General purpose independent tied scaffolds:
-                      </strong>{" "}
-                      up to 50 metres in favourable conditions (low wind zone,
-                      town exposure, open or lightly clad, dense tie pattern).
-                      However, in exposed locations with full sheeting, the
-                      maximum height may be significantly lower.
+                      </strong>{' '}
+                      up to 50 metres in favourable conditions (low wind zone, town exposure, open
+                      or lightly clad, dense tie pattern). However, in exposed locations with full
+                      sheeting, the maximum height may be significantly lower.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Birdcage scaffolds:
-                      </strong>{" "}
-                      internal freestanding scaffolds — maximum heights are
-                      typically lower because they are not tied to a structure.
-                      TG20 provides specific limits based on the scaffold
+                      <strong className="text-white">Birdcage scaffolds:</strong> internal
+                      freestanding scaffolds — maximum heights are typically lower because they are
+                      not tied to a structure. TG20 provides specific limits based on the scaffold
                       dimensions and loading.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Putlog scaffolds:
-                      </strong>{" "}
-                      limited heights because the scaffold relies on the
-                      building wall for support through the putlog blades built
-                      into the mortar joints. Not suitable for high-rise
+                      <strong className="text-white">Putlog scaffolds:</strong> limited heights
+                      because the scaffold relies on the building wall for support through the
+                      putlog blades built into the mortar joints. Not suitable for high-rise
                       applications.
                     </div>
                   </li>
@@ -1440,20 +1265,15 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <div className="bg-white/5 border border-slate-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-slate-300">
-                    Interacting Factors
-                  </h3>
+                  <h3 className="font-semibold text-slate-300">Interacting Factors</h3>
                 </div>
                 <p className="text-white/70 text-sm">
-                  Maximum height is not a single fixed number — it depends on
-                  the interaction of height, wind zone, exposure, cladding, tie
-                  pattern, bay length, and scaffold width. A scaffold
-                  configuration that is standard at 30 metres in a sheltered
-                  town location may be non-standard at the same height in an
-                  exposed coastal location. The eGuide calculates this
-                  interaction automatically — which is why every scaffold must
-                  be checked rather than relying on a &ldquo;rule of
-                  thumb&rdquo;.
+                  Maximum height is not a single fixed number — it depends on the interaction of
+                  height, wind zone, exposure, cladding, tie pattern, bay length, and scaffold
+                  width. A scaffold configuration that is standard at 30 metres in a sheltered town
+                  location may be non-standard at the same height in an exposed coastal location.
+                  The eGuide calculates this interaction automatically — which is why every scaffold
+                  must be checked rather than relying on a &ldquo;rule of thumb&rdquo;.
                 </p>
               </div>
             </div>
@@ -1471,18 +1291,14 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                Whenever a tube and fitting scaffold falls outside TG20
-                standard configurations, a{" "}
-                <strong className="text-white">
-                  bespoke scaffold design
-                </strong>{" "}
-                must be produced by a{" "}
+                Whenever a tube and fitting scaffold falls outside TG20 standard configurations, a{' '}
+                <strong className="text-white">bespoke scaffold design</strong> must be produced by
+                a{' '}
                 <strong className="text-white">
                   competent scaffold designer or structural engineer
                 </strong>
-                . This is not optional — it is a requirement of the Work at
-                Height Regulations 2005 (Regulation 8 — design requirements for
-                scaffolding) and is expected by the HSE.
+                . This is not optional — it is a requirement of the Work at Height Regulations 2005
+                (Regulation 8 — design requirements for scaffolding) and is expected by the HSE.
               </p>
 
               <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
@@ -1490,94 +1306,74 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   Common Triggers for a Bespoke Design
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  The following situations commonly require a bespoke scaffold
-                  design rather than a TG20 compliance sheet:
+                  The following situations commonly require a bespoke scaffold design rather than a
+                  TG20 compliance sheet:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Height exceeds TG20 limits:
-                      </strong>{" "}
-                      the scaffold is taller than the maximum permitted by TG20
-                      for the given combination of wind zone, exposure, cladding,
-                      and tie pattern.
+                      <strong className="text-white">Height exceeds TG20 limits:</strong> the
+                      scaffold is taller than the maximum permitted by TG20 for the given
+                      combination of wind zone, exposure, cladding, and tie pattern.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Full sheeting in exposed locations:
-                      </strong>{" "}
-                      fully sheeted scaffolds in coastal or elevated sites where
-                      the wind loading exceeds TG20 validated limits.
+                      <strong className="text-white">Full sheeting in exposed locations:</strong>{' '}
+                      fully sheeted scaffolds in coastal or elevated sites where the wind loading
+                      exceeds TG20 validated limits.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Non-standard tie arrangements:
-                      </strong>{" "}
-                      the building does not allow the standard TG20 tie patterns
-                      — for example, a glass facade where ties cannot be fixed,
-                      or a building with very wide window openings.
+                      <strong className="text-white">Non-standard tie arrangements:</strong> the
+                      building does not allow the standard TG20 tie patterns — for example, a glass
+                      facade where ties cannot be fixed, or a building with very wide window
+                      openings.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Complex building geometry:
-                      </strong>{" "}
-                      curved facades, significant setbacks, re-entrant corners,
-                      or cantilevered sections that prevent the scaffold from
-                      following a simple rectangular plan.
+                      <strong className="text-white">Complex building geometry:</strong> curved
+                      facades, significant setbacks, re-entrant corners, or cantilevered sections
+                      that prevent the scaffold from following a simple rectangular plan.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Heavy-duty loading:
-                      </strong>{" "}
-                      the scaffold must support loads that exceed the standard
-                      duty classes in TG20 — for example, heavy masonry
-                      materials, concrete pumping equipment, or heavy plant.
+                      <strong className="text-white">Heavy-duty loading:</strong> the scaffold must
+                      support loads that exceed the standard duty classes in TG20 — for example,
+                      heavy masonry materials, concrete pumping equipment, or heavy plant.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Cantilevered or hung scaffolds:
-                      </strong>{" "}
-                      scaffolds that are cantilevered from the building structure
-                      or hung from steelwork rather than standing on the ground.
+                      <strong className="text-white">Cantilevered or hung scaffolds:</strong>{' '}
+                      scaffolds that are cantilevered from the building structure or hung from
+                      steelwork rather than standing on the ground.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Scaffolds over public areas:
-                      </strong>{" "}
-                      scaffolds that span over roads, pavements, or other areas
-                      where the public passes beneath — requiring additional
-                      structural considerations and possibly a gantry design.
+                      <strong className="text-white">Scaffolds over public areas:</strong> scaffolds
+                      that span over roads, pavements, or other areas where the public passes
+                      beneath — requiring additional structural considerations and possibly a gantry
+                      design.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Poor ground conditions:
-                      </strong>{" "}
-                      the scaffold is on soft, sloping, or uneven ground where
-                      the bearing capacity of the foundations must be
-                      specifically assessed and engineered.
+                      <strong className="text-white">Poor ground conditions:</strong> the scaffold
+                      is on soft, sloping, or uneven ground where the bearing capacity of the
+                      foundations must be specifically assessed and engineered.
                     </div>
                   </li>
                 </ul>
@@ -1588,56 +1384,49 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   What a Bespoke Design Must Include
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  A competent bespoke scaffold design typically includes the
-                  following elements:
+                  A competent bespoke scaffold design typically includes the following elements:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      <strong className="text-white">General arrangement
-                      drawings</strong> showing the scaffold layout in plan and
-                      elevation
+                      <strong className="text-white">General arrangement drawings</strong> showing
+                      the scaffold layout in plan and elevation
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      <strong className="text-white">Structural
-                      calculations</strong> covering dead loads, imposed loads,
-                      wind loads, tie forces, and foundation bearing pressures
+                      <strong className="text-white">Structural calculations</strong> covering dead
+                      loads, imposed loads, wind loads, tie forces, and foundation bearing pressures
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      <strong className="text-white">Tie schedule</strong>{" "}
-                      detailing the type, location, and required capacity of
-                      every tie
+                      <strong className="text-white">Tie schedule</strong> detailing the type,
+                      location, and required capacity of every tie
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      <strong className="text-white">Foundation
-                      details</strong> specifying sole boards, base plates, and
-                      any special foundation requirements
+                      <strong className="text-white">Foundation details</strong> specifying sole
+                      boards, base plates, and any special foundation requirements
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      <strong className="text-white">Erection sequence</strong>{" "}
-                      if the scaffold requires a specific order of assembly for
-                      structural reasons
+                      <strong className="text-white">Erection sequence</strong> if the scaffold
+                      requires a specific order of assembly for structural reasons
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
-                      <strong className="text-white">Design
-                      certificate</strong> signed by the competent designer or
-                      engineer confirming the design is fit for purpose
+                      <strong className="text-white">Design certificate</strong> signed by the
+                      competent designer or engineer confirming the design is fit for purpose
                     </span>
                   </li>
                 </ul>
@@ -1648,35 +1437,29 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   Who Is Competent to Produce a Scaffold Design?
                 </h3>
                 <p className="text-white/80 text-sm">
-                  A bespoke scaffold design must be produced by a{" "}
-                  <strong className="text-white">competent person</strong> —
-                  typically a scaffold designer with relevant qualifications
-                  (such as the CISRS Scaffold Design qualification) or a
-                  chartered structural engineer with experience in temporary
-                  works design. The designer must have a thorough understanding
-                  of scaffold loading, wind effects, connection capacities, and
-                  the relevant British and European standards. Many NASC member
-                  companies employ in-house scaffold designers, and independent
-                  scaffold design consultancies also offer this service.
+                  A bespoke scaffold design must be produced by a{' '}
+                  <strong className="text-white">competent person</strong> — typically a scaffold
+                  designer with relevant qualifications (such as the CISRS Scaffold Design
+                  qualification) or a chartered structural engineer with experience in temporary
+                  works design. The designer must have a thorough understanding of scaffold loading,
+                  wind effects, connection capacities, and the relevant British and European
+                  standards. Many NASC member companies employ in-house scaffold designers, and
+                  independent scaffold design consultancies also offer this service.
                 </p>
               </div>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-red-300">
-                    No Design = No Scaffold
-                  </h3>
+                  <h3 className="font-semibold text-red-300">No Design = No Scaffold</h3>
                 </div>
                 <p className="text-white/70 text-sm">
-                  A scaffold that falls outside TG20 standard configurations
-                  must <strong className="text-white">not</strong> be erected
-                  until a bespoke design has been produced, reviewed, and
-                  accepted. Erecting a non-standard scaffold without a design
-                  is a serious breach of the Work at Height Regulations 2005
-                  and can result in enforcement action by the HSE, including
-                  prohibition notices and prosecution. If the scaffold collapses
-                  and causes injury or death, the consequences for the
+                  A scaffold that falls outside TG20 standard configurations must{' '}
+                  <strong className="text-white">not</strong> be erected until a bespoke design has
+                  been produced, reviewed, and accepted. Erecting a non-standard scaffold without a
+                  design is a serious breach of the Work at Height Regulations 2005 and can result
+                  in enforcement action by the HSE, including prohibition notices and prosecution.
+                  If the scaffold collapses and causes injury or death, the consequences for the
                   scaffolding contractor and the principal contractor are severe.
                 </p>
               </div>
@@ -1691,16 +1474,9 @@ const ScaffoldingAwarenessModule2Section2 = () => {
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="pb-4 border-b border-white/5 last:border-0"
-              >
-                <h3 className="font-semibold text-white mb-2">
-                  {faq.question}
-                </h3>
-                <p className="text-white/70 text-sm leading-relaxed">
-                  {faq.answer}
-                </p>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1708,10 +1484,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
         {/* Quiz */}
         <div className="mt-12">
-          <Quiz
-            title="Section 2 Knowledge Check"
-            questions={quizQuestions}
-          />
+          <Quiz title="Section 2 Knowledge Check" questions={quizQuestions} />
         </div>
 
         {/* Bottom Navigation */}

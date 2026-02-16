@@ -12,12 +12,13 @@ export const SmartHomeModule5Section2Intro = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Closed-Circuit Television (CCTV) is a core component of smart security systems. With advances in IP cameras, 
-          cloud storage, and AI features, modern CCTV offers far more than traditional analogue setups.
+          Closed-Circuit Television (CCTV) is a core component of smart security systems. With
+          advances in IP cameras, cloud storage, and AI features, modern CCTV offers far more than
+          traditional analogue setups.
         </p>
         <p>
-          This section explores different camera types, resolution standards, and storage methods so learners can 
-          design and install the right system for each property.
+          This section explores different camera types, resolution standards, and storage methods so
+          learners can design and install the right system for each property.
         </p>
       </CardContent>
     </Card>

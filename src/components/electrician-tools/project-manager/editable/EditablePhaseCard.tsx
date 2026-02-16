@@ -56,7 +56,7 @@ export const EditablePhaseCard = ({
     setIsEditingDays(false);
   };
 
-  const completedTasks = phase.tasks.filter(t => t.completed).length;
+  const completedTasks = phase.tasks.filter((t) => t.completed).length;
   const totalTasks = phase.tasks.length;
   const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
@@ -66,11 +66,14 @@ export const EditablePhaseCard = ({
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-2 flex-1">
             {dragHandleProps && (
-              <button {...dragHandleProps} className="cursor-grab mt-1 text-muted-foreground hover:text-foreground touch-manipulation">
+              <button
+                {...dragHandleProps}
+                className="cursor-grab mt-1 text-muted-foreground hover:text-foreground touch-manipulation"
+              >
                 <GripVertical className="h-5 w-5" />
               </button>
             )}
-            
+
             <div className="flex-1 space-y-2">
               {isEditingName ? (
                 <div className="flex gap-2">
@@ -96,7 +99,7 @@ export const EditablePhaseCard = ({
                   </Button>
                 </div>
               )}
-              
+
               {isEditingDays ? (
                 <div className="flex gap-2 items-center">
                   <MobileInput
@@ -131,7 +134,7 @@ export const EditablePhaseCard = ({
                   </Button>
                 </div>
               )}
-              
+
               {/* Progress bar */}
               {totalTasks > 0 && (
                 <div className="space-y-1">
@@ -148,10 +151,14 @@ export const EditablePhaseCard = ({
               )}
             </div>
           </div>
-          
+
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-destructive hover:text-destructive">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+              >
                 <Trash2 className="h-4 w-4" />
               </Button>
             </AlertDialogTrigger>
@@ -159,12 +166,16 @@ export const EditablePhaseCard = ({
               <AlertDialogHeader>
                 <AlertDialogTitle>Delete Phase</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to delete "{phase.phaseName}"? This will remove all tasks and materials associated with this phase.
+                  Are you sure you want to delete "{phase.phaseName}"? This will remove all tasks
+                  and materials associated with this phase.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={onDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                <AlertDialogAction
+                  onClick={onDelete}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
                   Delete
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -189,7 +200,10 @@ export const EditablePhaseCard = ({
             <h4 className="text-sm font-medium text-muted-foreground">Hold Points</h4>
             <div className="space-y-1">
               {phase.holdPoints.map((point, idx) => (
-                <div key={idx} className="text-sm bg-orange-500/10 border border-orange-500/20 rounded-md p-2">
+                <div
+                  key={idx}
+                  className="text-sm bg-orange-500/10 border border-orange-500/20 rounded-md p-2"
+                >
                   ⚠️ {point}
                 </div>
               ))}
@@ -203,7 +217,10 @@ export const EditablePhaseCard = ({
             <h4 className="text-sm font-medium text-muted-foreground">Trade Coordination</h4>
             <div className="space-y-1">
               {phase.tradeCoordination.map((coord) => (
-                <div key={coord.id} className="text-sm bg-blue-500/10 border border-blue-500/20 rounded-md p-2">
+                <div
+                  key={coord.id}
+                  className="text-sm bg-blue-500/10 border border-blue-500/20 rounded-md p-2"
+                >
                   <strong>{coord.trade}</strong> - Day {coord.day}: {coord.note}
                 </div>
               ))}
@@ -218,7 +235,8 @@ export const EditablePhaseCard = ({
             <div className="space-y-1">
               {phase.materials.map((material) => (
                 <div key={material.id} className="text-sm bg-muted/30 rounded-md p-2">
-                  {material.name} - {material.quantity}{material.unit || ''}
+                  {material.name} - {material.quantity}
+                  {material.unit || ''}
                   {material.orderBy && (
                     <span className="text-xs text-muted-foreground ml-2">
                       (Order by: {material.orderBy})

@@ -5,9 +5,23 @@
  */
 
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 import { TrendingUp, Users, CalendarCheck, PoundSterling } from 'lucide-react';
-import { calculateConversionMetrics, getMonthlyTrends, formatResponseTime, type ConversionMetrics, type MonthlyTrend } from '@/utils/analyticsHelper';
+import {
+  calculateConversionMetrics,
+  getMonthlyTrends,
+  formatResponseTime,
+  type ConversionMetrics,
+  type MonthlyTrend,
+} from '@/utils/analyticsHelper';
 import type { ExpiryReminder } from '@/types/expiryTypes';
 import { cn } from '@/lib/utils';
 
@@ -48,7 +62,7 @@ export const ExpiryAnalyticsSection: React.FC<ExpiryAnalyticsSectionProps> = ({
 }) => {
   const metrics = calculateConversionMetrics(reminders);
   const trends = getMonthlyTrends(reminders, 6);
-  const totalRevenue = reminders.filter(r => r.reminder_status === 'completed').length * 250;
+  const totalRevenue = reminders.filter((r) => r.reminder_status === 'completed').length * 250;
 
   if (reminders.length === 0) return null;
 
@@ -98,7 +112,9 @@ export const ExpiryAnalyticsSection: React.FC<ExpiryAnalyticsSectionProps> = ({
       {/* Monthly Trend Chart */}
       {trends.length > 1 && (
         <div className="p-4 rounded-xl bg-card/30 border border-border/30">
-          <p className="text-xs font-medium text-muted-foreground mb-3">Monthly Completions & Revenue</p>
+          <p className="text-xs font-medium text-muted-foreground mb-3">
+            Monthly Completions & Revenue
+          </p>
           <ResponsiveContainer width="100%" height={180}>
             <AreaChart data={trends} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
               <defs>
@@ -118,11 +134,7 @@ export const ExpiryAnalyticsSection: React.FC<ExpiryAnalyticsSectionProps> = ({
                 axisLine={false}
                 tickLine={false}
               />
-              <YAxis
-                tick={{ fill: '#94a3b8', fontSize: 10 }}
-                axisLine={false}
-                tickLine={false}
-              />
+              <YAxis tick={{ fill: '#94a3b8', fontSize: 10 }} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: '#1e293b',

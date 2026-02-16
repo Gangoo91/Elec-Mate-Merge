@@ -1,10 +1,9 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Shield, Plus, Lightbulb, CheckCircle, AlertTriangle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Shield, Plus, Lightbulb, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface ControlMeasuresGeneratorProps {
   onControlMeasuresAdded: (controlMeasures: string[]) => void;
@@ -12,99 +11,117 @@ interface ControlMeasuresGeneratorProps {
 
 const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGeneratorProps) => {
   const [selectedMeasures, setSelectedMeasures] = useState<string[]>([]);
-  const [customMeasure, setCustomMeasure] = useState("");
+  const [customMeasure, setCustomMeasure] = useState('');
 
   const controlMeasureCategories = [
     {
-      category: "Elimination",
+      category: 'Elimination',
       hierarchy: 1,
-      color: "green",
-      description: "Most effective - remove the hazard completely",
+      color: 'green',
+      description: 'Most effective - remove the hazard completely',
       measures: [
-        "Remove the hazard completely",
-        "Redesign the work process",
-        "Use alternative methods",
-        "Avoid the hazardous situation"
-      ]
+        'Remove the hazard completely',
+        'Redesign the work process',
+        'Use alternative methods',
+        'Avoid the hazardous situation',
+      ],
     },
     {
-      category: "Substitution",
+      category: 'Substitution',
       hierarchy: 2,
-      color: "green",
-      description: "Replace with safer alternative",
+      color: 'green',
+      description: 'Replace with safer alternative',
       measures: [
-        "Replace with safer alternative",
-        "Use less hazardous materials",
-        "Lower voltage alternatives",
-        "Safer work methods"
-      ]
+        'Replace with safer alternative',
+        'Use less hazardous materials',
+        'Lower voltage alternatives',
+        'Safer work methods',
+      ],
     },
     {
-      category: "Engineering Controls",
+      category: 'Engineering Controls',
       hierarchy: 3,
-      color: "yellow",
-      description: "Physical barriers and safety devices",
+      color: 'yellow',
+      description: 'Physical barriers and safety devices',
       measures: [
-        "Install safety barriers",
-        "Use lockout/tagout systems",
-        "Improve ventilation",
-        "Residual current devices (RCDs)",
-        "Earth fault protection",
-        "Physical guarding"
-      ]
+        'Install safety barriers',
+        'Use lockout/tagout systems',
+        'Improve ventilation',
+        'Residual current devices (RCDs)',
+        'Earth fault protection',
+        'Physical guarding',
+      ],
     },
     {
-      category: "Administrative Controls",
+      category: 'Administrative Controls',
       hierarchy: 4,
-      color: "orange",
-      description: "Procedures and training",
+      color: 'orange',
+      description: 'Procedures and training',
       measures: [
-        "Safety training and competency",
-        "Safe work procedures",
-        "Permit to work systems",
-        "Regular safety inspections",
-        "Supervision and monitoring",
-        "Warning signs and labels"
-      ]
+        'Safety training and competency',
+        'Safe work procedures',
+        'Permit to work systems',
+        'Regular safety inspections',
+        'Supervision and monitoring',
+        'Warning signs and labels',
+      ],
     },
     {
-      category: "Personal Protective Equipment",
+      category: 'Personal Protective Equipment',
       hierarchy: 5,
-      color: "red",
-      description: "Last line of defence",
+      color: 'red',
+      description: 'Last line of defence',
       measures: [
-        "Insulated tools and equipment",
-        "Arc flash protective clothing",
-        "Safety helmets",
-        "Safety footwear",
-        "Eye and face protection",
-        "Respiratory protection"
-      ]
-    }
+        'Insulated tools and equipment',
+        'Arc flash protective clothing',
+        'Safety helmets',
+        'Safety footwear',
+        'Eye and face protection',
+        'Respiratory protection',
+      ],
+    },
   ];
 
   const getColorConfig = (color: string) => {
     const configs: Record<string, { bg: string; text: string; border: string; iconBg: string }> = {
-      green: { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30', iconBg: 'from-green-500/20 to-green-500/5' },
-      yellow: { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', border: 'border-elec-yellow/30', iconBg: 'from-elec-yellow/20 to-elec-yellow/5' },
-      orange: { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/30', iconBg: 'from-orange-500/20 to-orange-500/5' },
-      red: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30', iconBg: 'from-red-500/20 to-red-500/5' }
+      green: {
+        bg: 'bg-green-500/10',
+        text: 'text-green-400',
+        border: 'border-green-500/30',
+        iconBg: 'from-green-500/20 to-green-500/5',
+      },
+      yellow: {
+        bg: 'bg-elec-yellow/10',
+        text: 'text-elec-yellow',
+        border: 'border-elec-yellow/30',
+        iconBg: 'from-elec-yellow/20 to-elec-yellow/5',
+      },
+      orange: {
+        bg: 'bg-orange-500/10',
+        text: 'text-orange-400',
+        border: 'border-orange-500/30',
+        iconBg: 'from-orange-500/20 to-orange-500/5',
+      },
+      red: {
+        bg: 'bg-red-500/10',
+        text: 'text-red-400',
+        border: 'border-red-500/30',
+        iconBg: 'from-red-500/20 to-red-500/5',
+      },
     };
     return configs[color] || configs.green;
   };
 
   const toggleMeasure = (measure: string) => {
-    setSelectedMeasures(prev =>
-      prev.includes(measure)
-        ? prev.filter(m => m !== measure)
-        : [...prev, measure]
+    setSelectedMeasures((prev) =>
+      prev.includes(measure) ? prev.filter((m) => m !== measure) : [...prev, measure]
     );
   };
 
   const addCustomMeasure = () => {
     if (customMeasure.trim() && !selectedMeasures.includes(customMeasure.trim())) {
-      setSelectedMeasures(prev => [...prev, customMeasure.trim()]);
-      setCustomMeasure("");
+      setSelectedMeasures((prev) => [...prev, customMeasure.trim()]);
+      setCustomMeasure('');
     }
   };
 
@@ -133,7 +150,8 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
               <Lightbulb className="h-4 w-4 text-blue-400" />
             </div>
             <p className="text-sm text-white">
-              Select control measures following the hierarchy of controls. Higher-level controls (elimination, substitution) are more effective.
+              Select control measures following the hierarchy of controls. Higher-level controls
+              (elimination, substitution) are more effective.
             </p>
           </div>
         </div>
@@ -144,7 +162,9 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
           return (
             <div key={category.category} className="space-y-3">
               <div className="flex items-center gap-3">
-                <Badge className={`${colorConfig.bg} ${colorConfig.text} border ${colorConfig.border}`}>
+                <Badge
+                  className={`${colorConfig.bg} ${colorConfig.text} border ${colorConfig.border}`}
+                >
                   Level {category.hierarchy}
                 </Badge>
                 <div>
@@ -163,22 +183,30 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
                       className={`
                         flex items-center gap-3 p-3 rounded-xl border transition-all
                         touch-manipulation active:scale-[0.98]
-                        ${isSelected
-                          ? `${colorConfig.bg} ${colorConfig.border}`
-                          : 'bg-white/10 border-white/10 hover:border-white/20'
+                        ${
+                          isSelected
+                            ? `${colorConfig.bg} ${colorConfig.border}`
+                            : 'bg-white/10 border-white/10 hover:border-white/20'
                         }
                       `}
                     >
-                      <div className={`
+                      <div
+                        className={`
                         w-5 h-5 rounded-lg flex items-center justify-center flex-shrink-0 transition-all
-                        ${isSelected
-                          ? `bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`
-                          : 'border border-white/30'
+                        ${
+                          isSelected
+                            ? `bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`
+                            : 'border border-white/30'
                         }
-                      `}>
-                        {isSelected && <CheckCircle className={`h-3.5 w-3.5 ${colorConfig.text}`} />}
+                      `}
+                      >
+                        {isSelected && (
+                          <CheckCircle className={`h-3.5 w-3.5 ${colorConfig.text}`} />
+                        )}
                       </div>
-                      <span className={`text-sm text-left ${isSelected ? colorConfig.text : 'text-white'}`}>
+                      <span
+                        className={`text-sm text-left ${isSelected ? colorConfig.text : 'text-white'}`}
+                      >
                         {measure}
                       </span>
                     </button>

@@ -63,7 +63,7 @@ const BMSModule1Section2Quiz = ({ onBack }: BMSModule1Section2QuizProps) => {
                 Back to Section
               </Button>
             </div>
-            
+
             <QuizResults
               questions={bmsModule1Section2QuizData}
               selectedAnswers={selectedAnswers}
@@ -97,16 +97,14 @@ const BMSModule1Section2Quiz = ({ onBack }: BMSModule1Section2QuizProps) => {
               <CardTitle className="text-foreground text-center">
                 BMS Module 1 - Section 2 Quiz
               </CardTitle>
-              <p className="text-center text-gray-300">
-                Common Systems Integrated with BMS
-              </p>
+              <p className="text-center text-gray-300">Common Systems Integrated with BMS</p>
             </CardHeader>
           </Card>
 
           {/* Progress */}
-          <QuizProgress 
-            currentQuestion={currentQuestion} 
-            totalQuestions={bmsModule1Section2QuizData.length} 
+          <QuizProgress
+            currentQuestion={currentQuestion}
+            totalQuestions={bmsModule1Section2QuizData.length}
           />
 
           {/* Question */}
@@ -137,13 +135,15 @@ const BMSModule1Section2Quiz = ({ onBack }: BMSModule1Section2QuizProps) => {
                 <RotateCcw className="mr-2 h-4 w-4" />
                 Restart
               </Button>
-              
+
               <Button
                 onClick={handleNext}
                 disabled={selectedAnswers[currentQuestion] === undefined}
                 className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
               >
-                {currentQuestion === bmsModule1Section2QuizData.length - 1 ? 'Complete Quiz' : 'Next'}
+                {currentQuestion === bmsModule1Section2QuizData.length - 1
+                  ? 'Complete Quiz'
+                  : 'Next'}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>

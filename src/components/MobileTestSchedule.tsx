@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import MobileTestTypeSection from './MobileTestTypeSection';
 import PhoneRotationPrompt from './PhoneRotationPrompt';
@@ -33,7 +32,7 @@ const MobileTestSchedule = ({ formData, onUpdate }: MobileTestScheduleProps) => 
 
     window.addEventListener('orientationchange', handleOrientationChange);
     window.addEventListener('resize', handleOrientationChange);
-    
+
     return () => {
       window.removeEventListener('orientationchange', handleOrientationChange);
       window.removeEventListener('resize', handleOrientationChange);
@@ -43,16 +42,16 @@ const MobileTestSchedule = ({ formData, onUpdate }: MobileTestScheduleProps) => 
   // Calculate overall progress
   const calculateProgress = () => {
     if (circuits.length === 0) return 0;
-    
+
     const totalTests = circuits.length * testTypes.length;
     const completedTestsCount = Array.from(completedTests).length;
-    
+
     return Math.round((completedTestsCount / totalTests) * 100);
   };
 
   const handleStartTestType = (testTypeId: string) => {
     setCurrentTestType(testTypeId);
-    
+
     // Show rotation prompt for landscape testing
     if (window.innerHeight > window.innerWidth) {
       setShowRotationPrompt(true);
@@ -61,11 +60,11 @@ const MobileTestSchedule = ({ formData, onUpdate }: MobileTestScheduleProps) => 
 
   const handleTestComplete = (testTypeId: string, circuitId: string) => {
     const testKey = `${testTypeId}-${circuitId}`;
-    setCompletedTests(prev => new Set([...prev, testKey]));
-    
+    setCompletedTests((prev) => new Set([...prev, testKey]));
+
     toast({
-      title: "Test completed",
-      description: `${testTypes.find(t => t.id === testTypeId)?.name} completed for circuit`,
+      title: 'Test completed',
+      description: `${testTypes.find((t) => t.id === testTypeId)?.name} completed for circuit`,
     });
   };
 
@@ -76,15 +75,15 @@ const MobileTestSchedule = ({ formData, onUpdate }: MobileTestScheduleProps) => 
 
   if (showRotationPrompt) {
     return (
-      <PhoneRotationPrompt 
+      <PhoneRotationPrompt
         onContinuePortrait={() => setShowRotationPrompt(false)}
-        testTypeName={testTypes.find(t => t.id === currentTestType)?.name || ''}
+        testTypeName={testTypes.find((t) => t.id === currentTestType)?.name || ''}
       />
     );
   }
 
   if (currentTestType) {
-    const testType = testTypes.find(t => t.id === currentTestType);
+    const testType = testTypes.find((t) => t.id === currentTestType);
     if (!testType) return null;
 
     return (

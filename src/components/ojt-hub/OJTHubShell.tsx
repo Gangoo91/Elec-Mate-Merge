@@ -38,10 +38,7 @@ export function OJTHubShell({
   return (
     <div className="min-h-screen bg-background flex flex-col lg:flex-row">
       {/* Navigation */}
-      <OJTHubNav
-        activeSection={activeSection}
-        onSectionChange={onSectionChange}
-      />
+      <OJTHubNav activeSection={activeSection} onSectionChange={onSectionChange} />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-h-screen lg:min-h-0">
@@ -81,9 +78,7 @@ export function OJTHubShell({
                 Apprentice Hub
               </Button>
               <div className="h-6 w-px bg-border" />
-              <h1 className="text-lg font-semibold text-foreground">
-                20% Off-the-Job Training
-              </h1>
+              <h1 className="text-lg font-semibold text-foreground">20% Off-the-Job Training</h1>
             </div>
             {showQuickLog && onQuickLog && (
               <Button
@@ -98,9 +93,7 @@ export function OJTHubShell({
         </header>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-auto pb-24 lg:pb-6">
-          {children}
-        </div>
+        <div className="flex-1 overflow-auto pb-24 lg:pb-6">{children}</div>
       </main>
 
       {/* Mobile Quick Log FAB */}

@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   BookOpen,
   Users,
@@ -13,10 +13,10 @@ import {
   Flame,
   Wrench,
   GraduationCap,
-  Battery
-} from "lucide-react";
-import type { CourseAnalytics } from "@/components/apprentice/career/courses/enhancedCoursesData";
-import { cn } from "@/lib/utils";
+  Battery,
+} from 'lucide-react';
+import type { CourseAnalytics } from '@/components/apprentice/career/courses/enhancedCoursesData';
+import { cn } from '@/lib/utils';
 
 interface ModernCoursesHeroProps {
   analytics: CourseAnalytics | null;
@@ -33,12 +33,12 @@ interface ModernCoursesHeroProps {
 
 // Category quick-access data
 const QUICK_CATEGORIES = [
-  { id: "18th-edition", label: "18th Edition", icon: Zap, color: "text-yellow-400" },
-  { id: "inspection-testing", label: "Testing", icon: Shield, color: "text-blue-400" },
-  { id: "ev-charging", label: "EV", icon: Battery, color: "text-green-400" },
-  { id: "fire-alarm", label: "Fire Alarm", icon: Flame, color: "text-red-400" },
-  { id: "pat-testing", label: "PAT", icon: Wrench, color: "text-purple-400" },
-  { id: "level-3", label: "Level 3", icon: GraduationCap, color: "text-cyan-400" },
+  { id: '18th-edition', label: '18th Edition', icon: Zap, color: 'text-yellow-400' },
+  { id: 'inspection-testing', label: 'Testing', icon: Shield, color: 'text-blue-400' },
+  { id: 'ev-charging', label: 'EV', icon: Battery, color: 'text-green-400' },
+  { id: 'fire-alarm', label: 'Fire Alarm', icon: Flame, color: 'text-red-400' },
+  { id: 'pat-testing', label: 'PAT', icon: Wrench, color: 'text-purple-400' },
+  { id: 'level-3', label: 'Level 3', icon: GraduationCap, color: 'text-cyan-400' },
 ];
 
 // Stat pill component for horizontal scroll
@@ -46,7 +46,7 @@ const StatPill = ({
   icon: Icon,
   value,
   label,
-  color = "text-blue-400"
+  color = 'text-blue-400',
 }: {
   icon: React.ElementType;
   value: string | number;
@@ -54,7 +54,7 @@ const StatPill = ({
   color?: string;
 }) => (
   <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
-    <Icon className={cn("h-4 w-4", color)} />
+    <Icon className={cn('h-4 w-4', color)} />
     <span className="text-sm font-semibold text-white">{value}</span>
     <span className="text-xs text-white/60">{label}</span>
   </div>
@@ -67,7 +67,7 @@ const CategoryPill = ({
   icon: Icon,
   color,
   isSelected,
-  onClick
+  onClick,
 }: {
   id: string;
   label: string;
@@ -79,13 +79,13 @@ const CategoryPill = ({
   <button
     onClick={onClick}
     className={cn(
-      "flex-shrink-0 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all touch-manipulation",
+      'flex-shrink-0 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all touch-manipulation',
       isSelected
-        ? "bg-blue-500 text-white border border-blue-400"
-        : "bg-white/5 text-white/80 border border-white/10 hover:bg-white/10 active:scale-95"
+        ? 'bg-blue-500 text-white border border-blue-400'
+        : 'bg-white/5 text-white/80 border border-white/10 hover:bg-white/10 active:scale-95'
     )}
   >
-    <Icon className={cn("h-3.5 w-3.5", isSelected ? "text-white" : color)} />
+    <Icon className={cn('h-3.5 w-3.5', isSelected ? 'text-white' : color)} />
     {label}
   </button>
 );
@@ -96,10 +96,10 @@ const ModernCoursesHero = ({
   onSearchChange,
   onRefreshData,
   isRefreshing = false,
-  locationQuery = "",
+  locationQuery = '',
   onLocationChange,
   onCategorySelect,
-  selectedCategory = "",
+  selectedCategory = '',
 }: ModernCoursesHeroProps) => {
   return (
     <motion.div
@@ -135,7 +135,7 @@ const ModernCoursesHero = ({
               variant="ghost"
               className="h-8 w-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
             >
-              <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
+              <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
             </Button>
           )}
         </div>
@@ -143,10 +143,25 @@ const ModernCoursesHero = ({
         {/* Stats - Horizontal Scroll on Mobile */}
         {analytics && (
           <div className="flex gap-2 overflow-x-auto mt-3 -mx-3 px-3 pb-1 scrollbar-hide">
-            <StatPill icon={BookOpen} value={analytics.totalCourses} label="Courses" color="text-blue-400" />
-            <StatPill icon={Users} value={analytics.totalProviders} label="Providers" color="text-green-400" />
+            <StatPill
+              icon={BookOpen}
+              value={analytics.totalCourses}
+              label="Courses"
+              color="text-blue-400"
+            />
+            <StatPill
+              icon={Users}
+              value={analytics.totalProviders}
+              label="Providers"
+              color="text-green-400"
+            />
             <StatPill icon={MapPin} value="UK-Wide" label="Locations" color="text-purple-400" />
-            <StatPill icon={Star} value={analytics.averageRating.toFixed(1)} label="Rating" color="text-yellow-400" />
+            <StatPill
+              icon={Star}
+              value={analytics.averageRating.toFixed(1)}
+              label="Rating"
+              color="text-yellow-400"
+            />
           </div>
         )}
 
@@ -181,12 +196,12 @@ const ModernCoursesHero = ({
         {onCategorySelect && (
           <div className="flex gap-2 overflow-x-auto mt-3 -mx-3 px-3 pb-1 scrollbar-hide">
             <button
-              onClick={() => onCategorySelect("")}
+              onClick={() => onCategorySelect('')}
               className={cn(
-                "flex-shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-all touch-manipulation",
+                'flex-shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-all touch-manipulation',
                 !selectedCategory
-                  ? "bg-blue-500 text-white border border-blue-400"
-                  : "bg-white/5 text-white/80 border border-white/10 hover:bg-white/10 active:scale-95"
+                  ? 'bg-blue-500 text-white border border-blue-400'
+                  : 'bg-white/5 text-white/80 border border-white/10 hover:bg-white/10 active:scale-95'
               )}
             >
               All Courses

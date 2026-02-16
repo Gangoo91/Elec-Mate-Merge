@@ -13,7 +13,9 @@ export const SmartBulbSystemsSection = () => {
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-lg">
           <p className="text-lg leading-relaxed mb-4">
-            Smart bulbs place intelligence in each individual light fitting, communicating wirelessly to control systems. Understanding their technical limitations and optimal use cases prevents costly mistakes.
+            Smart bulbs place intelligence in each individual light fitting, communicating
+            wirelessly to control systems. Understanding their technical limitations and optimal use
+            cases prevents costly mistakes.
           </p>
           <div className="grid md:grid-cols-3 gap-4 text-sm">
             <div className="text-center">
@@ -46,28 +48,36 @@ export const SmartBulbSystemsSection = () => {
               </thead>
               <tbody className="space-y-1">
                 <tr className="border-b border-gray-700">
-                  <td className="p-2"><strong>Philips Hue (Zigbee)</strong></td>
+                  <td className="p-2">
+                    <strong>Philips Hue (Zigbee)</strong>
+                  </td>
                   <td className="p-2">£45-90</td>
                   <td className="p-2 text-yellow-400">Yes (£50)</td>
                   <td className="p-2">10m through walls</td>
                   <td className="p-2 text-green-400">16 million</td>
                 </tr>
                 <tr className="border-b border-gray-700">
-                  <td className="p-2"><strong>IKEA Tradfri (Zigbee)</strong></td>
+                  <td className="p-2">
+                    <strong>IKEA Tradfri (Zigbee)</strong>
+                  </td>
                   <td className="p-2">£15-25</td>
                   <td className="p-2 text-yellow-400">Yes (£15)</td>
                   <td className="p-2">10m through walls</td>
                   <td className="p-2 text-orange-400">White spectrum</td>
                 </tr>
                 <tr className="border-b border-gray-700">
-                  <td className="p-2"><strong>LIFX (Wi-Fi)</strong></td>
+                  <td className="p-2">
+                    <strong>LIFX (Wi-Fi)</strong>
+                  </td>
                   <td className="p-2">£35-65</td>
                   <td className="p-2 text-green-400">No</td>
                   <td className="p-2">WiFi coverage</td>
                   <td className="p-2 text-green-400">16 million</td>
                 </tr>
                 <tr>
-                  <td className="p-2"><strong>TP-Link Kasa (Wi-Fi)</strong></td>
+                  <td className="p-2">
+                    <strong>TP-Link Kasa (Wi-Fi)</strong>
+                  </td>
                   <td className="p-2">£12-30</td>
                   <td className="p-2 text-green-400">No</td>
                   <td className="p-2">WiFi coverage</td>
@@ -155,8 +165,14 @@ export const SmartBulbSystemsSection = () => {
         <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
           <h5 className="text-yellow-200 font-medium mb-2">📊 Cost-Benefit Analysis</h5>
           <div className="text-sm text-yellow-100">
-            <p className="mb-2"><strong>Break-even point:</strong> Smart bulbs become cost-prohibitive beyond 8-10 bulbs per property.</p>
-            <p><strong>ROI considerations:</strong> Excellent for targeted applications (bedrooms, living areas) but expensive for whole-house lighting.</p>
+            <p className="mb-2">
+              <strong>Break-even point:</strong> Smart bulbs become cost-prohibitive beyond 8-10
+              bulbs per property.
+            </p>
+            <p>
+              <strong>ROI considerations:</strong> Excellent for targeted applications (bedrooms,
+              living areas) but expensive for whole-house lighting.
+            </p>
           </div>
         </div>
       </CardContent>

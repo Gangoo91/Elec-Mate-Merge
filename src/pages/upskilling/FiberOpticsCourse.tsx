@@ -1,5 +1,15 @@
 import React from 'react';
-import { ArrowLeft, Cable, BookOpen, Layers, Package, Wrench, FileCheck, MapPin, GraduationCap } from 'lucide-react';
+import {
+  ArrowLeft,
+  Cable,
+  BookOpen,
+  Layers,
+  Package,
+  Wrench,
+  FileCheck,
+  MapPin,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,61 +25,61 @@ const FiberOpticsCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Fibre Optics",
-      description: "Fundamentals of fiber optic technology",
-      duration: "45 mins",
-      icon: BookOpen
+      title: 'Introduction to Fibre Optics',
+      description: 'Fundamentals of fiber optic technology',
+      duration: '45 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "Fibre Types and Connectors",
-      description: "Understanding fiber types and connections",
-      duration: "50 mins",
-      icon: Layers
+      title: 'Fibre Types and Connectors',
+      description: 'Understanding fiber types and connections',
+      duration: '50 mins',
+      icon: Layers,
     },
     {
       id: 3,
-      title: "Fibre Optic Cables and Installation",
-      description: "Cable types and installation methods",
-      duration: "55 mins",
-      icon: Cable
+      title: 'Fibre Optic Cables and Installation',
+      description: 'Cable types and installation methods',
+      duration: '55 mins',
+      icon: Cable,
     },
     {
       id: 4,
-      title: "Termination and Splicing Techniques",
-      description: "Professional splicing and termination",
-      duration: "60 mins",
-      icon: Wrench
+      title: 'Termination and Splicing Techniques',
+      description: 'Professional splicing and termination',
+      duration: '60 mins',
+      icon: Wrench,
     },
     {
       id: 5,
-      title: "Fibre Testing and Certification",
-      description: "Testing methods and certification",
-      duration: "50 mins",
-      icon: FileCheck
+      title: 'Fibre Testing and Certification',
+      description: 'Testing methods and certification',
+      duration: '50 mins',
+      icon: FileCheck,
     },
     {
       id: 6,
-      title: "Standards and Network Design Principles",
-      description: "Design standards and architecture",
-      duration: "45 mins",
-      icon: MapPin
+      title: 'Standards and Network Design Principles',
+      description: 'Design standards and architecture',
+      duration: '45 mins',
+      icon: MapPin,
     },
     {
       id: 7,
-      title: "Fault Finding, Maintenance, and Upgrades",
-      description: "Troubleshooting and maintenance",
-      duration: "55 mins",
-      icon: Package
+      title: 'Fault Finding, Maintenance, and Upgrades',
+      description: 'Troubleshooting and maintenance',
+      duration: '55 mins',
+      icon: Package,
     },
     {
       id: 8,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "90 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '90 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -107,7 +117,9 @@ const FiberOpticsCourse = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../fiber-optics-mock-exam` : `../fiber-optics-module-${module.id}`}
+              to={
+                module.isExam ? `../fiber-optics-mock-exam` : `../fiber-optics-module-${module.id}`
+              }
               moduleNumber={typeof module.id === 'number' ? module.id : index + 1}
               title={module.title}
               description={module.description}

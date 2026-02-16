@@ -12,32 +12,32 @@ export interface ThermalInsulationFactor {
 // BS 7671 Table 52.2 - Correction factors for cables in thermal insulation
 export const THERMAL_INSULATION_FACTORS = {
   touchingOneSide: {
-    description: "Cable touching one side of thermal insulation",
+    description: 'Cable touching one side of thermal insulation',
     factors: {
-      100: 0.88,  // 100mm in insulation
-      200: 0.81,  // 200mm in insulation
-      400: 0.68,  // 400mm in insulation
-      500: 0.63   // 500mm in insulation
-    }
+      100: 0.88, // 100mm in insulation
+      200: 0.81, // 200mm in insulation
+      400: 0.68, // 400mm in insulation
+      500: 0.63, // 500mm in insulation
+    },
   },
   totallyEnclosed: {
-    description: "Cable totally enclosed in thermal insulation",
+    description: 'Cable totally enclosed in thermal insulation',
     factors: {
       100: 0.81,
       200: 0.68,
       400: 0.55,
-      500: 0.50
-    }
+      500: 0.5,
+    },
   },
   betweenJoists: {
-    description: "Cable between joists with insulation above",
+    description: 'Cable between joists with insulation above',
     factors: {
       100: 0.94,
       200: 0.89,
       400: 0.81,
-      500: 0.78
-    }
-  }
+      500: 0.78,
+    },
+  },
 };
 
 export function getThermalInsulationFactor(
@@ -45,7 +45,7 @@ export function getThermalInsulationFactor(
   lengthInInsulation: number
 ): number {
   const factorTable = THERMAL_INSULATION_FACTORS[scenario].factors;
-  
+
   // Find the appropriate factor for the length
   if (lengthInInsulation <= 100) return factorTable[100];
   if (lengthInInsulation <= 200) return factorTable[200];
@@ -55,10 +55,10 @@ export function getThermalInsulationFactor(
 
 // Regulation 523.9 - Grouped cables in thermal insulation
 export const GROUPED_IN_INSULATION_FACTORS = {
-  1: 0.50,  // Single cable
-  2: 0.45,  // Two cables
-  3: 0.41,  // Three cables
-  4: 0.38   // Four or more cables
+  1: 0.5, // Single cable
+  2: 0.45, // Two cables
+  3: 0.41, // Three cables
+  4: 0.38, // Four or more cables
 };
 
 export function getGroupedInsulationFactor(numberOfCables: number): number {

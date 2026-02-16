@@ -7,14 +7,15 @@ export const PushNotificationExampleQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Give one example of a situation where a smart home system would send a push notification.";
+  const question =
+    'Give one example of a situation where a smart home system would send a push notification.';
   const options = [
-    "When the weather forecast changes",
-    "Motion detected in the living room at 2 AM",
-    "When a software update is available for your phone",
-    "Weekly reminder to pay utility bills"
+    'When the weather forecast changes',
+    'Motion detected in the living room at 2 AM',
+    'When a software update is available for your phone',
+    'Weekly reminder to pay utility bills',
   ];
-  const correctAnswer = "Motion detected in the living room at 2 AM";
+  const correctAnswer = 'Motion detected in the living room at 2 AM';
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer);
@@ -36,14 +37,14 @@ export const PushNotificationExampleQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground text-sm font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <Button
               key={index}
               variant="outline"
               className={`w-full text-left p-3 h-auto justify-start text-sm ${
-                !showResult 
+                !showResult
                   ? 'bg-elec-dark text-foreground border-gray-600 hover:bg-gray-700'
                   : selectedAnswer === option && option === correctAnswer
                     ? 'bg-green-600/20 text-green-400 border-green-600/40'
@@ -56,9 +57,7 @@ export const PushNotificationExampleQuickCheck = () => {
               onClick={() => !showResult && handleAnswerSelect(option)}
               disabled={showResult}
             >
-              <span className="mr-2 font-bold">
-                {String.fromCharCode(65 + index)}.
-              </span>
+              <span className="mr-2 font-bold">{String.fromCharCode(65 + index)}.</span>
               {option}
               {showResult && option === correctAnswer && (
                 <CheckCircle className="ml-auto h-4 w-4 text-green-400" />
@@ -71,33 +70,37 @@ export const PushNotificationExampleQuickCheck = () => {
         </div>
 
         {showResult && (
-          <div className={`p-3 rounded-lg border text-sm ${
-            selectedAnswer === correctAnswer 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-lg border text-sm ${
+              selectedAnswer === correctAnswer
+                ? 'bg-green-600/10 border-green-600/30'
+                : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-start gap-2 mb-2">
               {selectedAnswer === correctAnswer ? (
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
               ) : (
                 <XCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
               )}
-              <span className={`font-semibold ${
-                selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
-              }`}>
+              <span
+                className={`font-semibold ${
+                  selectedAnswer === correctAnswer ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
                 {selectedAnswer === correctAnswer ? 'Correct!' : 'Incorrect'}
               </span>
             </div>
             <p className="text-foreground">
-              Smart home push notifications are event-driven alerts related to home security, safety, or 
-              system status. "Motion detected in the living room at 2 AM" is a typical security alert 
-              that homeowners would want to know about immediately.
+              Smart home push notifications are event-driven alerts related to home security,
+              safety, or system status. "Motion detected in the living room at 2 AM" is a typical
+              security alert that homeowners would want to know about immediately.
             </p>
           </div>
         )}
 
         {showResult && (
-          <Button 
+          <Button
             onClick={resetQuestion}
             variant="outline"
             className="bg-transparent border-green-600 text-green-400 hover:bg-green-600/10 text-sm"

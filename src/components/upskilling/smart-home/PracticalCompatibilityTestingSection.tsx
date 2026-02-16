@@ -12,8 +12,8 @@ export const PracticalCompatibilityTestingSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Develop a systematic approach to testing load and control compatibility before 
-          full installation to avoid costly mistakes and client dissatisfaction.
+          Develop a systematic approach to testing load and control compatibility before full
+          installation to avoid costly mistakes and client dissatisfaction.
         </p>
 
         <div className="grid gap-4">
@@ -24,7 +24,9 @@ export const PracticalCompatibilityTestingSection = () => {
             </h4>
             <div className="space-y-3">
               <div className="bg-green-900/20 border-l-4 border-green-600 p-3">
-                <h5 className="text-green-300 font-semibold text-sm">Step 1: Documentation Review</h5>
+                <h5 className="text-green-300 font-semibold text-sm">
+                  Step 1: Documentation Review
+                </h5>
                 <ul className="text-green-200 text-xs space-y-1 mt-1">
                   <li>• Check manufacturer compatibility charts</li>
                   <li>• Verify voltage and wattage specifications</li>
@@ -87,22 +89,34 @@ export const PracticalCompatibilityTestingSection = () => {
             </h4>
             <div className="bg-gray-800 p-3 rounded border">
               <p className="text-gray-300 text-xs font-mono">
-                Project: _______________<br/>
-                Date: _______________<br/>
-                Installer: _______________<br/><br/>
-                
-                Load Type: _______________<br/>
-                Control Type: _______________<br/>
-                Quantity: _______________<br/><br/>
-                
-                Test Results:<br/>
-                □ Dimming Range: _____ % to _____ %<br/>
-                □ No Flicker: Yes / No<br/>
-                □ No Noise: Yes / No<br/>
-                □ Startup: Normal / Delayed / Failed<br/>
-                □ Temperature: Normal / Warm / Hot<br/><br/>
-                
-                Overall: Pass / Fail<br/>
+                Project: _______________
+                <br />
+                Date: _______________
+                <br />
+                Installer: _______________
+                <br />
+                <br />
+                Load Type: _______________
+                <br />
+                Control Type: _______________
+                <br />
+                Quantity: _______________
+                <br />
+                <br />
+                Test Results:
+                <br />
+                □ Dimming Range: _____ % to _____ %<br />
+                □ No Flicker: Yes / No
+                <br />
+                □ No Noise: Yes / No
+                <br />
+                □ Startup: Normal / Delayed / Failed
+                <br />
+                □ Temperature: Normal / Warm / Hot
+                <br />
+                <br />
+                Overall: Pass / Fail
+                <br />
                 Notes: _______________
               </p>
             </div>
@@ -111,7 +125,7 @@ export const PracticalCompatibilityTestingSection = () => {
 
         <div className="bg-amber-900/20 border border-amber-600/50 p-4 rounded-lg">
           <p className="text-amber-200 text-sm">
-            <strong>Professional Tip:</strong> Always test combinations you haven't used before, 
+            <strong>Professional Tip:</strong> Always test combinations you haven't used before,
             even if they appear on compatibility lists. Real-world performance can vary.
           </p>
         </div>

@@ -11,29 +11,30 @@ export const BMSModule7Section3ContentPart1 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
-        <p>
-          Each protocol has its own addressing rules:
-        </p>
+        <p>Each protocol has its own addressing rules:</p>
 
         <div className="space-y-4">
           <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="font-semibold text-blue-300 mb-2">BACnet</h4>
             <p className="text-foreground">
-              Devices have a Device ID and may also use IP addresses (for BACnet/IP) or node IDs (for BACnet MSTP).
+              Devices have a Device ID and may also use IP addresses (for BACnet/IP) or node IDs
+              (for BACnet MSTP).
             </p>
           </div>
 
           <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
             <h4 className="font-semibold text-green-300 mb-2">Modbus</h4>
             <p className="text-foreground">
-              Devices have numeric addresses (1–247). Each register stores specific data (e.g., temperature = Register 30001).
+              Devices have numeric addresses (1–247). Each register stores specific data (e.g.,
+              temperature = Register 30001).
             </p>
           </div>
 
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
             <h4 className="font-semibold text-purple-300 mb-2">KNX</h4>
             <p className="text-foreground">
-              Devices use physical addresses (Line.Device format, e.g., 1.1.12). Logical group addresses then link devices for control.
+              Devices use physical addresses (Line.Device format, e.g., 1.1.12). Logical group
+              addresses then link devices for control.
             </p>
           </div>
         </div>
@@ -44,7 +45,8 @@ export const BMSModule7Section3ContentPart1 = () => {
             <div>
               <h4 className="text-red-300 font-semibold mb-1">Key Rule</h4>
               <p className="text-foreground">
-                No two devices on the same network segment can share the same address — otherwise, communication conflicts occur.
+                No two devices on the same network segment can share the same address — otherwise,
+                communication conflicts occur.
               </p>
             </div>
           </div>

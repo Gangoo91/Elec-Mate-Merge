@@ -5,41 +5,41 @@ import { Video, Eye, RotateCcw, Wifi, DoorOpen } from 'lucide-react';
 export const CCTVTypesSection = () => {
   const cameraTypes = [
     {
-      name: "Dome Cameras",
+      name: 'Dome Cameras',
       icon: Eye,
-      description: "Discreet, indoor use, wide angle coverage",
-      features: ["Low profile design", "360° coverage potential", "Vandal resistant"]
+      description: 'Discreet, indoor use, wide angle coverage',
+      features: ['Low profile design', '360° coverage potential', 'Vandal resistant'],
     },
     {
-      name: "Bullet Cameras",
+      name: 'Bullet Cameras',
       icon: Video,
-      description: "Long range, outdoor use, visible deterrent",
-      features: ["Weather resistant", "Long-range focus", "Clear deterrent effect"]
+      description: 'Long range, outdoor use, visible deterrent',
+      features: ['Weather resistant', 'Long-range focus', 'Clear deterrent effect'],
     },
     {
-      name: "PTZ Cameras",
+      name: 'PTZ Cameras',
       icon: RotateCcw,
-      description: "Pan-Tilt-Zoom - remotely controlled, wide coverage",
-      features: ["Remote control", "Zoom capabilities", "Track movement"]
+      description: 'Pan-Tilt-Zoom - remotely controlled, wide coverage',
+      features: ['Remote control', 'Zoom capabilities', 'Track movement'],
     },
     {
-      name: "Turret Cameras",
+      name: 'Turret Cameras',
       icon: Eye,
-      description: "Hybrid of dome/bullet, flexible mounting options",
-      features: ["Versatile mounting", "Good image quality", "No IR reflection"]
+      description: 'Hybrid of dome/bullet, flexible mounting options',
+      features: ['Versatile mounting', 'Good image quality', 'No IR reflection'],
     },
     {
-      name: "Wireless Cameras",
+      name: 'Wireless Cameras',
       icon: Wifi,
-      description: "Connect via Wi-Fi, easy retrofit installation",
-      features: ["Easy installation", "Flexible placement", "Remote access"]
+      description: 'Connect via Wi-Fi, easy retrofit installation',
+      features: ['Easy installation', 'Flexible placement', 'Remote access'],
     },
     {
-      name: "Doorbell Cameras",
+      name: 'Doorbell Cameras',
       icon: DoorOpen,
-      description: "Front-door monitoring, often with two-way audio",
-      features: ["Two-way audio", "Motion alerts", "Package detection"]
-    }
+      description: 'Front-door monitoring, often with two-way audio',
+      features: ['Two-way audio', 'Motion alerts', 'Package detection'],
+    },
   ];
 
   return (
@@ -63,7 +63,11 @@ export const CCTVTypesSection = () => {
               </div>
               <div className="flex flex-wrap gap-1">
                 {camera.features.map((feature, idx) => (
-                  <Badge key={idx} variant="outline" className="border-gray-500 text-gray-300 text-xs">
+                  <Badge
+                    key={idx}
+                    variant="outline"
+                    className="border-gray-500 text-gray-300 text-xs"
+                  >
                     {feature}
                   </Badge>
                 ))}

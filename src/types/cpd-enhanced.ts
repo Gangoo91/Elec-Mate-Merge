@@ -1,6 +1,6 @@
 export type ProfessionalBody = 'NICEIC' | 'ECA' | 'SELECT' | 'NAPIT' | 'STROMA' | 'ELECSA';
 
-export type CPDCategory = 
+export type CPDCategory =
   | 'regulations-standards'
   | 'technical-skills'
   | 'safety-health'
@@ -10,7 +10,7 @@ export type CPDCategory =
   | 'digital-technology'
   | 'customer-service';
 
-export type ActivityType = 
+export type ActivityType =
   | 'formal-training'
   | 'work-based-learning'
   | 'self-directed-study'
@@ -19,7 +19,7 @@ export type ActivityType =
   | 'mentoring'
   | 'assessment-preparation';
 
-export type EvidenceType = 
+export type EvidenceType =
   | 'certificate'
   | 'attendance-record'
   | 'site-photo'

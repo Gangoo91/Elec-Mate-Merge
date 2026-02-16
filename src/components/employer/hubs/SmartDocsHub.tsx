@@ -1,11 +1,11 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { FeatureTile } from "@/components/employer/FeatureTile";
-import { HubSkeleton } from "@/components/employer/skeletons";
-import type { Section } from "@/pages/employer/EmployerDashboard";
-import { useJobPacks } from "@/hooks/useJobPacks";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { FeatureTile } from '@/components/employer/FeatureTile';
+import { HubSkeleton } from '@/components/employer/skeletons';
+import type { Section } from '@/pages/employer/EmployerDashboard';
+import { useJobPacks } from '@/hooks/useJobPacks';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Sparkles,
   FileText,
@@ -16,8 +16,8 @@ import {
   Package,
   CheckCircle,
   Clock,
-  AlertTriangle
-} from "lucide-react";
+  AlertTriangle,
+} from 'lucide-react';
 
 // Format relative time (e.g., "2 hours ago", "Yesterday")
 function formatRelativeTime(date: Date): string {
@@ -47,7 +47,9 @@ function useRecentDocuments() {
   return useQuery({
     queryKey: ['recent-documents'],
     queryFn: async (): Promise<RecentDocument[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       // Fetch recent RAMS documents
@@ -68,14 +70,14 @@ function useRecentDocuments() {
 
       // Combine and sort by date
       const documents: RecentDocument[] = [
-        ...(rams || []).map(r => ({
+        ...(rams || []).map((r) => ({
           id: r.id,
           type: 'RAMS' as const,
           title: r.project_name || 'Untitled RAMS',
           createdAt: new Date(r.created_at),
           generatedAt: formatRelativeTime(new Date(r.created_at)),
         })),
-        ...(methods || []).map(m => ({
+        ...(methods || []).map((m) => ({
           id: m.id,
           type: 'Method Statement' as const,
           title: m.job_title || 'Untitled Method Statement',
@@ -85,9 +87,7 @@ function useRecentDocuments() {
       ];
 
       // Sort by most recent and limit to 3
-      return documents
-        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-        .slice(0, 3);
+      return documents.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).slice(0, 3);
     },
     staleTime: 30000, // Cache for 30 seconds
   });
@@ -103,14 +103,21 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
 
   // Calculate stats
   const totalJobPacks = jobPacks.length;
-  const pendingRams = jobPacks.filter(jp => !jp.rams_generated && jp.status !== 'Completed').length;
-  const pendingMethodStatements = jobPacks.filter(jp => !jp.method_statement_generated && jp.status !== 'Completed').length;
-  const pendingBriefings = jobPacks.filter(jp => !jp.briefing_pack_generated && jp.status !== 'Completed').length;
-  const readyForWork = jobPacks.filter(jp =>
-    jp.rams_generated &&
-    jp.method_statement_generated &&
-    jp.briefing_pack_generated &&
-    jp.status === 'In Progress'
+  const pendingRams = jobPacks.filter(
+    (jp) => !jp.rams_generated && jp.status !== 'Completed'
+  ).length;
+  const pendingMethodStatements = jobPacks.filter(
+    (jp) => !jp.method_statement_generated && jp.status !== 'Completed'
+  ).length;
+  const pendingBriefings = jobPacks.filter(
+    (jp) => !jp.briefing_pack_generated && jp.status !== 'Completed'
+  ).length;
+  const readyForWork = jobPacks.filter(
+    (jp) =>
+      jp.rams_generated &&
+      jp.method_statement_generated &&
+      jp.briefing_pack_generated &&
+      jp.status === 'In Progress'
   ).length;
 
   if (isLoading) {
@@ -119,7 +126,6 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
 
   return (
     <div className="space-y-4 md:space-y-6">
-
       {/* Quick Stats */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
         <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
@@ -175,7 +181,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
             icon={Sparkles}
             title="AI Design Spec"
             description="Circuit designs & installation guidance"
-            onClick={() => onNavigate("aidesignspec")}
+            onClick={() => onNavigate('aidesignspec')}
             badge="AI"
             badgeVariant="default"
           />
@@ -183,31 +189,31 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
             icon={Shield}
             title="AI RAMS"
             description="Risk assessment & method statements"
-            onClick={() => onNavigate("airams")}
-            badge={pendingRams > 0 ? `${pendingRams} pending` : "AI"}
-            badgeVariant={pendingRams > 0 ? "warning" : "default"}
+            onClick={() => onNavigate('airams')}
+            badge={pendingRams > 0 ? `${pendingRams} pending` : 'AI'}
+            badgeVariant={pendingRams > 0 ? 'warning' : 'default'}
           />
           <FeatureTile
             icon={ClipboardList}
             title="Method Statement"
             description="Step-by-step procedures"
-            onClick={() => onNavigate("aimethodstatement")}
+            onClick={() => onNavigate('aimethodstatement')}
             badge={pendingMethodStatements > 0 ? `${pendingMethodStatements} pending` : undefined}
-            badgeVariant={pendingMethodStatements > 0 ? "warning" : "default"}
+            badgeVariant={pendingMethodStatements > 0 ? 'warning' : 'default'}
           />
           <FeatureTile
             icon={Users}
             title="AI Briefing Pack"
             description="Worker pre-job briefings"
-            onClick={() => onNavigate("aibriefingpack")}
-            badge={pendingBriefings > 0 ? `${pendingBriefings} pending` : "AI"}
-            badgeVariant={pendingBriefings > 0 ? "warning" : "default"}
+            onClick={() => onNavigate('aibriefingpack')}
+            badge={pendingBriefings > 0 ? `${pendingBriefings} pending` : 'AI'}
+            badgeVariant={pendingBriefings > 0 ? 'warning' : 'default'}
           />
           <FeatureTile
             icon={Receipt}
             title="AI Quote"
             description="Professional quote generation"
-            onClick={() => onNavigate("aiquote")}
+            onClick={() => onNavigate('aiquote')}
             badge="AI"
             badgeVariant="default"
           />
@@ -223,7 +229,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Card
             className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 cursor-pointer transition-all duration-200"
-            onClick={() => onNavigate("jobpacks")}
+            onClick={() => onNavigate('jobpacks')}
           >
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
@@ -239,13 +245,19 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Missing RAMS</span>
-                  <Badge variant="secondary" className={pendingRams > 0 ? "bg-warning/20 text-warning" : ""}>
+                  <Badge
+                    variant="secondary"
+                    className={pendingRams > 0 ? 'bg-warning/20 text-warning' : ''}
+                  >
                     {pendingRams}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Missing Briefings</span>
-                  <Badge variant="secondary" className={pendingBriefings > 0 ? "bg-warning/20 text-warning" : ""}>
+                  <Badge
+                    variant="secondary"
+                    className={pendingBriefings > 0 ? 'bg-warning/20 text-warning' : ''}
+                  >
                     {pendingBriefings}
                   </Badge>
                 </div>
@@ -261,8 +273,11 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
               </div>
               <div className="space-y-2">
                 {recentDocuments.length > 0 ? (
-                  recentDocuments.map(doc => (
-                    <div key={doc.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-elec-dark/50 transition-colors">
+                  recentDocuments.map((doc) => (
+                    <div
+                      key={doc.id}
+                      className="flex items-center justify-between p-2 rounded-lg hover:bg-elec-dark/50 transition-colors"
+                    >
                       <div className="min-w-0">
                         <p className="text-sm font-medium text-foreground truncate">{doc.type}</p>
                         <p className="text-xs text-muted-foreground truncate">{doc.title}</p>
@@ -293,9 +308,10 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
             <div>
               <h3 className="font-medium text-foreground mb-1">Smart Workflow</h3>
               <p className="text-sm text-muted-foreground">
-                For complete job documentation: Generate <span className="text-info">RAMS</span> first,
-                then <span className="text-info">Method Statement</span>, and finally the
-                <span className="text-info"> Briefing Pack</span>. Documents auto-attach to your selected Job Pack.
+                For complete job documentation: Generate <span className="text-info">RAMS</span>{' '}
+                first, then <span className="text-info">Method Statement</span>, and finally the
+                <span className="text-info"> Briefing Pack</span>. Documents auto-attach to your
+                selected Job Pack.
               </p>
             </div>
           </div>

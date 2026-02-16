@@ -3,48 +3,48 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const HandsOnConfigurationSection = () => {
   const wifiSteps = [
-    "Access router admin panel (usually 192.168.1.1 or 192.168.0.1)",
-    "Navigate to Wireless Settings > 2.4GHz configuration",
-    "Set Channel to 1, 6, or 11 (avoid Auto)",
-    "Set Channel Width to 20MHz for better range",
-    "Create separate 2.4GHz and 5GHz network names (SSIDs)"
+    'Access router admin panel (usually 192.168.1.1 or 192.168.0.1)',
+    'Navigate to Wireless Settings > 2.4GHz configuration',
+    'Set Channel to 1, 6, or 11 (avoid Auto)',
+    'Set Channel Width to 20MHz for better range',
+    'Create separate 2.4GHz and 5GHz network names (SSIDs)',
   ];
 
   const zigbeeSteps = [
-    "Open hub management app or web interface",
-    "Check current channel in network settings",
-    "If on channel 11, 15, or 20 - check for Wi-Fi overlap",
-    "Change to channel 15, 20, or 25 for best separation",
-    "Restart hub and test device responses"
+    'Open hub management app or web interface',
+    'Check current channel in network settings',
+    'If on channel 11, 15, or 20 - check for Wi-Fi overlap',
+    'Change to channel 15, 20, or 25 for best separation',
+    'Restart hub and test device responses',
   ];
 
   const networkSeparation = [
     {
-      network: "Main_WiFi_5G",
-      purpose: "Phones, laptops, tablets, streaming devices",
-      channel: "Auto (36-165)",
-      priority: "High"
+      network: 'Main_WiFi_5G',
+      purpose: 'Phones, laptops, tablets, streaming devices',
+      channel: 'Auto (36-165)',
+      priority: 'High',
     },
     {
-      network: "Main_WiFi_2G", 
-      purpose: "Legacy devices, some smart home gear",
-      channel: "1, 6, or 11",
-      priority: "Medium"
+      network: 'Main_WiFi_2G',
+      purpose: 'Legacy devices, some smart home gear',
+      channel: '1, 6, or 11',
+      priority: 'Medium',
     },
     {
-      network: "SmartHome_IoT",
-      purpose: "Smart switches, sensors, thermostats",
-      channel: "Different from main 2.4GHz",
-      priority: "Low"
-    }
+      network: 'SmartHome_IoT',
+      purpose: 'Smart switches, sensors, thermostats',
+      channel: 'Different from main 2.4GHz',
+      priority: 'Low',
+    },
   ];
 
   const testingChecklist = [
-    "Speed test from multiple locations in home",
-    "Test smart device response times",
-    "Check connection stability during peak hours",
-    "Verify all devices can reach internet",
-    "Test automation reliability"
+    'Speed test from multiple locations in home',
+    'Test smart device response times',
+    'Check connection stability during peak hours',
+    'Verify all devices can reach internet',
+    'Test automation reliability',
   ];
 
   return (
@@ -57,7 +57,8 @@ export const HandsOnConfigurationSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          Step-by-step instructions for optimising your wireless networks. Follow these procedures for reliable smart home performance.
+          Step-by-step instructions for optimising your wireless networks. Follow these procedures
+          for reliable smart home performance.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -103,11 +104,15 @@ export const HandsOnConfigurationSection = () => {
               <div key={index} className="bg-elec-dark border border-gray-600 rounded p-3">
                 <div className="flex justify-between items-start mb-1">
                   <span className="font-medium text-foreground">{network.network}</span>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    network.priority === 'High' ? 'bg-red-600/20 text-red-400' :
-                    network.priority === 'Medium' ? 'bg-yellow-600/20 text-yellow-400' :
-                    'bg-green-600/20 text-green-400'
-                  }`}>
+                  <span
+                    className={`text-xs px-2 py-1 rounded ${
+                      network.priority === 'High'
+                        ? 'bg-red-600/20 text-red-400'
+                        : network.priority === 'Medium'
+                          ? 'bg-yellow-600/20 text-yellow-400'
+                          : 'bg-green-600/20 text-green-400'
+                    }`}
+                  >
                     {network.priority}
                   </span>
                 </div>
@@ -133,8 +138,9 @@ export const HandsOnConfigurationSection = () => {
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Configuration Challenge:</h4>
           <p className="text-sm text-foreground">
-            Set up a home with 15 smart switches, 8 sensors, security cameras, and a family of 4 with multiple devices. 
-            Design the network architecture and channel allocation to minimise interference.
+            Set up a home with 15 smart switches, 8 sensors, security cameras, and a family of 4
+            with multiple devices. Design the network architecture and channel allocation to
+            minimise interference.
           </p>
         </div>
       </CardContent>

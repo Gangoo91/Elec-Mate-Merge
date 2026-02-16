@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Package, Info } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Package, Info } from 'lucide-react';
 
 interface Material {
   description: string;
@@ -30,7 +30,8 @@ export const MaterialsListTable = ({ materialsList }: MaterialsListTableProps) =
           <div className="flex-1">
             <h3 className="font-bold text-xl text-foreground mb-1">Materials Required</h3>
             <p className="text-sm text-muted-foreground">
-              {materialsList.length} item{materialsList.length !== 1 ? 's' : ''} with quantities and specifications
+              {materialsList.length} item{materialsList.length !== 1 ? 's' : ''} with quantities and
+              specifications
             </p>
           </div>
         </div>
@@ -40,17 +41,27 @@ export const MaterialsListTable = ({ materialsList }: MaterialsListTableProps) =
           <table className="w-full">
             <thead>
               <tr className="border-b border-border/50">
-                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">Description</th>
-                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">Specification</th>
-                <th className="text-right py-3 px-2 text-sm font-semibold text-muted-foreground">Quantity</th>
-                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">Unit</th>
-                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">Notes</th>
+                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">
+                  Description
+                </th>
+                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">
+                  Specification
+                </th>
+                <th className="text-right py-3 px-2 text-sm font-semibold text-muted-foreground">
+                  Quantity
+                </th>
+                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">
+                  Unit
+                </th>
+                <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground">
+                  Notes
+                </th>
               </tr>
             </thead>
             <tbody>
               {materialsList.map((material, index) => (
-                <tr 
-                  key={index} 
+                <tr
+                  key={index}
                   className="border-b border-border/30 last:border-0 hover:bg-purple-500/5 transition-colors"
                 >
                   <td className="py-3 px-2">
@@ -84,17 +95,22 @@ export const MaterialsListTable = ({ materialsList }: MaterialsListTableProps) =
         {/* Mobile Cards */}
         <div className="sm:hidden space-y-3">
           {materialsList.map((material, index) => (
-            <div 
+            <div
               key={index}
               className="p-4 rounded-lg bg-card border border-border/50 hover:border-purple-500/30 transition-colors"
             >
               <div className="flex items-start justify-between gap-2 mb-3">
-                <p className="text-sm font-semibold text-foreground flex-1">{material.description}</p>
-                <Badge variant="outline" className="bg-purple-500/10 border-purple-500/30 text-purple-400 text-xs shrink-0">
+                <p className="text-sm font-semibold text-foreground flex-1">
+                  {material.description}
+                </p>
+                <Badge
+                  variant="outline"
+                  className="bg-purple-500/10 border-purple-500/30 text-purple-400 text-xs shrink-0"
+                >
                   #{index + 1}
                 </Badge>
               </div>
-              
+
               <div className="space-y-2">
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">Specification</p>
@@ -102,7 +118,7 @@ export const MaterialsListTable = ({ materialsList }: MaterialsListTableProps) =
                     {material.specification}
                   </Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <p className="text-xs text-muted-foreground mb-1">Quantity</p>

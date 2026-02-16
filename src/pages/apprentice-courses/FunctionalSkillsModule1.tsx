@@ -1,9 +1,9 @@
-import { ChevronLeft, Calculator, Hash, Ruler, FunctionSquare, BarChart3 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import { ChevronLeft, Calculator, Hash, Ruler, FunctionSquare, BarChart3 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const container = {
   hidden: { opacity: 0 },
@@ -17,42 +17,42 @@ const item = {
 
 const FunctionalSkillsModule1 = () => {
   useSEO(
-    "Module 1: Mathematics for Electricians",
-    "Number systems, units, algebra, data handling and practical calculations for electrical work"
+    'Module 1: Mathematics for Electricians',
+    'Number systems, units, algebra, data handling and practical calculations for electrical work'
   );
 
   const sections = [
     {
-      number: "1.1",
-      title: "Number Systems & Arithmetic",
+      number: '1.1',
+      title: 'Number Systems & Arithmetic',
       description:
-        "Whole numbers, decimals, fractions, percentages, BIDMAS, negative numbers and rounding",
+        'Whole numbers, decimals, fractions, percentages, BIDMAS, negative numbers and rounding',
       icon: Hash,
-      href: "/study-centre/apprentice/functional-skills/module1/section1",
+      href: '/study-centre/apprentice/functional-skills/module1/section1',
     },
     {
-      number: "1.2",
-      title: "Units & Measurement",
+      number: '1.2',
+      title: 'Units & Measurement',
       description:
-        "SI units, imperial conversion, area, volume, perimeter, scale drawings and tolerances",
+        'SI units, imperial conversion, area, volume, perimeter, scale drawings and tolerances',
       icon: Ruler,
-      href: "/study-centre/apprentice/functional-skills/module1/section2",
+      href: '/study-centre/apprentice/functional-skills/module1/section2',
     },
     {
-      number: "1.3",
-      title: "Algebra & Formulae",
+      number: '1.3',
+      title: 'Algebra & Formulae',
       description:
         "Ohm's law, power formula, transposition, simultaneous equations and cable sizing calculations",
       icon: FunctionSquare,
-      href: "/study-centre/apprentice/functional-skills/module1/section3",
+      href: '/study-centre/apprentice/functional-skills/module1/section3',
     },
     {
-      number: "1.4",
-      title: "Data & Statistics",
+      number: '1.4',
+      title: 'Data & Statistics',
       description:
-        "Reading charts and graphs, mean, median, mode, interpreting test results and energy data",
+        'Reading charts and graphs, mean, median, mode, interpreting test results and energy data',
       icon: BarChart3,
-      href: "/study-centre/apprentice/functional-skills/module1/section4",
+      href: '/study-centre/apprentice/functional-skills/module1/section4',
     },
   ];
 

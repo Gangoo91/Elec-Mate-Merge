@@ -1,16 +1,15 @@
-
 import { Clock } from 'lucide-react';
 
 export const VisualInspectionWhen = () => {
   const whenItems = [
-    "Before any electrical testing begins",
-    "During initial verification of new installations",
-    "As part of periodic inspection and testing (EICR)",
-    "Following alterations, additions, or modifications",
-    "After fault finding or remedial work",
-    "When taking over responsibility for an installation",
-    "Before re-energising after maintenance work",
-    "When investigating reported electrical problems"
+    'Before any electrical testing begins',
+    'During initial verification of new installations',
+    'As part of periodic inspection and testing (EICR)',
+    'Following alterations, additions, or modifications',
+    'After fault finding or remedial work',
+    'When taking over responsibility for an installation',
+    'Before re-energising after maintenance work',
+    'When investigating reported electrical problems',
   ];
 
   return (
@@ -32,7 +31,9 @@ export const VisualInspectionWhen = () => {
       </ul>
       <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4 mt-4">
         <p className="text-red-200 font-medium">
-          <strong>Critical Rule:</strong> BS 7671 Regulation 643.1 states that visual inspection must be completed before any electrical testing. You must not energise or test any circuit until the visual inspection is complete and defects resolved.
+          <strong>Critical Rule:</strong> BS 7671 Regulation 643.1 states that visual inspection
+          must be completed before any electrical testing. You must not energise or test any circuit
+          until the visual inspection is complete and defects resolved.
         </p>
       </div>
     </div>

@@ -1,7 +1,6 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Moon,
   Sun,
@@ -16,10 +15,10 @@ import {
   Check,
   BedDouble,
   Cloud,
-  CloudOff
-} from "lucide-react";
-import { useSleepData } from "@/hooks/useMentalHealthSync";
-import { useAuth } from "@/contexts/AuthContext";
+  CloudOff,
+} from 'lucide-react';
+import { useSleepData } from '@/hooks/useMentalHealthSync';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface SleepEntry {
   id?: string;
@@ -32,36 +31,42 @@ interface SleepEntry {
 }
 
 const qualityLabels = [
-  { value: 1, label: "Terrible", emoji: "😫", color: "bg-red-500" },
-  { value: 2, label: "Poor", emoji: "😔", color: "bg-orange-500" },
-  { value: 3, label: "Okay", emoji: "😐", color: "bg-yellow-500" },
-  { value: 4, label: "Good", emoji: "🙂", color: "bg-lime-500" },
-  { value: 5, label: "Great", emoji: "😴", color: "bg-green-500" }
+  { value: 1, label: 'Terrible', emoji: '😫', color: 'bg-red-500' },
+  { value: 2, label: 'Poor', emoji: '😔', color: 'bg-orange-500' },
+  { value: 3, label: 'Okay', emoji: '😐', color: 'bg-yellow-500' },
+  { value: 4, label: 'Good', emoji: '🙂', color: 'bg-lime-500' },
+  { value: 5, label: 'Great', emoji: '😴', color: 'bg-green-500' },
 ];
 
 const sleepFactors = [
-  "Caffeine late", "Screen time", "Stressed", "Exercise helped",
-  "Good routine", "Bad dreams", "Woke up often", "Felt rested"
+  'Caffeine late',
+  'Screen time',
+  'Stressed',
+  'Exercise helped',
+  'Good routine',
+  'Bad dreams',
+  'Woke up often',
+  'Felt rested',
 ];
 
 const SleepTracker = () => {
   const { user } = useAuth();
   const { entries, saveSleepEntry, isLoading } = useSleepData();
   const [view, setView] = useState<'log' | 'history'>('log');
-  const [bedTime, setBedTime] = useState("22:30");
-  const [wakeTime, setWakeTime] = useState("06:30");
+  const [bedTime, setBedTime] = useState('22:30');
+  const [wakeTime, setWakeTime] = useState('06:30');
   const [quality, setQuality] = useState(3);
   const [selectedFactors, setSelectedFactors] = useState<string[]>([]);
   const [saved, setSaved] = useState(false);
 
   // Check if already logged today
   const today = new Date().toISOString().split('T')[0];
-  const todaysEntry = entries.find(e => e.date === today);
+  const todaysEntry = entries.find((e) => e.date === today);
 
   // Calculate sleep hours
   const calculateHours = (bed: string, wake: string): number => {
-    const [bedH, bedM] = bed.split(":").map(Number);
-    const [wakeH, wakeM] = wake.split(":").map(Number);
+    const [bedH, bedM] = bed.split(':').map(Number);
+    const [wakeH, wakeM] = wake.split(':').map(Number);
 
     let hours = wakeH - bedH;
     let mins = wakeM - bedM;
@@ -85,7 +90,7 @@ const SleepTracker = () => {
       wake_time: wakeTime,
       hours: sleepHours,
       quality,
-      notes: selectedFactors
+      notes: selectedFactors,
     };
 
     await saveSleepEntry(entry);
@@ -105,14 +110,16 @@ const SleepTracker = () => {
   const getQualityTrend = () => {
     const lastWeek = entries.slice(0, 7);
     if (lastWeek.length < 2) return 0;
-    const recentAvg = lastWeek.slice(0, 3).reduce((s, e) => s + e.quality, 0) / Math.min(3, lastWeek.length);
-    const prevAvg = lastWeek.slice(3).reduce((s, e) => s + e.quality, 0) / Math.max(1, lastWeek.length - 3);
+    const recentAvg =
+      lastWeek.slice(0, 3).reduce((s, e) => s + e.quality, 0) / Math.min(3, lastWeek.length);
+    const prevAvg =
+      lastWeek.slice(3).reduce((s, e) => s + e.quality, 0) / Math.max(1, lastWeek.length - 3);
     return recentAvg - prevAvg;
   };
 
   const toggleFactor = (factor: string) => {
     if (selectedFactors.includes(factor)) {
-      setSelectedFactors(selectedFactors.filter(f => f !== factor));
+      setSelectedFactors(selectedFactors.filter((f) => f !== factor));
     } else {
       setSelectedFactors([...selectedFactors, factor]);
     }
@@ -152,9 +159,12 @@ const SleepTracker = () => {
           </Card>
           <Card className="border-purple-500/20 bg-purple-500/5">
             <CardContent className="p-3 text-center">
-              <TrendingUp className={`h-5 w-5 mx-auto mb-1 ${qualityTrend > 0 ? 'text-green-400' : qualityTrend < 0 ? 'text-red-400' : 'text-yellow-400'}`} />
+              <TrendingUp
+                className={`h-5 w-5 mx-auto mb-1 ${qualityTrend > 0 ? 'text-green-400' : qualityTrend < 0 ? 'text-red-400' : 'text-yellow-400'}`}
+              />
               <div className="text-2xl font-bold text-foreground">
-                {qualityTrend > 0 ? '+' : ''}{qualityTrend.toFixed(1)}
+                {qualityTrend > 0 ? '+' : ''}
+                {qualityTrend.toFixed(1)}
               </div>
               <div className="text-[10px] text-white">Quality Trend</div>
             </CardContent>
@@ -164,8 +174,8 @@ const SleepTracker = () => {
         {/* Entries */}
         <div className="space-y-2">
           {entries.length > 0 ? (
-            entries.slice(0, 14).map(entry => {
-              const q = qualityLabels.find(x => x.value === entry.quality);
+            entries.slice(0, 14).map((entry) => {
+              const q = qualityLabels.find((x) => x.value === entry.quality);
               const date = new Date(entry.date);
               return (
                 <Card key={entry.id} className="border-white/10 bg-white/5">
@@ -175,7 +185,11 @@ const SleepTracker = () => {
                         <span className="text-2xl">{q?.emoji}</span>
                         <div>
                           <div className="text-sm font-medium text-foreground">
-                            {date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
+                            {date.toLocaleDateString('en-GB', {
+                              weekday: 'short',
+                              day: 'numeric',
+                              month: 'short',
+                            })}
                           </div>
                           <div className="text-xs text-white">
                             {entry.bed_time} - {entry.wake_time}
@@ -189,8 +203,11 @@ const SleepTracker = () => {
                     </div>
                     {entry.notes && entry.notes.length > 0 && (
                       <div className="mt-2 flex flex-wrap gap-1">
-                        {entry.notes.map(note => (
-                          <span key={note} className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-foreground/60">
+                        {entry.notes.map((note) => (
+                          <span
+                            key={note}
+                            className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-foreground/60"
+                          >
                             {note}
                           </span>
                         ))}
@@ -235,9 +252,7 @@ const SleepTracker = () => {
           <Moon className="h-6 w-6 text-indigo-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Sleep Tracker</h2>
-        <p className="text-sm text-white">
-          Track your sleep for better mental health
-        </p>
+        <p className="text-sm text-white">Track your sleep for better mental health</p>
       </div>
 
       {/* Cloud Sync Status */}
@@ -317,16 +332,24 @@ const SleepTracker = () => {
           <div className="text-center py-3 rounded-xl bg-white/5">
             <div className="text-4xl font-bold text-indigo-400">{sleepHours}h</div>
             <div className="text-sm text-white">sleep duration</div>
-            <div className={`text-xs mt-1 ${
-              sleepHours < 6 ? 'text-red-400' :
-              sleepHours < 7 ? 'text-orange-400' :
-              sleepHours > 9 ? 'text-orange-400' :
-              'text-green-400'
-            }`}>
-              {sleepHours < 6 ? 'Try for more sleep' :
-               sleepHours < 7 ? 'A bit short' :
-               sleepHours > 9 ? 'Quite long' :
-               'Healthy range!'}
+            <div
+              className={`text-xs mt-1 ${
+                sleepHours < 6
+                  ? 'text-red-400'
+                  : sleepHours < 7
+                    ? 'text-orange-400'
+                    : sleepHours > 9
+                      ? 'text-orange-400'
+                      : 'text-green-400'
+              }`}
+            >
+              {sleepHours < 6
+                ? 'Try for more sleep'
+                : sleepHours < 7
+                  ? 'A bit short'
+                  : sleepHours > 9
+                    ? 'Quite long'
+                    : 'Healthy range!'}
             </div>
           </div>
         </CardContent>
@@ -337,14 +360,12 @@ const SleepTracker = () => {
         <CardContent className="p-4">
           <h3 className="text-sm font-medium text-foreground mb-3">How well did you sleep?</h3>
           <div className="flex justify-between gap-1">
-            {qualityLabels.map(q => (
+            {qualityLabels.map((q) => (
               <button
                 key={q.value}
                 onClick={() => setQuality(q.value)}
                 className={`flex flex-col items-center gap-1 p-2 sm:p-3 rounded-xl transition-all min-h-[72px] min-w-[56px] touch-manipulation active:scale-[0.95] ${
-                  quality === q.value
-                    ? `${q.color}/20 ring-2 ring-white/50`
-                    : 'hover:bg-white/10'
+                  quality === q.value ? `${q.color}/20 ring-2 ring-white/50` : 'hover:bg-white/10'
                 }`}
               >
                 <span className="text-2xl">{q.emoji}</span>
@@ -360,7 +381,7 @@ const SleepTracker = () => {
         <CardContent className="p-4">
           <h3 className="text-sm font-medium text-foreground mb-3">What affected your sleep?</h3>
           <div className="flex flex-wrap gap-2">
-            {sleepFactors.map(factor => (
+            {sleepFactors.map((factor) => (
               <button
                 key={factor}
                 onClick={() => toggleFactor(factor)}
@@ -411,8 +432,8 @@ const SleepTracker = () => {
                 <strong className="text-blue-400">Why track sleep?</strong>
               </p>
               <p className="text-xs text-white mt-1">
-                Poor sleep affects mood, concentration, and decision-making - all crucial
-                for safety on site. Tracking helps identify patterns and improve quality.
+                Poor sleep affects mood, concentration, and decision-making - all crucial for safety
+                on site. Tracking helps identify patterns and improve quality.
               </p>
             </div>
           </div>

@@ -1,5 +1,5 @@
-import { CheckSquare, AlertCircle, Clock, ListChecks } from "lucide-react";
-import { motion } from "framer-motion";
+import { CheckSquare, AlertCircle, Clock, ListChecks } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface KeyActionItemsProps {
   structuredData: any;
@@ -8,14 +8,14 @@ interface KeyActionItemsProps {
 const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
   // Extract top 3 priority actions from various sources
   const getTop3Actions = () => {
-    const actions: Array<{icon: any, text: string, priority: string}> = [];
+    const actions: Array<{ icon: any; text: string; priority: string }> = [];
 
     // Action 1: Critical site checks
     if (structuredData?.siteChecklist?.critical?.[0]) {
       actions.push({
         icon: AlertCircle,
         text: structuredData.siteChecklist.critical[0],
-        priority: 'critical'
+        priority: 'critical',
       });
     }
 
@@ -24,7 +24,7 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
       actions.push({
         icon: Clock,
         text: `Secure ${structuredData.paymentTerms.depositPercent}% deposit (£${structuredData.paymentTerms.depositAmount?.toFixed(2)}) before starting`,
-        priority: 'high'
+        priority: 'high',
       });
     }
 
@@ -34,14 +34,14 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
       actions.push({
         icon: CheckSquare,
         text: `Offer ${hotUpsell.opportunity} (+£${hotUpsell.price}) - ${hotUpsell.winRate}% win rate`,
-        priority: 'medium'
+        priority: 'medium',
       });
     } else if (structuredData?.riskAssessment?.risks?.[0]) {
       const topRisk = structuredData.riskAssessment.risks[0];
       actions.push({
         icon: AlertCircle,
         text: topRisk.mitigation,
-        priority: 'high'
+        priority: 'high',
       });
     }
 
@@ -53,10 +53,13 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
   if (actions.length === 0) return null;
 
   const getPriorityStyle = (priority: string) => {
-    switch(priority) {
-      case 'critical': return { bg: 'bg-red-500/10', border: 'border-red-500/30', icon: 'text-red-400' };
-      case 'high': return { bg: 'bg-amber-500/10', border: 'border-amber-500/30', icon: 'text-amber-400' };
-      default: return { bg: 'bg-blue-500/10', border: 'border-blue-500/30', icon: 'text-blue-400' };
+    switch (priority) {
+      case 'critical':
+        return { bg: 'bg-red-500/10', border: 'border-red-500/30', icon: 'text-red-400' };
+      case 'high':
+        return { bg: 'bg-amber-500/10', border: 'border-amber-500/30', icon: 'text-amber-400' };
+      default:
+        return { bg: 'bg-blue-500/10', border: 'border-blue-500/30', icon: 'text-blue-400' };
     }
   };
 
@@ -96,7 +99,9 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
                 <div className={`flex-shrink-0 mt-0.5 ${style.icon}`}>
                   <Icon className="h-5 w-5" />
                 </div>
-                <span className="text-sm sm:text-base text-white leading-relaxed">{action.text}</span>
+                <span className="text-sm sm:text-base text-white leading-relaxed">
+                  {action.text}
+                </span>
               </div>
             </motion.div>
           );

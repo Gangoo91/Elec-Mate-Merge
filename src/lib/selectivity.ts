@@ -46,23 +46,23 @@ const DEVICE_CHARACTERISTICS = {
   mcb: {
     magneticMultipliers: { B: 5, C: 10, D: 20 },
     timeCharacteristics: { thermal: 0.1, magnetic: 0.01 },
-    selectivityRatioMin: 1.6
+    selectivityRatioMin: 1.6,
   },
   mccb: {
     magneticMultipliers: { standard: 8, adjustable: 10 },
     timeCharacteristics: { thermal: 0.4, magnetic: 0.02, shortTime: 0.1 },
-    selectivityRatioMin: 2.0
+    selectivityRatioMin: 2.0,
   },
   fuse: {
     magneticMultipliers: { gG: 8, aM: 12 },
     timeCharacteristics: { prearcing: 0.01, total: 0.05 },
-    selectivityRatioMin: 1.6
+    selectivityRatioMin: 1.6,
   },
   rcbo: {
     magneticMultipliers: { B: 5, C: 10, D: 20 },
     timeCharacteristics: { thermal: 0.1, magnetic: 0.01, rcd: 0.3 },
-    selectivityRatioMin: 1.6
-  }
+    selectivityRatioMin: 1.6,
+  },
 };
 
 export function calculateSelectivity(inputs: SelectivityInputs): SelectivityResult {
@@ -80,7 +80,7 @@ export function calculateSelectivity(inputs: SelectivityInputs): SelectivityResu
     downstreamBreakingCapacity = 6, // kA converted to A for comparison
     faultCurrent,
     shortCircuitCurrent = faultCurrent,
-    loadCurrent = upstreamRating * 0.8
+    loadCurrent = upstreamRating * 0.8,
   } = inputs;
 
   // Calculate selectivity ratio
@@ -140,15 +140,15 @@ export function calculateSelectivity(inputs: SelectivityInputs): SelectivityResu
   );
 
   // Breaking capacity check (convert kA to A for comparison)
-  const breakingCapacityCheck = 
-    (upstreamBreakingCapacity * 1000) >= shortCircuitCurrent && 
-    (downstreamBreakingCapacity * 1000) >= shortCircuitCurrent;
+  const breakingCapacityCheck =
+    upstreamBreakingCapacity * 1000 >= shortCircuitCurrent &&
+    downstreamBreakingCapacity * 1000 >= shortCircuitCurrent;
 
   // Overall selectivity
   const isSelective = overloadSelectivity && shortCircuitSelectivity && breakingCapacityCheck;
 
   // Generate analysis
-  const { recommendations, concerns, immediateActions, complianceStatus, riskLevel } = 
+  const { recommendations, concerns, immediateActions, complianceStatus, riskLevel } =
     generateSelectivityAnalysis(inputs, {
       isSelective,
       selectivityRatio,
@@ -159,7 +159,7 @@ export function calculateSelectivity(inputs: SelectivityInputs): SelectivityResu
       faultCurrent,
       shortCircuitCurrent,
       upstreamTime,
-      downstreamTime
+      downstreamTime,
     });
 
   return {
@@ -171,17 +171,17 @@ export function calculateSelectivity(inputs: SelectivityInputs): SelectivityResu
     breakingCapacityCheck,
     operatingTimes: {
       upstream: upstreamTime,
-      downstream: downstreamTime
+      downstream: downstreamTime,
     },
     magneticTrips: {
       upstream: upstreamMagnetic,
-      downstream: downstreamMagnetic
+      downstream: downstreamMagnetic,
     },
     recommendations,
     concerns,
     immediateActions,
     complianceStatus,
-    riskLevel
+    riskLevel,
   };
 }
 
@@ -228,12 +228,16 @@ function calculateOperatingTime(
 
   if (deviceType === 'fuse') {
     const fuseChar = characteristics as typeof DEVICE_CHARACTERISTICS.fuse;
-    baseTime = current > magneticTrip ? fuseChar.timeCharacteristics.prearcing : fuseChar.timeCharacteristics.total;
+    baseTime =
+      current > magneticTrip
+        ? fuseChar.timeCharacteristics.prearcing
+        : fuseChar.timeCharacteristics.total;
   } else {
     const normalChar = characteristics as typeof DEVICE_CHARACTERISTICS.mcb;
-    baseTime = current > magneticTrip 
-      ? normalChar.timeCharacteristics.magnetic 
-      : normalChar.timeCharacteristics.thermal;
+    baseTime =
+      current > magneticTrip
+        ? normalChar.timeCharacteristics.magnetic
+        : normalChar.timeCharacteristics.thermal;
   }
 
   return baseTime + timeDelay;
@@ -256,7 +260,7 @@ function checkShortCircuitSelectivity(
   upstreamTime: number,
   downstreamTime: number
 ): boolean {
-  const timeDiscrimination = upstreamTime > (downstreamTime + 0.1); // 100ms margin
+  const timeDiscrimination = upstreamTime > downstreamTime + 0.1; // 100ms margin
   const currentDiscrimination = faultCurrent < selectivityLimit;
   return timeDiscrimination && currentDiscrimination;
 }
@@ -268,43 +272,43 @@ function generateSelectivityAnalysis(inputs: SelectivityInputs, results: any) {
 
   // Basic selectivity checks
   if (!results.isSelective) {
-    concerns.push("Selectivity not achieved - risk of upstream device operating before downstream");
-    immediateActions.push("Review protection coordination immediately");
+    concerns.push('Selectivity not achieved - risk of upstream device operating before downstream');
+    immediateActions.push('Review protection coordination immediately');
   }
 
   if (results.selectivityRatio < 1.6) {
-    concerns.push("Selectivity ratio below minimum 1.6:1 requirement");
-    recommendations.push("Increase upstream device rating or reduce downstream rating");
+    concerns.push('Selectivity ratio below minimum 1.6:1 requirement');
+    recommendations.push('Increase upstream device rating or reduce downstream rating');
   }
 
   if (!results.overloadSelectivity) {
-    concerns.push("Overload selectivity not achieved");
-    recommendations.push("Ensure upstream thermal setting > 1.45 × downstream rating");
+    concerns.push('Overload selectivity not achieved');
+    recommendations.push('Ensure upstream thermal setting > 1.45 × downstream rating');
   }
 
   if (!results.shortCircuitSelectivity) {
-    concerns.push("Short-circuit selectivity not achieved");
-    recommendations.push("Add time delay to upstream device or reduce fault current");
+    concerns.push('Short-circuit selectivity not achieved');
+    recommendations.push('Add time delay to upstream device or reduce fault current');
   }
 
   if (!results.breakingCapacityCheck) {
-    concerns.push("Breaking capacity insufficient for fault current");
-    immediateActions.push("Replace devices with higher breaking capacity");
+    concerns.push('Breaking capacity insufficient for fault current');
+    immediateActions.push('Replace devices with higher breaking capacity');
   }
 
   // Device-specific recommendations
   if (inputs.upstreamDevice === inputs.downstreamDevice) {
-    recommendations.push("Consider different device types for better selectivity");
+    recommendations.push('Consider different device types for better selectivity');
   }
 
   if (results.faultCurrent > results.selectivityLimit) {
-    recommendations.push("Install current-limiting devices or reduce fault current");
+    recommendations.push('Install current-limiting devices or reduce fault current');
   }
 
   // Add standard recommendations
   recommendations.push("Verify selectivity using manufacturer's coordination tables");
-  recommendations.push("Test protection coordination during commissioning");
-  recommendations.push("Document selectivity study for compliance records");
+  recommendations.push('Test protection coordination during commissioning');
+  recommendations.push('Document selectivity study for compliance records');
 
   // Determine compliance status and risk level
   let complianceStatus: 'compliant' | 'non-compliant' | 'requires-verification' = 'compliant';
@@ -323,6 +327,6 @@ function generateSelectivityAnalysis(inputs: SelectivityInputs, results: any) {
     concerns,
     immediateActions,
     complianceStatus,
-    riskLevel
+    riskLevel,
   };
 }

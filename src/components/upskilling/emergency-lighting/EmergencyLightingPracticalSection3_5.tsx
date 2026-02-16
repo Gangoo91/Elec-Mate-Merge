@@ -3,16 +3,16 @@ import { Wrench, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingPracticalSection3_5 = () => {
   const practicalPoints = [
-    "Always mark final exit routes in bold with directional arrows to make escape paths unambiguous",
-    "Use consistent drawing scales (1:100 for general layouts, 1:50 for detailed areas) and clearly indicate scale on all drawings",
-    "Organise drawings using separate layers for different systems (power, lighting, emergency lighting) to improve readability and coordination",
-    "Update as-built drawings immediately after any installation changes - missing documentation is the leading cause of compliance failures",
-    "Ensure all software files are provided in accessible formats (PDF for viewing, DWG/IFC for future modifications)",
-    "Include comprehensive legends with all symbols, abbreviations, and technical notes used on the drawing",
-    "Mark all testing points clearly and ensure they are accessible for ongoing maintenance procedures",
-    "Coordinate with other building services to avoid conflicts and ensure integration with fire alarm systems",
-    "Use standardised templates and symbol libraries to maintain consistency across projects and team members",
-    "Implement quality checking procedures with peer reviews before final issue to prevent costly errors"
+    'Always mark final exit routes in bold with directional arrows to make escape paths unambiguous',
+    'Use consistent drawing scales (1:100 for general layouts, 1:50 for detailed areas) and clearly indicate scale on all drawings',
+    'Organise drawings using separate layers for different systems (power, lighting, emergency lighting) to improve readability and coordination',
+    'Update as-built drawings immediately after any installation changes - missing documentation is the leading cause of compliance failures',
+    'Ensure all software files are provided in accessible formats (PDF for viewing, DWG/IFC for future modifications)',
+    'Include comprehensive legends with all symbols, abbreviations, and technical notes used on the drawing',
+    'Mark all testing points clearly and ensure they are accessible for ongoing maintenance procedures',
+    'Coordinate with other building services to avoid conflicts and ensure integration with fire alarm systems',
+    'Use standardised templates and symbol libraries to maintain consistency across projects and team members',
+    'Implement quality checking procedures with peer reviews before final issue to prevent costly errors',
   ];
 
   return (

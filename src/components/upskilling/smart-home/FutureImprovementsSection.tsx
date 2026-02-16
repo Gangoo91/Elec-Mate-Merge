@@ -12,7 +12,9 @@ export const FutureImprovementsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          The smart home industry continues to evolve with new technologies designed to address current interference and bandwidth limitations. These emerging standards promise more reliable and scalable networks.
+          The smart home industry continues to evolve with new technologies designed to address
+          current interference and bandwidth limitations. These emerging standards promise more
+          reliable and scalable networks.
         </p>
 
         <div className="space-y-4">

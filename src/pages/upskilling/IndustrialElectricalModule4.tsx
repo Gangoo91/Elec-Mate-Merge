@@ -7,40 +7,40 @@ const IndustrialElectricalModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "PLC Architecture and Inputs/Outputs",
+      title: 'PLC Architecture and Inputs/Outputs',
       icon: Cpu,
-      description: "PLC system architecture and I/O configuration"
+      description: 'PLC system architecture and I/O configuration',
     },
     {
       id: 2,
-      title: "Ladder Logic and Function Blocks",
+      title: 'Ladder Logic and Function Blocks',
       icon: Route,
-      description: "Programming languages and logic development"
+      description: 'Programming languages and logic development',
     },
     {
       id: 3,
-      title: "Sensor/Actuator Integration",
+      title: 'Sensor/Actuator Integration',
       icon: Activity,
-      description: "Field device integration and interfacing"
+      description: 'Field device integration and interfacing',
     },
     {
       id: 4,
-      title: "Industrial Protocols (Modbus, Profibus, Ethernet/IP)",
+      title: 'Industrial Protocols (Modbus, Profibus, Ethernet/IP)',
       icon: Network,
-      description: "Communication protocols and networking"
+      description: 'Communication protocols and networking',
     },
     {
       id: 5,
-      title: "SCADA and HMI Introduction",
+      title: 'SCADA and HMI Introduction',
       icon: Monitor,
-      description: "Supervisory control and human machine interfaces"
+      description: 'Supervisory control and human machine interfaces',
     },
     {
       id: 6,
-      title: "Safety PLC and Machine Guarding",
+      title: 'Safety PLC and Machine Guarding',
       icon: Shield,
-      description: "Safety systems and machine protection"
-    }
+      description: 'Safety systems and machine protection',
+    },
   ];
 
   return (

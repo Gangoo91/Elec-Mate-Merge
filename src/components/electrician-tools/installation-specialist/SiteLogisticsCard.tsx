@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Lock, FileCheck, Clock, AlertTriangle } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { MapPin, Lock, FileCheck, Clock, AlertTriangle } from 'lucide-react';
 
 interface SiteLogisticsCardProps {
   siteLogistics: {
@@ -34,7 +34,10 @@ export const SiteLogisticsCard = ({ siteLogistics }: SiteLogisticsCardProps) => 
               </div>
               <ul className="space-y-1.5">
                 {isolationPoints.map((point, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm bg-red-500/5 border border-red-500/20 rounded px-3 py-2">
+                  <li
+                    key={index}
+                    className="flex items-start gap-2 text-sm bg-red-500/5 border border-red-500/20 rounded px-3 py-2"
+                  >
                     <span className="text-red-400 mt-0.5 flex-shrink-0">⚡</span>
                     <span className="text-foreground">{point}</span>
                   </li>
@@ -49,7 +52,9 @@ export const SiteLogisticsCard = ({ siteLogistics }: SiteLogisticsCardProps) => 
               <div className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-semibold text-sm text-muted-foreground mb-1">Access Requirements</h4>
+                  <h4 className="font-semibold text-sm text-muted-foreground mb-1">
+                    Access Requirements
+                  </h4>
                   <p className="text-sm text-foreground">{accessRequirements}</p>
                 </div>
               </div>
@@ -67,11 +72,11 @@ export const SiteLogisticsCard = ({ siteLogistics }: SiteLogisticsCardProps) => 
                 {permitsRequired.map((permit, index) => {
                   const isNoPermit = permit.toLowerCase().includes('no permit');
                   return (
-                    <Badge 
+                    <Badge
                       key={index}
                       className={`${
-                        isNoPermit 
-                          ? 'bg-gradient-to-r from-green-500/20 to-green-600/20 border-green-500/40' 
+                        isNoPermit
+                          ? 'bg-gradient-to-r from-green-500/20 to-green-600/20 border-green-500/40'
                           : 'bg-gradient-to-r from-blue-500/20 to-blue-600/20 border-blue-500/40'
                       } text-foreground px-3 py-1 text-xs font-medium`}
                     >
@@ -89,7 +94,9 @@ export const SiteLogisticsCard = ({ siteLogistics }: SiteLogisticsCardProps) => 
               <div className="flex items-start gap-2">
                 <Clock className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-semibold text-sm text-purple-400 mb-1">Working Hours & Coordination</h4>
+                  <h4 className="font-semibold text-sm text-purple-400 mb-1">
+                    Working Hours & Coordination
+                  </h4>
                   <p className="text-sm text-foreground">{workingHours}</p>
                 </div>
               </div>
@@ -100,7 +107,7 @@ export const SiteLogisticsCard = ({ siteLogistics }: SiteLogisticsCardProps) => 
         {/* Footer Note */}
         <div className="mt-4 pt-3 border-t border-border/50">
           <p className="text-xs text-muted-foreground">
-            <strong>Important:</strong> Ensure all permits are obtained before commencing work. 
+            <strong>Important:</strong> Ensure all permits are obtained before commencing work.
             Coordinate with site manager, occupants, and other trades as required.
           </p>
         </div>

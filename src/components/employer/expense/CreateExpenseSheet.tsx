@@ -3,16 +3,35 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
-  Plus, ArrowLeft, ArrowRight, Check, Camera, Upload, X,
-  Wrench, Car, ParkingCircle, Hammer, HardHat,
-  GraduationCap, UtensilsCrossed, Package, Receipt
+  Plus,
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Camera,
+  Upload,
+  X,
+  Wrench,
+  Car,
+  ParkingCircle,
+  Hammer,
+  HardHat,
+  GraduationCap,
+  UtensilsCrossed,
+  Package,
+  Receipt,
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -26,8 +45,8 @@ interface CreateExpenseSheetProps {
   employees: { id: string; name: string }[];
   jobs?: { id: string; title: string }[];
   isSubmitting?: boolean;
-  employeeMode?: boolean;  // When true, auto-assigns to current user (no employee dropdown)
-  currentEmployeeId?: string;  // The employee ID to use in employee mode
+  employeeMode?: boolean; // When true, auto-assigns to current user (no employee dropdown)
+  currentEmployeeId?: string; // The employee ID to use in employee mode
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -64,7 +83,7 @@ export function CreateExpenseSheet({
 }: CreateExpenseSheetProps) {
   const isMobile = useIsMobile();
   const [step, setStep] = useState(1);
-  const totalSteps = employeeMode ? 3 : 4;  // Skip employee step in employee mode
+  const totalSteps = employeeMode ? 3 : 4; // Skip employee step in employee mode
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -78,7 +97,13 @@ export function CreateExpenseSheet({
     },
   });
 
-  const { watch, setValue, handleSubmit, formState: { errors }, reset } = form;
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = form;
   const values = watch();
 
   const handleClose = () => {
@@ -138,10 +163,7 @@ export function CreateExpenseSheet({
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn(
-          "flex flex-col p-0",
-          isMobile ? "h-[90vh] rounded-t-2xl" : "w-[450px]"
-        )}
+        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
@@ -182,8 +204,8 @@ export function CreateExpenseSheet({
               <div
                 key={i}
                 className={cn(
-                  "h-1 flex-1 rounded-full transition-colors",
-                  i < step ? "bg-elec-yellow" : "bg-muted"
+                  'h-1 flex-1 rounded-full transition-colors',
+                  i < step ? 'bg-elec-yellow' : 'bg-muted'
                 )}
               />
             ))}
@@ -203,7 +225,7 @@ export function CreateExpenseSheet({
                     value={values.employee_id}
                     onValueChange={(v) => setValue('employee_id', v)}
                   >
-                    <SelectTrigger className={cn(errors.employee_id && "border-red-500")}>
+                    <SelectTrigger className={cn(errors.employee_id && 'border-red-500')}>
                       <SelectValue placeholder="Select employee" />
                     </SelectTrigger>
                     <SelectContent>
@@ -231,21 +253,19 @@ export function CreateExpenseSheet({
                     step="0.01"
                     min="0"
                     placeholder="0.00"
-                    className={cn("pl-8 text-lg h-12", errors.amount && "border-red-500")}
+                    className={cn('pl-8 text-lg h-12', errors.amount && 'border-red-500')}
                     value={values.amount || ''}
                     onChange={(e) => setValue('amount', parseFloat(e.target.value) || 0)}
                   />
                 </div>
-                {errors.amount && (
-                  <p className="text-xs text-red-500">{errors.amount.message}</p>
-                )}
+                {errors.amount && <p className="text-xs text-red-500">{errors.amount.message}</p>}
               </div>
 
               <div className="space-y-2">
                 <Label>Description</Label>
                 <Textarea
                   placeholder="What was this expense for?"
-                  className={cn("min-h-[100px]", errors.description && "border-red-500")}
+                  className={cn('min-h-[100px]', errors.description && 'border-red-500')}
                   value={values.description}
                   onChange={(e) => setValue('description', e.target.value)}
                 />
@@ -271,26 +291,26 @@ export function CreateExpenseSheet({
                         type="button"
                         onClick={() => setValue('category', id)}
                         className={cn(
-                          "flex items-center gap-3 p-3 rounded-lg border transition-all",
-                          "hover:bg-muted/50 active:scale-[0.98]",
-                          isSelected
-                            ? "border-elec-yellow bg-elec-yellow/10"
-                            : "border-border"
+                          'flex items-center gap-3 p-3 rounded-lg border transition-all',
+                          'hover:bg-muted/50 active:scale-[0.98]',
+                          isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-border'
                         )}
                       >
-                        <Icon className={cn(
-                          "h-5 w-5",
-                          isSelected ? "text-elec-yellow" : "text-muted-foreground"
-                        )} />
-                        <span className={cn(
-                          "text-sm font-medium",
-                          isSelected ? "text-foreground" : "text-muted-foreground"
-                        )}>
+                        <Icon
+                          className={cn(
+                            'h-5 w-5',
+                            isSelected ? 'text-elec-yellow' : 'text-muted-foreground'
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            'text-sm font-medium',
+                            isSelected ? 'text-foreground' : 'text-muted-foreground'
+                          )}
+                        >
                           {label}
                         </span>
-                        {isSelected && (
-                          <Check className="h-4 w-4 text-elec-yellow ml-auto" />
-                        )}
+                        {isSelected && <Check className="h-4 w-4 text-elec-yellow ml-auto" />}
                       </button>
                     );
                   })}
@@ -425,10 +445,12 @@ export function CreateExpenseSheet({
                 <Card className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={cn(
-                        "p-2 rounded-lg",
-                        values.receipt_url ? "bg-green-500/10" : "bg-muted"
-                      )}>
+                      <div
+                        className={cn(
+                          'p-2 rounded-lg',
+                          values.receipt_url ? 'bg-green-500/10' : 'bg-muted'
+                        )}
+                      >
                         {values.receipt_url ? (
                           <Check className="h-5 w-5 text-green-500" />
                         ) : (

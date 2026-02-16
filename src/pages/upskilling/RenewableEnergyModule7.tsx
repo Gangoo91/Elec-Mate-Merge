@@ -7,40 +7,40 @@ const RenewableEnergyModule7 = () => {
   const sections = [
     {
       id: 1,
-      title: "Installation Best Practices (DC Safety, Cable Management, Earth Bonding)",
+      title: 'Installation Best Practices (DC Safety, Cable Management, Earth Bonding)',
       icon: Wrench,
-      description: "Safe installation procedures and best practices for renewable systems"
+      description: 'Safe installation procedures and best practices for renewable systems',
     },
     {
       id: 2,
-      title: "Commissioning Checks: Voltage, Insulation, Functional Testing",
+      title: 'Commissioning Checks: Voltage, Insulation, Functional Testing',
       icon: CheckCircle,
-      description: "Essential commissioning tests and verification procedures"
+      description: 'Essential commissioning tests and verification procedures',
     },
     {
       id: 3,
-      title: "Maintenance Schedules (Visual, Electrical, Firmware)",
+      title: 'Maintenance Schedules (Visual, Electrical, Firmware)',
       icon: Calendar,
-      description: "Planned maintenance schedules and inspection requirements"
+      description: 'Planned maintenance schedules and inspection requirements',
     },
     {
       id: 4,
-      title: "Fault-Finding in PV, Battery, and Inverter Systems",
+      title: 'Fault-Finding in PV, Battery, and Inverter Systems',
       icon: Search,
-      description: "Systematic approaches to troubleshooting renewable energy systems"
+      description: 'Systematic approaches to troubleshooting renewable energy systems',
     },
     {
       id: 5,
-      title: "Using Meters, Test Equipment, and Diagnostics",
+      title: 'Using Meters, Test Equipment, and Diagnostics',
       icon: Gauge,
-      description: "Testing equipment and diagnostic tools for system analysis"
+      description: 'Testing equipment and diagnostic tools for system analysis',
     },
     {
       id: 6,
-      title: "Safety, Isolation, and Working Live Considerations",
+      title: 'Safety, Isolation, and Working Live Considerations',
       icon: Shield,
-      description: "Safety procedures and isolation requirements for live systems"
-    }
+      description: 'Safety procedures and isolation requirements for live systems',
+    },
   ];
 
   return (

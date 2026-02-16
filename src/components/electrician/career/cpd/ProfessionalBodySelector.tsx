@@ -6,7 +6,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { CheckCircle, Clock, Users, BookOpen, ExternalLink } from 'lucide-react';
-import { professionalBodyService, ProfessionalBody, UserProfessionalMembership } from '@/services/professionalBodyService';
+import {
+  professionalBodyService,
+  ProfessionalBody,
+  UserProfessionalMembership,
+} from '@/services/professionalBodyService';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -34,9 +38,9 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
     } catch (error) {
       console.error('Error loading professional bodies:', error);
       toast({
-        title: "Error loading professional bodies",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error loading professional bodies',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -45,35 +49,37 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
 
   const handleBodySelection = (bodyId: string, checked: boolean) => {
     if (checked) {
-      setSelectedBodies(prev => [...prev, bodyId]);
+      setSelectedBodies((prev) => [...prev, bodyId]);
     } else {
-      setSelectedBodies(prev => prev.filter(id => id !== bodyId));
-      setMembershipNumbers(prev => ({ ...prev, [bodyId]: '' }));
-      setRenewalDates(prev => ({ ...prev, [bodyId]: '' }));
+      setSelectedBodies((prev) => prev.filter((id) => id !== bodyId));
+      setMembershipNumbers((prev) => ({ ...prev, [bodyId]: '' }));
+      setRenewalDates((prev) => ({ ...prev, [bodyId]: '' }));
     }
   };
 
   const handleMembershipNumberChange = (bodyId: string, value: string) => {
-    setMembershipNumbers(prev => ({ ...prev, [bodyId]: value }));
+    setMembershipNumbers((prev) => ({ ...prev, [bodyId]: value }));
   };
 
   const handleRenewalDateChange = (bodyId: string, value: string) => {
-    setRenewalDates(prev => ({ ...prev, [bodyId]: value }));
+    setRenewalDates((prev) => ({ ...prev, [bodyId]: value }));
   };
 
   const handleComplete = async () => {
     if (selectedBodies.length === 0) {
       toast({
-        title: "No professional bodies selected",
-        description: "Please select at least one professional body.",
-        variant: "destructive"
+        title: 'No professional bodies selected',
+        description: 'Please select at least one professional body.',
+        variant: 'destructive',
       });
       return;
     }
 
     setSaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('No authenticated user');
 
       const memberships: UserProfessionalMembership[] = [];
@@ -89,14 +95,14 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
           membership_number: membershipNumbers[bodyId] || undefined,
           registration_date: registrationDate.toISOString().split('T')[0],
           renewal_date: renewalDate ? renewalDate.toISOString().split('T')[0] : undefined,
-          is_active: true
+          is_active: true,
         });
 
         memberships.push(membership);
       }
 
       toast({
-        title: "Professional bodies added",
+        title: 'Professional bodies added',
         description: `Successfully added ${memberships.length} professional body membership(s).`,
       });
 
@@ -104,9 +110,9 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
     } catch (error) {
       console.error('Error saving memberships:', error);
       toast({
-        title: "Error saving memberships",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error saving memberships',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setSaving(false);
@@ -126,17 +132,18 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold">Select Your Professional Bodies</h2>
         <p className="text-muted-foreground">
-          Choose the professional bodies you're registered with to track their specific CPD requirements.
+          Choose the professional bodies you're registered with to track their specific CPD
+          requirements.
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         {professionalBodies.map((body) => (
-          <Card 
-            key={body.id} 
+          <Card
+            key={body.id}
             className={`relative transition-all ${
-              selectedBodies.includes(body.id) 
-                ? 'ring-2 ring-primary bg-primary/5' 
+              selectedBodies.includes(body.id)
+                ? 'ring-2 ring-primary bg-primary/5'
                 : 'hover:shadow-md'
             }`}
           >
@@ -150,9 +157,7 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
                   />
                   <div>
                     <CardTitle className="text-lg">{body.name}</CardTitle>
-                    <CardDescription className="text-sm">
-                      {body.description}
-                    </CardDescription>
+                    <CardDescription className="text-sm">{body.description}</CardDescription>
                   </div>
                 </div>
                 {body.website_url && (
@@ -171,9 +176,7 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
                   <Clock className="h-4 w-4 text-primary" />
                   <span>Annual CPD: {body.annual_cpd_hours} hours</span>
                 </div>
-                <Badge variant="secondary">
-                  {body.assessment_cycle}
-                </Badge>
+                <Badge variant="secondary">{body.assessment_cycle}</Badge>
               </div>
 
               <div className="space-y-2">
@@ -208,7 +211,7 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
                       onChange={(e) => handleMembershipNumberChange(body.id, e.target.value)}
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor={`renewal-${body.id}`} className="text-sm">
                       Next Renewal Date (Optional)
@@ -229,12 +232,7 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
 
       {selectedBodies.length > 0 && (
         <div className="flex justify-center pt-4">
-          <Button 
-            onClick={handleComplete} 
-            disabled={saving}
-            size="lg"
-            className="min-w-[200px]"
-          >
+          <Button onClick={handleComplete} disabled={saving} size="lg" className="min-w-[200px]">
             {saving ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>

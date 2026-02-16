@@ -1,7 +1,7 @@
-import { ArrowLeft, Wrench } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
-import InstallationSpecialistInterface from "@/components/electrician-tools/installation-specialist/InstallationSpecialistInterface";
-import React from "react";
+import { ArrowLeft, Wrench } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import InstallationSpecialistInterface from '@/components/electrician-tools/installation-specialist/InstallationSpecialistInterface';
+import React from 'react';
 
 const InstallationSpecialistPage = () => {
   const location = useLocation();
@@ -50,12 +50,14 @@ const InstallationSpecialistPage = () => {
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 ">
         <div className="px-4 py-2">
           <button
-            onClick={() => navigate(fromAgentSelector ? "/electrician/agent-selector" : "/electrician")}
+            onClick={() =>
+              navigate(fromAgentSelector ? '/electrician/agent-selector' : '/electrician')
+            }
             className="flex items-center gap-2 text-white active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">
-              {fromAgentSelector ? "Agent Selector" : "Electrician Hub"}
+              {fromAgentSelector ? 'Agent Selector' : 'Electrician Hub'}
             </span>
           </button>
         </div>

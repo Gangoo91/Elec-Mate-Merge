@@ -4,71 +4,76 @@
  * Understanding smart metering systems, energy monitoring devices, and data analysis for consumption optimization
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 // ============================================
 // SEO CONFIGURATION
 // ============================================
-const TITLE = "Smart Meters and Energy Monitoring - Level 3 Module 2 Section 2.5";
-const DESCRIPTION = "Understanding smart metering systems, energy monitoring devices, CT clamps, sub-metering, and data analysis for consumption optimization.";
+const TITLE = 'Smart Meters and Energy Monitoring - Level 3 Module 2 Section 2.5';
+const DESCRIPTION =
+  'Understanding smart metering systems, energy monitoring devices, CT clamps, sub-metering, and data analysis for consumption optimization.';
 
 // ============================================
 // INLINE CHECK QUESTIONS
 // ============================================
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "What is the main advantage of smart meters over traditional meters?",
+    id: 'check-1',
+    question: 'What is the main advantage of smart meters over traditional meters?',
     options: [
-      "They are cheaper to install",
-      "They provide real-time data and automatic readings to the supplier",
-      "They use less electricity",
-      "They last longer"
+      'They are cheaper to install',
+      'They provide real-time data and automatic readings to the supplier',
+      'They use less electricity',
+      'They last longer',
     ],
     correctIndex: 1,
-    explanation: "Smart meters automatically send consumption data to energy suppliers, eliminating estimated bills. They also provide real-time usage information to customers through in-home displays."
+    explanation:
+      'Smart meters automatically send consumption data to energy suppliers, eliminating estimated bills. They also provide real-time usage information to customers through in-home displays.',
   },
   {
-    id: "check-2",
-    question: "What does a CT clamp measure?",
+    id: 'check-2',
+    question: 'What does a CT clamp measure?',
     options: [
-      "Voltage only",
-      "Power factor",
-      "Current flowing through a conductor without breaking the circuit",
-      "Earth loop impedance"
+      'Voltage only',
+      'Power factor',
+      'Current flowing through a conductor without breaking the circuit',
+      'Earth loop impedance',
     ],
     correctIndex: 2,
-    explanation: "Current Transformer (CT) clamps measure current by sensing the magnetic field around a conductor. They can be fitted around live cables without disconnection, making them ideal for monitoring."
+    explanation:
+      'Current Transformer (CT) clamps measure current by sensing the magnetic field around a conductor. They can be fitted around live cables without disconnection, making them ideal for monitoring.',
   },
   {
-    id: "check-3",
+    id: 'check-3',
     question: "What is 'sub-metering' used for?",
     options: [
-      "Measuring underground cables",
-      "Monitoring specific circuits, areas, or equipment separately from the main meter",
-      "Testing meter accuracy",
-      "Reducing the main meter reading"
+      'Measuring underground cables',
+      'Monitoring specific circuits, areas, or equipment separately from the main meter',
+      'Testing meter accuracy',
+      'Reducing the main meter reading',
     ],
     correctIndex: 1,
-    explanation: "Sub-metering allows monitoring of individual circuits, departments, or pieces of equipment. This helps identify where energy is being used and enables allocation of costs or identification of waste."
+    explanation:
+      'Sub-metering allows monitoring of individual circuits, departments, or pieces of equipment. This helps identify where energy is being used and enables allocation of costs or identification of waste.',
   },
   {
-    id: "check-4",
-    question: "What communication technology do SMETS2 smart meters use?",
+    id: 'check-4',
+    question: 'What communication technology do SMETS2 smart meters use?',
     options: [
-      "WiFi connection to the home broadband",
-      "The DCC (Data Communications Company) national network",
-      "Mobile phone connection only",
-      "Powerline communication through the mains"
+      'WiFi connection to the home broadband',
+      'The DCC (Data Communications Company) national network',
+      'Mobile phone connection only',
+      'Powerline communication through the mains',
     ],
     correctIndex: 1,
-    explanation: "SMETS2 meters communicate via the Data Communications Company (DCC) network, a secure national infrastructure. This allows switching suppliers while keeping the smart functionality, unlike earlier SMETS1 meters."
-  }
+    explanation:
+      'SMETS2 meters communicate via the Data Communications Company (DCC) network, a secure national infrastructure. This allows switching suppliers while keeping the smart functionality, unlike earlier SMETS1 meters.',
+  },
 ];
 
 // ============================================
@@ -77,148 +82,155 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: "SMETS stands for:",
+    question: 'SMETS stands for:',
     options: [
-      "Smart Meter Equipment Technical Specification",
-      "Standard Metering Equipment Technology System",
-      "Smart Meter Energy Transfer System",
-      "Supplier Managed Energy Tracking Service"
+      'Smart Meter Equipment Technical Specification',
+      'Standard Metering Equipment Technology System',
+      'Smart Meter Energy Transfer System',
+      'Supplier Managed Energy Tracking Service',
     ],
     correctAnswer: 0,
-    explanation: "SMETS (Smart Metering Equipment Technical Specification) defines the standards for smart meters. SMETS2 is the current standard, featuring national network connectivity and supplier interoperability."
+    explanation:
+      'SMETS (Smart Metering Equipment Technical Specification) defines the standards for smart meters. SMETS2 is the current standard, featuring national network connectivity and supplier interoperability.',
   },
   {
     id: 2,
-    question: "The In-Home Display (IHD) provided with smart meters shows:",
+    question: 'The In-Home Display (IHD) provided with smart meters shows:',
     options: [
-      "Only monthly totals",
-      "Real-time and historical energy consumption and costs",
-      "Supplier contact details only",
-      "Weather forecasts"
+      'Only monthly totals',
+      'Real-time and historical energy consumption and costs',
+      'Supplier contact details only',
+      'Weather forecasts',
     ],
     correctAnswer: 1,
-    explanation: "The IHD shows real-time consumption in kW and cost, plus historical data. This helps customers understand and modify their energy usage patterns to reduce bills."
+    explanation:
+      'The IHD shows real-time consumption in kW and cost, plus historical data. This helps customers understand and modify their energy usage patterns to reduce bills.',
   },
   {
     id: 3,
-    question: "Which type of CT clamp would be used for monitoring a single-phase supply?",
+    question: 'Which type of CT clamp would be used for monitoring a single-phase supply?',
     options: [
-      "One CT clamp on the live conductor",
-      "CT clamps on both live and neutral",
-      "Three CT clamps",
-      "No CT clamps are needed for single-phase"
+      'One CT clamp on the live conductor',
+      'CT clamps on both live and neutral',
+      'Three CT clamps',
+      'No CT clamps are needed for single-phase',
     ],
     correctAnswer: 0,
-    explanation: "For single-phase monitoring, one CT clamp is placed around the live conductor. The current flowing through live equals that returning through neutral in a normal installation."
+    explanation:
+      'For single-phase monitoring, one CT clamp is placed around the live conductor. The current flowing through live equals that returning through neutral in a normal installation.',
   },
   {
     id: 4,
-    question: "Energy monitoring systems typically measure:",
+    question: 'Energy monitoring systems typically measure:',
     options: [
-      "Current only",
-      "Voltage only",
-      "Voltage, current, power, and often power factor",
-      "Temperature only"
+      'Current only',
+      'Voltage only',
+      'Voltage, current, power, and often power factor',
+      'Temperature only',
     ],
     correctAnswer: 2,
-    explanation: "Comprehensive energy monitors measure voltage, current, power (real and apparent), and power factor. This data enables identification of inefficiencies and optimisation opportunities."
+    explanation:
+      'Comprehensive energy monitors measure voltage, current, power (real and apparent), and power factor. This data enables identification of inefficiencies and optimisation opportunities.',
   },
   {
     id: 5,
-    question: "What is the benefit of half-hourly (HH) metering data?",
+    question: 'What is the benefit of half-hourly (HH) metering data?',
     options: [
       "It's required for all properties",
-      "It enables detailed analysis of consumption patterns and time-of-use billing",
-      "It reduces the meter cost",
-      "It eliminates the need for an IHD"
+      'It enables detailed analysis of consumption patterns and time-of-use billing',
+      'It reduces the meter cost',
+      'It eliminates the need for an IHD',
     ],
     correctAnswer: 1,
-    explanation: "Half-hourly data reveals when energy is being used, enabling identification of peak periods, unusual consumption, and opportunities for load shifting to cheaper tariff periods."
+    explanation:
+      'Half-hourly data reveals when energy is being used, enabling identification of peak periods, unusual consumption, and opportunities for load shifting to cheaper tariff periods.',
   },
   {
     id: 6,
-    question: "A Building Energy Management System (BEMS) typically:",
+    question: 'A Building Energy Management System (BEMS) typically:',
     options: [
-      "Only monitors energy",
-      "Controls HVAC, lighting, and other building systems while monitoring energy",
-      "Replaces the electricity meter",
-      "Is only for residential use"
+      'Only monitors energy',
+      'Controls HVAC, lighting, and other building systems while monitoring energy',
+      'Replaces the electricity meter',
+      'Is only for residential use',
     ],
     correctAnswer: 1,
-    explanation: "BEMS integrates monitoring and control of building services - HVAC, lighting, and sometimes other systems. Energy monitoring is a key function, enabling optimisation and fault detection."
+    explanation:
+      'BEMS integrates monitoring and control of building services - HVAC, lighting, and sometimes other systems. Energy monitoring is a key function, enabling optimisation and fault detection.',
   },
   {
     id: 7,
-    question: "The CAD (Consumer Access Device) in smart metering allows:",
+    question: 'The CAD (Consumer Access Device) in smart metering allows:',
     options: [
-      "Replacement of the IHD",
-      "Third-party devices to receive real-time data from the smart meter",
-      "Remote meter reading only",
-      "Supplier switching"
+      'Replacement of the IHD',
+      'Third-party devices to receive real-time data from the smart meter',
+      'Remote meter reading only',
+      'Supplier switching',
     ],
     correctAnswer: 1,
-    explanation: "The CAD connects to the smart meter's HAN (Home Area Network) and allows approved third-party devices and apps to receive real-time consumption data for energy management purposes."
+    explanation:
+      "The CAD connects to the smart meter's HAN (Home Area Network) and allows approved third-party devices and apps to receive real-time consumption data for energy management purposes.",
   },
   {
     id: 8,
-    question: "For three-phase monitoring, how many CT clamps are typically required?",
-    options: [
-      "One",
-      "Two",
-      "Three (one per phase)",
-      "Six"
-    ],
+    question: 'For three-phase monitoring, how many CT clamps are typically required?',
+    options: ['One', 'Two', 'Three (one per phase)', 'Six'],
     correctAnswer: 2,
-    explanation: "Three-phase systems require three CT clamps, one on each phase conductor. The monitoring system calculates total power from the three separate phase measurements."
+    explanation:
+      'Three-phase systems require three CT clamps, one on each phase conductor. The monitoring system calculates total power from the three separate phase measurements.',
   },
   {
     id: 9,
-    question: "Baseload in energy monitoring refers to:",
+    question: 'Baseload in energy monitoring refers to:',
     options: [
-      "The maximum power drawn",
-      "The minimum continuous power consumption when a building is unoccupied",
-      "The foundation of the building",
-      "The main electrical supply"
+      'The maximum power drawn',
+      'The minimum continuous power consumption when a building is unoccupied',
+      'The foundation of the building',
+      'The main electrical supply',
     ],
     correctAnswer: 1,
-    explanation: "Baseload is the constant background consumption when a building is not actively being used. High baseload often indicates equipment left running unnecessarily or inefficient systems."
+    explanation:
+      'Baseload is the constant background consumption when a building is not actively being used. High baseload often indicates equipment left running unnecessarily or inefficient systems.',
   },
   {
     id: 10,
-    question: "Energy monitoring can help identify which of the following issues?",
+    question: 'Energy monitoring can help identify which of the following issues?',
     options: [
-      "Equipment running outside of operating hours",
-      "Faulty or inefficient equipment drawing excess power",
-      "Power factor problems",
-      "All of the above"
+      'Equipment running outside of operating hours',
+      'Faulty or inefficient equipment drawing excess power',
+      'Power factor problems',
+      'All of the above',
     ],
     correctAnswer: 3,
-    explanation: "Energy monitoring can reveal out-of-hours consumption, abnormal power draw from faulty equipment, and power factor issues. This data enables targeted improvements and cost savings."
+    explanation:
+      'Energy monitoring can reveal out-of-hours consumption, abnormal power draw from faulty equipment, and power factor issues. This data enables targeted improvements and cost savings.',
   },
   {
     id: 11,
-    question: "The HAN in smart metering stands for:",
+    question: 'The HAN in smart metering stands for:',
     options: [
-      "High Availability Network",
-      "Home Area Network",
-      "Household Allocation Number",
-      "Heating and Air Network"
+      'High Availability Network',
+      'Home Area Network',
+      'Household Allocation Number',
+      'Heating and Air Network',
     ],
     correctAnswer: 1,
-    explanation: "The Home Area Network (HAN) connects smart meter components within the premises - the electricity meter, gas meter, and IHD communicate via this secure local network."
+    explanation:
+      'The Home Area Network (HAN) connects smart meter components within the premises - the electricity meter, gas meter, and IHD communicate via this secure local network.',
   },
   {
     id: 12,
-    question: "When installing CT clamps, which is essential?",
+    question: 'When installing CT clamps, which is essential?',
     options: [
-      "Breaking the circuit to insert the CT",
-      "Ensuring the CT is correctly oriented and sized for the cable",
-      "Connecting the CT to the neutral conductor",
-      "Using CTs rated below the expected current"
+      'Breaking the circuit to insert the CT',
+      'Ensuring the CT is correctly oriented and sized for the cable',
+      'Connecting the CT to the neutral conductor',
+      'Using CTs rated below the expected current',
     ],
     correctAnswer: 1,
-    explanation: "CT clamps must be correctly oriented (arrow pointing towards the load) and appropriately sized. An undersized CT will saturate and give inaccurate readings at higher currents."
-  }
+    explanation:
+      'CT clamps must be correctly oriented (arrow pointing towards the load) and appropriately sized. An undersized CT will saturate and give inaccurate readings at higher currents.',
+  },
 ];
 
 // ============================================
@@ -226,29 +238,35 @@ const quizQuestions = [
 // ============================================
 const faqs = [
   {
-    question: "Can customers refuse a smart meter installation?",
-    answer: "Currently customers can decline a smart meter. However, the government aims for all homes to be offered one by 2025. Smart meters become essential for time-of-use tariffs and some EV charging tariffs that offer lower rates."
+    question: 'Can customers refuse a smart meter installation?',
+    answer:
+      'Currently customers can decline a smart meter. However, the government aims for all homes to be offered one by 2025. Smart meters become essential for time-of-use tariffs and some EV charging tariffs that offer lower rates.',
   },
   {
-    question: "What happens to the smart meter when switching suppliers?",
-    answer: "SMETS2 meters maintain full smart functionality when switching suppliers as they communicate via the national DCC network. Earlier SMETS1 meters often lost smart features and operated as traditional meters after switching."
+    question: 'What happens to the smart meter when switching suppliers?',
+    answer:
+      'SMETS2 meters maintain full smart functionality when switching suppliers as they communicate via the national DCC network. Earlier SMETS1 meters often lost smart features and operated as traditional meters after switching.',
   },
   {
-    question: "How accurate are CT clamp energy monitors?",
-    answer: "Quality CT-based monitors typically achieve 1-2% accuracy when properly installed. Accuracy depends on CT quality, correct sizing, proper orientation, and voltage reference. Revenue-grade meters achieve higher accuracy (0.5% Class)."
+    question: 'How accurate are CT clamp energy monitors?',
+    answer:
+      'Quality CT-based monitors typically achieve 1-2% accuracy when properly installed. Accuracy depends on CT quality, correct sizing, proper orientation, and voltage reference. Revenue-grade meters achieve higher accuracy (0.5% Class).',
   },
   {
-    question: "Can I install energy monitoring on any circuit?",
-    answer: "Yes, sub-metering can be added to any circuit using appropriate CTs and monitoring equipment. This requires working in distribution boards, so must be done by a competent person following safe isolation procedures."
+    question: 'Can I install energy monitoring on any circuit?',
+    answer:
+      'Yes, sub-metering can be added to any circuit using appropriate CTs and monitoring equipment. This requires working in distribution boards, so must be done by a competent person following safe isolation procedures.',
   },
   {
-    question: "What data can a smart meter share with third parties?",
-    answer: "With customer consent, smart meter data can be shared via the CAD or through the DCC. This enables smart home systems, energy management apps, and demand-side response services. Customers control what data is shared."
+    question: 'What data can a smart meter share with third parties?',
+    answer:
+      'With customer consent, smart meter data can be shared via the CAD or through the DCC. This enables smart home systems, energy management apps, and demand-side response services. Customers control what data is shared.',
   },
   {
-    question: "How can energy monitoring data help reduce consumption?",
-    answer: "Data reveals when and where energy is used, highlighting waste such as overnight baseload, out-of-hours equipment, and inefficient processes. Seeing real-time costs encourages behaviour change and enables verification of efficiency improvements."
-  }
+    question: 'How can energy monitoring data help reduce consumption?',
+    answer:
+      'Data reveals when and where energy is used, highlighting waste such as overnight baseload, out-of-hours equipment, and inefficient processes. Seeing real-time costs encourages behaviour change and enables verification of efficiency improvements.',
+  },
 ];
 
 // ============================================
@@ -259,7 +277,6 @@ const Level3Module2Section2_5 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -279,34 +296,42 @@ const Level3Module2Section2_5 = () => {
 
       {/* Main Article Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Header */}
-        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>SMETS2:</strong> Current smart meter standard</li>
-              <li><strong>IHD:</strong> Real-time consumption display</li>
-              <li><strong>CT clamps:</strong> Non-invasive current monitoring</li>
-              <li><strong>Sub-metering:</strong> Monitor individual circuits</li>
+              <li>
+                <strong>SMETS2:</strong> Current smart meter standard
+              </li>
+              <li>
+                <strong>IHD:</strong> Real-time consumption display
+              </li>
+              <li>
+                <strong>CT clamps:</strong> Non-invasive current monitoring
+              </li>
+              <li>
+                <strong>Sub-metering:</strong> Monitor individual circuits
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Smart meter with HAN communications unit</li>
-              <li><strong>Use:</strong> CT clamps for circuit-level monitoring</li>
-              <li><strong>Apply:</strong> Energy data for identifying waste</li>
+              <li>
+                <strong>Spot:</strong> Smart meter with HAN communications unit
+              </li>
+              <li>
+                <strong>Use:</strong> CT clamps for circuit-level monitoring
+              </li>
+              <li>
+                <strong>Apply:</strong> Energy data for identifying waste
+              </li>
             </ul>
           </div>
         </div>
-
-        
-
-        
 
         {/* Section 01 */}
         <section className="mb-10">
@@ -316,22 +341,38 @@ const Level3Module2Section2_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Smart meters represent a fundamental shift in energy measurement and management. Unlike traditional meters that simply accumulate consumption, smart meters provide detailed, time-stamped data and two-way communication with energy suppliers and in-home systems.
+              Smart meters represent a fundamental shift in energy measurement and management.
+              Unlike traditional meters that simply accumulate consumption, smart meters provide
+              detailed, time-stamped data and two-way communication with energy suppliers and
+              in-home systems.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">SMETS2 Smart Meter Components:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Electricity meter:</strong> Measures consumption with 30-minute granularity</li>
-                <li><strong>Communications hub:</strong> Connects to DCC national network</li>
-                <li><strong>HAN (Home Area Network):</strong> Local wireless network linking devices</li>
-                <li><strong>IHD (In-Home Display):</strong> Shows real-time and historical usage</li>
-                <li><strong>Gas meter (if applicable):</strong> Connected via HAN to electricity meter</li>
+                <li>
+                  <strong>Electricity meter:</strong> Measures consumption with 30-minute
+                  granularity
+                </li>
+                <li>
+                  <strong>Communications hub:</strong> Connects to DCC national network
+                </li>
+                <li>
+                  <strong>HAN (Home Area Network):</strong> Local wireless network linking devices
+                </li>
+                <li>
+                  <strong>IHD (In-Home Display):</strong> Shows real-time and historical usage
+                </li>
+                <li>
+                  <strong>Gas meter (if applicable):</strong> Connected via HAN to electricity meter
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> SMETS2 meters communicate via the DCC network, not home broadband. This ensures continued operation during internet outages and enables supplier switching without losing smart functionality.
+              <strong>Remember:</strong> SMETS2 meters communicate via the DCC network, not home
+              broadband. This ensures continued operation during internet outages and enables
+              supplier switching without losing smart functionality.
             </p>
           </div>
         </section>
@@ -346,21 +387,31 @@ const Level3Module2Section2_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Current Transformer (CT) clamps enable non-invasive current measurement by sensing the magnetic field around a conductor. Combined with voltage sensing, they provide the basis for most energy monitoring systems.
+              Current Transformer (CT) clamps enable non-invasive current measurement by sensing the
+              magnetic field around a conductor. Combined with voltage sensing, they provide the
+              basis for most energy monitoring systems.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">CT Clamp Types</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Split-core:</strong> Can be fitted without disconnection</li>
-                  <li><strong>Solid-core:</strong> Cable must pass through</li>
-                  <li><strong>Rogowski coil:</strong> Flexible for large cables</li>
+                  <li>
+                    <strong>Split-core:</strong> Can be fitted without disconnection
+                  </li>
+                  <li>
+                    <strong>Solid-core:</strong> Cable must pass through
+                  </li>
+                  <li>
+                    <strong>Rogowski coil:</strong> Flexible for large cables
+                  </li>
                   <li>Various current ratings (e.g., 100A, 200A, 400A)</li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Considerations</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Installation Considerations
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Correct orientation (load direction arrow)</li>
                   <li>CT sized for expected current</li>
@@ -371,7 +422,9 @@ const Level3Module2Section2_5 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> Installing a whole-house energy monitor requires a CT clamp on the meter tails (live conductor) and a voltage reference connection. The monitor calculates power from the product of current and voltage.
+              <strong>Example:</strong> Installing a whole-house energy monitor requires a CT clamp
+              on the meter tails (live conductor) and a voltage reference connection. The monitor
+              calculates power from the product of current and voltage.
             </p>
           </div>
         </section>
@@ -386,17 +439,31 @@ const Level3Module2Section2_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Sub-metering extends monitoring beyond the main supply to individual circuits, areas, or equipment. This granular data enables identification of specific consumption patterns, cost allocation, and targeted efficiency improvements.
+              Sub-metering extends monitoring beyond the main supply to individual circuits, areas,
+              or equipment. This granular data enables identification of specific consumption
+              patterns, cost allocation, and targeted efficiency improvements.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common Sub-Metering Applications:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Common Sub-Metering Applications:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Commercial:</strong> Tenant billing, departmental allocation</li>
-                <li><strong>Industrial:</strong> Process monitoring, equipment efficiency</li>
-                <li><strong>Landlord metering:</strong> Individual unit consumption</li>
-                <li><strong>EV charging:</strong> Separate metering for billing</li>
-                <li><strong>Renewable monitoring:</strong> Solar PV generation tracking</li>
+                <li>
+                  <strong>Commercial:</strong> Tenant billing, departmental allocation
+                </li>
+                <li>
+                  <strong>Industrial:</strong> Process monitoring, equipment efficiency
+                </li>
+                <li>
+                  <strong>Landlord metering:</strong> Individual unit consumption
+                </li>
+                <li>
+                  <strong>EV charging:</strong> Separate metering for billing
+                </li>
+                <li>
+                  <strong>Renewable monitoring:</strong> Solar PV generation tracking
+                </li>
               </ul>
             </div>
 
@@ -427,26 +494,44 @@ const Level3Module2Section2_5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The value of energy monitoring lies in data analysis and action. Modern systems collect vast amounts of data - turning this into actionable insights requires understanding of consumption patterns, benchmarking, and integration with building systems.
+              The value of energy monitoring lies in data analysis and action. Modern systems
+              collect vast amounts of data - turning this into actionable insights requires
+              understanding of consumption patterns, benchmarking, and integration with building
+              systems.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key Analysis Metrics:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Baseload:</strong> Minimum consumption when unoccupied</li>
-                <li><strong>Peak demand:</strong> Maximum power draw</li>
-                <li><strong>Load profile:</strong> Consumption pattern over time</li>
-                <li><strong>Power factor:</strong> Efficiency of power usage</li>
-                <li><strong>Anomaly detection:</strong> Unusual consumption events</li>
+                <li>
+                  <strong>Baseload:</strong> Minimum consumption when unoccupied
+                </li>
+                <li>
+                  <strong>Peak demand:</strong> Maximum power draw
+                </li>
+                <li>
+                  <strong>Load profile:</strong> Consumption pattern over time
+                </li>
+                <li>
+                  <strong>Power factor:</strong> Efficiency of power usage
+                </li>
+                <li>
+                  <strong>Anomaly detection:</strong> Unusual consumption events
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> A commercial building with high overnight baseload might discover server room cooling running inefficiently, kitchen equipment left on, or lighting timers set incorrectly. Without monitoring data, this waste would go unnoticed.
+              <strong>Example:</strong> A commercial building with high overnight baseload might
+              discover server room cooling running inefficiently, kitchen equipment left on, or
+              lighting timers set incorrectly. Without monitoring data, this waste would go
+              unnoticed.
             </p>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Smart meters and monitoring enable time-of-use tariffs, demand response participation, and integration with home automation systems for automated energy optimization.
+              <strong>Remember:</strong> Smart meters and monitoring enable time-of-use tariffs,
+              demand response participation, and integration with home automation systems for
+              automated energy optimization.
             </p>
           </div>
         </section>
@@ -461,7 +546,9 @@ const Level3Module2Section2_5 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Installing Energy Monitors</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Installing Energy Monitors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Select CT clamps rated for the expected maximum current</li>
                 <li>Ensure correct CT orientation (load direction arrow)</li>
@@ -472,7 +559,9 @@ const Level3Module2Section2_5 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Helping Customers Use Data</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Helping Customers Use Data
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Explain the IHD display and what the readings mean</li>
                 <li>Show how to identify high-consumption appliances</li>
@@ -484,9 +573,15 @@ const Level3Module2Section2_5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong CT size</strong> - Undersized CTs saturate and give wrong readings</li>
-                <li><strong>CT orientation</strong> - Reversed CT shows negative power readings</li>
-                <li><strong>Missing voltage reference</strong> - Can only measure current, not power</li>
+                <li>
+                  <strong>Wrong CT size</strong> - Undersized CTs saturate and give wrong readings
+                </li>
+                <li>
+                  <strong>CT orientation</strong> - Reversed CT shows negative power readings
+                </li>
+                <li>
+                  <strong>Missing voltage reference</strong> - Can only measure current, not power
+                </li>
               </ul>
             </div>
           </div>
@@ -536,10 +631,7 @@ const Level3Module2Section2_5 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
@@ -566,7 +658,6 @@ const Level3Module2Section2_5 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

@@ -3,7 +3,7 @@ import { documentationBestPracticesQuizQuestions } from '@/data/upskilling/docum
 
 const DocumentationBestPracticesQuiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={documentationBestPracticesQuizQuestions}
       title="Documentation Best Practices Quiz"
     />

@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by COSHH awareness assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by COSHH awareness assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Know the COSHH Regulations 2002",
+    title: 'Know the COSHH Regulations 2002',
     description:
-      "Understand the legal duties on employers and employees, the eight steps of a COSHH assessment, and how the regulations link to the Health and Safety at Work Act 1974.",
+      'Understand the legal duties on employers and employees, the eight steps of a COSHH assessment, and how the regulations link to the Health and Safety at Work Act 1974.',
   },
   {
-    title: "Learn the GHS Pictograms",
+    title: 'Learn the GHS Pictograms',
     description:
-      "All nine GHS hazard pictograms are heavily tested. Know what each red-bordered diamond means, including health hazard, corrosive, flammable, and environment symbols.",
+      'All nine GHS hazard pictograms are heavily tested. Know what each red-bordered diamond means, including health hazard, corrosive, flammable, and environment symbols.',
   },
   {
-    title: "Understand Routes of Exposure",
+    title: 'Understand Routes of Exposure',
     description:
-      "Inhalation, ingestion, skin absorption, and injection — know which route is most common in construction and why respiratory protection is often the priority.",
+      'Inhalation, ingestion, skin absorption, and injection — know which route is most common in construction and why respiratory protection is often the priority.',
   },
   {
-    title: "Master the Hierarchy of Control",
+    title: 'Master the Hierarchy of Control',
     description:
-      "Elimination, substitution, engineering controls, administrative controls, then PPE. Know real examples of each level and why PPE is always the last resort.",
+      'Elimination, substitution, engineering controls, administrative controls, then PPE. Know real examples of each level and why PPE is always the last resort.',
   },
   {
-    title: "Know Your RPE & PPE",
+    title: 'Know Your RPE & PPE',
     description:
-      "Understand assigned protection factors, the difference between filtering and supplied-air RPE, face-fit testing requirements, and how to select the right gloves for different chemicals.",
+      'Understand assigned protection factors, the difference between filtering and supplied-air RPE, face-fit testing requirements, and how to select the right gloves for different chemicals.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function CoshhAwarenessModule6() {
   useSEO({
-    title: "COSHH Awareness Mock Exam | Module 6",
+    title: 'COSHH Awareness Mock Exam | Module 6',
     description:
-      "Test your COSHH awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your COSHH awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,12 +108,10 @@ export default function CoshhAwarenessModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Put your COSHH awareness knowledge to the test under timed exam conditions.
-              Questions are drawn from a 200-question bank covering all five content modules.
+              Put your COSHH awareness knowledge to the test under timed exam conditions. Questions
+              are drawn from a 200-question bank covering all five content modules.
             </p>
           </div>
 
@@ -115,7 +123,9 @@ export default function CoshhAwarenessModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real COSHH awareness assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real COSHH awareness assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +140,7 @@ export default function CoshhAwarenessModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +156,11 @@ export default function CoshhAwarenessModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Understanding COSHH", count: 40 },
-                  { module: "Module 2", name: "Legislation & Risk Assessment", count: 40 },
-                  { module: "Module 3", name: "Hazardous Substances on Site", count: 40 },
-                  { module: "Module 4", name: "Control Measures & PPE", count: 40 },
-                  { module: "Module 5", name: "Monitoring, Surveillance & Emergencies", count: 40 },
+                  { module: 'Module 1', name: 'Understanding COSHH', count: 40 },
+                  { module: 'Module 2', name: 'Legislation & Risk Assessment', count: 40 },
+                  { module: 'Module 3', name: 'Hazardous Substances on Site', count: 40 },
+                  { module: 'Module 4', name: 'Control Measures & PPE', count: 40 },
+                  { module: 'Module 5', name: 'Monitoring, Surveillance & Emergencies', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +212,7 @@ export default function CoshhAwarenessModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

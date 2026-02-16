@@ -1,44 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { useLocalStorage } from "@/hooks/use-local-storage";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  CheckCircle2, 
-  FileText, 
+import React, { useState, useEffect } from 'react';
+import { useLocalStorage } from '@/hooks/use-local-storage';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
+import {
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+  FileText,
   Sparkles,
   Clock,
   Save,
   Eye,
-  Loader2
-} from "lucide-react";
+  Loader2,
+} from 'lucide-react';
 
 // Step Components
-import TemplateSelectionStep from "./steps/TemplateSelectionStep";
-import ClientDetailsStep from "./steps/ClientDetailsStep";
-import InspectionDetailsStep from "./steps/InspectionDetailsStep";
-import ReviewGenerateStep from "./steps/ReviewGenerateStep";
+import TemplateSelectionStep from './steps/TemplateSelectionStep';
+import ClientDetailsStep from './steps/ClientDetailsStep';
+import InspectionDetailsStep from './steps/InspectionDetailsStep';
+import ReviewGenerateStep from './steps/ReviewGenerateStep';
 
 // Types
-import { WizardData, WizardStep } from "./types";
+import { WizardData, WizardStep } from './types';
 
-const STORAGE_KEY = "report-wizard-data";
+const STORAGE_KEY = 'report-wizard-data';
 
 // Validation functions
 const validateClientDetails = (data: Record<string, any>) => {
-  const requiredFields = ['clientName', 'clientAddress', 'installationAddress', 'installationDescription'];
-  const isValid = requiredFields.every(field => data[field]?.trim());
+  const requiredFields = [
+    'clientName',
+    'clientAddress',
+    'installationAddress',
+    'installationDescription',
+  ];
+  const isValid = requiredFields.every((field) => data[field]?.trim());
   console.log('Client validation:', { data, requiredFields, isValid });
   return isValid;
 };
 
 const validateInspectionDetails = (data: Record<string, any>) => {
   const requiredFields = ['extentOfInspection', 'overallAssessment'];
-  const isValid = requiredFields.every(field => data[field]?.trim());
+  const isValid = requiredFields.every((field) => data[field]?.trim());
   console.log('Inspection validation:', { data, requiredFields, isValid });
   return isValid;
 };
@@ -50,9 +55,9 @@ const ReportWizard = () => {
     template: null,
     clientDetails: {},
     inspectionDetails: {},
-    additionalNotes: "",
+    additionalNotes: '',
     isAutoSaving: false,
-    lastSaved: null
+    lastSaved: null,
   });
 
   const steps: Array<{
@@ -67,32 +72,32 @@ const ReportWizard = () => {
       title: 'Template Selection',
       description: 'Choose your report type',
       isCompleted: !!wizardData.template,
-      isAccessible: true
+      isAccessible: true,
     },
     {
       id: 'client',
       title: 'Client & Installation',
       description: 'Basic information',
       isCompleted: validateClientDetails(wizardData.clientDetails),
-      isAccessible: !!wizardData.template
+      isAccessible: !!wizardData.template,
     },
     {
       id: 'inspection',
       title: 'Inspection & Findings',
       description: 'Technical details',
       isCompleted: validateInspectionDetails(wizardData.inspectionDetails),
-      isAccessible: !!wizardData.template && validateClientDetails(wizardData.clientDetails)
+      isAccessible: !!wizardData.template && validateClientDetails(wizardData.clientDetails),
     },
     {
       id: 'review',
       title: 'Review & Generate',
       description: 'Final review and generation',
       isCompleted: false,
-      isAccessible: true // Force accessible for debugging - both validations are passing anyway
-    }
+      isAccessible: true, // Force accessible for debugging - both validations are passing anyway
+    },
   ];
 
-  const currentStepIndex = steps.findIndex(step => step.id === currentStep);
+  const currentStepIndex = steps.findIndex((step) => step.id === currentStep);
   const progress = ((currentStepIndex + 1) / steps.length) * 100;
 
   // Debug logging for wizard state
@@ -101,18 +106,22 @@ const ReportWizard = () => {
     wizardData: {
       template: wizardData.template?.name,
       clientDetails: Object.keys(wizardData.clientDetails),
-      inspectionDetails: Object.keys(wizardData.inspectionDetails)
+      inspectionDetails: Object.keys(wizardData.inspectionDetails),
     },
-    steps: steps.map(s => ({ id: s.id, isCompleted: s.isCompleted, isAccessible: s.isAccessible }))
+    steps: steps.map((s) => ({
+      id: s.id,
+      isCompleted: s.isCompleted,
+      isAccessible: s.isAccessible,
+    })),
   });
 
   // Auto-save functionality
   useEffect(() => {
     const autoSave = setTimeout(() => {
       if (wizardData.template || Object.keys(wizardData.clientDetails).length > 0) {
-        setWizardData(prev => ({
+        setWizardData((prev) => ({
           ...prev,
-          lastSaved: new Date().toISOString()
+          lastSaved: new Date().toISOString(),
         }));
       }
     }, 2000);
@@ -122,11 +131,11 @@ const ReportWizard = () => {
 
   const updateWizardData = (section: keyof WizardData, data: any) => {
     console.log('Updating wizard data:', { section, data });
-    setWizardData(prev => {
+    setWizardData((prev) => {
       const newData = {
         ...prev,
         [section]: data,
-        lastSaved: new Date().toISOString()
+        lastSaved: new Date().toISOString(),
       };
       console.log('New wizard data state:', newData);
       return newData;
@@ -134,8 +143,11 @@ const ReportWizard = () => {
   };
 
   const goToStep = (stepId: WizardStep) => {
-    const step = steps.find(s => s.id === stepId);
-    console.log('Attempting to go to step:', { stepId, step: step ? { id: step.id, isAccessible: step.isAccessible } : 'not found' });
+    const step = steps.find((s) => s.id === stepId);
+    console.log('Attempting to go to step:', {
+      stepId,
+      step: step ? { id: step.id, isAccessible: step.isAccessible } : 'not found',
+    });
     if (step?.isAccessible) {
       console.log('Step is accessible, navigating to:', stepId);
       setCurrentStep(stepId);
@@ -199,9 +211,9 @@ const ReportWizard = () => {
                 template: null,
                 clientDetails: {},
                 inspectionDetails: {},
-                additionalNotes: "",
+                additionalNotes: '',
                 isAutoSaving: false,
-                lastSaved: null
+                lastSaved: null,
               });
               setCurrentStep('template');
             }}
@@ -229,7 +241,7 @@ const ReportWizard = () => {
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Create BS7671 18th Edition compliant electrical certificates and condition reports
             </p>
-            
+
             {/* Subtle Auto-save indicator */}
             {wizardData.lastSaved && (
               <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/70 mt-4">
@@ -240,9 +252,7 @@ const ReportWizard = () => {
           </div>
 
           {/* Current Step Content */}
-          <div className="animate-fade-in">
-            {renderCurrentStep()}
-          </div>
+          <div className="animate-fade-in">{renderCurrentStep()}</div>
 
           {/* Quick Action Floating Button (Mobile) */}
           {wizardData.template && (
@@ -254,9 +264,9 @@ const ReportWizard = () => {
                     template: null,
                     clientDetails: {},
                     inspectionDetails: {},
-                    additionalNotes: "",
+                    additionalNotes: '',
                     isAutoSaving: false,
-                    lastSaved: null
+                    lastSaved: null,
                   });
                   setCurrentStep('template');
                 }}

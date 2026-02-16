@@ -12,10 +12,10 @@ const BMSModule7Section6ContentPart1 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          The handover ensures the client can safely and effectively operate the BMS. This structured 
-          process prevents misunderstandings and reduces the likelihood of system misuse.
+          The handover ensures the client can safely and effectively operate the BMS. This
+          structured process prevents misunderstandings and reduces the likelihood of system misuse.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
@@ -29,7 +29,7 @@ const BMSModule7Section6ContentPart1 = () => {
                 <li>• Override controls when necessary</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
               <Users className="h-6 w-6 text-elec-yellow mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Operator Training</h4>
@@ -42,7 +42,7 @@ const BMSModule7Section6ContentPart1 = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
               <Wrench className="h-6 w-6 text-elec-yellow mb-3" />
@@ -55,7 +55,7 @@ const BMSModule7Section6ContentPart1 = () => {
                 <li>• Manual override procedures</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
               <FileCheck className="h-6 w-6 text-elec-yellow mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Warranty Briefing</h4>
@@ -69,7 +69,7 @@ const BMSModule7Section6ContentPart1 = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Inline Check</h4>
           <p className="text-foreground">
@@ -78,9 +78,9 @@ const BMSModule7Section6ContentPart1 = () => {
           <details className="mt-2">
             <summary className="cursor-pointer text-elec-yellow">Click for answer</summary>
             <p className="mt-2 text-sm text-foreground">
-              Proper training ensures operators can use the system safely and effectively, preventing 
-              misuse that could damage equipment, waste energy, or create uncomfortable conditions. 
-              It also reduces call-backs and builds client confidence.
+              Proper training ensures operators can use the system safely and effectively,
+              preventing misuse that could damage equipment, waste energy, or create uncomfortable
+              conditions. It also reduces call-backs and builds client confidence.
             </p>
           </details>
         </div>

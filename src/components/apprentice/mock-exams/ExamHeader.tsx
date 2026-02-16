@@ -1,8 +1,7 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Clock } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Clock } from 'lucide-react';
 
 interface ExamHeaderProps {
   currentQuestionIndex: number;
@@ -15,14 +14,14 @@ const ExamHeader: React.FC<ExamHeaderProps> = ({
   currentQuestionIndex,
   totalQuestions,
   timeRemaining,
-  onExit
+  onExit,
 }) => {
   // Format time remaining
   const formatTime = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    
+
     return `${hrs > 0 ? `${hrs}h ` : ''}${mins.toString().padStart(2, '0')}m ${secs.toString().padStart(2, '0')}s`;
   };
 
@@ -45,7 +44,7 @@ const ExamHeader: React.FC<ExamHeaderProps> = ({
           Exit Exam
         </Button>
       </div>
-      
+
       <Progress value={progressPercentage} className="h-2" />
     </>
   );

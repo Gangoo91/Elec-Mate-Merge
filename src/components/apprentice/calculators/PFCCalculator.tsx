@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Zap,
   RotateCcw,
@@ -11,13 +11,9 @@ import {
   Calculator,
   Target,
   ChevronDown,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -26,16 +22,16 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 const PFCCalculator = () => {
-  const config = CALCULATOR_CONFIG["protection"];
+  const config = CALCULATOR_CONFIG['protection'];
 
-  const [activeTab, setActiveTab] = useState<"calculator" | "guidance">("calculator");
-  const [voltage, setVoltage] = useState("230");
-  const [systemType, setSystemType] = useState("");
-  const [zeValue, setZeValue] = useState("");
-  const [r1r2Value, setR1r2Value] = useState("");
+  const [activeTab, setActiveTab] = useState<'calculator' | 'guidance'>('calculator');
+  const [voltage, setVoltage] = useState('230');
+  const [systemType, setSystemType] = useState('');
+  const [zeValue, setZeValue] = useState('');
+  const [r1r2Value, setR1r2Value] = useState('');
   const [showGuidance, setShowGuidance] = useState(false);
   const [showStandards, setShowStandards] = useState(false);
   const [result, setResult] = useState<{
@@ -47,8 +43,8 @@ const PFCCalculator = () => {
   } | null>(null);
 
   const systemTypeOptions = [
-    { value: "single-phase", label: "Single Phase (230V)" },
-    { value: "three-phase", label: "Three Phase (400V)" },
+    { value: 'single-phase', label: 'Single Phase (230V)' },
+    { value: 'three-phase', label: 'Three Phase (400V)' },
   ];
 
   const calculatePFC = () => {
@@ -66,7 +62,7 @@ const PFCCalculator = () => {
     // Calculate PFC using Ohm's law
     // For earth fault loop impedance, we use phase voltage (Uo = 230V)
     // regardless of single-phase or three-phase, as the fault path is phase-to-earth
-    const phaseVoltage = systemType === "three-phase" ? 230 : supplyVoltage;
+    const phaseVoltage = systemType === 'three-phase' ? 230 : supplyVoltage;
     const pfcValue = phaseVoltage / zs;
 
     // Assess the PFC level and provide recommendations
@@ -75,38 +71,38 @@ const PFCCalculator = () => {
     let breakingCapacity: string;
 
     if (pfcValue < 1000) {
-      assessmentLevel = "Low";
+      assessmentLevel = 'Low';
       recommendations = [
-        "PFC is relatively low - standard MCBs should be adequate",
-        "Check if protective device will operate within required time",
-        "Consider cable sizing and length factors",
+        'PFC is relatively low - standard MCBs should be adequate',
+        'Check if protective device will operate within required time',
+        'Consider cable sizing and length factors',
       ];
-      breakingCapacity = "6kA MCBs typically adequate";
+      breakingCapacity = '6kA MCBs typically adequate';
     } else if (pfcValue < 6000) {
-      assessmentLevel = "Medium";
+      assessmentLevel = 'Medium';
       recommendations = [
-        "Moderate PFC - ensure MCBs have adequate breaking capacity",
-        "Standard 6kA MCBs should be sufficient",
-        "Check manufacturer specifications for exact requirements",
+        'Moderate PFC - ensure MCBs have adequate breaking capacity',
+        'Standard 6kA MCBs should be sufficient',
+        'Check manufacturer specifications for exact requirements',
       ];
-      breakingCapacity = "6kA MCBs recommended";
+      breakingCapacity = '6kA MCBs recommended';
     } else if (pfcValue < 10000) {
-      assessmentLevel = "High";
+      assessmentLevel = 'High';
       recommendations = [
-        "High PFC - use MCBs with higher breaking capacity",
-        "Consider 10kA or higher rated protective devices",
-        "Additional protection coordination may be required",
+        'High PFC - use MCBs with higher breaking capacity',
+        'Consider 10kA or higher rated protective devices',
+        'Additional protection coordination may be required',
       ];
-      breakingCapacity = "10kA MCBs required";
+      breakingCapacity = '10kA MCBs required';
     } else {
-      assessmentLevel = "Very High";
+      assessmentLevel = 'Very High';
       recommendations = [
-        "Very high PFC - specialist equipment required",
-        "Use MCBs with 16kA or higher breaking capacity",
-        "Consider current limiting devices",
-        "Professional assessment recommended",
+        'Very high PFC - specialist equipment required',
+        'Use MCBs with 16kA or higher breaking capacity',
+        'Consider current limiting devices',
+        'Professional assessment recommended',
       ];
-      breakingCapacity = "16kA or higher MCBs required";
+      breakingCapacity = '16kA or higher MCBs required';
     }
 
     setResult({
@@ -119,10 +115,10 @@ const PFCCalculator = () => {
   };
 
   const resetCalculator = () => {
-    setVoltage("230");
-    setSystemType("");
-    setZeValue("");
-    setR1r2Value("");
+    setVoltage('230');
+    setSystemType('');
+    setZeValue('');
+    setR1r2Value('');
     setResult(null);
   };
 
@@ -130,22 +126,22 @@ const PFCCalculator = () => {
 
   const getAssessmentColor = (level: string) => {
     switch (level) {
-      case "Low":
-        return "text-green-400 border-green-500/30 bg-green-500/10";
-      case "Medium":
-        return "text-blue-400 border-blue-500/30 bg-blue-500/10";
-      case "High":
-        return "text-orange-400 border-orange-500/30 bg-orange-500/10";
-      case "Very High":
-        return "text-red-400 border-red-500/30 bg-red-500/10";
+      case 'Low':
+        return 'text-green-400 border-green-500/30 bg-green-500/10';
+      case 'Medium':
+        return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
+      case 'High':
+        return 'text-orange-400 border-orange-500/30 bg-orange-500/10';
+      case 'Very High':
+        return 'text-red-400 border-red-500/30 bg-red-500/10';
       default:
-        return "text-white/60 border-white/10 bg-white/5";
+        return 'text-white/60 border-white/10 bg-white/5';
     }
   };
 
   const tabs = [
-    { key: "calculator" as const, label: "Calculator" },
-    { key: "guidance" as const, label: "Guidance" },
+    { key: 'calculator' as const, label: 'Calculator' },
+    { key: 'guidance' as const, label: 'Guidance' },
   ];
 
   return (
@@ -163,10 +159,10 @@ const PFCCalculator = () => {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={cn(
-                "flex-1 h-10 rounded-lg text-sm font-medium transition-all touch-manipulation",
+                'flex-1 h-10 rounded-lg text-sm font-medium transition-all touch-manipulation',
                 activeTab === tab.key
-                  ? "text-black"
-                  : "text-white/70 hover:text-white hover:bg-white/5"
+                  ? 'text-black'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
               )}
               style={
                 activeTab === tab.key
@@ -182,7 +178,7 @@ const PFCCalculator = () => {
         </div>
 
         {/* Calculator Tab */}
-        {activeTab === "calculator" && (
+        {activeTab === 'calculator' && (
           <div className="space-y-4">
             {/* System Parameters Header */}
             <div className="flex items-center gap-2">
@@ -236,10 +232,8 @@ const PFCCalculator = () => {
                 onClick={calculatePFC}
                 disabled={!isValid}
                 className={cn(
-                  "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-                  isValid
-                    ? "text-black"
-                    : "bg-white/10 text-white/30 cursor-not-allowed"
+                  'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+                  isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
                 )}
                 style={
                   isValid
@@ -263,7 +257,7 @@ const PFCCalculator = () => {
         )}
 
         {/* Guidance Tab */}
-        {activeTab === "guidance" && (
+        {activeTab === 'guidance' && (
           <div className="space-y-4">
             {/* Understanding PFC */}
             <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20">
@@ -272,9 +266,8 @@ const PFCCalculator = () => {
                 <span className="font-medium text-orange-300">Understanding PFC</span>
               </div>
               <p className="text-sm text-orange-200/80 mb-3">
-                Prospective Fault Current is the maximum current that would flow during a fault
-                with negligible impedance. It's essential for determining protective device
-                ratings.
+                Prospective Fault Current is the maximum current that would flow during a fault with
+                negligible impedance. It's essential for determining protective device ratings.
               </p>
               <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20 font-mono text-sm">
                 <p className="text-orange-300 font-bold text-center">PFC = U₀ / Zs</p>
@@ -362,16 +355,16 @@ const PFCCalculator = () => {
               </div>
               <div className="space-y-2 text-sm text-blue-200/80">
                 <p>
-                  <strong className="text-blue-300">Reg 434.5.2:</strong> PFC must be determined
-                  at every relevant point
+                  <strong className="text-blue-300">Reg 434.5.2:</strong> PFC must be determined at
+                  every relevant point
                 </p>
                 <p>
                   <strong className="text-blue-300">Reg 411.3.2:</strong> Maximum disconnection
                   times must be verified
                 </p>
                 <p>
-                  <strong className="text-blue-300">Section 612:</strong> Initial verification
-                  must include PFC verification
+                  <strong className="text-blue-300">Section 612:</strong> Initial verification must
+                  include PFC verification
                 </p>
               </div>
             </div>
@@ -380,22 +373,22 @@ const PFCCalculator = () => {
       </CalculatorCard>
 
       {/* Results Section */}
-      {result && activeTab === "calculator" && (
+      {result && activeTab === 'calculator' && (
         <div className="space-y-4 animate-fade-in">
           <CalculatorResult category="protection">
             {/* Assessment Badge */}
             <div className="flex items-center justify-center gap-3 pb-4 border-b border-white/10">
               <div
                 className={cn(
-                  "px-3 py-1 rounded-full border font-medium text-sm",
+                  'px-3 py-1 rounded-full border font-medium text-sm',
                   getAssessmentColor(result.assessmentLevel)
                 )}
               >
                 {result.assessmentLevel} PFC Level
               </div>
-              {result.assessmentLevel === "Low" ? (
+              {result.assessmentLevel === 'Low' ? (
                 <CheckCircle className="h-5 w-5 text-green-400" />
-              ) : result.assessmentLevel === "Very High" ? (
+              ) : result.assessmentLevel === 'Very High' ? (
                 <XCircle className="h-5 w-5 text-red-400" />
               ) : (
                 <AlertTriangle className="h-5 w-5 text-amber-400" />
@@ -414,7 +407,10 @@ const PFCCalculator = () => {
                 />
                 <ResultValue
                   label="Breaking Capacity"
-                  value={result.breakingCapacity.replace(" MCBs required", "").replace(" MCBs recommended", "").replace(" MCBs typically adequate", "")}
+                  value={result.breakingCapacity
+                    .replace(' MCBs required', '')
+                    .replace(' MCBs recommended', '')
+                    .replace(' MCBs typically adequate', '')}
                   category="protection"
                   size="sm"
                 />
@@ -444,10 +440,10 @@ const PFCCalculator = () => {
               </div>
               <p className="text-sm text-white/60">
                 {result.pfcValue < 6000
-                  ? "Adequate safety margin with standard equipment."
+                  ? 'Adequate safety margin with standard equipment.'
                   : result.pfcValue < 10000
-                  ? "Moderate margin - ensure correct equipment specification."
-                  : "High current level - specialist assessment recommended."}
+                    ? 'Moderate margin - ensure correct equipment specification.'
+                    : 'High current level - specialist assessment recommended.'}
               </p>
             </div>
 
@@ -462,8 +458,8 @@ const PFCCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showGuidance && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -485,7 +481,7 @@ const PFCCalculator = () => {
 
           {/* Why This Matters */}
           <Collapsible open={showStandards} onOpenChange={setShowStandards}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-amber-400" />
@@ -495,8 +491,8 @@ const PFCCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showStandards && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showStandards && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -531,9 +527,9 @@ const PFCCalculator = () => {
       )}
 
       {/* Quick Reference */}
-      {!result && activeTab === "calculator" && (
+      {!result && activeTab === 'calculator' && (
         <Collapsible>
-          <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+          <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
             <CollapsibleTrigger className="agent-collapsible-trigger w-full">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-4 w-4 text-amber-400" />

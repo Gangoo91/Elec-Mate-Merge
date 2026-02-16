@@ -23,15 +23,13 @@ const CircuitTypeListPanel: React.FC<CircuitTypeListPanelProps> = ({ value, onCh
     const term = searchQuery.trim().toLowerCase();
     if (!term) return items;
     return items.filter(
-      item =>
-        item.type.toLowerCase().includes(term) ||
-        item.category.toLowerCase().includes(term)
+      (item) => item.type.toLowerCase().includes(term) || item.category.toLowerCase().includes(term)
     );
   }, [searchQuery, items]);
 
   const groupedItems = useMemo(() => {
     const map = new Map<string, CircuitTypeItem[]>();
-    filteredItems.forEach(item => {
+    filteredItems.forEach((item) => {
       if (!map.has(item.category)) {
         map.set(item.category, []);
       }
@@ -44,7 +42,7 @@ const CircuitTypeListPanel: React.FC<CircuitTypeListPanelProps> = ({ value, onCh
     <div className="space-y-2">
       <Input
         value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
+        onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search circuit types..."
         className="h-9 bg-muted border-border text-sm"
       />
@@ -60,7 +58,7 @@ const CircuitTypeListPanel: React.FC<CircuitTypeListPanelProps> = ({ value, onCh
                 {category}
               </div>
               <div className="space-y-1">
-                {categoryItems.map(item => (
+                {categoryItems.map((item) => (
                   <button
                     key={item.type}
                     type="button"

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -15,13 +14,13 @@ interface InteractiveTestStepProps {
   onActivate: () => void;
 }
 
-const InteractiveTestStep = ({ 
-  step, 
-  stepNumber, 
-  isActive, 
-  isCompleted, 
-  onComplete, 
-  onActivate 
+const InteractiveTestStep = ({
+  step,
+  stepNumber,
+  isActive,
+  isCompleted,
+  onComplete,
+  onActivate,
 }: InteractiveTestStepProps) => {
   const [showDetails, setShowDetails] = useState(false);
   const [userNotes, setUserNotes] = useState('');
@@ -54,9 +53,7 @@ const InteractiveTestStep = ({
               <p className="text-sm text-gray-300 mt-1">{step.description}</p>
             </div>
           </div>
-          <Badge className="bg-blue-500/20 text-blue-400">
-            {step.regulation}
-          </Badge>
+          <Badge className="bg-blue-500/20 text-blue-400">{step.regulation}</Badge>
         </div>
 
         {step.safetyNote && (
@@ -81,7 +78,7 @@ const InteractiveTestStep = ({
               ))}
             </div>
           </div>
-          
+
           <div>
             <h4 className="font-medium text-foreground mb-2">Expected Result</h4>
             <p className="text-sm text-green-400">{step.expectedResult}</p>
@@ -128,7 +125,7 @@ const InteractiveTestStep = ({
               Start Step
             </Button>
           )}
-          
+
           {isActive && !isCompleted && (
             <Button
               onClick={onComplete}

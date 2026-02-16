@@ -1,23 +1,23 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Textarea } from "@/components/ui/textarea";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Textarea } from '@/components/ui/textarea';
 
 const evChargerFormSchema = z.object({
-  clientName: z.string().min(1, "Client name is required"),
-  installationAddress: z.string().min(1, "Installation address is required"),
-  chargerType: z.enum(["type-1", "type-2", "3-pin", "commando"]),
-  chargerPower: z.string().min(1, "Charger power is required"),
-  installationLocation: z.enum(["garage", "driveway", "car-park", "public-area"]),
-  earthingArrangement: z.string().min(1, "Earthing arrangement is required"),
-  testResults: z.string().min(1, "Test results are required"),
-  installationCompliant: z.enum(["yes", "no"]),
+  clientName: z.string().min(1, 'Client name is required'),
+  installationAddress: z.string().min(1, 'Installation address is required'),
+  chargerType: z.enum(['type-1', 'type-2', '3-pin', 'commando']),
+  chargerPower: z.string().min(1, 'Charger power is required'),
+  installationLocation: z.enum(['garage', 'driveway', 'car-park', 'public-area']),
+  earthingArrangement: z.string().min(1, 'Earthing arrangement is required'),
+  testResults: z.string().min(1, 'Test results are required'),
+  installationCompliant: z.enum(['yes', 'no']),
   specialRequirements: z.string().optional(),
-  installerName: z.string().min(1, "Installer name is required"),
-  installationDate: z.string().min(1, "Installation date is required"),
+  installerName: z.string().min(1, 'Installer name is required'),
+  installationDate: z.string().min(1, 'Installation date is required'),
 });
 
 export type EVChargerFormData = z.infer<typeof evChargerFormSchema>;
@@ -27,9 +27,13 @@ interface EVChargerFormProps {
 }
 
 export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
-  const { watch, setValue, formState: { errors } } = useForm<EVChargerFormData>({
+  const {
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<EVChargerFormData>({
     resolver: zodResolver(evChargerFormSchema),
-    mode: "onChange"
+    mode: 'onChange',
   });
 
   const watchedValues = watch();
@@ -42,38 +46,38 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
   }, [watch, onFormChange]);
 
   const chargerTypeOptions = [
-    { value: "type-1", label: "Type 1 (5-pin)" },
-    { value: "type-2", label: "Type 2 (7-pin)" },
-    { value: "3-pin", label: "3-pin Domestic Socket" },
-    { value: "commando", label: "Commando Socket" }
+    { value: 'type-1', label: 'Type 1 (5-pin)' },
+    { value: 'type-2', label: 'Type 2 (7-pin)' },
+    { value: '3-pin', label: '3-pin Domestic Socket' },
+    { value: 'commando', label: 'Commando Socket' },
   ];
 
   const locationOptions = [
-    { value: "garage", label: "Internal Garage" },
-    { value: "driveway", label: "Driveway" },
-    { value: "car-park", label: "Car Park" },
-    { value: "public-area", label: "Public Area" }
+    { value: 'garage', label: 'Internal Garage' },
+    { value: 'driveway', label: 'Driveway' },
+    { value: 'car-park', label: 'Car Park' },
+    { value: 'public-area', label: 'Public Area' },
   ];
 
   const powerOptions = [
-    { value: "3kw", label: "3kW (13A Socket)" },
-    { value: "7kw", label: "7kW Single Phase" },
-    { value: "11kw", label: "11kW Three Phase" },
-    { value: "22kw", label: "22kW Three Phase" },
-    { value: "50kw", label: "50kW Rapid DC" },
-    { value: "other", label: "Other Power Rating" }
+    { value: '3kw', label: '3kW (13A Socket)' },
+    { value: '7kw', label: '7kW Single Phase' },
+    { value: '11kw', label: '11kW Three Phase' },
+    { value: '22kw', label: '22kW Three Phase' },
+    { value: '50kw', label: '50kW Rapid DC' },
+    { value: 'other', label: 'Other Power Rating' },
   ];
 
   const earthingOptions = [
-    { value: "tn-c-s", label: "TN-C-S (PME)" },
-    { value: "tn-s", label: "TN-S" },
-    { value: "tt", label: "TT (Earth Electrode)" },
-    { value: "other", label: "Other" }
+    { value: 'tn-c-s', label: 'TN-C-S (PME)' },
+    { value: 'tn-s', label: 'TN-S' },
+    { value: 'tt', label: 'TT (Earth Electrode)' },
+    { value: 'other', label: 'Other' },
   ];
 
   const complianceOptions = [
-    { value: "yes", label: "Yes - Installation complies" },
-    { value: "no", label: "No - Non-compliance issues" }
+    { value: 'yes', label: 'Yes - Installation complies' },
+    { value: 'no', label: 'No - Non-compliance issues' },
   ];
 
   return (
@@ -85,15 +89,15 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
         <MobileInputWrapper
           label="Client Name"
           placeholder="Enter client name"
-          value={watchedValues.clientName || ""}
-          onChange={(value) => setValue("clientName", value)}
+          value={watchedValues.clientName || ''}
+          onChange={(value) => setValue('clientName', value)}
           error={errors.clientName?.message}
         />
         <MobileInputWrapper
           label="Installation Address"
           placeholder="Enter installation address"
-          value={watchedValues.installationAddress || ""}
-          onChange={(value) => setValue("installationAddress", value)}
+          value={watchedValues.installationAddress || ''}
+          onChange={(value) => setValue('installationAddress', value)}
           error={errors.installationAddress?.message}
         />
       </div>
@@ -105,32 +109,32 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
         <MobileSelectWrapper
           label="Charger Type"
           placeholder="Select charger type"
-          value={watchedValues.chargerType || ""}
-          onValueChange={(value) => setValue("chargerType", value as any)}
+          value={watchedValues.chargerType || ''}
+          onValueChange={(value) => setValue('chargerType', value as any)}
           options={chargerTypeOptions}
           error={errors.chargerType?.message}
         />
         <MobileSelectWrapper
           label="Charger Power"
           placeholder="Select charger power"
-          value={watchedValues.chargerPower || ""}
-          onValueChange={(value) => setValue("chargerPower", value)}
+          value={watchedValues.chargerPower || ''}
+          onValueChange={(value) => setValue('chargerPower', value)}
           options={powerOptions}
           error={errors.chargerPower?.message}
         />
         <MobileSelectWrapper
           label="Installation Location"
           placeholder="Select installation location"
-          value={watchedValues.installationLocation || ""}
-          onValueChange={(value) => setValue("installationLocation", value as any)}
+          value={watchedValues.installationLocation || ''}
+          onValueChange={(value) => setValue('installationLocation', value as any)}
           options={locationOptions}
           error={errors.installationLocation?.message}
         />
         <MobileSelectWrapper
           label="Earthing Arrangement"
           placeholder="Select earthing system"
-          value={watchedValues.earthingArrangement || ""}
-          onValueChange={(value) => setValue("earthingArrangement", value)}
+          value={watchedValues.earthingArrangement || ''}
+          onValueChange={(value) => setValue('earthingArrangement', value)}
           options={earthingOptions}
           error={errors.earthingArrangement?.message}
         />
@@ -145,8 +149,8 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
           <Textarea
             placeholder="Enter test results (earth fault loop impedance, RCD operation, etc.)"
             className="min-h-[80px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
-            value={watchedValues.testResults || ""}
-            onChange={(e) => setValue("testResults", e.target.value)}
+            value={watchedValues.testResults || ''}
+            onChange={(e) => setValue('testResults', e.target.value)}
           />
           {errors.testResults && (
             <p className="text-sm text-red-400">{errors.testResults.message}</p>
@@ -155,8 +159,8 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
         <MobileSelectWrapper
           label="Installation Compliance"
           placeholder="Select compliance status"
-          value={watchedValues.installationCompliant || ""}
-          onValueChange={(value) => setValue("installationCompliant", value as "yes" | "no")}
+          value={watchedValues.installationCompliant || ''}
+          onValueChange={(value) => setValue('installationCompliant', value as 'yes' | 'no')}
           options={complianceOptions}
           error={errors.installationCompliant?.message}
         />
@@ -165,8 +169,8 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
           <Textarea
             placeholder="Any special requirements or additional notes"
             className="min-h-[60px] bg-elec-gray border-elec-yellow/30 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow/50"
-            value={watchedValues.specialRequirements || ""}
-            onChange={(e) => setValue("specialRequirements", e.target.value)}
+            value={watchedValues.specialRequirements || ''}
+            onChange={(e) => setValue('specialRequirements', e.target.value)}
           />
         </div>
       </div>
@@ -178,16 +182,16 @@ export const EVChargerForm = ({ onFormChange }: EVChargerFormProps) => {
         <MobileInputWrapper
           label="Installer Name"
           placeholder="Enter installer name"
-          value={watchedValues.installerName || ""}
-          onChange={(value) => setValue("installerName", value)}
+          value={watchedValues.installerName || ''}
+          onChange={(value) => setValue('installerName', value)}
           error={errors.installerName?.message}
         />
         <MobileInputWrapper
           label="Installation Date"
           type="date"
           placeholder="Select installation date"
-          value={watchedValues.installationDate || ""}
-          onChange={(value) => setValue("installationDate", value)}
+          value={watchedValues.installationDate || ''}
+          onChange={(value) => setValue('installationDate', value)}
           error={errors.installationDate?.message}
         />
       </div>

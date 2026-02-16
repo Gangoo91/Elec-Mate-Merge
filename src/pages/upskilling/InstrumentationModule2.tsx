@@ -7,40 +7,45 @@ const InstrumentationModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Difference Between Sensors and Transducers",
+      title: 'Difference Between Sensors and Transducers',
       icon: Gauge,
-      description: "Understanding the distinction and relationship between sensors and transducers in instrumentation systems"
+      description:
+        'Understanding the distinction and relationship between sensors and transducers in instrumentation systems',
     },
     {
       id: 2,
-      title: "Temperature Sensors – Thermocouples, RTDs, Thermistors",
+      title: 'Temperature Sensors – Thermocouples, RTDs, Thermistors',
       icon: Thermometer,
-      description: "Comprehensive guide to temperature measurement devices, their principles, and applications"
+      description:
+        'Comprehensive guide to temperature measurement devices, their principles, and applications',
     },
     {
       id: 3,
-      title: "Pressure and Flow Sensors",
+      title: 'Pressure and Flow Sensors',
       icon: Gauge,
-      description: "Understanding pressure and flow measurement for fluid and gas systems"
+      description: 'Understanding pressure and flow measurement for fluid and gas systems',
     },
     {
       id: 4,
-      title: "Level, Position, and Proximity Sensors",
+      title: 'Level, Position, and Proximity Sensors',
       icon: Gauge,
-      description: "Understanding spatial awareness sensors for level detection, positioning, and proximity monitoring"
+      description:
+        'Understanding spatial awareness sensors for level detection, positioning, and proximity monitoring',
     },
     {
       id: 5,
-      title: "Digital vs Analog Sensor Output",
+      title: 'Digital vs Analog Sensor Output',
       icon: Gauge,
-      description: "Understanding output types and their implications for signal processing and system integration"
+      description:
+        'Understanding output types and their implications for signal processing and system integration',
     },
     {
       id: 6,
-      title: "Choosing the Right Sensor for the Application",
+      title: 'Choosing the Right Sensor for the Application',
       icon: Gauge,
-      description: "Decision-making framework for sensor selection based on technical and environmental criteria"
-    }
+      description:
+        'Decision-making framework for sensor selection based on technical and environmental criteria',
+    },
   ];
 
   return (
@@ -76,7 +81,8 @@ const InstrumentationModule2 = () => {
             Sensors and Transducers Explained
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Understanding the function, types, and selection of sensors and transducers in electrical instrumentation
+            Understanding the function, types, and selection of sensors and transducers in
+            electrical instrumentation
           </p>
         </div>
 

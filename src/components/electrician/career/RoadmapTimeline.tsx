@@ -113,7 +113,7 @@ export const RoadmapTimeline: React.FC = () => {
 
           {/* Active Progress Line */}
           <motion.div
-            className={cn("absolute top-4 left-8 h-0.5", styles.line)}
+            className={cn('absolute top-4 left-8 h-0.5', styles.line)}
             initial={false}
             animate={{
               width: `calc(${(activeStep / (roadmapSteps.length - 1)) * 100}% - 32px)`,
@@ -136,23 +136,23 @@ export const RoadmapTimeline: React.FC = () => {
                 {/* Dot */}
                 <div
                   className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
+                    'w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300',
                     isActive && stepStyles.bg,
-                    isActive && "ring-2 ring-offset-2 ring-offset-[#0a0a0a]",
-                    isActive && step.color === 'yellow' && "ring-elec-yellow/50",
-                    isActive && step.color === 'blue' && "ring-blue-400/50",
-                    isActive && step.color === 'green' && "ring-green-400/50",
-                    !isActive && !isCompleted && "bg-white/10",
+                    isActive && 'ring-2 ring-offset-2 ring-offset-[#0a0a0a]',
+                    isActive && step.color === 'yellow' && 'ring-elec-yellow/50',
+                    isActive && step.color === 'blue' && 'ring-blue-400/50',
+                    isActive && step.color === 'green' && 'ring-green-400/50',
+                    !isActive && !isCompleted && 'bg-white/10',
                     isCompleted && stepStyles.bg
                   )}
                 >
                   {isCompleted ? (
-                    <Check className={cn("h-4 w-4", stepStyles.icon)} />
+                    <Check className={cn('h-4 w-4', stepStyles.icon)} />
                   ) : (
                     <step.icon
                       className={cn(
-                        "h-4 w-4 transition-colors",
-                        isActive ? stepStyles.icon : "text-white/40"
+                        'h-4 w-4 transition-colors',
+                        isActive ? stepStyles.icon : 'text-white/40'
                       )}
                     />
                   )}
@@ -161,8 +161,8 @@ export const RoadmapTimeline: React.FC = () => {
                 {/* Label */}
                 <span
                   className={cn(
-                    "text-xs font-medium mt-2 transition-colors",
-                    isActive ? "text-white" : "text-white/40"
+                    'text-xs font-medium mt-2 transition-colors',
+                    isActive ? 'text-white' : 'text-white/40'
                   )}
                 >
                   {step.label}
@@ -185,16 +185,8 @@ export const RoadmapTimeline: React.FC = () => {
             className="space-y-2.5"
           >
             {currentStep.items.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-3 py-2"
-              >
-                <div
-                  className={cn(
-                    "w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0",
-                    styles.dot
-                  )}
-                />
+              <div key={index} className="flex items-start gap-3 py-2">
+                <div className={cn('w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0', styles.dot)} />
                 <span className="text-sm text-white/70">{item}</span>
               </div>
             ))}
@@ -202,9 +194,7 @@ export const RoadmapTimeline: React.FC = () => {
         </AnimatePresence>
 
         {/* Swipe Hint */}
-        <p className="text-center text-[11px] text-white/30 mt-3 sm:hidden">
-          Swipe to navigate
-        </p>
+        <p className="text-center text-[11px] text-white/30 mt-3 sm:hidden">Swipe to navigate</p>
       </div>
     </motion.div>
   );

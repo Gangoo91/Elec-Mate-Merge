@@ -1,81 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "io-list-critical",
-    question: "Why is an IO list critical before installation begins?",
+    id: 'io-list-critical',
+    question: 'Why is an IO list critical before installation begins?',
     options: [
-      "It looks professional in documentation",
-      "It ensures all required signals are identified, prevents missing devices, and supports commissioning",
-      "It's only needed for large projects"
+      'It looks professional in documentation',
+      'It ensures all required signals are identified, prevents missing devices, and supports commissioning',
+      "It's only needed for large projects",
     ],
     correctIndex: 1,
-    explanation: "The IO list ensures all required signals are identified, prevents missing devices, guides cable routing and panel design, supports procurement decisions, and provides the foundation for commissioning. Without it, costly site changes are inevitable."
+    explanation:
+      'The IO list ensures all required signals are identified, prevents missing devices, guides cable routing and panel design, supports procurement decisions, and provides the foundation for commissioning. Without it, costly site changes are inevitable.',
   },
   {
-    id: "schematic-vs-io",
-    question: "What do schematics provide that IO lists do not?",
+    id: 'schematic-vs-io',
+    question: 'What do schematics provide that IO lists do not?',
     options: [
-      "More detailed device descriptions",
-      "Physical and logical connections between devices, control sequences, and wiring methods",
-      "Alarm setpoints and priorities"
+      'More detailed device descriptions',
+      'Physical and logical connections between devices, control sequences, and wiring methods',
+      'Alarm setpoints and priorities',
     ],
     correctIndex: 1,
-    explanation: "Schematics show the physical and logical connections between devices, control sequences, wiring methods, and spatial relationships. While IO lists identify what signals exist, schematics show how they're connected."
+    explanation:
+      "Schematics show the physical and logical connections between devices, control sequences, wiring methods, and spatial relationships. While IO lists identify what signals exist, schematics show how they're connected.",
   },
   {
-    id: "bacnet-ip-topology",
-    question: "Which topology is typically used for BACnet/IP networks?",
-    options: [
-      "Bus topology",
-      "Star topology",
-      "Ring topology"
-    ],
+    id: 'bacnet-ip-topology',
+    question: 'Which topology is typically used for BACnet/IP networks?',
+    options: ['Bus topology', 'Star topology', 'Ring topology'],
     correctIndex: 1,
-    explanation: "Star topology is used for BACnet/IP networks because they run over Ethernet infrastructure, where devices connect to a central switch. This provides better reliability and easier fault isolation compared to bus topologies."
-  }
+    explanation:
+      'Star topology is used for BACnet/IP networks because they run over Ethernet infrastructure, where devices connect to a central switch. This provides better reliability and easier fault isolation compared to bus topologies.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between digital and analog inputs?",
-    answer: "Digital inputs provide simple on/off or high/low signals (like switches). Analog inputs provide variable signals representing measured values like temperature using standards like 0-10V or 4-20mA."
+    answer:
+      'Digital inputs provide simple on/off or high/low signals (like switches). Analog inputs provide variable signals representing measured values like temperature using standards like 0-10V or 4-20mA.',
   },
   {
-    question: "Why must mains cables be segregated from LV control wiring?",
-    answer: "Mains voltage cables can induce electromagnetic interference in low voltage control circuits, causing signal errors or equipment malfunction. Segregation also provides safety separation between voltage bands."
+    question: 'Why must mains cables be segregated from LV control wiring?',
+    answer:
+      'Mains voltage cables can induce electromagnetic interference in low voltage control circuits, causing signal errors or equipment malfunction. Segregation also provides safety separation between voltage bands.',
   },
   {
-    question: "What spare capacity should be left in trunking?",
-    answer: "40% spare capacity should be maintained to avoid overcrowding, allow future additions, maintain proper heat dissipation, and facilitate cable installation and maintenance."
+    question: 'What spare capacity should be left in trunking?',
+    answer:
+      '40% spare capacity should be maintained to avoid overcrowding, allow future additions, maintain proper heat dissipation, and facilitate cable installation and maintenance.',
   },
   {
-    question: "Why are ferrules used on stranded conductors?",
-    answer: "Ferrules prevent individual strands from breaking away and causing short circuits. They ensure all strands are captured in the termination, providing a secure and reliable connection."
-  }
+    question: 'Why are ferrules used on stranded conductors?',
+    answer:
+      'Ferrules prevent individual strands from breaking away and causing short circuits. They ensure all strands are captured in the termination, providing a secure and reliable connection.',
+  },
 ];
 
 const quizQuestion = {
-  question: "CO2 sensors in a building gave unstable readings. Investigation found their 0-10V cables were run in the same trunking as 230V fan power supplies. What caused the problem?",
+  question:
+    'CO2 sensors in a building gave unstable readings. Investigation found their 0-10V cables were run in the same trunking as 230V fan power supplies. What caused the problem?',
   options: [
-    "Faulty sensors",
-    "Incorrect power supply voltage",
-    "Electromagnetic interference from nearby mains cables",
-    "Poor network connectivity"
+    'Faulty sensors',
+    'Incorrect power supply voltage',
+    'Electromagnetic interference from nearby mains cables',
+    'Poor network connectivity',
   ],
   correctAnswer: 2,
-  explanation: "The electromagnetic interference from mains cables caused noise in the analog signals. This is why communications and analog signal cables must be segregated from power cables in separate containment systems."
+  explanation:
+    'The electromagnetic interference from mains cables caused noise in the analog signals. This is why communications and analog signal cables must be segregated from power cables in separate containment systems.',
 };
 
 const BMSModule7Section1 = () => {
   useSEO({
-    title: "BMS Design: IO Lists, Schematics, Network Topology | Module 7.1",
-    description: "Learn essential BMS design documentation including IO lists, control schematics, and network topology planning for Building Management Systems."
+    title: 'BMS Design: IO Lists, Schematics, Network Topology | Module 7.1',
+    description:
+      'Learn essential BMS design documentation including IO lists, control schematics, and network topology planning for Building Management Systems.',
   });
 
   return (
@@ -83,7 +89,12 @@ const BMSModule7Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -103,9 +114,7 @@ const BMSModule7Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BMS Design Documentation
           </h1>
-          <p className="text-white">
-            IO lists, schematics, and network topology planning
-          </p>
+          <p className="text-white">IO lists, schematics, and network topology planning</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -113,16 +122,26 @@ const BMSModule7Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>IO List:</strong> Master document of all inputs/outputs</li>
-              <li><strong>Schematics:</strong> How devices are wired and controlled</li>
-              <li><strong>Topology:</strong> Network structure and device connections</li>
+              <li>
+                <strong>IO List:</strong> Master document of all inputs/outputs
+              </li>
+              <li>
+                <strong>Schematics:</strong> How devices are wired and controlled
+              </li>
+              <li>
+                <strong>Topology:</strong> Network structure and device connections
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Tag numbers like AHU-01-T01</li>
-              <li><strong>Use:</strong> IO list for procurement and installation</li>
+              <li>
+                <strong>Spot:</strong> Tag numbers like AHU-01-T01
+              </li>
+              <li>
+                <strong>Use:</strong> IO list for procurement and installation
+              </li>
             </ul>
           </div>
         </div>
@@ -132,10 +151,10 @@ const BMSModule7Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand the purpose and content of IO lists",
-              "Interpret BMS schematics and control diagrams",
-              "Identify different network topologies and their applications",
-              "Apply design documentation in installation and commissioning"
+              'Understand the purpose and content of IO lists',
+              'Interpret BMS schematics and control diagrams',
+              'Identify different network topologies and their applications',
+              'Apply design documentation in installation and commissioning',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -155,7 +174,9 @@ const BMSModule7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              An IO list is the <strong>master document that records every input and output</strong> the BMS must manage. It serves as the foundation for system design, procurement, installation, and commissioning.
+              An IO list is the <strong>master document that records every input and output</strong>{' '}
+              the BMS must manage. It serves as the foundation for system design, procurement,
+              installation, and commissioning.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -201,13 +222,25 @@ const BMSModule7Section1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Essential IO List Information:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Essential IO List Information:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Tag number:</strong> Unique identifier (e.g., AHU-01-T01)</li>
-                <li><strong>Device name:</strong> Clear description of equipment</li>
-                <li><strong>Signal type:</strong> Digital/analog, input/output</li>
-                <li><strong>Engineering units:</strong> °C, ppm, bar, kW, etc.</li>
-                <li><strong>Alarm information:</strong> Critical limits and priorities</li>
+                <li>
+                  <strong>Tag number:</strong> Unique identifier (e.g., AHU-01-T01)
+                </li>
+                <li>
+                  <strong>Device name:</strong> Clear description of equipment
+                </li>
+                <li>
+                  <strong>Signal type:</strong> Digital/analog, input/output
+                </li>
+                <li>
+                  <strong>Engineering units:</strong> °C, ppm, bar, kW, etc.
+                </li>
+                <li>
+                  <strong>Alarm information:</strong> Critical limits and priorities
+                </li>
               </ul>
             </div>
           </div>
@@ -223,7 +256,9 @@ const BMSModule7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Schematics illustrate <strong>how devices are wired and controlled</strong>. They link physical connections to logical control sequences, providing the roadmap for installation and commissioning.
+              Schematics illustrate <strong>how devices are wired and controlled</strong>. They link
+              physical connections to logical control sequences, providing the roadmap for
+              installation and commissioning.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -257,7 +292,9 @@ const BMSModule7Section1 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Boiler Control Loop Example</p>
+              <p className="text-sm font-medium text-elec-yellow mb-2">
+                Boiler Control Loop Example
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">Input Side:</p>
@@ -292,7 +329,9 @@ const BMSModule7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Network topology defines <strong>how BMS devices are connected to share data</strong>. The chosen topology affects system reliability, cable requirements, and troubleshooting methods.
+              Network topology defines <strong>how BMS devices are connected to share data</strong>.
+              The chosen topology affects system reliability, cable requirements, and
+              troubleshooting methods.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -378,19 +417,35 @@ const BMSModule7Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Planning Phase</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Segment limits:</strong> Avoid overloading networks</li>
-                  <li><strong>Cable routing:</strong> Segregate comms from power</li>
-                  <li><strong>Future expansion:</strong> Allow spare capacity</li>
-                  <li><strong>Redundancy:</strong> Backup routes for critical devices</li>
+                  <li>
+                    <strong>Segment limits:</strong> Avoid overloading networks
+                  </li>
+                  <li>
+                    <strong>Cable routing:</strong> Segregate comms from power
+                  </li>
+                  <li>
+                    <strong>Future expansion:</strong> Allow spare capacity
+                  </li>
+                  <li>
+                    <strong>Redundancy:</strong> Backup routes for critical devices
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Phase</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Device addressing:</strong> Label with network address</li>
-                  <li><strong>Cable quality:</strong> Use specified types</li>
-                  <li><strong>Terminations:</strong> Install and test resistors</li>
-                  <li><strong>Testing:</strong> Verify before commissioning</li>
+                  <li>
+                    <strong>Device addressing:</strong> Label with network address
+                  </li>
+                  <li>
+                    <strong>Cable quality:</strong> Use specified types
+                  </li>
+                  <li>
+                    <strong>Terminations:</strong> Install and test resistors
+                  </li>
+                  <li>
+                    <strong>Testing:</strong> Verify before commissioning
+                  </li>
                 </ul>
               </div>
             </div>
@@ -398,10 +453,18 @@ const BMSModule7Section1 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Common Mistakes to Avoid</p>
               <ul className="text-sm text-white space-y-1">
-                <li><strong>Mixed containment:</strong> Running signal cables with mains power</li>
-                <li><strong>Reversed polarity:</strong> Incorrect analog signal wiring</li>
-                <li><strong>Missing terminations:</strong> RS-485 bus without end resistors</li>
-                <li><strong>Overcrowded trunking:</strong> Less than 40% spare capacity</li>
+                <li>
+                  <strong>Mixed containment:</strong> Running signal cables with mains power
+                </li>
+                <li>
+                  <strong>Reversed polarity:</strong> Incorrect analog signal wiring
+                </li>
+                <li>
+                  <strong>Missing terminations:</strong> RS-485 bus without end resistors
+                </li>
+                <li>
+                  <strong>Overcrowded trunking:</strong> Less than 40% spare capacity
+                </li>
               </ul>
             </div>
           </div>
@@ -413,15 +476,24 @@ const BMSModule7Section1 = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Problem</p>
-              <p className="text-sm text-white">CO2 sensors in an office building gave unstable, fluctuating readings despite being new and properly calibrated.</p>
+              <p className="text-sm text-white">
+                CO2 sensors in an office building gave unstable, fluctuating readings despite being
+                new and properly calibrated.
+              </p>
             </div>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">Investigation</p>
-              <p className="text-sm text-white">The 0-10V signal cables had been run in the same trunking as 230V fan power supplies, violating cable segregation rules.</p>
+              <p className="text-sm text-white">
+                The 0-10V signal cables had been run in the same trunking as 230V fan power
+                supplies, violating cable segregation rules.
+              </p>
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">Solution</p>
-              <p className="text-sm text-white">Signal cables were re-routed through separate containment. Readings immediately stabilized and matched expected values.</p>
+              <p className="text-sm text-white">
+                Signal cables were re-routed through separate containment. Readings immediately
+                stabilized and matched expected values.
+              </p>
             </div>
           </div>
         </section>
@@ -474,13 +546,22 @@ const BMSModule7Section1 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-7-section-2">
               Next: Commissioning and Testing
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

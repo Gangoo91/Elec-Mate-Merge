@@ -17,10 +17,18 @@ const UsagePatternAnalysis = () => {
                   <div>
                     <h6 className="text-green-400 font-medium mb-2">Typical Daily Profile:</h6>
                     <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Morning peak:</strong> 7-9am (showers, breakfast, leaving house)</li>
-                      <li>• <strong>Daytime minimum:</strong> 9am-5pm (house mostly empty)</li>
-                      <li>• <strong>Evening peak:</strong> 5-8pm (cooking, heating, appliances)</li>
-                      <li>• <strong>Night baseline:</strong> 10pm-6am (fridges, standby power)</li>
+                      <li>
+                        • <strong>Morning peak:</strong> 7-9am (showers, breakfast, leaving house)
+                      </li>
+                      <li>
+                        • <strong>Daytime minimum:</strong> 9am-5pm (house mostly empty)
+                      </li>
+                      <li>
+                        • <strong>Evening peak:</strong> 5-8pm (cooking, heating, appliances)
+                      </li>
+                      <li>
+                        • <strong>Night baseline:</strong> 10pm-6am (fridges, standby power)
+                      </li>
                     </ul>
                   </div>
                   <div>
@@ -40,14 +48,24 @@ const UsagePatternAnalysis = () => {
                   <div>
                     <h6 className="text-yellow-400 font-medium mb-2">Business Hours Profile:</h6>
                     <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Start-up surge:</strong> 7-9am (equipment, lighting, heating)</li>
-                      <li>• <strong>Operating plateau:</strong> 9am-5pm (consistent high demand)</li>
-                      <li>• <strong>Wind-down:</strong> 5-7pm (reduced but still significant)</li>
-                      <li>• <strong>Night minimum:</strong> 7pm-7am (security, refrigeration)</li>
+                      <li>
+                        • <strong>Start-up surge:</strong> 7-9am (equipment, lighting, heating)
+                      </li>
+                      <li>
+                        • <strong>Operating plateau:</strong> 9am-5pm (consistent high demand)
+                      </li>
+                      <li>
+                        • <strong>Wind-down:</strong> 5-7pm (reduced but still significant)
+                      </li>
+                      <li>
+                        • <strong>Night minimum:</strong> 7pm-7am (security, refrigeration)
+                      </li>
                     </ul>
                   </div>
                   <div>
-                    <h6 className="text-orange-400 font-medium mb-2">Solar Generation Alignment:</h6>
+                    <h6 className="text-orange-400 font-medium mb-2">
+                      Solar Generation Alignment:
+                    </h6>
                     <ul className="text-gray-300 space-y-1">
                       <li>• Excellent overlap with business hours</li>
                       <li>• High demand during peak generation</li>
@@ -61,7 +79,9 @@ const UsagePatternAnalysis = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold text-green-400 mb-4">Sector-Specific Optimisation Strategies:</h4>
+            <h4 className="font-semibold text-green-400 mb-4">
+              Sector-Specific Optimisation Strategies:
+            </h4>
             <div className="bg-elec-dark p-4 rounded border border-gray-600">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>

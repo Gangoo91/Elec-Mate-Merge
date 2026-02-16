@@ -58,7 +58,8 @@ export const DocumentationAuditsQuiz = () => {
           Section 4 Knowledge Check: Documentation and Audits
         </CardTitle>
         <p className="text-foreground text-sm mt-2">
-          Test your understanding of emergency lighting documentation requirements and fire authority audits
+          Test your understanding of emergency lighting documentation requirements and fire
+          authority audits
         </p>
       </CardHeader>
       <CardContent className="space-y-6">

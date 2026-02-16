@@ -10,16 +10,22 @@ const NewTechnologyRequirementsSection = () => {
           <Smartphone className="h-6 w-6 text-elec-yellow" />
           Emerging Technology Integration Standards
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">Future-Ready Installations</Badge>
+        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">
+          Future-Ready Installations
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Smart Home and IoT Integration Requirements:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Smart Home and IoT Integration Requirements:
+          </h5>
+
           <div className="space-y-4">
             <div className="bg-gray-800 p-4 rounded border-l-4 border-blue-400">
               <div className="flex justify-between items-center mb-3">
-                <h6 className="font-bold text-blue-400 text-sm sm:text-base">Home Automation Systems</h6>
+                <h6 className="font-bold text-blue-400 text-sm sm:text-base">
+                  Home Automation Systems
+                </h6>
                 <Smartphone className="h-5 w-5 text-blue-400" />
               </div>
               <ul className="text-sm sm:text-base space-y-2">
@@ -29,10 +35,12 @@ const NewTechnologyRequirementsSection = () => {
                 <li>• EMC considerations for wireless communication</li>
               </ul>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-purple-400">
               <div className="flex justify-between items-center mb-3">
-                <h6 className="font-bold text-purple-400 text-sm sm:text-base">AI and Machine Learning Systems</h6>
+                <h6 className="font-bold text-purple-400 text-sm sm:text-base">
+                  AI and Machine Learning Systems
+                </h6>
                 <Zap className="h-5 w-5 text-purple-400" />
               </div>
               <ul className="text-sm sm:text-base space-y-2">
@@ -43,7 +51,7 @@ const NewTechnologyRequirementsSection = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="hidden lg:block">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -71,7 +79,9 @@ const NewTechnologyRequirementsSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Advanced Electric Vehicle Infrastructure:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Advanced Electric Vehicle Infrastructure:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Bidirectional Charging Systems:</h6>
@@ -107,7 +117,9 @@ const NewTechnologyRequirementsSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Renewable Energy and Storage Integration:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Renewable Energy and Storage Integration:
+          </h5>
           <div className="space-y-4">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <div className="flex items-center gap-2 mb-2">
@@ -135,9 +147,11 @@ const NewTechnologyRequirementsSection = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
-              <h6 className="font-bold text-blue-400 mb-2">Hydrogen and Alternative Energy Systems</h6>
+              <h6 className="font-bold text-blue-400 mb-2">
+                Hydrogen and Alternative Energy Systems
+              </h6>
               <ul className="text-sm space-y-1">
                 <li>• Hydrogen fuel cell electrical integration requirements</li>
                 <li>• Green hydrogen production facility electrical specifications</li>
@@ -175,19 +189,33 @@ const NewTechnologyRequirementsSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Implementation Guidelines for New Technologies:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Implementation Guidelines for New Technologies:
+          </h5>
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-1">Design Considerations</h6>
-              <p className="text-sm">Plan electrical systems with flexibility for technology upgrades, including spare capacity, upgrade pathways, and modular design approaches that accommodate future developments.</p>
+              <p className="text-sm">
+                Plan electrical systems with flexibility for technology upgrades, including spare
+                capacity, upgrade pathways, and modular design approaches that accommodate future
+                developments.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <h6 className="font-bold text-green-400 mb-1">Installation Standards</h6>
-              <p className="text-sm">Follow manufacturer specifications while ensuring compliance with BS 7671 requirements, including proper earthing, bonding, and protection coordination for new technologies.</p>
+              <p className="text-sm">
+                Follow manufacturer specifications while ensuring compliance with BS 7671
+                requirements, including proper earthing, bonding, and protection coordination for
+                new technologies.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Testing and Commissioning</h6>
-              <p className="text-sm">Develop comprehensive testing procedures for new technologies, including communication system verification, cybersecurity validation, and performance optimisation testing.</p>
+              <p className="text-sm">
+                Develop comprehensive testing procedures for new technologies, including
+                communication system verification, cybersecurity validation, and performance
+                optimisation testing.
+              </p>
             </div>
           </div>
         </div>

@@ -28,12 +28,7 @@ interface ReviewStepProps {
  * Step 5: Review & Sign
  * Certificate summary with signature capture
  */
-export const ReviewStep: React.FC<ReviewStepProps> = ({
-  data,
-  onChange,
-  onComplete,
-  isMobile,
-}) => {
+export const ReviewStep: React.FC<ReviewStepProps> = ({ data, onChange, onComplete, isMobile }) => {
   const [showSignature, setShowSignature] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -102,19 +97,23 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
   return (
     <div className="space-y-6">
       {/* Overall Status */}
-      <Card className={cn(
-        overallStatus === 'satisfactory'
-          ? 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30'
-          : 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30'
-      )}>
+      <Card
+        className={cn(
+          overallStatus === 'satisfactory'
+            ? 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30'
+            : 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30'
+        )}
+      >
         <CardContent className="py-6">
           <div className="flex items-center gap-4">
-            <div className={cn(
-              'p-3 rounded-full',
-              overallStatus === 'satisfactory'
-                ? 'bg-green-100 dark:bg-green-900'
-                : 'bg-red-100 dark:bg-red-900'
-            )}>
+            <div
+              className={cn(
+                'p-3 rounded-full',
+                overallStatus === 'satisfactory'
+                  ? 'bg-green-100 dark:bg-green-900'
+                  : 'bg-red-100 dark:bg-red-900'
+              )}
+            >
               {overallStatus === 'satisfactory' ? (
                 <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
               ) : (
@@ -122,24 +121,27 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
               )}
             </div>
             <div>
-              <h3 className={cn(
-                'text-lg font-bold',
-                overallStatus === 'satisfactory'
-                  ? 'text-green-800 dark:text-green-200'
-                  : 'text-red-800 dark:text-red-200'
-              )}>
+              <h3
+                className={cn(
+                  'text-lg font-bold',
+                  overallStatus === 'satisfactory'
+                    ? 'text-green-800 dark:text-green-200'
+                    : 'text-red-800 dark:text-red-200'
+                )}
+              >
                 Installation {overallStatus === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory'}
               </h3>
-              <p className={cn(
-                'text-sm',
-                overallStatus === 'satisfactory'
-                  ? 'text-green-600 dark:text-green-400'
-                  : 'text-red-600 dark:text-red-400'
-              )}>
+              <p
+                className={cn(
+                  'text-sm',
+                  overallStatus === 'satisfactory'
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
+                )}
+              >
                 {issues > 0
                   ? `${issues} issue${issues > 1 ? 's' : ''} require attention`
-                  : 'All tests passed - ready for certification'
-                }
+                  : 'All tests passed - ready for certification'}
               </p>
             </div>
           </div>
@@ -171,9 +173,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
             </div>
           </CardHeader>
           <CardContent>
-            <p className="font-semibold line-clamp-1">
-              {data.propertyAddress || 'Not specified'}
-            </p>
+            <p className="font-semibold line-clamp-1">{data.propertyAddress || 'Not specified'}</p>
             <p className="text-sm text-muted-foreground">{data.propertyPostcode || ''}</p>
           </CardContent>
         </Card>

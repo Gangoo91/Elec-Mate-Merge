@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AlertCircle, Package, Calendar, AlertTriangle } from "lucide-react";
-import { addDays, format } from "date-fns";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { AlertCircle, Package, Calendar, AlertTriangle } from 'lucide-react';
+import { addDays, format } from 'date-fns';
 
 interface CriticalActionsCardProps {
   materialProcurement?: {
@@ -32,7 +32,7 @@ const CriticalActionsCard = ({
   materialProcurement,
   complianceTimeline,
   clientImpact,
-  startDate
+  startDate,
 }: CriticalActionsCardProps) => {
   const hasOrderNow = materialProcurement?.orderNow && materialProcurement.orderNow.length > 0;
   const hasBeforeWork = complianceTimeline?.beforeWork && complianceTimeline.beforeWork.length > 0;
@@ -58,7 +58,9 @@ const CriticalActionsCard = ({
           </div>
           Take Action Now
         </CardTitle>
-        <p className="text-sm text-muted-foreground">Critical items requiring immediate attention</p>
+        <p className="text-sm text-muted-foreground">
+          Critical items requiring immediate attention
+        </p>
       </CardHeader>
       <CardContent className="relative space-y-4">
         {/* Order Today */}
@@ -67,11 +69,13 @@ const CriticalActionsCard = ({
             <div className="flex items-center gap-2 mb-3">
               <Package className="h-4 w-4 text-destructive" />
               <h5 className="font-semibold text-sm">🔴 Order Today</h5>
-              <Badge variant="destructive" className="text-xs">Long Lead Time</Badge>
+              <Badge variant="destructive" className="text-xs">
+                Long Lead Time
+              </Badge>
             </div>
             <div className="space-y-2">
               {materialProcurement.orderNow!.map((item, idx) => (
-                <div 
+                <div
                   key={idx}
                   className="p-3 rounded-lg bg-destructive/10 border border-destructive/30 space-y-1"
                 >
@@ -87,11 +91,17 @@ const CriticalActionsCard = ({
                     )}
                   </div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <Badge variant="outline" className="text-xs bg-destructive/20 border-destructive/40">
+                    <Badge
+                      variant="outline"
+                      className="text-xs bg-destructive/20 border-destructive/40"
+                    >
                       {item.leadTime} lead time
                     </Badge>
                     {item.criticalPath && (
-                      <Badge variant="outline" className="text-xs bg-pink-400/20 border-pink-400/40">
+                      <Badge
+                        variant="outline"
+                        className="text-xs bg-pink-400/20 border-pink-400/40"
+                      >
                         Critical Path
                       </Badge>
                     )}
@@ -114,7 +124,7 @@ const CriticalActionsCard = ({
             </div>
             <div className="space-y-2">
               {complianceTimeline.beforeWork!.map((item, idx) => (
-                <div 
+                <div
                   key={idx}
                   className="p-3 rounded-lg bg-warning/10 border border-warning/30 space-y-1"
                 >
@@ -144,7 +154,7 @@ const CriticalActionsCard = ({
             </div>
             <div className="space-y-2">
               {clientImpact.slice(0, 3).map((item, idx) => (
-                <div 
+                <div
                   key={idx}
                   className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 space-y-1"
                 >

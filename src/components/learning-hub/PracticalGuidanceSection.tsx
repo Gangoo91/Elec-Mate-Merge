@@ -1,12 +1,22 @@
-
 import React from 'react';
-import { Wrench, AlertTriangle, CheckCircle2, Lightbulb, Target, Shield, Clock, TrendingUp, Search, FileText } from 'lucide-react';
+import {
+  Wrench,
+  AlertTriangle,
+  CheckCircle2,
+  Lightbulb,
+  Target,
+  Shield,
+  Clock,
+  TrendingUp,
+  Search,
+  FileText,
+} from 'lucide-react';
 import ScienceSection from './insulation-testing/ScienceSection';
 
 const PracticalGuidanceSection = () => (
   <div className="space-y-6">
     <ScienceSection />
-    
+
     <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
       <div className="flex items-center gap-2 mb-3">
         <Wrench className="h-4 w-4 text-green-400" />
@@ -48,28 +58,52 @@ const PracticalGuidanceSection = () => (
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">New Installation</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Expected:</strong> {'>'} 999MΩ all tests</p>
-              <p><strong>Test voltage:</strong> 500V DC</p>
-              <p><strong>Duration:</strong> 1 minute minimum</p>
-              <p><strong>Action:</strong> If {'<'} 2MΩ, investigate</p>
+              <p>
+                <strong>Expected:</strong> {'>'} 999MΩ all tests
+              </p>
+              <p>
+                <strong>Test voltage:</strong> 500V DC
+              </p>
+              <p>
+                <strong>Duration:</strong> 1 minute minimum
+              </p>
+              <p>
+                <strong>Action:</strong> If {'<'} 2MΩ, investigate
+              </p>
             </div>
           </div>
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">Periodic Inspection</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Expected:</strong> {'>'} 1MΩ minimum</p>
-              <p><strong>Test voltage:</strong> 500V DC typical</p>
-              <p><strong>Compare:</strong> Previous test results</p>
-              <p><strong>Action:</strong> Investigate declining trends</p>
+              <p>
+                <strong>Expected:</strong> {'>'} 1MΩ minimum
+              </p>
+              <p>
+                <strong>Test voltage:</strong> 500V DC typical
+              </p>
+              <p>
+                <strong>Compare:</strong> Previous test results
+              </p>
+              <p>
+                <strong>Action:</strong> Investigate declining trends
+              </p>
             </div>
           </div>
           <div className="bg-card rounded p-3">
             <p className="font-medium text-blue-400 mb-2">Fault Investigation</p>
             <div className="space-y-1 text-xs">
-              <p><strong>Symptoms:</strong> RCD tripping, earth leakage</p>
-              <p><strong>Method:</strong> Test individual circuits</p>
-              <p><strong>Look for:</strong> Low or declining readings</p>
-              <p><strong>Action:</strong> Isolate and repair faulty circuits</p>
+              <p>
+                <strong>Symptoms:</strong> RCD tripping, earth leakage
+              </p>
+              <p>
+                <strong>Method:</strong> Test individual circuits
+              </p>
+              <p>
+                <strong>Look for:</strong> Low or declining readings
+              </p>
+              <p>
+                <strong>Action:</strong> Isolate and repair faulty circuits
+              </p>
             </div>
           </div>
         </div>
@@ -159,10 +193,14 @@ const PracticalGuidanceSection = () => (
             <p className="font-medium text-yellow-400 mb-3">Systematic Problem Diagnosis:</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
               <div>
-                <p className="font-medium text-foreground mb-2">Reading {'<'} 1.0MΩ (Unacceptable)</p>
+                <p className="font-medium text-foreground mb-2">
+                  Reading {'<'} 1.0MΩ (Unacceptable)
+                </p>
                 <div className="space-y-2">
                   <div>
-                    <p><strong>Step 1 - Initial Checks:</strong></p>
+                    <p>
+                      <strong>Step 1 - Initial Checks:</strong>
+                    </p>
                     <div className="ml-2 space-y-0.5">
                       <p>• Verify test voltage selection (500V for LV)</p>
                       <p>• Check all equipment disconnected</p>
@@ -171,7 +209,9 @@ const PracticalGuidanceSection = () => (
                     </div>
                   </div>
                   <div>
-                    <p><strong>Step 2 - Environmental Assessment:</strong></p>
+                    <p>
+                      <strong>Step 2 - Environmental Assessment:</strong>
+                    </p>
                     <div className="ml-2 space-y-0.5">
                       <p>• Check for visible moisture/condensation</p>
                       <p>• Record ambient temperature and humidity</p>
@@ -180,7 +220,9 @@ const PracticalGuidanceSection = () => (
                     </div>
                   </div>
                   <div>
-                    <p><strong>Step 3 - Circuit Isolation:</strong></p>
+                    <p>
+                      <strong>Step 3 - Circuit Isolation:</strong>
+                    </p>
                     <div className="ml-2 space-y-0.5">
                       <p>• Test individual circuit sections</p>
                       <p>• Isolate at distribution boards</p>
@@ -191,10 +233,14 @@ const PracticalGuidanceSection = () => (
                 </div>
               </div>
               <div>
-                <p className="font-medium text-foreground mb-2">Reading 1.0-2.0MΩ (Investigation Required)</p>
+                <p className="font-medium text-foreground mb-2">
+                  Reading 1.0-2.0MΩ (Investigation Required)
+                </p>
                 <div className="space-y-2">
                   <div>
-                    <p><strong>Assessment Criteria:</strong></p>
+                    <p>
+                      <strong>Assessment Criteria:</strong>
+                    </p>
                     <div className="ml-2 space-y-0.5">
                       <p>• Installation age and type</p>
                       <p>• Environmental exposure level</p>
@@ -203,7 +249,9 @@ const PracticalGuidanceSection = () => (
                     </div>
                   </div>
                   <div>
-                    <p><strong>Additional Tests:</strong></p>
+                    <p>
+                      <strong>Additional Tests:</strong>
+                    </p>
                     <div className="ml-2 space-y-0.5">
                       <p>• Repeat test after moisture removal</p>
                       <p>• Check temperature correction factor</p>
@@ -212,7 +260,9 @@ const PracticalGuidanceSection = () => (
                     </div>
                   </div>
                   <div>
-                    <p><strong>Professional Judgement:</strong></p>
+                    <p>
+                      <strong>Professional Judgement:</strong>
+                    </p>
                     <div className="ml-2 space-y-0.5">
                       <p>• Consider acceptance with monitoring</p>
                       <p>• Document decision rationale</p>
@@ -232,11 +282,15 @@ const PracticalGuidanceSection = () => (
             <div>
               <p className="font-medium text-foreground mb-2">Moisture-Related Issues</p>
               <div className="space-y-1">
-                <p><strong>Symptoms:</strong></p>
+                <p>
+                  <strong>Symptoms:</strong>
+                </p>
                 <p>• Low readings improve over time</p>
                 <p>• Weather-dependent variations</p>
                 <p>• Surface leakage paths visible</p>
-                <p><strong>Solutions:</strong></p>
+                <p>
+                  <strong>Solutions:</strong>
+                </p>
                 <p>• Allow drying time</p>
                 <p>• Clean terminations</p>
                 <p>• Improve IP rating</p>
@@ -246,11 +300,15 @@ const PracticalGuidanceSection = () => (
             <div>
               <p className="font-medium text-foreground mb-2">Cable Degradation</p>
               <div className="space-y-1">
-                <p><strong>Symptoms:</strong></p>
+                <p>
+                  <strong>Symptoms:</strong>
+                </p>
                 <p>• Consistently declining readings</p>
                 <p>• Age-related deterioration</p>
                 <p>• Physical damage visible</p>
-                <p><strong>Solutions:</strong></p>
+                <p>
+                  <strong>Solutions:</strong>
+                </p>
                 <p>• Section testing to locate fault</p>
                 <p>• Cable replacement if necessary</p>
                 <p>• Improved installation methods</p>
@@ -260,11 +318,15 @@ const PracticalGuidanceSection = () => (
             <div>
               <p className="font-medium text-foreground mb-2">Installation Errors</p>
               <div className="space-y-1">
-                <p><strong>Symptoms:</strong></p>
+                <p>
+                  <strong>Symptoms:</strong>
+                </p>
                 <p>• Equipment still connected</p>
                 <p>• Incorrect test setup</p>
                 <p>• Parallel circuit paths</p>
-                <p><strong>Solutions:</strong></p>
+                <p>
+                  <strong>Solutions:</strong>
+                </p>
                 <p>• Verify complete isolation</p>
                 <p>• Check test configuration</p>
                 <p>• Identify all circuit paths</p>
@@ -413,7 +475,9 @@ const PracticalGuidanceSection = () => (
       </div>
       <div className="space-y-3 text-sm text-white">
         <div className="bg-card rounded p-4">
-          <p className="font-medium text-emerald-400 mb-2">When readings are 1.0-2.0MΩ, document:</p>
+          <p className="font-medium text-emerald-400 mb-2">
+            When readings are 1.0-2.0MΩ, document:
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div>
               <p className="font-medium text-foreground mb-1">Test Details:</p>

@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Copy, Download, RotateCcw, Zap, Eye, AlertTriangle, Clock } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import type { CommissioningResponse } from "@/types/commissioning-response";
+import { Button } from '@/components/ui/button';
+import { Copy, Download, RotateCcw, Zap, Eye, AlertTriangle, Clock } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import type { CommissioningResponse } from '@/types/commissioning-response';
 
 interface ProgressHeroBarProps {
   results: CommissioningResponse;
@@ -17,21 +17,22 @@ export const ProgressHeroBar = ({
   onCopyChecklist,
   onExportPDF,
   onStartOver,
-  completionPercentage
+  completionPercentage,
 }: ProgressHeroBarProps) => {
-  const visualCount = results.structuredData?.testingProcedure?.visualInspection?.checkpoints?.length || 0;
+  const visualCount =
+    results.structuredData?.testingProcedure?.visualInspection?.checkpoints?.length || 0;
   const deadCount = results.structuredData?.testingProcedure?.deadTests?.length || 0;
   const liveCount = results.structuredData?.testingProcedure?.liveTests?.length || 0;
-  
+
   // Calculate estimated time (rough estimate: 5min per visual, 15min per dead, 20min per live)
-  const estimatedMinutes = (visualCount * 5) + (deadCount * 15) + (liveCount * 20);
-  const estimatedHours = Math.round(estimatedMinutes / 60 * 10) / 10;
+  const estimatedMinutes = visualCount * 5 + deadCount * 15 + liveCount * 20;
+  const estimatedHours = Math.round((estimatedMinutes / 60) * 10) / 10;
 
   return (
     <div className="relative overflow-hidden rounded-xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/5 via-background to-elec-yellow/5 shadow-lg">
       {/* Decorative Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#fbbf2410_1px,transparent_1px),linear-gradient(to_bottom,#fbbf2410_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-      
+
       <div className="relative px-6 py-8">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
@@ -91,24 +92,24 @@ export const ProgressHeroBar = ({
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={onCopyChecklist}
             className="touch-manipulation border-elec-yellow/30 hover:bg-elec-yellow/10"
           >
             <Copy className="h-4 w-4 mr-2" />
             Copy Checklist
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={onExportPDF}
             className="touch-manipulation border-elec-yellow/30 hover:bg-elec-yellow/10"
           >
             <Download className="h-4 w-4 mr-2" />
             Export PDF
           </Button>
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={onStartOver}
             className="touch-manipulation ml-auto hover:bg-elec-yellow/10"
           >

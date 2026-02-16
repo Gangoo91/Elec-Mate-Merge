@@ -17,13 +17,14 @@ import {
   FileBarChart,
   Zap,
   BookOpen,
-  AlertTriangle
+  AlertTriangle,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule3Section3: React.FC = () => {
   useSEO({
     title: 'Comparing to Benchmarks and Tariffs | Energy Efficiency Module 3 Section 3',
-    description: 'Learn UK energy benchmarks including CIBSE TM46, Display Energy Certificates, degree day correction, and electricity tariff structures for effective energy analysis.',
+    description:
+      'Learn UK energy benchmarks including CIBSE TM46, Display Energy Certificates, degree day correction, and electricity tariff structures for effective energy analysis.',
     keywords: [
       'CIBSE TM46',
       'Display Energy Certificate',
@@ -34,8 +35,8 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
       'DUoS charges',
       'TNUoS',
       'kWh per square metre',
-      'building energy performance'
-    ]
+      'building energy performance',
+    ],
   });
 
   const quickCheckQuestions = [
@@ -46,52 +47,59 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
         'The building uses more energy than the benchmark',
         'The building uses significantly less energy than the typical benchmark',
         'The building has no heating system',
-        'The building is newly constructed'
+        'The building is newly constructed',
       ],
       correctIndex: 1,
-      explanation: 'A DEC rating of "A" indicates the building uses significantly less energy than the typical benchmark for that building type. The scale runs from A (most efficient, less than 25% of typical) to G (least efficient, over 150% of typical).'
+      explanation:
+        'A DEC rating of "A" indicates the building uses significantly less energy than the typical benchmark for that building type. The scale runs from A (most efficient, less than 25% of typical) to G (least efficient, over 150% of typical).',
     },
     {
       id: 'qc2-m3s3',
-      question: 'Why is degree day correction important when comparing energy consumption across different years?',
+      question:
+        'Why is degree day correction important when comparing energy consumption across different years?',
       options: [
         'It accounts for different building sizes',
         'It normalises for weather variations affecting heating/cooling demand',
         'It converts between different fuel types',
-        'It adjusts for electricity price changes'
+        'It adjusts for electricity price changes',
       ],
       correctIndex: 1,
-      explanation: 'Degree day correction normalises energy consumption data to account for weather variations between different time periods. This ensures like-for-like comparisons by removing the effect of warmer or colder weather on heating and cooling demand.'
+      explanation:
+        'Degree day correction normalises energy consumption data to account for weather variations between different time periods. This ensures like-for-like comparisons by removing the effect of warmer or colder weather on heating and cooling demand.',
     },
     {
       id: 'qc3-m3s3',
-      question: 'Which component of electricity costs typically varies by time of day and is charged by the Distribution Network Operator?',
+      question:
+        'Which component of electricity costs typically varies by time of day and is charged by the Distribution Network Operator?',
       options: [
         'Commodity cost',
         'TNUoS (Transmission Network Use of System)',
         'DUoS (Distribution Use of System)',
-        'Climate Change Levy'
+        'Climate Change Levy',
       ],
       correctIndex: 2,
-      explanation: 'DUoS (Distribution Use of System) charges are levied by Distribution Network Operators and typically vary by time of day with red, amber, and green time bands. This creates opportunities for load shifting to reduce costs.'
-    }
+      explanation:
+        'DUoS (Distribution Use of System) charges are levied by Distribution Network Operators and typically vary by time of day with red, amber, and green time bands. This creates opportunities for load shifting to reduce costs.',
+    },
   ];
 
   const quizQuestions = [
     {
-      question: 'According to CIBSE TM46, what is the typical electricity benchmark for a general office building?',
+      question:
+        'According to CIBSE TM46, what is the typical electricity benchmark for a general office building?',
       options: ['50 kWh/m²/year', '95 kWh/m²/year', '150 kWh/m²/year', '200 kWh/m²/year'],
-      correctAnswer: '95 kWh/m²/year'
+      correctAnswer: '95 kWh/m²/year',
     },
     {
-      question: 'What is the formula for calculating the Energy Performance Indicator used in DECs?',
+      question:
+        'What is the formula for calculating the Energy Performance Indicator used in DECs?',
       options: [
         'Total energy cost ÷ floor area',
         'Actual energy use ÷ benchmark energy use × 100',
         'kWh consumed × carbon factor',
-        'Floor area × occupancy hours'
+        'Floor area × occupancy hours',
       ],
-      correctAnswer: 'Actual energy use ÷ benchmark energy use × 100'
+      correctAnswer: 'Actual energy use ÷ benchmark energy use × 100',
     },
     {
       question: 'Which public buildings in England and Wales require a Display Energy Certificate?',
@@ -99,9 +107,9 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
         'All public buildings',
         'Public buildings over 250m² frequently visited by the public',
         'Only government offices',
-        'Buildings built after 2008'
+        'Buildings built after 2008',
       ],
-      correctAnswer: 'Public buildings over 250m² frequently visited by the public'
+      correctAnswer: 'Public buildings over 250m² frequently visited by the public',
     },
     {
       question: 'What is a heating degree day based on in the UK?',
@@ -109,34 +117,31 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
         'The average outdoor temperature being below 15.5°C',
         'The indoor temperature falling below 21°C',
         'The difference between outdoor and indoor temperatures',
-        'The number of hours heating is required'
+        'The number of hours heating is required',
       ],
-      correctAnswer: 'The average outdoor temperature being below 15.5°C'
+      correctAnswer: 'The average outdoor temperature being below 15.5°C',
     },
     {
-      question: 'Which electricity tariff component is charged based on usage during peak demand periods (Triads)?',
-      options: [
-        'DUoS charges',
-        'TNUoS charges',
-        'BSUoS charges',
-        'Commodity charges'
-      ],
-      correctAnswer: 'TNUoS charges'
+      question:
+        'Which electricity tariff component is charged based on usage during peak demand periods (Triads)?',
+      options: ['DUoS charges', 'TNUoS charges', 'BSUoS charges', 'Commodity charges'],
+      correctAnswer: 'TNUoS charges',
     },
     {
       question: 'What is the typical CIBSE TM46 electricity benchmark for schools?',
       options: ['32 kWh/m²/year', '55 kWh/m²/year', '95 kWh/m²/year', '120 kWh/m²/year'],
-      correctAnswer: '32 kWh/m²/year'
+      correctAnswer: '32 kWh/m²/year',
     },
     {
-      question: 'When normalising consumption data to kWh/m², which area measurement should typically be used?',
+      question:
+        'When normalising consumption data to kWh/m², which area measurement should typically be used?',
       options: [
         'External footprint area',
         'Gross Internal Area (GIA)',
         'Net lettable area only',
-        'Car park area'
+        'Car park area',
       ],
-      correctAnswer: 'Gross Internal Area (GIA)'
+      correctAnswer: 'Gross Internal Area (GIA)',
     },
     {
       question: 'What does BSUoS stand for in electricity billing?',
@@ -144,52 +149,60 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
         'British Standard Use of System',
         'Balancing Services Use of System',
         'Building Services Use of System',
-        'Base Supply Use of System'
+        'Base Supply Use of System',
       ],
-      correctAnswer: 'Balancing Services Use of System'
+      correctAnswer: 'Balancing Services Use of System',
     },
     {
-      question: 'A building has an Energy Performance Indicator of 75. What DEC rating would it receive?',
+      question:
+        'A building has an Energy Performance Indicator of 75. What DEC rating would it receive?',
       options: ['A', 'B', 'C', 'D'],
-      correctAnswer: 'C'
+      correctAnswer: 'C',
     },
     {
-      question: 'Which organisation publishes degree day data that is freely available for UK locations?',
+      question:
+        'Which organisation publishes degree day data that is freely available for UK locations?',
       options: [
         'Only commercial providers',
         'Degree Days.net and Carbon Trust',
         'Building Research Establishment only',
-        'National Grid exclusively'
+        'National Grid exclusively',
       ],
-      correctAnswer: 'Degree Days.net and Carbon Trust'
-    }
+      correctAnswer: 'Degree Days.net and Carbon Trust',
+    },
   ];
 
   const faqs = [
     {
       question: 'Why do CIBSE TM46 benchmarks differ from actual building performance?',
-      answer: 'CIBSE TM46 benchmarks represent typical energy consumption for building types under standard conditions. Actual performance varies due to factors including building age, construction quality, occupancy patterns, operational hours, equipment efficiency, and local climate. Benchmarks should be used as indicative guides rather than absolute targets. For more accurate comparison, use the 25th percentile (good practice) rather than median values, and always consider building-specific factors that may legitimately cause deviation from benchmarks.'
+      answer:
+        'CIBSE TM46 benchmarks represent typical energy consumption for building types under standard conditions. Actual performance varies due to factors including building age, construction quality, occupancy patterns, operational hours, equipment efficiency, and local climate. Benchmarks should be used as indicative guides rather than absolute targets. For more accurate comparison, use the 25th percentile (good practice) rather than median values, and always consider building-specific factors that may legitimately cause deviation from benchmarks.',
     },
     {
       question: 'How do I obtain degree day data for weather correction?',
-      answer: 'Degree day data for UK locations is available from several sources. Degree Days.net provides free data for any location using nearby weather stations. The Carbon Trust also publishes regional degree day data. For heating, use a base temperature of 15.5°C (UK standard). When weather correcting, apply the formula: Corrected consumption = (Actual consumption × Long-term average degree days) ÷ Current period degree days. This normalises data to allow fair year-on-year comparisons regardless of weather variations.'
+      answer:
+        'Degree day data for UK locations is available from several sources. Degree Days.net provides free data for any location using nearby weather stations. The Carbon Trust also publishes regional degree day data. For heating, use a base temperature of 15.5°C (UK standard). When weather correcting, apply the formula: Corrected consumption = (Actual consumption × Long-term average degree days) ÷ Current period degree days. This normalises data to allow fair year-on-year comparisons regardless of weather variations.',
     },
     {
       question: 'What are Triad periods and why do they matter for large electricity consumers?',
-      answer: 'Triads are the three half-hour periods of highest national electricity demand between November and February each year. TNUoS charges for half-hourly metered customers are based on their demand during these periods. Since Triads are identified retrospectively, businesses use forecasting services to predict likely Triad periods and reduce demand at these times. Avoiding just 1 kW of demand during Triads can save £50-60 per year, making this highly cost-effective for larger consumers with flexible loads.'
+      answer:
+        'Triads are the three half-hour periods of highest national electricity demand between November and February each year. TNUoS charges for half-hourly metered customers are based on their demand during these periods. Since Triads are identified retrospectively, businesses use forecasting services to predict likely Triad periods and reduce demand at these times. Avoiding just 1 kW of demand during Triads can save £50-60 per year, making this highly cost-effective for larger consumers with flexible loads.',
     },
     {
       question: 'How should I handle mixed-use buildings when applying benchmarks?',
-      answer: 'For mixed-use buildings, calculate a weighted benchmark based on the floor area dedicated to each use. For example, a building with 60% office and 40% retail would have a weighted electricity benchmark of: (0.6 × 95 kWh/m²) + (0.4 × 165 kWh/m²) = 123 kWh/m². Ensure you use consistent area measurements throughout. Where sub-metering exists, analyse each area separately against its relevant benchmark for more accurate insights.'
+      answer:
+        'For mixed-use buildings, calculate a weighted benchmark based on the floor area dedicated to each use. For example, a building with 60% office and 40% retail would have a weighted electricity benchmark of: (0.6 × 95 kWh/m²) + (0.4 × 165 kWh/m²) = 123 kWh/m². Ensure you use consistent area measurements throughout. Where sub-metering exists, analyse each area separately against its relevant benchmark for more accurate insights.',
     },
     {
       question: 'What is the difference between DUoS red, amber, and green time bands?',
-      answer: 'DUoS time bands reflect the cost of distributing electricity at different times. Red bands (typically 4-7pm weekdays, November-February) attract the highest charges during peak demand. Amber bands cover shoulder periods with moderate charges. Green bands (overnight and weekends) have the lowest charges when network demand is lowest. Exact times vary by Distribution Network Operator region. Shifting flexible loads to green periods can significantly reduce costs - the differential between red and green rates can be 10-15p/kWh or more.'
+      answer:
+        'DUoS time bands reflect the cost of distributing electricity at different times. Red bands (typically 4-7pm weekdays, November-February) attract the highest charges during peak demand. Amber bands cover shoulder periods with moderate charges. Green bands (overnight and weekends) have the lowest charges when network demand is lowest. Exact times vary by Distribution Network Operator region. Shifting flexible loads to green periods can significantly reduce costs - the differential between red and green rates can be 10-15p/kWh or more.',
     },
     {
       question: 'How often should Display Energy Certificates be renewed?',
-      answer: 'DECs for public buildings over 1,000m² must be renewed annually and are valid for 12 months. Advisory Reports accompanying DECs are valid for 7 years. Buildings between 250m² and 1,000m² require DECs valid for 10 years. The DEC must be displayed in a prominent place clearly visible to the public. Failure to display a valid DEC can result in a penalty charge notice. The advisory report provides recommendations for improving energy efficiency that should inform energy management strategies.'
-    }
+      answer:
+        'DECs for public buildings over 1,000m² must be renewed annually and are valid for 12 months. Advisory Reports accompanying DECs are valid for 7 years. Buildings between 250m² and 1,000m² require DECs valid for 10 years. The DEC must be displayed in a prominent place clearly visible to the public. Failure to display a valid DEC can result in a penalty charge notice. The advisory report provides recommendations for improving energy efficiency that should inform energy management strategies.',
+    },
   ];
 
   return (
@@ -197,21 +210,27 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-3">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
             <p className="text-elec-yellow text-sm font-medium">Module 3 • Section 3</p>
-            <h1 className="text-white font-semibold truncate">Comparing to Benchmarks and Tariffs</h1>
+            <h1 className="text-white font-semibold truncate">
+              Comparing to Benchmarks and Tariffs
+            </h1>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
-
         {/* Quick Summary */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -247,10 +266,10 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-2">Understanding CIBSE TM46</h3>
                 <p className="text-white leading-relaxed">
-                  CIBSE Technical Memorandum 46 (TM46) provides standardised energy benchmarks for different building
-                  types across the UK. Published by the Chartered Institution of Building Services Engineers, these
-                  benchmarks form the basis for Display Energy Certificates and enable meaningful comparisons between
-                  similar buildings.
+                  CIBSE Technical Memorandum 46 (TM46) provides standardised energy benchmarks for
+                  different building types across the UK. Published by the Chartered Institution of
+                  Building Services Engineers, these benchmarks form the basis for Display Energy
+                  Certificates and enable meaningful comparisons between similar buildings.
                 </p>
               </div>
             </div>
@@ -260,24 +279,35 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <Building2 className="w-4 h-4 text-elec-yellow mt-1 flex-shrink-0" />
-                  <span><strong>29 building categories</strong> covering offices, retail, schools, hospitals, hotels, and industrial premises</span>
+                  <span>
+                    <strong>29 building categories</strong> covering offices, retail, schools,
+                    hospitals, hotels, and industrial premises
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Zap className="w-4 h-4 text-elec-yellow mt-1 flex-shrink-0" />
-                  <span><strong>Separate benchmarks</strong> for electricity and fossil fuel consumption in kWh/m²/year</span>
+                  <span>
+                    <strong>Separate benchmarks</strong> for electricity and fossil fuel consumption
+                    in kWh/m²/year
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-1 flex-shrink-0" />
-                  <span><strong>Typical and good practice</strong> values allow assessment against median and 25th percentile performance</span>
+                  <span>
+                    <strong>Typical and good practice</strong> values allow assessment against
+                    median and 25th percentile performance
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-elec-yellow mb-3">Display Energy Certificate (DEC) Ratings</h4>
+              <h4 className="font-medium text-elec-yellow mb-3">
+                Display Energy Certificate (DEC) Ratings
+              </h4>
               <p className="text-white mb-3">
-                DECs use an A-G scale based on the Energy Performance Indicator (EPI), calculated as actual energy
-                use divided by the benchmark, multiplied by 100:
+                DECs use an A-G scale based on the Energy Performance Indicator (EPI), calculated as
+                actual energy use divided by the benchmark, multiplied by 100:
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                 <div className="bg-green-900/30 rounded p-2 text-center">
@@ -326,9 +356,10 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-2">Normalising to Floor Area</h3>
                 <p className="text-white leading-relaxed">
-                  Converting energy consumption to kWh per square metre enables comparison between buildings of
-                  different sizes. This normalisation uses Gross Internal Area (GIA) - the total floor area measured
-                  to the internal face of external walls, including circulation space, plant rooms, and toilets.
+                  Converting energy consumption to kWh per square metre enables comparison between
+                  buildings of different sizes. This normalisation uses Gross Internal Area (GIA) -
+                  the total floor area measured to the internal face of external walls, including
+                  circulation space, plant rooms, and toilets.
                 </p>
               </div>
             </div>
@@ -336,7 +367,8 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-elec-yellow mb-3">Normalisation Formula</h4>
               <div className="bg-white/10 rounded p-3 font-mono text-center text-white">
-                <span className="text-elec-yellow">Energy Intensity</span> = Total Annual Consumption (kWh) ÷ Gross Internal Area (m²)
+                <span className="text-elec-yellow">Energy Intensity</span> = Total Annual
+                Consumption (kWh) ÷ Gross Internal Area (m²)
               </div>
               <p className="text-white/70 text-sm mt-2">
                 Example: 150,000 kWh ÷ 2,000 m² = 75 kWh/m²/year
@@ -346,11 +378,14 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="flex items-start gap-3 mt-4">
               <ThermometerSun className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-elec-yellow mb-2">Degree Day Weather Correction</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2">
+                  Degree Day Weather Correction
+                </h3>
                 <p className="text-white leading-relaxed">
-                  Degree days quantify heating or cooling demand based on outdoor temperature. In the UK, heating
-                  degree days use a base temperature of 15.5°C - each degree below this base, for each day,
-                  contributes one degree day. This allows consumption to be normalised for weather variations.
+                  Degree days quantify heating or cooling demand based on outdoor temperature. In
+                  the UK, heating degree days use a base temperature of 15.5°C - each degree below
+                  this base, for each day, contributes one degree day. This allows consumption to be
+                  normalised for weather variations.
                 </p>
               </div>
             </div>
@@ -358,12 +393,15 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-elec-yellow mb-3">Weather Correction Formula</h4>
               <div className="bg-white/10 rounded p-3 font-mono text-sm text-center text-white">
-                <span className="text-elec-yellow">Corrected Consumption</span> = Actual Consumption × (Long-term Average DD ÷ Actual Period DD)
+                <span className="text-elec-yellow">Corrected Consumption</span> = Actual Consumption
+                × (Long-term Average DD ÷ Actual Period DD)
               </div>
               <p className="text-white/70 text-sm mt-3">
-                <strong>Example:</strong> A building used 80,000 kWh in a mild year with 1,800 degree days.
-                The 20-year average is 2,000 degree days.<br />
-                Corrected = 80,000 × (2,000 ÷ 1,800) = 88,889 kWh<br />
+                <strong>Example:</strong> A building used 80,000 kWh in a mild year with 1,800
+                degree days. The 20-year average is 2,000 degree days.
+                <br />
+                Corrected = 80,000 × (2,000 ÷ 1,800) = 88,889 kWh
+                <br />
                 This reveals true consumption would be higher in a typical year.
               </p>
             </div>
@@ -390,10 +428,13 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="flex items-start gap-3">
               <Building2 className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-elec-yellow mb-2">CIBSE TM46 Reference Benchmarks</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2">
+                  CIBSE TM46 Reference Benchmarks
+                </h3>
                 <p className="text-white leading-relaxed">
-                  The following benchmarks represent typical consumption for common building types. Good practice
-                  buildings (25th percentile) typically achieve 25-30% less than these typical values.
+                  The following benchmarks represent typical consumption for common building types.
+                  Good practice buildings (25th percentile) typically achieve 25-30% less than these
+                  typical values.
                 </p>
               </div>
             </div>
@@ -458,9 +499,16 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-yellow-500 mb-1">Important Considerations</h4>
                   <ul className="text-white text-sm space-y-1">
-                    <li>• Benchmarks assume standard operating hours - adjust for 24/7 operations</li>
-                    <li>• Data centres, server rooms, and process loads are excluded from typical benchmarks</li>
-                    <li>• Regional climate variations affect fossil fuel benchmarks significantly</li>
+                    <li>
+                      • Benchmarks assume standard operating hours - adjust for 24/7 operations
+                    </li>
+                    <li>
+                      • Data centres, server rooms, and process loads are excluded from typical
+                      benchmarks
+                    </li>
+                    <li>
+                      • Regional climate variations affect fossil fuel benchmarks significantly
+                    </li>
                     <li>• Buildings with electric heating should combine both benchmarks</li>
                   </ul>
                 </div>
@@ -480,62 +528,77 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="flex items-start gap-3">
               <PoundSterling className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-elec-yellow mb-2">Components of Electricity Costs</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2">
+                  Components of Electricity Costs
+                </h3>
                 <p className="text-white leading-relaxed">
-                  UK electricity bills comprise multiple components beyond the unit rate. Understanding these
-                  elements enables identification of cost reduction opportunities beyond simple consumption reduction.
+                  UK electricity bills comprise multiple components beyond the unit rate.
+                  Understanding these elements enables identification of cost reduction
+                  opportunities beyond simple consumption reduction.
                 </p>
               </div>
             </div>
 
             <div className="space-y-3">
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-medium text-elec-yellow mb-2">Commodity Cost (40-50% of bill)</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">
+                  Commodity Cost (40-50% of bill)
+                </h4>
                 <p className="text-white text-sm">
-                  The wholesale cost of electricity itself, influenced by market prices, fuel costs, and carbon
-                  pricing. This is what you typically negotiate with suppliers.
+                  The wholesale cost of electricity itself, influenced by market prices, fuel costs,
+                  and carbon pricing. This is what you typically negotiate with suppliers.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-medium text-elec-yellow mb-2">DUoS - Distribution Use of System (15-20%)</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">
+                  DUoS - Distribution Use of System (15-20%)
+                </h4>
                 <p className="text-white text-sm">
-                  Charges for using the local distribution network (11kV and below). These vary by time of day
-                  with red, amber, and green bands, and by geographic region. Set by the Distribution Network
-                  Operator (DNO) for your area.
+                  Charges for using the local distribution network (11kV and below). These vary by
+                  time of day with red, amber, and green bands, and by geographic region. Set by the
+                  Distribution Network Operator (DNO) for your area.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-medium text-elec-yellow mb-2">TNUoS - Transmission Network Use of System (5-10%)</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">
+                  TNUoS - Transmission Network Use of System (5-10%)
+                </h4>
                 <p className="text-white text-sm">
-                  Charges for using the high-voltage transmission network (275kV/400kV). For half-hourly metered
-                  customers, these are based on demand during Triad periods - the three highest national demand
-                  half-hours between November and February.
+                  Charges for using the high-voltage transmission network (275kV/400kV). For
+                  half-hourly metered customers, these are based on demand during Triad periods -
+                  the three highest national demand half-hours between November and February.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-medium text-elec-yellow mb-2">BSUoS - Balancing Services Use of System (2-5%)</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">
+                  BSUoS - Balancing Services Use of System (2-5%)
+                </h4>
                 <p className="text-white text-sm">
-                  Charges for National Grid's balancing services to match supply and demand in real-time.
-                  These vary half-hourly and can spike during system stress.
+                  Charges for National Grid's balancing services to match supply and demand in
+                  real-time. These vary half-hourly and can spike during system stress.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
-                <h4 className="font-medium text-elec-yellow mb-2">CCL - Climate Change Levy (5-8%)</h4>
+                <h4 className="font-medium text-elec-yellow mb-2">
+                  CCL - Climate Change Levy (5-8%)
+                </h4>
                 <p className="text-white text-sm">
-                  Environmental tax on business energy use at 0.775p/kWh (2024/25). Exemptions apply for
-                  renewable electricity and some energy-intensive industries with Climate Change Agreements.
+                  Environmental tax on business energy use at 0.775p/kWh (2024/25). Exemptions apply
+                  for renewable electricity and some energy-intensive industries with Climate Change
+                  Agreements.
                 </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Other Charges</h4>
                 <p className="text-white text-sm">
-                  Including meter operator charges, data collection charges, Feed-in Tariff costs, Contracts
-                  for Difference levies, and capacity market charges. These typically add 10-15% to the bill.
+                  Including meter operator charges, data collection charges, Feed-in Tariff costs,
+                  Contracts for Difference levies, and capacity market charges. These typically add
+                  10-15% to the bill.
                 </p>
               </div>
             </div>
@@ -564,9 +627,9 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-2">Strategic Cost Reduction</h3>
                 <p className="text-white leading-relaxed">
-                  Understanding tariff structures reveals opportunities beyond simple energy efficiency.
-                  Load shifting, demand management, and contract optimisation can deliver significant savings
-                  without reducing actual energy consumption.
+                  Understanding tariff structures reveals opportunities beyond simple energy
+                  efficiency. Load shifting, demand management, and contract optimisation can
+                  deliver significant savings without reducing actual energy consumption.
                 </p>
               </div>
             </div>
@@ -617,11 +680,14 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <div className="flex items-start gap-2">
                 <Lightbulb className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-green-400 mb-1">Pro Tip: Half-Hourly Data Analysis</h4>
+                  <h4 className="font-medium text-green-400 mb-1">
+                    Pro Tip: Half-Hourly Data Analysis
+                  </h4>
                   <p className="text-white text-sm">
-                    Request half-hourly consumption data from your supplier. Analysing this reveals load patterns,
-                    identifies peak demand periods, and highlights opportunities for demand reduction or shifting.
-                    Many suppliers provide this through online portals for half-hourly metered supplies.
+                    Request half-hourly consumption data from your supplier. Analysing this reveals
+                    load patterns, identifies peak demand periods, and highlights opportunities for
+                    demand reduction or shifting. Many suppliers provide this through online portals
+                    for half-hourly metered supplies.
                   </p>
                 </div>
               </div>
@@ -649,11 +715,13 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="flex items-start gap-3">
               <BarChart3 className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-elec-yellow mb-2">Professional Presentation Techniques</h3>
+                <h3 className="font-semibold text-elec-yellow mb-2">
+                  Professional Presentation Techniques
+                </h3>
                 <p className="text-white leading-relaxed">
-                  Effective energy analysis goes beyond raw numbers. Presenting findings in context with appropriate
-                  benchmarks and clear visualisation helps clients understand their position and motivates action
-                  on recommendations.
+                  Effective energy analysis goes beyond raw numbers. Presenting findings in context
+                  with appropriate benchmarks and clear visualisation helps clients understand their
+                  position and motivates action on recommendations.
                 </p>
               </div>
             </div>
@@ -662,31 +730,47 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <h4 className="font-medium text-elec-yellow mb-3">Comparison Framework</h4>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">1</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">
+                    1
+                  </span>
                   <div>
                     <p className="font-medium text-white">Against benchmark</p>
-                    <p className="text-white/70 text-sm">Show where client sits vs. typical and good practice values</p>
+                    <p className="text-white/70 text-sm">
+                      Show where client sits vs. typical and good practice values
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">2</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">
+                    2
+                  </span>
                   <div>
                     <p className="font-medium text-white">Against historical performance</p>
-                    <p className="text-white/70 text-sm">Weather-corrected year-on-year trends with clear baselines</p>
+                    <p className="text-white/70 text-sm">
+                      Weather-corrected year-on-year trends with clear baselines
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">3</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">
+                    3
+                  </span>
                   <div>
                     <p className="font-medium text-white">Against targets</p>
-                    <p className="text-white/70 text-sm">Progress towards client's own efficiency or carbon goals</p>
+                    <p className="text-white/70 text-sm">
+                      Progress towards client's own efficiency or carbon goals
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">4</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm flex-shrink-0">
+                    4
+                  </span>
                   <div>
                     <p className="font-medium text-white">Against portfolio</p>
-                    <p className="text-white/70 text-sm">For multi-site clients, compare similar sites to identify outliers</p>
+                    <p className="text-white/70 text-sm">
+                      For multi-site clients, compare similar sites to identify outliers
+                    </p>
                   </div>
                 </div>
               </div>
@@ -721,12 +805,28 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-elec-yellow mb-3">Sample Client Report Structure</h4>
               <ol className="text-white text-sm space-y-2">
-                <li><strong>1. Executive Summary:</strong> Key findings, current performance vs. benchmark, top 3 opportunities</li>
-                <li><strong>2. Building Profile:</strong> Area, use, hours, special factors</li>
-                <li><strong>3. Energy Performance:</strong> Current EUI, DEC equivalent rating, trend analysis</li>
-                <li><strong>4. Cost Analysis:</strong> Tariff breakdown, time-of-use patterns, optimisation potential</li>
-                <li><strong>5. Recommendations:</strong> Prioritised actions with costs, savings, and payback periods</li>
-                <li><strong>6. Appendices:</strong> Methodology, data sources, benchmark references</li>
+                <li>
+                  <strong>1. Executive Summary:</strong> Key findings, current performance vs.
+                  benchmark, top 3 opportunities
+                </li>
+                <li>
+                  <strong>2. Building Profile:</strong> Area, use, hours, special factors
+                </li>
+                <li>
+                  <strong>3. Energy Performance:</strong> Current EUI, DEC equivalent rating, trend
+                  analysis
+                </li>
+                <li>
+                  <strong>4. Cost Analysis:</strong> Tariff breakdown, time-of-use patterns,
+                  optimisation potential
+                </li>
+                <li>
+                  <strong>5. Recommendations:</strong> Prioritised actions with costs, savings, and
+                  payback periods
+                </li>
+                <li>
+                  <strong>6. Appendices:</strong> Methodology, data sources, benchmark references
+                </li>
               </ol>
             </div>
           </div>
@@ -742,43 +842,79 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
           <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-lg border border-elec-yellow/30 p-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-semibold text-elec-yellow mb-3">Key Benchmarks (kWh/m²/year)</h3>
+                <h3 className="font-semibold text-elec-yellow mb-3">
+                  Key Benchmarks (kWh/m²/year)
+                </h3>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Office (AC):</strong> 95 elec / 105 fossil</li>
-                  <li><strong>Office (natural vent):</strong> 54 elec / 120 fossil</li>
-                  <li><strong>Primary School:</strong> 32 elec / 113 fossil</li>
-                  <li><strong>Retail:</strong> 165 elec / 75 fossil</li>
-                  <li><strong>Hotel:</strong> 105 elec / 260 fossil</li>
+                  <li>
+                    <strong>Office (AC):</strong> 95 elec / 105 fossil
+                  </li>
+                  <li>
+                    <strong>Office (natural vent):</strong> 54 elec / 120 fossil
+                  </li>
+                  <li>
+                    <strong>Primary School:</strong> 32 elec / 113 fossil
+                  </li>
+                  <li>
+                    <strong>Retail:</strong> 165 elec / 75 fossil
+                  </li>
+                  <li>
+                    <strong>Hotel:</strong> 105 elec / 260 fossil
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-3">DEC Rating Scale</h3>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>A:</strong> 0-25 (Exceptional)</li>
-                  <li><strong>B:</strong> 26-50 (Excellent)</li>
-                  <li><strong>C:</strong> 51-75 (Good)</li>
-                  <li><strong>D:</strong> 76-100 (Typical)</li>
-                  <li><strong>E-G:</strong> Over 100 (Below typical)</li>
+                  <li>
+                    <strong>A:</strong> 0-25 (Exceptional)
+                  </li>
+                  <li>
+                    <strong>B:</strong> 26-50 (Excellent)
+                  </li>
+                  <li>
+                    <strong>C:</strong> 51-75 (Good)
+                  </li>
+                  <li>
+                    <strong>D:</strong> 76-100 (Typical)
+                  </li>
+                  <li>
+                    <strong>E-G:</strong> Over 100 (Below typical)
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-3">Key Formulas</h3>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>EUI:</strong> kWh ÷ m² GIA</li>
-                  <li><strong>EPI:</strong> (Actual ÷ Benchmark) × 100</li>
-                  <li><strong>Weather correction:</strong> Actual × (LTA DD ÷ Actual DD)</li>
+                  <li>
+                    <strong>EUI:</strong> kWh ÷ m² GIA
+                  </li>
+                  <li>
+                    <strong>EPI:</strong> (Actual ÷ Benchmark) × 100
+                  </li>
+                  <li>
+                    <strong>Weather correction:</strong> Actual × (LTA DD ÷ Actual DD)
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-3">Tariff Components</h3>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Commodity:</strong> 40-50% (wholesale energy)</li>
-                  <li><strong>DUoS:</strong> 15-20% (distribution, time-varying)</li>
-                  <li><strong>TNUoS:</strong> 5-10% (transmission, Triads)</li>
-                  <li><strong>CCL:</strong> 5-8% (0.775p/kWh)</li>
+                  <li>
+                    <strong>Commodity:</strong> 40-50% (wholesale energy)
+                  </li>
+                  <li>
+                    <strong>DUoS:</strong> 15-20% (distribution, time-varying)
+                  </li>
+                  <li>
+                    <strong>TNUoS:</strong> 5-10% (transmission, Triads)
+                  </li>
+                  <li>
+                    <strong>CCL:</strong> 5-8% (0.775p/kWh)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -786,10 +922,18 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             <div className="mt-4 pt-4 border-t border-white/20">
               <h3 className="font-semibold text-elec-yellow mb-2">Key Resources</h3>
               <ul className="text-sm text-white space-y-1">
-                <li>• <strong>CIBSE TM46:</strong> Energy Benchmarks</li>
-                <li>• <strong>Degree Days.net:</strong> Free weather data</li>
-                <li>• <strong>Carbon Trust:</strong> Benchmark guides and tools</li>
-                <li>• <strong>National Grid:</strong> Triad dates and forecasts</li>
+                <li>
+                  • <strong>CIBSE TM46:</strong> Energy Benchmarks
+                </li>
+                <li>
+                  • <strong>Degree Days.net:</strong> Free weather data
+                </li>
+                <li>
+                  • <strong>Carbon Trust:</strong> Benchmark guides and tools
+                </li>
+                <li>
+                  • <strong>National Grid:</strong> Triad dates and forecasts
+                </li>
               </ul>
             </div>
           </div>
@@ -809,10 +953,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
           <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-lg overflow-hidden"
-              >
+              <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
                   <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
@@ -824,13 +965,20 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-6 border-t border-white/10">
-          <Button asChild variant="outline" className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white">
+          <Button
+            asChild
+            variant="outline"
+            className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
+          >
             <Link to="../section-2" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               <span>Previous: Data Collection Methods</span>
             </Link>
           </Button>
-          <Button asChild className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+          <Button
+            asChild
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
             <Link to="../section-4" className="flex items-center gap-2">
               <span>Next: Tools and Software for Audits</span>
               <ArrowRight className="w-4 h-4" />

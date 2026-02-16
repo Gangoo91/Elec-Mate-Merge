@@ -44,7 +44,9 @@ export const EnergyEfficiencyComparisonSection = () => {
         <div className="bg-yellow-950/20 border border-yellow-600 rounded-lg p-4">
           <h4 className="font-semibold text-yellow-200 mb-2">Key Finding</h4>
           <p className="text-yellow-100">
-            Both approaches can outperform traditional thermostats significantly, especially when combined with zoning systems. The choice depends on household patterns rather than inherent superiority of either method.
+            Both approaches can outperform traditional thermostats significantly, especially when
+            combined with zoning systems. The choice depends on household patterns rather than
+            inherent superiority of either method.
           </p>
         </div>
 

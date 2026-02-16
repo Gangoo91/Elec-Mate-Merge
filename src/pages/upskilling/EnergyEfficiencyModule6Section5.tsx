@@ -7,32 +7,30 @@ import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Compliance Reporting and Audit Trails - Energy Efficiency Module 6 Section 5';
-const DESCRIPTION = 'Master UK energy compliance reporting requirements including ESOS evidence, SECR annual reporting, audit trail maintenance, document version control, and ISO 50001 audit preparation.';
+const DESCRIPTION =
+  'Master UK energy compliance reporting requirements including ESOS evidence, SECR annual reporting, audit trail maintenance, document version control, and ISO 50001 audit preparation.';
 
 const quickCheckQuestions = [
   {
     id: 'ee-m6s5-qc1',
     question: 'How long must ESOS compliance evidence be retained?',
-    options: [
-      '2 years',
-      '4 years (until the next compliance phase)',
-      '7 years',
-      'Permanently'
-    ],
+    options: ['2 years', '4 years (until the next compliance phase)', '7 years', 'Permanently'],
     correctIndex: 1,
-    explanation: 'ESOS evidence must be retained for the duration of the compliance period (4 years until the next phase). However, best practice is to retain records longer as they may be needed for trend analysis and future compliance cycles.'
+    explanation:
+      'ESOS evidence must be retained for the duration of the compliance period (4 years until the next phase). However, best practice is to retain records longer as they may be needed for trend analysis and future compliance cycles.',
   },
   {
     id: 'ee-m6s5-qc2',
     question: 'Where must SECR energy and emissions data be reported?',
     options: [
       'Environment Agency online portal',
-      'Companies House via the Directors\' Report',
+      "Companies House via the Directors' Report",
       'Direct submission to DESNZ',
-      'Local authority returns'
+      'Local authority returns',
     ],
     correctIndex: 1,
-    explanation: 'SECR data must be included in the Directors\' Report section of the company\'s Annual Report and Accounts, which is filed with Companies House. This makes the information publicly available.'
+    explanation:
+      "SECR data must be included in the Directors' Report section of the company's Annual Report and Accounts, which is filed with Companies House. This makes the information publicly available.",
   },
   {
     id: 'ee-m6s5-qc3',
@@ -41,11 +39,12 @@ const quickCheckQuestions = [
       'To reduce energy consumption',
       'To prove compliance and enable verification of data',
       'To calculate payback periods',
-      'To design energy dashboards'
+      'To design energy dashboards',
     ],
     correctIndex: 1,
-    explanation: 'Audit trails provide evidence that data is accurate, calculations are correct, and compliance requirements have been met. They enable internal and external auditors to verify information and trace any figure back to its source.'
-  }
+    explanation:
+      'Audit trails provide evidence that data is accurate, calculations are correct, and compliance requirements have been met. They enable internal and external auditors to verify information and trace any figure back to its source.',
+  },
 ];
 
 const quizQuestions = [
@@ -53,13 +52,14 @@ const quizQuestions = [
     id: 1,
     question: 'Who must sign off ESOS compliance reports?',
     options: [
-      'The company\'s CEO',
+      "The company's CEO",
       'A registered ESOS Lead Assessor',
       'Any qualified electrician',
-      'The Environment Agency'
+      'The Environment Agency',
     ],
     correctAnswer: 1,
-    explanation: 'ESOS requires sign-off by a registered Lead Assessor from an approved professional register such as CIBSE, IEMA, or the Energy Institute.'
+    explanation:
+      'ESOS requires sign-off by a registered Lead Assessor from an approved professional register such as CIBSE, IEMA, or the Energy Institute.',
   },
   {
     id: 2,
@@ -68,10 +68,11 @@ const quizQuestions = [
       'Only total kWh figures',
       'Description of calculation methods and data sources',
       'Names of all employees',
-      'Financial statements only'
+      'Financial statements only',
     ],
     correctAnswer: 1,
-    explanation: 'SECR requires disclosure of methodology used to calculate energy and emissions, including data sources, emission factors applied, and any estimation methods used for gaps in data.'
+    explanation:
+      'SECR requires disclosure of methodology used to calculate energy and emissions, including data sources, emission factors applied, and any estimation methods used for gaps in data.',
   },
   {
     id: 3,
@@ -80,10 +81,11 @@ const quizQuestions = [
       'Reduces file storage space',
       'Makes documents look professional',
       'Provides clear record of changes and prevents confusion',
-      'Automatically calculates energy savings'
+      'Automatically calculates energy savings',
     ],
     correctAnswer: 2,
-    explanation: 'Version control ensures everyone uses the correct current version, provides a clear history of changes, and prevents confusion when documents are updated over time.'
+    explanation:
+      'Version control ensures everyone uses the correct current version, provides a clear history of changes, and prevents confusion when documents are updated over time.',
   },
   {
     id: 4,
@@ -92,17 +94,19 @@ const quizQuestions = [
       'Approximate monthly estimates are sufficient',
       'Date, time, reading, meter ID, and who took the reading',
       'Just the kWh figure',
-      'Only readings over 1000 kWh need recording'
+      'Only readings over 1000 kWh need recording',
     ],
     correctAnswer: 1,
-    explanation: 'Complete meter reading records should include date, time, actual reading, meter identification, units, and the name of person taking the reading. Photos provide additional evidence.'
+    explanation:
+      'Complete meter reading records should include date, time, actual reading, meter identification, units, and the name of person taking the reading. Photos provide additional evidence.',
   },
   {
     id: 5,
     question: 'What percentage of energy consumption must an ESOS audit cover?',
     options: ['50%', '75%', '90%', '100%'],
     correctAnswer: 2,
-    explanation: 'ESOS audits must cover at least 90% of the organisation\'s total energy consumption across buildings, transport, and industrial processes.'
+    explanation:
+      "ESOS audits must cover at least 90% of the organisation's total energy consumption across buildings, transport, and industrial processes.",
   },
   {
     id: 6,
@@ -111,10 +115,11 @@ const quizQuestions = [
       'Company-specific factors only',
       'US EPA emission factors',
       'UK Government GHG Conversion Factors',
-      'Industry average estimates'
+      'Industry average estimates',
     ],
     correctAnswer: 2,
-    explanation: 'UK Government publishes annual GHG Conversion Factors (formerly DEFRA/BEIS factors) that must be used for SECR and most UK carbon reporting.'
+    explanation:
+      'UK Government publishes annual GHG Conversion Factors (formerly DEFRA/BEIS factors) that must be used for SECR and most UK carbon reporting.',
   },
   {
     id: 7,
@@ -123,22 +128,19 @@ const quizQuestions = [
       'Employee handbook',
       'Management review meeting minutes',
       'Marketing brochures',
-      'Reception sign-in sheets'
+      'Reception sign-in sheets',
     ],
     correctAnswer: 1,
-    explanation: 'ISO 50001 requires documented management reviews that demonstrate top management commitment and systematic approach to continuous improvement of energy performance.'
+    explanation:
+      'ISO 50001 requires documented management reviews that demonstrate top management commitment and systematic approach to continuous improvement of energy performance.',
   },
   {
     id: 8,
     question: 'How long should electrical installation certificates be retained?',
-    options: [
-      '1 year',
-      '5 years',
-      'Life of the installation',
-      'Until the next inspection'
-    ],
+    options: ['1 year', '5 years', 'Life of the installation', 'Until the next inspection'],
     correctAnswer: 2,
-    explanation: 'Electrical installation certificates (EICs) should be retained for the life of the installation. They provide evidence of compliance and are needed for any future modifications or investigations.'
+    explanation:
+      'Electrical installation certificates (EICs) should be retained for the life of the installation. They provide evidence of compliance and are needed for any future modifications or investigations.',
   },
   {
     id: 9,
@@ -147,10 +149,11 @@ const quizQuestions = [
       'Any energy consumption increase',
       'Failure to notify compliance or submit adequate evidence',
       'Installing solar panels',
-      'Changing energy suppliers'
+      'Changing energy suppliers',
     ],
     correctAnswer: 1,
-    explanation: 'The Environment Agency issues compliance notices for failures such as not notifying compliance by the deadline, failing to conduct required audits, or not retaining adequate evidence.'
+    explanation:
+      'The Environment Agency issues compliance notices for failures such as not notifying compliance by the deadline, failing to conduct required audits, or not retaining adequate evidence.',
   },
   {
     id: 10,
@@ -159,38 +162,45 @@ const quizQuestions = [
       'Only the final energy bill',
       'Before/after readings, installation dates, equipment specs, and commissioning records',
       'Just the product brochure',
-      'Only measures over £10,000'
+      'Only measures over £10,000',
     ],
     correctAnswer: 1,
-    explanation: 'Complete documentation includes baseline readings, installation records, equipment specifications, commissioning records, and post-installation verification to demonstrate actual savings achieved.'
-  }
+    explanation:
+      'Complete documentation includes baseline readings, installation records, equipment specifications, commissioning records, and post-installation verification to demonstrate actual savings achieved.',
+  },
 ];
 
 const faqs = [
   {
     question: 'What happens if we miss an ESOS deadline?',
-    answer: 'The Environment Agency can issue compliance notices and penalties. Initial penalties can reach £90,000 plus daily fines. They may also "name and shame" non-compliant organisations. If you realise you\'ve missed a deadline, contact the Environment Agency proactively - demonstrating good faith and working toward compliance may reduce penalties.'
+    answer:
+      'The Environment Agency can issue compliance notices and penalties. Initial penalties can reach £90,000 plus daily fines. They may also "name and shame" non-compliant organisations. If you realise you\'ve missed a deadline, contact the Environment Agency proactively - demonstrating good faith and working toward compliance may reduce penalties.',
   },
   {
     question: 'Can we use estimated data in SECR reports?',
-    answer: 'Yes, but it must be clearly identified as estimated, use reasonable methodology, and be explained in the methodology disclosure. Common estimates include pro-rating partial-year data or using industry benchmarks for unmeasured activities. The goal is reasonable accuracy - perfection is not required but transparency is essential.'
+    answer:
+      'Yes, but it must be clearly identified as estimated, use reasonable methodology, and be explained in the methodology disclosure. Common estimates include pro-rating partial-year data or using industry benchmarks for unmeasured activities. The goal is reasonable accuracy - perfection is not required but transparency is essential.',
   },
   {
     question: 'How do we prepare for an ISO 50001 surveillance audit?',
-    answer: 'Review previous audit findings and ensure all corrective actions are complete. Update all documentation to reflect current practices. Verify EnPI data is current and accurate. Brief key personnel on their roles and the audit process. Have evidence ready for any changes since the last audit. Run an internal audit first to identify gaps.'
+    answer:
+      'Review previous audit findings and ensure all corrective actions are complete. Update all documentation to reflect current practices. Verify EnPI data is current and accurate. Brief key personnel on their roles and the audit process. Have evidence ready for any changes since the last audit. Run an internal audit first to identify gaps.',
   },
   {
-    question: 'Should subcontractors\' energy use be included in our reports?',
-    answer: 'It depends on the reporting boundary and control. Under SECR, you report energy use within your operational control. For ISO 50001, you define the scope boundary. Consider if you pay the energy bills, if the work is on your premises, and the degree of control over operations. Document boundary decisions clearly.'
+    question: "Should subcontractors' energy use be included in our reports?",
+    answer:
+      'It depends on the reporting boundary and control. Under SECR, you report energy use within your operational control. For ISO 50001, you define the scope boundary. Consider if you pay the energy bills, if the work is on your premises, and the degree of control over operations. Document boundary decisions clearly.',
   },
   {
     question: 'What records should electricians keep for compliance support?',
-    answer: 'Keep detailed job records including date, location, work description, equipment installed, energy ratings, commissioning results, and before/after meter readings where applicable. Retain product specifications, certificates, and test results. These support clients\' compliance requirements and protect you professionally.'
+    answer:
+      "Keep detailed job records including date, location, work description, equipment installed, energy ratings, commissioning results, and before/after meter readings where applicable. Retain product specifications, certificates, and test results. These support clients' compliance requirements and protect you professionally.",
   },
   {
     question: 'How can we demonstrate continuous improvement for auditors?',
-    answer: 'Maintain records showing: objectives set at each review, progress against targets, actions taken when targets missed, new improvement opportunities identified, training provided, and management decisions made. CUSUM charts and trend analysis visually demonstrate performance over time. Document both successes and lessons from projects that didn\'t deliver expected savings.'
-  }
+    answer:
+      "Maintain records showing: objectives set at each review, progress against targets, actions taken when targets missed, new improvement opportunities identified, training provided, and management decisions made. CUSUM charts and trend analysis visually demonstrate performance over time. Document both successes and lessons from projects that didn't deliver expected savings.",
+  },
 ];
 
 const EnergyEfficiencyModule6Section5: React.FC = () => {
@@ -199,8 +209,14 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
   useSEO({
     title: TITLE,
     description: DESCRIPTION,
-    keywords: ['ESOS compliance', 'SECR reporting', 'audit trails', 'ISO 50001', 'energy compliance'],
-    canonicalUrl: '/study-centre/upskilling/energy-efficiency/module-6/section-5'
+    keywords: [
+      'ESOS compliance',
+      'SECR reporting',
+      'audit trails',
+      'ISO 50001',
+      'energy compliance',
+    ],
+    canonicalUrl: '/study-centre/upskilling/energy-efficiency/module-6/section-5',
   });
 
   return (
@@ -208,7 +224,12 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -228,9 +249,7 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Compliance Reporting and Audit Trails
           </h1>
-          <p className="text-white/80">
-            Maintaining evidence and meeting reporting requirements
-          </p>
+          <p className="text-white/80">Maintaining evidence and meeting reporting requirements</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -238,19 +257,35 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">Key Reports</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>ESOS:</strong> Lead Assessor sign-off, EA notification</li>
-              <li><strong>SECR:</strong> Directors' Report annually</li>
-              <li><strong>ISO 50001:</strong> Management review records</li>
-              <li><strong>DECs:</strong> Annual operational ratings</li>
+              <li>
+                <strong>ESOS:</strong> Lead Assessor sign-off, EA notification
+              </li>
+              <li>
+                <strong>SECR:</strong> Directors' Report annually
+              </li>
+              <li>
+                <strong>ISO 50001:</strong> Management review records
+              </li>
+              <li>
+                <strong>DECs:</strong> Annual operational ratings
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Record Retention</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>ESOS evidence:</strong> 4+ years</li>
-              <li><strong>SECR data:</strong> 6+ years</li>
-              <li><strong>EICs:</strong> Life of installation</li>
-              <li><strong>Meter readings:</strong> 7+ years</li>
+              <li>
+                <strong>ESOS evidence:</strong> 4+ years
+              </li>
+              <li>
+                <strong>SECR data:</strong> 6+ years
+              </li>
+              <li>
+                <strong>EICs:</strong> Life of installation
+              </li>
+              <li>
+                <strong>Meter readings:</strong> 7+ years
+              </li>
             </ul>
           </div>
         </div>
@@ -265,7 +300,7 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
               'Creating robust audit trails',
               'Document version control best practices',
               'ISO 50001 audit preparation',
-              'Record retention requirements'
+              'Record retention requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -285,7 +320,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              ESOS compliance requires comprehensive documentation to demonstrate that energy audits have been conducted properly and recommendations identified. The Environment Agency may request evidence at any time during the compliance period.
+              ESOS compliance requires comprehensive documentation to demonstrate that energy audits
+              have been conducted properly and recommendations identified. The Environment Agency
+              may request evidence at any time during the compliance period.
             </p>
 
             <div className="my-6">
@@ -312,7 +349,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Environment Agency notification:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Environment Agency notification:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Submit via online portal by compliance deadline</li>
                 <li>Confirm total energy consumption audited</li>
@@ -334,7 +373,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Streamlined Energy and Carbon Reporting requires qualifying companies to disclose energy and emissions data annually in the Directors' Report. This public disclosure promotes transparency and allows stakeholder comparison.
+              Streamlined Energy and Carbon Reporting requires qualifying companies to disclose
+              energy and emissions data annually in the Directors' Report. This public disclosure
+              promotes transparency and allows stakeholder comparison.
             </p>
 
             <div className="my-6">
@@ -382,17 +423,29 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              An audit trail enables any figure in a report to be traced back to its original source. This is essential for both internal verification and external audits. Good audit trails also help identify errors and demonstrate data quality.
+              An audit trail enables any figure in a report to be traced back to its original
+              source. This is essential for both internal verification and external audits. Good
+              audit trails also help identify errors and demonstrate data quality.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Audit trail principles:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Traceability:</strong> Every figure linked to source data</li>
-                <li><strong>Transparency:</strong> Calculations clearly documented</li>
-                <li><strong>Completeness:</strong> All data points captured</li>
-                <li><strong>Consistency:</strong> Same methods applied throughout</li>
-                <li><strong>Timeliness:</strong> Records created contemporaneously</li>
+                <li>
+                  <strong>Traceability:</strong> Every figure linked to source data
+                </li>
+                <li>
+                  <strong>Transparency:</strong> Calculations clearly documented
+                </li>
+                <li>
+                  <strong>Completeness:</strong> All data points captured
+                </li>
+                <li>
+                  <strong>Consistency:</strong> Same methods applied throughout
+                </li>
+                <li>
+                  <strong>Timeliness:</strong> Records created contemporaneously
+                </li>
               </ul>
             </div>
 
@@ -430,22 +483,36 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Version control ensures everyone works from the correct, current version of documents. Without it, outdated information may be used, changes are lost, and audit trails become unreliable.
+              Version control ensures everyone works from the correct, current version of documents.
+              Without it, outdated information may be used, changes are lost, and audit trails
+              become unreliable.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Version control elements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Version number:</strong> Clear sequential numbering (v1.0, v1.1, v2.0)</li>
-                <li><strong>Date:</strong> When this version was created</li>
-                <li><strong>Author:</strong> Who made the changes</li>
-                <li><strong>Change description:</strong> What was modified</li>
-                <li><strong>Approval:</strong> Who authorised the change</li>
+                <li>
+                  <strong>Version number:</strong> Clear sequential numbering (v1.0, v1.1, v2.0)
+                </li>
+                <li>
+                  <strong>Date:</strong> When this version was created
+                </li>
+                <li>
+                  <strong>Author:</strong> Who made the changes
+                </li>
+                <li>
+                  <strong>Change description:</strong> What was modified
+                </li>
+                <li>
+                  <strong>Approval:</strong> Who authorised the change
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">File naming conventions:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                File naming conventions:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Include document type, date, and version</li>
                 <li>Example: "EnergyAudit_BuildingA_2024-06_v2.1.xlsx"</li>
@@ -475,7 +542,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              ISO 50001 certification requires initial and ongoing surveillance audits. Preparation is key to successful audits. Auditors verify that the energy management system is implemented effectively and driving continuous improvement.
+              ISO 50001 certification requires initial and ongoing surveillance audits. Preparation
+              is key to successful audits. Auditors verify that the energy management system is
+              implemented effectively and driving continuous improvement.
             </p>
 
             <div className="my-6">
@@ -492,7 +561,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Demonstrating continual improvement:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Demonstrating continual improvement:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>EnPI trends showing improvement over time</li>
                 <li>Completed energy projects and verified savings</li>
@@ -523,23 +594,39 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different types of records have different retention requirements. Keeping records too briefly risks non-compliance; keeping everything forever creates storage and management challenges. A clear retention policy balances these needs.
+              Different types of records have different retention requirements. Keeping records too
+              briefly risks non-compliance; keeping everything forever creates storage and
+              management challenges. A clear retention policy balances these needs.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Minimum retention periods:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>ESOS evidence:</strong> 4 years (full compliance period)</li>
-                <li><strong>SECR supporting data:</strong> 6 years (accounting records)</li>
-                <li><strong>ISO 50001 records:</strong> 3 years minimum (standard)</li>
-                <li><strong>Electrical certificates:</strong> Life of installation</li>
-                <li><strong>Meter readings:</strong> 7 years (good practice)</li>
-                <li><strong>Equipment manuals:</strong> Life of equipment + disposal</li>
+                <li>
+                  <strong>ESOS evidence:</strong> 4 years (full compliance period)
+                </li>
+                <li>
+                  <strong>SECR supporting data:</strong> 6 years (accounting records)
+                </li>
+                <li>
+                  <strong>ISO 50001 records:</strong> 3 years minimum (standard)
+                </li>
+                <li>
+                  <strong>Electrical certificates:</strong> Life of installation
+                </li>
+                <li>
+                  <strong>Meter readings:</strong> 7 years (good practice)
+                </li>
+                <li>
+                  <strong>Equipment manuals:</strong> Life of equipment + disposal
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Secure storage considerations:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Secure storage considerations:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Fire-safe storage for critical paper records</li>
                 <li>Regular backups of electronic records</li>
@@ -550,7 +637,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Electrician record recommendations:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Electrician record recommendations:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Keep job sheets, certificates, and test results</li>
                 <li>Retain photographs of installations</li>
@@ -568,7 +657,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Supporting client compliance</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Supporting client compliance
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Provide detailed job records with dates and specifications</li>
                 <li>Include before/after meter readings for efficiency work</li>
@@ -579,7 +670,9 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Building your compliance toolkit</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Building your compliance toolkit
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Standardised job record templates</li>
                 <li>Meter reading log sheets</li>
@@ -592,11 +685,21 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common mistakes to avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Inadequate records</strong> - Document everything contemporaneously</li>
-                <li><strong>Lost evidence</strong> - Back up records regularly</li>
-                <li><strong>Wrong emission factors</strong> - Use correct year's factors</li>
-                <li><strong>Missed deadlines</strong> - Set calendar reminders</li>
-                <li><strong>Assuming compliance</strong> - Verify requirements annually</li>
+                <li>
+                  <strong>Inadequate records</strong> - Document everything contemporaneously
+                </li>
+                <li>
+                  <strong>Lost evidence</strong> - Back up records regularly
+                </li>
+                <li>
+                  <strong>Wrong emission factors</strong> - Use correct year's factors
+                </li>
+                <li>
+                  <strong>Missed deadlines</strong> - Set calendar reminders
+                </li>
+                <li>
+                  <strong>Assuming compliance</strong> - Verify requirements annually
+                </li>
               </ul>
             </div>
           </div>
@@ -656,21 +759,27 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-6">
               Complete Module
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

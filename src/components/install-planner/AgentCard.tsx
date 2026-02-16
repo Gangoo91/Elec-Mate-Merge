@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Lightbulb } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Lightbulb } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 interface AgentCardProps {
   agentId: string;
@@ -17,10 +17,16 @@ const AGENT_COLORS: Record<string, string> = {
   installer: 'border-orange-500/30 bg-orange-500/5',
   'health-safety': 'border-red-500/30 bg-red-500/5',
   commissioning: 'border-purple-500/30 bg-purple-500/5',
-  compliance: 'border-yellow-500/30 bg-yellow-500/5'
+  compliance: 'border-yellow-500/30 bg-yellow-500/5',
 };
 
-export const AgentCard = ({ agentId, agentName, agentEmoji, response, keyPoints }: AgentCardProps) => {
+export const AgentCard = ({
+  agentId,
+  agentName,
+  agentEmoji,
+  response,
+  keyPoints,
+}: AgentCardProps) => {
   const colorClass = AGENT_COLORS[agentId] || 'border-border bg-card';
 
   return (

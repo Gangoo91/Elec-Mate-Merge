@@ -1,17 +1,24 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  AlertTriangle, Shield, Calculator, FileText, Lightbulb, CheckCircle,
-  ClipboardList, ArrowRight, Scale, Target
-} from "lucide-react";
-import HazardIdentificationMatrix from "./risk-assessment/HazardIdentificationMatrix";
-import RiskCalculationMatrix from "./risk-assessment/RiskCalculationMatrix";
-import ControlMeasuresGenerator from "./risk-assessment/ControlMeasuresGenerator";
-import RiskOutcomeGuidance from "./risk-assessment/RiskOutcomeGuidance";
-import RiskDocumentation from "./risk-assessment/RiskDocumentation";
+  AlertTriangle,
+  Shield,
+  Calculator,
+  FileText,
+  Lightbulb,
+  CheckCircle,
+  ClipboardList,
+  ArrowRight,
+  Scale,
+  Target,
+} from 'lucide-react';
+import HazardIdentificationMatrix from './risk-assessment/HazardIdentificationMatrix';
+import RiskCalculationMatrix from './risk-assessment/RiskCalculationMatrix';
+import ControlMeasuresGenerator from './risk-assessment/ControlMeasuresGenerator';
+import RiskOutcomeGuidance from './risk-assessment/RiskOutcomeGuidance';
+import RiskDocumentation from './risk-assessment/RiskDocumentation';
 
 interface RiskAssessment {
   id: string;
@@ -28,15 +35,15 @@ interface RiskAssessment {
 
 const RiskAssessmentTab = () => {
   const [currentAssessment, setCurrentAssessment] = useState<RiskAssessment | null>(null);
-  const [selectedHazard, setSelectedHazard] = useState<string>("");
-  const [activeTab, setActiveTab] = useState("process");
+  const [selectedHazard, setSelectedHazard] = useState<string>('');
+  const [activeTab, setActiveTab] = useState('process');
 
   const calculateRiskLevel = (score: number): string => {
-    if (score >= 15) return "Very High";
-    if (score >= 10) return "High";
-    if (score >= 6) return "Medium";
-    if (score >= 3) return "Low";
-    return "Very Low";
+    if (score >= 15) return 'Very High';
+    if (score >= 10) return 'High';
+    if (score >= 6) return 'Medium';
+    if (score >= 3) return 'Low';
+    return 'Very Low';
   };
 
   const handleHazardSelected = (hazard: string) => {
@@ -59,76 +66,101 @@ const RiskAssessmentTab = () => {
       riskLevel,
       controlMeasures: [],
       timestamp: new Date().toISOString(),
-      assessor: "Current User",
-      location: "Site Location"
+      assessor: 'Current User',
+      location: 'Site Location',
     };
 
     setCurrentAssessment(newAssessment);
-    setActiveTab("guidance");
+    setActiveTab('guidance');
   };
 
   const handleControlMeasuresAdded = (controlMeasures: string[]) => {
     if (currentAssessment) {
       setCurrentAssessment({
         ...currentAssessment,
-        controlMeasures
+        controlMeasures,
       });
-      setActiveTab("documentation");
+      setActiveTab('documentation');
     }
   };
 
   const processSteps = [
     {
       step: 1,
-      title: "Identify Hazards",
-      description: "Systematically identify potential electrical hazards in the workplace",
+      title: 'Identify Hazards',
+      description: 'Systematically identify potential electrical hazards in the workplace',
       icon: AlertTriangle,
-      color: "red"
+      color: 'red',
     },
     {
       step: 2,
-      title: "Assess Risk",
-      description: "Calculate risk level using likelihood and severity matrix",
+      title: 'Assess Risk',
+      description: 'Calculate risk level using likelihood and severity matrix',
       icon: Calculator,
-      color: "yellow"
+      color: 'yellow',
     },
     {
       step: 3,
-      title: "Control Measures",
-      description: "Implement appropriate control measures following hierarchy of controls",
+      title: 'Control Measures',
+      description: 'Implement appropriate control measures following hierarchy of controls',
       icon: Shield,
-      color: "blue"
+      color: 'blue',
     },
     {
       step: 4,
-      title: "Document & Review",
-      description: "Document findings and establish review procedures",
+      title: 'Document & Review',
+      description: 'Document findings and establish review procedures',
       icon: FileText,
-      color: "green"
-    }
+      color: 'green',
+    },
   ];
 
   const legalRequirements = [
-    { text: "Health and Safety at Work Act 1974", icon: Scale },
-    { text: "Management of Health and Safety at Work Regulations 1999", icon: ClipboardList },
-    { text: "Electricity at Work Regulations 1989", icon: AlertTriangle },
-    { text: "BS EN ISO 31000:2018 Risk Management", icon: Target }
+    { text: 'Health and Safety at Work Act 1974', icon: Scale },
+    { text: 'Management of Health and Safety at Work Regulations 1999', icon: ClipboardList },
+    { text: 'Electricity at Work Regulations 1989', icon: AlertTriangle },
+    { text: 'BS EN ISO 31000:2018 Risk Management', icon: Target },
   ];
 
   const bestPractices = [
-    "Involve competent persons in assessments",
-    "Regular review and updates",
-    "Document all findings and decisions",
-    "Monitor effectiveness of controls"
+    'Involve competent persons in assessments',
+    'Regular review and updates',
+    'Document all findings and decisions',
+    'Monitor effectiveness of controls',
   ];
 
   const getColorConfig = (color: string) => {
     const configs: Record<string, { bg: string; text: string; iconBg: string; border: string }> = {
-      red: { bg: 'bg-red-500/10', text: 'text-red-400', iconBg: 'from-red-500/20 to-red-500/5', border: 'border-red-500/30' },
-      yellow: { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', iconBg: 'from-elec-yellow/20 to-elec-yellow/5', border: 'border-elec-yellow/30' },
-      blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', iconBg: 'from-blue-500/20 to-blue-500/5', border: 'border-blue-500/30' },
-      green: { bg: 'bg-green-500/10', text: 'text-green-400', iconBg: 'from-green-500/20 to-green-500/5', border: 'border-green-500/30' },
-      purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', iconBg: 'from-purple-500/20 to-purple-500/5', border: 'border-purple-500/30' }
+      red: {
+        bg: 'bg-red-500/10',
+        text: 'text-red-400',
+        iconBg: 'from-red-500/20 to-red-500/5',
+        border: 'border-red-500/30',
+      },
+      yellow: {
+        bg: 'bg-elec-yellow/10',
+        text: 'text-elec-yellow',
+        iconBg: 'from-elec-yellow/20 to-elec-yellow/5',
+        border: 'border-elec-yellow/30',
+      },
+      blue: {
+        bg: 'bg-blue-500/10',
+        text: 'text-blue-400',
+        iconBg: 'from-blue-500/20 to-blue-500/5',
+        border: 'border-blue-500/30',
+      },
+      green: {
+        bg: 'bg-green-500/10',
+        text: 'text-green-400',
+        iconBg: 'from-green-500/20 to-green-500/5',
+        border: 'border-green-500/30',
+      },
+      purple: {
+        bg: 'bg-purple-500/10',
+        text: 'text-purple-400',
+        iconBg: 'from-purple-500/20 to-purple-500/5',
+        border: 'border-purple-500/30',
+      },
     };
     return configs[color] || configs.yellow;
   };
@@ -155,8 +187,9 @@ const RiskAssessmentTab = () => {
         </CardHeader>
         <CardContent className="relative">
           <p className="text-white/70">
-            Comprehensive risk assessment tools following HSE guidelines and BS EN ISO 31000 standards.
-            Identify hazards, calculate risk levels, and implement effective control measures.
+            Comprehensive risk assessment tools following HSE guidelines and BS EN ISO 31000
+            standards. Identify hazards, calculate risk levels, and implement effective control
+            measures.
           </p>
         </CardContent>
       </Card>
@@ -220,12 +253,16 @@ const RiskAssessmentTab = () => {
                             <div className="w-8 h-8 bg-gradient-to-br from-elec-yellow to-elec-yellow/80 text-black rounded-full flex items-center justify-center font-bold text-sm">
                               {step.step}
                             </div>
-                            <div className={`p-2 rounded-lg bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`}>
+                            <div
+                              className={`p-2 rounded-lg bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`}
+                            >
                               <StepIcon className={`h-4 w-4 ${colorConfig.text}`} />
                             </div>
                           </div>
                           <h3 className="font-semibold text-white mb-2">{step.title}</h3>
-                          <p className="text-sm text-white/60 leading-relaxed">{step.description}</p>
+                          <p className="text-sm text-white/60 leading-relaxed">
+                            {step.description}
+                          </p>
                         </CardContent>
                       </Card>
                       {index < processSteps.length - 1 && (
@@ -255,7 +292,10 @@ const RiskAssessmentTab = () => {
                   {legalRequirements.map((req, index) => {
                     const ReqIcon = req.icon;
                     return (
-                      <li key={index} className="flex items-center gap-3 p-3 rounded-xl bg-blue-500/5 border border-blue-500/20">
+                      <li
+                        key={index}
+                        className="flex items-center gap-3 p-3 rounded-xl bg-blue-500/5 border border-blue-500/20"
+                      >
                         <div className="p-1.5 rounded-lg bg-blue-500/20">
                           <ReqIcon className="h-3.5 w-3.5 text-blue-400" />
                         </div>
@@ -279,7 +319,10 @@ const RiskAssessmentTab = () => {
               <CardContent>
                 <ul className="space-y-3">
                   {bestPractices.map((practice, index) => (
-                    <li key={index} className="flex items-center gap-3 p-3 rounded-xl bg-green-500/5 border border-green-500/20">
+                    <li
+                      key={index}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-green-500/5 border border-green-500/20"
+                    >
                       <div className="p-1.5 rounded-lg bg-green-500/20">
                         <CheckCircle className="h-3.5 w-3.5 text-green-400" />
                       </div>
@@ -312,9 +355,7 @@ const RiskAssessmentTab = () => {
             </Card>
           )}
 
-          {selectedHazard && (
-            <RiskCalculationMatrix onRiskCalculated={handleRiskCalculated} />
-          )}
+          {selectedHazard && <RiskCalculationMatrix onRiskCalculated={handleRiskCalculated} />}
 
           {currentAssessment && (
             <ControlMeasuresGenerator onControlMeasuresAdded={handleControlMeasuresAdded} />

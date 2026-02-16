@@ -12,9 +12,10 @@ export const ChallengesAndLimitationsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          While smart heating systems offer many benefits, installers should be aware of potential challenges and limitations that may affect implementation and user satisfaction.
+          While smart heating systems offer many benefits, installers should be aware of potential
+          challenges and limitations that may affect implementation and user satisfaction.
         </p>
-        
+
         <div className="space-y-4">
           <div className="bg-elec-gray border border-red-600 rounded-lg p-4">
             <h4 className="font-semibold text-red-200 mb-3">Installation Challenges</h4>
@@ -25,7 +26,7 @@ export const ChallengesAndLimitationsSection = () => {
               <li>• Compatibility issues with older heating systems</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-orange-600 rounded-lg p-4">
             <h4 className="font-semibold text-orange-200 mb-3">Technical Limitations</h4>
             <ul className="space-y-2 text-sm text-orange-100">
@@ -35,7 +36,7 @@ export const ChallengesAndLimitationsSection = () => {
               <li>• Potential interference from other devices</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-yellow-600 rounded-lg p-4">
             <h4 className="font-semibold text-yellow-200 mb-3">Cost Considerations</h4>
             <ul className="space-y-2 text-sm text-yellow-100">
@@ -45,7 +46,7 @@ export const ChallengesAndLimitationsSection = () => {
               <li>• Replacement costs for failed components</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-purple-600 rounded-lg p-4">
             <h4 className="font-semibold text-purple-200 mb-3">User Experience</h4>
             <ul className="space-y-2 text-sm text-purple-100">

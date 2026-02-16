@@ -15,7 +15,9 @@ export const EmergencyLightingLearningOutcomesSection3 = () => {
         <ul className="space-y-3">
           <li className="flex items-start gap-3 p-2 rounded-md bg-green-500/10 border-l-2 border-green-500">
             <span className="text-green-400 text-sm">✓</span>
-            <span>Distinguish between central battery and self-contained emergency lighting systems</span>
+            <span>
+              Distinguish between central battery and self-contained emergency lighting systems
+            </span>
           </li>
           <li className="flex items-start gap-3 p-2 rounded-md bg-blue-500/10 border-l-2 border-blue-500">
             <span className="text-blue-400 text-sm">✓</span>
@@ -27,11 +29,15 @@ export const EmergencyLightingLearningOutcomesSection3 = () => {
           </li>
           <li className="flex items-start gap-3 p-2 rounded-md bg-amber-500/10 border-l-2 border-amber-500">
             <span className="text-amber-400 text-sm">✓</span>
-            <span>Compare battery technologies and their suitability for different installations</span>
+            <span>
+              Compare battery technologies and their suitability for different installations
+            </span>
           </li>
           <li className="flex items-start gap-3 p-2 rounded-md bg-teal-500/10 border-l-2 border-teal-500">
             <span className="text-teal-400 text-sm">✓</span>
-            <span>Select appropriate system types based on building characteristics and requirements</span>
+            <span>
+              Select appropriate system types based on building characteristics and requirements
+            </span>
           </li>
         </ul>
       </CardContent>

@@ -10,40 +10,36 @@
  * All values are from official British Standards documents.
  */
 
-export type ZoneCategory =
-  | 'escape-route'
-  | 'open-area'
-  | 'high-risk'
-  | 'safety-equipment';
+export type ZoneCategory = 'escape-route' | 'open-area' | 'high-risk' | 'safety-equipment';
 
 export type OccupancyType =
-  | 'sleeping-risk'        // Hotels, care homes, hospitals - 3hr required
-  | 'entertainment'        // Cinemas, theatres - 3hr recommended
-  | 'high-occupancy'       // Shopping centres, large offices - 1hr minimum
-  | 'normal-occupancy'     // Standard offices, retail - 1hr minimum
-  | 'industrial';          // Warehouses, factories - 1hr minimum
+  | 'sleeping-risk' // Hotels, care homes, hospitals - 3hr required
+  | 'entertainment' // Cinemas, theatres - 3hr recommended
+  | 'high-occupancy' // Shopping centres, large offices - 1hr minimum
+  | 'normal-occupancy' // Standard offices, retail - 1hr minimum
+  | 'industrial'; // Warehouses, factories - 1hr minimum
 
 export type TestType =
-  | 'daily'               // Central battery indicator check only
-  | 'monthly'             // Brief functional test
-  | 'annual'              // Full duration test
-  | 'commissioning';      // Initial installation test
+  | 'daily' // Central battery indicator check only
+  | 'monthly' // Brief functional test
+  | 'annual' // Full duration test
+  | 'commissioning'; // Initial installation test
 
 export interface ValidationResult {
   valid: boolean;
   status: 'pass' | 'fail' | 'warning';
   message: string;
-  reference?: string;      // BS reference clause
+  reference?: string; // BS reference clause
 }
 
 export interface LuxRequirement {
   minLux: number;
-  maxUniformityRatio: number;     // max:min ratio (e.g., 40 means 40:1)
+  maxUniformityRatio: number; // max:min ratio (e.g., 40 means 40:1)
   reference: string;
 }
 
 export interface DurationRequirement {
-  minDuration: number;            // minutes
+  minDuration: number; // minutes
   description: string;
   reference: string;
 }
@@ -78,23 +74,23 @@ export const LUX_REQUIREMENTS: Record<ZoneCategory, LuxRequirement> = {
   'escape-route': {
     minLux: 1,
     maxUniformityRatio: 40,
-    reference: 'BS EN 1838:2013 Section 4.2'
+    reference: 'BS EN 1838:2013 Section 4.2',
   },
   'open-area': {
     minLux: 0.5,
     maxUniformityRatio: 40,
-    reference: 'BS EN 1838:2013 Section 4.3'
+    reference: 'BS EN 1838:2013 Section 4.3',
   },
   'high-risk': {
     minLux: 15,
     maxUniformityRatio: 10,
-    reference: 'BS EN 1838:2013 Section 4.4'
+    reference: 'BS EN 1838:2013 Section 4.4',
   },
   'safety-equipment': {
     minLux: 5,
     maxUniformityRatio: 10,
-    reference: 'BS EN 1838:2013 Section 4.5'
-  }
+    reference: 'BS EN 1838:2013 Section 4.5',
+  },
 };
 
 // ============================================
@@ -122,28 +118,28 @@ export const DURATION_REQUIREMENTS: Record<OccupancyType, DurationRequirement> =
   'sleeping-risk': {
     minDuration: 180,
     description: 'Sleeping risk premises - immediate evacuation not feasible',
-    reference: 'BS 5266-1:2016 Clause 5.4'
+    reference: 'BS 5266-1:2016 Clause 5.4',
   },
-  'entertainment': {
+  entertainment: {
     minDuration: 180,
     description: 'Entertainment venues - may not evacuate immediately',
-    reference: 'BS 5266-1:2016 Clause 5.4'
+    reference: 'BS 5266-1:2016 Clause 5.4',
   },
   'high-occupancy': {
     minDuration: 60,
     description: 'High occupancy - rapid evacuation possible, 3hr recommended',
-    reference: 'BS 5266-1:2016 Clause 5.4'
+    reference: 'BS 5266-1:2016 Clause 5.4',
   },
   'normal-occupancy': {
     minDuration: 60,
     description: 'Normal occupancy - rapid evacuation possible',
-    reference: 'BS 5266-1:2016 Clause 5.4'
+    reference: 'BS 5266-1:2016 Clause 5.4',
   },
-  'industrial': {
+  industrial: {
     minDuration: 60,
     description: 'Industrial premises - rapid evacuation typically possible',
-    reference: 'BS 5266-1:2016 Clause 5.4'
-  }
+    reference: 'BS 5266-1:2016 Clause 5.4',
+  },
 };
 
 /**
@@ -166,7 +162,7 @@ export const SLEEPING_RISK_PREMISES = [
   'Student accommodation',
   'Sheltered housing',
   'HMO (House in Multiple Occupation)',
-  'Serviced apartments'
+  'Serviced apartments',
 ];
 
 /**
@@ -183,7 +179,7 @@ export const RECOMMENDED_3HR_PREMISES = [
   'Sports stadium',
   'Arena',
   'Underground premises',
-  'Basement premises'
+  'Basement premises',
 ];
 
 // ============================================
@@ -214,27 +210,30 @@ export const RECOMMENDED_3HR_PREMISES = [
  * - All tests must be recorded in a logbook
  * - Records should include: date, type of test, results, faults, remedial actions
  */
-export const TEST_INTERVALS: Record<TestType, { days: number; description: string; reference: string }> = {
-  'daily': {
+export const TEST_INTERVALS: Record<
+  TestType,
+  { days: number; description: string; reference: string }
+> = {
+  daily: {
     days: 1,
     description: 'Visual check of central battery indicators (central systems only)',
-    reference: 'BS EN 50172:2004 Clause 6.2'
+    reference: 'BS EN 50172:2004 Clause 6.2',
   },
-  'monthly': {
+  monthly: {
     days: 30,
     description: 'Brief functional test - simulate power failure, check all luminaires illuminate',
-    reference: 'BS 5266-1:2016 Clause 12.2 / BS EN 50172:2004 Clause 6.3'
+    reference: 'BS 5266-1:2016 Clause 12.2 / BS EN 50172:2004 Clause 6.3',
   },
-  'annual': {
+  annual: {
     days: 365,
     description: 'Full rated duration test - verify operation for full 1 or 3 hour period',
-    reference: 'BS 5266-1:2016 Clause 12.3 / BS EN 50172:2004 Clause 6.4'
+    reference: 'BS 5266-1:2016 Clause 12.3 / BS EN 50172:2004 Clause 6.4',
   },
-  'commissioning': {
+  commissioning: {
     days: 0,
     description: 'Initial installation test - verify all luminaires, record baseline',
-    reference: 'BS 5266-1:2016 Clause 11'
-  }
+    reference: 'BS 5266-1:2016 Clause 11',
+  },
 };
 
 // ============================================
@@ -246,15 +245,15 @@ export const TEST_INTERVALS: Record<TestType, { days: number; description: strin
  */
 export const RESPONSE_TIME_REQUIREMENTS = {
   standard: {
-    fiftyPercent: 5,      // 50% illuminance within 5 seconds
-    fullOutput: 60,       // Full illuminance within 60 seconds
-    reference: 'BS EN 1838:2013 Clause 4.2.5'
+    fiftyPercent: 5, // 50% illuminance within 5 seconds
+    fullOutput: 60, // Full illuminance within 60 seconds
+    reference: 'BS EN 1838:2013 Clause 4.2.5',
   },
   highRisk: {
-    fiftyPercent: 0.5,    // 50% within 0.5 seconds
-    fullOutput: 0.5,      // 100% within 0.5 seconds (instant)
-    reference: 'BS EN 1838:2013 Clause 4.4.5'
-  }
+    fiftyPercent: 0.5, // 50% within 0.5 seconds
+    fullOutput: 0.5, // 100% within 0.5 seconds (instant)
+    reference: 'BS EN 1838:2013 Clause 4.4.5',
+  },
 };
 
 // ============================================
@@ -264,16 +263,13 @@ export const RESPONSE_TIME_REQUIREMENTS = {
 /**
  * Validate a lux reading against BS EN 1838 requirements
  */
-export function validateLuxReading(
-  lux: number,
-  category: ZoneCategory
-): ValidationResult {
+export function validateLuxReading(lux: number, category: ZoneCategory): ValidationResult {
   const requirement = LUX_REQUIREMENTS[category];
   if (!requirement) {
     return {
       valid: false,
       status: 'fail',
-      message: 'Unknown zone category'
+      message: 'Unknown zone category',
     };
   }
 
@@ -282,7 +278,7 @@ export function validateLuxReading(
       valid: true,
       status: 'pass',
       message: `Lux reading ${lux} meets minimum requirement of ${requirement.minLux} lux`,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -292,7 +288,7 @@ export function validateLuxReading(
       valid: false,
       status: 'warning',
       message: `Lux reading ${lux} is below minimum ${requirement.minLux} lux but close - verify measurement`,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -300,7 +296,7 @@ export function validateLuxReading(
     valid: false,
     status: 'fail',
     message: `Lux reading ${lux} FAILS minimum requirement of ${requirement.minLux} lux`,
-    reference: requirement.reference
+    reference: requirement.reference,
   };
 }
 
@@ -317,7 +313,7 @@ export function validateUniformity(
     return {
       valid: false,
       status: 'fail',
-      message: 'Unknown zone category'
+      message: 'Unknown zone category',
     };
   }
 
@@ -326,7 +322,7 @@ export function validateUniformity(
       valid: false,
       status: 'fail',
       message: 'Minimum lux cannot be zero for uniformity calculation',
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -337,7 +333,7 @@ export function validateUniformity(
       valid: true,
       status: 'pass',
       message: `Uniformity ratio ${ratio.toFixed(1)}:1 meets requirement of ${requirement.maxUniformityRatio}:1`,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -345,7 +341,7 @@ export function validateUniformity(
     valid: false,
     status: 'fail',
     message: `Uniformity ratio ${ratio.toFixed(1)}:1 exceeds maximum ${requirement.maxUniformityRatio}:1`,
-    reference: requirement.reference
+    reference: requirement.reference,
   };
 }
 
@@ -361,7 +357,7 @@ export function validateDuration(
     return {
       valid: false,
       status: 'fail',
-      message: 'Unknown occupancy type'
+      message: 'Unknown occupancy type',
     };
   }
 
@@ -370,7 +366,7 @@ export function validateDuration(
       valid: true,
       status: 'pass',
       message: `Duration ${durationMinutes} minutes meets ${requirement.minDuration} minute requirement`,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -378,7 +374,7 @@ export function validateDuration(
     valid: false,
     status: 'fail',
     message: `Duration ${durationMinutes} minutes FAILS ${requirement.minDuration} minute requirement for ${occupancyType}`,
-    reference: requirement.reference
+    reference: requirement.reference,
   };
 }
 
@@ -404,17 +400,14 @@ export function isTestOverdue(
   return {
     overdue: daysOverdue > 0,
     daysSinceTest,
-    daysOverdue: Math.max(0, daysOverdue)
+    daysOverdue: Math.max(0, daysOverdue),
   };
 }
 
 /**
  * Calculate next test due date
  */
-export function calculateNextTestDate(
-  lastTestDate: Date | string,
-  testType: TestType
-): Date {
+export function calculateNextTestDate(lastTestDate: Date | string, testType: TestType): Date {
   const testDate = typeof lastTestDate === 'string' ? new Date(lastTestDate) : lastTestDate;
   const nextDate = new Date(testDate);
 
@@ -447,20 +440,20 @@ export function getDurationRequirement(premisesType: string): {
   const normalizedType = premisesType.toLowerCase();
 
   // Check sleeping risk premises
-  if (SLEEPING_RISK_PREMISES.some(p => normalizedType.includes(p.toLowerCase()))) {
+  if (SLEEPING_RISK_PREMISES.some((p) => normalizedType.includes(p.toLowerCase()))) {
     return {
       duration: 180,
       reason: 'Sleeping risk premises - immediate evacuation not feasible',
-      reference: 'BS 5266-1:2016 Clause 5.4'
+      reference: 'BS 5266-1:2016 Clause 5.4',
     };
   }
 
   // Check recommended 3hr premises
-  if (RECOMMENDED_3HR_PREMISES.some(p => normalizedType.includes(p.toLowerCase()))) {
+  if (RECOMMENDED_3HR_PREMISES.some((p) => normalizedType.includes(p.toLowerCase()))) {
     return {
       duration: 180,
       reason: 'Entertainment/large venue - 3 hour duration recommended',
-      reference: 'BS 5266-1:2016 Clause 5.4 (recommendation)'
+      reference: 'BS 5266-1:2016 Clause 5.4 (recommendation)',
     };
   }
 
@@ -468,7 +461,7 @@ export function getDurationRequirement(premisesType: string): {
   return {
     duration: 60,
     reason: 'Standard premises - 1 hour minimum (3 hours recommended for UK practice)',
-    reference: 'BS 5266-1:2016 Clause 5.4'
+    reference: 'BS 5266-1:2016 Clause 5.4',
   };
 }
 
@@ -483,25 +476,25 @@ export function validateBatteryCondition(
       return {
         valid: true,
         status: 'pass',
-        message: 'Battery condition is good'
+        message: 'Battery condition is good',
       };
     case 'fair':
       return {
         valid: true,
         status: 'warning',
-        message: 'Battery condition is fair - schedule replacement within 12 months'
+        message: 'Battery condition is fair - schedule replacement within 12 months',
       };
     case 'poor':
       return {
         valid: false,
         status: 'fail',
-        message: 'Battery condition is poor - immediate replacement required'
+        message: 'Battery condition is poor - immediate replacement required',
       };
     default:
       return {
         valid: false,
         status: 'warning',
-        message: 'Unknown battery condition'
+        message: 'Unknown battery condition',
       };
   }
 }
@@ -510,9 +503,10 @@ export function validateBatteryCondition(
  * Get defect priority based on defect type
  * Per industry best practice and BS 5266-1 guidance
  */
-export function suggestDefectPriority(
-  defectDescription: string
-): { priority: 'immediate' | '7-days' | '28-days' | 'recommendation'; reason: string } {
+export function suggestDefectPriority(defectDescription: string): {
+  priority: 'immediate' | '7-days' | '28-days' | 'recommendation';
+  reason: string;
+} {
   const description = defectDescription.toLowerCase();
 
   // Immediate - safety critical
@@ -526,12 +520,12 @@ export function suggestDefectPriority(
     'complete failure',
     'total failure',
     'exit sign dark',
-    'exit sign failed'
+    'exit sign failed',
   ];
-  if (immediateKeywords.some(k => description.includes(k))) {
+  if (immediateKeywords.some((k) => description.includes(k))) {
     return {
       priority: 'immediate',
-      reason: 'Safety critical - emergency lighting non-functional'
+      reason: 'Safety critical - emergency lighting non-functional',
     };
   }
 
@@ -545,12 +539,12 @@ export function suggestDefectPriority(
     'dim',
     'flickering',
     'intermittent',
-    'failed duration test'
+    'failed duration test',
   ];
-  if (sevenDayKeywords.some(k => description.includes(k))) {
+  if (sevenDayKeywords.some((k) => description.includes(k))) {
     return {
       priority: '7-days',
-      reason: 'Reduced performance - may not provide full emergency duration'
+      reason: 'Reduced performance - may not provide full emergency duration',
     };
   }
 
@@ -564,19 +558,19 @@ export function suggestDefectPriority(
     'cosmetic',
     'dirty',
     'discoloured',
-    'diffuser cracked'
+    'diffuser cracked',
   ];
-  if (twentyEightDayKeywords.some(k => description.includes(k))) {
+  if (twentyEightDayKeywords.some((k) => description.includes(k))) {
     return {
       priority: '28-days',
-      reason: 'Minor issue - does not affect immediate safety'
+      reason: 'Minor issue - does not affect immediate safety',
     };
   }
 
   // Default to recommendation
   return {
     priority: 'recommendation',
-    reason: 'Advisory - review and address as appropriate'
+    reason: 'Advisory - review and address as appropriate',
   };
 }
 
@@ -596,7 +590,7 @@ export function getPremisesGuidance(premisesType: string): {
       title: '3-Hour Duration Required',
       content: `This premises type requires a minimum 3-hour emergency lighting duration per BS 5266-1:2016. ${requirement.reason}. Ensure all luminaires are rated for 180 minutes minimum.`,
       duration: 180,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -604,7 +598,7 @@ export function getPremisesGuidance(premisesType: string): {
     title: '1-Hour Minimum (3-Hour Recommended)',
     content: `This premises type requires a minimum 1-hour emergency lighting duration. However, UK practice strongly recommends 3-hour duration to allow immediate re-occupancy after power restoration without waiting for battery recharge.`,
     duration: 60,
-    reference: requirement.reference
+    reference: requirement.reference,
   };
 }
 
@@ -613,8 +607,8 @@ export function getPremisesGuidance(premisesType: string): {
  * Per BS EN 1838:2013 and BS 5499-4
  */
 export function validateExitSignViewing(
-  signHeight: number,      // mm
-  viewingDistance: number  // metres
+  signHeight: number, // mm
+  viewingDistance: number // metres
 ): ValidationResult {
   // Distance factor: viewing distance = height x distance factor
   // Standard factor is ~200 for internally illuminated signs
@@ -626,7 +620,7 @@ export function validateExitSignViewing(
       valid: true,
       status: 'pass',
       message: `Viewing distance ${viewingDistance}m is within ${maxDistance.toFixed(1)}m maximum for ${signHeight}mm sign`,
-      reference: 'BS EN 1838:2013 / BS 5499-4'
+      reference: 'BS EN 1838:2013 / BS 5499-4',
     };
   }
 
@@ -634,6 +628,6 @@ export function validateExitSignViewing(
     valid: false,
     status: 'fail',
     message: `Viewing distance ${viewingDistance}m exceeds ${maxDistance.toFixed(1)}m maximum - larger sign or additional signs required`,
-    reference: 'BS EN 1838:2013 / BS 5499-4'
+    reference: 'BS EN 1838:2013 / BS 5499-4',
   };
 }

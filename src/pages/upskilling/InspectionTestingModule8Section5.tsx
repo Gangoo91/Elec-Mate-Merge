@@ -1,201 +1,221 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Minor Works & EICR - Module 8 Section 5";
-const DESCRIPTION = "Learn when to use Minor Works Certificates and Electrical Installation Condition Reports (EICRs), including observation codes and classification systems.";
+const TITLE = 'Minor Works & EICR - Module 8 Section 5';
+const DESCRIPTION =
+  'Learn when to use Minor Works Certificates and Electrical Installation Condition Reports (EICRs), including observation codes and classification systems.';
 
 const quickCheckQuestions = [
   {
-    id: "minor-works-when",
-    question: "When should a Minor Works Certificate be used instead of an EIC?",
+    id: 'minor-works-when',
+    question: 'When should a Minor Works Certificate be used instead of an EIC?',
     options: [
-      "For all small jobs",
-      "For work that does not include adding a new circuit",
-      "Only for repairs",
-      "Only for non-notifiable work"
+      'For all small jobs',
+      'For work that does not include adding a new circuit',
+      'Only for repairs',
+      'Only for non-notifiable work',
     ],
     correctIndex: 1,
-    explanation: "A Minor Works Certificate is used for alterations or additions that do not extend to the provision of a new circuit. Examples include adding a socket to an existing circuit or replacing a consumer unit."
+    explanation:
+      'A Minor Works Certificate is used for alterations or additions that do not extend to the provision of a new circuit. Examples include adding a socket to an existing circuit or replacing a consumer unit.',
   },
   {
-    id: "eicr-c1-meaning",
-    question: "What does classification code C1 indicate on an EICR?",
+    id: 'eicr-c1-meaning',
+    question: 'What does classification code C1 indicate on an EICR?',
     options: [
-      "Satisfactory condition",
-      "Improvement recommended",
-      "Danger present - immediate remedial action required",
-      "Further investigation required"
+      'Satisfactory condition',
+      'Improvement recommended',
+      'Danger present - immediate remedial action required',
+      'Further investigation required',
     ],
     correctIndex: 2,
-    explanation: "C1 indicates danger is present and risk of injury exists. Immediate remedial action is required. The person responsible should be informed and the danger made safe immediately."
+    explanation:
+      'C1 indicates danger is present and risk of injury exists. Immediate remedial action is required. The person responsible should be informed and the danger made safe immediately.',
   },
   {
-    id: "eicr-overall-assessment",
-    question: "If an EICR has one C2 and several C3 observations, what is the overall assessment?",
+    id: 'eicr-overall-assessment',
+    question: 'If an EICR has one C2 and several C3 observations, what is the overall assessment?',
     options: [
-      "Satisfactory",
-      "Unsatisfactory",
-      "Depends on the age of installation",
-      "Further assessment needed"
+      'Satisfactory',
+      'Unsatisfactory',
+      'Depends on the age of installation',
+      'Further assessment needed',
     ],
     correctIndex: 1,
-    explanation: "Any C1 or C2 observation results in an 'Unsatisfactory' overall assessment. The installation does not meet the required standard and remedial work is needed."
-  }
+    explanation:
+      "Any C1 or C2 observation results in an 'Unsatisfactory' overall assessment. The installation does not meet the required standard and remedial work is needed.",
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "When should a Minor Works Certificate be used instead of an EIC?",
+    question: 'When should a Minor Works Certificate be used instead of an EIC?',
     options: [
-      "For all small jobs",
-      "For work that does not include adding a new circuit",
-      "Only for repairs",
-      "Only for non-notifiable work"
+      'For all small jobs',
+      'For work that does not include adding a new circuit',
+      'Only for repairs',
+      'Only for non-notifiable work',
     ],
     correctAnswer: 1,
-    explanation: "A Minor Works Certificate is used for alterations or additions that do not extend to the provision of a new circuit. Examples include adding a socket to an existing circuit or replacing a consumer unit."
+    explanation:
+      'A Minor Works Certificate is used for alterations or additions that do not extend to the provision of a new circuit. Examples include adding a socket to an existing circuit or replacing a consumer unit.',
   },
   {
     id: 2,
-    question: "What does an EICR assess?",
+    question: 'What does an EICR assess?',
     options: [
-      "New installation compliance only",
-      "The condition of an existing electrical installation",
-      "Individual circuit installation",
-      "Equipment warranty status"
+      'New installation compliance only',
+      'The condition of an existing electrical installation',
+      'Individual circuit installation',
+      'Equipment warranty status',
     ],
     correctAnswer: 1,
-    explanation: "An Electrical Installation Condition Report (EICR) assesses the condition of an existing installation, identifying defects and providing an overall assessment of safety."
+    explanation:
+      'An Electrical Installation Condition Report (EICR) assesses the condition of an existing installation, identifying defects and providing an overall assessment of safety.',
   },
   {
     id: 3,
-    question: "What does classification code C1 indicate on an EICR?",
+    question: 'What does classification code C1 indicate on an EICR?',
     options: [
-      "Satisfactory condition",
-      "Improvement recommended",
-      "Danger present - immediate remedial action required",
-      "Further investigation required"
+      'Satisfactory condition',
+      'Improvement recommended',
+      'Danger present - immediate remedial action required',
+      'Further investigation required',
     ],
     correctAnswer: 2,
-    explanation: "C1 indicates danger is present and risk of injury exists. Immediate remedial action is required. The person responsible should be informed and the danger made safe immediately."
+    explanation:
+      'C1 indicates danger is present and risk of injury exists. Immediate remedial action is required. The person responsible should be informed and the danger made safe immediately.',
   },
   {
     id: 4,
-    question: "What does classification code C2 indicate?",
+    question: 'What does classification code C2 indicate?',
     options: [
-      "Danger present",
-      "Potentially dangerous - urgent remedial action required",
-      "Minor cosmetic issue",
-      "Item not tested"
+      'Danger present',
+      'Potentially dangerous - urgent remedial action required',
+      'Minor cosmetic issue',
+      'Item not tested',
     ],
     correctAnswer: 1,
-    explanation: "C2 indicates a potentially dangerous condition that requires urgent remedial action. While not immediately dangerous like C1, it could become dangerous and needs prompt attention."
+    explanation:
+      'C2 indicates a potentially dangerous condition that requires urgent remedial action. While not immediately dangerous like C1, it could become dangerous and needs prompt attention.',
   },
   {
     id: 5,
-    question: "What does classification code C3 indicate?",
+    question: 'What does classification code C3 indicate?',
     options: [
-      "Dangerous condition",
-      "Potentially dangerous",
-      "Improvement recommended but not dangerous",
-      "Item not inspected"
+      'Dangerous condition',
+      'Potentially dangerous',
+      'Improvement recommended but not dangerous',
+      'Item not inspected',
     ],
     correctAnswer: 2,
-    explanation: "C3 indicates improvement is recommended. The issue doesn't create immediate danger but improvement would enhance safety. The client should consider this remedial work."
+    explanation:
+      "C3 indicates improvement is recommended. The issue doesn't create immediate danger but improvement would enhance safety. The client should consider this remedial work.",
   },
   {
     id: 6,
     question: "What does 'FI' (Further Investigation) indicate on an EICR?",
     options: [
-      "A fault has been found and repaired",
-      "A potential issue requiring more detailed investigation",
-      "Full inspection was completed",
-      "Testing was not done"
+      'A fault has been found and repaired',
+      'A potential issue requiring more detailed investigation',
+      'Full inspection was completed',
+      'Testing was not done',
     ],
     correctAnswer: 1,
-    explanation: "FI indicates further investigation is needed to determine the nature and extent of a potential defect. The inspector couldn't fully assess the condition without additional work."
+    explanation:
+      "FI indicates further investigation is needed to determine the nature and extent of a potential defect. The inspector couldn't fully assess the condition without additional work.",
   },
   {
     id: 7,
-    question: "If an EICR has one C2 and several C3 observations, what is the overall assessment?",
+    question: 'If an EICR has one C2 and several C3 observations, what is the overall assessment?',
     options: [
-      "Satisfactory",
-      "Unsatisfactory",
-      "Depends on the age of installation",
-      "Further assessment needed"
+      'Satisfactory',
+      'Unsatisfactory',
+      'Depends on the age of installation',
+      'Further assessment needed',
     ],
     correctAnswer: 1,
-    explanation: "Any C1 or C2 observation results in an 'Unsatisfactory' overall assessment. The installation does not meet the required standard and remedial work is needed."
+    explanation:
+      "Any C1 or C2 observation results in an 'Unsatisfactory' overall assessment. The installation does not meet the required standard and remedial work is needed.",
   },
   {
     id: 8,
-    question: "Can a Minor Works Certificate have multiple entries?",
+    question: 'Can a Minor Works Certificate have multiple entries?',
     options: [
-      "No - one certificate per item of work",
-      "Yes - for up to 5 separate items",
-      "Yes - if all work is on the same circuit",
-      "Only if requested by the client"
+      'No - one certificate per item of work',
+      'Yes - for up to 5 separate items',
+      'Yes - if all work is on the same circuit',
+      'Only if requested by the client',
     ],
     correctAnswer: 2,
-    explanation: "A single Minor Works Certificate can cover multiple items of work if they are all on the same circuit. Separate circuits or larger scope work requires an EIC."
+    explanation:
+      'A single Minor Works Certificate can cover multiple items of work if they are all on the same circuit. Separate circuits or larger scope work requires an EIC.',
   },
   {
     id: 9,
-    question: "Who is responsible for remedying defects identified on an EICR?",
+    question: 'Who is responsible for remedying defects identified on an EICR?',
     options: [
-      "The inspector who carried out the report",
-      "The person responsible for the installation (duty holder/owner)",
-      "The original installer",
-      "The DNO"
+      'The inspector who carried out the report',
+      'The person responsible for the installation (duty holder/owner)',
+      'The original installer',
+      'The DNO',
     ],
     correctAnswer: 1,
-    explanation: "The duty holder (usually the property owner or landlord) is responsible for arranging remedial work. The inspector reports findings but isn't responsible for remediation unless commissioned to do so."
+    explanation:
+      "The duty holder (usually the property owner or landlord) is responsible for arranging remedial work. The inspector reports findings but isn't responsible for remediation unless commissioned to do so.",
   },
   {
     id: 10,
-    question: "A Minor Works Certificate requires how many signatures?",
+    question: 'A Minor Works Certificate requires how many signatures?',
     options: [
-      "One - the installer only",
-      "Two - installer and supervisor",
-      "One - the installer, who takes responsibility for design and construction",
-      "Three - like an EIC"
+      'One - the installer only',
+      'Two - installer and supervisor',
+      'One - the installer, who takes responsibility for design and construction',
+      'Three - like an EIC',
     ],
     correctAnswer: 2,
-    explanation: "A Minor Works Certificate has a single signature from the person carrying out the work, who takes responsibility for design, construction, and inspection/testing of the minor work."
-  }
+    explanation:
+      'A Minor Works Certificate has a single signature from the person carrying out the work, who takes responsibility for design, construction, and inspection/testing of the minor work.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between an EIC and EICR?",
-    answer: "An EIC (Electrical Installation Certificate) is for new work - new installations or additions. An EICR (Electrical Installation Condition Report) assesses existing installations to determine their condition and safety. They serve different purposes."
+    answer:
+      'An EIC (Electrical Installation Certificate) is for new work - new installations or additions. An EICR (Electrical Installation Condition Report) assesses existing installations to determine their condition and safety. They serve different purposes.',
   },
   {
-    question: "Is replacing a consumer unit Minor Works or EIC?",
-    answer: "Typically a Minor Works Certificate, as you're not adding new circuits. However, if circuit protection is upgraded (adding RCBOs/RCDs) or any new circuits are added, an EIC may be more appropriate. Some schemes specify EIC for consumer unit changes."
+    question: 'Is replacing a consumer unit Minor Works or EIC?',
+    answer:
+      "Typically a Minor Works Certificate, as you're not adding new circuits. However, if circuit protection is upgraded (adding RCBOs/RCDs) or any new circuits are added, an EIC may be more appropriate. Some schemes specify EIC for consumer unit changes.",
   },
   {
-    question: "Can I convert C2 observations to C3 if the client accepts the risk?",
-    answer: "No. Classification codes are based on technical assessment, not client preference. C2 means potentially dangerous and urgent remedial action is required. The overall assessment remains Unsatisfactory regardless of client acceptance."
+    question: 'Can I convert C2 observations to C3 if the client accepts the risk?',
+    answer:
+      'No. Classification codes are based on technical assessment, not client preference. C2 means potentially dangerous and urgent remedial action is required. The overall assessment remains Unsatisfactory regardless of client acceptance.',
   },
   {
     question: "What if I can't complete all tests during an EICR?",
-    answer: "Record limitations clearly. Items not inspected should be listed. Use 'LIM' for limitations and 'FI' where further investigation is needed. The extent of inspection achieved should be clear."
+    answer:
+      "Record limitations clearly. Items not inspected should be listed. Use 'LIM' for limitations and 'FI' where further investigation is needed. The extent of inspection achieved should be clear.",
   },
   {
-    question: "How often is an EICR required for rental properties?",
-    answer: "In England, landlords must have an EICR every 5 years (or as recommended on previous report if sooner). Scotland has similar requirements. The report must be provided to tenants and the local authority if requested."
+    question: 'How often is an EICR required for rental properties?',
+    answer:
+      'In England, landlords must have an EICR every 5 years (or as recommended on previous report if sooner). Scotland has similar requirements. The report must be provided to tenants and the local authority if requested.',
   },
   {
-    question: "What happens if observations are found during Minor Works?",
-    answer: "Record any observations on the Minor Works Certificate. If you discover dangerous conditions in the existing installation (not related to your work), advise the client in writing and recommend a full EICR."
-  }
+    question: 'What happens if observations are found during Minor Works?',
+    answer:
+      'Record any observations on the Minor Works Certificate. If you discover dangerous conditions in the existing installation (not related to your work), advise the client in writing and recommend a full EICR.',
+  },
 ];
 
 const InspectionTestingModule8Section5 = () => {
@@ -206,7 +226,12 @@ const InspectionTestingModule8Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../module-8">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 8
@@ -217,7 +242,6 @@ const InspectionTestingModule8Section5 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -237,19 +261,35 @@ const InspectionTestingModule8Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Minor Works:</strong> No new circuits added</li>
-              <li><strong>EICR:</strong> Condition report for existing installations</li>
-              <li><strong>C1/C2:</strong> = Unsatisfactory overall</li>
-              <li><strong>C3:</strong> = Improvement recommended only</li>
+              <li>
+                <strong>Minor Works:</strong> No new circuits added
+              </li>
+              <li>
+                <strong>EICR:</strong> Condition report for existing installations
+              </li>
+              <li>
+                <strong>C1/C2:</strong> = Unsatisfactory overall
+              </li>
+              <li>
+                <strong>C3:</strong> = Improvement recommended only
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Code Reference</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>C1:</strong> Danger present - immediate action</li>
-              <li><strong>C2:</strong> Potentially dangerous - urgent</li>
-              <li><strong>C3:</strong> Improvement recommended</li>
-              <li><strong>FI:</strong> Further investigation needed</li>
+              <li>
+                <strong>C1:</strong> Danger present - immediate action
+              </li>
+              <li>
+                <strong>C2:</strong> Potentially dangerous - urgent
+              </li>
+              <li>
+                <strong>C3:</strong> Improvement recommended
+              </li>
+              <li>
+                <strong>FI:</strong> Further investigation needed
+              </li>
             </ul>
           </div>
         </div>
@@ -259,12 +299,12 @@ const InspectionTestingModule8Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand when Minor Works Certificates apply",
-              "Complete EICRs correctly with appropriate codes",
-              "Apply C1, C2, C3, and FI classification codes",
-              "Determine overall installation condition",
-              "Choose the correct certificate for each situation",
-              "Issue professional, compliant documentation"
+              'Understand when Minor Works Certificates apply',
+              'Complete EICRs correctly with appropriate codes',
+              'Apply C1, C2, C3, and FI classification codes',
+              'Determine overall installation condition',
+              'Choose the correct certificate for each situation',
+              'Issue professional, compliant documentation',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -285,11 +325,14 @@ const InspectionTestingModule8Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A Minor Works Certificate is used for additions or alterations to an existing installation that do not include adding a new circuit:
+              A Minor Works Certificate is used for additions or alterations to an existing
+              installation that do not include adding a new circuit:
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Examples of Minor Works</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Examples of Minor Works
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Adding a socket outlet to an existing circuit</li>
                 <li>Replacing a consumer unit (same circuits)</li>
@@ -299,7 +342,9 @@ const InspectionTestingModule8Section5 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> The certificate has a single signature - the installer takes responsibility for design, construction, and inspection/testing of the minor work.
+              <strong>Remember:</strong> The certificate has a single signature - the installer
+              takes responsibility for design, construction, and inspection/testing of the minor
+              work.
             </p>
           </div>
         </section>
@@ -314,7 +359,8 @@ const InspectionTestingModule8Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              An Electrical Installation Condition Report assesses the safety and condition of an existing electrical installation:
+              An Electrical Installation Condition Report assesses the safety and condition of an
+              existing electrical installation:
             </p>
 
             <div className="my-6">
@@ -337,26 +383,36 @@ const InspectionTestingModule8Section5 = () => {
             Classification Codes
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              EICR observations are classified using standard codes that indicate severity:
-            </p>
+            <p>EICR observations are classified using standard codes that indicate severity:</p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-red-500/30">
                 <p className="font-medium text-red-400 mb-1">C1 - Danger Present</p>
-                <p className="text-white/80 text-xs">Risk of injury. Immediate remedial action required. Person responsible must be informed immediately.</p>
+                <p className="text-white/80 text-xs">
+                  Risk of injury. Immediate remedial action required. Person responsible must be
+                  informed immediately.
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-amber-500/30">
                 <p className="font-medium text-amber-400 mb-1">C2 - Potentially Dangerous</p>
-                <p className="text-white/80 text-xs">Urgent remedial action required. May become dangerous under fault conditions or in future.</p>
+                <p className="text-white/80 text-xs">
+                  Urgent remedial action required. May become dangerous under fault conditions or in
+                  future.
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-blue-500/30">
                 <p className="font-medium text-blue-400 mb-1">C3 - Improvement Recommended</p>
-                <p className="text-white/80 text-xs">Not dangerous but improvement would enhance safety. Client should consider the recommendation.</p>
+                <p className="text-white/80 text-xs">
+                  Not dangerous but improvement would enhance safety. Client should consider the
+                  recommendation.
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-purple-500/30">
                 <p className="font-medium text-purple-400 mb-1">FI - Further Investigation</p>
-                <p className="text-white/80 text-xs">Cannot fully assess without further investigation. May require intrusive inspection or specialist assessment.</p>
+                <p className="text-white/80 text-xs">
+                  Cannot fully assess without further investigation. May require intrusive
+                  inspection or specialist assessment.
+                </p>
               </div>
             </div>
           </div>
@@ -378,16 +434,23 @@ const InspectionTestingModule8Section5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-green-500/30">
                 <p className="font-medium text-green-400 mb-1">SATISFACTORY</p>
-                <p className="text-white/80 text-xs">No C1 or C2 observations. Installation meets the required standard. May have C3 recommendations but these don't affect the overall assessment.</p>
+                <p className="text-white/80 text-xs">
+                  No C1 or C2 observations. Installation meets the required standard. May have C3
+                  recommendations but these don't affect the overall assessment.
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-red-500/30">
                 <p className="font-medium text-red-400 mb-1">UNSATISFACTORY</p>
-                <p className="text-white/80 text-xs">Any C1 or C2 observations. Installation does not meet the required standard. Remedial work is required to make it satisfactory.</p>
+                <p className="text-white/80 text-xs">
+                  Any C1 or C2 observations. Installation does not meet the required standard.
+                  Remedial work is required to make it satisfactory.
+                </p>
               </div>
             </div>
 
             <p className="text-sm text-amber-400/80">
-              <strong>Note:</strong> FI (Further Investigation) items should be listed but don't directly affect the overall assessment until investigated and classified.
+              <strong>Note:</strong> FI (Further Investigation) items should be listed but don't
+              directly affect the overall assessment until investigated and classified.
             </p>
           </div>
         </section>
@@ -401,12 +464,12 @@ const InspectionTestingModule8Section5 = () => {
             Choosing the Right Certificate
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Selecting the correct certification document is essential:
-            </p>
+            <p>Selecting the correct certification document is essential:</p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Certificate Selection Guide</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Certificate Selection Guide
+              </p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="p-2 rounded bg-transparent">
                   <p className="text-white/90">New installation</p>
@@ -433,7 +496,9 @@ const InspectionTestingModule8Section5 = () => {
                   <p className="text-elec-yellow font-semibold">EICR</p>
                 </div>
               </div>
-              <p className="text-white/50 text-xs mt-2">*Some schemes require EIC for consumer unit changes</p>
+              <p className="text-white/50 text-xs mt-2">
+                *Some schemes require EIC for consumer unit changes
+              </p>
             </div>
           </div>
         </section>
@@ -446,11 +511,14 @@ const InspectionTestingModule8Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Certification documentation reflects professional standards and carries legal significance:
+              Certification documentation reflects professional standards and carries legal
+              significance:
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Professional Obligations</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Professional Obligations
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Certificates are legal documents - accuracy is essential</li>
                 <li>Never issue false or misleading certificates</li>
@@ -473,7 +541,9 @@ const InspectionTestingModule8Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Good Practice</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Be clear and specific - observations should describe the defect and location</li>
+                <li>
+                  Be clear and specific - observations should describe the defect and location
+                </li>
                 <li>Help clients understand what codes mean and what action is needed</li>
                 <li>Document limitations clearly - state what couldn't be inspected and why</li>
                 <li>Record all findings accurately - never understate or overstate</li>
@@ -493,10 +563,19 @@ const InspectionTestingModule8Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Changing codes on request</strong> - codes are technical assessments, not negotiable</li>
-                <li><strong>Vague observations</strong> - be specific about defect and location</li>
-                <li><strong>Missing limitations</strong> - always document what couldn't be inspected</li>
-                <li><strong>Wrong certificate type</strong> - choose the correct document for the work</li>
+                <li>
+                  <strong>Changing codes on request</strong> - codes are technical assessments, not
+                  negotiable
+                </li>
+                <li>
+                  <strong>Vague observations</strong> - be specific about defect and location
+                </li>
+                <li>
+                  <strong>Missing limitations</strong> - always document what couldn't be inspected
+                </li>
+                <li>
+                  <strong>Wrong certificate type</strong> - choose the correct document for the work
+                </li>
               </ul>
             </div>
           </div>
@@ -548,10 +627,7 @@ const InspectionTestingModule8Section5 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Course Complete Section */}
@@ -559,7 +635,8 @@ const InspectionTestingModule8Section5 = () => {
           <div className="text-4xl mb-4">🎉</div>
           <h3 className="text-xl font-bold text-white mb-2">Course Complete!</h3>
           <p className="text-white/70 mb-4">
-            Congratulations! You've completed all 8 modules of the Inspection & Testing course covering BS 7671 requirements.
+            Congratulations! You've completed all 8 modules of the Inspection & Testing course
+            covering BS 7671 requirements.
           </p>
           <div className="text-left text-sm text-white/70 bg-white/5 rounded-lg p-4 mb-4">
             <ul className="space-y-1">
@@ -580,20 +657,28 @@ const InspectionTestingModule8Section5 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-8/section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing">
               Complete Course
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

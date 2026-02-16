@@ -21,11 +21,15 @@ export const BMSModule5Section3Practical = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Use shielded twisted pair, 120Ω impedance cable</span>
+                <span className="text-foreground">
+                  Use shielded twisted pair, 120Ω impedance cable
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Daisy-chain devices — never star-wire RS-485</span>
+                <span className="text-foreground">
+                  Daisy-chain devices — never star-wire RS-485
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -33,7 +37,9 @@ export const BMSModule5Section3Practical = () => {
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Assign unique device addresses (check for duplicates)</span>
+                <span className="text-foreground">
+                  Assign unique device addresses (check for duplicates)
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -54,11 +60,15 @@ export const BMSModule5Section3Practical = () => {
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Work with IT teams to assign static IP addresses</span>
+                <span className="text-foreground">
+                  Work with IT teams to assign static IP addresses
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">Keep BMS traffic separate from corporate networks</span>
+                <span className="text-foreground">
+                  Keep BMS traffic separate from corporate networks
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -100,11 +110,15 @@ export const BMSModule5Section3Practical = () => {
                 <p className="text-foreground pl-2">Check polarity on RS-485 lines</p>
               </div>
               <div>
-                <p className="text-foreground font-medium text-red-300">Multiple device failures:</p>
+                <p className="text-foreground font-medium text-red-300">
+                  Multiple device failures:
+                </p>
                 <p className="text-foreground pl-2">Look for duplicate addresses</p>
               </div>
               <div>
-                <p className="text-foreground font-medium text-red-300">Intermittent communication:</p>
+                <p className="text-foreground font-medium text-red-300">
+                  Intermittent communication:
+                </p>
                 <p className="text-foreground pl-2">Check termination and grounding</p>
               </div>
               <div>
@@ -118,7 +132,9 @@ export const BMSModule5Section3Practical = () => {
         {/* Documentation and Testing */}
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
-            <h4 className="text-foreground font-semibold mb-4 text-lg">Documentation Best Practices</h4>
+            <h4 className="text-foreground font-semibold mb-4 text-lg">
+              Documentation Best Practices
+            </h4>
             <div className="space-y-2 text-sm">
               <p className="text-foreground">• Record device addresses and locations</p>
               <p className="text-foreground">• Document cable routes and connections</p>
@@ -131,7 +147,9 @@ export const BMSModule5Section3Practical = () => {
           <div className="bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/20 rounded-lg p-6">
             <h4 className="text-foreground font-semibold mb-4 text-lg">Testing & Commissioning</h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground">• Test each device individually before connecting all</p>
+              <p className="text-foreground">
+                • Test each device individually before connecting all
+              </p>
               <p className="text-foreground">• Use Modbus master tools for initial testing</p>
               <p className="text-foreground">• Verify register maps match device documentation</p>
               <p className="text-foreground">• Check data scaling and units are correct</p>
@@ -143,22 +161,34 @@ export const BMSModule5Section3Practical = () => {
 
         {/* Advanced Diagnostic Techniques */}
         <div className="bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 rounded-lg p-6">
-          <h4 className="text-foreground font-semibold mb-6 text-lg">Advanced Diagnostic Techniques</h4>
+          <h4 className="text-foreground font-semibold mb-6 text-lg">
+            Advanced Diagnostic Techniques
+          </h4>
           <div className="grid lg:grid-cols-2 gap-8 text-sm">
             <div className="space-y-4">
               <div>
-                <p className="text-foreground font-medium mb-3 text-cyan-300">RTU Signal Analysis:</p>
+                <p className="text-foreground font-medium mb-3 text-cyan-300">
+                  RTU Signal Analysis:
+                </p>
                 <div className="space-y-2 pl-4 border-l-2 border-cyan-500/30">
-                  <p className="text-foreground">• Use oscilloscope to verify signal levels (±1.5V to ±6V)</p>
-                  <p className="text-foreground">• Check for reflections at start/end of transmission</p>
-                  <p className="text-foreground">• Measure bias voltages (A line: +1.5V, B line: -1.5V idle)</p>
+                  <p className="text-foreground">
+                    • Use oscilloscope to verify signal levels (±1.5V to ±6V)
+                  </p>
+                  <p className="text-foreground">
+                    • Check for reflections at start/end of transmission
+                  </p>
+                  <p className="text-foreground">
+                    • Measure bias voltages (A line: +1.5V, B line: -1.5V idle)
+                  </p>
                   <p className="text-foreground">• Verify proper rise/fall times for baud rate</p>
                 </div>
               </div>
             </div>
             <div className="space-y-4">
               <div>
-                <p className="text-foreground font-medium mb-3 text-blue-300">TCP/IP Performance Analysis:</p>
+                <p className="text-foreground font-medium mb-3 text-blue-300">
+                  TCP/IP Performance Analysis:
+                </p>
                 <div className="space-y-2 pl-4 border-l-2 border-blue-500/30">
                   <p className="text-foreground">• Use Wireshark to capture Modbus TCP frames</p>
                   <p className="text-foreground">• Monitor response times and timeout errors</p>

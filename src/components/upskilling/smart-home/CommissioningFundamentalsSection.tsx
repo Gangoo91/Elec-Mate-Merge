@@ -16,7 +16,8 @@ const CommissioningFundamentalsSection = () => {
           <div className="p-4 bg-blue-600/10 border border-blue-600/30 rounded-lg">
             <h4 className="font-semibold text-blue-400 mb-2">Definition</h4>
             <p className="text-gray-300">
-              <strong className="text-foreground">Commissioning</strong> = the process of making a system fully operational
+              <strong className="text-foreground">Commissioning</strong> = the process of making a
+              system fully operational
             </p>
           </div>
 
@@ -30,7 +31,7 @@ const CommissioningFundamentalsSection = () => {
                 </div>
                 <p className="text-gray-300 text-sm">Connecting devices to hubs and networks</p>
               </div>
-              
+
               <div className="p-4 bg-[#1a1a1a] rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Clipboard className="h-4 w-4 text-elec-yellow" />
@@ -38,7 +39,7 @@ const CommissioningFundamentalsSection = () => {
                 </div>
                 <p className="text-gray-300 text-sm">Verifying each device operates correctly</p>
               </div>
-              
+
               <div className="p-4 bg-[#1a1a1a] rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Clipboard className="h-4 w-4 text-elec-yellow" />
@@ -46,7 +47,7 @@ const CommissioningFundamentalsSection = () => {
                 </div>
                 <p className="text-gray-300 text-sm">Setting up automation and schedules</p>
               </div>
-              
+
               <div className="p-4 bg-[#1a1a1a] rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Clipboard className="h-4 w-4 text-elec-yellow" />

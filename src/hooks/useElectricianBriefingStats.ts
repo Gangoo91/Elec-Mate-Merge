@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface ElectricianBriefingStats {
   upcomingCount: number;
@@ -9,37 +9,37 @@ export interface ElectricianBriefingStats {
 
 export function useElectricianBriefingStats() {
   return useQuery({
-    queryKey: ["electrician-briefing-stats"],
+    queryKey: ['electrician-briefing-stats'],
     queryFn: async (): Promise<ElectricianBriefingStats> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      if (!user) throw new Error('Not authenticated');
 
       const now = new Date();
-      const today = now.toISOString().split("T")[0];
-      const monthStart = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+      const today = now.toISOString().split('T')[0];
+      const monthStart = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
 
       const [upcomingRes, completedRes, totalRes] = await Promise.all([
         // Upcoming: scheduled and date >= today
         supabase
-          .from("team_briefings")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id)
-          .eq("status", "scheduled")
-          .gte("briefing_date", today),
+          .from('team_briefings')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .eq('status', 'scheduled')
+          .gte('briefing_date', today),
         // Completed this month
         supabase
-          .from("team_briefings")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id)
-          .eq("completed", true)
-          .gte("briefing_date", monthStart),
+          .from('team_briefings')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .eq('completed', true)
+          .gte('briefing_date', monthStart),
         // Total count
         supabase
-          .from("team_briefings")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id),
+          .from('team_briefings')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id),
       ]);
 
       return {

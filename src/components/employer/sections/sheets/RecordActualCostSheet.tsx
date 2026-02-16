@@ -1,35 +1,22 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { format } from "date-fns";
-import {
-  Wrench,
-  Package,
-  Truck,
-  Building2,
-  Check,
-  Calendar,
-  PoundSterling,
-} from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { format } from 'date-fns';
+import { Wrench, Package, Truck, Building2, Check, Calendar, PoundSterling } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   useRecordActualCost,
   useJobCostComparison,
   type ActualCostEntry,
-} from "@/hooks/useJobFinancials";
+} from '@/hooks/useJobFinancials';
 
 interface RecordActualCostSheetProps {
   open: boolean;
@@ -39,16 +26,16 @@ interface RecordActualCostSheetProps {
 }
 
 const costCategories = [
-  { id: "labour", label: "Labour", icon: Wrench, color: "blue" },
-  { id: "materials", label: "Materials", icon: Package, color: "green" },
-  { id: "equipment", label: "Equipment", icon: Truck, color: "purple" },
-  { id: "overheads", label: "Overheads", icon: Building2, color: "orange" },
+  { id: 'labour', label: 'Labour', icon: Wrench, color: 'blue' },
+  { id: 'materials', label: 'Materials', icon: Package, color: 'green' },
+  { id: 'equipment', label: 'Equipment', icon: Truck, color: 'purple' },
+  { id: 'overheads', label: 'Overheads', icon: Building2, color: 'orange' },
 ] as const;
 
 const formSchema = z.object({
-  category: z.enum(["labour", "materials", "equipment", "overheads"]),
-  amount: z.coerce.number().min(0.01, "Amount must be greater than 0"),
-  date: z.string().min(1, "Date is required"),
+  category: z.enum(['labour', 'materials', 'equipment', 'overheads']),
+  amount: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
+  date: z.string().min(1, 'Date is required'),
   notes: z.string().optional(),
 });
 
@@ -69,14 +56,20 @@ export function RecordActualCostSheet({
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      category: "materials",
+      category: 'materials',
       amount: 0,
-      date: format(new Date(), "yyyy-MM-dd"),
-      notes: "",
+      date: format(new Date(), 'yyyy-MM-dd'),
+      notes: '',
     },
   });
 
-  const { watch, setValue, handleSubmit, formState: { errors }, reset } = form;
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = form;
   const values = watch();
 
   const handleClose = () => {
@@ -112,35 +105,30 @@ export function RecordActualCostSheet({
   );
 
   const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
       minimumFractionDigits: 0,
     }).format(amount);
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
-        side={isMobile ? "bottom" : "right"}
-        className={cn(
-          "flex flex-col p-0",
-          isMobile ? "h-[85vh] rounded-t-2xl" : "w-[450px]"
-        )}
+        side={isMobile ? 'bottom' : 'right'}
+        className={cn('flex flex-col p-0', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
           <SheetTitle>Record Actual Cost</SheetTitle>
-          {jobTitle && (
-            <p className="text-sm text-muted-foreground">{jobTitle}</p>
-          )}
+          {jobTitle && <p className="text-sm text-muted-foreground">{jobTitle}</p>}
           {/* Progress Bar */}
           <div className="flex gap-1 mt-3">
             {[1, 2].map((i) => (
               <div
                 key={i}
                 className={cn(
-                  "h-1 flex-1 rounded-full transition-colors",
-                  i <= step ? "bg-elec-yellow" : "bg-muted"
+                  'h-1 flex-1 rounded-full transition-colors',
+                  i <= step ? 'bg-elec-yellow' : 'bg-muted'
                 )}
               />
             ))}
@@ -157,50 +145,40 @@ export function RecordActualCostSheet({
                 <div className="grid grid-cols-2 gap-2">
                   {costCategories.map(({ id, label, icon: Icon, color }) => {
                     const isSelected = values.category === id;
-                    const comparison = costComparison.find(
-                      (c) => c.category.toLowerCase() === id
-                    );
+                    const comparison = costComparison.find((c) => c.category.toLowerCase() === id);
 
                     return (
                       <button
                         key={id}
                         type="button"
-                        onClick={() => setValue("category", id)}
+                        onClick={() => setValue('category', id)}
                         className={cn(
-                          "flex flex-col items-start gap-2 p-3 rounded-lg border transition-all text-left",
-                          "hover:bg-muted/50 active:scale-[0.98]",
-                          isSelected
-                            ? "border-elec-yellow bg-elec-yellow/10"
-                            : "border-border"
+                          'flex flex-col items-start gap-2 p-3 rounded-lg border transition-all text-left',
+                          'hover:bg-muted/50 active:scale-[0.98]',
+                          isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-border'
                         )}
                       >
                         <div className="flex items-center gap-2 w-full">
                           <Icon
                             className={cn(
-                              "h-5 w-5",
-                              isSelected
-                                ? "text-elec-yellow"
-                                : "text-muted-foreground"
+                              'h-5 w-5',
+                              isSelected ? 'text-elec-yellow' : 'text-muted-foreground'
                             )}
                           />
                           <span
                             className={cn(
-                              "text-sm font-medium flex-1",
-                              isSelected
-                                ? "text-foreground"
-                                : "text-muted-foreground"
+                              'text-sm font-medium flex-1',
+                              isSelected ? 'text-foreground' : 'text-muted-foreground'
                             )}
                           >
                             {label}
                           </span>
-                          {isSelected && (
-                            <Check className="h-4 w-4 text-elec-yellow" />
-                          )}
+                          {isSelected && <Check className="h-4 w-4 text-elec-yellow" />}
                         </div>
                         {comparison && (
                           <div className="text-xs text-muted-foreground">
                             <span>
-                              {formatCurrency(comparison.actual)} /{" "}
+                              {formatCurrency(comparison.actual)} /{' '}
                               {formatCurrency(comparison.budgeted)}
                             </span>
                           </div>
@@ -215,10 +193,10 @@ export function RecordActualCostSheet({
               {categoryComparison && (
                 <Card
                   className={cn(
-                    "p-3",
+                    'p-3',
                     categoryComparison.variance >= 0
-                      ? "bg-green-500/10 border-green-500/30"
-                      : "bg-red-500/10 border-red-500/30"
+                      ? 'bg-green-500/10 border-green-500/30'
+                      : 'bg-red-500/10 border-red-500/30'
                   )}
                 >
                   <div className="flex justify-between items-center">
@@ -227,19 +205,17 @@ export function RecordActualCostSheet({
                         {selectedCategory?.label} Budget Status
                       </p>
                       <p className="text-sm font-medium">
-                        {formatCurrency(categoryComparison.actual)} of{" "}
+                        {formatCurrency(categoryComparison.actual)} of{' '}
                         {formatCurrency(categoryComparison.budgeted)}
                       </p>
                     </div>
                     <div
                       className={cn(
-                        "text-sm font-bold",
-                        categoryComparison.variance >= 0
-                          ? "text-green-500"
-                          : "text-red-500"
+                        'text-sm font-bold',
+                        categoryComparison.variance >= 0 ? 'text-green-500' : 'text-red-500'
                       )}
                     >
-                      {categoryComparison.variance >= 0 ? "+" : ""}
+                      {categoryComparison.variance >= 0 ? '+' : ''}
                       {formatCurrency(categoryComparison.variance)}
                     </div>
                   </div>
@@ -256,19 +232,12 @@ export function RecordActualCostSheet({
                     step="0.01"
                     min="0"
                     placeholder="0.00"
-                    className={cn(
-                      "pl-9 text-lg h-12",
-                      errors.amount && "border-red-500"
-                    )}
-                    value={values.amount || ""}
-                    onChange={(e) =>
-                      setValue("amount", parseFloat(e.target.value) || 0)
-                    }
+                    className={cn('pl-9 text-lg h-12', errors.amount && 'border-red-500')}
+                    value={values.amount || ''}
+                    onChange={(e) => setValue('amount', parseFloat(e.target.value) || 0)}
                   />
                 </div>
-                {errors.amount && (
-                  <p className="text-xs text-red-500">{errors.amount.message}</p>
-                )}
+                {errors.amount && <p className="text-xs text-red-500">{errors.amount.message}</p>}
               </div>
 
               {/* Date */}
@@ -278,17 +247,12 @@ export function RecordActualCostSheet({
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     type="date"
-                    className={cn(
-                      "pl-9 h-11",
-                      errors.date && "border-red-500"
-                    )}
+                    className={cn('pl-9 h-11', errors.date && 'border-red-500')}
                     value={values.date}
-                    onChange={(e) => setValue("date", e.target.value)}
+                    onChange={(e) => setValue('date', e.target.value)}
                   />
                 </div>
-                {errors.date && (
-                  <p className="text-xs text-red-500">{errors.date.message}</p>
-                )}
+                {errors.date && <p className="text-xs text-red-500">{errors.date.message}</p>}
               </div>
             </div>
           )}
@@ -302,7 +266,7 @@ export function RecordActualCostSheet({
                   placeholder="Add details about this cost..."
                   className="min-h-[120px]"
                   value={values.notes}
-                  onChange={(e) => setValue("notes", e.target.value)}
+                  onChange={(e) => setValue('notes', e.target.value)}
                 />
               </div>
 
@@ -326,7 +290,7 @@ export function RecordActualCostSheet({
                   <div className="flex justify-between py-2 border-b border-border/50">
                     <span className="text-muted-foreground">Date</span>
                     <span className="font-medium">
-                      {format(new Date(values.date), "dd MMM yyyy")}
+                      {format(new Date(values.date), 'dd MMM yyyy')}
                     </span>
                   </div>
                   {values.notes && (
@@ -343,9 +307,7 @@ export function RecordActualCostSheet({
               {/* New Budget Status Preview */}
               {categoryComparison && (
                 <Card className="p-3">
-                  <p className="text-xs text-muted-foreground mb-2">
-                    After Recording
-                  </p>
+                  <p className="text-xs text-muted-foreground mb-2">After Recording</p>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">New {selectedCategory?.label} Total</span>
                     <span className="font-medium">
@@ -356,17 +318,15 @@ export function RecordActualCostSheet({
                     <span className="text-sm text-muted-foreground">Remaining</span>
                     <span
                       className={cn(
-                        "font-medium",
-                        categoryComparison.budgeted -
-                          (categoryComparison.actual + values.amount) >=
+                        'font-medium',
+                        categoryComparison.budgeted - (categoryComparison.actual + values.amount) >=
                           0
-                          ? "text-green-500"
-                          : "text-red-500"
+                          ? 'text-green-500'
+                          : 'text-red-500'
                       )}
                     >
                       {formatCurrency(
-                        categoryComparison.budgeted -
-                          (categoryComparison.actual + values.amount)
+                        categoryComparison.budgeted - (categoryComparison.actual + values.amount)
                       )}
                     </span>
                   </div>
@@ -388,11 +348,7 @@ export function RecordActualCostSheet({
             </Button>
           ) : (
             <div className="flex gap-3">
-              <Button
-                variant="outline"
-                className="flex-1 h-12"
-                onClick={() => setStep(1)}
-              >
+              <Button variant="outline" className="flex-1 h-12" onClick={() => setStep(1)}>
                 Back
               </Button>
               <Button
@@ -400,7 +356,7 @@ export function RecordActualCostSheet({
                 onClick={handleSubmit(handleFormSubmit)}
                 disabled={recordCost.isPending}
               >
-                {recordCost.isPending ? "Recording..." : "Record Cost"}
+                {recordCost.isPending ? 'Recording...' : 'Record Cost'}
               </Button>
             </div>
           )}

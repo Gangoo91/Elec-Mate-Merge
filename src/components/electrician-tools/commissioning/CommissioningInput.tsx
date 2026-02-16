@@ -1,27 +1,26 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { 
-  CheckCircle2, 
-  Zap, 
-  Building2, 
-  Lightbulb, 
-  AlertTriangle, 
-  FileText, 
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  CheckCircle2,
+  Zap,
+  Building2,
+  Lightbulb,
+  AlertTriangle,
+  FileText,
   Camera,
   Loader2,
-  Settings
-} from "lucide-react";
-import { toast } from "sonner";
-import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
-import PhotoUploadButton from "./PhotoUploadButton";
-import { InlineInstallationTypeSelector } from "./InlineInstallationTypeSelector";
-import { InputHeroBar } from "./redesign/InputHeroBar";
-import { InputCardSection } from "./redesign/InputCardSection";
-
+  Settings,
+} from 'lucide-react';
+import { toast } from 'sonner';
+import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
+import PhotoUploadButton from './PhotoUploadButton';
+import { InlineInstallationTypeSelector } from './InlineInstallationTypeSelector';
+import { InputHeroBar } from './redesign/InputHeroBar';
+import { InputCardSection } from './redesign/InputCardSection';
 
 interface ExampleScenario {
   title: string;
@@ -31,35 +30,41 @@ interface ExampleScenario {
 
 const EXAMPLE_SCENARIOS: ExampleScenario[] = [
   {
-    title: "Consumer Unit Testing",
+    title: 'Consumer Unit Testing',
     icon: CheckCircle2,
-    prompt: "Complete testing and commissioning procedure for new dual RCD consumer unit with 14 circuits in domestic property, all tests required for EIC"
+    prompt:
+      'Complete testing and commissioning procedure for new dual RCD consumer unit with 14 circuits in domestic property, all tests required for EIC',
   },
   {
-    title: "EV Charger Verification",
+    title: 'EV Charger Verification',
     icon: Zap,
-    prompt: "Testing procedure for 7kW Mode 3 EV charging point including O-PEN device testing, earth loop impedance, and RCD verification"
+    prompt:
+      'Testing procedure for 7kW Mode 3 EV charging point including O-PEN device testing, earth loop impedance, and RCD verification',
   },
   {
-    title: "Commercial Distribution Board",
+    title: 'Commercial Distribution Board',
     icon: Building2,
-    prompt: "Step-by-step commissioning of 3-phase TP&N distribution board feeding 8 submains in office building, including phase rotation and load balancing"
+    prompt:
+      'Step-by-step commissioning of 3-phase TP&N distribution board feeding 8 submains in office building, including phase rotation and load balancing',
   },
   {
-    title: "Emergency Lighting Testing",
+    title: 'Emergency Lighting Testing',
     icon: Lightbulb,
-    prompt: "Test and commission emergency lighting system with 20 fittings and central battery - what tests are required and what are the pass criteria?"
+    prompt:
+      'Test and commission emergency lighting system with 20 fittings and central battery - what tests are required and what are the pass criteria?',
   },
   {
-    title: "Fault Diagnosis",
+    title: 'Fault Diagnosis',
     icon: AlertTriangle,
-    prompt: "Insulation resistance test showing 0.3MΩ on lighting circuit - what's the fault finding procedure and acceptable values per BS 7671?"
+    prompt:
+      "Insulation resistance test showing 0.3MΩ on lighting circuit - what's the fault finding procedure and acceptable values per BS 7671?",
   },
   {
-    title: "EIC Completion",
+    title: 'EIC Completion',
     icon: FileText,
-    prompt: "What information is required to complete an Electrical Installation Certificate for a kitchen rewire with new cooker and shower circuits?"
-  }
+    prompt:
+      'What information is required to complete an Electrical Installation Certificate for a kitchen rewire with new cooker and shower circuits?',
+  },
 ];
 
 interface CommissioningInputProps {
@@ -79,14 +84,21 @@ interface CommissioningInputProps {
   initialProjectName?: string;
 }
 
-const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialProjectName }: CommissioningInputProps) => {
-  const [prompt, setPrompt] = useState(initialPrompt || "");
+const CommissioningInput = ({
+  onGenerate,
+  isProcessing,
+  initialPrompt,
+  initialProjectName,
+}: CommissioningInputProps) => {
+  const [prompt, setPrompt] = useState(initialPrompt || '');
   const [queryMode, setQueryMode] = useState<'testing' | 'fault'>('testing');
-  const [selectedType, setSelectedType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
-  const [projectName, setProjectName] = useState(initialProjectName || "");
-  const [location, setLocation] = useState("");
-  const [clientName, setClientName] = useState("");
-  const [installationDate, setInstallationDate] = useState("");
+  const [selectedType, setSelectedType] = useState<'domestic' | 'commercial' | 'industrial'>(
+    'domestic'
+  );
+  const [projectName, setProjectName] = useState(initialProjectName || '');
+  const [location, setLocation] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [installationDate, setInstallationDate] = useState('');
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   // Update state when initial values change
@@ -101,7 +113,9 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
   const handlePhotosUploaded = (urls: string[]) => {
     setImageUrls(urls);
     if (!prompt.trim() && urls.length > 0) {
-      setPrompt(`Analyse ${urls.length} installation photo${urls.length > 1 ? 's' : ''} for safety issues, compliance problems, and EICR defect coding`);
+      setPrompt(
+        `Analyse ${urls.length} installation photo${urls.length > 1 ? 's' : ''} for safety issues, compliance problems, and EICR defect coding`
+      );
     }
     toast.success(`${urls.length} photo${urls.length > 1 ? 's' : ''} ready for analysis`);
   };
@@ -111,14 +125,19 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
       try {
         const circuits = contextData.circuits || [];
         const installationType = contextData.installationType || 'installation';
-        
-        setPrompt(instruction || `Testing and commissioning for ${circuits.length} circuits - ${installationType}`);
-        
+
+        setPrompt(
+          instruction ||
+            `Testing and commissioning for ${circuits.length} circuits - ${installationType}`
+        );
+
         if (contextData.projectName) setProjectName(contextData.projectName);
         if (contextData.location) setLocation(contextData.location);
         if (contextData.clientName) setClientName(contextData.clientName);
-        
-        toast.success('Context loaded', { description: 'Installation details loaded from previous agent' });
+
+        toast.success('Context loaded', {
+          description: 'Installation details loaded from previous agent',
+        });
       } catch (error) {
         setPrompt(instruction || 'Testing and commissioning for forwarded work');
         toast.success('Context loaded');
@@ -128,19 +147,19 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
 
   const handleExampleClick = (examplePrompt: string) => {
     setPrompt(examplePrompt);
-    toast.success("Example loaded", {
-      description: "Query filled in - ready to generate"
+    toast.success('Example loaded', {
+      description: 'Query filled in - ready to generate',
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!prompt.trim()) {
-      toast.error("Please enter a testing requirement");
+      toast.error('Please enter a testing requirement');
       return;
     }
-    
+
     onGenerate({
       prompt,
       selectedType,
@@ -150,7 +169,7 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
       clientName,
       installationDate,
       imageUrl: imageUrls[0], // For backwards compatibility
-      imageUrls
+      imageUrls,
     });
   };
 
@@ -207,32 +226,31 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
                   {queryMode === 'testing' ? 'What needs testing?' : "What's the fault?"}
                 </h3>
                 <p className="text-xs sm:text-sm text-foreground/80 mt-0.5">
-                  {queryMode === 'testing' 
+                  {queryMode === 'testing'
                     ? 'Describe the installation and required tests'
-                    : "Describe the symptoms and what you've observed"
-                  }
+                    : "Describe the symptoms and what you've observed"}
                 </p>
               </div>
             </div>
-            
+
             <div className="relative">
               {/* Decorative grid overlay */}
-              <div 
+              <div
                 className="absolute inset-0 opacity-[0.02] pointer-events-none rounded-lg"
                 style={{
                   backgroundImage: `linear-gradient(to right, hsl(var(--elec-yellow)) 1px, transparent 1px),
                                    linear-gradient(to bottom, hsl(var(--elec-yellow)) 1px, transparent 1px)`,
-                  backgroundSize: '20px 20px'
+                  backgroundSize: '20px 20px',
                 }}
               />
-              
-              <Textarea 
+
+              <Textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={
                   queryMode === 'testing'
-                    ? "e.g., Testing procedure for new 18th Edition consumer unit with 12 circuits..."
-                    : "e.g., RCD keeps tripping on ring final circuit, intermittent issue over last 2 weeks..."
+                    ? 'e.g., Testing procedure for new 18th Edition consumer unit with 12 circuits...'
+                    : 'e.g., RCD keeps tripping on ring final circuit, intermittent issue over last 2 weeks...'
                 }
                 className="min-h-[140px] sm:min-h-[120px] text-base resize-none focus:ring-2 focus:ring-elec-yellow border-elec-yellow/20 bg-elec-dark/40 relative"
                 maxLength={500}
@@ -240,10 +258,12 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
                 spellCheck={true}
               />
             </div>
-            
+
             <div className="text-xs text-foreground/70 text-right mt-2">
-              <span className="text-elec-yellow font-medium">{prompt.length}</span>/500 
-              {prompt.length < 50 && <span className="ml-2 text-elec-yellow/80">• 50+ chars recommended</span>}
+              <span className="text-elec-yellow font-medium">{prompt.length}</span>/500
+              {prompt.length < 50 && (
+                <span className="ml-2 text-elec-yellow/80">• 50+ chars recommended</span>
+              )}
             </div>
           </div>
         </Card>
@@ -266,7 +286,7 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
           icon={Camera}
           defaultOpen={false}
         >
-          <PhotoUploadButton 
+          <PhotoUploadButton
             onPhotosUploaded={handlePhotosUploaded}
             maxPhotos={3}
             disabled={isProcessing}
@@ -276,7 +296,8 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <p className="text-xs text-foreground/90 font-medium">
-                  {imageUrls.length} photo{imageUrls.length > 1 ? 's' : ''} uploaded - AI will analyse for safety issues and EICR defect coding
+                  {imageUrls.length} photo{imageUrls.length > 1 ? 's' : ''} uploaded - AI will
+                  analyse for safety issues and EICR defect coding
                 </p>
               </div>
             </div>
@@ -292,7 +313,9 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
         >
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="projectName" className="text-sm font-medium text-foreground">Project Name</Label>
+              <Label htmlFor="projectName" className="text-sm font-medium text-foreground">
+                Project Name
+              </Label>
               <Input
                 id="projectName"
                 value={projectName}
@@ -303,7 +326,9 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="location" className="text-sm font-medium text-foreground">Location</Label>
+              <Label htmlFor="location" className="text-sm font-medium text-foreground">
+                Location
+              </Label>
               <Input
                 id="location"
                 value={location}
@@ -314,7 +339,9 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="clientName" className="text-sm font-medium text-foreground">Client Name</Label>
+              <Label htmlFor="clientName" className="text-sm font-medium text-foreground">
+                Client Name
+              </Label>
               <Input
                 id="clientName"
                 value={clientName}
@@ -325,7 +352,9 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="installationDate" className="text-sm font-medium text-foreground">Installation Date</Label>
+              <Label htmlFor="installationDate" className="text-sm font-medium text-foreground">
+                Installation Date
+              </Label>
               <Input
                 id="installationDate"
                 type="date"
@@ -348,7 +377,7 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
             {EXAMPLE_SCENARIOS.map((scenario, idx) => {
               const IconComponent = scenario.icon;
               return (
-                <Card 
+                <Card
                   key={idx}
                   className="p-4 cursor-pointer border-elec-yellow/20 bg-elec-dark/40 hover:border-elec-yellow/40 hover:bg-elec-dark/60 transition-all hover:scale-[1.02] touch-manipulation active:scale-95"
                   onClick={() => handleExampleClick(scenario.prompt)}
@@ -357,9 +386,7 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
                     <IconComponent className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <h5 className="font-semibold text-sm text-foreground">{scenario.title}</h5>
                   </div>
-                   <p className="text-xs text-foreground/80 line-clamp-3">
-                    {scenario.prompt}
-                  </p>
+                  <p className="text-xs text-foreground/80 line-clamp-3">{scenario.prompt}</p>
                 </Card>
               );
             })}
@@ -368,7 +395,7 @@ const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialPr
 
         {/* Generate Button */}
         <div className="sticky bottom-0 pb-4 sm:pb-6 pt-3 sm:pt-4 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent">
-          <Button 
+          <Button
             type="submit"
             size="lg"
             disabled={!prompt.trim() || isProcessing}

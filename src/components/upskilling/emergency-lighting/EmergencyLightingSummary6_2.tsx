@@ -3,16 +3,16 @@ import { BookOpen, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingSummary6_2 = () => {
   const keyPoints = [
-    "The Regulatory Reform (Fire Safety) Order 2005 places legal duty on the Responsible Person to provide adequate emergency lighting",
-    "Emergency lighting must operate independently of fire alarm systems but should integrate for coordinated functionality",
-    "Fire risk assessments determine specific emergency lighting requirements for each building",
-    "Fire Safety Strategy documents must explicitly reference emergency lighting provision and integration",
-    "Fire alarm control panels and fire-fighting equipment must have minimum 5 lux emergency illumination",
-    "Fire authorities have extensive enforcement powers including Prohibition Notices, Enforcement Notices, and prosecution",
-    "Missing documentation is treated as non-compliance even if the physical system works correctly",
-    "Care homes, hotels, and sleeping accommodation require 3-hour duration emergency lighting",
-    "Electricians share professional liability for inadequate design or poor integration with fire safety systems",
-    "Regular review of integration is required whenever fire risk assessments are updated or building changes occur"
+    'The Regulatory Reform (Fire Safety) Order 2005 places legal duty on the Responsible Person to provide adequate emergency lighting',
+    'Emergency lighting must operate independently of fire alarm systems but should integrate for coordinated functionality',
+    'Fire risk assessments determine specific emergency lighting requirements for each building',
+    'Fire Safety Strategy documents must explicitly reference emergency lighting provision and integration',
+    'Fire alarm control panels and fire-fighting equipment must have minimum 5 lux emergency illumination',
+    'Fire authorities have extensive enforcement powers including Prohibition Notices, Enforcement Notices, and prosecution',
+    'Missing documentation is treated as non-compliance even if the physical system works correctly',
+    'Care homes, hotels, and sleeping accommodation require 3-hour duration emergency lighting',
+    'Electricians share professional liability for inadequate design or poor integration with fire safety systems',
+    'Regular review of integration is required whenever fire risk assessments are updated or building changes occur',
   ];
 
   return (

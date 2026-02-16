@@ -1,21 +1,20 @@
-
-import React from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle } from "lucide-react";
-import { InstallPlanData } from "./types";
-import { SimplifiedCableSelectionEngine } from "./SimplifiedCableSelectionEngine";
-import { CableSelectionEngine } from "./CableSelectionEngine";
-import { SystemSummaryCard } from "./system-summary-card";
-import { UnifiedResultsCard } from "./unified-results-card";
-import { SupplyRequirementsCard } from "./supply-requirements-card";
-import { ConsumerUnitGuidance } from "./consumer-unit-guidance";
-import { ResultCard } from "@/components/ui/result-card";
-import CableRecommendationsCard from "./CableRecommendationsCard";
-import InstallationSuggestionsCard from "./InstallationSuggestionsCard";
-import ComplianceChecksCard from "./ComplianceChecksCard";
-import SimplifiedValidationCard from "./SimplifiedValidationCard";
-import VisualCircuitDesigner from "./VisualCircuitDesigner";
-import PostResultGuidance from "./PostResultGuidance";
+import React from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertTriangle } from 'lucide-react';
+import { InstallPlanData } from './types';
+import { SimplifiedCableSelectionEngine } from './SimplifiedCableSelectionEngine';
+import { CableSelectionEngine } from './CableSelectionEngine';
+import { SystemSummaryCard } from './system-summary-card';
+import { UnifiedResultsCard } from './unified-results-card';
+import { SupplyRequirementsCard } from './supply-requirements-card';
+import { ConsumerUnitGuidance } from './consumer-unit-guidance';
+import { ResultCard } from '@/components/ui/result-card';
+import CableRecommendationsCard from './CableRecommendationsCard';
+import InstallationSuggestionsCard from './InstallationSuggestionsCard';
+import ComplianceChecksCard from './ComplianceChecksCard';
+import SimplifiedValidationCard from './SimplifiedValidationCard';
+import VisualCircuitDesigner from './VisualCircuitDesigner';
+import PostResultGuidance from './PostResultGuidance';
 
 interface MultiCircuitResultsProps {
   planData: InstallPlanData;
@@ -23,8 +22,8 @@ interface MultiCircuitResultsProps {
 }
 
 const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) => {
-  const circuits = planData.circuits?.filter(c => c.enabled) || [];
-  
+  const circuits = planData.circuits?.filter((c) => c.enabled) || [];
+
   if (circuits.length === 0) {
     return (
       <div className="space-y-4">
@@ -37,13 +36,13 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
     );
   }
 
-  const circuitAnalysis = circuits.map(circuit => {
+  const circuitAnalysis = circuits.map((circuit) => {
     const circuitPlanData = {
-      installationType: "multi-circuit",
+      installationType: 'multi-circuit',
       loadType: circuit.loadType,
       totalLoad: circuit.totalLoad,
       voltage: circuit.voltage,
-      phases: circuit.phases || "single",
+      phases: circuit.phases || 'single',
       powerFactor: circuit.powerFactor || 0.95,
       cableType: circuit.cableType,
       cableLength: circuit.cableLength,
@@ -52,32 +51,36 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
       deviceRating: 16, // Default fallback
       ambientTemp: 30, // Default fallback
       grouping: 1, // Default fallback
-      environmentalSettings: planData.environmentalSettings
+      environmentalSettings: planData.environmentalSettings,
     };
     const recommendations = SimplifiedCableSelectionEngine.calculateCableOptions(circuitPlanData);
-    const designCurrent = circuit.totalLoad / (circuit.voltage || 230) / (circuit.powerFactor || 0.95);
+    const designCurrent =
+      circuit.totalLoad / (circuit.voltage || 230) / (circuit.powerFactor || 0.95);
     return { circuit, recommendations, designCurrent };
   });
 
   const totalSystemLoad = circuits.reduce((sum, circuit) => sum + circuit.totalLoad, 0);
-  const totalDesignCurrent = circuitAnalysis.reduce((sum, analysis) => sum + analysis.designCurrent, 0);
+  const totalDesignCurrent = circuitAnalysis.reduce(
+    (sum, analysis) => sum + analysis.designCurrent,
+    0
+  );
 
   // IET On-Site Guide Table 1B/H2 diversity calculation
   const diversityCalculation = React.useMemo(() => {
     const { calculateSystemDiversity } = require('@/utils/diversityCalculator');
-    
-    const circuitsForDiversity = circuitAnalysis.map(analysis => ({
+
+    const circuitsForDiversity = circuitAnalysis.map((analysis) => ({
       id: analysis.circuit.id,
       name: analysis.circuit.name,
       loadType: analysis.circuit.loadType,
       totalLoad: analysis.circuit.totalLoad,
       designCurrent: analysis.designCurrent,
-      voltage: analysis.circuit.voltage
+      voltage: analysis.circuit.voltage,
     }));
-    
+
     // Default to domestic premises type (can be enhanced later with premises type selector)
     const premisesType = 'domestic' as const;
-    
+
     return calculateSystemDiversity(circuitsForDiversity, premisesType);
   }, [circuitAnalysis]);
 
@@ -117,7 +120,7 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
                 <div className="flex justify-between items-start mb-2">
                   <div>
                     <p className="font-medium text-foreground capitalize">
-                      {group.type.replace(/([A-Z])/g, ' $1').trim()} 
+                      {group.type.replace(/([A-Z])/g, ' $1').trim()}
                       <span className="text-muted-foreground text-sm ml-2">
                         ({group.count} circuit{group.count > 1 ? 's' : ''})
                       </span>
@@ -135,7 +138,9 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
                 </div>
                 <ul className="space-y-1">
                   {group.details.map((detail, i) => (
-                    <li key={i} className="text-xs text-muted-foreground">• {detail}</li>
+                    <li key={i} className="text-xs text-muted-foreground">
+                      • {detail}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -145,7 +150,8 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
                 <span className="font-semibold text-foreground">Total System Diversity:</span>
                 <div className="text-right">
                   <p className="font-bold text-elec-yellow">
-                    {diversityCalculation.totalSystemCurrent.toFixed(2)}A → {diversityCalculation.diversifiedCurrent.toFixed(2)}A
+                    {diversityCalculation.totalSystemCurrent.toFixed(2)}A →{' '}
+                    {diversityCalculation.diversifiedCurrent.toFixed(2)}A
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Overall factor: {(diversityCalculation.diversityFactor * 100).toFixed(1)}%
@@ -180,42 +186,68 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
             // Calculate Zs for each circuit using same logic as single circuit
             const getR1R2 = (size: string, type: string) => {
               const twinEarthResistances: Record<string, number> = {
-                "1.5": 24.2, "2.5": 14.8, "4.0": 9.22, "6.0": 6.16, 
-                "10.0": 3.66, "16.0": 2.30, "25.0": 1.454, "35.0": 1.045, "50.0": 0.772
+                '1.5': 24.2,
+                '2.5': 14.8,
+                '4.0': 9.22,
+                '6.0': 6.16,
+                '10.0': 3.66,
+                '16.0': 2.3,
+                '25.0': 1.454,
+                '35.0': 1.045,
+                '50.0': 0.772,
               };
-              
+
               if (type.includes('twin') || type.includes('earth')) {
                 return twinEarthResistances[size] || 10;
               }
-              
+
               const singleCoreR1: Record<string, number> = {
-                "1.5": 12.1, "2.5": 7.41, "4.0": 4.61, "6.0": 3.08,
-                "10.0": 1.83, "16.0": 1.15, "25.0": 0.727, "35.0": 0.524, "50.0": 0.387
+                '1.5': 12.1,
+                '2.5': 7.41,
+                '4.0': 4.61,
+                '6.0': 3.08,
+                '10.0': 1.83,
+                '16.0': 1.15,
+                '25.0': 0.727,
+                '35.0': 0.524,
+                '50.0': 0.387,
               };
               return (singleCoreR1[size] || 5) * 2;
             };
 
-            const recommendedCable = analysis.recommendations.find(r => r.suitability === "suitable") || analysis.recommendations[0];
-            const r1r2PerKm = recommendedCable ? getR1R2(recommendedCable.size, recommendedCable.type) : 10;
-            const r1r2 = analysis.circuit.cableLength * r1r2PerKm / 1000;
+            const recommendedCable =
+              analysis.recommendations.find((r) => r.suitability === 'suitable') ||
+              analysis.recommendations[0];
+            const r1r2PerKm = recommendedCable
+              ? getR1R2(recommendedCable.size, recommendedCable.type)
+              : 10;
+            const r1r2 = (analysis.circuit.cableLength * r1r2PerKm) / 1000;
             const zsValue = (planData.environmentalSettings?.ze || 0.35) + r1r2;
-            
+
             // Calculate max Zs (simplified for Type B MCB)
             const maxZs = 1.44; // Conservative value for 230V Type B MCB
 
             // Generate detailed analysis for each circuit - matching single circuit
             const circuitPlanDataDetailed = {
               ...analysis.circuit,
-              installationType: "multi-circuit",
+              installationType: 'multi-circuit',
               environmentalSettings: planData.environmentalSettings,
               ze: planData.environmentalSettings?.ze || 0.35,
               ambientTemperature: planData.environmentalSettings?.ambientTemperature || 30,
-              groupingFactor: planData.environmentalSettings?.globalGroupingFactor || 1
+              groupingFactor: planData.environmentalSettings?.globalGroupingFactor || 1,
             };
-            
-            const suggestions = CableSelectionEngine.generateSuggestions(circuitPlanDataDetailed, analysis.recommendations);
-            const complianceChecks = recommendedCable ? 
-              CableSelectionEngine.performComplianceChecks(circuitPlanDataDetailed, zsValue, recommendedCable) : [];
+
+            const suggestions = CableSelectionEngine.generateSuggestions(
+              circuitPlanDataDetailed,
+              analysis.recommendations
+            );
+            const complianceChecks = recommendedCable
+              ? CableSelectionEngine.performComplianceChecks(
+                  circuitPlanDataDetailed,
+                  zsValue,
+                  recommendedCable
+                )
+              : [];
 
             return (
               <div key={analysis.circuit.id} className="space-y-4">
@@ -225,13 +257,14 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
                     Circuit {index + 1}: {analysis.circuit.name}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {analysis.circuit.loadType} • {analysis.circuit.totalLoad}W • {analysis.circuit.cableLength}m
+                    {analysis.circuit.loadType} • {analysis.circuit.totalLoad}W •{' '}
+                    {analysis.circuit.cableLength}m
                   </p>
                 </div>
 
                 {/* Visual Circuit Designer for each circuit */}
-                <VisualCircuitDesigner 
-                  planData={circuitPlanDataDetailed} 
+                <VisualCircuitDesigner
+                  planData={circuitPlanDataDetailed}
                   recommendedCable={recommendedCable}
                 />
 
@@ -248,23 +281,23 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
 
                 {/* Detailed Analysis Cards - matching single circuit */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <CableRecommendationsCard 
+                  <CableRecommendationsCard
                     recommendations={analysis.recommendations}
                     showNonCompliant={true}
                   />
-                  
+
                   <SimplifiedValidationCard planData={circuitPlanDataDetailed} />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <InstallationSuggestionsCard suggestions={suggestions} />
-                  
+
                   <ComplianceChecksCard checks={complianceChecks} />
                 </div>
 
                 {/* Post Result Guidance for compliant circuits */}
                 {recommendedCable && zsValue <= maxZs && (
-                  <PostResultGuidance 
+                  <PostResultGuidance
                     planData={circuitPlanDataDetailed}
                     recommendedCable={recommendedCable}
                   />
@@ -280,10 +313,13 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
         <div className="flex flex-col sm:flex-row gap-3 items-start">
           <AlertTriangle className="h-6 w-6 text-amber-300 flex-shrink-0 self-center sm:self-start sm:mt-0.5" />
           <div className="space-y-2 text-center sm:text-left flex-1">
-            <p className="font-medium text-amber-200 text-lg sm:text-base">Professional Verification Required</p>
+            <p className="font-medium text-amber-200 text-lg sm:text-base">
+              Professional Verification Required
+            </p>
             <p className="text-sm text-amber-200/80 leading-relaxed">
-              This analysis provides guidance based on BS7671:2018+A3:2024. All calculations assume standard conditions. 
-              Professional design verification, site-specific assessments, and comprehensive testing are required for all electrical installations.
+              This analysis provides guidance based on BS7671:2018+A3:2024. All calculations assume
+              standard conditions. Professional design verification, site-specific assessments, and
+              comprehensive testing are required for all electrical installations.
             </p>
           </div>
         </div>

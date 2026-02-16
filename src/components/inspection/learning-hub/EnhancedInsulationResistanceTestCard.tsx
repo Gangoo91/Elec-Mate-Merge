@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SmartTabs } from '@/components/ui/smart-tabs';
@@ -13,29 +12,29 @@ import InsulationRegulationRequirementsCard from './insulation-testing/Insulatio
 const EnhancedInsulationResistanceTestCard = () => {
   const smartTabs = [
     {
-      value: "why",
-      label: "Why Test?",
+      value: 'why',
+      label: 'Why Test?',
       icon: <HelpCircle className="h-4 w-4" />,
-      content: <WhyTestSection />
+      content: <WhyTestSection />,
     },
     {
-      value: "how",
-      label: "How to Test",
+      value: 'how',
+      label: 'How to Test',
       icon: <Settings className="h-4 w-4" />,
-      content: <HowToTestSection />
+      content: <HowToTestSection />,
     },
     {
-      value: "science",
-      label: "The Science",
+      value: 'science',
+      label: 'The Science',
       icon: <Atom className="h-4 w-4" />,
-      content: <ScienceSection />
+      content: <ScienceSection />,
     },
     {
-      value: "tables",
-      label: "IR Tables",
+      value: 'tables',
+      label: 'IR Tables',
       icon: <Table className="h-4 w-4" />,
-      content: <InsulationTablesSection />
-    }
+      content: <InsulationTablesSection />,
+    },
   ];
 
   return (
@@ -47,16 +46,12 @@ const EnhancedInsulationResistanceTestCard = () => {
             Enhanced Insulation Resistance Testing Module
           </CardTitle>
           <CardDescription className="text-gray-300">
-            Comprehensive learning module for insulation resistance testing with temperature correction - BS 7671 Regulation 612.3
+            Comprehensive learning module for insulation resistance testing with temperature
+            correction - BS 7671 Regulation 612.3
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <SmartTabs 
-            tabs={smartTabs}
-            defaultValue="why" 
-            className="w-full"
-            breakpoint={4}
-          />
+          <SmartTabs tabs={smartTabs} defaultValue="why" className="w-full" breakpoint={4} />
         </CardContent>
       </Card>
 

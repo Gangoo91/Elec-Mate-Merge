@@ -93,12 +93,19 @@ export function OpportunityDetailSheet({
                 <div className="flex items-center gap-2 mb-2">
                   <Badge
                     variant="outline"
-                    className={opportunity.status === 'live' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-gray-500/20'}
+                    className={
+                      opportunity.status === 'live'
+                        ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                        : 'bg-gray-500/20'
+                    }
                   >
                     {opportunity.status === 'live' ? 'LIVE' : opportunity.status.toUpperCase()}
                   </Badge>
                   {deadline.urgent && (
-                    <Badge variant="outline" className="bg-orange-500/20 text-orange-400 border-orange-500/30">
+                    <Badge
+                      variant="outline"
+                      className="bg-orange-500/20 text-orange-400 border-orange-500/30"
+                    >
                       <Clock className="h-3 w-3 mr-1" />
                       {deadline.text}
                     </Badge>
@@ -130,7 +137,9 @@ export function OpportunityDetailSheet({
                   <PoundSterling className="h-4 w-4" />
                   <span className="text-xs">Value</span>
                 </div>
-                <p className="font-semibold text-elec-yellow">{formatOpportunityValue(opportunity)}</p>
+                <p className="font-semibold text-elec-yellow">
+                  {formatOpportunityValue(opportunity)}
+                </p>
               </div>
 
               <div className="p-3 rounded-lg bg-card border border-border">
@@ -140,7 +149,11 @@ export function OpportunityDetailSheet({
                 </div>
                 <p className={`font-semibold ${deadline.urgent ? 'text-orange-400' : ''}`}>
                   {opportunity.deadline
-                    ? new Date(opportunity.deadline).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                    ? new Date(opportunity.deadline).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })
                     : 'Not specified'}
                 </p>
               </div>
@@ -153,9 +166,12 @@ export function OpportunityDetailSheet({
                 <p className="font-medium text-sm">
                   {opportunity.location_text || opportunity.postcode || 'Location TBC'}
                 </p>
-                {opportunity.distance_miles !== null && opportunity.distance_miles !== undefined && (
-                  <p className="text-xs text-muted-foreground">{opportunity.distance_miles} miles away</p>
-                )}
+                {opportunity.distance_miles !== null &&
+                  opportunity.distance_miles !== undefined && (
+                    <p className="text-xs text-muted-foreground">
+                      {opportunity.distance_miles} miles away
+                    </p>
+                  )}
               </div>
 
               <div className="p-3 rounded-lg bg-card border border-border">
@@ -229,7 +245,10 @@ export function OpportunityDetailSheet({
                     {opportunity.requirements.insurance && (
                       <div className="flex items-center gap-2 text-sm">
                         <CheckCircle2 className="h-4 w-4 text-green-400" />
-                        <span>Public Liability Insurance £{(opportunity.requirements.insurance / 1000000).toFixed(0)}m+</span>
+                        <span>
+                          Public Liability Insurance £
+                          {(opportunity.requirements.insurance / 1000000).toFixed(0)}m+
+                        </span>
                       </div>
                     )}
                     {opportunity.requirements.asbestos_awareness && (
@@ -300,7 +319,9 @@ export function OpportunityDetailSheet({
                     {opportunity.contract_start && (
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Start Date</span>
-                        <span>{new Date(opportunity.contract_start).toLocaleDateString('en-GB')}</span>
+                        <span>
+                          {new Date(opportunity.contract_start).toLocaleDateString('en-GB')}
+                        </span>
                       </div>
                     )}
                     {opportunity.contract_duration && (
@@ -316,7 +337,9 @@ export function OpportunityDetailSheet({
             )}
 
             {/* Contact */}
-            {(opportunity.contact_name || opportunity.contact_email || opportunity.contact_phone) && (
+            {(opportunity.contact_name ||
+              opportunity.contact_email ||
+              opportunity.contact_phone) && (
               <div className="mb-4">
                 <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                   <Building2 className="h-4 w-4" />
@@ -361,7 +384,14 @@ export function OpportunityDetailSheet({
                     <ExternalLink className="h-4 w-4" />
                     <span className="text-sm">View on {opportunity.source.replace('_', ' ')}</span>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={(e) => { e.preventDefault(); handleCopyLink(); }}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCopyLink();
+                    }}
+                  >
                     <Copy className="h-4 w-4" />
                   </Button>
                 </a>

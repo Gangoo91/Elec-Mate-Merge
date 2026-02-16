@@ -5,29 +5,17 @@
  * Shows hierarchical Unit → LO → AC accordion with checkboxes for multi-select.
  */
 
-import { useState, useMemo } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
-import {
-  ChevronDown,
-  ChevronRight,
-  BookOpen,
-  CheckCircle2,
-  Search,
-  X,
-} from "lucide-react";
+import { useState, useMemo } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
+import { ChevronDown, ChevronRight, BookOpen, CheckCircle2, Search, X } from 'lucide-react';
 import {
   useQualificationACs,
   type QualificationUnit,
-} from "@/hooks/qualification/useQualificationACs";
+} from '@/hooks/qualification/useQualificationACs';
 
 interface ACPickerSheetProps {
   open: boolean;
@@ -49,18 +37,16 @@ export function ACPickerSheet({
   onDone,
 }: ACPickerSheetProps) {
   const { tree, isLoading } = useQualificationACs(requirementCode);
-  const [localSelected, setLocalSelected] = useState<Set<string>>(
-    new Set(selectedACs),
-  );
+  const [localSelected, setLocalSelected] = useState<Set<string>>(new Set(selectedACs));
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(new Set());
   const [expandedLOs, setExpandedLOs] = useState<Set<string>>(new Set());
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Reset local state when sheet opens
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
       setLocalSelected(new Set(selectedACs));
-      setSearchQuery("");
+      setSearchQuery('');
     }
     onOpenChange(isOpen);
   };
@@ -106,22 +92,16 @@ export function ACPickerSheet({
           .map((lo) => ({
             ...lo,
             assessmentCriteria: lo.assessmentCriteria.filter(
-              (ac) =>
-                ac.acText.toLowerCase().includes(q) ||
-                ac.acFullRef.toLowerCase().includes(q),
+              (ac) => ac.acText.toLowerCase().includes(q) || ac.acFullRef.toLowerCase().includes(q)
             ),
           }))
-          .filter(
-            (lo) =>
-              lo.assessmentCriteria.length > 0 ||
-              lo.loText.toLowerCase().includes(q),
-          ),
+          .filter((lo) => lo.assessmentCriteria.length > 0 || lo.loText.toLowerCase().includes(q)),
       }))
       .filter(
         (unit) =>
           unit.learningOutcomes.length > 0 ||
           unit.unitTitle.toLowerCase().includes(q) ||
-          unit.unitCode.toLowerCase().includes(q),
+          unit.unitCode.toLowerCase().includes(q)
       );
   }, [tree.units, searchQuery]);
 
@@ -171,7 +151,7 @@ export function ACPickerSheet({
                 />
                 {searchQuery && (
                   <button
-                    onClick={() => setSearchQuery("")}
+                    onClick={() => setSearchQuery('')}
                     className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation"
                   >
                     <X className="h-4 w-4 text-white" />
@@ -191,9 +171,7 @@ export function ACPickerSheet({
               <div className="text-center py-12">
                 <BookOpen className="h-8 w-8 text-white/20 mx-auto mb-3" />
                 <p className="text-sm text-white/50">
-                  {requirementCode
-                    ? "No criteria found"
-                    : "No qualification selected"}
+                  {requirementCode ? 'No criteria found' : 'No qualification selected'}
                 </p>
               </div>
             ) : (
@@ -261,15 +239,13 @@ function UnitAccordion({
   // Count selected ACs in this unit
   const selectedInUnit = unit.learningOutcomes.reduce(
     (count, lo) =>
-      count +
-      lo.assessmentCriteria.filter((ac) => localSelected.has(ac.acFullRef))
-        .length,
-    0,
+      count + lo.assessmentCriteria.filter((ac) => localSelected.has(ac.acFullRef)).length,
+    0
   );
 
   const totalInUnit = unit.learningOutcomes.reduce(
     (count, lo) => count + lo.assessmentCriteria.length,
-    0,
+    0
   );
 
   return (
@@ -284,9 +260,7 @@ function UnitAccordion({
           <ChevronRight className="h-4 w-4 text-white/60 flex-shrink-0" />
         )}
         <div className="flex-1 text-left min-w-0">
-          <span className="text-xs font-bold text-elec-yellow">
-            Unit {unit.unitCode}
-          </span>
+          <span className="text-xs font-bold text-elec-yellow">Unit {unit.unitCode}</span>
           <p className="text-sm text-white truncate">{unit.unitTitle}</p>
         </div>
         <div className="flex items-center gap-1.5">
@@ -306,10 +280,7 @@ function UnitAccordion({
             const loExpanded = expandedLOs.has(loKey);
 
             return (
-              <div
-                key={loKey}
-                className="border-b border-white/[0.04] last:border-b-0"
-              >
+              <div key={loKey} className="border-b border-white/[0.04] last:border-b-0">
                 <button
                   onClick={() => onToggleLO(loKey)}
                   className="w-full flex items-start gap-2.5 px-4 py-2.5 pl-10 touch-manipulation active:bg-white/[0.03] transition-colors"
@@ -325,9 +296,7 @@ function UnitAccordion({
                         LO{lo.loNumber}
                       </span>
                     )}
-                    <p className="text-xs text-white/80 leading-relaxed">
-                      {lo.loText}
-                    </p>
+                    <p className="text-xs text-white/80 leading-relaxed">{lo.loText}</p>
                   </div>
                 </button>
 
@@ -342,9 +311,9 @@ function UnitAccordion({
                           key={ac.acFullRef}
                           onClick={() => onToggleAC(ac.acFullRef)}
                           className={cn(
-                            "w-full flex items-start gap-2.5 text-left py-1.5 touch-manipulation rounded-lg px-1 -mx-1",
-                            isSelected && "bg-elec-yellow/10",
-                            isEvidenced && !isSelected && "bg-green-500/5",
+                            'w-full flex items-start gap-2.5 text-left py-1.5 touch-manipulation rounded-lg px-1 -mx-1',
+                            isSelected && 'bg-elec-yellow/10',
+                            isEvidenced && !isSelected && 'bg-green-500/5'
                           )}
                         >
                           <Checkbox
@@ -355,10 +324,8 @@ function UnitAccordion({
                           <div className="flex-1 min-w-0">
                             <p
                               className={cn(
-                                "text-[11px] leading-relaxed",
-                                isEvidenced
-                                  ? "text-green-400/80"
-                                  : "text-white/60",
+                                'text-[11px] leading-relaxed',
+                                isEvidenced ? 'text-green-400/80' : 'text-white/60'
                               )}
                             >
                               {ac.acText}

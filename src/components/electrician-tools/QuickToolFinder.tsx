@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Search, Zap, Home, Shield, Wrench, ArrowRight, CheckCircle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Search, Zap, Home, Shield, Wrench, ArrowRight, CheckCircle } from 'lucide-react';
 
 const QuickToolFinder = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -11,115 +11,227 @@ const QuickToolFinder = () => {
 
   const questions = [
     {
-      id: "workType",
-      title: "What type of work are you doing?",
+      id: 'workType',
+      title: 'What type of work are you doing?',
       icon: Wrench,
       options: [
-        { id: "installation", label: "New Installation", description: "Installing new circuits, outlets, or fixtures" },
-        { id: "maintenance", label: "Maintenance", description: "Routine checks, cleaning, and minor repairs" },
-        { id: "troubleshooting", label: "Troubleshooting", description: "Finding and fixing electrical faults" },
-        { id: "testing", label: "Testing & Certification", description: "EICR, PAT testing, or compliance checks" }
-      ]
+        {
+          id: 'installation',
+          label: 'New Installation',
+          description: 'Installing new circuits, outlets, or fixtures',
+        },
+        {
+          id: 'maintenance',
+          label: 'Maintenance',
+          description: 'Routine checks, cleaning, and minor repairs',
+        },
+        {
+          id: 'troubleshooting',
+          label: 'Troubleshooting',
+          description: 'Finding and fixing electrical faults',
+        },
+        {
+          id: 'testing',
+          label: 'Testing & Certification',
+          description: 'EICR, PAT testing, or compliance checks',
+        },
+      ],
     },
     {
-      id: "environment",
-      title: "Where are you working?",
+      id: 'environment',
+      title: 'Where are you working?',
       icon: Home,
       options: [
-        { id: "domestic", label: "Domestic Property", description: "Houses, flats, residential buildings" },
-        { id: "commercial", label: "Commercial Building", description: "Offices, shops, restaurants" },
-        { id: "industrial", label: "Industrial Site", description: "Factories, warehouses, manufacturing" },
-        { id: "outdoor", label: "Outdoor/External", description: "Garden lighting, external supplies" }
-      ]
+        {
+          id: 'domestic',
+          label: 'Domestic Property',
+          description: 'Houses, flats, residential buildings',
+        },
+        {
+          id: 'commercial',
+          label: 'Commercial Building',
+          description: 'Offices, shops, restaurants',
+        },
+        {
+          id: 'industrial',
+          label: 'Industrial Site',
+          description: 'Factories, warehouses, manufacturing',
+        },
+        {
+          id: 'outdoor',
+          label: 'Outdoor/External',
+          description: 'Garden lighting, external supplies',
+        },
+      ],
     },
     {
-      id: "voltage",
-      title: "What voltage are you working with?",
+      id: 'voltage',
+      title: 'What voltage are you working with?',
       icon: Zap,
       options: [
-        { id: "low", label: "Low Voltage (12-48V)", description: "LED lighting, doorbells, garden lights" },
-        { id: "mains", label: "Mains Voltage (230V)", description: "Standard household circuits" },
-        { id: "three-phase", label: "Three Phase (400V)", description: "Commercial/industrial supplies" },
-        { id: "mixed", label: "Mixed Voltages", description: "Working with multiple voltage levels" }
-      ]
+        {
+          id: 'low',
+          label: 'Low Voltage (12-48V)',
+          description: 'LED lighting, doorbells, garden lights',
+        },
+        { id: 'mains', label: 'Mains Voltage (230V)', description: 'Standard household circuits' },
+        {
+          id: 'three-phase',
+          label: 'Three Phase (400V)',
+          description: 'Commercial/industrial supplies',
+        },
+        {
+          id: 'mixed',
+          label: 'Mixed Voltages',
+          description: 'Working with multiple voltage levels',
+        },
+      ],
     },
     {
-      id: "urgency",
-      title: "How urgent is this work?",
+      id: 'urgency',
+      title: 'How urgent is this work?',
       icon: Shield,
       options: [
-        { id: "emergency", label: "Emergency Call-out", description: "Immediate safety concern or power loss" },
-        { id: "planned", label: "Planned Work", description: "Scheduled installation or maintenance" },
-        { id: "diagnostic", label: "Diagnostic Only", description: "Initial assessment or quote preparation" },
-        { id: "routine", label: "Routine Maintenance", description: "Regular servicing or inspection" }
-      ]
-    }
+        {
+          id: 'emergency',
+          label: 'Emergency Call-out',
+          description: 'Immediate safety concern or power loss',
+        },
+        {
+          id: 'planned',
+          label: 'Planned Work',
+          description: 'Scheduled installation or maintenance',
+        },
+        {
+          id: 'diagnostic',
+          label: 'Diagnostic Only',
+          description: 'Initial assessment or quote preparation',
+        },
+        {
+          id: 'routine',
+          label: 'Routine Maintenance',
+          description: 'Regular servicing or inspection',
+        },
+      ],
+    },
   ];
 
   const getRecommendations = () => {
     const { workType, environment, voltage, urgency } = selections;
-    
-    let recommendations: { name: string; priority: "Essential" | "Recommended" | "Optional"; reason: string }[] = [];
+
+    let recommendations: {
+      name: string;
+      priority: 'Essential' | 'Recommended' | 'Optional';
+      reason: string;
+    }[] = [];
 
     // Base tools for all work
     recommendations.push(
-      { name: "Insulated Screwdriver Set", priority: "Essential", reason: "Required for safe electrical work" },
-      { name: "Voltage Tester", priority: "Essential", reason: "Safety requirement for all electrical work" }
+      {
+        name: 'Insulated Screwdriver Set',
+        priority: 'Essential',
+        reason: 'Required for safe electrical work',
+      },
+      {
+        name: 'Voltage Tester',
+        priority: 'Essential',
+        reason: 'Safety requirement for all electrical work',
+      }
     );
 
     // Work type specific
-    if (workType === "installation") {
+    if (workType === 'installation') {
       recommendations.push(
-        { name: "Wire Strippers", priority: "Essential", reason: "Needed for new cable connections" },
-        { name: "Cable Cutters", priority: "Essential", reason: "Required for cutting new cables" },
-        { name: "Crimping Tool", priority: "Recommended", reason: "For professional terminal connections" }
+        {
+          name: 'Wire Strippers',
+          priority: 'Essential',
+          reason: 'Needed for new cable connections',
+        },
+        { name: 'Cable Cutters', priority: 'Essential', reason: 'Required for cutting new cables' },
+        {
+          name: 'Crimping Tool',
+          priority: 'Recommended',
+          reason: 'For professional terminal connections',
+        }
       );
     }
 
-    if (workType === "troubleshooting") {
+    if (workType === 'troubleshooting') {
       recommendations.push(
-        { name: "Multimeter", priority: "Essential", reason: "Essential for fault finding" },
-        { name: "Clamp Meter", priority: "Recommended", reason: "For measuring current without disconnection" },
-        { name: "Cable Detector", priority: "Recommended", reason: "Helps locate hidden cables" }
+        { name: 'Multimeter', priority: 'Essential', reason: 'Essential for fault finding' },
+        {
+          name: 'Clamp Meter',
+          priority: 'Recommended',
+          reason: 'For measuring current without disconnection',
+        },
+        { name: 'Cable Detector', priority: 'Recommended', reason: 'Helps locate hidden cables' }
       );
     }
 
-    if (workType === "testing") {
+    if (workType === 'testing') {
       recommendations.push(
-        { name: "Insulation Tester", priority: "Essential", reason: "Required for EICR testing" },
-        { name: "RCD Tester", priority: "Essential", reason: "Mandatory for safety testing" },
-        { name: "Earth Loop Impedance Tester", priority: "Essential", reason: "Required for certification" }
+        { name: 'Insulation Tester', priority: 'Essential', reason: 'Required for EICR testing' },
+        { name: 'RCD Tester', priority: 'Essential', reason: 'Mandatory for safety testing' },
+        {
+          name: 'Earth Loop Impedance Tester',
+          priority: 'Essential',
+          reason: 'Required for certification',
+        }
       );
     }
 
     // Environment specific
-    if (environment === "industrial") {
+    if (environment === 'industrial') {
       recommendations.push(
-        { name: "Lock-out Tag-out Kit", priority: "Essential", reason: "Safety requirement for industrial work" },
-        { name: "Arc Flash PPE", priority: "Essential", reason: "Protection against arc flash incidents" }
+        {
+          name: 'Lock-out Tag-out Kit',
+          priority: 'Essential',
+          reason: 'Safety requirement for industrial work',
+        },
+        {
+          name: 'Arc Flash PPE',
+          priority: 'Essential',
+          reason: 'Protection against arc flash incidents',
+        }
       );
     }
 
-    if (environment === "outdoor") {
+    if (environment === 'outdoor') {
       recommendations.push(
-        { name: "Waterproof Tool Bag", priority: "Recommended", reason: "Protection from weather" },
-        { name: "Ground Spike Kit", priority: "Recommended", reason: "For outdoor earthing requirements" }
+        { name: 'Waterproof Tool Bag', priority: 'Recommended', reason: 'Protection from weather' },
+        {
+          name: 'Ground Spike Kit',
+          priority: 'Recommended',
+          reason: 'For outdoor earthing requirements',
+        }
       );
     }
 
     // Voltage specific
-    if (voltage === "three-phase") {
+    if (voltage === 'three-phase') {
       recommendations.push(
-        { name: "Phase Rotation Tester", priority: "Essential", reason: "Required for three-phase installations" },
-        { name: "High Voltage Detector", priority: "Essential", reason: "Safety for higher voltage work" }
+        {
+          name: 'Phase Rotation Tester',
+          priority: 'Essential',
+          reason: 'Required for three-phase installations',
+        },
+        {
+          name: 'High Voltage Detector',
+          priority: 'Essential',
+          reason: 'Safety for higher voltage work',
+        }
       );
     }
 
     // Urgency specific
-    if (urgency === "emergency") {
+    if (urgency === 'emergency') {
       recommendations.push(
-        { name: "Torch/Headlamp", priority: "Essential", reason: "Emergency work often in poor lighting" },
-        { name: "Socket Tester", priority: "Essential", reason: "Quick fault identification" }
+        {
+          name: 'Torch/Headlamp',
+          priority: 'Essential',
+          reason: 'Emergency work often in poor lighting',
+        },
+        { name: 'Socket Tester', priority: 'Essential', reason: 'Quick fault identification' }
       );
     }
 
@@ -128,7 +240,7 @@ const QuickToolFinder = () => {
 
   const handleSelection = (questionId: string, optionId: string) => {
     setSelections({ ...selections, [questionId]: optionId });
-    
+
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -144,10 +256,14 @@ const QuickToolFinder = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "Essential": return "bg-red-600/90 text-foreground border-red-400";
-      case "Recommended": return "bg-orange-600/90 text-foreground border-orange-400";
-      case "Optional": return "bg-green-600/90 text-foreground border-green-400";
-      default: return "bg-blue-600/90 text-foreground border-blue-400";
+      case 'Essential':
+        return 'bg-red-600/90 text-foreground border-red-400';
+      case 'Recommended':
+        return 'bg-orange-600/90 text-foreground border-orange-400';
+      case 'Optional':
+        return 'bg-green-600/90 text-foreground border-green-400';
+      default:
+        return 'bg-blue-600/90 text-foreground border-blue-400';
     }
   };
 
@@ -166,8 +282,8 @@ const QuickToolFinder = () => {
                 <p className="text-foreground/80 text-sm">Based on your specific requirements</p>
               </div>
             </div>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={reset}
               className="border-white/20 text-foreground hover:border-green-500/50"
             >
@@ -181,15 +297,13 @@ const QuickToolFinder = () => {
               <div key={index} className="p-4 rounded-lg bg-elec-card/30 border border-white/10">
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-medium text-foreground">{rec.name}</h4>
-                  <Badge className={getPriorityColor(rec.priority)}>
-                    {rec.priority}
-                  </Badge>
+                  <Badge className={getPriorityColor(rec.priority)}>{rec.priority}</Badge>
                 </div>
                 <p className="text-sm text-foreground/80">{rec.reason}</p>
               </div>
             ))}
           </div>
-          
+
           <div className="p-4 rounded-lg bg-green-600/10 border border-green-500/20">
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
@@ -197,10 +311,14 @@ const QuickToolFinder = () => {
                 <h5 className="font-medium text-foreground mb-1">Your Selections</h5>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(selections).map(([key, value]) => {
-                    const question = questions.find(q => q.id === key);
-                    const option = question?.options.find(o => o.id === value);
+                    const question = questions.find((q) => q.id === key);
+                    const option = question?.options.find((o) => o.id === value);
                     return (
-                      <Badge key={key} variant="outline" className="border-green-500/30 text-green-400">
+                      <Badge
+                        key={key}
+                        variant="outline"
+                        className="border-green-500/30 text-green-400"
+                      >
                         {option?.label}
                       </Badge>
                     );
@@ -263,8 +381,8 @@ const QuickToolFinder = () => {
         {/* Navigation */}
         {currentStep > 0 && (
           <div className="flex justify-between">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setCurrentStep(currentStep - 1)}
               className="border-white/20 text-foreground hover:border-green-500/50"
             >

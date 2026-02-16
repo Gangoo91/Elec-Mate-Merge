@@ -1,44 +1,44 @@
-import { ArrowLeft, Clipboard, FileText, Lightbulb, MapPin, Package } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Clipboard, FileText, Lightbulb, MapPin, Package } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Importance of Accurate Records for Compliance and Safety",
-    description: "Understanding why accurate documentation is essential",
+    number: 'Subsection 1',
+    title: 'Importance of Accurate Records for Compliance and Safety',
+    description: 'Understanding why accurate documentation is essential',
     icon: Clipboard,
-    href: "7-1"
+    href: '7-1',
   },
   {
-    number: "Subsection 2",
-    title: "Cable and Circuit Labelling Conventions",
-    description: "Standard methods for labelling electrical systems",
+    number: 'Subsection 2',
+    title: 'Cable and Circuit Labelling Conventions',
+    description: 'Standard methods for labelling electrical systems',
     icon: FileText,
-    href: "7-2"
+    href: '7-2',
   },
   {
-    number: "Subsection 3",
-    title: "Maintaining Work Logs and Handover Sheets",
-    description: "Keeping records of work completed and handover information",
+    number: 'Subsection 3',
+    title: 'Maintaining Work Logs and Handover Sheets',
+    description: 'Keeping records of work completed and handover information',
     icon: Lightbulb,
-    href: "7-3"
+    href: '7-3',
   },
   {
-    number: "Subsection 4",
-    title: "Updating As-Built Drawings (Basic Awareness)",
-    description: "Understanding the need to update drawings after installation",
+    number: 'Subsection 4',
+    title: 'Updating As-Built Drawings (Basic Awareness)',
+    description: 'Understanding the need to update drawings after installation',
     icon: MapPin,
-    href: "7-4"
+    href: '7-4',
   },
   {
-    number: "Subsection 5",
-    title: "Site Documentation Storage and Access",
-    description: "Managing and accessing site documentation effectively",
+    number: 'Subsection 5',
+    title: 'Site Documentation Storage and Access',
+    description: 'Managing and accessing site documentation effectively',
     icon: Package,
-    href: "7-5"
-  }
+    href: '7-5',
+  },
 ];
 
 const Module5Section7 = () => {

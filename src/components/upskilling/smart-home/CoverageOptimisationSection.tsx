@@ -14,7 +14,8 @@ const CoverageOptimisationSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Strategic placement of hubs, routers, and devices significantly improves wireless coverage and system reliability.
+            Strategic placement of hubs, routers, and devices significantly improves wireless
+            coverage and system reliability.
           </p>
 
           <div className="space-y-4">
@@ -22,7 +23,7 @@ const CoverageOptimisationSection = () => {
               <Router className="h-4 w-4 text-elec-yellow" />
               Hub and Router Placement
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-green-600/10 border border-green-600/30 rounded-lg">
                 <h5 className="font-semibold text-green-400 mb-2">✅ Best Practices</h5>
@@ -52,7 +53,7 @@ const CoverageOptimisationSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Coverage Enhancement Solutions</h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-2">Mesh Wi-Fi Systems</h5>
@@ -92,7 +93,8 @@ const CoverageOptimisationSection = () => {
               <h4 className="font-semibold text-red-200">Metal Enclosure Warning</h4>
             </div>
             <p className="text-red-100 text-sm mb-2">
-              Never install smart devices inside metal enclosures as this creates a Faraday cage effect that blocks wireless signals.
+              Never install smart devices inside metal enclosures as this creates a Faraday cage
+              effect that blocks wireless signals.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
               <div>
@@ -118,7 +120,7 @@ const CoverageOptimisationSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Zigbee/Z-Wave Mesh Optimisation</h4>
-            
+
             <div className="p-4 bg-blue-600/10 border border-blue-600/30 rounded-lg">
               <p className="text-blue-100 text-sm mb-3">
                 Mesh networks improve coverage by using powered devices as signal repeaters:

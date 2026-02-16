@@ -39,26 +39,21 @@ const AIAnalysisConfirmDialog: React.FC<AIAnalysisConfirmDialogProps> = ({
       <DialogContent className="max-w-sm sm:max-w-md">
         <DialogHeader>
           <DialogTitle>AI Quality Assurance</DialogTitle>
-          <DialogDescription>
-            Get a second opinion on this observation
-          </DialogDescription>
+          <DialogDescription>Get a second opinion on this observation</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           {/* Photo Preview */}
           <div className="relative w-full aspect-video rounded-lg overflow-hidden border-2 border-primary/20">
-            <img
-              src={photoUrl}
-              alt="Observation photo"
-              className="w-full h-full object-cover"
-            />
+            <img src={photoUrl} alt="Observation photo" className="w-full h-full object-cover" />
           </div>
 
           {/* Simple disclaimer */}
           <Alert className="border-primary/30">
             <Shield className="h-4 w-4" />
             <AlertDescription className="text-xs">
-              AI provides a second opinion based on visible evidence and BS7671:2018+A3:2024 regulations. Final classification decision remains with the inspector.
+              AI provides a second opinion based on visible evidence and BS7671:2018+A3:2024
+              regulations. Final classification decision remains with the inspector.
             </AlertDescription>
           </Alert>
         </div>

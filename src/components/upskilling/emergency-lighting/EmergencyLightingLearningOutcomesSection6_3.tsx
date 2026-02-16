@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection6_3 = () => {
   const outcomes = [
-    "Explain the relationship between the fire risk assessment and emergency lighting design",
-    "Identify the risk factors that influence system requirements",
-    "Apply BS 5266-1 principles to adapt design according to building use, occupancy, and hazards",
-    "Interpret how different risk categories (low, medium, high) affect lighting duration and coverage",
-    "Recognise when a reassessment is required following alterations or occupancy changes"
+    'Explain the relationship between the fire risk assessment and emergency lighting design',
+    'Identify the risk factors that influence system requirements',
+    'Apply BS 5266-1 principles to adapt design according to building use, occupancy, and hazards',
+    'Interpret how different risk categories (low, medium, high) affect lighting duration and coverage',
+    'Recognise when a reassessment is required following alterations or occupancy changes',
   ];
 
   return (

@@ -1,45 +1,45 @@
-import { ArrowLeft, Megaphone, Ear, ShieldAlert, PenLine } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Megaphone, Ear, ShieldAlert, PenLine } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Running Toolbox Talks and Site Briefings",
+    title: 'Running Toolbox Talks and Site Briefings',
     icon: Megaphone,
     description:
-      "Planning, delivering, and recording effective toolbox talks that keep your team engaged and informed",
+      'Planning, delivering, and recording effective toolbox talks that keep your team engaged and informed',
   },
   {
     id: 2,
-    title: "Active Listening and Asking Questions",
+    title: 'Active Listening and Asking Questions',
     icon: Ear,
     description:
-      "How to really hear what your team is telling you, open vs closed questions, and reading between the lines",
+      'How to really hear what your team is telling you, open vs closed questions, and reading between the lines',
   },
   {
     id: 3,
-    title: "Having Difficult Conversations",
+    title: 'Having Difficult Conversations',
     icon: ShieldAlert,
     description:
-      "Addressing poor performance, challenging behaviour, and sensitive issues with confidence and fairness",
+      'Addressing poor performance, challenging behaviour, and sensitive issues with confidence and fairness',
   },
   {
     id: 4,
-    title: "Written Communication — Emails, Reports, Records",
+    title: 'Written Communication — Emails, Reports, Records',
     icon: PenLine,
     description:
-      "Writing clear site reports, professional emails, and keeping records that protect you and your team",
+      'Writing clear site reports, professional emails, and keeping records that protect you and your team',
   },
 ];
 
 export default function LeadershipModule3() {
   useSEO({
-    title: "Module 3: Communication for Leaders | Leadership on Site",
+    title: 'Module 3: Communication for Leaders | Leadership on Site',
     description:
-      "Running toolbox talks, active listening, difficult conversations, and written communication for site leaders.",
+      'Running toolbox talks, active listening, difficult conversations, and written communication for site leaders.',
   });
 
   return (
@@ -66,9 +66,7 @@ export default function LeadershipModule3() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 3
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 3</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +76,8 @@ export default function LeadershipModule3() {
               Communication for Leaders
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Toolbox talks, active listening, handling difficult conversations,
-              and writing clear reports and records
+              Toolbox talks, active listening, handling difficult conversations, and writing clear
+              reports and records
             </p>
           </div>
 

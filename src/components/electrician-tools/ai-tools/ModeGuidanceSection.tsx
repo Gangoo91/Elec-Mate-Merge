@@ -1,8 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Info, CheckCircle2, XCircle, Camera, AlertTriangle, Search, Zap, CheckCircle, LucideIcon } from "lucide-react";
-import { useState } from "react";
-import { AnalysisMode } from "./ModeSelector";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Info,
+  CheckCircle2,
+  XCircle,
+  Camera,
+  AlertTriangle,
+  Search,
+  Zap,
+  CheckCircle,
+  LucideIcon,
+} from 'lucide-react';
+import { useState } from 'react';
+import { AnalysisMode } from './ModeSelector';
 
 interface ModeConfig {
   icon: LucideIcon;
@@ -20,111 +30,125 @@ interface ModeConfig {
 const MODE_GUIDANCE: Record<AnalysisMode, ModeConfig> = {
   component_identify: {
     icon: Search,
-    title: "Component Identification",
-    subtitle: "Snap a photo to identify any electrical component",
-    colour: "blue",
+    title: 'Component Identification',
+    subtitle: 'Snap a photo to identify any electrical component',
+    colour: 'blue',
     whatItDoes: [
-      "Identifies manufacturer, model & specifications",
-      "Shows BS 7671 requirements for that component",
-      "Provides datasheet information & ratings"
+      'Identifies manufacturer, model & specifications',
+      'Shows BS 7671 requirements for that component',
+      'Provides datasheet information & ratings',
     ],
     photoTips: {
       good: [
-        "Show full component with nameplate visible",
-        "Include any labels, ratings, or markings",
-        "Multiple angles if complex equipment",
-        "Good lighting - avoid shadows on text"
+        'Show full component with nameplate visible',
+        'Include any labels, ratings, or markings',
+        'Multiple angles if complex equipment',
+        'Good lighting - avoid shadows on text',
       ],
       avoid: [
-        "Blurry or dark photos",
-        "Cropped nameplates or rating labels",
+        'Blurry or dark photos',
+        'Cropped nameplates or rating labels',
         "Too far away - can't read markings",
-        "Heavily obstructed views"
-      ]
+        'Heavily obstructed views',
+      ],
     },
-    quickTags: ["Consumer Unit", "MCB", "RCD", "Socket", "Switch", "Isolator", "Contactor"]
+    quickTags: ['Consumer Unit', 'MCB', 'RCD', 'Socket', 'Switch', 'Isolator', 'Contactor'],
   },
   wiring_instruction: {
     icon: Zap,
-    title: "Wiring Instructions",
-    subtitle: "Get step-by-step BS 7671 compliant wiring guidance",
-    colour: "yellow",
+    title: 'Wiring Instructions',
+    subtitle: 'Get step-by-step BS 7671 compliant wiring guidance',
+    colour: 'yellow',
     whatItDoes: [
-      "Step-by-step wiring procedure with safety warnings",
-      "Terminal connection details with colour coding",
-      "Circuit specifications and protection requirements",
-      "Testing and verification requirements"
+      'Step-by-step wiring procedure with safety warnings',
+      'Terminal connection details with colour coding',
+      'Circuit specifications and protection requirements',
+      'Testing and verification requirements',
     ],
     photoTips: {
       good: [
-        "Clear, well-lit, straight-on angle",
-        "Component nameplate/ratings visible",
-        "Terminal labels clearly shown",
-        "Multiple angles (front + terminal view)"
+        'Clear, well-lit, straight-on angle',
+        'Component nameplate/ratings visible',
+        'Terminal labels clearly shown',
+        'Multiple angles (front + terminal view)',
       ],
       avoid: [
-        "Blurry, dark, or angled photos",
+        'Blurry, dark, or angled photos',
         "Too far away - can't read ratings",
-        "Obstructed view of terminals",
-        "Single photo of complex equipment"
-      ]
+        'Obstructed view of terminals',
+        'Single photo of complex equipment',
+      ],
     },
-    quickTags: ["Consumer Unit", "Cooker Circuit", "EV Charger", "Shower Circuit", "Outdoor Socket", "Immersion Heater"]
+    quickTags: [
+      'Consumer Unit',
+      'Cooker Circuit',
+      'EV Charger',
+      'Shower Circuit',
+      'Outdoor Socket',
+      'Immersion Heater',
+    ],
   },
   fault_diagnosis: {
     icon: AlertTriangle,
-    title: "Fault Diagnosis",
-    subtitle: "Photograph the issue for EICR coding & diagnosis",
-    colour: "orange",
+    title: 'Fault Diagnosis',
+    subtitle: 'Photograph the issue for EICR coding & diagnosis',
+    colour: 'orange',
     whatItDoes: [
-      "Identifies visible faults & hazards",
-      "Assigns EICR codes (C1/C2/C3/FI)",
-      "Provides BS 7671 regulation references",
-      "Suggests rectification steps"
+      'Identifies visible faults & hazards',
+      'Assigns EICR codes (C1/C2/C3/FI)',
+      'Provides BS 7671 regulation references',
+      'Suggests rectification steps',
     ],
     photoTips: {
       good: [
-        "Clear shot of the defect/issue",
-        "Show surrounding context",
-        "Multiple photos if complex fault",
-        "Include relevant circuit labels"
+        'Clear shot of the defect/issue',
+        'Show surrounding context',
+        'Multiple photos if complex fault',
+        'Include relevant circuit labels',
       ],
       avoid: [
-        "Photos taken from too far away",
-        "Poor lighting obscuring defect",
-        "Obscured fault areas",
-        "Missing context of installation"
-      ]
+        'Photos taken from too far away',
+        'Poor lighting obscuring defect',
+        'Obscured fault areas',
+        'Missing context of installation',
+      ],
     },
-    quickTags: ["EICR Inspection", "Burning/Scorch", "Exposed Cables", "Missing Cover", "Water Damage", "Overloaded"]
+    quickTags: [
+      'EICR Inspection',
+      'Burning/Scorch',
+      'Exposed Cables',
+      'Missing Cover',
+      'Water Damage',
+      'Overloaded',
+    ],
   },
   installation_verify: {
     icon: CheckCircle,
-    title: "Installation Verification",
-    subtitle: "Check if an installation meets BS 7671 compliance",
-    colour: "green",
+    title: 'Installation Verification',
+    subtitle: 'Check if an installation meets BS 7671 compliance',
+    colour: 'green',
     whatItDoes: [
-      "Performs visual compliance checks",
-      "Verifies protective devices & earthing",
-      "Checks labelling & accessibility",
-      "Provides pass/fail assessment"
+      'Performs visual compliance checks',
+      'Verifies protective devices & earthing',
+      'Checks labelling & accessibility',
+      'Provides pass/fail assessment',
     ],
     photoTips: {
       good: [
-        "Full consumer unit visible",
-        "Earthing arrangement shown",
-        "Labels readable",
-        "Multiple angles showing key components"
+        'Full consumer unit visible',
+        'Earthing arrangement shown',
+        'Labels readable',
+        'Multiple angles showing key components',
       ],
       avoid: [
-        "Partial views missing key elements",
-        "Dark board interiors",
-        "Missing protective covers",
-        "Obscured circuit labels"
-      ]
+        'Partial views missing key elements',
+        'Dark board interiors',
+        'Missing protective covers',
+        'Obscured circuit labels',
+      ],
     },
-    quickTags: ["New Installation", "Alterations", "Periodic Inspection", "Minor Works"]
-  }
+    quickTags: ['New Installation', 'Alterations', 'Periodic Inspection', 'Minor Works'],
+  },
 };
 
 interface ModeGuidanceSectionProps {
@@ -136,35 +160,35 @@ const ModeGuidanceSection = ({ mode }: ModeGuidanceSectionProps) => {
   const config = MODE_GUIDANCE[mode];
 
   const toggleSection = (section: string) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const getColourClasses = (colour: string) => {
     const classes = {
       blue: {
-        bg: "bg-blue-500/5",
-        border: "border-blue-500/20",
-        text: "text-blue-700 dark:text-blue-400",
-        accent: "text-blue-500"
+        bg: 'bg-blue-500/5',
+        border: 'border-blue-500/20',
+        text: 'text-blue-700 dark:text-blue-400',
+        accent: 'text-blue-500',
       },
       yellow: {
-        bg: "bg-elec-yellow/5",
-        border: "border-elec-yellow/20",
-        text: "text-elec-yellow",
-        accent: "text-elec-yellow"
+        bg: 'bg-elec-yellow/5',
+        border: 'border-elec-yellow/20',
+        text: 'text-elec-yellow',
+        accent: 'text-elec-yellow',
       },
       orange: {
-        bg: "bg-orange-500/5",
-        border: "border-orange-500/20",
-        text: "text-orange-700 dark:text-orange-400",
-        accent: "text-orange-500"
+        bg: 'bg-orange-500/5',
+        border: 'border-orange-500/20',
+        text: 'text-orange-700 dark:text-orange-400',
+        accent: 'text-orange-500',
       },
       green: {
-        bg: "bg-green-500/5",
-        border: "border-green-500/20",
-        text: "text-green-700 dark:text-green-400",
-        accent: "text-green-500"
-      }
+        bg: 'bg-green-500/5',
+        border: 'border-green-500/20',
+        text: 'text-green-700 dark:text-green-400',
+        accent: 'text-green-500',
+      },
     };
     return classes[colour as keyof typeof classes] || classes.blue;
   };
@@ -207,7 +231,9 @@ const ModeGuidanceSection = ({ mode }: ModeGuidanceSectionProps) => {
             <div className="p-3 sm:p-3.5 bg-green-500/5 border border-green-500/20 rounded-lg">
               <div className="flex items-start gap-2 mb-2">
                 <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-500 flex-shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm font-semibold text-green-700 dark:text-green-400">Good Photo</span>
+                <span className="text-xs sm:text-sm font-semibold text-green-700 dark:text-green-400">
+                  Good Photo
+                </span>
               </div>
               <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-foreground text-left">
                 {config.photoTips.good.map((tip, index) => (
@@ -220,7 +246,9 @@ const ModeGuidanceSection = ({ mode }: ModeGuidanceSectionProps) => {
             <div className="p-3 sm:p-3.5 bg-red-500/5 border border-red-500/20 rounded-lg">
               <div className="flex items-start gap-2 mb-2">
                 <XCircle className="h-4 w-4 text-red-600 dark:text-red-500 flex-shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm font-semibold text-red-700 dark:text-red-400">Avoid</span>
+                <span className="text-xs sm:text-sm font-semibold text-red-700 dark:text-red-400">
+                  Avoid
+                </span>
               </div>
               <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-foreground text-left">
                 {config.photoTips.avoid.map((tip, index) => (

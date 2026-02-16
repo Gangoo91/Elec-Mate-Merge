@@ -24,7 +24,7 @@ import {
   ArrowUp,
   ArrowDown,
   Plus,
-  ShieldAlert
+  ShieldAlert,
 } from 'lucide-react';
 import { MaintenanceStep } from '@/types/maintenance-method';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
@@ -40,12 +40,12 @@ interface MaintenanceStepCardProps {
   onMoveDown?: () => void;
 }
 
-export const MaintenanceStepCard = ({ 
-  step, 
-  onUpdate, 
-  onDelete, 
-  onMoveUp, 
-  onMoveDown 
+export const MaintenanceStepCard = ({
+  step,
+  onUpdate,
+  onDelete,
+  onMoveUp,
+  onMoveDown,
 }: MaintenanceStepCardProps) => {
   const { isMobile } = useMobileEnhanced();
   const [isEditing, setIsEditing] = useState(false);
@@ -59,22 +59,25 @@ export const MaintenanceStepCard = ({
       setIsEditing(true);
     }
   };
-  
+
   // Editing state
   const [editedTitle, setEditedTitle] = useState(step.title);
   const [editedContent, setEditedContent] = useState(step.content);
   const [editedDuration, setEditedDuration] = useState(step.estimatedDuration || '');
   const [editedSafety, setEditedSafety] = useState<string[]>(
-    step.safety?.map(s => typeof s === 'string' ? s : s.note) || []
+    step.safety?.map((s) => (typeof s === 'string' ? s : s.note)) || []
   );
   const [editedTools, setEditedTools] = useState<string[]>(step.toolsRequired || []);
   const [editedMaterials, setEditedMaterials] = useState<string[]>(step.materialsNeeded || []);
-  const [editedCheckpoints, setEditedCheckpoints] = useState<string[]>(step.inspectionCheckpoints || []);
+  const [editedCheckpoints, setEditedCheckpoints] = useState<string[]>(
+    step.inspectionCheckpoints || []
+  );
   const [editedReferences, setEditedReferences] = useState<string[]>(step.bsReferences || []);
   const [editedHazards, setEditedHazards] = useState<string[]>(step.linkedHazards || []);
-  const [editedQualifications, setEditedQualifications] = useState<string[]>(step.qualifications || []);
+  const [editedQualifications, setEditedQualifications] = useState<string[]>(
+    step.qualifications || []
+  );
   const [editedObservations, setEditedObservations] = useState<string[]>(step.observations || []);
-  
 
   // Collapsible sections state
   const [sectionsExpanded, setSectionsExpanded] = useState({
@@ -85,16 +88,16 @@ export const MaintenanceStepCard = ({
     materials: !isMobile,
     checkpoints: !isMobile,
     qualifications: !isMobile,
-    observations: !isMobile
+    observations: !isMobile,
   });
 
   const toggleSection = (section: keyof typeof sectionsExpanded) => {
-    setSectionsExpanded(prev => ({ ...prev, [section]: !prev[section] }));
+    setSectionsExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const handleSave = () => {
     if (!onUpdate) return;
-    
+
     onUpdate({
       ...step,
       title: editedTitle,
@@ -107,7 +110,7 @@ export const MaintenanceStepCard = ({
       bsReferences: editedReferences.length > 0 ? editedReferences : undefined,
       linkedHazards: editedHazards.length > 0 ? editedHazards : undefined,
       qualifications: editedQualifications.length > 0 ? editedQualifications : undefined,
-      observations: editedObservations.length > 0 ? editedObservations : undefined
+      observations: editedObservations.length > 0 ? editedObservations : undefined,
     });
     setIsEditing(false);
   };
@@ -116,7 +119,7 @@ export const MaintenanceStepCard = ({
     setEditedTitle(step.title);
     setEditedContent(step.content);
     setEditedDuration(step.estimatedDuration || '');
-    setEditedSafety(step.safety?.map(s => typeof s === 'string' ? s : s.note) || []);
+    setEditedSafety(step.safety?.map((s) => (typeof s === 'string' ? s : s.note)) || []);
     setEditedTools(step.toolsRequired || []);
     setEditedMaterials(step.materialsNeeded || []);
     setEditedCheckpoints(step.inspectionCheckpoints || []);
@@ -135,23 +138,31 @@ export const MaintenanceStepCard = ({
   };
 
   const addItem = (setter: React.Dispatch<React.SetStateAction<string[]>>) => {
-    setter(prev => [...prev, '']);
+    setter((prev) => [...prev, '']);
   };
 
-  const updateItem = (setter: React.Dispatch<React.SetStateAction<string[]>>, index: number, value: string) => {
-    setter(prev => prev.map((item, i) => i === index ? value : item));
+  const updateItem = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+    value: string
+  ) => {
+    setter((prev) => prev.map((item, i) => (i === index ? value : item)));
   };
 
   const removeItem = (setter: React.Dispatch<React.SetStateAction<string[]>>, index: number) => {
-    setter(prev => prev.filter((_, i) => i !== index));
+    setter((prev) => prev.filter((_, i) => i !== index));
   };
 
   const getRiskColor = (risk?: string) => {
     switch (risk) {
-      case 'high': return 'destructive';
-      case 'medium': return 'default';
-      case 'low': return 'secondary';
-      default: return 'default';
+      case 'high':
+        return 'destructive';
+      case 'medium':
+        return 'default';
+      case 'low':
+        return 'secondary';
+      default:
+        return 'default';
     }
   };
 
@@ -160,20 +171,20 @@ export const MaintenanceStepCard = ({
     // Only match numbered items like "1) Text" where it's at start or after punctuation/whitespace
     // and followed by a capital letter to avoid splitting dates like "2018-12-2"
     const hasNumberedItems = /(?:^|[.\s])(\d+)\)\s+[A-Z]/.test(text);
-    
+
     if (!hasNumberedItems) {
       return <p>{text}</p>;
     }
-    
+
     // Split on numbered items that are at start of string or after sentence-ending punctuation
     const parts = text.split(/(?:^|(?<=[.!?\s]))(?=\d+\)\s+[A-Z])/);
-    
+
     return (
       <div className="space-y-1.5">
         {parts.map((part, idx) => {
           const trimmed = part.trim();
           if (!trimmed) return null;
-          
+
           // Match numbered items like "1) " at the start
           const numMatch = trimmed.match(/^(\d+)\)\s+/);
           if (numMatch) {
@@ -181,12 +192,14 @@ export const MaintenanceStepCard = ({
             const content = trimmed.slice(numMatch[0].length);
             return (
               <div key={idx} className="flex gap-2 text-sm">
-                <span className="text-elec-yellow font-semibold flex-shrink-0 min-w-[1.25rem]">{num}.</span>
+                <span className="text-elec-yellow font-semibold flex-shrink-0 min-w-[1.25rem]">
+                  {num}.
+                </span>
                 <span>{content}</span>
               </div>
             );
           }
-          
+
           return <p key={idx}>{trimmed}</p>;
         })}
       </div>
@@ -199,25 +212,25 @@ export const MaintenanceStepCard = ({
     const whatMatch = content.match(/WHAT[:.]\s*([^]*?)(?=(?:HOW|WHY)[:.]\s*|$)/i);
     const howMatch = content.match(/HOW[:.]\s*([^]*?)(?=WHY[:.]\s*|$)/i);
     const whyMatch = content.match(/WHY[:.]\s*([^]*?)$/i);
-    
+
     // If no structured sections found, fall back to simple formatting
     if (!whatMatch && !howMatch && !whyMatch) {
       return formatNumberedItems(content);
     }
-    
+
     const renderSection = (label: string, text: string | undefined) => {
       if (!text?.trim()) return null;
       const capitalisedText = text.trim().charAt(0).toUpperCase() + text.trim().slice(1);
       return (
         <div className="space-y-1.5">
-          <span className="text-xs font-bold text-elec-yellow uppercase tracking-wide">{label}</span>
-          <div className="text-sm text-foreground pl-0">
-            {formatNumberedItems(capitalisedText)}
-          </div>
+          <span className="text-xs font-bold text-elec-yellow uppercase tracking-wide">
+            {label}
+          </span>
+          <div className="text-sm text-foreground pl-0">{formatNumberedItems(capitalisedText)}</div>
         </div>
       );
     };
-    
+
     return (
       <div className="space-y-4">
         {renderSection('WHAT', whatMatch?.[1])}
@@ -246,7 +259,7 @@ export const MaintenanceStepCard = ({
       green: 'border-green-500/30 bg-green-500/5',
       purple: 'border-purple-500/30 bg-purple-500/5',
       cyan: 'border-cyan-500/30 bg-cyan-500/5',
-      orange: 'border-orange-500/30 bg-orange-500/5'
+      orange: 'border-orange-500/30 bg-orange-500/5',
     };
 
     const headerColorClasses = {
@@ -257,7 +270,7 @@ export const MaintenanceStepCard = ({
       green: 'bg-green-500/10 text-green-400',
       purple: 'bg-purple-500/10 text-purple-400',
       cyan: 'bg-cyan-500/10 text-cyan-400',
-      orange: 'bg-orange-500/10 text-orange-400'
+      orange: 'bg-orange-500/10 text-orange-400',
     };
 
     return (
@@ -349,10 +362,12 @@ export const MaintenanceStepCard = ({
       <CardHeader className="pb-3">
         <div className="flex items-start gap-4">
           {/* Step Number Badge */}
-          <div className={cn(
-            "flex-shrink-0 rounded-full bg-elec-yellow flex items-center justify-center font-bold text-black",
-            isMobile ? "h-16 w-16 text-2xl" : "h-20 w-20 text-3xl"
-          )}>
+          <div
+            className={cn(
+              'flex-shrink-0 rounded-full bg-elec-yellow flex items-center justify-center font-bold text-black',
+              isMobile ? 'h-16 w-16 text-2xl' : 'h-20 w-20 text-3xl'
+            )}
+          >
             {step.stepNumber}
           </div>
 
@@ -367,14 +382,12 @@ export const MaintenanceStepCard = ({
                 />
               </div>
             ) : (
-              <h3 className="text-lg font-semibold text-foreground text-left">
-                {step.title}
-              </h3>
+              <h3 className="text-lg font-semibold text-foreground text-left">{step.title}</h3>
             )}
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Main Content */}
         <div className="text-left">
@@ -436,7 +449,7 @@ export const MaintenanceStepCard = ({
             'safety',
             'Safety Requirements',
             <AlertTriangle className="h-4 w-4" />,
-            step.safety?.map(s => typeof s === 'string' ? s : s.note) || [],
+            step.safety?.map((s) => (typeof s === 'string' ? s : s.note)) || [],
             editedSafety,
             setEditedSafety,
             'red'
@@ -471,22 +484,18 @@ export const MaintenanceStepCard = ({
             setEditedCheckpoints,
             'purple'
           )}
-
         </div>
 
         {/* Action Buttons */}
         {(onUpdate || onDelete || onMoveUp || onMoveDown) && (
-          <div className={cn(
-            "pt-4 border-t border-border/50 flex gap-2",
-            isMobile && "flex-col"
-          )}>
+          <div className={cn('pt-4 border-t border-border/50 flex gap-2', isMobile && 'flex-col')}>
             {isEditing ? (
               <>
                 <Button
                   onClick={handleSave}
                   className={cn(
-                    "bg-green-600 hover:bg-green-700 text-foreground",
-                    isMobile && "w-full"
+                    'bg-green-600 hover:bg-green-700 text-foreground',
+                    isMobile && 'w-full'
                   )}
                 >
                   <Save className="h-4 w-4 mr-2" />
@@ -495,7 +504,7 @@ export const MaintenanceStepCard = ({
                 <Button
                   onClick={handleCancel}
                   variant="outline"
-                  className={cn(isMobile && "w-full")}
+                  className={cn(isMobile && 'w-full')}
                 >
                   <X className="h-4 w-4 mr-2" />
                   Cancel
@@ -507,27 +516,27 @@ export const MaintenanceStepCard = ({
                   <Button
                     onClick={handleEditClick}
                     variant="outline"
-                    size={isMobile ? "default" : "sm"}
+                    size={isMobile ? 'default' : 'sm'}
                     className={cn(
-                      "touch-manipulation active:scale-[0.98]",
-                      isMobile && "w-full min-h-[48px]"
+                      'touch-manipulation active:scale-[0.98]',
+                      isMobile && 'w-full min-h-[48px]'
                     )}
                   >
                     <Edit className="h-4 w-4 mr-2" />
                     Edit
                   </Button>
                 )}
-                
+
                 {(onMoveUp || onMoveDown) && (
-                  <div className={cn("flex gap-2", isMobile && "w-full")}>
+                  <div className={cn('flex gap-2', isMobile && 'w-full')}>
                     {onMoveUp && (
                       <Button
                         onClick={onMoveUp}
                         variant="outline"
-                        size={isMobile ? "default" : "sm"}
+                        size={isMobile ? 'default' : 'sm'}
                         className={cn(
-                          "touch-manipulation active:scale-[0.98]",
-                          isMobile && "flex-1 min-h-[48px]"
+                          'touch-manipulation active:scale-[0.98]',
+                          isMobile && 'flex-1 min-h-[48px]'
                         )}
                       >
                         <ArrowUp className="h-4 w-4" />
@@ -537,10 +546,10 @@ export const MaintenanceStepCard = ({
                       <Button
                         onClick={onMoveDown}
                         variant="outline"
-                        size={isMobile ? "default" : "sm"}
+                        size={isMobile ? 'default' : 'sm'}
                         className={cn(
-                          "touch-manipulation active:scale-[0.98]",
-                          isMobile && "flex-1 min-h-[48px]"
+                          'touch-manipulation active:scale-[0.98]',
+                          isMobile && 'flex-1 min-h-[48px]'
                         )}
                       >
                         <ArrowDown className="h-4 w-4" />
@@ -552,14 +561,14 @@ export const MaintenanceStepCard = ({
                 {onDelete && (
                   <>
                     {showDeleteConfirm ? (
-                      <div className={cn("flex gap-2", isMobile && "w-full flex-col")}>
+                      <div className={cn('flex gap-2', isMobile && 'w-full flex-col')}>
                         <Button
                           onClick={handleDelete}
                           variant="destructive"
-                          size={isMobile ? "default" : "sm"}
+                          size={isMobile ? 'default' : 'sm'}
                           className={cn(
-                            "touch-manipulation active:scale-[0.98]",
-                            isMobile && "w-full min-h-[48px]"
+                            'touch-manipulation active:scale-[0.98]',
+                            isMobile && 'w-full min-h-[48px]'
                           )}
                         >
                           Confirm Delete
@@ -567,10 +576,10 @@ export const MaintenanceStepCard = ({
                         <Button
                           onClick={() => setShowDeleteConfirm(false)}
                           variant="outline"
-                          size={isMobile ? "default" : "sm"}
+                          size={isMobile ? 'default' : 'sm'}
                           className={cn(
-                            "touch-manipulation active:scale-[0.98]",
-                            isMobile && "w-full min-h-[48px]"
+                            'touch-manipulation active:scale-[0.98]',
+                            isMobile && 'w-full min-h-[48px]'
                           )}
                         >
                           Cancel
@@ -580,10 +589,10 @@ export const MaintenanceStepCard = ({
                       <Button
                         onClick={() => setShowDeleteConfirm(true)}
                         variant="outline"
-                        size={isMobile ? "default" : "sm"}
+                        size={isMobile ? 'default' : 'sm'}
                         className={cn(
-                          "text-destructive hover:bg-destructive/10 border-destructive/30 touch-manipulation active:scale-[0.98]",
-                          isMobile && "w-full min-h-[48px]"
+                          'text-destructive hover:bg-destructive/10 border-destructive/30 touch-manipulation active:scale-[0.98]',
+                          isMobile && 'w-full min-h-[48px]'
                         )}
                       >
                         <Trash2 className="h-4 w-4 mr-2" />

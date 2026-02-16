@@ -1,51 +1,51 @@
-import { ArrowLeft, Book, AlertTriangle, Monitor, LinkIcon, Database } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Book, AlertTriangle, Monitor, LinkIcon, Database } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule6Section3 = () => {
   useSEO(
-    "Section 6.3: Maintenance Records and Reporting - MOET Module 6",
-    "Work recording, fault reports, digital reporting and maintenance management systems"
+    'Section 6.3: Maintenance Records and Reporting - MOET Module 6',
+    'Work recording, fault reports, digital reporting and maintenance management systems'
   );
 
   const subsections = [
     {
-      number: "6.3.1",
-      title: "Recording Work Completed (logbooks, CMMS)",
-      description: "Work completion records, logbook entries and CMMS documentation",
+      number: '6.3.1',
+      title: 'Recording Work Completed (logbooks, CMMS)',
+      description: 'Work completion records, logbook entries and CMMS documentation',
       icon: Book,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section3-1"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section3-1',
     },
     {
-      number: "6.3.2",
-      title: "Fault Reports and Corrective Actions",
-      description: "Fault reporting procedures, corrective action documentation and follow-up",
+      number: '6.3.2',
+      title: 'Fault Reports and Corrective Actions',
+      description: 'Fault reporting procedures, corrective action documentation and follow-up',
       icon: AlertTriangle,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section3-2"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section3-2',
     },
     {
-      number: "6.3.3",
-      title: "Digital vs Paper-Based Reporting",
-      description: "Digital reporting systems, advantages and implementation considerations",
+      number: '6.3.3',
+      title: 'Digital vs Paper-Based Reporting',
+      description: 'Digital reporting systems, advantages and implementation considerations',
       icon: Monitor,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section3-3"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section3-3',
     },
     {
-      number: "6.3.4",
-      title: "Traceability and Compliance Requirements",
-      description: "Audit trails, regulatory compliance and traceability documentation",
+      number: '6.3.4',
+      title: 'Traceability and Compliance Requirements',
+      description: 'Audit trails, regulatory compliance and traceability documentation',
       icon: LinkIcon,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section3-4"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section3-4',
     },
     {
-      number: "6.3.5",
-      title: "Using Maintenance Management Systems",
-      description: "CMMS operation, data entry and system utilisation",
+      number: '6.3.5',
+      title: 'Using Maintenance Management Systems',
+      description: 'CMMS operation, data entry and system utilisation',
       icon: Database,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section3-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module6-section3-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule6Section3 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 6

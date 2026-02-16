@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
 import { filterInspectionSections } from '@/utils/inspectionFiltering';
@@ -16,7 +15,16 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'FI' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'FI'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -36,25 +44,31 @@ interface EICRInspectionChecklistProps {
   onNavigateToObservations?: () => void;
 }
 
-const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations }: EICRInspectionChecklistProps) => {
+const EICRInspectionChecklist = ({
+  formData,
+  onUpdate,
+  onNavigateToObservations,
+}: EICRInspectionChecklistProps) => {
   const { databaseId, effectiveReportId } = useEICRForm();
   const [expandedSections, setExpandedSections] = React.useState<Record<string, boolean>>({});
   const observationsRef = React.useRef<HTMLDivElement>(null);
 
   const getInspectionItems = (): InspectionItem[] => {
-    // Always show all sections for EICR forms
-    const filteredSections = bs7671InspectionSections;
-    
+    // Filter sections based on property type (domestic/commercial/industrial)
+    const filteredSections = formData.description
+      ? filterInspectionSections(bs7671InspectionSections, formData.description)
+      : bs7671InspectionSections;
+
     // Always ensure we have the correct number of items from the filtered structure
-    const expectedItems = filteredSections.flatMap(section =>
-      section.items.map(item => ({
+    const expectedItems = filteredSections.flatMap((section) =>
+      section.items.map((item) => ({
         id: item.id,
         section: section.title,
         item: item.item,
         clause: item.clause,
         inspected: false,
         outcome: '' as const, // Default to empty string instead of 'not-applicable'
-        notes: ''
+        notes: '',
       }))
     );
 
@@ -63,18 +77,20 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
       const existingItemsMap = new Map(
         formData.inspectionItems.map((item: InspectionItem) => [item.id, item])
       );
-      
-      return expectedItems.map(expectedItem => {
+
+      return expectedItems.map((expectedItem) => {
         const existingItem = existingItemsMap.get(expectedItem.id) as InspectionItem | undefined;
-        return existingItem ? {
-          ...expectedItem,
-          ...existingItem,
-          // Ensure outcome is valid
-          outcome: existingItem.outcome || ('' as const)
-        } : expectedItem;
+        return existingItem
+          ? {
+              ...expectedItem,
+              ...existingItem,
+              // Ensure outcome is valid
+              outcome: existingItem.outcome || ('' as const),
+            }
+          : expectedItem;
       });
     }
-    
+
     return expectedItems;
   };
 
@@ -82,63 +98,71 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
     return formData.defectObservations || [];
   };
 
-  const updateInspectionItem = (id: string, field: keyof InspectionItem | '__BULK_UPDATE__', value: any) => {
+  const updateInspectionItem = (
+    id: string,
+    field: keyof InspectionItem | '__BULK_UPDATE__',
+    value: any
+  ) => {
     console.log(`[EICRInspectionChecklist] updateInspectionItem called:`, {
       id,
       field,
       value,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
+
     // Handle bulk update for atomic operations
     if (id === '__BULK_UPDATE__' && field === '__BULK_UPDATE__') {
       console.log(`[EICRInspectionChecklist] Processing bulk update with ${value.length} items`);
       onUpdate('inspectionItems', value);
       return;
     }
-    
+
     const items = getInspectionItems();
-    const itemIndex = items.findIndex(item => item.id === id);
+    const itemIndex = items.findIndex((item) => item.id === id);
     console.log(`[EICRInspectionChecklist] Item index:`, itemIndex);
-    
+
     if (itemIndex === -1) {
-      console.warn(`[EICRInspectionChecklist] Item ${id} not found. Available items:`, items.map(i => i.id).slice(0, 10));
+      console.warn(
+        `[EICRInspectionChecklist] Item ${id} not found. Available items:`,
+        items.map((i) => i.id).slice(0, 10)
+      );
       // Force re-initialization if item not found
       const initializedItems = getInspectionItems();
       onUpdate('inspectionItems', initializedItems);
       return;
     }
-    
+
     const currentItem = items[itemIndex];
     console.log(`[EICRInspectionChecklist] Current item before update:`, currentItem);
-    
+
     // Create updated items array with atomic updates
     const updatedItems = [...items];
     const updates: Partial<InspectionItem> = { [field as keyof InspectionItem]: value };
-    
+
     // If updating outcome, also update inspected status appropriately
     if (field === 'outcome') {
       updates.inspected = value !== '' && value !== 'not-applicable';
     }
-    
+
     updatedItems[itemIndex] = { ...currentItem, ...updates };
-    
+
     const updatedItem = updatedItems[itemIndex];
     console.log(`[EICRInspectionChecklist] Updated item:`, updatedItem);
-    
+
     // Update the form data with all changes at once
     onUpdate('inspectionItems', updatedItems);
-    
+
     // If updating notes and there's a linked observation with a critical outcome, sync notes to observation
-    if (field === 'notes' && (currentItem.outcome === 'C1' || currentItem.outcome === 'C2' || currentItem.outcome === 'C3')) {
+    if (
+      field === 'notes' &&
+      (currentItem.outcome === 'C1' || currentItem.outcome === 'C2' || currentItem.outcome === 'C3')
+    ) {
       const existingObservations = getDefectObservations();
-      const linkedObservation = existingObservations.find(obs => obs.inspectionItemId === id);
-      
+      const linkedObservation = existingObservations.find((obs) => obs.inspectionItemId === id);
+
       if (linkedObservation && value && value.trim()) {
-        const updatedObservations = existingObservations.map(obs =>
-          obs.id === linkedObservation.id 
-            ? { ...obs, description: value }
-            : obs
+        const updatedObservations = existingObservations.map((obs) =>
+          obs.id === linkedObservation.id ? { ...obs, description: value } : obs
         );
         onUpdate('defectObservations', updatedObservations);
       }
@@ -147,47 +171,62 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
 
   const autoCreateObservation = async (inspectionItem: InspectionItem) => {
     console.log(`[EICRInspectionChecklist] autoCreateObservation called for:`, inspectionItem);
-    
+
     const existingObservations = getDefectObservations();
     console.log(`[EICRInspectionChecklist] Existing observations:`, existingObservations);
-    
+
     // Don't create observations for N/A, satisfactory, or other non-defect outcomes
     if (!['C1', 'C2', 'C3'].includes(inspectionItem.outcome)) {
-      console.log(`[EICRInspectionChecklist] Skipping observation creation for outcome: ${inspectionItem.outcome}`);
-      
+      console.log(
+        `[EICRInspectionChecklist] Skipping observation creation for outcome: ${inspectionItem.outcome}`
+      );
+
       // If there's an existing observation linked to this item, remove it
-      const linkedObservation = existingObservations.find(obs => obs.inspectionItemId === inspectionItem.id);
+      const linkedObservation = existingObservations.find(
+        (obs) => obs.inspectionItemId === inspectionItem.id
+      );
       if (linkedObservation) {
-        const updatedObservations = existingObservations.filter(obs => obs.id !== linkedObservation.id);
-        console.log(`[EICRInspectionChecklist] Removed observation for non-defect outcome:`, linkedObservation);
+        const updatedObservations = existingObservations.filter(
+          (obs) => obs.id !== linkedObservation.id
+        );
+        console.log(
+          `[EICRInspectionChecklist] Removed observation for non-defect outcome:`,
+          linkedObservation
+        );
         onUpdate('defectObservations', updatedObservations);
       }
-      
+
       return;
     }
-    
-    const existingObservation = existingObservations.find(obs => obs.inspectionItemId === inspectionItem.id);
-    
+
+    const existingObservation = existingObservations.find(
+      (obs) => obs.inspectionItemId === inspectionItem.id
+    );
+
     // Use notes from inspection item if available
-    const description = inspectionItem.notes && inspectionItem.notes.trim() 
-      ? inspectionItem.notes 
-      : 'Item requires attention - inspection outcome not satisfactory';
-    
+    const description =
+      inspectionItem.notes && inspectionItem.notes.trim()
+        ? inspectionItem.notes
+        : 'Item requires attention - inspection outcome not satisfactory';
+
     let observationId: string;
-    
+
     if (existingObservation) {
       observationId = existingObservation.id;
-      const updatedObservations = existingObservations.map(obs =>
-        obs.id === existingObservation.id 
-          ? { 
-              ...obs, 
+      const updatedObservations = existingObservations.map((obs) =>
+        obs.id === existingObservation.id
+          ? {
+              ...obs,
               defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3',
               item: inspectionItem.item,
-              description: description  // Update description with notes
+              description: description, // Update description with notes
             }
           : obs
       );
-      console.log(`[EICRInspectionChecklist] Updated existing observation for item ${inspectionItem.id}:`, updatedObservations);
+      console.log(
+        `[EICRInspectionChecklist] Updated existing observation for item ${inspectionItem.id}:`,
+        updatedObservations
+      );
       onUpdate('defectObservations', updatedObservations);
     } else {
       observationId = Date.now().toString();
@@ -195,10 +234,10 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
         id: observationId,
         item: inspectionItem.item,
         defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3',
-        description: description,  // Use notes as description
+        description: description, // Use notes as description
         recommendation: 'Investigate and rectify as required to comply with BS 7671',
         rectified: false,
-        inspectionItemId: inspectionItem.id
+        inspectionItemId: inspectionItem.id,
       };
       console.log(`[EICRInspectionChecklist] Created new observation:`, newObservation);
       onUpdate('defectObservations', [...existingObservations, newObservation]);
@@ -244,17 +283,23 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
       defectCode: 'C3',
       description: '',
       recommendation: '',
-      rectified: false
+      rectified: false,
     };
     const observations = getDefectObservations();
     onUpdate('defectObservations', [...observations, newObservation]);
   };
 
-  const updateDefectObservation = (id: string, field: keyof DefectObservation | '__BULK__', value: any) => {
+  const updateDefectObservation = (
+    id: string,
+    field: keyof DefectObservation | '__BULK__',
+    value: any
+  ) => {
     const observations = getDefectObservations();
-    const updatedObservations = observations.map(obs =>
+    const updatedObservations = observations.map((obs) =>
       obs.id === id
-        ? field === '__BULK__' ? { ...obs, ...value } : { ...obs, [field]: value }
+        ? field === '__BULK__'
+          ? { ...obs, ...value }
+          : { ...obs, [field]: value }
         : obs
     );
     onUpdate('defectObservations', updatedObservations);
@@ -262,85 +307,95 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
 
   const removeDefectObservation = (id: string) => {
     const observations = getDefectObservations();
-    const updatedObservations = observations.filter(obs => obs.id !== id);
+    const updatedObservations = observations.filter((obs) => obs.id !== id);
     onUpdate('defectObservations', updatedObservations);
   };
 
   const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [sectionId]: !prev[sectionId]
+      [sectionId]: !prev[sectionId],
     }));
   };
 
   const bulkMarkSatisfactory = (sectionId: string) => {
     console.log(`[EICRInspectionChecklist] bulkMarkSatisfactory called for section:`, sectionId);
-    
+
     const items = getInspectionItems();
-    const section = bs7671InspectionSections.find(s => s.id === sectionId);
-    
+    const section = bs7671InspectionSections.find((s) => s.id === sectionId);
+
     if (!section) {
       console.warn(`[EICRInspectionChecklist] Section ${sectionId} not found`);
       return;
     }
 
-    const updatedItems = items.map(item => {
-      const isInSection = section.items.some(sItem => sItem.id === item.id);
+    const updatedItems = items.map((item) => {
+      const isInSection = section.items.some((sItem) => sItem.id === item.id);
       if (isInSection) {
         return {
           ...item,
           outcome: 'satisfactory' as const,
-          inspected: true
+          inspected: true,
         };
       }
       return item;
     });
 
     const sectionItemsCount = section.items.length;
-    console.log(`[EICRInspectionChecklist] Bulk marking ${sectionItemsCount} items as satisfactory in section ${section.title}`);
+    console.log(
+      `[EICRInspectionChecklist] Bulk marking ${sectionItemsCount} items as satisfactory in section ${section.title}`
+    );
     onUpdate('inspectionItems', updatedItems);
   };
 
   const bulkClearSection = (sectionId: string) => {
     console.log(`[EICRInspectionChecklist] bulkClearSection called for section:`, sectionId);
-    
+
     const items = getInspectionItems();
-    const section = bs7671InspectionSections.find(s => s.id === sectionId);
-    
+    const section = bs7671InspectionSections.find((s) => s.id === sectionId);
+
     if (!section) {
       console.warn(`[EICRInspectionChecklist] Section ${sectionId} not found`);
       return;
     }
 
-    const updatedItems = items.map(item => {
-      const isInSection = section.items.some(sItem => sItem.id === item.id);
+    const updatedItems = items.map((item) => {
+      const isInSection = section.items.some((sItem) => sItem.id === item.id);
       if (isInSection) {
         return {
           ...item,
           outcome: '' as const, // Clear to empty string
           inspected: false,
-          notes: ''
+          notes: '',
         };
       }
       return item;
     });
 
     const sectionItemsCount = section.items.length;
-    console.log(`[EICRInspectionChecklist] Bulk clearing ${sectionItemsCount} items in section ${section.title}`);
+    console.log(
+      `[EICRInspectionChecklist] Bulk clearing ${sectionItemsCount} items in section ${section.title}`
+    );
     onUpdate('inspectionItems', updatedItems);
   };
 
   // Initialize inspection items if not already present or if count mismatch
   React.useEffect(() => {
-    const expectedCount = bs7671InspectionSections.reduce((total, section) => total + section.items.length, 0);
+    const expectedCount = bs7671InspectionSections.reduce(
+      (total, section) => total + section.items.length,
+      0
+    );
     const currentCount = formData.inspectionItems?.length || 0;
-    
+
     if (currentCount !== expectedCount) {
       const initialItems = getInspectionItems();
-      console.log(`[EICRInspectionChecklist] Initializing inspection items (expected: ${expectedCount}, current: ${currentCount}):`, {
-        totalItems: initialItems.length,
-        sampleItems: initialItems.slice(0, 3)
-      });
+      console.log(
+        `[EICRInspectionChecklist] Initializing inspection items (expected: ${expectedCount}, current: ${currentCount}):`,
+        {
+          totalItems: initialItems.length,
+          sampleItems: initialItems.slice(0, 3),
+        }
+      );
       onUpdate('inspectionItems', initialItems);
     }
   }, []);
@@ -352,7 +407,7 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
     itemsCount: inspectionItems.length,
     firstFewItems: inspectionItems.slice(0, 3),
     formDataItemsCount: formData.inspectionItems?.length || 0,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 
   return (

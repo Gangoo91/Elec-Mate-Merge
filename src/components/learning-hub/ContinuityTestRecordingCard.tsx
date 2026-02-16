@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Download, CheckCircle2, AlertTriangle, Calculator, Copy } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from '@/hooks/use-toast';
 
 interface TestingStep {
   id: number;
@@ -33,55 +32,75 @@ interface TestRecord {
 const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCardProps) => {
   const { toast } = useToast();
   const [testRecords, setTestRecords] = useState<TestRecord[]>([
-    { circuit: 'Ring Circuit - Kitchen', method: 'R1+R2', reading: '0.45', notes: 'Both legs tested separately' },
-    { circuit: 'Radial Circuit - Bedroom 1', method: 'R1+R2', reading: '0.32', notes: 'Single 2.5mm² cable run' },
-    { circuit: 'Main Gas Bonding', method: 'Main Bonding', reading: '0.02', notes: '10mm² bonding conductor' },
-    { circuit: 'Main Water Bonding', method: 'Main Bonding', reading: '0.03', notes: '10mm² bonding conductor' }
+    {
+      circuit: 'Ring Circuit - Kitchen',
+      method: 'R1+R2',
+      reading: '0.45',
+      notes: 'Both legs tested separately',
+    },
+    {
+      circuit: 'Radial Circuit - Bedroom 1',
+      method: 'R1+R2',
+      reading: '0.32',
+      notes: 'Single 2.5mm² cable run',
+    },
+    {
+      circuit: 'Main Gas Bonding',
+      method: 'Main Bonding',
+      reading: '0.02',
+      notes: '10mm² bonding conductor',
+    },
+    {
+      circuit: 'Main Water Bonding',
+      method: 'Main Bonding',
+      reading: '0.03',
+      notes: '10mm² bonding conductor',
+    },
   ]);
 
-  const completedSteps = testingSteps.filter(step => step.completed).length;
+  const completedSteps = testingSteps.filter((step) => step.completed).length;
   const totalSteps = testingSteps.length;
-  const criticalStepsCompleted = testingSteps.filter(step => step.critical && step.completed).length;
-  const totalCriticalSteps = testingSteps.filter(step => step.critical).length;
+  const criticalStepsCompleted = testingSteps.filter(
+    (step) => step.critical && step.completed
+  ).length;
+  const totalCriticalSteps = testingSteps.filter((step) => step.critical).length;
 
   const handleAddRecord = () => {
     const newRecord: TestRecord = {
       circuit: '',
       method: 'R1+R2',
       reading: '',
-      notes: ''
+      notes: '',
     };
-    setTestRecords(prev => [...prev, newRecord]);
+    setTestRecords((prev) => [...prev, newRecord]);
   };
 
   const handleUpdateRecord = (index: number, field: keyof TestRecord, value: string) => {
-    setTestRecords(prev => 
-      prev.map((record, i) => 
-        i === index ? { ...record, [field]: value } : record
-      )
+    setTestRecords((prev) =>
+      prev.map((record, i) => (i === index ? { ...record, [field]: value } : record))
     );
   };
 
   const handleRemoveRecord = (index: number) => {
-    setTestRecords(prev => prev.filter((_, i) => i !== index));
+    setTestRecords((prev) => prev.filter((_, i) => i !== index));
   };
 
   const exportResults = () => {
     toast({
-      title: "Results Exported",
-      description: "Test results have been exported successfully.",
+      title: 'Results Exported',
+      description: 'Test results have been exported successfully.',
     });
   };
 
   const copyToClipboard = () => {
-    const resultsText = testRecords.map(record => 
-      `${record.circuit}: ${record.reading}Ω (${record.method}) - ${record.notes}`
-    ).join('\n');
-    
+    const resultsText = testRecords
+      .map((record) => `${record.circuit}: ${record.reading}Ω (${record.method}) - ${record.notes}`)
+      .join('\n');
+
     navigator.clipboard.writeText(resultsText);
     toast({
-      title: "Copied to Clipboard",
-      description: "Test results copied to clipboard.",
+      title: 'Copied to Clipboard',
+      description: 'Test results copied to clipboard.',
     });
   };
 
@@ -102,29 +121,47 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
           {/* Progress Summary */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-lg p-4">
-              <div className="text-xl sm:text-2xl font-bold text-blue-400">{completedSteps}/{totalSteps}</div>
+              <div className="text-xl sm:text-2xl font-bold text-blue-400">
+                {completedSteps}/{totalSteps}
+              </div>
               <div className="text-sm text-white">Total Steps</div>
             </div>
             <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-lg p-4">
-              <div className="text-xl sm:text-2xl font-bold text-green-400">{criticalStepsCompleted}/{totalCriticalSteps}</div>
+              <div className="text-xl sm:text-2xl font-bold text-green-400">
+                {criticalStepsCompleted}/{totalCriticalSteps}
+              </div>
               <div className="text-sm text-white">Critical Steps</div>
             </div>
             <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-lg p-4">
-              <div className="text-xl sm:text-2xl font-bold text-purple-400">{testRecords.length}</div>
+              <div className="text-xl sm:text-2xl font-bold text-purple-400">
+                {testRecords.length}
+              </div>
               <div className="text-sm text-white">Test Records</div>
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="flex gap-2 flex-wrap">
-            <Button onClick={handleAddRecord} variant="outline" className="border-elec-yellow text-elec-yellow">
+            <Button
+              onClick={handleAddRecord}
+              variant="outline"
+              className="border-elec-yellow text-elec-yellow"
+            >
               Add Test Record
             </Button>
-            <Button onClick={copyToClipboard} variant="outline" className="border-blue-500 text-blue-400">
+            <Button
+              onClick={copyToClipboard}
+              variant="outline"
+              className="border-blue-500 text-blue-400"
+            >
               <Copy className="h-4 w-4 mr-2" />
               Copy Results
             </Button>
-            <Button onClick={exportResults} variant="outline" className="border-green-500 text-green-400">
+            <Button
+              onClick={exportResults}
+              variant="outline"
+              className="border-green-500 text-green-400"
+            >
               <Download className="h-4 w-4 mr-2" />
               Export Results
             </Button>
@@ -149,7 +186,9 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
               <div key={index} className="bg-muted border border-border rounded-lg p-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Circuit/Component</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Circuit/Component
+                    </label>
                     <input
                       type="text"
                       value={record.circuit}
@@ -159,7 +198,9 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Test Method</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Test Method
+                    </label>
                     <select
                       value={record.method}
                       onChange={(e) => handleUpdateRecord(index, 'method', e.target.value)}
@@ -172,7 +213,9 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Reading (Ω)</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Reading (Ω)
+                    </label>
                     <input
                       type="number"
                       step="0.01"
@@ -198,14 +241,20 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
                     {parseFloat(record.reading) > 0 && parseFloat(record.reading) <= 1.67 ? (
                       <>
                         <CheckCircle2 className="h-4 w-4 text-green-400" />
-                        <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
+                        <Badge
+                          variant="secondary"
+                          className="bg-green-500/20 text-green-400 border-green-500/30"
+                        >
                           Within Limits
                         </Badge>
                       </>
                     ) : parseFloat(record.reading) > 1.67 ? (
                       <>
                         <AlertTriangle className="h-4 w-4 text-red-400" />
-                        <Badge variant="destructive" className="bg-red-500/20 text-red-400 border-red-500/30">
+                        <Badge
+                          variant="destructive"
+                          className="bg-red-500/20 text-red-400 border-red-500/30"
+                        >
                           Exceeds Limits
                         </Badge>
                       </>

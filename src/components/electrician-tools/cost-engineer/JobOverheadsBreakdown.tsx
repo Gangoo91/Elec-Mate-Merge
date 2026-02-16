@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Building2, Car, FileText, Trash2, Clock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Building2, Car, FileText, Trash2, Clock } from 'lucide-react';
 
 interface JobOverheadsBreakdownProps {
   jobOverheads: {
@@ -23,40 +23,40 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
       style: 'currency',
       currency: 'GBP',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(amount);
   };
 
   const overheadItems = [
     {
       icon: Building2,
-      label: "Business Overheads",
+      label: 'Business Overheads',
       amount: jobOverheads.overheadAllocation,
       description: `Allocated for ${jobOverheads.estimatedDuration}`,
-      color: "text-blue-400"
+      color: 'text-blue-400',
     },
     {
       icon: Car,
-      label: "Travel Costs",
+      label: 'Travel Costs',
       amount: jobOverheads.travelCosts,
-      description: "Fuel, vehicle wear & tear",
-      color: "text-orange-400"
+      description: 'Fuel, vehicle wear & tear',
+      color: 'text-orange-400',
     },
     {
       icon: FileText,
-      label: "Permits & Parking",
+      label: 'Permits & Parking',
       amount: jobOverheads.permitsCosts,
-      description: "Site access and compliance",
-      color: "text-purple-400"
+      description: 'Site access and compliance',
+      color: 'text-purple-400',
     },
     {
       icon: Trash2,
-      label: "Waste Disposal",
+      label: 'Waste Disposal',
       amount: jobOverheads.wasteCosts,
-      description: "Materials disposal & recycling",
-      color: "text-red-400"
-    }
-  ].filter(item => item.amount > 0); // Only show items with costs
+      description: 'Materials disposal & recycling',
+      color: 'text-red-400',
+    },
+  ].filter((item) => item.amount > 0); // Only show items with costs
 
   return (
     <Card className="border-elec-yellow/20">
@@ -69,7 +69,7 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
           Hidden costs allocated to this {jobOverheads.estimatedDuration} job
         </CardDescription>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Direct Costs Summary */}
         <div className="p-4 rounded-lg bg-elec-dark/40 border border-elec-yellow/10 space-y-2">
@@ -78,11 +78,15 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
           </h4>
           <div className="flex items-center justify-between text-sm">
             <span className="text-foreground">Materials</span>
-            <span className="font-semibold text-foreground">{formatCurrency(directCosts.materials)}</span>
+            <span className="font-semibold text-foreground">
+              {formatCurrency(directCosts.materials)}
+            </span>
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-foreground">Labour</span>
-            <span className="font-semibold text-foreground">{formatCurrency(directCosts.labour)}</span>
+            <span className="font-semibold text-foreground">
+              {formatCurrency(directCosts.labour)}
+            </span>
           </div>
           <div className="flex items-center justify-between pt-2 border-t border-elec-yellow/10">
             <span className="font-medium text-foreground">Direct Costs Total</span>
@@ -98,12 +102,14 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
           {overheadItems.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div 
+              <div
                 key={idx}
                 className="flex items-center justify-between p-3 rounded-lg bg-elec-dark/40 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full bg-elec-dark/60 flex items-center justify-center shrink-0`}>
+                  <div
+                    className={`w-10 h-10 rounded-full bg-elec-dark/60 flex items-center justify-center shrink-0`}
+                  >
                     <Icon className={`h-5 w-5 ${item.color}`} />
                   </div>
                   <div>
@@ -121,7 +127,9 @@ const JobOverheadsBreakdown = ({ jobOverheads, directCosts }: JobOverheadsBreakd
           {/* Total Overheads */}
           <div className="flex items-center justify-between p-4 rounded-lg bg-orange-500/10 border border-orange-500/20 mt-3">
             <span className="font-semibold text-foreground">Total Job Overheads</span>
-            <span className="font-bold text-lg text-orange-400">{formatCurrency(jobOverheads.total)}</span>
+            <span className="font-bold text-lg text-orange-400">
+              {formatCurrency(jobOverheads.total)}
+            </span>
           </div>
         </div>
 

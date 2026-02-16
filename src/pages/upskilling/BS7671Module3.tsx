@@ -7,40 +7,40 @@ const BS7671Module3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Supply Systems – TN-S, TN-C-S, TT, IT",
+      title: 'Supply Systems – TN-S, TN-C-S, TT, IT',
       icon: Grid,
-      description: "Understanding earthing arrangements and their safety implications"
+      description: 'Understanding earthing arrangements and their safety implications',
     },
     {
       id: 2,
-      title: "Maximum Demand, Diversity, and Load Profiles",
+      title: 'Maximum Demand, Diversity, and Load Profiles',
       icon: Calculator,
-      description: "Load calculations, diversity factors, and system design principles"
+      description: 'Load calculations, diversity factors, and system design principles',
     },
     {
       id: 3,
-      title: "External Influences and Installation Conditions",
+      title: 'External Influences and Installation Conditions',
       icon: Thermometer,
-      description: "Environmental conditions affecting material selection and installation methods"
+      description: 'Environmental conditions affecting material selection and installation methods',
     },
     {
       id: 4,
-      title: "Voltage Drop and System Design Limits",
+      title: 'Voltage Drop and System Design Limits',
       icon: Zap,
-      description: "Calculating and managing voltage drop within BS 7671 limits"
+      description: 'Calculating and managing voltage drop within BS 7671 limits',
     },
     {
       id: 5,
-      title: "Earthing Arrangements and Protective Measures Selection",
+      title: 'Earthing Arrangements and Protective Measures Selection',
       icon: Shield,
-      description: "Matching earthing systems with appropriate protection strategies"
+      description: 'Matching earthing systems with appropriate protection strategies',
     },
     {
       id: 6,
-      title: "Amendment 3 Current Requirements",
+      title: 'Amendment 3 Current Requirements',
       icon: TrendingUp,
-      description: "Latest bidirectional protection and renewable energy integration requirements"
-    }
+      description: 'Latest bidirectional protection and renewable energy integration requirements',
+    },
   ];
 
   return (

@@ -1,45 +1,45 @@
-import { ArrowLeft, Wind, AlertTriangle, Activity, Fan } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Wind, AlertTriangle, Activity, Fan } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Atmospheric Hazards",
+    title: 'Atmospheric Hazards',
     icon: Wind,
     description:
-      "Oxygen depletion below 19.5%, oxygen enrichment above 23.5%, toxic gases including hydrogen sulphide, carbon monoxide, carbon dioxide and sulphur dioxide, and flammable gases such as methane and LPG",
+      'Oxygen depletion below 19.5%, oxygen enrichment above 23.5%, toxic gases including hydrogen sulphide, carbon monoxide, carbon dioxide and sulphur dioxide, and flammable gases such as methane and LPG',
   },
   {
     id: 2,
-    title: "Non-Atmospheric Hazards",
+    title: 'Non-Atmospheric Hazards',
     icon: AlertTriangle,
     description:
-      "Engulfment and drowning, entrapment by converging walls or machinery, fire and explosion risks, electricity, extreme temperatures, noise, manual handling, and biological hazards",
+      'Engulfment and drowning, entrapment by converging walls or machinery, fire and explosion risks, electricity, extreme temperatures, noise, manual handling, and biological hazards',
   },
   {
     id: 3,
-    title: "Gas Detection & Monitoring",
+    title: 'Gas Detection & Monitoring',
     icon: Activity,
     description:
-      "Four-gas monitors and their sensors, bump testing and calibration procedures, continuous versus pre-entry monitoring strategies, and understanding alarm set points",
+      'Four-gas monitors and their sensors, bump testing and calibration procedures, continuous versus pre-entry monitoring strategies, and understanding alarm set points',
   },
   {
     id: 4,
-    title: "Ventilation in Confined Spaces",
+    title: 'Ventilation in Confined Spaces',
     icon: Fan,
     description:
-      "Natural versus forced ventilation, positive and negative pressure configurations, air change rate calculations, ductwork placement, and monitoring the atmosphere during ventilation",
+      'Natural versus forced ventilation, positive and negative pressure configurations, air change rate calculations, ductwork placement, and monitoring the atmosphere during ventilation',
   },
 ];
 
 export default function ConfinedSpacesModule3() {
   useSEO({
-    title: "Module 3: Hazards & Atmospheric Monitoring | Confined Spaces Awareness",
+    title: 'Module 3: Hazards & Atmospheric Monitoring | Confined Spaces Awareness',
     description:
-      "Identify atmospheric and non-atmospheric hazards in confined spaces, learn gas detection techniques, and understand ventilation requirements.",
+      'Identify atmospheric and non-atmospheric hazards in confined spaces, learn gas detection techniques, and understand ventilation requirements.',
   });
 
   return (

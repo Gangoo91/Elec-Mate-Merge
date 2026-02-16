@@ -13,7 +13,6 @@ export const PolarityPurposePractical = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
-          
           {/* Critical Safety Points */}
           <div className="space-y-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2">
@@ -22,7 +21,9 @@ export const PolarityPurposePractical = () => {
             </h4>
             <div className="bg-red-900/20 border border-red-700/30 rounded-lg p-4 space-y-3">
               <div className="space-y-2">
-                <Badge variant="destructive" className="bg-red-700 text-foreground">DANGER</Badge>
+                <Badge variant="destructive" className="bg-red-700 text-foreground">
+                  DANGER
+                </Badge>
                 <p className="text-sm font-medium text-red-200">
                   Incorrect polarity can make normally safe parts become live at full mains voltage
                 </p>
@@ -43,7 +44,6 @@ export const PolarityPurposePractical = () => {
               Real-World Applications
             </h4>
             <div className="grid gap-4">
-              
               <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
                 <h5 className="text-elec-yellow font-medium">Lighting Circuits</h5>
                 <p className="text-sm">Most critical for polarity testing due to:</p>
@@ -86,7 +86,6 @@ export const PolarityPurposePractical = () => {
               Best Practices for Polarity Verification
             </h4>
             <div className="space-y-3">
-              
               <div className="bg-green-900/20 border border-green-700/30 rounded-lg p-4">
                 <h5 className="text-green-200 font-medium mb-2">Installation Phase</h5>
                 <ul className="list-disc list-inside space-y-1 text-sm text-green-200">
@@ -121,15 +120,32 @@ export const PolarityPurposePractical = () => {
 
           {/* Common Mistakes */}
           <div className="space-y-4">
-            <h4 className="text-foreground font-semibold">Common Installation Mistakes Leading to Polarity Errors</h4>
+            <h4 className="text-foreground font-semibold">
+              Common Installation Mistakes Leading to Polarity Errors
+            </h4>
             <div className="bg-orange-900/20 border border-orange-700/30 rounded-lg p-4">
               <ul className="list-disc list-inside space-y-2 text-sm text-orange-200">
-                <li><strong>Cable termination errors:</strong> Line and neutral swapped in junction boxes</li>
-                <li><strong>Switch wiring:</strong> Neutral taken to switch instead of line conductor</li>
-                <li><strong>DB connections:</strong> Outgoing circuits connected to wrong MCB terminals</li>
-                <li><strong>Socket wiring:</strong> Line and neutral reversed at back boxes</li>
-                <li><strong>Lampholder connections:</strong> Line connected to screw thread instead of centre contact</li>
-                <li><strong>Three-plate ceiling roses:</strong> Incorrect conductor identification</li>
+                <li>
+                  <strong>Cable termination errors:</strong> Line and neutral swapped in junction
+                  boxes
+                </li>
+                <li>
+                  <strong>Switch wiring:</strong> Neutral taken to switch instead of line conductor
+                </li>
+                <li>
+                  <strong>DB connections:</strong> Outgoing circuits connected to wrong MCB
+                  terminals
+                </li>
+                <li>
+                  <strong>Socket wiring:</strong> Line and neutral reversed at back boxes
+                </li>
+                <li>
+                  <strong>Lampholder connections:</strong> Line connected to screw thread instead of
+                  centre contact
+                </li>
+                <li>
+                  <strong>Three-plate ceiling roses:</strong> Incorrect conductor identification
+                </li>
               </ul>
             </div>
           </div>

@@ -1,6 +1,6 @@
 // Utility functions for mobile horizontal scrolling table
 
-export type ColumnGroup = 
+export type ColumnGroup =
   | 'circuit'
   | 'conductors'
   | 'protection'
@@ -20,11 +20,39 @@ export interface ColumnGroupConfig {
 
 export const columnGroups: ColumnGroupConfig[] = [
   { id: 'circuit', label: 'Circuit', icon: '⚡', color: 'bg-blue-50', columns: 5, width: 410 },
-  { id: 'conductors', label: 'Conductors', icon: '🔌', color: 'bg-green-50', columns: 2, width: 160 },
-  { id: 'protection', label: 'Protection', icon: '🛡️', color: 'bg-amber-50', columns: 5, width: 405 },
+  {
+    id: 'conductors',
+    label: 'Conductors',
+    icon: '🔌',
+    color: 'bg-green-50',
+    columns: 2,
+    width: 160,
+  },
+  {
+    id: 'protection',
+    label: 'Protection',
+    icon: '🛡️',
+    color: 'bg-amber-50',
+    columns: 5,
+    width: 405,
+  },
   { id: 'rcd', label: 'RCD', icon: '🔒', color: 'bg-red-50', columns: 4, width: 320 },
-  { id: 'continuity', label: 'Continuity', icon: '🔗', color: 'bg-blue-50', columns: 5, width: 400 },
-  { id: 'insulation', label: 'Insulation', icon: '⚡', color: 'bg-green-50', columns: 3, width: 240 },
+  {
+    id: 'continuity',
+    label: 'Continuity',
+    icon: '🔗',
+    color: 'bg-blue-50',
+    columns: 5,
+    width: 400,
+  },
+  {
+    id: 'insulation',
+    label: 'Insulation',
+    icon: '⚡',
+    color: 'bg-green-50',
+    columns: 3,
+    width: 240,
+  },
   { id: 'other', label: 'Other', icon: '📊', color: 'bg-purple-50', columns: 2, width: 160 },
 ];
 
@@ -42,13 +70,10 @@ export const getVisibleColumnGroup = (scrollLeft: number, containerWidth: number
   return columnGroups[columnGroups.length - 1].id;
 };
 
-export const smoothScrollToGroup = (
-  container: HTMLElement | null,
-  groupId: ColumnGroup
-) => {
+export const smoothScrollToGroup = (container: HTMLElement | null, groupId: ColumnGroup) => {
   if (!container) return;
 
-  const groupIndex = columnGroups.findIndex(g => g.id === groupId);
+  const groupIndex = columnGroups.findIndex((g) => g.id === groupId);
   if (groupIndex === -1) return;
 
   let scrollPosition = 0;
@@ -58,7 +83,7 @@ export const smoothScrollToGroup = (
 
   container.scrollTo({
     left: scrollPosition,
-    behavior: 'smooth'
+    behavior: 'smooth',
   });
 };
 

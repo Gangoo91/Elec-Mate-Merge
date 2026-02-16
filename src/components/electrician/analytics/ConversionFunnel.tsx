@@ -96,10 +96,16 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
           <CardTitle className="text-base font-semibold">Quote Pipeline</CardTitle>
           <div className="flex items-center gap-2 text-sm">
             <span className="text-muted-foreground">Win Rate:</span>
-            <span className={cn(
-              "font-bold",
-              winRate >= 50 ? "text-emerald-400" : winRate >= 25 ? "text-amber-400" : "text-red-400"
-            )}>
+            <span
+              className={cn(
+                'font-bold',
+                winRate >= 50
+                  ? 'text-emerald-400'
+                  : winRate >= 25
+                    ? 'text-amber-400'
+                    : 'text-red-400'
+              )}
+            >
               {winRate}%
             </span>
           </div>
@@ -109,7 +115,7 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
         <div className="space-y-1">
           {funnelStages.map((stage, index) => {
             // Calculate width based on count relative to max
-            const maxCount = Math.max(...funnelStages.map(s => s.count), 1);
+            const maxCount = Math.max(...funnelStages.map((s) => s.count), 1);
             const widthPercent = Math.max((stage.count / maxCount) * 100, 20);
 
             return (
@@ -117,10 +123,13 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
                 {/* Stage Row */}
                 <div className="flex items-center gap-3">
                   {/* Icon */}
-                  <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
-                    stage.bgColor, stage.color
-                  )}>
+                  <div
+                    className={cn(
+                      'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0',
+                      stage.bgColor,
+                      stage.color
+                    )}
+                  >
                     {stage.icon}
                   </div>
 
@@ -128,16 +137,14 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
                   <div className="flex-1 relative">
                     <div
                       className={cn(
-                        "h-10 rounded-lg flex items-center justify-between px-3 transition-all",
+                        'h-10 rounded-lg flex items-center justify-between px-3 transition-all',
                         stage.bgColor
                       )}
                       style={{ width: `${widthPercent}%` }}
                     >
                       <span className="text-sm font-medium">{stage.label}</span>
                       <div className="flex items-center gap-2">
-                        <span className={cn("text-sm font-bold", stage.color)}>
-                          {stage.count}
-                        </span>
+                        <span className={cn('text-sm font-bold', stage.color)}>{stage.count}</span>
                         <span className="text-xs text-muted-foreground">
                           {formatCurrency(stage.value)}
                         </span>

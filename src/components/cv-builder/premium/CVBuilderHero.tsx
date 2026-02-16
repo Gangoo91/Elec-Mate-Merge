@@ -3,21 +3,13 @@
  * Shows completion status, step indicators, and quick actions
  */
 
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import {
-  FileText,
-  Sparkles,
-  Download,
-  Eye,
-  Wand2,
-  Check,
-  ChevronRight,
-} from "lucide-react";
-import CVProgressRing from "./CVProgressRing";
-import { heroCardVariants, stepIndicatorVariants } from "./animations/variants";
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { FileText, Sparkles, Download, Eye, Wand2, Check, ChevronRight } from 'lucide-react';
+import CVProgressRing from './CVProgressRing';
+import { heroCardVariants, stepIndicatorVariants } from './animations/variants';
 
 interface CVBuilderHeroProps {
   progress: number;
@@ -53,7 +45,7 @@ const CVBuilderHero = ({
       variants={heroCardVariants}
       initial="initial"
       animate="animate"
-      className={cn("space-y-4", className)}
+      className={cn('space-y-4', className)}
     >
       {/* Main Hero Card */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/40 via-background to-background border border-blue-500/20">
@@ -81,7 +73,7 @@ const CVBuilderHero = ({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
                 <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Smart{" "}
+                  Smart{' '}
                   <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
                     CV Builder
                   </span>
@@ -94,10 +86,10 @@ const CVBuilderHero = ({
 
               <p className="text-sm text-white/60 mb-4">
                 {isComplete
-                  ? "Your professional CV is ready!"
+                  ? 'Your professional CV is ready!'
                   : hasDraft
-                  ? "Continue where you left off"
-                  : "Create a professional electrician CV in minutes"}
+                    ? 'Continue where you left off'
+                    : 'Create a professional electrician CV in minutes'}
               </p>
 
               {/* Quick Stats */}
@@ -126,45 +118,37 @@ const CVBuilderHero = ({
                 variants={stepIndicatorVariants}
                 initial="inactive"
                 animate={
-                  step.completed
-                    ? "completed"
-                    : index === currentStep - 1
-                    ? "active"
-                    : "inactive"
+                  step.completed ? 'completed' : index === currentStep - 1 ? 'active' : 'inactive'
                 }
                 className={cn(
-                  "flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl border transition-all",
+                  'flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl border transition-all',
                   step.completed
-                    ? "bg-emerald-500/20 border-emerald-500/30"
+                    ? 'bg-emerald-500/20 border-emerald-500/30'
                     : index === currentStep - 1
-                    ? "bg-blue-500/20 border-blue-500/30"
-                    : "bg-white/5 border-white/10"
+                      ? 'bg-blue-500/20 border-blue-500/30'
+                      : 'bg-white/5 border-white/10'
                 )}
               >
                 <div
                   className={cn(
-                    "w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium",
+                    'w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium',
                     step.completed
-                      ? "bg-emerald-500 text-black"
+                      ? 'bg-emerald-500 text-black'
                       : index === currentStep - 1
-                      ? "bg-blue-500 text-black"
-                      : "bg-white/10 text-white/50"
+                        ? 'bg-blue-500 text-black'
+                        : 'bg-white/10 text-white/50'
                   )}
                 >
-                  {step.completed ? (
-                    <Check className="h-3 w-3" />
-                  ) : (
-                    index + 1
-                  )}
+                  {step.completed ? <Check className="h-3 w-3" /> : index + 1}
                 </div>
                 <span
                   className={cn(
-                    "text-xs font-medium whitespace-nowrap",
+                    'text-xs font-medium whitespace-nowrap',
                     step.completed
-                      ? "text-emerald-300"
+                      ? 'text-emerald-300'
                       : index === currentStep - 1
-                      ? "text-blue-300"
-                      : "text-white/50"
+                        ? 'text-blue-300'
+                        : 'text-white/50'
                   )}
                 >
                   {step.title}

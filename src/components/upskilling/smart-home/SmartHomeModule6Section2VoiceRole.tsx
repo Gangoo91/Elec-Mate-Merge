@@ -8,7 +8,9 @@ export const SmartHomeModule6Section2VoiceRole = () => {
       <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">1</span>
+            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">
+              1
+            </span>
             Role of Voice Assistants in Smart Homes
           </CardTitle>
         </CardHeader>
@@ -19,7 +21,8 @@ export const SmartHomeModule6Section2VoiceRole = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Interface, Not Hub</h4>
                 <p className="text-foreground text-sm">
-                  Voice assistants act as an interface, not a hub — they rely on compatible devices or hubs.
+                  Voice assistants act as an interface, not a hub — they rely on compatible devices
+                  or hubs.
                 </p>
               </div>
             </div>
@@ -29,7 +32,8 @@ export const SmartHomeModule6Section2VoiceRole = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Command Translation</h4>
                 <p className="text-foreground text-sm">
-                  Commands like "Alexa, turn on the living room lights" are translated into actions via Wi-Fi or a hub.
+                  Commands like "Alexa, turn on the living room lights" are translated into actions
+                  via Wi-Fi or a hub.
                 </p>
               </div>
             </div>
@@ -39,7 +43,8 @@ export const SmartHomeModule6Section2VoiceRole = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">User Benefits</h4>
                 <p className="text-foreground text-sm">
-                  They provide convenience, accessibility, and quick control without needing to find apps or switches.
+                  They provide convenience, accessibility, and quick control without needing to find
+                  apps or switches.
                 </p>
               </div>
             </div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +10,12 @@ interface MobileQuickActionsProps {
   testType: any;
 }
 
-const MobileQuickActions = ({ typicalValues, onValueSelect, onApplyToAll, testType }: MobileQuickActionsProps) => {
+const MobileQuickActions = ({
+  typicalValues,
+  onValueSelect,
+  onApplyToAll,
+  testType,
+}: MobileQuickActionsProps) => {
   return (
     <div className="space-y-3">
       {/* Typical Values */}
@@ -40,15 +44,15 @@ const MobileQuickActions = ({ typicalValues, onValueSelect, onApplyToAll, testTy
         <div className="flex flex-wrap gap-2">
           {testType.id === 'continuity' && (
             <>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="cursor-pointer hover:bg-muted text-xs"
                 onClick={() => onValueSelect('0.05')}
               >
                 Lighting (0.05Ω)
               </Badge>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="cursor-pointer hover:bg-muted text-xs"
                 onClick={() => onValueSelect('0.10')}
               >
@@ -58,15 +62,15 @@ const MobileQuickActions = ({ typicalValues, onValueSelect, onApplyToAll, testTy
           )}
           {testType.id === 'insulation' && (
             <>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="cursor-pointer hover:bg-muted text-xs"
                 onClick={() => onValueSelect('>500')}
               >
                 New Installation ({'>'}500MΩ)
               </Badge>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="cursor-pointer hover:bg-muted text-xs"
                 onClick={() => onValueSelect('>200')}
               >
@@ -76,15 +80,15 @@ const MobileQuickActions = ({ typicalValues, onValueSelect, onApplyToAll, testTy
           )}
           {testType.id === 'zs' && (
             <>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="cursor-pointer hover:bg-muted text-xs"
                 onClick={() => onValueSelect('0.35')}
               >
                 32A MCB (0.35Ω)
               </Badge>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="cursor-pointer hover:bg-muted text-xs"
                 onClick={() => onValueSelect('0.80')}
               >
@@ -96,11 +100,7 @@ const MobileQuickActions = ({ typicalValues, onValueSelect, onApplyToAll, testTy
       </div>
 
       {/* Apply to All Button */}
-      <Button
-        variant="outline"
-        onClick={onApplyToAll}
-        className="w-full text-sm"
-      >
+      <Button variant="outline" onClick={onApplyToAll} className="w-full text-sm">
         <Copy className="h-4 w-4 mr-2" />
         Apply to All Circuits
       </Button>

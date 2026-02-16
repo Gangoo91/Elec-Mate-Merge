@@ -1,82 +1,94 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m7s4-check1",
-    question: "What is the purpose of an IT system in medical locations?",
+    id: 'bs7671-m7s4-check1',
+    question: 'What is the purpose of an IT system in medical locations?',
     options: [
-      "To reduce electricity costs",
-      "To maintain supply continuity during first fault",
-      "To increase power capacity",
-      "To simplify installation"
+      'To reduce electricity costs',
+      'To maintain supply continuity during first fault',
+      'To increase power capacity',
+      'To simplify installation',
     ],
     correctIndex: 1,
-    explanation: "IT systems allow continued operation during the first earth fault, which is critical in medical locations where loss of power could endanger patients during procedures."
+    explanation:
+      'IT systems allow continued operation during the first earth fault, which is critical in medical locations where loss of power could endanger patients during procedures.',
   },
   {
-    id: "bs7671-m7s4-check2",
-    question: "What is the maximum earth fault loop impedance in Group 2 medical locations (TN system)?",
-    options: ["0.2Ω", "0.4Ω", "1.67Ω", "5Ω"],
+    id: 'bs7671-m7s4-check2',
+    question:
+      'What is the maximum earth fault loop impedance in Group 2 medical locations (TN system)?',
+    options: ['0.2Ω', '0.4Ω', '1.67Ω', '5Ω'],
     correctIndex: 0,
-    explanation: "Group 2 medical locations (operating theatres etc.) require 0.2 second disconnection time, meaning earth fault loop impedance must be very low (typically 0.2Ω for Type B MCB)."
+    explanation:
+      'Group 2 medical locations (operating theatres etc.) require 0.2 second disconnection time, meaning earth fault loop impedance must be very low (typically 0.2Ω for Type B MCB).',
   },
   {
-    id: "bs7671-m7s4-check3",
-    question: "What additional protection is required for socket outlets in industrial locations with enhanced fire risk?",
+    id: 'bs7671-m7s4-check3',
+    question:
+      'What additional protection is required for socket outlets in industrial locations with enhanced fire risk?',
     options: [
-      "Higher IP rating only",
-      "Arc Fault Detection Devices (AFDD)",
-      "Time-delayed RCDs",
-      "Surge protection only"
+      'Higher IP rating only',
+      'Arc Fault Detection Devices (AFDD)',
+      'Time-delayed RCDs',
+      'Surge protection only',
     ],
     correctIndex: 1,
-    explanation: "AFDDs are increasingly recommended for locations with enhanced fire risk as they detect arc faults that can cause fires but wouldn't trip conventional RCDs or MCBs."
-  }
+    explanation:
+      "AFDDs are increasingly recommended for locations with enhanced fire risk as they detect arc faults that can cause fires but wouldn't trip conventional RCDs or MCBs.",
+  },
 ];
 
 const faqs = [
   {
-    question: "What defines a Group 1 vs Group 2 medical location?",
-    answer: "Group 1 locations are where patients have contact with medical electrical equipment but failure won't endanger life (e.g., examination rooms). Group 2 locations involve procedures where discontinuity could endanger life (e.g., operating theatres, ICU)."
+    question: 'What defines a Group 1 vs Group 2 medical location?',
+    answer:
+      "Group 1 locations are where patients have contact with medical electrical equipment but failure won't endanger life (e.g., examination rooms). Group 2 locations involve procedures where discontinuity could endanger life (e.g., operating theatres, ICU).",
   },
   {
-    question: "Why is supplementary equipotential bonding essential in medical locations?",
-    answer: "Patients may have reduced body impedance (wet skin, internal connections). Bonding limits touch voltages between simultaneously accessible parts to safe levels, typically requiring resistance below 0.2Ω."
+    question: 'Why is supplementary equipotential bonding essential in medical locations?',
+    answer:
+      'Patients may have reduced body impedance (wet skin, internal connections). Bonding limits touch voltages between simultaneously accessible parts to safe levels, typically requiring resistance below 0.2Ω.',
   },
   {
-    question: "What special earthing requirements apply to data centres?",
-    answer: "Data centres require clean earth systems separate from lightning protection, mesh bonding networks for EMC, and consideration of harmonics from IT equipment. Multiple parallel earth paths may be needed."
+    question: 'What special earthing requirements apply to data centres?',
+    answer:
+      'Data centres require clean earth systems separate from lightning protection, mesh bonding networks for EMC, and consideration of harmonics from IT equipment. Multiple parallel earth paths may be needed.',
   },
   {
-    question: "Are industrial socket outlets different from domestic ones?",
-    answer: "Yes, industrial sockets (BS EN 60309) have different pin configurations for different voltages/currents, IP ratings for harsh environments, and colour coding for voltage identification."
-  }
+    question: 'Are industrial socket outlets different from domestic ones?',
+    answer:
+      'Yes, industrial sockets (BS EN 60309) have different pin configurations for different voltages/currents, IP ratings for harsh environments, and colour coding for voltage identification.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "In a Group 2 medical location, what type of electrical system is required for critical circuits?",
-  options: [
-    "TN-S with standard RCD protection",
-    "TN-C-S with enhanced bonding",
-    "IT system with insulation monitoring",
-    "TT system with earth electrode"
-  ],
-  correctAnswer: 2,
-  explanation: "Group 2 medical locations require IT systems for critical circuits. This provides supply continuity during first fault, with insulation monitoring devices (IMD) to alert staff without disconnecting power."
-  }
+    question:
+      'In a Group 2 medical location, what type of electrical system is required for critical circuits?',
+    options: [
+      'TN-S with standard RCD protection',
+      'TN-C-S with enhanced bonding',
+      'IT system with insulation monitoring',
+      'TT system with earth electrode',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Group 2 medical locations require IT systems for critical circuits. This provides supply continuity during first fault, with insulation monitoring devices (IMD) to alert staff without disconnecting power.',
+  },
 ];
 
 const BS7671Module7Section4 = () => {
   useSEO({
-    title: "Medical, Commercial & Industrial Locations | BS7671 Module 7.4",
-    description: "Learn BS 7671 Part 710 requirements for medical locations and special requirements for commercial and industrial electrical installations."
+    title: 'Medical, Commercial & Industrial Locations | BS7671 Module 7.4',
+    description:
+      'Learn BS 7671 Part 710 requirements for medical locations and special requirements for commercial and industrial electrical installations.',
   });
 
   return (
@@ -118,16 +130,27 @@ const BS7671Module7Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Part 710:</strong> Medical location requirements</li>
-              <li><strong>IT systems:</strong> Required for Group 2 areas</li>
-              <li><strong>Industrial:</strong> BS EN 60309 sockets</li>
+              <li>
+                <strong>Part 710:</strong> Medical location requirements
+              </li>
+              <li>
+                <strong>IT systems:</strong> Required for Group 2 areas
+              </li>
+              <li>
+                <strong>Industrial:</strong> BS EN 60309 sockets
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Hospitals, factories, data centres, workshops</li>
-              <li><strong>Use:</strong> IT systems in critical areas, industrial sockets, enhanced bonding</li>
+              <li>
+                <strong>Spot:</strong> Hospitals, factories, data centres, workshops
+              </li>
+              <li>
+                <strong>Use:</strong> IT systems in critical areas, industrial sockets, enhanced
+                bonding
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +160,12 @@ const BS7671Module7Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Medical location classifications (Group 0, 1, 2)",
-              "IT system requirements and insulation monitoring",
-              "Supplementary equipotential bonding in medical areas",
-              "Industrial socket systems (BS EN 60309)",
-              "Data centre earthing and EMC considerations",
-              "Arc fault detection requirements"
+              'Medical location classifications (Group 0, 1, 2)',
+              'IT system requirements and insulation monitoring',
+              'Supplementary equipotential bonding in medical areas',
+              'Industrial socket systems (BS EN 60309)',
+              'Data centre earthing and EMC considerations',
+              'Arc fault detection requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -162,8 +185,8 @@ const BS7671Module7Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Medical locations are classified based on the type of patient contact with
-              electrical equipment and the criticality of power supply continuity.
+              Medical locations are classified based on the type of patient contact with electrical
+              equipment and the criticality of power supply continuity.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -232,10 +255,18 @@ const BS7671Module7Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">IMD Requirements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Visual alarm:</strong> When insulation drops below 50kΩ</li>
-                <li><strong>Audio alarm:</strong> Audible warning at control point</li>
-                <li><strong>Test facility:</strong> Regular testing required</li>
-                <li><strong>No auto-reset:</strong> Manual acknowledgement needed</li>
+                <li>
+                  <strong>Visual alarm:</strong> When insulation drops below 50kΩ
+                </li>
+                <li>
+                  <strong>Audio alarm:</strong> Audible warning at control point
+                </li>
+                <li>
+                  <strong>Test facility:</strong> Regular testing required
+                </li>
+                <li>
+                  <strong>No auto-reset:</strong> Manual acknowledgement needed
+                </li>
               </ul>
             </div>
 
@@ -256,22 +287,34 @@ const BS7671Module7Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Industrial installations present unique challenges including high power loads,
-              harsh environments, three-phase equipment, and increased fire risks.
+              Industrial installations present unique challenges including high power loads, harsh
+              environments, three-phase equipment, and increased fire risks.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Socket Types</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Industrial Socket Types
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Blue:</strong> 230V single phase</li>
-                  <li><strong>Red:</strong> 400V three phase</li>
-                  <li><strong>16A/32A/63A/125A:</strong> Current ratings</li>
-                  <li><strong>IP44/IP67:</strong> Protection ratings</li>
+                  <li>
+                    <strong>Blue:</strong> 230V single phase
+                  </li>
+                  <li>
+                    <strong>Red:</strong> 400V three phase
+                  </li>
+                  <li>
+                    <strong>16A/32A/63A/125A:</strong> Current ratings
+                  </li>
+                  <li>
+                    <strong>IP44/IP67:</strong> Protection ratings
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Special Considerations</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Special Considerations
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Motor starting currents</li>
                   <li>Power factor correction</li>
@@ -331,10 +374,18 @@ const BS7671Module7Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Redundancy Levels:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Tier 1:</strong> Basic capacity, no redundancy</li>
-                <li><strong>Tier 2:</strong> Redundant capacity components</li>
-                <li><strong>Tier 3:</strong> Concurrent maintainability</li>
-                <li><strong>Tier 4:</strong> Fault tolerant (2N+1)</li>
+                <li>
+                  <strong>Tier 1:</strong> Basic capacity, no redundancy
+                </li>
+                <li>
+                  <strong>Tier 2:</strong> Redundant capacity components
+                </li>
+                <li>
+                  <strong>Tier 3:</strong> Concurrent maintainability
+                </li>
+                <li>
+                  <strong>Tier 4:</strong> Fault tolerant (2N+1)
+                </li>
               </ul>
             </div>
           </div>
@@ -345,7 +396,9 @@ const BS7671Module7Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Medical Location Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Medical Location Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Classify all areas (Group 0, 1, or 2)</li>
                 <li>Install IT systems for Group 2 critical circuits</li>
@@ -357,10 +410,18 @@ const BS7671Module7Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong classification:</strong> — Under-classifying medical areas</li>
-                <li><strong>Bonding gaps:</strong> — Missing metalwork from bonding network</li>
-                <li><strong>IMD placement:</strong> — Alarms not visible/audible to staff</li>
-                <li><strong>Mixed systems:</strong> — IT circuits on TN distribution</li>
+                <li>
+                  <strong>Wrong classification:</strong> — Under-classifying medical areas
+                </li>
+                <li>
+                  <strong>Bonding gaps:</strong> — Missing metalwork from bonding network
+                </li>
+                <li>
+                  <strong>IMD placement:</strong> — Alarms not visible/audible to staff
+                </li>
+                <li>
+                  <strong>Mixed systems:</strong> — IT circuits on TN distribution
+                </li>
               </ul>
             </div>
           </div>
@@ -404,10 +465,7 @@ const BS7671Module7Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

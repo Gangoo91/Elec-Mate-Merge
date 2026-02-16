@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useCreateTender, CreateTenderData } from "@/hooks/useTenders";
-import { Loader2, ExternalLink, Plus, FileText } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
+} from '@/components/ui/select';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useCreateTender, CreateTenderData } from '@/hooks/useTenders';
+import { Loader2, ExternalLink, Plus, FileText } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 interface CreateTenderDialogProps {
   open: boolean;
@@ -30,26 +30,26 @@ interface CreateTenderDialogProps {
 }
 
 const CATEGORIES = [
-  "Commercial",
-  "Residential",
-  "Industrial",
-  "Healthcare",
-  "Education",
-  "Retail",
-  "Public Sector",
-  "Other",
+  'Commercial',
+  'Residential',
+  'Industrial',
+  'Healthcare',
+  'Education',
+  'Retail',
+  'Public Sector',
+  'Other',
 ];
 
 const emptyFormData: CreateTenderData = {
-  title: "",
-  client: "",
+  title: '',
+  client: '',
   value: 0,
-  deadline: "",
-  category: "",
-  description: "",
-  contact_name: "",
-  contact_email: "",
-  notes: "",
+  deadline: '',
+  category: '',
+  description: '',
+  contact_name: '',
+  contact_email: '',
+  notes: '',
 };
 
 export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTenderDialogProps) {
@@ -117,7 +117,10 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                 <SheetTitle className="text-lg text-foreground flex items-center gap-2">
                   {isFromOpportunity ? 'Start Tender Application' : 'Track New Tender'}
                   {isFromOpportunity && (
-                    <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
+                    <Badge
+                      variant="outline"
+                      className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs"
+                    >
                       From Discovery
                     </Badge>
                   )}
@@ -146,24 +149,28 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
           <ScrollArea className="flex-1">
             <div className="p-4 space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-foreground">Tender Title *</Label>
+                <Label htmlFor="title" className="text-foreground">
+                  Tender Title *
+                </Label>
                 <Input
                   id="title"
                   placeholder="e.g., Office Building Rewire"
                   value={formData.title}
-                  onChange={(e) => updateField("title", e.target.value)}
+                  onChange={(e) => updateField('title', e.target.value)}
                   className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="client" className="text-foreground">Client / Organisation *</Label>
+                <Label htmlFor="client" className="text-foreground">
+                  Client / Organisation *
+                </Label>
                 <Input
                   id="client"
                   placeholder="e.g., ABC Corporation"
                   value={formData.client}
-                  onChange={(e) => updateField("client", e.target.value)}
+                  onChange={(e) => updateField('client', e.target.value)}
                   className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   required
                 />
@@ -171,39 +178,47 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="value" className="text-foreground">Estimated Value</Label>
+                  <Label htmlFor="value" className="text-foreground">
+                    Estimated Value
+                  </Label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50">£</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50">
+                      £
+                    </span>
                     <Input
                       id="value"
                       type="number"
                       min="0"
                       step="1000"
                       placeholder="0"
-                      value={formData.value || ""}
-                      onChange={(e) => updateField("value", parseFloat(e.target.value) || 0)}
+                      value={formData.value || ''}
+                      onChange={(e) => updateField('value', parseFloat(e.target.value) || 0)}
                       className="h-11 pl-7 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="deadline" className="text-foreground">Submission Deadline</Label>
+                  <Label htmlFor="deadline" className="text-foreground">
+                    Submission Deadline
+                  </Label>
                   <Input
                     id="deadline"
                     type="date"
                     value={formData.deadline}
-                    onChange={(e) => updateField("deadline", e.target.value)}
+                    onChange={(e) => updateField('deadline', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="category" className="text-foreground">Category</Label>
+                <Label htmlFor="category" className="text-foreground">
+                  Category
+                </Label>
                 <Select
                   value={formData.category}
-                  onValueChange={(value) => updateField("category", value)}
+                  onValueChange={(value) => updateField('category', value)}
                 >
                   <SelectTrigger className="h-11 touch-manipulation bg-background border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue placeholder="Select category" />
@@ -219,12 +234,14 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description" className="text-foreground">Description</Label>
+                <Label htmlFor="description" className="text-foreground">
+                  Description
+                </Label>
                 <Textarea
                   id="description"
                   placeholder="Brief description of the tender scope..."
                   value={formData.description}
-                  onChange={(e) => updateField("description", e.target.value)}
+                  onChange={(e) => updateField('description', e.target.value)}
                   className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   rows={3}
                 />
@@ -232,36 +249,42 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="contact_name" className="text-foreground">Contact Name</Label>
+                  <Label htmlFor="contact_name" className="text-foreground">
+                    Contact Name
+                  </Label>
                   <Input
                     id="contact_name"
                     placeholder="John Smith"
                     value={formData.contact_name}
-                    onChange={(e) => updateField("contact_name", e.target.value)}
+                    onChange={(e) => updateField('contact_name', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="contact_email" className="text-foreground">Contact Email</Label>
+                  <Label htmlFor="contact_email" className="text-foreground">
+                    Contact Email
+                  </Label>
                   <Input
                     id="contact_email"
                     type="email"
                     placeholder="john@company.com"
                     value={formData.contact_email}
-                    onChange={(e) => updateField("contact_email", e.target.value)}
+                    onChange={(e) => updateField('contact_email', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="notes" className="text-foreground">Notes</Label>
+                <Label htmlFor="notes" className="text-foreground">
+                  Notes
+                </Label>
                 <Textarea
                   id="notes"
                   placeholder="Any additional notes..."
                   value={formData.notes}
-                  onChange={(e) => updateField("notes", e.target.value)}
+                  onChange={(e) => updateField('notes', e.target.value)}
                   className="text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   rows={2}
                 />

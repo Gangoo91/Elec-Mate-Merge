@@ -1,9 +1,15 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
-export type TrainingType = "Induction" | "Safety" | "CPD" | "Apprenticeship" | "Certification" | "Refresher";
-export type TrainingStatus = "Pending" | "In Progress" | "Completed" | "Expired" | "Failed";
+export type TrainingType =
+  | 'Induction'
+  | 'Safety'
+  | 'CPD'
+  | 'Apprenticeship'
+  | 'Certification'
+  | 'Refresher';
+export type TrainingStatus = 'Pending' | 'In Progress' | 'Completed' | 'Expired' | 'Failed';
 
 export interface TrainingRecord {
   id: string;
@@ -29,25 +35,32 @@ export interface TrainingRecord {
   };
 }
 
-export type CreateTrainingRecordInput = Omit<TrainingRecord, "id" | "user_id" | "created_at" | "updated_at" | "employee">;
+export type CreateTrainingRecordInput = Omit<
+  TrainingRecord,
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'employee'
+>;
 export type UpdateTrainingRecordInput = Partial<CreateTrainingRecordInput>;
 
 // Fetch all training records for the current user
 export function useTrainingRecords() {
   return useQuery({
-    queryKey: ["trainingRecords"],
+    queryKey: ['trainingRecords'],
     queryFn: async (): Promise<TrainingRecord[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("training_records")
-        .select(`
+        .from('training_records')
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as TrainingRecord[];
@@ -58,20 +71,24 @@ export function useTrainingRecords() {
 // Fetch training records by status
 export function useTrainingRecordsByStatus(status: TrainingStatus) {
   return useQuery({
-    queryKey: ["trainingRecords", "status", status],
+    queryKey: ['trainingRecords', 'status', status],
     queryFn: async (): Promise<TrainingRecord[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("training_records")
-        .select(`
+        .from('training_records')
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
-        .eq("user_id", user.id)
-        .eq("status", status)
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .eq('status', status)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as TrainingRecord[];
@@ -82,22 +99,26 @@ export function useTrainingRecordsByStatus(status: TrainingStatus) {
 // Fetch training records for a specific employee
 export function useTrainingRecordsByEmployee(employeeId: string | undefined) {
   return useQuery({
-    queryKey: ["trainingRecords", "employee", employeeId],
+    queryKey: ['trainingRecords', 'employee', employeeId],
     queryFn: async (): Promise<TrainingRecord[]> => {
       if (!employeeId) return [];
 
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("training_records")
-        .select(`
+        .from('training_records')
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
-        .eq("user_id", user.id)
-        .eq("employee_id", employeeId)
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .eq('employee_id', employeeId)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as TrainingRecord[];
@@ -109,31 +130,35 @@ export function useTrainingRecordsByEmployee(employeeId: string | undefined) {
 // Get training statistics
 export function useTrainingStats() {
   return useQuery({
-    queryKey: ["trainingRecords", "stats"],
+    queryKey: ['trainingRecords', 'stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("training_records")
-        .select("id, status, expiry_date")
-        .eq("user_id", user.id);
+        .from('training_records')
+        .select('id, status, expiry_date')
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
-      const today = new Date().toISOString().split("T")[0];
-      const thirtyDaysFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+      const today = new Date().toISOString().split('T')[0];
+      const thirtyDaysFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split('T')[0];
 
       const stats = {
         total: data.length,
-        completed: data.filter(t => t.status === "Completed").length,
-        inProgress: data.filter(t => t.status === "In Progress").length,
-        pending: data.filter(t => t.status === "Pending").length,
-        expired: data.filter(t => t.status === "Expired" || (t.expiry_date && t.expiry_date < today)).length,
-        expiringsSoon: data.filter(t =>
-          t.expiry_date &&
-          t.expiry_date >= today &&
-          t.expiry_date <= thirtyDaysFromNow
+        completed: data.filter((t) => t.status === 'Completed').length,
+        inProgress: data.filter((t) => t.status === 'In Progress').length,
+        pending: data.filter((t) => t.status === 'Pending').length,
+        expired: data.filter(
+          (t) => t.status === 'Expired' || (t.expiry_date && t.expiry_date < today)
+        ).length,
+        expiringsSoon: data.filter(
+          (t) => t.expiry_date && t.expiry_date >= today && t.expiry_date <= thirtyDaysFromNow
         ).length,
       };
 
@@ -149,33 +174,37 @@ export function useCreateTrainingRecord() {
 
   return useMutation({
     mutationFn: async (input: CreateTrainingRecordInput): Promise<TrainingRecord> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("training_records")
+        .from('training_records')
         .insert({ ...input, user_id: user.id })
-        .select(`
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as TrainingRecord;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["trainingRecords"] });
+      queryClient.invalidateQueries({ queryKey: ['trainingRecords'] });
       toast({
-        title: "Training added",
-        description: "The training record has been created successfully.",
+        title: 'Training added',
+        description: 'The training record has been created successfully.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -187,32 +216,37 @@ export function useUpdateTrainingRecord() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, ...input }: UpdateTrainingRecordInput & { id: string }): Promise<TrainingRecord> => {
+    mutationFn: async ({
+      id,
+      ...input
+    }: UpdateTrainingRecordInput & { id: string }): Promise<TrainingRecord> => {
       const { data, error } = await supabase
-        .from("training_records")
+        .from('training_records')
         .update({ ...input, updated_at: new Date().toISOString() })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as TrainingRecord;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["trainingRecords"] });
+      queryClient.invalidateQueries({ queryKey: ['trainingRecords'] });
       toast({
-        title: "Training updated",
-        description: "The training record has been updated successfully.",
+        title: 'Training updated',
+        description: 'The training record has been updated successfully.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -224,43 +258,53 @@ export function useUpdateTrainingStatus() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, status, completed_date }: { id: string; status: TrainingStatus; completed_date?: string }): Promise<TrainingRecord> => {
+    mutationFn: async ({
+      id,
+      status,
+      completed_date,
+    }: {
+      id: string;
+      status: TrainingStatus;
+      completed_date?: string;
+    }): Promise<TrainingRecord> => {
       const updates: Partial<TrainingRecord> = {
         status,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
-      if (status === "Completed" && !completed_date) {
-        updates.completed_date = new Date().toISOString().split("T")[0];
+      if (status === 'Completed' && !completed_date) {
+        updates.completed_date = new Date().toISOString().split('T')[0];
       } else if (completed_date) {
         updates.completed_date = completed_date;
       }
 
       const { data, error } = await supabase
-        .from("training_records")
+        .from('training_records')
         .update(updates)
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           employee:employer_employees(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as TrainingRecord;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["trainingRecords"] });
+      queryClient.invalidateQueries({ queryKey: ['trainingRecords'] });
       toast({
-        title: "Status updated",
+        title: 'Status updated',
         description: `Training marked as ${data.status}.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -273,25 +317,22 @@ export function useDeleteTrainingRecord() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("training_records")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('training_records').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["trainingRecords"] });
+      queryClient.invalidateQueries({ queryKey: ['trainingRecords'] });
       toast({
-        title: "Training deleted",
-        description: "The training record has been removed.",
+        title: 'Training deleted',
+        description: 'The training record has been removed.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

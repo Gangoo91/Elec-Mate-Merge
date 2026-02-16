@@ -73,12 +73,14 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
 
   const quizQuestions = [
     {
-      question: 'What voltage should typically be used for insulation resistance testing on a 400V motor?',
+      question:
+        'What voltage should typically be used for insulation resistance testing on a 400V motor?',
       options: ['250V DC', '500V DC', '1000V DC', '2500V DC'],
       correctAnswer: '500V DC',
     },
     {
-      question: 'Before conducting IR testing on a motor with a VSD, what essential step must be taken?',
+      question:
+        'Before conducting IR testing on a motor with a VSD, what essential step must be taken?',
       options: [
         'Run the motor at half speed',
         'Disconnect the motor from the VSD',
@@ -98,12 +100,14 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
       correctAnswer: 'Verify starting current and protection settings',
     },
     {
-      question: 'At what bearing temperature rise above ambient should immediate investigation be triggered?',
+      question:
+        'At what bearing temperature rise above ambient should immediate investigation be triggered?',
       options: ['20°C', '30°C', '40°C', '50°C'],
       correctAnswer: '40°C',
     },
     {
-      question: 'During commissioning, motor rotation direction should be verified using which method first?',
+      question:
+        'During commissioning, motor rotation direction should be verified using which method first?',
       options: [
         'Running the motor at full speed',
         'Phase rotation meter before starting',
@@ -123,7 +127,8 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
       correctAnswer: 'All test results including IR, continuity, polarity, and functional tests',
     },
     {
-      question: 'The Polarisation Index (PI) test compares IR readings taken at which time intervals?',
+      question:
+        'The Polarisation Index (PI) test compares IR readings taken at which time intervals?',
       options: [
         '30 seconds and 1 minute',
         '1 minute and 10 minutes',
@@ -143,7 +148,8 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
       correctAnswer: '5%',
     },
     {
-      question: 'When using thermal imaging during commissioning, hot spots should not exceed the motor winding temperature rise class limit plus:',
+      question:
+        'When using thermal imaging during commissioning, hot spots should not exceed the motor winding temperature rise class limit plus:',
       options: ['10°C', '20°C', '30°C', '40°C'],
       correctAnswer: '10°C',
     },
@@ -153,7 +159,7 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
     {
       question: 'Why must motors be isolated from VSDs before IR testing?',
       answer:
-        'Variable Speed Drives (VSDs) contain sensitive electronic components including IGBTs, capacitors, and control circuits that can be permanently damaged by the high DC test voltages used in insulation resistance testing (typically 500V-1000V DC). The VSD output terminals should be disconnected from the motor cables, and the test performed between motor windings and earth. Always follow the VSD manufacturer\'s guidelines and ensure all capacitors are discharged before testing.',
+        "Variable Speed Drives (VSDs) contain sensitive electronic components including IGBTs, capacitors, and control circuits that can be permanently damaged by the high DC test voltages used in insulation resistance testing (typically 500V-1000V DC). The VSD output terminals should be disconnected from the motor cables, and the test performed between motor windings and earth. Always follow the VSD manufacturer's guidelines and ensure all capacitors are discharged before testing.",
     },
     {
       question: 'How do environmental conditions affect insulation resistance readings?',
@@ -187,7 +193,12 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -203,7 +214,9 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10">
             <Settings className="w-8 h-8 text-elec-yellow" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Motor Commissioning and Load Testing</h1>
+          <h1 className="text-2xl font-bold text-foreground">
+            Motor Commissioning and Load Testing
+          </h1>
           <p className="text-muted-foreground">
             Complete guide to motor verification, testing procedures, and documentation per BS 7671
           </p>
@@ -218,9 +231,9 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
               <p className="text-sm text-muted-foreground">
                 Motor commissioning is a critical process that ensures safe and reliable operation
                 throughout the motor's service life. This section covers the systematic approach to
-                commissioning, from pre-energisation checks through to full load testing and handover
-                documentation. All procedures align with BS 7671, IEEE 43 for insulation testing, and
-                ISO 10816 for vibration assessment.
+                commissioning, from pre-energisation checks through to full load testing and
+                handover documentation. All procedures align with BS 7671, IEEE 43 for insulation
+                testing, and ISO 10816 for vibration assessment.
               </p>
             </div>
           </div>
@@ -352,34 +365,65 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
             <h3 className="font-medium text-foreground mb-3">IR Test Procedure</h3>
             <ol className="space-y-2 text-sm text-muted-foreground mb-4">
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">1</span>
-                <span><strong className="text-foreground">Isolate and prove dead</strong> - Use approved voltage indicator before and after testing</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  1
+                </span>
+                <span>
+                  <strong className="text-foreground">Isolate and prove dead</strong> - Use approved
+                  voltage indicator before and after testing
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">2</span>
-                <span><strong className="text-foreground">Disconnect from VSD/soft starter</strong> - Essential to prevent damage to electronic components</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  2
+                </span>
+                <span>
+                  <strong className="text-foreground">Disconnect from VSD/soft starter</strong> -
+                  Essential to prevent damage to electronic components
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">3</span>
-                <span><strong className="text-foreground">Record ambient conditions</strong> - Temperature and humidity affect readings</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  3
+                </span>
+                <span>
+                  <strong className="text-foreground">Record ambient conditions</strong> -
+                  Temperature and humidity affect readings
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">4</span>
-                <span><strong className="text-foreground">Test phase to earth</strong> - All phases connected together, test to motor frame/earth</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  4
+                </span>
+                <span>
+                  <strong className="text-foreground">Test phase to earth</strong> - All phases
+                  connected together, test to motor frame/earth
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">5</span>
-                <span><strong className="text-foreground">Test phase to phase</strong> - For wye-connected motors, test between each phase pair</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  5
+                </span>
+                <span>
+                  <strong className="text-foreground">Test phase to phase</strong> - For
+                  wye-connected motors, test between each phase pair
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">6</span>
-                <span><strong className="text-foreground">Discharge capacitance</strong> - Short windings to earth after testing, maintain for at least 4x test duration</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  6
+                </span>
+                <span>
+                  <strong className="text-foreground">Discharge capacitance</strong> - Short
+                  windings to earth after testing, maintain for at least 4x test duration
+                </span>
               </li>
             </ol>
 
             <h3 className="font-medium text-foreground mb-3">Polarisation Index (PI) Test</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              For motors above 1kW, the PI test provides additional information about insulation condition:
+              For motors above 1kW, the PI test provides additional information about insulation
+              condition:
             </p>
             <div className="bg-background/50 rounded-lg p-4 mb-4">
               <p className="text-center text-lg text-elec-yellow mb-3 font-mono">
@@ -426,8 +470,8 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
             <h3 className="font-medium text-foreground mb-3">No-Load Test (Running Light)</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              The no-load test verifies correct rotation, measures magnetising current, and identifies
-              mechanical issues before coupling to the driven equipment.
+              The no-load test verifies correct rotation, measures magnetising current, and
+              identifies mechanical issues before coupling to the driven equipment.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -446,9 +490,16 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
               <div className="bg-background/50 rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-3">Expected Values</h4>
                 <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>- No-load current: <span className="text-elec-yellow">25-50% FLC</span></li>
-                  <li>- Phase current imbalance: <span className="text-elec-yellow">&lt; 5%</span></li>
-                  <li>- Speed: Within <span className="text-elec-yellow">plus or minus 1%</span> of nameplate</li>
+                  <li>
+                    - No-load current: <span className="text-elec-yellow">25-50% FLC</span>
+                  </li>
+                  <li>
+                    - Phase current imbalance: <span className="text-elec-yellow">&lt; 5%</span>
+                  </li>
+                  <li>
+                    - Speed: Within <span className="text-elec-yellow">plus or minus 1%</span> of
+                    nameplate
+                  </li>
                   <li>- No abnormal vibration or noise</li>
                   <li>- Bearing temperature stable</li>
                 </ul>
@@ -460,17 +511,17 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
               <div className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-muted-foreground">
-                  <strong className="text-orange-300">Caution:</strong> The locked rotor test generates
-                  significant heat and current. Test duration must be limited (typically &lt; 10 seconds)
-                  and motor must be allowed to cool between tests. Some installations prohibit this test
-                  - consult manufacturer guidance.
+                  <strong className="text-orange-300">Caution:</strong> The locked rotor test
+                  generates significant heat and current. Test duration must be limited (typically
+                  &lt; 10 seconds) and motor must be allowed to cool between tests. Some
+                  installations prohibit this test - consult manufacturer guidance.
                 </p>
               </div>
             </div>
 
             <p className="text-sm text-muted-foreground mb-4">
-              The locked rotor test measures starting current to verify protection settings. The rotor
-              is mechanically prevented from rotating while supply voltage is applied briefly.
+              The locked rotor test measures starting current to verify protection settings. The
+              rotor is mechanically prevented from rotating while supply voltage is applied briefly.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -534,8 +585,8 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
 
             <h3 className="font-medium text-foreground mb-3">ISO 10816 Vibration Severity Zones</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              ISO 10816-3 classifies vibration severity for rotating machines. Measurements are taken
-              in velocity (mm/s RMS) at bearing housings in three planes.
+              ISO 10816-3 classifies vibration severity for rotating machines. Measurements are
+              taken in velocity (mm/s RMS) at bearing housings in three planes.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4 mb-4">
@@ -550,22 +601,38 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
                   </thead>
                   <tbody className="text-muted-foreground">
                     <tr className="border-b border-white/5">
-                      <td className="py-2"><span className="bg-green-600 px-2 py-0.5 rounded text-white text-xs">Zone A</span></td>
+                      <td className="py-2">
+                        <span className="bg-green-600 px-2 py-0.5 rounded text-white text-xs">
+                          Zone A
+                        </span>
+                      </td>
                       <td className="py-2">&lt; 1.8</td>
                       <td className="py-2">Newly commissioned machines</td>
                     </tr>
                     <tr className="border-b border-white/5">
-                      <td className="py-2"><span className="bg-blue-600 px-2 py-0.5 rounded text-white text-xs">Zone B</span></td>
+                      <td className="py-2">
+                        <span className="bg-blue-600 px-2 py-0.5 rounded text-white text-xs">
+                          Zone B
+                        </span>
+                      </td>
                       <td className="py-2">1.8 - 4.5</td>
                       <td className="py-2">Acceptable for unrestricted operation</td>
                     </tr>
                     <tr className="border-b border-white/5">
-                      <td className="py-2"><span className="bg-amber-600 px-2 py-0.5 rounded text-white text-xs">Zone C</span></td>
+                      <td className="py-2">
+                        <span className="bg-amber-600 px-2 py-0.5 rounded text-white text-xs">
+                          Zone C
+                        </span>
+                      </td>
                       <td className="py-2">4.5 - 7.1</td>
                       <td className="py-2">Restricted operation, investigate</td>
                     </tr>
                     <tr>
-                      <td className="py-2"><span className="bg-red-600 px-2 py-0.5 rounded text-white text-xs">Zone D</span></td>
+                      <td className="py-2">
+                        <span className="bg-red-600 px-2 py-0.5 rounded text-white text-xs">
+                          Zone D
+                        </span>
+                      </td>
                       <td className="py-2">&gt; 7.1</td>
                       <td className="py-2">Unacceptable, damage possible</td>
                     </tr>
@@ -573,7 +640,8 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
                 </table>
               </div>
               <p className="text-muted-foreground text-xs mt-2">
-                * Values shown for Group 2 machines (medium-sized, 15-300 kW). Consult ISO 10816-3 for specific machine classes.
+                * Values shown for Group 2 machines (medium-sized, 15-300 kW). Consult ISO 10816-3
+                for specific machine classes.
               </p>
             </div>
 
@@ -590,10 +658,20 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
               <div className="bg-background/50 rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-3">Temperature Limits</h4>
                 <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>- Maximum absolute: <span className="text-elec-yellow">80 degrees C</span> (grease lubricated)</li>
-                  <li>- Temperature rise above ambient: <span className="text-elec-yellow">&lt; 40 degrees C</span></li>
-                  <li>- Stabilisation time: <span className="text-elec-yellow">1-2 hours</span></li>
-                  <li>- Investigate if: <span className="text-red-400">&gt; 40 degrees C rise</span></li>
+                  <li>
+                    - Maximum absolute: <span className="text-elec-yellow">80 degrees C</span>{' '}
+                    (grease lubricated)
+                  </li>
+                  <li>
+                    - Temperature rise above ambient:{' '}
+                    <span className="text-elec-yellow">&lt; 40 degrees C</span>
+                  </li>
+                  <li>
+                    - Stabilisation time: <span className="text-elec-yellow">1-2 hours</span>
+                  </li>
+                  <li>
+                    - Investigate if: <span className="text-red-400">&gt; 40 degrees C rise</span>
+                  </li>
                 </ul>
               </div>
 
@@ -638,31 +716,56 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
             <p className="text-sm text-muted-foreground mb-4">
-              After successful no-load testing, the motor is coupled to the driven equipment and load
-              tested to verify performance under operating conditions.
+              After successful no-load testing, the motor is coupled to the driven equipment and
+              load tested to verify performance under operating conditions.
             </p>
 
             <h3 className="font-medium text-foreground mb-3">Load Test Procedure</h3>
             <ol className="space-y-2 text-sm text-muted-foreground mb-4">
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">1</span>
-                <span><strong className="text-foreground">Verify coupling alignment</strong> - Check angular and parallel alignment before restarting</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  1
+                </span>
+                <span>
+                  <strong className="text-foreground">Verify coupling alignment</strong> - Check
+                  angular and parallel alignment before restarting
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">2</span>
-                <span><strong className="text-foreground">Start unloaded</strong> - Run motor-pump/fan system without process load initially</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  2
+                </span>
+                <span>
+                  <strong className="text-foreground">Start unloaded</strong> - Run motor-pump/fan
+                  system without process load initially
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">3</span>
-                <span><strong className="text-foreground">Apply load incrementally</strong> - 25%, 50%, 75%, then 100% load stages</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  3
+                </span>
+                <span>
+                  <strong className="text-foreground">Apply load incrementally</strong> - 25%, 50%,
+                  75%, then 100% load stages
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">4</span>
-                <span><strong className="text-foreground">Record parameters at each stage</strong> - Current, power, vibration, temperature</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  4
+                </span>
+                <span>
+                  <strong className="text-foreground">Record parameters at each stage</strong> -
+                  Current, power, vibration, temperature
+                </span>
               </li>
               <li className="flex gap-3">
-                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">5</span>
-                <span><strong className="text-foreground">Run at full load</strong> - Minimum 2 hours for thermal stabilisation</span>
+                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  5
+                </span>
+                <span>
+                  <strong className="text-foreground">Run at full load</strong> - Minimum 2 hours
+                  for thermal stabilisation
+                </span>
               </li>
             </ol>
 
@@ -691,7 +794,9 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
                     <tr className="border-b border-white/5">
                       <td className="py-2">Power Factor</td>
                       <td className="py-2 text-green-400">0.85 - 0.95 at full load</td>
-                      <td className="py-2 text-amber-400">&lt; 0.85 - May indicate light loading</td>
+                      <td className="py-2 text-amber-400">
+                        &lt; 0.85 - May indicate light loading
+                      </td>
                     </tr>
                     <tr>
                       <td className="py-2">Starting Current</td>
@@ -704,12 +809,15 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
             </div>
 
             <div className="bg-background/50 rounded-lg p-4">
-              <h4 className="font-medium text-foreground mb-3">Phase Current Imbalance Calculation</h4>
+              <h4 className="font-medium text-foreground mb-3">
+                Phase Current Imbalance Calculation
+              </h4>
               <div className="bg-elec-yellow/10 rounded p-3 font-mono text-sm text-elec-yellow mb-3">
                 <p>Imbalance % = [(Max deviation from average) / Average current] x 100</p>
               </div>
               <p className="text-sm text-muted-foreground">
-                Example: L1=48A, L2=51A, L3=50A. Average=49.67A. Max deviation=1.67A. Imbalance = 3.4%
+                Example: L1=48A, L2=51A, L3=50A. Average=49.67A. Max deviation=1.67A. Imbalance =
+                3.4%
               </p>
             </div>
           </div>
@@ -735,7 +843,9 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
             <h3 className="font-medium text-foreground mb-3">BS 7671 Required Documentation</h3>
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="bg-background/50 rounded-lg p-4">
-                <h4 className="font-medium text-foreground mb-3">Electrical Installation Certificate</h4>
+                <h4 className="font-medium text-foreground mb-3">
+                  Electrical Installation Certificate
+                </h4>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li>- Design details and characteristics</li>
                   <li>- Installation details</li>
@@ -758,7 +868,9 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
               </div>
             </div>
 
-            <h3 className="font-medium text-foreground mb-3">Motor-Specific Commissioning Records</h3>
+            <h3 className="font-medium text-foreground mb-3">
+              Motor-Specific Commissioning Records
+            </h3>
             <div className="bg-background/50 rounded-lg p-4 mb-4">
               <div className="grid md:grid-cols-3 gap-4 text-sm">
                 <div>
@@ -885,7 +997,10 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
           <h2 className="text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {faqItems.map((faq, index) => (
-              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+              <div
+                key={index}
+                className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4"
+              >
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
                 <p className="text-sm text-muted-foreground">{faq.answer}</p>
               </div>
@@ -913,7 +1028,12 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-2/section-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Forward/Reverse Control

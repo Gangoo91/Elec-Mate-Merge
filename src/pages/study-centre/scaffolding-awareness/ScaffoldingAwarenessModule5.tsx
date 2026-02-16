@@ -1,45 +1,45 @@
-import { ArrowLeft, ShieldCheck, AlertTriangle, Wind, HardHat } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ShieldCheck, AlertTriangle, Wind, HardHat } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Safe Working on Scaffolds",
+    title: 'Safe Working on Scaffolds',
     icon: ShieldCheck,
     description:
-      "Access and egress, maintaining 3 points of contact, keeping platforms clear, load limits, and not overreaching",
+      'Access and egress, maintaining 3 points of contact, keeping platforms clear, load limits, and not overreaching',
   },
   {
     id: 2,
-    title: "Common Scaffold Hazards",
+    title: 'Common Scaffold Hazards',
     icon: AlertTriangle,
     description:
-      "Falls from height, falling objects, scaffold collapse, electrocution from overhead lines, slips/trips, and crushing",
+      'Falls from height, falling objects, scaffold collapse, electrocution from overhead lines, slips/trips, and crushing',
   },
   {
     id: 3,
-    title: "Weather & Environmental Conditions",
+    title: 'Weather & Environmental Conditions',
     icon: Wind,
     description:
-      "Wind speed limits, ice and frost, rain, lightning, and when to stop work on scaffolds",
+      'Wind speed limits, ice and frost, rain, lightning, and when to stop work on scaffolds',
   },
   {
     id: 4,
-    title: "Loading, Storage & Prohibited Actions",
+    title: 'Loading, Storage & Prohibited Actions',
     icon: HardHat,
     description:
-      "Maximum bay loads, material storage rules, never modify scaffolds, prohibited activities, and scaffold user responsibilities",
+      'Maximum bay loads, material storage rules, never modify scaffolds, prohibited activities, and scaffold user responsibilities',
   },
 ];
 
 export default function ScaffoldingAwarenessModule5() {
   useSEO({
-    title: "Module 5: Safe Use & Hazard Awareness | Scaffolding Awareness",
+    title: 'Module 5: Safe Use & Hazard Awareness | Scaffolding Awareness',
     description:
-      "Learn how to work safely on scaffolds, identify common hazards, understand weather limits, and follow loading and storage rules.",
+      'Learn how to work safely on scaffolds, identify common hazards, understand weather limits, and follow loading and storage rules.',
   });
 
   return (

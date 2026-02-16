@@ -3,13 +3,13 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule2Section1LearningOutcomes = () => {
   const outcomes = [
-    "Define what a communication protocol is in smart home systems",
-    "Identify the most common wireless protocols used in smart homes",
-    "Explain the differences in range, speed, and power consumption",
-    "Recognise why protocols affect device compatibility",
-    "Compare scenarios where different protocols are best applied",
-    "Understand the role of mesh networking in smart home systems",
-    "Evaluate the benefits and limitations of each protocol type"
+    'Define what a communication protocol is in smart home systems',
+    'Identify the most common wireless protocols used in smart homes',
+    'Explain the differences in range, speed, and power consumption',
+    'Recognise why protocols affect device compatibility',
+    'Compare scenarios where different protocols are best applied',
+    'Understand the role of mesh networking in smart home systems',
+    'Evaluate the benefits and limitations of each protocol type',
   ];
 
   return (

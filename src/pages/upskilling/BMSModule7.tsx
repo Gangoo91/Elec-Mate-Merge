@@ -7,40 +7,40 @@ const BMSModule7 = () => {
   const sections = [
     {
       id: 1,
-      title: "Design Phase: IO Lists, Schematics, Network Topology",
+      title: 'Design Phase: IO Lists, Schematics, Network Topology',
       icon: FileText,
-      description: "System design documentation and planning"
+      description: 'System design documentation and planning',
     },
     {
       id: 2,
-      title: "Programming Methods: Function Blocks, Boolean Logic, PID",
+      title: 'Programming Methods: Function Blocks, Boolean Logic, PID',
       icon: Code,
-      description: "Control programming techniques"
+      description: 'Control programming techniques',
     },
     {
       id: 3,
-      title: "Addressing and Device Mapping",
+      title: 'Addressing and Device Mapping',
       icon: MapPin,
-      description: "Device configuration and network addressing"
+      description: 'Device configuration and network addressing',
     },
     {
       id: 4,
-      title: "Software Upload and Controller Setup",
+      title: 'Software Upload and Controller Setup',
       icon: Upload,
-      description: "System configuration and deployment"
+      description: 'System configuration and deployment',
     },
     {
       id: 5,
-      title: "Pre-Functional and Functional Commissioning",
+      title: 'Pre-Functional and Functional Commissioning',
       icon: CheckCircle,
-      description: "Testing and commissioning procedures"
+      description: 'Testing and commissioning procedures',
     },
     {
       id: 6,
-      title: "Client Handover and Documentation Requirements",
+      title: 'Client Handover and Documentation Requirements',
       icon: Users,
-      description: "Project completion and handover"
-    }
+      description: 'Project completion and handover',
+    },
   ];
 
   return (

@@ -11,7 +11,7 @@ export const generateCertificateNumber = async (
 ): Promise<string> => {
   try {
     const { data, error } = await supabase.rpc('generate_certificate_number', {
-      p_report_type: reportType
+      p_report_type: reportType,
     });
 
     if (error) {
@@ -31,14 +31,12 @@ export const generateCertificateNumber = async (
  * Fallback method using crypto.randomUUID() for guaranteed uniqueness
  * Only used if database function fails
  */
-const generateFallbackCertificateNumber = (
-  reportType: 'eicr' | 'eic' | 'minor-works'
-): string => {
+const generateFallbackCertificateNumber = (reportType: 'eicr' | 'eic' | 'minor-works'): string => {
   const year = new Date().getFullYear();
   const prefix = reportType === 'eicr' ? 'EICR' : reportType === 'eic' ? 'EIC' : 'MW';
-  
+
   // Use crypto.randomUUID() and take first 6 characters for guaranteed uniqueness
   const uniqueId = crypto.randomUUID().replace(/-/g, '').substring(0, 6).toUpperCase();
-  
+
   return `${prefix}-${year}-${uniqueId}`;
 };

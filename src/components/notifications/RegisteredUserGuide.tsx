@@ -1,4 +1,13 @@
-import { CheckCircle2, ExternalLink, Shield, Zap, Award, ArrowRight, Clock, BadgeCheck } from 'lucide-react';
+import {
+  CheckCircle2,
+  ExternalLink,
+  Shield,
+  Zap,
+  Award,
+  ArrowRight,
+  Clock,
+  BadgeCheck,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { PORTAL_LINKS } from '@/utils/portalLinks';
@@ -65,7 +74,9 @@ export const RegisteredUserGuide = ({ showNiceic, showNapit }: RegisteredUserGui
                     </div>
                     <div className="text-left">
                       <span className="block text-lg font-bold">NICEIC Online</span>
-                      <span className="block text-xs font-medium opacity-70">Certification Portal</span>
+                      <span className="block text-xs font-medium opacity-70">
+                        Certification Portal
+                      </span>
                     </div>
                   </div>
                   <ArrowRight className="w-5 h-5 opacity-60" />
@@ -87,7 +98,9 @@ export const RegisteredUserGuide = ({ showNiceic, showNapit }: RegisteredUserGui
                     </div>
                     <div className="text-left">
                       <span className="block text-lg font-bold">NAPIT Direct</span>
-                      <span className="block text-xs font-medium opacity-70">Certification Portal</span>
+                      <span className="block text-xs font-medium opacity-70">
+                        Certification Portal
+                      </span>
                     </div>
                   </div>
                   <ArrowRight className="w-5 h-5 opacity-60" />

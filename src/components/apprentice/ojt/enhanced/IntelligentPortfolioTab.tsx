@@ -1,13 +1,22 @@
-
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Brain, FileText, Upload, MessageSquare, Lightbulb, CheckCircle, AlertCircle, Send, Sparkles } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import ChatMessageRenderer from "./ChatMessageRenderer";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import {
+  Brain,
+  FileText,
+  Upload,
+  MessageSquare,
+  Lightbulb,
+  CheckCircle,
+  AlertCircle,
+  Send,
+  Sparkles,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import ChatMessageRenderer from './ChatMessageRenderer';
 
 interface ChatMessage {
   id: string;
@@ -23,38 +32,38 @@ const IntelligentPortfolioTab = () => {
 
   const portfolioSuggestions = [
     {
-      category: "Evidence Collection",
+      category: 'Evidence Collection',
       suggestions: [
-        "Take before/after photos of installations",
-        "Document safety procedures followed",
-        "Record testing results and measurements",
-        "Note any challenges and how you overcame them"
+        'Take before/after photos of installations',
+        'Document safety procedures followed',
+        'Record testing results and measurements',
+        'Note any challenges and how you overcame them',
       ],
       icon: FileText,
-      color: "blue"
+      color: 'blue',
     },
     {
-      category: "Reflection & Learning",
+      category: 'Reflection & Learning',
       suggestions: [
-        "Explain what you learned from each task",
-        "Describe how you applied regulations",
-        "Note skills you developed or improved",
-        "Identify areas for future development"
+        'Explain what you learned from each task',
+        'Describe how you applied regulations',
+        'Note skills you developed or improved',
+        'Identify areas for future development',
       ],
       icon: Lightbulb,
-      color: "yellow"
+      color: 'yellow',
     },
     {
-      category: "Professional Development",
+      category: 'Professional Development',
       suggestions: [
-        "Link work to NVQ learning outcomes",
-        "Reference relevant BS 7671 regulations",
-        "Show progression in your skills",
-        "Document feedback from supervisors"
+        'Link work to NVQ learning outcomes',
+        'Reference relevant BS 7671 regulations',
+        'Show progression in your skills',
+        'Document feedback from supervisors',
       ],
       icon: CheckCircle,
-      color: "green"
-    }
+      color: 'green',
+    },
   ];
 
   const handleSendMessage = async () => {
@@ -64,10 +73,10 @@ const IntelligentPortfolioTab = () => {
       id: Date.now().toString(),
       content: currentMessage.trim(),
       isUser: true,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setChatMessages(prev => [...prev, userMessage]);
+    setChatMessages((prev) => [...prev, userMessage]);
     setCurrentMessage('');
     setIsLoading(true);
 
@@ -75,8 +84,8 @@ const IntelligentPortfolioTab = () => {
       const { data, error } = await supabase.functions.invoke('chat-assistant', {
         body: {
           message: currentMessage.trim(),
-          context: 'portfolio development and apprenticeship guidance'
-        }
+          context: 'portfolio development and apprenticeship guidance',
+        },
       });
 
       if (error) throw error;
@@ -85,22 +94,23 @@ const IntelligentPortfolioTab = () => {
         id: (Date.now() + 1).toString(),
         content: data.response || "I'm here to help with your portfolio development! ⚡",
         isUser: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setChatMessages(prev => [...prev, aiMessage]);
+      setChatMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
       toast.error('Sorry, I encountered an issue. Please try again.');
-      
+
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        content: "I apologise, but I'm having trouble responding right now. Please try your question again in a moment. 🔧",
+        content:
+          "I apologise, but I'm having trouble responding right now. Please try your question again in a moment. 🔧",
         isUser: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      
-      setChatMessages(prev => [...prev, errorMessage]);
+
+      setChatMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -114,17 +124,20 @@ const IntelligentPortfolioTab = () => {
   };
 
   const quickQuestions = [
-    "How should I document this electrical installation?",
-    "What reflection should I include for testing procedures?",
-    "How do I link this work to my NVQ outcomes?",
-    "What evidence do I need for my portfolio assessment?"
+    'How should I document this electrical installation?',
+    'What reflection should I include for testing procedures?',
+    'How do I link this work to my NVQ outcomes?',
+    'What evidence do I need for my portfolio assessment?',
   ];
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {portfolioSuggestions.map((section, index) => (
-          <Card key={index} className={`border-${section.color}-500/30 bg-gradient-to-br from-${section.color}-500/10 to-${section.color}-600/10`}>
+          <Card
+            key={index}
+            className={`border-${section.color}-500/30 bg-gradient-to-br from-${section.color}-500/10 to-${section.color}-600/10`}
+          >
             <CardHeader>
               <CardTitle className={`text-${section.color}-400 flex items-center gap-2`}>
                 <section.icon className="h-5 w-5" />
@@ -168,7 +181,8 @@ const IntelligentPortfolioTab = () => {
                     Welcome to your AI Portfolio Assistant! ⚡
                   </h3>
                   <p className="text-white mb-6 max-w-md">
-                    Ask me anything about portfolio development, documentation, or apprenticeship guidance. I'm here to help you succeed!
+                    Ask me anything about portfolio development, documentation, or apprenticeship
+                    guidance. I'm here to help you succeed!
                   </p>
                   <div className="space-y-3">
                     <p className="text-sm text-white">💡 Try asking:</p>
@@ -201,8 +215,14 @@ const IntelligentPortfolioTab = () => {
                         <div className="flex items-center gap-3 text-sm text-white">
                           <div className="flex space-x-1">
                             <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"></div>
-                            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                            <div
+                              className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
+                              style={{ animationDelay: '0.1s' }}
+                            ></div>
+                            <div
+                              className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
+                              style={{ animationDelay: '0.2s' }}
+                            ></div>
                           </div>
                           <span>Thinking...</span>
                         </div>

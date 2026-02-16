@@ -23,7 +23,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
     finishQuiz,
     getCurrentQuestion,
     getProgress,
-    setTimeElapsed
+    setTimeElapsed,
   } = useQuizSession();
 
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -39,7 +39,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
   // Timer effect
   useEffect(() => {
     const timer = setInterval(() => {
-      setTotalElapsed(prev => prev + 1);
+      setTotalElapsed((prev) => prev + 1);
       setTimeElapsed(totalElapsed);
     }, 1000);
 
@@ -91,10 +91,14 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return 'text-green-400 bg-green-400/10 border-green-400/20';
-      case 'Intermediate': return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
-      case 'Advanced': return 'text-red-400 bg-red-400/10 border-red-400/20';
-      default: return 'text-white/80 bg-gray-400/10 border-gray-400/20';
+      case 'Beginner':
+        return 'text-green-400 bg-green-400/10 border-green-400/20';
+      case 'Intermediate':
+        return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
+      case 'Advanced':
+        return 'text-red-400 bg-red-400/10 border-red-400/20';
+      default:
+        return 'text-white/80 bg-gray-400/10 border-gray-400/20';
     }
   };
 
@@ -124,9 +128,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
             <span className="text-sm text-white/80">
               Question {progress.current} of {progress.total}
             </span>
-            <span className="text-sm text-white/80">
-              {progress.percentage}% Complete
-            </span>
+            <span className="text-sm text-white/80">{progress.percentage}% Complete</span>
           </div>
           <Progress value={progress.percentage} className="w-full" />
         </div>
@@ -152,14 +154,14 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                      selectedAnswer === index
-                        ? 'border-elec-yellow bg-elec-yellow'
-                        : 'border-neutral-500'
-                    }`}>
-                      {selectedAnswer === index && (
-                        <CheckCircle className="h-4 w-4 text-black" />
-                      )}
+                    <div
+                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                        selectedAnswer === index
+                          ? 'border-elec-yellow bg-elec-yellow'
+                          : 'border-neutral-500'
+                      }`}
+                    >
+                      {selectedAnswer === index && <CheckCircle className="h-4 w-4 text-black" />}
                     </div>
                     <span className="flex-1">{option}</span>
                   </div>
@@ -174,7 +176,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
                   Category: <span className="text-foreground">{currentQuestion.category}</span>
                 </p>
               </div>
-              
+
               <div className="flex items-center justify-center gap-4">
                 <Button
                   variant="outline"
@@ -201,7 +203,10 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
 
         {/* Footer Info */}
         <div className="text-center text-sm text-white/60">
-          <p>Take your time and read each question carefully. You can navigate back to previous questions.</p>
+          <p>
+            Take your time and read each question carefully. You can navigate back to previous
+            questions.
+          </p>
         </div>
       </div>
     </div>

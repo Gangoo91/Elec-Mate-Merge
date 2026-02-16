@@ -88,8 +88,8 @@ export const CertificateImportDialog = ({
         <DialogHeader>
           <DialogTitle>Import Certificates</DialogTitle>
           <DialogDescription>
-            Import certificate metadata from a CSV or Excel file. Customers will be automatically matched or
-            created.
+            Import certificate metadata from a CSV or Excel file. Customers will be automatically
+            matched or created.
           </DialogDescription>
         </DialogHeader>
 
@@ -103,12 +103,7 @@ export const CertificateImportDialog = ({
                 <p className="text-sm text-muted-foreground">
                   Download our sample CSV to see the required format and example data.
                 </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={downloadSampleCSV}
-                  className="gap-2"
-                >
+                <Button variant="outline" size="sm" onClick={downloadSampleCSV} className="gap-2">
                   <Download className="h-4 w-4" />
                   Download Sample CSV
                 </Button>
@@ -120,9 +115,15 @@ export const CertificateImportDialog = ({
           <div className="rounded-lg border border-border p-4">
             <h4 className="text-sm font-medium mb-2">Required Fields:</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• <strong>Certificate Number</strong> - Must be unique</li>
-              <li>• <strong>Customer Name</strong> - Will be matched or created automatically</li>
-              <li>• <strong>Report Type</strong> - EICR, EIC, or Minor Works</li>
+              <li>
+                • <strong>Certificate Number</strong> - Must be unique
+              </li>
+              <li>
+                • <strong>Customer Name</strong> - Will be matched or created automatically
+              </li>
+              <li>
+                • <strong>Report Type</strong> - EICR, EIC, or Minor Works
+              </li>
             </ul>
             <h4 className="text-sm font-medium mt-4 mb-2">Optional Fields:</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
@@ -172,7 +173,8 @@ export const CertificateImportDialog = ({
                 <Alert>
                   <CheckCircle2 className="h-4 w-4" />
                   <AlertDescription>
-                    Successfully imported {importResult.success} certificate{importResult.success > 1 ? 's' : ''}
+                    Successfully imported {importResult.success} certificate
+                    {importResult.success > 1 ? 's' : ''}
                   </AlertDescription>
                 </Alert>
               )}
@@ -183,7 +185,8 @@ export const CertificateImportDialog = ({
                   <AlertDescription>
                     <div className="space-y-2">
                       <p className="font-medium">
-                        {importResult.failed} certificate{importResult.failed > 1 ? 's' : ''} failed to import:
+                        {importResult.failed} certificate{importResult.failed > 1 ? 's' : ''} failed
+                        to import:
                       </p>
                       <div className="max-h-40 overflow-y-auto space-y-1">
                         {importResult.errors.slice(0, 10).map((error, idx) => (
@@ -196,7 +199,8 @@ export const CertificateImportDialog = ({
                         ))}
                         {importResult.errors.length > 10 && (
                           <p className="text-xs italic">
-                            ... and {importResult.errors.length - 10} more error{importResult.errors.length - 10 > 1 ? 's' : ''}
+                            ... and {importResult.errors.length - 10} more error
+                            {importResult.errors.length - 10 > 1 ? 's' : ''}
                           </p>
                         )}
                       </div>
@@ -212,10 +216,7 @@ export const CertificateImportDialog = ({
             <Button variant="outline" onClick={handleClose} disabled={isImporting}>
               {importResult ? 'Close' : 'Cancel'}
             </Button>
-            <Button
-              onClick={handleImport}
-              disabled={!selectedFile || isImporting}
-            >
+            <Button onClick={handleImport} disabled={!selectedFile || isImporting}>
               {isImporting ? 'Importing...' : 'Import Certificates'}
             </Button>
           </div>

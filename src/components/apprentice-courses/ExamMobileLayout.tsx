@@ -8,11 +8,11 @@
  * - All 4 options visible without scrolling
  */
 
-import { useState } from "react";
-import { ArrowLeft, ArrowRight, Flag, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { ArrowLeft, ArrowRight, Flag, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Link } from 'react-router-dom';
 
 interface ExamMobileLayoutProps {
   examTitle: string;
@@ -47,7 +47,7 @@ export const ExamMobileLayout = ({
   onSubmit,
   exitPath,
   formatTime,
-  children
+  children,
 }: ExamMobileLayoutProps) => {
   const [showQuestionGrid, setShowQuestionGrid] = useState(false);
   const progressPercentage = (answeredQuestions / totalQuestions) * 100;
@@ -90,15 +90,15 @@ export const ExamMobileLayout = ({
         </div>
 
         {/* Timer */}
-        <div className={`font-mono text-sm font-bold ${timeRemaining < 300 ? 'text-red-400 animate-pulse' : 'text-elec-yellow'}`}>
+        <div
+          className={`font-mono text-sm font-bold ${timeRemaining < 300 ? 'text-red-400 animate-pulse' : 'text-elec-yellow'}`}
+        >
           {formatTime(timeRemaining)}
         </div>
       </div>
 
       {/* Main Content - fills remaining space with padding for footer */}
-      <div className="flex-1 overflow-y-auto px-4 pt-4 pb-20">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto px-4 pt-4 pb-20">{children}</div>
 
       {/* Compact Footer - Fixed at bottom */}
       <div className="fixed bottom-0 left-0 right-0 h-[52px] flex items-center justify-between px-3 py-2 bg-[#0d0d0d] border-t border-white/5 z-50 lg:hidden">
@@ -179,10 +179,10 @@ export const ExamMobileLayout = ({
                   }}
                   className={`aspect-square text-sm font-bold rounded-xl border-2 transition-all touch-manipulation active:scale-95 relative ${
                     isCurrent
-                      ? "bg-elec-yellow text-black border-elec-yellow"
+                      ? 'bg-elec-yellow text-black border-elec-yellow'
                       : isAnswered
-                      ? "bg-green-500/20 text-green-400 border-green-500/40"
-                      : "bg-white/5 text-white/60 border-white/10"
+                        ? 'bg-green-500/20 text-green-400 border-green-500/40'
+                        : 'bg-white/5 text-white/60 border-white/10'
                   }`}
                 >
                   {index + 1}

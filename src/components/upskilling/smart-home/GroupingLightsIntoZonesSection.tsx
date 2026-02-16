@@ -12,8 +12,8 @@ export const GroupingLightsIntoZonesSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Grouping allows multiple lights to be controlled as a single unit, creating logical areas that 
-          can be managed together for convenience and efficiency.
+          Grouping allows multiple lights to be controlled as a single unit, creating logical areas
+          that can be managed together for convenience and efficiency.
         </p>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -72,8 +72,8 @@ export const GroupingLightsIntoZonesSection = () => {
 
         <div className="bg-blue-900/20 border border-blue-600/50 p-4 rounded-lg">
           <p className="text-blue-200 text-sm">
-            <strong>Best Practice:</strong> Name groups clearly and logically. Use descriptive names that all users 
-            will understand, such as "Kitchen" rather than "Zone 3".
+            <strong>Best Practice:</strong> Name groups clearly and logically. Use descriptive names
+            that all users will understand, such as "Kitchen" rather than "Zone 3".
           </p>
         </div>
       </CardContent>

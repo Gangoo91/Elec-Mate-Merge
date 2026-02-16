@@ -17,9 +17,10 @@ export const NetworkSpeedScenario = () => {
             <div>
               <h4 className="font-semibold text-orange-300 mb-2">The Challenge</h4>
               <p className="text-orange-100 text-sm leading-relaxed">
-                DesignFlow Creative started with 10 employees working on basic graphics. Five years later, 
-                they have 50 staff creating 4K videos, 3D animations, and VR content. Their original 
-                100 Mbps network can barely handle current needs, and they&apos;re planning to double in size again.
+                DesignFlow Creative started with 10 employees working on basic graphics. Five years
+                later, they have 50 staff creating 4K videos, 3D animations, and VR content. Their
+                original 100 Mbps network can barely handle current needs, and they&apos;re planning
+                to double in size again.
               </p>
             </div>
           </div>
@@ -33,18 +34,24 @@ export const NetworkSpeedScenario = () => {
               <div className="space-y-3 text-blue-100 text-sm">
                 <div>
                   <strong>Phase 1 - Immediate Relief (Cat 6A to 10 Gbps):</strong>
-                  <p>Upgraded backbone to 10 Gbps with Cat 6A cabling supporting current 4K workflows 
-                  and providing headroom for growth.</p>
+                  <p>
+                    Upgraded backbone to 10 Gbps with Cat 6A cabling supporting current 4K workflows
+                    and providing headroom for growth.
+                  </p>
                 </div>
                 <div>
                   <strong>Phase 2 - Capacity Planning (25 Gbps Backbone):</strong>
-                  <p>Installed fibre backbone with 25 Gbps capacity and extra conduit space for future 
-                  expansion to 100 Gbps when needed.</p>
+                  <p>
+                    Installed fibre backbone with 25 Gbps capacity and extra conduit space for
+                    future expansion to 100 Gbps when needed.
+                  </p>
                 </div>
                 <div>
                   <strong>Phase 3 - Application Evolution:</strong>
-                  <p>Infrastructure ready for 8K video, real-time collaboration, and whatever new 
-                  creative technologies emerge in the next decade.</p>
+                  <p>
+                    Infrastructure ready for 8K video, real-time collaboration, and whatever new
+                    creative technologies emerge in the next decade.
+                  </p>
                 </div>
               </div>
             </div>

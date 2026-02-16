@@ -1,4 +1,13 @@
-import { Wrench, CheckCircle, AlertTriangle, Eye, Shield, Target, Settings, Zap } from 'lucide-react';
+import {
+  Wrench,
+  CheckCircle,
+  AlertTriangle,
+  Eye,
+  Shield,
+  Target,
+  Settings,
+  Zap,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const RCDFundamentalsPractical = () => {
@@ -11,18 +20,20 @@ export const RCDFundamentalsPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* RCD Selection Process */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">RCD Selection Process</h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="space-y-4">
-              
               <div className="flex gap-4">
-                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  1
+                </span>
                 <div>
                   <h4 className="text-foreground font-medium">Identify Protection Requirements</h4>
-                  <p className="text-sm sm:text-base text-foreground mb-2">Determine what protection is needed based on application</p>
+                  <p className="text-sm sm:text-base text-foreground mb-2">
+                    Determine what protection is needed based on application
+                  </p>
                   <ul className="text-xs sm:text-sm text-foreground space-y-1">
                     <li>• Personal protection: 30mA required</li>
                     <li>• Fire protection: 100mA or 300mA</li>
@@ -33,10 +44,14 @@ export const RCDFundamentalsPractical = () => {
               </div>
 
               <div className="flex gap-4">
-                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  2
+                </span>
                 <div>
                   <h4 className="text-foreground font-medium">Assess Installation Environment</h4>
-                  <p className="text-sm sm:text-base text-foreground mb-2">Consider environmental factors affecting RCD performance</p>
+                  <p className="text-sm sm:text-base text-foreground mb-2">
+                    Consider environmental factors affecting RCD performance
+                  </p>
                   <ul className="text-xs sm:text-sm text-foreground space-y-1">
                     <li>• Connected load types (electronic vs. resistive)</li>
                     <li>• Ambient temperature ranges</li>
@@ -47,10 +62,14 @@ export const RCDFundamentalsPractical = () => {
               </div>
 
               <div className="flex gap-4">
-                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  3
+                </span>
                 <div>
                   <h4 className="text-foreground font-medium">Calculate Current Ratings</h4>
-                  <p className="text-sm sm:text-base text-foreground mb-2">Ensure RCD can handle the expected load currents</p>
+                  <p className="text-sm sm:text-base text-foreground mb-2">
+                    Ensure RCD can handle the expected load currents
+                  </p>
                   <ul className="text-xs sm:text-sm text-foreground space-y-1">
                     <li>• Normal load current requirements</li>
                     <li>• Inrush current considerations</li>
@@ -61,10 +80,14 @@ export const RCDFundamentalsPractical = () => {
               </div>
 
               <div className="flex gap-4">
-                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                <span className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  4
+                </span>
                 <div>
                   <h4 className="text-foreground font-medium">Verify Coordination</h4>
-                  <p className="text-sm sm:text-base text-foreground mb-2">Ensure proper discrimination between protection devices</p>
+                  <p className="text-sm sm:text-base text-foreground mb-2">
+                    Ensure proper discrimination between protection devices
+                  </p>
                   <ul className="text-xs sm:text-sm text-foreground space-y-1">
                     <li>• Time-graded coordination with upstream RCDs</li>
                     <li>• Selectivity ratios (typically 3:1 minimum)</li>
@@ -81,7 +104,6 @@ export const RCDFundamentalsPractical = () => {
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Installation Best Practices</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
             <div className="bg-[#323232] rounded-lg p-4">
               <h4 className="text-foreground font-medium mb-3 flex items-center gap-2">
                 <Settings className="h-5 w-5 text-elec-yellow" />
@@ -132,16 +154,19 @@ export const RCDFundamentalsPractical = () => {
 
         {/* Common Installation Issues */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Common Installation Issues and Solutions</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Common Installation Issues and Solutions
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
             <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
               <h4 className="text-red-200 font-medium mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
                 Nuisance Tripping
               </h4>
               <div className="space-y-2">
-                <p className="text-sm sm:text-base text-foreground">When RCDs trip unexpectedly during normal operation:</p>
+                <p className="text-sm sm:text-base text-foreground">
+                  When RCDs trip unexpectedly during normal operation:
+                </p>
                 <div className="space-y-2">
                   <h5 className="text-red-200 text-sm font-medium">Common Causes:</h5>
                   <ul className="text-xs sm:text-sm text-foreground space-y-1">
@@ -167,7 +192,9 @@ export const RCDFundamentalsPractical = () => {
                 Failure to Trip
               </h4>
               <div className="space-y-2">
-                <p className="text-sm sm:text-base text-foreground">When RCDs fail to operate during fault conditions:</p>
+                <p className="text-sm sm:text-base text-foreground">
+                  When RCDs fail to operate during fault conditions:
+                </p>
                 <div className="space-y-2">
                   <h5 className="text-blue-200 text-sm font-medium">Possible Causes:</h5>
                   <ul className="text-xs sm:text-sm text-foreground space-y-1">
@@ -192,7 +219,7 @@ export const RCDFundamentalsPractical = () => {
         {/* Testing Verification */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Post-Installation Verification</h3>
-          
+
           <div className="bg-[#323232] rounded-lg p-4 space-y-4">
             <h4 className="text-foreground font-medium">Essential Tests</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -205,7 +232,7 @@ export const RCDFundamentalsPractical = () => {
                   <li>• Confirm visual indicators</li>
                 </ul>
               </div>
-              
+
               <div className="bg-blue-600/10 border border-blue-600/20 rounded p-3">
                 <h5 className="text-blue-200 text-sm font-medium mb-2">Trip Time Testing</h5>
                 <ul className="text-xs sm:text-sm text-foreground space-y-1">
@@ -215,7 +242,7 @@ export const RCDFundamentalsPractical = () => {
                   <li>• Record actual trip times</li>
                 </ul>
               </div>
-              
+
               <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-3">
                 <h5 className="text-yellow-200 text-sm font-medium mb-2">Polarity Verification</h5>
                 <ul className="text-xs sm:text-sm text-foreground space-y-1">
@@ -231,16 +258,23 @@ export const RCDFundamentalsPractical = () => {
 
         {/* Real-World Scenarios */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Real-World Application Scenarios</h3>
-          
+          <h3 className="text-xl font-semibold text-foreground">
+            Real-World Application Scenarios
+          </h3>
+
           <div className="bg-[#323232] rounded-lg p-4 space-y-4">
-            <h4 className="text-foreground font-medium">Scenario 1: Domestic Consumer Unit Upgrade</h4>
+            <h4 className="text-foreground font-medium">
+              Scenario 1: Domestic Consumer Unit Upgrade
+            </h4>
             <div className="bg-blue-600/10 border border-blue-600/20 rounded p-3">
               <p className="text-sm sm:text-base text-foreground mb-2">
-                <strong>Situation:</strong> Replacing old consumer unit in 1970s house with modern RCD protection
+                <strong>Situation:</strong> Replacing old consumer unit in 1970s house with modern
+                RCD protection
               </p>
               <div className="space-y-2">
-                <p className="text-blue-200 text-sm"><strong>Key Considerations:</strong></p>
+                <p className="text-blue-200 text-sm">
+                  <strong>Key Considerations:</strong>
+                </p>
                 <ul className="text-xs sm:text-sm text-foreground space-y-1">
                   <li>• Existing wiring may have reduced insulation resistance</li>
                   <li>• 30mA RCD required for all socket outlets</li>
@@ -253,13 +287,18 @@ export const RCDFundamentalsPractical = () => {
           </div>
 
           <div className="bg-[#323232] rounded-lg p-4 space-y-4">
-            <h4 className="text-foreground font-medium">Scenario 2: Commercial Kitchen Installation</h4>
+            <h4 className="text-foreground font-medium">
+              Scenario 2: Commercial Kitchen Installation
+            </h4>
             <div className="bg-green-600/10 border border-green-600/20 rounded p-3">
               <p className="text-sm sm:text-base text-foreground mb-2">
-                <strong>Situation:</strong> Installing RCD protection in commercial kitchen with high-power equipment
+                <strong>Situation:</strong> Installing RCD protection in commercial kitchen with
+                high-power equipment
               </p>
               <div className="space-y-2">
-                <p className="text-green-200 text-sm"><strong>Key Considerations:</strong></p>
+                <p className="text-green-200 text-sm">
+                  <strong>Key Considerations:</strong>
+                </p>
                 <ul className="text-xs sm:text-sm text-foreground space-y-1">
                   <li>• High ambient temperature affects RCD performance</li>
                   <li>• Steam and moisture create challenging environment</li>
@@ -300,7 +339,6 @@ export const RCDFundamentalsPractical = () => {
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

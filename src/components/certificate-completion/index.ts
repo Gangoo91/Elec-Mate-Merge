@@ -8,7 +8,10 @@ export { CertificateSummaryHero } from './CertificateSummaryHero';
 export type { CertificateSummaryHeroProps } from './CertificateSummaryHero';
 
 export { CertificateCompletionProgress } from './CertificateCompletionProgress';
-export type { CertificateCompletionProgressProps, CompletionStep } from './CertificateCompletionProgress';
+export type {
+  CertificateCompletionProgressProps,
+  CompletionStep,
+} from './CertificateCompletionProgress';
 
 export { CertificateActionsBar } from './CertificateActionsBar';
 export type { CertificateActionsBarProps } from './CertificateActionsBar';

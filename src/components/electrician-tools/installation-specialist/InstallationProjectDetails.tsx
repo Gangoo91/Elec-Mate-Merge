@@ -10,12 +10,12 @@ interface InstallationProjectDetailsProps {
 
 export const InstallationProjectDetails = ({
   projectDetails,
-  onChange
+  onChange,
 }: InstallationProjectDetailsProps) => {
   const handleChange = (field: keyof ProjectDetailsType, value: string) => {
     onChange({
       ...projectDetails,
-      [field]: value
+      [field]: value,
     });
   };
 

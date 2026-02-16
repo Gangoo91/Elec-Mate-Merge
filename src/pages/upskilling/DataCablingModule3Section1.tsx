@@ -1,69 +1,74 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Fibre Types: Singlemode vs Multimode | Data Cabling Module 3.1";
-const DESCRIPTION = "Learn singlemode and multimode fibre optic cable types, core sizes, OM/OS standards, and selection criteria for data transmission systems.";
+const TITLE = 'Fibre Types: Singlemode vs Multimode | Data Cabling Module 3.1';
+const DESCRIPTION =
+  'Learn singlemode and multimode fibre optic cable types, core sizes, OM/OS standards, and selection criteria for data transmission systems.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m3s1-check1",
-    question: "What is the core diameter of OS2 singlemode fibre?",
-    options: ["8.3 µm", "9 µm", "50 µm", "62.5 µm"],
+    id: 'datacabling-m3s1-check1',
+    question: 'What is the core diameter of OS2 singlemode fibre?',
+    options: ['8.3 µm', '9 µm', '50 µm', '62.5 µm'],
     correctIndex: 1,
-    explanation: "OS2 singlemode fibre has a core diameter of 9 µm, optimised for long-distance, high-bandwidth applications."
+    explanation:
+      'OS2 singlemode fibre has a core diameter of 9 µm, optimised for long-distance, high-bandwidth applications.',
   },
   {
-    id: "datacabling-m3s1-check2",
-    question: "What is the maximum 10 Gigabit Ethernet distance on OM4 fibre?",
-    options: ["82 metres", "150 metres", "300 metres", "400 metres"],
+    id: 'datacabling-m3s1-check2',
+    question: 'What is the maximum 10 Gigabit Ethernet distance on OM4 fibre?',
+    options: ['82 metres', '150 metres', '300 metres', '400 metres'],
     correctIndex: 3,
-    explanation: "OM4 fibre supports 10 Gigabit Ethernet up to 400 metres using 850nm VCSEL transceivers."
+    explanation:
+      'OM4 fibre supports 10 Gigabit Ethernet up to 400 metres using 850nm VCSEL transceivers.',
   },
   {
-    id: "datacabling-m3s1-check3",
-    question: "Which characteristic distinguishes singlemode from multimode fibre?",
-    options: ["Cladding diameter", "Core diameter", "Wavelength used", "Connector type"],
+    id: 'datacabling-m3s1-check3',
+    question: 'Which characteristic distinguishes singlemode from multimode fibre?',
+    options: ['Cladding diameter', 'Core diameter', 'Wavelength used', 'Connector type'],
     correctIndex: 1,
-    explanation: "The core diameter is the key difference: singlemode has ~9µm core, multimode has 50µm or 62.5µm cores."
-  }
+    explanation:
+      'The core diameter is the key difference: singlemode has ~9µm core, multimode has 50µm or 62.5µm cores.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When should I choose singlemode over multimode fibre?",
-    answer: "Choose singlemode when distance exceeds 300m, when future bandwidth requirements are uncertain, for campus-to-campus connections, or when connecting to service provider networks. Singlemode offers unlimited bandwidth potential and better long-term investment protection."
+    question: 'When should I choose singlemode over multimode fibre?',
+    answer:
+      'Choose singlemode when distance exceeds 300m, when future bandwidth requirements are uncertain, for campus-to-campus connections, or when connecting to service provider networks. Singlemode offers unlimited bandwidth potential and better long-term investment protection.',
   },
   {
-    question: "What does OM stand for in fibre grading?",
-    answer: "OM stands for Optical Multimode, with grades OM1-OM5 indicating performance levels and bandwidth capabilities. Higher OM numbers support greater bandwidth and longer distances at higher speeds."
+    question: 'What does OM stand for in fibre grading?',
+    answer:
+      'OM stands for Optical Multimode, with grades OM1-OM5 indicating performance levels and bandwidth capabilities. Higher OM numbers support greater bandwidth and longer distances at higher speeds.',
   },
   {
-    question: "Can I mix OM3 and OM4 fibre in the same link?",
-    answer: "Technically possible but not recommended. The link will perform to the lowest grade. For consistent performance and easier testing, use the same grade throughout. If mixing, document clearly and calculate combined performance."
+    question: 'Can I mix OM3 and OM4 fibre in the same link?',
+    answer:
+      'Technically possible but not recommended. The link will perform to the lowest grade. For consistent performance and easier testing, use the same grade throughout. If mixing, document clearly and calculate combined performance.',
   },
   {
-    question: "Why is singlemode cable sometimes cheaper than multimode?",
-    answer: "Singlemode cable can be less expensive due to simpler core design. However, singlemode transceivers cost more than multimode equivalents. For new long-distance installations, total cost of ownership often favours singlemode due to future upgrade potential."
-  }
+    question: 'Why is singlemode cable sometimes cheaper than multimode?',
+    answer:
+      'Singlemode cable can be less expensive due to simpler core design. However, singlemode transceivers cost more than multimode equivalents. For new long-distance installations, total cost of ownership often favours singlemode due to future upgrade potential.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A campus backbone requires links exceeding 500 metres with future-proof bandwidth. Which fibre type should you recommend?",
-  options: [
-    "OM3 multimode",
-    "OM4 multimode",
-    "OS2 singlemode",
-    "OM1 multimode"
-  ],
-  correctAnswer: 2,
-  explanation: "OS2 singlemode is ideal for campus backbone links over 300m, providing virtually unlimited bandwidth and distance capability with lower long-term costs for future upgrades."
-  }
+    question:
+      'A campus backbone requires links exceeding 500 metres with future-proof bandwidth. Which fibre type should you recommend?',
+    options: ['OM3 multimode', 'OM4 multimode', 'OS2 singlemode', 'OM1 multimode'],
+    correctAnswer: 2,
+    explanation:
+      'OS2 singlemode is ideal for campus backbone links over 300m, providing virtually unlimited bandwidth and distance capability with lower long-term costs for future upgrades.',
+  },
 ];
 
 const DataCablingModule3Section1 = () => {
@@ -98,9 +103,7 @@ const DataCablingModule3Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fibre Types: Singlemode vs Multimode
           </h1>
-          <p className="text-white/80">
-            Understanding fibre optic cable types and applications
-          </p>
+          <p className="text-white/80">Understanding fibre optic cable types and applications</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +111,26 @@ const DataCablingModule3Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Singlemode:</strong> 9µm core, unlimited distance/bandwidth</li>
-              <li><strong>Multimode:</strong> 50/62.5µm core, shorter distance, lower cost</li>
-              <li><strong>Selection:</strong> Match distance and bandwidth requirements</li>
+              <li>
+                <strong>Singlemode:</strong> 9µm core, unlimited distance/bandwidth
+              </li>
+              <li>
+                <strong>Multimode:</strong> 50/62.5µm core, shorter distance, lower cost
+              </li>
+              <li>
+                <strong>Selection:</strong> Match distance and bandwidth requirements
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Yellow jacket = singlemode, Aqua = OM3/OM4</li>
-              <li><strong>Use:</strong> SM for &gt;300m, MM for building backbone</li>
+              <li>
+                <strong>Spot:</strong> Yellow jacket = singlemode, Aqua = OM3/OM4
+              </li>
+              <li>
+                <strong>Use:</strong> SM for &gt;300m, MM for building backbone
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +140,12 @@ const DataCablingModule3Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify singlemode and multimode fibres",
-              "Understand core sizes and their impact",
-              "Select fibre for distance/bandwidth needs",
-              "Recognise OM and OS designation standards",
-              "Calculate basic transmission parameters",
-              "Apply knowledge to real installations"
+              'Identify singlemode and multimode fibres',
+              'Understand core sizes and their impact',
+              'Select fibre for distance/bandwidth needs',
+              'Recognise OM and OS designation standards',
+              'Calculate basic transmission parameters',
+              'Apply knowledge to real installations',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,18 +165,26 @@ const DataCablingModule3Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Multimode fibre allows multiple light modes to propagate simultaneously, making it ideal
-              for shorter distance, high-speed applications within buildings and campuses.
+              Multimode fibre allows multiple light modes to propagate simultaneously, making it
+              ideal for shorter distance, high-speed applications within buildings and campuses.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">OM Grades</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>OM1:</strong> 62.5/125µm, legacy, 275m @ 1G</li>
-                  <li><strong>OM2:</strong> 50/125µm, 550m @ 1G</li>
-                  <li><strong>OM3:</strong> 50/125µm laser-optimised, 300m @ 10G</li>
-                  <li><strong>OM4:</strong> 50/125µm enhanced, 400m @ 10G</li>
+                  <li>
+                    <strong>OM1:</strong> 62.5/125µm, legacy, 275m @ 1G
+                  </li>
+                  <li>
+                    <strong>OM2:</strong> 50/125µm, 550m @ 1G
+                  </li>
+                  <li>
+                    <strong>OM3:</strong> 50/125µm laser-optimised, 300m @ 10G
+                  </li>
+                  <li>
+                    <strong>OM4:</strong> 50/125µm enhanced, 400m @ 10G
+                  </li>
                 </ul>
               </div>
               <div>
@@ -211,19 +232,33 @@ const DataCablingModule3Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">OS Standards:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>OS1:</strong> Indoor singlemode, tight-buffered, ≤1.0 dB/km @ 1310nm</li>
-                <li><strong>OS2:</strong> Indoor/outdoor, loose-tube or tight, ≤0.4 dB/km @ 1310nm</li>
+                <li>
+                  <strong>OS1:</strong> Indoor singlemode, tight-buffered, ≤1.0 dB/km @ 1310nm
+                </li>
+                <li>
+                  <strong>OS2:</strong> Indoor/outdoor, loose-tube or tight, ≤0.4 dB/km @ 1310nm
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Transmission Capabilities</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Transmission Capabilities
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>1000BASE-LX:</strong> 10km+ @ 1310nm</li>
-                  <li><strong>10GBASE-LR:</strong> 10km @ 1310nm</li>
-                  <li><strong>10GBASE-ER:</strong> 40km @ 1550nm</li>
-                  <li><strong>100GBASE-LR4:</strong> 10km CWDM</li>
+                  <li>
+                    <strong>1000BASE-LX:</strong> 10km+ @ 1310nm
+                  </li>
+                  <li>
+                    <strong>10GBASE-LR:</strong> 10km @ 1310nm
+                  </li>
+                  <li>
+                    <strong>10GBASE-ER:</strong> 40km @ 1550nm
+                  </li>
+                  <li>
+                    <strong>100GBASE-LR4:</strong> 10km CWDM
+                  </li>
                 </ul>
               </div>
               <div>
@@ -305,10 +340,18 @@ const DataCablingModule3Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Mixing grades:</strong> — Performance limited to lowest grade</li>
-                <li><strong>Wrong transceiver:</strong> — SM/MM transceivers not interchangeable</li>
-                <li><strong>Under-specifying:</strong> — Not planning for future bandwidth</li>
-                <li><strong>Ignoring distance:</strong> — Multimode distance limits are real</li>
+                <li>
+                  <strong>Mixing grades:</strong> — Performance limited to lowest grade
+                </li>
+                <li>
+                  <strong>Wrong transceiver:</strong> — SM/MM transceivers not interchangeable
+                </li>
+                <li>
+                  <strong>Under-specifying:</strong> — Not planning for future bandwidth
+                </li>
+                <li>
+                  <strong>Ignoring distance:</strong> — Multimode distance limits are real
+                </li>
               </ul>
             </div>
           </div>
@@ -352,10 +395,7 @@ const DataCablingModule3Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

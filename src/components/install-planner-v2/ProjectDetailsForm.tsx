@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { Upload, Check } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { Upload, Check } from 'lucide-react';
 
 interface ClientDetails {
   clientName: string;
@@ -35,23 +35,23 @@ interface ProjectDetailsFormProps {
 
 export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetailsFormProps) => {
   const [clientDetails, setClientDetails] = useState<ClientDetails>({
-    clientName: "",
-    propertyAddress: "",
-    postcode: "",
-    contactNumber: "",
-    email: "",
-    siteNotes: ""
+    clientName: '',
+    propertyAddress: '',
+    postcode: '',
+    contactNumber: '',
+    email: '',
+    siteNotes: '',
   });
 
   const [companyDetails, setCompanyDetails] = useState<CompanyDetails>({
-    companyName: "",
-    companyAddress: "",
-    registrationNumber: "",
-    vatNumber: "",
-    phone: "",
-    email: "",
-    website: "",
-    logoUrl: ""
+    companyName: '',
+    companyAddress: '',
+    registrationNumber: '',
+    vatNumber: '',
+    phone: '',
+    email: '',
+    website: '',
+    logoUrl: '',
   });
 
   const [isUploading, setIsUploading] = useState(false);
@@ -62,12 +62,12 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      toast.error("Please upload an image file");
+      toast.error('Please upload an image file');
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      toast.error("Image must be less than 2MB");
+      toast.error('Image must be less than 2MB');
       return;
     }
 
@@ -84,15 +84,15 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('company-branding')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('company-branding').getPublicUrl(filePath);
 
-      setCompanyDetails(prev => ({ ...prev, logoUrl: publicUrl }));
-      toast.success("Logo uploaded successfully");
+      setCompanyDetails((prev) => ({ ...prev, logoUrl: publicUrl }));
+      toast.success('Logo uploaded successfully');
     } catch (error) {
       console.error('Logo upload error:', error);
-      toast.error("Failed to upload logo");
+      toast.error('Failed to upload logo');
     } finally {
       setIsUploading(false);
     }
@@ -100,17 +100,17 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
 
   const handleSave = () => {
     if (!clientDetails.clientName.trim()) {
-      toast.error("Client Name is required");
+      toast.error('Client Name is required');
       return;
     }
 
     if (!clientDetails.propertyAddress.trim()) {
-      toast.error("Property Address is required");
+      toast.error('Property Address is required');
       return;
     }
 
     if (!companyDetails.companyName.trim()) {
-      toast.error("Company Name is required");
+      toast.error('Company Name is required');
       return;
     }
 
@@ -120,8 +120,8 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
 
     setIsSaved(true);
     onDetailsSaved(clientDetails, companyDetails);
-    toast.success("Project details saved", {
-      description: "These will be included in all PDF exports"
+    toast.success('Project details saved', {
+      description: 'These will be included in all PDF exports',
     });
   };
 
@@ -144,7 +144,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="clientName"
                 value={clientDetails.clientName}
-                onChange={(e) => setClientDetails(prev => ({ ...prev, clientName: e.target.value }))}
+                onChange={(e) =>
+                  setClientDetails((prev) => ({ ...prev, clientName: e.target.value }))
+                }
                 placeholder="John Smith Building Ltd"
               />
             </div>
@@ -156,7 +158,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="postcode"
                 value={clientDetails.postcode}
-                onChange={(e) => setClientDetails(prev => ({ ...prev, postcode: e.target.value }))}
+                onChange={(e) =>
+                  setClientDetails((prev) => ({ ...prev, postcode: e.target.value }))
+                }
                 placeholder="SW1A 1AA"
               />
             </div>
@@ -169,7 +173,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
             <Textarea
               id="propertyAddress"
               value={clientDetails.propertyAddress}
-              onChange={(e) => setClientDetails(prev => ({ ...prev, propertyAddress: e.target.value }))}
+              onChange={(e) =>
+                setClientDetails((prev) => ({ ...prev, propertyAddress: e.target.value }))
+              }
               placeholder="12 High Street&#10;London"
               rows={3}
             />
@@ -181,7 +187,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="contactNumber"
                 value={clientDetails.contactNumber}
-                onChange={(e) => setClientDetails(prev => ({ ...prev, contactNumber: e.target.value }))}
+                onChange={(e) =>
+                  setClientDetails((prev) => ({ ...prev, contactNumber: e.target.value }))
+                }
                 placeholder="07700 900123"
               />
             </div>
@@ -192,7 +200,7 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
                 id="clientEmail"
                 type="email"
                 value={clientDetails.email}
-                onChange={(e) => setClientDetails(prev => ({ ...prev, email: e.target.value }))}
+                onChange={(e) => setClientDetails((prev) => ({ ...prev, email: e.target.value }))}
                 placeholder="john@example.com"
               />
             </div>
@@ -203,7 +211,7 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
             <Textarea
               id="siteNotes"
               value={clientDetails.siteNotes}
-              onChange={(e) => setClientDetails(prev => ({ ...prev, siteNotes: e.target.value }))}
+              onChange={(e) => setClientDetails((prev) => ({ ...prev, siteNotes: e.target.value }))}
               placeholder="Any additional site information..."
               rows={3}
             />
@@ -228,7 +236,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="companyName"
                 value={companyDetails.companyName}
-                onChange={(e) => setCompanyDetails(prev => ({ ...prev, companyName: e.target.value }))}
+                onChange={(e) =>
+                  setCompanyDetails((prev) => ({ ...prev, companyName: e.target.value }))
+                }
                 placeholder="ElecMate Ltd"
               />
             </div>
@@ -238,7 +248,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="registrationNumber"
                 value={companyDetails.registrationNumber}
-                onChange={(e) => setCompanyDetails(prev => ({ ...prev, registrationNumber: e.target.value }))}
+                onChange={(e) =>
+                  setCompanyDetails((prev) => ({ ...prev, registrationNumber: e.target.value }))
+                }
                 placeholder="12345678"
               />
             </div>
@@ -249,7 +261,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
             <Textarea
               id="companyAddress"
               value={companyDetails.companyAddress}
-              onChange={(e) => setCompanyDetails(prev => ({ ...prev, companyAddress: e.target.value }))}
+              onChange={(e) =>
+                setCompanyDetails((prev) => ({ ...prev, companyAddress: e.target.value }))
+              }
               placeholder="123 Business Park&#10;Manchester"
               rows={3}
             />
@@ -261,7 +275,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="vatNumber"
                 value={companyDetails.vatNumber}
-                onChange={(e) => setCompanyDetails(prev => ({ ...prev, vatNumber: e.target.value }))}
+                onChange={(e) =>
+                  setCompanyDetails((prev) => ({ ...prev, vatNumber: e.target.value }))
+                }
                 placeholder="GB123456789"
               />
             </div>
@@ -271,7 +287,7 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="companyPhone"
                 value={companyDetails.phone}
-                onChange={(e) => setCompanyDetails(prev => ({ ...prev, phone: e.target.value }))}
+                onChange={(e) => setCompanyDetails((prev) => ({ ...prev, phone: e.target.value }))}
                 placeholder="0208 123 4567"
               />
             </div>
@@ -284,7 +300,7 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
                 id="companyEmail"
                 type="email"
                 value={companyDetails.email}
-                onChange={(e) => setCompanyDetails(prev => ({ ...prev, email: e.target.value }))}
+                onChange={(e) => setCompanyDetails((prev) => ({ ...prev, email: e.target.value }))}
                 placeholder="info@company.com"
               />
             </div>
@@ -294,7 +310,9 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
               <Input
                 id="website"
                 value={companyDetails.website}
-                onChange={(e) => setCompanyDetails(prev => ({ ...prev, website: e.target.value }))}
+                onChange={(e) =>
+                  setCompanyDetails((prev) => ({ ...prev, website: e.target.value }))
+                }
                 placeholder="www.company.com"
               />
             </div>
@@ -318,7 +336,7 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
                 disabled={isUploading}
               >
                 <Upload className="w-4 h-4 mr-2" />
-                {isUploading ? "Uploading..." : "Upload Logo"}
+                {isUploading ? 'Uploading...' : 'Upload Logo'}
               </Button>
               {companyDetails.logoUrl && (
                 <div className="flex items-center gap-2">

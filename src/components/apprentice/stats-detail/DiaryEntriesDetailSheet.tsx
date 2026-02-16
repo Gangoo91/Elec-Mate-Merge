@@ -15,12 +15,7 @@
  * - Empty state CTA
  */
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   Calendar,
   ChevronDown,
@@ -71,9 +66,9 @@ const skillColours: Record<string, string> = {
   'Health & Safety': 'bg-red-500/20 text-red-300 border-red-500/30',
   'Testing & Inspection': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
   'Wiring & Containment': 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-  'Regulations': 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+  Regulations: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
   'Tools & Equipment': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-  'Communication': 'bg-pink-500/20 text-pink-300 border-pink-500/30',
+  Communication: 'bg-pink-500/20 text-pink-300 border-pink-500/30',
   'Problem Solving': 'bg-green-500/20 text-green-300 border-green-500/30',
 };
 
@@ -83,7 +78,11 @@ interface DiaryEntriesDetailSheetProps {
   entries: SiteDiaryEntry[];
 }
 
-export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEntriesDetailSheetProps) {
+export function DiaryEntriesDetailSheet({
+  open,
+  onOpenChange,
+  entries,
+}: DiaryEntriesDetailSheetProps) {
   const navigate = useNavigate();
 
   const goToDiary = () => {
@@ -149,7 +148,9 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                   value={totalEntries}
                   className="text-5xl font-bold text-purple-400"
                 />
-                <span className="text-xl text-purple-400/80 ml-1.5">entr{totalEntries !== 1 ? 'ies' : 'y'}</span>
+                <span className="text-xl text-purple-400/80 ml-1.5">
+                  entr{totalEntries !== 1 ? 'ies' : 'y'}
+                </span>
               </div>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
@@ -165,7 +166,9 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                 {diaryStreak > 1 && (
                   <>
                     <span className="text-white/20">·</span>
-                    <span className="text-sm text-purple-400 font-medium">{diaryStreak}-day streak</span>
+                    <span className="text-sm text-purple-400 font-medium">
+                      {diaryStreak}-day streak
+                    </span>
                   </>
                 )}
               </motion.div>
@@ -209,11 +212,18 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                   ) : (
                     <Minus className="h-4 w-4 text-white/50" />
                   )}
-                  <p className={cn(
-                    'text-xl font-bold',
-                    weekComparison.delta > 0 ? 'text-green-400' : weekComparison.delta < 0 ? 'text-red-400' : 'text-white/50'
-                  )}>
-                    {weekComparison.delta > 0 ? '+' : ''}{weekComparison.delta}
+                  <p
+                    className={cn(
+                      'text-xl font-bold',
+                      weekComparison.delta > 0
+                        ? 'text-green-400'
+                        : weekComparison.delta < 0
+                          ? 'text-red-400'
+                          : 'text-white/50'
+                    )}
+                  >
+                    {weekComparison.delta > 0 ? '+' : ''}
+                    {weekComparison.delta}
                   </p>
                 </div>
               </div>
@@ -231,16 +241,24 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                 <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <Heart className="h-4 w-4 text-purple-400" />
-                    <span className="text-xs font-semibold text-white uppercase tracking-wider">Avg Mood</span>
+                    <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                      Avg Mood
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{moodEmojis[Math.round(averageMood)]}</span>
                     <div>
                       <p className="text-lg font-bold text-white">{averageMood}</p>
-                      <p className={cn(
-                        'text-xs font-semibold',
-                        averageMood >= 4 ? 'text-green-400' : averageMood >= 3 ? 'text-amber-400' : 'text-red-400'
-                      )}>
+                      <p
+                        className={cn(
+                          'text-xs font-semibold',
+                          averageMood >= 4
+                            ? 'text-green-400'
+                            : averageMood >= 3
+                              ? 'text-amber-400'
+                              : 'text-red-400'
+                        )}
+                      >
                         {moodLabel(averageMood)}
                         {moodDeclining && ' (declining)'}
                       </p>
@@ -253,7 +271,9 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
               <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <BarChart3 className="h-4 w-4 text-purple-400" />
-                  <span className="text-xs font-semibold text-white uppercase tracking-wider">Stats</span>
+                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                    Stats
+                  </span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -284,7 +304,9 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                 <div className="flex items-center gap-2 mb-3">
                   <Heart className="h-4 w-4 text-white/50" />
                   <span className="text-sm font-semibold text-white">Mood Trend</span>
-                  <span className="text-xs text-white/50 ml-auto">Last {moodTrend.length} entries</span>
+                  <span className="text-xs text-white/50 ml-auto">
+                    Last {moodTrend.length} entries
+                  </span>
                 </div>
                 <div className="flex items-end gap-2.5 justify-center px-4 py-3 rounded-2xl bg-white/[0.05] border border-white/[0.08]">
                   {moodTrend.map((m, i) => (
@@ -293,7 +315,10 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                         initial={{ height: 0 }}
                         animate={{ height: `${Math.max(m.mood * 10, 16)}px` }}
                         transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 + i * 0.05 }}
-                        className={cn('w-full max-w-[32px] rounded-lg flex items-center justify-center', moodBg(m.mood))}
+                        className={cn(
+                          'w-full max-w-[32px] rounded-lg flex items-center justify-center',
+                          moodBg(m.mood)
+                        )}
                       />
                       <span className="text-sm">{moodEmojis[m.mood]}</span>
                     </div>
@@ -320,10 +345,14 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                     const barWidth = Math.round((site.count / maxCount) * 100);
                     return (
                       <div key={site.name} className="flex items-center gap-3">
-                        <span className="text-xs text-purple-400 w-5 text-right font-bold">{i + 1}</span>
+                        <span className="text-xs text-purple-400 w-5 text-right font-bold">
+                          {i + 1}
+                        </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm text-white font-medium truncate">{site.name}</span>
+                            <span className="text-sm text-white font-medium truncate">
+                              {site.name}
+                            </span>
                             <span className="text-xs text-purple-400 font-semibold flex-shrink-0 ml-2">
                               {site.count}
                             </span>
@@ -332,7 +361,11 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${barWidth}%` }}
-                              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.45 + i * 0.08 }}
+                              transition={{
+                                duration: 0.8,
+                                ease: 'easeOut',
+                                delay: 0.45 + i * 0.08,
+                              }}
                               className="h-full rounded-full bg-purple-400"
                             />
                           </div>
@@ -367,7 +400,11 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
                       className={cn(
                         'h-full rounded-full',
-                        skillDiversityPercent >= 75 ? 'bg-green-400' : skillDiversityPercent >= 40 ? 'bg-purple-400' : 'bg-white/25'
+                        skillDiversityPercent >= 75
+                          ? 'bg-green-400'
+                          : skillDiversityPercent >= 40
+                            ? 'bg-purple-400'
+                            : 'bg-white/25'
                       )}
                     />
                   </div>
@@ -476,7 +513,9 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">What to do next</span>
+                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                    What to do next
+                  </span>
                   <div className="flex-1 border-t border-white/[0.06]" />
                 </div>
 
@@ -484,7 +523,15 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
                   {recommendations.map((rec) => (
                     <RecommendationCard
                       key={rec.id}
-                      icon={rec.id === 'log-today' ? Calendar : rec.id === 'mood-check' ? Heart : rec.id === 'keep-up' ? TrendingUp : GraduationCap}
+                      icon={
+                        rec.id === 'log-today'
+                          ? Calendar
+                          : rec.id === 'mood-check'
+                            ? Heart
+                            : rec.id === 'keep-up'
+                              ? TrendingUp
+                              : GraduationCap
+                      }
                       title={rec.title}
                       description={rec.description}
                       actionLabel={rec.actionLabel}

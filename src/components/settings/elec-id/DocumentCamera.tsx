@@ -1,13 +1,13 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Camera,
   X,
@@ -19,8 +19,8 @@ import {
   Focus,
   Maximize2,
   AlertCircle,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface DocumentCameraProps {
   open: boolean;
@@ -31,24 +31,28 @@ interface DocumentCameraProps {
 
 const DOCUMENT_GUIDES = {
   ecs_card: {
-    title: "ECS Card",
-    tips: ["Place card on flat surface", "Ensure all text is visible", "Avoid glare and shadows"],
-    aspectRatio: "85.6 / 54", // Credit card ratio
+    title: 'ECS Card',
+    tips: ['Place card on flat surface', 'Ensure all text is visible', 'Avoid glare and shadows'],
+    aspectRatio: '85.6 / 54', // Credit card ratio
   },
   qualification: {
-    title: "Qualification Certificate",
-    tips: ["Capture entire document", "Keep edges straight", "Good lighting helps OCR"],
-    aspectRatio: "210 / 297", // A4 ratio
+    title: 'Qualification Certificate',
+    tips: ['Capture entire document', 'Keep edges straight', 'Good lighting helps OCR'],
+    aspectRatio: '210 / 297', // A4 ratio
   },
   driving_licence: {
-    title: "Driving Licence",
-    tips: ["Place on dark background", "Capture both sides if needed", "Ensure hologram is visible"],
-    aspectRatio: "85.6 / 54",
+    title: 'Driving Licence',
+    tips: [
+      'Place on dark background',
+      'Capture both sides if needed',
+      'Ensure hologram is visible',
+    ],
+    aspectRatio: '85.6 / 54',
   },
   default: {
-    title: "Document",
-    tips: ["Fill frame with document", "Keep camera steady", "Ensure good lighting"],
-    aspectRatio: "4 / 3",
+    title: 'Document',
+    tips: ['Fill frame with document', 'Keep camera steady', 'Ensure good lighting'],
+    aspectRatio: '4 / 3',
   },
 };
 
@@ -56,7 +60,7 @@ const DocumentCamera = ({
   open,
   onOpenChange,
   onCapture,
-  documentType = "default",
+  documentType = 'default',
 }: DocumentCameraProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -66,17 +70,18 @@ const DocumentCamera = ({
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+  const [facingMode, setFacingMode] = useState<'environment' | 'user'>('environment');
   const [torchOn, setTorchOn] = useState(false);
   const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
   const [hasTorch, setHasTorch] = useState(false);
 
-  const guide = DOCUMENT_GUIDES[documentType as keyof typeof DOCUMENT_GUIDES] || DOCUMENT_GUIDES.default;
+  const guide =
+    DOCUMENT_GUIDES[documentType as keyof typeof DOCUMENT_GUIDES] || DOCUMENT_GUIDES.default;
 
   // Check for multiple cameras
   useEffect(() => {
     navigator.mediaDevices?.enumerateDevices().then((devices) => {
-      const videoInputs = devices.filter((d) => d.kind === "videoinput");
+      const videoInputs = devices.filter((d) => d.kind === 'videoinput');
       setHasMultipleCameras(videoInputs.length > 1);
     });
   }, []);
@@ -111,21 +116,23 @@ const DocumentCamera = ({
 
         // Check for torch capability
         const track = stream.getVideoTracks()[0];
-        const capabilities = track.getCapabilities?.() as MediaTrackCapabilities & { torch?: boolean };
+        const capabilities = track.getCapabilities?.() as MediaTrackCapabilities & {
+          torch?: boolean;
+        };
         setHasTorch(!!capabilities?.torch);
       }
     } catch (err: any) {
       // AbortError is expected when switching cameras or closing dialog quickly
-      if (err.name === "AbortError") {
+      if (err.name === 'AbortError') {
         return;
       }
-      console.error("Camera error:", err);
-      if (err.name === "NotAllowedError") {
-        setError("Camera access denied. Please allow camera permissions.");
-      } else if (err.name === "NotFoundError") {
-        setError("No camera found on this device.");
+      console.error('Camera error:', err);
+      if (err.name === 'NotAllowedError') {
+        setError('Camera access denied. Please allow camera permissions.');
+      } else if (err.name === 'NotFoundError') {
+        setError('No camera found on this device.');
       } else {
-        setError("Could not access camera. Please try again.");
+        setError('Could not access camera. Please try again.');
       }
     }
   }, [facingMode]);
@@ -154,13 +161,13 @@ const DocumentCamera = ({
       });
       setTorchOn(!torchOn);
     } catch (err) {
-      console.error("Torch error:", err);
+      console.error('Torch error:', err);
     }
   }, [torchOn, hasTorch]);
 
   // Switch camera
   const switchCamera = useCallback(() => {
-    setFacingMode((prev) => (prev === "environment" ? "user" : "environment"));
+    setFacingMode((prev) => (prev === 'environment' ? 'user' : 'environment'));
   }, []);
 
   // Capture photo
@@ -169,7 +176,7 @@ const DocumentCamera = ({
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
 
     if (!ctx) return;
 
@@ -181,7 +188,7 @@ const DocumentCamera = ({
     ctx.drawImage(video, 0, 0);
 
     // Get image data
-    const imageData = canvas.toDataURL("image/jpeg", 0.9);
+    const imageData = canvas.toDataURL('image/jpeg', 0.9);
     setCapturedImage(imageData);
     stopCamera();
   }, [stopCamera]);
@@ -203,14 +210,14 @@ const DocumentCamera = ({
       const response = await fetch(capturedImage);
       const blob = await response.blob();
       const file = new File([blob], `document-${Date.now()}.jpg`, {
-        type: "image/jpeg",
+        type: 'image/jpeg',
       });
 
       onCapture(capturedImage, file);
       onOpenChange(false);
     } catch (err) {
-      console.error("Error processing image:", err);
-      setError("Failed to process image. Please try again.");
+      console.error('Error processing image:', err);
+      setError('Failed to process image. Please try again.');
     } finally {
       setIsProcessing(false);
     }
@@ -250,9 +257,7 @@ const DocumentCamera = ({
       <DialogContent className="max-w-lg p-0 bg-black overflow-hidden">
         <DialogHeader className="absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/80 to-transparent">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-white text-lg">
-              Scan {guide.title}
-            </DialogTitle>
+            <DialogTitle className="text-white text-lg">Scan {guide.title}</DialogTitle>
             <Button
               variant="ghost"
               size="icon"
@@ -284,7 +289,7 @@ const DocumentCamera = ({
                   <div
                     className="relative border-2 border-white/50 border-dashed rounded-lg"
                     style={{
-                      width: "85%",
+                      width: '85%',
                       aspectRatio: guide.aspectRatio,
                     }}
                   >
@@ -366,10 +371,8 @@ const DocumentCamera = ({
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-12 w-12 rounded-full",
-                    torchOn
-                      ? "bg-elec-yellow text-elec-dark"
-                      : "bg-white/20 text-white"
+                    'h-12 w-12 rounded-full',
+                    torchOn ? 'bg-elec-yellow text-elec-dark' : 'bg-white/20 text-white'
                   )}
                   onClick={toggleTorch}
                 >

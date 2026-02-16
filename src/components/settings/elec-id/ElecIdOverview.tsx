@@ -1,31 +1,31 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Drawer } from "vaul";
-import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Drawer } from 'vaul';
+import { motion } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 import {
   IdCard,
   GraduationCap,
@@ -51,20 +51,24 @@ import {
   Sparkles,
   TrendingUp,
   Zap,
-} from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { getExpiryStatus, calculateProfileCompleteness, isExpiringWithin } from "@/utils/elecIdGenerator";
-import { getECSCardType, UK_JOB_TITLES, ECS_CARD_TYPES } from "@/data/uk-electrician-constants";
-import { TrainingRequestsCard } from "./TrainingRequestsCard";
-import { toast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  getExpiryStatus,
+  calculateProfileCompleteness,
+  isExpiringWithin,
+} from '@/utils/elecIdGenerator';
+import { getECSCardType, UK_JOB_TITLES, ECS_CARD_TYPES } from '@/data/uk-electrician-constants';
+import { TrainingRequestsCard } from './TrainingRequestsCard';
+import { toast } from '@/hooks/use-toast';
 import {
   getQualificationsByProfileId,
   getSkillsByProfileId,
   getWorkHistoryByProfileId,
   getTrainingByProfileId,
-} from "@/services/elecIdService";
+} from '@/services/elecIdService';
 
 interface ElecIdOverviewProps {
   onNavigate?: (tabId: string) => void;
@@ -73,39 +77,34 @@ interface ElecIdOverviewProps {
 // Verification tier configuration
 const VERIFICATION_TIERS = {
   basic: {
-    label: "Basic",
-    color: "text-foreground/80",
-    bgColor: "bg-white/10",
-    borderColor: "border-white/20",
+    label: 'Basic',
+    color: 'text-foreground/80',
+    bgColor: 'bg-white/10',
+    borderColor: 'border-white/20',
     icon: Shield,
-    description: "Profile created",
+    description: 'Profile created',
   },
   verified: {
-    label: "Verified",
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20",
-    borderColor: "border-blue-500/30",
+    label: 'Verified',
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/20',
+    borderColor: 'border-blue-500/30',
     icon: CheckCircle2,
-    description: "ECS Card + 1 qualification verified",
+    description: 'ECS Card + 1 qualification verified',
   },
   premium: {
-    label: "Premium",
-    color: "text-elec-yellow",
-    bgColor: "bg-elec-yellow/20",
-    borderColor: "border-elec-yellow/30",
+    label: 'Premium',
+    color: 'text-elec-yellow',
+    bgColor: 'bg-elec-yellow/20',
+    borderColor: 'border-elec-yellow/30',
     icon: Crown,
-    description: "Fully verified professional",
+    description: 'Fully verified professional',
   },
 };
 
 const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   const { profile } = useAuth();
-  const {
-    profile: elecIdProfile,
-    isOptedOut,
-    setOptOut,
-    updateProfile
-  } = useElecIdProfile();
+  const { profile: elecIdProfile, isOptedOut, setOptOut, updateProfile } = useElecIdProfile();
   const isMobile = useIsMobile();
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -118,16 +117,20 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
   // Local state synced with profile
   const [availableForHire, setAvailableForHire] = useState(true);
-  const [profileVisibility, setProfileVisibility] = useState<"public" | "employers_only" | "private">("employers_only");
-  const [verificationTier, setVerificationTier] = useState<"basic" | "verified" | "premium">("basic");
+  const [profileVisibility, setProfileVisibility] = useState<
+    'public' | 'employers_only' | 'private'
+  >('employers_only');
+  const [verificationTier, setVerificationTier] = useState<'basic' | 'verified' | 'premium'>(
+    'basic'
+  );
 
   // Copy Elec-ID to clipboard
   const copyElecId = () => {
-    const id = elecIdProfile?.elec_id_number || "EM-XXXXXX";
+    const id = elecIdProfile?.elec_id_number || 'EM-XXXXXX';
     navigator.clipboard.writeText(id);
     toast({
-      title: "Copied!",
-      description: "Elec-ID copied to clipboard",
+      title: 'Copied!',
+      description: 'Elec-ID copied to clipboard',
     });
   };
 
@@ -149,7 +152,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   };
 
   // Handle visibility change
-  const handleVisibilityChange = async (value: "public" | "employers_only" | "private") => {
+  const handleVisibilityChange = async (value: 'public' | 'employers_only' | 'private') => {
     setProfileVisibility(value);
     setIsSaving(true);
     await updateProfile({ profile_visibility: value });
@@ -184,18 +187,18 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
     if (!validTypes.includes(file.type)) {
       toast({
-        title: "Invalid file type",
-        description: "Please upload a JPG, PNG, or WebP image",
-        variant: "destructive",
+        title: 'Invalid file type',
+        description: 'Please upload a JPG, PNG, or WebP image',
+        variant: 'destructive',
       });
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
       toast({
-        title: "File too large",
-        description: "Please upload an image smaller than 5MB",
-        variant: "destructive",
+        title: 'File too large',
+        description: 'Please upload an image smaller than 5MB',
+        variant: 'destructive',
       });
       return;
     }
@@ -225,9 +228,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
         if (fallbackError) throw fallbackError;
 
-        const { data: { publicUrl } } = supabase.storage
-          .from('avatars')
-          .getPublicUrl(fallbackData.path);
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('avatars').getPublicUrl(fallbackData.path);
 
         setPhotoUrl(publicUrl);
 
@@ -235,9 +238,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('id', profile.id);
       } else {
         // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('elec-id-photos')
-          .getPublicUrl(data.path);
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('elec-id-photos').getPublicUrl(data.path);
 
         setPhotoUrl(publicUrl);
 
@@ -246,15 +249,15 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       }
 
       toast({
-        title: "Photo uploaded",
-        description: "Your profile photo has been updated",
+        title: 'Photo uploaded',
+        description: 'Your profile photo has been updated',
       });
     } catch (error: any) {
       console.error('Error uploading photo:', error);
       toast({
-        title: "Upload failed",
-        description: error.message || "Failed to upload photo. Please try again.",
-        variant: "destructive",
+        title: 'Upload failed',
+        description: error.message || 'Failed to upload photo. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsUploadingPhoto(false);
@@ -267,9 +270,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
   // Get job title label from value
   const getJobTitleLabelFromValue = (value: string | null | undefined): string => {
-    if (!value) return "Not Set";
-    const title = UK_JOB_TITLES.find(t => t.value === value);
-    return title?.label || value || "Electrician";
+    if (!value) return 'Not Set';
+    const title = UK_JOB_TITLES.find((t) => t.value === value);
+    return title?.label || value || 'Electrician';
   };
 
   // Use actual profile data (no fallbacks) for completeness calculation
@@ -280,15 +283,15 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
   // Display data with fallbacks for UI rendering
   const elecIdData = {
-    elecIdNumber: elecIdProfile?.elec_id_number || "EM-XXXXXX",
-    jobTitle: actualJobTitle || "approved", // Fallback for display only
-    jobTitleLabel: getJobTitleLabelFromValue(actualJobTitle || "approved"), // Fallback for display only
-    ecsCardType: actualEcsCardType || "gold", // Fallback for display only
-    ecsCardExpiry: actualEcsCardExpiry || "2026-12-15", // Fallback for display only
+    elecIdNumber: elecIdProfile?.elec_id_number || 'EM-XXXXXX',
+    jobTitle: actualJobTitle || 'approved', // Fallback for display only
+    jobTitleLabel: getJobTitleLabelFromValue(actualJobTitle || 'approved'), // Fallback for display only
+    ecsCardType: actualEcsCardType || 'gold', // Fallback for display only
+    ecsCardExpiry: actualEcsCardExpiry || '2026-12-15', // Fallback for display only
     isVerified: elecIdProfile?.is_verified || false,
     photoUrl: photoUrl || profile?.avatar_url || null,
-    bio: actualBio || "",
-    rateType: elecIdProfile?.rate_type || "daily",
+    bio: actualBio || '',
+    rateType: elecIdProfile?.rate_type || 'daily',
     rateAmount: elecIdProfile?.rate_amount || null,
   };
 
@@ -305,7 +308,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     ecsCardExpiry: elecIdData.ecsCardExpiry,
     bio: elecIdData.bio,
     rateType: elecIdData.rateType,
-    rateAmount: elecIdData.rateAmount?.toString() || "",
+    rateAmount: elecIdData.rateAmount?.toString() || '',
   });
 
   // Real stats from backend
@@ -341,14 +344,14 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       }
 
       // Check qualifications with expiry dates
-      qualifications.forEach(q => {
+      qualifications.forEach((q) => {
         if (q.expiry_date && isExpiringWithin(q.expiry_date, 90)) {
           expiringCount++;
         }
       });
 
       // Check training with expiry dates
-      training.forEach(t => {
+      training.forEach((t) => {
         if (t.expiry_date && isExpiringWithin(t.expiry_date, 90)) {
           expiringCount++;
         }
@@ -361,7 +364,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         expiringItems: expiringCount,
       });
     } catch (err) {
-      console.error("Error loading profile stats:", err);
+      console.error('Error loading profile stats:', err);
     } finally {
       setStatsLoading(false);
     }
@@ -384,13 +387,15 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
   // Use display values for UI rendering
   const ecsCard = getECSCardType(elecIdData.ecsCardType);
-  const expiryStatus = actualEcsCardExpiry ? getExpiryStatus(actualEcsCardExpiry) : { status: 'valid' as const, label: 'Not Set', color: 'gray' };
+  const expiryStatus = actualEcsCardExpiry
+    ? getExpiryStatus(actualEcsCardExpiry)
+    : { status: 'valid' as const, label: 'Not Set', color: 'gray' };
 
-  const userName = profile?.full_name || profile?.username || "Electrician";
+  const userName = profile?.full_name || profile?.username || 'Electrician';
   const userInitials = userName
-    .split(" ")
+    .split(' ')
     .map((n) => n[0])
-    .join("")
+    .join('')
     .toUpperCase()
     .slice(0, 2);
 
@@ -401,7 +406,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       ecsCardExpiry: elecIdData.ecsCardExpiry,
       bio: elecIdData.bio,
       rateType: elecIdData.rateType,
-      rateAmount: elecIdData.rateAmount?.toString() || "",
+      rateAmount: elecIdData.rateAmount?.toString() || '',
     });
     setIsEditDialogOpen(true);
   };
@@ -414,20 +419,20 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         ecs_card_type: editFormData.ecsCardType,
         ecs_expiry_date: editFormData.ecsCardExpiry,
         bio: editFormData.bio,
-        rate_type: editFormData.rateType as "hourly" | "daily" | "weekly" | "yearly",
+        rate_type: editFormData.rateType as 'hourly' | 'daily' | 'weekly' | 'yearly',
         rate_amount: editFormData.rateAmount ? parseFloat(editFormData.rateAmount) : null,
       } as any);
       setIsEditDialogOpen(false);
       setIsEditSheetOpen(false);
       toast({
-        title: "Profile updated",
-        description: "Your Elec-ID profile has been saved",
+        title: 'Profile updated',
+        description: 'Your Elec-ID profile has been saved',
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to save profile. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to save profile. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSaving(false);
@@ -441,11 +446,14 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   };
 
   // Group job titles by category
-  const jobTitlesByCategory = UK_JOB_TITLES.reduce((acc, title) => {
-    if (!acc[title.category]) acc[title.category] = [];
-    acc[title.category].push(title);
-    return acc;
-  }, {} as Record<string, typeof UK_JOB_TITLES>);
+  const jobTitlesByCategory = UK_JOB_TITLES.reduce(
+    (acc, title) => {
+      if (!acc[title.category]) acc[title.category] = [];
+      acc[title.category].push(title);
+      return acc;
+    },
+    {} as Record<string, typeof UK_JOB_TITLES>
+  );
 
   // Edit form content (shared between dialog and sheet)
   const EditFormContent = () => (
@@ -455,9 +463,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         <Label className="text-foreground text-sm">Job Title</Label>
         <Select
           value={editFormData.jobTitle}
-          onValueChange={(value) =>
-            setEditFormData({ ...editFormData, jobTitle: value })
-          }
+          onValueChange={(value) => setEditFormData({ ...editFormData, jobTitle: value })}
         >
           <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl">
             <SelectValue placeholder="Select job title" />
@@ -465,9 +471,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           <SelectContent className="bg-elec-gray border-white/20 max-h-60">
             {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
               <React.Fragment key={category}>
-                <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">
-                  {category}
-                </div>
+                <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">{category}</div>
                 {titles.map((title) => (
                   <SelectItem key={title.value} value={title.value}>
                     {title.label}
@@ -484,9 +488,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         <Label className="text-foreground text-sm">ECS Card Type</Label>
         <Select
           value={editFormData.ecsCardType}
-          onValueChange={(value) =>
-            setEditFormData({ ...editFormData, ecsCardType: value })
-          }
+          onValueChange={(value) => setEditFormData({ ...editFormData, ecsCardType: value })}
         >
           <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl">
             <SelectValue placeholder="Select card type" />
@@ -495,10 +497,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             {ECS_CARD_TYPES.map((card) => (
               <SelectItem key={card.value} value={card.value}>
                 <div className="flex items-center gap-2">
-                  <div
-                    className="w-3 h-3 rounded"
-                    style={{ backgroundColor: card.color }}
-                  />
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: card.color }} />
                   {card.label}
                 </div>
               </SelectItem>
@@ -513,9 +512,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         <Input
           type="date"
           value={editFormData.ecsCardExpiry}
-          onChange={(e) =>
-            setEditFormData({ ...editFormData, ecsCardExpiry: e.target.value })
-          }
+          onChange={(e) => setEditFormData({ ...editFormData, ecsCardExpiry: e.target.value })}
           className="h-12 bg-white/5 border-white/10 rounded-xl"
         />
       </div>
@@ -534,18 +531,14 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               inputMode="decimal"
               min="0"
               value={editFormData.rateAmount}
-              onChange={(e) =>
-                setEditFormData({ ...editFormData, rateAmount: e.target.value })
-              }
+              onChange={(e) => setEditFormData({ ...editFormData, rateAmount: e.target.value })}
               placeholder="Amount"
               className="h-12 bg-white/5 border-white/10 rounded-xl pl-8"
             />
           </div>
           <Select
             value={editFormData.rateType}
-            onValueChange={(value) =>
-              setEditFormData({ ...editFormData, rateType: value })
-            }
+            onValueChange={(value) => setEditFormData({ ...editFormData, rateType: value })}
           >
             <SelectTrigger className="w-28 h-12 bg-white/5 border-white/10 rounded-xl">
               <SelectValue />
@@ -568,9 +561,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         </Label>
         <Textarea
           value={editFormData.bio}
-          onChange={(e) =>
-            setEditFormData({ ...editFormData, bio: e.target.value })
-          }
+          onChange={(e) => setEditFormData({ ...editFormData, bio: e.target.value })}
           placeholder="Brief description of your experience and specialisations..."
           className="bg-white/5 border-white/10 rounded-xl min-h-[100px] resize-none"
         />
@@ -593,9 +584,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 <h3 className="text-lg font-bold text-foreground">Edit Profile</h3>
                 <p className="text-sm text-foreground/70">Update your Elec-ID information</p>
               </div>
-              <div className="flex-1 overflow-y-auto px-4 pb-4">
-                {EditFormContent()}
-              </div>
+              <div className="flex-1 overflow-y-auto px-4 pb-4">{EditFormContent()}</div>
               <div className="p-4 border-t border-border bg-background/95 backdrop-blur-sm">
                 <div className="flex gap-3">
                   <Button
@@ -610,7 +599,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     onClick={handleSaveEdit}
                     disabled={isSaving}
                   >
-                    {isSaving ? "Saving..." : "Save Changes"}
+                    {isSaving ? 'Saving...' : 'Save Changes'}
                   </Button>
                 </div>
               </div>
@@ -639,7 +628,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   onClick={handleSaveEdit}
                   disabled={isSaving}
                 >
-                  {isSaving ? "Saving..." : "Save Changes"}
+                  {isSaving ? 'Saving...' : 'Save Changes'}
                 </Button>
               </div>
             </div>
@@ -651,7 +640,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
       >
         <Card className="relative overflow-hidden border border-white/10 rounded-3xl bg-gradient-to-b from-[#1a1a2e] to-[#12121f]">
           {/* Subtle top accent line */}
@@ -665,15 +654,19 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-elec-dark" />
                 </div>
                 <div>
-                  <h2 className="text-base sm:text-lg font-bold text-white tracking-wide">ELEC-iD</h2>
-                  <p className="text-[10px] sm:text-[11px] text-white/40 tracking-wider uppercase">Verified Professional</p>
+                  <h2 className="text-base sm:text-lg font-bold text-white tracking-wide">
+                    ELEC-iD
+                  </h2>
+                  <p className="text-[10px] sm:text-[11px] text-white/40 tracking-wider uppercase">
+                    Verified Professional
+                  </p>
                 </div>
               </div>
               <Button
                 variant="ghost"
                 size="icon"
                 className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 touch-manipulation active:scale-95"
-                onClick={() => isMobile ? setIsEditSheetOpen(true) : handleOpenEdit()}
+                onClick={() => (isMobile ? setIsEditSheetOpen(true) : handleOpenEdit())}
               >
                 <Edit2 className="h-4 w-4 text-white/60" />
               </Button>
@@ -692,7 +685,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     />
                   ) : (
                     <div className="w-[72px] h-[90px] sm:w-[100px] sm:h-[120px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-elec-yellow via-amber-400 to-amber-500 flex items-center justify-center border-2 border-white/20">
-                      <span className="text-elec-dark font-bold text-2xl sm:text-4xl">{userInitials}</span>
+                      <span className="text-elec-dark font-bold text-2xl sm:text-4xl">
+                        {userInitials}
+                      </span>
                     </div>
                   )}
 
@@ -731,7 +726,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   {/* Name & Job */}
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold text-white truncate">{userName}</h3>
-                    <p className="text-elec-yellow font-medium text-xs sm:text-sm mt-0.5">{elecIdData.jobTitleLabel}</p>
+                    <p className="text-elec-yellow font-medium text-xs sm:text-sm mt-0.5">
+                      {elecIdData.jobTitleLabel}
+                    </p>
                   </div>
 
                   {/* Info Grid */}
@@ -745,28 +742,47 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                         >
                           ECS
                         </div>
-                        <span className="text-white/80 text-[11px] sm:text-xs font-medium truncate">{ecsCard.label}</span>
-                        <span className={cn(
-                          "text-[9px] sm:text-[10px] font-medium ml-auto shrink-0",
-                          expiryStatus.status === "expired" ? "text-red-400" :
-                          expiryStatus.status === "expiring" ? "text-orange-400" : "text-white/50"
-                        )}>
-                          {expiryStatus.status === "expired" ? "EXPIRED" :
-                           expiryStatus.status === "expiring" && expiryStatus.daysRemaining != null ? `${expiryStatus.daysRemaining}d` :
-                           elecIdData.ecsCardExpiry ? new Date(elecIdData.ecsCardExpiry).toLocaleDateString("en-GB", { month: "short", year: "2-digit" }) : ""}
+                        <span className="text-white/80 text-[11px] sm:text-xs font-medium truncate">
+                          {ecsCard.label}
+                        </span>
+                        <span
+                          className={cn(
+                            'text-[9px] sm:text-[10px] font-medium ml-auto shrink-0',
+                            expiryStatus.status === 'expired'
+                              ? 'text-red-400'
+                              : expiryStatus.status === 'expiring'
+                                ? 'text-orange-400'
+                                : 'text-white/50'
+                          )}
+                        >
+                          {expiryStatus.status === 'expired'
+                            ? 'EXPIRED'
+                            : expiryStatus.status === 'expiring' &&
+                                expiryStatus.daysRemaining != null
+                              ? `${expiryStatus.daysRemaining}d`
+                              : elecIdData.ecsCardExpiry
+                                ? new Date(elecIdData.ecsCardExpiry).toLocaleDateString('en-GB', {
+                                    month: 'short',
+                                    year: '2-digit',
+                                  })
+                                : ''}
                         </span>
                       </div>
                     )}
 
                     {/* Tier Badge Row */}
                     <div className="flex items-center gap-1.5 sm:gap-2">
-                      <Badge className={cn(
-                        "text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 border",
-                        VERIFICATION_TIERS[verificationTier].bgColor,
-                        VERIFICATION_TIERS[verificationTier].color,
-                        VERIFICATION_TIERS[verificationTier].borderColor
-                      )}>
-                        {React.createElement(VERIFICATION_TIERS[verificationTier].icon, { className: "h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" })}
+                      <Badge
+                        className={cn(
+                          'text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 border',
+                          VERIFICATION_TIERS[verificationTier].bgColor,
+                          VERIFICATION_TIERS[verificationTier].color,
+                          VERIFICATION_TIERS[verificationTier].borderColor
+                        )}
+                      >
+                        {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
+                          className: 'h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1',
+                        })}
                         {VERIFICATION_TIERS[verificationTier].label}
                       </Badge>
                       <span className="text-[9px] sm:text-[10px] text-white/30">Verification</span>
@@ -788,12 +804,18 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-[#1a1a2e]" />
                   </div>
                   <div className="text-left">
-                    <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/30 font-medium">ELEC-iD</p>
-                    <p className="font-mono font-bold text-white text-base sm:text-lg tracking-wider">{elecIdData.elecIdNumber}</p>
+                    <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/30 font-medium">
+                      ELEC-iD
+                    </p>
+                    <p className="font-mono font-bold text-white text-base sm:text-lg tracking-wider">
+                      {elecIdData.elecIdNumber}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2 text-white/40">
-                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wide hidden xs:inline">Tap to copy</span>
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wide hidden xs:inline">
+                    Tap to copy
+                  </span>
                   <Copy className="h-4 w-4" />
                 </div>
               </motion.button>
@@ -807,7 +829,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <div className="flex items-center gap-1 sm:gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[9px] sm:text-[10px] text-emerald-400/60 font-medium">ACTIVE</span>
+                <span className="text-[9px] sm:text-[10px] text-emerald-400/60 font-medium">
+                  ACTIVE
+                </span>
               </div>
             </div>
           </CardContent>
@@ -822,47 +846,62 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className={cn(
-            "h-full border overflow-hidden rounded-xl",
-            verificationTier === "premium"
-              ? "bg-elec-yellow/[0.05] border-elec-yellow/20"
-              : verificationTier === "verified"
-              ? "bg-blue-500/[0.05] border-blue-500/20"
-              : "bg-white/[0.03] border-white/10"
-          )}>
+          <Card
+            className={cn(
+              'h-full border overflow-hidden rounded-xl',
+              verificationTier === 'premium'
+                ? 'bg-elec-yellow/[0.05] border-elec-yellow/20'
+                : verificationTier === 'verified'
+                  ? 'bg-blue-500/[0.05] border-blue-500/20'
+                  : 'bg-white/[0.03] border-white/10'
+            )}
+          >
             <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2 mb-2">
-                <div className={cn(
-                  "w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0",
-                  verificationTier === "premium" ? "bg-elec-yellow/20" :
-                  verificationTier === "verified" ? "bg-blue-500/20" : "bg-white/10"
-                )}>
+                <div
+                  className={cn(
+                    'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0',
+                    verificationTier === 'premium'
+                      ? 'bg-elec-yellow/20'
+                      : verificationTier === 'verified'
+                        ? 'bg-blue-500/20'
+                        : 'bg-white/10'
+                  )}
+                >
                   {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
-                    className: cn("h-4 w-4 sm:h-5 sm:w-5", VERIFICATION_TIERS[verificationTier].color),
+                    className: cn(
+                      'h-4 w-4 sm:h-5 sm:w-5',
+                      VERIFICATION_TIERS[verificationTier].color
+                    ),
                   })}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h4 className={cn("font-semibold text-sm truncate", VERIFICATION_TIERS[verificationTier].color)}>
+                  <h4
+                    className={cn(
+                      'font-semibold text-sm truncate',
+                      VERIFICATION_TIERS[verificationTier].color
+                    )}
+                  >
                     {VERIFICATION_TIERS[verificationTier].label}
                   </h4>
                   <p className="text-[10px] text-foreground/60 truncate">Verification Tier</p>
                 </div>
               </div>
 
-              {verificationTier !== "premium" ? (
+              {verificationTier !== 'premium' ? (
                 <div>
                   <div className="flex items-center justify-between text-[10px] mb-1">
                     <span className="text-foreground/60">Progress</span>
                     <span className={VERIFICATION_TIERS[verificationTier].color}>
-                      {verificationTier === "basic" ? "50%" : "75%"}
+                      {verificationTier === 'basic' ? '50%' : '75%'}
                     </span>
                   </div>
-                  <Progress value={verificationTier === "basic" ? 50 : 75} className="h-1" />
+                  <Progress value={verificationTier === 'basic' ? 50 : 75} className="h-1" />
                   <Button
                     variant="ghost"
                     size="sm"
                     className="w-full mt-2 h-9 text-[10px] sm:text-[11px] bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
-                    onClick={() => onNavigate?.("documents")}
+                    onClick={() => onNavigate?.('documents')}
                   >
                     <Sparkles className="h-3 w-3 mr-1" />
                     Upgrade
@@ -884,32 +923,44 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
         >
-          <Card className={cn(
-            "h-full border overflow-hidden rounded-xl",
-            availableForHire && !isOptedOut
-              ? "bg-emerald-500/[0.08] border-emerald-500/30"
-              : "bg-white/[0.03] border-white/10"
-          )}>
+          <Card
+            className={cn(
+              'h-full border overflow-hidden rounded-xl',
+              availableForHire && !isOptedOut
+                ? 'bg-emerald-500/[0.08] border-emerald-500/30'
+                : 'bg-white/[0.03] border-white/10'
+            )}
+          >
             <CardContent className="p-3 sm:p-4">
               {/* Header with toggle */}
               <div className="flex items-center justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <div className={cn(
-                    "w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0",
-                    availableForHire && !isOptedOut ? "bg-emerald-500/20" : "bg-white/10"
-                  )}>
-                    <Users className={cn(
-                      "h-4 w-4 sm:h-5 sm:w-5",
-                      availableForHire && !isOptedOut ? "text-emerald-400" : "text-foreground/70"
-                    )} />
+                  <div
+                    className={cn(
+                      'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0',
+                      availableForHire && !isOptedOut ? 'bg-emerald-500/20' : 'bg-white/10'
+                    )}
+                  >
+                    <Users
+                      className={cn(
+                        'h-4 w-4 sm:h-5 sm:w-5',
+                        availableForHire && !isOptedOut ? 'text-emerald-400' : 'text-foreground/70'
+                      )}
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4 className="font-semibold text-sm text-foreground truncate">Talent Pool</h4>
-                    <p className={cn(
-                      "text-[10px] truncate",
-                      availableForHire && !isOptedOut ? "text-emerald-400" : "text-foreground/60"
-                    )}>
-                      {isOptedOut ? "Disabled" : availableForHire ? "Visible to employers" : "Hidden"}
+                    <p
+                      className={cn(
+                        'text-[10px] truncate',
+                        availableForHire && !isOptedOut ? 'text-emerald-400' : 'text-foreground/60'
+                      )}
+                    >
+                      {isOptedOut
+                        ? 'Disabled'
+                        : availableForHire
+                          ? 'Visible to employers'
+                          : 'Hidden'}
                     </p>
                   </div>
                 </div>
@@ -938,7 +989,10 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                         Public
                       </div>
                     </SelectItem>
-                    <SelectItem value="employers_only" className="text-xs py-2.5 touch-manipulation">
+                    <SelectItem
+                      value="employers_only"
+                      className="text-xs py-2.5 touch-manipulation"
+                    >
                       <div className="flex items-center gap-2">
                         <Users className="h-3 w-3" />
                         Employers Only
@@ -957,7 +1011,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               {/* Hint text when inactive */}
               {(!availableForHire || isOptedOut) && (
                 <p className="text-[10px] text-foreground/60">
-                  {isOptedOut ? "Re-enable to join" : "Turn on to be discovered"}
+                  {isOptedOut ? 'Re-enable to join' : 'Turn on to be discovered'}
                 </p>
               )}
             </CardContent>
@@ -976,8 +1030,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <div className="flex-1">
                 <h4 className="font-semibold text-orange-400">Elec-ID Disabled</h4>
                 <p className="text-sm text-foreground/70 mt-1">
-                  Your Elec-ID is hidden from the Talent Pool. Employers cannot discover your profile.
-                  Your credentials and data are still saved.
+                  Your Elec-ID is hidden from the Talent Pool. Employers cannot discover your
+                  profile. Your credentials and data are still saved.
                 </p>
               </div>
               <Button
@@ -1032,8 +1086,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               Disable Elec-ID?
             </DialogTitle>
             <DialogDescription className="text-foreground/70">
-              This will hide your profile from the Talent Pool. Employers will not be able
-              to discover you through search.
+              This will hide your profile from the Talent Pool. Employers will not be able to
+              discover you through search.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 pt-4">
@@ -1088,10 +1142,14 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 <div className="p-2 rounded-xl bg-elec-yellow/20">
                   <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                 </div>
-                <h4 className="text-sm sm:text-lg font-semibold text-foreground">Profile Strength</h4>
+                <h4 className="text-sm sm:text-lg font-semibold text-foreground">
+                  Profile Strength
+                </h4>
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-xl sm:text-2xl font-bold text-elec-yellow">{completeness.percentage}</span>
+                <span className="text-xl sm:text-2xl font-bold text-elec-yellow">
+                  {completeness.percentage}
+                </span>
                 <span className="text-sm text-foreground/70">%</span>
               </div>
             </div>
@@ -1134,7 +1192,10 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           // Loading skeletons
           <>
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 min-h-[120px]">
+              <div
+                key={i}
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 min-h-[120px]"
+              >
                 <Skeleton className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-2 sm:mb-3 bg-white/10" />
                 <Skeleton className="h-8 w-12 mb-1 bg-white/10" />
                 <Skeleton className="h-3 w-16 bg-white/10" />
@@ -1143,29 +1204,72 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           </>
         ) : (
           [
-            { id: "qualifications", icon: GraduationCap, count: profileStats.qualificationsCount, label: "Qualifications", shortLabel: "Quals", color: "from-purple-500/20 to-pink-500/20", iconColor: "text-purple-400", borderColor: "hover:border-purple-500/50 active:border-purple-500/50" },
-            { id: "experience", icon: Briefcase, count: profileStats.experienceCount, label: "Work History", shortLabel: "Work", color: "from-blue-500/20 to-cyan-500/20", iconColor: "text-blue-400", borderColor: "hover:border-blue-500/50 active:border-blue-500/50" },
-            { id: "skills", icon: Wrench, count: profileStats.skillsCount, label: "Skills", shortLabel: "Skills", color: "from-emerald-500/20 to-teal-500/20", iconColor: "text-emerald-400", borderColor: "hover:border-emerald-500/50 active:border-emerald-500/50" },
-            { id: "compliance", icon: Shield, count: profileStats.expiringItems, label: "Expiring Soon", shortLabel: "Expiry", color: "from-orange-500/20 to-red-500/20", iconColor: "text-orange-400", borderColor: "hover:border-orange-500/50 active:border-orange-500/50" },
+            {
+              id: 'qualifications',
+              icon: GraduationCap,
+              count: profileStats.qualificationsCount,
+              label: 'Qualifications',
+              shortLabel: 'Quals',
+              color: 'from-purple-500/20 to-pink-500/20',
+              iconColor: 'text-purple-400',
+              borderColor: 'hover:border-purple-500/50 active:border-purple-500/50',
+            },
+            {
+              id: 'experience',
+              icon: Briefcase,
+              count: profileStats.experienceCount,
+              label: 'Work History',
+              shortLabel: 'Work',
+              color: 'from-blue-500/20 to-cyan-500/20',
+              iconColor: 'text-blue-400',
+              borderColor: 'hover:border-blue-500/50 active:border-blue-500/50',
+            },
+            {
+              id: 'skills',
+              icon: Wrench,
+              count: profileStats.skillsCount,
+              label: 'Skills',
+              shortLabel: 'Skills',
+              color: 'from-emerald-500/20 to-teal-500/20',
+              iconColor: 'text-emerald-400',
+              borderColor: 'hover:border-emerald-500/50 active:border-emerald-500/50',
+            },
+            {
+              id: 'compliance',
+              icon: Shield,
+              count: profileStats.expiringItems,
+              label: 'Expiring Soon',
+              shortLabel: 'Expiry',
+              color: 'from-orange-500/20 to-red-500/20',
+              iconColor: 'text-orange-400',
+              borderColor: 'hover:border-orange-500/50 active:border-orange-500/50',
+            },
           ].map((stat, index) => (
             <motion.button
               key={stat.id}
               whileTap={{ scale: 0.97 }}
               onClick={() => handleStatClick(stat.id)}
               className={cn(
-                "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 text-left transition-all touch-manipulation min-h-[120px]",
+                'relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 text-left transition-all touch-manipulation min-h-[120px]',
                 stat.borderColor
               )}
             >
               {/* Gradient background */}
-              <div className={cn("absolute inset-0 bg-gradient-to-br opacity-50", stat.color)} />
+              <div className={cn('absolute inset-0 bg-gradient-to-br opacity-50', stat.color)} />
 
               <div className="relative">
-                <div className={cn("w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-2 sm:mb-3", stat.color.replace("from-", "bg-gradient-to-br from-").replace("/20", "/30"))}>
-                  <stat.icon className={cn("h-5 w-5 sm:h-6 sm:w-6", stat.iconColor)} />
+                <div
+                  className={cn(
+                    'w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-2 sm:mb-3',
+                    stat.color.replace('from-', 'bg-gradient-to-br from-').replace('/20', '/30')
+                  )}
+                >
+                  <stat.icon className={cn('h-5 w-5 sm:h-6 sm:w-6', stat.iconColor)} />
                 </div>
                 <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.count}</p>
-                <p className="text-[10px] sm:text-xs text-foreground/70 mt-0.5 sm:hidden">{stat.shortLabel}</p>
+                <p className="text-[10px] sm:text-xs text-foreground/70 mt-0.5 sm:hidden">
+                  {stat.shortLabel}
+                </p>
                 <p className="text-xs text-foreground/70 mt-0.5 hidden sm:block">{stat.label}</p>
               </div>
 

@@ -18,7 +18,8 @@ export const SmartHomeModule6Section2RealWorld = () => {
             <h4 className="font-semibold text-foreground">Birmingham Smart Home Integration</h4>
           </div>
           <p className="text-foreground text-sm">
-            A homeowner in Birmingham wanted comprehensive voice control for their newly renovated property, including heating, lighting, and motorised blinds.
+            A homeowner in Birmingham wanted comprehensive voice control for their newly renovated
+            property, including heating, lighting, and motorised blinds.
           </p>
         </div>
 
@@ -27,11 +28,13 @@ export const SmartHomeModule6Section2RealWorld = () => {
           <h4 className="font-semibold text-elec-yellow mb-3">The Challenge:</h4>
           <div className="space-y-3 mb-4">
             <p className="text-foreground text-sm">
-              The client had mixed device brands: Hive heating system, Philips Hue lighting, and budget Zigbee motorised blinds. 
-              They wanted a single voice command to activate multiple "scenes" but were overwhelmed by different apps.
+              The client had mixed device brands: Hive heating system, Philips Hue lighting, and
+              budget Zigbee motorised blinds. They wanted a single voice command to activate
+              multiple "scenes" but were overwhelmed by different apps.
             </p>
             <p className="text-foreground text-sm">
-              <strong>Client requirements:</strong> "Alexa, good night" should turn off all lights, lower blinds, and set heating to eco mode.
+              <strong>Client requirements:</strong> "Alexa, good night" should turn off all lights,
+              lower blinds, and set heating to eco mode.
             </p>
           </div>
         </div>
@@ -39,40 +42,49 @@ export const SmartHomeModule6Section2RealWorld = () => {
         {/* Solution Implementation */}
         <div>
           <h4 className="font-semibold text-elec-yellow mb-3">The Solution:</h4>
-          
+
           <div className="space-y-4">
             {/* Step 1 */}
             <div className="flex items-start gap-4 p-3 bg-green-900/20 border border-green-500/30 rounded-lg">
-              <span className="bg-green-400 text-green-900 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span className="bg-green-400 text-green-900 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                1
+              </span>
               <div>
                 <h5 className="font-medium text-foreground mb-2">SmartThings Hub Installation</h5>
                 <p className="text-foreground text-sm">
-                  Installed a Samsung SmartThings hub to unify all devices under one system. The Hive system connected via the official integration, 
-                  Hue lights via the Philips Hue Bridge, and Zigbee blinds directly to SmartThings.
+                  Installed a Samsung SmartThings hub to unify all devices under one system. The
+                  Hive system connected via the official integration, Hue lights via the Philips Hue
+                  Bridge, and Zigbee blinds directly to SmartThings.
                 </p>
               </div>
             </div>
 
             {/* Step 2 */}
             <div className="flex items-start gap-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-              <span className="bg-blue-400 text-blue-900 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span className="bg-blue-400 text-blue-900 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                2
+              </span>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Alexa Integration Setup</h5>
                 <p className="text-foreground text-sm">
-                  Connected SmartThings to Amazon Alexa using the SmartThings skill. All devices became visible in the Alexa app, 
-                  allowing voice control of every connected component.
+                  Connected SmartThings to Amazon Alexa using the SmartThings skill. All devices
+                  became visible in the Alexa app, allowing voice control of every connected
+                  component.
                 </p>
               </div>
             </div>
 
             {/* Step 3 */}
             <div className="flex items-start gap-4 p-3 bg-purple-900/20 border border-purple-500/30 rounded-lg">
-              <span className="bg-purple-400 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span className="bg-purple-400 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                3
+              </span>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Routine Configuration</h5>
                 <p className="text-foreground text-sm">
-                  Created an Alexa routine triggered by "good night" that: turns off all lights (Hue), 
-                  closes all blinds (Zigbee motors), and sets Hive thermostat to 18°C eco mode.
+                  Created an Alexa routine triggered by "good night" that: turns off all lights
+                  (Hue), closes all blinds (Zigbee motors), and sets Hive thermostat to 18°C eco
+                  mode.
                 </p>
               </div>
             </div>
@@ -89,7 +101,8 @@ export const SmartHomeModule6Section2RealWorld = () => {
                 <span className="text-foreground text-sm font-medium">Single Voice Interface</span>
               </div>
               <p className="text-foreground text-sm ml-8">
-                Client now controls everything through Alexa voice commands instead of juggling three separate apps
+                Client now controls everything through Alexa voice commands instead of juggling
+                three separate apps
               </p>
             </div>
             <div className="space-y-2">
@@ -98,7 +111,8 @@ export const SmartHomeModule6Section2RealWorld = () => {
                 <span className="text-foreground text-sm font-medium">Energy Efficiency</span>
               </div>
               <p className="text-foreground text-sm ml-8">
-                Automated routines reduced energy consumption by ensuring heating and lighting aren't left on unnecessarily
+                Automated routines reduced energy consumption by ensuring heating and lighting
+                aren't left on unnecessarily
               </p>
             </div>
           </div>

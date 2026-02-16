@@ -1,5 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Zap, GraduationCap, Wrench, Building2, BookOpen, Bot, FileCheck, CreditCard } from 'lucide-react';
+import {
+  X,
+  Zap,
+  GraduationCap,
+  Wrench,
+  Building2,
+  BookOpen,
+  Bot,
+  FileCheck,
+  CreditCard,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 

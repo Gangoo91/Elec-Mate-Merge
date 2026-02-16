@@ -21,24 +21,15 @@ export type LuminaireType =
   | 'strip'
   | 'downlight';
 
-export type LuminaireCategory =
-  | 'escape-route'
-  | 'open-area'
-  | 'high-risk'
-  | 'standby';
+export type LuminaireCategory = 'escape-route' | 'open-area' | 'high-risk' | 'standby';
 
 export type BatteryType =
-  | 'NiCd'      // Nickel Cadmium
-  | 'NiMH'      // Nickel Metal Hydride
-  | 'LiFePO4'   // Lithium Iron Phosphate
-  | 'Li-ion';   // Lithium Ion
+  | 'NiCd' // Nickel Cadmium
+  | 'NiMH' // Nickel Metal Hydride
+  | 'LiFePO4' // Lithium Iron Phosphate
+  | 'Li-ion'; // Lithium Ion
 
-export type MountingType =
-  | 'surface'
-  | 'recessed'
-  | 'ceiling'
-  | 'wall'
-  | 'suspended';
+export type MountingType = 'surface' | 'recessed' | 'ceiling' | 'wall' | 'suspended';
 
 export interface EmergencyLuminaire {
   id: string;
@@ -47,23 +38,23 @@ export interface EmergencyLuminaire {
   productCode?: string;
   luminaireType: LuminaireType;
   category: LuminaireCategory;
-  lightOutput: number;            // lumens (emergency mode)
-  mainsPower?: number;            // lumens (mains mode, if maintained)
+  lightOutput: number; // lumens (emergency mode)
+  mainsPower?: number; // lumens (mains mode, if maintained)
   wattage: number;
   batteryType: BatteryType;
-  ratedDuration: 60 | 180;        // minutes (1hr or 3hr)
-  maintained: boolean;            // can operate as normal lighting
-  selfTest: boolean;              // auto-test capability
-  addressable: boolean;           // DALI/addressable
+  ratedDuration: 60 | 180; // minutes (1hr or 3hr)
+  maintained: boolean; // can operate as normal lighting
+  selfTest: boolean; // auto-test capability
+  addressable: boolean; // DALI/addressable
   mountingType: MountingType;
-  ipRating: string;               // IP20, IP65, etc.
-  ikRating?: string;              // IK08, IK10 etc.
-  viewingDistance?: number;       // metres (for exit signs)
-  maxSpacing?: number;            // metres between luminaires
-  colourTemp?: number;            // Kelvin (e.g., 6500)
-  dimensions?: string;            // L x W x H mm
-  weight?: number;                // kg
-  warranty?: number;              // years
+  ipRating: string; // IP20, IP65, etc.
+  ikRating?: string; // IK08, IK10 etc.
+  viewingDistance?: number; // metres (for exit signs)
+  maxSpacing?: number; // metres between luminaires
+  colourTemp?: number; // Kelvin (e.g., 6500)
+  dimensions?: string; // L x W x H mm
+  weight?: number; // kg
+  warranty?: number; // years
   notes?: string;
 }
 
@@ -106,7 +97,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     viewingDistance: 18,
     colourTemp: 6500,
     warranty: 3,
-    notes: 'Ultra-slim design, quick release gear tray'
+    notes: 'Ultra-slim design, quick release gear tray',
   },
   {
     id: 'ansell-raven-escape',
@@ -128,7 +119,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     colourTemp: 6500,
     dimensions: '110mm diameter',
     warranty: 3,
-    notes: 'High performance optic, 150mm cable pre-wired'
+    notes: 'High performance optic, 150mm cable pre-wired',
   },
   {
     id: 'ansell-raven-open',
@@ -149,7 +140,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     colourTemp: 6500,
     dimensions: '110mm diameter',
     warranty: 3,
-    notes: 'Open area lens, 43° beam angle'
+    notes: 'Open area lens, 43° beam angle',
   },
   {
     id: 'ansell-falcon',
@@ -170,7 +161,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     maxSpacing: 19.6,
     colourTemp: 6500,
     warranty: 3,
-    notes: 'Ultra-low profile, BESA mounting option'
+    notes: 'Ultra-low profile, BESA mounting option',
   },
   {
     id: 'ansell-owl-twin',
@@ -191,7 +182,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ikRating: 'IK08',
     colourTemp: 6500,
     warranty: 5,
-    notes: 'Industrial grade, 60° beam angle'
+    notes: 'Industrial grade, 60° beam angle',
   },
   {
     id: 'ansell-raptor-twin',
@@ -210,7 +201,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'wall',
     ipRating: 'IP65',
     warranty: 3,
-    notes: 'Adjustable spot heads'
+    notes: 'Adjustable spot heads',
   },
 
   // ============================================
@@ -235,7 +226,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     viewingDistance: 20,
     dimensions: '270 x 119 x 49',
     warranty: 2,
-    notes: 'ISO 7010 compliant legends available'
+    notes: 'ISO 7010 compliant legends available',
   },
   {
     id: 'eaton-safelite-30m',
@@ -256,7 +247,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     viewingDistance: 30,
     dimensions: '371 x 170 x 62',
     warranty: 2,
-    notes: 'Large format exit sign'
+    notes: 'Large format exit sign',
   },
   {
     id: 'eaton-safelite-cg-s',
@@ -277,7 +268,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ikRating: 'IK07',
     viewingDistance: 20,
     warranty: 3,
-    notes: 'Central battery compatible, 850°C glow wire'
+    notes: 'Central battery compatible, 850°C glow wire',
   },
   {
     id: 'eaton-atlantic-led',
@@ -296,7 +287,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'surface',
     ipRating: 'IP65',
     warranty: 2,
-    notes: 'All-round emergency safety light'
+    notes: 'All-round emergency safety light',
   },
 
   // ============================================
@@ -322,7 +313,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     dimensions: '280 x 130 x 71',
     weight: 0.68,
     warranty: 3,
-    notes: 'High power options for 20m ceiling heights'
+    notes: 'High power options for 20m ceiling heights',
   },
   {
     id: 'thorn-voyager-fit',
@@ -341,7 +332,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP40',
     warranty: 3,
-    notes: 'Only 80mm ceiling void required'
+    notes: 'Only 80mm ceiling void required',
   },
   {
     id: 'thorn-voyager-style',
@@ -360,7 +351,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'surface',
     ipRating: 'IP40',
     warranty: 3,
-    notes: 'Ultra-slim 37mm depth'
+    notes: 'Ultra-slim 37mm depth',
   },
   {
     id: 'thorn-voyager-one',
@@ -380,7 +371,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ipRating: 'IP65',
     viewingDistance: 30,
     warranty: 3,
-    notes: 'Click-in legends, outdoor suitable'
+    notes: 'Click-in legends, outdoor suitable',
   },
 
   // ============================================
@@ -405,7 +396,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     viewingDistance: 28,
     weight: 0.8,
     warranty: 3,
-    notes: 'SELV via suspension wires'
+    notes: 'SELV via suspension wires',
   },
   {
     id: 'channel-razor-recessed',
@@ -426,7 +417,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     viewingDistance: 26,
     weight: 0.8,
     warranty: 3,
-    notes: 'Ultra slim-line design'
+    notes: 'Ultra slim-line design',
   },
   {
     id: 'channel-brook2',
@@ -445,7 +436,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'surface',
     ipRating: 'IP65',
     warranty: 3,
-    notes: 'Robust polycarbonate construction'
+    notes: 'Robust polycarbonate construction',
   },
   {
     id: 'channel-milan',
@@ -466,7 +457,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ipRating: 'IP65',
     ikRating: 'IK10',
     warranty: 3,
-    notes: 'Microwave sensor option'
+    notes: 'Microwave sensor option',
   },
 
   // ============================================
@@ -489,7 +480,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP20',
     warranty: 3,
-    notes: 'Pre-packed kit with transformer'
+    notes: 'Pre-packed kit with transformer',
   },
   {
     id: 'hochiki-firescape-lite-oa',
@@ -508,7 +499,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP20',
     warranty: 3,
-    notes: 'Wide beam distribution'
+    notes: 'Wide beam distribution',
   },
   {
     id: 'hochiki-firescape-exit-20m',
@@ -528,7 +519,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ipRating: 'IP40',
     viewingDistance: 20,
     warranty: 10,
-    notes: 'FIREscape+ compatible, bi-colour status LED'
+    notes: 'FIREscape+ compatible, bi-colour status LED',
   },
   {
     id: 'hochiki-firescape-exit-40m',
@@ -548,7 +539,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ipRating: 'IP40',
     viewingDistance: 40,
     warranty: 10,
-    notes: 'Dynamic exit signage, route blocking capable'
+    notes: 'Dynamic exit signage, route blocking capable',
   },
 
   // ============================================
@@ -574,7 +565,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     colourTemp: 5500,
     dimensions: '345 x 110 x 60',
     warranty: 3,
-    notes: 'SMD 2835 LED lamp'
+    notes: 'SMD 2835 LED lamp',
   },
   {
     id: 'esp-duceri-5w',
@@ -596,7 +587,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     colourTemp: 5500,
     dimensions: '345 x 110 x 60',
     warranty: 3,
-    notes: '3.6V 1800mAH battery'
+    notes: '3.6V 1800mAH battery',
   },
   {
     id: 'esp-duceri-14w',
@@ -616,7 +607,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ipRating: 'IP65',
     colourTemp: 5500,
     warranty: 3,
-    notes: 'High power circular bulkhead'
+    notes: 'High power circular bulkhead',
   },
   {
     id: 'esp-duceri-flush',
@@ -635,7 +626,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP20',
     warranty: 3,
-    notes: 'Flush ceiling mounted'
+    notes: 'Flush ceiling mounted',
   },
 
   // ============================================
@@ -659,7 +650,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ipRating: 'IP40',
     weight: 0.246,
     warranty: 3,
-    notes: 'SmartCharge NiMH technology, DALI AutoTest'
+    notes: 'SmartCharge NiMH technology, DALI AutoTest',
   },
   {
     id: 'mackwell-xylux-lr',
@@ -678,7 +669,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP40',
     warranty: 3,
-    notes: 'Central battery compatible, articulated design'
+    notes: 'Central battery compatible, articulated design',
   },
   {
     id: 'mackwell-xylux-bhdx',
@@ -697,7 +688,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'surface',
     ipRating: 'IP65',
     warranty: 3,
-    notes: 'High-risk task area lighting'
+    notes: 'High-risk task area lighting',
   },
 
   // ============================================
@@ -722,7 +713,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ipRating: 'IP65',
     colourTemp: 6500,
     warranty: 5,
-    notes: '30,000 hours LED life'
+    notes: '30,000 hours LED life',
   },
   {
     id: 'kosnic-orda-3w',
@@ -743,7 +734,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ikRating: 'IK10',
     colourTemp: 6500,
     warranty: 4,
-    notes: '110° beam angle, adjustable heads'
+    notes: '110° beam angle, adjustable heads',
   },
   {
     id: 'kosnic-orda-6w',
@@ -764,7 +755,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     ikRating: 'IK10',
     colourTemp: 6500,
     warranty: 4,
-    notes: '40,000 hours LED life'
+    notes: '40,000 hours LED life',
   },
   {
     id: 'kosnic-belum',
@@ -785,7 +776,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     colourTemp: 6500,
     viewingDistance: 20,
     warranty: 3,
-    notes: 'ISO 7010 compliant legends'
+    notes: 'ISO 7010 compliant legends',
   },
 
   // ============================================
@@ -808,7 +799,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP40',
     warranty: 2,
-    notes: 'ECO designed, NF environment certified'
+    notes: 'ECO designed, NF environment certified',
   },
   {
     id: 'legrand-xlight-360-200',
@@ -827,7 +818,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP40',
     warranty: 2,
-    notes: 'Higher output version'
+    notes: 'Higher output version',
   },
   {
     id: 'legrand-kickspot',
@@ -846,7 +837,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'recessed',
     ipRating: 'IP40',
     warranty: 2,
-    notes: 'NF C 71-800 compliant, 2.2Ah battery'
+    notes: 'NF C 71-800 compliant, 2.2Ah battery',
   },
   {
     id: 'legrand-eco-bulkhead',
@@ -865,7 +856,7 @@ export const EMERGENCY_LUMINAIRES: EmergencyLuminaire[] = [
     mountingType: 'ceiling',
     ipRating: 'IP40',
     warranty: 2,
-    notes: 'Budget ECO range, 5hr BAEH option'
+    notes: 'Budget ECO range, 5hr BAEH option',
   },
 ];
 
@@ -877,8 +868,9 @@ export function searchLuminaires(query: string): EmergencyLuminaire[] {
   const normalizedQuery = query.toLowerCase().trim();
   if (!normalizedQuery) return EMERGENCY_LUMINAIRES;
 
-  return EMERGENCY_LUMINAIRES.filter(luminaire => {
-    const searchText = `${luminaire.make} ${luminaire.model} ${luminaire.productCode || ''}`.toLowerCase();
+  return EMERGENCY_LUMINAIRES.filter((luminaire) => {
+    const searchText =
+      `${luminaire.make} ${luminaire.model} ${luminaire.productCode || ''}`.toLowerCase();
     return searchText.includes(normalizedQuery);
   });
 }
@@ -887,47 +879,47 @@ export function searchLuminaires(query: string): EmergencyLuminaire[] {
  * Find a specific luminaire by make and model
  */
 export function findLuminaire(make: string, model: string): EmergencyLuminaire | null {
-  return EMERGENCY_LUMINAIRES.find(
-    l => l.make.toLowerCase() === make.toLowerCase() &&
-         l.model.toLowerCase() === model.toLowerCase()
-  ) || null;
+  return (
+    EMERGENCY_LUMINAIRES.find(
+      (l) =>
+        l.make.toLowerCase() === make.toLowerCase() && l.model.toLowerCase() === model.toLowerCase()
+    ) || null
+  );
 }
 
 /**
  * Find a luminaire by ID
  */
 export function findLuminaireById(id: string): EmergencyLuminaire | null {
-  return EMERGENCY_LUMINAIRES.find(l => l.id === id) || null;
+  return EMERGENCY_LUMINAIRES.find((l) => l.id === id) || null;
 }
 
 /**
  * Get all luminaires by type
  */
 export function getLuminairesByType(type: LuminaireType): EmergencyLuminaire[] {
-  return EMERGENCY_LUMINAIRES.filter(l => l.luminaireType === type);
+  return EMERGENCY_LUMINAIRES.filter((l) => l.luminaireType === type);
 }
 
 /**
  * Get all luminaires by category
  */
 export function getLuminairesByCategory(category: LuminaireCategory): EmergencyLuminaire[] {
-  return EMERGENCY_LUMINAIRES.filter(l => l.category === category);
+  return EMERGENCY_LUMINAIRES.filter((l) => l.category === category);
 }
 
 /**
  * Get all luminaires by manufacturer
  */
 export function getLuminairesByMake(make: string): EmergencyLuminaire[] {
-  return EMERGENCY_LUMINAIRES.filter(
-    l => l.make.toLowerCase() === make.toLowerCase()
-  );
+  return EMERGENCY_LUMINAIRES.filter((l) => l.make.toLowerCase() === make.toLowerCase());
 }
 
 /**
  * Get unique manufacturer list
  */
 export function getManufacturers(): string[] {
-  const makes = new Set(EMERGENCY_LUMINAIRES.map(l => l.make));
+  const makes = new Set(EMERGENCY_LUMINAIRES.map((l) => l.make));
   return Array.from(makes).sort();
 }
 
@@ -935,13 +927,16 @@ export function getManufacturers(): string[] {
  * Get luminaires grouped by manufacturer
  */
 export function getLuminairesGroupedByMake(): Record<string, EmergencyLuminaire[]> {
-  return EMERGENCY_LUMINAIRES.reduce((acc, luminaire) => {
-    if (!acc[luminaire.make]) {
-      acc[luminaire.make] = [];
-    }
-    acc[luminaire.make].push(luminaire);
-    return acc;
-  }, {} as Record<string, EmergencyLuminaire[]>);
+  return EMERGENCY_LUMINAIRES.reduce(
+    (acc, luminaire) => {
+      if (!acc[luminaire.make]) {
+        acc[luminaire.make] = [];
+      }
+      acc[luminaire.make].push(luminaire);
+      return acc;
+    },
+    {} as Record<string, EmergencyLuminaire[]>
+  );
 }
 
 /**
@@ -952,6 +947,6 @@ export function getSuitableLuminaires(
   minDuration: 60 | 180
 ): EmergencyLuminaire[] {
   return EMERGENCY_LUMINAIRES.filter(
-    l => l.category === category && l.ratedDuration >= minDuration
+    (l) => l.category === category && l.ratedDuration >= minDuration
   );
 }

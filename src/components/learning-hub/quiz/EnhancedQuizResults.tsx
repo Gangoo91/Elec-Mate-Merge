@@ -22,7 +22,7 @@ import {
   Download,
   Share2,
   Star,
-  Sparkles
+  Sparkles,
 } from 'lucide-react';
 import { QuizResult, Assessment, QuizQuestion, QuizAnswer } from '@/types/quiz';
 
@@ -47,7 +47,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
   onBackToHub,
   onReviewAnswers,
   onTakeAnother,
-  onViewAnalytics
+  onViewAnalytics,
 }) => {
   const [showCategoryDetails, setShowCategoryDetails] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
@@ -77,9 +77,9 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
   };
 
   const getScoreMessage = (percentage: number): string => {
-    if (percentage >= 90) return 'Outstanding! You\'ve mastered this topic.';
+    if (percentage >= 90) return "Outstanding! You've mastered this topic.";
     if (percentage >= 80) return 'Excellent work! You have a strong understanding.';
-    if (percentage >= 70) return 'Good job! You\'re well on your way.';
+    if (percentage >= 70) return "Good job! You're well on your way.";
     if (percentage >= 60) return 'Not bad! Some areas need improvement.';
     return 'Keep studying! Focus on the areas highlighted below.';
   };
@@ -93,13 +93,13 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
 
   const getStrengths = (): string[] => {
     return Object.entries(result.categoryBreakdown)
-      .filter(([_, data]) => (data.correct / data.total) >= 0.8)
+      .filter(([_, data]) => data.correct / data.total >= 0.8)
       .map(([category]) => category);
   };
 
   const getWeaknesses = (): string[] => {
     return Object.entries(result.categoryBreakdown)
-      .filter(([_, data]) => (data.correct / data.total) < 0.6)
+      .filter(([_, data]) => data.correct / data.total < 0.6)
       .map(([category]) => category);
   };
 
@@ -110,16 +110,16 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
     if (weaknesses.length > 0) {
       recommendations.push(`Focus on ${weaknesses.slice(0, 2).join(' and ')} topics`);
     }
-    
+
     if (result.percentage < 70) {
       recommendations.push('Review BS 7671 regulations for these areas');
       recommendations.push('Practice with more questions in weak categories');
     }
-    
+
     if (result.timeSpent / result.totalQuestions > 90) {
       recommendations.push('Work on improving your response time');
     }
-    
+
     return recommendations;
   };
 
@@ -144,23 +144,29 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
       )}
 
       {/* Main Score Display - Hero Section */}
-      <Card className={`overflow-hidden ${isExcellent ? 'ring-2 ring-green-500/50' : isPassing ? 'ring-2 ring-elec-yellow/50' : ''}`}>
-        <div className={`p-6 sm:p-8 text-center space-y-4 ${
-          isExcellent
-            ? 'bg-gradient-to-b from-green-500/10 to-transparent'
-            : isPassing
-              ? 'bg-gradient-to-b from-elec-yellow/10 to-transparent'
-              : 'bg-gradient-to-b from-red-500/10 to-transparent'
-        }`}>
+      <Card
+        className={`overflow-hidden ${isExcellent ? 'ring-2 ring-green-500/50' : isPassing ? 'ring-2 ring-elec-yellow/50' : ''}`}
+      >
+        <div
+          className={`p-6 sm:p-8 text-center space-y-4 ${
+            isExcellent
+              ? 'bg-gradient-to-b from-green-500/10 to-transparent'
+              : isPassing
+                ? 'bg-gradient-to-b from-elec-yellow/10 to-transparent'
+                : 'bg-gradient-to-b from-red-500/10 to-transparent'
+          }`}
+        >
           {/* Result Icon */}
           <div className="flex justify-center">
-            <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center ${
-              isExcellent
-                ? 'bg-green-500/20 ring-4 ring-green-500/30'
-                : isPassing
-                  ? 'bg-elec-yellow/20 ring-4 ring-elec-yellow/30'
-                  : 'bg-red-500/20 ring-4 ring-red-500/30'
-            }`}>
+            <div
+              className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center ${
+                isExcellent
+                  ? 'bg-green-500/20 ring-4 ring-green-500/30'
+                  : isPassing
+                    ? 'bg-elec-yellow/20 ring-4 ring-elec-yellow/30'
+                    : 'bg-red-500/20 ring-4 ring-red-500/30'
+              }`}
+            >
               {isExcellent ? (
                 <Trophy className="h-10 w-10 sm:h-12 sm:w-12 text-green-400" />
               ) : isPassing ? (
@@ -202,9 +208,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
           </p>
 
           {/* Assessment Title */}
-          <p className="text-xs text-foreground/70 pt-2">
-            {assessment.title}
-          </p>
+          <p className="text-xs text-foreground/70 pt-2">{assessment.title}</p>
         </div>
       </Card>
 
@@ -249,8 +253,8 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
               <Target className="h-4 w-4 sm:h-5 sm:w-5" />
               Category Performance
             </CardTitle>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               onClick={() => setShowCategoryDetails(!showCategoryDetails)}
               className="min-h-[44px] touch-manipulation text-xs sm:text-sm w-full sm:w-auto"
@@ -268,13 +272,15 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-sm sm:text-base">{category}</span>
                     <div className="flex items-center gap-2">
-                      <span className={`text-xs sm:text-sm ${getCategoryColor(data.correct, data.total)}`}>
+                      <span
+                        className={`text-xs sm:text-sm ${getCategoryColor(data.correct, data.total)}`}
+                      >
                         {data.correct}/{data.total} ({percentage}%)
                       </span>
                     </div>
                   </div>
                   <Progress value={percentage} className="h-3 sm:h-2" />
-                  
+
                   {showCategoryDetails && (
                     <div className="mt-2 text-xs sm:text-sm text-foreground/70">
                       <div className="flex items-center gap-4">
@@ -308,8 +314,12 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
           <CardContent>
             {getStrengths().length > 0 ? (
               <div className="space-y-2">
-                {getStrengths().map(strength => (
-                  <Badge key={strength} variant="outline" className="text-green-400 border-green-500/50">
+                {getStrengths().map((strength) => (
+                  <Badge
+                    key={strength}
+                    variant="outline"
+                    className="text-green-400 border-green-500/50"
+                  >
                     {strength}
                   </Badge>
                 ))}
@@ -330,8 +340,12 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
           <CardContent>
             {getWeaknesses().length > 0 ? (
               <div className="space-y-2">
-                {getWeaknesses().map(weakness => (
-                  <Badge key={weakness} variant="outline" className="text-amber-400 border-amber-500/50">
+                {getWeaknesses().map((weakness) => (
+                  <Badge
+                    key={weakness}
+                    variant="outline"
+                    className="text-amber-400 border-amber-500/50"
+                  >
                     {weakness}
                   </Badge>
                 ))}

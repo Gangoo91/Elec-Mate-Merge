@@ -1,12 +1,11 @@
-
-import React from "react";
-import { AlertTriangle } from "lucide-react";
+import React from 'react';
+import { AlertTriangle } from 'lucide-react';
 
 const LadderInspection = () => {
   return (
     <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
       <h3 className="text-xl font-bold text-elec-yellow">Ladder Inspection & Safe Use</h3>
-      
+
       <div className="space-y-4">
         <div className="bg-white/10 border-l-4 border-red-500 p-4">
           <div className="flex items-center gap-2 mb-2">
@@ -14,12 +13,12 @@ const LadderInspection = () => {
             <h4 className="font-semibold text-elec-yellow">Pre-use Inspection Requirements</h4>
           </div>
           <p className="text-sm">
-            Before using any ladder for electrical work, a thorough visual inspection must be performed. 
-            Damaged or defective ladders must be removed from service immediately and tagged with 
-            "DO NOT USE" signage until repaired or replaced by a competent person.
+            Before using any ladder for electrical work, a thorough visual inspection must be
+            performed. Damaged or defective ladders must be removed from service immediately and
+            tagged with "DO NOT USE" signage until repaired or replaced by a competent person.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <h4 className="font-semibold text-elec-yellow mb-3">Visual Inspection Checklist</h4>
@@ -36,7 +35,7 @@ const LadderInspection = () => {
               <li>Check ropes and pulleys on extension ladders</li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-semibold text-elec-yellow mb-3">Safe Use Practices</h4>
             <ul className="list-disc pl-5 space-y-2">
@@ -53,29 +52,37 @@ const LadderInspection = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="mt-4">
           <h4 className="font-semibold text-elec-yellow mb-3">Formal Inspection Requirements</h4>
           <p className="mb-3">
-            In addition to pre-use checks, ladders used for electrical work require formal documented 
-            inspections at regular intervals:
+            In addition to pre-use checks, ladders used for electrical work require formal
+            documented inspections at regular intervals:
           </p>
           <ul className="list-disc pl-5 space-y-2">
             <li>
-              <span className="font-medium">Weekly visual inspections</span> 
-              <p className="text-sm mt-1">Required when ladder is in frequent use or in harsh environments</p>
+              <span className="font-medium">Weekly visual inspections</span>
+              <p className="text-sm mt-1">
+                Required when ladder is in frequent use or in harsh environments
+              </p>
             </li>
             <li>
               <span className="font-medium">Detailed inspection every 3-6 months</span>
-              <p className="text-sm mt-1">Must be conducted by a competent person and results recorded</p>
+              <p className="text-sm mt-1">
+                Must be conducted by a competent person and results recorded
+              </p>
             </li>
             <li>
               <span className="font-medium">Tagging system</span>
-              <p className="text-sm mt-1">Color-coded or dated tags to indicate inspection status</p>
+              <p className="text-sm mt-1">
+                Color-coded or dated tags to indicate inspection status
+              </p>
             </li>
             <li>
               <span className="font-medium">Records retention</span>
-              <p className="text-sm mt-1">Inspection records must be kept available for regulatory review</p>
+              <p className="text-sm mt-1">
+                Inspection records must be kept available for regulatory review
+              </p>
             </li>
           </ul>
         </div>

@@ -1,8 +1,8 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ChevronRight, Calendar, AlertCircle, Package } from "lucide-react";
-import { format, addDays } from "date-fns";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ChevronRight, Calendar, AlertCircle, Package } from 'lucide-react';
+import { format, addDays } from 'date-fns';
 
 interface PhaseCardProps {
   phase: any;
@@ -12,39 +12,53 @@ interface PhaseCardProps {
   isActive?: boolean;
 }
 
-export const PhaseCard = ({ phase, phaseNumber, startDate, onViewDetails, isActive }: PhaseCardProps) => {
+export const PhaseCard = ({
+  phase,
+  phaseNumber,
+  startDate,
+  onViewDetails,
+  isActive,
+}: PhaseCardProps) => {
   const baseDate = new Date(startDate);
-  const phaseStartDay = phase.startDay ? parseInt(phase.startDay.replace('Day ', '')) - 1 : (phaseNumber - 1) * 3;
+  const phaseStartDay = phase.startDay
+    ? parseInt(phase.startDay.replace('Day ', '')) - 1
+    : (phaseNumber - 1) * 3;
   const phaseStart = addDays(baseDate, phaseStartDay);
   const phaseEnd = addDays(phaseStart, phase.duration || 1);
-  
+
   const isCritical = phase.criticalPath || false;
   const taskCount = phase.tasks?.length || 0;
   const phaseName = phase.phaseName || phase.phase || `Phase ${phaseNumber}`;
 
   return (
-    <Card className={`relative transition-all duration-300 touch-manipulation ${
-      isActive 
-        ? 'ring-2 ring-elec-yellow shadow-xl scale-[1.02]' 
-        : 'hover:shadow-lg hover:scale-[1.01]'
-    } ${isCritical ? 'border-pink-500/40 bg-pink-500/5' : 'border-border'}`}>
+    <Card
+      className={`relative transition-all duration-300 touch-manipulation ${
+        isActive
+          ? 'ring-2 ring-elec-yellow shadow-xl scale-[1.02]'
+          : 'hover:shadow-lg hover:scale-[1.01]'
+      } ${isCritical ? 'border-pink-500/40 bg-pink-500/5' : 'border-border'}`}
+    >
       <div className="p-4 sm:p-5 space-y-4">
         {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             {/* Phase Number Badge */}
-            <div className={`flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full text-base sm:text-sm font-bold shadow-lg ${
-              isCritical 
-                ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-foreground' 
-                : 'bg-gradient-to-br from-elec-yellow to-yellow-400 text-gray-900'
-            }`}>
+            <div
+              className={`flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full text-base sm:text-sm font-bold shadow-lg ${
+                isCritical
+                  ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-foreground'
+                  : 'bg-gradient-to-br from-elec-yellow to-yellow-400 text-gray-900'
+              }`}
+            >
               {phaseNumber}
             </div>
-            
+
             <div>
-              <h3 className={`font-bold text-base sm:text-lg leading-tight ${
-                isCritical ? 'text-pink-400' : 'text-foreground'
-              }`}>
+              <h3
+                className={`font-bold text-base sm:text-lg leading-tight ${
+                  isCritical ? 'text-pink-400' : 'text-foreground'
+                }`}
+              >
                 {phaseName}
               </h3>
               <div className="flex items-center gap-2 mt-1">
@@ -52,7 +66,10 @@ export const PhaseCard = ({ phase, phaseNumber, startDate, onViewDetails, isActi
                   {phase.duration || 1} {phase.durationUnit || 'days'}
                 </Badge>
                 {isCritical && (
-                  <Badge variant="outline" className="bg-pink-500/20 text-pink-400 border-pink-500/40 text-xs px-2 py-0.5">
+                  <Badge
+                    variant="outline"
+                    className="bg-pink-500/20 text-pink-400 border-pink-500/40 text-xs px-2 py-0.5"
+                  >
                     Critical Path
                   </Badge>
                 )}
@@ -64,7 +81,9 @@ export const PhaseCard = ({ phase, phaseNumber, startDate, onViewDetails, isActi
         {/* Dates */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
-          <span>{format(phaseStart, 'dd MMM yyyy')} → {format(phaseEnd, 'dd MMM yyyy')}</span>
+          <span>
+            {format(phaseStart, 'dd MMM yyyy')} → {format(phaseEnd, 'dd MMM yyyy')}
+          </span>
         </div>
 
         {/* Quick Stats */}

@@ -1,6 +1,6 @@
-import { AlertTriangle, Zap, AlertCircle, Info } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, Zap, AlertCircle, Info } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface EICRCriticalAlertBannerProps {
   classification: 'C1' | 'C2' | 'C3' | 'FI';
@@ -9,11 +9,11 @@ interface EICRCriticalAlertBannerProps {
   urgency: string;
 }
 
-const EICRCriticalAlertBanner = ({ 
-  classification, 
-  confidenceScore, 
+const EICRCriticalAlertBanner = ({
+  classification,
+  confidenceScore,
   primaryDefect,
-  urgency 
+  urgency,
 }: EICRCriticalAlertBannerProps) => {
   // Early return if classification is invalid
   if (!classification || !['C1', 'C2', 'C3', 'FI'].includes(classification)) {
@@ -28,7 +28,7 @@ const EICRCriticalAlertBanner = ({
       iconColor: 'text-red-400',
       label: 'DANGER',
       ringColor: 'stroke-red-500',
-      textColor: 'text-red-400'
+      textColor: 'text-red-400',
     },
     C2: {
       bg: 'bg-elec-dark/80',
@@ -37,7 +37,7 @@ const EICRCriticalAlertBanner = ({
       iconColor: 'text-orange-400',
       label: 'URGENT',
       ringColor: 'stroke-orange-500',
-      textColor: 'text-orange-400'
+      textColor: 'text-orange-400',
     },
     C3: {
       bg: 'bg-elec-dark/80',
@@ -46,7 +46,7 @@ const EICRCriticalAlertBanner = ({
       iconColor: 'text-amber-400',
       label: 'IMPROVEMENT',
       ringColor: 'stroke-amber-500',
-      textColor: 'text-amber-400'
+      textColor: 'text-amber-400',
     },
     FI: {
       bg: 'bg-elec-dark/80',
@@ -55,8 +55,8 @@ const EICRCriticalAlertBanner = ({
       iconColor: 'text-elec-yellow',
       label: 'INVESTIGATION',
       ringColor: 'stroke-elec-yellow',
-      textColor: 'text-elec-yellow'
-    }
+      textColor: 'text-elec-yellow',
+    },
   };
 
   const conf = config[classification];
@@ -107,16 +107,18 @@ const EICRCriticalAlertBanner = ({
         {/* Classification & Details */}
         <div className="flex-1 min-w-0 space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <Badge className={`${conf.border} border-2 bg-transparent ${conf.textColor} text-base px-3 py-1.5`}>
+            <Badge
+              className={`${conf.border} border-2 bg-transparent ${conf.textColor} text-base px-3 py-1.5`}
+            >
               <Icon className="h-4 w-4 mr-1.5" />
               {conf.label} ({classification})
             </Badge>
           </div>
-          
+
           <h3 className="text-lg sm:text-xl font-semibold text-foreground leading-tight line-clamp-2">
             {primaryDefect}
           </h3>
-          
+
           <div className="flex items-center gap-2 text-sm text-foreground">
             <AlertTriangle className="h-4 w-4" />
             <span>{urgency}</span>

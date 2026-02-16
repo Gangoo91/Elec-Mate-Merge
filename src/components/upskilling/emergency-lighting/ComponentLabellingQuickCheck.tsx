@@ -12,7 +12,10 @@ export const ComponentLabellingQuickCheck = () => {
               Quick Check: Name three system components that must be labelled for compliance.
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              (1) Luminaires (with circuit references and maintained/non-maintained status), (2) Distribution boards (clearly marked as "Emergency Lighting Circuits Only"), and (3) Test points or key switches (identified for monthly functional checks). Additional labelling may include cabling and central battery systems.
+              (1) Luminaires (with circuit references and maintained/non-maintained status), (2)
+              Distribution boards (clearly marked as "Emergency Lighting Circuits Only"), and (3)
+              Test points or key switches (identified for monthly functional checks). Additional
+              labelling may include cabling and central battery systems.
             </p>
           </div>
         </div>

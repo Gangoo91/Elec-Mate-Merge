@@ -12,7 +12,9 @@ export const CommissioningTestQuickCheck = () => {
               Quick Check: When must a full 3-hour test be carried out besides annual inspections?
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              At commissioning (before handover) and after any modifications to the emergency lighting system. This ensures the system is fully compliant before being put into service or after changes are made.
+              At commissioning (before handover) and after any modifications to the emergency
+              lighting system. This ensures the system is fully compliant before being put into
+              service or after changes are made.
             </p>
           </div>
         </div>

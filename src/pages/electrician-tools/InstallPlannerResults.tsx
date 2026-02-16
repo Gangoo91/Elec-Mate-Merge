@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download, RotateCcw, Loader } from "lucide-react";
-import { ResultsPage } from "@/components/install-planner/ResultsPage";
-import { InstallPlanDataV2 } from "@/components/install-planner-v2/types";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { useCompanyProfile } from "@/hooks/useCompanyProfile";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ProjectDetailsForm, ProjectDetailsData } from "@/components/install-planner/ProjectDetailsForm";
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate, Link, useParams, useSearchParams } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Download, RotateCcw, Loader } from 'lucide-react';
+import { ResultsPage } from '@/components/install-planner/ResultsPage';
+import { InstallPlanDataV2 } from '@/components/install-planner-v2/types';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  ProjectDetailsForm,
+  ProjectDetailsData,
+} from '@/components/install-planner/ProjectDetailsForm';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -30,14 +33,14 @@ const InstallPlannerResults = () => {
   const { conversationId } = useParams();
   const { companyProfile } = useCompanyProfile();
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "results";
+  const activeTab = searchParams.get('tab') || 'results';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [agentResults, setAgentResults] = useState<any[]>([]);
 
   const state = location.state as LocationState;
-  
+
   // Project details form state
   const [projectDetails, setProjectDetails] = useState<ProjectDetailsData>({
     companyName: companyProfile?.company_name || 'Your Company',
@@ -71,18 +74,18 @@ const InstallPlannerResults = () => {
           .select('*')
           .eq('conversation_id', convId)
           .order('created_at', { ascending: true });
-        
+
         if (error) {
           console.error('Failed to load results:', error);
           toast({
-            title: "Failed to load results",
-            description: "Redirecting to install planner",
-            variant: "destructive",
+            title: 'Failed to load results',
+            description: 'Redirecting to install planner',
+            variant: 'destructive',
           });
           navigate('/electrician/install-planner');
           return;
         }
-        
+
         setAgentResults(data || []);
       } catch (error) {
         console.error('Error fetching results:', error);
@@ -102,9 +105,9 @@ const InstallPlannerResults = () => {
   // Initialize project details from planData and companyProfile
   useEffect(() => {
     if (!state || !state.planData) return;
-    
+
     const { planData } = state;
-    setProjectDetails(prev => ({
+    setProjectDetails((prev) => ({
       ...prev,
       companyName: companyProfile?.company_name || prev.companyName,
       companyLogoUrl: companyProfile?.logo_url || prev.companyLogoUrl,
@@ -130,7 +133,7 @@ const InstallPlannerResults = () => {
   useEffect(() => {
     localStorage.setItem('installPlanner_projectDetails', JSON.stringify(projectDetails));
   }, [projectDetails]);
-  
+
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('installPlanner_projectDetails');
@@ -142,7 +145,7 @@ const InstallPlannerResults = () => {
       }
     }
   }, []);
-  
+
   // Show loading state while fetching
   if (isLoading) {
     return (
@@ -156,14 +159,15 @@ const InstallPlannerResults = () => {
   }
 
   // Use database results if available, otherwise fall back to location.state
-  const messages = agentResults.length > 0
-    ? agentResults.map(r => ({
-        role: 'assistant' as const,
-        content: r.output_data?.response || '',
-        agentName: r.agent_type,
-        structuredData: r.output_data
-      }))
-    : state?.messages || [];
+  const messages =
+    agentResults.length > 0
+      ? agentResults.map((r) => ({
+          role: 'assistant' as const,
+          content: r.output_data?.response || '',
+          agentName: r.agent_type,
+          structuredData: r.output_data,
+        }))
+      : state?.messages || [];
 
   const planData: InstallPlanDataV2 = state?.planData || {
     mode: 'ai-guided',
@@ -184,7 +188,7 @@ const InstallPlannerResults = () => {
         conditions: 'normal',
         earthing: 'TN-S',
         ze: 0.35,
-        grouping: 1
+        grouping: 1,
       },
       userOverrides: {},
       finalApplied: {
@@ -192,15 +196,15 @@ const InstallPlannerResults = () => {
         conditions: 'normal',
         earthing: 'TN-S',
         ze: 0.35,
-        grouping: 1
-      }
-    }
+        grouping: 1,
+      },
+    },
   };
   const activeAgents = state?.activeAgents || [];
 
   // Find designer message with structured data
   const designerMessage = messages.find(
-    m => m.role === 'assistant' && m.agentName === 'designer' && m.structuredData
+    (m) => m.role === 'assistant' && m.agentName === 'designer' && m.structuredData
   );
 
   // Extract structured data from designer message
@@ -224,12 +228,12 @@ const InstallPlannerResults = () => {
 
   const handleDownloadPDF = async () => {
     const designerData = getDesignerData();
-    
+
     if (!designerData) {
       toast({
-        title: "No Design Data",
-        description: "Generate a circuit design first to create a PDF.",
-        variant: "destructive",
+        title: 'No Design Data',
+        description: 'Generate a circuit design first to create a PDF.',
+        variant: 'destructive',
       });
       return;
     }
@@ -237,7 +241,9 @@ const InstallPlannerResults = () => {
     setIsGeneratingPDF(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Please sign in to generate PDFs');
 
       console.log('🎨 Generating cable calculation PDF...');
@@ -271,7 +277,7 @@ const InstallPlannerResults = () => {
             installation_type: projectDetails.installationType,
           },
           userId: user.id,
-        }
+        },
       });
 
       if (error || !data?.success) {
@@ -280,18 +286,17 @@ const InstallPlannerResults = () => {
 
       // Open PDF in new tab
       window.open(data.downloadUrl, '_blank');
-      
-      toast({
-        title: "PDF Generated",
-        description: "Your cable calculation specification is ready!",
-      });
 
+      toast({
+        title: 'PDF Generated',
+        description: 'Your cable calculation specification is ready!',
+      });
     } catch (error) {
       console.error('❌ PDF generation error:', error);
       toast({
-        title: "PDF Generation Failed",
-        description: error instanceof Error ? error.message : "Please try again.",
-        variant: "destructive",
+        title: 'PDF Generation Failed',
+        description: error instanceof Error ? error.message : 'Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGeneratingPDF(false);
@@ -309,10 +314,11 @@ const InstallPlannerResults = () => {
   const designerData = getDesignerData();
 
   // Check if required fields are filled
-  const requiredFieldsFilled = projectDetails.companyName && 
-    projectDetails.clientName && 
-    projectDetails.propertyAddress && 
-    projectDetails.projectName && 
+  const requiredFieldsFilled =
+    projectDetails.companyName &&
+    projectDetails.clientName &&
+    projectDetails.propertyAddress &&
+    projectDetails.projectName &&
     projectDetails.designEngineer;
 
   return (
@@ -327,21 +333,19 @@ const InstallPlannerResults = () => {
                   <ArrowLeft className="h-4 w-4" /> Back
                 </Button>
               </Link>
-              
+
               <div className="flex-1">
                 <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                   Installation Design Results
                 </h1>
-                <p className="text-muted-foreground text-sm mt-1">
-                  BS 7671:2018+A3:2024 Compliant
-                </p>
+                <p className="text-muted-foreground text-sm mt-1">BS 7671:2018+A3:2024 Compliant</p>
               </div>
             </div>
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={handleDownloadPDF}
                 disabled={isGeneratingPDF || !designerData || !requiredFieldsFilled}
                 className="gap-2 flex-1 sm:flex-none"
@@ -358,9 +362,9 @@ const InstallPlannerResults = () => {
                   </>
                 )}
               </Button>
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 onClick={handleNewConsultation}
                 className="gap-2 flex-1 sm:flex-none"
               >
@@ -385,7 +389,7 @@ const InstallPlannerResults = () => {
                 {requiredFieldsFilled && <span className="ml-2">✓</span>}
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="results">
               <ResultsPage
                 messages={messages}
@@ -394,7 +398,7 @@ const InstallPlannerResults = () => {
                 onNewConsultation={handleNewConsultation}
               />
             </TabsContent>
-            
+
             <TabsContent value="details">
               <ProjectDetailsForm
                 companyProfile={companyProfile}

@@ -59,44 +59,53 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
   // Calculate section summaries
   const sections = useMemo((): SectionSummary[] => {
     // Client section
-    const clientStatus = data.clientName && data.installationAddress
-      ? 'complete'
-      : data.clientName || data.installationAddress
-        ? 'partial'
-        : 'empty';
+    const clientStatus =
+      data.clientName && data.installationAddress
+        ? 'complete'
+        : data.clientName || data.installationAddress
+          ? 'partial'
+          : 'empty';
 
     // Installation section
-    const installationStatus = data.phases && data.earthingArrangement
-      ? 'complete'
-      : data.phases || data.earthingArrangement
-        ? 'partial'
-        : 'empty';
+    const installationStatus =
+      data.phases && data.earthingArrangement
+        ? 'complete'
+        : data.phases || data.earthingArrangement
+          ? 'partial'
+          : 'empty';
 
     // Circuits section
     const circuitCount = data.circuits?.length || 0;
-    const testedCircuits = data.circuits?.filter((c: any) =>
-      c.r1r2 && c.zs && c.insulationResistance
-    ).length || 0;
-    const circuitsStatus = circuitCount > 0 && testedCircuits === circuitCount
-      ? 'complete'
-      : circuitCount > 0
-        ? 'partial'
-        : 'empty';
+    const testedCircuits =
+      data.circuits?.filter((c: any) => c.r1r2 && c.zs && c.insulationResistance).length || 0;
+    const circuitsStatus =
+      circuitCount > 0 && testedCircuits === circuitCount
+        ? 'complete'
+        : circuitCount > 0
+          ? 'partial'
+          : 'empty';
 
     // Inspections section
     const inspectionItems = Object.values(data.inspectionItems || {});
     const completedInspections = inspectionItems.filter((i: any) => i.result).length;
     const totalInspections = 35; // Approximate total
-    const inspectionsStatus = completedInspections >= totalInspections * 0.9
-      ? 'complete'
-      : completedInspections > 0
-        ? 'partial'
-        : 'empty';
+    const inspectionsStatus =
+      completedInspections >= totalInspections * 0.9
+        ? 'complete'
+        : completedInspections > 0
+          ? 'partial'
+          : 'empty';
 
     // Declarations section
-    const declarationsComplete = data.designerSignature && data.constructorSignature && data.inspectorSignature;
-    const declarationsPartial = data.designerSignature || data.constructorSignature || data.inspectorSignature;
-    const declarationsStatus = declarationsComplete ? 'complete' : declarationsPartial ? 'partial' : 'empty';
+    const declarationsComplete =
+      data.designerSignature && data.constructorSignature && data.inspectorSignature;
+    const declarationsPartial =
+      data.designerSignature || data.constructorSignature || data.inspectorSignature;
+    const declarationsStatus = declarationsComplete
+      ? 'complete'
+      : declarationsPartial
+        ? 'partial'
+        : 'empty';
 
     return [
       {
@@ -106,9 +115,21 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         stepIndex: 0,
         status: clientStatus,
         items: [
-          { label: 'Client', value: data.clientName || 'Not entered', status: data.clientName ? 'ok' : 'error' },
-          { label: 'Address', value: data.installationAddress ? 'Entered' : 'Not entered', status: data.installationAddress ? 'ok' : 'error' },
-          { label: 'Postcode', value: data.installationPostcode || 'Not entered', status: data.installationPostcode ? 'ok' : 'warning' },
+          {
+            label: 'Client',
+            value: data.clientName || 'Not entered',
+            status: data.clientName ? 'ok' : 'error',
+          },
+          {
+            label: 'Address',
+            value: data.installationAddress ? 'Entered' : 'Not entered',
+            status: data.installationAddress ? 'ok' : 'error',
+          },
+          {
+            label: 'Postcode',
+            value: data.installationPostcode || 'Not entered',
+            status: data.installationPostcode ? 'ok' : 'warning',
+          },
         ],
       },
       {
@@ -118,9 +139,26 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         stepIndex: 1,
         status: installationStatus,
         items: [
-          { label: 'Phases', value: data.phases === 'single' ? 'Single Phase' : data.phases === 'three' ? 'Three Phase' : 'Not selected', status: data.phases ? 'ok' : 'error' },
-          { label: 'Earthing', value: data.earthingArrangement || 'Not selected', status: data.earthingArrangement ? 'ok' : 'error' },
-          { label: 'Ze', value: data.externalLoopImpedance ? `${data.externalLoopImpedance}Ω` : 'Not entered', status: data.externalLoopImpedance ? 'ok' : 'warning' },
+          {
+            label: 'Phases',
+            value:
+              data.phases === 'single'
+                ? 'Single Phase'
+                : data.phases === 'three'
+                  ? 'Three Phase'
+                  : 'Not selected',
+            status: data.phases ? 'ok' : 'error',
+          },
+          {
+            label: 'Earthing',
+            value: data.earthingArrangement || 'Not selected',
+            status: data.earthingArrangement ? 'ok' : 'error',
+          },
+          {
+            label: 'Ze',
+            value: data.externalLoopImpedance ? `${data.externalLoopImpedance}Ω` : 'Not entered',
+            status: data.externalLoopImpedance ? 'ok' : 'warning',
+          },
         ],
       },
       {
@@ -130,8 +168,16 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         stepIndex: 3,
         status: circuitsStatus,
         items: [
-          { label: 'Total Circuits', value: circuitCount.toString(), status: circuitCount > 0 ? 'ok' : 'error' },
-          { label: 'Tested', value: `${testedCircuits}/${circuitCount}`, status: testedCircuits === circuitCount && circuitCount > 0 ? 'ok' : 'warning' },
+          {
+            label: 'Total Circuits',
+            value: circuitCount.toString(),
+            status: circuitCount > 0 ? 'ok' : 'error',
+          },
+          {
+            label: 'Tested',
+            value: `${testedCircuits}/${circuitCount}`,
+            status: testedCircuits === circuitCount && circuitCount > 0 ? 'ok' : 'warning',
+          },
         ],
       },
       {
@@ -141,7 +187,11 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         stepIndex: 4,
         status: inspectionsStatus,
         items: [
-          { label: 'Completed', value: `${completedInspections}/${totalInspections}`, status: completedInspections >= totalInspections * 0.9 ? 'ok' : 'warning' },
+          {
+            label: 'Completed',
+            value: `${completedInspections}/${totalInspections}`,
+            status: completedInspections >= totalInspections * 0.9 ? 'ok' : 'warning',
+          },
         ],
       },
       {
@@ -151,9 +201,21 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         stepIndex: 5,
         status: declarationsStatus,
         items: [
-          { label: 'Designer', value: data.designerName || 'Not signed', status: data.designerSignature ? 'ok' : 'error' },
-          { label: 'Constructor', value: data.constructorName || 'Not signed', status: data.constructorSignature ? 'ok' : 'error' },
-          { label: 'Inspector', value: data.inspectorName || 'Not signed', status: data.inspectorSignature ? 'ok' : 'error' },
+          {
+            label: 'Designer',
+            value: data.designerName || 'Not signed',
+            status: data.designerSignature ? 'ok' : 'error',
+          },
+          {
+            label: 'Constructor',
+            value: data.constructorName || 'Not signed',
+            status: data.constructorSignature ? 'ok' : 'error',
+          },
+          {
+            label: 'Inspector',
+            value: data.inspectorName || 'Not signed',
+            status: data.inspectorSignature ? 'ok' : 'error',
+          },
         ],
       },
     ];
@@ -191,10 +253,12 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
   return (
     <div className="space-y-6">
       {/* Completion Progress */}
-      <Card className={cn(
-        'border-2 transition-all',
-        isReadyToComplete ? 'border-green-500/50 bg-green-500/5' : 'border-border'
-      )}>
+      <Card
+        className={cn(
+          'border-2 transition-all',
+          isReadyToComplete ? 'border-green-500/50 bg-green-500/5' : 'border-border'
+        )}
+      >
         <CardContent className="py-6">
           <div className="text-center space-y-3">
             {isReadyToComplete ? (
@@ -235,18 +299,22 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
             >
               <CardContent className="py-4">
                 <div className="flex items-start gap-3">
-                  <div className={cn(
-                    'p-2 rounded-lg shrink-0',
-                    section.status === 'complete' && 'bg-green-500/10',
-                    section.status === 'partial' && 'bg-amber-500/10',
-                    section.status === 'empty' && 'bg-red-500/10'
-                  )}>
-                    <Icon className={cn(
-                      'h-5 w-5',
-                      section.status === 'complete' && 'text-green-500',
-                      section.status === 'partial' && 'text-amber-500',
-                      section.status === 'empty' && 'text-red-500'
-                    )} />
+                  <div
+                    className={cn(
+                      'p-2 rounded-lg shrink-0',
+                      section.status === 'complete' && 'bg-green-500/10',
+                      section.status === 'partial' && 'bg-amber-500/10',
+                      section.status === 'empty' && 'bg-red-500/10'
+                    )}
+                  >
+                    <Icon
+                      className={cn(
+                        'h-5 w-5',
+                        section.status === 'complete' && 'text-green-500',
+                        section.status === 'partial' && 'text-amber-500',
+                        section.status === 'empty' && 'text-red-500'
+                      )}
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">

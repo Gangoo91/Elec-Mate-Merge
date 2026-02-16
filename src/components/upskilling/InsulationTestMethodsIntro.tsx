@@ -1,4 +1,3 @@
-
 import { Settings, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -13,10 +12,11 @@ export const InsulationTestMethodsIntro = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground text-lg leading-relaxed">
-          Now that you know the purpose of insulation resistance testing, this section walks through 
-          how to perform the test properly—covering test setup, procedures, and circuit configurations.
+          Now that you know the purpose of insulation resistance testing, this section walks through
+          how to perform the test properly—covering test setup, procedures, and circuit
+          configurations.
         </p>
-        
+
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <h3 className="text-blue-200 font-medium mb-3">What You'll Learn</h3>
           <ul className="space-y-2 text-foreground text-sm">
@@ -33,8 +33,9 @@ export const InsulationTestMethodsIntro = () => {
             <div>
               <h3 className="text-red-200 font-medium mb-2">Critical Safety Note</h3>
               <p className="text-foreground text-sm leading-relaxed">
-                This test uses high voltage (typically 500V DC) which can damage electronic equipment. 
-                Always disconnect sensitive devices before testing and ensure proper isolation.
+                This test uses high voltage (typically 500V DC) which can damage electronic
+                equipment. Always disconnect sensitive devices before testing and ensure proper
+                isolation.
               </p>
             </div>
           </div>

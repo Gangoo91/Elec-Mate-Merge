@@ -1,72 +1,80 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Target, Heart, Clock, Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Target, Heart, Clock, Users } from 'lucide-react';
 
 const WorkLifeBalanceTab = () => {
   const balanceStrategies = [
     {
-      title: "Boundary Setting",
-      description: "Create clear separation between work and personal time",
+      title: 'Boundary Setting',
+      description: 'Create clear separation between work and personal time',
       icon: Target,
-      color: "border-blue-500/20 bg-blue-500/10",
+      color: 'border-blue-500/20 bg-blue-500/10',
       strategies: [
-        "Turn off work phone after hours unless emergency",
-        "Designate specific study spaces at home",
-        "Communicate your schedule clearly to family/friends",
-        "Practice saying 'no' to non-essential commitments"
+        'Turn off work phone after hours unless emergency',
+        'Designate specific study spaces at home',
+        'Communicate your schedule clearly to family/friends',
+        "Practice saying 'no' to non-essential commitments",
       ],
-      tips: ["Set phone to 'Do Not Disturb'", "Use separate work/personal calendars", "Create evening wind-down routine"]
+      tips: [
+        "Set phone to 'Do Not Disturb'",
+        'Use separate work/personal calendars',
+        'Create evening wind-down routine',
+      ],
     },
     {
-      title: "Physical Wellbeing",
-      description: "Maintain your health throughout your apprenticeship",
+      title: 'Physical Wellbeing',
+      description: 'Maintain your health throughout your apprenticeship',
       icon: Heart,
-      color: "border-green-500/20 bg-green-500/10",
+      color: 'border-green-500/20 bg-green-500/10',
       strategies: [
-        "Schedule regular exercise sessions (even 20 minutes counts)",
-        "Pack healthy lunches and snacks for site work",
-        "Stay hydrated throughout long working days",
-        "Get adequate sleep (7-8 hours) for concentration"
+        'Schedule regular exercise sessions (even 20 minutes counts)',
+        'Pack healthy lunches and snacks for site work',
+        'Stay hydrated throughout long working days',
+        'Get adequate sleep (7-8 hours) for concentration',
       ],
-      tips: ["Use fitness apps for quick workouts", "Meal prep on weekends", "Track sleep patterns"]
+      tips: [
+        'Use fitness apps for quick workouts',
+        'Meal prep on weekends',
+        'Track sleep patterns',
+      ],
     },
     {
-      title: "Social Connections",
-      description: "Maintain relationships whilst managing demanding schedule",
+      title: 'Social Connections',
+      description: 'Maintain relationships whilst managing demanding schedule',
       icon: Users,
-      color: "border-purple-500/20 bg-purple-500/10",
+      color: 'border-purple-500/20 bg-purple-500/10',
       strategies: [
-        "Schedule regular catch-ups with friends and family",
-        "Be present during quality time (phones away)",
-        "Include loved ones in your apprenticeship journey",
-        "Join apprentice social groups or networks"
+        'Schedule regular catch-ups with friends and family',
+        'Be present during quality time (phones away)',
+        'Include loved ones in your apprenticeship journey',
+        'Join apprentice social groups or networks',
       ],
-      tips: ["Weekly family dinners", "Monthly friend meetups", "Share your achievements"]
-    }
+      tips: ['Weekly family dinners', 'Monthly friend meetups', 'Share your achievements'],
+    },
   ];
 
   const warningSignsAndSolutions = [
     {
-      warning: "Constantly thinking about work during personal time",
-      solution: "Practice mindfulness techniques and create transition rituals",
-      immediateAction: "Take 5 minutes to write down tomorrow's priorities, then close your notebook"
+      warning: 'Constantly thinking about work during personal time',
+      solution: 'Practice mindfulness techniques and create transition rituals',
+      immediateAction:
+        "Take 5 minutes to write down tomorrow's priorities, then close your notebook",
     },
     {
-      warning: "Neglecting personal relationships",
-      solution: "Schedule regular quality time and communicate your needs",
-      immediateAction: "Text a friend or family member right now to arrange a catch-up"
+      warning: 'Neglecting personal relationships',
+      solution: 'Schedule regular quality time and communicate your needs',
+      immediateAction: 'Text a friend or family member right now to arrange a catch-up',
     },
     {
-      warning: "Chronic exhaustion or illness",
-      solution: "Review your schedule and prioritise rest and recovery",
-      immediateAction: "Book a full day off this weekend with no work or study"
+      warning: 'Chronic exhaustion or illness',
+      solution: 'Review your schedule and prioritise rest and recovery',
+      immediateAction: 'Book a full day off this weekend with no work or study',
     },
     {
-      warning: "Loss of interest in hobbies or activities you once enjoyed",
-      solution: "Gradually reintroduce enjoyable activities into your routine",
-      immediateAction: "Spend 30 minutes today doing something you love"
-    }
+      warning: 'Loss of interest in hobbies or activities you once enjoyed',
+      solution: 'Gradually reintroduce enjoyable activities into your routine',
+      immediateAction: 'Spend 30 minutes today doing something you love',
+    },
   ];
 
   return (
@@ -82,7 +90,7 @@ const WorkLifeBalanceTab = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {balanceStrategies.map((strategy, index) => {
               const IconComponent = strategy.icon;
-              
+
               return (
                 <div key={index} className={`border rounded-lg p-6 ${strategy.color}`}>
                   <div className="flex items-center gap-3 mb-4">
@@ -92,7 +100,7 @@ const WorkLifeBalanceTab = () => {
                       <p className="text-sm text-white">{strategy.description}</p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3">
                     <div>
                       <h4 className="font-medium text-white mb-2">Key Strategies:</h4>
@@ -105,12 +113,16 @@ const WorkLifeBalanceTab = () => {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="font-medium text-white mb-2">Quick Tips:</h4>
                       <div className="flex flex-wrap gap-2">
                         {strategy.tips.map((tip, tipIndex) => (
-                          <Badge key={tipIndex} variant="outline" className="text-xs border-white/20">
+                          <Badge
+                            key={tipIndex}
+                            variant="outline"
+                            className="text-xs border-white/20"
+                          >
                             {tip}
                           </Badge>
                         ))}
@@ -140,12 +152,12 @@ const WorkLifeBalanceTab = () => {
                     <h4 className="font-semibold text-red-400 mb-2">⚠️ Warning Sign</h4>
                     <p className="text-sm text-white">{item.warning}</p>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-semibold text-blue-400 mb-2">💡 Solution</h4>
                     <p className="text-sm text-white">{item.solution}</p>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-semibold text-green-400 mb-2">🎯 Take Action Now</h4>
                     <p className="text-sm text-white">{item.immediateAction}</p>
@@ -176,7 +188,9 @@ const WorkLifeBalanceTab = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border border-elec-yellow/40 rounded"></div>
-                  <span className="text-sm text-white">Do something I enjoy for at least 1 hour</span>
+                  <span className="text-sm text-white">
+                    Do something I enjoy for at least 1 hour
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border border-elec-yellow/40 rounded"></div>
@@ -184,15 +198,18 @@ const WorkLifeBalanceTab = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-3">Balance Reflection</h4>
               <div className="space-y-3">
                 <div>
                   <p className="text-sm text-white mb-1">Energy levels (1-10):</p>
                   <div className="flex gap-1">
-                    {[1,2,3,4,5,6,7,8,9,10].map(num => (
-                      <div key={num} className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-white">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                      <div
+                        key={num}
+                        className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-white"
+                      >
                         {num}
                       </div>
                     ))}
@@ -201,8 +218,11 @@ const WorkLifeBalanceTab = () => {
                 <div>
                   <p className="text-sm text-white mb-1">Relationship satisfaction (1-10):</p>
                   <div className="flex gap-1">
-                    {[1,2,3,4,5,6,7,8,9,10].map(num => (
-                      <div key={num} className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-white">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                      <div
+                        key={num}
+                        className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-white"
+                      >
                         {num}
                       </div>
                     ))}

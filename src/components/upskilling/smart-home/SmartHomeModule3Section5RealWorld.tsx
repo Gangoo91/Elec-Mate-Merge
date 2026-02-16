@@ -17,20 +17,23 @@ export const SmartHomeModule3Section5RealWorld = () => {
             Smart Office Implementation
           </h3>
           <p className="text-gray-300 mb-4">
-            An office building installs smart lighting grouped into zones (meeting rooms, corridors, open-plan area). 
-            Motion sensors control corridor lights for energy savings, while meeting room lights link with the 
-            booking system — lights automatically switch on when a room is reserved and switch off when meetings end.
+            An office building installs smart lighting grouped into zones (meeting rooms, corridors,
+            open-plan area). Motion sensors control corridor lights for energy savings, while
+            meeting room lights link with the booking system — lights automatically switch on when a
+            room is reserved and switch off when meetings end.
           </p>
           <p className="text-gray-300">
-            The open-plan area uses adaptive lighting that adjusts throughout the day based on natural light levels 
-            and occupancy, whilst maintaining manual override controls at each workstation.
+            The open-plan area uses adaptive lighting that adjusts throughout the day based on
+            natural light levels and occupancy, whilst maintaining manual override controls at each
+            workstation.
           </p>
         </div>
 
         <div className="bg-blue-900/20 border border-blue-600/50 p-4 rounded-lg">
           <h3 className="text-blue-300 font-semibold mb-3">💭 Think About It</h3>
           <p className="text-blue-200 text-sm">
-            What are the benefits of this setup? What issues might arise, and how could they be prevented?
+            What are the benefits of this setup? What issues might arise, and how could they be
+            prevented?
           </p>
         </div>
 
@@ -70,9 +73,7 @@ export const SmartHomeModule3Section5RealWorld = () => {
               <Lightbulb className="h-4 w-4" />
               Prevention & Solutions
             </h4>
-            <p className="text-amber-200 text-sm mb-2">
-              How to prevent and address these issues:
-            </p>
+            <p className="text-amber-200 text-sm mb-2">How to prevent and address these issues:</p>
             <ul className="text-amber-200 text-sm space-y-1">
               <li>• Carefully position motion sensors away from air vents</li>
               <li>• Provide manual override switches in all meeting rooms</li>
@@ -88,9 +89,10 @@ export const SmartHomeModule3Section5RealWorld = () => {
         <div className="bg-elec-gray p-4 rounded-lg border border-gray-600">
           <h4 className="text-foreground font-semibold mb-2">Key Lessons</h4>
           <p className="text-gray-300 text-sm">
-            This scenario demonstrates how thoughtful integration of grouping, linking, and motion logic can create 
-            significant value. Success depends on careful planning, quality implementation, comprehensive testing, 
-            and ongoing support to address edge cases and user needs.
+            This scenario demonstrates how thoughtful integration of grouping, linking, and motion
+            logic can create significant value. Success depends on careful planning, quality
+            implementation, comprehensive testing, and ongoing support to address edge cases and
+            user needs.
           </p>
         </div>
       </CardContent>

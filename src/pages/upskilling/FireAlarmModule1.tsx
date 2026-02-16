@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Module 1: Categories of Fire Alarm Systems - Fire Alarm Course";
-const DESCRIPTION = "Learn about L, P, and M fire alarm system categories under BS 5839-1, their applications, and how to select the right category for different building types.";
+const TITLE = 'Module 1: Categories of Fire Alarm Systems - Fire Alarm Course';
+const DESCRIPTION =
+  'Learn about L, P, and M fire alarm system categories under BS 5839-1, their applications, and how to select the right category for different building types.';
 
 const FireAlarmModule1 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -13,28 +14,28 @@ const FireAlarmModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "L Category Systems (Life Safety)",
+      title: 'L Category Systems (Life Safety)',
       icon: CheckCircle,
-      description: "L1-L5 categories for life protection"
+      description: 'L1-L5 categories for life protection',
     },
     {
       id: 2,
-      title: "P Category Systems (Property)",
+      title: 'P Category Systems (Property)',
       icon: CheckCircle,
-      description: "P1 and P2 for property protection"
+      description: 'P1 and P2 for property protection',
     },
     {
       id: 3,
-      title: "M Category Systems (Manual)",
+      title: 'M Category Systems (Manual)',
       icon: CheckCircle,
-      description: "Manual-only systems and call points"
+      description: 'Manual-only systems and call points',
     },
     {
       id: 4,
-      title: "Category Selection & Risk Assessment",
+      title: 'Category Selection & Risk Assessment',
       icon: CheckCircle,
-      description: "Choosing based on building use and risk"
-    }
+      description: 'Choosing based on building use and risk',
+    },
   ];
 
   return (
@@ -75,7 +76,8 @@ const FireAlarmModule1 = () => {
             Categories of Fire Alarm Systems
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Understanding L, P, and M categories under BS 5839-1 and how to select the appropriate system for different applications.
+            Understanding L, P, and M categories under BS 5839-1 and how to select the appropriate
+            system for different applications.
           </p>
         </div>
 

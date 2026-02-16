@@ -3,12 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const CableShieldingLearningOutcomes = () => {
   const outcomes = [
-    "Understand the differences between UTP, FTP, and STP cable construction",
-    "Identify when to use shielded versus unshielded cables in different environments",
-    "Recognise the importance of proper grounding for shielded cables",
-    "Understand electromagnetic interference sources and mitigation strategies",
-    "Compare performance characteristics and cost implications of different cable types",
-    "Apply correct installation practices for shielded and unshielded systems"
+    'Understand the differences between UTP, FTP, and STP cable construction',
+    'Identify when to use shielded versus unshielded cables in different environments',
+    'Recognise the importance of proper grounding for shielded cables',
+    'Understand electromagnetic interference sources and mitigation strategies',
+    'Compare performance characteristics and cost implications of different cable types',
+    'Apply correct installation practices for shielded and unshielded systems',
   ];
 
   return (
@@ -20,9 +20,7 @@ export const CableShieldingLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="mb-4 text-gray-300">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="mb-4 text-gray-300">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-gray-300">

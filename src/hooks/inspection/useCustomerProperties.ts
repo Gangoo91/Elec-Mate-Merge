@@ -27,17 +27,23 @@ export const useCustomerProperties = (customerId: string) => {
   const queryClient = useQueryClient();
 
   // Fetch properties for a customer
-  const { data: properties = [], isLoading, refetch } = useQuery({
+  const {
+    data: properties = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['customer-properties', customerId],
     queryFn: async () => {
       if (!customerId) return [];
 
       const { data, error } = await supabase
         .from('customer_properties')
-        .select(`
+        .select(
+          `
           *,
           reports:reports(count)
-        `)
+        `
+        )
         .eq('customer_id', customerId)
         .order('is_primary', { ascending: false })
         .order('created_at', { ascending: false });
@@ -62,7 +68,9 @@ export const useCustomerProperties = (customerId: string) => {
   // Add property mutation
   const addPropertyMutation = useMutation({
     mutationFn: async (property: PropertyInput) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // If this is set as primary, unset other primaries first
@@ -108,7 +116,13 @@ export const useCustomerProperties = (customerId: string) => {
 
   // Update property mutation
   const updatePropertyMutation = useMutation({
-    mutationFn: async ({ propertyId, updates }: { propertyId: string; updates: Partial<PropertyInput> }) => {
+    mutationFn: async ({
+      propertyId,
+      updates,
+    }: {
+      propertyId: string;
+      updates: Partial<PropertyInput>;
+    }) => {
       // If setting as primary, unset other primaries first
       if (updates.isPrimary) {
         await supabase
@@ -150,10 +164,7 @@ export const useCustomerProperties = (customerId: string) => {
   // Delete property mutation
   const deletePropertyMutation = useMutation({
     mutationFn: async (propertyId: string) => {
-      const { error } = await supabase
-        .from('customer_properties')
-        .delete()
-        .eq('id', propertyId);
+      const { error } = await supabase.from('customer_properties').delete().eq('id', propertyId);
 
       if (error) throw error;
     },
@@ -175,12 +186,15 @@ export const useCustomerProperties = (customerId: string) => {
   });
 
   // Set primary property
-  const setPrimaryProperty = useCallback(async (propertyId: string) => {
-    await updatePropertyMutation.mutateAsync({
-      propertyId,
-      updates: { isPrimary: true },
-    });
-  }, [updatePropertyMutation]);
+  const setPrimaryProperty = useCallback(
+    async (propertyId: string) => {
+      await updatePropertyMutation.mutateAsync({
+        propertyId,
+        updates: { isPrimary: true },
+      });
+    },
+    [updatePropertyMutation]
+  );
 
   return {
     properties,

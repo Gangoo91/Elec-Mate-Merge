@@ -25,42 +25,42 @@ interface MultiSelectDropdownProps {
 
 export function MultiSelectDropdown({
   label,
-  placeholder = "Select items...",
+  placeholder = 'Select items...',
   value,
   onValueChange,
   options,
   error,
   hint,
   disabled,
-  className
+  className,
 }: MultiSelectDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleItemSelect = (itemValue: string) => {
-    if (itemValue === "N/A") {
+    if (itemValue === 'N/A') {
       onValueChange([]);
     } else if (value.includes(itemValue)) {
-      onValueChange(value.filter(v => v !== itemValue));
+      onValueChange(value.filter((v) => v !== itemValue));
     } else {
       onValueChange([...value, itemValue]);
     }
   };
 
   const removeBadge = (itemValue: string) => {
-    onValueChange(value.filter(v => v !== itemValue));
+    onValueChange(value.filter((v) => v !== itemValue));
   };
 
-  const selectedItems = options.filter(option => value.includes(option.value));
+  const selectedItems = options.filter((option) => value.includes(option.value));
 
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn('space-y-3', className)}>
       {label && (
         <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
           <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
           {label}
         </Label>
       )}
-      
+
       <div className="relative group">
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
@@ -69,12 +69,12 @@ export function MultiSelectDropdown({
               role="combobox"
               aria-expanded={isOpen}
               className={cn(
-                "h-auto min-h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl",
-                "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
-                "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
-                "text-elec-light placeholder:text-elec-light/60 p-3 justify-start",
-                "w-full text-left font-normal",
-                error ? "border-destructive focus:border-destructive" : ""
+                'h-auto min-h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl',
+                'hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200',
+                'group-hover:shadow-lg group-hover:shadow-elec-yellow/10',
+                'text-elec-light placeholder:text-elec-light/60 p-3 justify-start',
+                'w-full text-left font-normal',
+                error ? 'border-destructive focus:border-destructive' : ''
               )}
               disabled={disabled}
             >
@@ -82,14 +82,14 @@ export function MultiSelectDropdown({
                 {selectedItems.length > 0 ? (
                   <div className="flex flex-wrap gap-1 w-full">
                     {selectedItems.map((item) => (
-                      <Badge 
-                        key={item.value} 
-                        variant="secondary" 
+                      <Badge
+                        key={item.value}
+                        variant="secondary"
                         className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs flex items-center gap-1"
                       >
                         <span className="text-xs">{item.label}</span>
-                        <X 
-                          className="h-3 w-3 cursor-pointer hover:text-elec-yellow/70" 
+                        <X
+                          className="h-3 w-3 cursor-pointer hover:text-elec-yellow/70"
                           onClick={(e) => {
                             e.stopPropagation();
                             removeBadge(item.value);
@@ -105,12 +105,12 @@ export function MultiSelectDropdown({
               </div>
             </Button>
           </PopoverTrigger>
-          
+
           <PopoverContent className="w-full p-0 bg-elec-gray border-elec-gray/50 shadow-xl z-50">
             <div className="max-h-64 overflow-y-auto">
               <div
                 className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20"
-                onClick={() => handleItemSelect("N/A")}
+                onClick={() => handleItemSelect('N/A')}
               >
                 N/A
               </div>
@@ -118,8 +118,8 @@ export function MultiSelectDropdown({
                 <div
                   key={option.value}
                   className={cn(
-                    "p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer flex items-center justify-between",
-                    value.includes(option.value) ? "bg-elec-yellow/10" : ""
+                    'p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer flex items-center justify-between',
+                    value.includes(option.value) ? 'bg-elec-yellow/10' : ''
                   )}
                   onClick={() => handleItemSelect(option.value)}
                 >
@@ -132,11 +132,11 @@ export function MultiSelectDropdown({
             </div>
           </PopoverContent>
         </Popover>
-        
+
         {/* Subtle glow effect */}
         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/5 to-elec-yellow/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       </div>
-      
+
       {hint && !error && (
         <p className="text-xs text-elec-light/70 flex items-center gap-1">
           <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>

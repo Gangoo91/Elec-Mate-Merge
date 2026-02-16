@@ -485,7 +485,7 @@ const ApprenticeHub = () => {
               title="My Portfolio"
               description="Track evidence, assessment criteria, OJT hours, and build your apprenticeship portfolio"
               icon={FileText}
-              link="/apprentice/hub?tab=work"
+              link="/apprentice/hub"
               featured
               badges={['Evidence', 'AC Mapping', 'OJT Hours']}
             />

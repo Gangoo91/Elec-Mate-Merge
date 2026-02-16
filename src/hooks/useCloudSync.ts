@@ -12,7 +12,7 @@ interface CloudSyncOptions {
   data: any;
   enabled: boolean;
   customerId?: string;
-  onReportCreated?: (reportId: string) => void;  // Called when auto-sync creates a new report
+  onReportCreated?: (reportId: string) => void; // Called when auto-sync creates a new report
 }
 
 interface SyncState {
@@ -62,19 +62,26 @@ export const useCloudSync = ({
   // 'unsaved' is mapped to 'queued' for backwards compatibility
   // 'conflict' is also mapped to 'queued' (not 'error') since local data is safe
   const syncState: SyncState = {
-    status: status.cloud === 'synced' ? 'synced' :
-            status.cloud === 'syncing' ? 'syncing' :
-            status.cloud === 'unsaved' ? 'queued' :  // Map unsaved to queued for old consumers
-            status.cloud === 'queued' || status.cloud === 'offline' || status.cloud === 'conflict' ? 'queued' :
-            'error',
+    status:
+      status.cloud === 'synced'
+        ? 'synced'
+        : status.cloud === 'syncing'
+          ? 'syncing'
+          : status.cloud === 'unsaved'
+            ? 'queued' // Map unsaved to queued for old consumers
+            : status.cloud === 'queued' || status.cloud === 'offline' || status.cloud === 'conflict'
+              ? 'queued'
+              : 'error',
     lastSyncTime: status.lastCloudSync?.getTime(),
-    lastLocalSave: status.lastLocalSave?.getTime(),  // Expose local save time
+    lastLocalSave: status.lastLocalSave?.getTime(), // Expose local save time
     errorMessage: status.errorMessage,
     queuedChanges: status.queuedChanges,
   };
 
   // Wrapper for the old syncToCloud API
-  const syncToCloud = async (forceSync = false): Promise<{ success: boolean; reportId: string | null }> => {
+  const syncToCloud = async (
+    forceSync = false
+  ): Promise<{ success: boolean; reportId: string | null }> => {
     if (!forceSync) {
       // Auto-sync is now handled internally by useReportSync
       return { success: false, reportId: null };
@@ -83,7 +90,9 @@ export const useCloudSync = ({
   };
 
   // Wrapper for the old loadFromCloud API - now returns { data, databaseId }
-  const loadFromCloud = async (cloudReportId: string): Promise<{ data: any; databaseId: string | null } | null> => {
+  const loadFromCloud = async (
+    cloudReportId: string
+  ): Promise<{ data: any; databaseId: string | null } | null> => {
     return await loadReport(cloudReportId);
   };
 
@@ -108,7 +117,7 @@ export const useCloudSync = ({
     discardDraft,
     // Immediate sync functions
     syncNow,
-    syncNowImmediate,  // For PDF generation - returns the saved data
+    syncNowImmediate, // For PDF generation - returns the saved data
     onTabChange,
   };
 };

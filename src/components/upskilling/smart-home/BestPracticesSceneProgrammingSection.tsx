@@ -12,9 +12,10 @@ export const BestPracticesSceneProgrammingSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Following proven practices ensures scenes and schedules enhance rather than frustrate the user experience.
+          Following proven practices ensures scenes and schedules enhance rather than frustrate the
+          user experience.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <h5 className="font-semibold text-blue-200 mb-2">Clear Naming Conventions</h5>
@@ -43,30 +44,57 @@ export const BestPracticesSceneProgrammingSection = () => {
           <div className="p-3 bg-green-600/10 border border-green-600/20 rounded-lg">
             <h5 className="font-semibold text-green-200 mb-2">Simplicity and User Focus</h5>
             <ul className="text-sm text-green-100 space-y-1">
-              <li>• <strong>Limit scene count:</strong> 5-8 scenes per room maximum</li>
-              <li>• <strong>Avoid overlapping functions:</strong> Each scene should have clear purpose</li>
-              <li>• <strong>Group related scenes:</strong> "Morning", "Afternoon", "Evening" progression</li>
-              <li>• <strong>Consider user skill level:</strong> Start simple, add complexity gradually</li>
+              <li>
+                • <strong>Limit scene count:</strong> 5-8 scenes per room maximum
+              </li>
+              <li>
+                • <strong>Avoid overlapping functions:</strong> Each scene should have clear purpose
+              </li>
+              <li>
+                • <strong>Group related scenes:</strong> "Morning", "Afternoon", "Evening"
+                progression
+              </li>
+              <li>
+                • <strong>Consider user skill level:</strong> Start simple, add complexity gradually
+              </li>
             </ul>
           </div>
 
           <div className="p-3 bg-purple-600/10 border border-purple-600/20 rounded-lg">
             <h5 className="font-semibold text-purple-200 mb-2">Include Manual Overrides</h5>
             <ul className="text-sm text-purple-100 space-y-1">
-              <li>• <strong>Physical switches:</strong> Always maintain manual control option</li>
-              <li>• <strong>App emergency button:</strong> Quick "all lights on" for safety</li>
-              <li>• <strong>Schedule disable:</strong> Easy way to temporarily suspend automation</li>
-              <li>• <strong>Guest mode:</strong> Simplified control for visitors</li>
+              <li>
+                • <strong>Physical switches:</strong> Always maintain manual control option
+              </li>
+              <li>
+                • <strong>App emergency button:</strong> Quick "all lights on" for safety
+              </li>
+              <li>
+                • <strong>Schedule disable:</strong> Easy way to temporarily suspend automation
+              </li>
+              <li>
+                • <strong>Guest mode:</strong> Simplified control for visitors
+              </li>
             </ul>
           </div>
 
           <div className="p-3 bg-orange-600/10 border border-orange-600/20 rounded-lg">
             <h5 className="font-semibold text-orange-200 mb-2">Real-World Testing</h5>
             <ul className="text-sm text-orange-100 space-y-1">
-              <li>• <strong>Live with schedules:</strong> Test automations for a full week</li>
-              <li>• <strong>Family feedback:</strong> Ensure all household members understand scenes</li>
-              <li>• <strong>Edge case handling:</strong> What happens during power cuts, internet outages?</li>
-              <li>• <strong>Seasonal adjustment:</strong> Schedules may need tweaking for daylight changes</li>
+              <li>
+                • <strong>Live with schedules:</strong> Test automations for a full week
+              </li>
+              <li>
+                • <strong>Family feedback:</strong> Ensure all household members understand scenes
+              </li>
+              <li>
+                • <strong>Edge case handling:</strong> What happens during power cuts, internet
+                outages?
+              </li>
+              <li>
+                • <strong>Seasonal adjustment:</strong> Schedules may need tweaking for daylight
+                changes
+              </li>
             </ul>
           </div>
 

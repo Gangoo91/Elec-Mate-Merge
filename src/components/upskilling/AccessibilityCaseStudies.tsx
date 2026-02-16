@@ -1,41 +1,66 @@
-
 import { AlertTriangle, CheckCircle, XCircle, Info } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const AccessibilityCaseStudies = () => {
   const caseStudies = [
     {
-      title: "Commercial Office Block - Suspended Ceiling Issues",
-      situation: "Distribution boards installed above suspended ceiling tiles with no proper access panels. Ceiling tiles need to be removed to access boards.",
-      problems: ["Fragile ceiling tiles break during access", "Inadequate lighting above ceiling", "Risk of debris falling", "Time-consuming access procedure"],
-      solution: "Request client to install proper access panels or relocate boards to accessible positions",
-      outcome: "Limitation recorded, return visit arranged after remedial work",
-      status: "limitation"
+      title: 'Commercial Office Block - Suspended Ceiling Issues',
+      situation:
+        'Distribution boards installed above suspended ceiling tiles with no proper access panels. Ceiling tiles need to be removed to access boards.',
+      problems: [
+        'Fragile ceiling tiles break during access',
+        'Inadequate lighting above ceiling',
+        'Risk of debris falling',
+        'Time-consuming access procedure',
+      ],
+      solution:
+        'Request client to install proper access panels or relocate boards to accessible positions',
+      outcome: 'Limitation recorded, return visit arranged after remedial work',
+      status: 'limitation',
     },
     {
-      title: "Retail Unit - Equipment Blocking Access",
-      situation: "Consumer unit installed behind large commercial refrigerator that's been moved after installation.",
-      problems: ["Heavy equipment difficult to move safely", "Risk of damage to refrigeration pipework", "Potential food safety issues", "Access requires multiple personnel"],
-      solution: "Coordinate with client to safely relocate equipment during testing, or install secondary isolation",
-      outcome: "Testing completed with client coordination and extra time allowance",
-      status: "resolved"
+      title: 'Retail Unit - Equipment Blocking Access',
+      situation:
+        "Consumer unit installed behind large commercial refrigerator that's been moved after installation.",
+      problems: [
+        'Heavy equipment difficult to move safely',
+        'Risk of damage to refrigeration pipework',
+        'Potential food safety issues',
+        'Access requires multiple personnel',
+      ],
+      solution:
+        'Coordinate with client to safely relocate equipment during testing, or install secondary isolation',
+      outcome: 'Testing completed with client coordination and extra time allowance',
+      status: 'resolved',
     },
     {
-      title: "Residential Property - Missing Circuit Labels",
-      situation: "Modern consumer unit with all MCBs present but no circuit identification labels on any protective devices.",
-      problems: ["Cannot safely identify circuits", "Risk of incorrect isolation", "Testing accuracy compromised", "Future maintenance difficulties"],
-      solution: "Systematic circuit tracing required before testing can commence safely",
-      outcome: "Additional time charged to client for circuit identification and labelling",
-      status: "resolved"
+      title: 'Residential Property - Missing Circuit Labels',
+      situation:
+        'Modern consumer unit with all MCBs present but no circuit identification labels on any protective devices.',
+      problems: [
+        'Cannot safely identify circuits',
+        'Risk of incorrect isolation',
+        'Testing accuracy compromised',
+        'Future maintenance difficulties',
+      ],
+      solution: 'Systematic circuit tracing required before testing can commence safely',
+      outcome: 'Additional time charged to client for circuit identification and labelling',
+      status: 'resolved',
     },
     {
-      title: "Industrial Unit - Height Access Issues",
-      situation: "Main distribution board mounted 3.5m high with no fixed access platform. Only portable ladder available on site.",
-      problems: ["Unsafe working at height", "Inadequate platform for testing equipment", "Risk of falls during testing", "Poor lighting at working height"],
-      solution: "Proper scaffold or mobile elevated work platform required for safe access",
-      outcome: "Testing postponed until safe access provided",
-      status: "limitation"
-    }
+      title: 'Industrial Unit - Height Access Issues',
+      situation:
+        'Main distribution board mounted 3.5m high with no fixed access platform. Only portable ladder available on site.',
+      problems: [
+        'Unsafe working at height',
+        'Inadequate platform for testing equipment',
+        'Risk of falls during testing',
+        'Poor lighting at working height',
+      ],
+      solution: 'Proper scaffold or mobile elevated work platform required for safe access',
+      outcome: 'Testing postponed until safe access provided',
+      status: 'limitation',
+    },
   ];
 
   const getStatusIcon = (status: string) => {
@@ -70,8 +95,9 @@ export const AccessibilityCaseStudies = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground leading-relaxed text-base sm:text-lg">
-          These real-world scenarios demonstrate common accessibility and labelling challenges encountered during electrical inspections, 
-          along with practical solutions and professional approaches to each situation.
+          These real-world scenarios demonstrate common accessibility and labelling challenges
+          encountered during electrical inspections, along with practical solutions and professional
+          approaches to each situation.
         </p>
 
         <div className="space-y-6">
@@ -90,14 +116,17 @@ export const AccessibilityCaseStudies = () => {
                   <h4 className="text-foreground font-medium mb-2">Key Problems Identified</h4>
                   <ul className="space-y-1">
                     {study.problems.map((problem, problemIndex) => (
-                      <li key={problemIndex} className="text-foreground text-sm flex items-start gap-2">
+                      <li
+                        key={problemIndex}
+                        className="text-foreground text-sm flex items-start gap-2"
+                      >
                         <span className="text-red-400 mt-1">•</span>
                         {problem}
                       </li>
                     ))}
                   </ul>
                 </div>
-                
+
                 <div>
                   <h4 className="text-foreground font-medium mb-2">Professional Solution</h4>
                   <p className="text-foreground text-sm leading-relaxed">{study.solution}</p>

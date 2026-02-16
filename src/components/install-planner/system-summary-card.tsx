@@ -1,8 +1,8 @@
-import React from "react";
-import { ResultCard } from "@/components/ui/result-card";
-import { Badge } from "@/components/ui/badge";
-import { Calculator, Zap, Building, Clock } from "lucide-react";
-import { Circuit } from "./types";
+import React from 'react';
+import { ResultCard } from '@/components/ui/result-card';
+import { Badge } from '@/components/ui/badge';
+import { Calculator, Zap, Building, Clock } from 'lucide-react';
+import { Circuit } from './types';
 
 interface SystemSummaryCardProps {
   circuits: Circuit[];
@@ -17,13 +17,13 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
   totalSystemLoad,
   totalDesignCurrent,
   diversityFactor,
-  diversifiedLoad
+  diversifiedLoad,
 }) => {
   const estimatedInstallTime = circuits.length * 4; // 4 hours per circuit average
   const totalInstallDays = Math.ceil(estimatedInstallTime / 8);
-  
+
   return (
-    <ResultCard 
+    <ResultCard
       icon={<Calculator className="h-5 w-5" />}
       title="System Overview"
       status="info"
@@ -38,15 +38,21 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
             <span className="text-sm text-muted-foreground">Total Load</span>
-            <span className="text-lg font-bold text-elec-yellow">{(totalSystemLoad / 1000).toFixed(1)}kW</span>
+            <span className="text-lg font-bold text-elec-yellow">
+              {(totalSystemLoad / 1000).toFixed(1)}kW
+            </span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
             <span className="text-sm text-muted-foreground">Design</span>
-            <span className="text-lg font-bold text-elec-yellow">{totalDesignCurrent.toFixed(1)}A</span>
+            <span className="text-lg font-bold text-elec-yellow">
+              {totalDesignCurrent.toFixed(1)}A
+            </span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
             <span className="text-sm text-muted-foreground">Diversity</span>
-            <span className="text-lg font-bold text-elec-yellow">{(diversifiedLoad / 1000).toFixed(1)}kW</span>
+            <span className="text-lg font-bold text-elec-yellow">
+              {(diversifiedLoad / 1000).toFixed(1)}kW
+            </span>
           </div>
         </div>
 
@@ -58,11 +64,15 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
             <span className="text-sm text-muted-foreground">Duration</span>
-            <span className="text-lg font-bold text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</span>
+            <span className="text-lg font-bold text-elec-yellow">
+              {totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}
+            </span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
             <span className="text-sm text-muted-foreground">Factor</span>
-            <span className="text-lg font-bold text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</span>
+            <span className="text-lg font-bold text-elec-yellow">
+              {(diversityFactor * 100).toFixed(0)}%
+            </span>
           </div>
         </div>
 

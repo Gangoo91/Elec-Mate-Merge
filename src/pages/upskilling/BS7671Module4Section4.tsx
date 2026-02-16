@@ -1,69 +1,83 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "rcd-trip-current",
-    question: "At what current level does a 30mA RCD typically trip?",
-    options: ["Exactly 30mA only", "30mA or above", "15mA only", "100mA"],
+    id: 'rcd-trip-current',
+    question: 'At what current level does a 30mA RCD typically trip?',
+    options: ['Exactly 30mA only', '30mA or above', '15mA only', '100mA'],
     correctIndex: 1,
-    explanation: "A 30mA RCD will trip when the residual current reaches 30mA or above, providing protection against earth leakage currents that could cause electric shock."
+    explanation:
+      'A 30mA RCD will trip when the residual current reaches 30mA or above, providing protection against earth leakage currents that could cause electric shock.',
   },
   {
-    id: "type-a-rcd",
-    question: "Which RCD type is suitable for appliances with pulsed DC leakage?",
-    options: ["Type AC", "Type A", "Type S", "Type B"],
+    id: 'type-a-rcd',
+    question: 'Which RCD type is suitable for appliances with pulsed DC leakage?',
+    options: ['Type AC', 'Type A', 'Type S', 'Type B'],
     correctIndex: 1,
-    explanation: "Type A RCDs can detect both AC and pulsating DC residual currents, making them suitable for modern appliances that may produce pulsed DC leakage currents."
+    explanation:
+      'Type A RCDs can detect both AC and pulsating DC residual currents, making them suitable for modern appliances that may produce pulsed DC leakage currents.',
   },
   {
-    id: "s-type-purpose",
-    question: "What does an S-type (selective) RCD provide?",
-    options: ["Surge protection", "Time delay for selectivity", "Single-phase only protection", "Extra earth leakage detection"],
+    id: 's-type-purpose',
+    question: 'What does an S-type (selective) RCD provide?',
+    options: [
+      'Surge protection',
+      'Time delay for selectivity',
+      'Single-phase only protection',
+      'Extra earth leakage detection',
+    ],
     correctIndex: 1,
-    explanation: "S-type (selective) RCDs have a built-in time delay to provide discrimination with downstream RCDs, preventing unnecessary tripping of upstream devices when only a local fault occurs."
-  }
+    explanation:
+      'S-type (selective) RCDs have a built-in time delay to provide discrimination with downstream RCDs, preventing unnecessary tripping of upstream devices when only a local fault occurs.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why do RCDs need regular testing?",
-    answer: "RCDs contain mechanical and electronic components that can degrade over time. Regular testing (user monthly, professional at periodic inspection) ensures the device still trips within required parameters."
+    question: 'Why do RCDs need regular testing?',
+    answer:
+      'RCDs contain mechanical and electronic components that can degrade over time. Regular testing (user monthly, professional at periodic inspection) ensures the device still trips within required parameters.',
   },
   {
-    question: "Can I use Type AC RCDs in new installations?",
-    answer: "Type AC RCDs are being phased out for many applications. BS 7671 generally requires Type A minimum for most circuits, as modern equipment can produce pulsating DC leakage that Type AC cannot detect."
+    question: 'Can I use Type AC RCDs in new installations?',
+    answer:
+      'Type AC RCDs are being phased out for many applications. BS 7671 generally requires Type A minimum for most circuits, as modern equipment can produce pulsating DC leakage that Type AC cannot detect.',
   },
   {
-    question: "What causes nuisance tripping of RCDs?",
-    answer: "Common causes include cumulative earth leakage from multiple appliances, moisture ingress, faulty equipment, and using the wrong RCD type for the load. Type F or Type B RCDs may reduce nuisance tripping with modern electronics."
+    question: 'What causes nuisance tripping of RCDs?',
+    answer:
+      'Common causes include cumulative earth leakage from multiple appliances, moisture ingress, faulty equipment, and using the wrong RCD type for the load. Type F or Type B RCDs may reduce nuisance tripping with modern electronics.',
   },
   {
-    question: "When is Type B RCD required?",
-    answer: "Type B RCDs are mandatory for EV charging points and solar PV inverters because these systems can produce smooth DC residual currents that Type A RCDs cannot detect."
-  }
+    question: 'When is Type B RCD required?',
+    answer:
+      'Type B RCDs are mandatory for EV charging points and solar PV inverters because these systems can produce smooth DC residual currents that Type A RCDs cannot detect.',
+  },
 ];
 
 const quizQuestion = {
-  question: "Where are 30mA RCDs required under the 18th Edition?",
+  question: 'Where are 30mA RCDs required under the 18th Edition?',
   options: [
-    "Only in bathrooms",
-    "Only outdoor circuits",
-    "All socket outlets ≤32A, special locations, and generally all final circuits in new domestic installations",
-    "Only TT systems"
+    'Only in bathrooms',
+    'Only outdoor circuits',
+    'All socket outlets ≤32A, special locations, and generally all final circuits in new domestic installations',
+    'Only TT systems',
   ],
   correctAnswer: 2,
-  explanation: "The 18th Edition requires RCD protection for socket outlets ≤32A, circuits in special locations like bathrooms, and generally all final circuits in new domestic installations."
+  explanation:
+    'The 18th Edition requires RCD protection for socket outlets ≤32A, circuits in special locations like bathrooms, and generally all final circuits in new domestic installations.',
 };
 
 const BS7671Module4Section4 = () => {
   useSEO({
-    title: "Residual Current Devices (RCDs) | BS7671 Module 4.4",
-    description: "Understand RCD types, operation principles, and BS 7671 requirements for residual current device installation and testing."
+    title: 'Residual Current Devices (RCDs) | BS7671 Module 4.4',
+    description:
+      'Understand RCD types, operation principles, and BS 7671 requirements for residual current device installation and testing.',
   });
 
   return (
@@ -71,7 +85,12 @@ const BS7671Module4Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bs7671-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -90,9 +109,7 @@ const BS7671Module4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Residual Current Devices (RCDs)
           </h1>
-          <p className="text-white/80">
-            Use and Placement for Maximum Safety
-          </p>
+          <p className="text-white/80">Use and Placement for Maximum Safety</p>
         </header>
 
         {/* Quick Summary */}
@@ -100,16 +117,26 @@ const BS7671Module4Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Function:</strong> Detects earth leakage and disconnects supply</li>
-              <li><strong>Sensitivity:</strong> 30mA for shock protection, 100mA for fire</li>
-              <li><strong>Response:</strong> Trips within 40ms at 5×IΔn</li>
+              <li>
+                <strong>Function:</strong> Detects earth leakage and disconnects supply
+              </li>
+              <li>
+                <strong>Sensitivity:</strong> 30mA for shock protection, 100mA for fire
+              </li>
+              <li>
+                <strong>Response:</strong> Trips within 40ms at 5×IΔn
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Consumer units, distribution boards, as RCBOs</li>
-              <li><strong>Use:</strong> Select correct type for load characteristics</li>
+              <li>
+                <strong>Spot:</strong> Consumer units, distribution boards, as RCBOs
+              </li>
+              <li>
+                <strong>Use:</strong> Select correct type for load characteristics
+              </li>
             </ul>
           </div>
         </div>
@@ -119,10 +146,10 @@ const BS7671Module4Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand RCD types and sensitivity ratings",
-              "Identify when and where RCDs are required under BS 7671",
-              "Learn how RCDs complement other protective devices",
-              "Recognise limitations and special installation considerations"
+              'Understand RCD types and sensitivity ratings',
+              'Identify when and where RCDs are required under BS 7671',
+              'Learn how RCDs complement other protective devices',
+              'Recognise limitations and special installation considerations',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -142,20 +169,37 @@ const BS7671Module4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              RCDs continuously monitor the balance between live conductors. In a healthy circuit, current flowing out through the line conductor should equal current returning through the neutral. When an earth fault occurs, some current flows to earth instead of returning through neutral, creating an imbalance.
+              RCDs continuously monitor the balance between live conductors. In a healthy circuit,
+              current flowing out through the line conductor should equal current returning through
+              the neutral. When an earth fault occurs, some current flows to earth instead of
+              returning through neutral, creating an imbalance.
             </p>
             <p>
-              When this imbalance reaches the device's rated sensitivity (typically 30mA), the RCD trips and disconnects the supply within milliseconds, providing protection against electric shock and reducing fire risk.
+              When this imbalance reaches the device's rated sensitivity (typically 30mA), the RCD
+              trips and disconnects the supply within milliseconds, providing protection against
+              electric shock and reducing fire risk.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Sequence:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1. Monitoring:</strong> Toroidal transformer monitors current flow continuously</li>
-                <li><strong>2. Detection:</strong> Compares outgoing line current with returning neutral</li>
-                <li><strong>3. Sensing:</strong> Detects any imbalance indicating earth leakage</li>
-                <li><strong>4. Tripping:</strong> Activates when threshold exceeded (typically 30mA)</li>
-                <li><strong>5. Disconnection:</strong> Opens contacts within 10-40 milliseconds</li>
+                <li>
+                  <strong>1. Monitoring:</strong> Toroidal transformer monitors current flow
+                  continuously
+                </li>
+                <li>
+                  <strong>2. Detection:</strong> Compares outgoing line current with returning
+                  neutral
+                </li>
+                <li>
+                  <strong>3. Sensing:</strong> Detects any imbalance indicating earth leakage
+                </li>
+                <li>
+                  <strong>4. Tripping:</strong> Activates when threshold exceeded (typically 30mA)
+                </li>
+                <li>
+                  <strong>5. Disconnection:</strong> Opens contacts within 10-40 milliseconds
+                </li>
               </ul>
             </div>
           </div>
@@ -171,22 +215,32 @@ const BS7671Module4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different RCD types are designed to detect different waveforms of residual current. Modern appliances often produce complex leakage currents that older RCD types cannot detect effectively.
+              Different RCD types are designed to detect different waveforms of residual current.
+              Modern appliances often produce complex leakage currents that older RCD types cannot
+              detect effectively.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standard Types</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Type AC:</strong> Standard AC residual currents only - being phased out</li>
-                  <li><strong>Type A:</strong> AC and pulsating DC - now standard requirement</li>
+                  <li>
+                    <strong>Type AC:</strong> Standard AC residual currents only - being phased out
+                  </li>
+                  <li>
+                    <strong>Type A:</strong> AC and pulsating DC - now standard requirement
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Advanced Types</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Type F:</strong> Up to 1kHz - for VSDs and LED lighting</li>
-                  <li><strong>Type B:</strong> All types including smooth DC - for EV charging</li>
+                  <li>
+                    <strong>Type F:</strong> Up to 1kHz - for VSDs and LED lighting
+                  </li>
+                  <li>
+                    <strong>Type B:</strong> All types including smooth DC - for EV charging
+                  </li>
                 </ul>
               </div>
             </div>
@@ -218,11 +272,14 @@ const BS7671Module4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The 18th Edition significantly expanded RCD requirements, making them mandatory for most final circuits in new installations and many existing installation modifications.
+              The 18th Edition significantly expanded RCD requirements, making them mandatory for
+              most final circuits in new installations and many existing installation modifications.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mandatory 30mA RCD Protection:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Mandatory 30mA RCD Protection:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>All socket outlets rated 32A or less</li>
                 <li>All circuits in bathrooms (except SELV)</li>
@@ -264,11 +321,14 @@ const BS7671Module4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              In installations with multiple RCDs, proper selectivity ensures that only the RCD closest to the fault trips, maintaining power to unaffected circuits.
+              In installations with multiple RCDs, proper selectivity ensures that only the RCD
+              closest to the fault trips, maintaining power to unaffected circuits.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Time-Delayed (S-Type) RCDs:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Time-Delayed (S-Type) RCDs:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Built-in delay of 130-500ms before tripping</li>
                 <li>Used as main incomer RCDs (upstream)</li>
@@ -278,7 +338,9 @@ const BS7671Module4Section4 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Nuisance Tripping Prevention:</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Nuisance Tripping Prevention:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Separate high-leakage equipment onto dedicated RCDs</li>
                 <li>Use appropriate RCD types for load characteristics</li>
@@ -299,12 +361,15 @@ const BS7671Module4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Regular testing ensures RCDs continue to provide protection throughout their service life. Both functional and comprehensive testing are required at different intervals.
+              Regular testing ensures RCDs continue to provide protection throughout their service
+              life. Both functional and comprehensive testing are required at different intervals.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Functional Testing (User)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Functional Testing (User)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Press test button quarterly (or monthly)</li>
                   <li>RCD should click and switch off</li>
@@ -333,18 +398,27 @@ const BS7671Module4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Kitchen Rewiring with RCD Protection</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Kitchen Rewiring with RCD Protection
+              </p>
               <p className="text-sm mb-3">
-                An electrician is rewiring a domestic kitchen as part of a larger renovation project. The new installation must comply with the 18th Edition requirements for RCD protection.
+                An electrician is rewiring a domestic kitchen as part of a larger renovation
+                project. The new installation must comply with the 18th Edition requirements for RCD
+                protection.
               </p>
               <p className="text-sm mb-2">
-                <strong>Design Solution:</strong> The electrician installs individual RCBOs (combined MCB + RCD) for each final circuit, providing both overload protection and 30mA RCD protection.
+                <strong>Design Solution:</strong> The electrician installs individual RCBOs
+                (combined MCB + RCD) for each final circuit, providing both overload protection and
+                30mA RCD protection.
               </p>
               <p className="text-sm mb-2">
-                <strong>Circuits Protected:</strong> Ring final circuit for sockets, radial circuit for dishwasher, dedicated circuit for electric oven, under-cabinet lighting circuit.
+                <strong>Circuits Protected:</strong> Ring final circuit for sockets, radial circuit
+                for dishwasher, dedicated circuit for electric oven, under-cabinet lighting circuit.
               </p>
               <p className="text-sm">
-                <strong>Benefits:</strong> Each circuit has independent protection, fault on one circuit won't affect others, easier fault finding, compliance with current standards.
+                <strong>Benefits:</strong> Each circuit has independent protection, fault on one
+                circuit won't affect others, easier fault finding, compliance with current
+                standards.
               </p>
             </div>
           </div>
@@ -358,12 +432,15 @@ const BS7671Module4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Amendment 3 enhanced RCD requirements, introducing new applications and improved selectivity requirements for modern electrical systems.
+              Amendment 3 enhanced RCD requirements, introducing new applications and improved
+              selectivity requirements for modern electrical systems.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">EV Charging Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  EV Charging Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Type B RCD mandatory for EV charging</li>
                   <li>6mA DC fault detection capability</li>
@@ -371,7 +448,9 @@ const BS7671Module4Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Storage Systems</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Energy Storage Systems
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Type B RCD for inverter AC output</li>
                   <li>DC residual current monitoring</li>
@@ -431,13 +510,22 @@ const BS7671Module4Section4 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

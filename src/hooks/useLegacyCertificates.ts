@@ -62,21 +62,29 @@ export const useLegacyCertificates = () => {
   const queryClient = useQueryClient();
 
   // Fetch all legacy certificates for the user
-  const { data: certificates, isLoading, error } = useQuery({
+  const {
+    data: certificates,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['legacy-certificates'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
         .from('legacy_certificates')
-        .select(`
+        .select(
+          `
           *,
           customer:customers!legacy_certificates_customer_id_fkey (
             id,
             name
           )
-        `)
+        `
+        )
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
@@ -88,7 +96,9 @@ export const useLegacyCertificates = () => {
   // Upload a new legacy certificate
   const uploadCertificate = useMutation({
     mutationFn: async (input: CreateLegacyCertificateInput) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Validate file type
@@ -136,9 +146,7 @@ export const useLegacyCertificates = () => {
 
       if (insertError) {
         // Clean up uploaded file on database error
-        await supabase.storage
-          .from('legacy-certificates')
-          .remove([storagePath]);
+        await supabase.storage.from('legacy-certificates').remove([storagePath]);
         throw insertError;
       }
 
@@ -243,7 +251,9 @@ export const useLegacyCertificates = () => {
   // Bulk upload certificates
   const bulkUpload = useMutation({
     mutationFn: async (files: File[]) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const results = {
@@ -279,27 +289,25 @@ export const useLegacyCertificates = () => {
           if (uploadError) throw uploadError;
 
           // Insert database record
-          const { error: insertError } = await supabase
-            .from('legacy_certificates')
-            .insert({
-              user_id: user.id,
-              original_filename: file.name,
-              storage_path: storagePath,
-              file_size_bytes: file.size,
-            });
+          const { error: insertError } = await supabase.from('legacy_certificates').insert({
+            user_id: user.id,
+            original_filename: file.name,
+            storage_path: storagePath,
+            file_size_bytes: file.size,
+          });
 
           if (insertError) {
             // Clean up uploaded file
-            await supabase.storage
-              .from('legacy-certificates')
-              .remove([storagePath]);
+            await supabase.storage.from('legacy-certificates').remove([storagePath]);
             throw insertError;
           }
 
           results.successful++;
         } catch (error) {
           results.failed++;
-          results.errors.push(`${file.name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+          results.errors.push(
+            `${file.name}: ${error instanceof Error ? error.message : 'Unknown error'}`
+          );
         }
       }
 

@@ -1,7 +1,19 @@
 import { useState, useEffect } from 'react';
-import { cn } from "@/lib/utils";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
@@ -26,7 +38,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ReportPdfViewerProps {
@@ -99,14 +111,19 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'apikey': SUPABASE_PUBLISHABLE_KEY,
+          Authorization: `Bearer ${accessToken}`,
+          apikey: SUPABASE_PUBLISHABLE_KEY,
         },
         body: JSON.stringify({ pdfUrl: url }),
       });
 
       const contentType = response.headers.get('content-type');
-      console.log('[ReportPdfViewer] Response status:', response.status, 'content-type:', contentType);
+      console.log(
+        '[ReportPdfViewer] Response status:',
+        response.status,
+        'content-type:',
+        contentType
+      );
 
       // Check if response is JSON (error) instead of PDF
       if (contentType?.includes('application/json')) {
@@ -136,9 +153,8 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       }
 
       // Ensure correct MIME type for PDF
-      const pdfBlob = blob.type === 'application/pdf'
-        ? blob
-        : new Blob([blob], { type: 'application/pdf' });
+      const pdfBlob =
+        blob.type === 'application/pdf' ? blob : new Blob([blob], { type: 'application/pdf' });
 
       const newBlobUrl = URL.createObjectURL(pdfBlob);
       console.log('[ReportPdfViewer] Blob URL created:', newBlobUrl);
@@ -149,7 +165,11 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       console.error('[ReportPdfViewer] Failed to create blob URL:', errorMsg);
 
       // Check if this is an expired URL error - if so, indicate we need to regenerate
-      if (errorMsg.includes('403') || errorMsg.includes('expired') || errorMsg.includes('Forbidden')) {
+      if (
+        errorMsg.includes('403') ||
+        errorMsg.includes('expired') ||
+        errorMsg.includes('Forbidden')
+      ) {
         setPreviewError('PDF link has expired. Click "Regenerate PDF" to create a new one.');
       } else {
         setPreviewError(errorMsg);
@@ -188,7 +208,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   const getValidPdfUrl = async (reportData: any): Promise<string | null> => {
     const pdfUrl = reportData.pdf_url;
     const pdfExpiresAt = reportData.pdf_expires_at;
-    const pdfGeneratedAt = reportData.pdf_generated_at ? new Date(reportData.pdf_generated_at) : null;
+    const pdfGeneratedAt = reportData.pdf_generated_at
+      ? new Date(reportData.pdf_generated_at)
+      : null;
     const dataUpdatedAt = new Date(reportData.updated_at);
 
     // Check if data has been updated since PDF was generated
@@ -198,12 +220,18 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       // Check if URL is still valid
       const isValid = await isPdfUrlValid(pdfUrl, pdfExpiresAt);
       if (isValid) {
-        console.log('[ReportPdfViewer] Using cached PDF (valid until:', pdfExpiresAt || 'unknown', ')');
+        console.log(
+          '[ReportPdfViewer] Using cached PDF (valid until:',
+          pdfExpiresAt || 'unknown',
+          ')'
+        );
         return pdfUrl;
       }
       console.log('[ReportPdfViewer] Cached PDF URL is invalid, regenerating...');
     } else if (isPdfStale) {
-      console.log('[ReportPdfViewer] PDF is stale (data updated after generation), regenerating...');
+      console.log(
+        '[ReportPdfViewer] PDF is stale (data updated after generation), regenerating...'
+      );
     }
 
     // Need to regenerate
@@ -281,9 +309,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       } catch (error) {
         console.error('Error loading report:', error);
         toast({
-          title: "Error",
-          description: "Failed to load report",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to load report',
+          variant: 'destructive',
         });
       }
     };
@@ -295,7 +323,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
     setIsGenerating(true);
     setGenerationError(null);
     setSizeWarning(null);
-    
+
     try {
       const reportType = reportData.report_type.toLowerCase();
       let edgeFunctionName = '';
@@ -314,7 +342,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       const { offlineStorage } = await import('@/utils/offlineStorage');
       const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
       let templateId: string | undefined;
-      
+
       if (reportType === 'eic') {
         templateId = credentials.eicTemplateId;
       } else if (reportType === 'eicr') {
@@ -324,9 +352,11 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       // Optimize data and check size
       console.log('Optimizing data for PDF generation...');
       const optimizationResult = optimizeForPdfGeneration(reportData.data);
-      
-      console.log(`Data size: ${optimizationResult.originalSizeMB.toFixed(2)}MB (optimised: ${optimizationResult.optimizedSizeMB.toFixed(2)}MB)`);
-      
+
+      console.log(
+        `Data size: ${optimizationResult.originalSizeMB.toFixed(2)}MB (optimised: ${optimizationResult.optimizedSizeMB.toFixed(2)}MB)`
+      );
+
       if (optimizationResult.warnings.length > 0) {
         const warningText = formatSizeWarning(optimizationResult);
         console.warn('PDF generation warnings:', warningText);
@@ -344,9 +374,12 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         console.log(`Using template ID from settings: ${templateId}`);
       }
 
-      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(edgeFunctionName, {
-        body: requestBody
-      });
+      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
+        edgeFunctionName,
+        {
+          body: requestBody,
+        }
+      );
 
       if (pdfError) {
         console.error('Edge function error:', pdfError);
@@ -356,12 +389,17 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       if (!pdfResult?.success || !pdfResult?.pdfUrl) {
         const errorMsg = pdfResult?.error || 'No PDF URL returned';
         console.error('PDF generation unsuccessful:', errorMsg);
-        
+
         // Map template errors to user-friendly messages
-        if (errorMsg.includes('Document template must exist') || errorMsg.includes('Invalid or inaccessible PDF template')) {
-          throw new Error('The selected PDF Monkey template ID isn\'t available for this account. Please check the Template ID in Settings or contact support.');
+        if (
+          errorMsg.includes('Document template must exist') ||
+          errorMsg.includes('Invalid or inaccessible PDF template')
+        ) {
+          throw new Error(
+            "The selected PDF Monkey template ID isn't available for this account. Please check the Template ID in Settings or contact support."
+          );
         }
-        
+
         throw new Error(errorMsg);
       }
 
@@ -390,25 +428,21 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         updateData.pdf_expires_at = pdfResult.expiresAt;
       }
 
-      await supabase
-        .from('reports')
-        .update(updateData)
-        .eq('id', reportData.id);
+      await supabase.from('reports').update(updateData).eq('id', reportData.id);
 
       toast({
-        title: "PDF Generated",
-        description: "Certificate PDF is ready to view",
+        title: 'PDF Generated',
+        description: 'Certificate PDF is ready to view',
       });
-
     } catch (error) {
       console.error('PDF generation error:', error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to generate PDF";
+      const errorMessage = error instanceof Error ? error.message : 'Failed to generate PDF';
       setGenerationError(errorMessage);
-      
+
       toast({
-        title: "PDF Generation Failed",
+        title: 'PDF Generation Failed',
         description: errorMessage,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -429,8 +463,8 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         document.body.removeChild(link);
 
         toast({
-          title: "Download Started",
-          description: "Your PDF is downloading...",
+          title: 'Download Started',
+          description: 'Your PDF is downloading...',
         });
         return;
       } catch (error) {
@@ -443,9 +477,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       window.open(pdfUrl, '_blank');
     } else {
       toast({
-        title: "No PDF Available",
-        description: "Please generate the PDF first",
-        variant: "destructive",
+        title: 'No PDF Available',
+        description: 'Please generate the PDF first',
+        variant: 'destructive',
       });
     }
   };
@@ -469,14 +503,16 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         reportId: report.id,
         section: reportType,
         reportType: reportType,
-      }
+      },
     });
     onOpenChange(false);
   };
 
   const handleCreateNewVersion = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Create new version
@@ -507,13 +543,10 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       if (error) throw error;
 
       // Mark old version as not latest
-      await supabase
-        .from('reports')
-        .update({ is_latest_version: false })
-        .eq('id', report.id);
+      await supabase.from('reports').update({ is_latest_version: false }).eq('id', report.id);
 
       toast({
-        title: "New Version Created",
+        title: 'New Version Created',
         description: `Version ${newVersion} created successfully`,
       });
 
@@ -523,21 +556,21 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
           reportId: newReport.id,
           section: report.report_type.toLowerCase(),
           reportType: report.report_type.toLowerCase(),
-        }
+        },
       });
       onOpenChange(false);
     } catch (error) {
       console.error('Error creating version:', error);
       toast({
-        title: "Error",
-        description: "Failed to create new version",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create new version',
+        variant: 'destructive',
       });
     }
   };
 
   const handleVersionChange = async (versionId: string) => {
-    const selectedVersion = versions.find(v => v.id === versionId);
+    const selectedVersion = versions.find((v) => v.id === versionId);
     if (!selectedVersion) return;
 
     try {
@@ -571,9 +604,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
     } catch (error) {
       console.error('Error switching version:', error);
       toast({
-        title: "Error",
-        description: "Failed to load version",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load version',
+        variant: 'destructive',
       });
     }
   };
@@ -600,7 +633,8 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             <AlertTitle>PDF Generation Failed</AlertTitle>
             <AlertDescription className="text-xs mt-2">
               {generationError}
-              <br /><br />
+              <br />
+              <br />
               <strong>Common causes:</strong>
               <ul className="list-disc list-inside mt-1">
                 <li>Data size exceeds 1MB limit (check for large embedded images)</li>
@@ -625,7 +659,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             isMobile ? (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
                 <FileText className="h-16 w-16 text-primary mb-4" />
-                <p className="text-center mb-4 text-muted-foreground">PDF preview not available on mobile</p>
+                <p className="text-center mb-4 text-muted-foreground">
+                  PDF preview not available on mobile
+                </p>
                 <Button onClick={handleDownload} className="h-12 px-6 touch-manipulation">
                   <Download className="h-5 w-5 mr-2" />
                   Open PDF
@@ -658,7 +694,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                 disabled={isGenerating}
                 className="h-11 touch-manipulation mt-2"
               >
-                <Loader2 className={cn("h-4 w-4 mr-2", isGenerating && "animate-spin")} />
+                <Loader2 className={cn('h-4 w-4 mr-2', isGenerating && 'animate-spin')} />
                 Regenerate PDF
               </Button>
             </div>
@@ -710,7 +746,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                     {report?.certificate_number || 'Loading...'}
                   </SheetTitle>
                   {currentVersion?.is_latest_version && (
-                    <Badge variant="default" className="text-xs">Latest</Badge>
+                    <Badge variant="default" className="text-xs">
+                      Latest
+                    </Badge>
                   )}
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
@@ -723,7 +761,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                       className="h-10 w-10 touch-manipulation"
                       title="Regenerate PDF"
                     >
-                      <Loader2 className={cn("h-4 w-4", isGenerating && "animate-spin")} />
+                      <Loader2 className={cn('h-4 w-4', isGenerating && 'animate-spin')} />
                     </Button>
                   )}
                   <Button
@@ -787,16 +825,16 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                                   {format(new Date(version.created_at), 'dd/MM/yyyy')}
                                 </span>
                                 {version.is_latest_version && (
-                                  <Badge variant="default" className="ml-2">Latest</Badge>
+                                  <Badge variant="default" className="ml-2">
+                                    Latest
+                                  </Badge>
                                 )}
                               </DropdownMenuItem>
                             ))}
                           </DropdownMenuContent>
                         </DropdownMenu>
                       )}
-                      {currentVersion.is_latest_version && (
-                        <Badge variant="default">Latest</Badge>
-                      )}
+                      {currentVersion.is_latest_version && <Badge variant="default">Latest</Badge>}
                     </>
                   )}
                 </div>
@@ -809,15 +847,10 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                       disabled={isGenerating}
                       title="Regenerate PDF"
                     >
-                      <Loader2 className={cn("h-4 w-4", isGenerating && "animate-spin")} />
+                      <Loader2 className={cn('h-4 w-4', isGenerating && 'animate-spin')} />
                     </Button>
                   )}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleEdit}
-                    disabled={isGenerating}
-                  >
+                  <Button variant="outline" size="sm" onClick={handleEdit} disabled={isGenerating}>
                     <Edit className="h-4 w-4 mr-2" />
                     Edit
                   </Button>
@@ -846,8 +879,13 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             <AlertDialogDescription>
               You're viewing version {currentVersion?.version}. Would you like to:
               <ul className="list-disc list-inside mt-4 space-y-2">
-                <li><strong>Edit Current Version</strong> - Modify V{currentVersion?.version} directly</li>
-                <li><strong>Create New Version</strong> - Create V{(currentVersion?.version || 0) + 1} based on this version</li>
+                <li>
+                  <strong>Edit Current Version</strong> - Modify V{currentVersion?.version} directly
+                </li>
+                <li>
+                  <strong>Create New Version</strong> - Create V{(currentVersion?.version || 0) + 1}{' '}
+                  based on this version
+                </li>
               </ul>
             </AlertDialogDescription>
           </AlertDialogHeader>

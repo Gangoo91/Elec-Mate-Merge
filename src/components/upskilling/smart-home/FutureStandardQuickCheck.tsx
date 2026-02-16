@@ -7,12 +7,12 @@ export const FutureStandardQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What future standard may reduce the need for hubs?";
+  const question = 'What future standard may reduce the need for hubs?';
   const options = [
     { id: 'a', text: 'Wi-Fi 7', correct: false },
     { id: 'b', text: 'Matter', correct: true },
     { id: 'c', text: 'Bluetooth 6.0', correct: false },
-    { id: 'd', text: '5G Cellular', correct: false }
+    { id: 'd', text: '5G Cellular', correct: false },
   ];
 
   const handleAnswerSelect = (optionId: string) => {
@@ -31,7 +31,7 @@ export const FutureStandardQuickCheck = () => {
     setShowResult(false);
   };
 
-  const selectedOption = options.find(opt => opt.id === selectedAnswer);
+  const selectedOption = options.find((opt) => opt.id === selectedAnswer);
   const isCorrect = selectedOption?.correct || false;
 
   return (
@@ -44,7 +44,7 @@ export const FutureStandardQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
             <Button
@@ -52,10 +52,10 @@ export const FutureStandardQuickCheck = () => {
               variant="outline"
               onClick={() => handleAnswerSelect(option.id)}
               className={`w-full justify-start text-left p-4 h-auto border-gray-600 hover:bg-gray-700 ${
-                selectedAnswer === option.id 
-                  ? showResult 
-                    ? option.correct 
-                      ? 'bg-green-900/20 border-green-600 text-green-100' 
+                selectedAnswer === option.id
+                  ? showResult
+                    ? option.correct
+                      ? 'bg-green-900/20 border-green-600 text-green-100'
                       : 'bg-red-900/20 border-red-600 text-red-100'
                     : 'bg-blue-900/20 border-blue-600 text-blue-100'
                   : 'text-gray-300'
@@ -78,7 +78,7 @@ export const FutureStandardQuickCheck = () => {
         </div>
 
         {!showResult && selectedAnswer && (
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-400"
           >
@@ -87,7 +87,9 @@ export const FutureStandardQuickCheck = () => {
         )}
 
         {showResult && (
-          <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}>
+          <div
+            className={`p-4 rounded-lg ${isCorrect ? 'bg-green-900/20 border border-green-600' : 'bg-red-900/20 border border-red-600'}`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400" />
@@ -99,12 +101,11 @@ export const FutureStandardQuickCheck = () => {
               </span>
             </div>
             <p className={`text-sm ${isCorrect ? 'text-green-100' : 'text-red-100'}`}>
-              {isCorrect 
+              {isCorrect
                 ? 'Perfect! Matter is the new connectivity standard that enables direct device interoperability across different ecosystems, potentially reducing the need for traditional protocol-bridging hubs.'
-                : 'Matter is the emerging standard that may reduce hub dependency. It enables devices from different manufacturers to communicate directly, using Thread networking for mesh capabilities without traditional hubs.'
-              }
+                : 'Matter is the emerging standard that may reduce hub dependency. It enables devices from different manufacturers to communicate directly, using Thread networking for mesh capabilities without traditional hubs.'}
             </p>
-            <Button 
+            <Button
               onClick={resetCheck}
               variant="outline"
               className="mt-3 border-gray-600 text-gray-300 hover:bg-gray-700"

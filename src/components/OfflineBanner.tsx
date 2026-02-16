@@ -23,7 +23,8 @@ const OfflineBanner: React.FC<OfflineBannerProps> = ({ queuedChanges, isOnline, 
         <WifiOff className="h-4 w-4 text-destructive" />
         <AlertDescription className="text-sm text-destructive flex items-center justify-between">
           <span>
-            You're offline. {queuedChanges} change{queuedChanges !== 1 ? 's' : ''} will be saved when you reconnect.
+            You're offline. {queuedChanges} change{queuedChanges !== 1 ? 's' : ''} will be saved
+            when you reconnect.
           </span>
         </AlertDescription>
       </Alert>
@@ -32,7 +33,7 @@ const OfflineBanner: React.FC<OfflineBannerProps> = ({ queuedChanges, isOnline, 
 
   // User is online but has queued changes
   return (
-    <Alert 
+    <Alert
       className="border-blue-500/50 bg-blue-500/10 cursor-pointer hover:bg-blue-500/20 active:bg-blue-500/30 transition-all touch-manipulation"
       onClick={() => navigate('/sync-status')}
     >

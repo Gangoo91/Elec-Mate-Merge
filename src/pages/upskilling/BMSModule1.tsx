@@ -9,38 +9,38 @@ const BMSModule1 = () => {
       id: 1,
       title: "What is a BMS and Why It's Used",
       icon: BookOpen,
-      description: "Introduction to Building Management Systems"
+      description: 'Introduction to Building Management Systems',
     },
     {
       id: 2,
-      title: "Common Systems Integrated with BMS (HVAC, Lighting, Access)",
+      title: 'Common Systems Integrated with BMS (HVAC, Lighting, Access)',
       icon: Building,
-      description: "System integration and connectivity"
+      description: 'System integration and connectivity',
     },
     {
       id: 3,
-      title: "Benefits of BMS: Efficiency, Comfort, Control",
+      title: 'Benefits of BMS: Efficiency, Comfort, Control',
       icon: TrendingUp,
-      description: "Advantages and value proposition"
+      description: 'Advantages and value proposition',
     },
     {
       id: 4,
-      title: "Real-World Environments Using BMS (Commercial, Healthcare, Retail)",
+      title: 'Real-World Environments Using BMS (Commercial, Healthcare, Retail)',
       icon: MapPin,
-      description: "Application sectors and use cases"
+      description: 'Application sectors and use cases',
     },
     {
       id: 5,
-      title: "Overview of Relevant Standards (ISO 16484, EN 15232)",
+      title: 'Overview of Relevant Standards (ISO 16484, EN 15232)',
       icon: FileCheck,
-      description: "Industry standards and compliance"
+      description: 'Industry standards and compliance',
     },
     {
       id: 6,
       title: "The Electrician's Role in BMS Installations",
       icon: FileCheck,
-      description: "Professional responsibilities and best practices"
-    }
+      description: 'Professional responsibilities and best practices',
+    },
   ];
 
   return (

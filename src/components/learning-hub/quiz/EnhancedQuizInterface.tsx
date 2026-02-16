@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { 
-  Clock, 
-  ChevronLeft, 
-  ChevronRight, 
+import {
+  Clock,
+  ChevronLeft,
+  ChevronRight,
   X,
   CheckCircle2,
   Circle,
   BookOpen,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { QuizQuestion, Assessment } from '@/types/quiz';
 import { useQuizSession } from '@/hooks/useQuizSession';
@@ -23,11 +23,11 @@ interface EnhancedQuizInterfaceProps {
   onExit: () => void;
 }
 
-const EnhancedQuizInterface = ({ 
-  assessment, 
-  questions, 
-  onComplete, 
-  onExit 
+const EnhancedQuizInterface = ({
+  assessment,
+  questions,
+  onComplete,
+  onExit,
 }: EnhancedQuizInterfaceProps) => {
   const {
     currentSession,
@@ -38,7 +38,7 @@ const EnhancedQuizInterface = ({
     finishQuiz,
     getCurrentQuestion,
     getProgress,
-    setTimeElapsed
+    setTimeElapsed,
   } = useQuizSession();
 
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -55,7 +55,7 @@ const EnhancedQuizInterface = ({
   // Timer
   useEffect(() => {
     const timer = setInterval(() => {
-      setTotalElapsed(prev => prev + 1);
+      setTotalElapsed((prev) => prev + 1);
       setTimeElapsed(totalElapsed);
     }, 1000);
     return () => clearInterval(timer);
@@ -118,10 +118,14 @@ const EnhancedQuizInterface = ({
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return 'text-bs7671-safe bg-bs7671-safe/10 border-bs7671-safe/30';
-      case 'Intermediate': return 'text-bs7671-warning bg-bs7671-warning/10 border-bs7671-warning/30';
-      case 'Advanced': return 'text-bs7671-danger bg-bs7671-danger/10 border-bs7671-danger/30';
-      default: return 'text-foreground/80 bg-muted/10 border-muted/30';
+      case 'Beginner':
+        return 'text-bs7671-safe bg-bs7671-safe/10 border-bs7671-safe/30';
+      case 'Intermediate':
+        return 'text-bs7671-warning bg-bs7671-warning/10 border-bs7671-warning/30';
+      case 'Advanced':
+        return 'text-bs7671-danger bg-bs7671-danger/10 border-bs7671-danger/30';
+      default:
+        return 'text-foreground/80 bg-muted/10 border-muted/30';
     }
   };
 
@@ -133,7 +137,10 @@ const EnhancedQuizInterface = ({
           {/* Title Row */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3 flex-1 min-w-0">
-              <CategoryIcon category={assessment.category} className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+              <CategoryIcon
+                category={assessment.category}
+                className="h-5 w-5 text-elec-yellow flex-shrink-0"
+              />
               <h1 className="text-base sm:text-lg font-bold text-foreground truncate">
                 {assessment.title}
               </h1>
@@ -157,7 +164,9 @@ const EnhancedQuizInterface = ({
                 <span className="font-mono font-medium">{formatTime(totalElapsed)}</span>
               </div>
               <div className="hidden sm:flex items-center gap-1.5">
-                <span className={`px-2 py-0.5 rounded-md text-xs font-medium border ${getDifficultyColor(currentQuestion.difficulty)}`}>
+                <span
+                  className={`px-2 py-0.5 rounded-md text-xs font-medium border ${getDifficultyColor(currentQuestion.difficulty)}`}
+                >
                   {currentQuestion.difficulty}
                 </span>
               </div>
@@ -232,11 +241,13 @@ const EnhancedQuizInterface = ({
                   >
                     <div className="flex items-center gap-3 sm:gap-4">
                       {/* Radio Button */}
-                      <div className={`relative flex-shrink-0 w-7 h-7 rounded-full border-2 transition-all duration-200 ${
-                        isSelected
-                          ? 'border-elec-yellow bg-elec-yellow scale-110'
-                          : 'border-muted-foreground/50 group-hover:border-elec-yellow/70 group-active:border-elec-yellow'
-                      }`}>
+                      <div
+                        className={`relative flex-shrink-0 w-7 h-7 rounded-full border-2 transition-all duration-200 ${
+                          isSelected
+                            ? 'border-elec-yellow bg-elec-yellow scale-110'
+                            : 'border-muted-foreground/50 group-hover:border-elec-yellow/70 group-active:border-elec-yellow'
+                        }`}
+                      >
                         {isSelected && (
                           <CheckCircle2 className="absolute inset-0 w-full h-full text-black animate-in zoom-in-50 duration-200" />
                         )}
@@ -247,16 +258,20 @@ const EnhancedQuizInterface = ({
 
                       {/* Option Label & Text */}
                       <div className="flex-1 flex items-center gap-3">
-                        <span className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-base transition-all duration-200 ${
-                          isSelected
-                            ? 'bg-elec-yellow text-black scale-105'
-                            : 'bg-muted text-foreground/70 group-hover:bg-elec-yellow/20 group-hover:text-elec-yellow group-active:bg-elec-yellow/30'
-                        }`}>
+                        <span
+                          className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-base transition-all duration-200 ${
+                            isSelected
+                              ? 'bg-elec-yellow text-black scale-105'
+                              : 'bg-muted text-foreground/70 group-hover:bg-elec-yellow/20 group-hover:text-elec-yellow group-active:bg-elec-yellow/30'
+                          }`}
+                        >
                           {optionLabels[index]}
                         </span>
-                        <span className={`text-sm sm:text-base leading-snug ${
-                          isSelected ? 'text-foreground font-medium' : 'text-foreground'
-                        }`}>
+                        <span
+                          className={`text-sm sm:text-base leading-snug ${
+                            isSelected ? 'text-foreground font-medium' : 'text-foreground'
+                          }`}
+                        >
                           {option}
                         </span>
                       </div>

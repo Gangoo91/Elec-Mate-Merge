@@ -1,65 +1,82 @@
-import { ArrowLeft, Shield, Zap, Wrench, HardHat, FileText, TestTube, AlertTriangle, GraduationCap, ChevronLeft } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  Shield,
+  Zap,
+  Wrench,
+  HardHat,
+  FileText,
+  TestTube,
+  AlertTriangle,
+  GraduationCap,
+  ChevronLeft,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const modules = [
   {
-    number: "Module 1",
-    title: "Health and Safety in Building Services Engineering",
-    description: "Essential health and safety practices for electrical work environments",
+    number: 'Module 1',
+    title: 'Health and Safety in Building Services Engineering',
+    description: 'Essential health and safety practices for electrical work environments',
     icon: Shield,
-    href: "module1",
+    href: 'module1',
   },
   {
-    number: "Module 2",
-    title: "Principles of Electrical Science",
-    description: "Fundamental electrical theory, voltage, current, resistance and power calculations",
+    number: 'Module 2',
+    title: 'Principles of Electrical Science',
+    description:
+      'Fundamental electrical theory, voltage, current, resistance and power calculations',
     icon: Zap,
-    href: "module2",
+    href: 'module2',
   },
   {
-    number: "Module 3",
-    title: "Electrical Installation Methods & Technology",
-    description: "Wiring systems, containment methods, tools and materials for electrical installations",
+    number: 'Module 3',
+    title: 'Electrical Installation Methods & Technology',
+    description:
+      'Wiring systems, containment methods, tools and materials for electrical installations',
     icon: Wrench,
-    href: "module3",
+    href: 'module3',
   },
   {
-    number: "Module 4",
-    title: "Installing Wiring Systems & Enclosures",
-    description: "Hands-on installation techniques for PVC, trunking, conduit and cable tray systems",
+    number: 'Module 4',
+    title: 'Installing Wiring Systems & Enclosures',
+    description:
+      'Hands-on installation techniques for PVC, trunking, conduit and cable tray systems',
     icon: HardHat,
-    href: "module4",
+    href: 'module4',
   },
   {
-    number: "Module 5",
-    title: "Design, Planning & Communication",
-    description: "Project planning, technical documentation and effective team communication",
+    number: 'Module 5',
+    title: 'Design, Planning & Communication',
+    description: 'Project planning, technical documentation and effective team communication',
     icon: FileText,
-    href: "module5",
+    href: 'module5',
   },
   {
-    number: "Module 6",
-    title: "Inspection, Testing & Certification",
-    description: "Safe isolation procedures, continuity testing, insulation resistance and certification",
+    number: 'Module 6',
+    title: 'Inspection, Testing & Certification',
+    description:
+      'Safe isolation procedures, continuity testing, insulation resistance and certification',
     icon: TestTube,
-    href: "module6",
+    href: 'module6',
   },
   {
-    number: "Module 7",
-    title: "Electrical Fault Finding and Diagnosis",
-    description: "Learn to identify, diagnose, and safely resolve electrical faults in installations",
+    number: 'Module 7',
+    title: 'Electrical Fault Finding and Diagnosis',
+    description:
+      'Learn to identify, diagnose, and safely resolve electrical faults in installations',
     icon: AlertTriangle,
-    href: "module7",
+    href: 'module7',
   },
   {
-    number: "Module 8",
-    title: "Mock Examinations & Assessment",
-    description: "Test your knowledge and exam readiness with comprehensive mock examinations and practice questions",
+    number: 'Module 8',
+    title: 'Mock Examinations & Assessment',
+    description:
+      'Test your knowledge and exam readiness with comprehensive mock examinations and practice questions',
     icon: TestTube,
-    href: "module8",
+    href: 'module8',
   },
 ];
 
@@ -86,10 +103,7 @@ const Level2 = () => {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-6">
           {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <Button
               variant="ghost"
               size="sm"

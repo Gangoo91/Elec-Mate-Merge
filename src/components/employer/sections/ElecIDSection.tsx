@@ -1,32 +1,43 @@
-import { useState, useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Progress } from "@/components/ui/progress";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useElecIdProfiles, useVerifyElecIdProfile, useGenerateShareableLink, useCreateElecIdProfile } from "@/hooks/useElecId";
-import { useEmployees } from "@/hooks/useEmployees";
-import { ElecIdProfile } from "@/services/elecIdService";
-import { ElecIDCard } from "@/components/employer/ElecIDCard";
-import { ShareElecIDDialog } from "@/components/employer/dialogs/ShareElecIDDialog";
-import { AddTrainingRecordDialog } from "@/components/employer/dialogs/AddTrainingRecordDialog";
-import { ScanElecIDDialog } from "@/components/employer/dialogs/ScanElecIDDialog";
-import { AddCertificationDialog } from "@/components/employer/dialogs/AddCertificationDialog";
-import { AddSkillDialog } from "@/components/employer/dialogs/AddSkillDialog";
-import { AddWorkHistoryDialog } from "@/components/employer/dialogs/AddWorkHistoryDialog";
-import { CreateElecIDForEmployeeDialog } from "@/components/employer/dialogs/CreateElecIDForEmployeeDialog";
-import { 
-  CreditCard, 
-  Search, 
-  CheckCircle2, 
-  AlertTriangle, 
+import { useState, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Progress } from '@/components/ui/progress';
+import { Skeleton } from '@/components/ui/skeleton';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  useElecIdProfiles,
+  useVerifyElecIdProfile,
+  useGenerateShareableLink,
+  useCreateElecIdProfile,
+} from '@/hooks/useElecId';
+import { useEmployees } from '@/hooks/useEmployees';
+import { ElecIdProfile } from '@/services/elecIdService';
+import { ElecIDCard } from '@/components/employer/ElecIDCard';
+import { ShareElecIDDialog } from '@/components/employer/dialogs/ShareElecIDDialog';
+import { AddTrainingRecordDialog } from '@/components/employer/dialogs/AddTrainingRecordDialog';
+import { ScanElecIDDialog } from '@/components/employer/dialogs/ScanElecIDDialog';
+import { AddCertificationDialog } from '@/components/employer/dialogs/AddCertificationDialog';
+import { AddSkillDialog } from '@/components/employer/dialogs/AddSkillDialog';
+import { AddWorkHistoryDialog } from '@/components/employer/dialogs/AddWorkHistoryDialog';
+import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/CreateElecIDForEmployeeDialog';
+import {
+  CreditCard,
+  Search,
+  CheckCircle2,
+  AlertTriangle,
   XCircle,
   Award,
   GraduationCap,
@@ -43,76 +54,76 @@ import {
   RefreshCw,
   Plus,
   UserPlus,
-  Loader2
-} from "lucide-react";
+  Loader2,
+} from 'lucide-react';
 
 const statusConfig = {
-  "Active": { 
-    bg: "bg-success/20", 
-    text: "text-success", 
-    border: "border-success/30",
-    accent: "border-l-success",
-    icon: CheckCircle2 
+  Active: {
+    bg: 'bg-success/20',
+    text: 'text-success',
+    border: 'border-success/30',
+    accent: 'border-l-success',
+    icon: CheckCircle2,
   },
-  "Valid": { 
-    bg: "bg-success/20", 
-    text: "text-success", 
-    border: "border-success/30",
-    accent: "border-l-success",
-    icon: CheckCircle2 
+  Valid: {
+    bg: 'bg-success/20',
+    text: 'text-success',
+    border: 'border-success/30',
+    accent: 'border-l-success',
+    icon: CheckCircle2,
   },
-  "Warning": { 
-    bg: "bg-warning/20", 
-    text: "text-warning", 
-    border: "border-warning/30",
-    accent: "border-l-warning",
-    icon: AlertTriangle 
+  Warning: {
+    bg: 'bg-warning/20',
+    text: 'text-warning',
+    border: 'border-warning/30',
+    accent: 'border-l-warning',
+    icon: AlertTriangle,
   },
-  "Expiring": { 
-    bg: "bg-warning/20", 
-    text: "text-warning", 
-    border: "border-warning/30",
-    accent: "border-l-warning",
-    icon: AlertTriangle 
+  Expiring: {
+    bg: 'bg-warning/20',
+    text: 'text-warning',
+    border: 'border-warning/30',
+    accent: 'border-l-warning',
+    icon: AlertTriangle,
   },
-  "Expired": { 
-    bg: "bg-destructive/20", 
-    text: "text-destructive", 
-    border: "border-destructive/30",
-    accent: "border-l-destructive",
-    icon: XCircle 
+  Expired: {
+    bg: 'bg-destructive/20',
+    text: 'text-destructive',
+    border: 'border-destructive/30',
+    accent: 'border-l-destructive',
+    icon: XCircle,
   },
 };
 
 const skillLevelColors: Record<string, string> = {
-  "beginner": "bg-muted text-foreground/70",
-  "intermediate": "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  "advanced": "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
-  "expert": "bg-success/20 text-success border-success/30",
+  beginner: 'bg-muted text-foreground/70',
+  intermediate: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  advanced: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+  expert: 'bg-success/20 text-success border-success/30',
 };
 
 // Helper to get certification status from expiry date
 const getCertStatus = (expiryDate: string | null): string => {
-  if (!expiryDate) return "Active";
+  if (!expiryDate) return 'Active';
   const expiry = new Date(expiryDate);
   const now = new Date();
   const daysUntil = Math.ceil((expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-  
-  if (daysUntil < 0) return "Expired";
-  if (daysUntil <= 30) return "Warning";
-  return "Active";
+
+  if (daysUntil < 0) return 'Expired';
+  if (daysUntil <= 30) return 'Warning';
+  return 'Active';
 };
 
 // Helper to get ECS card status
 const getEcsStatus = (expiryDate: string | null): string => {
-  if (!expiryDate) return "Active";
+  if (!expiryDate) return 'Active';
   const expiry = new Date(expiryDate);
   const now = new Date();
   const daysUntil = Math.ceil((expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-  
-  if (daysUntil < 0) return "Expired";
-  if (daysUntil <= 60) return "Expiring";
-  return "Valid";
+
+  if (daysUntil < 0) return 'Expired';
+  if (daysUntil <= 60) return 'Expiring';
+  return 'Valid';
 };
 
 export const ElecIDSection = () => {
@@ -122,8 +133,8 @@ export const ElecIDSection = () => {
   const verifyProfile = useVerifyElecIdProfile();
   const generateLink = useGenerateShareableLink();
   const createElecIdProfile = useCreateElecIdProfile();
-  
-  const [searchQuery, setSearchQuery] = useState("");
+
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -131,17 +142,20 @@ export const ElecIDSection = () => {
   const [addSkillDialogOpen, setAddSkillDialogOpen] = useState(false);
   const [addWorkHistoryDialogOpen, setAddWorkHistoryDialogOpen] = useState(false);
   const [scanDialogOpen, setScanDialogOpen] = useState(false);
-  const [mainTab, setMainTab] = useState<"workers" | "compliance">("workers");
+  const [mainTab, setMainTab] = useState<'workers' | 'compliance'>('workers');
   const [createElecIdSheetOpen, setCreateElecIdSheetOpen] = useState(false);
   const [createElecIdDialogOpen, setCreateElecIdDialogOpen] = useState(false);
-  const [selectedEmployeeForElecId, setSelectedEmployeeForElecId] = useState<{ id: string; name: string } | null>(null);
+  const [selectedEmployeeForElecId, setSelectedEmployeeForElecId] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
   const [bulkCreating, setBulkCreating] = useState(false);
 
   // Find employees without Elec-IDs
   const employeesWithoutElecId = useMemo(() => {
     if (!employees || !profiles) return [];
-    const profileEmployeeIds = new Set(profiles.map(p => p.employee_id));
-    return employees.filter(emp => !profileEmployeeIds.has(emp.id));
+    const profileEmployeeIds = new Set(profiles.map((p) => p.employee_id));
+    return employees.filter((emp) => !profileEmployeeIds.has(emp.id));
   }, [employees, profiles]);
 
   // Set first profile as selected when data loads - use useMemo to avoid state update during render
@@ -151,59 +165,69 @@ export const ElecIDSection = () => {
     return null;
   }, [selectedProfile, profiles]);
 
-  const filteredProfiles = profiles?.filter(p =>
-    p.employee?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.employee?.role?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.elec_id_number.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredProfiles =
+    profiles?.filter(
+      (p) =>
+        p.employee?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.employee?.role?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.elec_id_number.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
   // Aggregate compliance stats from certifications table
-  const certifications = employees?.flatMap(emp => {
-    // Get certifications for this employee from the profiles
-    const profile = profiles?.find(p => p.employee_id === emp.id);
-    return profile?.qualifications?.map(q => ({
-      ...q,
-      workerName: emp.name,
-      workerId: emp.id,
-      status: getCertStatus(q.date_achieved),
-    })) || [];
-  }) || [];
+  const certifications =
+    employees?.flatMap((emp) => {
+      // Get certifications for this employee from the profiles
+      const profile = profiles?.find((p) => p.employee_id === emp.id);
+      return (
+        profile?.qualifications?.map((q) => ({
+          ...q,
+          workerName: emp.name,
+          workerId: emp.id,
+          status: getCertStatus(q.date_achieved),
+        })) || []
+      );
+    }) || [];
 
   // Also get training records for expiry tracking
-  const allTraining = profiles?.flatMap(p => 
-    p.training?.map(t => ({
-      ...t,
-      workerName: p.employee?.name,
-      workerId: p.employee_id,
-      status: getCertStatus(t.expiry_date),
-    })) || []
-  ) || [];
+  const allTraining =
+    profiles?.flatMap(
+      (p) =>
+        p.training?.map((t) => ({
+          ...t,
+          workerName: p.employee?.name,
+          workerId: p.employee_id,
+          status: getCertStatus(t.expiry_date),
+        })) || []
+    ) || [];
 
-  const expiredItems = allTraining.filter(t => t.status === "Expired");
-  const warningItems = allTraining.filter(t => t.status === "Warning");
-  const activeItems = allTraining.filter(t => t.status === "Active");
+  const expiredItems = allTraining.filter((t) => t.status === 'Expired');
+  const warningItems = allTraining.filter((t) => t.status === 'Warning');
+  const activeItems = allTraining.filter((t) => t.status === 'Active');
 
   const handleVerifyCredentials = async () => {
     if (!effectiveSelectedProfile) return;
-    
+
     try {
-      await verifyProfile.mutateAsync({ id: effectiveSelectedProfile.id, verifiedBy: "Employer Admin" });
+      await verifyProfile.mutateAsync({
+        id: effectiveSelectedProfile.id,
+        verifiedBy: 'Employer Admin',
+      });
       toast({
-        title: "Credentials Verified",
+        title: 'Credentials Verified',
         description: `${effectiveSelectedProfile.employee?.name}'s credentials have been verified.`,
       });
     } catch (error) {
       toast({
-        title: "Verification Failed",
-        description: "Could not verify credentials. Please try again.",
-        variant: "destructive",
+        title: 'Verification Failed',
+        description: 'Could not verify credentials. Please try again.',
+        variant: 'destructive',
       });
     }
   };
 
   const handleRenewCert = (certName: string, workerName: string) => {
     toast({
-      title: "Renewal Initiated",
+      title: 'Renewal Initiated',
       description: `Renewal process started for ${certName} (${workerName}).`,
     });
   };
@@ -225,7 +249,7 @@ export const ElecIDSection = () => {
         </div>
         <div className="grid lg:grid-cols-3 gap-4">
           <div className="space-y-3">
-            {[1, 2, 3, 4].map(i => (
+            {[1, 2, 3, 4].map((i) => (
               <Skeleton key={i} className="h-24 w-full" />
             ))}
           </div>
@@ -239,94 +263,120 @@ export const ElecIDSection = () => {
 
   const ProfileDetail = () => {
     if (!effectiveSelectedProfile) return null;
-    
+
     const ecsStatus = getEcsStatus(effectiveSelectedProfile.ecs_expiry_date);
     const config = statusConfig[ecsStatus as keyof typeof statusConfig] || statusConfig.Active;
-    
+
     // Create a profile-like object for the ElecIDCard
     const cardProfile = {
       id: effectiveSelectedProfile.id,
       employeeId: effectiveSelectedProfile.employee_id,
       elecIdNumber: effectiveSelectedProfile.elec_id_number,
-      name: effectiveSelectedProfile.employee?.name || "Unknown",
-      role: effectiveSelectedProfile.employee?.role || "Electrician",
+      name: effectiveSelectedProfile.employee?.name || 'Unknown',
+      role: effectiveSelectedProfile.employee?.role || 'Electrician',
       photo: effectiveSelectedProfile.employee?.photo_url,
-      bio: effectiveSelectedProfile.bio || "",
+      bio: effectiveSelectedProfile.bio || '',
       yearsExperience: 0,
-      ecsCardType: effectiveSelectedProfile.ecs_card_type || "Gold Card",
-      ecsCardNumber: effectiveSelectedProfile.ecs_card_number || "",
-      ecsExpiry: effectiveSelectedProfile.ecs_expiry_date || "",
+      ecsCardType: effectiveSelectedProfile.ecs_card_type || 'Gold Card',
+      ecsCardNumber: effectiveSelectedProfile.ecs_card_number || '',
+      ecsExpiry: effectiveSelectedProfile.ecs_expiry_date || '',
       ecsStatus,
-      skills: effectiveSelectedProfile.skills?.map(s => ({
-        name: s.skill_name,
-        level: s.skill_level.charAt(0).toUpperCase() + s.skill_level.slice(1) as "Beginner" | "Intermediate" | "Advanced" | "Expert",
-        yearsExperience: s.years_experience,
-        verified: s.is_verified,
-      })) || [],
-      workHistory: effectiveSelectedProfile.work_history?.map(w => ({
-        id: w.id,
-        employer: w.employer_name,
-        role: w.job_title,
-        location: "",
-        startDate: w.start_date,
-        endDate: w.end_date,
-        isCurrent: w.is_current,
-        description: w.description || "",
-        projects: w.projects || [],
-        referenceAvailable: false,
-        verified: w.is_verified,
-      })) || [],
-      certifications: effectiveSelectedProfile.qualifications?.map(q => ({
-        name: q.qualification_name,
-        issuer: q.awarding_body || "",
-        certNumber: q.certificate_number || "",
-        issueDate: q.date_achieved || "",
-        expiryDate: q.date_achieved || "",
-        status: "Active" as const,
-        verified: q.is_verified,
-      })) || [],
-      training: effectiveSelectedProfile.training?.map(t => ({
-        id: t.id,
-        name: t.training_name,
-        provider: t.provider || "",
-        completedDate: t.completed_date || "",
-        certificateId: t.certificate_id || "",
-        fundedBy: t.funded_by || "",
-        ownedBy: "worker" as const,
-        verified: t.status === "valid",
-      })) || [],
-      qualifications: effectiveSelectedProfile.qualifications?.map(q => ({
-        name: q.qualification_name,
-        issuer: q.awarding_body || "",
-        year: q.date_achieved ? new Date(q.date_achieved).getFullYear().toString() : "",
-      })) || [],
+      skills:
+        effectiveSelectedProfile.skills?.map((s) => ({
+          name: s.skill_name,
+          level: (s.skill_level.charAt(0).toUpperCase() + s.skill_level.slice(1)) as
+            | 'Beginner'
+            | 'Intermediate'
+            | 'Advanced'
+            | 'Expert',
+          yearsExperience: s.years_experience,
+          verified: s.is_verified,
+        })) || [],
+      workHistory:
+        effectiveSelectedProfile.work_history?.map((w) => ({
+          id: w.id,
+          employer: w.employer_name,
+          role: w.job_title,
+          location: '',
+          startDate: w.start_date,
+          endDate: w.end_date,
+          isCurrent: w.is_current,
+          description: w.description || '',
+          projects: w.projects || [],
+          referenceAvailable: false,
+          verified: w.is_verified,
+        })) || [],
+      certifications:
+        effectiveSelectedProfile.qualifications?.map((q) => ({
+          name: q.qualification_name,
+          issuer: q.awarding_body || '',
+          certNumber: q.certificate_number || '',
+          issueDate: q.date_achieved || '',
+          expiryDate: q.date_achieved || '',
+          status: 'Active' as const,
+          verified: q.is_verified,
+        })) || [],
+      training:
+        effectiveSelectedProfile.training?.map((t) => ({
+          id: t.id,
+          name: t.training_name,
+          provider: t.provider || '',
+          completedDate: t.completed_date || '',
+          certificateId: t.certificate_id || '',
+          fundedBy: t.funded_by || '',
+          ownedBy: 'worker' as const,
+          verified: t.status === 'valid',
+        })) || [],
+      qualifications:
+        effectiveSelectedProfile.qualifications?.map((q) => ({
+          name: q.qualification_name,
+          issuer: q.awarding_body || '',
+          year: q.date_achieved ? new Date(q.date_achieved).getFullYear().toString() : '',
+        })) || [],
       verified: effectiveSelectedProfile.is_verified,
-      lastVerified: effectiveSelectedProfile.verified_at || "",
+      lastVerified: effectiveSelectedProfile.verified_at || '',
       profileViews: effectiveSelectedProfile.profile_views,
       shareableLink: effectiveSelectedProfile.shareable_link || undefined,
     };
 
     return (
       <div className="space-y-4">
-        <ElecIDCard
-          profile={cardProfile}
-          onShare={() => setShareDialogOpen(true)}
-        />
+        <ElecIDCard profile={cardProfile} onShare={() => setShareDialogOpen(true)} />
 
         <div className="flex flex-wrap gap-2">
-          <Button onClick={handleVerifyCredentials} size="sm" className="gap-2" disabled={verifyProfile.isPending}>
+          <Button
+            onClick={handleVerifyCredentials}
+            size="sm"
+            className="gap-2"
+            disabled={verifyProfile.isPending}
+          >
             <ShieldCheck className="h-4 w-4" />
-            {verifyProfile.isPending ? "Verifying..." : "Verify Credentials"}
+            {verifyProfile.isPending ? 'Verifying...' : 'Verify Credentials'}
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setAddTrainingDialogOpen(true)} className="gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setAddTrainingDialogOpen(true)}
+            className="gap-2"
+          >
             <GraduationCap className="h-4 w-4" />
             Add Training
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setAddSkillDialogOpen(true)} className="gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setAddSkillDialogOpen(true)}
+            className="gap-2"
+          >
             <Star className="h-4 w-4" />
             Add Skill
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setAddWorkHistoryDialogOpen(true)} className="gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setAddWorkHistoryDialogOpen(true)}
+            className="gap-2"
+          >
             <Briefcase className="h-4 w-4" />
             Add Work History
           </Button>
@@ -362,7 +412,12 @@ export const ElecIDSection = () => {
                 <CardContent className="p-6 text-center">
                   <Star className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
                   <p className="text-foreground/70 text-sm">No skills recorded yet</p>
-                  <Button variant="outline" size="sm" className="mt-3 gap-2" onClick={() => setAddSkillDialogOpen(true)}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-3 gap-2"
+                    onClick={() => setAddSkillDialogOpen(true)}
+                  >
                     <Plus className="h-4 w-4" />
                     Add Skill
                   </Button>
@@ -375,17 +430,28 @@ export const ElecIDSection = () => {
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
                         <h4 className="font-medium text-foreground text-sm">{skill.skill_name}</h4>
-                        {skill.is_verified && (
-                          <ShieldCheck className="h-4 w-4 text-success" />
-                        )}
+                        {skill.is_verified && <ShieldCheck className="h-4 w-4 text-success" />}
                       </div>
-                      <Badge className={skillLevelColors[skill.skill_level.toLowerCase()] || skillLevelColors.intermediate}>
+                      <Badge
+                        className={
+                          skillLevelColors[skill.skill_level.toLowerCase()] ||
+                          skillLevelColors.intermediate
+                        }
+                      >
                         {skill.skill_level.charAt(0).toUpperCase() + skill.skill_level.slice(1)}
                       </Badge>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Progress 
-                        value={skill.skill_level === 'beginner' ? 25 : skill.skill_level === 'intermediate' ? 50 : skill.skill_level === 'advanced' ? 75 : 100} 
+                      <Progress
+                        value={
+                          skill.skill_level === 'beginner'
+                            ? 25
+                            : skill.skill_level === 'intermediate'
+                              ? 50
+                              : skill.skill_level === 'advanced'
+                                ? 75
+                                : 100
+                        }
                         className="h-2 flex-1"
                       />
                       {skill.years_experience > 0 && (
@@ -406,7 +472,12 @@ export const ElecIDSection = () => {
                 <CardContent className="p-6 text-center">
                   <BookOpen className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
                   <p className="text-foreground/70 text-sm">No training records found</p>
-                  <Button variant="outline" size="sm" className="mt-3 gap-2" onClick={() => setAddTrainingDialogOpen(true)}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-3 gap-2"
+                    onClick={() => setAddTrainingDialogOpen(true)}
+                  >
                     <GraduationCap className="h-4 w-4" />
                     Add Training Record
                   </Button>
@@ -419,7 +490,9 @@ export const ElecIDSection = () => {
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <h4 className="font-medium text-foreground text-sm">{train.training_name}</h4>
+                          <h4 className="font-medium text-foreground text-sm">
+                            {train.training_name}
+                          </h4>
                           {train.status === 'valid' && (
                             <ShieldCheck className="h-4 w-4 text-success flex-shrink-0" />
                           )}
@@ -461,7 +534,12 @@ export const ElecIDSection = () => {
                 <CardContent className="p-6 text-center">
                   <Briefcase className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
                   <p className="text-foreground/70 text-sm">No work history on record</p>
-                  <Button variant="outline" size="sm" className="mt-3 gap-2" onClick={() => setAddWorkHistoryDialogOpen(true)}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-3 gap-2"
+                    onClick={() => setAddWorkHistoryDialogOpen(true)}
+                  >
                     <Plus className="h-4 w-4" />
                     Add Work History
                   </Button>
@@ -469,17 +547,28 @@ export const ElecIDSection = () => {
               </Card>
             ) : (
               effectiveSelectedProfile.work_history?.map((job) => (
-                <Card key={job.id} className={`bg-elec-gray border-border ${job.is_current ? 'border-elec-yellow/30' : ''}`}>
+                <Card
+                  key={job.id}
+                  className={`bg-elec-gray border-border ${job.is_current ? 'border-elec-yellow/30' : ''}`}
+                >
                   <CardContent className="p-3">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 flex-wrap">
                           <h4 className="font-medium text-foreground text-sm">{job.job_title}</h4>
                           {job.is_current && (
-                            <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 text-[10px]">Current</Badge>
+                            <Badge
+                              variant="outline"
+                              className="text-elec-yellow border-elec-yellow/30 text-[10px]"
+                            >
+                              Current
+                            </Badge>
                           )}
                           {job.is_verified && (
-                            <Badge variant="outline" className="bg-success/10 text-success border-success/30 text-[10px]">
+                            <Badge
+                              variant="outline"
+                              className="bg-success/10 text-success border-success/30 text-[10px]"
+                            >
                               <ShieldCheck className="h-3 w-3 mr-1" />
                               Verified
                             </Badge>
@@ -490,23 +579,37 @@ export const ElecIDSection = () => {
                           {job.employer_name}
                         </p>
                         {job.description && (
-                          <p className="text-xs text-foreground/70 mt-2 line-clamp-2">{job.description}</p>
+                          <p className="text-xs text-foreground/70 mt-2 line-clamp-2">
+                            {job.description}
+                          </p>
                         )}
                         {job.projects && job.projects.length > 0 && (
                           <div className="flex flex-wrap gap-1 mt-2">
                             {job.projects.slice(0, 3).map((project, idx) => (
-                              <Badge key={idx} variant="secondary" className="text-[10px]">{project}</Badge>
+                              <Badge key={idx} variant="secondary" className="text-[10px]">
+                                {project}
+                              </Badge>
                             ))}
                           </div>
                         )}
                       </div>
                       <div className="text-right text-xs flex-shrink-0">
                         <p className="text-foreground font-medium">
-                          {new Date(job.start_date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                          {new Date(job.start_date).toLocaleDateString('en-GB', {
+                            month: 'short',
+                            year: 'numeric',
+                          })}
                         </p>
                         <p className="text-foreground/70">to</p>
                         <p className="text-foreground font-medium">
-                          {job.is_current ? 'Present' : job.end_date ? new Date(job.end_date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : 'N/A'}
+                          {job.is_current
+                            ? 'Present'
+                            : job.end_date
+                              ? new Date(job.end_date).toLocaleDateString('en-GB', {
+                                  month: 'short',
+                                  year: 'numeric',
+                                })
+                              : 'N/A'}
                         </p>
                       </div>
                     </div>
@@ -530,14 +633,16 @@ export const ElecIDSection = () => {
                   <CardContent className="p-3">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
-                        <h4 className="font-medium text-foreground text-sm">{qual.qualification_name}</h4>
+                        <h4 className="font-medium text-foreground text-sm">
+                          {qual.qualification_name}
+                        </h4>
                         <p className="text-xs text-foreground/70 flex items-center gap-1 mt-1">
                           <Building className="h-3 w-3" />
-                          {qual.awarding_body || "Unknown"}
+                          {qual.awarding_body || 'Unknown'}
                         </p>
                       </div>
                       <Badge variant="secondary">
-                        {qual.date_achieved ? new Date(qual.date_achieved).getFullYear() : "N/A"}
+                        {qual.date_achieved ? new Date(qual.date_achieved).getFullYear() : 'N/A'}
                       </Badge>
                     </div>
                   </CardContent>
@@ -564,7 +669,9 @@ export const ElecIDSection = () => {
                 <XCircle className="h-4 w-4 md:h-5 md:w-5 text-destructive" />
               </div>
               <div>
-                <p className="text-xl md:text-2xl font-bold text-destructive">{expiredItems.length}</p>
+                <p className="text-xl md:text-2xl font-bold text-destructive">
+                  {expiredItems.length}
+                </p>
                 <p className="text-xs md:text-sm text-foreground/70">Expired</p>
               </div>
             </div>
@@ -603,7 +710,9 @@ export const ElecIDSection = () => {
                 <BarChart3 className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
               </div>
               <div>
-                <p className="text-xl md:text-2xl font-bold text-elec-yellow">{profiles?.length || 0}</p>
+                <p className="text-xl md:text-2xl font-bold text-elec-yellow">
+                  {profiles?.length || 0}
+                </p>
                 <p className="text-xs md:text-sm text-foreground/70">Profiles</p>
               </div>
             </div>
@@ -617,7 +726,9 @@ export const ElecIDSection = () => {
           variant="outline"
           size="sm"
           className="gap-2"
-          onClick={() => toast({ title: "Training Scheduler", description: "Training scheduling coming soon" })}
+          onClick={() =>
+            toast({ title: 'Training Scheduler', description: 'Training scheduling coming soon' })
+          }
         >
           <BookOpen className="h-4 w-4" />
           Schedule Training
@@ -634,16 +745,19 @@ export const ElecIDSection = () => {
           </CardHeader>
           <CardContent className="space-y-2">
             {expiredItems.slice(0, 5).map((item, idx) => (
-              <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-b border-border/50 last:border-0 gap-2">
+              <div
+                key={idx}
+                className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-b border-border/50 last:border-0 gap-2"
+              >
                 <div className="min-w-0">
                   <p className="font-medium text-sm truncate">{item.training_name}</p>
                   <p className="text-xs text-foreground/70">{item.workerName}</p>
                 </div>
-                <Button 
-                  size="sm" 
-                  variant="destructive" 
+                <Button
+                  size="sm"
+                  variant="destructive"
                   className="self-start sm:self-auto gap-2"
-                  onClick={() => handleRenewCert(item.training_name, item.workerName || "")}
+                  onClick={() => handleRenewCert(item.training_name, item.workerName || '')}
                 >
                   <RefreshCw className="h-3 w-3" />
                   Renew Now
@@ -651,18 +765,27 @@ export const ElecIDSection = () => {
               </div>
             ))}
             {warningItems.slice(0, 5).map((item, idx) => {
-              const daysLeft = item.expiry_date ? Math.ceil((new Date(item.expiry_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : 0;
+              const daysLeft = item.expiry_date
+                ? Math.ceil(
+                    (new Date(item.expiry_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+                  )
+                : 0;
               return (
-                <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-b border-border/50 last:border-0 gap-2">
+                <div
+                  key={idx}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-b border-border/50 last:border-0 gap-2"
+                >
                   <div className="min-w-0">
                     <p className="font-medium text-sm truncate">{item.training_name}</p>
-                    <p className="text-xs text-foreground/70">{item.workerName} - {daysLeft} days remaining</p>
+                    <p className="text-xs text-foreground/70">
+                      {item.workerName} - {daysLeft} days remaining
+                    </p>
                   </div>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     className="self-start sm:self-auto gap-2"
-                    onClick={() => handleRenewCert(item.training_name, item.workerName || "")}
+                    onClick={() => handleRenewCert(item.training_name, item.workerName || '')}
                   >
                     <Clock className="h-3 w-3" />
                     Schedule
@@ -677,29 +800,31 @@ export const ElecIDSection = () => {
   );
 
   // Create mock profile for dialogs when using old interface
-  const mockDialogProfile = selectedProfile ? {
-    id: selectedProfile.id,
-    employeeId: selectedProfile.employee_id,
-    elecIdNumber: selectedProfile.elec_id_number,
-    name: selectedProfile.employee?.name || "Unknown",
-    role: selectedProfile.employee?.role || "Electrician",
-    photo: selectedProfile.employee?.photo_url,
-    bio: selectedProfile.bio || "",
-    yearsExperience: 0,
-    ecsCardType: selectedProfile.ecs_card_type || "Gold Card",
-    ecsCardNumber: selectedProfile.ecs_card_number || "",
-    ecsExpiry: selectedProfile.ecs_expiry_date || "",
-    ecsStatus: getEcsStatus(selectedProfile.ecs_expiry_date),
-    skills: [],
-    workHistory: [],
-    certifications: [],
-    training: [],
-    qualifications: [],
-    verified: selectedProfile.is_verified,
-    lastVerified: selectedProfile.verified_at || "",
-    profileViews: selectedProfile.profile_views,
-    shareableLink: selectedProfile.shareable_link || undefined,
-  } : null;
+  const mockDialogProfile = selectedProfile
+    ? {
+        id: selectedProfile.id,
+        employeeId: selectedProfile.employee_id,
+        elecIdNumber: selectedProfile.elec_id_number,
+        name: selectedProfile.employee?.name || 'Unknown',
+        role: selectedProfile.employee?.role || 'Electrician',
+        photo: selectedProfile.employee?.photo_url,
+        bio: selectedProfile.bio || '',
+        yearsExperience: 0,
+        ecsCardType: selectedProfile.ecs_card_type || 'Gold Card',
+        ecsCardNumber: selectedProfile.ecs_card_number || '',
+        ecsExpiry: selectedProfile.ecs_expiry_date || '',
+        ecsStatus: getEcsStatus(selectedProfile.ecs_expiry_date),
+        skills: [],
+        workHistory: [],
+        certifications: [],
+        training: [],
+        qualifications: [],
+        verified: selectedProfile.is_verified,
+        lastVerified: selectedProfile.verified_at || '',
+        profileViews: selectedProfile.profile_views,
+        shareableLink: selectedProfile.shareable_link || undefined,
+      }
+    : null;
 
   return (
     <div className="space-y-3 md:space-y-6 animate-fade-in -mx-4 px-4 sm:mx-0 sm:px-0">
@@ -708,10 +833,19 @@ export const ElecIDSection = () => {
         <div className="flex items-center justify-between py-2">
           <h1 className="text-lg font-semibold text-foreground">Credentials</h1>
           <div className="flex items-center gap-2">
-            <Button onClick={() => refetch()} variant="ghost" size="icon" className="h-9 w-9 touch-manipulation">
+            <Button
+              onClick={() => refetch()}
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 touch-manipulation"
+            >
               <RefreshCw className="h-4 w-4" />
             </Button>
-            <Button onClick={() => setScanDialogOpen(true)} size="sm" className="gap-2 h-9 touch-manipulation">
+            <Button
+              onClick={() => setScanDialogOpen(true)}
+              size="sm"
+              className="gap-2 h-9 touch-manipulation"
+            >
               <QrCode className="h-4 w-4" />
               Scan
             </Button>
@@ -732,7 +866,11 @@ export const ElecIDSection = () => {
             <Button onClick={() => refetch()} variant="outline" size="sm" className="gap-2">
               <RefreshCw className="h-4 w-4" />
             </Button>
-            <Button onClick={() => setCreateElecIdSheetOpen(true)} variant="outline" className="gap-2">
+            <Button
+              onClick={() => setCreateElecIdSheetOpen(true)}
+              variant="outline"
+              className="gap-2"
+            >
               <UserPlus className="h-4 w-4" />
               Create Elec-ID
             </Button>
@@ -744,16 +882,19 @@ export const ElecIDSection = () => {
         </div>
       )}
 
-      <Tabs value={mainTab} onValueChange={(v) => setMainTab(v as "workers" | "compliance")}>
+      <Tabs value={mainTab} onValueChange={(v) => setMainTab(v as 'workers' | 'compliance')}>
         <TabsList className="w-full md:w-auto h-11">
           <TabsTrigger value="workers" className="gap-2 flex-1 md:flex-none h-9 touch-manipulation">
             <User className="h-4 w-4" />
             Workers
           </TabsTrigger>
-          <TabsTrigger value="compliance" className="gap-2 flex-1 md:flex-none h-9 touch-manipulation">
+          <TabsTrigger
+            value="compliance"
+            className="gap-2 flex-1 md:flex-none h-9 touch-manipulation"
+          >
             <BarChart3 className="h-4 w-4" />
             Compliance
-            {(expiredItems.length + warningItems.length) > 0 && (
+            {expiredItems.length + warningItems.length > 0 && (
               <Badge variant="destructive" className="ml-1 h-5 w-5 p-0 text-[10px] rounded-full">
                 {expiredItems.length + warningItems.length}
               </Badge>
@@ -771,7 +912,7 @@ export const ElecIDSection = () => {
                   )}
                   <Input
                     placeholder="Search by name or Elec-ID..."
-                    className={cn("h-11 touch-manipulation", !searchQuery && "pl-10")}
+                    className={cn('h-11 touch-manipulation', !searchQuery && 'pl-10')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -791,20 +932,24 @@ export const ElecIDSection = () => {
               <div className="space-y-2">
                 {filteredProfiles.map((profile) => {
                   const ecsStatus = getEcsStatus(profile.ecs_expiry_date);
-                  const config = statusConfig[ecsStatus as keyof typeof statusConfig] || statusConfig.Active;
+                  const config =
+                    statusConfig[ecsStatus as keyof typeof statusConfig] || statusConfig.Active;
                   const StatusIcon = config.icon;
-                  
-                  const daysUntilExpiry = profile.ecs_expiry_date 
-                    ? Math.ceil((new Date(profile.ecs_expiry_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+
+                  const daysUntilExpiry = profile.ecs_expiry_date
+                    ? Math.ceil(
+                        (new Date(profile.ecs_expiry_date).getTime() - Date.now()) /
+                          (1000 * 60 * 60 * 24)
+                      )
                     : null;
-                  
+
                   return (
-                    <Card 
-                      key={profile.id} 
+                    <Card
+                      key={profile.id}
                       className={`group cursor-pointer transition-all duration-200 overflow-hidden border-l-4 ${config.accent} ${
-                        selectedProfile?.id === profile.id 
-                          ? "border-elec-yellow bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 shadow-md shadow-elec-yellow/10"
-                          : "bg-elec-gray border-border hover:border-elec-yellow/50 hover:shadow-md"
+                        selectedProfile?.id === profile.id
+                          ? 'border-elec-yellow bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 shadow-md shadow-elec-yellow/10'
+                          : 'bg-elec-gray border-border hover:border-elec-yellow/50 hover:shadow-md'
                       }`}
                       onClick={() => handleProfileSelect(profile)}
                     >
@@ -812,38 +957,51 @@ export const ElecIDSection = () => {
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-3 min-w-0 flex-1">
                             <div className="relative flex-shrink-0">
-                              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center ring-2 ${config.border.replace('border-', 'ring-')} ring-offset-1 ring-offset-card`}>
+                              <div
+                                className={`w-12 h-12 rounded-xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center ring-2 ${config.border.replace('border-', 'ring-')} ring-offset-1 ring-offset-card`}
+                              >
                                 <User className="h-5 w-5 text-foreground/60" />
                               </div>
-                              <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full ${config.bg} ${config.border} border flex items-center justify-center`}>
+                              <div
+                                className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full ${config.bg} ${config.border} border flex items-center justify-center`}
+                              >
                                 <StatusIcon className={`h-2.5 w-2.5 ${config.text}`} />
                               </div>
                             </div>
-                            
+
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2">
-                                <p className="font-semibold text-foreground text-sm truncate">{profile.employee?.name || "Unknown"}</p>
+                                <p className="font-semibold text-foreground text-sm truncate">
+                                  {profile.employee?.name || 'Unknown'}
+                                </p>
                                 {profile.is_verified && (
                                   <ShieldCheck className="h-3.5 w-3.5 text-success flex-shrink-0" />
                                 )}
                               </div>
-                              <p className="text-xs text-foreground/70 truncate">{profile.employee?.role || "Electrician"}</p>
-                              <p className="text-[10px] font-mono text-foreground/50 mt-0.5">{profile.elec_id_number}</p>
+                              <p className="text-xs text-foreground/70 truncate">
+                                {profile.employee?.role || 'Electrician'}
+                              </p>
+                              <p className="text-[10px] font-mono text-foreground/50 mt-0.5">
+                                {profile.elec_id_number}
+                              </p>
                             </div>
                           </div>
-                          
+
                           <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-                            <Badge variant="outline" className={`${config.bg} ${config.text} ${config.border} text-[10px] py-0.5`}>
-                              {(profile.ecs_card_type || "Gold").split(' ')[0]}
+                            <Badge
+                              variant="outline"
+                              className={`${config.bg} ${config.text} ${config.border} text-[10px] py-0.5`}
+                            >
+                              {(profile.ecs_card_type || 'Gold').split(' ')[0]}
                             </Badge>
-                            
+
                             {daysUntilExpiry !== null && daysUntilExpiry <= 60 && (
                               <div className="flex items-center gap-1 text-[10px] text-warning">
                                 <Clock className="h-3 w-3" />
                                 <span>{daysUntilExpiry}d</span>
                               </div>
                             )}
-                            
+
                             <div className="flex items-center gap-2 text-[10px] text-foreground/70">
                               <span className="flex items-center gap-0.5">
                                 <Star className="h-3 w-3" />
@@ -855,14 +1013,16 @@ export const ElecIDSection = () => {
                               </span>
                             </div>
                           </div>
-                          
-                          {isMobile && <ChevronRight className="h-4 w-4 text-foreground/70 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />}
+
+                          {isMobile && (
+                            <ChevronRight className="h-4 w-4 text-foreground/70 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                          )}
                         </div>
                       </CardContent>
                     </Card>
                   );
                 })}
-                
+
                 {filteredProfiles.length === 0 && (
                   <Card className="bg-muted/30 border-dashed">
                     <CardContent className="p-6 text-center">
@@ -882,7 +1042,10 @@ export const ElecIDSection = () => {
 
             {isMobile && (
               <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-                <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-3xl border-t-0 bg-background">
+                <SheetContent
+                  side="bottom"
+                  className="h-[92vh] p-0 rounded-t-3xl border-t-0 bg-background"
+                >
                   <div className="w-12 h-1.5 bg-foreground/20 rounded-full mx-auto mt-3 mb-2" />
                   <SheetHeader className="px-4 pb-3 border-b border-border/50">
                     <SheetTitle className="text-lg">Elec-ID Profile</SheetTitle>
@@ -904,49 +1067,44 @@ export const ElecIDSection = () => {
       {/* Dialogs */}
       {effectiveSelectedProfile && (
         <>
-          <ShareElecIDDialog 
-            open={shareDialogOpen} 
-            onOpenChange={setShareDialogOpen} 
-            profile={effectiveSelectedProfile} 
+          <ShareElecIDDialog
+            open={shareDialogOpen}
+            onOpenChange={setShareDialogOpen}
+            profile={effectiveSelectedProfile}
           />
-          <AddTrainingRecordDialog 
-            open={addTrainingDialogOpen} 
+          <AddTrainingRecordDialog
+            open={addTrainingDialogOpen}
             onOpenChange={setAddTrainingDialogOpen}
-            workerName={effectiveSelectedProfile.employee?.name || "Worker"}
+            workerName={effectiveSelectedProfile.employee?.name || 'Worker'}
             profileId={effectiveSelectedProfile.id}
           />
           <AddSkillDialog
             open={addSkillDialogOpen}
             onOpenChange={setAddSkillDialogOpen}
             profileId={effectiveSelectedProfile.id}
-            workerName={effectiveSelectedProfile.employee?.name || "Worker"}
+            workerName={effectiveSelectedProfile.employee?.name || 'Worker'}
           />
           <AddWorkHistoryDialog
             open={addWorkHistoryDialogOpen}
             onOpenChange={setAddWorkHistoryDialogOpen}
             profileId={effectiveSelectedProfile.id}
-            profileName={effectiveSelectedProfile.employee?.name || "Worker"}
+            profileName={effectiveSelectedProfile.employee?.name || 'Worker'}
           />
         </>
       )}
-      <ScanElecIDDialog
-        open={scanDialogOpen}
-        onOpenChange={setScanDialogOpen}
-      />
+      <ScanElecIDDialog open={scanDialogOpen} onOpenChange={setScanDialogOpen} />
 
       {/* Create Elec-ID Sheet - Select Employee */}
       <Sheet open={createElecIdSheetOpen} onOpenChange={setCreateElecIdSheetOpen}>
-        <SheetContent side={isMobile ? "bottom" : "right"} className={isMobile ? "h-[85vh]" : ""}>
+        <SheetContent side={isMobile ? 'bottom' : 'right'} className={isMobile ? 'h-[85vh]' : ''}>
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
               <UserPlus className="h-5 w-5 text-elec-yellow" />
               Create Elec-ID
             </SheetTitle>
-            <SheetDescription>
-              Select an employee to create an Elec-ID profile for
-            </SheetDescription>
+            <SheetDescription>Select an employee to create an Elec-ID profile for</SheetDescription>
           </SheetHeader>
-          
+
           <div className="mt-4 space-y-4">
             {employeesWithoutElecId.length === 0 ? (
               <Card className="bg-success/10 border-success/30">
@@ -962,7 +1120,8 @@ export const ElecIDSection = () => {
               <>
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-foreground/70">
-                    {employeesWithoutElecId.length} employee{employeesWithoutElecId.length !== 1 ? 's' : ''} without Elec-ID
+                    {employeesWithoutElecId.length} employee
+                    {employeesWithoutElecId.length !== 1 ? 's' : ''} without Elec-ID
                   </p>
                   <Button
                     variant="outline"
@@ -972,25 +1131,29 @@ export const ElecIDSection = () => {
                       setBulkCreating(true);
                       try {
                         for (const emp of employeesWithoutElecId) {
-                          const cardType = emp.role?.toLowerCase().includes('apprentice') ? 'white' 
-                            : emp.role?.toLowerCase().includes('supervisor') || emp.role?.toLowerCase().includes('manager') ? 'black'
-                            : emp.role?.toLowerCase().includes('labourer') ? 'green'
-                            : 'gold';
+                          const cardType = emp.role?.toLowerCase().includes('apprentice')
+                            ? 'white'
+                            : emp.role?.toLowerCase().includes('supervisor') ||
+                                emp.role?.toLowerCase().includes('manager')
+                              ? 'black'
+                              : emp.role?.toLowerCase().includes('labourer')
+                                ? 'green'
+                                : 'gold';
                           await createElecIdProfile.mutateAsync({
                             employee_id: emp.id,
                             ecs_card_type: cardType,
                           });
                         }
                         toast({
-                          title: "Elec-IDs Created",
+                          title: 'Elec-IDs Created',
                           description: `Created Elec-ID profiles for ${employeesWithoutElecId.length} employees`,
                         });
                         setCreateElecIdSheetOpen(false);
                       } catch (error) {
                         toast({
-                          title: "Error",
-                          description: "Failed to create some Elec-ID profiles",
-                          variant: "destructive",
+                          title: 'Error',
+                          description: 'Failed to create some Elec-ID profiles',
+                          variant: 'destructive',
                         });
                       } finally {
                         setBulkCreating(false);
@@ -1010,11 +1173,11 @@ export const ElecIDSection = () => {
                     )}
                   </Button>
                 </div>
-                
-                <ScrollArea className={isMobile ? "h-[calc(85vh-200px)]" : "h-[calc(100vh-220px)]"}>
+
+                <ScrollArea className={isMobile ? 'h-[calc(85vh-200px)]' : 'h-[calc(100vh-220px)]'}>
                   <div className="space-y-2 pr-4">
                     {employeesWithoutElecId.map((emp) => (
-                      <Card 
+                      <Card
                         key={emp.id}
                         className="cursor-pointer hover:border-elec-yellow/50 active:scale-[0.98] transition-all touch-manipulation"
                         onClick={() => {

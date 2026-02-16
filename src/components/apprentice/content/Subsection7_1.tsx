@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SubsectionProps } from './subsection1_1/types';
 import { Button } from '@/components/ui/button';
@@ -10,33 +9,41 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
     <div className="space-y-6">
       {/* Main header with background */}
       <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-5">
-        <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">Preparation and Planning</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">
+          Preparation and Planning
+        </h2>
         <p className="mt-2 text-elec-light/80">
-          Ensuring all tools and equipment are in good condition, selecting appropriate Personal Protective Equipment (PPE), and understanding the task requirements
+          Ensuring all tools and equipment are in good condition, selecting appropriate Personal
+          Protective Equipment (PPE), and understanding the task requirements
         </p>
       </div>
-      
+
       {/* Introduction Section */}
       <CourseContentSection
         title="Introduction to Practical Preparation"
         description="Thorough preparation and planning are fundamental to safe electrical work. This section provides guidance on the practical steps required before beginning any electrical installation or maintenance task."
         keyPoints={[
-          "Tool and equipment inspection and maintenance",
-          "Appropriate PPE selection for electrical tasks",
-          "Task planning and preparation procedures",
-          "Pre-work safety checks and documentation"
+          'Tool and equipment inspection and maintenance',
+          'Appropriate PPE selection for electrical tasks',
+          'Task planning and preparation procedures',
+          'Pre-work safety checks and documentation',
         ]}
         icon="tools"
         subsectionId={subsectionId}
       />
-      
+
       {/* Content Sections */}
       <div className="grid grid-cols-1 gap-6 mt-6">
         <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-elec-yellow mb-4">Tool and Equipment Inspection</h3>
+          <h3 className="text-xl font-semibold text-elec-yellow mb-4">
+            Tool and Equipment Inspection
+          </h3>
           <div className="space-y-4">
-            <p className="text-elec-light/90">Before beginning any electrical work, thorough inspection of tools and equipment is essential:</p>
-            
+            <p className="text-elec-light/90">
+              Before beginning any electrical work, thorough inspection of tools and equipment is
+              essential:
+            </p>
+
             <div className="overflow-x-auto">
               <table className="min-w-full border-collapse my-4">
                 <thead>
@@ -91,44 +98,56 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-elec-yellow mb-4">PPE Selection and Inspection</h3>
+          <h3 className="text-xl font-semibold text-elec-yellow mb-4">
+            PPE Selection and Inspection
+          </h3>
           <div className="space-y-4">
-            <p className="text-elec-light/90">Select appropriate PPE based on the specific electrical task:</p>
+            <p className="text-elec-light/90">
+              Select appropriate PPE based on the specific electrical task:
+            </p>
             <ul className="list-disc pl-5 space-y-3 text-elec-light/80">
               <li className="pl-2">
-                <span className="font-medium text-white">Class 0 gloves</span> - For basic insulation from electrical shock up to 1,000V AC (verify voltage rating before use)
+                <span className="font-medium text-white">Class 0 gloves</span> - For basic
+                insulation from electrical shock up to 1,000V AC (verify voltage rating before use)
               </li>
               <li className="pl-2">
-                <span className="font-medium text-white">Safety eyewear</span> - Always required when working with live circuits or where there's risk of arc flash
+                <span className="font-medium text-white">Safety eyewear</span> - Always required
+                when working with live circuits or where there's risk of arc flash
               </li>
               <li className="pl-2">
-                <span className="font-medium text-white">Arc flash protection</span> - Required for higher current installations or where fault current could cause arc flash
+                <span className="font-medium text-white">Arc flash protection</span> - Required for
+                higher current installations or where fault current could cause arc flash
               </li>
               <li className="pl-2">
-                <span className="font-medium text-white">Insulating mats</span> - Place under work area when working on live or potentially live equipment
+                <span className="font-medium text-white">Insulating mats</span> - Place under work
+                area when working on live or potentially live equipment
               </li>
               <li className="pl-2">
-                <span className="font-medium text-white">Safety footwear</span> - Electrical hazard rated boots with insulated soles and toe protection
+                <span className="font-medium text-white">Safety footwear</span> - Electrical hazard
+                rated boots with insulated soles and toe protection
               </li>
             </ul>
-            
+
             <div className="bg-white/5 p-3 rounded mt-4">
               <p className="text-sm text-elec-light/90">
-                <strong>Inspection tip:</strong> Before each use, inspect PPE for tears, punctures, contamination by conductive materials, and signs of deterioration or ageing. Never use damaged PPE.
+                <strong>Inspection tip:</strong> Before each use, inspect PPE for tears, punctures,
+                contamination by conductive materials, and signs of deterioration or ageing. Never
+                use damaged PPE.
               </p>
             </div>
           </div>
         </div>
-      
+
         <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-semibold text-elec-yellow mb-4">Task Planning Procedures</h3>
           <div className="space-y-4">
             <p className="text-elec-light/90">
-              Follow this structured approach to planning electrical installation or maintenance work:
+              Follow this structured approach to planning electrical installation or maintenance
+              work:
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
               <div>
                 <h4 className="font-semibold text-white">Pre-Work Planning Checklist:</h4>
@@ -142,14 +161,15 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Ensure permits and authorisations are in place</li>
                   <li>Consider emergency procedures and escape routes</li>
                 </ol>
-                
+
                 <div className="bg-white/5 p-3 rounded mt-4">
                   <p className="text-sm text-elec-light/90">
-                    <strong>Best practice:</strong> Create a written work plan for complex tasks, detailing step-by-step procedures, responsibilities, and safety measures.
+                    <strong>Best practice:</strong> Create a written work plan for complex tasks,
+                    detailing step-by-step procedures, responsibilities, and safety measures.
                   </p>
                 </div>
               </div>
-              
+
               <div>
                 <h4 className="font-semibold text-white">Material and Equipment Preparation:</h4>
                 <ul className="list-disc pl-5 mt-2 space-y-2 text-elec-light/80">
@@ -161,24 +181,27 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Have spares available for critical components</li>
                   <li>Keep documentation for installed equipment</li>
                 </ul>
-                
+
                 <div className="bg-white/5 p-3 rounded mt-4">
                   <p className="text-sm text-elec-light/90">
-                    <strong>Documentation tip:</strong> Take photographs of existing installations before modification work to assist with reinstatement if required.
+                    <strong>Documentation tip:</strong> Take photographs of existing installations
+                    before modification work to assist with reinstatement if required.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-elec-yellow mb-4">Pre-Work Safety Documentation</h3>
+          <h3 className="text-xl font-semibold text-elec-yellow mb-4">
+            Pre-Work Safety Documentation
+          </h3>
           <div className="space-y-4">
             <p className="text-elec-light/90">
               Complete and review these essential safety documents before commencing work:
             </p>
-            
+
             <div className="overflow-x-auto">
               <table className="min-w-full border-collapse my-4">
                 <thead>
@@ -232,15 +255,18 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </tbody>
               </table>
             </div>
-            
+
             <div className="bg-white/5 p-4 rounded-lg my-4">
               <p className="font-medium text-white">Practical Exercise:</p>
               <p className="text-elec-light/90 mt-2">
-                For the following scenario, create a preparation checklist identifying the required tools, PPE, and key safety considerations:
+                For the following scenario, create a preparation checklist identifying the required
+                tools, PPE, and key safety considerations:
               </p>
-              
+
               <div className="mt-4 space-y-3">
-                <p className="font-medium text-white">Scenario: Replacing a consumer unit in a domestic property</p>
+                <p className="font-medium text-white">
+                  Scenario: Replacing a consumer unit in a domestic property
+                </p>
                 <ul className="list-disc pl-5 space-y-2 text-elec-light/80">
                   <li>What specific tools would you prepare?</li>
                   <li>What PPE would be essential?</li>
@@ -249,15 +275,16 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>How would you communicate with the property occupants?</li>
                 </ul>
               </div>
-              
+
               <p className="text-elec-light/90 mt-4">
-                Document your preparation plan as you would in a real work environment, and discuss with your supervisor or instructor.
+                Document your preparation plan as you would in a real work environment, and discuss
+                with your supervisor or instructor.
               </p>
             </div>
           </div>
         </div>
       </div>
-      
+
       {/* Completion Button */}
       <div className="mt-8 flex justify-end">
         <Button
@@ -265,8 +292,8 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           disabled={isCompleted}
           className={`${
             isCompleted
-              ? "bg-green-600/20 border-green-500/50 text-green-400"
-              : "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              ? 'bg-green-600/20 border-green-500/50 text-green-400'
+              : 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
           } px-4 py-2 rounded-lg`}
         >
           {isCompleted ? (
@@ -275,7 +302,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <span>Completed</span>
             </div>
           ) : (
-            "Mark as Complete"
+            'Mark as Complete'
           )}
         </Button>
       </div>

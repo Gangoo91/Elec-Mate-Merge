@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 // Types
 export interface MoodEntry {
@@ -70,18 +70,23 @@ export const moodService = {
   },
 
   async upsert(entry: MoodEntry): Promise<MoodEntry> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
       .from('mental_health_mood_entries')
-      .upsert({
-        user_id: user.id,
-        date: entry.date,
-        mood: entry.mood,
-        notes: entry.notes,
-        factors: entry.factors || []
-      }, { onConflict: 'user_id,date' })
+      .upsert(
+        {
+          user_id: user.id,
+          date: entry.date,
+          mood: entry.mood,
+          notes: entry.notes,
+          factors: entry.factors || [],
+        },
+        { onConflict: 'user_id,date' }
+      )
       .select()
       .single();
 
@@ -90,13 +95,10 @@ export const moodService = {
   },
 
   async delete(date: string): Promise<void> {
-    const { error } = await supabase
-      .from('mental_health_mood_entries')
-      .delete()
-      .eq('date', date);
+    const { error } = await supabase.from('mental_health_mood_entries').delete().eq('date', date);
 
     if (error) throw error;
-  }
+  },
 };
 
 // =====================================================
@@ -119,7 +121,10 @@ export const journalService = {
   },
 
   async create(entry: JournalEntry): Promise<JournalEntry> {
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError) {
       console.error('[journalService.create] Auth error:', authError);
@@ -132,7 +137,11 @@ export const journalService = {
     }
 
     console.log('[journalService.create] Creating entry for user:', user.id);
-    console.log('[journalService.create] Entry data:', { date: entry.date, time: entry.time, mood: entry.mood });
+    console.log('[journalService.create] Entry data:', {
+      date: entry.date,
+      time: entry.time,
+      mood: entry.mood,
+    });
 
     const { data, error } = await supabase
       .from('mental_health_journal_entries')
@@ -146,7 +155,7 @@ export const journalService = {
         gratitude: entry.gratitude || [],
         triggers: entry.triggers || [],
         tags: entry.tags || [],
-        prompt: entry.prompt
+        prompt: entry.prompt,
       })
       .select()
       .single();
@@ -163,13 +172,10 @@ export const journalService = {
   },
 
   async delete(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('mental_health_journal_entries')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('mental_health_journal_entries').delete().eq('id', id);
 
     if (error) throw error;
-  }
+  },
 };
 
 // =====================================================
@@ -188,20 +194,25 @@ export const sleepService = {
   },
 
   async upsert(entry: SleepEntry): Promise<SleepEntry> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
       .from('mental_health_sleep_entries')
-      .upsert({
-        user_id: user.id,
-        date: entry.date,
-        bed_time: entry.bed_time,
-        wake_time: entry.wake_time,
-        hours: entry.hours,
-        quality: entry.quality,
-        notes: entry.notes || []
-      }, { onConflict: 'user_id,date' })
+      .upsert(
+        {
+          user_id: user.id,
+          date: entry.date,
+          bed_time: entry.bed_time,
+          wake_time: entry.wake_time,
+          hours: entry.hours,
+          quality: entry.quality,
+          notes: entry.notes || [],
+        },
+        { onConflict: 'user_id,date' }
+      )
       .select()
       .single();
 
@@ -210,13 +221,10 @@ export const sleepService = {
   },
 
   async delete(date: string): Promise<void> {
-    const { error } = await supabase
-      .from('mental_health_sleep_entries')
-      .delete()
-      .eq('date', date);
+    const { error } = await supabase.from('mental_health_sleep_entries').delete().eq('date', date);
 
     if (error) throw error;
-  }
+  },
 };
 
 // =====================================================
@@ -224,10 +232,7 @@ export const sleepService = {
 // =====================================================
 export const safetyPlanService = {
   async get(): Promise<SafetyPlan | null> {
-    const { data, error } = await supabase
-      .from('mental_health_safety_plans')
-      .select('*')
-      .single();
+    const { data, error } = await supabase.from('mental_health_safety_plans').select('*').single();
 
     if (error && error.code !== 'PGRST116') {
       console.error('[safetyPlanService.get] Error:', error);
@@ -237,7 +242,10 @@ export const safetyPlanService = {
   },
 
   async upsert(plan: SafetyPlan): Promise<SafetyPlan> {
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError) {
       console.error('[safetyPlanService.upsert] Auth error:', authError);
@@ -253,16 +261,19 @@ export const safetyPlanService = {
 
     const { data, error } = await supabase
       .from('mental_health_safety_plans')
-      .upsert({
-        user_id: user.id,
-        warning_signs: plan.warning_signs || [],
-        coping_strategies: plan.coping_strategies || [],
-        distractions: plan.distractions || [],
-        support_people: plan.support_people || [],
-        professionals: plan.professionals || [],
-        safe_environment: plan.safe_environment || [],
-        reasons_for_living: plan.reasons_for_living || []
-      }, { onConflict: 'user_id' })
+      .upsert(
+        {
+          user_id: user.id,
+          warning_signs: plan.warning_signs || [],
+          coping_strategies: plan.coping_strategies || [],
+          distractions: plan.distractions || [],
+          support_people: plan.support_people || [],
+          professionals: plan.professionals || [],
+          safe_environment: plan.safe_environment || [],
+          reasons_for_living: plan.reasons_for_living || [],
+        },
+        { onConflict: 'user_id' }
+      )
       .select()
       .single();
 
@@ -275,7 +286,7 @@ export const safetyPlanService = {
 
     console.log('[safetyPlanService.upsert] Successfully saved plan:', data?.id);
     return data;
-  }
+  },
 };
 
 // =====================================================
@@ -311,7 +322,9 @@ export const groundingService = {
   },
 
   async markComplete(exerciseId: string): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const today = new Date().toISOString().split('T')[0];
@@ -325,13 +338,14 @@ export const groundingService = {
         exercises.push(exerciseId);
       }
 
-      const { error } = await supabase
-        .from('mental_health_grounding_progress')
-        .upsert({
+      const { error } = await supabase.from('mental_health_grounding_progress').upsert(
+        {
           user_id: user.id,
           date: today,
-          exercises_completed: exercises
-        }, { onConflict: 'user_id,date' });
+          exercises_completed: exercises,
+        },
+        { onConflict: 'user_id,date' }
+      );
 
       // Gracefully handle 406 schema cache errors
       if (error && !error.message?.includes('406')) {
@@ -341,14 +355,16 @@ export const groundingService = {
       console.warn('Grounding progress save error:', err);
       // Don't throw - let the UI continue working
     }
-  }
+  },
 };
 
 // =====================================================
 // SYNC UTILITY - Migrate localStorage to cloud
 // =====================================================
 export const syncFromLocalStorage = async () => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return;
 
   try {
@@ -360,7 +376,7 @@ export const syncFromLocalStorage = async () => {
         await moodService.upsert({
           date: entry.date,
           mood: entry.mood,
-          notes: entry.notes
+          notes: entry.notes,
         });
       }
     }
@@ -379,7 +395,7 @@ export const syncFromLocalStorage = async () => {
           gratitude: entry.gratitude,
           triggers: entry.triggers,
           tags: entry.tags,
-          prompt: entry.prompt
+          prompt: entry.prompt,
         });
       }
     }
@@ -395,7 +411,7 @@ export const syncFromLocalStorage = async () => {
           wake_time: entry.wakeTime,
           hours: entry.hours,
           quality: entry.quality,
-          notes: entry.notes
+          notes: entry.notes,
         });
       }
     }
@@ -411,7 +427,7 @@ export const syncFromLocalStorage = async () => {
         support_people: plan.supportPeople || [],
         professionals: plan.professionals || [],
         safe_environment: plan.safeEnvironment || [],
-        reasons_for_living: plan.reasonsForLiving || []
+        reasons_for_living: plan.reasonsForLiving || [],
       });
     }
 

@@ -1,28 +1,14 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import {
-  Edit,
-  Trash2,
-  Eye,
-  Calendar,
-  Clock,
-  FileText,
-  Star,
-  MessageSquare
-} from "lucide-react";
-import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
-import PortfolioEntryForm from "./PortfolioEntryForm";
-import PortfolioEntryViewDialog from "./PortfolioEntryViewDialog";
-import { usePortfolioData } from "@/hooks/portfolio/usePortfolioData";
-import { EvidenceCommentsIndicator, EvidenceComments } from "@/components/portfolio-hub/comments";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Edit, Trash2, Eye, Calendar, Clock, FileText, Star, MessageSquare } from 'lucide-react';
+import { PortfolioEntry, PortfolioCategory } from '@/types/portfolio';
+import PortfolioEntryForm from './PortfolioEntryForm';
+import PortfolioEntryViewDialog from './PortfolioEntryViewDialog';
+import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { EvidenceCommentsIndicator, EvidenceComments } from '@/components/portfolio-hub/comments';
 
 interface PortfolioEntriesListProps {
   entries: PortfolioEntry[];
@@ -30,7 +16,11 @@ interface PortfolioEntriesListProps {
   onDeleteEntry: (entryId: string) => void;
 }
 
-const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: PortfolioEntriesListProps) => {
+const PortfolioEntriesList = ({
+  entries,
+  onUpdateEntry,
+  onDeleteEntry,
+}: PortfolioEntriesListProps) => {
   const { categories } = usePortfolioData();
   const [editingEntry, setEditingEntry] = useState<PortfolioEntry | null>(null);
   const [viewingEntry, setViewingEntry] = useState<PortfolioEntry | null>(null);
@@ -38,21 +28,31 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'success';
-      case 'in-progress': return 'yellow';
-      case 'reviewed': return 'gold';
-      case 'draft': return 'outline';
-      default: return 'outline';
+      case 'completed':
+        return 'success';
+      case 'in-progress':
+        return 'yellow';
+      case 'reviewed':
+        return 'gold';
+      case 'draft':
+        return 'outline';
+      default:
+        return 'outline';
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'completed': return 'Completed';
-      case 'in-progress': return 'In Progress';
-      case 'reviewed': return 'Reviewed';
-      case 'draft': return 'Draft';
-      default: return status;
+      case 'completed':
+        return 'Completed';
+      case 'in-progress':
+        return 'In Progress';
+      case 'reviewed':
+        return 'Reviewed';
+      case 'draft':
+        return 'Draft';
+      default:
+        return status;
     }
   };
 
@@ -60,7 +60,7 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
     return new Date(dateString).toLocaleDateString('en-GB', {
       day: '2-digit',
       month: 'short',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
@@ -69,9 +69,12 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
       <Card className="border-dashed border-2 border-elec-yellow/20 bg-white/5">
         <CardContent className="flex flex-col items-center justify-center py-8">
           <FileText className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow/40 mb-4" />
-          <h3 className="text-lg sm:text-xl font-medium mb-2 text-center">No portfolio entries found</h3>
+          <h3 className="text-lg sm:text-xl font-medium mb-2 text-center">
+            No portfolio entries found
+          </h3>
           <p className="text-white text-center text-sm max-w-md">
-            Start building your portfolio by adding your first entry. Document your learning journey and professional development.
+            Start building your portfolio by adding your first entry. Document your learning journey
+            and professional development.
           </p>
         </CardContent>
       </Card>
@@ -85,7 +88,9 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
           <CardHeader className="pb-3">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-base sm:text-lg mb-2 leading-tight">{entry.title}</CardTitle>
+                <CardTitle className="text-base sm:text-lg mb-2 leading-tight">
+                  {entry.title}
+                </CardTitle>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -109,23 +114,25 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                 <Badge variant={getStatusColor(entry.status)} className="text-xs">
                   {getStatusText(entry.status)}
                 </Badge>
-                <Badge variant="outline" style={{ backgroundColor: `${entry.category.color}20` }} className="text-xs">
+                <Badge
+                  variant="outline"
+                  style={{ backgroundColor: `${entry.category.color}20` }}
+                  className="text-xs"
+                >
                   {entry.category.name}
                 </Badge>
               </div>
             </div>
           </CardHeader>
-          
+
           <CardContent className="pt-0 space-y-3">
-            <p className="text-xs sm:text-sm text-white line-clamp-2">
-              {entry.description}
-            </p>
-            
+            <p className="text-xs sm:text-sm text-white line-clamp-2">{entry.description}</p>
+
             {/* Skills */}
             {entry.skills.length > 0 && (
               <div>
                 <div className="flex flex-wrap gap-1">
-                  {entry.skills.slice(0, 2).map(skill => (
+                  {entry.skills.slice(0, 2).map((skill) => (
                     <Badge key={skill} variant="secondary" className="text-xs">
                       {skill}
                     </Badge>
@@ -138,16 +145,17 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                 </div>
               </div>
             )}
-            
+
             {/* Evidence Files */}
             {entry.evidenceFiles.length > 0 && (
               <div>
                 <p className="text-xs text-white">
-                  {entry.evidenceFiles.length} evidence file{entry.evidenceFiles.length !== 1 ? 's' : ''} attached
+                  {entry.evidenceFiles.length} evidence file
+                  {entry.evidenceFiles.length !== 1 ? 's' : ''} attached
                 </p>
               </div>
             )}
-            
+
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-2">
               <Button

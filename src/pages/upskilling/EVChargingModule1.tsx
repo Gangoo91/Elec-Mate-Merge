@@ -7,34 +7,34 @@ const EVChargingModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "EV Basics and Charging Principles",
+      title: 'EV Basics and Charging Principles',
       icon: Zap,
-      description: "Understanding electric vehicle charging fundamentals"
+      description: 'Understanding electric vehicle charging fundamentals',
     },
     {
       id: 2,
-      title: "Domestic vs Commercial Installations",
+      title: 'Domestic vs Commercial Installations',
       icon: Building,
-      description: "Different requirements for residential and commercial charging"
+      description: 'Different requirements for residential and commercial charging',
     },
     {
       id: 3,
-      title: "Installer Responsibilities and Regs",
+      title: 'Installer Responsibilities and Regs',
       icon: Users,
-      description: "Professional duties and regulatory compliance"
+      description: 'Professional duties and regulatory compliance',
     },
     {
       id: 4,
-      title: "Key Standards: BS 7671, IET CoP, G98/G99",
+      title: 'Key Standards: BS 7671, IET CoP, G98/G99',
       icon: FileText,
-      description: "Essential standards and codes of practice"
+      description: 'Essential standards and codes of practice',
     },
     {
       id: 5,
-      title: "Overview of Market-Ready Hardware",
+      title: 'Overview of Market-Ready Hardware',
       icon: Wrench,
-      description: "Current charging equipment and manufacturers"
-    }
+      description: 'Current charging equipment and manufacturers',
+    },
   ];
 
   return (

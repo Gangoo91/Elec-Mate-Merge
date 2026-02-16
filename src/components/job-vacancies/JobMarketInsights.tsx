@@ -1,19 +1,19 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { 
-  TrendingUp, 
-  Clock, 
-  Users, 
-  MapPin, 
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  TrendingUp,
+  Clock,
+  Users,
+  MapPin,
   Target,
   Lightbulb,
   BookOpen,
   Award,
   Calendar,
-  Zap
-} from "lucide-react";
+  Zap,
+} from 'lucide-react';
 
 interface JobMarketInsightsProps {
   jobCount?: number;
@@ -25,67 +25,67 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
   const quickTips = [
     {
       icon: Clock,
-      title: "Apply within 48 hours",
-      description: "Early applications get 3x better response rates"
+      title: 'Apply within 48 hours',
+      description: 'Early applications get 3x better response rates',
     },
     {
       icon: Target,
-      title: "Tailor your CV",
-      description: "Highlight relevant certifications and experience"
+      title: 'Tailor your CV',
+      description: 'Highlight relevant certifications and experience',
     },
     {
       icon: MapPin,
-      title: "Expand your radius",
-      description: "Consider jobs within 25 miles for more opportunities"
+      title: 'Expand your radius',
+      description: 'Consider jobs within 25 miles for more opportunities',
     },
     {
       icon: Calendar,
-      title: "Peak hiring seasons",
-      description: "March-May and September-November see most job postings"
+      title: 'Peak hiring seasons',
+      description: 'March-May and September-November see most job postings',
     },
     {
       icon: TrendingUp,
-      title: "Track applications",
-      description: "Keep a record of applications and follow up after 1 week"
+      title: 'Track applications',
+      description: 'Keep a record of applications and follow up after 1 week',
     },
     {
       icon: Users,
-      title: "Network actively",
-      description: "70% of jobs come through professional connections"
-    }
+      title: 'Network actively',
+      description: '70% of jobs come through professional connections',
+    },
   ];
 
   const careerDevelopment = [
     {
       icon: BookOpen,
-      title: "BS7671 18th Edition",
-      description: "Stay current with the latest wiring regulations and safety standards"
+      title: 'BS7671 18th Edition',
+      description: 'Stay current with the latest wiring regulations and safety standards',
     },
     {
       icon: Zap,
-      title: "EV Charging & Solar",
-      description: "Specialise in high-demand renewable energy installations"
+      title: 'EV Charging & Solar',
+      description: 'Specialise in high-demand renewable energy installations',
     },
     {
       icon: Award,
-      title: "NICEIC/NAPIT Registration",
-      description: "Maintain your professional registration for credibility"
+      title: 'NICEIC/NAPIT Registration',
+      description: 'Maintain your professional registration for credibility',
     },
     {
       icon: Users,
-      title: "Trade Associations",
-      description: "Join professional networks for career opportunities"
+      title: 'Trade Associations',
+      description: 'Join professional networks for career opportunities',
     },
     {
       icon: TrendingUp,
-      title: "Additional Certifications",
-      description: "PAT testing, fire alarm systems, emergency lighting"
+      title: 'Additional Certifications',
+      description: 'PAT testing, fire alarm systems, emergency lighting',
     },
     {
       icon: Lightbulb,
-      title: "Smart Home Technology",
-      description: "Learn home automation and IoT device installation"
-    }
+      title: 'Smart Home Technology',
+      description: 'Learn home automation and IoT device installation',
+    },
   ];
 
   return (
@@ -128,7 +128,10 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
           </CardHeader>
           <CardContent className="space-y-3">
             {quickTips.map((tip, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10">
+              <div
+                key={index}
+                className="flex items-start gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10"
+              >
                 <tip.icon className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
                   <div className="font-medium text-foreground text-sm">{tip.title}</div>
@@ -149,7 +152,10 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
           </CardHeader>
           <CardContent className="space-y-3">
             {careerDevelopment.map((item, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10">
+              <div
+                key={index}
+                className="flex items-start gap-3 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/10"
+              >
                 <item.icon className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
                   <div className="font-medium text-foreground text-sm">{item.title}</div>
@@ -172,20 +178,20 @@ const JobMarketInsights: React.FC<JobMarketInsightsProps> = ({ jobCount = 0 }) =
         <CardContent>
           <div className="flex flex-wrap gap-2">
             {[
-              "EV Charging Installation",
-              "Solar Panel Systems", 
-              "Smart Home Automation",
-              "Emergency Lighting",
-              "Fire Alarm Systems",
-              "PAT Testing",
-              "Data Cabling",
-              "CCTV Installation",
-              "Heat Pump Electrical",
-              "Battery Storage Systems"
+              'EV Charging Installation',
+              'Solar Panel Systems',
+              'Smart Home Automation',
+              'Emergency Lighting',
+              'Fire Alarm Systems',
+              'PAT Testing',
+              'Data Cabling',
+              'CCTV Installation',
+              'Heat Pump Electrical',
+              'Battery Storage Systems',
             ].map((skill, index) => (
-              <Badge 
-                key={index} 
-                variant="secondary" 
+              <Badge
+                key={index}
+                variant="secondary"
                 className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 hover:bg-elec-yellow/30 transition-colors"
               >
                 {skill}

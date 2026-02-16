@@ -10,28 +10,48 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ArrowRight, Flag, CheckCircle, XCircle, Clock, BookOpen, Target, FileText, X, Eye, RotateCcw, Shuffle, Trophy, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { ExamMobileLayout } from "@/components/apprentice-courses/ExamMobileLayout";
-import { ExamDesktopSidebar } from "@/components/apprentice-courses/ExamDesktopSidebar";
-import { getBalancedRandomQuestions, getCategoryBreakdown, Question } from "@/data/apprentice-courses/level3/mixed/questionBank";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Flag,
+  CheckCircle,
+  XCircle,
+  Clock,
+  BookOpen,
+  Target,
+  FileText,
+  X,
+  Eye,
+  RotateCcw,
+  Shuffle,
+  Trophy,
+  AlertTriangle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
+import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
+import {
+  getBalancedRandomQuestions,
+  getCategoryBreakdown,
+  Question,
+} from '@/data/apprentice-courses/level3/mixed/questionBank';
 
 const EXAM_CONFIG = {
   totalQuestions: 40,
   timeInSeconds: 90 * 60, // 90 minutes
   passPercentage: 60,
-  exitPath: "/study-centre/apprentice/level3-module8"
+  exitPath: '/study-centre/apprentice/level3-module8',
 };
 
 const Level3Module8MockExam8 = () => {
   useSEO(
-    "Level 3 Full Practice Exam | Comprehensive Mock Assessment",
-    "Complete 40-question practice exam covering all Level 3 modules. Balanced difficulty, 90-minute timed conditions, category breakdown."
+    'Level 3 Full Practice Exam | Comprehensive Mock Assessment',
+    'Complete 40-question practice exam covering all Level 3 modules. Balanced difficulty, 90-minute timed conditions, category breakdown.'
   );
 
   const [examQuestions, setExamQuestions] = useState<Question[]>([]);
@@ -42,7 +62,9 @@ const Level3Module8MockExam8 = () => {
   const [showReview, setShowReview] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(EXAM_CONFIG.timeInSeconds);
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
-  const [reviewFilter, setReviewFilter] = useState<'all' | 'correct' | 'incorrect' | 'unanswered' | 'flagged'>('all');
+  const [reviewFilter, setReviewFilter] = useState<
+    'all' | 'correct' | 'incorrect' | 'unanswered' | 'flagged'
+  >('all');
 
   // Start exam
   const startExam = () => {
@@ -61,7 +83,7 @@ const Level3Module8MockExam8 = () => {
   useEffect(() => {
     if (examStarted && !showResults && timeRemaining > 0) {
       const timer = setInterval(() => {
-        setTimeRemaining(prev => {
+        setTimeRemaining((prev) => {
           if (prev <= 1) {
             handleSubmit();
             return 0;
@@ -131,21 +153,28 @@ const Level3Module8MockExam8 = () => {
   };
 
   const getFilteredQuestions = () => {
-    return examQuestions.map((_, index) => index).filter(index => {
-      const status = getQuestionStatus(index);
-      const isFlagged = flaggedQuestions.has(index);
+    return examQuestions
+      .map((_, index) => index)
+      .filter((index) => {
+        const status = getQuestionStatus(index);
+        const isFlagged = flaggedQuestions.has(index);
 
-      switch (reviewFilter) {
-        case 'correct': return status === 'correct';
-        case 'incorrect': return status === 'incorrect';
-        case 'unanswered': return status === 'unanswered';
-        case 'flagged': return isFlagged;
-        default: return true;
-      }
-    });
+        switch (reviewFilter) {
+          case 'correct':
+            return status === 'correct';
+          case 'incorrect':
+            return status === 'incorrect';
+          case 'unanswered':
+            return status === 'unanswered';
+          case 'flagged':
+            return isFlagged;
+          default:
+            return true;
+        }
+      });
   };
 
-  const answeredQuestions = selectedAnswers.filter(answer => answer !== -1).length;
+  const answeredQuestions = selectedAnswers.filter((answer) => answer !== -1).length;
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
@@ -230,32 +259,38 @@ const Level3Module8MockExam8 = () => {
     const passed = percentage >= EXAM_CONFIG.passPercentage;
     const categoryBreakdown = getCategoryBreakdown(examQuestions, selectedAnswers);
     const correct = score;
-    const incorrect = selectedAnswers.filter((a, i) => a !== -1 && a !== examQuestions[i]?.correctAnswer).length;
-    const unanswered = selectedAnswers.filter(a => a === -1).length;
+    const incorrect = selectedAnswers.filter(
+      (a, i) => a !== -1 && a !== examQuestions[i]?.correctAnswer
+    ).length;
+    const unanswered = selectedAnswers.filter((a) => a === -1).length;
 
     return (
       <div className="min-h-screen bg-[#0d0d0d] p-4">
         <div className="max-w-2xl mx-auto space-y-6">
           {/* Pass/Fail Header */}
-          <Card className={`border-2 ${passed ? 'border-green-500/40 bg-green-500/5' : 'border-red-500/40 bg-red-500/5'}`}>
+          <Card
+            className={`border-2 ${passed ? 'border-green-500/40 bg-green-500/5' : 'border-red-500/40 bg-red-500/5'}`}
+          >
             <CardContent className="p-6 text-center">
-              <div className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${passed ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+              <div
+                className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${passed ? 'bg-green-500/20' : 'bg-red-500/20'}`}
+              >
                 {passed ? (
                   <Trophy className="h-8 w-8 text-green-400" />
                 ) : (
                   <AlertTriangle className="h-8 w-8 text-red-400" />
                 )}
               </div>
-              <Badge className={`mb-3 ${passed ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+              <Badge
+                className={`mb-3 ${passed ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+              >
                 {passed ? 'PASSED' : 'NOT PASSED'}
               </Badge>
               <div className="text-4xl font-bold text-white mb-2">{percentage}%</div>
               <p className="text-white/70">
                 {score} out of {examQuestions.length} questions correct
               </p>
-              <p className="text-xs text-white/50 mt-2">
-                Pass mark: {EXAM_CONFIG.passPercentage}%
-              </p>
+              <p className="text-xs text-white/50 mt-2">Pass mark: {EXAM_CONFIG.passPercentage}%</p>
             </CardContent>
           </Card>
 
@@ -292,7 +327,9 @@ const Level3Module8MockExam8 = () => {
                 <div key={index}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm text-white/80">{cat.label}</span>
-                    <span className={`text-sm font-semibold ${cat.percent >= 60 ? 'text-green-400' : 'text-red-400'}`}>
+                    <span
+                      className={`text-sm font-semibold ${cat.percent >= 60 ? 'text-green-400' : 'text-red-400'}`}
+                    >
                       {cat.correct}/{cat.total} ({cat.percent}%)
                     </span>
                   </div>
@@ -329,7 +366,10 @@ const Level3Module8MockExam8 = () => {
                 Retake
               </Button>
               <Link to={EXAM_CONFIG.exitPath} className="h-11">
-                <Button variant="outline" className="w-full h-full border-white/20 text-white/70 hover:text-white">
+                <Button
+                  variant="outline"
+                  className="w-full h-full border-white/20 text-white/70 hover:text-white"
+                >
                   Back to Course
                 </Button>
               </Link>
@@ -347,9 +387,10 @@ const Level3Module8MockExam8 = () => {
     const percentage = Math.round((score / examQuestions.length) * 100);
     const stats = {
       correct: score,
-      incorrect: selectedAnswers.filter((a, i) => a !== -1 && a !== examQuestions[i]?.correctAnswer).length,
-      unanswered: selectedAnswers.filter(a => a === -1).length,
-      flagged: flaggedQuestions.size
+      incorrect: selectedAnswers.filter((a, i) => a !== -1 && a !== examQuestions[i]?.correctAnswer)
+        .length,
+      unanswered: selectedAnswers.filter((a) => a === -1).length,
+      flagged: flaggedQuestions.size,
     };
 
     return (
@@ -359,7 +400,9 @@ const Level3Module8MockExam8 = () => {
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <div>
               <h1 className="text-lg font-semibold text-white">Review Answers</h1>
-              <p className="text-sm text-white/60">Score: {percentage}% ({score}/{examQuestions.length})</p>
+              <p className="text-sm text-white/60">
+                Score: {percentage}% ({score}/{examQuestions.length})
+              </p>
             </div>
             <Button
               onClick={() => setShowReview(false)}
@@ -378,28 +421,48 @@ const Level3Module8MockExam8 = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {[
               { key: 'correct' as const, label: 'Correct', count: stats.correct, color: 'green' },
-              { key: 'incorrect' as const, label: 'Incorrect', count: stats.incorrect, color: 'red' },
-              { key: 'unanswered' as const, label: 'Skipped', count: stats.unanswered, color: 'gray' },
-              { key: 'flagged' as const, label: 'Flagged', count: stats.flagged, color: 'yellow' }
+              {
+                key: 'incorrect' as const,
+                label: 'Incorrect',
+                count: stats.incorrect,
+                color: 'red',
+              },
+              {
+                key: 'unanswered' as const,
+                label: 'Skipped',
+                count: stats.unanswered,
+                color: 'gray',
+              },
+              { key: 'flagged' as const, label: 'Flagged', count: stats.flagged, color: 'yellow' },
             ].map(({ key, label, count, color }) => (
               <button
                 key={key}
                 onClick={() => setReviewFilter(reviewFilter === key ? 'all' : key)}
                 className={`p-3 rounded-xl border-2 text-center transition-all touch-manipulation ${
                   reviewFilter === key
-                    ? color === 'green' ? 'border-green-500 bg-green-500/10' :
-                      color === 'red' ? 'border-red-500 bg-red-500/10' :
-                      color === 'yellow' ? 'border-elec-yellow bg-elec-yellow/10' :
-                      'border-white/40 bg-white/5'
+                    ? color === 'green'
+                      ? 'border-green-500 bg-green-500/10'
+                      : color === 'red'
+                        ? 'border-red-500 bg-red-500/10'
+                        : color === 'yellow'
+                          ? 'border-elec-yellow bg-elec-yellow/10'
+                          : 'border-white/40 bg-white/5'
                     : 'border-white/10 bg-transparent'
                 }`}
               >
-                <div className={`text-lg font-bold ${
-                  color === 'green' ? 'text-green-400' :
-                  color === 'red' ? 'text-red-400' :
-                  color === 'yellow' ? 'text-elec-yellow' :
-                  'text-white/60'
-                }`}>{count}</div>
+                <div
+                  className={`text-lg font-bold ${
+                    color === 'green'
+                      ? 'text-green-400'
+                      : color === 'red'
+                        ? 'text-red-400'
+                        : color === 'yellow'
+                          ? 'text-elec-yellow'
+                          : 'text-white/60'
+                  }`}
+                >
+                  {count}
+                </div>
                 <div className="text-xs text-white/50">{label}</div>
               </button>
             ))}
@@ -407,7 +470,7 @@ const Level3Module8MockExam8 = () => {
 
           {/* Questions */}
           <div className="space-y-4">
-            {filteredQuestions.map(qIndex => {
+            {filteredQuestions.map((qIndex) => {
               const question = examQuestions[qIndex];
               const userAnswer = selectedAnswers[qIndex];
               const correctAnswer = question.correctAnswer;
@@ -419,21 +482,35 @@ const Level3Module8MockExam8 = () => {
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="text-base text-white">Question {qIndex + 1}</CardTitle>
+                        <CardTitle className="text-base text-white">
+                          Question {qIndex + 1}
+                        </CardTitle>
                         <p className="text-xs text-white/50 mt-1">{question.module}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         {isFlagged && (
-                          <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40">
-                            <Flag className="h-3 w-3 mr-1 fill-current" />Flagged
+                          <Badge
+                            variant="outline"
+                            className="text-elec-yellow border-elec-yellow/40"
+                          >
+                            <Flag className="h-3 w-3 mr-1 fill-current" />
+                            Flagged
                           </Badge>
                         )}
-                        <Badge className={
-                          status === 'correct' ? 'bg-green-500/20 text-green-400 border-green-500/40' :
-                          status === 'incorrect' ? 'bg-red-500/20 text-red-400 border-red-500/40' :
-                          'bg-white/10 text-white/60 border-white/20'
-                        }>
-                          {status === 'correct' ? 'Correct' : status === 'incorrect' ? 'Incorrect' : 'Skipped'}
+                        <Badge
+                          className={
+                            status === 'correct'
+                              ? 'bg-green-500/20 text-green-400 border-green-500/40'
+                              : status === 'incorrect'
+                                ? 'bg-red-500/20 text-red-400 border-red-500/40'
+                                : 'bg-white/10 text-white/60 border-white/20'
+                          }
+                        >
+                          {status === 'correct'
+                            ? 'Correct'
+                            : status === 'incorrect'
+                              ? 'Incorrect'
+                              : 'Skipped'}
                         </Badge>
                       </div>
                     </div>
@@ -452,15 +529,21 @@ const Level3Module8MockExam8 = () => {
                               isCorrectAnswer
                                 ? 'border-green-500 bg-green-500/10 text-green-400'
                                 : isUserAnswer && !isCorrectAnswer
-                                ? 'border-red-500 bg-red-500/10 text-red-400'
-                                : 'border-white/10 text-white/70'
+                                  ? 'border-red-500 bg-red-500/10 text-red-400'
+                                  : 'border-white/10 text-white/70'
                             }`}
                           >
                             <div className="flex items-start gap-3">
-                              <span className="font-semibold text-xs mt-0.5">{String.fromCharCode(65 + optIndex)}.</span>
+                              <span className="font-semibold text-xs mt-0.5">
+                                {String.fromCharCode(65 + optIndex)}.
+                              </span>
                               <span className="flex-1">{option}</span>
-                              {isCorrectAnswer && <CheckCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />}
-                              {isUserAnswer && !isCorrectAnswer && <XCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />}
+                              {isCorrectAnswer && (
+                                <CheckCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                              )}
+                              {isUserAnswer && !isCorrectAnswer && (
+                                <XCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                              )}
                             </div>
                           </div>
                         );
@@ -471,8 +554,12 @@ const Level3Module8MockExam8 = () => {
                         <div className="flex items-start gap-2">
                           <Eye className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-xs font-semibold text-elec-yellow mb-1">Explanation</p>
-                            <p className="text-sm text-white/80 leading-relaxed">{question.explanation}</p>
+                            <p className="text-xs font-semibold text-elec-yellow mb-1">
+                              Explanation
+                            </p>
+                            <p className="text-sm text-white/80 leading-relaxed">
+                              {question.explanation}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -514,11 +601,13 @@ const Level3Module8MockExam8 = () => {
                 : 'bg-white/[0.02] border-white/15 active:border-white/25'
             }`}
           >
-            <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
-              selectedAnswers[currentQuestion] === index
-                ? 'bg-elec-yellow text-black'
-                : 'bg-white/10 text-white/60'
-            }`}>
+            <div
+              className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                selectedAnswers[currentQuestion] === index
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-white/10 text-white/60'
+              }`}
+            >
               <span className="text-xs font-bold">{String.fromCharCode(65 + index)}</span>
             </div>
             <span className="text-sm text-white leading-snug text-left">{option}</span>
@@ -560,8 +649,12 @@ const Level3Module8MockExam8 = () => {
                 <CardHeader className="pb-4 border-b border-white/10">
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle className="text-lg text-white">Question {currentQuestion + 1} of {examQuestions.length}</CardTitle>
-                      <p className="text-sm text-white/50 mt-1">{examQuestions[currentQuestion]?.module}</p>
+                      <CardTitle className="text-lg text-white">
+                        Question {currentQuestion + 1} of {examQuestions.length}
+                      </CardTitle>
+                      <p className="text-sm text-white/50 mt-1">
+                        {examQuestions[currentQuestion]?.module}
+                      </p>
                     </div>
                     <Button
                       onClick={toggleFlag}
@@ -569,13 +662,17 @@ const Level3Module8MockExam8 = () => {
                       size="sm"
                       className={`border-elec-yellow/30 ${flaggedQuestions.has(currentQuestion) ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white/60 hover:text-white'}`}
                     >
-                      <Flag className={`h-4 w-4 mr-2 ${flaggedQuestions.has(currentQuestion) ? 'fill-current' : ''}`} />
+                      <Flag
+                        className={`h-4 w-4 mr-2 ${flaggedQuestions.has(currentQuestion) ? 'fill-current' : ''}`}
+                      />
                       {flaggedQuestions.has(currentQuestion) ? 'Flagged' : 'Flag'}
                     </Button>
                   </div>
                 </CardHeader>
                 <CardContent className="p-6">
-                  <p className="text-white text-lg leading-relaxed mb-6">{examQuestions[currentQuestion]?.question}</p>
+                  <p className="text-white text-lg leading-relaxed mb-6">
+                    {examQuestions[currentQuestion]?.question}
+                  </p>
                   <div className="space-y-3">
                     {examQuestions[currentQuestion]?.options.map((option, index) => (
                       <button

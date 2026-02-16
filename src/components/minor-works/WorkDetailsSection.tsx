@@ -3,7 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin, User, FileText, AlertTriangle } from 'lucide-react';
 
@@ -13,43 +19,43 @@ interface WorkDetailsSectionProps {
 }
 
 const workTypeCategories = {
-  'addition': {
+  addition: {
     label: 'Addition of New Circuit',
     subcategories: [
       'New socket outlet circuit',
       'New lighting circuit',
       'New cooker circuit',
       'New shower circuit',
-      'New outdoor circuit'
-    ]
+      'New outdoor circuit',
+    ],
   },
-  'alteration': {
+  alteration: {
     label: 'Alteration to Existing Circuit',
     subcategories: [
       'Circuit extension',
       'Change of protective device',
       'Cable route alteration',
-      'Load increase modification'
-    ]
+      'Load increase modification',
+    ],
   },
-  'replacement': {
+  replacement: {
     label: 'Replacement Work',
     subcategories: [
       'Like-for-like accessory replacement',
       'Consumer unit replacement',
       'Cable replacement',
-      'Protective device replacement'
-    ]
+      'Protective device replacement',
+    ],
   },
-  'accessory': {
+  accessory: {
     label: 'Accessory Installation',
     subcategories: [
       'Additional socket outlets',
       'Additional lighting points',
       'Switches and controls',
-      'Outdoor installations'
-    ]
-  }
+      'Outdoor installations',
+    ],
+  },
 };
 
 const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => {
@@ -79,7 +85,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   onChange={(e) => onUpdate('propertyAddress', e.target.value)}
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="clientName" className="text-sm font-medium">
                   Client Name *
@@ -92,7 +98,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 />
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <Label htmlFor="workDate" className="text-sm font-medium">
@@ -109,7 +115,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   />
                 </div>
               </div>
-              
+
               <div>
                 <Label htmlFor="workOrderNumber" className="text-sm font-medium">
                   Work Order Number
@@ -140,8 +146,8 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="workType" className="text-sm font-medium">
                 Primary Work Category *
               </Label>
-              <Select 
-                value={formData.workType || ''} 
+              <Select
+                value={formData.workType || ''}
                 onValueChange={(value) => {
                   onUpdate('workType', value);
                   onUpdate('workSubcategory', ''); // Reset subcategory
@@ -159,14 +165,14 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             {selectedCategory && (
               <div>
                 <Label htmlFor="workSubcategory" className="text-sm font-medium">
                   Specific Work Type *
                 </Label>
-                <Select 
-                  value={formData.workSubcategory || ''} 
+                <Select
+                  value={formData.workSubcategory || ''}
                   onValueChange={(value) => onUpdate('workSubcategory', value)}
                 >
                   <SelectTrigger>
@@ -183,17 +189,17 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               </div>
             )}
           </div>
-          
+
           <div>
             <Label htmlFor="workDescription" className="text-sm font-medium">
               Detailed Description of Work *
             </Label>
-              <Textarea
-                id="workDescription"
-                placeholder="Provide comprehensive description including locations, quantities, and specific details..."
-                value={formData.workDescription || ''}
-                onChange={(e) => onUpdate('workDescription', e.target.value)}
-              />
+            <Textarea
+              id="workDescription"
+              placeholder="Provide comprehensive description including locations, quantities, and specific details..."
+              value={formData.workDescription || ''}
+              onChange={(e) => onUpdate('workDescription', e.target.value)}
+            />
           </div>
         </CardContent>
       </Card>
@@ -219,13 +225,13 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
               />
             </div>
-            
+
             <div>
               <Label htmlFor="supplyVoltage" className="text-sm font-medium">
                 Supply Voltage
               </Label>
-              <Select 
-                value={formData.supplyVoltage || ''} 
+              <Select
+                value={formData.supplyVoltage || ''}
                 onValueChange={(value) => onUpdate('supplyVoltage', value)}
               >
                 <SelectTrigger>
@@ -238,7 +244,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label htmlFor="frequency" className="text-sm font-medium">
                 Frequency
@@ -251,14 +257,14 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="earthingArrangement" className="text-sm font-medium">
                 Earthing Arrangement *
               </Label>
-              <Select 
-                value={formData.earthingArrangement || ''} 
+              <Select
+                value={formData.earthingArrangement || ''}
                 onValueChange={(value) => onUpdate('earthingArrangement', value)}
               >
                 <SelectTrigger>
@@ -272,7 +278,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label htmlFor="supplyCharacteristics" className="text-sm font-medium">
                 Supply Characteristics
@@ -302,8 +308,8 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="partPRequired" className="text-sm font-medium">
                 Part P Notification Required
               </Label>
-              <Select 
-                value={formData.partPRequired || ''} 
+              <Select
+                value={formData.partPRequired || ''}
                 onValueChange={(value) => onUpdate('partPRequired', value)}
               >
                 <SelectTrigger>
@@ -316,7 +322,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             {formData.partPRequired === 'yes' && (
               <div>
                 <Label htmlFor="buildingControl" className="text-sm font-medium">
@@ -331,15 +337,15 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               </div>
             )}
           </div>
-          
+
           {formData.partPRequired === 'self-cert' && (
             <div className="p-3 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
               <Badge variant="secondary" className="mb-2">
                 Self-Certification Scheme
               </Badge>
               <p className="text-sm text-green-700 dark:text-green-400">
-                Work covered under competent person self-certification scheme. 
-                Building control notification will be handled automatically.
+                Work covered under competent person self-certification scheme. Building control
+                notification will be handled automatically.
               </p>
             </div>
           )}
